@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590916;
-	b=C0x0LEFprYdBnUTlJXKVX8Zxlrp0V5yB1rQqpvqj048OLl4CFrA8r08lqnY89UGIqR8Z
-	 pUGPPUpt82k1WSXLCkISfwR0zdl/hyon2iyAQ7O9F+7RmdAH0zk91EXOdKV7Kh9okaH5y
-	 K4xqTEFLRXR9iLU3Kx2y8Ue65Hn83xeNZbUwjyiTGdTcyfh5gq2pcgtEQf6RAMET8Cbpu
-	 opMBsIkoB3jlOAI3fZfdP2bc4eJn9xPOypSOnVRZYM7IPxukRLrUuPGY+ujCTI3bSU98O
-	 zGg05/llQZgTJZ4tAu4r0N3H35iqgao1eTtt/aJmRPymr677gEh5cL/O4DZGtVGHvvQ==
+	t=1794590917;
+	b=iPXZYCIwX/YOizXlTspQEDAxhBJgT5sRJ8E5L+c+xDWu2KumCrRRGOaSm3bibfmPIdms
+	 l/GREuRK0/F6JBMFTX58x3L2UXLDfsbch9I1Dp3sFMVc5LKNPucUJ0li8fvp0akf7Gsm/
+	 JNenJcrhuLq7KGwJNc5CwiVmfoafwmcY9/EYS4tpGYOCeewK7HSaaX8OUhIuTIhAD94AC
+	 JQQSo8oJJOy+jGwCe10EThJT+WsQ10BK/n3L7tnExUKSw/7g8DD2HSEtCVv45aNR2NWhd
+	 JbHF5SA/Qwf4XLaETyeCjwDYrVSjZwgLTwegVtjnDvwciAR9zmtkYVgzllp9nwyLdNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590916;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590917;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ung3n/zXMtlXKgXIj8fRLxmrERzpP9deykf9rHmqgAg=;
-	b=lgn4oG369au3enqL7R3UkbNpe2aO0aL/BBnQ/7jiQeHum7/WDQRRhiVkLm9KmiMy9YZG
-	 5dpz7YgFKss/CSgXAmAlWqG7SGkuLEGr580P0iXtr66yicMEWyFeIpkMVxHd4+qzP/V2K
-	 goSjszfGwADmhvQs8mWpHsJwghrskr4ri3fswiJ7vGqoLS8E+hiwZ/p15YTESNj/IHRdn
-	 Ki5kuZ0hLWnCx9Mlef1MOuDDSQjCkWKAQoPgDL1pM7qSDUzhi/BPjCkXerAhjJK6M2FLq
-	 LumSBVRUAoW/E9+Mfpy+CATbIO2vlMKIlWJ1Q2Td1KHGNT0TWlT4K1IvMUx2Tq01nhA==
+	bh=CEjpqJ7qXSC4PPRUY2iUgQDzTBPn2ej0JbJMZJ83vNE=;
+	b=V3ZiUYlyA0vyodD0073ADh0icogbJBXTxfknSAynb0TvPvm0SkNXVeurksvvFktsqj2E
+	 SQ4xOr3jLc0H2+x1CXpCVr5EpEKxnNCBByHvCtLwjGkkIPG6kqO9XFTqeNJJE1Mq2XG5Z
+	 pqCDdzOiZDK6iXzeAmQtJ5yohqy4/hkHCswNfPi1fx8k1Ro/sNvp1jmrrqwQm/VWnIl8Y
+	 kGpvJIgFXEsXm574sZE01jt9FLhrO5Mn6efYS2ZWKgpySbjImdrBbOuPsIN8uthQul3zM
+	 20yis5cA08c6uItONufneK7NVgIuVdcx51hP2d/pE6zh+DuqLEwoaOUrQV6agf+WA6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jo9+AgTG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9wcRaxc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2A0606E238;
-	Fri, 13 Nov 2026 17:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AB9606A327;
+	Fri, 13 Nov 2026 17:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jo9+AgTG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973CE1F000C5;
-	Fri, 13 Nov 2026 17:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9wcRaxc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1251F000C5;
+	Fri, 13 Nov 2026 17:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590915;
-	bh=Ung3n/zXMtlXKgXIj8fRLxmrERzpP9deykf9rHmqgAg=;
+	s=korg; t=1794590917;
+	bh=CEjpqJ7qXSC4PPRUY2iUgQDzTBPn2ej0JbJMZJ83vNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jo9+AgTGet1TJl+7+n3GCpUpGyFlurmGMxCgaV7BHZZH93686hm2HNwS5NmmFMhLz
-	 /BK/PTOlTPepoqY8m2p5Iem2bSVT4gUCwlEfI6iQoVor0JqoYyFSKD4nm0dpblm88J
-	 58HUHreV7f3C40pOn2ERs1LGgQaMe69+qEFAg6mw=
+	b=O9wcRaxcaa1K5rL1umm0CnUYSvJfk9En5iLipvpdfmoQPd/jlHcZzG1rEb0LxRdcT
+	 bZxgH/UirDFGzsoI6IsagUFz3Oxoif9DV4xAT1jS/JxulLI9i92IcUgYZGnavZFGog
+	 JNGQmMOhe12JvZD9t5zo/9t/p/h/TpFKou+CIVpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+675af112519ca34f5502@syzkaller.appspotmail.com,
-	Shuai Liu <847807867@qq.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/670] io_uring/sqpoll: dont set IO_SQ_THREAD_SHOULD_STOP on thread exit
-Date: Fri, 13 Nov 2026 10:43:36 -0500
-Message-ID: <20261113153813.209707743@linuxfoundation.org>
+Subject: [PATCH 6.12 098/670] wifi: mac80211: queue frames while off-channel
+Date: Fri, 13 Nov 2026 10:44:22 -0500
+Message-ID: <20261113153815.221553516@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,87 +68,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuai Liu <847807867@qq.com>
+From: Stanislaw Gruszka <stf_xl@wp.pl>
 
-Commit fca3ff9e2eee7d285585daf51942e0b5e2be354a upstream.
+[ Upstream commit 13e51269b6656768dc595ed6025e4974f2026543 ]
 
-io_sq_thread_stop() carries a WARN_ON_ONCE() asserting that
-IO_SQ_THREAD_SHOULD_STOP isn't set yet, i.e. that stopping the SQPOLL
-thread is never attempted twice. Since commit 22d9db9fd64a
-("io_uring/sqpoll: don't attach to a thread that is canceling"), the
-SQPOLL thread itself sets that bit on its way out, so that
-io_sq_offload_create() won't attach a new ring to a thread that is
-canceling.
+Drivers without FAST_XMIT and hardware scan support currently drop TX
+frames during software scanning while being off-channel. This happens
+in ieee80211_tx_h_check_assoc() before frames reach internal TX queue.
 
-When the thread exits on a fatal signal, the bit is thus set before the
-ring teardown gets to io_sq_thread_stop(), which now triggers the
-warning on every such exit:
+Move the off-channel check to invoke_tx_handlers_late(), after
+ieee80211_queue_skb(). Frames can then remain queued and be transmitted
+when the interface returns on-channel. This how TX works currently when
+code goes via ieee80211_xmit_fast() path.
 
-  WARNING: io_uring/sqpoll.c:88 at io_sq_thread_stop
-  Workqueue: iou_exit io_ring_exit_work
-  Call Trace:
-   io_put_sq_data
-   io_sq_thread_finish
-   io_ring_ctx_free
-   io_ring_exit_work
+Below is rt2x00 driver ping output example while scanning, before and
+after the fix. After the fix, packets are no longer lost. Some have
+increased latency, what is expected behavior.
 
-Introduce a separate IO_SQ_THREAD_EXITING bit for the thread marking
-itself as on its way out, and check it in io_sq_offload_create() along
-with IO_SQ_THREAD_SHOULD_STOP. IO_SQ_THREAD_SHOULD_STOP regains its
-original meaning, "a stop has been requested", and the WARN_ON_ONCE()
-holds again.
+BEFORE:
+64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.61 ms
+64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=3.33 ms # Missed 30
+64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.03 ms
+64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=3.10 ms # Missed 33
+64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=3.04 ms # Missed 35
+64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.05 ms # Missed 37
+64 bytes from 192.168.0.1: icmp_seq=40 ttl=64 time=4.14 ms # Missed 39
+64 bytes from 192.168.0.1: icmp_seq=41 ttl=64 time=4.50 ms
 
-Reproduced with an SQPOLL ring and an immediate fatal signal: the
-warning fires on v7.3.0+ (22d9db9fd64a present) and is gone with this
-change.
+AFTER:
+64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.40 ms
+64 bytes from 192.168.0.1: icmp_seq=30 ttl=64 time=6.10 ms
+64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=4.69 ms
+64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.49 ms
+64 bytes from 192.168.0.1: icmp_seq=33 ttl=64 time=148 ms
+64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=6.83 ms
+64 bytes from 192.168.0.1: icmp_seq=35 ttl=64 time=8.66 ms
+64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=13.0 ms
+64 bytes from 192.168.0.1: icmp_seq=37 ttl=64 time=4.78 ms
+64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.85 ms
 
-Reported-by: syzbot+675af112519ca34f5502@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=675af112519ca34f5502
-Fixes: 22d9db9fd64a ("io_uring/sqpoll: don't attach to a thread that is canceling")
-Signed-off-by: Shuai Liu <847807867@qq.com>
-Link: https://patch.msgid.link/tencent_BB08960D79E0261B5C1EB1E589787734E907@qq.com
-[axboe: trim excessive comment]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Link: https://patch.msgid.link/20260908124651.2995-1-stf_xl@wp.pl
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/sqpoll.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/mac80211/tx.c | 55 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 28 insertions(+), 27 deletions(-)
 
-diff --git a/io_uring/sqpoll.c b/io_uring/sqpoll.c
-index 6ce73c93a721a..09cd74c4d0dd2 100644
---- a/io_uring/sqpoll.c
-+++ b/io_uring/sqpoll.c
-@@ -26,6 +26,7 @@
- enum {
- 	IO_SQ_THREAD_SHOULD_STOP = 0,
- 	IO_SQ_THREAD_SHOULD_PARK,
-+	IO_SQ_THREAD_EXITING,
- };
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 0fad278d8f249..3b01934a6e800 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -276,7 +276,6 @@ ieee80211_tx_h_dynamic_ps(struct ieee80211_tx_data *tx)
+ static ieee80211_tx_result debug_noinline
+ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+ {
+-
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+ 	bool assoc = false;
+@@ -284,23 +283,6 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+ 	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
+ 		return TX_CONTINUE;
  
- void io_sq_thread_unpark(struct io_sq_data *sqd)
-@@ -438,9 +439,10 @@ static int io_sq_thread(void *data)
- 	/*
- 	 * Cancelation drops sqd->lock while it waits, and a ring could attach
- 	 * to a thread that is on its way out. A fatal signal doesn't set the
--	 * bit, so set it here for io_sq_offload_create() to see.
-+	 * stop bit, so mark the thread as exiting here for
-+	 * io_sq_offload_create() to see.
- 	 */
--	set_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state);
-+	set_bit(IO_SQ_THREAD_EXITING, &sqd->state);
- 	io_uring_cancel_generic(true, sqd);
- 	rcu_assign_pointer(sqd->thread, NULL);
- 	put_task_struct(current);
-@@ -511,7 +513,8 @@ __cold int io_sq_offload_create(struct io_ring_ctx *ctx,
- 		/* don't attach to a dying SQPOLL thread, would be racy */
- 		ret = 0;
- 		if (attached && (!sqd->thread ||
--		    test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state)))
-+		    test_bit(IO_SQ_THREAD_SHOULD_STOP, &sqd->state) ||
-+		    test_bit(IO_SQ_THREAD_EXITING, &sqd->state)))
- 			ret = -ENXIO;
- 		io_sq_thread_unpark(sqd);
+-	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
+-	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
+-	    !ieee80211_is_probe_req(hdr->frame_control) &&
+-	    !ieee80211_is_any_nullfunc(hdr->frame_control))
+-		/*
+-		 * When software scanning only nullfunc frames (to notify
+-		 * the sleep state to the AP) and probe requests (for the
+-		 * active scan) are allowed, all other frames should not be
+-		 * sent and we should not get here, but if we do
+-		 * nonetheless, drop them to avoid sending them
+-		 * off-channel. See the link below and
+-		 * ieee80211_start_scan() for more.
+-		 *
+-		 * http://article.gmane.org/gmane.linux.kernel.wireless.general/30089
+-		 */
+-		return TX_DROP;
+-
+ 	if (tx->sdata->vif.type == NL80211_IFTYPE_OCB)
+ 		return TX_CONTINUE;
  
+@@ -810,6 +792,33 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
+ 	return TX_CONTINUE;
+ }
+ 
++static ieee80211_tx_result debug_noinline
++ieee80211_tx_h_check_offchannel(struct ieee80211_tx_data *tx)
++{
++	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
++
++	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
++		return TX_CONTINUE;
++
++	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
++	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
++	    !ieee80211_is_probe_req(hdr->frame_control) &&
++	    !ieee80211_is_any_nullfunc(hdr->frame_control)) {
++		/*
++		 * When software scanning only nullfunc frames (to notify
++		 * the sleep state to the AP) and probe requests (for the
++		 * active scan) are allowed, all other frames should not be
++		 * sent and we should not get here, but if we do
++		 * nonetheless, drop them to avoid sending them
++		 * off-channel. See __ieee80211_start_scan() for more.
++		 */
++		return TX_DROP;
++	}
++
++	return TX_CONTINUE;
++}
++
+ static __le16 ieee80211_tx_next_seq(struct sta_info *sta, int tid)
+ {
+ 	u16 *seq = &sta->tid_seq[tid];
+@@ -1853,6 +1862,7 @@ static int invoke_tx_handlers_late(struct ieee80211_tx_data *tx)
+ 		goto txh_done;
+ 	}
+ 
++	CALL_TXH(ieee80211_tx_h_check_offchannel);
+ 	CALL_TXH(ieee80211_tx_h_michael_mic_add);
+ 	CALL_TXH(ieee80211_tx_h_sequence);
+ 	CALL_TXH(ieee80211_tx_h_fragment);
+@@ -4667,10 +4677,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ 	queue = ieee80211_select_queue(sdata, sta, skb);
+ 	skb_set_queue_mapping(skb, queue);
+ 
+-	if (unlikely(test_bit(SCAN_SW_SCANNING, &local->scanning)) &&
+-	    test_bit(SDATA_STATE_OFFCHANNEL, &sdata->state))
+-		goto out_free;
+-
+ 	skb = skb_share_check(skb, GFP_ATOMIC);
+ 	if (unlikely(!skb))
+ 		return;
+@@ -4748,11 +4754,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
+ 	ieee80211_tpt_led_trig_tx(local, len);
+ 
+ 	ieee80211_tx_8023(sdata, skb, sta, false);
+-
+-	return;
+-
+-out_free:
+-	kfree_skb(skb);
+ }
+ 
+ static bool ieee80211_check_mcast_offload(struct ieee80211_sub_if_data *sdata,
 -- 
 2.53.0
 
