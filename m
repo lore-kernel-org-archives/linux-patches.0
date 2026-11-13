@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591334;
-	b=yZXTQevo3VfSbPfrg6oryKuDv2vZibI4Dj30hWdJSmLMSUIR9/ur22g+TzRR2yMkMG/Y
-	 JUVRRTPnuYQ8mSCnuenH7rVOr4eHe/IVEu+u94Q4LdaXN2hIhL9NYRK4GNs1TMmf3h7RX
-	 ZjSo7JV0BOq6vGTg0273jkx3wusUfQ64vtynRDXhvlpG0U9nAQCAi9HHlm8RIc5Psjrzk
-	 6J4pU7KRMRtQ7oS8K8hBM5//ug8rAixc2+J4Mvl97R4vUGblU5vY8lc5Uf9Hubv8qnaWC
-	 YqWUmeIynqnnrBKrQfPdbRe1/gwhtOJ/ill0mdj5Q13Sb6y1yElh7rFcL1zaRCnsCOA==
+	t=1794591335;
+	b=n3s0vVSaKOLCP82xYAULxATa2TbB3QMsF88HNtXXl3QQWPqlK5AwreqMaTdgiWfDK4pp
+	 4qZruvp1UN1NtwKkHflRL2yMOrQo8Ecdpukd4ZTCgXPRnqIOB2FqHUcBN9I2k1bJD92VM
+	 HQKUQ1L+xrSPrqUja+yEPAxgOBHY513AsLNqKK6j0Fe1vxvP4emj8+5jgJljL5BtCOjO7
+	 ySa5YnWMjVZeFkZqdu+9o9a6eLl1A5ePpfhqZNstJJZJQEgZuTIhdBtzEqb7oDFq2J5SD
+	 /UUOEkP4l9v7Anp5z92sV8JMXwWLrQpetqra0HOGXUWoc0pdRknKWiqxIFnDRcJWxYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591335;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VbzNODvGX57JqDM8e6aD0v8ieMwbS85f/SFQNWP3VuA=;
-	b=4Foheo6Y+uHBXPGcViTGMRK6S9Eq1JY4HLRLHu48t9nwR7pytALVkOjJCQ7ZIlXO6AB7
-	 /Uae0gb/leG5nGo0OTUjhIYhwb6MP5hIsOARfYg1pKmWQvSSFDXeiKYNUz7Earz+hwqGn
-	 EGK8whj+6r4GeIaXsv0bM2/sFucqruqowkgjAgfhNvu6iOK5D7ezM/+HQscZK7U6KQTmX
-	 CYBMNYc6OPQgS3F2TW+VrLjDmmWYEKF9WnhF8NnRLvSwRSDd7w3KOjSS5Ljbo0xRKVRo5
-	 NLTbFyXOPqhJD96RuRKW3l/aVp2d6mb04sNLtGoY0Pt3RUlkX5oZcnkiTJWO6FRxsbw==
+	bh=s9wvE3o5GDZQYThKomEI9/12A9HHN2dmtsebnjQ/8uU=;
+	b=JKdzwMj9CQIwUPHO1SpqNxINURT0Ixky6JGQTnSy58M/LbggPtv6q91qzw1AVWwQvJtJ
+	 zpoNYZ6DfWcqUWi3gaZ7DEFRfEWyPs8K7FSfoVtc8dgQwKw6BUVSK/gLUX1qDraO78JTN
+	 tq1nN5fNPn1+hSMUSe/I0+5Ns6Zh+SgRWrcMM36e3p7j6mHTGR2TOrjS+4c75E6+IIron
+	 AJ7Wr/7kmPAoW+QamEWjfTvqg9J+HzcFlmKSSIpPsjr/yD9IH0tHqJjA/9P5TTmlRWvI0
+	 hPn3Vtr3ZM/rnFSlwtXrKXG1pVjPd5eju7bnvH5fMYhvc9RFP9u+68gNEpUfrz1qIlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Hwsh7Qi/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjS161lT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA87606CEC7;
-	Fri, 13 Nov 2026 17:35:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAEE606CECA;
+	Fri, 13 Nov 2026 17:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hwsh7Qi/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30061F000C6;
-	Fri, 13 Nov 2026 17:35:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjS161lT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7971F000C4;
+	Fri, 13 Nov 2026 17:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591334;
-	bh=VbzNODvGX57JqDM8e6aD0v8ieMwbS85f/SFQNWP3VuA=;
+	s=korg; t=1794591335;
+	bh=s9wvE3o5GDZQYThKomEI9/12A9HHN2dmtsebnjQ/8uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Hwsh7Qi/CsYohQUzb2pqeuHeh8njlzb8GdFgES7rOp9qcLimZFrvhRWze7LH/rmkF
-	 LBvSw94vYuNBf4Tor0lLKrzLvFfPTFcMFhYqntBRGw/kw4NFhTB1FRx4HfX1ToehLZ
-	 XXkt/oWt7dQIVLzsKrRx8Fyw4VBlXkfiJjShI2sg=
+	b=gjS161lTX2ysEB++O5a5XoVitBAwerbV4P1s8s5t6gm2HjOSp3mkte1il9hevOyp1
+	 8/CBMIhGjfypV+aYa6BaJjMi97AvLne5u0uIDW/lUN+WddSly1vswJq6Ig89iaolhQ
+	 M8kp0jMlONMl+DJDmgE30cc9XorEFzprI4Yd5yi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenghui Yu <yuzenghui@huawei.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Casey Connolly <casey.connolly@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 444/670] KVM: arm64: timers: Compute an offset-applied CVAL from the current count
-Date: Fri, 13 Nov 2026 10:50:08 -0500
-Message-ID: <20261113153826.967793119@linuxfoundation.org>
+Subject: [PATCH 6.12 445/670] power: supply: pmi8998_charger: rename to qcom_smbx
+Date: Fri, 13 Nov 2026 10:50:09 -0500
+Message-ID: <20261113153826.999896639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,133 +68,472 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Casey Connolly <casey.connolly@linaro.org>
 
-[ Upstream commit 49930b1b557ceb698e0ab7f985ea41c99dc8bf22 ]
+[ Upstream commit 5ec53bcc7fce6801977a0c125fb726d7b0e9102c ]
 
-When the hardware won't apply a timer's offset, KVM programs CVAL +
-offset and lets it compare that against the raw counter. The compare is
-unsigned (IsTimerConditionMet, DDI0487M_c J1.4.3.29):
+Prepare to add smb5 support by making variables and the file name more
+generic. Also take the opportunity to remove the "_charger" suffix since
+smb2 always refers to a charger.
 
-  condition_met = (UInt(PhysicalCountInt() - offset) -
-                   UInt(compare_value)) >= 0;
-
-so adding the offset to both sides holds only while both sums wrap or
-neither does. A guest whose counter is ahead of the host's by more than
-CVAL has an expired timer that never fires, and one behind it can have
-a far-future timer fire at once.
-
-On a CNTPOFF_EL2 host the first case livelocks: each entry reloads the
-guest's CVAL, the timer fires, and the exit rewrites it as CVAL + offset
-before the host can take the interrupt. Without CNTPOFF_EL2 the timer
-hangs until the vCPU is next loaded, which is what Zenghui reported on
-a Kunpeng920.
-
-Program the value from the current count instead: CVAL + offset while
-the deadline is ahead, 0 once the timer has expired for the guest, ~0
-past the counter's wrap. KVM recomputes it at load, at exit and on a
-trapped CVAL write, and an expired timer stays expired in between. The
-value can't be inverted, so with an offset timer_save_state() keeps the
-memory copy, and kvm_hyp_handle_timer() returns that copy for a guest
-hypervisor's read of its physical CVAL rather than subtracting the
-offset back out.
-
-Fixes: c605ee245097 ("KVM: arm64: timers: Allow physical offset without CNTPOFF_EL2")
-Fixes: 9404673293b0 ("KVM: arm64: timers: Correctly handle TGE flip with CNTPOFF_EL2")
-Fixes: 0bc9a9e85fcf ("KVM: arm64: Work around x1e's CNTVOFF_EL2 bogosity")
-Reported-by: Zenghui Yu <yuzenghui@huawei.com>
-Closes: https://lore.kernel.org/r/460258be-0102-e922-c342-4e87cd94b9e5@huawei.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261007074343.324269-2-fuad.tabba@linux.dev
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: omitted hunks targeting the absent has_broken_cntvoff() workaround and kvm_hyp_handle_timer() fast path ]
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Link: https://lore.kernel.org/r/20250619-smb2-smb5-support-v1-4-ac5dec51b6e1@linaro.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Stable-dep-of: a2d7dc538da2 ("power: supply: qcom_smbx: validate battery float voltage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/arch_timer.c     | 16 ++++++++--------
- arch/arm64/kvm/hyp/vhe/switch.c |  3 ++-
- include/kvm/arm_arch_timer.h    | 15 +++++++++++++++
- 3 files changed, 25 insertions(+), 9 deletions(-)
+ drivers/power/supply/Makefile                 |   2 +-
+ .../{qcom_pmi8998_charger.c => qcom_smbx.c}   | 148 +++++++++---------
+ 2 files changed, 75 insertions(+), 75 deletions(-)
+ rename drivers/power/supply/{qcom_pmi8998_charger.c => qcom_smbx.c} (88%)
 
-diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
-index 754914d9ec683..89ad3aee4715b 100644
---- a/arch/arm64/kvm/arch_timer.c
-+++ b/arch/arm64/kvm/arch_timer.c
-@@ -506,8 +506,6 @@ static void timer_save_state(struct arch_timer_context *ctx)
- 		goto out;
+diff --git a/drivers/power/supply/Makefile b/drivers/power/supply/Makefile
+index 8dcb415453171..6673860ff26c1 100644
+--- a/drivers/power/supply/Makefile
++++ b/drivers/power/supply/Makefile
+@@ -115,5 +115,5 @@ obj-$(CONFIG_BATTERY_ACER_A500)	+= acer_a500_battery.o
+ obj-$(CONFIG_BATTERY_SURFACE)	+= surface_battery.o
+ obj-$(CONFIG_CHARGER_SURFACE)	+= surface_charger.o
+ obj-$(CONFIG_BATTERY_UG3105)	+= ug3105_battery.o
+-obj-$(CONFIG_CHARGER_QCOM_SMB2)	+= qcom_pmi8998_charger.o
++obj-$(CONFIG_CHARGER_QCOM_SMB2)	+= qcom_smbx.o
+ obj-$(CONFIG_FUEL_GAUGE_MM8013)	+= mm8013.o
+diff --git a/drivers/power/supply/qcom_pmi8998_charger.c b/drivers/power/supply/qcom_smbx.c
+similarity index 88%
+rename from drivers/power/supply/qcom_pmi8998_charger.c
+rename to drivers/power/supply/qcom_smbx.c
+index d4c9f85654da3..c5ac09469650a 100644
+--- a/drivers/power/supply/qcom_pmi8998_charger.c
++++ b/drivers/power/supply/qcom_smbx.c
+@@ -364,17 +364,17 @@ enum charger_status {
+ 	DISABLE_CHARGE,
+ };
  
- 	switch (index) {
--		u64 cval;
--
- 	case TIMER_VTIMER:
- 	case TIMER_HVTIMER:
- 		timer_set_ctl(ctx, read_sysreg_el0(SYS_CNTV_CTL));
-@@ -537,11 +535,12 @@ static void timer_save_state(struct arch_timer_context *ctx)
- 	case TIMER_PTIMER:
- 	case TIMER_HPTIMER:
- 		timer_set_ctl(ctx, read_sysreg_el0(SYS_CNTP_CTL));
--		cval = read_sysreg_el0(SYS_CNTP_CVAL);
--
--		cval -= timer_get_offset(ctx);
--
--		timer_set_cval(ctx, cval);
-+		/*
-+		 * With an offset, memory already holds the guest's CVAL (the
-+		 * trap handler or __deactivate_traps() wrote it).
-+		 */
-+		if (!timer_get_offset(ctx))
-+			timer_set_cval(ctx, read_sysreg_el0(SYS_CNTP_CVAL));
+-struct smb2_register {
++struct smb_init_register {
+ 	u16 addr;
+ 	u8 mask;
+ 	u8 val;
+ };
  
- 		/* Disable the timer */
- 		write_sysreg_el0(0, SYS_CNTP_CTL);
-@@ -626,7 +625,8 @@ static void timer_restore_state(struct arch_timer_context *ctx)
- 		cval = timer_get_cval(ctx);
- 		offset = timer_get_offset(ctx);
- 		set_cntpoff(offset);
--		cval += offset;
-+		if (offset)
-+			cval = timer_apply_offset(cval, offset, kvm_phys_timer_read());
- 		write_sysreg_el0(cval, SYS_CNTP_CVAL);
- 		isb();
- 		write_sysreg_el0(timer_get_ctl(ctx), SYS_CNTP_CTL);
-diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
-index 496abfd3646b9..b364d9319cea3 100644
---- a/arch/arm64/kvm/hyp/vhe/switch.c
-+++ b/arch/arm64/kvm/hyp/vhe/switch.c
-@@ -195,7 +195,8 @@ static void __deactivate_traps(struct kvm_vcpu *vcpu)
- 		offset = read_sysreg_s(SYS_CNTPOFF_EL2);
+ /**
+- * struct smb2_chip - smb2 chip structure
++ * struct smb_chip - smb chip structure
+  * @dev:		Device reference for power_supply
+  * @name:		The platform device name
+- * @base:		Base address for smb2 registers
++ * @base:		Base address for smb registers
+  * @regmap:		Register map
+  * @batt_info:		Battery data from DT
+  * @status_change_work: Worker to handle plug/unplug events
+@@ -384,7 +384,7 @@ struct smb2_register {
+  * @usb_in_v_chan:	USB_IN voltage measurement channel
+  * @chg_psy:		Charger power supply instance
+  */
+-struct smb2_chip {
++struct smb_chip {
+ 	struct device *dev;
+ 	const char *name;
+ 	unsigned int base;
+@@ -401,7 +401,7 @@ struct smb2_chip {
+ 	struct power_supply *chg_psy;
+ };
  
- 		if (map.direct_ptimer && offset) {
--			write_sysreg_el0(val + offset, SYS_CNTP_CVAL);
-+			val = timer_apply_offset(val, offset, arch_timer_read_cntpct_el0());
-+			write_sysreg_el0(val, SYS_CNTP_CVAL);
- 			isb();
- 		}
- 	}
-diff --git a/include/kvm/arm_arch_timer.h b/include/kvm/arm_arch_timer.h
-index c819c5d16613b..c468e3d177d71 100644
---- a/include/kvm/arm_arch_timer.h
-+++ b/include/kvm/arm_arch_timer.h
-@@ -152,4 +152,19 @@ static inline bool has_cntpoff(void)
- 	return (has_vhe() && cpus_have_final_cap(ARM64_HAS_ECV_CNTPOFF));
+-static enum power_supply_property smb2_properties[] = {
++static enum power_supply_property smb_properties[] = {
+ 	POWER_SUPPLY_PROP_MANUFACTURER,
+ 	POWER_SUPPLY_PROP_MODEL_NAME,
+ 	POWER_SUPPLY_PROP_CURRENT_MAX,
+@@ -413,7 +413,7 @@ static enum power_supply_property smb2_properties[] = {
+ 	POWER_SUPPLY_PROP_USB_TYPE,
+ };
+ 
+-static int smb2_get_prop_usb_online(struct smb2_chip *chip, int *val)
++static int smb_get_prop_usb_online(struct smb_chip *chip, int *val)
+ {
+ 	unsigned int stat;
+ 	int rc;
+@@ -433,13 +433,13 @@ static int smb2_get_prop_usb_online(struct smb2_chip *chip, int *val)
+  * Qualcomm "automatic power source detection" aka APSD
+  * tells us what type of charger we're connected to.
+  */
+-static int smb2_apsd_get_charger_type(struct smb2_chip *chip, int *val)
++static int smb_apsd_get_charger_type(struct smb_chip *chip, int *val)
+ {
+ 	unsigned int apsd_stat, stat;
+ 	int usb_online = 0;
+ 	int rc;
+ 
+-	rc = smb2_get_prop_usb_online(chip, &usb_online);
++	rc = smb_get_prop_usb_online(chip, &usb_online);
+ 	if (!usb_online) {
+ 		*val = POWER_SUPPLY_USB_TYPE_UNKNOWN;
+ 		return rc;
+@@ -473,13 +473,13 @@ static int smb2_apsd_get_charger_type(struct smb2_chip *chip, int *val)
+ 	return 0;
  }
  
-+/*
-+ * CVAL to program when the hardware won't apply the timer's offset, so that
-+ * its compare against the raw counter matches the guest's at 'now'. An
-+ * expired timer stays expired; one past the wrap never fires.
-+ */
-+static inline u64 timer_apply_offset(u64 cval, u64 offset, u64 now)
-+{
-+	u64 hw = cval + offset;
-+
-+	if (now - offset >= cval)
-+		return 0;
-+
-+	return hw > now ? hw : U64_MAX;
-+}
-+
- #endif
+-static int smb2_get_prop_status(struct smb2_chip *chip, int *val)
++static int smb_get_prop_status(struct smb_chip *chip, int *val)
+ {
+ 	unsigned char stat[2];
+ 	int usb_online = 0;
+ 	int rc;
+ 
+-	rc = smb2_get_prop_usb_online(chip, &usb_online);
++	rc = smb_get_prop_usb_online(chip, &usb_online);
+ 	if (!usb_online) {
+ 		*val = POWER_SUPPLY_STATUS_DISCHARGING;
+ 		return rc;
+@@ -521,7 +521,7 @@ static int smb2_get_prop_status(struct smb2_chip *chip, int *val)
+ 	}
+ }
+ 
+-static inline int smb2_get_current_limit(struct smb2_chip *chip,
++static inline int smb_get_current_limit(struct smb_chip *chip,
+ 					 unsigned int *val)
+ {
+ 	int rc = regmap_read(chip->regmap, chip->base + ICL_STATUS, val);
+@@ -531,7 +531,7 @@ static inline int smb2_get_current_limit(struct smb2_chip *chip,
+ 	return rc;
+ }
+ 
+-static int smb2_set_current_limit(struct smb2_chip *chip, unsigned int val)
++static int smb_set_current_limit(struct smb_chip *chip, unsigned int val)
+ {
+ 	unsigned char val_raw;
+ 
+@@ -546,22 +546,22 @@ static int smb2_set_current_limit(struct smb2_chip *chip, unsigned int val)
+ 			    val_raw);
+ }
+ 
+-static void smb2_status_change_work(struct work_struct *work)
++static void smb_status_change_work(struct work_struct *work)
+ {
+ 	unsigned int charger_type, current_ua;
+ 	int usb_online = 0;
+ 	int count, rc;
+-	struct smb2_chip *chip;
++	struct smb_chip *chip;
+ 
+-	chip = container_of(work, struct smb2_chip, status_change_work.work);
++	chip = container_of(work, struct smb_chip, status_change_work.work);
+ 
+-	smb2_get_prop_usb_online(chip, &usb_online);
++	smb_get_prop_usb_online(chip, &usb_online);
+ 	if (!usb_online)
+ 		return;
+ 
+ 	for (count = 0; count < 3; count++) {
+ 		dev_dbg(chip->dev, "get charger type retry %d\n", count);
+-		rc = smb2_apsd_get_charger_type(chip, &charger_type);
++		rc = smb_apsd_get_charger_type(chip, &charger_type);
+ 		if (rc != -EAGAIN)
+ 			break;
+ 		msleep(100);
+@@ -594,11 +594,11 @@ static void smb2_status_change_work(struct work_struct *work)
+ 		break;
+ 	}
+ 
+-	smb2_set_current_limit(chip, current_ua);
++	smb_set_current_limit(chip, current_ua);
+ 	power_supply_changed(chip->chg_psy);
+ }
+ 
+-static int smb2_get_iio_chan(struct smb2_chip *chip, struct iio_channel *chan,
++static int smb_get_iio_chan(struct smb_chip *chip, struct iio_channel *chan,
+ 			     int *val)
+ {
+ 	int rc;
+@@ -619,7 +619,7 @@ static int smb2_get_iio_chan(struct smb2_chip *chip, struct iio_channel *chan,
+ 	return iio_read_channel_processed(chan, val);
+ }
+ 
+-static int smb2_get_prop_health(struct smb2_chip *chip, int *val)
++static int smb_get_prop_health(struct smb_chip *chip, int *val)
+ {
+ 	int rc;
+ 	unsigned int stat;
+@@ -647,11 +647,11 @@ static int smb2_get_prop_health(struct smb2_chip *chip, int *val)
+ 	return 0;
+ }
+ 
+-static int smb2_get_property(struct power_supply *psy,
++static int smb_get_property(struct power_supply *psy,
+ 			     enum power_supply_property psp,
+ 			     union power_supply_propval *val)
+ {
+-	struct smb2_chip *chip = power_supply_get_drvdata(psy);
++	struct smb_chip *chip = power_supply_get_drvdata(psy);
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_MANUFACTURER:
+@@ -661,43 +661,43 @@ static int smb2_get_property(struct power_supply *psy,
+ 		val->strval = chip->name;
+ 		return 0;
+ 	case POWER_SUPPLY_PROP_CURRENT_MAX:
+-		return smb2_get_current_limit(chip, &val->intval);
++		return smb_get_current_limit(chip, &val->intval);
+ 	case POWER_SUPPLY_PROP_CURRENT_NOW:
+-		return smb2_get_iio_chan(chip, chip->usb_in_i_chan,
++		return smb_get_iio_chan(chip, chip->usb_in_i_chan,
+ 					 &val->intval);
+ 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
+-		return smb2_get_iio_chan(chip, chip->usb_in_v_chan,
++		return smb_get_iio_chan(chip, chip->usb_in_v_chan,
+ 					 &val->intval);
+ 	case POWER_SUPPLY_PROP_ONLINE:
+-		return smb2_get_prop_usb_online(chip, &val->intval);
++		return smb_get_prop_usb_online(chip, &val->intval);
+ 	case POWER_SUPPLY_PROP_STATUS:
+-		return smb2_get_prop_status(chip, &val->intval);
++		return smb_get_prop_status(chip, &val->intval);
+ 	case POWER_SUPPLY_PROP_HEALTH:
+-		return smb2_get_prop_health(chip, &val->intval);
++		return smb_get_prop_health(chip, &val->intval);
+ 	case POWER_SUPPLY_PROP_USB_TYPE:
+-		return smb2_apsd_get_charger_type(chip, &val->intval);
++		return smb_apsd_get_charger_type(chip, &val->intval);
+ 	default:
+ 		dev_err(chip->dev, "invalid property: %d\n", psp);
+ 		return -EINVAL;
+ 	}
+ }
+ 
+-static int smb2_set_property(struct power_supply *psy,
++static int smb_set_property(struct power_supply *psy,
+ 			     enum power_supply_property psp,
+ 			     const union power_supply_propval *val)
+ {
+-	struct smb2_chip *chip = power_supply_get_drvdata(psy);
++	struct smb_chip *chip = power_supply_get_drvdata(psy);
+ 
+ 	switch (psp) {
+ 	case POWER_SUPPLY_PROP_CURRENT_MAX:
+-		return smb2_set_current_limit(chip, val->intval);
++		return smb_set_current_limit(chip, val->intval);
+ 	default:
+ 		dev_err(chip->dev, "No setter for property: %d\n", psp);
+ 		return -EINVAL;
+ 	}
+ }
+ 
+-static int smb2_property_is_writable(struct power_supply *psy,
++static int smb_property_is_writable(struct power_supply *psy,
+ 				     enum power_supply_property psp)
+ {
+ 	switch (psp) {
+@@ -708,9 +708,9 @@ static int smb2_property_is_writable(struct power_supply *psy,
+ 	}
+ }
+ 
+-static irqreturn_t smb2_handle_batt_overvoltage(int irq, void *data)
++static irqreturn_t smb_handle_batt_overvoltage(int irq, void *data)
+ {
+-	struct smb2_chip *chip = data;
++	struct smb_chip *chip = data;
+ 	unsigned int status;
+ 	int rc;
+ 
+@@ -731,9 +731,9 @@ static irqreturn_t smb2_handle_batt_overvoltage(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static irqreturn_t smb2_handle_usb_plugin(int irq, void *data)
++static irqreturn_t smb_handle_usb_plugin(int irq, void *data)
+ {
+-	struct smb2_chip *chip = data;
++	struct smb_chip *chip = data;
+ 
+ 	power_supply_changed(chip->chg_psy);
+ 
+@@ -743,18 +743,18 @@ static irqreturn_t smb2_handle_usb_plugin(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static irqreturn_t smb2_handle_usb_icl_change(int irq, void *data)
++static irqreturn_t smb_handle_usb_icl_change(int irq, void *data)
+ {
+-	struct smb2_chip *chip = data;
++	struct smb_chip *chip = data;
+ 
+ 	power_supply_changed(chip->chg_psy);
+ 
+ 	return IRQ_HANDLED;
+ }
+ 
+-static irqreturn_t smb2_handle_wdog_bark(int irq, void *data)
++static irqreturn_t smb_handle_wdog_bark(int irq, void *data)
+ {
+-	struct smb2_chip *chip = data;
++	struct smb_chip *chip = data;
+ 	int rc;
+ 
+ 	power_supply_changed(chip->chg_psy);
+@@ -767,22 +767,22 @@ static irqreturn_t smb2_handle_wdog_bark(int irq, void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-static const struct power_supply_desc smb2_psy_desc = {
++static const struct power_supply_desc smb_psy_desc = {
+ 	.name = "pmi8998_charger",
+ 	.type = POWER_SUPPLY_TYPE_USB,
+ 	.usb_types = BIT(POWER_SUPPLY_USB_TYPE_SDP) |
+ 		     BIT(POWER_SUPPLY_USB_TYPE_CDP) |
+ 		     BIT(POWER_SUPPLY_USB_TYPE_DCP) |
+ 		     BIT(POWER_SUPPLY_USB_TYPE_UNKNOWN),
+-	.properties = smb2_properties,
+-	.num_properties = ARRAY_SIZE(smb2_properties),
+-	.get_property = smb2_get_property,
+-	.set_property = smb2_set_property,
+-	.property_is_writeable = smb2_property_is_writable,
++	.properties = smb_properties,
++	.num_properties = ARRAY_SIZE(smb_properties),
++	.get_property = smb_get_property,
++	.set_property = smb_set_property,
++	.property_is_writeable = smb_property_is_writable,
+ };
+ 
+ /* Init sequence derived from vendor downstream driver */
+-static const struct smb2_register smb2_init_seq[] = {
++static const struct smb_init_register smb_init_seq[] = {
+ 	{ .addr = AICL_RERUN_TIME_CFG, .mask = AICL_RERUN_TIME_MASK, .val = 0 },
+ 	/*
+ 	 * By default configure us as an upstream facing port
+@@ -884,17 +884,17 @@ static const struct smb2_register smb2_init_seq[] = {
+ 	  .val = 1000000 / CURRENT_SCALE_FACTOR },
+ };
+ 
+-static int smb2_init_hw(struct smb2_chip *chip)
++static int smb_init_hw(struct smb_chip *chip)
+ {
+ 	int rc, i;
+ 
+-	for (i = 0; i < ARRAY_SIZE(smb2_init_seq); i++) {
++	for (i = 0; i < ARRAY_SIZE(smb_init_seq); i++) {
+ 		dev_dbg(chip->dev, "%d: Writing 0x%02x to 0x%02x\n", i,
+-			smb2_init_seq[i].val, smb2_init_seq[i].addr);
++			smb_init_seq[i].val, smb_init_seq[i].addr);
+ 		rc = regmap_update_bits(chip->regmap,
+-					chip->base + smb2_init_seq[i].addr,
+-					smb2_init_seq[i].mask,
+-					smb2_init_seq[i].val);
++					chip->base + smb_init_seq[i].addr,
++					smb_init_seq[i].mask,
++					smb_init_seq[i].val);
+ 		if (rc < 0)
+ 			return dev_err_probe(chip->dev, rc,
+ 					     "%s: init command %d failed\n",
+@@ -904,7 +904,7 @@ static int smb2_init_hw(struct smb2_chip *chip)
+ 	return 0;
+ }
+ 
+-static int smb2_init_irq(struct smb2_chip *chip, int *irq, const char *name,
++static int smb_init_irq(struct smb_chip *chip, int *irq, const char *name,
+ 			 irqreturn_t (*handler)(int irq, void *data))
+ {
+ 	int irqnum;
+@@ -926,11 +926,11 @@ static int smb2_init_irq(struct smb2_chip *chip, int *irq, const char *name,
+ 	return 0;
+ }
+ 
+-static int smb2_probe(struct platform_device *pdev)
++static int smb_probe(struct platform_device *pdev)
+ {
+ 	struct power_supply_config supply_config = {};
+ 	struct power_supply_desc *desc;
+-	struct smb2_chip *chip;
++	struct smb_chip *chip;
+ 	int rc, irq;
+ 
+ 	chip = devm_kzalloc(&pdev->dev, sizeof(*chip), GFP_KERNEL);
+@@ -961,17 +961,17 @@ static int smb2_probe(struct platform_device *pdev)
+ 				     "Couldn't get usbin_i IIO channel\n");
+ 	}
+ 
+-	rc = smb2_init_hw(chip);
++	rc = smb_init_hw(chip);
+ 	if (rc < 0)
+ 		return rc;
+ 
+ 	supply_config.drv_data = chip;
+ 	supply_config.of_node = pdev->dev.of_node;
+ 
+-	desc = devm_kzalloc(chip->dev, sizeof(smb2_psy_desc), GFP_KERNEL);
++	desc = devm_kzalloc(chip->dev, sizeof(smb_psy_desc), GFP_KERNEL);
+ 	if (!desc)
+ 		return -ENOMEM;
+-	memcpy(desc, &smb2_psy_desc, sizeof(smb2_psy_desc));
++	memcpy(desc, &smb_psy_desc, sizeof(smb_psy_desc));
+ 	desc->name =
+ 		devm_kasprintf(chip->dev, GFP_KERNEL, "%s-charger",
+ 			       (const char *)device_get_match_data(chip->dev));
+@@ -990,7 +990,7 @@ static int smb2_probe(struct platform_device *pdev)
+ 				     "Failed to get battery info\n");
+ 
+ 	rc = devm_delayed_work_autocancel(chip->dev, &chip->status_change_work,
+-					  smb2_status_change_work);
++					  smb_status_change_work);
+ 	if (rc)
+ 		return dev_err_probe(chip->dev, rc,
+ 				     "Failed to init status change work\n");
+@@ -1002,20 +1002,20 @@ static int smb2_probe(struct platform_device *pdev)
+ 	if (rc < 0)
+ 		return dev_err_probe(chip->dev, rc, "Couldn't set vbat max\n");
+ 
+-	rc = smb2_init_irq(chip, &irq, "bat-ov", smb2_handle_batt_overvoltage);
++	rc = smb_init_irq(chip, &irq, "bat-ov", smb_handle_batt_overvoltage);
+ 	if (rc < 0)
+ 		return rc;
+ 
+-	rc = smb2_init_irq(chip, &chip->cable_irq, "usb-plugin",
+-			   smb2_handle_usb_plugin);
++	rc = smb_init_irq(chip, &chip->cable_irq, "usb-plugin",
++			   smb_handle_usb_plugin);
+ 	if (rc < 0)
+ 		return rc;
+ 
+-	rc = smb2_init_irq(chip, &irq, "usbin-icl-change",
+-			   smb2_handle_usb_icl_change);
++	rc = smb_init_irq(chip, &irq, "usbin-icl-change",
++			   smb_handle_usb_icl_change);
+ 	if (rc < 0)
+ 		return rc;
+-	rc = smb2_init_irq(chip, &irq, "wdog-bark", smb2_handle_wdog_bark);
++	rc = smb_init_irq(chip, &irq, "wdog-bark", smb_handle_wdog_bark);
+ 	if (rc < 0)
+ 		return rc;
+ 
+@@ -1031,22 +1031,22 @@ static int smb2_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static const struct of_device_id smb2_match_id_table[] = {
++static const struct of_device_id smb_match_id_table[] = {
+ 	{ .compatible = "qcom,pmi8998-charger", .data = "pmi8998" },
+ 	{ .compatible = "qcom,pm660-charger", .data = "pm660" },
+ 	{ /* sentinal */ }
+ };
+-MODULE_DEVICE_TABLE(of, smb2_match_id_table);
++MODULE_DEVICE_TABLE(of, smb_match_id_table);
+ 
+-static struct platform_driver qcom_spmi_smb2 = {
+-	.probe = smb2_probe,
++static struct platform_driver qcom_spmi_smb = {
++	.probe = smb_probe,
+ 	.driver = {
+-		.name = "qcom-pmi8998/pm660-charger",
+-		.of_match_table = smb2_match_id_table,
++		.name = "qcom-smbx-charger",
++		.of_match_table = smb_match_id_table,
+ 		},
+ };
+ 
+-module_platform_driver(qcom_spmi_smb2);
++module_platform_driver(qcom_spmi_smb);
+ 
+ MODULE_AUTHOR("Caleb Connolly <caleb.connolly@linaro.org>");
+ MODULE_DESCRIPTION("Qualcomm SMB2 Charger Driver");
 -- 
 2.53.0
 
