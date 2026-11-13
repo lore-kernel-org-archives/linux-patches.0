@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590265;
-	b=mrdk3xTdspV9Sg3+Gc8zn+oBmxP8Cg6Wtd6yh6BIZdulY9NJ+v8KQOmSCj+IjhwlqxE4
-	 NRkgAZX6qH810OXfleWP2Sk3iz8Jz+nMM6Jnyq1MxRh/rsugx7QCS8HErBBlXabGtPxpW
-	 zVbp6w/SEl3yK/1NhknNh4yb11XyNQipPvboQ0dB0XD3uGqBERSR+sLsrZMlWM3QG4hAp
-	 Ep6ms239r29V+FzGVr97KaS9yGtLd5SoNZGcjYDzfJjffAVKrWaLW+WN0TEqeSE8lqb02
-	 WIiimI2rBGp7av/TK8kKDWCRxIA1gvLi2UcZsV2TYXrrnVcLx3YpB+KS5kcLdmNb2OA==
+	t=1794590266;
+	b=WamEcAoixbqUBuE80XYyAH8b9BHrn1ZbgKmpUQPtRVTndBODQreUOI7JgxXr6vIw+FDi
+	 abjhttJxKZE79LuOR5dp01ppelqoSqaia/2IphOM1lTyJmdSXi2RmfDWb42AsrTWidI92
+	 VOll2JCrnq5BCsC23//blaTJv4euTLjRCT8w3NtuHCGaGvevHibQKFbqoMV8mb/umO3Im
+	 8lLCnfi27KhkSy6jCQxt2vv+CE3PvgANhK2HWKDcol9SLvxWCCphVrIEk3XDgLAMdJ4M8
+	 yX5S7xlx8veCJn35XRZBoawKJBm5VB4ERr1H2Dg35dwhTcuw9QZPFKZbB0w63T7GRFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590265;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Mb4LTUK8eXaEn89bWlLNEalYaMjIEk2x6HoxDIKYeE=;
-	b=Kyy0njs4xnh4NqPZlp2rMjLNhKxK6rodH+DqAIW/nYE0HmhhiEhN9WWLqgeygZFu9Fsa
-	 /KWqa8gMV5cpYXGO9FdX+nqZVC77Na2YEGWCFpnoHQJusYc20ZCw2znEwQT5uHpStuX/o
-	 bjd1jlvVXAnY3XkFAxB43eKOV0DwZVKp7U1hIDv7SUmYX298O+eW3Ta8WJNQi7oDBI01S
-	 3+KsKJdrZrIWYfF1iHLVBSXljFQatK61ZY9n7+p8DcJ+iCLgC96YXyhyEKefcTA5WmnCI
-	 kjMdlOOYPtYmQcuiumEiSL8MlcmlcPHy8DSYP2Ck+j+rYdMKjEJmGysQQ6mwiNSbiXw==
+	bh=MKuw520oHaIuOnd3CeJhDwcigwXc3nY0sFMdm9Ar5Fw=;
+	b=oTBHKEeIOuy+Cl5eDFprUHKbgCtNF8v98q9CWMp8doGY1YJ0Z9bA7vDEEX/bqPDLjaV0
+	 0E9bqpDKFa5Bl2LD8d/CbCithaUZTsBHuFCh2FeMqoIAj15zv529DPkyDg7XQBu9Vd38W
+	 EGXf+DSaHHbA6Pd9K9P+wzHWcgJLUlTxmKmSezk0nVzXKDQFOtfCRCzJ+VVJNIaXCQDEe
+	 C5aseyxmCxMjQLxkh3pEFY/42VI2J3Id6/WUTS44GV2JZ0xgfJ7Ls5KM3BpfuNNHL2d5i
+	 eqmmQAk4R+zHPJGTgQckn9Wq8FrbkzcudCUhyDxpW21LcbfPUjyYexDFdiUxBK+OEEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFC1ZLOr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GWKvQuYz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DDF60A3822;
-	Fri, 13 Nov 2026 17:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D4460A382F;
+	Fri, 13 Nov 2026 17:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iFC1ZLOr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2D01F000C4;
-	Fri, 13 Nov 2026 17:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GWKvQuYz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541FD1F000C4;
+	Fri, 13 Nov 2026 17:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590265;
-	bh=1Mb4LTUK8eXaEn89bWlLNEalYaMjIEk2x6HoxDIKYeE=;
+	s=korg; t=1794590266;
+	bh=MKuw520oHaIuOnd3CeJhDwcigwXc3nY0sFMdm9Ar5Fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iFC1ZLOrKU+MvxBt/d45YYseBdSJ+qf8eLPAD+ybdit1U6ywRLSfHyuvFUTcodMzr
-	 IxhhRMMJMlTLMAO502kfWmPbmN09kUKRs4yqMbFHk4i5+ExOlyJxRSa4DFsEDKOLJV
-	 a9bLmOT7sfrToLt88ve1VuECXSIbKRTibWWsczos=
+	b=GWKvQuYz2AAJgUqnjBM0ddo3G/+ibLs0fp5Li5/gtQCs2hbt8+zkEqPqjPqMkPF6G
+	 fhkETRVudixuzaj+8y72CkhM9Q8ConfmhRaSk6We7UN6zIOsuqCE4ku4ybQ5EuoXbR
+	 nUk4gE0r4UsUHXkqDmgDZvyOukeeItLyQnLphXrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Rik van Riel <riel@surriel.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 231/686] ALSA: usx2y: Initialize idle URBs before submitting streams
-Date: Fri, 13 Nov 2026 10:46:04 -0500
-Message-ID: <20261113153828.873908667@linuxfoundation.org>
+Subject: [PATCH 6.18 258/686] mm/filemap: dont lose a folio lock wakeup to a signal
+Date: Fri, 13 Nov 2026 10:46:31 -0500
+Message-ID: <20261113153829.776101931@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,83 +71,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit ceb0d8c22473933099b46cec70639d0f1f7c68ad ]
+[ Upstream commit 8ccb6ded6a47b59b4907ed4f8c293cf8122de889 ]
 
-usb_stream_start() submits the first two capture and playback URBs and
-only afterwards assigns sk->idle_inurb, sk->idle_outurb,
-sk->completed_inurb and sk->completed_outurb to the remaining two URBs
-of each direction.
+An exclusive waiter in folio_wait_bit_common() can leave the wait loop
+because of a fatal signal, then be woken by folio_unlock() before
+finish_wait(). If the waker did not hand over the lock, the waiter returns
+-EINTR without trying to acquire it.
 
-A transfer can complete as soon as usb_submit_urb() has been called, so
-the completion handler i_capture_start() or i_playback_start() may run
-before those pointers are set.  While the stream is still being
-synchronized (state below usb_stream_sync1), stream_start() then calls
-playback_prep_freqn(sk, sk->idle_outurb) with sk->idle_outurb still
-NULL, and the packet descriptors are written through that NULL pointer:
+folio_wake_bit() stops after waking the first exclusive waiter, so this
+loses the wakeup and can leave other waiters asleep indefinitely on an
+unlocked folio.
 
-  Oops: general protection fault, probably for non-canonical address
-  0xdffffc0000000018: 0000 [#1] SMP KASAN
-  KASAN: null-ptr-deref in range [0x00000000000000c0-0x00000000000000c7]
-  RIP: 0010:playback_prep_freqn+0x11c/0x4a0 sound/usb/usx2y/usb_stream.c:33
-  Call Trace:
-   <IRQ>
-   stream_start+0x5dc/0x8d0 sound/usb/usx2y/usb_stream.c:596
-   i_capture_start+0x3da/0x710 sound/usb/usx2y/usb_stream.c:654
-   __usb_hcd_giveback_urb+0x238/0x550 drivers/usb/core/hcd.c:1657
-   usb_giveback_urb_bh+0x20b/0x530 drivers/usb/core/hcd.c:1691
-   tasklet_hi_action+0xa/0x20 kernel/softirq.c:994
-   handle_softirqs+0x16f/0x440 kernel/softirq.c:645
-   </IRQ>
+After finish_wait(), let a waiter woken without a lock handoff try once
+more to acquire the lock. If successful, return success so the caller's
+eventual unlock wakes the next waiter. Otherwise, the current lock owner
+will do so.
 
-The four URBs referenced by these pointers are allocated long before and
-do not depend on any transfer state, so assign them before the submit
-loop.  Keeping the assignment inside the retry path also restores a
-well-defined URB rotation when the start frame mismatch handling kills
-and resubmits the streams.
+Fix generated by an LLM and sent by Josef Bacik in private.
 
-Fixes: 030a07e441296c372f946cd4065b5d831d8dc40c ("ALSA: Add USB US122L driver")
+Fixes: 5ef64cc8987a ("mm: allow a controlled amount of unfairness in the page lock")
 Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261028103158.22996-1-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: clarify and simplify comment + description ]
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-7-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/usb_stream.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ mm/filemap.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/usx2y/usb_stream.c b/sound/usb/usx2y/usb_stream.c
-index 3122cf653273d..7d621280fba33 100644
---- a/sound/usb/usx2y/usb_stream.c
-+++ b/sound/usb/usx2y/usb_stream.c
-@@ -682,6 +682,10 @@ int usb_stream_start(struct usb_stream_kernel *sk)
- 	s->sync_packet = -1;
- 	s->inpacket_head = -1;
- 	sk->iso_frame_balance = 0;
-+	sk->idle_inurb = sk->inurb[USB_STREAM_NURBS - 2];
-+	sk->idle_outurb = sk->outurb[USB_STREAM_NURBS - 2];
-+	sk->completed_inurb = sk->inurb[USB_STREAM_NURBS - 1];
-+	sk->completed_outurb = sk->outurb[USB_STREAM_NURBS - 1];
- 	++try;
- 	for (u = 0; u < 2; u++) {
- 		struct urb *inurb = sk->inurb[u];
-@@ -739,11 +743,6 @@ int usb_stream_start(struct usb_stream_kernel *sk)
- 		return -EFAULT;
- 	}
+diff --git a/mm/filemap.c b/mm/filemap.c
+index 1a03588106090..7a8528d1daf79 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -1383,10 +1383,22 @@ static inline int folio_wait_bit_common(struct folio *folio, int bit_nr,
+ 	 * return value based on that state without races.
+ 	 *
+ 	 * Also note that WQ_FLAG_WOKEN is sufficient for a non-exclusive
+-	 * waiter, but an exclusive one requires WQ_FLAG_DONE.
++	 * waiter, but an exclusive one must also acquire the bit.
+ 	 */
+-	if (behavior == EXCLUSIVE)
+-		return wait->flags & WQ_FLAG_DONE ? 0 : -EINTR;
++	if (behavior == EXCLUSIVE) {
++		if (wait->flags & WQ_FLAG_DONE)
++			return 0;
++		/*
++		 * We might have just been woken up and the waker will not
++		 * wake up anybody else. If we ignore that now, the remaining
++		 * waiters may not get woken up: take the bit now if it is
++		 * still free.
++		 */
++		if ((wait->flags & WQ_FLAG_WOKEN) &&
++		    !test_and_set_bit(bit_nr, folio_flags(folio, 0)))
++			return 0;
++		return -EINTR;
++	}
  
--	sk->idle_inurb = sk->inurb[USB_STREAM_NURBS - 2];
--	sk->idle_outurb = sk->outurb[USB_STREAM_NURBS - 2];
--	sk->completed_inurb = sk->inurb[USB_STREAM_NURBS - 1];
--	sk->completed_outurb = sk->outurb[USB_STREAM_NURBS - 1];
--
- /* wait, check */
- 	{
- 		int wait_ms = 3000;
+ 	return wait->flags & WQ_FLAG_WOKEN ? 0 : -EINTR;
+ }
 -- 
 2.53.0
 
