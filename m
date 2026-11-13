@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590250;
-	b=26pSOIVqN2qdYLe/kRMyTE3JExZSzTxKWaWAAivz3QtG/kG7sPazGmChfohp2Yz8pguc
-	 2i+yfW2iUSsPBgd81HwiVue7bV9zSUD9lMjEUA2rHwgqJMkcXp0v6X5cs1dbAWMLdF9la
-	 JKn/P0EF67d0zb2i+YDM8RfpXnLefuf36W+CxZ21Yvx6Kr4US+xlfcIhXdGIF8vgZl4ux
-	 15qGV7B3eL8Th7qc2M5oI8k+jdxzwJfpVQ0Kqm/GQj/dS5pEUkbKl2yyLCk1gp862tocU
-	 UHA84biotHWuBT5r4Moxu8eIWqaaaWb2RO5qjFRPIn/hnLZfK7oFs/SlPsmKgHgZ7wA==
+	t=1794590251;
+	b=fVvgWs0X/jj41eNb+yScdl0mn2Cd1ZPm4NTEL7x25tI0Bt0r9DDMkXVKzfm5cDuHkt35
+	 nIKJ6vBkrQHefoR1qR0BE+NBArIXRQdorZsGpAd6rFq4JIXsOtfU++/YyOIBBZqsZmglp
+	 y2KFCRJjvv3qtofvk8Jj2sbl6Ui2w+DFvIEq2tIOusRwoH8rLwN20TBTufatDGjGiFhTm
+	 YGGclA7+nbNF0UP/V+U9FgQ8ogAldbIzEd7gAuX4xGIY94yfdhX+7BBNAEJvCFW8WlrB3
+	 sPPtN0SOjDHta9L5T2KgxlP9Gh2dAKRGKxeR7zLFPa3NPN1ue4ljwFfEYou25tvFdVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590251;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nUtRji1pOau2HH+I5zLqEWz3xvKb580WkLluaVyLQxY=;
-	b=OaHLFYPv5YIbz/EZGa9CZuzm7KMPsTCjFMCJ4hDe8BpjDWJSZH1FFG2mTThrpVYCdpB9
-	 CEaEfdnc5mRiwGRr8EzV+U/r8L/tvAiIkapcvlS9a0zuDv//g8rIxGUaWE8NIGFIRi91A
-	 0jU19gSsf2nPmajSKPlJki1nxlBX07UIv0SZiBp3/Um7WmdZ5AxsyiIMKGVpHigy4nn13
-	 WF1PFzqOcQdzzzppNQTbYIzSFZgyWdtQbAEzYmD5CX0+CtGoAusdfKS52MSPEhVfM+9e1
-	 wYkqrkym8TtES9fNnxXQJo2kuyp3iQayoywuFY7j5vyFT2bS7z47dMdChnklfhw2Cig==
+	bh=m7IZqHGynimGLpY25LT9vDhmTu25e1wiRh0jMM8XB0Y=;
+	b=tusWW8/0Tvzby1OjQn7BTkescdkZyodzLtxEQFb3XsW9BHGRgPaL5z59tiEKjPwXxXxt
+	 Tb0Oxip0gbAdtVZjsLvYICtEj3/Sb1pPJMDdCTY40X2eHzJI7iuTY7HqLlYBBjWxV9p7b
+	 5IxY244afEQQYIDB6k3dssj+KktXiovRAD+At0xIuzHKmZzvR9vL9KVO5k6tmxSwkmfnC
+	 z+F0gCCwOj70p9qWG/vR/pz2xrhZLCpf44PeiVibCxHzFp8C1+JLhGS0p451gqQz/U8sL
+	 yPJ7GS+st/mYwO23S8I6B/Yjcvqjt6XAavhc+6KbsV/EEniL727jdrINlU/wp0ZBsKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j88d3zlP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcX38Hyw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F7F6075E36;
-	Fri, 13 Nov 2026 17:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA8360A263D;
+	Fri, 13 Nov 2026 17:17:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j88d3zlP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464D41F000C4;
-	Fri, 13 Nov 2026 17:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcX38Hyw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8CA1F000C4;
+	Fri, 13 Nov 2026 17:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590250;
-	bh=nUtRji1pOau2HH+I5zLqEWz3xvKb580WkLluaVyLQxY=;
+	s=korg; t=1794590251;
+	bh=m7IZqHGynimGLpY25LT9vDhmTu25e1wiRh0jMM8XB0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j88d3zlP81hLy/1JOvG22M9ngCJuiZSd+dJh6CFWE31iwEaU8FL/aTh72UCRmRxdK
-	 Hiqs1tNPqZqo9nU7liL6GVwoLlkijWIriyS3anBYHRXXk086GtzcqKGJXWPwnhWkht
-	 v9zeXTZaCmHSSeff211Sh03waPFARmo+F9qDf9NA=
+	b=lcX38HywCSex9YVsvSdYOTfCIKU7wGHVUQKtJBGqA8zVymzaVRuP49aR3TpSSXpqm
+	 ugOUspkIcH2xGZTVtdIBBeXRMjZbJ61dY94PLk7isNDB8y4mU1R+ikwfuNx2Qce0iE
+	 gJ/pcpG2QPAH9cdmIPLO5iRte+3Pvk31e+SBm+2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jan Kara <jack@suse.cz>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 247/686] tmpfs: keep the quota soft limits of an unused id
-Date: Fri, 13 Nov 2026 10:46:20 -0500
-Message-ID: <20261113153829.417264152@linuxfoundation.org>
+Subject: [PATCH 6.18 230/686] ALSA: us122l: Fix NULL dereference at hwdep open and release
+Date: Fri, 13 Nov 2026 10:46:03 -0500
+Message-ID: <20261113153828.844400176@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,51 +70,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit 968d73463059156e1b89bfa6b189acd7d27197b2 ]
+[ Upstream commit 820e0050866942b5498488496462d12c6ce1c7a9 ]
 
-When the last reference to a dquot goes away, shmem_release_dquot()
-stores its limits in the rb tree of the mount, unless
-shmem_is_empty_dquot() says that there is nothing worth storing. That
-function looks at the usage and at the two hard limits only.
+usb_stream_hwdep_open() and usb_stream_hwdep_release() pass the result of
+usb_ifnum_to_if() straight to usb_autopm_get_interface() and
+usb_autopm_put_interface(), without checking it for NULL.
 
-So if the administrator sets nothing but soft limits for an id that owns
-no file yet, the entry is thrown away as soon as the dquot that
-Q_SETQUOTA used is released, and the id never gets to see a limit.
+usb_ifnum_to_if() returns NULL once the device is gone, since
+usb_disable_device() clears udev->actconfig on disconnect.  The hwdep file
+can outlive the disconnect: the card is released with
+snd_card_free_when_closed(), so a process that keeps the character device
+open reaches the driver's release callback after the USB configuration has
+been dropped, and interface_to_usbdev() then dereferences the NULL
+interface at offsetof(struct device, parent).  The open callback has the
+same problem when it races with the disconnect.
 
-To fix it, compare the soft limits as well: an entry can be empty only if
-both soft limits are zero as well, which is exactly what
-shmem_acquire_dquot() sets for a new entry.
+Check both lookups and fail the open with -ENODEV; in release, skip the
+runtime PM put when the interface is already gone and still run the rest
+of the per-file cleanup.  Move the us122l->first bookkeeping after the
+checks so that a failed open no longer leaves a stale file pointer behind.
 
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: de4c0e7ca8b5 ("shmem: Add default quota limit mount options")
+Fixes: 030a07e44129 ("ALSA: Add USB US122L driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: slightly adjusted description ]
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-2-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261028074143.14440-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem_quota.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/usx2y/us122l.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/mm/shmem_quota.c b/mm/shmem_quota.c
-index d1e32ac01407a..a359e8cceedb4 100644
---- a/mm/shmem_quota.c
-+++ b/mm/shmem_quota.c
-@@ -251,6 +251,8 @@ static bool shmem_is_empty_dquot(struct dquot *dquot)
- 	if (test_bit(DQ_FAKE_B, &dquot->dq_flags) ||
- 		(dquot->dq_dqb.dqb_curspace == 0 &&
- 		 dquot->dq_dqb.dqb_curinodes == 0 &&
-+		 dquot->dq_dqb.dqb_bsoftlimit == 0 &&
-+		 dquot->dq_dqb.dqb_isoftlimit == 0 &&
- 		 dquot->dq_dqb.dqb_bhardlimit == bhardlimit &&
- 		 dquot->dq_dqb.dqb_ihardlimit == ihardlimit))
- 		return true;
+diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
+index 50975b7ef1b8b..46dbf9ea1fb70 100644
+--- a/sound/usb/usx2y/us122l.c
++++ b/sound/usb/usx2y/us122l.c
+@@ -129,19 +129,26 @@ static const struct vm_operations_struct usb_stream_hwdep_vm_ops = {
+ static int usb_stream_hwdep_open(struct snd_hwdep *hw, struct file *file)
+ {
+ 	struct us122l	*us122l = hw->private_data;
+-	struct usb_interface *iface;
++	struct usb_interface *iface, *iface0 = NULL;
+ 
+ 	if (hw->used >= 2)
+ 		return -EBUSY;
+ 
+-	if (!us122l->first)
+-		us122l->first = file;
+-
+ 	if (us122l->is_us144) {
+-		iface = usb_ifnum_to_if(us122l->dev, 0);
+-		usb_autopm_get_interface(iface);
++		iface0 = usb_ifnum_to_if(us122l->dev, 0);
++		if (!iface0)
++			return -ENODEV;
+ 	}
++
+ 	iface = usb_ifnum_to_if(us122l->dev, 1);
++	if (!iface)
++		return -ENODEV;
++
++	if (!us122l->first)
++		us122l->first = file;
++
++	if (iface0)
++		usb_autopm_get_interface(iface0);
+ 	usb_autopm_get_interface(iface);
+ 	return 0;
+ }
+@@ -153,10 +160,12 @@ static int usb_stream_hwdep_release(struct snd_hwdep *hw, struct file *file)
+ 
+ 	if (us122l->is_us144) {
+ 		iface = usb_ifnum_to_if(us122l->dev, 0);
+-		usb_autopm_put_interface(iface);
++		if (iface)
++			usb_autopm_put_interface(iface);
+ 	}
+ 	iface = usb_ifnum_to_if(us122l->dev, 1);
+-	usb_autopm_put_interface(iface);
++	if (iface)
++		usb_autopm_put_interface(iface);
+ 	if (us122l->first == file)
+ 		us122l->first = NULL;
+ 	guard(mutex)(&us122l->mutex);
 -- 
 2.53.0
 
