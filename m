@@ -1,83 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794589937;
-	b=3bXMEsuKRPWC73idnhE2sPx9PFH6egO+Uo9cBup5wnCOzru7o9I397SgC+ytmJeW8UTT
-	 8iaFNeghE1PGVPcxCwh9X11S5guHLpdQVbeOGRJX0THzJ0pY0wWngFwnT+OARhWmgibWF
-	 QOaInryskrUO87kx52TgV3GRZstlD6v2CMUFrfUvhhOt0eYCt80mJhFyBW4ERjB1l6Q/6
-	 Vi3///p5zdbxyJdUPz5cABvipAvk2C36oEk5sq/Bemf5SyWAmTzOVucemofEA4ogRPC5l
-	 rcdCBJG6v7NhszEH6oJdaibKMe9GyjiDOVNUDk/rQzMHAGYbEa9Jc7wK9DS4Hgbvs6A==
+	t=1794590015;
+	b=yl5H1rwqJ0BLx5t+fNqoNr5vayt0wcXITg9n8IsroM6m/a319F6AE7zCa81dTaeyP2uV
+	 KE3U6QAiLfHq7d1H6uri3K6FBU9Y3fqszAeqcXvm06nRVjhVcu7LLcuNR4SW3n0oXBcjk
+	 qBCBPag26ET/j6bRSIAd+EryY+R9JTvlWiMqLDGvhWdivE1PMF2qAhZgHFgv1zEKIAK02
+	 Y8HGhQ4v1tVvPi+D1woXDQVkr3uPHCeNZz4RcM9YOtXxjEFB/n9UE7/XReVmc0+l4RFC2
+	 xAXYaXQd57DF12/UdVAo9GjKK/4IBM7aW2TORDjAMZCiaOBN7bM/QJRv8dPbvpKPuhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794589937;
-	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
-	 References:Date:Message-ID:MIME-Version:Content-Type;
-	bh=EghNJb/w9KWddSZy7Eooq4G2yL9GJh+Li1g9aAPh8jM=;
-	b=s1P+93bNYHhJo6wQdjiFvS7nYI8meRG+LZqjxmveETary8Brhcm88MYxmvrHFCj+c76L
-	 91u0aJgciEPh/hDqszXm0BL9E7WGnhhJtxiCHsL1zZVkoNVk0VxSEm+3PrliRn9yBikFG
-	 v/+NpzbXmncz/e1JZv9YIDkbPAMzCe/6CWIKnQjc2UA44gWuLJHRUw8SOS/kgywDUVQ+l
-	 vfJx6e/geBEPtpV+99p68ONQiQwHYh0JNxkeuOegqovnGpwtgH6JLCOzJ8Dvi+zUJb8kq
-	 SH/7+JOQ5ljfqE+76NC+CFmVgHAHqb25B1/DKvYgXuZ7FgyIhhVESAlpNyITAFpw0aA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590015;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=RZ4vxl75737Gu4SIFaKh4VW8JMlpcZm7DJvO10DviMs=;
+	b=uwB+mnadVMwnpQb6m/KrxTQ+j0fQ/uqecAk5JSHE8oPKSKKONhhBFFxugVD8yKQ7lfMN
+	 7aXLAC9/CQkTT8EaxlreisLHq7vPjth77REzJmCHkXNc4oODkPaBB90M5au5hrBiEXthH
+	 W7opxVfp2HpCl+eMZB7Ic4urpBeXKIbhUYApN7GXAQ14Pyr9jyuVjFLuNybzO2hBA8ihu
+	 sG7sUG7ouPSEr66lV4xUV8o3dqK/W3ACqi3b0U3vJp/dxNQhD5FZc3pXuS3YUNuJhIybv
+	 yJLBFkh1vDO7O6i1GTu7sLJEPfP14PUjF3mDSyPXbr5beaiRIK2qer+VrJ3yGQHFy6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="bc/Um4gm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TCHa+l7X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65295606A32E;
-	Fri, 13 Nov 2026 17:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25005606A331;
+	Fri, 13 Nov 2026 17:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=bc/Um4gm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99DA1F000C4;
-	Fri, 13 Nov 2026 17:12:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794589937;
-	bh=EghNJb/w9KWddSZy7Eooq4G2yL9GJh+Li1g9aAPh8jM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=bc/Um4gmQW17Efk2IOy6bhr5SWExvPOQT5E4rFqMTXlNzbhU60XOr12Oc3Ybx4EOF
-	 WUKTV++vluSqN7Wh43GwwSu5LJeYIRYT/kWVIDhW7zbyYb4OPtMPC/ir9bcY4WOEmP
-	 LuYa/bdu+VQoJhvhAIRpbHxVhvg71pUn0kRoXr9H1VGIGOoAMSBjqK0IQkmxDftqpx
-	 6Pnb+XZLK2fcQDlcwpL6tysHQ4zi4JLCqRTJRcClU0KXzLoqNQE49SrkS5lV2DU0Xt
-	 pEMIf+RbhrehHvdrGcc9kXN3yWNv52Qip62S2T8e1ZYCyQy7C4GZE008PRuPmaKXRU
-	 gYTRVA1iIy8jg==
-X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
-From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Dave Jiang <dave.jiang@intel.com>, "Reshetova,
-	Elena" <elena.reshetova@intel.com>,
-	Xu Yilun <yilun.xu@linux.intel.com>,
-	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
-	Jiri Pirko <jiri@resnulli.us>, "Tian,
-	Kevin" <kevin.tian@intel.com>,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Kiryl Shutsemau <kas@kernel.org>, "Edgecombe,
-	Rick P" <rick.p.edgecombe@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	John Allen <john.allen@amd.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Alistair <alistair23@gmail.com>
-Subject: Re: [RFC PATCH v1 10/11] virt: coco: arm-cca-host: Publish slot
- zero and establish streams after acceptance
-In-Reply-To: <20261113145249.GA3706007@nvidia.com>
-References: <20261103151643.GI274202@nvidia.com>
- <aurmtTe4ObBQhC4S@yilunxu-OptiPlex-7050>
- <DS4PPFA84FA90FCDC94900C2FC6CEF4D428E7682@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
- <20261104134119.GR274202@nvidia.com>
- <a3f95140-c49f-42fc-b92c-73c8cf98336d@intel.com>
- <e05a71df-3b20-45a3-bb46-fb1bdad164c8@intel.com>
- <20261106193018.GK770409@nvidia.com> <yq5a5wy2qtjs.fsf@kernel.org>
- <20261112145254.GL738765@nvidia.com> <yq5abj7tm7q4.fsf@kernel.org>
- <20261113145249.GA3706007@nvidia.com>
-Date: Fri, 13 Nov 2026 22:42:06 +0530
-Message-ID: <yq5a33t4mza1.fsf@kernel.org>
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TCHa+l7X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7A5D1F000C4;
+	Fri, 13 Nov 2026 17:13:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1794590014;
+	bh=RZ4vxl75737Gu4SIFaKh4VW8JMlpcZm7DJvO10DviMs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=TCHa+l7XugJgP5ZZoLXr73y4RaCWEGviVW9ETV2lCIe+1EpMHLmNsfDVmTDViYNSr
+	 KvMjss0HKuuG/ncZQRaxlabWsS9TSG+mZ1tVgcMKbQnvAlAE1IwNP6fdo5REck7/oW
+	 YT7yfakx9QJ2zWgYkQGliR47ZmT4hYSQB2ETB/Bg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Gael Blivet <gael.blivet@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 057/686] ksmbd: look up stream size by exact xattr name
+Date: Fri, 13 Nov 2026 10:43:10 -0500
+Message-ID: <20261113153822.882205118@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
+References: <20261113153820.902362109@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -87,119 +62,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Jason Gunthorpe <jgg@nvidia.com> writes:
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-> On Fri, Nov 13, 2026 at 02:24:59PM +0530, Aneesh Kumar K.V wrote:
->> Jason Gunthorpe <jgg@nvidia.com> writes:
->> 
->> > On Thu, Nov 12, 2026 at 03:07:43PM +0530, Aneesh Kumar K.V wrote:
+------------------
 
- [ ... 96 lines skipped ... ] 
+From: Gael Blivet <gael.blivet@gmail.com>
 
-> We really want the certificates to be loaded at the start before doing
-> key_exchange. That is when they are most useful.
->
-> So when we fix this for 1.3 the opt in should trigger a transcript'd
-> GET_DIGEST in plain text and certificate collection from all the slots
-> in plain text.
->
-> 1.3 will sign GET_DIGESTS during KEY_EXCHANGE
-> 1.2 RMM could issue CHALLENGE if the device supports it right before
->     KEY_EXCHANGE and transcript it
-> 1.2 RMM could issue GET_DIGESTS inside the session and fail if != to
->     the plaintext
->
+[ Upstream commit 10ea20d6584ecdaf2f7505855412a856a88d8934 ]
+
+get_file_stream_info() walks the xattr list from a single
+ksmbd_vfs_listxattr() and sizes each stream it finds with
+ksmbd_vfs_casexattr_len(), which matches with strncasecmp(). Linux
+xattr names are case-sensitive, so two streams differing only in case
+report each other's size.
+
+The loop already holds the exact name, so query it directly with
+ksmbd_vfs_xattr_len(), which is what casexattr_len() calls once its
+search succeeds. Make it non-static and declare it in vfs.h, and drop
+the comment above it, which describes a different bug and no longer
+matches the code.
+
+This also drops a full listing per stream: casexattr_len() runs its own
+listxattr on every call, so enumerating a file with N xattrs cost N
+listings instead of one.
+
+Fixes: 689f1eb3719d ("ksmbd: report actual xattr value length in stream enumeration")
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: retained non-const struct mnt_idmap pointers to match the existing vfs_getxattr() API ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/smb/server/smb2pdu.c | 13 ++-----------
+ fs/smb/server/vfs.c     |  4 ++--
+ fs/smb/server/vfs.h     |  2 ++
+ 3 files changed, 6 insertions(+), 13 deletions(-)
+
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index c784aa6d9b6ad..1cbc425d7273e 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -5275,17 +5275,8 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 		streamlen *= 2;
+ 		kfree(stream_buf);
+ 		file_info->StreamNameLength = cpu_to_le32(streamlen);
+-		/*
+-		 * stream_name_len is the byte length of the xattr's *name*,
+-		 * not its value -- same class of bug ksmbd_stream_eof()
+-		 * (smb2pdu.c) already fixes for EndOfFile/AllocationSize on
+-		 * a stream handle; this enumeration path needs the same
+-		 * real xattr value length, not the name length reused as a
+-		 * size.
+-		 */
+-		slen = ksmbd_vfs_casexattr_len(file_mnt_idmap(fp->filp),
+-						path->dentry, stream_name,
+-						strlen(stream_name) + 1, NULL);
++		slen = ksmbd_vfs_xattr_len(file_mnt_idmap(fp->filp),
++					   path->dentry, stream_name);
+ 		ssize = slen < 0 ? 0 : (loff_t)slen;
+ 		file_info->StreamSize = cpu_to_le64(ssize);
+ 		file_info->StreamAllocationSize = cpu_to_le64(ssize);
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index c470d419e7ce8..a3db77b3c2728 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -950,8 +950,8 @@ ssize_t ksmbd_vfs_listxattr(struct dentry *dentry, char **list)
+ 	return size;
+ }
+ 
+-static ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
+-				   struct dentry *dentry, char *xattr_name)
++ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
++			    struct dentry *dentry, char *xattr_name)
+ {
+ 	return vfs_getxattr(idmap, dentry, xattr_name, NULL, 0);
+ }
+diff --git a/fs/smb/server/vfs.h b/fs/smb/server/vfs.h
+index e9a5798d7baed..ca5048ebb1308 100644
+--- a/fs/smb/server/vfs.h
++++ b/fs/smb/server/vfs.h
+@@ -106,6 +106,8 @@ ssize_t ksmbd_vfs_getxattr(struct mnt_idmap *idmap,
+ 			   struct dentry *dentry,
+ 			   char *xattr_name,
+ 			   char **xattr_buf);
++ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
++			    struct dentry *dentry, char *xattr_name);
+ ssize_t ksmbd_vfs_casexattr_len(struct mnt_idmap *idmap,
+ 				struct dentry *dentry, char *attr_name,
+ 				int attr_name_len, char *actual_name);
+-- 
+2.53.0
 
 
-So the combined flow would be:
 
-Host                             RMM                              Device
-|                                 |                                  |
-| RMI_PDEV_CREATE(new-flow opt-in)|                                  |
-|-------------------------------->|                                  |
-|                                 | GET_VERSION / VERSION            |
-|                                 | GET_CAPABILITIES / CAPABILITIES  |
-|                                 | NEGOTIATE_ALGORITHMS / ALGORITHMS|
-|                                 |<-------------------------------->|
-| Cache individual VCA messages   |                                  |
-|<--------------------------------|                                  |
-|                                 |                                  |
-|                                 | GET_DIGESTS / DIGESTS [plaintext]|
-|                                 |<-------------------------------->|
-| Cache discovery transcript      | Retain original slot mask        |
-|<--------------------------------| and per-slot chain digests       |
-|                                 |                                  |
-|                                 | For each populated slot:         |
-|                                 | GET_CERTIFICATE / CERTIFICATE    |
-|                                 |<-------------------------------->|
-| Cache complete chains by slot   |                                  |
-|<--------------------------------|                                  |
-|                                 |                                  |
-|                      Pause: PDEV_NEEDS_KEY                         |
-|                                 |                                  |
-| Validate candidate certificate  |                                  |
-| paths against userspace policy. |                                  |
-| Select slot S and extract key S.|                                  |
-| Discovery remains provisional.  |                                  |
-|                                 |                                  |
-| RMI_PDEV_SET_PUBKEY             |                                  |
-| (slot S, key S, chain hash S)   |                                  |
-|-------------------------------->|                                  |
-|                                 |                                  |
-|                    IF SPDM 1.2 AND CHALLENGE supported             |
-|                                 |                                  |
-|                                 | CHALLENGE(slot S, fresh nonce)   |
-|                                 |--------------------------------->|
-|                                 | CHALLENGE_AUTH                   |
-|                                 |<---------------------------------|
-|                                 | Verify signature using key S.    |
-|                                 | Authenticates earlier DIGESTS.   |
-| Cache challenge transcript      |                                  |
-|<--------------------------------|                                  |
-|                                 |                                  |
-|                    END IF                                          |
-|                                 |                                  |
-|                                 | KEY_EXCHANGE(slot S)             |
-|                                 |--------------------------------->|
-|                                 | KEY_EXCHANGE_RSP                 |
-|                                 |<---------------------------------|
-|                                 | Verify signature using key S.    |
-|                                 |                                  |
-|                    IF SPDM 1.3 multikey negotiated                 |
-|                                 |                                  |
-|                                 | Signature covers earlier DIGESTS.|
-|                                 | Authenticate retained inventory. |
-|                                 |                                  |
-|                    END IF                                          |
-|                                 |                                  |
-| Cache key-exchange transcript   |                                  |
-|<--------------------------------|                                  |
-|                                 | FINISH / FINISH_RSP              |
-|                                 |<-------------------------------->|
-|                                 | Session established.             |
-|                                 |                                  |
-|                    IF SPDM 1.2 AND CHALLENGE unavailable           |
-|                                 |                                  |
-|                                 | GET_DIGESTS / DIGESTS [secure]   |
-| Relay ciphertext                |<-------------------------------->|
-|                                 | Compare authenticated slot mask  |
-|                                 | and every digest with original   |
-|                                 | plaintext discovery.             |
-|                                 |                                  |
-|                                 | Mismatch: fail setup.            |
-|                                 | Match: authenticate inventory.   |
-|                                 |                                  |
-|                    END IF                                          |
-|                                 |                                  |
-|                                 | Check collected chains against   |
-|                                 | authenticated per-slot digests.  |
-|                                 |                                  |
-|                            PDEV_READY                              |
-
-BTW, all these proposals require RMM changes. As I requested in my previous
-email, it would be useful to describe what this would look like without a
-firmware change.
-
--aneesh
