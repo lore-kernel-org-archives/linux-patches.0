@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794586003;
-	b=CtVfZVUwpahRYMoTrqIBIVCwZt7BPl6RpF21TXP5qB3kDIIb2YIxF0xErDEyHD7efKuB
-	 HGH4UsB5EGYTZyh5f65RB0xxYrjZJFlysfCoAHIkqSfI7uAKRL3kbUhqE+p3usEG3Igou
-	 Ff0IR+G9+rc/ypUlir7v4yODTN5834tel99bzpjej8GK55pVgfG9c2/gAI9mugWjm/bBp
-	 CD7XISM4Qjw64zsNc7gEo8/h64zbzfKmDpFmOYfyP9SFdngHsN48/8nHrdRdISNBNQ3gw
-	 FN3b1l8bDoImulnJQ82yiM5ECIPABUuhQrBfAi6vi24roqhLYCa9ifAEyhqF/UK9r+Q==
+	t=1794586004;
+	b=zv/ArpAVdjjK6I7nq4t5KPCB5pQAF3GugWaj4OFVdynner5gJTo6ZWBHSnacNOX4ycpo
+	 02K2hNwXooECMF69NBKY0HWBRjqlVCEPADzdV+RuGnsqdnJoynBbVpYz00da9hvCCQfi4
+	 ac2zSjQc7q0i+bv4jTkHfFLYHzRPnC8IJyOHxjDfcwzH/2Zwvvzuu2BvPlCNjY0ztFNSm
+	 ie6864noqkLb/EOPnTRte1hig33F7UMmYU30+lL0K+HX3IEKQwb48UK8UhO6uk/3lWyII
+	 PIqSWQVAHXr5Hp5luo1WEb3ZXQVUnBcwIBUsRZwXT1MXAnXcuPsHXPtpLzltR0p3Scg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794586003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794586004;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hKOYdZv99LI1AC2GO70+l6VFw7Pm4sXKWec2zeK/EdA=;
-	b=NcIse8YEPl58ef1/57OUEj8pYBTUt2Gcg977ZVwBJe9e0VWXuYIbUSq+UxMad/7r95in
-	 KFgvCEnyiEiR5xK9pDybrtHr6chtIIzIZFTlqlXE56Cg72WaFURYHH9Gm1WhgomstsUOD
-	 YdUARoU8wXTN1m7uyfCDvfvI7pARbxFSwV/u0NLtQfcli37/DKMiaqCcqdS9bDEmaWrI6
-	 4RsebgpPCmQDLqbdCEPbjh5Vl86YbQSCSrnrVvZSKbK1CpzzQwenFr3yKUG6WXJtESwdq
-	 jjtUEdIdJrmAFwzYdXZCpigcmZstmNOXozVEFOg6LFt99LXATxXmMUMk05F8DcqjKLg==
+	bh=ke8dwbJwhHcbPT+Y0CFmRqYxqrsmM4p/Dn6ZPz4I6B8=;
+	b=EpW59ZFdGrYbl0sekTt1dhCZ3IgwCWil+jPqRH/1Trr28M33qy2nSkPnxnj4DUbxGiKD
+	 C3TA7YTipaMO9tTZP6tt8O1b+8Hv47wydOPqkbE+DS+w4UKl8IiF3PNBPF0fbXWdiAtWe
+	 s4iRjnoxINy/ZpMejHQ8A/kwb3wDD7PWPlkre3sRohbsohOluLeze5ZAqM7sty4Io9IHL
+	 H9tqThPteC0FYOR2h9Fyy2jXo8mXXEYqNKo6K9yKvKfLaJDyyqJDKXAC5B6+ficSVE8rd
+	 DSERPDrhW4kUPpxLGNntQB7Ut4uqz+5vmtxuoWUxyUy7mJyJtkmR8FeCLXsWHjJs/CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FqOARpgr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uCMFJbiM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1496076E3A;
-	Fri, 13 Nov 2026 16:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86DA606B5C6;
+	Fri, 13 Nov 2026 16:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FqOARpgr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3B31F000C4;
-	Fri, 13 Nov 2026 16:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uCMFJbiM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F111F000C4;
+	Fri, 13 Nov 2026 16:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794586003;
-	bh=hKOYdZv99LI1AC2GO70+l6VFw7Pm4sXKWec2zeK/EdA=;
+	s=korg; t=1794586004;
+	bh=ke8dwbJwhHcbPT+Y0CFmRqYxqrsmM4p/Dn6ZPz4I6B8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FqOARpgrBK9RdkP40hQmksO7pgDT4zvNtruXjkQqgoWmzXTBSLh0dEmpjHijCjGrJ
-	 KDA/ZmayOOqtGZQZ/S0n7EgKo54hGT0lFYixiuNiTA/z4wCGQCkMTeIyATuHzmyNKA
-	 O7k2TbDW2BCVBpPIzoi3EqErlYr9ZQQ27s0PR0LI=
+	b=uCMFJbiMs5EYBrNVIfcsWcs1B7HBBFv8hmlINBqMWAc7pRTLFTSDv5naZ2Uy7+JM8
+	 0ByNRR43xNXsMEhtjQ0SIlLjCE+dNtCro5rnSDaOzqinKEdyVgGybHiewAid9QoWsX
+	 /kmnnkHWmLEyg353sUFYxrePGRfxUZk1blZN5YIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com,
+	syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com,
+	Eduard Zateev <hackerowskiy@gmail.com>,
+	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/686] NFSD: stop registering with rpcbind after a failure in listener_set
-Date: Fri, 13 Nov 2026 10:42:56 -0500
-Message-ID: <20261113153822.424774468@linuxfoundation.org>
+Subject: [PATCH 6.18 012/686] smb: client: hold server info until cifsd exits
+Date: Fri, 13 Nov 2026 10:42:25 -0500
+Message-ID: <20261113153821.340071445@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,120 +71,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Eduard Zateev <hackerowskiy@gmail.com>
 
-[ Upstream commit bf0f3a37e6ccb78ae80cc6eb2edde4f033c7574c ]
+[ Upstream commit 482c117c6dbeee382790168af10959810450ab09 ]
 
-nfsd_nl_listener_set_doit() calls svc_xprt_create_from_sa() once for each
-requested listener and passes flags of 0, so every listener registers with
-rpcbind on its own. A rpcbind that accepts the connection and never replies
-therefore costs one timeout for each entry. With the cap of 1024 entries
-the request can hold nfsd_mutex for about 34 minutes, which is roughly 17
-times the hung-task threshold.
+The last session reference can be dropped while the cifsd demultiplex
+thread is still running clean_demultiplex_info(). That thread frees
+TCP_Server_Info there, racing with cifs_put_tcp_session() as it releases
+the server crypto state. syzbot reported a KASAN use-after-free in
+cifs_crypto_secmech_release().
 
-One failure is enough to know that the next call will not fare better.
-Read svc_rpcb_failure_count() before the create loop, and pass
-SVC_SOCK_ANONYMOUS for the rest of the request once the count moves.
+Keep an object reference for the cifsd thread. Defer final crypto,
+session-key, network namespace, string, and structure cleanup until both
+the last session reference and the thread reference are dropped. Drop the
+thread reference after clean_demultiplex_info() has finished using the
+server.
 
-Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
+Build-tested with ARCH=arm64 and W=1 for
+fs/smb/client/connect.o. The KASAN reproducer was not run on the patched
+kernel.
+
+Fixes: a5c3e1c725af ("Revert "cifs: No need to send SIGKILL to demux_thread during umount"")
+Reported-by: syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5c3ed2a0de3270efc921
+Reported-by: syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com
+Closes: https://syzbot.org/bug?extid=c2ec61adfbcb24e5ec20
+Assisted-by: LLM OpenAI Codex
+Signed-off-by: Eduard Zateev <hackerowskiy@gmail.com>
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Link: https://syzkaller.appspot.com/bug?extid=c7eae0eb80858a2dba0f
-Suggested-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-10-a540d86668b0@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Tested-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsctl.c | 42 ++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 38 insertions(+), 4 deletions(-)
+ fs/smb/client/cifsglob.h |  2 ++
+ fs/smb/client/connect.c  | 33 +++++++++++++++++++++------------
+ 2 files changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 49cd0588deb39..9ffa72c15aed2 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2029,7 +2029,10 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
- 	const struct nlattr *bad_attr = NULL;
- 	struct svc_xprt *xprt, *tmp;
- 	const char *bad_xprt = NULL;
-+	unsigned int rpcb_failures;
- 	const struct nlattr *attr;
-+	bool skipped_rpcb = false;
-+	bool bad_rpcb = false;
- 	struct svc_serv *serv;
- 	LIST_HEAD(permsocks);
- 	struct nfsd_net *nn;
-@@ -2119,13 +2122,16 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
- 	if (delete)
- 		svc_xprt_destroy_all(serv, net, false);
+diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
+index 8d751026dd4a2..d529446e4984b 100644
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -16,6 +16,7 @@
+ #include <linux/scatterlist.h>
+ #include <linux/mm.h>
+ #include <linux/mempool.h>
++#include <linux/refcount.h>
+ #include <linux/workqueue.h>
+ #include <linux/utsname.h>
+ #include <linux/sched/mm.h>
+@@ -678,6 +679,7 @@ struct TCP_Server_Info {
+ 	spinlock_t srv_lock;  /* protect anything here that is not protected */
+ 	__u64 conn_id; /* connection identifier (useful for debugging) */
+ 	int srv_count; /* reference counter */
++	refcount_t obj_refs; /* struct lifetime: srv_count users + cifsd */
+ 	int rfc1001_sessinit; /* whether to estasblish netbios session */
+ 	bool with_rfc1001; /* if netbios session is used */
+ 	/* 15 character server name + 0x20 16th byte indicating type = srv */
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index fa7c2f70b6ed3..0a60c411aba67 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1059,6 +1059,19 @@ cifs_enable_signing(struct TCP_Server_Info *server, bool mnt_sign_required)
+ 	return 0;
+ }
  
-+	rpcb_failures = svc_rpcb_failure_count(serv);
++static void cifs_tcp_server_put(struct TCP_Server_Info *server)
++{
++	if (!refcount_dec_and_test(&server->obj_refs))
++		return;
 +
- 	/* walk list of addrs again, open any that still don't exist */
- 	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
- 				 GENL_HDRLEN, rem) {
- 		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
- 		const char *xcl_name;
- 		struct sockaddr *sa;
--		int ret;
-+		bool hit_rpcb;
-+		int flags, ret;
- 
- 		/* validated up front in nfsd_nl_validate_listeners() */
- 		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
-@@ -2144,12 +2150,27 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
- 			continue;
- 		}
- 
--		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, 0,
-+		flags = skipped_rpcb ? SVC_SOCK_ANONYMOUS : 0;
-+		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, flags,
- 					      current_cred());
++	cifs_crypto_secmech_release(server);
++	kfree_sensitive(server->session_key.response);
++	put_net(cifs_net_ns(server));
++	kfree(server->leaf_fullpath);
++	kfree(server->hostname);
++	kfree_sensitive(server);
++}
 +
-+		hit_rpcb = false;
-+		if (!skipped_rpcb &&
-+		    svc_rpcb_failure_count(serv) != rpcb_failures) {
-+			skipped_rpcb = true;
-+			hit_rpcb = true;
-+			if (ret < 0)
-+				ret = svc_xprt_create_from_sa(serv, xcl_name,
-+							      net, sa,
-+							      SVC_SOCK_ANONYMOUS,
-+							      current_cred());
-+		}
-+
- 		/* always save the latest error */
- 		if (ret < 0) {
- 			bad_attr = attr;
- 			bad_xprt = xcl_name;
-+			bad_rpcb = hit_rpcb;
- 			err = ret;
- 		}
- 	}
-@@ -2161,8 +2182,21 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
- 	 */
- 	if (err) {
- 		NL_SET_BAD_ATTR(info->extack, bad_attr);
--		NL_SET_ERR_MSG_FMT(info->extack, "cannot create %s listener",
--				   bad_xprt);
-+		if (bad_rpcb)
-+			NL_SET_ERR_MSG_FMT(info->extack,
-+					   "cannot create %s listener; rpcbind did not answer",
-+					   bad_xprt);
-+		else if (skipped_rpcb)
-+			NL_SET_ERR_MSG_FMT(info->extack,
-+					   "cannot create %s listener; rpcbind did not answer earlier, so some listeners are not registered",
-+					   bad_xprt);
-+		else
-+			NL_SET_ERR_MSG_FMT(info->extack,
-+					   "cannot create %s listener",
-+					   bad_xprt);
-+	} else if (skipped_rpcb) {
-+		NL_SET_ERR_MSG(info->extack,
-+			       "rpcbind did not answer, some listeners are not registered");
+ static noinline_for_stack void
+ clean_demultiplex_info(struct TCP_Server_Info *server)
+ {
+@@ -1144,14 +1157,11 @@ clean_demultiplex_info(struct TCP_Server_Info *server)
+ 		 */
  	}
  
- 	if (!serv->sv_nrthreads && list_empty(&nn->nfsd_serv->sv_permsocks))
+-	put_net(cifs_net_ns(server));
+-	kfree(server->leaf_fullpath);
+-	kfree(server->hostname);
+-	kfree_sensitive(server);
+-
+ 	length = atomic_dec_return(&tcpSesAllocCount);
+ 	if (length > 0)
+ 		mempool_resize(cifs_req_poolp, length + cifs_min_rcv);
++
++	cifs_tcp_server_put(server);
+ }
+ 
+ static int
+@@ -1730,7 +1740,7 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 	else
+ 		cancel_delayed_work_sync(&server->reconnect);
+ 
+-	/* For secondary channels, we pick up ref-count on the primary server */
++	/* For secondary channels, drop the reference on the primary server */
+ 	if (SERVER_IS_CHAN(server))
+ 		cifs_put_tcp_session(server->primary_server, from_reconnect);
+ 
+@@ -1738,15 +1748,11 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
+ 	server->tcpStatus = CifsExiting;
+ 	spin_unlock(&server->srv_lock);
+ 
+-	cifs_crypto_secmech_release(server);
+-
+-	kfree_sensitive(server->session_key.response);
+-	server->session_key.response = NULL;
+-	server->session_key.len = 0;
+-
+ 	task = xchg(&server->tsk, NULL);
+ 	if (task)
+ 		send_sig(SIGKILL, task, 1);
++
++	cifs_tcp_server_put(server);
+ }
+ 
+ struct TCP_Server_Info *
+@@ -1768,6 +1774,7 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 		rc = -ENOMEM;
+ 		goto out_err;
+ 	}
++	refcount_set(&tcp_ses->obj_refs, 1);
+ 
+ 	tcp_ses->hostname = kstrdup(ctx->server_hostname, GFP_KERNEL);
+ 	if (!tcp_ses->hostname) {
+@@ -1906,6 +1913,8 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
+ 		module_put(THIS_MODULE);
+ 		goto out_err_crypto_release;
+ 	}
++	/* Keep the server alive until the demultiplex thread has exited */
++	refcount_inc(&tcp_ses->obj_refs);
+ 	/* thread created, put it on the list */
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_add(&tcp_ses->tcp_ses_list, &cifs_tcp_ses_list);
 -- 
 2.53.0
 
