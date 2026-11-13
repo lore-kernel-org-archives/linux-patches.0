@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590956;
-	b=aZiSDNZ6YkFxzjF3peQ3ydGBE4OOREotEwae2lbFs+cMa2GswsjkwwEoEEubBzi6Ph6N
-	 dRj4SfImexiiBN9kKYuK7umW5T4g8ehI9FzcmkyGeFne27epy9rQhKRIP8cr8fu3C1d5I
-	 ZplJjIGmzGg2nFS5WoU+BP2WMFOASKNeLEuADTI7b/B+li+nBInf99HB2LAdhbv9s0IQc
-	 Q1HleVuygdhkcmhXiBqxjnEsZPES4AFteSPdiC60tN7/N6csY9/JTFyJm1NuA/4Z3tz3x
-	 OhBeB/j0yqFCMeQFCXfDQlWp9Ru7+oNipgJfIvYCbtOvQjznrxtKCi42QQAs2duccOA==
+	t=1794590958;
+	b=A6bDlQUH44oJNZW0dH3SvoG70dhK5mHbb1tggsyRAEAsEy7iukBg5spbhARmjcV7kgGd
+	 g7Bs6ZbKJ7qIisqVVXomm8c0BpcApONjTjtf+QnOTDi3JOJAyBXC/EpJ3lEdZuArPcBVk
+	 AUHZlU9L0JhPI2a00l5eJIm7GIan2M4+SryEkHSAtDkMJ4woz/PLR2QaONkqegTKcIdBB
+	 itcd2d5MR8mYdEKyKYI2rGrD7cPEsMdO2jz/H59LgfyTOIdWrkiF8oF/hk0/6A/++peyG
+	 ch/SWFPQ2Yj0CugEXKqXQkk5YMmuPOSkDyX3b4PDM3JaAydKY7B6fIrcwnT2k/MJ23A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gxJQAY3Vzm7T4Jclt/ASQ8ajOAWn3NEeZNUqwIi8iJc=;
-	b=2dRFluNhcX+d/gHVCOUBPoJoyTG1pFjDU1b8EgWUO/44bvrRVA+NpTWJ4AZSJ6ueBy25
-	 WjFSQFBr08uJLTrEJVoyxbARApRYPp76SW2ry/ouVrMqS5l85c5Ax0GUUquTe+oQmlgpm
-	 h6AA81+Z9sUFz+nxXCfYqceQmkgQOp2KXNy2Iz96JcYdFjlfof/lujz6UhZice6qAegUM
-	 awFfXz7FBNOQeT7pLzu+3WCTsalJz65PQyvCp+cb39skHRBNq7J+bWBAnXMR05bGJMJ5Z
-	 cVm22EJMFqHa6kKl2YjtaNLGFyno+Kvh2CUlnexBE/3bu4MTsT4kneghCMqZyAmFWqQ==
+	bh=T5tRI1biiDIbfoOlwe47weEW/xv9/dKw0n/dYaGk+sA=;
+	b=IH5OjRzk2S4uL56jYqsIzYVEhjaCJzS6eu9gCXAQDwBu9/WEq8q/Wq1fT/Yewvwvzhp8
+	 9eVHzxs+znT7cWSLTYU1VacjCY1VgZv9DU1zRzW0QXPa4Id0eTbcAOSvhJsbeKC03mCkH
+	 5YPlil2qgk+AxB+a3rk+CXYbsjVOa1LG3BehvHsgfQTDE8km3s/fdYn2O+GTH7pQisk6H
+	 FFnrMNCzuP1YcAlC6mTy6T6LNVqGUBLmEl+xhd99BTs7ryzs2m5kchU3l7nuCRTtNT4DI
+	 gdYMXeVIG4R1bOPobUJBQPQ88zA300AjiqCU/zwChEZXb3PQ1pxuSw7BV3yBGGoNqEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWbXH0rw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSidOyBu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89896083156;
-	Fri, 13 Nov 2026 17:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 210FD606E654;
+	Fri, 13 Nov 2026 17:29:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWbXH0rw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C9C1F000C5;
-	Fri, 13 Nov 2026 17:29:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vSidOyBu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D65C1F000C4;
+	Fri, 13 Nov 2026 17:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590956;
-	bh=gxJQAY3Vzm7T4Jclt/ASQ8ajOAWn3NEeZNUqwIi8iJc=;
+	s=korg; t=1794590957;
+	bh=T5tRI1biiDIbfoOlwe47weEW/xv9/dKw0n/dYaGk+sA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vWbXH0rwtVl7b4lEPsJzQ2FJBt7LhqTFopHVedl71suLZ8dM+kh5jYLFiaUoZ8JVS
-	 26aaMYDJOzLa0Y6+j+xHTFtlP0ZY6iYH2GbFVb7eJ4NQo/xT0znYZz0NllEEsZZhHt
-	 yR0kxBBcLu4WdJt9dRb3Crn359HkCd0cg01vXJcI=
+	b=vSidOyBuxFiOiWmP1ObOSzdt6cJ82XVUbTMg22YnvqwYP/zk8w8JDSds5/q24wAq9
+	 xR+0HLfaCVpu1uPd9aHlDKETisyK/DJD3sCSo8TtpSJCafpp7wMN+smC7FrEN24sVH
+	 qPjWsoCQ5AQNa2H/+zEfZH4WzrdLNVGKwPT/+ZpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 136/670] rose: hold the listener while a Call Request is queued on it
-Date: Fri, 13 Nov 2026 10:45:00 -0500
-Message-ID: <20261113153816.445384980@linuxfoundation.org>
+Subject: [PATCH 6.12 101/670] mkiss: size the frame buffers for worst-case KISS escaping
+Date: Fri, 13 Nov 2026 10:44:25 -0500
+Message-ID: <20261113153815.316746407@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,109 +69,148 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-rose_rx_call_request() runs in softirq context for every Call Request
-addressed to us. It finds the listening socket with
-rose_find_listener(), which returns it without a reference once
-rose_list_lock is dropped, then creates the new socket, queues it on
-the listener's receive queue and wakes the listener up. Nothing stops
-the process owning the listener from closing it meanwhile:
-rose_release() destroys a listening socket at once, and the Call
-Request writes into freed memory. A node daemon that restarts while
-calls come in does exactly this.
+ax_encaps() accepts a frame for transmission as long as it is not
+longer than dev->mtu + 73 bytes, and KISS escaping can double every
+byte of it (END and ESC are each sent as two bytes). The transmit
+buffer, however, is only max(2 * dev->mtu, 1152) + 4 bytes long, so the
+73 bytes of header allowance are not covered once they are doubled.
 
-Take a reference in rose_find_listener(), lock the listener in
-rose_rx_call_request() and refuse the call if it has been closed in the
-meantime. rose_release() marks the socket dead with sock_orphan()
-before rose_destroy_socket() empties its queue under the socket lock,
-so a listener found alive once locked will see the new socket on its
-queue, either in rose_accept() or when it is destroyed.
+With the default MTU of 236 the 1152 byte floor hides the problem. As
+soon as the MTU is raised above 502, a maximum length frame made of END
+or ESC bytes makes kiss_esc() or kiss_esc_crc() write up to 148 bytes
+past the end of xbuff. The content of the frame does not have to come
+from the local machine: it can be traffic forwarded for another
+station, a routed IP datagram for instance.
 
-On a QEMU bench with two 4-CPU guests (KASAN, lockdep), six threads on
-A calling B without a break while B opens a listening socket, keeps it
-0 to 30 ms and closes it, for 40 s: before, KASAN reports a
-slab-use-after-free in rose_rx_call_request() a few seconds in, the
-socket having been freed by close() on B; with a 20 ms delay after
-rose_find_listener() the corrupted socket list then panics B in
-rose_neigh_put(). After, no report in either case, with about 400
-calls connected as before.
+Reproduced under KASAN on 6.12.94 with the MTU set to 1024 and a
+1097 byte UI frame whose payload is all 0xC0:
+
+  BUG: KASAN: slab-out-of-bounds in kiss_esc+0x316/0x390 [mkiss]
+  Write of size 1 at addr ffff888001c9c804 by task init/1
+   kiss_esc+0x316/0x390 [mkiss]
+   ax_xmit+0x346/0xcd5 [mkiss]
+   dev_hard_start_xmit+0xf8/0x580
+   sch_direct_xmit+0x131/0xa10
+   __dev_queue_xmit+0x27f6/0x34b0
+   packet_sendmsg+0x30c5/0x4a10
+  The buggy address is located 0 bytes to the right of
+   allocated 2052-byte region [ffff888001c9c000, ffff888001c9c804)
+
+In addition the driver sets no upper bound on the MTU. An MTU of 2^30
+or more makes "dev->mtu * 2" negative, which leaves the buffers at
+their minimum size while the length check in ax_encaps() no longer
+rejects anything.
+
+Compute the buffer length in one place, from the largest frame that
+ax_encaps() accepts, and allocate six more bytes for the two END
+delimiters and the two CRC bytes, which may need escaping too. Set
+max_mtu so that the computation cannot overflow.
+
+With the change the same test produces no KASAN report, the frames
+found on the serial line are identical to those sent, with and without
+CRC (SMACK and FlexNet), and an MTU above 65535 is refused.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 8bd85552e2ae1a606eda4b6c096a7e3bd0bcff62)
+(cherry picked from commit 1d80a1c3a4591b20182a8adb3bcb0427f85331a5)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 32 +++++++++++++++++++++++++++-----
- 1 file changed, 27 insertions(+), 5 deletions(-)
+ drivers/net/hamradio/mkiss.c | 49 ++++++++++++++++++++++--------------
+ 1 file changed, 30 insertions(+), 19 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 4be2dd8200b5a..f6f09590e86b5 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -278,7 +278,7 @@ static void rose_insert_socket(struct sock *sk)
+diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
+index 5f38a002bd9e3..05c7a234de6ca 100644
+--- a/drivers/net/hamradio/mkiss.c
++++ b/drivers/net/hamradio/mkiss.c
+@@ -30,6 +30,7 @@
+ #include <net/ax25.h>
  
- /*
-  *	Find a socket that wants to accept the Call Request we just
-- *	received.
-+ *	received. A reference is taken on the socket found.
-  */
- static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
- {
-@@ -304,6 +304,8 @@ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
- 	}
- 	s = NULL;
- found:
-+	if (s)
-+		sock_hold(s);
- 	spin_unlock_bh(&rose_list_lock);
- 	return s;
- }
-@@ -1103,12 +1105,31 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
- 	}
+ #define AX_MTU		236
++#define AX_MAX_MTU	65535
  
- 	sk = rose_find_listener(&facilities.source_addr, &facilities.source_call);
-+	if (!sk) {
-+		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
-+		return 0;
-+	}
-+
-+	/*
-+	 * The listener may be closed by rose_release() at any time. It is
-+	 * marked dead before rose_destroy_socket() empties its queue, so
-+	 * once it is locked a listener that is not dead will see the new
-+	 * socket on its queue, either in rose_accept() or when it is
-+	 * destroyed.
-+	 */
-+	bh_lock_sock(sk);
+ /* some arch define END as assembly function ending, just undef it */
+ #undef	END
+@@ -355,13 +356,19 @@ static int ax_set_mac_address(struct net_device *dev, void *addr)
+ 
+ /*---------------------------------------------------------------------------*/
+ 
+-static void ax_changedmtu(struct mkiss *ax)
+-{
+-	struct net_device *dev = ax->dev;
+-	unsigned char *xbuff, *rbuff, *oxbuff, *orbuff;
+-	int len;
++/*
++ * Length of the frame buffers for the current MTU.
++ *
++ * ax_encaps() accepts frames of up to dev->mtu + 73 bytes and KISS escaping
++ * can double every one of them.  The buffers are allocated AX_BUF_SLACK bytes
++ * larger than this, for the two END delimiters and the two CRC bytes, which
++ * can need escaping as well.
++ */
++#define AX_BUF_SLACK	6
+ 
+-	len = dev->mtu * 2;
++static int ax_buflen(const struct net_device *dev)
++{
++	int len = (dev->mtu + 73) * 2;
  
  	/*
- 	 * We can't accept the Call Request.
+ 	 * allow for arrival of larger UDP packets, even if we say not to
+@@ -371,8 +378,19 @@ static void ax_changedmtu(struct mkiss *ax)
+ 	if (len < 576 * 2)
+ 		len = 576 * 2;
+ 
+-	xbuff = kmalloc(len + 4, GFP_ATOMIC);
+-	rbuff = kmalloc(len + 4, GFP_ATOMIC);
++	return len;
++}
++
++static void ax_changedmtu(struct mkiss *ax)
++{
++	struct net_device *dev = ax->dev;
++	unsigned char *xbuff, *rbuff, *oxbuff, *orbuff;
++	int len;
++
++	len = ax_buflen(dev);
++
++	xbuff = kmalloc(len + AX_BUF_SLACK, GFP_ATOMIC);
++	rbuff = kmalloc(len + AX_BUF_SLACK, GFP_ATOMIC);
+ 
+ 	if (xbuff == NULL || rbuff == NULL)  {
+ 		printk(KERN_ERR "mkiss: %s: unable to grow ax25 buffers, "
+@@ -581,20 +599,12 @@ static int ax_open(struct net_device *dev)
+ 	 * rbuff	Receive buffer.
+ 	 * xbuff	Transmit buffer.
  	 */
--	if (sk == NULL || sk_acceptq_is_full(sk) ||
--	    (make = rose_make_new(sk)) == NULL) {
-+	if (sock_flag(sk, SOCK_DEAD) || sk->sk_state != TCP_LISTEN ||
-+	    sk_acceptq_is_full(sk))
-+		make = NULL;
-+	else
-+		make = rose_make_new(sk);
-+	if (!make) {
-+		bh_unlock_sock(sk);
-+		sock_put(sk);
- 		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
- 		return 0;
- 	}
-@@ -1164,8 +1185,9 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
+-	len = dev->mtu * 2;
+-
+-	/*
+-	 * allow for arrival of larger UDP packets, even if we say not to
+-	 * also fixes a bug in which SunOS sends 512-byte packets even with
+-	 * an MSS of 128
+-	 */
+-	if (len < 576 * 2)
+-		len = 576 * 2;
++	len = ax_buflen(dev);
  
- 	rose_start_heartbeat(make);
+-	if ((ax->rbuff = kmalloc(len + 4, GFP_KERNEL)) == NULL)
++	if ((ax->rbuff = kmalloc(len + AX_BUF_SLACK, GFP_KERNEL)) == NULL)
+ 		goto norbuff;
  
--	if (!sock_flag(sk, SOCK_DEAD))
--		sk->sk_data_ready(sk);
-+	sk->sk_data_ready(sk);
-+	bh_unlock_sock(sk);
-+	sock_put(sk);
+-	if ((ax->xbuff = kmalloc(len + 4, GFP_KERNEL)) == NULL)
++	if ((ax->xbuff = kmalloc(len + AX_BUF_SLACK, GFP_KERNEL)) == NULL)
+ 		goto noxbuff;
  
- 	return 1;
- }
+ 	ax->mtu	     = dev->mtu + 73;
+@@ -640,6 +650,7 @@ static void ax_setup(struct net_device *dev)
+ {
+ 	/* Finish setting up the DEVICE info. */
+ 	dev->mtu             = AX_MTU;
++	dev->max_mtu         = AX_MAX_MTU;
+ 	dev->hard_header_len = AX25_MAX_HEADER_LEN;
+ 	dev->addr_len        = AX25_ADDR_LEN;
+ 	dev->type            = ARPHRD_AX25;
 -- 
 2.53.0
 
