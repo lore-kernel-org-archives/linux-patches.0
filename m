@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590201;
-	b=vtT3dV1brWaQrpmr9MjGx+CSUfd3Z98Ch0FLprXu5vT+9gZ/vz4XT7vWEhavaJHJNlHn
-	 FypizGlFMnMcUxH4rnFuC8BcQzLucz3rkltpWI9wENfhZp6WKP1t2GXGhqehYMIee3gOa
-	 /fw9k4IgxROQosH3L03xMKXqvkCdlmuSbpshlpYkWr2QCram2+gugGZYA52XOOZLpJG7U
-	 izcKO1ooMGJnOhxOwcpJdX7fWw6gTxqcUh+C9HszaUkHsV7DaRM1ZkK8eDSm4GjGzo0hg
-	 J8HYZkjQDC7i4BZWeKiFFMGOiPTqY4yz4JwPO9HbuI30odu8MG0glcvgI65pVh4k1ig==
+	t=1794590202;
+	b=loafcTuPSaFWA26hzcVpfkmkHoCbgZQa8z2/R0LXhsQmDGcbLClX7RnBScNbErjtsXTh
+	 GHS6LXdx+vMLyGTXmhSOY05xEBOlj6HF8FQJu36lxmDgMpviyOnDfjrI1l4typYDQ3pWv
+	 uHz2GSFJNnpa4rCVs22yIMX2rLzvoQOlqsyu2aGDr9A7IYavOan2mdmkDlb6j2UKHmJxM
+	 qciYBysGjpZigCxNVQvnMEEIy1LdauwrR5ezMjHzkmVkhLP77EbqWrAEXYiMLF5cvgjYr
+	 pGXBSVp99Hbo459z34hEM4AOSvT+DAIjUQWUuDQK6sy6CFzetdBd/K9CQc2qJMiXsnA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590201;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HesEwvdKDM0XmJwk8qb/6cNRX8S/N0L/HhfOvWJCuPo=;
-	b=nf0qS0DfxUMRMZPlFmvlc/Tp8dkM/gKM3MsLuTJHBF9oGot5t0wLLG0yezlec71XYtNQ
-	 QOdH0fkyT1xYBTBO00Z8lQjVf+OzYlnhjc6dG4ucL5OivfDtmvbmcJZ8BanRubJ5HKDBU
-	 f9c3WkWSjvjHsjlrys3c8qVK6Bm7bZJzG9LLQJcDKR3QoClp2LCUh7DAD/7wj45GjSFeH
-	 XZEzcDmB4N6kgYMOJSOPXWaTIsFky8H1sUWIG/cOVpIDQ6gL6rGdIhx3At2e5gcLj04nH
-	 usY7lGwF8qgM7bc4L04e8Bc49UD7aifErP55WFDbJrS3M1eFSuX9tWW+2+xnaciiGLA==
+	bh=gAfkWKA9GiJURZgpzG4+oo32xGGivE4skI6665y9Qq0=;
+	b=E8gKTDN2EAdG7rN+HW8qv9VbT5W4WSs1d7otRVMXT2ASTjuuGcSWuKuZsTa0N/9LzXnr
+	 yUU1b0SnjQpT9snMuKtnn0J0boKtDN+HaSLrsom9uXI2SDmmTuz2LRTVyGhlq7ac3zGXO
+	 6iUDoN3bScsOksg0K+gQk6FvSHYg66GpSi9ZiOkaf1AAEJitBEh39/v1hCbOi78C2aiVv
+	 m0m8eVxqFygMh0rVwjhgUBh7/zqgbp8iiccfVU7v4pZFmZDw77LWo/GvZZHv/CMA3OL+k
+	 8DbZheXwiB4WIXsSXxIUCLIeN3qnvGRAOf6nGwYYbFQu/c5tGvoBwvFv3ArEq1/Uc1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ATeDnfR4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V06buXas;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD07606B370;
-	Fri, 13 Nov 2026 17:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DFF606B375;
+	Fri, 13 Nov 2026 17:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ATeDnfR4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC141F000C4;
-	Fri, 13 Nov 2026 17:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V06buXas
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43C61F000C4;
+	Fri, 13 Nov 2026 17:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590200;
-	bh=HesEwvdKDM0XmJwk8qb/6cNRX8S/N0L/HhfOvWJCuPo=;
+	s=korg; t=1794590202;
+	bh=gAfkWKA9GiJURZgpzG4+oo32xGGivE4skI6665y9Qq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ATeDnfR40C/Hkabsf9IH4V7IBCtjPu7PMVXFuSb+gT7Fzn1UXPFKlKO6QcoaBldwS
-	 vISLMGBl45qZCrA8xBafeBAM4vA2rAuLZHiLfMWIB1arf/Sy5tAqtxBHiDV1hag+xm
-	 7jd/4LYMSyJuOfSqrC6Hf0mLPfnKjhyWd2eX9F3Q=
+	b=V06buXashVV+s3cFqmPeq6/zjBYIo8ln5ILRNtTlGSV382eE+NzyojEI1NqUHatXD
+	 +F/92fnfHk3Aixe5+C3XaXIZIrvEjwTlFykC7eSENO4P8uyvzdRt0Py75WYEfVcNcY
+	 jeK9jUC0CLSh/gG+j10yuPh5ug2Qj7wmg4usdHes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Andrew Luebke <andrew.luebke@gmail.com>,
+	Yu Zhang <yuz08559@gmail.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 206/686] scsi: aic79xx: Fix NULL pointer dereference in device reset
-Date: Fri, 13 Nov 2026 10:45:39 -0500
-Message-ID: <20261113153828.017464593@linuxfoundation.org>
+Subject: [PATCH 6.18 207/686] scsi: target: Fix demo-mode dynamic ACL dev-entry UAF vs LUN teardown
+Date: Fri, 13 Nov 2026 10:45:40 -0500
+Message-ID: <20261113153828.052912293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,146 +68,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Luebke <andrew.luebke@gmail.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-[ Upstream commit f057a8bfeb6ff89c65e95540b8700a53c66d4a31 ]
+[ Upstream commit 6a6e7d7230cd4e0a6c003bae5b85bf37a1e77b94 ]
 
-Since commit c67e63800446 ("scsi: aic79xx: Do not reference SCSI command
-when resetting device") the device reset SCB has no SCSI command, but
-ahd_linux_dev_reset() still sets its residual, and ahd_abort_scbs(), which
-completes it, sets its status. Seen on an AIC-7902 when a failing disk
-triggered a device reset, which killed the SCSI error handler:
+A demo-mode (generate_node_acls=1) login that allocates a dynamic NodeACL
+populates that ACL's per-LUN dev entries in core_tpg_add_node_to_devs()
+*before* the ACL is linked onto tpg->acl_node_list by
+target_add_node_acl():
 
-  BUG: kernel NULL pointer dereference, address: 0000009c
-  EIP: ahd_linux_dev_reset.cold+0xee/0x26e
+	core_tpg_check_initiator_node_acl():
+		...
+		core_tpg_add_node_to_devs(acl, tpg, NULL); /* builds deves */
+		target_add_node_acl(acl);                  /* only now listed */
 
-Add NULL command checks to the accessors in aic79xx_osm.h. Also skip
-autosense for an SCB without a command and complete it with ahd_done()
-right away: the REQUEST SENSE path can clear SCB_DEVICE_RESET, after which
-ahd_done() would dereference the missing command.
+The LUN teardown sweep, core_clear_lun_from_tpg(), enumerates only
+tpg->acl_node_list, so a dev entry whose ACL is still in the window above
+is invisible to the sweep and is never disabled.  It is left on the
+se_lun->lun_deve_list after core_tpg_remove_lun() frees the se_lun; when
+the same unpacked_lun is later re-added and the se_lun is reallocated at
+the same address, the stale dev entry is rediscovered by
+target_nacl_find_deve() and core_enable_device_list_for_node() corrupts
+lun_deve_list:
 
-Fixes: c67e63800446 ("scsi: aic79xx: Do not reference SCSI command when resetting device")
+  BUG: KASAN: slab-use-after-free ...
+   core_enable_device_list_for_node+0x5ce/0x880
+   core_tpg_add_node_to_devs+0x169/0x190
+   core_dev_add_lun+0x146/0x190
+   target_fabric_port_link+0xe9/0x1b0
+   configfs_symlink+0x381/0xae0
+   __x64_sys_symlink+0x55/0x80
+
+The demo-mode login path that drives the ACL/dev-entry creation is
+reachable by an unauthenticated initiator; the colliding LUN add/remove is
+a local configfs operation.
+
+Commit 49cb77e297dc ("target: Avoid mappedlun symlink creation during lun
+shutdown") introduced se_lun->lun_shutdown and guarded the *explicit* ACL
+MappedLUN path (target_fabric_mappedlun_link()), but the demo-mode
+automatic path, core_tpg_add_node_to_devs() ->
+core_enable_device_list_for_node(), was never given the equivalent guard,
+and the publish-after-populate ordering in
+core_tpg_check_initiator_node_acl() was left unchanged.
+
+Fix it in three cooperating parts:
+
+ 1) Publish the dynamic NodeACL onto acl_node_list *before* creating its
+    dev entries, so the teardown sweep can observe them.
+
+ 2) Refuse to attach a dev entry to an se_lun that is shutting down,
+    checked under nacl->lun_entry_mutex -- the same lock the sweep takes --
+    so once the sweep has passed an ACL any later enable for that LUN
+    observes lun_shutdown and skips it.
+
+ 3) In core_enable_device_list_for_node(), insert the new dev entry onto
+    lun->lun_deve_list while still holding nacl->lun_entry_mutex, in both
+    the replace and the new-entry branch.  Previously the entry was added
+    to nacl->lun_entry_hlist under the mutex but to lun->lun_deve_list only
+    after dropping it; with the ACL now published early, the sweep could
+    take the mutex in that gap, find the entry on the hlist,
+    core_disable_device_list_for_node() it (list_del() on the not-yet-
+    linked lun_link succeeds and the entry is freed), and then the enable
+    would list_add_tail() the freed entry back onto lun_deve_list.  Linking
+    both lists under the mutex makes enable and the sweep mutually
+    exclusive, closing that window.
+
+core_tpg_add_node_to_devs() already ignores the return value of
+core_enable_device_list_for_node(), so a shutting-down LUN is simply
+skipped.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Signed-off-by: Andrew Luebke <andrew.luebke@gmail.com>
-Assisted-by: LLM
-Link: https://patch.msgid.link/20261026172032.749756-1-andrew.luebke@gmail.com
+Fixes: 49cb77e297dc ("target: Avoid mappedlun symlink creation during lun shutdown")
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Tested-by: Yu Zhang <yuz08559@gmail.com>
+Link: https://patch.msgid.link/20261014013746.46705-1-yuz08559@gmail.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aic7xxx/aic79xx_core.c |  4 +++-
- drivers/scsi/aic7xxx/aic79xx_osm.h  | 26 +++++++++++++++++++++-----
- 2 files changed, 24 insertions(+), 6 deletions(-)
+ drivers/target/target_core_device.c | 18 +++++++++++++++---
+ drivers/target/target_core_tpg.c    | 10 +++++++++-
+ 2 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/aic7xxx/aic79xx_core.c b/drivers/scsi/aic7xxx/aic79xx_core.c
-index 6b87ea004e537..ff7efba29adac 100644
---- a/drivers/scsi/aic7xxx/aic79xx_core.c
-+++ b/drivers/scsi/aic7xxx/aic79xx_core.c
-@@ -8942,8 +8942,10 @@ ahd_handle_scsi_status(struct ahd_softc *ahd, struct scb *scb)
- 		}
- #endif
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 7bb711b24c0d7..91ba88f9934d5 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -349,6 +349,19 @@ int core_enable_device_list_for_node(
+ 	new->attach_count++;
  
--		if (ahd_perform_autosense(scb) == 0)
-+		if (ahd_perform_autosense(scb) == 0) {
-+			ahd_done(ahd, scb);
- 			break;
-+		}
+ 	mutex_lock(&nacl->lun_entry_mutex);
++	/*
++	 * Do not attach a new dev entry to an se_lun that is being torn down.
++	 * lun_shutdown is set by core_tpg_remove_lun() before its
++	 * core_clear_lun_from_tpg() sweep; checking it here under the same
++	 * nacl->lun_entry_mutex the sweep takes guarantees that once the sweep
++	 * has passed this ACL no dev entry can be left dangling on the
++	 * se_lun->lun_deve_list that is about to be freed.
++	 */
++	if (lun->lun_shutdown) {
++		mutex_unlock(&nacl->lun_entry_mutex);
++		ret = -ENODEV;
++		goto free_stats;
++	}
+ 	orig = target_nacl_find_deve(nacl, mapped_lun);
+ 	if (orig && orig->se_lun) {
+ 		struct se_lun *orig_lun = orig->se_lun;
+@@ -375,12 +388,12 @@ int core_enable_device_list_for_node(
+ 		new->se_lun_acl = lun_acl;
+ 		hlist_del_rcu(&orig->link);
+ 		hlist_add_head_rcu(&new->link, &nacl->lun_entry_hlist);
+-		mutex_unlock(&nacl->lun_entry_mutex);
  
- 		ahd_compile_devinfo(&devinfo, SCB_GET_OUR_ID(scb),
- 				    SCB_GET_TARGET(ahd, scb),
-diff --git a/drivers/scsi/aic7xxx/aic79xx_osm.h b/drivers/scsi/aic7xxx/aic79xx_osm.h
-index 793fe19993a90..3bcfcfe18f08b 100644
---- a/drivers/scsi/aic7xxx/aic79xx_osm.h
-+++ b/drivers/scsi/aic7xxx/aic79xx_osm.h
-@@ -499,6 +499,8 @@ int	ahd_linux_show_info(struct seq_file *,struct Scsi_Host *);
- static inline
- void ahd_cmd_set_transaction_status(struct scsi_cmnd *cmd, uint32_t status)
- {
-+	if (!cmd)
-+		return;
- 	cmd->result &= ~(CAM_STATUS_MASK << 16);
- 	cmd->result |= status << 16;
- }
-@@ -512,6 +514,8 @@ void ahd_set_transaction_status(struct scb *scb, uint32_t status)
- static inline
- void ahd_cmd_set_scsi_status(struct scsi_cmnd *cmd, uint32_t status)
- {
-+	if (!cmd)
-+		return;
- 	cmd->result &= ~0xFFFF;
- 	cmd->result |= status;
- }
-@@ -525,6 +529,8 @@ void ahd_set_scsi_status(struct scb *scb, uint32_t status)
- static inline
- uint32_t ahd_cmd_get_transaction_status(struct scsi_cmnd *cmd)
- {
-+	if (!cmd)
-+		return CAM_REQ_INPROG;
- 	return ((cmd->result >> 16) & CAM_STATUS_MASK);
- }
+ 		spin_lock(&lun->lun_deve_lock);
+ 		list_del(&orig->lun_link);
+ 		list_add_tail(&new->lun_link, &lun->lun_deve_list);
+ 		spin_unlock(&lun->lun_deve_lock);
++		mutex_unlock(&nacl->lun_entry_mutex);
  
-@@ -537,6 +543,8 @@ uint32_t ahd_get_transaction_status(struct scb *scb)
- static inline
- uint32_t ahd_cmd_get_scsi_status(struct scsi_cmnd *cmd)
- {
-+	if (!cmd)
-+		return SAM_STAT_GOOD;
- 	return (cmd->result & 0xFFFF);
- }
+ 		kref_put(&orig->pr_kref, target_pr_kref_release);
+ 		wait_for_completion(&orig->pr_comp);
+@@ -393,11 +406,10 @@ int core_enable_device_list_for_node(
+ 	new->se_lun = lun;
+ 	new->se_lun_acl = lun_acl;
+ 	hlist_add_head_rcu(&new->link, &nacl->lun_entry_hlist);
+-	mutex_unlock(&nacl->lun_entry_mutex);
+-
+ 	spin_lock(&lun->lun_deve_lock);
+ 	list_add_tail(&new->lun_link, &lun->lun_deve_list);
+ 	spin_unlock(&lun->lun_deve_lock);
++	mutex_unlock(&nacl->lun_entry_mutex);
  
-@@ -564,13 +572,16 @@ u_long ahd_get_transfer_length(struct scb *scb)
- static inline
- int ahd_get_transfer_dir(struct scb *scb)
- {
-+	if (!scb->io_ctx)
-+		return DMA_NONE;
- 	return (scb->io_ctx->sc_data_direction);
- }
+ 	target_luns_data_has_changed(nacl, new, true);
+ 	return 0;
+diff --git a/drivers/target/target_core_tpg.c b/drivers/target/target_core_tpg.c
+index c0e429e5ef310..d8f4538e48dc7 100644
+--- a/drivers/target/target_core_tpg.c
++++ b/drivers/target/target_core_tpg.c
+@@ -266,6 +266,15 @@ struct se_node_acl *core_tpg_check_initiator_node_acl(
+ 	kref_get(&acl->acl_kref);
+ 	acl->dynamic_node_acl = 1;
  
- static inline
- void ahd_set_residual(struct scb *scb, u_long resid)
- {
--	scsi_set_resid(scb->io_ctx, resid);
-+	if (scb->io_ctx)
-+		scsi_set_resid(scb->io_ctx, resid);
- }
- 
- static inline
-@@ -582,6 +593,8 @@ void ahd_set_sense_residual(struct scb *scb, u_long resid)
- static inline
- u_long ahd_get_residual(struct scb *scb)
- {
-+	if (!scb->io_ctx)
-+		return 0;
- 	return scsi_get_resid(scb->io_ctx);
- }
- 
-@@ -595,11 +608,12 @@ static inline
- int ahd_perform_autosense(struct scb *scb)
- {
++	/*
++	 * Publish the dynamic NodeACL on tpg->acl_node_list before creating
++	 * its demo-mode MappedLUN dev entries below, so that a concurrent LUN
++	 * teardown sweep (core_clear_lun_from_tpg(), which walks acl_node_list)
++	 * can observe and disable those dev entries.  Otherwise a dev entry can
++	 * be left on an se_lun->lun_deve_list that is about to be freed.
++	 */
++	target_add_node_acl(acl);
++
  	/*
--	 * We always perform autosense in Linux.
--	 * On other platforms this is set on a
--	 * per-transaction basis.
-+	 * We always perform autosense in Linux, except for the device
-+	 * reset SCB, which has no command to return sense data to.
- 	 */
--	return (1);
-+	if (!scb->io_ctx)
-+		return 0;
-+	return 1;
- }
+ 	 * Here we only create demo-mode MappedLUNs from the active
+ 	 * TPG LUNs if the fabric is not explicitly asking for
+@@ -275,7 +284,6 @@ struct se_node_acl *core_tpg_check_initiator_node_acl(
+ 	    (tpg->se_tpg_tfo->tpg_check_demo_mode_login_only(tpg) != 1))
+ 		core_tpg_add_node_to_devs(acl, tpg, NULL);
  
- static inline uint32_t
-@@ -629,6 +643,8 @@ void	ahd_platform_freeze_devq(struct ahd_softc *ahd, struct scb *scb);
- static inline void
- ahd_freeze_scb(struct scb *scb)
- {
-+	if (!scb->io_ctx)
-+		return;
- 	if ((scb->io_ctx->result & (CAM_DEV_QFRZN << 16)) == 0) {
- 		scb->io_ctx->result |= CAM_DEV_QFRZN << 16;
- 		scb->platform_data->dev->qfrozen++;
+-	target_add_node_acl(acl);
+ 	return acl;
+ }
+ EXPORT_SYMBOL(core_tpg_check_initiator_node_acl);
 -- 
 2.53.0
 
