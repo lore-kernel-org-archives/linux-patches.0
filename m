@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585727;
-	b=0x/VKYnNeFPj5VF3R5Txm4UFGv1mo/+VMAVv1CX1cRGwSLnMw93DdVhnZebEqCK94LS1
-	 xOVLdouptdXKKzXC5vvg1QKOpoPIbJu2x8kJs1mWqZfhuzm5uT+RO80gJ0y7yKLPKWkxf
-	 epZW/QgnGz+YBEOHpr4n3y4Ls01knMe4sf37oorQeD2xfEZkNmrsTJnkKuqLzPsLTiIhC
-	 yXyBdUpFFJehEl2NxI2ml9dNRGCSQ3HzYX2e38oZpZr5ooIDNGEMF4V4mpzHC26Xgk99S
-	 HMJCZwWdr7xOzTTkhA6cpc0YpiX/DwNcAu0r6tu9XGRsuiC+2Hl+6aFCVpMOFVBfD+g==
+	t=1794585729;
+	b=3ixASIAmX4acchn6GYFgXJzT3TuoBn9bCMCWaqVVNXzJepCiWMogAJcegpbMEVOp4/YM
+	 0U9ZurM7uNmWdsQ4yt94zkDPB6FHRw6mtX6ghnf+x3e3UGKVyGVUktKBGb0qvBJeAVKMQ
+	 DK91iAybAvfz4S1zoaj4iPUMA1UldzfoEcaBIAlDHUPRXdSFZNEDe2Pb+jXcpnWVrpq0W
+	 FziCJoMweavqEaKsf8TLFVChnl26Y5VQamG1wuvuaazYfs91MOb4y2qy5u2koMudDjMmD
+	 X7d7Lvs369EKT0amcNmeEhY23t1OydiVxPWQNkGemtplBLy9WrPr5dx18dUmjTK1YzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585727;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585729;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0/yEh4KIWU6+KwI/jzUbVpsWg3i1BG3usoshrG0/yYI=;
-	b=chO8eo3jdwh6YTaX4+afUFpL4DDFOs0ucVJIaQKMHEVSA18Ao4uPMfatbZ3wJel/8uwB
-	 BjftVUwWKVdJalz/9w0FBEVu4NyCN+O333JaJ8ljENdritcp2Phhu5hsjpYLDexPZ9Hx0
-	 uxMA+AwoMle5H3WA1AY2q1r1tfLZFygc1b968jRI48l4RHsK7/pl5JMRHH/Mpzzb0yoCC
-	 PE4uJddc/ZrPFafawnBuK8R3V6UjGmj3ya3C8bPWf87iYdU9+RHCtaFD9bSCND6eUa2vE
-	 YpRvGMdjO5E1CnQpYAieJcNm/+bovSwbxOj1ZGDs+Nz+diZkK5ydrSxd72M5L/mtc9w==
+	bh=XEoQJecVa4KKtRPbUxSPnwgBeWOXcSXl+r3TBpdMpjI=;
+	b=R0u6elGtlHGa6WojVMooC7G7IesOGGFpTPtzgS/9Wa85JFZyv0ulCStMF+SP8oOu0SA9
+	 b/G7mQZXRHqwJB2MQR6PHpPA+bqDA1lvoYzgtgAsURtnDrPSy1lzC3a7YVcwwf5abK0bb
+	 YXvTYU7q7UmA7BWdmXCg5BhH8P+j+O/WV2cvW1Av8X/7jwbd2zUewaW1M/wy8GcnnPkl0
+	 /Tiu9NDyDDck/+0ZAS4zZYRtCg/mLxwdzB/VnJ1uW6GF0B0U29nTO4gciVLJMCZMuSC9G
+	 qNqkRxIQmtxyOeWS1LD1myNwBLk91Yrh56aj/dztqQGbO2AAXXxUbq5/0rbq5fbdgMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eUdvcTnj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Me3V3WyE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC939606EB88;
-	Fri, 13 Nov 2026 16:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00699606EB88;
+	Fri, 13 Nov 2026 16:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eUdvcTnj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D541F000C6;
-	Fri, 13 Nov 2026 16:02:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Me3V3WyE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD961F000C6;
+	Fri, 13 Nov 2026 16:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585727;
-	bh=0/yEh4KIWU6+KwI/jzUbVpsWg3i1BG3usoshrG0/yYI=;
+	s=korg; t=1794585728;
+	bh=XEoQJecVa4KKtRPbUxSPnwgBeWOXcSXl+r3TBpdMpjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eUdvcTnjl9Tam/0w8DhDN0H9Jjvax1YqlQUy9kqxykcjU3v31255TAQC0ZZ6LwCvy
-	 /b3HkkGKcSTRy1Z8D2tkoUM6CpGoXWtY2Ur718pKJHq9fvVU43btuMOQjxY48u40Qf
-	 S06BdszGAJCi9q1CeqFYUztHfH9DR+2Bwr7Lr07o=
+	b=Me3V3WyEpULL0vKZoAILv7Iq+z6WFrN0Q7tlWwSDH1Q+sH2K8K2WWd5vSHnyVtZ/O
+	 NU6F1qtIiV9qgOX/EJDs17s2vqQ5IRK0vk5dSxVpF4hORZfVyM+DmkRKbs2Af6tpVX
+	 86cOe8UxTz3tSkkw4jRxvaGHgVj2qQeVX80S7V9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowangio@gmail.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Cong Zhang <cong.zhang@oss.qualcomm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 275/507] virtio_blk: use synchronous quiesce in virtblk_freeze_priv()
-Date: Fri, 13 Nov 2026 10:49:39 -0500
-Message-ID: <20261113153804.155716572@linuxfoundation.org>
+Subject: [PATCH 7.3 322/507] mm: fix unkillable fault loop on MAP_DROPPABLE memory
+Date: Fri, 13 Nov 2026 10:50:26 -0500
+Message-ID: <20261113153806.308224767@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,55 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Zhang <cong.zhang@oss.qualcomm.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 6c6dec7883f8eb10b326bc9d109a4990c885d949 ]
+[ Upstream commit 9f02ca8c15a74bc9e4e8e05ec089f63cb87cbf75 ]
 
-blk_mq_run_work_fn() can call blk_mq_sched_dispatch_requests() through
-blk_mq_run_dispatch_ops(). The dispatcher checks QUEUE_FLAG_QUIESCED
-while the flag is clear. It can then be preempted before it gets a
-request. At that time, it has no queue usage reference, so
-blk_mq_freeze_queue() does not wait for it.
+handle_mm_fault() suppresses VM_FAULT_OOM for VM_DROPPABLE mappings.
 
-virtblk_freeze_priv() then calls blk_mq_quiesce_queue_nowait() and
-blk_mq_unfreeze_queue(). A new request can enter the queue. The old
-dispatcher can run again, use its old flag check, get the new request,
-and call virtio_queue_rq(). At the same time, virtblk_freeze_priv() can
-reset the device, delete the virtqueues, and free vblk->vqs. The old
-dispatcher can then use a deleted virtqueue or a NULL vblk->vqs, and the
-kernel can crash.
+For user-mode faults, pending signals are processed before retrying the
+access. Kernel-mode faults on user buffers instead return directly to
+the faulting instruction.
 
-Fix this by using blk_mq_quiesce_queue(), which waits for dispatch code
-that was already running. Keep the existing freeze and unfreeze order.
-The queue remains quiesced until virtblk_restore_priv() calls
-blk_mq_unquiesce_queue().
+With persistent allocation failures (esp. memcg limits), a syscall,
+such as write(), can therefore loop while not dropping locks.
 
-Fixes: 7678abee0867 ("virtio-blk: don't keep queue frozen during system suspend")
+Only suppress VM_FAULT_OOM when FAULT_FLAG_USER is set, allowing
+kernel-mode faults and GUP to fail and signal allocation errors.
+
+Fix generated by an LLM and sent by Chris Mason in private.
+
+Fixes: 9651fcedf7b9 ("mm: add MAP_DROPPABLE for designating always lazily freeable mappings")
 Cc: stable@vger.kernel.org
-Acked-by: Jason Wang <jasowangio@gmail.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
-Link: https://lore.kernel.org/20260911-virtblk_sync_quiesce-v1-1-a883f8f31258@oss.qualcomm.com
-Link: https://patch.msgid.link/20261103-virtblk_sync_quiesce-v3-1-f40233f9bdd9@oss.qualcomm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ david: simplify description ]
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-37-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/virtio_blk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/memory.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index c8bfbf8435ac7..10ba8b0b863b8 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1596,7 +1596,7 @@ static int virtblk_freeze_priv(struct virtio_device *vdev)
+diff --git a/mm/memory.c b/mm/memory.c
+index e773d51f0d6fc..f6f704d693f4f 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -6923,8 +6923,12 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
  
- 	/* Ensure no requests in virtqueues before deleting vqs. */
- 	memflags = blk_mq_freeze_queue(q);
--	blk_mq_quiesce_queue_nowait(q);
-+	blk_mq_quiesce_queue(q);
- 	blk_mq_unfreeze_queue(q, memflags);
+ 	lru_gen_exit_fault();
  
- 	/* Ensure we don't receive any more interrupts */
+-	/* If the mapping is droppable, then errors due to OOM aren't fatal. */
+-	if (is_droppable)
++	/*
++	 * If the mapping is droppable, then errors due to OOM aren't fatal: the
++	 * task returns to user mode, handles its signals and tries again. A
++	 * fault from kernel mode has no such return, so it must see the error.
++	 */
++	if (is_droppable && (flags & FAULT_FLAG_USER))
+ 		ret &= ~VM_FAULT_OOM;
+ 
+ 	if (flags & FAULT_FLAG_USER) {
 -- 
 2.53.0
 
