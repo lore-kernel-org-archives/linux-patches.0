@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590282;
-	b=ic4AsEefuF9XsrtzuyrbH7S75GUrTCLqGT6fNkQA/1WHof8IZ9tJQCsAyYqA06a/Zbbz
-	 jwszojth9LTvFNo53sv4AALmzOPIbdswTVdK8fcqjuFEfLFwLDaFgFFbzjeamf2GAvyFz
-	 C4dTCkXwF32T6ajdQFcvQ3VOBtEZ+pTKjo8i3H8wYfBEHRDdQE166RdggbERN4qNNBo07
-	 LJi2Qv0y+uF/H6luIG1glQeBffloS2wFxxU1tNR2ic3hTJB1NGO/juV95CKh8rbntgs+y
-	 nvD9AN9/DRbbAnIvQ6ia00LMBPNUZkxjRmBC3shlULpSxGFYmBMOXuU7iswowkHtaww==
+	t=1794590284;
+	b=FsHz9ea8JSDGJ4xJ4EaNuSaU0vAyEnZrwDGGHHC/EzU0lPMkPqQjiVe+xiuACf2gqgg9
+	 kI80V3WKnLCNeXE/iIPyi8Q88bM0wrQa7L7PouA3Dn3NAPr4eS0XkBLVW5H7v6NoXUycX
+	 GWsEy/lgMYSIbyuD5FJ8ypwV+3zpZvGljurNRbJcUmvLkYzAp06c/jdRFI01Rl6ZdrkLp
+	 uIC4pQwHIa9OfYaKTHCt/A6EG0lqMGVw/zvxCBIUymzrncwBgvGRfIYPvQtSvCssXtjAp
+	 ZBztanQY4mA3Ia/yBZFnD/YZ7Hu6py0KknL9BW0J+Ps3kv9DbawU1hP5pwLGPV3RA/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590282;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590284;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z9qFayyreLWsNar6k0rEVs1RPUkwgO+CVcOIyo0idg4=;
-	b=s/MxmpXNcnOENIHLPFGV2/YXDff9A5WSg6BkAkEHY6gFfM6F81sJ9PZDcz0a0AtlF7TT
-	 pJREhld1rNEGdWgK05+6w1pyXgbz+HEKnFklpiJ/OdH9wDxcMLQPkyUxJt33aB0cV3Udp
-	 /ulHVqIiJ+xR5KGnThZM3WylCFqOhYJS+NEzQC0JO/w3oWSwBG4HfdYTyzgumzBkQBbZd
-	 ZvWEX/s/e+x5bkCQVvmdlUUi67jln74ony/QDrsgbXeEyiGArUp+NTzqngDaxqOw7+E5t
-	 lTZCrfxJ542dysg13mE0c0OmwkQzmf9GUPWpTUhaDkjRVGKgXoclnkWo69aMldUqDGw==
+	bh=gGwzsmTJz0vPvr0TUY0uyrtqd7UtifL5pkpomR4GTM4=;
+	b=VThOrXt/uH1XWzQZOVMn8kBlDzjD3HswaiiLUOf78ds9SQ5JSPMKRrO6BF505Q1frT2B
+	 SmjdKCKZKOQlZCuYiIogpJo0/NWOyByd8+FQWX0uaixlIZqZdj2EVQjj55xUe5nEaUAGj
+	 hgBa5fcStSjINyNPtb7vQ/1Fv1fjOeapKttQyZm73T5wmiyXEG3TzWjBXMX4/9sZI5yMx
+	 YyVKsHdzltMxYRckaYrMOrQx8mu8MxoAR5pgEx+F2KlXUfXpfMl/r697xaBquwmtjIY/w
+	 ERHlonKrZb+QZXG8e9l4Mtey5yLyhQH8t2ZzNnYjqbaETwzT7stx9RqV82+wAp7TTew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEkAsbPc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IMR8EDou;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC3A606CEE7;
-	Fri, 13 Nov 2026 17:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E200A607A5C7;
+	Fri, 13 Nov 2026 17:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEkAsbPc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F4211F000C4;
-	Fri, 13 Nov 2026 17:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IMR8EDou
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CA701F000CD;
+	Fri, 13 Nov 2026 17:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590282;
-	bh=z9qFayyreLWsNar6k0rEVs1RPUkwgO+CVcOIyo0idg4=;
+	s=korg; t=1794590283;
+	bh=gGwzsmTJz0vPvr0TUY0uyrtqd7UtifL5pkpomR4GTM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yEkAsbPcSW3EltwHNTvfelu02+bBMUnENl5YHCtf7eWNlWaVssFrZagflUIr35yiX
-	 Pcxtmd0R16+E8N3L3xvMpjcmEYe9iMt+HE/aFOW69ylVJ1u+Q8DG7b3o8pODWzEsK8
-	 j3R0kVEgCkx0drHJYP7Nwb8MiJiRDaUzfP63tZKA=
+	b=IMR8EDouKnUfWwUnrkAL97EaXyN9/p5WFoElOp4Ug149PLhWHi3xx6hgsRo/fO+ho
+	 OIKzFRqKt+ao/sqm/Vfp3s1NxONW539g0dzF3GJivMqPuhEB9DDi4dCWPRtzCQIQrF
+	 Xcxved1E5RbHVqrCFwTs/07DD+xN1go5KC7VpQog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
+	Jiale Yao <yaojiale02@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 270/686] hwmon: (corsair-cpro) Cache fan target only after a successful command
-Date: Fri, 13 Nov 2026 10:46:43 -0500
-Message-ID: <20261113153830.162914643@linuxfoundation.org>
+Subject: [PATCH 6.18 271/686] hwmon: (aquacomputer_d5next) reject short status reports
+Date: Fri, 13 Nov 2026 10:46:44 -0500
+Message-ID: <20261113153830.192857142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,49 +68,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit e2c26431b4e47892378582a414b4bbaa9edf1798 ]
+[ Upstream commit cf8f81babd2e96087dedbb74985bc1781c98f73d ]
 
-set_target() updates the cached fan target before sending the command.
-If the command fails, subsequent fanN_target reads report the failed
-request instead of the previous value. For example, after successfully
-setting 1200 RPM, a rejected request for 1800 RPM returns an error but
-leaves fanN_target reporting 1800. A failed request also replaces
--ENODATA when no target has been successfully set.
+The HID raw_event callback runs before HID core validates the received
+report length. aqc_raw_event() reads device-specific status fields at fixed
+offsets, including multi-byte values, without first ensuring that the
+received buffer contains every field. A truncated report can therefore
+cause out-of-bounds reads and update hwmon state with unrelated data.
 
-Update the target cache under the existing mutex only after
-send_usb_cmd() succeeds, as set_pwm() already does when invalidating
-the target. Preserve the previous cached value and return the original
-error on failure.
+The required length differs between supported devices and cannot be
+derived from the HID report descriptor. Define the minimum length needed
+by each asynchronous status format, select it while configuring the
+device, and reject reports that do not contain the last field accessed by
+that format. Keep the published length zero until probe configuration is
+complete, which also excludes legacy devices whose status is retrieved
+through feature reports.
 
-Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 0e35f63f7f4e ("hwmon: add driver for Aquacomputer D5 Next")
+Fixes: 19692f17cd13 ("hwmon: (aquacomputer_d5next) Add support for Aquacomputer Aquastream XT")
 Cc: stable@vger.kernel.org
-Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
-Link: https://patch.msgid.link/20261020160941.36787-1-pocj8ur4in@gmail.com
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20261021120408.48495-1-yaojiale02@163.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/corsair-cpro.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/aquacomputer_d5next.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
-index 17bb080eb9bb6..1c152a6db3806 100644
---- a/drivers/hwmon/corsair-cpro.c
-+++ b/drivers/hwmon/corsair-cpro.c
-@@ -215,10 +215,11 @@ static int set_target(struct ccp_device *ccp, int channel, long val)
+diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
+index 0dcb8a3a691d6..1f0e71d3b52e4 100644
+--- a/drivers/hwmon/aquacomputer_d5next.c
++++ b/drivers/hwmon/aquacomputer_d5next.c
+@@ -133,6 +133,7 @@ static u8 aquaero_secondary_ctrl_report[] = {
+ #define AQUAERO_FAN_CURRENT_OFFSET		0x06
+ #define AQUAERO_FAN_POWER_OFFSET		0x08
+ #define AQUAERO_FAN_SPEED_OFFSET		0x00
++#define AQUAERO_MIN_STATUS_REPORT_SIZE		(0x18B + AQUAERO_FAN_POWER_OFFSET + sizeof(u16))
+ static u16 aquaero_sensor_fan_offsets[] = { 0x167, 0x173, 0x17f, 0x18B };
+ 
+ /* Control report offsets for the Aquaero fan controllers */
+@@ -156,6 +157,8 @@ static u16 aquaero_ctrl_fan_offsets[] = { 0x20c, 0x220, 0x234, 0x248 };
+ #define D5NEXT_5V_VOLTAGE		0x39
+ #define D5NEXT_12V_VOLTAGE		0x37
+ #define D5NEXT_VIRTUAL_SENSORS_START	0x3f
++#define D5NEXT_MIN_STATUS_REPORT_SIZE	(D5NEXT_PUMP_OFFSET + AQC_FAN_SPEED_OFFSET + \
++					 sizeof(u16))
+ static u16 d5next_sensor_fan_offsets[] = { D5NEXT_PUMP_OFFSET, D5NEXT_FAN_OFFSET };
+ 
+ /* Control report offsets for the D5 Next pump */
+@@ -180,11 +183,14 @@ static u16 d5next_ctrl_fan_offsets[] = { 0x97, 0x42 };	/* Pump and fan speed (fr
+ #define AQUASTREAMULT_FAN_CURRENT_OFFSET	0x00
+ #define AQUASTREAMULT_FAN_POWER_OFFSET		0x04
+ #define AQUASTREAMULT_FAN_SPEED_OFFSET		0x06
++#define AQUASTREAMULT_MIN_STATUS_REPORT_SIZE	(AQUASTREAMULT_PRESSURE_OFFSET + sizeof(u16))
+ static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
+ 
+ /* Spec and sensor report offset for the Farbwerk RGB controller */
+ #define FARBWERK_NUM_SENSORS		4
+ #define FARBWERK_SENSOR_START		0x2f
++#define FARBWERK_MIN_STATUS_REPORT_SIZE	(FARBWERK_SENSOR_START + \
++					 FARBWERK_NUM_SENSORS * AQC_SENSOR_SIZE)
+ 
+ /* Specs of the Farbwerk 360 RGB controller */
+ #define FARBWERK360_NUM_SENSORS			4
+@@ -194,6 +200,8 @@ static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
+ /* Sensor report offsets for the Farbwerk 360 */
+ #define FARBWERK360_SENSOR_START		0x32
+ #define FARBWERK360_VIRTUAL_SENSORS_START	0x3a
++#define FARBWERK360_MIN_STATUS_REPORT_SIZE	(FARBWERK360_VIRTUAL_SENSORS_START + \
++					 FARBWERK360_NUM_VIRTUAL_SENSORS * AQC_SENSOR_SIZE)
+ 
+ /* Control report offsets for the Farbwerk 360 */
+ #define FARBWERK360_TEMP_CTRL_OFFSET		0x8
+@@ -210,6 +218,7 @@ static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
+ #define OCTO_SENSOR_START		0x3D
+ #define OCTO_VIRTUAL_SENSORS_START	0x45
+ #define OCTO_FLOW_SENSOR_OFFSET		0x7B
++#define OCTO_MIN_STATUS_REPORT_SIZE	(0xD8 + AQC_FAN_SPEED_OFFSET + sizeof(u16))
+ static u16 octo_sensor_fan_offsets[] = { 0x7D, 0x8A, 0x97, 0xA4, 0xB1, 0xBE, 0xCB, 0xD8 };
+ 
+ /* Control report offsets for the Octo */
+@@ -230,6 +239,7 @@ static u16 octo_ctrl_fan_offsets[] = { 0x5B, 0xB0, 0x105, 0x15A, 0x1AF, 0x204, 0
+ #define QUADRO_SENSOR_START		0x34
+ #define QUADRO_VIRTUAL_SENSORS_START	0x3c
+ #define QUADRO_FLOW_SENSOR_OFFSET	0x6e
++#define QUADRO_MIN_STATUS_REPORT_SIZE	(0x97 + AQC_FAN_SPEED_OFFSET + sizeof(u16))
+ static u16 quadro_sensor_fan_offsets[] = { 0x70, 0x7D, 0x8A, 0x97 };
+ 
+ /* Control report offsets for the Quadro */
+@@ -249,6 +259,7 @@ static u16 quadro_ctrl_fan_offsets[] = { 0x37, 0x8c, 0xe1, 0x136 }; /* Fan speed
+ #define HIGHFLOWNEXT_CONDUCTIVITY	95
+ #define HIGHFLOWNEXT_5V_VOLTAGE		97
+ #define HIGHFLOWNEXT_5V_VOLTAGE_USB	99
++#define HIGHFLOWNEXT_MIN_STATUS_REPORT_SIZE	(HIGHFLOWNEXT_5V_VOLTAGE_USB + sizeof(u16))
+ 
+ /* Specs of the Leakshield */
+ #define LEAKSHIELD_NUM_SENSORS		2
+@@ -264,6 +275,7 @@ static u16 quadro_ctrl_fan_offsets[] = { 0x37, 0x8c, 0xe1, 0x136 }; /* Fan speed
+ #define LEAKSHIELD_FLOW_IN		111
+ #define LEAKSHIELD_RESERVOIR_VOLUME	313
+ #define LEAKSHIELD_RESERVOIR_FILLED	311
++#define LEAKSHIELD_MIN_STATUS_REPORT_SIZE	(LEAKSHIELD_RESERVOIR_VOLUME + sizeof(u16))
+ 
+ /* Specs of the Aquastream XT pump */
+ #define AQUASTREAMXT_SERIAL_START		0x3a
+@@ -556,6 +568,7 @@ struct aqc_data {
+ 	const char *name;
+ 
+ 	int status_report_id;	/* Used for legacy devices, report is stored in buffer */
++	u16 min_report_size;
+ 	int ctrl_report_id;
+ 	int secondary_ctrl_report_id;
+ 	int secondary_ctrl_report_size;
+@@ -1356,6 +1369,8 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
+ 		return 0;
+ 
+ 	priv = hid_get_drvdata(hdev);
++	if (!priv->min_report_size || size < priv->min_report_size)
++		return 0;
+ 
+ 	/* Info provided with every report */
+ 	priv->serial_number[0] = get_unaligned_be16(data + priv->serial_number_start_offset);
+@@ -1541,6 +1556,7 @@ static void aqc_debugfs_init(struct aqc_data *priv)
+ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ {
+ 	struct aqc_data *priv;
++	u16 min_report_size = 0;
  	int ret;
  
- 	val = clamp_val(val, 0, 0xFFFF);
--	ccp->target[channel] = val;
+ 	priv = devm_kzalloc(&hdev->dev, sizeof(*priv), GFP_KERNEL);
+@@ -1608,6 +1624,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_fan_power;
+ 		priv->voltage_label = label_fan_voltage;
+ 		priv->current_label = label_fan_current;
++		min_report_size = AQUAERO_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_D5NEXT:
+ 		priv->kind = d5next;
+@@ -1633,6 +1650,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_d5next_power;
+ 		priv->voltage_label = label_d5next_voltages;
+ 		priv->current_label = label_d5next_current;
++		min_report_size = D5NEXT_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_FARBWERK:
+ 		priv->kind = farbwerk;
+@@ -1643,6 +1661,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->temp_sensor_start_offset = FARBWERK_SENSOR_START;
  
- 	mutex_lock(&ccp->mutex);
- 	ret = send_usb_cmd(ccp, CTL_SET_FAN_TARGET, channel, val >> 8, val);
-+	if (!ret)
-+		ccp->target[channel] = val;
+ 		priv->temp_label = label_temp_sensors;
++		min_report_size = FARBWERK_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_FARBWERK360:
+ 		priv->kind = farbwerk360;
+@@ -1659,6 +1678,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
  
- 	mutex_unlock(&ccp->mutex);
- 	return ret;
+ 		priv->temp_label = label_temp_sensors;
+ 		priv->virtual_temp_label = label_virtual_temp_sensors;
++		min_report_size = FARBWERK360_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_OCTO:
+ 		priv->kind = octo;
+@@ -1688,6 +1708,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_fan_power;
+ 		priv->voltage_label = label_fan_voltage;
+ 		priv->current_label = label_fan_current;
++		min_report_size = OCTO_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_QUADRO:
+ 		priv->kind = quadro;
+@@ -1717,6 +1738,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_fan_power;
+ 		priv->voltage_label = label_fan_voltage;
+ 		priv->current_label = label_fan_current;
++		min_report_size = QUADRO_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_HIGHFLOWNEXT:
+ 		priv->kind = highflownext;
+@@ -1734,6 +1756,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->speed_label = label_highflownext_fan_speed;
+ 		priv->power_label = label_highflownext_power;
+ 		priv->voltage_label = label_highflownext_voltage;
++		min_report_size = HIGHFLOWNEXT_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_LEAKSHIELD:
+ 		/*
+@@ -1753,6 +1776,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 
+ 		priv->temp_label = label_leakshield_temp_sensors;
+ 		priv->speed_label = label_leakshield_fan_speed;
++		min_report_size = LEAKSHIELD_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_AQUASTREAMXT:
+ 		priv->kind = aquastreamxt;
+@@ -1783,6 +1807,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_aquastreamult_power;
+ 		priv->voltage_label = label_aquastreamult_voltages;
+ 		priv->current_label = label_aquastreamult_current;
++		min_report_size = AQUASTREAMULT_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_POWERADJUST3:
+ 		priv->kind = poweradjust3;
+@@ -1856,6 +1881,8 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		break;
+ 	}
+ 
++	priv->min_report_size = min_report_size;
++
+ 	if (priv->buffer_size != 0) {
+ 		priv->checksum_start = 0x01;
+ 		priv->checksum_length = priv->buffer_size - 3;
 -- 
 2.53.0
 
