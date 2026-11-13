@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590733;
-	b=K/bS5xdQ2eNavG6I/0QeMlhfwten5YBsdhAj8HMakEsff1d03x1b7B6S/UQa5biUbkKY
-	 Cjvi/8E20zj1YaU9DBzVjjHbxls1DkzinSWboTE4FDFXRoOme+QgQOUWThG6jgQaFyVFA
-	 mOQi8pkkzhykBFTT/qsN35ljoptIwMKVERMk39eB5eGLdYUZrqdJQQyMHZmQeqbIvDCdc
-	 +Xxo7xEnPENZWIvOv73zLhwrJ00S3zn8bWZgA0gdKn1ATZ/dgjQzztJuKOFACxJYCrxox
-	 6qen9SZSoJkh0l7Q4WIdhC7RlyjIuG5N0iFU1SEla93GtWGwCu4z1zFmQHjznXwYS9Q==
+	t=1794590734;
+	b=dnmAzZ0GCkO4Kfmj0qNfeq7s9bh6Xfl/Cq0UTVELAUxad7c25npuujhTmdnPvBi9b8iC
+	 lSKTRq6o2M3l8DqhSAO4w/CSjkjYHLrFcy3Qe4JPzjSjaxZSusSs1AOL41HgtOfyPIyTO
+	 7RXbF3Hh/XkVquukBVYrDEflad7KmcAEaZwU9ydY23vRwrRgw2SCO+UwP1cjrzFaAPx35
+	 eeR4iy7CxSSy8tabSEqEtx6T0HGbBEuawK7qnOoCf+7/f34jo9g9mMjkoV9Y4V0BaO0k/
+	 NWngRcBDHBMD+7Q4ZmoHUR5MfHh3mh8fSoQ1nu+T9Xe7QXdPwl8KEz7RI6qGV8tZQ0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590733;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590734;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ucomWbRW708BHlfWkhOhuDa/GLZ9bIU0KxC+XUcveSU=;
-	b=o5ZLiGLPSxfZdmlLNEsK4z+cISJdZF5Or7gV2is3x1zpb1jtbeco8VE9UszOW4DKwpsI
-	 oP5sYq4rVTW24yoQSMbNCRWJxmP8VpvlKub6noIsnch1bGRARDEnwlGyu0J8sK8rE3Oym
-	 K7m8QCVLgz3wcWHbujuqQojDIftgbmky9P4TJiw2gBAwgywiKQ1V6eds6ET6wv5rz7/TO
-	 SGEXRF/2u4CX9tNf/E2LsZBlC8u4DJNENzN2WkbF8TTnEcWvW5a/OGU8PqTYBZdtmrw2V
-	 ACR8EhtYDT9+Io3q91q1iQhW0MpM6CBWyIpvz55IC8tr5/ez9lDhkLKdtloOHmOzTDA==
+	bh=2Lag3lX1q5UhhIN/LmMDHYnpieNML+9vxuEeKtmpH14=;
+	b=O5vsdta7Jmi7b/6xvpTlxRY7wE94TXWS2G/n6dmwM2qW338/3M6OFSNblb4eOYj+YTxI
+	 lcUg+S0tTFzG61D6iDx4dlWbSLKLLXkjdkexxxCmZsRFuB9ShB/oCNhGWC+J+8WgoUJDr
+	 gGUBq1LKUIJTXquUKMEACBltz35IWG5OFbyT/VxEXw5qYZmN0UyE3bFyfjMKJfIzpcMJy
+	 +whdUTuQ0PVvk86Y+EPp5Zf46vUS/EOaGgl/chgc9mo7BMiY49WxT6DHfKUz2tKWmYTH0
+	 dO908sXODWl4xngQmkMYMbbhgo22JcIR4BOEpup5uTZTdwd5DxrfqKq89zXZmki1uSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcpOSWOK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nrfMc9DH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6788B6079D7B;
-	Fri, 13 Nov 2026 17:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC256079D7A;
+	Fri, 13 Nov 2026 17:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UcpOSWOK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C602E1F000C4;
-	Fri, 13 Nov 2026 17:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nrfMc9DH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0728F1F000C4;
+	Fri, 13 Nov 2026 17:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590733;
-	bh=ucomWbRW708BHlfWkhOhuDa/GLZ9bIU0KxC+XUcveSU=;
+	s=korg; t=1794590734;
+	bh=2Lag3lX1q5UhhIN/LmMDHYnpieNML+9vxuEeKtmpH14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UcpOSWOK5KgFeWeRJB71t6+yxPdUdLQp4nCTYhf3tcMcUnAGqx8IJzLhuu60SqRCp
-	 T6ebOOnFB6vTR8fzJcoRHTt/VnIxZBrTIkbG73un7q9mqAw0wnH08UAvhp7dp4nm+o
-	 sbk+PjNmnbMfDWcTCrCTN56AA468vsqOI+RPOws0=
+	b=nrfMc9DHO2dKW0uBXkZoAOBRPb8Uenrw2u/bEXMTK8cG+yDFZ/gs19omxhGF9b+Sm
+	 1EsHJgNhOj5fVsuWz8/NVSNOzDMax5SivYUb/raZ52QcQDjNiN18YNB9xTc7zyR6os
+	 KHRQ5Sj67/bx3qv8g50NS7G8Yko2v6Qga+CKy6GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongfu Li <lihongfu@kylinos.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 636/686] mm/memfd: fix hugetlb reservation accounting in error paths
-Date: Fri, 13 Nov 2026 10:52:49 -0500
-Message-ID: <20261113153843.366233531@linuxfoundation.org>
+Subject: [PATCH 6.18 637/686] ASoC: hdac_hda: Allocate the private data at codec driver bind
+Date: Fri, 13 Nov 2026 10:52:50 -0500
+Message-ID: <20261113153843.396011440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -74,128 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongfu Li <lihongfu@kylinos.cn>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 50ee565c1e900e247e439e4139839b060c968343 ]
+[ Upstream commit 7d357eae973a1e1933f81f55aa1b3b4e3064570f ]
 
-If hugetlb_add_to_page_cache() in memfd_alloc_folio() fails with -EEXIST,
-a concurrent fault has already instantiated the folio in the page cache,
-and the reservation now belongs to that folio.  Calling
-hugetlb_unreserve_pages() in that case incorrectly removes the region
-backing the cached folio and releases one reservation more than it should,
-leaving that folio in the page cache with no region recording it.
+The SOF HDA code allocates struct hdac_hda_priv and stores it as drvdata
+of the codec device before the codec driver is bound. The driver core
+clears drvdata on unbind, so after unbinding the codec driver via sysfs
+a subsequent bind dereferences a NULL pointer in hdac_hda_dev_probe().
 
-That leaves resv_huge_pages one page short until that folio is removed
-from the page cache, so available_huge_pages() reports a page that is not
-actually free and the pool can grant one reservation more than it can
-back.  Applications using hugetlb memfds can then fail to allocate or
-fault in a page they already reserved.  They see -ENOMEM or -ENOSPC from
-the allocation or fault path even though the reservation and
-HugePages_Free still look healthy.
+All information in the private data can be derived from the codec
+device itself, so allocate and set it up in hdac_hda_dev_probe() as a
+device managed resource, which is released on unbind.
 
-So hold the hugetlb fault mutex from hugetlb_reserve_pages() until the
-error-path unreserve completes to make the reserve, allocate and
-instantiate steps atomic against concurrent faults.  With the mutex held
-from the start, a concurrent fault can no longer consume the reservation
-between reserve and allocate/instantiate.  If a fault completed before the
-mutex was taken, it has already added the region for that index, so
-hugetlb_reserve_pages() returns 0 and the error path leaves the region in
-place.
+Remove the allocation from SOF, keeping the check for iDisp codecs
+without display audio component.
 
-Link: https://lore.kernel.org/20260927094757.31665-1-hongfu.li@linux.dev
-Link: https://lore.kernel.org/20260903030134.7407-1-hongfu.li@linux.dev
-Fixes: 717cf9357325 ("mm/memfd: reserve hugetlb folios before allocation")
-Signed-off-by: Hongfu Li <lihongfu@kylinos.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: Used 0 instead of EMPTY_VMA_FLAGS in hugetlb_reserve_pages() to match the vm_flags_t API. ]
+Fixes: 3fd63658caed ("ASoC: Intel: Drop hdac_ext usage for codec device creation")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261027083840.28813-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 08a44bde821d ("ASoC: hdac_hda: Restore the codec device type on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memfd.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ sound/soc/codecs/hdac_hda.c     | 13 ++++++++++++-
+ sound/soc/sof/intel/hda-codec.c | 23 ++++-------------------
+ 2 files changed, 16 insertions(+), 20 deletions(-)
 
-diff --git a/mm/memfd.c b/mm/memfd.c
-index aa3c948e55738..d09157cd486a2 100644
---- a/mm/memfd.c
-+++ b/mm/memfd.c
-@@ -82,22 +82,31 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
- 		struct hstate *h = hstate_file(memfd);
- 		int err = -ENOMEM;
- 		long nr_resv;
-+		u32 hash;
+diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
+index ac28b3cadb69f..e63b616afa79f 100644
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -638,10 +638,21 @@ static const struct snd_soc_component_driver hdac_hda_hdmi_codec = {
  
- 		gfp_mask = htlb_alloc_mask(h);
- 		gfp_mask &= ~(__GFP_HIGHMEM | __GFP_MOVABLE);
- 		idx >>= huge_page_order(h);
+ static int hdac_hda_dev_probe(struct hdac_device *hdev)
+ {
+-	struct hdac_hda_priv *hda_pvt = dev_get_drvdata(&hdev->dev);
++	struct hdac_hda_priv *hda_pvt;
+ 	struct hdac_ext_link *hlink;
+ 	int ret;
  
-+		/*
-+		 * Serialize hugepage allocation and instantiation to prevent
-+		 * races with concurrent allocations, as required by all other
-+		 * callers of hugetlb_add_to_page_cache().
-+		 */
-+		hash = hugetlb_fault_mutex_hash(memfd->f_mapping, idx);
-+		mutex_lock(&hugetlb_fault_mutex_table[hash]);
++	hda_pvt = devm_kzalloc(&hdev->dev, sizeof(*hda_pvt), GFP_KERNEL);
++	if (!hda_pvt)
++		return -ENOMEM;
 +
- 		nr_resv = hugetlb_reserve_pages(inode, idx, idx + 1, NULL, 0);
--		if (nr_resv < 0)
--			return ERR_PTR(nr_resv);
-+		if (nr_resv < 0) {
-+			err = nr_resv;
-+			goto out_unlock;
-+		}
++	hda_pvt->codec = dev_to_hda_codec(&hdev->dev);
++	hda_pvt->dev_index = hdev->addr;
++	/* Intel iDisp (HDMI/DP) codec */
++	if (((hdev->vendor_id >> 16) & 0xFFFF) == 0x8086)
++		hda_pvt->need_display_power = true;
++	dev_set_drvdata(&hdev->dev, hda_pvt);
++
+ 	/* hold the ref while we probe */
+ 	hlink = snd_hdac_ext_bus_get_hlink_by_name(hdev->bus, dev_name(&hdev->dev));
+ 	if (!hlink) {
+diff --git a/sound/soc/sof/intel/hda-codec.c b/sound/soc/sof/intel/hda-codec.c
+index 37674ea452d6a..2f5a1db235351 100644
+--- a/sound/soc/sof/intel/hda-codec.c
++++ b/sound/soc/sof/intel/hda-codec.c
+@@ -15,8 +15,6 @@
+ #include "hda.h"
  
- 		folio = alloc_hugetlb_folio_reserve(h,
- 						    numa_node_id(),
- 						    NULL,
- 						    gfp_mask);
- 		if (folio) {
--			u32 hash;
+ #if IS_ENABLED(CONFIG_SND_SOC_SOF_HDA_AUDIO_CODEC)
+-#include "../../codecs/hdac_hda.h"
 -
- 			/*
- 			 * Zero the folio to prevent information leaks to userspace.
- 			 * Use folio_zero_user() which is optimized for huge/gigantic
-@@ -112,20 +121,9 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
- 			 */
- 			__folio_mark_uptodate(folio);
+ #define CODEC_PROBE_RETRIES	3
  
--			/*
--			 * Serialize hugepage allocation and instantiation to prevent
--			 * races with concurrent allocations, as required by all other
--			 * callers of hugetlb_add_to_page_cache().
--			 */
--			hash = hugetlb_fault_mutex_hash(memfd->f_mapping, idx);
--			mutex_lock(&hugetlb_fault_mutex_table[hash]);
--
- 			err = hugetlb_add_to_page_cache(folio,
- 							memfd->f_mapping,
- 							idx);
--
--			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
--
- 			if (err) {
- 				folio_put(folio);
- 				goto err_unresv;
-@@ -133,11 +131,14 @@ struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx)
+ #define IDISP_VID_INTEL	0x80860000
+@@ -148,7 +146,6 @@ static struct hda_codec *hda_codec_device_init(struct hdac_bus *bus, int addr, i
+ /* probe individual codec */
+ static int hda_codec_probe(struct snd_sof_dev *sdev, int address)
+ {
+-	struct hdac_hda_priv *hda_priv;
+ 	struct hda_bus *hbus = sof_to_hbus(sdev);
+ 	struct hda_codec *codec;
+ 	u32 hda_cmd = (address << 28) | (AC_NODE_ROOT << 20) |
+@@ -168,27 +165,15 @@ static int hda_codec_probe(struct snd_sof_dev *sdev, int address)
+ 	dev_dbg(sdev->dev, "HDA codec #%d probed OK: response: %x\n",
+ 		address, resp);
  
- 			hugetlb_set_folio_subpool(folio, subpool_inode(inode));
- 			folio_unlock(folio);
-+			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 			return folio;
- 		}
- err_unresv:
- 		if (nr_resv > 0)
- 			hugetlb_unreserve_pages(inode, idx, idx + 1, 0);
-+out_unlock:
-+		mutex_unlock(&hugetlb_fault_mutex_table[hash]);
- 		return ERR_PTR(err);
+-	hda_priv = devm_kzalloc(sdev->dev, sizeof(*hda_priv), GFP_KERNEL);
+-	if (!hda_priv)
+-		return -ENOMEM;
+-
+ 	codec = hda_codec_device_init(&hbus->core, address, HDA_DEV_LEGACY);
+ 	ret = PTR_ERR_OR_ZERO(codec);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	hda_priv->codec = codec;
+-	hda_priv->dev_index = address;
+-	dev_set_drvdata(&codec->core.dev, hda_priv);
+-
+-	if ((resp & 0xFFFF0000) == IDISP_VID_INTEL) {
+-		if (!hbus->core.audio_component) {
+-			dev_dbg(sdev->dev,
+-				"iDisp hw present but no driver\n");
+-			ret = -ENOENT;
+-			goto out;
+-		}
+-		hda_priv->need_display_power = true;
++	if ((resp & 0xFFFF0000) == IDISP_VID_INTEL && !hbus->core.audio_component) {
++		dev_dbg(sdev->dev, "iDisp hw present but no driver\n");
++		ret = -ENOENT;
++		goto out;
  	}
- #endif
+ 
+ 	if (is_generic_config(hbus))
 -- 
 2.53.0
 
