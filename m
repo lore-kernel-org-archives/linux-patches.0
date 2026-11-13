@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590804;
-	b=ujAeMsD9xPDtP20nW5X5rwyeB/kAvLZn2IvbYndKfvbJN5qcZtOxZoK6a5dAfMM3jwzz
-	 LjKL2zM8YHxy6vsRv5rq4lyOUbu5ujkb7uYXJxCAgXS4SWLYyBOBYHMS+eYIbG9rJaL7U
-	 ePsV2UzCEmnKjNkSCF2rIVnNrXe6kR0l6gdjdpstn88dsWR6NVQD1zutX6EeM5xFuQp2C
-	 0gf3WRHWJFJgtbv13a8i3LEBFQDSY+NmdcgqVLLcaPpWjwcfeYMYZ08E/QEhJLdcYMS+M
-	 cXaEuUYosnv1sM1nTlvXaBATJS9kiAw6L0+2KntRwHqRLxC4OAW7hgXzop5u65JzBkg==
+	t=1794590806;
+	b=yHC2n3KBIX0w/HJ2RqRsSqvjP5cLH48J7o4oxf5kzrFA8QT+8UMqgyzHu9d7YY2EIRF6
+	 I6K8u71bMGVgTt26dJe99zjHczcZ2x4qzo00AHfbnv8nVCRuhqzVr17bTVwceZELuY/AG
+	 u7X6EZorsGsLq9dfICERqD4ZC/d2ttPtdFmqvTNLvuxtAZUXMQUYnEoiigrjx488TzuNB
+	 YYc7TdcBwTr2cVc/J6KgCrmWUigB3gYvid6K7+A0vIMUJiM649rG6/n7rYEv1OZBQqnD0
+	 7NrhbS+eJcKRHVldlGI82DW6Yqqb2mUkX8a8qQb35JtgXwwqGIKUfM/rcfHTvLxFysw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590804;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590806;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=49p0ZE1wJ3lebpL/VzsGVw0TlH0i+fw0n/7E92awvPE=;
-	b=V5EjxoH6177uPXBAkQcvM+TTjJ8eKYJLeggoSIyqPgCRRrht47PNVWw93ehyQVn69X5n
-	 /9Sba0x9UHQ0ivK9TyWyqqzhlYgJ8g2sc/d2fya/fc93MRbWGfcDk+fK6EstGX6KizgPi
-	 7OPs1iL6mPkWCawYf6yjoH+vcEEcXhJj1l3C90oe+mrJMQyWaF1rvs0v04H2eY89zbLBu
-	 f2LEYKfQ/8ErbIts18fpdyd1gJTfyn8yr6GoyuBJ/sgeNxmSw7wI1Fe5g8KlvuRJIRlS5
-	 98yYH1Nr9rxl+3MeFEg87ivR0BGSHoaZOFPbS52ASbjgPWIdD/l+b2idWi4k0CtakxQ==
+	bh=Karp5TBN3eOuvnTzt+vzzb/506eaNNK6U+QkKi1KPbQ=;
+	b=HmG6QhkKKyE3AAGsyQ2Or0YYIkaDt4SUgiJ/bnVn1oAiXgsgEc7OxCkndtk6QYfomexq
+	 O6am4PhVmNWrOaxI8EwSC/QxomgCAa3rw+IPc0v+YoB25bQAn56MnU+nux6Qt6ejvkmvu
+	 LBvGAnjn7zLLWqDVI4jIlw8H0NpnnKsmOja1dLUPDHetR/peUbevCrGbTL/+62heB/AJh
+	 gjabe3So3zi2WhXvktrIbfGnr6XX8emFu5/KhBjAQXjnjA22KwsyntinErc7dFjLYdqtQ
+	 mHLWXBXwXidO1RcdmH8shnKPmCoeht3HXPZLnQrP/q7N75Qw2ejQdK4ljOVfmzTmcUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XV1jxnRw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwyHkT3e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD58607D2E1;
-	Fri, 13 Nov 2026 17:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23061607D2E8;
+	Fri, 13 Nov 2026 17:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XV1jxnRw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874151F000C4;
-	Fri, 13 Nov 2026 17:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwyHkT3e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E381F000C4;
+	Fri, 13 Nov 2026 17:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590804;
-	bh=49p0ZE1wJ3lebpL/VzsGVw0TlH0i+fw0n/7E92awvPE=;
+	s=korg; t=1794590806;
+	bh=Karp5TBN3eOuvnTzt+vzzb/506eaNNK6U+QkKi1KPbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XV1jxnRwEvkRW13dS1U815dnSm7KIKlgQJqRBC9SIjY6t5p3x/bgQ/jOTDDD9q5hW
-	 xASk/0pAbIXmkhRVWwUH3NWVVctlSlNFjfcJFcKHc492Mkv+P9cFmRvJsZRuJ9uMon
-	 dO7hjFZBUumeYqWkEi10MTRPIylbWAFNs6Y30720=
+	b=RwyHkT3ekHX1rEaqk1Rr+2Ari6EqyI1pInsX3IYFB1AWXfAdlC4/5ZWJyLbRqRtfR
+	 7hyOCYVoRWI+LGesbW8jbzbys8n7jQJQZa4WNFFOzEeHhPk016EEaXTnAsU9K9sFp5
+	 ErdmZk86fqFCywxmku/0gbVAw7q6TFoA+7X3PDwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongjian Wang <echoowall@gmail.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Keith Busch <kbusch@kernel.org>,
+	Andrew Stellman <astellman@stellman-greene.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/670] Revert "net: advertise TCP MSS from the configured MTU, not the learned PMTU"
-Date: Fri, 13 Nov 2026 10:42:51 -0500
-Message-ID: <20261113153811.436889776@linuxfoundation.org>
+Subject: [PATCH 6.12 006/670] nvmet-rdma: fix out-of-bounds write in nvmet_rdma_map_sgl_inline()
+Date: Fri, 13 Nov 2026 10:42:50 -0500
+Message-ID: <20261113153811.405714907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,190 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongjian Wang <echoowall@gmail.com>
+From: Andrew Stellman <astellman@stellman-greene.com>
 
-[ Upstream commit 564313447e545eea13038f74ada9272ab129b3cb ]
+[ Upstream commit d1512773a0d539669440bd9f6d050b8e12923b5f ]
 
-This reverts commit 2640e6419594 ("net: advertise TCP MSS from the
-configured MTU, not the learned PMTU").
+nvmet_rdma_map_sgl_inline() bounds the host-supplied in-capsule SGL
+offset with "off + len > inline_data_size", evaluated in 64-bit
+arithmetic. off is taken straight from the host SGL descriptor
+(le64_to_cpu(sgl->addr)) and len is promoted to 64-bit, so the sum
+wraps: an off within len of 2^64 makes it small and the check passes.
+off is then used as page_idx = off / PAGE_SIZE to index the fixed-size
+rsp->cmd->inline_sg[] array (NVMET_RDMA_MAX_INLINE_SGE entries), so a
+crafted offset yields an out-of-bounds scatterlist index that is written
+through in nvmet_rdma_use_inline_sg().
 
-That commit stopped the learned PMTU from lowering the MSS we advertise
-in SYN and SYN-ACK. For symmetric paths it argued that "the peer runs
-its own PMTU discovery and usually already knows the real path MTU".
-That only holds if ICMP "fragmentation needed" can reach the peer. When
-the peer sits behind a firewall that drops inbound ICMP, its PMTU
-discovery is a black hole (RFC 2923, section 2.1), and the smaller MSS
-we advertised was the only thing keeping its full-size segments off the
-narrow hop.
+The mapping runs while handling a received capsule, before the command
+executes, so a remote RDMA peer can reach it (the Connect capsule is a
+write and takes this path on a queue that has no controller yet). The
+host controls only the low bits of the resulting displacement, so the
+expected impact is an out-of-bounds write that faults the target
+(remote denial of service).
 
-Inbound ICMP filtering is very common in enterprise and carrier
-networks, and it is pervasive in mainland China. We hit this in
-production after the commit was backported to 6.12.111: TCP connections
-that reach a server through a relay with a smaller-MTU hop complete the
-handshake, then stall as soon as the client sends full-size segments.
-Clients on networks that let ICMP through, and connections that bypass
-the relay, are unaffected, which made it hard to trace back to the
-kernel.
+This wrap was reported, with a KASAN reproduction, on linux-nvme in May,
+and the check below was suggested in that thread. The fix that was
+applied, 48c0162f647b, reworked how the offset is mapped but kept the
+original check, and its page index turns a wrapped offset into an
+out-of-bounds index into inline_sg[].
 
-Reproducer, network namespaces on a single host:
+Reject the offset before it can wrap.
 
-  cli --(1500)-- r1 --(1456)-- r2 --(1500)-- srv
+Found independently by static analysis with AI assistance, not
+reproduced at runtime.
 
-r1 drops ICMP frag-needed towards cli. srv has already learned PMTU
-1456 towards cli, then cli uploads 1 MB to srv:
-
-  kernel                     SYN-ACK MSS   1 MB upload
-  6.12.107                   1416          OK
-  6.12.111                   1460          stalls, times out
-  7.3-rc7                    1460          stalls, times out
-  7.3-rc7 + this revert      1416          OK
-
-The asymmetric case the commit was written for does not need a new
-default: the advertised MSS can already be set per route with the
-advmss metric, which takes precedence over default_advmss(). With this
-revert applied, on an asymmetric path where srv learned PMTU 1456
-towards cli while cli->srv is 1500 end to end:
-
-  srv route to cli           SYN-ACK MSS   largest cli->srv segment
-  default                    1416          1404
-  advmss 1460                1460          1448
-
-So DSR-style setups can opt in with "ip route ... advmss <mss>", while
-hosts whose peers cannot complete PMTU discovery keep working by
-default.
-
-[ 6.12.y: reverse commit 7f84f07f54fa, the stable backport of
-  2640e6419594. Keep the local dst_dev() lookup and surrounding
-  context in ip6_default_advmss(). ]
-
-Fixes: 2640e6419594 ("net: advertise TCP MSS from the configured MTU, not the learned PMTU")
-Closes: https://lore.kernel.org/regressions/4F0FAEB6-A13B-47F3-BFF1-C706686C6F64@gmail.com/
+Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
+Fixes: 48c0162f647b ("nvmet-rdma: handle inline data with a nonzero offset")
+Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
+Closes: https://lore.kernel.org/all/LM21QIR-1-qJb7PViyJKCnGBnUzizeiNJVWQ3wb7ZwGezodjgKg3f-iobqOyequ-sT1jFCKJImfqNO_BKU3KO80xFITnaI5GTV_GxLUNDDc=@proton.me/
+Suggested-by: Keith Busch <kbusch@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Yongjian Wang <echoowall@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261026-advmss-revert-v1-2-272fa4b7ecb6@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip.h        | 25 -------------------------
- include/net/ip6_route.h | 37 -------------------------------------
- net/ipv4/route.c        |  4 ++--
- net/ipv6/route.c        |  2 +-
- 4 files changed, 3 insertions(+), 65 deletions(-)
+ drivers/nvme/target/rdma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 97c60b3002702..f00719e1863f7 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -515,31 +515,6 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
- 	return res;
- }
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 01b7722afb5e8..290b51fef0b98 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -864,7 +864,8 @@ static u16 nvmet_rdma_map_sgl_inline(struct nvmet_rdma_rsp *rsp)
+ 		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
  
--/* Configured/administrative MTU of a route, for advertising the TCP MSS.
-- *
-- * Unlike ip_dst_mtu_maybe_forward(), this deliberately ignores the
-- * ICMP-learned path MTU (rt->rt_pmtu).  The advertised MSS bounds what the
-- * peer may send to us and must reflect our receive capability (the device or
-- * route-configured MTU), not a path MTU learned on the reverse (send)
-- * direction, which may not apply to the peer->us path and outlives the fnhe
-- * for the whole connection.  See RFC 2923 section 2.3 and the comment above
-- * tcp_advertise_mss().
-- */
--static inline unsigned int ip_dst_mtu_configured(const struct dst_entry *dst)
--{
--	unsigned int mtu, res;
--
--	rcu_read_lock();
--	mtu = dst_metric_raw(dst, RTAX_MTU);
--	if (!mtu)
--		mtu = READ_ONCE(dst_dev_rcu(dst)->mtu);
--	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
--	res = mtu - lwtunnel_headroom(dst->lwtstate, mtu);
--	rcu_read_unlock();
--
--	return res;
--}
--
- static inline unsigned int ip_skb_dst_mtu(struct sock *sk,
- 					  const struct sk_buff *skb)
- {
-diff --git a/include/net/ip6_route.h b/include/net/ip6_route.h
-index 8be44dc5b5b71..ad35c7512f120 100644
---- a/include/net/ip6_route.h
-+++ b/include/net/ip6_route.h
-@@ -354,43 +354,6 @@ static inline unsigned int ip6_dst_mtu_maybe_forward(const struct dst_entry *dst
- 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
- }
- 
--/* Configured/administrative MTU of a route, for advertising the TCP MSS.
-- *
-- * Unlike ip6_dst_mtu_maybe_forward(), this ignores any ICMPv6-learned path
-- * MTU (which is kept on the RTF_CACHE exception route) and returns the MTU of
-- * the underlying route (fib6_pmtu) or the egress device.  The advertised MSS
-- * bounds what the peer may send to us and must reflect our receive
-- * capability, not a path MTU learned on the reverse (send) direction.  See
-- * RFC 2923 section 2.3 and the comment above tcp_advertise_mss().
-- */
--static inline unsigned int ip6_dst_mtu_configured(const struct dst_entry *dst)
--{
--	const struct rt6_info *rt = dst_rt6_info(dst);
--	const struct fib6_info *from;
--	struct inet6_dev *idev;
--	unsigned int mtu = 0;
--
--	rcu_read_lock();
--	/* IPv6 keeps the learned PMTU and the configured MTU in the same
--	 * RTAX_MTU slot: the learned value sits on this (possibly RTF_CACHE)
--	 * dst, the configured one on the underlying route.  Reach the latter
--	 * via ->from (fib6_pmtu), populated by ip6_route_info_create().
--	 */
--	from = rcu_dereference(rt->from);
--	if (from)
--		mtu = from->fib6_pmtu;
--	if (!mtu) {
--		mtu = IPV6_MIN_MTU;
--		idev = __in6_dev_get(dst_dev_rcu(dst));
--		if (idev)
--			mtu = max_t(unsigned int, mtu, READ_ONCE(idev->cnf.mtu6));
--	}
--	rcu_read_unlock();
--
--	mtu = min_t(unsigned int, mtu, IP6_MAX_MTU);
--	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
--}
--
- u32 ip6_mtu_from_fib6(const struct fib6_result *res,
- 		      const struct in6_addr *daddr,
- 		      const struct in6_addr *saddr);
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 596c84fd5ab42..f1b0ab77b443b 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1358,8 +1358,8 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
- 
- 	rcu_read_lock();
- 	net = dst_dev_net_rcu(dst);
--	advmss = max_t(unsigned int, ip_dst_mtu_configured(dst) - header_size,
--		       net->ipv4.ip_rt_min_advmss);
-+	advmss = max_t(unsigned int, ipv4_mtu(dst) - header_size,
-+				   net->ipv4.ip_rt_min_advmss);
- 	rcu_read_unlock();
- 
- 	return min(advmss, IPV4_MAX_PMTU - header_size);
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 94fa1b34be5c3..e6c2db89860c8 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3252,7 +3252,7 @@ EXPORT_SYMBOL_GPL(ip6_sk_redirect);
- static unsigned int ip6_default_advmss(const struct dst_entry *dst)
- {
- 	struct net_device *dev = dst_dev(dst);
--	unsigned int mtu = ip6_dst_mtu_configured(dst);
-+	unsigned int mtu = dst6_mtu(dst);
- 	struct net *net;
- 
- 	mtu -= sizeof(struct ipv6hdr) + sizeof(struct tcphdr);
+-	if (off + len > rsp->queue->dev->inline_data_size) {
++	if (off > (u64)rsp->queue->dev->inline_data_size ||
++	    len > (u64)rsp->queue->dev->inline_data_size - off) {
+ 		pr_err("invalid inline data offset!\n");
+ 		return NVME_SC_SGL_INVALID_OFFSET | NVME_STATUS_DNR;
+ 	}
 -- 
 2.53.0
 
