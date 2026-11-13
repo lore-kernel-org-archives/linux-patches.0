@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591529;
-	b=KLB6Yp50YXQTaYcnDT2H00p6ModSz6VnDbaLysttkecaFbqXB5qW5N2VGTdCCfZkyP7A
-	 tZjWoaeHL3g71577274OUpHuUSYcUyrpK6Pol/gZlxPwFCeQRSvAR6KGTh3ekSPWljCyf
-	 +NcEzUMCImMb+TIVTj6CQuYFgMz56H2SlENYsug6jKg4alR9483aT26FaQCFVx6rGEP/V
-	 czdTqOvOsj7EoMlbg08YjjH0N4gsADbrNxPG5Wy3+PDZtDBtrgin8vppWJZMZM27DXdPA
-	 mPvjVoQb29z9aaHBwlr+SNYfM8CPuxpx1icZeE+XQSW4BinH6NISr5BoiZ0Gjvn4IXg==
+	t=1794591530;
+	b=T9UwTzoRmKpBogn9iezFcjLcbOZnc7JNDg3tX3V+eFWovCozDEozcPkR+Qx/16oS0jup
+	 MuHCD6x7zveq0R+tunq8Xn78zJgBC7QV7ouqP53QKKqqiK9Fkxn+sNMjawO8Bc2sXliJX
+	 QlyibwidhdLcXHJZWlARe93lyzvCPZE/WW22J7Fd4nMGergMeQ1s2k6lN7jf5fQf+UaTr
+	 8gyLu9fjxflogIGhYRVRfnfkqdGLDdV5N80HRTSpKhiXBCbDzWRnUeeabcforfNja2sJv
+	 qfDvDn3JkVHEye49MGaxpsAcNypyv7wcHuSTH119dTXzgzIVy17rUaVrYR8Q/P6medQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WdyIJJiQWj1CwAsVsBPEvIQ1ykIHlWGTEQ9bKVK/cvg=;
-	b=com33G1k/p+uN2Ro9zP0/1o+yRT9uFzi/xEQYvHjYcfYvjW5oWqRq5Qm3M4m7d/htVmO
-	 FkIqiRN9ap5e2Qlx6Zd0hKWOHIZNmSQAKfLYbnjSaZuEBkrBuu+NAwdelBvn+L0rgcWUF
-	 7oWpmWhYf+cEmd7AjJjzuJ5uufCin8sZiyO8o4MdNYOIR/YoCffi3Ng4myFyq0EJPIQq9
-	 szaON5BB9k8xLNGCfIHisqSo9cFdmQIZa1vwwKPAV8Qw3AU3+OU8JPWeXralpOXJ6LOvK
-	 6Mavipy6jaet69byfIcNnx1g9G/GLzTGrlttyVCVN9hirLMx4Vyq8hzpz44dIXk3nxQ==
+	bh=ei4E7FPm/GxJ1Re0ZBcB0NCE1KwCETAP7/ZuGuhKJZE=;
+	b=esh9wcrUjVx/1Qs8z7609JatZkeCa7IJ2P9UFRVCgxk9TnTRizdCdpOvhfpjJ6yWWcxx
+	 famugk+SyL2OBN0xVuJDPaGg06xP51jSRoGvBAIbOG3F1WLhny8MYpRSu3OOtGY34KiJ9
+	 BoguIvUVSnAlFT3TtdNkXPu+ueVS0i6As8NcPZfFu1G3r9Fv3Do+Fl6vnAyGlgHw+laqq
+	 KkRsWiMbenl1f7N/k1eyRp15cNxNB5aVE6pKI/eFoQRmuHVYL3valMrCNW+CaZOwjaS64
+	 aQO6+1MM6D+w7GShJihPE5fVLsf6CSsSDrV/llQSkjNdLOnV4qwmgBspmE6m+Jx/BSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZH49ffwN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nThE4VkZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3396A606D857;
-	Fri, 13 Nov 2026 17:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8851607EE4D;
+	Fri, 13 Nov 2026 17:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZH49ffwN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43351F000C6;
-	Fri, 13 Nov 2026 17:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nThE4VkZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187371F000C5;
+	Fri, 13 Nov 2026 17:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591529;
-	bh=WdyIJJiQWj1CwAsVsBPEvIQ1ykIHlWGTEQ9bKVK/cvg=;
+	s=korg; t=1794591530;
+	bh=ei4E7FPm/GxJ1Re0ZBcB0NCE1KwCETAP7/ZuGuhKJZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZH49ffwNcOnHaNpvWMGDgiGKnaZ+obu9J+sQ+uDzXDH0PDYPPWYvv7/A+WNEiFIAd
-	 Lmh9CK2QBN+PMdmPkFttImPV2nvLKDfpg1Vl/VjwIS4fLp5MBjfEXXzLOnvTUD/jQK
-	 XERGEL0lAPPpedwSYdJGKrKsa4t4gzmqhB1ogRJk=
+	b=nThE4VkZnRO1grxzTozpJcXJX5zgXCqyoRUYkGsaBa4oJjvPg4fgEf/ZpuWT0ONl/
+	 UW8RMue7DoZducS1XZqUG7obQDHSYYXzYfKkUc58pRbN9IWXKPkI3BlTsEu35kTbox
+	 LIbpgy22nXPxVt2A+DU0DBDq80dpPbnfTabxjStE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Yiqi <yaoyiqi3@huawei.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 586/670] fbcon: Retry rotated font allocation after failure
-Date: Fri, 13 Nov 2026 10:52:30 -0500
-Message-ID: <20261113153831.696297380@linuxfoundation.org>
+Subject: [PATCH 6.12 587/670] xen/gntdev: Fix gntdev_dmabuf ref leak in dmabuf_exp_wait_released()
+Date: Fri, 13 Nov 2026 10:52:31 -0500
+Message-ID: <20261113153831.733009823@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,47 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Yiqi <yaoyiqi3@huawei.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7935db1a4a0f83a63590a222500e5016e2f6c85e ]
+[ Upstream commit 6f165abe2b40ede71c98956cd74cd17c18505e75 ]
 
-fbcon_rotate_font() records the font, its geometry and the rotation in
-par->rotated before calling font_data_rotate(). If the allocation
-fails, the error path clears par->rotated.buf, but the recorded key
-already looks up to date, so the next call takes the early-out and
-never retries. The rotated putcs/cursor ops keep returning early on
-the NULL buffer, and the console stays blank even after memory is
-available again.
+dmabuf_exp_wait_released() takes a reference on the exported
+gntdev_dmabuf with dmabuf_exp_wait_obj_get_dmabuf() and passes it to
+dmabuf_exp_wait_obj_new(), which drops that reference after adding the
+wait object to the wait list.  When the wait object allocation fails,
+dmabuf_exp_wait_obj_new() returns ERR_PTR(-ENOMEM) early and the
+reference is never dropped, leaking a reference to the exported
+gntdev_dmabuf.
 
-Also test par->rotated.buf in the early-out, so a failed allocation
-is retried on the next call: at the next fbcon_switch(),
-fbcon_modechanged() or font change.
+Drop the reference on the allocation failure path so the reference is
+consumed whether the wait object is created or not.
 
-Fixes: e4ef723d8975 ("fbcon: Avoid OOB font access if console rotation fails")
+Fixes: 932d6562179e ("xen/gntdev: Add initial support for dma-buf UAPI")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yao Yiqi <yaoyiqi3@huawei.com>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-[ sashal: used par->fontbuffer instead of par->rotated.buf in the existing font cache check ]
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260916170956.2086505-1-vulab@iscas.ac.cn>
+[ sashal: adjusted allocation context from kzalloc_obj(*obj) to kzalloc(sizeof(*obj), GFP_KERNEL) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon_rotate.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/xen/gntdev-dmabuf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/core/fbcon_rotate.c b/drivers/video/fbdev/core/fbcon_rotate.c
-index a3f507825eed8..3105682075c87 100644
---- a/drivers/video/fbdev/core/fbcon_rotate.c
-+++ b/drivers/video/fbdev/core/fbcon_rotate.c
-@@ -27,7 +27,8 @@ static int fbcon_rotate_font(struct fb_info *info, struct vc_data *vc)
- 	u8 *dst;
+diff --git a/drivers/xen/gntdev-dmabuf.c b/drivers/xen/gntdev-dmabuf.c
+index 5ab973627d183..1072e781f12ee 100644
+--- a/drivers/xen/gntdev-dmabuf.c
++++ b/drivers/xen/gntdev-dmabuf.c
+@@ -96,8 +96,10 @@ dmabuf_exp_wait_obj_new(struct gntdev_dmabuf_priv *priv,
+ 	struct gntdev_dmabuf_wait_obj *obj;
  
- 	if (vc->vc_font.data == par->fontdata &&
--	    par->p->con_rotate == par->cur_rotate)
-+	    par->p->con_rotate == par->cur_rotate &&
-+	    par->fontbuffer)
- 		goto finished;
+ 	obj = kzalloc(sizeof(*obj), GFP_KERNEL);
+-	if (!obj)
++	if (!obj) {
++		kref_put(&gntdev_dmabuf->u.exp.refcount, dmabuf_exp_release);
+ 		return ERR_PTR(-ENOMEM);
++	}
  
- 	src = par->fontdata = vc->vc_font.data;
+ 	init_completion(&obj->completion);
+ 	obj->gntdev_dmabuf = gntdev_dmabuf;
 -- 
 2.53.0
 
