@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585694;
-	b=zQvoS8Ik+ZcLA5DlqgL/F+JDzqb4WxYlzxso3ed57JZKlKX7dbyIK3DvPDC/mC90Y4Wc
-	 WdznN09nGFzdZwKSUP8uF6Dumnc6lRHOPb28Hazb1HDfBPaX6gO9ouY3YA2F3G0tuuZdp
-	 Q38isSBuKzbfxCPIQzIWOPOgnO2aTsla386A1GJj3ekJ48IOSGSnBEETFL0IpyI4PKYdN
-	 DVyWGGcF2mwpeLxaOjxedEV2Zp7PKeHce4OdgMhPBjZACVRRgHl76k6JxscrOqRR4ynsn
-	 SnOAtMyETeNakPMqPhvTjjael5pjnaZE+PrhDjHZ59hyT4uEI2DCdrNpMtVdvDkojMQ==
+	t=1794585695;
+	b=sqeOTiZW2UBSyb3867ARykymS/FxbiWa1JRWDQOv9Oz1YaqOK366LYe1YQcz17v5tzHa
+	 0YSY/QSmNWU7h33KeLBRicVhC9jBu5HOuJDROcKDqgeVhUndah4ppw2aLGLOUZUsviyxT
+	 ElQDFBSMveUSEtwgS/bERoHeycTJzeNuWEGsGMho73+IMxap5qCFmJrX1EmOEfZfRCOEo
+	 5vWP3Tx4yMKsT+TUZNsCfqSjbi8Xavk6Rco6oXHXnAgd9i5CO3nEPQUbPMx97lACK614e
+	 iMOE+HJkSZDcUnQ71cdcM2KCaiYK6iH59ySlnAcXJYZBTNl36qR9FFv4cAyQgmd/D9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585694;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585695;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zC/faLuFjOmCwBS7xevK9W2nnTve31rnzrHarCwe9HM=;
-	b=DaZfTmEVzElZl6+qD4R8PGbK8aFHWbg3HVLgtn1ILPOdR/zgki4z2bsTqb1RUZFUoXi7
-	 FCkFCoqHBUkhvnrpIXu92SYwxArt9rennXAANcLmDT1raxue94ZEEqjIKzziBYOjIhR3M
-	 sCAbBehCMLI9v188REyCzgIPS6WHoNVCvU30tPXrK8QagdM8XEGkV8AZa1CEhcw63jMhw
-	 aXLmVExDy/NjDrbMTrYAUUt64beCfqadHJjtBgxjnoRB+NUCkOAE5oIzpeP1s+qOazaEX
-	 Q1Ui1+8Ioy6jShZDeT8e5ys2PU1/xnKqmCPAwls6DKEUkxonEH3Wu2zapIcwCZffuKA==
+	bh=Rl2HdZKRNrrUHNnwUeM7c+OEYfgf2qzWkMsyZIp0x88=;
+	b=3K6wzR87mNMXlYwqcqquXuSakKUXaiK+FKJWZs+0/nJsLUIAfd5AbwJl9pCpSX/OgyPp
+	 0dGUANK/m76xEpJ4TSv1rJhqEQrZchWCij+61rFfAwHDz/ynjn6LXh57GpN6EnViMUgWV
+	 I5tQzxtxJLWbZIVkjtdttoG9INR+SgKxD9sf0vtPYmKxzUJ3Kg29FVNmShhrfaYw/MmfY
+	 VaAQzipiJwMMO6hMfkt+hYr4fSWMzOkhsgWtokq7u5o75kf/lIhYRzpM1T8/MEFaLYIe/
+	 8GW3HKqDCTk+eezJEW3jNX6ItRWSlQmRxMgmrDmGsTRO6QKloX/lzcFUHe7V9NOPQYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6wOLqfe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKTedSAi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25775606A8B9;
-	Fri, 13 Nov 2026 16:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58275606A8B9;
+	Fri, 13 Nov 2026 16:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6wOLqfe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55B51F000C4;
-	Fri, 13 Nov 2026 16:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKTedSAi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088941F000C4;
+	Fri, 13 Nov 2026 16:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585694;
-	bh=zC/faLuFjOmCwBS7xevK9W2nnTve31rnzrHarCwe9HM=;
+	s=korg; t=1794585695;
+	bh=Rl2HdZKRNrrUHNnwUeM7c+OEYfgf2qzWkMsyZIp0x88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J6wOLqfeV+DOntAzzv91nzx+NOoBiq9RBSr7x8crAAiGfOUXLl71OkQUTWmzi/+5m
-	 peWJ2b3H0aiRZoIlVcToVQ4S7GiYYhwwl6+6M4fjCinHCD0TYE6QQEymJH8242R0uY
-	 PAT+RKAD3lNSDJF4UMkhXsMZJD1fU+PtE3icyH2Q=
+	b=bKTedSAiPxtQNmJU3uUqLU1zMNPCp6W3bMqL3pPRbMTWD0TBATlF3TfPCttO2Uhwe
+	 ECHdeeJTaVowyU8vO473pqv0AKdy6pKhQ32ClJdz3S6Ak345ld5DVl1Tm2ypEZHs/b
+	 0YTyjUTILk40GJtYOika/e+V1o6pkWYtEPjzfCz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 302/507] mm/huge_memory: fix truncate racing with PMD zapping
-Date: Fri, 13 Nov 2026 10:50:06 -0500
-Message-ID: <20261113153805.506592917@linuxfoundation.org>
+Subject: [PATCH 7.3 303/507] mm/huge_memory: fix zapping migration entries for device-private THPs
+Date: Fri, 13 Nov 2026 10:50:07 -0500
+Message-ID: <20261113153805.537436502@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -74,66 +73,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit e6a07d29b0a60f3a4cfe77fe34eeb4b3fb38d6c4 ]
+[ Upstream commit 63a940541358d09cc9f02d40b71eb8d3917a21c0 ]
 
-zap_huge_pmd_folio() removes the rmap before calling folio_mark_dirty().
-If this was the last mapping, truncation can skip unmapping the folio
-and proceed without waiting for the PMD lock, racing with dirtying.
+A PMD migration entry can refer to a device-private folio.
+zap_huge_pmd_folio() checks the folio type instead of the entry type,
+so it treats such a migration entry as a device-private entry.
 
-ifs_set_range_dirty() can oops if MADV_DONTNEED races with
-ftruncate() on XFS, when we get the folio set dirty after it was found
-to not be mapped anymore.
+Installing the migration entry already removed the reverse mapping and
+dropped the mapping reference. Zapping it must not repeat those
+operations. Concurrent MADV_DONTNEED during migration back to system
+memory can trigger this.
 
-Move folio_mark_dirty() and folio_mark_accessed() before rmap removal,
-matching the PTE zap path. This keeps the folio mapped while updating
-its state, so truncation must wait for the page table lock.
+Check the PMD entry type using pmd_is_device_private_entry().
 
 Fix generated by an LLM and sent by Chris Mason in private.
 
-Fixes: fe6cf984939d ("mm/huge_memory: transfer the pmd dirty bit to the folio on zap")
+Fixes: 368076f52ebe ("mm/huge_memory: add device-private THP support to PMD operations")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify comment and description ]
+[ david: simplify description ]
 Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-13-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-14-d6437171ecc3@kernel.org
 Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ mm/huge_memory.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index f5e871059ba6b..da96959998692 100644
+index da96959998692..c1130d3d28261 100644
 --- a/mm/huge_memory.c
 +++ b/mm/huge_memory.c
-@@ -2496,10 +2496,6 @@ static void zap_huge_pmd_folio(struct mm_struct *mm, struct vm_area_struct *vma,
+@@ -2494,7 +2494,7 @@ static inline void zap_deposited_table(struct mm_struct *mm, pmd_t *pmd)
+ static void zap_huge_pmd_folio(struct mm_struct *mm, struct vm_area_struct *vma,
+ 		pmd_t pmdval, struct folio *folio, bool is_present)
  {
- 	const bool is_device_private = folio_is_device_private(folio);
+-	const bool is_device_private = folio_is_device_private(folio);
++	const bool is_device_private = pmd_is_device_private_entry(pmdval);
  
--	/* Present and device private folios are rmappable. */
--	if (is_present || is_device_private)
--		folio_remove_rmap_pmd(folio, &folio->page, vma);
--
  	if (folio_test_anon(folio)) {
  		add_mm_counter(mm, MM_ANONPAGES, -HPAGE_PMD_NR);
- 	} else {
-@@ -2513,6 +2509,13 @@ static void zap_huge_pmd_folio(struct mm_struct *mm, struct vm_area_struct *vma,
- 			folio_mark_accessed(folio);
- 	}
- 
-+	/*
-+	 * Present and device private folios are rmappable. Remove the
-+	 * rmap after transferring young+dirty to the folio.
-+	 */
-+	if (is_present || is_device_private)
-+		folio_remove_rmap_pmd(folio, &folio->page, vma);
-+
- 	/* Device private folios are pinned. */
- 	if (is_device_private)
- 		folio_put(folio);
 -- 
 2.53.0
 
