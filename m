@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590176;
-	b=WtjL0gJPg+/lV21HbKDoejKrJ5KnipApJ920DPVTIYJKU9j/kRdUygJnUcakPGl+vIcf
-	 FU9znhfwoVH0p8lfJpeT5wl1pVoG+oDfW3bYd6wVuC19wADCKepg1vUtT+JGlEp5y0cl5
-	 j4q0WlpZ8AXv8II70Cmli9neGAX9ZTOG8/6mVr7Vm662CI60ryuqTG5L5JyVo59Myidqg
-	 Ad2AC6A6ID21kJgjwLLkEZCgle04lGEZeojEAGfjJWQlYG/E9AFKh+6JY/pmn9mczawlG
-	 K4Lm4hou4U3tztM/LKU8CQyZ4xkaqs1Lhk7j0EKaYwgIO2BJva+UFb+hvqOoXZoooTw==
+	t=1794590177;
+	b=h6hmU2ZK86tDgK5vYjTqQWK5EslHvQQvCSSgqzXCdtSAkdo/PSAC3BlSEL8dBrW74u39
+	 8JVYlf9KsWVKv36LohjxJFUWRBBf3KqpvknHfF68ChB48LorGYOtvK4bmSkcJytt46sOB
+	 W3OBg2+k7mjekt4CXNA8yZvMjGOt15/w8glcXrEaRm9Taq+FpxknxMJTseBtlrBa78cQd
+	 iNdnuvdE6c0rvBSwdaVvwp9fqUSFoYQtg2acOjYQYmZHNXflyePqFi6WoI1bBTjeXFL1N
+	 +AcKhONWp3jmznFS+iK0fHutstagoybRP0xKdBowP2L17W75Vc0jq0KggYV4+Uq87ww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590177;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/MrYShMj6VlRKU8blbEhJCR0PwYhbOjZKQZNuVn7/Dg=;
-	b=ZMJ8m9RG5ABztpUeq4UasZR/HI15u5SLaon0ASxhVOaA7wc1bzk+YIUgsWMtCKtvjWmL
-	 1LPC2D1WxERDBhASrQC2K4nZz704qv4YqzTlH3swmW6WDarcXTVutV48IbAJG512h3I+d
-	 2g15JmfkqS7LocgZ92nBCRVI/W33KT448nsx4ZII/Lo3WpZq39rkZpOKyIKDWRNwUYy9X
-	 ZvHdVBufeKooYIz/UwE+dFHkPEc0NENJcVL0vAC5aTw9yf/sKglhn4ZeFqsZiUUCEXnoi
-	 G6/9ozh1+8Tmz0rMCZ/BJEBwukJQitjnpKUFBBF84sJrl4L3dcfvHrY4n43tzTBlgHA==
+	bh=MhQf6iHzPNpus/ynwNk7N498lqTkTz+LA8kl5jK3XM0=;
+	b=PtVVm5VmdvYpU9nC1DiP/iTnTNKpNY54fhlSD+yoiwKMuu+GNYY9ipiDT2yJ7w/og9xl
+	 f7rpvg793gYu5jNM7DG/ZmNHrIGENxCgCSnK5ARhtLNmVV6R5KWJ6ginL5DF1geShM7+e
+	 MjrdxM7vOcCnk2YOJYvq7P+6nDyhhsG9X0sMRXJJh5Kp6aP+zDZ9fuIgVkfvjlau2aRTz
+	 ARFEIIlETxVuI4pGaTlyx6Dy57K4Uwx6greJYSNzlNQtI3EKPaOPDCLQmICvImXnYkJPU
+	 +W+2z1+qxgmeNcStLCZvl7eE2AUV+KL3zzIU2Xj5qFBoFE6ZCSRtkkZi7ZkLrXUfcNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MG06aLwf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zZUfE8dQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68006606A8A5;
-	Fri, 13 Nov 2026 17:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1E0607141C;
+	Fri, 13 Nov 2026 17:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MG06aLwf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FD91F000C9;
-	Fri, 13 Nov 2026 17:16:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zZUfE8dQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A88A1F000C8;
+	Fri, 13 Nov 2026 17:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590176;
-	bh=/MrYShMj6VlRKU8blbEhJCR0PwYhbOjZKQZNuVn7/Dg=;
+	s=korg; t=1794590177;
+	bh=MhQf6iHzPNpus/ynwNk7N498lqTkTz+LA8kl5jK3XM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MG06aLwf/9ie/OXsE1vauWpeQ5qBZoqh+h1f7KzwyIV29fwgqpgYWbbDrBU/kenLR
-	 lKjb5WnXtpffVcM12rQ0qWaUz4xO4A81um7tFvQpG14b+3foayJXQolD30f3a5mKV/
-	 MPdn/L8LIPyGxZuHQFH8mBEA+arkI4xfB0yvFAuI=
+	b=zZUfE8dQQJasmlrZYCZ7i6/OpNNBjU/lZoTsTiJZ+osyImKyMARkoKwesXLcJDRHl
+	 RCOPUv5MoNrYnjtnShNgPVzP/yqgzWwU7kCfFhKrLFsMzFuQfDiqndumaIRVW3XrvP
+	 AXm/WF30JcIAfFqOzFXmNImt5biIttXZoi1qOQ5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 142/686] rose: drop the neighbour reference once when a cleared socket is closed
-Date: Fri, 13 Nov 2026 10:44:35 -0500
-Message-ID: <20261113153825.615151161@linuxfoundation.org>
+Subject: [PATCH 6.18 143/686] rose: swap the AX.25 connection of a neighbour under a lock
+Date: Fri, 13 Nov 2026 10:44:36 -0500
+Message-ID: <20261113153825.646110626@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,77 +69,173 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-rose_release() of a socket in state 2, awaiting the Clear Confirmation
-of its call, drops the neighbour reference but leaves rose->neighbour
-set, then releases the socket lock before disconnecting the socket.
-release_sock() runs the frames put on the socket backlog while the
-lock was held: a Clear Confirmation among them goes through
-rose_state2_machine() with the socket still in state 2 and drops the
-same reference again. rose_kill_by_neigh(), which does not take the
-socket lock, can do the same if the link restarts or fails at that
-moment. The neighbour refcount then goes below the number of users,
-and the neighbour is freed while it is still in the tables.
+Each holder of neigh->ax25 owns a reference on the ax25_cb.
+rose_send_frame() and rose_link_up() replace it by reading the old
+pointer, storing the new connection and dropping the reference on the
+old one. They run from process context (sendmsg, connect, release),
+from softirq (frames routed or answered on receipt) and from the
+neighbour timers, under no common lock, and rose_link_failed() clears
+the pointer under rose_neigh_list_lock alone. When two of them run at
+the same time for one neighbour, both drop the reference on the same
+old ax25_cb, which is freed while still in use, and the reference taken
+by one of them on the new connection is lost.
 
-Disconnect the socket before its lock is dropped, so that the frames
-on the backlog find it in state 0, and take the neighbour off the
-socket under rose_list_lock, as rose_kill_by_neigh() looks at it, so
-that only one of them drops the reference.
+Do the swap under a spinlock of its own and drop the reference taken
+off after it, so that it is dropped once; rose_link_failed() only
+clears the pointer if it still holds the failed connection.
 
-On a QEMU bench with two guests (KASAN, lockdep), A calls B with T1 set
-to 2 s, B never accepts, and A closes the socket 200 ms after T1
-expired, while the Clear Confirmation is on its way. With 1 s of delay
-in rose_release() and 500 ms before B sends the Clear Confirmation:
-before, the "use" count of the neighbour in /proc/net/rose_neigh goes
-to -1 on the first close, then KASAN reports a slab-use-after-free on
-the freed neighbour and A panics; after, it stays at 0 over five calls,
-with or without the delays.
+On a QEMU bench with two 4-CPU guests (KASAN, lockdep), four threads on
+A placing calls to B and sending a message every 20 ms, each echoed by
+a thread on B: with 50 ms between the read and the update of
+neigh->ax25, before: KASAN reports a slab-use-after-free in
+rose_send_frame(), from rose_sendmsg() on B, and refcount_t reports an
+underflow on the ax25_cb; after: no report. Without the delay, no
+report either way and the same traffic, 1220 messages.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit bf135eb205f09dbb9581f9bf2c9c8cd62d4ea9f2)
+(cherry picked from commit 2d8b7bf0ceb1ceffa4b19906b70b8b412292e531)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ include/net/rose.h    |  1 +
+ net/rose/rose_link.c  | 61 ++++++++++++++++++++++++++++++++++---------
+ net/rose/rose_route.c |  5 ++--
+ 3 files changed, 52 insertions(+), 15 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 87e7d938e6db7..fbf0e27ce898b 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -698,6 +698,7 @@ static struct sock *rose_make_new(struct sock *osk)
- static int rose_release(struct socket *sock)
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 7ee480e0a64e7..30b0809dd0a65 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -232,6 +232,7 @@ int rose_backlog_rcv(struct sock *sk, struct sk_buff *skb);
+ 
+ /* rose_link.c */
+ void rose_neigh_init_timers(struct rose_neigh *neigh);
++bool rose_neigh_clear_ax25(struct rose_neigh *neigh, ax25_cb *ax25);
+ void rose_start_ftimer(struct rose_neigh *);
+ void rose_stop_ftimer(struct rose_neigh *);
+ void rose_stop_t0timer(struct rose_neigh *);
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index 49a45936eb2bd..912d26f1fe359 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -27,6 +27,47 @@
+ static void rose_ftimer_expiry(struct timer_list *);
+ static void rose_t0timer_expiry(struct timer_list *);
+ 
++/*
++ * neigh->ax25 is replaced when a frame is sent or the link is looked up,
++ * from process context, softirq and the neighbour timers, and cleared by
++ * rose_link_failed(). Each holder of the pointer owns a reference on the
++ * ax25_cb: swap the pointer under this lock, then drop the reference that
++ * was taken off, so that it is dropped once and none is lost.
++ */
++static DEFINE_SPINLOCK(rose_neigh_ax25_lock);
++
++static void rose_neigh_set_ax25(struct rose_neigh *neigh, ax25_cb *ax25)
++{
++	ax25_cb *old;
++
++	spin_lock_bh(&rose_neigh_ax25_lock);
++	old = neigh->ax25;
++	neigh->ax25 = ax25;
++	spin_unlock_bh(&rose_neigh_ax25_lock);
++
++	if (old)
++		ax25_cb_put(old);
++}
++
++/*
++ * Clear neigh->ax25 if it still is @ax25, and drop its reference.
++ */
++bool rose_neigh_clear_ax25(struct rose_neigh *neigh, ax25_cb *ax25)
++{
++	bool found;
++
++	spin_lock_bh(&rose_neigh_ax25_lock);
++	found = neigh->ax25 == ax25;
++	if (found)
++		neigh->ax25 = NULL;
++	spin_unlock_bh(&rose_neigh_ax25_lock);
++
++	if (found)
++		ax25_cb_put(ax25);
++
++	return found;
++}
++
+ static void rose_transmit_restart_confirmation(struct rose_neigh *neigh);
+ static void rose_transmit_restart_request(struct rose_neigh *neigh);
+ 
+@@ -91,19 +132,17 @@ static void rose_t0timer_expiry(struct timer_list *t)
+ static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
  {
- 	struct sock *sk = sock->sk;
-+	struct rose_neigh *neigh;
- 	struct rose_sock *rose;
+ 	const ax25_address *rose_call;
+-	ax25_cb *ax25s;
++	ax25_cb *ax25;
  
- 	if (sk == NULL) return 0;
-@@ -716,10 +717,21 @@ static int rose_release(struct socket *sock)
- 		break;
+ 	if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
+ 		rose_call = (const ax25_address *)neigh->dev->dev_addr;
+ 	else
+ 		rose_call = &rose_callsign;
  
- 	case ROSE_STATE_2:
--		rose_neigh_put(rose->neighbour);
--		release_sock(sk);
-+		/*
-+		 * Disconnect before the socket lock is dropped: frames put on
-+		 * the backlog meanwhile, a Clear Confirmation for one, then
-+		 * find it in state 0 instead of dropping the neighbour
-+		 * reference a second time. rose_kill_by_neigh() does not take
-+		 * the socket lock: take the neighbour under rose_list_lock, as
-+		 * it does, so that only one of them drops the reference.
-+		 */
- 		rose_disconnect(sk, 0, -1, -1);
--		lock_sock(sk);
-+		spin_lock_bh(&rose_list_lock);
-+		neigh = rose->neighbour;
-+		rose->neighbour = NULL;
-+		spin_unlock_bh(&rose_list_lock);
-+		if (neigh)
-+			rose_neigh_put(neigh);
- 		rose_destroy_socket(sk);
- 		break;
+-	ax25s = neigh->ax25;
+-	neigh->ax25 = ax25_send_frame(skb, 260, rose_call, &neigh->callsign, neigh->digipeat, neigh->dev);
+-	if (ax25s)
+-		ax25_cb_put(ax25s);
++	ax25 = ax25_send_frame(skb, 260, rose_call, &neigh->callsign, neigh->digipeat, neigh->dev);
++	rose_neigh_set_ax25(neigh, ax25);
  
+-	return neigh->ax25 != NULL;
++	return !!ax25;
+ }
+ 
+ /*
+@@ -114,19 +153,17 @@ static int rose_send_frame(struct sk_buff *skb, struct rose_neigh *neigh)
+ static int rose_link_up(struct rose_neigh *neigh)
+ {
+ 	const ax25_address *rose_call;
+-	ax25_cb *ax25s;
++	ax25_cb *ax25;
+ 
+ 	if (ax25cmp(&rose_callsign, &null_ax25_address) == 0)
+ 		rose_call = (const ax25_address *)neigh->dev->dev_addr;
+ 	else
+ 		rose_call = &rose_callsign;
+ 
+-	ax25s = neigh->ax25;
+-	neigh->ax25 = ax25_find_cb(rose_call, &neigh->callsign, neigh->digipeat, neigh->dev);
+-	if (ax25s)
+-		ax25_cb_put(ax25s);
++	ax25 = ax25_find_cb(rose_call, &neigh->callsign, neigh->digipeat, neigh->dev);
++	rose_neigh_set_ax25(neigh, ax25);
+ 
+-	return neigh->ax25 != NULL;
++	return !!ax25;
+ }
+ 
+ /*
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 84d628a826b79..00fbe47fffe04 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -936,14 +936,13 @@ void rose_link_failed(ax25_cb *ax25, int reason)
+ 	spin_lock_bh(&rose_neigh_list_lock);
+ 	rose_neigh = rose_neigh_list;
+ 	while (rose_neigh != NULL) {
+-		if (rose_neigh->ax25 == ax25)
++		if (READ_ONCE(rose_neigh->ax25) == ax25)
+ 			break;
+ 		rose_neigh = rose_neigh->next;
+ 	}
+ 
+ 	if (rose_neigh != NULL) {
+-		rose_neigh->ax25 = NULL;
+-		ax25_cb_put(ax25);
++		rose_neigh_clear_ax25(rose_neigh, ax25);
+ 
+ 		rose_del_route_by_neigh(rose_neigh);
+ 		rose_kill_by_neigh(rose_neigh);
 -- 
 2.53.0
 
