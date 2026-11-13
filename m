@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591484;
-	b=mEPmSuIgaPvhzApsthCwJ4tqSz3eLYixwh82B0m7ZzOELwcJxsfiuFwJWNZa1jNiJGal
-	 JQchEOVZqmiiHxXPj7vpxU2n4EgTM58zC5JrwHE3zVHt5iFfwG72D71x3LZNv21iiT+gr
-	 lUJfcUzmVv2gy9VSougeoHcyPk6ZSmiDJeSOB6kp+MSwQXi3x9jXzcPaKJKxO+q0eLjqp
-	 DnWKENKitaNOM5gHuhN2MKDnuQ4nuvinRNBQbRs27bmrTcOQ+Up0NWDRaBxdlJfRp3wZK
-	 lACFcBkAhiB2ycTah3Mtm2x4deURAgkxm8QDpdUIAuBaXYd6RUpaWpzAPgtXlxBqpIA==
+	t=1794591486;
+	b=yYm4OhO4csXOA0N+yicKZF34hj2IMRLacfneFJgVLBMuehfrKf4oYOluhh72m+VNZtd+
+	 Cyb6dECBe3YtcpYuTuLWOSS5RUZcj2GhVyjtUAbIxlwW+z9JxLlwzpPbCDjdWbBxacsCL
+	 OjC6V96nE5Q5DqAKm/RIpF4EA0JFXIeSFD9Mf81JHWzrfd1qOI5dQeBTqDqaaGQpfpW4X
+	 fJTPP9LmLyjfph5KYI0rPKVcriiNFO0vIHzFSJwiKaVeEMuEBIMv5pdQRYA4kojUrD2NI
+	 CpTVAeQqEKp76x5BQTkRGLetYcoZqQUDsePxUHEe3xhvhIXhL+qgU0Ky8Vl/Ad5Pcog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591484;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591486;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lY7gKLGH8j03faQjri9xCvNpntkfEezfL/365Tcl34c=;
-	b=NtvvxI24hhXk5EW2I5yDA6vxPFQKOpLmY2yKRPcyDYrrBJVr2Aq5AOepPPjwA/eCoRlW
-	 P3bNvrx2cmxvDr92m3tJEn9Fchc+IQKSKcLLvDWe7YLsIqXK/YZtYLBCtoahVOD3YQcBu
-	 I8Nh13mamfyYhg7NmT15h+tnc6zmq7wWsuMVBl1P6uMi8cfOFAYXYzUWZMi52oYnI48OY
-	 I0yfxAgwGweOSaeKCPyAHaPbczybyLhwWWSMpEGQNhXf2yBIgJyNeuOzwRSotgsLcSyEN
-	 Uv87nB3Fwv1vQpD8xg1i4YarBJDFl5Dy69qZglmiUPy02wXJ2y9o/40tHiW2MRD9UPQ==
+	bh=EE8Z/ggQhBt8bHI5q+9wlICx4PJCOtcmUis9HuQfLkw=;
+	b=rXhkVirydcPzuYisCGe9zTznpel9EESHYNyE2VbRBflQfMtWrpm9eSE7iaeutkeaMJZo
+	 gJ3KOvQ9frmnzM3VLCfyivd7/C9+yLR+5914CihVLUtqqSV1h6CdncRH0kdGoSrlt4cXn
+	 zFQ7GnI7jptn/A4qG0SK3txlRoE0Odk23X24JHqf1mmqr9UuEYTAWBKM9agEx/6+dcs91
+	 cRuX+FnfCxjzQHGPa8iLtLPva2sj5LgfxPmmK52ThXBhRABe44Dy4MH2sB764qKOQ25RB
+	 ae/WoZoVoofELwpLg8GB+oQ8tXGzP9pzACUyLoXQlM3HXxRt+V02SxinlWNHABEv9ew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vL3xA9m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z00hvaN9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA80606D485;
-	Fri, 13 Nov 2026 17:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E200607E060;
+	Fri, 13 Nov 2026 17:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vL3xA9m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9601F000C7;
-	Fri, 13 Nov 2026 17:38:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z00hvaN9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73AC51F000C7;
+	Fri, 13 Nov 2026 17:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591484;
-	bh=lY7gKLGH8j03faQjri9xCvNpntkfEezfL/365Tcl34c=;
+	s=korg; t=1794591485;
+	bh=EE8Z/ggQhBt8bHI5q+9wlICx4PJCOtcmUis9HuQfLkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0vL3xA9m/BZ/xp8Roxi7fisaALce5m55sOFvF/NxZiPhwkNOAHBTRDBqBZQYP4BiS
-	 xOxCgbmTCaWUeydA0et/FDflvqqVc1UHao1wuWv6yHQPhX131DsXzVF3GBUiyfLfuj
-	 ceZoLW9KpP6flRt0ItKu2ePDxN8pc673Vh5SwQQs=
+	b=z00hvaN9h6Kni5DO+Ax1BWiFR23VDC4dCd0/rh6FYB2/Ge1Nb0U65qsmgxyLZfVH5
+	 NcXJgrFwkE9n/Par4yPplndLONtkn32I80cGchKWiTX//aw5qAc9DbzY6xhvn2sgqH
+	 PoVsF8f2SzhppnfMsgdfae8tx+/X91ME+99BMvdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 524/670] ALSA: line6: Use guard() for spin locks
-Date: Fri, 13 Nov 2026 10:51:28 -0500
-Message-ID: <20261113153829.688699753@linuxfoundation.org>
+Subject: [PATCH 6.12 515/670] ASoC: stm: stm32_i2s: request IRQ after regmap initialization
+Date: Fri, 13 Nov 2026 10:51:19 -0500
+Message-ID: <20261113153829.391865292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -67,213 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit bdcdb4e7aa410122baa3496b93e7850dc20a90fa ]
+[ Upstream commit 1b207c85551fd74854d632116849295b2305245f ]
 
-Clean up the code using guard() for spin locks.
+The ISR accesses the managed regmap, but probe requests the IRQ before
+creating it. An early interrupt can reach an uninitialized regmap.
+Reverse-order cleanup can free the regmap while the IRQ remains active.
 
-Merely code refactoring, and no behavior change.
+Request the IRQ after regmap initialization so probe unwind and
+removal free and synchronize it before releasing the regmap.
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 443ed4edc267 ("ALSA: line6: Handle period elapsed calls outside the locks")
+The teardown ordering issue was found by static analysis.
+
+Fixes: e4e6ec7b127c ("ASoC: stm32: Add I2S driver")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20261004043451.1138613-1-mhun512@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/capture.c |  6 +-----
- sound/usb/line6/driver.c  | 31 +++++++++++++++----------------
- sound/usb/line6/midi.c    | 10 ++--------
- sound/usb/line6/pcm.c     | 27 ++++++++++++---------------
- 4 files changed, 30 insertions(+), 44 deletions(-)
+ sound/soc/stm/stm32_i2s.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
-diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
-index 2ce020939bd72..dde52454ec65e 100644
---- a/sound/usb/line6/capture.c
-+++ b/sound/usb/line6/capture.c
-@@ -157,8 +157,6 @@ void line6_capture_check_period(struct snd_line6_pcm *line6pcm, int length)
- static void audio_in_callback(struct urb *urb)
- {
- 	int i, index, length = 0, shutdown = 0;
--	unsigned long flags;
--
- 	struct snd_line6_pcm *line6pcm = (struct snd_line6_pcm *)urb->context;
+diff --git a/sound/soc/stm/stm32_i2s.c b/sound/soc/stm/stm32_i2s.c
+index 5b15b8fb87c39..d62802f4f12e3 100644
+--- a/sound/soc/stm/stm32_i2s.c
++++ b/sound/soc/stm/stm32_i2s.c
+@@ -1026,7 +1026,7 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
+ 	struct device_node *np = pdev->dev.of_node;
+ 	struct reset_control *rst;
+ 	struct resource *res;
+-	int irq, ret;
++	int ret;
  
- 	line6pcm->in.last_frame = urb->start_frame;
-@@ -168,7 +166,7 @@ static void audio_in_callback(struct urb *urb)
- 		if (urb == line6pcm->in.urbs[index])
- 			break;
- 
--	spin_lock_irqsave(&line6pcm->in.lock, flags);
-+	guard(spinlock_irqsave)(&line6pcm->in.lock);
- 
- 	for (i = 0; i < LINE6_ISO_PACKETS; ++i) {
- 		char *fbuf;
-@@ -223,8 +221,6 @@ static void audio_in_callback(struct urb *urb)
- 		    test_bit(LINE6_STREAM_PCM, &line6pcm->in.running))
- 			line6_capture_check_period(line6pcm, length);
+ 	if (!np)
+ 		return -ENODEV;
+@@ -1069,16 +1069,6 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
+ 			return ret;
  	}
--
--	spin_unlock_irqrestore(&line6pcm->in.lock, flags);
- }
  
- /* open capture callback */
-diff --git a/sound/usb/line6/driver.c b/sound/usb/line6/driver.c
-index e9eb5c74d6c7a..caf9bc6616865 100644
---- a/sound/usb/line6/driver.c
-+++ b/sound/usb/line6/driver.c
-@@ -286,31 +286,30 @@ static void line6_data_received(struct urb *urb)
+-	/* Get irqs */
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
+-
+-	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
+-			       dev_name(&pdev->dev), i2s);
+-	if (ret)
+-		return ret;
+-
+ 	/* Reset */
+ 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
+ 	if (IS_ERR(rst))
+@@ -1103,7 +1093,7 @@ static int stm32_i2s_probe(struct platform_device *pdev)
  {
- 	struct usb_line6 *line6 = (struct usb_line6 *)urb->context;
- 	struct midi_buffer *mb = &line6->line6midi->midibuf_in;
--	unsigned long flags;
- 	int done;
+ 	struct stm32_i2s_data *i2s;
+ 	u32 val;
+-	int ret;
++	int irq, ret;
  
- 	if (urb->status == -ESHUTDOWN)
- 		return;
+ 	i2s = devm_kzalloc(&pdev->dev, sizeof(*i2s), GFP_KERNEL);
+ 	if (!i2s)
+@@ -1129,6 +1119,15 @@ static int stm32_i2s_probe(struct platform_device *pdev)
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->regmap),
+ 				     "Regmap init error\n");
  
- 	if (line6->properties->capabilities & LINE6_CAP_CONTROL_MIDI) {
--		spin_lock_irqsave(&line6->line6midi->lock, flags);
--		done =
--			line6_midibuf_write(mb, urb->transfer_buffer, urb->actual_length);
--
--		if (done < urb->actual_length) {
--			line6_midibuf_ignore(mb, done);
--			dev_dbg(line6->ifcdev, "%d %d buffer overflow - message skipped\n",
--				done, urb->actual_length);
-+		scoped_guard(spinlock_irqsave, &line6->line6midi->lock) {
-+			done =
-+				line6_midibuf_write(mb, urb->transfer_buffer, urb->actual_length);
++	irq = platform_get_irq(pdev, 0);
++	if (irq < 0)
++		return irq;
 +
-+			if (done < urb->actual_length) {
-+				line6_midibuf_ignore(mb, done);
-+				dev_dbg(line6->ifcdev, "%d %d buffer overflow - message skipped\n",
-+					done, urb->actual_length);
-+			}
- 		}
--		spin_unlock_irqrestore(&line6->line6midi->lock, flags);
- 
- 		for (;;) {
--			spin_lock_irqsave(&line6->line6midi->lock, flags);
--			done =
--				line6_midibuf_read(mb, line6->buffer_message,
--						   LINE6_MIDI_MESSAGE_MAXLEN,
--						   LINE6_MIDIBUF_READ_RX);
--			spin_unlock_irqrestore(&line6->line6midi->lock, flags);
-+			scoped_guard(spinlock_irqsave, &line6->line6midi->lock) {
-+				done =
-+					line6_midibuf_read(mb, line6->buffer_message,
-+							   LINE6_MIDI_MESSAGE_MAXLEN,
-+							   LINE6_MIDIBUF_READ_RX);
-+			}
- 
- 			if (done <= 0)
- 				break;
-diff --git a/sound/usb/line6/midi.c b/sound/usb/line6/midi.c
-index 9b51760862809..80d9a6d903424 100644
---- a/sound/usb/line6/midi.c
-+++ b/sound/usb/line6/midi.c
-@@ -72,7 +72,6 @@ static void line6_midi_transmit(struct snd_rawmidi_substream *substream)
- */
- static void midi_sent(struct urb *urb)
- {
--	unsigned long flags;
- 	int status;
- 	int num;
- 	struct usb_line6 *line6 = (struct usb_line6 *)urb->context;
-@@ -84,7 +83,7 @@ static void midi_sent(struct urb *urb)
- 	if (status == -ESHUTDOWN)
- 		return;
- 
--	spin_lock_irqsave(&line6->line6midi->lock, flags);
-+	guard(spinlock_irqsave)(&line6->line6midi->lock);
- 	num = --line6->line6midi->num_active_send_urbs;
- 
- 	if (num == 0) {
-@@ -94,8 +93,6 @@ static void midi_sent(struct urb *urb)
- 
- 	if (num == 0)
- 		wake_up(&line6->line6midi->send_wait);
--
--	spin_unlock_irqrestore(&line6->line6midi->lock, flags);
- }
- 
- /*
-@@ -158,17 +155,14 @@ static int line6_midi_output_close(struct snd_rawmidi_substream *substream)
- static void line6_midi_output_trigger(struct snd_rawmidi_substream *substream,
- 				      int up)
- {
--	unsigned long flags;
- 	struct usb_line6 *line6 =
- 	    line6_rawmidi_substream_midi(substream)->line6;
- 
- 	line6->line6midi->substream_transmit = substream;
--	spin_lock_irqsave(&line6->line6midi->lock, flags);
-+	guard(spinlock_irqsave)(&line6->line6midi->lock);
- 
- 	if (line6->line6midi->num_active_send_urbs == 0)
- 		line6_midi_transmit(substream);
--
--	spin_unlock_irqrestore(&line6->line6midi->lock, flags);
- }
- 
- static void line6_midi_output_drain(struct snd_rawmidi_substream *substream)
-diff --git a/sound/usb/line6/pcm.c b/sound/usb/line6/pcm.c
-index 7f51a81d7ec9b..77d5802872b16 100644
---- a/sound/usb/line6/pcm.c
-+++ b/sound/usb/line6/pcm.c
-@@ -190,11 +190,10 @@ static void line6_buffer_release(struct snd_line6_pcm *line6pcm,
- static int line6_stream_start(struct snd_line6_pcm *line6pcm, int direction,
- 			      int type)
- {
--	unsigned long flags;
- 	struct line6_pcm_stream *pstr = get_stream(line6pcm, direction);
- 	int ret = 0;
- 
--	spin_lock_irqsave(&pstr->lock, flags);
-+	guard(spinlock_irqsave)(&pstr->lock);
- 	if (!test_and_set_bit(type, &pstr->running) &&
- 	    !(pstr->active_urbs || pstr->unlink_urbs)) {
- 		pstr->count = 0;
-@@ -207,7 +206,6 @@ static int line6_stream_start(struct snd_line6_pcm *line6pcm, int direction,
- 
- 	if (ret < 0)
- 		clear_bit(type, &pstr->running);
--	spin_unlock_irqrestore(&pstr->lock, flags);
- 	return ret;
- }
- 
-@@ -215,21 +213,20 @@ static int line6_stream_start(struct snd_line6_pcm *line6pcm, int direction,
- static void line6_stream_stop(struct snd_line6_pcm *line6pcm, int direction,
- 			  int type)
- {
--	unsigned long flags;
- 	struct line6_pcm_stream *pstr = get_stream(line6pcm, direction);
- 
--	spin_lock_irqsave(&pstr->lock, flags);
--	clear_bit(type, &pstr->running);
--	if (!pstr->running) {
--		spin_unlock_irqrestore(&pstr->lock, flags);
--		line6_unlink_audio_urbs(line6pcm, pstr);
--		spin_lock_irqsave(&pstr->lock, flags);
--		if (direction == SNDRV_PCM_STREAM_CAPTURE) {
--			line6pcm->prev_fbuf = NULL;
--			line6pcm->prev_fsize = 0;
--		}
-+	scoped_guard(spinlock_irqsave, &pstr->lock) {
-+		clear_bit(type, &pstr->running);
-+		if (pstr->running)
-+			return;
-+	}
++	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
++			       dev_name(&pdev->dev), i2s);
++	if (ret)
++		return ret;
 +
-+	line6_unlink_audio_urbs(line6pcm, pstr);
-+	if (direction == SNDRV_PCM_STREAM_CAPTURE) {
-+		guard(spinlock_irqsave)(&pstr->lock);
-+		line6pcm->prev_fbuf = NULL;
-+		line6pcm->prev_fsize = 0;
- 	}
--	spin_unlock_irqrestore(&pstr->lock, flags);
- }
- 
- /* common PCM trigger callback */
+ 	ret = snd_dmaengine_pcm_register(&pdev->dev, &stm32_i2s_pcm_config, 0);
+ 	if (ret)
+ 		return ret;
 -- 
 2.53.0
 
