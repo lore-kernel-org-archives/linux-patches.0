@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590903;
-	b=MR2Psjy4ktN2ccGYVtGXHOUmI2horthbBA7ieHDOBVrElzVLqXlkwJ2wT/MflqGQNW/J
-	 I0Er+0y/qouDfcYZe8rxPRNqJaysO+AVUDoVyAhQgDe06hUaGiRxOdV2l0mRJS/TPISt6
-	 eUNCefq//T3PFxQyFmrIDpOBmkPxJPgDri2qpod1vFQbdSjaCtMtS/LgXq6wdiLGk+SYt
-	 +3QIxcV2K28spX5As6TY6yIZmlRFiimo/pw8O5j84uhu+EfDfgnjFtlhvUe3uU4TQpZyW
-	 1yROeaW+KfuO9C5ivvpK716NOVihXFySmIuSHjMdAwymNPwuRbdoRj9ktKU3NMPraTw==
+	t=1794590904;
+	b=gQxWieGCWinDRsHVrqXoWR5ZVStAx1t+gECwQaUHjjC/O757wKWt58alTSxOqtbOe5gW
+	 RLOmSZYMYqMN8ypM/owzcikbnMf5LOiOXx3stTBfgD/skh8XHkCnt1c14AhMuVp22R4Tq
+	 PxVNw9Cm50U2IN3Yq96eSIwO6FgdBm3J/M20eZ4uTum0XaskfNoHVmUKoQGkozHRRwP2Z
+	 kywoaBEGq04RnlKZ5AsSRBsBIU3r5oKlgw1Fba9+t6xGj6eSgYf1KB5mr+0AvZGiWhcu8
+	 EiP8w5c9GTmSbdg9KOVh+RvFWdIgCxs+tGkvYxlEjaBTZHHeeHzbrGd2VVyyPccpBBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590903;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590904;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=mxdjXHTQCKOI3taExnIxeJdGUVLVmHDglogs+llPz/8=;
-	b=rwHzJ+U2SuXUORTFj+JUIY6HoCd7+H6L/vN5guyhYATiXJ8zC3ENYfX1GSR2I1+Igiee
-	 60e6vYAnSb87om3UD5ic1t5RtuCNuZnOtL9XCLaM38CanS2UgIs10kCzxLU1+VmvGY4Pi
-	 ldxbXypCXdOd8z6BR6S2QriGbkCnegMqLD9YUiLR6fsfuOro/B5O0DlecApKkE3Fc9AKA
-	 noFDNLUgAMugC9IEJoxYdrt6146kVQpJVtDo86fWbp01S8TCiUT0hSAuefSTXe10PLx/U
-	 vvWI2ZnR+4wNlW9RqB0+PihXBpjlcxLJQAWI3Cf7B0b87jcW1SF6AMvNW1hH915AnLg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=QSN33idFEYyLzSOo0PUQf9Aqc0ZRRTAKbZ95XkbvVmQ=;
+	b=5lJYM4v78VgP2QSDRkovMtKPDlBYsSp5zFWSyW4k/hC5p9UB1F4NHMpR1SuHzzEG6s4V
+	 i1mTz3o/AIEjRJqltch8TW9MKGMD0xdYGRsjE73WUc8xUYRplvo4199xuenpDtcUuldRu
+	 h3NNn46ZtDFKUbqB0ZRZ+eXh7i+w/n32ho8j28Wqvs/z7R5LSWREVztJ2jn4dY/4FACf4
+	 lOjMLW06E/gb2raMuLCD2qdlgUEOJY3PK6sA99XqZ4l3D55OvqfKwt5XLD8P74/ltgArO
+	 tJjkL8JCmDnGtuGaAuz0yVTFJJRPzrdnPIorC1NSIVvLXGo1Tb7LoA+Z0pnWHK+l3lQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDVbeRd3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wgzArB9f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D9C606E236;
-	Fri, 13 Nov 2026 17:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9BC606E237;
+	Fri, 13 Nov 2026 17:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDVbeRd3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DE41F000C4;
-	Fri, 13 Nov 2026 17:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wgzArB9f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A73A1F000C4;
+	Fri, 13 Nov 2026 17:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590903;
-	bh=mxdjXHTQCKOI3taExnIxeJdGUVLVmHDglogs+llPz/8=;
+	s=korg; t=1794590904;
+	bh=QSN33idFEYyLzSOo0PUQf9Aqc0ZRRTAKbZ95XkbvVmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDVbeRd30/KbcCB7wxnGvgFxtXORbdGLn0ZCS48MLAaft7qIpsLZoJTAFCdpaq7xL
-	 8YbVGt4gGVUjRubNymIfjdjI4uZySuNqRzuvAy/7IAVfwTR5Eq9UnRV7YcbjOJESSB
-	 GlrG94yCXEBWXgIYbZ6LNQaAjgpL2iMREGS1+HCQ=
+	b=wgzArB9fr9b+PXvlwMVB9mrbUqh0jpeDwcm7A8Uhbp8F5aQDM7Oy1uuAut+fbrM8c
+	 PoY0dQAX3dwmEMoRxv26xgnkNZNZRG9+0izl/LzWIUrKqvUwAAnz2Q5nNyEGb+5/7I
+	 rEyErKLfzNyWm82PgmqavnJ5LdPRnZvCVnbhlbQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/670] PCI: Add enable_device() and disable_device() callbacks for bridges
-Date: Fri, 13 Nov 2026 10:44:16 -0500
-Message-ID: <20261113153815.023282178@linuxfoundation.org>
+Subject: [PATCH 6.12 093/670] PCI: rcar-gen4: Limit Max_Read_Request_Size to 256 Bytes
+Date: Fri, 13 Nov 2026 10:44:17 -0500
+Message-ID: <20261113153815.056541384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -65,132 +63,156 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit a3751212a8eeece59d2018c455000f30ed7e5bb7 ]
+[ Upstream commit f0a5c6bd797c2b9900034983a1118d27eb2f2f16 ]
 
-Some PCI host bridges require special handling when enabling or
-disabling PCI devices. For example, the i.MX95 platform has a lookup
-table to map Requester IDs to StreamIDs, which the SMMU and MSI
-controller use to identify the source of DMA accesses.
+R-Car Gen4 PCIe controller has a hardware limitation of 256 Bytes
+Max_Payload_Size (MPS). PCIe specification indicates that the MPS must not
+exceed minimum MPS of any element along the packet path.  The PCI core
+already enforces this, but add a check to warn if MPS is ever set larger
+than 256.
 
-Without this mapping, DMA accesses may target unintended memory, which
-would corrupt memory or read the wrong data.
+R-Car Gen4 Reference Manual, chapter 104.4.8 Usage notes for MRRS (Max Read
+Request Size) states:
 
-Add a host bridge enable_device() hook the imx6 driver can use to
-configure the Requester ID to StreamID mapping. The hardware table isn't
-big enough to map all possible Requester IDs, so this hook may fail if
-no table space is available. In that case, return failure from
-pci_enable_device().
+  Please set "Max Read Request Size" to 128 bytes or 256 bytes.
+  If "Max Read Request Size" is set to anything other than the
+  above, the transferred data will not match the expected value.
 
-It might make more sense to make pci_set_master() decline to enable bus
-mastering and return failure, but it currently doesn't have a way to return
-failure.
+This limitation also seems to apply to devices doing DMA reads, i.e.,
+issuing MRd TLPs.  This limitation can be triggered by using non-HMB NVMe
+SSD with Max_Read_Request_Size 512 Bytes, for example Crucial P5 Plus.  Any
+write to the SSD (MRd TLP issued by the SSD controller) longer than 256
+Bytes wraps around at the 256 Byte boundary, and the same data are written
+to the SSD starting at offset 0 and at 256 Bytes.
 
-Link: https://lore.kernel.org/r/20250114-imx95_lut-v9-1-39f58dbed03a@nxp.com
-Tested-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Limit Max_Read_Request_Size to at most 256 Bytes for each device connected
+to this PCIe controller to avoid this behavior.
+
+A non-HMB (Host Memory Buffer) NVMe SSD can be identified using the
+following command. Affected SSD reports 'hmpre' field as 0:
+
+  $ nvme id-ctrl /dev/nvme0 | grep hmpre
+  hmpre     : 0
+
+The symptom is a read from the SSD which wraps around at 256 Byte boundary.
+The test for this symptom can be implemented by writing 512 Byte of random
+data into the SSD and reading the data back. If the read back data repeat
+after 256 Bytes, the device is affected.
+
+  $ dd if=/dev/urandom of=/tmp/data.bin bs=256 count=2 ; \
+    dd if=/tmp/data.bin of=/dev/nvme0n1 bs=256 count=2 ; \
+    dd if=/dev/nvme0n1 bs=256 count=2 of=/tmp/readback.bin
+
+Expected data:
+  $ hexdump -vC /tmp/data.bin
+  00000000  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca
+  00000010  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b
+  ...
+  00000100  7a ce 3c b2 e1 d5 d9 11  88 63 10 59 76 3c dc 32 <-- random
+  00000110  72 32 2a 7d a3 e1 aa 13  7c da 58 a1 7b 21 11 50 <-- data
+
+Faulty readback, collected without this change in place:
+  $ hexdump -vC /tmp/readback.bin
+  00000000  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca <---.
+  00000010  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b <-. |
+  ...                                                          | |
+  00000100  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca <-:-+- repeated
+  00000110  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b <-+--- data
+       ^^^
+        |
+        '--- Repeat starts at offset 0x100 = 256 Bytes
+
+Fixes: 0d0c551011df ("PCI: rcar-gen4: Add R-Car Gen4 PCIe controller support for host mode")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-[kwilczynski: commit log]
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260821020636.111719-1-marek.vasut+renesas@mailbox.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c   | 36 +++++++++++++++++++++++++++++++++++-
- include/linux/pci.h |  2 ++
- 2 files changed, 37 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c | 54 +++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 2f575af94e094..b53ee0920bdcf 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -2090,6 +2090,28 @@ int __weak pcibios_enable_device(struct pci_dev *dev, int bars)
- 	return pci_enable_resources(dev, bars);
+diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+index 8dcb63f813beb..a5f750709e2ce 100644
+--- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
++++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
+@@ -305,6 +305,57 @@ static struct rcar_gen4_pcie *rcar_gen4_pcie_alloc(struct platform_device *pdev)
+ 	return rcar;
  }
  
-+static int pci_host_bridge_enable_device(struct pci_dev *dev)
++static int rcar_gen4_pcie_enable_device(struct pci_host_bridge *bridge,
++					struct pci_dev *dev)
 +{
-+	struct pci_host_bridge *host_bridge = pci_find_host_bridge(dev->bus);
-+	int err;
++	/*
++	 * R-Car Gen4 PCIe controller has a hardware limitation of 256 Bytes
++	 * Max_Payload_Size (MPS). PCIe specification indicates that the MPS
++	 * must not exceed minimum MPS of any element along the packet path.
++	 * The controller reports Max_Payload_Size_Supported (MPSS) 256 Bytes
++	 * for header type 0 and 128 Bytes for header type 1. The PCIe core
++	 * will not allow MPS to be set higher than MPSS; warn here in case
++	 * something went very wrong in the core.
++	 *
++	 * For details, refer to chapter "104.1.1 Features" in either of:
++	 * R-Car S4 R19UH0161EJ0140 Rev.1.40 Jul. 31, 2026 or
++	 * R-Car V4H R19UH0186EJ0140 Rev.1.40 Aug. 7, 2026 or
++	 * R-Car V4M R19UH0217EJ0110 Rev.1.10 Jun. 30, 2026.
++	 */
++	WARN_ON(pcie_get_mps(dev) > 256);
 +
-+	if (host_bridge && host_bridge->enable_device) {
-+		err = host_bridge->enable_device(host_bridge, dev);
-+		if (err)
-+			return err;
++	/*
++	 * R-Car Gen4 Reference Manual, chapter 104.4.8 Usage notes for
++	 * MRRS (Max Read Request Size) states:
++	 *
++	 *   Please set "Max Read Request Size" to 128 bytes or 256 bytes.
++	 *   If "Max Read Request Size" is set to anything other than the
++	 *   above, the transferred data will not match the expected value.
++	 *
++	 * This limitation also seems to apply to devices issuing MRd TLPs.
++	 * This limitation can be triggered by using non-HMB NVMe SSD with
++	 * Max_Read_Request_Size 512 Bytes, for example Crucial P5 Plus.
++	 * Any write into the SSD (MRd TLP issued by the SSD) longer than
++	 * 256 Bytes wraps around at 256 Byte boundary, and the same data
++	 * are written into the SSD starting at offset 0 and at 256 Bytes.
++	 *
++	 * Limit Max_Read_Request_Size to at most 256 Bytes for each
++	 * device connected to this PCIe controller to avoid this behavior.
++	 *
++	 * For details, refer to aforementioned chapter in either of:
++	 * R-Car S4 R19UH0161EJ0140 Rev.1.40 Jul. 31, 2026 or
++	 * R-Car V4H R19UH0186EJ0140 Rev.1.40 Aug. 7, 2026 or
++	 * R-Car V4M R19UH0217EJ0110 Rev.1.10 Jun. 30, 2026.
++	 */
++	bridge->no_inc_mrrs = 1;
++	if (pcie_get_readrq(dev) > 256) {
++		pci_info(dev, "Limiting MRRS to 256 bytes\n");
++		pcie_set_readrq(dev, 256);
 +	}
 +
 +	return 0;
 +}
 +
-+static void pci_host_bridge_disable_device(struct pci_dev *dev)
-+{
-+	struct pci_host_bridge *host_bridge = pci_find_host_bridge(dev->bus);
-+
-+	if (host_bridge && host_bridge->disable_device)
-+		host_bridge->disable_device(host_bridge, dev);
-+}
-+
- static int do_pci_enable_device(struct pci_dev *dev, int bars)
+ /* Host mode */
+ static int rcar_gen4_pcie_host_init(struct dw_pcie_rp *pp)
  {
- 	int err;
-@@ -2105,9 +2127,13 @@ static int do_pci_enable_device(struct pci_dev *dev, int bars)
- 	if (bridge)
- 		pcie_aspm_powersave_config_link(bridge);
+@@ -313,6 +364,9 @@ static int rcar_gen4_pcie_host_init(struct dw_pcie_rp *pp)
+ 	int ret;
+ 	u32 val;
  
-+	err = pci_host_bridge_enable_device(dev);
-+	if (err)
-+		return err;
++	if (pp->bridge)
++		pp->bridge->enable_device = rcar_gen4_pcie_enable_device;
 +
- 	err = pcibios_enable_device(dev, bars);
- 	if (err < 0)
--		return err;
-+		goto err_enable;
- 	pci_fixup_device(pci_fixup_enable, dev);
+ 	gpiod_set_value_cansleep(dw->pe_rst, 1);
  
- 	if (dev->msi_enabled || dev->msix_enabled)
-@@ -2122,6 +2148,12 @@ static int do_pci_enable_device(struct pci_dev *dev, int bars)
- 	}
- 
- 	return 0;
-+
-+err_enable:
-+	pci_host_bridge_disable_device(dev);
-+
-+	return err;
-+
- }
- 
- /**
-@@ -2305,6 +2337,8 @@ void pci_disable_device(struct pci_dev *dev)
- 	if (atomic_dec_return(&dev->enable_cnt) != 0)
- 		return;
- 
-+	pci_host_bridge_disable_device(dev);
-+
- 	do_pci_disable_device(dev);
- 
- 	dev->is_busmaster = 0;
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index c65de9e8aa8af..63c24b5bdce56 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -602,6 +602,8 @@ struct pci_host_bridge {
- 	u8 (*swizzle_irq)(struct pci_dev *, u8 *); /* Platform IRQ swizzler */
- 	int (*map_irq)(const struct pci_dev *, u8, u8);
- 	void (*release_fn)(struct pci_host_bridge *);
-+	int (*enable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
-+	void (*disable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
- 	void		*release_data;
- 	unsigned int	ignore_reset_delay:1;	/* For entire hierarchy */
- 	unsigned int	no_ext_tags:1;		/* No Extended Tags */
+ 	ret = rcar_gen4_pcie_common_init(rcar);
 -- 
 2.53.0
 
