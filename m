@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585736;
-	b=kBld14n6lZjwGkJ4iL7mlYwzoQ5Y4as1UGiUnVPfC+N/1ZMqdpvpJk2JuXt3OiLZSFOD
-	 1cSRRBZzETqgrgrNM9yjDXtRLahiWg+0XSvEHgjFYewSK0YuB3pnUTTBZeg9f1rkdf6v0
-	 j2Gm8SoJEPM2itjgEa2hhe3sjSmb4C5nrjLKbShU4mxo8xVkl7i/1TO12gczOCMgZealO
-	 3R+whFBQTWug4tlVnDZ66GJuasUtDrSqSclTLgGkyGK1EYKAPpwVa1eRrNzVEiX6qr2TJ
-	 8K3Vgdd1mYqURXTU1OTD7BCTzOJ9sFiGMWbu7TY/5SvvzchZ0mXInBGn4/d4IUfQDxQ==
+	t=1794585737;
+	b=iBXAE702iMGlaUXPxW6T2dmH7uLe6y2e+tuUqMuB4M3/Lkqq0CogKLLY4UjTUgv/XKP9
+	 hiPfiLNmGADHN1JRSc+QFgERbMFglQC3JxAYxp3ELlmnH5+j+x51fKsUgyaAovmkaHBk2
+	 8G0VJDN2cXoLCcWquhsml/6HR0ZohF3MMHUNYnSQoWsMdY5HAefmcQyLcvm9PgVc0RThd
+	 pk5KPy2iF0foGjVu35JL3Kjh4F1F5Scr3lb7nJv5BS3z6wWB2bOKQm8AJzDiIiU2uJAjU
+	 z2k+n9EKWSMF+fWSZcEpINws3vtAHBERKbRjsqRjWK7rkunYti/AKGX4L2UwSe+3GXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585737;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a0I4lfDdmWNR4Yac8kbFLHjiiDaMTYPRzAbkYtLsltQ=;
-	b=HGuvzVBLwgtpQoSYApVWfC21u/JRJjoTYKKV2xe2GeU2d1Nlb2BijYgy1Gqst8H3Exlu
-	 TUU3hO4vH0xZyze+ZypptFl2SSmXSARj2CUoNPugb+R5pKwBoIRnbxQLtWn9nizjfy5LJ
-	 9VjsxOVWHnwkRCOHPQPjeHmjPEDuVzh83sXisupTa1HyR1L6dm0LMnKmsHRUYEn5CC1cu
-	 IQqkSAR45Ct+MO1kurXMSHqm1usl+0LmSHAEh10eM13pe2sCJWJsF9JBgUoSKlIndyYDV
-	 wogGOgou24xPzinaTfHNUxkVL/NmzgdJtbmuLgKLyuvd9dwuOSIT0MNOmHbuLHtzv8w==
+	bh=kOC6DM3/Dliwa2kDTWzC+ZhwkYAuXL9J+va2O9WL0IE=;
+	b=kq0+gcrvsNRnS5v3V3eFYYddWd8Do1fua/L0syoUFeMw26ntWKWshEwe6f5QYqLMqr9P
+	 AHLHTt3+CLYmFBInFD1BNslay9fUUoILkymFxC1lOX8vzxdrwSKxgo8dg6aoE0CdwmCn+
+	 gHY6DsD+yq9c84sVyGnMG/VZLXhPy66BVvVQ3FoNDA4n/VruWSv+k1eBhQ7wWCxvluzVp
+	 C6nKlPVo5pBCqYmzmEUIL3mqDTwg35W61dkB0BXLBd4hAfgXx16NjS7dw8qGguo6+yqDD
+	 I0m8fAxZRIjRwZlnx6ZZ4xup+KscPN3Sioa8/jZ/FDXkU1LrtwF1QMySg3KaZfUSStw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1dSwmsp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Umqyq3it;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B303D606A336;
-	Fri, 13 Nov 2026 16:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEF1E606EB82;
+	Fri, 13 Nov 2026 16:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s1dSwmsp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C401F000C4;
-	Fri, 13 Nov 2026 16:02:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Umqyq3it
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACCF1F000C4;
+	Fri, 13 Nov 2026 16:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585736;
-	bh=a0I4lfDdmWNR4Yac8kbFLHjiiDaMTYPRzAbkYtLsltQ=;
+	s=korg; t=1794585737;
+	bh=kOC6DM3/Dliwa2kDTWzC+ZhwkYAuXL9J+va2O9WL0IE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s1dSwmspxG26gxrMaya4tRkTwQNU7EpwT/F5ah0Y/FNwMv2O6s38972+m+HBlB//U
-	 YgvXVfdItq/W73NmTMMhUgbvrOsQck0qP424ai+FUh+0LiYb3F8DBz4bnd0+YUXo5/
-	 JU8pDl0JWjmJmNzRPjA09XqkakNbNJ0Jl5/8U+bo=
+	b=Umqyq3itPh9AXOVElYw6XxQ8NABQyn50rmh8D1drNmYtRreoezbnmRBMyt+Ya++ur
+	 3cLfwCXboJemS9HQY9p6ZlWZQzhjNMZ96j4XnKZdai51gA0f9dOYzerpDEA/88s98Y
+	 ZcmHvxzJ63OXHMM/gx/3M7UJKrFr5jdBTuf52/zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xia Yan <yanxia@cmss.chinamobile.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chris Mason <mason@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 336/507] ipv6: fix device binding after failed datagram connect
-Date: Fri, 13 Nov 2026 10:50:40 -0500
-Message-ID: <20261113153806.804970078@linuxfoundation.org>
+Subject: [PATCH 7.3 337/507] ovl: fail the mount if the casefold flag has changed
+Date: Fri, 13 Nov 2026 10:50:41 -0500
+Message-ID: <20261113153806.833469697@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,78 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xia Yan <yanxia@cmss.chinamobile.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit bc53aab4881adc134f495092034e9e7c0791d84c ]
+[ Upstream commit c782fc8ada811569811c0fdea5c3412511be95d0 ]
 
-__ip6_datagram_connect() can change sk_bound_dev_if when connecting to
-an address that needs a scope ID. If ip6_datagram_dst_update() fails,
-the old peer address and port are restored, but the new device binding
-is left behind.
+An unprivileged user in a user namespace can repeatedly trigger a kernel
+warning with their own overlay mounts. They do so by changing the
+casefold flag of the topmost layer's empty root, the top directory of
+that layer, after the layers are set and before the mount is created.
 
-A UDP socket can then keep reporting its original peer while sends and
-attempts to reconnect to that peer fail with ENETUNREACH. Replies to the
-socket are also dropped by the device match. The same problem occurs
-when a scoped multicast destination picks up np->mcast_oif.
+The casefold flag of a directory makes name lookups in that directory
+case-insensitive. All layers of an overlay must agree on casefolding.
 
-Save the original binding before processing the scope and restore it
-along with the peer information on failure. This completes the rollback
-in commit 2f987a76a977 ("net: ipv6: keep sk status consistent after
-datagram connect failure") and preserves the new binding on success.
+ovl_mount_dir_check() reads the casefold flag of a layer root when
+fsconfig() sets that layer, and saves the result in ofs->casefold. The
+mount is created later, by another fsconfig() call with
+FSCONFIG_CMD_CREATE.
 
-Found while reviewing scope-ID handling in __ip6_datagram_connect().
+The casefold flag of an empty directory can be changed.
 
-Confirmed by exchanging UDP traffic over ::1, then attempting a link-local
-connect with a nonexistent scope ifindex or a down interface. After that
-connect fails, the original peer is still reported but communication and
-reconnecting to it fail.
+The casefold flag of the overlay root must match ofs->casefold.
+ovl_get_root() copies the flag from the topmost layer root, as it is
+when the mount is created. On a mismatch, ovl_get_root() only does a
+WARN_ON(), and the mount continues. The check is not a WARN_ON_ONCE(),
+so each such mount warns again.
 
-Tested before and after the fix in UML for three rounds, covering explicit
-scopes, multicast interface fallback, initially unconnected sockets and
-existing bindings. With the fix, the old binding and peer are retained,
-and traffic and reconnection to the original peer work. Also built on
-x86_64 with W=1 using adjusted allmodconfig and allyesconfig
-configurations, with no new warnings.
+An unprivileged user needs CONFIG_UNICODE, and a tmpfs mounted with the
+casefold option in their namespace.
 
-Fixes: 2f987a76a977 ("net: ipv6: keep sk status consistent after datagram connect failure")
+Reproduced by changing the casefold flag of the empty upper directory
+after the layers were set and before FSCONFIG_CMD_CREATE, with tmpfs and
+ext4 layers, and as uid 1000 in a user namespace.
+
+Fix this by replacing the WARN_ON() with a check that fails the mount
+with -EINVAL.
+
+Fixes: f9377faaeae0 ("ovl: Add S_CASEFOLD as part of the inode flag to be copied")
 Cc: stable@vger.kernel.org
-Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261029135822.448299-1-yanxia@cmss.chinamobile.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Tested-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/datagram.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/overlayfs/super.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
-index 38d7b48452817..9672ac979f476 100644
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -149,6 +149,7 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
- 	__be32			fl6_flowlabel = 0;
- 	__be32			old_fl6_flowlabel;
- 	__be16			old_dport;
-+	int			old_bound_dev_if;
- 	int			addr_type;
- 	int			err;
+diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
+index 861b0775f9ddb..c06bfe9765e25 100644
+--- a/fs/overlayfs/super.c
++++ b/fs/overlayfs/super.c
+@@ -1366,7 +1366,6 @@ static struct dentry *ovl_get_root(struct super_block *sb,
+ 	ovl_dentry_set_flag(OVL_E_CONNECTED, root);
+ 	ovl_set_upperdata(d_inode(root));
+ 	ovl_inode_init(d_inode(root), &oip, ino, fsid);
+-	WARN_ON(!!IS_CASEFOLDED(d_inode(root)) != ofs->casefold);
+ 	ovl_dentry_init_flags(root, upperdentry, oe, DCACHE_OP_WEAK_REVALIDATE);
+ 	/* root keeps a reference of upperdentry */
+ 	dget(upperdentry);
+@@ -1550,6 +1549,17 @@ static int ovl_fill_super_creds(struct fs_context *fc, struct super_block *sb)
+ 	if (!sb->s_root)
+ 		goto out_free_oe;
  
-@@ -219,6 +220,8 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
- 		goto out;
- 	}
- 
-+	old_bound_dev_if = sk->sk_bound_dev_if;
++	/*
++	 * The casefold flag of an empty layer root may have changed since the
++	 * mount options were parsed.  The root inode owns oe by now.
++	 */
++	if (!!IS_CASEFOLDED(d_inode(sb->s_root)) != ofs->casefold) {
++		pr_err("casefold flag of the root directory has changed\n");
++		dput(sb->s_root);
++		sb->s_root = NULL;
++		return -EINVAL;
++	}
 +
- 	if (__ipv6_addr_needs_scope_id(addr_type)) {
- 		if (addr_len >= sizeof(struct sockaddr_in6) &&
- 		    usin->sin6_scope_id) {
-@@ -261,6 +264,7 @@ int __ip6_datagram_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
- 		sk->sk_v6_daddr = old_daddr;
- 		np->flow_label = old_fl6_flowlabel;
- 		inet->inet_dport = old_dport;
-+		WRITE_ONCE(sk->sk_bound_dev_if, old_bound_dev_if);
- 		goto out;
- 	}
+ 	return 0;
  
+ out_free_oe:
 -- 
 2.53.0
 
