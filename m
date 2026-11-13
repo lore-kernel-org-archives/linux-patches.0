@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591329;
-	b=bj9X6q3l8vKWNMbsXyl4/WN9wcCzreFTo/2qJJ6gHK67I1Yf1UnINa1Zm64i9fKUq2dg
-	 O4MkQnikVhgotD0dfd6akS+mqXi8v0A8RGW3R1yXN+wEmIFpr79q1mOvf503HW4zcFkZa
-	 KSgd0PH7+SsNzdS/7vurdz2isrFeZFNpVXKYgqgsViC+gvdrIHE/JsdgqJ/aKb5miH+6q
-	 V66RxarZ6lgdmi7plQUUyB2iwrM1ACh5bApvFWyvBGC4KvVvaO9KsXKqB4O8vFt7KZODX
-	 dCn2LWP74bu+12FnrbXXnJNJEV+bdrLG4cxAV7Ot7wq2K701ax1qOB5CFZhdduPRNEA==
+	t=1794591330;
+	b=dEpCwX+OLTZinGmD1lEmSl6Ppx73GxnChwPhs16mcx0Tn7UOwBwXH3EpmUzxYZbTPV4H
+	 a2oTMjM4QJBCbIkDamqqciPgwj5YvFx7S5ROw3AezxVBZp/tD/9SddE3+12S6hZYQvEtd
+	 smxNBFbBUTJMVqfEFeTNx0H9tx7AnBlsFdllT4MWPDgiiakUQN6nXOkpY3aDgrnyUVWxu
+	 oUV7yWRGDVu3gIJtLmArqbNUSy70M0chD2iArvPdCwSTdhW51Mc8ouvSatPuIPjiL/3tF
+	 7B4DYqL3lOBosm8uctt3zBpT9uph9o+wcPnNrXP2BXyuMVNoRLXRgWphLt9SIa+x7Ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591329;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591330;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5QKJANru+VsOy4QL/4ifAxt45IlNTs3p3iPjV1JrLP4=;
-	b=MD1VgQNPoI9uCxuQKhWdH3U8IBUcNPYAga/BL/FMlixmOklyCkYFe7xSR4DtcOMfraXV
-	 pVEaw1ebjnQxKqtPOZ2b6Sv96qvoIns1WL2N5aqM1LVWLx3SJ8hTngUSY34R1Gqyw8vfj
-	 T3/y+7TyCEWqTUfoZZOYURHQc5TbGfQKMGPwwl7JMgt/OklI9+/ztQA/NFfD0z5OD8pe7
-	 5LX89HVCuEvHZK5WrqaW0V2d0u5GiLZQnMxYGQuFTIte+1XFv+RjnE2mGqcuCtKOaNEOe
-	 yt0FoHFFPJd3Bn70N4T0VIqDq2y3XfsEX7YEt4yiNEpljkIoxue1lhKJp/t4w367BhA==
+	bh=rgl2BY5rJ2WpZYi9Q0deFBD82R9B0qxZ9T9vb/vRH60=;
+	b=n40bfChLnLwLSSN9BUrWeeja0pX0MbMchlBTO6kwX6GmsNLL6NVnAwzJCSnyqt8Z4za9
+	 bw5h9x3EG0C/9rkRW1jEaFAsNerl5hSwfs4K09ICps0YFEFbm2fFYelYd4c1tCFgAE75z
+	 KpxwvFjenlFrZsx64xAxB+9cEivGD+si/98RHJUdgKJDEkZH8SgrZotzV5vvXu/3ZMc2w
+	 YkBbx/QmSoEQoUb7Ohw9tIJiRBV4Rw9YGb06h8Ovrd+7ee9xlzuvpdy9sVxNw1hFGe3Be
+	 yFJHGW4PCyEfoMWfCqor+1s4n9Rgmqn+mCcAnzAMKPzxYKdDQDiYWmCB8PgnPF5mcbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GG3Bppw6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KubPayQo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F2B60776F8;
-	Fri, 13 Nov 2026 17:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3D760A6F64;
+	Fri, 13 Nov 2026 17:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GG3Bppw6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FA31F000C7;
-	Fri, 13 Nov 2026 17:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KubPayQo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C8D1F000C5;
+	Fri, 13 Nov 2026 17:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591329;
-	bh=5QKJANru+VsOy4QL/4ifAxt45IlNTs3p3iPjV1JrLP4=;
+	s=korg; t=1794591330;
+	bh=rgl2BY5rJ2WpZYi9Q0deFBD82R9B0qxZ9T9vb/vRH60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GG3Bppw6avrp11tIhCurss8YyM0xWHes5opxJ/9TEbeaWue06Z/Myy7DTiHR7OcLc
-	 PZpet/JqbHta1V5/O6ExNi7nRkRaEnKqlkSIy+dV6CP0jzbD7DB6You8oChQ8h/QC8
-	 fvVN3bbs/+SwNCRQHopBbdSCFAqXt2Kw+YKaC0TA=
+	b=KubPayQodVnlyuW1jDSH5oThQRSFBlbXva/hxiZKMyDdJhNYYYKk2kBjgk41M1LuP
+	 yAJPdYVRP0wUGCQovQosvrQTMIdvJNNxl2tuHy0cJf7v99blTxdL6ut28jZOTjNbr2
+	 izsUz/Rw04Vfis/u5vlw0UYg/qIyU32ll4701Tb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 441/670] iio: adc: ad7192: reject devices without match data
-Date: Fri, 13 Nov 2026 10:50:05 -0500
-Message-ID: <20261113153826.857144227@linuxfoundation.org>
+Subject: [PATCH 6.12 442/670] ALSA: core: Clean up file_operations definitions
+Date: Fri, 13 Nov 2026 10:50:06 -0500
+Message-ID: <20261113153826.892941565@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,44 +68,494 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 7f7a119a370ecf6c8d4ab9e9ee0a8cdd77afedd3 ]
+[ Upstream commit 307835a6eb50e548e58ee604bf91909d4faa4203 ]
 
-SPI driver_override allows a device to bind to this driver without
-matching either the OF or SPI device ID table. In that case,
-spi_get_device_match_data() returns NULL.
+Align file_operations initializers with tabs to match the standard
+kernel coding style and improve readability.
 
-ad7192_probe() immediately dereferences the returned chip information
-to initialize the IIO device, causing a NULL pointer dereference.
-
-Commit 572a00852635 ("iio: dac: ad5686: missing NULL check on match
-data") fixed the same driver_override issue in another SPI driver.
-Reject devices without match data before using the chip information.
-
-Fixes: c3708c829a06 ("iio: adc: ad7192: Convert from of specific to fwnode property handling")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260708140624.562403-1-phucduc.bui@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 1bbc033983b7 ("ALSA: timer: Handle userspace-driven timer ioctls from 32-bit tasks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7192.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/core/compress_offload.c  | 18 +++++++-------
+ sound/core/control.c           | 19 +++++++--------
+ sound/core/hwdep.c             | 23 +++++++++---------
+ sound/core/init.c              | 23 +++++++++---------
+ sound/core/jack.c              | 38 ++++++++++++++---------------
+ sound/core/oss/mixer_oss.c     | 13 +++++-----
+ sound/core/oss/pcm_oss.c       | 21 ++++++++--------
+ sound/core/pcm_native.c        | 44 +++++++++++++++++-----------------
+ sound/core/rawmidi.c           | 16 ++++++-------
+ sound/core/seq/oss/seq_oss.c   | 21 ++++++++--------
+ sound/core/seq/seq_clientmgr.c | 19 +++++++--------
+ sound/core/sound.c             |  9 ++++---
+ sound/core/timer.c             | 25 ++++++++++---------
+ 13 files changed, 140 insertions(+), 149 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7192.c b/drivers/iio/adc/ad7192.c
-index 02328b9115756..ef8268ad353e0 100644
---- a/drivers/iio/adc/ad7192.c
-+++ b/drivers/iio/adc/ad7192.c
-@@ -1394,6 +1394,9 @@ static int ad7192_probe(struct spi_device *spi)
- 	st->int_vref_mv = ret == -ENODEV ? avdd_mv : ret / MILLI;
+diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
+index ae8ab99f53f86..ec0d4f34404c8 100644
+--- a/sound/core/compress_offload.c
++++ b/sound/core/compress_offload.c
+@@ -1014,17 +1014,17 @@ static long snd_compr_ioctl_compat(struct file *file, unsigned int cmd,
+ #endif
  
- 	st->chip_info = spi_get_device_match_data(spi);
-+	if (!st->chip_info)
-+		return -ENODATA;
-+
- 	indio_dev->name = st->chip_info->name;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
- 	indio_dev->info = st->chip_info->info;
+ static const struct file_operations snd_compr_file_ops = {
+-		.owner =	THIS_MODULE,
+-		.open =		snd_compr_open,
+-		.release =	snd_compr_free,
+-		.write =	snd_compr_write,
+-		.read =		snd_compr_read,
+-		.unlocked_ioctl = snd_compr_ioctl,
++		.owner		=	THIS_MODULE,
++		.open		=	snd_compr_open,
++		.release	=	snd_compr_free,
++		.write		=	snd_compr_write,
++		.read		=	snd_compr_read,
++		.unlocked_ioctl	=	snd_compr_ioctl,
+ #ifdef CONFIG_COMPAT
+-		.compat_ioctl = snd_compr_ioctl_compat,
++		.compat_ioctl	=	snd_compr_ioctl_compat,
+ #endif
+-		.mmap =		snd_compr_mmap,
+-		.poll =		snd_compr_poll,
++		.mmap		=	snd_compr_mmap,
++		.poll		=	snd_compr_poll,
+ };
+ 
+ static int snd_compress_dev_register(struct snd_device *device)
+diff --git a/sound/core/control.c b/sound/core/control.c
+index 460d8dd8303fb..d8f071218c0ed 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -2269,16 +2269,15 @@ EXPORT_SYMBOL_GPL(snd_ctl_disconnect_layer);
+  *  INIT PART
+  */
+ 
+-static const struct file_operations snd_ctl_f_ops =
+-{
+-	.owner =	THIS_MODULE,
+-	.read =		snd_ctl_read,
+-	.open =		snd_ctl_open,
+-	.release =	snd_ctl_release,
+-	.poll =		snd_ctl_poll,
+-	.unlocked_ioctl =	snd_ctl_ioctl,
+-	.compat_ioctl =	snd_ctl_ioctl_compat,
+-	.fasync =	snd_ctl_fasync,
++static const struct file_operations snd_ctl_f_ops = {
++	.owner		=	THIS_MODULE,
++	.read		=	snd_ctl_read,
++	.open		=	snd_ctl_open,
++	.release	=	snd_ctl_release,
++	.poll		=	snd_ctl_poll,
++	.unlocked_ioctl	=	snd_ctl_ioctl,
++	.compat_ioctl	=	snd_ctl_ioctl_compat,
++	.fasync		=	snd_ctl_fasync,
+ };
+ 
+ /* call lops under rwsems; called from snd_ctl_dev_*() below() */
+diff --git a/sound/core/hwdep.c b/sound/core/hwdep.c
+index 10a32004398ff..4334162bc0b22 100644
+--- a/sound/core/hwdep.c
++++ b/sound/core/hwdep.c
+@@ -324,18 +324,17 @@ static int snd_hwdep_control_ioctl(struct snd_card *card,
+ 
+  */
+ 
+-static const struct file_operations snd_hwdep_f_ops =
+-{
+-	.owner = 	THIS_MODULE,
+-	.llseek =	snd_hwdep_llseek,
+-	.read = 	snd_hwdep_read,
+-	.write =	snd_hwdep_write,
+-	.open =		snd_hwdep_open,
+-	.release =	snd_hwdep_release,
+-	.poll =		snd_hwdep_poll,
+-	.unlocked_ioctl =	snd_hwdep_ioctl,
+-	.compat_ioctl =	snd_hwdep_ioctl_compat,
+-	.mmap =		snd_hwdep_mmap,
++static const struct file_operations snd_hwdep_f_ops = {
++	.owner		=	THIS_MODULE,
++	.llseek		=	snd_hwdep_llseek,
++	.read		=	snd_hwdep_read,
++	.write		=	snd_hwdep_write,
++	.open		=	snd_hwdep_open,
++	.release	=	snd_hwdep_release,
++	.poll		=	snd_hwdep_poll,
++	.unlocked_ioctl	=	snd_hwdep_ioctl,
++	.compat_ioctl	=	snd_hwdep_ioctl_compat,
++	.mmap		=	snd_hwdep_mmap,
+ };
+ 
+ static void snd_hwdep_free(struct snd_hwdep *hwdep)
+diff --git a/sound/core/init.c b/sound/core/init.c
+index 92dff1736cfe9..b37269b86be89 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -461,20 +461,19 @@ static int snd_disconnect_fasync(int fd, struct file *file, int on)
+ 	return -ENODEV;
+ }
+ 
+-static const struct file_operations snd_shutdown_f_ops =
+-{
+-	.owner = 	THIS_MODULE,
+-	.llseek =	snd_disconnect_llseek,
+-	.read = 	snd_disconnect_read,
+-	.write =	snd_disconnect_write,
+-	.release =	snd_disconnect_release,
+-	.poll =		snd_disconnect_poll,
+-	.unlocked_ioctl = snd_disconnect_ioctl,
++static const struct file_operations snd_shutdown_f_ops = {
++	.owner		=	THIS_MODULE,
++	.llseek		=	snd_disconnect_llseek,
++	.read		=	snd_disconnect_read,
++	.write		=	snd_disconnect_write,
++	.release	=	snd_disconnect_release,
++	.poll		=	snd_disconnect_poll,
++	.unlocked_ioctl	=	snd_disconnect_ioctl,
+ #ifdef CONFIG_COMPAT
+-	.compat_ioctl = snd_disconnect_ioctl,
++	.compat_ioctl	=	snd_disconnect_ioctl,
+ #endif
+-	.mmap =		snd_disconnect_mmap,
+-	.fasync =	snd_disconnect_fasync
++	.mmap		=	snd_disconnect_mmap,
++	.fasync		=	snd_disconnect_fasync
+ };
+ 
+ /**
+diff --git a/sound/core/jack.c b/sound/core/jack.c
+index e4bcecdf89b7e..c21f041bf4577 100644
+--- a/sound/core/jack.c
++++ b/sound/core/jack.c
+@@ -304,41 +304,41 @@ static ssize_t jack_type_read(struct file *file,
+ }
+ 
+ static const struct file_operations jack_type_fops = {
+-	.open = simple_open,
+-	.read = jack_type_read,
+-	.llseek = default_llseek,
++	.open	=	simple_open,
++	.read	=	jack_type_read,
++	.llseek	=	default_llseek,
+ };
+ #endif
+ 
+ static const struct file_operations sw_inject_enable_fops = {
+-	.open = simple_open,
+-	.read = sw_inject_enable_read,
+-	.write = sw_inject_enable_write,
+-	.llseek = default_llseek,
++	.open	=	simple_open,
++	.read	=	sw_inject_enable_read,
++	.write	=	sw_inject_enable_write,
++	.llseek	=	default_llseek,
+ };
+ 
+ static const struct file_operations jackin_inject_fops = {
+-	.open = simple_open,
+-	.write = jackin_inject_write,
+-	.llseek = default_llseek,
++	.open	=	simple_open,
++	.write	=	jackin_inject_write,
++	.llseek	=	default_llseek,
+ };
+ 
+ static const struct file_operations jack_kctl_id_fops = {
+-	.open = simple_open,
+-	.read = jack_kctl_id_read,
+-	.llseek = default_llseek,
++	.open	=	simple_open,
++	.read	=	jack_kctl_id_read,
++	.llseek	=	default_llseek,
+ };
+ 
+ static const struct file_operations jack_kctl_mask_bits_fops = {
+-	.open = simple_open,
+-	.read = jack_kctl_mask_bits_read,
+-	.llseek = default_llseek,
++	.open	=	simple_open,
++	.read	=	jack_kctl_mask_bits_read,
++	.llseek	=	default_llseek,
+ };
+ 
+ static const struct file_operations jack_kctl_status_fops = {
+-	.open = simple_open,
+-	.read = jack_kctl_status_read,
+-	.llseek = default_llseek,
++	.open	=	simple_open,
++	.read	=	jack_kctl_status_read,
++	.llseek	=	default_llseek,
+ };
+ 
+ static int snd_jack_debugfs_add_inject_node(struct snd_jack *jack,
+diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
+index a6cc74bb25fd4..34e4dc791119e 100644
+--- a/sound/core/oss/mixer_oss.c
++++ b/sound/core/oss/mixer_oss.c
+@@ -407,13 +407,12 @@ static long snd_mixer_oss_ioctl_compat(struct file *file, unsigned int cmd,
+  *  REGISTRATION PART
+  */
+ 
+-static const struct file_operations snd_mixer_oss_f_ops =
+-{
+-	.owner =	THIS_MODULE,
+-	.open =		snd_mixer_oss_open,
+-	.release =	snd_mixer_oss_release,
+-	.unlocked_ioctl =	snd_mixer_oss_ioctl,
+-	.compat_ioctl =	snd_mixer_oss_ioctl_compat,
++static const struct file_operations snd_mixer_oss_f_ops = {
++	.owner		=	THIS_MODULE,
++	.open		=	snd_mixer_oss_open,
++	.release	=	snd_mixer_oss_release,
++	.unlocked_ioctl	=	snd_mixer_oss_ioctl,
++	.compat_ioctl	=	snd_mixer_oss_ioctl_compat,
+ };
+ 
+ /*
+diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
+index a65a3b8d04b8c..c49d71dd42808 100644
+--- a/sound/core/oss/pcm_oss.c
++++ b/sound/core/oss/pcm_oss.c
+@@ -3121,17 +3121,16 @@ static inline void snd_pcm_oss_proc_done(struct snd_pcm *pcm)
+  *  ENTRY functions
+  */
+ 
+-static const struct file_operations snd_pcm_oss_f_reg =
+-{
+-	.owner =	THIS_MODULE,
+-	.read =		snd_pcm_oss_read,
+-	.write =	snd_pcm_oss_write,
+-	.open =		snd_pcm_oss_open,
+-	.release =	snd_pcm_oss_release,
+-	.poll =		snd_pcm_oss_poll,
+-	.unlocked_ioctl =	snd_pcm_oss_ioctl,
+-	.compat_ioctl =	snd_pcm_oss_ioctl_compat,
+-	.mmap =		snd_pcm_oss_mmap,
++static const struct file_operations snd_pcm_oss_f_reg = {
++	.owner		=	THIS_MODULE,
++	.read		=	snd_pcm_oss_read,
++	.write		=	snd_pcm_oss_write,
++	.open		=	snd_pcm_oss_open,
++	.release	=	snd_pcm_oss_release,
++	.poll		=	snd_pcm_oss_poll,
++	.unlocked_ioctl	=	snd_pcm_oss_ioctl,
++	.compat_ioctl	=	snd_pcm_oss_ioctl_compat,
++	.mmap		=	snd_pcm_oss_mmap,
+ };
+ 
+ static void register_oss_dsp(struct snd_pcm *pcm, int index)
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 45b34e34412c5..dd135ed91c99c 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -4182,29 +4182,29 @@ static unsigned long snd_pcm_get_unmapped_area(struct file *file,
+ 
+ const struct file_operations snd_pcm_f_ops[2] = {
+ 	{
+-		.owner =		THIS_MODULE,
+-		.write =		snd_pcm_write,
+-		.write_iter =		snd_pcm_writev,
+-		.open =			snd_pcm_playback_open,
+-		.release =		snd_pcm_release,
+-		.poll =			snd_pcm_poll,
+-		.unlocked_ioctl =	snd_pcm_ioctl,
+-		.compat_ioctl = 	snd_pcm_ioctl_compat,
+-		.mmap =			snd_pcm_mmap,
+-		.fasync =		snd_pcm_fasync,
+-		.get_unmapped_area =	snd_pcm_get_unmapped_area,
++		.owner			=	THIS_MODULE,
++		.write			=	snd_pcm_write,
++		.write_iter		=	snd_pcm_writev,
++		.open			=	snd_pcm_playback_open,
++		.release		=	snd_pcm_release,
++		.poll			=	snd_pcm_poll,
++		.unlocked_ioctl		=	snd_pcm_ioctl,
++		.compat_ioctl		=	snd_pcm_ioctl_compat,
++		.mmap			=	snd_pcm_mmap,
++		.fasync			=	snd_pcm_fasync,
++		.get_unmapped_area	=	snd_pcm_get_unmapped_area,
+ 	},
+ 	{
+-		.owner =		THIS_MODULE,
+-		.read =			snd_pcm_read,
+-		.read_iter =		snd_pcm_readv,
+-		.open =			snd_pcm_capture_open,
+-		.release =		snd_pcm_release,
+-		.poll =			snd_pcm_poll,
+-		.unlocked_ioctl =	snd_pcm_ioctl,
+-		.compat_ioctl = 	snd_pcm_ioctl_compat,
+-		.mmap =			snd_pcm_mmap,
+-		.fasync =		snd_pcm_fasync,
+-		.get_unmapped_area =	snd_pcm_get_unmapped_area,
++		.owner			=	THIS_MODULE,
++		.read			=	snd_pcm_read,
++		.read_iter		=	snd_pcm_readv,
++		.open			=	snd_pcm_capture_open,
++		.release		=	snd_pcm_release,
++		.poll			=	snd_pcm_poll,
++		.unlocked_ioctl		=	snd_pcm_ioctl,
++		.compat_ioctl		=	snd_pcm_ioctl_compat,
++		.mmap			=	snd_pcm_mmap,
++		.fasync			=	snd_pcm_fasync,
++		.get_unmapped_area	=	snd_pcm_get_unmapped_area,
+ 	}
+ };
+diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
+index c7b39e07e7c39..1eb234250c58a 100644
+--- a/sound/core/rawmidi.c
++++ b/sound/core/rawmidi.c
+@@ -1784,14 +1784,14 @@ static void snd_rawmidi_proc_info_read(struct snd_info_entry *entry,
+  */
+ 
+ static const struct file_operations snd_rawmidi_f_ops = {
+-	.owner =	THIS_MODULE,
+-	.read =		snd_rawmidi_read,
+-	.write =	snd_rawmidi_write,
+-	.open =		snd_rawmidi_open,
+-	.release =	snd_rawmidi_release,
+-	.poll =		snd_rawmidi_poll,
+-	.unlocked_ioctl =	snd_rawmidi_ioctl,
+-	.compat_ioctl =	snd_rawmidi_ioctl_compat,
++	.owner		=	THIS_MODULE,
++	.read		=	snd_rawmidi_read,
++	.write		=	snd_rawmidi_write,
++	.open		=	snd_rawmidi_open,
++	.release	=	snd_rawmidi_release,
++	.poll		=	snd_rawmidi_poll,
++	.unlocked_ioctl	=	snd_rawmidi_ioctl,
++	.compat_ioctl	=	snd_rawmidi_ioctl_compat,
+ };
+ 
+ static int snd_rawmidi_alloc_substreams(struct snd_rawmidi *rmidi,
+diff --git a/sound/core/seq/oss/seq_oss.c b/sound/core/seq/oss/seq_oss.c
+index 77c1214acd90d..9de191f59c67a 100644
+--- a/sound/core/seq/oss/seq_oss.c
++++ b/sound/core/seq/oss/seq_oss.c
+@@ -211,17 +211,16 @@ odev_poll(struct file *file, poll_table * wait)
+  * registration of sequencer minor device
+  */
+ 
+-static const struct file_operations seq_oss_f_ops =
+-{
+-	.owner =	THIS_MODULE,
+-	.read =		odev_read,
+-	.write =	odev_write,
+-	.open =		odev_open,
+-	.release =	odev_release,
+-	.poll =		odev_poll,
+-	.unlocked_ioctl =	odev_ioctl,
+-	.compat_ioctl =	odev_ioctl_compat,
+-	.llseek =	noop_llseek,
++static const struct file_operations seq_oss_f_ops = {
++	.owner		=	THIS_MODULE,
++	.read		=	odev_read,
++	.write		=	odev_write,
++	.open		=	odev_open,
++	.release	=	odev_release,
++	.poll		=	odev_poll,
++	.unlocked_ioctl	=	odev_ioctl,
++	.compat_ioctl	=	odev_ioctl_compat,
++	.llseek		=	noop_llseek,
+ };
+ 
+ static int __init
+diff --git a/sound/core/seq/seq_clientmgr.c b/sound/core/seq/seq_clientmgr.c
+index 86316cf027aed..4dc5b15029e45 100644
+--- a/sound/core/seq/seq_clientmgr.c
++++ b/sound/core/seq/seq_clientmgr.c
+@@ -2785,16 +2785,15 @@ void snd_seq_info_clients_read(struct snd_info_entry *entry,
+  *  REGISTRATION PART
+  */
+ 
+-static const struct file_operations snd_seq_f_ops =
+-{
+-	.owner =	THIS_MODULE,
+-	.read =		snd_seq_read,
+-	.write =	snd_seq_write,
+-	.open =		snd_seq_open,
+-	.release =	snd_seq_release,
+-	.poll =		snd_seq_poll,
+-	.unlocked_ioctl =	snd_seq_ioctl,
+-	.compat_ioctl =	snd_seq_ioctl_compat,
++static const struct file_operations snd_seq_f_ops = {
++	.owner		=	THIS_MODULE,
++	.read		=	snd_seq_read,
++	.write		=	snd_seq_write,
++	.open		=	snd_seq_open,
++	.release	=	snd_seq_release,
++	.poll		=	snd_seq_poll,
++	.unlocked_ioctl	=	snd_seq_ioctl,
++	.compat_ioctl	=	snd_seq_ioctl_compat,
+ };
+ 
+ static struct device *seq_dev;
+diff --git a/sound/core/sound.c b/sound/core/sound.c
+index 7980b60f4ba0b..5ce042db47559 100644
+--- a/sound/core/sound.c
++++ b/sound/core/sound.c
+@@ -167,11 +167,10 @@ static int snd_open(struct inode *inode, struct file *file)
+ 	return err;
+ }
+ 
+-static const struct file_operations snd_fops =
+-{
+-	.owner =	THIS_MODULE,
+-	.open =		snd_open,
+-	.llseek =	noop_llseek,
++static const struct file_operations snd_fops = {
++	.owner	=	THIS_MODULE,
++	.open	=	snd_open,
++	.llseek	=	noop_llseek,
+ };
+ 
+ #ifdef CONFIG_SND_DYNAMIC_MINORS
+diff --git a/sound/core/timer.c b/sound/core/timer.c
+index a548885e81781..688a2d1257485 100644
+--- a/sound/core/timer.c
++++ b/sound/core/timer.c
+@@ -2101,9 +2101,9 @@ static long snd_utimer_ioctl(struct file *file, unsigned int ioctl, unsigned lon
+ }
+ 
+ static const struct file_operations snd_utimer_fops = {
+-	.llseek = noop_llseek,
+-	.release = snd_utimer_release,
+-	.unlocked_ioctl = snd_utimer_ioctl,
++	.llseek		=	noop_llseek,
++	.release	=	snd_utimer_release,
++	.unlocked_ioctl	=	snd_utimer_ioctl,
+ };
+ 
+ static int snd_utimer_start(struct snd_timer *t)
+@@ -2455,16 +2455,15 @@ static __poll_t snd_timer_user_poll(struct file *file, poll_table * wait)
+ #define snd_timer_user_ioctl_compat	NULL
+ #endif
+ 
+-static const struct file_operations snd_timer_f_ops =
+-{
+-	.owner =	THIS_MODULE,
+-	.read =		snd_timer_user_read,
+-	.open =		snd_timer_user_open,
+-	.release =	snd_timer_user_release,
+-	.poll =		snd_timer_user_poll,
+-	.unlocked_ioctl =	snd_timer_user_ioctl,
+-	.compat_ioctl =	snd_timer_user_ioctl_compat,
+-	.fasync = 	snd_timer_user_fasync,
++static const struct file_operations snd_timer_f_ops = {
++	.owner		=	THIS_MODULE,
++	.read		=	snd_timer_user_read,
++	.open		=	snd_timer_user_open,
++	.release	=	snd_timer_user_release,
++	.poll		=	snd_timer_user_poll,
++	.unlocked_ioctl	=	snd_timer_user_ioctl,
++	.compat_ioctl	=	snd_timer_user_ioctl_compat,
++	.fasync		=	snd_timer_user_fasync,
+ };
+ 
+ /* unregister the system timer */
 -- 
 2.53.0
 
