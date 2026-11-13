@@ -1,55 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591194;
-	b=HCDgnwR2F8zEdnA+ziMZqD8mlS/mc0y+BJF+gtKLpeROKZ+d3Aqw9dku02IJmYw93ZLK
-	 Wgr2y0E0PrwkjnC/+x9HF0XA60CZgD8dBTmT4IcBm/de2i2pg4xu4KRDwq6NVCCWa7OBr
-	 Ifa2cP9H4J/JbTE/8nWilMlQ9Emngx9c9g01/Sth5XMIVtk1KqhhsV+6AtGSIIMlC026o
-	 +1D6Uawjh6oMOVX6xM99743eSsV/EXgx4XMZOVa+kck/0EdrAV/Bx6OzWBZMKpfWWrCBn
-	 gzYDwWIeEpVZqPEBm7wBodieIZ3VPSyq6NbeB2RgN55SS7gdZmFe1SFa/KgyxDwL88A==
+	t=1794591195;
+	b=BAIaZdaxCcb3QBwaCl0ure1i4kshqExNQ53yVrS2F2ZkJa8sMZ70TV05170b6dY30sNH
+	 ca5ug/UV/vZQDvz88nqvR/na5jf0OwADpoNLZj2Gq+cbSN2qvpT+HxSLh6UWUlhy6GkwQ
+	 87Fxv7jJFL/bMR8tDpHSj0Sty9NBweXSSotymUU3761milN/14z/Rz9864xR8W30J/Jug
+	 oKWLwvj5oPHopWtuVYdLcrrc1eoVEeakZtrsff/VDr4aDsZNsPL74+B5xBESFSp9YHY3n
+	 eHO0XxMo5LY4/o3i/aUryg6ybYKkfRf3sw6jJh3vQlGRmAW/qgP2aVGstmKLL8lfdQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591194;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PGTzIpTFJezj1l8W8MRGXqjeFCFLle3HhV8G9oSlXxk=;
-	b=fJlALTMuH5ql0eUHPBxx8ZkEeeEB0UG6uT23tgCj2MbKBfgpwh4fjwlkSwI9lVxwQ5Q7
-	 4Q79HHY5/GqR6rdbyW0DcuAdb9kfcey+gD7989U+v2U9xI4LoIZpcVytP8dkO6oe+TU61
-	 ICX79Dwb+SlD5QZFdTeONoVNvF+uhol2cr3/UlkGg8CqZDAHsvjgqFZqFbhS4cvNk+Xj0
-	 HUUC+Aer2W2ndvCl1Uxui1CGZUD7GclEGGlqPIe/7j0dG2tvp0b+IF6nXBpywXPJC364r
-	 w0GBshkmsp2yO2j62zNEpXWElzzOFbk139/8YZKl6rGBkEEJnrK3wyrcrKYHH8Mt1CA==
+	bh=vd6kU6Hgb9hy71NM9676//d9jxEz+uHjUH3jKyECGxo=;
+	b=MG1bcB98VFxOIQyINtAj/vL80Pq8aBlczcb8GZYv6/NLeM3wsYvBr9F703/VpI5SbDht
+	 uZmK4URi68t+YOIf/OVx5XbKeCTwcZTX7ZYpXKd5JhxxOmygfdJazl1tmZ4CfMOCN0R0E
+	 Inax9acbtrDJNBxXCb/061ISTQ7JepdQCAWVJauaUXSeiwiRAKJJHfWEeX0uWcg04vcmr
+	 aBs8xtzMhowjdL7W4MxvSDx4cvyXV47yvhmQrGnZjsJ9wyjgGDtTU/sObxdMrc3h6Ym7e
+	 sN9D1rX++UZ2ZpBXnysK2fGkpYWvuakL7bkYfQEiBAWdTKOyTGItLOhnR3HVNHdhecA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6AqAgNa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsR8wtW7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123586075840;
-	Fri, 13 Nov 2026 17:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6616075847;
+	Fri, 13 Nov 2026 17:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6AqAgNa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B790E1F000C9;
-	Fri, 13 Nov 2026 17:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KsR8wtW7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B6C1F000C5;
+	Fri, 13 Nov 2026 17:33:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591193;
-	bh=PGTzIpTFJezj1l8W8MRGXqjeFCFLle3HhV8G9oSlXxk=;
+	s=korg; t=1794591195;
+	bh=vd6kU6Hgb9hy71NM9676//d9jxEz+uHjUH3jKyECGxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z6AqAgNaeTB8z0w5UDKu4Z5pCAvrZNP2esIXX8jtIqYmgOwDgtmFs67wCO9v4eNSf
-	 4Kb2Qf39LK5bW3FF/gwxsX6gvX/k29fQLc/S2Hgo3qfEVA8kj3z6FguWPaDB1CRtzw
-	 K0kDfPWfHHplCYMQ9ZmVhiaEkfpf8QLF7IBC2CkA=
+	b=KsR8wtW7eCvQFWS8HFXvB+cBytQB+cN3zDG1VG+9qThVAYHwBEbyMTz8ocTC20CON
+	 2KcHU72pgpG8pq0nILhgOi9MUxxlrf+bZtKrlKg+b5NROd7TeVLiV4NvqgxP7ce5Cq
+	 oso6dOW7YRzKPIOHZi+GVeKY6cKizRAk7juoJVFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Xu Xin <xu.xin@linux.dev>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Kees Cook <kees@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sunil Mushran <sunil.mushran@oracle.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 329/670] mm/madvise: fix data loss from MADV_FREE on a KSM page
-Date: Fri, 13 Nov 2026 10:48:13 -0500
-Message-ID: <20261113153823.027142555@linuxfoundation.org>
+Subject: [PATCH 6.12 294/670] ocfs2/cluster: unlink socket containers before releasing resources
+Date: Fri, 13 Nov 2026 10:47:38 -0500
+Message-ID: <20261113153821.897115816@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,57 +77,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 22d043c1da48d6c7274f9dd900714b6d58b7b9c6 ]
+[ Upstream commit 0988f0c0c7c908f0ff77fd8b90ce9918a1f41479 ]
 
-MADV_FREE can clear the dirty flag of a singly mapped KSM folio. The
-folio remains in the stable tree and can gain new mappings without being
-dirtied again. Once marked lazyfree, reclaim can discard data that those
-mappings still need.
+A socket container's node and socket must remain alive while the
+container is on sock_containers. The debugfs formatter reads sc_node
+and sc_sock under o2net_debug_lock without taking their references, but
+sc_kref_release() releases both before taking that lock to unlink the
+container.
 
-KSM always marks a folio dirty when converting it to a KSM folio in
-try_to_merge_one_page(). Marking a folio lazyfree clears PG_swapbacked
-but leaves PG_dirty unchanged. Preserving PG_dirty makes reclaim restore
-PG_swapbacked instead of discarding the folio. This also protects folios
-that were already lazyfree when KSM converted them.
+With CONFIG_DEBUG_FS enabled, a synchronous sender can retain its last
+socket-container reference after o2net_disconnect_node() has detached
+the connection and flushed o2net_wq. The caller runs outside that
+workqueue. After the sender removes its configfs dependency, node
+removal can proceed without waiting for the sender's final sc_put():
 
-Skip KSM folios before clearing their dirty flag, checking under the
-folio lock to serialize with KSM conversion.
+  Sender (final sc_put)    Configfs rmdir        Debugfs reader
+  --------------------    --------------        --------------
+  o2nm_undepend_item()
+                          Drop node item refs
+  o2nm_node_put()
+    [node can be freed]
+                                               sc_seq_show()
+                                                 Lock debug lock
+                                                 Read sc_node->nd_name
+                                                 Unlock debug lock
+  sc_node = NULL
+  o2net_debug_del_sc()
 
-Fixes: 854e9ed09ded ("mm: support madvise(MADV_FREE)")
-Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Xu Xin <xu.xin@linux.dev>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-34-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+The earlier socket release has a similar window. The container is
+still selectable while its socket has been released and sc_sock has
+not yet been cleared:
+
+  Sender (final sc_put)                       Debugfs reader
+  --------------------                       --------------
+  sock_release(sc->sc_sock)
+    [socket can be freed]
+                                             sc_seq_show()
+                                               Lock debug lock
+                                               Read sc_sock->sk fields
+                                               Unlock debug lock
+  sc_sock = NULL
+  ...
+  o2net_debug_del_sc()
+
+Move o2net_debug_del_sc() before releasing either resource. Unlinking
+under the existing debug lock waits for an active formatter to finish
+and prevents later readers from selecting the container. This covers
+both socket fields and node fields, including nd_num in the stats
+formatter.
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in string+0x42b/0x470
+    Read of size 1 at addr ffff88810f56fc90 by task python3/506
+
+    CPU: 0 UID: 0 PID: 506 Comm: python3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     kasan_report+0xe0/0x110
+     string+0x42b/0x470
+     vsnprintf+0x330/0x1110
+     seq_printf+0x1a8/0x260
+     sc_seq_show+0x604/0x9f0
+     seq_read_iter+0x480/0x1110
+     seq_read+0x362/0x5a0
+     full_proxy_read+0x11f/0x180
+     vfs_read+0x1a0/0xc20
+     ksys_read+0x111/0x200
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+(User register dump omitted.)
+
+     </TASK>
+
+    Allocated by task 497:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x28d/0x610
+     o2nm_node_group_make_item+0xea/0x1a0
+     configfs_mkdir+0x762/0xca0
+     vfs_mkdir+0x399/0x7e0
+     filename_mkdirat+0x129/0x450
+     __x64_sys_mkdir+0x70/0xa0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 505:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x308/0x580
+     config_item_cleanup+0x14b/0x230
+     config_item_put+0x79/0x90
+     sc_put+0x454/0x6e0
+     o2net_send_message_vec+0x63d/0x1560
+     o2net_send_message+0xa6/0xe0
+     validation_send_write+0x17f/0x1d0
+     full_proxy_write+0x11f/0x180
+     vfs_write+0x25a/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff88810f56fc00
+     which belongs to the cache kmalloc-512 of size 512
+    The buggy address is located 144 bytes inside of
+     freed 512-byte region [ffff88810f56fc00, ffff88810f56fe00)
+
+(Page and shadow-memory dumps omitted.)
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0065-v6-3090153fd7cacb810214@gmail.com
+Fixes: 2309e9e040fe ("ocfs2/net: Add debug interface to o2net")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Sunil Mushran <sunil.mushran@oracle.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ocfs2/cluster/tcp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index ea966d402f073..6ce97106d6d44 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -752,6 +752,15 @@ static int madvise_free_pte_range(pmd_t *pmd, unsigned long addr,
- 		if (folio_test_swapcache(folio) || folio_test_dirty(folio)) {
- 			if (!folio_trylock(folio))
- 				continue;
-+			/*
-+			 * KSM folios can gain new mappings at any time, so we must
-+			 * not clear their dirty flag.
-+			 */
-+			if (folio_test_ksm(folio)) {
-+				folio_unlock(folio);
-+				continue;
-+			}
+diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
+index dd4fb83d9cd8b..a53b2c47f55d4 100644
+--- a/fs/ocfs2/cluster/tcp.c
++++ b/fs/ocfs2/cluster/tcp.c
+@@ -391,6 +391,9 @@ static void sc_kref_release(struct kref *kref)
+ 
+ 	sclog(sc, "releasing\n");
+ 
++	/* Unlink before freeing anything the debugfs readers dereference. */
++	o2net_debug_del_sc(sc);
 +
- 			/*
- 			 * If we have a large folio at this point, we know it is
- 			 * fully mapped so if its mapcount is the same as its
+ 	if (sc->sc_sock) {
+ 		sock_release(sc->sc_sock);
+ 		sc->sc_sock = NULL;
+@@ -400,8 +403,6 @@ static void sc_kref_release(struct kref *kref)
+ 	o2nm_node_put(sc->sc_node);
+ 	sc->sc_node = NULL;
+ 
+-	o2net_debug_del_sc(sc);
+-
+ 	if (sc->sc_page)
+ 		__free_page(sc->sc_page);
+ 	kfree(sc);
 -- 
 2.53.0
 
