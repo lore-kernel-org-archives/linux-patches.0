@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590155;
-	b=0G75uRz9kPpsAuin7+TSQ9l91R9GI8prNL1zZDec1+GVZE4nnptWvxfllobbpKULHFTY
-	 D03apmG9cxttXGmfpudRttnpkFBy0NKpfSXQpHVxL32U6nv7AIK55xH1QaCqGZ6wc5mTF
-	 HT7ETUUcE5kRK2nOR8L/6FWAqkODqnhGIHT8H82KbhtxVKBRd/YLgPeeyBU+43tYAIiEs
-	 5AVnn/iSd9U+wu3w4AjoLHvpP+djxVcgO8av6UOfgBJ0lI4FvS1StBqbnBboqJR5YJqog
-	 M/82qqBwRdG5ihe8qB5DOTjI2GKTgkNuAYXP57DYEUZwzv8vIrikQlIqVJ29yOx645g==
+	t=1794590156;
+	b=YjFwBnxH0AvSZ7+kyu/zxNsiwDYsqdgsvX4uq6kfcB3uRsHKFx9Q6ZgU5OREqEIO0PA5
+	 Htzj6CdYYGeXWMzgXRW09sQbqbxWTnii3Wu7D31gUIElds2v5k5uzYp1BxmZWdZk/HoWw
+	 K7aSj+/dqUdtcobZOVxKhDJMLJV+LK4OFdaKm61IREUtd4A7YzI0Vu7W0XyMenOt1/VT8
+	 9tVbiqI8zdMLgarXeEBYn1qyS7rC8k4vtSAtsrAequt+a5JiB0kjEsxpUNHGwVhG+KYuc
+	 8KRH/9A+o4bwcyNzI7mGz4yNBhj0I0eHj5NKbRYUvOuzuBqm84B6YQel7R5yNTv8NPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590155;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oEnYt7bj6nLFNj5CAKmKV8Rsw94Y92krQHmFD/dWAt4=;
-	b=Rag3oAD+yAYNzBTvB2fXlZyyphbu/Pk08K8cR3clP5snS4w5WaA8vnFpTzUR8XKVvdXL
-	 GpHrKcztJ/mfElvqBH2wzhjS9gNBrFzFSlSF+xsyDOCpW4xN9VOc9Ae93M8LKy/Yyl0+D
-	 uToLO3c9qeF3pUwljey1tZKIhynzk5k9mqXy3qBMDXjJBwgzfFWhuaAcRZ+QdyHN6wUPW
-	 KrleOJodbl5Q2n3nFg3kVfpWZot2v7WywYUwRH3unbttFKZUOXrK/lT26ndmoxyNsM2I0
-	 6dYg9WSBIOld5P7k83dVCFnnvfYPHRs7/a/xEyEtUghUarryj0IS7bo6bVAdnhnmCMQ==
+	bh=M3H2vbrMI3ljoYE7dkuQ0xhz89rfVFwkrJuG3X6/EyI=;
+	b=Yl4YcZEgal75q8L4vpigtpA3hnbtz3aNKC8V2FOghrQY6khjYUmaczRu0QTMh+T/0C9L
+	 I1UTyH8LFa32axPLgDi5O8ECWlcFHkuWS8aAtMkECWpBVJM/Qwto9BhtZuJz+Or+Bkve4
+	 Wmc2PPB69u900A7kD7X/Qn0d/HhgLZv5mHIkXNOJYePr8IlIZcOdqBdV87D6Bi+DuD5P0
+	 zTSkJyZ4/GTsxoYf+ibIVD2Rmuwfs53o2+SJVu5s0QOQvdOAWinUf068P2FBdtHUwMXce
+	 UZk5msXJK3dp0sy/RjkTLNUC6ksNF+QZgE1AdRuPlwlVhqttFH6OfcxnWTPXIvLlJ9w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XXOE4RPJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KWnUs8sw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D317606D4A1;
-	Fri, 13 Nov 2026 17:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4762606D4AE;
+	Fri, 13 Nov 2026 17:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XXOE4RPJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E7E1F000C4;
-	Fri, 13 Nov 2026 17:15:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KWnUs8sw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D581F000C4;
+	Fri, 13 Nov 2026 17:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590155;
-	bh=oEnYt7bj6nLFNj5CAKmKV8Rsw94Y92krQHmFD/dWAt4=;
+	s=korg; t=1794590156;
+	bh=M3H2vbrMI3ljoYE7dkuQ0xhz89rfVFwkrJuG3X6/EyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XXOE4RPJEeOTmMM3l8CutnmXM+Ua92bqZ29Pyu3TrG6M/9NHN5fu595frzXpnmINX
-	 lAXw9XjLmy90YNeGyOc9Iq3NltXY50bHx/WD/qkkU+loA+uZoCA7FH98PiCqO/jHV+
-	 C08PbiHm0AcbjIZYw+w5APfUrzTRdEZoPqCptPp8=
+	b=KWnUs8swlWuC2igxrB06Rr/3jJFRHbVHsQP9qxHS9pp1UA2BlynjCtpmRLz89C16e
+	 FzDATESgh4s0lIwSfjZmcsYMW2mtRX5muDKqoif6gA3f+j66T7SZxUl18MoWDerDGr
+	 AvKbVHbyGRcsEclrDrU01PjSJi6q5NBP8wMzwT/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	stable@kernel.org,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 168/686] gpio: pca953x: Preserve wakeup accounting on parent IRQ failure
-Date: Fri, 13 Nov 2026 10:45:01 -0500
-Message-ID: <20261113153826.603985429@linuxfoundation.org>
+Subject: [PATCH 6.18 169/686] f2fs: dont use truncate_inode_pages_final() on live inodes
+Date: Fri, 13 Nov 2026 10:45:02 -0500
+Message-ID: <20261113153826.665846260@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,60 +70,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit a38bf551726a21c9bcc001b02164f30378b64b64 ]
+[ Upstream commit 74bbd6ada01f91fcad60608e0417bf45a9fa99e6 ]
 
-pca953x_irq_set_wake() updates wakeup_path before asking the parent
-IRQ controller to change its wake state. If irq_set_irq_wake() fails,
-the IRQ core rolls back its wake state but the driver's counter remains
-changed.
+truncate_inode_pages_final() is meant to be called from ->evict_inode.
+It sets AS_EXITING on the mapping, and nothing ever clears it, to tell
+the VM that the inode is going away.
 
-A failed enable can therefore leave the expander marked as part of the
-wakeup path when no child IRQ has successfully enabled wakeup. A failed
-disable can make the driver stop retaining power even though wakeup is
-still enabled. The suspend and resume paths use this counter to decide
-whether to disable or enable the regulator.
+f2fs calls it in two places where the inode stays live:
 
-Update wakeup_path only after the parent operation succeeds, leaving it
-unchanged on error.
+ - F2FS_IOC_START_ATOMIC_REPLACE uses it to drop the page cache of the
+   original inode before setting i_size to 0. The atomic write then
+   goes on through this inode.
 
-Fixes: f70fbc15bae2 ("gpio: pca953x: Configure wake-up path when wake-up is enabled")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
-Fixes: f70fbc15bae2c89f ("gpio: pca953x: Configure wake-up path when wake-up is enabled")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20261018161042.3298045-1-sahaj123.sc@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+ - f2fs_abort_atomic_write() uses it to drop the uncommitted data. It
+   is called on eviction, but also on the last writer's close in
+   f2fs_release_file(), from f2fs_file_flush() when the atomic writer
+   exits, from F2FS_IOC_ABORT_ATOMIC_WRITE and when
+   F2FS_IOC_COMMIT_ATOMIC_WRITE fails.
+
+Other processes may still have the file open or mapped in all of these
+cases. The mapping then stays marked as exiting for as long as the
+inode is in memory. This stops reclaim from storing workingset shadow
+entries for it and breaks any code that assumes an exiting mapping has
+no users left.
+
+All we need in both places is to drop the page cache, so use
+truncate_inode_pages(mapping, 0) instead. The eviction path is not
+affected, because f2fs_pre_evict_inode() still calls
+truncate_inode_pages_final() after f2fs_abort_atomic_write().
+
+Cc: stable@kernel.org
+Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
+Fixes: 41e8f85a75fc ("f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE")
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/f2fs/file.c    | 2 +-
+ fs/f2fs/segment.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 7ebc4f9662c91..99b7bc2629580 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -839,13 +839,18 @@ static int pca953x_irq_set_wake(struct irq_data *d, unsigned int on)
- {
- 	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
- 	struct pca953x_chip *chip = gpiochip_get_data(gc);
-+	int ret;
-+
-+	ret = irq_set_irq_wake(chip->client->irq, on);
-+	if (ret)
-+		return ret;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 8211ee75fb8f7..d6798d795e3d3 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2431,7 +2431,7 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 	fi->original_i_size = isize;
+ 	if (truncate) {
+ 		set_inode_flag(inode, FI_ATOMIC_REPLACE);
+-		truncate_inode_pages_final(inode->i_mapping);
++		truncate_inode_pages(inode->i_mapping, 0);
+ 		f2fs_i_size_write(inode, 0);
+ 		isize = 0;
+ 	}
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 46f14f891843c..c0ec2715408e8 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -193,7 +193,7 @@ void f2fs_abort_atomic_write(struct inode *inode, bool clean)
+ 		return;
  
- 	if (on)
- 		atomic_inc(&chip->wakeup_path);
- 	else
- 		atomic_dec(&chip->wakeup_path);
+ 	if (clean)
+-		truncate_inode_pages_final(inode->i_mapping);
++		truncate_inode_pages(inode->i_mapping, 0);
  
--	return irq_set_irq_wake(chip->client->irq, on);
-+	return 0;
- }
- 
- static void pca953x_irq_bus_lock(struct irq_data *d)
+ 	release_atomic_write_cnt(inode);
+ 	clear_inode_flag(inode, FI_ATOMIC_COMMITTED);
 -- 
 2.53.0
 
