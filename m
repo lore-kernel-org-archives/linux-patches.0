@@ -1,61 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590752;
-	b=nRlu19mY8u0Ynp5sMO/vmkvGAw9zyAywveGf7f23O68glaLsTnueEYqJFcemieJo7JR2
-	 X9qlRxUz0gKLOTeIkF6ljyEJkBlevdWc4bRMYfC3jBknfUTMvwGLyJK3F8c27Qbe+dJ9b
-	 CI4a9UzlGUjecsOTahDBV0+sVQdAshEGiVrjKIOVe7s+wWZiw4frlQAAokh6grrpN5R0D
-	 JbShgY4eGNJhxAXUa0AGtKGWpB/E+/oNNB1WRUolP2SvoUtvodhFdbv+m2OawBT+AfRWM
-	 K/pCQMvi6TerwbWovhWUpXe0uKUcbyKHJcXLN7jfU1YzD4hd7GuCK2ar3pkAmJyxbFg==
+	t=1794590753;
+	b=awzW91cOCgKJq4GHglm4hI/C/SkViAL8VuB1uMv4ljxO2CZQW5/qqHZ8JeV3V4ecW9Ft
+	 ih0NF4QghlOrx9yovHtasYi4FlvMIyOfwNLlJih8hCTvvhEJKkYBp25FZi3HwfrBi66yN
+	 ZCM8o4q7wXdcbKadRk7Wat13z3gSvOWTr4/707cvv5qud/J+brHeOf7GBEwEWIuglEqov
+	 i8dpSmX2tRca4qbY5U+JBUAxaxaw34I1wlyNBjjgjpvqssY2WR/X/ywSGvwF8bluhcsvo
+	 Uje2MAN9C/zN2/VRPmXQGnt+ekA1pB9/qPTLLxiuuRUa/3NeHPLCJlChT7iRrYxBYMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590752;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590753;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JPMiV7aqQAJc2B1VkfdkvoGFy1VjhkPLdlEntvor0Ac=;
-	b=5PXqSRKtbmVxL9UaBuDLAwVqBI5+fNtzOC+4dmsG2oPVd0floQICkX9SG6EdWx7szm/6
-	 RU9HfDRAtnhrnde/A2H0tOF1GdGqTSZOTc64MtF/g6Peio/G70ZmJjbCjuMR0pVdPB7Q5
-	 IXEJMDuMki6x+thGNw3HeFO0Y+BwJPpglWhk7QO9AuykeWcvCiQ1wpWwB516Lwi6biLBP
-	 XHRz2BQu+fPCjUcKl7HFF7dvqqNHSCmEyHydMOw5I2oEIChHLM9Fh3OTqpZHWD+FaOQUW
-	 kJc0yIcwdJDodZBcN49zqGXwJZIXewHG8u/gRrTm2iXsUiaBLxUyQ8kGwXFaTRQ9XxA==
+	bh=mEOsFL0sp7hrG3hdoayqTlq+Ba3a28iAi9xfUeOSn/k=;
+	b=1hi+SSNRdtKTGIDePypNNruh+AAiqupUCMn/EfrnO0w7tCCeBdYFaOZzSoaBkv6z5Fun
+	 G5fnJiK77Rn9TfMXcYViMjjyHIJ0pqGHM5Q0SiXDgNg5aQhXGIDTwX70GdzNl6fk7DTXu
+	 fjYLkh5Vg/xqSzvsv7Xp4wjMDCyXvMWKoWzBL5Pq58BXoI5WmA4+3N/++s4+ZuE4VQEOR
+	 o1mvOlGrsCBPJ4tBmaBg0cUybod/7C8oalarVLGHR8wWfY/eUDDH47l4HBSPM1cwj6MIL
+	 +Wa+POplwCco/2iN31q41uGGtQgBw0SHssJYhrpF0JFrpMJN+7fDvfl8PcEKcj4isNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xKpNUyEx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S75U6uzr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F21C607C346;
-	Fri, 13 Nov 2026 17:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D45607C341;
+	Fri, 13 Nov 2026 17:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xKpNUyEx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416B31F000C6;
-	Fri, 13 Nov 2026 17:25:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S75U6uzr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722211F000C9;
+	Fri, 13 Nov 2026 17:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590752;
-	bh=JPMiV7aqQAJc2B1VkfdkvoGFy1VjhkPLdlEntvor0Ac=;
+	s=korg; t=1794590753;
+	bh=mEOsFL0sp7hrG3hdoayqTlq+Ba3a28iAi9xfUeOSn/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xKpNUyEx/wFdO5QC2ru4FhecPVrNHlGn/Du6zi+wbQZPQG+YdYdAsdxS38BHBWx5R
-	 iQEkj+P5fQqtElWthJbQbDW3xsIyoGPamKTilZ07q+WGs43gxT3IoUJqIZorb625ES
-	 Md0/HkJGNJ7N2n5M46iSIpCbkPJgktHzyRkXGB64=
+	b=S75U6uzrRFdmR9oSf+k6VjqifdnDHt3yH3EOLc6yWrf0uQASBV9SE9ii671AKjBUj
+	 ujRtxn0FHZQhqVq+Kac/Bh9epO5CxOj0TaWtrinYj0kpH4tGUQyCb3nH92OjihXGKE
+	 JJOJ5qXV/3kLqHRVe0WP2paPpGGsipOBUTIEQvJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+23b25ba3c6bf971f9c57@syzkaller.appspotmail.com,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Baoquan he <bhe@redhat.com>,
-	Barry Song <baohua@kernel.org>,
-	Hugh Dickens <hughd@google.com>,
-	Kairui Song <kasong@tencent.com>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chis Li <chrisl@kernel.org>
-Subject: [PATCH 6.18 646/686] mm/shmem: dont release a swapin-error marker as a swap entry
-Date: Fri, 13 Nov 2026 10:52:59 -0500
-Message-ID: <20261113153843.669587405@linuxfoundation.org>
+	Thomas Gleixner <tglx@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 655/686] posix-timers: Handle the timer_[re]arm() return value
+Date: Fri, 13 Nov 2026 10:53:08 -0500
+Message-ID: <20261113153843.939505378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -77,63 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-[ Upstream commit e4b92891aaca0d37b5973362dd14747a65406650 ]
+[ Upstream commit cfb7fe3fdd4ca1d37da1ed15a1897d4a27c47a8a ]
 
-A failed shmem swapin (eg, EIO) frees the swap slot and leaves a
-PTE_MARKER_POISONED entry in the page cache.  On truncate or eviction
-shmem_free_swap() passes that marker to swap_put_entries_direct(), which
-warns because it is not a swap entry.  There is nothing left to release
-either way.
+The [re]arm callbacks will return true when the timer was queued and false
+if it was already expired at enqueue time.
 
-Skip the release for non-swap entries, as every other caller already does.
+In both cases the call sites can trivially queue the signal right there,
+when the timer was already expired. That avoids a full round trip through
+the hrtimer interrupt.
 
-Link: https://lore.kernel.org/20260920155002.1030454-1-devnexen@gmail.com
-Fixes: ac2d3268284b ("mm/swapfile.c: remove the unneeded checking")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: syzbot+23b25ba3c6bf971f9c57@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=23b25ba3c6bf971f9c57
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Baoquan he <bhe@redhat.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Chis Li <chrisl@kernel.org> (Google)
-Cc: Hugh Dickens <hughd@google.com>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted newer softleaf and swap-release APIs to the existing swp_entry_t-based swap helpers ]
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260408114952.198028466@kernel.org
+Stable-dep-of: 141a27750ec3 ("posix-timers: Report zero remaining time for disarmed SIGEV_NONE timers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/time/posix-timers.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 6f4c85a3f6410..5ce1c0ddf8cde 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -948,6 +948,7 @@ static long shmem_free_swap(struct address_space *mapping,
- 			    pgoff_t index, pgoff_t end, void *radswap)
+diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
+index 3082129d836c2..3d39f77423afb 100644
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -306,6 +306,8 @@ static bool common_hrtimer_rearm(struct k_itimer *timr)
+ 
+ static bool __posixtimer_deliver_signal(struct kernel_siginfo *info, struct k_itimer *timr)
  {
- 	XA_STATE(xas, &mapping->i_pages, index);
-+	const swp_entry_t swp = radix_to_swp_entry(radswap);
- 	unsigned int nr_pages = 0;
- 	pgoff_t base;
- 	void *entry;
-@@ -964,8 +965,9 @@ static long shmem_free_swap(struct address_space *mapping,
- 	}
- 	xas_unlock_irq(&xas);
++	bool queued;
++
+ 	guard(spinlock)(&timr->it_lock);
  
--	if (nr_pages)
--		free_swap_and_cache_nr(radix_to_swp_entry(radswap), nr_pages);
-+	/* A swapin-error marker holds no swap slot, so just drop it. */
-+	if (nr_pages && !non_swap_entry(swp))
-+		free_swap_and_cache_nr(swp, nr_pages);
+ 	/*
+@@ -319,12 +321,18 @@ static bool __posixtimer_deliver_signal(struct kernel_siginfo *info, struct k_it
+ 	if (!timr->it_interval || WARN_ON_ONCE(timr->it_status != POSIX_TIMER_REQUEUE_PENDING))
+ 		return true;
  
- 	return nr_pages;
+-	timr->kclock->timer_rearm(timr);
+-	timr->it_status = POSIX_TIMER_ARMED;
++	/* timer_rearm() updates timr::it_overrun */
++	queued = timr->kclock->timer_rearm(timr);
++
+ 	timr->it_overrun_last = timr->it_overrun;
+ 	timr->it_overrun = -1LL;
+ 	++timr->it_signal_seq;
+ 	info->si_overrun = timer_overrun_to_int(timr);
++
++	if (queued)
++		timr->it_status = POSIX_TIMER_ARMED;
++	else
++		posix_timer_queue_signal(timr);
+ 	return true;
  }
+ 
+@@ -912,9 +920,13 @@ int common_timer_set(struct k_itimer *timr, int flags,
+ 		expires = timens_ktime_to_host(timr->it_clock, expires);
+ 	sigev_none = timr->it_sigev_notify == SIGEV_NONE;
+ 
+-	kc->timer_arm(timr, expires, flags & TIMER_ABSTIME, sigev_none);
+-	if (!sigev_none)
+-		timr->it_status = POSIX_TIMER_ARMED;
++	if (kc->timer_arm(timr, expires, flags & TIMER_ABSTIME, sigev_none)) {
++		if (!sigev_none)
++			timr->it_status = POSIX_TIMER_ARMED;
++	} else {
++		/* Timer was already expired, queue the signal */
++		posix_timer_queue_signal(timr);
++	}
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
