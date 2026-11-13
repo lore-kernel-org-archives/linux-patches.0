@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590760;
-	b=d8U2D8KYLZHAVRr/3JGEoBq4q6zQFd27dODEgPYkxEsoBOC+Zem3yW8yp72k76Ldegcm
-	 xz214X7rkR7oVTJ+k3iLCBEA7JSAhV+GtS7+fyjocXjBLdjFOgFXVYcvjuVmDOZ3lVevh
-	 w6makWrehb3Mtm2kneQKqHcVk+MmEqV2+agdeAdpSAdaKnRCIa+aBVLc7iK6SNzeyWLLn
-	 6FNaBpuVu7qtLowOeI/ZyDPdQGigTa+STcMLnTdbac1ah/0lBkRMI6F3xANsCWf74jqHo
-	 Fkf2F+/ruyw2Wx8/M8R91+EpQOOfG/Mj2vCS58Tlosh7GkyxLjR/4FmXT+68IREf5Pw==
+	t=1794590761;
+	b=Opp/+/V3yeofraFKsGSr7IZ9dzmNMEoypE5fY4hJpuhiHAQSpW+vTqU1pmu1nK9A8a/r
+	 I2MgVQ1XdTpu26Cp/ssTD2FChPeKxE/Gy37+YL/GF3eWy3RlK6IFgVdalZArdL49XqLvR
+	 n1sUbR9Qd9pNCKJBahXu3S5zI4Bdo3pcsJ/pdqBcK5G+t5stsCCLzRkQHIR+iqhXGog40
+	 9VMSvUCk/D6EurxBeojv/j8WNPcdJKwLbL4lCr5agU8PrghCbX385b9n9JZveEcT5r9Ab
+	 TtGvkaF3ENUWDg82y+tp3uEVRFk1q8rme/LEVYofjEJUG/wkbKIuaU9Pm6RgWyBx4mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590760;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590761;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UKB4kCO99b5BZWLbBmP5hV/gcQ4IxXqkugJxdCIf6Bg=;
-	b=QAIFW0+sMfOQ7OtXur1okZRxOnUj2JJ/Xi9B433gfCDAywpPTfU+61s1p33rHGLTqJIr
-	 lllbZ7NB8bGLhgclfgEXJl9m5fKzTXYuqi1Yl61EXg/vJwMqszI3X8a/cW1q+jqmcUv4T
-	 Tc4yFJtLSThtBjYis5d3/oQgQdmGtA/fk8UnMWxXKmBH7bLTcDPuuuBo1ElCVnL4JLTxf
-	 x0Bb+15zj1gOInwePr8N8O3g+Qxi25gDCA4l7V/CgK39LKREvizbUDx7jN/o99uuQqUdl
-	 PS9PMQBy0WazDZSngsTe7dhofPf2E2Zp87WRVmINGYNVx8uQodEqYIZovsnjRLUt42g==
+	bh=ibUFDzVlgioodZ/AFMphia3kbc5ra+lRWdijbTX7qQ4=;
+	b=DqJFrQhrPO+ddUS/crbI+XsjBdhOawjBg0cIBDeJIvUymURYEpYKtJMVEbYoXFoSGwQF
+	 N4minA3fSNI6Klhk8n/FomOIE9yi2c5fewNeTcclNLZeO1Uuko4kBGn6F1hzGvZ2wusjW
+	 GgVNHi1silpJRQ0qEluvJ2zD5diBIItz1EFcMEjDFUKh5RbF74PZNOSuNk23F02jlxaX3
+	 uODqq1x0stogztuqqpMNWXklWbn5z10L5THz3RF3Q+jxU97mU4QahsyQSJOKR2ER+NYu3
+	 q0A2kMI/AvkLThEeh3usQqljrtWcKgu9oDCalvdscZv6PL/efqVCmw2hVFZq6dqh3Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=awGY33t5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MO9Yc2cA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFC2607C355;
-	Fri, 13 Nov 2026 17:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4455E607C34F;
+	Fri, 13 Nov 2026 17:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=awGY33t5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B1391F000C4;
-	Fri, 13 Nov 2026 17:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MO9Yc2cA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CCB1F000C6;
+	Fri, 13 Nov 2026 17:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590759;
-	bh=UKB4kCO99b5BZWLbBmP5hV/gcQ4IxXqkugJxdCIf6Bg=;
+	s=korg; t=1794590761;
+	bh=ibUFDzVlgioodZ/AFMphia3kbc5ra+lRWdijbTX7qQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=awGY33t5rzmWSJ2z0Ja3PC5gHMTyO9vlDZBI4Uia4ifk0dl+U58/fW3NonF35gUmP
-	 oRRRpk2BTbXXmJFqG2DfAeLTRIcTkgfEprY0Is6btE7eArI1+dE8f2stbH5NC5WplX
-	 FGTF2ySLTSPdAJqNHPAkIGwujkAZ3gB/FerEIhOs=
+	b=MO9Yc2cASRcLQ9wRTKI3HWvYqCRCop92Ut1dt+r4U2vEOxAikOeFm2QTjKAWmYg5g
+	 aI82hj0NaBP40s7/G1JJxi7cJ+ryXzU9lg2EqWXScR0weHlQaTqvHhNpma2M80iK3m
+	 kZESOiQPJbiGjrw92oWxIC+F1xh1GbhV2RcoLfTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Jerome Brunet <jbrunet@baylibre.com>,
 	Brian Masney <bmasney@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 660/686] clk: nuvoton: ma35d1: Keep the clock count in the driver
-Date: Fri, 13 Nov 2026 10:53:13 -0500
-Message-ID: <20261113153844.087438427@linuxfoundation.org>
+Subject: [PATCH 6.18 661/686] dt-bindings: clock: ma35d1: Drop CLK_MAX_IDX define
+Date: Fri, 13 Nov 2026 10:53:14 -0500
+Message-ID: <20261113153844.116426399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,50 +72,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 26ec588063d9b6c70773b8729372e2bf6d3ea95a ]
+[ Upstream commit 653738db38c7c7f0fb959a7870f9461cf4987825 ]
 
-The number of clocks is not a binding since this is a value that can
-change. As such, in order to support the missing watchdog clocks and
-allow the deprecation and removal of CLK_MAX_IDX from the bindings, we
-need to switch to a local definition first.
+Drop CLK_MAX_IDX define of MA35D1 include. This is not a binding and
+should not be placed here. Value is defined in the user driver.
 
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260930-perso-ma35d1-upstream-clk-v6-1-48937ee6c9bb@bootlin.com
+Link: https://patch.msgid.link/20260930-perso-ma35d1-upstream-clk-v6-3-48937ee6c9bb@bootlin.com
 Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 Stable-dep-of: 1dc3871ce7ec ("clk: nuvoton: ma35d1: Add missing WDT/WWDT parent clocks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/nuvoton/clk-ma35d1.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/dt-bindings/clock/nuvoton,ma35d1-clk.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/nuvoton/clk-ma35d1.c b/drivers/clk/nuvoton/clk-ma35d1.c
-index 9f65d0623517a..6aa42a3e1be3b 100644
---- a/drivers/clk/nuvoton/clk-ma35d1.c
-+++ b/drivers/clk/nuvoton/clk-ma35d1.c
-@@ -17,6 +17,7 @@
- static DEFINE_SPINLOCK(ma35d1_lock);
+diff --git a/include/dt-bindings/clock/nuvoton,ma35d1-clk.h b/include/dt-bindings/clock/nuvoton,ma35d1-clk.h
+index ba2d70f776a6d..2d6a44a7e55c4 100644
+--- a/include/dt-bindings/clock/nuvoton,ma35d1-clk.h
++++ b/include/dt-bindings/clock/nuvoton,ma35d1-clk.h
+@@ -248,6 +248,5 @@
+ #define ADC_GATE	233
+ #define EADC_DIV	234
+ #define EADC_GATE	235
+-#define	CLK_MAX_IDX	236
  
- #define PLL_MAX_NUM		5
-+#define	MA35D1_CLK_COUNT	236
- 
- /* Clock Control Registers Offset */
- #define REG_CLK_PWRCTL		0x00
-@@ -467,12 +468,12 @@ static int ma35d1_clocks_probe(struct platform_device *pdev)
- 	int ret;
- 
- 	ma35d1_hw_data = devm_kzalloc(dev,
--				      struct_size(ma35d1_hw_data, hws, CLK_MAX_IDX),
-+				      struct_size(ma35d1_hw_data, hws, MA35D1_CLK_COUNT),
- 				      GFP_KERNEL);
- 	if (!ma35d1_hw_data)
- 		return -ENOMEM;
- 
--	ma35d1_hw_data->num = CLK_MAX_IDX;
-+	ma35d1_hw_data->num = MA35D1_CLK_COUNT;
- 	hws = ma35d1_hw_data->hws;
- 
- 	clk_base = devm_platform_ioremap_resource(pdev, 0);
+ #endif /* __DT_BINDINGS_CLOCK_NUVOTON_MA35D1_CLK_H */
 -- 
 2.53.0
 
