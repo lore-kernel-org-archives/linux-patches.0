@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585826;
-	b=xpNYJMp0g00Pqt6JsOlAIcoqyZTt8JC7GoKVLYrwo7GEIdJ94lJhgKJv2ILkfNjQfDcR
-	 qKWngqGNT4DnOTCKGeg3hbwyq1T0Ys5VEhUpu7FZI5vkJPz2TivR9TGFv2Q0Uml83huLY
-	 kJBJsXSMTxN2klJkSMkV4RLJOQn+hLUfwsWVELZaXb6y4Cl8mVmEJDHnPOGFGxP5KuikY
-	 7mga13iby+O9t/p3p/4fzbMLEGh0PRf8gK+IKF+5Ig9BrgQJAP9YNIF6VLv6Vkhlis0B+
-	 5AowOPZfzBz2ToPNEWeUhBPMxdyFPT1YuhZzIa1XrgTG85YxScIBZCzf0c08rBvI3JQ==
+	t=1794585827;
+	b=f+pS6kVmUwQJKLrc21hSUQ/jIsBaf6vXBPPEXru8Ffr6yoovI/xDtqCewOhRu5Vy3Jyh
+	 4o/ogbW519KxZR58S/wgY7Hs4Z6KvhdATTgIkNsaTzLVKZW88TRIk59rr8ycm846lboRZ
+	 qIvizrC4RJ+eWaA7gADWkLjBgr9szYeUEc7LB/WPP3Vt/k7sMiLGE09MBQ5VyizRSZVoV
+	 QWIkn6WDrkD+dhC0aVdNxprG7fTiiJE2F6M+vCVKc6U0/A0xPlmgd67nNIO6ZG0McD1bA
+	 Z9zpsTeJIO32YfnNHfF6PjVuqx/ItZXIa5W73HPkFXxKaTTCwYaLXLoMXJd7LtkbINQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YSEs0avsq/3/0AUxEBB7h2L7ieAnTM3BGTNTu9jHXP4=;
-	b=mh/LidbSs2rCdTDftqXp1eGpCNqbe5ARfNaz0st2Gyjd7SaWJKTZw6K2l4XixvdP3H8g
-	 S1CVY8eqk0gaHUWc+iUiGMyJccsAhi4EiyQnt1glN/eQQfmoigjRH6ovRe7UMuKG0zy/b
-	 r6IPg//3SdjtSPnZQL2QJZ53SCXr4klxyMTwA+JHR5RrPcKPmYf6KCXOZ6WD5AZ1Yxgm7
-	 L9ZTncFWvUKtTHdtSIsUTCwvazlzXGXGafG/TSgvmJn87g0wifsHAtYwJKx+KleIzUbhd
-	 6/zBFaQhcH3UtpM348Dhj5MpTZu5TJRKGBtD387Zg4fEFPfSuKb+RUJ9BbkEeASAQUA==
+	bh=CcJ7z9r+fYI/yYvuXT5sHQOEU2/afu9MthT+Z3CKxx8=;
+	b=4Fe063GYLOGbL6Zby94vQOE3JBlGCJxMOv4RqPcc3pDOmow8ndbvhSmvRGeQBKkd7GAa
+	 aCBFPkeWzPq1WdNXsfiKmBkmm8GUYDKhTv666eK0nm0TsIjwVSQ0zrJeycjNp9F/UDryi
+	 6R4Z3SFKm1wKVWfJTAr9bJ2iVgCFhyabZ4kCa8draHoAVAIDCS98DBwLC1Cga8YxlZ6Me
+	 Slhkp46qeQmztl5Yi/rY4spsc4tM6TqZCcxXH++wb4KzOxnLU732JRhtUz36+KgNNFbTW
+	 /zH8CM3kNzwAnlbvJw1T2HyYmQ64mHkTy+mCoMnL93cK5ghWzYYsKvZIyb+MIyvl05Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BItMdhBF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjgR2ZHF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA209606C576;
-	Fri, 13 Nov 2026 16:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75C560A5BE5;
+	Fri, 13 Nov 2026 16:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BItMdhBF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1E01F000C4;
-	Fri, 13 Nov 2026 16:03:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cjgR2ZHF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 731271F000C4;
+	Fri, 13 Nov 2026 16:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585826;
-	bh=YSEs0avsq/3/0AUxEBB7h2L7ieAnTM3BGTNTu9jHXP4=;
+	s=korg; t=1794585827;
+	bh=CcJ7z9r+fYI/yYvuXT5sHQOEU2/afu9MthT+Z3CKxx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BItMdhBFp42CZA7fvvM2VOKvUotutvRkthFG9uQaHgvOOigQ1SJNBJEXHcDEO+25o
-	 9uZ51kA7sqEgC2KjZskfV38yDf6JaqiqsrBNNGkqfILTidZryaqj8KSHI+5Eqf0PnD
-	 CLmbqh5necRcnOJcchMpN0/TJdsF9qTtQVJN3L1g=
+	b=cjgR2ZHF7+8Y2qtlWkLLX4v2DGeaYm3AyyVvjutRiqgFAQnUEUVUmKogSqX1XI+3a
+	 h6Z6Vq1TskYk1F+8KGykBMkcyV1SlI10t9WqIt4kxg/0q8ZZfC0Yi/4hyoosOD1lLz
+	 wtbFRBAjdGr6HQ+UUuudNNXvNJa2U7Zc7DsSQTIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pierre-Loup A. Griffais" <pgriffais@valvesoftware.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	James Clark <jjc@jclark.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 370/507] drm/amd/display: Signal PQ EOTF in FreeSync infopacket for DP HDR
-Date: Fri, 13 Nov 2026 10:51:14 -0500
-Message-ID: <20261113153808.606538842@linuxfoundation.org>
+Subject: [PATCH 7.3 406/507] net: ethernet: ti: am65-cpsw-nuss: Enable timestamping of unicast PTP packets
+Date: Fri, 13 Nov 2026 10:51:50 -0500
+Message-ID: <20261113153810.499502251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,87 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit 81f923b065801c7d30042bcda31ccb9449b4f58b ]
+[ Upstream commit 6887a8f98244ba4c0fbe2d2461b9b8f8a300e326 ]
 
-Commit c2791297013e ("drm/amd/display: Add color bit info to freesync
-infoframe") created the app_tf interface for FreeSync HDR and commit
-c21a764a98cb ("drm/amd/display: Send PQ bit in AMD VSIF") used it to set
-PB9 bit 5 (PQ EOTF) in v2/v3 AMD Freesync infopacket. However, Linux
-never made use of this interface: DM ignores what userspace sets
-regarding HDR and always passes TRANSFER_FUNC_UNKNOWN as app_tf, so the
-PQ bit is never set in the infopacket received by the eDP panel.
+On a BeagleY-AI (J722S), ptp4l as a unicast master (unicast_listen) logs
+"received DELAY_REQ without timestamp" for each unicast Delay_Req, and
+its port goes to FAULTY after "timed out while polling for tx timestamp"
+for the first unicast Sync.
 
-Check the EOTF in the HDR static metadata and set the PQ bit in Freesync
-infopacket for DP accordingly. This fixes gray-washed HDR on KDE/GNOME
-on Framework 13 Pro AI 9 HX 370 (DCN 3.5) and may fix similar issues on
-other VRR-capable panels that advertise Replay in its AMD VSDB.
+am65_cpsw_nuss_hwtstamp_set() does not set the TS_UNI_EN bit (bit 24) of
+the port's TS_CTL_LTYPE2 register. According to the TRM (J722S TRM
+SPRUJB3D, 12.2.1.4.7.13.5.1 Ethernet Port Receive Event and
+12.2.1.4.7.13.5.2 Ethernet Port Transmit Event), this bit must be set
+for the port to timestamp PTP event messages over UDP sent to a unicast
+address; without it, only messages sent to the PTP multicast addresses
+selected by the TS_107 and TS_129 to TS_132 bits are timestamped. TI's
+netcp_ethss driver for the Keystone 2 Ethernet switch, which has the
+same timestamping registers, always sets TS_UNI_EN.
 
-It doesn't affect color/EOTF bits on infopackets for SDR and native
-HDMI.
+Set TS_UNI_EN along with the other bits. With this change, ptp4l in the
+same setup gets timestamps for the unicast Delay_Req and Sync messages.
 
-Reported-by: Pierre-Loup A. Griffais <pgriffais@valvesoftware.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/work_items/3200
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b318f3e13dd73781404670d3b3c6cf2177e0119c)
+Fixes: b1f66a5bee07 ("net: ethernet: ti: am65-cpsw-nuss: enable packet timestamping support")
 Cc: stable@vger.kernel.org
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20261102135117.419539-1-jjc@jclark.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../display/amdgpu_dm/amdgpu_dm_freesync.c    | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
-index f26dd206dffa0..a51cf46d0e448 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
-@@ -162,6 +162,18 @@ void amdgpu_dm_get_freesync_config_for_crtc(
- }
- EXPORT_IF_KUNIT(amdgpu_dm_get_freesync_config_for_crtc);
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 6330540979d70..f54cfcb7d1530 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -128,6 +128,7 @@
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319	BIT(21)
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320	BIT(22)
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO BIT(23)
++#define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN	BIT(24)
  
-+#define DP_HDR_SDP_EOTF_IDX 2
-+
-+static bool dm_dp_in_hdr_mode(const struct dc_stream_state *stream)
-+{
-+	const struct dc_info_packet *hdr = &stream->hdr_static_metadata;
-+
-+	if (!dc_is_dp_signal(stream->signal) || !hdr->valid)
-+		return false;
-+
-+	return hdr->sb[DP_HDR_SDP_EOTF_IDX] == HDMI_EOTF_SMPTE_ST2084;
-+}
-+
- void amdgpu_dm_update_freesync_state_on_stream(
- 	struct amdgpu_display_manager *dm,
- 	struct dm_crtc_state *new_crtc_state,
-@@ -177,6 +189,7 @@ void amdgpu_dm_update_freesync_state_on_stream(
- 	bool pack_sdp_v1_3 = false;
- 	struct amdgpu_dm_connector *aconn;
- 	enum vrr_packet_type packet_type = PACKET_TYPE_VRR;
-+	enum color_transfer_func app_tf;
+ /* The PTP event messages - Sync, Delay_Req, Pdelay_Req, and Pdelay_Resp. */
+ #define AM65_CPSW_TS_EVENT_MSG_TYPE_BITS (BIT(0) | BIT(1) | BIT(2) | BIT(3))
+@@ -1857,7 +1858,8 @@ static int am65_cpsw_nuss_hwtstamp_set(struct net_device *ndev,
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_132 |
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319 |
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320 |
+-			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO;
++			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO |
++			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN;
  
- 	if (!new_stream)
- 		return;
-@@ -228,12 +241,16 @@ void amdgpu_dm_update_freesync_state_on_stream(
- 					&new_stream->adaptive_sync_infopacket);
- 	}
- 
-+	app_tf = dm_dp_in_hdr_mode(new_stream) ?
-+		 TRANSFER_FUNC_PQ2084 :
-+		 TRANSFER_FUNC_UNKNOWN;
-+
- 	mod_freesync_build_vrr_infopacket(
- 		dm->freesync_module,
- 		new_stream,
- 		&vrr_params,
- 		packet_type,
--		TRANSFER_FUNC_UNKNOWN,
-+		app_tf,
- 		&vrr_infopacket,
- 		pack_sdp_v1_3);
- 
+ 	ts_ctrl = AM65_CPSW_TS_EVENT_MSG_TYPE_BITS <<
+ 		  AM65_CPSW_PN_TS_CTL_MSG_TYPE_EN_SHIFT;
 -- 
 2.53.0
 
