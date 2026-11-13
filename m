@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590373;
-	b=TBx+e8gKXIUMWxpTQ6VPARgze3lM/fapWUkaKn72AV6bCbQ0Ff2Mq/F+uYTPawv7jufA
-	 7PHNfRxWPnD8SDerenTch4cP7OYxgmaYwffCpynmiz4u+/RKJSxncm7OziBHb2jwCi4lO
-	 BmMtGKPBp//4IvvF1Irqm59hsxhirDPxwGjllE/NBrthHNrLlJHPEdtciwWRqd7g4vFnz
-	 S2QEOgLwv0cZWQuE+wR4E6HomfQKii2lOHv9CNBvFfWIEgmbov3ZYd5DVapxT1iH2i98F
-	 z4Scn+hihgSNH3lIXtgxxWoNjiZJpNr0zTBsh9Bpfn49kIqJLeFjsdghe7KmhPmsOOg==
+	t=1794590375;
+	b=k1UtGFXMBHM2wogXmycvZdOEH+gIT44K59q6mpBX50e7hVb8bOHCYswcljZBd0adslPt
+	 ZwzAt0MRVO71wRuIIr/CpIKRuWwPlNlXnU9J53KBTQIE+He3ImQwTNdMEAYARfqqywtO0
+	 rAN03YD34rLQXFmoTJ3Ep82jxpeEI3dM4Y3gBaysdjL/XHkx4np33iEZnHy2sl+sdj+P1
+	 IEjxEHj7LQ4TYtJRjEma46tE+sc6kSyRhapd+WS/1ERjOilx3nYP3Ow9seT7wEjQHJGTa
+	 08URE/jAAVenOPQvYBN0xLd/ya6r+voEUjKk/uowVNaYGFkugDTMJqh6N00CWxg6mNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Up0LQw2/oKqw3hHCSTWZPD8Bg42Hyj4ze9Id71dOAxI=;
-	b=hWbZWCObGLf+wSCOrW271XOCz1vG00uqoZIpz7fQScQ9EfXyOms5S5fC9pqLxtQBukPV
-	 kx68S8VmD71M+GSYADD1E84CC46/SPrUTFEY3wyZEiN1+YLpWR2jFyVI/F1Tj7Ir+5TzF
-	 qKN0qPYSyZwxsyl0c9nby10uzBeROr5FCUgjmdWepK3KAzclRDfmwskdLE5TLLg2H/tDx
-	 kYCqv5AR3Bt0JyNCfvxJyClSX4SzP60A3KBn8Qxgjrozs1VRg0SrKdUhX/p39+OiZ7ro3
-	 sDAbNa8xsdm5gkF/XfkG/zkcO+j/o0uwQTdk/+2vkIEaExYkRp/Ao8LM8o5C3KHQEWg==
+	bh=3rKJ9L+M7mv0hfrFxlG/dWQYOZWhdlLsyIwr4ouHyjw=;
+	b=tBOShIUkbI27yVnG+9GsarZ/zl/IrJ7BVs0Izxb7FJBNtq68pk3rtIWI6UqT2qnCeZw9
+	 +mko/Z42kW6B+3JBszUv8BHrtkM4VgGBQkisPsOgqn3bcqEFArzfTBHxcOvaDNwn/Rdge
+	 5dgH2BZQRyTUiwzAZFJuLMpn/0+M6us/EbKN8LqLPCeVm3r4OsS5fuMgymYMt7Qhy4hUt
+	 S7gtMZ7cUx5cyIHpsWlixeVCG9DwAtyFFQsleDas+YymHA87h1j9Qgl6qUWsgPTzwm+nj
+	 /Yq9r6OmMWwLgkM3WYasuJ23yfoS7ezzjaljDs1ANlyaSyMiWMiXjV7EG1UW4xXDruQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uM7Fodmh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jELUt0Qp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F44606B340;
-	Fri, 13 Nov 2026 17:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09996606A327;
+	Fri, 13 Nov 2026 17:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uM7Fodmh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325811F000C4;
-	Fri, 13 Nov 2026 17:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jELUt0Qp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 692D41F000C4;
+	Fri, 13 Nov 2026 17:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590373;
-	bh=Up0LQw2/oKqw3hHCSTWZPD8Bg42Hyj4ze9Id71dOAxI=;
+	s=korg; t=1794590374;
+	bh=3rKJ9L+M7mv0hfrFxlG/dWQYOZWhdlLsyIwr4ouHyjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uM7FodmhJ9NEVbZZBOEMgq3ufb5H2d/6xCLc4IrA95ncvHSTZybBjeq5fnkd0fEf0
-	 ytdw3jbS/+Cf6cklCykmmv+lReyGZ1g++6FF+NI0NMmN6wPRtuuhwqvFjv0mw6AGsh
-	 X+5qMrjUAMbtWjbIAGHUZp5i5bUjNPdQTwa5aNDg=
+	b=jELUt0QpimVArN/edY/Qqy5lra0M8SgIBwXHQISQTYgyIoa4MyOfTFs6RMlAjahIY
+	 lq5fk0mCS2LPQCBW0cAjqULo/w4Yui/0TuRGg2XIkOPGsq/WotLhgT/izbcnC2K3VO
+	 QjP5wv9YPHep9KblsGA3TNLd1E1C26EzVZvJpgpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xie Yongji <xieyongji@bytedance.com>,
-	"chenglong.ma" <longpareto@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Claude Code <noreply@anthropic.com>
-Subject: [PATCH 6.18 346/686] vduse: fix VA/PA confusion in the coherent page fault path
-Date: Fri, 13 Nov 2026 10:47:59 -0500
-Message-ID: <20261113153832.651052914@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 347/686] inotify: do not coalesce rename events
+Date: Fri, 13 Nov 2026 10:48:00 -0500
+Message-ID: <20261113153832.684771868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,86 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: chenglong.ma <longpareto@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit bb2e6f166547838fd7c320b01c90918b736f76e2 ]
+[ Upstream commit 581230d2ec3c0380917d1255792508851e7c4627 ]
 
-vduse_domain_get_coherent_page() assumes that iotlb entries above
-bounce_size were installed by vduse_domain_alloc_coherent(), so it
-treats map->addr as a physical address. But vduse registers with
-use_va = true, and when the device is bound to vhost_vdpa,
-vhost_vdpa_va_map() stores a userspace virtual address in map->addr,
-which vduse_domain_set_map() then copies into the same iotlb. A
-process holding the domain file descriptor across a rebind can
-therefore fault in an arbitrary physical page with read/write
-access, ignoring the entry permissions.
+inotify compares the mask, watch descriptor and name when coalescing
+adjacent unread events, but ignores their rename cookies. Distinct
+IN_MOVED_FROM events can therefore be coalesced, losing the cookie needed
+to match a later IN_MOVED_TO event.
 
-Additionally, since the domain file mmap lacks VM_IO, the domain
-file itself can be mapped and passed to vhost_vdpa_va_map(),
-producing self-referential entries that bypass the coherent path
-check.
+For example, watch two directories with IN_MOVE. Move an entry from the
+first directory into an unwatched directory, recreate it under the same
+name, then move it from the first directory into the second watched
+directory before reading the events. The second IN_MOVED_FROM is merged
+with the first, while the IN_MOVED_TO retains the second rename's cookie.
+Userspace can no longer pair the second rename's events.
 
-To fix, only translate entries whose backing file is the domain
-file itself in vduse_domain_get_coherent_page(), reject such
-entries in vduse_domain_set_map() since only external mappings
-should be imported, and set VM_IO on the domain file mmap so
-vhost_vdpa_va_map() refuses to map it in the first place.
+The original inotify implementation compared cookies before coalescing.
+The fsnotify conversion lost this comparison. Do not coalesce
+IN_MOVED_FROM or IN_MOVED_TO events, which carry the identity of their
+respective renames. Leave coalescing of other event types unchanged.
 
-Fixes: 8c773d53fb7b ("vduse: Implement an MMU-based software IOTLB")
-Cc: Xie Yongji <xieyongji@bytedance.com>
+Fixes: 63c882a05416 ("inotify: reimplement inotify using fsnotify")
 Cc: stable@vger.kernel.org
-Reported-by: chenglong.ma <longpareto@gmail.com>
-Signed-off-by: chenglong.ma <longpareto@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Co-Authored-By: Claude Code <noreply@anthropic.com>
+Suggested-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Link: https://patch.msgid.link/20261027192027.8617-1-dennylin0707@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/iova_domain.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ fs/notify/inotify/inotify_fsnotify.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vdpa/vdpa_user/iova_domain.c b/drivers/vdpa/vdpa_user/iova_domain.c
-index e8b837df328f0..b8b2eb44410da 100644
---- a/drivers/vdpa/vdpa_user/iova_domain.c
-+++ b/drivers/vdpa/vdpa_user/iova_domain.c
-@@ -76,6 +76,10 @@ int vduse_domain_set_map(struct vduse_iova_domain *domain,
- 	for (map = vhost_iotlb_itree_first(iotlb, start, last); map;
- 	     map = vhost_iotlb_itree_next(map, start, last)) {
- 		map_file = (struct vdpa_map_file *)map->opaque;
-+		if (!map_file || map_file->file == domain->file) {
-+			ret = -EINVAL;
-+			goto err;
-+		}
- 		ret = vduse_iotlb_add_range(domain, map->start, map->last,
- 					    map->addr, map->perm,
- 					    map_file->file,
-@@ -226,6 +230,7 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
- {
- 	u64 start = iova & PAGE_MASK;
- 	u64 last = start + PAGE_SIZE - 1;
-+	struct vdpa_map_file *map_file;
- 	struct vhost_iotlb_map *map;
- 	struct page *page = NULL;
+diff --git a/fs/notify/inotify/inotify_fsnotify.c b/fs/notify/inotify/inotify_fsnotify.c
+index 7c326ec2e8a8c..6e3af6452dccb 100644
+--- a/fs/notify/inotify/inotify_fsnotify.c
++++ b/fs/notify/inotify/inotify_fsnotify.c
+@@ -36,7 +36,7 @@ static bool event_compare(struct fsnotify_event *old_fsn,
  
-@@ -234,6 +239,10 @@ vduse_domain_get_coherent_page(struct vduse_iova_domain *domain, u64 iova)
- 	if (!map)
- 		goto out;
- 
-+	map_file = (struct vdpa_map_file *)map->opaque;
-+	if (!map_file || map_file->file != domain->file)
-+		goto out;
-+
- 	page = pfn_to_page((map->addr + iova - map->start) >> PAGE_SHIFT);
- 	get_page(page);
- out:
-@@ -579,7 +588,7 @@ static int vduse_domain_mmap(struct file *file, struct vm_area_struct *vma)
- {
- 	struct vduse_iova_domain *domain = file->private_data;
- 
--	vm_flags_set(vma, VM_DONTDUMP | VM_DONTEXPAND);
-+	vm_flags_set(vma, VM_IO | VM_DONTDUMP | VM_DONTEXPAND);
- 	vma->vm_private_data = domain;
- 	vma->vm_ops = &vduse_domain_mmap_ops;
- 
+ 	old = INOTIFY_E(old_fsn);
+ 	new = INOTIFY_E(new_fsn);
+-	if (old->mask & FS_IN_IGNORED)
++	if (old->mask & (FS_IN_IGNORED | FS_MOVE))
+ 		return false;
+ 	if ((old->mask == new->mask) &&
+ 	    (old->wd == new->wd) &&
 -- 
 2.53.0
 
