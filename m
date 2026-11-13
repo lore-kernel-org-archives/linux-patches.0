@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590196;
-	b=A6NTt2TTIg4LiMnYdYO9Nte3Rj6We0cXJRj9KqG8esFKUMRTJxCEU1la8uXi3OByPiiV
-	 ifHFRVVgPL6XBamiJ7VQD8tdW8l0amrnfmV6ctoxJD9TqLQhpJl8TwgrZhQm5lHbV6mYJ
-	 5eAO8Rz/A3VdYPfOWnY7LtgAQA5hXvkPHxHFyvoOsJpcK6kUceZp54NrGCAfW9kUpK98k
-	 h4G/dBUXNs3wTr0g/xS4iWXjxz4zBUBZW7MvQe3tjQXriFyHRnwIy4btgO2IJRG7lZo/j
-	 yWdtMXcRS3RSjiaW0hMBwfpMFbfmj2SSKG9+jCyZTts3NojBKZV2EQsK14/uVXX1v3g==
+	t=1794590197;
+	b=GZ+eE2B2u4Q/bGWzykfwqNv1Xw35iszpeool0kZ76cXOCZG6SdF0xn1hiz2HWDnRLQ+e
+	 w2TbvXcotz8fa+7+vB0k0fSBgs4OL3BgdO23nIjvt4i4QgIEqfgu/vjCpTwmUF6U5lmhb
+	 ug7Eb7EkJkdIMLYUOVnVkNDFpzQGWfqodBck3Rf0pD8a7e2cw+djXcAZWy0AhTqXkkV3D
+	 chq9OMuOw2EVqacX1ick5Jy2NeVmkRoFtdos/j6ee5P/IBwnPEazOzcGGVJVaMmhkRhI0
+	 /6BJbfdEWWuNLbMNyO6JDdnQOfOHTHgobLbB17a1kyjjit/15B0FU/IK8S88WSk4r2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590196;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590197;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=EUIUNjf+XxYg7VlTiMKJGC3yptOeUZ6YuEeYf2iXdXI=;
-	b=YNelzF5MN88SOP5WVtU1RsgLagR+hCNbNcAL+YH1b8OzdbgZa5TcPyB+8+pwwaX3+8BG
-	 pwIGOAcycw6vk/xDECpE4/uPdow2yeRyIg8oF1H2lGHCTNytLk71mehDapx6a9XdPOsep
-	 m3AR5j/RV5XdgYBk1AEzUwZnRHSfGpTorQLYlKJhJ/KlU2Oel0sgJUkhQVvAWXcrV66Cv
-	 TlKMICv7V82iGUIhnUX5YvLlRcJHwZLckcX/gEUTmC6I+Hx31fVact09n/tZ8oXcJLEJa
-	 lbjYXMzoU9sA5zYWBkqVMU9zjT+3EVzrF3JrwnFa9iJXLRZfTM0WF/k7skQ0yzhWM/Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=gwilmxvscCnshGTK8WSabgVC6hNp8swBWeLJJApHTvs=;
+	b=K29LoyUMxMfBZnpey1CbYr0D87JkgVCAPrjD849qAHDcNEKzDMnrlJJzLQnfnd0SSw3H
+	 3e5QEqVafP+60lZeSMWMfHI0SHQPrQuq7lAlLVBX8Oo85hphaDmdBpqnIJLM2HwMNPJ2x
+	 71WQ2DYA54Pf/Er2Rx6nKUm50h1pgCa35zcu1hu7d/V950/qr7rLIln5/0fRmxzaMvYRo
+	 2IF/XNvoHASh5SIym0zkjhSuXTh4Zq1OhMlb9yaxjDUrNgc7KE+xUGEkvqYv/Gia2vSAz
+	 Ey2p6eh9uwI0wzTa+Pz2NHgv93H2b7BfG2nZGpdBUB34zIYggqlOmPHKv/TLFd4lwPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0Kmkjpt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12z7NRu9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155C0606B36D;
-	Fri, 13 Nov 2026 17:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515B0606B36D;
+	Fri, 13 Nov 2026 17:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n0Kmkjpt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDD21F000C5;
-	Fri, 13 Nov 2026 17:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12z7NRu9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F18D21F000C4;
+	Fri, 13 Nov 2026 17:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590195;
-	bh=EUIUNjf+XxYg7VlTiMKJGC3yptOeUZ6YuEeYf2iXdXI=;
+	s=korg; t=1794590197;
+	bh=gwilmxvscCnshGTK8WSabgVC6hNp8swBWeLJJApHTvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n0KmkjptTh9VU4Pn0nc3byWT+Q13y7RyzsneDUTm7UJHdXsMYlORlPNzLgwSDc3im
-	 E7Fbhe1duWP7RIH8hIHVFsilJj4aIIh5QaYpvUTS0kyDisGJk+ITZ60k0sVj1kgphz
-	 dkf+7uyN9/RieYlmPG2Gzx6JO0Wi++VDK6yZeSqU=
+	b=12z7NRu9ExbATFYFNAQvPxO1WyY6HkYftKhzIF3ysTMlNQtC5xXDZXrWW3tBs0kx7
+	 CvYA6y1yWdf3TNRc+rHh/j+f8xxcYy92xjXEDErmvzbhk0EdoiOXkVpXfdA5+tilqz
+	 5hPZGy/6SA5QqWWxrEFfU5zqmp6G9WREYluibyJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Michael Grzeschik <mgr@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Evan Severson <eseverson@gmail.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 185/686] net/9p/usbg: Fix use-after-free in disable_usb9pfs()
-Date: Fri, 13 Nov 2026 10:45:18 -0500
-Message-ID: <20261113153827.273717622@linuxfoundation.org>
+Subject: [PATCH 6.18 203/686] wifi: mac80211: reinstate IEEE80211_TX_CTL_AMPDU flag in ieee80211_tx_prep_agg()
+Date: Fri, 13 Nov 2026 10:45:36 -0500
+Message-ID: <20261113153827.923598688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,81 +63,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Toke Høiland-Jørgensen <toke@toke.dk>
 
-[ Upstream commit 6f401e350939442b2ac905f7e5ac952e3802a5d8 ]
+[ Upstream commit 25e73f1d6868c759c8eb56cad4e411692c5341b4 ]
 
-disable_usb9pfs() frees the IN and OUT usb_request objects before it
-disables the corresponding endpoints. If either request is still queued,
-the later usb_ep_disable() call cancels the endpoint queue and the UDC
-driver can still access the already freed request.
+The commit 592234e941f1 ("wifi: mac80211: Fix iTXQ AMPDU fragmentation
+handling") changed the way handling of the IEEE80211_TX_CTL_AMPDU flag
+is done in mac80211, so the only place it is set is in
+ieee80211_tx_dequeue().
 
-With dummy_hcd and KASAN, this is reproducible by queueing the OUT
-request and then disconnecting the configfs gadget:
+This means that any frames that are sent to the driver via drv_tx() will
+no longer have the flag set. In particular, this affects packets going
+through ieee80211_tx_pending(). Evan reported that this can result in
+the ath9k driver failing to account such packets in its block ack
+window, eventually overrunning the window and stalling TX.
 
-  BUG: KASAN: slab-use-after-free in dummy_disable+0x2b4/0x300
-  Read of size 8 at addr ffff888009702400 by task sh/1
-  usb_ep_disable+0x8e/0x1f0
-  usb9pfs_func_unbind+0x193/0x350
-  gadget_dev_desc_UDC_store+0x135/0x280
+Fix this by reinstating the flag in ieee80211_tx_prep_agg() when inside
+a valid block ack window. This should be harmless for the TXQ path, and
+will reinstate the previous behaviour for drivers that use the flag as a
+signal to track the packet in the window.
 
-dummy_free_request() also warns because the request is freed while its
-queue entry is still linked.
-
-Disable both endpoints before freeing the request objects. This lets
-usb_ep_disable() cancel any queued transfers and invoke the completion
-callback while the request storage is still valid. The request objects
-are then freed only after they have been removed from the endpoint
-queues.
-
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
+Fixes: 592234e941f1 ("wifi: mac80211: Fix iTXQ AMPDU fragmentation handling")
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Acked-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260607130118.16579-1-zhaoyz24@mails.tsinghua.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Reported-by: Evan Severson <eseverson@gmail.com>
+Link: https://lore.kernel.org/all/20261014025734.2288693-1-eseverson@gmail.com/
+Signed-off-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Tested-by: Evan Severson <eseverson@gmail.com>
+Link: https://patch.msgid.link/20261023110052.650519-1-toke@toke.dk
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mac80211/tx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index c682947dfb885..cd45d4a8597ad 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -277,6 +277,9 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
- 	struct usb_composite_dev *cdev =
- 		usb9pfs->function.config->cdev;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index b012451f45253..85c90f7c24d8e 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -1124,6 +1124,7 @@ static bool ieee80211_tx_prep_agg(struct ieee80211_tx_data *tx,
+ 	struct sk_buff *purge_skb = NULL;
  
-+	disable_ep(cdev, usb9pfs->in_ep);
-+	disable_ep(cdev, usb9pfs->out_ep);
-+
- 	if (usb9pfs->in_req) {
- 		usb_ep_free_request(usb9pfs->in_ep, usb9pfs->in_req);
- 		usb9pfs->in_req = NULL;
-@@ -286,9 +289,6 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
- 		usb_ep_free_request(usb9pfs->out_ep, usb9pfs->out_req);
- 		usb9pfs->out_req = NULL;
- 	}
--
--	disable_ep(cdev, usb9pfs->in_ep);
--	disable_ep(cdev, usb9pfs->out_ep);
- 	dev_dbg(&cdev->gadget->dev, "%s disabled\n",
- 		usb9pfs->function.name);
- }
+ 	if (test_bit(HT_AGG_STATE_OPERATIONAL, &tid_tx->state)) {
++		info->flags |= IEEE80211_TX_CTL_AMPDU;
+ 		reset_agg_timer = true;
+ 	} else if (test_bit(HT_AGG_STATE_WANT_START, &tid_tx->state)) {
+ 		/*
+@@ -1155,6 +1156,7 @@ static bool ieee80211_tx_prep_agg(struct ieee80211_tx_data *tx,
+ 		if (!tid_tx) {
+ 			/* do nothing, let packet pass through */
+ 		} else if (test_bit(HT_AGG_STATE_OPERATIONAL, &tid_tx->state)) {
++			info->flags |= IEEE80211_TX_CTL_AMPDU;
+ 			reset_agg_timer = true;
+ 		} else {
+ 			queued = true;
 -- 
 2.53.0
 
