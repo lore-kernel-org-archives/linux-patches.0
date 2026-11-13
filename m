@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590994;
-	b=23mc3sfSIr7hhs4vGiB5vR+29BEaCjP5s61c6WTDGTHYWIH4a7+nC0rymHhIJh1/9BOu
-	 VjAkMwPZhkFKVEtYW+Y2Uz0kNIitcvHmnOc6rHYuXg+4sA6mQgDuYlouGbygyHcU/CEMp
-	 0gP91XhEzktDKzhXaIoBEqILNeIppcptmgAuMoLsvJWpx8xbSSqfzOWxbX2fgan+bz7tW
-	 CtUIyLtupEG+q3gxqf9lTXB+rSTxtQq4gZHsyDnIrj0JXvcYtEFYH3LtCHr1ip/TWteFZ
-	 071EZCeO9mSh8PK2qMPZrEERftjvgFmrYzSUpR0Gj7t+w5xnbPHTy0owMX0kM7m5GHg==
+	t=1794590995;
+	b=db9rMCOSBSYs0w/qlDCgKfmtSeq9zDz1cjqH5hUrGqa/4Z0Fg2GrJy5sce/il8vpQcnB
+	 9AzbA1ORC0BAvPyPwOuDnMbTHNde+J39Pc0GU8tFFvNzQVbfpgASSXRIKeSPk2E4KPCta
+	 ofXY1PdX7erPq/HX6Hl4IUZudtsW5rvQ+q++suX8tD4t1gBZw3+PfPOays52esyQmC01v
+	 4E8oC5UnzpjeeTT/aJNnfNylEfYXcexB8rqvlYWGzH2ttHHL1n6a3yiJPBGtR29GvHBk4
+	 DR4c6YG9MWB/2Tr4VH+ReJFfb2cp7YN23XcOBVsp4I6CZqykS6QPkYXupIk6xennsVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GzzMvfSo17WWnZaMIRU54/BzBRHBh1RTeTJD8ALem6c=;
-	b=35F88AnzZ0Fc5gACzRySe7YF3mZK0jn8DGBdKS3GfeavC/0DGRYq5etqMXGzIRQChD13
-	 JZcLotOezVfkmOX04mJ23+5jAkb+4fuWNOEcA1zixBxGW+3kZy5Y5nRpaXwT01d9m+Uu9
-	 +CB7qKLW84Lq2wqxmB8qayAVoNjWOg4f5exhwHr2d01Y64ayn2MI8XTsNHAD4Z38UXtca
-	 Hf1MmEm76XU9/MtpJkytUC0M6h5r4EnjhxeMcKKq1CATQ6RzlpVsiXuMsWAYpC0+HwgZ0
-	 mNs8Gv64VwRid1bP/uIwFaDuXxWrrP2J5D6E4SVZ+go3cqUUMkIwJG61Tt19HcqLj9A==
+	bh=oQPyvq/X6VL8YxujpbV2A5EV9TGwIZT8ftwwY4LJnqg=;
+	b=S3SZajY6IGcjEv9lDE4SFxl42B1pmOj0aW08lXVVSZVSSDJ8FmGvTU33pq6XRoE5XX4f
+	 53McZ/oRwALam8xCl33FH4hPBuiRa551MXY43vE6c/7habIkV0eg/LD1k9N6iSsa1pUg7
+	 K0t2/vXuisEt6aIU1Gd01erirNO2YxArWBdBryCEwn6ucUjiEazxlrJCllAt/4Oxa3d4k
+	 37+7InbY8mouCrm8AVpao79Kl5BM+2Upwu+z+r2vz6mY6w9AThl69yCnGOdtP06wx07Ee
+	 fIJSAvohJ8MoUXBXjqCpUYb+684pMSSOZTvOpVUIjYa2g8WYfgmNGlCu7aj9PUQnOcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DzSx0YzM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpI2AMtC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4ACA607140C;
-	Fri, 13 Nov 2026 17:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BD860703F9;
+	Fri, 13 Nov 2026 17:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DzSx0YzM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5110D1F000C4;
-	Fri, 13 Nov 2026 17:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpI2AMtC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF081F000C4;
+	Fri, 13 Nov 2026 17:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590994;
-	bh=GzzMvfSo17WWnZaMIRU54/BzBRHBh1RTeTJD8ALem6c=;
+	s=korg; t=1794590995;
+	bh=oQPyvq/X6VL8YxujpbV2A5EV9TGwIZT8ftwwY4LJnqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DzSx0YzMe1krhlQRvjaYlKAdGQBCLET4rFr0Toc+gry364SGfLTCoBLESUV32cezd
-	 w0kDjMLadcF3FSEY+khousCrWE7VlmiIUl2tmwU8XGpMwh4r+dPezjR4JdZufmsfjH
-	 yKJ6gXlGV2z+A/SMTAFksQhw/JYAhd3xOqS72YYs=
+	b=SpI2AMtCf7BFsAhudCgtFOM4lv/LCu10MvIU5jryort1kpC98qm04miSqh9kqovpr
+	 VRZ5l0hijEAwvNipBvDjMoXSmPu+JwI50kwoSmoyNDJWukBysAmf1hsu00VjjVEwD/
+	 BCDRztTQBxBu2RlMoTf5TAztj4wIJWEfv1Mg5/kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
-	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
-	Ao Wang <wangao@seu.edu.cn>,
-	Xuewei Feng <fengxw06@126.com>,
-	Qi Li <qli01@tsinghua.edu.cn>,
-	Ke Xu <xuke@tsinghua.edu.cn>,
-	Jackie Liu <liuyun01@kylinos.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 168/670] net/9p/usbg: fix prefix matching in device lookup
-Date: Fri, 13 Nov 2026 10:45:32 -0500
-Message-ID: <20261113153817.767297261@linuxfoundation.org>
+Subject: [PATCH 6.12 169/670] xfrm: retry inexact policy lookup after node reinsertion
+Date: Fri, 13 Nov 2026 10:45:33 -0500
+Message-ID: <20261113153817.797727788@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -74,55 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 9ee83ef8d24f11feb55fd0d222c0ec19f09dbd3f ]
+[ Upstream commit 868f63c8bfafa9b827168c9126f85264c39c02ec ]
 
-p9_usbg_create() matches the mount source against registered usb9pfs
-instance tags with strncmp() and the length of the caller supplied source.
-That accepts any prefix of the registered tag.
+An inexact policy lookup first records pointers to candidate hlist heads
+and then traverses the lists.  A concurrent policy insertion can merge
+inexact tree nodes between those operations:
 
-For example, a gadget instance tagged "secret_channel" can be selected with
-"s", "sec", or any other non-empty prefix.  Once selected, the instance is
-marked in use and the client is attached to that transport.  This differs
-from the configfs tag lookup path, which uses strcmp() and therefore
-requires an exact tag match.
+  lookup                         policy insertion
+  ------                         ----------------
+  find inexact candidates
+    save obsolete hlist head
+                                 write_seqcount_begin(&bin->count)
+                                 merge inexact tree nodes
+                                   hlist_del_rcu(&policy->bydst)
+                                   reinsert policy->bydst in survivor
+                                 write_seqcount_end(&bin->count)
+  evaluate saved candidate list
+    miss the moved policy
 
-Require an exact tag match in p9_usbg_create() as well.
+The merge immediately reinserts the same hlist node into the surviving
+tree node.  RCU keeps the policy alive, but it does not provide a
+consistent view while its list node is moved.  A lookup that selected the
+obsolete list can observe it empty.  A lookup already traversing a moved
+policy can instead follow the next pointer rewritten by the reinsertion.
+Either case can return an incorrect IPsec policy result.
 
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
+The per-bin sequence counter already brackets calls to
+xfrm_policy_inexact_insert_node(), including node merges.  The read side,
+however, currently validates the counter only while searching an
+individual rb-tree.  A successful search returns without validation, and
+the later candidate-list traversal is outside that read-side section.
+
+Snapshot the per-bin sequence before discovering candidate heads and
+validate it after evaluating all candidate lists.   Retry the lookup if
+the inexact policy tree changes while it is being searched.
+
+Fixes: 9cf545ebd591 ("xfrm: policy: store inexact policies in a tree ordered by destination address")
 Cc: stable@vger.kernel.org
-Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
-Reported-by: Ao Wang <wangao@seu.edu.cn>
-Reported-by: Xuewei Feng <fengxw06@126.com>
-Reported-by: Qi Li <qli01@tsinghua.edu.cn>
-Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
-Assisted-by: GLM:GLM-5.1
-Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
-Co-developed-by: Jackie Liu <liuyun01@kylinos.cn>
-Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
-Message-ID: <20260607121907.12588-1-zhaoyz24@mails.tsinghua.edu.cn>
-Message-ID: <20260719040346.88295-1-liu.yun@linux.dev>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/xfrm/xfrm_policy.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index 468f7e8f0277b..59505d2388f52 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -389,7 +389,7 @@ static int p9_usbg_create(struct p9_client *client, const char *devname, char *a
- 	guard(mutex)(&usb9pfs_lock);
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index e033390e77855..106e2f5cc5865 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -2157,6 +2157,7 @@ static struct xfrm_policy *xfrm_policy_lookup_bytype(struct net *net, u8 type,
+ 	struct xfrm_pol_inexact_bin *bin;
+ 	struct xfrm_policy *pol, *ret;
+ 	struct hlist_head *chain;
++	unsigned int inexact_sequence;
+ 	unsigned int sequence;
+ 	int err;
  
- 	list_for_each_entry(dev, &usbg_instance_list, usb9pfs_instance) {
--		if (!strncmp(devname, dev->tag, strlen(devname))) {
-+		if (!strcmp(devname, dev->tag)) {
- 			if (!dev->inuse) {
- 				dev->inuse = true;
- 				found = 1;
+@@ -2191,12 +2192,18 @@ static struct xfrm_policy *xfrm_policy_lookup_bytype(struct net *net, u8 type,
+ 		goto skip_inexact;
+ 
+ 	bin = xfrm_policy_inexact_lookup_rcu(net, type, family, dir, if_id);
+-	if (!bin || !xfrm_policy_find_inexact_candidates(&cand, bin, saddr,
+-							 daddr))
++	if (!bin)
++		goto skip_inexact;
++
++	inexact_sequence = read_seqcount_begin(&bin->count);
++	if (!xfrm_policy_find_inexact_candidates(&cand, bin, saddr, daddr))
+ 		goto skip_inexact;
+ 
+ 	pol = xfrm_policy_eval_candidates(&cand, ret, fl, type,
+ 					  family, if_id);
++	if (read_seqcount_retry(&bin->count, inexact_sequence))
++		goto retry;
++
+ 	if (pol) {
+ 		ret = pol;
+ 		if (IS_ERR(pol))
 -- 
 2.53.0
 
