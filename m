@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590131;
-	b=bvpB0IccHEgHqjw7UE2MCcGdH5ik0Q1VZIEi5x7/j98oZOeyTYvDQEMhOyijKMsl1EfM
-	 zpfBnJth8yiTRUA2QMTx2ltkn4R/2FIKXM+fbc34WtNnAto3GCTzzFL5tZmTb+kdsb1cA
-	 WFb9s21kdV4Ek2qDuEf/CgUIFZs+0446scFQpIz4WxncaAjUUkK0krf1cTY0XQ3bOhi4Y
-	 zoIE/bzSoWD81Xc8nyr95rGzwnz+2mv9meaaiCuqgYlMxCn+M7q4A7ANHj/DPhmMzk2jk
-	 DIDutSnu8rf5c76+3ujE48j27RjlHlR8CxJ6mRx7PXqPjQaXH9mGc9BbjVksz+Zs7HQ==
+	t=1794590133;
+	b=C0biD5BDSnFDlr+/QYYLctIBxn4tC68e15vi9ZhFqkL/8MD4JymFq8P6EkU5mQim/d2q
+	 3VWo6IByNx2ouphy+jgMauXmiTdwDRK3bLdDqLS+ZWWBIuPZbJItWja4DchMVDNT8v/Bp
+	 5sVOWf1R7XK+SqyXLP4xawUt9Cbzw17+RAUBcjvGKyN87PHegwUomLslC9AOsm4AvRRxl
+	 9swndwG/mXhNk21UJ92gZg3c+v//ugubddYWtFnhr4tbR3cKfj6GxJ9qwnD4sSf9sBODd
+	 rr0FW4kNhrPp1Kd92/mrQFMxRL4uNsEtyskHsBl0xAZ6aEdKzOztljZXig0lkfMNAGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590131;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590133;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=76oxpdTph8asvsgzvAwTWVsfNs2wIDExwrWKp9PMIhc=;
-	b=0Rd7c9ZygSJmRApsKATl3sPfBDlzNg/oW6UOOfhnU9uTn9H8eanRuOKx455XCHspzbSq
-	 rOSklRPK4ZO9oz7Z35br+QZaz9bkOCal+7V3nlH9DNS21D9glMunGB8ws6ujVI0Qthexa
-	 jKUotnUQ/UPqDiZSlbuFvMO1bc9q/epktolbJRowemOBtehiwzEw7mklyjbCS/gUIOjNb
-	 /o7tekwsOQwPov+jfZWOA2u9V2IybQgPcW7DzgOo92H97OTAcxh7UquuMWuHm/To7vOno
-	 p5MJs06AajkVlS7lZ6kALtB32PPV/v9+TnenGoW4KVS+RUQuP2aQPaJB/SITV4qwvYA==
+	bh=85zfZRb5+DRAa4lLZVg743/vK4diHAbW5mdfeH1V6G4=;
+	b=CPKt3eiIWCaTo3h23IDD8fGkkgAiGIooo9Y3paxyoeR2rVB2HdfndIJPrMxgfEetZ1oM
+	 UaOSgiXpYeEjAXZO8tjFIt5NQv+yryCRyZJNjpuwSvxwe3QaUgC28JJJUmNYMdkfKPt5g
+	 a4KiHdGTsShaSdOp5XHo5+PRrVpgImJ8xqKXSbZu3obZBZW3MIOUWkEEO7B/iHzecjF/S
+	 UWu0paJoeTtxJht/AflkKOO/Tz0crv0lZK9yDtCgXltOaB4lunAHCu5i/00mrIarK2i8x
+	 2rzNTRoev+a6Jivf6VJlnqLeVxh5aniP5kodW+KJTmSgyIBwnIZdF3fE6C4S4dyrSXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="aLZ2T/ZB";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wv9eYcRB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88C160A5BC8;
-	Fri, 13 Nov 2026 17:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E336160A5BCE;
+	Fri, 13 Nov 2026 17:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aLZ2T/ZB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5566F1F000D0;
-	Fri, 13 Nov 2026 17:15:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wv9eYcRB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6641F000C4;
+	Fri, 13 Nov 2026 17:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590131;
-	bh=76oxpdTph8asvsgzvAwTWVsfNs2wIDExwrWKp9PMIhc=;
+	s=korg; t=1794590132;
+	bh=85zfZRb5+DRAa4lLZVg743/vK4diHAbW5mdfeH1V6G4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aLZ2T/ZBLkjsmLmeHHpAnRWgW1UU9rkXjehp+fObM/LR102LHCT1tQuQG5ENjv88x
-	 GQSGqHVTtViHHLVtjF8yEUr1eSDQyZc3HB81f40/61mZntJ5QcO5LQclV+aqq0hTT3
-	 O9jpTS6i7cdQiTkneSYpTQloEa6c03UWlkulgfP4=
+	b=wv9eYcRBSQGrDOnntPtNN1z7BM55V993efiToxOqNFg0NawbleQY6WP5kEmFDqSk6
+	 5YM4K8hKUqydq4ZyobN2NUiwt8YByRssWhMTbdSx+I8KiEFAzZblBYmvRcwDwH5eaa
+	 bkaTVUXl8kHx2+GI9lQMm/HlbhiwEiK79ZKu12E0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Ridham Khurana <khurana.ridham222@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 151/686] media: adv748x: Fix endpoint reference leaks on probe failure
-Date: Fri, 13 Nov 2026 10:44:44 -0500
-Message-ID: <20261113153825.912441477@linuxfoundation.org>
+Subject: [PATCH 6.18 152/686] hwmon: (lm70) Fix rounding of negative temperatures
+Date: Fri, 13 Nov 2026 10:44:45 -0500
+Message-ID: <20261113153825.948055149@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,81 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruoyu Wang <ruoyuw560@gmail.com>
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 
-[ Upstream commit 359db09cf055497075a668b192f4578a0ed00955 ]
+[ Upstream commit eddb0aaacce4baa9d8176eb2f4bd9e99e867f8fc ]
 
-adv748x_parse_dt() takes an extra reference for every endpoint saved in
-state->endpoints. If parsing later fails, adv748x_probe() skips
-adv748x_dt_cleanup(), so the saved references remain held. A CSI-2 lane
-parsing error also returns from for_each_endpoint_of_node() without
-dropping the iterator's reference.
+temp1_input_show() drops the low bits of the temperature register by
+dividing the raw value (raw / 32 on the LM70). These bits are not part
+of the temperature: the LM70, LM71, LM74 and TMP122/TMP124 always
+return some of them as 1, and the TMP125 fills them with copies of the
+temperature LSB. Division rounds toward zero, so a negative temperature
+with any of these bits set is reported one LSB too high.
 
-Save the endpoint reference only after lane parsing succeeds. Drop the
-iterator reference before returning a lane parsing error and route all
-parse failures through the endpoint cleanup path to release any saved
-references. This retains the endpoints only for a successful probe.
+For example, the TMP122 returns 0xffff for -0.0625 degrees C, which the
+driver reports as 0. The LM70 returns 0xf39f for -25 degrees C, which
+the driver reports as -24750.
 
-This issue was found by a static analysis checker and confirmed by
-manual source review.
+Use an arithmetic right shift instead, which drops the low bits and
+rounds down.
 
-Fixes: 6a18865da8e3 ("media: i2c: adv748x: store number of CSI-2 lanes described in device tree")
-Fixes: eccf442ce156 ("media: i2c: adv748x: Support probing a single output")
+Fixes: e1a8e913f97e ("[PATCH] lm70: New hardware monitoring driver")
+Fixes: a86e94dc946d ("hwmon: (lm70) Add support for LM71 and LM74")
+Fixes: cd929672a9ef ("hwmon: (lm70) Add ti,tmp125 support")
 Cc: stable@vger.kernel.org
-Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
+Link: https://patch.msgid.link/20260924205326.1739229-1-khurana.ridham222@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv748x/adv748x-core.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/hwmon/lm70.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/adv748x/adv748x-core.c b/drivers/media/i2c/adv748x/adv748x-core.c
-index 3eb6d5e8f0826..70594d0018048 100644
---- a/drivers/media/i2c/adv748x/adv748x-core.c
-+++ b/drivers/media/i2c/adv748x/adv748x-core.c
-@@ -675,9 +675,6 @@ static int adv748x_parse_dt(struct adv748x_state *state)
- 			continue;
- 		}
+diff --git a/drivers/hwmon/lm70.c b/drivers/hwmon/lm70.c
+index 0d5a250cb6722..ee06c5641870a 100644
+--- a/drivers/hwmon/lm70.c
++++ b/drivers/hwmon/lm70.c
+@@ -97,21 +97,21 @@ static ssize_t temp1_input_show(struct device *dev,
+ 	 */
+ 	switch (p_lm70->chip) {
+ 	case LM70_CHIP_LM70:
+-		val = ((int)raw / 32) * 250;
++		val = ((int)raw >> 5) * 250;
+ 		break;
  
--		of_node_get(ep_np);
--		state->endpoints[ep.port] = ep_np;
--
- 		/*
- 		 * At least one input endpoint and one output endpoint shall
- 		 * be defined.
-@@ -689,8 +686,13 @@ static int adv748x_parse_dt(struct adv748x_state *state)
+ 	case LM70_CHIP_TMP121:
+ 	case LM70_CHIP_TMP122:
+ 	case LM70_CHIP_LM74:
+-		val = ((int)raw / 8) * 625 / 10;
++		val = ((int)raw >> 3) * 625 / 10;
+ 		break;
  
- 		/* Store number of CSI-2 lanes used for TXA and TXB. */
- 		ret = adv748x_parse_csi2_lanes(state, ep.port, ep_np);
--		if (ret)
-+		if (ret) {
-+			of_node_put(ep_np);
- 			return ret;
-+		}
-+
-+		of_node_get(ep_np);
-+		state->endpoints[ep.port] = ep_np;
+ 	case LM70_CHIP_LM71:
+-		val = ((int)raw / 4) * 3125 / 100;
++		val = ((int)raw >> 2) * 3125 / 100;
+ 		break;
+ 
+ 	case LM70_CHIP_TMP125:
+-		val = (sign_extend32(raw, 14) / 32) * 250;
++		val = (sign_extend32(raw, 14) >> 5) * 250;
+ 		break;
  	}
  
- 	return in_found && out_found ? 0 : -ENODEV;
-@@ -739,7 +741,7 @@ static int adv748x_probe(struct i2c_client *client)
- 	ret = adv748x_parse_dt(state);
- 	if (ret) {
- 		adv_err(state, "Failed to parse device tree");
--		goto err_free_mutex;
-+		goto err_cleanup_dt;
- 	}
- 
- 	/* Configure IO Regmap region */
-@@ -809,7 +811,6 @@ static int adv748x_probe(struct i2c_client *client)
- 	adv748x_unregister_clients(state);
- err_cleanup_dt:
- 	adv748x_dt_cleanup(state);
--err_free_mutex:
- 	mutex_destroy(&state->mutex);
- 
- 	return ret;
 -- 
 2.53.0
 
