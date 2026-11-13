@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590868;
-	b=4iHl5U4yjBoT+piS1Fdsj7fylN13Djx1ezUc5jETNXXEx9syodOqKwi51900/gajDgMc
-	 0042WtBkqexVLS3tg5bO1jafpAyPmQ+4htkXuCvRIb2ghXQdQpOxdffa2bHRNAFQMXKsQ
-	 DIpQ8csByOnvyt71pkD3zsB0bpwFjhte+BSGO6zeaHuSqX8Rc8PAlBnjGAqGL4MQti8v6
-	 48BHIV/TagW4/LLxH5nnTJ41Ya2pI4p0+WZOEHrthmoSbDvHIfeqXiPzVFMDsXqnw7tVD
-	 EXTdpPYO+zvX85yzrFtal8X30vZmhBlVQEjABBr/OxE0HacNvteu4VZY+sEPewA/wqQ==
+	t=1794590869;
+	b=LT6eOlb0nMoV2fUS5DNQ46Wov9lrp1ILDW5gGUZarKU+M8VP1hZKTDur3DO1M7T1Z7ev
+	 sjYaqoNmxGD7GYOeRrNu1SD6mDd/4CX67udvgKOGRwCis0A0oQhwMyKh5WXPhgBqU7AE5
+	 pMGFscNnsU82Cqvi0Nsj02DZ4aKplXoU9zNG3/D4REo5+u9sz2A9rwy6SzUIp7fUx+9uN
+	 HGeZPAKrblqCUFOFU1SVq/8fGWTW5wT+EFS9pD0s6MAUnQwBKXx/5WZO+avsRIKxxX+ml
+	 VhVhGBBzj9Y2yH0bJKF5vKJPCVkKOJB8n5rKZOZKcfBjVBA87JX9JXIVcdcKn7EH9hA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tn5nF+0tzekU5KozbCzCJIbOGDSWDchusKxKW4KzvCk=;
-	b=PQojloIHS3ELCNchPyGS6TZpSPwE3FqviBlvi3uvhux03fLYtNW6FITv0aHfiuSfUBgR
-	 vHATNrLsQsn2niUz7MXWnK29YmfrtW0ZtXOtW0asfbor4x6s6cB9fXEqpYYMZF8tEzDbn
-	 BbCq0tsUzczeBjz9bk1q/ExgEt55eHSIc5M4qz7YmoW2j6SBeCzmCNCfKX6tfcSBtFE/3
-	 xMgIwjaZYzSU/hbH+KMW+xyu8LU2h1LIwqswkSrO80/8A9b5XcAgF7c/ekK8Pt+mpZZuh
-	 YrJso39xBvBGQKfhOmaFhb2EwWw2pUJcRxz7Xb3pNUYNitVrNV7zMurkPivu8y2zQbw==
+	bh=zwg1PwKH5m5ifzEY41s5HYiocUOF6nCWaqBc3rpKKa4=;
+	b=eAb8tBBHBNi2clpnzqwAgSUVKw6ldX/Zz1kLqDvaNVibgGzYi6iiykv6xRILqfI1ERQI
+	 cWikGGTgUTgtmTzl6IgrAOhf4Ti7z2IxtYejyPJhFfwhw9FBHtnJ50rtBs1kcUaHMwUL3
+	 RQycyuUtNmnRl2AErFHRXAuRDUIfs8G5KjB/rqjwSNXvSYzT+CheyN9EwAiYKIvDvrqcN
+	 wlabHayCu752rhRGvTHeiJtAADIEmKmXXEC/Hd4FyJM6MX3opQMurGLNrhpEC69Gu9AdK
+	 ZCfPp2PDihZciEENo1NQf6ug+c83rHv6CzZdOhET62rrZUsIKXZbKLwijUzyb0ID5EA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Pg7pbI/O";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gtysE5D8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A79E606D4A5;
-	Fri, 13 Nov 2026 17:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1E4606D857;
+	Fri, 13 Nov 2026 17:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pg7pbI/O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14911F000C4;
-	Fri, 13 Nov 2026 17:27:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gtysE5D8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDD71F000C4;
+	Fri, 13 Nov 2026 17:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590867;
-	bh=tn5nF+0tzekU5KozbCzCJIbOGDSWDchusKxKW4KzvCk=;
+	s=korg; t=1794590869;
+	bh=zwg1PwKH5m5ifzEY41s5HYiocUOF6nCWaqBc3rpKKa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pg7pbI/OPdoNFfZbRrRxsDFxH8+AJbbpj28vjUETYQRKzNC4HVAjK2D5l+g3r04PT
-	 elVCTUAY/+sYvcyeR2iVwqNuyjuy1d/4yf+1bpSNRe2nLCDFIFSyftkNqyegWSuZH2
-	 drO4NRkdqPRTWwqeLqJH8Jb9sRzXbRFteWTDi3xU=
+	b=gtysE5D8DwTxvyDxhsMxpP7Lgoc2em7ncAXnPuif9vO4iMw9auNZ3335ywWkpBdkP
+	 XMbTqUUQLjettiXAYyQW4gVvF99AoTNIgrkSczBxomp7bY6GhuZzg8KYpTF3wk93Au
+	 8rPOwP+RG6UjDXnSb3clV/KXMLy9sZW23RKfzRwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Liz Fong-Jones <lizf@honeycomb.io>,
-	Jan Kara <jack@suse.cz>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Igor Velkov <iav@iav.lv>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 066/670] writeback: keep cleanup_offline_cgwb()s scan out of syncs
-Date: Fri, 13 Nov 2026 10:43:50 -0500
-Message-ID: <20261113153813.748860144@linuxfoundation.org>
+Subject: [PATCH 6.12 067/670] genirq/kexec: Do not take the bus lock of an interrupt chip on the crash path
+Date: Fri, 13 Nov 2026 10:43:51 -0500
+Message-ID: <20261113153813.782033919@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,77 +68,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liz Fong-Jones <lizf@honeycomb.io>
+From: Igor Velkov <iav@iav.lv>
 
-[ Upstream commit 90c96612460e6accddbda5a195e6ddaa391ecde0 ]
+commit 717862eac6eff0eea8ac30a0c0de0bed84922aab upstream.
 
-On a filesystem mounted with lazytime, sync() and syncfs() can return
-without persisting timestamp updates of inodes attached to a dying
-cgroup wb, so a crash after the sync loses them. File data and sizes are
-not affected.
+machine_kexec_mask_interrupts() calls irq_set_irqchip_state() for every
+started interrupt. That function takes the bus lock of the chip and
+desc->lock, and syncs the chip when it drops them. On the crash path
+interrupts are off and the other CPUs are stopped, so a chip whose bus
+transfer is completed by an interrupt never returns from the sync.
 
-Since commit f6988c90671e ("writeback: bound cleanup_offline_cgwb()
-rescans by rotating scanned inodes"), isw_prepare_wbs_switch() moves the
-inodes it walks to the newest end of the list. When a pass fills its isw
-before reaching an inode that got its lazytime update after a sync's
-cutoff, the walked inodes land past it on b_dirty_time, and the sync's
-queue_io(), which stops at the first inode dirtied after the cutoff,
-misses them. The late inode has to be one without a pending lazytime
-update; one already on b_dirty_time keeps its position.
+On RK3399 boards with an RK808 PMIC the RTC alarm interrupt belongs to
+the regmap-irq chip of the RK808, which sits on I2C. rk808_irq_chip sets
+init_ack_masked, so regmap_irq_sync_unlock() writes the ack register on
+every unlock, and the I2C controller needs its own interrupt to finish
+the transfer. A panic with a crash kernel loaded prints
 
-The window is narrow. cleanup_offline_cgwbs_workfn() skips wbs with
-anything on b_dirty, b_io or b_more_io, so the scan has to land between
-wb_writeback() fixing dirtied_before and taking list_lock for its first
-queue_io(), unless a multi-pass drain started before the wb got dirty
-IO.
+  SMP: stopping secondary CPUs
 
-Take wb_switch_rwsem for read across the scan, as
-process_inode_switch_wbs() does for the switches.
+and then nothing until the watchdog resets the board.
 
-Fixes: f6988c90671e ("writeback: bound cleanup_offline_cgwb() rescans by rotating scanned inodes")
+machine_kexec_mask_interrupts() takes neither lock for the other
+operations on the descriptor. Move the search for the chip that
+implements irq_set_irqchip_state() into __irq_set_irqchip_state(), which
+takes no locks, and call it from machine_kexec_mask_interrupts().
+
+Fixes: 78fd584cdec0 ("arm64: kdump: implement machine_crash_shutdown()")
+Suggested-by: Thomas Gleixner <tglx@kernel.org>
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Cc: stable@vger.kernel.org
-Suggested-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/all/0bc5d58533f10b4841807be3025daa11@kernel.org/
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
-Link: https://patch.msgid.link/20261017040710.1174009-1-lizf@honeycomb.io
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ Take wb_switch_rwsem before this branch's rcu_read_lock(), as
-  down_read() can sleep. ]
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
+Link: https://patch.msgid.link/20261015-kexec-irq-bus-lock-v2-1-2af15f0757b6@iav.lv
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/irq/internals.h |  1 +
+ kernel/irq/kexec.c     |  2 +-
+ kernel/irq/manage.c    | 49 +++++++++++++++++++++---------------------
+ 3 files changed, 27 insertions(+), 25 deletions(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 435f14b7e2cca..3b67018191df1 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -757,6 +757,13 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
- 		new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index 7062a99a1ddd2..0b60f8aa62868 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -77,6 +77,7 @@ enum {
+ #include "settings.h"
  
- 	nr = 0;
-+	/*
-+	 * The scan moves walked inodes to the newest end of b_dirty_time,
-+	 * past ones it didn't reach. If one of those was dirtied after a
-+	 * sync's cutoff, the sync's queue_io() stops there and misses the
-+	 * moved ones. Exclude syncs as process_inode_switch_wbs() does.
-+	 */
-+	down_read(&wb->bdi->wb_switch_rwsem);
- 	/*
- 	 * Paired with synchronize_rcu() in cgroup_writeback_umount().
- 	 * Holding rcu_read_lock across the SB_ACTIVE check, the inode grab
-@@ -779,6 +786,7 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
- 		restart = isw_prepare_wbs_switch(new_wb, isw, &wb->b_dirty_time,
- 						 &nr);
- 	spin_unlock(&wb->list_lock);
-+	up_read(&wb->bdi->wb_switch_rwsem);
+ extern int __irq_set_trigger(struct irq_desc *desc, unsigned long flags);
++extern int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val);
+ extern void __disable_irq(struct irq_desc *desc);
+ extern void __enable_irq(struct irq_desc *desc);
  
- 	/* no attached inodes? bail out */
- 	if (nr == 0) {
+diff --git a/kernel/irq/kexec.c b/kernel/irq/kexec.c
+index 0f9548c1708dd..58d92a7f2af1c 100644
+--- a/kernel/irq/kexec.c
++++ b/kernel/irq/kexec.c
+@@ -25,7 +25,7 @@ void machine_kexec_mask_interrupts(void)
+ 			 * First try to remove the active state from an interrupt which is forwarded
+ 			 * to a VM. If the interrupt is not forwarded, try to EOI the interrupt.
+ 			 */
+-			check_eoi = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
++			check_eoi = __irq_set_irqchip_state(desc, IRQCHIP_STATE_ACTIVE, false);
+ 		}
+ 
+ 		if (check_eoi && chip->irq_eoi && irqd_irq_inprogress(&desc->irq_data))
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index 67b1c5a352014..927a6e52a58c9 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -2867,6 +2867,28 @@ int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ }
+ EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
+ 
++int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val)
++{
++	struct irq_data *data = irq_desc_get_irq_data(desc);
++	struct irq_chip *chip;
++
++	do {
++		chip = irq_data_get_irq_chip(data);
++
++		if (WARN_ON_ONCE(!chip))
++			return -ENODEV;
++
++		if (chip->irq_set_irqchip_state)
++			break;
++
++		data = irqd_get_parent_data(data);
++	} while (data);
++
++	if (data)
++		return chip->irq_set_irqchip_state(data, which, val);
++	return -EINVAL;
++}
++
+ /**
+  *	irq_set_irqchip_state - set the state of a forwarded interrupt.
+  *	@irq: Interrupt line that is forwarded to a VM
+@@ -2883,36 +2905,15 @@ int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
+ 			  bool val)
+ {
+ 	struct irq_desc *desc;
+-	struct irq_data *data;
+-	struct irq_chip *chip;
+ 	unsigned long flags;
+-	int err = -EINVAL;
++	int err;
+ 
+ 	desc = irq_get_desc_buslock(irq, &flags, 0);
+ 	if (!desc)
+-		return err;
+-
+-	data = irq_desc_get_irq_data(desc);
+-
+-	do {
+-		chip = irq_data_get_irq_chip(data);
+-		if (WARN_ON_ONCE(!chip)) {
+-			err = -ENODEV;
+-			goto out_unlock;
+-		}
+-		if (chip->irq_set_irqchip_state)
+-			break;
+-#ifdef CONFIG_IRQ_DOMAIN_HIERARCHY
+-		data = data->parent_data;
+-#else
+-		data = NULL;
+-#endif
+-	} while (data);
++		return -EINVAL;
+ 
+-	if (data)
+-		err = chip->irq_set_irqchip_state(data, which, val);
++	err = __irq_set_irqchip_state(desc, which, val);
+ 
+-out_unlock:
+ 	irq_put_desc_busunlock(desc, flags);
+ 	return err;
+ }
 -- 
 2.53.0
 
