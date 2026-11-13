@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590955;
-	b=Ca9diPdGmGrpTDHiSMFB88yzRoG6VbCfhPkU2vQ9rqeXWLp4S71dCwnc4Ymb3FjZnb1G
-	 lpG+gy1KK6739rM4H6Hb76Alg5XGipMpYPTbHypjTZtnNQ01LdbqqM83wFNvN1h7CZARd
-	 9BNPoT/h4V/U+Tds+5iBfCLoQkJlae682IOrQQqNea0N3b0QHOtEitLzmELHMUFIv0TPv
-	 1/w1/IkBCPX64yL4MPq+hUApwdSuH4UeWBsj2sBoJsVBiLLn+DcQFqfRw8xmtNoyhYdDk
-	 RWs7ytUSCo3K8+Sh2ZjPH9K1SfCS4PBKxZi4sH1jXJtFUGC41zg5R1YWxF6GgmuK1Hg==
+	t=1794590956;
+	b=aZiSDNZ6YkFxzjF3peQ3ydGBE4OOREotEwae2lbFs+cMa2GswsjkwwEoEEubBzi6Ph6N
+	 dRj4SfImexiiBN9kKYuK7umW5T4g8ehI9FzcmkyGeFne27epy9rQhKRIP8cr8fu3C1d5I
+	 ZplJjIGmzGg2nFS5WoU+BP2WMFOASKNeLEuADTI7b/B+li+nBInf99HB2LAdhbv9s0IQc
+	 Q1HleVuygdhkcmhXiBqxjnEsZPES4AFteSPdiC60tN7/N6csY9/JTFyJm1NuA/4Z3tz3x
+	 OhBeB/j0yqFCMeQFCXfDQlWp9Ru7+oNipgJfIvYCbtOvQjznrxtKCi42QQAs2duccOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590955;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590956;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6jZYkzoQmsDHAOQvrXWTcXzeYQiAKb7K3IcqM3UM+8A=;
-	b=amUbHg/08aYeCngAYMzHJnl+ZXaQLIYYAuLJI4PLbx79bjefAmnmhhcHI/LTscqUneUj
-	 s+MOUQPrH1zjzmVb2W9oRB0rTW73T1E04y6yrXQME8XrgLeCrZ+DtcNnmWTopX5VjWeD3
-	 PcYvjIrUxzjBFnVKoEDXM2QyoPCA53mBF/Urr8K7ZntvsPZhHPoDOerW1coskb2qu/Z+x
-	 IDnf+0ehz6aLNHiWszgwtludYg8W4tcXMnWkeCFCd+w9GlyP6VcS5c+OxAo+SagxkYp+k
-	 /BJUK0bKkk3m8DgLdP4TVBjRvMTujsnQCH0p4jrd5w6uUHRkkJtptKB6QkkbakJodjQ==
+	bh=gxJQAY3Vzm7T4Jclt/ASQ8ajOAWn3NEeZNUqwIi8iJc=;
+	b=2dRFluNhcX+d/gHVCOUBPoJoyTG1pFjDU1b8EgWUO/44bvrRVA+NpTWJ4AZSJ6ueBy25
+	 WjFSQFBr08uJLTrEJVoyxbARApRYPp76SW2ry/ouVrMqS5l85c5Ax0GUUquTe+oQmlgpm
+	 h6AA81+Z9sUFz+nxXCfYqceQmkgQOp2KXNy2Iz96JcYdFjlfof/lujz6UhZice6qAegUM
+	 awFfXz7FBNOQeT7pLzu+3WCTsalJz65PQyvCp+cb39skHRBNq7J+bWBAnXMR05bGJMJ5Z
+	 cVm22EJMFqHa6kKl2YjtaNLGFyno+Kvh2CUlnexBE/3bu4MTsT4kneghCMqZyAmFWqQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mRhZLd4S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWbXH0rw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F647606F710;
-	Fri, 13 Nov 2026 17:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89896083156;
+	Fri, 13 Nov 2026 17:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mRhZLd4S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9911F000C8;
-	Fri, 13 Nov 2026 17:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vWbXH0rw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C9C1F000C5;
+	Fri, 13 Nov 2026 17:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590955;
-	bh=6jZYkzoQmsDHAOQvrXWTcXzeYQiAKb7K3IcqM3UM+8A=;
+	s=korg; t=1794590956;
+	bh=gxJQAY3Vzm7T4Jclt/ASQ8ajOAWn3NEeZNUqwIi8iJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mRhZLd4S9nKG86jU47059ZGiDnPKTuioA1zAo+LA8NGIJb7UC6AGHoxnb4TjUQblo
-	 Y/kJSnpN4oDgy0oUMZaczonsOb4evqZPPEwn1K3eHGcQLXbHlZW+hMHpA+P0Z8e945
-	 jpHR91H7tZ2C7hgPvjOYhy3l37ID0EvU9yHI1Nsw=
+	b=vWbXH0rwtVl7b4lEPsJzQ2FJBt7LhqTFopHVedl71suLZ8dM+kh5jYLFiaUoZ8JVS
+	 26aaMYDJOzLa0Y6+j+xHTFtlP0ZY6iYH2GbFVb7eJ4NQo/xT0znYZz0NllEEsZZhHt
+	 yR0kxBBcLu4WdJt9dRb3Crn359HkCd0cg01vXJcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/670] netrom: only update the BPQ extension flag on circuit set-up frames
-Date: Fri, 13 Nov 2026 10:44:59 -0500
-Message-ID: <20261113153816.406752702@linuxfoundation.org>
+Subject: [PATCH 6.12 136/670] rose: hold the listener while a Call Request is queued on it
+Date: Fri, 13 Nov 2026 10:45:00 -0500
+Message-ID: <20261113153816.445384980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,62 +69,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-For a frame received on an existing circuit, nr_rx_frame() sets bpqext
-when the frame is a CONNACK of 22 bytes and clears it for any other
-frame. Yet only the set-up frames tell whether the peer uses the BPQ
-extension: a CONNACK of 22 bytes, or a CONNREQ of 37 bytes. The first
-INFO frame of an accepted circuit therefore clears the flag set from
-the peer's CONNREQ.
+rose_rx_call_request() runs in softirq context for every Call Request
+addressed to us. It finds the listening socket with
+rose_find_listener(), which returns it without a reference once
+rose_list_lock is dropped, then creates the new socket, queues it on
+the listener's receive queue and wakes the listener up. Nothing stops
+the process owning the listener from closing it meanwhile:
+rose_release() destroys a listening socket at once, and the Call
+Request writes into freed memory. A node daemon that restarts while
+calls come in does exactly this.
 
-When a BPQ peer then repeats its CONNREQ, because our CONNACK was lost,
-nr_state3_machine() answers with a CONNACK built with bpqext clear,
-without the TTL byte that the first CONNACK had.
+Take a reference in rose_find_listener(), lock the listener in
+rose_rx_call_request() and refuse the call if it has been closed in the
+meantime. rose_release() marks the socket dead with sock_orphan()
+before rose_destroy_socket() empties its queue under the socket lock,
+so a listener found alive once locked will see the new socket on its
+queue, either in rose_accept() or when it is destroyed.
 
-Only change bpqext on a CONNACK or a CONNREQ, from its length.
-
-Tested on two QEMU guests (6.12.94, KASAN, lockdep) linked by KISS: A
-speaks NET/ROM itself, opens a circuit to a listening socket on B with a
-37-byte CONNREQ, sends an INFO frame on it, then repeats the CONNREQ.
-
-  before: first CONNACK 22 bytes, second one 21 bytes (no BPQ byte)
-  after:  both CONNACK 22 bytes
-
-No kernel report in either run.
+On a QEMU bench with two 4-CPU guests (KASAN, lockdep), six threads on
+A calling B without a break while B opens a listening socket, keeps it
+0 to 30 ms and closes it, for 40 s: before, KASAN reports a
+slab-use-after-free in rose_rx_call_request() a few seconds in, the
+socket having been freed by close() on B; with a 20 ms delay after
+rose_find_listener() the corrupted socket list then panics B in
+rose_neigh_put(). After, no report in either case, with about 400
+calls connected as before.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit e0950e6b8432455e36dcdd4fcdcdf51b27e7404c)
+(cherry picked from commit 8bd85552e2ae1a606eda4b6c096a7e3bd0bcff62)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/af_netrom.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/rose/af_rose.c | 32 +++++++++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 5 deletions(-)
 
-diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index 55abdeaeb6fec..99d9fe19d27f1 100644
---- a/net/netrom/af_netrom.c
-+++ b/net/netrom/af_netrom.c
-@@ -961,10 +961,16 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
- 		bh_lock_sock(sk);
- 		skb_reset_transport_header(skb);
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 4be2dd8200b5a..f6f09590e86b5 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -278,7 +278,7 @@ static void rose_insert_socket(struct sock *sk)
  
--		if (frametype == NR_CONNACK && skb->len == 22)
--			nr_sk(sk)->bpqext = 1;
--		else
--			nr_sk(sk)->bpqext = 0;
-+		/*
-+		 * Only the circuit set-up frames tell whether the peer uses
-+		 * the BPQ extension: a CONNACK of 22 bytes, or a CONNREQ of
-+		 * 37 bytes (repeated, for a circuit already accepted). The
-+		 * other frames say nothing about it.
-+		 */
-+		if (frametype == NR_CONNACK)
-+			nr_sk(sk)->bpqext = (skb->len == 22);
-+		else if (frametype == NR_CONNREQ)
-+			nr_sk(sk)->bpqext = (skb->len == 37);
+ /*
+  *	Find a socket that wants to accept the Call Request we just
+- *	received.
++ *	received. A reference is taken on the socket found.
+  */
+ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
+ {
+@@ -304,6 +304,8 @@ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
+ 	}
+ 	s = NULL;
+ found:
++	if (s)
++		sock_hold(s);
+ 	spin_unlock_bh(&rose_list_lock);
+ 	return s;
+ }
+@@ -1103,12 +1105,31 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
+ 	}
  
- 		ret = nr_process_rx_frame(sk, skb);
- 		bh_unlock_sock(sk);
+ 	sk = rose_find_listener(&facilities.source_addr, &facilities.source_call);
++	if (!sk) {
++		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
++		return 0;
++	}
++
++	/*
++	 * The listener may be closed by rose_release() at any time. It is
++	 * marked dead before rose_destroy_socket() empties its queue, so
++	 * once it is locked a listener that is not dead will see the new
++	 * socket on its queue, either in rose_accept() or when it is
++	 * destroyed.
++	 */
++	bh_lock_sock(sk);
+ 
+ 	/*
+ 	 * We can't accept the Call Request.
+ 	 */
+-	if (sk == NULL || sk_acceptq_is_full(sk) ||
+-	    (make = rose_make_new(sk)) == NULL) {
++	if (sock_flag(sk, SOCK_DEAD) || sk->sk_state != TCP_LISTEN ||
++	    sk_acceptq_is_full(sk))
++		make = NULL;
++	else
++		make = rose_make_new(sk);
++	if (!make) {
++		bh_unlock_sock(sk);
++		sock_put(sk);
+ 		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
+ 		return 0;
+ 	}
+@@ -1164,8 +1185,9 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
+ 
+ 	rose_start_heartbeat(make);
+ 
+-	if (!sock_flag(sk, SOCK_DEAD))
+-		sk->sk_data_ready(sk);
++	sk->sk_data_ready(sk);
++	bh_unlock_sock(sk);
++	sock_put(sk);
+ 
+ 	return 1;
+ }
 -- 
 2.53.0
 
