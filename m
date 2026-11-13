@@ -1,57 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591611;
-	b=FVwHa5aGFQB9JVpINR4oKb57YE861zynOsxQksBkMfgqE2iMQsqvOOsiNGTymjolESN6
-	 IM1oakDO49kGHDPARn29jheeFaPR+PrerFQ3bYbMkKfMCDzcuJsZ0qN1EybzuIC80peD6
-	 4TcLX/MgcIt4Qhe96R0bVebbvCup4lJwKuRFrX/XavtOD+U8nbFsGn9xkG/rrd9Isurl3
-	 +fO/FdNixwEDxdiO8D95PseRIl0P5m4rparTjGUqbOXgljgU+6tdopyI6yQ9jQrXYtaxl
-	 SlMDm/WkvkmezWfTj/iuoM0gqknEP76Fr47uKiYY2yM73u25YofLL3LWqL82Obm2BCQ==
+	t=1794591613;
+	b=3guRrwLw4bYjbg8YBtzpJ+kHLyY8KIDOv/hpbAS8KcKpp82jYF2BOxZVxmOks3a0OPyN
+	 JoToUPoUagdOEQq9VVEBb84rkDziCZLqWSxmjrPnzLSsIE42UsGDMunSv3ANOB3M1Dhv6
+	 7ST4cIOeZnV/BjROpfyydYVi4CJrm2mRINQpVyZC8zO8uNIDDqjJ7arCKFcKxk/XKMMvc
+	 9qFI0zYFXLp9JfaY6qaSoKKIBCJf/xMY7h+WqPP32knb5BYnqnA/PiPi1JrqGIWcya/CN
+	 RQlJ5EL3dpYRQN98GIKVae+3TLoNjahe4yIoFuW4NTAC8PrE6dJmAsLkfAluesCeoqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591611;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HQUcIyNC+XMXTtoPaw+JUPJ67sSY0Cbz3H9/D0+wd48=;
-	b=lV3wEN89JyTW/QKoAJS1JFbQHArCuDtG4UHK3+A+MnP1G4ZBK7ufLCA88LUaU+K6i0mj
-	 hPArBL9fAG30XH2aho1Q/WYvbCyS2PVOIcugnhmEiqb9YgBtkWjqgOo4Dbnezu5WHLE/Q
-	 iMvOyURNKaEwPDj3/wu4NAg4yKVwbqMybAknQvWx63zeIK5VITm8/VdJEeLl/W3vW+Jz8
-	 vPnEbtI/enHR0YcD+sInV5E2/p7Ug24Jrx5PhLDCnFCjmzMfWDtyg4mGgGgtn4wc8AOSv
-	 IfwqiiwWKYfB72ZIhkSBk9X6724LPrNmTERLAEfvLFxCcyQiaDVoGgYiQYUVc5PFVLA==
+	bh=f46/pTyIyj5/dP+8QNkGgqHZhQxNzUxcLWwS8sOSp1M=;
+	b=OctDvX3feNu2bmTnzzh/1QxKbVufJX17P2Nhy2DQgUPGBrclh/TYuAzLhJTtRB60UAFJ
+	 zBYpNmG/2eMuZmSTqa4UpMswrDVBKj8AbqUJOTCoe7/5gQatD1C4iwHSalkedTUzXDOmZ
+	 M6mxcv+bL0+icoJ/6fKSu9NJlDzXxrTGD2u4cp+KJL0HxcOzDQolMTyZugFexrS3ZZF54
+	 nvSwoWBV85jSXbwxvZVJC0PPKTWgA69EpQggOC/ObTLivwvfsFgPUBYCRF7NGdT/lfMCy
+	 /NOwWGq3x2Q733UUYaYwG9ELt3z6SOs3k6T/9zhx45Sj2Bu/7X5NXLqe4C+00l5E5CQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwpxGmts;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2veIM+O4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD1E606B466;
-	Fri, 13 Nov 2026 17:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF566606B47A;
+	Fri, 13 Nov 2026 17:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwpxGmts
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8185B1F000C4;
-	Fri, 13 Nov 2026 17:40:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2veIM+O4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30001F000C4;
+	Fri, 13 Nov 2026 17:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591611;
-	bh=HQUcIyNC+XMXTtoPaw+JUPJ67sSY0Cbz3H9/D0+wd48=;
+	s=korg; t=1794591612;
+	bh=f46/pTyIyj5/dP+8QNkGgqHZhQxNzUxcLWwS8sOSp1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rwpxGmtsqEk+svBGteCTqOc5v3WP+pHm1vwUWRCBoincTk7jImYQsg7bV0uB+d+GB
-	 oRxl+OrCRb4TikyBoNOoIjgSx0PFVuq7YKD8c8mqdn812xp94kyT8eerLlOL4T24m1
-	 A5N/yL3UtQAMbc0ymuA6L4zwWJ5EUfUjKWpBXQok=
+	b=2veIM+O4INsKGd/clNo+g2SQ93FCfvutSmbMbw+Sc0Qpt6caK4TXtMRvev9vFc/Xh
+	 xgqiJBc0n1PxzeTdXwWES639AA7lqb8OLLsXArvJNDmFc3nQKxqA9eQTOk8Xx2srP5
+	 QZqvWzBM6wnlS/AUjGofcg64p9cJ0HowOlY6WjuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Longlong Xia <xialonglong@kylinos.cn>,
+	Qi Xi <xiqi2@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Sashiko <sashiko-bot@kernel.org>,
-	Yosry Ahmed <yosry@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
 	Johannes Weiner <hannes@cmpxchg.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 611/670] mm/zswap: publish the initial pool with list_add_rcu()
-Date: Fri, 13 Nov 2026 10:52:55 -0500
-Message-ID: <20261113153832.521746471@linuxfoundation.org>
+Subject: [PATCH 6.12 612/670] mm/page_isolation: fix UBSAN shift-out-of-bounds warning
+Date: Fri, 13 Nov 2026 10:52:56 -0500
+Message-ID: <20261113153832.554911251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -73,62 +76,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Longlong Xia <xialonglong@kylinos.cn>
+From: Qi Xi <xiqi2@huawei.com>
 
-[ Upstream commit c1dd5e24a82d19bff8eef50ba8205d4776584aff ]
+[ Upstream commit eba0e6297edd60a85bc96ff5cfb734d066af62dd ]
 
-zswap_setup() publishes the pool on the zswap_pools list with a plain
-list_add(), but the list is walked by concurrent RCU readers holding
-nothing but rcu_read_lock() through zswap_total_pages(), e.g.
-/proc/meminfo and the shrinker count path.
+Patch series "mm/page_isolation: fix UBSAN shift-out-of-bounds in
+isolate_single_pageblock", v3.
 
-    CPU 0 (writer)                          CPU 1 (reader)
-    --------------                          --------------
-    zswap_pool_create():
-      pool->zs_pool = zs_create_pool(); (1)
-    list_add() -> __list_add():
-      WRITE_ONCE(zswap_pools.next,
-          &pool->list);                (2)   zswap_total_pages():
-                                                pool = READ_ONCE(     (a)
-                                                    zswap_pools.next);
-                                                zs_get_total_pages(   (b)
-                                                    pool->zs_pool);
+Patch 1 fixes a UBSAN shift-out-of-bounds warning in the PageBuddy branch
+of isolate_single_pageblock() triggered by concurrent buddy allocation.
 
-If (2) becomes visible to CPU 1 before (1), CPU 1 finds the pool at (a)
-but dereferences a wild pointer at (b).  Publish the node with
-list_add_rcu().
+Patch 2 addresses the same class of issue in the PageCompound branch,
+where racy compound_order() and compound_head() reads could lead to
+out-of-range shifts or incorrect page skipping.
 
-Link: https://lore.kernel.org/20260908012801.1864430-1-xialonglong2025@163.com
-Fixes: 91cdcd8d624b ("mm: zswap: optimize zswap pool size tracking")
-Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+This patch (of 2):
+
+A contig-range allocation racing with buddy allocation on the adjacent
+pageblock can trigger:
+
+ UBSAN: shift-out-of-bounds in mm/page_isolation.c:393:15
+ shift exponent -749042176 is negative
+ Call trace:
+  isolate_single_pageblock
+  start_isolate_page_range
+  alloc_contig_frozen_range_noprof
+  alloc_contig_range_noprof
+
+isolate_single_pageblock() first calls set_migratetype_isolate() with
+zone->lock held, which marks the pageblock MIGRATE_ISOLATE and moves any
+free page straddling the boundary out of the way.  Once the lock is
+dropped, it scans the MAX_ORDER_NR_PAGES-aligned window [start_pfn,
+boundary_pfn) locklessly, only to skip the free pages already handled
+above and to detect in-use pages straddling the boundary.  Since this
+scan only reads page state to decide how far to skip and returns -EBUSY
+on a straddling in-use page, it does not take the lock.
+
+The window also covers the adjacent pageblock, whose free pages stay on
+the normal movable/CMA freelist and can be allocated concurrently.  So
+after the scan observes PageBuddy(page), another CPU can allocate the
+page, leaving a stale value in page->private that makes "1 << order" shift
+out of range.
+
+Use buddy_order_unsafe() with READ_ONCE to read the order, and validate
+it is within MAX_PAGE_ORDER before shifting to prevent UBSAN warnings.
+
+Since pageblock_isolate_and_move_free_pages() already handles free pages
+straddling boundary_pfn under zone->lock, bail out with -EBUSY instead
+of VM_WARN_ON_ONCE() when a PageBuddy page appears to cross the boundary
+during the lockless scan.
+
+Link: https://lore.kernel.org/20260825120549.966271-2-xiqi2@huawei.com
+Fixes: b2c9e2fbba32 ("mm: make alloc_contig_range work at pageblock granularity")
+Signed-off-by: Qi Xi <xiqi2@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260906133601.3563324-1-xialonglong2025%40163.com
-Acked-by: Yosry Ahmed <yosry@kernel.org>
-Acked-by: Nhat Pham <nphamcs@gmail.com>
-Assisted-by: Zcode:GLM-5.3
-Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
 Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
 Cc: <stable@vger.kernel.org>
-[ sashal: Adjusted context to preserve existing logging of both the compressor and the zpool backend. ]
+[ sashal: Adjusted the comment to name move_freepages_block_isolate() instead of pageblock_isolate_and_move_free_pages(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/zswap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/page_isolation.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/mm/zswap.c b/mm/zswap.c
-index 6c50249d5398f..61311c92bd6f6 100644
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -1778,7 +1778,7 @@ static int zswap_setup(void)
- 	if (pool) {
- 		pr_info("loaded using pool %s/%s\n", pool->tfm_name,
- 			zpool_get_type(pool->zpool));
--		list_add(&pool->list, &zswap_pools);
-+		list_add_rcu(&pool->list, &zswap_pools);
- 		zswap_has_pool = true;
- 	} else {
- 		pr_err("pool creation failed\n");
+diff --git a/mm/page_isolation.c b/mm/page_isolation.c
+index 702db2e28a77c..b5ceebc8e7447 100644
+--- a/mm/page_isolation.c
++++ b/mm/page_isolation.c
+@@ -376,13 +376,19 @@ static int isolate_single_pageblock(unsigned long boundary_pfn, int flags,
+ 		}
+ 
+ 		if (PageBuddy(page)) {
+-			int order = buddy_order(page);
++			unsigned int order = buddy_order_unsafe(page);
+ 
+-			/* move_freepages_block_isolate() handled this */
+-			VM_WARN_ON_ONCE(pfn + (1 << order) > boundary_pfn);
+-
+-			pfn += 1UL << order;
+-			continue;
++			/* buddy_order_unsafe() is racy. Validate the order before shifting. */
++			if (order <= MAX_PAGE_ORDER &&
++				/*
++				 * move_freepages_block_isolate() splits
++				 * cross-boundary PageBuddy, verify it.
++				 */
++			    pfn + (1UL << order) <= boundary_pfn) {
++				pfn += 1UL << order;
++				continue;
++			}
++			goto failed;
+ 		}
+ 
+ 		/*
 -- 
 2.53.0
 
