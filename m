@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585809;
-	b=gGgtsaQWnS1TCjgqKe1qNV3YzKLp89Y6sKHJND0lNCQWgHDnADmoxHFpnej4QTGUertA
-	 LeKGP4ae/ojYcbkKk0hUfDrITFSLG4yu41jl84GCQG+1G77Q/eOo+3eW7f5Z+zRiMjKag
-	 zqB82GZQYf3jd3MPd4h3cdYcN0AwAU3cq1cGl8epbSfj30U8pl8h6xEPrCV+Nqmk7OBUU
-	 ew8cCPWh+rcHhRjdaSfgppLgNSfYtpwBTTV5hoBdxeAjM3dFOF3fZ+dBqy/BN6/+Pu40L
-	 t8WnG7dAcgax8Bq5yS408Ngjs0ddoex2sA7RBC26E3KsujUK01LetuP9vaHbHpeuTMQ==
+	t=1794585810;
+	b=RB4Lroici+GIKHSeFz38pDi1fFuH59msgXOLc+TfV95Pfx17TyZZoSWiXBMHWrXxbNFx
+	 qklu+H1sb/Lp4IUYvlQM6kbCcHc9gc5WXouEnVRp3GpbfiqB/BXL8nYfXMPpqIbydYPGh
+	 atlWtUnp53lNF2gnKWIu7QzZWELkCvK1OA+1icWSpQeAqfog/wuz0RSn6Rh6YbmZKz6Cj
+	 OKTAhQil/PGVt+nwQmOM1byA+dhkRSPA/5icQSbAZ1EA/JSE5Ujq37GJ7EKkxtR9PkCUI
+	 9uP2EBCeMoKnJYaBVwN8ps2WJlYKe8bV3THkOj3wqDFJnHMlEjcsGekQD0gKkU6IWXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585809;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585810;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uCWU5KTsZ3lhlryJnM73TxNspwZymMGCikPT2RPQiSk=;
-	b=24tB57qqxk4FA9BrzNNCzq0zfKwhQLUdwyOu5d/oQlWE8z+qWRDEMNYOdUhj1lG+GV3w
-	 QOzOqrxfrts8UHg3s4y6yx6S5vWVKn+G8yGRsRQBpSOtXxTjw1urtjwPScKI1c8YajJKT
-	 izC10cZ4vx7yOLIY+W/j4Sv2bQDNp0gjy4MDW9w8RBNup8WpPmc79aBoEXQ5IRGc1BMvV
-	 JOKTsMF4SPHY9BqrZjiVR7u8lA72UdYrvgcC4+zHAzEAGayhFG52UL4N+ZsuJRXc+R3bY
-	 3oFRx1ucrMl2FLpx/IqfYL3EoeshOvGNg91knxaGQwLbIuHWq8wxO6HZxz1cS1p1w8Q==
+	bh=yVweCln5TKH9IXQH68bDsMmAevQ9Z886smTT3snwvhI=;
+	b=Sd2x6BDhmr3ew9JoCQWgT0irX03H8yQDT25Yld2scEA4FD8kKUq83XfUOxfft24P0Ruc
+	 eQSyfxe+PB4yA6gLw0aXGJMC/4b/7fGO2xv84C7WvVbaP++UAwiZWi30d/2hR3nw2PgIc
+	 DDbL8DGAXCmJEBUnP9YC6+dSd4qr01vURAHkV65oor7/Mjkyo4jAdDZg/bvrJbO55YxFt
+	 u+Sb1PIjV07yZPdBs3HxQDiasnH31G5uCS4K+HxUQ6HKcVaOfu3gr6DmTmXo8821jB68X
+	 NN47Z5lXRMy/1i/ayH+WDTNW2QdgE4XnRCRWsrzlYaFf/lzPbMS5uvyKWWQRa4E/CwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=taXBXKww;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jxh+YbHL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFD5606BA98;
-	Fri, 13 Nov 2026 16:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6510F606BA98;
+	Fri, 13 Nov 2026 16:03:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=taXBXKww
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDCCD1F000C4;
-	Fri, 13 Nov 2026 16:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jxh+YbHL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AB11F000C4;
+	Fri, 13 Nov 2026 16:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585809;
-	bh=uCWU5KTsZ3lhlryJnM73TxNspwZymMGCikPT2RPQiSk=;
+	s=korg; t=1794585810;
+	bh=yVweCln5TKH9IXQH68bDsMmAevQ9Z886smTT3snwvhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=taXBXKww9Rf2QV1H1+UL7exApykprPwDwZirMq+592foh4UUE4qn5deDFP/u5RakH
-	 GOHKRNXaDCsvVoqMa9XpmOiAopNciURPcwkhgcNqynVap76lcy3KHsnMj4gvKmKxte
-	 1w3V08Hr+xVcKsGWHqch5vYzUeEhp+LHGjuuiWro=
+	b=Jxh+YbHLpyFJMXPzkRdNpwfk9sEJUmB+YuKUSRd5dX9l8HsWGhU3yGS5bUwWlrrtu
+	 m6HQ2u+Y1bT1YtS9Eq5DbYphaN+UctHNbTwYm5u0ZKrkiUXumSwD8BiLV2pKNYNFBp
+	 YUfNyjZ58rorKr9yhagl4XTVHBRLDe6vREKHlwhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Kazinsky <a.kazinsky@ideco.ru>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 393/507] ALSA: cs46xx: Handle SCB creation failures before dereferencing
-Date: Fri, 13 Nov 2026 10:51:37 -0500
-Message-ID: <20261113153810.075982880@linuxfoundation.org>
+Subject: [PATCH 7.3 394/507] ALSA: bcd2000: Fix use-after-free of MIDI URBs on file close
+Date: Fri, 13 Nov 2026 10:51:38 -0500
+Message-ID: <20261113153810.103637207@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,61 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Kazinsky <a.kazinsky@ideco.ru>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit 023d3e1176202339cd94a3d732e3aec74e36ba22 ]
+[ Upstream commit f6c7bb1f0799591a62be75b9bcf84245b4f208b7 ]
 
-With CONFIG_PM_SLEEP enabled, cs46xx_dsp_create_scb() can return NULL
-if kmemdup() fails to allocate the SCB data saved for resume.
-cs46xx_dsp_scb_and_task_init() and _dsp_create_generic_scb() dereference
-the returned pointer without checking it, causing a NULL pointer
-dereference on allocation failure.
+bcd2000_disconnect() calls snd_card_disconnect(), which only prevents
+new opens, and then frees the MIDI URBs.  A rawmidi file that was
+already open can still be closed afterwards, and its close callback,
+bcd2000_midi_output_close(), calls usb_kill_urb() on midi_out_urb.
 
-Check both return values before accessing the SCB descriptors.
-Return -ENOMEM when creating the null SCB fails and propagate NULL
-from _dsp_create_generic_scb().
+The URB pointers are cleared on disconnect and their accesses are
+serialized with midi_lock, but bcd2000_midi_output_close() reads
+midi_out_urb without that lock.  The check can therefore pass just
+before the pointer is cleared, and usb_kill_urb() then runs on the URB
+that has already been freed:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE
-static analysis tool.
+  BUG: KASAN: slab-use-after-free in usb_kill_urb+0x74/0x80
+  Read of size 8 at addr ffff8880078e7d40
+   usb_kill_urb
+   bcd2000_midi_output_close
+   close_substream
+   rawmidi_release_priv
+   snd_rawmidi_release
 
-Fixes: 41116e926cb9 ("ALSA: cs46xx - Fix suspend/resume with new DSP")
+  Allocated by: usb_alloc_urb <- bcd2000_init_midi <- bcd2000_probe
+  Freed by:     usb_free_urb <- bcd2000_midi_free
+                <- bcd2000_disconnect
+
+Take the lock in bcd2000_midi_output_close() and reference the URB with
+usb_get_urb() before releasing it.  The URB then stays valid until
+usb_put_urb() after usb_kill_urb() has returned, even if a disconnect
+frees it in the meantime.  usb_kill_urb() itself cannot run under
+midi_lock, as the completion handler takes the same lock.
+
+Fixes: b47a22290d58 ("ALSA: MIDI driver for Behringer BCD2000 USB device")
 Cc: stable@vger.kernel.org
-Signed-off-by: Alex Kazinsky <a.kazinsky@ideco.ru>
-Link: https://patch.msgid.link/20261030142529.415697-1-a.kazinsky@ideco.ru
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261031190936.5696-1-25031212351@stu.xidian.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/cs46xx/dsp_spos.c         | 2 ++
- sound/pci/cs46xx/dsp_spos_scb_lib.c | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ sound/usb/bcd2000/bcd2000.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/cs46xx/dsp_spos.c b/sound/pci/cs46xx/dsp_spos.c
-index a77e6f5a14ada..57b0a6321e0b6 100644
---- a/sound/pci/cs46xx/dsp_spos.c
-+++ b/sound/pci/cs46xx/dsp_spos.c
-@@ -1104,6 +1104,8 @@ int cs46xx_dsp_scb_and_task_init (struct snd_cs46xx *chip)
+diff --git a/sound/usb/bcd2000/bcd2000.c b/sound/usb/bcd2000/bcd2000.c
+index 2bd49bf827489..0fd086cac9552 100644
+--- a/sound/usb/bcd2000/bcd2000.c
++++ b/sound/usb/bcd2000/bcd2000.c
+@@ -183,10 +183,24 @@ static int bcd2000_midi_output_open(struct snd_rawmidi_substream *substream)
+ static int bcd2000_midi_output_close(struct snd_rawmidi_substream *substream)
+ {
+ 	struct bcd2000 *bcd2k = substream->rmidi->private_data;
++	struct urb *urb = NULL;
  
- 		null_scb.entry_point = null_algorithm->address;
- 		ins->the_null_scb = cs46xx_dsp_create_scb(chip, "nullSCB", (u32 *)&null_scb, NULL_SCB_ADDR);
-+		if (!ins->the_null_scb)
-+			return -ENOMEM;
- 		ins->the_null_scb->task_entry = null_algorithm;
- 		ins->the_null_scb->sub_list_ptr = ins->the_null_scb;
- 		ins->the_null_scb->next_scb_ptr = ins->the_null_scb;
-diff --git a/sound/pci/cs46xx/dsp_spos_scb_lib.c b/sound/pci/cs46xx/dsp_spos_scb_lib.c
-index fd19365026b4a..c5208e42cde95 100644
---- a/sound/pci/cs46xx/dsp_spos_scb_lib.c
-+++ b/sound/pci/cs46xx/dsp_spos_scb_lib.c
-@@ -274,7 +274,8 @@ _dsp_create_generic_scb (struct snd_cs46xx *chip, char * name, u32 * scb_data, u
- 	dev_dbg(chip->card->dev, "dsp_spos: creating SCB <%s>\n", name);
+-	if (bcd2k->midi_out_active && bcd2k->midi_out_urb) {
+-		usb_kill_urb(bcd2k->midi_out_urb);
+-		bcd2k->midi_out_active = 0;
++	/*
++	 * Reference the URB under the lock so that it stays valid until
++	 * usb_kill_urb() returns, even if a disconnect frees it in the
++	 * meantime.  usb_kill_urb() cannot run under the lock, as the
++	 * completion handler takes the same lock.
++	 */
++	scoped_guard(spinlock_irqsave, &bcd2k->midi_lock) {
++		if (bcd2k->midi_out_active && bcd2k->midi_out_urb) {
++			urb = usb_get_urb(bcd2k->midi_out_urb);
++			bcd2k->midi_out_active = 0;
++		}
++	}
++
++	if (urb) {
++		usb_kill_urb(urb);
++		usb_put_urb(urb);
+ 	}
  
- 	scb = cs46xx_dsp_create_scb(chip,name,scb_data,dest);
--
-+	if (!scb)
-+		return NULL;
- 
- 	scb->sub_list_ptr = ins->the_null_scb;
- 	scb->next_scb_ptr = ins->the_null_scb;
+ 	return 0;
 -- 
 2.53.0
 
