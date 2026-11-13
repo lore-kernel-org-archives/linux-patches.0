@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591080;
-	b=liEIljB3XNsYbk/ec+gfY2DIysK/fReesUOa4mpChC9HvcsKJSzybsnb+sUFYe/ixksD
-	 FYGUSQMsTRtRaDeGkKehk+4ri/yxo0EoSnoAPjxz4AXrR4VcAj060Z650SHKyruY5fEP9
-	 WuXE4qGzGwrJMaUFOMHaL9GZdOvMky+UWVfhdOYruHq3FvC8PscID5QVlj5iNBl7+7CQ2
-	 j22vblNndPluQdcH5+hFMBGOYu86Jp74T8rYxrC9TwO8/yiKwRUgK5NTTUcm8Kzvq5DfC
-	 IsCJLfnW6PWuqQ1CPd1RKe8S8OmyDkMDS7lyZpOxiWCMqDjFMownutM3lDZbq5crqZQ==
+	t=1794591081;
+	b=jXvd6F8C0P1aBhDCqJyiUWfBrHQGQ6YAj9dH/oUIdfD1BXHkHcvVJozQKO4R7kWlA4oY
+	 vz+22prcw/1+IaXD0Sk9zuBLs+0IgzKGJoHVzk2CvQLhL4lm5aXysygqvYBFedP1a9xqz
+	 gFvArMwAytR+gyfzY2hG0oSq0/n8NE4A8ciETEGNor0YFA1mCDJ2JRhTWol63o/I366yV
+	 PWKudFiCxkYOIvTa8bEBTi0Hhb3j5bV82Cg5lRp4ZyVFrW5P39f3hvM9HoXOaswaBvZBi
+	 opPQTN2k56HOgXQ+zoPnHVFLEi/3uiu0MnoqXHVeGBaRbpOpvF94E743iXfDwKEsNLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591080;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591081;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3DL9qEl3jUI/MpZnDIvIIfOSXTfpOef7de7dicUf3fY=;
-	b=VTlqU26hvEj7I740e0tQpD4pCoQUTdi6dTeFhNJMxOnmw9JPN4bpYQqkFIKTH5qqELjo
-	 RWDarx7ZmUKTfKi3AuAeIy4ox0DfSClDNYixqZ5SiTGQ9yirY2CfKaI4KFC55Sw6zzTH8
-	 yKDOaUwIkx6MkDMhYAaytgU7qsf7oiylYLgD3iSYDCz01J0QTbvQUuclmq8qX0Hlo9/4B
-	 LGJiwjhUa7lE+l+rSZwiLmUsTERqKLqi45D1QlnCy+A0qe7B7QUwoifQT2O5Ho7Xen7va
-	 CtmsTihdQaAJueZ4Affhz1Luaj/XpsCWniHk46sHIeVn7mvZF5X6Y3aWPiHMiUQXm4A==
+	bh=PSqJgtXyMPD9raQ6Ztm7T/w5QuNddYxpoQaPDVBIUks=;
+	b=ZOnzBFCGjyXJ7itZMS4rzshIDNvTrdBh0+p0YBhRzCSIoEa/gftxm9qTQCiCwRcZmGCB
+	 dKM+2+MueO0pMC2E1FBzy0M6WI8fAANb/fCoC3V+tELdoc4/FQHXWFAUJw0HzNb0+vLzo
+	 7XAtJTBdP5B6Mr1e7AMg2qHMtLy4bEtJQ0D7ee5mSRqeZh0b9YS4Dtv+mt9cEXslPQb9y
+	 D5AR1FRBt54vvmaDSZMy09k2gGbPEIs6ZVxswLUqm6LAdWPnhSbJntvXPSsTQCJFKVo5B
+	 THucWeIrpmHgk+P6Gx5qgE/aZJUiO2klRyn12Xm4THFLihfUMKQ+i4kSKFiw/qovRpA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKLkfK06;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QCkw1Ju6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590216073228;
-	Fri, 13 Nov 2026 17:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900F46073225;
+	Fri, 13 Nov 2026 17:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKLkfK06
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 049871F000C5;
-	Fri, 13 Nov 2026 17:31:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QCkw1Ju6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4C81F000C4;
+	Fri, 13 Nov 2026 17:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591080;
-	bh=3DL9qEl3jUI/MpZnDIvIIfOSXTfpOef7de7dicUf3fY=;
+	s=korg; t=1794591081;
+	bh=PSqJgtXyMPD9raQ6Ztm7T/w5QuNddYxpoQaPDVBIUks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QKLkfK06br6lBDMmLbBmR6moxpRN85rN95T+X9gQ2/bdAkM2h2oqWHRaiY6u864MQ
-	 iJKIFc/t98KOOlFY6Y6P91m8xlzMd38eSZWdaXAhGA8QQKHQVjFbtJYc4xo1z/hTUF
-	 FSLNxSxQ+NPEEIMkJHMhlwXUjwbl1XcXxwOg6Ewc=
+	b=QCkw1Ju61ErAYzoFu+zwwzL8jzIpU2YCKB2CA82TDfI1f2zY3xmLpkpA++adOfD14
+	 NsjifFYlT8uWZqaFRLFNusD/JN4tqxGIjk+XIIjecg20YrJ1F3vDmFxOyO5rIrW4kK
+	 ZQStDLG5ZOlZZ/53gAse/TbA1+jT+flH8K95taMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/670] ext2: preserve completed DIO bytes when buffered fallback fails
-Date: Fri, 13 Nov 2026 10:46:39 -0500
-Message-ID: <20261113153819.821621566@linuxfoundation.org>
+Subject: [PATCH 6.12 236/670] xfs: dont skip free extents in later batches of a whole-AG FITRIM
+Date: Fri, 13 Nov 2026 10:46:40 -0500
+Message-ID: <20261113153819.856637903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,47 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit cbf04dde8b3c5a7e043e91cefad68b8980ea0d18 ]
+[ Upstream commit 595e67d7261673d03c96950ffbb2e545c00376ed ]
 
-ext2_dio_write_iter() can complete part of a direct write before
-falling back to buffered I/O for a hole inside i_size. If
-generic_perform_write() then fails, its error overwrites the completed
-direct-I/O byte count.
+A whole-device FITRIM walks every AG but the last by length, in
+batches. xfs_trim_gather_extents() saves the record to restart from in
+tcur->start. But tcur->start is also the start of the range to trim.
+Later batches therefore never discard the free extents below that
+block.
 
-For example, on a full filesystem, an 8 KiB write to a file with an
-allocated 4 KiB prefix and a 4 KiB hole overwrites the prefix but returns
-ENOSPC and leaves the file position unchanged. GNU dd with oflag=direct
-consequently reports zero bytes written.
+Save the restart record in a new restart_bno field.
 
-Preserve a positive direct-I/O result and return the buffered error
-when no bytes were direct-written. This restores the fallback policy of
-generic_file_write_iter(), which ext2 used before its iomap conversion.
-
-Fixes: fb5de4358e1a ("ext2: Move direct-io to use iomap")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261102061555.55183-1-dennylin0707@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Cc: stable@vger.kernel.org # v6.10
+Fixes: b0ffe661fab4 ("xfs: fix performance problems when fstrimming a subset of a fragmented AG")
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/file.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_discard.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext2/file.c b/fs/ext2/file.c
-index 908d4849874da..0f047c33e0feb 100644
---- a/fs/ext2/file.c
-+++ b/fs/ext2/file.c
-@@ -254,7 +254,8 @@ static ssize_t ext2_dio_write_iter(struct kiocb *iocb, struct iov_iter *from)
- 		pos = iocb->ki_pos;
- 		status = generic_perform_write(iocb, from);
- 		if (unlikely(status < 0)) {
--			ret = status;
-+			if (!ret)
-+				ret = status;
- 			goto out_unlock;
+diff --git a/fs/xfs/xfs_discard.c b/fs/xfs/xfs_discard.c
+index 0b343776da8c3..9ad0d653f266b 100644
+--- a/fs/xfs/xfs_discard.c
++++ b/fs/xfs/xfs_discard.c
+@@ -160,6 +160,8 @@ struct xfs_trim_cur {
+ 	xfs_agblock_t	end;
+ 	xfs_extlen_t	minlen;
+ 	bool		by_bno;
++	/* restart point (with count) for the by-length walk */
++	xfs_agblock_t	restart_bno;
+ };
+ 
+ static int
+@@ -205,14 +207,15 @@ xfs_trim_gather_extents(
+ 		error = xfs_alloc_lookup_le(cur, tcur->start, 0, &i);
+ 		if (!error && !i)
+ 			error = xfs_alloc_lookup_ge(cur, tcur->start, 0, &i);
+-	} else if (tcur->start == 0) {
++	} else if (tcur->restart_bno == NULLAGBLOCK) {
+ 		/* first time through a by-len starts with max length */
+ 		cur = xfs_cntbt_init_cursor(mp, tp, agbp, pag);
+ 		error = xfs_alloc_lookup_ge(cur, 0, tcur->count, &i);
+ 	} else {
+ 		/* nth time through a by-len starts where we left off */
+ 		cur = xfs_cntbt_init_cursor(mp, tp, agbp, pag);
+-		error = xfs_alloc_lookup_le(cur, tcur->start, tcur->count, &i);
++		error = xfs_alloc_lookup_le(cur, tcur->restart_bno,
++					    tcur->count, &i);
+ 	}
+ 	if (error)
+ 		goto out_del_cursor;
+@@ -242,9 +245,15 @@ xfs_trim_gather_extents(
+ 		if (--batch <= 0) {
+ 			/*
+ 			 * Update the cursor to point at this extent so we
+-			 * restart the next batch from this extent.
++			 * restart the next batch from this extent. The
++			 * by-length walk does not visit extents in block
++			 * order, so it must keep the start of the range and
++			 * restart from restart_bno instead.
+ 			 */
+-			tcur->start = fbno;
++			if (tcur->by_bno)
++				tcur->start = fbno;
++			else
++				tcur->restart_bno = fbno;
+ 			tcur->count = flen;
+ 			break;
  		}
+@@ -347,6 +356,7 @@ xfs_trim_perag_extents(
+ 		.start		= start,
+ 		.end		= end,
+ 		.minlen		= minlen,
++		.restart_bno	= NULLAGBLOCK,
+ 	};
+ 	int			error = 0;
  
 -- 
 2.53.0
