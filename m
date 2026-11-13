@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591303;
-	b=LljxHBMm91Upm3ARtZrPpjexiTdxWV7NpWaolF3fPjk2wSxFThEPnLnm+IflKDRaEBZ9
-	 91CUHn2JWQyMhRZnZwPkI5Gzo5yGTf2XaUHx3cH+iKQoZ0DC1k0C4F0JAjWJqnMGWSP99
-	 37oebvnYCgqufuLckS8YzG8HvH3xW+6pgoYyW4h5MtYztKBLgPENforiDUilzqwj2/lCi
-	 uipm8dXtFmCI0RZ/Gyb/At+2QARwrUjKAUlOY8ktvrUjlJxx+oIZZUAYLqn1H9pLhUmxx
-	 6W4eK5Ow5VMJg6TSF/ZUrgcO74KcPauJeu5MCKQcDlRYM57EfnPldR1ToOE7WhLtBXg==
+	t=1794591304;
+	b=bq5/icWxM5f0driEVlQjcz3A5HbNEdH+sI0UuoueFJRxWdjIV9BDy+4lMNao3hXPiYaM
+	 aPiAUjkMAU0Vx4GyUJZajBr6WBRw6EFuyLl2Y0bfo7T6DMdNGaI8Lfkeap66Rh1iEq8zX
+	 FdV/+6xIaV/g6XIlNyaiOEmfE0isQRTqDBBRg/8JEiw8u7MhY+0v3bnoZw0VjIc6FzWad
+	 65zzeugQs4BblamxvRHCVd1cKsGTUjc7N4pbfrR7Y8FpgUmv5BcqXahwMoRIJPeOYQ4DL
+	 KjSz2MBeY1nY/7ef3VPEgjoziNZKWMTAmBiIvsr4TCw5sfA9FJU9dHQRrsfLfA/Bcdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591303;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1l1y0Dct5dUdKJncxJVsstY6PPSk0Efrd3Nad2EpWcE=;
-	b=QEOIwweFe+3nqtOBxrl8FNnsN+EMNBIecYvsZY1JXmoEOR+2Zr5FGP0qrW+3ZuFUcvy/
-	 v7S4KSI3/htg5yiZKI+iFL4O36Lxm7+W+smwiP1i8xyQYDeTYvz/O409dObyYZeoNKjIl
-	 DSLYVl4MS2KBCgG1fT55RhjZOFZxZ7c053JQQqaO/1OViDGvfgR1SOq4/StD8I5JeKAGq
-	 hZMM7lX3+qk9l/NX7ksbH5Oh3rfoRQN8qZcPdCSzubRdjr7KUk9sI2VW2aoby9deypDoe
-	 TwmgZH4X7KNAxFiiPPMDE4mGKlFd/gTXJsLDvc1oHaGXQHj9oERKmGo2B99C7kkrR+w==
+	bh=L0rNUpcuJHWtdjDdz/JVeUrrUwp0/6IpuGvohB2V+Ng=;
+	b=1yBuq6YYLJ9rxnd+Sk9TZEDbvUFdJIhadG6ETgoBozHI3PiPMF8x8OSCb4SVXKnMw+zB
+	 plNx9zGej7FX7NolP7kj6yJoyjy+L2841tw13XVExOdD8TiGuBqmJv6E+VRsHrqU54W2B
+	 z4NltNYHsjZ4gNlo+LpQg7CWAAyq3JO7DCQMSbnKQPPnYE2OEofPNM9YFvcZG4qdL7DI0
+	 lWQ3DvyVg0dGfg9g8qVNy7ZnS/cRvgM2Ewn6YOLUfNC6A7tbZkWllK7PuiU/P6tGkyimc
+	 3kk3ILGXBgsmz1xUK4Upj3UcNhYDYOzn5SB2TN3MC9/EaAag99lwKKhDzu6T2dHL1+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJN5RwAR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OkV9Bn4R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C85D606B205;
-	Fri, 13 Nov 2026 17:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79C9606B202;
+	Fri, 13 Nov 2026 17:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XJN5RwAR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343EC1F000C5;
-	Fri, 13 Nov 2026 17:35:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OkV9Bn4R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABE21F000C5;
+	Fri, 13 Nov 2026 17:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591303;
-	bh=1l1y0Dct5dUdKJncxJVsstY6PPSk0Efrd3Nad2EpWcE=;
+	s=korg; t=1794591304;
+	bh=L0rNUpcuJHWtdjDdz/JVeUrrUwp0/6IpuGvohB2V+Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XJN5RwARYhz6IiQy63St7hHiJ1eb/NtoJnkTcsPl+KMBYg4Px3ut99bmMXSCXz4PJ
-	 EKZanLHSNdq2kpijsHan2bKXc9Pswr+PMdTKpNKlR2D5ltjRm56h5XhDkWdFrhXcpF
-	 AV2Tiypn/OSqWH6H1unkK192IYXCgOoePTQ4cmuA=
+	b=OkV9Bn4RG+cQGKBVnkZ2dbr0SrnZTa7cPzoZD6OfCrUEAyFckz6jto1TjztEiuyhW
+	 Nho+ZGwh5vUiSKnhn7ueddlkrC5j/njXtAHd9iPFhap5cariIe5k0DX1WWDUjEEOWo
+	 wdET+QoFAFaqRW6xdTHhhLVd6JL/mJoFVMKnYKHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
+	yangge <yangge1116@126.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <21cnbao@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Bundschuh <mkbund@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 418/670] lib/crypto: mips: Disable Octeon SHA code on little-endian kernels
-Date: Fri, 13 Nov 2026 10:49:42 -0500
-Message-ID: <20261113153825.908525028@linuxfoundation.org>
+Subject: [PATCH 6.12 419/670] mm: replace free hugepage folios after migration
+Date: Fri, 13 Nov 2026 10:49:43 -0500
+Message-ID: <20261113153825.943010045@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,95 +73,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: yangge <yangge1116@126.com>
 
-commit dd2a4edb26e1c78823c50ba10c42f2d3de2e5ec4 upstream.
+[ Upstream commit 04f13d241b8b146b23038bffd907cb8278391d07 ]
 
-Kernels built for the MIPS64-based Cavium Octeon SoCs are normally
-big-endian, but little-endian builds are also supported.  Currently, the
-SHA-1, SHA-256, and SHA-512 code using the Octeon crypto co-processor is
-enabled in both builds.
+My machine has 4 NUMA nodes, each equipped with 32GB of memory.  I have
+configured each NUMA node with 16GB of CMA and 16GB of in-use hugetlb
+pages.  The allocation of contiguous memory via cma_alloc() can fail
+probabilistically.
 
-This code is untestable without the hardware.  However, based on the
-code itself, it is implausible that it computes hash values correctly in
-little-endian builds.  Such builds write many incorrect values to COP2:
+When there are free hugetlb folios in the hugetlb pool, during the
+migration of in-use hugetlb folios, new folios are allocated from the free
+hugetlb pool.  After the migration is completed, the old folios are
+released back to the free hugetlb pool instead of being returned to the
+buddy system.  This can cause test_pages_isolated() check to fail,
+ultimately leading to the failure of cma_alloc().
 
-  - SHA-1 and SHA-256: The 64-bit integer that contains the last two
-    32-bit message words of each block is written to COP2 entirely
-    byte-reflected, due to missing endianness conversion in
-    octeon_sha1_start() and octeon_sha256_start() to compensate for
-    using native 64-bit loads from the message bytes.  This differs from
-    all the earlier message words which are written correctly.
+Call trace:
 
-    Furthermore, the state is written to COP2 with each 32-bit word
-    byte-reflected within each 64-bit integer, due to incorrect use of
-    64-bit endianness conversion in write_octeon_64bit_hash_dword() when
-    the state is kept in memory in native-endian 32-bit words.
+cma_alloc()
+    __alloc_contig_migrate_range() // migrate in-use hugepage
+    test_pages_isolated()
+        __test_page_isolated_in_pageblock()
+             PageBuddy(page) // check if the page is in buddy
 
-  - SHA-512: All the 64-bit message words are written to COP2
-    byte-reflected, due to missing endianness conversion in
-    write_octeon_64bit_block_sha512() and octeon_sha512_start().  The
-    SHA-512 state words seem to be written correctly.
+To address this issue, we introduce a function named
+replace_free_hugepage_folios().  This function will replace the hugepage
+in the free hugepage pool with a new one and release the old one to the
+buddy system.  After the migration of in-use hugetlb pages is completed,
+we will invoke replace_free_hugepage_folios() to ensure that these
+hugepages are properly released to the buddy system.  Following this step,
+when test_pages_isolated() is executed for inspection, it will
+successfully pass.
 
-Big-endian kernels aren't affected by these bugs.  These bugs also
-aren't new; this code has been broken on little-endian ever since it and
-Octeon little-endian support were first added in v4.1.
+Additionally, when alloc_contig_range() is used to migrate multiple in-use
+hugetlb pages, it can result in some in-use hugetlb pages being released
+back to the free hugetlb pool and subsequently being reallocated and used
+again.  For example:
 
-Commit d2a948d2db68 ("MIPS: Octeon: Make octeon-md5 driver
-endian-agnostic") made the MD5 code work on little-endian kernels by
-adding 64-bit endianness conversions to the COP2 macros used by MD5
-(some of which are shared by SHA-1 and SHA-256, despite those algorithms
-keeping the state words in native-endian instead of MD5's little-endian,
-causing some of the strange behavior described above).  However, SHA-1,
-SHA-256, and SHA-512 were never fixed to work on little-endian kernels.
+[huge 0] [huge 1]
 
-Therefore, disable the Octeon SHA-1, SHA-256, and SHA-512 code in
-little-endian kernels.  This causes the generic code that actually
-computes hash values correctly to be used instead.
+To migrate huge 0, we obtain huge x from the pool.  After the migration is
+completed, we return the now-freed huge 0 back to the pool.  When it's
+time to migrate huge 1, we can simply reuse the now-freed huge 0 from the
+pool.  As a result, when replace_free_hugepage_folios() is executed, it
+cannot release huge 0 back to the buddy system.  To address this issue, we
+should prevent the reuse of isolated free hugepages during the migration
+process.
 
-Fixes: 82be2dcfa6a1 ("crypto: octeon - add SHA1 module")
-Fixes: c3d0def62001 ("crypto: octeon - add SHA256 module")
-Fixes: fbaa4dfd51a0 ("crypto: octeon - add SHA512 module")
-Cc: stable@vger.kernel.org
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20261022054450.20746-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://lkml.kernel.org/r/1734503588-16254-1-git-send-email-yangge1116@126.com
+Link: https://lkml.kernel.org/r/1736582300-11364-1-git-send-email-yangge1116@126.com
+Signed-off-by: yangge <yangge1116@126.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <21cnbao@gmail.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/crypto/Kconfig | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/linux/hugetlb.h |  7 +++++++
+ mm/hugetlb.c            | 42 +++++++++++++++++++++++++++++++++++++++++
+ mm/page_alloc.c         | 12 +++++++++++-
+ 3 files changed, 60 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/crypto/Kconfig b/arch/mips/crypto/Kconfig
-index ee9604fd20372..f951a75dfef32 100644
---- a/arch/mips/crypto/Kconfig
-+++ b/arch/mips/crypto/Kconfig
-@@ -34,7 +34,7 @@ config CRYPTO_MD5_OCTEON
+diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
+index 69bc41be9be90..96a201151a801 100644
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -687,6 +687,7 @@ struct huge_bootmem_page {
  
- config CRYPTO_SHA1_OCTEON
- 	tristate "Hash functions: SHA-1 (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA1
- 	select CRYPTO_HASH
- 	help
-@@ -44,7 +44,7 @@ config CRYPTO_SHA1_OCTEON
+ int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list);
+ void wait_for_freed_hugetlb_folios(void);
++int replace_free_hugepage_folios(unsigned long start_pfn, unsigned long end_pfn);
+ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 				unsigned long addr, bool cow_from_owner);
+ struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
+@@ -1078,6 +1079,12 @@ static inline void wait_for_freed_hugetlb_folios(void)
+ {
+ }
  
- config CRYPTO_SHA256_OCTEON
- 	tristate "Hash functions: SHA-224 and SHA-256 (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA256
- 	select CRYPTO_HASH
- 	help
-@@ -54,7 +54,7 @@ config CRYPTO_SHA256_OCTEON
++static inline int replace_free_hugepage_folios(unsigned long start_pfn,
++		unsigned long end_pfn)
++{
++	return 0;
++}
++
+ static inline struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
+ 					   unsigned long addr,
+ 					   bool cow_from_owner)
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index d9443bdebc068..929ea7dbd9007 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -48,6 +48,7 @@
+ #include <linux/page_owner.h>
+ #include "internal.h"
+ #include "hugetlb_vmemmap.h"
++#include <linux/page-isolation.h>
  
- config CRYPTO_SHA512_OCTEON
- 	tristate "Hash functions: SHA-384 and SHA-512 (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA512
- 	select CRYPTO_HASH
- 	help
+ int hugetlb_max_hstate __read_mostly;
+ unsigned int default_hstate_idx;
+@@ -1350,6 +1351,9 @@ static struct folio *dequeue_hugetlb_folio_node_exact(struct hstate *h,
+ 		if (folio_test_hwpoison(folio))
+ 			continue;
+ 
++		if (is_migrate_isolate_page(&folio->page))
++			continue;
++
+ 		list_move(&folio->lru, &h->hugepage_activelist);
+ 		folio_ref_unfreeze(folio, 1);
+ 		folio_clear_hugetlb_freed(folio);
+@@ -2991,6 +2995,44 @@ void wait_for_freed_hugetlb_folios(void)
+ 	flush_work(&free_hpage_work);
+ }
+ 
++/*
++ *  replace_free_hugepage_folios - Replace free hugepage folios in a given pfn
++ *  range with new folios.
++ *  @start_pfn: start pfn of the given pfn range
++ *  @end_pfn: end pfn of the given pfn range
++ *  Returns 0 on success, otherwise negated error.
++ */
++int replace_free_hugepage_folios(unsigned long start_pfn, unsigned long end_pfn)
++{
++	struct hstate *h;
++	struct folio *folio;
++	int ret = 0;
++
++	LIST_HEAD(isolate_list);
++
++	while (start_pfn < end_pfn) {
++		folio = pfn_folio(start_pfn);
++		if (folio_test_hugetlb(folio)) {
++			h = folio_hstate(folio);
++		} else {
++			start_pfn++;
++			continue;
++		}
++
++		if (!folio_ref_count(folio)) {
++			ret = alloc_and_dissolve_hugetlb_folio(h, folio,
++							       &isolate_list);
++			if (ret)
++				break;
++
++			putback_movable_pages(&isolate_list);
++		}
++		start_pfn++;
++	}
++
++	return ret;
++}
++
+ /*
+  * NOTE! "cow_from_owner" represents a very hacky usage only used in CoW
+  * faults of hugetlb private mappings on top of a non-page-cache folio (in
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 480579d7d59e4..063c2a359a1e1 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -6743,7 +6743,17 @@ int alloc_contig_range_noprof(unsigned long start, unsigned long end,
+ 	ret = __alloc_contig_migrate_range(&cc, start, end, migratetype);
+ 	if (ret && ret != -EBUSY)
+ 		goto done;
+-	ret = 0;
++
++	/*
++	 * When in-use hugetlb pages are migrated, they may simply be released
++	 * back into the free hugepage pool instead of being returned to the
++	 * buddy system.  After the migration of in-use huge pages is completed,
++	 * we will invoke replace_free_hugepage_folios() to ensure that these
++	 * hugepages are properly released to the buddy system.
++	 */
++	ret = replace_free_hugepage_folios(start, end);
++	if (ret)
++		goto done;
+ 
+ 	/*
+ 	 * Pages from [start, end) are within a pageblock_nr_pages
 -- 
 2.53.0
 
