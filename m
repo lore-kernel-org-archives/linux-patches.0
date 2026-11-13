@@ -1,63 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590770;
-	b=AGpKh+fRWZlXZ7EOwbBGoShUAYwatZSEovsHYqwowSdW8qro+ZvuZ3L7piiWrxonfhQK
-	 tCE2Tyn4XkOnwSu1TcnA7nqrW4PXz0snLmBPPut89pRrjJyZzEuqyyeOVjafQuyIsO+FV
-	 jr4QTIdMKrMlrk8se1GYGa4TCIxp3v/Nt1miDzJElWuBaCt+KiK9q88aDhUzikVZbvkNs
-	 /uP7NZK6NSfuKA7ZRbvYnVVLKEEymgaaXogoyKOEFCbxDGqCmoYqe4BZRVu3ind/+u6Mh
-	 wwUkS9xzwA8daDF+EaZTrByK7cNW0cAK9XkVF8+EbVgD0um+7fbMtpd0BBfPWxxs0Ew==
+	t=1794590771;
+	b=cqnyKOvct/tSldZH8k5L/n7WWOqTZZfPsczH/Sx27zmbAsu2GqkynAKIghVLtWQ8tMOr
+	 7b9IV7p43qMGJpUzfA/jTDXVM8Vh5LJjfPKBAf9f03ltE+b4CSs6P5dKiQ5315ZUKgDq5
+	 XolPj3esPPepLy8g8Ds/89EaFbFwVYebO0PV17mr8Ub1OqeGS3gxieQtkFY2JY/P++Fvy
+	 9q/kFZ0Kg83UDNUMHdUEfl0Xi558AFvtejVCyqrewsaDhB7OtF05DLDvuwnFEzU7oS2Q5
+	 T8FahwlQQUFLtI4n6uCvIqhU1RDOGE3OGsILZKqa2WIrAsGtrj8CdfcXk6TYcpzsbRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590770;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590771;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WNNeI7WaxSBdWrXeMOPv+3AXTzUAIcwnZ8obxAFwmGA=;
-	b=zYx7/rdjzKHbs0I+LCd5TXfhvOHOVjJXi40kh4f9YExRsMh4YwEQoZ160DXHrO09Eu+H
-	 qmQUvDjsLdFiqW8+VhsPsRtC81HdcKnaybqm87Nykvs/NV0UeH6BdQ+rGCWNIMJ67MuF3
-	 HBwyzxyJGGwAkSCruIHDNaEoTB/YaaNHQQYaTwkj/0bnj+7bMQzJzdrYCFe2Itg1NrNqy
-	 zPpP0QjE5Rp0C1hFUTOvH+AwQJ84PVSfCJtcliWjlHSfXTPQOMF3aALJcSPWR6j6pkt8q
-	 DDpODe9RbZJWQ3BrQwunGuqO2xNB+ybuJk+dzffoig4vkLFKd1oY5nzYn2n3dVieXbg==
+	bh=u0eHMwTf6X+SFXWpzLef6/D6/Ktz9KLRKxYQaJjrWko=;
+	b=wOzErhSaeoVPMtNVIcxt6+69GHBHABNXU29NCuOMVVBDpRcJ/dz14duIgo+eGFdwB/hM
+	 NkEFZQJMx4P05lRujurfz9Nnm6lC5Y2zpi6uIWIv9S81C85Dies4HS7PnEs5wWJYlvcw+
+	 kAkhcOc2HGCCd4aAV278TFcZgIRiAQ1nRAEMq7h8hcPBxw7pSpvDn5y4djBe6KeEidy/C
+	 CXit4E+eUTRCxTVXqgi0CtO/5H7PfzT7Wuj+bBZfhXxWNmzYwDHLUYUKdtJ4DB8WfMjUe
+	 q5fGZlHXQB6EN2QPSdaW90VCZIRYUNVAJkJEhihQmORhhC3awmMruI6LDWA3oUbuIIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJpDZ5dO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKKE9mBc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5872607C343;
-	Fri, 13 Nov 2026 17:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA43607C36B;
+	Fri, 13 Nov 2026 17:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qJpDZ5dO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8067E1F000C5;
-	Fri, 13 Nov 2026 17:26:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKKE9mBc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7C91F000C5;
+	Fri, 13 Nov 2026 17:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590769;
-	bh=WNNeI7WaxSBdWrXeMOPv+3AXTzUAIcwnZ8obxAFwmGA=;
+	s=korg; t=1794590771;
+	bh=u0eHMwTf6X+SFXWpzLef6/D6/Ktz9KLRKxYQaJjrWko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qJpDZ5dOfU/6cot4izMgnDksinoobhtTGBaAMe3/3ZOZbd1+rxMjrD3K/2vwrqUBA
-	 yxZdzcZ34alK/alDp6cdlqhGWMLIq8wSGW9E10qUfe7EinTfgpCA4G/cu4w940DBsg
-	 3XiHBP9VaGyT0+7bLIfuK/qQdIISMtsEvLzg7LEc=
+	b=pKKE9mBcuy8vbDf1gUPKSuRAI+x31MrGfuj6BZ5gMZUR2hUdPw2bsTL4Z2/4W6rA2
+	 kHuRR9UOwRFVr7hheSb1vfW9fbnondqIxLFNB4I0vB/9YqdGqZ8nvSp8Xfs8suc/Bh
+	 EK+fCgta22e+R1GoHkgtYvWcQ/IJCWHpPKgGC7+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	shaos <shawnq1@163.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Xueyuan Chen <xueyuan.chen21@gmail.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@kernel.org>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 667/686] mm/vma: avoid broken uffd merge on mremap
-Date: Fri, 13 Nov 2026 10:53:20 -0500
-Message-ID: <20261113153844.295151389@linuxfoundation.org>
+Subject: [PATCH 6.18 668/686] iommufd/iova_bitmap: Ensure that iova_bitmap_set() handles the full IOVA
+Date: Fri, 13 Nov 2026 10:53:21 -0500
+Message-ID: <20261113153844.328031924@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -79,91 +68,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+From: Andrea Parri <parri.andrea@gmail.com>
 
-[ Upstream commit 68cb098eadda190783f8f8bdf9fe764df59f7d32 ]
+[ Upstream commit e21952d72b4740f08a272d694cca223b6b0099ca ]
 
-Userfaultfd often causes unexpected interactions within mm, and does so at
-the intersection of uffd, mremap() and VMA merging.
+Generally userspace is going to step the dirty bitmap through the IOVA
+space. However if the bitmap ends in the middle of a large PTE this is
+problematic. The first step will clear the dirty bit and report dirty to
+the end of its bitmap while the second step will see the clear'd dirty and
+report clean for the start of the bitmap. If it happens this ends up
+losing dirties.
 
-When an mremap of a VMA occurs, copy_vma_and_data() calls
-mremap_userfaultfd_prep() to notify uffd of this.
+Further this function is missing bounds checking so if this does happen
+ther is a good chance it will write memory beyond what the userspace was
+expecting.
 
-However, mremap_userfaultfd_prep() simply drops the UFFD context for the
-VMA if the user did not register it for remap, i.e. didn't specify the
-UFFD_FEATURE_EVENT_REMAP flag.
+Return an error code if this illegal condition happens.
 
-This is OK for the VMA itself, as upon page table move, move_ptes() clears
-UFFD page table flags, using vma_has_uffd_without_event_remap() to
-determine whether to do so.
-
-However, this doesn't account for merging with adjacent VMAs, whose page
-tables won't have received this treatment, and thus latent UFFD markers
-will be left around.
-
-Worse, it'll break UFFD for any VMAs it is merged with. This is very
-surprising behaviour for a user, who will then simply not receive UFFD
-events for VMAs they ought to.
-
-Resolve the issue by explicitly checking for this case via
-vma_has_uffd_without_event_remap() in vma_merge_copied_range(), the merge
-function explicitly designated for mremap() operations.
-
-Also update the userland VMA tests accordingly.
-
-Link: https://lore.kernel.org/20261020-uffd-remap-fix-v1-1-0f34fc181f0a@kernel.org
-Fixes: 3cfd22be0ad6 ("userfaultfd: clear flag if remap event not enabled")
-Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: shaos <shawnq1@163.com>
-Closes: https://lore.kernel.org/all/20261020110748.959870-1-shawnq1@163.com/
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Xueyuan Chen <xueyuan.chen21@gmail.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: replaced the inline test stub with a constant-false macro in the existing test harness header ]
+Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
+Link: https://patch.msgid.link/20260925161142.189813-2-parri.andrea@gmail.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[ sashal: Added missing prerequisite support for recording bitmap errors and propagating them through the iterator to the ioctl caller. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vma.c                         | 5 +++++
- tools/testing/vma/vma_internal.h | 2 ++
- 2 files changed, 7 insertions(+)
+ drivers/iommu/iommufd/io_pagetable.c |  2 +-
+ drivers/iommu/iommufd/iova_bitmap.c  | 18 +++++++++++++++++-
+ include/uapi/linux/iommufd.h         |  6 ++++++
+ 3 files changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/mm/vma.c b/mm/vma.c
-index 3710cb70ca682..0d4f344956642 100644
---- a/mm/vma.c
-+++ b/mm/vma.c
-@@ -1145,6 +1145,11 @@ static struct vm_area_struct *vma_merge_copied_range(struct vma_merge_struct *vm
+diff --git a/drivers/iommu/iommufd/io_pagetable.c b/drivers/iommu/iommufd/io_pagetable.c
+index 77891d4d65fb1..a6face8a46f58 100644
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -552,7 +552,7 @@ iommu_read_and_clear_dirty(struct iommu_domain *domain,
+ 	arg.iopt = iopt;
+ 	arg.domain = domain;
+ 	arg.dirty = &dirty;
+-	iova_bitmap_for_each(iter, &arg, __iommu_read_and_clear_dirty);
++	ret = iova_bitmap_for_each(iter, &arg, __iommu_read_and_clear_dirty);
  
- 	vmg->copied_from = vmg->middle;
- 	vmg->middle = NULL;
-+
-+	/* If not registered for remap, uffd context will be cleared. */
-+	if (vma_has_uffd_without_event_remap(vmg->copied_from))
-+		return NULL;
-+
- 	return vma_merge_new_range(vmg);
- }
+ 	if (!(flags & IOMMU_DIRTY_NO_CLEAR))
+ 		iommu_iotlb_sync(domain, &gather);
+diff --git a/drivers/iommu/iommufd/iova_bitmap.c b/drivers/iommu/iommufd/iova_bitmap.c
+index b5b67a9d3fb35..3a7eca3c7d989 100644
+--- a/drivers/iommu/iommufd/iova_bitmap.c
++++ b/drivers/iommu/iommufd/iova_bitmap.c
+@@ -116,6 +116,8 @@ struct iova_bitmap {
  
-diff --git a/tools/testing/vma/vma_internal.h b/tools/testing/vma/vma_internal.h
-index f64064ee48587..b736528815bd8 100644
---- a/tools/testing/vma/vma_internal.h
-+++ b/tools/testing/vma/vma_internal.h
-@@ -802,6 +802,8 @@ static inline bool is_mergeable_vm_userfaultfd_ctx(struct vm_area_struct *vma,
- 	return true;
- }
- 
-+#define vma_has_uffd_without_event_remap(vma) false
+ 	/* length of the IOVA range for the whole bitmap */
+ 	size_t length;
 +
- static inline bool anon_vma_name_eq(struct anon_vma_name *anon_name1,
- 				    struct anon_vma_name *anon_name2)
++	int err;
+ };
+ 
+ /*
+@@ -384,7 +386,9 @@ static int iova_bitmap_advance_to(struct iova_bitmap *bitmap,
+ int iova_bitmap_for_each(struct iova_bitmap *bitmap, void *opaque,
+ 			 iova_bitmap_fn_t fn)
  {
+-	return fn(bitmap, bitmap->iova, bitmap->length, opaque);
++	int ret = fn(bitmap, bitmap->iova, bitmap->length, opaque);
++
++	return ret ? ret : bitmap->err;
+ }
+ EXPORT_SYMBOL_NS_GPL(iova_bitmap_for_each, "IOMMUFD");
+ 
+@@ -404,6 +408,18 @@ void iova_bitmap_set(struct iova_bitmap *bitmap,
+ 	struct iova_bitmap_map *mapped = &bitmap->mapped;
+ 	unsigned long cur_bit, last_bit, last_page_idx;
+ 
++	/*
++	 * If the range cannot be recorded then the system call returns failure.
++	 * This is to prevent loosing dirties if userspace is expecting to step
++	 * the bitmap through the IOVA space.
++	 */
++	if (!length || length > bitmap->length || iova < bitmap->iova ||
++	    iova - bitmap->iova > bitmap->length - length) {
++		if (!bitmap->err)
++			bitmap->err = -EPROTO;
++		return;
++	}
++
+ update_indexes:
+ 	if (unlikely(!iova_bitmap_mapped_range(mapped, iova, length))) {
+ 		/*
+diff --git a/include/uapi/linux/iommufd.h b/include/uapi/linux/iommufd.h
+index bdd20666d1eb1..65e564965e98a 100644
+--- a/include/uapi/linux/iommufd.h
++++ b/include/uapi/linux/iommufd.h
+@@ -775,6 +775,12 @@ enum iommufd_hwpt_get_dirty_bitmap_flags {
+  * Walk the IOMMU pagetables for a given IOVA range to return a bitmap
+  * with the dirty IOVAs. In doing so it will also by default clear any
+  * dirty bit metadata set in the IOPTE.
++ *
++ * The IOVA range given must fully enclose any IOPTE. If the range starts or
++ * ends inside a dirty IOPTE then the ioctl will fail. This avoids partially
++ * reporting a dirty range.
++ *
++ * On failure the dirty state becomes unknown and the userspace must restart.
+  */
+ struct iommu_hwpt_get_dirty_bitmap {
+ 	__u32 size;
 -- 
 2.53.0
 
