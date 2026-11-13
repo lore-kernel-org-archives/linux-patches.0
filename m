@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590128;
-	b=twCJKFV5FXwd+XK5loyWNmAH8HmT7DIZZcpkohfy1AQeJZNuK0zQ4ewySTN0ET/hro3Q
-	 DQaa+8i8sydfAx+MznqFmJWOLoXY+cTc6Uk5vO/TcSQ7AJwLraAWH+7kdb+mwKoyAbbws
-	 UjUhr9s388N9xHG0k04LxHME2RNtvUh3kqwKI9GBSBJXxaS+coU90MtLZstVVP9iTu3Qi
-	 HND+p42VbyyErD1Pn7+jLBeKYrqIj9+zBVFujlgu8SQeF6Fm4aMu1IqlrvUATHQnSCQ6b
-	 PtxPGna0iNc0K6tFIW7hB//A2ISBbrsxKgLnVEa0WIsU8KpXTvG5L7xZTBGhhQjDWwQ==
+	t=1794590129;
+	b=BDLdGVuMlJGlyOJETulTLKFUbPANpbfUzGYcRgFGQS+oDMv3c3h027GfvBGX1V4h1c83
+	 N5Np0tiQ3mSleY2XMckObZlmh/ij2EFpxr5s2iS+RZezUgVmpvoyx3tnIXbxybHBqnKwA
+	 4uyB/M1mnIsxRh3O9GYPzU/SavJZgklaGAdU1Kf1+l00Hv4DNdtE5JvW2QhIevyeWy4Al
+	 WDLpzLVK7xisbi3UATWs2WHhdxZF4XAHi99ooMga7/RuWMHzaSkYoZCy/YPb3kuenp2Tn
+	 7LR396DxCY99MiO1lbXtfBHIxtvGdmG8hWZZBAZCTEBvsVl4VFNBpImrQMPgJbuh/fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590128;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590129;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5rC0fjgp/nGnBEw6SVBqnUEm6hnjVuTL1YKuGyI3eH0=;
-	b=4pGkB8oOsVN7gFnT/tYlLaWU3+hFm03dOxtGzEgtyF67uJxa2FExejcB8AXOMdeqjvT0
-	 oHdTjrdIrDv/trnzGq8fZQScPmtUVVeMWX9it2a5vac/y/OezoSQB3xVKBC8C9H+UKUqr
-	 VRHFaVM18T8EWz2ZsNJzT9l/TUpuNiRPHxRPRD97gi5RZwGxu6jFmC1/ZZPzYWlstP/2E
-	 eefLRCeg+v20z1CGXCNd6FLN/04+3sn7MwP7qHiv9o2C5gzIS8BPk7I+q7xlj7FFxFSyp
-	 BqgaxESbfevebFZlIfe4aeBDbA3PWCHXNElhgio1JeNlTvoHqSLiPUXxYuvr0grN/YQ==
+	bh=h1aSWYUaRnI3X2yrLnpusy02vxWT2aqCTovgwtNnKTI=;
+	b=HIe4RTrE+XUVFYg85cIguFmBR1mTwC9HFnK7y6fXVmUomaR98f4AnTPuFcXpPocSxEZQ
+	 0XFa7oHqRYltfGVbL0VtmloAen+de5p0/uBPgTjFRxMUTlruzzImpLyUoKYPgY6fqYOG/
+	 4NBRK8WY7yB64ZWesFzmoaVKO1dEBMPdch8hbjrNZY+x3Ke09teJSAOvIVWKvGzavZuMS
+	 gPfNVd7mQMTigRR2AGjF3hTRsfhinwM2g08Q4bi5h/AdnNCrXDUFXZCrOmQvSKXiDuxFQ
+	 BwCkY3MfqKOoQ3cxUwY3QdZJm6kKsn6zThnWZ/rUCp1OFkwoClNnNyjEPCzYpi7UF6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=at5NbLDW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/v05Uud";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C108606B23B;
-	Fri, 13 Nov 2026 17:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368EE60A3809;
+	Fri, 13 Nov 2026 17:15:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=at5NbLDW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38171F000C9;
-	Fri, 13 Nov 2026 17:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/v05Uud
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C001F000C9;
+	Fri, 13 Nov 2026 17:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590127;
-	bh=5rC0fjgp/nGnBEw6SVBqnUEm6hnjVuTL1YKuGyI3eH0=;
+	s=korg; t=1794590129;
+	bh=h1aSWYUaRnI3X2yrLnpusy02vxWT2aqCTovgwtNnKTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=at5NbLDWCRzaGl10QHLN2n2WAxKgZWTTWCvhXJIj+Q4JReqqsGOdx07UTj/EqaXpA
-	 1hg2RDxcBxtEyjNvLl5OsYWTwWPctspL43v00CJqI26taoUsI2cd7EJN/SdR9PmPLh
-	 0QlLqaPAnzUVqQTt67jOtdWM9grTsKFri9tzPYtA=
+	b=a/v05UudWY3dFKahOGFY4hSkqAgh8EbhQby34oqratj82tDz23prKXb6jiAnC7QVG
+	 kY16pXAvTRMQxeOPL2DNL61wzE70ZWlIPMs1Xant5kdZhfaS+4lklwWv3NXJeha7qk
+	 DoFLL/XxRvdgJAyzIWLkN1dBv9qzg/lnrI2q90kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@davidgow.net>,
-	Usama Arif <usamaarif642@gmail.com>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 148/686] mm/damon/sysfs-schemes: read sysfs_filter->sz_range only once
-Date: Fri, 13 Nov 2026 10:44:41 -0500
-Message-ID: <20261113153825.817525013@linuxfoundation.org>
+Subject: [PATCH 6.18 149/686] media: microchip-isc: fix WB offset and gain register field masking
+Date: Fri, 13 Nov 2026 10:44:42 -0500
+Message-ID: <20261113153825.847739494@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,58 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit af19aff38d6faea35b10f26cca32d0e54f8aea5e ]
+[ Upstream commit 6e9eaa3b93870e4edac1bd2539fe113c24663eaf ]
 
-DAMON sysfs interface reads the user-provided size range arguments for
-hugepage_size type DAMOS filter twice.  Once for validation, and once
-again for assignments to the variable that will be passed to the core
-layer.  If the user updates the arguments in parallel, an invalid size
-range could be passed to the core layer.  Avoid it by doing the
-assignments first, and then validating the assigned variables before
-passing those to the core layer.
+ISC_WB_O_* and ISC_WB_G_* each pack two 13-bit fields. A negative offset
+sign-extends and corrupts the adjacent field. Add masks for the two
+fields and write them with FIELD_PREP(), which masks each value into its
+field, so sign extension can no longer bleed across.
 
-User impact of the bug should be trivial.  From the core layer's
-perspective, the invalid size range is not really invalid.  It just works
-as having a weird size range.  No critical issues such as a crash or a
-leak could happen.  And sane users ain't do such parallel arguments update
-anyway.  If they do, such racy behavior is arguably somewhat expected and
-deserved.  That said, there is no reason to keep such races.
-
-Link: https://lore.kernel.org/20260914142327.92510-3-sj@kernel.org
-Fixes: ea1f204ba29a ("mm/damon/sysfs-schemes: add files for setting damos_filter->sz_range")
-Signed-off-by: SJ Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@davidgow.net>
-Cc: Usama Arif <usamaarif642@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: SJ Park <sj@kernel.org>
+Fixes: 73c1a577b839 ("media: atmel: atmel-isc: reworked white balance feature")
+Cc: stable@vger.kernel.org
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/sysfs-schemes.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ .../platform/microchip/microchip-isc-base.c      | 16 ++++++++--------
+ .../platform/microchip/microchip-isc-regs.h      |  6 ++++++
+ 2 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/mm/damon/sysfs-schemes.c b/mm/damon/sysfs-schemes.c
-index e95cddca0a10d..952e12fd6dbf7 100644
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -2493,12 +2493,11 @@ static int damon_sysfs_add_scheme_filters(struct damos *scheme,
- 		} else if (filter->type == DAMOS_FILTER_TYPE_TARGET) {
- 			filter->target_idx = sysfs_filter->target_idx;
- 		} else if (filter->type == DAMOS_FILTER_TYPE_HUGEPAGE_SIZE) {
--			if (sysfs_filter->sz_range.min >
--					sysfs_filter->sz_range.max) {
-+			filter->sz_range = sysfs_filter->sz_range;
-+			if (filter->sz_range.min > filter->sz_range.max) {
- 				damos_destroy_filter(filter);
- 				return -EINVAL;
- 			}
--			filter->sz_range = sysfs_filter->sz_range;
- 		}
+diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
+index 21d108eb93c7b..85cd86bed7ba9 100644
+--- a/drivers/media/platform/microchip/microchip-isc-base.c
++++ b/drivers/media/platform/microchip/microchip-isc-base.c
+@@ -62,17 +62,17 @@ static inline void isc_update_awb_ctrls(struct isc_device *isc)
+ 	/* In here we set our actual hw pipeline config */
  
- 		damos_add_filter(scheme, filter);
+ 	regmap_write(isc->regmap, ISC_WB_O_RGR,
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_R])) |
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_GR]) << 16));
++		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_R]) |
++		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GR]));
+ 	regmap_write(isc->regmap, ISC_WB_O_BGB,
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_B])) |
+-		     ((ctrls->offset[ISC_HIS_CFG_MODE_GB]) << 16));
++		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_B]) |
++		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GB]));
+ 	regmap_write(isc->regmap, ISC_WB_G_RGR,
+-		     ctrls->gain[ISC_HIS_CFG_MODE_R] |
+-		     (ctrls->gain[ISC_HIS_CFG_MODE_GR] << 16));
++		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_R]) |
++		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GR]));
+ 	regmap_write(isc->regmap, ISC_WB_G_BGB,
+-		     ctrls->gain[ISC_HIS_CFG_MODE_B] |
+-		     (ctrls->gain[ISC_HIS_CFG_MODE_GB] << 16));
++		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_B]) |
++		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GB]));
+ }
+ 
+ static inline void isc_reset_awb_ctrls(struct isc_device *isc)
+diff --git a/drivers/media/platform/microchip/microchip-isc-regs.h b/drivers/media/platform/microchip/microchip-isc-regs.h
+index e77e1d9a1db87..166f57e6ed5d7 100644
+--- a/drivers/media/platform/microchip/microchip-isc-regs.h
++++ b/drivers/media/platform/microchip/microchip-isc-regs.h
+@@ -149,6 +149,12 @@
+ /* ISC White Balance Gain for B, GB Register */
+ #define ISC_WB_G_BGB	0x0000006c
+ 
++/* Each WB offset/gain register packs two 13-bit fields, low and high */
++#define ISC_WB_O_LO	GENMASK(12, 0)	/* R or B  offset [12:0]  */
++#define ISC_WB_O_HI	GENMASK(28, 16)	/* GR or GB offset [28:16] */
++#define ISC_WB_G_LO	GENMASK(12, 0)	/* R or B  gain [12:0]  */
++#define ISC_WB_G_HI	GENMASK(28, 16)	/* GR or GB gain [28:16] */
++
+ /* ISC Color Filter Array Control Register */
+ #define ISC_CFA_CTRL    0x00000070
+ 
 -- 
 2.53.0
 
