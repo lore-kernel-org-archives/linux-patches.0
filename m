@@ -1,60 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590389;
-	b=DvGhaU2t2DYGpHRjGcDTK+HdwMn2vJIrsyMpO8jHL9oCK42T9oyZGpJXXqcIr0/q5CpJ
-	 ge4/I4cjseKOs462O+i4BnceEv+wQkTlNVmbZiWJ/YlwiJxhsZzy+Q2rpFz2rqJ7RYnnu
-	 3H6CVL8ji6q+k/Z/Lg396R17i8Vmw4/6lYYvDDzsbHl6KDJMNaXF5wUSTD8ynK04OkQ+e
-	 +HZIGiYispt1H9oUcUGnxfs4+eVFWkg3XJx0bCETlrLMI8RSpZlc5uVgt/oGt7MKNY2nA
-	 Pc9miuUl09iEkidNSR96GSD5hXnmNDl3Ux6HtDaP1liPhLbGbTeSmgYkS8Q6uvGOJiQ==
+	t=1794590390;
+	b=RN47WuaAqYjxM4GrV0gwdva2ZWGXalVaU/E7sXBxDX+OkjQASE/LSzsdjQIG5854/BwU
+	 oWEywl/OmlZ9G9agoh1dmfYNTLW8GSI2tqZHaR4qYBh9tHoW7pstupR1eEWkEaza5srzn
+	 yA8Mn42K+v+dVi2E5GzguQunt94sQK4+7iIQ5yB61ckZ84/jIQUN8/eRTfGIyR2l7aWij
+	 K70KNrgZRj0qu0Ioswc0v9r7UnCGAN+9wdNW0klgQkMSE7a4c/D0Vxq5DoJzYGbfcEk7L
+	 UMAfVRs7xSAxbI6DF0w7tJGlx6wYxz55sixzvMin5g7pC3wFedfsZqvQi0IP8ZZtLvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590389;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590390;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+Ah7L1Bvt2Hqxl15rawu7G9HDQ1b9iSJ1phfu8l6WR0=;
-	b=D/wNbc4+UkR+lufVdkknGfcv1Lh7TLOTFWs7GL+c0CXx5NYZF2Tj+fo6zpYG9i1mPcZR
-	 F5XGUn/BozXxWkzbaGwrnHPvEhuOjbOt9KtlzQx5vKkBuomns9U5Gql2IIIFdSeZXLgtw
-	 7Ev3g8OTw94SdRirhLRia+59NJer7MtLo+yArpC94gYflo45DhArXurT6kl4HGqcISD4i
-	 T7tVIsOxZMbQtalKmlFHLcn4DDteGDxKL8ds2qWbOzmkMJCstPr3oCpEMRWvNb0RLHvlY
-	 GxyqsqzuIXAAfBHRb+PILtB7TxotBn/sqRoHGesz7/QgsPnnGzWaU7WmckQgEcZoxXw==
+	bh=QzqLauJ6g2U1TCabKgmxHvkRHklKQCGtdvbyeX4ZIMg=;
+	b=QchKbN0WUAo055qLfymo9Rt7OL1RwOnXqUb5J7v4tN02kcqSXRI1dfQyI8jO5BO8jSwu
+	 jHjaLR0MfNP0DeYKhaCbA1irTSIidx0BXefi8sAWAXTYrB7wYvTPOWuMZdSPLziKsmBqW
+	 UR6QPeiXWg0Xd8N0RWtP0DDXo3MCTxiqsqNKmZuolxfBqoua/+wRNLUPZRFfaYyPGaUIV
+	 ZJd9pXNCTBE8RUKV6iU8BuGjS7rvYBJLTBVtuyAKJeMZSpngN845FsALdS9EOZcVme48c
+	 xtvh1GVh/HkhAhPVOpuwMBF7/zE+r3Fm3oGCfsOvLJESD7jk7IkYNwzP2xlgWjJqKQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCcnYcXf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJQN1zvc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76525606A89C;
-	Fri, 13 Nov 2026 17:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670CA606B348;
+	Fri, 13 Nov 2026 17:19:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dCcnYcXf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCDA1F000C4;
-	Fri, 13 Nov 2026 17:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jJQN1zvc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C011F000C4;
+	Fri, 13 Nov 2026 17:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590389;
-	bh=+Ah7L1Bvt2Hqxl15rawu7G9HDQ1b9iSJ1phfu8l6WR0=;
+	s=korg; t=1794590390;
+	bh=QzqLauJ6g2U1TCabKgmxHvkRHklKQCGtdvbyeX4ZIMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dCcnYcXf5Itn3w5v+TPjfXZnX42KLZeZs1/2MPlNgBwWccFezW/E1/9F9jFJWtWRp
-	 kgaMzZXMGJUwR8FXGS0PZ97uQMq7+LM2w5R8x9wDyHBgXX5IFQ20KPLMb1+QjZMrgh
-	 j52cYDwV5AzazimsBk1XgWC091DoI0px3EUarI/M=
+	b=jJQN1zvc4MowcetIgipjaT0O2AILV093DhxFvVeCIdYaCOTWX3Bu/rxXoLBUtALLh
+	 T8kDLuaCSQv/iO18fBbDzYL2FfF1oEp26dqIVXC7nzaox38ipZM+CK/+Wm0XeP65dH
+	 NJ+Uf/jCLfS2YjJ4B5gRuJ1GXjUbMWoZGjWxlIwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Michal Hocko <mhocko@suse.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	JP Kobryn <jp.kobryn@linux.dev>,
+	Daejun Park <daejun7.park@samsung.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 322/686] mm: memcontrol: fix NULL pointer deref and UAF from high_work_func() on dying memcg
-Date: Fri, 13 Nov 2026 10:47:35 -0500
-Message-ID: <20261113153831.842096754@linuxfoundation.org>
+Subject: [PATCH 6.18 358/686] xfs: clamp the pNFS layout range to the maximum file size
+Date: Fri, 13 Nov 2026 10:48:11 -0500
+Message-ID: <20261113153833.039790937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -76,158 +71,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit dd94d8c7660a60dbfcd425e0d10120de6d02a7bd ]
+[ Upstream commit 29f3c1be4e554c9dbc66e13333034e0947477cb6 ]
 
-When memory.high is exceeded in non-task context, try_charge_memcg()
-schedules memcg->high_work without taking a reference on the memcg, and
-high_work_func() invokes reclaim_high() without pinning the memcg.
+xfs_fs_map_blocks() lets two bad layout ranges through. An offset of
+2^63 or more is negative and passes "offset > limit". A length above
+the limit, such as NFS4_UINT64_MAX, wraps "offset > limit - length"
+and stays unclamped. With NFS4_UINT64_MAX, a read layout is built from
+an uninitialized mapping.
 
-With obj_cgroup reparenting, introduced in commit bf4f059954dc ("mm:
-memcg/slab: obj_cgroup API"), objects charged to a child memcg are
-reparented to its parent in mem_cgroup_css_offline() instead of holding a
-reference on the child until uncharged.  Subsequent uncharges of those
-objects go to the parent, which can leave the child's memory use
-permanently above its high limit, so any later charge on the offlined
-memcg in non-task context schedules high_work.  This was later widened
-from kernel memory to LRU folios when commit f1cf8d2f36dc ("mm:
-memcontrol: eliminate the problem of dying memory cgroup for LRU folios")
-converted LRU folios to use obj_cgroup reparenting.
+Reject a negative offset and one at the limit, and clamp the length.
+This needs "xfs: cap the block count of xfs_iomap_write_direct() at one
+extent".
 
-cancel_work_sync(&memcg->high_work) only runs at the end of teardown in
-mem_cgroup_css_free(), so high_work_func() can start or still be running
-reclaim_high() after mem_cgroup_css_released() or shrink_many() has called
-lru_gen_release_memcg() and unhashed lruvec->lrugen.list.  If reclaim
-tries to rotate the memcg, lru_gen_rotate_memcg() dereferences a NULL
-pprev pointer.  This issue is specific to MGLRU and was introduced with
-the memcg LRU in commit e4dde56cd208 ("mm: multi-gen LRU: per-node
-lru_gen_folio lists").
-
-With either traditional LRU or MGLRU, css_free_rwork_fn() calls
-css_rstat_exit() which frees per-CPU rstat data before calling
-mem_cgroup_css_free().  If reclaim_high() is still running, rstat updates
-via mod_lruvec_state() -> __css_rstat_updated() cause a use-after-free on
-the per-CPU rstat data.  This was introduced when commit 5da3bfa029d6
-("cgroup: use separate rstat trees for each subsystem") moved
-css_rstat_exit() ahead of ss->css_free().
-
-Fix both problems by acquiring a reference with css_tryget_online() in
-high_work_func() before calling reclaim_high(), and by resetting
-memory.high and swap.high to PAGE_COUNTER_MAX in mem_cgroup_css_offline()
-so that charges via references on an offlined memcg do not trigger
-high_work on the dead child and skip checking live ancestors in
-try_charge_memcg().
-
-Acquiring the reference in high_work_func() rather than before scheduling
-high_work is safe because mem_cgroup_css_free() calls irq_work_sync() and
-cancel_work_sync() which cancels pending work and waits for an already
-running high_work_func() to complete before mem_cgroup_free() frees the
-memcg.  css_tryget_online() uses percpu_ref_tryget_live() and is safe to
-call after percpu_ref_exit() before the cgroup is freed unlike
-css_tryget().
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 UID: 0 PID: 27 Comm: kworker/1:0 Tainted: G    B   W           7.3.0-rc5-g2bba28e98578 #284 PREEMPT(full)
-Tainted: [B]=BAD_PAGE, [W]=WARN  <-- Taint from lru_gen_rotate_memcg() VM_WARN_ON_ONCE
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: events high_work_func
-RIP: 0010:lru_gen_rotate_memcg+0x1a3/0xe90
-Call Trace:
- <TASK>
- ? read_ctrl_pos+0x22f/0x3f0
- shrink_lruvec+0x16cb/0x1b80
- ? ret_from_fork_asm+0x1a/0x30
- ? lapic_next_event+0x15/0x20
- ? clockevents_program_event+0x2bb/0x6f0
- ? lapic_next_event+0x15/0x20
- ? __pfx_shrink_lruvec+0x10/0x10
- ? __pfx_clockevents_program_event+0x10/0x10
- ? _raw_spin_lock+0x84/0xe0
- ? __pfx__raw_spin_lock+0x10/0x10
- ? kasan_save_stack+0x30/0x50
- ? psi_group_change+0x381/0x740
- ? __pfx_sched_clock_cpu+0x10/0x10
- ? save_fpregs_to_fpstate+0xc4/0x2c0
- ? finish_task_switch.isra.0+0x1de/0xac0
- ? __schedule+0xf62/0x42c0
- ? __pfx___schedule+0x10/0x10
- ? __pfx___irq_work_queue_local+0x10/0x10
- ? shrink_node+0x626/0x31e0
- shrink_node+0x626/0x31e0
- ? ring_buffer_unlock_commit+0x11d/0x5c0
- ? kswapd_clear_hopeless+0xa0/0x150
- ? __pfx_shrink_node+0x10/0x10
- ? 0xffffffffc0000095
- do_try_to_free_pages+0x255/0x13b0
- ? ring_buffer_unlock_commit+0x11d/0x5c0
- ? reclaim_high+0x10a/0x1b0
- try_to_free_mem_cgroup_pages+0x1f9/0x5a0
- ? __pfx_try_to_free_mem_cgroup_pages+0x10/0x10
- ? irqentry_exit+0xc6/0x670
- reclaim_high+0x10a/0x1b0
- ? __pfx_reclaim_high+0x10/0x10
- ? process_one_work+0x5ff/0x1030
- ? __pfx_high_work_func+0x10/0x10
- process_one_work+0x6e2/0x1030
- ? __pfx___schedule+0x10/0x10
- ? __pfx_process_one_work+0x10/0x10
- worker_thread+0x422/0xbb0
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x2cd/0x3a0
- ? recalc_sigpending+0x15c/0x200
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x368/0x590
- ? __pfx_ret_from_fork+0x10/0x10
- ? __switch_to+0x588/0xf50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Link: https://lore.kernel.org/20261029201858.2932905-1-tjmercier@google.com
-Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
-Fixes: 5da3bfa029d6 ("cgroup: use separate rstat trees for each subsystem")
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Qi Zheng <qi.zheng@linux.dev>
-Cc: JP Kobryn <jp.kobryn@linux.dev>
-Cc: <stable@vger.kernel.org>
+Fixes: 527851124d10 ("xfs: implement pNFS export operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/xfs/xfs_pnfs.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index eec89dcb7801b..97ed5ad4053f0 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2062,7 +2062,10 @@ static void high_work_func(struct work_struct *work)
- 	struct mem_cgroup *memcg;
+diff --git a/fs/xfs/xfs_pnfs.c b/fs/xfs/xfs_pnfs.c
+index b880d061ee90c..298fdc9e9f1c3 100644
+--- a/fs/xfs/xfs_pnfs.c
++++ b/fs/xfs/xfs_pnfs.c
+@@ -177,10 +177,9 @@ xfs_fs_map_blocks(
+ 	if (!write)
+ 		limit = max(limit, round_up(i_size_read(inode),
+ 				     inode->i_sb->s_blocksize));
+-	if (offset > limit)
++	if (offset < 0 || offset >= limit)
+ 		goto out_unlock;
+-	if (offset > limit - length)
+-		length = limit - offset;
++	length = min_t(u64, length, limit - offset);
  
- 	memcg = container_of(work, struct mem_cgroup, high_work);
-+	if (!css_tryget_online(&memcg->css))
-+		return;
- 	reclaim_high(memcg, MEMCG_CHARGE_BATCH, GFP_KERNEL);
-+	css_put(&memcg->css);
- }
- 
- /*
-@@ -3906,6 +3909,8 @@ static void mem_cgroup_css_offline(struct cgroup_subsys_state *css)
- 
- 	page_counter_set_min(&memcg->memory, 0);
- 	page_counter_set_low(&memcg->memory, 0);
-+	page_counter_set_high(&memcg->memory, PAGE_COUNTER_MAX);
-+	page_counter_set_high(&memcg->swap, PAGE_COUNTER_MAX);
- 
- 	zswap_memcg_offline_cleanup(memcg);
- 
+ 	error = filemap_write_and_wait(inode->i_mapping);
+ 	if (error)
 -- 
 2.53.0
 
