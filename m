@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585559;
-	b=mvY+Prhqi3dwW4ThtPqPPUStu/6Ldpycx6PKudoOcdLT05+8OJvrF+prJZEPLTcFU36Z
-	 tjQSC678/tvaDlTvPDB9O0qwvTAMWRrb1+rWkLmZYN0H0//x9rgbBsEVwztXh+uzPdpqW
-	 vdDZt7e9uPo9J30AcRG6IAMfosuS4/SjZDu/2EywF9Pxt4ZaryC4MY+S2RKINkwc+G6os
-	 Twh0eWgYVyYYNn877oPnmXyZ09yIXG4VigIsCBjdgJWVkHVQdhhTu+pjEKXaFAVhmRMkW
-	 lHI/22erqeS4aicpZ0RMSABhiQb1dh88xPYslxKMw2kRyYBMbPiruRNOqt2KmnRasdQ==
+	t=1794585560;
+	b=5DABWz/s9cxHFDCQNjS/cBNOmELJujZ6FiKYxLI+/D/T2EO46F5/cyvCLis0W+X9oe2W
+	 Owrij4JngVIGGUD8/2EF/WoErZHmrBdhplcdTTZSu1fq86skK3f6Xf3yFk6uL8Tzf/O0x
+	 f8EnvveuuDx/PVw8v7WygVuOJN1CtkwO+ZlZ9+lB57WBnCLzK0UKNz5sd1Es8v6KJJiY4
+	 /eQ9Y0PXXb44wD+usT5IluzLJW7Q639lsCqo3kXJ7GHnx6VClY/NaoJdhQq/OTCajU2qs
+	 E5MAzgyj6G3wcysWSgEuyc7Bwwx/l8CmOlsIx/qfo2QQagOkzL449wYYJQsd9dWth5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585559;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585560;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=pFZjT/BtF08KEs+kl7B8G7Y0BED1zPJY3zwzqzf3UpA=;
-	b=hriQFylI5x1qfLyHyPdEU8e+Fq/DkJGuZa5NBIm1s6IarulpWShT6G5rL9lioDlatepa
-	 FoUgh8+J/oqXgkGTXJq42SUgcI/A9QzxvDSFiwP+zBFP7EY/5LNAMm1nbfOehyaA/Wh9G
-	 2PwkSXjBCvBtjEDoiFDdT8Y15no39qgRu/LaCTAdzy59kDlcHf7q6O+r2rUwiue7fSN2+
-	 WHLQBHTj6TobRvT5QYl9O2HRlvy88GwWNm/qAwkOmDmHbJNI0g5DE4a9neBfM6RmGQqWA
-	 FST1NSbUFKsX9faYaQWgTDS7dSowDbBE+EZR19O/6LvkmyNNAU/U5upS+B0DK9UK9LQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=bbTMlX/6RAUyOJFyUlchmIZwq47S56OOoEW/xHk2fWg=;
+	b=APjXWQFdIShdtr1VgUxNOrTyGyQ020AuQnz9GFFCD2LsHt1rTih/CtCJoSkn4ERg2b0Y
+	 U0YxD9+9Z2MejF/g/jIgT0jvOfQtWAel4wS8A9WYG8cshV0Zk1kaJRXbHRgzS4WWLrb/P
+	 OjMctZO0upYABu2V8h6xffEIwqDsnvy7m2e5X9eqXmKDb1XdSYVHtPlAqJFr37GJ+I7Fd
+	 Te3TxokdneXmdsNfxxhtD/NKb5YHGrZC4q2TP/fTsjZRdrjxNFpAPSdhsT7w1GbvPhqKK
+	 d5X/lek48Wh/6kJvchA82lBKAOsmF6WIXSoT8je2nS1NYh942A0yr/xNJ3eqSQ9CTPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJhO6vgd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZXqOQRRr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADFC606C56B;
-	Fri, 13 Nov 2026 15:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86042606C573;
+	Fri, 13 Nov 2026 15:59:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJhO6vgd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB70F1F000C4;
-	Fri, 13 Nov 2026 15:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZXqOQRRr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3162C1F000C4;
+	Fri, 13 Nov 2026 15:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585559;
-	bh=pFZjT/BtF08KEs+kl7B8G7Y0BED1zPJY3zwzqzf3UpA=;
+	s=korg; t=1794585560;
+	bh=bbTMlX/6RAUyOJFyUlchmIZwq47S56OOoEW/xHk2fWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JJhO6vgdfOGN5rhaxBvY0AEhFr+Khte4NkUBs2PJBi6FPfx+C5anJO91jg430+/1L
-	 WDhjgVHVsHFtMS5bsvQb6De6yXbMsJbljVeci14iop/uHNAzMk/bqDRFNGhberorht
-	 2dHs7icm7ne0rgH79/JlPISpsv6w9L3m3X/906gY=
+	b=ZXqOQRRr4eOpRUHLGx7dTdMV1jTs0SSC26xArlIEvpIzqcnLfQW9FF3v5AuGazPhV
+	 vjlwP41c3h9yHjnmr/g1yxDKTLkhlq2mZZHmsnMXWR6Ty9UHwi7CotcMgX3TkYzakL
+	 icbcKg/6sgD2JYwmzzwJqrpb9R3GAXjx/bIRr7F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 196/507] hwmon: (tmp108) Fix initial conversion delay and wait until ready
-Date: Fri, 13 Nov 2026 10:48:20 -0500
-Message-ID: <20261113153801.130548507@linuxfoundation.org>
+Subject: [PATCH 7.3 197/507] hwmon: (gpio-fan) Update the speed cache before dropping the PM reference
+Date: Fri, 13 Nov 2026 10:48:21 -0500
+Message-ID: <20261113153801.163763198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -62,116 +62,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit 7cd60538073e465310c94b2a2f0ea8d2f03768ef ]
+[ Upstream commit f324179e6ccd05dfdc8e98fba2e9d50aea8e7ea2 ]
 
-In tmp108_common_probe(), the driver only adds the 30 ms conversion delay
-(TMP108_CONVERSION_TIME_MS) to ready_time if the sensor was previously in
-TMP108_MODE_SHUTDOWN. However, the TMP108 hardware defaults to continuous
-conversion mode (TMP108_MODE_CONTINUOUS) upon power-on reset, including
-immediately after enabling the vcc supply regulator during probe, while
-the temperature register retains its power-on reset value of 0x0000 (0°C)
-until the first conversion completes. Because the initial mode is not
-shutdown, the delay is bypassed and early reads via thermal zone
-registration or sysfs before the first conversion finishes return an
-uninitialized 0°C reading.
+set_fan_speed() writes the GPIO control value before dropping the runtime
+PM reference when stopping the fan. pm_runtime_put_sync() decrements the
+usage count even when suspending the device fails, but the error return
+currently leaves speed_index at the previous running speed.
 
-In addition, returning -EAGAIN from tmp108_read() while waiting for a
-conversion to complete after probe or resume can trigger an unnecessary
-tight retry loop in callers or fail initial reads.
+A request for that same running speed then returns success without
+changing the GPIOs or taking a runtime PM reference. Retrying the stop
+instead drops a reference the driver no longer owns and can trigger a
+runtime PM usage count underflow warning.
 
-Unconditionally set ready_time to TMP108_CONVERSION_TIME_MS ahead in
-tmp108_common_probe(), track ready_time as ktime_t, and wait for the
-remaining conversion time in tmp108_read() using usleep_range() instead
-of returning -EAGAIN.
+Update speed_index after writing the GPIOs and before dropping the PM
+reference. The initial same-speed check already excludes a stopped fan,
+so a zero target is sufficient to identify the transition that needs a
+PM put. Preserve the PM error return and the CONFIG_PM=n exception.
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 66e1c9171339 ("hwmon: Add Texas Instruments TMP108 temperature sensor driver.")
+This keeps the cached control state and PM reference ownership consistent
+without restoring running GPIOs after a possibly partial supply failure.
+It does not clear persistent runtime PM errors or claim that a failing
+regulator has successfully powered off.
+
+Fixes: 0d01110e6356 ("hwmon: (gpio-fan) Add regulator support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Link: https://patch.msgid.link/20261031095039.11683-1-pocj8ur4in@gmail.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp108.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ drivers/hwmon/gpio-fan.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/tmp108.c b/drivers/hwmon/tmp108.c
-index 91d20a1ce1120..862b944d3e609 100644
---- a/drivers/hwmon/tmp108.c
-+++ b/drivers/hwmon/tmp108.c
-@@ -13,7 +13,7 @@
- #include <linux/i2c.h>
- #include <linux/i3c/device.h>
- #include <linux/init.h>
--#include <linux/jiffies.h>
-+#include <linux/ktime.h>
- #include <linux/regmap.h>
- #include <linux/regulator/consumer.h>
- #include <linux/slab.h>
-@@ -78,7 +78,7 @@
- struct tmp108 {
- 	struct regmap *regmap;
- 	u16 orig_config;
--	u64 ready_time;
-+	ktime_t ready_time;
- 	const struct tmp108_params *params;
- };
+diff --git a/drivers/hwmon/gpio-fan.c b/drivers/hwmon/gpio-fan.c
+index 3f78375eeb448..08b58b49be5b9 100644
+--- a/drivers/hwmon/gpio-fan.c
++++ b/drivers/hwmon/gpio-fan.c
+@@ -150,7 +150,10 @@ static int set_fan_speed(struct gpio_fan_data *fan_data, int speed_index)
  
-@@ -121,6 +121,7 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
- 	struct tmp108 *tmp108 = dev_get_drvdata(dev);
- 	unsigned int regval;
- 	int err, hyst;
-+	s64 delay;
+ 	__set_fan_ctrl(fan_data, fan_data->speed[speed_index].ctrl_val);
  
- 	if (type == hwmon_chip) {
- 		if (attr == hwmon_chip_update_interval) {
-@@ -137,12 +138,10 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
+-	if (fan_data->speed_index > 0 && speed_index == 0) {
++	/* The GPIOs have changed, and a PM put drops the reference on error. */
++	fan_data->speed_index = speed_index;
++
++	if (speed_index == 0) {
+ 		int ret;
  
- 	switch (attr) {
- 	case hwmon_temp_input:
--		/* Is it too early to return a conversion ? */
--		if (time_before64(get_jiffies_64(), tmp108->ready_time)) {
--			dev_dbg(dev, "%s: Conversion not ready yet..\n",
--				__func__);
--			return -EAGAIN;
--		}
-+		/* Wait if it is too early to return a conversion */
-+		delay = ktime_us_delta(tmp108->ready_time, ktime_get());
-+		if (delay > 0)
-+			usleep_range(delay, delay + 1000);
- 		err = regmap_read(tmp108->regmap, TMP108_REG_TEMP, &regval);
- 		if (err < 0)
- 			return err;
-@@ -477,11 +476,8 @@ static int tmp108_common_probe(struct device *dev, struct regmap *regmap, char *
- 		return err;
+ 		ret = pm_runtime_put_sync(fan_data->dev);
+@@ -158,8 +161,6 @@ static int set_fan_speed(struct gpio_fan_data *fan_data, int speed_index)
+ 			return ret;
  	}
  
--	tmp108->ready_time = get_jiffies_64();
--	if ((tmp108->orig_config & TMP108_CONF_MODE_MASK) ==
--	    TMP108_MODE_SHUTDOWN)
--		tmp108->ready_time +=
--			msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
-+	tmp108->ready_time = ktime_add_ms(ktime_get(),
-+					  TMP108_CONVERSION_TIME_MS);
- 
- 	err = devm_add_action_or_reset(dev, tmp108_restore_config, tmp108);
- 	if (err) {
-@@ -528,8 +524,8 @@ static int tmp108_resume(struct device *dev)
- 
- 	err = regmap_update_bits(tmp108->regmap, TMP108_REG_CONF,
- 				 TMP108_CONF_MODE_MASK, TMP108_MODE_CONTINUOUS);
--	tmp108->ready_time = get_jiffies_64() +
--			     msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
-+	tmp108->ready_time = ktime_add_ms(ktime_get(),
-+					  TMP108_CONVERSION_TIME_MS);
- 	return err;
+-	fan_data->speed_index = speed_index;
+-
+ 	return 0;
  }
  
 -- 
