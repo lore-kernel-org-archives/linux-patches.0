@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585620;
-	b=fHU1c+VUgkObdQunHbV1WeaPPkgMS/ZseGo4rxszlDOJvZysO94wrkHSlCMXrGoZbFTJ
-	 A2D5uhLSwyXjN6oNHZ8riWvZ3qs+Y73k/LdAM4lsaKtn0AwefZdGrxvr/MuKSX/KJwHr3
-	 eATOg9Fopa6NMaaE+MhWaPFzUczwKiRmthjwUjge5g3OVlmy5x4MOKQogrGmLWe+A0D/G
-	 iaVBJdWlSSGkLA+QF2r0CjYHfhbxNVsY5UrPtICrS998l1YwJ+hpfb7AAFUyUxVByHvXW
-	 nnKxPa1tnfxCeS4tZqYLqxCfewMN+LGIfzr6t8rrhb1kye98czsk4JV0SePdO1kQdOQ==
+	t=1794585621;
+	b=Yp9wFhr7fLRKOy+2k6nd3XNAcxq/TM62gcIbHiVhzzgnniHwWsLvfxOMCD7TQs5YIg0F
+	 30Klr3VPJDCcrHUbnkr3fb+AVNjE024HJnALMQhMp98hGX0SB6lDjNL99IdGrzpApS7bu
+	 T4jp9HJOEklGUcV5GVP3S7N32Hh3JDD5cF2yNQKHl6AA7cJBt733vIJElr/AX8qLhQ3B6
+	 Z44Pcn7zrm1FbVwQNZmkFSpuMaaBm3zrIjoy3aoepxbJSPawph3dTRxMR9hT9vnVMp0TN
+	 ZOFS1jm2MVT9uP75EkkypaZ4NNCx4160tChaYc3tBQgmV00KWdD8Mva4t8h83uGKTUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585620;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585621;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MPNV7POUJfttgLws5IZT//4PKBgoJaN288dIsLiMUsA=;
-	b=Iozx7FSQCGknrKvVcUVOnCcUsGkdUGkDkYZMl807ocjFdw9Q3GwmO64uOMzkZCnMsUnl
-	 VsAXteQrk3BFHfpCeVECCtuZSuQHUY/PZ85EQHxQoLriUjDr7z2wXyuYGBc0kSNm5MHN0
-	 GCLsWfTFogL7sulEjCK+YSKfl8BRIY0R4sYRDzlN2/vibyGtpINPbWcHI5MRpdoo/rtDC
-	 CKXb2s4IPwupD6rUtZtuT4m0GAsyhYNRP9BY8fWhKHArRf8pXucTMDGsOYo3Y5tRXlEOq
-	 UE/kudCfDfB9ihz+/J7jEH8aBRTjy5nmZ573VP80rIrc8FD98zdPGx6/6gZAoF8LXEA==
+	bh=JKndjGrSuGEbziLw5tCSNDD/V13ghyVPUS64K3V/JFE=;
+	b=ZfqCZzSJCnsFaMcx8MrQajRg6d36nwUXLGFWv0WrjjkPHenFrpJK2q4X6cJPsH+BVwae
+	 4gQb4aHp1Hmv8TeqEcyReczpgicG/tDq/a9tW3gQLNsCQHvgJAIxT1lzMRhe/iFYeyAjZ
+	 EpraaHEY1zLT2FYtPjUL2PvNk5HamnW56b9hJel/b8Qgg3UdhdGhl6vQarBArV8BlMuzh
+	 JGvt4arLNPNMOt9iFIfumS+exto1AetcLPnPnkpzIAsWtIpzzQodUFZHZ+SMlU/0HIUcD
+	 NFJFl0LGF4u5f8Tf8IzK3mUK4Uj+X1U8XYM2+gPw7oGJlcf+nwXvkJhcNUoeEpJr7Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=knjAXswt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ht7SYi3O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E267606A889;
-	Fri, 13 Nov 2026 16:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86234606A896;
+	Fri, 13 Nov 2026 16:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=knjAXswt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7181F000C4;
-	Fri, 13 Nov 2026 16:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ht7SYi3O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C141F000C5;
+	Fri, 13 Nov 2026 16:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585620;
-	bh=MPNV7POUJfttgLws5IZT//4PKBgoJaN288dIsLiMUsA=;
+	s=korg; t=1794585621;
+	bh=JKndjGrSuGEbziLw5tCSNDD/V13ghyVPUS64K3V/JFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=knjAXswtCm70hx7Q0WgC7TSMKChZ6R+LbehQLudwTAW3EhY26YGzJpP7BwJeUFAG7
-	 uO7RLHji924CwBVqPZ1hF0xt+tn6OZlecqFtb/aZB7h1JHARj8bppAboD4F0w7AC+a
-	 1c7ER8FBOJ7vvXvHlMlQSzTLf6uaLwnOKDU4UOuk=
+	b=ht7SYi3O761Bkw6TSGZ/Y1OJesSzLdF9YkeCCKDIZR89OWWct4vj4BsK4ASv5NvGq
+	 Bq0GcZHs05f1uoT0L/vgsQyZGrmQj0dZfGpKQuF73mXbAaXutKKpPwWAh5lCTxMzN4
+	 0rwELiIjnCvL+DOzPxAO2TjavRtVZO0T0YSdpPOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -52,9 +52,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 243/507] mm/cma: accept memory of multi-range CMA areas
-Date: Fri, 13 Nov 2026 10:49:07 -0500
-Message-ID: <20261113153802.822029713@linuxfoundation.org>
+Subject: [PATCH 7.3 244/507] mm/cma: accept memory of CMA areas reserved at a fixed address
+Date: Fri, 13 Nov 2026 10:49:08 -0500
+Message-ID: <20261113153802.852256255@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -78,45 +78,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 5d002001601a163b6c3500cdc098ff66c34f62d8 ]
+[ Upstream commit f8f9cbc34a309a388c052706f3329d1b52985aa3 ]
 
-Patch series "mm/cma: accept memory of CMA areas reserved with
-memblock_reserve()", v1.
+CMA areas allocated from memblock have their memory accepted by
+memblock_alloc_range_nid(), but areas reserved at a fixed address with
+memblock_reserve() are not.
 
-Pages of allocated CMA areas are released to the buddy allocator with
-__free_pages(), which does not check for unaccepted memory.
+If a fixed CMA area is requested by the cma=<size>@<base> command line
+parameter, it may be in regular RAM and on TDX and SEV-SNP guests it
+must be accepted.
 
-This usually works because memblock accepts the memory it allocates.
+Accept the memory of fixed CMA areas as well, so that all CMA areas are
+accepted regardless of how they were reserved.
 
-However, multi-range CMA areas, used by hugetlb_cma, and fixed CMA areas
-requested with cma=<size>@<base> are reserved with memblock_reserve() and
-their memory is never accepted.
-
-On TDX and SEV-SNP guests the first access to such a page is fatal.
-
-To ease the backporting, each case is addressed by a separate patch:
-- patch 1 accepts the memory of multi-range CMA areas
-- patch 2 does the same for the fixed CMA areas
-
-The second patch won't apply cleanly to 6.6 and 6.12, but I believe the
-stable team LLMs will take care of that :)
-
-This patch (of 2):
-
-On systems with unaccepted memory, memblock allocations accept the
-allocated range, but when cma_declare_contiguous_multi() uses open coded
-allocation of multiple ranges, it reserves them with memblock_reserve()
-and they are never accepted.
-
-These pages are released to the buddy allocator by cma_activate_area()
-with __free_pages() that does not check for unaccepted memory, so the
-first access to such a page in a TDX or SEV-SNP guest is fatal.
-
-Accept the memory of each range when it is reserved.
-
-Link: https://lore.kernel.org/20261029-cma-multi-v1-0-2cbced8b5cb7@kernel.org
-Link: https://lore.kernel.org/20261029-cma-multi-v1-1-2cbced8b5cb7@kernel.org
-Fixes: c009da4258f9 ("mm, cma: support multiple contiguous ranges, if requested")
+Link: https://lore.kernel.org/20261029-cma-multi-v1-2-2cbced8b5cb7@kernel.org
+Fixes: 75d090fd167a ("x86/tdx: Add unaccepted memory support")
 Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
@@ -135,18 +111,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 2 insertions(+)
 
 diff --git a/mm/cma.c b/mm/cma.c
-index a10ea37a261da..0035efb1130a5 100644
+index 0035efb1130a5..f61d52796f4ef 100644
 --- a/mm/cma.c
 +++ b/mm/cma.c
-@@ -678,6 +678,8 @@ int __init cma_declare_contiguous_multi(phys_addr_t total_size,
- 			break;
- 		}
+@@ -381,6 +381,8 @@ static int __init cma_fixed_reserve(phys_addr_t base, phys_addr_t size)
+ 		return -EBUSY;
+ 	}
  
-+		accept_memory(mlp->base, size);
++	accept_memory(base, size);
 +
- 		pr_debug("created region %d: %016llx - %016llx\n",
- 		    nr, (u64)mlp->base, (u64)mlp->base + size);
- 		cmrp = &cma->ranges[nr++];
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
