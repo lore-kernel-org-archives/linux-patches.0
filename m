@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591317;
-	b=voap7W8RtqCTpRlEVdRp9Q0vG3VahlVitBC8Ls36I3dsftRqWfIYR/GQ2B8z3zlhfPYi
-	 XbE/AskaAUREm4+PdmBvzeREk6BMVudV+fgawuPyWdx6y4ANNGCyrk9sQ9EJaSOPkkoBM
-	 9ah7tw6c12e3auJQLt6FnMjkiF1fabOcCpfMKurXtivKStI/n5UyFtFrbTqH8c7ePfUJw
-	 0lOW/I7NBLpohfNTo5fnmppdYCECyUDoxWFo8Z30/CYA/qYiPDB0idojbd1SC0x8tf7hq
-	 WtLAYBDvEpmP0eb3upFCYeP8NIwAbdr2M8MOsGXhZTTfysFbYAo7qIG+p15MMeoZwJA==
+	t=1794591318;
+	b=16dM5TwCUiS5RJannE4tq35KemDCZs9I3XjqwEkjoO0uWIN+Ki+uJi2/302Kh6ors+Hu
+	 9PP9R0Uz9DO+1CohtXrRwnwgad/KW7qR27J7CB7F/k6IvItF0oWv6kU91vbszMxPw2F23
+	 +IjCf7A3UsxrIC3/vqTBFC3aDA3s+3/xZ/EMuzHKXpc2fwLxMY00H5yXrkQzpmJvHd9i5
+	 mhfiGH1V9d+Td1GFGBFHjAcTUSDW3b6OMuMsx+wkCBk1KPwesJ0t0kYmaMryyhAbbctwL
+	 gxce8sb42OtovxXqz0pymNyDSOi24hvM1d8eCk7VvIFhXICS+VM+dHfsnXiP3XjNrug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591317;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5E4FLGd9sfN/eM8ysCrYCxJKmxiS4YWFGg38drWs0Uo=;
-	b=AG/E8eD3PhHuHUYtmSlBnLIqAiCILqVKOlkHlSj1WeqTE6Yn0u5abedRukPQKbk4XwSU
-	 C5olyecZ7OmK6Qi5hU6LYyhYu5L5eDfgoJTuQU8vfWXvmQ2+OXE5skxpVRdrnLlIl9IW5
-	 7yzfXtjUGx7gpbeoxRPve3Ax6MxWqmVLNViBhi064coXqMH4Td/oj7rSR/IQsSlzl9LdM
-	 lMHZvcyP1bxaDF641+3k3/Tw6TEhBM9+PWwwwa47qsi2WSaZ4FRoGkOL9qe48v4Xulhcj
-	 iYE78Ai01BAzOoYfSe0GpWW/KcBaMJJeNeTmVr8sjsYVB3Na3iROgBolLMWVSa8Gzyw==
+	bh=GOM628ooP10CnJRgFe+A9KLO07kVqkrwF9B6SvBu0b8=;
+	b=ITMOp7SA1cdfBxB6g6sbsKDhtUDX9DpZdbk5mtV94pqyYv8zmVApjIpUqkS3SFF2UXMx
+	 QMGHmc+5NCjDaKM07hTDNcN/FqANS2TaiB+sjh1ohFefEWzzRyoH2wJx031CG9/HQU6W6
+	 9G/Is5onps79R/0t9eJgnvNuluBLpHxOqM0Lio8TbMuMb/sajv6SzTKhTmq3BmXjJDvTd
+	 /ncxerWdi0sr6B/UAkey3Y0/KNCxL72GjUdBOS/BW+I8OthsnXzXnCqc72Z2nu4ZrTDJN
+	 icwAF91wDP+UYUs79ym8Mgu3n5+7nVdRWbBRjyfrOVppzHi/HWITJslNEK129AcMipA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1rS1yku;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIJZ9SD5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31189606B220;
-	Fri, 13 Nov 2026 17:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993AD606B20D;
+	Fri, 13 Nov 2026 17:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1rS1yku
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10551F000C5;
-	Fri, 13 Nov 2026 17:35:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIJZ9SD5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157F41F000C5;
+	Fri, 13 Nov 2026 17:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591317;
-	bh=5E4FLGd9sfN/eM8ysCrYCxJKmxiS4YWFGg38drWs0Uo=;
+	s=korg; t=1794591318;
+	bh=GOM628ooP10CnJRgFe+A9KLO07kVqkrwF9B6SvBu0b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I1rS1ykubRADqQoGeOhGYHDGZdhzMAH/Tqn4IKhn7jEsfxapSQAHJcSCU894sXwji
-	 TNfQGS3lG/7JNXOUi9q+3oGdAFJOpeDMlewQDWrqoXrtY1ha662fZwR6NFoxtxDsj0
-	 Tgzz+zRrJ0Ti0okdD9m02Q+a7c4VdjIdblRNs43A=
+	b=hIJZ9SD5Y3BQM8xk1I5vZyF9ggDc3TU0mRVX4MJda4rHvvyM5nt5bUux5icO70m7A
+	 FTvGqQTBPfl6OuqEsKgz3f94Smn9vK0X5siBCHaDKWKQ2sLGiOTz15nQ1tf/hJmwRE
+	 WjrmOBprSTicXQa/xNeJDL1rPA0lVnrz8wveykWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Matthias Goergens <matthias.goergens@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 389/670] x86/nmi: Ignore negative NMI handler durations
-Date: Fri, 13 Nov 2026 10:49:13 -0500
-Message-ID: <20261113153824.941099834@linuxfoundation.org>
+Subject: [PATCH 6.12 380/670] udf: fix preallocation discarding before an empty allocation extent
+Date: Fri, 13 Nov 2026 10:49:04 -0500
+Message-ID: <20261113153824.657130104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,72 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-[ Upstream commit ade63af6cfb7b3ca19ced28730fd6461e8d1d410 ]
+[ Upstream commit 0c52750caaaccee8b0e929450fe6538ec4985722 ]
 
-I am seeing NMI handlers in the Meta fleet reported as running for
-about 584 years. Over 30 days, 11 AMD and Intel machines logged 637
-such lines, for example:
+udf_discard_prealloc() finds the last extent of a file by peeking at
+the next one with udf_next_aext() and stopping when that returns 0.
+The peek reads into eloc and elen, and the code then uses them as the
+last extent.  But when udf_next_aext() returns 0 they hold no defined
+value: if the extent list ends in a continuation descriptor that leads
+to an empty allocation extent, they describe that continuation, i.e.
+the block of the empty allocation extent, one block long.
 
-  AMD EPYC 9D25 (family 0x1a, model 0x11, stepping 0x0):
-  [ 1650.616627] INFO: NMI handler (nmi_cpu_backtrace_handler.llvm.9643156322683129580) took too long to run: 18446744073709.551 msecs
+The kernel creates such lists itself: when udf_delete_aext() removes
+the only descriptor of the last allocation extent in a list, it leaves
+that allocation extent empty and the continuation to it in place.
 
-  Intel Xeon Platinum 8321HC (family 0x6, model 0x55, stepping 0xb):
-  [360448.230129] INFO: NMI handler (perf_event_nmi_handler) took too long to run: 18446744071018.936 msecs
+If the last extent is a preallocation, udf_discard_prealloc() deletes
+it with udf_delete_aext(), which finds the following allocation extent
+empty, so it also removes the continuation and frees that allocation
+extent's block.  udf_discard_prealloc() then frees eloc and elen: that
+block a second time, instead of the preallocated blocks.  On a space
+bitmap the preallocated blocks leak and the free block count drifts.
+On an unallocated space table the second free adds a second free
+extent for the same block, which is later handed out twice: fsx as run
+by generic/091 and generic/263 ends up with two parts of its test file
+in one block and reads back bad data.
 
-  Intel Xeon D-2191A (family 0x6, model 0x55, stepping 0x4):
-  [81787.188959] INFO: NMI handler (ghes_notify_nmi) took too long to run: 18446744073709.545 msecs
+Peek into separate variables, so that eloc and elen keep the last
+extent that udf_next_aext() returned with 1.
 
-nmi_handle() times each handler with two sched_clock() reads. When the
-second read is lower than the first, the u64 subtraction wraps, and
-nmi_check_duration() treats the result as a duration. In the three
-examples, the clock went back by less than 1 us, by 2.7 s and by about
-6 us.
-
-The wrapped value is also stored in action->max_duration. Every later
-real duration is smaller, so the handler is never reported again until
-the next boot.
-
-Whatever makes the clock read lower, a negative difference is not a
-duration, so return before it is stored or reported. A clock that steps
-forward is not covered, since that cannot be told from a real stall.
-
-A backwards clock is still worth knowing about, so print the size of
-the step once per boot. This uses pr_warn_once() rather than WARN, as a
-stack trace says nothing about the clock and panic_on_warn machines
-should not go down for it.
-
-Fixes: 2ab00456ea8a ("x86: Warn when NMI handlers take large amounts of time")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Fixes: cfe4c1b25dd6 ("udf: Fix preallocation discarding at indirect extent boundary")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261027-nmi_negative-v1-1-b436a005eb8a@debian.org
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://patch.msgid.link/480eccd1264a4cea5226fc36ed108931b2c403fb.1793349907.git.matthias.goergens@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/nmi.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/udf/truncate.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/nmi.c b/arch/x86/kernel/nmi.c
-index 9a95d00f14233..49b3cc215a6ac 100644
---- a/arch/x86/kernel/nmi.c
-+++ b/arch/x86/kernel/nmi.c
-@@ -120,6 +120,14 @@ static void nmi_check_duration(struct nmiaction *action, u64 duration)
+diff --git a/fs/udf/truncate.c b/fs/udf/truncate.c
+index da5a61306390c..85bbd6fa2a302 100644
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -124,8 +124,8 @@ void udf_discard_prealloc(struct inode *inode)
  {
- 	int remainder_ns, decimal_msecs;
+ 	struct extent_position epos = {};
+ 	struct extent_position prev_epos = {};
+-	struct kernel_lb_addr eloc;
+-	uint32_t elen;
++	struct kernel_lb_addr eloc, tmpeloc;
++	uint32_t elen, tmpelen;
+ 	uint64_t lbcount = 0;
+ 	int8_t etype = -1;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
+@@ -141,7 +141,8 @@ void udf_discard_prealloc(struct inode *inode)
  
-+	/* sched_clock() went backwards? */
-+	if ((s64)duration < 0) {
-+		pr_warn_once("NMI handler (%ps): sched_clock() went backwards by %lld ns on CPU%d\n",
-+			     action->handler, -(s64)duration,
-+			     smp_processor_id());
-+		return;
-+	}
-+
- 	if (duration < nmi_longest_ns || duration < action->max_duration)
- 		return;
- 
+ 	/* Find the last extent in the file */
+ 	while (1) {
+-		ret = udf_next_aext(inode, &epos, &eloc, &elen, &tmpetype, 0);
++		ret = udf_next_aext(inode, &epos, &tmpeloc, &tmpelen,
++				    &tmpetype, 0);
+ 		if (ret < 0)
+ 			goto out;
+ 		if (ret == 0)
 -- 
 2.53.0
 
