@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591525;
-	b=2AC2oV2faMmEApVO0k9Xplly3aEgJUf4T+n1WepHsju7FZ5XZdlbhnc3s8UMfZXUYZLT
-	 LulHxi/BS/3sfgGBhgINYG8k5GfHvnEunzTRmMiGm+/4zliRdrkOUNdNCCzqyC2g2X5gH
-	 R3Eh6ZYkkPmF3bt1GU9M8UyZkDATrFMAjR7Ht1Mf9C3vS9NsbikramzWyTUyPjAMhUtQY
-	 6DC7R5KVgrKhYm0GLAJGJv2mmnsA5zZ9Dw46mwhgJOZDuu1S8aBAx4Spdr4dvCSr/KtbP
-	 vddGBInKie1f4JXwCsfNGkAVkPPnb+nwRQhqriRFzYSlo0bOeu/WgQn8iZ3G7nQv7Jg==
+	t=1794591526;
+	b=WTxoyyKkAAvRETny5+R+Ku/RziOT3H6sGUWTNARiPVDNy6cRum1bF1sATulYfOq1wINQ
+	 v+7CWQqht3rN9tirVFrwpTTQvqN2G9tc3CzXCMyObIjgAoFB0cnz/F014LydF4uJB4jdC
+	 /qCy8is6PrTGz97QUgGD9swuUzH1freuh6JVfKakY+rEc6BPMQbXiTqgd2YoR9Y7scEo7
+	 dMGWbQdO5USZZebDnaW2Av39xoU9Mj95mOnKMg4Mzdug+RBhpdNVszYjtgLTAQ1fIIwgA
+	 tft3SPftTyNAwBBCbkM//pAr0DFtfBOujxpln9Q7O8IPagD2YwvKdmBc6lkcIn/J61w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591525;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591526;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RoUA1KIcSQAwTa7CT6jW7CGULkzHHuzu4P0dGeVEXQU=;
-	b=XTNtXqZoOfLSm5SCPUQot61YByw01oAdd6yFO/vOXv+/EwYLy1tNUdTuggZ/mgVGV2EH
-	 Z2yQlRBTQEH6dZvXJcif3qAxlmNPkdgU9V37Uy0DgjSc4WgCSX9EjiE30aTpJUhf04tA8
-	 mAx6pcDwM0bgqH69YAlEn9hcV1T4Yn7MUD9Haxezv3IWPfxqwLurEF6+L4Nm6GK5FI4mF
-	 gp+IcfTYanAhyx4b63gy/+MMAI2RUyeBnvX4uFw0WlV5KABIteBUQFu0ryEWNTH3DN3GW
-	 hccNvds4bagMblEnLYekqWQFt0k1RpVW6jdTXwa3OX5d+ly2GAvrL4KD6+V5qcbeprg==
+	bh=OpYZKo/4h0fwhbJsQ6j38lauiqcmzXGk3eamgLncaEw=;
+	b=m3/dX8xSabZDglPeG49oh+Ej1+Ai4inkVVRrXHO5zQW0NmgzTJh6RXyJ+Kpz1SJxnNJr
+	 GV5gm1jY1EFOlnX17MRBsAGYkDKejahKYhsTZwXcRFtNxWIzwLPI2I3FcW+h47V5g6Hio
+	 2JzYa46blz1z9Q/nv+Quxc0ERbcRfBxtLXoopXskramfhdScbhGR0rlO0utHRaKWRy4go
+	 +JjRNuVUbBDojGWkSaZnSOKcXtqA7YWOAfsbZpZtUsCTresV64Hdmg00WPG/wtz0LozoJ
+	 5tFWo0A4NewVMKEl25jwMxSNta8dIRsEsAoXOJj6cDuLH8i2jo5oBb1PdJoFZ30QPug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzCjHtqG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UvSx1FMT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D89606D49D;
-	Fri, 13 Nov 2026 17:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9ED7606D4B1;
+	Fri, 13 Nov 2026 17:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kzCjHtqG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D66F1F000C4;
-	Fri, 13 Nov 2026 17:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UvSx1FMT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663F81F000C4;
+	Fri, 13 Nov 2026 17:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591525;
-	bh=RoUA1KIcSQAwTa7CT6jW7CGULkzHHuzu4P0dGeVEXQU=;
+	s=korg; t=1794591526;
+	bh=OpYZKo/4h0fwhbJsQ6j38lauiqcmzXGk3eamgLncaEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kzCjHtqGmubqVtEn70O42F+fVxta3IaPUm3RenoQVRgihD5xmEFq5Fg03GWsBzLZl
-	 jUzfYFYEXHzNFvR0PVKqtDxauMYMeRc2rqcI2IlvPjcH0fny2igUhp1bEfG452zyIN
-	 AMZnQBiPmLP3hupa3LvgFXANjpzrhkFWKgs0JoGk=
+	b=UvSx1FMTTIxQTQR8Cb/a9tkTpZMDFYmoWyTIgZdA+7gZccF1WghbrraLYwZQuqwBl
+	 x1DIePIqNhQk7Q4UgKB4ynC2VteBMrwDnE66A98R5hFCbCp1cl1AineRd8bBJeY/vg
+	 HUKi/uwokLotW3FYttN6Eo2u+EdeCiNBwcH40KRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 583/670] ALSA: emux: Fix UAF of soundfont zones at note-on
-Date: Fri, 13 Nov 2026 10:52:27 -0500
-Message-ID: <20261113153831.595463116@linuxfoundation.org>
+Subject: [PATCH 6.12 584/670] ALSA: hda/hdmi: clamp num_cvts against cvt_nids[] in hdmi_read_pin_conn
+Date: Fri, 13 Nov 2026 10:52:28 -0500
+Message-ID: <20261113153831.632125766@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,79 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 34e3e04b8a1731a773797542f0781e99ce7cd755 ]
+[ Upstream commit 6cf3ab38b0d53d41f00fe594b2986849bdf994ae ]
 
-snd_emux_note_on() looks up the matching zones via
-snd_soundfont_search_zone(), which takes sflist->lock only during the
-lookup and returns the raw zone pointers after releasing it.  The
-caller then stores them in vp->zone without any protection.
-Meanwhile, a concurrent SNDRV_EMUX_IOCTL_REMOVE_LAST_SAMPLES ioctl may
-unlink and free those zones in snd_soundfont_remove_unlocked(); this
-leads to a use-after-free in snd_emux_note_on(), and later at
-accessing the cached vp->zone, e.g. in snd_emux_send_effect().
+hdmi_add_cvt() stores each converter's NID into the fixed-size
+spec->cvt_nids[] array (used only by the Intel Haswell pin-connection
+fixup), but only when spec->num_cvts is still within
+ARRAY_SIZE(cvt_nids); the num_cvts counter itself is incremented
+unconditionally regardless of whether the store happened. A codec
+that reports more converters than cvt_nids[] can hold therefore ends
+up with num_cvts > ARRAY_SIZE(cvt_nids).
 
-Fix it by holding sflist->lock in snd_emux_note_on() over the whole
-zone lookup and voice setup, and let snd_soundfont_search_zone()
-require the caller to hold the lock, instead.
-snd_soundfont_lock_preset() takes sflist->lock for setting
-presets_locked, so the removal path now syncs with the note-on finish.
+hdmi_read_pin_conn(), on the intel_hsw_fixup path, copies num_cvts
+elements from cvt_nids[] with memcpy(), so once num_cvts exceeds the
+array size this reads past cvt_nids[] and writes the resulting
+garbage NIDs into per_pin->mux_nids[].
 
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/bug/linux-697212bb-a434-4ff5-8778-25a84f5dad89
+Clamp the copy length to the actual size of cvt_nids[] instead of
+trusting num_cvts, which is also used unbounded as the size of the
+separate, dynamically-sized spec->cvts array and must not be
+truncated at the source.
+
+Fixes: bce0d2a80e42 ("ALSA: hda - Allow unlimited pins and converters in patch_hdmi.c")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261020101624.205638-1-tiwai@suse.de
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261008085122.9442-1-peter.ujfalusi@linux.intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: Applied the unchanged upstream hunk at the HDMI driver's older source location. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/synth/emux/emux_synth.c | 3 +++
- sound/synth/emux/soundfont.c  | 9 ++++++---
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ sound/pci/hda/patch_hdmi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/synth/emux/emux_synth.c b/sound/synth/emux/emux_synth.c
-index b3c8296840a56..537a7c47ef475 100644
---- a/sound/synth/emux/emux_synth.c
-+++ b/sound/synth/emux/emux_synth.c
-@@ -60,6 +60,9 @@ snd_emux_note_on(void *p, int note, int vel, struct snd_midi_channel *chan)
- 		return;
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index 8b68386e1ac94..c097fc844b18b 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1355,7 +1355,8 @@ static int hdmi_read_pin_conn(struct hda_codec *codec, int pin_idx)
+ 	snd_hda_set_dev_select(codec, pin_nid, dev_id);
  
- 	key = note; /* remember the original note */
-+
-+	/* hold sflist->lock for protecting against concurrent free */
-+	guard(spinlock_irqsave)(&emu->sflist->lock);
- 	nvoices = get_zone(emu, port, &note, vel, chan, table);
- 	if (! nvoices)
- 		return;
-diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
-index 18a919d1cdb64..ad4a0f262afa5 100644
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -1264,6 +1264,9 @@ delete_preset(struct snd_sf_list *sflist, struct snd_sf_zone *zp)
-  * The found zones are stored on 'table' array.  max_layers defines
-  * the maximum number of elements in this array.
-  * This function returns the number of found zones.  0 if not found.
-+ *
-+ * The caller must hold sflist->lock, and keep holding it as long as
-+ * the returned zones are accessed.
-  */
- int
- snd_soundfont_search_zone(struct snd_sf_list *sflist, int *notep, int vel,
-@@ -1273,11 +1276,11 @@ snd_soundfont_search_zone(struct snd_sf_list *sflist, int *notep, int vel,
- {
- 	int nvoices;
- 
--	/* this function is supposed to be called atomically,
--	 * so we check the lock.  if it's busy, just returns 0 to
-+	lockdep_assert_held(&sflist->lock);
-+
-+	/* if the presets are being modified, just returns 0 to
- 	 * tell the caller the busy state
- 	 */
--	guard(spinlock_irqsave)(&sflist->lock);
- 	if (sflist->presets_locked)
- 		return 0;
- 	nvoices = search_zones(sflist, notep, vel, preset, bank,
+ 	if (spec->intel_hsw_fixup) {
+-		conns = spec->num_cvts;
++		/* spec->cvt_nids[] only has ARRAY_SIZE(spec->cvt_nids) slots */
++		conns = min_t(int, spec->num_cvts, ARRAY_SIZE(spec->cvt_nids));
+ 		memcpy(per_pin->mux_nids, spec->cvt_nids,
+ 		       sizeof(hda_nid_t) * conns);
+ 	} else {
 -- 
 2.53.0
 
