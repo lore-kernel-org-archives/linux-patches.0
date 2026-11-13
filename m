@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585872;
-	b=cosl7r+peHMgD47ShUiUFWoHwvj9gP4haVeQa9ZSFT4CAIRR8d/sR+zudV9I6bfH3Goe
-	 OnxV3C8ljYWG7OCN3TpoAJD6/UAA+vqqUv9doxmIIAG4owcWyEu1qm8/Wsg0L1JJE7B3v
-	 nRJZLzVmtLAQR10WcndU5z1LfWf0DgHA8hpBr2me1kC99tfXteglHPKKmJw/kI3zVGQMl
-	 zF3UIfPEKWITjJHxfeUSvIsYr3zuoSt/e2zqsC9wpxxcrXQWALCkSy4+66c4ITjNUAy8C
-	 NFXNSYie52PkvurZjFSLkdVCZTDQkuEDam8Bz+dexx5gcZ3t/T34g/+THkoEYD3e4TA==
+	t=1794585875;
+	b=XSmwKqxjuoPE1fgZb8FkfCZUzxDA8UmTFwETd5E5gnBf3enL0HXS1AMLPSbaAdMn3JUz
+	 w0dR/CeDRb5Q0iJjESb8REdnHlItNRT6CmlWHnplYTmkPUgz4fGwhbICLWux1XP/08pwT
+	 xEOCXNAfComxW9l5jm74lxgkJbzsBjtPlhQdXMwmWaBmnr/HbN42mfF0UpvlWezKsYar4
+	 +77d5vu8Rv7sL8qK4YRh1O3zhM6NQtfUGXjQBne2siS5HiJXmWrTfWuekbsYH3k9/bCQs
+	 /cAFJ9HuvvWWC8MRa/GjJkQrHfELajlTmmaRBiid2gPoAQgPF3mxRc9Eibm/lR/wy/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585875;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nk+4udmTvBJj6MggHnIJ/1u4HaCdAJuUaEWnbiEHJ7M=;
-	b=vWCdHlch0yJfsOLzXBlap82fuGI6aaChtg7qNLHXV4LJd8Ju3/AmSnBWNRJpIx7MucwN
-	 7J5GpwxWucIXHgFzL6q8V4Imbe3x+xQXgW0xyDRwXmCUi5+BGPSgxTnq3ECFHEyn5FDEc
-	 OuppN9T5ymQCGs+DarQ/zyZgK2EJRg5KxRQltL3l5vYU6F8v+jEC4i/CiRLyQtkwnM7W6
-	 CGScSe8Tt/rqaKreQiJFWUKBtMGkCaagNy7R53Tv2pOdpVpH9kU2SRg80WisMEeYdEXX6
-	 SiwlllTQvTceUu43hfvmnkguf/wZIxWEmk32usKeursTCFlWMQcRpRoILj4Qo3NPL/A==
+	bh=UrcpM/6nSVqOtarxY+Vl8y6VdrMhiniA0jg6WnpEpqQ=;
+	b=0SS6PrRJgK6nI3uHergGQj8hnIthcANBQgWLwdmR0tolwpXFTM0nQ0TlyYghWzm+kM+U
+	 /keUkbCFzOllCgzUWECr+vnN5UyDT1ZYWDoZqZo2ayCenRyRgHPGgP10TjpV4ct6CJdT4
+	 JNighN6XiIGrTUpyWShYdxnq/OFUyCknK6w/aC0NrENessrIcXD1f0o8ZiS7HdyQM/03N
+	 cfs/03Rc3OSRM5rLjh99qNBpfDeNnbTtsWJ8Wz/6cSUbUuP02r7KsfC4aLbdij1HTgQC3
+	 BwmP8uHN+xZuvQrvumlNaAtXzcUVrQZbl9F7iycgK4fzfRW9w15G3rJUcDi8KndCfng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IG926vPK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uG8LCO3Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C58606EA8D;
-	Fri, 13 Nov 2026 16:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AEB606D2EE;
+	Fri, 13 Nov 2026 16:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IG926vPK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430EE1F000C4;
-	Fri, 13 Nov 2026 16:04:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uG8LCO3Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EDE1F000C6;
+	Fri, 13 Nov 2026 16:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585872;
-	bh=nk+4udmTvBJj6MggHnIJ/1u4HaCdAJuUaEWnbiEHJ7M=;
+	s=korg; t=1794585874;
+	bh=UrcpM/6nSVqOtarxY+Vl8y6VdrMhiniA0jg6WnpEpqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IG926vPKx9FHdQHn9p3m3/u1M8wjAegSx/bXdpGlx7qIaB69Ttid4bf35QwKEnZ4L
-	 5UPI3OqrC+vm67+JwNp+HnrJ83nroUOGL0fEadHHMkwwyoTFdT90lnREWWLzj0cWu/
-	 IkmYaQeTbHUn4Sxt9ecIk/9+F52oHUb147t18DF8=
+	b=uG8LCO3Yt+I0I68vJ0w99fm8HVht/k06CgztmJunuiKx+fi1kS7AktKVZAYHE8gcb
+	 G08YEwa90UClHRX2oC+Q8OIytoKK7byXfueiMQ1nAN/fkAU/d/V2tN9jCAqfn8STOV
+	 KwnClardsqw5MjM6ec0/+vxT7kRQRrZjC6eK98sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Ming Lin <chengminglin@mxic.com.tw>,
-	Michael Walle <mwalle@kernel.org>,
-	Russell Senior <russell@personaltelco.net>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 443/507] mtd: spi-nor: macronix: Restore fallback parameters for MX25L12805D
-Date: Fri, 13 Nov 2026 10:52:27 -0500
-Message-ID: <20261113153811.755398082@linuxfoundation.org>
+Subject: [PATCH 7.3 444/507] media: microchip-isc: store the unshifted PFE_CFG0 BPS value
+Date: Fri, 13 Nov 2026 10:52:28 -0500
+Message-ID: <20261113153811.786682547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,52 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Ming Lin <chengminglin@mxic.com.tw>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit 01739ccea21b69818dc071096a249e6f84a6b13d ]
+[ Upstream commit 14cbe597504a04c5c49342d0566438e2b438a948 ]
 
-In a previous effort to drop flash_info fields and rely on SFDP, the
-static size and no_sfdp_flags were removed from the MX25L12805D entry
-(JEDEC ID 0xc22018).
+pfe_cfg0_bps held a pre-shifted BPS value (ISC_PFE_CFG0_BPS_EIGHT was
+0x4 << 28) ORed straight into the register. The other format selectors
+like cfa_baycfg store the bare field value and position it at the write,
+so this one was inconsistent.
 
-At that time, the legacy MX25L12805D was already EOL and unavailable
-for physical testing. Verification was inadvertently performed using
-the newer MX25L12833F, which shares the same JEDEC ID but supports
-SFDP. As a result, the probe succeeded during testing, leading to
-the mistaken removal of the fallback parameters.
+Store the bare BPS value and apply it with FIELD_PREP() at the PFE_CFG0
+write, and fix the pfe_cfg0_bps comment to match. No functional change.
 
-Since the actual MX25L12805D lacks SFDP support entirely, it strictly
-requires these static parameters.
-
-Restore .size = SZ_16M and .no_sfdp_flags = SECT_4K to this entry
-to fix the probe failure for the legacy part.
-
-Fixes: 947c86e481a0 ("mtd: spi-nor: macronix: Drop the redundant flash info fields")
-Cc: stable@vger.kernel.org
-Signed-off-by: Cheng Ming Lin <chengminglin@mxic.com.tw>
-Reviewed-by: Michael Walle <mwalle@kernel.org>
-Tested-by: Russell Senior <russell@personaltelco.net>
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-[ sashal: Adjusted patch context to account for the absent mx25l12805d_4pp3b_fixups hook. ]
+Suggested-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Stable-dep-of: 6e9eaa3b9387 ("media: microchip-isc: fix WB offset and gain register field masking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/macronix.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/microchip/microchip-isc-base.c |  4 +++-
+ drivers/media/platform/microchip/microchip-isc-regs.h | 10 +++++-----
+ drivers/media/platform/microchip/microchip-isc.h      |  4 +++-
+ 3 files changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/macronix.c b/drivers/mtd/spi-nor/macronix.c
-index e97f5cbd9aad2..c854a1163a475 100644
---- a/drivers/mtd/spi-nor/macronix.c
-+++ b/drivers/mtd/spi-nor/macronix.c
-@@ -132,7 +132,9 @@ static const struct flash_info macronix_nor_parts[] = {
- 	}, {
- 		/* MX25L12805D */
- 		.id = SNOR_ID(0xc2, 0x20, 0x18),
-+		.size = SZ_16M,
- 		.flags = SPI_NOR_HAS_LOCK | SPI_NOR_4BIT_BP,
-+		.no_sfdp_flags = SECT_4K,
- 	}, {
- 		/* MX25L25635E, MX25L25645G */
- 		.id = SNOR_ID(0xc2, 0x20, 0x19),
+diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
+index 21d108eb93c7b..e5ecf6ffd24a8 100644
+--- a/drivers/media/platform/microchip/microchip-isc-base.c
++++ b/drivers/media/platform/microchip/microchip-isc-base.c
+@@ -8,6 +8,7 @@
+  * Author: Eugen Hristev <eugen.hristev@microchip.com>
+  *
+  */
++#include <linux/bitfield.h>
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+ #include <linux/math64.h>
+@@ -291,7 +292,8 @@ static int isc_configure(struct isc_device *isc)
+ 	struct isc_subdev_entity *subdev = isc->current_subdev;
+ 	int ret;
+ 
+-	pfe_cfg0 = isc->config.sd_format->pfe_cfg0_bps;
++	pfe_cfg0 = FIELD_PREP(ISC_PFE_CFG0_BPS_MASK,
++			      isc->config.sd_format->pfe_cfg0_bps);
+ 	pipeline = isc->config.bits_pipeline;
+ 
+ 	dcfg = isc->config.dcfg_imode | isc->dcfg;
+diff --git a/drivers/media/platform/microchip/microchip-isc-regs.h b/drivers/media/platform/microchip/microchip-isc-regs.h
+index e77e1d9a1db87..185ef0eab7ad3 100644
+--- a/drivers/media/platform/microchip/microchip-isc-regs.h
++++ b/drivers/media/platform/microchip/microchip-isc-regs.h
+@@ -31,11 +31,11 @@
+ #define ISC_PFE_CFG0_MODE_PROGRESSIVE   (0x0 << 4)
+ #define ISC_PFE_CFG0_MODE_MASK          GENMASK(6, 4)
+ 
+-#define ISC_PFE_CFG0_BPS_EIGHT  (0x4 << 28)
+-#define ISC_PFG_CFG0_BPS_NINE   (0x3 << 28)
+-#define ISC_PFG_CFG0_BPS_TEN    (0x2 << 28)
+-#define ISC_PFG_CFG0_BPS_ELEVEN (0x1 << 28)
+-#define ISC_PFG_CFG0_BPS_TWELVE (0x0 << 28)
++#define ISC_PFE_CFG0_BPS_EIGHT  0x4
++#define ISC_PFG_CFG0_BPS_NINE   0x3
++#define ISC_PFG_CFG0_BPS_TEN    0x2
++#define ISC_PFG_CFG0_BPS_ELEVEN 0x1
++#define ISC_PFG_CFG0_BPS_TWELVE 0x0
+ #define ISC_PFE_CFG0_BPS_MASK   GENMASK(30, 28)
+ 
+ #define ISC_PFE_CFG0_COLEN	BIT(12)
+diff --git a/drivers/media/platform/microchip/microchip-isc.h b/drivers/media/platform/microchip/microchip-isc.h
+index f5e322c2e36bc..d7bcd74efff92 100644
+--- a/drivers/media/platform/microchip/microchip-isc.h
++++ b/drivers/media/platform/microchip/microchip-isc.h
+@@ -62,7 +62,9 @@ struct isc_subdev_entity {
+  * @mbus_code:		V4L2 media bus format code.
+  * @cfa_baycfg:		If this format is RAW BAYER, indicate the type of bayer.
+ 			this is either BGBG, RGRG, etc.
+- * @pfe_cfg0_bps:	Number of hardware data lines connected to the ISC
++ * @pfe_cfg0_bps:	ISC_PFE_CFG0 BPS field value (e.g. ISC_PFE_CFG0_BPS_EIGHT),
++			written into PFE_CFG0 with FIELD_PREP(ISC_PFE_CFG0_BPS_MASK)
++			at configure time.
+  * @raw:		If the format is raw bayer.
+  */
+ 
 -- 
 2.53.0
 
