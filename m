@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591276;
-	b=VlHzi3kWqG3pLAsnJiFb2n+3lUC9dGSe2s+8Oc84c9KQZn0FIkyMO8USSijdpJLemnCu
-	 4KolLbgKmoF90CFpsxcVTW7g8SuYfhZmMOSrQNNZpnFnvGLQm/z4rAiafqh4XRLsnQQmA
-	 nVisXEAFH4g69HlZm6XQLP+gqCZYV/BQwV5JqKwNzq+9npwr282qWruaf+G8rcPdEo6Dw
-	 oz1wbGAVn5sAcnJ64pYyc7yMsEABONXN5TTapZDKiFQny3MdnLsMdeK6UQY3gHMpbPYdq
-	 pCQdyz8isOvU8x+pkvtv2Hwa9jSPDvxwHY8HbZqK69Z+amdEyfWSts5wvrNHe879+Eg==
+	t=1794591277;
+	b=K1uFfUiOLJZI4EqLlQ0h3OVxMwfuT+3U/98HTI+G4+ErAt83mdOVGSaa7ErBkVsigGBJ
+	 thQBKpMyxLwHWuk2GfBtZUG8jpYQSeQo5WneeOjMFCfE5UEtPmusRPuj1GP5Ju6X2108f
+	 uFxGOjWVV0xKuHX51iPHQLhJ6lC2Fmm4PUKviqz95mvyUmvQym84t+2xxrIIAt7ScH+bq
+	 xq8JWHkFr8wKy5RajMzLokFKJmuSQTsKLusiajJi/sEXb1AVTkGRAsXowb0VCBrXJyPJf
+	 YaI+TEO4CiTwt7KpT0ObS+qQbsnpFsKUOy7R5WI5xE4ZhZUX7CwkKnblYGS/18R0zeg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591277;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Wh32q83FYCVTG5JHMhLqLCLAXMPyUYxbZklNPOHf3Q4=;
-	b=r80Z33fAIjwOInk6+TYtqxHBYHBfAzAxMgpI53J7cM/PPAlzokVbt0hIzD8KDTJxgfkH
-	 uZIlCeeg7v6Hoh5w3GiFnXyGkjzkuPcILzn94eKVKT/EwNfEeZetyAuh+Rqma6M2j4zTY
-	 J2vSTOVsZMlL4euqya9z6tAQMyKTYy7dORdvQ+Dr/f1QDYOszhmhTmDNwen3O1X9gtMHR
-	 h3qNEt8u6aBcBN0OAdHl8cNOzkbSNwKsu38h6xq5/VggNoznnI+hlXVCeUNEtnbDdYFK/
-	 Jm1yaaWTwlPMsDxRoVSrE2hbzN6XGUI4CsLgecQFR9Xh7YxZm39PlRexKFDljJ2StDw==
+	bh=wAaEF+00zyJBpfZu2q2HCKKN+7uai37GR1Wv/fu32oI=;
+	b=LC20NqsQ0CfA2XYQ7CWnjrm5ohdZkPYcxDIyIIkxEynY5CagYZkgTB36rBusHF2nzN5G
+	 DmNO1wXO/XNQ7/e7H/MpCi/yK++7jdVEBNng8vwf2SeiGN+JJtsbhPlJnXZPdVadqGuoQ
+	 YBNTYjD42n4G+uiPmNH3GUG7IwqKXc+UFOf/iKytRoP5kJQRQybeK5kfeqE3pEZMB4YcT
+	 CkbikE+YdzVZlgvW2JhjjrxG9eRe4b1pMrLPXJmq1hILI80hSD1R8HAAflhzhoWFOXgjQ
+	 zYyyguABFQD7Cu1BRbytX26s7JOIoOIp6eVs306ps9Xd/ZpMlEsfqY2PMUOsnS+6mCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XTGpPZj/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lir5+0oG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC7D6076FB4;
-	Fri, 13 Nov 2026 17:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B426076FBD;
+	Fri, 13 Nov 2026 17:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTGpPZj/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D191F000C4;
-	Fri, 13 Nov 2026 17:34:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lir5+0oG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1C31F000C4;
+	Fri, 13 Nov 2026 17:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591276;
-	bh=Wh32q83FYCVTG5JHMhLqLCLAXMPyUYxbZklNPOHf3Q4=;
+	s=korg; t=1794591277;
+	bh=wAaEF+00zyJBpfZu2q2HCKKN+7uai37GR1Wv/fu32oI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XTGpPZj/yXMhmfGftstVcJqRTecSMBPEy1/Ji2wXZom2+rQGl2/NYNyzWQ8gu2Cqf
-	 roVCG4J+7ZyKshYraW5+eDZYa8tJt72NZIWBJPtOEd6ViZW6OyYMjwKH1EblFTbmZX
-	 XqY1jZmVw3c11Y2E+ZzLinYycaX7RVy1SwcwZoss=
+	b=Lir5+0oGuG0Ijt0MT5EdnyMRhMUmIuO77ip/EtGPfFmP19vSZ4YKt+0OnM0uI3wSZ
+	 CA8Cd2LJwZMf90qB9z8+D4FiKx4FgzbNLzb2E8MzwpU0OxeDMbRwnD1A3K/WJXfzP7
+	 NaprqO+qMNW6nQIMzzFmGQ7SlabjFkDyvO2ZTH+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
 	Breno Leitao <leitao@debian.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 398/670] arm64: sdei: Run the event handler on the kernel vectors
-Date: Fri, 13 Nov 2026 10:49:22 -0500
-Message-ID: <20261113153825.242014678@linuxfoundation.org>
+Subject: [PATCH 6.12 399/670] arm64: sdei: Preserve the interrupted contexts exception registers
+Date: Fri, 13 Nov 2026 10:49:23 -0500
+Message-ID: <20261113153825.276360843@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,140 +71,184 @@ Content-Transfer-Encoding: 8bit
 
 From: Kiryl Shutsemau (Meta) <kas@kernel.org>
 
-[ Upstream commit 9bf6ee7952c7ee151c30e0fffcfc61b58127c899 ]
+[ Upstream commit 58c1eb84e97701c583605ba2fd553b69afba2245 ]
 
-With KPTI, VBAR_EL1 holds the trampoline vectors from the return to EL0
-until the next exception from EL0 maps the kernel and installs the
-kernel vectors. The trampoline vectors only handle exceptions from EL0;
-their current-EL half is zero-filled.
+An SDEI event is dispatched by firmware regardless of PSTATE.DAIF, so it
+can interrupt the kernel where the exception registers are live:
 
-An SDEI event is dispatched regardless of PSTATE.DAIF, so it lands there
-whenever the CPU is in user space. The SDEI entry trampoline maps the
-kernel but leaves VBAR_EL1 alone. An exception taken by the handler then
-executes the zeros, takes an undefined instruction exception to the same
-vector, and loops there forever. The event never completes and the CPU
-is lost; RCU stall reports are the first sign of it.
+ - exception entry, before kernel_entry has saved ELR_EL1/SPSR_EL1 and
+   before the C handler has read ESR_EL1/FAR_EL1;
+ - exception return, after kernel_exit has loaded ELR_EL1/SPSR_EL1 and
+   before the ERET.
 
-RAS notifications land in user space whenever a task consumes the
-error, and NMI backtraces land wherever the CPU happens to be. The GHES
-handler takes no exception on its own, but any exception in the handler
-path does it: a WARN, a kprobe hit, or a fault fixed up by a _nofault()
-accessor.
+An IRQ or pseudo-NMI cannot arrive there with PSTATE.I set. Firmware
+saves only x0-x17, PC and PSTATE around an SDEI event, so a synchronous
+exception taken by the handler overwrites the interrupted context's
+ELR, SPSR, ESR and FAR. do_sdei_event() only notices that ELR changed,
+and warns.
 
-Install the kernel vectors in __sdei_handler() when VBAR_EL1 holds the
-trampoline vectors, and restore it before returning to firmware. The
-switch covers irqentry_nmi_enter() and irqentry_nmi_exit() too, as Usama
-Arif pointed out: their tracepoints and context tracking WARNs can take
-an exception as well.
+The interrupted context then carries on with the handler's state. A
+task interrupted on its way into the kernel can be sent SIGILL for the
+handler's kernel data abort. A task interrupted on its way back to user
+space ERETs to EL1, at the handler's fixup address, with user registers
+loaded.
 
-The IRQ-like resume into user space must still go through the
-trampoline to map the kernel. do_sdei_event() takes the interrupted
-VBAR_EL1 and keeps basing the resume address on it.
+With SDEI delivering NMI backtraces, this happens in normal operation.
+The handler runs show_regs(), which reads through possibly-NULL pointers
+with the _nofault() accessors. print_worker_info() faults this way for a
+kworker that is not running a work item, and a single sysrq-l warned
+once per such kworker.
 
-Fixes: 79e9aa59dc29 ("arm64: sdei: Add trampoline code for remapping the kernel")
+Save ELR, SPSR, ESR and FAR in __sdei_handler() before
+irqentry_nmi_enter(), which can take an exception too, and restore them
+after irqentry_nmi_exit().
+
+Once they are restored, a nested exception is harmless if its handler is
+safe in NMI context. That holds for EL1 data aborts on translation,
+permission and access-flag faults, which never take the mmap lock in NMI
+context, and for BRK. Warn once, with the syndrome, about any other
+exception class.
+
+Fixes: f5df26961853 ("arm64: kernel: Add arch-specific SDEI entry code and CPU masking")
 Cc: stable@vger.kernel.org
 Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
 Tested-by: Breno Leitao <leitao@debian.org>
-[catalin.marinas@arm.com: use raw_cpu_read() for this_cpu_vector]
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 [ kas: keep arm64_enter_nmi()/arm64_exit_nmi() in __sdei_handler() ]
 Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/sdei.h    |  3 ++-
- arch/arm64/kernel/entry-common.c | 21 ++++++++++++++++++++-
- arch/arm64/kernel/sdei.c         |  6 ++++--
- 3 files changed, 26 insertions(+), 4 deletions(-)
+ arch/arm64/kernel/entry-common.c | 21 ++++++++++++-
+ arch/arm64/kernel/sdei.c         | 53 ++++++++++++++++++++++++++------
+ 2 files changed, 64 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/include/asm/sdei.h b/arch/arm64/include/asm/sdei.h
-index 484cb6972e99a..3b689185f3715 100644
---- a/arch/arm64/include/asm/sdei.h
-+++ b/arch/arm64/include/asm/sdei.h
-@@ -44,7 +44,8 @@ asmlinkage unsigned long __sdei_handler(struct pt_regs *regs,
- 					struct sdei_registered_event *arg);
- 
- unsigned long do_sdei_event(struct pt_regs *regs,
--			    struct sdei_registered_event *arg);
-+			    struct sdei_registered_event *arg,
-+			    unsigned long vbar);
- 
- unsigned long sdei_arch_get_entry_point(int conduit);
- #define sdei_arch_get_entry_point(x)	sdei_arch_get_entry_point(x)
 diff --git a/arch/arm64/kernel/entry-common.c b/arch/arm64/kernel/entry-common.c
-index ea3876d99c2ec..8539e75a2b7ea 100644
+index 8539e75a2b7ea..4033ee7005a4a 100644
 --- a/arch/arm64/kernel/entry-common.c
 +++ b/arch/arm64/kernel/entry-common.c
-@@ -27,6 +27,7 @@
- #include <asm/stacktrace.h>
- #include <asm/sysreg.h>
- #include <asm/system_misc.h>
-+#include <asm/vectors.h>
- 
- /*
-  * Handle IRQ/context state management when entering from kernel mode.
-@@ -1087,6 +1088,7 @@ asmlinkage void noinstr __noreturn handle_bad_stack(struct pt_regs *regs)
+@@ -1088,7 +1088,7 @@ asmlinkage void noinstr __noreturn handle_bad_stack(struct pt_regs *regs)
  asmlinkage noinstr unsigned long
  __sdei_handler(struct pt_regs *regs, struct sdei_registered_event *arg)
  {
-+	unsigned long vbar;
+-	unsigned long vbar;
++	unsigned long elr, spsr, esr, far, vbar;
  	unsigned long ret;
  
  	/*
-@@ -1111,10 +1113,27 @@ __sdei_handler(struct pt_regs *regs, struct sdei_registered_event *arg)
+@@ -1113,6 +1113,17 @@ __sdei_handler(struct pt_regs *regs, struct sdei_registered_event *arg)
  	else if (cpu_has_pan())
  		set_pstate_pan(0);
  
 +	/*
-+	 * With KPTI, VBAR_EL1 holds the trampoline vectors from the return to
-+	 * EL0 until the next exception from EL0 maps the kernel. They only
-+	 * handle exceptions from EL0: an exception taken here would run their
-+	 * empty current-EL half and never come back. Switch to the kernel
-+	 * vectors. The IRQ-like resume keeps using the interrupted VBAR, so it
-+	 * still goes through the trampoline.
++	 * Nothing saved the interrupted context's exception registers on the
++	 * way in, and it may be in the middle of exception entry or return
++	 * (SDEI ignores DAIF). Save them before anything can take an exception
++	 * and overwrite them.
 +	 */
-+	vbar = read_sysreg(vbar_el1);
-+	if (arm64_kernel_unmapped_at_el0() &&
-+	    vbar == (unsigned long)raw_cpu_read(this_cpu_vector)) {
-+		write_sysreg((unsigned long)vectors, vbar_el1);
-+		isb();
-+	}
++	elr = read_sysreg(elr_el1);
++	spsr = read_sysreg(spsr_el1);
++	esr = read_sysreg(esr_el1);
++	far = read_sysreg(far_el1);
 +
- 	arm64_enter_nmi(regs);
--	ret = do_sdei_event(regs, arg);
-+	ret = do_sdei_event(regs, arg, vbar);
+ 	/*
+ 	 * With KPTI, VBAR_EL1 holds the trampoline vectors from the return to
+ 	 * EL0 until the next exception from EL0 maps the kernel. They only
+@@ -1132,6 +1143,14 @@ __sdei_handler(struct pt_regs *regs, struct sdei_registered_event *arg)
+ 	ret = do_sdei_event(regs, arg, vbar);
  	arm64_exit_nmi(regs);
  
-+	write_sysreg(vbar, vbar_el1);
-+
++	/*
++	 * Put them back unconditionally. An unchanged ELR does not rule out a
++	 * nested exception: one may have returned to the same address.
++	 */
++	write_sysreg(elr, elr_el1);
++	write_sysreg(spsr, spsr_el1);
++	write_sysreg(esr, esr_el1);
++	write_sysreg(far, far_el1);
+ 	write_sysreg(vbar, vbar_el1);
+ 
  	return ret;
- }
- #endif /* CONFIG_ARM_SDE_INTERFACE */
 diff --git a/arch/arm64/kernel/sdei.c b/arch/arm64/kernel/sdei.c
-index 255d12f881c26..c867baa9f9f64 100644
+index c867baa9f9f64..a6d78ceb1364d 100644
 --- a/arch/arm64/kernel/sdei.c
 +++ b/arch/arm64/kernel/sdei.c
-@@ -208,16 +208,18 @@ unsigned long sdei_arch_get_entry_point(int conduit)
+@@ -203,6 +203,31 @@ unsigned long sdei_arch_get_entry_point(int conduit)
+ 	return 0;
+ }
+ 
++/*
++ * Exceptions an SDEI handler may take without harm once __sdei_handler() has
++ * restored the interrupted context's exception registers. Their handlers are
++ * safe in NMI context:
++ *  - EL1 data aborts on translation, permission and access-flag faults:
++ *    faulthandler_disabled() is true in NMI context, so do_page_fault() never
++ *    takes the mmap lock. This covers the _nofault() accessors used by the
++ *    generic dump_stack()/show_regs() code (e.g. print_worker_info()).
++ *  - BRK: kprobes, WARN/BUG, kCFI and UBSAN traps, all NMI-capable.
++ * Anything else taken at EL1 is fatal on its own, or unexpected here.
++ */
++static bool sdei_nested_exception_ok(unsigned long esr)
++{
++	switch (ESR_ELx_EC(esr)) {
++	case ESR_ELx_EC_DABT_CUR:
++		return esr_fsc_is_translation_fault(esr) ||
++		       esr_fsc_is_permission_fault(esr) ||
++		       esr_fsc_is_access_flag_fault(esr);
++	case ESR_ELx_EC_BRK64:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ /*
+  * do_sdei_event() returns one of:
   *  SDEI_EV_HANDLED -  success, return to the interrupted context.
-  *  SDEI_EV_FAILED  -  failure, return this error code to firmare.
-  *  virtual-address -  success, return to this address.
-+ *
-+ * vbar is the interrupted context's VBAR_EL1, for the IRQ-like resume.
-  */
- unsigned long __kprobes do_sdei_event(struct pt_regs *regs,
--				      struct sdei_registered_event *arg)
-+				      struct sdei_registered_event *arg,
-+				      unsigned long vbar)
- {
- 	u32 mode;
+@@ -219,6 +244,7 @@ unsigned long __kprobes do_sdei_event(struct pt_regs *regs,
  	int i, err = 0;
  	int clobbered_registers = 4;
  	u64 elr = read_sysreg(elr_el1);
++	u64 nested_elr, nested_esr, nested_far;
  	u32 kernel_mode = read_sysreg(CurrentEL) | 1;	/* +SPSel */
--	unsigned long vbar = read_sysreg(vbar_el1);
  
  	if (arm64_kernel_unmapped_at_el0())
- 		clobbered_registers++;
+@@ -231,18 +257,27 @@ unsigned long __kprobes do_sdei_event(struct pt_regs *regs,
+ 	}
+ 
+ 	err = sdei_event_handler(regs, arg);
+-	if (err)
+-		return SDEI_EV_FAILED;
+ 
+-	if (elr != read_sysreg(elr_el1)) {
+-		/*
+-		 * We took a synchronous exception from the SDEI handler.
+-		 * This could deadlock, and if you interrupt KVM it will
+-		 * hyp-panic instead.
+-		 */
+-		pr_warn("unsafe: exception during handler\n");
++	/*
++	 * A synchronous exception taken by the handler has overwritten the
++	 * exception registers; __sdei_handler() puts them back. Only the last
++	 * one's syndrome survives; report it if it is not one known to be
++	 * harmless.
++	 *
++	 * If the event interrupted a KVM world switch, VBAR points at the KVM
++	 * hyp vectors and any such exception is a hyp panic instead.
++	 */
++	nested_elr = read_sysreg(elr_el1);
++	nested_esr = read_sysreg(esr_el1);
++	nested_far = read_sysreg(far_el1);
++	if (nested_elr != elr && !sdei_nested_exception_ok(nested_esr)) {
++		pr_warn_once("unexpected exception during handler: ESR %#llx FAR %#llx near %pS\n",
++			     nested_esr, nested_far, (void *)nested_elr);
+ 	}
+ 
++	if (err)
++		return SDEI_EV_FAILED;
++
+ 	mode = regs->pstate & (PSR_MODE32_BIT | PSR_MODE_MASK);
+ 
+ 	/*
 -- 
 2.53.0
 
