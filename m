@@ -1,58 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590531;
-	b=sE/f6YRBIc0Gn8mNi8iwW52SOjrZcd8R0nG2OpcBzwVjfzo2MnEjW3zZWlkVybH1kNqf
-	 Or/qNuT+2+FafMoTdulglIF1UtlerGbYVIO5edf2gG3cOkb+vOQHLIrLKLODfFm+gJklC
-	 2SnCIFcwcWafKrDgFqZMHeCvtnDNGCr7ahOHBocQ7oN1FI7R6C+Y4ZNNKLll3wu6rZKEq
-	 r4g+6aej3ccQoO4fUFDD1ZCdFryDl8GjvOJEJFzyg9S0WUATjq5PqMgxZ9ivRXrHPWXjl
-	 3ikasZzoKh3cThAWJo6M9hIKxZuC3L6W/kj3VpZTCEGkM24RlMWH5HNxx8jmFWvhwbg==
+	t=1794590532;
+	b=S3kVldQhi/L/KRRF5R6AI8sOlvW4jzwpJqpXyfb+fvSN9WYWr0TBy02UemRnU+3BCX8x
+	 wWV+4YS8MwXYRL23OrPFU0imE5wReO6fAFP49IhkFrIdo60b/aKQ3cSirP+jqiFdqVrAA
+	 5RemoQ4R4peO9aKVu9PTuPuNX6//mu6one5eC/bNs7kQ1gtLJa/gq+mctg/HQQoEaUP+4
+	 H268j0+RZT66YH0aUDe3o5fjthxqDYE6h2g6eFHwgjNX6SHHLxf8x+eWLAblRBmSsPrH3
+	 6hv0cNMlVBMecpj2DxpHi1aL4L8SSMxjrjdzB+wAk0P1zMf3dqkKzbhcb4Lg1Kpbxhg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p5gGp4UT3iM6rBHZ0QiuoayoE+df9DyHvKKloUPtEE4=;
-	b=N15VGTNtTx2eFe/yggHZqUsreQVsJQkI1qzbQHlJ0ol+d7OJBn0K/OdTwoLT13Xpb8V1
-	 d2nrZX081eSwcv/TkdxFNwUpgRXEw6R6CgYfsPZvB9axFHYVGFF3B8wbw3Q3TYR75Gnuf
-	 UVAPhFFNcmBIL0NRt5L8NUGSIzVnEgQf7PilR/s7lsfAtdOy+Y1CczashXS5rvm+iW/MJ
-	 yOBR5u3NwhieecAIZLvRGJrI6TJO7qECRnrd/GWjtsAcwCtLg9PGyyDXPXqlp8qnKjnag
-	 AEP1y9TC+oXzccWcqDEIMqBmgZK+4KHGD220sMcNb1cUuYM5lAg05SyD8cZ4GoItf+w==
+	bh=WXzuUQl3SPiNHRrG7JEx7t6ylwOZQJvxSzAxsh5Cxyo=;
+	b=pKWsPs5wYBAvU6c9jmELtME2k8BpIVPNo45R3U9H1ldPNc0YDLSHhAlkDb+jYTIC7HFH
+	 ar2Zb2B1On0ohn82ZZcq+1eCoQss3Crf8f/cSYCFA8EhzTeQ41RR7/gsxqQcfjp7/v7o6
+	 cD9/RayejN2k7hwR+lGJyuqC6D/bkkZ2gTArxuydHi1WesMYd7kkZF3C+FVUXty2kE8QH
+	 L6jjn73STJlz5PL+X8J1b3Y/JC+VUmpUssPyumAFE9P0iq3HbEO3cOetyeq6ZhasBocJe
+	 oK61F14SZgzj8pmfsx9CNwKU+DVpEHZK+wX99cHWjf2v8dMddxrHotMa7PmOMscoxMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDizGnaB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DOIRvhcS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43F43606B83C;
-	Fri, 13 Nov 2026 17:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CF2606B83C;
+	Fri, 13 Nov 2026 17:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDizGnaB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADE11F000C8;
-	Fri, 13 Nov 2026 17:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DOIRvhcS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264E11F000C8;
+	Fri, 13 Nov 2026 17:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590531;
-	bh=p5gGp4UT3iM6rBHZ0QiuoayoE+df9DyHvKKloUPtEE4=;
+	s=korg; t=1794590532;
+	bh=WXzuUQl3SPiNHRrG7JEx7t6ylwOZQJvxSzAxsh5Cxyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wDizGnaBoxdiNPbT9O2cM9Zt1vawS+pkedcu1FWqgsqXSsPNDu5G4xt7X1I20Q/sg
-	 Av7wUpAmsU+fkz4dhzqbowlVxtje7vkDwIKzyB3Y3AH1o4pS942w35Y6idyJh4aIVf
-	 GOqv7yfGC9BkIAAvWs+JDxAQb7uZDXD1ZEGOU+xU=
+	b=DOIRvhcS9n03ob10OEUMxB4kVXZAueGd8xMbiCbBvWcNlVyfVyqveFgkPunadKeoR
+	 SQfpDwn+fUEboVhmWtDf+lmUrwIDwaauCME40HlxHl+032WGGMUizboUqOpTVjnUFI
+	 Hvp1ugKw9bepHNBQMhn7I4F5H+1poSwYMnHzAKJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Thomas Huth <thuth@redhat.com>,
-	Breno Leitao <leitao@debian.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Baoquan He <bhe@redhat.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 456/686] arm64: kexec_file: Fix elf_headers memory leak in retry loop
-Date: Fri, 13 Nov 2026 10:49:49 -0500
-Message-ID: <20261113153836.322178481@linuxfoundation.org>
+Subject: [PATCH 6.18 474/686] batman-adv: tt: send ROAM_ADV on each roamed back client
+Date: Fri, 13 Nov 2026 10:50:07 -0500
+Message-ID: <20261113153836.996513473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -74,45 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit ac302aea3d824ccc99f29b8e499c365cb9a684a9 ]
+commit aff4d5d10f2dcb4a9b604e27414dafa1d51b6406 upstream.
 
-A retry allocates new elf headers and overwrites image->elf_headers,
-leaking the previous buffer.
+When a ROAMING_ADV is received for an announced local client,
+batadv_roam_tvlv_unicast_handler_v1() creates a global entry with the
+BATADV_TT_CLIENT_ROAM flag set.
 
-Free it before assigning.
+If the client sends a frame again before the next TTVN commit,
+batadv_tt_local_add_roam() is expected to announce this return via a
+ROAM_ADV frame. But this doesn't happen because the global entry (created
+by the first ROAMING_ADV) carries BATADV_TT_CLIENT_ROAM until the new
+originator announces the client.
 
-Cc: Will Deacon <will@kernel.org>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Breno Leitao <leitao@debian.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Yeoreum Yun <yeoreum.yun@arm.com>
-Cc: Baoquan He <bhe@redhat.com>
+Let batadv_tt_local_add_roam() always handle a roamed back client -
+independent of the ROAM flag of the global entry:
+
+* trigger sending of the ROAM_ADV frame(s)
+* remove the (with the roaming) associated global entry
+
 Cc: stable@vger.kernel.org
-Fixes: 108aa503657e ("arm64: kexec_file: try more regions if loading segments fails")
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-[catalin.marinas@arm.com: drop the redundant NULL check before vfree()]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
+[ adjust code still in batadv_tt_local_add ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/machine_kexec_file.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/batman-adv/translation-table.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/machine_kexec_file.c b/arch/arm64/kernel/machine_kexec_file.c
-index 410060ebd86df..2034ca8287a22 100644
---- a/arch/arm64/kernel/machine_kexec_file.c
-+++ b/arch/arm64/kernel/machine_kexec_file.c
-@@ -128,6 +128,8 @@ int load_other_segments(struct kimage *image,
- 			vfree(headers);
- 			goto out_err;
- 		}
-+
-+		vfree(image->elf_headers);
- 		image->elf_headers = headers;
- 		image->elf_load_addr = kbuf.mem;
- 		image->elf_headers_sz = headers_sz;
+diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
+index d1cc702e1f14d..3f0b26ad699c0 100644
+--- a/net/batman-adv/translation-table.c
++++ b/net/batman-adv/translation-table.c
+@@ -729,7 +729,8 @@ bool batadv_tt_local_add(struct net_device *mesh_iface, const u8 *addr,
+ 	/* Check whether it is a roaming, but don't do anything if the roaming
+ 	 * process has already been handled
+ 	 */
+-	if (tt_global && !(tt_global->common.flags & BATADV_TT_CLIENT_ROAM)) {
++	if (tt_global &&
++	    (roamed_back || !(tt_global->common.flags & BATADV_TT_CLIENT_ROAM))) {
+ 		/* These node are probably going to update their tt table */
+ 		head = &tt_global->orig_list;
+ 		rcu_read_lock();
 -- 
 2.53.0
 
