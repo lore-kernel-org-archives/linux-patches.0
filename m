@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590556;
-	b=tNg8UYseHHky9rM5ypslmOaL71AI3HBsjJh+tQn4WLo2KU6ZZCLT8zsEm8z8l0iVSmuB
-	 xkseBAbqhLGqKIYAlS3NXRIv14AwA53nZswYS2IhjvCy5jfK+NO84jVW6u0ozSh5VtnQo
-	 CF09XRhtNnMKyLJWAMdUhCHqgKV48LTUyQiNVUoka00eoxpiLrQnrh4D51yJLNyHy8si/
-	 UZxAZV3n+nwGApr4JAr5w3P2HQTzOoGmBHzsj3YQhB4JaA75wd5elvFaaz7ouPRfEtlV/
-	 EAgFjZLMBBGy65bKUpwXTVT1967jKJXiXbs809ps5a+TxYv3JXK7UbrJtDZBNkkkD/A==
+	t=1794590557;
+	b=C4/8nbYVSlNzeYyUUklHBafQvPiU56+rYtPBVEjeYgPXNvwL6c587EE9R+TRj6xLP4D7
+	 +FN0hnTrKBwLH4rebLXmmUB40HiLhrBwzX2lHR8mMLguLbzrKuZ3kmEtx1r4A5j6AwdkA
+	 Ujo5/LOxy3jLkS1jJwXdHAJG9yqh9ugvnbf0l6erG/Mkz59iY2+5Htbku5b9V0ti/bIOc
+	 yIE9xU+W3j9b0FPlNOnVUr4N5XZNljXF/+3oaM/YVA/PqNttrZIuxm96p3RW/EB0iVpzl
+	 WpS8OcUy8oZ78Ypl6etnGOgLKb1P0Qv/5jeCWURm90fsq9CTehmlD+SpUZNSEvT3Hvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590556;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590557;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jS6YU5u0fK+5HR0vInVlIhce5NHJl2FB8U1NyLoiJgU=;
-	b=gvFGA5443LhRjOXhUgSFzVNKiWhBPRRu/Vsh0QdSzI75NhrVNN6Xe0uM9aEeSrla0hM+
-	 zS1YIdthMUm/tenFk0TL4zi6al44e3TDquka82idVGTiEUr1FHqqrqpo07MdlE2IaVb6t
-	 r0lA/rCiDzugcNXzY+8PGpa9/Ou9Iw6/slVoii0GnYCmSzBU18vDL0NJEEZvjQmJd8y6h
-	 /BeBVdJOmK6YgdIOF3WtPuFP8oZ46o+78Ce7Fi8xW0cgkH35RqlrvtK6jDLVmOiIUuaFl
-	 i9wvG6mi/N8StdImu0teFxYtTkq7J8e9FWzxY5AhZzjPX7d0sTcTLUkdWIpuNKGUsLQ==
+	bh=OF5ltjXB/5yNtxL/C3g7DNYWKI43CwD98BIAHfCuvaQ=;
+	b=DUaNGbsHlW1p9VAbnxKiRlSuppsv7RAs4C3C3EM4BH/C1EPZikSoPjEOcLuIM2XT/MO7
+	 bGSM2UgXQ544oXUQCV/mqtc/BhrDBgBklq5StCGqC4iW94L5xepMEvyMZn3ICLgWAz+MP
+	 WkSqcPula0nHoI+ZJOAPkhOzEWF4HdE6f3ragnz7pbrJpQrDtcgt/V6yEDiwwinzahk3n
+	 CdWKvQy2CrFMoLhj9mERT1G3FZva0JDHjQ3etSCWooa/5wXyKf/KQtntinABGU109jkZ+
+	 r5/x1llo78WwJWMFSiMVXix/nJqsdGOgTwMGPpLn/Zveh9SKCV5rMNcYPw/rcKIyjwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yDWtrr/j";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VC7wpJLY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E582B608435D;
-	Fri, 13 Nov 2026 17:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586456084362;
+	Fri, 13 Nov 2026 17:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDWtrr/j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905E31F000C4;
-	Fri, 13 Nov 2026 17:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VC7wpJLY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58DD1F000C8;
+	Fri, 13 Nov 2026 17:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590555;
-	bh=jS6YU5u0fK+5HR0vInVlIhce5NHJl2FB8U1NyLoiJgU=;
+	s=korg; t=1794590557;
+	bh=OF5ltjXB/5yNtxL/C3g7DNYWKI43CwD98BIAHfCuvaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yDWtrr/j/loFVxdM5sy7qnIvhe8cvJ4u9hLTTujYpQc0QpHbGR+8WdQKoMW3hutXg
-	 /NMGKry+tVnmpmSBa806yu/uDWeAhElEyIFeagGO9awXQeua7ruXGv7fj5vzBxQvPi
-	 mMljc+Xoxs3Qu5dvCJEVcdBp46bMer35huPR0qKc=
+	b=VC7wpJLYbfjRfB9Av+2/4CcyhKCI4vXDA9ggVjnlsAGYxZ1IyOE45Jfdnpz82Dor/
+	 t1unQvNZCw6tlTHU/ETCLZBkwBzOqiHxJykGwoIC0/8HxjhniL8grX/fiTaszsagLo
+	 n8cegHF5xVn06qqR/Dm/MD9neFnxhAPBXqyOaxq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <jic23@kernel.org>,
-	Sang-Heon Jeon <ekffu200098@gmail.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Fabio Cesari <fabio.cesari@gmail.com>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 492/686] iio: light: isl29028: remove isl29028_set_pm_runtime_busy() helper
-Date: Fri, 13 Nov 2026 10:50:25 -0500
-Message-ID: <20261113153837.607730578@linuxfoundation.org>
+Subject: [PATCH 6.18 493/686] iio: light: isl29028: fix runtime PM reference leak on error paths
+Date: Fri, 13 Nov 2026 10:50:26 -0500
+Message-ID: <20261113153837.636544732@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,86 +69,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sang-Heon Jeon <ekffu200098@gmail.com>
+From: Fabio Cesari <fabio.cesari@gmail.com>
 
-[ Upstream commit 7f61f41a3f5e8f9aa6c264833504995c89712cfc ]
+[ Upstream commit 0e30d15b15647df786e60022650613e16dd70645 ]
 
-isl29028_set_pm_runtime_busy() just calls pm_runtime_resume_and_get()
-or pm_runtime_put_autosuspend() depending on its bool argument. Call
-them directly and remove the helper.
+isl29028_read_raw() and isl29028_write_raw() take a runtime PM reference
+with pm_runtime_resume_and_get() but return directly on their error
+paths without dropping it. The usage count never balances again and the
+device stops entering autosuspend for good. In isl29028_read_raw() this
+needs a regmap access to fail; in isl29028_write_raw() one rejected
+sysfs write is enough, for example
 
-No functional change.
+  echo 200 > in_proximity_sampling_frequency
 
-Suggested-by: Jonathan Cameron <jic23@kernel.org>
-Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
+which is outside the [1:100] range and returns -EINVAL with the
+reference still held.
+
+Take the reference with PM_RUNTIME_ACQUIRE_AUTOSUSPEND() instead, so it
+is released on every return path.
+
+This also stops the return value of pm_runtime_put_autosuspend() from
+reaching userspace. That value only says whether the device could be
+suspended right away, so -EAGAIN or -EPERM turns a successful access
+into a failure, and with CONFIG_PM=n the stub returns -ENOSYS on every
+access.
+
+Fixes: 2db5054ac28d ("staging: iio: isl29028: add runtime power management support")
+Suggested-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Cc: stable@vger.kernel.org
+Assisted-by: LLM coccinelle
+Signed-off-by: Fabio Cesari <fabio.cesari@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
 Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Stable-dep-of: 0e30d15b1564 ("iio: light: isl29028: fix runtime PM reference leak on error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/isl29028.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+ drivers/iio/light/isl29028.c | 33 ++++++++-------------------------
+ 1 file changed, 8 insertions(+), 25 deletions(-)
 
 diff --git a/drivers/iio/light/isl29028.c b/drivers/iio/light/isl29028.c
-index f89c5d9ee5240..7590efcf8dedb 100644
+index 7590efcf8dedb..408b32d096a86 100644
 --- a/drivers/iio/light/isl29028.c
 +++ b/drivers/iio/light/isl29028.c
-@@ -333,16 +333,6 @@ static int isl29028_ir_get(struct isl29028_chip *chip, int *ir_data)
- 	return isl29028_read_als_ir(chip, ir_data);
- }
- 
--static int isl29028_set_pm_runtime_busy(struct isl29028_chip *chip, bool on)
--{
--	struct device *dev = regmap_get_device(chip->regmap);
--
--	if (on)
--		return pm_runtime_resume_and_get(dev);
--
--	return pm_runtime_put_autosuspend(dev);
--}
--
- /* Channel IO */
- static int isl29028_write_raw(struct iio_dev *indio_dev,
- 			      struct iio_chan_spec const *chan,
-@@ -352,7 +342,7 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
+@@ -342,8 +342,9 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
  	struct device *dev = regmap_get_device(chip->regmap);
  	int ret;
  
--	ret = isl29028_set_pm_runtime_busy(chip, true);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
+-	ret = pm_runtime_resume_and_get(dev);
+-	if (ret < 0)
++	PM_RUNTIME_ACQUIRE_AUTOSUSPEND(dev, pm);
++	ret = PM_RUNTIME_ACQUIRE_ERR(&pm);
++	if (ret)
  		return ret;
  
-@@ -405,7 +395,7 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
- 	if (ret < 0)
- 		return ret;
+ 	mutex_lock(&chip->lock);
+@@ -392,14 +393,7 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
  
--	ret = isl29028_set_pm_runtime_busy(chip, false);
-+	ret = pm_runtime_put_autosuspend(dev);
- 	if (ret < 0)
- 		return ret;
+ 	mutex_unlock(&chip->lock);
  
-@@ -420,7 +410,7 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = pm_runtime_put_autosuspend(dev);
+-	if (ret < 0)
+-		return ret;
+-
+-	return 0;
++	return ret;
+ }
+ 
+ static int isl29028_read_raw(struct iio_dev *indio_dev,
+@@ -408,10 +402,11 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
+ {
+ 	struct isl29028_chip *chip = iio_priv(indio_dev);
  	struct device *dev = regmap_get_device(chip->regmap);
- 	int ret, pm_ret;
+-	int ret, pm_ret;
++	int ret;
  
--	ret = isl29028_set_pm_runtime_busy(chip, true);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
+-	ret = pm_runtime_resume_and_get(dev);
+-	if (ret < 0)
++	PM_RUNTIME_ACQUIRE_AUTOSUSPEND(dev, pm);
++	ret = PM_RUNTIME_ACQUIRE_ERR(&pm);
++	if (ret)
  		return ret;
  
-@@ -476,10 +466,10 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
+ 	mutex_lock(&chip->lock);
+@@ -461,18 +456,6 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
  
- 	/**
- 	 * Preserve the ret variable if the call to
--	 * isl29028_set_pm_runtime_busy() is successful so the reading
-+	 * pm_runtime_put_autosuspend() is successful so the reading
- 	 * (if applicable) is returned to user space.
- 	 */
--	pm_ret = isl29028_set_pm_runtime_busy(chip, false);
-+	pm_ret = pm_runtime_put_autosuspend(dev);
- 	if (pm_ret < 0)
- 		return pm_ret;
+ 	mutex_unlock(&chip->lock);
+ 
+-	if (ret < 0)
+-		return ret;
+-
+-	/**
+-	 * Preserve the ret variable if the call to
+-	 * pm_runtime_put_autosuspend() is successful so the reading
+-	 * (if applicable) is returned to user space.
+-	 */
+-	pm_ret = pm_runtime_put_autosuspend(dev);
+-	if (pm_ret < 0)
+-		return pm_ret;
+-
+ 	return ret;
+ }
  
 -- 
 2.53.0
