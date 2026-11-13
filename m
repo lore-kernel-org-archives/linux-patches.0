@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585801;
-	b=EkXOaYXeWt/yaQsSybyzsx+iagKhCZxGnQNg5rJdeJ4zyAS3grdzxEbG4ogCLu5JKr/f
-	 h9QrGQu2t6+KygS8OX65fC/C1yfIUpJg88nZaCygCi0AWxtUJ0cziMUus3YTc1cR0bqGT
-	 Essc40GHj5GIc6HXE4UAe9J2gEIa0VA9lchdSFg4dAuIuUQbOREPk5KKMN2Es3Ksd2C1q
-	 GSw/tpB9b0z4vU9XNpSzCDx3rVCCfE09qq4amiWJowsHrvmZk7F3F8+JtD20Bw740L6EJ
-	 7Si6pLegN1ok6rHmcBvvsX1fkvy2pmbpuy262muQf1xbm70jlqjDOrKRmJ/8qlDd9rA==
+	t=1794585803;
+	b=ad8nJb+hmERGbHOtHhh6gClM5a38oEqoi8yQgKl4ttlgSN1uhIcC2wXEkCZe3Fe/Ul8S
+	 +iIGYPtPkuyFgsNUGaSXiuv2ACMDmZaopzK6IT3418//0EpktRCXeWuAgIqynhoWZKVCM
+	 Pus6Qc3rNmZ/vP7FHF6tz3SRVPasuq/hh6BDBtKI60sPAwHYTeaDuRL0GWt94Vp4yRaEY
+	 lKn4UoJT64YzCvfhpCakoaAycHfwF2N1kI9PEMsV/Ss0uSQbJX6qHmdXY/PHVRYhDZlcR
+	 SZC4C3qbvbBiSeRvBABR7ReCjDASxAICx3rsrDIiu8NMcwHQ2aafu1rFGj8Z3lAjkVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585803;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iqnrHKovENJ7cpPm/6ys7o7Ozw27AdwiRkJxT21kDRw=;
-	b=cCKSLSV3QDn0d2godk4YwrybzDI96koDiID7rYigK52tbMHNFsB9M/kCDXq853DszAYq
-	 gOc1WuH9axFAxTQRXXS2YxYmxkjeLTgLhslM5xNWe605pw45U5sAWIk6jVi29ooRjkDh6
-	 H69VKzb9i0AzfZ9y1TI89ciUK7aa4wVUFrdjXnR77akUH4jl4CkVy+0pSjktRwtPJBG06
-	 lFz7Vz2fTpDoLat2a7HVOerRl2R/SDRTVkVGgJ5Dz5aRkNCdKkaEnMQ3PxGH4a5fOsGGZ
-	 xIThrtjdlovtt3NOlPlRUnh2u4+cB1esoLdCESaJ+VdphNuFcPFxp01e8t4JULY7Xeg==
+	bh=H6+yOfVFDVP0qX0dToCBhXvqcP0Z7LRfPZehG54ODak=;
+	b=kBQVB7Q/aLHC2FP9e3LC+J81HBJvlzplFkIgde8ovhd07uSz8quAdyCfD6JXy9Fjbhhm
+	 lqLJVpXWywuFEkmtH0ghVCNhvE3bKYTDI+QI9AL5uohsfeMQhaBlEYpts8XhkdZd7DwXL
+	 dOxBgfyg9JSOllrJ1GCcotQRvvn+E6IZv/G9V7fJ35dYiycpEQV0LPuvS8CVeOijsirsB
+	 YCEXmue8oJlFkknC5aQxu23a78FZRyqwXOWL4/lla14S4bTOlAURBGf9gO09T6Q2Z5Ghz
+	 XGN26JpR5lQe5DyYKdkV9tLV97XPNVZva28SwkbSO+bnphDpKekvzPgA7MuJNXd5UOg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9roTzOz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=REl3Omur;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03F3606BA9A;
-	Fri, 13 Nov 2026 16:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD45606BA8A;
+	Fri, 13 Nov 2026 16:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9roTzOz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA011F000C4;
-	Fri, 13 Nov 2026 16:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=REl3Omur
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962611F000C4;
+	Fri, 13 Nov 2026 16:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585801;
-	bh=iqnrHKovENJ7cpPm/6ys7o7Ozw27AdwiRkJxT21kDRw=;
+	s=korg; t=1794585802;
+	bh=H6+yOfVFDVP0qX0dToCBhXvqcP0Z7LRfPZehG54ODak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9roTzOzNQJMCqE0v8NQbA8nUUlMWm1/0/3rh6r9kD7P6zGR7jYsskNyKFxqWViPf
-	 bj1Ou/1XC7sLVux9i1gao3zEwEsGGQKbUgkAEOdJ4D9zyU4ZYa2+yRrP6AfJ86zKVp
-	 QZ2gE2hRbG8ISLONIto87/lC/37tGeqEVe0LwSOg=
+	b=REl3OmurQka1LUcpwQqFDfe7uW8jrFRC/bMLtKL/qFdGfpTS+21bffKw1JgHvMp3v
+	 bnr9q5wxtyW35v7/uWbmh8CweAT9pP+NrVjCei9ck9st5L7Q7G56hBtCfQqO7jitWP
+	 vWYffirV6ZoRfzKScOi83WOOXTiKmsPaTYjh98WQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hengyu Liang <hengyul@cs.unc.edu>,
-	Guillaume Nault <gnault@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 387/507] l2tp: only return sessions of the given tunnel in l2tp_session_get()
-Date: Fri, 13 Nov 2026 10:51:31 -0500
-Message-ID: <20261113153809.631883070@linuxfoundation.org>
+Subject: [PATCH 7.3 388/507] drm/nouveau/nvkm: clear use.enabled when subdev init fails
+Date: Fri, 13 Nov 2026 10:51:32 -0500
+Message-ID: <20261113153809.736895008@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,78 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hengyu Liang <hengyul@cs.unc.edu>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit a75facf4bb3e866103ddca4f47a6f3ca4b090d8b ]
+[ Upstream commit a1f7f37417bacf2eaf80a8ce6b598b1fa56f8906 ]
 
-Commit 5f77c18ea556 ("l2tp: use IDR for all session lookups") made
-pppol2tp_connect() and the netlink session commands find sessions with
-l2tp_session_get(), passing the socket of the tunnel they name.
+On Kepler boards without the video decode falcon firmware installed
+(msvld/mspdec/msppp), every other VA-API decode attempt binds to an
+engine with no ucode loaded. The submitted work never completes, which
+leads to a context switch timeout, a channel recovery that cannot reset
+the engine, and eviction waits on fences that never signal. The process
+ends up stuck in D state, or killed by SIGBUS when it touches a buffer
+evicted after the wait times out:
 
-L2TPv3 session IDs are unique per network namespace, except that
-sessions carried over UDP are only unique per UDP socket, the socket of
-their tunnel. However, l2tp_v3_session_get() only checks the socket when
-another session has the same session ID. Otherwise it returns the
-session, whichever tunnel it belongs to. As of now, a session command
-that names the wrong tunnel acts on a session of another tunnel, and a
-PPPoL2TP socket for a second L2TPv3 tunnel fails with EEXIST, because it
-finds session 0 of the first tunnel.
+  msvld: unable to load firmware data
+  msvld: init failed, -19
+  fifo: SCHED_ERROR 0a [CTXSW_TIMEOUT]
+  vo[5444]: channel 14 killed!
+  WARNING: drivers/gpu/drm/nouveau/nvkm/engine/fifo/runl.c:117 at nvkm_runl_rc+0x2a4/0x3b0 [nouveau]
+  [TTM] Buffer eviction failed
+  WARNING: drivers/gpu/drm/nouveau/nouveau_bo.c:1092 at nouveau_bo_move_ntfy.part.0+0x9b/0x100 [nouveau]
 
-The issue can be reproduced with:
+Tracing nvkm_subdev_ref() and nvkm_subdev_init_() shows the pattern:
+a reference taken with enabled=0 runs nvkm_falcon_init(), which
+returns -ENODEV; the next reference sees enabled=1 and succeeds
+without running it.
 
-    ip l2tp add tunnel tunnel_id 3 peer_tunnel_id 3 encap udp \
-        local 127.0.0.1 remote 127.0.0.1 udp_sport 5003 udp_dport 6003
-    ip l2tp add tunnel tunnel_id 4 peer_tunnel_id 4 encap udp \
-        local 127.0.0.1 remote 127.0.0.1 udp_sport 5004 udp_dport 6004
-    ip l2tp add session tunnel_id 3 session_id 7 peer_session_id 7
-    ip l2tp del session tunnel_id 4 session_id 7
-    ip l2tp show session
+Clear use.enabled when init() fails, so that every later reference
+retries init and fails cleanly.  The other readers of use.enabled are
+fini() handlers that use it to skip teardown, which they now also do
+after a failed init().
 
-Before that commit, the delete fails with "No such device", and session
-7 of tunnel 3 is still listed. After that commit, the delete succeeds,
-and session 7 of tunnel 3 is gone.
+On a GK107 (Quadro K1100M) without video firmware, playing H.264 with
+mpv --hwdec=auto: without this patch the GPU channel is killed within a
+minute and mpv hangs; with it, VA-API decoder creation fails, mpv falls
+back to software decoding, and no faults are logged.
 
-This patch will make l2tp_session_get() return NULL when the L2TPv3
-session it finds does not belong to the given socket. The receive path
-calls l2tp_v3_session_get() directly and is not changed.
-
-Fixes: 5f77c18ea556 ("l2tp: use IDR for all session lookups")
+Fixes: 8478cd5a740a ("drm/nouveau/nvkm: add locking to subdev/engine init paths")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
-Acked-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/20261030032617.4065353-1-hengyul@cs.unc.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20261101200428.16959-1-rosenp@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/l2tp/l2tp_core.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/core/subdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
-index 7e042a3e648ce..0cd3e38bf662f 100644
---- a/net/l2tp/l2tp_core.c
-+++ b/net/l2tp/l2tp_core.c
-@@ -315,10 +315,19 @@ EXPORT_SYMBOL_GPL(l2tp_v2_session_get);
- struct l2tp_session *l2tp_session_get(const struct net *net, struct sock *sk, int pver,
- 				      u32 tunnel_id, u32 session_id)
- {
-+	struct l2tp_session *session;
-+
- 	if (pver == L2TP_HDR_VER_2)
- 		return l2tp_v2_session_get(net, tunnel_id, session_id);
--	else
--		return l2tp_v3_session_get(net, sk, session_id);
-+
-+	/* l2tp_v3_session_get() doesn't check sk if the ID hasn't collided */
-+	session = l2tp_v3_session_get(net, sk, session_id);
-+	if (session && session->tunnel->sock != sk) {
-+		l2tp_session_put(session);
-+		return NULL;
-+	}
-+
-+	return session;
- }
- EXPORT_SYMBOL_GPL(l2tp_session_get);
- 
+diff --git a/drivers/gpu/drm/nouveau/nvkm/core/subdev.c b/drivers/gpu/drm/nouveau/nvkm/core/subdev.c
+index aab5a73f467a1..ff6858f5e5d32 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/core/subdev.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/subdev.c
+@@ -157,6 +157,7 @@ nvkm_subdev_init_(struct nvkm_subdev *subdev)
+ 		ret = subdev->func->init(subdev);
+ 		if (ret) {
+ 			nvkm_error(subdev, "init failed, %d\n", ret);
++			subdev->use.enabled = false;
+ 			return ret;
+ 		}
+ 	}
 -- 
 2.53.0
 
