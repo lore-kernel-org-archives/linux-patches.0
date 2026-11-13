@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591140;
-	b=buy3yVbZEpMz3XdMYjliczHChGsdINcpC5yKuri3Qmc1qzlkZW2JuFOZ9RgVcm2iDwBJ
-	 eC+L95oX/l2fpUc2AWToodOBXsNLUd/d0nLEXH8h3iAsyU4XpO/92M/pY4yJFJ0GxtB0C
-	 bFOF1g2zd/0iGfBDdt/tIxkK1q0+mZaPOxk6D3rlzNLpNWjUWMgLq4oRlsrwp7dniSxwU
-	 jxFISptH9Qy4ZO4KWSgq6eNPoUVWdgwoJ9LndzaEAgoF+FmeBrCB7zn+FWFWNP3dD3sT+
-	 Wdinfp3yItQypj2M3N4TtGQLIInkRIZw1OOdAzuKWqtOnHzhVskr5Hevv6115uvGgiA==
+	t=1794591141;
+	b=oYCHYbg8ga2kcpox26joR9JCwRCzCnKmrh0LX8F7L3xeQZgL2BHk9F0yhpTi+i/luCbV
+	 fw8izZBkDQRQXg4kfoY5Vse1p4DywyZhdIhpQJ12ZX727j5LzssLWRbvtveKQHs6WHjWs
+	 8eoVV/ZGS/mkhdqkwB81epeR5OHlN/XAQSLNe/KvNf3kyt1c+eA+KUrxCJyXpTTZgicYd
+	 +l6dHvgfY/4lBdGDSkn3mGnRy1NW+biJo5WTSZXljk1lcAuK+rWDn5FKm2Xg4hsV7HLgh
+	 vk2plCxKmPis/V/QwVuNfMOMsDvwBgcGKOca9vQmgvTdMIOHwICUd6zhEIENwoE7lkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591140;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591141;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2fcfES9anQmSFehfjhmGksJ90ROrbq/ZUhIIla3WNgk=;
-	b=gX/YseKIv6/vNyJ0QlIt/h7ZnmDjFdrx1FPipx4E+ZiexgZY3YDZd1RE9sQksU9A16iu
-	 uSP00yaXBKglZ/09cPTEeByyghf3ikdxzyFPjag1MUAkgsJGQbZZ2rP+cjh7YLmjaWjMQ
-	 RqGBSUk18HiY1NceKnrQ0ceBQ2CUl7wCjAjVfmNXDn2ee1aLatwLQ3wYKhe3VPoleIQ9Z
-	 YYJzE9B4Oz/JizHCKHIL0/VMuuo5ye+5+Y5N5300vXiPJhnTLQ7KPcHuOVOhZELqMt3YE
-	 xU5o6tXmLwhhGKaA+JtipSDDFExFip+/1ifazE2swE87x/QQhyBLf8ECm2hEkycCbTw==
+	bh=xYzD9tqdcJpB/zc4MYXJfN2w31vqfsHeEH2thMkM8hw=;
+	b=VJi1SkhqSm04/lLT2A9yOcG2SbC46iAmp66mnpAigS+ng3llIUI6bXRSvSH6KBKD+y80
+	 E8hzBtRlUcVo6i1D3u4n/ononobj8TYSw/Oz6GJ4yIOId9ZGz7MN3zxrFdM5CYjUjnL/4
+	 HxeI0KvRnlHN/6RyM/zc6mCb+Ur5ebSb/p1eh0MlcS0EupwO7m01BWkqnTY7j+eHdUFVg
+	 bFSw4nt5XLdlRFAY8oUSQi+kYOw9Jki0UHMaepUql6WT4T004RNDyP8LokCOgwiZ4hM3V
+	 vbKL2lJdq0KFFBh4mslpY84jpE9S45cY55BK10KQV7Q2KiyyfD6qd2bzpPM5H677/ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UwqMFZJJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JdfBPoTU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3524A606BD1D;
-	Fri, 13 Nov 2026 17:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643B8606BD1C;
+	Fri, 13 Nov 2026 17:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UwqMFZJJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D531F000C4;
-	Fri, 13 Nov 2026 17:32:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JdfBPoTU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E661F000C6;
+	Fri, 13 Nov 2026 17:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591140;
-	bh=2fcfES9anQmSFehfjhmGksJ90ROrbq/ZUhIIla3WNgk=;
+	s=korg; t=1794591141;
+	bh=xYzD9tqdcJpB/zc4MYXJfN2w31vqfsHeEH2thMkM8hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UwqMFZJJGf0ZppLWgntVR0qPPebPmHglq6SgBvDJevUlir82sdfkBzmYWjcqPfqwj
-	 bSHfLjmjJOety2la6Q4fGgqylPCRi5tuO5npik+hAWrIx7TocgTjQCJUGaJc+JG1ZJ
-	 aNpVLg7b4y+B4SnoDUqTzvXeG4d67D4YhhFzNXjI=
+	b=JdfBPoTU81GHdV1IHprvg0dnZV9B1XVxihZSYZMGiXSuA1MBdkQTibkNRES0W4pWD
+	 Ir5rhhCOvACQ5JEXIKEtq7dO2fAo4vlDlItcT3WSb01T4+uYYtKZPMgpSi0Ct6ZQCh
+	 RSznv2VMSu6LpiLsKTEZs4jsqk8FWWyhSzXKo71s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 249/670] hwmon: chipcap2: defer probe when IRQs are unavailable
-Date: Fri, 13 Nov 2026 10:46:53 -0500
-Message-ID: <20261113153820.276797265@linuxfoundation.org>
+Subject: [PATCH 6.12 285/670] ocfs2: find the xattr entry again after defragmenting a bucket
+Date: Fri, 13 Nov 2026 10:47:29 -0500
+Message-ID: <20261113153821.536379347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,55 +71,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit b5a1412618f93b594f924cf4f3b4bb6b5dc49d41 ]
+[ Upstream commit 9a40c050f58344615a0604701b5d299519833163 ]
 
-This device can work with or without interrupts, but if they
-are provided and still not available, but if -EPROBE_DEFER is read,
-its value must be propagated to enable probe retries.
+ocfs2_xattr_set_entry_bucket() hands loc.xl_entry to ocfs2_xa_set() twice:
+once for the bucket as it stands, and, if that reports -ENOSPC, once more
+after ocfs2_defrag_xattr_bucket() has packed the name/value pairs down.
 
-Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-4-27ebfc2c5b9e@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Defragmenting ends by sorting the entry array on xe_name_hash.  Buckets
+are kept sorted, so the sort only permutes entries that share a hash, but
+lib/sort.c is an unstable heapsort and it does permute them.  loc.xl_entry
+is an address inside xh_entries[], so afterwards it denotes whichever
+entry landed in that slot rather than the one the search found.
+
+The second ocfs2_xa_set() then works on the wrong entry.  Nothing on that
+path compares the entry's name with xi->xi_name, so what happens depends
+on how the two entries compare in size: ocfs2_xa_reuse_entry() trips its
+BUG_ON() when the padded name sizes differ, and otherwise the new value is
+written into the neighbouring attribute's value slot while the attribute
+being set is left untouched.  setxattr() reports success either way.
+
+Remember the entry's hash before defragmenting and look the entry up
+again afterwards, the way ocfs2_xattr_bucket_find() does.  An entry that
+cannot be found again means the bucket no longer holds what the search
+found, so fail with -EFSCORRUPTED rather than writing through the stale
+pointer.
+
+Link: https://lore.kernel.org/20261024151012.1059683-3-joseph.qi@linux.alibaba.com
+Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/chipcap2.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ocfs2/xattr.c | 30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
-index ede664d22b8a6..b82b702a0f6bd 100644
---- a/drivers/hwmon/chipcap2.c
-+++ b/drivers/hwmon/chipcap2.c
-@@ -651,6 +651,8 @@ static int cc2_request_ready_irq(struct cc2_data *data, struct device *dev)
- 	int ret = 0;
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index f73bfcfcde546..7c611b5d34513 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -5850,13 +5850,18 @@ static int ocfs2_xattr_set_entry_bucket(struct inode *inode,
+ 					struct ocfs2_xattr_search *xs,
+ 					struct ocfs2_xattr_set_ctxt *ctxt)
+ {
+-	int ret;
++	int ret, found = 0;
++	u16 xe_index;
++	u32 name_hash;
+ 	struct ocfs2_xa_loc loc;
  
- 	data->irq_ready = fwnode_irq_get_byname(dev_fwnode(dev), "ready");
-+	if (data->irq_ready == -EPROBE_DEFER)
-+		return data->irq_ready;
- 	if (data->irq_ready > 0) {
- 		init_completion(&data->complete);
- 		ret = devm_request_threaded_irq(dev, data->irq_ready, NULL,
-@@ -668,6 +670,8 @@ static int cc2_request_alarm_irqs(struct cc2_data *data, struct device *dev)
- 	int ret = 0;
+ 	trace_ocfs2_xattr_set_entry_bucket(xi->xi_name);
  
- 	data->irq_low = fwnode_irq_get_byname(dev_fwnode(dev), "low");
-+	if (data->irq_low == -EPROBE_DEFER)
-+		return data->irq_low;
- 	if (data->irq_low > 0) {
- 		ret = devm_request_threaded_irq(dev, data->irq_low, NULL,
- 						cc2_low_interrupt,
-@@ -681,6 +685,8 @@ static int cc2_request_alarm_irqs(struct cc2_data *data, struct device *dev)
+ 	ocfs2_init_xattr_bucket_xa_loc(&loc, xs->bucket,
+ 				       xs->not_found ? NULL : xs->here);
++	/* Defragmenting below may move this entry, so remember its hash. */
++	name_hash = loc.xl_entry ? le32_to_cpu(loc.xl_entry->xe_name_hash) : 0;
++
+ 	ret = ocfs2_xa_set(&loc, xi, ctxt);
+ 	if (!ret) {
+ 		xs->here = loc.xl_entry;
+@@ -5875,6 +5880,29 @@ static int ocfs2_xattr_set_entry_bucket(struct inode *inode,
+ 		goto out;
  	}
  
- 	data->irq_high = fwnode_irq_get_byname(dev_fwnode(dev), "high");
-+	if (data->irq_high == -EPROBE_DEFER)
-+		return data->irq_high;
- 	if (data->irq_high > 0) {
- 		ret = devm_request_threaded_irq(dev, data->irq_high, NULL,
- 						cc2_high_interrupt,
++	/*
++	 * ocfs2_defrag_xattr_bucket() sorts the entries by name hash and
++	 * lib/sort.c is not stable, so entries sharing a hash may have traded
++	 * slots.  Look the entry up again before writing through it.
++	 */
++	if (loc.xl_entry) {
++		ret = ocfs2_find_xe_in_bucket(inode, xs->bucket,
++					      xi->xi_name_index, xi->xi_name,
++					      name_hash, &xe_index, &found);
++		if (ret) {
++			mlog_errno(ret);
++			goto out;
++		}
++		if (!found) {
++			mlog(ML_ERROR, "xattr entry not found in bucket %llu after defrag\n",
++			     (unsigned long long)bucket_blkno(xs->bucket));
++			ret = -EFSCORRUPTED;
++			goto out;
++		}
++		loc.xl_entry = &bucket_xh(xs->bucket)->xh_entries[xe_index];
++		xs->here = loc.xl_entry;
++	}
++
+ 	ret = ocfs2_xa_set(&loc, xi, ctxt);
+ 	if (!ret) {
+ 		xs->here = loc.xl_entry;
 -- 
 2.53.0
 
