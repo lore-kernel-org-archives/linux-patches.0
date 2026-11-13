@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590668;
-	b=xKFS+IHMfGTfQtzwQNAf+WD9CoC/AjeBr1g8WzVN02HVs5euTbbtagICwKkmSXcF0HgE
-	 V4NBnRKT5R83gG/ujttOQWpadG34ZBJOONnloYR5251T3ZloZjedM/BvX/QIfe7oKM00Z
-	 QI5cE80O1bek2f+306JAqL1xQyA97E2r3bBBvptPti39U4BNC5FysasVv8PuM1xCnxUf/
-	 Jk/XvmfCepYu3LKzjlDnLAElSno3PuTae+ss++v4DyO+Wp2JpAs+YaC/0et5vKWrvFose
-	 vaohciCwqTYxYozKX1jzqxbi16qI7YKG4CyrvEyY1BTWVmaXA8M8ILG6dNlTvVNRqSg==
+	t=1794590669;
+	b=XIVvGyVUKi2cmggUwzF7cZUwASxr3GLW9cuXKqWP313GW2wdEHnud/u3ENPgugmNSqfD
+	 p4LDzEvOx5u3MqYKKDVOD9zBrpIS4RF7QPFEy9HOUxlD0Gr3U0uZlt7FKysK9jiPAVrYs
+	 7o2ehuSsa8c4goSC3uag0Mi5YhrhRrBCUAnYVwnNh8CPYu20/W5cc6YyaMa6TezNUfh3i
+	 xdfyENmZ2qOEVnCzKTAr38VEi2lQApP1TXO/mAH/oNXcsbGwl3dboH0YfuxsVYMEn4GpV
+	 PAeVcvSDknIwfBRgP2miXtYd5xMRTAYKfL7aeCasMmu5JSJ7BEsQjIqM7kSK6cqsaCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590668;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WjTQXzdgGVw3NJ5/Ym8pdUbzOgp191HRzbCZfspPsnU=;
-	b=u4d5UMxqBIkm+AnNl1ur3+fSKcT3ebGRONEyHvw3ae3q1ef4gcdR8aBzxX2fu0CyFk18
-	 AMAVtvYJgp2bqcrE8I9dvDtTKqjehXyIfPPN3UfNkYc5RBJ7s1WOsM+5Uz1nigxiGru0C
-	 WpRN/YFvote9vXT48XkouPbHJ0A3pPc48vI2X9/KpkQccv716sT+c83OP0Au/D31mwtny
-	 g+ssFdX695IAZ4u1MBUGfgKH20FL8H4OVpz5Iy/aoVUPLbEYWZ1taqJN3exHYI9BlixoM
-	 Ok5yWy7/+h24EzsY0/5wRNB01c6B4imm4j6emotYC1iHcUR3pCizkuIXmva51kgieTA==
+	bh=iG+MwLvPbBeexQFaSi3cbhnYDIQJbVZRpL/gh94RLiY=;
+	b=AIVlU7ECIGB5NIk7fKm4ISEvKYRHSB4Scd0VC0RH/lAGQP544Xd4Z86dxMehAQp1qHS2
+	 K12HE6L9IbQpPsWKJGycIuz4fDLadag2+eCGjfjv5k4ZnFV0dZwbJSmfKtLDC5876ZUAr
+	 FhttDKvmxjnq4ssX5i5UXm0pf0KFa8W6FW41bYmGY6b4gRQ6Etzz3J7oj2Os9LTIp24Qr
+	 OTobERB/5JxGnqtFOMmCzoWRqmjUgpnXPkeOECFbOztX86IrDLPwhJxBevFOZ+w8FX6y2
+	 jE9NkQQabuoV6Bh90JUcXnDOuvi5+dFMcWf3C+87SNbzsYS8F1FTKkDzIboVC9Sp1Dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9ptT7pM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgVKZ6cI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062EE606B212;
-	Fri, 13 Nov 2026 17:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405B660776F0;
+	Fri, 13 Nov 2026 17:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9ptT7pM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A681F000C5;
-	Fri, 13 Nov 2026 17:24:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgVKZ6cI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F561F000C4;
+	Fri, 13 Nov 2026 17:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590667;
-	bh=WjTQXzdgGVw3NJ5/Ym8pdUbzOgp191HRzbCZfspPsnU=;
+	s=korg; t=1794590669;
+	bh=iG+MwLvPbBeexQFaSi3cbhnYDIQJbVZRpL/gh94RLiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9ptT7pMUCMW6KnYvmgGwnw2Gf1Mm+SoIok+FJg/D9qhWoroOIaLOj7ontUt0uajC
-	 uMr56VVf3qVgWDh/WGHRPN2mVVDL+SFACCgFxYUMS/TsUA9aySJNoU8YHhbC4P8Ize
-	 +LshpG1i7K2mGXutrK3IgoOOQvPqwDq9p4pNmDn4=
+	b=hgVKZ6cIWOgw7HdMHiyX2NGJ2wQCQcjeyZXRnDoRVwAr7glBn1XDie1BCFm98CbQ/
+	 U2qQf3RKSfPMDheJ6uILr/A28eABuyIa9Bk03ZVhx07MKddRqO2gPPi5L8CueuqZ2C
+	 miqjtcLXmVjg0VOnYUnvft6TqrZjyMpjHfTYOtqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tobias Schumacher <ts@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 557/686] ASoC: stm: stm32_i2s: request IRQ after regmap initialization
-Date: Fri, 13 Nov 2026 10:51:30 -0500
-Message-ID: <20261113153840.460985972@linuxfoundation.org>
+Subject: [PATCH 6.18 584/686] s390/pci: Add error cleanup in zpci_directed_irq_init()
+Date: Fri, 13 Nov 2026 10:51:57 -0500
+Message-ID: <20261113153841.603805092@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,87 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Tobias Schumacher <ts@linux.ibm.com>
 
-[ Upstream commit 1b207c85551fd74854d632116849295b2305245f ]
+[ Upstream commit 769f66f595c11185c66913ea5d96420504bfebc3 ]
 
-The ISR accesses the managed regmap, but probe requests the IRQ before
-creating it. An early interrupt can reach an uninitialized regmap.
-Reverse-order cleanup can free the regmap while the IRQ remains active.
+If per-CPU airq_iv allocation fails in the loop, previously allocated
+vectors and arrays leak. Add proper error path to release all resources
+on failure.
 
-Request the IRQ after regmap initialization so probe unwind and
-removal free and synchronize it before releasing the regmap.
+The error path frees zpci_sbv, but SIC_IRQ_MODE_DIRECT has already
+programmed its address into the hardware. Set the directed interrupt
+mode only after all allocations have succeeded, so a failed init leaves
+no freed memory registered with the hardware.
 
-The teardown ordering issue was found by static analysis.
-
-Fixes: e4e6ec7b127c ("ASoC: stm32: Add I2S driver")
+Fixes: e979ce7bced2 ("s390/pci: provide support for CPU directed interrupts")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20261004043451.1138613-1-mhun512@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Tobias Schumacher <ts@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+[ sashal: Adapted cleanup references from zpci_dibv to the existing zpci_ibv array. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_i2s.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ arch/s390/pci/pci_irq.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/stm/stm32_i2s.c b/sound/soc/stm/stm32_i2s.c
-index 100a50a88d6d6..ab06d13a59b9f 100644
---- a/sound/soc/stm/stm32_i2s.c
-+++ b/sound/soc/stm/stm32_i2s.c
-@@ -1192,7 +1192,7 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
- 	struct device_node *np = pdev->dev.of_node;
- 	struct reset_control *rst;
- 	struct resource *res;
--	int irq, ret;
-+	int ret;
+diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
+index e73be96ce5fe6..836db17f4e8f6 100644
+--- a/arch/s390/pci/pci_irq.c
++++ b/arch/s390/pci/pci_irq.c
+@@ -450,15 +450,10 @@ static int __init zpci_directed_irq_init(void)
+ 	if (!zpci_sbv)
+ 		return -ENOMEM;
  
- 	if (!np)
- 		return -ENODEV;
-@@ -1238,16 +1238,6 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
- 			return ret;
+-	iib.diib.isc = PCI_ISC;
+-	iib.diib.nr_cpus = num_possible_cpus();
+-	iib.diib.disb_addr = virt_to_phys(zpci_sbv->vector);
+-	zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
+-
+ 	zpci_ibv = kcalloc(num_possible_cpus(), sizeof(*zpci_ibv),
+ 			   GFP_KERNEL);
+ 	if (!zpci_ibv)
+-		return -ENOMEM;
++		goto out_free_sbv;
+ 
+ 	for_each_possible_cpu(cpu) {
+ 		/*
+@@ -470,13 +465,30 @@ static int __init zpci_directed_irq_init(void)
+ 					       AIRQ_IV_CACHELINE |
+ 					       (!cpu ? AIRQ_IV_ALLOC : 0), NULL);
+ 		if (!zpci_ibv[cpu])
+-			return -ENOMEM;
++			goto out_free_dibv;
  	}
- 
--	/* Get irqs */
--	irq = platform_get_irq(pdev, 0);
--	if (irq < 0)
--		return irq;
--
--	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
--			       dev_name(&pdev->dev), i2s);
--	if (ret)
--		return ret;
--
- 	/* Reset */
- 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
- 	if (IS_ERR(rst))
-@@ -1272,7 +1262,7 @@ static int stm32_i2s_probe(struct platform_device *pdev)
- {
- 	struct stm32_i2s_data *i2s;
- 	u32 val;
--	int ret;
-+	int irq, ret;
- 
- 	i2s = devm_kzalloc(&pdev->dev, sizeof(*i2s), GFP_KERNEL);
- 	if (!i2s)
-@@ -1298,6 +1288,15 @@ static int stm32_i2s_probe(struct platform_device *pdev)
- 		return dev_err_probe(&pdev->dev, PTR_ERR(i2s->regmap),
- 				     "Regmap init error\n");
- 
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return irq;
 +
-+	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
-+			       dev_name(&pdev->dev), i2s);
-+	if (ret)
-+		return ret;
++	iib.diib.isc = PCI_ISC;
++	iib.diib.nr_cpus = num_possible_cpus();
++	iib.diib.disb_addr = virt_to_phys(zpci_sbv->vector);
++	zpci_set_irq_ctrl(SIC_IRQ_MODE_DIRECT, 0, &iib);
+ 	on_each_cpu(cpu_enable_directed_irq, NULL, 1);
+ 
+ 	zpci_irq_chip.irq_set_affinity = zpci_set_irq_affinity;
+ 
+ 	return 0;
 +
- 	ret = snd_dmaengine_pcm_register(&pdev->dev, &stm32_i2s_pcm_config, 0);
- 	if (ret)
- 		return ret;
++out_free_dibv:
++	for_each_possible_cpu(cpu) {
++		if (zpci_ibv[cpu])
++			airq_iv_release(zpci_ibv[cpu]);
++	}
++	kfree(zpci_ibv);
++	zpci_ibv = NULL;
++out_free_sbv:
++	airq_iv_release(zpci_sbv);
++	zpci_sbv = NULL;
++	return -ENOMEM;
+ }
+ 
+ static int __init zpci_floating_irq_init(void)
 -- 
 2.53.0
 
