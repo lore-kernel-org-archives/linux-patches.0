@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590554;
-	b=JAgbXvbxQsmv/1N59k8L1AwC6ptK96TW5oWxQD7q1lik/2G+M/eQPHyIq8ooAynrFL1k
-	 CUOJqDCsycwlQcFMWcpqIEDIGFa411aXpZCFCFAkhjrY5eHtU13ytBUbLVN6iEAFWvWsh
-	 89uFp3bmxyxoOO4nZgKD8tvFzEahm09MiaKZooJf6NnMKBvTpW8qtPib527gNOX6pRh2H
-	 yOv9YTjmOE2qgdhnsCtco/l8IS1KZoxLNs3GNIdS76s0mgU0x+RtGYpj2Dz2ZroefsCGu
-	 fpv8FJKlXSCJf5jbphuAgwZ3AWJ6zgPpFls5hjX9eTEn/QCW0FQWr0LQZthLqhGvJnQ==
+	t=1794590556;
+	b=tNg8UYseHHky9rM5ypslmOaL71AI3HBsjJh+tQn4WLo2KU6ZZCLT8zsEm8z8l0iVSmuB
+	 xkseBAbqhLGqKIYAlS3NXRIv14AwA53nZswYS2IhjvCy5jfK+NO84jVW6u0ozSh5VtnQo
+	 CF09XRhtNnMKyLJWAMdUhCHqgKV48LTUyQiNVUoka00eoxpiLrQnrh4D51yJLNyHy8si/
+	 UZxAZV3n+nwGApr4JAr5w3P2HQTzOoGmBHzsj3YQhB4JaA75wd5elvFaaz7ouPRfEtlV/
+	 EAgFjZLMBBGy65bKUpwXTVT1967jKJXiXbs809ps5a+TxYv3JXK7UbrJtDZBNkkkD/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x7JDrKAb5rysAvY35pXvjB8qV101Fw1z/BTSto8Mbro=;
-	b=hJm6+yF9+X/Rru09vOAhwbXAEm1fX67cDTuuKhuLlzDHSZy0R/X48Eg2kXdVQXw8M3c7
-	 hFLKfDnbbvpbfsSKp6Z+HL16dDk2fdY2iSBiFL7boN94Z9RYYsgs5EaO98cRhsHbcjeb5
-	 6l7XES5r7blBLfO15oP12mwcjkpI9L/gGVsfmy0Z72+AUm0BEP8zPQXaIWzsoXYmiJKoZ
-	 PYiH6/y4+NWC5o6BZ/L0YHRoc8OShzrF3V7r1alS/so76NP7sEp4cfbavk8BTYNfuHwDN
-	 2bfBI8uTQhoY58134LMAa5V8f04xm/DvCm6Pr3CHD6F4w26Fc8ldrnPHy7/P9Sm2bpA==
+	bh=jS6YU5u0fK+5HR0vInVlIhce5NHJl2FB8U1NyLoiJgU=;
+	b=gvFGA5443LhRjOXhUgSFzVNKiWhBPRRu/Vsh0QdSzI75NhrVNN6Xe0uM9aEeSrla0hM+
+	 zS1YIdthMUm/tenFk0TL4zi6al44e3TDquka82idVGTiEUr1FHqqrqpo07MdlE2IaVb6t
+	 r0lA/rCiDzugcNXzY+8PGpa9/Ou9Iw6/slVoii0GnYCmSzBU18vDL0NJEEZvjQmJd8y6h
+	 /BeBVdJOmK6YgdIOF3WtPuFP8oZ46o+78Ce7Fi8xW0cgkH35RqlrvtK6jDLVmOiIUuaFl
+	 i9wvG6mi/N8StdImu0teFxYtTkq7J8e9FWzxY5AhZzjPX7d0sTcTLUkdWIpuNKGUsLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b79c0vRH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yDWtrr/j";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF64608434A;
-	Fri, 13 Nov 2026 17:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E582B608435D;
+	Fri, 13 Nov 2026 17:22:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b79c0vRH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E41E1F000C8;
-	Fri, 13 Nov 2026 17:22:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDWtrr/j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905E31F000C4;
+	Fri, 13 Nov 2026 17:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590554;
-	bh=x7JDrKAb5rysAvY35pXvjB8qV101Fw1z/BTSto8Mbro=;
+	s=korg; t=1794590555;
+	bh=jS6YU5u0fK+5HR0vInVlIhce5NHJl2FB8U1NyLoiJgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b79c0vRHBB8ml0e1/9oGfktPTAbhM/1RE/T9PQwJJwULwug6u+pJ6Zxjehl0M6gNv
-	 6Z987DdUszpRqxhOAQkWhEiRTwsHz1qNKg13tat/W6rI1eL7UQ/YWIuQd9AXKwCYdz
-	 gzdlFqqoijaE6jX78ISsmuUYWNvsWyVOPTC24NDA=
+	b=yDWtrr/j/loFVxdM5sy7qnIvhe8cvJ4u9hLTTujYpQc0QpHbGR+8WdQKoMW3hutXg
+	 /NMGKry+tVnmpmSBa806yu/uDWeAhElEyIFeagGO9awXQeua7ruXGv7fj5vzBxQvPi
+	 mMljc+Xoxs3Qu5dvCJEVcdBp46bMer35huPR0qKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Sang-Heon Jeon <ekffu200098@gmail.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 491/686] KVM: guest_memfd: Split bind() into prepare()+commit() phases
-Date: Fri, 13 Nov 2026 10:50:24 -0500
-Message-ID: <20261113153837.576994663@linuxfoundation.org>
+Subject: [PATCH 6.18 492/686] iio: light: isl29028: remove isl29028_set_pm_runtime_busy() helper
+Date: Fri, 13 Nov 2026 10:50:25 -0500
+Message-ID: <20261113153837.607730578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,206 +70,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Sang-Heon Jeon <ekffu200098@gmail.com>
 
-[ Upstream commit 83411f32b8ad96c6b05b1511d1a588daab44bd25 ]
+[ Upstream commit 7f61f41a3f5e8f9aa6c264833504995c89712cfc ]
 
-Split binding a memslot to a guest_memfd instance into prepare() and
-commit() phases so that KVM can separate preparing the memslot from binding
-the memslot to the gmem instance, i.e. from committing the memslot.  This
-will allow waiting to commit the memslot+gmem binding until the memslot is
-fully prepared, which is necessary as the memslot becomes reachable when
-the binding is created.
+isl29028_set_pm_runtime_busy() just calls pm_runtime_resume_and_get()
+or pm_runtime_put_autosuspend() depending on its bool argument. Call
+them directly and remove the helper.
 
-As a bonus, drop the unwind-on-failure from the commit phase (other than
-nullifying the bindings), as the only reason bind() did the full unwind is
-because it technically didn't own the memslot, i.e. "needed" to leave
-memslot in the same state it started in.
+No functional change.
 
-No functional change intended (the unwinding down on bind() failure was
-effectively dead code since KVM simply deletes the memslot on failure,
-i.e. there was nothing that could actually observe the unwind).
-
-Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Link: https://patch.msgid.link/20260922001332.1121266-5-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[ sashal: adapted guest-memory interfaces to the existing header layout and u64/struct kvm_gmem types ]
+Suggested-by: Jonathan Cameron <jic23@kernel.org>
+Signed-off-by: Sang-Heon Jeon <ekffu200098@gmail.com>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Stable-dep-of: 0e30d15b1564 ("iio: light: isl29028: fix runtime PM reference leak on error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/guest_memfd.c | 67 ++++++++++++++++++++++++------------------
- virt/kvm/kvm_main.c    | 18 +++++++++++-
- virt/kvm/kvm_mm.h      | 18 ++++++++----
- 3 files changed, 69 insertions(+), 34 deletions(-)
+ drivers/iio/light/isl29028.c | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-index 5f9a25fa0a09b..74f7b7ee28793 100644
---- a/virt/kvm/guest_memfd.c
-+++ b/virt/kvm/guest_memfd.c
-@@ -563,15 +563,14 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
- 	return __kvm_gmem_create(kvm, size, flags);
+diff --git a/drivers/iio/light/isl29028.c b/drivers/iio/light/isl29028.c
+index f89c5d9ee5240..7590efcf8dedb 100644
+--- a/drivers/iio/light/isl29028.c
++++ b/drivers/iio/light/isl29028.c
+@@ -333,16 +333,6 @@ static int isl29028_ir_get(struct isl29028_chip *chip, int *ir_data)
+ 	return isl29028_read_als_ir(chip, ir_data);
  }
  
--int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
--		  unsigned int fd, u64 offset)
-+int kvm_gmem_prepare_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot,
-+				   unsigned int fd, u64 offset)
- {
- 	u64 size = slot->npages << PAGE_SHIFT;
--	unsigned long start, end;
- 	struct kvm_gmem *gmem;
- 	struct inode *inode;
- 	struct file *file;
--	int r = -EINVAL;
-+
+-static int isl29028_set_pm_runtime_busy(struct isl29028_chip *chip, bool on)
+-{
+-	struct device *dev = regmap_get_device(chip->regmap);
+-
+-	if (on)
+-		return pm_runtime_resume_and_get(dev);
+-
+-	return pm_runtime_put_autosuspend(dev);
+-}
+-
+ /* Channel IO */
+ static int isl29028_write_raw(struct iio_dev *indio_dev,
+ 			      struct iio_chan_spec const *chan,
+@@ -352,7 +342,7 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
+ 	struct device *dev = regmap_get_device(chip->regmap);
+ 	int ret;
  
- 	BUILD_BUG_ON(sizeof(gpa_t) != sizeof(offset));
- 	BUILD_BUG_ON(sizeof(gfn_t) != sizeof(slot->gmem.pgoff));
-@@ -595,43 +594,55 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
- 	if (!PAGE_ALIGNED(offset) || offset + size > i_size_read(inode))
- 		goto err;
+-	ret = isl29028_set_pm_runtime_busy(chip, true);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		return ret;
  
--	filemap_invalidate_lock(inode->i_mapping);
--
--	start = offset >> PAGE_SHIFT;
--	end = start + slot->npages;
--
--	if (!xa_empty(&gmem->bindings) &&
--	    xa_find(&gmem->bindings, &start, end - 1, XA_PRESENT)) {
--		filemap_invalidate_unlock(inode->i_mapping);
--		goto err;
--	}
--
- 	/*
- 	 * memslots of flag KVM_MEM_GUEST_MEMFD are immutable to change, so
- 	 * kvm_gmem_bind() must occur on a new memslot.  Because the memslot
- 	 * is not visible yet, kvm_gmem_get_pfn() is guaranteed to see the file.
+@@ -405,7 +395,7 @@ static int isl29028_write_raw(struct iio_dev *indio_dev,
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	ret = isl29028_set_pm_runtime_busy(chip, false);
++	ret = pm_runtime_put_autosuspend(dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -420,7 +410,7 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
+ 	struct device *dev = regmap_get_device(chip->regmap);
+ 	int ret, pm_ret;
+ 
+-	ret = isl29028_set_pm_runtime_busy(chip, true);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -476,10 +466,10 @@ static int isl29028_read_raw(struct iio_dev *indio_dev,
+ 
+ 	/**
+ 	 * Preserve the ret variable if the call to
+-	 * isl29028_set_pm_runtime_busy() is successful so the reading
++	 * pm_runtime_put_autosuspend() is successful so the reading
+ 	 * (if applicable) is returned to user space.
  	 */
- 	WRITE_ONCE(slot->gmem.file, file);
--	slot->gmem.pgoff = start;
-+	slot->gmem.pgoff = offset >> PAGE_SHIFT;
- 	if (kvm_gmem_supports_mmap(inode))
- 		slot->flags |= KVM_MEMSLOT_GMEM_ONLY;
+-	pm_ret = isl29028_set_pm_runtime_busy(chip, false);
++	pm_ret = pm_runtime_put_autosuspend(dev);
+ 	if (pm_ret < 0)
+ 		return pm_ret;
  
--	r = xa_err(xa_store_range(&gmem->bindings, start, end - 1, slot, GFP_KERNEL));
--	if (r) {
--		xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
--		slot->gmem.file = NULL;
--		slot->gmem.pgoff = 0;
--		slot->flags &= ~KVM_MEMSLOT_GMEM_ONLY;
--	}
--	filemap_invalidate_unlock(inode->i_mapping);
--
- 	/*
--	 * Drop the reference to the file, even on success.  The file pins KVM,
--	 * not the other way 'round.  Active bindings are invalidated if the
--	 * file is closed before memslots are destroyed.
-+	 * Gift the caller a reference to the file.  The reference will be
-+	 * dropped after bindings are established, or if installing the new
-+	 * memslot ultimately fails.
- 	 */
-+	return 0;
-+
- err:
- 	fput(file);
-+	return -EINVAL;
-+}
-+
-+int kvm_gmem_commit_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot)
-+{
-+	struct kvm_gmem *gmem = slot->gmem.file->private_data;
-+	struct inode *inode = file_inode(slot->gmem.file);
-+	unsigned long start, end;
-+	int r;
-+
-+	if (WARN_ON_ONCE(slot->gmem.file->f_op != &kvm_gmem_fops))
-+		return -EIO;
-+
-+	filemap_invalidate_lock(inode->i_mapping);
-+
-+	start = slot->gmem.pgoff;
-+	end = start + slot->npages;
-+
-+	if (!xa_empty(&gmem->bindings) &&
-+	    xa_find(&gmem->bindings, &start, end - 1, XA_PRESENT)) {
-+		filemap_invalidate_unlock(inode->i_mapping);
-+		return -EEXIST;
-+	}
-+
-+	r = xa_err(xa_store_range(&gmem->bindings, start, end - 1, slot, GFP_KERNEL));
-+	if (r)
-+		xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
-+
-+	filemap_invalidate_unlock(inode->i_mapping);
-+
- 	return r;
- }
- 
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 5521743d6e8cb..2354a4097dec4 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -2128,7 +2128,23 @@ static int kvm_set_memory_region(struct kvm *kvm,
- 	new->flags = mem->flags;
- 	new->userspace_addr = mem->userspace_addr;
- 	if (change == KVM_MR_CREATE && (mem->flags & KVM_MEM_GUEST_MEMFD)) {
--		r = kvm_gmem_bind(kvm, new, mem->guest_memfd, mem->guest_memfd_offset);
-+		r = kvm_gmem_prepare_memory_region(kvm, new, mem->guest_memfd,
-+						   mem->guest_memfd_offset);
-+		if (r)
-+			goto out;
-+
-+		r = kvm_gmem_commit_memory_region(kvm, new);
-+
-+		/*
-+		 * Drop the reference to the file, even on success.  The file
-+		 * pins KVM, not the other way 'round.  Active bindings are
-+		 * invalidated if the file is closed before memslots are
-+		 * destroyed.
-+		 */
-+#ifdef CONFIG_KVM_GUEST_MEMFD
-+		 fput(new->gmem.file);
-+#endif
-+
- 		if (r)
- 			goto out;
- 	}
-diff --git a/virt/kvm/kvm_mm.h b/virt/kvm/kvm_mm.h
-index 0e68675a8a630..9db0a64d9d541 100644
---- a/virt/kvm/kvm_mm.h
-+++ b/virt/kvm/kvm_mm.h
-@@ -73,8 +73,9 @@ static inline void gfn_to_pfn_cache_invalidate_start(struct kvm *kvm,
- #ifdef CONFIG_KVM_GUEST_MEMFD
- void kvm_gmem_init(struct module *module);
- int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args);
--int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
--		  unsigned int fd, u64 offset);
-+int kvm_gmem_prepare_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot,
-+				   unsigned int fd, u64 offset);
-+int kvm_gmem_commit_memory_region(struct kvm *kvm, struct kvm_memory_slot *slot);
- void kvm_gmem_unbind(struct kvm_memory_slot *slot);
- #else
- static inline void kvm_gmem_init(struct module *module)
-@@ -82,9 +83,16 @@ static inline void kvm_gmem_init(struct module *module)
- 
- }
- 
--static inline int kvm_gmem_bind(struct kvm *kvm,
--					 struct kvm_memory_slot *slot,
--					 unsigned int fd, u64 offset)
-+static inline int kvm_gmem_prepare_memory_region(struct kvm *kvm,
-+						 struct kvm_memory_slot *slot,
-+						 unsigned int fd, u64 offset)
-+{
-+	WARN_ON_ONCE(1);
-+	return -EIO;
-+}
-+
-+static inline int kvm_gmem_commit_memory_region(struct kvm *kvm,
-+						struct kvm_memory_slot *slot)
- {
- 	WARN_ON_ONCE(1);
- 	return -EIO;
 -- 
 2.53.0
 
