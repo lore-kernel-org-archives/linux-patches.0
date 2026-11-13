@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590772;
-	b=u9h9FesiL+/pfQjjVT8b76fbvcDh/QbIHbsqIsRSPpw5Cz79SfhWlSlaz8SC7pTIPkx8
-	 MBL0m/WYZQCBHGf85VVJG39GvHd9YJyUFzbVOq0foqVEVmL0HWwB3eosbNbJzP/WNvACH
-	 izXfBKterNiXpXW2MRtUvqtkiIYMdNRD7Xs6I84iLkiEqZLQ0K3gX6vnEocujZ+5XQREK
-	 cpvkuZg8Fx1tlgtyQ0xfcxnQMMVHl1Tsy2ZzfHvlXtQhLxnJDFCGTi9TcZ9qQ0JhTnU27
-	 kMdoJXQ6Qr9CmIMRS5+651Gsl2BoL3QyRQ9IyZNuj1gaT+/QqtGFqfBTsZf8/wbNtxQ==
+	t=1794590773;
+	b=k6XNaqWnBh0OJaDqrE0Y+noxCD7XxRcqyLqy+eGthiqNDwQKzYn8Zndtv7sgXHBgUcPA
+	 C76C3dqgt0RJiiol0O5cHFgyDKMnARbpcxM2yyVJeuvV98j3W+UVOKnPYZDBfIQRgMEqv
+	 7DyR63op0gZ6ubr5QuxRlYMzizPLVJKsAyPF1BgV8W7OfSn6RUql2Mxojbv7wtvyTLF1C
+	 nXs4Nb5D3jm8JGGt9WVmawnK4/78BfmTc2CVqEoQ7uRWAz8ENs6/2Na8YBGOkesfn1Jm3
+	 db3TrPlH5BNc8reo7QlLbTX2GuRIIAgHBBWcC2nEXpiciQYwJPH2qj8gmBrPtCqOLqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590773;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hQusp90UA8FYau3IF8nBkXpGJQRstlMVOahuMdMLLh0=;
-	b=siki7m65oBIPwkYul9PcfVWU+jN3i5KRtMRjQFz2QNKUEXJ3rxoPUytdGW3qPWeYT/xF
-	 ladgu50hhxzfT+30rt7toXXDa0ROri+8TN9HxxvwbdEk6uRCSmrZVp/jgIIqnrXEEJe/b
-	 Zcsu8zQa4KnxZ1OW4NREigTS44awYf7DRl3Pksp57Lh0Oj8ueubKi60DX+0p4OD2vVEgR
-	 7sA6BvBXoT+PA+EvDgjylQNyH4wD2EOLNj7a05BQ9qGigt1U5KVBuD8bUJibuSePAWl9r
-	 wJgwBcZ2CmkEphVw7LPpZ632avnF/zSxgV7BLjXZmD1UWTLh7TufEvO7GT6L/+65AQg==
+	bh=zqeVhQDdgXfJ+eGDjEkxafoPdfIOtSjEaYp1A04iNLg=;
+	b=rgQuPN/ALWjlShcnwHqn4oB/2BfEKIOxCXVuI7eSFB10znoRbyCOL2N0ChLoA0ZNF1rD
+	 YXJJ7BGpxdt+4Qs9oe+X7O1fHfdWWcq85kfyhPhg/cg5OXD8ioLXRFErfrV0yuPE94YUt
+	 28D2WX45wFQ+OKR8X+VBN43ZX58y02Y9dunTAQfuG51NZhldF9CePZogA4zHrvxFY2BeJ
+	 p70oyQ+CUTqXxxMWeu2lcZU8gvTy+Mlq0EoXJNtICaEiVi/j56KZXZoNdGCUNVH5C3Tkz
+	 /4fCg+9JZaOff6tr880Y15LPbqMPVWIyOk52R2/J2qYlJH3f1r/oodmhySTWnxqLHSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wlyq7bwB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rj5etfc0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75134607C36B;
-	Fri, 13 Nov 2026 17:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B77606E207;
+	Fri, 13 Nov 2026 17:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wlyq7bwB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 213A31F000C4;
-	Fri, 13 Nov 2026 17:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rj5etfc0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545891F000C5;
+	Fri, 13 Nov 2026 17:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590772;
-	bh=hQusp90UA8FYau3IF8nBkXpGJQRstlMVOahuMdMLLh0=;
+	s=korg; t=1794590773;
+	bh=zqeVhQDdgXfJ+eGDjEkxafoPdfIOtSjEaYp1A04iNLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wlyq7bwBO3Lc+6UJ+soeJ2VuHSFh3dwyMaKdKUZyqEWwceJVqAn8lVYCHE6i2FnX7
-	 JlmuKmhscmNb8LTUc2rBIBR1CjTe6jwTpSq7t1fh3mcdBr7OX1oB4Du5X0zdFdgYcH
-	 11S9zmxvR5rf3iMNGf0Ue4pBD9Xo3sXzb0/kQ2mA=
+	b=Rj5etfc0UBaOtDa8wPIupEtoxma6VPa04GFpX6uxrEFS7nxCGODCKtzNGh3CSrid4
+	 O17Jxd+l3NNyqnce9BF/M5R2/1ChAzw5Lp2geQMMybsKcHa7npPYTe6SS/RzbR7aT2
+	 zLL6KNlY8S41fT/HitFIFDcB7qb+UAMZGosrzcxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 669/686] hwmon: (coretemp) Return -ENODATA for invalid temperature readings
-Date: Fri, 13 Nov 2026 10:53:22 -0500
-Message-ID: <20261113153844.357704587@linuxfoundation.org>
+Subject: [PATCH 6.18 670/686] crypto: omap - add omap_sham_unregister_algs helper
+Date: Fri, 13 Nov 2026 10:53:23 -0500
+Message-ID: <20261113153844.386836961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,112 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit f63aaa529cbc73146ff0d52235e5479042285cae ]
+[ Upstream commit c3494e6fbb35579a131de11369b658a59b1323e5 ]
 
-IA32_THERM_STATUS and IA32_PACKAGE_THERM_STATUS have a valid bit, bit 31.
-The Intel SDM documents it only for the former, but the package register
-implements it too: x86_pkg_temp_thermal has required it since commit
-f1a18a105660 ("Thermal: CPU Package temperature thermal").
+Add a new helper omap_sham_unregister_algs() and replace two for loops
+in omap_sham_probe() and omap_sham_remove(), which also ensure
+->registered is reset to 0.
 
-This driver checked the bit for both registers as well, until
-commit bf6ea084ebb5 ("hwmon: (coretemp) Do not return -EAGAIN for low
-temperatures") made it ignore the bit because some CPUs clear it while
-the temperature is too low to be measured. Since then, temp%d_input
-reports such a reading as a real temperature. Userspace cannot tell it
-apart from a genuinely low one.
-
-Fail the read with -ENODATA while the CPU reports the reading as invalid.
-On a CPU that clears the bit, reading temp%d_input now fails where it
-used to return a low value. sensors(1) shows N/A in its place.
-
-Cc: stable@vger.kernel.org
-Suggested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/all/46f9f319-de71-412f-a424-6cb801478456@roeck-us.net/
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Link: https://patch.msgid.link/20261006-coretemp-enodata-v2-1-64e788acc7dc@linux.intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: Adapted the MSR validity check from val.l to eax to use the existing rdmsr_on_cpu() interface. ]
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: be51ea091c65 ("crypto: omap-sham - fix crypto engine cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/coretemp.rst |  3 +++
- drivers/hwmon/coretemp.c         | 21 +++++++++++++++------
- 2 files changed, 18 insertions(+), 6 deletions(-)
+ drivers/crypto/omap-sham.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/hwmon/coretemp.rst b/Documentation/hwmon/coretemp.rst
-index c609329e3bc45..6089bee1159f1 100644
---- a/Documentation/hwmon/coretemp.rst
-+++ b/Documentation/hwmon/coretemp.rst
-@@ -47,6 +47,9 @@ All Sysfs entries are named with their core_id (represented here by 'X').
+diff --git a/drivers/crypto/omap-sham.c b/drivers/crypto/omap-sham.c
+index ff8aac02994a4..7b3612d097700 100644
+--- a/drivers/crypto/omap-sham.c
++++ b/drivers/crypto/omap-sham.c
+@@ -2041,6 +2041,20 @@ static struct attribute *omap_sham_attrs[] = {
+ };
+ ATTRIBUTE_GROUPS(omap_sham);
  
- ================= ========================================================
- tempX_input	  Core temperature (in millidegrees Celsius).
-+		  Reading fails with -ENODATA while the CPU reports the
-+		  temperature as invalid. Some CPUs do this when the
-+		  temperature is too low to be measured.
- tempX_max	  All cooling devices should be turned on (on Core2).
- tempX_crit	  Maximum junction temperature (in millidegrees Celsius).
- tempX_crit_alarm  Set when Out-of-spec bit is set, never clears.
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index ac56319ff90cf..25a9cf8feb311 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -61,6 +61,8 @@ enum coretemp_attr_index {
- 
- /*
-  * Per-Core Temperature Data
-+ * @temp_valid: Whether the CPU reported @temp as valid. @temp is not
-+ *		reported when this is false.
-  * @tjmax: The static tjmax value when tjmax cannot be retrieved from
-  *		IA32_TEMPERATURE_TARGET MSR.
-  * @last_updated: The time when the current temperature value was updated
-@@ -73,6 +75,7 @@ enum coretemp_attr_index {
-  */
- struct temp_data {
- 	int temp;
-+	bool temp_valid;
- 	int tjmax;
- 	unsigned long last_updated;
- 	unsigned int cpu;
-@@ -391,7 +394,8 @@ static ssize_t show_temp(struct device *dev,
- {
- 	u32 eax, edx;
- 	struct temp_data *tdata = container_of(devattr, struct temp_data, sd_attrs[ATTR_TEMP]);
--	int tjmax;
-+	int tjmax, temp;
-+	bool valid;
- 
- 	mutex_lock(&tdata->update_lock);
- 
-@@ -400,17 +404,22 @@ static ssize_t show_temp(struct device *dev,
- 	if (time_after(jiffies, tdata->last_updated + HZ)) {
- 		rdmsr_on_cpu(tdata->cpu, tdata->status_reg, &eax, &edx);
- 		/*
--		 * Ignore the valid bit. In all observed cases the register
--		 * value is either low or zero if the valid bit is 0.
--		 * Return it instead of reporting an error which doesn't
--		 * really help at all.
-+		 * Bit 31 indicates whether the reading is valid. Some CPUs
-+		 * clear it while the temperature is too low to be measured.
-+		 * Such a reading is not a temperature. Do not report it.
- 		 */
-+		tdata->temp_valid = (eax >> 31) & 1;
- 		tdata->temp = tjmax - ((eax >> 16) & 0xff) * 1000;
- 		tdata->last_updated = jiffies;
- 	}
- 
-+	valid = tdata->temp_valid;
-+	temp = tdata->temp;
- 	mutex_unlock(&tdata->update_lock);
--	return sprintf(buf, "%d\n", tdata->temp);
++static void omap_sham_unregister_algs(const struct omap_sham_pdata *pdata)
++{
++	struct omap_sham_algs_info *alg_info;
++	int i;
 +
-+	if (!valid)
-+		return -ENODATA;
-+	return sprintf(buf, "%d\n", temp);
- }
++	for (i = pdata->algs_info_size - 1; i >= 0; i--) {
++		alg_info = &pdata->algs_info[i];
++
++		crypto_engine_unregister_ahashes(alg_info->algs_list,
++						 alg_info->registered);
++		alg_info->registered = 0;
++	}
++}
++
+ static int omap_sham_probe(struct platform_device *pdev)
+ {
+ 	struct omap_sham_dev *dd;
+@@ -2158,10 +2172,7 @@ static int omap_sham_probe(struct platform_device *pdev)
+ 	return 0;
  
- static int create_core_attrs(struct temp_data *tdata, struct device *dev)
+ err_algs:
+-	for (i = dd->pdata->algs_info_size - 1; i >= 0; i--)
+-		for (j = dd->pdata->algs_info[i].registered - 1; j >= 0; j--)
+-			crypto_engine_unregister_ahash(
+-					&dd->pdata->algs_info[i].algs_list[j]);
++	omap_sham_unregister_algs(dd->pdata);
+ err_engine_start:
+ 	crypto_engine_exit(dd->engine);
+ err_engine:
+@@ -2182,19 +2193,13 @@ static int omap_sham_probe(struct platform_device *pdev)
+ static void omap_sham_remove(struct platform_device *pdev)
+ {
+ 	struct omap_sham_dev *dd;
+-	int i, j;
+ 
+ 	dd = platform_get_drvdata(pdev);
+ 
+ 	spin_lock_bh(&sham.lock);
+ 	list_del(&dd->list);
+ 	spin_unlock_bh(&sham.lock);
+-	for (i = dd->pdata->algs_info_size - 1; i >= 0; i--)
+-		for (j = dd->pdata->algs_info[i].registered - 1; j >= 0; j--) {
+-			crypto_engine_unregister_ahash(
+-					&dd->pdata->algs_info[i].algs_list[j]);
+-			dd->pdata->algs_info[i].registered--;
+-		}
++	omap_sham_unregister_algs(dd->pdata);
+ 	cancel_work_sync(&dd->done_task);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
