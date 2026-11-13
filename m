@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585964;
-	b=I7BxmfVI/1B4v8ntRzhOn0zja6tf1ztVrmcS+N2Lf5MMHGFdEyq4zB+n1bB9ixM7xvbg
-	 mmMQEFbyEWhJrPB8zLBfsesKuwD8UXhv3uq6JiTJe+y7zCNAc69FZmr8wzWZCIpdt+Pl/
-	 rP64kThHmsDy2+jvHW6rmbc9LDBbMtgEsDuj8hDN/wAnEUf6+DO5CitokCWXCmBZHdByi
-	 eHuJPHL4C3g95wQpRYiyttc7d33InVnXZfNAZ5vL8Wg96Z8TK8eDOU+Xqs+acKdKV8xoH
-	 zj1F5QxXU70iAj5GfbT0xuzxakhgEe02RzY0Jkg849Wy0zlM1g4AKboqu9eAeLIPy7w==
+	t=1794585965;
+	b=WQggEF2HNyStYII1eMmbRuEYcHJWAtUrZSh0cTmRSopv/OcKR4kOGP9VPNWyVdZhjyaO
+	 /PwnOn3yvmG7yiJQ5TmlBA9h8JzbfqwCCUnSCM4/x3UFp5vn24P4duIfiRR1UDqjESfRQ
+	 cMyUTM/0LkKn4xSwZ29Y1ueuTNzf0RxEhLEQTki2ZjSkZhnAGFjmYyFwUFzZIiNddxNWk
+	 Ph/TvJAg2vXjgxP7XYF3dOJvC/cA8Afrjas2ovumUUyr0ZoUSr14HBDqEiXAZd+GRRJzx
+	 N501i6GL62+9g1CQLPh7fRYUgsHfgI6dhwsVPQW12imGi4h4ua8R+TIFXNFJ/7nZU/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ku/0SRc3eB4c5mvDWtF9YcwDXX6MtAg367Q2RH0NU44=;
-	b=T9aXLo2l1dB0tZXUo9GQiiVO6XZThAQx4UUCalP0jrcwaM4UiJYyzR6tr4mt6f1ddh6E
-	 +aOUBrnxXuqd/J0VkLqL2etuqyy0DOrXW1uSurcg9EXKnik1M+/VOEQUXwKYvXbN0v0lo
-	 qu7leMN+O/A184TjOtKqEQK6DqRZthQ11Igk+n4Xjd6WRhbbAMFdrQCUbD+x/uJ6KJ/kg
-	 /47xtmugiwrTUiMyDm5Nxyysm9ruyA4IjjqH7YnIv1z7ExPjXbNrsnh0/80uRRn6VTwd1
-	 7CU2fOHgTDvDZnifBCZUoiU1Cj81qk6Q6Q9VVdcwNCAe2z7InB8z5ABnJBKX/C+dOJw==
+	bh=aHlvN08YGQ6XOb50sTyPrjiKwrHTO6A5kzS55rCYA7U=;
+	b=OxuaBrMIKshtDj1PMh/sRdAoCZ1NmII21nFRUFE6b34FCOVPsIVk8/CLIvJqsyZbFpGz
+	 WXVsvq7B71b/41PxdghWD7uxpAo9hJ618E6VxetdMdQB+Q4b5kvfYkgbFn5TByC916dLk
+	 JjUo3xp3ii3MCChWEEM4nmQ0ByI0E9DYhS9S41+aCis1A2pkYkQhcl4cXTLX7R+XrLtaw
+	 h/j9w6NOkMXLa4Gl4R+KzQgU4a6+/OV8FbhoczlKlNcwAVWMaH5uAne7A84AbYCEiyX2B
+	 zwCMUETV3+C/1QpGQVzb8aATTzzaGzpr7JlDMR+fHEXalXtXeA64wY4k4yhQiE9ccVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0nTgG9E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FEFfbMV8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EFA6072300;
-	Fri, 13 Nov 2026 16:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D450D6072305;
+	Fri, 13 Nov 2026 16:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O0nTgG9E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31DE1F000C4;
-	Fri, 13 Nov 2026 16:06:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FEFfbMV8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F361F000C4;
+	Fri, 13 Nov 2026 16:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585964;
-	bh=Ku/0SRc3eB4c5mvDWtF9YcwDXX6MtAg367Q2RH0NU44=;
+	s=korg; t=1794585965;
+	bh=aHlvN08YGQ6XOb50sTyPrjiKwrHTO6A5kzS55rCYA7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O0nTgG9EUE2qpfZrOmfFCGLLmFuZVjysyXwv+5puTF7csOAUzcZ1fi+O1FD+SCtYc
-	 br0Y1ZUZW4O0rzjxpVtea+KOTrpI2y98xNaLK1mHA3yIvEnE3vJgacmR64AnJnHmNq
-	 JJYkI7Q20dd0NJmY3Hwg7Up5wxWrVMDr+V/Yymzo=
+	b=FEFfbMV8C0R+UWrwYzduAQSrSdkUcPOsf557ugIwNMtQ/BhfKK62t8DEDDj+n1pC+
+	 Sx27QrbxCt4ga5MH4rlPOvc+Zo9mPl9oCGcAmaXz1nbVoojdQj2bi6d32Zic/68qYw
+	 7+2hly3cCR7JFJMqkSI6zZXufjB/FZzv2sh9qos0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Len Brown <len.brown@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Fan Wu <wufan@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 502/507] intel_idle: Adjust state names and descriptions for _LPI states
-Date: Fri, 13 Nov 2026 10:53:26 -0500
-Message-ID: <20261113153814.126529312@linuxfoundation.org>
+Subject: [PATCH 6.18 007/686] fsverity: Tell LSMs about signature only after verity is enabled
+Date: Fri, 13 Nov 2026 10:42:20 -0500
+Message-ID: <20261113153821.177318266@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
-References: <20261113153753.358973689@linuxfoundation.org>
+In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
+References: <20261113153820.902362109@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -64,80 +64,185 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.3-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 4035247966859152a6523bc041f81cb9905695a5 ]
+commit 28d74059fddbd8ae83c7715056b303c402071f6f upstream.
 
-The value of the _LPI "State Name" field is used as the description of
-the given idle state (that is, the value of its "desc" attribute in
-sysfs) which is not consistent with idle state descriptions used when
-the idle state information comes from an ACPI _CST object.
+FS_IOC_ENABLE_VERITY calls security_inode_setintegrity() before verity
+has finished being enabled.  That's broken because enabling verity can
+still fail at that point, e.g. due to insufficient xattr space.
 
-To rectify that, use the _LPI "State Name" field value as the value of
-the "name" sysfs attribute of a given idle state and use the MWAIT hint
-value from the _LPI register address value to derive the value of its
-"desc" sysfs attribute in analogy with the _CST case.
+Afterwards, arbitrary contents can be written to the file, which doesn't
+actually have verity enabled.  The in-core inode stays the same, so the
+LSM considers it to have verity enabled with a valid signature.  (Or
+rather, in the case of IPE, which is the only LSM that implements
+security_inode_setintegrity(), it also checks IS_VERITY(), which can be
+bypassed by enabling verity with no signature after the file writes.)
 
-Fixes: abc5c103c66d ("intel_idle: Add ACPI _LPI support")
-Tested-by: Len Brown <len.brown@intel.com>
-Cc: 7.3+ <stable@vger.kernel.org> # 7.3+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-[ rjw: Adjusted scnprintf() format string, tweaked changelog ]
-Link: https://patch.msgid.link/6061409.DvuYhMxLoT@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix this by moving the call to security_inode_setintegrity() out of
+fsverity_verify_signature() and into a new function that is called from
+the appropriate places.
+
+Fixes: 7c373e4f1445 ("fsverity: expose verified fsverity built-in signatures to LSMs")
+Cc: stable@vger.kernel.org
+Reviewed-by: Fan Wu <wufan@kernel.org>
+Tested-by: Fan Wu <wufan@kernel.org>
+Link: https://patch.msgid.link/20261025204534.122506-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/pm/intel_idle.rst | 12 +++++++-----
- drivers/idle/intel_idle.c                   |  9 +++++++--
- 2 files changed, 14 insertions(+), 7 deletions(-)
+ fs/verity/enable.c           |  8 ++++++
+ fs/verity/fsverity_private.h |  8 ++++++
+ fs/verity/open.c             |  9 ++++++
+ fs/verity/signature.c        | 55 ++++++++++++++++++++++++++----------
+ 4 files changed, 65 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/admin-guide/pm/intel_idle.rst b/Documentation/admin-guide/pm/intel_idle.rst
-index 996e5bd83c425..d1a6251790b80 100644
---- a/Documentation/admin-guide/pm/intel_idle.rst
-+++ b/Documentation/admin-guide/pm/intel_idle.rst
-@@ -145,11 +145,13 @@ for the other idle state types (C2 and C3) the target residency value is 3 times
- the exit latency (again, that is because it reflects the target residency to
- exit latency ratio in the majority of cases for the processor models recognized
- by ``intel_idle``).  The name of the idle state (to be returned by the ``name``
--idle state attribute in ``sysfs``) is either "Cx_LPI" (if it comes from ``_LPI``
--processing) or "Cx_ACPI", where x is the index of that idle state in the final
--list (note that the minimum value of x is 1, because 0 is reserved for the
--"polling" state), and its target residency is based on the exit latency value.
--All of the idle states in the final list are enabled by default in this case.
-+idle state attribute in ``sysfs``) either is equal to the state name value that
-+comes from ``_LPI`` processing (with the possible fallback to "Cx_LPI" if the
-+state name is not provided) or it is "Cx_ACPI", where x is the index of that
-+idle state in the final list (note that the minimum value of x is 1, because 0
-+is reserved for the "polling" state), and its target residency is based on the
-+exit latency value.  All of the idle states in the final list are enabled by
-+default in this case.
- 
- 
- .. _intel-idle-initialization:
-diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
-index c5b65f7d7271c..ec951c148d4a2 100644
---- a/drivers/idle/intel_idle.c
-+++ b/drivers/idle/intel_idle.c
-@@ -1905,8 +1905,13 @@ static void __init intel_idle_init_cstates_acpi_lpi(struct cpuidle_driver *drv)
- 
- 		state = &drv->states[drv->state_count++];
- 
--		scnprintf(state->name, CPUIDLE_NAME_LEN, "C%d_LPI", index + 1);
--		strscpy(state->desc, lpi_state->desc);
-+		if (strlen(lpi_state->desc) > 0)
-+			strscpy(state->name, lpi_state->desc);
-+		else
-+			scnprintf(state->name, CPUIDLE_NAME_LEN, "C%d_LPI", index + 1);
+diff --git a/fs/verity/enable.c b/fs/verity/enable.c
+index 95ec42b847972..05fbcae57e5db 100644
+--- a/fs/verity/enable.c
++++ b/fs/verity/enable.c
+@@ -287,6 +287,14 @@ static int enable_verity(struct file *filp,
+ 		 * just after the filesystem has successfully enabled verity.
+ 		 */
+ 		fsverity_set_info(inode, vi);
 +
-+		scnprintf(state->desc, CPUIDLE_DESC_LEN, "ACPI LPI MWAIT 0x%02llx",
-+			  lpi_state->address);
- 		state->exit_latency = lpi_state->wake_latency;
- 		state->target_residency = lpi_state->min_residency;
- 		state->flags = MWAIT2flg(lpi_state->address);
++		/*
++		 * Now that verity is enabled, report the signature (if any) to
++		 * LSMs.  We tolerate that a process racing with this ioctl can
++		 * briefly see verity enabled with no signature reported yet.
++		 */
++		fsverity_report_valid_sig(inode, desc->signature,
++					  le32_to_cpu(desc->sig_size));
+ 	}
+ out:
+ 	kfree(params.hashstate);
+diff --git a/fs/verity/fsverity_private.h b/fs/verity/fsverity_private.h
+index dd20b138d452f..0a2ddca3c838d 100644
+--- a/fs/verity/fsverity_private.h
++++ b/fs/verity/fsverity_private.h
+@@ -142,6 +142,8 @@ void __init fsverity_init_info_cache(void);
+ extern int fsverity_require_signatures;
+ int fsverity_verify_signature(const struct fsverity_info *vi,
+ 			      const u8 *signature, size_t sig_size);
++void fsverity_report_valid_sig(const struct inode *inode, const u8 *signature,
++			       size_t sig_size);
+ 
+ void __init fsverity_init_signature(void);
+ #else /* !CONFIG_FS_VERITY_BUILTIN_SIGNATURES */
+@@ -152,6 +154,12 @@ fsverity_verify_signature(const struct fsverity_info *vi,
+ 	return 0;
+ }
+ 
++static inline void fsverity_report_valid_sig(const struct inode *inode,
++					     const u8 *signature,
++					     size_t sig_size)
++{
++}
++
+ static inline void fsverity_init_signature(void)
+ {
+ }
+diff --git a/fs/verity/open.c b/fs/verity/open.c
+index 02e2c14ab3ffb..dbc2a25e9158e 100644
+--- a/fs/verity/open.c
++++ b/fs/verity/open.c
+@@ -369,6 +369,15 @@ static int ensure_verity_info(struct inode *inode)
+ 		goto out_free_desc;
+ 	}
+ 
++	/*
++	 * Now that the signature (if any) has been verified, report it to LSMs.
++	 * Do this before setting the fsverity_info, so that anyone who
++	 * concurrently retrieves the fsverity_info for the same inode is
++	 * guaranteed to see the LSM's signature status populated.
++	 */
++	fsverity_report_valid_sig(inode, desc->signature,
++				  le32_to_cpu(desc->sig_size));
++
+ 	fsverity_set_info(inode, vi);
+ 	err = 0;
+ out_free_desc:
+diff --git a/fs/verity/signature.c b/fs/verity/signature.c
+index 0302a4e506ec4..212e873c84998 100644
+--- a/fs/verity/signature.c
++++ b/fs/verity/signature.c
+@@ -42,13 +42,16 @@ static struct key *fsverity_keyring;
+  * @sig_size: size of signature in bytes, or 0 if no signature
+  *
+  * If the file includes a signature of its fs-verity file digest, verify it
+- * against the certificates in the fs-verity keyring. Note that signatures
+- * are verified regardless of the state of the 'fsverity_require_signatures'
+- * variable and the LSM subsystem relies on this behavior to help enforce
+- * file integrity policies. Please discuss changes with the LSM list
+- * (thank you!).
++ * against the certificates in the fs-verity keyring.
+  *
+- * Return: 0 on success (signature valid or not required); -errno on failure
++ * Note that signatures are verified regardless of the state of the
++ * 'fsverity_require_signatures' variable, and the LSM subsystem relies on this
++ * behavior to help enforce file integrity policies.  (See
++ * fsverity_report_valid_sig(), which assumes that the signature, if present,
++ * was verified here.)  Please discuss changes with the LSM list (thank you!).
++ *
++ * Return: 0 if the signature is present and valid, or absent and not required;
++ *	   -errno on failure
+  */
+ int fsverity_verify_signature(const struct fsverity_info *vi,
+ 			      const u8 *signature, size_t sig_size)
+@@ -111,18 +114,40 @@ int fsverity_verify_signature(const struct fsverity_info *vi,
+ 		return err;
+ 	}
+ 
+-	err = security_inode_setintegrity(inode,
+-					  LSM_INT_FSVERITY_BUILTINSIG_VALID,
+-					  signature,
+-					  sig_size);
++	return 0;
++}
+ 
+-	if (err) {
++/*
++ * If the signature exists, this tells the LSM that it was verified.
++ *
++ * fsverity_verify_signature() must have already been called with the same
++ * signature, *and* the inode must have verity enabled with the signature
++ * matching it.  If called from FS_IOC_ENABLE_VERITY, the latter means that we
++ * must be past the point of no return, i.e. verity won't fail to be enabled at
++ * a later point.  This is critical, since LSMs must be told about the signature
++ * only when the verity status is permanent in the in-core inode.
++ */
++void fsverity_report_valid_sig(const struct inode *inode, const u8 *signature,
++			       size_t sig_size)
++{
++	int err;
++
++	if (WARN_ON_ONCE(!IS_VERITY(inode)))
++		return;
++
++	if (sig_size == 0)
++		return;
++
++	err = security_inode_setintegrity(
++		inode, LSM_INT_FSVERITY_BUILTINSIG_VALID, signature, sig_size);
++	if (err)
+ 		fsverity_err(inode, "Error %d exposing file signature to LSMs",
+ 			     err);
+-		return err;
+-	}
+-
+-	return 0;
++	/*
++	 * Besides the logging above, ignore errors here.  The LSM hook just
++	 * records the signature and doesn't perform access control.  And in the
++	 * case of FS_IOC_ENABLE_VERITY verity was already enabled.
++	 */
+ }
+ 
+ void __init fsverity_init_signature(void)
 -- 
 2.53.0
 
