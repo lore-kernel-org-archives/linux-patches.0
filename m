@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590104;
-	b=sY3jT+uqgU0zPJn30/7Npr7oEMjdX4VK9EgLtUJvQ8FJVw0y+En3SOms2GRzZY73CnTU
-	 I7FcTYAGEKA0CJdSeBeIBlkvz+gBdAW0YpY3oS9VgawQcHPrFxxDgo+dEb/1QKZqIrA5L
-	 l1A0fOekZ0avmDVpLtyxCItGsnox9lMzsZrHpCrrwprAtxo4/IbMnmqCWsBdjCX2QFc8n
-	 aOtu9/a/t0zXRFnxxH6RtbZ5YdwVOIgDhWq4DZkgd1QAbEAiVCXn1XMKUfCOoEEKsRqM8
-	 /Vhhf4c7DvhD4tmLzkUYaYJXy9fTARPhhgqZC/b7LG4RuNun0t5Jb/b88AYclhUXnkw==
+	t=1794590105;
+	b=T2YV+x2Yyb0x6lUO18XTKdbj5fOTjGtg7rqaeuShWxTjxs5XIFpoa+m26T1OqmCFiQSY
+	 qY1ZXVmfe4N5qgcFHvcmxyCWiPctK8iTgdbTWoo1FRdripEOdEeZuKELoqyqwQPVx9pus
+	 NuMhdgpBx6uvmQTXx6ja0Poze4n8bNMqDtVzm/DEFLyJmIMxs+0Q31ycROD8c1zAYTWDh
+	 KvmbQKy2tOESMc4EomRcQLVZvN9Ixny2GbZh20muPQQq/SzrQ9z9Lw6dscSLJHy521oLt
+	 abPCOqJcbqYN60IPtWeuY8Kkf5gLUj5jcKrIX12GawAT760G8R8ieIMBNF5LaPXJkeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RhrHNYwynZykTgqwhzMwROI167+ZYQW1qAhY9hXhpzU=;
-	b=l3Dwi54IcuESp3OSEXI9UhtLxAzjj0UUYz517GQyHsdpxIBN+VK14zkh05WUlM+CjKCC
-	 9MjNX9COe+9DF5KkodT5mvTYrmSXkee9azyaLP9pefmwNQBBYQkt2Hs9fRF9+M58zTHCt
-	 K4W/ngn1WyqLxmFD8EzpzzBdfL4hBZHqhRiWgJ+2r3NKNBfE+iww+T3BCNNMxnB+t1IT4
-	 rWbikS7qNngXoqEaUwWtFHD5qAC7hlOrbhCO9UANJYhiJeETrFkbANKQX7alumf0zK8e0
-	 sTO6wYzRxFxDmAzPMnC5EQHHSCN+1Pj1tq7PyF/urswaSjs/2rwjnag05V8givXmaEA==
+	bh=6TkqNB/btNATKvIr56JZBuqz0+p9okFPlC3q6wbXGWw=;
+	b=sN9QlXR09ZzgP3rRSslAwMQVnBL5hWFhC5X+YmQpEJ/sDIa13Gz8eHMGoyjQk4r/s1vB
+	 P+0fNSqRNJ2eAK2ZJ+ZiJv32eNP22HZYYGhIEJO7ugtNRysrdn2QU9fQkN8pMBEZRww8j
+	 wxin5mKKqhxmCAX3FKXwRV6kthnDWJK5z7w/euHuPQacz9iL4r8KP1Rkc2P7zNiIN6RfI
+	 DOjFccKJtK4N4tg8O77SeY00mWXzN9yoJdcM5v67gthJ+a0ZiM0XfN+hGXXY20ltuEErg
+	 A11wpYNv1PF+dSZJOuUJu+Qs7KUbBwL6S8RfCg8TVOp7gUCEFffaufz9DWdprN1whdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NutNBsbB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P5MfKSBv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2B360A383C;
-	Fri, 13 Nov 2026 17:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB8DD60A3830;
+	Fri, 13 Nov 2026 17:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NutNBsbB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 250891F000C9;
-	Fri, 13 Nov 2026 17:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P5MfKSBv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6602E1F000C4;
+	Fri, 13 Nov 2026 17:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590104;
-	bh=RhrHNYwynZykTgqwhzMwROI167+ZYQW1qAhY9hXhpzU=;
+	s=korg; t=1794590105;
+	bh=6TkqNB/btNATKvIr56JZBuqz0+p9okFPlC3q6wbXGWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NutNBsbB+csdr5nhYhdd1zVHapIXEwiQn5GG0N1lxA7d2m+7ERu/7c+QS77h2BqjE
-	 jXhyqOqN9fKLV1BkIhCU/xRKASsl5e0XyXbbwxZyZqP75KmFMXWJe3nDV+h4CRnAuh
-	 Ba/Gn1YN22ynr+Y9WhuXjiPqSO3zexcNJ8Mh58AI=
+	b=P5MfKSBvAES1aXB7owWleP6dnVlwNVaUxn4rdKI1HJGnheAk79UfMu4468DIC2aje
+	 8OLRoVx+JBMhMG6aAcugfz01fsGBjFpD8IdsdJFY8fEk+//kJH1kAOm0aMnG78dZnU
+	 mwUJcKVJijTophvXWHdAlJuFFzd0GLU1UYh9fz0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 127/686] netrom: dont convert the maximum number of tries to jiffies
-Date: Fri, 13 Nov 2026 10:44:20 -0500
-Message-ID: <20261113153825.124040176@linuxfoundation.org>
+Subject: [PATCH 6.18 128/686] netrom: dont leak frames in nr_route_frame()
+Date: Fri, 13 Nov 2026 10:44:21 -0500
+Message-ID: <20261113153825.157166693@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,46 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-nr_create() sets the number of transport retries of a new socket with
+nr_route_frame() leaks a frame in two cases.
 
-	nr->n2 = msecs_to_jiffies(sysctl_netrom_transport_maximum_tries);
+When the frame comes from AX.25 and nr_add_node() fails, it returns the
+error. AX.25 calls it as a protocol function and takes any non-zero
+value as "frame consumed", so the frame is never freed. nr_add_node()
+fails with -EINVAL when the source of the frame is one of our own
+NET/ROM callsigns, which is what a node sees when its own frames come
+back through a routing loop, and with -ENOMEM.
 
-but transport_maximum_tries is a count, not a time in milliseconds. The
-result depends on HZ: with the default of 3 tries, n2 is 3 with HZ=1000
-but 1 with HZ=250 or HZ=100, below the minimum of 2 that the sysctl
-itself enforces. Sockets accepted on a listener copy its n2, so every
-NET/ROM circuit of such a kernel gives up after a single retry.
+When the frame is forwarded, it is sent from a copy, nskb. If
+ax25_send_frame() returns NULL (device going down, no memory), it has
+not taken the copy, and nr_route_frame() only frees the original.
 
-Seen on our nodes in /proc/net/nr: n2 is 01 on the Raspberry Pi kernels
-(HZ=250 and HZ=100) and 03 on the x86 ones (HZ=1000), all with
-transport_maximum_tries set to 3.
+Return 0 when nr_add_node() fails, so that AX.25 frees the frame, and
+free the copy when ax25_send_frame() returns NULL.
 
-Use the count as is. The other transport values are times and keep
-their conversion.
+Tested on two QEMU guests (6.12.94, KASAN, lockdep) linked by KISS: A
+opens an AX.25 link to the NET/ROM callsign of B and sends 400 NET/ROM
+frames with A's callsign as source, then 400 with B's own callsign as
+source. Live skbs on B (skbuff_head_cache objects, KASAN quarantine
+shrunk), 20 s after the last frame:
 
-Fixes: 4d8937d0b113 ("[NETROM]: Eleminate HZ from NET/ROM kernel interfaces")
+                    normal source   B's own callsign
+  before the fix         12              412
+  after the fix          12               12
+
+No kernel report in either run. The second leak (ax25_send_frame()
+returning NULL) was checked by reading only.
+
+Fixes: 58bc57471514 ("[AX.25]: Fix unchecked nr_add_node uses.")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 16eb00a80bb05640ba628529fd258e4ddb100ecb)
+(cherry picked from commit 51c59de17ab51364241f4b0bf4399b0f2c5dde5a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/af_netrom.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/netrom/nr_route.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index 6de086082f71b..e3daae77e43e5 100644
---- a/net/netrom/af_netrom.c
-+++ b/net/netrom/af_netrom.c
-@@ -459,8 +459,7 @@ static int nr_create(struct net *net, struct socket *sock, int protocol,
- 		msecs_to_jiffies(READ_ONCE(sysctl_netrom_transport_timeout));
- 	nr->t2     =
- 		msecs_to_jiffies(READ_ONCE(sysctl_netrom_transport_acknowledge_delay));
--	nr->n2     =
--		msecs_to_jiffies(READ_ONCE(sysctl_netrom_transport_maximum_tries));
-+	nr->n2     = READ_ONCE(sysctl_netrom_transport_maximum_tries);
- 	nr->t4     =
- 		msecs_to_jiffies(READ_ONCE(sysctl_netrom_transport_busy_delay));
- 	nr->idle   =
+diff --git a/net/netrom/nr_route.c b/net/netrom/nr_route.c
+index 288c4a91ea9b7..821697f222d6a 100644
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -774,11 +774,16 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 	nr_dest = (ax25_address *)(skb->data + 7);
+ 
+ 	if (ax25 != NULL) {
+-		ret = nr_add_node(nr_src, "", &ax25->dest_addr, ax25->digipeat,
+-				  ax25->ax25_dev->dev, 0,
+-				  READ_ONCE(sysctl_netrom_obsolescence_count_initialiser));
+-		if (ret)
+-			return ret;
++		/*
++		 * A frame that cannot be noted here (it claims to come from
++		 * one of our own callsigns, or memory is short) is dropped.
++		 * Return 0, not the error: AX.25 takes any other value as
++		 * "frame consumed" and would never free it.
++		 */
++		if (nr_add_node(nr_src, "", &ax25->dest_addr, ax25->digipeat,
++				ax25->ax25_dev->dev, 0,
++				READ_ONCE(sysctl_netrom_obsolescence_count_initialiser)))
++			return 0;
+ 	}
+ 
+ 	if ((dev = nr_dev_get(nr_dest)) != NULL) {	/* Its for me */
+@@ -848,8 +853,14 @@ int nr_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 	spin_unlock_bh(&nr_route_lock);
+ 	nr_node_put(nr_node);
+ 
++	/*
++	 * ax25_send_frame() only returns NULL before taking the frame:
++	 * free our copy then; the caller frees the original.
++	 */
+ 	if (ret)
+ 		kfree_skb(oskb);
++	else
++		kfree_skb(skb);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
