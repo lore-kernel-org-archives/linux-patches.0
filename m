@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591007;
-	b=aAjJhunFMlJw8oh0edF1p+RoGP+d0IZ8//kj+UAWhf2+u3VMTrtfxvLKJi7hrPdV42zN
-	 SH+nNHggJsyQZ0mMfWhs7Im3hd9XRY+1eRHCkydWNJziH4Ys7AMqyAeP+wEvwYPhcD3GT
-	 pJSq8nCmNIPPFWtLNJdghi8TeCTxAw0U7vFwDNGs52dzZ1Y7yTY17E1CBMyApMS5iUzIW
-	 GBU+gS9C5t+aerN3RVke+hSeUOE3v5bO//hdrUjTF2BhPv+DJZ4A5x8sXcT4o4hVibiZP
-	 yIWm5dJCg4BPmMEdlQ1PoQDnpLpXpk+W4Ajuu63R8dYv/1mQWFgZrCaVMTcCvqzRDtA==
+	t=1794591009;
+	b=scvgSbSpNvBhG4cabmGOykEQfepkaHnW6nIduOdutNpERn3MHnKffY+4VwK01mbg4qHv
+	 MU1uQ1PrYb0HvMqDUCAKHfShYREkzpsfKuLz/5QNbuL3pQ/W+RhzF4Be2Z+OqZ0R0YihK
+	 Sk30sco9q47OzrwMSDDw3z3YhwnEWA/abgESIa5UOLfj3/d87MEEr4ZpOd3T5u+lN1GMQ
+	 ErlYJTJRCrwD0rx/f+ZPYV3ieE74geBZrJVUBNkHZKcnyjhe5lQK7xUyy5JfM8TDGexla
+	 RNmiUKPZHVZBs8Ns3k4Nk49bdH4TZMWw9q++H/UKAlcOSFrYH/R5mVPwu2EkmClsK2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591007;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591009;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l7lzhcRaBwbzGBx7gxEIgdRQAcKFrU49jafjR98X/5c=;
-	b=2xlKVOk6kQh3YxKA2KF15SN2bBRpC8DrW4Ogz0bdewE+HBu76SCFvxkoXmrRYh3q3Y50
-	 O9ne8tLifO5hXD5CZCC6nSaRfDnAl3KK7leWoR/kAggW9Y3ubdf9coee29qWnqwbq492J
-	 g+MdLMPf6Ago0ARQb6QeuTjs3ISVpowy1dARklBNlGR6xZTTF4xviR8FE0INLriAsLJ6P
-	 SZw0Nx4UA6HQAV7lIfSiz8wItv/m7I4cETPB3DFCgZN1W+61GWfTNf1DvLC5Rshhtx1aa
-	 IaMs7/vXpvrpZBNeeVzVpJirgTFi9PwmkmwWCiFO73/Z3sv4oUeoVtsQXlxTSiZYWLg==
+	bh=GB8v5yuRtHO8pZt6N1G4PHrR7PjM3D4qk6bBNNWkeZA=;
+	b=o5vLvGFTMUmhSsdk4ybyoyBFYB3hN2LryIBZ/4J3AYftpjuECtOUqYz54DTMjHye/YSQ
+	 1Fkxu3ZVN27pahvwXT4X7MwppOyuQ7mty3jyj7+NHBc7ppo/TwD+gM6OjBLRL/wZrnNXY
+	 yObQdBxHmRaLYBY+wvLY5DEcP9Kcdx6KenvGXN3s/HQUL5FPPN4rt21rx1bB+Va8HEIz+
+	 q7QXcmNvf/gB+b9dfjrgOn0Rbf6XtpsURkGjn9CghYgAmEuyy6lp8YRjnx9Geowsqjura
+	 knUX1AqErlavHP6pbjXgyZZ9GoUhthIm4vqkdqTN3CMMFNBkXQ1lcifrVake8hJliGw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SBQE4mYG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BZ/0vmoT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4BDC60703FD;
-	Fri, 13 Nov 2026 17:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB8A6070F09;
+	Fri, 13 Nov 2026 17:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SBQE4mYG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615F71F000C4;
-	Fri, 13 Nov 2026 17:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BZ/0vmoT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 983B71F000C4;
+	Fri, 13 Nov 2026 17:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591007;
-	bh=l7lzhcRaBwbzGBx7gxEIgdRQAcKFrU49jafjR98X/5c=;
+	s=korg; t=1794591008;
+	bh=GB8v5yuRtHO8pZt6N1G4PHrR7PjM3D4qk6bBNNWkeZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SBQE4mYG0OAbp0Q+V0ldPpxjH4A3+d/ZsKpkt9JAe8y1o8ip1Nc6JxhbDcTqkryBv
-	 B9mElkBa/IObrubyYZjt+7zpb/X2PKySwvboXvO34R79HVP7HXU5/DAo3Zoux8a7FJ
-	 b2vZHku+z8eSdRfeO3Dvd4cMJpRvBcJekT2i62S4=
+	b=BZ/0vmoTs7JTPMy8CQmoti/2kksOSDKtgDzyAAD4H+qoyLkhQ0DihX8MCnwRappyF
+	 Vj5Hg/LgKYtV4o5okbwRNlPblpaPiLk0VJ6uH6ZMLEygyVV57dTP+ZQtdvKhAr1bJs
+	 f7j0d/5wo3EZ3LqhqQ3G+CEx3I9S0aJeXwtFuAp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Grzeschik <mgr@kernel.org>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 177/670] net/9p/usbg: always reset completion when disconnecting
-Date: Fri, 13 Nov 2026 10:45:41 -0500
-Message-ID: <20261113153818.043455129@linuxfoundation.org>
+Subject: [PATCH 6.12 178/670] net/9p/usbg: call disable_usb9pfs() from usb9pfs_disable()
+Date: Fri, 13 Nov 2026 10:45:42 -0500
+Message-ID: <20261113153818.075573796@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,43 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael Grzeschik <mgr@kernel.org>
 
-[ Upstream commit 08c6b9f484a406d9d87c5b2580725d2e0597f3b9 ]
+[ Upstream commit cd1988cf723c2eae87112b198bf90b0aebfeaf31 ]
 
-When some tx or rx transfers were pending while closing the connection,
-the completion handler could catch one pending completion call. To
-ensure a normal start when mounting again, we have to reset the
-completion and flush any pending completions.
+usb9pfs_disable() is the usb_function ->disable callback, invoked by
+the composite gadget core whenever the host resets or unconfigures
+the gadget. The gadget function API requires this callback to disable
+its endpoints; every other in-tree function driver does so from its
+->disable hook.
+
+usb9pfs_disable() never called disable_usb9pfs(), so the IN/OUT
+endpoints and their usb_request objects were left active and
+allocated across a host-driven disable. When the host later
+reconfigures the device, enable_usb9pfs() calls alloc_requests() again
+and unconditionally overwrites usb9pfs->in_req/out_req, permanently
+leaking the previous allocations, while the endpoints themselves are
+left enabled underneath the function's own idea of being disabled.
+
+Call disable_usb9pfs() before reinit_completion(&usb9pfs->send),
+mirroring the same sequence already used in p9_usbg_close(). Placing
+it before the reinit_completion() also ensures usb_ep_disable() has
+synchronously flushed any requests still queued in hardware before the
+completion is reset, closing the same race that motivated resetting
+the completion here in the first place.
 
 Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
+Assisted-by: Claude:claude-opus-4.8
 Cc: stable@vger.kernel.org
 Signed-off-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260922-usb9pfsfixes-v1-3-9d8dcc52904c@kernel.org>
+Message-ID: <20260922-usb9pfsfixes-v1-4-9d8dcc52904c@kernel.org>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/9p/trans_usbg.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index f1773749d9124..0b04363c39793 100644
+index 0b04363c39793..c58d57232369e 100644
 --- a/net/9p/trans_usbg.c
 +++ b/net/9p/trans_usbg.c
-@@ -467,6 +467,7 @@ static void p9_usbg_close(struct p9_client *client)
- 	mutex_unlock(&usb9pfs_lock);
- 
- 	disable_usb9pfs(usb9pfs);
-+	reinit_completion(&usb9pfs->send);
- }
- 
- static int p9_usbg_request(struct p9_client *client, struct p9_req_t *p9_req)
-@@ -755,6 +756,7 @@ static void usb9pfs_disable(struct usb_function *f)
+@@ -756,6 +756,10 @@ static void usb9pfs_disable(struct usb_function *f)
  		usb9pfs->client->status = Disconnected;
  	spin_unlock_irqrestore(&usb9pfs->lock, flags);
  	usb9pfs_clear_tx(usb9pfs);
-+	reinit_completion(&usb9pfs->send);
++
++	if (usb9pfs->in_ep->enabled)
++		disable_usb9pfs(usb9pfs);
++
+ 	reinit_completion(&usb9pfs->send);
  }
  
- static struct usb_function *usb9pfs_alloc(struct usb_function_instance *fi)
 -- 
 2.53.0
 
