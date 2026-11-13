@@ -1,54 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585662;
-	b=u8MEk25Wmi7OJ3EjQMeoeKp5ytPPWrcGKUw4fJF7e8SEigBtc6qi7yMqOtqoqyyKhgKE
-	 2kgJW6aj02mvYKNuQ+caOklnG2XjoYMiM/zQ1gy1WqlusxK3JovlBmeWhGghrYq289Mgg
-	 3AXXjKYnAK8mEvTDzn47yeMwsH5rr7wVPjPv4W9LXOKy+hN0A9TZBQod5avwlOx5ARQlc
-	 Yd5p44b/mQp17ct0zAJIKcRS69qUd6iKo0ZtUYI2oe6p6AxEu/8OabcrK0adj0VNS8YR8
-	 xMdkil9xm5+fgXCcKXtcX2vjx4oC5qoOvoM/YTlj1BdeM5IuNrAQ/tTqbysXpbLFy4w==
+	t=1794585663;
+	b=MpILYZoKh6Hs0C9E2fDAA58FR3ox02ZZJUWJsiOHpH9dc/BAKRRA05fiDf/7xZS9p3kL
+	 IDr3g+ooC7y7P0xPn8jcX3uFs7gUTvq/Hiir8e/+KZjSCYM/XhDrCxnh+9mogXmyUuoNF
+	 0Ah8yGyT7Ve1MEi1vX22rT5ncdSbLVt0HNX2p/jGTc6bcGE2oBOIvvHeQsHTZhjFKREMv
+	 OqnJUMIAjCHGbGjYYLX9l7q9pJWAvJoq15C0NnCMNNPmKRZqkbPgUbSSXrUADy+UdKBZD
+	 6J7JtsYNVPh07eyDdPVFqNsSbgA+ylc/4fk7rUcOyuiMgo5E+Fr1HZRwMcyBivA/fRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585662;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585663;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=55VpnoZ/trczYprnOb/VswImAn4i5KBYcv98/UhLhfE=;
-	b=Gvf+iMuo0TvGhz1wZl9N5EuJJbzKlMs0A0nCK5WOQfr6CX67NQgFxuAEtxhtCSTQuE67
-	 7xI7lwGzMMa43WNKZetULfyJ2sWLTleyze86ZBWR7AHigR0Y7wOYk7ZR96Zp+ZbolDCSn
-	 tKjpZcik/J2FLYjyOheqpjC2WqbGt90OD/nnaedL5fCGv3R1oqbRxunfXIFZN8c7/oirr
-	 JirxngXHA6GKFISv6M/kt9w2CxsjwPIxoBhr34l5DKw8bGkySJp7VyyKPQfD47Cyja8hf
-	 0ERjpd2TRDX7mMTv5K9NE6umatKZ2AYMNIvtv1LMfIS4AbFXdWIm3WEbsPtu7ApVtkQ==
+	bh=FHSgurg+HLzBtKLa6L56tloKI4Uv/1nBo+ngFFe5KwQ=;
+	b=KN3RJ1S6nLM3nbN2xp1q/mAGGWC2YspVHTzAbPSpVS3tgnUXQsoBkltP3iW8uFXOT2jH
+	 l1tK/FaZZbDgUR5mAqjNyP5+14HaftBQjPT0GqARJcJ09X91x0O8v1ZVQQfgtMj31no82
+	 RDJagPyPI+hUolEd89leqUGpnzfrd98ZLWwjMTtSgW/yk9iyqSJnFINVQ9s39ndS1DdBQ
+	 bLSm6/OfdrvXmU2+y5rcR0UIZJ8TSLIidylIyhCrGpyCdc315fr12k5mc9LImsy+jYb3J
+	 3Rfqf3rzJ985UAwhoBKWjo4fiZhBy9btFQ3pzSUG8jpeZC1zALC70yzRkDBvxqHOH+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVer3Z0E;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qfhdypf6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04600606B2DA;
-	Fri, 13 Nov 2026 16:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940A160744C0;
+	Fri, 13 Nov 2026 16:01:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVer3Z0E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37C71F000C6;
-	Fri, 13 Nov 2026 16:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qfhdypf6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B0E1F000C5;
+	Fri, 13 Nov 2026 16:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585661;
-	bh=55VpnoZ/trczYprnOb/VswImAn4i5KBYcv98/UhLhfE=;
+	s=korg; t=1794585663;
+	bh=FHSgurg+HLzBtKLa6L56tloKI4Uv/1nBo+ngFFe5KwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fVer3Z0ERvmWmjNOwlAtQvqwSLXMqVP6QHQoVI7moSYad8X2jU7T/0zCncEjMHrHH
-	 Q9brArc0WCy9yvRABQOiQ5Oq4fIY+JRe4SwZ6UCum6yMNxs3zDpBJ1Mu5H7g7k1z4r
-	 12KnUFow5MI8QWsrilG7S9vXBxJaCWWRvYUViqCg=
+	b=Qfhdypf6mAYUgTsu6sYvqlM5xVbCh04sMmcPmytYdZhffhYKpREGFT3dXHW69AbHy
+	 1o7pZ7r7v0HZ/0DkRbmBLCCXIz4FfmntSQllwmQRmuMmKu+CqAMRRJCYxS8QWm2rxv
+	 ILlTpfuJhLjRoq2lC/ezPToKhkGNY3iazJTHCkD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Chris Down <chris@chrisdown.name>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kairui Song <kasong@tencent.com>,
+	Hugh Dickins <hughd@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Youngjun Park <youngjun.park@lge.com>,
+	Ying Huang <huang.ying.caritas@gmail.com>,
+	Kelley Nielsen <kelleynnn@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 274/507] blk-mq: end the request if getting a keyslot fails
-Date: Fri, 13 Nov 2026 10:49:38 -0500
-Message-ID: <20261113153804.084133470@linuxfoundation.org>
+Subject: [PATCH 7.3 235/507] mm: make swapoff interruptible when unusing mms/shmem
+Date: Fri, 13 Nov 2026 10:48:59 -0500
+Message-ID: <20261113153802.465258736@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,62 +80,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Down <chris@chrisdown.name>
 
-[ Upstream commit e67cb6ed40e7f45912b63d7d575f18dfd2ebc98a ]
+[ Upstream commit 740128dd1a3f2bd81a80314d079b6b03c39ba3af ]
 
-When blk_crypto_rq_get_keyslot() fails, blk_mq_submit_bio() ends the bio
-by hand and frees the request. By then blk_mq_bio_to_request() has done
-the IO accounting, which blk_mq_free_request() doesn't undo, so the
-in_flight counter never drops and iostat shows a device that is 100%
-busy. If the bio went through zone write plugging the zone stays plugged
-as well, and every later write to it waits forever.
+try_to_unuse() only checks for a pending signal between mms, and
+shmem_unuse() doesn't check at all.  That means that once swapoff gets to
+a process or a shmem file with a lot swapped out, nothing can interrupt it
+until every last page of it has been read back in.
 
-Use blk_mq_end_request() like the dispatch path does for a request the
-driver rejected, after marking it for zone write plugging.
+Just as one example of where this can concretely show up, freezing tasks
+for suspend or hibernation has to wait for swapoff to notice the freezer's
+fake signal, and gives up after freeze_timeout_msecs (20 seconds by
+default).
 
-Move the call to blk_zone_write_plug_init_request() before
-blk_crypto_rq_get_keyslot() so that it doesn't need to be duplicated.
-It doesn't depend on the keyslot.
+Here's a facetious example where one swaps out 2GiB of one process to a
+swap file on ext4, starts swapoff, and half a second later tries to freeze
+with pm_test=freezer.  Writing to /sys/power/state then fails with EBUSY
+and this in dmesg:
 
-Fixes: 99dc422335d8 ("block: support to account io_ticks precisely")
-Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
-Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261029200110.1328103-1-ebiggers@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+    Freezing user space processes failed after 20.003 seconds (1 tasks refusing to freeze, wq_busy=0):
+    task:swapoff         state:D stack:0     pid:3175  tgid:3175  ppid:2955   task_flags:0x400100 flags:0x00000419
+    Call trace:
+     [...]
+     io_schedule+0x44/0x70
+     folio_wait_bit_common+0x1ec/0x3d0
+     __folio_lock+0x24/0x40
+     unuse_pte_range+0x2d0/0x348
+     unuse_vma+0x158/0x248
+     unuse_mm+0xfc/0x150
+     try_to_unuse+0x104/0x3f8
+     __do_sys_swapoff+0x220/0x5d8
+     [...]
+
+The same goes for anything else that wants swapoff to stop, like an admin
+hitting ^C in a panic, of course.
+
+Prior to commit b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+try_to_unuse() was driven by find_next_to_unuse() which checks for a
+signal before every entry, so let's restore that behaviour.
+
+Just as an example of the improvements, here's how long freezing takes
+in the same test while swapoff is happening on my computer:
+
+                      before                  after
+    400MiB anon       8.925s                  0.028s
+    400MiB shmem      1.639s                  0.003s
+    2GiB anon         failed after 20.003s    0.011s
+
+Link: https://lore.kernel.org/at9kJwdGkHPsWwgG@chrisdown.name
+Fixes: b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+Signed-off-by: Chris Down <chris@chrisdown.name>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Youngjun Park <youngjun.park@lge.com>
+Cc: Ying Huang <huang.ying.caritas@gmail.com>
+Cc: Kelley Nielsen <kelleynnn@gmail.com>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ mm/shmem.c    | 4 ++++
+ mm/swapfile.c | 4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 5a5dc66fc3b15..6d111c6f0ecd1 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -3193,16 +3193,15 @@ void blk_mq_submit_bio(struct bio *bio)
+diff --git a/mm/shmem.c b/mm/shmem.c
+index edda9f90b3d89..825a5a961086d 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1561,6 +1561,10 @@ static int shmem_unuse_inode(struct inode *inode, unsigned int type)
+ 		if (ret < 0)
+ 			break;
  
- 	blk_mq_bio_to_request(rq, bio, nr_segs);
++		if (signal_pending(current)) {
++			ret = -ERESTARTSYS;
++			break;
++		}
+ 		start = indices[folio_batch_count(&fbatch) - 1];
+ 	} while (true);
  
-+	if (bio_zone_write_plugging(bio))
-+		blk_zone_write_plug_init_request(rq);
-+
- 	ret = blk_crypto_rq_get_keyslot(rq);
- 	if (ret != BLK_STS_OK) {
--		bio_endio_status(bio, ret);
--		blk_mq_free_request(rq);
-+		blk_mq_end_request(rq, ret);
- 		return;
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index 601979b97f95b..fbb4b3dcf9562 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2609,6 +2609,8 @@ static inline int unuse_pmd_range(struct vm_area_struct *vma, pud_t *pud,
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ 		cond_resched();
++		if (signal_pending(current))
++			return -ERESTARTSYS;
+ 		next = pmd_addr_end(addr, end);
+ 		ret = unuse_pte_range(vma, pmd, addr, next, type);
+ 		if (ret)
+@@ -2823,7 +2825,7 @@ static int try_to_unuse(unsigned int type)
+ 	if (swap_usage_in_pages(si)) {
+ 		if (!signal_pending(current))
+ 			goto retry;
+-		return -EINTR;
++		return -ERESTARTSYS;
  	}
  
--	if (bio_zone_write_plugging(bio))
--		blk_zone_write_plug_init_request(rq);
--
- 	if (op_is_flush(bio->bi_opf) && blk_insert_flush(rq))
- 		return;
- 
+ success:
 -- 
 2.53.0
 
