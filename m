@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794586002;
-	b=S7JGpQC+RbA5G4InR3i0QHU6Zg10ojhKdcLfIPsWacWscYFDA7mfB9i0HN6Vb77XH6BF
-	 EplwDUMpL153LEbqODKCZK13tdQpOiP3bQ+/XJdfzWcnNFoqh5xBW4cRVJtopUGsLbc0+
-	 JpWYJO/wYttIX4U1uYg5sREx5vnze71zjKS7f8f6pM8DlCcK1XNjKv7Qkod8/qROQA4Fp
-	 t9w9qBLscCYXT5o1X+tgY5//yTP6gxHYvCJFslBnB5bzoRX1zPnlIC+PhbuevCon4CmKr
-	 SpFvLw1EeIjb+/7svUw5xaRuMMY05Nrx29gbm3l7i+fCUnskOT2dVIfV7JnfJD+GpHg==
+	t=1794586003;
+	b=CtVfZVUwpahRYMoTrqIBIVCwZt7BPl6RpF21TXP5qB3kDIIb2YIxF0xErDEyHD7efKuB
+	 HGH4UsB5EGYTZyh5f65RB0xxYrjZJFlysfCoAHIkqSfI7uAKRL3kbUhqE+p3usEG3Igou
+	 Ff0IR+G9+rc/ypUlir7v4yODTN5834tel99bzpjej8GK55pVgfG9c2/gAI9mugWjm/bBp
+	 CD7XISM4Qjw64zsNc7gEo8/h64zbzfKmDpFmOYfyP9SFdngHsN48/8nHrdRdISNBNQ3gw
+	 FN3b1l8bDoImulnJQ82yiM5ECIPABUuhQrBfAi6vi24roqhLYCa9ifAEyhqF/UK9r+Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794586002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794586003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7vBH7Vjpv/0Xbv2ZWGslw9dfvUL0/K8ku/aBBseMGDc=;
-	b=ETmsr34U/JmbuYt/19TUB9QfrletWR5vAYsA962+Zv+NecNklayQPivIvdmctsjNTpee
-	 Dfr21WA8PVvwZvwCzxDSJRTBh9FN7U2yH3eb63ij80M+9wmCbFnDrOLUkxHgEky8rvfG9
-	 sxTEgih7+08uYvAEMG7bYDz7NxpKap5LnXdhs9nSRHzFomBsWu9UR95rJG1dtVNddbFut
-	 YZhKsONKuM+wLAFq+66uVfHPKfij3Rp5Pf4HtGSrMtu2JR5/tm4Gy9AMYzT7kEtFyAkzc
-	 Ohsn2+gZ/e29Rdwj4f1cLjVfiV+a8kox8WAs6wOCyk7vTQ3WAJPUGcUn1M+OWt2VT+Q==
+	bh=hKOYdZv99LI1AC2GO70+l6VFw7Pm4sXKWec2zeK/EdA=;
+	b=NcIse8YEPl58ef1/57OUEj8pYBTUt2Gcg977ZVwBJe9e0VWXuYIbUSq+UxMad/7r95in
+	 KFgvCEnyiEiR5xK9pDybrtHr6chtIIzIZFTlqlXE56Cg72WaFURYHH9Gm1WhgomstsUOD
+	 YdUARoU8wXTN1m7uyfCDvfvI7pARbxFSwV/u0NLtQfcli37/DKMiaqCcqdS9bDEmaWrI6
+	 4RsebgpPCmQDLqbdCEPbjh5Vl86YbQSCSrnrVvZSKbK1CpzzQwenFr3yKUG6WXJtESwdq
+	 jjtUEdIdJrmAFwzYdXZCpigcmZstmNOXozVEFOg6LFt99LXATxXmMUMk05F8DcqjKLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S+JjLRe+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FqOARpgr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27353606B5C4;
-	Fri, 13 Nov 2026 16:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1496076E3A;
+	Fri, 13 Nov 2026 16:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S+JjLRe+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7BDE1F000C4;
-	Fri, 13 Nov 2026 16:06:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FqOARpgr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C3B31F000C4;
+	Fri, 13 Nov 2026 16:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794586002;
-	bh=7vBH7Vjpv/0Xbv2ZWGslw9dfvUL0/K8ku/aBBseMGDc=;
+	s=korg; t=1794586003;
+	bh=hKOYdZv99LI1AC2GO70+l6VFw7Pm4sXKWec2zeK/EdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S+JjLRe+d2KO4ongzHAKfYd9wCsoQ0Pss5SbkROvO3pBn7YS7eH7sdKF280mUSqq2
-	 3rSkuAGqaeRl4sSe0mI2D92dGo6vIwDztIgfkmaGD37KDj04lAUBIjtHQw1jie3g0v
-	 bNUqXAqCUX2AoUmBePRwArY44C2fDp77cLjOOHyU=
+	b=FqOARpgrBK9RdkP40hQmksO7pgDT4zvNtruXjkQqgoWmzXTBSLh0dEmpjHijCjGrJ
+	 KDA/ZmayOOqtGZQZ/S0n7EgKo54hGT0lFYixiuNiTA/z4wCGQCkMTeIyATuHzmyNKA
+	 O7k2TbDW2BCVBpPIzoi3EqErlYr9ZQQ27s0PR0LI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Olga Kornievskaia <okorniev@redhat.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/686] SUNRPC: report local rpcbind calls that get no answer
-Date: Fri, 13 Nov 2026 10:42:55 -0500
-Message-ID: <20261113153822.390728449@linuxfoundation.org>
+Subject: [PATCH 6.18 043/686] NFSD: stop registering with rpcbind after a failure in listener_set
+Date: Fri, 13 Nov 2026 10:42:56 -0500
+Message-ID: <20261113153822.424774468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,214 +71,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 202a557d0c8e65c7fd7fcff2ad2756468d1ab711 ]
+[ Upstream commit bf0f3a37e6ccb78ae80cc6eb2edde4f033c7574c ]
 
-A caller that creates many listeners in one operation calls svc_register()
-once for each of them. Every call waits for the local rpcbind on its own,
-so a rpcbind that never answers costs the caller one timeout per listener.
-The caller has no way to learn that the first call already failed.
+nfsd_nl_listener_set_doit() calls svc_xprt_create_from_sa() once for each
+requested listener and passes flags of 0, so every listener registers with
+rpcbind on its own. A rpcbind that accepts the connection and never replies
+therefore costs one timeout for each entry. With the cap of 1024 entries
+the request can hold nfsd_mutex for about 34 minutes, which is roughly 17
+times the hung-task threshold.
 
-Split rpcb_register_call() failures by whether rpcbind answered:
+One failure is enough to know that the next call will not fare better.
+Read svc_rpcb_failure_count() before the create loop, and pass
+SVC_SOCK_ANONYMOUS for the rest of the request once the count moves.
 
- - answered: a FALSE reply, or an RPC-level rejection that
-   rpc_decode_header() derives from the reply. -EACCES (FALSE reply or
-   AUTH_ERROR), -EPROTONOSUPPORT, -EPFNOSUPPORT, -EOPNOTSUPP.
- - never sent: -ENOMEM, -EMSGSIZE, -ERESTARTSYS.
- - no answer: everything else, i.e. transport errors.
-
-Any no-answer error gets represented by -EIO, which is already what the
-RPC layer reports for most of it: rpc_check_timeout() returns -EIO for a
-soft timeout without RPC_TASK_TIMEOUT, and call_status() documents -EIO
-as "shutdown or soft timeout".
-
-Keep a count of the number of rpcbind failures in the serv. Later
-patches will use that to watch for hard rpcbind failures, and alter
-their behavior accordingly.
-
+Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
+Cc: stable@vger.kernel.org
 Assisted-by: LLM
+Link: https://syzkaller.appspot.com/bug?extid=c7eae0eb80858a2dba0f
+Suggested-by: Olga Kornievskaia <okorniev@redhat.com>
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-6-a540d86668b0@kernel.org
+Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-10-a540d86668b0@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
-Stable-dep-of: bf0f3a37e6cc ("NFSD: stop registering with rpcbind after a failure in listener_set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/clnt.h |  3 ++-
- include/linux/sunrpc/svc.h  |  7 +++++--
- net/sunrpc/rpcb_clnt.c      | 22 ++++++++++++++++---
- net/sunrpc/svc.c            | 42 ++++++++++++++++++++++++++++++++++++-
- 4 files changed, 67 insertions(+), 7 deletions(-)
+ fs/nfsd/nfsctl.c | 42 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 38 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/sunrpc/clnt.h b/include/linux/sunrpc/clnt.h
-index 3c2b8c355ab3a..30344c0d6a9d7 100644
---- a/include/linux/sunrpc/clnt.h
-+++ b/include/linux/sunrpc/clnt.h
-@@ -199,7 +199,8 @@ struct rpc_xprt	*rpc_task_get_xprt(struct rpc_clnt *clnt,
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 49cd0588deb39..9ffa72c15aed2 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2029,7 +2029,10 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 	const struct nlattr *bad_attr = NULL;
+ 	struct svc_xprt *xprt, *tmp;
+ 	const char *bad_xprt = NULL;
++	unsigned int rpcb_failures;
+ 	const struct nlattr *attr;
++	bool skipped_rpcb = false;
++	bool bad_rpcb = false;
+ 	struct svc_serv *serv;
+ 	LIST_HEAD(permsocks);
+ 	struct nfsd_net *nn;
+@@ -2119,13 +2122,16 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 	if (delete)
+ 		svc_xprt_destroy_all(serv, net, false);
  
- int		rpcb_create_local(struct net *);
- void		rpcb_put_local(struct net *);
--int		rpcb_register(struct net *, u32, u32, int, unsigned short);
-+int		rpcb_register(struct net *net, u32 prog, u32 vers, int prot,
-+			      unsigned short port);
- int		rpcb_v4_register(struct net *net, const u32 program,
- 				 const u32 version,
- 				 const struct sockaddr *address,
-diff --git a/include/linux/sunrpc/svc.h b/include/linux/sunrpc/svc.h
-index 5506d20857c31..1668804db44dd 100644
---- a/include/linux/sunrpc/svc.h
-+++ b/include/linux/sunrpc/svc.h
-@@ -75,6 +75,7 @@ struct svc_serv {
- 	unsigned int		sv_max_payload;	/* datagram payload size */
- 	unsigned int		sv_max_mesg;	/* max_payload + 1 page for overheads */
- 	unsigned int		sv_xdrsize;	/* XDR buffer size */
-+	atomic_t		sv_rpcb_failures; /* unanswered rpcbind calls */
- 	struct list_head	sv_permsocks;	/* all permanent sockets */
- 	struct list_head	sv_tempsocks;	/* all temporary sockets */
- 	int			sv_tmpcnt;	/* count of temporary "valid" sockets */
-@@ -435,6 +436,7 @@ int sunrpc_set_pool_mode(const char *val);
- int sunrpc_get_pool_mode(char *val, size_t size);
- void svc_rpcb_cleanup(struct svc_serv *serv, struct net *net);
- int svc_bind(struct svc_serv *serv, struct net *net);
-+unsigned int svc_rpcb_failure_count(struct svc_serv *serv);
- struct svc_serv *svc_create(struct svc_program *, unsigned int,
- 			    int (*threadfn)(void *data));
- bool		   svc_rqst_replace_page(struct svc_rqst *rqstp,
-@@ -450,8 +452,9 @@ int		   svc_set_num_threads(struct svc_serv *, struct svc_pool *, int);
- int		   svc_pool_stats_open(struct svc_info *si, struct file *file);
- void		   svc_process(struct svc_rqst *rqstp);
- void		   svc_process_bc(struct rpc_rqst *req, struct svc_rqst *rqstp);
--int		   svc_register(const struct svc_serv *, struct net *, const int,
--				const unsigned short, const unsigned short);
-+int		   svc_register(struct svc_serv *serv, struct net *net,
-+				const int family, const unsigned short proto,
-+				const unsigned short port);
++	rpcb_failures = svc_rpcb_failure_count(serv);
++
+ 	/* walk list of addrs again, open any that still don't exist */
+ 	nlmsg_for_each_attr_type(attr, NFSD_A_SERVER_SOCK_ADDR, info->nlhdr,
+ 				 GENL_HDRLEN, rem) {
+ 		struct nlattr *tb[NFSD_A_SOCK_MAX + 1];
+ 		const char *xcl_name;
+ 		struct sockaddr *sa;
+-		int ret;
++		bool hit_rpcb;
++		int flags, ret;
  
- void		   svc_wake_up(struct svc_serv *);
- void		   svc_reserve(struct svc_rqst *rqstp, int space);
-diff --git a/net/sunrpc/rpcb_clnt.c b/net/sunrpc/rpcb_clnt.c
-index 2d74c660de666..9b90350820be4 100644
---- a/net/sunrpc/rpcb_clnt.c
-+++ b/net/sunrpc/rpcb_clnt.c
-@@ -400,7 +400,8 @@ static struct rpc_clnt *rpcb_create(struct net *net, const char *nodename,
- 	return rpc_create(&args);
- }
+ 		/* validated up front in nfsd_nl_validate_listeners() */
+ 		if (nla_parse_nested(tb, NFSD_A_SOCK_MAX, attr,
+@@ -2144,12 +2150,27 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 			continue;
+ 		}
  
--static int rpcb_register_call(struct sunrpc_net *sn, struct rpc_clnt *clnt, struct rpc_message *msg, bool is_set)
-+static int rpcb_register_call(struct sunrpc_net *sn, struct rpc_clnt *clnt,
-+			      struct rpc_message *msg, bool is_set)
- {
- 	int flags = RPC_TASK_NOCONNECT;
- 	int error, result = 0;
-@@ -410,8 +411,23 @@ static int rpcb_register_call(struct sunrpc_net *sn, struct rpc_clnt *clnt, stru
- 	msg->rpc_resp = &result;
- 
- 	error = rpc_call_sync(clnt, msg, flags);
--	if (error < 0)
--		return error;
-+	if (error < 0) {
-+		switch (error) {
-+		/* rpcbind answered; the reply itself carries the error */
-+		case -EPROTONOSUPPORT:
-+		case -EPFNOSUPPORT:
-+		case -EOPNOTSUPP:
-+		case -EACCES:
-+		/* the call never made it onto the wire */
-+		case -ENOMEM:
-+		case -EMSGSIZE:
-+		/* the caller is going away; this says nothing about rpcbind */
-+		case -ERESTARTSYS:
-+			return error;
+-		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, 0,
++		flags = skipped_rpcb ? SVC_SOCK_ANONYMOUS : 0;
++		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, flags,
+ 					      current_cred());
++
++		hit_rpcb = false;
++		if (!skipped_rpcb &&
++		    svc_rpcb_failure_count(serv) != rpcb_failures) {
++			skipped_rpcb = true;
++			hit_rpcb = true;
++			if (ret < 0)
++				ret = svc_xprt_create_from_sa(serv, xcl_name,
++							      net, sa,
++							      SVC_SOCK_ANONYMOUS,
++							      current_cred());
 +		}
-+		/* anything else, we assume that rpcbind isn't functional */
-+		return -EIO;
-+	}
- 
- 	if (!result)
- 		return -EACCES;
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index 61c3c3a743289..a3933f86f2d42 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1207,10 +1207,40 @@ int svc_generic_rpcbind_set(struct net *net,
- 	error = svc_rpcbind_set_version(net, progp, version,
- 					family, proto, port);
- 
-+	/* -EIO means no answer, not a refusal, so vs_rpcb_optnl must keep it. */
-+	if (error == -EIO)
-+		return error;
 +
- 	return (vers->vs_rpcb_optnl) ? 0 : error;
- }
- EXPORT_SYMBOL_GPL(svc_generic_rpcbind_set);
- 
-+/**
-+ * svc_rpcb_failure_count - local rpcbind calls for @serv that got no answer
-+ * @serv: RPC service to query
-+ *
-+ * svc_register() adds one for each of its calls that got no answer. A reply
-+ * that refuses one entry does not count, because rpcbind answered and the
-+ * next entry may still succeed.
-+ *
-+ * The count is kept per serv rather than per net. The local rpcbind client
-+ * is per-net and lockd shares it, but a count that another service can move
-+ * says nothing about this serv's own calls.
-+ *
-+ * This is for callers that cannot see the svc_register() return, because a
-+ * transport class sits in between. Such a caller reads the count before it
-+ * starts and compares as it goes, so there is no state to reset between
-+ * operations. The count never resets, and callers must not attach meaning
-+ * to the value itself.
-+ *
-+ * Return: the number of unanswered calls since this serv was created.
-+ */
-+unsigned int svc_rpcb_failure_count(struct svc_serv *serv)
-+{
-+	return atomic_read(&serv->sv_rpcb_failures);
-+}
-+EXPORT_SYMBOL_GPL(svc_rpcb_failure_count);
-+
- /**
-  * svc_register - register an RPC service with the local portmapper
-  * @serv: svc_serv struct for the service to register
-@@ -1221,10 +1251,11 @@ EXPORT_SYMBOL_GPL(svc_generic_rpcbind_set);
-  *
-  * Service is registered for any address in the passed-in protocol family
-  */
--int svc_register(const struct svc_serv *serv, struct net *net,
-+int svc_register(struct svc_serv *serv, struct net *net,
- 		 const int family, const unsigned short proto,
- 		 const unsigned short port)
- {
-+	bool			noanswer = false;
- 	unsigned int		p, i;
- 	int			error = 0;
- 
-@@ -1236,10 +1267,16 @@ int svc_register(const struct svc_serv *serv, struct net *net,
- 		struct svc_program *progp = &serv->sv_programs[p];
- 
- 		for (i = 0; i < progp->pg_nvers; i++) {
-+			const struct svc_version *vers = progp->pg_vers[i];
- 			int ret;
- 
- 			ret = progp->pg_rpcbind_set(net, progp, i,
- 					family, proto, port);
-+			if (ret == -EIO) {
-+				noanswer = true;
-+				if (vers && vers->vs_rpcb_optnl)
-+					ret = 0;
-+			}
- 			if (ret < 0) {
- 				printk(KERN_WARNING "svc: failed to register "
- 					"%sv%u RPC service (errno %d).\n",
-@@ -1251,6 +1288,9 @@ int svc_register(const struct svc_serv *serv, struct net *net,
+ 		/* always save the latest error */
+ 		if (ret < 0) {
+ 			bad_attr = attr;
+ 			bad_xprt = xcl_name;
++			bad_rpcb = hit_rpcb;
+ 			err = ret;
  		}
  	}
+@@ -2161,8 +2182,21 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 	 */
+ 	if (err) {
+ 		NL_SET_BAD_ATTR(info->extack, bad_attr);
+-		NL_SET_ERR_MSG_FMT(info->extack, "cannot create %s listener",
+-				   bad_xprt);
++		if (bad_rpcb)
++			NL_SET_ERR_MSG_FMT(info->extack,
++					   "cannot create %s listener; rpcbind did not answer",
++					   bad_xprt);
++		else if (skipped_rpcb)
++			NL_SET_ERR_MSG_FMT(info->extack,
++					   "cannot create %s listener; rpcbind did not answer earlier, so some listeners are not registered",
++					   bad_xprt);
++		else
++			NL_SET_ERR_MSG_FMT(info->extack,
++					   "cannot create %s listener",
++					   bad_xprt);
++	} else if (skipped_rpcb) {
++		NL_SET_ERR_MSG(info->extack,
++			       "rpcbind did not answer, some listeners are not registered");
+ 	}
  
-+	if (noanswer)
-+		atomic_inc(&serv->sv_rpcb_failures);
-+
- 	return error;
- }
- 
+ 	if (!serv->sv_nrthreads && list_empty(&nn->nfsd_serv->sv_permsocks))
 -- 
 2.53.0
 
