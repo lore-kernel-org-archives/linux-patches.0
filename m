@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590164;
-	b=ybLHy6hwpqseVOersFEw+Fzg5/nlJPY1SyIkABSCjLq0cugLwmdNPEK4zXH3nPjnlyvF
-	 8LpRdVifMZ9AQaFQXNW/bfEn0Rc4+tvJohpLs9xHvWFZK7Bzsk2CZaw1SHCWtn0Yho7F9
-	 KxkcV6Oc6cWdHxJvPOYfNc/clk/SQCpLrZ9MBYr//FehMHYKyAnIpNx00Pd+zXLyFw5ZZ
-	 yBttwY6QTgQohD6cPaYVi+m0G4i7pRtNLB9odLRHBLvPmCusTCK0fN3v0VABr0bRznfB1
-	 AhMuI9pMkAgjGKmfVwn/xbCDuApmmGErezQf6wVI82LEbdwkbFr5F8eAzogSWPIM6Xw==
+	t=1794590165;
+	b=XTb9x65rYjFpDYGr+Oa04KzaCXyeM5rfnZn0D1zemWMGOgPVO8Yr3bm2cXGRrQK4N9Va
+	 AoMOkIZOnGRubDy2gbZWJawcmNNZKM0Pp+L6I2eHHqpIhe1K8IZoBDsKosrwpZeNYMG74
+	 01cXTj0iipRsc/XkDugX8U380ksoPPY/A7N3dwyWHoBxZ17/qx20O28sLC8YlW41OlPAX
+	 FPpdLaZbiwq3/28lCOdg2eD7sbd1LtJxkF7eV8E95rzu63iRCMHMIgi8NNUI4GZlt0yl5
+	 Xm+3f6PQO4Ar+7tmvBkxtXqdwHln9mZQbOnW6ee6cLGaLpJaeSa63ImZY2MFSjUjUtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590164;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590165;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T5JYrXe7Ap4JVdwhq+q8fjLTgk/x87UHGxdfDVftF2g=;
-	b=wBlD8fzSjLFEUZG2bcnBEwm9zdMIFtmvlNc4ZAMxsB//MatgRZ263LQGBOF/eXdjuVlm
-	 0aadoMz4cTfYw15aT07I61q0K235Do0EYYSHy3aLF8EacCvjyQEh2dZi/rGchsEogQRmR
-	 O3rGZl/hRtkYldDR4QpTgPtJG6U5SomqX1UxzUgrZi6owNf1OlYe4eeqS3zi8EAlv4IFR
-	 mS1pLTgR4Q2Ug1eGIUtu3cpBIR2uT5mK93G4OzHQ1anPeWkig0N7WW4yaTr4ZNWRKIqZ+
-	 /ZiANcYY5Uwi481YYQJq0tI2w6r/5Mtv5KGeIhYwfQdR3Y8O/WDAWLk3Uvwrpg3Velg==
+	bh=LyXzxx5cokQWIN5JbiUCrCusUNH5ax6Jtc4XC6sZXko=;
+	b=k1Gsoey8dAVIRgy1X35FI78LhQfb6SxlIqrW/IZo16acUA7w+BgzWG5A/xi7a9jyIi/g
+	 KYX71qcXfcRSnAVxI40TjnqnS1Fia7yOC9JyIJxUTheZ2lsrfUpnQgmtSUsa/yRqMejSk
+	 EIY3LskJa3unJajSYqsckdMCHt6xa+IIZJUuoH2oW+ZhorKaY2/Y6htw2jDHMrgieu6Pt
+	 pez0amMKM13bbyKw66E3H7nTgEZZM6zD/Yh3ZAQ3BmaYH1vqCvbjkHztTmFZlROPGsCZ2
+	 D+72edpfNes23dXYSk0L4quVT9rylBmGJxcTkzH4EXMijsRC+E6GcwUezrbVBe+mDLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4291wGx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qGPu4ho7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8AB606E213;
-	Fri, 13 Nov 2026 17:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75FA8606E225;
+	Fri, 13 Nov 2026 17:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y4291wGx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9C41F000C4;
-	Fri, 13 Nov 2026 17:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qGPu4ho7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D029D1F000C4;
+	Fri, 13 Nov 2026 17:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590163;
-	bh=T5JYrXe7Ap4JVdwhq+q8fjLTgk/x87UHGxdfDVftF2g=;
+	s=korg; t=1794590165;
+	bh=LyXzxx5cokQWIN5JbiUCrCusUNH5ax6Jtc4XC6sZXko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y4291wGxjJYx0rEI9ApQZ29HeZuSjmA2Seng2rXcFDKsJ/OaOW6i36roC/XrN0/1c
-	 9P+XZHQ31FKp0ld8WMnxPJuXu5JnPiaQVoWHur1a4DzKdMjvya7H3aCy7tXL8hnVYC
-	 2SxwfHo+X1DsptvlyP74Yx3CFEM5G3RiveIa0xRI=
+	b=qGPu4ho7KDYDtWg+qluy8rzz/YpEicAnpsuRMeMUI+pypvYIjqVmnZ4CsIbJYY8Cz
+	 iOcrX6P7rkdiSjdcv5STEiST0OA/mv2lPW59QVjjGUDiJ18cVPTJILny+wgQhN2BiW
+	 Nks1D8salMNDIZAQeML4L9Wkqfg9thSIPu0KKwew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <netdev-bot+sashiko@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 175/686] ipmr, ip6mr: validate packets injected into the register vif on xmit
-Date: Fri, 13 Nov 2026 10:45:08 -0500
-Message-ID: <20261113153826.934799662@linuxfoundation.org>
+Subject: [PATCH 6.18 140/686] rose: hold the socket a received frame is delivered to
+Date: Fri, 13 Nov 2026 10:44:33 -0500
+Message-ID: <20261113153825.548338963@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,102 +67,192 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit aa1799e93f5ebb973252aec649d84d12d9c7fd1c ]
+rose_route_frame() and rose_loopback_timer() find the socket a frame
+belongs to with rose_find_socket(), which returns it without a
+reference once rose_list_lock is dropped, then hand the frame to
+rose_rcv_frame(), which locks the socket and runs its state machine.
+The socket can be destroyed in between: by rose_release() on another
+CPU, or by its heartbeat, which reaps a dead socket in state 0 that
+nobody owns, such as an incoming call left on the queue of a listener
+that has been closed. Its LCI is not cleared then, so frames from the
+neighbour still find it until it is reaped, and the reaping frees it
+under the frame being delivered.
 
-reg_vif_xmit() passes the packet to ipmr_cache_report() which copies its
-IP header into the IGMPMSG_WHOLEPKT report that is queued to the mroute
-socket. Nothing guarantees that the packet contains a full IP header, so
-when a short packet is injected on the register device (e.g., using
-AF_PACKET), the copy reads past the end of the packet and a recvmsg() on
-the mroute socket leaks the uninitialized bytes to user space [1].
+Take a reference in rose_find_socket() and drop it in its callers once
+the frame has been handled. rose_new_lci() only needs to know whether
+an LCI is in use: let it walk the socket list under rose_list_lock
+itself instead of taking references.
 
-IPv6 has the same problem [2]. Its reg_vif_xmit() does call
-pskb_inet_may_pull(), but the helper keys off skb->protocol and does not
-pull anything when the protocol is neither IPv4 nor IPv6.
+A Call Request that arrives on the LCI of an existing socket tears the
+old socket down. With the reference held, the socket may by then have
+been disconnected or reaped, its neighbour reference dropped and
+rose->neighbour cleared: lock the socket and only tear it down if it
+still holds that LCI on that neighbour.
 
-Fix by dropping packets whose protocol does not match the address family
-of the register device or that do not contain a full network header.
+On a QEMU bench with two 4-CPU guests (KASAN, lockdep), A places eight
+calls to B and sends a 100-byte message per second on each; B listens
+without ever accepting, closes the listener after 10 s, and the calls
+left on its queue are reaped 5 s later while A's messages keep coming.
+With frames for sockets in state 0 held 2 s after rose_find_socket(),
+before: KASAN reports a slab-use-after-free in rose_rcv_frame(), called
+from rose_route_frame(), on the socket freed by the heartbeat timer;
+after: no report in two runs, and no report without the delay either.
 
-[1]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter
- raw_recvmsg
-
-Uninit was stored to memory at:
- ipmr_cache_report
- reg_vif_xmit
- packet_sendmsg
-
-Uninit was created at:
- __alloc_skb
- sock_alloc_send_pskb
- packet_sendmsg
-
-Bytes 1-3 of 21 are uninitialized
-
-[2]
-BUG: KMSAN: kernel-infoleak in _copy_to_iter
- rawv6_recvmsg
-
-Uninit was stored to memory at:
- ip6mr_cache_report
- reg_vif_xmit
- packet_sendmsg
-
-Uninit was created at:
- __alloc_skb
- sock_alloc_send_pskb
- packet_sendmsg
-
-Bytes 8-23 of 41 are uninitialized
-
-Fixes: 14fb64e1f449 ("[IPV6] MROUTE: Support PIM-SM (SSM).")
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
-Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/0545f0c83f5ee2f6696210f87268e811ef655715.1792476357.git.zhilinz%40nebusec.ai
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261025071729.34967-3-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit 294cfbca864a2cf9d458fa1e8ee51f2cd8284b95)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c  | 6 ++++++
- net/ipv6/ip6mr.c | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ net/rose/af_rose.c       | 42 ++++++++++++++++++++++++++++++----------
+ net/rose/rose_loopback.c |  1 +
+ net/rose/rose_route.c    | 37 +++++++++++++++++++++--------------
+ 3 files changed, 56 insertions(+), 24 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 66a7f25f236b8..f3464e7a337b6 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -530,6 +530,12 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb, struct net_device *dev)
- 	};
- 	int err;
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 8d0878cf2b01c..87e7d938e6db7 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -312,20 +312,35 @@ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
  
-+	if (skb->protocol != htons(ETH_P_IP) || !pskb_inet_may_pull(skb)) {
-+		DEV_STATS_INC(dev, tx_errors);
-+		kfree_skb(skb);
-+		return NETDEV_TX_OK;
-+	}
+ /*
+  *	Find a connected ROSE socket given my LCI and device.
++ *	The caller holds rose_list_lock.
+  */
+-struct sock *rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
++static struct sock *__rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
+ {
+ 	struct sock *s;
+ 
+-	spin_lock_bh(&rose_list_lock);
+ 	sk_for_each(s, &rose_list) {
+ 		struct rose_sock *rose = rose_sk(s);
+ 
+ 		if (rose->lci == lci && rose->neighbour == neigh)
+-			goto found;
++			return s;
+ 	}
+-	s = NULL;
+-found:
 +
- 	rcu_read_lock();
- 	err = ipmr_fib_lookup(net, &fl4, &mrt);
- 	if (err < 0) {
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 7b60e4b2a8179..9a2c23de98ad7 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -620,7 +620,7 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
- 		.flowi6_mark	= skb->mark,
- 	};
++	return NULL;
++}
++
++/*
++ *	Find a connected ROSE socket given my LCI and device. A reference is
++ *	taken on the socket found: it can be released and destroyed as soon
++ *	as rose_list_lock is dropped.
++ */
++struct sock *rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
++{
++	struct sock *s;
++
++	spin_lock_bh(&rose_list_lock);
++	s = __rose_find_socket(lci, neigh);
++	if (s)
++		sock_hold(s);
+ 	spin_unlock_bh(&rose_list_lock);
+ 	return s;
+ }
+@@ -336,19 +351,26 @@ struct sock *rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
+  */
+ unsigned int rose_new_lci(struct rose_neigh *neigh)
+ {
++	unsigned int res = 0;
+ 	int lci;
  
--	if (!pskb_inet_may_pull(skb))
-+	if (skb->protocol != htons(ETH_P_IPV6) || !pskb_inet_may_pull(skb))
- 		goto tx_err;
++	spin_lock_bh(&rose_list_lock);
+ 	if (neigh->dce_mode) {
+ 		for (lci = 1; lci <= sysctl_rose_maximum_vcs; lci++)
+-			if (rose_find_socket(lci, neigh) == NULL && rose_route_free_lci(lci, neigh) == NULL)
+-				return lci;
++			if (!__rose_find_socket(lci, neigh) && !rose_route_free_lci(lci, neigh)) {
++				res = lci;
++				break;
++			}
+ 	} else {
+ 		for (lci = sysctl_rose_maximum_vcs; lci > 0; lci--)
+-			if (rose_find_socket(lci, neigh) == NULL && rose_route_free_lci(lci, neigh) == NULL)
+-				return lci;
++			if (!__rose_find_socket(lci, neigh) && !rose_route_free_lci(lci, neigh)) {
++				res = lci;
++				break;
++			}
+ 	}
++	spin_unlock_bh(&rose_list_lock);
  
- 	if (ip6mr_fib_lookup(net, &fl6, &mrt) < 0)
+-	return 0;
++	return res;
+ }
+ 
+ /*
+diff --git a/net/rose/rose_loopback.c b/net/rose/rose_loopback.c
+index 4e4a473910cc8..6c5c35030e67b 100644
+--- a/net/rose/rose_loopback.c
++++ b/net/rose/rose_loopback.c
+@@ -109,6 +109,7 @@ static void rose_loopback_timer(struct timer_list *unused)
+ 		if (sk) {
+ 			if (rose_rcv_frame(sk, skb) == 0)
+ 				kfree_skb(skb);
++			sock_put(sk);
+ 			continue;
+ 		}
+ 
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 87a33f5c65d8a..84d628a826b79 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -1054,25 +1054,34 @@ int rose_route_frame(struct sk_buff *skb, ax25_cb *ax25)
+ 		if (frametype == ROSE_CALL_REQUEST) {
+ 			struct rose_sock *rose = rose_sk(sk);
+ 
+-			/* Remove an existing unused socket */
+-			rose_clear_queues(sk);
+-			rose->cause	 = ROSE_NETWORK_CONGESTION;
+-			rose->diagnostic = 0;
+-			rose_neigh_put(rose->neighbour);
+-			rose->neighbour	 = NULL;
+-			rose->lci	 = 0;
+-			rose->state	 = ROSE_STATE_0;
+-			sk->sk_state	 = TCP_CLOSE;
+-			sk->sk_err	 = 0;
+-			sk->sk_shutdown	 |= SEND_SHUTDOWN;
+-			if (!sock_flag(sk, SOCK_DEAD)) {
+-				sk->sk_state_change(sk);
+-				sock_set_flag(sk, SOCK_DEAD);
++			/*
++			 * Remove an existing unused socket, unless it was
++			 * disconnected or reaped since it was found.
++			 */
++			bh_lock_sock(sk);
++			if (rose->lci == lci && rose->neighbour == rose_neigh) {
++				rose_clear_queues(sk);
++				rose->cause	 = ROSE_NETWORK_CONGESTION;
++				rose->diagnostic = 0;
++				rose_neigh_put(rose->neighbour);
++				rose->neighbour	 = NULL;
++				rose->lci	 = 0;
++				rose->state	 = ROSE_STATE_0;
++				sk->sk_state	 = TCP_CLOSE;
++				sk->sk_err	 = 0;
++				sk->sk_shutdown	 |= SEND_SHUTDOWN;
++				if (!sock_flag(sk, SOCK_DEAD)) {
++					sk->sk_state_change(sk);
++					sock_set_flag(sk, SOCK_DEAD);
++				}
+ 			}
++			bh_unlock_sock(sk);
++			sock_put(sk);
+ 		}
+ 		else {
+ 			skb_reset_transport_header(skb);
+ 			res = rose_rcv_frame(sk, skb);
++			sock_put(sk);
+ 			goto out;
+ 		}
+ 	}
 -- 
 2.53.0
 
