@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585670;
-	b=p+rgWsLVyX81o03JBs5p3kwTVF3UJXmYnMx0uPEx3Wg7AOgqt+IR5gsaNuv4FpdapFtP
-	 nZnBdD+HwOkt8Gt2EW4lgl9OnzsoFgEJ7lBIEZ3429VAB9BiYQQMcMPXpsSDPVPdUFxkT
-	 OLumux5u8cCDPRzgMXuvCbUtNuFzGB59EpBoHg18KsbgpYADrBV0BoqI1TvKkPF9SW3uF
-	 sY4tq2ySkFZ2Smi0hoTzop5BhwiZ9+VCCUr3tA3mIZsyh3sS+fSg00QFawj3UJa12G7DT
-	 SZPeu/ykvCxDELfawgRQc6BjM8RPmvUcLv4sGitlx7sg/L4CZYAWL0qgk5dDUcEYN1Q==
+	t=1794585671;
+	b=LOsAe6er9nhVQse30aAqvq9V0/0+8Apl/JoFMsArk+TlPn/cjWGkDb/+2m1jh4xVDwza
+	 kc//MEInh/A4oU3J1Dxbnw0gzgWl1UX1QjW1v9ZTRd9pJjeF1SgvDNzi6ZtLQKdlLGAit
+	 iq04yIfnWbdK7HHmQMchrNl6/x3iTmPlvFEjZoi4vT7kd1lp/4w4O0crFEOqKhKBwBSO9
+	 sL0aGlhw3vkrDD6MRDWPdW4NsREIh3IZkAq0pb03Zy4L8864g9mMuJ6cVt4R5FKfGQHG9
+	 URmYTh5sq9Lc3YIpKkeL7+34qZ0FCgyDRFdHBAvqSNvpEYesR7yYOJm4siMiKgWZ6Vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585670;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585671;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9r8iMV7TjLrAMxdOtjBYzc9A1LFrOyYhlJNaBsWV7Qk=;
-	b=rtEf0Lfq311b4oohIlz0dgUaxI6EbUZwB3BsxxJTvOP88D+ZlXweoSMC6chUp3nvvAz9
-	 nMdW/7FAprtxFZLpplIGpQ7nw/P6BAWE6SREVb3hljWZj3M4eiyW0jIMTgbWpiC7x5+r5
-	 pxjpaybuicl9tyoq7i2w001tx8z3nSammTlJWgCHJr/6rHGsnqM55Abv+MehnHEK8rqNc
-	 pILM+X6GCwKE4zqJfkDF71gXgNpya3ckR8by5vI6iHmpk+Arft37KexprFObZ9bJ+LMbP
-	 fQRAPVHFVA/XdyLGFo0LKdHUBPAU6YIQG8TIf3UPYElRWF/RVkwi0cQ/IfeVbGzs6wA==
+	bh=JyQBgxCWSqYwugDUnRs9eJqhAj7hdkBix4HVdJAUIt8=;
+	b=qpUuk/e9T4Cbtc66UsJqtBcbmLPqfFkJdWrcVt2v5n9F1kbMP9kPVTgN0ajnRhVfC/nZ
+	 v7U1zC5VQZcT11zQc1y6oN0AEqq0q+J77iH5dfThXBC209mDOiN16wgwj+0IlfkPRUqiu
+	 pW8W/3l+ReEJcMuFU8Ti7jD2+RJmGRvcFTu3sQO3wbkaleBzAdUQD3TqD8GTb+J21P/tC
+	 TOjH1218OGch/xk3PuWyrHKdNOJYktncWmw4X1OljLYGgA9ztMQoanuCaIUYOLuEkGuHf
+	 pJpK8LKGtiqdFmloRDqPBwI7OiZhD3tXcEl4c8K9VZqN6cPIlERLeCu5iq+HuOeMFzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b609y93+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0mV3SCVZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9770D606B2DB;
-	Fri, 13 Nov 2026 16:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0993606B2DB;
+	Fri, 13 Nov 2026 16:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b609y93+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437471F000C4;
-	Fri, 13 Nov 2026 16:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0mV3SCVZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFC21F000C4;
+	Fri, 13 Nov 2026 16:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585670;
-	bh=9r8iMV7TjLrAMxdOtjBYzc9A1LFrOyYhlJNaBsWV7Qk=;
+	s=korg; t=1794585671;
+	bh=JyQBgxCWSqYwugDUnRs9eJqhAj7hdkBix4HVdJAUIt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b609y93+RHL5R4gs2RwgAx4gtqYj03UfYLLn6cg23JoJVxfYX/0O86YKZVuOoEs0O
-	 scf10/1YnW+/Z/I9BS+piMGCKQdksHFnaptvP46arSSQ2D3sqFKvn+8Ey2GKTeBj14
-	 KxkPYkSddUMvK1rzrbJxSrZMPPiB/anrjvt0zllY=
+	b=0mV3SCVZaXBDQzrzXdqHGVYjWWH3yQ8qR5vTvT1X6kFPE2x6lGKWkwoc88BLBMPIy
+	 bUMwNOPkympZtwIqmvPcHheWyqcV89imw1p9EPq7euqlYViriODXe+xCfg9rSVfXem
+	 F2n4CseZfDeS66d/SwtG2bzgcXysmrV/drtAeMyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 276/507] block: Return the soft block size for compat BLKBSZGET
-Date: Fri, 13 Nov 2026 10:49:40 -0500
-Message-ID: <20261113153804.209564613@linuxfoundation.org>
+Subject: [PATCH 7.3 285/507] xfs: cap the block count of xfs_iomap_write_direct() at one extent
+Date: Fri, 13 Nov 2026 10:49:49 -0500
+Message-ID: <20261113153804.899502885@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,51 +71,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit 57cd1a08717690e5ea01d7ac7a96bb33a2dca117 ]
+[ Upstream commit 66d1ce09ebd72709f8d739630c39f440445173fd ]
 
-BLKBSZGET returns the block device's soft block size, while BLKSSZGET
-returns its logical sector size. The compat BLKBSZGET_32 handler uses
-bdev_logical_block_size(), so it returns the wrong value when these
-sizes differ.
+xfs_iomap_write_direct() reserves blocks for the whole count in an
+unsigned int. For a pNFS layout the client chooses that count, and an
+RW LAYOUTGET for 16 TiB wraps the reservation and shuts XFS down.
 
-For example, on an x86_64 kernel a native query of a RAM or loop device
-with 512-byte logical sectors returns the initial soft block size of
-4096 bytes, but an i386 process gets 512 bytes. This makes 32-bit
-blockdev --getbsz and the BSZ column of --report disagree with native
-queries, even without a preceding BLKBSZSET.
+xfs_bmapi_write() maps at most XFS_MAX_BMBT_EXTLEN blocks here, so cap
+the count at that. nfsd asks again for the rest. The other callers get
+the same mapping as before.
 
-Use block_size() as the native handler and the pre-regression compat
-handler do, and correct the case comment to describe the soft size.
-
-Fixes: 9b81648cb5e3 ("compat_ioctl: simplify up block/ioctl.c")
+Suggested-by: Darrick J. Wong <djwong@kernel.org>
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Suggested-by: Pankaj Raghav <p.raghav@samsung.com>
+Fixes: 527851124d10 ("xfs: implement pNFS export operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20261023153645.37546-1-dennylin0707@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioctl.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_iomap.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/block/ioctl.c b/block/ioctl.c
-index 64b4e6c0f6965..fb2f4b4d2505e 100644
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -835,8 +835,8 @@ long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg)
- 		return compat_put_ulong(argp, bdev_nr_sectors(bdev));
+diff --git a/fs/xfs/xfs_iomap.c b/fs/xfs/xfs_iomap.c
+index 93826ca74b6be..373ff0e64f145 100644
+--- a/fs/xfs/xfs_iomap.c
++++ b/fs/xfs/xfs_iomap.c
+@@ -285,6 +285,14 @@ xfs_iomap_write_direct(
  
- 	/* The data is compatible, but the command number is different */
--	case BLKBSZGET_32: /* get the logical block size (cf. BLKSSZGET) */
--		return put_int(argp, bdev_logical_block_size(bdev));
-+	case BLKBSZGET_32: /* get the soft block size (cf. BLKSSZGET) */
-+		return put_int(argp, block_size(bdev));
- 	case BLKBSZSET_32:
- 		return blkdev_bszset(file, mode, argp);
- 	case BLKGETSIZE64_32:
+ 	ASSERT(count_fsb > 0);
+ 
++	/*
++	 * xfs_bmapi_write() maps at most XFS_MAX_BMBT_EXTLEN blocks in one
++	 * mapping, so don't reserve blocks for more. A pNFS layout range
++	 * comes from a client, and its block count may not even fit the
++	 * 32-bit reservation. The caller maps the rest with a later call.
++	 */
++	count_fsb = min_t(xfs_filblks_t, count_fsb, XFS_MAX_BMBT_EXTLEN);
++
+ 	resaligned = xfs_aligned_fsb_count(offset_fsb, count_fsb,
+ 					   xfs_get_extsz_hint(ip));
+ 	if (unlikely(XFS_IS_REALTIME_INODE(ip))) {
 -- 
 2.53.0
 
