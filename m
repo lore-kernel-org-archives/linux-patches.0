@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585565;
-	b=U+ntMAdfedqUZkX5XPsmWtavKgosKg416ripnUQO6+5kyFkU6CW+OLDG7VbBMkk4/uhA
-	 ygHZ35gZNQnIVPPRgpV91L6b6fXHSz/89scbQ9ndA01xSfb6YnuYXA/6o97oCFNaQ+aQe
-	 laq2em0ZT31P5Y14qqMfzQRLvGFKMClSrZjfkC5BWduZCi9YaKTua1PZ+zhsjVzEuNSOb
-	 IWAADUogEavaGchRJXLaQO2mD6qvy0JCMnfE8QlkZQj8JXulH6qAerub+Xl2kvnq1YV8m
-	 BcVSI3IJuNRQNhBfeUAH+c44qGqLieMFzkh2FTIEElQDCbYkbFT6b4NheoUFc30mQAQ==
+	t=1794585566;
+	b=2PGZbAUojKbgTJH6Lr2oLUFkGhOBU4CJIyopI8o6NwNjGQoh6373DUr5KDVXgiPrPqd/
+	 xdNCwwT38A/Ryp773myylXleKQ4bPMOSmpUHmyEF9tyztRklRE7sc7q8RHHv7+0tmQxeE
+	 YSroCGUrv3EGMC0jKRMK2oAFMPY9rc1KZ0EOC1lWc14tdo38+Tn0UgsJ8hX3X9/WZDc0c
+	 iI9ZKJqyiqB92Xq1hbgFgeXla6q0nzZO2mDaFQngjENPjsh6wIR6SHCcLDvoSaA14xz90
+	 ZmFzhXoQdpIZ6k8A0lIXp8IzROzVYgW6DEnt1Q+ITaRRSCzfV48CAlAzaYwDj5prqPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585566;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=df9yuyOmAys1rf/UjPFichc9/mdLec5637Q0BDki1V8=;
-	b=PwRkwIvsde4dfy1MSDjrkYdlZidnjBLd58un6y+w7Lq4vc5Pq7p/TP1VjIqqX+hpxHP+
-	 h4cqQYzUNJzInrxXkILG0RaEKv+9sLKJ1pbKUIuV3HlQWirStvWfvmO4kvNAKDQYix8dY
-	 fW7h4XWL2zDfn0gL07Og2CSksLveKtrthyOb8yqqAswQK7hKQ+HBEdnicj+x4cZ3zJKJS
-	 upZ9HBJxxvGcN6XPY8oXrTRSYp8kz1mogybY8ECt1i0Ax5E1+uymDqVyUl93vw9nIwjps
-	 t+FsqHDmSrn9rhGlDS3Ax9uHSMIE9f7gYtKGF1CDM6arn/BA6H1C00GZDRU4Y5vfZ+A==
+	bh=mVHrEHdyHZbBx6mjGsQ0jTS5iHjYy4zzwMTMz3sex1U=;
+	b=2LYQ0do1iNKxdLPBe7IdmuRCof1DMbc+GDmtIsqQfoVk2CIYj9Oxs3MYRlJBm+l+EbjX
+	 x1uf4746c3MZI011UpgSkxU8/PAvBjeoYZd0lIhBPcthyU7VM2T1LGl5kvxZU25WjvC9V
+	 Cyk6ix7dD9FsmRSSadzGHitHATgs3sv4GTHjPzpRUSRnLbFBwx3QFaZ1MHpGfE+xbtY3b
+	 Ioi6+QPsQGXamO+aGG9V1ok5vkA+aC2DP1ksveQnyH4CGGsIWtwB2SajFAzCvL5cELhsn
+	 4YRQXv4GbqURxnYcr8jm60D8YjHU/48Gl/rKB1aca06LTL3U8sBN/xXswMeH+q/j8mQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+cQzpxE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trnF7eUb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE1D606BA88;
-	Fri, 13 Nov 2026 15:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C769F606BA88;
+	Fri, 13 Nov 2026 15:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N+cQzpxE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A9D1F000C9;
-	Fri, 13 Nov 2026 15:59:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trnF7eUb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7329F1F000C4;
+	Fri, 13 Nov 2026 15:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585565;
-	bh=df9yuyOmAys1rf/UjPFichc9/mdLec5637Q0BDki1V8=;
+	s=korg; t=1794585566;
+	bh=mVHrEHdyHZbBx6mjGsQ0jTS5iHjYy4zzwMTMz3sex1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N+cQzpxEsgULn73BqH+XQhnNTlQJeoNWZcURdJxKyqnTi27QJbywEUKyUUlhQWj+I
-	 7IglEPBZKLQTQV6mfYjtIs6cWrKX+oPw6MemWDfPDbK3fCwDWJsbiVJzyFdXNafe8a
-	 ptF5HJM18Fh/4sBA8XuomBu0LNn0qtnALfMr+j8I=
+	b=trnF7eUbmmJTG/CTKt98fDvPTj8s3E4kWKZhGnkkgSysl0XlJcoGIt1BjxNtd3mpz
+	 W+xsnIvK/8xw3swvqARpczZqSyP+hNG4IdEnvw+sdTj5NvhKzx8FJ4gX9X2aJOrpz7
+	 cLFM8BJnX8bjsNcR0GFlq7hwH6BlvuwkX1SIxLak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vas Zayarskiy <contact@vasily.cc>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 201/507] hwmon: (aquacomputer_d5next) Avoid truncating scaled sensor readings
-Date: Fri, 13 Nov 2026 10:48:25 -0500
-Message-ID: <20261113153801.296325894@linuxfoundation.org>
+	Joonhoe Kim <26rote@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Filippo Falezza <effeffe99@gmail.com>
+Subject: [PATCH 7.3 202/507] net: qrtr: announce local services again once our HELLO is sent
+Date: Fri, 13 Nov 2026 10:48:26 -0500
+Message-ID: <20261113153801.326492953@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,129 +69,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vas Zayarskiy <contact@vasily.cc>
+From: Joonhoe Kim <26rote@gmail.com>
 
-[ Upstream commit c221091f7e30c64280e4cbfa27dc4c05edc96d0c ]
+[ Upstream commit 743b5c86276b1c3241e6f0f395b55f98f0756ef0 ]
 
-High Flow Next power is reported in watts. Multiplying the 16-bit value
-by one million can overflow both the signed intermediate and the u32
-cache. Store power in long, perform the conversion in u64, and clamp to
-LONG_MAX. The other existing power conversions fit in a signed 32-bit
-value. Return -ENODATA for unavailable power instead of exposing the
-stored error as a reading.
+Since commit 544d85de4dc2 ("net: qrtr: Send HELLO message on endpoint
+register"), qrtr_node_enqueue() drops every packet but HELLO with
+-EAGAIN until our HELLO has gone out to the node. When the remote's
+HELLO arrives first, the NEW_SERVER replies from the name service are
+dropped, and so are the broadcasts for services registered before our
+HELLO goes out. Nothing announces these services again, so the remote
+never learns about them.
 
-The power cache is updated by HID reports without the hwmon read mutex.
-Read it once with READ_ONCE() and use that snapshot for both the
-availability check and the returned value. Mark the corresponding
-updates with WRITE_ONCE() so that the shared accesses are explicit.
+On Kaanapali the modem sends its HELLO before it accepts ours. With
+rmtfs started first, the modem never learns about rmtfs and its
+watchdog resets the SoC about 40 s later.
 
-Widen the shared current cache to u32. The Aquastream XT conversion to
-milliamperes can exceed 65535 mA; clamp its negative conversion results
-to zero before assigning to the unsigned cache. This also permits devices
-with scaled aggregate currents to store milliamperes directly.
+Remember that the remote has sent a HELLO. Once our HELLO has been
+sent to such a node, pass a HELLO from it to the local name service
+again, so that it announces the services it has at that point. Retry
+the replay if it cannot be queued, and queue it under ep_lock only
+while the endpoint is registered, so that it cannot follow the BYE
+from qrtr_endpoint_unregister().
 
-Fixes: aed80bb91de8 ("hwmon: (aquacomputer_d5next) Add support for Aquacomputer High Flow Next")
+The flag is not cleared when qrtr_endpoint_hello() restarts the
+handshake on resume, so a HELLO that the remote sent before then is
+not lost. The cost is that the remote gets the same NEW_SERVER
+announcements twice when its HELLO arrives before ours goes out but
+the name service handles it after, and on every resume.
+
+Fixes: 544d85de4dc2 ("net: qrtr: Send HELLO message on endpoint register")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vas Zayarskiy <contact@vasily.cc>
-Link: https://patch.msgid.link/20260927191316.4137752-2-contact@vasily.cc
-[groeck: Dropped obsolete 'Assisted-by: tag]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Filippo Falezza <effeffe99@gmail.com> # Motorola Moto G 5G Plus nairo (SM7250)
+Signed-off-by: Joonhoe Kim <26rote@gmail.com>
+Link: https://patch.msgid.link/20261029105142.2503-1-26rote@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/aquacomputer_d5next.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ net/qrtr/af_qrtr.c | 53 +++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 45 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
-index 6565731b0e71f..3d3786c829317 100644
---- a/drivers/hwmon/aquacomputer_d5next.c
-+++ b/drivers/hwmon/aquacomputer_d5next.c
-@@ -19,6 +19,7 @@
- #include <linux/hwmon.h>
- #include <linux/jiffies.h>
- #include <linux/ktime.h>
-+#include <linux/limits.h>
- #include <linux/module.h>
- #include <linux/seq_file.h>
- #include <linux/unaligned.h>
-@@ -612,9 +613,9 @@ struct aqc_data {
- 	u32 speed_input_min[1];
- 	u32 speed_input_target[1];
- 	u32 speed_input_max[1];
--	u32 power_input[8];
-+	long power_input[8];
- 	u16 voltage_input[8];
--	u16 current_input[8];
-+	u32 current_input[8];
+diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+index e7b3647424b8f..45cb8e8c36ca2 100644
+--- a/net/qrtr/af_qrtr.c
++++ b/net/qrtr/af_qrtr.c
+@@ -122,6 +122,7 @@ static DEFINE_XARRAY_ALLOC(qrtr_ports);
+  * @qrtr_tx_flow: xarray of qrtr_tx_flow, keyed by node << 32 | port
+  * @qrtr_tx_lock: lock for qrtr_tx_flow inserts
+  * @hello_sent: hello packet send successful
++ * @hello_rcvd: remote has sent a hello packet
+  * @rx_queue: receive queue
+  * @item: list item for broadcast list
+  * @say_hello: delayed work for sending hello packet
+@@ -136,6 +137,7 @@ struct qrtr_node {
+ 	struct mutex qrtr_tx_lock; /* for qrtr_tx_flow */
  
- 	/* Label values */
- 	const char *const *temp_label;
-@@ -989,7 +990,7 @@ static int aqc_legacy_read(struct aqc_data *priv)
+ 	bool hello_sent;
++	bool hello_rcvd;
  
- 		/* Calculation derived from linear regression */
- 		sensor_value = get_unaligned_le16(priv->buffer + AQUASTREAMXT_PUMP_CURR_OFFSET);
--		priv->current_input[0] = DIV_ROUND_CLOSEST(sensor_value * 176, 100) - 52;
-+		priv->current_input[0] = max(DIV_ROUND_CLOSEST(sensor_value * 176, 100) - 52, 0);
+ 	struct sk_buff_head rx_queue;
+ 	struct list_head item;
+@@ -541,6 +543,11 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+ 		qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+ 	}
  
- 		sensor_value = get_unaligned_le16(priv->buffer + AQUASTREAMXT_PUMP_VOLTAGE_OFFSET);
- 		priv->voltage_input[0] = DIV_ROUND_CLOSEST(sensor_value * 1000, 61);
-@@ -1019,6 +1020,7 @@ static int aqc_legacy_read(struct aqc_data *priv)
- static int aqc_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 		    int channel, long *val)
- {
-+	long power;
- 	int ret;
- 	struct aqc_data *priv = dev_get_drvdata(dev);
++	if (cb->type == QRTR_TYPE_HELLO) {
++		/* Pairs with smp_load_acquire() in qrtr_hello_work() */
++		smp_store_release(&node->hello_rcvd, true);
++	}
++
+ 	if (cb->type == QRTR_TYPE_RESUME_TX) {
+ 		qrtr_tx_resume(node, skb);
+ 	} else {
+@@ -599,6 +606,8 @@ static void qrtr_hello_work(struct work_struct *work)
+ 	struct qrtr_node *node;
+ 	struct qrtr_sock *ctrl;
+ 	struct sk_buff *skb;
++	bool hello_sent;
++	int rc = 0;
  
-@@ -1083,7 +1085,10 @@ static int aqc_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
- 		}
- 		break;
- 	case hwmon_power:
--		*val = priv->power_input[channel];
-+		power = READ_ONCE(priv->power_input[channel]);
-+		if (power == -ENODATA)
-+			return -ENODATA;
-+		*val = power;
- 		break;
- 	case hwmon_pwm:
- 		switch (priv->kind) {
-@@ -1383,9 +1388,9 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 		priv->speed_input[i] =
- 		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
- 				       priv->fan_structure->speed);
--		priv->power_input[i] =
--		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
--				       priv->fan_structure->power) * 10000;
-+		WRITE_ONCE(priv->power_input[i],
-+			   get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
-+					      priv->fan_structure->power) * 10000);
- 		priv->voltage_input[i] =
- 		    get_unaligned_be16(data + priv->fan_sensor_offsets[i] +
- 				       priv->fan_structure->voltage) * 10;
-@@ -1425,7 +1430,8 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 		priv->speed_input[2] = get_unaligned_be16(data + AQUASTREAMULT_PRESSURE_OFFSET);
- 		priv->speed_input[3] = get_unaligned_be16(data + AQUASTREAMULT_FLOW_SENSOR_OFFSET);
+ 	node = container_of(to_delayed_work(work), struct qrtr_node, say_hello);
  
--		priv->power_input[1] = get_unaligned_be16(data + AQUASTREAMULT_PUMP_POWER) * 10000;
-+		WRITE_ONCE(priv->power_input[1],
-+			   get_unaligned_be16(data + AQUASTREAMULT_PUMP_POWER) * 10000);
+@@ -609,17 +618,45 @@ static void qrtr_hello_work(struct work_struct *work)
+ 		return;
+ 	}
  
- 		priv->voltage_input[1] = get_unaligned_be16(data + AQUASTREAMULT_PUMP_VOLTAGE) * 10;
+-	skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
+-	if (!skb) {
+-		qrtr_port_put(ctrl);
+-		schedule_delayed_work(&node->say_hello, msecs_to_jiffies(100));
+-		return;
++	mutex_lock(&node->ep_lock);
++	hello_sent = node->hello_sent;
++	mutex_unlock(&node->ep_lock);
++
++	from.sq_node = qrtr_local_nid;
++	if (!hello_sent) {
++		skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
++		if (!skb)
++			goto retry;
++
++		pkt->cmd = cpu_to_le32(QRTR_TYPE_HELLO);
++		to.sq_node = node->nid;
++		if (qrtr_node_enqueue(node, skb, QRTR_TYPE_HELLO, &from, &to))
++			goto out;
+ 	}
  
-@@ -1438,10 +1444,11 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
- 	case highflownext:
- 		/* If external temp sensor is not connected, its power reading is also N/A */
- 		if (priv->temp_input[1] == -ENODATA)
--			priv->power_input[0] = -ENODATA;
-+			WRITE_ONCE(priv->power_input[0], -ENODATA);
- 		else
--			priv->power_input[0] =
--			    get_unaligned_be16(data + HIGHFLOWNEXT_POWER) * 1000000;
-+			WRITE_ONCE(priv->power_input[0],
-+				   min_t(u64, get_unaligned_be16(data + HIGHFLOWNEXT_POWER) *
-+					 1000000ULL, LONG_MAX));
++	/* Pairs with smp_store_release() in qrtr_endpoint_post() */
++	if (!smp_load_acquire(&node->hello_rcvd))
++		goto out;
++
++	skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
++	if (!skb)
++		goto retry;
++
+ 	pkt->cmd = cpu_to_le32(QRTR_TYPE_HELLO);
+-	from.sq_node = qrtr_local_nid;
+-	to.sq_node = node->nid;
+-	qrtr_node_enqueue(node, skb, QRTR_TYPE_HELLO, &from, &to);
++	to.sq_node = READ_ONCE(node->nid);
++
++	mutex_lock(&node->ep_lock);
++	if (node->ep)
++		rc = qrtr_local_enqueue(NULL, skb, QRTR_TYPE_HELLO, &to, &from);
++	else
++		kfree_skb(skb);
++	mutex_unlock(&node->ep_lock);
++	if (!rc)
++		goto out;
++
++retry:
++	schedule_delayed_work(&node->say_hello, msecs_to_jiffies(100));
++out:
+ 	qrtr_port_put(ctrl);
+ }
  
- 		priv->voltage_input[0] = get_unaligned_be16(data + HIGHFLOWNEXT_5V_VOLTAGE) * 10;
- 		priv->voltage_input[1] =
 -- 
 2.53.0
 
