@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585863;
-	b=ETCpCb/TNOChad2p8ixTgiE1CZLRNjUCOVA35teHFSpmapAktLVZMEF94mQpTaAlrP1e
-	 3Kq8+0IYrgP9HSB8QchvqQ+SK+6pWxMelFk1roBMnClWwTMZDA2ubLNbWlxqGh+BX7yH0
-	 WRgGdNyhPIi71i0eh/wVCpfyzVIjS6d6aVYYPy2XHU1+ScUYzM7uEi+/loh8W6ddYTMCc
-	 w6WhhqNI7/w5hYVEv3E3UmZv6oII49Gt+jBh/ZQiP4trO+CSmf7AO8nWL0MUVQk0J3uvj
-	 8UBSjog6NxpIE+BYyN4mJgWvGL1/itnpyZF5J9gL+CbIdPrathDR2PVrU6yu7uOotUA==
+	t=1794585865;
+	b=DQlGAFu/Hydw6C/AiQApqAK9Bg65/ibOjPBrdwK4A60+5LA6ZANVzJES7c9hTdgaeUU1
+	 RAUrJPYjp1fJNNEAqvsWWu5UftEC52eARGP8Rh3TUyusB4kPVBZ93ynTng36NxkGfrwBV
+	 x8QXe9b+fN+XuM0U8nz2FrISSk+ewbTVuQ819z8wgDFp+zO7IM0htugnUuKxh6432Qu4m
+	 6B42RNavGmHEixO8uLp24sHfNP85Kfo707WJwQX3t2NYMtUstKORucVuu3zqlmwWZ7dw5
+	 SMxfKBSRSEAXi50A0gQ9l1/VK2x23DZ4GWalWn3JJvMIZYTVT/1O5a07U+PBncW3Pzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l1NAEWb8OTPaiDk59B1uwVlSJWNknFiB9QO93ppyJzw=;
-	b=SjnBhMllPOmxysjAfRajEmMU/bT/hQjYn5f8P2KUwYAsBVpdlMo+GJP0O5K9xZ66umrH
-	 mpPJt+t23p4LTQipS1GahWU7lT8sF6PSLcI1ZWJZRR1H0Ivtw/NZOJ8MI1pHp95jRIJT+
-	 DWi1lSZYoCH2nYbr45CuA1UebrOnSpX4alieseb7VmBUA4MnbNwamZkIK+I3YV+Xikwmu
-	 8ek8lgDkdPDkUdrpM1h/mkFCjC2EIVyPmueJfCsqS4PGAkqZrGLWQSS6EXIJ9AV5jPYWm
-	 bV2zfKcyYkYJikyCaVhEhQPTxwDGfV9iV81qeTPEHubDlx68Ea7ZtsLYhOGdwPcAGdA==
+	bh=NcVt4Oxm8cWCLtmwa7rdGEAuGFc8QsKVCxwTzWhScyw=;
+	b=AS6wod/NrM252K290wANAyWx7SBoywO4qCCDBf87caMp+BuMqSOnAYz7EKDo/D6dKjQd
+	 xWz2uNmgrAZWmE9ZQ7eKKs4qAc1zvvbmPWFN6HRpVLcVBvT3Ht5cTD029ZFcXSuOX9dW+
+	 gvdSQ9yF1yCWpZSRbIjmDxk02+ULE7gtlPhSebOZ0LCPeWLBNOcdpbChny/OPtKhb2uIi
+	 /MIQuRFmDt/z5qOpHCXdRnndJ1pRRXw0blf3K/6YyI0TPxIgk8A14nNW9KVOh2Un2meMw
+	 G0m0SFhZIZamtEdoozjjRdWVitMLo3J1NKl9K8yzaGcD/+CzW1DGPNu5GmSxWbVsmWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQcaUDJ1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wuSRcZGg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFB46070200;
-	Fri, 13 Nov 2026 16:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265F2606BAB8;
+	Fri, 13 Nov 2026 16:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cQcaUDJ1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1D11F000C5;
-	Fri, 13 Nov 2026 16:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wuSRcZGg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B051F000C4;
+	Fri, 13 Nov 2026 16:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585863;
-	bh=l1NAEWb8OTPaiDk59B1uwVlSJWNknFiB9QO93ppyJzw=;
+	s=korg; t=1794585865;
+	bh=NcVt4Oxm8cWCLtmwa7rdGEAuGFc8QsKVCxwTzWhScyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cQcaUDJ1AGCY0I0L3WcvO6rCM+mo6hUUwDOBQbdulzlGa4S1T6Kc4qUEwSjpsEVlg
-	 Kwl5eAIhn2yuB0ZFQOpGlhntVhR+muNdqnDlL2+ZVxAFAoavB58vXgSvpAdtSsj7lb
-	 6E9QLFFOz1URiTc8nGH40C/TYK5KCAsd3Sdr7ESY=
+	b=wuSRcZGgbUwRXbOi5UfF4+gWIgL161JA+ic/vxo9MMidLqe6j13fq2eELafqfwKhb
+	 psKzN5Ni80rm/jBqmdYOvkZ2BrUb+WN6tv4MnbqGRyObJkg2zZlZRsrsReFhaH6un8
+	 BKA1Az6Vri65psxrCYEfBZASgvwmp3b5fh1QrS6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 437/507] batman-adv: tt: clear ROAM flag when re-adding a pending local client
-Date: Fri, 13 Nov 2026 10:52:21 -0500
-Message-ID: <20261113153811.549236141@linuxfoundation.org>
+Subject: [PATCH 7.3 438/507] batman-adv: tt: send ROAM_ADV on each roamed back client
+Date: Fri, 13 Nov 2026 10:52:22 -0500
+Message-ID: <20261113153811.581461089@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,24 +69,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit cc2186d7854785b30d423f5d43757b086b300e55 upstream.
+commit aff4d5d10f2dcb4a9b604e27414dafa1d51b6406 upstream.
 
 When a ROAMING_ADV is received for an announced local client,
-batadv_tt_local_mark_removed() sets BATADV_TT_CLIENT_ROAM, queues a
-DEL|ROAM change and marks the entry as BATADV_TT_CLIENT_PENDING. If the
-client sends a frame again before the next TTVN commit,
-batadv_tt_local_add_existing() only clears the PENDING flag and returns
-early. The ADD cancels the queued DEL, but the entry keeps the ROAM flag:
+batadv_roam_tvlv_unicast_handler_v1() creates a global entry with the
+BATADV_TT_CLIENT_ROAM flag set.
 
-* batadv_is_my_client() reports the client as not served by this node
-* batadv_tt_local_client_is_roaming() reroutes unicast frames for it to
-  the node which sent the ROAMING_ADV
+If the client sends a frame again before the next TTVN commit,
+batadv_tt_local_add_roam() is expected to announce this return via a
+ROAM_ADV frame. But this doesn't happen because the global entry (created
+by the first ROAMING_ADV) carries BATADV_TT_CLIENT_ROAM until the new
+originator announces the client.
 
-The ROAM flag is only removed with the next frame of the client.
+Let batadv_tt_local_add_roam() always handle a roamed back client -
+independent of the ROAM flag of the global entry:
 
-Since BATADV_TT_CLIENT_ROAM is set together with BATADV_TT_CLIENT_PENDING,
-it has to be cleared also at the same time with BATADV_TT_CLIENT_PENDING
-when the client roamed back.
+* trigger sending of the ROAM_ADV frame(s)
+* remove the (with the roaming) associated global entry
 
 Cc: stable@vger.kernel.org
 Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
@@ -94,45 +93,23 @@ Fixes: 068ee6e204e1 ("batman-adv: roaming handling mechanism redesign")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/batman-adv/translation-table.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index d1b1b8459279b..0be2f693d5955 100644
+index 0be2f693d5955..4ade3ca5af99c 100644
 --- a/net/batman-adv/translation-table.c
 +++ b/net/batman-adv/translation-table.c
-@@ -632,6 +632,7 @@ bool batadv_tt_local_add(struct net_device *mesh_iface, const u8 *addr,
- 	bool iif_is_wifi = false;
- 	struct hlist_head *head;
- 	int packet_size_max;
-+	bool added = false;
- 	bool ret = false;
- 	u8 remote_flags;
- 	int hash_added;
-@@ -664,7 +665,7 @@ bool batadv_tt_local_add(struct net_device *mesh_iface, const u8 *addr,
- 			 * flag can be reset like it was never enqueued
- 			 */
- 			tt_local->common.flags &= ~BATADV_TT_CLIENT_PENDING;
--			goto add_event;
-+			added = true;
- 		}
- 
- 		if (tt_local->common.flags & BATADV_TT_CLIENT_ROAM) {
-@@ -745,10 +746,12 @@ bool batadv_tt_local_add(struct net_device *mesh_iface, const u8 *addr,
- 		goto out;
- 	}
- 
--add_event:
--	batadv_tt_local_event(bat_priv, tt_local, BATADV_NO_FLAGS);
-+	added = true;
- 
- check_roaming:
-+	if (added)
-+		batadv_tt_local_event(bat_priv, tt_local, BATADV_NO_FLAGS);
-+
+@@ -755,7 +755,8 @@ bool batadv_tt_local_add(struct net_device *mesh_iface, const u8 *addr,
  	/* Check whether it is a roaming, but don't do anything if the roaming
  	 * process has already been handled
  	 */
+-	if (tt_global && !(tt_global->common.flags & BATADV_TT_CLIENT_ROAM)) {
++	if (tt_global &&
++	    (roamed_back || !(tt_global->common.flags & BATADV_TT_CLIENT_ROAM))) {
+ 		/* These node are probably going to update their tt table */
+ 		head = &tt_global->orig_list;
+ 		rcu_read_lock();
 -- 
 2.53.0
 
