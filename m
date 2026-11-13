@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585891;
-	b=a8qq6Ujai10lu44yYEwMBEqFVaZoGSdFX/OwtqvXPSK0O8oJrgfHhtg1aZvHnvNxegk/
-	 JqIJimpX3DFKDqZ26TnU1GsxYuOdhRyPHj1rOUJWkazKcy5q4qKrsSB/BfO/aWkHkYwpj
-	 RL9ZxvgAXXIXhGYGYBw5E2Xjg+v5JCtbBY3tzge7yFZDo7SACea1502s53BGsMQoE54G1
-	 yT14KwvNIPCoeflC3pfApdpjXenTMmJ+45Gkqu7RUvFl6zFW9uB+egnNP1YD4eR5Yuu5H
-	 r4Hodltw2Fo6HoszVOoO35HEde0KU2exjRnyI8DtF4UUxvv8GOBSJAFnhX3YEFUb4Ew==
+	t=1794585892;
+	b=LcSSTvqKTXuQzkLugpi6zU5N7IqVDAelzXcigs9kz75DkQiEuijWKolNyLlYIbMYbE0B
+	 +RbxNwkNuMnkIiCl+KCkeKW+6njxb9DcDugPsNWAuMx/pShFhys3X1W5l30nXgb83wtdh
+	 L6Ve5IEV2MrzI9/xOZlz7Ua7d6zVZzGBdWToeuAnkNlZFnkM0WLQp2PaMT1qGJwdoJEOz
+	 plh2BlYFBohP0dyHsWtJ2422LlRciCchCQc6JB1A7jk1WiIbsK6MBrqdKiUcb9dJKmTYW
+	 +XvyRD89Yw+ptH2tz2s69m3CsRLlld0yPQhb2FV5lSkluB4anMxIvzKocWj2l+zQ7gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585891;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585892;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vgsBivFUGXSOxX/W2ROlLclSKI0oWgKC+4DWSCbsWgE=;
-	b=1pxVnOR6y1oj/Wt/kuoX2mvLNNoweOfCnTL8spFf4rispLxpcLfq6FeLV6VqFZemgvNS
-	 zr5c4p5tcXXSD6thVljNjWR4zAPskG22UfeNRZluRIec1g8ENecdj5e15nbrR0moqB66v
-	 /zCwXaXkLIvWQMzWVXZpLO8fNX/Yu+y+hMxida7YfsXGh+wfxg5bV9enYZWDj4YzF8v5V
-	 Y6YPOoVUIoJAaAJ/kITBlp9Cn5UwhzG9/XpKagUK+nIQRELvk35gO/rUE7/Q44osrM/pw
-	 UR+txwJ9hd/ua4KIvEp/BzYpyEei+47qBcbUdpoMcB8wvVFMEva1XyRQrb2rQonCTPw==
+	bh=+KDvlflUF9bgK0V4kfVdiL8mieikO+v6BSt5cIZwdNM=;
+	b=hwvUfv/fcULhmYA5FwDPnQ+tp87QmKlVHkp8gEiXgqrMOwUseTrg7UihZCvQf20X0Jbf
+	 4T8dGRDW0Ebbeb/VI06M5Xg98cEFQVleTNtd3K3E197HfUNoz2lMdozKjn/b9diUaSX4p
+	 wQhviFihUjpzTySAGuc1OHnATgFSyiLJzsZbcPHu8k3ImIpae29UKcS1A4/m6y2zP1LtX
+	 RI2qTcCU8RQe9mY8CuV/NA238NDD7YcBmpVKrTi+/FhJEi72uA8tLACTnXKzGEwSzDImk
+	 /E4X6uwTBTWyPWrw+RRItuBjbjeovpAqVA4F/kLfmpDDeQDe1oAgrtHkiKxYx8S1DXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ECM3A0J;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbmQ2GB6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3158E606EA9D;
-	Fri, 13 Nov 2026 16:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BA6606EABB;
+	Fri, 13 Nov 2026 16:04:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ECM3A0J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F261F000C4;
-	Fri, 13 Nov 2026 16:04:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BbmQ2GB6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141E61F000C4;
+	Fri, 13 Nov 2026 16:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585891;
-	bh=vgsBivFUGXSOxX/W2ROlLclSKI0oWgKC+4DWSCbsWgE=;
+	s=korg; t=1794585892;
+	bh=+KDvlflUF9bgK0V4kfVdiL8mieikO+v6BSt5cIZwdNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0ECM3A0JNtGN7EnA5pVOLjedQnvP02HMFx5TRT/JgGxB9csHkVTzbRVUy3r8soCtP
-	 6PJxjxjWHKRyLjGLosXfjAnAhrZl/tpaKUipGijv9yZxidaZpkH2HrCty1vftASsOm
-	 yfrJkx0Icp2dT8ogi4ibou81sIsAQnShf0cIwbAs=
+	b=BbmQ2GB6Kdn2XIj1gZ1KDb3xb85fNRRug2yS/vwPoD9+reoRBeYOzTFK/jsUAlMfQ
+	 d60aUpBQ9BoNHCxikzfrsfeFhepn7Nbs1GS07I1KG64sjfIR/5iIhHXeJrth+6t2aj
+	 sM/ExLJACrE7UAufMdsTSZnUcnXDfIBle4BLlypU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 456/507] sctp: hold shkey across socket migration
-Date: Fri, 13 Nov 2026 10:52:40 -0500
-Message-ID: <20261113153812.180810871@linuxfoundation.org>
+Subject: [PATCH 7.3 416/507] MIPS: mm: Fix the cache error vector jump for XKPHYS kernels
+Date: Fri, 13 Nov 2026 10:52:00 -0500
+Message-ID: <20261113153810.828229686@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,70 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lee <david.lee@trailofbits.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit ad1320865b1826ffa2e81e37c49535751e81335c ]
+[ Upstream commit 30b76362f80d39d80f1197c88b284d9fa7952356 ]
 
-sctp_sock_migrate() transfers queued DATA skbs from the old socket to the
-new one. skb_orphan() invokes sctp_wfree() during that transfer and drops
-the skb-owned shared-key reference.
+except_vec2_generic jumps to cache_parity_error with a j, which cannot
+leave the vector's 256MB region. An XKPHYS kernel such as IP30's, linked
+at 512MB, is outside it, so the j targets an unbacked address and its
+speculative fetch raises bus errors on unrelated fetches. Jump to the
+handler's uncached XKPHYS address instead.
 
-If userspace has removed that key from the association, this can be the
-final reference. The following sctp_set_owner_w() then dereferences the
-freed chunk->shkey while trying to take the new owner reference.
-
-Take a temporary shared-key reference before orphaning the skb and release
-it after the new owner has taken its reference. This preserves the selected
-authentication key throughout the ownership transfer.
-
-Bug found and triaged by OpenAI Security Research and
-validated by Trail of Bits.
-
-Fixes: 1b1e0bc99474 ("sctp: add refcnt support for sh_key")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Signed-off-by: David Lee <david.lee@trailofbits.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261009074244.3718-2-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 52ffeaa358d1 ("sctp: re-point retained control chunks on association migration")
+Fixes: 7505576d1c1a ("MIPS: add support for SGI Octane (IP30)")
+Cc: stable@vger.kernel.org
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/mips/mm/cex-gen.S | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index c616f1609d0cf..b5e205eca3077 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -148,9 +148,19 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
+diff --git a/arch/mips/mm/cex-gen.S b/arch/mips/mm/cex-gen.S
+index e528583d13311..6989fe274aab8 100644
+--- a/arch/mips/mm/cex-gen.S
++++ b/arch/mips/mm/cex-gen.S
+@@ -8,6 +8,7 @@
+  *
+  * Cache error handler
+  */
++#include <asm/addrspace.h>
+ #include <asm/asm.h>
+ #include <asm/regdef.h>
+ #include <asm/mipsregs.h>
+@@ -37,6 +38,21 @@
+ 	nop
+ 	nop
  
- static void sctp_clear_owner_w(struct sctp_chunk *chunk)
- {
-+	/* Keep the shkey alive until the new owner takes its reference. */
-+	if (chunk->shkey)
-+		sctp_auth_shkey_hold(chunk->shkey);
- 	skb_orphan(chunk->skb);
- }
- 
-+static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
-+{
-+	sctp_set_owner_w(chunk);
-+	if (chunk->shkey)
-+		sctp_auth_shkey_release(chunk->shkey);
-+}
-+
- #define traverse_and_process()	\
- do {				\
- 	msg = chunk->msg;	\
-@@ -9649,7 +9659,7 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
- 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
- 	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
- 	sctp_assoc_migrate(assoc, newsk);
--	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w);
-+	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
- 
- 	/* If the association on the newsk is already closed before accept()
- 	 * is called, set RCV_SHUTDOWN flag.
++#if defined(CONFIG_64BIT) && VMLINUX_LOAD_ADDRESS >= XKPHYS && \
++    VMLINUX_LOAD_ADDRESS < XKSEG
++	/*
++	 * An XKPHYS kernel may lie outside the 256MB region a j from the
++	 * vector reaches, so jump to the handler's uncached XKPHYS address.
++	 */
++	PTR_LA	k0, cache_parity_error
++	PTR_LI	k1, TO_PHYS_MASK
++	and	k0, k0, k1
++	PTR_LI	k1, UNCAC_BASE
++	or	k0, k0, k1
++	jr	k0
++	nop
++#else
+ 	j	cache_parity_error
+ 	nop
++#endif
+ 	END(except_vec2_generic)
 -- 
 2.53.0
 
