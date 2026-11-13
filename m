@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590470;
-	b=fB+PRZ0YAJBEbEAtpW9TltmLZRLz3jeimnUL4xyXtxKB1MR5ahyIi+AvLzBxcgbUDVYO
-	 Gj924w4uze3tADCTN6xy8qNs9SDlCqfdEpFKVEMeQClaCfHrM8rkAe/HV7NhuKzXAfBid
-	 Tjx/un2g15jVSkn5D+JzDKVbGyN8AlPjueyhzy864F5g5Ly746UTHeMrQVtbZYjqcHKNf
-	 HoL8QK9wB+Wj8Vxwue19mE2PjQm+e8GZpYDagQiLRFUitEtYTwvnuGyWiocxNpT2BSBwI
-	 /XL/mOcTLIvjlniov91nFHFbvAdmkYDeU5SicQIWgG7lgxIAZqHlbuKWppdH5TdUCxQ==
+	t=1794590471;
+	b=Z3i5Ut6+HwGeTHChTgbSLzpal1D6iY3oxQe6/y03C1bGRYU/1MHY8decqIGgJLmJ3wBA
+	 95XzG8dRx7qliR9ggq37mYpJrkSIUzKQasW8b3lbRHgo92XZP6CxrbTtuRrsWkftiVVgG
+	 LlX/+3OXYxSQHhfDthk1bwdibbBUbfo1TTISwRjaOAsNUuJyZXru/J3Z48g1G0stfCOr3
+	 JrK+I4xo3CUyO0iazl8C5hdgbsa6F6Ol/Vr3fu30xeh468ERxNd64IzF9FkPIJ+urDggT
+	 pUTIK+jeL73oFSY4PcDAPxiYQaJs9Op00BaZfqeXhsqgrYlbmEYnqVK8GPOQGEeGKdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590471;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kp/TXJ7pik77nlw+8zpejgYJw6C/Na5HNiXH4VceXGA=;
-	b=M2oj4iCt1xu26R3/lXK6h/yrFI6+SP2o3/CrHgS+BGKnLuYBnz8SQa+6rfsinxUJ+ClE
-	 XkgNOUKqtHsfW4X4Iur9ZtrC048cpV/nKoHQmiCmdbnmyIbw3Y8a5BeVswqrR71zOQmeI
-	 Y0lxccgoZx8c1ihsV7yDoH0p2pKBTxEHzFUODQrM7Nr383Mp0vvtmtNqWjU4K5JaNxRDO
-	 NvGhMGke/JuHMexXkRYxKfuYNWW5mSHQcwt7NvpIKRIQUK5vEvsBXla5p3a++hBEROqIS
-	 qbAsL1apY06ofH0XohOTdeitmL1+xXCAoASg/gfxgJFboBJBXppIEb/GRKk0P6JJJpQ==
+	bh=aT4cd6CIhXE+eKqb8KBinBFXjHlYWwMlHssxCgTlNAI=;
+	b=1f7r6j3TlRaSCXvGR8MHq99Ovs4iXze9qsc5LC5j42IOf8IZNZMDWjvblns8n/TRblzd
+	 4vBFGlfo3ym0mRGgQZIMsVH2PGwQKAeZKrHKfHPsURFGvkBfkrbU6oniqqrbZZJ65BJDi
+	 +GL07SgC4jncdgHaYq/dLMUrBdjVBpnDM6FxAyi1SHAkT5K+T6BB6Ig/J3ODf9y8IdEw4
+	 U7MZl9/bI8IWVaHCd9P2NZf1LzTkK/bmqyLRBAS59r6JT0u51VrrCqlu3rPgtp7gKhFMn
+	 lQVJBie+FyjRobEAgMDiecroVajFAH5+Q42aZK+SHbp9eMdjsV8B2eQND6Gq0cQiHrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bVttDWds;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h1l62J6/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACE8606B805;
-	Fri, 13 Nov 2026 17:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4791606B80A;
+	Fri, 13 Nov 2026 17:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bVttDWds
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167141F000C7;
-	Fri, 13 Nov 2026 17:21:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h1l62J6/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3851F000C6;
+	Fri, 13 Nov 2026 17:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590470;
-	bh=kp/TXJ7pik77nlw+8zpejgYJw6C/Na5HNiXH4VceXGA=;
+	s=korg; t=1794590471;
+	bh=aT4cd6CIhXE+eKqb8KBinBFXjHlYWwMlHssxCgTlNAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bVttDWdsd8rhtUTd3mVXbjjTD9jsuCRKfMepxPhXb8R/B6uMaHzViUWI5b34Sbznw
-	 cz8+KPLZLMvS7hcOSIh+zgb2mDL93tI/CMXL8B+RMOooeVrc/eqeriEGJGpfDAejcJ
-	 DuOYsTBwd0Uht/6EYx/Mbd/KxHLhXAij0eT7frgY=
+	b=h1l62J6/8Jo7H0VgLxxVa9ECSbbHxiIYMelbGjVY4J0RRFbOlmSks/QmkI7g5QAJC
+	 nxDu+k/05dxBKMEo0nuyM9I905O/ZS8DJWzh6B45vcbIWpjjr43GTJD05T25wYcW8q
+	 b6InFY1ixc+8/jJ/K2VfY3rPlHQqbhs6Q/eCCjzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Finn Zeruhn <fzeruhn@icloud.com>,
+	Ilia Mirkin <imirkin@alum.mit.edu>,
 	Dave Airlie <airlied@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 425/686] drm/dp: keep MOT set between messages when no_zero_sized is set
-Date: Fri, 13 Nov 2026 10:49:18 -0500
-Message-ID: <20261113153835.340904067@linuxfoundation.org>
+Subject: [PATCH 6.18 426/686] drm/nouveau/devinit/gf100-: try to avoid double-running vbios scripts
+Date: Fri, 13 Nov 2026 10:49:19 -0500
+Message-ID: <20261113153835.372076643@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,59 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Zeruhn <fzeruhn@icloud.com>
+From: Ilia Mirkin <imirkin@alum.mit.edu>
 
-[ Upstream commit 06bb2e5c71e9983519929a8482bea89da6d80ad8 ]
+[ Upstream commit 2139cb633d48ebbbaec88d2e5a8ebe8e774df4fb ]
 
-When aux->no_zero_sized is set, drm_dp_i2c_xfer() cannot use a bare
-address packet to close the transaction, so it clears MOT on the last
-data packet instead. The check only looks at the position within the
-current i2c_msg, so MOT is cleared at the end of every message and each
-one is terminated by an I2C stop.
+Turns out some VBIOSes don't actually set the bit in question in 2240c.
+Use the nv50-style detection to try avoiding running the vbios twice.
 
-This breaks E-DDC reads of EDID blocks 2 and up. Those are read as three
-messages: a write of the segment pointer to 0x30, a write of the offset
-to 0x50, and the read. The stop after the first message resets the
-segment pointer, so the read returns segment 0 again.
-
-On a Pimax Dream Air (three EDID blocks, native timings in a DisplayID
-extension in block 2) connected to an RTX 5070 Ti with nouveau, block 2
-reads back as a copy of block 0. The checksum is valid, so nothing is
-reported, and the connector only offers fallback modes.
-
-Clear MOT only on the last packet of the last message, as the commit
-that added the option describes. With this, block 2 reads correctly and
-the native 7104x3840 modes are listed for the Dream Air.
-
-The same problem was pointed out by the Sashiko review of the patch that
-sets no_zero_sized for all DisplayPort connectors in nouveau.
-
-Fixes: f0ddbb1eed18 ("drm/dp: add option to disable zero sized address only transactions.")
-Link: https://lore.kernel.org/all/20260827015758.0B4FB1F000E9@smtp.kernel.org/
-Cc: stable@vger.kernel.org
-Signed-off-by: Finn Zeruhn <fzeruhn@icloud.com>
+Fixes: a6a0f67ca7aa ("drm/nouveau/devinit/gf100-: detect if BIOS invoked devinit")
+Link: https://bugs.freedesktop.org/show_bug.cgi?id=97620
+Cc: <stable@vger.kernel.org> # v4.6+
+Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
 Reviewed-by: Dave Airlie <airlied@redhat.com>
 Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20261002212833.9674-1-fzeruhn@icloud.com
+Link: https://patch.msgid.link/20170128205347.17453-1-imirkin@alum.mit.edu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_helper.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../drm/nouveau/nvkm/subdev/devinit/gf100.c   | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/gpu/drm/display/drm_dp_helper.c b/drivers/gpu/drm/display/drm_dp_helper.c
-index 4fc371f0fa123..8ef5adecace12 100644
---- a/drivers/gpu/drm/display/drm_dp_helper.c
-+++ b/drivers/gpu/drm/display/drm_dp_helper.c
-@@ -2183,7 +2183,8 @@ static int drm_dp_i2c_xfer(struct i2c_adapter *adapter, struct i2c_msg *msgs,
- 			msg.buffer = msgs[i].buf + j;
- 			msg.size = min(transfer_size, msgs[i].len - j);
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
+index 5368e705e7fd6..186e09ea0cb10 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
+@@ -27,6 +27,7 @@
+ #include <subdev/bios/init.h>
+ #include <subdev/bios/pll.h>
+ #include <subdev/clk/pll.h>
++#include <subdev/vga.h>
  
--			if (j + msg.size == msgs[i].len && aux->no_zero_sized)
-+			if (aux->no_zero_sized && i == num - 1 &&
-+			    j + msg.size == msgs[i].len)
- 				msg.request &= ~DP_AUX_I2C_MOT;
- 			err = drm_dp_i2c_drain_msg(aux, &msg);
+ int
+ gf100_devinit_pll_set(struct nvkm_devinit *init, u32 type, u32 freq)
+@@ -99,6 +100,25 @@ gf100_devinit_preinit(struct nvkm_devinit *base)
+ 	 * can use it as a reliable way to know whether we should run devinit.
+ 	 */
+ 	base->post = ((nvkm_rd32(device, 0x2240c) & BIT(1)) == 0);
++
++	/*
++	 * However some VBIOS init sequences miss this bit. So fall back to
++	 * the nv50 method of checking if the bit is not set. Running the
++	 * VBIOS multiple times may have detrimental effects.
++	 */
++	if (base->post) {
++		u64 disable = nvkm_devinit_disable(base);
++		/* magic to detect whether or not x86 vbios code has
++		 * executed the devinit scripts to initialise the
++		 * board. only works if there's a display engine.
++		 */
++		if (!(disable & (1ULL << NVKM_ENGINE_DISP))) {
++			if (nvkm_rdvgac(device, 0, 0x00) ||
++			    nvkm_rdvgac(device, 0, 0x1a)) {
++				base->post = false;
++			}
++		}
++	}
+ }
  
+ static const struct nvkm_devinit_func
 -- 
 2.53.0
 
