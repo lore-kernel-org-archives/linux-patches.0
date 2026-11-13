@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590535;
-	b=kkYydqIiZ6yiGiB5BR0voQl8jHl4A9BbVRCHCBOrBScsM2EasWkwVYNRlpAMZEqmB3a0
-	 V2y1Dj5Luoq37+XjcvmkKuNYV+AsAHZ+wtZoNEBJhd3wX5sc6UlBeHlxTt9e/BVl53dJC
-	 VD+iB9vi4xpsbWDsZs7DK92zKPt4QWmUdc2M22EbxAhBH1io1BQMotExf0ryVCdMf4sRz
-	 /F9foFLDXxB5bOU1CIDayoDmAQKIKm08nL2Gm8VtGINgkf4xkAnWyNjpsKL51tGbnACOu
-	 BgUIMb8+i83EvkGVJemUnaUVyLAPZp6/oceDTkRYO8Plf4KPO1KDRCJl/9eue2aUvhQ==
+	t=1794590536;
+	b=lnLtEo+W1OWXivc/Y27JUndCpDdKFDICDgRnuBc0PZIJ5Rg5SJvzHyGlQvJF898OL3ks
+	 19Ff90JywKwMJskKs8FpiApWkufQm80JPG0sI9CEZOk+3LAaAfBFyxNc4JY9xZcR6+SYz
+	 fwEHvv11JaWqckISF83wO07BmM0WXjxahkGXdBL8fxl36QfgoTALODRTjC+sUHSizAUUp
+	 Jr1DqVhXviwfB2XoS4WrN4IxBKcBDVFbLuVAdRJLAOYFXqy51xztEHwntdfmEP/dqN492
+	 yxAuLgkS+olEuxeqD5ff4qORnPOJJdfQTMDxLRJDj7vUDmqUVR9YXe8ozJle/PD7HPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590536;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+fiIVly8jPzJ7+pMoZGFMhcGMMlZtXobElzuN9e0bDc=;
-	b=La+F6DsaeBXqLb5ioGRB+gHOopoiLtFRLfz9KNeTwuLJibC2Ejm9ANNIRlwA+eMky3Va
-	 YzbQYmJsZg5t7X//zKbPBvA+a2xSRPQD4N1f6E2tjZw2WV7n1q93XsQNcmZ6IjogDhcKb
-	 HGZdDpFPxHDKRh73UPCA+EYiRmcRRhjqvjSjheeP7nJh5u0MhGuqc4iHpLfoImsFr3ZWl
-	 9MhJzY81tfhpykJMo+MUDxZ/iNhXOeK6eR4MKthFPr/wjS7a8PCkMgz/1s0+oQeLwn6HQ
-	 DonximGcPuCO9Ekiim7gSIVatQz0dHG6PZPrPjcmmt9ZgrS1qRGH9eCSp6hdL5KtJLQ==
+	bh=nNDCyJtmUpCeVVtHncTMtH8Bp7+7ntvvuFQKMrBhUmo=;
+	b=wNpuJfm4puWrf44ogDYtIPCtjWn0IKT6iil/OZu+oCgiZ93XhLh+S9rxkQyXXKKdSjK0
+	 OAd9qtmfmSX/roRR7Etc+mSn92lFPO3WcJ/UnabY9V+a5Vj0IcxcqjC9cPrTW3aizhDKC
+	 Y7XND3x1bk7xkhA8X4SEVhhu/EB2XoJJkKfMWEBsQne6TLj8xycdw5s/dNHKaUeZMu8IE
+	 LKpsoff5hYjhjVFnMyugFr40XpQVd6fUtHDizizqu2PGuMfMrmi+DXN0N5/bXd5yOFhPc
+	 J41rrJcQ5kZc9X3HsrrM5NUKFkFxUFnBZFKL4CG0ZVjBehxp+mIk171qIxLZH4sZnTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVop00Pt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yt2fDD9a;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C61606B365;
-	Fri, 13 Nov 2026 17:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB55606B365;
+	Fri, 13 Nov 2026 17:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tVop00Pt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935271F000C9;
-	Fri, 13 Nov 2026 17:22:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yt2fDD9a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC83F1F000C4;
+	Fri, 13 Nov 2026 17:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590534;
-	bh=+fiIVly8jPzJ7+pMoZGFMhcGMMlZtXobElzuN9e0bDc=;
+	s=korg; t=1794590536;
+	bh=nNDCyJtmUpCeVVtHncTMtH8Bp7+7ntvvuFQKMrBhUmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tVop00PtQYJw4GogCe7g1ZIlByU+K2dDhh5PcSqdMgXvbbOi4DeahgQsB7wH5JPcZ
-	 SLc+1YjrolqzZZEDEKkd/kNxfI63h/zMlf5wUcq8nMQ8mvANmCyfH312vWbWknzXpn
-	 Vmd8J60GNepm1RUxkCxMVRU25D5F0bjVr+pQSZAo=
+	b=yt2fDD9acCgSh0WNK9r4iw/j8j6OwXAxzaGhKcHl69shzIK2rA/JCwAIKcBArnaut
+	 hQTeu8hE+5TiCwJo5wsKC3xLYSbGCuFZ1YEU83HfG39rCXWxfFLTcoSLEwavSojXsH
+	 spZ++tOL1l2S4MLZVwCL7U61vqv1pH3wYQPWNcNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 476/686] batman-adv: tt: only update flags for TT events
-Date: Fri, 13 Nov 2026 10:50:09 -0500
-Message-ID: <20261113153837.067670959@linuxfoundation.org>
+Subject: [PATCH 6.18 477/686] batman-adv: tt: dont drop local events queued during TVLV update
+Date: Fri, 13 Nov 2026 10:50:10 -0500
+Message-ID: <20261113153837.100624011@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,107 +70,182 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-commit ad1fd828aa3944efc393b84b0d7c02483f1b5638 upstream.
+commit ed7a0dfdd370acb48be7a281df732c1bebcc7f1d upstream.
 
-In the first implementation of the translation table events, it was only
-possible to announce:
+batadv_tt_tvlv_container_update() read the number of local changes without
+holding changes_list_lock. batadv_tt_local_event() is not serialized by
+the commit_lock and can queue new events before the changes_list is
+flushed:
 
-* ADD: new locally detected client
-* DEL: disappeared local client
+  CPU0                          CPU1
+  batadv_tt_tvlv_container_update()
+    num = ...local_changes;
+                                batadv_tt_local_event()
+                                  list_add_tail(...);
+                                  ...local_changes++;
+    spin_lock_bh(&...changes_list_lock);
+    /* only num events copied but all freed */
 
-If an ADD event was queued and then a DEL event was queued in the same
-timeslot, it is valid to destroy both events because nothing actually
-changed for remode nodes
+The additional events were freed without ever being sent. Other nodes will
+only notice this via a CRC mismatch and must request the full table.
 
-But with commit 3c4f7ab60cc2 ("batman-adv: improve the TT component to
-support runtime flag changes") and subsequent changes, it could also happen
-that there are extra ADD events:
+The number of changes and the changes_list must therefore be taken
+atomically. Events queued afterwards then stay in the tt.changes_list for
+the next TT round.
 
-* ADD: _NEW_ locally detected client
-* ADD: already existing client with new flags
-* DEL: disappeared local client
+The changes can no longer be kept for the next round when the TVLV buffer
+allocation fails. But they would be sent with a skipped TTVN anyway, so the
+other nodes have to request the full table in this case either way. The
+last changeset is only dropped in this case when the TTVN was incremented.
+Without new changes, it still describes the current TTVN.
 
-The first and the last type of event could in theory still be removed
-together from the (to be announced) events queue. But if the "update flags"
-ADD is dropped together with the DEL, it would still leave global
-translation table of a remote node in the incorrect state - believing that
-the client didn't disappear.
+Previously, the unconsumed changes caused a retry of the TVLV container
+update in the next commit round. Since the changes are now consumed, the
+next round would only take the path without changes and wait for
+BATADV_TT_OGM_APPEND_MAX rounds before updating the container again. Until
+then, the outdated container with the previous TTVN would still be
+announced. The ogm_append_cnt is therefore reset on failure to retry the
+update in the next OGM interval.
 
-If a detected client was previously announced, a DEL event must only
-overwrite the "update flags" ADD but the DEL itself must still continue to
-exist in the (to be anounced) events queue. For now, adjustment of the
-announced flags is used for everything instead of dropping already queued
-up events completely.
-
-Similarly, a DEL followed by an ADD caused both entries to be deleted. But
-the new ADD could announce flags changes which were not yet present for the
-client before it was marked for DELetion. The new ADD must therefore only
-overwrite the DEL - but still be kept.
+This doesn't make the CRC consistent with the announced changeset. The
+local table modifications are still not serialized with the commit and
+batadv_tt_local_transition_new() can still make a client part of the CRC
+for which the event is only part of the next TT round. Such an
+inconsistency is detected by the CRC check of the other nodes and solved
+via a full table request.
 
 Cc: stable@vger.kernel.org
-Fixes: 3c4f7ab60cc2 ("batman-adv: improve the TT component to support runtime flag changes")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-fc286ddd-5bed-4683-b842-ee7a307eeb19
+Fixes: a73105b8d4c7 ("batman-adv: improved client announcement mechanism")
 [ Context ]
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 30 ++++++++++--------------------
- 1 file changed, 10 insertions(+), 20 deletions(-)
+ net/batman-adv/translation-table.c | 61 +++++++++++++++++++++++-------
+ 1 file changed, 48 insertions(+), 13 deletions(-)
 
 diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index c73596ef6160c..e7242706e3345 100644
+index e7242706e3345..dfec5cce5fe50 100644
 --- a/net/batman-adv/translation-table.c
 +++ b/net/batman-adv/translation-table.c
-@@ -415,6 +415,9 @@ batadv_tt_orig_list_entry_put(struct batadv_tt_orig_list_entry *orig_entry)
+@@ -978,20 +978,22 @@ batadv_tt_prepare_tvlv_local_data(struct batadv_priv *bat_priv,
+  * batadv_tt_tvlv_container_update() - update the translation table tvlv
+  *  container after local tt changes have been committed
   * @bat_priv: the bat priv with all the mesh interface information
-  * @tt_local_entry: the TT entry involved in the event
-  * @event_flags: flags to store in the event structure
-+ *
-+ * Only a single change per client is queued. It describes the latest state of
-+ * the client and a new event therefore replaces an already queued one.
++ * @changes_list: list of committed changes which will be consumed
++ * @tt_diff_entries_num: number of entries in @changes_list
   */
- static void batadv_tt_local_event(struct batadv_priv *bat_priv,
- 				  struct batadv_tt_local_entry *tt_local_entry,
-@@ -423,7 +426,7 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
- 	struct batadv_tt_change_node *tt_change_node, *entry, *safe;
- 	struct batadv_tt_common_entry *common = &tt_local_entry->common;
- 	u8 flags = common->flags | event_flags;
--	bool del_op_requested, del_op_entry;
-+	bool del_op_requested;
- 	size_t changes;
+-static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
++static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv,
++					    struct list_head *changes_list,
++					    int tt_diff_entries_num)
+ {
+ 	struct batadv_tt_change_node *entry, *safe;
+ 	struct batadv_tvlv_tt_data *tt_data;
+ 	struct batadv_tvlv_tt_change *tt_change;
+ 	int tt_diff_len, tt_change_len = 0;
+-	int tt_diff_entries_num = 0;
+ 	int tt_diff_entries_count = 0;
+ 	bool drop_changes = false;
+ 	size_t tt_extra_len = 0;
+ 	u16 tvlv_len;
  
- 	tt_change_node = kmem_cache_alloc(batadv_tt_change_cache, GFP_ATOMIC);
-@@ -457,25 +460,12 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
- 		if (entry->change.vid != tt_change_node->change.vid)
- 			continue;
+-	tt_diff_entries_num = READ_ONCE(bat_priv->tt.local_changes);
+ 	tt_diff_len = batadv_tt_len(tt_diff_entries_num);
  
--		del_op_entry = entry->change.flags & BATADV_TT_CLIENT_DEL;
--		if (del_op_requested != del_op_entry) {
--			/* DEL+ADD in the same orig interval have no effect and
--			 * can be removed to avoid silly behaviour on the
--			 * receiver side. The  other way around (ADD+DEL) can
--			 * happen in case of roaming of  a client still in the
--			 * NEW state. Roaming of NEW clients is now possible due
--			 * to automatically recognition of "temporary" clients
--			 */
--			list_del(&entry->list);
--			kmem_cache_free(batadv_tt_change_cache, entry);
--			changes--;
--		} else {
--			/* this is a second add or del in the same originator
--			 * interval. It could mean that flags have been changed
--			 * (e.g. double add): update them
--			 */
--			entry->change.flags = flags;
--		}
-+		/* the other nodes may know the client with different
-+		 * flags. A DEL+ADD must therefore still announce the
-+		 * current flags and an ADD+DEL must still remove the
-+		 * client. ADD+ADD and DEL+DEL only update the flags
+ 	/* if we have too many changes for one packet don't send any
+@@ -1009,19 +1011,39 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 
+ 	tvlv_len = batadv_tt_prepare_tvlv_local_data(bat_priv, &tt_data,
+ 						     &tt_change, &tt_diff_len);
+-	if (!tvlv_len)
++	if (!tvlv_len) {
++		/* the changes are lost and the other nodes have to request the
++		 * full table. Don't answer TT requests for the new TTVN with
++		 * the stale changeset of the previous TTVN. Without changes, the
++		 * TTVN was not incremented and the last changeset is still valid
 +		 */
-+		entry->change.flags = flags;
++		if (drop_changes || tt_diff_entries_num > 0) {
++			list_for_each_entry_safe(entry, safe, changes_list,
++						 list) {
++				list_del(&entry->list);
++				kmem_cache_free(batadv_tt_change_cache, entry);
++			}
++
++			spin_lock_bh(&bat_priv->tt.last_changeset_lock);
++			kfree(bat_priv->tt.last_changeset);
++			bat_priv->tt.last_changeset = NULL;
++			bat_priv->tt.last_changeset_len = 0;
++			spin_unlock_bh(&bat_priv->tt.last_changeset_lock);
++		}
++
++		/* announce the already committed TTVN in the next OGM interval
++		 * instead of waiting for BATADV_TT_OGM_APPEND_MAX idle rounds
++		 */
++		atomic_set(&bat_priv->tt.ogm_append_cnt, 0);
+ 		return;
++	}
  
- 		kmem_cache_free(batadv_tt_change_cache, tt_change_node);
- 		goto update_changes;
+ 	tt_data->flags = BATADV_TT_OGM_DIFF;
+ 
+ 	if (!drop_changes && tt_diff_len == 0)
+ 		goto container_register;
+ 
+-	spin_lock_bh(&bat_priv->tt.changes_list_lock);
+-	WRITE_ONCE(bat_priv->tt.local_changes, 0);
+-
+-	list_for_each_entry_safe(entry, safe, &bat_priv->tt.changes_list,
+-				 list) {
++	list_for_each_entry_safe(entry, safe, changes_list, list) {
+ 		if (tt_diff_entries_count < tt_diff_entries_num) {
+ 			memcpy(tt_change + tt_diff_entries_count,
+ 			       &entry->change,
+@@ -1031,7 +1053,6 @@ static void batadv_tt_tvlv_container_update(struct batadv_priv *bat_priv)
+ 		list_del(&entry->list);
+ 		kmem_cache_free(batadv_tt_change_cache, entry);
+ 	}
+-	spin_unlock_bh(&bat_priv->tt.changes_list_lock);
+ 
+ 	tt_extra_len = batadv_tt_len(tt_diff_entries_num -
+ 				     tt_diff_entries_count);
+@@ -3695,11 +3716,25 @@ static void batadv_tt_local_purge_pending_clients(struct batadv_priv *bat_priv)
+  */
+ static void batadv_tt_local_commit_changes_nolock(struct batadv_priv *bat_priv)
+ {
++	LIST_HEAD(changes_list);
++	int changes_num;
++
+ 	lockdep_assert_held(&bat_priv->tt.commit_lock);
+ 
+-	if (READ_ONCE(bat_priv->tt.local_changes) == 0) {
++	/* atomically get the list of changes. The TTVN decision and the
++	 * announced changeset must cover the same events. Events queued
++	 * afterwards stay in the tt.changes_list for the next TT round
++	 */
++	spin_lock_bh(&bat_priv->tt.changes_list_lock);
++	list_splice_init(&bat_priv->tt.changes_list, &changes_list);
++	changes_num = READ_ONCE(bat_priv->tt.local_changes);
++	WRITE_ONCE(bat_priv->tt.local_changes, 0);
++	spin_unlock_bh(&bat_priv->tt.changes_list_lock);
++
++	if (changes_num == 0) {
+ 		if (!batadv_atomic_dec_not_zero(&bat_priv->tt.ogm_append_cnt))
+-			batadv_tt_tvlv_container_update(bat_priv);
++			batadv_tt_tvlv_container_update(bat_priv, &changes_list,
++							changes_num);
+ 		return;
+ 	}
+ 
+@@ -3716,7 +3751,7 @@ static void batadv_tt_local_commit_changes_nolock(struct batadv_priv *bat_priv)
+ 
+ 	/* reset the sending counter */
+ 	atomic_set(&bat_priv->tt.ogm_append_cnt, BATADV_TT_OGM_APPEND_MAX);
+-	batadv_tt_tvlv_container_update(bat_priv);
++	batadv_tt_tvlv_container_update(bat_priv, &changes_list, changes_num);
+ }
+ 
+ /**
 -- 
 2.53.0
 
