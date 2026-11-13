@@ -1,59 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591130;
-	b=TZLzJWyHhkCR+mIPsNBOtAMetPy3pEORdqQunH+vnoEpCCXYjhpBqqA+kegwnPgmNx1k
-	 8Ia9bqUupyR4W8yGf/vHxNhvFMBcjWFgH5+thPVhBlmJ0O1VQWmsxQxXJCibkUA7LKbeb
-	 XuGXnj6RXlC30AH36IRketC4BKNE4xwqhcbGUmQqOrnGRz80hOi38oXllKj1/6u9DItFx
-	 1oXVJLaxjlQGZqfQhV7NG2i9ccnZFPiU5N9csugQlihA/LAnOQeFk4u2qUcKiov2PQ4tK
-	 WwlevYhHg2HZjO06bB2NmBPE02kx2SGPzQ4zvlJelkWIusbfLRgofa1PaMLg/Mbm0yQ==
+	t=1794591131;
+	b=sS00FgHOkOO2siQpKYpMnCi9Yr2ef/QIP06zsHEUGBWnoxo1jfNlwqTCg3OipdCxd3xy
+	 agY3RV9HYG3MiugYeMR9SVapbxj1CNBgGOQkiCpcLDBgdb0Rw5BowEDP4mWfZ04cRBOoP
+	 vpltlXOV1+S1gOTNNnMxx/vdr0i2IqJTuZE8LvSkVa3CB4YZa4FI3agu7MIf7SoHUtpw3
+	 YV4uL9NFXc6yomBS8HdqEInmbJ+OljCHGwvPLmFtBhmp0GfM9kMs9THDOjD7HkwKyoY88
+	 kZ1XOueM4XWZ9AMtuhbi5FscQd9snHOcgoEI98wb9bE+dSpr4n/aeCzg6JVCXK5lE7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591130;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591131;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w2HwfE5AfCKUQCBVEc5A0xrTM2i/jgZ4WeJ0jAIkCWM=;
-	b=VvykhrwRLEMR4xi25nAAqB5pRI+je/xH7Dw5n302pPScVMD86YIsScD8DXlnoaOQC3qV
-	 tpZi4o2sdPovGgsDxkGy+nXZ6+o9oU799xXHz1RhsrHdXdmbDJPUrbq5f4LOwDPA+FCvO
-	 qmxr3TmiQGk26LR271EkuZDTgShYX6ljx138/tR99i7Cuyiz3aH4BGVsC1g966yhRlUUJ
-	 1WHyCL7TLCFISGAO6TQNApHHkYxdhZgJFo29iuLrIxncshJ0AbaiuVCw25YV1wSjFQjR4
-	 Y6uik1h17IDw97waluiJr8vYdn0VXkiOwFAVYzcdDxmItv9VDQUCkYwoOnflYpTkIhA==
+	bh=QkAF+CNhbg2ifBMpe8iwhjeSYHPVwHlY+IDECRqq/Kk=;
+	b=DaD810fg50xCA6QRtSnai+w9/lNKOMwLP54yb0ymeGUTa210cWHLkBYuu+9XhiXuq3Qw
+	 42LH3mhNueoDzczoErAi6HWzA1HqP3Iv5hjnNl2bqLJmyooRVLvqpOtNlWxbiUpuJKsxa
+	 yUrORDCMdfk3PlYr07OGBrFDAqAWWMxW31a8GuGys3nEKLDSEChmdfv4IVAl8gTUf0hKY
+	 Nx2Z/9dYDqPjsd5a6+rZARx4G5PN0hLyKYh3ajT36s3hleWRuP4dCwh0K/tsN0XBLvb+g
+	 aa1nCgcGTIViVf/fAZ7fugE7NhlYqACUf4LypuS9kQVCncBHGmARI/9BctKf620m45Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5mzrTzv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBFB3TwW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BF6606BD0F;
-	Fri, 13 Nov 2026 17:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3688606A88C;
+	Fri, 13 Nov 2026 17:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5mzrTzv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572801F000C4;
-	Fri, 13 Nov 2026 17:32:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBFB3TwW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764E71F000C4;
+	Fri, 13 Nov 2026 17:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591130;
-	bh=w2HwfE5AfCKUQCBVEc5A0xrTM2i/jgZ4WeJ0jAIkCWM=;
+	s=korg; t=1794591131;
+	bh=QkAF+CNhbg2ifBMpe8iwhjeSYHPVwHlY+IDECRqq/Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R5mzrTzvdMyoZyqKHQIkndSs68Z5QpyXnk7ZwxufhNhEmyRaWg04PSQr54G/PRiE+
-	 PBEiD1u7geDaBsc15IYKeNj4FVKQzeJYtDON0C5XtoafnGHxGuy05kmT8dGRlrNix5
-	 q123NPWLgkrwLmChPaelLDCC9pio7Vdl27QIfz5g=
+	b=ZBFB3TwWa0Wza1Tt3Cc0czvbNhS7zXHXzjpVCRQEg8foYlIUt6UJBeB5/iSbnHjua
+	 jpgDakCdBCUdQshEeTzxNoidKKwXJwn+9byxvL9pyoYx292y1E0xOnfe42u2QR60CZ
+	 h3eEiQ9FJ4IQQSK7PimdYH6FdPekkKLA4qF+a2RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	Samarth Narang <samarth.colleges@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Xu Xin <xu.xin@linux.dev>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Peter Xu <peterx@redhat.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
 	Mike Rapoport <rppt@kernel.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 277/670] mm/page_alloc: mark pages freed by __free_pages_core() as not tagged
-Date: Fri, 13 Nov 2026 10:47:21 -0500
-Message-ID: <20261113153821.276170142@linuxfoundation.org>
+Subject: [PATCH 6.12 278/670] mm/ksm: keep soft-dirty when merging a page
+Date: Fri, 13 Nov 2026 10:47:22 -0500
+Message-ID: <20261113153821.305848593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -75,85 +75,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+From: Samarth Narang <samarth.colleges@gmail.com>
 
-[ Upstream commit b6732c6d43139ea56de8bc62e87ace8543ef784f ]
+[ Upstream commit 2efc6332f18bfd848f74f3d5ba45b31450601faa ]
 
-Onlining hotplugged memory (e.g., a dev_dax device bound to kmem) with
-CONFIG_MEM_ALLOC_PROFILING_DEBUG triggers:
+replace_page() maps the KSM page with a PTE built from scratch, so the
+soft-dirty bit of the PTE it replaces is lost.  A page written since
+"clear_refs 4" then no longer shows as soft-dirty once it is merged, and a
+soft-dirty based dumper treats it as unchanged.
 
-  alloc_tag was not set
-  WARNING: ./include/linux/alloc_tag.h:166 at __pgalloc_tag_sub+0x1fc/0x254
-  Call trace:
-   __pgalloc_tag_sub+0x1fc/0x254 (P)
-   __free_pages_ok+0x14c/0x6ac
-   __free_pages_core+0xa8/0x188
-   generic_online_page+0x14/0x20
-   online_pages+0x220/0x3b0
-   memory_subsys_online+0xfc/0x198
-   device_online+0x58/0xe0
-   state_store+0xf0/0xf8
+Copy the soft-dirty bit from the original PTE to the new PTE.
 
-Pages entering the buddy through __free_pages_core() have never been
-allocated, so their allocation tag references are NULL.  The free path,
-__free_pages_prepare() -> pgalloc_tag_sub(), expects a valid tag or a
-CODETAG_EMPTY mark and warns otherwise.  Paths feeding never-allocated
-pages into the buddy are therefore expected to mark them with
-clear_page_tag_ref() first, like init_cma_reserved_pageblock() and
-free_reserved_pages() do; of __free_pages_core()'s callers only
-memblock_free_pages() clears the tag ref itself, and the hotplug
-onlining path was missed.
-
-Since all __free_pages_core() callers free never-allocated pages, mark the
-head page as not tagged in __free_pages_core() itself instead of relying on
-each caller, and drop the now-redundant clearing from
-memblock_free_pages().
-
-Link: https://lore.kernel.org/20261022122752.74774-1-zenghui.yu@linux.dev
-Fixes: dcfe378c81f7 ("lib: introduce support for page allocation tagging")
-Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+Link: https://lore.kernel.org/20261021182157.1873726-1-samarth.colleges@gmail.com
+Fixes: 0f8975ec4db2 ("mm: soft-dirty bits for user memory changes tracking")
+Signed-off-by: Samarth Narang <samarth.colleges@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Xu Xin <xu.xin@linux.dev>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
 Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mm_init.c    | 2 --
- mm/page_alloc.c | 3 +++
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ mm/ksm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/mm/mm_init.c b/mm/mm_init.c
-index 77f5f62628b71..f024ab7ae363d 100644
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -2481,8 +2481,6 @@ void __init memblock_free_pages(struct page *page, unsigned long pfn,
- 		return;
+diff --git a/mm/ksm.c b/mm/ksm.c
+index 15f558f69093a..aba53b4a3b978 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -1407,6 +1407,10 @@ static int replace_page(struct vm_area_struct *vma, struct page *page,
+ 		dec_mm_counter(mm, MM_ANONPAGES);
  	}
  
--	/* pages were reserved and not allocated */
--	clear_page_tag_ref(page);
- 	__free_pages_core(page, order, MEMINIT_EARLY);
- }
- 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index a649f0245e3bf..480579d7d59e4 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1355,6 +1355,9 @@ void __meminit __free_pages_core(struct page *page, unsigned int order,
- 		atomic_long_add(nr_pages, &page_zone(page)->managed_pages);
- 	}
- 
-+	/* pages were never allocated */
-+	clear_page_tag_ref(page);
++	/* Preserve soft-dirty when replacing the page. */
++	if (pte_soft_dirty(orig_pte))
++		newpte = pte_mksoft_dirty(newpte);
 +
- 	if (page_contains_unaccepted(page, order)) {
- 		if (order == MAX_PAGE_ORDER && __free_unaccepted(page))
- 			return;
+ 	flush_cache_page(vma, addr, pte_pfn(ptep_get(ptep)));
+ 	/*
+ 	 * No need to notify as we are replacing a read only page with another
 -- 
 2.53.0
 
