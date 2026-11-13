@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591457;
-	b=JF8bCRAskNnQdAY3U/LYZLFbQAh1W6NKK9yotJ+4ee3hKdO2fa5+unxZyseaF/szK0I9
-	 ydeSbnyBp2nlNpCSOaVGX5/KSD8qpyh7V/52Ziwu4D7n43/FWm3kw4OV9hx/2LVOdmUTV
-	 P+6CdMhcMLX4pNuAav5HI01tyan0J278c5dTgnr19XY1Lldo7VeGAG0FfkGGClVnef9sm
-	 NwBzHa9udD5Dln8iKrHGQljRW0UEc/z15PPpGi2TpKbtJZOCloEEBuO5p2ebc824ujhwS
-	 IOV4CvqZr1R29hVAeHGmwk+eixvmbFJ4i3L94VZGztpYW3P4hQOAJuazVIJvdvAOrCg==
+	t=1794591458;
+	b=wJE7ue9kEYH2QmTQva5rOMc63QZfPF6kwi4vVHEFAzIVuCLqIWaC+IigQ3upYqnRMEiB
+	 c9WhL9t7qLvbcBxVEjWZ+k23IKldeIknzpY+w1y/xTeCqQcNZFjvcV+yqi0aSYO09j47l
+	 Gd6Gpoy4+hCPgvRBX/gm8vY5mcxzZgfpIeXZSk9daKV2O/f2/O4Byz1b02tmR8zeFE3jI
+	 lNXY2/HZSHp3jy9nANdFdQO4i0+RY3bHwZR7Wik1EX9W+X12xeqvQSzkysNDdkvxdubO0
+	 NnDmUy3FZ60VVArwiV0nz2laS/44lju2SVJUSpchMw39nu6DKVN0mTW/R9sj97Z5e9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591458;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F072AKXfDrMfUeWmVp5nRJO4deSK1JKy9GG/T6REWuc=;
-	b=WSornzNZI5y0QJo7QHO5FEEAJqAPeHmlRhxYBlYWRhAI+SDmItQvTOLJWddOFEEG9NBR
-	 7Za0erjgjr+u1WOnOcDzAjd7MKoKKtDAtNhWioSdZ4rcPYH4/hbR8QvktTU3kTP0Rmu8J
-	 jZusGDkDYqLGXxtSYLtRlirgXXiY18rjt9qcIFXbVaNaH4aGEOZjggAP7FuGhGZpLaUO5
-	 wKHntSfaee4w19KRozytZUy6fgWZpGA9KeK7S0un0s8cmHHjb2goTATPKGim16Ja4XK/c
-	 KyyyJt4WimHnrSG10Gv4KU4pbBX9QA8plEe20UB7x8Ua1ttQ728pBmtL4ZY8xQ6TzuA==
+	bh=FCxBgZInDehsMaMhzrdepfVIDOGvRmm8LpT1kawV204=;
+	b=Z+Gg4eMCHo/dQQEwxFZM0hAt9nFEmC2hPrtZZ64F4lRmbo8vEvt73ZQAJqWmXkmaYkmZ
+	 moiwp5RNLyp4xsuXkF5L1h4jJdZHW4M8GFVGlBMBWmviRrVRe6o1O7IekpJK2JuK/2xCP
+	 kC4phT30Wi4z/P7hxKBkMpujj4dNx1PTVQGc9T+3L1HZQL0ealNFt+sm8/+NR9vcnds3m
+	 Re+6iXpwwcPcXmLH4wvAG8pl5xm/YJTL4FvOZSxGRfk6F1Rwroq1nvl06KMe+/8kP/THI
+	 /d6qJZLxCRGl/Aac3L6TTaPoq1mIAIm9JrIQNcSGfWPqC8bW+nGZ4SF+I9efFVWFSow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEOyFfOi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mnVL1MP0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABC0607C36F;
-	Fri, 13 Nov 2026 17:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4819607C371;
+	Fri, 13 Nov 2026 17:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEOyFfOi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267CF1F000C4;
-	Fri, 13 Nov 2026 17:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mnVL1MP0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602B91F000C4;
+	Fri, 13 Nov 2026 17:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591457;
-	bh=F072AKXfDrMfUeWmVp5nRJO4deSK1JKy9GG/T6REWuc=;
+	s=korg; t=1794591458;
+	bh=FCxBgZInDehsMaMhzrdepfVIDOGvRmm8LpT1kawV204=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yEOyFfOiPI6UBCrZLJQxYBW6OG/tIOmI7VgWd7YA7LCPXz520utgiLkc+R1AFCmqG
-	 Gk4A3kYc+GMEI2lul4v2S0M8ACzvf+YZRi8d1JVlzRjRVR9s22vjkQEno7kq3Lww6n
-	 knnDD3jjD/OMLzHH5/S7PHnt1clSpwsVeLVbjDs8=
+	b=mnVL1MP0DWr1bLrLP4kwfcSpmNjcwZiV2wIN8hSVZXrsbQ2/8ycos+fcK/tbBB3IR
+	 sl4+SWUwVNQxde5MCf+gsJbNPVzgZI1t7kf8TmeeC5YrPLeRt93to5LIBVJ+GGVNib
+	 fjMJbZGKeavzfJmWmV51WmDYgM5xWchxoMbJA1ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Fuad Tabba <tabba@google.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 544/670] ALSA: mpu401: shut down timer before freeing MPU
-Date: Fri, 13 Nov 2026 10:51:48 -0500
-Message-ID: <20261113153830.328617944@linuxfoundation.org>
+Subject: [PATCH 6.12 518/670] KVM: arm64: Fix MMFR0 TGRAN advertisement for pVMs
+Date: Fri, 13 Nov 2026 10:51:22 -0500
+Message-ID: <20261113153829.489621046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,81 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit 9332af5220d42341bb1446a62c545c0518e990ef ]
+[ Upstream commit 6c29285e78b5e4811145ebda382ac0ba732ce56a ]
 
-When an MPU401 interface has no usable IRQ, the driver polls raw-MIDI
-input and output with a timer. During raw-MIDI teardown, the timer callback
-can already be running when snd_mpu401_uart_remove_timer() clears the last
-mode bit and calls timer_delete(). That API neither waits for a running
-callback nor prevents it from rearming the timer, and free_irq() does not
-synchronize timer callbacks. snd_mpu401_uart_free() can therefore release
-mpu while the timer callback still uses it.
+Protected VM ID register emulation leaves unlisted fields at 0. This
+creates two issues for TGRAN:
 
-Initialize the timer once when the MPU object is created and only rearm it
-while a timer mode is active. Shut it down synchronously after freeing the
-IRQ so an in-flight callback completes before mpu and its resources are
-released.
+  * TGRAN16: 0 means non-implemented. It prevents 16KB protected VMs
+    from booting even when the hardware supports it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+  * TGRAN4|TGRAN64: 0 means implemented. This may falsely advertise the
+    feature even when the hardware does not support it.
+
+Advertise all the TGRAN fields in pvmid_aa64mmfr0 so that the hardware
+support is properly propagated.
+
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Link: https://patch.msgid.link/20260927093809.681726-1-runyu.xiao@seu.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Adapted scoped_guard() locking to the existing spin_lock_irqsave() and spin_unlock_irqrestore() calls. ]
+Fixes: 6c30bfb18d0b ("KVM: arm64: Add handlers for protected VM System Registers")
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <tabba@google.com>
+Reviewed-by: Fuad Tabba <tabba@google.com>
+Link: https://patch.msgid.link/20260928095454.3255918-2-vdonnefort@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: adapted MAX_FEAT table entries to the existing unsigned restriction mask and signed-field limits in get_pvm_id_aa64mmfr0() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/mpu401/mpu401_uart.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/hyp/include/nvhe/fixed_config.h | 3 ++-
+ arch/arm64/kvm/hyp/nvhe/sys_regs.c             | 9 +++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/sound/drivers/mpu401/mpu401_uart.c b/sound/drivers/mpu401/mpu401_uart.c
-index 8e3318e177179..86235aefab02d 100644
---- a/sound/drivers/mpu401/mpu401_uart.c
-+++ b/sound/drivers/mpu401/mpu401_uart.c
-@@ -162,14 +162,15 @@ static void snd_mpu401_uart_timer(struct timer_list *t)
- 
- 	spin_lock_irqsave(&mpu->timer_lock, flags);
- 	/*mpu->mode |= MPU401_MODE_TIMER;*/
--	mod_timer(&mpu->timer,  1 + jiffies);
-+	if (mpu->timer_invoked)
-+		mod_timer(&mpu->timer,  1 + jiffies);
- 	spin_unlock_irqrestore(&mpu->timer_lock, flags);
- 	if (mpu->rmidi)
- 		_snd_mpu401_uart_interrupt(mpu);
- }
+diff --git a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
+index f957890c7e381..3a9909f565f28 100644
+--- a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
++++ b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
+@@ -92,7 +92,8 @@
+  */
+ #define PVM_ID_AA64MMFR0_RESTRICT_UNSIGNED (\
+ 	FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64MMFR0_EL1_PARANGE), ID_AA64MMFR0_EL1_PARANGE_40) | \
+-	FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64MMFR0_EL1_ASIDBITS), ID_AA64MMFR0_EL1_ASIDBITS_16) \
++	FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64MMFR0_EL1_ASIDBITS), ID_AA64MMFR0_EL1_ASIDBITS_16) | \
++	SYS_FIELD_PREP_ENUM(ID_AA64MMFR0_EL1, TGRAN16, IMP) \
+ 	)
  
  /*
-- * initialize the timer callback if not programmed yet
-+ * arm the timer if it is not already active
-  */
- static void snd_mpu401_uart_add_timer (struct snd_mpu401 *mpu, int input)
- {
-@@ -177,7 +178,6 @@ static void snd_mpu401_uart_add_timer (struct snd_mpu401 *mpu, int input)
+diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
+index 2860548d42508..039badc77bf16 100644
+--- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
++++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
+@@ -191,6 +191,15 @@ static u64 get_pvm_id_aa64mmfr0(const struct kvm_vcpu *vcpu)
+ 	set_mask = get_restricted_features_unsigned(id_aa64mmfr0_el1_sys_val,
+ 		PVM_ID_AA64MMFR0_RESTRICT_UNSIGNED);
  
- 	spin_lock_irqsave (&mpu->timer_lock, flags);
- 	if (mpu->timer_invoked == 0) {
--		timer_setup(&mpu->timer, snd_mpu401_uart_timer, 0);
- 		mod_timer(&mpu->timer, 1 + jiffies);
- 	} 
- 	mpu->timer_invoked |= input ? MPU401_MODE_INPUT_TIMER :
-@@ -493,6 +493,7 @@ static void snd_mpu401_uart_free(struct snd_rawmidi *rmidi)
- 	struct snd_mpu401 *mpu = rmidi->private_data;
- 	if (mpu->irq >= 0)
- 		free_irq(mpu->irq, (void *) mpu);
-+	timer_shutdown_sync(&mpu->timer);
- 	release_and_free_resource(mpu->res);
- 	kfree(mpu);
++	set_mask |= SYS_FIELD_PREP(ID_AA64MMFR0_EL1, TGRAN4,
++		min_t(int, cpuid_feature_extract_signed_field(id_aa64mmfr0_el1_sys_val,
++							 ID_AA64MMFR0_EL1_TGRAN4_SHIFT),
++		      ID_AA64MMFR0_EL1_TGRAN4_IMP));
++	set_mask |= SYS_FIELD_PREP(ID_AA64MMFR0_EL1, TGRAN64,
++		min_t(int, cpuid_feature_extract_signed_field(id_aa64mmfr0_el1_sys_val,
++							 ID_AA64MMFR0_EL1_TGRAN64_SHIFT),
++		      ID_AA64MMFR0_EL1_TGRAN64_IMP));
++
+ 	return (id_aa64mmfr0_el1_sys_val & PVM_ID_AA64MMFR0_ALLOW) | set_mask;
  }
-@@ -547,6 +548,7 @@ int snd_mpu401_uart_new(struct snd_card *card, int device,
- 	spin_lock_init(&mpu->input_lock);
- 	spin_lock_init(&mpu->output_lock);
- 	spin_lock_init(&mpu->timer_lock);
-+	timer_setup(&mpu->timer, snd_mpu401_uart_timer, 0);
- 	mpu->hardware = hardware;
- 	mpu->irq = -1;
- 	mpu->rmidi = rmidi;
+ 
 -- 
 2.53.0
 
