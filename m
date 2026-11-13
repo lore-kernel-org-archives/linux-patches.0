@@ -1,67 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585616;
-	b=Dm695z1GdFeM1jcmRggLSeOlLxC3JzVVRUXTDQ7Fa3IL0RX1o2GGt4e8X9GxcBj1PL/j
-	 Hh/FwmgLpBixozlBNS3GvbSPTfkkg59XWJPO5uhVLtcIu5goFRdDAewQHDxjB1KLeXDnF
-	 NyhZBhxQMQBqECr3j1gpPnHk30vwkO6F/XJTA0XtoGYxekcUahaGA4C0VcHQBF/Umfhbn
-	 tfWeMltE24JbJCHXdt7qH0D525zWejvpmbRiEh4w65JhvXcfqrS2a7ZUlSp2BilEBj+b0
-	 uOGVdRxFu2AXiLAZ/DzF95SB64iTZNXGvMODVJGdBy1tgEWlC7402ZQuvYMjZrAcVVg==
+	t=1794585618;
+	b=UB7+K+4oktBf/r/PTDRjDHNY/MGA3+Ev0aTOyKNKDbhVbdTEFC0wWZo4j7ctC+nJWdiY
+	 joW1RPGjCTVl73nvFj1z/xKvbSS1CyrlUmlqcERZKJCivb7VFw04S2pGqYgR4fL8M5jkw
+	 s4zLS1W0lIdc/ZloIxD/PEFeQ3613DCCUERA9P5OAH/0nucNYI7WXXiid/dJfJU54m4ob
+	 xDzn0EjaIRD+WpcIvHEcZ5XBGMHCL8R3259EQMc6rWWDcv6W8GM+6MI+mHy1YiOvAqNuC
+	 paCpsMl0PFkvIT6wuM3NQEaHFxkooUXFjV0JSagIExQ/xbNjHWip4I5/5kUKdfCTFIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585616;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585618;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/fX5eSst0u7E32RssCYnF/qVL79qrPNfwRM0REQve4g=;
-	b=b+yPo+20qEecsuO7cbwLzDGi4bAPZuMIkVPVd7wdb1S80vnJcozlJcZZavg8x1No+0pO
-	 9KlxpoSuoJoxaQ/toBZSr9hv6c0uj4n9ZNu1bRkkKSC3kwNuCxfekhu8iRFeSGkLf42Tf
-	 2JGe/c3NypYpCp1n8VbtXhztSORDgYl7nurKDmnuTDKEPzedgSYgO/Y4cCtQtXSMsBzLz
-	 M2zLpXX0mhR1e4q3ZqlXj8TlNUPq6ZZ1+HbnNsi6JfdU2FfD18TmJwRsQqMqid9PweArO
-	 QH0vBldo7fQV//GdGzcA9JEg8fGBILNNoofzPs4+b8yqMeJ31iWrsifwPXzR2qPOLJw==
+	bh=bRhr0lKqvThdLSW9oAEeLmCS9k8TUzqvw2/DKZeGH9g=;
+	b=fLNrgvUAJl9oA7LnUTNo+jLheUJZEm07tIxilLcGGhNAv5FEvwzA3CcjW6qz3CsiqvM7
+	 pQdJnuVhvjyVj2B+CF9pVbN2RXz5h+6xEHqenFuOUcgCYB0c2otiGF7QNF3zAzWboe3S6
+	 6k29Jh9MqS/jUGOzID1eLQ7KN61+yrNAEKqb+fcdUdCbhf9qkytzTZNth1N7dreNc49Aq
+	 rH+piDF7GJDqiDkBkWtxos3lOThRHpd61VpYoP0KeT1a+207NviX6AGD37jJjOfCXLyXn
+	 f0XTumzXp8hdSNy2ggTLpMnAsKTSZ9MWEZoLv/lkcG4/UeySygPRk3DoA/QvT4kRkXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oAyJrOGy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nd+V1229;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9C7606A33B;
-	Fri, 13 Nov 2026 16:00:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CCE6070237;
+	Fri, 13 Nov 2026 16:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oAyJrOGy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541701F000C5;
-	Fri, 13 Nov 2026 16:00:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nd+V1229
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EED21F000C4;
+	Fri, 13 Nov 2026 16:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585616;
-	bh=/fX5eSst0u7E32RssCYnF/qVL79qrPNfwRM0REQve4g=;
+	s=korg; t=1794585617;
+	bh=bRhr0lKqvThdLSW9oAEeLmCS9k8TUzqvw2/DKZeGH9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oAyJrOGy+UhBhk4r1Ljnwr6l7MK4CkmuGdwxPhYXNCarSr2Xt41djG3u2j/506mAY
-	 FbWCH26GgzcPUz+jovxZ93weaCzHaZxZ7g6RPwRw9YUd2odiW5tr+y/A2wrQ0HMJrs
-	 SSYUwuIcFCTZVVhJQC9MJgNNfuHll1uYfaNR73L4=
+	b=nd+V1229+cegdM62TKCpSKnvM1ulzzzPTRk4PZLI9bub0wIcgX/ckvN6SotNMVeJE
+	 tbU1MHc70Hb/J7sWIE3woM8YezWyiGeXflsqY1D39YmPbl9dCY5vQ9J21XH3n2Xrus
+	 fB1Ra6KuDw/fQHv3Au36nKiW+1RL0FPeGUH+IRzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Frank van der Linden <fvdl@google.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
+	Salvatore Dipietro <dipiets@amazon.it>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dgc@kernel.org>,
+	Matt Fleming <matt@readmodwrite.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
 	Michal Hocko <mhocko@suse.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 240/507] mm/hugetlb_vmemmap: map the shared tail page writable
-Date: Fri, 13 Nov 2026 10:49:04 -0500
-Message-ID: <20261113153802.733233847@linuxfoundation.org>
+Subject: [PATCH 7.3 241/507] mm: page_alloc: do not give all non-blocking requests reserve access
+Date: Fri, 13 Nov 2026 10:49:05 -0500
+Message-ID: <20261113153802.759993658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -83,122 +81,135 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau (Meta) <kas@kernel.org>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-[ Upstream commit 0120a603afadba8ab4954bb1ce60f8195f80efc8 ]
+[ Upstream commit 6ee3d87b940848aaed5d4e8d005c5f674bf2637a ]
 
-page_ref_add_unless_zero() reads the refcount and then updates it with a
-cmpxchg.  A lockless get, such as a page cache lookup or a PFN scanner,
-can read a non-zero refcount from a page that is then freed and reused as
-a hugetlb tail page.  If HVO remaps its struct page to the shared tail
-page in between, the cmpxchg writes to read-only vmemmap:
+Patch series "mm: page_alloc: fix reserve access for non-blocking
+requests", v2.
 
-    CPU0 (lockless get)               CPU1
-    c = atomic_read(&page->_refcount)
-                                      page freed
-                                      page allocated as a hugetlb tail
-                                      HVO remaps the struct page RO
-    try_cmpxchg(&page->_refcount, &c, c + 1)
-      -> write fault on read-only vmemmap
+Two fixes for how non-blocking allocations interact with the highatomic
+reserve.  There are prerequisites for Salvatore's "mm/page_alloc: avoid
+direct reclaim and compaction for costly __GFP_NORETRY allocations" [0].
 
-The refcount is zero by then and the compare fails, but a compare-and-swap
-instruction needs write access whether or not it succeeds.  The kernel
-oopses when hugetlb pages are allocated at runtime with HVO enabled while
-a lockless get races with it.
+Patch 1 narrows which requests may physically take highatomic pages,
+patch 2 narrows which requests may count them in their watermark check.
 
-Commit bd225530a4c7 ("mm/hugetlb_vmemmap: fix race with speculative PFN
-walkers") closed the window with RCU on both sides.  The RCU was removed
-together with fake heads, on the wrong belief that it was only needed for
-them.
+Both are prerequisites for Salvatore's patch: it clears
+__GFP_DIRECT_RECLAIM for costly __GFP_NORETRY requests, which turns every
+large page cache folio allocation that reaches the slowpath into a
+non-blocking one.  Without patch 1, those requests may fall back to the
+highatomic freelists reserved for atomic requests.  Without patch 2, they
+count the free highatomic pages in their watermark check while being
+served from regular memory, so they can consume regular high-order blocks
+below the min watermark by the size of the reserve.  GFP_NOWAIT requests
+hit both paths today, so these are existing problems worthy of their own
+stable backports; but Salvatore's patch would widen them significantly.
 
-Map the shared tail page writable instead of restoring the RCU.  Every
-struct page on it is a tail with a zero refcount, so a late cmpxchg
-fails and leaves the page unchanged.  RCU would put rcu_read_lock()
-back around every get and synchronize_rcu() back into hugetlb
-allocation and freeing.
+Patch 2 reproduction: a GFP_NOWAIT burst under memory pressure can drain
+regular free memory to zero while the highatomic reserve sits idle.
+Measured on a 32G box with an anonymous working set, swap, and a full 290M
+reserve, three synthetic bursts drove the 28G Normal zone's regular free
+memory to 28M, 0.8M and 0.6M against a 60M min watermark.  Swapout failed
+its swap table allocation inside reclaim, reclaim scanned 13M pages to
+free 200k, and page faults stalled for tens to hundreds of milliseconds.
+With the fix the burst stops at the min watermark and nothing else
+happens.  This was found in review and reproduced synthetically; it has
+not been observed in production.
 
-The cost is the protection against stray writes to tail struct pages.  The
-shared page is shared by all hugetlb folios of the same order in the zone,
-so such a write now corrupts all of them instead of oopsing.
+GFP_ATOMIC order-0 requests have a milder version of the same problem:
+They are entitled to the reserve but are served regular memory first, so
+the fix there has to change the watermark check and the freelist order
+together.  Salvatore's change doesn't interact with this, though; fixing
+that is left for a separate patch.
 
-Bootmem folios optimized when the memmap is set up keep their tails
-read-only.  Nothing does a lockless get on them before hugetlb takes them
-over.
+This patch (of 2):
 
-Link: https://lore.kernel.org/20261028132623.2560146-1-kirill@shutemov.name
-Fixes: 32c440d67e6c ("mm: drop fake head checks")
-Fixes: 01b1d0ffb6f7 ("hugetlb: remove VMEMMAP_SYNCHRONIZE_RCU")
-Signed-off-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access
+highatomic reserves") accidentally gave all non-blocking allocation
+requests access to highatomic reserves, which includes GFP_NOWAIT and
+other sites clearing __GFP_DIRECT_RECLAIM.
+
+While this improved atomic request success rate, it's unintentionally
+broad and can actually worsen highatomic requests by squandering the
+reserves on requests that don't need it.
+
+There are concurrent efforts to clear __GFP_DIRECT_RECLAIM altogether
+for costly order __GFP_NORETRY requests, which would then also fall
+into this exemption and deplete reserves even faster.
+
+What GFP_ATOMIC has over the others is __GFP_HIGH, which
+alloc_flags_slowpath() translates to ALLOC_MIN_RESERVE.
+
+Narrow the exemption to contexts that have both ALLOC_NON_BLOCK |
+ALLOC_MIN_RESERVE.
+
+Link: https://lore.kernel.org/20261001082152.2879289-1-dipiets@amazon.it [0]
+Link: https://lore.kernel.org/linux-mm/arFBWvzXPYrKuIYi@cmpxchg.org/ [1]
+Link: https://lore.kernel.org/linux-mm/20261001082152.2879289-1-dipiets@amazon.it/ [2]
+Link: https://lore.kernel.org/20261028171719.2043421-1-hannes@cmpxchg.org
+Link: https://lore.kernel.org/20261028171719.2043421-2-hannes@cmpxchg.org
+Fixes: 281dd25c1a01 ("mm/page_alloc: let GFP_ATOMIC order-0 allocs access highatomic reserves")
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: David Hildenbrand (Arm) <david@kernel.org>
-Closes: https://lore.kernel.org/r/ebc7bde1-f52e-4da8-b16f-822d6c0a4d74@kernel.org
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Frank van der Linden <fvdl@google.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260904115629.3993331-1-dipiets@amazon.it
+Acked-by: Balbir Singh <balbirs@nvidia.com>
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Salvatore Dipietro <dipiets@amazon.it>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Dave Chinner <dgc@kernel.org>
+Cc: Matt Fleming <matt@readmodwrite.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
 Cc: Michal Hocko <mhocko@suse.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
+
+regular free memory to zero while the highatomic reserve sits idle.
+Measured on a 32G box with an anonymous working set, swap, and a full 290M
+reserve, three synthetic bursts drove the 28G Normal zone's regular free
+memory to 28M, 0.8M and 0.6M against a 60M min watermark.  Swapout failed
+its swap table allocation inside reclaim, reclaim scanned 13M pages to
+free 200k, and page faults stalled for tens to hundreds of milliseconds.
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/mm/vmemmap_dedup.rst | 15 +++++++++++++--
- mm/hugetlb_vmemmap.c               |  8 +++++---
- 2 files changed, 18 insertions(+), 5 deletions(-)
+ mm/page_alloc.c | 4 +++-
+ mm/page_alloc.h | 3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/mm/vmemmap_dedup.rst b/Documentation/mm/vmemmap_dedup.rst
-index 9fa8642ded483..66d58fbea5b1e 100644
---- a/Documentation/mm/vmemmap_dedup.rst
-+++ b/Documentation/mm/vmemmap_dedup.rst
-@@ -131,8 +131,19 @@ pages of ``struct page`` (page 1 to page 7) are tail pages.
- The optimization is only applied when the size of the struct page is a power
- of 2. In this case, all tail pages of the same order are identical. See
- compound_head(). This allows us to remap the tail pages of the vmemmap to a
--shared, read-only page. The head page is also remapped to a new page. This
--allows the original vmemmap pages to be freed.
-+shared page. The head page is also remapped to a new page. This allows the
-+original vmemmap pages to be freed.
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index d8adf19eaeea6..ddffc7c8430e8 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -3259,7 +3259,9 @@ struct page *rmqueue_buddy(struct zone *preferred_zone, struct zone *zone,
+ 			 * reserves as failing now is worse than failing a
+ 			 * high-order atomic allocation in the future.
+ 			 */
+-			if (!page && (alloc_flags & (ALLOC_OOM|ALLOC_NON_BLOCK)))
++			if (!page &&
++			    ((alloc_flags & ALLOC_OOM) ||
++			     (alloc_flags & ALLOC_MASK_ATOMIC) == ALLOC_MASK_ATOMIC))
+ 				page = __rmqueue_smallest(zone, order, MIGRATE_HIGHATOMIC);
+ 
+ 			if (!page) {
+diff --git a/mm/page_alloc.h b/mm/page_alloc.h
+index 2b1017a91928c..1ae729be96016 100644
+--- a/mm/page_alloc.h
++++ b/mm/page_alloc.h
+@@ -60,6 +60,9 @@
+ /* Flags that allow allocations below the min watermark. */
+ #define ALLOC_RESERVES (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE|ALLOC_HIGHATOMIC|ALLOC_OOM)
+ 
++/* Flags that mean GFP_ATOMIC */
++#define ALLOC_MASK_ATOMIC (ALLOC_NON_BLOCK|ALLOC_MIN_RESERVE)
 +
-+The shared page is mapped writable. A lockless get of a page reference can
-+read a non-zero refcount before the remap and attempt its atomic update
-+after it. The refcount of a tail page is zero, so the update fails without
-+changing the page. Nothing else may write to the shared page: it is shared
-+by all HugeTLB pages of the same size in the zone, and a stray write would
-+corrupt all of them.
-+
-+HugeTLB pages whose vmemmap is optimized when the memmap is first set up at
-+boot keep a read-only mapping of the shared page. Nothing can do a lockless
-+get on them before they are handed to HugeTLB.
- 
- Here is how things look after remapping::
- 
-diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
-index 917db0984143c..8e59818889371 100644
---- a/mm/hugetlb_vmemmap.c
-+++ b/mm/hugetlb_vmemmap.c
-@@ -222,10 +222,12 @@ static void vmemmap_remap_pte(pte_t *pte, unsigned long addr,
- 		VM_WARN_ON_ONCE(!PageTail((const struct page *)addr));
- 
- 		/*
--		 * Remap the tail pages as read-only to catch illegal write
--		 * operation to the tail pages.
-+		 * Map the shared tail page writable. A lockless get that read
-+		 * a non-zero refcount before the remap can still do its
-+		 * cmpxchg after it. The refcount is zero, so the cmpxchg
-+		 * fails and leaves the page unchanged.
- 		 */
--		entry = mk_pte(walk->vmemmap_tail, PAGE_KERNEL_RO);
-+		entry = mk_pte(walk->vmemmap_tail, PAGE_KERNEL);
- 	}
- 
- 	list_add(&page->lru, walk->vmemmap_pages);
+ /*
+  * Structure for holding the mostly immutable allocation parameters passed
+  * between functions involved in allocations, including the alloc_pages*
 -- 
 2.53.0
 
