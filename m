@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591197;
-	b=nUhv36CjedoCyi+hTqfmbLlOZJgdQp7zNR79P2VaZoOeKAKQhX23VkXpReFKKYtZScB4
-	 c/UgftPSJgx5DH3MCB3H7NSR9T19c7iDjNDaXj0ds6HXyWyOcJB1Y/xyd3ibBMhcij9fm
-	 AxT4Dnh9bbQh4gHKaYFyKsVhIOMaBXhoyiLKzbr0/fuK1Igjq/ZT2X4+Kf4LWK/l3rv8J
-	 qVEo0LKBMZ/7TJjNf2sujzAT4G3LFTjVfxnhw0syePxfoFVGaWg1li25lLTuSC7H55/fj
-	 m+gMs/AgaWi2PUqhl9bH85ZPkRbkwDeS/bF6soNZ0goVeSByfrDQmTqwyyfGrEkrbvg==
+	t=1794591198;
+	b=slHKhRy1HxMH5n9d4WcOX6dbEXUuRzHKqPggfC19n7FNdxnxUZzuSxVHS77ZpvQItuqM
+	 bxE+Q7oHHIyjPrbRp9aabpA6GSZXBOnplGFWyc4JRBJwr61SNawVz8Ur6AHVoa3Je2Q20
+	 TTzkWTn7FafrEpB8+3eXHhtl5jOiCMeJm6n/8OJppQX8XBn+L90y7KvDHqx/16Kqd7ZRf
+	 KMJP0HDat7m5vrflddFcALWRVcT9QQnWrK68PHrQdidx36G7uhykhG3ZVoFfh1NDOMLSb
+	 wGlbNpAoX4H/2dV5Fb5peyBOTg2Mk0YP1Tei9Nfsa6BGRlQuL2zgYgHUhXoh29hshBQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591197;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591198;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lpFHHsZO5uTWYlxbekNCsoBp6TVUQaGgLbPmzxWcy50=;
-	b=HNRBm7rgrki0p+MTBQI+cWrgdLikCcW0o6ymoo0a43rCAYuC+kBrI7CgnutI454C+Mq3
-	 ryr7FJFrkZ/6WUeqIyyfi4WVmfuEk9EZAOWiRQLBxqivaKFcGrFowHWeqiQ0jhsU+YJqn
-	 JNX+KwUTsPZXmJv4l1DWHBe5GUnkKAT9Gx2pKsUUNXoDFlwhs1gMC60Z2HuxtMsno40Gd
-	 PQgimw7VUIcZnNz6mvmOcg+G75AxhvxJnMErKDxrbbRsdiy2biyeq4EQfkPGkNcAIR/4W
-	 yQua9cNw61r1LQS1avhqfcpt3UMdMjVZsnexjdqoltCs0jLqcXOaoevqJfBU9mpzTwA==
+	bh=t737D1/nAMghJEj0vM2fiTLWPiB/m3r2uY7xrIauqsQ=;
+	b=qT8qfPzHyBx76/lhl5Z8ibKlq5Mu7zgoIekrFG0MDje8FZwz9Ip/dA7rNlFgDKheMTxp
+	 +RNrIbvIDVxso6hbOSGx0l6Ky4513dihYJOxQrpL6LRXNFZncFNgx3Mr/A5QtO2YcBd0H
+	 f3qPu8hbREltDgzcNciMAS3xqGgc8G+6JgmUINz1RxToT84HALPWwTxi5N5+y6KIO1OSg
+	 YVrDTjOgSrPiLBvQhL25Ba9rU2bHQDhPerUZtS2/S4nsNMb3DhaMnbBUWAsIwQyLWdB9X
+	 6tcqa6x33fjOFt3sZDY/++nF0daLMBWOtErFOk1kZFku+R28I6Zsj8qs/IrpOdpzO0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgI5LuLQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2m3bMvQx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D4E6075847;
-	Fri, 13 Nov 2026 17:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD09E6075844;
+	Fri, 13 Nov 2026 17:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BgI5LuLQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A021F000C5;
-	Fri, 13 Nov 2026 17:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2m3bMvQx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 786A61F000C5;
+	Fri, 13 Nov 2026 17:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591197;
-	bh=lpFHHsZO5uTWYlxbekNCsoBp6TVUQaGgLbPmzxWcy50=;
+	s=korg; t=1794591198;
+	bh=t737D1/nAMghJEj0vM2fiTLWPiB/m3r2uY7xrIauqsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BgI5LuLQstJ+yFo6HH6muD8AzmJMFq7FArSj3k9FL8vfFXkbbw5sD/BAlc0wVj197
-	 2gcC/qdOHNelyfg+3H/MlSxEWYpYaTDQk5OO164SisTlEwLkL+bKU+7G4+v/2OG0+1
-	 8qJ/aSJAHLF6Eofnxq3lgF/YUxFBiI1Svnhgq+tQ=
+	b=2m3bMvQxkJ7snpN/cva6Xx5JZx6lwdbcCw8hylfTEF67iIvGnHeHl/7fXnLLa3VHT
+	 IvSU4Qag8c2cu9vuJDL4Pa0VHKY+TMj51FL8OJuVWV0kw1m/1RV+NhLA+p9JImpokC
+	 hX1RBZUWCNkoK8H7kz8G1VmVvReiObX1AP7aQ1iU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
+	Chris Mason <mason@kernel.org>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 331/670] mm: fix unmap_mapping_range() beyond 4 GiB on 32-bit
-Date: Fri, 13 Nov 2026 10:48:15 -0500
-Message-ID: <20261113153823.088717776@linuxfoundation.org>
+Subject: [PATCH 6.12 332/670] mm: fix unkillable fault loop on MAP_DROPPABLE memory
+Date: Fri, 13 Nov 2026 10:48:16 -0500
+Message-ID: <20261113153823.120621510@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,61 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 7a81bc23dade8082187be6d9cc36e4be4b7207e2 ]
+[ Upstream commit 9f02ca8c15a74bc9e4e8e05ec089f63cb87cbf75 ]
 
-Commit 9eab0421fa94 ("mm: fix unmap_mapping_range high bits shift bug")
-made holebegin and holelen unsigned before they are shifted, by casting
-them to pgoff_t. That is an unsigned long: on a 32-bit kernel the cast
-cuts off the upper half of the two loff_t values, so a hole which begins
-at 4 GiB or beyond is taken for one in the first 4 GiB of the file.
+handle_mm_fault() suppresses VM_FAULT_OOM for VM_DROPPABLE mappings.
 
-truncate_pagecache() passes the new size of the file and asks for private
-COWed pages to be unmapped as well. If a file of 6 GiB is truncated to
-5 GiB, everything from 1 GiB on is unmapped, and what a process has
-written to a private mapping of the range between 1 GiB and 5 GiB is
-lost: it reads the contents of the file again.
+For user-mode faults, pending signals are processed before retrying the
+access. Kernel-mode faults on user buffers instead return directly to
+the faulting instruction.
 
-Where the range has an end, the wrong range is unmapped instead of the
-right one. The page cache copes with that, as it unmaps every folio that
-it removes. The callers which only have unmap_mapping_range() to get
-rid of user mappings do not, for example drm_vma_node_unmap(), whose fake
-offsets reach beyond 4 GiB on 32-bit, and revoke_iomem() with physical
-addresses of more than 32 bits.
+With persistent allocation failures (esp. memcg limits), a syscall,
+such as write(), can therefore loop while not dropping locks.
 
-Cast to u64 instead. Nothing changes for 64-bit kernels.
+Only suppress VM_FAULT_OOM when FAULT_FLAG_USER is set, allowing
+kernel-mode faults and GUP to fail and signal allocation errors.
 
-Fix generated by an LLM and sent by Josef Bacik in private.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Fixes: 9eab0421fa94 ("mm: fix unmap_mapping_range high bits shift bug")
+Fixes: 9651fcedf7b9 ("mm: add MAP_DROPPABLE for designating always lazily freeable mappings")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ david: simplify description ]
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-36-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-37-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/memory.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/mm/memory.c b/mm/memory.c
-index 81e5e9cadc35f..223f82aeeca5e 100644
+index 223f82aeeca5e..564c0ce0aa6d7 100644
 --- a/mm/memory.c
 +++ b/mm/memory.c
-@@ -3867,8 +3867,8 @@ EXPORT_SYMBOL_GPL(unmap_mapping_pages);
- void unmap_mapping_range(struct address_space *mapping,
- 		loff_t const holebegin, loff_t const holelen, int even_cows)
- {
--	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
--	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	pgoff_t hba = (u64)holebegin >> PAGE_SHIFT;
-+	pgoff_t hlen = ((u64)holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
+@@ -6121,8 +6121,12 @@ vm_fault_t handle_mm_fault(struct vm_area_struct *vma, unsigned long address,
  
- 	/* Check for overflow. */
- 	if (sizeof(holelen) > sizeof(hlen)) {
+ 	lru_gen_exit_fault();
+ 
+-	/* If the mapping is droppable, then errors due to OOM aren't fatal. */
+-	if (is_droppable)
++	/*
++	 * If the mapping is droppable, then errors due to OOM aren't fatal: the
++	 * task returns to user mode, handles its signals and tries again. A
++	 * fault from kernel mode has no such return, so it must see the error.
++	 */
++	if (is_droppable && (flags & FAULT_FLAG_USER))
+ 		ret &= ~VM_FAULT_OOM;
+ 
+ 	if (flags & FAULT_FLAG_USER) {
 -- 
 2.53.0
 
