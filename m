@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591152;
-	b=mQhwyf0s6W4c6U0f4LJjwtOpH/jkyI2uGu8nhhNpikcw6FfuuM4MYDR+8SE4dZSWqGe0
-	 XRiPDIQECovYKRqRo9ACgVTDx58cAm/KIwMBPVTWZH4RMVOpCyEvxmjUYQqkDNoYCDqNN
-	 fCNSnb42+hIM1TJyy1B2J4zO0t7cuQM2gU1BGSIUaiCbd2n5p1Kgz2EMHS2ONhFwrJVU/
-	 7L4nSGZ+xht3/XeDV9s9GCAamzfssvEO52d5EYihDex7k/BtmPp2zzz+41hPjr2LS1QEt
-	 zch0VRZ/f2TKbdCmockG/fyabKVOiuOzEZalT4x1KOIDlhQMCrribc04l8aJK+wuIbg==
+	t=1794591153;
+	b=zFyP57bVsYRQ3QfoSsDdxz5z5nNbSs+Fo+Dlwmu5me54eTHX2b8e+NrVUnymb0mVQjPf
+	 LDapuTryKFf/dCDrB8atI4mHbPYirOf5FnhRinA/znk0of++ZmGbsjXowgdnK/SuTuo3j
+	 NuEqv8vwewJPfozWAKDYJ/63gclSIZw1wdBfA3Br0GPnL2K3ywy+tIXEbi5orYy4zf5Xs
+	 BkTPbjvO7EbF+BcRtHs8G39nFhfCQrweFGbIhB7kGgO00ZdWMTX4OdSayrA6kR3TupYnF
+	 WcFJOL/kxsk6UD+pnKHTWcUFfC2HzMazd/9+nLDAei8n+Gp4qJAuUzP7q6lur7Mhq1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591153;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NoaxoqcQGO2f3BEIcX3JMD/X2kDuUcfy29Iv1Xd8lXI=;
-	b=0rNx7G0tqPmi47SJDRx+GtGos6CLoaa4WLeBBjBkYm4jSvW4uL5Ifq27Kg/R380Jk/Iw
-	 3Rt+PUh1KyNNRhxm8XEZlx0QRKWt2/KvRPU8QY89m2u9snDjKOeg39u8KD2+U2aVu5x8Z
-	 e+LP5VhDqvFDPn+ZVBH7AOzQh2u/FOTcVn5asbVs1rxFd1jCxnea4/NEfuUgPSWM0kecx
-	 zsTWvFhO58kXHzELSQykPX7w5zuFdy0GT+uiWLvBqoRu8YwS3JxhQLoVxd2nkqHeIw9QF
-	 9mVDfVp1P/yRWwXv2i71rDbj3rXTsPs98/UISRx24UW2mQNMJeb0hhVTXNy0lY5pbdA==
+	bh=rcN30G/K84e6d4M2eat3xje1qUX6Em9mt8WeG1OeL50=;
+	b=aHE8b5w9M1NQtV+KTCaHiNRAv+Qf03L71swTUUX0opM4y1r2BpMxZTfQzBNqHgnoaVq0
+	 aVBSjraBBwmcvU6rPcc5RjmA4cXAMQfj79u09UcOMoTn6uxrtdVMWWBwfEKt8Jw4xCUYT
+	 Qc+H1i58AluFU5qkKEJEc2ZwIvvt4KnS/mVx1Oe7kZrrwzh6RipwdnrPV3TYqUZlL1/A7
+	 olFdA5dFnlt6sTofgUEsm9ZnfeOnF0y3gJJ5db+tq7xq0HAWbUAdMWnkzmwMWZgzFrlNL
+	 iKKxoFanoRp/KOS/MHwUnOUGDGTjbygB/OsvEbgJgjCTfVHFl08KM6/aur9HclXwZDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nok6dHGo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JfTGLYMB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B276073FC0;
-	Fri, 13 Nov 2026 17:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED66606BD2A;
+	Fri, 13 Nov 2026 17:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Nok6dHGo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211401F000C4;
-	Fri, 13 Nov 2026 17:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JfTGLYMB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ACA21F000C4;
+	Fri, 13 Nov 2026 17:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591152;
-	bh=NoaxoqcQGO2f3BEIcX3JMD/X2kDuUcfy29Iv1Xd8lXI=;
+	s=korg; t=1794591153;
+	bh=rcN30G/K84e6d4M2eat3xje1qUX6Em9mt8WeG1OeL50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Nok6dHGoG0BTlNvq4rsR0B3ONME8rbgiaEX287sbh3+fOJoLSbViBwdQC/MDJJXJ0
-	 t/yMuEuRuhROYWElGgdMow0Hs3bcB0EDziEtYK83/j7z5G5EJ01GNyXvHsyLFkvLil
-	 +4HQuHU25ZbDcVVJa81UfjX/pAsnny+peJZQBhl8=
+	b=JfTGLYMBaP/Jqpq3IMegYuGPaPiQJOIY2AFTjlWIQUqEBtuoV7EABgSLy3JuE6m3Z
+	 FW64jUN4At3KVBjMl2XetNEdzkW07asEzFZdOh8gVSBCn3BgNww6QsnCN2G6CrnW1K
+	 jD18QDMaoZlFk3sQC+U4H2Tg8utukct2giR6TY8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ed Brindley <kernel@maidavale.org>,
-	Denis Pauk <pauk.denis@gmail.com>,
 	Guenter Roeck <linux@roeck-us.net>,
+	Jiale Yao <yaojiale02@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 254/670] hwmon: (asus_wmi_sensors) Avoid global struct mutation
-Date: Fri, 13 Nov 2026 10:46:58 -0500
-Message-ID: <20261113153820.439911263@linuxfoundation.org>
+Subject: [PATCH 6.12 245/670] hwmon: (aquacomputer_d5next) reject short status reports
+Date: Fri, 13 Nov 2026 10:46:49 -0500
+Message-ID: <20261113153820.145238593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,82 +68,219 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 59d586c9e47d1205563bc9b5a5d443adc3ba5bc5 ]
+[ Upstream commit cf8f81babd2e96087dedbb74985bc1781c98f73d ]
 
-In the asus_wmi_sensors driver, device-managed memory allocated in
-asus_wmi_configure_sensor_setup() is assigned to a global static structure,
-leading to a potential use-after-free when the device is unbound.
-The driver defines a single global asus_wmi_chip_info structure to register
-with the hwmon core. During probe, it dynamically allocates the .info
-channel array using devm_kcalloc() and assigns it directly to this global
-structure. When a device is unbound, its device-managed memory is
-automatically freed, leaving asus_wmi_chip_info.info as a dangling pointer.
-Furthermore, if multiple WMI devices are probed sequentially, each probe
-overwrites the same global pointer, forcing all registered hwmon instances
-to reference the channel information of the most recently probed device.
+The HID raw_event callback runs before HID core validates the received
+report length. aqc_raw_event() reads device-specific status fields at fixed
+offsets, including multi-byte values, without first ensuring that the
+received buffer contains every field. A truncated report can therefore
+cause out-of-bounds reads and update hwmon state with unrelated data.
 
-While it is unlikely if not impossible that multiple WMI devices of the same
-kind exist, modifying a global static data structure is undesirable. Remove
-the static data structure and allocate it as part of struct asus_wmi_sensors
-to avoid the potential problem.
+The required length differs between supported devices and cannot be
+derived from the HID report descriptor. Define the minimum length needed
+by each asynchronous status format, select it while configuring the
+device, and reject reports that do not contain the last field accessed by
+that format. Keep the published length zero until probe configuration is
+complete, which also excludes legacy devices whose status is retrieved
+through feature reports.
 
-Fixes: 548820e21ce1 ("hwmon: (asus_wmi_sensors) Support X370 Asus WMI.")
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 0e35f63f7f4e ("hwmon: add driver for Aquacomputer D5 Next")
+Fixes: 19692f17cd13 ("hwmon: (aquacomputer_d5next) Add support for Aquacomputer Aquastream XT")
 Cc: stable@vger.kernel.org
-Cc: Ed Brindley <kernel@maidavale.org>
-Cc: Denis Pauk <pauk.denis@gmail.com>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20261021120408.48495-1-yaojiale02@163.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus_wmi_sensors.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/hwmon/aquacomputer_d5next.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/drivers/hwmon/asus_wmi_sensors.c b/drivers/hwmon/asus_wmi_sensors.c
-index c2dd7ff882f24..502996e97cf14 100644
---- a/drivers/hwmon/asus_wmi_sensors.c
-+++ b/drivers/hwmon/asus_wmi_sensors.c
-@@ -164,6 +164,7 @@ struct asus_wmi_wmi_info {
+diff --git a/drivers/hwmon/aquacomputer_d5next.c b/drivers/hwmon/aquacomputer_d5next.c
+index 0dcb8a3a691d6..1f0e71d3b52e4 100644
+--- a/drivers/hwmon/aquacomputer_d5next.c
++++ b/drivers/hwmon/aquacomputer_d5next.c
+@@ -133,6 +133,7 @@ static u8 aquaero_secondary_ctrl_report[] = {
+ #define AQUAERO_FAN_CURRENT_OFFSET		0x06
+ #define AQUAERO_FAN_POWER_OFFSET		0x08
+ #define AQUAERO_FAN_SPEED_OFFSET		0x00
++#define AQUAERO_MIN_STATUS_REPORT_SIZE		(0x18B + AQUAERO_FAN_POWER_OFFSET + sizeof(u16))
+ static u16 aquaero_sensor_fan_offsets[] = { 0x167, 0x173, 0x17f, 0x18B };
  
- struct asus_wmi_sensors {
- 	struct asus_wmi_wmi_info wmi;
-+	struct hwmon_chip_info chip_info;
- 	/* lock access to internal cache */
- 	struct mutex lock;
- };
-@@ -496,11 +497,6 @@ static const struct hwmon_ops asus_wmi_hwmon_ops = {
- 	.read_string = asus_wmi_hwmon_read_string,
- };
+ /* Control report offsets for the Aquaero fan controllers */
+@@ -156,6 +157,8 @@ static u16 aquaero_ctrl_fan_offsets[] = { 0x20c, 0x220, 0x234, 0x248 };
+ #define D5NEXT_5V_VOLTAGE		0x39
+ #define D5NEXT_12V_VOLTAGE		0x37
+ #define D5NEXT_VIRTUAL_SENSORS_START	0x3f
++#define D5NEXT_MIN_STATUS_REPORT_SIZE	(D5NEXT_PUMP_OFFSET + AQC_FAN_SPEED_OFFSET + \
++					 sizeof(u16))
+ static u16 d5next_sensor_fan_offsets[] = { D5NEXT_PUMP_OFFSET, D5NEXT_FAN_OFFSET };
  
--static struct hwmon_chip_info asus_wmi_chip_info = {
--	.ops = &asus_wmi_hwmon_ops,
--	.info = NULL,
--};
--
- static int asus_wmi_configure_sensor_setup(struct device *dev,
- 					   struct asus_wmi_sensors *sensor_data)
+ /* Control report offsets for the D5 Next pump */
+@@ -180,11 +183,14 @@ static u16 d5next_ctrl_fan_offsets[] = { 0x97, 0x42 };	/* Pump and fan speed (fr
+ #define AQUASTREAMULT_FAN_CURRENT_OFFSET	0x00
+ #define AQUASTREAMULT_FAN_POWER_OFFSET		0x04
+ #define AQUASTREAMULT_FAN_SPEED_OFFSET		0x06
++#define AQUASTREAMULT_MIN_STATUS_REPORT_SIZE	(AQUASTREAMULT_PRESSURE_OFFSET + sizeof(u16))
+ static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
+ 
+ /* Spec and sensor report offset for the Farbwerk RGB controller */
+ #define FARBWERK_NUM_SENSORS		4
+ #define FARBWERK_SENSOR_START		0x2f
++#define FARBWERK_MIN_STATUS_REPORT_SIZE	(FARBWERK_SENSOR_START + \
++					 FARBWERK_NUM_SENSORS * AQC_SENSOR_SIZE)
+ 
+ /* Specs of the Farbwerk 360 RGB controller */
+ #define FARBWERK360_NUM_SENSORS			4
+@@ -194,6 +200,8 @@ static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
+ /* Sensor report offsets for the Farbwerk 360 */
+ #define FARBWERK360_SENSOR_START		0x32
+ #define FARBWERK360_VIRTUAL_SENSORS_START	0x3a
++#define FARBWERK360_MIN_STATUS_REPORT_SIZE	(FARBWERK360_VIRTUAL_SENSORS_START + \
++					 FARBWERK360_NUM_VIRTUAL_SENSORS * AQC_SENSOR_SIZE)
+ 
+ /* Control report offsets for the Farbwerk 360 */
+ #define FARBWERK360_TEMP_CTRL_OFFSET		0x8
+@@ -210,6 +218,7 @@ static u16 aquastreamult_sensor_fan_offsets[] = { AQUASTREAMULT_FAN_OFFSET };
+ #define OCTO_SENSOR_START		0x3D
+ #define OCTO_VIRTUAL_SENSORS_START	0x45
+ #define OCTO_FLOW_SENSOR_OFFSET		0x7B
++#define OCTO_MIN_STATUS_REPORT_SIZE	(0xD8 + AQC_FAN_SPEED_OFFSET + sizeof(u16))
+ static u16 octo_sensor_fan_offsets[] = { 0x7D, 0x8A, 0x97, 0xA4, 0xB1, 0xBE, 0xCB, 0xD8 };
+ 
+ /* Control report offsets for the Octo */
+@@ -230,6 +239,7 @@ static u16 octo_ctrl_fan_offsets[] = { 0x5B, 0xB0, 0x105, 0x15A, 0x1AF, 0x204, 0
+ #define QUADRO_SENSOR_START		0x34
+ #define QUADRO_VIRTUAL_SENSORS_START	0x3c
+ #define QUADRO_FLOW_SENSOR_OFFSET	0x6e
++#define QUADRO_MIN_STATUS_REPORT_SIZE	(0x97 + AQC_FAN_SPEED_OFFSET + sizeof(u16))
+ static u16 quadro_sensor_fan_offsets[] = { 0x70, 0x7D, 0x8A, 0x97 };
+ 
+ /* Control report offsets for the Quadro */
+@@ -249,6 +259,7 @@ static u16 quadro_ctrl_fan_offsets[] = { 0x37, 0x8c, 0xe1, 0x136 }; /* Fan speed
+ #define HIGHFLOWNEXT_CONDUCTIVITY	95
+ #define HIGHFLOWNEXT_5V_VOLTAGE		97
+ #define HIGHFLOWNEXT_5V_VOLTAGE_USB	99
++#define HIGHFLOWNEXT_MIN_STATUS_REPORT_SIZE	(HIGHFLOWNEXT_5V_VOLTAGE_USB + sizeof(u16))
+ 
+ /* Specs of the Leakshield */
+ #define LEAKSHIELD_NUM_SENSORS		2
+@@ -264,6 +275,7 @@ static u16 quadro_ctrl_fan_offsets[] = { 0x37, 0x8c, 0xe1, 0x136 }; /* Fan speed
+ #define LEAKSHIELD_FLOW_IN		111
+ #define LEAKSHIELD_RESERVOIR_VOLUME	313
+ #define LEAKSHIELD_RESERVOIR_FILLED	311
++#define LEAKSHIELD_MIN_STATUS_REPORT_SIZE	(LEAKSHIELD_RESERVOIR_VOLUME + sizeof(u16))
+ 
+ /* Specs of the Aquastream XT pump */
+ #define AQUASTREAMXT_SERIAL_START		0x3a
+@@ -556,6 +568,7 @@ struct aqc_data {
+ 	const char *name;
+ 
+ 	int status_report_id;	/* Used for legacy devices, report is stored in buffer */
++	u16 min_report_size;
+ 	int ctrl_report_id;
+ 	int secondary_ctrl_report_id;
+ 	int secondary_ctrl_report_size;
+@@ -1356,6 +1369,8 @@ static int aqc_raw_event(struct hid_device *hdev, struct hid_report *report, u8
+ 		return 0;
+ 
+ 	priv = hid_get_drvdata(hdev);
++	if (!priv->min_report_size || size < priv->min_report_size)
++		return 0;
+ 
+ 	/* Info provided with every report */
+ 	priv->serial_number[0] = get_unaligned_be16(data + priv->serial_number_start_offset);
+@@ -1541,6 +1556,7 @@ static void aqc_debugfs_init(struct aqc_data *priv)
+ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
  {
-@@ -508,7 +504,7 @@ static int asus_wmi_configure_sensor_setup(struct device *dev,
- 	struct hwmon_channel_info *asus_wmi_hwmon_chan;
- 	int nr_count[hwmon_max] = {}, nr_types = 0;
- 	struct asus_wmi_sensor_info *temp_sensor;
--	const struct hwmon_chip_info *chip_info;
-+	struct hwmon_chip_info *chip_info;
- 	enum hwmon_sensor_types type;
- 	struct device *hwdev;
- 	int i, idx;
-@@ -549,8 +545,9 @@ static int asus_wmi_configure_sensor_setup(struct device *dev,
- 	if (!ptr_asus_wmi_ci)
- 		return -ENOMEM;
+ 	struct aqc_data *priv;
++	u16 min_report_size = 0;
+ 	int ret;
  
--	asus_wmi_chip_info.info = ptr_asus_wmi_ci;
--	chip_info = &asus_wmi_chip_info;
-+	chip_info = &sensor_data->chip_info;
-+	chip_info->ops = &asus_wmi_hwmon_ops;
-+	chip_info->info = ptr_asus_wmi_ci;
+ 	priv = devm_kzalloc(&hdev->dev, sizeof(*priv), GFP_KERNEL);
+@@ -1608,6 +1624,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_fan_power;
+ 		priv->voltage_label = label_fan_voltage;
+ 		priv->current_label = label_fan_current;
++		min_report_size = AQUAERO_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_D5NEXT:
+ 		priv->kind = d5next;
+@@ -1633,6 +1650,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_d5next_power;
+ 		priv->voltage_label = label_d5next_voltages;
+ 		priv->current_label = label_d5next_current;
++		min_report_size = D5NEXT_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_FARBWERK:
+ 		priv->kind = farbwerk;
+@@ -1643,6 +1661,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->temp_sensor_start_offset = FARBWERK_SENSOR_START;
  
- 	sensor_data->wmi.info_by_id = devm_kcalloc(dev, sensor_data->wmi.sensor_count,
- 						   sizeof(*sensor_data->wmi.info_by_id),
+ 		priv->temp_label = label_temp_sensors;
++		min_report_size = FARBWERK_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_FARBWERK360:
+ 		priv->kind = farbwerk360;
+@@ -1659,6 +1678,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 
+ 		priv->temp_label = label_temp_sensors;
+ 		priv->virtual_temp_label = label_virtual_temp_sensors;
++		min_report_size = FARBWERK360_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_OCTO:
+ 		priv->kind = octo;
+@@ -1688,6 +1708,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_fan_power;
+ 		priv->voltage_label = label_fan_voltage;
+ 		priv->current_label = label_fan_current;
++		min_report_size = OCTO_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_QUADRO:
+ 		priv->kind = quadro;
+@@ -1717,6 +1738,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_fan_power;
+ 		priv->voltage_label = label_fan_voltage;
+ 		priv->current_label = label_fan_current;
++		min_report_size = QUADRO_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_HIGHFLOWNEXT:
+ 		priv->kind = highflownext;
+@@ -1734,6 +1756,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->speed_label = label_highflownext_fan_speed;
+ 		priv->power_label = label_highflownext_power;
+ 		priv->voltage_label = label_highflownext_voltage;
++		min_report_size = HIGHFLOWNEXT_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_LEAKSHIELD:
+ 		/*
+@@ -1753,6 +1776,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 
+ 		priv->temp_label = label_leakshield_temp_sensors;
+ 		priv->speed_label = label_leakshield_fan_speed;
++		min_report_size = LEAKSHIELD_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_AQUASTREAMXT:
+ 		priv->kind = aquastreamxt;
+@@ -1783,6 +1807,7 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		priv->power_label = label_aquastreamult_power;
+ 		priv->voltage_label = label_aquastreamult_voltages;
+ 		priv->current_label = label_aquastreamult_current;
++		min_report_size = AQUASTREAMULT_MIN_STATUS_REPORT_SIZE;
+ 		break;
+ 	case USB_PRODUCT_ID_POWERADJUST3:
+ 		priv->kind = poweradjust3;
+@@ -1856,6 +1881,8 @@ static int aqc_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ 		break;
+ 	}
+ 
++	priv->min_report_size = min_report_size;
++
+ 	if (priv->buffer_size != 0) {
+ 		priv->checksum_start = 0x01;
+ 		priv->checksum_length = priv->buffer_size - 3;
 -- 
 2.53.0
 
