@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585805;
-	b=HEAm79IZrdajXw11qeVp/z8K2zVF/32cBggAyImzmVxk3ZxaOBdZXjfQ+9C8OCVXH2/J
-	 PHI8xVpqL3zFyJuWhQWWi7n0QuXZpwAGww5Sgb0kPojpkbixmiGvSwoHi51WWQxDg4T/T
-	 Jga/wT9C3nBAUGDlHM4q1zd+5PmecFWOhL4WMpgJmZlcBSxoAxlgy+X9yfq3ZuJ8SL2eR
-	 I8YMjGlf16ZwTFh2wER4r6+NkhVMxh6EoYRZjfYmruHqOe74Tg2KD1POEJl+Py/VPEHKM
-	 2wVyGpoZFbLb0w0x6KDuw1E3wfI00Cl21MkdMh3MDgUpZO2z0N1N27IXZKKE9HOkfEQ==
+	t=1794585806;
+	b=qyRNHnH8pUOTEsnL+2AZ7YtP04e6TyE29o9nQ7qvK6ES9UakteW2QwqIGbYvaRGVjPhN
+	 jYGxaM+qlP8CcvaTOjbYj5C5pPNCunjQiBwKk9GuszzJ0gd46FTPOYjvN1ICxO90yPhuN
+	 /0fZSWzxfWhBWasfBTrx/eMfGHi1EUPPDB1ysNHtfarWlzYDKyr4dYGolRbVol+TCdauW
+	 YSkixQsqG17veO+0p346+gDlIotg28kXVkxUQPVmATd7UvzQ2ex7YUheMcoiLvlF9M8Ju
+	 qg1EyW6EHD4zgO2zQPR+VTFVq2c/Q7CaWZvxzYhL4Y5WpXbsQOGmtrPFuNQ3l//kH0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585805;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585806;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WhNax8DuIrl7/41RyISTMl/d13Y9BRR1m0D69L+ytRU=;
-	b=JO24yawBUJxgnkmTvtti723Mg0k/alKdwP8T0PczdGmJfIOsOZP/4b6Xw8M5vJiT5Q5+
-	 aM8PfBL4SUtALYs05nsFHcjlzDMAJQdWL4jRW7w5VJbZPdewc5CmdpYjISJOrQ3YIXaY6
-	 VqyN/qQKZt2uBU60FWfsloKRhQsboZypCDJcePlwyTNH5t6Jyz/OgcPn0PhQJpfukqbAp
-	 hsD3QQPMHcduSLg3HY6eEe6yMHu775F8/SDcIYJPXkqleP6SpKatLZFXNnNieVOdiYMRF
-	 fAz8M50K76GyzN9uDGvUw0Qa9+13ZvwmDEq4CXGd0vqS2A3VFl9n7zoVBUuI4WwSAWQ==
+	bh=ka2sU59jVYBycMnSglTaAwjFn4JVs89WHjgYwrlmRqY=;
+	b=NmWcbACTd642Kuji45JTuLtUMYSNdXkKa89PayTlXiaMWVObqKRw3sxZtND/puSXP1/C
+	 IiysnNwVO6ZvmIE6vJ7i5kxGtmHB7hGM5p6Kojtyf+JR5NaIk5LP9LPVzpQCvOfMAPSs3
+	 4/quYORahXKv2JIV8rtKMTbCm64HigmfRqDuPoXugGVGQbJPL+jfQaIcCfHQxPHMWVk7q
+	 Nmr/X78efFGJFRRcFn2LqpEC55i7S4OlYFi+bZpGqPa6TssOlhdFw5c8n1UQHlMTrO6Ts
+	 lrNcbZnZHKwAnBceeiHHldYgyPyAs0ugQPUz0OS51alJx8UMnILvIvKSWLpLoMMtQLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYUXf9Sa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WGn0rWmz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655D7606BA8A;
-	Fri, 13 Nov 2026 16:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A06606BA8A;
+	Fri, 13 Nov 2026 16:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YYUXf9Sa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 117BC1F000C7;
-	Fri, 13 Nov 2026 16:03:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WGn0rWmz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1ED1F000C4;
+	Fri, 13 Nov 2026 16:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585805;
-	bh=WhNax8DuIrl7/41RyISTMl/d13Y9BRR1m0D69L+ytRU=;
+	s=korg; t=1794585806;
+	bh=ka2sU59jVYBycMnSglTaAwjFn4JVs89WHjgYwrlmRqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YYUXf9Sah0+DkUQbRUHIn8luJ0WtDOMZkjbSlBLJGEPAzG8kjFw8xTiZgY4b6f/jC
-	 y09KKLUpQJgoFFmRxDLaU1yvA9/u6BeukWlKUfF0RBMk1oq6Lkllfxg2oSvJxnwuLE
-	 6iGRVKNtaZZ/s7w7AH0gaE/hQbsvYCtg13ZKxXOo=
+	b=WGn0rWmzRi6c9p9MpLErN5d6BJLS7KydWK3SrdXEnlie+/+vP441hK28qIz7Hp1/b
+	 YISW6E2gtqjZkll53lDaH1fsTj2A2P5NVFzfa3KdyVHpC+ml0U5z7wOwlpkU4o0W6r
+	 /e6fl7RGkdNg7dLXLmOAxF7htNHG6zXr0TAC8R68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilia Mirkin <imirkin@alum.mit.edu>,
-	Dave Airlie <airlied@redhat.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 390/507] drm/nouveau/devinit/gf100-: try to avoid double-running vbios scripts
-Date: Fri, 13 Nov 2026 10:51:34 -0500
-Message-ID: <20261113153809.875657316@linuxfoundation.org>
+Subject: [PATCH 7.3 391/507] ALSA: ump: Fix dropped data bytes at UMP System message conversion
+Date: Fri, 13 Nov 2026 10:51:35 -0500
+Message-ID: <20261113153809.943901818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,63 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilia Mirkin <imirkin@alum.mit.edu>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 2139cb633d48ebbbaec88d2e5a8ebe8e774df4fb ]
+[ Upstream commit ac1cac4c1f1b143650f7261ae78f64a3e22fa4d6 ]
 
-Turns out some VBIOSes don't actually set the bit in question in 2240c.
-Use the nv50-style detection to try avoiding running the vbios twice.
+The cvt_ump_system_to_legacy() function switches on
+ump_message_status_code(), which returns only the upper 4 bits of the
+status. The case labels are the full 0xf1, 0xf2 and 0xf3 values, so they
+never match. MIDI Time Code, Song Position and Song Select are converted
+to the status byte alone, and their data bytes are lost.
 
-Fixes: a6a0f67ca7aa ("drm/nouveau/devinit/gf100-: detect if BIOS invoked devinit")
-Link: https://bugs.freedesktop.org/show_bug.cgi?id=97620
-Cc: <stable@vger.kernel.org> # v4.6+
-Signed-off-by: Ilia Mirkin <imirkin@alum.mit.edu>
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20170128205347.17453-1-imirkin@alum.mit.edu
+Switch on the full status byte in buf[0] instead.
+
+Both callers of snd_ump_convert_from_ump() pass the result on as is: the
+legacy rawmidi input of a UMP endpoint, and the MIDI 1.0 path of the
+f_midi2 USB gadget.
+
+Fixes: 0b5288f5fe63 ("ALSA: ump: Add legacy raw MIDI support")
+Cc: stable@vger.kernel.org
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Link: https://patch.msgid.link/20261029130538.1985867-1-sammiee5311@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/nouveau/nvkm/subdev/devinit/gf100.c   | 20 +++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ sound/core/ump_convert.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
-index 5368e705e7fd6..186e09ea0cb10 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/gf100.c
-@@ -27,6 +27,7 @@
- #include <subdev/bios/init.h>
- #include <subdev/bios/pll.h>
- #include <subdev/clk/pll.h>
-+#include <subdev/vga.h>
- 
- int
- gf100_devinit_pll_set(struct nvkm_devinit *init, u32 type, u32 freq)
-@@ -99,6 +100,25 @@ gf100_devinit_preinit(struct nvkm_devinit *base)
- 	 * can use it as a reliable way to know whether we should run devinit.
- 	 */
- 	base->post = ((nvkm_rd32(device, 0x2240c) & BIT(1)) == 0);
-+
-+	/*
-+	 * However some VBIOS init sequences miss this bit. So fall back to
-+	 * the nv50 method of checking if the bit is not set. Running the
-+	 * VBIOS multiple times may have detrimental effects.
-+	 */
-+	if (base->post) {
-+		u64 disable = nvkm_devinit_disable(base);
-+		/* magic to detect whether or not x86 vbios code has
-+		 * executed the devinit scripts to initialise the
-+		 * board. only works if there's a display engine.
-+		 */
-+		if (!(disable & (1ULL << NVKM_ENGINE_DISP))) {
-+			if (nvkm_rdvgac(device, 0, 0x00) ||
-+			    nvkm_rdvgac(device, 0, 0x1a)) {
-+				base->post = false;
-+			}
-+		}
-+	}
- }
- 
- static const struct nvkm_devinit_func
+diff --git a/sound/core/ump_convert.c b/sound/core/ump_convert.c
+index 0a7972d91ec52..ecbd894f4c83a 100644
+--- a/sound/core/ump_convert.c
++++ b/sound/core/ump_convert.c
+@@ -69,7 +69,7 @@ static u32 upscale_14_to_32bit(u16 src)
+ static int cvt_ump_system_to_legacy(u32 data, unsigned char *buf)
+ {
+ 	buf[0] = ump_message_status_channel(data);
+-	switch (ump_message_status_code(data)) {
++	switch (buf[0]) {
+ 	case UMP_SYSTEM_STATUS_MIDI_TIME_CODE:
+ 	case UMP_SYSTEM_STATUS_SONG_SELECT:
+ 		buf[1] = (data >> 8) & 0x7f;
 -- 
 2.53.0
 
