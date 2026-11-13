@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585812;
-	b=agT9J2+7qKm8RUjaxffcL+kkb4KbZiKIY4TBVaPJmQfNfgHCO4hzOA96mEsuzdMikSD9
-	 JqZLhhScdu1UaI+tyvjMEUPg3c8H10WaYnnT+BE3w5niIStXgpLSnUn1t530qpxKo92/J
-	 xTSI3AkaGVblXwKBSl1+q1oyw0Kqo0CpAJPhadYaoa3AwotF/T4+vriUbKRS3GztdxrQq
-	 tvrpgKu2Rvj9+M/dMFvep+NQCMvR2Bh8B8kHt5bHFaen2zwwxdWR576UEnK/vyRgjzm70
-	 XiHFnYq8xW6LzmniUfhDfWwyGRJlafs9QMM1JFLys4JEObb3OuFxNB13XfXXH46iRrw==
+	t=1794585814;
+	b=ypT8OEFM+aDmBa5uaSp9BbJeP31T/8hNz2oPkd3raSwuuWmvYySRdBLzrO3lvHELRVkE
+	 5+rCpYxojfGczZX/zGjzRn5hhWXPuhg6G1hvaksXSGo60h55M0a4F0ia+yuscWf9E1Dta
+	 JjN8AVPLcKvfPH/rxrphtMf6b4rK4wR9e9J1qtZmpdsseIz6uRhfv36j/4YLhLQP0G6FS
+	 +qcpVhVk804Eb8EeAJ9/+1O5CWjFPRu0s90OZHp79HXfaucEmyvg2uUUIYMZswt9+hgef
+	 I4dZ9LrO3NTDfdPsAOByTbtSDH95UrZrFEjigXfVtn7903t/RRbGtJvnipFz6JksJGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uPzME0KqL9XyVFJjtQ14rQUsfn7ppzXg5rSFnWCYEvw=;
-	b=YqkBbwRTFX5XpLJcEjNxcVUVKQDRjwRRgOTfFDwXRxRNf4riPOvpEtOsYP0Crwck0B3p
-	 LDVJctnhSBJggt5d69TQkzPGCvx1gu8cjdoDz09FaYYuWx2C4+dBQ+APku6DkTIhzP9NR
-	 rLELdm8IGMdf6lEWQU51EI9vT5z9TUcaUIwEUjHb/g3qcsaaY3bNktbrfEbSuiab8yhsa
-	 jzq8SK4a6+RIRs1dWIUOFQm0Houc8auboBaHMl3342KQeZVF/J+8tLgRhBd2nzaNPNP4j
-	 DAeRkM9BwH64H7oImJOm7866vUEI0qwb17Ick3PFaZkAtgHBegL81l++bEI13IXgCQg==
+	bh=kWwElwuzDAt4ArVVlF7Lrekz3+Gb24Cr7MiaGAP0SKA=;
+	b=qycM6rWODCr/PfvMpA3YG5X+YcHzhmjUeO5EaKCgGMbiQuWtFtDMZM5G3+wjgIheoziD
+	 2Ck/znx5AHMwtrHk2bEWQJbXBMrZDqHmb3ECq7ISO65IjA86oXdjz9MDO+FhbysqGKe21
+	 717nvqZayGEV0T/C6r3UimtaNwJ7ExSH5dm0ZvPQbpGNRoOXSaVTomHWLoLB+z37ibU5q
+	 nnvBDu8cpm/UFvFnlNej/bh/pT1FNnJf01CGdgjdPlwUKRynINzyM43vz0/IsFr1BfCvR
+	 aNG7rZpAf45Io2bL5mbtQYVVPQB4G7f+/tBRtZuPAVr2rKtjNy7+sOyZgQM0fQsfNEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcrAnhe+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x41Jsb3A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B53606BA98;
-	Fri, 13 Nov 2026 16:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7A0606C55A;
+	Fri, 13 Nov 2026 16:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcrAnhe+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B871F000C5;
-	Fri, 13 Nov 2026 16:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x41Jsb3A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBAD1F000C5;
+	Fri, 13 Nov 2026 16:03:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585812;
-	bh=uPzME0KqL9XyVFJjtQ14rQUsfn7ppzXg5rSFnWCYEvw=;
+	s=korg; t=1794585814;
+	bh=kWwElwuzDAt4ArVVlF7Lrekz3+Gb24Cr7MiaGAP0SKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lcrAnhe+lHcj9c7Z2hD9yztWjRQtLcTkSV9JANoKcIWGiPdKTe6N6JDtEIYJ4qfv+
-	 Np/kWOWL/01LZLSH58kHp67r2fpGv9LahQw1iU7dc+mBqKgdkbHoN0dR5vIA8l+bwR
-	 4BIWWYn8/G3UfOSe3V9CHN3OkGEiXqafQXLHPg0Q=
+	b=x41Jsb3AWM2UxrTtixPPWm0xciH8O7YASjlAuJVluKuzL+YEEaYyp+D2HcrepgFTm
+	 LWBI24EOPHAd6msAqd5WSeNlLRHgxCVXa/yW52FNs7cMJDeNc47WMQsC/7+o28ZMFF
+	 u5UP8FRLEzuAyf+iEZl7rNSpv/pTsPeKSFLvDIvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Kasten <jkasten@gmail.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yuqiang Sun <izaiahsun@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 369/507] drm/amd/display: set allow_freesync before validating a new stream
-Date: Fri, 13 Nov 2026 10:51:13 -0500
-Message-ID: <20261113153808.567800324@linuxfoundation.org>
+Subject: [PATCH 7.3 396/507] ALSA: usb-audio: qcom: Check the return value of qmi_handle_init()
+Date: Fri, 13 Nov 2026 10:51:40 -0500
+Message-ID: <20261113153810.170100414@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,71 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+From: Yuqiang Sun <izaiahsun@gmail.com>
 
-[ Upstream commit ab18dd3061eb2d92e60c8bbf9a435c25962e449f ]
+[ Upstream commit a3cf5ebab5f1db9e6f751e2a08df05a84f37ea57 ]
 
-After resume from S3, DC enables SubVP on a single FreeSync display at
-a high refresh rate, although dcn32_allow_subvp_high_refresh_rate() is
-meant to keep SubVP off that configuration ("For single display cases,
-freesync must be disabled").  On an RX 7900 XTX driving a FreeSync TV
-at 3840x2160@120, amdgpu_dm_capabilities reports sub-viewport disabled
-after boot and enabled after "rtcwake -m mem", and the memory clock
-starts switching.  It stays that way until a later commit re-validates
-the state; a CRTC gamma change (toggling Night Light) turns SubVP off
-again.
+qc_usb_audio_probe() overwrites the return value of qmi_handle_init()
+with that of qmi_add_server() without checking it. When
+qmi_handle_init() fails, it has already freed the receive buffer and
+destroyed the workqueue, and qmi->sock may hold an error pointer. If
+QRTR is not available, qmi_handle_init() returns -EPROBE_DEFER and
+qmi->sock is ERR_PTR(-EAFNOSUPPORT), so qmi_add_server() passes it to
+kernel_sendmsg():
 
-The policy reads dc_stream_state::allow_freesync while the new state
-is validated, but amdgpu_dm sets that field only in
-amdgpu_dm_update_freesync_state_on_stream(), on the first flip after
-the commit.  A stream created by a modeset is therefore validated as
-if FreeSync were off.  On resume, dm_destroy_cached_state() drops the
-streams and forces a modeset, so the resumed state is validated
-without FreeSync.
+  BUG: unable to handle page fault for address: ffffffffffffffb7
+  RIP: 0010:selinux_socket_sendmsg+0xa0/0x590
+  Call Trace:
+   security_socket_sendmsg+0x29/0x50
+   __sock_sendmsg+0x43/0x150
+   kernel_sendmsg+0xd6/0x180
+   qmi_send_new_server+0x1b8/0x2b0
+   qmi_add_server+0x165/0x200
+   qc_usb_audio_probe+0xf4/0x2e0
+   really_probe+0x2b4/0x850
 
-Set allow_freesync in amdgpu_dm_get_freesync_config_for_crtc(), which
-atomic check calls for every active CRTC and which already writes
-ignore_msa_timing_param to the stream.  It uses vrr_supported, the
-condition the flip-time value is derived from.  With this change the
-same TV keeps SubVP disabled across "rtcwake -m mem".
+Had the probe gone on, the error and remove paths would call
+qmi_handle_release() on the half-initialized handle, which destroys the
+workqueue and frees the receive buffer a second time.
 
-On this machine SubVP is also what exposes the single-frame scanout
-corruption reported in the thread linked below, so the FreeSync
-setting stopped working as a workaround after every suspend.
+Return the error from qmi_handle_init(), so that -EPROBE_DEFER defers
+the probe, and check qmi_add_server() as well.
 
-Fixes: 87f0c16e0eeb ("drm/amd/display: Enable SubVP for high refresh rate displays")
-Link: https://lore.kernel.org/all/20260829010525.29935-1-mikhail.v.gavrilov@gmail.com/
-Link: https://gitlab.freedesktop.org/drm/amd/-/work_items/5714#note_3736349
-Tested-by: Josh Kasten <jkasten@gmail.com>
-Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 29793918b0eb63b6810b248a906f87dd79b70be5)
+The bug was found with kbound, a static analysis prototype for
+ownership mismatches at kernel interfaces, on v7.2.12; it is present in
+mainline.
+
+Build-tested with x86_64 and arm64 allmodconfig (W=1, sparse): no new
+warnings. Run-tested on QEMU (x86_64, KVM) with KASAN and kmemleak, with
+the driver built in and a test module that registers the
+q6usb.qc-usb-audio-offload auxiliary device. Without QRTR, the probe
+crashes as above without this patch; with it the device is deferred and
+removing it again reports nothing. With QRTR the probe succeeds, and
+removal reports nothing either.
+
+Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Yuqiang Sun <izaiahsun@gmail.com>
+Link: https://patch.msgid.link/20261102035237.56253-1-izaiahsun@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c    | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ sound/usb/qcom/qc_audio_offload.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
-index 7e484adb4120f..f26dd206dffa0 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_freesync.c
-@@ -128,6 +128,14 @@ void amdgpu_dm_get_freesync_config_for_crtc(
- 					vrefresh >= aconnector->min_vfreq &&
- 					vrefresh <= aconnector->max_vfreq;
- 
-+	/*
-+	 * DC reads allow_freesync while validating the new state, for example
-+	 * to keep SubVP off a single FreeSync display, but it is otherwise set
-+	 * only on the first flip after the commit.  Set it here, so that a
-+	 * stream created by this commit is not validated without it.
-+	 */
-+	new_crtc_state->stream->allow_freesync = new_crtc_state->vrr_supported;
+diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
+index e4bfd43a2488b..5ee568e0454cb 100644
+--- a/sound/usb/qcom/qc_audio_offload.c
++++ b/sound/usb/qcom/qc_audio_offload.c
+@@ -1969,8 +1969,13 @@ static int qc_usb_audio_probe(struct auxiliary_device *auxdev,
+ 			      QMI_UAUDIO_STREAM_REQ_MSG_V01_MAX_MSG_LEN,
+ 			      &uaudio_svc_ops_options,
+ 			      &uaudio_stream_req_handlers);
++	if (ret)
++		goto free_qmi_hdl;
 +
- 	if (new_crtc_state->vrr_supported) {
- 		new_crtc_state->stream->ignore_msa_timing_param = true;
- 		fs_vid_mode = new_crtc_state->freesync_config.state == VRR_STATE_ACTIVE_FIXED;
+ 	ret = qmi_add_server(svc->uaudio_svc_hdl, UAUDIO_STREAM_SERVICE_ID_V01,
+ 			     UAUDIO_STREAM_SERVICE_VERS_V01, 0);
++	if (ret)
++		goto release_qmi_hdl;
+ 
+ 	uaudio_svc = svc;
+ 
+@@ -1987,7 +1992,9 @@ static int qc_usb_audio_probe(struct auxiliary_device *auxdev,
+ 
+ release_qmi:
+ 	qc_usb_audio_cleanup_qmi_dev();
++release_qmi_hdl:
+ 	qmi_handle_release(svc->uaudio_svc_hdl);
++free_qmi_hdl:
+ 	kfree(svc->uaudio_svc_hdl);
+ free_svc:
+ 	kfree(svc);
 -- 
 2.53.0
 
