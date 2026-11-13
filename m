@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591097;
-	b=3JY69GEFuJG9+nDKL29EFLjqZcoNVrDYqxNThMIylObNGOYIqV6cNgVO2eA+D8E8AQUz
-	 v0v0+tzjHyzgjNJ7syembkKHkSJmLvHjYGBkH60jkbPJ48+BIwyOapJcwS1UxpT+esKVr
-	 8LE65fR7lt7OlRNKgpzXa8HAvVkBfg8FkgtYx5rL1iXhOap4/YHdN5plw84K1fDLcKmVJ
-	 hr21FVdszmeHoR+NX2CC2tCvSsGUACSZX2JB0NiEC+L30UCO9PVcHalV+2+yH1QiznYmU
-	 YJS0Q7/Q18OxBFQ2uXTDlVbOU9aYV5b38O64Ru2Il3AAkLZY0DOCUa4X15MtIPmGOHA==
+	t=1794591098;
+	b=yOZZ49Y/cK/ine3R+aeOWUAYNIrSgF8ejrTzMX4mA79eN2M090+MRRC6cOH/mWz8TmvJ
+	 DUASBxYOW9TqG/gbLW/nlCQlXdZMy9COxAaUuGjPZl+tWHrgttNWQMt647nDUUktRz2nj
+	 QHpC8wzMuy5E01F5T6+VH0ReEmofJSbWV5BegDb7uilmVDHIRmK/RBhhntcr6NlvCriBY
+	 JAeY/hMqSkUHCieZ3A2TOkSfBwuMz6zRO9x/G3ljRrgug0Kdamz53aEiMqie/aApB5Je3
+	 t/EkwwobpCQQFqIVfEbT7yKm8BoJZBbYYDs+OtoeYp/yLN5csLVkJKGanAvDdIT8nVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591097;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591098;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sV0i5yYY6PU/QMWbX1w4VM+dQXVK12JCafk8ZLWpQHg=;
-	b=ofsB3mbgvIdCBbSClHWwOw+TakzsloYoY3mFMKdXRa+2qO/JeoBWxxGgSyfy7b8nuBn4
-	 rsQY1Q0n6NZgB6lG+rPz1nFJ6HWDf+tvJ281lCHXaG3kQI3xzjgwVHmwkRvAPyM1365K2
-	 Ys+AVVXhjLwneGOZ4EJgQm01wV1aoQMFs6UNX6JiJLRQS1zrHXNRGGtKa4Xmt9IK7YmZA
-	 CuyXdgs0jYRWSvu6BAY/gp4RfE0f8qYIC1X1sJd93fNxJrQTqKvRGnQNPTlEKDvrHgev1
-	 kFWlOjILaoVQRtjuGh8iappA+LS1WBD9riPkzTGQr3IA/tAXN1ZeEqlUVt3WWlvgshw==
+	bh=gDeFzikP0C9R7W6qwzeJPqJvcvxaze5/xTesp9iU55o=;
+	b=erC2cYnBbetPheD8NQVL3zzHXm7xzJYxxUWlCaubUL8AgnYeeVivMScD/LHe/2MimQJF
+	 I/x6tbgjz+kGdIP/9Kjly+ammrg+Xl7lxl50DheaSZ90LgEoqHQaMVdv42kK0V3F8hgmS
+	 rJEZ42MBNk7ts3kDo1OQ9K29K/x1OJBhuhmy2fG9am8cwXjG+wUXOCdgPoz9+G+VDqBEg
+	 kiggcI/Wn1GkWKtE1BIi8u/UuzF6zkizGUPkmZxag53y8+kcprO/ZE7fmdImCx9K9wSsm
+	 7xXhLl0bHb0IOto7V1tBAG+U30oTX9kHpPEG7+M5BYslAq4w3Au+L+I0ZgT12FWo5cQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qu6tr/F8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fw6OzLOm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D161607321F;
-	Fri, 13 Nov 2026 17:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5873606BD08;
+	Fri, 13 Nov 2026 17:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qu6tr/F8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2971F1F000C4;
-	Fri, 13 Nov 2026 17:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fw6OzLOm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615071F000C4;
+	Fri, 13 Nov 2026 17:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591097;
-	bh=sV0i5yYY6PU/QMWbX1w4VM+dQXVK12JCafk8ZLWpQHg=;
+	s=korg; t=1794591098;
+	bh=gDeFzikP0C9R7W6qwzeJPqJvcvxaze5/xTesp9iU55o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qu6tr/F8cEmpWZQ6e41YGOJensn9iYGMB9geNffINCpZXvDqLnvy3+jQ3RVeHU5sG
-	 H9Mq+ZtPhmI5E3Kvw8ZiNKMm2P1ICF6aNbq3tlMgqtn2Pu2ufca3pXgQpFbAs2z7RD
-	 7Y3+CdzLJ2GzUL3kuOjRf4UTPoirTjpLEit925Xw=
+	b=fw6OzLOmAH1ggy4NYq692lVs4oFFggNZ/UsBl/1lhP4gSy02+ZD2tkjRbEOg1RyCr
+	 xcO8LpiP4yj3eINvXN834CUY5F1J8j4dAa3GJ/grHtAeiL7ckFdB7IZbqpN2HF/nmn
+	 Ml9ss6btEItRGymtmKk7IgG43K221kRK6qK98R/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhou Qiuyue <n0ps1edzz@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Imre Kaloz <kaloz@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 200/670] ipv6: raw: fix use-after-free in rawv6_send_hdrinc()
-Date: Fri, 13 Nov 2026 10:46:04 -0500
-Message-ID: <20261113153818.750265876@linuxfoundation.org>
+Subject: [PATCH 6.12 191/670] scsi: aic7xxx: Use default settings on the SGI O2 onboard controllers
+Date: Fri, 13 Nov 2026 10:45:55 -0500
+Message-ID: <20261113153818.478638172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,50 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhou Qiuyue <n0ps1edzz@gmail.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 66dfb2cacda7faae614d688943d85e75abf7f586 ]
+[ Upstream commit 696bdfc58975fbc70d2e2347a74e0b562e7e2494 ]
 
-rawv6_send_hdrinc() caches the route before handing the skb to
-l3mdev_ip6_out(). The VRF output path may replace skb->dst and release
-the original route, leaving the cached pointer stale.
+The SGI O2 firmware runs its onboard aic7880s without the Adaptec BIOS, so
+scratch RAM holds no settings. The left over BIOS path reads uninitialised
+bytes, and bad parity panics the boot.
 
-The function later dereferences that pointer for statistics accounting
-and as the output device passed to NF_HOOK(). Its RCU read-side critical
-section starts after l3mdev_ip6_out(), so it cannot prevent the old route
-from being reclaimed in between.
+Use the defaults there with host ID 0. ahc_init() keeps the default host ID
+ahc_pci_config() chose, 7 on other PCI controllers, so only the O2 changes.
 
-Reload the route from the current skb destination after
-l3mdev_ip6_out() returns.
-
-KASAN reports a slab-use-after-free in rawv6_sendmsg(), with the route
-allocated by ip6_dst_alloc(), freed by dst_destroy() from rcu_core(), and
-the related RCU callback queued from vrf_l3_out().
-
-Fixes: 4c1feac58e06 ("net: vrf: Flip IPv6 output path from FIB lookup hook to out hook")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhou Qiuyue <n0ps1edzz@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Link: https://patch.msgid.link/20261026131432.26065-1-kaloz@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/raw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/scsi/aic7xxx/aic7xxx_core.c |  8 ++++++--
+ drivers/scsi/aic7xxx/aic7xxx_pci.c  | 20 +++++++++++++++++++-
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index deaaae63bda0a..27bb9443c8848 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -652,6 +652,9 @@ static int rawv6_send_hdrinc(struct sock *sk, struct msghdr *msg, int length,
- 	if (unlikely(!skb))
- 		return 0;
+diff --git a/drivers/scsi/aic7xxx/aic7xxx_core.c b/drivers/scsi/aic7xxx/aic7xxx_core.c
+index a396f048a031e..d747d0b72a13a 100644
+--- a/drivers/scsi/aic7xxx/aic7xxx_core.c
++++ b/drivers/scsi/aic7xxx/aic7xxx_core.c
+@@ -5266,9 +5266,13 @@ ahc_init(struct ahc_softc *ahc)
  
-+	/* l3mdev_ip6_out() may have replaced the skb dst. */
-+	rt = dst_rt6_info(skb_dst(skb));
+ 	/*
+ 	 * Assume we have a board at this stage and it has been reset.
++	 * PCI controllers keep the host ID ahc_pci_config() chose.
+ 	 */
+-	if ((ahc->flags & AHC_USEDEFAULTS) != 0)
+-		ahc->our_id = ahc->our_id_b = 7;
++	if ((ahc->flags & AHC_USEDEFAULTS) != 0) {
++		if ((ahc->chip & AHC_PCI) == 0)
++			ahc->our_id = 7;
++		ahc->our_id_b = 7;
++	}
+ 
+ 	/*
+ 	 * Default to allowing initiator operations.
+diff --git a/drivers/scsi/aic7xxx/aic7xxx_pci.c b/drivers/scsi/aic7xxx/aic7xxx_pci.c
+index 2d4c85426dc3e..5a04c7d55e4b5 100644
+--- a/drivers/scsi/aic7xxx/aic7xxx_pci.c
++++ b/drivers/scsi/aic7xxx/aic7xxx_pci.c
+@@ -701,6 +701,21 @@ ahc_find_pci_device(ahc_dev_softc_t pci)
+ 	return (NULL);
+ }
+ 
++/*
++ * The SGI O2 firmware runs its onboard controllers, in slots 1 and 2 of the
++ * root bus, without the Adaptec BIOS and at host ID 0.  It leaves no settings
++ * in scratch RAM, which may still hold power-on contents with bad parity.
++ */
++static bool
++ahc_pci_sgi_o2_onboard(struct ahc_softc *ahc)
++{
++	int slot = ahc_get_pci_slot(ahc->dev_softc);
 +
- 	/* Acquire rcu_read_lock() in case we need to use rt->rt6i_idev
- 	 * in the error path. Since skb has been freed, the dst could
- 	 * have been queued for deletion.
++	return IS_ENABLED(CONFIG_SGI_IP32) &&
++	       ahc_get_pci_bus(ahc->dev_softc) == 0 &&
++	       (slot == 1 || slot == 2);
++}
++
+ int
+ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ {
+@@ -782,6 +797,9 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ 	ahc->bus_intr = ahc_pci_intr;
+ 	ahc->bus_chip_init = ahc_pci_chip_init;
+ 
++	if (ahc_pci_sgi_o2_onboard(ahc))
++		ahc->flags |= AHC_NO_BIOS_INIT;
++
+ 	/* Remember how the card was setup in case there is no SEEPROM */
+ 	if ((ahc_inb(ahc, HCNTRL) & POWRDN) == 0) {
+ 		ahc_pause(ahc);
+@@ -898,7 +916,7 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ 			 * Assume only one connector and always turn
+ 			 * on termination.
+ 			 */
+- 			our_id = 0x07;
++			our_id = ahc_pci_sgi_o2_onboard(ahc) ? 0 : 0x07;
+ 			sxfrctl1 = STPWEN;
+ 		}
+ 		ahc_outb(ahc, SCSICONF, our_id|ENSPCHK|RESET_SCSI);
 -- 
 2.53.0
 
