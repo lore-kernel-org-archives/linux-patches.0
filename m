@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590044;
-	b=i2dJNh/3JqKrQdzBcjF2V+yQup/JnOYYGXpVRZdtV69nGKtWPpAG9bAuM0mBXowi2xdg
-	 +NYrqm8K8RWeeuo82nIO0x/TFAk6Oavh8S2SPhmm/wTdQQj+8/z2Kt3RaEAJnIGzFNAH9
-	 kYZ8LEtv9q/evnFpLR/uR/hcaagu5Agu51eWuaOWjUsVrr2FVFD+M/ckX0w5HFHZYWqza
-	 psX5kmzkx4UG6ta8kaS6Wf8p0epg0veaDJTki9jjxwkc1sGqEex1EfbVgremrVhmPfd8+
-	 Ae94KcU/Ns+DpvWlOo6KmQ3T43cSReGOAqeiGFscF3K/dMEnhD50MNhvPHScmhGRqnw==
+	t=1794590046;
+	b=ti1iCNzVbuj+Sg05c6Kwm73iHBkN7SuSX66WrqbIul9GLFYkA1ivmnM5bdzU/mMe8Ja+
+	 3K/N5FLLCUuAEm6PNyfDPA3lOXDa+nztER+w9cNA5tBhIHp2WllvTAvUnbclMfUrfKFpi
+	 uhrW2FG4Rsyddq371ZdcL/OP557ySEvJ2nOkTPJqSuRQsS86qX00xJgN8PnAkQsrvuM60
+	 PIKae5a7ChIuGaNklwe39T7Zx/euqLvF5OxqVaMqrQ95zs6l/hD02JI6ABO2eC/8Ue7YK
+	 JJ15J6oECQSybAh3qevkHEs3EutpzvYdF4aeU6oB+YCxQPTDEmFe8pzNVObwaXotu6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590044;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590046;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FZKUcwLnzlN7L+6LKq1Vi31MqhB+vVS7fYCc3iWqQUM=;
-	b=jqJVFxq98PSlmQlrir7kXBBmDu2HBIVW0Li1Qj+EPFR5crVlzYtfFBvzEzFPPwi22Vjn
-	 3YH66xqqE1TGdHhO1EqM+gXd20CiAtmN/ipJvSQmNRzrmq/07b196X5jpsltvE5eiZQog
-	 TbkdGPHmA8dV8ZP/9LlfVxT/cABjZojN9CyJUNAodls1tIPNe3nxq6XJRQqfneEiMysRa
-	 Hxx7dzDvKb6C7y1n+Or2wRdH1FzklfOKRPAdNAT27WOqtdc5yj7Ty5ehGB5SWNiuEv2yi
-	 wTbgXIKEJGK3ZLy+k8sWym97fL8j79HnlLVtJKkvVRZf1qlZVFXtf9ZN1QS/U2SY4KQ==
+	bh=OBpk0PKzIgSEJcJ3YabTqoYS2FZochPAd4xnBmK4hes=;
+	b=x3+SEcI8R8L5+pEt9FUk/f7P4r4zq964le1IuyOxoeSADLHoRbUilcg92+kpQ/D+hQRK
+	 CMr7to1tkZ8TMFZU6dDH9bawEt0F5ZPHfZpDJX1Muw0ZTOPBt00wF+q8BA/Jn25O6RHJD
+	 YT4xbfeAHUoHVGzNWQYNDWcDMLcL1hfTGpLnsvD6sgnwBut52c0RdfYzq8oCMhlWwI44C
+	 AfOBucpQ+fNMxwU1sdqRn7kQBJUmQiCcejo+gcHDslAPy3RKPczO6MxW5lCF/+LCc3Q1+
+	 An2xCPGNBaZhwB+Lgpq6A75nDL/IhDrzFOqrqLIF7sGiaWhv2IfCrEQ/haRvsOe8V8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfH+No0q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HKKPgtdv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B05606B346;
-	Fri, 13 Nov 2026 17:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ABA3606A8A0;
+	Fri, 13 Nov 2026 17:14:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wfH+No0q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8235F1F000C8;
-	Fri, 13 Nov 2026 17:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HKKPgtdv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2E61F000C5;
+	Fri, 13 Nov 2026 17:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590044;
-	bh=FZKUcwLnzlN7L+6LKq1Vi31MqhB+vVS7fYCc3iWqQUM=;
+	s=korg; t=1794590046;
+	bh=OBpk0PKzIgSEJcJ3YabTqoYS2FZochPAd4xnBmK4hes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wfH+No0qecPMlzTZJ+Z8pWxw9QltxkxkXen64k/lMNAvNiV8XUe6zXhmlHrs6kZBv
-	 155vnBKdGFQg4xb+Kp8+PIpMg5afboDMKNIblPLjgSUKvMqNJ3PS9s6jlL5kRvlrM/
-	 p/fGY6ZwNxRP2B5m2fyHUWVqipGgxpbgmajFDn8k=
+	b=HKKPgtdvDdSosy+wLuTosQZKOlibZ292kblowwwVl2uHpJrkz1tucvkaQCy/Ghxs4
+	 NPyBLl/UWuYY6nExUmAEEIv4U97OVaxCPFZ9gF/aLXj9A8csC61CjBabrsNsgGtOks
+	 qh2vf2QXa0HJCRjPP/gGHpdydjm/JyH5Z9U/QI+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sumit Gupta <sumitg@nvidia.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 079/686] ACPI: CPPC: Validate FFH register fields before hardware access
-Date: Fri, 13 Nov 2026 10:43:32 -0500
-Message-ID: <20261113153823.566537760@linuxfoundation.org>
+Subject: [PATCH 6.18 080/686] ACPI: CPPC: Propagate errors from cross-CPU FFH calls
+Date: Fri, 13 Nov 2026 10:43:33 -0500
+Message-ID: <20261113153823.597739410@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,157 +71,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Loehle <christian.loehle@arm.com>
 
-commit 6b016c5c96448c0a5f09328d37f66562d154a5e5 upstream.
+commit 36e96b469da24868f727b4cd168d7cf01cbd163d upstream.
 
-The x86 CPPC FFH accessors construct masks and shift values using the
-firmware's Bit Width and Bit Offset without checking that the field fits
-in an MSR. A zero-width field or a field extending beyond bit 63 can
-therefore cause an invalid shift. The safe MSR accessors only handle an
-access fault, not invalid field arithmetic after a successful read.
+The arm64 and RISC-V CPPC FFH accessors ignore the return value of
+smp_call_function_single(). If the target CPU is offline, the call can
+return -ENXIO without running the callback. The accessors then consume
+callback output which was never initialized and may report success.
 
-Also, the 64-bit GAS address is implicitly narrowed to the 32-bit MSR
-number. A descriptor with nonzero upper address bits can access a different
-MSR from the one described by firmware.
+CPU offlining leaves the CPU's CPPC sysfs attributes present. On arm64,
+the AMU feature mask does not exclude an offline CPU, so a paired counter
+read can expose uninitialized stack values through feedback_ctrs. RISC-V
+has the same problem in both SBI and CSR reads, and its write paths also
+inspect an uninitialized callback status after a failed cross-CPU call.
 
-The arm64 AMU counter readers have the same unchecked field arithmetic.
-Validate the field bounds before reading a counter, including both
-descriptors in the paired counter path.
+Return the SMP call error before using callback output. The arm64 single
+and paired counter readers already check the helper's return value. For
+RISC-V, also check the callback status before copying a read value: an
+unsupported CSR sets the error but does not initialize the value.
 
-Dispatch FFH accesses before decoding the GAS Access Size in the common
-read and write paths. Otherwise, a large access_width can trigger an
-invalid shift in GET_BIT_WIDTH() before the architecture validates its
-register. That field has architecture-specific FFH semantics and is not
-needed by the generic memory/port accessor on this path.
-
-Validate x86 MSR addresses and share the field-bounds checks between
-related accessors within each architecture.
-
-Fixes: a6cbcdd5ab5f ("ACPI / CPPC: Add support for functional fixed hardware address")
 Fixes: 68c5debcc06d ("arm64: implement CPPC FFH support using AMUs")
-Fixes: f489c948028b ("ACPI: CPPC: Fix access width used for PCC registers")
+Fixes: 30f3ffbee86b ("ACPI: RISC-V: Add CPPC driver")
 Cc: All applicable <stable@vger.kernel.org>
 Signed-off-by: Christian Loehle <christian.loehle@arm.com>
 Tested-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20260916162805.1039247-17-christian.loehle@arm.com
+Link: https://patch.msgid.link/20260916162805.1039247-18-christian.loehle@arm.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Christian Loehle <christian.loehle@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/topology.c |  9 +++++++++
- arch/x86/kernel/acpi/cppc.c  | 15 +++++++++++++++
- drivers/acpi/cppc_acpi.c     | 10 ++++++----
- 3 files changed, 30 insertions(+), 4 deletions(-)
+ arch/arm64/kernel/topology.c |  4 +---
+ drivers/acpi/riscv/cppc.c    | 26 ++++++++++++++++++++------
+ 2 files changed, 21 insertions(+), 9 deletions(-)
 
 diff --git a/arch/arm64/kernel/topology.c b/arch/arm64/kernel/topology.c
-index 202f677e2b0f2..bbbe866680fd2 100644
+index bbbe866680fd2..415891ffa62e7 100644
 --- a/arch/arm64/kernel/topology.c
 +++ b/arch/arm64/kernel/topology.c
-@@ -478,10 +478,19 @@ bool cpc_ffh_supported(void)
- 	return true;
+@@ -449,9 +449,7 @@ int counters_read_on_cpu(int cpu, smp_call_func_t func, u64 *val)
+ 	if (WARN_ON_ONCE(irqs_disabled()))
+ 		return -EPERM;
+ 
+-	smp_call_function_single(cpu, func, val, 1);
+-
+-	return 0;
++	return smp_call_function_single(cpu, func, val, 1);
  }
  
-+static bool cpc_ffh_reg_valid(const struct cpc_reg *reg)
-+{
-+	return reg->bit_width && reg->bit_width <= 64 &&
-+	       reg->bit_offset <= 64 - reg->bit_width;
-+}
-+
+ /*
+diff --git a/drivers/acpi/riscv/cppc.c b/drivers/acpi/riscv/cppc.c
+index 42c1a90524707..4ea4ddedd91f1 100644
+--- a/drivers/acpi/riscv/cppc.c
++++ b/drivers/acpi/riscv/cppc.c
+@@ -97,6 +97,7 @@ bool cpc_ffh_supported(void)
  int cpc_read_ffh(int cpu, struct cpc_reg *reg, u64 *val)
  {
- 	int ret = -EOPNOTSUPP;
+ 	struct sbi_cppc_data data;
++	int ret;
  
-+	if (!cpc_ffh_reg_valid(reg))
-+		return -EINVAL;
-+
- 	switch ((u64)reg->address) {
- 	case 0x0:
- 		ret = counters_read_on_cpu(cpu, cpu_read_corecnt, val);
-diff --git a/arch/x86/kernel/acpi/cppc.c b/arch/x86/kernel/acpi/cppc.c
-index be4c5e9e5ff6f..ca5287ccd8968 100644
---- a/arch/x86/kernel/acpi/cppc.c
-+++ b/arch/x86/kernel/acpi/cppc.c
-@@ -6,6 +6,8 @@
+ 	if (WARN_ON_ONCE(irqs_disabled()))
+ 		return -EPERM;
+@@ -107,19 +108,27 @@ int cpc_read_ffh(int cpu, struct cpc_reg *reg, u64 *val)
  
- #include <linux/bitfield.h>
+ 		data.reg = FFH_CPPC_SBI_REG(reg->address);
  
-+#include <linux/limits.h>
-+
- #include <acpi/cppc_acpi.h>
- #include <asm/msr.h>
- #include <asm/processor.h>
-@@ -45,10 +47,20 @@ bool cpc_ffh_supported(void)
- 	return true;
- }
+-		smp_call_function_single(cpu, sbi_cppc_read, &data, 1);
++		ret = smp_call_function_single(cpu, sbi_cppc_read, &data, 1);
++		if (ret)
++			return ret;
++		if (data.ret.error)
++			return sbi_err_map_linux_errno(data.ret.error);
  
-+static bool cpc_ffh_reg_valid(const struct cpc_reg *reg)
-+{
-+	return reg->address <= U32_MAX && reg->bit_width &&
-+	       reg->bit_width <= 64 &&
-+	       reg->bit_offset <= 64 - reg->bit_width;
-+}
-+
- int cpc_read_ffh(int cpunum, struct cpc_reg *reg, u64 *val)
+ 		*val = data.ret.value;
+ 
+-		return (data.ret.error) ? sbi_err_map_linux_errno(data.ret.error) : 0;
++		return 0;
+ 	} else if (FFH_CPPC_TYPE(reg->address) == FFH_CPPC_CSR) {
+ 		data.reg = FFH_CPPC_CSR_NUM(reg->address);
+ 
+-		smp_call_function_single(cpu, cppc_ffh_csr_read, &data, 1);
++		ret = smp_call_function_single(cpu, cppc_ffh_csr_read, &data, 1);
++		if (ret)
++			return ret;
++		if (data.ret.error)
++			return data.ret.error;
+ 
+ 		*val = data.ret.value;
+ 
+-		return data.ret.error;
++		return 0;
+ 	}
+ 
+ 	return -EINVAL;
+@@ -128,6 +137,7 @@ int cpc_read_ffh(int cpu, struct cpc_reg *reg, u64 *val)
+ int cpc_write_ffh(int cpu, struct cpc_reg *reg, u64 val)
  {
- 	int err;
+ 	struct sbi_cppc_data data;
++	int ret;
  
-+	if (!cpc_ffh_reg_valid(reg))
-+		return -EINVAL;
-+
- 	err = rdmsrq_safe_on_cpu(cpunum, reg->address, val);
- 	if (!err) {
- 		u64 mask = GENMASK_ULL(reg->bit_offset + reg->bit_width - 1,
-@@ -65,6 +77,9 @@ int cpc_write_ffh(int cpunum, struct cpc_reg *reg, u64 val)
- 	u64 rd_val;
- 	int err;
+ 	if (WARN_ON_ONCE(irqs_disabled()))
+ 		return -EPERM;
+@@ -139,14 +149,18 @@ int cpc_write_ffh(int cpu, struct cpc_reg *reg, u64 val)
+ 		data.reg = FFH_CPPC_SBI_REG(reg->address);
+ 		data.val = val;
  
-+	if (!cpc_ffh_reg_valid(reg))
-+		return -EINVAL;
-+
- 	err = rdmsrq_safe_on_cpu(cpunum, reg->address, &rd_val);
- 	if (!err) {
- 		u64 mask = GENMASK_ULL(reg->bit_offset + reg->bit_width - 1,
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 531777557b47c..a3984e061ce0c 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1017,6 +1017,9 @@ static int cpc_read(int cpu, struct cpc_register_resource *reg_res, u64 *val)
+-		smp_call_function_single(cpu, sbi_cppc_write, &data, 1);
++		ret = smp_call_function_single(cpu, sbi_cppc_write, &data, 1);
++		if (ret)
++			return ret;
+ 
+ 		return (data.ret.error) ? sbi_err_map_linux_errno(data.ret.error) : 0;
+ 	} else if (FFH_CPPC_TYPE(reg->address) == FFH_CPPC_CSR) {
+ 		data.reg = FFH_CPPC_CSR_NUM(reg->address);
+ 		data.val = val;
+ 
+-		smp_call_function_single(cpu, cppc_ffh_csr_write, &data, 1);
++		ret = smp_call_function_single(cpu, cppc_ffh_csr_write, &data, 1);
++		if (ret)
++			return ret;
+ 
+ 		return data.ret.error;
  	}
- 
- 	*val = 0;
-+	if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
-+		return cpc_read_ffh(cpu, reg, val);
-+
- 	size = GET_BIT_WIDTH(reg);
- 
- 	if (IS_ENABLED(CONFIG_HAS_IOPORT) &&
-@@ -1044,8 +1047,6 @@ static int cpc_read(int cpu, struct cpc_register_resource *reg_res, u64 *val)
- 	}
- 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
- 		vaddr = reg_res->sys_mem_vaddr;
--	else if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
--		return cpc_read_ffh(cpu, reg, val);
- 	else
- 		return acpi_os_read_memory((acpi_physical_address)reg->address,
- 				val, size);
-@@ -1091,6 +1092,9 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 	struct cpc_desc *cpc_desc;
- 	unsigned long flags;
- 
-+	if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
-+		return cpc_write_ffh(cpu, reg, val);
-+
- 	size = GET_BIT_WIDTH(reg);
- 
- 	if (IS_ENABLED(CONFIG_HAS_IOPORT) &&
-@@ -1116,8 +1120,6 @@ static int cpc_write(int cpu, struct cpc_register_resource *reg_res, u64 val)
- 	}
- 	else if (reg->space_id == ACPI_ADR_SPACE_SYSTEM_MEMORY)
- 		vaddr = reg_res->sys_mem_vaddr;
--	else if (reg->space_id == ACPI_ADR_SPACE_FIXED_HARDWARE)
--		return cpc_write_ffh(cpu, reg, val);
- 	else
- 		return acpi_os_write_memory((acpi_physical_address)reg->address,
- 				val, size);
 -- 
 2.53.0
 
