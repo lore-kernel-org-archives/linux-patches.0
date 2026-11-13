@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585286;
-	b=HayEbUZtgsmkGNEjub3EwVnnGD3rZCO8m5IfYz8yMUNKArpn7F0ViQO25q0ZyDsDjWxh
-	 Y7bsisCSxGn0JZe3u49djqGjIjoNPiECTyTKgvKcSXw9qLSPj27N0aXoGRzJq9AE8ihLh
-	 OzlGRNSwSAOpKM43/4Pt/QAMLTnu7qAOQyp3u65xgBufuJI3zAbv0Qd1wrk50ODFcbiBp
-	 r6jpYePmdkKGYcg0ITGWDkncitudRP4+ixcyHrF38Fq9PBtQ7XqlpHENjOTLL1h54yHs4
-	 CF3Dtkd4YnLZmd5EiNBOqZvo+FPa5CW8iI49mNeobUOdA2859EizX0Bg7cMX6P0K/eQ==
+	t=1794585332;
+	b=opslDh+5U9HXum6vNF8wOZss63lulOGYSuHASrfz+QgSz/MKPT/3TIEqkSvXSge1X42s
+	 tepi44B/xU2jSQQbgoAuIr02kPPnFBPcKkUP+cx0Zl+dHgjuLDtIlwVrzE93gawRANHXR
+	 I6+4GwIxp6uJ3KuOPFmEbjlyFIKP+92hKg1Un/k59GhmZ3aSZRYXfDYTqkbsdsS1wHik2
+	 30CTq2UgITpIl0y6QZ0KVW7TsL9OPmcdIfF3gtypL2HWEySx4rpqyIsAeEJ0nsiPu/j4J
+	 4CaV/4R2eDpGZxVxEGaa7Qnwn36SOxQjJ/D3Tgx8gxYCzkP6wkHoIzm5Qa79uQHArJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585332;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LM4IO3HaYt5e1cmI4XddTOdwTyR8x2tSGqK6mTX8/rc=;
-	b=xz6JmJCHJyDo4IZoqWAIKHGFRYgKwGbp/Ji1xCYqLkBNmKJcXFM9Xeftxq7C+q+edEVt
-	 7RbsdlYzmFGiZasdgspTEVtxlqtJ3OME1zahtL9GUFO3XxpQcyHPep1ee1SLGpScY2nis
-	 oehGHLUl96IbXUV/R1+gi/kMWnNXnZDmAxNxiRLCNcxI+c6rIjqY/y9EZtBe4yVDPT5E3
-	 BlDYBdGRltNFQ+KYcXYKwqP9v3jorNP2jmAAbJszFFt3NPs+lW5vW4Yjgka+yxLELbKCq
-	 OSjIuuJA7j6H9J5YXNtVW+Atj/KfJFOrkG7n6x+oucbYBWd31tdnbehZ74R1abkdVUQ==
+	bh=Nc23Vw9N9T8DUa0XhRC4SZmqVM/lTJzGpSgfRAIHT3c=;
+	b=NeMe4lmL6frK7IC6kJzyCaCx04c5wQ6egIZpRWoYHI9d8jTW4CY/Vzxppbx/h4kYpHeS
+	 El3cY0YmPhNe2CVjehXUHg5/rMSufpqyoJAGSlpln9u0PHpl+LgMUG0NUTDPOxUHN1yOn
+	 pjsXwOEGqPyyLAey7d6IbtEGJUU1IJx14vsXaiIqYj1ydrbZkWoZexTDFPf7iBssGXnXE
+	 jzsFT52MfFZSP1veqL9eXGeHoar3LIL9QmNL21583rxDle5DTHAdEg18OI/KCKC5j0nvH
+	 oCtDpMCQx+5GUdTbS2k2O3G5qfyIRgikIeIPY0Y2TcwsXouL/jelguN7g0uMM0eZemA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R+G+8szB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxqKUrMD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62773606A331;
-	Fri, 13 Nov 2026 15:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3C4606A894;
+	Fri, 13 Nov 2026 15:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R+G+8szB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A88201F000C4;
-	Fri, 13 Nov 2026 15:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxqKUrMD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040B21F000D3;
+	Fri, 13 Nov 2026 15:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585285;
-	bh=LM4IO3HaYt5e1cmI4XddTOdwTyR8x2tSGqK6mTX8/rc=;
+	s=korg; t=1794585332;
+	bh=Nc23Vw9N9T8DUa0XhRC4SZmqVM/lTJzGpSgfRAIHT3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R+G+8szBMQ88bf/Sx2Fse/XoyGbD5Cu499QHa2BhvW3wXYwWWBEFtfULT41c8zysr
-	 5cU1Sf3ZGXAP7q2jSYKnmfrUHPG+eM+Thf5ZnVsxqw3rArvv3lMkh3oOEnk5Q5MRTz
-	 7ppNbYgBZhvKz6IS0ddoh36gCA2v4Fvk3Rt0Hw4g=
+	b=IxqKUrMDELtptTcwPel0fKdcJ5I/fR5aUsrlWGBi3EeI8C2Ok3phpYh0mO0NaM2ss
+	 /1W91vlGpKbyL8sR2jeaLdgPh2LokOVopHDTFSA75OdZaczMoNsSZDQDrje7mW3L1L
+	 MpcR68YAJoIxI69cM7KSYGAo22D930zHsevsqpyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 008/507] xfs: refactor directory data block walking loops in scrub
-Date: Fri, 13 Nov 2026 10:45:12 -0500
-Message-ID: <20261113153753.662192675@linuxfoundation.org>
+Subject: [PATCH 7.3 010/507] NFSD: Replace nfsd_write()s "stable" argument with "iocb_flags"
+Date: Fri, 13 Nov 2026 10:45:14 -0500
+Message-ID: <20261113153753.731661450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,204 +67,302 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 19b5653cc870788df71e7fcf2dd7b6131d8868dc ]
+[ Upstream commit 7f7dde9a45dfd9b3c9f35cb24aff9e45669071cc ]
 
-Hoist the inner loop code of the directory data block walking code in
-the directory scrub and repair code to separate functions in preparation
-for strengthening the validation in a subsequent patch.
+The current nfsd_write() API is not NFS version-agnostic, as it
+relies on callers to pass an NFSv3 stable_how value to determine
+the persistence of the requested WRITE. NFSv2 does not use a
+stable-how value on the wire, and NFSv4 has its own stable_how4
+(though stable_how and stable_how4 happen to share the same
+numeric values).
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-Stable-dep-of: 5d470234d04d ("xfs: improve dirent bounds checking in scrub and repair")
+To remove the dependence on NFSv3-specific XDR values from NFSD's
+generic VFS APIs, replace nfsd_write()'s stable argument with an
+argument that passes a set of IOCB flags instead of an XDR-defined
+value.
+
+The NFSv4 WRITE and COPY paths had been borrowing the NFSv3
+stable_how constants for their own on-the-wire stable values,
+relying on the numeric coincidence noted above. Convert those
+sites to the stable_how4 enumerators so the v4 code expresses
+its own protocol's values directly, with no change in behavior.
+
+While here, bound-check the decoded NFSv3 WRITE stable value, as
+the NFSv4 WRITE decoder already does, and make the nfsd3_writeargs
+stable field unsigned to suit.
+
+The larger benefit is one less NFSv4 dependency on nfs3.h.
+
+Link: https://patch.msgid.link/20260723182043.990391-3-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Stable-dep-of: ccfc4db5ab74 ("NFSD: map fh_verify() status codes for NFS_ACLv2 replies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/dir.c        | 56 ++++++++++++++++++++++++++----
- fs/xfs/scrub/dir_repair.c | 73 ++++++++++++++++++++++++++++-----------
- 2 files changed, 102 insertions(+), 27 deletions(-)
+ fs/nfsd/nfs3proc.c   | 17 ++++++++++++++++-
+ fs/nfsd/nfs3xdr.c    |  2 ++
+ fs/nfsd/nfs4proc.c   | 18 ++++++++++++++++--
+ fs/nfsd/nfs4xdr.c    |  2 +-
+ fs/nfsd/nfsproc.c    |  2 +-
+ fs/nfsd/vfs.c        | 30 ++++++++++--------------------
+ fs/nfsd/vfs.h        |  6 ++++--
+ fs/nfsd/xdr3.h       |  2 +-
+ include/linux/nfs4.h |  6 ++++++
+ 9 files changed, 57 insertions(+), 28 deletions(-)
 
-diff --git a/fs/xfs/scrub/dir.c b/fs/xfs/scrub/dir.c
-index 4ab7e64692482..e35631e00ddec 100644
---- a/fs/xfs/scrub/dir.c
-+++ b/fs/xfs/scrub/dir.c
-@@ -313,6 +313,45 @@ xchk_dir_actor(
- 	return error;
+diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
+index 0904d953d10e0..7d8ddb7bfab0c 100644
+--- a/fs/nfsd/nfs3proc.c
++++ b/fs/nfsd/nfs3proc.c
+@@ -48,6 +48,20 @@ static bool nfsd3_time_in_range(const struct iattr *iap)
+ 	return true;
  }
  
-+/*
-+ * Deal with an unused directory entry.  Returns a positive number of bytes to
-+ * advance in the directory block, zero to stop processing, or -1 if corruption
-+ * was found.
-+ */
-+static int
-+xchk_dir_check_unused(
-+	struct xchk_da_btree		*ds,
-+	struct xfs_buf			*bp,
-+	unsigned int			iter_off,
-+	unsigned int			end)
++static int nfsd3_iocb_flags(enum nfs3_stable_how how)
 +{
-+	struct xfs_dir2_data_unused	*dup = bp->b_addr + iter_off;
-+
-+	return be16_to_cpu(dup->length);
-+}
-+
-+/*
-+ * Check a directory entry.  Returns a positive number of bytes to advance
-+ * in the directory block, zero to stop processing, or -1 if corruption was
-+ * found.
-+ */
-+static int
-+xchk_dir_check_entry(
-+	struct xchk_da_btree		*ds,
-+	struct xfs_buf			*bp,
-+	unsigned int			iter_off,
-+	unsigned int			end,
-+	struct xfs_dir2_data_entry	*dent)
-+{
-+	struct xfs_dir2_data_entry	*dep = bp->b_addr + iter_off;
-+	struct xfs_mount		*mp = ds->state->mp;
-+
-+	if (dep == dent)
++	switch (how) {
++	case NFS_FILE_SYNC:
++		/* persist data and timestamps */
++		return IOCB_DSYNC | IOCB_SYNC;
++	case NFS_DATA_SYNC:
++		/* persist data only */
++		return IOCB_DSYNC;
++	default:
 +		return 0;
-+
-+	return xfs_dir2_data_entsize(mp, dep->namelen);
++	}
 +}
 +
- /* Scrub a directory btree record. */
- STATIC int
- xchk_dir_rec(
-@@ -389,21 +428,24 @@ xchk_dir_rec(
- 		goto out_relse;
- 	}
- 	for (;;) {
--		struct xfs_dir2_data_entry	*dep = bp->b_addr + iter_off;
- 		struct xfs_dir2_data_unused	*dup = bp->b_addr + iter_off;
-+		int				advance;
+ static __be32 nfsd3_map_status(__be32 status)
+ {
+ 	switch (status) {
+@@ -260,7 +274,8 @@ nfsd3_proc_write(struct svc_rqst *rqstp)
+ 	resp->committed = argp->stable;
+ 	resp->status = nfsd_write(rqstp, &resp->fh, argp->offset,
+ 				  &argp->payload, &cnt,
+-				  resp->committed, resp->verf);
++				  nfsd3_iocb_flags(resp->committed),
++				  resp->verf);
+ 	resp->count = cnt;
+ 	resp->status = nfsd3_map_status(resp->status);
+ 	return rpc_success;
+diff --git a/fs/nfsd/nfs3xdr.c b/fs/nfsd/nfs3xdr.c
+index e481804bb120c..f418cab0bd614 100644
+--- a/fs/nfsd/nfs3xdr.c
++++ b/fs/nfsd/nfs3xdr.c
+@@ -556,6 +556,8 @@ nfs3svc_decode_writeargs(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ 		return false;
+ 	if (xdr_stream_decode_u32(xdr, &args->stable) < 0)
+ 		return false;
++	if (args->stable > NFS_FILE_SYNC)
++		return false;
  
- 		if (iter_off >= end) {
- 			xchk_fblock_set_corrupt(ds->sc, XFS_DATA_FORK, rec_bno);
- 			goto out_relse;
- 		}
+ 	/* opaque data */
+ 	if (xdr_stream_decode_u32(xdr, &args->len) < 0)
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index f3f7f14a93683..9ee02a6d00868 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -69,6 +69,20 @@ MODULE_PARM_DESC(nfsd4_ssc_umount_timeout,
  
--		if (be16_to_cpu(dup->freetag) == XFS_DIR2_DATA_FREE_TAG) {
--			iter_off += be16_to_cpu(dup->length);
--			continue;
--		}
--		if (dep == dent)
-+		if (dup->freetag == cpu_to_be16(XFS_DIR2_DATA_FREE_TAG))
-+			advance = xchk_dir_check_unused(ds, bp, iter_off, end);
-+		else
-+			advance = xchk_dir_check_entry(ds, bp, iter_off, end,
-+					dent);
-+		if (advance < 0)
-+			goto out_relse;
-+		if (!advance)
- 			break;
--		iter_off += xfs_dir2_data_entsize(mp, dep->namelen);
-+		iter_off += advance;
- 	}
+ #define NFSDDBG_FACILITY		NFSDDBG_PROC
  
- 	/* Retrieve the entry, sanity check it, and compare hashes. */
-diff --git a/fs/xfs/scrub/dir_repair.c b/fs/xfs/scrub/dir_repair.c
-index bb3f2f462bde5..1169a2ad26876 100644
---- a/fs/xfs/scrub/dir_repair.c
-+++ b/fs/xfs/scrub/dir_repair.c
-@@ -462,6 +462,52 @@ xrep_dir_salvage_data_entry(
- 	return xrep_dir_salvage_entry(rd, dep->name, dep->namelen, ino);
++static int nfsd4_iocb_flags(enum stable_how4 how)
++{
++	switch (how) {
++	case FILE_SYNC4:
++		/* persist data and timestamps */
++		return IOCB_DSYNC | IOCB_SYNC;
++	case DATA_SYNC4:
++		/* persist data only */
++		return IOCB_DSYNC;
++	default:
++		return 0;
++	}
++}
++
+ static u32 nfsd_attrmask[] = {
+ 	NFSD_WRITEABLE_ATTRS_WORD0,
+ 	NFSD_WRITEABLE_ATTRS_WORD1,
+@@ -1377,7 +1391,7 @@ nfsd4_write(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	write->wr_how_written = write->wr_stable_how;
+ 	status = nfsd_vfs_write(rqstp, &cstate->current_fh, nf,
+ 				write->wr_offset, &write->wr_payload,
+-				&cnt, write->wr_how_written,
++				&cnt, nfsd4_iocb_flags(write->wr_how_written),
+ 				(__be32 *)write->wr_verifier.data);
+ 	nfsd_file_put(nf);
+ 
+@@ -1974,7 +1988,7 @@ static void nfsd4_init_copy_res(struct nfsd4_copy *copy, bool sync)
+ {
+ 	copy->cp_res.wr_stable_how =
+ 		test_bit(NFSD4_COPY_F_COMMITTED, &copy->cp_flags) ?
+-			NFS_FILE_SYNC : NFS_UNSTABLE;
++			FILE_SYNC4 : UNSTABLE4;
+ 	nfsd4_copy_set_sync(copy, sync);
  }
  
-+/*
-+ * Deal with an unused directory entry.  Returns a positive number of bytes to
-+ * advance in the directory block, or zero to stop processing.
-+ */
-+static int
-+xrep_dir_recover_unused(
-+	struct xfs_buf			*bp,
-+	unsigned int			offset,
-+	unsigned int			end)
-+{
-+	struct xfs_dir2_data_unused	*dup = bp->b_addr + offset;
-+
-+	return be16_to_cpu(dup->length);
-+}
-+
-+/*
-+ * Salvage a directory entry.  Returns a positive number of bytes to advance
-+ * in the directory block, zero to stop processing, or a negative errno.
-+ */
-+static int
-+xrep_dir_recover_entry(
-+	struct xrep_dir			*rd,
-+	struct xfs_buf			*bp,
-+	unsigned int			offset,
-+	unsigned int			end)
-+{
-+	struct xfs_dir2_data_entry	*dep = bp->b_addr + offset;
-+	unsigned int			advance;
-+	int				error;
-+
-+	/* Don't walk off the end of the block. */
-+	advance = xfs_dir2_data_entsize(rd->sc->mp, dep->namelen);
-+	if (!advance)
-+		return 0;
-+	if (offset + advance > end)
-+		return 0;
-+
-+	/* Ok, let's save this entry. */
-+	error = xrep_dir_salvage_data_entry(rd, dep);
-+	if (error < 0)
-+		return error;
-+
-+	return advance;
-+}
-+
-+
- /* Try to recover block/data format directory entries. */
- STATIC int
- xrep_dir_recover_data(
-@@ -483,33 +529,20 @@ xrep_dir_recover_data(
+diff --git a/fs/nfsd/nfs4xdr.c b/fs/nfsd/nfs4xdr.c
+index ebd0dc8f00fca..f7d2884aba44c 100644
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -1606,7 +1606,7 @@ nfsd4_decode_write(struct nfsd4_compoundargs *argp, union nfsd4_op_u *u)
+ 		return nfserr_bad_xdr;
+ 	if (xdr_stream_decode_u32(argp->xdr, &write->wr_stable_how) < 0)
+ 		return nfserr_bad_xdr;
+-	if (write->wr_stable_how > NFS_FILE_SYNC)
++	if (write->wr_stable_how > FILE_SYNC4)
+ 		return nfserr_bad_xdr;
+ 	if (xdr_stream_decode_u32(argp->xdr, &write->wr_buflen) < 0)
+ 		return nfserr_bad_xdr;
+diff --git a/fs/nfsd/nfsproc.c b/fs/nfsd/nfsproc.c
+index aaeb222b62ba1..48182f78d6be9 100644
+--- a/fs/nfsd/nfsproc.c
++++ b/fs/nfsd/nfsproc.c
+@@ -280,7 +280,7 @@ nfsd_proc_write(struct svc_rqst *rqstp)
  
- 	while (offset < end) {
- 		struct xfs_dir2_data_unused	*dup = bp->b_addr + offset;
--		struct xfs_dir2_data_entry	*dep = bp->b_addr + offset;
--		unsigned int			advance;
-+		int				advance;
+ 	fh_copy(&resp->fh, &argp->fh);
+ 	resp->status = nfsd_write(rqstp, &resp->fh, argp->offset,
+-				  &argp->payload, &cnt, NFS_DATA_SYNC, NULL);
++				  &argp->payload, &cnt, IOCB_DSYNC, NULL);
+ 	if (resp->status == nfs_ok)
+ 		resp->status = fh_getattr(&resp->fh, &resp->stat);
+ 	else if (resp->status == nfserr_jukebox)
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 8923a9910a08f..fe27f6b404268 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1424,7 +1424,7 @@ nfsd_direct_write(struct svc_rqst *rqstp, struct svc_fh *fhp,
+  * @offset: Byte offset of start
+  * @payload: xdr_buf containing the write payload
+  * @cnt: IN: number of bytes to write, OUT: number of bytes actually written
+- * @stable: An NFS stable_how value
++ * @iocb_flags: VFS IOCB_* flags expressing the requested write stability
+  * @verf: NFS WRITE verifier
+  *
+  * Upon return, caller must invoke fh_put on @fhp.
+@@ -1436,7 +1436,7 @@ __be32
+ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	       struct nfsd_file *nf, loff_t offset,
+ 	       const struct xdr_buf *payload, unsigned long *cnt,
+-	       int stable, __be32 *verf)
++	       int iocb_flags, __be32 *verf)
+ {
+ 	struct nfsd_net		*nn = net_generic(SVC_NET(rqstp), nfsd_net_id);
+ 	struct file		*file = nf->nf_file;
+@@ -1473,21 +1473,11 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 	exp = fhp->fh_export;
  
- 		if (xchk_should_terminate(rd->sc, &error))
- 			return error;
- 
--		/* Skip unused entries. */
--		if (be16_to_cpu(dup->freetag) == XFS_DIR2_DATA_FREE_TAG) {
--			if (!dup->length)
--				break;
--			offset += be16_to_cpu(dup->length);
--			continue;
--		}
--
--		/* Don't walk off the end of the block. */
--		advance = xfs_dir2_data_entsize(rd->sc->mp, dep->namelen);
-+		if (dup->freetag == cpu_to_be16(XFS_DIR2_DATA_FREE_TAG))
-+			advance = xrep_dir_recover_unused(bp, offset, end);
-+		else
-+			advance = xrep_dir_recover_entry(rd, bp, offset, end);
-+		if (advance < 0)
-+			return advance;
- 		if (!advance)
- 			break;
- 		offset += advance;
--		if (offset > end)
+ 	if (!EX_ISSYNC(exp))
+-		stable = NFS_UNSTABLE;
++		iocb_flags = 0;
+ 	init_sync_kiocb(&kiocb, file);
+ 	kiocb.ki_pos = offset;
+-	if (likely(!fhp->fh_use_wgather)) {
+-		switch (stable) {
+-		case NFS_FILE_SYNC:
+-			/* persist data and timestamps */
+-			kiocb.ki_flags |= IOCB_DSYNC | IOCB_SYNC;
 -			break;
--
--		/* Ok, let's save this entry. */
--		error = xrep_dir_salvage_data_entry(rd, dep);
--		if (error)
--			return error;
--
+-		case NFS_DATA_SYNC:
+-			/* persist data only */
+-			kiocb.ki_flags |= IOCB_DSYNC;
+-			break;
+-		}
+-	}
++	if (likely(!fhp->fh_use_wgather))
++		kiocb.ki_flags |= iocb_flags;
+ 
+ 	nvecs = xdr_buf_to_bvec(rqstp->rq_bvec, rqstp->rq_maxpages, payload);
+ 	if (nvecs < 0) {
+@@ -1528,7 +1518,7 @@ nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 		goto out_nfserr;
  	}
  
- 	return 0;
+-	if (stable && fhp->fh_use_wgather) {
++	if (iocb_flags && fhp->fh_use_wgather) {
+ 		host_err = wait_for_concurrent_writes(file);
+ 		if (host_err < 0)
+ 			commit_reset_write_verifier(nn, rqstp, host_err);
+@@ -1619,7 +1609,7 @@ __be32 nfsd_read(struct svc_rqst *rqstp, struct svc_fh *fhp,
+  * @offset: Byte offset of start
+  * @payload: xdr_buf containing the write payload
+  * @cnt: IN: number of bytes to write, OUT: number of bytes actually written
+- * @stable: An NFS stable_how value
++ * @iocb_flags: VFS IOCB_* flags expressing the requested write stability
+  * @verf: NFS WRITE verifier
+  *
+  * Upon return, caller must invoke fh_put on @fhp.
+@@ -1629,8 +1619,8 @@ __be32 nfsd_read(struct svc_rqst *rqstp, struct svc_fh *fhp,
+  */
+ __be32
+ nfsd_write(struct svc_rqst *rqstp, struct svc_fh *fhp, loff_t offset,
+-	   const struct xdr_buf *payload, unsigned long *cnt, int stable,
+-	   __be32 *verf)
++	   const struct xdr_buf *payload, unsigned long *cnt,
++	   int iocb_flags, __be32 *verf)
+ {
+ 	struct nfsd_file *nf;
+ 	__be32 err;
+@@ -1642,7 +1632,7 @@ nfsd_write(struct svc_rqst *rqstp, struct svc_fh *fhp, loff_t offset,
+ 		goto out;
+ 
+ 	err = nfsd_vfs_write(rqstp, fhp, nf, offset, payload, cnt,
+-			     stable, verf);
++			     iocb_flags, verf);
+ 	nfsd_file_put(nf);
+ out:
+ 	trace_nfsd_write_done(rqstp, fhp, offset, *cnt);
+diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
+index 4af2ff9e9dfee..5937bd78d4291 100644
+--- a/fs/nfsd/vfs.h
++++ b/fs/nfsd/vfs.h
+@@ -135,11 +135,13 @@ __be32		nfsd_read(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 				u32 *eof);
+ __be32		nfsd_write(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 				loff_t offset, const struct xdr_buf *payload,
+-				unsigned long *cnt, int stable, __be32 *verf);
++				unsigned long *cnt, int iocb_flags,
++				__be32 *verf);
+ __be32		nfsd_vfs_write(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 				struct nfsd_file *nf, loff_t offset,
+ 				const struct xdr_buf *payload,
+-				unsigned long *cnt, int stable, __be32 *verf);
++				unsigned long *cnt, int iocb_flags,
++				__be32 *verf);
+ __be32		nfsd_readlink(struct svc_rqst *, struct svc_fh *,
+ 				char *, int *);
+ __be32		nfsd_symlink(struct svc_rqst *, struct svc_fh *,
+diff --git a/fs/nfsd/xdr3.h b/fs/nfsd/xdr3.h
+index 344203874b4c4..cad875d142313 100644
+--- a/fs/nfsd/xdr3.h
++++ b/fs/nfsd/xdr3.h
+@@ -39,7 +39,7 @@ struct nfsd3_writeargs {
+ 	svc_fh			fh;
+ 	__u64			offset;
+ 	__u32			count;
+-	int			stable;
++	__u32			stable;
+ 	__u32			len;
+ 	struct xdr_buf		payload;
+ };
+diff --git a/include/linux/nfs4.h b/include/linux/nfs4.h
+index 1a3981c26b23b..41b7cdcc674f1 100644
+--- a/include/linux/nfs4.h
++++ b/include/linux/nfs4.h
+@@ -263,6 +263,12 @@ enum why_no_delegation4 { /* new to v4.1 */
+ 	WND4_IS_DIR = 8,
+ };
+ 
++enum stable_how4 {
++	UNSTABLE4	= 0,
++	DATA_SYNC4	= 1,
++	FILE_SYNC4	= 2,
++};
++
+ enum lock_type4 {
+ 	NFS4_UNLOCK_LT = 0,
+ 	NFS4_READ_LT = 1,
 -- 
 2.53.0
 
