@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585475;
-	b=M4Y4FVqW2QVHOHC5wy6+lR/OQ7ZVYRBUHix21v5c04fBJwLqwOhxswFRQkKmAnc0ksSG
-	 AvIojL8cNbFr4DBG0yEMPfxE77XEjEg6kXqe6yw7aGr4FadtClkDcTF3nFvdXWuEuU9uk
-	 jDUQK0/VbgjN1PsoGkUWTg8oKDAwGTUjhn9HNxey71Bp99MW0UzkLRW8lyNNZr/0+cnpx
-	 MeHmhV7TzcRmyA5/mJE2o0+3LibWP1gpOeJsZh13r2mePtdIwKG3F7thX67udKwzNHAW0
-	 UgWmvc/BvOy0keV6bT5ySJmO63rhtbxqUMO1EeTTEE4/c8dihVZF4LfZYlnuabwDmrg==
+	t=1794585476;
+	b=HxQRlNN+0S+7ztN1tXjqzi7zBJ9/J3IGjK7Tkw08wOF3VyAmX0AHPGmROIWYmd649h/X
+	 u4lVe79XmXfOPaydYjVaDk0ahI18RUANmX3YmlGJ+znrzYU49Ta5JKRlqQFetb/ww+ahs
+	 CyT9mI5YTnIk2/GMaj+5D2mtIGBvY0FrAfSb5jBHxmPbr+b/whLeQQLYtNCQXacTLqH0f
+	 wC94hNTACRE3ggWrKUjKL6GAfNc96uc9SXjlbiIet4BoLARmBlpylARU5fh2RbgPN2v0j
+	 E0hB0oIeWxv6zuEvQ8N1MmgRq6B+7ULsg9gJRHhw0qYuZEfw4xbo/f+liHaWcLFce6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RCIchLjLdyNg3e3rQDAenYxYAwk6CzYTItc3Wi9sCns=;
-	b=NB56DvUqaX7pT2qW+FU3fpSgAaJX3cE2k0CS372401NG0S4HZxipLoKFPJ6XFuh4pR2v
-	 yw6266ddw7HDUZ/zOYDgZbVmk/cFb5b6lwhI0wGksMofeCkc6FtKu27Q15Tw4XihNCS/i
-	 9rlSlX3AJ79Bo5GlP7Ct9qUp2UhaaiY2N+qiy+D6Wyi00DnhWg0K9Pm46nIcsmVIKfcDc
-	 zkvKUT14JilzPlm2FjgwpQ9S6KzeUi4BefSr06jdNSYTfq7WGro/sNLEXfKnHseH5PCoL
-	 oz4AU2XjwYby8ScEcSv6wRSts8J9VuKOW8yIrTR3UDcZcPfXAHyasfE5maqREhXjYig==
+	bh=zx5cdQJnxuXUGCjfZyyxYdPGNEJVMEr6Ds7pFkPRNiw=;
+	b=4iE4nY5ubgbvpJ9G0ROp69Lr1BOpgLwY4KKnnrAsDiEubs5JQUq7sBs3195Xbacy7TjP
+	 R60Wa6Ov4SMl+Z4f98GAmHqrziODGBzYEyEyNyKpQbjFHjOwTEXFrK66MOTF/j3my8seR
+	 p6FjdgCKXfSMKnmW6G7ONwiYdyxyk10IymauEQSxz/tbuppERF5YUT7/PyXriJdIYMJny
+	 10V+KrCAddueia3FWPyGrr/2VHJ3Q6SVJRgsTu4EsqUednDoRwCtullXg+Uo2ShNrZNcM
+	 Wyx0BpZfTNkZnY3KF/6ZPOkzGNcobfnvFEWKiqfMWEOKQc/7nqMXXhzNf1SURjV7bmA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0SyPkF+x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9g6zbGH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EC9606EB82;
-	Fri, 13 Nov 2026 15:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0CF606EB94;
+	Fri, 13 Nov 2026 15:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0SyPkF+x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C721F000C4;
-	Fri, 13 Nov 2026 15:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9g6zbGH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9591F000C4;
+	Fri, 13 Nov 2026 15:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585475;
-	bh=RCIchLjLdyNg3e3rQDAenYxYAwk6CzYTItc3Wi9sCns=;
+	s=korg; t=1794585476;
+	bh=zx5cdQJnxuXUGCjfZyyxYdPGNEJVMEr6Ds7pFkPRNiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0SyPkF+xLUakfFc8O+6OWpNFF4Qki39EM8d7t51FUAtrrWLx9dUTkVg4er6b0GpKp
-	 1IG6SC1HAaIvHFFD0WTVdSiib4vGxWDSYNOuu/D/5Ekik/Pjsi8VrT+NrbPwZuZ66h
-	 1ioQJyIKPTF3JMC+f4j8e5fufNc/BOurX/VuWDko=
+	b=S9g6zbGHbcSMOFWTMp4/tKi58G2uVUxeWx03yE3VPk+IFZARZpy4wzdPLBsuHTpIA
+	 HtzEAEIzGtlC5bUH/LYFFi1xEEQTSv9ktKaYNocXcve1lWLigmXoCu3DnfBzCB2x2c
+	 uQqzptzXG5r3e8QRFhqZLUaR3eMGnLt9cGUcolhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charlton Lin <charlton.lin@intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Vidya Srinivas <vidya.srinivas@intel.com>,
+	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 127/507] drm/i915/display: Disable pipe joiner on WCL
-Date: Fri, 13 Nov 2026 10:47:11 -0500
-Message-ID: <20261113153758.749345296@linuxfoundation.org>
+Subject: [PATCH 7.3 128/507] drm/i915/display: Allow port sync on PTL
+Date: Fri, 13 Nov 2026 10:47:12 -0500
+Message-ID: <20261113153758.789477237@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,50 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vidya Srinivas <vidya.srinivas@intel.com>
+From: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
 
-[ Upstream commit b42b656db1384255044754cd2163d370d766b776 ]
+[ Upstream commit 285300ef89aacbe902ba29c91625975f51345217 ]
 
-Pipe joining is not supported in the WCL display configuration.
-Report no joiner support on WCL so that modes which would require
-joining are rejected, matching the 4k 60Hz maximum resolution
-documented for the platform.
+Some dual-SST tiled displays exhibit visual corruption on PTL, with
+one tile's image vertically shifted or wrapped by a random amount
+that changes on every hotplug.
 
-v2: Rebase onto latest upstream
-v3: Fix up the commit message
-v4: Split the scaler and joiner changes into separate patches (Jani)
+PTL supports port sync, so allow it to be used to avoid these
+display issues.
 
-Bspec: 74286
-Fixes: f8e1c3e07db1 ("drm/i915/xe3lpd: Add support for display version 30.02")
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8991
+Fixes: 05cffc074938 ("drm/i915/display: Implement Wa_16024710867")
 Cc: stable@vger.kernel.org
-Suggested-by: Charlton Lin <charlton.lin@intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Signed-off-by: Vidya Srinivas <vidya.srinivas@intel.com>
-Signed-off-by: Uma Shankar <uma.shankar@intel.com>
-Link: https://patch.msgid.link/20261028070404.1913843-3-vidya.srinivas@intel.com
-(cherry picked from commit 917676a55a690319a01b45d3956eaf94ba564df8)
+Signed-off-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20261012040402.3332398-1-mitulkumar.ajitkumar.golani@intel.com
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 7b308d9d496dd3bbe2fdd09d4e9d32499f2a1a0b)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_ddi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 3152122e6aefe..d79b6367cd57f 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -475,9 +475,9 @@ bool intel_dp_has_joiner(struct intel_dp *intel_dp)
- 	    !connector->panel.vbt.edp.pipe_joiner_enable)
- 		return false;
+diff --git a/drivers/gpu/drm/i915/display/intel_ddi.c b/drivers/gpu/drm/i915/display/intel_ddi.c
+index 02a53c9848e13..8de6e13cf2dde 100644
+--- a/drivers/gpu/drm/i915/display/intel_ddi.c
++++ b/drivers/gpu/drm/i915/display/intel_ddi.c
+@@ -4594,7 +4594,7 @@ intel_ddi_port_sync_transcoders(const struct intel_crtc_state *ref_crtc_state,
+ 	 * From, xe3lpd onwards we have defeatured this with reference to
+ 	 * Wa_16024710867
+ 	 */
+-	if (!IS_DISPLAY_VER(display, 9, 20))
++	if (!IS_DISPLAY_VER(display, 9, 30))
+ 		return 0;
  
--	return DISPLAY_VER(display) >= 12 ||
-+	return ((DISPLAY_VER(display) >= 12 && DISPLAY_VERx100(display) != 3002) ||
- 		(DISPLAY_VER(display) == 11 &&
--		 encoder->port != PORT_A);
-+		 encoder->port != PORT_A));
- }
- 
- static int dg2_max_source_rate(struct intel_dp *intel_dp)
+ 	if (!intel_crtc_has_type(ref_crtc_state, INTEL_OUTPUT_DP))
 -- 
 2.53.0
 
