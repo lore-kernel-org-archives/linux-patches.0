@@ -1,61 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585441;
-	b=b4JkkdwqFHgvrh7a/OT+ZnmQSilnK0ZZYMhRO9e+dnVRuSDteFQeR0si++2qIIFBJ8q6
-	 8dx7gBVWhmMYR4QXP8KZrdbkpdbMwNZlg4Kn5IgphxJ07oeLi6Av7WDp0NDPaldPFM6LI
-	 UWNqyk4/Og+Y2xusaX5rXfhPYqkpuWsc6xCk1sAUiZnF7FiHkhxIyQzSHv6VUCYi52EOS
-	 sE9eOOH4lUVjcM362JV96mYZuzotDn2/wN0YI8wfU/8G7D3m9lhisO5rXxEpXLIh3Ijt2
-	 4Aswjmk0XwGixDgwjBLAcL78Av3UBaMrH8UvMw0UnhtxNVzWrtiAG6PyXOpX2W97crw==
+	t=1794585443;
+	b=A8U79/Gkt+IKHhP0E/Lpu+1wkH35mD0Utm502L1H66wtv2fWCDDW3HLqhtiISS4H86Pq
+	 n/JDTSII4Sn2zpDS4qODTAcuhLp54r/Tnl4gCzZAiHW9ksGr4ELE3jcqvmF+BiAmA1gS8
+	 cLDJy9b9KV8OTcbZ6xIqBjNVj6WJhk/aY65dtzdq8xtrq8a62yetvJmESuBP80olW/PkV
+	 Zdjm1VuXen7TBy6zisDkhb/3d5+LD/GLLtKKj5kWd1xdBB8BARz0Rc1sM27B4kWL8CvGq
+	 lWNtWa2mxNENlHwcEK4aXf0zJiAMbPVACLoX2NNZyuFV3Ixgyp1W9+p/3p+yhoZyGIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585443;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IMxhJLQMzBbjPoBXIo7yJNwKgmfi6SMTZNGrxfjvXKU=;
-	b=W6O/CUI+zL0e1Ii5MPKdQSNdW4TtwCU5T6hmqNDKqDc/khH8UVKiVGwKKISWFaznp771
-	 JFaEG3FhfoCej7nrXOedMsFGSZmhINshzm60sjynsnmw6OmZ0NMxIGPOeEJQQJpUKxyX2
-	 PvbArTnAUaZo3Ni0zNROzHw1GWyMtZm1XcSnjie2aUOTGjYWHFmnEs7onyQVBFnR+9sv4
-	 lQTBTa92n2LWE6LmiesNbVrWhyb1fHcXG6e0TeRWscEc7hrRmy8Ra/vRLBNb3DkBoHduK
-	 TtQ1O8o6VWu9ap3pyr6Xb/sHmrEYN6S8dBoXelRHDOKog4koBSCQdTegmh/IfIteKqA==
+	bh=dRwGZuim3JNBIErYgE+9s6yRFH+UEJxhj6PrXtpP7MY=;
+	b=Tf7z0FRthWEmSGPEDFJSKPWFH6LY4kb27BOZloyUdT9Grsg6Sz+Z18qK+75CodVt5LU8
+	 k+5cDWW6CeOK6DnOBBrfJ8XTcnQPqkc4jMMrJSczVu0JytdHzEtz85Ra2nfmLx0WIg13S
+	 qieGq0VYzIzspJWbQUjfy/bYSq1Xx1ca3sStRbj/coiwTUxw2OxyX6Rc5wmVYvltqNsOG
+	 6fxYiqgI0MZvTMBJqSAw3idGplfQzRAr2NW7YEBAK7hm4TSWsu6qt8zcYzFA41ZcpN08n
+	 qzihaosDys2gTqkrnDYiN0cRK7Xsro9/yFW9RvWhyOHO1GGqfvDVIIf+xZFkw+Ae6Dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GODW9GpG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wYUKeqRR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A7D606A8B5;
-	Fri, 13 Nov 2026 15:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0442F606A8A8;
+	Fri, 13 Nov 2026 15:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GODW9GpG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7169C1F000C5;
-	Fri, 13 Nov 2026 15:57:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wYUKeqRR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB97F1F000C5;
+	Fri, 13 Nov 2026 15:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585441;
-	bh=IMxhJLQMzBbjPoBXIo7yJNwKgmfi6SMTZNGrxfjvXKU=;
+	s=korg; t=1794585442;
+	bh=dRwGZuim3JNBIErYgE+9s6yRFH+UEJxhj6PrXtpP7MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GODW9GpGv8PBAQs77+J2Q/HlBLMwOcl4ByikqAJxcB9tjyevnS+h5a+vlaJf+/PgX
-	 an5Ogq1CoYTXg1GpM2Y8xdWRRxeJxz5X5xTfZL8KzlrVFKPk2/8cz8Tw0EBe3Tr+p/
-	 hDS9n3n2BMuhubBqiYFVZEi+YsprMHqOnpufoDNA=
+	b=wYUKeqRR/zvsLQ3kIFL2ZgwTHBT6qPKEGB1KwWLUR8w8UkeRqE+Z2kDdtIZy/uugd
+	 Dq7psHKiYZmSTq0JkpRZ1VQCLKKxzZZIqpvb/6hFENnlBCTIhz6oD27B07yTlyNBwT
+	 1eVu5B+jb9BeQr8J4JCMtYUaQNETB9MGlhAUpTJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Peihan Liu <ronbogo@outlook.com>,
-	Yilin Zhu <zylzyl2333@gmail.com>,
-	Ren Wei <n05ec@lzu.edu.cn>,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Jaeyoung Chung <jjy600901@snu.ac.kr>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Michael Grzeschik <mgr@kernel.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 059/507] xfrm: espintcp: reorder operations within espintcp_init_sk
-Date: Fri, 13 Nov 2026 10:46:03 -0500
-Message-ID: <20261113153755.560094359@linuxfoundation.org>
+Subject: [PATCH 7.3 050/507] net/9p/usbg: Fix use-after-free in disable_usb9pfs()
+Date: Fri, 13 Nov 2026 10:45:54 -0500
+Message-ID: <20261113153755.247005619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -77,128 +74,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit f9a11716c8445b496e9fafeec7e8412d384d02e2 ]
+[ Upstream commit 6f401e350939442b2ac905f7e5ac952e3802a5d8 ]
 
-When enabled on a socket, espintcp sets the socket callbacks to its
-own before it has finished setting up its context and published it as
-icsk_ulp_data. Any one of those callbacks that gets called before will
-dereference a NULL icsk_ulp_data.
+disable_usb9pfs() frees the IN and OUT usb_request objects before it
+disables the corresponding endpoints. If either request is still queued,
+the later usb_ep_disable() call cancels the endpoint queue and the UDC
+driver can still access the already freed request.
 
-Fix this by reording the operations, and add memory barriers to ensure
-callers will have a struct espintcp_ctx available. Add a few
-WRITE_ONCE/READ_ONCE too while we're there.
+With dummy_hcd and KASAN, this is reproducible by queueing the OUT
+request and then disconnecting the configfs gadget:
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+  BUG: KASAN: slab-use-after-free in dummy_disable+0x2b4/0x300
+  Read of size 8 at addr ffff888009702400 by task sh/1
+  usb_ep_disable+0x8e/0x1f0
+  usb9pfs_func_unbind+0x193/0x350
+  gadget_dev_desc_UDC_store+0x135/0x280
+
+dummy_free_request() also warns because the request is freed while its
+queue entry is still linked.
+
+Disable both endpoints before freeing the request objects. This lets
+usb_ep_disable() cancel any queued transfers and invoke the completion
+callback while the request storage is still valid. The request objects
+are then freed only after they have been removed from the endpoint
+queues.
+
+Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Reported-by: Peihan Liu <ronbogo@outlook.com>
-Reported-by: Yilin Zhu <zylzyl2333@gmail.com>
-Reported-by: Ren Wei <n05ec@lzu.edu.cn>
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
-Link: https://lore.kernel.org/all/c30b645074a1b379e0f7fe297f917c66137d9964.1778464688.git.zylzyl2333@gmail.com/
-Link: https://lore.kernel.org/all/20260819155349.3555804-1-jjy600901@snu.ac.kr
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:GLM-5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Michael Grzeschik <mgr@kernel.org>
+Message-ID: <20260607130118.16579-1-zhaoyz24@mails.tsinghua.edu.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/espintcp.h |  5 +++--
- net/xfrm/espintcp.c    | 43 +++++++++++++++++++++++++-----------------
- 2 files changed, 29 insertions(+), 19 deletions(-)
+ net/9p/trans_usbg.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/espintcp.h b/include/net/espintcp.h
-index c70efd704b6d5..7cad3c6822df9 100644
---- a/include/net/espintcp.h
-+++ b/include/net/espintcp.h
-@@ -34,7 +34,8 @@ static inline struct espintcp_ctx *espintcp_getctx(const struct sock *sk)
- {
- 	const struct inet_connection_sock *icsk = inet_csk(sk);
+diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
+index f2619e8465d23..e2309500a8c74 100644
+--- a/net/9p/trans_usbg.c
++++ b/net/9p/trans_usbg.c
+@@ -278,6 +278,9 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
+ 	struct usb_composite_dev *cdev =
+ 		usb9pfs->function.config->cdev;
  
--	/* RCU is only needed for diag */
--	return (__force void *)icsk->icsk_ulp_data;
-+	/* pairs with smp_wmb() in espintcp_init_sk() */
-+	smp_rmb();
-+	return (__force void *)READ_ONCE(icsk->icsk_ulp_data);
- }
- #endif
-diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
-index 3e72b9f067b9b..4052ae5bbb2ea 100644
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -434,7 +434,9 @@ static void espintcp_destruct(struct sock *sk)
- 
- bool tcp_is_ulp_esp(struct sock *sk)
- {
--	return sk->sk_prot == &espintcp_prot || sk->sk_prot == &espintcp6_prot;
-+	const struct proto *prot = READ_ONCE(sk->sk_prot);
++	disable_ep(cdev, usb9pfs->in_ep);
++	disable_ep(cdev, usb9pfs->out_ep);
 +
-+	return prot == &espintcp_prot || prot == &espintcp6_prot;
- }
- EXPORT_SYMBOL_GPL(tcp_is_ulp_esp);
- 
-@@ -466,34 +468,41 @@ static int espintcp_init_sk(struct sock *sk)
- 
- 	__sk_dst_reset(sk);
- 
--	strp_check_rcv(&ctx->strp);
- 	skb_queue_head_init(&ctx->ike_queue);
- 	skb_queue_head_init(&ctx->out_queue);
-+	INIT_WORK(&ctx->work, espintcp_tx_work);
-+
-+	ctx->saved_data_ready = sk->sk_data_ready;
-+	ctx->saved_write_space = sk->sk_write_space;
-+	ctx->saved_destruct = sk->sk_destruct;
-+
-+	/* avoid using task_frag */
-+	sk->sk_allocation = GFP_ATOMIC;
-+	sk->sk_use_task_frag = false;
-+
-+	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
-+
-+	/* pairs with smp_rmb() in espintcp_getctx() */
-+	smp_wmb();
-+
-+	WRITE_ONCE(sk->sk_data_ready, espintcp_data_ready);
-+	WRITE_ONCE(sk->sk_write_space, espintcp_write_space);
-+	sk->sk_destruct = espintcp_destruct;
- 
- 	if (sk->sk_family == AF_INET) {
--		sk->sk_prot = &espintcp_prot;
--		sk->sk_socket->ops = &espintcp_ops;
-+		WRITE_ONCE(sk->sk_prot, &espintcp_prot);
-+		WRITE_ONCE(sk->sk_socket->ops, &espintcp_ops);
- 	} else {
- 		mutex_lock(&tcpv6_prot_mutex);
- 		if (!espintcp6_prot.recvmsg)
- 			build_protos(&espintcp6_prot, &espintcp6_ops, sk->sk_prot, sk->sk_socket->ops);
- 		mutex_unlock(&tcpv6_prot_mutex);
- 
--		sk->sk_prot = &espintcp6_prot;
--		sk->sk_socket->ops = &espintcp6_ops;
-+		WRITE_ONCE(sk->sk_prot, &espintcp6_prot);
-+		WRITE_ONCE(sk->sk_socket->ops, &espintcp6_ops);
+ 	if (usb9pfs->in_req) {
+ 		usb_ep_free_request(usb9pfs->in_ep, usb9pfs->in_req);
+ 		usb9pfs->in_req = NULL;
+@@ -287,9 +290,6 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
+ 		usb_ep_free_request(usb9pfs->out_ep, usb9pfs->out_req);
+ 		usb9pfs->out_req = NULL;
  	}
--	ctx->saved_data_ready = sk->sk_data_ready;
--	ctx->saved_write_space = sk->sk_write_space;
--	ctx->saved_destruct = sk->sk_destruct;
--	sk->sk_data_ready = espintcp_data_ready;
--	sk->sk_write_space = espintcp_write_space;
--	sk->sk_destruct = espintcp_destruct;
--	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
--	INIT_WORK(&ctx->work, espintcp_tx_work);
- 
--	/* avoid using task_frag */
--	sk->sk_allocation = GFP_ATOMIC;
--	sk->sk_use_task_frag = false;
-+	strp_check_rcv(&ctx->strp);
- 
- 	return 0;
- 
+-
+-	disable_ep(cdev, usb9pfs->in_ep);
+-	disable_ep(cdev, usb9pfs->out_ep);
+ 	dev_dbg(&cdev->gadget->dev, "%s disabled\n",
+ 		usb9pfs->function.name);
+ }
 -- 
 2.53.0
 
