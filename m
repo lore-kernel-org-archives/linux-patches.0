@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590676;
-	b=1DcPjXRhCZuwyc4mDVWJ0t9Pca2g4ktyXg2ixwQqKyuz35fKNZ7bPpRx3gRmRsb/yaim
-	 WRBPiAOzldXxfJDK/b32CZqPajr2OUsjpadWl48L19XeGqfmx6k8N91pu5II2eTcWFPL0
-	 xDYT/0QCr0fYDH+iUZXJQFePiYf+zMpc61q5y7wfNkS9vQaahAsFt/sWcBPX6yNfzSWgD
-	 f8Z2SJy065EFODxXWPwyX3M6HfLtBi+mWQ8BJiWZ81xtaMYVUn994RWOguYOMBJXog+PS
-	 3GpG7UCh89i82A+2jPXlGvj6OtM5KnItKkJsuWdD04qp5dt/U0LchTFSleGMmSewYgg==
+	t=1794590677;
+	b=Lttrl+CksyCBk51uq18QCh+njEdLnmvPjEvLJga3ZaK8hNa69j2l+hqRFKBkjrUgbwHT
+	 YXqNTb/y+H44nj9Im045OT5sfA2ccPJwHaMf3X3kGu/z9Fw3GCOvVtvH0YgWoCY8CEqLw
+	 U21Y/bu+SqL35w2by5+naHI0zKCQBurhpw+LfrNqa+f368pgOk5hEeaHAij9gCGCnOk+0
+	 H5QvZEQIwASPPsRLhKDsAgWdkQh2E947fRpSGE6nyLjbNgVbV87p6m4/PaRmwd9AKqrGf
+	 6fEPPDsFfkfbjXLhCBEExCkuesPrPbS7Y6SnLVfbMmXGApc1gK5R+/U84zYNEpvSTpA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590676;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jno37AdjN78u7vja7d9NzY/4fbbFUMiSH0dDpvP1FkY=;
-	b=xXkU+xAM84wnUd7cxEbHWIBRVjTaqcC7S7s5ESwJ1hcOBwF3rqYFTIy8v08I9I+Vo7YB
-	 y1M+2sU54SzBsfEFdQ0D1PIkNu3Jnn6Ek6PI6r0MOw6iqYg2B6XPs5G2dR8CKlBIomECd
-	 Qtzl3S8EjEMke8qnzcDEvp5nCQobkglTd/RaytP7rqp8n3VD8bt3VZJCcj/YKTl+i35au
-	 htS3yJZE+veGBprtuGyZFAcY18LOHqQLNYvLRIbYN4iUhqH8QXkWhrb/icTc5GtCobqDs
-	 8xXT3Nj4vK8Z9ptZeRF6ZEKASJaPFJm7I/fLO1MNeXN93183qfxa/YLk6u1vFlrgsZg==
+	bh=zBeCeVfZj5QEIG9uC1fZzrfhZazs9kZyO2ismVNTDPU=;
+	b=N9PzzjkRjWMRAgftlB1Eyutgx6XqMVddef2+SzMydiO13q36a16mj2TcfpZT872S+qBj
+	 tCcJGvmYZrA2TYr17mrjOsM3btMWW7TiFaMozHH8lvCbZH6T+0UFKGNhcHxHPBbViBdVL
+	 GbrO3qS44VgmRMKvyUJFu0RtQbwKjS1Th+yi6pviq672+BjMkNKgzy9cODOH9O4p4hhgt
+	 oHIBcHbaSdehupHxQ8CS6jItIX2bsY35GZyN1y6H41/LLT/HgQJ9eBtz6n1zMvUcbs7+v
+	 By8c6IAxkBOzFcWCkGbDfEUHRdHwyKIZcINmZ5nq3Fi4ct9vlfSln6SpppUNme7MUbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LfLu0A5e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G34Lzaoe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BD6606B223;
-	Fri, 13 Nov 2026 17:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B8B606CEC3;
+	Fri, 13 Nov 2026 17:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LfLu0A5e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE291F000C4;
-	Fri, 13 Nov 2026 17:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G34Lzaoe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1531F000C6;
+	Fri, 13 Nov 2026 17:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590676;
-	bh=Jno37AdjN78u7vja7d9NzY/4fbbFUMiSH0dDpvP1FkY=;
+	s=korg; t=1794590677;
+	bh=zBeCeVfZj5QEIG9uC1fZzrfhZazs9kZyO2ismVNTDPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LfLu0A5ex55Qryzlhp70wDh8skoXAM2ZLMlrQNZ7CaUPJFcqPFpbbEwz6WbrBEPxi
-	 08qHyzVjYra4wFevsRYhhHd8igvdG2qeJMfP/vogwHrTQBizRydBzX/Nk7y1CsdUy+
-	 ZqEAwBdhSgR8l2wE7D0q/vAVUKxInt4hRh68kA58=
+	b=G34LzaoeFF0mV6feOhQ+AaVNTA1UZvnkn6XYG/Y1wGeoAGL5iM3N9IPA6LRyf8Wku
+	 K+IdglJ6QVOKqyjGAY4SDWhX5iyt1zG5JJ6WRxGlNw+LY9ZrBuV/n7KqInBD8JuAnx
+	 aLl6CHT5VUX0q/3bIMiNU9Ah3SizuKy8G9DJRx+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Vega <vega@nebusec.ai>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Ruide Cao <caoruide123@gmail.com>,
+	Ren Wei <weir@nebusec.ai>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 590/686] rculist: Add hlist_nulls_replace_rcu() and hlist_nulls_replace_init_rcu()
-Date: Fri, 13 Nov 2026 10:52:03 -0500
-Message-ID: <20261113153841.893110007@linuxfoundation.org>
+Subject: [PATCH 6.18 591/686] mptcp: fix MP_CAPABLE token migration when cloning reqsk
+Date: Fri, 13 Nov 2026 10:52:04 -0500
+Message-ID: <20261113153841.951809304@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,108 +72,295 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+From: Ruide Cao <caoruide123@gmail.com>
 
-[ Upstream commit 9c4609225ec1cb551006d6a03c7c4ad8cb5584c0 ]
+[ Upstream commit 2093bc7fa50056fef8620d2b82bcb2e9a0a5575d ]
 
-Add two functions to atomically replace RCU-protected hlist_nulls entries.
+TCP request migration clones pending request sockets with
+inet_reqsk_clone().  For MPTCP MP_CAPABLE requests this byte-copies the
+token_node hlist state into the clone even though the token table still
+names the original request, and the following warning can be seen:
 
-Keep using WRITE_ONCE() to assign values to ->next and ->pprev, as
-mentioned in the patch below:
-commit efd04f8a8b45 ("rcu: Use WRITE_ONCE() for assignments to ->next for
-rculist_nulls")
-commit 860c8802ace1 ("rcu: Use WRITE_ONCE() for assignments to ->pprev for
-hlist_nulls")
+  WARNING: net/mptcp/token.c:364 at mptcp_token_destroy_request+0x2b0/0x330, CPU#2: swapper/2/0
+  CPU: 2 UID: 0 PID: 0 Comm: swapper/2 Not tainted 7.2.0-rc5-00353-gc27e36054537 #10 PREEMPT(full)
+  RIP: 0010:mptcp_token_destroy_request (net/mptcp/token.c:364 (discriminator 1))
+  Call Trace:
+   <IRQ>
+   subflow_v4_req_destructor (net/mptcp/subflow.c:694)
+   __reqsk_free (net/ipv4/inet_connection_sock.c:906)
+   reqsk_timer_handler (include/net/request_sock.h:137 net/ipv4/inet_connection_sock.c:1147)
+   call_timer_fn (kernel/time/timer.c:1748)
 
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20251015020236.431822-2-xuanqiang.luo@linux.dev
+Move token request ownership from the original request to the clone under
+the token bucket lock.  Make mptcp_token_accept() and
+mptcp_token_destroy_request() re-check token_node under the same lock and
+treat an already moved or removed request as a normal race instead of
+warning.  This also keeps token bucket chain_len accounting balanced.
+
+If a passive MP_CAPABLE socket cannot claim the token, destroy the
+provisional MPTCP socket and let the subflow fall back rather than
+installing a socket with mismatched token ownership.  Mark that path as a
+passive handshake fallback so MPCapableFallbackACK records the downgrade.
+
+If the speculative clone later loses the inet_ehash_insert() ownership
+arbitration, the original request may find that its token was already moved
+and fall back to plain TCP.  The clone destructor then releases the token
+reservation and keeps chain_len balanced.  This trades an exceptionally
+rare fallback for eliminating the warning and persistent accounting drift.
+
+Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
+Cc: stable@vger.kernel.org
+Reported-by: Vega <vega@nebusec.ai>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/86e2514b533bf4d55d4aa2fdbf1404022e8c9430.1776149210.git.caoruide123%40gmail.com
+Signed-off-by: Ruide Cao <caoruide123@gmail.com>
+Signed-off-by: Ren Wei <weir@nebusec.ai>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-4-932c9b182fc7@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 2093bc7fa500 ("mptcp: fix MP_CAPABLE token migration when cloning reqsk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rculist_nulls.h | 59 +++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ net/mptcp/protocol.c   | 31 +++++++++++++++----
+ net/mptcp/protocol.h   |  4 ++-
+ net/mptcp/subflow.c    |  6 +++-
+ net/mptcp/token.c      | 68 +++++++++++++++++++++++++++++++++++++-----
+ net/mptcp/token_test.c |  4 +--
+ 5 files changed, 97 insertions(+), 16 deletions(-)
 
-diff --git a/include/linux/rculist_nulls.h b/include/linux/rculist_nulls.h
-index 89186c499dd47..c26cb83ca0711 100644
---- a/include/linux/rculist_nulls.h
-+++ b/include/linux/rculist_nulls.h
-@@ -52,6 +52,13 @@ static inline void hlist_nulls_del_init_rcu(struct hlist_nulls_node *n)
- #define hlist_nulls_next_rcu(node) \
- 	(*((struct hlist_nulls_node __rcu __force **)&(node)->next))
+diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
+index df09dcfd15ce3..fdd4c7d87775b 100644
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -3410,6 +3410,24 @@ static void mptcp_copy_ip_options(struct sock *newsk, const struct sock *sk)
+ 	rcu_read_unlock();
+ }
  
-+/**
-+ * hlist_nulls_pprev_rcu - returns the dereferenced pprev of @node.
-+ * @node: element of the list.
-+ */
-+#define hlist_nulls_pprev_rcu(node) \
-+	(*((struct hlist_nulls_node __rcu __force **)(node)->pprev))
++static void mptcp_sk_clone_destroy(struct sock *nsk)
++{
++	struct mptcp_sock *msk = mptcp_sk(nsk);
 +
- /**
-  * hlist_nulls_del_rcu - deletes entry from hash list without re-initialization
-  * @n: the element to delete from the hash list.
-@@ -152,6 +159,58 @@ static inline void hlist_nulls_add_fake(struct hlist_nulls_node *n)
- 	n->next = (struct hlist_nulls_node *)NULLS_MARKER(NULL);
++	mptcp_release_sched(msk);
++	mptcp_set_state(nsk, TCP_CLOSE);
++	/* inet_csk_prepare_forced_close() clears TCP sock_ops state via
++	 * tcp_sk(), but nsk is an MPTCP master socket; keep the inet-level
++	 * destroy preparation here.
++	 */
++	bh_unlock_sock(nsk);
++	sock_put(nsk);
++	sock_set_flag(nsk, SOCK_DEAD);
++	tcp_orphan_count_inc();
++	inet_sk(nsk)->inet_num = 0;
++	inet_csk_destroy_sock(nsk);
++}
++
+ struct sock *mptcp_sk_clone_init(const struct sock *sk,
+ 				 const struct mptcp_options_received *mp_opt,
+ 				 struct sock *ssk,
+@@ -3469,11 +3487,6 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
+ 	list_add(&subflow->node, &msk->conn_list);
+ 	sock_hold(ssk);
+ 
+-	/* new mpc subflow takes ownership of the newly
+-	 * created mptcp socket
+-	 */
+-	mptcp_token_accept(subflow_req, msk);
+-
+ 	/* set msk addresses early to ensure mptcp_pm_get_local_id()
+ 	 * uses the correct data
+ 	 */
+@@ -3482,6 +3495,14 @@ struct sock *mptcp_sk_clone_init(const struct sock *sk,
+ 	mptcp_rcv_space_init(msk, ssk);
+ 	msk->rcvq_space.time = mptcp_stamp();
+ 
++	if (!mptcp_token_accept(subflow_req, msk)) {
++		list_del_init(&subflow->node);
++		WRITE_ONCE(msk->first, NULL);
++		sock_put(ssk);
++		mptcp_sk_clone_destroy(nsk);
++		return NULL;
++	}
++
+ 	if (mp_opt->suboptions & OPTION_MPTCP_MPC_ACK)
+ 		__mptcp_subflow_fully_established(msk, subflow, mp_opt);
+ 	bh_unlock_sock(nsk);
+diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
+index 184831b5b624a..1b6335408b17f 100644
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -1033,9 +1033,11 @@ static inline void mptcp_token_init_request(struct request_sock *req)
+ }
+ 
+ int mptcp_token_new_request(struct request_sock *req);
++void mptcp_token_move_request(struct request_sock *req,
++			      struct request_sock *new_req);
+ void mptcp_token_destroy_request(struct request_sock *req);
+ int mptcp_token_new_connect(struct sock *ssk);
+-void mptcp_token_accept(struct mptcp_subflow_request_sock *r,
++bool mptcp_token_accept(struct mptcp_subflow_request_sock *r,
+ 			struct mptcp_sock *msk);
+ bool mptcp_token_exists(u32 token);
+ struct mptcp_sock *mptcp_token_get_sock(struct net *net, u32 token);
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index c2d6a7adca6b2..0f8b7396f446e 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -78,6 +78,8 @@ void mptcp_subflow_reqsk_clone(struct request_sock *req,
+ 	}
+ 
+ 	new_subflow_req->msk = msk;
++
++	mptcp_token_move_request(req, new_req);
+ }
+ 
+ static void subflow_generate_hmac(u64 key1, u64 key2, u32 nonce1, u32 nonce2,
+@@ -931,8 +933,10 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
+ 
+ 		if (ctx->mp_capable) {
+ 			ctx->conn = mptcp_sk_clone_init(listener->conn, &mp_opt, child, req);
+-			if (!ctx->conn)
++			if (!ctx->conn) {
++				fallback = true;
+ 				goto fallback;
++			}
+ 
+ 			ctx->subflow_id = 1;
+ 			owner = mptcp_sk(ctx->conn);
+diff --git a/net/mptcp/token.c b/net/mptcp/token.c
+index 5bb9245343874..d5735d3ac793b 100644
+--- a/net/mptcp/token.c
++++ b/net/mptcp/token.c
+@@ -180,6 +180,43 @@ int mptcp_token_new_connect(struct sock *ssk)
+ 	return 0;
  }
  
 +/**
-+ * hlist_nulls_replace_rcu - replace an old entry by a new one
-+ * @old: the element to be replaced
-+ * @new: the new element to insert
++ * mptcp_token_move_request - move request token ownership to a clone
++ * @req: original request socket
++ * @new_req: cloned request socket
 + *
-+ * Description:
-+ * Replace the old entry with the new one in a RCU-protected hlist_nulls, while
-+ * permitting racing traversals.
-+ *
-+ * The caller must take whatever precautions are necessary (such as holding
-+ * appropriate locks) to avoid racing with another list-mutation primitive, such
-+ * as hlist_nulls_add_head_rcu() or hlist_nulls_del_rcu(), running on this same
-+ * list.  However, it is perfectly legal to run concurrently with the _rcu
-+ * list-traversal primitives, such as hlist_nulls_for_each_entry_rcu().
++ * Move the token hash entry from the original request to its clone.
 + */
-+static inline void hlist_nulls_replace_rcu(struct hlist_nulls_node *old,
-+					   struct hlist_nulls_node *new)
++void mptcp_token_move_request(struct request_sock *req,
++			      struct request_sock *new_req)
 +{
-+	struct hlist_nulls_node *next = old->next;
++	struct mptcp_subflow_request_sock *subflow_req = mptcp_subflow_rsk(req);
++	struct mptcp_subflow_request_sock *new_subflow_req;
++	struct mptcp_subflow_request_sock *pos;
++	struct token_bucket *bucket;
 +
-+	WRITE_ONCE(new->next, next);
-+	WRITE_ONCE(new->pprev, old->pprev);
-+	rcu_assign_pointer(hlist_nulls_pprev_rcu(new), new);
-+	if (!is_a_nulls(next))
-+		WRITE_ONCE(next->pprev, &new->next);
-+}
++	new_subflow_req = mptcp_subflow_rsk(new_req);
 +
-+/**
-+ * hlist_nulls_replace_init_rcu - replace an old entry by a new one and
-+ * initialize the old
-+ * @old: the element to be replaced
-+ * @new: the new element to insert
-+ *
-+ * Description:
-+ * Replace the old entry with the new one in a RCU-protected hlist_nulls, while
-+ * permitting racing traversals, and reinitialize the old entry.
-+ *
-+ * Note: @old must be hashed.
-+ *
-+ * The caller must take whatever precautions are necessary (such as holding
-+ * appropriate locks) to avoid racing with another list-mutation primitive, such
-+ * as hlist_nulls_add_head_rcu() or hlist_nulls_del_rcu(), running on this same
-+ * list. However, it is perfectly legal to run concurrently with the _rcu
-+ * list-traversal primitives, such as hlist_nulls_for_each_entry_rcu().
-+ */
-+static inline void hlist_nulls_replace_init_rcu(struct hlist_nulls_node *old,
-+						struct hlist_nulls_node *new)
-+{
-+	hlist_nulls_replace_rcu(old, new);
-+	WRITE_ONCE(old->pprev, NULL);
++	if (hlist_nulls_unhashed_lockless(&subflow_req->token_node)) {
++		mptcp_token_init_request(new_req);
++		return;
++	}
++
++	bucket = token_bucket(subflow_req->token);
++	spin_lock_bh(&bucket->lock);
++	if (hlist_nulls_unhashed(&subflow_req->token_node)) {
++		mptcp_token_init_request(new_req);
++	} else {
++		pos = __token_lookup_req(bucket, subflow_req->token);
++		if (pos == subflow_req)
++			hlist_nulls_replace_init_rcu(&subflow_req->token_node,
++						     &new_subflow_req->token_node);
++		else
++			mptcp_token_init_request(new_req);
++	}
++	spin_unlock_bh(&bucket->lock);
 +}
 +
  /**
-  * hlist_nulls_for_each_entry_rcu - iterate over rcu list of given type
-  * @tpos:	the type * to use as a loop cursor.
+  * mptcp_token_accept - replace a req sk with full sock in token hash
+  * @req: the request socket to be removed
+@@ -187,24 +224,36 @@ int mptcp_token_new_connect(struct sock *ssk)
+  *
+  * Called when a SYN packet creates a new logical connection, i.e.
+  * is not a join request.
++ *
++ * Return: true on success.
+  */
+-void mptcp_token_accept(struct mptcp_subflow_request_sock *req,
++bool mptcp_token_accept(struct mptcp_subflow_request_sock *req,
+ 			struct mptcp_sock *msk)
+ {
+ 	struct mptcp_subflow_request_sock *pos;
+ 	struct sock *sk = (struct sock *)msk;
+ 	struct token_bucket *bucket;
++	bool ret = false;
+ 
+-	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
+ 	bucket = token_bucket(req->token);
+ 	spin_lock_bh(&bucket->lock);
++	if (hlist_nulls_unhashed(&req->token_node))
++		goto unlock;
+ 
+-	/* pedantic lookup check for the moved token */
+ 	pos = __token_lookup_req(bucket, req->token);
+-	if (!WARN_ON_ONCE(pos != req))
+-		hlist_nulls_del_init_rcu(&req->token_node);
++	if (pos != req)
++		goto unlock;
++
++	hlist_nulls_del_init_rcu(&req->token_node);
+ 	__sk_nulls_add_node_rcu((struct sock *)msk, &bucket->msk_chain);
++	ret = true;
++
++unlock:
+ 	spin_unlock_bh(&bucket->lock);
++	if (ret)
++		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, 1);
++
++	return ret;
+ }
+ 
+ bool mptcp_token_exists(u32 token)
+@@ -353,16 +402,21 @@ void mptcp_token_destroy_request(struct request_sock *req)
+ 	struct mptcp_subflow_request_sock *pos;
+ 	struct token_bucket *bucket;
+ 
+-	if (hlist_nulls_unhashed(&subflow_req->token_node))
++	if (hlist_nulls_unhashed_lockless(&subflow_req->token_node))
+ 		return;
+ 
+ 	bucket = token_bucket(subflow_req->token);
+ 	spin_lock_bh(&bucket->lock);
++	if (hlist_nulls_unhashed(&subflow_req->token_node))
++		goto unlock;
++
+ 	pos = __token_lookup_req(bucket, subflow_req->token);
+-	if (!WARN_ON_ONCE(pos != subflow_req)) {
++	if (pos == subflow_req) {
+ 		hlist_nulls_del_init_rcu(&pos->token_node);
+ 		bucket->chain_len--;
+ 	}
++
++unlock:
+ 	spin_unlock_bh(&bucket->lock);
+ }
+ 
+diff --git a/net/mptcp/token_test.c b/net/mptcp/token_test.c
+index 4fc39fa2e262d..be9acce8a5673 100644
+--- a/net/mptcp/token_test.c
++++ b/net/mptcp/token_test.c
+@@ -99,7 +99,7 @@ static void mptcp_token_test_accept(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, 0,
+ 			mptcp_token_new_request((struct request_sock *)req));
+ 	msk->token = req->token;
+-	mptcp_token_accept(req, msk);
++	KUNIT_EXPECT_TRUE(test, mptcp_token_accept(req, msk));
+ 	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(&init_net, msk->token));
+ 
+ 	/* this is now a no-op */
+@@ -122,7 +122,7 @@ static void mptcp_token_test_destroyed(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, 0,
+ 			mptcp_token_new_request((struct request_sock *)req));
+ 	msk->token = req->token;
+-	mptcp_token_accept(req, msk);
++	KUNIT_EXPECT_TRUE(test, mptcp_token_accept(req, msk));
+ 
+ 	/* simulate race on removal */
+ 	refcount_set(&sk->sk_refcnt, 0);
 -- 
 2.53.0
 
