@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585434;
-	b=jfCOh9LMHLQFk3DAZU8vRhDBkNI4ePAvf+sfdCV6ttG/KsmrO9oDuDP982UoRIjxs4Hh
-	 UsFKhcubjQoJ+r4h8GqVzWxGW7T4x4+O7+lE3wqsRoG3eWmxFulYhpzkHXm0LoKLdNjsX
-	 DjY55YzJZkE7HYe1mY39loOlXkXiWb32XMLHYSNKLKHP7OzZoFWF54xPnx41jJ911D4zh
-	 7oALU0e5nXt8vgDyFxZ+ncMOIkyCQy1mpSun+uiBlS0Op23jclAsUB8Ef7U/iKiEDzm4f
-	 FQbagjXswHb5z7FbrqAZ1pmVNA/GfkzinTN7839dZIjweB2+yAabkmSqFI4vTf9vSNw==
+	t=1794585435;
+	b=g15Tz5wqvRiiZ3EnPlKZy3yRvHasXOJHGEUrIP1crpdfCkydtwZ2TVeIinMuGnfYYMiL
+	 EGVmefM47p+kmAmZZJYPVM1Ab8pVdpBRRYUGrZS6OyB0SlDu040ecBGEvs613jfgoAaYN
+	 d4lgzxzMIkopbAarxs7JKQQY/d7kGd2MbcL4YVupeYSt0yizv7iOVNr12nNLbIC3q3H+Z
+	 s+tfvufn7DtThBpBR5Yx8BydVKAUuc5+E1/zyCGi4TxDAwB3ocvGRDUXUlPeutQN26+NI
+	 Bon2mc7+XWpXZxC9UN4axucKnQpFyvOAzBKTSxIpA3oJ5K65JOrqQs/1wmMN68LroYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585434;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585435;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1SmYQqWM1xVZCWcFdyYz1pnXu/XrAHaIAS6DBzQaDQw=;
-	b=JpcA8LoRmykGew1Wve7wHgS7uf0PEfzaW4XAoJCeqAELtFupBqAQ9DYCrErqcdtduICT
-	 jPZ8a2GFAJYvI/w1ncRAMOgQUgcRJzBAlaiJEadxJ7FS/AWBWlnFMtl0xbarppqqHfadb
-	 1fEvBYxwk7Cf4xYGiBPECanlbQP5Azl2ykRGU9BRAcUw5iHCLsVnvczAZBQu7IIRlC4m1
-	 i8nCVvApJkIJ8QgD7yis7/p1VyWUelhfpJM4lxTO1H5gtlzS5u2KIiM9ziRxOC6CFBBm6
-	 BeDykUznubo+/cpQQBQFMFiokwGhhB3bi+TwvbSiMfE8pHKZQl4YHe5/sWVl6j++hBg==
+	bh=NC5yCbB3b2Z6RWRzoxyuMOOjVIGDFeZEWQQK80oedqA=;
+	b=ZMxNXSHErlTHBD6j8l9lPoGZxLqI+UoNW4mhxZqZEyEuaWT3vH/aJGttdapyyXmafxTJ
+	 e1DkzK64VtHvGdY/dKKSL7JnXuD96s43FbjYiiTJ1OqznucyLhadYvZBLDJQdWU1mN3XK
+	 R4w4Q+065Pjlh8NA9M1IeDKllcYjXRZw2oUNxci0omSEA+LwhK3jtxyDOr/pppvjMhGJM
+	 O8JlhnytVY7Pqm6oMYdp4qRbI/VGTJV6KxuWAnhG3ckdQ46F3AAmTpNQkm2V4x9RPPAot
+	 TcCYj1qKrpEi7fBXNWiIAgPISxDCzV1O0ap61JuYaAzktykCpV/oF0IdQ83dj5+tf2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sj+spFhC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1OvTo/ZK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7009360A5BCB;
-	Fri, 13 Nov 2026 15:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7DA60A5BCF;
+	Fri, 13 Nov 2026 15:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sj+spFhC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C66E1F000C5;
-	Fri, 13 Nov 2026 15:57:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1OvTo/ZK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54CB21F000C5;
+	Fri, 13 Nov 2026 15:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585434;
-	bh=1SmYQqWM1xVZCWcFdyYz1pnXu/XrAHaIAS6DBzQaDQw=;
+	s=korg; t=1794585435;
+	bh=NC5yCbB3b2Z6RWRzoxyuMOOjVIGDFeZEWQQK80oedqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Sj+spFhCGkj7XCe7c0kGIe1gqcrFqM/fhn6/2Vsqeifz4DcOVA3+RGPl2bomrWmZN
-	 ABKlgqnc+Yj5GTyasEF8HMx/72u4d91Hw85wlg7AIuHCnJDwoAvUNXn3PgZ7csseYq
-	 2rcV1roTxXCSOPZcjbCgY2htTBNZ3aduVUahqzg8=
+	b=1OvTo/ZKlcbyHOoCNpeFg9o8VrvSg+TlCIjbegZ9yo3xn1Omo/phHnc1x8VENVjRH
+	 Vb7HRvYTRKRyzUI20jwdRFMEbh0J/VjA5O8BOk8FfyojoZk7+qKw3xph3lTkngf49K
+	 8uR/SqzZHCVyCCWtx+enQYJ8aU1FTyYMs9KmApxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masafumi Suzuki <shengshilingmu97@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 094/507] sctp: account for chunk padding in sctp_init_cause()
-Date: Fri, 13 Nov 2026 10:46:38 -0500
-Message-ID: <20261113153757.253312119@linuxfoundation.org>
+Subject: [PATCH 7.3 095/507] btrfs: fix chattr failing on nodatasum files that have the compress flag
+Date: Fri, 13 Nov 2026 10:46:39 -0500
+Message-ID: <20261113153757.321975839@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,59 +70,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masafumi Suzuki <shengshilingmu97@gmail.com>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit ed6c53b27be492643da2017c6f8e2732be5edf1a ]
+[ Upstream commit 16b8f07d1ed50d4a8da468b56484873784dd8f4a ]
 
-sctp_init_cause() accepts a chunk when skb_tailroom() can hold the
-cause header and the payload. sctp_addto_chunk() then writes 0-3
-bytes of padding before that header so the chunk stays 4-byte
-aligned. The check does not include the padding, and the following
-skb_put() calls skb_over_panic() from softirq.
+Commit cf1afec09e9f ("btrfs: validate properties before setting them")
+made btrfs_set_prop() validate a property before setting it. For the
+compression property, the validation fails with -EINVAL when the inode
+has NODATASUM.
 
-Count the padding sctp_addto_chunk() is about to write. The cause
-length on the wire stays the header plus the payload.
+However, chattr writes back all the flags it read from the file, and
+btrfs_fileattr_set() sets the compression property whenever the new
+flags include FS_COMPR_FL, even when the compression flags do not
+change. A file created on a filesystem mounted with nodatasum has
+NODATASUM and still inherits the compress flag from its directory. As
+of now, chattr fails on such a file when it changes any other flag.
 
-Found by LLM inspection, triggered and tested the fix.
+The issue can be reproduced with:
 
-Fixes: 8914f4bace3f ("sctp: add sctp_make_op_error_limited and reuse inner functions")
-Cc: stable@vger.kernel.org
-Signed-off-by: Masafumi Suzuki <shengshilingmu97@gmail.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261027082405.1297-1-shengshilingmu97@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    mkfs.btrfs -f /dev/sdb
+    mount -o nodatasum /dev/sdb /mnt
+    mkdir /mnt/dir
+    chattr +c /mnt/dir
+    touch /mnt/dir/file
+    chattr +A /mnt/dir/file
+
+Before commit cf1afec09e9f ("btrfs: validate properties before setting
+them"), the last command succeeds.
+
+After that commit, it fails with EINVAL.
+
+This patch will make btrfs_fileattr_set() leave the compression flags
+and the compression property alone when the call changes neither
+FS_COMPR_FL nor FS_NOCOMP_FL.
+
+Fixes: cf1afec09e9f ("btrfs: validate properties before setting them")
+CC: stable@vger.kernel.org # 7.2+
+Suggested-by: Qu Wenruo <wqu@suse.com>
+Assisted-by: LLM
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/btrfs/ioctl.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 84a4c97d0f755..8933caadcdb66 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -136,6 +136,7 @@ int sctp_init_cause(struct sctp_chunk *chunk, __be16 cause_code,
- 		    size_t paylen)
- {
- 	struct sctp_errhdr err;
-+	int chunklen, padlen;
- 	__u16 len;
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 576cd76ca0bf3..905b04ad0ae45 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -375,6 +375,19 @@ int btrfs_fileattr_set(struct mnt_idmap *idmap,
+ 		}
+ 	}
  
- 	/* Cause code constants are now defined in network order.  */
-@@ -143,7 +144,13 @@ int sctp_init_cause(struct sctp_chunk *chunk, __be16 cause_code,
- 	len = sizeof(err) + paylen;
- 	err.length = htons(len);
- 
--	if (skb_tailroom(chunk->skb) < len)
-+	/* sctp_addto_chunk() pads the chunk up to a 4-byte boundary before
-+	 * appending the cause, so account for that padding here as well.
++	/*
++	 * Callers write back the whole flag set, so only touch the compression
++	 * flags and the compression property if FS_COMPR_FL or FS_NOCOMP_FL
++	 * changes.
 +	 */
-+	chunklen = ntohs(chunk->chunk_hdr->length);
-+	padlen = SCTP_PAD4(chunklen) - chunklen;
++	if (!((fsflags ^ old_fsflags) & (FS_COMPR_FL | FS_NOCOMP_FL))) {
++		/* 1 item for the inode */
++		trans = btrfs_start_transaction(root, 1);
++		if (IS_ERR(trans))
++			return PTR_ERR(trans);
++		goto update_flags;
++	}
 +
-+	if (skb_tailroom(chunk->skb) < padlen + len)
- 		return -ENOSPC;
- 
- 	chunk->subh.err_hdr = sctp_addto_chunk(chunk, sizeof(err), &err);
+ 	/*
+ 	 * The COMPRESS flag can only be changed by users, while the NOCOMPRESS
+ 	 * flag may be changed automatically if compression code won't make
 -- 
 2.53.0
 
