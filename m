@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591365;
-	b=Mw/fJP4ivhPJUuhiPV2TSeYkKerzj7YoL0OW1gaW7+TjaUjYOd+B+ysgE7FX1g0p5eyp
-	 +8J0w9AdYE/xJXn2wx9J09GuhGlR8KifSpW9cSyHrZZwnE3+FGlfGCLEjjXID63qvkJt0
-	 mPah4bAMOYwDDLZr7NYgSl6EBi9Hzd5GtctJsSWhEsowFd7oO9mFpraG4JwcOqoAFBa+N
-	 KG9EElSc8l6Ze/h16yAlTO+wu0tXMkPQQ7gE7XkQvNv41oLaO+Rm1BtZLirblOLNSgzi9
-	 fxzIL30BjKoA+nXgbwYsomEWM2nsUYudnb/ymDOgMxr1asl9Ii1wOotgEYtrOLCA4sw==
+	t=1794591366;
+	b=iKGsVYZ9dToCQJ8ylBrb7MOvdxf91T3t77YaPFf4LAJm/VSLBlMjT9XwVG6i9k4n1lZI
+	 YKpiw3tPysnID5m3imJTjyb81EllnGZTfpIl855d1MPjGTo7/U0BKCNjyn46qm1SJte0s
+	 5J4XXdVFyB93mTfyauSYbHd37+PLqoePp2fRzhaj9+Q6dGpPqOuOqAiaxwPh5hQ3lGMjq
+	 sI4zLR5qhitPumncIWIyGHoIGWMgxW98elBQt4CTaxZyaPfM3mPbb+2XKKNkwHtccZefr
+	 WTslIUuVA2KAByPR1pXx+vGFzs0UX9nDlk1tRCMlqEoXb2S1qsNXz+HvAP9dmpRgxzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591365;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591366;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=banU3WJI6qDdbjuUFBEIr5aOjo9mES5vnlleKc/YGdg=;
-	b=Dy7qN8LOstXsFwrFmWUYsiILj6TIZe1yHrhynD4J8j9Ha8pjbb6PqAr7/b0ewJ0RBr8D
-	 6hNtB3XP3m8TTgw5brfYdwPNzuh36O5PxS1dHejHooY5y5Ztgyd8QWm2noukIMMGv7hjP
-	 bP9Sm3Flwjo9ysVypA9cGbtQZYrnY7G0Y7eo2rn4cNf+2+ujg9XXHPiHQq7eA0J3LLuaW
-	 d8nPEOSA3fDnU4itMyMVFqDkuuvEtk+dHSYRBNa4VbALRezUpwRADl0fyaJOg6Ln5pVoS
-	 z0UOcP5DnrtfdQVJ4Q3o7j0erDXjM7e/d4tDaKAS1QrVEMPZ+qVJV+6auAmPbbP/Xpw==
+	bh=6Lp4AQluq9I0Z2H4C8t4bZ9UFZR6W6ylOgvLI92XESA=;
+	b=Gs/CQsHJLCTsK7sFMRegTYqup07uaGNT9HUrBM0Vkg7sO+aPx+51DRH20eqZkToBJU8m
+	 jNoP+y76/2R2aKzqbw0Ja0ei2SXmj1Zw8WHq6f/ieFqS3IB0g9/hVW7kRajqZiobbckn3
+	 ZnllZaInMZYyNchLI+8X+A1o8U3uWxhqkYihZFz0WaewYdqYYQ5AEAgi8G0rIpKuk0hVe
+	 LUj8gTHs+RmGTkk7eQzjULo1a/Q8GVoiNKY/GCILi8jfJbnctmROGyeR3lPW9pfmNeYxi
+	 GIX9CY7d8HW4Yf4j1jOdvzDhshVu3/qhbARpu1SgKvfOLf0E+kEwKBy/ujPzL/zOo4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ui5YjbOB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pykGhDtO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A06606EDA6;
-	Fri, 13 Nov 2026 17:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB7D606B22B;
+	Fri, 13 Nov 2026 17:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ui5YjbOB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E271F000C4;
-	Fri, 13 Nov 2026 17:36:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pykGhDtO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1714A1F000C5;
+	Fri, 13 Nov 2026 17:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591365;
-	bh=banU3WJI6qDdbjuUFBEIr5aOjo9mES5vnlleKc/YGdg=;
+	s=korg; t=1794591366;
+	bh=6Lp4AQluq9I0Z2H4C8t4bZ9UFZR6W6ylOgvLI92XESA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ui5YjbOBRse0PGHa9sPP/RU4QG2PxFDCNNHeL6X/MdTfPAWqxSO4C1M5hcM0NTktL
-	 8+/SUI67+yoQ9t4+/LgcqeRDEABK0N/eMa3DM54mms32cX4wdmobFMHqjMDSqbfWwy
-	 LQN5kSkcusKeV6TXxKS6HHz2hiHcv/kHf2S4yoAY=
+	b=pykGhDtOOuWxGu8LmN3gHM2cxJRUcG5UEhhSBaJhI5TD0G/WRVR1wUA+bQPfJXJFd
+	 5QBq6vRiYV+abk+ijtzCXqcaGe5EIbczSmwgyIDF21spSJz8N+GezmNVmKCs8vwSd3
+	 ckZCO3fQ0/qVFUPWYcQ9ch1CQZY1Cp5l5eJZtjnk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Dipen Patel <dipenp@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 467/670] media: i2c: ov5647: fix power cleanup on remove
-Date: Fri, 13 Nov 2026 10:50:31 -0500
-Message-ID: <20261113153827.799560532@linuxfoundation.org>
+Subject: [PATCH 6.12 468/670] hte: tegra194-test: shut down timer before GPIO release
+Date: Fri, 13 Nov 2026 10:50:32 -0500
+Message-ID: <20261113153827.827188991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,45 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 6e81cfc38548109021ab761b94ecdd01f8753154 ]
+[ Upstream commit 30167fadbf87fa901a2fee49c30a5c5a506a43e8 ]
 
-ov5647_remove() disables runtime PM without powering off the sensor if
-it is still runtime active. pm_runtime_disable() does not invoke the
-runtime suspend callback, so the sensor can remain powered on.
+tegra_hte_test_remove() releases GPIO descriptors before stopping
+hte.timer. gpio_timer_cb() accesses hte.gpio_out and rearms the timer, so
+a callback concurrent with remove can use a released descriptor and rearm
+after teardown.
 
-If the device is not already runtime suspended, call ov5647_power_off()
-and mark the runtime PM state as suspended.
+Shut down the timer before releasing the GPIO descriptors.
+timer_shutdown_sync() waits for a running callback and prevents it from
+being rearmed.
 
-This issue was found by manual code inspection.
-
-Fixes: 089b7c70f0d8 ("media: ov5647: Use pm_runtime infrastructure")
+Fixes: 9a75a7cd03c9 ("hte: Add Tegra HTE test driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-[ sashal: adjusted context to account for the existing mutex_destroy() call ]
+Assisted-by: Codex:GPT-5
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Acked-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+[ sashal: Adjusted the deleted call from timer_delete_sync() to del_timer_sync() to match the existing API name. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5647.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hte/hte-tegra194-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov5647.c b/drivers/media/i2c/ov5647.c
-index 305677913a0c3..3e7fd8f28df3a 100644
---- a/drivers/media/i2c/ov5647.c
-+++ b/drivers/media/i2c/ov5647.c
-@@ -1481,6 +1481,10 @@ static void ov5647_remove(struct i2c_client *client)
- 	v4l2_ctrl_handler_free(&sensor->ctrls);
- 	v4l2_device_unregister_subdev(sd);
- 	pm_runtime_disable(&client->dev);
-+	if (!pm_runtime_status_suspended(&client->dev)) {
-+		ov5647_power_off(&client->dev);
-+		pm_runtime_set_suspended(&client->dev);
-+	}
- 	mutex_destroy(&sensor->lock);
+diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
+index df631b5100d23..0bec696774c17 100644
+--- a/drivers/hte/hte-tegra194-test.c
++++ b/drivers/hte/hte-tegra194-test.c
+@@ -218,10 +218,10 @@ static void tegra_hte_test_remove(struct platform_device *pdev)
+ {
+ 	(void)pdev;
+ 
++	timer_shutdown_sync(&hte.timer);
+ 	free_irq(hte.gpio_in_irq, &hte);
+ 	gpiod_put(hte.gpio_in);
+ 	gpiod_put(hte.gpio_out);
+-	del_timer_sync(&hte.timer);
  }
  
+ static struct platform_driver tegra_hte_test_driver = {
 -- 
 2.53.0
 
