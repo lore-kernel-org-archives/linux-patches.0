@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590280;
-	b=0r66oRB0+I0Sr0YjKChPZSNTgN8yq8btmztr6O56hrotweZCG/dEerybEb4H464ljnIJ
-	 uS4FSjaIFuWTmiEnUuiAI/C+b9e4h+PWzO/BrvoI3z8JxqDzPVRwy2TUyzBLmcQH+PVyO
-	 Ne5Cf0a6ccZeN8yvgegkfL/mOdveqbQYdFseLkX+0YJkOtXCDAcV/htT92VqxC84HGfpW
-	 9Ubtg3ERvJ5are/udEsQDNBhCbMah4C6OPTVS0luK1/gF+Mv4qUKML3i9jUodK1/zZ/XH
-	 TqHUcQ7E0eT4jYhpglXujKtrXm02CkYvM4rkmPZ5xoGugtKRoTxdSUv5CMUa19hebMw==
+	t=1794590281;
+	b=2/oioA6Ta+RoPjADQazwG4mOZHGh4uz4PTlLBYOF6+g1ZEgHo75iJPe8op4W14wiOXHc
+	 ikfKeOagv6ixLcE1pV3S/T0IxzSivn3eACgF63Jh2GMdQWA/hVBiRq7Wv+O+F2LTcupwa
+	 UhV8FSUJ556VQNFmuC3bSM1Od+SJawQPMJ1t14g+6TKDJ8Ss/c36o57fsq5ZrZfg4zP5Y
+	 jGtYu3oO4exKjVC9opBcQOv+4ueAAPePvMfo+qnT3yNbrQ/0QSAmMafstM3w7Uur1Y9DV
+	 Q9J1cpFsJIycZ7QVghZs1JPcGm0WphBuyFjTAdTgetlfFoH3V6kSCINoV3dkzrZ6vYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590281;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pGAwHnL0yjWJuRX0rYNnwtwvMDAgUF+p+Cbh9DmK07U=;
-	b=MmVZH4wYzcmaEWvuOKeK7irDxYuZqaPxto7uL7TFLLjLJNfoTCr2vI7CHP4MfALn7y/E
-	 u4MHlfth6WdFVvlTl82X5FaowtJ0EQFr2v3D6AfeYcvhR2MX3XsJE/+R8+7KFtFHuISYK
-	 q9zNP327v8ts2J2jLU6SVEmtrVTZDX91Kprh600rHvk7an9eM/ZylLrfQ0Y8FkhNv3tJM
-	 5WPGF1C587nx0h8UUOUO67bNZwuVxCxAV5/hbjKSzsMNUZkOi0eoBgmku5nmIjIa9KJ6Z
-	 h7VvF9rd7dfBzPdiqMEVi6voG5aMkSe37EodIdD4+hj0/nnUFuWGxvF8NAHo7QjvJcQ==
+	bh=wjth3pPIrep+kHUkINki0xk/wLKO440sTVvng7DG5Fo=;
+	b=RYcdqFGmphIsXZquTQviGEzdjjvMpTqTABC0QiyU8Spa0mkwRHvsh3Flxunxtr/K8toZ
+	 D5OvKiWr+A0/vlq6ouQLyfpRgYIQjNjTOiWsa+Ilz3tg5NwUTZLhp9Zxtu6Pd7t5VkEsx
+	 PR9Sl57VgDq0DzH2asN0rmm7C/UuFdzbwv81wOqM3IIEma/xHFfvHcR2FAGA33LOyCDGs
+	 cknsW7LOPdwtFKaUhWrLNgTLX+T1zjMCwZIR9/tujiknV3VFNpa13DBrls94kzrYc4ARf
+	 yWEQfhnKVtUIOBFhR8HZ57gqBc2AD9dIP8/ljyx7WFd6Jsp6Ju5B+Uq0vXTVg5VzI6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHfJdM6q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFn4cJ08;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CB260A5BD5;
-	Fri, 13 Nov 2026 17:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B99E606CEED;
+	Fri, 13 Nov 2026 17:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KHfJdM6q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D56441F000C4;
-	Fri, 13 Nov 2026 17:17:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TFn4cJ08
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1768E1F000C4;
+	Fri, 13 Nov 2026 17:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590280;
-	bh=pGAwHnL0yjWJuRX0rYNnwtwvMDAgUF+p+Cbh9DmK07U=;
+	s=korg; t=1794590281;
+	bh=wjth3pPIrep+kHUkINki0xk/wLKO440sTVvng7DG5Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KHfJdM6qFv74BuS4cN7bCyE+Us7SqztHJeQPJVdftuRulh8R9SVguq67/MYVjXLlB
-	 kbIsW9rfAnFiWxDRQv+rEX8obddlO1Y/hBPQjcSYzVitma1KDk/JwgBBf+QOQVBpj3
-	 mXQNQEIORlLffza6Myazxq0RZqRP5q9jT8wE6l50=
+	b=TFn4cJ087jvcxFrvwwuBKWcJd6GGniE8Z7lubEbTS87dzJZk+T+0erbXw7sQs8zCS
+	 iayz4pgJkJZ1Md7Gwx5bUcuF8xSObi7vjWoekCX9DCs+QOep6ODAsAYdwf7IpBTb1l
+	 NSfZsD3sd1PIKI6B+OOX+BzpaqHvpwvw7U2EOOBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fang Xieyan <fangxy@xiaopeng.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Xia Yan <yana06070@163.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 268/686] vringh: reject empty / undersized indirect descriptor tables
-Date: Fri, 13 Nov 2026 10:46:41 -0500
-Message-ID: <20261113153830.097967638@linuxfoundation.org>
+Subject: [PATCH 6.18 269/686] veth: keep carrier off when resizing channels with a down peer
+Date: Fri, 13 Nov 2026 10:46:42 -0500
+Message-ID: <20261113153830.131532862@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,52 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fang Xieyan <fangxy@xiaopeng.com>
+From: Xia Yan <yana06070@163.com>
 
-[ Upstream commit 60a792b97933a686316737838cd007d27963011e ]
+[ Upstream commit 2d02191779345b13de91048db441191b20264d16 ]
 
-move_to_indirect() validates an indirect descriptor table only with
-"len % sizeof(struct vring_desc)".  A descriptor flagged
-VRING_DESC_F_INDIRECT with len == 0 passes that test, so *desc_max is
-set to 0 while *descs points at the empty table.  __vringh_iov() then
-copies one struct vring_desc from descs[0] -- 16 bytes past the end of
-the table -- before the "indirect_count > desc_max" loop detection
-aborts the walk.  The over-read value is discarded when the walk aborts
-and is never used to map anything, but the access itself is out of
-bounds.
+veth_set_channels() temporarily turns carrier off while reconfiguring a
+running interface. It then turns carrier on for both ends without
+checking whether the peer is administratively up. If only one end is up,
+changing its channel counts therefore reports LOWER_UP even though the
+peer remains down.
 
-Reject any len smaller than one descriptor, alongside the existing
-stride check, so an empty table is refused with -EINVAL and no
-descriptor is ever fetched from it.
+For example, after creating a pair with two RX and TX queues per end:
 
-Fixes: f87d0fbb5798 ("vringh: host-side implementation of virtio rings.")
+  ip link set vca up
+  ethtool -L vca rx 1 tx 1
+
+vca incorrectly reports LOWER_UP while vcb is still down.
+
+Only restore carrier when the peer has IFF_UP, matching veth_open().
+The local interface is already known to be running at this point.
+
+Found during LLM-assisted source review and reproduced with a veth pair
+in network namespaces, without kernel instrumentation or error injection.
+The companion veth.sh test reproduces the two mixed up/down failures
+before the fix and passes after it.
+
+Fixes: 4752eeb3d891 ("veth: implement support for set_channel ethtool op")
 Cc: stable@vger.kernel.org
-Assisted-by: Hawkeye:GLM-5.3-flash
-Assisted-by: Qoder:Qwen3.8-Max
-Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
-Message-ID: <20260926160755.21485-1-fangxy@xiaopeng.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Signed-off-by: Xia Yan <yana06070@163.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261029024259.3700-1-yana06070@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vringh.c | 5 +++--
+ drivers/net/veth.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
-index c753a0cee240d..3391413379579 100644
---- a/drivers/vhost/vringh.c
-+++ b/drivers/vhost/vringh.c
-@@ -197,8 +197,9 @@ static int move_to_indirect(const struct vringh *vrh,
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 25cdbba5dfa9b..c2b8b9d02e357 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -1371,9 +1371,10 @@ static int veth_set_channels(struct net_device *dev,
+ 		 * to identify the range we have to disable
+ 		 */
+ 		veth_disable_range_safe(dev, new_rx_count, old_rx_count);
+-		netif_carrier_on(dev);
+-		if (peer)
++		if (peer && (peer->flags & IFF_UP)) {
++			netif_carrier_on(dev);
+ 			netif_carrier_on(peer);
++		}
  	}
  
- 	len = vringh32_to_cpu(vrh, desc->len);
--	if (unlikely(len % sizeof(struct vring_desc))) {
--		vringh_bad("Strange indirect len %u", desc->len);
-+	if (unlikely(len < sizeof(struct vring_desc) ||
-+		     len % sizeof(struct vring_desc))) {
-+		vringh_bad("Invalid indirect len %u", desc->len);
- 		return -EINVAL;
- 	}
- 
+ 	/* update XDP supported features */
 -- 
 2.53.0
 
