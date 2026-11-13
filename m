@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591318;
-	b=16dM5TwCUiS5RJannE4tq35KemDCZs9I3XjqwEkjoO0uWIN+Ki+uJi2/302Kh6ors+Hu
-	 9PP9R0Uz9DO+1CohtXrRwnwgad/KW7qR27J7CB7F/k6IvItF0oWv6kU91vbszMxPw2F23
-	 +IjCf7A3UsxrIC3/vqTBFC3aDA3s+3/xZ/EMuzHKXpc2fwLxMY00H5yXrkQzpmJvHd9i5
-	 mhfiGH1V9d+Td1GFGBFHjAcTUSDW3b6OMuMsx+wkCBk1KPwesJ0t0kYmaMryyhAbbctwL
-	 gxce8sb42OtovxXqz0pymNyDSOi24hvM1d8eCk7VvIFhXICS+VM+dHfsnXiP3XjNrug==
+	t=1794591319;
+	b=32A1bIxo0a9HMjGBQxWh6D4j/7Q2cgqS5dZgC9Ak+cyHNaHcJowT/9jbZx7rPfq88lUI
+	 hv/zEmF9WdCm0vvGgwOgeWurjfS4+0vitTsw2hSde8XpznAYWoNbzjH4PVpCzJSlLPpKr
+	 WIgU/0SRhjrooB0fZZxGOkOB6vm0tuLg+7+s71IJepd/lO8wZHZtvCawpHsi7mLfMU2j8
+	 lC75lplYOSpVsVRXlYtQ2W8B1gk5Yp7Mjs4KOSUI1ysjh/ifWliX7yDJXMPSKPG/gA4yj
+	 NS0j2hA6LPXGViX40JGb179/rSrSHpAjKlUz9sBIXNBLvBfb2z4KvJJR8jBSUL+7rww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591318;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GOM628ooP10CnJRgFe+A9KLO07kVqkrwF9B6SvBu0b8=;
-	b=ITMOp7SA1cdfBxB6g6sbsKDhtUDX9DpZdbk5mtV94pqyYv8zmVApjIpUqkS3SFF2UXMx
-	 QMGHmc+5NCjDaKM07hTDNcN/FqANS2TaiB+sjh1ohFefEWzzRyoH2wJx031CG9/HQU6W6
-	 9G/Is5onps79R/0t9eJgnvNuluBLpHxOqM0Lio8TbMuMb/sajv6SzTKhTmq3BmXjJDvTd
-	 /ncxerWdi0sr6B/UAkey3Y0/KNCxL72GjUdBOS/BW+I8OthsnXzXnCqc72Z2nu4ZrTDJN
-	 icwAF91wDP+UYUs79ym8Mgu3n5+7nVdRWbBRjyfrOVppzHi/HWITJslNEK129AcMipA==
+	bh=BWZSuIYrKuoxa9w3Be/jZh8erxZYJXBMfW8VOODpA40=;
+	b=XsJUhovCHvozP0nQgpYI8dU7QX4XZ9fH33OrIogh6aZRoRc/5TH1SVaMRZB/H9YNgG8Y
+	 DclJaCfLxpbBv29uc5fJd6tAS5RzSU2GvEDRwPMy7Fk9ONLJWnFKQaIzGzIqzjYVs44fE
+	 WOm73XlITgCr0PYNLNSQ09Nv5VmcheZaWITA+2IEHhn2YO+/ORdLGahwcSHZAoeMgr80G
+	 0nxYKJQz3OpcuByYfhS9yqeUqCe4LnIJjXtp+cxUBxyirflXSkGpLx6mwtbNq7Xn2Dlt5
+	 fT/9eeNpnEVhfqC2nyDytlEmxtAukuhkfzPQz/A0dMl4tX0qXYEl7ogyZxFDUUbXANA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIJZ9SD5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVOkptzW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993AD606B20D;
-	Fri, 13 Nov 2026 17:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD0A60776DC;
+	Fri, 13 Nov 2026 17:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIJZ9SD5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157F41F000C5;
-	Fri, 13 Nov 2026 17:35:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kVOkptzW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8961F000C9;
+	Fri, 13 Nov 2026 17:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591318;
-	bh=GOM628ooP10CnJRgFe+A9KLO07kVqkrwF9B6SvBu0b8=;
+	s=korg; t=1794591319;
+	bh=BWZSuIYrKuoxa9w3Be/jZh8erxZYJXBMfW8VOODpA40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIJZ9SD5Y3BQM8xk1I5vZyF9ggDc3TU0mRVX4MJda4rHvvyM5nt5bUux5icO70m7A
-	 FTvGqQTBPfl6OuqEsKgz3f94Smn9vK0X5siBCHaDKWKQ2sLGiOTz15nQ1tf/hJmwRE
-	 WjrmOBprSTicXQa/xNeJDL1rPA0lVnrz8wveykWI=
+	b=kVOkptzWnSVIMdg7prWf3ioUr72ftkFLWL88sHgbfUzkkqT//XTUxnAf8sT1bNIkH
+	 8rjWHfPPdLH7S9Ud6Ko4GT6h0HtE7TsiZQRzW7WAYWSOMHXQbVoPxhPc4Qpu24L1UL
+	 vXymh+Xz+vFLAdQhBej66oP/unt5BFduCr+ebXbM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Matthias Goergens <matthias.goergens@gmail.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 380/670] udf: fix preallocation discarding before an empty allocation extent
-Date: Fri, 13 Nov 2026 10:49:04 -0500
-Message-ID: <20261113153824.657130104@linuxfoundation.org>
+Subject: [PATCH 6.12 425/670] PCI: endpoint: pci-epf-vntb: Manage virtual NTB and PCI bus lifetime
+Date: Fri, 13 Nov 2026 10:49:49 -0500
+Message-ID: <20261113153826.136431763@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,72 +70,214 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthias Goergens <matthias.goergens@gmail.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 0c52750caaaccee8b0e929450fe6538ec4985722 ]
+[ Upstream commit 5cdbd6d3a3a147fa9975e35f2602cbec9a72a932 ]
 
-udf_discard_prealloc() finds the last extent of a file by peeking at
-the next one with udf_next_aext() and stopping when that returns 0.
-The peek reads into eloc and elen, and the code then uses them as the
-last extent.  But when udf_next_aext() returns 0 they hold no defined
-value: if the extent list ends in a continuation descriptor that leads
-to an empty allocation extent, they describe that continuation, i.e.
-the block of the empty allocation extent, one block long.
+The virtual PCI driver registers an ntb_dev but has no remove callback.
+Unbinding the endpoint function can therefore free BARs while the NTB
+device and its client still use them. It also leaves the virtual PCI
+devices and root bus allocated.
 
-The kernel creates such lists itself: when udf_delete_aext() removes
-the only descriptor of the last allocation extent in a list, it leaves
-that allocation extent empty and the continuation to it in place.
+Allocate an ntb_dev for each virtual PCI probe and unregister it from the
+matching remove callback. Start command processing only after registration.
+Publish the device for doorbell IRQs at the same point. During remove, stop
+the command work and drain IRQ handlers before unregistering the device.
 
-If the last extent is a preallocation, udf_discard_prealloc() deletes
-it with udf_delete_aext(), which finds the following allocation extent
-empty, so it also removes the continuation and frees that allocation
-extent's block.  udf_discard_prealloc() then frees eloc and elen: that
-block a second time, instead of the preallocated blocks.  On a space
-bitmap the preallocated blocks leak and the free block count drifts.
-On an unallocated space table the second free adds a second free
-extent for the same block, which is later handed out twice: fsx as run
-by generic/091 and generic/263 ends up with two parts of its test file
-in one block and reads back bad data.
+Retain the root bus returned by pci_scan_bus() so it can be removed on
+unbind. Unregister the virtual PCI driver before releasing endpoint
+resources. Stop and remove the root bus under the PCI rescan/remove lock,
+then release its host bridge.
 
-Peek into separate variables, so that eloc and elen keep the last
-extent that udf_next_aext() returned with 1.
-
-Fixes: cfe4c1b25dd6 ("udf: Fix preallocation discarding at indirect extent boundary")
-Cc: stable@vger.kernel.org
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
-Link: https://patch.msgid.link/480eccd1264a4cea5226fc36ed108931b2c403fb.1793349907.git.matthias.goergens@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Cc: stable@vger.kernel.org # 6.0+
+Link: https://patch.msgid.link/20260901063238.631166-3-den@valinux.co.jp
+[ sashal: adapted NTB pointer changes to the existing polling doorbell implementation. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/truncate.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 69 +++++++++++++++----
+ 1 file changed, 55 insertions(+), 14 deletions(-)
 
-diff --git a/fs/udf/truncate.c b/fs/udf/truncate.c
-index da5a61306390c..85bbd6fa2a302 100644
---- a/fs/udf/truncate.c
-+++ b/fs/udf/truncate.c
-@@ -124,8 +124,8 @@ void udf_discard_prealloc(struct inode *inode)
- {
- 	struct extent_position epos = {};
- 	struct extent_position prev_epos = {};
--	struct kernel_lb_addr eloc;
--	uint32_t elen;
-+	struct kernel_lb_addr eloc, tmpeloc;
-+	uint32_t elen, tmpelen;
- 	uint64_t lbcount = 0;
- 	int8_t etype = -1;
- 	struct udf_inode_info *iinfo = UDF_I(inode);
-@@ -141,7 +141,8 @@ void udf_discard_prealloc(struct inode *inode)
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 963a1a1f983db..710bddc30cdfc 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -116,7 +116,7 @@ struct epf_ntb_ctrl {
+ } __packed;
  
- 	/* Find the last extent in the file */
- 	while (1) {
--		ret = udf_next_aext(inode, &epos, &eloc, &elen, &tmpetype, 0);
-+		ret = udf_next_aext(inode, &epos, &tmpeloc, &tmpelen,
-+				    &tmpetype, 0);
- 		if (ret < 0)
- 			goto out;
- 		if (ret == 0)
+ struct epf_ntb {
+-	struct ntb_dev ntb;
++	struct ntb_dev *ntb;
+ 	struct pci_epf *epf;
+ 	struct config_group group;
+ 
+@@ -142,10 +142,15 @@ struct epf_ntb {
+ 	void __iomem *vpci_mw_addr[MAX_MW];
+ 
+ 	struct delayed_work cmd_handler;
++	struct pci_bus *vpci_bus;
+ };
+ 
+ #define to_epf_ntb(epf_group) container_of((epf_group), struct epf_ntb, group)
+-#define ntb_ndev(__ntb) container_of(__ntb, struct epf_ntb, ntb)
++
++static struct epf_ntb *ntb_ndev(struct ntb_dev *ntb)
++{
++	return ntb->pdev->sysdata;
++}
+ 
+ static struct pci_epf_header epf_ntb_header = {
+ 	.vendorid	= PCI_ANY_ID,
+@@ -171,7 +176,7 @@ static int epf_ntb_link_up(struct epf_ntb *ntb, bool link_up)
+ 	else
+ 		ntb->reg->link_status &= ~LINK_STATUS_UP;
+ 
+-	ntb_link_event(&ntb->ntb);
++	ntb_link_event(ntb->ntb);
+ 	return 0;
+ }
+ 
+@@ -259,7 +264,7 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
+ 	for (i = 1; i < ntb->db_count; i++) {
+ 		if (ntb->epf_db[i]) {
+ 			ntb->db |= 1 << (i - 1);
+-			ntb_db_event(&ntb->ntb, i);
++			ntb_db_event(ntb->ntb, i);
+ 			ntb->epf_db[i] = 0;
+ 		}
+ 	}
+@@ -760,7 +765,6 @@ static int epf_ntb_epc_init(struct epf_ntb *ntb)
+ 	}
+ 
+ 	INIT_DELAYED_WORK(&ntb->cmd_handler, epf_ntb_cmd_handler);
+-	queue_work(kpcintb_workqueue, &ntb->cmd_handler.work);
+ 
+ 	return 0;
+ 
+@@ -1009,6 +1013,7 @@ static int vpci_scan_bus(void *sysdata)
+ 		pr_err("create pci bus failed\n");
+ 		return -EINVAL;
+ 	}
++	ndev->vpci_bus = vpci_bus;
+ 
+ 	pci_bus_add_devices(vpci_bus);
+ 
+@@ -1053,7 +1058,7 @@ static int vntb_epf_mw_set_trans(struct ntb_dev *ndev, int pidx, int idx,
+ 	int ret;
+ 	struct device *dev;
+ 
+-	dev = &ntb->ntb.dev;
++	dev = &ndev->dev;
+ 	barno = ntb->epf_ntb_bar[BAR_MW0 + idx];
+ 	epf_bar = &ntb->epf->bar[barno];
+ 	epf_bar->phys_addr = addr;
+@@ -1153,7 +1158,7 @@ static int vntb_epf_peer_db_set(struct ntb_dev *ndev, u64 db_bits)
+ 	ret = pci_epc_raise_irq(ntb->epf->epc, func_no, vfunc_no,
+ 				PCI_IRQ_MSI, interrupt_num + 1);
+ 	if (ret)
+-		dev_err(&ntb->ntb.dev, "Failed to raise IRQ\n");
++		dev_err(&ntb->epf->dev, "Failed to raise IRQ\n");
+ 
+ 	return ret;
+ }
+@@ -1236,13 +1241,18 @@ static const struct ntb_dev_ops vntb_epf_ops = {
+ 
+ static int pci_vntb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+-	int ret;
+ 	struct epf_ntb *ndev = (struct epf_ntb *)pdev->sysdata;
+ 	struct device *dev = &pdev->dev;
++	struct ntb_dev *ntb;
++	int ret;
+ 
+-	ndev->ntb.pdev = pdev;
+-	ndev->ntb.topo = NTB_TOPO_NONE;
+-	ndev->ntb.ops =  &vntb_epf_ops;
++	ntb = devm_kzalloc(dev, sizeof(*ntb), GFP_KERNEL);
++	if (!ntb)
++		return -ENOMEM;
++
++	ntb->pdev = pdev;
++	ntb->topo = NTB_TOPO_NONE;
++	ntb->ops = &vntb_epf_ops;
+ 
+ 	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
+ 	if (ret) {
+@@ -1250,16 +1260,33 @@ static int pci_vntb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		return ret;
+ 	}
+ 
+-	ret = ntb_register_device(&ndev->ntb);
++	ret = ntb_register_device(ntb);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register NTB device\n");
+ 		return ret;
+ 	}
+ 
++	/* Publish after ntb_register_device() succeeds */
++	smp_store_release(&ndev->ntb, ntb);
++	queue_delayed_work(kpcintb_workqueue, &ndev->cmd_handler, 0);
++
+ 	dev_dbg(dev, "PCI Virtual NTB driver loaded\n");
+ 	return 0;
+ }
+ 
++static void pci_vntb_remove(struct pci_dev *pdev)
++{
++	struct epf_ntb *ndev = pdev->sysdata;
++	struct ntb_dev *ntb;
++
++	/* Stop the work reader */
++	cancel_delayed_work_sync(&ndev->cmd_handler);
++
++	ntb = xchg(&ndev->ntb, NULL);
++
++	ntb_unregister_device(ntb);
++}
++
+ static struct pci_device_id pci_vntb_table[] = {
+ 	{
+ 		PCI_DEVICE(0xffff, 0xffff),
+@@ -1271,6 +1298,7 @@ static struct pci_driver vntb_pci_driver = {
+ 	.name           = "pci-vntb",
+ 	.id_table       = pci_vntb_table,
+ 	.probe          = pci_vntb_probe,
++	.remove         = pci_vntb_remove,
+ };
+ 
+ /* ============ PCIe EPF Driver Bind ====================*/
+@@ -1351,12 +1379,25 @@ static int epf_ntb_bind(struct pci_epf *epf)
+  */
+ static void epf_ntb_unbind(struct pci_epf *epf)
+ {
++	struct pci_host_bridge *bridge;
+ 	struct epf_ntb *ntb = epf_get_drvdata(epf);
+ 
++	pci_unregister_driver(&vntb_pci_driver);
++
++	if (ntb->vpci_bus) {
++		bridge = to_pci_host_bridge(ntb->vpci_bus->bridge);
++
++		pci_lock_rescan_remove();
++		pci_stop_root_bus(ntb->vpci_bus);
++		pci_remove_root_bus(ntb->vpci_bus);
++		ntb->vpci_bus = NULL;
++		pci_unlock_rescan_remove();
++
++		pci_free_host_bridge(bridge);
++	}
++
+ 	epf_ntb_epc_cleanup(ntb);
+ 	epf_ntb_config_spad_bar_free(ntb);
+-
+-	pci_unregister_driver(&vntb_pci_driver);
+ }
+ 
+ // EPF driver probe
 -- 
 2.53.0
 
