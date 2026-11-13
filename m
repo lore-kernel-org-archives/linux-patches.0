@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591091;
-	b=hEgBWQkQWJZcjOx5fS/gXKp3v0CjnKdXkR4ISkU5otjbBvKreG5hLBVoiOFSAuHfE98t
-	 JeZKw1owP1tTdad/VOAJPXWFYGHReKQGmBuiMQwVUo3FIYk5rk1vBVdPN7wEpwfo5cOqy
-	 HiJUkhc3fNdnJz6TQWkbGq2fKw1YZYfema5tr7+unQFG3gCp7qOd2uwdFOILUqymdpKHL
-	 7bnhKrSWACogPYNiG6TTMqFaCG0YfQCXDD7GI3wA/wRcvwjrIQ8sgDML7eAdmihxJ4g/0
-	 SELUWPgiqgr0Z7VPbFeJ9NHp7q/BRTar7HOs3srI2mlRZLOyfQpp0+GXd+UEB5T4gvw==
+	t=1794591092;
+	b=UXekH3wUd1vefGx3Yjs1MVvsg+b3DDkaGY8PNMWpGi/AXw4RqIbiuH/0ybpMstJQ7xZY
+	 9DRtYbT0sjxXUbMxZmsWLyj0dd0YE34bR8AS62ZkFRj7tSwUPnZX4uqmdnxhSgotZ2laj
+	 a+dUr1VoYoH6VEtZeSCb31t8ds48lxfCMORODemJSXIlVWrSJ8iXSy7b/29dgNihrSMaw
+	 Rv3WFRWvRsJjfOqXeh2IzFirfcFwUXOM3sMGDygItDZZ7+I0LTNdVZMNoO0EcI0uq2fTV
+	 m+chmhnum86bOfB/pYkt9gQmxKAFfYuoUNlKtwxN17KYufmPgeGV2C1q4W7hYNzn2bA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591091;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591092;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vtVLlIuExrPO0Nmz+xKjZrDv+pHV/KXD98hKuv1CZAY=;
-	b=p6tMZpi7jh+6XmWKrokkc31ZKeMbjimcc7vr3hMYRNstpSEtQKfGNy+FTX50sGWXx6lK
-	 Hi8UcQzB8GcSkISeFoi0PCF66EOoKE4G61N0vIiJImtzvX0pNTf2Jlm9LpBrUHuVmTXZH
-	 Rhgx9V+DhEvEWdPsKQDELgVJoBqfEybFKbGpkIAKWq9AOVT920qJhlFHTwT9OqKMa1qr4
-	 bY8Gp5uw3t5WsAJMhbZoa8ggg3Ea7yDg5Er52hnzJQBSA66stzIEkzlKR6E0SlvK51Jd5
-	 eb/Z8LQoDi6I9JiZX4LMHsS0H/2C8L4rRX/6VA6x1UjiWL0FnIAso5p8CJ/xPgXAjPw==
+	bh=RmQeNPJQkd2U7eTdKKiZHY8AdpX01kbUnxDBUA+HVh0=;
+	b=NcQv3hUqXkcQWv9HAm1+BxBBxveKdqvRgc+FiCYzSwe8utsFB1XoRIKDtAxV3ianIMpo
+	 pGQ+aQhyJBxltQs0ahgwMspYradXxqnU96tmj0sWfdZ8/nwcmeqjFUKQW53TgJtw03Edw
+	 LE59j9jz2U8sUZNdddBZVBk75jyK1RGtmYMWiUgwzNag9q1I0LY/a1rGdRYKNPe/Bacgz
+	 eMMwhTcTach8oCRxGCYG8n0zis5vAik83epvgdiMzr548IfC49VxcIoRp++XNL2tFvFs4
+	 3Woh016snE3oYhpj8pCuKDUCrO+2VAjPsGdeKb5llkzmKR2rU2JCVFhLrRSeEn3Cr3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cyS8AWJl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EgJcA+oK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C76606B355;
-	Fri, 13 Nov 2026 17:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937C6606A880;
+	Fri, 13 Nov 2026 17:31:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cyS8AWJl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1046C1F000C5;
-	Fri, 13 Nov 2026 17:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EgJcA+oK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A701F000C4;
+	Fri, 13 Nov 2026 17:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591091;
-	bh=vtVLlIuExrPO0Nmz+xKjZrDv+pHV/KXD98hKuv1CZAY=;
+	s=korg; t=1794591092;
+	bh=RmQeNPJQkd2U7eTdKKiZHY8AdpX01kbUnxDBUA+HVh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cyS8AWJlOycel6GsP1J0bDakdH727As7xkpoODzSrxmX6wa+c+Z+b9Sd1X1vmyhWm
-	 jhVWtirSx8bNWapaZBH18w2Ii1jGxDooq1V/5ohbaQJWgU0XDlPU2UhtVTwN1U/b5/
-	 CsqIrlS1PwAeE4I+Z/l1lgwCAvkRvRPP81MZS9bc=
+	b=EgJcA+oKqEMPd3wCtYmJi3Rx4nFPZ3tErVjJ8nbc4jgE5pu59IHDTSsRKyPSjt4Ee
+	 YfFM1ztvirkV2W4wG5YRYUj0Yvai9c0NRpq2ymBbbmGayLPAdPglO6dGxVthNs96oC
+	 9nZ6cjZP3zVrnhy9+r7DlWiuj5q3vYDwfiMQO2Ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Xia Yan <yana06070@163.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Baek Kyu, Kim" <pocj8ur4in@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 243/670] veth: keep carrier off when resizing channels with a down peer
-Date: Fri, 13 Nov 2026 10:46:47 -0500
-Message-ID: <20261113153820.079989592@linuxfoundation.org>
+Subject: [PATCH 6.12 244/670] hwmon: (corsair-cpro) Cache fan target only after a successful command
+Date: Fri, 13 Nov 2026 10:46:48 -0500
+Message-ID: <20261113153820.113764991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,60 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xia Yan <yana06070@163.com>
+From: Baek Kyu, Kim <pocj8ur4in@gmail.com>
 
-[ Upstream commit 2d02191779345b13de91048db441191b20264d16 ]
+[ Upstream commit e2c26431b4e47892378582a414b4bbaa9edf1798 ]
 
-veth_set_channels() temporarily turns carrier off while reconfiguring a
-running interface. It then turns carrier on for both ends without
-checking whether the peer is administratively up. If only one end is up,
-changing its channel counts therefore reports LOWER_UP even though the
-peer remains down.
+set_target() updates the cached fan target before sending the command.
+If the command fails, subsequent fanN_target reads report the failed
+request instead of the previous value. For example, after successfully
+setting 1200 RPM, a rejected request for 1800 RPM returns an error but
+leaves fanN_target reporting 1800. A failed request also replaces
+-ENODATA when no target has been successfully set.
 
-For example, after creating a pair with two RX and TX queues per end:
+Update the target cache under the existing mutex only after
+send_usb_cmd() succeeds, as set_pwm() already does when invalidating
+the target. Preserve the previous cached value and return the original
+error on failure.
 
-  ip link set vca up
-  ethtool -L vca rx 1 tx 1
-
-vca incorrectly reports LOWER_UP while vcb is still down.
-
-Only restore carrier when the peer has IFF_UP, matching veth_open().
-The local interface is already known to be running at this point.
-
-Found during LLM-assisted source review and reproduced with a veth pair
-in network namespaces, without kernel instrumentation or error injection.
-The companion veth.sh test reproduces the two mixed up/down failures
-before the fix and passes after it.
-
-Fixes: 4752eeb3d891 ("veth: implement support for set_channel ethtool op")
+Fixes: 40c3a4454225 ("hwmon: add Corsair Commander Pro driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Signed-off-by: Xia Yan <yana06070@163.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20261029024259.3700-1-yana06070@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Baek Kyu, Kim <pocj8ur4in@gmail.com>
+Link: https://patch.msgid.link/20261020160941.36787-1-pocj8ur4in@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hwmon/corsair-cpro.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 564bf57bc8979..22387f66bf90d 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1371,9 +1371,10 @@ static int veth_set_channels(struct net_device *dev,
- 		 * to identify the range we have to disable
- 		 */
- 		veth_disable_range_safe(dev, new_rx_count, old_rx_count);
--		netif_carrier_on(dev);
--		if (peer)
-+		if (peer && (peer->flags & IFF_UP)) {
-+			netif_carrier_on(dev);
- 			netif_carrier_on(peer);
-+		}
- 	}
+diff --git a/drivers/hwmon/corsair-cpro.c b/drivers/hwmon/corsair-cpro.c
+index 17bb080eb9bb6..1c152a6db3806 100644
+--- a/drivers/hwmon/corsair-cpro.c
++++ b/drivers/hwmon/corsair-cpro.c
+@@ -215,10 +215,11 @@ static int set_target(struct ccp_device *ccp, int channel, long val)
+ 	int ret;
  
- 	/* update XDP supported features */
+ 	val = clamp_val(val, 0, 0xFFFF);
+-	ccp->target[channel] = val;
+ 
+ 	mutex_lock(&ccp->mutex);
+ 	ret = send_usb_cmd(ccp, CTL_SET_FAN_TARGET, channel, val >> 8, val);
++	if (!ret)
++		ccp->target[channel] = val;
+ 
+ 	mutex_unlock(&ccp->mutex);
+ 	return ret;
 -- 
 2.53.0
 
