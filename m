@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591410;
-	b=2sER21l/W85UV3FKa9VFifs4BjMCrjzZ21Lr7LJt8FIk4EaHfO7v6BHnMLbzvUZFJkgO
-	 JkxoEZMfDTlEmUx+/H8QJ+PW+3FMQajXyuvJkUal1OjzrnjogRBJ/hohfhziirr1RgCxR
-	 ZTWILRKfs0v1TXb2XlRr3KbJDhrtDpfzwmphx/+auTRlfqWqJWLBiIkbwBRWCZIFtQjTc
-	 9dH45hZlAuCBpgpJGEAv0i2lJ7/swESqTRKbyGLq5sVJAIyqUp8EXn7A6H5Yi6+l0tQCr
-	 LDxLNRquMruNQnFtQJQawIjDzqRzcWqzLvwaKdBW84VvHmFOtyUnNf4sXTwHy2Yjlkw==
+	t=1794591411;
+	b=vg7MiNmTMbV2+LAOglP17QlLn9F9Bh9CGkLUNAtXe9n9zwOwrLNquUXeojagDPBYekgv
+	 U4MdlPaAqga6GCMuhN71YCC9Jlstl98S2Na/QQ1saclh1Z+CFTBCCaZhxgBEAXutFfohY
+	 2lszPY3JIDGL3ZR5kWz4WncXRWMb1MwvhlM2yUFxPB12Ud0RSV8kmDRj+sEjSB/JyAeTP
+	 9jHZ7UEZgTi7ocuBct79xAa+/fraeuoUg7doxxG+A8U4dgnXeVYNGP7IKSrF1RKGG13l4
+	 D15X/uXOL+TVrTIqKNNmRnSfOPaE6gohJC7JDAacFj/OWWMFc+Rzs7SQdEL7IrVMaVQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591410;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mj+EdbtVWPXWJLWpuf7LLQSk5fnJMa8VYRZd7acedPE=;
-	b=pe0U35jQeIfCoWUVv7TIk+fV8dWllc1bNA4Zpzu9prm8nj5q/lpCOsng9ak7/8f+7hrF
-	 m4SgyeuHTzHI6EPSQsklBWX85If9O4vFFnxPvx0oU5tPvYwhWkWC8v8VhrSktBBj1/XGg
-	 PFg0HBLlLSbMavjrCqZ1I1K02OEZS01rajq/DGxO8MPXc93SeNG7vwPBJi4cXk8vaEZx1
-	 ulm2Ft2io1LPXMSjJab5SSvjs/LWIVHkI0TamGw/th6HF14ONE9O4pgsBkbZX3BwJ4BAI
-	 Y5I/hwVHbaZQnLa1gWQ2DPe1oZp+tjU2pOZBNoPjfm1XPsx7A4sV6Huj3jZDCVLQWeQ==
+	bh=rVnzQtKfFp0cRTMA5P3Gr/qBPRVa3vY5VGHFnftNwbE=;
+	b=kmiM7tiBsyM3fANcb5cOgwhQrSaEEHGhwmLAZmwqAio4Fu6xs349s33oVsSTmXp+ZyQD
+	 KItKcqi5WkVY1A1H1I6YTAjR2m3Tt39D/TDrkaJ1Q+enrbQqk1iw9WQ8OOxW5gHhYfSJ1
+	 uNuCcTAQQqzuAvBayrnQz+2LCgaLPYVagEcIjyN6KKt1zaQv0ijx41UBhyRqY2BYwncGP
+	 0sGHlOsRxKbwUo0S+mex0d28zm1/VQ2gwhQ3KPO2oAMFia29A1WfxYwwfaNY7IHnLz2ZY
+	 rPtqeatkfYvd11DBAa2tqJWaBmgg7YQ5INwduVurUJy4RVTbRe9VZbwNds+ILdmlDNg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9XpB3Dl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfRycCLE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A826079D6B;
-	Fri, 13 Nov 2026 17:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BE56079D5B;
+	Fri, 13 Nov 2026 17:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v9XpB3Dl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37B01F000C4;
-	Fri, 13 Nov 2026 17:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfRycCLE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA121F000C4;
+	Fri, 13 Nov 2026 17:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591410;
-	bh=mj+EdbtVWPXWJLWpuf7LLQSk5fnJMa8VYRZd7acedPE=;
+	s=korg; t=1794591411;
+	bh=rVnzQtKfFp0cRTMA5P3Gr/qBPRVa3vY5VGHFnftNwbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v9XpB3DlyMW7tjtRD8TTmrUwztXMUEVdB7yoSrG8SaQ8+UL+KybuXTx48PdrpD7n6
-	 qtwrzd6rMgqSC3Vh04B7Y23sitloG7azwhheViOp3kidpDTbhlEJB7BzumtfwjrLZ4
-	 6Sm6pvKZvvYRsaqjwcpCQF54a4zF3PX3lIl+Va78=
+	b=VfRycCLE9hC/0NkHgW1QeKpJ7oOMntXh/K9mGMTcgZsHdzq7QsCLS+PV6BGYPsubO
+	 /VTdVP4Jj8wMpwSiJIJI5nG8jH8JKBzIaPTHCD/+xit4Ky4I1KEUrB9L7uNR+anVdF
+	 izfYS1x6x/Kn2K6iXUV7U8qfGztG70EQZngK5Sdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fab Stz <fabstz-it@yahoo.fr>,
-	Marek Czernohous <marek@czernohous.de>,
-	Lyude Paul <lyude@redhat.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jan Kara <jack@suse.cz>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Stefan Roesch <shr@devkernel.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 505/670] drm/nouveau/pci: use config-space MSI rearm on MCP79/MCP7A (NVAC)
-Date: Fri, 13 Nov 2026 10:51:09 -0500
-Message-ID: <20261113153829.061857917@linuxfoundation.org>
+Subject: [PATCH 6.12 506/670] mm/page-writeback: avoid 32-bit overflow in dirty threshold shares
+Date: Fri, 13 Nov 2026 10:51:10 -0500
+Message-ID: <20261113153829.094380406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,145 +72,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Czernohous <marek@czernohous.de>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-commit 354d47fb3f35461b7f942831c1b2a7105e92b57f upstream.
+[ Upstream commit 9597c2056e05bd79df9d343a9b42e84a54de1c52 ]
 
-NVAC (MCP79/MCP7A) uses g94_pci_func, whose .msi_rearm is
-nv40_pci_msi_rearm(): a re-arm write through the MMIO mirror of PCI
-config space.  On this IGP that path is unreliable; when a re-arm is
-missed the interrupt line stays dead, command submission times out and
-the GPU appears hung until reboot.  On an Apple Mac mini (early 2009,
-MCP79, boot0 0x0ac080b1) this showed as sporadic fifo timeouts and GPU
-hangs under load unless MSI was disabled via config=NvMSI=0.
+The ratios used by __wb_calc_thresh() are scaled to parts per million, but
+the threshold and ratio operands are unsigned long.  On 32-bit kernels,
+their multiplication can wrap before the result is assigned to u64.
 
-Give NVAC its own pci func that re-arms through real PCI config space
-(nv46_pci_msi_rearm) instead.  This follows existing precedent: nv46.c
-documents the MMIO-mirror re-arm as broken on several related parts,
-and commit 5112abc6a433 ("drm/nouveau/pci/g92: Fix rearm") fixed g92
-the same way while moving the remaining chipsets, NVAC included, into
-the newly added shared g94 table, where NVAC stayed on the MMIO path.
-This change completes that fix for NVAC.  The sibling IGP NVAA
-(MCP77/MCP78) has MSI disabled entirely as "reported broken" in
-nvkm_pci_new_(); NVAC works correctly once the re-arm goes through
-config space, so disabling MSI is not necessary.
+For example, with a threshold of 25600 pages and the default maximum ratio
+of 1000000, wb_max_thresh becomes 4125 pages instead of 25600.  The shared
+threshold and minimum share calculations can overflow in the same way,
+producing incorrect per-writeback dirty limits.
 
-Only NVAC is switched: that is the hardware this has been validated
-on.  The other users of g94_pci_func (G94/G96/G98/GT2xx and the
-MCP77/MCP89 IGPs) keep their current behavior; MCP77 and MCP89
-plausibly want the same treatment but were not tested.
+Use a u64 threshold for the three ratio multiplications and div_u64() to
+retain the existing division order and rounding.
 
-Tested on the Mac mini as a daily driver for two months with MSI
-enabled and zero fifo timeouts.  Independently confirmed stable on an
-iMac9,1 (MCP79) running 6.12.90 with the v1 form of this change (the
-same one-line functional switch, applied to that kernel's g94
-implementation).
+In 6.12, __wb_calc_thresh() has no freerun adjustment here. Widen the
+threshold for the ratio calculations and compute the maximum share once
+for the existing clamp.
 
-Fixes: 5112abc6a433 ("drm/nouveau/pci/g92: Fix rearm")
-Cc: <stable@vger.kernel.org> # v6.16+
-Tested-by: Fab Stz <fabstz-it@yahoo.fr>
-Assisted-by: Claude:claude-opus-4-7
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/178688574401.522643.12812428444459119913@gmail.com
-[ Backport note: linux-6.12.y predates commit 2f89bb3264af
-  ("drm/nouveau/pci: add PRI address of config space mirror to
-  nvkm_pci_func"), so struct nvkm_pci_func has no .cfg member here.
-  mcp79_pci_func uses the nv40 .rd32/.wr08/.wr32 accessors instead,
-  exactly as g94_pci_func does in this tree, and still differs from
-  g94_pci_func only in .msi_rearm. ]
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: Marek Czernohous <marek@czernohous.de>
+Link: https://lore.kernel.org/20261021060654.27855-1-dennylin0707@gmail.com
+Fixes: ae82291e9ca4 ("mm: use part per 1000000 for bdi ratios")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Stefan Roesch <shr@devkernel.io>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/nouveau/include/nvkm/subdev/pci.h |  1 +
- .../gpu/drm/nouveau/nvkm/engine/device/base.c |  2 +-
- .../gpu/drm/nouveau/nvkm/subdev/pci/Kbuild    |  1 +
- .../gpu/drm/nouveau/nvkm/subdev/pci/mcp79.c   | 36 +++++++++++++++++++
- 4 files changed, 39 insertions(+), 1 deletion(-)
- create mode 100644 drivers/gpu/drm/nouveau/nvkm/subdev/pci/mcp79.c
+ mm/page-writeback.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/include/nvkm/subdev/pci.h b/drivers/gpu/drm/nouveau/include/nvkm/subdev/pci.h
-index 3c103101d5fcc..f21d6f1cf4fee 100644
---- a/drivers/gpu/drm/nouveau/include/nvkm/subdev/pci.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/subdev/pci.h
-@@ -46,6 +46,7 @@ int nv4c_pci_new(struct nvkm_device *, enum nvkm_subdev_type, int inst, struct n
- int g84_pci_new(struct nvkm_device *, enum nvkm_subdev_type, int inst, struct nvkm_pci **);
- int g92_pci_new(struct nvkm_device *, enum nvkm_subdev_type, int inst, struct nvkm_pci **);
- int g94_pci_new(struct nvkm_device *, enum nvkm_subdev_type, int inst, struct nvkm_pci **);
-+int mcp79_pci_new(struct nvkm_device *, enum nvkm_subdev_type, int inst, struct nvkm_pci **);
- int gf100_pci_new(struct nvkm_device *, enum nvkm_subdev_type, int inst, struct nvkm_pci **);
- int gf106_pci_new(struct nvkm_device *, enum nvkm_subdev_type, int inst, struct nvkm_pci **);
- int gk104_pci_new(struct nvkm_device *, enum nvkm_subdev_type, int inst, struct nvkm_pci **);
-diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c b/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
-index 9093d89b16f37..6f13b8b0fc776 100644
---- a/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
-@@ -1237,7 +1237,7 @@ nvac_chipset = {
- 	.mc       = { 0x00000001, g98_mc_new },
- 	.mmu      = { 0x00000001, mcp77_mmu_new },
- 	.mxm      = { 0x00000001, nv50_mxm_new },
--	.pci      = { 0x00000001, g94_pci_new },
-+	.pci      = { 0x00000001, mcp79_pci_new },
- 	.therm    = { 0x00000001, g84_therm_new },
- 	.timer    = { 0x00000001, nv41_timer_new },
- 	.volt     = { 0x00000001, nv40_volt_new },
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/pci/Kbuild b/drivers/gpu/drm/nouveau/nvkm/subdev/pci/Kbuild
-index 174bdf9952715..c5911d7d08ea1 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/pci/Kbuild
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/pci/Kbuild
-@@ -9,6 +9,7 @@ nvkm-y += nvkm/subdev/pci/nv4c.o
- nvkm-y += nvkm/subdev/pci/g84.o
- nvkm-y += nvkm/subdev/pci/g92.o
- nvkm-y += nvkm/subdev/pci/g94.o
-+nvkm-y += nvkm/subdev/pci/mcp79.o
- nvkm-y += nvkm/subdev/pci/gf100.o
- nvkm-y += nvkm/subdev/pci/gf106.o
- nvkm-y += nvkm/subdev/pci/gk104.o
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/pci/mcp79.c b/drivers/gpu/drm/nouveau/nvkm/subdev/pci/mcp79.c
-new file mode 100644
-index 0000000000000..98d85a856b888
---- /dev/null
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/pci/mcp79.c
-@@ -0,0 +1,36 @@
-+// SPDX-License-Identifier: MIT
-+/*
-+ * Copyright 2026 Marek Czernohous
-+ *
-+ * MCP79/MCP7A (NVAC): like g94, but MSI re-arm goes through real PCI
-+ * config space.  The MMIO-mirror re-arm is unreliable on this IGP and a
-+ * missed re-arm kills the interrupt line (see the nv46 comment; g92
-+ * already re-arms through config space for the same reason).
-+ */
-+#include "priv.h"
-+
-+static const struct nvkm_pci_func
-+mcp79_pci_func = {
-+	.init = g84_pci_init,
-+	.rd32 = nv40_pci_rd32,
-+	.wr08 = nv40_pci_wr08,
-+	.wr32 = nv40_pci_wr32,
-+	.msi_rearm = nv46_pci_msi_rearm,
-+
-+	.pcie.init = g84_pcie_init,
-+	.pcie.set_link = g84_pcie_set_link,
-+
-+	.pcie.max_speed = g84_pcie_max_speed,
-+	.pcie.cur_speed = g84_pcie_cur_speed,
-+
-+	.pcie.set_version = g84_pcie_set_version,
-+	.pcie.version = g84_pcie_version,
-+	.pcie.version_supported = g92_pcie_version_supported,
-+};
-+
-+int
-+mcp79_pci_new(struct nvkm_device *device, enum nvkm_subdev_type type, int inst,
-+	      struct nvkm_pci **ppci)
-+{
-+	return nvkm_pci_new_(&mcp79_pci_func, device, type, inst, ppci);
-+}
+diff --git a/mm/page-writeback.c b/mm/page-writeback.c
+index bfb3f903bb6d5..89b2e4a290b59 100644
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -917,7 +917,9 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+ 				      unsigned long thresh)
+ {
+ 	struct wb_domain *dom = dtc_dom(dtc);
++	u64 threshold = thresh;
+ 	u64 wb_thresh;
++	u64 wb_max_thresh;
+ 	unsigned long numerator, denominator;
+ 	unsigned long wb_min_ratio, wb_max_ratio;
+ 
+@@ -927,15 +929,17 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+ 	fprop_fraction_percpu(&dom->completions, dtc->wb_completions,
+ 			      &numerator, &denominator);
+ 
+-	wb_thresh = (thresh * (100 * BDI_RATIO_SCALE - bdi_min_ratio)) / (100 * BDI_RATIO_SCALE);
++	wb_thresh = div_u64(threshold * (100 * BDI_RATIO_SCALE - bdi_min_ratio),
++			    100 * BDI_RATIO_SCALE);
+ 	wb_thresh *= numerator;
+ 	wb_thresh = div64_ul(wb_thresh, denominator);
+ 
+ 	wb_min_max_ratio(dtc->wb, &wb_min_ratio, &wb_max_ratio);
+ 
+-	wb_thresh += (thresh * wb_min_ratio) / (100 * BDI_RATIO_SCALE);
+-	if (wb_thresh > (thresh * wb_max_ratio) / (100 * BDI_RATIO_SCALE))
+-		wb_thresh = thresh * wb_max_ratio / (100 * BDI_RATIO_SCALE);
++	wb_thresh += div_u64(threshold * wb_min_ratio, 100 * BDI_RATIO_SCALE);
++	wb_max_thresh = div_u64(threshold * wb_max_ratio, 100 * BDI_RATIO_SCALE);
++	if (wb_thresh > wb_max_thresh)
++		wb_thresh = wb_max_thresh;
+ 
+ 	return wb_thresh;
+ }
 -- 
 2.53.0
 
