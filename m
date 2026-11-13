@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585429;
-	b=XIHYBtObfVjIJBFKxtfLDuAlrMhr0sjJV8aKH5jRQpWwfX7hSeAnRrKstWWkQiNKJZFY
-	 m3y4gSI7RMo/Pc22RdK2r5FlYjKumiOGVHRSJ8PiaxOSi7mj18mQj/MEMsbV293TeG7JK
-	 nT8k0MbAvNfmch/+wLsWEoV09g5NRmXsou9LJT0TM9RzgP3IK0PdBX6pcFg6Ttfspa8nN
-	 2AJVXKr1Dc9bKlM+YBoOLADQ+iZoE0b8lk7Esv6F7yadbb5WTF5E4W+ChCL3URHG/HZl/
-	 DU/XIlOIbKBqOlzz076SFT2uf3YWgdV/fkJ21zcAxsCL8lNG03agN257jx1EwlrMjLg==
+	t=1794585430;
+	b=iHagE4iNbrQAl49/PbT+lh+09kn/2SOWrNYgdRNWAFWlTwXHRqE+jjMaAWXpdA6NyTaI
+	 Dqgo672vK3LEqvr0LG7zk9WwWNQmypFMusF45QTKygMqSfkPH0j9AFmU0aHOYrN3QX8o8
+	 Eqn+Yg3Y3r13BvX0FKWlPFiEcNJETtlHRWCXwZdr4FTfLP8avWdbXpXEbTXmFHs9sx2sQ
+	 EEJtD86yOuL7txb7zsdT8XPvhlIju9vV71BxbOZCETUEkVesKONE4wwTjlr5KrnQSvNUa
+	 Rxfijedo3E8XF9ux55FnFa7MB2Xk8hGWc6hQHSp8+X/HNQptE9VDR24KZW+AAtVZ7Eg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585429;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585430;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=NIMOP0D3ufWVHTckAtuiUBgDavaSkuwm5+r7jwCWVkI=;
-	b=zU3TjWerbmYW8KbCWcEaDUM1GBA3GOfWdNlZYAdiNBVjtV63SGgIIe2WSreleBnpWBPf
-	 iqOyB1hQ9ObfMRYlD8SJOygEEBQiquVcjOIacFYt13FowKLv9wA8H1QVBdKfOCmHxLnBh
-	 9x8WPBDNDYUaRZ5JAbFh7MrWXh6e9ZEem7PuJxuaDDTmOZPohXz8tQlr1Fb4ztOLjiV6G
-	 0A1S19j+1Js7mhiKomLMWMpj8Con0ZrgrGOaFHWw/h3bBNRTLzIA9sgQeZg8YT/VW/cIv
-	 JMBlmVIxtpilmbLLv/bEYda85lV2uR4/6oNY38DOMZ1QoVAMbzwtW1zvcsifJOunCDA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=vCBQBMxE8ODKIvxZG8V2UV3DCqa6YmLxCWA+7bGyazA=;
+	b=j6rRGsxyt4oZ5mF37+xf8TiKrFhR2hiF9eSBBkdVuiNBnFNrPwkSafC25zEmWofWRM+j
+	 9VF4USnNL8bzEd+VgqpL+4sQGyvZoSrug5CUZ+l5egbrvG5y3k3QSyN67QecOY+/yjWSz
+	 +wakY9E0+aJevcz8znwT1GpXscnneO/wHQcLtwpzp8TWtus20m8TXsY1x8z300cecAsHD
+	 Ec1mx/npl/Aw5Jo/12wYI6adHFZrk04i4K+cCUjFNEabXvrVDCvUSRRjgu0Tczf3qLuHQ
+	 Hk8HtEFMW4xBbsqyNE4oYvF14GYAozmEV8P5HuxK88YLcd1t5y12uiR4ySB7sZyRPDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owiW9KpL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQIwpsiS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC6560A3839;
-	Fri, 13 Nov 2026 15:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E5260A3839;
+	Fri, 13 Nov 2026 15:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=owiW9KpL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2F81F000C5;
-	Fri, 13 Nov 2026 15:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IQIwpsiS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43901F000C4;
+	Fri, 13 Nov 2026 15:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585428;
-	bh=NIMOP0D3ufWVHTckAtuiUBgDavaSkuwm5+r7jwCWVkI=;
+	s=korg; t=1794585430;
+	bh=vCBQBMxE8ODKIvxZG8V2UV3DCqa6YmLxCWA+7bGyazA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=owiW9KpLj2CN4py83UmuhdT4RmbqDtRaqfedYptRIkaHgyIQta5gm3LDPYs8yiVb6
-	 hvL2FFUH0jeVz6WBVb2BCwb9bZy3dN49ioroO25W6POXuOk/AdK7Es5LcAesfFBELW
-	 XQL9L9AWw43BU71tqF8ObaXzLFGZ9sWIKtV2RPvk=
+	b=IQIwpsiSpuBZUJ1HIRB9DR4Wb0LM+v2fRN/DWbl0LxTNI2/s3iEn9f2ZZ9zTZLV4x
+	 5m+3k4tOTS9piZxwNc1x+hzvKNxSIS6VvtdS+hQqE+r8VsuGyev3xNjDT+WhKWwgl0
+	 6crgbWF0CMXG6aQOE7TkMqkE+ZCdAdyDAPq92A/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhou Qiuyue <n0ps1edzz@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Dom Cobley <popcornmix@gmail.com>,
+	Lucas Tanure <lucas.tanure@neat.no>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 090/507] ipv6: raw: fix use-after-free in rawv6_send_hdrinc()
-Date: Fri, 13 Nov 2026 10:46:34 -0500
-Message-ID: <20261113153757.065217743@linuxfoundation.org>
+Subject: [PATCH 7.3 091/507] drm/vc4: hdmi: power down the BCM2712 PHY when the output is disabled
+Date: Fri, 13 Nov 2026 10:46:35 -0500
+Message-ID: <20261113153757.093729063@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -63,56 +64,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhou Qiuyue <n0ps1edzz@gmail.com>
+From: Dom Cobley <popcornmix@gmail.com>
 
-[ Upstream commit 66dfb2cacda7faae614d688943d85e75abf7f586 ]
+[ Upstream commit a59a60e6e9e3a1d5177b28577d935d5ee37ace66 ]
 
-rawv6_send_hdrinc() caches the route before handing the skb to
-l3mdev_ip6_out(). The VRF output path may replace skb->dst and release
-the original route, leaving the cached pointer stale.
+vc6_hdmi_phy_disable() is empty, so on BCM2712 the PHY keeps its PLL
+and TMDS drivers running after the HDMI output is disabled, until the
+next vc6_hdmi_phy_init(). The TMDS clock is therefore not stopped
+between two mode sets, which the SCDC clock ratio change requires, and
+the idle PHY wastes power.
 
-The function later dereferences that pointer for statistics accounting
-and as the output device passed to NF_HOOK(). Its RCU read-side critical
-section starts after l3mdev_ip6_out(), so it cannot prevent the old route
-from being reclaimed in between.
+Reset and power down the PHY on disable, as the BCM2711 variant does.
 
-Reload the route from the current skb destination after
-l3mdev_ip6_out() returns.
-
-KASAN reports a slab-use-after-free in rawv6_sendmsg(), with the route
-allocated by ip6_dst_alloc(), freed by dst_destroy() from rcu_core(), and
-the related RCU callback queued from vrf_l3_out().
-
-Fixes: 4c1feac58e06 ("net: vrf: Flip IPv6 output path from FIB lookup hook to out hook")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhou Qiuyue <n0ps1edzz@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: 0b1dbe82e051 ("drm/vc4: hdmi: Add support for BCM2712 HDMI controllers")
+Signed-off-by: Dom Cobley <popcornmix@gmail.com>
+[lucas.tanure: Rewrote commit message to clarify the issue and fix]
+Signed-off-by: Lucas Tanure <lucas.tanure@neat.no>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Link: https://patch.msgid.link/20261026164028.78792-2-lucas.tanure@neat.no
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/raw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/vc4/vc4_hdmi_phy.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index b965258cf9e5f..bdea825434ea7 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -654,6 +654,9 @@ static int rawv6_send_hdrinc(struct sock *sk, struct msghdr *msg, int length,
- 	if (unlikely(!skb))
- 		return 0;
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi_phy.c b/drivers/gpu/drm/vc4/vc4_hdmi_phy.c
+index 56e6a35da3576..5040f014bf7e6 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi_phy.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi_phy.c
+@@ -1197,4 +1197,9 @@ void vc6_hdmi_phy_init(struct vc4_hdmi *vc4_hdmi,
  
-+	/* l3mdev_ip6_out() may have replaced the skb dst. */
-+	rt = dst_rt6_info(skb_dst(skb));
+ void vc6_hdmi_phy_disable(struct vc4_hdmi *vc4_hdmi)
+ {
++	unsigned long flags;
 +
- 	/* Acquire rcu_read_lock() in case we need to use rt->rt6i_idev
- 	 * in the error path. Since skb has been freed, the dst could
- 	 * have been queued for deletion.
++	spin_lock_irqsave(&vc4_hdmi->hw_lock, flags);
++	vc6_hdmi_reset_phy(vc4_hdmi);
++	spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
+ }
 -- 
 2.53.0
 
