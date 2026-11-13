@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591212;
-	b=JxZnVbgzw+pK27hhHnLAHCIGUIDWk+8czOmH0bOxSHKOK+GhLJEWaBdh/3PtyvAiQfD2
-	 5GXptKTUYyn9LyAGSkB2HibYzkGiDGZ2V0AezzJaUZ2upre7A0eXk6/5dMrNDvukMHlob
-	 p8gV+VoTzojHioOLKWTMtBBB+1mE3R/zoRLbHojc9S2tax1Ztcv1OQX0e4bt53eeQvgy3
-	 TEsyB7Dzxhr9nNi/TGnMzKMer7oo/HmJLx5B5W3Zvp07K/1VaAHpzr5ordXbqeHaHfWyn
-	 GysZqbSdqC9DQM90T5gS5t/omUKv5TRqRtYnVHWuKhi0hsNSOLnaiQcbTVl52Z+erPA==
+	t=1794591213;
+	b=ofQ1YVFyOK0MONCVe3WjyAuMH3EJMZvaFMHfDZ/ni7crEpsSyeB0cv/LHCvsYelWTXdr
+	 F45Cdxk6NN/Abpnw/pl27H97CrHQUx8BEESfvFSnG/kGwbgmBS923HeqWMclqH9vOwlbY
+	 HEhVSgNqT8RLGGysFM8oCa8O50Hvz1xAAOwFPO/phAaut8EBFwp0Ubq4fKdLrpkkFPSof
+	 Zr56K5u3XcKzQo/IppiZdItQXCRVZJLXNDwFwIOJmV4xrtzmf7UYEME40EufoYKkNO6bZ
+	 8kDE1GjNhK4AB7hbqkgz/sitkY5zkQTsNd9d5U6cU2mTOPhmK+4zEt7g1bcI0kTRTkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591212;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591213;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fgs8zvqAOe1RAopnhqrjSYS4Vff5HevabR+KhK9stXM=;
-	b=3dha0rlpd3v7hPkiBVlAAQ3X1CaVhSBAF9MFaRHyQ3hVFm9jCaa9z1gZBfWcyolx8Zzz
-	 ZUxd0wxZiDOUf8sw5iCv8Eyfz/y2KLn399oSVDzzpD26URfvkaD7qSNXr0eQQHt5Sohu2
-	 kxUPfNBmdhX/SJngjGCA7H7yPP5vUl93plfSINcTNZoxoH/gqd1nTJQcu2zhNMx+JmJPJ
-	 z3ORCOEzuSWD8vfH7H3CZ9LOylVMqQUUBwyUmngML/EJVnuOav8LB0dGSVMSsfDDZdrSn
-	 OK1DZ0xcB0yFxaI4Rxo8KzVrnfrN07/gMk9Jt5265rDBlsIDlohqqF4lFBEYI6T1fig==
+	bh=c5BC1KqzvTWOhLf2rGZoVlzhAM2N4VBDlXKJuaKeSMs=;
+	b=uauxjvgPaiaQld8UBaF5JiJrCrJ696s9azZJ57JhwjjyirKuvmAaSKUS9sF7fhFP4gfK
+	 qMk4bQTvVS6Ks6OnOyubgHlRlyvcvuzgMcRtTFoREBey5AUPKExVlPjeKvVOvIS+26McR
+	 dYW+eQzbycgqW/d5VjMM/kFzLjm0LNpJOR/TQ6he/WRNZDxFfWFiwhaeZ7OsyZOPjj2ZZ
+	 QRQrCrcdAZ61fAU3wljDq5PR7//+YCh60luGlN7tLv2foq1aRwfl5rC+DnvTvA5KMP0SP
+	 zC5e7YMfA17A2esLjw7/rH52Zor1bLrMqm4Q1qA+4R7p9VxBvQFXeZPNgNQZTw+MFEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QrJED7HL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tLB/dAfW";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38B8D6075854;
-	Fri, 13 Nov 2026 17:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DC06075854;
+	Fri, 13 Nov 2026 17:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QrJED7HL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FF51F000C4;
-	Fri, 13 Nov 2026 17:33:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tLB/dAfW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDC91F000C4;
+	Fri, 13 Nov 2026 17:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591212;
-	bh=fgs8zvqAOe1RAopnhqrjSYS4Vff5HevabR+KhK9stXM=;
+	s=korg; t=1794591213;
+	bh=c5BC1KqzvTWOhLf2rGZoVlzhAM2N4VBDlXKJuaKeSMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QrJED7HLMWQ3fFzyJVGVYnYK8FShqW/8LwQRifVil1AK0QSQGei1OEvtPgbcdsM9+
-	 MPUtw3hpAu6OYt3gt+iqfgIizJEC0SwoZjDOHXlfDLhIEqawgwm0Q2zCxQhmPnXwH+
-	 CVQs6wf+GYNLqS3YoG+k87wErqhQDs54NhmSVUVE=
+	b=tLB/dAfWe2KcHVV5b4aIW6m/Z9JViej3PIMh+AZHdoJf68Ns6EcAYPlvsS18/glGg
+	 TV/6LYySru9Nt15iLME28/BEBEz1mbJzspAeK/nd+RxDw/+GUOrOrJ/KJPk8/RhkMY
+	 xF/UnXK986IzHQGlWy75T+VL2hmpHXOz5v632wfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Roman Demidov <roman.demidov.nn@gmail.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 346/670] drm/amdgpu/gfx12: disallow GFXOFF while updating the SPM VMID
-Date: Fri, 13 Nov 2026 10:48:30 -0500
-Message-ID: <20261113153823.560636773@linuxfoundation.org>
+Subject: [PATCH 6.12 347/670] drm/amd/display: Fix NULL deref in dcn401_update_clocks_update_dtb_dto
+Date: Fri, 13 Nov 2026 10:48:31 -0500
+Message-ID: <20261113153823.593835816@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,58 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Roman Demidov <roman.demidov.nn@gmail.com>
 
-[ Upstream commit d1551515a3258b43cba60bd7f45bbdd1f4e9e60a ]
+[ Upstream commit 7fac15d009cf236677a8cddf6bc0e8c85666ac3b ]
 
-gfx_v12_0_update_spm_vmid() does a read-modify-write of RLC_SPM_MC_CNTL
-over MMIO without keeping GFX powered, unlike gfx11. When GFX is in
-GFXOFF at that point the update doesn't stick, and with the SPM VMID
-programmed on submission again, the job of a process with a reserved
-VMID can still run with the SPM writing through VMID 0.
+[Why]
+resource_get_otg_master_for_stream() can return NULL if no OTG master pipe
+is found for a given stream. The current code dereferences this pointer
+without a NULL check. This may lead to a possible NULL pointer
+dereference.
 
-On navi48, after a few other submissions and a VM fault on the same VM,
-a COPY_DATA of RLC_SPM_MC_CNTL from such a job reads 0 although the
-update was called for it:
+[How]
+Add an explicit NULL check and skip the stream if the OTG master is not
+found. This is similar to dcn60_update_clocks_update_dtb_dto().
 
-  $ amd_uapi_regression --run-subtest cs-secure-ib-compute,gem-mapping-info-high-va,gpuvm-fault-high-va,reserved-vmid-spm-vmid
-  amdgpu 0000:03:00.0: [gfxhub] page fault (src_id:0 ring:40 vmid:7 pasid:185)
-  amdgpu 0000:03:00.0: 	 Faulty UTCL2 client ID: SDMA1 (0xe)
-  RLC_SPM_MC_CNTL in the job: 0x00000000
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-With GFXOFF disallowed around the update it reads the reserved VMID 15.
-
-Fixes: 52cb80c12e8a ("drm/amdgpu: Add gfx v12_0 ip block support (v6)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Fixes: b6d508533fa1 ("drm/amd/display: fix a crash when clock source is reference for non otg master pipe")
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 907aebc5578ae09fa5c0e2f0784201295837e60b)
+(cherry picked from commit ffde3d74c1faeeb645b66d02d02fdae3e073941b)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-index a076a314dc677..5282c2de1ec83 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -3828,6 +3828,7 @@ static void gfx_v12_0_update_spm_vmid(struct amdgpu_device *adev,
- {
- 	u32 reg, data;
- 
-+	amdgpu_gfx_off_ctrl(adev, false);
- 	reg = SOC15_REG_OFFSET(GC, 0, regRLC_SPM_MC_CNTL);
- 	if (amdgpu_sriov_is_pp_one_vf(adev))
- 		data = RREG32_NO_KIQ(reg);
-@@ -3841,6 +3842,7 @@ static void gfx_v12_0_update_spm_vmid(struct amdgpu_device *adev,
- 		WREG32_SOC15_NO_KIQ(GC, 0, regRLC_SPM_MC_CNTL, data);
- 	else
- 		WREG32_SOC15(GC, 0, regRLC_SPM_MC_CNTL, data);
-+	amdgpu_gfx_off_ctrl(adev, true);
- 
- 	if (ring
- 	    && amdgpu_sriov_is_pp_one_vf(adev)
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
+index 2ee034879f9ff..24b1103c88c86 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn401/dcn401_clk_mgr.c
+@@ -511,6 +511,9 @@ static void dcn401_update_clocks_update_dtb_dto(struct clk_mgr_internal *clk_mgr
+ 		otg_master = resource_get_otg_master_for_stream(
+ 				&context->res_ctx, context->streams[i]);
+ 		ASSERT(otg_master);
++		if (!otg_master)
++			continue;
++
+ 		ASSERT(otg_master->clock_source);
+ 		ASSERT(otg_master->clock_source->funcs->program_pix_clk);
+ 		ASSERT(otg_master->stream_res.pix_clk_params.controller_id >= CONTROLLER_ID_D0);
 -- 
 2.53.0
 
