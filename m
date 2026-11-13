@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585741;
-	b=38n7RJ4btSG9iApY1S9MOWsaRug85CGyO5I8nGS5AKU2TUmPcPR7KeAxmrOCbLuZIcqE
-	 heWXGAIzuOwyjVTSPddVhnl8dnwzk5r+D1tDWMudurB+R4crlEoeCBNlXc5nSxnWxAzhJ
-	 EGEV9SbbwUjjk1imnenxWy3fJcApD+uz4LZnf8dhhi23QUMhzm/gWuep6gKmBgqWmC5CT
-	 hSf0seXYTyzPw52+LYvKY6bs1paPOLX+K8vGzGGmH9VMXwNj5TC5tRHeTkzSNXre0NP9+
-	 A5ModFmI32vns3yAEdfMuVuH7bqDDwLB90V+8/09i5yI9DeN7pX0xxlOfYyg3IE9HbA==
+	t=1794585742;
+	b=sLKUtXjHHFbRUaFkSFhk1kqf00kHAzSqH9No57X4TEEP8KcGIvPg1ZzJYvVkMOlp6Tm9
+	 DMWVAHXyePrPM386QlKCYX638e2zLgrJhEvA9717ycvHp44wJkj2GMJv/o/BEIxHE7No9
+	 nQVffx2+uLwwfkLPe+UmqMx361SODWgjysTi5rXgLCXk4EhS9VrGq206fjyp6ww9yZUew
+	 XPr4kk+4LBx9m0iCsxSFpfkEJPmZUOWwr/WjF9qtWAVNoggJapPpPLnhcoBBeMGW7iWYa
+	 PWaQ5nW5Wdh+8xFNo4082bdp84TiRKO8MKJPVLwL1gkGTxDKTARVj7f7SkYHEjybGjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585741;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=p8lrZVvOv1DZCLKBq1jVEFOL6Wl60IDbYCrnEKTdWCY=;
-	b=xKY9xU/RRLRNJI3nteJaQxOV+tQhtAX4u1yMA3ZFGGpg83DPwnPgY2WbtggdTrlzgl2f
-	 LrriaePB5SUltS4WXx/wVUxmRav+e9dEw4HjRSsDSiwF9BO+rMgDqfZHw5S3A9m+esjAa
-	 Dq34Q7oN5Z8NpwvvijakP5wCox01maURR3qFv2XkAlIimsgS7Ng4nl/P16+cga0g8POTC
-	 vdeFYw0d95chl9CCkLbvO1Alul4phNs9pUQW7PmHd1T87VpW6aRoNvuibpz6KnO8vVQb0
-	 jkYvBXeMLfQtbVbaWAw+flf89VUYNRcTVg13J2ZTtSa5C/IGZa+sGiEfD9g2Y18a80Q==
+	bh=p7T/SamYPUYiXs3viWJDe1lfoNnUbLpmrk9Iw+Xp7a0=;
+	b=IS3dBJYqKBnjdZiupesxRKbhindEVp31LQ0Ddm1lRQZ50+p4CKOqR51a+lG84ZaMlRpS
+	 IZGlWmthFsot95hjIju4TP6ZfRrSbZYi1ByChT6/O/n9Chq4C2OpbE2zC772CvvpJykv/
+	 UvwbPUH8kWHrxYMBhgOdRXm/8bTNw8gdN0002xsBNcCL7hYKmLh8BKv8anldsczTN3HBm
+	 W4g245s+suDyzJCOemD7oUykQDqJvnJq/0bc3jgK5g4YG/gXi437YLIulSaYFxa3HudJL
+	 eS9sxlo2czvDTQWMbAqMa36P3y8QCmejpDRMRcgvD9O8ja/pqHJP2EIDF61rXAv0CoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGd6W4Hx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JC9d7ALr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66617606AE01;
-	Fri, 13 Nov 2026 16:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A603B606A336;
+	Fri, 13 Nov 2026 16:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGd6W4Hx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A591F000C9;
-	Fri, 13 Nov 2026 16:02:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JC9d7ALr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545001F000C4;
+	Fri, 13 Nov 2026 16:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585741;
-	bh=p8lrZVvOv1DZCLKBq1jVEFOL6Wl60IDbYCrnEKTdWCY=;
+	s=korg; t=1794585742;
+	bh=p7T/SamYPUYiXs3viWJDe1lfoNnUbLpmrk9Iw+Xp7a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oGd6W4HxpjI5DSzy5LPMnwJ3z4zAmoAFVfvttpIqio8F9OvfsLPhrSq7g4p4CuN1i
-	 3DquirN/IgNNYFN1TsBmz5xTsc94WQk5e/GTTezkapC3lqQ47D5Uo+uUcUthuPb5zQ
-	 7iVY1wqoSsHR2JB3RmBAo6ylqkqL1aaOsJ0ehdcg=
+	b=JC9d7ALrm+u5MRxWpMSgXOdcTRi6cuCv9QPKrTYVK1yDmyZEJJkZBdJh8Wvxku6e2
+	 V0qBBtkBX6rfdvL8Cp1u5dlYR8pRfJmCm2rBHMx/NDMb7hr5tyo+4NshG4JagI279K
+	 z9G3c1LQ9xZg8VHJQUxqpKdp37/RY19PLPLGwovY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 340/507] net/sched: clamp skb->queue_mapping before indexing the tx queue
-Date: Fri, 13 Nov 2026 10:50:44 -0500
-Message-ID: <20261113153806.920518754@linuxfoundation.org>
+Subject: [PATCH 7.3 323/507] mm: fix deadlock of mremap() against UFFDIO_MOVE
+Date: Fri, 13 Nov 2026 10:50:27 -0500
+Message-ID: <20261113153806.339746108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,224 +72,378 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit f19f2b308beb158d0e6f6eb806ced636e4ebf6ce ]
+[ Upstream commit d03df42ddae196f20e9cfb775704e60269eb6b44 ]
 
-This issue was caught by Sashiko (nipa). A producer-side path cap is
-already merged (ea4d4b5dddb5); this patch adds the matching consumer-side
-caps.
+With per-VMA locks, UFFDIO_MOVE can run concurrently with mremap()
+on different VMAs in the same mm. Those VMAs can share page tables, so
+both operations can acquire the same pair of page-table locks.
 
-The issue:
-The tx queue is picked and capped in netdev_core_pick_tx() before the
-__dev_xmit_skb() qdisc enqueue path. A tc BPF program running inside an
-egress qdisc (not clsact) can then change __sk_buff->queue_mapping; that
-store is never re-checked. bpf_convert_ctx_access() bounds it only by
-NO_QUEUE_MAPPING, not by the device's queue count.
+UFFDIO_MOVE orders the locks by address, while mremap() takes the source
+lock first. These conflicting orders can deadlock; mremap() holding
+mmap_lock for writing no longer helps.
 
-Two consumers read the stale value:
+Move double_pt_lock() and double_pt_unlock() to mm/internal.h and use
+them for all page-table moves in mremap(). Preserve the source entry
+checks after acquiring both locks. Remove the comments claiming that
+exclusive mmap_lock makes lock ordering irrelevant.
 
-  - On dequeue, qdisc_restart() calls netdev_get_tx_queue(), which
-    indexes dev->_tx[]. netdev_get_tx_queue() guards it with just a
-    DEBUG_NET_WARN_ON_ONCE, so sch_direct_xmit() takes the out-of-bounds
-    txq->_xmit_lock and writes txq->xmit_lock_owner past the end of the
-    allocation on non-lltx devices such as ifb. Drivers that index their
-    rings from skb_get_queue_mapping() (ex: ifb) go out of range the same
-    way.
+In move_ptes(), make sure to just recheck source and destination PMD
+after taking the locks and drop the overly-long comment.
 
-  - On enqueue, taprio_enqueue() indexes q->qdiscs[] with the same value;
-    the array is sized dev->num_tx_queues. A duplicating netem on a child
-    qdisc clones the skb and re-enqueues the clone at the taprio root
-    (qdisc_root_bh()) through a direct rootq->enqueue() call, so the value
-    reaches taprio_enqueue() before any dequeue cap runs.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-The Fix:
-Cap the mapping at the consumers and write the capped value back, so the
-qdisc's _tx[] lookup, the taprio q->qdiscs[] lookup and any later driver
-read stay in range.
+[ david: use new helpers consistently; simplify description and comments;
+         move_ptes() fixup ]
 
-On the dequeue side the cap folds into the dequeue path instead of a
-separate walk over the returned list: dequeue_skb() caps the head, and
-each bulk helper caps the element it appends. For a qdisc that is not
-TCQ_F_ONETXQUEUE, netdev_cap_txqueue() logs a ratelimited notice and
-selects queue 0.
-
-A TCQ_F_ONETXQUEUE qdisc is bound to a single tx queue: dequeue_skb() uses
-q->dev_queue for the frozen check, the BQL limit and the trace point, while
-qdisc_restart() transmits on the skb's queue. Capping an out-of-range
-mapping to queue 0 would therefore send a per-queue child's skb through a
-different queue than the one it was dequeued for. On mq, mqprio, taprio and
-htb offload children, a stopped queue 0 could then park the list in
-q->gso_skb, and the later wake would schedule queue 0's own child instead
-of this qdisc. Pin a TCQ_F_ONETXQUEUE mapping to the qdisc's own queue to
-keep the documented invariant.
-
-The pin covers every mapping, not only an out-of-range one: an in-range
-mapping that a filter sets on one of those per-queue children is rewritten
-to the child's own queue, and this path does not call netdev_cap_txqueue(),
-so it logs no notice. On a single-queue device qdisc_create() sets
-TCQ_F_ONETXQUEUE, so the one-queue trigger described below also takes this
-branch and is corrected without a notice.
-
-That also keeps a bulk list on one queue by construction: every element of
-a TCQ_F_ONETXQUEUE qdisc, including a follower changed by a filter, is
-pinned to q->dev_queue before it is appended. The fast bulk helper
-therefore needs no head comparison and no skb_bad_txq requeue; the slow
-helper, used only by non-ONETXQUEUE qdiscs, still compares and requeues a
-mismatched follower, where a wake on any queue reschedules q.
-
-On the enqueue side taprio_enqueue() caps the mapping against
-real_num_tx_queues and writes it back before selecting q->qdiscs[queue], so
-a duplicating child cannot steer the clone out of the array.
-
-Conditions to recreate the bug:
-The dequeue path: load a SCHED_CLS or SCHED_ACT program that stores
-__sk_buff->queue_mapping (a tc BPF action is enough), attach it to a
-transmit qdisc (for example a matchall filter on a prio root), and send a
-packet. With a 1-queue device a store of 1 indexes one past dev->_tx[].
-Under KASAN with panic_on_warn=1 the unfixed kernel faults with "BUG:
-KASAN: slab-out-of-bounds in sch_direct_xmit". Loading the program needs
-CAP_BPF/CAP_SYS_ADMIN, so the trigger is root.
-
-The enqueue path: on a multi-queue device, install a software taprio root,
-graft a prio child with a duplicating netem on every class, and store an
-out-of-range queue_mapping from a matchall+bpf filter on the prio. The
-duplicate is re-enqueued at the taprio root and indexes q->qdiscs[] past
-dev->num_tx_queues; the unfixed kernel faults in taprio_enqueue_one().
-Same CAP_BPF/CAP_SYS_ADMIN requirement.
-
-Fixes: 74e31ca850c1 ("bpf: add skb->queue_mapping write access from tc clsact")
-Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/netdev/179033713973.2160803.4914570693994398206@kernel.org/
-Link: https://lore.kernel.org/netdev/179329777513.3134.12135506558709584471@kernel.org/
-Link: https://lore.kernel.org/netdev/179293123940.3134.1149128679923234677@kernel.org/
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/QDISC-MD1X.v4.r0.20261021042722-1%40mojatatu.com
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/QDISC-MD1X.v3.r0.20261015165943-1%40mojatatu.com
-Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/QDISC-MD1X.v1.20261005193231%40mojatatu.com
-Link: https://lore.kernel.org/netdev/20261015125822.GH83879@horms.kernel.org/
+Fixes: 867a43a34ff8 ("userfaultfd: use per-vma locks in userfaultfd operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-MD1X.v6.r0.20261029162633-1@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-38-d6437171ecc3@kernel.org
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_generic.c | 41 ++++++++++++++++++++++++++++++++++++-----
- net/sched/sch_taprio.c  |  5 +++++
- 2 files changed, 41 insertions(+), 5 deletions(-)
+ include/linux/userfaultfd_k.h |  2 -
+ mm/huge_memory.c              | 19 +++-----
+ mm/hugetlb.c                  | 14 ++----
+ mm/internal.h                 | 28 +++++++++++
+ mm/mremap.c                   | 87 ++++++++++++++---------------------
+ mm/userfaultfd.c              | 27 -----------
+ 6 files changed, 72 insertions(+), 105 deletions(-)
 
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index 3e8ee4a691c34..d2e0d20f3ba1c 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -96,9 +96,34 @@ static void qdisc_maybe_clear_missed(struct Qdisc *q,
+diff --git a/include/linux/userfaultfd_k.h b/include/linux/userfaultfd_k.h
+index a4351cffc60ce..4c0924c73166d 100644
+--- a/include/linux/userfaultfd_k.h
++++ b/include/linux/userfaultfd_k.h
+@@ -154,8 +154,6 @@ extern int mrwprotect_range(struct userfaultfd_ctx *ctx, unsigned long start,
+ 			    unsigned long len, bool enable_rwp);
  
- #define SKB_XOFF_MAGIC ((struct sk_buff *)1UL)
+ /* move_pages */
+-void double_pt_lock(spinlock_t *ptl1, spinlock_t *ptl2);
+-void double_pt_unlock(spinlock_t *ptl1, spinlock_t *ptl2);
+ int move_pages_huge_pmd(struct mm_struct *mm, pmd_t *dst_pmd, pmd_t *src_pmd, pmd_t dst_pmdval,
+ 			struct vm_area_struct *dst_vma,
+ 			struct vm_area_struct *src_vma,
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index c1130d3d28261..c0d500bfb9fbc 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2659,15 +2659,11 @@ bool move_huge_pmd(struct vm_area_struct *vma, unsigned long old_addr,
+ 		return false;
+ 	}
  
-+/* Re-cap a stale queue_mapping; an ONETXQUEUE qdisc pins q->dev_queue. */
-+static u16 qdisc_cap_skb_tx_queue(struct Qdisc *q, struct sk_buff *skb)
-+{
-+	u16 queue = skb_get_queue_mapping(skb);
-+	struct net_device *dev = qdisc_dev(q);
-+	u16 capped;
+-	/*
+-	 * We don't have to worry about the ordering of src and dst
+-	 * ptlocks because exclusive mmap_lock prevents deadlock.
+-	 */
+-	old_ptl = __pmd_trans_huge_lock(old_pmd, vma);
+-	if (old_ptl) {
+-		new_ptl = pmd_lockptr(mm, new_pmd);
+-		if (new_ptl != old_ptl)
+-			spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
++	old_ptl = pmd_lockptr(mm, old_pmd);
++	new_ptl = pmd_lockptr(mm, new_pmd);
 +
-+	if (q->flags & TCQ_F_ONETXQUEUE)
-+		capped = q->dev_queue - netdev_get_tx_queue(dev, 0);
++	double_pt_lock(old_ptl, new_ptl);
++	if (likely(pmd_is_huge(*old_pmd))) {
+ 		pmd = pmdp_huge_get_and_clear(mm, old_addr, old_pmd);
+ 		if (pmd_present(pmd))
+ 			force_flush = true;
+@@ -2695,11 +2691,10 @@ bool move_huge_pmd(struct vm_area_struct *vma, unsigned long old_addr,
+ 		set_pmd_at(mm, new_addr, new_pmd, pmd);
+ 		if (force_flush)
+ 			flush_pmd_tlb_range(vma, old_addr, old_addr + PMD_SIZE);
+-		if (new_ptl != old_ptl)
+-			spin_unlock(new_ptl);
+-		spin_unlock(old_ptl);
++		double_pt_unlock(old_ptl, new_ptl);
+ 		return true;
+ 	}
++	double_pt_unlock(old_ptl, new_ptl);
+ 	return false;
+ }
+ 
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 532cc42662a69..09665fd220752 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5119,15 +5119,9 @@ static void move_huge_pte(struct vm_area_struct *vma, unsigned long old_addr,
+ 	spinlock_t *src_ptl, *dst_ptl;
+ 	pte_t pte;
+ 
+-	dst_ptl = huge_pte_lock(h, mm, dst_pte);
++	dst_ptl = huge_pte_lockptr(h, mm, dst_pte);
+ 	src_ptl = huge_pte_lockptr(h, mm, src_pte);
+-
+-	/*
+-	 * We don't have to worry about the ordering of src and dst ptlocks
+-	 * because exclusive mmap_lock (or the i_mmap_lock) prevents deadlock.
+-	 */
+-	if (src_ptl != dst_ptl)
+-		spin_lock_nested(src_ptl, SINGLE_DEPTH_NESTING);
++	double_pt_lock(dst_ptl, src_ptl);
+ 
+ 	pte = huge_ptep_get_and_clear(mm, old_addr, src_pte, sz);
+ 
+@@ -5156,9 +5150,7 @@ static void move_huge_pte(struct vm_area_struct *vma, unsigned long old_addr,
+ 		set_huge_pte_at(mm, new_addr, dst_pte, pte, sz);
+ 	}
+ 
+-	if (src_ptl != dst_ptl)
+-		spin_unlock(src_ptl);
+-	spin_unlock(dst_ptl);
++	double_pt_unlock(dst_ptl, src_ptl);
+ }
+ 
+ unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
+diff --git a/mm/internal.h b/mm/internal.h
+index a533b56e2f2b9..526ad50e3c1d8 100644
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -621,6 +621,34 @@ static inline void force_page_cache_readahead(struct address_space *mapping,
+ 	force_page_cache_ra(&ractl, nr_to_read);
+ }
+ 
++/*
++ * Take two page table locks at the same level in address order such that
++ * we cannot deadlock.
++ */
++static inline void double_pt_lock(spinlock_t *ptl1, spinlock_t *ptl2)
++	__acquires(ptl1)
++	__acquires(ptl2)
++{
++	if (ptl1 > ptl2)
++		swap(ptl1, ptl2);
++	spin_lock(ptl1);
++	if (ptl1 != ptl2)
++		spin_lock_nested(ptl2, SINGLE_DEPTH_NESTING);
 +	else
-+		capped = netdev_cap_txqueue(dev, queue);
-+
-+	if (unlikely(capped != queue))
-+		skb_set_queue_mapping(skb, capped);
-+
-+	return capped;
++		__acquire(ptl2);
 +}
 +
-+static struct netdev_queue *skb_cap_tx_queue(struct Qdisc *q,
-+					     struct sk_buff *skb)
++static inline void double_pt_unlock(spinlock_t *ptl1, spinlock_t *ptl2)
++	__releases(ptl1)
++	__releases(ptl2)
 +{
-+	return netdev_get_tx_queue(qdisc_dev(q),
-+				   qdisc_cap_skb_tx_queue(q, skb));
++	spin_unlock(ptl1);
++	if (ptl1 != ptl2)
++		spin_unlock(ptl2);
++	else
++		__release(ptl2);
 +}
 +
- static inline struct sk_buff *__skb_dequeue_bad_txq(struct Qdisc *q)
- {
--	const struct netdev_queue *txq = q->dev_queue;
-+	const struct netdev_queue *txq;
- 	spinlock_t *lock = NULL;
- 	struct sk_buff *skb;
+ unsigned find_lock_entries(struct address_space *mapping, pgoff_t *start,
+ 		pgoff_t end, struct folio_batch *fbatch, pgoff_t *indices);
+ unsigned find_get_entries(struct address_space *mapping, pgoff_t *start,
+diff --git a/mm/mremap.c b/mm/mremap.c
+index b6e0a4206016b..23498d0783c43 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -202,7 +202,7 @@ static int move_ptes(struct pagetable_move_control *pmc,
+ 	struct mm_struct *mm = vma->vm_mm;
+ 	pte_t *old_ptep, *new_ptep;
+ 	pte_t old_pte, pte;
+-	pmd_t dummy_pmdval;
++	pmd_t old_pmdval, new_pmdval;
+ 	spinlock_t *old_ptl, *new_ptl;
+ 	bool force_flush = false;
+ 	unsigned long old_addr = pmc->old_addr;
+@@ -234,31 +234,30 @@ static int move_ptes(struct pagetable_move_control *pmc,
+ 	if (pmc->need_rmap_locks)
+ 		take_rmap_locks(vma);
  
-@@ -110,7 +135,8 @@ static inline struct sk_buff *__skb_dequeue_bad_txq(struct Qdisc *q)
- 	skb = skb_peek(&q->skb_bad_txq);
- 	if (skb) {
- 		/* check the reason of requeuing without tx lock first */
--		txq = skb_get_tx_queue(txq->dev, skb);
-+		/* re-cap: real_num_tx_queues may have shrunk */
-+		txq = skb_cap_tx_queue(q, skb);
- 		if (!netif_xmit_frozen_or_stopped(txq)) {
- 			skb = __skb_dequeue(&q->skb_bad_txq);
- 			if (qdisc_is_percpu_stats(q)) {
-@@ -224,6 +250,8 @@ static void try_bulk_dequeue_skb(struct Qdisc *q,
- 		if (!nskb)
- 			break;
+-	/*
+-	 * We don't have to worry about the ordering of src and dst
+-	 * pte locks because exclusive mmap_lock prevents deadlock.
+-	 */
+-	old_ptep = pte_offset_map_lock(mm, old_pmd, old_addr, &old_ptl);
++	old_ptep = pte_offset_map_rw_nolock(mm, old_pmd, old_addr, &old_pmdval,
++					    &old_ptl);
+ 	if (!old_ptep) {
+ 		err = -EAGAIN;
+ 		goto out;
+ 	}
+-	/*
+-	 * Now new_pte is none, so collapse_scan_file() path can not find
+-	 * this by traversing file->f_mapping, so there is no concurrency with
+-	 * retract_page_tables(). In addition, we already hold the exclusive
+-	 * mmap_lock, so this new_pte page is stable, so there is no need to get
+-	 * pmdval and do pmd_same() check.
+-	 */
+-	new_ptep = pte_offset_map_rw_nolock(mm, new_pmd, new_addr, &dummy_pmdval,
+-					   &new_ptl);
++	new_ptep = pte_offset_map_rw_nolock(mm, new_pmd, new_addr, &new_pmdval,
++					    &new_ptl);
+ 	if (!new_ptep) {
+-		pte_unmap_unlock(old_ptep, old_ptl);
++		pte_unmap(old_ptep);
++		err = -EAGAIN;
++		goto out;
++	}
++
++	double_pt_lock(old_ptl, new_ptl);
++	if (unlikely(!pmd_same(old_pmdval, pmdp_get_lockless(old_pmd)) ||
++		     !pmd_same(new_pmdval, pmdp_get_lockless(new_pmd)))) {
++		double_pt_unlock(old_ptl, new_ptl);
++		pte_unmap(new_ptep);
++		pte_unmap(old_ptep);
+ 		err = -EAGAIN;
+ 		goto out;
+ 	}
+-	if (new_ptl != old_ptl)
+-		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
++
+ 	flush_tlb_batched_pending(vma->vm_mm);
+ 	lazy_mmu_mode_enable();
  
-+		/* Every element of an ONETXQUEUE qdisc is pinned to q->dev_queue. */
-+		qdisc_cap_skb_tx_queue(q, nskb);
- 		bytelimit -= nskb->len; /* covers GSO len */
- 		skb->next = nskb;
- 		skb = nskb;
-@@ -241,7 +269,6 @@ static void try_bulk_dequeue_skb_slow(struct Qdisc *q,
- 				      struct sk_buff *skb,
- 				      int *packets)
- {
--	int mapping = skb_get_queue_mapping(skb);
- 	struct sk_buff *nskb;
- 	int cnt = 0;
+@@ -317,10 +316,9 @@ static int move_ptes(struct pagetable_move_control *pmc,
+ 	lazy_mmu_mode_disable();
+ 	if (force_flush)
+ 		flush_tlb_range(vma, old_end - len, old_end);
+-	if (new_ptl != old_ptl)
+-		spin_unlock(new_ptl);
++	double_pt_unlock(old_ptl, new_ptl);
+ 	pte_unmap(new_ptep - 1);
+-	pte_unmap_unlock(old_ptep - 1, old_ptl);
++	pte_unmap(old_ptep - 1);
+ out:
+ 	if (pmc->need_rmap_locks)
+ 		drop_rmap_locks(vma);
+@@ -395,14 +393,9 @@ static bool move_normal_pmd(struct pagetable_move_control *pmc,
+ 	if (WARN_ON_ONCE(!pmd_none(*new_pmd)))
+ 		return false;
  
-@@ -249,7 +276,9 @@ static void try_bulk_dequeue_skb_slow(struct Qdisc *q,
- 		nskb = q->dequeue(q);
- 		if (!nskb)
- 			break;
--		if (unlikely(skb_get_queue_mapping(nskb) != mapping)) {
-+		/* A tc BPF store may have changed the mapping; cap it. */
-+		if (unlikely(qdisc_cap_skb_tx_queue(q, nskb) !=
-+			     skb_get_queue_mapping(skb))) {
- 			qdisc_enqueue_skb_bad_txq(q, nskb);
- 			break;
- 		}
-@@ -294,7 +323,7 @@ static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
- 		if (xfrm_offload(skb))
- 			*validate = true;
- 		/* check the reason of requeuing without tx lock first */
--		txq = skb_get_tx_queue(txq->dev, skb);
-+		txq = skb_cap_tx_queue(q, skb);
- 		if (!netif_xmit_frozen_or_stopped(txq)) {
- 			skb = __skb_dequeue(&q->gso_skb);
- 			if (qdisc_is_percpu_stats(q)) {
-@@ -330,6 +359,8 @@ static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
- 	skb = q->dequeue(q);
- 	if (skb) {
- bulk:
-+		/* cap the head; the bulk helpers cap every appended element */
-+		qdisc_cap_skb_tx_queue(q, skb);
- 		if (qdisc_may_bulk(q))
- 			try_bulk_dequeue_skb(q, skb, txq, packets, budget);
- 		else
-diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
-index 39ac5b97aa3af..0eb0803047a1e 100644
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -632,6 +632,11 @@ static int taprio_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 	int queue;
+-	/*
+-	 * We don't have to worry about the ordering of src and dst
+-	 * ptlocks because exclusive mmap_lock prevents deadlock.
+-	 */
+-	old_ptl = pmd_lock(mm, old_pmd);
++	old_ptl = pmd_lockptr(mm, old_pmd);
+ 	new_ptl = pmd_lockptr(mm, new_pmd);
+-	if (new_ptl != old_ptl)
+-		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
++	double_pt_lock(old_ptl, new_ptl);
  
- 	queue = skb_get_queue_mapping(skb);
-+	if (unlikely(queue >= qdisc_dev(sch)->real_num_tx_queues)) {
-+		/* A tc BPF program may have stored an out-of-range mapping. */
-+		queue = netdev_cap_txqueue(qdisc_dev(sch), queue);
-+		skb_set_queue_mapping(skb, queue);
+ 	pmd = *old_pmd;
+ 
+@@ -418,9 +411,7 @@ static bool move_normal_pmd(struct pagetable_move_control *pmc,
+ 	pmd_populate(mm, new_pmd, pmd_pgtable(pmd));
+ 	flush_tlb_range(vma, pmc->old_addr, pmc->old_addr + PMD_SIZE);
+ out_unlock:
+-	if (new_ptl != old_ptl)
+-		spin_unlock(new_ptl);
+-	spin_unlock(old_ptl);
++	double_pt_unlock(old_ptl, new_ptl);
+ 
+ 	return res;
+ }
+@@ -452,14 +443,10 @@ static bool move_normal_pud(struct pagetable_move_control *pmc,
+ 	if (WARN_ON_ONCE(!pud_none(*new_pud)))
+ 		return false;
+ 
+-	/*
+-	 * We don't have to worry about the ordering of src and dst
+-	 * ptlocks because exclusive mmap_lock prevents deadlock.
+-	 */
+-	old_ptl = pud_lock(mm, old_pud);
++	old_ptl = pud_lockptr(mm, old_pud);
+ 	new_ptl = pud_lockptr(mm, new_pud);
+-	if (new_ptl != old_ptl)
+-		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
++
++	double_pt_lock(old_ptl, new_ptl);
+ 
+ 	pud = *old_pud;
+ 	if (unlikely(pud_none(pud)))
+@@ -473,9 +460,7 @@ static bool move_normal_pud(struct pagetable_move_control *pmc,
+ 	pud_populate(mm, new_pud, pud_pgtable(pud));
+ 	flush_tlb_range(vma, pmc->old_addr, pmc->old_addr + PUD_SIZE);
+ out_unlock:
+-	if (new_ptl != old_ptl)
+-		spin_unlock(new_ptl);
+-	spin_unlock(old_ptl);
++	double_pt_unlock(old_ptl, new_ptl);
+ 
+ 	return true;
+ }
+@@ -503,16 +488,14 @@ static bool move_huge_pud(struct pagetable_move_control *pmc,
+ 	if (WARN_ON_ONCE(!pud_none(*new_pud)))
+ 		return false;
+ 
+-	/*
+-	 * We don't have to worry about the ordering of src and dst
+-	 * ptlocks because exclusive mmap_lock prevents deadlock.
+-	 */
+-	old_ptl = __pud_trans_huge_lock(old_pud, vma);
+-	if (unlikely(!old_ptl))
+-		return false;
++	old_ptl = pud_lockptr(mm, old_pud);
+ 	new_ptl = pud_lockptr(mm, new_pud);
+-	if (new_ptl != old_ptl)
+-		spin_lock_nested(new_ptl, SINGLE_DEPTH_NESTING);
++
++	double_pt_lock(old_ptl, new_ptl);
++	if (unlikely(!pud_trans_huge(*old_pud))) {
++		double_pt_unlock(old_ptl, new_ptl);
++		return false;
 +	}
  
- 	child = q->qdiscs[queue];
- 	if (unlikely(child == &noop_qdisc))
+ 	/* Clear the pud */
+ 	pud = pudp_huge_get_and_clear(mm, pmc->old_addr, old_pud);
+@@ -523,9 +506,7 @@ static bool move_huge_pud(struct pagetable_move_control *pmc,
+ 	/* mark soft_ditry when we add pud level soft dirty support */
+ 	set_pud_at(mm, pmc->new_addr, new_pud, pud);
+ 	flush_pud_tlb_range(vma, pmc->old_addr, pmc->old_addr + HPAGE_PUD_SIZE);
+-	if (new_ptl != old_ptl)
+-		spin_unlock(new_ptl);
+-	spin_unlock(old_ptl);
++	double_pt_unlock(old_ptl, new_ptl);
+ 
+ 	return true;
+ }
+diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
+index 5689df692401e..cc37b60fc3e81 100644
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -1234,33 +1234,6 @@ int mrwprotect_range(struct userfaultfd_ctx *ctx, unsigned long start,
+ 	return 0;
+ }
+ 
+-void double_pt_lock(spinlock_t *ptl1,
+-		    spinlock_t *ptl2)
+-	__acquires(ptl1)
+-	__acquires(ptl2)
+-{
+-	if (ptl1 > ptl2)
+-		swap(ptl1, ptl2);
+-	/* lock in virtual address order to avoid lock inversion */
+-	spin_lock(ptl1);
+-	if (ptl1 != ptl2)
+-		spin_lock_nested(ptl2, SINGLE_DEPTH_NESTING);
+-	else
+-		__acquire(ptl2);
+-}
+-
+-void double_pt_unlock(spinlock_t *ptl1,
+-		      spinlock_t *ptl2)
+-	__releases(ptl1)
+-	__releases(ptl2)
+-{
+-	spin_unlock(ptl1);
+-	if (ptl1 != ptl2)
+-		spin_unlock(ptl2);
+-	else
+-		__release(ptl2);
+-}
+-
+ static inline bool is_pte_pages_stable(pte_t *dst_pte, pte_t *src_pte,
+ 				       pte_t orig_dst_pte, pte_t orig_src_pte,
+ 				       pmd_t *dst_pmd, pmd_t dst_pmdval)
 -- 
 2.53.0
 
