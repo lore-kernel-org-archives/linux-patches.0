@@ -1,52 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590610;
-	b=XZPWatKAarMJFMsizcGEdbn202Xu7DLpKtLl02mXtEFj3AKq1b1EYjyOLszvwMHjfIjF
-	 6Fi+SlqYVoFaWUsngpn7obnC5MpacKZmHYygNsn5TGnpI41Z4wTOFGa3Bfh4NaRMOi0zV
-	 QuG+0z394omabcqO4D8RBk+Ufvfv28IKt+XRph7+NpbBD7i6QWnq9DcnM0rMbTRiwqhR7
-	 zYEiN6aNs8iOOYosP+Ugyq07+gHZq9Ylg8EsLullLSClJ1pfiAQ/tL7PAZSleQfJOMlA7
-	 ibLoDbrUX3yb2kVXxAIQ6j7yRvdBEtClj21QchRfqhYVbUILg0jRvHyc7hOFKIQcQCw==
+	t=1794590611;
+	b=Stx0ywgF764XiCGlw82hm5+H0jJvcUA5A82/CXPaxYzgL89hNV5sZiazA6K/Vjd5+V1m
+	 enT9z2pM55BLlSBRteYpcLz7iDWoLVgkBtu97pQyM0uU25r5c1VS8dfhClS1lomTd5m11
+	 JHasxJNQqWMvOYMsIq2dXc8BdEIrDbVTKTADPaOxgVVsoobARINCr02dxcz8gIkZe1cQE
+	 N9df/pFC3i+3eLpUK5ubThzEJMGiaCXLZ37BZPHsi6sdIckBy7NZCxFPJZPq48zmd3/s9
+	 5yq4uJld7Fgqm814zi+dYoGOZCZV7XkdrSFDs1sjN3fZcwkODfu36TeN7IbpkVLZ4yA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aHco5E8ndyYXzntPJK8yJfmzQGmOn6t8Xq2hDp6Ug+Y=;
-	b=omcOQcE4tURsEGJpZooiFDhLrW2r4uN/6aDBoqEQg6SDG/yD2b5LkbfhkMd+vwzIkVwB
-	 lYiZ1U9D4m4DGEt0va4otd0FFqzAMfyUkE4VRP3Bc/LSdTvIeLaEV7i1qranwiTxQk9UR
-	 h7u6u5KbYmGP7Dna4icpuCUuL1vfLOTJjvcRwhkeyWED1FEIWLjt2YSanLlZ/j2r6IOhc
-	 8tssmbg0RL0cijJ5R04cZCKvPjD0cHjm6IFKqNm77i8cI0CaCPoyBzwE4iGy2Mk3p7SmW
-	 swNmF89xG9yZNj79QPRAJVdD4ommdJ+AAHqBiQP8tOfenBey8XNPOQIQYklR4eCXdPQ==
+	bh=/djKdE+YIKsDt64F41oGfV1ewx+tOfrGrBC3bUyXIEo=;
+	b=CWYBx7KnGrCPvo+iDMdk1GkXQ2BzP1cZ4rmeGR1S0yJEtGKuK0kpRNQqSENkckvu+/td
+	 OOMxDzPOxmgjBJYJ8xQQQ9EiB8oNUkLOOOzqeDvDn+m7FGqLO3km2DkgZpp1QNFWS3u+/
+	 MIE5wKUXAt2CqTl3cEmLERNXbOQi5Zke2uP7sngsIoY9HZpuc/9sIIgTn4PwnN4krdqZc
+	 pEXRaE4mlfz32zXoMF1ARGO3EIScPiPgNay/dB7OOury1DQ/05M5Kaj4Z0TAUHqWhrzEf
+	 /wZmbw8OtRRxOkIc+vnZrE2SySL7XIav2P/ULuFDK33QuAG6dAJogShmduKuzXyed6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QmQt9MPd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HcJguH7L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A19C607584C;
-	Fri, 13 Nov 2026 17:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C074607585C;
+	Fri, 13 Nov 2026 17:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QmQt9MPd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F1D1F000C7;
-	Fri, 13 Nov 2026 17:23:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HcJguH7L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8191F000C6;
+	Fri, 13 Nov 2026 17:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590610;
-	bh=aHco5E8ndyYXzntPJK8yJfmzQGmOn6t8Xq2hDp6Ug+Y=;
+	s=korg; t=1794590611;
+	bh=/djKdE+YIKsDt64F41oGfV1ewx+tOfrGrBC3bUyXIEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QmQt9MPd8GEfkywKuhHUf/MdoFbICQvrisGVKOg+qwzuOXXsq0a3hCYPPIQ3qLakY
-	 +4AvfdefoQVxsrBEhILUHlKRr6+yKIX7IrsxzJFsMElah1srpoZqUFyZ0tQkgHsw37
-	 eqZEqiNgbGW/GQE5JMnFZU+zVlNp6eAQV4BNIKDY=
+	b=HcJguH7LYUTSqQ2+JJNXxygMFmuMM+agdQ1K6+/0FHhbj09EI/gcJmDzKwAKpU/+L
+	 u/wgMnuyASHuq6m6BQM8oCSaEhpTwrnHIVFE3iKPTS8XNCM9sMXKNTt4OLEAJxIPGi
+	 t4Bn4GjIJjvyTgizRSSqXrndst4MDloU00bk+C6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Harry Yoo <harry@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Lance Yang <lance.yang@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 510/686] gfs2: reject invalid inode sizes
-Date: Fri, 13 Nov 2026 10:50:43 -0500
-Message-ID: <20261113153838.179031412@linuxfoundation.org>
+Subject: [PATCH 6.18 537/686] mm/page_vma_mapped: continue past nonmatching huge PMDs
+Date: Fri, 13 Nov 2026 10:51:10 -0500
+Message-ID: <20261113153839.442571727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,74 +76,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
+[ Upstream commit 1a2993227e8a27fc4cdea305bbdae82d290bc885 ]
 
-A corrupted GFS2 image can store a dinode size that is larger than what VFS
-i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
-writes it directly into inode->i_size. If the value is larger than S64_MAX, the
-incore i_size becomes negative. That negative value can bypass the existing
-stuffed inode size check:
+A PTE-mapped large folio can straddle PMD boundaries after an unaligned
+mremap().  If the first part is discarded and replaced with an unrelated
+huge PMD, page_vma_mapped_walk() stops instead of looking for the rest of
+the folio in subsequent PMDs.
 
-inode->i_size > gfs2_max_stuffed_size(ip)
+This also affects migration entries.  A walk that stops at an unrelated
+huge PMD can leave migration PTEs behind when migration or an anonymous
+folio split restores the mappings.  Those entries do not hold mapping
+references and can outlive the source folio.
 
-Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
-gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
-passes it to memcpy(), turning it into a huge copy size and triggering a
-out-of-bound issue.
+This issue can lead to memory corruption and I have a reproducer for
+it.
 
-Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
-inode->i_size. Also make the stuffed inode check use the raw on-disk size while
-it is still unsigned.
+Skip the current PMD rather than ending the walk on a flag or PFN
+mismatch.  Do the same if the PMD became nonpresent before the locked
+recheck.  Release the PMD lock, clear the per-PMD state and advance with
+step_forward(), so the existing range limit controls termination.  This
+covers present, migration and device-private huge PMDs while preserving
+the matching-PMD and split-to-PTE paths.
 
-Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
-Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
-Assisted-by: Codex:gpt-5.5-xhigh
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[ sashal: adjusted context for direct inode->i_state access and the absent adjacent directory-consistency check ]
+Link: https://lore.kernel.org/20261016011549.61146-1-kylebot@openai.com
+Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Harry Yoo <harry@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: <stable@vger.kernel.org>
+[ sashal: Adapted PMD handling to older migration-entry APIs and inline locking without device-private huge-PMD support. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ mm/page_vma_mapped.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 242e47926b39d..35ad44d13e8b6 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -392,6 +392,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	umode_t mode = be32_to_cpu(str->di_mode);
- 	struct inode *inode = &ip->i_inode;
- 	bool is_new = inode->i_state & I_NEW;
-+	u64 size;
+diff --git a/mm/page_vma_mapped.c b/mm/page_vma_mapped.c
+index 41cf3192a8f62..dfbbbf5e3f53d 100644
+--- a/mm/page_vma_mapped.c
++++ b/mm/page_vma_mapped.c
+@@ -260,18 +260,18 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
  
- 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
- 		gfs2_consist_inode(ip);
-@@ -417,7 +418,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	i_uid_write(inode, be32_to_cpu(str->di_uid));
- 	i_gid_write(inode, be32_to_cpu(str->di_gid));
- 	set_nlink(inode, be32_to_cpu(str->di_nlink));
--	i_size_write(inode, be64_to_cpu(str->di_size));
-+	size = be64_to_cpu(str->di_size);
-+	if (unlikely(size > inode->i_sb->s_maxbytes)) {
-+		gfs2_consist_inode(ip);
-+		return -EIO;
-+	}
-+	i_size_write(inode, size);
- 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
- 	atime.tv_sec = be64_to_cpu(str->di_atime);
- 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
-@@ -456,7 +462,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
+ 				if (!thp_migration_supported() ||
+ 				    !(pvmw->flags & PVMW_MIGRATION))
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				entry = pmd_to_swp_entry(pmde);
+ 				if (!is_migration_entry(entry) ||
+ 				    !check_pmd(swp_offset_pfn(entry), pvmw))
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				return true;
+ 			}
+ 			if (likely(pmd_trans_huge(pmde))) {
+ 				if (pvmw->flags & PVMW_MIGRATION)
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				if (!check_pmd(pmd_pfn(pmde), pvmw))
+-					return not_found(pvmw);
++					goto next_pmd;
+ 				return true;
+ 			}
+ 			/* THP pmd was split under us: handle on pte level */
+@@ -291,8 +291,7 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
  
--	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
-+	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
- 		gfs2_consist_inode(ip);
- 		return -EIO;
- 	}
+ 				spin_unlock(ptl);
+ 			}
+-			step_forward(pvmw, PMD_SIZE);
+-			continue;
++			goto next_pmd;
+ 		}
+ 		if (!map_pte(pvmw, &pmde, &ptl)) {
+ 			if (!pvmw->pte)
+@@ -331,6 +330,17 @@ bool page_vma_mapped_walk(struct page_vma_mapped_walk *pvmw)
+ 			pvmw->ptl = ptl;
+ 		}
+ 		goto this_pte;
++next_pmd:
++		/*
++		 * A large folio can be PTE-mapped across PMDs, so a
++		 * nonmatching PMD does not end the walk.
++		 */
++		if (pvmw->ptl) {
++			spin_unlock(pvmw->ptl);
++			pvmw->ptl = NULL;
++		}
++		pvmw->pmd = NULL;
++		step_forward(pvmw, PMD_SIZE);
+ 	} while (pvmw->address < end);
+ 
+ 	return false;
 -- 
 2.53.0
 
