@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590500;
-	b=FmlKGQyzDsk5binOF+Ynl6odm/XaRsO1Gp2sM/4adcxupAhrx/YAblLNpJtelzK8b7s6
-	 D9iWsUSSEBXGNDr8PVnljgEktAlTVixOvN7/8HHr/BSUmL4to4XKPNP+cLMqiaJeyWKmk
-	 H2pP2oZi3yrWznGf7/lnNNXA02f7cVfGkvKWBi4p94FKMIalaKQeb5ppS85MwuzKAAD7a
-	 VqxtREwyv8ToU4EIVJWDH/mcwZddbP8oenNyTPxRm5VBQWweSDY5jvZIQd1lmNibx04Z8
-	 tHa4o/BSUdlE9OxaAb9unvjhqRWxzA7+SWcjr7DjWZeyIY1oW+WKPHom5e4TNzNU37A==
+	t=1794590501;
+	b=xT+UxL/aNZpEzQdLvf0rfWhQf8xQ1NnB+lPY6IErlqPOfSXutd6rFo/X1TkMXjC7smH4
+	 OFD2p6NM3PXivd+TXnQ/C46OY7EfKEgyWkwwaHgcM4qj3w7k4lKlyMnvxOGPM72tziEYJ
+	 KnDbYdwSjiS1vPKuJwS8OtXM2wFJPcj+0YRFqSDFDTQffE1yKUirYNhakfh/gHnlV7krB
+	 E4kP3aQwsmD5xke7/fThAycX8JRmbGXpxcCvhLzFMVjOIykAbNIA15yQA4f51mg6Wa5o6
+	 GZwnbfOMC9T4gk27JNunhUR8D5oTviRr8f+PtbSO4fina+W/RDUgu9eVviXVPyEEcFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590500;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590501;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M+BycPrczLyt9Fb/1Pb6KMQ5KYXQKVBw18LeAvRtvrM=;
-	b=hc+IWBQLm8HfGJgwrV/Z1Tvu8zjq6pJGOyzymFt8mlN+92hLfrHqgqAwso6ikFvZUaxS
-	 kodcMkt7BLcnJLE7LOoVidu4a4rgh6Fm6z/ovgNL6MsRpQfbmzySBJ/mSAj1/fVKIf4xX
-	 Gz6e/9cQJTIkEder0MeJEcpv27ZN1KYORadvPtg/wnN+ltv4Z58JTi/yKu743x8xWi/vG
-	 y0QgJLG1RY5f9bIg9hfripib+3Tq+Tad+LnYSTADu8MvW+bgVBJeWuAxpyBrmozNuAPeS
-	 yQvzPU0nr0rit/MW1JaualC9Pgqf3L/uo5MufK6YdXkaLykVcXa3dLAZSpNV9v1EdcQ==
+	bh=bZF9cEo8E+wKci7YDu12/RiFwoQ5aE5tkUYSpb44qWo=;
+	b=AmLV+QKtJQnBksQK4CKPa0CSxpIT8xoxEgKvyVOdplfU1iYm60jK3A8y9ubIqMjQNJ0k
+	 jkHrU6FdTFDwTxgIz0V/UHoN+7T5vxDogdgJ+a4ZHLhUlHUc9vjbVVszyt6Umnhiz2k1T
+	 22yINKvlALTwZ8xs3P5hokCzsxf3IZRoSLPuOks45RpQv9wiPxP9ko445d5MdyltGudxf
+	 fJMv4WdZ638JLqISoHtccsJ/Ut1RMe2/Srzbt/cypaZe2vhKy0gtwi24OoYzp/c694v1l
+	 67pfmTNnX109TLipwndjPMudoLITKKJEy7XIUiGPg257rZjdZZo3J3krJ3LDeGl5qvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HpD4N7ux;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TOKxWvwH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8DD6071437;
-	Fri, 13 Nov 2026 17:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5074C607143B;
+	Fri, 13 Nov 2026 17:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HpD4N7ux
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEFE1F000C6;
-	Fri, 13 Nov 2026 17:21:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TOKxWvwH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BA41F000C4;
+	Fri, 13 Nov 2026 17:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590500;
-	bh=M+BycPrczLyt9Fb/1Pb6KMQ5KYXQKVBw18LeAvRtvrM=;
+	s=korg; t=1794590501;
+	bh=bZF9cEo8E+wKci7YDu12/RiFwoQ5aE5tkUYSpb44qWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HpD4N7ux6VKyRfhO1sfPzMm/uhkL5nWUwtG6ev77WGd2Wpekdvtll7bo5MUOs45aR
-	 F/MOMYj2WwW2laTHdZ3N0WDIgW++PXoqUfLyARTLPU12i/FEy1ooe10izC/WUeqhej
-	 4t6TB0Nhe4iw+kVCGabuPPDNs3/w+XhPpJAxQ1n8=
+	b=TOKxWvwHRuf0V+HSO3t6Q0z6Iw9t61HqyDwjyyq3qeQpk4s/9sTS3AVUWuhpBef9Q
+	 +Svv9GdtnoFNH1OpG+AmjgTG+A3OgjNF8/sRhZk7WnYZOTppD6pTYwOHRABCS13J/X
+	 kzL1mL3+dCMeSwGFQHWMhBrqiHb+YdL52yiHYD6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Erhan Bilgili <erhan.bilgili@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 447/686] MIPS: mm: Fix the cache error vector jump for XKPHYS kernels
-Date: Fri, 13 Nov 2026 10:49:40 -0500
-Message-ID: <20261113153836.027465150@linuxfoundation.org>
+Subject: [PATCH 6.18 412/686] drm/amdgpu: Fix duplicate dependency fence releases
+Date: Fri, 13 Nov 2026 10:49:05 -0500
+Message-ID: <20261113153834.936306673@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,59 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Erhan Bilgili <erhan.bilgili@gmail.com>
 
-[ Upstream commit 30b76362f80d39d80f1197c88b284d9fa7952356 ]
+[ Upstream commit ea47f84199241dd083d40a241beea665415d4f6c ]
 
-except_vec2_generic jumps to cache_parity_error with a j, which cannot
-leave the vector's 256MB region. An XKPHYS kernel such as IP30's, linked
-at 512MB, is outside it, so the j targets an unbacked address and its
-speculative fetch raises bus errors on unrelated fetches. Jump to the
-handler's uncached XKPHYS address instead.
+drm_sched_job_add_dependency() consumes its fence reference on success
+and failure. Do not release the fence again if
+drm_sched_job_add_dependency() fails.
 
-Fixes: 7505576d1c1a ("MIPS: add support for SGI Octane (IP30)")
+Fixes: 41cc108b2451 ("drm/amdgpu: fix missing dma_fence_put in error path")
+Fixes: c1c4a8b21721 ("drm/amdgpu: grab extra fence reference for drm_sched_job_add_dependency")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Erhan Bilgili <erhan.bilgili@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit e04f3dfb2071451633e6440a3911a9bb65df9144)
 Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/mm/cex-gen.S | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c    | 4 +---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c | 1 -
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/arch/mips/mm/cex-gen.S b/arch/mips/mm/cex-gen.S
-index e528583d13311..6989fe274aab8 100644
---- a/arch/mips/mm/cex-gen.S
-+++ b/arch/mips/mm/cex-gen.S
-@@ -8,6 +8,7 @@
-  *
-  * Cache error handler
-  */
-+#include <asm/addrspace.h>
- #include <asm/asm.h>
- #include <asm/regdef.h>
- #include <asm/mipsregs.h>
-@@ -37,6 +38,21 @@
- 	nop
- 	nop
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
+index d6ae9974c952e..4f31021b21520 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
+@@ -447,10 +447,8 @@ int amdgpu_sync_push_to_job(struct amdgpu_sync *sync, struct amdgpu_job *job)
  
-+#if defined(CONFIG_64BIT) && VMLINUX_LOAD_ADDRESS >= XKPHYS && \
-+    VMLINUX_LOAD_ADDRESS < XKSEG
-+	/*
-+	 * An XKPHYS kernel may lie outside the 256MB region a j from the
-+	 * vector reaches, so jump to the handler's uncached XKPHYS address.
-+	 */
-+	PTR_LA	k0, cache_parity_error
-+	PTR_LI	k1, TO_PHYS_MASK
-+	and	k0, k0, k1
-+	PTR_LI	k1, UNCAC_BASE
-+	or	k0, k0, k1
-+	jr	k0
-+	nop
-+#else
- 	j	cache_parity_error
- 	nop
-+#endif
- 	END(except_vec2_generic)
+ 		dma_fence_get(f);
+ 		r = drm_sched_job_add_dependency(&job->base, f);
+-		if (r) {
+-			dma_fence_put(f);
++		if (r)
+ 			return r;
+-		}
+ 	}
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+index 902d0a538e419..dd72891624ebb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+@@ -234,7 +234,6 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
+ 		dma_fence_get(fence);
+ 		r = drm_sched_job_add_dependency(&p->job->base, fence);
+ 		if (r) {
+-			dma_fence_put(fence);
+ 			dma_resv_iter_end(&cursor);
+ 			return r;
+ 		}
 -- 
 2.53.0
 
