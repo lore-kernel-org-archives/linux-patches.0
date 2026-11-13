@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585814;
-	b=ypT8OEFM+aDmBa5uaSp9BbJeP31T/8hNz2oPkd3raSwuuWmvYySRdBLzrO3lvHELRVkE
-	 5+rCpYxojfGczZX/zGjzRn5hhWXPuhg6G1hvaksXSGo60h55M0a4F0ia+yuscWf9E1Dta
-	 JjN8AVPLcKvfPH/rxrphtMf6b4rK4wR9e9J1qtZmpdsseIz6uRhfv36j/4YLhLQP0G6FS
-	 +qcpVhVk804Eb8EeAJ9/+1O5CWjFPRu0s90OZHp79HXfaucEmyvg2uUUIYMZswt9+hgef
-	 I4dZ9LrO3NTDfdPsAOByTbtSDH95UrZrFEjigXfVtn7903t/RRbGtJvnipFz6JksJGg==
+	t=1794585815;
+	b=MMvLRLVZbdDGr7S7RXWnBIOoilqQ71gU4deMPpH+YRt+beLfFzgZqJaOFDA7fK0rdYtu
+	 gnZ3SGBIy15uXXujmPAsJlN6iNO87p+/Hvn00ReP/x+ajW46AK7ariPiajB7THvr5sned
+	 50ZJCaE8GTXHmKoI8MCFmNp7KFlmxE060WpuOTEfr70BXytUCqlue7z85fXN69Ke19agV
+	 s6cdUIiJmMEQSGcy7PE+i9MqPfYWPVAGZR6+/OOuxV6gMGH5v5AJNipODPs/hzAAmn9d+
+	 LFZUBDYsucDLw1wpXt7JZcBdBDL1TPbsu6lLgW/SEBKnkUdzrpVCem+3UUp+Cg/E1cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kWwElwuzDAt4ArVVlF7Lrekz3+Gb24Cr7MiaGAP0SKA=;
-	b=qycM6rWODCr/PfvMpA3YG5X+YcHzhmjUeO5EaKCgGMbiQuWtFtDMZM5G3+wjgIheoziD
-	 2Ck/znx5AHMwtrHk2bEWQJbXBMrZDqHmb3ECq7ISO65IjA86oXdjz9MDO+FhbysqGKe21
-	 717nvqZayGEV0T/C6r3UimtaNwJ7ExSH5dm0ZvPQbpGNRoOXSaVTomHWLoLB+z37ibU5q
-	 nnvBDu8cpm/UFvFnlNej/bh/pT1FNnJf01CGdgjdPlwUKRynINzyM43vz0/IsFr1BfCvR
-	 aNG7rZpAf45Io2bL5mbtQYVVPQB4G7f+/tBRtZuPAVr2rKtjNy7+sOyZgQM0fQsfNEA==
+	bh=SsKSDLNHUnIYvfiwTP/Dvklp/KFsw6cetBzoSmP3BjE=;
+	b=JMS0J407xA0SgaakZbeeUTjXVoBMPQf1e/VteGJpo6MU9+EMOy0JPMHjBZr7ASggBQHc
+	 dPSbasGzQLygREeqF/uPtE+xmOzneD9Hq1GEaHv1uO3PotDzKFnV4ajr1dIst480YtHOi
+	 7zdAL94QIa+hVFda2vFABXXX7u1U/uC1upxMQjKFKbIpqjj2F24nVBV68ZGbubkw562g/
+	 S5QYZ9WzuaT1OiUSAM42oBADcahYp/xyHleCd3C8ruA+PZJoMaloCsfkk7A5UWGxP8SVM
+	 N+vmFURwoLdyUqAAgfQsNWQbf276hb43vqHnn4ZUbKSKhT0Nq8kYetAxlIP3DGD6oaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x41Jsb3A;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gN9hrGac;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7A0606C55A;
-	Fri, 13 Nov 2026 16:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D8D606C554;
+	Fri, 13 Nov 2026 16:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x41Jsb3A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBAD1F000C5;
-	Fri, 13 Nov 2026 16:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gN9hrGac
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CE71F000C5;
+	Fri, 13 Nov 2026 16:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585814;
-	bh=kWwElwuzDAt4ArVVlF7Lrekz3+Gb24Cr7MiaGAP0SKA=;
+	s=korg; t=1794585815;
+	bh=SsKSDLNHUnIYvfiwTP/Dvklp/KFsw6cetBzoSmP3BjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x41Jsb3AWM2UxrTtixPPWm0xciH8O7YASjlAuJVluKuzL+YEEaYyp+D2HcrepgFTm
-	 LWBI24EOPHAd6msAqd5WSeNlLRHgxCVXa/yW52FNs7cMJDeNc47WMQsC/7+o28ZMFF
-	 u5UP8FRLEzuAyf+iEZl7rNSpv/pTsPeKSFLvDIvY=
+	b=gN9hrGacZuTqII1wt4nmOSh9eAnFA2PqFKOqIQAf5rMrZwYwNOkZof2yswIAv0T+v
+	 3kVPnPVQNmjvCYsdMbMBMgG5H288yURGmQf8EDzUlhEe/JlN8qt0iJX2n8UdfdZTqb
+	 SaC3YCub8zB+bvuaFJ6r12DUy5L4c3MtvzsRna3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuqiang Sun <izaiahsun@gmail.com>,
+	Alexandr <youdoit@mail.ru>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 396/507] ALSA: usb-audio: qcom: Check the return value of qmi_handle_init()
-Date: Fri, 13 Nov 2026 10:51:40 -0500
-Message-ID: <20261113153810.170100414@linuxfoundation.org>
+Subject: [PATCH 7.3 397/507] ALSA: hda/realtek: Enable mute and mic-mute LEDs on HP ENVY 17-cr0xxx
+Date: Fri, 13 Nov 2026 10:51:41 -0500
+Message-ID: <20261113153810.203913774@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,86 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuqiang Sun <izaiahsun@gmail.com>
+From: Alexandr <youdoit@mail.ru>
 
-[ Upstream commit a3cf5ebab5f1db9e6f751e2a08df05a84f37ea57 ]
+[ Upstream commit cf79cc4996bf936fe159af2a600519b3ebd4ccb7 ]
 
-qc_usb_audio_probe() overwrites the return value of qmi_handle_init()
-with that of qmi_add_server() without checking it. When
-qmi_handle_init() fails, it has already freed the receive buffer and
-destroyed the workqueue, and qmi->sock may hold an error pointer. If
-QRTR is not available, qmi_handle_init() returns -EPROBE_DEFER and
-qmi->sock is ERR_PTR(-EAFNOSUPPORT), so qmi_add_server() passes it to
-kernel_sendmsg():
+The HP ENVY Laptop 17-cr0xxx (subsystem ID 103c:8a2e) has mute and
+mic-mute LEDs on the F8 and F5 keys that never light up on Linux: the
+existing quirk entry only sets up the CS35L41 amplifiers.
 
-  BUG: unable to handle page fault for address: ffffffffffffffb7
-  RIP: 0010:selinux_socket_sendmsg+0xa0/0x590
-  Call Trace:
-   security_socket_sendmsg+0x29/0x50
-   __sock_sendmsg+0x43/0x150
-   kernel_sendmsg+0xd6/0x180
-   qmi_send_new_server+0x1b8/0x2b0
-   qmi_add_server+0x165/0x200
-   qc_usb_audio_probe+0xf4/0x2e0
-   really_probe+0x2b4/0x850
+The board uses the same LED wiring as the HP ENVY x360 15-ey0xxx
+(103c:8a31): the mute LED is driven by COEF 0x0b bits 3:2 and the
+mic-mute LED by GPIO2 with inverted polarity. Both were verified with
+hda-verb on the actual hardware. Switch the entry to
+ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS, which chains the amplifier
+setup with ALC245_FIXUP_HP_X360_MUTE_LEDS, and use the DMI product name
+of the board.
 
-Had the probe gone on, the error and remove paths would call
-qmi_handle_release() on the half-initialized handle, which destroys the
-workqueue and frees the receive buffer a second time.
-
-Return the error from qmi_handle_init(), so that -EPROBE_DEFER defers
-the probe, and check qmi_add_server() as well.
-
-The bug was found with kbound, a static analysis prototype for
-ownership mismatches at kernel interfaces, on v7.2.12; it is present in
-mainline.
-
-Build-tested with x86_64 and arm64 allmodconfig (W=1, sparse): no new
-warnings. Run-tested on QEMU (x86_64, KVM) with KASAN and kmemleak, with
-the driver built in and a test module that registers the
-q6usb.qc-usb-audio-offload auxiliary device. Without QRTR, the probe
-crashes as above without this patch; with it the device is deferred and
-removing it again reports nothing. With QRTR the probe succeeds, and
-removal reports nothing either.
-
-Fixes: 326bbc348298 ("ALSA: usb-audio: qcom: Introduce QC USB SND offloading support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuqiang Sun <izaiahsun@gmail.com>
-Link: https://patch.msgid.link/20261102035237.56253-1-izaiahsun@gmail.com
+Fixes: aa8e3ef4fe53 ("ALSA: hda/realtek: Add quirks for various HP ENVY models")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Alexandr <youdoit@mail.ru>
+Link: https://patch.msgid.link/20261103142121.74032-1-youdoit@mail.ru
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/qc_audio_offload.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/hda/codecs/realtek/alc269.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index e4bfd43a2488b..5ee568e0454cb 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1969,8 +1969,13 @@ static int qc_usb_audio_probe(struct auxiliary_device *auxdev,
- 			      QMI_UAUDIO_STREAM_REQ_MSG_V01_MAX_MSG_LEN,
- 			      &uaudio_svc_ops_options,
- 			      &uaudio_stream_req_handlers);
-+	if (ret)
-+		goto free_qmi_hdl;
-+
- 	ret = qmi_add_server(svc->uaudio_svc_hdl, UAUDIO_STREAM_SERVICE_ID_V01,
- 			     UAUDIO_STREAM_SERVICE_VERS_V01, 0);
-+	if (ret)
-+		goto release_qmi_hdl;
- 
- 	uaudio_svc = svc;
- 
-@@ -1987,7 +1992,9 @@ static int qc_usb_audio_probe(struct auxiliary_device *auxdev,
- 
- release_qmi:
- 	qc_usb_audio_cleanup_qmi_dev();
-+release_qmi_hdl:
- 	qmi_handle_release(svc->uaudio_svc_hdl);
-+free_qmi_hdl:
- 	kfree(svc->uaudio_svc_hdl);
- free_svc:
- 	kfree(svc);
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 1288b180df752..dd3466c3129d7 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7606,7 +7606,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8a2b, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a2c, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a2d, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
+-	SND_PCI_QUIRK(0x103c, 0x8a2e, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8a2e, "HP ENVY Laptop 17-cr0xxx", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8a30, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a31, "HP ENVY x360 2-in-1 Laptop 15-ey0xxx", ALC287_FIXUP_CS35L41_I2C_2_HP_MUTE_LEDS),
+ 	SND_PCI_QUIRK(0x103c, 0x8a34, "HP Pavilion x360 2-in-1 Laptop 14-ek0xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
 -- 
 2.53.0
 
