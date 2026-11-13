@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591193;
-	b=q0Q00Gxl5cjhUT1I259FT/PAVOE7I4lD9fzZcQzidUviB1hEYr/wJrbBRPK4z/iW5dr0
-	 5XE14+sc40Uin5g45dXyz+pOgL327J0OVWv0kJeGKh4CedaEy/PFruWB2Kod/1LpLosuw
-	 G1+8WxZB0PTLCl9PMZrTcBDmGng3vxXieM1GVb9PgIp9fImYojYTp/xF1OMcehx/N942Z
-	 USIFG0+5qj3veHdE2z3C2U3++jKHx2NIy+RNYCTLARei1Y/jI77AFJXfm9XpEO0SjhknI
-	 j9DDKB5RouivYzTwAFIxbpI4/fNY+3bRDByKH1kC3p5wGkJOxpfjMQi193yR2SUo99A==
+	t=1794591194;
+	b=HCDgnwR2F8zEdnA+ziMZqD8mlS/mc0y+BJF+gtKLpeROKZ+d3Aqw9dku02IJmYw93ZLK
+	 Wgr2y0E0PrwkjnC/+x9HF0XA60CZgD8dBTmT4IcBm/de2i2pg4xu4KRDwq6NVCCWa7OBr
+	 Ifa2cP9H4J/JbTE/8nWilMlQ9Emngx9c9g01/Sth5XMIVtk1KqhhsV+6AtGSIIMlC026o
+	 +1D6Uawjh6oMOVX6xM99743eSsV/EXgx4XMZOVa+kck/0EdrAV/Bx6OzWBZMKpfWWrCBn
+	 gzYDwWIeEpVZqPEBm7wBodieIZ3VPSyq6NbeB2RgN55SS7gdZmFe1SFa/KgyxDwL88A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZmGs/YLnL469sK/nFsuOv+kuFaKLq4BfXUhWjHNK4o8=;
-	b=3EFZouOwSUoJ/Awjz/EESjpwlkp+MCBbl02Yaz2FW1//CcWTKYGNBYx+oqGOxE/VZHc8
-	 LHV76XVUWLFT/4UE+xqfM/DOlMxBhebXDr6z655OassrSjYmiIeSC+skqIagbf76NkVrC
-	 w9AHlSzZBrZC0qDNaaHtVtfc6XyTveUo/e85U5L+y8hHiHmlmxojxtWFFXka4C2rpZF3J
-	 rDwuCkhwRaz2iNYCCPG0LT2l+CMUosrT7p1L3fOcCGG3ymg2k8b3BFLU1mYGlR2BswXrp
-	 7BIS3gtKjdyVhvGDVGOVs4PGmrTKRJQbmnFVmgxmw1v8S6K9+X7UjOUfv5Bnqk4MWcg==
+	bh=PGTzIpTFJezj1l8W8MRGXqjeFCFLle3HhV8G9oSlXxk=;
+	b=fJlALTMuH5ql0eUHPBxx8ZkEeeEB0UG6uT23tgCj2MbKBfgpwh4fjwlkSwI9lVxwQ5Q7
+	 4Q79HHY5/GqR6rdbyW0DcuAdb9kfcey+gD7989U+v2U9xI4LoIZpcVytP8dkO6oe+TU61
+	 ICX79Dwb+SlD5QZFdTeONoVNvF+uhol2cr3/UlkGg8CqZDAHsvjgqFZqFbhS4cvNk+Xj0
+	 HUUC+Aer2W2ndvCl1Uxui1CGZUD7GclEGGlqPIe/7j0dG2tvp0b+IF6nXBpywXPJC364r
+	 w0GBshkmsp2yO2j62zNEpXWElzzOFbk139/8YZKl6rGBkEEJnrK3wyrcrKYHH8Mt1CA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WR8O9DOw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6AqAgNa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E25C6075E03;
-	Fri, 13 Nov 2026 17:33:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123586075840;
+	Fri, 13 Nov 2026 17:33:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WR8O9DOw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0911F000C5;
-	Fri, 13 Nov 2026 17:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6AqAgNa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B790E1F000C9;
+	Fri, 13 Nov 2026 17:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591192;
-	bh=ZmGs/YLnL469sK/nFsuOv+kuFaKLq4BfXUhWjHNK4o8=;
+	s=korg; t=1794591193;
+	bh=PGTzIpTFJezj1l8W8MRGXqjeFCFLle3HhV8G9oSlXxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WR8O9DOwa8o2Id64A5cLLssa+K6rB1tgcOXbzNsocr8BEYwUaE8VwIqPDJBBEy1OG
-	 k5r/Hu4HVbxFax9mjN+qJ3n4D/PacJihiVTnfiSuOBUeJ3TzbY6x/1fsHe1jrbGI+N
-	 B/9ra9eIAj4FfCKtb7pl3K33ng8frPpB9XpKCxM0=
+	b=z6AqAgNaeTB8z0w5UDKu4Z5pCAvrZNP2esIXX8jtIqYmgOwDgtmFs67wCO9v4eNSf
+	 4Kb2Qf39LK5bW3FF/gwxsX6gvX/k29fQLc/S2Hgo3qfEVA8kj3z6FguWPaDB1CRtzw
+	 K0kDfPWfHHplCYMQ9ZmVhiaEkfpf8QLF7IBC2CkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Josef Bacik <josef@toxicpanda.com>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Xu Xin <xu.xin@linux.dev>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 328/670] mm/mmu_notifier: set ->mm only after mmgrab()
-Date: Fri, 13 Nov 2026 10:48:12 -0500
-Message-ID: <20261113153822.994069268@linuxfoundation.org>
+Subject: [PATCH 6.12 329/670] mm/madvise: fix data loss from MADV_FREE on a KSM page
+Date: Fri, 13 Nov 2026 10:48:13 -0500
+Message-ID: <20261113153823.027142555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,64 +71,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 5ad9e4b0f1104f5dbfb41125c34bb30ea6dc7a94 ]
+[ Upstream commit 22d043c1da48d6c7274f9dd900714b6d58b7b9c6 ]
 
-Radeon uses a non-NULL notifier->mm to decide whether to call
-mmu_interval_notifier_remove() when freeing a buffer object.
-__mmu_interval_notifier_insert() sets ->mm before validating the range,
-so a wrapping userptr range can leave ->mm set after insertion fails.
-Cleanup then tries to remove an unregistered notifier for which no mm
-reference was acquired.
+MADV_FREE can clear the dirty flag of a singly mapped KSM folio. The
+folio remains in the stable tree and can gain new mappings without being
+dirtied again. Once marked lazyfree, reclaim can discard data that those
+mappings still need.
 
-Set ->mm only after mmgrab(), once insertion can no longer fail. While
-we could fix radeon's code instead, setting ->mm on success only makes
-the code more robust.
+KSM always marks a folio dirty when converting it to a KSM folio in
+try_to_merge_one_page(). Marking a folio lazyfree clears PG_swapbacked
+but leaves PG_dirty unchanged. Preserving PG_dirty makes reclaim restore
+PG_swapbacked instead of discarding the folio. This also protects folios
+that were already lazyfree when KSM converted them.
 
-Fix generated by an LLM and sent by Chris Mason in private.
+Skip KSM folios before clearing their dirty flag, checking under the
+folio lock to serialize with KSM conversion.
 
-Fixes: 3506ff69c3ec ("drm/radeon: use mmu_interval_notifier_insert")
+Fixes: 854e9ed09ded ("mm: support madvise(MADV_FREE)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify description ]
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reported-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Xu Xin <xu.xin@linux.dev>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-29-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-34-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mmu_notifier.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/madvise.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/mm/mmu_notifier.c b/mm/mmu_notifier.c
-index e614ecafb8817..1c2707a8ed76b 100644
---- a/mm/mmu_notifier.c
-+++ b/mm/mmu_notifier.c
-@@ -901,7 +901,6 @@ static int __mmu_interval_notifier_insert(
- 	struct mmu_notifier_subscriptions *subscriptions, unsigned long start,
- 	unsigned long length, const struct mmu_interval_notifier_ops *ops)
- {
--	interval_sub->mm = mm;
- 	interval_sub->ops = ops;
- 	RB_CLEAR_NODE(&interval_sub->interval_tree.rb);
- 	interval_sub->interval_tree.start = start;
-@@ -918,8 +917,12 @@ static int __mmu_interval_notifier_insert(
- 	if (WARN_ON(atomic_read(&mm->mm_users) <= 0))
- 		return -EINVAL;
- 
--	/* pairs with mmdrop in mmu_interval_notifier_remove() */
-+	/*
-+	 * Pairs with mmdrop in mmu_interval_notifier_remove(). Drivers take a
-+	 * non-NULL ->mm for "registered", so set it only with the reference.
-+	 */
- 	mmgrab(mm);
-+	interval_sub->mm = mm;
- 
- 	/*
- 	 * If some invalidate_range_start/end region is going on in parallel
+diff --git a/mm/madvise.c b/mm/madvise.c
+index ea966d402f073..6ce97106d6d44 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -752,6 +752,15 @@ static int madvise_free_pte_range(pmd_t *pmd, unsigned long addr,
+ 		if (folio_test_swapcache(folio) || folio_test_dirty(folio)) {
+ 			if (!folio_trylock(folio))
+ 				continue;
++			/*
++			 * KSM folios can gain new mappings at any time, so we must
++			 * not clear their dirty flag.
++			 */
++			if (folio_test_ksm(folio)) {
++				folio_unlock(folio);
++				continue;
++			}
++
+ 			/*
+ 			 * If we have a large folio at this point, we know it is
+ 			 * fully mapped so if its mapcount is the same as its
 -- 
 2.53.0
 
