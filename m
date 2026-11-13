@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590199;
-	b=F6kSRaFHrmRrDB72XKRfpbKQltPf9lRw4DQktAGvBITaiBQFS0PJTIwRtDiECS8eb8TE
-	 IUgsHFD+4+NF9JSVK35frJ9aqnV7Xgmb0rWiareJQO1Xnckf0cI1WXdhBrJMpBIjwLh22
-	 nDiAqSKyNhATsLEA8pk27DT1YyVJwvZoOD6BiyuTVUCfvQ/PXRJ6lDrjRb2+dPAf2fK4J
-	 U+xSBCNBcDzI7Nsyf3sr115zvMX73w96W35OhtQ++TmpClokBWcTiLrCmTCKH9/7V2eq2
-	 VOruQWvigj3V6oBc1R6ES5HQXpLF+wcqIW10x2m3AZ8wmCZCDnV7Ye1rFXdDxNNhLBQ==
+	t=1794590200;
+	b=tYh07FMzyF3tVvxCRCyLZuzoy9x7/3CN8Vh8RU6wZ79YflrdhK+1M6GKWqhBB4fXPnly
+	 aRR5lbfJwQxy0EqN76eH/uMziNWhsk9zSklEHnGDixKT7jsuMAxzn/i2pz+gNSMFLqUbV
+	 lZBH8+ZsyyQh0iGN4Y30NXU+yvVJbV1BxBaDZKiMKQSafoFb3OxUqJtccJ470JqJi4gLk
+	 RTw3M73diquD9hxcZzg5n9TBrMAg5kC1kHQTmK4yElQWr1a5wlBFsel+G77F0TAQ26vNt
+	 T1DqnR4xApyqP/kdfX9QbhkfIX38iPbRCbjx75VefJFqPiFoP9qb9RXzbBVxQu3GIJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590200;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TUWBWDFTf7VDancmc6BmsPO6Yfft8OscYG6hBroHaD8=;
-	b=bwfp9YPRumlGGz9lkbypTWEIq/2i3TxKkao3bVn0XAbxSI8wiEDH+UxAE1hhT1ZOOXFo
-	 +oh+WbLa9Dn5r6vcqKiP08W9a/HlmJHryfm/UqiEvKBkykK5S9BS78kfPaJP9MCCQ78e/
-	 Caz8ZODiJIPg9C1w1W9ygzY4wMtDA67CBDStyWFShAZlvcapNOwuj/GTnFKNOpZ+UXo+I
-	 mVODZexaQ3S0OZV/EOTFtNnANJGncLsiNvmtwe9FIykmQVpogBDFrUaW3dkGzI5JgkwGq
-	 t5DOMKdat76mDisbMyXVdF3Kus+1VeAgz/b0chnuAD5AsFLFPp+IJ8JoCWXu3XqpRfw==
+	bh=DSJyPgkVlezox3kFPA44nnme4N1Z5ZkHey8Ippo/DwQ=;
+	b=exvuBAoCQZ5pTNK5ewaR645URrReaQ0pVjvxWNYiHIfGLFhHUSOSCShLaUDIc2SeU9YA
+	 +C0WIZSGTJqGuIx+YCL66C+hA6AyYLituyMX+aJg2hnCoX1j4XJGjKHNr+hHKceRrz0zY
+	 MCpGgx8fSozwkoRo8Qhpj8BJb23APTkUP20KPP9lYEJUOOvomwKs7BpO+ah6Nc/gfTGQY
+	 ajToUJ2HICiEoIWROjaLhPmSWTe6ZRXD05gVk6Fs5hnkWsQgTq/TNor5s4uTISeNzqknF
+	 +3U9txSd7YR3c19PlqrQAuBBADZyKyZ1a/D6Whjv2GAi5AwhIG3CiSxqXrceMRWQJPQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CdiOKrp/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJv7aAXD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44BF606BD01;
-	Fri, 13 Nov 2026 17:16:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1137606B370;
+	Fri, 13 Nov 2026 17:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CdiOKrp/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1221F000C4;
-	Fri, 13 Nov 2026 17:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JJv7aAXD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74EA91F000C4;
+	Fri, 13 Nov 2026 17:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590198;
-	bh=TUWBWDFTf7VDancmc6BmsPO6Yfft8OscYG6hBroHaD8=;
+	s=korg; t=1794590199;
+	bh=DSJyPgkVlezox3kFPA44nnme4N1Z5ZkHey8Ippo/DwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CdiOKrp/KBuk4L39wqDCygLuyXKSP2rkNuypNdglCaMlZi/OBN/g+qzVU4toq5qQ+
-	 j0BthLx5KfrlYAFf8fwtmYeIsF9skFmXiJAgNRLgLyMPQd9eUw/Xup5R3lT1Fncsea
-	 9mjZhXeWlpPSpR4yrjfSZnoPL9Tcm0WZSd/0zHQg=
+	b=JJv7aAXDD95U03T9UjI3qH+w6dX2q83J2n9UkoZhSzlNmDfxzrzsUMDI2mKbqPUjU
+	 Oa8nL4MEmqiGcWqZKccD6thojJzWmKDEbDiPa5Hjmboq+4CrGisC0eDaCJBhHlMzbE
+	 DV+X9m2wmtne4C/bWe9z8w2rpy1WXeLYYOBCRdgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Fourie Zhang <fouriezhang@tencent.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Imre Kaloz <kaloz@kernel.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 204/686] xfrm4: use a full socket for local errors
-Date: Fri, 13 Nov 2026 10:45:37 -0500
-Message-ID: <20261113153827.957852199@linuxfoundation.org>
+Subject: [PATCH 6.18 205/686] scsi: aic7xxx: Use default settings on the SGI O2 onboard controllers
+Date: Fri, 13 Nov 2026 10:45:38 -0500
+Message-ID: <20261113153827.988941087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,62 +68,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fourie Zhang <fouriezhang@tencent.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 5def91015ba7b59de62a81384572da7281b8a033 ]
+[ Upstream commit 696bdfc58975fbc70d2e2347a74e0b562e7e2494 ]
 
-xfrm4_local_error() passes skb->sk to inet_sk() and ip_local_error()
-without ensuring it points to a full socket. TCP SYN-ACK skbs can be owned
-by TCP_NEW_SYN_RECV request sockets.
+The SGI O2 firmware runs its onboard aic7880s without the Adaptec BIOS, so
+scratch RAM holds no settings. The left over BIOS path reads uninitialised
+bytes, and bad parity panics the boot.
 
-xfrm4_tunnel_check_size() already checks sk_fullsock() since commit
-1620c88887b1 ("xfrm: Fix the usage of skb->sk"), so iptfs_is_too_big() is
-the only remaining IPv4 caller passing a request socket here: the sk it
-tests is the listener, while skb->sk is the request socket.
+Use the defaults there with host ID 0. ahc_init() keeps the default host ID
+ahc_pci_config() chose, 7 on other PCI controllers, so only the O2 changes.
 
-When IP-TFS rejects such an skb because it exceeds its payload MTU, the
-local error path treats the request socket as a struct inet_sock. KASAN
-reports a slab-out-of-bounds read in ip_local_error() beyond the
-request_sock_TCP allocation.
-
-Resolve the skb owner with skb_to_full_sk() before accessing inet_sock
-state or reporting the error. This maps a request socket to its listener
-and rejects sockets that cannot be used as full sockets, matching what
-commit 6973a21ee73c ("ipv6: xfrm: use full sockets in local error paths")
-did for xfrm6_local_error().
-
-Fixes: 0e4fbf013fa5 ("xfrm: iptfs: add user packet (tunnel ingress) handling")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Link: https://lore.kernel.org/netdev/20260908224856.1591189-1-kuba@kernel.org/
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Assisted-by: tencentos-corvus-ai:hy4-preview
-Signed-off-by: Fourie Zhang <fouriezhang@tencent.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Link: https://patch.msgid.link/20261026131432.26065-1-kaloz@kernel.org
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/xfrm4_output.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/scsi/aic7xxx/aic7xxx_core.c |  8 ++++++--
+ drivers/scsi/aic7xxx/aic7xxx_pci.c  | 20 +++++++++++++++++++-
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv4/xfrm4_output.c b/net/ipv4/xfrm4_output.c
-index 0ae67d537499a..fffa3c4f456ee 100644
---- a/net/ipv4/xfrm4_output.c
-+++ b/net/ipv4/xfrm4_output.c
-@@ -38,9 +38,12 @@ int xfrm4_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+diff --git a/drivers/scsi/aic7xxx/aic7xxx_core.c b/drivers/scsi/aic7xxx/aic7xxx_core.c
+index a396f048a031e..d747d0b72a13a 100644
+--- a/drivers/scsi/aic7xxx/aic7xxx_core.c
++++ b/drivers/scsi/aic7xxx/aic7xxx_core.c
+@@ -5266,9 +5266,13 @@ ahc_init(struct ahc_softc *ahc)
  
- void xfrm4_local_error(struct sk_buff *skb, u32 mtu)
- {
-+	struct sock *sk = skb_to_full_sk(skb);
- 	struct iphdr *hdr;
+ 	/*
+ 	 * Assume we have a board at this stage and it has been reset.
++	 * PCI controllers keep the host ID ahc_pci_config() chose.
+ 	 */
+-	if ((ahc->flags & AHC_USEDEFAULTS) != 0)
+-		ahc->our_id = ahc->our_id_b = 7;
++	if ((ahc->flags & AHC_USEDEFAULTS) != 0) {
++		if ((ahc->chip & AHC_PCI) == 0)
++			ahc->our_id = 7;
++		ahc->our_id_b = 7;
++	}
  
-+	if (!sk)
-+		return;
-+
- 	hdr = skb->encapsulation ? inner_ip_hdr(skb) : ip_hdr(skb);
--	ip_local_error(skb->sk, EMSGSIZE, hdr->daddr,
--		       inet_sk(skb->sk)->inet_dport, mtu);
-+	ip_local_error(sk, EMSGSIZE, hdr->daddr, inet_sk(sk)->inet_dport, mtu);
+ 	/*
+ 	 * Default to allowing initiator operations.
+diff --git a/drivers/scsi/aic7xxx/aic7xxx_pci.c b/drivers/scsi/aic7xxx/aic7xxx_pci.c
+index 2d4c85426dc3e..5a04c7d55e4b5 100644
+--- a/drivers/scsi/aic7xxx/aic7xxx_pci.c
++++ b/drivers/scsi/aic7xxx/aic7xxx_pci.c
+@@ -701,6 +701,21 @@ ahc_find_pci_device(ahc_dev_softc_t pci)
+ 	return (NULL);
  }
+ 
++/*
++ * The SGI O2 firmware runs its onboard controllers, in slots 1 and 2 of the
++ * root bus, without the Adaptec BIOS and at host ID 0.  It leaves no settings
++ * in scratch RAM, which may still hold power-on contents with bad parity.
++ */
++static bool
++ahc_pci_sgi_o2_onboard(struct ahc_softc *ahc)
++{
++	int slot = ahc_get_pci_slot(ahc->dev_softc);
++
++	return IS_ENABLED(CONFIG_SGI_IP32) &&
++	       ahc_get_pci_bus(ahc->dev_softc) == 0 &&
++	       (slot == 1 || slot == 2);
++}
++
+ int
+ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ {
+@@ -782,6 +797,9 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ 	ahc->bus_intr = ahc_pci_intr;
+ 	ahc->bus_chip_init = ahc_pci_chip_init;
+ 
++	if (ahc_pci_sgi_o2_onboard(ahc))
++		ahc->flags |= AHC_NO_BIOS_INIT;
++
+ 	/* Remember how the card was setup in case there is no SEEPROM */
+ 	if ((ahc_inb(ahc, HCNTRL) & POWRDN) == 0) {
+ 		ahc_pause(ahc);
+@@ -898,7 +916,7 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
+ 			 * Assume only one connector and always turn
+ 			 * on termination.
+ 			 */
+- 			our_id = 0x07;
++			our_id = ahc_pci_sgi_o2_onboard(ahc) ? 0 : 0x07;
+ 			sxfrctl1 = STPWEN;
+ 		}
+ 		ahc_outb(ahc, SCSICONF, our_id|ENSPCHK|RESET_SCSI);
 -- 
 2.53.0
 
