@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591316;
-	b=dE2i+KTZYaMHsO9WZ3U4XZuLWKkDf9Sx1HkJ5i+EKMcU9Ykl3T7IFCdB8b4QBCA2Cabh
-	 NbcuLPb00Xi49eI0CAoPr1WqOauUKTGZeDXnO6Bn5uq0HmFUlPThVUUwQM0AdDKgD0B1p
-	 pdXShLjSqRrLpV8v43z2RYGr2g3434h0MEhx5mU168+lCvbmjO5Z0Tg31WoAqSDPHCB7b
-	 Tn7M1XXJMCLs79nvWDBKbceNHAxsGxxHJgBNUedauRox0mp8KnJVpiRP1Ie96en+JGD4T
-	 FFmLmkpzmUkM49nk1fBvoOgPIcdloNDTM0sdVivdTy9b9GJZ3Fkmsv3bHB8N251WRgw==
+	t=1794591317;
+	b=voap7W8RtqCTpRlEVdRp9Q0vG3VahlVitBC8Ls36I3dsftRqWfIYR/GQ2B8z3zlhfPYi
+	 XbE/AskaAUREm4+PdmBvzeREk6BMVudV+fgawuPyWdx6y4ANNGCyrk9sQ9EJaSOPkkoBM
+	 9ah7tw6c12e3auJQLt6FnMjkiF1fabOcCpfMKurXtivKStI/n5UyFtFrbTqH8c7ePfUJw
+	 0lOW/I7NBLpohfNTo5fnmppdYCECyUDoxWFo8Z30/CYA/qYiPDB0idojbd1SC0x8tf7hq
+	 WtLAYBDvEpmP0eb3upFCYeP8NIwAbdr2M8MOsGXhZTTfysFbYAo7qIG+p15MMeoZwJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591316;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YfPhlJhi3D7kmaTmF1+rX2nDT457GuOuukOpMHZufdE=;
-	b=XIjPbrsp/1BicDKKZxlbiKOgllP8c+TDFwlAFMUkh+lnoVX6g6w+m7lYknlgJIW0e7rS
-	 cGh8lPblaySxGfvx5bQ3KmgtLsNeYaS5Y8Ma+imB6NBIpFK+ioMXkezp4sLWEBUJXLglp
-	 ceXaMsuHietX3CSPZ/isBP5/4Hcymcn2JMph9KPBdT1A70KSpBSiBbLwsuZv5xK0vD/NR
-	 0B0ZknxGVpUmDOPDkHvmyJw/q3YBwb4oo7JbdUX89NbFS9vPIiRq2qgMi3C2AClHpSZOu
-	 KPEt2xoOmY+eM2ghTucF+7rFzpcxB4wpBuRbJqbZhztU1vx3LGUeZfGR3ZJS+r/G28Q==
+	bh=5E4FLGd9sfN/eM8ysCrYCxJKmxiS4YWFGg38drWs0Uo=;
+	b=AG/E8eD3PhHuHUYtmSlBnLIqAiCILqVKOlkHlSj1WeqTE6Yn0u5abedRukPQKbk4XwSU
+	 C5olyecZ7OmK6Qi5hU6LYyhYu5L5eDfgoJTuQU8vfWXvmQ2+OXE5skxpVRdrnLlIl9IW5
+	 7yzfXtjUGx7gpbeoxRPve3Ax6MxWqmVLNViBhi064coXqMH4Td/oj7rSR/IQsSlzl9LdM
+	 lMHZvcyP1bxaDF641+3k3/Tw6TEhBM9+PWwwwa47qsi2WSaZ4FRoGkOL9qe48v4Xulhcj
+	 iYE78Ai01BAzOoYfSe0GpWW/KcBaMJJeNeTmVr8sjsYVB3Na3iROgBolLMWVSa8Gzyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q/ZHVwRY";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1rS1yku;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B14606B21F;
-	Fri, 13 Nov 2026 17:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31189606B220;
+	Fri, 13 Nov 2026 17:35:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q/ZHVwRY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABA71F000C4;
-	Fri, 13 Nov 2026 17:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1rS1yku
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D10551F000C5;
+	Fri, 13 Nov 2026 17:35:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591315;
-	bh=YfPhlJhi3D7kmaTmF1+rX2nDT457GuOuukOpMHZufdE=;
+	s=korg; t=1794591317;
+	bh=5E4FLGd9sfN/eM8ysCrYCxJKmxiS4YWFGg38drWs0Uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q/ZHVwRYiwcLH8zP1Iv90+POOMs+kjBNJVdA4etRID3PGf4goD35sUA6+o9PODmEH
-	 BgmlFi3dcu/CkxKvt1VHgJq/dqR4HYOL6CjrCG+KnPmDHVVsY5Dl9chcOWR9Kap9wc
-	 tvMTkLLsS6dId+4RhWWTTWqKpZ5k8tAmuZFPQno8=
+	b=I1rS1ykubRADqQoGeOhGYHDGZdhzMAH/Tqn4IKhn7jEsfxapSQAHJcSCU894sXwji
+	 TNfQGS3lG/7JNXOUi9q+3oGdAFJOpeDMlewQDWrqoXrtY1ha662fZwR6NFoxtxDsj0
+	 Tgzz+zRrJ0Ti0okdD9m02Q+a7c4VdjIdblRNs43A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Breno Leitao <leitao@debian.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 388/670] perf/core: Dont send SIGTRAP after exec removed the event
-Date: Fri, 13 Nov 2026 10:49:12 -0500
-Message-ID: <20261113153824.909805760@linuxfoundation.org>
+Subject: [PATCH 6.12 389/670] x86/nmi: Ignore negative NMI handler durations
+Date: Fri, 13 Nov 2026 10:49:13 -0500
+Message-ID: <20261113153824.941099834@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,72 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 6f083fbccd5f06889bc08e1182bd02c0383b9121 ]
+[ Upstream commit ade63af6cfb7b3ca19ced28730fd6461e8d1d410 ]
 
-A sigtrap event must also set remove_on_exec, so that its SIGTRAP never
-reaches a program after exec. But the signal is sent from task work,
-which only runs on the way back to user space. If the event overflows
-shortly before execve(), the task work can still be pending when the
-task enters execve(), and then runs when execve() returns. By then
-perf_event_exec() has removed the event and the new program has default
-signal handlers, so the SIGTRAP kills it.
+I am seeing NMI handlers in the Meta fleet reported as running for
+about 584 years. Over 30 days, 11 AMD and Intel machines logged 637
+such lines, for example:
 
-The exec_stress test in the remove_on_exec selftest catches this and
-fails about half the time in a VM. A process that opens a sigtrap event
-on itself and then calls execve() is killed by SIGTRAP in 15% to 50% of
-runs, both on an AMD machine running v7.2 and in a VM, with or without
-close-on-exec on the event fd.
+  AMD EPYC 9D25 (family 0x1a, model 0x11, stepping 0x0):
+  [ 1650.616627] INFO: NMI handler (nmi_cpu_backtrace_handler.llvm.9643156322683129580) took too long to run: 18446744073709.551 msecs
 
-Commit ffb684f2aa14 ("perf: Fix race between perf_event_exit_task() and
-perf_pending_task()") made perf_sigtrap() return once
-perf_event_exit_task() has set ctx->task to TASK_TOMBSTONE. Exec only
-calls perf_event_exit_task() when the new program is not dumpable, such
-as a setuid one. An ordinary exec keeps the context and only removes the
-remove_on_exec events, so the SIGTRAP is still sent.
+  Intel Xeon Platinum 8321HC (family 0x6, model 0x55, stepping 0xb):
+  [360448.230129] INFO: NMI handler (perf_event_nmi_handler) took too long to run: 18446744071018.936 msecs
 
-perf_event_exit_event() sets PERF_EVENT_STATE_EXIT when exec removes the
-event. If the event fd is close-on-exec and was the last reference to
-the file, exec also queues the file release as task work. Task work runs
-newest first, so perf_release() runs before the SIGTRAP work and moves
-the event on to PERF_EVENT_STATE_DEAD. So don't send the signal when the
-event state is PERF_EVENT_STATE_EXIT or lower, which means the event has
-been removed. That also covers PERF_EVENT_STATE_REVOKED, where the PMU
-is gone.
+  Intel Xeon D-2191A (family 0x6, model 0x55, stepping 0x4):
+  [81787.188959] INFO: NMI handler (ghes_notify_nmi) took too long to run: 18446744073709.545 msecs
 
-Fixes: 97ba62b27867 ("perf: Add support for SIGTRAP on perf events")
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+nmi_handle() times each handler with two sched_clock() reads. When the
+second read is lower than the first, the u64 subtraction wraps, and
+nmi_check_duration() treats the result as a duration. In the three
+examples, the clock went back by less than 1 us, by 2.7 s and by about
+6 us.
+
+The wrapped value is also stored in action->max_duration. Every later
+real duration is smaller, so the handler is never reported again until
+the next boot.
+
+Whatever makes the clock read lower, a negative difference is not a
+duration, so return before it is stored or reported. A clock that steps
+forward is not covered, since that cannot be told from a real stall.
+
+A backwards clock is still worth knowing about, so print the size of
+the step once per boot. This uses pr_warn_once() rather than WARN, as a
+stack trace says nothing about the clock and panic_on_warn machines
+should not go down for it.
+
+Fixes: 2ab00456ea8a ("x86: Warn when NMI handlers take large amounts of time")
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015152013.106040-1-danishkhateeb03@gmail.com
+Link: https://patch.msgid.link/20261027-nmi_negative-v1-1-b436a005eb8a@debian.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/x86/kernel/nmi.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index d14cf23a16a63..21a54cedd854b 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6916,6 +6916,15 @@ static void perf_sigtrap(struct perf_event *event)
- 	if (event->ctx->task == TASK_TOMBSTONE)
+diff --git a/arch/x86/kernel/nmi.c b/arch/x86/kernel/nmi.c
+index 9a95d00f14233..49b3cc215a6ac 100644
+--- a/arch/x86/kernel/nmi.c
++++ b/arch/x86/kernel/nmi.c
+@@ -120,6 +120,14 @@ static void nmi_check_duration(struct nmiaction *action, u64 duration)
+ {
+ 	int remainder_ns, decimal_msecs;
+ 
++	/* sched_clock() went backwards? */
++	if ((s64)duration < 0) {
++		pr_warn_once("NMI handler (%ps): sched_clock() went backwards by %lld ns on CPU%d\n",
++			     action->handler, -(s64)duration,
++			     smp_processor_id());
++		return;
++	}
++
+ 	if (duration < nmi_longest_ns || duration < action->max_duration)
  		return;
  
-+	/*
-+	 * The event was removed after this signal was queued, e.g. by exec()
-+	 * (remove_on_exec), which may also have closed its fd (close-on-exec).
-+	 * The new program has default signal handlers, so a SIGTRAP would
-+	 * kill it.
-+	 */
-+	if (READ_ONCE(event->state) <= PERF_EVENT_STATE_EXIT)
-+		return;
-+
- 	/*
- 	 * We'd expect this to only occur if the irq_work is delayed and either
- 	 * ctx->task or current has changed in the meantime. This can be the
 -- 
 2.53.0
 
