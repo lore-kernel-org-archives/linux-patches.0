@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590972;
-	b=hK/YXe9otRF5nadc1q1nsbhHkxJUdVpvwZfS8dgmqExO19RBY4IwzvB6mMVHwyjvzK5P
-	 xmNoUj73aRDbwe270WmfmSfqgpj75VisCjNslmvOrzWsA7Y6TDv80AjlsotVlDcu29HLA
-	 4qPD1Z0sHHD8eqmfUH6ci31sDZ7HtUmNCkGpnKKAvsMoCXSXIXUaE4RciZ2uMMK/b2Hih
-	 hw4tMYT3BZRQxDMO4aAjqw97s3GSubNbGpYgMFgyw7GOhtsE8211hqzZKDdGaWDkTBy5a
-	 nSyKQZQZDA25x18qdS1Huk8/Kna33Gidj9nieyUXa0r7etW/nel5O8pDnmvoMYHqJSA==
+	t=1794590974;
+	b=puAo5j8/J3qbHCnVcecuiQCr3WljvlJMKxC3Eyk/TwwQrVvuuHPfqCAh4VycABLXu+tD
+	 7dHGxjgAVLemlBDwDq9WctHFjNZVd9LOHtd9Lh2vhysotiV9CC4ajKpF/wTNsp1B3ZlsB
+	 hAYzvIweJmMknpW6fumqvbm+f+NzvF4u/EDPmNl04qKs+rvV8uyEoLi8KDeLCplZ6L/f+
+	 +MPUWCxRV3Ul675WKeUh/yrRHGxhRyWYeBSNl0JHzFe+FB+erx8vVznAynKDUWj3pMoTQ
+	 2+HhAujcSlEurSjVQjWcyNZ8+SIsAbjFhlL3+9e49bOqtuhAaQhMAjNYPyZ9dtF+q1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590972;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590974;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=KySVHTu01w/w2MgAMmKG43IZnH3i+yo+2mOm7bxGeiU=;
-	b=regK/9hxmV0slmCde5SE0cfxPZ+7xcfZoD/K0wQae1VRfcP/edSsQXR+grndgNV0kWZ+
-	 PiI/z9BAzK2lJq3C+d8ZSa3icRI1jgbYt5Np9174ruPbYZhYVDp9GAXJzKAGW/4KxEIMx
-	 Pd+NSo4JbRdg9QsY25fGRTna0Tho8Qo0TFQGXiBcWfBS5eoFrB6CHVyVzUP13tKNxfynS
-	 6pcrkbGk/txMJP+nmkhWBt4NXhhyOZhw+AFF78OPNPnh0IrpA0m7jCCZ9iNJg/1oD927I
-	 00Q34ub9JOpan01Jp34wk70j75pBLqoV5doGvqSKDWOTvAtlnokHp1CUAE+/biOGsxA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=K9zRW+n1ai7bgxqXDZV0+bHpqOsPa9dUiv+2pwS037w=;
+	b=HC2cgF334sT+qZzjdD/ufDXpND1/gIsUOpjcoRVJLYI5TkKLNOUiUZ9zF3KSJOOnU48U
+	 XNpv73kMYvAGYbdyx39HjonLCm08lgwUe7HcU0AOtsKfOJ+5lEFEvexh98dA6FwbNVcE2
+	 3DksruNHCp6NSQES2/a5Xay6RAbUVTy8rRyTBLRP3sUqiekHpxTYYwYaO1bY430n8pFyf
+	 EIdg/AxDRZqmsFeJE0Ql1Pozs6WfjlM2ADXj/+t5DPXB7B4zEgmfmMeuHaGfy85sSy/nt
+	 O+WuRtYpt23MD1qOSDdNHCFGppG6F4UXg21m6O2GIegI0vpuQsRv0sUYz7vLhRJXLQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDQdpLa0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixBLRGjj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE49C606F729;
-	Fri, 13 Nov 2026 17:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079B9606E65E;
+	Fri, 13 Nov 2026 17:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDQdpLa0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB061F000C4;
-	Fri, 13 Nov 2026 17:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixBLRGjj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79F21F000C4;
+	Fri, 13 Nov 2026 17:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590972;
-	bh=KySVHTu01w/w2MgAMmKG43IZnH3i+yo+2mOm7bxGeiU=;
+	s=korg; t=1794590973;
+	bh=K9zRW+n1ai7bgxqXDZV0+bHpqOsPa9dUiv+2pwS037w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IDQdpLa0noPqwaEENrUTEml40LC6syb12FwJL6ksgns+u2FEYrKr+aZ3/A/RTQKsp
-	 Oo5PIrmEUta0DAQA+nyl5O1wJU/SFZvDx4OgagZjmjMY+nGTcLH+woIcCbtYzsNbAf
-	 grgEOOveJkyXYs11PGUnLWwN8gFfkAvA4to9Bu/M=
+	b=ixBLRGjjAIi7vLE5in9T02I3A83hmepGUW/xDoBNmf/tmFSXwouVPDcQ0+QErcC9F
+	 2o9ijsH49/+3f3AcFdVfpvnShis3/rGRa+aervq6yNqVqNbeq8Xt459Iac5QcNKH48
+	 lWXNwirp9JH5mu1fBy09gqwSYOjJ4tAbmneC1RUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Pauk <pauk.denis@gmail.com>,
-	=?UTF-8?q?Tom=C3=A1=C5=A1=20B=C5=BEatek?= <bugs@bzatek.net>,
-	Theunis Scheepers <ptscheepers@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	stable@kernel.org,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/670] hwmon: (nct6775) Add ASUS X870/W480 to WMI monitoring list
-Date: Fri, 13 Nov 2026 10:44:21 -0500
-Message-ID: <20261113153815.184918741@linuxfoundation.org>
+Subject: [PATCH 6.12 144/670] media: require two-byte Cypress type 04 records
+Date: Fri, 13 Nov 2026 10:45:08 -0500
+Message-ID: <20261113153816.755494448@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -64,145 +63,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Pauk <pauk.denis@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 21518579cbdeb4e86a6fffbc3d52f52bd74ab87e ]
+[ Upstream commit e22872703386c3885d8c6bd595124587bc4e5081 ]
 
-Boards such as
-* G15CE,
-* PRIME X870-P WIFI,
-* PRIME X870-P,
-* Pro WS W480-ACE,
-* ProArt X870E-CREATOR WIFI,
-* ROG CROSSHAIR X870E APEX,
-* ROG CROSSHAIR X870E DARK HERO,
-* ROG CROSSHAIR X870E EXTREME,
-* ROG CROSSHAIR X870E GLACIAL,
-* ROG CROSSHAIR X870E HERO BTF,
-* ROG CROSSHAIR X870E HERO,
-* ROG STRIX X870-A GAMING WIFI,
-* ROG STRIX X870-F GAMING WIFI,
-* ROG STRIX X870-I GAMING WIFI,
-* ROG STRIX X870E-E GAMING WIFI,
-* ROG STRIX X870E-E GAMING WIFI7 R2,
-* TUF GAMING X870-PLUS WIFI,
-* TUF GAMING X870-PRO WIFI7 W NEO,
-* TUF GAMING X870E-PLUS WIFI7,
-* W480/SYS,
-* X870 AYW GAMING WIFI W,
-* X870 MAX GAMING WIFI7 W,
-* X870 MAX GAMING WIFI7
-have got a nct6775 chip, but by default there's no use of it because of
-resource conflict with WMI method.
+Both Cypress Intel HEX parsers read two address bytes from type 04
+records. Generic record framing permits any record length, so a short
+record can make the parser consume the checksum or bytes beyond the
+firmware record. A longer record also violates the Intel HEX type 04
+layout.
 
-Add the boards to the WMI monitoring list.
+Require the type 04 payload length to be exactly two bytes in both
+implementations.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=204807
-Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
-Tested-by: Tomáš Bžatek <bugs@bzatek.net>
-Tested-by: Theunis Scheepers <ptscheepers@gmail.com>
-Link: https://lore.kernel.org/r/20260322131848.6261-1-pauk.denis@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 79a63c60a6a2 ("[media] media: move dvb-usb-v2/cypress_firmware.c to media/common")
+Fixes: 776338e121b9 ("[PATCH] dvb: Add generalized dvb-usb driver")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-platform.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ drivers/media/common/cypress_firmware.c      | 2 ++
+ drivers/media/usb/dvb-usb/dvb-usb-firmware.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
-index 8016f146d90df..4b0003280f11f 100644
---- a/drivers/hwmon/nct6775-platform.c
-+++ b/drivers/hwmon/nct6775-platform.c
-@@ -1158,6 +1158,7 @@ static const char * const asus_wmi_boards[] = {
- 	"Pro A520M-C",
- 	"Pro A520M-C II",
- 	"Pro B550M-C",
-+	"Pro WS W480-ACE",
- 	"Pro WS X570-ACE",
- 	"ProArt B550-CREATOR",
- 	"ProArt X570-CREATOR WIFI",
-@@ -1257,6 +1258,7 @@ static const char * const asus_wmi_boards[] = {
- 	"TUF Z390-PRO GAMING",
- 	"TUF Z390M-PRO GAMING",
- 	"TUF Z390M-PRO GAMING (WI-FI)",
-+	"W480/SYS",
- 	"WS Z390 PRO",
- 	"Z490-GUNDAM (WI-FI)",
- };
-@@ -1269,6 +1271,7 @@ static const char * const asus_msi_boards[] = {
- 	"EX-B760M-V5 D4",
- 	"EX-H510M-V3",
- 	"EX-H610M-V3 D4",
-+	"G15CE",
- 	"G15CF",
- 	"PRIME A620M-A",
- 	"PRIME B560-PLUS",
-@@ -1319,6 +1322,8 @@ static const char * const asus_msi_boards[] = {
- 	"PRIME X670-P",
- 	"PRIME X670-P WIFI",
- 	"PRIME X670E-PRO WIFI",
-+	"PRIME X870-P",
-+	"PRIME X870-P WIFI",
- 	"PRIME Z590-A",
- 	"PRIME Z590-P",
- 	"PRIME Z590-P WIFI",
-@@ -1361,11 +1366,18 @@ static const char * const asus_msi_boards[] = {
- 	"ProArt B660-CREATOR D4",
- 	"ProArt B760-CREATOR D4",
- 	"ProArt X670E-CREATOR WIFI",
-+	"ProArt X870E-CREATOR WIFI",
- 	"ProArt Z690-CREATOR WIFI",
- 	"ProArt Z790-CREATOR WIFI",
- 	"ROG CROSSHAIR X670E EXTREME",
- 	"ROG CROSSHAIR X670E GENE",
- 	"ROG CROSSHAIR X670E HERO",
-+	"ROG CROSSHAIR X870E APEX",
-+	"ROG CROSSHAIR X870E DARK HERO",
-+	"ROG CROSSHAIR X870E EXTREME",
-+	"ROG CROSSHAIR X870E GLACIAL",
-+	"ROG CROSSHAIR X870E HERO",
-+	"ROG CROSSHAIR X870E HERO BTF",
- 	"ROG MAXIMUS XIII APEX",
- 	"ROG MAXIMUS XIII EXTREME",
- 	"ROG MAXIMUS XIII EXTREME GLACIAL",
-@@ -1403,6 +1415,11 @@ static const char * const asus_msi_boards[] = {
- 	"ROG STRIX X670E-E GAMING WIFI",
- 	"ROG STRIX X670E-F GAMING WIFI",
- 	"ROG STRIX X670E-I GAMING WIFI",
-+	"ROG STRIX X870-A GAMING WIFI",
-+	"ROG STRIX X870-F GAMING WIFI",
-+	"ROG STRIX X870-I GAMING WIFI",
-+	"ROG STRIX X870E-E GAMING WIFI",
-+	"ROG STRIX X870E-E GAMING WIFI7 R2",
- 	"ROG STRIX X870E-H GAMING WIFI7",
- 	"ROG STRIX Z590-A GAMING WIFI",
- 	"ROG STRIX Z590-A GAMING WIFI II",
-@@ -1450,6 +1467,9 @@ static const char * const asus_msi_boards[] = {
- 	"TUF GAMING H770-PRO WIFI",
- 	"TUF GAMING X670E-PLUS",
- 	"TUF GAMING X670E-PLUS WIFI",
-+	"TUF GAMING X870-PLUS WIFI",
-+	"TUF GAMING X870-PRO WIFI7 W NEO",
-+	"TUF GAMING X870E-PLUS WIFI7",
- 	"TUF GAMING Z590-PLUS",
- 	"TUF GAMING Z590-PLUS WIFI",
- 	"TUF GAMING Z690-PLUS",
-@@ -1459,6 +1479,9 @@ static const char * const asus_msi_boards[] = {
- 	"TUF GAMING Z790-PLUS D4",
- 	"TUF GAMING Z790-PLUS WIFI",
- 	"TUF GAMING Z790-PLUS WIFI D4",
-+	"X870 AYW GAMING WIFI W",
-+	"X870 MAX GAMING WIFI7",
-+	"X870 MAX GAMING WIFI7 W",
- 	"Z590 WIFI GUNDAM EDITION",
- };
+diff --git a/drivers/media/common/cypress_firmware.c b/drivers/media/common/cypress_firmware.c
+index cdc7050ed3ac8..3468eff508b02 100644
+--- a/drivers/media/common/cypress_firmware.c
++++ b/drivers/media/common/cypress_firmware.c
+@@ -59,6 +59,8 @@ static int cypress_get_hexline(const struct firmware *fw,
+ 	if (hx->type == 0x04) {
+ 		/* b[4] and b[5] are the Extended linear address record data
+ 		 * field */
++		if (hx->len != 2)
++			return -EINVAL;
+ 		hx->addr |= (b[4] << 24) | (b[5] << 16);
+ 	}
  
+diff --git a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
+index 0fb3fa6100e4a..675d9d1d4f472 100644
+--- a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
++++ b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
+@@ -141,6 +141,8 @@ int dvb_usb_get_hexline(const struct firmware *fw, struct hexline *hx,
+ 
+ 	if (hx->type == 0x04) {
+ 		/* b[4] and b[5] are the Extended linear address record data field */
++		if (hx->len != 2)
++			return -EINVAL;
+ 		hx->addr |= (b[4] << 24) | (b[5] << 16);
+ /*		hx->len -= 2;
+ 		data_offs += 2; */
 -- 
 2.53.0
 
