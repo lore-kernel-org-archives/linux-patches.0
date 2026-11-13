@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590675;
-	b=OdzTT0nZtU6uWXDNNQKYmT8vj0xPT9qwv0ZeGzu/jjoIjcue8oCCjnReLoIKyoUnbPJw
-	 M/zMQ9Y6Xtq6XWPOFgWayqYuGGsTfwXawkcMQycoOeTr41iC8/HN83fJeDO6VdJCjlUDH
-	 TMclab3WwN68RvqxaAyZgfPWWn0bpOz1V10yvKJ+a2dgMatoAQa6MncCtqTSaY8zffTFr
-	 YUBZsUQ1qqAwbUXF4hajKG5fA9q8X8CRZKn/2w65sesfelqE8zQgo3YSoh9fdT813plKo
-	 sYAD6xbE1/urWlhHjPiqXp2WQCsPnbaZFbODyW2xeG9EWjdd3buvOzrZ+NfBPYIskUA==
+	t=1794590676;
+	b=1DcPjXRhCZuwyc4mDVWJ0t9Pca2g4ktyXg2ixwQqKyuz35fKNZ7bPpRx3gRmRsb/yaim
+	 WRBPiAOzldXxfJDK/b32CZqPajr2OUsjpadWl48L19XeGqfmx6k8N91pu5II2eTcWFPL0
+	 xDYT/0QCr0fYDH+iUZXJQFePiYf+zMpc61q5y7wfNkS9vQaahAsFt/sWcBPX6yNfzSWgD
+	 f8Z2SJy065EFODxXWPwyX3M6HfLtBi+mWQ8BJiWZ81xtaMYVUn994RWOguYOMBJXog+PS
+	 3GpG7UCh89i82A+2jPXlGvj6OtM5KnItKkJsuWdD04qp5dt/U0LchTFSleGMmSewYgg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590675;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590676;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=adavp3ZOB7hy+FC5oWoRL4yQ8NjAonvH1oiuBwtHqDA=;
-	b=A6E+QlT6MQ8uIKoMWrqLGYZsnDbP6ncFT9+jYEHkQ4IQAeNaIJbEOaxD0O7jfkhgThGL
-	 k2Et7XBDvkbGqHpI75aFPP7QQ1+wgpZ2rXzH9mlcJpxo+yxODiPwLgXHW+KyIcj5jHww/
-	 sEYYykyNu03rGVUNhrOOHVYy5XjuPoXrAj/AdtCoYkMuwuaTqxhldVxRbXR+5DOypAk1V
-	 q7CuZLttj/o9IVBM7llVW1Ta3fN8Kv/ugFtQj0Y7AYVtFhUS5K324kvoW+qy1R8VldxX/
-	 OoJ1r0SIi8TiYqiT9Wew31w+soyUcIgjBsBZsW3LpWNIrUC6dMVp/aI9rJz5UL7I0mw==
+	bh=Jno37AdjN78u7vja7d9NzY/4fbbFUMiSH0dDpvP1FkY=;
+	b=xXkU+xAM84wnUd7cxEbHWIBRVjTaqcC7S7s5ESwJ1hcOBwF3rqYFTIy8v08I9I+Vo7YB
+	 y1M+2sU54SzBsfEFdQ0D1PIkNu3Jnn6Ek6PI6r0MOw6iqYg2B6XPs5G2dR8CKlBIomECd
+	 Qtzl3S8EjEMke8qnzcDEvp5nCQobkglTd/RaytP7rqp8n3VD8bt3VZJCcj/YKTl+i35au
+	 htS3yJZE+veGBprtuGyZFAcY18LOHqQLNYvLRIbYN4iUhqH8QXkWhrb/icTc5GtCobqDs
+	 8xXT3Nj4vK8Z9ptZeRF6ZEKASJaPFJm7I/fLO1MNeXN93183qfxa/YLk6u1vFlrgsZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pKeS/igT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LfLu0A5e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC8E606B223;
-	Fri, 13 Nov 2026 17:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BD6606B223;
+	Fri, 13 Nov 2026 17:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pKeS/igT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168FC1F000C4;
-	Fri, 13 Nov 2026 17:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LfLu0A5e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE291F000C4;
+	Fri, 13 Nov 2026 17:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590675;
-	bh=adavp3ZOB7hy+FC5oWoRL4yQ8NjAonvH1oiuBwtHqDA=;
+	s=korg; t=1794590676;
+	bh=Jno37AdjN78u7vja7d9NzY/4fbbFUMiSH0dDpvP1FkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pKeS/igTHl8DvcAKZt/IqyRve/jyCtLXUxiluzHtmsRwMFp8/RGwmMg7UiAHXmxTk
-	 NHXlUAM80CnMFIPRnS1BFDI2Sna99T3OlpNjIK5Zy81Ab+672A9sX2DiQRnOxNkRTI
-	 jnL88wvScpNsHPbMyMBbxLyDWygIXcK5sktWl54E=
+	b=LfLu0A5ex55Qryzlhp70wDh8skoXAM2ZLMlrQNZ7CaUPJFcqPFpbbEwz6WbrBEPxi
+	 08qHyzVjYra4wFevsRYhhHd8igvdG2qeJMfP/vogwHrTQBizRydBzX/Nk7y1CsdUy+
+	 ZqEAwBdhSgR8l2wE7D0q/vAVUKxInt4hRh68kA58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 589/686] virtiofs: validate fixed-output response length
-Date: Fri, 13 Nov 2026 10:52:02 -0500
-Message-ID: <20261113153841.821305411@linuxfoundation.org>
+Subject: [PATCH 6.18 590/686] rculist: Add hlist_nulls_replace_rcu() and hlist_nulls_replace_init_rcu()
+Date: Fri, 13 Nov 2026 10:52:03 -0500
+Message-ID: <20261113153841.893110007@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,101 +71,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 5364d081125a34e90851fbb46ecc93f79339ce78 ]
+[ Upstream commit 9c4609225ec1cb551006d6a03c7c4ad8cb5584c0 ]
 
-A short successful virtiofs response can leave the fixed-output portion of
-the request argument buffer unwritten.  The completion path nevertheless
-copies the full declared output to the request destination, allowing stale
-allocator contents to reach callers such as fuse_statfs().
+Add two functions to atomically replace RCU-protected hlist_nulls entries.
 
-Require successful fixed-output responses to contain their complete
-declared output.  Continue to permit a shorter final argument only for
-out_argvar requests.  Reject positive and internal restart error values
-and require valid error replies to be header-only.  The error already
-stored in the FUSE output header is returned by fuse_request_end(), so do
-not copy output arguments from an error reply.
+Keep using WRITE_ONCE() to assign values to ->next and ->pprev, as
+mentioned in the patch below:
+commit efd04f8a8b45 ("rcu: Use WRITE_ONCE() for assignments to ->next for
+rculist_nulls")
+commit 860c8802ace1 ("rcu: Use WRITE_ONCE() for assignments to ->pprev for
+hlist_nulls")
 
-This was found by source review with AI assistance.  A header-only
-successful FUSE_STATFS reply returned stale fields in nine of nine calls
-across three boots.  The fixed kernel rejected the short response and
-preserved complete replies, valid negative-error replies, and
-variable-output replies.
-
-Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Link: https://patch.msgid.link/20251015020236.431822-2-xuanqiang.luo@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 2093bc7fa500 ("mptcp: fix MP_CAPABLE token migration when cloning reqsk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ include/linux/rculist_nulls.h | 59 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index 33962e1ad8c12..7075984a89aad 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -726,6 +726,10 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- 	unsigned int num_out;
- 	unsigned int i;
+diff --git a/include/linux/rculist_nulls.h b/include/linux/rculist_nulls.h
+index 89186c499dd47..c26cb83ca0711 100644
+--- a/include/linux/rculist_nulls.h
++++ b/include/linux/rculist_nulls.h
+@@ -52,6 +52,13 @@ static inline void hlist_nulls_del_init_rcu(struct hlist_nulls_node *n)
+ #define hlist_nulls_next_rcu(node) \
+ 	(*((struct hlist_nulls_node __rcu __force **)&(node)->next))
  
-+	/* fuse_request_end() returns this error; there are no args to copy. */
-+	if (req->out.h.error)
-+		goto out;
++/**
++ * hlist_nulls_pprev_rcu - returns the dereferenced pprev of @node.
++ * @node: element of the list.
++ */
++#define hlist_nulls_pprev_rcu(node) \
++	(*((struct hlist_nulls_node __rcu __force **)(node)->pprev))
 +
- 	remaining = req->out.h.len - sizeof(req->out.h);
- 	num_in = args->in_numargs - args->in_pages;
- 	num_out = args->out_numargs - args->out_pages;
-@@ -751,6 +755,7 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- 	if (args->out_argvar)
- 		args->out_args[args->out_numargs - 1].size = remaining;
- 
-+out:
- 	kfree(req->argbuf);
- 	req->argbuf = NULL;
- }
-@@ -758,7 +763,9 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- /* Verify that the server properly follows the FUSE protocol */
- static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
- {
-+	struct fuse_args *args = req->args;
- 	struct fuse_out_header *oh = &req->out.h;
-+	unsigned int expected;
- 
- 	if (len < sizeof(*oh)) {
- 		pr_warn("virtio-fs: response too short (%u)\n", len);
-@@ -773,6 +780,29 @@ static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
- 			oh->unique, req->in.h.unique);
- 		return false;
- 	}
-+	if (oh->error <= -ERESTARTSYS || oh->error > 0) {
-+		pr_warn("virtio-fs: invalid error value (%d)\n", oh->error);
-+		return false;
-+	}
-+
-+	if (oh->error) {
-+		if (len != sizeof(*oh)) {
-+			pr_warn("virtio-fs: error response too long (%u)\n", len);
-+			return false;
-+		}
-+		return true;
-+	}
-+
-+	expected = sizeof(*oh) +
-+		   fuse_len_args(args->out_numargs, args->out_args);
-+	if (len > expected ||
-+	    (len < expected &&
-+	     (!args->out_argvar ||
-+	      expected - len > args->out_args[args->out_numargs - 1].size))) {
-+		pr_warn("virtio-fs: invalid response length (%u, expected %u)\n",
-+			len, expected);
-+		return false;
-+	}
- 	return true;
+ /**
+  * hlist_nulls_del_rcu - deletes entry from hash list without re-initialization
+  * @n: the element to delete from the hash list.
+@@ -152,6 +159,58 @@ static inline void hlist_nulls_add_fake(struct hlist_nulls_node *n)
+ 	n->next = (struct hlist_nulls_node *)NULLS_MARKER(NULL);
  }
  
++/**
++ * hlist_nulls_replace_rcu - replace an old entry by a new one
++ * @old: the element to be replaced
++ * @new: the new element to insert
++ *
++ * Description:
++ * Replace the old entry with the new one in a RCU-protected hlist_nulls, while
++ * permitting racing traversals.
++ *
++ * The caller must take whatever precautions are necessary (such as holding
++ * appropriate locks) to avoid racing with another list-mutation primitive, such
++ * as hlist_nulls_add_head_rcu() or hlist_nulls_del_rcu(), running on this same
++ * list.  However, it is perfectly legal to run concurrently with the _rcu
++ * list-traversal primitives, such as hlist_nulls_for_each_entry_rcu().
++ */
++static inline void hlist_nulls_replace_rcu(struct hlist_nulls_node *old,
++					   struct hlist_nulls_node *new)
++{
++	struct hlist_nulls_node *next = old->next;
++
++	WRITE_ONCE(new->next, next);
++	WRITE_ONCE(new->pprev, old->pprev);
++	rcu_assign_pointer(hlist_nulls_pprev_rcu(new), new);
++	if (!is_a_nulls(next))
++		WRITE_ONCE(next->pprev, &new->next);
++}
++
++/**
++ * hlist_nulls_replace_init_rcu - replace an old entry by a new one and
++ * initialize the old
++ * @old: the element to be replaced
++ * @new: the new element to insert
++ *
++ * Description:
++ * Replace the old entry with the new one in a RCU-protected hlist_nulls, while
++ * permitting racing traversals, and reinitialize the old entry.
++ *
++ * Note: @old must be hashed.
++ *
++ * The caller must take whatever precautions are necessary (such as holding
++ * appropriate locks) to avoid racing with another list-mutation primitive, such
++ * as hlist_nulls_add_head_rcu() or hlist_nulls_del_rcu(), running on this same
++ * list. However, it is perfectly legal to run concurrently with the _rcu
++ * list-traversal primitives, such as hlist_nulls_for_each_entry_rcu().
++ */
++static inline void hlist_nulls_replace_init_rcu(struct hlist_nulls_node *old,
++						struct hlist_nulls_node *new)
++{
++	hlist_nulls_replace_rcu(old, new);
++	WRITE_ONCE(old->pprev, NULL);
++}
++
+ /**
+  * hlist_nulls_for_each_entry_rcu - iterate over rcu list of given type
+  * @tpos:	the type * to use as a loop cursor.
 -- 
 2.53.0
 
