@@ -1,52 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591604;
-	b=YY8JHb92IbxazB3aS4vZyzJt47P1BKH7v78iAX1ZuZ7qqJzS/mp3p+7FxyXt0ZUNKSLk
-	 B3oII50p9UxzXfjAQhFAPuD9WNKxl4mLBEYuHPUXpPeAJQF0jmEafd7GeyTGbBDZ5irfo
-	 5t5Jib6VlwAO5Z+iBrNITZqW4r21Zc5dMWlppP0Q0P5WhGekR/8RzG0AA5siNb/zc5hNX
-	 OhS+D/xqIRZOBZq2tb0HQi/zJFiwzQvmWXBpX7ZCsM+OzNuTc+2IPX8BxDzhrhbtiesJ9
-	 u/PIoMGYB0ZAkPUAKZgy2y2+uIU/wa49yUJdU4O5jZS4yQa7u+OUOuDPl0tF7lS0FCg==
+	t=1794591605;
+	b=VpcN66QHWKxhtJPMPyInwIIgH4Ppr/4Nx+qiYTAneCrTT22mXqZURpzOVE9ku72UUZUz
+	 lxxdRG2zqXyekmBSorhGAfNcgVYt8fGsEfCdd66i5x2Of19RhZ5W4rAhuCU3Oamv+TZfU
+	 imiByLLhKwWApVvO4feoMovEgH/tYlW6hHhN407/cGJxE71DX0j26s23PZnEsjo/nxKVK
+	 OtWKG1wSFelkJRs9XbkcYWCH1Ib8ixp0snszKNT958Prbhv9uWN/GFKKR21gsOJAhJixu
+	 Tf2j9oK4j6aq/RJu57VdUCbgwFrI4yHv+0fvoAwp1uIniOZobk8mVEEpjTum33Asy3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D/Y0tU54QMdrH+tJdnciEO/iJujmKJyFAQWx1G85bFo=;
-	b=GxHGLRg7xkvJGNgIgp053NhMPF7AUMbvfWMMgZuo8BcjjJusw+XZK5iYh3AzWHkuqkyY
-	 ttArYg4r/uviXugOsuRptaHkJbiqV1qymOTi0KJSXl05xXB055HYA1/Ahb5LrBBye4/VH
-	 0TiV8IrnYD31Q4KAGgKn2IPAE+aTARyXsvy0xmel+Py2TTl6U23BA6tRU0BHD/r/aA91S
-	 3DyliuXRmsiWG6mHg1XUqlKlQ1E3pBfMdba3UaYODeAJ66nNWjic6LNN2HpKcHeH0iet7
-	 fbtG0PvJg7bSAciZLNOa7j9iyMqqEpxjv73D9PtctJslPUWkzlTWT9UX7zeRjoYCiuA==
+	bh=BAF0wOrsVHmY8iZcmD7RronTrrvVb0jsp5zO/mrLX8Y=;
+	b=botEmNeobV4+Z722eYKKK08SNAwUFm9my6C85iGDEYLUpCKSu/KWI60CD8aZGBiIuDbi
+	 BHds8VTG5BhLX220QnkRjnCfqQOqlkEY65ixh72V9iZ8YDaX/KqFG+YbsA95v3f7eyo8i
+	 04wp1ioC2rlJ3Qu9DlyV4XCVJDmiLEZi5wW0qauhq+vCHgUuAU38x0j2hyfDcsGSMd0GD
+	 dkpu+qXh5UC74zBX48gY6fMcOMMO6gfHel4sHqkUQKkiSmFliOtloF/Sfc97q22wYOo9A
+	 aEFLArtvJ0iIcYwbouihmvPiOWyzhlk7X1Bs9w2dZabee9fJQUZDXvELI5TYGvBLniQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CFLDR0bl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ope2Y5v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAF2606B449;
-	Fri, 13 Nov 2026 17:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B698A606B452;
+	Fri, 13 Nov 2026 17:40:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CFLDR0bl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2683E1F000C4;
-	Fri, 13 Nov 2026 17:40:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ope2Y5v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB781F000C4;
+	Fri, 13 Nov 2026 17:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591604;
-	bh=D/Y0tU54QMdrH+tJdnciEO/iJujmKJyFAQWx1G85bFo=;
+	s=korg; t=1794591605;
+	bh=BAF0wOrsVHmY8iZcmD7RronTrrvVb0jsp5zO/mrLX8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CFLDR0bllxLN6qI2Hh9lSG8BrTwceMGmDkds0HMBPdDK56hgSSRWmDGdhpDll6MaK
-	 QY6ssr11c1T/3cqig4Yco+KKDHPByr5T+U+RsykfibfqGKhgVKISWVhLaaSBGwNc3o
-	 ZHGN9ExmL+zoQrxQ/hi4CCYggWyFGiaG6QKfveOg=
+	b=1ope2Y5vB+dJK1cMbCyg+Tj4fL48Jo2vYr+BOoywWlsgO6rSwGAjIqiunqt20/+Vo
+	 dq8S66L6maJ2y49HhEkgf/bzoy6m42eTEu/jBwvH2n9PKswHgZuBqcZyIgdcMArug3
+	 5i9zeH5x1WkMHGk5YX01bvlN9VP2e3acf6AB4P/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Carlier <devnexen@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	shaos <shawnq1@163.com>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Xueyuan Chen <xueyuan.chen21@gmail.com>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Mike Rapoport <rppt@linux.vnet.ibm.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 645/670] media: ipu6: Fix firmware config leak on stream start
-Date: Fri, 13 Nov 2026 10:53:29 -0500
-Message-ID: <20261113153833.663288209@linuxfoundation.org>
+Subject: [PATCH 6.12 646/670] mm/vma: avoid broken uffd merge on mremap
+Date: Fri, 13 Nov 2026 10:53:30 -0500
+Message-ID: <20261113153833.696946559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,108 +79,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Carlier <devnexen@gmail.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit d3d9bc694fe087c672c3ad5871984dc45cd9f425 ]
+[ Upstream commit 68cb098eadda190783f8f8bdf9fe764df59f7d32 ]
 
-ipu6_isys_fwcom_cfg_init() runs on every first stream start and allocates
-the firmware config and queue configs with devm, so each STREAMON/STREAMOFF
-cycle leaks them. They are only needed until ipu6_fw_com_prepare() has
-copied them, so free them right after. Also check the return value, an
-allocation failure would otherwise make ipu6_fw_com_prepare() dereference
-a NULL queue config.
+Userfaultfd often causes unexpected interactions within mm, and does so at
+the intersection of uffd, mremap() and VMA merging.
 
-Fixes: f625e8d7ffc1 ("media: intel/ipu6: input system ABI between firmware and driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-[ sashal: Adapted fwcom_cfg and isys->fwctx to existing fwcom and isys->fwcom names with cleanup inlined in the caller. ]
+When an mremap of a VMA occurs, copy_vma_and_data() calls
+mremap_userfaultfd_prep() to notify uffd of this.
+
+However, mremap_userfaultfd_prep() simply drops the UFFD context for the
+VMA if the user did not register it for remap, i.e. didn't specify the
+UFFD_FEATURE_EVENT_REMAP flag.
+
+This is OK for the VMA itself, as upon page table move, move_ptes() clears
+UFFD page table flags, using vma_has_uffd_without_event_remap() to
+determine whether to do so.
+
+However, this doesn't account for merging with adjacent VMAs, whose page
+tables won't have received this treatment, and thus latent UFFD markers
+will be left around.
+
+Worse, it'll break UFFD for any VMAs it is merged with. This is very
+surprising behaviour for a user, who will then simply not receive UFFD
+events for VMAs they ought to.
+
+Resolve the issue by explicitly checking for this case via
+vma_has_uffd_without_event_remap() in vma_merge_copied_range(), the merge
+function explicitly designated for mremap() operations.
+
+Also update the userland VMA tests accordingly.
+
+Link: https://lore.kernel.org/20261020-uffd-remap-fix-v1-1-0f34fc181f0a@kernel.org
+Fixes: 3cfd22be0ad6 ("userfaultfd: clear flag if remap event not enabled")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: shaos <shawnq1@163.com>
+Closes: https://lore.kernel.org/all/20261020110748.959870-1-shawnq1@163.com/
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Xueyuan Chen <xueyuan.chen21@gmail.com>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: moved the merge guard into copy_vma() because vma_merge_copied_range() is absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu6/ipu6-fw-isys.c | 29 ++++++++++++++-------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ mm/vma.c                         | 5 ++++-
+ tools/testing/vma/vma_internal.h | 2 ++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c b/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
-index 62ed92ff1d303..51d02649d7a74 100644
---- a/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
-+++ b/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
-@@ -218,7 +218,6 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
- 	unsigned int max_send_queues, max_sram_blocks, max_devq_size;
- 	struct ipu6_fw_syscom_queue_config *input_queue_cfg;
- 	struct ipu6_fw_syscom_queue_config *output_queue_cfg;
--	struct device *dev = &isys->adev->auxdev.dev;
- 	int type_proxy = IPU6_FW_ISYS_QUEUE_TYPE_PROXY;
- 	int type_dev = IPU6_FW_ISYS_QUEUE_TYPE_DEV;
- 	int type_msg = IPU6_FW_ISYS_QUEUE_TYPE_MSG;
-@@ -228,7 +227,6 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
- 	struct ipu6_fw_isys_fw_config *isys_fw_cfg;
- 	u32 num_in_message_queues;
- 	unsigned int max_streams;
--	unsigned int size;
- 	unsigned int i;
+diff --git a/mm/vma.c b/mm/vma.c
+index 66b0472b7d8a6..85660d67b7942 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -1694,7 +1694,10 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
+ 		faulted_in_anon_vma = true;
+ 	}
  
- 	max_streams = isys->pdata->ipdata->max_streams;
-@@ -236,7 +234,7 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
- 	max_sram_blocks = isys->pdata->ipdata->max_sram_blocks;
- 	max_devq_size = isys->pdata->ipdata->max_devq_size;
- 	num_in_message_queues = clamp(num_streams, 1U, max_streams);
--	isys_fw_cfg = devm_kzalloc(dev, sizeof(*isys_fw_cfg), GFP_KERNEL);
-+	isys_fw_cfg = kzalloc_obj(*isys_fw_cfg);
- 	if (!isys_fw_cfg)
- 		return -ENOMEM;
+-	new_vma = vma_merge_new_range(&vmg);
++	/* If not registered for remap, uffd context will be cleared. */
++	new_vma = NULL;
++	if (!vma_has_uffd_without_event_remap(vma))
++		new_vma = vma_merge_new_range(&vmg);
  
-@@ -248,15 +246,14 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
- 	isys_fw_cfg->num_recv_queues[type_dev] = 0;
- 	isys_fw_cfg->num_recv_queues[type_msg] = 1;
- 
--	size = sizeof(*input_queue_cfg) * max_send_queues;
--	input_queue_cfg = devm_kzalloc(dev, size, GFP_KERNEL);
-+	input_queue_cfg = kzalloc_objs(*input_queue_cfg, max_send_queues);
- 	if (!input_queue_cfg)
--		return -ENOMEM;
-+		goto err_free_fw_cfg;
- 
--	size = sizeof(*output_queue_cfg) * IPU6_N_MAX_RECV_QUEUES;
--	output_queue_cfg = devm_kzalloc(dev, size, GFP_KERNEL);
-+	output_queue_cfg = kzalloc_objs(*output_queue_cfg,
-+					IPU6_N_MAX_RECV_QUEUES);
- 	if (!output_queue_cfg)
--		return -ENOMEM;
-+		goto err_free_input_queue_cfg;
- 
- 	fwcom->input = input_queue_cfg;
- 	fwcom->output = output_queue_cfg;
-@@ -319,6 +316,13 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
- 	fwcom->specific_size = sizeof(*isys_fw_cfg);
- 
- 	return 0;
-+
-+err_free_input_queue_cfg:
-+	kfree(input_queue_cfg);
-+err_free_fw_cfg:
-+	kfree(isys_fw_cfg);
-+
-+	return -ENOMEM;
+ 	if (new_vma) {
+ 		/*
+diff --git a/tools/testing/vma/vma_internal.h b/tools/testing/vma/vma_internal.h
+index 0a95dbb0346fb..213e40afa8ee3 100644
+--- a/tools/testing/vma/vma_internal.h
++++ b/tools/testing/vma/vma_internal.h
+@@ -605,6 +605,8 @@ static inline bool is_mergeable_vm_userfaultfd_ctx(struct vm_area_struct *vma,
+ 	return true;
  }
  
- int ipu6_fw_isys_init(struct ipu6_isys *isys, unsigned int num_streams)
-@@ -332,10 +336,15 @@ int ipu6_fw_isys_init(struct ipu6_isys *isys, unsigned int num_streams)
- 	};
- 	int ret;
- 
--	ipu6_isys_fwcom_cfg_init(isys, &fwcom, num_streams);
-+	ret = ipu6_isys_fwcom_cfg_init(isys, &fwcom, num_streams);
-+	if (ret)
-+		return ret;
- 
- 	isys->fwcom = ipu6_fw_com_prepare(&fwcom, isys->adev,
- 					  isys->pdata->base);
-+	kfree(fwcom.specific_addr);
-+	kfree(fwcom.output);
-+	kfree(fwcom.input);
- 	if (!isys->fwcom) {
- 		dev_err(dev, "isys fw com prepare failed\n");
- 		return -EIO;
++#define vma_has_uffd_without_event_remap(vma) false
++
+ static inline bool anon_vma_name_eq(struct anon_vma_name *anon_name1,
+ 				    struct anon_vma_name *anon_name2)
+ {
 -- 
 2.53.0
 
