@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590964;
-	b=aplDdwaYKwLLotPAwNAQXreOGs0OXl7k1fe3aUkikwS3B8lDgK1aGh4hYThSO5ULO8zo
-	 /mtPNrc/agZde5SLtuNW6UQCmsQNloGjd4hsy2VXMhjyzd29AztWPDVF9PqDAuoKKcTk/
-	 kjQIn2GqahCMvsmTtk0vHOwDhcLV1mDswzDJ/alc5xAIybzM3DOSqLF83H2ug/z5v97UP
-	 DsfT6mhEoBOF83IyVPha4m1WkGu5o9VIcFllQX9geA6jXjIz2Z6LjItKlejmAiEoUOT50
-	 W6/n0QobFqoQJ2vpIEbeddsAvcfPZME4Wogul3p+eGBmKqLSHhdf/xFEnlWKT2uyNcg==
+	t=1794590965;
+	b=aT62MnDcADMQFf4AP9jFbgY6M8SqW+hnk2KNa2R7FnImxZgYQ6aBjVm2fxv6dFJsLcYy
+	 G/b2bvsb78QbsmolsMR4ieyVhCWhUo3gjwvi58Iqy7Qs2j9+B4Kw0dNZWpMUb4Drx+EpS
+	 QzTRwCuoHfXlubEmKsgeiTrDbn6ZlHJHPKkRcRenwsxxV9LdNxFQ4RiKDrwjF2qlhZdTd
+	 RjfrpdWNqyIgg3coEf9L7nR/ldjU9U/nzkf5HpNG157FG/Pkx++IZWl00ryGxTptBDOB5
+	 JhbxUCz+cs5CK+90QC3eRQw20UAshykF2eWKWOPnCATTsDko/oRykMWEEX9M1gYpltw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XDp1aUg34IUUWl37dRfrsidp8EgxAQ7JJ8jDF8yiagw=;
-	b=qqnA6NWqzCBXfudNOH51CzpQzh68L61EjF3N9PMw3T5A5AlImlOfnM9n3AKkiTIDWYht
-	 IRnh8J6Cs+90ME/batyUaQnYbvlAq63pBtslXS7jwyiISuPnBtmlemTTCTae8eYbSkTNK
-	 6E2AarR6ws0Cy634VrG9Fl7dj5R6WY5z/u9zlk5NTtphWTsKiDce3pBfMTLUT/MA80lgF
-	 iaqMM6SVdWCgUkUcd9GWD8RcKrdGP05afLKZZ3i57rbo53gYT4nb6OZ/EkhJ0vztCBdvV
-	 j8w4QFqmpXXvntm1suobKT7vioX8FbJAjSU7FR3VlQG57wXTGL2X4cmwTU+PsoB+BRg==
+	bh=gVspNbKtMe6x6WHYdzyndZrxQlOmX7fz7IGu/aJ5ZV0=;
+	b=BZtyLjQ+XpY6xJq1vdwH3Smr+opFmQSj6az7vOEIU+i6zJT1LRnWjhA8exCkitkY6/ai
+	 U0GGUI/bFR8uB1AAVC46SxI7IG9Or0LjqjHDZQS/vaOK0+Wt6WC7mPS3Rx3YohrpFHLTI
+	 TVxp6y92boE9XD+94CRQVMedXYlN1gwUl7uCPGIHCHqe1kbkLLD31ZbjjQQceW3DvP2Z5
+	 NPYIKsCBwYt50ihsm/pXAap+p2COYSn1kHe/kvp144PtD76DFKUm2DiqNybvkPgHBXfIa
+	 ejRHtHOEAlcYEY1s02yVhQ5vJ122gZPo32e+DX7FlJHawUUKV8ub+yExq7Dz3xh1TyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDaQFD6T;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6lM4MRP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B93606B45C;
-	Fri, 13 Nov 2026 17:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C54D606B45C;
+	Fri, 13 Nov 2026 17:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SDaQFD6T
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2C721F000C4;
-	Fri, 13 Nov 2026 17:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p6lM4MRP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF961F000C4;
+	Fri, 13 Nov 2026 17:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590963;
-	bh=XDp1aUg34IUUWl37dRfrsidp8EgxAQ7JJ8jDF8yiagw=;
+	s=korg; t=1794590965;
+	bh=gVspNbKtMe6x6WHYdzyndZrxQlOmX7fz7IGu/aJ5ZV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SDaQFD6Tw1ozQ1JsWyI/0mWxM/Mj5QrTJnZWZSdFCN/b4mBBGKsIUhZ6vvwlatumw
-	 9SGLF90QTDLe1UntaRLayz5gTwa7tYagW5mrJUhe1qjTFn06HDlOee7ND7d0t+wn8k
-	 TR8MMr9OdZJ8c9RqJRfYFg43dI+roIDP0nwc7fbk=
+	b=p6lM4MRP+ehwGmau6nwpRd78uTxmOHkqPw13AhZEBun0mo1865+rjZrksVf5e5QDi
+	 EN+oLoUMDgSPynew0gJKum79AxhzBJPEhh8cIMU3eBbYOs8VwDdAuPtZ37Kem2MqCp
+	 laIB8NdIVOLNnW7Mp/ZsJIeg4xUDS/vcBoCEybcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 141/670] rose: give the sysctl timer limits in milliseconds
-Date: Fri, 13 Nov 2026 10:45:05 -0500
-Message-ID: <20261113153816.622572660@linuxfoundation.org>
+Subject: [PATCH 6.12 142/670] efi/libstub: arm64: Dont use the platform register x18
+Date: Fri, 13 Nov 2026 10:45:06 -0500
+Message-ID: <20261113153816.650894394@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -67,60 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-Since commit 82e84249f0ee ("[ROSE]: Eleminate HZ from ROSE kernel
-interfaces") the ROSE timer sysctls hold milliseconds, converted with
-msecs_to_jiffies() where they are used, but their limits were left in
-jiffies: 1 * HZ to 300 * HZ for T0 to T3 and the holdback, 60 * HZ to
-600 * HZ for the link fail timeout, up to 65535 * HZ for the idle
-timeout. They only match with HZ=1000. With HZ=100, the largest T1 that
-can be written is 30 s while the default is 200 s, and the default link
-fail timeout of 120 s is refused: once changed, a default can no longer
-be put back. With HZ=250 the limit on T0 to T3 is 75 s.
+commit 4c86b5f3fa78347fa9cbc9e8ec06615b2f80e397 upstream
 
-Seen on a Raspberry Pi node (HZ=100): writing back 200000 to
-call_request_timeout or 120000 to link_fail_timeout fails with EINVAL,
-and 30000 is the largest call_request_timeout accepted.
+The UEFI specification designates x18, the platform register, as "do not
+use" on AArch64, so that UEFI code is compatible both with an OS that
+assigns a fixed role to x18, and with one that uses it as a temporary
+register.
 
-Give the limits in milliseconds. With HZ=1000 nothing changes: on a
-QEMU bench the defaults are accepted, and 999/300001 (T0 to T3),
-59999/600001 (link fail) and 65535001 (idle) are refused, as before.
+The arm64 EFI stub and the EFI zboot decompressor only avoid x18 if the
+kernel is built with shadow call stacks, as that is the only case where
+-ffixed-x18 is added to KBUILD_CFLAGS, which the stub inherits.
+Otherwise, the compiler is free to use x18 as a temporary register, and
+it does so.
 
-Fixes: 82e84249f0ee ("[ROSE]: Eleminate HZ from ROSE kernel interfaces")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit adb6f95e07482fb8aade33a20454b8a2a0fc7953)
+So pass -ffixed-x18 unconditionally when building the stub for arm64,
+so that the image can be run by loaders that rely on x18 being left
+alone, such as a kernel that uses it for its shadow call stack.
+
+Cc: <stable@vger.kernel.org> # 6.12.y and older
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/sysctl_net_rose.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/firmware/efi/libstub/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rose/sysctl_net_rose.c b/net/rose/sysctl_net_rose.c
-index d801315b70839..a82735c34871c 100644
---- a/net/rose/sysctl_net_rose.c
-+++ b/net/rose/sysctl_net_rose.c
-@@ -9,13 +9,14 @@
- #include <net/ax25.h>
- #include <net/rose.h>
+diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
+index 1141cd06011ff..d33c02e587174 100644
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -22,7 +22,7 @@ cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu11 \
  
--static int min_timer[]  = {1 * HZ};
--static int max_timer[]  = {300 * HZ};
--static int min_idle[]   = {0 * HZ};
--static int max_idle[]   = {65535 * HZ};
-+/* The timers are given in milliseconds */
-+static int min_timer[]  = {1 * MSEC_PER_SEC};
-+static int max_timer[]  = {300 * MSEC_PER_SEC};
-+static int min_idle[]   = {0 * MSEC_PER_SEC};
-+static int max_idle[]   = {65535 * MSEC_PER_SEC};
- static int min_route[1],       max_route[] = {1};
--static int min_ftimer[] = {60 * HZ};
--static int max_ftimer[] = {600 * HZ};
-+static int min_ftimer[] = {60 * MSEC_PER_SEC};
-+static int max_ftimer[] = {600 * MSEC_PER_SEC};
- static int min_maxvcs[] = {1}, max_maxvcs[] = {254};
- static int min_window[] = {1}, max_window[] = {7};
- 
+ # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
+ # disable the stackleak plugin
+-cflags-$(CONFIG_ARM64)		+= -fpie $(DISABLE_STACKLEAK_PLUGIN) \
++cflags-$(CONFIG_ARM64)		+= -fpie $(DISABLE_STACKLEAK_PLUGIN) -ffixed-x18 \
+ 				   -fno-unwind-tables -fno-asynchronous-unwind-tables
+ cflags-$(CONFIG_ARM)		+= -DEFI_HAVE_STRLEN -DEFI_HAVE_STRNLEN \
+ 				   -DEFI_HAVE_MEMCHR -DEFI_HAVE_STRRCHR \
 -- 
 2.53.0
 
