@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590120;
-	b=PPyDPRSbBic3kdIBFi75nOlv6i0itqAx9iXg8ppRUvCoFM7KO07m2wagBXBeCm9AD1cb
-	 1ynrflcC4vM6U77RJc9k+/bgmzL3yf0feei1Bdgvv06FdU/dZ+5yPS8dfcBzG8n0JQy5/
-	 bli/4pC74h+fmNekjZiEGuPd1PhhoV+uuO7lLuNuNh2Hs+90Pto00RJxeYawjyKesxTmY
-	 Vq8bzeqjiEPu+comvJwbiVvrKWMyC4Djty5U2Ka9UaTYsqRYP3Ypggjgo0NBg5SUvwdCx
-	 ikjbfnv9kkvDLTS2AUiAT8oL04ShoMYItqy+Y6P1ExU/OOSSmcLSsbcyWIJZZAfPMtg==
+	t=1794590122;
+	b=dmaD8EAUPn1FEsAZDt6HAcKBJy0nOpEDR+EIU177F2B9PqpOk4AELYqZ5yu1T2fFJC0x
+	 6WvV2jVuR0PYupvNGebzAq/NKGF12eYaOdM5F+iHeH2ga0jlRGMGRVGWBPVKELEAgJE5P
+	 0n2gLQONP2dFJMwV8dT3KVO14sKZr5T9zX4twenlIXfLPN0Rz/gSGvivSq+Tti8SH33a0
+	 PvLnq4taw0tmTGmLVh8mszVU9MVp7SAERhPjkRtKKVk+akUyK23x/Vl3fIMQCMMYFspSB
+	 fdpIRJf+Uv6qRDpKhlANby7NQFfsopNZBA/ikfLvvX6UkL2GA4QfXsahtiZM1CHs84A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590120;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tDocmy1IeVSFKxeoKKCbdgyST5OHq5grxFPE4/CF9fs=;
-	b=RKoO2S0LlcmlYaeI8cfeoPaU4XBNeFKNPIiZM/SIjlqTehhPRcL3Qv/Vnd6oMhX1kAzy
-	 p58deIJqiMs8Q051a95VrwIFpOsB743ZocL20a3HbGfbylZiqw7XCel8/rwb9/MwIKyZo
-	 cJPTUZLFLQf1A0T9gCcPr7sTxTg49zTmPQXP8nLi8PrC34IcRQO4sYZCGHcinAGk53PQG
-	 fdR2unPXnZrpcJNbbX1eFphmpZY2KFgiaAinnzyonTwBqwUwGsBmrjKie/Fq/dKea7L7L
-	 qvRKIoNOO9HN8W962SGoqruu1dQ4oSwCGNONGXjtigg/iIfWRbBUwZgwaKQUCD33CiQ==
+	bh=wv+5rBgJNtAGxiz8okwskAsVd/vc1cVUNYdic792Ves=;
+	b=IRviKaSeHW2g5xlAE9RYxiGX5CtNsqWq01suRvLRSeeNqxfzUP8jAPuolxUkQBjUdvsE
+	 P4CPMTYaiO0hzycqp+sLAMfyKWCL5NFV1+fMpQw5MRUHX3qTlLlrdwvu9yDxuhZdT80GN
+	 qqEPYFV/GLF6WA3nWgEuy2W6jtOqgNi6E7KrBlPpLZb2CrbAQnRLs22ZaIHlqY1C84VQM
+	 5xRnF3I/Ik7UX/z68NqulLhZ2RP2tZ4JgYpxomYCgWqnTrKHoh9Ec7cF0db+KJ/RVhvA5
+	 fqu5TD7VrZoqGACflln+eGMbVO5UD5kQ1jAtEpI9eyODidGz8FRTm3/f7thfpvC02FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGGN15UD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vE4JPDu7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C9C606B22C;
-	Fri, 13 Nov 2026 17:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14CE1606B237;
+	Fri, 13 Nov 2026 17:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eGGN15UD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D58B1F000C6;
-	Fri, 13 Nov 2026 17:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vE4JPDu7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E6C1F000C6;
+	Fri, 13 Nov 2026 17:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590120;
-	bh=tDocmy1IeVSFKxeoKKCbdgyST5OHq5grxFPE4/CF9fs=;
+	s=korg; t=1794590121;
+	bh=wv+5rBgJNtAGxiz8okwskAsVd/vc1cVUNYdic792Ves=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eGGN15UDWa9IOmZ5DFxEPi8XdSd/FgmFj6IeWvD4OvImq37PqBMikPKFo1g/AxTVv
-	 cM1omAOhpF2CWPQSNHlTed2T2qHDA8NMtfqICBVoPIMWPSGVzP2cBJ0p7vWS08DKXd
-	 z/Fy90pG+mwjfd2kWAsdZqYhyVSvEViPKxIKi6Wc=
+	b=vE4JPDu7q2akVut24SyYyo/a7BmTjTy41iK7KFR2ZSeeZ+cNPrDaYBsgED31OCp+x
+	 Z4w2LkTN53DmdHunpCXq99QRGQeRpPgwyOvFLaop1jmTXebpNqiHIOzSgdDjnhglW+
+	 OA+1kFKxmkfs81sC+X4V+vYhO+IT6vC/QJuX1Q0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Yi Cong <yicong@kylinos.cn>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 097/686] PCI: rcar-gen4: Limit Max_Read_Request_Size to 256 Bytes
-Date: Fri, 13 Nov 2026 10:43:50 -0500
-Message-ID: <20261113153824.152061826@linuxfoundation.org>
+Subject: [PATCH 6.18 098/686] wifi: mt76: mt792x: fix negative errno truncation in offload capability
+Date: Fri, 13 Nov 2026 10:43:51 -0500
+Message-ID: <20261113153824.183575355@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,150 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Yi Cong <yicong@kylinos.cn>
 
-[ Upstream commit f0a5c6bd797c2b9900034983a1118d27eb2f2f16 ]
+[ Upstream commit d0115096429ca090a592770c7645f9553a839954 ]
 
-R-Car Gen4 PCIe controller has a hardware limitation of 256 Bytes
-Max_Payload_Size (MPS). PCIe specification indicates that the MPS must not
-exceed minimum MPS of any element along the packet path.  The PCI core
-already enforces this, but add a check to warn if MPS is ever set larger
-than 256.
+Returning a negative errno as u8 turned -ENOENT into 0xfe, wrongly
+enabling CNM and NAN caps. Return int and default to no caps on error.
 
-R-Car Gen4 Reference Manual, chapter 104.4.8 Usage notes for MRRS (Max Read
-Request Size) states:
-
-  Please set "Max Read Request Size" to 128 bytes or 256 bytes.
-  If "Max Read Request Size" is set to anything other than the
-  above, the transferred data will not match the expected value.
-
-This limitation also seems to apply to devices doing DMA reads, i.e.,
-issuing MRd TLPs.  This limitation can be triggered by using non-HMB NVMe
-SSD with Max_Read_Request_Size 512 Bytes, for example Crucial P5 Plus.  Any
-write to the SSD (MRd TLP issued by the SSD controller) longer than 256
-Bytes wraps around at the 256 Byte boundary, and the same data are written
-to the SSD starting at offset 0 and at 256 Bytes.
-
-Limit Max_Read_Request_Size to at most 256 Bytes for each device connected
-to this PCIe controller to avoid this behavior.
-
-A non-HMB (Host Memory Buffer) NVMe SSD can be identified using the
-following command. Affected SSD reports 'hmpre' field as 0:
-
-  $ nvme id-ctrl /dev/nvme0 | grep hmpre
-  hmpre     : 0
-
-The symptom is a read from the SSD which wraps around at 256 Byte boundary.
-The test for this symptom can be implemented by writing 512 Byte of random
-data into the SSD and reading the data back. If the read back data repeat
-after 256 Bytes, the device is affected.
-
-  $ dd if=/dev/urandom of=/tmp/data.bin bs=256 count=2 ; \
-    dd if=/tmp/data.bin of=/dev/nvme0n1 bs=256 count=2 ; \
-    dd if=/dev/nvme0n1 bs=256 count=2 of=/tmp/readback.bin
-
-Expected data:
-  $ hexdump -vC /tmp/data.bin
-  00000000  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca
-  00000010  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b
-  ...
-  00000100  7a ce 3c b2 e1 d5 d9 11  88 63 10 59 76 3c dc 32 <-- random
-  00000110  72 32 2a 7d a3 e1 aa 13  7c da 58 a1 7b 21 11 50 <-- data
-
-Faulty readback, collected without this change in place:
-  $ hexdump -vC /tmp/readback.bin
-  00000000  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca <---.
-  00000010  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b <-. |
-  ...                                                          | |
-  00000100  97 81 b7 3b 0e 38 2b 4d  a7 d3 e0 47 ff c2 4b ca <-:-+- repeated
-  00000110  c1 85 98 f0 4a ac 03 a0  3b ab f3 19 44 dd 06 8b <-+--- data
-       ^^^
-        |
-        '--- Repeat starts at offset 0x100 = 256 Bytes
-
-Fixes: 0d0c551011df ("PCI: rcar-gen4: Add R-Car Gen4 PCIe controller support for host mode")
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: e8a264ccd2de ("wifi: mt76: mt7921: move init shared code in mt792x-lib module")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260821020636.111719-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Yi Cong <yicong@kylinos.cn>
+Link: https://patch.msgid.link/20260824021429.43761-1-cong.yi@linux.dev
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-rcar-gen4.c | 54 +++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt792x_core.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-rcar-gen4.c b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-index 7e171526b1ded..9e5dc1009ed4e 100644
---- a/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-+++ b/drivers/pci/controller/dwc/pcie-rcar-gen4.c
-@@ -305,6 +305,57 @@ static struct rcar_gen4_pcie *rcar_gen4_pcie_alloc(struct platform_device *pdev)
- 	return rcar;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+index 96c50a501c1a9..d00807075c71f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+@@ -704,7 +704,7 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
  }
+ EXPORT_SYMBOL_GPL(mt792x_init_wiphy);
  
-+static int rcar_gen4_pcie_enable_device(struct pci_host_bridge *bridge,
-+					struct pci_dev *dev)
-+{
-+	/*
-+	 * R-Car Gen4 PCIe controller has a hardware limitation of 256 Bytes
-+	 * Max_Payload_Size (MPS). PCIe specification indicates that the MPS
-+	 * must not exceed minimum MPS of any element along the packet path.
-+	 * The controller reports Max_Payload_Size_Supported (MPSS) 256 Bytes
-+	 * for header type 0 and 128 Bytes for header type 1. The PCIe core
-+	 * will not allow MPS to be set higher than MPSS; warn here in case
-+	 * something went very wrong in the core.
-+	 *
-+	 * For details, refer to chapter "104.1.1 Features" in either of:
-+	 * R-Car S4 R19UH0161EJ0140 Rev.1.40 Jul. 31, 2026 or
-+	 * R-Car V4H R19UH0186EJ0140 Rev.1.40 Aug. 7, 2026 or
-+	 * R-Car V4M R19UH0217EJ0110 Rev.1.10 Jun. 30, 2026.
-+	 */
-+	WARN_ON(pcie_get_mps(dev) > 256);
-+
-+	/*
-+	 * R-Car Gen4 Reference Manual, chapter 104.4.8 Usage notes for
-+	 * MRRS (Max Read Request Size) states:
-+	 *
-+	 *   Please set "Max Read Request Size" to 128 bytes or 256 bytes.
-+	 *   If "Max Read Request Size" is set to anything other than the
-+	 *   above, the transferred data will not match the expected value.
-+	 *
-+	 * This limitation also seems to apply to devices issuing MRd TLPs.
-+	 * This limitation can be triggered by using non-HMB NVMe SSD with
-+	 * Max_Read_Request_Size 512 Bytes, for example Crucial P5 Plus.
-+	 * Any write into the SSD (MRd TLP issued by the SSD) longer than
-+	 * 256 Bytes wraps around at 256 Byte boundary, and the same data
-+	 * are written into the SSD starting at offset 0 and at 256 Bytes.
-+	 *
-+	 * Limit Max_Read_Request_Size to at most 256 Bytes for each
-+	 * device connected to this PCIe controller to avoid this behavior.
-+	 *
-+	 * For details, refer to aforementioned chapter in either of:
-+	 * R-Car S4 R19UH0161EJ0140 Rev.1.40 Jul. 31, 2026 or
-+	 * R-Car V4H R19UH0186EJ0140 Rev.1.40 Aug. 7, 2026 or
-+	 * R-Car V4M R19UH0217EJ0110 Rev.1.10 Jun. 30, 2026.
-+	 */
-+	bridge->no_inc_mrrs = 1;
-+	if (pcie_get_readrq(dev) > 256) {
-+		pci_info(dev, "Limiting MRRS to 256 bytes\n");
-+		pcie_set_readrq(dev, 256);
-+	}
-+
-+	return 0;
-+}
-+
- /* Host mode */
- static int rcar_gen4_pcie_host_init(struct dw_pcie_rp *pp)
+-static u8
++static int
+ mt792x_get_offload_capability(struct device *dev, const char *fw_wm)
  {
-@@ -313,6 +364,9 @@ static int rcar_gen4_pcie_host_init(struct dw_pcie_rp *pp)
- 	int ret;
- 	u32 val;
+ 	const struct mt76_connac2_fw_trailer *hdr;
+@@ -766,13 +766,20 @@ mt792x_get_mac80211_ops(struct device *dev,
+ 			void *drv_data, u8 *fw_features)
+ {
+ 	struct ieee80211_ops *ops;
++	int ret;
  
-+	if (pp->bridge)
-+		pp->bridge->enable_device = rcar_gen4_pcie_enable_device;
-+
- 	gpiod_set_value_cansleep(dw->pe_rst, 1);
+ 	ops = devm_kmemdup(dev, mac80211_ops, sizeof(struct ieee80211_ops),
+ 			   GFP_KERNEL);
+ 	if (!ops)
+ 		return NULL;
  
- 	ret = rcar_gen4_pcie_common_init(rcar);
+-	*fw_features = mt792x_get_offload_capability(dev, drv_data);
++	ret = mt792x_get_offload_capability(dev, drv_data);
++	if (ret < 0) {
++		dev_warn(dev, "failed to read firmware offload caps: %d\n", ret);
++		*fw_features = 0;
++	} else {
++		*fw_features = ret;
++	}
+ 	if (!(*fw_features & MT792x_FW_CAP_CNM)) {
+ 		ops->remain_on_channel = NULL;
+ 		ops->cancel_remain_on_channel = NULL;
 -- 
 2.53.0
 
