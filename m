@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590243;
-	b=gN4e++CYmQLB6eRMkEHK8wp06k83bKtssYzxMInrobcLjX7hLMz0eQKV0P1NJJK27/G8
-	 c98NKNOWeQHN4cYB1/jN5G71Nh8dPc9hMa4tJp+NTmChP73mc78GRoRppJ3ayuVERbytg
-	 Ms7WbcDKEArYYmyWY26Hqp/771q3hu/wFlJpbLD11tWOk0MqnhI3aWsALQ/jaKqskgXrB
-	 HJFviEgICAplmUqKrffHS+tEMAHfKKtssOjoMSvwJ2ngKyyXacfKlWQBJMnJbvmB3xBZs
-	 vxNbtJu8nAzxzZXod8WPt6sHFnwvnw0VwVuTc91XKi08dh4F8+aiBTcXTto8TS/6tvQ==
+	t=1794590244;
+	b=Y/yghkX0OXGXTzlxIxWRrjOowYcaZnevcRvz5fsjeYqWTxaLgwTMkTgyJOLvcqguNtje
+	 YacpVARhhMAByqTg9/r7LyqXcAtNK/HSpHGgyv7bvKdeF6J2mq0aCEyyo3AD9gCP0mhQY
+	 RIA9dEtoAt/KyAgJuzgARAQt0v8cZKNFt1W0XgLqmk9OTITtjJIqw3RQ/jrQ8cjcB73wF
+	 rOJ3auZHtovbsXtkv9BIdsIadTTcXTjntIgB4z2DhX9eJ35x71ddAfpxK4ZHtNBcrahEI
+	 cNpffklbLNRsPyEZiVO+8VVBe9+BQtsjnsPZPEFzMfIfzkp3sxBJ1HfCQmLjAN/8few==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590243;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590244;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Nqbp+91G1yeXvY0KCAFSzfSjE7JatZXbP+oI+eNOZbo=;
-	b=RsRuIg5J53DlErPM+Di7OC4zucOaWp8RrnhKb2OOEAUrSrbe/QM5VVGjdKz0KZlBxI+h
-	 2FI8BVZsRDqLI3Muebk76+Vsoit/ZqWBUWSSSRSuZhywJtNq+AB46qhz1frS+sslrTQsN
-	 5v1zNSqZ31/0J1Q5v8QsquUFFvWCGLNp7CbK5Bk+luXPE3zW4+4tfOG1JxVOUsRLSlpw2
-	 i+4vU7KgEWv/1LdB+NNoZxbZqLlTNoMOpMlt1ptiDN3vss2hU0WM4lhi0ASiTHiEp//V6
-	 Pp4gVMYt92+kHn5RuUIYSbe++PZ2FyU8ZH3YR4YB/FX8mCqwiBYnt9okPbSJV2z0zfw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=wJ/o/8TIi1qnmOZcaEh37ZvUlGNkDj8qmeKtgx/YmTE=;
+	b=I+ea4peSfPPCtTyirDaIhxHrjX5yAGxdlIs/wrj11j5EHud7kivABSXo4NRJiesHEN2b
+	 7sQb2y/AoSzv+9tjjJDqEXPjNvNA+dxRM9JQKKgPObZ+rANxs+L4qrA04Vn+Rfod6Fh6H
+	 3Y2lRhiE34+k+2mvmWDNqEw02FjhLjiwnaxLgtJibslF1mOY4u4Rv9v4spDRtu/BMj92W
+	 lu/ocQmEVpu/VngNAKte5AGsIY9wtfHcrZ4eXld4Mn8s+2LfrRnHPQJN6wRLeyfw/bF/7
+	 JUSw3fc2IJF2ENrkOUeF8V5cRj3GGNJCdiwpHih60On0Viyi2zGw3eJOqvRFB6ja51A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bjzFJhoB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yn2ocQMc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5796075E2C;
-	Fri, 13 Nov 2026 17:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EB7606C0BD;
+	Fri, 13 Nov 2026 17:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bjzFJhoB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF2F61F000C4;
-	Fri, 13 Nov 2026 17:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yn2ocQMc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C911F000C4;
+	Fri, 13 Nov 2026 17:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590243;
-	bh=Nqbp+91G1yeXvY0KCAFSzfSjE7JatZXbP+oI+eNOZbo=;
+	s=korg; t=1794590244;
+	bh=wJ/o/8TIi1qnmOZcaEh37ZvUlGNkDj8qmeKtgx/YmTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bjzFJhoB8VZWSZV4ARXT8GnYxCn57KSBpwx83M53vGxXjSPtckfkgABwiEL4Lh/9Q
-	 lac081PN0vV4k09AY+T4DMwEdvJVlQF1JIAFraxHuQP/r4hHTctgk+rfV+YFnaY1n4
-	 LivvdpRYfeHTBCkoooNT44Rurd/nVMDeCFEwoPJk=
+	b=Yn2ocQMcx2VTgW1PjmpePNC6sPJgduMWnIpmxOc5x7PY9hsk7H0E2NXo8RJs+sjwY
+	 KfW9920G4UihrFqNUUmG5q5cLGUDFwO/B2odyMAatEHiyB3JHlzXhGwzuAiN4Rv0qQ
+	 MDFP19U/n+btHNjvAWnKEm4o++eMNOM/qZkhSbKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Mika Kahola <mika.kahola@intel.com>,
+	Lu Yao <yaolu@kylinos.cn>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 241/686] drm/i915/psr: Dont clip plane state destination rectangle
-Date: Fri, 13 Nov 2026 10:46:14 -0500
-Message-ID: <20261113153829.222597707@linuxfoundation.org>
+Subject: [PATCH 6.18 242/686] drm/i915/gem: Reset err for each fence entry
+Date: Fri, 13 Nov 2026 10:46:15 -0500
+Message-ID: <20261113153829.260723572@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -63,77 +63,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Lu Yao <yaolu@kylinos.cn>
 
-[ Upstream commit e30830d21860fbf030ad162c3db4d1219477dfb5 ]
+[ Upstream commit 31643dc89818d9b65bf42ecb1c67c99b64146fba ]
 
-clip_area_update() uses drm_rect_intersect which modifies passed r1
-rectangle. Early transport alignment passes the cursor uapi.dst rectangle
-to clip_area_update, so the cursor uapi.dst is unintentionally modified by
-drm_rect_intersect.
+If dma_fence_chain_find_seqno() failed once, 'err' will store val in
+the following loop. May causing returns '-EINVAL' even though that
+entry never called dma_fence_chain_find_seqno() at all.
 
-Fix this by using local copy in clip_area_update(). Also make the damage
-and the display area const.
-
-Fixes: 1bff93b8bc27 ("drm/i915/psr: Extend SU area to cover cursor fully if needed")
-Cc: <stable@vger.kernel.org> # v6.9+
-Assisted-by: GitHub-Copilot:claude-opus-5
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Mika Kahola <mika.kahola@intel.com>
-Link: https://patch.msgid.link/20260929094434.77129-9-jouni.hogander@intel.com
-(cherry picked from commit 8621f3bcea6b0a790a954ddf2e6514c20a24ac1a)
+Fixes: 13149e8bafc4 ("drm/i915: add syncobj timeline support")
+Signed-off-by: Lu Yao <yaolu@kylinos.cn>
+Cc: <stable@vger.kernel.org> # v5.10+
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patch.msgid.link/20261027072832.726435-1-yaolu@kylinos.cn
+(cherry picked from commit 4e9db08db75f55c920986ac929cfd82a4ee99f41)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index d1a9f9de75b9a..ebade0f4e70ba 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -2592,23 +2592,25 @@ static u32 psr2_pipe_srcsz_early_tpt_calc(struct intel_crtc_state *crtc_state,
- }
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+index 61f1b8f172a76..e05b1e98c9b2b 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+@@ -2789,7 +2789,6 @@ add_timeline_fence_array(struct i915_execbuffer *eb,
+ 	u64 __user *user_values;
+ 	struct eb_fence *f;
+ 	u64 nfences;
+-	int err = 0;
  
- static void clip_area_update(struct drm_rect *overlap_damage_area,
--			     struct drm_rect *damage_area,
--			     struct drm_rect *display_area)
-+			     const struct drm_rect *damage_area,
-+			     const struct drm_rect *display_area)
- {
--	if (!drm_rect_intersect(damage_area, display_area))
-+	struct drm_rect inter = *damage_area;
-+
-+	if (!drm_rect_intersect(&inter, display_area))
- 		return;
+ 	nfences = timeline_fences->fence_count;
+ 	if (!nfences)
+@@ -2827,6 +2826,7 @@ add_timeline_fence_array(struct i915_execbuffer *eb,
+ 		struct drm_syncobj *syncobj;
+ 		struct dma_fence *fence = NULL;
+ 		u64 point;
++		int err = 0;
  
- 	if (overlap_damage_area->y1 == -1) {
--		overlap_damage_area->y1 = damage_area->y1;
--		overlap_damage_area->y2 = damage_area->y2;
-+		overlap_damage_area->y1 = inter.y1;
-+		overlap_damage_area->y2 = inter.y2;
- 		return;
- 	}
- 
--	if (damage_area->y1 < overlap_damage_area->y1)
--		overlap_damage_area->y1 = damage_area->y1;
-+	if (inter.y1 < overlap_damage_area->y1)
-+		overlap_damage_area->y1 = inter.y1;
- 
--	if (damage_area->y2 > overlap_damage_area->y2)
--		overlap_damage_area->y2 = damage_area->y2;
-+	if (inter.y2 > overlap_damage_area->y2)
-+		overlap_damage_area->y2 = inter.y2;
- }
- 
- static bool intel_psr2_sel_fetch_pipe_alignment(struct intel_crtc_state *crtc_state)
+ 		if (__copy_from_user(&user_fence,
+ 				     user_fences++,
 -- 
 2.53.0
 
