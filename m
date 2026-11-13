@@ -1,56 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591002;
-	b=xNZ9qPMQ3tZk/gEQZBwy3aQndXcqo1tJK/sifnfsAXo5zjblGaTHS9Sk1ju2gmZBurj8
-	 PFOeNyTHu1fcosGS5MI7BXwxrpToFHanWUrjhKHcY0irtvKz7kWB1LiKRMtoOdSXFrpxs
-	 qf2BcN1bNsC8vC3b3vt9nq5V/VglS9NMQPiuQtkqGGRmtN+ytcNk6Y0XU7QqDkiMIDtD6
-	 JYQd/BN8UMkxXv2+kkeNlTaE4eHcjVkkQeDqx+zatVpRpqVP1rMmxLqzYDPIuZfG+07qk
-	 /DH/XV901uFefIcX1Py128Z7tA+ajlluBid9s09yOc7XGXem5KhRPMAet/4BSk8HYZA==
+	t=1794591003;
+	b=fu1TXQhYYKGZRNKGGkdgJy3oxItdh/JgWAWoOmFuC5RUvHvyVCssR2a8wKFpGaMEduXP
+	 WgMmcggDHktxpLfH4PlM2YUuca72ikyrlnLnKYyPLKMyEIpjXDhk2uH5UOKELWeLfOVF9
+	 majbFF+Y++2k0s3JrUac9ITTE6z7Gt7mgu4TvdPZwxpDDxrD7WK++oA0fmY5NHfpuq7Id
+	 8Mrn8aAPGUPV3b/B9fqjW6B+ExfijLUmLQjFZQmoEQW9d20BEeE0boQBGrbyIdDXSzty6
+	 icu1iCZQLz964Gn2JCt3WDz6xj9pWp1Fe1D70V8JV4SYND1pjRsaZkBOQcDFHcYtuxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591002;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=34vKvq9MsmvV9w1dP4IoELgwoje1kswDFVhBLrsPwlA=;
-	b=T6eZ/1/9pwf0lKUuO9aToZA0i6MWdgh4Y5BRrZz9P3HEZc9L99kYe1RzG6p2c1Hat3lv
-	 tN+nE48bnC9pmn9Bdyqt80gmE3m1mBDWJhnVOtCOgggzs+eiVdmV389SFOsGIBizFP3dY
-	 5IrtUKad4vncmea5M3AO/5srmq+cJDXL5Ljiu5/7QfStIw3ZiVRUbtPA3a+TlEdHO5i+x
-	 NQ9g4EjD0WPr1mC/iLAJLBv4zgvDsl6L1YuISVZLeF3PJZ6trnWZg9/xHlULcPWYwSpRB
-	 igj1cCfHCQAmKNtDAbdDOy9TN7p9hc9g2pcsctw54VMMqFBpsnnM2CsmsK2McXZ+NzQ==
+	bh=/8qzwCOdTvvc2YQe8NhNxuzmBO408kcH5oCe1mGQutQ=;
+	b=1K6XD98pTANQRAaQBEuRe6iYRQzF6PVN4VhJuo023Y/BptbkYVWWd93o8VFcac+PKDAz
+	 zfEIJifdXO03rPqHt9bCY4lR1lz3aYjxS0Wy/LvDSSp/cXeyBWyMdX89ThjjOjQa0hNoe
+	 PyhXLFZ/uqzICwmOdOVr9j0pCIkvEB9OMI4pjWm8nS/aRlupObErtQunYkc580eZoCxYc
+	 jcfG8ZvS4ChwA4wq+dXgN5T9AElNNIomoM4vt0B64CmHrqJnvOHM6QeUh1ZE2dIaug+RF
+	 VF3Vc14PNBCF/wKsYsfT2E6IjxWljrWzjN68EtEfQlyfAoh40fn0LqSAk4/mTe3ZujA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOqpIaQG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZn9feTX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D416070F08;
-	Fri, 13 Nov 2026 17:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5166070F08;
+	Fri, 13 Nov 2026 17:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iOqpIaQG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC621F000C4;
-	Fri, 13 Nov 2026 17:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZn9feTX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5DD1F000C4;
+	Fri, 13 Nov 2026 17:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591002;
-	bh=34vKvq9MsmvV9w1dP4IoELgwoje1kswDFVhBLrsPwlA=;
+	s=korg; t=1794591003;
+	bh=/8qzwCOdTvvc2YQe8NhNxuzmBO408kcH5oCe1mGQutQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iOqpIaQGXjO/+ZmLxjYfscrrru0bCOHMpdcSiVsdcJ+WLhaL/Mi6dTaJX5ATZge0+
-	 s30ePvOIr4Yc03ZBLRmF81Il5X5QOtH4gPE6KdOGBh23f7ZY3VoknqttgdsxFU5t+F
-	 kEdk/eT00MYXaAOPiUB9tyjdMSU9rDxXmfqqHkhc=
+	b=gZn9feTXTBpxk9KB1wTS4VxAzMnsMzcn4rXqMao9UKPn7sLdbddmd7WrzvfSn07ri
+	 98ibEf+KSTkQEM7r0oWkFn/gkG826OdxbWtfr+hSIasZLL9g34mZSI4ipXyDfyYo7R
+	 FqTKjHzhrK0oQa1dBBrnU8fPwKWGsns19mrLgSzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Tan <yuantan098@gmail.com>,
-	Zhengchuan Liang <zcliangcn@gmail.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Zhao Zhang <zzhan461@ucr.edu>,
-	Ren Wei <n05ec@lzu.edu.cn>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Michael Grzeschik <mgr@kernel.org>,
 	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 173/670] 9p: fix caches_show() out-of-bounds write
-Date: Fri, 13 Nov 2026 10:45:37 -0500
-Message-ID: <20261113153817.922793036@linuxfoundation.org>
+Subject: [PATCH 6.12 174/670] net/9p/usbg: Fix use-after-free in disable_usb9pfs()
+Date: Fri, 13 Nov 2026 10:45:38 -0500
+Message-ID: <20261113153817.953034707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -72,78 +74,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Zhang <zzhan461@ucr.edu>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit 2acd800de8827b7cdce8cb5c2c63b8e8608ec8e3 ]
+[ Upstream commit 6f401e350939442b2ac905f7e5ac952e3802a5d8 ]
 
-The sysfs show handler for /sys/fs/9p/caches appends cache tags with
-snprintf(buf + count, limit, ...) and then advances count and limit by
-the return value. This is incorrect for truncation because snprintf()
-returns the full would-have-been length, not the number of bytes stored.
+disable_usb9pfs() frees the IN and OUT usb_request objects before it
+disables the corresponding endpoints. If either request is still queued,
+the later usb_ep_disable() call cancels the endpoint queue and the UDC
+driver can still access the already freed request.
 
-Once the accumulated output exceeds PAGE_SIZE, count can advance past
-the sysfs buffer and limit can become negative. A later iteration then
-passes an out-of-bounds destination pointer and an oversized size_t
-into snprintf(), leading to an out-of-bounds write.
+With dummy_hcd and KASAN, this is reproducible by queueing the OUT
+request and then disconnecting the configfs gadget:
 
-Use sysfs_emit_at() for the append instead. It follows the sysfs buffer
-contract and returns the number of bytes actually stored, so the offset
-remains bounded even when the output is truncated.
+  BUG: KASAN: slab-use-after-free in dummy_disable+0x2b4/0x300
+  Read of size 8 at addr ffff888009702400 by task sh/1
+  usb_ep_disable+0x8e/0x1f0
+  usb9pfs_func_unbind+0x193/0x350
+  gadget_dev_desc_UDC_store+0x135/0x280
 
-Fixes: 86db0c32f16c ("9p: fix /sys/fs/9p/caches overwriting itself")
+dummy_free_request() also warns because the request is freed while its
+queue entry is still linked.
+
+Disable both endpoints before freeing the request objects. This lets
+usb_ep_disable() cancel any queued transfers and invoke the completion
+callback while the request storage is still valid. The request objects
+are then freed only after they have been removed from the endpoint
+queues.
+
+Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Cc: stable@vger.kernel.org
-Reported-by: Yuan Tan <yuantan098@gmail.com>
-Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
-Reported-by: Xin Liu <bird@lzu.edu.cn>
-Assisted-by: Codex:GPT-5.4
-Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
-Co-authored-by: Ren Wei <n05ec@lzu.edu.cn>
-Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
-Message-ID: <abfb65f4800634dafb08238bba20cb48797e796f.1781908090.git.zzhan461@ucr.edu>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:GLM-5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Acked-by: Michael Grzeschik <mgr@kernel.org>
+Message-ID: <20260607130118.16579-1-zhaoyz24@mails.tsinghua.edu.cn>
 Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/v9fs.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ net/9p/trans_usbg.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
-index bc879d32cfcf5..66b072152745a 100644
---- a/fs/9p/v9fs.c
-+++ b/fs/9p/v9fs.c
-@@ -16,6 +16,7 @@
- #include <linux/parser.h>
- #include <linux/slab.h>
- #include <linux/seq_file.h>
-+#include <linux/sysfs.h>
- #include <net/9p/9p.h>
- #include <net/9p/client.h>
- #include <net/9p/transport.h>
-@@ -555,21 +556,14 @@ static ssize_t caches_show(struct kobject *kobj,
- 			   struct kobj_attribute *attr,
- 			   char *buf)
- {
--	ssize_t n = 0, count = 0, limit = PAGE_SIZE;
-+	ssize_t count = 0;
- 	struct v9fs_session_info *v9ses;
+diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
+index c682947dfb885..cd45d4a8597ad 100644
+--- a/net/9p/trans_usbg.c
++++ b/net/9p/trans_usbg.c
+@@ -277,6 +277,9 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
+ 	struct usb_composite_dev *cdev =
+ 		usb9pfs->function.config->cdev;
  
- 	spin_lock(&v9fs_sessionlist_lock);
- 	list_for_each_entry(v9ses, &v9fs_sessionlist, slist) {
--		if (v9ses->cachetag) {
--			n = snprintf(buf + count, limit, "%s\n", v9ses->cachetag);
--			if (n < 0) {
--				count = n;
--				break;
--			}
--
--			count += n;
--			limit -= n;
--		}
-+		if (v9ses->cachetag)
-+			count += sysfs_emit_at(buf, count, "%s\n",
-+					       v9ses->cachetag);
++	disable_ep(cdev, usb9pfs->in_ep);
++	disable_ep(cdev, usb9pfs->out_ep);
++
+ 	if (usb9pfs->in_req) {
+ 		usb_ep_free_request(usb9pfs->in_ep, usb9pfs->in_req);
+ 		usb9pfs->in_req = NULL;
+@@ -286,9 +289,6 @@ static void disable_usb9pfs(struct f_usb9pfs *usb9pfs)
+ 		usb_ep_free_request(usb9pfs->out_ep, usb9pfs->out_req);
+ 		usb9pfs->out_req = NULL;
  	}
- 
- 	spin_unlock(&v9fs_sessionlist_lock);
+-
+-	disable_ep(cdev, usb9pfs->in_ep);
+-	disable_ep(cdev, usb9pfs->out_ep);
+ 	dev_dbg(&cdev->gadget->dev, "%s disabled\n",
+ 		usb9pfs->function.name);
+ }
 -- 
 2.53.0
 
