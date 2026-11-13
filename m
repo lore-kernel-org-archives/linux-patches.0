@@ -1,51 +1,67 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590648;
-	b=Ch0o/O/TPBZlMReVxUfUv/8ww1oM5PBPzST4s1p29xN8oo9Bb3vRZy5rSR616OpDxuMh
-	 +HtVkHVTzMeh3dEW/E4gl8hatuaYCLfz/HkjMZYUwtK7PLQkwhpzmTuebSU4imqSF8qdw
-	 cjLaD75+pvE1/waNB3uh7lYI4jJhM7wsu/qrmccK4Daqonw77thoLMuTy+0dklD9hlyg6
-	 TMRbEpfqnJPEEsVTpa9zfLAu0d8BAyqmh+lG1oi4JpVMxPanNwiV8k/MEHkkHWsizuZgF
-	 bFKvDWqhsulwmLJNkGUgslxL21aQQgN0hPuPYcTkn38011YNE+9VcTeZieLhl3B1z0Q==
+	t=1794590649;
+	b=xsg8XmngmZuOHLhRKG6i6HqQJ8q+biiZcXLrCKp0rKhatMaDP4u6lTuxXigiayQXQw7J
+	 Jj2Y6nDzIF8Hnzc6yhT6idXNF1ZgGnxVwjYPOeiLl2xWORxMhn13Avt7r8KheCUkmjQBl
+	 s0X6PLldOcnBj3OHJrRKR1MTTO0N+XQPfFs0TfWamd8DpFVyHVJGxVD6nv4+rMOJqcI3S
+	 X4XXoyV04hMV2n6uIrzzl2HxpmSPleoiKiiXdmz46xSLmjgJqSe9gvZLiH126k6vfeh0H
+	 1vJ/f9KF3mTCGYBpw8zpp9ip3wbXLNF2mr2Gt4/2zZvCq0UwWh8+tzy88wZJPsxuFJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590648;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T7AQnhX9sIg+6ZVNjwRPZWeYnpBZQyPUYGExKPKS0v0=;
-	b=nGkq/oquizvdwB0iElUwdbfOb2CaEBvRBEUja2/LlzcsslPusR0IFzS1KqpMmOKFz8a/
-	 M62Hs9VKzfQx1vOjz5ZZQCZBIWRu/WkW7Dnu6UdoM4wFUyRv1uMqmM1gN1G5DG9BwKY4A
-	 2ne0Ic12S/aI4dOhbMCPjWblt85SqCA+UktOXxJx5Rc9MS0E21BnRKWt37S1Sjle34OX7
-	 3zvWnTU2qAXdMPCqwTjh52zod2vkTFZQnbL1EeYJk29GbEBaI0z1+yUKjxlLuX0zYkhtT
-	 jZpx4RUWyybbpZmIMs9qbQXrfKhNwIsBDPUJEbqhAWQXGFx1dvAIWW7GvchS+s0aKCw==
+	bh=yOwdAO/V2eJcb8ReB284vt2L/rhX/iWEPC+ujSKr5gM=;
+	b=nAAia2tSxOJqIyq1pRvXzHyp6mYuFcKSSggRfuhW7HDMpsodTutyTn03878pa6Be5Qog
+	 S8kzfXXOkMiU+HYXh7wfyVWs9gjsK1/A/t5ESFgKA3EEalNZM3adskIQ/7SG3qPP98jT9
+	 1xNTbwbJ5xxM9ffdj6k8rOiKIU6mWTNceRM3rQmZmXlD+duLM78GtD/hw1C5xTdCSnnfX
+	 NBWXccSeumcVea7MzZ3PT67KWcUTrUqthfOM/E3K1kV89bPs4cd+nmbj4329dRIvBDnhk
+	 S7FwQkC9BBL11KgJ3VpqzXZ8CP4EGnsCkWkVdZ7LhywwrG2wObRfDkjjL30FE3mTf/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="FwAi/l76";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhytC3Nl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF37606B202;
-	Fri, 13 Nov 2026 17:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F6B606B202;
+	Fri, 13 Nov 2026 17:24:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FwAi/l76
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B0F1F000C4;
-	Fri, 13 Nov 2026 17:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhytC3Nl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB4F1F000C4;
+	Fri, 13 Nov 2026 17:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590648;
-	bh=T7AQnhX9sIg+6ZVNjwRPZWeYnpBZQyPUYGExKPKS0v0=;
+	s=korg; t=1794590649;
+	bh=yOwdAO/V2eJcb8ReB284vt2L/rhX/iWEPC+ujSKr5gM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FwAi/l762WeEJPNYOwnLVA4cKTwGUp+0AdHbeSS7fEllJ3RKOzjLbOsRn45rZfjrj
-	 7lwlu0IRtTeXbcz+gpTTsvXMMlCQl+V282la0eb4JdrhYgAbk0c0gLap9DDZAs/6ZQ
-	 U2wiIRrQ21nrPps52twYTv07y6cDwU4wsCzaWGYw=
+	b=MhytC3NlbGEfT8qYa4FHLNIG2So+7CVxwKhxFwoputMijLjNi87zJ4iq0pVl03NeU
+	 5DcWALQfFf1wuXv3kfRpxq95kqpLOIh0R9+YSCfEgxjrYLVphj50vLjkGSIvkPhiPl
+	 vtvqBwM2qRZwDb71ul0xXkk/z6aDY5iNuzekCE6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ridong Chen <chenridong@xiaomi.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Barry Song <baohua@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Chris Down <chris@chrisdown.name>,
+	David Hildenbrand <david@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Tejun Heo <tj@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 569/686] cgroup: Expose some cgroup helpers
-Date: Fri, 13 Nov 2026 10:51:42 -0500
-Message-ID: <20261113153840.948490864@linuxfoundation.org>
+Subject: [PATCH 6.18 570/686] mm/mglru: fix ineffective memory protection for non-kswapd reclaim
+Date: Fri, 13 Nov 2026 10:51:43 -0500
+Message-ID: <20261113153840.981290597@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -67,254 +83,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Ridong Chen <chenridong@xiaomi.com>
 
-[ Upstream commit 5b30afc20b3fea29b9beb83c6415c4ff06f774aa ]
+[ Upstream commit 15da1e4978dd4ea8f5faa6e15ee967ba4ad9a30a ]
 
-Expose the following through cgroup.h:
+For MGLRU, memory.min/low is not honored during global proactive reclaim
+(writing to the root memory.reclaim) and global direct reclaim, because
+these paths shrink memcgs using stale protection (emin/elow).  It can be
+reproduced as follows:
 
-- cgroup_on_dfl()
-- cgroup_is_dead()
-- cgroup_for_each_live_child()
-- cgroup_for_each_live_descendant_pre()
-- cgroup_for_each_live_descendant_post()
+  # echo 7 > /sys/kernel/mm/lru_gen/enabled
+  # cd /sys/fs/cgroup
+  # mkdir -p a/b
+  # echo 100M > a/memory.min
+  # echo +memory > a/cgroup.subtree_control
+  # echo 100M > a/b/memory.min
+  # echo $$ > a/b/cgroup.procs
+  # dd if=/dev/zero of=/tmp/testfile bs=1M count=200
+  # cat a/b/memory.current
+  222650368
+  # echo 500M > memory.reclaim
+  -bash: echo: write error: Resource temporarily unavailable
+  # cat a/b/memory.current
+  6070272
 
-Until now, these didn't need to be exposed because controllers only cared
-about the css hierarchy. The planned sched_ext hierarchical scheduler
-support will be based on the default cgroup hierarchy, which is in line
-with the existing BPF cgroup support, and thus needs these exposed.
+memory.min is 100M, yet reclaim drops a/b down to 6M, breaking the
+protection.  The traditional LRU path is not affected because
+shrink_node() calls mem_cgroup_calculate_protection() for each memcg it
+visits during a top-down tree walk.
 
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: 15da1e4978dd ("mm/mglru: fix ineffective memory protection for non-kswapd reclaim")
+Commit 30d77b7eef01 ("mm/mglru: fix ineffective protection calculation")
+moved the protection computation into lru_gen_age_node(), which only runs
+for kswapd.  Non-kswapd global reclaim reaches shrink_one() through
+lru_gen_shrink_node() -> shrink_many() without any protection computation,
+so emin/elow are whatever a previous kswapd run left behind - or zero if
+kswapd never ran on this node.  Relying on a prior kswapd pass is not
+correct either: a memcg's emin/elow are derived from its ancestors'
+memory.min/low settings and from children_min_usage, both of which change
+over time, so emin/elow go stale even after kswapd has run and must be
+recomputed at the point of reclaim.
+
+Introduce mem_cgroup_calculate_protection_path() which computes emin/elow
+along the root-to-target path only, by iterating through the cgroup
+ancestors array top-down.  This avoids the full tree traversal that would
+be needed with mem_cgroup_calculate_protection(), limiting the cost to
+O(depth) per memcg - typically 3-5 levels.
+
+Call it from shrink_one() for the non-kswapd path so that each memcg about
+to be shrunk has correct protection values.
+
+Link: https://lore.kernel.org/20260907025445.1836238-3-ridong.chen@linux.dev
+Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
+Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Assisted-by: Claude:claude-opus-4-8
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Chris Down <chris@chrisdown.name>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cgroup.h          | 65 ++++++++++++++++++++++++++++++++-
- kernel/cgroup/cgroup-internal.h |  6 ---
- kernel/cgroup/cgroup.c          | 55 ----------------------------
- 3 files changed, 63 insertions(+), 63 deletions(-)
+ include/linux/memcontrol.h | 10 +++++++++
+ mm/memcontrol.c            | 45 ++++++++++++++++++++++++++++++++++++++
+ mm/vmscan.c                |  8 ++++++-
+ 3 files changed, 62 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/cgroup.h b/include/linux/cgroup.h
-index 7b2807009155a..e53524027b737 100644
---- a/include/linux/cgroup.h
-+++ b/include/linux/cgroup.h
-@@ -42,6 +42,14 @@ struct kernel_clone_args;
+diff --git a/include/linux/memcontrol.h b/include/linux/memcontrol.h
+index 706ddda4a60b1..b14bfce896d20 100644
+--- a/include/linux/memcontrol.h
++++ b/include/linux/memcontrol.h
+@@ -1869,6 +1869,16 @@ static inline void mem_cgroup_node_filter_allowed(struct mem_cgroup *memcg,
+ }
+ #endif /* CONFIG_MEMCG */
  
- #ifdef CONFIG_CGROUPS
- 
-+/*
-+ * To avoid confusing the compiler (and generating warnings) with code
-+ * that attempts to access what would be a 0-element array (i.e. sized
-+ * to a potentially empty array when CGROUP_SUBSYS_COUNT == 0), this
-+ * constant expression can be added.
-+ */
-+#define CGROUP_HAS_SUBSYS_CONFIG	(CGROUP_SUBSYS_COUNT > 0)
++#if defined(CONFIG_MEMCG) && defined(CONFIG_LRU_GEN)
++void mem_cgroup_calculate_protection_path(struct mem_cgroup *root,
++					  struct mem_cgroup *memcg);
++#else
++static inline void mem_cgroup_calculate_protection_path(struct mem_cgroup *root,
++							struct mem_cgroup *memcg)
++{
++}
++#endif
 +
- enum css_task_iter_flags {
- 	CSS_TASK_ITER_PROCS    = (1U << 0),  /* walk only threadgroup leaders */
- 	CSS_TASK_ITER_THREADED = (1U << 1),  /* walk all threaded css_sets in the domain */
-@@ -76,6 +84,7 @@ enum cgroup_lifetime_events {
- extern struct file_system_type cgroup_fs_type;
- extern struct cgroup_root cgrp_dfl_root;
- extern struct css_set init_css_set;
-+extern struct mutex cgroup_mutex;
- extern spinlock_t css_set_lock;
- extern struct blocking_notifier_head cgroup_lifetime_notifier;
- 
-@@ -103,6 +112,8 @@ extern struct blocking_notifier_head cgroup_lifetime_notifier;
- #define cgroup_subsys_on_dfl(ss)						\
- 	static_branch_likely(&ss ## _on_dfl_key)
- 
-+bool cgroup_on_dfl(const struct cgroup *cgrp);
-+
- bool css_has_online_children(struct cgroup_subsys_state *css);
- struct cgroup_subsys_state *css_from_id(int id, struct cgroup_subsys *ss);
- struct cgroup_subsys_state *cgroup_e_css(struct cgroup *cgroup,
-@@ -273,6 +284,32 @@ void css_task_iter_end(struct css_task_iter *it);
- 	for ((pos) = css_next_descendant_post(NULL, (css)); (pos);	\
- 	     (pos) = css_next_descendant_post((pos), (css)))
- 
-+/* iterate over child cgrps, lock should be held throughout iteration */
-+#define cgroup_for_each_live_child(child, cgrp)				\
-+	list_for_each_entry((child), &(cgrp)->self.children, self.sibling) \
-+		if (({ lockdep_assert_held(&cgroup_mutex);		\
-+		       cgroup_is_dead(child); }))			\
-+			;						\
-+		else
-+
-+/* walk live descendants in pre order */
-+#define cgroup_for_each_live_descendant_pre(dsct, d_css, cgrp)		\
-+	css_for_each_descendant_pre((d_css), cgroup_css((cgrp), NULL))	\
-+		if (({ lockdep_assert_held(&cgroup_mutex);		\
-+		       (dsct) = (d_css)->cgroup;			\
-+		       cgroup_is_dead(dsct); }))			\
-+			;						\
-+		else
-+
-+/* walk live descendants in postorder */
-+#define cgroup_for_each_live_descendant_post(dsct, d_css, cgrp)		\
-+	css_for_each_descendant_post((d_css), cgroup_css((cgrp), NULL))	\
-+		if (({ lockdep_assert_held(&cgroup_mutex);		\
-+		       (dsct) = (d_css)->cgroup;			\
-+		       cgroup_is_dead(dsct); }))			\
-+			;						\
-+		else
-+
- /**
-  * cgroup_taskset_for_each - iterate cgroup_taskset
-  * @task: the loop cursor
-@@ -335,6 +372,27 @@ static inline u64 cgroup_id(const struct cgroup *cgrp)
- 	return cgrp->kn->id;
+ #if defined(CONFIG_MEMCG) && defined(CONFIG_ZSWAP)
+ bool obj_cgroup_may_zswap(struct obj_cgroup *objcg);
+ void obj_cgroup_charge_zswap(struct obj_cgroup *objcg, size_t size);
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index 97ed5ad4053f0..db12e61ee9852 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -4737,6 +4737,51 @@ void mem_cgroup_calculate_protection(struct mem_cgroup *root,
+ 	page_counter_calculate_protection(&root->memory, &memcg->memory, recursive_protection);
  }
  
++#ifdef CONFIG_LRU_GEN
 +/**
-+ * cgroup_css - obtain a cgroup's css for the specified subsystem
-+ * @cgrp: the cgroup of interest
-+ * @ss: the subsystem of interest (%NULL returns @cgrp->self)
++ * mem_cgroup_calculate_protection_path - compute protection along a path
++ * @root: the top ancestor of the sub-tree being checked (NULL for root_mem_cgroup)
++ * @memcg: the target memory cgroup
 + *
-+ * Return @cgrp's css (cgroup_subsys_state) associated with @ss.  This
-+ * function must be called either under cgroup_mutex or rcu_read_lock() and
-+ * the caller is responsible for pinning the returned css if it wants to
-+ * keep accessing it outside the said locks.  This function may return
-+ * %NULL if @cgrp doesn't have @subsys_id enabled.
++ * Walk the ancestor path from @root down to @memcg and compute the effective
++ * protection at each level.  This is safe for isolated queries because it
++ * ensures parents are computed before children.
 + */
-+static inline struct cgroup_subsys_state *cgroup_css(struct cgroup *cgrp,
-+						     struct cgroup_subsys *ss)
++void mem_cgroup_calculate_protection_path(struct mem_cgroup *root,
++					  struct mem_cgroup *memcg)
 +{
-+	if (CGROUP_HAS_SUBSYS_CONFIG && ss)
-+		return rcu_dereference_check(cgrp->subsys[ss->id],
-+					lockdep_is_held(&cgroup_mutex));
-+	else
-+		return &cgrp->self;
-+}
++	bool recursive_protection =
++		cgrp_dfl_root.flags & CGRP_ROOT_MEMORY_RECURSIVE_PROT;
++	struct cgroup *cg;
++	int root_level, i;
 +
- /**
-  * css_is_dying - test whether the specified css is dying
-  * @css: target css
-@@ -371,6 +429,11 @@ static inline bool css_is_self(struct cgroup_subsys_state *css)
- 	return false;
- }
- 
-+static inline bool cgroup_is_dead(const struct cgroup *cgrp)
-+{
-+	return !(cgrp->self.flags & CSS_ONLINE);
-+}
++	if (mem_cgroup_disabled())
++		return;
 +
- static inline void cgroup_get(struct cgroup *cgrp)
++	if (!root)
++		root = root_mem_cgroup;
++
++	if (memcg == root)
++		return;
++
++	root_level = root->css.cgroup->level;
++	cg = memcg->css.cgroup;
++
++	rcu_read_lock();
++	for (i = root_level + 1; i <= cg->level; i++) {
++		struct mem_cgroup *cur;
++
++		cur = mem_cgroup_from_css(cgroup_css(cg->ancestors[i],
++						     &memory_cgrp_subsys));
++		if (cur)
++			page_counter_calculate_protection(&root->memory,
++							  &cur->memory,
++							  recursive_protection);
++	}
++	rcu_read_unlock();
++}
++#endif /* CONFIG_LRU_GEN */
++
+ static int charge_memcg(struct folio *folio, struct mem_cgroup *memcg,
+ 			gfp_t gfp)
  {
- 	css_get(&cgrp->self);
-@@ -386,8 +449,6 @@ static inline void cgroup_put(struct cgroup *cgrp)
- 	css_put(&cgrp->self);
- }
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index ed75f1bce9f0a..8556318ff721d 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4927,7 +4927,13 @@ static int shrink_one(struct lruvec *lruvec, struct scan_control *sc)
+ 	struct mem_cgroup *memcg = lruvec_memcg(lruvec);
+ 	struct pglist_data *pgdat = lruvec_pgdat(lruvec);
  
--extern struct mutex cgroup_mutex;
--
- static inline void cgroup_lock(void)
- {
- 	mutex_lock(&cgroup_mutex);
-diff --git a/kernel/cgroup/cgroup-internal.h b/kernel/cgroup/cgroup-internal.h
-index 22051b4f1ccbc..e4a872e2e08c2 100644
---- a/kernel/cgroup/cgroup-internal.h
-+++ b/kernel/cgroup/cgroup-internal.h
-@@ -184,11 +184,6 @@ extern bool cgrp_dfl_visible;
- 	for ((ssid) = 0; (ssid) < CGROUP_SUBSYS_COUNT &&		\
- 	     (((ss) = cgroup_subsys[ssid]) || true); (ssid)++)
+-	/* lru_gen_age_node() called mem_cgroup_calculate_protection() */
++	/*
++	 * For kswapd, mem_cgroup_calculate_protection() has already
++	 * been called during the top-down cgroup traversal.
++	 */
++	if (!current_is_kswapd())
++		mem_cgroup_calculate_protection_path(NULL, memcg);
++
+ 	if (mem_cgroup_below_min(NULL, memcg))
+ 		return MEMCG_LRU_YOUNG;
  
--static inline bool cgroup_is_dead(const struct cgroup *cgrp)
--{
--	return !(cgrp->self.flags & CSS_ONLINE);
--}
--
- static inline bool notify_on_release(const struct cgroup *cgrp)
- {
- 	return test_bit(CGRP_NOTIFY_ON_RELEASE, &cgrp->flags);
-@@ -222,7 +217,6 @@ static inline void get_css_set(struct css_set *cset)
- }
- 
- bool cgroup_ssid_enabled(int ssid);
--bool cgroup_on_dfl(const struct cgroup *cgrp);
- 
- struct cgroup_root *cgroup_root_from_kf(struct kernfs_root *kf_root);
- struct cgroup *task_cgroup_from_root(struct task_struct *task,
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index aa629b7d76e53..ac7b2103df68a 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -70,14 +70,6 @@
- /* let's not notify more than 100 times per second */
- #define CGROUP_FILE_NOTIFY_MIN_INTV	DIV_ROUND_UP(HZ, 100)
- 
--/*
-- * To avoid confusing the compiler (and generating warnings) with code
-- * that attempts to access what would be a 0-element array (i.e. sized
-- * to a potentially empty array when CGROUP_SUBSYS_COUNT == 0), this
-- * constant expression can be added.
-- */
--#define CGROUP_HAS_SUBSYS_CONFIG	(CGROUP_SUBSYS_COUNT > 0)
--
- /*
-  * cgroup_mutex is the master lock.  Any modification to cgroup or its
-  * hierarchy must be performed while holding it.
-@@ -513,27 +505,6 @@ static u16 cgroup_ss_mask(struct cgroup *cgrp)
- 	return cgrp->root->subsys_mask;
- }
- 
--/**
-- * cgroup_css - obtain a cgroup's css for the specified subsystem
-- * @cgrp: the cgroup of interest
-- * @ss: the subsystem of interest (%NULL returns @cgrp->self)
-- *
-- * Return @cgrp's css (cgroup_subsys_state) associated with @ss.  This
-- * function must be called either under cgroup_mutex or rcu_read_lock() and
-- * the caller is responsible for pinning the returned css if it wants to
-- * keep accessing it outside the said locks.  This function may return
-- * %NULL if @cgrp doesn't have @subsys_id enabled.
-- */
--static struct cgroup_subsys_state *cgroup_css(struct cgroup *cgrp,
--					      struct cgroup_subsys *ss)
--{
--	if (CGROUP_HAS_SUBSYS_CONFIG && ss)
--		return rcu_dereference_check(cgrp->subsys[ss->id],
--					lockdep_is_held(&cgroup_mutex));
--	else
--		return &cgrp->self;
--}
--
- /**
-  * cgroup_e_css_by_mask - obtain a cgroup's effective css for the specified ss
-  * @cgrp: the cgroup of interest
-@@ -745,32 +716,6 @@ EXPORT_SYMBOL_GPL(of_css);
- 	}								\
- } while (false)
- 
--/* iterate over child cgrps, lock should be held throughout iteration */
--#define cgroup_for_each_live_child(child, cgrp)				\
--	list_for_each_entry((child), &(cgrp)->self.children, self.sibling) \
--		if (({ lockdep_assert_held(&cgroup_mutex);		\
--		       cgroup_is_dead(child); }))			\
--			;						\
--		else
--
--/* walk live descendants in pre order */
--#define cgroup_for_each_live_descendant_pre(dsct, d_css, cgrp)		\
--	css_for_each_descendant_pre((d_css), cgroup_css((cgrp), NULL))	\
--		if (({ lockdep_assert_held(&cgroup_mutex);		\
--		       (dsct) = (d_css)->cgroup;			\
--		       cgroup_is_dead(dsct); }))			\
--			;						\
--		else
--
--/* walk live descendants in postorder */
--#define cgroup_for_each_live_descendant_post(dsct, d_css, cgrp)		\
--	css_for_each_descendant_post((d_css), cgroup_css((cgrp), NULL))	\
--		if (({ lockdep_assert_held(&cgroup_mutex);		\
--		       (dsct) = (d_css)->cgroup;			\
--		       cgroup_is_dead(dsct); }))			\
--			;						\
--		else
--
- /*
-  * The default css_set - used by init and its children prior to any
-  * hierarchies being mounted. It contains a pointer to the root state
 -- 
 2.53.0
 
