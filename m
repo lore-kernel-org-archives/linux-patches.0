@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591229;
-	b=Ln2zGCRzkQ+r0SajP4Blm01+3O7WLi0EBLbXTx+XNkJHhTFo/WD7sgl6b+QB6Y3LAjhG
-	 bPsdIQRcEh/Ovu/LA+wdRhpuHXaU5tyzqWWXKwAzNCMW1bkseILSlyMpmPlcYFiBKjEjN
-	 rCzHkvnzTdH4/VvDgBEWHuWkbpZewcQiqMQYGs92lh9VJaAVheIiz6N6UuI3ei8Qfkkic
-	 fXiRxLAf+IMxZpl/J4ROMK52wnwq7yepgxyk82nfBb1HXVYZzjuQCrNE5+jtJqbjyJpeH
-	 TzfA+Unc1EHiJ/NAbte4IQiSWn1jQyEOTCxK7vz+xw2e2PNQRQsV6mtyfA/OMPWSDoA==
+	t=1794591230;
+	b=sNWJk0DTXB7yXWZL54f7+7PsyVWRhADMkOjFOoZFyH0z1cVzzR+kJ751hgd9tDsGV7/9
+	 /Ik5MfZLQlZBrrzOfkCiOIt7iN+Dz91oYGjDt1ywROQnPWa/vBvbUdNoJtc/6P/2srE7a
+	 59jLQRhy1Dmlt/BqFy+xZVcX/+qZKQw5j4sux/4OT0+GA5ZHx5MuI4dFydRN4lzfoCaC4
+	 1XDNzirNPgdEvpW7Yd5wuKMYIJikjHnXbpkTggSsgPwBlDCNQfQlhZsuhAZxXGi4vV9td
+	 G0jBsQFneJ7iwuM3lYIUbl/ar5wRXz42mXKvY06uRXCVmfPRwOLZe+Unbv74wASpw0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591229;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Dj6vfEaeaehrql87OhpIpEycWDZT3IHj/gxLu0xKqS4=;
-	b=KZZLrLVUs6ywzVXR3RlFlYPs9qJiB5sC/qYXNf2lqWYjh4uLzZg70cyAkdZNPgCG+yaJ
-	 Q6dXLWKIo0WANjk/xynIyLMtdmKaZgXGNkCxLE2MJNZtMSR4Pm55JLFU8GO0VMwBcGhRd
-	 To6OuYUzJOGIK08P9HpWFpZbx+eeORsEdFmtn5ersDXgNUfC+rNMzVz0WkgZHbaAvsbrr
-	 BOoptpmBO2f3jRh3Nn12dAxyppSOw2pMH3gt05kbn/BhZEbv0y/yc4aOO664SuxXCFjEW
-	 jwpAWgTX6pz/FpwPzfAeqacaDG0M7KyUmQYohB28YUnaCtiapL/epkJyxLYygUW3L8A==
+	bh=NajRtyu6PE4l1RSFvNO6QfJXJBjUu1jcE4cOQoSMuG4=;
+	b=f9L5OmdEMKo1R8w9Ljb5LzoViMlDtgZgenRmoHMZJh9AOsQG+iRsOtazCGVa3kbBCco6
+	 MmQEIJ79x94Wn7fMj3U7Z4L3Swz4aQz5EbD206eJKkcVfHett3NmtkFLNY24YlU3A0JFa
+	 esfL8m2hVztJraJYUsv5I44VcONNS1IXyxV4EfEhfTashvkGY1SpcSEHHo9EWo+NUTFfL
+	 RPbqP0Ca3LTAva5/ahK4f1QEK2Lq0rwueAoRPdxEixxEIyllfjWD7fDM4xOUMPlVykvOB
+	 CaT/DoNFHlxXoVWfhjiKhu9kD1e2VzRERRJNnn02qJQeBYEFJtY7bCnTDsAQkcettgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QjGKAPce;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEDDKa3V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BB16075E34;
-	Fri, 13 Nov 2026 17:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBFF60A2603;
+	Fri, 13 Nov 2026 17:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QjGKAPce
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4242F1F000C4;
-	Fri, 13 Nov 2026 17:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tEDDKa3V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF341F000C5;
+	Fri, 13 Nov 2026 17:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591229;
-	bh=Dj6vfEaeaehrql87OhpIpEycWDZT3IHj/gxLu0xKqS4=;
+	s=korg; t=1794591230;
+	bh=NajRtyu6PE4l1RSFvNO6QfJXJBjUu1jcE4cOQoSMuG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QjGKAPce7mYa3bxSXDpazqPWP2NSsN4SRFPDgyqz0hzbSxdyGWITeJ0/SDmv2hmZO
-	 vuj0vv+jTLXVrYvBpRhEVSdvNDQpt/Lps44fLdM1czcRiWoiywOA/atT6YM0Iwic+r
-	 dZc90CdnJb3Sv6ViV5uQ+e0qV4Yb+IdJt/Fo7eaM=
+	b=tEDDKa3Vq0s+Vclpp4prQTCGp0xVn+WjgKe/2Gb8vI/ml2nrQ8Ya28n9JWD7IROS0
+	 K0vm2aCBpfmRy5LN4xbZhmyKiC+W/qAR16IP4GXCMxP2xsxOMyxMtRLOHV1xJUxOPF
+	 9UYFmUtqbUfxkR9xyliKhulztPJ2tJrr1sjsd/mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Hengyu Liang <hengyul@cs.unc.edu>,
+	Guillaume Nault <gnault@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 359/670] ovl: look up the index by the decoded origin
-Date: Fri, 13 Nov 2026 10:48:43 -0500
-Message-ID: <20261113153823.980056496@linuxfoundation.org>
+Subject: [PATCH 6.12 360/670] l2tp: only return sessions of the given tunnel in l2tp_session_get()
+Date: Fri, 13 Nov 2026 10:48:44 -0500
+Message-ID: <20261113153824.010238856@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,148 +69,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Hengyu Liang <hengyul@cs.unc.edu>
 
-[ Upstream commit 520ef67f47f69255695859b0008281a384d0bc20 ]
+[ Upstream commit a75facf4bb3e866103ddca4f47a6f3ca4b090d8b ]
 
-A file opened by file handle on an overlay with nfs_export=on can show
-the stale lower data of a file that was copied up to the upper layer.
-While the file opened this way stays in the inode cache, a lookup of the
-copied up file by path fails with ESTALE for all users. The open can
-also succeed for a file that was removed, where it has to fail with
-ESTALE. This happens with a handle that has one byte changed. The handle
-comes from an NFS client, or from a process that calls
-open_by_handle_at() with CAP_DAC_READ_SEARCH in the initial user
-namespace.
+Commit 5f77c18ea556 ("l2tp: use IDR for all session lookups") made
+pppol2tp_connect() and the netlink session commands find sessions with
+l2tp_session_get(), passing the socket of the tunnel they name.
 
-When a file in a lower layer is about to be modified, overlayfs first
-copies it to the upper layer (copy up). With nfs_export=on, each copy up
-also creates an entry in the index directory, a directory that overlayfs
-keeps for itself on the upper filesystem.
+L2TPv3 session IDs are unique per network namespace, except that
+sessions carried over UDP are only unique per UDP socket, the socket of
+their tunnel. However, l2tp_v3_session_get() only checks the socket when
+another session has the same session ID. Otherwise it returns the
+session, whichever tunnel it belongs to. As of now, a session command
+that names the wrong tunnel acts on a session of another tunnel, and a
+PPPoL2TP socket for a second L2TPv3 tunnel fails with EEXIST, because it
+finds session 0 of the first tunnel.
 
-The handle of an overlay file that comes from a lower layer wraps the
-handle of its lower inode. Overlayfs calls this lower inode the origin.
-The overlay handle stays valid after a copy up.
+The issue can be reproduced with:
 
-To decode such a handle, ovl_lower_fh_to_d() first decodes the wrapped
-handle to the origin. If no overlay inode is cached for the origin, it
-looks in the index directory:
+    ip l2tp add tunnel tunnel_id 3 peer_tunnel_id 3 encap udp \
+        local 127.0.0.1 remote 127.0.0.1 udp_sport 5003 udp_dport 6003
+    ip l2tp add tunnel tunnel_id 4 peer_tunnel_id 4 encap udp \
+        local 127.0.0.1 remote 127.0.0.1 udp_sport 5004 udp_dport 6004
+    ip l2tp add session tunnel_id 3 session_id 7 peer_session_id 7
+    ip l2tp del session tunnel_id 4 session_id 7
+    ip l2tp show session
 
-- An index entry there leads to the upper file.
-- A whiteout, the marker that overlayfs uses for a removed file, means
-  that the overlay file was removed.
+Before that commit, the delete fails with "No such device", and session
+7 of tunnel 3 is still listed. After that commit, the delete succeeds,
+and session 7 of tunnel 3 is gone.
 
-The name of an index entry is the handle that copy up encoded for the
-origin, as a hex string.
+This patch will make l2tp_session_get() return NULL when the L2TPv3
+session it finds does not belong to the given socket. The receive path
+calls l2tp_v3_session_get() directly and is not changed.
 
-ovl_lower_fh_to_d() builds the name for this lookup from the bytes that
-the caller passed in. But handles with different bytes can decode to the
-same inode:
-
-- Overlayfs ignores some flag bits of the handle.
-- A lower filesystem can accept a different fid type, extra bytes, or
-  generation 0 for any generation.
-
-Such a handle decodes to the origin but misses the index entry or the
-whiteout. So the decode returns an overlay inode that has only the lower
-file.
-
-While that inode is cached, a path lookup of a copied up file fails with
-ESTALE, since the upper file that the lookup finds does not match the
-cached inode, which has none.
-
-Reproduced on tmpfs and on ext4 with open_by_handle_at(), after a copy
-up and a mount cycle. A handle in which one flag bit, the fid type, the
-length or the generation was changed read the old lower data, and path
-lookups returned ESTALE.
-
-Fix this by re-encoding the decoded origin and building the index name
-from that handle.
-
-Fixes: f71bd9cfb692 ("ovl: decode indexed non-dir file handles")
+Fixes: 5f77c18ea556 ("l2tp: use IDR for all session lookups")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Hengyu Liang <hengyul@cs.unc.edu>
+Acked-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20261030032617.4065353-1-hengyul@cs.unc.edu
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/filesystems/overlayfs.rst |  3 ++-
- fs/overlayfs/export.c                   |  4 ++--
- fs/overlayfs/namei.c                    | 13 ++++++++++---
- fs/overlayfs/overlayfs.h                |  2 +-
- 4 files changed, 15 insertions(+), 7 deletions(-)
+ net/l2tp/l2tp_core.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/filesystems/overlayfs.rst b/Documentation/filesystems/overlayfs.rst
-index c51fb6f2651f9..0e01bfc75fce2 100644
---- a/Documentation/filesystems/overlayfs.rst
-+++ b/Documentation/filesystems/overlayfs.rst
-@@ -678,7 +678,8 @@ When decoding an overlay file handle, the following steps are followed:
- 
-  1. Find underlying layer by UUID and path type information.
-  2. Decode the underlying filesystem file handle to underlying dentry.
-- 3. For a lower file handle, lookup the handle in index directory by name.
-+ 3. For a lower file handle, encode the decoded underlying inode again and
-+    lookup that handle in index directory by name.
-  4. If a whiteout is found in index, return ESTALE. This represents an
-     overlay object that was deleted after its file handle was encoded.
-  5. For a non-directory, instantiate a disconnected overlay dentry from the
-diff --git a/fs/overlayfs/export.c b/fs/overlayfs/export.c
-index 444aeeccb6daf..576c89e440f71 100644
---- a/fs/overlayfs/export.c
-+++ b/fs/overlayfs/export.c
-@@ -720,9 +720,9 @@ static struct dentry *ovl_lower_fh_to_d(struct super_block *sb,
- 		}
- 	}
- 
--	/* Then lookup indexed upper/whiteout by origin fh */
-+	/* Then lookup indexed upper/whiteout by origin */
- 	if (ovl_indexdir(sb)) {
--		index = ovl_get_index_fh(ofs, fh);
-+		index = ovl_get_index_origin(ofs, origin.dentry);
- 		err = PTR_ERR(index);
- 		if (IS_ERR(index)) {
- 			index = NULL;
-diff --git a/fs/overlayfs/namei.c b/fs/overlayfs/namei.c
-index 8e8c416a06fd6..9a44af6bf911d 100644
---- a/fs/overlayfs/namei.c
-+++ b/fs/overlayfs/namei.c
-@@ -748,14 +748,21 @@ int ovl_get_index_name(struct ovl_fs *ofs, struct dentry *origin,
- 	return err;
- }
- 
--/* Lookup index by file handle for NFS export */
--struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh)
-+/*
-+ * Lookup index by decoded origin for NFS export.
-+ *
-+ * The name of an index is the hex of the file handle that copy up encoded.
-+ * The bytes of the handle to decode cannot be used as the name, because a
-+ * lower fs may decode many handles to the same inode.  For example, it may
-+ * ignore the fid type, extra fid bytes or a zero generation.
-+ */
-+struct dentry *ovl_get_index_origin(struct ovl_fs *ofs, struct dentry *origin)
+diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+index 7cdfab3a78094..6c83cb02d4345 100644
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -315,10 +315,19 @@ EXPORT_SYMBOL_GPL(l2tp_v2_session_get);
+ struct l2tp_session *l2tp_session_get(const struct net *net, struct sock *sk, int pver,
+ 				      u32 tunnel_id, u32 session_id)
  {
- 	struct dentry *index;
- 	struct qstr name;
- 	int err;
++	struct l2tp_session *session;
++
+ 	if (pver == L2TP_HDR_VER_2)
+ 		return l2tp_v2_session_get(net, tunnel_id, session_id);
+-	else
+-		return l2tp_v3_session_get(net, sk, session_id);
++
++	/* l2tp_v3_session_get() doesn't check sk if the ID hasn't collided */
++	session = l2tp_v3_session_get(net, sk, session_id);
++	if (session && session->tunnel->sock != sk) {
++		l2tp_session_put(session);
++		return NULL;
++	}
++
++	return session;
+ }
+ EXPORT_SYMBOL_GPL(l2tp_session_get);
  
--	err = ovl_get_index_name_fh(fh, &name);
-+	err = ovl_get_index_name(ofs, origin, &name);
- 	if (err)
- 		return ERR_PTR(err);
- 
-diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
-index 75eb9d379549b..53d1f0e0c924a 100644
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -715,7 +715,7 @@ int ovl_verify_index(struct ovl_fs *ofs, struct dentry *index);
- int ovl_get_index_name_fh(const struct ovl_fh *fh, struct qstr *name);
- int ovl_get_index_name(struct ovl_fs *ofs, struct dentry *origin,
- 		       struct qstr *name);
--struct dentry *ovl_get_index_fh(struct ovl_fs *ofs, struct ovl_fh *fh);
-+struct dentry *ovl_get_index_origin(struct ovl_fs *ofs, struct dentry *origin);
- struct dentry *ovl_lookup_index(struct ovl_fs *ofs, struct dentry *upper,
- 				struct dentry *origin, bool verify);
- int ovl_path_next(int idx, struct dentry *dentry, struct path *path,
 -- 
 2.53.0
 
