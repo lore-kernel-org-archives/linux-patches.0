@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590053;
-	b=2YVY2GXMFqrw2x3AedOCoWBOn0ToWuX1xk0pD71ItpvIhhydfn2VmJHx0KOmAQ7CPQAY
-	 Vp0k3BLYgAPR6c6ej3x3vMvgbi54+68ka6k5oJKQGZJhUvD92nQpvQDxErzXwAWwjekrB
-	 WzxphTfp/ThjCI91xjrrPfwWMCfpMSntFvBIC4m2DTDzIuhIP04EFaC8eM+vJT9BQmfEm
-	 l+euAQNwILsU8ycp0kYvvyD7U3wOczYsbzUlUUY1SKhtBsfhwtFzibyLG3V1Ob7l1yMOY
-	 8u+i3tGDzvxyfL69oPTu0El0+Jsm+EKmMGy7Jf6pDim50Ls7UynQLBAh621sUALHEUQ==
+	t=1794590054;
+	b=c8D6ZAwiWbiu08r23f8qi1UiUFLjwJCSS9fbIZm28qSnWiXuhxRUqPFVlsPhYHfmiPGx
+	 g0mCdLYuGESs1ZmgdwXhN5SUJmnWjDLLSmEYEiLTT4lXyxS7vskZkBHmw+YIq8v9pjg/F
+	 0mHGVXpmj5xaET5Gv8UBTpSJupPXRNGM4f1AfLwy1YXgiVcw6ejAuvTaGZrBKF8BPy2eP
+	 QEHm9CBOkgAhn7c0I1MPWEfVuBgSNwWalLq9uIV8tnoK/YHwVh+9ih+nqiEKedCLIEwVF
+	 igggRi8rmds9GFE6h7uuG1X/jnRQuZuiN0rNf01NHTuOidu0AcQpgw4A/NosrH6GAnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590053;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kdtyv+xzYENv3qblXz1ABfCYfYdyBIYA42aRqPxxpVQ=;
-	b=vopjE6Gt2KSmyCgLPV3JEZKYXJ1lCvlxS7Vyktzx3wwGstUbi3wQggy8y4c1BhK6OReN
-	 UVvd8zdd2kB8iYAPWuZGNSYn2uUn/+svMxB/aRZ7+Xt7hu7Ov+BtUNXgC72iZ50chPeVU
-	 sEJ5rYVJjy3qM1VivHYXW6jAX2T9lWdMGD9E9buigrVVeRUeQAmzE4GzEavutW+lKSMFU
-	 6Q9gRHIwlWSM03p36GNXd1ul14W2SAcAwTZKWGMkL+QNLgz0Kmu56MxZVSlZrco4CNiqn
-	 HVa6QrRsFRkhoTp247r5vpgSCq/QxSmyx9s1k03XA3IUD6Xxe22ZdyKwxJPZKl0s+WQ==
+	bh=dM+cZrLBBcLQpVXuK1vCUH1wIpAuRysxFPZco5lOIVI=;
+	b=u/Aczmd6MMzMwDkgKSb9dl24RtsYZfiJFrXPyWiWnM9opmNCDZw93OHhOX7kqax65qyg
+	 8knRiS6rNZq1Op4sxBufqQqd9j99oBsgT23Ei+qaUBUaiIysAApWmLG98XcEJ2nm8c46K
+	 fN3GTu4txdolpqsNHQs7tB05/QpPtLm4kWMm+RBT7xy2DHCD7xAUX7ZySidGLWiv0WQb6
+	 nDL37ypfBsagtInlfDz+2GS2Hh52Ei7Z6W71H9sQQb6l+ahCpGsx6M0D1sGnV9DPVIYNk
+	 b3FmWX17p033FF7Q3gAD03fw5Tdv3xYdqITwNrxptfO6jWBk4gZ7zsmNJmv9knYD49w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLvPZCwC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCrilFYy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8646606A8AA;
-	Fri, 13 Nov 2026 17:14:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FD6606A880;
+	Fri, 13 Nov 2026 17:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FLvPZCwC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2523A1F000C6;
-	Fri, 13 Nov 2026 17:14:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCrilFYy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBB41F000C6;
+	Fri, 13 Nov 2026 17:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590053;
-	bh=kdtyv+xzYENv3qblXz1ABfCYfYdyBIYA42aRqPxxpVQ=;
+	s=korg; t=1794590054;
+	bh=dM+cZrLBBcLQpVXuK1vCUH1wIpAuRysxFPZco5lOIVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FLvPZCwCLdRxHf110GBQRa7T1+UTmdh7PvXDyApIvj7LtiNpQR5U4dn1yiFu1aaue
-	 Z33sFNaU6fg0uJ1DUcFig2cxrnzXo3vpSh2eDJk4Jnpc58Z+HJsIdWRGN9Sc4RsZuZ
-	 zu/BcpKoJ3O/7ZYTvNmURZh1+mHUxuWsQWj8YTuk=
+	b=WCrilFYyxzCYbdFqBFPyQUieqIc9ZaOzpHjKavtOuVz88bISeBbYOODZdp4xVi+vT
+	 3MdZfFGGLbYluP1384RavJDXpcplhLFaYzPcwxSwk01tbHz6DFarpe4w9anrGn5fvb
+	 Ygkwc193VnYo1H4sRE3H6Dk4hGsUVmp/ULduGFTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 085/686] xfs: forcibly reset quota timers when upgrading to bigtime during repair
-Date: Fri, 13 Nov 2026 10:43:38 -0500
-Message-ID: <20261113153823.758182188@linuxfoundation.org>
+Subject: [PATCH 6.18 086/686] smb: client: reclaim credits for decrypted reads with no matching mid
+Date: Fri, 13 Nov 2026 10:43:39 -0500
+Message-ID: <20261113153823.792842625@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,62 +73,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 780212c8d8105eadb5f56b4c7aafb94937755582 ]
+[ Upstream commit 78f73985846465a25a7bd1d89904053661f3ca92 ]
 
-If we decide to upgrade a dquot to BIGTIME as part of repairing it, we
-should zero out the timer fields so that they are re-evaluated and reset
-in bigtime format instead of letting through whatever was in there
-before.
+When a decrypted SMB2 READ response carries a MessageId that matches no
+outstanding request, both the inline receive_encrypted_read() and the
+offloaded smb2_decrypt_offload() paths drop the frame without accounting
+the credits the server granted in it.  The plaintext unknown-frame path in
+cifs_demultiplex_thread() already reclaims them with
+smb2_add_credits_from_hdr(), so encrypted reads leak credits that the
+plaintext path would not.
 
-Cc: stable@vger.kernel.org # v6.8
-Fixes: a5b91555403e3a ("xfs: repair quotas")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+This also happens for legitimate frames - e.g. a reply that arrives after
+the client has timed out and dropped the mid - so over a long-lived
+connection the client's credit count drifts down and can eventually starve
+it of the ability to issue requests.  The frame is AEAD-authenticated, so
+the granted credits in the decrypted header come from the real server and
+are safe to apply.
+
+Reclaim the credits from the decrypted header before dropping the frame,
+and export smb2_add_credits_from_hdr() so the SMB2 receive paths can use it.
+
+Fixes: c42a6abe3012 ("CIFS: Add capability to decrypt big read responses")
+Fixes: 35cf94a39728 ("smb3: allow parallelizing decryption of reads")
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
+[ sashal: adjusted prototype insertion context to preserve existing declaration formatting and extern keywords ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/quota_repair.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ fs/smb/client/cifsproto.h | 1 +
+ fs/smb/client/connect.c   | 3 +--
+ fs/smb/client/smb2ops.c   | 6 ++++--
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/xfs/scrub/quota_repair.c b/fs/xfs/scrub/quota_repair.c
-index cf17d35b70cce..44806ce8c0bf4 100644
---- a/fs/xfs/scrub/quota_repair.c
-+++ b/fs/xfs/scrub/quota_repair.c
-@@ -348,6 +348,8 @@ xrep_quota_block(
- 	bp->b_ops = &xfs_dquot_buf_ops;
- 	for (i = 0; i < qi->qi_dqperchunk; i++, dqblk++) {
- 		struct xfs_disk_dquot	*ddq = &dqblk->dd_diskdq;
-+		bool			was_bigtime =
-+				!!(ddq->d_type & XFS_DQTYPE_BIGTIME);
+diff --git a/fs/smb/client/cifsproto.h b/fs/smb/client/cifsproto.h
+index 325408073888e..d47ad5d86b4b1 100644
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -161,6 +161,7 @@ cifs_mark_tcp_ses_conns_for_reconnect(struct TCP_Server_Info *server,
+ 				      bool mark_smb_session);
+ extern int cifs_reconnect(struct TCP_Server_Info *server,
+ 			  bool mark_smb_session);
++void smb2_add_credits_from_hdr(char *buffer, struct TCP_Server_Info *server);
+ extern int checkSMB(char *buf, unsigned int len, struct TCP_Server_Info *srvr);
+ extern bool is_valid_oplock_break(char *, struct TCP_Server_Info *);
+ extern bool backup_cred(struct cifs_sb_info *);
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 0a60c411aba67..b4e139471e865 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1235,8 +1235,7 @@ cifs_handle_standard(struct TCP_Server_Info *server, struct mid_q_entry *mid)
+ 	return 0;
+ }
  
- 		trace_xrep_disk_dquot(sc->mp, dqtype, id + i);
+-static void
+-smb2_add_credits_from_hdr(char *buffer, struct TCP_Server_Info *server)
++void smb2_add_credits_from_hdr(char *buffer, struct TCP_Server_Info *server)
+ {
+ 	struct smb2_hdr *shdr = (struct smb2_hdr *)buffer;
+ 	int scredits, in_flight;
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 71cf42981ab04..f7f8e8b981f75 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -5256,9 +5256,10 @@ static void smb2_decrypt_offload(struct work_struct *work)
  
-@@ -356,8 +358,21 @@ xrep_quota_block(
- 		ddq->d_type = dqtype;
- 		ddq->d_id = cpu_to_be32(id + i);
- 
--		if (xfs_has_bigtime(sc->mp) && ddq->d_id)
-+		if (xfs_has_bigtime(sc->mp) && ddq->d_id) {
-+			/*
-+			 * If something was broken with this dquot and it was a
-+			 * non-bigtime dquot, we'll grant everyone a fresh
-+			 * grace period by zeroing the timer field rather than
-+			 * try to interpret what might be garbage.
-+			 */
-+			if (!was_bigtime) {
-+				ddq->d_btimer = 0;
-+				ddq->d_itimer = 0;
-+				ddq->d_rtbtimer = 0;
-+			}
-+
- 			ddq->d_type |= XFS_DQTYPE_BIGTIME;
-+		}
- 
- 		xrep_quota_fix_timer(sc->mp, ddq, ddq->d_blk_softlimit,
- 				ddq->d_bcount, &ddq->d_btimer,
+ 	dw->server->lstrp = jiffies;
+ 	mid = smb2_find_dequeue_mid(dw->server, dw->buf);
+-	if (mid == NULL)
++	if (mid == NULL) {
+ 		cifs_dbg(FYI, "mid not found\n");
+-	else {
++		smb2_add_credits_from_hdr(dw->buf, dw->server);
++	} else {
+ 		mid->decrypted = true;
+ 		rc = handle_read_data(dw->server, mid, dw->buf,
+ 				      dw->server->vals->read_rsp_size,
+@@ -5381,6 +5382,7 @@ receive_encrypted_read(struct TCP_Server_Info *server, struct mid_q_entry **mid,
+ 	*mid = smb2_find_mid(server, buf);
+ 	if (*mid == NULL) {
+ 		cifs_dbg(FYI, "mid not found\n");
++		smb2_add_credits_from_hdr(buf, server);
+ 		rc = -1;
+ 	} else {
+ 		cifs_dbg(FYI, "mid found\n");
 -- 
 2.53.0
 
