@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585920;
-	b=DQuiYivmNqeHvt2R09qeZmHsOEJUfdEwhAzfaktv/mFoheDL3us2xbtdyZeaY3lxmWw7
-	 4tFpNhNvmbAlH9jOFN26cSld8Ir6/tKChhk6SKb4YYTVacLaHYCXRgZjWQ6p3AEwmlv8s
-	 xAogZI067x3k123WMsMGdzKkvOHyWd7Atu3peV+Qc3zPbk6kXEhSdeUi6j6zuGMyGkK/Z
-	 /BbiQ1o9CVcq0iO/n0en9seCFVX0q3AakDGoDrkxX66ZoNC5ZPA9F/YV8kOqSmr6RBnWD
-	 Riw3pX+e6fqZAGZgrGAWwaAjDqvDSnQhsvug0Et0+HG2dun579BZqNgaEPXk6Ke0oyA==
+	t=1794585921;
+	b=3g7LvTwwdplbqZPMUll8KKBIEO55Y6/+Kcr7PlBiakj6LD+5q09zKDkuCjxCfL1YdMt7
+	 nC0uf/ZSPkOd0myN2UWosVU0XkDeSqPRphk/p0sbd2KNR3zeL0OPi/0ZOl5FRVMFPeTew
+	 YjpUyYmh4AZBUfl3TfjOBvySp5g8pIryBsI4xtV850LobRnVzUVk8eBt29a9KW6cxz4dZ
+	 X0wshLmxzJZyZNcc5JpyoxLD3yLIBOGOo1nHW27xhIlPXiyWomhvarPU5J4KevLGxmHDS
+	 dRhiYpj3P9fGKaMg4d06cFzaz+4sI/Lax2jVbj9Z+qGmWe7uEshhsOHkoQ7/IEJ78yg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9vDmGFYNqsCmWswlXSdiNOroNGM7WrezaZDV1b9ePKI=;
-	b=wSX+YJT7kAFh2F1LWMOdY3h+J27CSA0Ks1LxknvYOolN7uxF/VNRbIkDYvMb2uoWNN0J
-	 j9WYJ7E4062NSAhVMBLSQoNZ0eI5d58L6vF/1epgr+4VQabx/1l0YEQzAHL1/lhWaTf5t
-	 T93yAeTc28VbNfZSlMB2VhPKjuhVDavFhQqUosOnN2eOuPfpygNxFjDLW2uMfoFQprZD7
-	 ehJ2jvvDI6TlSNVaGVcDtWt0Likm/QKS/Fg1jqHG+DHqDfqrApQ7s+KCb0XtN2HmLYlAL
-	 RT+whnDpkGh8tsoHfbVt3gUW+WJFA2pRRJ1s6R0b9IQx2whcK/yq2M0jBdcqFMIExPg==
+	bh=3idoxSO141hfiDKVvnnZmkHgEGsqyyfmyHTgnYzsGwU=;
+	b=LwYFo0gTFi80tXl6jb4klVPCHr2gnzFFxTU+oAaxnYsdf0cRcbaTbJvHuGgxj+ijYR4K
+	 UdHPu/7VD2Cck4U6OamR70aogGoM6fbNnPwk2hxGbG1I2ttXFSPMT9iD4MidGnFcdhPf8
+	 Z0o5ah3dkG/sot6fpya+d+fKv3RpaFftjvPA9Sh/6J9ys/tjpgAIMznlcz3l8IvUCG9m3
+	 YcOCL8q+U4ByIMGYR2/B6LPMoXU7JNSsDOX6lMSCZI7z7BrlrUVz0Ao2CivNOEAtHcTEy
+	 StszUR5byEeFR1JM9YhUrWZuSg8gRKyW4fHPA38zZQHfiph36nrHzbrm4d+4Bixh9XA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEhGSNsg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzCqjvj4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537836070223;
-	Fri, 13 Nov 2026 16:05:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3657606A895;
+	Fri, 13 Nov 2026 16:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rEhGSNsg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F20171F000C4;
-	Fri, 13 Nov 2026 16:05:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzCqjvj4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2D21F000C4;
+	Fri, 13 Nov 2026 16:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585920;
-	bh=9vDmGFYNqsCmWswlXSdiNOroNGM7WrezaZDV1b9ePKI=;
+	s=korg; t=1794585921;
+	bh=3idoxSO141hfiDKVvnnZmkHgEGsqyyfmyHTgnYzsGwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rEhGSNsgVyr3T0eGVokoN68mIgwEANNnhsgXU8if848VTmtqW+Cw5dIsGnuLQJLHR
-	 qypLwjr1UUtQej7b5R8Q3aNvhXiI5BiWauqEABxrDeEuIYJkDC2wlRyDhjrfAy5GXl
-	 SU9WdcrfbEiPnUT8mb2k1fv8MuAv35TZkwHVn8Oc=
+	b=vzCqjvj4Qy/i2BN5M8zcrEnuIVYB32FOMLYuwnV6asaGFMcRI9XSc1J7LX4Z9X9cy
+	 cGUcWskcegegUaYsykCJwNydSUtajhBwRPvH/8XJd1n4df2sLUVQ5ed5BX2AJJPMSd
+	 EoKejUkdDufJrouwknjc9FVpVnh+3BI61ceRurS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 481/507] nvme-tcp: Validate the queue state under the queue lock in the address attribute
-Date: Fri, 13 Nov 2026 10:53:05 -0500
-Message-ID: <20261113153813.336843319@linuxfoundation.org>
+Subject: [PATCH 7.3 482/507] ASoC: hdac_hda: Allocate the private data at codec driver bind
+Date: Fri, 13 Nov 2026 10:53:06 -0500
+Message-ID: <20261113153813.400920262@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,181 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 2eeeaa9c1ff0c429096acc2947c296db6a56f96d ]
+[ Upstream commit 7d357eae973a1e1933f81f55aa1b3b4e3064570f ]
 
-Reading the "address" sysfs attribute calls kernel_getsockname() on the
-admin queue socket, which can race with the queue teardown during
-connection error recovery: a reader can observe NVME_TCP_Q_LIVE set,
-then block on the queue lock while nvme_tcp_free_queue() releases the
-socket and clears queue->sock without holding the lock.  Once the
-reader acquires the lock it dereferences the NULL socket pointer.
+The SOF HDA code allocates struct hdac_hda_priv and stores it as drvdata
+of the codec device before the codec driver is bound. The driver core
+clears drvdata on unbind, so after unbinding the codec driver via sysfs
+a subsequent bind dereferences a NULL pointer in hdac_hda_dev_probe().
 
-Commit 76d54bf20cdc ("nvme-tcp: don't access released socket during
-error recovery") had the queue liveness check inside the lock.
-Commit 782373ba2766 ("nvme: tcp: avoid race between queue_lock lock
-and destroy") moved it back out because the lock itself is destroyed
-in nvme_tcp_free_queue(), so a reader arriving late trips
-mutex_destroy().
+All information in the private data can be derived from the codec
+device itself, so allocate and set it up in hdac_hda_dev_probe() as a
+device managed resource, which is released on unbind.
 
-Check the queue liveness inside the queue lock, and clear queue->sock
-under the same lock.  The teardown clears NVME_TCP_Q_LIVE under the
-lock well before the socket is released, so a reader either sees the
-bit cleared or a socket that cannot be released while it holds the
-lock.  To also close the lock lifetime race, the queue locks are now
-owned by the controller: they are initialized with the queue array and
-only destroyed when the controller is freed, which cannot happen while
-a sysfs attribute read is still in progress.  The queue count is
-computed by the NVME_TCP_OPT_NR_QUEUES() macro from the original
-connect options for both initialization and destruction, as reconnects
-may shrink ctrl->queue_count.
+Remove the allocation from SOF, keeping the check for iDisp codecs
+without display audio component.
 
-Fixes: 782373ba2766 ("nvme: tcp: avoid race between queue_lock lock and destroy")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ sashal: Added a standalone queue_lock initialization loop because the upstream page-fragment cache initialization loop is absent. ]
+Fixes: 3fd63658caed ("ASoC: Intel: Drop hdac_ext usage for codec device creation")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://patch.msgid.link/20261027083840.28813-2-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 08a44bde821d ("ASoC: hdac_hda: Restore the codec device type on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 51 +++++++++++++++++++++++++++++------------
- 1 file changed, 36 insertions(+), 15 deletions(-)
+ sound/soc/codecs/hdac_hda.c     | 13 ++++++++++++-
+ sound/soc/sof/intel/hda-codec.c | 23 ++++-------------------
+ 2 files changed, 16 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 2c7e9cfa2253e..50297ce8bdde6 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -117,6 +117,9 @@ enum nvme_tcp_queue_flags {
- 	NVME_TCP_Q_IO_CPU_SET	= 3,
- };
+diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
+index 40d602f79314a..0604315a1f0f3 100644
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -635,10 +635,21 @@ static const struct snd_soc_component_driver hdac_hda_hdmi_codec = {
  
-+#define NVME_TCP_OPT_NR_QUEUES(opts) ((opts)->nr_io_queues + \
-+	(opts)->nr_write_queues + (opts)->nr_poll_queues + 1)
-+
- enum nvme_tcp_recv_state {
- 	NVME_TCP_RECV_PDU = 0,
- 	NVME_TCP_RECV_DATA,
-@@ -1556,14 +1559,21 @@ static void nvme_tcp_free_queue(struct nvme_ctrl *nctrl, int qid)
- 	 * nvme_reset_ctrl_work(), queue teardown is immediately followed by
- 	 * re-allocation. fput() defers socket cleanup to delayed_fput_work
- 	 * in workqueue context, which can race with new queue setup.
-+	 *
-+	 * Clear queue->sock under the queue lock so that a sysfs reader in
-+	 * nvme_tcp_get_address() either observes the NVME_TCP_Q_LIVE bit
-+	 * cleared or a still valid socket.  The queue lock itself is owned
-+	 * by the controller and only destroyed when the controller is
-+	 * freed, so readers blocked on it cannot race its teardown.
- 	 */
-+	mutex_lock(&queue->queue_lock);
- 	__fput_sync(queue->sock->file);
- 	queue->sock = NULL;
-+	mutex_unlock(&queue->queue_lock);
- 	memalloc_noio_restore(noio_flag);
- 
- 	kfree(queue->pdu);
- 	mutex_destroy(&queue->send_mutex);
--	mutex_destroy(&queue->queue_lock);
- 	mutex_destroy(&queue->pf_cache_lock);
- }
- 
-@@ -1995,7 +2005,6 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
- 	int ret, rcv_pdu_size;
- 	struct file *sock_file;
- 
--	mutex_init(&queue->queue_lock);
- 	queue->ctrl = ctrl;
- 	init_llist_head(&queue->req_list);
- 	INIT_LIST_HEAD(&queue->send_list);
-@@ -2133,7 +2142,6 @@ static int nvme_tcp_alloc_queue(struct nvme_ctrl *nctrl, int qid,
- 	queue->sock = NULL;
- err_destroy_mutex:
- 	mutex_destroy(&queue->send_mutex);
--	mutex_destroy(&queue->queue_lock);
- 	mutex_destroy(&queue->pf_cache_lock);
- 	return ret;
- }
-@@ -2783,6 +2791,9 @@ static void nvme_tcp_stop_ctrl(struct nvme_ctrl *ctrl)
- static void nvme_tcp_free_ctrl(struct nvme_ctrl *nctrl)
+ static int hdac_hda_dev_probe(struct hdac_device *hdev)
  {
- 	struct nvme_tcp_ctrl *ctrl = to_tcp_ctrl(nctrl);
-+	/* the same count used to size and initialize the queue array */
-+	unsigned int nr_queues = NVME_TCP_OPT_NR_QUEUES(nctrl->opts);
-+	unsigned int i;
+-	struct hdac_hda_priv *hda_pvt = dev_get_drvdata(&hdev->dev);
++	struct hdac_hda_priv *hda_pvt;
+ 	struct hdac_ext_link *hlink;
+ 	int ret;
  
- 	if (list_empty_careful(&ctrl->list))
- 		goto free_ctrl;
-@@ -2793,6 +2804,8 @@ static void nvme_tcp_free_ctrl(struct nvme_ctrl *nctrl)
++	hda_pvt = devm_kzalloc(&hdev->dev, sizeof(*hda_pvt), GFP_KERNEL);
++	if (!hda_pvt)
++		return -ENOMEM;
++
++	hda_pvt->codec = dev_to_hda_codec(&hdev->dev);
++	hda_pvt->dev_index = hdev->addr;
++	/* Intel iDisp (HDMI/DP) codec */
++	if (((hdev->vendor_id >> 16) & 0xFFFF) == 0x8086)
++		hda_pvt->need_display_power = true;
++	dev_set_drvdata(&hdev->dev, hda_pvt);
++
+ 	/* hold the ref while we probe */
+ 	hlink = snd_hdac_ext_bus_get_hlink_by_name(hdev->bus, dev_name(&hdev->dev));
+ 	if (!hlink) {
+diff --git a/sound/soc/sof/intel/hda-codec.c b/sound/soc/sof/intel/hda-codec.c
+index fd371850b0d69..32fcc1cd3f923 100644
+--- a/sound/soc/sof/intel/hda-codec.c
++++ b/sound/soc/sof/intel/hda-codec.c
+@@ -15,8 +15,6 @@
+ #include "hda.h"
  
- 	nvmf_free_options(nctrl->opts);
- free_ctrl:
-+	for (i = 0; i < nr_queues; i++)
-+		mutex_destroy(&ctrl->queues[i].queue_lock);
- 	kfree(ctrl->queues);
- 	kfree(ctrl);
- }
-@@ -3045,17 +3058,18 @@ static int nvme_tcp_get_address(struct nvme_ctrl *ctrl, char *buf, int size)
- 
- 	len = nvmf_get_address(ctrl, buf, size);
- 
--	if (!test_bit(NVME_TCP_Q_LIVE, &queue->flags))
--		return len;
+ #if IS_ENABLED(CONFIG_SND_SOC_SOF_HDA_AUDIO_CODEC)
+-#include "../../codecs/hdac_hda.h"
 -
- 	mutex_lock(&queue->queue_lock);
+ #define CODEC_PROBE_RETRIES	3
  
--	ret = kernel_getsockname(queue->sock, (struct sockaddr *)&src_addr);
--	if (ret > 0) {
--		if (len > 0)
--			len--; /* strip trailing newline */
--		len += scnprintf(buf + len, size - len, "%ssrc_addr=%pISc\n",
--				(len) ? "," : "", &src_addr);
-+	if (test_bit(NVME_TCP_Q_LIVE, &queue->flags)) {
-+		ret = kernel_getsockname(queue->sock,
-+				(struct sockaddr *)&src_addr);
-+		if (ret > 0) {
-+			if (len > 0)
-+				len--; /* strip trailing newline */
-+			len += scnprintf(buf + len, size - len,
-+					"%ssrc_addr=%pISc\n",
-+					(len) ? "," : "", &src_addr);
-+		}
- 	}
- 
- 	mutex_unlock(&queue->queue_lock);
-@@ -3121,7 +3135,7 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
- 		struct nvmf_ctrl_options *opts)
+ #define IDISP_VID_INTEL	0x80860000
+@@ -148,7 +146,6 @@ static struct hda_codec *hda_codec_device_init(struct hdac_bus *bus, int addr, i
+ /* probe individual codec */
+ static int hda_codec_probe(struct snd_sof_dev *sdev, int address)
  {
- 	struct nvme_tcp_ctrl *ctrl;
--	int ret;
-+	int ret, i;
+-	struct hdac_hda_priv *hda_priv;
+ 	struct hda_bus *hbus = sof_to_hbus(sdev);
+ 	struct hda_codec *codec;
+ 	u32 hda_cmd = (address << 28) | (AC_NODE_ROOT << 20) |
+@@ -168,27 +165,15 @@ static int hda_codec_probe(struct snd_sof_dev *sdev, int address)
+ 	dev_dbg(sdev->dev, "HDA codec #%d probed OK: response: %x\n",
+ 		address, resp);
  
- 	ctrl = kzalloc_obj(*ctrl);
- 	if (!ctrl)
-@@ -3132,8 +3146,7 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
- 	 */
- 	context_unsafe(INIT_LIST_HEAD(&ctrl->list));
- 	ctrl->ctrl.opts = opts;
--	ctrl->ctrl.queue_count = opts->nr_io_queues + opts->nr_write_queues +
--				opts->nr_poll_queues + 1;
-+	ctrl->ctrl.queue_count = NVME_TCP_OPT_NR_QUEUES(opts);
- 	ctrl->ctrl.sqsize = opts->queue_size - 1;
- 	ctrl->ctrl.kato = opts->kato;
+-	hda_priv = devm_kzalloc(sdev->dev, sizeof(*hda_priv), GFP_KERNEL);
+-	if (!hda_priv)
+-		return -ENOMEM;
+-
+ 	codec = hda_codec_device_init(&hbus->core, address, HDA_DEV_LEGACY);
+ 	ret = PTR_ERR_OR_ZERO(codec);
+ 	if (ret < 0)
+ 		return ret;
  
-@@ -3191,6 +3204,14 @@ static struct nvme_tcp_ctrl *nvme_tcp_alloc_ctrl(struct device *dev,
- 		goto out_free_ctrl;
+-	hda_priv->codec = codec;
+-	hda_priv->dev_index = address;
+-	dev_set_drvdata(&codec->core.dev, hda_priv);
+-
+-	if ((resp & 0xFFFF0000) == IDISP_VID_INTEL) {
+-		if (!hbus->core.audio_component) {
+-			dev_dbg(sdev->dev,
+-				"iDisp hw present but no driver\n");
+-			ret = -ENOENT;
+-			goto out;
+-		}
+-		hda_priv->need_display_power = true;
++	if ((resp & 0xFFFF0000) == IDISP_VID_INTEL && !hbus->core.audio_component) {
++		dev_dbg(sdev->dev, "iDisp hw present but no driver\n");
++		ret = -ENOENT;
++		goto out;
  	}
  
-+	/*
-+	 * The queue locks are owned by the controller, not the queues:
-+	 * they outlive the per-queue connect/disconnect cycles so that
-+	 * sysfs readers can never race their destruction.
-+	 */
-+	for (i = 0; i < ctrl->ctrl.queue_count; i++)
-+		mutex_init(&ctrl->queues[i].queue_lock);
-+
- 	ret = nvme_init_ctrl(&ctrl->ctrl, dev, &nvme_tcp_ctrl_ops, 0);
- 	if (ret)
- 		goto out_kfree_queues;
+ 	if (is_generic_config(hbus))
 -- 
 2.53.0
 
