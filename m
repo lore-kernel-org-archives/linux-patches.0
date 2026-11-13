@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591180;
-	b=NDWv5+lin/98taZE6lVMU+WnU6wEEyFzKB9fhR5oRaAwBUViIg9NM90AGiqrrql9AhTQ
-	 XDb3DuSdo+q2aQUTA7b3zw9iB0EY1mh10+Pp6/B6UZsaM8QQXFWhm8MDZDt8DVZL0wLBY
-	 Bzt//6Wt66rDGEoYZFP3xp2kn3RNDDGRF2zBzjEi8Es0i8DRBvpOfGTnbAcBtDHU9EHVq
-	 IuR4becX67vT5Boly5KygttCbJIR57XvYe68m1Wu+sn3e53f/2xtFULnl76R7upNG5XWR
-	 ZHJTnji1xwJmS+Tha34Afuau3c/wxeToBnSq/pJP3U7LiPdrAAwOZOJLj2tdnvUZdOw==
+	t=1794591182;
+	b=Vq3BODoj+K4v1epUkMaN7F3vISWKkw7OgH8265GU5sSyuugjWmfKIqNWD9zFBbrd9L9G
+	 UdQbKI3oHRWqjOTAqc4ncxzbC5jN4RpxhyFt360hnom2F1i4C9fVAgx2rA2omHWYq9XR5
+	 JT6MFuc4lmoq2h0eZwPFyFYn1Zv9sX0F/SLEdyUAsF5Ix6YcO8m/M9AgOtH8LOMEECUxk
+	 wfzL4yg5+LdyswBqeKzT4TeV6ygrNy0gdRFSAlzN/tWiwye3Cwr1RFXHe93R/oe75y1GL
+	 l6ZzR5ikScmB6qrgRQW+FMLGpZbJAPr0aPvbhq0m0grDJfIgv3IuX3Kv5wLLS2YlHLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591180;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pnF1QqzH3beF0+OvkgHpAzMclWqjjp78yNjm0JcI9lQ=;
-	b=PgvZgANdl5pID3mdSZrMWJPNfwcw628F4AIy8zcYrvgusFXAt3aQsgv6NvkQc05Jjk+Z
-	 9nHOzZkJzhaxECfQ4wxw0gtgV56vhrqnBiTZB2tE9d4c2QBI3/rgeQOpuckACSGuDN2be
-	 /uYAb3XodlUYKSWRMohZH+I+LHtvZACvzuv9C26bdHTGr0VXO9kZxOknVxVIgpY9+WKkT
-	 IlhfoW3teKQyscxSoTuGDq20C3CdOSZaFwiy6/0Pth4CTnS6vWwx+O4PToQ89XufeB+f+
-	 mKqNenjmWE9Ym79igEh+deXLeokxzX82bB5/MoYo8en12sygAz6KXz/jmcJFn1JJvvw==
+	bh=zF8Lt5B8cJAzTCYCMiKWFKdYpKro2UtFgVFH+HMECCA=;
+	b=m2o87Horfa+4WfyOvxqCXkAcBmabyAvBr+Z0OYyGrXVuV8Fx3CZruT4m5PTlwxjspyjf
+	 s8PjoiAPl1JdwEOftWxdMXixf9wyIpNdHb56htOuR3aU6++nGvHgfDecsK2gDtGzuU19A
+	 licEk10O8uCCTQlIxfGynQ6QugRAK9oYK+1d9QBWwBK4h4SVoNKFdavX5ZDuGciW3UpGF
+	 jrOEceVxNL8Vd/xZXupFqdfqzppeyhUQVeG4IVMLKuzCz8Hijxi4T9VB3icubpBHD5ZT2
+	 Q3sJssi3Yf64q54fQW2+O7Ma42BPAOB59bQnqXipXFLrqsPf+9ZOULs4gIkEFUDYQHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcL84eW4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UYym0VPW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE166073FE6;
-	Fri, 13 Nov 2026 17:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A2D6073FE6;
+	Fri, 13 Nov 2026 17:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcL84eW4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0611F000C6;
-	Fri, 13 Nov 2026 17:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UYym0VPW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1B91F000C4;
+	Fri, 13 Nov 2026 17:33:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591180;
-	bh=pnF1QqzH3beF0+OvkgHpAzMclWqjjp78yNjm0JcI9lQ=;
+	s=korg; t=1794591181;
+	bh=zF8Lt5B8cJAzTCYCMiKWFKdYpKro2UtFgVFH+HMECCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xcL84eW4h3qmG7PYLX10SCTrir7fE4mZ8sJnMWOzC7BsJBeRb7OT15ZtAtXTtJv9X
-	 c+lGbRJhzgxS2xDU8rqNdrkPLAQBx9NjH7YSR8vw6b8ActbzQLlILqCkqLpkjw19tX
-	 46DCUjKbDpLm4yDYF/M9uxQtEfCAAzpTTkQav14U=
+	b=UYym0VPW8sGG7k6arwCJ5T2XDdw0w83R9hIfJPB8spBqjzxFkU95mq3T2J0/LLRka
+	 4/reZpWMcgl4pjqP7fJOebd0D6SCS5emi9QOBuD32OZ4bmzXhdjMIkPXrht7A8At7h
+	 3aZcu7LXPj53myx/HiENkioU2jj83ZbUqRwuISAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Jia-Ju Bai <baijiaju1990@gmail.com>,
+	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 319/670] can: proc: reset pkg_stats atomics individually
-Date: Fri, 13 Nov 2026 10:48:03 -0500
-Message-ID: <20261113153822.710700872@linuxfoundation.org>
+Subject: [PATCH 6.12 293/670] ocfs2: stop recovery before shutting down local allocators
+Date: Fri, 13 Nov 2026 10:47:37 -0500
+Message-ID: <20261113153821.865740578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,136 +74,236 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 12297f855bbd943847cb8893a3614caef5a9c2a8 ]
+[ Upstream commit 126429e2f503ade63502978beb0c519066442250 ]
 
-Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-converted several members of struct can_pkg_stats to atomic_long_t and
-updated the hot TX/RX and procfs read paths to use atomic_long_*()
-helpers. However, can_init_stats() still clears the whole struct with
-memset().
+Recovery completion needs the local allocators until it has finished
+reclaiming a failed node's allocation window and truncate log.  During
+unmount, quota recovery is stopped first, but that leaves recovery_state
+at OCFS2_REC_QUOTA_DISABLED.  New non-quota recovery can still start.
 
-can_init_stats() is reached from can_stat_update() in timer context and
-also from the procfs reset path. Those paths can run while the TX/RX hot
-paths are concurrently updating rx_frames, tx_frames, matches and their
-*_delta counters. Hitting the whole-struct memset() in that window
-performs plain writes to fields that otherwise follow an atomic_long_t
-access contract, which can lose or mix live statistics updates.
+ocfs2_truncate_log_shutdown() drains existing completion work and releases
+osb_tl_bh before ocfs2_recovery_exit() closes that publication path:
 
-This issue was found by source-level API-misuse analysis looking for
-whole-object resets left behind after atomic_long_t conversions, then
-manually audited on Linux v6.18.21.
+  Unmount                             Recovery
+  -------                             --------
+  stop quota recovery; disable quotas
+  truncate_log_shutdown()
+    flush existing completion work
+                                      recover another failed node
+                                        queue completion
+    flush local log; release buffer
+                                      complete_truncate_log_recovery()
+                                        use released osb_tl_bh
+  recovery_exit(): disable and drain
 
-Replace the whole-struct memset() with a helper that resets the
-atomic_long_t counters via atomic_long_set() and clears the derived
-scalar statistics explicitly. This preserves the existing reset
-semantics for scalar fields while restoring atomic access discipline for
-the live counters.
+An extra buffer reference alone would still let completion append new
+records after the final truncate-log flush.
 
-Build-tested by compiling net/can/proc.o on x86_64 netdev/main.
-Runtime-tested with a QEMU + vcan setup on Linux v6.18.21 by driving
-concurrent traffic and reset_stats reads, which reproduced inconsistent
-exported statistics before the fix.
+Split stopping and draining recovery from freeing its state. Stop all
+recovery producers and drain completion work before shutting down either
+local allocator. Keep recovery-state release at its existing later point,
+so its lifetime relative to other teardown users stays unchanged. The
+second stop at recovery_exit() is harmless once recovery is disabled.
 
-[Hartkopp] can_stat_update() also read the *_delta counters at the
-beginning and cleared them with atomic_long_set() at the end. Increments
-from the hot path in between were lost for both the current and the next
-interval. Use atomic_long_xchg() to fetch and clear the *_delta counters
-in one atomic step instead.
+KASAN report as below:
 
-On x86_64 atomic_long_set() is a plain store like memset(), so the
-memset() is an actual problem only on architectures with lock-based
-atomics (e.g. parisc). The inconsistencies seen on x86_64 come from the
-*_delta handling and from the stale snapshots, which are fixed in "can:
-proc: skip stats calculation after reset in can_stat_update()". As
-before, the counters are reset one at a time and the derived scalar
-statistics use plain stores.
+    BUG: KASAN: slab-use-after-free in ocfs2_truncate_log_needs_flush+0x23d/0x360
+    Read of size 8 at addr ffff8881093711e8 by task kworker/u16:3/53
 
-Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20261027-can-rx-lock-v12-5-eb5afc2d8b9b@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+    CPU: 0 UID: 0 PID: 53 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    Workqueue: ocfs2_wq ocfs2_complete_recovery
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20e/0x420
+     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
+     kasan_report+0xe0/0x110
+     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
+     ocfs2_truncate_log_needs_flush+0x23d/0x360
+     ? __pfx_ocfs2_truncate_log_needs_flush+0x10/0x10
+     ? __pfx_down_write+0x10/0x10
+     ocfs2_complete_truncate_log_recovery+0x315/0x780
+     ? trace_hardirqs_on+0x18/0x160
+     ? __pfx_ocfs2_complete_truncate_log_recovery+0x10/0x10
+     ? ocfs2_complete_recovery+0x666/0x11b0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? kfree+0x308/0x580
+     ocfs2_complete_recovery+0x676/0x11b0
+     ? __pfx_ocfs2_complete_recovery+0x10/0x10
+     ? reacquire_held_locks+0xdd/0x200
+     ? process_one_work+0x7c8/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_acquire+0x190/0x300
+     ? __pfx_autoremove_wake_function+0x10/0x10
+     ? process_one_work+0x834/0x1b40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x290
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     process_one_work+0x9a8/0x1b40
+     ? __pfx_process_one_work+0x10/0x10
+     ? lock_acquire+0x190/0x300
+     ? lock_is_held_type+0x8f/0x100
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     worker_thread+0x65c/0xe40
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __kthread_parkme+0x177/0x220
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_worker_thread+0x10/0x10
+     kthread+0x351/0x460
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork+0x659/0x940
+     ? __pfx_ret_from_fork+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __switch_to+0x74f/0xf70
+     ? __pfx_kthread+0x10/0x10
+     ret_from_fork_asm+0x1a/0x30
+     </TASK>
+
+    Allocated by task 538:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_slab_alloc+0x89/0x90
+     kmem_cache_alloc_noprof+0x20b/0x5c0
+     alloc_buffer_head+0x26/0x120
+     folio_alloc_buffers+0x122/0x1d0
+     bdev_getblk+0x299/0x4f0
+     ocfs2_read_blocks_sync+0x513/0xbc0
+     ocfs2_iget+0x9cd/0x1a00
+     ocfs2_get_system_file_inode+0x25e/0x7a0
+     ocfs2_fill_super+0x1b05/0x3930
+     get_tree_bdev_flags+0x35d/0x5f0
+     vfs_get_tree+0x93/0x320
+     fc_mount+0x1d/0x200
+     path_mount+0x592/0x1e00
+     __x64_sys_mount+0x24b/0x2d0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 553:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kmem_cache_free+0x242/0x580
+     free_buffer_head+0x4b/0xc0
+     try_to_free_buffers+0x1dc/0x330
+     ocfs2_truncate_log_shutdown+0x789/0x1290
+     ocfs2_dismount_volume+0x1da/0x940
+     generic_shutdown_super+0x15f/0x490
+     kill_block_super+0x40/0xa0
+     deactivate_locked_super+0xae/0x120
+     deactivate_super+0xa2/0xc0
+     cleanup_mnt+0x217/0x450
+     task_work_run+0x144/0x230
+     exit_to_user_mode_loop+0x17d/0x570
+     do_syscall_64+0x4d1/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    The buggy address belongs to the object at ffff8881093711c0
+     which belongs to the cache buffer_head of size 160
+    The buggy address is located 40 bytes inside of
+     freed 160-byte region [ffff8881093711c0, ffff888109371260)
+
+    The buggy address belongs to the physical page:
+    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x109371
+    flags: 0x200000000000000(node=0|zone=2)
+    page_type: f5(slab)
+    raw: 0200000000000000 ffff8881008883c0 dead000000000100 dead000000000122
+    raw: 0000000000000000 0000000000120012 00000000f5000000 0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff888109371080: 00 00 00 00 fc fc fc fc fc fc fc fc 00 00 00 00
+     ffff888109371100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+    >ffff888109371180: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
+                                                              ^
+     ffff888109371200: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+     ffff888109371280: fc fc fc fc 00 00 00 00 00 00 00 00 00 00 00 00
+    ==================================================================
+
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0019-v8-574dd69fd3f47f56348b@gmail.com
+Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Assisted-by: LLM
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
+Cc: <jjzuming@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/proc.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ fs/ocfs2/journal.c | 15 ++++++++++++---
+ fs/ocfs2/journal.h |  1 +
+ fs/ocfs2/super.c   |  3 +++
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/net/can/proc.c b/net/can/proc.c
-index 2f78ea8ac30b0..0f2cbc5816831 100644
---- a/net/can/proc.c
-+++ b/net/can/proc.c
-@@ -76,16 +76,39 @@ static const char rx_list_name[][8] = {
-  * af_can statistics stuff
-  */
+diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
+index 66427185a5d02..e8f6e3a554a37 100644
+--- a/fs/ocfs2/journal.c
++++ b/fs/ocfs2/journal.c
+@@ -230,13 +230,22 @@ void ocfs2_recovery_disable_quota(struct ocfs2_super *osb)
+ 	ocfs2_recovery_disable(osb, OCFS2_REC_QUOTA_WANT_DISABLE);
+ }
  
-+static void can_reset_pkg_stats(struct can_pkg_stats *pkg_stats)
++/* Stop producers and drain completion work without freeing recovery state. */
++void ocfs2_recovery_stop(struct ocfs2_super *osb)
 +{
-+	atomic_long_set(&pkg_stats->rx_frames, 0);
-+	atomic_long_set(&pkg_stats->tx_frames, 0);
-+	atomic_long_set(&pkg_stats->matches, 0);
-+
-+	pkg_stats->total_rx_rate = 0;
-+	pkg_stats->total_tx_rate = 0;
-+	pkg_stats->total_rx_match_ratio = 0;
-+
-+	pkg_stats->current_rx_rate = 0;
-+	pkg_stats->current_tx_rate = 0;
-+	pkg_stats->current_rx_match_ratio = 0;
-+
-+	pkg_stats->max_rx_rate = 0;
-+	pkg_stats->max_tx_rate = 0;
-+	pkg_stats->max_rx_match_ratio = 0;
-+
-+	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
-+	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
-+	atomic_long_set(&pkg_stats->matches_delta, 0);
++	ocfs2_recovery_disable(osb, OCFS2_REC_WANT_DISABLE);
 +}
 +
- static void can_init_stats(struct net *net)
+ void ocfs2_recovery_exit(struct ocfs2_super *osb)
  {
- 	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
- 	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
+ 	struct ocfs2_recovery_map *rm;
+ 
+-	/* disable any new recovery threads and wait for any currently
+-	 * running ones to exit. Do this before setting the vol_state. */
+-	ocfs2_recovery_disable(osb, OCFS2_REC_WANT_DISABLE);
++	/*
++	 * Disable producers and drain work before freeing recovery state.
++	 * Do this before setting vol_state to VOLUME_DISMOUNTED: completion
++	 * work may still be waiting in __ocfs2_wait_on_mount().
++	 */
++	ocfs2_recovery_stop(osb);
+ 
  	/*
--	 * This memset function is called from a timer context (when
-+	 * This stats reset is called from a timer context (when
- 	 * can_stattimer is active which is the default) OR in a process
- 	 * context (reading the proc_fs when can_stattimer is disabled).
- 	 */
--	memset(pkg_stats, 0, sizeof(struct can_pkg_stats));
-+	can_reset_pkg_stats(pkg_stats);
- 	pkg_stats->jiffies_init = jiffies;
+ 	 * Now that recovery is shut down, and the osb is about to be
+diff --git a/fs/ocfs2/journal.h b/fs/ocfs2/journal.h
+index 19fc920d26b1c..4b52bf7b0938e 100644
+--- a/fs/ocfs2/journal.h
++++ b/fs/ocfs2/journal.h
+@@ -147,6 +147,7 @@ void ocfs2_complete_recovery(struct work_struct *work);
+ void ocfs2_wait_for_recovery(struct ocfs2_super *osb);
  
- 	rcv_lists_stats->stats_reset++;
-@@ -121,9 +144,10 @@ void can_stat_update(struct timer_list *t)
- 	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
- 	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
- 	long matches = atomic_long_read(&pkg_stats->matches);
--	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
--	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
--	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
-+	/* fetch and clear values for 'current rate' calculation */
-+	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
-+	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
-+	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
+ int ocfs2_recovery_init(struct ocfs2_super *osb);
++void ocfs2_recovery_stop(struct ocfs2_super *osb);
+ void ocfs2_recovery_exit(struct ocfs2_super *osb);
+ void ocfs2_recovery_disable_quota(struct ocfs2_super *osb);
  
- 	/* restart counting in timer context on user request */
- 	if (user_reset)
-@@ -172,11 +196,6 @@ void can_stat_update(struct timer_list *t)
- 	if (pkg_stats->max_rx_match_ratio < pkg_stats->current_rx_match_ratio)
- 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
+diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
+index 3535881de6521..2a11202b52205 100644
+--- a/fs/ocfs2/super.c
++++ b/fs/ocfs2/super.c
+@@ -1884,6 +1884,9 @@ static void ocfs2_dismount_volume(struct super_block *sb, int mnt_err)
+ 	/* Wait for worker to be done with the work structure in osb */
+ 	cancel_work_sync(&osb->dquot_drop_work);
  
--	/* clear values for 'current rate' calculation */
--	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
--	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
--	atomic_long_set(&pkg_stats->matches_delta, 0);
--
- 	/* restart timer (one second) */
- 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
- }
++	/* Stop recovery producers before releasing their local allocators. */
++	ocfs2_recovery_stop(osb);
++
+ 	ocfs2_shutdown_local_alloc(osb);
+ 
+ 	ocfs2_truncate_log_shutdown(osb);
 -- 
 2.53.0
 
