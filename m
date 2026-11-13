@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585501;
-	b=XTvDrNgXzSNk7XGrv62URAb85jerjbQrT44lD1d8m9HoRqPkKBG7nLEPg0FSJU9/QOu9
-	 AeTwJ13L4CQuygmF0uHF60UPRkzCOl1fhhRnB8MAneeIy2W6vMs5V7NrzJLpSXPZKSgqG
-	 0KeY+iHnwbI1AzEotvIUL77Ec4ZqwqR74uBA+gjYXeRieu7+CL0or2TqNcWYmpbOS1X1E
-	 2CydoG+nxSNePLELbEyMI0qYxCHCrTKArYfj0NByrZzesFExwLx4Xp/ML7N4rGi7wKBEv
-	 2H4YkLdoPP5OJRUoJA7TY4TD8uoSW1quX2V33VA/3D/XOpnMm6coCdgvk+Vg84iPvLA==
+	t=1794585502;
+	b=G3NsfFgfaelkKO5vZiEx/Lx7+3YSVI4CKWk3s2Il4uYwwYI1bgc7/p9310PyksqG2xXe
+	 yyQZBF6FJBmjARxslbQ5jSGVvmLG8qkw0weID5BE4/Vi9e1d3ftd5u5XmPyV7X/mYHvFe
+	 RnB4rqWr+AZK7byIKoOllA0tqJfVallptbClbev9k0Ez82QAZ4tgpKF6i9P6iJ1u+j2C9
+	 sBTDQFIg8oLG3MusO1iIOBthagfl9b39r9AS5ys8T+sfFxqWwm8LJBqkjvFZDj1to6ETU
+	 wi8OsM/k94wDZx6ty3FcQpaAoALvOTx9PiK4d+YLDaBJS04d8+8sXyIUV1hPcmNsYXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585501;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iP75UQcVzMBxWYZ4D4zf2EqHzTz0/HguVFi4QiIe9Pc=;
-	b=E9ge6SlE3v7RxdbFuUYBnaaRZ8MI9ytdR1U3/E/1irWKAZpeDO8NpadqTPm3lSIZf86a
-	 ur5RGcPieT4PWPNFfgp89Gflx7p/CLSySoBv0b4g1/yj4GnBlt5JBzA9BTdW+TM1H4FMc
-	 XPG/Hd34tj1Mb8QE7NPhDq3pg6x22tQrcvRStoZ/yV/p12Nz9TmslTpgds9iNjiWOqsXx
-	 chP5sN7MmiOl5/p5Z/WtX+CXZ79JSOjAgkkdss/8b2bGBYAY5DZv8HMsSiyFW+NoAexht
-	 jGNd8gt3hngF25sLKOvUV/8E07cKcwQRZL+a0QYeErgTxUSGw1S+DRIpxXJqkONeGSQ==
+	bh=Ut3sjD6YKyXMRWr4EVtUFPUPna5LlXTw4db5HieNnYk=;
+	b=QnXl+LLVhJvIXVddh9wxY0wEpCi7l3rZ1uHZGvrpyYSVj03mG6/hTqk9ysr4YXpR1J5e
+	 i7EcxraQ5osnrSsLHEHq5NYHYN8AOIzvJohMzwh0kga1eKqQFrNNtXfeOMwf5N1gPBpky
+	 6jq7ZShp6ILC8yc6kSR4EzJpP/iv0Zxv5IGbRE9qHlZ5uBLiR7w4S4FOOBhk0rqlig/Z7
+	 AQIMJgLiAGvsEGFdOVo6yznH+4L2hhhULOw4kCrpS96QKqARa/p/30csAq6wjllbXOG9O
+	 hmUGOX7OzEclu/RP0e5hosClSLS2JQWrku+hheYsp9xLJ7qN6sCFSrV0+5KP+FFUw/A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bu0z2HEA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kYby31Ty;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E47B606AE1B;
-	Fri, 13 Nov 2026 15:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF19606AE15;
+	Fri, 13 Nov 2026 15:58:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bu0z2HEA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EA31F000C4;
-	Fri, 13 Nov 2026 15:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kYby31Ty
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EDF1F000C4;
+	Fri, 13 Nov 2026 15:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585501;
-	bh=iP75UQcVzMBxWYZ4D4zf2EqHzTz0/HguVFi4QiIe9Pc=;
+	s=korg; t=1794585502;
+	bh=Ut3sjD6YKyXMRWr4EVtUFPUPna5LlXTw4db5HieNnYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Bu0z2HEAimTVCwKookMY8GLPmEdMXyTcQ3AVRDqojKbbGZRHahh7oB4GfrCXP8tq7
-	 YVAoEzWL9q9dk+hVRNZg0BQPVhSYp4Wupw5QkEwcPzcfIyNxWYYfzsu9epmwipXtDa
-	 67e9vT/8isr5DeSMN/ccvfMj375PIxE845A/3jDw=
+	b=kYby31TyqyWW30whQFav9qjaXKEdBWUroyT0ZedIJ2ypc8oWC8Ghq9i/ll9BJ70BO
+	 c9K3C33Zjt3z20jkgOIhq1Abc5ySImceL0Sq+Rmal5yS9TBRze8g9cMAzGLKoK3Lsn
+	 jU+1fazpO28WSGrQ8nF+dPhjrAAOXjSfEbPZRWB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Nhat Pham <nphamcs@gmail.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Rik van Riel <riel@surriel.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 142/507] mm/shmem: fix truncate loop after boundary swapin failure
-Date: Fri, 13 Nov 2026 10:47:26 -0500
-Message-ID: <20261113153759.253592709@linuxfoundation.org>
+Subject: [PATCH 7.3 151/507] mm/filemap: dont lose a folio lock wakeup to a signal
+Date: Fri, 13 Nov 2026 10:47:35 -0500
+Message-ID: <20261113153759.546502329@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,59 +71,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 5f1ec2cf92a7d655a8eb39711987822f9b1f9d67 ]
+[ Upstream commit 8ccb6ded6a47b59b4907ed4f8c293cf8122de889 ]
 
-If swapping in a large entry at the new EOF fails, shmem_undo_range()
-leaves the entry in place. Its final scan skips the entry, then restarts
-from the same start index and finds it again. Truncation can loop forever
-while holding i_rwsem.
+An exclusive waiter in folio_wait_bit_common() can leave the wait loop
+because of a fatal signal, then be woken by folio_unlock() before
+finish_wait(). If the waker did not hand over the lock, the waiter returns
+-EINTR without trying to acquire it.
 
-Advance start past the skipped entry so that a restarted scan can finish,
-as we already do for folios that cannot be split.
+folio_wake_bit() stops after waking the first exclusive waiter, so this
+loses the wakeup and can leave other waiters asleep indefinitely on an
+unlocked folio.
 
-Note that this does not fix the missing zeroing when boundary swapin fails,
-it merely prevents the endless loop.
+After finish_wait(), let a waiter woken without a lock handoff try once
+more to acquire the lock. If successful, return success so the caller's
+eventual unlock wakes the next waiter. Otherwise, the current lock owner
+will do so.
 
-Fixes: 8a1968bd997f ("mm/shmem, swap: fix race of truncate and swap entry split")
+Fix generated by an LLM and sent by Josef Bacik in private.
+
+Fixes: 5ef64cc8987a ("mm: allow a controlled amount of unfairness in the page lock")
 Cc: stable@vger.kernel.org
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-13-392fc715d8f6@kernel.org
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: clarify and simplify comment + description ]
+Reviewed-by: Rik van Riel <riel@surriel.com>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-7-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ mm/filemap.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 2b2f347bb8a71..508ada89151d8 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1229,14 +1229,16 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
- 					order = shmem_confirm_swap(mapping, indices[i],
- 								   radix_to_swp_entry(folio));
- 					/*
--					 * If found a large swap entry cross the end or start
--					 * border, skip it as the truncate_inode_partial_folio
--					 * above should have at least zerod its content once.
-+					 * Skip boundary entries when restarting
-+					 * the scan to avoid endless loops after
-+					 * swapin failure.
- 					 */
- 					if (order > 0) {
- 						base = round_down(base, 1 << order);
--						if (base < start || base + (1 << order) > end)
-+						if (base < start || base + (1 << order) > end) {
-+							start = max(start, base + (1 << order));
- 							continue;
-+						}
- 					}
- 					/* Swap was replaced by page or extended, retry */
- 					index = base;
+diff --git a/mm/filemap.c b/mm/filemap.c
+index 0494c246fb18e..c6a573caef70e 100644
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -1374,10 +1374,22 @@ static inline int folio_wait_bit_common(struct folio *folio, int bit_nr,
+ 	 * return value based on that state without races.
+ 	 *
+ 	 * Also note that WQ_FLAG_WOKEN is sufficient for a non-exclusive
+-	 * waiter, but an exclusive one requires WQ_FLAG_DONE.
++	 * waiter, but an exclusive one must also acquire the bit.
+ 	 */
+-	if (behavior == EXCLUSIVE)
+-		return wait->flags & WQ_FLAG_DONE ? 0 : -EINTR;
++	if (behavior == EXCLUSIVE) {
++		if (wait->flags & WQ_FLAG_DONE)
++			return 0;
++		/*
++		 * We might have just been woken up and the waker will not
++		 * wake up anybody else. If we ignore that now, the remaining
++		 * waiters may not get woken up: take the bit now if it is
++		 * still free.
++		 */
++		if ((wait->flags & WQ_FLAG_WOKEN) &&
++		    !test_and_set_bit(bit_nr, folio_flags(folio, 0)))
++			return 0;
++		return -EINTR;
++	}
+ 
+ 	return wait->flags & WQ_FLAG_WOKEN ? 0 : -EINTR;
+ }
 -- 
 2.53.0
 
