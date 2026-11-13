@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591362;
-	b=BWPoVhGBdHnSSvW3ieUsTDNSeyIRcuhrZkYBhET/+UlVdHwL3c+t5bgvpC7Amxz+22Fv
-	 KhdNyz3TQQsOzogFX9vMz6JMr7i2cx3+mKoKok2UrDXtnzZpRyUo117KzY+QdUGjIqIYZ
-	 r0RMhV9+8L0wgpGpIbP0cOx/4kl2MGnQwRJfwmEnZ5GYQYt5gVMVl7vPLrK0OW9swXt1y
-	 HgbLT8fNwz+ioU7vla965jNAgZdOoTvTDqhSE8bEsIe0EgMkH4P0RBRXjmAhEhhfhN38y
-	 tWljH8kxi6vLl+K7NP7W387BuXkcPXI5hf2hYcS8KLDIAa8fu5AlQsYYMLWpkjSpl/A==
+	t=1794591364;
+	b=iB1wKUaajpjP3PIIqyp+UjHtID5URvXGPFdTZOa5RCnWOYPmKKK3twJ8/tpJrOTg5+ln
+	 aZK6yETYppYrqYv0u+xoXV7SW9Kg6hvGkdkAHQ9RurZuwdWLGqt1AERStlPNUsPOJqpLH
+	 5Pd3sjevx2nwA961Io80PuHFOoqQKHo1fWRchVJI6O6m9HRZiL1Y64AOZrdCWpQvyzIez
+	 t4j8COdY0jSyHbVQR8FQnd1Q8HVUIVrS62tU8I/wxI+sBnAD++MZt1yc8yfU77Ixu3Pac
+	 x62jrbogYZ2017tNktM9sQLldT6e3PjT6S4Rub/werak44fzjeG3flx1DUCBUaE3mSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591362;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hvfSEX+bree0qF4acFll7iHw+6zyZRJE9pA65aa4N4I=;
-	b=N3x6dWgt0CSmOlSE6zyl3heinA3r/xJwquqtmAsQBCEzOxeZTVwn3helAiS//iPiPzNG
-	 VOiBqQIb02pwHhyzX0DtRN0pTbD297IJri3u1YWyd9CiG/IVk2esw05N8usYqy6IyUeu4
-	 fisU+6YLGSTRG4GJE4MKByPZAXsOErXpOsZHzguYG2XYf/OLTr35JVph/8hV9f2kPgaPC
-	 7PautOSaKTSrXJ+wm2MpNQ9/trp3lY0UhNlZApARJbf0mhXfTewfLqabuyQ+wpRVeGm/6
-	 liyZki4iHBJ/XLmIxodg4H+AbkuTtzqdgDkPW8/azyEQlDySOxSfTaE8CkZxBrgpHUQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=y9kMPT4lvc1oVPatZtF5GWtCXYDTVG/bwcV3P2pMqPk=;
+	b=EKfePtCRWwmSQF8Y2qFVJ5Ce3h5/pRg6rAtLMD9dcefSqoo92xRsQIrvjvM/s7+iVddB
+	 5Ej02vRt2+lE7yI/jDXORNydgyVGAOlcWOvqd/6KVMjcQQ2wFUNLQEbrTjwgGYRQj2MoT
+	 Z+guZXdw7YChcXWzJ2m0VJCWfOYo0wHrSHeKOa2/qCxC8If74EufiD6oLSWOndyaQFyLF
+	 dd+/2GNtGgvJJTnmoS1cCWBIuR2IqLMxXI5CrGtKhtYCbYShp6oawCi01qNh/Gtv8DFeC
+	 uSNaKX/zibTQKlxVVV195r93jIPVLB+zgRJpXx1EOCTGPLbWaRw7bauWogcW65N6lig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2uXHJUhR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VeYeKSxl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2658606B22B;
-	Fri, 13 Nov 2026 17:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD81606B22B;
+	Fri, 13 Nov 2026 17:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2uXHJUhR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFF41F000C4;
-	Fri, 13 Nov 2026 17:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VeYeKSxl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9949A1F000C4;
+	Fri, 13 Nov 2026 17:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591362;
-	bh=hvfSEX+bree0qF4acFll7iHw+6zyZRJE9pA65aa4N4I=;
+	s=korg; t=1794591363;
+	bh=y9kMPT4lvc1oVPatZtF5GWtCXYDTVG/bwcV3P2pMqPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2uXHJUhR0PadL8o7vRhHipwqxLwjhcJ64GfAdBdGwYwP4PiZH80XMousy21j9bM6U
-	 T9qgR0GAw2r00DiTW/+Mf/gIS4Mvu40xcMD3Y6G3Zoyljc5+m2uostqrc1NTlvHLXo
-	 huQVz0xk3ow0ueFudsLMU+lAtwI1c6lUHpl1kqUc=
+	b=VeYeKSxlj+DENCpVU49tTb7+Ru0ZX9DeDqxN20RZPOnfxuxpxgZstlFS93cAQW0DV
+	 /+2CThI5ZWNqr7WKgDnWAEXEL4H8qyWA58f5EX2BfD4Lepj90fISeJIBGg/HgsohSs
+	 z7li0IWvPWk+9s6FGRKsB6N1ZxB9Zq9wm3j+3xW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	dri-devel@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 465/670] platform/x86: int3472: Fix uninitialised variable warning
-Date: Fri, 13 Nov 2026 10:50:29 -0500
-Message-ID: <20261113153827.709138205@linuxfoundation.org>
+Subject: [PATCH 6.12 466/670] drm/panic: Do not use un-escaped URL as format string
+Date: Fri, 13 Nov 2026 10:50:30 -0500
+Message-ID: <20261113153827.740392404@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -64,102 +64,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 70e6384fe0f4cf9768944f81924f6c1478b0ce43 ]
+[ Upstream commit 6596aae25585b183ebd528206bde6f12efaf8db1 ]
 
-Fix a compiler warning about an uninitialised err_msg variable by printing
-the error where it is handled:
+Replace the direct use of DRM_PANIC_SCREEN_QR_CODE_URL in snprintf()
+with a %s conversion specifier. Avoids a possible vulnerabilty from
+a crafted URL string.
 
-drivers/platform/x86/intel/int3472/discrete.c:440:24: warning: ‘err_msg’ may be used uninitialized [-Wmaybe-uninitialized]
-  440 |                 return dev_err_probe(int3472->dev, ret, err_msg);
+As the attacker needs to control the kernel at the Kconfig level, the
+potential for an exploit is likely low.
 
-Fixes: 5de691bffe57 ("platform/x86: Add intel_skl_int3472 driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Acked-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
-[ sashal: retained return ret instead of upstream’s return 1 to preserve existing callback success behavior ]
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.12+
+Link: https://patch.msgid.link/20260911124540.279841-2-tzimmermann@suse.de
+[ sashal: Retained the zl= URL parameter instead of z= to match the older QR encoding. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/int3472/discrete.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/drm_panic.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/int3472/discrete.c b/drivers/platform/x86/intel/int3472/discrete.c
-index 9e69ac9cfb92c..06191446e38b1 100644
---- a/drivers/platform/x86/intel/int3472/discrete.c
-+++ b/drivers/platform/x86/intel/int3472/discrete.c
-@@ -237,7 +237,6 @@ static int skl_int3472_handle_gpio_resources(struct acpi_resource *ares,
- 	u8 active_value, pin, type;
- 	union acpi_object *obj;
- 	struct gpio_desc *gpio;
--	const char *err_msg;
- 	const char *func;
- 	unsigned long gpio_flags;
- 	int ret;
-@@ -283,7 +282,8 @@ static int skl_int3472_handle_gpio_resources(struct acpi_resource *ares,
- 	case INT3472_GPIO_TYPE_POWERDOWN:
- 		ret = skl_int3472_map_gpio_to_sensor(int3472, agpio, func, gpio_flags);
- 		if (ret)
--			err_msg = "Failed to map GPIO pin to sensor\n";
-+			dev_err_probe(int3472->dev, ret,
-+				      "Failed to map GPIO pin to sensor\n");
+diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
+index 06f0aa1cb4f74..f4662f88e2173 100644
+--- a/drivers/gpu/drm/drm_panic.c
++++ b/drivers/gpu/drm/drm_panic.c
+@@ -507,7 +507,8 @@ static int drm_panic_get_qr_code_url(u8 **qr_image)
+ 	char *kmsg;
+ 	int max_qr_data_size, url_len;
  
- 		break;
- 	case INT3472_GPIO_TYPE_CLK_ENABLE:
-@@ -292,7 +292,7 @@ static int skl_int3472_handle_gpio_resources(struct acpi_resource *ares,
- 		gpio = skl_int3472_gpiod_get_from_temp_lookup(int3472, agpio, func, gpio_flags);
- 		if (IS_ERR(gpio)) {
- 			ret = PTR_ERR(gpio);
--			err_msg = "Failed to get GPIO\n";
-+			dev_err_probe(int3472->dev, ret, "Failed to get GPIO\n");
- 			break;
- 		}
+-	url_len = snprintf(url, sizeof(url), CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL "?a=%s&v=%s&zl=",
++	url_len = snprintf(url, sizeof(url), "%s?a=%s&v=%s&zl=",
++			   CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL,
+ 			   utsname()->machine, utsname()->release);
  
-@@ -300,19 +300,22 @@ static int skl_int3472_handle_gpio_resources(struct acpi_resource *ares,
- 		case INT3472_GPIO_TYPE_CLK_ENABLE:
- 			ret = skl_int3472_register_gpio_clock(int3472, gpio);
- 			if (ret)
--				err_msg = "Failed to register clock\n";
-+				dev_err_probe(int3472->dev, ret,
-+					      "Failed to register clock\n");
- 
- 			break;
- 		case INT3472_GPIO_TYPE_PRIVACY_LED:
- 			ret = skl_int3472_register_pled(int3472, gpio);
- 			if (ret)
--				err_msg = "Failed to register LED\n";
-+				dev_err_probe(int3472->dev, ret,
-+					      "Failed to register LED\n");
- 
- 			break;
- 		case INT3472_GPIO_TYPE_POWER_ENABLE:
- 			ret = skl_int3472_register_regulator(int3472, gpio);
- 			if (ret)
--				err_msg = "Failed to map regulator to sensor\n";
-+				dev_err_probe(int3472->dev, ret,
-+					      "Failed to map regulator to sensor\n");
- 
- 			break;
- 		default: /* Never reached */
-@@ -331,9 +334,6 @@ static int skl_int3472_handle_gpio_resources(struct acpi_resource *ares,
- 	int3472->ngpios++;
- 	ACPI_FREE(obj);
- 
--	if (ret < 0)
--		return dev_err_probe(int3472->dev, ret, err_msg);
--
- 	return ret;
- }
- 
+ 	max_qr_data_size = drm_panic_qr_max_data_size(panic_qr_version, url_len);
 -- 
 2.53.0
 
