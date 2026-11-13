@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585248;
-	b=WteRjYcwzI5Ef6FeQVWu9OWcOWz6OXE89YT2ANLe5bOXxtci97o0c0wdN5fs+h5S9ji5
-	 N9PJD6rUoc8sIWOdy/62a7JSGyRq1XpqJ3zuWv/C/vekbNKTnmN575sk0x/WDQQYKJSWW
-	 0mr/9eqUFYmsLL/rTspcvP+IAXlWd/dCuTUoFB9+uQs+7rXFqXHQGyE2mwuMTsvjrf00x
-	 zQ3I1txzgatM1x0NES/6ZQhbVYR4dB2tEyqUD37ZdO44hfvrQB0sdJpctjUPzCxiA8m/o
-	 kOb9Kp5GjNWW0ol1L5Xw9uooCv/B0qAqUXE9H/SeLzQWQMkRbw8Bk3ICmQXVzD9sSKw==
+	t=1794585249;
+	b=pbr1mBN29qLSmeKO8lO57MtPTvzZnAF4ssj2CuJXXVIzFDL/46LEXH0DCLAMHWbbxKQR
+	 wWmqv2CL2a9TUheC7szS0MijivcnvoOXHIzEAlbfClYSsN0ywt2aSBpXmqkIrOlUiK4Uh
+	 4cWNOpTH6n06uLQWQ8NoM7v+oqqFfjlqIENUAQmKKGF5cuwfYZ67Eiog2GupuO9E3/BSY
+	 JsEX4DSYi8Vfb5OPXQsHzRuJZfDhjJuXma32zGPWaPeTA2Wo3RC7iCgvL1lMivlh+08RT
+	 InkTXKxbInX7m3Ujtv3cS3m66X9B/GaS4nmkGRB72fIGc9o7oD8PHVeizZyzz4FRPgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lC8fxfBbQ6TOjPUiMiGVTWCg3WYLqwIYRCzbFyAee9Q=;
-	b=ycK5cSOMNb84Yj+vqDJUqHoURKzDEHElgkES/ijM3w3Hq5xFxOuOgxI1pWsdQS0Sk6Mb
-	 ow6agvA+mOcFj9d1TU//QeZPxySF6NseIL3CvpcnB/5L9FO1MP3rolm0CLdfxBWx0qitF
-	 49Ko3Vus4ajEbb8FE/WxMSSB/uC0NaT2NHWdRsigzVE6gpRPYWZIokne2V/ugzYQ8E2g6
-	 lB51kw27N38j5J4FwPx6H5j4MX+UTkF5jNCQaNTpID4FObyTdPc5AZsBsTJ6Ygqxxk7I4
-	 XQOfLdG0G8tjzkSf1hZfCnpytGb6kkw7LwpoF762PzLhQrMFBN+HUwuNbXwmu7TcKGQ==
+	bh=K2k2vCDUPppG7hqBsoBdN6vCAGy+I6h3Io/9bLuT1Kk=;
+	b=BU7C1pvmTOg0TKn3qIxjDp5Yo7Epn6ewd/z4D5qoffDuXitEFtaSwbX4TLOI8DVbRWT0
+	 U1o4ZpfJcyEZpLYWRsbbXPwTpQhDp7tMRIFVFYFhYku/WWQU45xyFYmf2bavhtaklkl8+
+	 R24CS7wE2nAoqaEWGJaIhbfMcYeAnjpgL+Q1Mp9tUGK/Rox/SYNF441cCsqwRRoscgF6Y
+	 Xru9jA1Vk9ZaSuV/CeRAATsr6cU4+0b7BxCVGzZXunK2iaZv8oHeXLCbsddqxbz6QuC7h
+	 qKh3Z61Ze0onMt8c7YRBN9aILDanoAibfIBj/xRJhUmvs1Lota3aMu9DDtSnCClBe5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f7bs/Pvg";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBcAyamh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C7E606A32D;
-	Fri, 13 Nov 2026 15:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66576606A880;
+	Fri, 13 Nov 2026 15:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f7bs/Pvg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E5A1F000C4;
-	Fri, 13 Nov 2026 15:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBcAyamh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE451F000C4;
+	Fri, 13 Nov 2026 15:54:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585247;
-	bh=lC8fxfBbQ6TOjPUiMiGVTWCg3WYLqwIYRCzbFyAee9Q=;
+	s=korg; t=1794585249;
+	bh=K2k2vCDUPppG7hqBsoBdN6vCAGy+I6h3Io/9bLuT1Kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f7bs/Pvg/up5VPBy25f61lnCkDbSUoPd4Yerfq3mdveV20ooMN6gvOwTi8G0yaNRH
-	 Ev9FLXiHWdWu0+u2wr0Zoy3ADF8Qe+uW1LGJVw+1xnWi7m0ioGAt6Fx1wmOosAbgQz
-	 +Ik/C8MS2trmYcFteYgje4QEzohVR7++OwY8Ssng=
+	b=TBcAyamhSIR6PXGU0Mafdtdrc7jtDelgKDlnyzeZYE2Kkykax4TJ7B0iFMtCiMCd5
+	 dXJk48xRbOrHoOEyGgPt8VHWPDngoE3KTTCjvDK5oEr/E2zbEorZ98CYz+Jo7DB1eo
+	 0osD13qEidPoZr0kI2ASwXtwiO4Zu27ohFkp3AMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ashok Raj <ashok.raj@oss.qualcomm.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Ahmed Abdelfattah <me@ahmedabdelfattah.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/686] ALSA: x86: hdmi: fix chmap array missing terminator entry
-Date: Fri, 13 Nov 2026 10:42:15 -0500
-Message-ID: <20261113153821.013423887@linuxfoundation.org>
+Subject: [PATCH 6.18 003/686] cxl/features: Ensure that count is set before access to ent[] __counted_by()
+Date: Fri, 13 Nov 2026 10:42:16 -0500
+Message-ID: <20261113153821.047069702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,70 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Ashok Raj <ashok.raj@oss.qualcomm.com>
 
-[ Upstream commit f5e1a9a3fddab8421416b68bb132ae9626d07156 ]
+commit c1031c2474f73261d8d5e4deef2b5dc20fb964f5 upstream.
 
-had_build_channel_allocation_map() allocates a single struct
-snd_pcm_chmap_elem via kzalloc() and stores it as
-intelhaddata->chmap->chmap. struct snd_pcm_chmap.chmap is expected to
-be a zero-terminated array (see snd_pcm_std_chmaps[]), but
-had_register_chmap_ctls() never overrides the TLV callback installed
-by snd_pcm_add_chmap_ctls(), so the generic pcm_chmap_ctl_tlv() from
-ALSA core is left in place.
+get_supported_features() assigns entries->num_features only after the
+memcpy() loop that fills entries->ent[] has already run. Since ent[]
+is __counted_by(num_features), the compiler's bounds instrumentation
+sees a 0-length array during that loop and FORTIFY_SOURCE trips on
+the memcpy. Set @num_features right after allocation, before any
+write into ent[], so the bound is correct for the whole lifetime of
+the array.
 
-pcm_chmap_ctl_tlv() is reachable by any local user via
-SNDRV_CTL_IOCTL_TLV_READ on the "Playback Channel Map" control and
-walks the array with "for (map = info->chmap; map->channels; map++)".
-Since the driver's single element is never terminated, this walks
-past the allocation. The same pointer is also freed on hot-unplug and
-rebuilt on hot-plug under intelhaddata->mutex, while the TLV callback
-runs under card->controls_rwsem without that mutex, so the walk can
-also race a concurrent free of the array.
+This was found via a fortify panic:
 
-Fix this by allocating a second, zeroed element so the array is
-properly terminated, and by dropping the inherited TLV callback
-entirely at registration time, since the driver never implements one
-of its own.
+ memcpy: detected buffer overflow: 384 byte write of buffer size 0
+ WARNING: lib/string_helpers.c:1035 at __fortify_report+0x54/0xa0
+ kernel BUG at lib/string_helpers.c:1043!
+ Call trace:
+  __fortify_panic+0x10/0x18
+  get_supported_features.isra.0+0x4a0/0x4d0 [cxl_core]
+  devm_cxl_setup_features+0x84/0x120 [cxl_core]
+  cxl_pci_probe+0x254/0x5e0 [cxl_pci]
 
-Fixes: 5dab11d89777 ("ALSA: x86: hdmi: Add audio support for BYT and CHT")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261008085411.13742-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ sashal: Adapted the allocation hunk to replace kzalloc(sizeof(*chmap), GFP_KERNEL) instead of kzalloc_obj(*chmap). ]
+Same class of bug, same fix shape as commit 6c9d2e87df40
+("cxl/fwctl: Fix __fortify_panic"), which fixed the analogous issue
+in cxlctl_get_supported_features() but missed this one.
+
+[ dj: Fixed up title typo per Jonathan. ]
+
+Fixes: f0e6a2329bf9 ("cxl: Add Get Supported Features command for kernel usage")
+Signed-off-by: Ashok Raj <ashok.raj@oss.qualcomm.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260911215304.1816467-1-ashok.raj@oss.qualcomm.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Ahmed Abdelfattah <me@ahmedabdelfattah.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/x86/intel_hdmi_audio.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/cxl/core/features.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/x86/intel_hdmi_audio.c b/sound/x86/intel_hdmi_audio.c
-index 8e2a007311d36..21ee9c9154804 100644
---- a/sound/x86/intel_hdmi_audio.c
-+++ b/sound/x86/intel_hdmi_audio.c
-@@ -475,7 +475,8 @@ static void had_build_channel_allocation_map(struct snd_intelhad *intelhaddata)
- 	kfree(intelhaddata->chmap->chmap);
- 	intelhaddata->chmap->chmap = NULL;
+diff --git a/drivers/cxl/core/features.c b/drivers/cxl/core/features.c
+index bb73f205f16cf..0ea5a31275d38 100644
+--- a/drivers/cxl/core/features.c
++++ b/drivers/cxl/core/features.c
+@@ -97,6 +97,7 @@ get_supported_features(struct cxl_features_state *cxlfs)
+ 		kvmalloc(struct_size(entries, ent, count), GFP_KERNEL);
+ 	if (!entries)
+ 		return NULL;
++	entries->num_features = count;
  
--	chmap = kzalloc(sizeof(*chmap), GFP_KERNEL);
-+	/* info->chmap must be zero-terminated; allocate a spare terminator entry */
-+	chmap = kzalloc_objs(*chmap, 2);
- 	if (!chmap)
- 		return;
+ 	struct cxl_mbox_get_sup_feats_out *mbox_out __free(kvfree) =
+ 		kvmalloc(cxl_mbox->payload_size, GFP_KERNEL);
+@@ -174,7 +175,6 @@ get_supported_features(struct cxl_features_state *cxlfs)
+ 		start += num_entries;
+ 	} while (remain_feats);
  
-@@ -575,6 +576,12 @@ static int had_register_chmap_ctls(struct snd_intelhad *intelhaddata,
- 	intelhaddata->chmap->kctl->info = had_chmap_ctl_info;
- 	intelhaddata->chmap->kctl->get = had_chmap_ctl_get;
- 	intelhaddata->chmap->chmap = NULL;
-+
-+	/* drop the inherited TLV read: it walks chmap without our mutex */
-+	intelhaddata->chmap->kctl->tlv.c = NULL;
-+	intelhaddata->chmap->kctl->vd[0].access &=
-+		~(SNDRV_CTL_ELEM_ACCESS_TLV_READ | SNDRV_CTL_ELEM_ACCESS_TLV_CALLBACK);
-+
- 	return 0;
- }
+-	entries->num_features = count;
+ 	entries->num_user_features = user_feats;
  
+ 	return no_free_ptr(entries);
 -- 
 2.53.0
 
