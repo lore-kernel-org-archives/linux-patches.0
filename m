@@ -1,64 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585960;
-	b=leCqzon+MnbO94mE4ivhOB767Q/QETqGhf0zJFAzzY1TtoNrbL7B9H3+AUArAZz+XO7s
-	 yinVGsrbxBZ9u1oQpPF9ZcjSZLNUu0RAhOx+Uv6VxhCZWv4+jlLBXG/3vSZPTEgSflFlV
-	 uazS06G7jzGI63qIx8BS6vpDMJvzbKECL3chZMauAU0ahzf1gpA4mlO1E95fSu4D8GD3W
-	 22Sh6MsWnyWE95YlPlBLxhz2PYOergHrMJVcE9RmLiT4voc0PNnN9tgUmW99DUdeBlmtU
-	 YbHmH/AjeZK44VDDPqG0zfsNPD6GX7LVXd4s1cCJu2afFWysUsh7eZVioHV8meEu4Jg==
+	t=1794585961;
+	b=2TD0D/r47mU4V9RqODK/1Fp0OxeMcr85Ho0FIMa3hJo13sk1QPD0QNuA8+kBtO6VN64I
+	 M9VHc6xJvWZN08MoqaM1DD5fXuuzsVULgGGYzWED158tM81MUoYz5GBDesosQHb7ca7IQ
+	 5IFmoHNILwrlipKTdsfsFVncAroUkMaCwAHLV8+OK7v2Rs+MlkTBqb7rLjIluxB5dmWDJ
+	 dd+yNbcUVqm67zY52tFrjwm8rtxx7qOw6iNn3GUe5pufl8HP/EmdOI5z0iIXCKeAqwxy6
+	 a5+yYU5s+fgTydkgwFot9dSnRfo/QCLzIh6+Sd//c78UzUGBULHlOmvKxPFcw04vjxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585960;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585961;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=obWvineHvQBLmI/oRt8ubYzd5GfKzjaH3MtvOFZI5tw=;
-	b=LWz9LDkIeDezsChElMMRb+Ytwxl5WBnrzFFQv9HhP6NE+B+fQ3n61QPI5VpPa1ek/NLa
-	 6XLqha2bzsHrDQqR5Op34uLSz8Wj7EJEeJwajf70IbOoIdpfihBEbxJlPzQn3xELXn2a6
-	 G//IC/nkyiIUXLZqZXWQ4W6eFauUntKU7AeFS9vd68aQRAzi7DviPU6ZTTAavjKdv31O6
-	 qQo04zov6gwzAoLQHkpoJCmBe1L4UdYU44QhVvfoFbXuB4jBok6h1n+SMHma37SdwAW0r
-	 kdtIXvw0u0XFfpvrVUwTQhrdUg0JTps90tLlSdqA6zs9a6gHZlhD32lhdGAoqpxcWFw==
+	bh=ywS+EmMnLUcg0qUuk3SQWAc2qTCxnT4qZg0iQHL+whk=;
+	b=SMLOAWjsdIxNJCbTsUkmIiSCB4z2fOTqukyocXNMu2yFP9LiMv9IrxnovDDIFwYhFXZ6
+	 1rFYksqpNe0bOHRNt4H/bjp0URVtqpp+82ct2oULvcwGam60gNPcbbvHy8jCwMw3MlTcj
+	 2P4WeciKryMg/Y+7YpNqWh2ZyndfZo9h5RdHS1LZArODeBS5PCYFRUJwQlzIYkL2d5Ug5
+	 oeGBETXO+N9huSK4ZT9YXUJRUpSffFUJjG9Xso1uRNamflbBqSo8F9tUUwzbE/D4JJyDL
+	 ayj66UHbC4UCN69NL2vTNL03vlScrzsEh9idjkPWF3zu3UABzkGtkzUaWSgEMmmzslw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyB9K9V+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JoIeML5e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E67606A896;
-	Fri, 13 Nov 2026 16:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6C86076E25;
+	Fri, 13 Nov 2026 16:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eyB9K9V+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7C81F000C4;
-	Fri, 13 Nov 2026 16:05:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JoIeML5e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6661F000C4;
+	Fri, 13 Nov 2026 16:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585960;
-	bh=obWvineHvQBLmI/oRt8ubYzd5GfKzjaH3MtvOFZI5tw=;
+	s=korg; t=1794585961;
+	bh=ywS+EmMnLUcg0qUuk3SQWAc2qTCxnT4qZg0iQHL+whk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eyB9K9V++++wflQyWlXqLgv80pG6wgZtZW3hibXAP/5x0uxBbUqXBuIrwNLDT7scO
-	 u6DqvbTBxqX5ey6uAv9A47damd2QV0Upmi6L2fiH+Ddz4foOKVIgyksdE7QpeqORz/
-	 YkZndVkmAJZfQ+yKrcAf0UyQ606Qq5XJK6lYh2yk=
+	b=JoIeML5eh09HxbFdTB8b0XtQZ3RFQowX3PuH4rUpgVK2nbzogjqjFXWepFtn/EFl8
+	 mnvip6tjG2DOymRrVyZaY2Qp5cDOYsPXEVpu7axiMWhmk6EvHw1IWEfyX3VQPPLxgJ
+	 Q0v+bd2ivCIWa5Sh/BuovGohDStFf2QltVPx0fP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Baoquan He <baoquan.he@linux.dev>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Kairui Song <kasong@tencent.com>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 505/507] mm/vmscan: avoid false-positive -Wuninitialized warning, again
-Date: Fri, 13 Nov 2026 10:53:29 -0500
-Message-ID: <20261113153814.267643053@linuxfoundation.org>
+Subject: [PATCH 7.3 506/507] f2fs: fix to use bio_in_atomic() in f2fs_write_end_io()
+Date: Fri, 13 Nov 2026 10:53:30 -0500
+Message-ID: <20261113153814.345306671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -80,88 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit ca6e32f3f4240d0335775a11afc21e0451dd8d8f ]
+[ Upstream commit e4582e5f3b439228d4e900edcf8225aa89be32b4 ]
 
-I previously worked around a false-postive gcc-16 warning in the
-get_tier_idx() function, by adding a fake initializer. This happens with
-the -fsanitize=bounds sanitizer when the compiler creates a specialized
-variant of isolate_folios():
+f2fs_write_end_io() uses in_atomic() to decide whether a write bio which
+exceeds max_atc_write_bio_size or max_atc_write_bio_entry_cnt should be
+completed in sbi->wq rather than in the current context.
 
-In function 'get_tier_idx',
-    inlined from 'isolate_folios.constprop' at mm/vmscan.c:4982:9:
-mm/vmscan.c:4934:9: error: 'sp.refaulted' is used uninitialized [-Werror=uninitialized]
- 4934 |         read_ctrl_pos(lruvec, type, LRU_TIER_MIN, LRU_TIER_MIN, 2, &sp);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-mm/vmscan.c: In function 'isolate_folios.constprop':
-mm/vmscan.c:4946:25: note: 'sp.refaulted' was declared here
- 4946 |         struct ctrl_pos sp, pv = {};
-      |                         ^~
+However, in_atomic() is not meant to be used outside core kernel code
+(checkpatch.pl warns about it), as it only looks at preempt_count(): it
+misses irqs-disabled and RCU read-side critical sections, and on kernels
+without CONFIG_PREEMPT_COUNT it cannot see spinlock-held sections at all.
+In those contexts, a large write bio will still be completed inline,
+which defeats the purpose of the above knobs.
 
-Adding another "= {}" would solve the problem as well, but to prevent
-this from happening again after the next code refactoring, try instead to
-prevent this by forbidding interprocedural optimizations on this function.
+The block layer provides bio_in_atomic() for exactly this purpose, it
+checks rcu_preempt_depth() and preemptible(), and conservatively returns
+true if CONFIG_PREEMPT_COUNT is disabled, let's use it instead. The
+difference is as below:
 
-Link: https://lore.kernel.org/all/20260213123902.3466040-1-arnd@kernel.org/
-Link: https://lore.kernel.org/20260916083456.4136132-1-arnd@kernel.org
-Fixes: 3de705a43a46 ("mm/vmscan: avoid false-positive -Wuninitialized warning")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Baoquan He <baoquan.he@linux.dev>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: <stable@vger.kernel.org>
+ Context                              | in_atomic()    | bio_in_atomic()
+ -------------------------------------+----------------+----------------
+ Hard IRQ / softirq                   | true           | true
+ IRQs disabled, preempt count 0       | false (missed) | true
+ RCU read lock (CONFIG_PREEMPTION)    | false (missed) | true
+ Kernel w/o CONFIG_PREEMPT_COUNT      | IRQ ctx only   | always true
+
+Note that on kernels without CONFIG_PREEMPT_COUNT, write bios exceeding
+the thresholds will always be offloaded to sbi->wq, since there is no way
+to tell whether the current context is atomic. The thresholds default to
+UINT_MAX, so the default behavior is not changed.
+
+Cc: stable@kernel.org
+Fixes: 3de6b8094115 ("f2fs: Run f2fs_write_end_io() asynchronously")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: Retained the bio-size check without the entry-count condition because the required fields are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/f2fs/data.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/vmscan.c b/mm/vmscan.c
-index 8ec8fdede5dd8..88fd31d135853 100644
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3194,8 +3194,11 @@ struct ctrl_pos {
- 	int gain;
- };
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index cc601b65163be..e0abc159b796c 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -400,7 +400,8 @@ static void f2fs_write_end_io(struct bio *bio)
  
--static void read_ctrl_pos(struct lruvec *lruvec, int type, int tier_min,
--			  int tier_max, int gain, struct ctrl_pos *pos)
-+/*
-+ * __noipa works around gcc-16 warning for uninitialized use of pos->refaulted
-+ */
-+static void __noipa read_ctrl_pos(struct lruvec *lruvec, int type, int tier_min,
-+				  int tier_max, int gain, struct ctrl_pos *pos)
- {
- 	int i;
- 	struct lru_gen_folio *lrugen = &lruvec->lrugen;
-@@ -4801,7 +4804,7 @@ static int scan_folios(unsigned long nr_to_scan, struct lruvec *lruvec,
- static int get_tier_idx(struct lruvec *lruvec, int type)
- {
- 	int tier;
--	struct ctrl_pos sp, pv = {};
-+	struct ctrl_pos sp, pv;
+ 	sbi = bio->bi_private;
  
- 	/*
- 	 * To leave a margin for fluctuations, use a larger gain factor (2:3).
-@@ -4820,7 +4823,7 @@ static int get_tier_idx(struct lruvec *lruvec, int type)
+-	if (in_atomic() && bio->bi_iter.bi_size > sbi->max_atc_write_bio_size) {
++	if (bio_in_atomic() &&
++	    bio->bi_iter.bi_size > sbi->max_atc_write_bio_size) {
+ 		struct work_struct *w;
  
- static int get_type_to_scan(struct lruvec *lruvec, int swappiness)
- {
--	struct ctrl_pos sp, pv = {};
-+	struct ctrl_pos sp, pv;
- 
- 	if (swappiness <= MIN_SWAPPINESS + 1)
- 		return LRU_GEN_FILE;
+ 		w = &container_of(bio, struct f2fs_bio, bio)->work;
 -- 
 2.53.0
 
