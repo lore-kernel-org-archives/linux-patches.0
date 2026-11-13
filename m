@@ -1,56 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585254;
-	b=XjhjR0oDWa+wzfRJSBNKmeDBrPKmkFIVaZFoWSqzHQ8eruOPjzeojx1JtnSrKj9A5Gjn
-	 qeZ0mMdINMffA6Oc7vNgMeSTtoL5qTJiyjUCZJv6KpSMDtfy9Vp/wS8VROZxrN0jgBrn7
-	 6VTcw8hS2DwQuFdgH3dMQcm9VHhLMRig2ta+/yIrAW8X5RkR1PMcMm3l+iC7nl4NJo8Cx
-	 zqL/3ElPWBzFt5GWdCO9qMqlcwHGorJpmdQNWnRHWTaKfTwF4YpQvMszJ3w05tg4RUPpS
-	 0dAWg964TrZ2K1eyyvccEVv/oSq291P5iiEIu8/gDa7IbeW9/bMDxlXIoSralogIXIg==
+	t=1794585256;
+	b=XxIgONDUH25AWWgSktxHeL+XzE+JZfJ0QCrzdG7Cstw9gzDelbXAu3I9HjYhFjrmPje1
+	 S4l0UhQBVxS8h5Zrq//tm48R1r8XoPwZNoucpayeEIQxkzJQq1q+3yv2Y1wgrEFaF1WgI
+	 5SurZ9SjYTM0QFhFb7fEgXahnafSKRiR3KVaYdxu0a59nUb7wqE+zHKpmi1+MI2d7Gk3X
+	 H8mC3NAYdGuGgFjQTSRGR05vNNlNFlM8qkMWUxtreB+70V/tMnMEKkPdBpK6P43aFxvcu
+	 AfvOAD/oYVKmylkDMQyi6lPt+TMbwrEjtFVDK7leyM/RvgckNlcnLvJ70acDwvC1aOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585256;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C5LRzyt3oo2JT6kA6coJPRMj/DRwEtkBY+0Fr/hqmB0=;
-	b=nSGLpGoM1oZzONvH2Mp0eEhZ8qDybEnPmTbC16THqt0UyqgT7YzvGpZ6oTVzcZymQClt
-	 cNFCseUpbSSzxRpLdqQkcyBcK5OjWsMOM6f6Da+TUD22A2+abE4lY16pRZbGUCLnsOX+h
-	 upT1358O0at83VK11q0cWnnOQPKdX5nPpwhIfrsy7w6Y4IvTTwUH+U4+Sb1hDMFpT43FL
-	 pnCYQ9IwkWc66EHBfdOe2TaUBaffTsR2502FzDAD+/Pqix4Yl4XheIHs4vN3mvCohpqUD
-	 D88uS67Mv4xJ31twxrST928HsWlQYzv3l3KRoS/1lqUatl0YW4RU8iZ1KveW2PAHyAw==
+	bh=YKCoKJsIZyuzOnNcNqOXjKQ++zSblsWucwHPwzZrm9o=;
+	b=PxI2OnBt+e0tczI1aI8D2lRQbD7FUwM1nmlC+l/RsJemBCfVBKWdxYt/zRgB+462LAW7
+	 0F/3M8ZizCILLZr1vOXXbHeKvqA/2ykRViU5EJFP4Vc42SMRk3HP7q0Tawe4hjTgAifqs
+	 lNmvBhDk1PoyMPyF66sNyDjzzEpfMSCYHCsePIebH5qv8NP1BGX6X8Vaf38r9mZpIeC33
+	 pNu/4UVEp1y/JmyUiJcsFUZ34pcOQRR89V80Y5665j2Gep+3giYmQEgnLmIdEt+C6dWES
+	 6J/5xV3vRF2wUeeN5cjKQI6/42rtgOA7/IYCS9arEbka4AO6Fv6T7VKTc7paFyOTb5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yloyzYHE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDzvKWDS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88674606A887;
-	Fri, 13 Nov 2026 15:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E84606A330;
+	Fri, 13 Nov 2026 15:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yloyzYHE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E454C1F000C4;
-	Fri, 13 Nov 2026 15:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QDzvKWDS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D14C1F000C4;
+	Fri, 13 Nov 2026 15:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585254;
-	bh=C5LRzyt3oo2JT6kA6coJPRMj/DRwEtkBY+0Fr/hqmB0=;
+	s=korg; t=1794585256;
+	bh=YKCoKJsIZyuzOnNcNqOXjKQ++zSblsWucwHPwzZrm9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yloyzYHEW0Ya/0qJq4v15Ez6j52XZk4hgjxb7rcfn8mCMVj4piBTEZwfzsMx2l3bb
-	 xVLC0AGz5YoinshzqR2BszEJfkT84D9ezwhQRfFDON8v3Ndu/4L2SYWV2OCwUWS7o7
-	 aqDhYqOya1ECph1ybsFKDvjH9U7X9rOopFV6orps=
+	b=QDzvKWDSioKoCDOicQRXNKpwujKXju/6jIhCRHdPuGYvvRdEgwXhKQRsolTsS+UBi
+	 mXO4OGGXbFQG0of9mDq77gq+dK4ciwfa9cq6h8M9YYUuIf4WuZcMLT8nqYm+VOGjhq
+	 8XxTBhI/IToWSDr3VaW1CWMIplOguCWD1ZLONM5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinwang Li <jinwang.li@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Siwei Zhang <oss@fourdim.xyz>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Keith Busch <kbusch@kernel.org>,
+	Andrew Stellman <astellman@stellman-greene.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 004/507] Bluetooth: L2CAP: Ignore connection responses with wrong ident
-Date: Fri, 13 Nov 2026 10:45:08 -0500
-Message-ID: <20261113153753.524383950@linuxfoundation.org>
+Subject: [PATCH 6.18 005/686] nvmet-rdma: fix out-of-bounds write in nvmet_rdma_map_sgl_inline()
+Date: Fri, 13 Nov 2026 10:42:18 -0500
+Message-ID: <20261113153821.115586329@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
-References: <20261113153753.358973689@linuxfoundation.org>
+In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
+References: <20261113153820.902362109@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -65,53 +65,70 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-7.3-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jinwang Li <jinwang.li@oss.qualcomm.com>
+From: Andrew Stellman <astellman@stellman-greene.com>
 
-commit a9f9eeb5344fc7dc625e5700ccf09891bc2603b5 upstream.
+[ Upstream commit d1512773a0d539669440bd9f6d050b8e12923b5f ]
 
-Adjusted context as stable does not have the lockdep_assert_held()
-call in l2cap_connect_create_rsp().
+nvmet_rdma_map_sgl_inline() bounds the host-supplied in-capsule SGL
+offset with "off + len > inline_data_size", evaluated in 64-bit
+arithmetic. off is taken straight from the host SGL descriptor
+(le64_to_cpu(sgl->addr)) and len is promoted to 64-bit, so the sum
+wraps: an off within len of 2^64 makes it small and the check passes.
+off is then used as page_idx = off / PAGE_SIZE to index the fixed-size
+rsp->cmd->inline_sg[] array (NVMET_RDMA_MAX_INLINE_SGE entries), so a
+crafted offset yields an out-of-bounds scatterlist index that is written
+through in nvmet_rdma_use_inline_sg().
 
-L2CAP/COS/CED/BI-28-C requires the IUT to ignore a Connection Response
-that carries an invalid Identifier.
+The mapping runs while handling a received capsule, before the command
+executes, so a remote RDMA peer can reach it (the Connect capsule is a
+write and takes this path on a queue that has no controller yet). The
+host controls only the low bits of the resulting displacement, so the
+expected impact is an out-of-bounds write that faults the target
+(remote denial of service).
 
-l2cap_connect_create_rsp() only checks that a connection request is
-outstanding, not that the response answers it. Add an ident check
-against the pending request so that a mismatched response is dropped.
+This wrap was reported, with a KASAN reproduction, on linux-nvme in May,
+and the check below was suggested in that thread. The fix that was
+applied, 48c0162f647b, reworked how the offset is mapped but kept the
+original check, and its page index turns a wrapped offset into an
+out-of-bounds index into inline_sg[].
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jinwang Li <jinwang.li@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Reject the offset before it can wrap.
+
+Found independently by static analysis with AI assistance, not
+reproduced at runtime.
+
+Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
+Fixes: 48c0162f647b ("nvmet-rdma: handle inline data with a nonzero offset")
+Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
+Closes: https://lore.kernel.org/all/LM21QIR-1-qJb7PViyJKCnGBnUzizeiNJVWQ3wb7ZwGezodjgKg3f-iobqOyequ-sT1jFCKJImfqNO_BKU3KO80xFITnaI5GTV_GxLUNDDc=@proton.me/
+Suggested-by: Keith Busch <kbusch@kernel.org>
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/target/rdma.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 01945c55e1b87..47f0449588ea1 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4333,11 +4333,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index a0ba6641c7ffb..ae44a0ff34d74 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -864,7 +864,8 @@ static u16 nvmet_rdma_map_sgl_inline(struct nvmet_rdma_rsp *rsp)
+ 		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+ 	}
  
- 	l2cap_chan_lock(chan);
- 
--	/* Only accept a response to a connection request we sent and that
--	 * is still outstanding. A channel waiting in BT_CONNECT for security
--	 * or the feature mask has not sent one yet.
-+	/* Only accept a response matching a connection request we sent and
-+	 * that is still outstanding. A channel waiting in BT_CONNECT for
-+	 * security or the feature mask has not sent one yet.
- 	 */
--	if (!l2cap_chan_connect_pending(chan))
-+	if (!l2cap_chan_connect_pending(chan) || chan->ident != cmd->ident)
- 		goto done;
- 
- 	switch (result) {
+-	if (off + len > rsp->queue->dev->inline_data_size) {
++	if (off > (u64)rsp->queue->dev->inline_data_size ||
++	    len > (u64)rsp->queue->dev->inline_data_size - off) {
+ 		pr_err("invalid inline data offset!\n");
+ 		return NVME_SC_SGL_INVALID_OFFSET | NVME_STATUS_DNR;
+ 	}
 -- 
 2.53.0
 
