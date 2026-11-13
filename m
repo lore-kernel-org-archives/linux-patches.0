@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591554;
-	b=jZ6pLAWiuIZO5VGcpkLSn7Eq84jxMznTJTNEfU5wXYhpBY/s5U4P8V/Aqf29a2r4Py1l
-	 2TEM39jRc98Rs3VhgxZ9VpEUqP+Sew/NYX61RUdTbvOZ3Dmaa6by/zllrs3MtO4HnF4ub
-	 JT7miY60IR6eVzK9r0Qgkmvk10nK98Ylpd9BJ+/LOvAgp6f+60/LrXDoxK337oIUcmadA
-	 zjMDbuyDz5Z1hZLMIUTixow67ZEnd6CQh3t+4fgI5dleZhwoyXm4TCpeO0tFtQsEOGdkn
-	 iSPDFQl+eJHAosEyo9tRWZTZvxnb2W/tMVWSQfw93024EmKrShEDSp6sZNZBiaOuXQA==
+	t=1794591555;
+	b=X7sQhMt4YsnwnvH8/Auy72oF33EYNVOe/byV57nxLMi+oT+7I1QnANtZyoJNhu8hrHFJ
+	 nOZNmSUGEKeaMjdPDqMkJkTLR3pvigtJL7k9IgrKM/NGEGpGLGnvyE32K93uRrln2fJD2
+	 EYMxuH9JYND/R0rVADRFOvuwGeeb3I9kl3y6YIY//0iGm/UC5miAu7bC6WV+IDFnJ1BAy
+	 CTr59jwb81aItC4LxkoR+5a0QUudJ0oHDtlcTji8cdDtWgxyneYzbMhpLnUlJ98m9Oyzz
+	 m/XRXUZQYD/0vpmAbk4sdTjiXHQL1YIfpwWy9QApPWLvf6hf8DMRwO1m0azn/LiX/iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591554;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rLjajc9SdKaeCIxfSpRg9S+/cuLX2a5ZEhWHQYagb6Q=;
-	b=OVnIsTUsso0hAyLTwEIZ0llw5B8raybMUBnpOP6kuxjWdLrtgmgHXe2ZYfM3tXMn143K
-	 vqn0/G3L9vzRs4apRILqTZXUdjyJih10XWNYkov3xnwh+kmal+re0BYq7m8rcJLglaIYS
-	 zBVk+6bp6etnmEvyTPaJRb/UIWxosK5TMsbd7ANt5mFZR09bG1CSKjMQx+5icN6KvW3vZ
-	 F/GGTE8moCiXt+14PH9KK/Nd6v4iF7E3JcHGsTxesgJen9a6BAt0Wwg6uIReNsVfqUJuF
-	 PiRePSEY5aJui7WkcQ2u+2M5yHMSJfCO03Ph6geqdBcnkwQZn9/z4sAjDxgDg40yP/g==
+	bh=leR3B6R1wUj6PXHsowLYRwixnzzgm1e5nX1UOqY0iYI=;
+	b=NS3ApGgat9c4HdibWBs4qYHNlw5zYKMQEXTgMcB1So3J5lv3/wNQxnhOEDpBUP7PxwAo
+	 Uzy7mj28AIPRxIK8hAP27wzZm+2szaGtlttMGxR77kO217EKeWgmQxu9NjoqXZPUEj6Yi
+	 FIgWGhxW03TLkGEQh/j+AFZdnKLzMWaNXXVpij8df67GU+aUnUWpZAhXCk3SmYpMakAYv
+	 QFCbxbc+HAC3CZ3JtTVhMMO8BQqo7XHeV+/dac/8a7gYLv1sN9MsoGDlILokyuir6jnbB
+	 pug/LJmOJEgbGW1BnjrZmLXy052grzMDZoVtM0SlG3CEsp54l8x/ufjCK07/b2HYNEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2twDlQo2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nY+Vdfmm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4569F606E21E;
-	Fri, 13 Nov 2026 17:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B499606E224;
+	Fri, 13 Nov 2026 17:39:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2twDlQo2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B391F000C4;
-	Fri, 13 Nov 2026 17:39:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nY+Vdfmm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2802A1F000C4;
+	Fri, 13 Nov 2026 17:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591554;
-	bh=rLjajc9SdKaeCIxfSpRg9S+/cuLX2a5ZEhWHQYagb6Q=;
+	s=korg; t=1794591555;
+	bh=leR3B6R1wUj6PXHsowLYRwixnzzgm1e5nX1UOqY0iYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2twDlQo2igh4kJ/YwXULcWlhjNMt6etIH0ZE/iPk0rmq/jnr/8cd7lx3Un1KEFmNf
-	 UiiLjYtX3S89g9V3XgqCeFkW1XePOAY5mpwFLdjv0X8xByGGJ4H6olgUmvPuK4oUbZ
-	 0r6b8FkSiqCqQzPIrFgJ24u8/PCDhv54gAonK6Ok=
+	b=nY+Vdfmmy5uE4h+j7oGiIYoDRr5Hv100VkHozpGD50IYzYl/4h8/ZovwaJoacLq5d
+	 lhFiDbCRIgG+A0pZT6cpat78I6XwNOWEWtf28FJk+HHSI+UoW5I9XjTmS1GfCpo531
+	 G1OMFRNRTjIoa2sYNT50vNgfAB7MLUf6i6fAKvQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolaos Karaolidis <nick@karaolidis.com>,
-	Jan Kara <jack@suse.cz>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Alex Sierra <alex.sierra@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 604/670] fs: rotate inodes whose page cache could not be dropped
-Date: Fri, 13 Nov 2026 10:52:48 -0500
-Message-ID: <20261113153832.298127891@linuxfoundation.org>
+Subject: [PATCH 6.12 565/670] drm/amd: update mtype flags for gfx 9.5.0
+Date: Fri, 13 Nov 2026 10:52:09 -0500
+Message-ID: <20261113153831.020761976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,78 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolaos Karaolidis <nick@karaolidis.com>
+From: Alex Sierra <alex.sierra@amd.com>
 
-[ Upstream commit 8ee09f597763acfd31c62a578ba88b792fc41b24 ]
+[ Upstream commit dad0c70507a834ac12e9286401d90536a3c4cea2 ]
 
-When inode_lru_isolate() drops the page cache of an unused inode, it
-has to unlock the list, so it returns LRU_RETRY and the walk restarts
-at the head of the list, where the inode still is. If
-invalidate_mapping_pages() could not empty the mapping, the restarted
-walk strips the same inode again, and so on until nr_to_walk runs out.
-Every walk of that list then ends on this inode, and nothing behind it
-is reclaimed for as long as its cache stays.
+Update mtype flags to meet gfx 9.5.0 requirements for remote GPU
+memory and system memory.
 
-Before commit 2a0629834cd8 ("vfs: Don't evict inode under the inode lru
-traversing context") the walker pinned the inode with a reference, and
-dropping it in iput_final() set I_REFERENCED, so the restarted walk
-rotated the inode to the tail. Set I_REFERENCED again when the mapping
-is still populated after the invalidation, in the same i_lock section
-that clears I_LRU_ISOLATING. inode_unpin_lru_isolating() now expects
-i_lock to be held, like inode_pin_lru_isolating().
-
-On CONFIG_HIGHMEM kernels this can happen to any unused inode: a folio
-is left behind if it is locked, under writeback, spliced into a pipe,
-or still in another CPU's LRU-add batch after being read. Without
-HIGHMEM it happens to DAX inodes whose only entry is at index 0, which
-mapping_shrinkable() lets onto the LRU and invalidate_mapping_pages()
-never removes.
-
-Fixes: 2a0629834cd8 ("vfs: Don't evict inode under the inode lru traversing context")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikolaos Karaolidis <nick@karaolidis.com>
-Link: https://patch.msgid.link/20261016102515.111285-1-nick@karaolidis.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: replaced inode_state_set(inode, I_REFERENCED) with inode->i_state |= I_REFERENCED ]
+Signed-off-by: Alex Sierra <alex.sierra@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 232213c9bd7f ("drm/amdgpu/gmc9: add extra type-2 TLB flush for gfx942/gfx950")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |  8 ++++----
+ drivers/gpu/drm/amd/amdkfd/kfd_svm.c  | 16 ++++++++++++----
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index 7942673f686fd..50f0a5d756bdc 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -502,12 +502,11 @@ static void inode_pin_lru_isolating(struct inode *inode)
- 
- static void inode_unpin_lru_isolating(struct inode *inode)
- {
--	spin_lock(&inode->i_lock);
-+	lockdep_assert_held(&inode->i_lock);
- 	WARN_ON(!(inode->i_state & I_LRU_ISOLATING));
- 	inode->i_state &= ~I_LRU_ISOLATING;
- 	/* Called with inode->i_lock which ensures memory ordering. */
- 	inode_wake_up_bit(inode, __I_LRU_ISOLATING);
--	spin_unlock(&inode->i_lock);
- }
- 
- static void inode_wait_for_lru_isolating(struct inode *inode)
-@@ -930,7 +929,13 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
- 				__count_vm_events(PGINODESTEAL, reap);
- 			mm_account_reclaimed_pages(reap);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+index fba9d8c6fd2b1..68390bdbc51c8 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -1207,7 +1207,7 @@ static void gmc_v9_0_get_coherence_flags(struct amdgpu_device *adev,
+ 		if (uncached) {
+ 			mtype = MTYPE_UC;
+ 		} else if (ext_coherent) {
+-			if (adev->rev_id)
++			if (gc_ip_version == IP_VERSION(9, 5, 0) || adev->rev_id)
+ 				mtype = is_local ? MTYPE_CC : MTYPE_UC;
+ 			else
+ 				mtype = MTYPE_UC;
+@@ -1217,10 +1217,10 @@ static void gmc_v9_0_get_coherence_flags(struct amdgpu_device *adev,
+ 			/* dGPU */
+ 			if (is_local)
+ 				mtype = mtype_local;
+-			else if (is_vram)
+-				mtype = MTYPE_NC;
+-			else
++			else if (gc_ip_version < IP_VERSION(9, 5, 0) && !is_vram)
+ 				mtype = MTYPE_UC;
++			else
++				mtype = MTYPE_NC;
  		}
-+
-+		spin_lock(&inode->i_lock);
-+		/* The walk restarts here: don't retry leftovers right away */
-+		if (!mapping_empty(&inode->i_data))
-+			inode->i_state |= I_REFERENCED;
- 		inode_unpin_lru_isolating(inode);
-+		spin_unlock(&inode->i_lock);
- 		spin_lock(lru_lock);
- 		return LRU_RETRY;
- 	}
+ 
+ 		break;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+index a62c94894a274..f3a454d4698ae 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
+@@ -1272,7 +1272,8 @@ svm_range_get_pte_flags(struct kfd_node *node,
+ 	case IP_VERSION(9, 4, 3):
+ 	case IP_VERSION(9, 4, 4):
+ 		if (ext_coherent)
+-			mtype_local = node->adev->rev_id ? AMDGPU_VM_MTYPE_CC : AMDGPU_VM_MTYPE_UC;
++			mtype_local = (gc_ip_version < IP_VERSION(9, 5, 0) && !node->adev->rev_id) ?
++					AMDGPU_VM_MTYPE_UC : AMDGPU_VM_MTYPE_CC;
+ 		else
+ 			mtype_local = amdgpu_mtype_local == 1 ? AMDGPU_VM_MTYPE_NC :
+ 				amdgpu_mtype_local == 2 ? AMDGPU_VM_MTYPE_CC : AMDGPU_VM_MTYPE_RW;
+@@ -1287,9 +1288,13 @@ svm_range_get_pte_flags(struct kfd_node *node,
+ 			 */
+ 			else if (svm_nodes_in_same_hive(bo_node, node) && !ext_coherent)
+ 				mapping_flags |= AMDGPU_VM_MTYPE_NC;
+-			/* PCIe P2P or extended system scope coherence */
+-			else
++			/* PCIe P2P on GPUs pre-9.5.0 */
++			else if (gc_ip_version < IP_VERSION(9, 5, 0) &&
++				 !svm_nodes_in_same_hive(bo_node, node))
+ 				mapping_flags |= AMDGPU_VM_MTYPE_UC;
++			/* Other remote memory */
++			else
++				mapping_flags |= ext_coherent ? AMDGPU_VM_MTYPE_UC : AMDGPU_VM_MTYPE_NC;
+ 		/* system memory accessed by the APU */
+ 		} else if (node->adev->flags & AMD_IS_APU) {
+ 			/* On NUMA systems, locality is determined per-page
+@@ -1301,7 +1306,10 @@ svm_range_get_pte_flags(struct kfd_node *node,
+ 				mapping_flags |= ext_coherent ? AMDGPU_VM_MTYPE_UC : AMDGPU_VM_MTYPE_NC;
+ 		/* system memory accessed by the dGPU */
+ 		} else {
+-			mapping_flags |= AMDGPU_VM_MTYPE_UC;
++			if (gc_ip_version < IP_VERSION(9, 5, 0))
++				mapping_flags |= AMDGPU_VM_MTYPE_UC;
++			else
++				mapping_flags |= AMDGPU_VM_MTYPE_NC;
+ 		}
+ 		break;
+ 	case IP_VERSION(12, 0, 0):
 -- 
 2.53.0
 
