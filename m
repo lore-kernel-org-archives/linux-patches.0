@@ -1,60 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585623;
-	b=J+REsa/hkK18bgRasFpPO+hX4ryPpZP3XmV66pj+y9zsgYJbg8hg3eWuFOB1NcP7dafR
-	 273sOTJTSWmw5NLc8S68zcF7AMjQFvfq+OL+rr7SR/zU8h/DKQwSeVkmSc2INxAXEhAWE
-	 /tYKUioBYXHnr9OcwKllJ3yFWVs3vyM+qRIdjzDSjWZOChoIchnZDq1tNoaHvH8CfN+Lt
-	 zsBGvvL1mFfawrl1VJJcUI926gQgH3o07TI7D+jrA7nmxmO039Qkq6o1AvaLWV1zTt1dB
-	 Rs+alcXqyoSCuKMRiioFvMFl/eXNt9uZv2h9MvSOeObKpqRfsySYA3u/4hKCBOdxMEA==
+	t=1794585624;
+	b=Eet4F4RMHKTba7mLt3pDjBh3c1AMHiY2+NRphwjJGDZWnFYYTPD+LZfj7G4iXP/qTi+P
+	 hVuPgjQRoBjfKWk/qMMXlG6CvX7LFZmU4Vsqy8kKYbfsSK6qUrRIXjD1bpitPcQk8G0Ui
+	 kFQs2BzoviZMTJiHX15u999c/EDMCHRdAtCt26TFLn1NzfFV4lORJODG0s8T7yNm5pl6D
+	 yUSvneJivS1NuTYEEYSNX3EeNDQ8L4XcaUrUvB7qXi+LEnLXQA2PdyD/C0KsuKLPzHKTS
+	 RSZdYuqKIQmaZpmMk2s3K40FuZm7INj8LUiDjUy3bGiOReJ4EjoBNeX1iITcs6dgIew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585624;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mHWCEc5fe4PrOC58JS41xN+gOP2INnFn2lRzwKyU758=;
-	b=Dmt52FyOSRAku+ndnpyXluCgjSTN9BxXqbR7TNxxkcnZWLGNhG71bjV3MOGmGp1piNkn
-	 EcYPf7c8mHXP5u43Hw1RP3AjTX5umC2sWEAYBfopxB5GgxX0YFOLb5bqEz+NccSY4izqI
-	 hR3nPq5ySZZo3bhfz1xILKgQG7GsfE7sxnMYQdRAueZv0+1bt7EsgQMTkanLTqK+HMGqi
-	 lS3UYflSCmOW7QRTckofw7y5idNFw7xTNkyhEWeT6ILKAWQl4BC4GpE29RBJ9sonrciqa
-	 9v7WTIy7jiLM8FrhPDQ/o8IOB2ZxevCthwEZZHvgR/4KxHyXIhT6T+bq/0dGUt4WaIw==
+	bh=zCEXrmTH1TtYArcN+jIcaYtpUVRU7K+V4AxLl9h5Qro=;
+	b=MsUywsmzOtpyRmlquSue28NspV9h1EbLfNxPZnOLeA3x/6EqIbY19u+OzUJT1MJ27w5O
+	 7TtjZ5LmQczFuC4SeTJ+LogdUlikHu4y0cKz+V1gE/srCDzFy30MCs4iLl8IxADxKmZx7
+	 Q080Gxdkwu90QNI+BkSlWB5/s0tNm0tB6B/2yZ/5Kc2BOUQDqum/5fwq+AwTNwY/weHSD
+	 QmaKcpjq+Sjxg6Layfs1Lu4qA5Ps1JDnYpvb6c92P8yza9XLmKF84VNjE6BatpSTp6zZ7
+	 MJNc80YaZIZ/xHQtqQXo0QnTKM2CPms3a4jhY9fZZIzNjC6MfF3dnGfLSdwNfo1lfmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHtBlJJs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nV4dAS9v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4C7606A894;
-	Fri, 13 Nov 2026 16:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63BD6070FC1;
+	Fri, 13 Nov 2026 16:00:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHtBlJJs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618491F000C4;
-	Fri, 13 Nov 2026 16:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nV4dAS9v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C0A1F000C5;
+	Fri, 13 Nov 2026 16:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585622;
-	bh=mHWCEc5fe4PrOC58JS41xN+gOP2INnFn2lRzwKyU758=;
+	s=korg; t=1794585623;
+	bh=zCEXrmTH1TtYArcN+jIcaYtpUVRU7K+V4AxLl9h5Qro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RHtBlJJs4zP4A92wXJTQiN16uDJctxskt9LGv2pCMCHX3x5O4sNJISSNkkawW7aXb
-	 49oRFtqJQuXSeeqHa8avi0UMBz4hkcSma12WlTVCDZWLTPoVytZpaHXfJOp6N2uu8l
-	 EzFFTN9qZs4+KnclYa6JVia7eHQ4QizKKqRoUcgs=
+	b=nV4dAS9vHxigFzxrgJDStSMUsDK4UNqOGy6Ug+wsDU+yKb1R5KusqL3CqmxLb/D0Q
+	 WvShPFxfEpGREySqzVOz02mN37X+BtoYw5mnBrDb5aUeR3CqPM1iuVvYOHT/0d/kvI
+	 n7BsLBhHYQ8ZDFIUa2rcMSYltfSxONVgYW65aS/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"T.J. Mercier" <tjmercier@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Michal Hocko <mhocko@suse.com>,
-	Michal Hocko <mhocko@kernel.org>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	JP Kobryn <jp.kobryn@linux.dev>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	Guan-Chun Wu <409411716@gms.tku.edu.tw>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 245/507] mm: memcontrol: fix NULL pointer deref and UAF from high_work_func() on dying memcg
-Date: Fri, 13 Nov 2026 10:49:09 -0500
-Message-ID: <20261113153802.883864440@linuxfoundation.org>
+Subject: [PATCH 7.3 246/507] lib/base64: silence clang-24 -Wconstant-conversion with diag pragmas
+Date: Fri, 13 Nov 2026 10:49:10 -0500
+Message-ID: <20261113153802.914775190@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -76,158 +73,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: T.J. Mercier <tjmercier@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit dd94d8c7660a60dbfcd425e0d10120de6d02a7bd ]
+[ Upstream commit 3af83c11cf5990fda0bfe3959aa6391ff903ffdd ]
 
-When memory.high is exceeded in non-task context, try_charge_memcg()
-schedules memcg->high_work without taking a reference on the memcg, and
-high_work_func() invokes reclaim_high() without pinning the memcg.
+After a recent change in clang to warn on signed char conversions within
+array initializers [1], there are several instances of this warning from
+base64_rev_maps in lib/base64.c, which can break the build with W=e or
+CONFIG_WERROR=y:
 
-With obj_cgroup reparenting, introduced in commit bf4f059954dc ("mm:
-memcg/slab: obj_cgroup API"), objects charged to a child memcg are
-reparented to its parent in mem_cgroup_css_offline() instead of holding a
-reference on the child until uncharged.  Subsequent uncharges of those
-objects go to the parent, which can leave the child's memory use
-permanently above its high limit, so any later charge on the offlined
-memcg in non-task context schedules high_work.  This was later widened
-from kernel memory to LRU folios when commit f1cf8d2f36dc ("mm:
-memcontrol: eliminate the problem of dying memory cgroup for LRU folios")
-converted LRU folios to use obj_cgroup reparenting.
+  lib/base64.c:58:18: error: implicit conversion from 'int' to 's8' (aka 'signed char') changes value from 131 to -125 [-Werror,-Wconstant-conversion]
+     58 |         [BASE64_IMAP] = BASE64_REV_INIT('+', ',')
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+  lib/base64.c:52:2: note: expanded from macro 'BASE64_REV_INIT'
+     48 | #define BASE64_REV_INIT(ch_62, ch_63) { \
+        |                                       ~
+     49 |         [0 ... 0x1f] = -1, \
+     50 |         INIT_32(0x20, ch_62, ch_63), \
+     51 |         INIT_32(0x40, ch_62, ch_63), \
+     52 |         INIT_32(0x60, ch_62, ch_63), \
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ...
+  lib/base64.c:34:42: note: expanded from macro 'INIT_1'
+     34 |                 : (v) >= '0' && (v) <= '9' ? (v) - '0' + 52 \
+        |                                              ~~~~~~~~~~^~~~
+  lib/base64.c:58:18: error: implicit conversion from 'int' to 's8' (aka 'signed char') changes value from 130 to -126 [-Werror,-Wconstant-conversion]
+     58 |         [BASE64_IMAP] = BASE64_REV_INIT('+', ',')
+        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+  lib/base64.c:52:2: note: expanded from macro 'BASE64_REV_INIT'
+     48 | #define BASE64_REV_INIT(ch_62, ch_63) { \
+        |                                       ~
+     49 |         [0 ... 0x1f] = -1, \
+     50 |         INIT_32(0x20, ch_62, ch_63), \
+     51 |         INIT_32(0x40, ch_62, ch_63), \
+     52 |         INIT_32(0x60, ch_62, ch_63), \
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ...
+  lib/base64.c:34:42: note: expanded from macro 'INIT_1'
+     34 |                 : (v) >= '0' && (v) <= '9' ? (v) - '0' + 52 \
+        |                                              ~~~~~~~~~~^~~~
+  ...
 
-cancel_work_sync(&memcg->high_work) only runs at the end of teardown in
-mem_cgroup_css_free(), so high_work_func() can start or still be running
-reclaim_high() after mem_cgroup_css_released() or shrink_many() has called
-lru_gen_release_memcg() and unhashed lruvec->lrugen.list.  If reclaim
-tries to rotate the memcg, lru_gen_rotate_memcg() dereferences a NULL
-pprev pointer.  This issue is specific to MGLRU and was introduced with
-the memcg LRU in commit e4dde56cd208 ("mm: multi-gen LRU: per-node
-lru_gen_folio lists").
+These are false positives, as the branch where the wraparound could happen
+is unreachable with the values that clang reports.  This is not considered
+a bug by some clang folks [2][3], so silence the warnings using the __diag
+macros the kernel has to workaround compiler warnings when necessary.
 
-With either traditional LRU or MGLRU, css_free_rwork_fn() calls
-css_rstat_exit() which frees per-CPU rstat data before calling
-mem_cgroup_css_free().  If reclaim_high() is still running, rstat updates
-via mod_lruvec_state() -> __css_rstat_updated() cause a use-after-free on
-the per-CPU rstat data.  This was introduced when commit 5da3bfa029d6
-("cgroup: use separate rstat trees for each subsystem") moved
-css_rstat_exit() ahead of ss->css_free().
-
-Fix both problems by acquiring a reference with css_tryget_online() in
-high_work_func() before calling reclaim_high(), and by resetting
-memory.high and swap.high to PAGE_COUNTER_MAX in mem_cgroup_css_offline()
-so that charges via references on an offlined memcg do not trigger
-high_work on the dead child and skip checking live ancestors in
-try_charge_memcg().
-
-Acquiring the reference in high_work_func() rather than before scheduling
-high_work is safe because mem_cgroup_css_free() calls irq_work_sync() and
-cancel_work_sync() which cancels pending work and waits for an already
-running high_work_func() to complete before mem_cgroup_free() frees the
-memcg.  css_tryget_online() uses percpu_ref_tryget_live() and is safe to
-call after percpu_ref_exit() before the cgroup is freed unlike
-css_tryget().
-
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-CPU: 1 UID: 0 PID: 27 Comm: kworker/1:0 Tainted: G    B   W           7.3.0-rc5-g2bba28e98578 #284 PREEMPT(full)
-Tainted: [B]=BAD_PAGE, [W]=WARN  <-- Taint from lru_gen_rotate_memcg() VM_WARN_ON_ONCE
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: events high_work_func
-RIP: 0010:lru_gen_rotate_memcg+0x1a3/0xe90
-Call Trace:
- <TASK>
- ? read_ctrl_pos+0x22f/0x3f0
- shrink_lruvec+0x16cb/0x1b80
- ? ret_from_fork_asm+0x1a/0x30
- ? lapic_next_event+0x15/0x20
- ? clockevents_program_event+0x2bb/0x6f0
- ? lapic_next_event+0x15/0x20
- ? __pfx_shrink_lruvec+0x10/0x10
- ? __pfx_clockevents_program_event+0x10/0x10
- ? _raw_spin_lock+0x84/0xe0
- ? __pfx__raw_spin_lock+0x10/0x10
- ? kasan_save_stack+0x30/0x50
- ? psi_group_change+0x381/0x740
- ? __pfx_sched_clock_cpu+0x10/0x10
- ? save_fpregs_to_fpstate+0xc4/0x2c0
- ? finish_task_switch.isra.0+0x1de/0xac0
- ? __schedule+0xf62/0x42c0
- ? __pfx___schedule+0x10/0x10
- ? __pfx___irq_work_queue_local+0x10/0x10
- ? shrink_node+0x626/0x31e0
- shrink_node+0x626/0x31e0
- ? ring_buffer_unlock_commit+0x11d/0x5c0
- ? kswapd_clear_hopeless+0xa0/0x150
- ? __pfx_shrink_node+0x10/0x10
- ? 0xffffffffc0000095
- do_try_to_free_pages+0x255/0x13b0
- ? ring_buffer_unlock_commit+0x11d/0x5c0
- ? reclaim_high+0x10a/0x1b0
- try_to_free_mem_cgroup_pages+0x1f9/0x5a0
- ? __pfx_try_to_free_mem_cgroup_pages+0x10/0x10
- ? irqentry_exit+0xc6/0x670
- reclaim_high+0x10a/0x1b0
- ? __pfx_reclaim_high+0x10/0x10
- ? process_one_work+0x5ff/0x1030
- ? __pfx_high_work_func+0x10/0x10
- process_one_work+0x6e2/0x1030
- ? __pfx___schedule+0x10/0x10
- ? __pfx_process_one_work+0x10/0x10
- worker_thread+0x422/0xbb0
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x2cd/0x3a0
- ? recalc_sigpending+0x15c/0x200
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x368/0x590
- ? __pfx_ret_from_fork+0x10/0x10
- ? __switch_to+0x588/0xf50
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Link: https://lore.kernel.org/20261029201858.2932905-1-tjmercier@google.com
-Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
-Fixes: 5da3bfa029d6 ("cgroup: use separate rstat trees for each subsystem")
-Signed-off-by: T.J. Mercier <tjmercier@google.com>
+Link: https://lore.kernel.org/20261008-base64-silence-clang-24-constant-conversion-v1-1-0858b60b23c8@kernel.org
+Link: https://github.com/llvm/llvm-project/commit/a5ef934a8d295dc03be3960f2b3744ec2e53238e [1]
+Link: https://github.com/llvm/llvm-project/issues/223923#issuecomment-6056856245 [2]
+Link: https://github.com/llvm/llvm-project/pull/226775#pullrequestreview-5454407389 [3]
+Fixes: c4eb7ad32eab ("lib/base64: optimize base64_decode() with reverse lookup tables")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Qi Zheng <qi.zheng@linux.dev>
-Cc: JP Kobryn <jp.kobryn@linux.dev>
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2181
+Acked-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Bill Wendling <morbo@google.com>
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Guan-Chun Wu <409411716@gms.tku.edu.tw>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ lib/base64.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index b5137e86bed70..b303bfc6b46ea 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2419,7 +2419,10 @@ static void high_work_func(struct work_struct *work)
- 	struct mem_cgroup *memcg;
+diff --git a/lib/base64.c b/lib/base64.c
+index 325c7332b0492..e46be3a55585c 100644
+--- a/lib/base64.c
++++ b/lib/base64.c
+@@ -52,11 +52,14 @@ static const char base64_tables[][65] = {
+ 	INIT_32(0x60, ch_62, ch_63), \
+ 	[0x80 ... 0xff] = -1 }
  
- 	memcg = container_of(work, struct mem_cgroup, high_work);
-+	if (!css_tryget_online(&memcg->css))
-+		return;
- 	reclaim_high(memcg, MEMCG_CHARGE_BATCH, GFP_KERNEL);
-+	css_put(&memcg->css);
- }
++__diag_push();
++__diag_ignore(clang, all, "-Wconstant-conversion", "https://github.com/llvm/llvm-project/issues/223923");
+ static const s8 base64_rev_maps[][256] = {
+ 	[BASE64_STD] = BASE64_REV_INIT('+', '/'),
+ 	[BASE64_URLSAFE] = BASE64_REV_INIT('-', '_'),
+ 	[BASE64_IMAP] = BASE64_REV_INIT('+', ',')
+ };
++__diag_pop();
  
- /*
-@@ -4369,6 +4372,8 @@ static void mem_cgroup_css_offline(struct cgroup_subsys_state *css)
- 
- 	page_counter_set_min(&memcg->memory, 0);
- 	page_counter_set_low(&memcg->memory, 0);
-+	page_counter_set_high(&memcg->memory, PAGE_COUNTER_MAX);
-+	page_counter_set_high(&memcg->swap, PAGE_COUNTER_MAX);
- 
- 	zswap_memcg_offline_cleanup(memcg);
- 
+ #undef BASE64_REV_INIT
+ #undef INIT_32
 -- 
 2.53.0
 
