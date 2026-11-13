@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591208;
-	b=FGvPxR8fJUnHnDGi4pduo9Co96oLWkNdJ4BinRA+GhImM4IbKdIQaifrbUksyvsbiXcw
-	 TzUipsV3cZ+D09nwJq2qZC64Z6XBUzI+thf9InMR+0l57xQ1ZOVzsc/4/Co1j8tLdlkK2
-	 ufImbKjGrT/IbhqDhjv+XmLoDxrWGgf34yGvw7cuNWfT0xuTJMW4IAjmV3gXbgZByooju
-	 tfwrNNlKxFHRS1nMMW44ZAsYM6aFv/s9zm+IGsHHtBs8D6P3joHRr7WPqAmpzXe9FTLKK
-	 KSnMwIfbKR7/m1GzKLxAS9VDw2cb+oHJivyhCI0U7sDtS0YKZbn78UbxnTP5ele9jjw==
+	t=1794591209;
+	b=RQatGqCMrQguo9o96QggZEgJx8gWclJTVVUwt7fL/zjrTq6r/h62gLiB7FYbBSKgT9Il
+	 4FRrVKMuI6yZK/UWZmv3vsiaNSfZhcJPF3cT9Vpn3Zp02fwQg7e4ZxbeLv8a9099sg1Wh
+	 GrwPJ1hNPRJ+mNP2zIo0nwmb03S6mBsZL3v3f921oqwzKSC/ReuLOsh8VCGE6RVPDk5WY
+	 /rNPzoVwQaSxzi8GZVBl+Ia32O1K+u8H9/1NyHyNSyLWXBnwepHWiOgV5fQ9TAIir3jwi
+	 wFnLAvaqSNQ/BOzLNAXgvjpkUO8PDB8zs9ZOOscj3GQnwUrEcsjEo7B8ROOGwryOjYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591208;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591209;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rBdnCMaBZn7qEOzxIaFRx+P443eCvlPx+xdAdVIBULg=;
-	b=c6Gj7T1vwHumxM7ma7QJKwvqRJxDKF8kMeRlSqTF2szNgCUlSAO2GY9AymzAo/TfYTEb
-	 XVnWLzNXs/KiZ0OLol+x/g0qaaJnxTWUlBHu+67lCw/hSZTOfP5dQuS+YYwWhirbSR+vM
-	 aFnK44uMy2YjmJukx9vzfv0CmrjA3HRqQGZjIZZLYxVAKAh+Xqb+Nlh66KSWzZEONOksZ
-	 AkVE/qCTyUdLdaksEHMNmqJFPVGBcICPPNj0SEGHTE8No47c10L8vgYrDEfXx3QsxWaUp
-	 huyNeItxDDWvwG0pEn5bDOn38Q6Xd1yNzLIv8JE3+nXN9TCKbIAvIlEFDT+hVgv7LeQ==
+	bh=AP4ZKc0AVaItApYDhikqe0MiKHVG7edmpz1/44jGvEg=;
+	b=vzkqMWTBcP/nriHhQbt0eNWPp9QpIqiQIN+x0c8j0dma/HbZIbSL1wbSx0QAMW7/9Xen
+	 FGIsrum160sEvl8yrD3WLxrd9vJB+3Uxj6c35iWLj+HbENwDOq3B7Q8X4+lPmMPURGzue
+	 8L3YhJ0GI7YPVyVPzZonybCqXk+KRsO6NGzaPU4jpR30dTTV3AK3OKSDH4EZczuzEAH5s
+	 KBVHz68fBt5ObdkDgp6KaIQaW5WJvX1UAzxNPDnqmbAZ2CUMi80xw+VG5q3vAvBfDA0Gg
+	 zfP16O4B/Qxu6U2WH4XWU9IpUVsb6tCGffj5R71E3sNpWcPJdLo4MOUeWqSLPGX/jWw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nsOPlnK5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8AMWGfU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FDF6075854;
-	Fri, 13 Nov 2026 17:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2A26075866;
+	Fri, 13 Nov 2026 17:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nsOPlnK5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDF11F000C5;
-	Fri, 13 Nov 2026 17:33:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e8AMWGfU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691A71F000C5;
+	Fri, 13 Nov 2026 17:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591208;
-	bh=rBdnCMaBZn7qEOzxIaFRx+P443eCvlPx+xdAdVIBULg=;
+	s=korg; t=1794591209;
+	bh=AP4ZKc0AVaItApYDhikqe0MiKHVG7edmpz1/44jGvEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nsOPlnK57plIPy8fMbsjBjp7SthF43JcSlVFMZkmf6lNRq6c8DS5ENG5zSzTimIw1
-	 ODSMUuxeKV0VwzDIKJkp561WVVbcnGrhGmw70Vm32WgPnUGouJeR3Z0XOJHuWaZXQu
-	 mePer11NTwlpsOuLlzru5AEG0L8hNt5qSpaVwPpg=
+	b=e8AMWGfU4SHoTiSQ4Zmu5ekxDd+Yfm6dQQt5QdjWvZ/xTkPZo6Sk8YwuR5bVNgtiv
+	 oCV/sWZ3bSYuZykwYnueUKAWcaNA84LlSRGeAklQ1zPalU6SZX9XVNObPgCHUv2psM
+	 EzdHkF2yeOcJTLFSmUDivckjGi7Yt7rDJuzHkADU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>,
-	Pedro Falcato <pfalcato@suse.de>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 290/670] fat: hold truncate_lock in fat_write_failed()
-Date: Fri, 13 Nov 2026 10:47:34 -0500
-Message-ID: <20261113153821.697366329@linuxfoundation.org>
+Subject: [PATCH 6.12 336/670] net: reject a negative TCP header offset in qdisc_pkt_len_segs_init()
+Date: Fri, 13 Nov 2026 10:48:20 -0500
+Message-ID: <20261113153823.248385193@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,58 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit 7b90009546f5d3f3ac9428040cd7ffbdfd60f2eb ]
+[ Upstream commit 35d2d6e5ac0d22428b2a0216061f3330c095393c ]
 
-The current fat_write_failed() implementation calls into
-fat_truncate_blocks() without holding truncate_lock.
+qdisc_pkt_len_segs_init() stores skb_transport_offset(), or the inner
+offset, in the unsigned hdr_len. A header in front of skb->data gives a
+negative offset. For an offset a little below zero, pskb_may_pull() gets a
+small length and succeeds. Then a 64-bit kernel reads the TCP header far
+after the skb and can crash. Further below zero pskb_may_pull() fails.
 
-A failed or short extending write racing with FIBMAP can spuriously make a
-FAT filesystem read-only.  FIBMAP bounds its lookup by i_blocks, so it can
-walk allocated clusters beyond i_size while fat_write_failed() is removing
-them.  If the chain is shortened during the walk, the mapper can report a
-bogus "request beyond EOF" error, triggering the default read-only error
-policy.  Hold truncate_lock for write around the block cleanup to
-serialize it with _fat_bmap().
+Commit 28a57fb2c5df ("net: iptunnel: fix stale transport header during
+tunnel decapsulation") fixed one source of such offsets. Other code that
+removes bytes from the front of a packet can leave the same stale header.
 
-For comparison, fat_setattr() correctly holds truncate_lock during
-truncation:
+Return SKB_DROP_REASON_SKB_BAD_GSO for a negative offset in the TCP branch.
+SKB_GSO_UDP_L4 and the other GSO types read no header and still get a wrong
+qdisc_pkt_len(). On a 64-bit kernel only packets that cause the read after
+the skb today get a new result. Then __dev_queue_xmit() drops them and
+returns -EINVAL, but sch_handle_ingress() ignores the result. Their content
+can be valid. Thus the code that leaves the header stale needs its own fix.
 
-	down_write(&MSDOS_I(inode)->truncate_lock);
-	truncate_setsize(inode, attr->ia_size);
-	fat_truncate_blocks(inode, attr->ia_size);
-	up_write(&MSDOS_I(inode)->truncate_lock);
-
-Make it so ->truncate_lock is held exclusive while truncating.
-
-Link: https://lore.kernel.org/20261021162105.62525-1-matheus.aalmeida@inf.ufrgs.br
-Fixes: 16fab2015099 ("fat: permit to return phy block number by fibmap in fallocated region")
-Fixes: 459f6ed3b8c7 ("fat: convert to use the new truncate convention.")
-Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: OGAWA Hirofumi <hirofumi@mail.parknet.co.jp>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: <stable@vger.kernel.org>
+Fixes: 7fb4c1967011 ("net: pull headers in qdisc_pkt_len_segs_init()")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+CC: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261101194433.2637113-1-alexei.starovoitov@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fat/inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/core/dev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/fat/inode.c b/fs/fat/inode.c
-index 3852bb66358cc..1c9988efc8d29 100644
---- a/fs/fat/inode.c
-+++ b/fs/fat/inode.c
-@@ -215,7 +215,9 @@ static void fat_write_failed(struct address_space *mapping, loff_t to)
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 058965698004d..f42ec2837143e 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3890,7 +3890,9 @@ static enum skb_drop_reason qdisc_pkt_len_init(struct sk_buff *skb)
+ 	if (likely(shinfo->gso_type & (SKB_GSO_TCPV4 | SKB_GSO_TCPV6))) {
+ 		const struct tcphdr *th;
  
- 	if (to > inode->i_size) {
- 		truncate_pagecache(inode, inode->i_size);
-+		down_write(&MSDOS_I(inode)->truncate_lock);
- 		fat_truncate_blocks(inode, inode->i_size);
-+		up_write(&MSDOS_I(inode)->truncate_lock);
- 	}
- }
+-		if (!pskb_may_pull(skb, hdr_len + sizeof(struct tcphdr)))
++		/* A header in front of skb->data gives a negative offset. */
++		if ((int)hdr_len < 0 ||
++		    !pskb_may_pull(skb, hdr_len + sizeof(struct tcphdr)))
+ 			return SKB_DROP_REASON_SKB_BAD_GSO;
  
+ 		th = (const struct tcphdr *)(skb->data + hdr_len);
 -- 
 2.53.0
 
