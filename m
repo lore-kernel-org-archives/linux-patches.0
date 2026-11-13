@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590458;
-	b=ql2OTM12HNU/qSfx4Knv9+ohcvBZgR/407zg1xy+TaJgN29uEZMBeTkgwLD6D/8EWj53
-	 LgeYAA+OkRVLRBOt/+SkGvx/5Dp1W/kj7iaVpedvYFNiJn9mQP9Qn6dGdOHhtJsdFNbLq
-	 8HpsFF8Cm21zuyUPU2HO+rpHs+nmIz+7jq+bdvOHE6h0EX9Ly6VEKIjD3MKC0OHPraTao
-	 nWx9soQxYHCLB2BEuzB/RBdLjEVmWhitaLaTT+Senq85jcbrQWqyuSP1MEFFosF+bvCHZ
-	 G2BkejAGMxZ7cpix8JqH0A1jmEoPtBO3DQ1jVWvDkYE2pgBdwHUThuqze1X4Oo8pzXQ==
+	t=1794590460;
+	b=ToAeMvSU7fC5XKeaIvVhvX1jAssd/MQhSF3+OhUBbiwbu8SYLF+DRj3CbYGq/aRYiJS+
+	 aX0RH3J/RO59xAkjVxR1K7eSJEWmhV4hDtjH2vsku6vFTgUS+K6Cl9gYVlaKU4rrVvSIm
+	 74VOgMDNmW0MUnuqtxhljArEJq9vtGS0rHxFXLB+HWp+5LiT8NG/623qEk8PvP1F8+5Os
+	 7sBnRrICYoBzPZJpMYOLkgDhqXF6NbFihddBzowUFHa75lv5QFL0RcSvBu8efAqXWDHPh
+	 cevtOOjdZF51H2Z+HPIzrTRSMCrim0kDMyg7fkTOrfE0OfZtSQViPR5SFfDf/C8ZjJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UgSXYHKPaO0fGYBbTt+O45hsAucjKFC6ktedrYdtix8=;
-	b=Bc1c5xuaO4GogGIFWJ/YwO8BXz5ymRbEbWt9dqMMlF736uemPc+FBB20AkJqEervPBuO
-	 7JLy3FC10muLJXDzh2N68xGrTKIaVrvf88qv/9FmG+YRhaSp3pRMpwgK3Pr+Yza0KE4d3
-	 IdMhD0vL5hE4iziHN9gySB08b6o/GOahIBVYMa50CYEpe+Le2+l3eQ3doq7aMc8rglyAd
-	 wcHITDBzxwGQyV31mrcOE48DnGUcb6aCIleRLtexb9hURqqvta+4CWWZb5TRqe81B2Suq
-	 KzbX5LJfc92dWeDD5OJUfucepRBenIl5/eLf6Wd3S0+3CjEOiHHxHZ8dfDWphyppRrg==
+	bh=tzen5WbREjqA5bnDr+iGjHRC8nuY58QSdl6ydieclkk=;
+	b=VgHu7LWT/qYya/58YcpCrF6jQ0y+h3uYwRpOJ2K6dtfndrgTJgkJXMz/Eevx8CBRgQFn
+	 j97Ljt3La49w5sXIz36ZLWeS8/N15ZEcM+zQjKOv7Oi2M6V/UHezVBpgbQMJ8jc5RuQDC
+	 OHIlLl7YAv+CvPnroRxlh69t4LB9qZRaJG0AKxUMWgbow0r5n0jOijMBRtHKgxq17w/Nr
+	 ABOJYxmP7Bgtx/Mh982TTndMPTzO3Y5A//ULV2LrDifj+s4IX0LHtEVuvnXsGFoEMZ2Ah
+	 8VRqhw82H4S3+niGh4VHfmYY5ouAOulYSHA3l2B+pAZBPk4lUnLQ8CudbYo/+9WbLug==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6l3OVqM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znp6PMa8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43D6606A339;
-	Fri, 13 Nov 2026 17:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5F3606A339;
+	Fri, 13 Nov 2026 17:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6l3OVqM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713481F000C4;
-	Fri, 13 Nov 2026 17:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=znp6PMa8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CC61F000C4;
+	Fri, 13 Nov 2026 17:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590458;
-	bh=UgSXYHKPaO0fGYBbTt+O45hsAucjKFC6ktedrYdtix8=;
+	s=korg; t=1794590459;
+	bh=tzen5WbREjqA5bnDr+iGjHRC8nuY58QSdl6ydieclkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j6l3OVqMhRxKGdHpt/Gi6+w2aoRjTSGVb/RziCN+luFWfdcj5cOQ8llkNKIxjhRj5
-	 LfSa+zn7FLxKeNe44vkmQjbxfjCdWEcGfQhtGKG70Z6S0lbPiDQIBh2etOGBUvYddl
-	 wcyCjvfN1mV0n8ct3VffwdLp51ivsdian7L410Xk=
+	b=znp6PMa83ilrQbNuKmsQIxLO6MtNI/bk0tw43UDIJvYOP+mlLp7NHXMGJsLY66HpV
+	 xA5H/dBa6fOpnfDA6BwV48Q4X646IvUGwYEoADkdKUdaZPGcFWXP9xmRcUC5idS/40
+	 z/iceZnBPFxaO0iZXT6fNFovvQi4eyrFTvDXpeKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Cunhao Lu <1579567540@qq.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Misha Nasledov <misha@nasledov.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 363/686] can: dev: can_put_echo_skb(): free skb on invalid echo index
-Date: Fri, 13 Nov 2026 10:48:16 -0500
-Message-ID: <20261113153833.203328309@linuxfoundation.org>
+Subject: [PATCH 6.18 409/686] drm/amd/display: Drop clock requirements on DCN32 when no displays are active
+Date: Fri, 13 Nov 2026 10:49:02 -0500
+Message-ID: <20261113153834.839521817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,74 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cunhao Lu <1579567540@qq.com>
+From: Misha Nasledov <misha@nasledov.com>
 
-[ Upstream commit b4ebcbbf66ba6c5816dfe229effb4641c46e4b4c ]
+[ Upstream commit bba4dc3306483335ddbe065c05b2d8359ec387a4 ]
 
-can_put_echo_skb() consumes the skb on all paths except when the echo
-index is out of bounds. This leaves ownership with the caller on -EINVAL,
-unlike the other error paths, and can leak the skb if the caller expects
-consistent semantics.
+amdgpu_dm builds the new dc_state as a copy of the old one. When the last
+stream is removed, dml1_validate() returns early on pipe_cnt == 0 and
+never reaches dcn32_calculate_dlg_params(), so bw.dcn.clk keeps the
+dramclk/dcfclk/fclk requirements of the display that was just turned off.
+dcn32_update_clocks() then keeps those hard minimums applied.
 
-Free the skb before returning -EINVAL so that all return paths consume it.
+On an RX 7900 XTX this leaves UCLK at 456 MHz and DCFCLK at 637 MHz with
+the monitor off, and the board idles at 28.4 W. With this change they
+drop to 96 MHz and 145 MHz and board power falls to 15.3 W.
 
-Fixes: 6411959c10fe ("can: dev: can_put_echo_skb(): don't crash kernel if can_priv::echo_skb is accessed out of bounds")
+Reset the clock requirements in that case, as calculate_dlg_params()
+already does when no HUBP is active and as the DML2 path does for
+stream_count == 0.
+
+Signed-off-by: Misha Nasledov <misha@nasledov.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0261a0ef89f37ef962fbc9dbc724ebf65fe681cf)
 Cc: stable@vger.kernel.org
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Signed-off-by: Cunhao Lu <1579567540@qq.com>
-Link: https://patch.msgid.link/tencent_683AA16E643DE00211CD2FB62991264DC605@qq.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-
----
-
-FAQ:
-
-Q: `can_skb_init_valid()` directly modifies `skb->data` without checking if
-   the SKB is cloned or shared. Is this violating SKB shared buffer rules and
-   causing data corruption?
-
-A: The finding about can_skb_init_valid() modifying skb->data on a
-   potentially shared buffer is not relevant for this (correct) patch.
-
-   The FDF-flag write in can_skb_init_valid() only matters for PF_PACKET
-   use: PF_CAN allocators already set CANFD_FDF. The write exists to
-   normalize frames for PF_PACKET observers (tcpdump/Wireshark) so they can
-   distinguish classic CAN from CAN FD at the netdev level, and to
-   compensate for PF_PACKET senders that omit the bit. That normalization
-   is functionally required.
-
-   The shared-buffer concern only becomes realistic through a specific
-   chain: a PF_PACKET sender injects a CANFD-sized frame, the CAN driver's
-   loopback puts an echo skb back into can_rcv(), and cgw (without
-   modfuncs) clones it for forwarding to another interface. Only on that
-   second can_skb_init_valid() call is the skb cloned. By then the bit was
-   already set on the exclusive skb during the initial xmit path, so the
-   flags |= CANFD_FDF write is strictly idempotent for any parallel
-   consumer of the shared buffer - no memory-safety or
-   information-disclosure consequence. It's a formal violation of the skb
-   sharing rules without an observable effect, so the current code can stay
-   as-is.
-
-Link: https://lore.kernel.org/all/54a3cc01-abcf-4a33-b932-39bb1f68cdd5@hartkopp.net/
-[mkl: convert Oliver's mail to FAQ section]
-
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../display/dc/resource/dcn32/dcn32_resource.c    | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index 3ebd4f779b9bd..6fb1f9b2a9e20 100644
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -52,6 +52,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
- 	if (idx >= priv->echo_skb_max) {
- 		netdev_err(dev, "%s: BUG! Trying to access can_priv::echo_skb out of bounds (%u/max %u)\n",
- 			   __func__, idx, priv->echo_skb_max);
-+		dev_kfree_skb_any(skb);
- 		return -EINVAL;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
+index e655772986851..61cb8d051917a 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
+@@ -1777,8 +1777,21 @@ static bool dml1_validate(struct dc *dc, struct dc_state *context, enum dc_valid
+ 	out = dcn32_internal_validate_bw(dc, context, pipes, &pipe_cnt, &vlevel, validate_mode);
+ 	DC_FP_END();
  
+-	if (pipe_cnt == 0)
++	if (pipe_cnt == 0) {
++		/* The context is a copy of the previous state, so without this the
++		 * clocks the last display needed stay applied with all displays off.
++		 */
++		context->bw_ctx.bw.dcn.clk.socclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dppclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_deep_sleep_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dramclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.fclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
++		context->bw_ctx.bw.dcn.clk.fclk_p_state_change_support = true;
++		context->bw_ctx.bw.dcn.clk.num_ways = 0;
+ 		goto validate_out;
++	}
+ 
+ 	if (!out)
+ 		goto validate_fail;
 -- 
 2.53.0
 
