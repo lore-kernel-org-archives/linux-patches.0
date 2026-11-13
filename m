@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590115;
-	b=IsYP0M1C0xMIEFYcEqwKixZ0ldh4I7FFFXD4ED+XPap7VCpFFkWFMvmG7QD5m4cKYx6w
-	 oHfb7/gZglVN2lAnRJWRbNi8faWFIqKJxLEMZOEDmycsPB+2ZaG+fuUSANS++SJpAZ2AB
-	 gFqz2JZ/64vv2GXSnj8qgMD3UY1tV8PTBIyajFSbo4qZfeFu+h4LJp5F9Bp2QXC7PobIE
-	 zoFNrUp2tsROvNQ0AHy5fb13Xu+Hh5/7/EjhTDPPFeFeSbbxX2t5/Re2Ou+rbAtFDEmFD
-	 5WfhKoAmNswEwWvvpJJFU9Zyl/Nb+uyNQT55PSmV0m/lLhfoHOj/2MzhKQ0Hp4LTQXg==
+	t=1794590116;
+	b=B5S25zkCqis4Ok/l2yYBYGdsNPCOgnMkFJCrY4DimwnFa0GfHb7s3zRTzu8sRSsSZ3FF
+	 kQKJrRPFjPEObEWhssKUMp+GOQu0Dw5TfQUp3tp3Xztp89KTLjIIXmfeKZlz0xvymrxpa
+	 eNCznmLuYW7dxrLR2CqsFA8GQ33XMdSsBJTlOJWVlekW225Qx/YVOuA4v/iYfCwrdJiFX
+	 lRh9dBFSLI5m9I6ryWAx1q0mkF8zQ8jQKxR97/CnMQHBar/t1+Dvup03edfUiOQUCEP7I
+	 MRL0X1DJ2DUm49bv7Uge7mzpn5bicVbVE7WGJrxw1gWfICfZZBW4rvvBVmug5Z+vzQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hSZMcGBee57YdYDBzh4xYrn9kpuZUW5aMiPUdd+TkRg=;
-	b=Dm9WvG/CvqE9SD0kOwT2vQEroH3gzBvYMtuWJZz3Zh6rjcCE4Kyuub9EpdHwTyUhLY++
-	 Q6ts1rNc6rMeLy1jy+Kb/m68EhDt9d6iadD5W0/okRcBwb2heJoN4vj1vTNVotuCXa7KU
-	 rdmOkk6RjuNOGLIX694fCHg3DpVYSeBtxkZY3Dkv/XHCw908XuIWVotCUdY69DLeYbN8I
-	 R6e2NTbu3GwWaahZwB8fLxgdJY9x5q5d6OUpOenr+O7x78OZg4RGH7NDmtFcrVTf1n32D
-	 B8J5ZVU4tALtXiSiZR9Znry9eYJVUJIk09VMGvn+jSL0DpqGqSlr2T5fflXdpTkRzuw==
+	bh=AFeJo6v9o5SIjktA/RkLQyyOYC6iA5CXEzblNziamzc=;
+	b=myPdDVt1oRRazdNyW28teW0U92637pL9q30z3wuK8wbvFeycuBzlgAZMDfhYCl1QP0Ws
+	 wQ4rtNiDjSPz1mCQfUxQF/1nsHe6sEC7TrET8nAEbavWxm29UyGUIVLT2VoBiQNOVFEtG
+	 ngkfyFbunHfEZYkyvkgm0qHNbZEwyMGu7K9gSTtKUrsXOggCmF5YvEu3KqaXVYduv8yk9
+	 4yyvGJFGixIjP+cfM4iaBlsehJkr4vCCvpwr5NyrvLkiLtC75LEBG8XUfk9pyD87dqHc1
+	 DqjrYwLNt3sjt80hlCSukV6ihbUsFwhBuzKmrO4W8fMy/z49xi9mQdqTlEVSG365Cmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="CJVa+av/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y439CHDl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0222606B226;
-	Fri, 13 Nov 2026 17:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5F8606B22B;
+	Fri, 13 Nov 2026 17:15:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJVa+av/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1551F000C4;
-	Fri, 13 Nov 2026 17:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y439CHDl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A711F000C4;
+	Fri, 13 Nov 2026 17:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590115;
-	bh=hSZMcGBee57YdYDBzh4xYrn9kpuZUW5aMiPUdd+TkRg=;
+	s=korg; t=1794590116;
+	bh=AFeJo6v9o5SIjktA/RkLQyyOYC6iA5CXEzblNziamzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CJVa+av/toVKmSRaQsqgCYdYynzwvvSPwHSsMSlNTBuCrq7RY0FqAEJzSkB59b7qC
-	 O07XwpY55RuBbPpRjaoAo6neXYDWLOTcQOAu/HpIxQsgNHM4I91tkbfue1SAd8RC+J
-	 Gqdz+XKzPqcUnmqunFpbySsKaHgmtbNtexZmaMOY=
+	b=y439CHDlDsOKopzERzqQiBhYX3ddUrnuBZObrlRfI/D95jNZSwna3X9mcbRuI31NR
+	 MyHO+zvqN2C0owIjDfBZ+AZqFDhdvaSlNoXUZdJiYIXg44jV0zT8yOPO69Goyq8Rcd
+	 szqYb28LOYGy1OPc4L+g5JN1TZAlL8Urq8h/VYnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	"Xiang Mei (Microsoft)" <xmei5@asu.edu>,
+	AutonomousCodeSecurity@microsoft.com,
+	"Cen Zhang (Microsoft Security FORGE Labs)" <cenzhang@linux.microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 135/686] netrom: check the window size given by the peer
-Date: Fri, 13 Nov 2026 10:44:28 -0500
-Message-ID: <20261113153825.383038053@linuxfoundation.org>
+Subject: [PATCH 6.18 094/686] ksmbd: fix tree connection use-after-free in smb2_tree_connect()
+Date: Fri, 13 Nov 2026 10:43:47 -0500
+Message-ID: <20261113153824.052795198@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -67,94 +70,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
 
-The window size of a circuit is negotiated in its CONNREQ and CONNACK.
-On a CONNREQ received, nr_rx_frame() keeps the smaller of ours and the
-peer's; on a CONNACK, nr_state1_machine() takes the peer's as is.
+[ Upstream commit b5ec6c462aab1062cf5d1e667ba7c6442f737055 ]
 
-So a window of 0 from the peer, in either frame, becomes the window of
-the circuit, and nr_kick() then never sends anything: the circuit is
-established but stuck. And a CONNACK can raise the window above the
-one we asked for, even above NR_MAX_WINDOW_SIZE.
+ksmbd_tree_conn_connect() publishes a new tree connection in
+sess->tree_conns with a single reference and returns its pointer to
+smb2_tree_connect(). The handler continues to initialize the object and
+build the response after publication. A concurrent session logoff can
+erase the connection and drop that reference, freeing the object while
+the handler still uses it.
 
-Negotiate both in one helper: take a window of 0 as 1 and keep the
-smaller of ours and the peer's.
+BUG: KASAN: slab-use-after-free in smb2_tree_connect+0xe3d/0xf90
+  smb2_tree_connect (fs/smb/server/smb2pdu.c:2872)
+  handle_ksmbd_work
+  process_one_work
+  worker_thread
+  kthread
 
-Tested on two QEMU guests (6.12.94, KASAN, lockdep) linked by KISS. A
-speaks NET/ROM itself over a raw AX.25 link and answers B's calls; after
-each circuit is up, B sends two messages and A counts the INFO frames
-(A does not acknowledge them):
+After xa_store() succeeds, take a second reference before releasing
+tree_conns_lock. The original reference belongs to the xarray entry and
+the second belongs to the creating smb2_tree_connect() handler.
 
-                            before                after
-  CONNREQ with window 0     wnd 0, 0 frame sent   wnd 1, 1 frame sent
-  CONNACK with window 0     wnd 0, 0 frame sent   wnd 1, 1 frame sent
-  CONNACK with window 200   wnd 200, 2 frames     wnd 4 (ours), 2 frames
+Keep the references balanced in every path:
 
-No kernel report in either run.
+- On normal exit or an error after publication, smb2_tree_connect()
+  drops its creator reference. Error cleanup also calls
+  ksmbd_tree_conn_disconnect(), which drops the xarray reference only if
+  it removes the exact entry.
+- SMB2 TREE_DISCONNECT uses the same helper to remove the entry and drop
+  its xarray reference. The request's existing lookup reference remains
+  owned by the request and is released by the existing cleanup.
+- Session LOGOFF removes each entry and drops its xarray reference. If
+  it wins the race, later cleanup sees that the entry is gone and does
+  not drop that reference again.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit ce7485c6c0e52acdef785adfc46541c20beb55ed)
+To enforce this ownership, claim the disconnected state and erase the
+exact entry atomically under tree_conns_lock. This guarantees one drop
+for the xarray reference and one drop by each in-flight user, regardless
+of which teardown path wins. If logoff removes the entry before
+initialization completes, fail the connect instead of marking the
+detached object TREE_CONNECTED.
+
+Fixes: 33b235a6e6eb ("ksmbd: fix race condition between tree conn lookup and disconnect")
+Reported-by: Xiang Mei (Microsoft) <xmei5@asu.edu>
+Cc: AutonomousCodeSecurity@microsoft.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Cen Zhang (Microsoft Security FORGE Labs) <cenzhang@linux.microsoft.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: Adapted the smb2_tree_connect() hunk to the older brace-less if/else layout and fixed the context for the missing counter-decrement line in tree_connect.c. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netrom.h   | 13 +++++++++++++
- net/netrom/af_netrom.c |  3 +--
- net/netrom/nr_in.c     |  2 +-
- 3 files changed, 15 insertions(+), 3 deletions(-)
+ fs/smb/server/mgmt/tree_connect.c |  8 ++++++++
+ fs/smb/server/smb2pdu.c           | 32 +++++++++++++++----------------
+ 2 files changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/include/net/netrom.h b/include/net/netrom.h
-index 2b4685d52bd81..b8f2e324962ba 100644
---- a/include/net/netrom.h
-+++ b/include/net/netrom.h
-@@ -87,6 +87,19 @@ struct nr_sock {
+diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
+index c7a89eddcda7b..6d8f3ebcbc53d 100644
+--- a/fs/smb/server/mgmt/tree_connect.c
++++ b/fs/smb/server/mgmt/tree_connect.c
+@@ -82,6 +82,8 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ 	down_write(&sess->tree_conns_lock);
+ 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
+ 			      KSMBD_DEFAULT_GFP));
++	if (!ret)
++		atomic_inc(&tree_conn->refcount);
+ 	up_write(&sess->tree_conns_lock);
+ 	if (ret) {
+ 		status.ret = -ENOMEM;
+@@ -122,6 +124,12 @@ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+ 			       struct ksmbd_tree_connect *tree_conn)
+ {
+ 	down_write(&sess->tree_conns_lock);
++	if (tree_conn->t_state == TREE_DISCONNECTED ||
++	    xa_load(&sess->tree_conns, tree_conn->id) != tree_conn) {
++		up_write(&sess->tree_conns_lock);
++		return -ENOENT;
++	}
++	tree_conn->t_state = TREE_DISCONNECTED;
+ 	xa_erase(&sess->tree_conns, tree_conn->id);
+ 	up_write(&sess->tree_conns_lock);
  
- #define nr_sk(sk) ((struct nr_sock *)(sk))
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 1cbc425d7273e..40d86993dbe3d 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2023,6 +2023,7 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	struct ksmbd_session *sess = work->sess;
+ 	char *treename = NULL, *name = NULL;
+ 	struct ksmbd_tree_conn_status status;
++	struct ksmbd_tree_connect *tree_conn = NULL;
+ 	struct ksmbd_share_config *share = NULL;
+ 	int rc = -EINVAL;
  
-+/*
-+ * Window negotiation, for a CONNREQ received or a CONNACK: use the smaller
-+ * of our window and the peer's. A window of 0 would never let a frame
-+ * out: take it as 1.
-+ */
-+static inline void nr_negotiate_window(struct nr_sock *nr, unsigned char window)
-+{
-+	if (window == 0)
-+		window = 1;
-+	if (window < nr->window)
-+		nr->window = window;
-+}
-+
- struct nr_neigh {
- 	struct hlist_node	neigh_node;
- 	ax25_address		callsign;
-diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index d2b374dbc92fd..ff7f6ba9754cc 100644
---- a/net/netrom/af_netrom.c
-+++ b/net/netrom/af_netrom.c
-@@ -1034,8 +1034,7 @@ int nr_rx_frame(struct sk_buff *skb, struct net_device *dev)
- 	bh_lock_sock(sk);
+@@ -2049,9 +2050,10 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 		    name, treename);
  
- 	/* Window negotiation */
--	if (window < nr_make->window)
--		nr_make->window = window;
-+	nr_negotiate_window(nr_make, window);
+ 	status = ksmbd_tree_conn_connect(work, name);
+-	if (status.ret == KSMBD_TREE_CONN_STATUS_OK)
++	if (status.ret == KSMBD_TREE_CONN_STATUS_OK) {
++		tree_conn = status.tree_conn;
+ 		rsp->hdr.Id.SyncId.TreeId = cpu_to_le32(status.tree_conn->id);
+-	else
++	} else
+ 		goto out_err1;
  
+ 	share = status.tree_conn->share_conf;
+@@ -2083,8 +2085,15 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 		status.tree_conn->posix_extensions = true;
+ 
+ 	down_write(&sess->tree_conns_lock);
+-	status.tree_conn->t_state = TREE_CONNECTED;
++	if (status.tree_conn->t_state == TREE_DISCONNECTED) {
++		status.ret = KSMBD_TREE_CONN_STATUS_ERROR;
++		share = NULL;
++	} else {
++		status.tree_conn->t_state = TREE_CONNECTED;
++	}
+ 	up_write(&sess->tree_conns_lock);
++	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
++		goto out_err1;
+ 	rsp->StructureSize = cpu_to_le16(16);
+ out_err1:
  	/*
- 	 * L4 timeout negotiation.  Ignore a proposal shorter than the
-diff --git a/net/netrom/nr_in.c b/net/netrom/nr_in.c
-index cf8844cd64b75..805881e5d6c01 100644
---- a/net/netrom/nr_in.c
-+++ b/net/netrom/nr_in.c
-@@ -129,7 +129,7 @@ static int nr_state1_machine(struct sock *sk, struct sk_buff *skb,
- 		nr->vl	       = 0;
- 		nr->state      = NR_STATE_3;
- 		nr->n2count    = 0;
--		nr->window     = skb->data[20];
-+		nr_negotiate_window(nr, skb->data[20]);
- 		sk->sk_state   = TCP_ESTABLISHED;
- 		if (!sock_flag(sk, SOCK_DEAD))
- 			sk->sk_state_change(sk);
+@@ -2099,9 +2108,6 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	rc = ksmbd_iov_pin_rsp(work, rsp, sizeof(struct smb2_tree_connect_rsp));
+ 	if (rc) {
+ 		if (status.ret == KSMBD_TREE_CONN_STATUS_OK) {
+-			down_write(&sess->tree_conns_lock);
+-			status.tree_conn->t_state = TREE_DISCONNECTED;
+-			up_write(&sess->tree_conns_lock);
+ 			ksmbd_tree_conn_disconnect(sess, status.tree_conn);
+ 			status.tree_conn = NULL;
+ 		}
+@@ -2142,6 +2148,9 @@ int smb2_tree_connect(struct ksmbd_work *work)
+ 	if (status.ret != KSMBD_TREE_CONN_STATUS_OK)
+ 		smb2_set_err_rsp(work);
+ 
++	if (tree_conn)
++		ksmbd_tree_connect_put(tree_conn);
++
+ 	return rc;
+ }
+ 
+@@ -2245,17 +2254,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
+ 
+ 	ksmbd_close_tree_conn_fds(work);
+ 
+-	down_write(&sess->tree_conns_lock);
+-	if (tcon->t_state == TREE_DISCONNECTED) {
+-		up_write(&sess->tree_conns_lock);
+-		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+-		err = -ENOENT;
+-		goto err_out;
+-	}
+-
+-	tcon->t_state = TREE_DISCONNECTED;
+-	up_write(&sess->tree_conns_lock);
+-
+ 	err = ksmbd_tree_conn_disconnect(sess, tcon);
+ 	if (err) {
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
 -- 
 2.53.0
 
