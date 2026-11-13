@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590703;
-	b=e/8JlkecAQIFT8qQK/bX9Qep3AEOrWloOR/V5BP1ScLqj7vMdbhKVZe+d358KfJR4HBd
-	 ssayzRtnGhP0UuZZZs9IR4GLJHvt7dPakV65y/Dl9IDL0wPZtAn+RBXDDK3iY+6hiXlbh
-	 vUR/eT+gBHo9asldcBWUjQblgQvQMUoeqvx6V4V3XH+HGUcb4/0jJgHQ8uWv3/vkxo/wY
-	 dXebhNKxpjuPKTZzW0t47Jg/1wiZUkYjml8ZUxora+z7/z7XPMu6IPbqHBh2VRsbxkrV/
-	 SHsBdliE1o4PFQcPdnY9gNaXfq0zA45n/nUL15Uhjp1z649B2RbiHhUA9R9uD+lqJXw==
+	t=1794590705;
+	b=GnnWU+JdwOJ35+Vzu7wJwuEl3u+yr0ZLiejDz6lCde6C9xILA6Qlj4hAc03OMPJNoXrA
+	 XTSwBwFXFu/WKDLQs41pxlIPRjq/W0I8Jk9aj70ZrlrjD5BpMuavfmzOO9Pn4B0cXLxyY
+	 FIOzaKsIWZ6M8h04yMCll86CKYF4orCE5kpyE+7A//miGBA2RA3JZFHQcZzfbTGX08Zv/
+	 H8DN30YvcfQ232ksKvw/lqBKKcVilZs8Je+WB9ZJ2e2pYSsrTwqWDyLPM84R6loVQb5wI
+	 CIZ01aRBwqJSMSTJhxXVWql9hDDO/QOz9NwHeW2H5BuA6EMjWl8GlJOu5gGbT6dFKNQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590703;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Ys7rQiFu+Tp7JFzkA1fCgzcl1G1W8kgHiZJHMuFg/Cs=;
-	b=e+khKfkzrO/JBYequgoW3ebBZgTCgK6+eWhTVLTMkZQj1lAIjzfdunPzPQT/BPokuvFx
-	 EfUIfKxwUFWDGOwgzSpZdqnRImaiZEXmyPgKLFJ+/8dhpaAJOMmotQA5nGwoy4MQdEwHW
-	 +CIf0VYoJT0gGevfnyoKnmwKGZDiRUJ7K9Vwe6G88Yud6M5xDil4yfwqK6z/sBormX7RX
-	 B3p+B8fTWSCaB2b+5WMzz5zBVdp9IVgJiyjU1F8Coe5jyM2gnk2bAKNQBFFN+Uo3HjeIk
-	 GbE7uwKfxPJqvZUCSgJZEhE+2hjHNp15ckQZmjMy8Spu8fN1Tgat6c79yzgHCDMQDjA==
+	bh=IPr9sDbgNwBx+YIT0n477Ep/uX5vYIEz126mz0vFxdE=;
+	b=wIGAUzYd50nvbUDYoT/vZ7RC+6yjRGTesOj9KhvUe7JTCIEV+TZjb5I7JEnULEkuxpLF
+	 nBaZsr3OM0/lP9iqZx49zhG+RcVzJk328+NrrRineeP+ApVuUhLuAtVK5QT7T5KDYwQNm
+	 lrAXahPODlZ9MjaPljGyqcrMUZWUHcIyTErxJJ2JZ4a3bKzDasuqDgzjZlHN5PV0+o/yo
+	 7CULIiUKXPknChbE/7ZTbloCkljnouMKlbmfm+bD/ct8nPFkB25rah7bJhaHORHjNvPLl
+	 RdNp7sd4smd2672aCjX3ognflW1vMtPXC8yVp1DHw2zprdYUQ7AWYmQRuy5uRw36kwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CUyIaOwl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G08Odvvj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFF7F607A5C9;
-	Fri, 13 Nov 2026 17:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037D9606B224;
+	Fri, 13 Nov 2026 17:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CUyIaOwl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7265C1F000C5;
-	Fri, 13 Nov 2026 17:25:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G08Odvvj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43A21F000C6;
+	Fri, 13 Nov 2026 17:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590703;
-	bh=Ys7rQiFu+Tp7JFzkA1fCgzcl1G1W8kgHiZJHMuFg/Cs=;
+	s=korg; t=1794590704;
+	bh=IPr9sDbgNwBx+YIT0n477Ep/uX5vYIEz126mz0vFxdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CUyIaOwl+LXDSlcl1iWWsAcz0youzhHZHhvEBLP3bPjpNtKCHe+AWqH4OVlhuG+ve
-	 Ez7H2JPxU3LyEoKbZGOdVS0oRiJXY2euoP1qtA2e5L5+YQCCNh2yvbzDzm7t0SNiJb
-	 dnDYjSiWtv44bokO/hNtyzFAkrqpVt2XpytV9GuI=
+	b=G08OdvvjWSdIeUjsTR6hdX6t50W8uSafQWWVfZ0BltPb4xzfBtIPzThiU+BMQ5Hba
+	 UoFCK+FSHXQ0knTUk6WnbdGgkEYx3tKR5MD3K7CAlqaHb9MPi4AjSG6z5w78ntI8sm
+	 8dwOT7MgT3neUk0UzIyeqPjSphvBaouzQz9Tpbc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Navon John Lukose <navonjohnlukose@gmail.com>,
-	"Derek J. Clark" <derekjohn.clark@gmail.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Rong Zhang <i@rong.moe>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 614/686] platform/x86: lenovo-wmi-capdata: Do not stop the AC notifier chain on error
-Date: Fri, 13 Nov 2026 10:52:27 -0500
-Message-ID: <20261113153842.690506864@linuxfoundation.org>
+Subject: [PATCH 6.18 615/686] iio: adc: ad4080: enable address ascension for chip identification
+Date: Fri, 13 Nov 2026 10:52:28 -0500
+Message-ID: <20261113153842.720805765@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -72,73 +70,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rong Zhang <i@rong.moe>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit 3b53e691e907086672b72d0544e4bf27efd4250d ]
+[ Upstream commit c051d08d98771132868abf0cb95b6de95ab3060a ]
 
-Returning NOTIFY_BAD to the AC notifier chain stops it by preventing
-later notifier blocks from being called, but our error is non-fatal for
-other AC notifier blocks, which should continue to consume the event.
+The two byte bulk read at AD4080_REG_PRODUCT_ID_L expects PRODUCT_ID_L
+followed by PRODUCT_ID_H. After a software reset the AD408x defaults to
+descending address mode, so the second byte comes from CHIP_TYPE (0x03)
+instead. CHIP_TYPE reads 0x07 on all AD408x parts, so an AD4080 reports
+0x0750 rather than 0x0050 and every part logs "Unrecognized CHIP_ID".
 
-Return NOTIFY_DONE and add a dev_warn() on error, so that the AC
-notifier chain continues. This also aligns with hp-wmi.
+Set ADDR_ASC along with SDO_ENABLE before the read. This is the only
+multi byte transfer in the driver, so no other access is affected.
 
-The function documentation was copied from elsewhere and makes no sense
-here, so correct it as well.
-
-Fixes: e1a5fe662b59 ("platform/x86: Add Lenovo Capability Data 01 WMI Driver")
+Fixes: b66cddc8be72 ("iio: adc: ad4080: fix chip identification")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: stable@vger.kernel.org
-Tested-by: Navon John Lukose <navonjohnlukose@gmail.com>
-Reviewed-by: Derek J. Clark <derekjohn.clark@gmail.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Signed-off-by: Rong Zhang <i@rong.moe>
-Link: https://patch.msgid.link/20261019-lwmi-wmi-new-api-v5-2-71557d28d058@rong.moe
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lenovo/wmi-capdata.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/iio/adc/ad4080.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/lenovo/wmi-capdata.c b/drivers/platform/x86/lenovo/wmi-capdata.c
-index ba843b6604b06..c7fa1c2969561 100644
---- a/drivers/platform/x86/lenovo/wmi-capdata.c
-+++ b/drivers/platform/x86/lenovo/wmi-capdata.c
-@@ -188,13 +188,11 @@ static int lwmi_cd_setup(struct lwmi_cd_priv *priv)
+diff --git a/drivers/iio/adc/ad4080.c b/drivers/iio/adc/ad4080.c
+index e15310fcd21a3..584f273c6bb35 100644
+--- a/drivers/iio/adc/ad4080.c
++++ b/drivers/iio/adc/ad4080.c
+@@ -455,7 +455,8 @@ static int ad4080_setup(struct iio_dev *indio_dev)
+ 		return ret;
  
- /**
-  * lwmi_cd01_notifier_call() - Call method for cd01 notifier.
-- * block call chain.
-- * @nb: The notifier_block registered to lenovo-wmi-events driver.
-+ * @nb: The cd01 ACPI notifier_block.
-  * @action: Unused.
-  * @data: The ACPI event.
-  *
-- * For LWMI_EVENT_THERMAL_MODE, set current_mode and notify platform_profile
-- * of a change.
-+ * Refresh cached capdata on AC status change.
-  *
-  * Return: notifier_block status.
-  */
-@@ -213,8 +211,16 @@ static int lwmi_cd01_notifier_call(struct notifier_block *nb, unsigned long acti
- 	switch (event->type) {
- 	case ACPI_AC_NOTIFY_STATUS:
- 		ret = lwmi_cd_cache(priv);
--		if (ret)
--			return NOTIFY_BAD;
-+		if (ret) {
-+			dev_warn(&priv->wdev->dev,
-+				 "failed to refresh capdata on AC change: %d\n", ret);
-+
-+			/*
-+			 * Our error is non-fatal for others, and we still want
-+			 * the other event consumers to process it.
-+			 */
-+			return NOTIFY_DONE;
-+		}
+ 	ret = regmap_write(st->regmap, AD4080_REG_INTERFACE_CONFIG_A,
+-			   AD4080_INTERFACE_CONFIG_A_SDO_ENABLE);
++			   AD4080_INTERFACE_CONFIG_A_SDO_ENABLE |
++			   AD4080_INTERFACE_CONFIG_A_ADDR_ASC);
+ 	if (ret)
+ 		return ret;
  
- 		return NOTIFY_OK;
- 	default:
 -- 
 2.53.0
 
