@@ -1,59 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585604;
-	b=lluj+imz2nUl0ZUMTmN0t/1CTPbDWTu5ymAEAlvn1mbj34V/ev7Xf3MYS1gF3LVyXZk8
-	 c2TwQta5NRKNYYNJDXlVK5BP1hSspy5SmZ/NK5dBx9V437/Nfb4dorezmVaHWAdYpX7Jr
-	 Zl/mxecNNlXVYZiOk4Y3k3Gk2Jcye0K3LDNvGlF4g7I7zIUvERYwiGS21xZVCjesu5aF+
-	 IgaS3pxtmHGIuYG+LF237IqCUvuLKvHPSBAyfH1SrVYt0XaZasdz7ZsCol1RIruqUKj59
-	 CIn+ROBlTNu0XX+cvDrfH+8w24q9Zh+OnAbLMsCg1PLtbSmbI/Yb2WevqwOjEufrawg==
+	t=1794585605;
+	b=4lPwX213vQtbEzAPfSH3ry7yHirkW2sr25ePa+RAHuTyxm/B2SbSJRsqZEuXwqQHDIxp
+	 8CC7mJ2ol4dO/tezsZ0lLKZtdWYk+050kyzbdyjllJ/iS0yeFCHEl/N5DQJLQ0ZDbYZDN
+	 wo1bGm2CiLDtKNHyFNLo4bbjed0/0b1rmPO+FDNqo6xfV2rt1OfkbxAv7/Q0ucySD2pdQ
+	 VRhB5JaglhcsvxKH+a5gXZDwRMi7UX45XHhe3ugmGbhmlbmmtfmrTqE/iZZ5k2HseTm5A
+	 xGkneWrzPyXj2o/uq+lXVR9dzpYlPnLgi5px6Df5S9/52hV5iNqoJcTDoYCEWTj10ug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+1cICBh5MqwYG81C97EqOP9rTuoiuE/SK5+3UrddgEY=;
-	b=lJOptV9Z/Nk++QMUkDl8lgmZ130FbuGGYQGJL98Bz2CJryaWsHdopKVjVOQmyw9YGChl
-	 Qe7Pw24F6ZMnhkyjhjxdygzYe3tYV+b6iXaEx6ciRSxSiYWsc8fR1UGc4bHKU6YAyoybi
-	 gEBMUnRM/RrkGUfjaotcFA2tsPbUhQdukmmaawaOTVBleofAvlXPhD01NotwC/PDw8bLE
-	 CSzQbQH1e/PkL5LHRKcfDYE2Ry0rR+RG29DGO2H3EQbzsck5Alh65045DSXmbmrvmTcQ6
-	 ouLFvmfkW84OAErQaw8m9fVe8sLRqA/Gp2Oy6J2jvs2NuDxCNDRtmv8voyczkLP9igA==
+	bh=WLyc1gB/R7YVbdL2AvdXI+l+0JGLA00bVySoVRx3v/4=;
+	b=Y/97JTp9lNXgi1tkNkEfr9f4L6aQmBWuL9iJL+KFe8BQtYd4IeXqhzS83xCLzyEMFImM
+	 t3WfViyOoyKJffvh8yaivDNrJE6cBfpRskUFiUaLfbz0h6P1Gk3TS5WSCAC796XjZXIIk
+	 139XK6Hmq3PP1FLdEbnVQZOtUbTCUivW9rRzSD9J5EhJkb3ZzZdc8wKV6ALfilRGd6Gap
+	 Lf4sh61et3j2lm54KcIaYhXymUGuO3Gq0A1XPPfDeqxKsY0gvTeKofdgEsCWZp6aXgScN
+	 k98GGuLI4xntWDO1FcC9TlsUEjFR6rJ30qlW0H2yYJL58wXdXSv8pRGguCuP+XLbhZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLOhKu6j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AAZEWcWA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E6C606A33B;
-	Fri, 13 Nov 2026 16:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3072606A33B;
+	Fri, 13 Nov 2026 16:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLOhKu6j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DD01F000C5;
-	Fri, 13 Nov 2026 16:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AAZEWcWA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EF71F000C4;
+	Fri, 13 Nov 2026 16:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585604;
-	bh=+1cICBh5MqwYG81C97EqOP9rTuoiuE/SK5+3UrddgEY=;
+	s=korg; t=1794585605;
+	bh=WLyc1gB/R7YVbdL2AvdXI+l+0JGLA00bVySoVRx3v/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZLOhKu6ja5ysUiA6B0NcMF+gMZGes5kvT8RUh7Xp3i3EBMrcgi2XvlonbxuTsv7h5
-	 ANuOdg0FnnfQkspJXH/H/5K7GWaeOObWogG3DUOVmhFYE9kTEXYY8segnNnmO1DjnR
-	 jYweXuVAfFATsjczsDRYcYBJDaheUw6/DOIl9da0=
+	b=AAZEWcWALN7qbGqpKpHDQNeWFZORQU8nNTsD4+jEE9X0//POoFwngXS7TjdEjc/2j
+	 bIAMGfurYPU/+tvnUQATnvOh8nUuuAaGopTP9a6JExhBwr+/9fwB1CS1aDiT636G9W
+	 RFhy3+6kCb99W0szluu9uLOvzo09e3Tv6ue53qMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Mike Rapoport <rppt@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Liam R. Howlett" <liam@infradead.org>,
 	Vlastimil Babka <vbabka@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
 	Suren Baghdasaryan <surenb@google.com>,
 	Michal Hocko <mhocko@suse.com>,
-	Brendan Jackman <brendan.jackman@linux.dev>,
-	Zi Yan <ziy@nvidia.com>,
+	Jann Horn <jannh@google.com>,
+	SJ Park <sj@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Colin Cross <ccross@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 228/507] mm/page_alloc: mark pages freed by __free_pages_core() as not tagged
-Date: Fri, 13 Nov 2026 10:48:52 -0500
-Message-ID: <20261113153802.230805375@linuxfoundation.org>
+Subject: [PATCH 7.3 229/507] mm/vma: write lock source VMA before duplicating it in __split_vma()
+Date: Fri, 13 Nov 2026 10:48:53 -0500
+Message-ID: <20261113153802.259564893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -75,85 +81,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit b6732c6d43139ea56de8bc62e87ace8543ef784f ]
+[ Upstream commit 769417e410dd19b2a438c6addb61b194b7a4c387 ]
 
-Onlining hotplugged memory (e.g., a dev_dax device bound to kmem) with
-CONFIG_MEM_ALLOC_PROFILING_DEBUG triggers:
+__split_vma() duplicates the source VMA before taking its VMA write lock,
+and until the VMA is write-locked, a concurrent thread might set
+VMA_MAYBE_GUARD_BIT, resulting in the duplication missing the flag.
 
-  alloc_tag was not set
-  WARNING: ./include/linux/alloc_tag.h:166 at __pgalloc_tag_sub+0x1fc/0x254
-  Call trace:
-   __pgalloc_tag_sub+0x1fc/0x254 (P)
-   __free_pages_ok+0x14c/0x6ac
-   __free_pages_core+0xa8/0x188
-   generic_online_page+0x14/0x20
-   online_pages+0x220/0x3b0
-   memory_subsys_online+0xfc/0x198
-   device_online+0x58/0xe0
-   state_store+0xf0/0xf8
+If this happens, then fork may fail to duplicate guard markers and, if a
+file-backed mapping, THP collapse may also discard the markers.
 
-Pages entering the buddy through __free_pages_core() have never been
-allocated, so their allocation tag references are NULL.  The free path,
-__free_pages_prepare() -> pgalloc_tag_sub(), expects a valid tag or a
-CODETAG_EMPTY mark and warns otherwise.  Paths feeding never-allocated
-pages into the buddy are therefore expected to mark them with
-clear_page_tag_ref() first, like init_cma_reserved_pageblock() and
-free_reserved_pages() do; of __free_pages_core()'s callers only
-memblock_free_pages() clears the tag ref itself, and the hotplug
-onlining path was missed.
+Resolve this by taking the VMA write lock before vm_area_dup() and, since
+all callers of vm_area_dup() now hold the VMA write lock, assert that this
+is the case there, and add a comment to explain why it's needed.
 
-Since all __free_pages_core() callers free never-allocated pages, mark the
-head page as not tagged in __free_pages_core() itself instead of relying on
-each caller, and drop the now-redundant clearing from
-memblock_free_pages().
-
-Link: https://lore.kernel.org/20261022122752.74774-1-zenghui.yu@linux.dev
-Fixes: dcfe378c81f7 ("lib: introduce support for page allocation tagging")
-Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
+[ljs@kernel.org: add VMA write assert in vm_area_dup(), commit message touchup]
+Link: https://lore.kernel.org/20261023-fix-vma-atomic-v1-2-8ff4fae1fc85@kernel.org
+Fixes: 2ab7f1bbafc9 ("mm/madvise: allow guard page install/remove under VMA lock")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Mike Rapoport <rppt@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Cc: Liam R. Howlett <liam@infradead.org>
 Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Mike Rapoport <rppt@kernel.org>
 Cc: Suren Baghdasaryan <surenb@google.com>
 Cc: Michal Hocko <mhocko@suse.com>
-Cc: Brendan Jackman <brendan.jackman@linux.dev>
-Cc: Zi Yan <ziy@nvidia.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: SJ Park <sj@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Colin Cross <ccross@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mm_init.c    | 2 --
- mm/page_alloc.c | 3 +++
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ mm/vma.c      | 2 +-
+ mm/vma_init.c | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/mm/mm_init.c b/mm/mm_init.c
-index 1533aebafb688..36ec1ef0712cb 100644
---- a/mm/mm_init.c
-+++ b/mm/mm_init.c
-@@ -2422,8 +2422,6 @@ void __init memblock_free_pages(unsigned long pfn, unsigned int order)
- 		return;
+diff --git a/mm/vma.c b/mm/vma.c
+index 3d63f73e723b9..e2ce21afe44a6 100644
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -557,6 +557,7 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+ 			return err;
  	}
  
--	/* pages were reserved and not allocated */
--	clear_page_tag_ref(page);
- 	__free_pages_core(page, order, MEMINIT_EARLY);
- }
++	vma_start_write(vma);
+ 	new = vm_area_dup(vma);
+ 	if (!new)
+ 		return -ENOMEM;
+@@ -587,7 +588,6 @@ __split_vma(struct vma_iterator *vmi, struct vm_area_struct *vma,
+ 	if (new->vm_ops && new->vm_ops->open)
+ 		new->vm_ops->open(new);
  
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 319053c6a9c0f..d8adf19eaeea6 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -1634,6 +1634,9 @@ void __meminit __free_pages_core(struct page *page, unsigned int order,
- 		atomic_long_add(nr_pages, &page_zone(page)->managed_pages);
- 	}
+-	vma_start_write(vma);
+ 	vma_start_write(new);
  
-+	/* pages were never allocated */
-+	clear_page_tag_ref(page);
+ 	init_vma_prep(&vp, vma);
+diff --git a/mm/vma_init.c b/mm/vma_init.c
+index baa7e82f47e3f..d661f229a734f 100644
+--- a/mm/vma_init.c
++++ b/mm/vma_init.c
+@@ -127,6 +127,9 @@ struct vm_area_struct *vm_area_dup(struct vm_area_struct *orig)
+ {
+ 	struct vm_area_struct *new = kmem_cache_alloc(vm_area_cachep, GFP_KERNEL);
+ 
++	/* Must hold a write lock to stabilise atomic VMA flags. */
++	vma_assert_write_locked(orig);
 +
- 	if (page_contains_unaccepted(page, order)) {
- 		if (order == MAX_PAGE_ORDER && __free_unaccepted(page))
- 			return;
+ 	if (!new)
+ 		return NULL;
+ 
 -- 
 2.53.0
 
