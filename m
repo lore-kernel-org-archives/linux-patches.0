@@ -1,58 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591129;
-	b=bDkBi+lFOSFHFUuUvDZ6yV0KyhVpio9PLADiLyhsCOnowcwBm9Qj6XdZ6BEdzjcbJUjy
-	 9Kz4fSu30H13o2rh6KH5qsH39W+LdHHumQanaaC61MQfGpSeFwgyxO88zYFpiqojS8ngL
-	 mVyaiGUkwOqhcM9Mc08/wB4yoPlbP4HQbIkStlbll13Sf194tYWpFcqKL7tia8QGMkmtT
-	 6TBFAAavKDjD54fcZW6XXYvo9Krs7mSEUGnz2uFKRdoUL6oXz2HlaCydYKmFeslRavs0R
-	 LfrXERyI31+ZIlrmiBmk/o9JN9uwQUDbGtX5hlMO4oxhO4fhkU13OuqF331rd5mUDrw==
+	t=1794591130;
+	b=TZLzJWyHhkCR+mIPsNBOtAMetPy3pEORdqQunH+vnoEpCCXYjhpBqqA+kegwnPgmNx1k
+	 8Ia9bqUupyR4W8yGf/vHxNhvFMBcjWFgH5+thPVhBlmJ0O1VQWmsxQxXJCibkUA7LKbeb
+	 XuGXnj6RXlC30AH36IRketC4BKNE4xwqhcbGUmQqOrnGRz80hOi38oXllKj1/6u9DItFx
+	 1oXVJLaxjlQGZqfQhV7NG2i9ccnZFPiU5N9csugQlihA/LAnOQeFk4u2qUcKiov2PQ4tK
+	 WwlevYhHg2HZjO06bB2NmBPE02kx2SGPzQ4zvlJelkWIusbfLRgofa1PaMLg/Mbm0yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591129;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XCAxDO3lq9Kk0YyWKdXRXVIpbSQjh/u3RhTnETv6jV4=;
-	b=49eQ3eCScFbgCEt9exo6EdQSa0qC8q7vHxzvqKIzl4ETrnpn1fUIgEo6Mavk6jr+YxkI
-	 1q2Ma53QL3tn7fwtSC0Tpr7V6LzK5OEdGWFLFJM34XZhe6BpMdfyqv6gNBLMtT5bay5dt
-	 rGV6VniFfA8PUVgbudOL+1dG0fhYAmKNGfVW9+ath9ZXdkJuIXgSGmkUOxADEqnqg0IFT
-	 ANgN/UejzYuQYJH/d5yDG51Xg5jfdUHeq11uilJ86YsMlI6L++xsNgFhR6YcmVPRs/BEU
-	 /G63OhY6ouzgHHo/5S7au+3ur80csURxsoulVX8fv+I65xORGaJzRGHGndl225vyhvQ==
+	bh=w2HwfE5AfCKUQCBVEc5A0xrTM2i/jgZ4WeJ0jAIkCWM=;
+	b=VvykhrwRLEMR4xi25nAAqB5pRI+je/xH7Dw5n302pPScVMD86YIsScD8DXlnoaOQC3qV
+	 tpZi4o2sdPovGgsDxkGy+nXZ6+o9oU799xXHz1RhsrHdXdmbDJPUrbq5f4LOwDPA+FCvO
+	 qmxr3TmiQGk26LR271EkuZDTgShYX6ljx138/tR99i7Cuyiz3aH4BGVsC1g966yhRlUUJ
+	 1WHyCL7TLCFISGAO6TQNApHHkYxdhZgJFo29iuLrIxncshJ0AbaiuVCw25YV1wSjFQjR4
+	 Y6uik1h17IDw97waluiJr8vYdn0VXkiOwFAVYzcdDxmItv9VDQUCkYwoOnflYpTkIhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Oc4/uBgi";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5mzrTzv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8498B606A336;
-	Fri, 13 Nov 2026 17:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BF6606BD0F;
+	Fri, 13 Nov 2026 17:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oc4/uBgi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F441F000C6;
-	Fri, 13 Nov 2026 17:32:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5mzrTzv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 572801F000C4;
+	Fri, 13 Nov 2026 17:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591129;
-	bh=XCAxDO3lq9Kk0YyWKdXRXVIpbSQjh/u3RhTnETv6jV4=;
+	s=korg; t=1794591130;
+	bh=w2HwfE5AfCKUQCBVEc5A0xrTM2i/jgZ4WeJ0jAIkCWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oc4/uBgi8eme6kIMz47jzCiS+vu2IvwndlofFFF9EjTXi25FNindGmnFlAoH/0liT
-	 i9XPMd1JTg/QGPnjhcBolAupRUPHAzLrV/J/v2khj1rzT6x8qwJo/zz1VhaXZCcYVQ
-	 sjyHLXdUOBx0W0ZVjir0O/qH37+R27wlaFFPysV4=
+	b=R5mzrTzvdMyoZyqKHQIkndSs68Z5QpyXnk7ZwxufhNhEmyRaWg04PSQr54G/PRiE+
+	 PBEiD1u7geDaBsc15IYKeNj4FVKQzeJYtDON0C5XtoafnGHxGuy05kmT8dGRlrNix5
+	 q123NPWLgkrwLmChPaelLDCC9pio7Vdl27QIfz5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhe <lizhe.67@bytedance.com>,
+	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Mike Rapoport <rppt@kernel.org>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Brendan Jackman <brendan.jackman@linux.dev>,
+	Zi Yan <ziy@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 276/670] mm/hugetlb: fix mremap move length truncation
-Date: Fri, 13 Nov 2026 10:47:20 -0500
-Message-ID: <20261113153821.242586163@linuxfoundation.org>
+Subject: [PATCH 6.12 277/670] mm/page_alloc: mark pages freed by __free_pages_core() as not tagged
+Date: Fri, 13 Nov 2026 10:47:21 -0500
+Message-ID: <20261113153821.276170142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -74,110 +75,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhe <lizhe.67@bytedance.com>
+From: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
 
-[ Upstream commit dfb190302d2b4af86c6ae48af0d3b09f28b35460 ]
+[ Upstream commit b6732c6d43139ea56de8bc62e87ace8543ef784f ]
 
-Patch series "mm/hugetlb: fix mremap bugs", v3.
+Onlining hotplugged memory (e.g., a dev_dax device bound to kmem) with
+CONFIG_MEM_ALLOC_PROFILING_DEBUG triggers:
 
-This series fixes a few hugetlb mremap bugs.
+  alloc_tag was not set
+  WARNING: ./include/linux/alloc_tag.h:166 at __pgalloc_tag_sub+0x1fc/0x254
+  Call trace:
+   __pgalloc_tag_sub+0x1fc/0x254 (P)
+   __free_pages_ok+0x14c/0x6ac
+   __free_pages_core+0xa8/0x188
+   generic_online_page+0x14/0x20
+   online_pages+0x220/0x3b0
+   memory_subsys_online+0xfc/0x198
+   device_online+0x58/0xe0
+   state_store+0xf0/0xf8
 
-Patch 1 fixes the return type of move_hugetlb_page_tables(), so large
-hugetlb moves cannot be truncated when reported back to the generic
-mremap code.
+Pages entering the buddy through __free_pages_core() have never been
+allocated, so their allocation tag references are NULL.  The free path,
+__free_pages_prepare() -> pgalloc_tag_sub(), expects a valid tag or a
+CODETAG_EMPTY mark and warns otherwise.  Paths feeding never-allocated
+pages into the buddy are therefore expected to mark them with
+clear_page_tag_ref() first, like init_cma_reserved_pageblock() and
+free_reserved_pages() do; of __free_pages_core()'s callers only
+memblock_free_pages() clears the tag ref itself, and the hotplug
+onlining path was missed.
 
-Patch 2 disables hugetlb PMD sharing for UFFD missing mode, so
-UFFDIO_POISON markers cannot become visible through shared PMD page
-tables.
+Since all __free_pages_core() callers free never-allocated pages, mark the
+head page as not tagged in __free_pages_core() itself instead of relying on
+each caller, and drop the now-redundant clearing from
+memblock_free_pages().
 
-Patch 3 fixes the recursive i_mmap_rwsem deadlock in the hugetlb mremap
-path by avoiding the destination PMD sharing allocation path while the
-mapping lock is already held for write.
-
-This patch (of 3):
-
-move_hugetlb_page_tables() returns the number of bytes moved, but
-its return type is int while the generic move_page_tables() path uses
-unsigned long lengths.
-
-A hugetlb mremap() move length above INT_MAX can therefore be
-misreported to copy_vma_and_data(). The out-of-range conversion to int
-is implementation-defined; on common 64-bit builds, for example, a
-4 GiB move can be reported as zero, making the caller treat the move as
-a failure and use the wrong length for rollback.
-
-Return unsigned long from move_hugetlb_page_tables(), matching
-move_page_tables() and preserving the full byte count.
-
-Link: https://lore.kernel.org/20261022034543.51226-1-lizhe.67@bytedance.com
-Link: https://lore.kernel.org/20261022034543.51226-2-lizhe.67@bytedance.com
-Fixes: 550a7d60bd5e ("mm, hugepages: add mremap() support for hugepage backed vma")
-Signed-off-by: Li Zhe <lizhe.67@bytedance.com>
+Link: https://lore.kernel.org/20261022122752.74774-1-zenghui.yu@linux.dev
+Fixes: dcfe378c81f7 ("lib: introduce support for page allocation tagging")
+Signed-off-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
 Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Brendan Jackman <brendan.jackman@linux.dev>
+Cc: Zi Yan <ziy@nvidia.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hugetlb.h | 15 ++++++---------
- mm/hugetlb.c            |  7 +++----
- 2 files changed, 9 insertions(+), 13 deletions(-)
+ mm/mm_init.c    | 2 --
+ mm/page_alloc.c | 3 +++
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index 32cbaaaccfe54..69bc41be9be90 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -121,10 +121,9 @@ void hugepage_put_subpool(struct hugepage_subpool *spool);
+diff --git a/mm/mm_init.c b/mm/mm_init.c
+index 77f5f62628b71..f024ab7ae363d 100644
+--- a/mm/mm_init.c
++++ b/mm/mm_init.c
+@@ -2481,8 +2481,6 @@ void __init memblock_free_pages(struct page *page, unsigned long pfn,
+ 		return;
+ 	}
  
- void hugetlb_dup_vma_private(struct vm_area_struct *vma);
- void clear_vma_resv_huge_pages(struct vm_area_struct *vma);
--int move_hugetlb_page_tables(struct vm_area_struct *vma,
--			     struct vm_area_struct *new_vma,
--			     unsigned long old_addr, unsigned long new_addr,
--			     unsigned long len);
-+unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
-+		struct vm_area_struct *new_vma, unsigned long old_addr,
-+		unsigned long new_addr, unsigned long len);
- int copy_hugetlb_page_range(struct mm_struct *, struct mm_struct *,
- 			    struct vm_area_struct *, struct vm_area_struct *);
- void unmap_hugepage_range(struct vm_area_struct *,
-@@ -334,11 +333,9 @@ static inline int copy_hugetlb_page_range(struct mm_struct *dst,
- 	return 0;
+-	/* pages were reserved and not allocated */
+-	clear_page_tag_ref(page);
+ 	__free_pages_core(page, order, MEMINIT_EARLY);
  }
  
--static inline int move_hugetlb_page_tables(struct vm_area_struct *vma,
--					   struct vm_area_struct *new_vma,
--					   unsigned long old_addr,
--					   unsigned long new_addr,
--					   unsigned long len)
-+static inline unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
-+		struct vm_area_struct *new_vma, unsigned long old_addr,
-+		unsigned long new_addr, unsigned long len)
- {
- 	BUG();
- 	return 0;
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 049726560c1aa..d9443bdebc068 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5478,10 +5478,9 @@ static void move_huge_pte(struct vm_area_struct *vma, unsigned long old_addr,
- 	spin_unlock(dst_ptl);
- }
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index a649f0245e3bf..480579d7d59e4 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1355,6 +1355,9 @@ void __meminit __free_pages_core(struct page *page, unsigned int order,
+ 		atomic_long_add(nr_pages, &page_zone(page)->managed_pages);
+ 	}
  
--int move_hugetlb_page_tables(struct vm_area_struct *vma,
--			     struct vm_area_struct *new_vma,
--			     unsigned long old_addr, unsigned long new_addr,
--			     unsigned long len)
-+unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
-+		struct vm_area_struct *new_vma, unsigned long old_addr,
-+		unsigned long new_addr, unsigned long len)
- {
- 	struct hstate *h = hstate_vma(vma);
- 	struct address_space *mapping = vma->vm_file->f_mapping;
++	/* pages were never allocated */
++	clear_page_tag_ref(page);
++
+ 	if (page_contains_unaccepted(page, order)) {
+ 		if (order == MAX_PAGE_ORDER && __free_unaccepted(page))
+ 			return;
 -- 
 2.53.0
 
