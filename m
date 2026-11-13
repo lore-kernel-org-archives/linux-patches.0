@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591059;
-	b=DhZokagPNHjmOSenDmMpBHUPI1RT3OvA/PXaPPiBGPbL4CJ8FODSOeWdd1p665FCvkaS
-	 yKn8lu7RvuDVDVulD968lo7E/X74mhw8vJfAFqbpa4yS6Aqbuzjqxhfqwk1QFH0A1TkEi
-	 2trOgijdpT37IoS6+Zo1hG+xghXPzgWdui9jMTQBQgXXhua8llGlzIjH8q53Hc6ICXTmx
-	 3fg4ScIPmsB/ZHiv3Q+izRuvqnK3YeAbEKGICK0PwnEn0yUh2YrW9mC3fKbeWCyWxhmwq
-	 EJd9wdHtbKCmIcgeQZr68q54Sl+APX/MXartxT7CJaDj1LB1220+5/ckf4ZwVQHAHdw==
+	t=1794591060;
+	b=gQ+x43KuMIz/xHo6vQvrpaBgelAvOKbnP76YNs/4wjzxTFqGtiHSnk9pyTzoepALVKcE
+	 NPerpTtxQ5Rwf/knT6ljvaPWK3Dh7Bcyyoz+u6b6yegr/umRINV7nL/yrkuvmkJ/HlSKm
+	 TT2iQTHqm8PEm0/aOiIHTpccpDEtWcPuWuA2EsEuYaK8TDw677Agf4lBfOeYF38vcgqqN
+	 6EN2AujyJAjm3foL2WhAINWLvhMZW4WWEqwlwLhBMINK01EemGCvGYvqjMCF2QAnEQRbS
+	 9EqVpV7wekVrks+ShxYWiDOIBYsHg5BLfNPfOhZ2U6HS3KinX/6e6YSKhqw+zLLrSfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ur1wYzqBCm93ySSmlg8duyc9hX5CkZZmX4gJCYL8Z7o=;
-	b=mYWC108IZI8dj417EB/bUFd4G6dRfFEYIe5LdsHnet754xMq5kPfVyPdGETxKLETwagh
-	 w/gsnYmDzkFJZNCG/ZrYNOPETPl52pXnFVHEfkky9QfKRjTTqEjgymoOL3C1oOe3cIBty
-	 sf70TJfhhiUsoY8nN9zCpdu/rIJiqK6ivwZeFW23CMD9PB7naFvgOIsdTBMadT4hY2Lxs
-	 ZFHJtJ6xEKt2bR8lyHudxEX/mqVM2eEUdlR4bSdJHAzP/ISmFIw3yLITohAMFAxEKLPpD
-	 d1PKoPXrfxjOTD/gx35hQbBe0TdPZQtlJckCsPqt4mlnKVP6TAr+CD70J2j76194C4A==
+	bh=vhcmVPsvL7k/LNWS/9cbV2QUcpglWn0aJaeNSgN/atE=;
+	b=lWtzgAiyQ5DQZflP0Z8LTd/tABY7Ahxk0HWRvVDHjwItAzJo5lcAnoBl3DRitdu0MneT
+	 /yOm+HylPWA6zfdixuuMyLRpK4vxaKONeVk2w8kVbmOQ9euamwlRjMF9bAwjVL5pIbZd1
+	 5gQ3B3xR6yzLeR3MmFu/vNs+V73KTSo3oFL7Nutj+kMVxxunj2YxVw/1F9GsSBsapMwbD
+	 od68Y611M7oDn5Sqvf43/T8O/oHA6q0rRfWDKGibJsKh5q0z8KgrGsTxb0yWUSWMwrlKo
+	 CsCRWK+6FAIugVjfFO6I1wbYcd6XC9laSK//9wN8pAPRy2WwImDNW7LqEgsDi3MhqPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9G7ui8n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMuUIJoG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C9CF606B834;
-	Fri, 13 Nov 2026 17:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88343606B82D;
+	Fri, 13 Nov 2026 17:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9G7ui8n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6371F000C7;
-	Fri, 13 Nov 2026 17:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sMuUIJoG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B891F000C5;
+	Fri, 13 Nov 2026 17:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591059;
-	bh=ur1wYzqBCm93ySSmlg8duyc9hX5CkZZmX4gJCYL8Z7o=;
+	s=korg; t=1794591060;
+	bh=vhcmVPsvL7k/LNWS/9cbV2QUcpglWn0aJaeNSgN/atE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N9G7ui8nZjQM5y9Y4FWEKGbIe2PEm7X1jqolZIN2SfBLAk3zdDbc7vIY/X2aMa+UZ
-	 Rp07gSXt+ju2efZjag1ieuUVhZAZI1u7lJTvr3RCqJU1BnN4Lq1069c2uQE0FA2VOy
-	 +X8g3Iu7kDdYnMw6ENKXJ7hneHiErgOwZMfOains=
+	b=sMuUIJoG3jtN0e6SiVrgtXtUp7zbfnOqW+/dLKgHWZ05rAgkPFIAHxnACOf1vvZxR
+	 pwIep/ZWdtNWNYSgYM02uhZc196WFQr7/5WDNDSJrBD/qyvYBMoheXI47kWx4tD4AW
+	 7i2CiMLkQXRC+DPayF7tCLSEsnNEghDLuYJ+40zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Musto <federico@rimpianto.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 220/670] net: atl1c: drop oversized RX frames instead of panicking
-Date: Fri, 13 Nov 2026 10:46:24 -0500
-Message-ID: <20261113153819.352239905@linuxfoundation.org>
+Subject: [PATCH 6.12 194/670] 9p: dont decrement a server-owned zero nlink
+Date: Fri, 13 Nov 2026 10:45:58 -0500
+Message-ID: <20261113153818.571937707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,96 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Federico Musto <federico@rimpianto.com>
+From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
 
-[ Upstream commit c4ba1716853de5178a9df785844ebb5e397a80e6 ]
+[ Upstream commit 4e915aa8566173b44146bc46177c85afbe6bdf96 ]
 
-atl1c sizes its receive buffers from the netdev MTU plus a fixed set of L2
-overheads, which comes to 1522 bytes at the default MTU.  A link partner
-that sends a longer frame - in practice a MikroTik CCR2004-1G-2XS-PCIe,
-whose RouterOS side defaults to l2mtu 1600 while the host stays at MTU 1500
-- makes the length reported by the RX return descriptor exceed what the
-hardware wrote, and skb_put() then either includes bytes that were never
-received or trips skb_over_panic and takes the host down.
+A 9P2000.L server can report nlink=0 for a regular file that still
+exists.  On a cache=loose or cache=fscache mount, lookup stores that
+value with set_nlink().  A later successful unlink calls
+v9fs_dec_count(), which still calls drop_nlink() for a non-directory.
+drop_nlink() warns, and the unsigned link count wraps to 4294967295.
+fstat() on a descriptor opened before the unlink shows 0 before and
+4294967295 after.
 
-Compare the descriptor length against buffer_info->length, the length the
-hardware was given, rather than against skb_tailroom(): the skb carries 64
-bytes of slack for the DMA erratum, so tailroom is larger than the DMA
-buffer and a frame in between would pass the check and still be delivered
-with a tail the device never wrote.  The same test rejects frames shorter
-than ETH_HLEN + ETH_FCS_LEN; before this change a reported length below
-ETH_FCS_LEN underflowed in skb_put().
+The warning on the unpatched kernel, trimmed:
 
-The frame is dropped with kfree_skb_reason(SKB_DROP_REASON_PKT_TOO_BIG) so
-drop_monitor and the kfree_skb tracepoint see it, and counted through
-dev_core_stats_rx_dropped_inc(), which survives atl1c_get_stats()
-overwriting the hardware counters on every read.  It also counts as work:
-atl1c_clean_rfd() has already recycled the RFD, and the refill at the end
-of the poll only runs when work_done is non-zero, so sustained oversized
-traffic would otherwise drain the ring and stop RX.
+WARNING: fs/inode.c:408 at drop_nlink+0xac/0xd0, CPU#1: trigger/188
+CPU: 1 UID: 0 PID: 188 Comm: trigger Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
+RIP: 0010:drop_nlink+0xac/0xd0
+Call Trace:
+ <TASK>
+ v9fs_remove+0x529/0x750
+ vfs_unlink+0x2f0/0xbd0
+ filename_unlinkat+0x340/0x6c0
+ __x64_sys_unlink+0x46/0x70
+ do_syscall_64+0xe8/0x4f0
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ </TASK>
+---[ end trace 0000000000000000 ]---
 
-Tested on a MikroTik CCR2004-1G-2XS-PCIe (4x AR8151) in a Proxmox VE host,
-with atl1c built from a DKMS tree carrying this change: the l2mtu-1600
-traffic that panics the stock driver is dropped and counted with the patch
-applied, and received normally once the host MTU is raised to match.
+Directories whose cached nlink is at most 2 already skip this
+decrement, because the exported filesystem may not maintain nlink
+(commit ac89b2ef9b559).  cache=none skips it as well (commit
+574aa0b479947).  cache=mmap does not take this path: it sets neither
+CACHE_META nor CACHE_LOOSE.  A regular file on cache=loose or
+cache=fscache still does.  Its count came from GETATTR and may
+already be zero, so skip the decrement when i_nlink is already 0.
 
-This complements commit 36c2009d90f2 ("net: atl1c: fix soft lockup on
-out-of-range tpd_cons read"), which fixed the TX side of the same
-"host dies while the card resets" problem.
+Verified on 7.3-rc4-00537-ga3ff15db6820 with only this change.  A
+server that advertises nlink=0 and accepts the unlink no longer
+warns, and the open descriptor stays at nlink 0.  An honest server
+on the same mount still goes from 1 to 0.  A rejected unlink leaves
+the count unchanged.  cache=none is unchanged.  With panic_on_warn
+the unpatched kernel panics on the warning; the patched kernel does
+not.
 
-Fixes: 43250ddd75a3 ("atl1c: Atheros L1C Gigabit Ethernet driver")
+Fixes: ac89b2ef9b559 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
 Cc: stable@vger.kernel.org
-Signed-off-by: Federico Musto <federico@rimpianto.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+Message-ID: <8B490036-EBB0-4A36-AE39-F294F7C79649@stu.pku.edu.cn>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/atheros/atl1c/atl1c_main.c   | 33 +++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ fs/9p/vfs_inode.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-index 96152e5a920a3..5af78b3de09df 100644
---- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-@@ -1934,6 +1934,39 @@ static int atl1c_clean_rx(struct napi_struct *napi, int budget)
- 			break;
- 		}
- 		atl1c_clean_rfd(rfd_ring, rrs, rfd_num);
-+
-+		/* A link partner whose l2mtu is larger than ours can hand us a
-+		 * frame that does not fit the buffer the hardware was given:
-+		 * the descriptor reports the untruncated length while at most
-+		 * buffer_info->length bytes were written.  skb_put() of such a
-+		 * length would pull in whatever the tail of the buffer holds
-+		 * and, past the end of the skb, trips skb_over_panic and takes
-+		 * the host down.  Bound it by what the device actually wrote
-+		 * rather than by skb_tailroom(): the skb carries 64 bytes of
-+		 * slack for the DMA erratum, so the two are not the same.
-+		 *
-+		 * Frames shorter than an Ethernet header plus its FCS are
-+		 * rejected by the same test; before this, a length below
-+		 * ETH_FCS_LEN underflowed in skb_put().
-+		 */
-+		if (unlikely(length < ETH_HLEN + ETH_FCS_LEN ||
-+			     length > buffer_info->length)) {
-+			dev_core_stats_rx_dropped_inc(netdev);
-+			if (netif_msg_rx_err(adapter))
-+				dev_warn_ratelimited(&pdev->dev,
-+						     "dropped rx frame: %u bytes, buffer %u\n",
-+						     length, buffer_info->length);
-+			kfree_skb_reason(skb, SKB_DROP_REASON_PKT_TOO_BIG);
-+			/* atl1c_clean_rfd() has already recycled the RFD, so
-+			 * count the drop as work: the refill at the end of the
-+			 * poll only runs when work_done is non-zero, and
-+			 * sustained oversized traffic would otherwise drain the
-+			 * ring and stop RX for good.
-+			 */
-+			work_done++;
-+			continue;
-+		}
-+
- 		skb_put(skb, length - ETH_FCS_LEN);
- 		skb->protocol = eth_type_trans(skb, netdev);
- 		atl1c_rx_checksum(adapter, skb, rrs);
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index 90fe3ea09595d..7cb3f4b89dcc3 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -493,6 +493,12 @@ static int v9fs_at_to_dotl_flags(int flags)
+  * nothing and races with concurrent metadata fetches that may already
+  * have observed the post-unlink value (nlink == 0).
+  *
++ * The same applies to a regular file whose cached nlink has already been
++ * driven to zero by the server: in the cached modes the attributes come
++ * from GETATTR and are applied verbatim, so decrementing a link count the
++ * server does not maintain only trips the drop_nlink() WARN_ON and
++ * underflows i_nlink.
++ *
+  * @inode: inode whose nlink is being dropped
+  */
+ static void v9fs_dec_count(struct inode *inode)
+@@ -501,6 +507,8 @@ static void v9fs_dec_count(struct inode *inode)
+ 
+ 	if (!(v9ses->cache & (CACHE_META | CACHE_LOOSE)))
+ 		return;
++	if (inode->i_nlink == 0)
++		return;
+ 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
+ 		drop_nlink(inode);
+ }
 -- 
 2.53.0
 
