@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590590;
-	b=df81vzEU6XUn09BiPnUYjv0wEtkkHbSLfaYp98WM/8Jn5m2Ayg/Gd5D+qODZ/I+CBqz6
-	 K73hS52CCtPtvWsrX+zEVNzregwme6Ayn6ueDka3Jcr8TBHD+z+KO8IP+V/vlBV0sjy0p
-	 O0BlENZdPFIJ1lWn/jP1Zzu/LPhPNZ40puyK3zZyDNxfFuI6fsDJACqWpFphgnEhxfwvL
-	 9d70hh/F+kB/+1C77xPQrr4RzYlUXli9MWMwouZGpKARG3tDgKg70QRBZn4R6RR/29Som
-	 PfTjt8/Ya3toglFFDsvdzMV4bk0uxR1UbnDoxVkd3jQmE8namBprXsyjDVjINN3KtXw==
+	t=1794590591;
+	b=o0MfxyggRZAu8AK4Q4qIKl3JtOQLHhAPkvXBve+TENDr/FDMKnLtmGDOpykWlgAb4VDm
+	 i8Lzjz2NKBiVTw0nynwwfB3ab0w2URwp4qAsDNzDrUv3i7dE/1dGOcWezAAGyMNOFBwVf
+	 piacu3fjIBK9ZhyTvQSGg2vrqzacPefgROiypeXl4f9A5u6zkrADBGhhqYITZSb5PUFNp
+	 wGWKRaJZOTy510btU1XCD6YXVjPoNa5TXzGH5C1aNLOi0D5BBur+dAWS99ffjVJuildCp
+	 qa8k4WUkhpPRGhtzcMX086RwETwkIVPbmeClIQJqedx66aa4vKsLOjHficgDpME3cwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590590;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iBdl1ot4dwyMs3O6mWcNZ4cbQ+NNuHrFSyHIkH3Kdyo=;
-	b=PFtIVqNspjDaN4wrKWZRYsbcCg7zaiuxO0OnyptiZKdfp9E6IapQi9Es7mXNy0k2QeVY
-	 HwncgwsgtwONUXj1JlrZ4naXLTkM+4gu3qmwYH4jVR8XCgYhFqG9TTLCnPreOGScV5PJE
-	 XwgjuA9w1wyx3qGbi59DnkelKC3s/1kViXo5gPMpXv7vAY+1NXjoexMDrkRKIZTN2gPB2
-	 YKJj+JkXymuazjtSeL4fWIZXGtoovW1GXIIFuGAQieVOBrfGXfpnipdIPtII6aHUCpAef
-	 N3kBkEDrLRdADo8HxCGPcYRxpdOxhpv5WABPVRuOKMXd/KSWU24IOJUhNZd+uDj2yuw==
+	bh=U7Q1SyKzZQh+8CWXVcSH8YjrMH2pD8dmWna5G0qqAJY=;
+	b=ngJvJnZSbJRGlRHyHV9ViR5A11o8/IB4Fqem7facSAvTBlmbCIACeNu6NdJ30RCfGv1W
+	 5KDsljdzR6cJaZosgSvpZDjwda3SL7I48s25isBlg7nVopYfdUn22L3wCPHjF0N8nXs8k
+	 mrLRMS2djMtJLxb2aOBvRfsJC3YE75amO4cMobAlizwayjJ0ZIC5tnYkLCdoj00oso2gJ
+	 VIFvP0/VLvC3ARjoPH41dAhhyQBtm/I+bG4tX0x11DpGxxMmj/XNQmsOj0Bp7r9z3ej0O
+	 C4cj50HEthQMMt28W3ygAAy5ZtR+CnbeLuIVmb3gBnVTORJfzVGRZA46dcr4b1/AbyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWPcvJAf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctQt8tHP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9201C606A32E;
-	Fri, 13 Nov 2026 17:23:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB2C606C09A;
+	Fri, 13 Nov 2026 17:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWPcvJAf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3081F000C7;
-	Fri, 13 Nov 2026 17:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctQt8tHP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898D41F000C7;
+	Fri, 13 Nov 2026 17:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590590;
-	bh=iBdl1ot4dwyMs3O6mWcNZ4cbQ+NNuHrFSyHIkH3Kdyo=;
+	s=korg; t=1794590591;
+	bh=U7Q1SyKzZQh+8CWXVcSH8YjrMH2pD8dmWna5G0qqAJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oWPcvJAfj1Z0Rat919cbi/dTD2pvL7p0ynataxprxrkVTa2cRuJQ/FBwr3gNuoQ7g
-	 Q5vxv+Rh0SdHcSXRIAA2cZJYidBtUpNgoU/caP6p8ttP8Oi59lK0Xtomq+w2ZfebD9
-	 tI8rfY+jquAcGbUp+16i3ytrLsK3A2c1baY85IvI=
+	b=ctQt8tHPV5cKt4SXgwpsN62Vjc9+xWucRZ6uPOo4Oqvh2cwlT7BTbHiGche33St84
+	 Nt3UqzgRfS9HSrEwvYSCQhLVIauYxndkRXIDDgLnufWLESKtX1Of+SHwlfUntx14+U
+	 nsu0iGmrUIX9DynPGNySe7V2cFIeI55hT1QbHUtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko Bot <sashiko-bot@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 522/686] KVM: guest_memfd: Establish memslot<=>guest_memfd bindings *after* memslot is ready
-Date: Fri, 13 Nov 2026 10:50:55 -0500
-Message-ID: <20261113153838.823600942@linuxfoundation.org>
+Subject: [PATCH 6.18 523/686] ublk: keep a canceled FETCH round canceling until the server is gone
+Date: Fri, 13 Nov 2026 10:50:56 -0500
+Message-ID: <20261113153838.856881180@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,92 +69,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Ming Lei <tom.leiming@gmail.com>
 
-[ Upstream commit 3fe5d2944e5ac3fc5073344b0982c73703332e18 ]
+[ Upstream commit 4c454b5b2634d982caf797fbe477770c3edfc983 ]
 
-Wait to bind a memslot to a guest_memfd instance until *after* the memslot
-is fully prepared, as creating the binding in guest_memfd will effectively
-expose the memslot to readers.  As pointed out by Sashiko, binding the
-memslot before it's ready to be exposed to the rest of the world can break
-various memslot assumption and rules.  E.g. x86 could observe a NULL rmap
-pointer if a PUNCH_HOLE hit the guest_memfd after the binding was created,
-but before KVM made it through kvm_prepare_memory_region().
+A cancel completes a fetched io command and sets io->cmd to NULL, but
+the io still counts as ready. Only ubq->canceling stops ublk_queue_rq()
+from using the NULL io->cmd. Two paths clear that flag too early:
 
-Fixes: a7800aa80ea4 ("KVM: Add KVM_CREATE_GUEST_MEMFD ioctl() for guest-specific backing memory")
-Cc: stable@vger.kernel.org
-Reported-by: Sashiko Bot <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260826170551.BEF801F000E9@smtp.kernel.org
-Link: https://patch.msgid.link/20260922001332.1121266-6-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+  partial FETCH round                 recovery, two queues
+  -------------------                 --------------------
+  task A: FETCH tags 0-2              q0 ready: q0->canceling = false
+  task A exits:                       q0 task exits:
+    start_cancel(): mark queues         start_cancel(): ub->canceling
+    tags 0-2: io->cmd = NULL              is still set -> q0 not marked
+  task B: FETCH tag 3                   q0: io->cmd = NULL
+    queue ready: canceling = false    q1 ready
+  START_DEV                           END_USER_RECOVERY
+  read -> ublk_queue_cmd(NULL)        read on q0 -> ublk_queue_cmd(NULL)
+
+A FETCH round runs from the open of /dev/ublkcN until
+ublk_reset_ch_dev() resets the queues. A canceled command can't be
+fetched again in the same round. So the ready check only needs one
+fact: did this round see a cancel? ub->canceling already records it:
+ublk_start_cancel() sets it under cancel_mutex before any command is
+taken. It is only cleared too early, when all queues are ready.
+
+Fix:
+
+ - clear ub->canceling only in ublk_reset_ch_dev()
+ - when a queue gets ready, clear ubq->canceling only if ub->canceling
+   is not set, and check it under cancel_mutex
+
+The check and the marking are ordered by cancel_mutex:
+
+  check first:   queue cleared -> start_cancel() marks it again
+                 -> command taken
+  cancel first:  check sees ub->canceling -> queue stays canceling
+
+While ub->canceling is set, no queue clears its flag. So the "all
+queues marked" shortcut in ublk_start_cancel() is correct again.
+
+UBLK_F_BATCH_IO follows the same rule. It does not dispatch through
+io->cmd, so it never hit the oops, but a round which lost a fetch
+command is treated the same way: it has to start over.
+
+Fixes: 728cbac5fe21 ("ublk: move device reset into ublk_ch_release()")
+Fixes: 3f3850785594 ("ublk: fix batch I/O recovery -ENODEV error")
+Cc: stable@vger.kernel.org # v6.17+: needs cancel_mutex
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Closes: https://lore.kernel.org/linux-block/20260928-b4-ublk-cancel-stop-v1-0-4a4360232a46@toxicpanda.com/
+Tested-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20261011063555.1142277-2-tom.leiming@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ sashal: Adapted per-queue readiness handling to the existing device-wide ublk_reset_io_flags() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- virt/kvm/kvm_main.c | 36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ drivers/block/ublk_drv.c | 31 ++++++++++++++++++++++++-------
+ 1 file changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-index 2354a4097dec4..723463fe60380 100644
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -1955,6 +1955,15 @@ static int kvm_set_memslot(struct kvm *kvm,
- 	if (r)
- 		goto err;
- 
-+	if (change == KVM_MR_CREATE && (new->flags & KVM_MEM_GUEST_MEMFD)) {
-+		r = kvm_gmem_commit_memory_region(kvm, new);
-+		if (r) {
-+			kvm_arch_free_memslot(kvm, new);
-+			kvm_destroy_dirty_bitmap(new);
-+			goto err;
-+		}
-+	}
-+
- 	/*
- 	 * For DELETE and MOVE, the working slot is now active as the INVALID
- 	 * version of the old slot.  MOVE is particularly special as it reuses
-@@ -2132,32 +2141,25 @@ static int kvm_set_memory_region(struct kvm *kvm,
- 						   mem->guest_memfd_offset);
- 		if (r)
- 			goto out;
-+	}
- 
--		r = kvm_gmem_commit_memory_region(kvm, new);
-+	r = kvm_set_memslot(kvm, old, new, change);
- 
--		/*
--		 * Drop the reference to the file, even on success.  The file
--		 * pins KVM, not the other way 'round.  Active bindings are
--		 * invalidated if the file is closed before memslots are
--		 * destroyed.
--		 */
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 6b2035c46daa3..c0e4f94cc43b0 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -233,6 +233,11 @@ struct ublk_device {
+ 	u32			nr_io_ready;
+ 	bool 			unprivileged_daemons;
+ 	struct mutex cancel_mutex;
 +	/*
-+	 * Drop the reference to the gmem file, even on success.  The file pins
-+	 * KVM, not the other way 'round.  Active bindings are invalidated if
-+	 * the file is closed before memslots are destroyed.
++	 * A cancel started in this FETCH round. Set by ublk_set_canceling(),
++	 * cleared only by ublk_reset_ch_dev() when a new round starts. While
++	 * it is set, no queue clears its ->canceling.
 +	 */
- #ifdef CONFIG_KVM_GUEST_MEMFD
--		 fput(new->gmem.file);
-+	if (change == KVM_MR_CREATE && (mem->flags & KVM_MEM_GUEST_MEMFD))
-+		fput(new->gmem.file);
- #endif
+ 	bool canceling;
+ 	pid_t 	ublksrv_tgid;
+ 	struct delayed_work	exit_work;
+@@ -1637,6 +1642,11 @@ static void ublk_reset_ch_dev(struct ublk_device *ub)
+ 	for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
+ 		ublk_queue_reinit(ub, ublk_get_queue(ub, i));
  
--		if (r)
--			goto out;
--	}
--
--	r = kvm_set_memslot(kvm, old, new, change);
- 	if (r)
--		goto out_unbind;
-+		goto out;
++	/* a new FETCH round starts, the queues stay canceling until ready */
++	mutex_lock(&ub->cancel_mutex);
++	ub->canceling = false;
++	mutex_unlock(&ub->cancel_mutex);
++
+ 	/* set to NULL, otherwise new tasks cannot mmap io_cmd_buf */
+ 	ub->mm = NULL;
+ 	ub->nr_io_ready = 0;
+@@ -2152,8 +2162,15 @@ static void ublk_reset_io_flags(struct ublk_device *ub)
  
- 	return 0;
+ 	for (i = 0; i < ub->dev_info.nr_hw_queues; i++)
+ 		ublk_get_queue(ub, i)->fail_io = false;
++	/*
++	 * A cancel in this FETCH round took a command which still counts as
++	 * ready, so the queues have to stay canceling. ub->canceling is set
++	 * under cancel_mutex before any command is taken: either we see it
++	 * here, or the cancel marks these queues again later.
++	 */
+ 	mutex_lock(&ub->cancel_mutex);
+-	ublk_set_canceling(ub, false);
++	if (!ub->canceling)
++		ublk_set_canceling(ub, false);
+ 	mutex_unlock(&ub->cancel_mutex);
+ }
  
--out_unbind:
--	if (change == KVM_MR_CREATE && (mem->flags & KVM_MEM_GUEST_MEMFD))
--		kvm_gmem_unbind(new);
- out:
- 	kfree(new);
- 	return r;
+@@ -2173,9 +2190,8 @@ static void ublk_mark_io_ready(struct ublk_device *ub, struct ublk_queue *ubq,
+ 	ub->nr_io_ready++;
+ 	if (ublk_dev_ready(ub)) {
+ 		/*
+-		 * now we are ready for handling ublk io request, clear
+-		 * device-level canceling flag and wake ublk_dev_ready()
+-		 * waiters
++		 * Reset queue flags unless this round saw a cancel, and
++		 * wake ublk_dev_ready() waiters.
+ 		 */
+ 		ublk_reset_io_flags(ub);
+ 		wake_up_var(&ub->nr_io_ready);
+@@ -2996,9 +3012,10 @@ static bool ublk_validate_user_pid(struct ublk_device *ub, pid_t ublksrv_pid)
+ 
+ /*
+  * Wait until all queues have fetched their I/O commands, and return with
+- * ub->mutex held and readiness guaranteed: then every queue's ->canceling
+- * is cleared. Ready may regress between wakeup and mutex_lock() (daemon
+- * death), so re-check it under the mutex and wait again.
++ * ub->mutex held and readiness guaranteed. The queues stay canceling if
++ * this round saw a cancel, see ublk_reset_io_flags(). Ready may regress
++ * between wakeup and mutex_lock() (daemon death), so re-check it under
++ * the mutex and wait again.
+  */
+ static int ublk_wait_dev_ready_and_lock(struct ublk_device *ub)
+ {
 -- 
 2.53.0
 
