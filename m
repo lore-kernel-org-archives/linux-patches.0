@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590806;
-	b=yHC2n3KBIX0w/HJ2RqRsSqvjP5cLH48J7o4oxf5kzrFA8QT+8UMqgyzHu9d7YY2EIRF6
-	 I6K8u71bMGVgTt26dJe99zjHczcZ2x4qzo00AHfbnv8nVCRuhqzVr17bTVwceZELuY/AG
-	 u7X6EZorsGsLq9dfICERqD4ZC/d2ttPtdFmqvTNLvuxtAZUXMQUYnEoiigrjx488TzuNB
-	 YYc7TdcBwTr2cVc/J6KgCrmWUigB3gYvid6K7+A0vIMUJiM649rG6/n7rYEv1OZBQqnD0
-	 7NrhbS+eJcKRHVldlGI82DW6Yqqb2mUkX8a8qQb35JtgXwwqGIKUfM/rcfHTvLxFysw==
+	t=1794590807;
+	b=KpOD0STAYmNs1pC6Z/QEgN9u2GcP/VaNAclzk2daN2tCwwKiyqtpHuEfOTqH3Lf7fxPK
+	 i0zhafz7Nhe2YMVwjHj8YER5knzekx5Jj6AULZibEVBnfQtqLZMU8bATvUwEvueHtHGn8
+	 IgnX8MydSCzoEtbRt3hufUq3UAPlGJ8RNNmUu7PlMZ6tdrrzj/tmsfvIf3jcapVru/6nI
+	 /6gTeCFuFd6pLSaq/JNmOt0G/i4/MpVcL8BywaWQkd/75ViKpKwlTjw8cF8865zoib60Y
+	 UtpJYUsl6f4/7H7/on6vfaSlhF1qZ46lF/JI7PlJopsxvOTp/6Ifg9sbosx7VJKIquQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590806;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590807;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Karp5TBN3eOuvnTzt+vzzb/506eaNNK6U+QkKi1KPbQ=;
-	b=HmG6QhkKKyE3AAGsyQ2Or0YYIkaDt4SUgiJ/bnVn1oAiXgsgEc7OxCkndtk6QYfomexq
-	 O6am4PhVmNWrOaxI8EwSC/QxomgCAa3rw+IPc0v+YoB25bQAn56MnU+nux6Qt6ejvkmvu
-	 LBvGAnjn7zLLWqDVI4jIlw8H0NpnnKsmOja1dLUPDHetR/peUbevCrGbTL/+62heB/AJh
-	 gjabe3So3zi2WhXvktrIbfGnr6XX8emFu5/KhBjAQXjnjA22KwsyntinErc7dFjLYdqtQ
-	 mHLWXBXwXidO1RcdmH8shnKPmCoeht3HXPZLnQrP/q7N75Qw2ejQdK4ljOVfmzTmcUA==
+	bh=Lt8l4oAIEI4okRjW4vasbYzAls1S1xpfK1uRXwiJfuw=;
+	b=xQHxvaK2rNgJIDgeokeUqteW0d6T5s+QaZxAvj2wTJ18H1+kvzcQb4lUVbqoI+CO2cyq
+	 TSaC4ddsmXtiQ8trmsAnHEKqB2XHWAFhwaN71XtHag33QeoIZWa40YfeYbTbxrm2NAeKu
+	 kms3shX4dftWMl9iYdqqgOzYS2R2+3Ly11/VusfoOVBOp6CkK1bWvHQliPoxeH6MSYusV
+	 HP6X8ihiHAOBuIuNmnrA34PkkCPScGYz04j15E37xqqg8bUbTgHMRL2AJtG0QCzVAhR7F
+	 Ek+lpozSXRuwIaUfITQl+C9kcIhMckspuHfIRitc+2yE3saz37MtQaWLiM9UDCdEuDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwyHkT3e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xdd2bJ/Z";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23061607D2E8;
-	Fri, 13 Nov 2026 17:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3F7607D2E1;
+	Fri, 13 Nov 2026 17:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RwyHkT3e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E381F000C4;
-	Fri, 13 Nov 2026 17:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xdd2bJ/Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC0C1F000C4;
+	Fri, 13 Nov 2026 17:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590806;
-	bh=Karp5TBN3eOuvnTzt+vzzb/506eaNNK6U+QkKi1KPbQ=;
+	s=korg; t=1794590807;
+	bh=Lt8l4oAIEI4okRjW4vasbYzAls1S1xpfK1uRXwiJfuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RwyHkT3ekHX1rEaqk1Rr+2Ari6EqyI1pInsX3IYFB1AWXfAdlC4/5ZWJyLbRqRtfR
-	 7hyOCYVoRWI+LGesbW8jbzbys8n7jQJQZa4WNFFOzEeHhPk016EEaXTnAsU9K9sFp5
-	 ErdmZk86fqFCywxmku/0gbVAw7q6TFoA+7X3PDwo=
+	b=xdd2bJ/Zhw09BgayMU4zb9mctAvNHxEyJsE8gpj/jXZuTQR5Ne8koDwk0Vx+xhj1W
+	 rYtIq6T3FvMGrIoJ3HfArbrgdRF9mS80wlgaOpthfbIFOi7KG06ohNjkPMp6SA58XP
+	 voe0+uMurpBj7Lt7Z1UHSMsIsAejaOuMC99IdzPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Keith Busch <kbusch@kernel.org>,
-	Andrew Stellman <astellman@stellman-greene.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/670] nvmet-rdma: fix out-of-bounds write in nvmet_rdma_map_sgl_inline()
-Date: Fri, 13 Nov 2026 10:42:50 -0500
-Message-ID: <20261113153811.405714907@linuxfoundation.org>
+Subject: [PATCH 6.12 009/670] Bluetooth: L2CAP: Reject signalling responses in invalid states
+Date: Fri, 13 Nov 2026 10:42:53 -0500
+Message-ID: <20261113153811.498959187@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,66 +68,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Stellman <astellman@stellman-greene.com>
+From: Siwei Zhang <oss@fourdim.xyz>
 
-[ Upstream commit d1512773a0d539669440bd9f6d050b8e12923b5f ]
+commit 6320736af7dcb90da6ee9fd651ecc11c564d45b7 upstream.
 
-nvmet_rdma_map_sgl_inline() bounds the host-supplied in-capsule SGL
-offset with "off + len > inline_data_size", evaluated in 64-bit
-arithmetic. off is taken straight from the host SGL descriptor
-(le64_to_cpu(sgl->addr)) and len is promoted to 64-bit, so the sum
-wraps: an off within len of 2^64 makes it small and the check passes.
-off is then used as page_idx = off / PAGE_SIZE to index the fixed-size
-rsp->cmd->inline_sg[] array (NVMET_RDMA_MAX_INLINE_SGE entries), so a
-crafted offset yields an out-of-bounds scatterlist index that is written
-through in nvmet_rdma_use_inline_sg().
+Adjusted context as stable does not have the lockdep_assert_held()
+calls, and l2cap_get_chan_by_scid() still returns the channel locked,
+so l2cap_config_rsp() does not lock it again.
 
-The mapping runs while handling a received capsule, before the command
-executes, so a remote RDMA peer can reach it (the Connect capsule is a
-write and takes this path on a queue that has no controller yet). The
-host controls only the low bits of the resulting displacement, so the
-expected impact is an out-of-bounds write that faults the target
-(remote denial of service).
+A peer can send configuration messages while an
+incoming channel is in BT_CONNECT2, before the
+security or deferred accept gate has completed. A
+configuration response can then promote the channel
+to BT_CONNECTED. Configuration responses can also
+act on channels that are closing, and a late connection
+response can move a disconnecting channel back to
+BT_CONFIG.
 
-This wrap was reported, with a KASAN reproduction, on linux-nvme in May,
-and the check below was suggested in that thread. The fix that was
-applied, 48c0162f647b, reworked how the offset is mapped but kept the
-original check, and its page index turns a wrapped offset into an
-out-of-bounds index into inline_sg[].
+Accept connection responses only while waiting in
+BT_CONNECT. Answer configuration requests in
+BT_CONNECT2, but defer our own request until
+BT_CONFIG so configuration cannot complete before
+the gate. Ignore configuration responses outside
+BT_CONFIG and BT_CONNECTED, and only complete
+configuration in BT_CONFIG.
 
-Reject the offset before it can wrap.
-
-Found independently by static analysis with AI assistance, not
-reproduced at runtime.
-
-Fixes: 0d5ee2b2ab4f ("nvmet-rdma: support max(16KB, PAGE_SIZE) inline data")
-Fixes: 48c0162f647b ("nvmet-rdma: handle inline data with a nonzero offset")
-Reported-by: Bryam Vargas <hexlabsecurity@proton.me>
-Closes: https://lore.kernel.org/all/LM21QIR-1-qJb7PViyJKCnGBnUzizeiNJVWQ3wb7ZwGezodjgKg3f-iobqOyequ-sT1jFCKJImfqNO_BKU3KO80xFITnaI5GTV_GxLUNDDc=@proton.me/
-Suggested-by: Keith Busch <kbusch@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Andrew Stellman <astellman@stellman-greene.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/rdma.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
-index 01b7722afb5e8..290b51fef0b98 100644
---- a/drivers/nvme/target/rdma.c
-+++ b/drivers/nvme/target/rdma.c
-@@ -864,7 +864,8 @@ static u16 nvmet_rdma_map_sgl_inline(struct nvmet_rdma_rsp *rsp)
- 		return NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index d8c39a4306861..fa7124c32d91a 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4278,6 +4278,10 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 
+ 	l2cap_chan_lock(chan);
+ 
++	/* Ignore a late response after the channel has left BT_CONNECT. */
++	if (chan->state != BT_CONNECT)
++		goto done;
++
+ 	switch (result) {
+ 	case L2CAP_CR_SUCCESS:
+ 		if (__l2cap_get_chan_by_dcid(conn, dcid)) {
+@@ -4307,6 +4311,7 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
+ 		break;
  	}
  
--	if (off + len > rsp->queue->dev->inline_data_size) {
-+	if (off > (u64)rsp->queue->dev->inline_data_size ||
-+	    len > (u64)rsp->queue->dev->inline_data_size - off) {
- 		pr_err("invalid inline data offset!\n");
- 		return NVME_SC_SGL_INVALID_OFFSET | NVME_STATUS_DNR;
++done:
+ 	l2cap_chan_unlock(chan);
+ 	l2cap_chan_put(chan);
+ 
+@@ -4439,7 +4444,13 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
+ 		goto unlock;
  	}
+ 
+-	if (!test_and_set_bit(CONF_REQ_SENT, &chan->conf_state)) {
++	/* A channel in BT_CONNECT2 has not passed security or userspace
++	 * accept yet. Answer the peer's request, but hold our own until
++	 * the channel reaches BT_CONFIG: the CONNECT2 -> CONFIG sites send
++	 * it. Connected channels may also need to reconfigure.
++	 */
++	if ((chan->state == BT_CONFIG || chan->state == BT_CONNECTED) &&
++	    !test_and_set_bit(CONF_REQ_SENT, &chan->conf_state)) {
+ 		u8 buf[64];
+ 		l2cap_send_cmd(conn, l2cap_get_ident(conn), L2CAP_CONF_REQ,
+ 			       l2cap_build_conf_req(chan, buf, sizeof(buf)), buf);
+@@ -4487,6 +4498,10 @@ static inline int l2cap_config_rsp(struct l2cap_conn *conn,
+ 	if (!chan)
+ 		return 0;
+ 
++	/* Connected channels may also receive reconfiguration responses. */
++	if (chan->state != BT_CONFIG && chan->state != BT_CONNECTED)
++		goto done;
++
+ 	switch (result) {
+ 	case L2CAP_CONF_SUCCESS:
+ 		l2cap_conf_rfc_get(chan, rsp->data, len);
+@@ -4554,6 +4569,9 @@ static inline int l2cap_config_rsp(struct l2cap_conn *conn,
+ 	if (test_bit(CONF_OUTPUT_DONE, &chan->conf_state)) {
+ 		set_default_fcs(chan);
+ 
++		if (chan->state != BT_CONFIG)
++			goto done;
++
+ 		if (chan->mode == L2CAP_MODE_ERTM ||
+ 		    chan->mode == L2CAP_MODE_STREAMING)
+ 			err = l2cap_ertm_init(chan);
 -- 
 2.53.0
 
