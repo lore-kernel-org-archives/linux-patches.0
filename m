@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591219;
-	b=YXuSlby8SiJDKRTQtVHH6DHgOb/YJ3xabkx6k8zTwD1LSfXFI9QUn+JQ2hrdWzFH0cFs
-	 YNXkQRbvb4HD6N2jYuTVjNbgDrgUwzW26I+bgDT/OoWyeJxUV1n9XUJpwsNhNPjPtqjPm
-	 Kto6o0Iq5w4mjA9/qQQGCTvqg7ZLRFZ8mGgXGOXXydgsfOv7k1SnkwBOv7CqlJJ3audqv
-	 ED8DYr4YzxYCc+eRzygccH+bgfaeOd+38vw8BUHrDUXfN7IdMsjoBAX/PAhgrlylYRxoG
-	 ULjuEevOlQ7wYRIRfzQ7AowEyUY3wBO7cD1Q/gcJmm9fWhaF+LIMdYCpq3EOzxHyc7A==
+	t=1794591221;
+	b=kKGGWPxTObdvN1STciWkfN7+kt/bcvolCQnu+YJer6kWTM4q9Ir/W70LQGAxZOqeGZ5i
+	 hxBzxKN0xx7PbU4REXnCHCAB6Wug9YoRJcADjUk3whH07hx4ZMJTIbobOle7PQT7AN6AQ
+	 bC7I0oWpjzOe/TeBjm7oK7wNQPo08vmhYCehkc8LNf0Lrlmb6WbVqErAwcu0CivIf/wGH
+	 8erwM/OPvgJIpLRsd3BZ1ac/4t3Zi7nIXAFXtqaVyLnOM7CS+HRvPc8szaYJuq4hJ9sof
+	 1d2KHMuLS3DUAp5cWwoA0RlNXDffkmsiNErlB86rcDRO9zcCW/SLVnumDDZuBhvgw1Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591219;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591221;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G2pwzWKshYsdvE+jv2/lsBIvgtSBSCGgpteyoGRFA4Q=;
-	b=H5JucObT6br9ZkZsMjLpxdB9JSXEcni0rKnPaHCQtSjtTFySSRo+/clSqgIYtk1Mqooh
-	 RgdSCdOMwGT8jmEz2OkjC4N1RiD+ByYzflK2J0F46xqViSJPZHqih5AtBJ5MngupO3n0i
-	 H5w4PPg2dycQAsb5udVYx+Eky8nnLCSv8SQ46jCStZ9B2dY1OFH3NiJ6xHk58Xdk2oot2
-	 +bW8E8USNlWsLtR0dIZJoTYgTqTa9rysUYcrrzoQH/SGXjWc0VcJqQzaIUKXR63K6kTkB
-	 pocLrmInZQBX/6eUhKwlQyQ8lsG4ZxJvSAhKIlsd8OV3OM745QLdoMmBxz3BQCe1qGQ==
+	bh=RcvVB7Kjyr8S+KWjNcImNL7WmIGi+BjhXZEKi80Dd/w=;
+	b=c9biEy6sFJ3uD6WpBc9WKBI3O95DEm5qybzFS3GJ2JLtd4nAikTj3KNT2e/shQVJUt0L
+	 Pq7McbUqHPetzZ8F+kWdPyyH3PWK5ZBS0xgFerNIyW/Jmxi2VfUuvwaW3cS0/OG8fkWxZ
+	 QGfL/eFpeDyU0GQSlEf6oe+wt2Nubs4y3aL1niUgrI+m3P6ijBbttMureAcjijGN5bmr1
+	 3mRdK5Hu4O8ZKFem77+8AjZ/7vGUZVKLVPdxr5nqBIatXURG6jOzXbL5u4SSR1HmNC7R6
+	 bVeXLUONpU4Q0EUWLEACNndFX+W0Pg9fzHT6gQxifxgeY1FEAkXbJmlMjReZOPNmdtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttzOopGS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RcjwQOzm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923516075E04;
-	Fri, 13 Nov 2026 17:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DEE6075E18;
+	Fri, 13 Nov 2026 17:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttzOopGS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0021F000CD;
-	Fri, 13 Nov 2026 17:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RcjwQOzm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B4E1F000CF;
+	Fri, 13 Nov 2026 17:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591219;
-	bh=G2pwzWKshYsdvE+jv2/lsBIvgtSBSCGgpteyoGRFA4Q=;
+	s=korg; t=1794591220;
+	bh=RcvVB7Kjyr8S+KWjNcImNL7WmIGi+BjhXZEKi80Dd/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ttzOopGSwg9nOQ95DFletKPb2l2NFLOMMn0y+zuudoKvemwonZBSWdyCuYoFM7wUZ
-	 higFgz1FwUB8vcoAt5w8Pc3D0ArDE8p3rx/GbEAkewm9VAgvrq0O10Lb/5LM4K121q
-	 DrTnVu9IjZd/88LXzQWmOi2JP4sDdGNKety8tk8U=
+	b=RcjwQOzm2RC3xVKvQO8lB6i/IOwqa3dto3kzgTFuAy/2h/2DLiY1eHxWfzBWwcphx
+	 FKJWd7Il248laJgurXgQ0wGgSelw7X5YRGCmDLTVauG6+H1za+dLT8iDA15m0P2VUb
+	 xfZK3dqdWR+cevije0WIyY3cK2pNWiijKA4AW4wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	renpanpan <renpanpan@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 352/670] drm/amdgpu: drop the dma-buf reference when a KFD import fails
-Date: Fri, 13 Nov 2026 10:48:36 -0500
-Message-ID: <20261113153823.752260061@linuxfoundation.org>
+Subject: [PATCH 6.12 353/670] drm/amdgpu: Only enable HDMI audio if display supports it
+Date: Fri, 13 Nov 2026 10:48:37 -0500
+Message-ID: <20261113153823.787758677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,50 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: renpanpan <renpanpan@kylinos.cn>
 
-[ Upstream commit fb900f8bfd8a16126affd186d21001e4c6533324 ]
+[ Upstream commit 0de95c96655c8a12df62e47871016f49e5cd8618 ]
 
-import_obj_create() takes a reference on the dma-buf for the new kgd_mem,
-but the error path after validating the BO doesn't drop it. Since the
-validation reserves the BO interruptibly, an import failing with
--ERESTARTSYS leaks the exported BO with its memory, and keeps the module
-in use.
+The amdgpu legacy DCE audio path (dce_v6/v8/v10) unconditionally calls
+audio_enable(pin, true) at the end of afmt_setmode(), regardless of
+whether the connected display advertises audio support in its EDID.
 
-Importing a 64 MiB VRAM BO in a loop while getting SIGUSR1
-every 20 us and another thread changes the BO's mappings:
+This causes a phantom HDMI audio output to appear for displays that
+have no audio capability (no basic audio bit, no Audio Data Block in
+EDID), because the GPU sets the AUDIO_ENABLED register bit, which
+drives the HDA codec's ELDV pin sense, making the codec report the
+jack as audio-available.
 
-  INFO: 171821 imports, VRAM used before 65 MiB, after 129 MiB
-  modprobe: FATAL: Module amdgpu is in use.
+The radeon, nouveau, and dw-hdmi drivers all gate audio enablement on
+display_info.has_audio. Apply the same check to amdgpu's DCE
+afmt_setmode functions.
 
-Drop the reference, and free the sync object and the mutex of the kgd_mem
-as well. With that VRAM usage returns to 65 MiB after the same test.
-
-Fixes: 0e2e7c5b3d71 ("drm/amdgpu: Attach eviction fence on alloc")
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: renpanpan <renpanpan@kylinos.cn>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b4d1eca2729840148ff2ea957724ce764ca5a94e)
+(cherry picked from commit 842a45c68e0355eea47796551c8761c0c77e8ce0)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/dce_v10_0.c | 5 +++--
+ drivers/gpu/drm/amd/amdgpu/dce_v6_0.c  | 5 +++--
+ drivers/gpu/drm/amd/amdgpu/dce_v8_0.c  | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index bc284939cf66d..ef4d8dca3c7af 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -2441,6 +2441,9 @@ static int import_obj_create(struct amdgpu_device *adev,
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+index daed4a8439cc8..8bfa0b07dec7c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v10_0.c
+@@ -1736,8 +1736,9 @@ static void dce_v10_0_afmt_setmode(struct drm_encoder *encoder,
+ 	WREG32(mmAFMT_RAMP_CONTROL2 + dig->afmt->offset, 0x00000001);
+ 	WREG32(mmAFMT_RAMP_CONTROL3 + dig->afmt->offset, 0x00000001);
  
- err_remove_mem:
- 	remove_kgd_mem_from_kfd_bo_list(*mem, avm->process_info);
-+	amdgpu_sync_free(&(*mem)->sync);
-+	mutex_destroy(&(*mem)->lock);
-+	dma_buf_put(dma_buf);
- 	drm_vma_node_revoke(&obj->vma_node, drm_priv);
- err_free_mem:
- 	kfree(*mem);
+-	/* enable audio after to setting up hw */
+-	dce_v10_0_audio_enable(adev, dig->afmt->pin, true);
++	/* Only enable audio if the display supports it */
++	if (connector->display_info.has_audio)
++		dce_v10_0_audio_enable(adev, dig->afmt->pin, true);
+ }
+ 
+ static void dce_v10_0_afmt_enable(struct drm_encoder *encoder, bool enable)
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+index 1e15348a5c7df..9b39518a3e11c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v6_0.c
+@@ -1721,8 +1721,9 @@ static void dce_v6_0_afmt_setmode(struct drm_encoder *encoder,
+ 		dce_v6_0_audio_dp_enable(encoder, 1);
+ 	}
+ 
+-	/* enable audio after setting up hw */
+-	dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
++	/* Only enable audio if the display supports it */
++	if (connector->display_info.has_audio)
++		dce_v6_0_audio_enable(adev, dig->afmt->pin, true);
+ }
+ 
+ static void dce_v6_0_afmt_enable(struct drm_encoder *encoder, bool enable)
+diff --git a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+index 7e92f322bc339..c22bb261d0ffb 100644
+--- a/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/dce_v8_0.c
+@@ -1683,8 +1683,9 @@ static void dce_v8_0_afmt_setmode(struct drm_encoder *encoder,
+ 	WREG32(mmAFMT_RAMP_CONTROL2 + offset, 0x00000001);
+ 	WREG32(mmAFMT_RAMP_CONTROL3 + offset, 0x00000001);
+ 
+-	/* enable audio after setting up hw */
+-	dce_v8_0_audio_enable(adev, dig->afmt->pin, true);
++	/* Only enable audio if the display supports it */
++	if (connector->display_info.has_audio)
++		dce_v8_0_audio_enable(adev, dig->afmt->pin, true);
+ }
+ 
+ static void dce_v8_0_afmt_enable(struct drm_encoder *encoder, bool enable)
 -- 
 2.53.0
 
