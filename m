@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590156;
-	b=YjFwBnxH0AvSZ7+kyu/zxNsiwDYsqdgsvX4uq6kfcB3uRsHKFx9Q6ZgU5OREqEIO0PA5
-	 Htzj6CdYYGeXWMzgXRW09sQbqbxWTnii3Wu7D31gUIElds2v5k5uzYp1BxmZWdZk/HoWw
-	 K7aSj+/dqUdtcobZOVxKhDJMLJV+LK4OFdaKm61IREUtd4A7YzI0Vu7W0XyMenOt1/VT8
-	 9tVbiqI8zdMLgarXeEBYn1qyS7rC8k4vtSAtsrAequt+a5JiB0kjEsxpUNHGwVhG+KYuc
-	 8KRH/9A+o4bwcyNzI7mGz4yNBhj0I0eHj5NKbRYUvOuzuBqm84B6YQel7R5yNTv8NPQ==
+	t=1794590158;
+	b=4yadOXK+T2ltVxjQPBxSIY0dA8+uvZbI+ZRBBvfZ4OBDsySBLityEEOOZxs2/zaMTNMn
+	 t7Cx7kvBBelk9c2j1aKdFVz/+VsOfr5pDPa5S1GngQJFhirKhkDK5MvE5OL5wxxELqtXN
+	 dCph5LaS5woYgMAtztPlbabTFJlrI/8Jm80J2E00FC39h27HYsbY41qH47Yn3s7pfgVbU
+	 X1v8wPmrOLSmmI0vPNj136tQqaTGYohLitoqgUWdTfB3jFsVkqVSMlDp6878QQlyG7d8O
+	 6SFS6YZ1cuYr7ifaLQKZ4SoCHSy0c+SIn58O3g9I7dBpNt0BoP3pvuQGw5YzPQxWrbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590156;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590158;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M3H2vbrMI3ljoYE7dkuQ0xhz89rfVFwkrJuG3X6/EyI=;
-	b=Yl4YcZEgal75q8L4vpigtpA3hnbtz3aNKC8V2FOghrQY6khjYUmaczRu0QTMh+T/0C9L
-	 I1UTyH8LFa32axPLgDi5O8ECWlcFHkuWS8aAtMkECWpBVJM/Qwto9BhtZuJz+Or+Bkve4
-	 Wmc2PPB69u900A7kD7X/Qn0d/HhgLZv5mHIkXNOJYePr8IlIZcOdqBdV87D6Bi+DuD5P0
-	 zTSkJyZ4/GTsxoYf+ibIVD2Rmuwfs53o2+SJVu5s0QOQvdOAWinUf068P2FBdtHUwMXce
-	 UZk5msXJK3dp0sy/RjkTLNUC6ksNF+QZgE1AdRuPlwlVhqttFH6OfcxnWTPXIvLlJ9w==
+	bh=+wHoouWeju+JR7JJeDcTKj4iU2raH6YoR5YIT8fTpkE=;
+	b=vwXe1LOxmWMNOZASL2+CInKI9rmRnN/1l1DGrrgQKIxLSoawIjlcUJQcq6f8H3bgT3zu
+	 ltjMfNGjVv8jArJSyPY2RqSFbmW8sFfGP0ZJGibHLf/W+jB0NIoarjmbGOnM1KYwXfLMe
+	 Mjz/wpYsjDsj7xcOZ1DpChA/5zlb/WejoieQDUFdTSUTbksywMnkPQLqBe5oDTntAy7v6
+	 uxqUJbSEDsGyNQjF5jt10vRQW2VP7CdwuxM0DGairoFslyu4Q62i5ZLvCDLr+Zjmf5IBh
+	 K+VvEzQTKRMPvuaG+lC0swbWlDIS5OdeQbhGKskzi8KkwL8jY1B0+RpsSczoJcSpJWQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KWnUs8sw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWW8h5Xu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4762606D4AE;
-	Fri, 13 Nov 2026 17:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D0F606D4B5;
+	Fri, 13 Nov 2026 17:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KWnUs8sw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51D581F000C4;
-	Fri, 13 Nov 2026 17:15:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jWW8h5Xu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872861F000C4;
+	Fri, 13 Nov 2026 17:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590156;
-	bh=M3H2vbrMI3ljoYE7dkuQ0xhz89rfVFwkrJuG3X6/EyI=;
+	s=korg; t=1794590157;
+	bh=+wHoouWeju+JR7JJeDcTKj4iU2raH6YoR5YIT8fTpkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KWnUs8swlWuC2igxrB06Rr/3jJFRHbVHsQP9qxHS9pp1UA2BlynjCtpmRLz89C16e
-	 FzDATESgh4s0lIwSfjZmcsYMW2mtRX5muDKqoif6gA3f+j66T7SZxUl18MoWDerDGr
-	 AvKbVHbyGRcsEclrDrU01PjSJi6q5NBP8wMzwT/c=
+	b=jWW8h5XuvD1cJLUaJwqJSDH1AQb5GAgXjZF2mACTFO6JCBiL29X6F/FP7Myk4H0uw
+	 Xnld2ZDw1vY07lEvoq0Il8hHobm1gYuI6IzKMS/c/42gCcX4gBG+nQU3FOVSh414ES
+	 O4RuOOmRKtbBM8HUDZIUZD7qsc+EtMeJgeUGCh/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Bean Huo <beanhuo@micron.com>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 169/686] f2fs: dont use truncate_inode_pages_final() on live inodes
-Date: Fri, 13 Nov 2026 10:45:02 -0500
-Message-ID: <20261113153826.665846260@linuxfoundation.org>
+Subject: [PATCH 6.18 170/686] scsi: ufs: bsg: Validate request_len before accessing request
+Date: Fri, 13 Nov 2026 10:45:03 -0500
+Message-ID: <20261113153826.720361972@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,75 +71,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Stanley Jhu <stanleyjhu@google.com>
 
-[ Upstream commit 74bbd6ada01f91fcad60608e0417bf45a9fa99e6 ]
+[ Upstream commit 42aa443718104d10dbdb6f258810b425eb2451f8 ]
 
-truncate_inode_pages_final() is meant to be called from ->evict_inode.
-It sets AS_EXITING on the mapping, and nothing ever clears it, to tell
-the VM that the inode is going away.
+ufs_bsg_request() and ufs_bsg_exec_advanced_rpmb_req() read the request
+buffer without checking job->request_len, which userspace controls. A short
+request causes an out-of-bounds read. Found by syzkaller.
 
-f2fs calls it in two places where the inode stays live:
+Reject requests shorter than the structure each path reads.
 
- - F2FS_IOC_START_ATOMIC_REPLACE uses it to drop the page cache of the
-   original inode before setting i_size to 0. The atomic write then
-   goes on through this inode.
-
- - f2fs_abort_atomic_write() uses it to drop the uncommitted data. It
-   is called on eviction, but also on the last writer's close in
-   f2fs_release_file(), from f2fs_file_flush() when the atomic writer
-   exits, from F2FS_IOC_ABORT_ATOMIC_WRITE and when
-   F2FS_IOC_COMMIT_ATOMIC_WRITE fails.
-
-Other processes may still have the file open or mapped in all of these
-cases. The mapping then stays marked as exiting for as long as the
-inode is in memory. This stops reclaim from storing workingset shadow
-entries for it and breaks any code that assumes an exiting mapping has
-no users left.
-
-All we need in both places is to drop the page cache, so use
-truncate_inode_pages(mapping, 0) instead. The eviction path is not
-affected, because f2fs_pre_evict_inode() still calls
-truncate_inode_pages_final() after f2fs_abort_atomic_write().
-
-Cc: stable@kernel.org
-Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
-Fixes: 41e8f85a75fc ("f2fs: introduce F2FS_IOC_START_ATOMIC_REPLACE")
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 64d4864714c2 ("scsi: ufs: bsg: Remove unnecessary length checkup")
+Fixes: 6ff265fc5ef6 ("scsi: ufs: core: bsg: Add advanced RPMB support in ufs_bsg")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261015001855.3450573-4-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c    | 2 +-
- fs/f2fs/segment.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufs_bsg.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index 8211ee75fb8f7..d6798d795e3d3 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2431,7 +2431,7 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
- 	fi->original_i_size = isize;
- 	if (truncate) {
- 		set_inode_flag(inode, FI_ATOMIC_REPLACE);
--		truncate_inode_pages_final(inode->i_mapping);
-+		truncate_inode_pages(inode->i_mapping, 0);
- 		f2fs_i_size_write(inode, 0);
- 		isize = 0;
- 	}
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 46f14f891843c..c0ec2715408e8 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -193,7 +193,7 @@ void f2fs_abort_atomic_write(struct inode *inode, bool clean)
- 		return;
+diff --git a/drivers/ufs/core/ufs_bsg.c b/drivers/ufs/core/ufs_bsg.c
+index 0e0b08a3821c4..36def5ef24d62 100644
+--- a/drivers/ufs/core/ufs_bsg.c
++++ b/drivers/ufs/core/ufs_bsg.c
+@@ -79,6 +79,9 @@ static int ufs_bsg_exec_advanced_rpmb_req(struct ufs_hba *hba, struct bsg_job *j
+ 	if (hba->ufs_version < ufshci_version(4, 0) || !hba->dev_info.b_advanced_rpmb_en)
+ 		return -EINVAL;
  
- 	if (clean)
--		truncate_inode_pages_final(inode->i_mapping);
-+		truncate_inode_pages(inode->i_mapping, 0);
++	if (job->request_len < sizeof(*rpmb_request))
++		return -EINVAL;
++
+ 	if (rpmb_request->ehs_req.length != 2 || rpmb_request->ehs_req.ehs_type != 1)
+ 		return -EINVAL;
  
- 	release_atomic_write_cnt(inode);
- 	clear_inode_flag(inode, FI_ATOMIC_COMMITTED);
+@@ -144,6 +147,11 @@ static int ufs_bsg_request(struct bsg_job *job)
+ 
+ 	memset(job->reply, 0, job->reply_len);
+ 
++	if (job->request_len < sizeof(*bsg_request)) {
++		ret = -EINVAL;
++		goto out_complete;
++	}
++
+ 	ufshcd_rpm_get_sync(hba);
+ 
+ 	msgcode = bsg_request->msgcode;
+@@ -193,6 +201,7 @@ static int ufs_bsg_request(struct bsg_job *job)
+ out:
+ 	ufshcd_rpm_put_sync(hba);
+ 	kfree(buff);
++out_complete:
+ 	bsg_reply->result = ret;
+ 	if (ret == 0)
+ 		job->reply_len = rpmb ? sizeof(struct ufs_rpmb_reply) :
 -- 
 2.53.0
 
