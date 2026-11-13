@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585824;
-	b=bxkNj/gSZZNohpX8vIA9AAHdariJqjDPyZbodStOTP3DpqlvdC9pEfJO3/gd16+7dykb
-	 kTVfvzlD18R9RtPgQ3RotaOeki70t+WR3L56R2G/YInRkrmC6wyCUXyvGLvzj8gk4HRCW
-	 a7FCzdAsmWxZamowyYUKhrrPWrULxTfJFE6YT/OVqvHG+noT3fZDoRQ4fdcmBXeA0tV3J
-	 9m87hF6au6Ka1rSlQYj0lSm99zwY6I5Q59toumSy9Cs4KA/fvZnHYHFioqOKmI+aLMdnr
-	 wsqiBTj8sUQxocbsGMqxUz31XJo1w+3tIUtKu5py0/4W/KWaGlUYeNkCq+kbUfQt5xA==
+	t=1794585825;
+	b=tVDscRvBubMDOfeNZk1yOhKDTDrMzrQI5wv+VaY93xQw/gz3Ozbgr03dzfnLH5d0o/bt
+	 leIznnxrvb8O3QHIExz+VdJyOEFahP2dveMgRJNPEEoCOvD9UuVb4TAjmaVFFvuWXZn4o
+	 Xr5S5cFr3ir7qPbSDbS5pwUFuIArCn+gnbzC3H8kdQrxzWTSrIj/j7uosyrRNSOhs+6xu
+	 esnV8W/B5kxBC1+4fyOaf3/IvVMc0km9xsXZ+iioIjRrO9yqGqQH9vvcB7/n/zK1Gc9d6
+	 RZm336ML64kjxzoeu+7R3A75XYSzB7XqNvkJZRp1IwUvk3JlBKswCcuxxX3VRJnvd/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585825;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Re5y8sHSHj1oguEG3k3xgwkRgk6LQPEQRX5YtHHEpIs=;
-	b=IWMXHss8QoB0Yv/wjksJabwSog50TCy5DGh3wyqYGoNZhNy5E7YJr1YDenS2eIZONRIH
-	 ndH44ZmrgQuqGsCxsCB1Ijgamdq1/Vc69PDgYjFMmIerF3RKWehSqU0NYsSGlVdqqXkRZ
-	 mXJiw1vIA76U15wTNeljXasSzA7Nk6JUjj5V+qpNw7iZXiHDv0fawXa+HtGyr4kGsmK4D
-	 gKbLrUbdNaf8T05ArhxDaTCZy0WUVqiFf/tBBl3jYuSRjBjVpMmj3kWJuAo4+qEb9q1VO
-	 48BTh2KbqDF1TiQZh7MpzHlKJxsvGCCzxJMLHFktvUiyZNXf/3C1D0+dJkACTGtC/tA==
+	bh=ANOu1gY07qxrEE9rVPgAVzdvI1bCdjD+jP2To0FCjE0=;
+	b=eoSpAStkZcMaj2gMgjjk9h8BX24lEMhT51GZNnpgraajNmJ1twbUeng0BttMDRNKhLf/
+	 prwcEgIjqv+odgIEwvKNxiYqNRdr6qHyIJgtmrH9QxIYPn+Yzu8sKgiwja4CvX22zcIaS
+	 +qyhM5/7SMHI8flOqWAdeNR8M/eii2Zt+jHBAUiXzGI5wB7b2TG7et2NZR86hwFg5WqBz
+	 Y/Z5DmboinJRYngaVjB1Q2w7g0uQtowGmUq7HaqmU/TXYYdVSqgsIC7p6esLRYA6169Ay
+	 N0tvsAaOF0YwAG2IzfLVGPJ0weKJJTFS1zB9x0LUkjjcXMAJMooWlIuE28xa7y4e9VA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oq4vrH5q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7eEtTdP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2D6606C56D;
-	Fri, 13 Nov 2026 16:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535CC606BAA6;
+	Fri, 13 Nov 2026 16:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oq4vrH5q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD551F000C5;
-	Fri, 13 Nov 2026 16:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L7eEtTdP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40B71F000C5;
+	Fri, 13 Nov 2026 16:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585824;
-	bh=Re5y8sHSHj1oguEG3k3xgwkRgk6LQPEQRX5YtHHEpIs=;
+	s=korg; t=1794585825;
+	bh=ANOu1gY07qxrEE9rVPgAVzdvI1bCdjD+jP2To0FCjE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oq4vrH5qcsyR2B5v5zaZChbdiBWmL1oHbJLiRXDGCTp3zZ6CTCQjFn0lhhuj4wh5h
-	 7BVHGcjL7YqGl5JxkWJT184DIMtT5Wr6HzAjvFZRzIdJiafM2GE1et1++AEglvI/Of
-	 PbceTky9a6Ks+R6BTyV4/8n0PlSUjKEEX7eROquY=
+	b=L7eEtTdPcROIbg7LeAoYvBJ4cqFJOjQCWbqGoN6vP+IyI3YARFq4Yrt/HVFVfisQs
+	 Q1dNfA/gAXbVEuj+25Oj6bJcEWHsRvO0hEnhfkuf2bX+CeY5NTRqRfakOOLujRUIPB
+	 FSBowVc2T80gcomhMHdaRIAFOf0clrgqDeS//LY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	Dust Li <dust.li@linux.alibaba.com>,
+	Ray Zhang <sgzhang@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 404/507] net/smc: dont spin in smc_rx_recvmsg() while a pipe holds spliced data
-Date: Fri, 13 Nov 2026 10:51:48 -0500
-Message-ID: <20261113153810.434037193@linuxfoundation.org>
+Subject: [PATCH 7.3 405/507] net: count last skb of each sk_backlog pass in __release_sock()
+Date: Fri, 13 Nov 2026 10:51:49 -0500
+Message-ID: <20261113153810.468306181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,97 +70,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryam Vargas <hexlabsecurity@proton.me>
+From: Ray Zhang <sgzhang@google.com>
 
-[ Upstream commit 8288ba942cfd20621c05e16978b7c3da91513ae1 ]
+[ Upstream commit c4e4056b21355356f6a95bcdf03a850edd9f49e7 ]
 
-While bytes spliced off the RMB are still in a pipe, recvmsg() waits
-for the pipe to release them before it copies the data behind them.
-The path to that wait skips the timeout and signal checks, and
-smc_rx_wait() returns at once on RCV_SHUTDOWN. With a signal pending,
-after SHUT_RD, or once the peer closes or shuts down writing,
-recvmsg() spins on a CPU until the pipe is drained, and SIGKILL cannot
-stop it. MSG_DONTWAIT and an expired SO_RCVTIMEO wait there too
-instead of returning -EAGAIN.
+Running 500 concurrent TCPv6 streams (neper "tcp_stream -6 -T 1 -F 500")
+on a 2-core Cortex-A53 (CONFIG_PREEMPT_NONE=y, HZ=1000, LATENCY_WARN)
+triggers resched_latency_warn() in __release_sock():
 
-Check the timeout and signals before that wait, and end it when the
-pipe releases the data or the connection is killed, not on RCV_SHUTDOWN.
-A zero-length read returns 0 without waiting for the pipe; a
-non-blocking one returns -EAGAIN while poll() still reports the socket
-readable (splice() can still take those bytes). The wait sets
-SOCKWQ_ASYNC_WAITDATA like smc_rx_wait(), so a byte arriving behind
-the pipe raises no SIGIO on a reader already asleep for it, and a full
-barrier orders its wait queue entry before its read of splice_pending,
-so no wake is lost.
+  [ 3655.311821] sched: CPU 0 need_resched set for > 100006892 ns (100 ticks) without schedule
+  [ 3655.311889] Call trace:
+  ...
+  [ 3655.311944]  resched_latency_warn+0x7c/0x88
+  [ 3655.311958]  sched_tick+0x1c0/0x418
+  ...
+  [ 3655.312578]  net_rx_action+0x238/0x438
+  ...
+  [ 3655.312641]  do_softirq+0x4c/0x90
+  [ 3655.312651]  __local_bh_enable_ip+0x84/0x90
+  [ 3655.312663]  local_bh_enable+0x1c/0x28
+  [ 3655.312674]  __dev_queue_xmit+0x4a8/0xb00
+  ...
+  [ 3655.312782]  tcp_v6_do_rcv+0x240/0x5f8
+  [ 3655.312793]  __release_sock+0x9c/0x188
+  [ 3655.312806]  release_sock+0x150/0x168
+  [ 3655.312817]  tcp_sendmsg+0x4c/0x70
 
-Fixes: 9014db202cb7 ("smc: add support for splice()")
+__release_sock() can loop past 100 ms without calling cond_resched():
+
+- Each outer-loop pass drains sk_backlog, but "if (!skb) break;" runs
+  before "++nb", so a pass of B skbs only adds B - 1 to nb (0 for 1 skb).
+- With 500 TCPv6 streams and NAPI sharing two Cortex-A53 cores, runnable
+  tasks keep TIF_NEED_RESCHED set on CPU 0.
+- During spin_unlock_bh() and TX softirqs (__dev_queue_xmit() ->
+  local_bh_enable()), tcp_add_backlog() coalesces arriving pure ACKs into
+  a single tail skb.
+- Repeated 1-skb passes never advance nb or call cond_resched(),
+  triggering resched_latency_warn() after 100 ticks.
+
+Restore the do-while loop and drop "if (!skb) break;" so every skb
+increments nb across passes and calls cond_resched() every 16 skbs.
+
+Reproduced the issue and verified the fix on two 2-core Cortex-A53 hosts
+(CONFIG_PREEMPT_NONE=y, HZ=1000, LATENCY_WARN, latency_warn_once=0) with
+a userspace reproducer over /dev/net/tun:
+
+- CPU 0 runs a TCPv6 sender and a second runnable task while CPU 1 writes
+  pure ACKs to /dev/net/tun (~30k TCPBacklogCoalesce/run), sustaining
+  1-skb sk_backlog refills in __release_sock() for ~400 ms (ftrace).
+- Before: CPU 0 stayed unscheduled in __release_sock(), hitting
+  resched_latency_warn() 293 and 275 times on the two hosts (> 100.9 ms).
+- After: cond_resched() yielded CPU 0 inside __release_sock(), with
+  0 resched_latency_warn() hits on both hosts.
+- Also observed no regression with the workload from
+  commit 16c610162d1f ("net: call cond_resched() less often in
+  __release_sock()"), "super_netperf 4 -H srv -T,10 -l 3000 &".
+
+Fixes: 16c610162d1f ("net: call cond_resched() less often in __release_sock()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
-Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
-Link: https://patch.msgid.link/20261029-b4-disp-da7f8e6a-v2-1-9052904adf72@proton.me
+Signed-off-by: Ray Zhang <sgzhang@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261101075145.698399-1-sgzhang@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_rx.c | 39 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 38 insertions(+), 1 deletion(-)
+ net/core/sock.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
-index 197fddc6271f0..63c178c10bf1a 100644
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -286,6 +286,27 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo, size_t peeked,
- 	return rc;
- }
+diff --git a/net/core/sock.c b/net/core/sock.c
+index e8551df8330ff..1108543f9fec5 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3262,7 +3262,7 @@ void __release_sock(struct sock *sk)
  
-+/* Wait for the pipe to release the spliced data. Unlike smc_rx_wait()
-+ * it does not end on shutdown or sk_err, the data is already in the
-+ * RMB; smc_conn_kill() wakes it and the caller checks conn->killed.
-+ */
-+static void smc_rx_wait_splice(struct smc_sock *smc, long *timeo)
-+{
-+	DEFINE_WAIT_FUNC(wait, woken_wake_function);
-+	struct smc_connection *conn = &smc->conn;
-+	struct sock *sk = &smc->sk;
-+
-+	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
-+	add_wait_queue(sk_sleep(sk), &wait);
-+	/* pairs with the smp_mb() in wq_has_sleeper(): the release drops
-+	 * splice_pending, then looks for a sleeper
-+	 */
-+	smp_mb();
-+	sk_wait_event(sk, timeo, !atomic_read(&conn->splice_pending), &wait);
-+	remove_wait_queue(sk_sleep(sk), &wait);
-+	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
-+}
-+
- static int smc_rx_recv_urg(struct smc_sock *smc, struct msghdr *msg, int len,
- 			   int flags)
- {
-@@ -443,7 +464,23 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
- 		/* could be just 1 byte, even after waiting on data above */
- 		readable = smc_rx_data_available(conn, peeked_bytes);
- 		splbytes = atomic_read(&conn->splice_pending);
--		if (!readable || (msg && splbytes)) {
-+		if (msg && splbytes) {
-+			/* a pipe holds bytes ahead of these; the copy path
-+			 * skips the timeout and signal checks
-+			 */
-+			if (!read_remaining)
-+				break;
-+			if (!timeo || signal_pending(current)) {
-+				if (!read_done)
-+					read_done = timeo ?
-+						    sock_intr_errno(timeo) :
-+						    -EAGAIN;
-+				break;
-+			}
-+			smc_rx_wait_splice(smc, &timeo);
-+			continue;
-+		}
-+		if (!readable) {
- 			if (splbytes)
- 				func = smc_rx_data_available_and_no_splice_pend;
- 			else
+ 		spin_unlock_bh(&sk->sk_lock.slock);
+ 
+-		while (1) {
++		do {
+ 			next = skb->next;
+ 			prefetch(next);
+ 			DEBUG_NET_WARN_ON_ONCE(skb_dst_is_noref(skb));
+@@ -3270,12 +3270,10 @@ void __release_sock(struct sock *sk)
+ 			sk_backlog_rcv(sk, skb);
+ 
+ 			skb = next;
+-			if (!skb)
+-				break;
+ 
+ 			if (!(++nb & 15))
+ 				cond_resched();
+-		}
++		} while (skb);
+ 
+ 		spin_lock_bh(&sk->sk_lock.slock);
+ 	}
 -- 
 2.53.0
 
