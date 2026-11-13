@@ -1,52 +1,67 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590141;
-	b=rXz26lbv8wzP991TvzMr8Wfb5I03o3BZqg+F8AsvkVZvwnfkjuJxJAQLRAwqdvVlsx4Z
-	 rnCMiHSSNHbxe9tEYI3fJsuCR4me/paFT977jRsNoFZYgTbBRVymxcFxV0PsYH3hUGjzy
-	 YHChkKyx8qXmnrbgWOKZG0PLs6efXsye8CNWhajSvEmXWwMNLAiWl+9T3dE6GTedZEFJ7
-	 yRlyn1gKDJsJrkqEQneXiYHych3cjQgiVEh08u/dOczQOO/tEq949Qyc27D1itxKCJBDp
-	 AUFQlCiTu2PqAtE1R7oZXflg36tqog1DJurlTzu2ivHrQSxMzPLIuAEeDQifqkYiaqQ==
+	t=1794590143;
+	b=2dDY4woK5e04ektFhNOUNo6+B7T9YRAvvu69Q3Hp3IBQ5VurMjOFsnemXOBGEWRSsdbr
+	 2uiRrYP4qJYq6NxdToqbbe22k4+sJAKkvJoaCIXeo2XYVfH1obC57Xoy9wckROL3wIolu
+	 cKqhH/B1fy5d/hlqc8y5vFiOxAzR/i9SrRVUl5X59jiu4aC0jWWpNQj7wHTv4JgTwuC79
+	 MDvPrxxjlRkY46bkHUfsWdOq1NftBoZFpDN2uNSi2UHxefL4ox/d1no6uYwrqZI6qt/EI
+	 tJbnAv5aIOj2fmSnfUD3H5X4edt/f9Rty91uCmNx6eWtkJkYi/8frbn9YV5xVY5jLfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pZJSxCNL4z46/qB0AqiWbHr3qVgYy62FD+ctHGJ6NH4=;
-	b=I398bYnkxmYMNgTdqlHv7E0GKiGsFL84Sj9tTI643QHh4HlK7D1ytZioccw/9l/qEaHT
-	 7f2Rgg5XamBeWSni6XQPEkv/iHBom1xESc8mos+AMXL4Q2xMChm/yuVE9pKewZcOh5cUy
-	 m8GIgGnA70zeJBw3HVo6zDhilGwuTW/aS36r+pUIkzrcnSXWcA9Pgrls9P/ynzyhNVULb
-	 w8n9K0cdV6lf6FLulhpuS95vYh8oaoZh/zUIuTIFKQApuSztg8dnrQONX4C9Y3yXu1lIP
-	 37fqbLL7LikTwwfIJAJI84om+oY0EYwhBDokFt4HHlZpv5LwJ6rh31trvvlKywfJVLA==
+	bh=TgpzbHLS1w95z8AUC/xeuQrkl8ZSENZ9OHaJhr/u0+0=;
+	b=X5Ssm5Ex/cDUp52iRqgUy2N8KI/Q395pN71977PcJvPprwY5wggPbj9FmcMWXoh8tOTi
+	 dSsbqHWe3tVvYYe4LuDuRo0dvl9ijo+x4rQrv7ynpAXcy2iTcPc3lOTqw7PXT717V8HM8
+	 q1aiPg01HDetyTMy03LZxx9E9hZXRTLAgP4Q2fzrk3yQxFM3afVLIZ76sLorFu+b/XwNB
+	 uogYkJ+72rxfoJ8wGsJfC/JmLAbmAHB3WUva1nIvB9f28IP3xdqlO8XJcFAw9Ge+aZfa1
+	 +WB5eDkMoxV3nPKf07qX6lVlB3uCg/ETFcTUWiQEgteZv1s4S7iVn3AsfKTfzN4ZfOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kssr1gcE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K0qRRTfi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C137B60A6F5B;
-	Fri, 13 Nov 2026 17:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54ED3606E216;
+	Fri, 13 Nov 2026 17:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kssr1gcE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD381F000C4;
-	Fri, 13 Nov 2026 17:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K0qRRTfi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9804C1F000C4;
+	Fri, 13 Nov 2026 17:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590141;
-	bh=pZJSxCNL4z46/qB0AqiWbHr3qVgYy62FD+ctHGJ6NH4=;
+	s=korg; t=1794590142;
+	bh=TgpzbHLS1w95z8AUC/xeuQrkl8ZSENZ9OHaJhr/u0+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kssr1gcE/ST/AX5fStDBgNALRKaNIsScImUN9I8Q7yBisqkfouulSfX+7ZpYCrgQk
-	 yYnB/XUT8oAdMb3Kuub07ZILlR67ZN3Uuc0OsqYCa8Wp3pKPsVzS/OJJPcCLtuL39c
-	 P5Gva4rOn3oZhP8hsr1MZgliisItIxHqw9+gZfzY=
+	b=K0qRRTfiWtTwc02eO7Ah5kjOAj1V9DObf7tTCCVJAdChQOwdssqXnq1Ygc7xOC1k/
+	 a3IyB+245qwTTu1hJX74ptS3EJHxGJzZs9w5gQjf2uzkB4tseAAovfhV19HRV0ZyMX
+	 XdrvDVRb0jr5NH0emTEGGaXoEjH1QpfNiZPg4Z70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	Barry Song <baohua@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Ridong Chen <chenridong@xiaomi.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Chris Down <chris@chrisdown.name>,
+	David Hildenbrand <david@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Yu Zhao <yuzhao@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 158/686] wifi: mt76: take rcu_read_lock in the USB/SDIO tx completion path
-Date: Fri, 13 Nov 2026 10:44:51 -0500
-Message-ID: <20261113153826.145668173@linuxfoundation.org>
+Subject: [PATCH 6.18 159/686] mm/page_counter: avoid integer overflow in effective_protection()
+Date: Fri, 13 Nov 2026 10:44:52 -0500
+Message-ID: <20261113153826.177327166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,88 +83,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Ridong Chen <chenridong@xiaomi.com>
 
-[ Upstream commit a7871a7ae5a8625f0ba0a89454ac734c383dd538 ]
+[ Upstream commit 7809ce47b05671e1fa6d74bead892d6ad6c1403b ]
 
-The USB and SDIO completion path reads a station pointer that RCU
-protects, without holding the read lock. Lockdep catches it on the
-first association:
+Patch series "mm/mglru: fix ineffective memory protection for non-kswapd
+reclaim", v4.
 
-  mt76.h:1305 suspicious rcu_dereference_check() usage!
-  no locks held by mt76-usb-status/1254.
-   mt7925_usb_sdio_tx_complete_skb+0x119/0x130 [mt7925_common]
-   mt76_queue_tx_complete+0x27/0x60 [mt76]
-   mt76u_status_worker+0xed/0x1e0 [mt76_usb]
+For MGLRU, memory.min/low is not honored during non-kswapd global reclaim
+(global direct reclaim and root-level memory.reclaim), because these paths
+shrink memcgs using stale protection (emin/elow).
 
-  mt7925/mac.c:856 suspicious rcu_dereference_check() usage!
-   mt7925_tx_check_aggr.part.0+0xc2/0xe0 [mt7925_common]
-   mt7925_usb_sdio_tx_complete_skb+0xa0/0x130 [mt7925_common]
+Patch 2 is the actual fix.  Patch 1 is a prerequisite: an integer overflow
+in effective_protection(), spotted by the sashiko review tool, which patch
+2's new caller would also be exposed to.
 
-mt7921 does the same, and warns once instead of twice because its
-aggregation check reads the default link directly. The DMA path makes
-the same reads but completes from softirq, so it stays quiet.
+This patch (of 2):
 
-Take the read lock around the lookup and the check.
+effective_protection() scales a parent's protection by a ratio of page
+counts, e.g.  for recursive protection:
 
-Tested on 7.2-rc5 with lockdep, fresh module load per arm, 4000
-packets each and no change to the link:
+	(parent_effective - siblings_protected) * (usage - protected)
+		/ (parent_usage - siblings_protected)
 
-                             splats before   after
-    MT7925  Netgear A9000          2           0
-    MT7921  Alfa                   1           0
-    mt7921e same kernel            0           0
+The multiply is done at unsigned long width before dividing.  On systems
+with >= 16TB RAM the product can exceed 2^64 and wrap, giving a bogus
+protection value and silently breaking memory.min/low enforcement.
 
-Fixes: dc66a129adf1 ("wifi: mt76: add a wrapper for wcid access with validation")
-Fixes: c22769de2509 ("wifi: mt76: mt7925u: use connac3 tx aggr check in tx complete")
-Cc: stable@vger.kernel.org
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20261003233056.94497-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Use mul_u64_u64_div_u64() to multiply in a 128-bit intermediate.  Because
+usage and parent_usage are not read atomically (a child is charged before
+its parent), usage - protected can briefly exceed the divisor, making the
+quotient overflow 64 bits and trap (#DE on x86).  Cap it so the ratio
+stays <= 1.
+
+Reported by the sashiko review tool [1].
+
+Link: https://lore.kernel.org/20260907025445.1836238-1-ridong.chen@linux.dev
+Link: https://lore.kernel.org/20260907025445.1836238-2-ridong.chen@linux.dev
+Link: https://sashiko.dev/#/patchset/20260826133054.88529-1-ridong.chen@linux.dev?part=1 [1]
+Fixes: bc50bcc6e00b ("mm: memcontrol: clean up and document effective low/min calculations")
+Fixes: 8a931f801340 ("mm: memcontrol: recursive memory.low protection")
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Signed-off-by: Ridong Chen <chenridong@xiaomi.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: Claude:claude-opus-4-8
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Chris Down <chris@chrisdown.name>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/mac.c | 3 +++
- drivers/net/wireless/mediatek/mt76/mt7925/mac.c | 3 +++
- 2 files changed, 6 insertions(+)
+ mm/page_counter.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-index 0d48dbb2354f3..2af061a987f20 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
-@@ -826,11 +826,14 @@ void mt7921_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
- 	u16 idx;
+diff --git a/mm/page_counter.c b/mm/page_counter.c
+index 661e0f2a5127a..ea0d1646cff85 100644
+--- a/mm/page_counter.c
++++ b/mm/page_counter.c
+@@ -8,6 +8,7 @@
+ #include <linux/page_counter.h>
+ #include <linux/atomic.h>
+ #include <linux/kernel.h>
++#include <linux/math64.h>
+ #include <linux/string.h>
+ #include <linux/sched.h>
+ #include <linux/bug.h>
+@@ -356,7 +357,8 @@ static unsigned long effective_protection(unsigned long usage,
+ 	 * otherwise get a smaller chunk than what they claimed.
+ 	 */
+ 	if (siblings_protected > parent_effective)
+-		return protected * parent_effective / siblings_protected;
++		return mul_u64_u64_div_u64(protected, parent_effective,
++					   siblings_protected);
  
- 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
+ 	/*
+ 	 * Ok, utilized protection of all children is within what the
+@@ -397,13 +399,20 @@ static unsigned long effective_protection(unsigned long usage,
+ 	if (parent_effective > siblings_protected &&
+ 	    parent_usage > siblings_protected &&
+ 	    usage > protected) {
+-		unsigned long unclaimed;
++		unsigned long parent_unclaimed, parent_unprotected, unprotected;
+ 
+-		unclaimed = parent_effective - siblings_protected;
+-		unclaimed *= usage - protected;
+-		unclaimed /= parent_usage - siblings_protected;
++		parent_unclaimed = parent_effective - siblings_protected;
++		parent_unprotected = parent_usage - siblings_protected;
+ 
+-		ep += unclaimed;
++		/*
++		 * The usages aren't read atomically, so a child can transiently
++		 * appear to use more than its parent, making the ratio exceed 1
++		 * and the quotient overflow 64 bits (#DE on x86).  Cap it.
++		 */
++		unprotected = min(usage - protected, parent_unprotected);
 +
-+	rcu_read_lock();
- 	wcid = __mt76_wcid_ptr(mdev, idx);
- 	sta = wcid_to_sta(wcid);
++		ep += mul_u64_u64_div_u64(parent_unclaimed, unprotected,
++					  parent_unprotected);
+ 	}
  
- 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
- 		mt76_connac2_tx_check_aggr(sta, txwi);
-+	rcu_read_unlock();
- 
- 	skb_pull(e->skb, headroom);
- 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-index ce81ac1c2c635..4e41ef92d6239 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mac.c
-@@ -1476,11 +1476,14 @@ void mt7925_usb_sdio_tx_complete_skb(struct mt76_dev *mdev,
- 	u16 idx;
- 
- 	idx = le32_get_bits(txwi[1], MT_TXD1_WLAN_IDX);
-+
-+	rcu_read_lock();
- 	wcid = __mt76_wcid_ptr(mdev, idx);
- 	sta = wcid_to_sta(wcid);
- 
- 	if (sta && likely(e->skb->protocol != cpu_to_be16(ETH_P_PAE)))
- 		mt7925_tx_check_aggr(sta, e->skb, wcid);
-+	rcu_read_unlock();
- 
- 	skb_pull(e->skb, headroom);
- 	mt76_tx_complete_skb(mdev, e->wcid, e->skb);
+ 	return ep;
 -- 
 2.53.0
 
