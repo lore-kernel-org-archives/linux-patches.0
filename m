@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585333;
-	b=OhfFbJBj/3MzPOHm51tSiFajnsfYhFfB1fNRMW7cRk1a1zaGSMSR+83ULbYQ9b9SgWHz
-	 4LXtN/733RxtReQKO5OhOP5n1IjxOetNjO6ksHIsaGDwdZsK6eytUoyqKbN5//pJOiTR5
-	 /EX4vkD1UcqAA4f1fMkHuDUoCt1pxIHI7wyjxnB+8AUp/EoX6uVekhkvLZvpG7E6/5TsZ
-	 pjkjDFFJXVAQEsit8KRXnyCPbCyPi505WaV4kLyixRBWehaFUuuEHA/siiROuFSN46hr/
-	 AZkaRBec44hAMAi5YmIlZ2+wKr8nwrke9o9aNdYKLm1dMtORkw7HIl44iiSUopEh5jQ==
+	t=1794585334;
+	b=aCFKc/48X5cQNpDwolKSJpCgjnKAC5n0mUDX7MLvGIArQAZFNho/4qn/7FF+hpbkOueV
+	 ygV1cPkdRusI1pqRQy9Q+DxLHMmGUobUxNNhT9O5zrAiigqW8hyuFJcoT8dwjqO6K8egR
+	 IEgz4jb1OpINwZucnTmq9gVsSaAFIWqn7mveqbM4awi7aZ38v2HRPNnBJvJX554Ed46dk
+	 nX5WJQmb+qg+O0XNgpbeTL/NsiagXhZkqdJQH9viMY9XdUccwlS1iM9b1iAsqOywHsyVV
+	 bVMKgdeW3h9oKR8n63ycqgzdGsbSZLD6pG8cH6ZXytyMpBZwG7dPgzi6CbAFepVHmQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585333;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uMwQK0ngNKdVVK4XPneLamBnyk56PPqQwSyY9HwlKH4=;
-	b=mhTTQ/lHWMvQj6FYazk67AN4uQgYS94Ii0PaF6zT/xhmNjl/ivr9TclT/5sROT3zPmtW
-	 CKzZ+D6QzJYLFjdYpc/oOCjFdyqY4e+DrcR0S5eH+fgn+uiloBLNSjPv0+yip24K2F2z9
-	 DCeynMdKGX7bpPTjNW9EKioEm1QpajNfRJG3/PM3q7XIcV1Yldz+g9iNj2WoEDBDluqH7
-	 MOTCrnCl9BT09LEnd4aa40L7tz7Mv3lWp5Cj0CNDHkLiLsulp1t6CwvBwadCFRDO9UI1d
-	 PkgD2Vad3fxNZzwHgkItjJeEBeUSzqw5kmVnLqeOGkdA5db1PPKwuXs+pK0DZapAQ1g==
+	bh=NvCVFKWcIHoS/nnPiNN1jP1HCRo8F3WyxtsohSeRBOk=;
+	b=J3LXMtQmAqKDlKrSKgtpctUi7DmFSusdGAxGvw+mdl7ABnK1QmIPCsfHbqWW9gLDfzcC
+	 cnffLL4w7yUu7q6elk+tEMZv013zPqKAq0x0iy7APfRZuWROCMQbs1AmkhxOFe/icaK7h
+	 LcMflLs6YLE/LJ0mZay+PzlQ4jZtJl8tkqt1nL2e4s/NZ7J2/Sh+IucncsvvQp5YqCqA1
+	 PC3ddRTyDgWy95X95irisuD52iekFriqpq/iEcVevV6UaYuhNYYgh1/cvDTJJ7JpKSnlK
+	 iaFROfIcV+Gvbyi8d8bUoTu1OygQO8kbY8RQkgsDAEmrDBSek36GYfJoN72vgtUCmUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vb/nJZEd";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YQ4JLZwY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8F8606A8A8;
-	Fri, 13 Nov 2026 15:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C116E606A8BB;
+	Fri, 13 Nov 2026 15:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vb/nJZEd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3132F1F0089E;
-	Fri, 13 Nov 2026 15:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YQ4JLZwY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB041F000D3;
+	Fri, 13 Nov 2026 15:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585333;
-	bh=uMwQK0ngNKdVVK4XPneLamBnyk56PPqQwSyY9HwlKH4=;
+	s=korg; t=1794585334;
+	bh=NvCVFKWcIHoS/nnPiNN1jP1HCRo8F3WyxtsohSeRBOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vb/nJZEdmb2VKxMWm16zg9X0UJSmlDSHBw1MDhMAVYxttyYv96S350RoZgXcpSoOY
-	 eeLJlw2fRzboqOV6FIfxApNXxcFLx8CY33uW3SzkpsXlsJvBHF9OFbHXhyUWx4oHT9
-	 ti/bbOVLIz7nrj0de7Ba40rrnrp4JlJAlhQA2hTM=
+	b=YQ4JLZwYpJfyfZTPqvzU5jItSlpUUcjFdNLpaLZYJbNMfJFnlsJ7bBWfyuYukUMrW
+	 qkNKyvUF2+22RfOxzXMtx635UxPG3fAFvouknnuJ/F9qlDPUlItsoNasCXn3/ra+1i
+	 Jn5p8wvQTpMX3RHDTQcMgGC0zTD3nNmjApSEBSgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <cel@kernel.org>,
+	Gael Blivet <gael.blivet@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 019/507] NFSD: Complete a cld upcall when copying its reply fails
-Date: Fri, 13 Nov 2026 10:45:23 -0500
-Message-ID: <20261113153754.064136489@linuxfoundation.org>
+Subject: [PATCH 7.3 020/507] ksmbd: look up stream size by exact xattr name
+Date: Fri, 13 Nov 2026 10:45:24 -0500
+Message-ID: <20261113153754.091550041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -67,48 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Gael Blivet <gael.blivet@gmail.com>
 
-[ Upstream commit 8cef2b0a01d28647facc57501a3df7ccd8d13ccd ]
+[ Upstream commit 10ea20d6584ecdaf2f7505855412a856a88d8934 ]
 
-cld_pipe_downcall() removes the matching upcall from cn_list before
-copying the daemon's reply. When that copy_from_user() faults, the
-downcall returns -EFAULT without completing the upcall, and a
-retried write cannot reach it because its xid is no longer on the
-list. __cld_pipe_upcall() waits on cu_done uninterruptibly, so the
-nfsd thread that sent the upcall is stuck, and nfsd shutdown hangs
-behind it. The pipe is mode 0600, so only a broken or hostile
-nfsdcld can trigger the fault.
+get_file_stream_info() walks the xattr list from a single
+ksmbd_vfs_listxattr() and sizes each stream it finds with
+ksmbd_vfs_casexattr_len(), which matches with strncasecmp(). Linux
+xattr names are case-sensitive, so two streams differing only in case
+report each other's size.
 
-Record the fault in the upcall's pipe message and complete it, so
-the waiter returns the error to its client tracking operation.
+The loop already holds the exact name, so query it directly with
+ksmbd_vfs_xattr_len(), which is what casexattr_len() calls once its
+search succeeds. Make it non-static and declare it in vfs.h, and drop
+the comment above it, which describes a different bug and no longer
+matches the code.
 
-Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-3-e163f94a3a6e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+This also drops a full listing per stream: casexattr_len() runs its own
+listxattr on every call, so enumerating a file with N xattrs cost N
+listings instead of one.
+
+Fixes: 689f1eb3719d ("ksmbd: report actual xattr value length in stream enumeration")
+Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: retained non-const struct mnt_idmap pointers to match the existing vfs_getxattr() API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 13 ++-----------
+ fs/smb/server/vfs.c     |  4 ++--
+ fs/smb/server/vfs.h     |  2 ++
+ 3 files changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 0b033688aa0b5..907a914b04cd1 100644
---- a/fs/nfsd/nfs4recover.c
-+++ b/fs/nfsd/nfs4recover.c
-@@ -839,8 +839,11 @@ cld_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
- 	if (status == -EINPROGRESS)
- 		return __cld_pipe_inprogress_downcall(cmsg, nn);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 418610e05ce95..30549a02ccfb2 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -7097,17 +7097,8 @@ static int get_file_stream_info(struct ksmbd_work *work,
+ 		streamlen *= 2;
+ 		kfree(stream_buf);
+ 		file_info->StreamNameLength = cpu_to_le32(streamlen);
+-		/*
+-		 * stream_name_len is the byte length of the xattr's *name*,
+-		 * not its value -- same class of bug ksmbd_stream_eof()
+-		 * (smb2pdu.c) already fixes for EndOfFile/AllocationSize on
+-		 * a stream handle; this enumeration path needs the same
+-		 * real xattr value length, not the name length reused as a
+-		 * size.
+-		 */
+-		slen = ksmbd_vfs_casexattr_len(file_mnt_idmap(fp->filp),
+-						path->dentry, stream_name,
+-						strlen(stream_name) + 1, NULL);
++		slen = ksmbd_vfs_xattr_len(file_mnt_idmap(fp->filp),
++					   path->dentry, stream_name);
+ 		ssize = slen < 0 ? 0 : (loff_t)slen;
+ 		file_info->StreamSize = cpu_to_le64(ssize);
+ 		file_info->StreamAllocationSize = cpu_to_le64(ssize);
+diff --git a/fs/smb/server/vfs.c b/fs/smb/server/vfs.c
+index 7453b6e72bd4d..674e4fcd80cb2 100644
+--- a/fs/smb/server/vfs.c
++++ b/fs/smb/server/vfs.c
+@@ -902,8 +902,8 @@ ssize_t ksmbd_vfs_listxattr(struct dentry *dentry, char **list)
+ 	return size;
+ }
  
--	if (copy_from_user(&cup->cu_u.cu_msg_v2, src, mlen) != 0)
-+	if (copy_from_user(&cup->cu_u.cu_msg_v2, src, mlen) != 0) {
-+		cup->cu_pipe_msg.errno = -EFAULT;
-+		complete(&cup->cu_done);
- 		return -EFAULT;
-+	}
- 
- 	complete(&cup->cu_done);
- 	return mlen;
+-static ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
+-				   struct dentry *dentry, char *xattr_name)
++ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
++			    struct dentry *dentry, char *xattr_name)
+ {
+ 	return vfs_getxattr(idmap, dentry, xattr_name, NULL, 0);
+ }
+diff --git a/fs/smb/server/vfs.h b/fs/smb/server/vfs.h
+index 53044549571ab..7cdd496786674 100644
+--- a/fs/smb/server/vfs.h
++++ b/fs/smb/server/vfs.h
+@@ -109,6 +109,8 @@ ssize_t ksmbd_vfs_getxattr(struct mnt_idmap *idmap,
+ 			   struct dentry *dentry,
+ 			   char *xattr_name,
+ 			   char **xattr_buf);
++ssize_t ksmbd_vfs_xattr_len(struct mnt_idmap *idmap,
++			    struct dentry *dentry, char *xattr_name);
+ ssize_t ksmbd_vfs_casexattr_len(struct mnt_idmap *idmap,
+ 				struct dentry *dentry, char *attr_name,
+ 				int attr_name_len, char *actual_name);
 -- 
 2.53.0
 
