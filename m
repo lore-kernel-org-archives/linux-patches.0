@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590324;
-	b=wkWfOTVUrGKZBOtaXqSpLpWptz0/rRgypZVA2wKHdOw9Fhe4JwMpgMWN8nbD1X4Neg4G
-	 olFFSMCh3drhoL9yN8PuWSMc7uI4iDcEIuJik0lUXtHIwSJNCAL2phrNYjRchs2pyWQah
-	 9HVx2eT1gpzdgo3si+cW02/byOOW7UY0+HMoehN69cpHMjQnV+UX0DK+ADo6aZh2nEk0n
-	 DWycSr3dU4GKH+2gboYpBkWPQgbafYBrn3Y+o6L3sX3Qo4aV4c6gmsVFVmsWGw2SyKxeb
-	 EaIuZCvYVvEX6aRzyRyjmsWlkAj/jbovdSZcSEPT8qPYN2E+SEWAdmmhrnykX/BbLVg==
+	t=1794590320;
+	b=yOSNmATWhruQshwM0cZxocKCpPYwb3+/4MFIXzoDCxK6UygOgM769CyJa0yS22yvpROg
+	 FhYYbg6Smwg2kSFa1JPnw+RH1QRvpcUh0LS4ZSOPpkLalE0jL5NBFPc5dEExDUMMeWAnV
+	 4R9xEeKQR9Zaj4li3K10vdRgz5/W4/8LE4LYd+lz6pPEZeolnuXYNJcgmipBwOEeSXXIT
+	 YvIzDY83cKPiuMM/1tzmHH0run4WQAkhVeoIbgIlxX1JQqSoS+KqcIr+c7PmM46WY0+vR
+	 ijZUAVv81hseqv6C9Nc+yBaTS0CNH1ViEProtkV7bmWewsRTvmRtE5uBGF4KYO6OoHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590320;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tQ107kMt9jDAidD4b/JLyRBkbX8WSuJQoaUByM7ls00=;
-	b=23anUfuvG5p0Rm8k09w9Vi8XX6afmntfreQNPVk/pHyEe4tVsoSxphqgOeboEdPIgpBA
-	 nrDqd6oMTrL1sdWPj7272ugRxOrXYkW/57rvri7ntvhrmHIP3aMrA8HvB0AVHvawK5Iwp
-	 T5U9gx+AHcQR0l1Ms//zlt5K0cPyfqiYbofvy48z0P1IfG36ybBw7yJ+W2vMD85/R46Kf
-	 YpMrsvIGs0c9ZvZzHdbbUAsr5bmRLuroGg9JCq4GdDXsHZKo1ZaW2x5vVrEUdwPDhLmu8
-	 y6fUGh8ly6mgboVK2d+lRwzolZj7YyNtL5cV8NTVCWTRQ8oGWsOlPHuTGI7H9XrO47g==
+	bh=/NWSX3CZNmifZUAaTsZarzABfOjwX+FAhr2Czq8d/rM=;
+	b=UYbXbyfzFeg7uesHTGoRpzipkgHQQ8fU/gokCUW9F+RY/BhNUf92MVaU5t5+5bngW8B2
+	 o13HU6OoMHCYroLRDTRtyC88BeR+0TxQhTNvCZQBRso6+XwMq4jUg5qE7aeC4Lc5bp9Vn
+	 LQIyIf9zpGXSU93vwQoeZ3tzu1AkY6m5jlA0GGOKkft5IIr4vGtxZ3/DoiWaSTV+6bDYF
+	 +bNJLxnQ9xMwXHuKu8jGKsp81URoZr+msSavMczpHKBNdvZvhs+nDbhrT+oWohuhfuJoB
+	 vb456ZlGst/Jb2WUXwSY7cHiDMm+vUFr5VjLFBk1ToIwFbr61+Q9/OSAdQZ/wxQPG7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hBc8+CjK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gLKiGQay;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7667607EE51;
-	Fri, 13 Nov 2026 17:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1E0606E214;
+	Fri, 13 Nov 2026 17:18:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hBc8+CjK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621DF1F000C4;
-	Fri, 13 Nov 2026 17:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gLKiGQay
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1431F000C8;
+	Fri, 13 Nov 2026 17:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590324;
-	bh=tQ107kMt9jDAidD4b/JLyRBkbX8WSuJQoaUByM7ls00=;
+	s=korg; t=1794590319;
+	bh=/NWSX3CZNmifZUAaTsZarzABfOjwX+FAhr2Czq8d/rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hBc8+CjK3S5aukEON18S2pB6TsiE6nP0PyDEUMS9LOpu0ET7bg9MHzetTlnuyqg6a
-	 gsWF+Iln2Aunrt3EGiaGbfWIRJcW7XLbAruWsVMqZb6vJz0vH0YCrDLCskjsNkUFV3
-	 1pS0u8UwO+o0HfFj1QPTS+fqOc9R5WdsTXPX8enI=
+	b=gLKiGQaybeMDJiHkDORzXaY5GnMkFagKN7LXbeVHGU5FURp0XtHoLzjUeqqmpiVTX
+	 ZUfkc7v6Z6VgOH4/W2Bv5HytF8TP3UmchRwPHTfZ8pm1WHZOFTXd++7AespyP3JjX7
+	 hkTJWNvrpXqjkOf8R4vFbBYYSUz/JUquujoB0aMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
-	Mohit Sharma <mohit.sharma@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 305/686] ASoC: qcom: q6apm: Guard callbacks until probe data is ready
-Date: Fri, 13 Nov 2026 10:47:18 -0500
-Message-ID: <20261113153831.288877784@linuxfoundation.org>
+Subject: [PATCH 6.18 275/686] hwmon: chipcap2: defer probe when IRQs are unavailable
+Date: Fri, 13 Nov 2026 10:46:48 -0500
+Message-ID: <20261113153830.322105606@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,77 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit ef7062864c0511bba52775d0eb3aa72d886b5f3a ]
+[ Upstream commit b5a1412618f93b594f924cf4f3b4bb6b5dc49d41 ]
 
-The GPR bus needs to make response callbacks available before invoking a
-client probe because clients can issue synchronous commands from probe.
-This creates a short interval where a callback can run before the client
-has published its private data.
+This device can work with or without interrupts, but if they
+are provided and still not available, but if -EPROBE_DEFER is read,
+its value must be propagated to enable probe retries.
 
-Make q6apm publish its driver data only after all callback-visible state
-has been initialized. Have the q6apm and q6prm callbacks ignore packets
-received before driver data is available.
-
-Fixes: ec1471a898cc ("soc: qcom: apr: Add GPR support")
+Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Signed-off-by: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261022144130.2443667-2-mohit.sharma@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-4-27ebfc2c5b9e@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 6 ++++--
- sound/soc/qcom/qdsp6/q6prm.c | 3 +++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/hwmon/chipcap2.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 50d5d2143daaf..7894d4430ff17 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -765,8 +765,6 @@ static int apm_probe(gpr_device_t *gdev)
- 	if (!apm)
- 		return -ENOMEM;
+diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+index b7b59ca4a4f9d..34c3e26211458 100644
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -624,6 +624,8 @@ static int cc2_request_ready_irq(struct cc2_data *data, struct device *dev)
+ 	int ret = 0;
  
--	dev_set_drvdata(dev, apm);
--
- 	mutex_init(&apm->lock);
- 	apm->dev = dev;
- 	apm->gdev = gdev;
-@@ -780,6 +778,7 @@ static int apm_probe(gpr_device_t *gdev)
+ 	data->irq_ready = fwnode_irq_get_byname(dev_fwnode(dev), "ready");
++	if (data->irq_ready == -EPROBE_DEFER)
++		return data->irq_ready;
+ 	if (data->irq_ready > 0) {
+ 		init_completion(&data->complete);
+ 		ret = devm_request_threaded_irq(dev, data->irq_ready, NULL,
+@@ -641,6 +643,8 @@ static int cc2_request_alarm_irqs(struct cc2_data *data, struct device *dev)
+ 	int ret = 0;
  
- 	idr_init(&apm->modules_idr);
+ 	data->irq_low = fwnode_irq_get_byname(dev_fwnode(dev), "low");
++	if (data->irq_low == -EPROBE_DEFER)
++		return data->irq_low;
+ 	if (data->irq_low > 0) {
+ 		ret = devm_request_threaded_irq(dev, data->irq_low, NULL,
+ 						cc2_low_interrupt,
+@@ -654,6 +658,8 @@ static int cc2_request_alarm_irqs(struct cc2_data *data, struct device *dev)
+ 	}
  
-+	dev_set_drvdata(dev, apm);
- 	g_apm = apm;
- 
- 	q6apm_get_apm_state(apm);
-@@ -820,6 +819,9 @@ static int apm_callback(struct gpr_resp_pkt *data, void *priv, int op)
- 	struct gpr_ibasic_rsp_result_t *result;
- 	struct gpr_hdr *hdr = &data->hdr;
- 
-+	if (!apm)
-+		return 0;
-+
- 	result = data->payload;
- 
- 	switch (hdr->opcode) {
-diff --git a/sound/soc/qcom/qdsp6/q6prm.c b/sound/soc/qcom/qdsp6/q6prm.c
-index 81554d2026589..22e2a174a3871 100644
---- a/sound/soc/qcom/qdsp6/q6prm.c
-+++ b/sound/soc/qcom/qdsp6/q6prm.c
-@@ -197,6 +197,9 @@ static int prm_callback(struct gpr_resp_pkt *data, void *priv, int op)
- 	struct gpr_ibasic_rsp_result_t *result;
- 	struct gpr_hdr *hdr = &data->hdr;
- 
-+	if (!prm)
-+		return 0;
-+
- 	switch (hdr->opcode) {
- 	case PRM_CMD_RSP_REQUEST_HW_RSC:
- 	case PRM_CMD_RSP_RELEASE_HW_RSC:
+ 	data->irq_high = fwnode_irq_get_byname(dev_fwnode(dev), "high");
++	if (data->irq_high == -EPROBE_DEFER)
++		return data->irq_high;
+ 	if (data->irq_high > 0) {
+ 		ret = devm_request_threaded_irq(dev, data->irq_high, NULL,
+ 						cc2_high_interrupt,
 -- 
 2.53.0
 
