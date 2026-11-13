@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590816;
-	b=JFEA3V8fE5P1BNMNXYSfjdCChe09k+88Bmc5JIuS0g0RLX9Kf6uSDAnB1yJ9buVyw31t
-	 JJYVfoAw5SGSb+ljaQ0V+oq16UW5UEAunHjqC4lpVSAampk3uWq+/LLONOJn6oemUxzk+
-	 8h2CYRWti779FKQn1RSYSnYGJPvf+CJYOzpEAOWNjWCJe9m78H8OHBJNXKj00+lJ65U1G
-	 Djsd2RN2tJVGUfZHBurftqS2D/PzRQbR0+imddrxqC/1fIWLFiwhFebwd57WM0bainaTP
-	 N0jjq/m6yXkdifkXfY+Gvz9n8CQP6VyjSHZAitf8XqkFBrxjqqs3Z8rm/8/kHB1KfgQ==
+	t=1794590817;
+	b=NnkumDrI1V6YlJ1bShY6V8Olk1d6hEp9R71kfNRLdvr1gbQxrDLqnye4ygEBo+OGddc3
+	 6sAT16VKOnO/STZ7jPwT+pzVdyoG0RNtdxny81WFBFCOZokiLPQLuo7czzDdCUtf9ds2n
+	 +IXqd3pOFMV6yyS4ZAUPEiGVnSxrbIKOc+O9UHaWJ/Nz8MS02z7A5p9eWX3dOaEXsQfCp
+	 y4KbVMVWNFSzjv0a5X8r+wXnW9eQVHtJOTJZGpg332vrdaNZZpH6mZ+53B2yHreswhDzL
+	 RwPRq0ZaFgd5ae3XJMzgRrpZ0H+dAHj2pMKX2rdITGnlNLspliBXt6mm1G4f7Ac4C0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TG1hydabuqGhhlohfz4UNtqW0iizX2fE48qRn7PQ4eo=;
-	b=BDWVKuTcUvGRPRVopRGZIGYgNr7NPL/PD29V3+CUsWdLZ4bb26fbpx8tw8rz8DEb0xSf
-	 MKIoX4bGQoqnaIBjBmrwt3aFMOr8lbG1u+ePran0GWrz1E9iPbGZBOe0Kf/oSiz0i9kKw
-	 6/1sgFsZYmr5U/ob+EWJt+wkq63wl3Wkrmsa1mPWNDkhoIeRx7/fQLSlEDX+lfaMNVf9g
-	 ATepYpjNERXmXD0Y50D/bCrMC103TzTImhWTgCHYRAhh7ebKm/jY/iPXpdmXnsH1lUvek
-	 PiyXTF4avnb/QqVgucnGnKd96OQXrBx+NKN1UW3GmTxt17MyuomxDATXLWLeaY2bH5w==
+	bh=gmWLcpV4G/CSyOGRk+YtQf8kaqmCgsqTEZWUhaXDhiM=;
+	b=IPUQqH0jCy4AEXHf8W1Fr9C2ZvReTsQYmXqfAdlg7+vomppFk5AwMS5CEAzaPa5jHgD9
+	 8U0rap2qVmM1ni7drxN8W1ZdKC+YJfGqd8aFe8GdmSR8dBMLWBWhPumNh+EXB7u7wFbI2
+	 o16OoGfMzekrzj2DJXQHTgOgZ8BHFzzTRvcH/CnTw9PkOY8Olr/BYfiGeUbuMH4hfyU7H
+	 9ayzq5pVIQAwNpxKGhiYRtO7ixv0dI7hbMeprrVQK2DbJsocVkbnXMdo6D3J3YCCHLbnE
+	 iAIr2/IDs2NleyDcNJCM7u016beSoE+Qo/eJRICLEkRCZtSnVmPoG4qzuGDEuuOhZ6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksuiW4vP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uMVDUraD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59346607E049;
-	Fri, 13 Nov 2026 17:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1A6607E053;
+	Fri, 13 Nov 2026 17:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ksuiW4vP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65021F000C4;
-	Fri, 13 Nov 2026 17:26:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uMVDUraD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9801F000C4;
+	Fri, 13 Nov 2026 17:26:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590815;
-	bh=TG1hydabuqGhhlohfz4UNtqW0iizX2fE48qRn7PQ4eo=;
+	s=korg; t=1794590817;
+	bh=gmWLcpV4G/CSyOGRk+YtQf8kaqmCgsqTEZWUhaXDhiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ksuiW4vPx6oz1gUbaTK5+OIBA2ns61R6M7s3x/lPaY9InGeSoxLbGvsNwY0bmZOLG
-	 Ew6J4B/JUGKpVP9R+K4vagUOtl1QxcUDFKpVir73GOuCVRphdmbIFWVoG4USPC2eeX
-	 dMb8sZvIk5FPRqXt0/2shg245gSiM1UfikpH6k3g=
+	b=uMVDUraD3bA0RV/ABa0ORvejPuYl7xvoIWXIXSvkNWTHKycVDYui8ww3M+cOPkrTA
+	 WZeX3MebOh4EPgQsQXWaddBy8BWBAXZA2VeKBEujbSnU7hnB+U+HJHIlSCRn4AZp5i
+	 mBImSgEro7eo1LYUneNGWCNkGZyCU6FiDMPvB3WI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Benji Wiebe <itsme@benjiwiebe.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/670] NFSD: map fh_verify() status codes for NFS_ACLv2 replies
-Date: Fri, 13 Nov 2026 10:43:08 -0500
-Message-ID: <20261113153812.004800140@linuxfoundation.org>
+Subject: [PATCH 6.12 025/670] nfsd: dont offer flexfiles layouts when NFSv3 isnt being served
+Date: Fri, 13 Nov 2026 10:43:09 -0500
+Message-ID: <20261113153812.037512897@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,92 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit ccfc4db5ab740175b9958ea0cf5986957bf4e659 ]
+[ Upstream commit 5d28b2c920d9d9d3c45b41769342ad785eb372a7 ]
 
-The NFS_ACL v2 protocol shares its status code space with NFSv2,
-which has no NFSERR_BADHANDLE and no NFSERR_NOFILEHANDLE. An
-NFS_ACLv2 GETACL, SETACL, GETATTR, or ACCESS request that carries a
-malformed or empty file handle gets a reply with status 10001 or
-10020, values the client cannot interpret.
+The flexfiles layout driver hands out a deviceinfo that names this server
+as an NFSv3 DS (flexfilelayout.c hardcodes da->version = 3). With v3
+disabled, the client can't talk to the DS: it loops on v3 NULL calls that
+the server answers with PROG_MISMATCH, and I/O hangs in D state.
 
-Commit 1459ad57673b ("nfsd: Move error code mapping to per-version
-proc code.") removed the version check from fh_verify() that turned
-those codes into NFSERR_STALE for any version 2 program. The NFSv2
-procedures gained nfsd_map_status() in exchange, but the NFS_ACL v2
-procedures did not, so the unmapped status reaches the encoder.
+Skip LAYOUT_FLEX_FILES in nfsd4_setup_layout_type() unless v3 is enabled.
 
-Add the same mapping to the NFS_ACL v2 procedures.
-
-Fixes: 1459ad57673b ("nfsd: Move error code mapping to per-version proc code.")
+Reported-by: Benji Wiebe <itsme@benjiwiebe.com>
+Closes: https://lore.kernel.org/linux-nfs/c734eeb8-8486-4491-bb4d-b9656cbaffbe@app.fastmail.com/
+Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260916004240.141975-1-cel@kernel.org
+Assisted-by: LLM
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260904-pnfs-ff-v1-1-5f502cf25401@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
-[ sashal: Placed nfsacld_map_status() before the NULL handler because the upstream access-map declarations are absent. ]
+[ sashal: adapted the flexfiles condition to the older layout-selection code that uses direct block/SCSI checks ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs2acl.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ fs/nfsd/nfs4layouts.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/nfs2acl.c b/fs/nfsd/nfs2acl.c
-index 2998640f259de..cf92e1f8df7d2 100644
---- a/fs/nfsd/nfs2acl.c
-+++ b/fs/nfsd/nfs2acl.c
-@@ -15,6 +15,20 @@
+diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
+index 0ff8994752637..a78e0bfdc9363 100644
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -125,6 +125,7 @@ nfsd4_set_deviceid(struct nfsd4_deviceid *id, const struct svc_fh *fhp,
  
- #define NFSDDBG_FACILITY		NFSDDBG_PROC
+ void nfsd4_setup_layout_type(struct svc_export *exp)
+ {
++	struct nfsd_net *nn = net_generic(exp->cd->net, nfsd_net_id);
+ #if defined(CONFIG_NFSD_BLOCKLAYOUT) || defined(CONFIG_NFSD_SCSILAYOUT)
+ 	struct super_block *sb = exp->ex_path.mnt->mnt_sb;
+ #endif
+@@ -132,9 +133,9 @@ void nfsd4_setup_layout_type(struct svc_export *exp)
+ 	if (!(exp->ex_flags & NFSEXP_PNFS))
+ 		return;
  
-+static __be32 nfsacld_map_status(__be32 status)
-+{
-+	switch (status) {
-+	case nfserr_nofilehandle:
-+	case nfserr_badhandle:
-+		status = nfserr_stale;
-+		break;
-+	case nfserr_wrongsec:
-+		status = nfserr_acces;
-+		break;
-+	}
-+	return status;
-+}
-+
- /*
-  * NULL call.
-  */
-@@ -79,6 +93,7 @@ static __be32 nfsacld_proc_getacl(struct svc_rqst *rqstp)
- 
- 	/* resp->acl_{access,default} are released in nfssvc_release_getacl. */
- out:
-+	resp->status = nfsacld_map_status(resp->status);
- 	return rpc_success;
- 
- fail:
-@@ -137,6 +152,7 @@ static __be32 nfsacld_proc_setacl(struct svc_rqst *rqstp)
- 
- out:
- 	/* argp->acl_{access,default} are released in nfsaclsvc_release_setacl. */
-+	resp->status = nfsacld_map_status(resp->status);
- 	return rpc_success;
- 
- out_drop_lock:
-@@ -163,6 +179,7 @@ static __be32 nfsacld_proc_getattr(struct svc_rqst *rqstp)
- 		goto out;
- 	resp->status = fh_getattr(&resp->fh, &resp->stat);
- out:
-+	resp->status = nfsacld_map_status(resp->status);
- 	return rpc_success;
- }
- 
-@@ -185,6 +202,7 @@ static __be32 nfsacld_proc_access(struct svc_rqst *rqstp)
- 		goto out;
- 	resp->status = fh_getattr(&resp->fh, &resp->stat);
- out:
-+	resp->status = nfsacld_map_status(resp->status);
- 	return rpc_success;
- }
- 
+-#ifdef CONFIG_NFSD_FLEXFILELAYOUT
+-	exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
+-#endif
++	if (IS_ENABLED(CONFIG_NFSD_FLEXFILELAYOUT) &&
++	    nfsd_vers(nn, 3, NFSD_TEST))
++		exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
+ #ifdef CONFIG_NFSD_BLOCKLAYOUT
+ 	if (sb->s_export_op->get_uuid &&
+ 	    sb->s_export_op->map_blocks &&
 -- 
 2.53.0
 
