@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590152;
-	b=QXHNDfLTO/03cHRlTspRgTjDcKTqxsyBtpd5R8IcPnSM5phe6OyunX/90c20SdCVR/iq
-	 b3V8lucGQUcoqAblrl/CFrTTUVa0M3x/fDBFOInkJX0QwFFO9ZNsN40e65lZPZi50yp/G
-	 +jXbt7jsqRlQNxw1Gseei2PxMgEzwzsBDN1MM97LlowjXty7FXmAs28rTgynYyKerb8bY
-	 tyCXz7+bUk07ZIsNuctaXiXZOadbZ5646Tm1iOWKn0Dgmuj85cQU2QWA8oldEb757IVn1
-	 XLIwyj1ctXUrg6LwARHR1nuR+gnUZbEYVSUvlcKMsGhUcfZoRaXEsTWMyNjDgyc/AaQ==
+	t=1794590153;
+	b=2criDcudmXI9lp3UfVq32Yn5s9I1B25AGwOv01ItT0AoWWn7ZEwr/O2SyK4vs35lLOJ/
+	 ovMh3eLPd7E7fgKv/r8GuVFqDVvRGAcwrxJKwTPrCZN9FOayJnt3C2FGY5mJKnhLp1NC+
+	 Iji6NxKdNtKjTiUbPTmAfXLh6eAPbL+gTxQIf2KxK5VOhhPtzzQXvKK1lUX6lKGsrx0AU
+	 GK2f7/aTYMkTyj2s5EEV1hCEodxF6yrBlZxKQ0wyoAE1T6KmrPCPvtp7nX3CluD1EeiEW
+	 /aMzfJHBkvdX3rUpxNWcmR/uZcpGc9Y9w+ozzQrsK1ZGEvecfofUdkMZxoLoma/bx7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590153;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LvjIeViM9FaGebNSw/EbmLRYqRP1X+fHWq8iUYNNuYs=;
-	b=A/J/+iFMdHWRQ1smpxGHPoiZqtkcZfguiY+r3S76RmzkhRisSuBwEu5+s0KnRDBUX9F/
-	 841hVAZhVgQNHHgU+nnfiOOU4DEMNJm/NEwG/FBbrmIWyF+j5+msF+u3JiTSrA27YKf10
-	 7Lpt2ue6RONBRmBWFUrvBc0fMNvPrykMQ10gMnfwZg0bXDuKztFHFNKS9m003M8BU7dfW
-	 ng07qnVVYLrCvzN/Nuo/D/itry3TGWxDVcP25cYgXVw7RCswFLKi9WojBfFTDzQwWJxEb
-	 2GCN7Pmgidge1nyHewPhjPLB6QcbQZt4Jn0KrWZ9VT9zcR3+e4sXRoUS9dyk/5o/3Kw==
+	bh=BPSCdA6tdUqkXxuzcZ452slkOA7Zj0ffriTE9EzLZ50=;
+	b=bjf5JtLMFsV5VGPg+Uaf83kxJeXMuQEXuBGm3gNArmLxDsbKTmVZHRiW5bW9bzaHL4Dz
+	 ROuBFOUfsGrqfVhVw7vG7NW/v9Bj/PREktyK/U2Ly9bAphtAdAZuJqBBmrnqqDP7FBONc
+	 DnR2QVGYv3GD8ESQsQDveg9fMdCm/FYpHrq2HRi+NUzTW7oMXs1H+I0JsKSPtUCwFm9Vx
+	 jhcoTyuuJW4bT0iLF+qPQKyl3bUTh+OEByLs3RXv7BEKfNTfQRcdtpdxFB1fIu94vaTmZ
+	 oU835relvmYuOr+VF4PJi/0i7Vqpf07iOqyaKQ/ASbwUnl0PWFX4hC0uvelI4PT3mgQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pJ5YKhFe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnNNKS+e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00245606A8BC;
-	Fri, 13 Nov 2026 17:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA48D606D4A1;
+	Fri, 13 Nov 2026 17:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pJ5YKhFe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5571F000C4;
-	Fri, 13 Nov 2026 17:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wnNNKS+e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 963AD1F000C4;
+	Fri, 13 Nov 2026 17:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590151;
-	bh=LvjIeViM9FaGebNSw/EbmLRYqRP1X+fHWq8iUYNNuYs=;
+	s=korg; t=1794590152;
+	bh=BPSCdA6tdUqkXxuzcZ452slkOA7Zj0ffriTE9EzLZ50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pJ5YKhFeyYaoHnwyjBnK2V39mR/vuI+yCZ5tKgOAtTugVQVfMrb1PZAAjqeMz+7qX
-	 M+fNuPHseOCSOQrOspUUCSZaQCyRZorkSLrXdoIRMXAobC2Jh4+aO42MIHSACX1QHK
-	 kz0BKqv5YIlWPAYtbPYYo2VUl9k9C9sgsJmFJPFI=
+	b=wnNNKS+evuA0dQmsopqLcuSLlbyba7dAYysT98BskkFKVRRQLB2eP79xXQFZVXewG
+	 V0LGPKbjHOcVOp+i6k44BzKpause7dzqXIV9YtuaeDcL89GW+HUdQ0dWskVHNa4Jn6
+	 os778JWlK2MyYGk1YjEq5sbZIcWW+O/d2/E6nea8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	syzbot+9bda1b9fbb7fbdf9b62b@syzkaller.appspotmail.com,
+	Yun Zhou <yun.zhou@windriver.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 139/686] rose: hold the listener while a Call Request is queued on it
-Date: Fri, 13 Nov 2026 10:44:32 -0500
-Message-ID: <20261113153825.512208126@linuxfoundation.org>
+Subject: [PATCH 6.18 166/686] net: erspan: set lltx to avoid sch_direct_xmit deadlock
+Date: Fri, 13 Nov 2026 10:44:59 -0500
+Message-ID: <20261113153826.431439980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -67,111 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-rose_rx_call_request() runs in softirq context for every Call Request
-addressed to us. It finds the listening socket with
-rose_find_listener(), which returns it without a reference once
-rose_list_lock is dropped, then creates the new socket, queues it on
-the listener's receive queue and wakes the listener up. Nothing stops
-the process owning the listener from closing it meanwhile:
-rose_release() destroys a listening socket at once, and the Call
-Request writes into freed memory. A node daemon that restarts while
-calls come in does exactly this.
+[ Upstream commit 2d36ec73836e83175deb467fd494c61006107e5d ]
 
-Take a reference in rose_find_listener(), lock the listener in
-rose_rx_call_request() and refuse the call if it has been closed in the
-meantime. rose_release() marks the socket dead with sock_orphan()
-before rose_destroy_socket() empties its queue under the socket lock,
-so a listener found alive once locked will see the new socket on its
-queue, either in rose_accept() or when it is destroyed.
+The ERSPAN xmit path re-enters the network stack, causing nested
+acquisition of _xmit_lock on the underlay device while already holding
+the ERSPAN device's _xmit_lock, creating an ABBA deadlock. This happens
+for both IPv4 ERSPAN (erspan_xmit() -> ip_tunnel_xmit()) and IPv6 ERSPAN
+(ip6erspan_tunnel_xmit() -> ip6_tnl_xmit()):
 
-On a QEMU bench with two 4-CPU guests (KASAN, lockdep), six threads on
-A calling B without a break while B opens a listening socket, keeps it
-0 to 30 ms and closes it, for 40 s: before, KASAN reports a
-slab-use-after-free in rose_rx_call_request() a few seconds in, the
-socket having been freed by close() on B; with a 20 ms delay after
-rose_find_listener() the corrupted socket list then panics B in
-rose_neigh_put(). After, no report in either case, with about 400
-calls connected as before.
+  sch_direct_xmit [lock erspan] -> erspan_xmit -> ip_tunnel_xmit ->
+  ip_output -> __dev_queue_xmit -> sch_direct_xmit [lock underlay]
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 8bd85552e2ae1a606eda4b6c096a7e3bd0bcff62)
+  sch_direct_xmit [lock erspan] -> ip6erspan_tunnel_xmit -> ip6_tnl_xmit ->
+  ip6_output -> __dev_queue_xmit -> sch_direct_xmit [lock underlay]
+
+Set dev->lltx = true so HARD_TX_LOCK() skips the spinlock for ERSPAN.
+This is safe as the ERSPAN xmit path has no shared mutable state: o_seqno
+is atomic, TX stats are per-CPU u64_stats, dst_cache is per-CPU, and
+o_flags is no longer modified in the xmit path since commit 9958e69b9893
+("gre: fix ERSPAN o_flags race/corruption in xmit and fill_info").
+GRETAP, the sibling device with identical xmit structure, already sets
+lltx.
+
+Reported-by: syzbot+9bda1b9fbb7fbdf9b62b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9bda1b9fbb7fbdf9b62b
+Fixes: 84e54fe0a5ea ("gre: introduce native tunnel support for ERSPAN")
+Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
+Cc: stable@vger.kernel.org # 9958e69b9893 ("gre: fix ERSPAN o_flags race/corruption in xmit and fill_info")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261008093824.119453-1-yun.zhou@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 32 +++++++++++++++++++++++++++-----
- 1 file changed, 27 insertions(+), 5 deletions(-)
+ net/ipv4/ip_gre.c  | 1 +
+ net/ipv6/ip6_gre.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 614d033410fa3..8d0878cf2b01c 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -278,7 +278,7 @@ static void rose_insert_socket(struct sock *sk)
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index b1ec4f92d3462..7df1ada13c2a1 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -1366,6 +1366,7 @@ static int erspan_tunnel_init(struct net_device *dev)
+ 	dev->features		|= GRE_FEATURES;
+ 	dev->hw_features	|= GRE_FEATURES;
+ 	dev->priv_flags		|= IFF_LIVE_ADDR_CHANGE;
++	dev->lltx = true;
+ 	netif_keep_dst(dev);
  
- /*
-  *	Find a socket that wants to accept the Call Request we just
-- *	received.
-+ *	received. A reference is taken on the socket found.
-  */
- static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
- {
-@@ -304,6 +304,8 @@ static struct sock *rose_find_listener(rose_address *addr, ax25_address *call)
- 	}
- 	s = NULL;
- found:
-+	if (s)
-+		sock_hold(s);
- 	spin_unlock_bh(&rose_list_lock);
- 	return s;
- }
-@@ -1103,12 +1105,31 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
- 	}
+ 	return ip_tunnel_init(dev);
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index c14c76b78b984..17c5e9440bfa3 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1863,6 +1863,7 @@ static int ip6erspan_tap_init(struct net_device *dev)
+ 		dev->mtu -= 8;
  
- 	sk = rose_find_listener(&facilities.source_addr, &facilities.source_call);
-+	if (!sk) {
-+		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
-+		return 0;
-+	}
-+
-+	/*
-+	 * The listener may be closed by rose_release() at any time. It is
-+	 * marked dead before rose_destroy_socket() empties its queue, so
-+	 * once it is locked a listener that is not dead will see the new
-+	 * socket on its queue, either in rose_accept() or when it is
-+	 * destroyed.
-+	 */
-+	bh_lock_sock(sk);
+ 	dev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
++	dev->lltx = true;
+ 	ip6erspan_tnl_link_config(tunnel, 1);
  
- 	/*
- 	 * We can't accept the Call Request.
- 	 */
--	if (sk == NULL || sk_acceptq_is_full(sk) ||
--	    (make = rose_make_new(sk)) == NULL) {
-+	if (sock_flag(sk, SOCK_DEAD) || sk->sk_state != TCP_LISTEN ||
-+	    sk_acceptq_is_full(sk))
-+		make = NULL;
-+	else
-+		make = rose_make_new(sk);
-+	if (!make) {
-+		bh_unlock_sock(sk);
-+		sock_put(sk);
- 		rose_transmit_clear_request(neigh, lci, ROSE_NETWORK_CONGESTION, 120);
- 		return 0;
- 	}
-@@ -1164,8 +1185,9 @@ int rose_rx_call_request(struct sk_buff *skb, struct net_device *dev, struct ros
- 
- 	rose_start_heartbeat(make);
- 
--	if (!sock_flag(sk, SOCK_DEAD))
--		sk->sk_data_ready(sk);
-+	sk->sk_data_ready(sk);
-+	bh_unlock_sock(sk);
-+	sock_put(sk);
- 
- 	return 1;
- }
+ 	netdev_hold(dev, &tunnel->dev_tracker, GFP_KERNEL);
 -- 
 2.53.0
 
