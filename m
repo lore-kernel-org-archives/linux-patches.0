@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590993;
-	b=CZ9daRpTyGGccQQqU9JlS+Qz8PjISdGhbvY1+ri92Mpa1KzexfMv/ZK2iPHZfjmulQwN
-	 baLEgXA1wh+SQWyvIa4qx/0GWtXfkSYXvOdfuuywjtBhpiw9ZqlthGl7v1iUpQWQl+h8y
-	 o/HxeUc9F8xEsZO3Gr/WBMm8OxLp6Kx1YhlKDOxvlqvKdf0gnAa1w9vObAGG2IKnMjNIH
-	 NrG38puYnfvqLRxe7tHgcQypZasKaGPtYRjs5Y8CkPvCsPYiK8hFa0EOXh3MWvxq/tae+
-	 W6O/C8xvmNnQlDb6jDhTjt2zR+J7jUyEP8Kmh4yKyUbQgsyduEK8s5XfMSS6hIXfgWw==
+	t=1794590994;
+	b=23mc3sfSIr7hhs4vGiB5vR+29BEaCjP5s61c6WTDGTHYWIH4a7+nC0rymHhIJh1/9BOu
+	 VjAkMwPZhkFKVEtYW+Y2Uz0kNIitcvHmnOc6rHYuXg+4sA6mQgDuYlouGbygyHcU/CEMp
+	 0gP91XhEzktDKzhXaIoBEqILNeIppcptmgAuMoLsvJWpx8xbSSqfzOWxbX2fgan+bz7tW
+	 CtUIyLtupEG+q3gxqf9lTXB+rSTxtQq4gZHsyDnIrj0JXvcYtEFYH3LtCHr1ip/TWteFZ
+	 071EZCeO9mSh8PK2qMPZrEERftjvgFmrYzSUpR0Gj7t+w5xnbPHTy0owMX0kM7m5GHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590993;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590994;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HeZ5fXyKLQjXdgdxYkjHPsJOIUKVvscNDYpbQv4ucx4=;
-	b=sV1a3tazQH++Y1GaIHSOTZ4O+yfUh7kLOWJ0QxaoxWDV31Tx8HQG9uG67VgKtG4aH8pn
-	 3QDThmLknHB8icK42wKv4fasG6K2M+fb8sX6GAJ1mNCFXOeHxRQMcdG0NXd407vzFCGFI
-	 EQuT3BzJvwp130w5+iuu0rxS79v2/Xp/Ja4l6BY923dKry2kXGikwJAwU84oX1QXgbSkx
-	 DagyDn4G2jLLYCMZFSzKACrgqeIUnoUt9iG/AtXau0j2ffIkilll3T6zofrVjfa4bn36m
-	 lfALOdbwVCGvp8j97cZ+80CowTPgsD/Wsq6TmL2prx8wa5QPOgD/FJdxl/P3I8nYr/A==
+	bh=GzzMvfSo17WWnZaMIRU54/BzBRHBh1RTeTJD8ALem6c=;
+	b=35F88AnzZ0Fc5gACzRySe7YF3mZK0jn8DGBdKS3GfeavC/0DGRYq5etqMXGzIRQChD13
+	 JZcLotOezVfkmOX04mJ23+5jAkb+4fuWNOEcA1zixBxGW+3kZy5Y5nRpaXwT01d9m+Uu9
+	 +CB7qKLW84Lq2wqxmB8qayAVoNjWOg4f5exhwHr2d01Y64ayn2MI8XTsNHAD4Z38UXtca
+	 Hf1MmEm76XU9/MtpJkytUC0M6h5r4EnjhxeMcKKq1CATQ6RzlpVsiXuMsWAYpC0+HwgZ0
+	 mNs8Gv64VwRid1bP/uIwFaDuXxWrrP2J5D6E4SVZ+go3cqUUMkIwJG61Tt19HcqLj9A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ltt4LNN0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DzSx0YzM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E98960703F9;
-	Fri, 13 Nov 2026 17:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4ACA607140C;
+	Fri, 13 Nov 2026 17:29:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ltt4LNN0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6AE1F000C4;
-	Fri, 13 Nov 2026 17:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DzSx0YzM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5110D1F000C4;
+	Fri, 13 Nov 2026 17:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590993;
-	bh=HeZ5fXyKLQjXdgdxYkjHPsJOIUKVvscNDYpbQv4ucx4=;
+	s=korg; t=1794590994;
+	bh=GzzMvfSo17WWnZaMIRU54/BzBRHBh1RTeTJD8ALem6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ltt4LNN0IY82anQfEizhggVrPca13YOJlTN/UUfRB0EaboPJxt82pK4b38UcuFhTk
-	 WeRQNtCPpR6Q/CfJ7cBFcKWQ4cQDZUb0BPRrdZofjqKF/ImDK/bnMzhJvBkJ/S4cRr
-	 m/0YcmW4CtVX2h1+WybcrTVhBYUbUkVoWm8KIKCo=
+	b=DzSx0YzMe1krhlQRvjaYlKAdGQBCLET4rFr0Toc+gry364SGfLTCoBLESUV32cezd
+	 w0kDjMLadcF3FSEY+khousCrWE7VlmiIUl2tmwU8XGpMwh4r+dPezjR4JdZufmsfjH
+	 yKJ6gXlGV2z+A/SMTAFksQhw/JYAhd3xOqS72YYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Noam D. Eliyahu" <noam.d.eliyahu@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>,
+	Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>,
+	Ao Wang <wangao@seu.edu.cn>,
+	Xuewei Feng <fengxw06@126.com>,
+	Qi Li <qli01@tsinghua.edu.cn>,
+	Ke Xu <xuke@tsinghua.edu.cn>,
+	Jackie Liu <liuyun01@kylinos.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 167/670] tg3: Invert restart quirk logic to restrict SNP power-down bypass
-Date: Fri, 13 Nov 2026 10:45:31 -0500
-Message-ID: <20261113153817.735614945@linuxfoundation.org>
+Subject: [PATCH 6.12 168/670] net/9p/usbg: fix prefix matching in device lookup
+Date: Fri, 13 Nov 2026 10:45:32 -0500
+Message-ID: <20261113153817.767297261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,117 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Noam D. Eliyahu <noam.d.eliyahu@gmail.com>
+From: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
 
-[ Upstream commit d7314b51341c037973ce022f12c6009fd07b021e ]
+[ Upstream commit 9ee83ef8d24f11feb55fd0d222c0ec19f09dbd3f ]
 
-Commit 9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF")
-bypassed `tg3_power_down()` on system restarts to prevent reboot hangs and
-NMIs on servers where NICs were initialized via SNP (such as Dell PowerEdge
-R650 and R750).
+p9_usbg_create() matches the mount source against registered usb9pfs
+instance tags with strncmp() and the length of the caller supplied source.
+That accepts any prefix of the registered tag.
 
-However, skipping the power-down flow globally causes the ACPI _PTS method
-to trigger fatal PCIe AER events and hangs on other models. Commit
-e0efe83ed325 ("tg3: Disable tg3 PCIe AER on system reboot") attempted to
-mitigate this by adding an AER-disable DMI quirk table. Maintaining a
-growing list of models for a secondary symptom misses the root cause,
-leaving systems like the PowerEdge T440 (sharing the BCM5720 NIC) exposed.
+For example, a gadget instance tagged "secret_channel" can be selected with
+"s", "sec", or any other non-empty prefix.  Once selected, the instance is
+marked in use and the client is attached to that transport.  This differs
+from the configfs tag lookup path, which uses strcmp() and therefore
+requires an exact tag match.
 
-Fix this by inverting the quirk logic:
-1. Restrict SNP power-down avoidance strictly to
-   `tg3_restart_snp_quirk_table` for the specific systems requiring it
-   (Dell PowerEdge R650 and R750).
-2. Restore standard power-down behavior for all other systems, eliminating
-   the separate AER-disable quirk table.
+Require an exact tag match in p9_usbg_create() as well.
 
-For systems affected by the original SNP restart issue, their shutdown flow
-remains completely untouched.
-
-Link: https://lore.kernel.org/netdev/20251221175050.14089-1-noam.d.eliyahu@gmail.com/T/#u
-Fixes: 9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF")
-Fixes: e0efe83ed325 ("tg3: Disable tg3 PCIe AER on system reboot")
+Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
 Cc: stable@vger.kernel.org
-Signed-off-by: Noam D. Eliyahu <noam.d.eliyahu@gmail.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://patch.msgid.link/20261026220955.473247-1-noam.d.eliyahu@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Reported-by: Yuxiang Yang <yangyx22@mails.tsinghua.edu.cn>
+Reported-by: Ao Wang <wangao@seu.edu.cn>
+Reported-by: Xuewei Feng <fengxw06@126.com>
+Reported-by: Qi Li <qli01@tsinghua.edu.cn>
+Reported-by: Ke Xu <xuke@tsinghua.edu.cn>
+Assisted-by: GLM:GLM-5.1
+Signed-off-by: Yizhou Zhao <zhaoyz24@mails.tsinghua.edu.cn>
+Co-developed-by: Jackie Liu <liuyun01@kylinos.cn>
+Signed-off-by: Jackie Liu <liuyun01@kylinos.cn>
+Message-ID: <20260607121907.12588-1-zhaoyz24@mails.tsinghua.edu.cn>
+Message-ID: <20260719040346.88295-1-liu.yun@linux.dev>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 42 ++++++++---------------------
- 1 file changed, 11 insertions(+), 31 deletions(-)
+ net/9p/trans_usbg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 7f143e388d420..190e7f622e7f8 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -18170,41 +18170,17 @@ static int tg3_resume(struct device *device)
+diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
+index 468f7e8f0277b..59505d2388f52 100644
+--- a/net/9p/trans_usbg.c
++++ b/net/9p/trans_usbg.c
+@@ -389,7 +389,7 @@ static int p9_usbg_create(struct p9_client *client, const char *devname, char *a
+ 	guard(mutex)(&usb9pfs_lock);
  
- static SIMPLE_DEV_PM_OPS(tg3_pm_ops, tg3_suspend, tg3_resume);
- 
--/* Systems where ACPI _PTS (Prepare To Sleep) S5 will result in a fatal
-- * PCIe AER event on the tg3 device if the tg3 device is not, or cannot
-- * be, powered down.
-+/* Systems where powering down a tg3 device on restarts triggers
-+ * NMIs and fatal hangs during reboot if the network adapters were
-+ * initialized under SNP.
-  */
--static const struct dmi_system_id tg3_restart_aer_quirk_table[] = {
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R440"),
--		},
--	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R540"),
--		},
--	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R640"),
--		},
--	},
-+static const struct dmi_system_id tg3_restart_snp_quirk_table[] = {
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R650"),
- 		},
- 	},
--	{
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R740"),
--		},
--	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-@@ -18228,14 +18204,18 @@ static void tg3_shutdown(struct pci_dev *pdev)
- 	if (netif_running(dev))
- 		dev_close(dev);
- 
--	if (system_state == SYSTEM_POWER_OFF)
-+	if (!dmi_first_match(tg3_restart_snp_quirk_table) ||
-+	    system_state == SYSTEM_POWER_OFF) {
- 		tg3_power_down(tp);
--	else if (system_state == SYSTEM_RESTART &&
--		 dmi_first_match(tg3_restart_aer_quirk_table) &&
-+	} else if (system_state == SYSTEM_RESTART &&
- 		 pdev->current_state != PCI_D3cold &&
- 		 pdev->current_state != PCI_UNKNOWN) {
- 		/* Disable PCIe AER on the tg3 to avoid a fatal
- 		 * error during this system restart.
-+		 * Needed since on restarts for systems in
-+		 * tg3_restart_snp_quirk_table skipping on powering down the
-+		 * tg3 device causes a fatal AER error during ACPI _PTS
-+		 * (Prepare To Sleep).
- 		 */
- 		pcie_capability_clear_word(pdev, PCI_EXP_DEVCTL,
- 					   PCI_EXP_DEVCTL_CERE |
+ 	list_for_each_entry(dev, &usbg_instance_list, usb9pfs_instance) {
+-		if (!strncmp(devname, dev->tag, strlen(devname))) {
++		if (!strcmp(devname, dev->tag)) {
+ 			if (!dev->inuse) {
+ 				dev->inuse = true;
+ 				found = 1;
 -- 
 2.53.0
 
