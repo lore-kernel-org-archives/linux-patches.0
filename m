@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585579;
-	b=QLs/q3l3OgVmge9WSnjI+Vm6lVkNimbwVCLYh8YQ+8pfRCzwtfnSepGH6H+w8qRAMnQl
-	 UeZzKTyMNXqt21Nj6k4kiVTD/7JapO3239uRhhAJ8NQQStYQI4E6Wug8YUnGLn5BA90m0
-	 n/4gB1SnCLv2mPz+MBx/oUwtnAgbkLUBk7GntOmCSMyWtxPfhZqPckuvVhMGOnqKhcAHX
-	 Jp7+2R73Vw1bSIuvysbdqCJwBuOrx18/FM0Y1ww2Ot0N26A+FUrXiQttkVElM8dbh+i04
-	 zkkhrjHPUmwYF2GivBTq9cwXhLwF7ZhOnOwhVhzGUuUJx49QfM7lz9JynjeGtI1+A7w==
+	t=1794585580;
+	b=FTDWZw7wxCwtWUc+/VGUKEGnwPecLAGuzGpVQYTxBIz6argvMAorJdcFWBr78W/6yNNx
+	 N1j/5hzJ4tObg0O2lJIk1IGY+peKi+1cYvDEvedkdNTRUcUjsrQUfAgNOxFGhAx/IFFkC
+	 OxBON1JFGVOI/zgBvxN6/Ly7bP1H/Kmjkfg17yo3IB6c9S2sk5EpwDi282Z8KwyWL8wdb
+	 E9VmiGz7zjLgKRV3PRcmF7Rf09P9ZThdFSYCuDeItXiObXDrCNAYmNxlKUMqAkxnCBPk5
+	 PbYLUJEJejO3F87COYAyCQCS9KeYh0t3yUpahpfi8sYFULHRHTqRvyQAuJFAJ4K9bUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M78a6RkxpYPf+ikbUXyeQiEadt4TIQWET+9ydtRFqEo=;
-	b=HfaGpA+klIFQq2VMwWbP9JjIvMlK6p1YM1+ATJjTU5loXYgQj3yHHsB/j1BzOcIHSOet
-	 UHUAs1HyAFlSwDYxb6vgMyYZO3wG3PUxfqQtgz5sAKIlyOop7pjOPFZ2vh3tVXGu2RxWx
-	 QlwPGOpgllz9/SrkiSbSeOqXXuKzFF1uH8Dp9O3PhhGLlPttoqp50Dws3NxGNdEXyZeup
-	 Dzh7ZUb0pO34WdX80CCaFsr/JDjmKldlH7R4AAcO85bMhOMBy3TGgtGPf2oI7LQqr8fVY
-	 m/c6kZjglF4nyf1tjytNWnvujz2MpaTCmEfxFSf9w7y2N3B4OtphHzbvvlRVNf+eI5Q==
+	bh=5HZZkmi4P/xb0J36uD7JMHURy1B3/w6f7mQAIlUEBWs=;
+	b=epkcDnecP2oOV2JLGbD7OsGJzH3PHJ/StzmQMwTgPDpe17D3Fjn+VgA0BoQ3jaIMIPBG
+	 YztNp7cGL3nQ/B7pgPglbnd4L2QcO+y11dyh9sVyJloUV4jq7ePVyJT5TwnSinyxr76G0
+	 pTpEa8l5TYmfD+EimIZb42nFvH5Lil7/iP4BUHu3ga9sA7pOQWi01NfarWi48Z1S02Q/7
+	 Ct8UNYZw6q42ZUxDwOsNKUH3L4bPVlZ1Aaihpsoki2kQgzUfl50/RqldDKJqiPhsTg7TD
+	 xCoU9qsFycQJOBU2je23iDQ3VOrwhgz6i6mYcrY6OONUhOVnVaeDyGZt3net+HgWXeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0r4JtRqk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDJREg2Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F413606EA84;
-	Fri, 13 Nov 2026 15:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CD71606EA9E;
+	Fri, 13 Nov 2026 15:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0r4JtRqk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFC91F000C6;
-	Fri, 13 Nov 2026 15:59:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDJREg2Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6F41F000C4;
+	Fri, 13 Nov 2026 15:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585579;
-	bh=M78a6RkxpYPf+ikbUXyeQiEadt4TIQWET+9ydtRFqEo=;
+	s=korg; t=1794585580;
+	bh=5HZZkmi4P/xb0J36uD7JMHURy1B3/w6f7mQAIlUEBWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0r4JtRqkZ1L2mVy2jPH1eUVXKxaPT2oYfwoXuWAuXxZtitkSRiBAq8pSxdccJwveT
-	 2kkxSH9/+318ZQB8P4uG6CzcVEwWuYwDFMyPAt8+MePkD1/HQ0PsPf79fj/gK4Wrj5
-	 V9sAZZXCrRIdsxrEi0npTi8KQpKiP3S9hm6REYN4=
+	b=PDJREg2Qn/GdYFgk+hUNWG0YjrPEThWuQsQ58sNmDlxC6gj4lVnLDmie+otsvl5p+
+	 shvd8pFXdz8DOgLwTPKU805bUihXz9aKbCtaoiv9Gso8641sG6S5VpEV4Bj4qARrCM
+	 KN1w1/5vXA+asxHScccSZi5vehd1sjaYSoEjOVKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Calligeros <jcalligeros99@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kyle Zeng <kylebot@openai.com>,
+	Florian Westphal <fw@strlen.de>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Wang Zhan <wang.zhan@smartx.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 211/507] ASoC: tas2770: Fix error detection in tas2770_set_dai_tdm_idle
-Date: Fri, 13 Nov 2026 10:48:35 -0500
-Message-ID: <20261113153801.639075035@linuxfoundation.org>
+Subject: [PATCH 7.3 212/507] inet: frags: limit the truesize of a reassembly queue
+Date: Fri, 13 Nov 2026 10:48:36 -0500
+Message-ID: <20261113153801.671672012@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,83 +73,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Calligeros <jcalligeros99@gmail.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit f65f866dacbb10a37e4fae4076627c767afd3cbb ]
+[ Upstream commit 3ae20e4697eb969104fe4b1e98a675f0100382b6 ]
 
-snd_soc_component_update_bits returns 1 on a successful update, and
-we were returning from tas2770_set_dai_tdm_idle early on any nonzero
-return code. Change this so that only negative return codes are
-treated as errors.
+The truesize of fragments in a reassembly queue is only bounded by
+the per netns ipfrag_high_thresh sysctl, which has no upper limit.
 
-Fixes: af176d0787d2 ("ASoC: tas2770: expose SDOUT bus keeper via set_tdm_idle")
+inet_frag_reasm_finish() sums the truesize of all fragments in an int.
+If this sum reaches 2^32, it wraps, and the final sk_wmem_alloc
+adjustment of the socket owning the reassembled skb can cancel its own
+reference, leading to a use-after-free of this socket.
+
+This can be triggered from an unprivileged user/network namespace,
+raising ipfrag_high_thresh and using padded TUN packets, which keep
+a large truesize after being trimmed by ip_rcv_core().
+
+Track the sum of the truesize of fragments in each queue, and refuse
+a fragment that would make it bigger than INT_MAX / 2. Callers kill
+the queue on this error. This bound is far above the needs of
+legitimate traffic.
+
+Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
 Cc: stable@vger.kernel.org
-Signed-off-by: James Calligeros <jcalligeros99@gmail.com>
-Link: https://patch.msgid.link/20261025-tas2770-idle-fix-v2-1-6c8096a87f44@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Kyle Zeng <kylebot@openai.com>
+Cc: Florian Westphal <fw@strlen.de>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Tested-by: Wang Zhan <wang.zhan@smartx.com>
+Link: https://patch.msgid.link/20261030081225.2575462-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2770.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ include/net/inet_frag.h  | 9 +++++++++
+ net/ipv4/inet_fragment.c | 5 +++++
+ 2 files changed, 14 insertions(+)
 
-diff --git a/sound/soc/codecs/tas2770.c b/sound/soc/codecs/tas2770.c
-index e79754edac5ca..355fcbfd01c79 100644
---- a/sound/soc/codecs/tas2770.c
-+++ b/sound/soc/codecs/tas2770.c
-@@ -513,7 +513,7 @@ static int tas2770_set_dai_tdm_idle(struct snd_soc_dai *dai,
- 		ret = snd_soc_component_update_bits(component, TAS2770_DIN_PD,
- 						    TAS2770_DIN_PD_SDOUT,
- 						    TAS2770_DIN_PD_SDOUT);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
+diff --git a/include/net/inet_frag.h b/include/net/inet_frag.h
+index b02d2472b003e..c1fb419a9cf03 100644
+--- a/include/net/inet_frag.h
++++ b/include/net/inet_frag.h
+@@ -79,6 +79,7 @@ struct frag_v6_compare_key {
+  * @tstamp_type: stamp has a mono delivery time (EDT)
+  * @flags: fragment queue flags
+  * @max_size: maximum received fragment size
++ * @truesize: sum of the truesize of queued fragments
+  * @fqdir: pointer to struct fqdir
+  * @rcu: rcu head for freeing deferall
+  */
+@@ -100,6 +101,7 @@ struct inet_frag_queue {
+ 	u8			tstamp_type;
+ 	__u8			flags;
+ 	u16			max_size;
++	unsigned int		truesize;
+ 	struct fqdir		*fqdir;
+ 	struct rcu_head		rcu;
+ };
+@@ -172,6 +174,13 @@ extern const u8 ip_frag_ecn_table[16];
+ #define IPFRAG_DUP	1
+ #define IPFRAG_OVERLAP	2
+ #define IPFRAG_MIXED_SECPATH	3
++#define IPFRAG_TOOBIG	4
++
++/* Max sum of the truesize of fragments in a queue. This keeps the sums
++ * done in inet_frag_reasm_prepare() and inet_frag_reasm_finish() well
++ * below INT_MAX. Legitimate traffic stays far below this limit.
++ */
++#define INET_FRAG_MAX_TRUESIZE	(INT_MAX / 2)
+ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ 			   int offset, int end);
+ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index c18da91c1f031..0b8d22ffafca6 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -336,6 +336,7 @@ void inet_frag_queue_flush(struct inet_frag_queue *q,
+ 	q->rb_fragments = RB_ROOT;
+ 	q->fragments_tail = NULL;
+ 	q->last_run_head = NULL;
++	q->truesize = 0;
+ }
+ EXPORT_SYMBOL(inet_frag_queue_flush);
  
- 		break;
-@@ -521,12 +521,12 @@ static int tas2770_set_dai_tdm_idle(struct snd_soc_dai *dai,
- 		ret = snd_soc_component_update_bits(component, TAS2770_TDM_CFG_REG4,
- 						    TAS2770_TDM_CFG_REG4_TX_KEEPER,
- 						    TAS2770_TDM_CFG_REG4_TX_KEEPER);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
+@@ -446,6 +447,9 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ 	if (last && !secpath_equal(last, skb))
+ 		return IPFRAG_MIXED_SECPATH;
  
- 		ret = snd_soc_component_update_bits(component, TAS2770_TDM_CFG_REG4,
- 						    TAS2770_TDM_CFG_REG4_TX_FILL, 0);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
++	if (skb->truesize > INET_FRAG_MAX_TRUESIZE - q->truesize)
++		return IPFRAG_TOOBIG;
++
+ 	/* An IP fragment is never a GSO packet, but an untrusted source
+ 	 * (virtio_net_hdr) may have attached GSO metadata to it. Do not let
+ 	 * that reach the reassembled skb, whose head keeps the first
+@@ -510,6 +514,7 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ 	if (offset)
+ 		nf_reset_ct(skb);
  
- 		break;
-@@ -534,25 +534,25 @@ static int tas2770_set_dai_tdm_idle(struct snd_soc_dai *dai,
- 		ret = snd_soc_component_update_bits(component, TAS2770_TDM_CFG_REG4,
- 						    TAS2770_TDM_CFG_REG4_TX_KEEPER,
- 						    TAS2770_TDM_CFG_REG4_TX_KEEPER);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
- 
- 		ret = snd_soc_component_update_bits(component, TAS2770_TDM_CFG_REG4,
- 						    TAS2770_TDM_CFG_REG4_TX_FILL,
- 						    TAS2770_TDM_CFG_REG4_TX_FILL);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
- 
- 		break;
- 	case SND_SOC_DAI_TDM_IDLE_OFF:
- 		ret = snd_soc_component_update_bits(component, TAS2770_DIN_PD,
- 						    TAS2770_DIN_PD_SDOUT, 0);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
- 
- 		ret = snd_soc_component_update_bits(component, TAS2770_TDM_CFG_REG4,
- 						    TAS2770_TDM_CFG_REG4_TX_KEEPER, 0);
--		if (ret)
-+		if (ret < 0)
- 			return ret;
- 
- 		break;
++	q->truesize += skb->truesize;
+ 	return IPFRAG_OK;
+ }
+ EXPORT_SYMBOL(inet_frag_queue_insert);
 -- 
 2.53.0
 
