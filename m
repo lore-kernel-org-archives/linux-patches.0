@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590223;
-	b=4o6E2bIeJAeG+98IZQkZ954wQbteBfmCeGhM+SjaKpse7OOeq7DYN81WtyZo+HO/ZVag
-	 VtkS5FwSqZrmaZJOHIJT+ab3h3JqpUB7DLlSeL5jf8xI84uaH9yO9zstIkgh7aZ0cPyE8
-	 0v1NuiWkyZzpmonJn3uYU/HJwA54awwY3ngLs0MTA4404j0V3NZkaf40AD5uNk2MtYvdm
-	 JkrVXsMlg+WC6Czfj+sT/DLqaeFZbONQVB2l+zCuYG7uPInwVlorkxBH/YZW2lP+qCH7Y
-	 pP+8puVTDnN3wL3ddg6g/7NwuRFHURSZGE5647Nsgc7nnyOsXAEYtrd63hFYyvQxcsw==
+	t=1794590224;
+	b=aq+nwynjvTkKbbyUZwnm2HXA1yifNgI5UW8l+5Xuf1BTK9WjgZRsNE6OdGJKxaGxBcXU
+	 pzqNqnWSGOUd7IRiF615Baa+FLt/9vtHbA/vobIiRu241pl4yD3VJdurC+Jnl3JWRUYyQ
+	 X7lRCb+iiOoTHlfzLZuM2NWs2A25vv6zqyRYJIVe6CMztgsaBu6ImEvPYClRMw0IMQ2Lp
+	 J32ZoY1X+y3tTFLnBd1aegWSKccKO4I3konoWVkOE7j3AtX8XM6MSBOF9GTjDwNT2fcqo
+	 EC96gKVMuV1lu3dOQMmepztUnTYCK/BcDFv6Iyt09OfRPZ11RWq5bflURn9KWPF8SJg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590224;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cyOSScs9fYJ1fhlZpm/21CZfVnJ+brSKo2jnrvQL6po=;
-	b=hZp8TvK6n2lFZxj7kWggqJNFLTHU5d70Vizvfyu40ipXmky/Y1sPk9YuVwodkiug+5u7
-	 9Qpylo7DHrc5btHtNATWKf0XtVjIGqhnPfpzUGaeW8nXoh1VF97hsDAQ+uesVMwuqxsjD
-	 pqaYjiQKfUS6pjF1+IVGje3tCRLo/Uw91qhJ6eTy3XJn0bQBbAD5ITEASDHrDB5AoaUjC
-	 PYEdubtacrTwhzDUzWqgtSeK4Gsbh4chklOSilAyXg7x2+E7TKYDDSpBWr65EpNhTreBr
-	 v+rZT3erY9lRLt/D93BYOlffAgBcjMONZc2HVK8OuCdFUiwF7RFgsTj9OydrYqSAnpw==
+	bh=nmcDQ98y1kT2kH7vqd/RmMDWlyiZJZeXPW/IDsLkG+8=;
+	b=Ww2NkhDrs8vqWRu1IvD0jjVhYNBL9hzKmZ223TGQ7wsqgSjCa1Z8BbdHFFqoAvlntfUt
+	 smzT/Q8PIZO7yqonoYBZi1EoMSCJgEQgt8xZNmH3aZPcUNfzhxHM9JqH2zyI8+kgPExSO
+	 RZYHhntbBA685UgevCuD8/WHwvDwq6yL9S8B6vWpLfM1phDME78gsptFRS1YhVsFgttvG
+	 NY/dRNzPFIxbd4074Dh6XXb1Um45LDGbUiEsOtCc4kiwl/VO4W7w9IFf22L4ORBT8VLLm
+	 tkWYAi2S4lbZrklm5dqhpu+X1Qo6YeFSw4RcNxuC0o/b2C3NPBTUoDW6EDpymDzChDA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yr57Z2BJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1LvQGSs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19B7606C08A;
-	Fri, 13 Nov 2026 17:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931D5606C08A;
+	Fri, 13 Nov 2026 17:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yr57Z2BJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06AB41F000C4;
-	Fri, 13 Nov 2026 17:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z1LvQGSs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC5C1F000C6;
+	Fri, 13 Nov 2026 17:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590223;
-	bh=cyOSScs9fYJ1fhlZpm/21CZfVnJ+brSKo2jnrvQL6po=;
+	s=korg; t=1794590224;
+	bh=nmcDQ98y1kT2kH7vqd/RmMDWlyiZJZeXPW/IDsLkG+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yr57Z2BJydYjDrXkOvAIVDjWH54YOMbSB5o+b/qV0lgZU3OaerAfnuFm2b7FgHw2H
-	 kmrwxQU2IW3S0ULzfa7mmMDu70WbdjZCw76iXgQVMbAZBlbv9sW6egNalp2+ftOO4C
-	 REZpLrSZQEUOOy2cp2D07JACAndS3Z+vGtikbxUE=
+	b=z1LvQGSsH/6/n8sUPdim7KWCJAM7iqCTD7oBQ3be37aRcGJ0TY5o+8o5Dp3UfGvX/
+	 +/ph0eHDpaW+IhuGTkcT8LxGCsNp8Adr6m0S390/JxjwyVr8SlyOY3BWfqil+UbT3J
+	 WTJHhzeU97SONuwtiqy4UGXml/sfoGuGweRMTRbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <mgr@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Yingjie Wang <x-professor@outlook.com>,
+	Yang Xiuwei <yangxiuwei@kylinos.cn>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 187/686] net/9p/usbg: set client to Disconnected on usb9pfs_disable
-Date: Fri, 13 Nov 2026 10:45:20 -0500
-Message-ID: <20261113153827.336153406@linuxfoundation.org>
+Subject: [PATCH 6.18 223/686] scsi: bsg: Report synchronous data copyback failures
+Date: Fri, 13 Nov 2026 10:45:56 -0500
+Message-ID: <20261113153828.584164845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,41 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Grzeschik <mgr@kernel.org>
+From: Yingjie Wang <x-professor@outlook.com>
 
-[ Upstream commit 795f8eeca01d1c9ca3d9a450385b7745ace4e53a ]
+[ Upstream commit a52f2ad45726d788755b525adcf51f65a6b836ff ]
 
-This patch is setting the client status to Disconnected, when the
-client is still in use. Otherwise a disconnected usb cable would run
-any use of the mount to faults.
+scsi_bsg_sg_io_fn() ignores the result of blk_rq_unmap_user(). For a
+data-in command that uses a bounce buffer, unmapping copies the completed
+data to userspace. If that copy fails, SG_IO can report success despite the
+copyback failure.
 
-Fixes: a3be076dc174 ("net/9p/usbg: Add new usb gadget function transport")
+Capture the unmap status. Preserve an earlier sense-buffer copy error and
+otherwise return the data copyback error. This matches the error precedence
+used by scsi_complete_sghdr_rq().
+
+On x86_64, a virtio-scsi INQUIRY with an unaligned PROT_NONE destination
+made ioctl() return 0 in 20/20 runs before this change and return -1 with
+errno EFAULT in 20/20 runs afterward. Writable controls succeeded in 20/20
+runs on both kernels.
+
+Fixes: 10e8855b9451 ("bsg: add SG_IO to SG v4")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Grzeschik <mgr@kernel.org>
-Message-ID: <20260922-usb9pfsfixes-v1-2-9d8dcc52904c@kernel.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Yingjie Wang <x-professor@outlook.com>
+Reviewed-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/2561d633cc8cef513d75eb1df260046a4971e783.1792772194.git.x-professor@outlook.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_usbg.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/scsi/scsi_bsg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/9p/trans_usbg.c b/net/9p/trans_usbg.c
-index ff787f5fb1631..f1773749d9124 100644
---- a/net/9p/trans_usbg.c
-+++ b/net/9p/trans_usbg.c
-@@ -748,7 +748,12 @@ static int usb9pfs_set_alt(struct usb_function *f,
- static void usb9pfs_disable(struct usb_function *f)
- {
- 	struct f_usb9pfs *usb9pfs = func_to_usb9pfs(f);
-+	unsigned long flags;
+diff --git a/drivers/scsi/scsi_bsg.c b/drivers/scsi/scsi_bsg.c
+index a9a9ec086a7e3..e2e4b8bb559f9 100644
+--- a/drivers/scsi/scsi_bsg.c
++++ b/drivers/scsi/scsi_bsg.c
+@@ -15,7 +15,7 @@ static int scsi_bsg_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 	struct scsi_cmnd *scmd;
+ 	struct request *rq;
+ 	struct bio *bio;
+-	int ret;
++	int ret, unmap_ret;
  
-+	spin_lock_irqsave(&usb9pfs->lock, flags);
-+	if (usb9pfs->client)
-+		usb9pfs->client->status = Disconnected;
-+	spin_unlock_irqrestore(&usb9pfs->lock, flags);
- 	usb9pfs_clear_tx(usb9pfs);
- }
+ 	if (hdr->protocol != BSG_PROTOCOL_SCSI  ||
+ 	    hdr->subprotocol != BSG_SUB_PROTOCOL_SCSI_CMD)
+@@ -89,7 +89,9 @@ static int scsi_bsg_sg_io_fn(struct request_queue *q, struct sg_io_v4 *hdr,
+ 	else
+ 		hdr->dout_resid = scmd->resid_len;
  
+-	blk_rq_unmap_user(bio);
++	unmap_ret = blk_rq_unmap_user(bio);
++	if (!ret)
++		ret = unmap_ret;
+ 
+ out_put_request:
+ 	blk_mq_free_request(rq);
 -- 
 2.53.0
 
