@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591344;
-	b=33mgaGPD0j3KrojNyzilJ11ILXDTFzSUsaESxm7UAItURIr24w5U6KGS4wSx+yxLdHjG
-	 wd8cpbWANVJuyxsL/6ncJf1UdYC6dO/wMKUcLeKcwC+A2b3BiSGIHhP7wh0a4VizwK/HQ
-	 B0kPNGr3GMdZYTV1D07li7bTbCbzd/KShjv+SYCSbwWaNInshN1+TZFvUQaBO/x6Bdfbv
-	 kiROWL23zUiIcOBgwIL8Y9nu9V7cjBlRvgFkO00SjvvzTY+a9upBP05UeXPlDGOaHzsFs
-	 a4CPnW+cNfUrpY+ckijsBq1qmsV7LAN4e1L5pYPa7Qm/h2+aXAfUVF75l3I4WC/plHA==
+	t=1794591345;
+	b=pc5180BMRXndplHI6V7ml74KVHnsc/1nZFy4+6swVLJn3QvyaDgmtCK63wYFGnR7WNjM
+	 QyDvXE086bNhiYFqAUG9zKdHYnKcNIgPFhD0roeG6eXgCyYML4XvIjnG6rjp05myrWOMr
+	 i78jL+EDeJYnV38m2+6mc0rZAKMQmv8YmY8MH8Z83mIhuIZwBuqG6CnibGMhT/ZOB8whz
+	 bEbckGKk7fRMETEc8XkVGeTwqjyO0N6NanWNl9sm8+HcYmD8FIWj5WsMyA/lHPenrDMVs
+	 JFAwaJK5Yn9Qoc4H84lMVoCEkuL4EXOeVNdWqs5tc8fJ26lQ2/tPXi+KoFeGk2qpK5g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YPQamdYBR2e1wu64xRU9WXrhiClZ0u6h0saNDmeBy/U=;
-	b=Vyqr8/nh7o1CYPoO1CdOGrS3D6/BqijQoj5M3uph9BCjLNdwjds7oEiYwPXwSyeaH8al
-	 LBb3850bztP8rPRIcWWunG9JiUgJtDxZEl6SZx2jmpE24C70Q0b5wvvy5EL4sAvLFCGU5
-	 2gPieev2koyB92aCtCF1RT4OJS/Y4sEBY1LBq8vhFFgLXAqKmvHznSVIGVwd5cpJK/ltf
-	 w11d6x9hQOkUll7FJv5XC12wCpy2vmAQ+10+/mRvKSYhu5qPST73L/mvfCO+psK2ZRIGx
-	 Q3AyIiP/Axgs0dpCl71agzYGy775/lEA4O/dhMBe9c4UKs+zPyN2hIMOIMqex6mHjZg==
+	bh=065NG3isn1QwjV+ZNdFGoAgRLekx4D7BWEDZ6loN6zA=;
+	b=TRfqeCiAo43fGW7kfWm1ub9+PquiVGNTaM8uTHF1xajiB3E9SE8ZBS6YUErhN4VnYlaO
+	 YB6k4gqCDUQLZV1AX2wJz3gJ2VHik+OD0OfLQJNhQxxFd/KxlXXb3TS3j9HGzE0Z7V8W3
+	 YVYzntggOCnzPaIHDm7agx+MVqcG3XhEmp9gHdKPsCPKDqb9oC375HX6Axe1p7gD6loro
+	 DX3PLbVctC40yZn3L4erqgI/pTCo/vVIKGXpCcX5nLhTME0fexJQTSqDD4TRaxTnga2mr
+	 B6x2xl+WF53rOhLT1+azKcXPu9mKI/1mVsFg4fQzBHf5nAtCBWu0m7LSKQMHDVPhmHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=emkAerh+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc5c0cJF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527FE606CEED;
-	Fri, 13 Nov 2026 17:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5F6606ED8C;
+	Fri, 13 Nov 2026 17:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=emkAerh+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11031F000C4;
-	Fri, 13 Nov 2026 17:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc5c0cJF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2731F000C5;
+	Fri, 13 Nov 2026 17:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591343;
-	bh=YPQamdYBR2e1wu64xRU9WXrhiClZ0u6h0saNDmeBy/U=;
+	s=korg; t=1794591345;
+	bh=065NG3isn1QwjV+ZNdFGoAgRLekx4D7BWEDZ6loN6zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=emkAerh+v2aiHurQQq7a6xZ66oKhcwGXrAHXcNmWiXGTpK14rZQvf9Xu35UmxQSuA
-	 sVlyc7p+6ij5noW/irA7xVoFdP0x5Sjd02FWcV/3NwcAGxdnr9Gyix9ATU7eevAmtL
-	 sWhewxFOun5jic7MLaTsENf7CRHAvyKMsvcEr+yU=
+	b=sc5c0cJFWy0FJHE1EBXQIwZDNWKmlDEOL7Clgv65pnJMB//aptS6SHILbz+iZg3Q5
+	 r6FV36mshYOspE2XisqjHxNUurHUcpsym+1CqX8ks/SGrSWT8ZmndvbmCBYkG7DLjZ
+	 sUJIHeclUAdWfr0CvTHE1GOJMd5O/H1P01Vu1xPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 452/670] gfs2: reject invalid inode sizes
-Date: Fri, 13 Nov 2026 10:50:16 -0500
-Message-ID: <20261113153827.229389372@linuxfoundation.org>
+Subject: [PATCH 6.12 453/670] media: i2c: og01a1b: Switch from .s_stream to .enable_streams/.disable_streams
+Date: Fri, 13 Nov 2026 10:50:17 -0500
+Message-ID: <20261113153827.260144051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,74 +69,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaming Zhang <r772577952@gmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 33ed0a0567e0abe66ea65e89dad2e35082890fbe ]
+[ Upstream commit 3a594bb454ba1ecb005f753007fa1bb5c5e68bae ]
 
-A corrupted GFS2 image can store a dinode size that is larger than what VFS
-i_size can represent. gfs2_dinode_in() reads the on-disk di_size as a u64 and
-writes it directly into inode->i_size. If the value is larger than S64_MAX, the
-incore i_size becomes negative. That negative value can bypass the existing
-stuffed inode size check:
+The change allows to simplify the driver code, in particular the explicit
+locking scheme for stream on/off or format update serialization can be
+dropped in favour to the one provided by the V4L2 core internals.
 
-inode->i_size > gfs2_max_stuffed_size(ip)
-
-Later, gfs2_quotad may try to sync the quota file and unstuff the quota inode.
-gfs2_unstuffer_folio() reads the negative i_size into an unsigned length and
-passes it to memcpy(), turning it into a huge copy size and triggering a
-out-of-bound issue.
-
-Reject dinodes whose size exceeds sb->s_maxbytes before storing the value in
-inode->i_size. Also make the stuffed inode check use the raw on-disk size while
-it is still unsigned.
-
-Fixes: 70376c7ff312 ("gfs2: Always check inode size of inline inodes")
-Closes: https://lore.kernel.org/lkml/CANypQFaF6bvORKKbRALvEL0k_epFaneFiOQqco4gjdmKVbdURg@mail.gmail.com/
-Assisted-by: Codex:gpt-5.5-xhigh
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
-[ sashal: adjusted context for direct inode->i_state access and existing depth and entry assignments ]
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+[Sakari Ailus: Fix error handling for enable_streams callback.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: a26c5ac46191 ("media: i2c: og01a1b: power off sensor on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/i2c/og01a1b.c | 90 ++++++++++++++-----------------------
+ 1 file changed, 34 insertions(+), 56 deletions(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index d13a050bcb9dc..dc51608272019 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -395,6 +395,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	umode_t mode = be32_to_cpu(str->di_mode);
- 	struct inode *inode = &ip->i_inode;
- 	bool is_new = inode->i_state & I_NEW;
-+	u64 size;
+diff --git a/drivers/media/i2c/og01a1b.c b/drivers/media/i2c/og01a1b.c
+index 68573122cd6ee..95ead31dda278 100644
+--- a/drivers/media/i2c/og01a1b.c
++++ b/drivers/media/i2c/og01a1b.c
+@@ -442,9 +442,6 @@ struct og01a1b {
  
- 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr))) {
- 		gfs2_consist_inode(ip);
-@@ -420,7 +421,12 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	i_uid_write(inode, be32_to_cpu(str->di_uid));
- 	i_gid_write(inode, be32_to_cpu(str->di_gid));
- 	set_nlink(inode, be32_to_cpu(str->di_nlink));
--	i_size_write(inode, be64_to_cpu(str->di_size));
-+	size = be64_to_cpu(str->di_size);
-+	if (unlikely(size > inode->i_sb->s_maxbytes)) {
-+		gfs2_consist_inode(ip);
-+		return -EIO;
-+	}
-+	i_size_write(inode, size);
- 	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
- 	atime.tv_sec = be64_to_cpu(str->di_atime);
- 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
-@@ -459,7 +465,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
+ 	/* Current mode */
+ 	const struct og01a1b_mode *cur_mode;
+-
+-	/* To serialize asynchronus callbacks */
+-	struct mutex mutex;
+ };
  
--	if (gfs2_is_stuffed(ip) && inode->i_size > gfs2_max_stuffed_size(ip)) {
-+	if (gfs2_is_stuffed(ip) && size > gfs2_max_stuffed_size(ip)) {
- 		gfs2_consist_inode(ip);
- 		return -EIO;
+ static u64 to_pixel_rate(u32 f_index)
+@@ -616,7 +613,6 @@ static int og01a1b_init_controls(struct og01a1b *og01a1b)
+ 	if (ret)
+ 		return ret;
+ 
+-	ctrl_hdlr->lock = &og01a1b->mutex;
+ 	og01a1b->link_freq = v4l2_ctrl_new_int_menu(ctrl_hdlr,
+ 						    &og01a1b_ctrl_ops,
+ 						    V4L2_CID_LINK_FREQ,
+@@ -686,74 +682,66 @@ static void og01a1b_update_pad_format(const struct og01a1b_mode *mode,
+ 	fmt->field = V4L2_FIELD_NONE;
+ }
+ 
+-static int og01a1b_start_streaming(struct og01a1b *og01a1b)
++static int og01a1b_enable_streams(struct v4l2_subdev *sd,
++				  struct v4l2_subdev_state *state, u32 pad,
++				  u64 streams_mask)
+ {
++	struct og01a1b *og01a1b = to_og01a1b(sd);
++	unsigned int link_freq_index = og01a1b->cur_mode->link_freq_index;
+ 	const struct og01a1b_reg_list *reg_list;
+-	int link_freq_index, ret;
++	int ret;
+ 
+-	link_freq_index = og01a1b->cur_mode->link_freq_index;
+-	reg_list = &link_freq_configs[link_freq_index].reg_list;
++	ret = pm_runtime_resume_and_get(og01a1b->dev);
++	if (ret)
++		return ret;
+ 
++	reg_list = &link_freq_configs[link_freq_index].reg_list;
+ 	ret = og01a1b_write_reg_list(og01a1b, reg_list);
+ 	if (ret) {
+-		dev_err(og01a1b->dev, "failed to set plls");
+-		return ret;
++		dev_err(og01a1b->dev, "failed to set plls: %d\n", ret);
++		goto error;
  	}
+ 
+ 	reg_list = &og01a1b->cur_mode->reg_list;
+ 	ret = og01a1b_write_reg_list(og01a1b, reg_list);
+ 	if (ret) {
+-		dev_err(og01a1b->dev, "failed to set mode");
+-		return ret;
++		dev_err(og01a1b->dev, "failed to set mode: %d\n", ret);
++		goto error;
+ 	}
+ 
+ 	ret = __v4l2_ctrl_handler_setup(og01a1b->sd.ctrl_handler);
+ 	if (ret)
+-		return ret;
++		goto error;
+ 
+ 	ret = og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
+ 				OG01A1B_REG_VALUE_08BIT,
+ 				OG01A1B_MODE_STREAMING);
+ 	if (ret) {
+-		dev_err(og01a1b->dev, "failed to set stream");
+-		return ret;
++		dev_err(og01a1b->dev, "failed to start streaming: %d\n", ret);
++		goto error;
+ 	}
+ 
+ 	return 0;
+-}
+ 
+-static void og01a1b_stop_streaming(struct og01a1b *og01a1b)
+-{
+-	if (og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
+-			      OG01A1B_REG_VALUE_08BIT, OG01A1B_MODE_STANDBY))
+-		dev_err(og01a1b->dev, "failed to set stream");
++error:
++	pm_runtime_put_autosuspend(og01a1b->dev);
++
++	return ret;
+ }
+ 
+-static int og01a1b_set_stream(struct v4l2_subdev *sd, int enable)
++static int og01a1b_disable_streams(struct v4l2_subdev *sd,
++				   struct v4l2_subdev_state *state, u32 pad,
++				   u64 streams_mask)
+ {
+ 	struct og01a1b *og01a1b = to_og01a1b(sd);
+-	int ret = 0;
+-
+-	mutex_lock(&og01a1b->mutex);
+-	if (enable) {
+-		ret = pm_runtime_resume_and_get(og01a1b->dev);
+-		if (ret) {
+-			mutex_unlock(&og01a1b->mutex);
+-			return ret;
+-		}
++	int ret;
+ 
+-		ret = og01a1b_start_streaming(og01a1b);
+-		if (ret) {
+-			enable = 0;
+-			og01a1b_stop_streaming(og01a1b);
+-			pm_runtime_put(og01a1b->dev);
+-		}
+-	} else {
+-		og01a1b_stop_streaming(og01a1b);
+-		pm_runtime_put(og01a1b->dev);
+-	}
++	ret = og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
++				OG01A1B_REG_VALUE_08BIT, OG01A1B_MODE_STANDBY);
++	if (ret)
++		dev_err(og01a1b->dev, "failed to stop streaming: %d\n", ret);
+ 
+-	mutex_unlock(&og01a1b->mutex);
++	pm_runtime_put_autosuspend(og01a1b->dev);
+ 
+ 	return ret;
+ }
+@@ -771,7 +759,6 @@ static int og01a1b_set_format(struct v4l2_subdev *sd,
+ 				      height, fmt->format.width,
+ 				      fmt->format.height);
+ 
+-	mutex_lock(&og01a1b->mutex);
+ 	og01a1b_update_pad_format(mode, &fmt->format);
+ 	if (fmt->which == V4L2_SUBDEV_FORMAT_TRY) {
+ 		*v4l2_subdev_state_get_format(sd_state, fmt->pad) = fmt->format;
+@@ -794,8 +781,6 @@ static int og01a1b_set_format(struct v4l2_subdev *sd,
+ 					 h_blank);
+ 	}
+ 
+-	mutex_unlock(&og01a1b->mutex);
+-
+ 	return 0;
+ }
+ 
+@@ -805,15 +790,12 @@ static int og01a1b_get_format(struct v4l2_subdev *sd,
+ {
+ 	struct og01a1b *og01a1b = to_og01a1b(sd);
+ 
+-	mutex_lock(&og01a1b->mutex);
+ 	if (fmt->which == V4L2_SUBDEV_FORMAT_TRY)
+ 		fmt->format = *v4l2_subdev_state_get_format(sd_state,
+ 							    fmt->pad);
+ 	else
+ 		og01a1b_update_pad_format(og01a1b->cur_mode, &fmt->format);
+ 
+-	mutex_unlock(&og01a1b->mutex);
+-
+ 	return 0;
+ }
+ 
+@@ -849,18 +831,14 @@ static int og01a1b_enum_frame_size(struct v4l2_subdev *sd,
+ 
+ static int og01a1b_open(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
+ {
+-	struct og01a1b *og01a1b = to_og01a1b(sd);
+-
+-	mutex_lock(&og01a1b->mutex);
+ 	og01a1b_update_pad_format(&supported_modes[0],
+ 				  v4l2_subdev_state_get_format(fh->state, 0));
+-	mutex_unlock(&og01a1b->mutex);
+ 
+ 	return 0;
+ }
+ 
+ static const struct v4l2_subdev_video_ops og01a1b_video_ops = {
+-	.s_stream = og01a1b_set_stream,
++	.s_stream = v4l2_subdev_s_stream_helper,
+ };
+ 
+ static const struct v4l2_subdev_pad_ops og01a1b_pad_ops = {
+@@ -868,6 +846,8 @@ static const struct v4l2_subdev_pad_ops og01a1b_pad_ops = {
+ 	.get_fmt = og01a1b_get_format,
+ 	.enum_mbus_code = og01a1b_enum_mbus_code,
+ 	.enum_frame_size = og01a1b_enum_frame_size,
++	.enable_streams = og01a1b_enable_streams,
++	.disable_streams = og01a1b_disable_streams,
+ };
+ 
+ static const struct v4l2_subdev_ops og01a1b_subdev_ops = {
+@@ -1062,7 +1042,6 @@ static void og01a1b_remove(struct i2c_client *client)
+ 	media_entity_cleanup(&sd->entity);
+ 	v4l2_ctrl_handler_free(sd->ctrl_handler);
+ 	pm_runtime_disable(og01a1b->dev);
+-	mutex_destroy(&og01a1b->mutex);
+ }
+ 
+ static int og01a1b_probe(struct i2c_client *client)
+@@ -1146,7 +1125,6 @@ static int og01a1b_probe(struct i2c_client *client)
+ 		goto power_off;
+ 	}
+ 
+-	mutex_init(&og01a1b->mutex);
+ 	og01a1b->cur_mode = &supported_modes[0];
+ 	ret = og01a1b_init_controls(og01a1b);
+ 	if (ret) {
+@@ -1154,6 +1132,7 @@ static int og01a1b_probe(struct i2c_client *client)
+ 		goto probe_error_v4l2_ctrl_handler_free;
+ 	}
+ 
++	og01a1b->sd.state_lock = og01a1b->ctrl_handler.lock;
+ 	og01a1b->sd.internal_ops = &og01a1b_internal_ops;
+ 	og01a1b->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
+ 	og01a1b->sd.entity.ops = &og01a1b_subdev_entity_ops;
+@@ -1194,7 +1173,6 @@ static int og01a1b_probe(struct i2c_client *client)
+ 
+ probe_error_v4l2_ctrl_handler_free:
+ 	v4l2_ctrl_handler_free(og01a1b->sd.ctrl_handler);
+-	mutex_destroy(&og01a1b->mutex);
+ 
+ power_off:
+ 	og01a1b_power_off(og01a1b->dev);
 -- 
 2.53.0
 
