@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591396;
-	b=NxOoI07bOGNePk7i+IHgYAJTorFM2BSkdQN9EEDpXbwTVc8i0K5WfBj1hjhAqTkGjcCy
-	 vs4feaWTc5AvdizflTSCk/fzOVlptWc2CX88wrtfc8dhwQAAnmbN9mH98ZqwS4xXxjnfg
-	 ufEEjhNtJ0IRNiUXrFRjXf5drelyr2NyMPrGh/pEA0Mzg+jWlE5GcgfZyZ4GiR5JIdPm2
-	 oxMHu6zo9dBtKAtwxT1bscC5wVHmW2X2TA5OgkyjPTmp+aAgu0K1ATdfdE/V4oOM06xx8
-	 weo4j6zunwru+RDb/1qkEF/eDeKANWwYCrhsWDV9o/jh0Ol2oS4h+daujnoJ1VaTgGw==
+	t=1794591398;
+	b=mFd/pGI6ox4TA1E0GCxHnrD0PHeXwhsF4FbYXqTGt/41/6TwfMTN6SJ4i3loovXCzYPQ
+	 YSXsom525brsXCZNCYZut9nTD+eKxiYl/TP020Ad2YZI2Tl4jSGedVgqspNmOt67vB8mc
+	 IXWmZnreff9JOTJnFQ6l+izMI8UwDyjXDg5yA1gfSTOv6HynVBUdi6fjInkismf7BvBgx
+	 Ddb2PWamJL/4Y291dmRRgvYHLtIBLuFvIB5tQzK0AxIdjZ20Q10ETOPQ7Tn7+5Dt5ZCZq
+	 Cn1wkuVX+ckIoikMOAlLDFlMjb6MIEO8OU9Ak49PasB9gl/v8R2WdLgFunv54kKjE0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591396;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591398;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OZMWfcla9r8uZQXwOrTETvhnybyedKED7iZAzoTJFgo=;
-	b=RaJGLUrcZKuux/ZrbxzDB9mFCYw4c4oPaUOP6KBWpuVlXShpqZoVSoJKzfRyZ7SrWk6o
-	 1sjO5MtsEMCy7QQt9ji/SowcNcGmcrYAciqCoyEqpaL5t3ZXNGCuXP4FM3CHwgeKEK+LI
-	 tUdT9RsKOptdrEgr4jJ6e0kutZ+gHpqqBDxbUsiyRbehmYKK57yfvubehGpiKu4vQ4sR5
-	 VKVdc0SbA5YVMwYKDxW7xwiC0z8kdYFS0PBqcsa0u/SvlJZx6YirIKAgA/Civ/8UzY6o6
-	 PwhhfLMt0z6IVsR1K9kDL33rV4ubXCYtiwAN7eYzSTTy69ZL5LBby/zicwT+EPr+EYQ==
+	bh=JB/8N/3W+BjlSkiT7swjZTEkAMHZ/Fn1mRjENrVxIjU=;
+	b=mssAkEZENHCICpfmc3ueZV0jDv14JkyYnY4wb3tgRXvtcZijbZDW3MtdCh3U79/7KcA8
+	 P7r9LY4ICVFB4wQtxzJGwqoW4S1I3z+8hHcoV4+GvdPKuZO5W0NKtGiwdLDqofzcZBjza
+	 CAVc2cgFGJzNoqmt+q2OrAlbQiujdxWtU2a0vOmIObZiqHPq2TIVnlAQ0NwHyrzGFQLeG
+	 FbtHDbzpcxMJuPwhdqbGLlK0OLIp/FQLvgez8H7IlnifpOlP0fOczYuaBdXdc2yzCRyty
+	 Lk6jrvC/b1FNDHdjEbVhbWhQeEKWZ43nsAWr0NKz6Ks+vUWzY01kLpVC/AvBHooZHkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx4NN83Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCW3dfK+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C35616079D44;
-	Fri, 13 Nov 2026 17:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0565F6079D40;
+	Fri, 13 Nov 2026 17:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tx4NN83Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE781F000C4;
-	Fri, 13 Nov 2026 17:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qCW3dfK+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DDF1F000C5;
+	Fri, 13 Nov 2026 17:36:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591396;
-	bh=OZMWfcla9r8uZQXwOrTETvhnybyedKED7iZAzoTJFgo=;
+	s=korg; t=1794591397;
+	bh=JB/8N/3W+BjlSkiT7swjZTEkAMHZ/Fn1mRjENrVxIjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tx4NN83YP+8bvwehswHfo362dX2mvOtydHWnacp4uruclNb4sOSpm1Ii/BzA0q9VK
-	 lTQjlahkvusHlNzkUYPsCzJ/EXDGvaah5SAdwIZnhccAnqAoDahicd6HsmuiB7ojW/
-	 DZkmH+n1FSRhVMCl9AArSm/U9q9jKlvoP91PqMFw=
+	b=qCW3dfK+GUh33seNrevQEmNuac8JsxTU2AnABrxvKeq5v6LwGLnohozBKYKdJl1cS
+	 jYb0/yvPWrRq4B6uU3ZxaSSB9+UJr+F8Db1DNfRLd03uIM7EMsN9wUUrxHuEVNNFkj
+	 5dgSBIV8TxTXjSHncxw5/It/eBw+hbJ5aScO/Zjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weibin Liu <liuwb@xiaopeng.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 495/670] spi: cadence-xspi: reject SDMA transfers larger than the requested length
-Date: Fri, 13 Nov 2026 10:50:59 -0500
-Message-ID: <20261113153828.705208661@linuxfoundation.org>
+Subject: [PATCH 6.12 496/670] ipmr: prevent info-leak in pmr_cache_report()
+Date: Fri, 13 Nov 2026 10:51:00 -0500
+Message-ID: <20261113153828.737896282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,155 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weibin Liu <liuwb@xiaopeng.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ea9854a169e9c1437df8829bea21c2f2e80b137c ]
+[ Upstream commit 4f34002e2e37639133693c13a2a9977fab86880d ]
 
-The XSPI controller reports the size of the slave-DMA transaction
-through SDMA_SIZE_REG. Both SDMA handlers take this register at face
-value and copy the reported number of bytes between the SDMA FIFO and
-the transfer buffers, without checking it against the length of the
-transfer that was actually requested.
+Yiming Qian reported:
 
-While cdns_xspi_adjust_mem_op_size() clamps the size of the operations
-issued by the SPI core, the device can still report a bigger SDMA size
-than what was programmed, which makes the handlers read from or write
-to memory beyond the end of the transfer buffers.
+<quote>
+ ipmr_cache_report()` allocates a report skb with `alloc_skb(128,
+ GFP_ATOMIC)` and appends a `struct igmphdr` using `skb_put()`. In the
+ non-`IGMPMSG_WHOLEPKT` path it initializes only:
 
-Track the number of bytes requested for the current data phase in a new
-sdma_xfer_len field, set by cdns_xspi_send_stig_command() and by the
-Marvell b0 transfer path, and reject any SDMA size that exceeds it.
+ - `igmp->type`
+ - `igmp->code`
 
-Fixes: a16cc8077627 ("spi: cadence: add support for Cadence XSPI controller")
-Cc: stable@vger.kernel.org # 5.16+
-Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
-Link: https://patch.msgid.link/20260929081146.41041-2-liuwb@xiaopeng.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ sashal: adjusted context for direct SDMA I/O calls instead of helper functions ]
+ but does not initialize:
+
+ - `igmp->csum`
+ - `igmp->group`
+
+ Later, `igmpmsg_netlink_event()` copies the bytes after `sizeof(struct
+ igmpmsg)` into the `IPMRA_CREPORT_PKT` netlink attribute and emits
+ `RTM_NEWCACHEREPORT` on `RTNLGRP_IPV4_MROUTE_R`.
+
+ As a result, 6 bytes of stale heap data from the skb head are
+ disclosed to userspace.
+</quote>
+
+Let's use skb_put_zero() instead of skb_put() to fix this bug.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260430070611.4004529-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 94a6736bb5ab ("ipmr: only copy pktinfo to cache reports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-xspi.c | 36 +++++++++++++++++++++++++++++-----
- 1 file changed, 31 insertions(+), 5 deletions(-)
+ net/ipv4/ipmr.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-xspi.c b/drivers/spi/spi-cadence-xspi.c
-index c12930ce67472..ca6af39e977a4 100644
---- a/drivers/spi/spi-cadence-xspi.c
-+++ b/drivers/spi/spi-cadence-xspi.c
-@@ -332,6 +332,7 @@ struct cdns_xspi_dev {
- 	int irq;
- 	int cur_cs;
- 	unsigned int sdmasize;
-+	unsigned int sdma_xfer_len;
- 
- 	struct completion cmd_complete;
- 	struct completion auto_cmd_complete;
-@@ -344,7 +345,7 @@ struct cdns_xspi_dev {
- 	u8 hw_num_banks;
- 
- 	const struct cdns_xspi_driver_data *driver_data;
--	void (*sdma_handler)(struct cdns_xspi_dev *cdns_xspi);
-+	int (*sdma_handler)(struct cdns_xspi_dev *cdns_xspi);
- 	void (*set_interrupts_handler)(struct cdns_xspi_dev *cdns_xspi, bool enabled);
- 
- 	bool xfer_in_progress;
-@@ -445,7 +446,7 @@ static int cdns_xspi_controller_init(struct cdns_xspi_dev *cdns_xspi)
- 	return 0;
- }
- 
--static void cdns_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
-+static int cdns_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- {
- 	u32 sdma_size, sdma_trd_info;
- 	u8 sdma_dir;
-@@ -454,6 +455,13 @@ static void cdns_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- 	sdma_trd_info = readl(cdns_xspi->iobase + CDNS_XSPI_SDMA_TRD_INFO_REG);
- 	sdma_dir = FIELD_GET(CDNS_XSPI_SDMA_DIR, sdma_trd_info);
- 
-+	if (sdma_size > cdns_xspi->sdma_xfer_len) {
-+		dev_err(cdns_xspi->dev,
-+			"SDMA size %u exceeds the requested length %u\n",
-+			sdma_size, cdns_xspi->sdma_xfer_len);
-+		return -EINVAL;
-+	}
-+
- 	switch (sdma_dir) {
- 	case CDNS_XSPI_SDMA_DIR_READ:
- 		ioread8_rep(cdns_xspi->sdmabase,
-@@ -465,6 +473,8 @@ static void cdns_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- 			     cdns_xspi->out_buffer, sdma_size);
- 		break;
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index 8fadd5281c5e4..b9b0be1b02a62 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -1095,11 +1095,12 @@ static int ipmr_cache_report(const struct mr_table *mrt,
+ 		msg->im_vif_hi = vifi >> 8;
+ 		ipv4_pktinfo_prepare(mroute_sk, pkt, false);
+ 		memcpy(skb->cb, pkt->cb, sizeof(skb->cb));
+-		/* Add our header */
+-		igmp = skb_put(skb, sizeof(struct igmphdr));
++		/* Add our header.
++		 * Note that code, csum and group fields are cleared.
++		 */
++		igmp = skb_put_zero(skb, sizeof(struct igmphdr));
+ 		igmp->type = assert;
+ 		msg->im_msgtype = assert;
+-		igmp->code = 0;
+ 		ip_hdr(skb)->tot_len = htons(skb->len);	/* Fix the length */
+ 		skb->transport_header = skb->network_header;
  	}
-+
-+	return 0;
- }
- 
- static int cdns_xspi_send_stig_command(struct cdns_xspi_dev *cdns_xspi,
-@@ -510,6 +520,7 @@ static int cdns_xspi_send_stig_command(struct cdns_xspi_dev *cdns_xspi,
- 
- 		cdns_xspi->in_buffer = op->data.buf.in;
- 		cdns_xspi->out_buffer = op->data.buf.out;
-+		cdns_xspi->sdma_xfer_len = op->data.nbytes;
- 
- 		cdns_xspi_trigger_command(cdns_xspi, cmd_regs);
- 
-@@ -518,7 +529,11 @@ static int cdns_xspi_send_stig_command(struct cdns_xspi_dev *cdns_xspi,
- 			cdns_xspi->set_interrupts_handler(cdns_xspi, false);
- 			return -EIO;
- 		}
--		cdns_xspi->sdma_handler(cdns_xspi);
-+		ret = cdns_xspi->sdma_handler(cdns_xspi);
-+		if (ret) {
-+			cdns_xspi->set_interrupts_handler(cdns_xspi, false);
-+			return ret;
-+		}
- 	}
- 
- 	wait_for_completion(&cdns_xspi->cmd_complete);
-@@ -900,7 +915,7 @@ static void m_iowriteq(void __iomem *addr, const void *buf, int len)
- 	}
- }
- 
--static void marvell_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
-+static int marvell_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- {
- 	u32 sdma_size, sdma_trd_info;
- 	u8 sdma_dir;
-@@ -909,6 +924,13 @@ static void marvell_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- 	sdma_trd_info = readl(cdns_xspi->iobase + CDNS_XSPI_SDMA_TRD_INFO_REG);
- 	sdma_dir = FIELD_GET(CDNS_XSPI_SDMA_DIR, sdma_trd_info);
- 
-+	if (sdma_size > cdns_xspi->sdma_xfer_len) {
-+		dev_err(cdns_xspi->dev,
-+			"SDMA size %u exceeds the requested length %u\n",
-+			sdma_size, cdns_xspi->sdma_xfer_len);
-+		return -EINVAL;
-+	}
-+
- 	switch (sdma_dir) {
- 	case CDNS_XSPI_SDMA_DIR_READ:
- 		m_ioreadq(cdns_xspi->sdmabase,
-@@ -920,6 +942,8 @@ static void marvell_xspi_sdma_handle(struct cdns_xspi_dev *cdns_xspi)
- 			     cdns_xspi->out_buffer, sdma_size);
- 		break;
- 	}
-+
-+	return 0;
- }
- 
- static const struct spi_controller_mem_ops marvell_xspi_mem_ops = {
-@@ -1084,9 +1108,11 @@ static int cdns_xspi_transfer_one_message_b0(struct spi_controller *controller,
- 				cdns_xspi_prepare_transfer(cs, 1, current_transfer_len - 1,
- 							   cmd_regs);
- 				cdns_xspi_trigger_command(cdns_xspi, cmd_regs);
-+				cdns_xspi->sdma_xfer_len = current_transfer_len - 1;
- 				if (!cdns_xspi_is_sdma_ready(cdns_xspi, true))
- 					return -EIO;
--				cdns_xspi->sdma_handler(cdns_xspi);
-+				if (cdns_xspi->sdma_handler(cdns_xspi))
-+					return -EIO;
- 				if (!cdns_xspi_is_stig_ready(cdns_xspi, true))
- 					return -EIO;
- 
 -- 
 2.53.0
 
