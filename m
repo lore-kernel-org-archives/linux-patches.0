@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585890;
-	b=bLYCGRs1AqXxUfn0XoFW0URUUuYFPEzHJX4uhjnuEy3Wu8Bxd4WPWi8USwhtfA2jd2LN
-	 jiftSulS6JebUPAFHzPCbsG+Bhhs8nxlZs9y6AGWcbUAL7BrT3B2s7CXNhCr93os3Iyj2
-	 z7TiraauoxT4mXvjTiEpxGAEst1CPGKR4eUHvdi/NuZBmgLJdJzr3BFfbKQYaM/mZBEdO
-	 bKPCi62ytx7JXKs9coCCekY8K0oTc6HHyFqYv1aKLaldu+607BV4xcOV4ptVk02f4U4j0
-	 URjHI6b+rBxPbNH90vwcsGrjKDXtaSxq9GYscrO9ej0jC9MH+7NOJPTKBshBOv9DgdA==
+	t=1794585891;
+	b=a8qq6Ujai10lu44yYEwMBEqFVaZoGSdFX/OwtqvXPSK0O8oJrgfHhtg1aZvHnvNxegk/
+	 JqIJimpX3DFKDqZ26TnU1GsxYuOdhRyPHj1rOUJWkazKcy5q4qKrsSB/BfO/aWkHkYwpj
+	 RL9ZxvgAXXIXhGYGYBw5E2Xjg+v5JCtbBY3tzge7yFZDo7SACea1502s53BGsMQoE54G1
+	 yT14KwvNIPCoeflC3pfApdpjXenTMmJ+45Gkqu7RUvFl6zFW9uB+egnNP1YD4eR5Yuu5H
+	 r4Hodltw2Fo6HoszVOoO35HEde0KU2exjRnyI8DtF4UUxvv8GOBSJAFnhX3YEFUb4Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585890;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585891;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E/XmuQ7CskDnuS7FWDlMVl9XdE8uneTcC/Oh4v4fNYc=;
-	b=XbYiHyxlpvzXU9WlNprlSUhfaWiadTfUDMleS4Ysttb8uDaeTgrClOVcT+ATKKS1oltF
-	 GRX95f0RPMXh0GaKGuDdJ98tYMMwrgy4dnBoAIVKHBJwWHVLq4wHnKHEgfpT5BMHN3aln
-	 otKJUWV7w8zI+ARpoUkgck1pJoEzrZCB7jA9r2XjGDXnhjj06LDGuu49GNIzP+Q7AipQ/
-	 bFdB61dFnyCB2FcNhKsG4b6licZpDVzm232f87Uf4CPQMPlos6RHqDuVE688LYIZ1criv
-	 gG7Oq0ZYLF6VEIKaxeleml5GfjtpXINuYMBWVioHsCJlW4Pdgvsj87HnBGZkGv9DsiA==
+	bh=vgsBivFUGXSOxX/W2ROlLclSKI0oWgKC+4DWSCbsWgE=;
+	b=1pxVnOR6y1oj/Wt/kuoX2mvLNNoweOfCnTL8spFf4rispLxpcLfq6FeLV6VqFZemgvNS
+	 zr5c4p5tcXXSD6thVljNjWR4zAPskG22UfeNRZluRIec1g8ENecdj5e15nbrR0moqB66v
+	 /zCwXaXkLIvWQMzWVXZpLO8fNX/Yu+y+hMxida7YfsXGh+wfxg5bV9enYZWDj4YzF8v5V
+	 Y6YPOoVUIoJAaAJ/kITBlp9Cn5UwhzG9/XpKagUK+nIQRELvk35gO/rUE7/Q44osrM/pw
+	 UR+txwJ9hd/ua4KIvEp/BzYpyEei+47qBcbUdpoMcB8wvVFMEva1XyRQrb2rQonCTPw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yium3z8p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ECM3A0J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED89F606EA9D;
-	Fri, 13 Nov 2026 16:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3158E606EA9D;
+	Fri, 13 Nov 2026 16:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yium3z8p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A15F1F000C4;
-	Fri, 13 Nov 2026 16:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0ECM3A0J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F261F000C4;
+	Fri, 13 Nov 2026 16:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585889;
-	bh=E/XmuQ7CskDnuS7FWDlMVl9XdE8uneTcC/Oh4v4fNYc=;
+	s=korg; t=1794585891;
+	bh=vgsBivFUGXSOxX/W2ROlLclSKI0oWgKC+4DWSCbsWgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yium3z8por9KFPwx3jCwNjCpoKEzMuzeUbdgZG8seRN9ydP4qw/PVlK+XwIyy7Bu/
-	 qzYcjzEU1c2PqTXsF1unk1/SGC13Z90ik9XghNUZwMPkuajks8S2aMdezAJsyyqDey
-	 B7Jb1NhCXVV6e2wc59AnO7pegVNpSvVljcrJPKhI=
+	b=0ECM3A0JNtGN7EnA5pVOLjedQnvP02HMFx5TRT/JgGxB9csHkVTzbRVUy3r8soCtP
+	 6PJxjxjWHKRyLjGLosXfjAnAhrZl/tpaKUipGijv9yZxidaZpkH2HrCty1vftASsOm
+	 yfrJkx0Icp2dT8ogi4ibou81sIsAQnShf0cIwbAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jared Wuerzburger <jwuerz@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Kyle Zeng <kylebot@openai.com>,
+	David Lee <david.lee@trailofbits.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 455/507] ALSA: hda/realtek: Fix internal mic on Minisforum V3 and V3 SE
-Date: Fri, 13 Nov 2026 10:52:39 -0500
-Message-ID: <20261113153812.147260676@linuxfoundation.org>
+Subject: [PATCH 7.3 456/507] sctp: hold shkey across socket migration
+Date: Fri, 13 Nov 2026 10:52:40 -0500
+Message-ID: <20261113153812.180810871@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,99 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jared Wuerzburger <jwuerz@gmail.com>
+From: David Lee <david.lee@trailofbits.com>
 
-[ Upstream commit 72107104d4f522405c9dfdfbaeb230e371c295ee ]
+[ Upstream commit ad1320865b1826ffa2e81e37c49535751e81335c ]
 
-On the Minisforum V3 and V3 SE (ALC245, PCI SSID 1f4c:e001) the
-internal digital microphone array never produces any audio. The DMIC
-pin 0x12 is parsed correctly ("Internal Mic=0x12"), but the headset mic
-jack pin 0x19 (BIOS pin config 0x04a19050, jack detect enabled) has no
-presence detect wired on these boards: reading GET_PIN_SENSE on 0x19
-always returns "present" (as it does on the unused, unconnected pin
-0x18), while the headphone jack 0x21 reports correctly.
+sctp_sock_migrate() transfers queued DATA skbs from the old socket to the
+new one. skb_orphan() invokes sctp_wfree() during that transfer and drops
+the skb-owned shared-key reference.
 
-The generic parser therefore sets up auto-mic switching and, believing
-an external mic is always plugged in, permanently routes the ADC to the
-empty jack (mixer 0x23 input 0x19 unmuted, input 0x12 muted). The
-"Mic Jack" kcontrol reports "on" with nothing plugged in.
+If userspace has removed that key from the association, this can be the
+final reference. The following sctp_set_owner_w() then dereferences the
+freed chunk->shkey while trying to take the new owner reference.
 
-Mark pin 0x19 as having no presence detect. The parser then stops
-auto-switching and exposes a normal "Capture Source" (Internal Mic /
-Mic) control, which desktop audio stacks drive from their Internal
-Microphone / Microphone ports. The existing bass speaker DAC routing is
-kept by chaining to ALC245_FIXUP_BASS_HP_DAC.
+Take a temporary shared-key reference before orphaning the skb and release
+it after the new owner has taken its reference. This preserves the selected
+authentication key throughout the ownership transfer.
 
-Tested on both models with the same pin config applied through a
-snd-hda-intel patch firmware ([pincfg] 0x19 0x04a19150):
- - V3 SE (Ryzen 7 7735U, BIOS 1.03), kernel 7.2.6
- - V3 (Ryzen 7 8840U, BIOS 1.06), kernel 7.2.7
-Both boards report the same codec SSID and the same 0x19 default. On
-both, the internal mic records at a normal level, headphone jack
-detection on 0x21 still switches output, and the bass routing is
-retained (DAC1/DAC2 Playback Volume controls present). A headset mic
-on the combo jack was not tested (none available); with this change it
-has to be selected manually. V3 users already report that the jack mic
-gets no input [1], which is the other symptom of the same broken
-presence detect.
+Bug found and triaged by OpenAI Security Research and
+validated by Trail of Bits.
 
-The patched alc269.c was build-tested with W=1 on tiwai/sound.git
-for-linus (7.3-rc3) without new warnings.
-
-The diagnosis, the fixup and this changelog were written with the help
-of an AI coding assistant; I reviewed them and tested the change on the
-hardware listed above.
-
-Fixes: e34743018249 ("ALSA: hda/realtek: Add quirk for Minisforum V3 SE")
-Link: https://github.com/mudkipme/awesome-minisforum-v3/issues/14 [1]
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Jared Wuerzburger <jwuerz@gmail.com>
-Link: https://patch.msgid.link/20260928152925.69032-1-jwuerz@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1b1e0bc99474 ("sctp: add refcnt support for sh_key")
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Signed-off-by: David Lee <david.lee@trailofbits.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261009074244.3718-2-juny24602@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 52ffeaa358d1 ("sctp: re-point retained control chunks on association migration")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ net/sctp/socket.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 03f03080bbeb5..49c4d01759b06 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -4413,6 +4413,7 @@ enum {
- 	ALC287_FIXUP_YOGA9_SPEAKER2_TO_DAC1,
- 	ALC256_FIXUP_IPASON_SMARTBOOK_S1,
- 	ALC256_FIXUP_ASUS_SPEAKER_COEFS,
-+	ALC245_FIXUP_MINISFORUM_V3_MIC_NO_PRESENCE,
- };
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index c616f1609d0cf..b5e205eca3077 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -148,9 +148,19 @@ static inline void sctp_set_owner_w(struct sctp_chunk *chunk)
  
- /* A special fixup for Lenovo C940 and Yoga Duet 7;
-@@ -7236,6 +7237,15 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC256_FIXUP_ASUS_MIC_NO_PRESENCE,
- 	},
-+	[ALC245_FIXUP_MINISFORUM_V3_MIC_NO_PRESENCE] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x19, 0x04a19150 }, /* headset mic jack, no presence detect */
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC245_FIXUP_BASS_HP_DAC
-+	},
- };
+ static void sctp_clear_owner_w(struct sctp_chunk *chunk)
+ {
++	/* Keep the shkey alive until the new owner takes its reference. */
++	if (chunk->shkey)
++		sctp_auth_shkey_hold(chunk->shkey);
+ 	skb_orphan(chunk->skb);
+ }
  
- static const struct hda_quirk alc269_fixup_tbl[] = {
-@@ -8475,7 +8485,8 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1ee7, 0x2081, "HONOR MRB-XXX M1020", ALC256_FIXUP_HONOR_MRB_XXX_M1020_AUDIO),
- 	SND_PCI_QUIRK(0x1f4c, 0xb020, "Minisforum AI X1 Pro",
- 		      ALC245_FIXUP_MINISFORUM_JACK_DETECT),
--	SND_PCI_QUIRK(0x1f4c, 0xe001, "Minisforum V3 (SE)", ALC245_FIXUP_BASS_HP_DAC),
-+	SND_PCI_QUIRK(0x1f4c, 0xe001, "Minisforum V3 (SE)",
-+		      ALC245_FIXUP_MINISFORUM_V3_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2039, 0x0001, "Inspur S14-G1", ALC295_FIXUP_CHROME_BOOK),
++static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
++{
++	sctp_set_owner_w(chunk);
++	if (chunk->shkey)
++		sctp_auth_shkey_release(chunk->shkey);
++}
++
+ #define traverse_and_process()	\
+ do {				\
+ 	msg = chunk->msg;	\
+@@ -9649,7 +9659,7 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
+ 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
+ 	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
+ 	sctp_assoc_migrate(assoc, newsk);
+-	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w);
++	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
+ 
+ 	/* If the association on the newsk is already closed before accept()
+ 	 * is called, set RCV_SHUTDOWN flag.
 -- 
 2.53.0
 
