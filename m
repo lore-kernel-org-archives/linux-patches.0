@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585695;
-	b=sqeOTiZW2UBSyb3867ARykymS/FxbiWa1JRWDQOv9Oz1YaqOK366LYe1YQcz17v5tzHa
-	 0YSY/QSmNWU7h33KeLBRicVhC9jBu5HOuJDROcKDqgeVhUndah4ppw2aLGLOUZUsviyxT
-	 ElQDFBSMveUSEtwgS/bERoHeycTJzeNuWEGsGMho73+IMxap5qCFmJrX1EmOEfZfRCOEo
-	 5vWP3Tx4yMKsT+TUZNsCfqSjbi8Xavk6Rco6oXHXnAgd9i5CO3nEPQUbPMx97lACK614e
-	 iMOE+HJkSZDcUnQ71cdcM2KCaiYK6iH59ySlnAcXJYZBTNl36qR9FFv4cAyQgmd/D9w==
+	t=1794585696;
+	b=K1D4K0bkVrc/VULHDErmmppCbZdZ+2n6qYGAzu3N8/Oj0DPbUue09WDDi51y/1jiOv98
+	 NnVLawIowVHDNllvLRxwmMOrXa38ITJYWT1sPY0afLX9FydxIjWF67zu3FiWxn7nV13MU
+	 98q2RAJjqZjSBvCFTbBUCNqUryxpEvsEhhJNPu7VOgtmvD9RcqEHGNZkqCk3Z34PvHow/
+	 RMOzfeyHIqYkTURgGHQliJNDuWGxM2+8jQPsZQkys5Fvu9ro7DTSUxZ74ytD4LbFeaoaB
+	 riUHMnGhU4aPOnmPECRM47CleQlLhkSMoOzGcVqrIMAs/fqpM/JyoYURW2s1AN2+JFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585695;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585696;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rl2HdZKRNrrUHNnwUeM7c+OEYfgf2qzWkMsyZIp0x88=;
-	b=3K6wzR87mNMXlYwqcqquXuSakKUXaiK+FKJWZs+0/nJsLUIAfd5AbwJl9pCpSX/OgyPp
-	 0dGUANK/m76xEpJ4TSv1rJhqEQrZchWCij+61rFfAwHDz/ynjn6LXh57GpN6EnViMUgWV
-	 I5tQzxtxJLWbZIVkjtdttoG9INR+SgKxD9sf0vtPYmKxzUJ3Kg29FVNmShhrfaYw/MmfY
-	 VaAQzipiJwMMO6hMfkt+hYr4fSWMzOkhsgWtokq7u5o75kf/lIhYRzpM1T8/MEFaLYIe/
-	 8GW3HKqDCTk+eezJEW3jNX6ItRWSlQmRxMgmrDmGsTRO6QKloX/lzcFUHe7V9NOPQYA==
+	bh=xZtLJxMtl03w2/LhbL1XWuPtWY1se8RzBb97i+vfhQE=;
+	b=qa5+Pf5u323auSXwxOL2YPyN8q4YtoBU34b0pOMq/NgqKPVRT+c6AXjo+IK2wPlzTAvn
+	 x0288HGmdkWYZT0HduvfrD5uyBHom9aA2LSfpRe+nBz6rWOI8+9qEjGXWKrARx6+m8gso
+	 +lpZAG07OLQ8ce7lCLV5wPfLGUxOyK7zfyfP3cLfEXtdk4OhsPKUzbKc+qzdnCRDS5d7y
+	 bf5hreSLhOrqNyUXAef+KPJfwlzZkgBmsTWaVGPq2stWzCfcJSK5VVGJpdFX6TbIPURJp
+	 ovDfawB6Kd6jdcYizLSThj2lDQQdYeTSdTfHmqDqXOnpgDYFIWawlYVOeh3+SqT4alw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKTedSAi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uYsMWDWV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58275606A8B9;
-	Fri, 13 Nov 2026 16:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D126F606A8B5;
+	Fri, 13 Nov 2026 16:01:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKTedSAi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 088941F000C4;
-	Fri, 13 Nov 2026 16:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uYsMWDWV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8215E1F000C4;
+	Fri, 13 Nov 2026 16:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585695;
-	bh=Rl2HdZKRNrrUHNnwUeM7c+OEYfgf2qzWkMsyZIp0x88=;
+	s=korg; t=1794585696;
+	bh=xZtLJxMtl03w2/LhbL1XWuPtWY1se8RzBb97i+vfhQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bKTedSAiPxtQNmJU3uUqLU1zMNPCp6W3bMqL3pPRbMTWD0TBATlF3TfPCttO2Uhwe
-	 ECHdeeJTaVowyU8vO473pqv0AKdy6pKhQ32ClJdz3S6Ak345ld5DVl1Tm2ypEZHs/b
-	 0YTyjUTILk40GJtYOika/e+V1o6pkWYtEPjzfCz0=
+	b=uYsMWDWV/G79mUZEb2luie4gQM5bi2rZXQ0YUEoXEExWGwCD3B5bnLHebfM3M4Zye
+	 nm3KtrFQ97YJyM9xSmx21YO6BOAtEw2JaF0iU4BVk3G0EAbO+uN8pquOpqFMQrMV9J
+	 cw7MIgREDoEpGqyj9bVTkP3AV0NWxcZW6ATawMX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	Lance Yang <lance.yang@linux.dev>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 303/507] mm/huge_memory: fix zapping migration entries for device-private THPs
-Date: Fri, 13 Nov 2026 10:50:07 -0500
-Message-ID: <20261113153805.537436502@linuxfoundation.org>
+Subject: [PATCH 7.3 304/507] mm/khugepaged: always recheck the pmd in try_collapse_pte_mapped_thp()
+Date: Fri, 13 Nov 2026 10:50:08 -0500
+Message-ID: <20261113153805.564975541@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,50 +72,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 63a940541358d09cc9f02d40b71eb8d3917a21c0 ]
+[ Upstream commit aa72cf34d90da7019591ab67533a8ece8b41da2d ]
 
-A PMD migration entry can refer to a device-private folio.
-zap_huge_pmd_folio() checks the folio type instead of the entry type,
-so it treats such a migration entry as a device-private entry.
+try_collapse_pte_mapped_thp() drops the PTE lock after it has cleared the
+page table, and takes the PMD lock and the PTE lock to remove it.
 
-Installing the migration entry already removed the reverse mapping and
-dropped the mapping reference. Zapping it must not repeat those
-operations. Concurrent MADV_DONTNEED during migration back to system
-memory can trigger this.
+In between, MADV_DONTNEED with CONFIG_PT_RECLAIM can reclaim the
+page table. The pmd_same() check is supposed to handle this, but it is
+only done with CONFIG_SPLIT_PTE_PTLOCKS.
 
-Check the PMD entry type using pmd_is_device_private_entry().
+Fix it by performing the check unconditionally.
 
-Fix generated by an LLM and sent by Chris Mason in private.
+Fix generated by an LLM and sent by Josef Bacik in private.
 
-Fixes: 368076f52ebe ("mm/huge_memory: add device-private THP support to PMD operations")
+Fixes: 6375e95f381e ("mm: pgtable: reclaim empty PTE page in madvise(MADV_DONTNEED)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify description ]
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: adjust description ]
 Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-14-d6437171ecc3@kernel.org
-Reviewed-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-15-d6437171ecc3@kernel.org
 Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/huge_memory.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/khugepaged.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/mm/huge_memory.c b/mm/huge_memory.c
-index da96959998692..c1130d3d28261 100644
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2494,7 +2494,7 @@ static inline void zap_deposited_table(struct mm_struct *mm, pmd_t *pmd)
- static void zap_huge_pmd_folio(struct mm_struct *mm, struct vm_area_struct *vma,
- 		pmd_t pmdval, struct folio *folio, bool is_present)
- {
--	const bool is_device_private = folio_is_device_private(folio);
-+	const bool is_device_private = pmd_is_device_private_entry(pmdval);
- 
- 	if (folio_test_anon(folio)) {
- 		add_mm_counter(mm, MM_ANONPAGES, -HPAGE_PMD_NR);
+diff --git a/mm/khugepaged.c b/mm/khugepaged.c
+index 16444bd7f1c0a..9cd468307841f 100644
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -2037,12 +2037,11 @@ static enum scan_result try_collapse_pte_mapped_thp(struct mm_struct *mm, unsign
+ 	/* step 4: remove empty page table */
+ 	if (!pml) {
+ 		pml = pmd_lock(mm, pmd);
+-		if (ptl != pml) {
++		if (ptl != pml)
+ 			spin_lock_nested(ptl, SINGLE_DEPTH_NESTING);
+-			if (unlikely(!pmd_same(pgt_pmd, pmdp_get_lockless(pmd)))) {
+-				flush_tlb_mm(mm);
+-				goto unlock;
+-			}
++		if (unlikely(!pmd_same(pgt_pmd, pmdp_get_lockless(pmd)))) {
++			flush_tlb_mm(mm);
++			goto unlock;
+ 		}
+ 	}
+ 	pgt_pmd = pmdp_collapse_flush(vma, haddr, pmd);
 -- 
 2.53.0
 
