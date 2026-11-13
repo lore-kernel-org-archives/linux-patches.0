@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585912;
-	b=1EDEunIkrlbVUBzxxlBqz//mJgSKLmSvNfb8T7YBwSkh8sVusnOMhJqRMWbeNKFkizIb
-	 HxlG2vIxKVLRH8YqlszRc+FVeBI94K9lBEcNe3+UXUcUt5kZO+OW4nbhTzuRmqgGJyubZ
-	 JEnr7t5AbvdNTvUeTagALnG3eSdqmBEm6aXlEMFmR1obQpKTCMylM4d9F49yIFIaa7V5L
-	 6vjlkVNKtz2s+P+z7AfCvFMQJ9bqPEAkYF3Q9FrweXMrnyLFWfWdzqeI1jcTrgZXbz0+4
-	 fHU/hFr43F8sJ6vvSnG2Kv63aKiOnZ+JkKJtu9obfZdjctuiobTfeE9ExEgMEzT4+Ew==
+	t=1794585913;
+	b=u2II0WubFuyz2Vo6mYaaZ1iSmc8xC4VCj9ubiHAyzkDadN0cRvyA7RCUE3MxhGfrA11G
+	 AMs7DGtD+TM8tQjDDXcE9neLJduT6V+2Em6LSE/g5y1qzEdZRQDZ0Zc3Swf4CgoSnsaRJ
+	 1jQsQbM2UaQmEDUVJK4jJYEJhoZEiyYK1+C3NqtlFuGk2y46f34Q8jAAl1wtz29UxRxeg
+	 7+n8IGGCk+b4pmezZSUJXnImQfmGcILbM7nZsmx7CbCysfwIzbA0CBQvUt30BkaeqYH4j
+	 qsYI6aFyPBpaw36/QnGzj3sDOblMnynM961IlyMYqSCxMG0M3KcCYGCf5VNl0yKEM8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585913;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8z+iykj+MwAaWyz2gRpOgtyMoQ9GVVEPqHXh6mkgbNs=;
-	b=QCAvJ1bjmCKCYfGHEQELmfT/TGzXHegxGgKJOP3IH26HMvM+3teeLrafS2Xyvn7oHlC/
-	 Rxwa1bQ/dQl9ZU9uU0GE4VhqqDdpyJFrEUOsju80vCR/OC12wq008hci3gYAAwJUEfj5V
-	 cHhjdkC3+tvu0mPXgVcllRdq0NUao5OYXsAHxftQpjPYKQuR8hlZ+lvmg0bXaoLCycTT6
-	 Zd1A3/7sX+b4Q/r3kW6fVBiaEtzoNSP62cv6A8e1zyJ2r1iKTSsmL2g/yQvyG4pON8QBB
-	 /3SaHrDE2siJtIN5bBC4zNS/HY5beWGgUWCb0Het0L5T71YqWxBIF86OvmaAJkTRElg==
+	bh=LvNGVpYQMe9vfmIrdP/QlVg1Z+TocDSA0E9qKsj7xLE=;
+	b=nzYH/XMcRnKX/Y1B5ZZADcenIO3GGFudCnV3O1UQDfmlrkNpDbxYw7X7QpIveKTEBGCR
+	 GXFDc753IHCg1MdaoVT3wO22Wu7xHqWPCvJpEUTfTPT1CuLZutG8AXJH3Q9h8SeGQLb3D
+	 hKxlt244neSVj5+0wJXWDLJWSIInIVxvqZ1xU8NLOWLx0fIUlFwIsK3VcYVnkpIPx4bWH
+	 IFq3LcKCpeyQatmTHQqYOro2J7oxpr7JLbmkGJdpd7sb6oGLn+3FZd0A9/yxN6HcWA73X
+	 clc8wOYrMS88mOy8/D6DHtP/G7f7Lqzh7AeB761idl6DkGiSHCUonMMKpJSqnnyGyHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Pef/aUoS";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lVNZv1K8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B8DF6076E09;
-	Fri, 13 Nov 2026 16:05:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD8B6076E17;
+	Fri, 13 Nov 2026 16:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pef/aUoS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BDF1F000C6;
-	Fri, 13 Nov 2026 16:05:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lVNZv1K8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7921F000C7;
+	Fri, 13 Nov 2026 16:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585912;
-	bh=8z+iykj+MwAaWyz2gRpOgtyMoQ9GVVEPqHXh6mkgbNs=;
+	s=korg; t=1794585913;
+	bh=LvNGVpYQMe9vfmIrdP/QlVg1Z+TocDSA0E9qKsj7xLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pef/aUoSBGrv5Vw4vJ0G0oFzV3nffDyZ8zGlK0RA2DkfnNTOyubgEibPTf2Oc0ziy
-	 SRK6uSOQapjsoYC8Tnjb0gNr1Li85o/P63cS/q0dOnOtN8yeKUxQPYbeAKrMXPUzi6
-	 x57gpS3P4kSv1tL4Mwsdm3mta50TdFCo1Er/OzZ0=
+	b=lVNZv1K84QCLhO4TnzPHNJqYwCVxCehOMYa1XlLqTHgacZQqnfAA2THWYnBc8jtff
+	 WXKeoOpTqcUBoIH4z6+/FdrGRj9I/1yFp32x+fqSbO4JY0e0kuVRrIqU55NLkWbhGD
+	 aLiCGlJErhCan1smIOX9j3w0U1rOoeZQHVmXjp8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Kaixuan Li <kaixuanli0131@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Hemanth Selam <hemanth.selam@gmail.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 476/507] f2fs: bound the SIT/NAT bitmaps by the checkpoint pack
-Date: Fri, 13 Nov 2026 10:53:00 -0500
-Message-ID: <20261113153813.088849442@linuxfoundation.org>
+Subject: [PATCH 7.3 459/507] platform/chrome: Fix typos in comments
+Date: Fri, 13 Nov 2026 10:52:43 -0500
+Message-ID: <20261113153812.269476525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,81 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaixuan Li <kaixuanli0131@gmail.com>
+From: Hemanth Selam <hemanth.selam@gmail.com>
 
-[ Upstream commit 080833a32fd5dc10b3acf2fa9af9b3213e6cb617 ]
+[ Upstream commit 2d23d5e9cb468baf6e4fa78d0dd7e8555759385d ]
 
-sit_ver_bitmap_bytesize and nat_ver_bitmap_bytesize are used as memcpy
-lengths into and out of sbi->ckpt, which is sized from cp_payload alone,
-and nothing compares either length against that allocation.
+Fix typos in comments, reported by scripts/checkpatch.pl using the
+misspelling list in scripts/spelling.txt.  Only touches comments, no code
+changes.
 
-sanity_check_ckpt() has checked these two fields since c77ec61ca0a4, which
-added them after a crafted image overran build_sit_info(). That check ties
-each length to a segment count; it never compares either against the
-allocation, which is the half this adds.
-
-Mounting over-reads in build_sit_info() and build_node_manager(), and the
-first checkpoint writes the same lengths back through the same pointers,
-so the over-read's contents reach the on-disk checkpoint. An unmount is
-enough; the filesystem does not have to be used.
-
-Bound both ends the way __bitmap_ptr() lays them out. The three branches
-differ, so a single sum of the two lengths would still admit a small
-overflow when cp_payload is non-zero.
-
-Fixes: 39a53e0ce0df ("f2fs: add superblock and major in-memory structure")
-Cc: stable@kernel.org
-Signed-off-by: Kaixuan Li <kaixuanli0131@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: Replaced F2FS_BLKSIZE(sbi) calls with the F2FS_BLKSIZE constant. ]
+Assisted-by: Cursor:claude-opus-5
+Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
+Link: https://lore.kernel.org/r/20260904110900.20435-2-hemanth.selam@gmail.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Stable-dep-of: ca75b38b1a3c ("platform/chrome: cros_usbpd_notify: Only use drvdata when parent is GOOG0004")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/super.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ drivers/platform/chrome/cros_ec_ishtp.c     | 2 +-
+ drivers/platform/chrome/cros_usbpd_notify.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index b9adad85e18c3..b18ea09bcbe2c 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4255,6 +4255,7 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 	block_t avail_node_count, valid_node_count;
- 	unsigned int nat_blocks, nat_bits_bytes, nat_bits_blocks;
- 	unsigned int sit_blk_cnt;
-+	unsigned long long ckpt_size, sit_end, nat_end;
- 	int i, j;
+diff --git a/drivers/platform/chrome/cros_ec_ishtp.c b/drivers/platform/chrome/cros_ec_ishtp.c
+index 3766cef81fe82..b21a27ad37625 100644
+--- a/drivers/platform/chrome/cros_ec_ishtp.c
++++ b/drivers/platform/chrome/cros_ec_ishtp.c
+@@ -369,7 +369,7 @@ static void ish_event_cb(struct ishtp_cl_device *cl_device)
+  * @cros_ish_cl: ISHTP client instance
+  * @reset: true if called from reset handler
+  *
+- * This function complete the initializtion of the client.
++ * This function complete the initialization of the client.
+  *
+  * Return: 0 for success, negative error code for failure.
+  */
+diff --git a/drivers/platform/chrome/cros_usbpd_notify.c b/drivers/platform/chrome/cros_usbpd_notify.c
+index d842c05f4db00..6f5eea4938cb4 100644
+--- a/drivers/platform/chrome/cros_usbpd_notify.c
++++ b/drivers/platform/chrome/cros_usbpd_notify.c
+@@ -64,7 +64,7 @@ static void cros_usbpd_get_event_and_notify(struct device  *dev,
  
- 	total = le32_to_cpu(raw_super->segment_count);
-@@ -4386,6 +4387,29 @@ int f2fs_sanity_check_ckpt(struct f2fs_sb_info *sbi)
- 		return 1;
- 	}
- 
-+	/*
-+	 * Nothing above ties the bitmap lengths to sbi->ckpt, which is
-+	 * (1 + cp_payload) blocks. Bound both ends the way __bitmap_ptr()
-+	 * lays them out.
-+	 */
-+	ckpt_size = (unsigned long long)(cp_payload + 1) * F2FS_BLKSIZE;
-+	if (__is_set_ckpt_flags(ckpt, CP_LARGE_NAT_BITMAP_FLAG)) {
-+		nat_end = CP_MIN_CHKSUM_OFFSET + sizeof(__le32) + nat_bitmap_size;
-+		sit_end = nat_end + sit_bitmap_size;
-+	} else if (cp_payload > 0) {
-+		nat_end = CP_MIN_CHKSUM_OFFSET + nat_bitmap_size;
-+		sit_end = F2FS_BLKSIZE + sit_bitmap_size;
-+	} else {
-+		sit_end = CP_MIN_CHKSUM_OFFSET + sit_bitmap_size;
-+		nat_end = sit_end + nat_bitmap_size;
-+	}
-+
-+	if (sit_end > ckpt_size || nat_end > ckpt_size) {
-+		f2fs_err(sbi, "Bitmaps do not fit the checkpoint pack: sit ends at %llu, nat at %llu, pack is %llu bytes",
-+			 sit_end, nat_end, ckpt_size);
-+		return 1;
-+	}
-+
- 	if (__is_set_ckpt_flags(ckpt, CP_LARGE_NAT_BITMAP_FLAG) &&
- 		le32_to_cpu(ckpt->checksum_offset) != CP_MIN_CHKSUM_OFFSET) {
- 		f2fs_warn(sbi, "using deprecated layout of large_nat_bitmap, "
+ 	/*
+ 	 * We still send a 0 event out to older devices which don't
+-	 * have the updated device heirarchy.
++	 * have the updated device hierarchy.
+ 	 */
+ 	if (!ec_dev) {
+ 		dev_dbg(dev,
+@@ -115,7 +115,7 @@ static int cros_usbpd_notify_probe_acpi(struct platform_device *pdev)
+ 	if (!ec_dev) {
+ 		/*
+ 		 * We continue even for older devices which don't have the
+-		 * correct device heirarchy, namely, GOOG0003 is a child
++		 * correct device hierarchy, namely, GOOG0003 is a child
+ 		 * of GOOG0004. If GOOG0003 is a child of GOOG0004 and we
+ 		 * can't get a pointer to the Chrome EC device, defer the
+ 		 * probe function.
 -- 
 2.53.0
 
