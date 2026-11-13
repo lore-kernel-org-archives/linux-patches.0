@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590579;
-	b=HTqCh4sUPnLk3CqAjYYSunVIciIFagKkO6VwfV5eNozZQsoqU0JchlPX8f0JrzAjmU/T
-	 NEUhiIR01loFGNrv9w5sETu2wS8NeR0xaZlYsVadG4uj9XkcIHZXJCyy9isAJmjhW6HN2
-	 BaKvzhpbMQaRkBxXSmeQdPn1sy7/NKITaWUUaQo2iVEPrFplADITUKpelABH/f0AaBaKA
-	 qZLwMrOvtopzlq/1u9Ba6xe/RSnm7X3M1c6IrLadTntriJ4uF8ibHpTW0L0v3/YlbnvT+
-	 55oGzqRS4VFSpp755fxt9jr2RxAgig4cH0WGTpD/RsgHIbWeGZwquPbHPR8WMMhCByQ==
+	t=1794590580;
+	b=Nvfz3iaMi3YpisLYbpUNw/g4Zqa6x0rT2Zgqzo/5vz2lF/lRgsm77oD75UpZUTPIGBeK
+	 XrmAprmsz3jC0iXK+QLje1wV+Jf4roL0Ep7lBft5OP/ETOeIXtUD+MM9+NLTtG56wKSy1
+	 N9aBATEC0YigJofMSr/h/5P2kNiUNuDLC/74UmbI7Q+LUWBW/Na3SaZht51J8Re6JrEFI
+	 e5M/GM+0wZSf4TLUsDmAFtEibOTHWk41b7mFy4qbHbz23tWJeBOpRZ0fB70VbRPbnmSnE
+	 T2zg4h54Zy62IRn/Z6VCeM+AtZHmRrEbnNmFlqPWMUpiz5CluNdZpe7eyxQFRxIvURQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590579;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kg4rCgsJBWeEKKRXVz9k7uA7HqRyoKv/hx1TQeNnrK0=;
-	b=r+I398o1qqOrCQPvsgApfsUW3gZnk01cKP6WDn5FaMwe/CFNje4NXcIEOG55xv7qh1y4
-	 TQjDJRWbDsHWSiAEKxRCfHb6k+XvoOdM3O1O+ZpcTQy5RmHsPJsUMHE19aER5HgjLzciS
-	 SPxizIRac+Tw8lohfSF6HUtUTPu1NMgoRZJT0wmrXOtNJ1uUgBGfaHCGiLufeZ3r/Igur
-	 bRz900OQTXeFfHkaBc911JqpHRzq7JHXbKi2a6VtgJjAgwnT6hTquIXNlL1Xx3hYP3gEl
-	 gj67mv/crP5K3kkgKVrRObb/ovE9B4LtsS+hU376FQ3xKHCkZGbi+bOjFfmnAcNOkaw==
+	bh=Ck/2Su7wGGWS/huQ9T5puYVj8NyPcu9bwwaQWp1glxs=;
+	b=N/Ia6qkzPgzFmNlpAMCpEVb0sBkxgVmp+2pxDI8LQssjkfDxKp+lnG55ULP7w/CyfHxT
+	 +UAMhzwITmhrv4lkpiPLY9E3ZhnPYp4RnlKSYk1H9RGPhhazOEKPIg0kt84obvOZb/V/0
+	 ALxmyI0lYevnukCf3uogzlhoORJ+TCxZvs3ofEPoO1f/e8Bkl7YLVNsti+UbgKaBlJkqH
+	 da35T3uC7+zKTk0q+z+IF9RLnFTvOAbaPtaCcFvPa3v6/7sbCiSXmhdgjVB4004GnvfL3
+	 mQavn4Qtml54ZhLkCIIzzpKjAE25osSb2tIfcyq8sSM3tmtQwfdJ177ZvqNM+J+zOuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Y5g2qUd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sfygSXGS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326C4606BD27;
-	Fri, 13 Nov 2026 17:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AE8606BD38;
+	Fri, 13 Nov 2026 17:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Y5g2qUd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26301F000C7;
-	Fri, 13 Nov 2026 17:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sfygSXGS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A281F000C7;
+	Fri, 13 Nov 2026 17:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590579;
-	bh=Kg4rCgsJBWeEKKRXVz9k7uA7HqRyoKv/hx1TQeNnrK0=;
+	s=korg; t=1794590580;
+	bh=Ck/2Su7wGGWS/huQ9T5puYVj8NyPcu9bwwaQWp1glxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Y5g2qUdjosxXYLdYeIGn/0zbn6x5kAtUxOusfkNKuaKckWixSlC2hA8xhRZIMikr
-	 DNHILOqw/AdpzNH7q83nt0PJCD+uiTCyqKG9Fe9ah2VUeuoAWDctHvIlStzaFqdxgX
-	 TcT/8ryJ6jF+HM7Us53ztJoukrHv8PgOpppqoS4I=
+	b=sfygSXGShn/VTb0KtA99MOmMfm8Q3D/7ErgMxE16TmAzeDhi6OMPGOX0bH4f8nJ9a
+	 QlILbDhFOsssDFjbK2TRnkuJvUiLWodEwz6dvs/JNoXllZ3b3kPgtXbGbjkk98OOKO
+	 a4KU7VNv7zwZew1RacXDAd+far0Vw5G3EzuRpLQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.18 462/686] iommu/amd: Force device table to maximum size
-Date: Fri, 13 Nov 2026 10:49:55 -0500
-Message-ID: <20261113153836.522703737@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 463/686] Revert "hugetlb: remove VMEMMAP_SYNCHRONIZE_RCU"
+Date: Fri, 13 Nov 2026 10:49:56 -0500
+Message-ID: <20261113153836.560369457@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,88 +66,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+This reverts commit dba93b8cceb0048071389352fc29dcb0a7fe666f.
 
-commit 6e2213dae78b41976c60133eb10cf99e81916638 upstream.
-
-IOMMU can perform out-of-bounds read of the device table entry (DTE)
-that is adjacent to the last DTE and falls outside the device table.
-For example, if the device table can hold 0 to N-1 entries, then the
-IOMMU can be made to fetch the Nth entry, which falls outside the
-device table.
-
-The device table is owned by the hypervisor (HV) and is assigned in 4KB
-pages that are contiguous in system physical address (SPA). If the
-out-of-bound DTE falls on a guest-owned page, then the guest can exploit
-this bug to setup malicious table walks to corrupt HV pages and/or bring
-down the system. Note that this bug does not manifest when the device
-table size is set to its maximum size of 2MB.
-
-Therefore, force the device table size to the maximum 2MB on affected
-processors. These are CPU family 0x17 (Zen1/Zen2) through family 0x1a
-(Zen5/BRH).
-
-This is a mitigation for CVE-2024-21963.
-
-kdump reuses the previous kernel's device table only when the size
-encoded in the IOMMU device-table register matches
-pci_seg->dev_table_size. A mixed rollout disagrees: the unpatched
-kernel uses the IVRS-derived size and the patched kernel uses 2MB,
-so __reuse_device_table() rejects the table. On SNP-capable IOMMUs
-that rejection panics the kdump kernel. Kernels that both have this
-patch agree on 2MB and reuse succeeds. Update the production kernel
-and the crash kernel together.
-
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c |   27 ++++++++++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ mm/hugetlb_vmemmap.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -1736,6 +1736,21 @@ static int __init init_iommu_from_acpi(s
- 	return 0;
+diff --git a/mm/hugetlb_vmemmap.c b/mm/hugetlb_vmemmap.c
+index 795e7dbbca7d0..efe4bcc85da2c 100644
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -45,6 +45,8 @@ struct vmemmap_remap_walk {
+ #define VMEMMAP_SPLIT_NO_TLB_FLUSH	BIT(0)
+ /* Skip the TLB flush when we remap the PTE */
+ #define VMEMMAP_REMAP_NO_TLB_FLUSH	BIT(1)
++/* synchronize_rcu() to avoid writes from page_ref_add_unless() */
++#define VMEMMAP_SYNCHRONIZE_RCU		BIT(2)
+ 	unsigned long		flags;
+ };
+ 
+@@ -405,6 +407,9 @@ static int __hugetlb_vmemmap_restore_folio(const struct hstate *h,
+ 	if (!folio_test_hugetlb_vmemmap_optimized(folio))
+ 		return 0;
+ 
++	if (flags & VMEMMAP_SYNCHRONIZE_RCU)
++		synchronize_rcu();
++
+ 	vmemmap_start	= (unsigned long)&folio->page;
+ 	vmemmap_end	= vmemmap_start + hugetlb_vmemmap_size(h);
+ 
+@@ -437,7 +442,7 @@ static int __hugetlb_vmemmap_restore_folio(const struct hstate *h,
+  */
+ int hugetlb_vmemmap_restore_folio(const struct hstate *h, struct folio *folio)
+ {
+-	return __hugetlb_vmemmap_restore_folio(h, folio, 0);
++	return __hugetlb_vmemmap_restore_folio(h, folio, VMEMMAP_SYNCHRONIZE_RCU);
  }
  
-+/*
-+ * Apply workaround for Zen1 to Zen5(BRH) generation of processors.
-+ * References: CVE-2024-21963
-+ */
-+static bool __init amd_iommu_force_max_dev_table(void)
-+{
-+	if (boot_cpu_data.x86 >= 0x17 && boot_cpu_data.x86 <= 0x1a) {
-+		if (cpu_feature_enabled(X86_FEATURE_ZEN6))
-+			return false;
-+		else
-+			return true;
-+	}
-+	return false;
-+}
+ /**
+@@ -460,11 +465,14 @@ long hugetlb_vmemmap_restore_folios(const struct hstate *h,
+ 	struct folio *folio, *t_folio;
+ 	long restored = 0;
+ 	long ret = 0;
+-	unsigned long flags = VMEMMAP_REMAP_NO_TLB_FLUSH;
++	unsigned long flags = VMEMMAP_REMAP_NO_TLB_FLUSH | VMEMMAP_SYNCHRONIZE_RCU;
+ 
+ 	list_for_each_entry_safe(folio, t_folio, folio_list, lru) {
+ 		if (folio_test_hugetlb_vmemmap_optimized(folio)) {
+ 			ret = __hugetlb_vmemmap_restore_folio(h, folio, flags);
++			/* only need to synchronize_rcu() once for each batch */
++			flags &= ~VMEMMAP_SYNCHRONIZE_RCU;
 +
- /* Allocate PCI segment data structure */
- static struct amd_iommu_pci_seg *__init alloc_pci_segment(u16 id,
- 					  struct acpi_table_header *ivrs_base)
-@@ -1758,9 +1773,15 @@ static struct amd_iommu_pci_seg *__init
+ 			if (ret)
+ 				break;
+ 			restored++;
+@@ -513,6 +521,8 @@ static int __hugetlb_vmemmap_optimize_folio(const struct hstate *h,
  
- 	pci_seg->last_bdf = last_bdf;
- 	DUMP_printk("PCI segment : 0x%0x, last bdf : 0x%04x\n", id, last_bdf);
--	pci_seg->dev_table_size =
--		max(roundup_pow_of_two((last_bdf + 1) * DEV_TABLE_ENTRY_SIZE),
--		    SZ_4K);
-+	if (amd_iommu_force_max_dev_table()) {
-+		pr_info("Force device table to maximum size\n");
-+		pci_seg->dev_table_size = SZ_2M;
-+	} else {
-+		pci_seg->dev_table_size =
-+			max(roundup_pow_of_two((last_bdf + 1) *
-+					       DEV_TABLE_ENTRY_SIZE),
-+			    SZ_4K);
-+	}
+ 	static_branch_inc(&hugetlb_optimize_vmemmap_key);
  
- 	pci_seg->id = id;
- 	init_llist_head(&pci_seg->dev_data_list);
++	if (flags & VMEMMAP_SYNCHRONIZE_RCU)
++		synchronize_rcu();
+ 	/*
+ 	 * Very Subtle
+ 	 * If VMEMMAP_REMAP_NO_TLB_FLUSH is set, TLB flushing is not performed
+@@ -572,7 +582,7 @@ void hugetlb_vmemmap_optimize_folio(const struct hstate *h, struct folio *folio)
+ {
+ 	LIST_HEAD(vmemmap_pages);
+ 
+-	__hugetlb_vmemmap_optimize_folio(h, folio, &vmemmap_pages, 0);
++	__hugetlb_vmemmap_optimize_folio(h, folio, &vmemmap_pages, VMEMMAP_SYNCHRONIZE_RCU);
+ 	free_vmemmap_page_list(&vmemmap_pages);
+ }
+ 
+@@ -600,7 +610,7 @@ static void __hugetlb_vmemmap_optimize_folios(struct hstate *h,
+ 	struct folio *folio;
+ 	int nr_to_optimize;
+ 	LIST_HEAD(vmemmap_pages);
+-	unsigned long flags = VMEMMAP_REMAP_NO_TLB_FLUSH;
++	unsigned long flags = VMEMMAP_REMAP_NO_TLB_FLUSH | VMEMMAP_SYNCHRONIZE_RCU;
+ 
+ 	nr_to_optimize = 0;
+ 	list_for_each_entry(folio, folio_list, lru) {
+@@ -654,6 +664,8 @@ static void __hugetlb_vmemmap_optimize_folios(struct hstate *h,
+ 		int ret;
+ 
+ 		ret = __hugetlb_vmemmap_optimize_folio(h, folio, &vmemmap_pages, flags);
++		/* only need to synchronize_rcu() once for each batch */
++		flags &= ~VMEMMAP_SYNCHRONIZE_RCU;
+ 
+ 		/*
+ 		 * Pages to be freed may have been accumulated.  If we
+-- 
+2.53.0
+
 
 
