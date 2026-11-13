@@ -1,54 +1,82 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590726;
-	b=sj0Cm1iTtKdD8+1hcErLAmn64sFTm5kg/4GvuN2gbAfCC+ZUz3jTYtOV3BM9LZFaa2Uy
-	 QoWGUNlCPB4rQPhMwnGSbgG+i8lkA6Ov19ND7JskacjNEgmK/KN9KiUcjvFjJzHlL1YL6
-	 B0GBrNtXVMxAqG0E9TrkXj9SoebOEcy4GL49TsnV3FnGf+0WIWTUTGTE5FPMkz2OUkhfb
-	 qmEIxascDfSXQzf8vd4yjv3wLkCPLPfGVOx+SnF65frVEaQokWJzzN57nZnKwV8Z7Onx8
-	 YtEauG8lufJlzrqYn4XraFKcfLvFHyKfkk9sRxqbyRfcDACNrIFVPImbrlW6MQh1nNA==
+	t=1794590727;
+	b=jAXrv/oW3tF99Hs5J43fBJDm1k93ZIb2DxDFtQXaNFJQi4HmF45hxEWc3zOUQQ8SXJEW
+	 o5iwAfVxMu3CRuJnDbK5XeFjhS+HnkKDR5FKSIN62GTrEptOYVTHcRnRwAdBaSMhMTuhY
+	 k9nljZOPmsLSmXMUxqyXFNoGV9q6Me80x0NgiMIZWbCNNaJyFmVALY6uSYzuMAzMDKocx
+	 3lxpeNBwv+ua3ms1f+zxpE43tsgn5skqNfpu1l0j0fg8FTxMm/Y2WFIEn3ofRgySm50Rw
+	 IPk2AQ6Kbhum0oWVlyvM7DvUqiJWjPL/T2mPeQ9FpxSUo9Gtc3vR9ddSVbFDnFa5cuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590726;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590727;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yvr3gZ3jepReSmZeE8UW6cK/yVX6m2/g1lZ4NtCY6l4=;
-	b=44VIZMXkOpW90Udy997k5M6Iwbrny6h1CGi94qHBjaX4+7Zg5gxLj5W2cz3Hs9OtykOY
-	 UWRGQqJnxIqcPGyO2vA9m+4GL/09nxhippXrN2BCoejD57VwwLNNx86rch+wvM3xqvAJl
-	 tIu7ClrCCkueOobaMzkqDCIniRhdyMwuvlr6Yy27QwmAqjCB2GVeorQ4VaYHVWKTa4+eQ
-	 yhhL10F2hC7vqllMjOaIerb3MVIJytcBw6ViFn38zH1cXGq3VGo8CFkMj8A8T+w+QZllG
-	 lBAZtkutJGhWIuQW8f6V+MAU+Xs5b5I8CorEPb2sbQZB5pxDpcTe9Ps+nbpZykGLgng==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4SZJufXmSagXcWO26Mhmz+v5u/A10h0tpEAm+J9vPvI=;
+	b=Wj6lUsedJZBoyYWbkUs1DFAN3n4W/QpotO5h5nmz55SKLbRhaNIOU7ShTmcEIifo7agG
+	 uUT5hUieMlR2XRdxZC9S4GnD3/v07Ta7t8bk7tLVzD5eD033YJS79ivwO8dm5BsFZYiEW
+	 UefDCUL1aGz4ljfRfDD6tKJno4M5sQ96VayW++mgI8Ljuuaz8KilPTAsmeMRVk3yYefjZ
+	 Ua6iXlIebErQB+ECBX1c80klaskORjT+l8cDWX7ytXLwVWPzEC4dyeoSy6aNrVUlKar3V
+	 XG41EWlpojsae3BbpIKZcDLOmY7NLzkGPWJw0Ybs1u2cfI2H7b7qU8aAsno2iT7hVRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btXRvCN0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HN63+j7y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366ED607A5FC;
-	Fri, 13 Nov 2026 17:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343896079D4A;
+	Fri, 13 Nov 2026 17:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btXRvCN0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93BF71F000C4;
-	Fri, 13 Nov 2026 17:25:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HN63+j7y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBA11F000C4;
+	Fri, 13 Nov 2026 17:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590725;
-	bh=Yvr3gZ3jepReSmZeE8UW6cK/yVX6m2/g1lZ4NtCY6l4=;
+	s=korg; t=1794590727;
+	bh=4SZJufXmSagXcWO26Mhmz+v5u/A10h0tpEAm+J9vPvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=btXRvCN0xz6ia7SavDQbYaMnyesLOhSX63QKyNqOlens8YrdKStPA5C3guGd9Ipqw
-	 M0YsRdZjeKsdZ0qh0JEX4iRgJ++Tm/cXoGIuu7L1PH5Hh+vvjX0huifYbuYu6sro4P
-	 HCM/oURG28C+fbeubpqzPQBf7zkjlqOqmFIpTfEc=
+	b=HN63+j7yri3u/tj6iC1Et2e6FW7wB2lOhfTqAADMHfWH7sI1WwFElmUbiwIfndLvZ
+	 tw0LkPhVDvCjfkXz3B0sjigxqPIFsbxBfb54qlyOZW3hzdKRPsG/XAGF2zjW2g54HI
+	 Rnar6J0oafqPzDJjymaVvfr4rDmG5zvFfYnxzeBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolaos Karaolidis <nick@karaolidis.com>,
-	Jan Kara <jack@suse.cz>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Allen Pais <apais@linux.microsoft.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Baoquan He <bhe@redhat.com>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Chen Ridong <chenridong@huawei.com>,
+	David Hildenbrand <david@kernel.org>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Hugh Dickins <hughd@google.com>,
+	Imran Khan <imran.f.khan@oracle.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Kamalesh Babulal <kamalesh.babulal@oracle.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Liam Howlett <Liam.Howlett@oracle.com>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 630/686] fs: rotate inodes whose page cache could not be dropped
-Date: Fri, 13 Nov 2026 10:52:43 -0500
-Message-ID: <20261113153843.185638768@linuxfoundation.org>
+Subject: [PATCH 6.18 631/686] mm: memcontrol: refactor mod_memcg_state() and mod_memcg_lruvec_state()
+Date: Fri, 13 Nov 2026 10:52:44 -0500
+Message-ID: <20261113153843.213886215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -64,84 +92,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nikolaos Karaolidis <nick@karaolidis.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-[ Upstream commit 8ee09f597763acfd31c62a578ba88b792fc41b24 ]
+[ Upstream commit 5371e350fda70bbdbee364215ca37b7fea25047b ]
 
-When inode_lru_isolate() drops the page cache of an unused inode, it
-has to unlock the list, so it returns LRU_RETRY and the walk restarts
-at the head of the list, where the inode still is. If
-invalidate_mapping_pages() could not empty the mapping, the restarted
-walk strips the same inode again, and so on until nr_to_walk runs out.
-Every walk of that list then ends on this inode, and nothing behind it
-is reclaimed for as long as its cache stays.
+Refactor the memcg_reparent_objcgs() to facilitate subsequent reparenting
+non-hierarchical stats.
 
-Before commit 2a0629834cd8 ("vfs: Don't evict inode under the inode lru
-traversing context") the walker pinned the inode with a reference, and
-dropping it in iput_final() set I_REFERENCED, so the restarted walk
-rotated the inode to the tail. Set I_REFERENCED again when the mapping
-is still populated after the invalidation, in the same i_lock section
-that clears I_LRU_ISOLATING. inode_unpin_lru_isolating() now expects
-i_lock to be held, like inode_pin_lru_isolating().
-
-On CONFIG_HIGHMEM kernels this can happen to any unused inode: a folio
-is left behind if it is locked, under writeback, spliced into a pipe,
-or still in another CPU's LRU-add batch after being read. Without
-HIGHMEM it happens to DAX inodes whose only entry is at index 0, which
-mapping_shrinkable() lets onto the LRU and invalidate_mapping_pages()
-never removes.
-
-Fixes: 2a0629834cd8 ("vfs: Don't evict inode under the inode lru traversing context")
-Cc: stable@vger.kernel.org
-Signed-off-by: Nikolaos Karaolidis <nick@karaolidis.com>
-Link: https://patch.msgid.link/20261016102515.111285-1-nick@karaolidis.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Adjusted context for direct i_state accesses in inode_unpin_lru_isolating() where upstream uses inode state accessors. ]
+Link: https://lore.kernel.org/7f8bd3aacec2270b9453428fc8585cca9f10751e.1772711148.git.zhengqi.arch@bytedance.com
+Co-developed-by: Yosry Ahmed <yosry@kernel.org>
+Signed-off-by: Yosry Ahmed <yosry@kernel.org>
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Allen Pais <apais@linux.microsoft.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Chen Ridong <chenridong@huawei.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Cc: Harry Yoo <harry.yoo@oracle.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Imran Khan <imran.f.khan@oracle.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Kamalesh Babulal <kamalesh.babulal@oracle.com>
+Cc: Lance Yang <lance.yang@linux.dev>
+Cc: Liam Howlett <Liam.Howlett@oracle.com>
+Cc: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Michal Koutný <mkoutny@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Usama Arif <usamaarif642@gmail.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 02e0c8cc2815 ("mm/memcg: migrate per-node hugetlb lruvec stat together with hugetlb folio")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/inode.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ mm/memcontrol.c | 50 ++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/fs/inode.c b/fs/inode.c
-index ec58d248a7ed9..229ac6ff72cb9 100644
---- a/fs/inode.c
-+++ b/fs/inode.c
-@@ -581,12 +581,11 @@ static void inode_pin_lru_isolating(struct inode *inode)
- 
- static void inode_unpin_lru_isolating(struct inode *inode)
- {
--	spin_lock(&inode->i_lock);
-+	lockdep_assert_held(&inode->i_lock);
- 	WARN_ON(!(inode->i_state & I_LRU_ISOLATING));
- 	inode->i_state &= ~I_LRU_ISOLATING;
- 	/* Called with inode->i_lock which ensures memory ordering. */
- 	inode_wake_up_bit(inode, __I_LRU_ISOLATING);
--	spin_unlock(&inode->i_lock);
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index db12e61ee9852..371bbfc419170 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -678,21 +678,12 @@ static int memcg_state_val_in_pages(int idx, int val)
+ 		return max(val * unit / PAGE_SIZE, 1UL);
  }
  
- static void inode_wait_for_lru_isolating(struct inode *inode)
-@@ -964,7 +963,13 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
- 		else
- 			__count_vm_events(PGINODESTEAL, reap);
- 		mm_account_reclaimed_pages(reap);
-+
-+		spin_lock(&inode->i_lock);
-+		/* The walk restarts here: don't retry leftovers right away */
-+		if (!mapping_empty(&inode->i_data))
-+			inode_state_set(inode, I_REFERENCED);
- 		inode_unpin_lru_isolating(inode);
-+		spin_unlock(&inode->i_lock);
- 		return LRU_RETRY;
- 	}
+-/**
+- * mod_memcg_state - update cgroup memory statistics
+- * @memcg: the memory cgroup
+- * @idx: the stat item - can be enum memcg_stat_item or enum node_stat_item
+- * @val: delta to add to the counter, can be negative
+- */
+-void mod_memcg_state(struct mem_cgroup *memcg, enum memcg_stat_item idx,
+-		       int val)
++static void __mod_memcg_state(struct mem_cgroup *memcg,
++			      enum memcg_stat_item idx, int val)
+ {
+ 	int i = memcg_stats_index(idx);
+ 	int cpu;
  
+-	if (mem_cgroup_disabled())
+-		return;
+-
+ 	if (WARN_ONCE(BAD_STAT_IDX(i), "%s: missing stat item %d\n", __func__, idx))
+ 		return;
+ 
+@@ -706,6 +697,21 @@ void mod_memcg_state(struct mem_cgroup *memcg, enum memcg_stat_item idx,
+ 	put_cpu();
+ }
+ 
++/**
++ * mod_memcg_state - update cgroup memory statistics
++ * @memcg: the memory cgroup
++ * @idx: the stat item - can be enum memcg_stat_item or enum node_stat_item
++ * @val: delta to add to the counter, can be negative
++ */
++void mod_memcg_state(struct mem_cgroup *memcg, enum memcg_stat_item idx,
++		       int val)
++{
++	if (mem_cgroup_disabled())
++		return;
++
++	__mod_memcg_state(memcg, idx, val);
++}
++
+ #ifdef CONFIG_MEMCG_V1
+ /* idx can be of type enum memcg_stat_item or node_stat_item. */
+ unsigned long memcg_page_state_local(struct mem_cgroup *memcg, int idx)
+@@ -725,21 +731,16 @@ unsigned long memcg_page_state_local(struct mem_cgroup *memcg, int idx)
+ }
+ #endif
+ 
+-static void mod_memcg_lruvec_state(struct lruvec *lruvec,
+-				     enum node_stat_item idx,
+-				     int val)
++static void __mod_memcg_lruvec_state(struct mem_cgroup_per_node *pn,
++				     enum node_stat_item idx, int val)
+ {
+-	struct mem_cgroup_per_node *pn;
+-	struct mem_cgroup *memcg;
++	struct mem_cgroup *memcg = pn->memcg;
+ 	int i = memcg_stats_index(idx);
+ 	int cpu;
+ 
+ 	if (WARN_ONCE(BAD_STAT_IDX(i), "%s: missing stat item %d\n", __func__, idx))
+ 		return;
+ 
+-	pn = container_of(lruvec, struct mem_cgroup_per_node, lruvec);
+-	memcg = pn->memcg;
+-
+ 	cpu = get_cpu();
+ 
+ 	/* Update memcg */
+@@ -755,6 +756,17 @@ static void mod_memcg_lruvec_state(struct lruvec *lruvec,
+ 	put_cpu();
+ }
+ 
++static void mod_memcg_lruvec_state(struct lruvec *lruvec,
++				     enum node_stat_item idx,
++				     int val)
++{
++	struct mem_cgroup_per_node *pn;
++
++	pn = container_of(lruvec, struct mem_cgroup_per_node, lruvec);
++
++	__mod_memcg_lruvec_state(pn, idx, val);
++}
++
+ /**
+  * __mod_lruvec_state - update lruvec memory statistics
+  * @lruvec: the lruvec
 -- 
 2.53.0
 
