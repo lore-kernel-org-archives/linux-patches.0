@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585844;
-	b=OsX7MJDSQ7qFMDVxYI1ZkS4UcbQsen/PdoP8a6LmvfIBYMxmjCx2a+8ZUct1jTKddPHN
-	 hEZ/wWh3IIo7lYnqtOPEPSa5uYJ6FpzGl4M9tS7XElG/MUR9eDUrJQVx7+NkQXlMSqCMH
-	 /FkQAq8n6ro6Sf2+LBybMy3yG4NCmxteDRjWZihdqVvbArsx8zF0yKzGf69VvHA0N/LIO
-	 wTpvjVNSL9rTliB1WigCw6rOv+vt0ljzQZd5950CCmSxViXADsT4HXRXB/uSwZ8fCUB/2
-	 0mWAGrtVKpzs0R50SbYoUrMMrLIdCSlszvdxned0l5MUwOaWy12Rl7cyjhPcu2PljZA==
+	t=1794585845;
+	b=5A0WM1E5b2l/U1C0o8O4mqWrfaFHmT76qdBzfXlhFfgaSTh9YnX32Q2tc4YWxujKOuiB
+	 aeOu3YgqrUocHJjcoFIKuJUM0WnJOKcqnldAenObOgpy+Un1zBLP/rZ20tjRXTLhc7XIv
+	 iagYMWE7mIbvRpzt3GaQQ5wVmJsmQBNTHxXEQkGlbrZyu6yj2KsvEivJ3ihEOCNY8frSW
+	 eIC5Cvxpoj93PjbZoE7VL4Do9hdi7fINzskTxJUPc42Irte6OtRFYoyHLnXteFYUuzCIo
+	 Wd2oJpd+xL450mwKnucQmTQcR/R61U1JjMPl0abN96nuRQqA4u2KCL5ycv03QgGNdPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585845;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iEa1OEnOlqs0P4g8dW2EcwKS1KFugKuNcAgWJruO5Y0=;
-	b=VhYHJW65rKKd6SkiEwwA7V4QiLNEg8am5EwvPI3njE9lJ4shPqzXN5+1ObywjYq66gf6
-	 U8yRpDR6VUOEvvcn+MRzx8bXLaqADHuuVaYIGFTJH1gMgdPUqJ/eTMvyArelLmHXUBt/d
-	 EtJFG02zuwxOJvo258LCGu5zQBBWBahErUSj7/xKDsudxJBNdFgMYopPuCXa4gGaPihtf
-	 KmWVVIA1m3Toi49+e4HUZUZVHbJbkVCsjPIz21UOb1nqM9H+6KIdDM/8zCbWYpsbbP6rZ
-	 SGklzkY7xE8ys6z8rt5lHLrFe2zCMcXv4IXrYCmM6BUrW/Pbnsf1Hc+9tCodvAb4vhg==
+	bh=dcK9vuUGYKIQYIx3eWLY0fYFYayJSfEb3R4fNREl9Ps=;
+	b=Z8Q7kpYA/G+vVgBkXp5eqIRRs6ptFv6+WlZGWutjzzsc+l+LHGzO3kZn4RZrxNlR3SGi
+	 jkNDV1/pDF8uLJaU7x6CnRYq9GoAvftLC0pN9se6aiZB2lwjGdBgMF9eQZ33Boa15B5yM
+	 WORT22ijlcrob/gTRo5gp0sEtdCdM22DGp5vP0LJ6/2pcgUcSD3si0SB5io3u0LXZctUb
+	 XlH99jZdiUnkDmzLcoQbIcjHyprSdGqQHBXMCMDLVydvisDXaX7vRlWLq3DmqDm+Awpng
+	 9hQ1P4lKqfMDo77b9VkLECExCpCPbg2NKOzB6WzsNuotEiBIf7HXaEFrpwwSSZ4ZYoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gN3nErfU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NmZwEPHu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEEE606A891;
-	Fri, 13 Nov 2026 16:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 356D5606BAB6;
+	Fri, 13 Nov 2026 16:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gN3nErfU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5D21F000C4;
-	Fri, 13 Nov 2026 16:04:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NmZwEPHu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E081F000C4;
+	Fri, 13 Nov 2026 16:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585843;
-	bh=iEa1OEnOlqs0P4g8dW2EcwKS1KFugKuNcAgWJruO5Y0=;
+	s=korg; t=1794585845;
+	bh=dcK9vuUGYKIQYIx3eWLY0fYFYayJSfEb3R4fNREl9Ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gN3nErfUom7YNSJCeAYKcRG3WWFOBrpGJtQ4rnjtLrji1Qs3ri32/g8Yj53A9JvyY
-	 rfw/aSUWFRFNIQ2fAHq5+CAeMhoTVpg7QNre3ZnM6npHsU6kJwurR0btmEy0gElPey
-	 2VPaYy+hrtcogiOHG57b/34PWwBUFMVDS99SjwS8=
+	b=NmZwEPHu97qVYroQAbl5g2ZEga4sOPXf+Zylkh248/5PPXvS4rEHdnEQKEfo2L7es
+	 0JAxcJvXp4F6odVV2xAGGgTZEY8NpAlpvDZMTLqlN9UK13Vag9W4Ot3ZtjO+R6bm1x
+	 Z4O0pntL55BHINTLgl3CkC2n5Ak1T8kK+BbTl4EY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
+	Daehyeon Ko <4ncienth@gmail.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
+	Aaron Lu <ziqianlu@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 422/507] perf/core: Dont send SIGTRAP after exec removed the event
-Date: Fri, 13 Nov 2026 10:52:06 -0500
-Message-ID: <20261113153811.051992904@linuxfoundation.org>
+Subject: [PATCH 7.3 423/507] sched/fair: Clear throttle state when leaving the fair class
+Date: Fri, 13 Nov 2026 10:52:07 -0500
+Message-ID: <20261113153811.081586474@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,72 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Daehyeon Ko <4ncienth@gmail.com>
 
-[ Upstream commit 6f083fbccd5f06889bc08e1182bd02c0383b9121 ]
+[ Upstream commit c282051fc2cae2ea54770ebe435dbea090272c25 ]
 
-A sigtrap event must also set remove_on_exec, so that its SIGTRAP never
-reaches a program after exec. But the signal is sent from task work,
-which only runs on the way back to user space. If the event overflows
-shortly before execve(), the task work can still be pending when the
-task enters execve(), and then runs when execve() returns. By then
-perf_event_exec() has removed the event and the new program has default
-signal handlers, so the SIGTRAP kills it.
+Task-based CFS bandwidth throttling removes a task's fair sched_entity
+while the scheduler core still considers the task queued. p->throttled
+carries the fair-specific state across dequeue/enqueue operations.
 
-The exec_stress test in the remove_on_exec selftest catches this and
-fails about half the time in a VM. A process that opens a sigtrap event
-on itself and then calls execve() is killed by SIGTRAP in 15% to 50% of
-runs, both on an AMD machine running v7.2 and in a VM, with or without
-close-on-exec on the event fd.
+DEQUEUE_CLASS removes the task from cfs_rq->throttled_limbo_list
+but retains the bit. If the last finite CFS quota is disabled while
+the task runs in another class, it is absent from the unthrottle walk and
+the bit survives.
+Returning to fair while cfs_bandwidth_used() is false then performs a real
+fair enqueue with p->throttled still set.
 
-Commit ffb684f2aa14 ("perf: Fix race between perf_event_exit_task() and
-perf_pending_task()") made perf_sigtrap() return once
-perf_event_exit_task() has set ctx->task to TASK_TOMBSTONE. Exec only
-calls perf_event_exit_task() when the new program is not dumpable, such
-as a setuid one. An ordinary exec keeps the context and only removes the
-remove_on_exec events, so the SIGTRAP is still sent.
+After bandwidth is re-enabled, a class-change dequeue treats the
+stale bit as limbo state and skips __dequeue_task(). p->se.on_rq therefore
+remains set, and put_prev_task_fair() places the entity in the EEVDF tree
+while the task moves to RT. On exit, the fair picker can select the
+TASK_DEAD task. __schedule() then returns to do_task_dead(),
+which hits BUG().
 
-perf_event_exit_event() sets PERF_EVENT_STATE_EXIT when exec removes the
-event. If the event fd is close-on-exec and was the last reference to
-the file, exec also queues the file release as task work. Task work runs
-newest first, so perf_release() runs before the SIGTRAP work and moves
-the event on to PERF_EVENT_STATE_DEAD. So don't send the signal when the
-event state is PERF_EVENT_STATE_EXIT or lower, which means the event has
-been removed. That also covers PERF_EVENT_STATE_REVOKED, where the PMU
-is gone.
+Keep p->throttled across migrations and group moves, but clear it on
+DEQUEUE_CLASS because fair-specific state must not outlive fair-class
+membership. A later return to fair uses the normal enqueue path. That path
+still respects a throttled cfs_rq.
 
-Fixes: 97ba62b27867 ("perf: Add support for SIGTRAP on perf events")
-Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
+A KASAN, LOCKDEP and DEBUG_LIST v7.3 kernel reproduced the do_task_dead()
+BUG in 3/3 root and 3/3 delegated uid-1000 runs with CapPrm=CapEff=0 and
+RLIMIT_RTPRIO=1. The fix passed both matrices plus a 3/3 class-switch
+control with bandwidth continuously enabled, without a scheduler warning,
+KASAN report, lockdep splat or crash.
+
+An AI coding assistant analyzed the state mismatch and drafted the initial
+reproducer, fix candidate and this changelog. The source paths, trigger,
+controls and results were rechecked against the cited revisions.
+
+Fixes: e1fad12dcb66 ("sched/fair: Switch to task based throttle model")
+Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Aaron Lu <ziqianlu@bytedance.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015152013.106040-1-danishkhateeb03@gmail.com
+Link: https://patch.msgid.link/20261022235234.150957-1-4ncienth@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ kernel/sched/fair.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index c4217c996f5a1..9b90b6831de7c 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -7634,6 +7634,15 @@ static void perf_sigtrap(struct perf_event *event)
- 	if (event->ctx->task == TASK_TOMBSTONE)
- 		return;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index b35e23f93bcd2..913630c0b0590 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7021,8 +7021,8 @@ static void dequeue_throttled_task(struct task_struct *p, int flags)
+ 	WARN_ON_ONCE(p->se.on_rq);
+ 	list_del_init(&p->throttle_node);
  
-+	/*
-+	 * The event was removed after this signal was queued, e.g. by exec()
-+	 * (remove_on_exec), which may also have closed its fd (close-on-exec).
-+	 * The new program has default signal handlers, so a SIGTRAP would
-+	 * kill it.
-+	 */
-+	if (READ_ONCE(event->state) <= PERF_EVENT_STATE_EXIT)
-+		return;
-+
- 	/*
- 	 * We'd expect this to only occur if the irq_work is delayed and either
- 	 * ctx->task or current has changed in the meantime. This can be the
+-	/* task blocked after throttled */
+-	if (flags & DEQUEUE_SLEEP) {
++	/* Task blocked after throttling or is leaving the fair class: */
++	if (flags & (DEQUEUE_SLEEP | DEQUEUE_CLASS)) {
+ 		p->throttled = false;
+ 		return;
+ 	}
 -- 
 2.53.0
 
