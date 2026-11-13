@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585767;
-	b=a4mopNVPZ2lnKBf3UT0dkBl5zdhqBpWJEnYSD1kBvJnFEdBS2UJ0COjTlwxwlBlh7cJJ
-	 u+Y5XMZwMQU35XGcLH/SzSLR5nT3D1GlN2US75vSXAhvDdb0loCWEM2iNtR8Ow9yJne62
-	 lgvvBFOe0nbo2mG6jQ2zd3CbNkTwztEGaXnGy0NAGHHMV6zc8nnLseTu+kTcBBV1Q8Khy
-	 D2CZLaQwAltTnJeV/EslDvgyisprOMUkK9kdI5NOycX6rFmBW/7kytSFwGHRFUp68Xu7c
-	 UrZ8Yy7McldOAZaVXRQ0IBrwp0UeiEByY8Vr/T3EKcYR++vUWh2VNB5Ixrw1hAR4pjg==
+	t=1794585768;
+	b=Wnzg7L2oyaC6NAGqvt7MAuOmss980zFiGhA2WH1I+QEXwJpr/uEYS+pEhwFhCRFf1Byi
+	 w7WopQpPQqUkDNLz/EKO0Nti5cy05JOsbSx2wuo6R40ToJZphEmAd9RvDTxZ/+ljVjkFF
+	 HaBpsafawkbE/j05+8Qods9R1/MV7xj06JNul8vzmvgkaTRf/a6WgdGT3N9RlRN+wbnTk
+	 CDbNKZQRWB3sBCCrMu5OhJvX8k0IH+DudrM4xZQAl8uars8CFoor35VDNxgqLMl5/O9LK
+	 BX8Kl2eRJQ0w74f93vUYXiVJ6mOz4ZqkL6ZdBLGm50m/y4Fa6FWcphvTlihuzkPjxOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585767;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585768;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/SryqEe6ar22Qhep3x6TwtEToBxLwq2AygowmBUmgQc=;
-	b=4PEk3Pe32in9WcQPVG3Af4S1XTo81Kknov6bN9DsWEDVF4lsaPt6qbuPWag6JuNCEtsL
-	 O66LW92c3jFOoNv9JNkIWFtnByxk9tGZBMWLs/n2MbhpiwKLVZOcs9ca1O+Xdv6l7oWoX
-	 ExrSuTxrPvMI3ItdiydYydl8Wj0EKPCQk9kJdGn+AMe2GtbQQ8QL04RugcO037XpJzqqA
-	 ylFVVM12aXTtHDYlVvG6PlXd85tDKemqs6i3XVwom22TazSTqR6mSNPX1D3Q4DSR2sDJU
-	 gJOJyZNbHRSuJ4OezO1MSB+CbRvDLQ7fOA004KXeIxVtqF02d3hVJon9XqDj4iNeAWg==
+	bh=197yTnPRsaaW0269lsh51DyY2+64W2HDSpxzJZY6gFw=;
+	b=dT/pZF2JgCcdekkfminPglXB/p77xcp/YvhUb18NOf7hJFSJ6yCFE7gkiMDzOUqu6Tmc
+	 ahBUbZRGK0xShJ2TUepYqOaVOtPb1e8146a+2fdeNf8JKkJcEOlcvedUz8VFByA32g4AA
+	 d6qJSmQ1Me15Zuvsz4bbMyDiGJSzGrgtt/IKUn2HHYS7mooSTMXe0tpbI6BT/X6t+ol2e
+	 bEk/zQrZ4nO8f1Q4IB6/a59e5vxhSO+h+EsJ5HyiZyVSqMA5aKQ2Lf7t3zM2ho+qtAMSZ
+	 jUj63kvknOHvXtMUIfW43kU5B75P7jU34V/GYt0uwodPv4H15AyuHhYOQRWO66hIT/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLEHK8rl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tXehgM4j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AF3606D445;
-	Fri, 13 Nov 2026 16:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2EF606D451;
+	Fri, 13 Nov 2026 16:02:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YLEHK8rl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E6FD1F000C4;
-	Fri, 13 Nov 2026 16:02:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tXehgM4j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8966C1F000C4;
+	Fri, 13 Nov 2026 16:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585767;
-	bh=/SryqEe6ar22Qhep3x6TwtEToBxLwq2AygowmBUmgQc=;
+	s=korg; t=1794585768;
+	bh=197yTnPRsaaW0269lsh51DyY2+64W2HDSpxzJZY6gFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YLEHK8rlqJOoFTHBsOR3fMC8BvPN6RvJIwFXs2+/ISeQbTzL9QNHRp/wtwR2q+kUP
-	 q55m/6LoG+Z5Bbb6ryKWdOy5JNtnCxsd4hnmFJyIEwbjIuumvqHdCiVet5cNVZcKwd
-	 CMZ10pJfkWsDgSQ3eNxeTfbF0p64ThDv3L60uTH8=
+	b=tXehgM4jpu5DEDA4uTaMkHB7+hAOgiAQ6zgfVr/wzse+V7cbuE0KBZPinsEUMkJHf
+	 nEq8yDi/f5CZa/Vp1Pbtj/r8Wqwbn158H/in3Gb/Sg/k45iaePXgiM/Kfk9C4gB/kI
+	 uIqre/q9yVypTzb2AMFRH3DHInT2qScY5xF+0b8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Kent Russell <kent.russell@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 359/507] drm/amdgpu: stop the schedulers before preparing the GPU reset
-Date: Fri, 13 Nov 2026 10:51:03 -0500
-Message-ID: <20261113153808.078732774@linuxfoundation.org>
+Subject: [PATCH 7.3 360/507] drm/amdgpu: Ensure that harvest information gets set
+Date: Fri, 13 Nov 2026 10:51:04 -0500
+Message-ID: <20261113153808.107911302@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,89 +69,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Kent Russell <kent.russell@amd.com>
 
-[ Upstream commit 5b40c07c7ae9f80ec5277bc44c63f354ff581077 ]
+[ Upstream commit 4c5ec969b9b011e824f1850d7ffe4fa5c41ba890 ]
 
-amdgpu_device_halt_activities() only stops the ring schedulers after
-amdgpu_amdkfd_pre_reset() and amdgpu_userq_pre_reset(). With a hung MES
-every REMOVE_QUEUE in amdgpu_userq_pre_reset() waits for its timeout, so
-the schedulers keep pushing jobs to the hardware for seconds after the
-reset has started:
+After the earlier patch exported IP discovery on probe failure, there was
+an unexpected consequence where harvest info was not populated. The
+early-exit in amdgpu_discovery_sysfs_init meant that we never called
+amdgpu_discovery_get_harvest_info, which is where we set the actual
+harvest value. The first time we call amdgpu_discovery_sysfs_recurse
+with NULL instead of adev, most values can get set. The 2nd time
+amdgpu_discovery_sysfs_recurse is called, we bail early.
 
-  GPU reset begin!. Source:  6
-  MES failed to respond to msg=REMOVE_QUEUE fence_wait_ret=528494 status=0x0
-  WARNING: amdgpu_device.c:928 at amdgpu_device_skip_hw_access+0x73/0x90 [amdgpu]
-  Workqueue: sdma0 drm_sched_run_job_work [gpu_sched]
-  Call Trace:
-   amdgpu_mm_wdoorbell64+0x20/0x70 [amdgpu]
-   sdma_v6_0_ring_set_wptr+0xa6/0x180 [amdgpu]
-   amdgpu_ring_commit+0x5b/0xa0 [amdgpu]
-   amdgpu_ib_schedule+0x64a/0x8f0 [amdgpu]
-   amdgpu_job_run+0xa2/0x220 [amdgpu]
-   drm_sched_run_job_work+0x10c/0x300 [gpu_sched]
+To keep the logic of the first patch intact, ensuring that older kernels
+can still discover the IP blocks, add a separate call in the early-exit
+section that sets the harvest information.
 
-Stop the schedulers of all devices in the reset list first. None of the
-preparation steps needs them, and jobs submitted meanwhile simply wait
-until amdgpu_device_sched_resume().
+This should be the only functionality that is missed in this flow, as the
+rest of the calls either work fine with adev=NULL, or use the discovery_bin
+directly.
 
-Fixes: 290f46cf5726 ("drm/amdgpu: Implement user queue reset functionality")
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Acked-by: Lijo Lazar <lijo.lazar@amd.com>
+Fixes: 402e04f11ff7 ("drm/amdgpu: Export ip_discovery sysfs on probe failure")
+Assisted-by: LLM Claude
+Signed-off-by: Kent Russell <kent.russell@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ea55250ab5594032541c455e1b84e8a7c15a2ba4)
+(cherry picked from commit ca0812a625d112df556e37550e6accceea33e485)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 28 ++++++++++++----------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 44 +++++++++++++++++--
+ 1 file changed, 40 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 10fc1981fb640..948886fffb4ad 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5515,7 +5515,21 @@ static void amdgpu_device_halt_activities(struct amdgpu_device *adev,
- 	struct amdgpu_device *tmp_adev = NULL;
- 	int i;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+index 7ab2ad2c5ba99..6d9a3e3b35468 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
+@@ -1402,6 +1402,40 @@ static int amdgpu_discovery_sysfs_recurse(struct amdgpu_device *adev,
+ 	return 0;
+ }
  
--	/* block all schedulers and reset given job's ring */
-+	/* Stop job submission first, the preparation below can take seconds */
-+	list_for_each_entry(tmp_adev, device_list, reset_list) {
-+		for (i = 0; i < AMDGPU_MAX_RINGS; ++i) {
-+			struct amdgpu_ring *ring = tmp_adev->rings[i];
++#define list_to_kobj(el) container_of(el, struct kobject, entry)
 +
-+			if (!amdgpu_ring_sched_ready(ring))
-+				continue;
++static void amdgpu_discovery_sysfs_update_harvest(struct amdgpu_device *adev)
++{
++	struct ip_discovery_top *ip_top = adev->discovery.ip_top;
++	struct ip_die_entry *ip_die_entry;
++	struct list_head *el_die, *el_hw_id, *el_hw_inst;
++	struct ip_hw_id *hw_id;
++	struct kset *die_kset;
++	struct ip_hw_instance *ip_inst;
 +
-+			drm_sched_wqueue_stop(&ring->sched);
++	if (!ip_top)
++		return;
 +
-+			if (need_emergency_restart)
-+				amdgpu_job_stop_all_jobs_on_sched(&ring->sched);
++	die_kset = &ip_top->die_kset;
++
++	guard(spinlock)(&die_kset->list_lock);
++	list_for_each(el_die, &die_kset->list) {
++		ip_die_entry = to_ip_die_entry(list_to_kobj(el_die));
++
++		list_for_each(el_hw_id, &ip_die_entry->ip_kset.list) {
++			hw_id = to_ip_hw_id(list_to_kobj(el_hw_id));
++
++			list_for_each(el_hw_inst, &hw_id->hw_id_kset.list) {
++				ip_inst = to_ip_hw_instance(list_to_kobj(el_hw_inst));
++				ip_inst->harvest =
++					amdgpu_discovery_get_harvest_info(
++						adev, ip_inst->hw_id,
++						ip_inst->num_instance);
++			}
 +		}
 +	}
++}
 +
- 	list_for_each_entry(tmp_adev, device_list, reset_list) {
- 		amdgpu_device_set_mp1_state(tmp_adev);
+ static int amdgpu_discovery_sysfs_init(struct amdgpu_device *adev)
+ {
+ 	uint8_t *discovery_bin = adev->discovery.bin;
+@@ -1412,9 +1446,13 @@ static int amdgpu_discovery_sysfs_init(struct amdgpu_device *adev)
+ 	if (!discovery_bin)
+ 		return -EINVAL;
  
-@@ -5551,18 +5565,6 @@ static void amdgpu_device_halt_activities(struct amdgpu_device *adev,
- 			amdgpu_ras_suspend(tmp_adev);
+-	/* If early init already created sysfs in standalone mode, skip normal init */
+-	if (adev->discovery.ip_top && adev->discovery.ip_top->standalone_mode)
++	/* If early init already created sysfs in standalone mode, update harvest info
++	 * now that adev is fully initialized, then skip the rest of normal init.
++	 */
++	if (adev->discovery.ip_top && adev->discovery.ip_top->standalone_mode) {
++		amdgpu_discovery_sysfs_update_harvest(adev);
+ 		return 0;
++	}
  
- 		amdgpu_userq_pre_reset(tmp_adev);
+ 	ip_top = kzalloc_obj(*ip_top);
+ 	if (!ip_top)
+@@ -1469,8 +1507,6 @@ static int amdgpu_discovery_sysfs_init(struct amdgpu_device *adev)
+ 
+ /* -------------------------------------------------- */
+ 
+-#define list_to_kobj(el) container_of(el, struct kobject, entry)
 -
--		for (i = 0; i < AMDGPU_MAX_RINGS; ++i) {
--			struct amdgpu_ring *ring = tmp_adev->rings[i];
--
--			if (!amdgpu_ring_sched_ready(ring))
--				continue;
--
--			drm_sched_wqueue_stop(&ring->sched);
--
--			if (need_emergency_restart)
--				amdgpu_job_stop_all_jobs_on_sched(&ring->sched);
--		}
- 		atomic_inc(&tmp_adev->gpu_reset_counter);
- 	}
- }
+ static void amdgpu_discovery_sysfs_ip_hw_free(struct ip_hw_id *ip_hw_id)
+ {
+ 	struct list_head *el, *tmp;
 -- 
 2.53.0
 
