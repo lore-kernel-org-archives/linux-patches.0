@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590917;
-	b=iPXZYCIwX/YOizXlTspQEDAxhBJgT5sRJ8E5L+c+xDWu2KumCrRRGOaSm3bibfmPIdms
-	 l/GREuRK0/F6JBMFTX58x3L2UXLDfsbch9I1Dp3sFMVc5LKNPucUJ0li8fvp0akf7Gsm/
-	 JNenJcrhuLq7KGwJNc5CwiVmfoafwmcY9/EYS4tpGYOCeewK7HSaaX8OUhIuTIhAD94AC
-	 JQQSo8oJJOy+jGwCe10EThJT+WsQ10BK/n3L7tnExUKSw/7g8DD2HSEtCVv45aNR2NWhd
-	 JbHF5SA/Qwf4XLaETyeCjwDYrVSjZwgLTwegVtjnDvwciAR9zmtkYVgzllp9nwyLdNw==
+	t=1794590918;
+	b=c3Gr1+V1w5wvTWgiaLW9SaDRy4Loi14uC0OyA+rSBgR+mRKnJerT0hHXxTM5D19ZFAZe
+	 iafPfqpEvOpRQFHpee/mKuPS0rkaqVgzHjk9q/+0vG7Jb8d5ftXiYN+UT174Ms7JkZ88+
+	 6exGK4nxFBthvcYtrX+wkIZB4b82kMzKPlO6aMKJ0obL+7zSl1J99qX5qTghMHaFUV9of
+	 qNcaIWDUpxM4VioW2u3SS51v9E+PWZBzl+NIRjyL2zY/qR2e6eYhuJcd8SAdBEtp/qgyd
+	 4Gj8nDEV2QPcdjSnnoZQs6nM/WUVZDGv/gV6g3JTGOWyqHwmzVy6eNqN3J3s3WJUtLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590918;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CEjpqJ7qXSC4PPRUY2iUgQDzTBPn2ej0JbJMZJ83vNE=;
-	b=V3ZiUYlyA0vyodD0073ADh0icogbJBXTxfknSAynb0TvPvm0SkNXVeurksvvFktsqj2E
-	 SQ4xOr3jLc0H2+x1CXpCVr5EpEKxnNCBByHvCtLwjGkkIPG6kqO9XFTqeNJJE1Mq2XG5Z
-	 pqCDdzOiZDK6iXzeAmQtJ5yohqy4/hkHCswNfPi1fx8k1Ro/sNvp1jmrrqwQm/VWnIl8Y
-	 kGpvJIgFXEsXm574sZE01jt9FLhrO5Mn6efYS2ZWKgpySbjImdrBbOuPsIN8uthQul3zM
-	 20yis5cA08c6uItONufneK7NVgIuVdcx51hP2d/pE6zh+DuqLEwoaOUrQV6agf+WA6Q==
+	bh=dqpQZvNflH/EPsb9rfk57tynD/kjPOWCTl9FKyjV2ZM=;
+	b=YwXavvbVKvEUaJkZ/ivpvNSFG4Sxcu2Q79UpxYf6ttGQoY9pgdR4qNp0L5CJKlWDMDP0
+	 5hXQQ3cHIhvg7Czv6JML/y57ece3eEI6yf6sVu4v7Pm+JGMf7X1eqBdSKMl9ffwZzPM80
+	 45J9UqQKG/feuEnJ2esd7q/FMcodsE4hXGb+oyzM6Aa/zXnOnPcXejKuyN3mPwZv/vsff
+	 +cH7YposeJLPjbQxXNLrPw8bxNg474SqiErslB+rsSmaAJdm7pmfHjXHCM7lahxzGep7L
+	 4SjcQ7jwTFziaps38DJv2FpXrOumd+Rim40vQNdQw/P1YWvl0vo65tbq1lfC/UD6Nww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9wcRaxc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dJLI+/qh";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AB9606A327;
-	Fri, 13 Nov 2026 17:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC46606A327;
+	Fri, 13 Nov 2026 17:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9wcRaxc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1251F000C5;
-	Fri, 13 Nov 2026 17:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJLI+/qh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3641F000C4;
+	Fri, 13 Nov 2026 17:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590917;
-	bh=CEjpqJ7qXSC4PPRUY2iUgQDzTBPn2ej0JbJMZJ83vNE=;
+	s=korg; t=1794590918;
+	bh=dqpQZvNflH/EPsb9rfk57tynD/kjPOWCTl9FKyjV2ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O9wcRaxcaa1K5rL1umm0CnUYSvJfk9En5iLipvpdfmoQPd/jlHcZzG1rEb0LxRdcT
-	 bZxgH/UirDFGzsoI6IsagUFz3Oxoif9DV4xAT1jS/JxulLI9i92IcUgYZGnavZFGog
-	 JNGQmMOhe12JvZD9t5zo/9t/p/h/TpFKou+CIVpc=
+	b=dJLI+/qh8kPJUNLDfQo/xgybi8EPmw9BloiIks7TN8ZMpfmM2y53bli5d44OV+bk+
+	 SMx6ssozgd+BQdJ6I1LhlBHkkj8h85dFzIVm+0PgjnTh3t59/n+3ShzsV5nhqBPq8t
+	 r7meSQsHqTlGOjhViVXbVXYTxLcTWYdAqw9kUTkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/670] wifi: mac80211: queue frames while off-channel
-Date: Fri, 13 Nov 2026 10:44:22 -0500
-Message-ID: <20261113153815.221553516@linuxfoundation.org>
+Subject: [PATCH 6.12 107/670] rose: dont give the same LCI to two calls placed at the same time
+Date: Fri, 13 Nov 2026 10:44:31 -0500
+Message-ID: <20261113153815.492608820@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,156 +67,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-[ Upstream commit 13e51269b6656768dc595ed6025e4974f2026543 ]
+rose_connect() picks the logical channel of a new call with
+rose_new_lci(), which looks for an LCI used neither by a socket nor by
+a through route on the neighbour, and stores the result in rose->lci
+afterwards.  Nothing serialises the search and the store, so two
+sockets calling through the same neighbour on two CPUs can pick the
+same LCI.  An unbound socket is worse: it is only put on the socket
+list by the autobind after its LCI was chosen, so it stays invisible
+to the search for longer.  Both calls go out on the same channel, the
+neighbour accepts one of them, and the other connect() hangs until T1
+expires while the neighbour holds a circuit nobody uses.
 
-Drivers without FAST_XMIT and hardware scan support currently drop TX
-frames during software scanning while being off-channel. This happens
-in ieee80211_tx_h_check_assoc() before frames reach internal TX queue.
+rose_new_lci() also walks rose_route_list through
+rose_route_free_lci() without rose_route_list_lock when called from
+rose_connect(), while rose_route_frame() may add or remove routes on
+another CPU.
 
-Move the off-channel check to invoke_tx_handlers_late(), after
-ieee80211_queue_skb(). Frames can then remain queued and be transmitted
-when the interface returns on-channel. This how TX works currently when
-code goes via ieee80211_xmit_fast() path.
+Do the autobind first, so the socket is on the list before it gets an
+LCI, then choose and store the LCI under rose_route_list_lock, as
+rose_route_frame() already does for a through route.  Assert the lock
+in rose_route_free_lci().
 
-Below is rt2x00 driver ping output example while scanning, before and
-after the fix. After the fix, packets are no longer lost. Some have
-increased latency, what is expected behavior.
+On a QEMU bench with two 4-CPU guests, eight connect() calls started at
+the same time through one neighbour, six rounds: before, 14 duplicate
+LCIs and 14 of the 48 calls timed out; after, no duplicate and 48/48
+calls connected.
 
-BEFORE:
-64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.61 ms
-64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=3.33 ms # Missed 30
-64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.03 ms
-64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=3.10 ms # Missed 33
-64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=3.04 ms # Missed 35
-64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.05 ms # Missed 37
-64 bytes from 192.168.0.1: icmp_seq=40 ttl=64 time=4.14 ms # Missed 39
-64 bytes from 192.168.0.1: icmp_seq=41 ttl=64 time=4.50 ms
-
-AFTER:
-64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.40 ms
-64 bytes from 192.168.0.1: icmp_seq=30 ttl=64 time=6.10 ms
-64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=4.69 ms
-64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.49 ms
-64 bytes from 192.168.0.1: icmp_seq=33 ttl=64 time=148 ms
-64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=6.83 ms
-64 bytes from 192.168.0.1: icmp_seq=35 ttl=64 time=8.66 ms
-64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=13.0 ms
-64 bytes from 192.168.0.1: icmp_seq=37 ttl=64 time=4.78 ms
-64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.85 ms
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260908124651.2995-1-stf_xl@wp.pl
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
+Assisted-by: Claude:claude-opus-5-5
+(cherry picked from commit 4e9d49c39bf7161e1b14493076816c715f9ed557)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 55 ++++++++++++++++++++++++-----------------------
- 1 file changed, 28 insertions(+), 27 deletions(-)
+ include/net/rose.h    |  1 +
+ net/rose/af_rose.c    | 32 ++++++++++++++++----------------
+ net/rose/rose_route.c | 19 +++++++++++++++++++
+ 3 files changed, 36 insertions(+), 16 deletions(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 0fad278d8f249..3b01934a6e800 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -276,7 +276,6 @@ ieee80211_tx_h_dynamic_ps(struct ieee80211_tx_data *tx)
- static ieee80211_tx_result debug_noinline
- ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 83d6b611eb735..7ee480e0a64e7 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -267,6 +267,7 @@ void rose_link_device_down(struct net_device *);
+ struct net_device *rose_dev_first(void);
+ struct net_device *rose_dev_get(rose_address *);
+ struct rose_route *rose_route_free_lci(unsigned int, struct rose_neigh *);
++unsigned int rose_assign_lci(struct sock *sk);
+ struct rose_neigh *rose_get_neigh(rose_address *, unsigned char *,
+ 				  unsigned char *, int);
+ int rose_rt_ioctl(unsigned int, void __user *);
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index d8a86006c7448..4be2dd8200b5a 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -330,6 +330,7 @@ struct sock *rose_find_socket(unsigned int lci, struct rose_neigh *neigh)
+ 
+ /*
+  *	Find a unique LCI for a given device.
++ *	The caller holds rose_route_list_lock.
+  */
+ unsigned int rose_new_lci(struct rose_neigh *neigh)
  {
+@@ -854,20 +855,6 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 	sk->sk_state   = TCP_CLOSE;
+ 	sock->state = SS_UNCONNECTED;
+ 
+-	rose->neighbour = rose_get_neigh(&addr->srose_addr, &cause,
+-					 &diagnostic, 0);
+-	if (!rose->neighbour) {
+-		err = -ENETUNREACH;
+-		goto out_release;
+-	}
 -
- 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
- 	bool assoc = false;
-@@ -284,23 +283,6 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
- 	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
- 		return TX_CONTINUE;
- 
--	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
--	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
--	    !ieee80211_is_probe_req(hdr->frame_control) &&
--	    !ieee80211_is_any_nullfunc(hdr->frame_control))
--		/*
--		 * When software scanning only nullfunc frames (to notify
--		 * the sleep state to the AP) and probe requests (for the
--		 * active scan) are allowed, all other frames should not be
--		 * sent and we should not get here, but if we do
--		 * nonetheless, drop them to avoid sending them
--		 * off-channel. See the link below and
--		 * ieee80211_start_scan() for more.
--		 *
--		 * http://article.gmane.org/gmane.linux.kernel.wireless.general/30089
--		 */
--		return TX_DROP;
+-	rose->lci = rose_new_lci(rose->neighbour);
+-	if (!rose->lci) {
+-		err = -ENETUNREACH;
+-		rose_neigh_put(rose->neighbour);
+-		goto out_release;
+-	}
 -
- 	if (tx->sdata->vif.type == NL80211_IFTYPE_OCB)
- 		return TX_CONTINUE;
+ 	if (sock_flag(sk, SOCK_ZAPPED)) {	/* Must bind first - autobinding in this may or may not work */
+ 		struct net_device *dev;
  
-@@ -810,6 +792,33 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
- 	return TX_CONTINUE;
- }
+@@ -876,14 +863,12 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 		dev = rose_dev_first();
+ 		if (!dev) {
+ 			err = -ENETUNREACH;
+-			rose_neigh_put(rose->neighbour);
+ 			goto out_release;
+ 		}
  
-+static ieee80211_tx_result debug_noinline
-+ieee80211_tx_h_check_offchannel(struct ieee80211_tx_data *tx)
-+{
-+	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
-+	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+ 		user = ax25_findbyuid(current_euid());
+ 		if (!user) {
+ 			err = -EINVAL;
+-			rose_neigh_put(rose->neighbour);
+ 			dev_put(dev);
+ 			goto out_release;
+ 		}
+@@ -897,6 +882,21 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 
+ 		rose_insert_socket(sk);		/* Finish the bind */
+ 	}
 +
-+	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
-+		return TX_CONTINUE;
-+
-+	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
-+	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
-+	    !ieee80211_is_probe_req(hdr->frame_control) &&
-+	    !ieee80211_is_any_nullfunc(hdr->frame_control)) {
-+		/*
-+		 * When software scanning only nullfunc frames (to notify
-+		 * the sleep state to the AP) and probe requests (for the
-+		 * active scan) are allowed, all other frames should not be
-+		 * sent and we should not get here, but if we do
-+		 * nonetheless, drop them to avoid sending them
-+		 * off-channel. See __ieee80211_start_scan() for more.
-+		 */
-+		return TX_DROP;
++	rose->neighbour = rose_get_neigh(&addr->srose_addr, &cause,
++					 &diagnostic, 0);
++	if (!rose->neighbour) {
++		err = -ENETUNREACH;
++		goto out_release;
 +	}
 +
-+	return TX_CONTINUE;
-+}
++	/* The socket is on the list now, so others see the LCI it gets */
++	if (!rose_assign_lci(sk)) {
++		err = -ENETUNREACH;
++		rose_neigh_put(rose->neighbour);
++		goto out_release;
++	}
 +
- static __le16 ieee80211_tx_next_seq(struct sta_info *sta, int tid)
+ 	rose->dest_addr   = addr->srose_addr;
+ 	rose->dest_call   = addr->srose_call;
+ 	rose->rand        = ((long)rose & 0xFFFF) + rose->lci;
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 3499f034b83c6..87a33f5c65d8a 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -724,6 +724,8 @@ struct rose_route *rose_route_free_lci(unsigned int lci, struct rose_neigh *neig
  {
- 	u16 *seq = &sta->tid_seq[tid];
-@@ -1853,6 +1862,7 @@ static int invoke_tx_handlers_late(struct ieee80211_tx_data *tx)
- 		goto txh_done;
- 	}
+ 	struct rose_route *rose_route;
  
-+	CALL_TXH(ieee80211_tx_h_check_offchannel);
- 	CALL_TXH(ieee80211_tx_h_michael_mic_add);
- 	CALL_TXH(ieee80211_tx_h_sequence);
- 	CALL_TXH(ieee80211_tx_h_fragment);
-@@ -4667,10 +4677,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 	queue = ieee80211_select_queue(sdata, sta, skb);
- 	skb_set_queue_mapping(skb, queue);
- 
--	if (unlikely(test_bit(SCAN_SW_SCANNING, &local->scanning)) &&
--	    test_bit(SDATA_STATE_OFFCHANNEL, &sdata->state))
--		goto out_free;
--
- 	skb = skb_share_check(skb, GFP_ATOMIC);
- 	if (unlikely(!skb))
- 		return;
-@@ -4748,11 +4754,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 	ieee80211_tpt_led_trig_tx(local, len);
- 
- 	ieee80211_tx_8023(sdata, skb, sta, false);
--
--	return;
--
--out_free:
--	kfree_skb(skb);
++	lockdep_assert_held(&rose_route_list_lock);
++
+ 	for (rose_route = rose_route_list; rose_route != NULL; rose_route = rose_route->next)
+ 		if ((rose_route->neigh1 == neigh && rose_route->lci1 == lci) ||
+ 		    (rose_route->neigh2 == neigh && rose_route->lci2 == lci))
+@@ -732,6 +734,23 @@ struct rose_route *rose_route_free_lci(unsigned int lci, struct rose_neigh *neig
+ 	return NULL;
  }
  
- static bool ieee80211_check_mcast_offload(struct ieee80211_sub_if_data *sdata,
++/*
++ *	Give a socket placing a call a free LCI on its neighbour. As for a
++ *	through route in rose_route_frame(), the search and the assignment
++ *	are done under rose_route_list_lock, so two calls cannot pick the
++ *	same LCI. The socket must already be on the socket list.
++ */
++unsigned int rose_assign_lci(struct sock *sk)
++{
++	struct rose_sock *rose = rose_sk(sk);
++
++	spin_lock_bh(&rose_route_list_lock);
++	rose->lci = rose_new_lci(rose->neighbour);
++	spin_unlock_bh(&rose_route_list_lock);
++
++	return rose->lci;
++}
++
+ /*
+  *	Find a neighbour or a route given a ROSE address.
+  */
 -- 
 2.53.0
 
