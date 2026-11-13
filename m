@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590831;
-	b=Afcb/jJrP+x2XFF4PfCparau02ygleBVR5qbxBmsf9iYbu1QY4Rcsb52BcE1VMgnQld5
-	 qqI5XxVu7uThInp+L6Fk3/gTcIQZDGZOomr5AC6/lEwO2vzrY5dutHDG/7DKKMRHLQptm
-	 5zXKYNddceGCBLvYNgXeMydeR4QCDbf1+DcdzXB5551vilhBI1tsDeXqjoO5NsszC/YTF
-	 bdBBpzx370YD1C9INlLCO0HnDvpLjKC8L8b4gHCwqkdpFl0yEsJPZ3Hb163CBQEwLWkZr
-	 gbytNfkvxp51VJEhtKjEhnAelTdFYtAOjz5blJdVUf+v3RrzgczPMRwxoq2PKN6Cg3g==
+	t=1794590832;
+	b=D3GebxWDG0TtOCrB2Btz90Sr3CwnKx5kWQEYXVqoHckWaPJoFciUqKUnPSSS1m36OLu0
+	 YIA0/tDpYw8hT+YHqhl3OomMXXzTiEanQQ1duLNorkaAEF8O21nzL7ryTdyH6k1NMLOCy
+	 697zsiPd2lj+wSY0nD5wPaZkNkDiA4Nw2MDuOP/6Dbr2GE2FtVcYtLv4/UpFJVyICPVqk
+	 5og4NIp6TVVdkNTZQ5gBqT9MENakKN9dL2ERIYWwSJ9FU5R+eIy1YNb+hOOjBAv8lcK5V
+	 /S15f1N40WIDwm44Ob/kKiHErjQaCpl11DE+6VQtH9nKVZsiTTbJ3D3NMNqIL11eI0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590831;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590832;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YjYqR+fHL/cXtUIHgIKhEm87r5je7FH+O6F86jLSWJU=;
-	b=EHnsDjHUOvmB8wIeq/WdGVBIxCgSOIXHbf+5E/pfjKsr56IodyYp+pRkJV02v6L4G6bq
-	 N086KI2KqNl5VFIgGANyY2mV/Lxyym7MyZkZfGfpGORPxelAs8SLEH0tq9D51ix6JyEEr
-	 LQaGaT8/scpzzxBzWPdbUKx3mEumGsNxBFx+hkhShvYxEgVx5Ckf0/AVhVg2WE9MOXqZD
-	 I4sSq0V27knK0GGghKInbpZ4vButWG/P9cYj2TNBIZhagPfPyCThXDmjK3FykYTyGVVPL
-	 vrd5Csz5wi5ygDPJhA5IBoLBMCYMTwl7WyP2CidE3NPTTN9LcuJicwpk1FAZ6kSzKcg==
+	bh=ys9nQaf81lI82prytNt+P9HRg/rFKjSjsPCc5nKD6Z0=;
+	b=cwnIqji9mqO/J1czUr5iC0U6Vmcp5AUJKSgSEtrJKgEVQqMG2LV0Y6A3OgFwwyW0yRy5
+	 JAPzG8bg5oEG9rpAI2aD3hWqb/fLj/Po9vCAak9LptyM7zvrMbIAUhVYsBsP1AzyeTiwj
+	 +OE6e1/Xw3esJdkIB65O4pW8n7i+qmhUIuiZKfXtir1tyj+VwXhcCPCzwvQPwdmBlMnJu
+	 JDrq8zNDrI1XZF0I31CgGpNKPu/VMlgJM+pEO8HfIEGjvSBH8WbfNSgpRZ5XdTNxXC0YO
+	 YuuQZ2PO9iuUwCqFwuuynTO21lEFTjptfTc6jwyeoLNPje9CjerFCVkb25LE1G8jcuQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F+qEAEBQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rhdeA/m3";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC6F606D487;
-	Fri, 13 Nov 2026 17:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F5F606D486;
+	Fri, 13 Nov 2026 17:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F+qEAEBQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9101F000C5;
-	Fri, 13 Nov 2026 17:27:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rhdeA/m3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D145B1F000C5;
+	Fri, 13 Nov 2026 17:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590830;
-	bh=YjYqR+fHL/cXtUIHgIKhEm87r5je7FH+O6F86jLSWJU=;
+	s=korg; t=1794590832;
+	bh=ys9nQaf81lI82prytNt+P9HRg/rFKjSjsPCc5nKD6Z0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F+qEAEBQDrK3dSMdU+J59HOxcPdKsuZul+taJe/ULsxofL3JCmAXsUdl7lNzpU5iD
-	 vl3FAeisS6V4YmYoZG3F1LenJe74ssKimjC9z64UcbfmcImPgUm7zIua4xi6Hm2DZS
-	 CwSbNx8stINXN4sRILZrIUduvW7i6zbkiqRk7Kgk=
+	b=rhdeA/m3/7D4KU879HBayimORp77FqAPoyNASns+R5TfXYWnTAN1pKwehBgRfODDl
+	 t6wxbx98ZQz0XDsbzkcTuXkc6NKW9o4xQUoNHzYVmWmNPeiJGjo9HIcpsaCTGtFV6G
+	 33dFFqkyOIKKMjF4PBJVV1IIdrqkJYZ5Vdy9NrFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d5c77cabf7a3492aa650@syzkaller.appspotmail.com,
+	syzbot+edbebd898142ee5e24ce@syzkaller.appspotmail.com,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/670] NFSD: Move the cld upcall message out of the callers stack frame
-Date: Fri, 13 Nov 2026 10:43:19 -0500
-Message-ID: <20261113153812.345036660@linuxfoundation.org>
+Subject: [PATCH 6.12 036/670] NFSD: Complete a cld upcall when the daemon closes the pipe
+Date: Fri, 13 Nov 2026 10:43:20 -0500
+Message-ID: <20261113153812.379020861@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,84 +70,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit c559b05610557fa3c6c30259261f6dae523b3f23 ]
+[ Upstream commit 2a83fcb50f3c25c493cc4389619340fefe9d6ac4 ]
 
-__cld_pipe_upcall() builds its struct rpc_pipe_msg on the stack and
-hands it to rpc_queue_upcall(), which links it into a list the pipe
-owns until the message is released. Only the completion rules keep that
-frame alive for as long as the pipe refers to it, and the peer that
-drives those rules is an untrusted userspace daemon. The gss and idmap
-upcalls do not take that on: each keeps the message in the object it
-already allocates.
+Once nfsdcld has read a whole upcall, rpc_pipe_read() unlinks the
+message from every pipe list, so the purges in rpc_pipe_release()
+and rpc_close_pipes() no longer reach it. cld_upcall_ops supplies no
+.release_pipe callback, and cld_pipe_destroy_msg() returns without
+completing the upcall because a downcall is expected to follow. A
+daemon that exits between the read and the write therefore strands
+its waiter: the nfsd thread sleeps in TASK_UNINTERRUPTIBLE in
+__cld_pipe_upcall() and never returns, hung task warnings follow,
+and the server cannot be shut down.
 
-Do the same here and put the message in struct cld_upcall, beside the
-reply buffer it carries. cld_pipe_destroy_msg() then reaches the upcall
-from the message directly rather than through msg->data.
+Add a .release_pipe that completes every upcall the daemon has
+consumed. cu_inflight distinguishes those from upcalls still queued
+on the pipe, which the framework purges before it calls this
+callback; cld_pipe_downcall() removes an upcall it accepts from
+cn_list under the same lock. Neither can be completed twice.
 
-Reported-by: syzbot+d5c77cabf7a3492aa650@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d5c77cabf7a3492aa650
-Link: https://patch.msgid.link/20260901-alemi-v2-2-e163f94a3a6e@kernel.org
+Fail the stranded upcall with -EPIPE rather than the -EAGAIN that
+makes cld_pipe_upcall() retry. The daemon consumed the request, so
+whether it acted on it before exiting is unknown.
+
+Fixes: f3f8014862d8 ("nfsd: add the infrastructure to handle the cld upcall")
+Reported-by: syzbot+edbebd898142ee5e24ce@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-nfs/6a99f6f0.2e567484.299ffc.000c.GAE@google.com/
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260901-alemi-v2-7-e163f94a3a6e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
-Stable-dep-of: 2a83fcb50f3c ("NFSD: Complete a cld upcall when the daemon closes the pipe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4recover.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ fs/nfsd/nfs4recover.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 diff --git a/fs/nfsd/nfs4recover.c b/fs/nfsd/nfs4recover.c
-index 104dafbe881bc..b493bb059a8b0 100644
+index b493bb059a8b0..9c7f6d90a1b99 100644
 --- a/fs/nfsd/nfs4recover.c
 +++ b/fs/nfsd/nfs4recover.c
-@@ -730,6 +730,7 @@ struct cld_upcall {
- 	struct completion	 cu_done;
- 	/* daemon has read the whole upcall; protected by cn_lock */
- 	bool			 cu_inflight;
-+	struct rpc_pipe_msg	 cu_pipe_msg;
- 	union {
- 		struct cld_msg_hdr	 cu_hdr;
- 		struct cld_msg		 cu_msg;
-@@ -741,22 +742,22 @@ static int
- __cld_pipe_upcall(struct rpc_pipe *pipe, void *cmsg, struct nfsd_net *nn)
- {
- 	int ret;
--	struct rpc_pipe_msg msg;
- 	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall, cu_u);
-+	struct rpc_pipe_msg *msg = &cup->cu_pipe_msg;
- 
--	memset(&msg, 0, sizeof(msg));
--	msg.data = cmsg;
--	msg.len = nn->client_tracking_ops->msglen;
-+	memset(msg, 0, sizeof(*msg));
-+	msg->data = cmsg;
-+	msg->len = nn->client_tracking_ops->msglen;
- 
--	ret = rpc_queue_upcall(pipe, &msg);
-+	ret = rpc_queue_upcall(pipe, msg);
- 	if (ret < 0) {
- 		goto out;
- 	}
- 
- 	wait_for_completion(&cup->cu_done);
- 
--	if (msg.errno < 0)
--		ret = msg.errno;
-+	if (msg->errno < 0)
-+		ret = msg->errno;
- out:
- 	return ret;
+@@ -948,10 +948,34 @@ cld_pipe_destroy_msg(struct rpc_pipe_msg *msg)
+ 	complete(&cup->cu_done);
  }
-@@ -929,9 +930,8 @@ cld_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
- static void
- cld_pipe_destroy_msg(struct rpc_pipe_msg *msg)
- {
--	struct cld_msg *cmsg = msg->data;
--	struct cld_upcall *cup = container_of(cmsg, struct cld_upcall,
--						 cu_u.cu_msg);
-+	struct cld_upcall *cup = container_of(msg, struct cld_upcall,
-+						 cu_pipe_msg);
- 	struct cld_net *cn = cup->cu_net;
  
- 	/*
++/*
++ * An upcall the daemon has consumed is off every pipe list, so the
++ * purge in rpc_pipe_release() and rpc_close_pipes() cannot reach it.
++ * Release its waiter here instead; no downcall can arrive now.
++ */
++static void
++cld_release_pipe(struct inode *inode)
++{
++	struct nfsd_net *nn = net_generic(inode->i_sb->s_fs_info, nfsd_net_id);
++	struct cld_net *cn = nn->cld_net;
++	struct cld_upcall *cup;
++
++	spin_lock(&cn->cn_lock);
++	list_for_each_entry(cup, &cn->cn_list, cu_list) {
++		if (!cup->cu_inflight)
++			continue;
++		cup->cu_inflight = false;
++		cup->cu_pipe_msg.errno = -EPIPE;
++		complete(&cup->cu_done);
++	}
++	spin_unlock(&cn->cn_lock);
++}
++
+ static const struct rpc_pipe_ops cld_upcall_ops = {
+ 	.upcall		= rpc_pipe_generic_upcall,
+ 	.downcall	= cld_pipe_downcall,
+ 	.destroy_msg	= cld_pipe_destroy_msg,
++	.release_pipe	= cld_release_pipe,
+ };
+ 
+ static int
 -- 
 2.53.0
 
