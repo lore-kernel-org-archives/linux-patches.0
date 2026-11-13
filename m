@@ -1,56 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590621;
-	b=w8E0Yd5nxJGYyyYj/wtWc6TV/WpFLhp5DfTfyMrljePeFsS9DGkenJ1reKL6FJMcSw9H
-	 idwfwj/JShz08llsGzBxfSl9I+sSbmg3MomTDSidpzaPJnoImtuJReCwTWmXp077FTRwG
-	 4+idX+r16cB7qpvos19wxdBrxRPq2OjvcU1beAIE2EeGy7I4B6Io3E2NiqWSfVgNjsYHp
-	 +mxKY49ItZBurRZTlJqL0cdeq7qfD3z9u0YcCszT2aOTHy+VZjvG81I2Pk+L1EKLFOTGY
-	 fIerAIM0b+iVWXex0UT47hJsXV+u3j78nmlHhddpDnyXGXBvZxOz/CMDYuE28Tv2h3A==
+	t=1794590622;
+	b=QjSPyLzLmmxWmr0y7QQHD283hYfgfD2BV35fdtPpiViNWlq1U/IaKAdANX5pberefgGV
+	 28jmbxPl+G3cAJ/hLydZh6R2sbO2qAQsrKsqFpaGxAVwlQU7ejfNMM9guh6mmePwgdUbu
+	 RLHq8LNxGfm1+lN22ly+uibNFsYSRVJE9WdtWrAVbyftRYAPRLoxGjiyQ1qx6spxSsAwM
+	 1qxQD6LB0hZC6+djAImsvqK3jTGj++kGEsdMr/DLj0FrnLMhoeoDURhtydbP8wLOdJGIM
+	 YbOhFj12VMzcOcIBVwv8DviVPwV/vOAf431n9ap77zkl+lB5G9ZaGJbt/HMl3XYtKYw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3bM61dkHkOYew2Q56B2keOXpRUbSSaFv//Eys63GPiM=;
-	b=E95ttMHLr9yRcSG4BWSdrXWHoYprn1sbAQcqeKhxFZI9tl8ZBHrKWIfqrT6V2jFnRvxU
-	 3GZiMBq8yhGdv1CirO3KPSRKzGwB9Z6mwslK782Gm8o64ubAYFcw/mvGlrwxwjVmGJ2vx
-	 h20b9U7WX0KauReYWw7Pw1/tnebpAYPF8PAJ5fXu41tZC2jQH+/U7JdklPP68LuEu2cDC
-	 xiT+8nnq867nwDxr7+CGYT5v+gBHmg/uLX/wgFgywc9Ndeg3z+syTi0t3DuviV9SrGVzR
-	 Zs4+9xjU27qPclRs9RURXkFo4ACCuPruOQVJ8BcKj62LoSzyM0KleTaOCkD/fFX1RsA==
+	bh=sp+0cQXY4oVplhkpdyWmH/DeBFUej4eV2DZzCvHvrKU=;
+	b=PpO93BLWQR7YqPDRkG8G2Bi4PXGkb1qhWd8YdKM0ceaUeY7SaFnsSPI9Il2ojwn1Q7Gw
+	 uoU5oQCGmOMuOwHDJzj6WH0FHgmkr4wwDhI74RKbcvOfjQgozTy0MRRTeVVLlNuWSfI+E
+	 BWfw2SoRfgQi7uNGTX5pgz4JrsihNiooUnyLtC107v28BLDDIgnJmtkAi8nxwMHYYD6jt
+	 9VKxLoAuoCKSHzueMMaoY/a4WGZOdAEoqbsxwnrHh1+IaXZioEGkrMiRnfpoNIb+QA0rO
+	 9yag0zGlJWPMOF7i38VCxrTvBnpsLaubxaVygCn2NBJWtZ/qi5Fy19dPbou8r/M8qQw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=emj84V+M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omBYi5mH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33528607586F;
-	Fri, 13 Nov 2026 17:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777C6607587D;
+	Fri, 13 Nov 2026 17:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=emj84V+M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F131F000C6;
-	Fri, 13 Nov 2026 17:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=omBYi5mH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234701F000C4;
+	Fri, 13 Nov 2026 17:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590621;
-	bh=3bM61dkHkOYew2Q56B2keOXpRUbSSaFv//Eys63GPiM=;
+	s=korg; t=1794590622;
+	bh=sp+0cQXY4oVplhkpdyWmH/DeBFUej4eV2DZzCvHvrKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=emj84V+MR1tZrKiMcWtjsHVa1yXVpbgT4PXTnQCitqTcuVBdOKg5miXXeYzKvbBWq
-	 zqFywoQx3VTdhoKyG8Eg+P8Xo1WpPA4g1funU1WulmKDQhmE3hYn438LkJdIz89XPV
-	 rKHk7Y9jsVgGcC8SkHRVgUnaXmjYAjanFmt/cd4g=
+	b=omBYi5mHaF+tUC8B/qOg2/UknNOq8l87DVNSUwt9GJtk7GfU9lK2FfFP6TPyYbH8o
+	 V/0wLLzdJ0+/d8gdZB6AYWimroY3jVpTEltgur5oVS1wGzcRuuZdeVB6KQhfdZwA3B
+	 Om6FvfNxVHjvAFGTI1cERi5Eeg6D0CSFM5ZSI5Bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Martin Belanger <martin.belanger@dell.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 545/686] ipmr: only copy pktinfo to cache reports
-Date: Fri, 13 Nov 2026 10:51:18 -0500
-Message-ID: <20261113153839.969616178@linuxfoundation.org>
+Subject: [PATCH 6.18 546/686] nvme-tcp: skip TLS control records while waiting for the ICResp
+Date: Fri, 13 Nov 2026 10:51:19 -0500
+Message-ID: <20261113153840.037322463@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -72,81 +70,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Martin Belanger <martin.belanger@dell.com>
 
-[ Upstream commit 94a6736bb5abe6b2ef38490d0cab19c1c6a7c71f ]
+commit 12c20e2903563acfb949342967adb900310a24d4 upstream.
 
-ipmr_cache_report() prepares IP_PKTINFO on the original skb. The
-ipv4_pktinfo_prepare() helper updates skb->cb and clears the pktinfo fields
-when packet info is disabled. Since the skb can continue through the data
-path, preserve and restore its original control block around the helper.
+A peer may send a NewSessionTicket as soon as the handshake completes,
+ahead of the ICResp. nvme_tcp_init_connection() fails the connection on
+any record that is not application data, so such a target cannot be
+reached at all. An OpenSSL-based target does this by default.
 
-The original implementation copies the entire control block to the report
-skb. For synthetic RTM_GETROUTE packets, NETLINK_CB data is interpreted as
-IPCB by the raw IPv4 receive path. With IP_RECVOPTS or IP_RETOPTS enabled,
-corrupted option offsets cause out-of-bounds reads or a stack buffer
-overflow. WHOLEPKT and WRVIFWHOLE reports also inherit stale IP option
-offsets when their header is prepended.
+RFC 9846 section 4.7.1 requires a client that does not support session
+resumption to ignore a NewSessionTicket. Discard such a record and read
+again, up to a fixed number of records. Report an alert, and fail the
+connection for any other record type.
 
-Clear the report skb control block. Only prepare and copy pktinfo when the
-input skb has an IPv4 header. Synthetic route-query skbs use NETLINK_CB,
-not IPCB, so leave their report control block zeroed. Restore pkt->cb after
-preparing pktinfo for regular IPv4 packets.
+The record type is now checked before the length. A control record
+shorter than the ICResp was reported as -ECONNRESET, which hid the real
+cause.
 
-Fixes: bb7403655b3c ("ipmr: support IP_PKTINFO on cache report IGMP msg")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Link: https://lore.kernel.org/netdev/20260903113055.GA90787@shredder/
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/0545f0c83f5ee2f6696210f87268e811ef655715.1792476357.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2837966ab2a8 ("nvme-tcp: control message handling for recvmsg()")
+Assisted-by: LLM
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Martin Belanger <martin.belanger@dell.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ Martin: resolved a context conflict next to nvme_tcp_cpu_queues ]
+Signed-off-by: Martin Belanger <martin.belanger@dell.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/nvme/host/tcp.c | 162 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 140 insertions(+), 22 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index cd587d84f388e..5133fd14029e2 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -1055,6 +1055,7 @@ static void ipmr_cache_resolve(struct net *net, struct mr_table *mrt,
- static int ipmr_cache_report(const struct mr_table *mrt,
- 			     struct sk_buff *pkt, vifi_t vifi, int assert)
- {
-+	unsigned char pkt_cb[sizeof(pkt->cb)];
- 	const int ihl = ip_hdrlen(pkt);
- 	struct sock *mroute_sk;
- 	struct igmphdr *igmp;
-@@ -1110,8 +1111,6 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- 		msg = (struct igmpmsg *)skb_network_header(skb);
- 		msg->im_vif = vifi;
- 		msg->im_vif_hi = vifi >> 8;
--		ipv4_pktinfo_prepare(mroute_sk, pkt, false);
--		memcpy(skb->cb, pkt->cb, sizeof(skb->cb));
- 		/* Add our header.
- 		 * Note that code, csum and group fields are cleared.
- 		 */
-@@ -1122,6 +1121,15 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- 		skb->transport_header = skb->network_header;
- 	}
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 94495b0228714..190eac661e7da 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -53,6 +53,12 @@ MODULE_PARM_DESC(tls_handshake_timeout,
+ 		 "nvme TLS handshake timeout in seconds (default 10)");
+ #endif
  
-+	memset(skb->cb, 0, sizeof(skb->cb));
-+	/* Route queries from ipmr_get_route() carry NETLINK_CB, not IPCB. */
-+	if (ip_hdr(pkt)->version) {
-+		memcpy(pkt_cb, pkt->cb, sizeof(pkt_cb));
-+		ipv4_pktinfo_prepare(mroute_sk, pkt, false);
-+		*PKTINFO_SKB_CB(skb) = *PKTINFO_SKB_CB(pkt);
-+		memcpy(pkt->cb, pkt_cb, sizeof(pkt_cb));
++/* read a TLS control record in chunks of this size */
++#define NVME_TCP_TLS_REC_CHUNK 256
++
++/* TLS records read while waiting for the ICResp, the ICResp included */
++#define NVME_TCP_ICRESP_MAX_RECORDS 8
++
+ static atomic_t nvme_tcp_cpu_queues[NR_CPUS];
+ 
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
+@@ -1535,12 +1541,143 @@ static void nvme_tcp_free_queue(struct nvme_ctrl *nctrl, int qid)
+ 	mutex_destroy(&queue->pf_cache_lock);
+ }
+ 
++static int nvme_tcp_recv_tls_alert(struct nvme_tcp_queue *queue,
++				   struct msghdr *msg, int len)
++{
++	struct sock *sk = queue->sock->sk;
++	u8 level, description;
++
++	if (len < 2) {
++		dev_err(queue->ctrl->ctrl.device,
++			"queue %d: truncated TLS alert\n",
++			nvme_tcp_queue_id(queue));
++		return -ENOTCONN;
 +	}
 +
- 	igmpmsg_netlink_event(mrt, skb);
++	/* tls_alert_recv() reads through the iterator */
++	iov_iter_revert(&msg->msg_iter, len);
++	tls_alert_recv(sk, msg, &level, &description);
++
++	if (level == TLS_ALERT_LEVEL_FATAL) {
++		dev_err(queue->ctrl->ctrl.device,
++			"queue %d: fatal TLS alert %u\n",
++			nvme_tcp_queue_id(queue), description);
++		return -ENOTCONN;
++	}
++
++	/* a peer shutting down normally is not worth a warning */
++	if (description == TLS_ALERT_DESC_CLOSE_NOTIFY)
++		dev_dbg(queue->ctrl->ctrl.device,
++			"queue %d: TLS close_notify\n",
++			nvme_tcp_queue_id(queue));
++	else
++		dev_warn(queue->ctrl->ctrl.device,
++			 "queue %d: TLS alert %u\n",
++			 nvme_tcp_queue_id(queue), description);
++
++	return 0;
++}
++
++/*
++ * Discard a TLS record that arrived in place of the ICResp. A peer may send
++ * a NewSessionTicket as soon as the handshake completes.
++ *
++ * Returns 0 when the record was discarded and the ICResp can be read, or a
++ * negative errno if the connection cannot continue.
++ */
++static int nvme_tcp_skip_tls_record(struct nvme_tcp_queue *queue,
++				    struct msghdr *msg, u8 ctype, int len)
++{
++	u8 buf[NVME_TCP_TLS_REC_CHUNK];
++	int ret;
++
++	switch (ctype) {
++	case TLS_RECORD_TYPE_HANDSHAKE:
++		break;
++	case TLS_RECORD_TYPE_ALERT:
++		ret = nvme_tcp_recv_tls_alert(queue, msg, len);
++		return ret ? : -ENOTCONN;
++	default:
++		pr_err("queue %d: unhandled TLS record %u\n",
++		       nvme_tcp_queue_id(queue), ctype);
++		return -ENOTCONN;
++	}
++
++	/* the ICResp is in a later record, drain this one first */
++	while (!(msg->msg_flags & MSG_EOR)) {
++		struct kvec iov = {
++			.iov_base = buf,
++			.iov_len = sizeof(buf),
++		};
++		char cbuf[CMSG_LEN(sizeof(char))] = {};
++		/* kTLS fails a control record read without a cmsg buffer */
++		struct msghdr drain = {
++			.msg_control = cbuf,
++			.msg_controllen = sizeof(cbuf),
++		};
++
++		ret = kernel_recvmsg(queue->sock, &drain, &iov, 1, sizeof(buf),
++				     0);
++		if (ret <= 0) {
++			pr_warn("queue %d: failed to drain TLS record: %d\n",
++				nvme_tcp_queue_id(queue), ret);
++			return ret ? : -ECONNRESET;
++		}
++		msg->msg_flags = drain.msg_flags;
++	}
++
++	return 0;
++}
++
++/*
++ * Receive the ICResp. Over TLS, skip the records that a peer may send
++ * ahead of it.
++ *
++ * Returns the length received, or a negative errno.
++ */
++static int nvme_tcp_recv_icresp(struct nvme_tcp_queue *queue,
++				struct nvme_tcp_icresp_pdu *icresp)
++{
++	char cbuf[CMSG_LEN(sizeof(char))];
++	struct msghdr msg;
++	struct kvec iov;
++	u8 ctype;
++	int i, ret;
++
++	for (i = 0; i < NVME_TCP_ICRESP_MAX_RECORDS; i++) {
++		memset(&msg, 0, sizeof(msg));
++		memset(cbuf, 0, sizeof(cbuf));
++		iov.iov_base = icresp;
++		iov.iov_len = sizeof(*icresp);
++		if (nvme_tcp_queue_tls(queue)) {
++			msg.msg_control = cbuf;
++			msg.msg_controllen = sizeof(cbuf);
++		}
++		msg.msg_flags = MSG_WAITALL;
++		ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
++				     iov.iov_len, msg.msg_flags);
++		if (ret <= 0 || !nvme_tcp_queue_tls(queue))
++			return ret;
++
++		ctype = tls_get_record_type(queue->sock->sk,
++					    (struct cmsghdr *)cbuf);
++		if (ctype == TLS_RECORD_TYPE_DATA)
++			return ret;
++
++		ret = nvme_tcp_skip_tls_record(queue, &msg, ctype, ret);
++		if (ret < 0)
++			return ret;
++	}
++
++	pr_err("queue %d: too many TLS records before the ICResp\n",
++	       nvme_tcp_queue_id(queue));
++	return -EPROTO;
++}
++
+ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+ {
+ 	struct nvme_tcp_icreq_pdu *icreq;
+ 	struct nvme_tcp_icresp_pdu *icresp;
+-	char cbuf[CMSG_LEN(sizeof(char))] = {};
+-	u8 ctype;
+ 	struct msghdr msg = {};
+ 	struct kvec iov;
+ 	bool ctrl_hdgst, ctrl_ddgst;
+@@ -1578,16 +1715,7 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+ 		goto free_icresp;
+ 	}
  
- 	/* Deliver to mrouted */
+-	memset(&msg, 0, sizeof(msg));
+-	iov.iov_base = icresp;
+-	iov.iov_len = sizeof(*icresp);
+-	if (nvme_tcp_queue_tls(queue)) {
+-		msg.msg_control = cbuf;
+-		msg.msg_controllen = sizeof(cbuf);
+-	}
+-	msg.msg_flags = MSG_WAITALL;
+-	ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
+-			iov.iov_len, msg.msg_flags);
++	ret = nvme_tcp_recv_icresp(queue, icresp);
+ 	if (ret >= 0 && ret < sizeof(*icresp))
+ 		ret = -ECONNRESET;
+ 	if (ret < 0) {
+@@ -1595,16 +1723,6 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+ 			nvme_tcp_queue_id(queue), ret);
+ 		goto free_icresp;
+ 	}
+-	ret = -ENOTCONN;
+-	if (nvme_tcp_queue_tls(queue)) {
+-		ctype = tls_get_record_type(queue->sock->sk,
+-					    (struct cmsghdr *)cbuf);
+-		if (ctype != TLS_RECORD_TYPE_DATA) {
+-			pr_err("queue %d: unhandled TLS record %d\n",
+-			       nvme_tcp_queue_id(queue), ctype);
+-			goto free_icresp;
+-		}
+-	}
+ 	ret = -EINVAL;
+ 	if (icresp->hdr.type != nvme_tcp_icresp) {
+ 		pr_err("queue %d: bad type returned %d\n",
 -- 
 2.53.0
 
