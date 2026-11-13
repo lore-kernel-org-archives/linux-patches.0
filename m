@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585917;
-	b=OuI8u4gurLxlzsG1+WlCXGz/oUav3t14EhATs84VSnsNPiapVd9Yq3SNNfs1AZ4WRFEf
-	 3/vvw0Ao5LsyHDvjjKI/ptGwqKexi46nCWsFnCN5jY0mnmfqKRZ0ZZzDxgAy0EbqDqduv
-	 kebff/Vl+HvboGuo0J0qFRgrafAYfXe6p80ne+5+Ck0Y7+l7ixY2yFjmeELL66eOb3WWV
-	 or/BYvpcOHFyGNWKjlOdd1UZMZJgMI/r7rn5hXyJ6tIdRcJL+OrUMGuUaSHmsyUdTsbkD
-	 3o5vI8Sl6i50E4DCmAaG1oW0n+gXKZrisNmC0U6CzzfPeMrYhlkgfHGLz1/e6RZdZog==
+	t=1794585919;
+	b=i3FeaodALGeG8pz6l1kMAS6JLSf58Gpmftu+hvZZMm0XovKGlay5h3xAPD4YCkLptPng
+	 DbAbk9LZh3xvpxPlntnGPNu+hOmwZ7qjl7Gy1v5AzUx56SI35s+tcWAGNZog0lPrv6Amc
+	 v4LdQxRv9l/ccnIWogC/+vc/h5Bo82UfhaJ0t5+CXQQNFghhF2hvl89KBIBvSDpFHskpi
+	 H6EtGUkL/Igq/H3Mh1ohFLOem5tZXcg0bp2PUtILN9o+YCeQexQfMggq+U54okgXSJAGV
+	 yZtkXTFNCL/KP1f8RJp8OKNundf1MWomy/YGyfUCh72NGN/3oYxm5HA/UlUVQagTriA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585919;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6HVXB3O7bgU8zeCm6CeznP+ZVKf0pOqTKlIaRPR0hiE=;
-	b=2fx2Jq4IZ+MXCB3SijWB0qboUq4aYf1rSybXAFI1QRWrHnckSj2DFK+M+mXtn5UA7KGq
-	 6cDcVowbRJYdONg6EnsfAfcD8fE5U4oB88eaokZXVFS1aVdeqQo+/7252R24keju1sfXz
-	 haCLSML+NB2yGa4FF4JL5+qrVEpLvSnHUyR12iMUsyR3CYLV3z5b4W94pCJV8lXgQRiJ7
-	 5uzMtXPAd3gsPWhyPNyTvb2swJSmte+XobE+5c0NlNjgVcmzW3Gw4YbtkvHPnp+79v8xV
-	 FLbQ/Z/mfFTZ2xNIr7hBSj0u8WKJY7Yhbvjas/DVZFGWwJ9VZsuPhyLCCqAUWJAnxxw==
+	bh=UmxsZmBGJTYng4JOUf67p0MipAU3hwoyqlT26WA8cs4=;
+	b=4rooEsJBUaP3wcMXEsJCPI6Lrt6Jeoo+fYpZA8fNC+I1zebphem7fWbJ7Ax8Ch3RVRpQ
+	 WVye9dNnnVLqvSL6CXQdXOyXwBmEhjR49f6xAGtjgq4iW7tP94KWthknJgdY9c/Re+qfA
+	 74eIldAw1f27jFtmsxmkF+pmNloaouR5WSuOXJl0Dza4EQ3TkZ27+FenMKNQU1VJk76Yk
+	 +YArdbHU3kU8RAW+AVmd2vy3EOilu6hggU8pZLOj/NYjMnZ6YqKSv+YIeWc66QsDr4SnQ
+	 1MQa70o1TSXSd9giluw//J6orGsPGlGiFcRU3kW5A5pLJhc82ocATbyH6Fp8Tb+gSaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EEKIExsb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QBQ85y+L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB449607020E;
-	Fri, 13 Nov 2026 16:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6288C6070225;
+	Fri, 13 Nov 2026 16:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EEKIExsb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8151B1F000C4;
-	Fri, 13 Nov 2026 16:05:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QBQ85y+L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7FC31F000C4;
+	Fri, 13 Nov 2026 16:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585917;
-	bh=6HVXB3O7bgU8zeCm6CeznP+ZVKf0pOqTKlIaRPR0hiE=;
+	s=korg; t=1794585918;
+	bh=UmxsZmBGJTYng4JOUf67p0MipAU3hwoyqlT26WA8cs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EEKIExsbubeSJMSlzO2hWZVDA34LO61bTj7WziRL4GEnKgd80P0bI597cB1hYopN3
-	 SaPcdilDibvckzJ2ciQX8L1tGyOhuw0fjjDY8WF2THq50u61KGuu0At7zqUmOac+zm
-	 1+DYwUU9NPjZJ4VLp6uaGPIXfWXaTg5om9YLNUto=
+	b=QBQ85y+LHSAXAL2MfzlMjpQ0rHtJSJ1LO/Dm955TnrBm+pPNQSdDqrxnMgsTpdTvS
+	 S2XuP7wJHBsz7e54Hu1OeZ/gRUEpyG2iVjqdGlLwA3w/B9YPol10gSGLROX/nDX4mj
+	 rMWwnHLDZSG4C7oULv0n61bvGdLTxg3pHFdlQG/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oupton@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	stable@kernel.org,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 479/507] KVM: arm64: vgic: Stop the target vcpu when disabling LPIs
-Date: Fri, 13 Nov 2026 10:53:03 -0500
-Message-ID: <20261113153813.247026516@linuxfoundation.org>
+Subject: [PATCH 7.3 480/507] f2fs: fix to avoid potential reference count leak in do_garbage_collect()
+Date: Fri, 13 Nov 2026 10:53:04 -0500
+Message-ID: <20261113153813.290894097@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,58 +70,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit a1b4bd2c2c262b8094c86afb99364d16ac08cb66 ]
+[ Upstream commit 894ca8b856668a82426dbd0a0042b61541a1a9ec ]
 
-Disabling LPIs is pretty nasty, as it directly messes with the AP list
-of the affected CPU, which could be running... This has the potential to
-lead to really bad behaviours, and we should not be doing that.
+In do_garbage_collect(), we have reserved reference counts on summary cache
+of all segments, once gc_thread encounter freezing, we need to release all
+reference counts.
 
-Take example on the way the Active state is handled and simply pause the
-the vcpu so that we are sure it is in a quiescent state, and the state be
-safely manipulated.
-
-Nobody has any expectation of performance for this anyway.
-
-Fixes: 96085b949672d ("KVM: arm/arm64: vgic-v3: Retire pending interrupts on disabling LPIs")
-Co-developed-by: Oliver Upton <oupton@kernel.org>
-Signed-off-by: Oliver Upton <oupton@kernel.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20261015100539.1011760-7-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: Replaced per-vCPU pause/resume helpers with kvm_arm_halt_guest() and kvm_arm_resume_guest(), which pause all vCPUs. ]
+Cc: stable@kernel.org
+Cc: Daeho Jeong <daehojeong@google.com>
+Fixes: 02d91398a602 ("f2fs: fix to freeze GC and discard threads quickly")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: Used folio_put_refs(sum_folio, 2) instead of two f2fs_put_cache() calls. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/f2fs/gc.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index 5ab789accc9d4..9e6200c5adcef 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -303,9 +303,19 @@ static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
- 		if (ctlr != GICR_CTLR_ENABLE_LPIS)
- 			return;
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 738a5543f086a..6220d55709e9c 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1857,6 +1857,9 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 		if (block_end_segno > end_segno)
+ 			block_end_segno = end_segno;
  
-+		/*
-+		 * Yes, disabling LPIs is painful, since it can be done from
-+		 * a *remote* vcpu! So let's not take any chance, and make
-+		 * sure that the target vCPU has written their LRs back to the
-+		 * irq structures, and release any reference they would have.
-+		 *
-+		 * If it hurts, don't do it.
-+		 */
-+		kvm_arm_halt_guest(vcpu->kvm);
- 		vgic_flush_pending_lpis(vcpu);
- 		vgic_its_invalidate_all_caches(vcpu->kvm);
- 		atomic_set_release(&vgic_cpu->ctlr, 0);
-+		kvm_arm_resume_guest(vcpu->kvm);
- 	} else {
- 		ctlr = atomic_cmpxchg_acquire(&vgic_cpu->ctlr, 0,
- 					      GICR_CTLR_ENABLE_LPIS);
++		if (unlikely(freezing(current)))
++			goto next_block;
++
+ 		if (is_cursec(sbi, GET_SEC_FROM_SEG(sbi, segno))) {
+ 			f2fs_err(sbi, "%s: segment %u is used by log",
+ 							__func__, segno);
+@@ -1924,18 +1927,12 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 				sbi->next_victim_seg[gc_type] =
+ 					(cur_segno + 1 < sec_end_segno) ?
+ 					cur_segno + 1 : NULL_SEGNO;
+-
+-			if (unlikely(freezing(current))) {
+-				folio_put_refs(sum_folio, 2);
+-				goto stop;
+-			}
+ 		}
+ next_block:
+ 		folio_put_refs(sum_folio, 2);
+ 		segno = block_end_segno;
+ 	}
+ 
+-stop:
+ 	if (submitted)
+ 		f2fs_submit_merged_write(sbi, data_type);
+ 
 -- 
 2.53.0
 
