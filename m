@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585476;
-	b=HxQRlNN+0S+7ztN1tXjqzi7zBJ9/J3IGjK7Tkw08wOF3VyAmX0AHPGmROIWYmd649h/X
-	 u4lVe79XmXfOPaydYjVaDk0ahI18RUANmX3YmlGJ+znrzYU49Ta5JKRlqQFetb/ww+ahs
-	 CyT9mI5YTnIk2/GMaj+5D2mtIGBvY0FrAfSb5jBHxmPbr+b/whLeQQLYtNCQXacTLqH0f
-	 wC94hNTACRE3ggWrKUjKL6GAfNc96uc9SXjlbiIet4BoLARmBlpylARU5fh2RbgPN2v0j
-	 E0hB0oIeWxv6zuEvQ8N1MmgRq6B+7ULsg9gJRHhw0qYuZEfw4xbo/f+liHaWcLFce6w==
+	t=1794585477;
+	b=mQbvGBg65DXTnVqCCGLwAHxdYDP4lUTZh0qGRl4hyawoA6mGPen2ZQLDlwy2WTi93/65
+	 3VQ21pgZXPH1DQze3t1UJQlEKGsWavNaNqCJR97iZn2ZIkkCRlHZ/+7cjcyv4EGv1dlRN
+	 gby6k0F8Zqp1deRgzgr6atpAJTAuWzATHbFpTBhlLnUEJMHdFN2Xk7JYjXV/2N44KdWhI
+	 7YB0O0O8j9NldW5Q62Kp5i5ssiil1yBI9pDk/FiqhiU+GNNuC6ZBxvzbXHsMr21LFxTW0
+	 LKbDIQJJtDt1gLriEQKP8FkKzQn2J3MkpDlgVSAsB7RfqNcVR4norcjSfZ10/ZHvMpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585477;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zx5cdQJnxuXUGCjfZyyxYdPGNEJVMEr6Ds7pFkPRNiw=;
-	b=4iE4nY5ubgbvpJ9G0ROp69Lr1BOpgLwY4KKnnrAsDiEubs5JQUq7sBs3195Xbacy7TjP
-	 R60Wa6Ov4SMl+Z4f98GAmHqrziODGBzYEyEyNyKpQbjFHjOwTEXFrK66MOTF/j3my8seR
-	 p6FjdgCKXfSMKnmW6G7ONwiYdyxyk10IymauEQSxz/tbuppERF5YUT7/PyXriJdIYMJny
-	 10V+KrCAddueia3FWPyGrr/2VHJ3Q6SVJRgsTu4EsqUednDoRwCtullXg+Uo2ShNrZNcM
-	 Wyx0BpZfTNkZnY3KF/6ZPOkzGNcobfnvFEWKiqfMWEOKQc/7nqMXXhzNf1SURjV7bmA==
+	bh=DZsPDvNIhBSXK0AJ1G8P9bcIOBgi9f8SAldVukTMjpw=;
+	b=dbN2JfEBoZLDhqeRXM52hJ2lXtzjmKHsWkp7VjP423/KFlqiGolbZ6Veir4fdTJOjvym
+	 1TR7OOVa4HiXuuQgtyfHhsRI0J4bcRawR+ObLMX9l9IatulHN1iEp3LMRNfgsTtANmzFb
+	 bT6TXNS+ieVEX9NINkP4LepZVob/JyosQtqp6hnYFBmSloEYU3lR4Wh18UXCo6jy16+iH
+	 h160ORFzGe5LcdKQePUmEhRLpID8DmQp1JpuUVAp6+90Wj10BjKWBgV1O1hhfqg1gptMm
+	 FgUsSy78kZXyDiXFE7bcm+dDyEp28gZwwRP90BSvIJ2lsELjr5QB0A5HCdBu03ycLRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9g6zbGH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFZFs1vS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0CF606EB94;
-	Fri, 13 Nov 2026 15:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA33606A8BF;
+	Fri, 13 Nov 2026 15:57:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S9g6zbGH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9591F000C4;
-	Fri, 13 Nov 2026 15:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jFZFs1vS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459B31F000C4;
+	Fri, 13 Nov 2026 15:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585476;
-	bh=zx5cdQJnxuXUGCjfZyyxYdPGNEJVMEr6Ds7pFkPRNiw=;
+	s=korg; t=1794585477;
+	bh=DZsPDvNIhBSXK0AJ1G8P9bcIOBgi9f8SAldVukTMjpw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S9g6zbGHbcSMOFWTMp4/tKi58G2uVUxeWx03yE3VPk+IFZARZpy4wzdPLBsuHTpIA
-	 HtzEAEIzGtlC5bUH/LYFFi1xEEQTSv9ktKaYNocXcve1lWLigmXoCu3DnfBzCB2x2c
-	 uQqzptzXG5r3e8QRFhqZLUaR3eMGnLt9cGUcolhg=
+	b=jFZFs1vSSWu95Tds4RCaqqlnDqOv26WtYI48XoHdTlO8BT+nZ4UhrhU8nCaYjGrJ5
+	 zZk8c+k4SzctiFOQw3HeTo5fC3tXynYyWfa6AdR9tHWCHvs+fcdKEBsVz/S5ERgCug
+	 o9kDWiLM+7KVR7GCwXIQ620Ts+/hgG2V/jJW8RI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Federico Musto <federico@rimpianto.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 128/507] drm/i915/display: Allow port sync on PTL
-Date: Fri, 13 Nov 2026 10:47:12 -0500
-Message-ID: <20261113153758.789477237@linuxfoundation.org>
+Subject: [PATCH 7.3 129/507] net: atl1c: drop oversized RX frames instead of panicking
+Date: Fri, 13 Nov 2026 10:47:13 -0500
+Message-ID: <20261113153758.821491636@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,44 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
+From: Federico Musto <federico@rimpianto.com>
 
-[ Upstream commit 285300ef89aacbe902ba29c91625975f51345217 ]
+[ Upstream commit c4ba1716853de5178a9df785844ebb5e397a80e6 ]
 
-Some dual-SST tiled displays exhibit visual corruption on PTL, with
-one tile's image vertically shifted or wrapped by a random amount
-that changes on every hotplug.
+atl1c sizes its receive buffers from the netdev MTU plus a fixed set of L2
+overheads, which comes to 1522 bytes at the default MTU.  A link partner
+that sends a longer frame - in practice a MikroTik CCR2004-1G-2XS-PCIe,
+whose RouterOS side defaults to l2mtu 1600 while the host stays at MTU 1500
+- makes the length reported by the RX return descriptor exceed what the
+hardware wrote, and skb_put() then either includes bytes that were never
+received or trips skb_over_panic and takes the host down.
 
-PTL supports port sync, so allow it to be used to avoid these
-display issues.
+Compare the descriptor length against buffer_info->length, the length the
+hardware was given, rather than against skb_tailroom(): the skb carries 64
+bytes of slack for the DMA erratum, so tailroom is larger than the DMA
+buffer and a frame in between would pass the check and still be delivered
+with a tail the device never wrote.  The same test rejects frames shorter
+than ETH_HLEN + ETH_FCS_LEN; before this change a reported length below
+ETH_FCS_LEN underflowed in skb_put().
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/work_items/8991
-Fixes: 05cffc074938 ("drm/i915/display: Implement Wa_16024710867")
+The frame is dropped with kfree_skb_reason(SKB_DROP_REASON_PKT_TOO_BIG) so
+drop_monitor and the kfree_skb tracepoint see it, and counted through
+dev_core_stats_rx_dropped_inc(), which survives atl1c_get_stats()
+overwriting the hardware counters on every read.  It also counts as work:
+atl1c_clean_rfd() has already recycled the RFD, and the refill at the end
+of the poll only runs when work_done is non-zero, so sustained oversized
+traffic would otherwise drain the ring and stop RX.
+
+Tested on a MikroTik CCR2004-1G-2XS-PCIe (4x AR8151) in a Proxmox VE host,
+with atl1c built from a DKMS tree carrying this change: the l2mtu-1600
+traffic that panics the stock driver is dropped and counted with the patch
+applied, and received normally once the host MTU is raised to match.
+
+This complements commit 36c2009d90f2 ("net: atl1c: fix soft lockup on
+out-of-range tpd_cons read"), which fixed the TX side of the same
+"host dies while the card resets" problem.
+
+Fixes: 43250ddd75a3 ("atl1c: Atheros L1C Gigabit Ethernet driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mitul Golani <mitulkumar.ajitkumar.golani@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20261012040402.3332398-1-mitulkumar.ajitkumar.golani@intel.com
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 7b308d9d496dd3bbe2fdd09d4e9d32499f2a1a0b)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Federico Musto <federico@rimpianto.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_ddi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/atheros/atl1c/atl1c_main.c   | 33 +++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_ddi.c b/drivers/gpu/drm/i915/display/intel_ddi.c
-index 02a53c9848e13..8de6e13cf2dde 100644
---- a/drivers/gpu/drm/i915/display/intel_ddi.c
-+++ b/drivers/gpu/drm/i915/display/intel_ddi.c
-@@ -4594,7 +4594,7 @@ intel_ddi_port_sync_transcoders(const struct intel_crtc_state *ref_crtc_state,
- 	 * From, xe3lpd onwards we have defeatured this with reference to
- 	 * Wa_16024710867
- 	 */
--	if (!IS_DISPLAY_VER(display, 9, 20))
-+	if (!IS_DISPLAY_VER(display, 9, 30))
- 		return 0;
- 
- 	if (!intel_crtc_has_type(ref_crtc_state, INTEL_OUTPUT_DP))
+diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+index e58f1d2c26bdf..eddd8406867f7 100644
+--- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
++++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
+@@ -1934,6 +1934,39 @@ static int atl1c_clean_rx(struct napi_struct *napi, int budget)
+ 			break;
+ 		}
+ 		atl1c_clean_rfd(rfd_ring, rrs, rfd_num);
++
++		/* A link partner whose l2mtu is larger than ours can hand us a
++		 * frame that does not fit the buffer the hardware was given:
++		 * the descriptor reports the untruncated length while at most
++		 * buffer_info->length bytes were written.  skb_put() of such a
++		 * length would pull in whatever the tail of the buffer holds
++		 * and, past the end of the skb, trips skb_over_panic and takes
++		 * the host down.  Bound it by what the device actually wrote
++		 * rather than by skb_tailroom(): the skb carries 64 bytes of
++		 * slack for the DMA erratum, so the two are not the same.
++		 *
++		 * Frames shorter than an Ethernet header plus its FCS are
++		 * rejected by the same test; before this, a length below
++		 * ETH_FCS_LEN underflowed in skb_put().
++		 */
++		if (unlikely(length < ETH_HLEN + ETH_FCS_LEN ||
++			     length > buffer_info->length)) {
++			dev_core_stats_rx_dropped_inc(netdev);
++			if (netif_msg_rx_err(adapter))
++				dev_warn_ratelimited(&pdev->dev,
++						     "dropped rx frame: %u bytes, buffer %u\n",
++						     length, buffer_info->length);
++			kfree_skb_reason(skb, SKB_DROP_REASON_PKT_TOO_BIG);
++			/* atl1c_clean_rfd() has already recycled the RFD, so
++			 * count the drop as work: the refill at the end of the
++			 * poll only runs when work_done is non-zero, and
++			 * sustained oversized traffic would otherwise drain the
++			 * ring and stop RX for good.
++			 */
++			work_done++;
++			continue;
++		}
++
+ 		skb_put(skb, length - ETH_FCS_LEN);
+ 		skb->protocol = eth_type_trans(skb, netdev);
+ 		atl1c_rx_checksum(adapter, skb, rrs);
 -- 
 2.53.0
 
