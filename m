@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591458;
-	b=wJE7ue9kEYH2QmTQva5rOMc63QZfPF6kwi4vVHEFAzIVuCLqIWaC+IigQ3upYqnRMEiB
-	 c9WhL9t7qLvbcBxVEjWZ+k23IKldeIknzpY+w1y/xTeCqQcNZFjvcV+yqi0aSYO09j47l
-	 Gd6Gpoy4+hCPgvRBX/gm8vY5mcxzZgfpIeXZSk9daKV2O/f2/O4Byz1b02tmR8zeFE3jI
-	 lNXY2/HZSHp3jy9nANdFdQO4i0+RY3bHwZR7Wik1EX9W+X12xeqvQSzkysNDdkvxdubO0
-	 NnDmUy3FZ60VVArwiV0nz2laS/44lju2SVJUSpchMw39nu6DKVN0mTW/R9sj97Z5e9w==
+	t=1794591460;
+	b=Wo+0Lrwn6pKOGZoSmkBf9B+r7qoqCcllIfflm0cPi6iXi28VDwJBbgMN0QOJ8XunDXz/
+	 mhVXY1D0FaWuojozsBX6Di64UcbvF2dqLJPjH6rp8F2JybjNFReFcKCLZY3cLcGc0jSRu
+	 ig13780a960Ts0T+2iT5H6etzlyAEhes9XlnYsHhk8sf+52yzE5t78gqZnSGWk5e2WIoj
+	 TNhpjcXNhwSnmQbgWbfXnWNgkQ8fdVcHJQV1whh6vX4MpMDXmJNZ8lUq1Mj0U/1srh2rk
+	 USCOwRo5m7IK9bFSZJ7J4B7kCCOckMOIxc9v0XADkZBlWowZQg36PstH2J3S0I6Eskg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FCxBgZInDehsMaMhzrdepfVIDOGvRmm8LpT1kawV204=;
-	b=Z+Gg4eMCHo/dQQEwxFZM0hAt9nFEmC2hPrtZZ64F4lRmbo8vEvt73ZQAJqWmXkmaYkmZ
-	 moiwp5RNLyp4xsuXkF5L1h4jJdZHW4M8GFVGlBMBWmviRrVRe6o1O7IekpJK2JuK/2xCP
-	 kC4phT30Wi4z/P7hxKBkMpujj4dNx1PTVQGc9T+3L1HZQL0ealNFt+sm8/+NR9vcnds3m
-	 Re+6iXpwwcPcXmLH4wvAG8pl5xm/YJTL4FvOZSxGRfk6F1Rwroq1nvl06KMe+/8kP/THI
-	 /d6qJZLxCRGl/Aac3L6TTaPoq1mIAIm9JrIQNcSGfWPqC8bW+nGZ4SF+I9efFVWFSow==
+	bh=+RR011xAOyEhMkn0uAwuUCkuUvQiPkxsUG+m0xsuNNw=;
+	b=LvDITCPyDNZEJpy+RfYhHMp451AwpNIRhpjpIw78jFoREOoMGW60D5y2cicOid9uHJTv
+	 ZeQmPsNi3xltjhfQUz8HcIb03EGNJiN84bOPvvgx6DuG6fhvaISjdJd05EUupIKCIVEEb
+	 6AeVvrpNauHRprbGL8QqHEf9fNOMCvizUSvghPZMNW60HhKX1aB+pkBojgLzGM/OWWVXv
+	 BiK5Lkf29QplxxooKMkObfwD4u/i5XgSMNGBDtPm18eDxiO/4rynPV97AvUcBjRV9UZh7
+	 YmxxEwZqH3m+0OFm0VPLZhCrkVUv8ErShBbUVPRsm7W13truJnmq94KR8cqty8Nu5SQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mnVL1MP0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGQQjg+3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4819607C371;
-	Fri, 13 Nov 2026 17:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7572606E211;
+	Fri, 13 Nov 2026 17:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mnVL1MP0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 602B91F000C4;
-	Fri, 13 Nov 2026 17:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGQQjg+3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9946C1F000C4;
+	Fri, 13 Nov 2026 17:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591458;
-	bh=FCxBgZInDehsMaMhzrdepfVIDOGvRmm8LpT1kawV204=;
+	s=korg; t=1794591459;
+	bh=+RR011xAOyEhMkn0uAwuUCkuUvQiPkxsUG+m0xsuNNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mnVL1MP0DWr1bLrLP4kwfcSpmNjcwZiV2wIN8hSVZXrsbQ2/8ycos+fcK/tbBB3IR
-	 sl4+SWUwVNQxde5MCf+gsJbNPVzgZI1t7kf8TmeeC5YrPLeRt93to5LIBVJ+GGVNib
-	 fjMJbZGKeavzfJmWmV51WmDYgM5xWchxoMbJA1ZU=
+	b=oGQQjg+3av36SeM0wPPOzF6b7T0HZgdMvYL0h7cCRnCDszzT9JiHddEa/QE5ZmiJw
+	 AoBgaDkRHuo4rVeQbSF0GREdmUnjs8nkQlKsDiaS3VK71HgVDy5PK7OIwK/0Ikatji
+	 t4f9qv086FM1xIqbLcO5Y5H+S5brQEHZZRtokZS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Joe Damato <joe@dama.to>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 518/670] KVM: arm64: Fix MMFR0 TGRAN advertisement for pVMs
-Date: Fri, 13 Nov 2026 10:51:22 -0500
-Message-ID: <20261113153829.489621046@linuxfoundation.org>
+Subject: [PATCH 6.12 545/670] mm: memcontrol: raise MEMCG_MAX for charges that fail without reclaiming
+Date: Fri, 13 Nov 2026 10:51:49 -0500
+Message-ID: <20261113153830.359403061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,72 +73,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Joe Damato <joe@dama.to>
 
-[ Upstream commit 6c29285e78b5e4811145ebda382ac0ba732ce56a ]
+[ Upstream commit 374f65b1481992eb6b9c6bffd53f3afa5c2e94cf ]
 
-Protected VM ID register emulation leaves unlisted fields at 0. This
-creates two issues for TGRAN:
+Charges that exceed memory.max and return through the nomem label can
+raise no event and simply return -ENOMEM.
 
-  * TGRAN16: 0 means non-implemented. It prevents 16KB protected VMs
-    from booting even when the hardware supports it.
+A non-blocking charge can hit the limit, get rejected, but is not visible
+in memory.events.
 
-  * TGRAN4|TGRAN64: 0 means implemented. This may falsely advertise the
-    feature even when the hardware does not support it.
+This was noticed in a production setting where bpf_mem_alloc() attempted
+to refill its per-cpu freelists, which triggered a non-blocking charge
+while at the limit.
 
-Advertise all the TGRAN fields in pvmid_aa64mmfr0 so that the hardware
-support is properly propagated.
+Commit d6e103a757fa ("mm: memcontrol: do not miss MEMCG_MAX events for
+enforced allocations") added raised_max_event to cover charges that are
+force charged without ever reaching reclaim, but charges that are rejected
+outright were left out.  Getting an allocation failure without the
+corresponding MEMCG_MAX event is unexpected and makes debugging and
+monitoring harder.
 
-Cc: stable@vger.kernel.org
-Fixes: 6c30bfb18d0b ("KVM: arm64: Add handlers for protected VM System Registers")
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <tabba@google.com>
-Reviewed-by: Fuad Tabba <tabba@google.com>
-Link: https://patch.msgid.link/20260928095454.3255918-2-vdonnefort@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: adapted MAX_FEAT table entries to the existing unsigned restriction mask and signed-field limits in get_pvm_id_aa64mmfr0() ]
+Raise the event on the way out for rejected charges as well, by routing
+the -ENOMEM return through the same exit path that already covers forced
+charges.  The existing behavior of raising a MEMCG_MAX event on every
+charge/reclaim/retry iteration is left unchanged.
+
+Tested with a module that performs accounted GFP_NOWAIT page allocations
+from a task in a cgroup at its memory.max, and measures the resulting
+memory.events:max delta.  Without this patch the rejected charges raise no
+event at all; with it the delta matches the number of rejected charges
+exactly.  A GFP_KERNEL|__GFP_NORETRY control, which reaches reclaim,
+raises the same two events per failed charge before and after, confirming
+the existing charge/reclaim/retry accounting is unchanged.
+
+Link: https://lore.kernel.org/20260831174836.3102406-1-joe@dama.to
+Fixes: d6e103a757fa ("mm: memcontrol: do not miss MEMCG_MAX events for enforced allocations")
+Signed-off-by: Joe Damato <joe@dama.to>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+[ sashal: Replaced __memcg_memory_event(..., allow_spinning) with the existing memcg_memory_event() helper. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/hyp/include/nvhe/fixed_config.h | 3 ++-
- arch/arm64/kvm/hyp/nvhe/sys_regs.c             | 9 +++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ mm/memcontrol.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
-index f957890c7e381..3a9909f565f28 100644
---- a/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
-+++ b/arch/arm64/kvm/hyp/include/nvhe/fixed_config.h
-@@ -92,7 +92,8 @@
-  */
- #define PVM_ID_AA64MMFR0_RESTRICT_UNSIGNED (\
- 	FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64MMFR0_EL1_PARANGE), ID_AA64MMFR0_EL1_PARANGE_40) | \
--	FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64MMFR0_EL1_ASIDBITS), ID_AA64MMFR0_EL1_ASIDBITS_16) \
-+	FIELD_PREP(ARM64_FEATURE_MASK(ID_AA64MMFR0_EL1_ASIDBITS), ID_AA64MMFR0_EL1_ASIDBITS_16) | \
-+	SYS_FIELD_PREP_ENUM(ID_AA64MMFR0_EL1, TGRAN16, IMP) \
- 	)
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index b713cda2628a8..2aae088c86082 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2182,10 +2182,11 @@ int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	bool drained = false;
+ 	bool raised_max_event = false;
+ 	unsigned long pflags;
++	int ret = 0;
  
- /*
-diff --git a/arch/arm64/kvm/hyp/nvhe/sys_regs.c b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-index 2860548d42508..039badc77bf16 100644
---- a/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-+++ b/arch/arm64/kvm/hyp/nvhe/sys_regs.c
-@@ -191,6 +191,15 @@ static u64 get_pvm_id_aa64mmfr0(const struct kvm_vcpu *vcpu)
- 	set_mask = get_restricted_features_unsigned(id_aa64mmfr0_el1_sys_val,
- 		PVM_ID_AA64MMFR0_RESTRICT_UNSIGNED);
+ retry:
+ 	if (consume_stock(memcg, nr_pages))
+-		return 0;
++		return ret;
  
-+	set_mask |= SYS_FIELD_PREP(ID_AA64MMFR0_EL1, TGRAN4,
-+		min_t(int, cpuid_feature_extract_signed_field(id_aa64mmfr0_el1_sys_val,
-+							 ID_AA64MMFR0_EL1_TGRAN4_SHIFT),
-+		      ID_AA64MMFR0_EL1_TGRAN4_IMP));
-+	set_mask |= SYS_FIELD_PREP(ID_AA64MMFR0_EL1, TGRAN64,
-+		min_t(int, cpuid_feature_extract_signed_field(id_aa64mmfr0_el1_sys_val,
-+							 ID_AA64MMFR0_EL1_TGRAN64_SHIFT),
-+		      ID_AA64MMFR0_EL1_TGRAN64_IMP));
+ 	if (!do_memsw_account() ||
+ 	    page_counter_try_charge(&memcg->memsw, batch, &counter)) {
+@@ -2297,16 +2298,11 @@ int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	 * put the burden of reclaim on regular allocation requests
+ 	 * and let these go through as privileged allocations.
+ 	 */
+-	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH)))
+-		return -ENOMEM;
++	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH))) {
++		ret = -ENOMEM;
++		goto out;
++	}
+ force:
+-	/*
+-	 * If the allocation has to be enforced, don't forget to raise
+-	 * a MEMCG_MAX event.
+-	 */
+-	if (!raised_max_event)
+-		memcg_memory_event(mem_over_limit, MEMCG_MAX);
+-
+ 	/*
+ 	 * The allocation either can't fail or will lead to more memory
+ 	 * being freed very soon.  Allow memory usage go over the limit
+@@ -2316,7 +2312,15 @@ int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	if (do_memsw_account())
+ 		page_counter_charge(&memcg->memsw, nr_pages);
+ 
+-	return 0;
++out:
++	/*
++	 * Don't forget to raise a MEMCG_MAX event for forced or rejected
++	 * requests.
++	 */
++	if (!raised_max_event)
++		memcg_memory_event(mem_over_limit, MEMCG_MAX);
 +
- 	return (id_aa64mmfr0_el1_sys_val & PVM_ID_AA64MMFR0_ALLOW) | set_mask;
++	return ret;
+ 
+ done_restock:
+ 	if (batch > nr_pages)
+@@ -2375,7 +2379,7 @@ int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
+ 	    !(current->flags & PF_MEMALLOC) &&
+ 	    gfpflags_allow_blocking(gfp_mask))
+ 		mem_cgroup_handle_over_high(gfp_mask);
+-	return 0;
++	return ret;
  }
  
+ /**
 -- 
 2.53.0
 
