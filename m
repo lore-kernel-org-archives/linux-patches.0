@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585566;
-	b=2PGZbAUojKbgTJH6Lr2oLUFkGhOBU4CJIyopI8o6NwNjGQoh6373DUr5KDVXgiPrPqd/
-	 xdNCwwT38A/Ryp773myylXleKQ4bPMOSmpUHmyEF9tyztRklRE7sc7q8RHHv7+0tmQxeE
-	 YSroCGUrv3EGMC0jKRMK2oAFMPY9rc1KZ0EOC1lWc14tdo38+Tn0UgsJ8hX3X9/WZDc0c
-	 iI9ZKJqyiqB92Xq1hbgFgeXla6q0nzZO2mDaFQngjENPjsh6wIR6SHCcLDvoSaA14xz90
-	 ZmFzhXoQdpIZ6k8A0lIXp8IzROzVYgW6DEnt1Q+ITaRRSCzfV48CAlAzaYwDj5prqPA==
+	t=1794585568;
+	b=JvZRsXNdGRxplr69JLyhOuxxYV7EVO5cVXbBe8ly3Xj5oiyo7fENZkXAF+Rp4KRlG90S
+	 Q/7DzAyxGX4MOOtX0olJ2tlLhNDNto0zIc1H4ZLjBMjn41ZGPKIb92JDoecgcNKKKR7+A
+	 z70cn5nytNyAThKlrGahScpTFeAScFq6GLzsOC17AUpGNwgv7nO+uq57anBdp/bHfquJc
+	 zeMe7IZL0y9nrB1A+yVB+eV4Si1llXi21iEmpEIZcsfvDsRyWDWv1fny8Al1o6WhFBLP2
+	 TrnhAQ836U2BtNDhgATolG3vHkMvI6/xPpKx3aMJLrFV4XDPygm1cCDhShfxQT4fkJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mVHrEHdyHZbBx6mjGsQ0jTS5iHjYy4zzwMTMz3sex1U=;
-	b=2LYQ0do1iNKxdLPBe7IdmuRCof1DMbc+GDmtIsqQfoVk2CIYj9Oxs3MYRlJBm+l+EbjX
-	 x1uf4746c3MZI011UpgSkxU8/PAvBjeoYZd0lIhBPcthyU7VM2T1LGl5kvxZU25WjvC9V
-	 Cyk6ix7dD9FsmRSSadzGHitHATgs3sv4GTHjPzpRUSRnLbFBwx3QFaZ1MHpGfE+xbtY3b
-	 Ioi6+QPsQGXamO+aGG9V1ok5vkA+aC2DP1ksveQnyH4CGGsIWtwB2SajFAzCvL5cELhsn
-	 4YRQXv4GbqURxnYcr8jm60D8YjHU/48Gl/rKB1aca06LTL3U8sBN/xXswMeH+q/j8mQ==
+	bh=VW2tviEt7ipabe7eDpgj2l4Lvan2NC6kHGYC2Qm0DvA=;
+	b=4Fvdcx6/mwKgN6ssPm1NEeiN+NNGCgfBU4uR7a3AmXgGSTAVY+PPKbF/WSkcttAAdC1W
+	 dOkXxJv29SE1L4O+Sl3hnKsfqFFB7QzbSgYf948eoXkSMlXl9dzK9GnRSrX/Qp1GFPsq9
+	 5IKYefkm0q0KsE75LNeOemVu5T1WPqbKr5JzBzGcPqKXvSlWGg2k/+3rNYmy/Uakq7rrS
+	 uBNh8MgPMxBV/Bzye28fj9h/Y+J/fn4h4P/kKox8/6N6+BjQ6oew4ZnR8HWBSij956/DT
+	 aaVv7XZdOkOtAd1o52p6fk10BiPd4KKGQJVqk61bO4/9P7sp7Z6KBPANMkdAk4UWX4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trnF7eUb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXXhzXjL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C769F606BA88;
-	Fri, 13 Nov 2026 15:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F867606BA88;
+	Fri, 13 Nov 2026 15:59:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trnF7eUb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7329F1F000C4;
-	Fri, 13 Nov 2026 15:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UXXhzXjL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9D01F000C4;
+	Fri, 13 Nov 2026 15:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585566;
-	bh=mVHrEHdyHZbBx6mjGsQ0jTS5iHjYy4zzwMTMz3sex1U=;
+	s=korg; t=1794585567;
+	bh=VW2tviEt7ipabe7eDpgj2l4Lvan2NC6kHGYC2Qm0DvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=trnF7eUbmmJTG/CTKt98fDvPTj8s3E4kWKZhGnkkgSysl0XlJcoGIt1BjxNtd3mpz
-	 W+xsnIvK/8xw3swvqARpczZqSyP+hNG4IdEnvw+sdTj5NvhKzx8FJ4gX9X2aJOrpz7
-	 cLFM8BJnX8bjsNcR0GFlq7hwH6BlvuwkX1SIxLak=
+	b=UXXhzXjLAPMjrvxmZX7G4a3f7mknKHvkf1EDlB3amPH8etydkdxeYnsN4VxIe0B90
+	 m6WlY75Cx1x7luaftLZpMiC4NSfc/OOeCCcL/Xt/yJFkR6XG1I94ypQ5cDYos7Goh6
+	 gP4wWPCRde3Lo4KKz6ayHwHp3NwIPWtMnLlyanb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joonhoe Kim <26rote@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Filippo Falezza <effeffe99@gmail.com>
-Subject: [PATCH 7.3 202/507] net: qrtr: announce local services again once our HELLO is sent
-Date: Fri, 13 Nov 2026 10:48:26 -0500
-Message-ID: <20261113153801.326492953@linuxfoundation.org>
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 203/507] nvme-rdma: fix NULL queue->ctrl dereference on reconnect
+Date: Fri, 13 Nov 2026 10:48:27 -0500
+Message-ID: <20261113153801.360381944@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,141 +69,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonhoe Kim <26rote@gmail.com>
+From: Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>
 
-[ Upstream commit 743b5c86276b1c3241e6f0f395b55f98f0756ef0 ]
+[ Upstream commit 3ee50a2d76f278ea0ced45716a62730059283787 ]
 
-Since commit 544d85de4dc2 ("net: qrtr: Send HELLO message on endpoint
-register"), qrtr_node_enqueue() drops every packet but HELLO with
--EAGAIN until our HELLO has gone out to the node. When the remote's
-HELLO arrives first, the NEW_SERVER replies from the name service are
-dropped, and so are the broadcasts for services registered before our
-HELLO goes out. Nothing announces these services again, so the remote
-never learns about them.
+Since commit 2a8513091d2f ("nvme-rdma: parallelize I/O queue allocation
+and startup"), a reconnect that gets more I/O queues than before grows
+the tag set before the new queues are set up. queue->ctrl is only set
+by nvme_rdma_setup_io_queues(), so I/O submitted in between reaches
+nvme_rdma_queue_rq() on a queue that was never allocated and
+dereferences a NULL queue->ctrl:
 
-On Kaanapali the modem sends its HELLO before it accepts ours. With
-rmtfs started first, the modem never learns about rmtfs and its
-watchdog resets the SoC about 40 s later.
+  BUG: kernel NULL pointer dereference, address: 000000000000034c
+  RIP: 0010:nvme_rdma_queue_rq+0x52/0xb90
 
-Remember that the remote has sent a HELLO. Once our HELLO has been
-sent to such a node, pass a HELLO from it to the local name service
-again, so that it announces the services it has at that point. Retry
-the replay if it cannot be queued, and queue it under ep_lock only
-while the endpoint is registered, so that it cannot follow the BYE
-from qrtr_endpoint_unregister().
+Set queue->ctrl for every queue when allocating the controller. Such
+requests are then requeued like on any other queue that is not live.
 
-The flag is not cleared when qrtr_endpoint_hello() restarts the
-handshake on resume, so a HELLO that the remote sent before then is
-not lost. The cost is that the remote gets the same NEW_SERVER
-announcements twice when its HELLO arrives before ours goes out but
-the name service handles it after, and on every resume.
-
-Fixes: 544d85de4dc2 ("net: qrtr: Send HELLO message on endpoint register")
+Fixes: 2a8513091d2f ("nvme-rdma: parallelize I/O queue allocation and startup")
 Cc: stable@vger.kernel.org
-Tested-by: Filippo Falezza <effeffe99@gmail.com> # Motorola Moto G 5G Plus nairo (SM7250)
-Signed-off-by: Joonhoe Kim <26rote@gmail.com>
-Link: https://patch.msgid.link/20261029105142.2503-1-26rote@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Christian Aurich Zanettini Martins <christian.aurichzm@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/qrtr/af_qrtr.c | 53 +++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 45 insertions(+), 8 deletions(-)
+ drivers/nvme/host/rdma.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-index e7b3647424b8f..45cb8e8c36ca2 100644
---- a/net/qrtr/af_qrtr.c
-+++ b/net/qrtr/af_qrtr.c
-@@ -122,6 +122,7 @@ static DEFINE_XARRAY_ALLOC(qrtr_ports);
-  * @qrtr_tx_flow: xarray of qrtr_tx_flow, keyed by node << 32 | port
-  * @qrtr_tx_lock: lock for qrtr_tx_flow inserts
-  * @hello_sent: hello packet send successful
-+ * @hello_rcvd: remote has sent a hello packet
-  * @rx_queue: receive queue
-  * @item: list item for broadcast list
-  * @say_hello: delayed work for sending hello packet
-@@ -136,6 +137,7 @@ struct qrtr_node {
- 	struct mutex qrtr_tx_lock; /* for qrtr_tx_flow */
+diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
+index 5b9b540693b51..ff7b9e3796140 100644
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -735,7 +735,6 @@ static int nvme_rdma_setup_io_queues(struct nvme_rdma_ctrl *ctrl,
+ 	for (i = 0; i < nr_queues; i++) {
+ 		struct nvme_rdma_queue *queue = &ctrl->queues[first + i];
  
- 	bool hello_sent;
-+	bool hello_rcvd;
+-		queue->ctrl = ctrl;
+ 		queue->queue_size = queue_size;
  
- 	struct sk_buff_head rx_queue;
- 	struct list_head item;
-@@ -541,6 +543,11 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 		qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
- 	}
+ 		ctxs[i].queue = queue;
+@@ -798,7 +797,6 @@ static int nvme_rdma_configure_admin_queue(struct nvme_rdma_ctrl *ctrl,
+ 	bool pi_capable = false;
+ 	int error;
  
-+	if (cb->type == QRTR_TYPE_HELLO) {
-+		/* Pairs with smp_load_acquire() in qrtr_hello_work() */
-+		smp_store_release(&node->hello_rcvd, true);
-+	}
+-	ctrl->queues[0].ctrl = ctrl;
+ 	ctrl->queues[0].queue_size = NVME_AQ_DEPTH;
+ 	error = nvme_rdma_alloc_queue(&ctrl->queues[0]);
+ 	if (error)
+@@ -2284,7 +2282,7 @@ static struct nvme_rdma_ctrl *nvme_rdma_alloc_ctrl(struct device *dev,
+ 		struct nvmf_ctrl_options *opts)
+ {
+ 	struct nvme_rdma_ctrl *ctrl;
+-	int ret;
++	int ret, i;
+ 
+ 	ctrl = kzalloc_obj(*ctrl);
+ 	if (!ctrl)
+@@ -2343,6 +2341,9 @@ static struct nvme_rdma_ctrl *nvme_rdma_alloc_ctrl(struct device *dev,
+ 	if (!ctrl->queues)
+ 		goto out_free_ctrl;
+ 
++	for (i = 0; i < ctrl->ctrl.queue_count; i++)
++		ctrl->queues[i].ctrl = ctrl;
 +
- 	if (cb->type == QRTR_TYPE_RESUME_TX) {
- 		qrtr_tx_resume(node, skb);
- 	} else {
-@@ -599,6 +606,8 @@ static void qrtr_hello_work(struct work_struct *work)
- 	struct qrtr_node *node;
- 	struct qrtr_sock *ctrl;
- 	struct sk_buff *skb;
-+	bool hello_sent;
-+	int rc = 0;
- 
- 	node = container_of(to_delayed_work(work), struct qrtr_node, say_hello);
- 
-@@ -609,17 +618,45 @@ static void qrtr_hello_work(struct work_struct *work)
- 		return;
- 	}
- 
--	skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
--	if (!skb) {
--		qrtr_port_put(ctrl);
--		schedule_delayed_work(&node->say_hello, msecs_to_jiffies(100));
--		return;
-+	mutex_lock(&node->ep_lock);
-+	hello_sent = node->hello_sent;
-+	mutex_unlock(&node->ep_lock);
-+
-+	from.sq_node = qrtr_local_nid;
-+	if (!hello_sent) {
-+		skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
-+		if (!skb)
-+			goto retry;
-+
-+		pkt->cmd = cpu_to_le32(QRTR_TYPE_HELLO);
-+		to.sq_node = node->nid;
-+		if (qrtr_node_enqueue(node, skb, QRTR_TYPE_HELLO, &from, &to))
-+			goto out;
- 	}
- 
-+	/* Pairs with smp_store_release() in qrtr_endpoint_post() */
-+	if (!smp_load_acquire(&node->hello_rcvd))
-+		goto out;
-+
-+	skb = qrtr_alloc_ctrl_packet(&pkt, GFP_KERNEL);
-+	if (!skb)
-+		goto retry;
-+
- 	pkt->cmd = cpu_to_le32(QRTR_TYPE_HELLO);
--	from.sq_node = qrtr_local_nid;
--	to.sq_node = node->nid;
--	qrtr_node_enqueue(node, skb, QRTR_TYPE_HELLO, &from, &to);
-+	to.sq_node = READ_ONCE(node->nid);
-+
-+	mutex_lock(&node->ep_lock);
-+	if (node->ep)
-+		rc = qrtr_local_enqueue(NULL, skb, QRTR_TYPE_HELLO, &to, &from);
-+	else
-+		kfree_skb(skb);
-+	mutex_unlock(&node->ep_lock);
-+	if (!rc)
-+		goto out;
-+
-+retry:
-+	schedule_delayed_work(&node->say_hello, msecs_to_jiffies(100));
-+out:
- 	qrtr_port_put(ctrl);
- }
- 
+ 	ret = nvme_init_ctrl(&ctrl->ctrl, dev, &nvme_rdma_ctrl_ops,
+ 				0 /* no quirks, we're perfect! */);
+ 	if (ret)
 -- 
 2.53.0
 
