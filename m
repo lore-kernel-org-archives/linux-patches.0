@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590630;
-	b=qM9Nz6oi8JA6OWvFjamyaWPCLRxMEnYZ6S7HKUpPRkjr9hHMztBovZfq6rytscJdAE1a
-	 11Q641y303plhhbgY19/D2CqoPY3yii3gn0iioDhwBBNOeKXEq/EpplaIzItqsOPNbEu1
-	 JbhCJm/XzlTZRtvhghz77ce4OnEWYqVenJNeSHvo4Xf6OorGNYbqMiXQvm11qtD8kYPEy
-	 EmCzG/jtvBl/x2zXCehNNjXnBv3BciJ6pW+uZDHZgqBZ2snqXXp0LCNJcfAvSAtN1bmU1
-	 wflIMDSvQObvFRDY8Wo16yU9ig/+QbkGxyQG24XnXLq/DOjaUI/e+SaODu0fxW7K5lg==
+	t=1794590631;
+	b=ZU52OnVzFsl3u52ZX1pSM0mxuH5WOctU7L5QTpwj065lhxAYqlGMGWqnTdw0Zh+3c8nw
+	 bvZefLw5/ZWFBbj7+Mj6V+7H9eQlhCKJQRVQDE/9iFK+/WkoGp6r0u6fu1i5M4dcKGVaJ
+	 QXmDEa9PWuWQMp22j+RwSs7i9/SZYsLGQMW23aq2mhMbBWa56mO6QpD6gJtbYC3JkpoC6
+	 OhaWaX5MQWuXWc/Q+E0HWo7cBGC/uNrqmXB6D88Y4+SG3N89X9ms63UmZKOACiNgLUv9a
+	 9OctZCd7rWNtnpqShMHXZeTsI1The/0r2pi6NE3vUp9wdsZEi1RjF7/HLcds6XkZTOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590630;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590631;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ks1jBfMffCCwE8jOOknEWVtslRKnDepj+RZKEzYLGi8=;
-	b=VzvBS/WNQwCMvr741LkkF4YGhjdDhgijlfIvid02l/7i/f5OOU5ILtrsnEamW4qnARTu
-	 /1RVRJmgFdS+7yg0ytyAZ3Gt7Qj2DKylmBergJRuKPhLwg4ODmM2sanyB5ssxHIl4v6ok
-	 WqaGQPA+wC28ReBj2NDrE9FunoQJ7b0+8zZo+uuPTBznL3Yl+2yXtq5DxTGkaplF3HaY8
-	 rjwD9hwK6AQuBWeHNLJtWCB5hAh6+4gY654njDkUZUygYPuMMUI/kRiuZHuvN2Bm/VeK9
-	 X9NvsihIEVJVyTPd80VZ1Eqoavdhr3hd5gmhkFmFoQKKfD1Zq6JOXMSn103mj29vk3g==
+	bh=KmpieOJKqhA4TG4GdsIqZvVP3Uj8V9q6h9ulgAH1+Pc=;
+	b=ne2770YojDKLLUZgPAGl+naW3gfWKqGIF4sKZtpiEmiXOdWEDgtm64ecWuxOMT++tcz7
+	 /otJLtC7TvEdWXWGBiCsGjDmqulgBnKQa2obkC/yindD5yNDpvyaxnSzdgrUuZptnOxZi
+	 zefkr2N7oMTol61JOq23HOZQkSyY22pX8sHzs2hZCZFgYzkP0kBFOhz08V+0HLEUcXy06
+	 5bqmofD/Wcq+4iXmoymAlJFrjUQZk68ptN/wpGvoRocue4+zCGqcJU8xvPjI+u/zTG4Jm
+	 0iTafJLcXzT/HrFNeCfoNSUftjCa2TGrfpNFia2m+jKKvedlvymJ/92+wH+hGrfWIRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUO5XjYr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+TFEeTX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E747060A2623;
-	Fri, 13 Nov 2026 17:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2570B60A260C;
+	Fri, 13 Nov 2026 17:23:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DUO5XjYr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944221F000C4;
-	Fri, 13 Nov 2026 17:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+TFEeTX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD0B1F000C4;
+	Fri, 13 Nov 2026 17:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590629;
-	bh=Ks1jBfMffCCwE8jOOknEWVtslRKnDepj+RZKEzYLGi8=;
+	s=korg; t=1794590631;
+	bh=KmpieOJKqhA4TG4GdsIqZvVP3Uj8V9q6h9ulgAH1+Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DUO5XjYrQH5FdAKRCxum9IgArt0ko715aX+8XVz3vR3yihUvFjALpex+u1mBF8Pb7
-	 F80N+ivaaVI+oMGAQOJ3LM902EJocSoQLq1L1XXh3+4FVhPcRcMmZROzjMf03JdqXx
-	 vez/l+NuqVcomNPLLvxwdUhA4QUVy6Q+wsAjmRPo=
+	b=H+TFEeTXPKN8Mp+ACWgaQ+88AmJmsQf9HRn68zRzg8+pMETVESV+ZRzC37hTU0uFq
+	 rcgQzK+wLRL3YZALN8a/qxx1LjhH1pK1+1CpdGEbSXwXH1gzZlzV89h4U0seKiw5hu
+	 bYHo66Opxk2wMdJanKb/R0Ink/Qw9kILVYNAFMuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 551/686] ovl: fail the mount if the casefold flag has changed
-Date: Fri, 13 Nov 2026 10:51:24 -0500
-Message-ID: <20261113153840.238171372@linuxfoundation.org>
+Subject: [PATCH 6.18 552/686] udf: validate the device specification EA before using it
+Date: Fri, 13 Nov 2026 10:51:25 -0500
+Message-ID: <20261113153840.270039119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,85 +71,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Yunpeng Tian <shionthanatos@gmail.com>
 
-[ Upstream commit c782fc8ada811569811c0fdea5c3412511be95d0 ]
+[ Upstream commit 9a2390959685ac35a58c80c8016120849a2babf6 ]
 
-An unprivileged user in a user namespace can repeatedly trigger a kernel
-warning with their own overlay mounts. They do so by changing the
-casefold flag of the topmost layer's empty root, the top directory of
-that layer, after the layers are set and before the mount is created.
+udf_get_extendedattr() bounds an extended attribute only against
+struct genericFormat, which is 12 bytes.  A type-12 device
+specification is struct deviceSpec, which is 24 bytes plus a flexible
+impUse array. Thus a corrupted filesystem can contain extended attribute
+that is accepted by udf_get_extendedattr() but udf_write_inode() or
+udf_read_inode() may access beyond the end of provided buffer.
 
-The casefold flag of a directory makes name lookups in that directory
-case-insensitive. All layers of an overlay must agree on casefolding.
+Provide a udf_device_spec_valid() check to validate correctness of
+extended attribute that is a deviceSpec. While here, check the result of
+udf_add_extendedattr() before dereferencing it as it can return NULL in
+case of error.
 
-ovl_mount_dir_check() reads the casefold flag of a layer root when
-fsconfig() sets that layer, and saves the result in ofs->casefold. The
-mount is created later, by another fsconfig() call with
-FSCONFIG_CMD_CREATE.
+[JK: Removed duplicated validity checks]
 
-The casefold flag of an empty directory can be changed.
-
-The casefold flag of the overlay root must match ofs->casefold.
-ovl_get_root() copies the flag from the topmost layer root, as it is
-when the mount is created. On a mismatch, ovl_get_root() only does a
-WARN_ON(), and the mount continues. The check is not a WARN_ON_ONCE(),
-so each such mount warns again.
-
-An unprivileged user needs CONFIG_UNICODE, and a tmpfs mounted with the
-casefold option in their namespace.
-
-Reproduced by changing the casefold flag of the empty upper directory
-after the layers were set and before FSCONFIG_CMD_CREATE, with tmpfs and
-ext4 layers, and as uid 1000 in a user namespace.
-
-Fix this by replacing the WARN_ON() with a check that fails the mount
-with -EINVAL.
-
-Fixes: f9377faaeae0 ("ovl: Add S_CASEFOLD as part of the inode flag to be copied")
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Tested-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[backport: In 6.18, ovl_fill_super() handles credential restoration and
-filesystem cleanup. Drop the unpublished root dentry and go to out_err,
-skipping out_free_oe because the root inode already owns oe.]
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+[ sashal: adapted udf_write_inode() changes to udf_update_inode() while preserving its existing err variable and synchronous writeback error handling ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/super.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/udf/inode.c | 42 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 37 insertions(+), 5 deletions(-)
 
-diff --git a/fs/overlayfs/super.c b/fs/overlayfs/super.c
-index 8d4ef5b2f1780..52d6f32a5a7c3 100644
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -1370,7 +1370,6 @@ static struct dentry *ovl_get_root(struct super_block *sb,
- 	ovl_dentry_set_flag(OVL_E_CONNECTED, root);
- 	ovl_set_upperdata(d_inode(root));
- 	ovl_inode_init(d_inode(root), &oip, ino, fsid);
--	WARN_ON(!!IS_CASEFOLDED(d_inode(root)) != ofs->casefold);
- 	ovl_dentry_init_flags(root, upperdentry, oe, DCACHE_OP_WEAK_REVALIDATE);
- 	/* root keeps a reference of upperdentry */
- 	dget(upperdentry);
-@@ -1576,6 +1575,17 @@ int ovl_fill_super(struct super_block *sb, struct fs_context *fc)
- 	if (!root_dentry)
- 		goto out_free_oe;
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index d00b78523a967..a9538a0f9734b 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -1346,6 +1346,26 @@ int udf_setsize(struct inode *inode, loff_t newsize)
+ 	return err;
+ }
  
-+	/*
-+	 * The casefold flag of an empty layer root may have changed since the
-+	 * mount options were parsed. The root inode owns oe by now.
-+	 */
-+	if (!!IS_CASEFOLDED(d_inode(root_dentry)) != ofs->casefold) {
-+		pr_err("casefold flag of the root directory has changed\n");
-+		dput(root_dentry);
-+		err = -EINVAL;
-+		goto out_err;
-+	}
++/*
++ * Verify validity of struct deviceSpec on disk. udf_get_extendedattr() has
++ * already verified the generic header and made sure attribute fits in the
++ * inode so we just have to make sure attribute space is large enough for
++ * deviceSpec struct and required impUse information.
++ */
++static bool udf_device_spec_valid(struct deviceSpec *dsea)
++{
++	u32 attr_length, imp_use_length;
 +
- 	sb->s_root = root_dentry;
++	attr_length = le32_to_cpu(dsea->attrLength);
++	imp_use_length = le32_to_cpu(dsea->impUseLength);
++	if (attr_length < sizeof(struct deviceSpec) ||
++	    imp_use_length < sizeof(struct regid) ||
++	    imp_use_length > attr_length - sizeof(struct deviceSpec))
++		return false;
++
++	return true;
++}
++
+ /*
+  * Maximum length of linked list formed by ICB hierarchy. The chosen number is
+  * arbitrary - just that we hopefully don't limit any real use of rewritten
+@@ -1664,13 +1684,12 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
+ 	if (S_ISCHR(inode->i_mode) || S_ISBLK(inode->i_mode)) {
+ 		struct deviceSpec *dsea =
+ 			(struct deviceSpec *)udf_get_extendedattr(inode, 12, 1);
+-		if (dsea) {
+-			init_special_inode(inode, inode->i_mode,
++
++		if (!dsea || !udf_device_spec_valid(dsea))
++			goto out;
++		init_special_inode(inode, inode->i_mode,
+ 				MKDEV(le32_to_cpu(dsea->majorDeviceIdent),
+ 				      le32_to_cpu(dsea->minorDeviceIdent)));
+-			/* Developer ID ??? */
+-		} else
+-			goto out;
+ 	}
+ 	ret = 0;
+ out:
+@@ -1818,6 +1837,10 @@ static int udf_update_inode(struct inode *inode, int do_sync)
+ 				udf_add_extendedattr(inode,
+ 						     sizeof(struct deviceSpec) +
+ 						     sizeof(struct regid), 12, 0x3);
++			if (!dsea) {
++				err = -ENOSPC;
++				goto out_unlock;
++			}
+ 			dsea->attrType = cpu_to_le32(12);
+ 			dsea->attrSubtype = 1;
+ 			dsea->attrLength = cpu_to_le32(
+@@ -1825,6 +1848,10 @@ static int udf_update_inode(struct inode *inode, int do_sync)
+ 						sizeof(struct regid));
+ 			dsea->impUseLength = cpu_to_le32(sizeof(struct regid));
+ 		}
++		if (!udf_device_spec_valid(dsea)) {
++			err = -EFSCORRUPTED;
++			goto out_unlock;
++		}
+ 		eid = (struct regid *)dsea->impUse;
+ 		memset(eid, 0, sizeof(*eid));
+ 		strcpy(eid->ident, UDF_ID_DEVELOPER);
+@@ -1966,6 +1993,11 @@ static int udf_update_inode(struct inode *inode, int do_sync)
+ 	brelse(bh);
  
- 	ovl_revert_creds(old_cred);
+ 	return err;
++
++out_unlock:
++	unlock_buffer(bh);
++	brelse(bh);
++	return err;
+ }
+ 
+ struct inode *__udf_iget(struct super_block *sb, struct kernel_lb_addr *ino,
 -- 
 2.53.0
 
