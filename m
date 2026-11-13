@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585253;
-	b=UKRomwkIYY15t27HA/A35PrENDL1fStKnz6Jb5QyNtsxLwPuymT7lLoc+Mj4HMcz0oUs
-	 OvL3VdV/cgrI7kD39d+E2WtV8k34f/Npsvm3onqoksxxs/PfCG0fwuorNV0hbwZGozoaD
-	 xA9PbzCvT6I3fmRGLZ2QQ8qqUQOfkqPVIyH08nz4k8Ozgh+16zowKfceXpgnm43qd9Mm4
-	 tjgytjECAs7Ry7XzmLWFjhbTphFEST03zlJ5CMTxkRMpOYJFLrxzjCTO90S6/a2dgFnZ+
-	 UWjfsqZxJ50D/Q6qJ9stwm5FeNnlwcm7GmpwbdFeKlIvewpb08FNzxng/2ddzVsldtA==
+	t=1794585254;
+	b=XjhjR0oDWa+wzfRJSBNKmeDBrPKmkFIVaZFoWSqzHQ8eruOPjzeojx1JtnSrKj9A5Gjn
+	 qeZ0mMdINMffA6Oc7vNgMeSTtoL5qTJiyjUCZJv6KpSMDtfy9Vp/wS8VROZxrN0jgBrn7
+	 6VTcw8hS2DwQuFdgH3dMQcm9VHhLMRig2ta+/yIrAW8X5RkR1PMcMm3l+iC7nl4NJo8Cx
+	 zqL/3ElPWBzFt5GWdCO9qMqlcwHGorJpmdQNWnRHWTaKfTwF4YpQvMszJ3w05tg4RUPpS
+	 0dAWg964TrZ2K1eyyvccEVv/oSq291P5iiEIu8/gDa7IbeW9/bMDxlXIoSralogIXIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585253;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585254;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y6gmMuJmJFFVHmIasUwYI65+iwTO+CD2dYddccL/oU0=;
-	b=LLQzaTJiSolkzYNQcKZLt/kI0NgHJQ4fetYdyIILJ1FTyUXCroqQ5jKmX6UODNRAHA+R
-	 Rb3OuO0uk6yi1orksrhMNtFg5SwwdvJhDsJzCCXx+JDMxehvrmG05jpPXFkV3glscTPta
-	 VIJV6hP6p6TPGsjzuz5nwmcYk6zj3ThD7EGwKVn8d4g8cmAHYSz3B57Rjit3re8NJyukL
-	 E2kMJCUJrwlRMQPSqyth8kXhw4YytzrACRGL+153RUS483TK2j9QmXdAcli31UYPVtEi5
-	 qXcgrjEvFI+On5UosQe4qbcAfXfsM/36lTjVKxhgoYmbUo52IGehd8IkoAgEXle+tWw==
+	bh=C5LRzyt3oo2JT6kA6coJPRMj/DRwEtkBY+0Fr/hqmB0=;
+	b=nSGLpGoM1oZzONvH2Mp0eEhZ8qDybEnPmTbC16THqt0UyqgT7YzvGpZ6oTVzcZymQClt
+	 cNFCseUpbSSzxRpLdqQkcyBcK5OjWsMOM6f6Da+TUD22A2+abE4lY16pRZbGUCLnsOX+h
+	 upT1358O0at83VK11q0cWnnOQPKdX5nPpwhIfrsy7w6Y4IvTTwUH+U4+Sb1hDMFpT43FL
+	 pnCYQ9IwkWc66EHBfdOe2TaUBaffTsR2502FzDAD+/Pqix4Yl4XheIHs4vN3mvCohpqUD
+	 D88uS67Mv4xJ31twxrST928HsWlQYzv3l3KRoS/1lqUatl0YW4RU8iZ1KveW2PAHyAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anKuSj3S;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yloyzYHE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05744606A330;
-	Fri, 13 Nov 2026 15:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88674606A887;
+	Fri, 13 Nov 2026 15:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anKuSj3S
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41531F000C7;
-	Fri, 13 Nov 2026 15:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yloyzYHE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E454C1F000C4;
+	Fri, 13 Nov 2026 15:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585252;
-	bh=y6gmMuJmJFFVHmIasUwYI65+iwTO+CD2dYddccL/oU0=;
+	s=korg; t=1794585254;
+	bh=C5LRzyt3oo2JT6kA6coJPRMj/DRwEtkBY+0Fr/hqmB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=anKuSj3SlGm8CQd5pVSJJJPiNrMi1fgSzK2E1oZ0BrxfCV2UvW4qSLUTrha8OTTkU
-	 L28uSM4DJUm7DRHEbjduUtDdLivZdC8iPknoJr8aTP/yqqJgTcjdY3dIIxU0fSX4KU
-	 +v0rhfHhMFb2oOJISMscDhU1bYzDrENcg/InMB88=
+	b=yloyzYHEW0Ya/0qJq4v15Ez6j52XZk4hgjxb7rcfn8mCMVj4piBTEZwfzsMx2l3bb
+	 xVLC0AGz5YoinshzqR2BszEJfkT84D9ezwhQRfFDON8v3Ndu/4L2SYWV2OCwUWS7o7
+	 aqDhYqOya1ECph1ybsFKDvjH9U7X9rOopFV6orps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Jinwang Li <jinwang.li@oss.qualcomm.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Siwei Zhang <oss@fourdim.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 007/507] xfs: check for buffer overruns when examining local/remote xattr entries
-Date: Fri, 13 Nov 2026 10:45:11 -0500
-Message-ID: <20261113153753.626177760@linuxfoundation.org>
+Subject: [PATCH 7.3 004/507] Bluetooth: L2CAP: Ignore connection responses with wrong ident
+Date: Fri, 13 Nov 2026 10:45:08 -0500
+Message-ID: <20261113153753.524383950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,111 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Jinwang Li <jinwang.li@oss.qualcomm.com>
 
-[ Upstream commit 91c41f9524906a8ebd2ae68c98a07b4bd5255ddb ]
+commit a9f9eeb5344fc7dc625e5700ccf09891bc2603b5 upstream.
 
-LOLLM noticed that the xattr scrub and repair code can walk off the end
-of the buffer if the xattr entry record starts so close to the end of
-the buffer that there's not even space for the entry structure itself.
-Strengthen the bounds checking here.
+Adjusted context as stable does not have the lockdep_assert_held()
+call in l2cap_connect_create_rsp().
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: 13791d3b833428 ("xfs: scrub extended attribute leaf space")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+L2CAP/COS/CED/BI-28-C requires the IUT to ignore a Connection Response
+that carries an invalid Identifier.
+
+l2cap_connect_create_rsp() only checks that a connection request is
+outstanding, not that the response answers it. Add an ident check
+against the pending request so that a mismatched response is dropped.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jinwang Li <jinwang.li@oss.qualcomm.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/attr.c        | 12 ++++++++++++
- fs/xfs/scrub/attr_repair.c | 16 +++++++++++++---
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/xfs/scrub/attr.c b/fs/xfs/scrub/attr.c
-index f7c00ea1af5d3..f909e2b25158a 100644
---- a/fs/xfs/scrub/attr.c
-+++ b/fs/xfs/scrub/attr.c
-@@ -306,6 +306,12 @@ xchk_xattr_local_entry(
- 	char				*name_end;
- 	unsigned int			namesize;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 01945c55e1b87..47f0449588ea1 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4333,11 +4333,11 @@ static int l2cap_connect_create_rsp(struct l2cap_conn *conn,
  
-+	name_end = (char *)lentry + offsetof(typeof(*lentry), nameval[0]);
-+	if (name_end > buf_end) {
-+		xchk_da_set_corrupt(ds, level);
-+		return 0;
-+	}
-+
- 	namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
- 			be16_to_cpu(lentry->valuelen));
- 	name_end = (char *)lentry + namesize;
-@@ -335,6 +341,12 @@ xchk_xattr_remote_entry(
- 	char				*name_end;
- 	unsigned int			namesize;
+ 	l2cap_chan_lock(chan);
  
-+	name_end = (char *)rentry + offsetof(typeof(*rentry), name[0]);
-+	if (name_end > buf_end) {
-+		xchk_da_set_corrupt(ds, level);
-+		return 0;
-+	}
-+
- 	namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
- 	name_end = (char *)rentry + namesize;
- 	if (rentry->namelen == 0) {
-diff --git a/fs/xfs/scrub/attr_repair.c b/fs/xfs/scrub/attr_repair.c
-index c7695d4cc8e7c..ad688f9f7ce94 100644
---- a/fs/xfs/scrub/attr_repair.c
-+++ b/fs/xfs/scrub/attr_repair.c
-@@ -285,6 +285,7 @@ xrep_xattr_salvage_local_attr(
- 	struct xfs_attr_leaf_name_local	*lentry)
- {
- 	struct xchk_xattr_buf		*ab = rx->sc->buf;
-+	char				*name_end;
- 	unsigned char			*value;
- 	unsigned int			valuelen;
- 	unsigned int			namesize;
-@@ -293,10 +294,14 @@ xrep_xattr_salvage_local_attr(
- 	 * Decode the leaf local entry format.  If something seems wrong, we
- 	 * junk the attribute.
+-	/* Only accept a response to a connection request we sent and that
+-	 * is still outstanding. A channel waiting in BT_CONNECT for security
+-	 * or the feature mask has not sent one yet.
++	/* Only accept a response matching a connection request we sent and
++	 * that is still outstanding. A channel waiting in BT_CONNECT for
++	 * security or the feature mask has not sent one yet.
  	 */
-+	name_end = (char *)lentry + offsetof(typeof(*lentry), nameval[0]);
-+	if (name_end > buf_end)
-+		return 0;
- 	value = &lentry->nameval[lentry->namelen];
- 	valuelen = be16_to_cpu(lentry->valuelen);
- 	namesize = xfs_attr_leaf_entsize_local(lentry->namelen, valuelen);
--	if ((char *)lentry + namesize > buf_end)
-+	name_end = (char *)lentry + namesize;
-+	if (name_end > buf_end)
- 		return 0;
- 	if (!xrep_xattr_want_salvage(rx, ent->flags, lentry->nameval,
- 			lentry->namelen, value, valuelen))
-@@ -333,8 +338,8 @@ xrep_xattr_salvage_remote_attr(
- 		.attr_filter		= ent->flags & XFS_ATTR_NSP_ONDISK_MASK,
- 		.namelen		= rentry->namelen,
- 		.name			= rentry->name,
--		.valuelen		= be32_to_cpu(rentry->valuelen),
- 	};
-+	char				*name_end;
- 	unsigned int			namesize;
- 	int				error;
+-	if (!l2cap_chan_connect_pending(chan))
++	if (!l2cap_chan_connect_pending(chan) || chan->ident != cmd->ident)
+ 		goto done;
  
-@@ -343,9 +348,14 @@ xrep_xattr_salvage_remote_attr(
- 	 * junk the attribute.  Note that we should never find a zero-length
- 	 * remote attribute value.
- 	 */
-+	name_end = (char *)rentry + offsetof(typeof(*rentry), name[0]);
-+	if (name_end > buf_end)
-+		return 0;
- 	namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
--	if ((char *)rentry + namesize > buf_end)
-+	name_end = (char *)rentry + namesize;
-+	if (name_end > buf_end)
- 		return 0;
-+	args.valuelen = be32_to_cpu(rentry->valuelen);
- 	if (args.valuelen == 0 ||
- 	    !xrep_xattr_want_salvage(rx, ent->flags, rentry->name,
- 			rentry->namelen, NULL, args.valuelen))
+ 	switch (result) {
 -- 
 2.53.0
 
