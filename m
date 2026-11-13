@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590999;
-	b=dVmNLzhCUFmX8ddMt5VsXdMJjElLKekhKUN9FZQv6j9COVWqmuXnGyubR6Xk4x4o3thx
-	 mCxNwz63As/MfcqDsXO3R38fZc9N5YCNdSB7bEIMVMfyu71XqLNru96rbFHdP4E3m4x7e
-	 eoiXE0nv4fN2uZZ0RN4ThU0LCjcNP+LG5vkIYfkHczFifkTRTwGWXdn8KBd80dnQXfYBF
-	 25yQTm0wdQjAbNWL7sS3fb/0h/EpvZrcARvlEK3c1KxGdqOge1PgOReeUDZQGEOlusKyz
-	 bbaD7IARieEmRKQj0vkF+eIU1Y/Qa/qShR9qDwi+Q4eoPA9HddE8tHspGL4ZisxFvrg==
+	t=1794591001;
+	b=H0f1GcRl8E3R2RkPmjVfRWvNyQcvRxnKfI4D9EfldbYy1QmuCRMlR+jaeXpU4Brq/yE3
+	 XczLAI3zAvlIw/RghCUHs26DrodtWMv91Cht+ezW3kgSWS98MVFAtiO0RKKNh/bkMtzzT
+	 PrBdiZ2rbI64Gl6ceev47ZDeRKIsJQki8Xs6AmKnWByS5Og4W5q+xTGx9a55ewDmIXGZp
+	 WV0KUZeQkgHCkaqI7R405FpU5BxWkJJt4MZLPphZZMZ/JS9SMXa0LA61pAJFDcAPZS9+F
+	 ikgZ4KglxJJOLpYw68cCY2oIP5b/5EsbQR7DKRb+HSh8G0FTanYe9n2NA6olFwMPJgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590999;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591001;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y8b9+eqfsHfO4L4VaOOvL64FcxHquWzkzmdFPzvhnUg=;
-	b=w9AmQbWLWCF0CKhPsWSePpTi+haT+AL+hj5WWD5JAbZD+gdxaYiZBveamm3NDsPHiAzz
-	 OgBSnYh9Yo+ri1fu3LOzL4xHrFgVoWtElVNIYLANiE0Aue/69NaFXXLljCCGPsuLcF2TO
-	 76a3/44t6iRVhX1AzsvfeNc/UyYIv2fIkZ/8q7P8qDeRCOcVipvoU0geecwHi8KvbqNK5
-	 QMYOBRTmkH0UZwZoZJmBcJqxUej69O9EtohQPejJj+yGFg7SD4fSiQ7OXANT5y/+d48j5
-	 liI6q57qRQ6syAS56S2+FFT4SZ/rg91ZlPnmnJQOQZUBB5nHrUIFWFgoxbPqsyisyYA==
+	bh=UwPyAr7s19nJKB8ruvWMMeEZbwAhogbW/jwCvMrHzXs=;
+	b=dkMm7sLl8EGAWpqyigFfKFUmJUcpfdftohEPJ+ci/ok272hlLVg1Gobj38Y1Jdro/Df0
+	 k03bED9C76Ny94I+8PduKFQiAfj/E+erDujqBwHO3o63kspcfTYC9HpkXiBnb6By2a321
+	 X8bY8LkWduujfZfUAB3m2uuAwmdDuwK3JUBzlIoQVFTzNTGqiM6t/4v/cufvRMr10bzhI
+	 Ml+h6ZIJpLRK/04fiel9z5z6TGx7/IjBISFjVPm2EuHiILXMjSATge03QQx+xOUOhdgbQ
+	 ix8xaVP8IC2OW3tkBYj7GIzOu6xSUQiewe+7mwfleOKV0pPw5MtilaaB5esgMYRYOLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUUvoZeO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNOhAIEk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC286070F08;
-	Fri, 13 Nov 2026 17:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AEE6070F0D;
+	Fri, 13 Nov 2026 17:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vUUvoZeO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A701F000C4;
-	Fri, 13 Nov 2026 17:29:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNOhAIEk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F4C1F000C4;
+	Fri, 13 Nov 2026 17:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590999;
-	bh=y8b9+eqfsHfO4L4VaOOvL64FcxHquWzkzmdFPzvhnUg=;
+	s=korg; t=1794591000;
+	bh=UwPyAr7s19nJKB8ruvWMMeEZbwAhogbW/jwCvMrHzXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vUUvoZeOR/o78V3GtEwYv6gL0BvuXMkss/aiVrSV9fawnNne+YkVcJBJDxSPQQ+sC
-	 yzgtNhge87x2mZn0J/HpC5B03CVUrT0jf/nJJ0WRRIvH0A3Gk5MGIf5YgCrBK3geec
-	 fmYYxkSyE7EWgqHBZ5hI8YRMgoDkKOjKY0LjHB74=
+	b=wNOhAIEk69uQox3IR09AwNErL9temO+8xlwdkKShIaXynhhIglomJzOgkRXTdv0a0
+	 Df4PMFDmyc1JlkQeA77wubVMLqQsfaO9vR2dcoyGd+YCO+ef3efD99zQFb3XAt5/uR
+	 ScHP5DLvJCPp8HEv7dc6G3vcs5OnTTrCQbknPKUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifei Gao <gyf161023@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Ridham Khurana <khurana.ridham222@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 172/670] 9p/xen: fix refcount leak in p9_xen_response() on wrong tag
-Date: Fri, 13 Nov 2026 10:45:36 -0500
-Message-ID: <20261113153817.891602086@linuxfoundation.org>
+Subject: [PATCH 6.12 146/670] hwmon: (lm70) Fix rounding of negative temperatures
+Date: Fri, 13 Nov 2026 10:45:10 -0500
+Message-ID: <20261113153816.883611905@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,45 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifei Gao <gyf161023@gmail.com>
+From: Ridham Khurana <khurana.ridham222@gmail.com>
 
-[ Upstream commit 4d183e6f153245aca2534e372152583b868dd925 ]
+[ Upstream commit eddb0aaacce4baa9d8176eb2f4bd9e99e867f8fc ]
 
-p9_xen_response() looks up the request for an incoming reply with
-p9_tag_lookup(), which takes a reference on the returned p9_req_t. When
-the tag does not resolve to a request in REQ_STATUS_SENT, the function
-warns and continues the loop without dropping that reference, permanently
-leaking the p9_req_t and its msize buffers. The reply header, including
-the tag, is supplied by the backend, so a malicious or buggy 9P backend
-can leak kernel memory on every crafted response.
+temp1_input_show() drops the low bits of the temperature register by
+dividing the raw value (raw / 32 on the LM70). These bits are not part
+of the temperature: the LM70, LM71, LM74 and TMP122/TMP124 always
+return some of them as 1, and the TMP125 fills them with copies of the
+temperature LSB. Division rounds toward zero, so a negative temperature
+with any of these bits set is reported one LSB too high.
 
-Drop the reference before continuing.
+For example, the TMP122 returns 0xffff for -0.0625 degrees C, which the
+driver reports as 0. The LM70 returns 0xf39f for -25 degrees C, which
+the driver reports as -24750.
 
-Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
+Use an arithmetic right shift instead, which drops the low bits and
+rounds down.
+
+Fixes: e1a8e913f97e ("[PATCH] lm70: New hardware monitoring driver")
+Fixes: a86e94dc946d ("hwmon: (lm70) Add support for LM71 and LM74")
+Fixes: cd929672a9ef ("hwmon: (lm70) Add ti,tmp125 support")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: Yifei Gao <gyf161023@gmail.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Message-ID: <20260806144255.4167019-1-gyf161023@gmail.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
+Link: https://patch.msgid.link/20260924205326.1739229-1-khurana.ridham222@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/lm70.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 068d57515dd58..92701a16511d4 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -201,6 +201,8 @@ static void p9_xen_response(struct work_struct *work)
- 		req = p9_tag_lookup(priv->client, h.tag);
- 		if (!req || req->status != REQ_STATUS_SENT) {
- 			dev_warn(&priv->dev->dev, "Wrong req tag=%x\n", h.tag);
-+			if (req)
-+				p9_req_put(priv->client, req);
- 			cons += h.size;
- 			virt_mb();
- 			ring->intf->in_cons = cons;
+diff --git a/drivers/hwmon/lm70.c b/drivers/hwmon/lm70.c
+index 0d5a250cb6722..ee06c5641870a 100644
+--- a/drivers/hwmon/lm70.c
++++ b/drivers/hwmon/lm70.c
+@@ -97,21 +97,21 @@ static ssize_t temp1_input_show(struct device *dev,
+ 	 */
+ 	switch (p_lm70->chip) {
+ 	case LM70_CHIP_LM70:
+-		val = ((int)raw / 32) * 250;
++		val = ((int)raw >> 5) * 250;
+ 		break;
+ 
+ 	case LM70_CHIP_TMP121:
+ 	case LM70_CHIP_TMP122:
+ 	case LM70_CHIP_LM74:
+-		val = ((int)raw / 8) * 625 / 10;
++		val = ((int)raw >> 3) * 625 / 10;
+ 		break;
+ 
+ 	case LM70_CHIP_LM71:
+-		val = ((int)raw / 4) * 3125 / 100;
++		val = ((int)raw >> 2) * 3125 / 100;
+ 		break;
+ 
+ 	case LM70_CHIP_TMP125:
+-		val = (sign_extend32(raw, 14) / 32) * 250;
++		val = (sign_extend32(raw, 14) >> 5) * 250;
+ 		break;
+ 	}
+ 
 -- 
 2.53.0
 
