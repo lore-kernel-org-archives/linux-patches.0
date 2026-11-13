@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591311;
-	b=R8N9omGUOTIgqwW9eP0N3MUwX3Pk7k/oeQBBDnMyD5+Ndlpru4Y9LAxkdytz+0/4tu/6
-	 eYH/Z1EtkPbJ5tawMusyDcQNEwKeRGF7oCXLpIlyqAPL36dOLWtXFWM58GZWV9M5uz9sT
-	 TYjW+U6V6fp2cr1wILKbT9KLAngz6dHbLPGoa77N3Bu+d5cmj4pNmkYuhAjuF3Usq6yLK
-	 85ruzkpJKiiusFbI8zm/vKE6w9I5KxBBE3klWrxAqN1GhHtnS9Tnc7M1UBMytOhhY3Oxz
-	 0kysSoqC/mewMk73K1+O80QCG8LF/rqcofF1NXRWVkicPVjX7nozTu058OQKN8opS0g==
+	t=1794591312;
+	b=RVoxuM/MXRYG1T8uVe54F4jajdgcUij1WrZT2rGFfbejOTNCcgLFsk5GphE1OwNyOY7U
+	 h+3UuLXGaGu0BdQrg5KRIvv5wk66+9oAF9IaOxpLwYnLPYeCrdVvlzw6bmWFKd3NGyrge
+	 8aLE7FzgGCi9VqCZZtOjvgKRDWV3RcbSOnaLFB6gbhx7cDanXdjCuG27MJXOYXCgGF3Wc
+	 emoqtEP3cjZvk3qJyaBnQ/Df7nNPDt0MofB6lOliv6kFMuy+e3y69gtBYhneMw9OI7ufD
+	 ZIXKyQ07SErRKnnLwF/qeVVNCmK0y4FHynwfl9zhADkj1G4X8bAE7VmG6JVoxnp52qA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591312;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OfZwTNkUbS1twRQNkkg3rGWowgs0afq5m4bi65ReSDE=;
-	b=C8NeJ9A8FDZrWuFYCbooAFm97Hj4UXKnS2S4MJJXJmBwP6ZSHNaJmLnhxux6VgjyqkgS
-	 tIVfTXa4cshsQh4qxde0nw7Oo4all+jNo7L3y9IGx3BNVGqtEg1cx8Er+hRN3FzcyYNCb
-	 tIf9QCHbtJXNRTZxqNmI5LGSRzzOZYTphGL/eY5c4+TvJierDxqT7KaotE+coiyAXpGla
-	 4F+bDdeTZpyXfbUBcCv72aU5x7GjRqhM86T3TYMYf6ETn5cUD1eP3tcb7gYn7yxGdb2y6
-	 62ONojwMmSN2gHWGaIPS68aJE3RURyNPFECU43RRVIowULunaGJeSIYLQfJYXnPSUMQ==
+	bh=uDBH4/oyl3W++/w5Q6gfBfAin816jSyTKfCB9QmYRE0=;
+	b=ofAShuWTv43/jw/ccY+rSQnM9SMr2A5+JNnBGNy8JbE6LogrAYuUurLuSAa6WfhUvmH0
+	 /GYOo5w8lSYKnK9tyEQCmHo+vqH8lCJKtCYDj7g+XxwJuwpKrKeNEIrp7E5uvCOJHZ9fG
+	 ZMDT3+XrPnDrI532TS3aJciXjYrmmWBk8LlAEu/8k2Qnf2kSp0laZs+TrNzDfBrSt/WMp
+	 Zkn1J9ukWia1f/NHUVUnX7UtLfDMzXZ6E+X+d1UKbZ/i+DRnBM5QkiTj8wW2fW3Nda04A
+	 XexpPtwo9bpyORaM9waEyxoK8QG4ucrbt4LuICOxVHm7l4Fce4IXQBDvl+M9cgxp+AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKBtSePu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hd68oIus;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B17B606B213;
-	Fri, 13 Nov 2026 17:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367B6606B213;
+	Fri, 13 Nov 2026 17:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eKBtSePu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE1A1F000C5;
-	Fri, 13 Nov 2026 17:35:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hd68oIus
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E0D1F000C4;
+	Fri, 13 Nov 2026 17:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591310;
-	bh=OfZwTNkUbS1twRQNkkg3rGWowgs0afq5m4bi65ReSDE=;
+	s=korg; t=1794591312;
+	bh=uDBH4/oyl3W++/w5Q6gfBfAin816jSyTKfCB9QmYRE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eKBtSePuP7VYPhLmw6hn613Z+cp68DHU+apxf/T6DP92BywZ9TRnqluafJ3I4r0Yz
-	 pbGkg6+lCy6pbEuJgt6v3oDGDV+Mcou86QkpOkB5xheMXOG70EfHRy1P8+61IbZHFc
-	 mE/5YVUEZfjqCdpP5shI7Rp4jFNkA++UZoSK+7tc=
+	b=hd68oIus25zufiocueVCeWa2tqdX3CQmkzr69hCkKGe88V1QImX42jQAapXPoT677
+	 c18helM5lf+KQ31Rm/02LvznGyirTXwkT4nWIiC/jMdBtywjF4NpDmhBoYOv7+SiOb
+	 g1+/QCrZjqj5tLd0LQdFOUukv3+KvXgTckqWvWBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Szczudlo <jakubszczudlo40@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 423/670] iio: adc: ti-ads1100: Fix incorrect reading when datarate changed in single mode
-Date: Fri, 13 Nov 2026 10:49:47 -0500
-Message-ID: <20261113153826.072351802@linuxfoundation.org>
+Subject: [PATCH 6.12 385/670] srcu: Add list_splice_init_srcu()
+Date: Fri, 13 Nov 2026 10:49:09 -0500
+Message-ID: <20261113153824.814409543@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,209 +70,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Szczudlo <jakubszczudlo40@gmail.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 38dbf24dfbd0a73b89fa2871a7148429aef05531 ]
+[ Upstream commit d06917d0ba226206dbd606330d73a8eb1e3029c1 ]
 
-When device is suspended and it is in single mode then changing
-datarate doesn't make it actually wait for new measurement, so to
-be sure that read after change is correct, functions that changes
-datarate and gain will wait for a new data.
+list_splice_init_rcu() makes a list look empty to new readers, waits for
+the current ones with the given sync function, and only then links the
+entries into the new list. The sync function takes no argument, so it
+can wait for RCU readers but not for the readers of an srcu_struct.
 
-Fixes: 541880542f2b ("iio: adc: Add TI ADS1100 and ADS1000")
-Signed-off-by: Jakub Szczudlo <jakubszczudlo40@gmail.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-[ sashal: replaced scoped PM guards with pm_runtime_resume_and_get() and explicit cleanup using pm_runtime_mark_last_busy() before pm_runtime_put_autosuspend() ]
+Passing synchronize_rcu() for a list read under SRCU still builds, but
+leaves SRCU readers on the entries while the last one's next pointer is
+moved onto the new list head. nvme_remove_namespaces() does this today.
+
+Add list_splice_init_srcu(), which waits for the readers of the given
+srcu_struct instead.
+
+Cc: stable@vger.kernel.org
+Suggested-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ti-ads1100.c | 121 +++++++++++++++++++++++++++++++++--
- 1 file changed, 115 insertions(+), 6 deletions(-)
+ include/linux/srcu.h | 36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
-diff --git a/drivers/iio/adc/ti-ads1100.c b/drivers/iio/adc/ti-ads1100.c
-index 1e46f07a9ca6a..bea727ff9d6ee 100644
---- a/drivers/iio/adc/ti-ads1100.c
-+++ b/drivers/iio/adc/ti-ads1100.c
-@@ -14,10 +14,12 @@
- #include <linux/module.h>
- #include <linux/init.h>
- #include <linux/i2c.h>
-+#include <linux/iopoll.h>
+diff --git a/include/linux/srcu.h b/include/linux/srcu.h
+index 835bbb2d1f88a..4958b16d187e2 100644
+--- a/include/linux/srcu.h
++++ b/include/linux/srcu.h
+@@ -18,6 +18,7 @@
+ 
  #include <linux/mutex.h>
- #include <linux/property.h>
- #include <linux/pm_runtime.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/time.h>
- #include <linux/units.h>
+ #include <linux/rcupdate.h>
++#include <linux/rculist.h>
+ #include <linux/workqueue.h>
+ #include <linux/rcu_segcblist.h>
  
- #include <linux/iio/iio.h>
-@@ -42,6 +44,9 @@
- static const int ads1100_data_rate[] = { 128, 32, 16, 8 };
- static const int ads1100_data_rate_bits[] = { 12, 14, 15, 16 };
+@@ -58,6 +59,41 @@ int __srcu_read_lock(struct srcu_struct *ssp) __acquires(ssp);
+ void __srcu_read_unlock(struct srcu_struct *ssp, int idx) __releases(ssp);
+ void synchronize_srcu(struct srcu_struct *ssp);
  
-+/* Timeout based on the minimum sample rate of 8 SPS (7500ms) */
-+#define ADS1100_MAX_DRDY_TIMEOUT_US	(7500 * USEC_PER_MSEC)
-+
- struct ads1100_data {
- 	struct i2c_client *client;
- 	struct regulator *reg_vdd;
-@@ -123,10 +128,86 @@ static int ads1100_get_adc_result(struct ads1100_data *data, int chan, int *val)
- 	return 0;
- }
- 
-+static int ads1100_conversion_busy(struct ads1100_data *data)
++/**
++ * list_splice_init_srcu - splice an SRCU-protected list into an existing list
++ * @list:	the SRCU-protected list to splice
++ * @head:	the place in the existing list to splice the first list into
++ * @ssp:	the srcu_struct that readers of @list use
++ *
++ * Like list_splice_init_rcu(), but wait for the SRCU readers of @list
++ * instead of RCU ones, so that none of them can follow a next pointer
++ * onto @head.
++ *
++ * Note that this function blocks, and that the caller must prevent any
++ * other updates to @list.
++ */
++static inline void list_splice_init_srcu(struct list_head *list,
++					 struct list_head *head,
++					 struct srcu_struct *ssp)
 +{
-+	u8 buffer[3];
-+	int ret;
++	struct list_head *first = list->next;
++	struct list_head *last = list->prev;
++	struct list_head *next = head->next;
 +
-+	ret = i2c_master_recv(data->client, (char *)&buffer, sizeof(buffer));
-+	if (ret < 0) {
-+		dev_err(&data->client->dev, "I2C read fail: %d\n", ret);
-+		return ret;
-+	}
++	if (list_empty(list))
++		return;
 +
-+	return FIELD_GET(ADS1100_CFG_ST_BSY, buffer[2]);
++	INIT_LIST_HEAD_RCU(list);
++	synchronize_srcu(ssp);
++	ASSERT_EXCLUSIVE_ACCESS(*first);
++	ASSERT_EXCLUSIVE_ACCESS(*last);
++
++	last->next = next;
++	rcu_assign_pointer(list_next_rcu(head), first);
++	first->prev = head;
++	next->prev = last;
 +}
 +
-+static int ads1100_wait_single_conversion(struct ads1100_data *data)
-+{
-+	int data_rate_index = FIELD_GET(ADS1100_DR_MASK, data->config);
-+	int data_rate_Hz = ads1100_data_rate[data_rate_index];
-+	unsigned long poll_us = DIV_ROUND_CLOSEST(USEC_PER_SEC, data_rate_Hz) / 4;
-+	int busy;
-+	int ret;
-+
-+	ret = readx_poll_timeout(ads1100_conversion_busy, data,
-+				 busy, busy <= 0,
-+				 poll_us, ADS1100_MAX_DRDY_TIMEOUT_US);
-+	if (busy < 0)
-+		return busy;
-+
-+	return ret;
-+}
-+
-+static int ads1100_start_single_conversion(struct ads1100_data *data)
-+{
-+	u8 config = data->config | ADS1100_CFG_SC;
-+	int ret;
-+
-+	ret = i2c_master_send(data->client, &config, sizeof(config));
-+	if (ret < 0) {
-+		dev_err(&data->client->dev, "I2C write fail: %d\n", ret);
-+		return ret;
-+	}
-+	/* Need to wait because of change from continuous to single mode */
-+	ret = ads1100_wait_single_conversion(data);
-+	if (ret)
-+		return ret;
-+
-+	config |= ADS1100_CFG_ST_BSY;
-+
-+	ret = i2c_master_send(data->client, &config, sizeof(config));
-+	if (ret < 0) {
-+		dev_err(&data->client->dev, "I2C write fail: %d\n", ret);
-+		return ret;
-+	}
-+
-+	/* No need to cache it, it's status bit */
-+	data->config = config & ~ADS1100_CFG_ST_BSY;
-+
-+	return 0;
-+}
-+
-+static int ads1100_poll_data_ready(struct ads1100_data *data)
-+{
-+	int ret;
-+
-+	ret = ads1100_start_single_conversion(data);
-+	if (ret)
-+		return ret;
-+
-+	ret = ads1100_wait_single_conversion(data);
-+	if (ret)
-+		return ret;
-+
-+	return ads1100_set_config_bits(data, ADS1100_CFG_SC, ADS1100_CONTINUOUS);
-+}
-+
- static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
- {
- 	int microvolts;
- 	int gain;
-+	int ret;
+ #define SRCU_GET_STATE_COMPLETED 0x1
  
- 	/* With Vdd between 2.7 and 5V, the scale is always below 1 */
- 	if (val)
-@@ -135,6 +216,10 @@ static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
- 	if (!val2)
- 		return -EINVAL;
- 
-+	ret = pm_runtime_resume_and_get(&data->client->dev);
-+	if (ret)
-+		return ret;
-+
- 	microvolts = regulator_get_voltage(data->reg_vdd);
- 	/*
- 	 * val2 is in 'micro' units, n = val2 / 1000000
-@@ -144,27 +229,51 @@ static int ads1100_set_scale(struct ads1100_data *data, int val, int val2)
- 	 * bitshift so everything fits in 32-bits yields this formula.
- 	 */
- 	gain = DIV_ROUND_CLOSEST(microvolts, BIT(15)) * MILLI / val2;
--	if (gain < BIT(0) || gain > BIT(3))
--		return -EINVAL;
-+	if (gain < BIT(0) || gain > BIT(3)) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
- 
- 	ads1100_set_config_bits(data, ADS1100_PGA_MASK, ffs(gain) - 1);
- 
--	return 0;
-+	ret = ads1100_poll_data_ready(data);
-+out:
-+	pm_runtime_mark_last_busy(&data->client->dev);
-+	pm_runtime_put_autosuspend(&data->client->dev);
-+
-+	return ret;
- }
- 
- static int ads1100_set_data_rate(struct ads1100_data *data, int chan, int rate)
- {
- 	unsigned int i;
- 	unsigned int size;
-+	int ret;
- 
- 	size = data->supports_data_rate ? ARRAY_SIZE(ads1100_data_rate) : 1;
- 	for (i = 0; i < size; i++) {
- 		if (ads1100_data_rate[i] == rate)
--			return ads1100_set_config_bits(data, ADS1100_DR_MASK,
--						       FIELD_PREP(ADS1100_DR_MASK, i));
-+			break;
- 	}
- 
--	return -EINVAL;
-+	if (i == size)
-+		return -EINVAL;
-+
-+	ret = pm_runtime_resume_and_get(&data->client->dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = ads1100_set_config_bits(data, ADS1100_DR_MASK,
-+				      FIELD_PREP(ADS1100_DR_MASK, i));
-+	if (ret)
-+		goto out;
-+
-+	ret = ads1100_poll_data_ready(data);
-+out:
-+	pm_runtime_mark_last_busy(&data->client->dev);
-+	pm_runtime_put_autosuspend(&data->client->dev);
-+
-+	return ret;
- }
- 
- static int ads1100_get_vdd_millivolts(struct ads1100_data *data)
+ /**
 -- 
 2.53.0
 
