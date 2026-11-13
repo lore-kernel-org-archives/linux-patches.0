@@ -1,52 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585948;
-	b=eW4CfAj9C3KPvqSqSZcAWmELxkWmo+IK8BptE4oMggBRqh9/edVsbCkNzuijzf/qmXqE
-	 kH/IIa37KbKeZF0VVbf0DD9ZF9TnqN2g7AH7BMvs0xXdsuYtOskEA84ke4gCLw+cbkrsy
-	 5O7CY+HovAllOJmNcxBmZwNZ6g6LAznpX7uzBrIMGNEvUAECNzmjkwr+XfruXTaTZCB0g
-	 7iVRXdp3uz6MSLtCymETIOB8iTvbUkP9yniN/84w8GtM4jQZqqwl2mTTqnGsxIt/hdY3T
-	 DkHqsQ3Jv0IcKkwod8fdbL7iPibhx9A/MG/SXLNVvOHrG2qYHyw4+4gE1Xk482HONrg==
+	t=1794585949;
+	b=cryxsT+RzAl4lACzw/kpF5g9ThCpuMDpt67Ueurvf1pI/P3i7wnV67zs1phMzPEU1ziW
+	 kY5DsdHyvSx+jCMij2RrvVoaiFIevqz2dHR0/5AbOuNrqGxiv8p5Nu10jlUJpqdoXmiuy
+	 9ta/6DK9uchInKRSi/Ho6E0QGiq5uNWuFQVgPTVNf4QonaWB97+EK/XMRXSpbPXeBFCLX
+	 ctVTLb2sFRkhAWRsMLhwjoTmohO9BRZyZTp1zF7QQC00Wts+L/IH3/l+cC3xtNOhPDEQ0
+	 93k9ToGdDavn8ffddE+L0G289bVzeAUW4Jp02YqLoRR7WL/kCaQCYFEpmj8lxFRQCGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585949;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=O0tMxbqVSlNJ+JWb3GHt/xHtlNZM5d5fpvRU7nfr6dE=;
-	b=JGclatQd1/KdP+f/H44rSdvDh/bE3Iep7eDrL0UnxLe64bPyf4g5VvsOX86T2m2zGVA0
-	 kq5y99kZUCCY07A4LNC9as/KmZU816Xs9tmkGmj8w+X0SdLPV1Ys2QF034E7ogPeYMmG1
-	 5BBfpNkZgGqu2oX8BN5lBLaJMdjbKCFAzxcq9qedkqM3oCsWi4asG9/AO1x7v2L6W9tHg
-	 cDgWALTD/jc3IjiJXJeA1YrKxOoKGPYTSCqXbEcs8bDo/x9OjcN/uleS80j0XQc/BSqMH
-	 HSOz1rEtPVM6ACH7rNoDQOk47FgSkqOo/c3fKQ/+4G/K7ZhtBrhbtvFJlW7dv5BhbMg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=fymef/C3Wbaiv7hFUWzq2vmkMYnKi+dIXnPeBuqOAVU=;
+	b=OcGhQVl4GmLCMt+/oSK553lVcdhypEQcody+PY2Ly+pIg7jv9OWfmxVhEpGUPNGDSb9l
+	 XDHZuDjhaXwgCbdjwRGj5NE/loSkReBC4S2riJxwJpcigu7hYeU1aH8268nKzoFLevhnO
+	 lMHWwfMFHNLYXEssK0Y3HKdw1O9lyFQIQ86V+gf2gTOH3oIBqcpmnpbCzAQ3snI3bRf+G
+	 kzE+OmylZcUGY7yKazN3DhiyC8sb941/ODXiKBvQvdsyawAwIVWcOOLQfXT0++NubX10s
+	 79tXSeNg+iVwThZQA2BDBOdHA67KlAhoBimlwp6qm2cai8NhbUCZwJAuoEbr5ith5zQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgqO9DOa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Y7lena9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5606070FED;
-	Fri, 13 Nov 2026 16:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCBA6070FEC;
+	Fri, 13 Nov 2026 16:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lgqO9DOa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE091F000C4;
-	Fri, 13 Nov 2026 16:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Y7lena9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8DC11F000C4;
+	Fri, 13 Nov 2026 16:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585948;
-	bh=O0tMxbqVSlNJ+JWb3GHt/xHtlNZM5d5fpvRU7nfr6dE=;
+	s=korg; t=1794585949;
+	bh=fymef/C3Wbaiv7hFUWzq2vmkMYnKi+dIXnPeBuqOAVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lgqO9DOaeegQ+zxZCwxdyERQHNloHYSXyatYii+ONEDsLUYpQe3qknA+ToS+8nNMq
-	 1ePknbxgx/orNEnTT1AkWLRMLA+UUdXOu7Vc4U0d+b+SCz1qQmiMtaeQDzjnWzVSfD
-	 dPBP13mJaE12Be7cZYh7Pfd9ffvpikmql0Sh/K5c=
+	b=1Y7lena9Tgdb24x5mnG75eucnUAo6kGFcxNZgLO4G+j5eEsfTg0U21VDr8Kjc5yst
+	 HCH/C1Vzofg17ysC8cm0ZBa9Ypej/mx+KWhnNK7frdIncbs1jiWNqv/Gh2h9nKoNEf
+	 DRKETJ4p6uW4aoSUqv9OmIKeUv/jbmlJfukobMpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Todd Kjos <tkjos@android.com>,
+	Christian Brauner <christian@brauner.io>,
+	Carlos Llamas <cmllamas@google.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	David Ahern <dsahern@kernel.org>,
+	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 501/507] intel_idle: Use 2-argument strscpy()
-Date: Fri, 13 Nov 2026 10:53:25 -0500
-Message-ID: <20261113153814.090840079@linuxfoundation.org>
+Subject: [PATCH 7.3 462/507] mm: add RCU-based VMA lookup helper that waits for writers
+Date: Fri, 13 Nov 2026 10:52:46 -0500
+Message-ID: <20261113153812.379322590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -62,50 +75,178 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-[ Upstream commit 2094ae12eed8e83dd91a631ac0a582fee5934c36 ]
+[ Upstream commit d96082aa35043cd1856e2213e683db778482a7d8 ]
 
-Use 2-argument strscpy(), which is not only shorter but also provides
-an additional check that destination buffer is an array.
+There are basically two parallel ways to look up a VMA: the traditional
+way, which is protected by mmap_read_lock, and the RCU-based per-VMA lock
+way which is based on RCU and refcounts.  However, per-VMA locks will fail
+if the lock is help by a writer and therefore never waits.  In a number of
+places we need to wait for the lock and it's done by falling back to
+mmap_read_lock, locking the VMA and releasing the mmap_lock once VMA is
+locked.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260813082624.2650581-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 403524796685 ("intel_idle: Adjust state names and descriptions for _LPI states")
+Add vma_start_read_unlocked() - a variant of the RCU-based lookup that
+waits for writers.  This is basically the same as the existing RCU-based
+lookup, but on a failure to lock it temporarily takes mmap_lock for read
+and waits for writers to finish before locking the VMA, dropping the
+mmap_read_lock and returning the locked VMA.  This has some advantages:
+
+1. Callers do not need to have a fallback path for when they collide
+with writers.
+
+2. Its fast path does not require taking mmap_lock for read.
+
+Basically, when applied correctly, this approach results in faster *and*
+simpler code.
+
+While at it, fix the comments for vma_start_read_locked(),
+vma_start_read_locked_nested(), and uffd_lock_vma().
+
+Link: https://lore.kernel.org/20260831203056.838265-4-surenb@google.com
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Todd Kjos <tkjos@android.com>
+Cc: Christian Brauner <christian@brauner.io>
+Cc: Carlos Llamas <cmllamas@google.com>
+Cc: Alice Ryhl <aliceryhl@google.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Arve Hjønnevåg <arve@android.com>
+Cc: David Hildenbrand (Arm) <david@kernel.org>
+Stable-dep-of: 7135a05838e8 ("mm/vma: avoid spurious write locks when mm->mm_lock_seq overflows")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/idle/intel_idle.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/mmap_lock.h | 19 +++++++++++++++----
+ mm/mmap_lock.c            | 35 +++++++++++++++++++++++++++++++++++
+ mm/userfaultfd.c          |  6 ++++--
+ 3 files changed, 54 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/idle/intel_idle.c b/drivers/idle/intel_idle.c
-index 651408df9c24a..c5b65f7d7271c 100644
---- a/drivers/idle/intel_idle.c
-+++ b/drivers/idle/intel_idle.c
-@@ -1906,7 +1906,7 @@ static void __init intel_idle_init_cstates_acpi_lpi(struct cpuidle_driver *drv)
- 		state = &drv->states[drv->state_count++];
+diff --git a/include/linux/mmap_lock.h b/include/linux/mmap_lock.h
+index b8a13b8d36a45..084fc66d7f904 100644
+--- a/include/linux/mmap_lock.h
++++ b/include/linux/mmap_lock.h
+@@ -230,10 +230,14 @@ static inline void vma_refcount_put(struct vm_area_struct *vma)
+ }
  
- 		scnprintf(state->name, CPUIDLE_NAME_LEN, "C%d_LPI", index + 1);
--		strscpy(state->desc, lpi_state->desc, CPUIDLE_DESC_LEN);
-+		strscpy(state->desc, lpi_state->desc);
- 		state->exit_latency = lpi_state->wake_latency;
- 		state->target_residency = lpi_state->min_residency;
- 		state->flags = MWAIT2flg(lpi_state->address);
-@@ -1956,7 +1956,7 @@ static void __init intel_idle_init_cstates_acpi_cst(struct cpuidle_driver *drv)
- 		state = &drv->states[drv->state_count++];
+ /*
+- * Use only while holding mmap read lock which guarantees that locking will not
+- * fail (nobody can concurrently write-lock the vma). vma_start_read() should
++ * Use only while holding mmap read lock which guarantees that vma lock is not
++ * contended (nobody can concurrently write-lock the vma). vma_start_read() should
+  * not be used in such cases because it might fail due to mm_lock_seq overflow.
+  * This functionality is used to obtain vma read lock and drop the mmap read lock.
++ *
++ * VMA can't be detached while we are holding mmap lock, therefore in practice this
++ * function can fail only when there are so many readers that vm_refcnt overflows.
++ * The failure case is very unlikely and is already annotated as such internally.
+  */
+ static inline bool vma_start_read_locked_nested(struct vm_area_struct *vma, int subclass)
+ {
+@@ -249,16 +253,23 @@ static inline bool vma_start_read_locked_nested(struct vm_area_struct *vma, int
+ }
  
- 		snprintf(state->name, CPUIDLE_NAME_LEN, "C%d_ACPI", cstate);
--		strscpy(state->desc, cx->desc, CPUIDLE_DESC_LEN);
-+		strscpy(state->desc, cx->desc);
- 		state->exit_latency = cx->latency;
- 		/*
- 		 * For C1-type C-states use the same number for both the exit
+ /*
+- * Use only while holding mmap read lock which guarantees that locking will not
+- * fail (nobody can concurrently write-lock the vma). vma_start_read() should
++ * Use only while holding mmap read lock which guarantees that vma lock is not
++ * contended (nobody can concurrently write-lock the vma). vma_start_read() should
+  * not be used in such cases because it might fail due to mm_lock_seq overflow.
+  * This functionality is used to obtain vma read lock and drop the mmap read lock.
++ *
++ * VMA can't be detached while we are holding mmap lock, therefore in practice this
++ * function can fail only when there are so many readers that vm_refcnt overflows.
++ * The failure case is very unlikely and is already annotated as such internally.
+  */
+ static inline bool vma_start_read_locked(struct vm_area_struct *vma)
+ {
+ 	return vma_start_read_locked_nested(vma, 0);
+ }
+ 
++struct vm_area_struct *vma_start_read_unlocked(struct mm_struct *mm,
++					       unsigned long address);
++
+ static inline void vma_end_read(struct vm_area_struct *vma)
+ {
+ 	vma_refcount_put(vma);
+diff --git a/mm/mmap_lock.c b/mm/mmap_lock.c
+index 898c2ef1e9580..f7f1c6ae25910 100644
+--- a/mm/mmap_lock.c
++++ b/mm/mmap_lock.c
+@@ -341,6 +341,41 @@ struct vm_area_struct *lock_vma_under_rcu(struct mm_struct *mm,
+ 	return NULL;
+ }
+ 
++/**
++ * vma_start_read_unlocked() - Find the VMA covering 'address' and read-lock it.
++ * @mm: the mm_struct of the address space to search
++ * @address: address that the vma should contain
++ *
++ * The fast path does not take mmap_lock. Waits for writers to finish if the
++ * VMA is being modified by taking mmap_lock.
++ * Use when mmap_lock is not held, otherwise use vma_start_read_locked().
++ * Nothing prevents VMAs being unmapped/mapped before or after the VMA is
++ * looked up, if a stronger guarantee is required, take an mmap_lock.
++ *
++ * Return: If a VMA exists which spans @address, return that VMA, read-locked.
++ * If no VMA is mapped there or, very unlikely, a reference count overflow
++ * occurred, return NULL.
++ */
++struct vm_area_struct *vma_start_read_unlocked(struct mm_struct *mm,
++					       unsigned long address)
++{
++	struct vm_area_struct *vma;
++
++	/* Fast path: return stable VMA covering 'address': */
++	vma = lock_vma_under_rcu(mm, address);
++	if (vma)
++		return vma;
++
++	/* Slow path: preclude VMA writers by temporarily getting mmap read lock. */
++	mmap_read_lock(mm);
++	vma = vma_lookup(mm, address);
++	if (vma && !vma_start_read_locked(vma))
++		vma = NULL;
++	mmap_read_unlock(mm);
++
++	return vma;
++}
++
+ static struct vm_area_struct *lock_next_vma_under_mmap_lock(struct mm_struct *mm,
+ 							    struct vma_iterator *vmi,
+ 							    unsigned long from_addr)
+diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
+index f8e2b7f2f61c6..3e13bc9d35fc0 100644
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -129,8 +129,10 @@ struct vm_area_struct *find_vma_and_prepare_anon(struct mm_struct *mm,
+  *
+  * Should be called without holding mmap_lock.
+  *
+- * Return: A locked vma containing @address, -ENOENT if no vma is found, or
+- * -ENOMEM if anon_vma couldn't be allocated.
++ * Return: A locked vma containing @address, -ENOENT if no vma is found,
++ * -ENOMEM if anon_vma couldn't be allocated, or -EAGAIN if vma refcount
++ * overflow happened due to high number of readers and the caller should
++ * retry later.
+  */
+ static struct vm_area_struct *uffd_lock_vma(struct mm_struct *mm,
+ 				       unsigned long address)
 -- 
 2.53.0
 
