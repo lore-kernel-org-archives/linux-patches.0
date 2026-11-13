@@ -1,61 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591589;
-	b=YgzrUKW78La5dGrx46/X5MWmTP6/W/A6l/6XS4oa1Vrlv9yXd2KI1yL8DZ+ZFiVfhhsV
-	 zcbvCOlzWGhztnvThg5KUQ/x7rczmpLvaBVRaWUtxmItO6GoF3bQ15/wXfNBHcmZClPoW
-	 nPV3TJYYZ3mS/aTyabHGUS2JUO+7caaaISS+22pn/bgSArfG8Ho73qzM4IxVmepoKMJZE
-	 WU7hcRqBP3nusbC0f3JT14ARfWtPCImgeQDoLIudV1Bgyvdz4jcxI6xUM/1MVT0enS68u
-	 9L69nXMLz8kN6lMqz6V+Y4o4C9bCF5FazFHE9RemuacuL3pUmMhznUqqpht81pbIj/g==
+	t=1794591590;
+	b=BUyI7SglufIDD/5ciQL5NQ2Rx36YQmvT+AglbDgCL8f2KletGSB0O1x/Xl9sIzj6eCRg
+	 nw7S/JrLlC/NqBDNIJDGwAM18qXG+Aw9Lg3IpsMxMOuwOPvUjYvN2v3glkYVDNda6pemr
+	 gSo7B33XPIgpG34QHyhB0zWhLuzM+7KEPlDrQMsuR4dukRaQVDqytPeXPob/WRGg4ZKbG
+	 JPhuC8G6E478vjkdpnpQIjg2xKZqRXYcssbil1EcHROgp538mN4Oh1X8oqmTsXbGipbMR
+	 Ljs2MBFIGQTi98MK0845nZPTtJFoQgIRBHk+iUGlzZw9YORYWhd6qiZ1aff+vNVI69g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591589;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591590;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hhulhz64MXKxndw17uMRcFJew3ZW2V5PgPvR5BvY7TM=;
-	b=s8uyCUg4yyTxMoDhOk4vOOBPckok2tkNRIukPkh6s2sKj8BjR4YHkN2CGb240a+AOFJw
-	 TW7sOumE4q1he7Sz9Bny1/SICw/cN/JqIPr64s/TLGEvGkwUJmi6lVz9e42IdH9AEiwl9
-	 zd1tf3UD2S7KemMoQzY1LJ8h5tN/jvciErqXzZJruxUr3oLU84mDHxIJhIdhyB7BrHyBU
-	 Ux6xqBNMrfTa1E9986QO0jX0oi4DF+/xOpDRqzS+gY09zr9ewOoJiZeRRVovqEZE4t79T
-	 OyAinMi+LTD3ZpG0O60kjSl0ldQWlqdM+W6RLza+S9FVMjdqzAWLy/Zb+Bq5h5uzksA==
+	bh=w/WapQ0BL0caK7Fyvzz7wokWqBFuL+9W9EeE6niwEbs=;
+	b=QVomDhkNqdpMegjtTl4kfJLFXVC6sTrW9Z6JD8y40e2AQOyKoiV8+Z9D+gB30ydKrDp9
+	 1O/Auv9uzdIrRYV3g3fqNWXy1qc+JeLvkAYvG4/82HMoXqSOhpmzT0KC89z9vAHquYRnP
+	 GW/zetHA8zDxcUZt2CKlajwW3lZAOURP8RSRv1P/kZCF8GFjPuppdFx5qbBRF7wmo1HOm
+	 KGwTSR/y1Qw6253rW8JrbWurB6xf/IuMo7WL/pQiz3zjFA9YU68PcZ/YssxPc/r3j6TCk
+	 cq+6aZLjmNuUujudmSWOL7uySda6oUGtbscoypwtwzz7ROF3IkYkDAMxyISIuSFq8aQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obtux5iD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSZjxITf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944E9606E678;
-	Fri, 13 Nov 2026 17:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFEE606E651;
+	Fri, 13 Nov 2026 17:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=obtux5iD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E331F000C4;
-	Fri, 13 Nov 2026 17:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mSZjxITf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775261F000C4;
+	Fri, 13 Nov 2026 17:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591589;
-	bh=Hhulhz64MXKxndw17uMRcFJew3ZW2V5PgPvR5BvY7TM=;
+	s=korg; t=1794591590;
+	bh=w/WapQ0BL0caK7Fyvzz7wokWqBFuL+9W9EeE6niwEbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=obtux5iDxHIb+cacrY1cgQsE2Nd8ZNFm9pvaAHuOlxIHbq9zpEDkAnOGgru0IAktd
-	 iY571vidklO1Jb2uh/KQGu1P0kwHHnGUKmfuOYieetiiiWdmioXnag3tTDvUNuOgsS
-	 HBNKfesfHGIFVdkeE2FpvkBjGwhe3jPLTpaWcdu4=
+	b=mSZjxITfGCnFzyi2zzK9AO3nEFvAQ7W5nKvvLemxmIJlb0WTOzxkd1wPhbO85rF8O
+	 vlAFvzOyp/PwxzO7tkJXIjIR+afeWie68N9E1ZycwcuUMIScGccLZNsd+csilKh1nG
+	 LJE9+SLkHE7sPMbrSHB1d3+E+MvXfovzz0N228kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinmeng Zhou <zhoujinmeng@bytedance.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Hongfu Li <lihongfu@kylinos.cn>,
-	David Hildenbrand <david@kernel.org>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
+	Jianyun Gao <jianyungao89@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 608/670] mm/hugetlb: charge folios to the target mms memcg
-Date: Fri, 13 Nov 2026 10:52:52 -0500
-Message-ID: <20261113153832.424747713@linuxfoundation.org>
+Subject: [PATCH 6.12 635/670] dax: fix wrong error code returned from dax_dedupe_file_range_compare()
+Date: Fri, 13 Nov 2026 10:53:19 -0500
+Message-ID: <20261113153833.323629588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -77,63 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinmeng Zhou <jinmengzhou22@gmail.com>
+From: Jianyun Gao <jianyungao89@gmail.com>
 
-[ Upstream commit c2deb1356d82c9d54bd2fcf1241cc97eb66fd81f ]
+[ Upstream commit 9b036546a02c6c9a5133f9c1e93503896595c6ba ]
 
-HugeTLB folios are currently charged to the memcg of the allocating task.
-This gives the wrong result when a userfaultfd handler populates a HugeTLB
-VMA that belongs to another process.  The UFFDIO_COPY ioctl operates on
-the userfaultfd context's mm, but get_mem_cgroup_from_current() charges
-the folio to the handler's memcg instead.
+When dax_range_compare_iter() returns a negative error code (e.g. -EIO),
+dax_dedupe_file_range_compare() incorrectly returns 'ret' which holds the
+positive return value from iomap_iter() indicating more iterations remain.
+This positive value leaks to the caller, where vfs_dedupe_file_range()
+interprets it as success (bytes_deduped = len), causing userspace to
+incorrectly believe deduplication completed.
 
-This can be reproduced by placing the faulting process and its userfaultfd
-handler in different memory cgroups.  Have the target process register a
-HugeTLB mapping with userfaultfd, trigger a missing fault, and let the
-handler resolve it with UFFDIO_COPY.  The hugepage usage is then reported
-in the handler's memory.current instead of the target's.
+Return 'status' instead to propagate the actual error code.
 
-The generic userfaultfd population path avoids this problem by charging
-folios to dst_vma->vm_mm.
-
-Pass the target mm through hugetlb_alloc_folio() and charge the folio by
-using get_mem_cgroup_from_mm().  This preserves the existing charge timing
-and error handling while making HugeTLB userfaultfd population consistent
-with the generic path.
-
-Link: https://lore.kernel.org/20260903075048.3316-1-zhoujinmeng@bytedance.com
-Fixes: 8cba9576df60 ("hugetlb: memcg: account hugetlb-backed memory in memory controller")
-Signed-off-by: Jinmeng Zhou <zhoujinmeng@bytedance.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Hongfu Li <lihongfu@kylinos.cn>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: <stable@vger.kernel.org>
-[ sashal: Used vma->vm_mm directly in alloc_hugetlb_folio() instead of passing it through the unavailable upstream helpers. ]
+Fixes: 0e79e3736d54 ("fsdax: dedupe: iter two files at the same time")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Link: https://patch.msgid.link/20261015143426.17620-1-jianyungao89@gmail.com
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
+[ sashal: Adapted return status to return compared to match the existing comparison result variable. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 2 +-
+ fs/dax.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 43f4f2a06f463..1dd80a5b72b07 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -3043,7 +3043,7 @@ struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 	bool deferred_reserve;
- 	gfp_t gfp = htlb_alloc_mask(h) | __GFP_RETRY_MAYFAIL;
- 
--	memcg = get_mem_cgroup_from_current();
-+	memcg = get_mem_cgroup_from_mm(vma->vm_mm);
- 	memcg_charge_ret = mem_cgroup_hugetlb_try_charge(memcg, gfp, nr_pages);
- 	if (memcg_charge_ret == -ENOMEM) {
- 		mem_cgroup_put(memcg);
+diff --git a/fs/dax.c b/fs/dax.c
+index ae1e9497b4168..e9f12b7de17ae 100644
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -2067,7 +2067,7 @@ int dax_dedupe_file_range_compare(struct inode *src, loff_t srcoff,
+ 		compared = dax_range_compare_iter(&src_iter, &dst_iter,
+ 				min(src_iter.len, dst_iter.len), same);
+ 		if (compared < 0)
+-			return ret;
++			return compared;
+ 		src_iter.processed = dst_iter.processed = compared;
+ 	}
+ 	return ret;
 -- 
 2.53.0
 
