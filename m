@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591345;
-	b=pc5180BMRXndplHI6V7ml74KVHnsc/1nZFy4+6swVLJn3QvyaDgmtCK63wYFGnR7WNjM
-	 QyDvXE086bNhiYFqAUG9zKdHYnKcNIgPFhD0roeG6eXgCyYML4XvIjnG6rjp05myrWOMr
-	 i78jL+EDeJYnV38m2+6mc0rZAKMQmv8YmY8MH8Z83mIhuIZwBuqG6CnibGMhT/ZOB8whz
-	 bEbckGKk7fRMETEc8XkVGeTwqjyO0N6NanWNl9sm8+HcYmD8FIWj5WsMyA/lHPenrDMVs
-	 JFAwaJK5Yn9Qoc4H84lMVoCEkuL4EXOeVNdWqs5tc8fJ26lQ2/tPXi+KoFeGk2qpK5g==
+	t=1794591346;
+	b=bOSPg9yAq3KdHRH6rYGgyAKN33sUPZY6qysEg8e7A6xhJvyKfOxKkxzXi3krKbz52Ia/
+	 uyCRZ6TngsxW8ptg1ccUadAdeYW8tfhjsGFb5/Kj2misUUBBJD0Ows7phbEskmoSEYbOn
+	 pKCZlBrkyJxZ4+eu+eIQwTrsmFti6+gb9ZLWZfiQ7GEME6UWVM4PYtLrh+bBMcWVG5OHz
+	 e/Qw1O7MZvpS72jMfkj9BxLKEkc4TSqgdorgpiMgz8/51k2BbdWHt5XIZWyx8BDyoG4wS
+	 dCt4JZPu3Gz9DFKR2pDDJ7nUUn62IFmFVblbOTp4pJVjwFAXhfQwn3shl0cDKaNFDHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591346;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=065NG3isn1QwjV+ZNdFGoAgRLekx4D7BWEDZ6loN6zA=;
-	b=TRfqeCiAo43fGW7kfWm1ub9+PquiVGNTaM8uTHF1xajiB3E9SE8ZBS6YUErhN4VnYlaO
-	 YB6k4gqCDUQLZV1AX2wJz3gJ2VHik+OD0OfLQJNhQxxFd/KxlXXb3TS3j9HGzE0Z7V8W3
-	 YVYzntggOCnzPaIHDm7agx+MVqcG3XhEmp9gHdKPsCPKDqb9oC375HX6Axe1p7gD6loro
-	 DX3PLbVctC40yZn3L4erqgI/pTCo/vVIKGXpCcX5nLhTME0fexJQTSqDD4TRaxTnga2mr
-	 B6x2xl+WF53rOhLT1+azKcXPu9mKI/1mVsFg4fQzBHf5nAtCBWu0m7LSKQMHDVPhmHA==
+	bh=Ang6PFg+aGJ4Lvcggxt1GfJ/fIvv9ytqi7xxdtdL8r0=;
+	b=rUY29zRfIiB9Mim1+K1mGtJnc7aqAB0rwwhgPjxPAJa/fmGt97dMZ+uPduQ+B2c8rX+S
+	 mAPQ8deKI0QiBnFouatkRrMKfcQLwLz8j38pak2u8ZKuXcfSfnjxuj2LZPs7dSKtrml3e
+	 T8psTr2p7eK0vQ3jROXlII07VW2jPGfCuQK5aul3B1dd/CSnaV7gA5KpfHSi/q2n1j72A
+	 DQmDyDofiCM7qipFw0kZmxaF2fCvJPCPMIufKiL0JjjdGuYz+2CrIYL2B0wJMoxeSq1HE
+	 LKAZ4i0JRJjXz9c6cGlf3yoWQh2xDEqElzx/dGb1w46VyLEu4heZHsgxrq3iAwCSHMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc5c0cJF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzYzwvTH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5F6606ED8C;
-	Fri, 13 Nov 2026 17:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9FA606CEE9;
+	Fri, 13 Nov 2026 17:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sc5c0cJF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2731F000C5;
-	Fri, 13 Nov 2026 17:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzYzwvTH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC641F000C4;
+	Fri, 13 Nov 2026 17:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591345;
-	bh=065NG3isn1QwjV+ZNdFGoAgRLekx4D7BWEDZ6loN6zA=;
+	s=korg; t=1794591346;
+	bh=Ang6PFg+aGJ4Lvcggxt1GfJ/fIvv9ytqi7xxdtdL8r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sc5c0cJFWy0FJHE1EBXQIwZDNWKmlDEOL7Clgv65pnJMB//aptS6SHILbz+iZg3Q5
-	 r6FV36mshYOspE2XisqjHxNUurHUcpsym+1CqX8ks/SGrSWT8ZmndvbmCBYkG7DLjZ
-	 sUJIHeclUAdWfr0CvTHE1GOJMd5O/H1P01Vu1xPU=
+	b=vzYzwvTHwArppwG6eFJiJPI9xTTA324BksTVUcrpG7lCOPNlif2VV86gaJe7WNQvD
+	 bpC9E4EMhMMSy4meCiWV8BbeSAFDegp0bguBSnWDO1nroot2oE7jmPOQtuJwRLbgBm
+	 H3po10MXPBXChlN/e/a5qYnPggtcM5J0SbDEi4Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Anshul Dalal <anshuld@ti.com>,
+	Bryan Brattlof <bb@ti.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 453/670] media: i2c: og01a1b: Switch from .s_stream to .enable_streams/.disable_streams
-Date: Fri, 13 Nov 2026 10:50:17 -0500
-Message-ID: <20261113153827.260144051@linuxfoundation.org>
+Subject: [PATCH 6.12 427/670] arm64: dts: ti: k3-am62*: remove SoC dtsi from common dtsi
+Date: Fri, 13 Nov 2026 10:49:51 -0500
+Message-ID: <20261113153826.214571330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,245 +69,745 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Anshul Dalal <anshuld@ti.com>
 
-[ Upstream commit 3a594bb454ba1ecb005f753007fa1bb5c5e68bae ]
+[ Upstream commit e0b9feca7329c495a76891d7766a781dea73787d ]
 
-The change allows to simplify the driver code, in particular the explicit
-locking scheme for stream on/off or format update serialization can be
-dropped in favour to the one provided by the V4L2 core internals.
+The k3-am62x-sk-common dtsi represents the common hardware used across
+am62x EVMs which can be configured with various DDR sizes or none (with
+DDR integrated in the package) based on the specific am62x SoC used.
 
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-[Sakari Ailus: Fix error handling for enable_streams callback.]
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: a26c5ac46191 ("media: i2c: og01a1b: power off sensor on remove")
+Therefore this patch moves the memory node and the SoC specific k3-am625
+dtsi out of sk-common and into the board dts files. No functional change
+is intended from this patch. The device-tree inheritance is changed as
+follows:
+
+Before:
+
+               k3-am62
+                 ^
+               k3-am625
+                 ^
+         k3-am62x-sk-common
+                 ^
+  am62x EVMs (k3-am625-sk, k3-am62-lp-sk)
+
+After:
+
+        k3-am62
+          ^
+        k3-am625    k3-am62x-sk-common
+          ^              ^
+  am62x EVMs (k3-am625-sk, k3-am62-lp-sk)
+
+Signed-off-by: Anshul Dalal <anshuld@ti.com>
+Reviewed-by: Bryan Brattlof <bb@ti.com>
+Link: https://patch.msgid.link/20250814134531.2743874-2-anshuld@ti.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
+
+Move the SoC include and RAM description out of the shared evaluation
+board description and into the individual board descriptions. Preserve
+the existing unlabeled reserved-memory node.
+
+Also extract the existing AM625 SK hardware description into a common
+include, keeping the SoC selection, board identity and RAM in the board
+description. This supplies the location needed by the subsequent eMMC
+clock pin correction without adding support for another board.
+
+Keep all existing hardware properties, including boot phase annotations,
+the eMMC non-removable flag and the audio codec supply. No functional
+change is intended.
+
+Stable-dep-of: 8ef8a0e38d13 ("arm64: dts: ti: k3-am625-sk-common: Set eMMC clock pin as OUTPUT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/og01a1b.c | 90 ++++++++++++++-----------------------
- 1 file changed, 34 insertions(+), 56 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts      |   8 +
+ .../arm64/boot/dts/ti/k3-am625-sk-common.dtsi | 304 ++++++++++++++++++
+ arch/arm64/boot/dts/ti/k3-am625-sk.dts        | 301 +----------------
+ .../arm64/boot/dts/ti/k3-am62x-sk-common.dtsi |   8 -
+ 4 files changed, 316 insertions(+), 305 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/ti/k3-am625-sk-common.dtsi
 
-diff --git a/drivers/media/i2c/og01a1b.c b/drivers/media/i2c/og01a1b.c
-index 68573122cd6ee..95ead31dda278 100644
---- a/drivers/media/i2c/og01a1b.c
-+++ b/drivers/media/i2c/og01a1b.c
-@@ -442,9 +442,6 @@ struct og01a1b {
+diff --git a/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts b/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
+index cb5e8364c9731..fc79641d7bb5f 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62-lp-sk.dts
+@@ -7,12 +7,20 @@
  
- 	/* Current mode */
- 	const struct og01a1b_mode *cur_mode;
--
--	/* To serialize asynchronus callbacks */
--	struct mutex mutex;
- };
+ /dts-v1/;
  
- static u64 to_pixel_rate(u32 f_index)
-@@ -616,7 +613,6 @@ static int og01a1b_init_controls(struct og01a1b *og01a1b)
- 	if (ret)
- 		return ret;
++#include "k3-am625.dtsi"
+ #include "k3-am62x-sk-common.dtsi"
  
--	ctrl_hdlr->lock = &og01a1b->mutex;
- 	og01a1b->link_freq = v4l2_ctrl_new_int_menu(ctrl_hdlr,
- 						    &og01a1b_ctrl_ops,
- 						    V4L2_CID_LINK_FREQ,
-@@ -686,74 +682,66 @@ static void og01a1b_update_pad_format(const struct og01a1b_mode *mode,
- 	fmt->field = V4L2_FIELD_NONE;
- }
+ / {
+ 	compatible = "ti,am62-lp-sk", "ti,am625";
+ 	model = "Texas Instruments AM62x LP SK";
  
--static int og01a1b_start_streaming(struct og01a1b *og01a1b)
-+static int og01a1b_enable_streams(struct v4l2_subdev *sd,
-+				  struct v4l2_subdev_state *state, u32 pad,
-+				  u64 streams_mask)
- {
-+	struct og01a1b *og01a1b = to_og01a1b(sd);
-+	unsigned int link_freq_index = og01a1b->cur_mode->link_freq_index;
- 	const struct og01a1b_reg_list *reg_list;
--	int link_freq_index, ret;
-+	int ret;
- 
--	link_freq_index = og01a1b->cur_mode->link_freq_index;
--	reg_list = &link_freq_configs[link_freq_index].reg_list;
-+	ret = pm_runtime_resume_and_get(og01a1b->dev);
-+	if (ret)
-+		return ret;
- 
-+	reg_list = &link_freq_configs[link_freq_index].reg_list;
- 	ret = og01a1b_write_reg_list(og01a1b, reg_list);
- 	if (ret) {
--		dev_err(og01a1b->dev, "failed to set plls");
--		return ret;
-+		dev_err(og01a1b->dev, "failed to set plls: %d\n", ret);
-+		goto error;
- 	}
- 
- 	reg_list = &og01a1b->cur_mode->reg_list;
- 	ret = og01a1b_write_reg_list(og01a1b, reg_list);
- 	if (ret) {
--		dev_err(og01a1b->dev, "failed to set mode");
--		return ret;
-+		dev_err(og01a1b->dev, "failed to set mode: %d\n", ret);
-+		goto error;
- 	}
- 
- 	ret = __v4l2_ctrl_handler_setup(og01a1b->sd.ctrl_handler);
- 	if (ret)
--		return ret;
-+		goto error;
- 
- 	ret = og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
- 				OG01A1B_REG_VALUE_08BIT,
- 				OG01A1B_MODE_STREAMING);
- 	if (ret) {
--		dev_err(og01a1b->dev, "failed to set stream");
--		return ret;
-+		dev_err(og01a1b->dev, "failed to start streaming: %d\n", ret);
-+		goto error;
- 	}
- 
- 	return 0;
--}
- 
--static void og01a1b_stop_streaming(struct og01a1b *og01a1b)
--{
--	if (og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
--			      OG01A1B_REG_VALUE_08BIT, OG01A1B_MODE_STANDBY))
--		dev_err(og01a1b->dev, "failed to set stream");
-+error:
-+	pm_runtime_put_autosuspend(og01a1b->dev);
++	memory@80000000 {
++		/* 2G RAM */
++		reg = <0x00000000 0x80000000 0x00000000 0x80000000>;
++		device_type = "memory";
++		bootph-pre-ram;
++	};
 +
-+	return ret;
- }
+ 	vmain_pd: regulator-0 {
+ 		/* TPS65988 PD CONTROLLER OUTPUT */
+ 		compatible = "regulator-fixed";
+diff --git a/arch/arm64/boot/dts/ti/k3-am625-sk-common.dtsi b/arch/arm64/boot/dts/ti/k3-am625-sk-common.dtsi
+new file mode 100644
+index 0000000000000..a9e372e9feada
+--- /dev/null
++++ b/arch/arm64/boot/dts/ti/k3-am625-sk-common.dtsi
+@@ -0,0 +1,304 @@
++// SPDX-License-Identifier: GPL-2.0-only OR MIT
++/*
++ * Common dtsi for AM625 SK and derivatives
++ *
++ * Copyright (C) 2021-2024 Texas Instruments Incorporated - https://www.ti.com/
++ */
++
++#include "k3-am62x-sk-common.dtsi"
++
++/ {
++	opp-table {
++		/* Add 1.4GHz OPP for am625-sk board. Requires VDD_CORE to be at 0.85V */
++		opp-1400000000 {
++			opp-hz = /bits/ 64 <1400000000>;
++			opp-supported-hw = <0x01 0x0004>;
++			clock-latency-ns = <6000000>;
++		};
++	};
++
++	vmain_pd: regulator-0 {
++		/* TPS65988 PD CONTROLLER OUTPUT */
++		bootph-all;
++		compatible = "regulator-fixed";
++		regulator-name = "vmain_pd";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-always-on;
++		regulator-boot-on;
++	};
++
++	vcc_5v0: regulator-1 {
++		/* Output of LM34936 */
++		bootph-all;
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_5v0";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		vin-supply = <&vmain_pd>;
++		regulator-always-on;
++		regulator-boot-on;
++	};
++
++	vcc_3v3_sys: regulator-2 {
++		/* output of LM61460-Q1 */
++		bootph-all;
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_3v3_sys";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vmain_pd>;
++		regulator-always-on;
++		regulator-boot-on;
++	};
++
++	vdd_mmc1: regulator-3 {
++		/* TPS22918DBVR */
++		bootph-all;
++		compatible = "regulator-fixed";
++		regulator-name = "vdd_mmc1";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-boot-on;
++		enable-active-high;
++		vin-supply = <&vcc_3v3_sys>;
++		gpio = <&exp1 3 GPIO_ACTIVE_HIGH>;
++	};
++
++	vdd_sd_dv: regulator-4 {
++		/* Output of TLV71033 */
++		bootph-all;
++		compatible = "regulator-gpio";
++		regulator-name = "tlv71033";
++		pinctrl-names = "default";
++		pinctrl-0 = <&vdd_sd_dv_pins_default>;
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-boot-on;
++		vin-supply = <&vcc_5v0>;
++		gpios = <&main_gpio0 31 GPIO_ACTIVE_HIGH>;
++		states = <1800000 0x0>,
++			 <3300000 0x1>;
++	};
++
++	vcc_1v8: regulator-5 {
++		/* output of TPS6282518DMQ */
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_1v8";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		vin-supply = <&vcc_3v3_sys>;
++		regulator-always-on;
++		regulator-boot-on;
++	};
++};
++
++&main_pmx0 {
++	main_mmc0_pins_default: main-mmc0-default-pins {
++		bootph-all;
++		pinctrl-single,pins = <
++			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (Y3) MMC0_CMD */
++			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
++			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
++			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
++			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
++			AM62X_IOPAD(0x208, PIN_INPUT_PULLUP, 0) /* (Y4) MMC0_DAT3 */
++			AM62X_IOPAD(0x204, PIN_INPUT_PULLUP, 0) /* (AB2) MMC0_DAT4 */
++			AM62X_IOPAD(0x200, PIN_INPUT_PULLUP, 0) /* (AC1) MMC0_DAT5 */
++			AM62X_IOPAD(0x1fc, PIN_INPUT_PULLUP, 0) /* (AD2) MMC0_DAT6 */
++			AM62X_IOPAD(0x1f8, PIN_INPUT_PULLUP, 0) /* (AC2) MMC0_DAT7 */
++		>;
++	};
++
++	main_rgmii2_pins_default: main-rgmii2-default-pins {
++		bootph-all;
++		pinctrl-single,pins = <
++			AM62X_IOPAD(0x184, PIN_INPUT, 0) /* (AE23) RGMII2_RD0 */
++			AM62X_IOPAD(0x188, PIN_INPUT, 0) /* (AB20) RGMII2_RD1 */
++			AM62X_IOPAD(0x18c, PIN_INPUT, 0) /* (AC21) RGMII2_RD2 */
++			AM62X_IOPAD(0x190, PIN_INPUT, 0) /* (AE22) RGMII2_RD3 */
++			AM62X_IOPAD(0x180, PIN_INPUT, 0) /* (AD23) RGMII2_RXC */
++			AM62X_IOPAD(0x17c, PIN_INPUT, 0) /* (AD22) RGMII2_RX_CTL */
++			AM62X_IOPAD(0x16c, PIN_OUTPUT, 0) /* (Y18) RGMII2_TD0 */
++			AM62X_IOPAD(0x170, PIN_OUTPUT, 0) /* (AA18) RGMII2_TD1 */
++			AM62X_IOPAD(0x174, PIN_OUTPUT, 0) /* (AD21) RGMII2_TD2 */
++			AM62X_IOPAD(0x178, PIN_OUTPUT, 0) /* (AC20) RGMII2_TD3 */
++			AM62X_IOPAD(0x168, PIN_OUTPUT, 0) /* (AE21) RGMII2_TXC */
++			AM62X_IOPAD(0x164, PIN_OUTPUT, 0) /* (AA19) RGMII2_TX_CTL */
++		>;
++	};
++
++	ospi0_pins_default: ospi0-default-pins {
++		bootph-all;
++		pinctrl-single,pins = <
++			AM62X_IOPAD(0x000, PIN_OUTPUT, 0) /* (H24) OSPI0_CLK */
++			AM62X_IOPAD(0x02c, PIN_OUTPUT, 0) /* (F23) OSPI0_CSn0 */
++			AM62X_IOPAD(0x00c, PIN_INPUT, 0) /* (E25) OSPI0_D0 */
++			AM62X_IOPAD(0x010, PIN_INPUT, 0) /* (G24) OSPI0_D1 */
++			AM62X_IOPAD(0x014, PIN_INPUT, 0) /* (F25) OSPI0_D2 */
++			AM62X_IOPAD(0x018, PIN_INPUT, 0) /* (F24) OSPI0_D3 */
++			AM62X_IOPAD(0x01c, PIN_INPUT, 0) /* (J23) OSPI0_D4 */
++			AM62X_IOPAD(0x020, PIN_INPUT, 0) /* (J25) OSPI0_D5 */
++			AM62X_IOPAD(0x024, PIN_INPUT, 0) /* (H25) OSPI0_D6 */
++			AM62X_IOPAD(0x028, PIN_INPUT, 0) /* (J22) OSPI0_D7 */
++			AM62X_IOPAD(0x008, PIN_INPUT, 0) /* (J24) OSPI0_DQS */
++		>;
++	};
++
++	vdd_sd_dv_pins_default: vdd-sd-dv-default-pins {
++		bootph-all;
++		pinctrl-single,pins = <
++			AM62X_IOPAD(0x07c, PIN_OUTPUT, 7) /* (P25) GPMC0_CLK.GPIO0_31 */
++		>;
++	};
++
++	main_gpio1_ioexp_intr_pins_default: main-gpio1-ioexp-intr-default-pins {
++		bootph-all;
++		pinctrl-single,pins = <
++			AM62X_IOPAD(0x01d4, PIN_INPUT, 7) /* (B15) UART0_RTSn.GPIO1_23 */
++		>;
++	};
++};
++
++&main_gpio0 {
++	bootph-all;
++};
++
++&main_gpio1 {
++	bootph-all;
++};
++
++&main_i2c1 {
++	bootph-all;
++	exp1: gpio@22 {
++		bootph-all;
++		compatible = "ti,tca6424";
++		reg = <0x22>;
++		gpio-controller;
++		#gpio-cells = <2>;
++		gpio-line-names = "GPIO_CPSW2_RST", "GPIO_CPSW1_RST",
++				   "PRU_DETECT", "MMC1_SD_EN",
++				   "VPP_LDO_EN", "EXP_PS_3V3_En",
++				   "EXP_PS_5V0_En", "EXP_HAT_DETECT",
++				   "GPIO_AUD_RSTn", "GPIO_eMMC_RSTn",
++				   "UART1_FET_BUF_EN", "WL_LT_EN",
++				   "GPIO_HDMI_RSTn", "CSI_GPIO1",
++				   "CSI_GPIO2", "PRU_3V3_EN",
++				   "HDMI_INTn", "PD_I2C_IRQ",
++				   "MCASP1_FET_EN", "MCASP1_BUF_BT_EN",
++				   "MCASP1_FET_SEL", "UART1_FET_SEL",
++				   "TSINT#", "IO_EXP_TEST_LED";
++
++		interrupt-parent = <&main_gpio1>;
++		interrupts = <23 IRQ_TYPE_EDGE_FALLING>;
++		interrupt-controller;
++		#interrupt-cells = <2>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&main_gpio1_ioexp_intr_pins_default>;
++	};
++};
++
++&sdhci0 {
++	bootph-all;
++	non-removable;
++	pinctrl-names = "default";
++	pinctrl-0 = <&main_mmc0_pins_default>;
++	status = "okay";
++};
++
++&sdhci1 {
++	vmmc-supply = <&vdd_mmc1>;
++	vqmmc-supply = <&vdd_sd_dv>;
++};
++
++&cpsw3g {
++	pinctrl-names = "default";
++	pinctrl-0 = <&main_rgmii1_pins_default>, <&main_rgmii2_pins_default>;
++};
++
++&cpsw_port2 {
++	phy-mode = "rgmii-rxid";
++	phy-handle = <&cpsw3g_phy1>;
++};
++
++&cpsw3g_mdio {
++	cpsw3g_phy1: ethernet-phy@1 {
++		reg = <1>;
++		ti,rx-internal-delay = <DP83867_RGMIIDCTL_2_00_NS>;
++		ti,fifo-depth = <DP83867_PHYCR_FIFO_DEPTH_4_B_NIB>;
++		ti,min-output-impedance;
++	};
++};
++
++&fss {
++	bootph-all;
++};
++
++&ospi0 {
++	bootph-all;
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&ospi0_pins_default>;
++
++	flash@0 {
++		bootph-all;
++		compatible = "jedec,spi-nor";
++		reg = <0x0>;
++		spi-tx-bus-width = <8>;
++		spi-rx-bus-width = <8>;
++		spi-max-frequency = <25000000>;
++		cdns,tshsl-ns = <60>;
++		cdns,tsd2d-ns = <60>;
++		cdns,tchsh-ns = <60>;
++		cdns,tslch-ns = <60>;
++		cdns,read-delay = <4>;
++
++		partitions {
++			bootph-all;
++			compatible = "fixed-partitions";
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			partition@0 {
++				label = "ospi.tiboot3";
++				reg = <0x0 0x80000>;
++			};
++
++			partition@80000 {
++				label = "ospi.tispl";
++				reg = <0x80000 0x200000>;
++			};
++
++			partition@280000 {
++				label = "ospi.u-boot";
++				reg = <0x280000 0x400000>;
++			};
++
++			partition@680000 {
++				label = "ospi.env";
++				reg = <0x680000 0x40000>;
++			};
++
++			partition@6c0000 {
++				label = "ospi.env.backup";
++				reg = <0x6c0000 0x40000>;
++			};
++
++			partition@800000 {
++				label = "ospi.rootfs";
++				reg = <0x800000 0x37c0000>;
++			};
++
++			partition@3fc0000 {
++				bootph-pre-ram;
++				label = "ospi.phypattern";
++				reg = <0x3fc0000 0x40000>;
++			};
++		};
++	};
++};
++
++&tlv320aic3106 {
++	DVDD-supply = <&vcc_1v8>;
++};
+diff --git a/arch/arm64/boot/dts/ti/k3-am625-sk.dts b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
+index d240165bda9c5..52954c77df804 100644
+--- a/arch/arm64/boot/dts/ti/k3-am625-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
+@@ -7,310 +7,17 @@
  
--static int og01a1b_set_stream(struct v4l2_subdev *sd, int enable)
-+static int og01a1b_disable_streams(struct v4l2_subdev *sd,
-+				   struct v4l2_subdev_state *state, u32 pad,
-+				   u64 streams_mask)
- {
- 	struct og01a1b *og01a1b = to_og01a1b(sd);
--	int ret = 0;
+ /dts-v1/;
+ 
+-#include "k3-am62x-sk-common.dtsi"
++#include "k3-am625.dtsi"
++#include "k3-am625-sk-common.dtsi"
+ 
+ / {
+ 	compatible = "ti,am625-sk", "ti,am625";
+ 	model = "Texas Instruments AM625 SK";
+ 
+-	opp-table {
+-		/* Add 1.4GHz OPP for am625-sk board. Requires VDD_CORE to be at 0.85V */
+-		opp-1400000000 {
+-			opp-hz = /bits/ 64 <1400000000>;
+-			opp-supported-hw = <0x01 0x0004>;
+-			clock-latency-ns = <6000000>;
+-		};
+-	};
 -
--	mutex_lock(&og01a1b->mutex);
--	if (enable) {
--		ret = pm_runtime_resume_and_get(og01a1b->dev);
--		if (ret) {
--			mutex_unlock(&og01a1b->mutex);
--			return ret;
--		}
-+	int ret;
- 
--		ret = og01a1b_start_streaming(og01a1b);
--		if (ret) {
--			enable = 0;
--			og01a1b_stop_streaming(og01a1b);
--			pm_runtime_put(og01a1b->dev);
--		}
--	} else {
--		og01a1b_stop_streaming(og01a1b);
--		pm_runtime_put(og01a1b->dev);
--	}
-+	ret = og01a1b_write_reg(og01a1b, OG01A1B_REG_MODE_SELECT,
-+				OG01A1B_REG_VALUE_08BIT, OG01A1B_MODE_STANDBY);
-+	if (ret)
-+		dev_err(og01a1b->dev, "failed to stop streaming: %d\n", ret);
- 
--	mutex_unlock(&og01a1b->mutex);
-+	pm_runtime_put_autosuspend(og01a1b->dev);
- 
- 	return ret;
- }
-@@ -771,7 +759,6 @@ static int og01a1b_set_format(struct v4l2_subdev *sd,
- 				      height, fmt->format.width,
- 				      fmt->format.height);
- 
--	mutex_lock(&og01a1b->mutex);
- 	og01a1b_update_pad_format(mode, &fmt->format);
- 	if (fmt->which == V4L2_SUBDEV_FORMAT_TRY) {
- 		*v4l2_subdev_state_get_format(sd_state, fmt->pad) = fmt->format;
-@@ -794,8 +781,6 @@ static int og01a1b_set_format(struct v4l2_subdev *sd,
- 					 h_blank);
- 	}
- 
--	mutex_unlock(&og01a1b->mutex);
+ 	memory@80000000 {
+-		device_type = "memory";
+ 		/* 2G RAM */
+ 		reg = <0x00000000 0x80000000 0x00000000 0x80000000>;
 -
- 	return 0;
- }
- 
-@@ -805,15 +790,12 @@ static int og01a1b_get_format(struct v4l2_subdev *sd,
- {
- 	struct og01a1b *og01a1b = to_og01a1b(sd);
- 
--	mutex_lock(&og01a1b->mutex);
- 	if (fmt->which == V4L2_SUBDEV_FORMAT_TRY)
- 		fmt->format = *v4l2_subdev_state_get_format(sd_state,
- 							    fmt->pad);
- 	else
- 		og01a1b_update_pad_format(og01a1b->cur_mode, &fmt->format);
- 
--	mutex_unlock(&og01a1b->mutex);
+-	};
 -
- 	return 0;
- }
- 
-@@ -849,18 +831,14 @@ static int og01a1b_enum_frame_size(struct v4l2_subdev *sd,
- 
- static int og01a1b_open(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
- {
--	struct og01a1b *og01a1b = to_og01a1b(sd);
+-	vmain_pd: regulator-0 {
+-		/* TPS65988 PD CONTROLLER OUTPUT */
+-		bootph-all;
+-		compatible = "regulator-fixed";
+-		regulator-name = "vmain_pd";
+-		regulator-min-microvolt = <5000000>;
+-		regulator-max-microvolt = <5000000>;
+-		regulator-always-on;
+-		regulator-boot-on;
+-	};
 -
--	mutex_lock(&og01a1b->mutex);
- 	og01a1b_update_pad_format(&supported_modes[0],
- 				  v4l2_subdev_state_get_format(fh->state, 0));
--	mutex_unlock(&og01a1b->mutex);
- 
- 	return 0;
- }
- 
- static const struct v4l2_subdev_video_ops og01a1b_video_ops = {
--	.s_stream = og01a1b_set_stream,
-+	.s_stream = v4l2_subdev_s_stream_helper,
+-	vcc_5v0: regulator-1 {
+-		/* Output of LM34936 */
+-		bootph-all;
+-		compatible = "regulator-fixed";
+-		regulator-name = "vcc_5v0";
+-		regulator-min-microvolt = <5000000>;
+-		regulator-max-microvolt = <5000000>;
+-		vin-supply = <&vmain_pd>;
+-		regulator-always-on;
+-		regulator-boot-on;
+-	};
+-
+-	vcc_3v3_sys: regulator-2 {
+-		/* output of LM61460-Q1 */
+-		bootph-all;
+-		compatible = "regulator-fixed";
+-		regulator-name = "vcc_3v3_sys";
+-		regulator-min-microvolt = <3300000>;
+-		regulator-max-microvolt = <3300000>;
+-		vin-supply = <&vmain_pd>;
+-		regulator-always-on;
+-		regulator-boot-on;
+-	};
+-
+-	vdd_mmc1: regulator-3 {
+-		/* TPS22918DBVR */
+-		bootph-all;
+-		compatible = "regulator-fixed";
+-		regulator-name = "vdd_mmc1";
+-		regulator-min-microvolt = <3300000>;
+-		regulator-max-microvolt = <3300000>;
+-		regulator-boot-on;
+-		enable-active-high;
+-		vin-supply = <&vcc_3v3_sys>;
+-		gpio = <&exp1 3 GPIO_ACTIVE_HIGH>;
+-	};
+-
+-	vdd_sd_dv: regulator-4 {
+-		/* Output of TLV71033 */
+-		bootph-all;
+-		compatible = "regulator-gpio";
+-		regulator-name = "tlv71033";
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&vdd_sd_dv_pins_default>;
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <3300000>;
+-		regulator-boot-on;
+-		vin-supply = <&vcc_5v0>;
+-		gpios = <&main_gpio0 31 GPIO_ACTIVE_HIGH>;
+-		states = <1800000 0x0>,
+-			 <3300000 0x1>;
+-	};
+-
+-	vcc_1v8: regulator-5 {
+-		/* output of TPS6282518DMQ */
+-		compatible = "regulator-fixed";
+-		regulator-name = "vcc_1v8";
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <1800000>;
+-		vin-supply = <&vcc_3v3_sys>;
+-		regulator-always-on;
+-		regulator-boot-on;
+-	};
+-};
+-
+-&main_pmx0 {
+-	main_mmc0_pins_default: main-mmc0-default-pins {
+-		bootph-all;
+-		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x220, PIN_INPUT, 0) /* (Y3) MMC0_CMD */
+-			AM62X_IOPAD(0x218, PIN_INPUT, 0) /* (AB1) MMC0_CLK */
+-			AM62X_IOPAD(0x214, PIN_INPUT, 0) /* (AA2) MMC0_DAT0 */
+-			AM62X_IOPAD(0x210, PIN_INPUT_PULLUP, 0) /* (AA1) MMC0_DAT1 */
+-			AM62X_IOPAD(0x20c, PIN_INPUT_PULLUP, 0) /* (AA3) MMC0_DAT2 */
+-			AM62X_IOPAD(0x208, PIN_INPUT_PULLUP, 0) /* (Y4) MMC0_DAT3 */
+-			AM62X_IOPAD(0x204, PIN_INPUT_PULLUP, 0) /* (AB2) MMC0_DAT4 */
+-			AM62X_IOPAD(0x200, PIN_INPUT_PULLUP, 0) /* (AC1) MMC0_DAT5 */
+-			AM62X_IOPAD(0x1fc, PIN_INPUT_PULLUP, 0) /* (AD2) MMC0_DAT6 */
+-			AM62X_IOPAD(0x1f8, PIN_INPUT_PULLUP, 0) /* (AC2) MMC0_DAT7 */
+-		>;
+-	};
+-
+-	main_rgmii2_pins_default: main-rgmii2-default-pins {
+-		bootph-all;
+-		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x184, PIN_INPUT, 0) /* (AE23) RGMII2_RD0 */
+-			AM62X_IOPAD(0x188, PIN_INPUT, 0) /* (AB20) RGMII2_RD1 */
+-			AM62X_IOPAD(0x18c, PIN_INPUT, 0) /* (AC21) RGMII2_RD2 */
+-			AM62X_IOPAD(0x190, PIN_INPUT, 0) /* (AE22) RGMII2_RD3 */
+-			AM62X_IOPAD(0x180, PIN_INPUT, 0) /* (AD23) RGMII2_RXC */
+-			AM62X_IOPAD(0x17c, PIN_INPUT, 0) /* (AD22) RGMII2_RX_CTL */
+-			AM62X_IOPAD(0x16c, PIN_OUTPUT, 0) /* (Y18) RGMII2_TD0 */
+-			AM62X_IOPAD(0x170, PIN_OUTPUT, 0) /* (AA18) RGMII2_TD1 */
+-			AM62X_IOPAD(0x174, PIN_OUTPUT, 0) /* (AD21) RGMII2_TD2 */
+-			AM62X_IOPAD(0x178, PIN_OUTPUT, 0) /* (AC20) RGMII2_TD3 */
+-			AM62X_IOPAD(0x168, PIN_OUTPUT, 0) /* (AE21) RGMII2_TXC */
+-			AM62X_IOPAD(0x164, PIN_OUTPUT, 0) /* (AA19) RGMII2_TX_CTL */
+-		>;
+-	};
+-
+-	ospi0_pins_default: ospi0-default-pins {
+-		bootph-all;
+-		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x000, PIN_OUTPUT, 0) /* (H24) OSPI0_CLK */
+-			AM62X_IOPAD(0x02c, PIN_OUTPUT, 0) /* (F23) OSPI0_CSn0 */
+-			AM62X_IOPAD(0x00c, PIN_INPUT, 0) /* (E25) OSPI0_D0 */
+-			AM62X_IOPAD(0x010, PIN_INPUT, 0) /* (G24) OSPI0_D1 */
+-			AM62X_IOPAD(0x014, PIN_INPUT, 0) /* (F25) OSPI0_D2 */
+-			AM62X_IOPAD(0x018, PIN_INPUT, 0) /* (F24) OSPI0_D3 */
+-			AM62X_IOPAD(0x01c, PIN_INPUT, 0) /* (J23) OSPI0_D4 */
+-			AM62X_IOPAD(0x020, PIN_INPUT, 0) /* (J25) OSPI0_D5 */
+-			AM62X_IOPAD(0x024, PIN_INPUT, 0) /* (H25) OSPI0_D6 */
+-			AM62X_IOPAD(0x028, PIN_INPUT, 0) /* (J22) OSPI0_D7 */
+-			AM62X_IOPAD(0x008, PIN_INPUT, 0) /* (J24) OSPI0_DQS */
+-		>;
+-	};
+-
+-	vdd_sd_dv_pins_default: vdd-sd-dv-default-pins {
+-		bootph-all;
+-		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x07c, PIN_OUTPUT, 7) /* (P25) GPMC0_CLK.GPIO0_31 */
+-		>;
+-	};
+-
+-	main_gpio1_ioexp_intr_pins_default: main-gpio1-ioexp-intr-default-pins {
+-		bootph-all;
+-		pinctrl-single,pins = <
+-			AM62X_IOPAD(0x01d4, PIN_INPUT, 7) /* (B15) UART0_RTSn.GPIO1_23 */
+-		>;
+-	};
+-};
+-
+-&main_gpio0 {
+-	bootph-all;
+-};
+-
+-&main_gpio1 {
+-	bootph-all;
+-};
+-
+-&main_i2c1 {
+-	bootph-all;
+-	exp1: gpio@22 {
+-		bootph-all;
+-		compatible = "ti,tca6424";
+-		reg = <0x22>;
+-		gpio-controller;
+-		#gpio-cells = <2>;
+-		gpio-line-names = "GPIO_CPSW2_RST", "GPIO_CPSW1_RST",
+-				   "PRU_DETECT", "MMC1_SD_EN",
+-				   "VPP_LDO_EN", "EXP_PS_3V3_En",
+-				   "EXP_PS_5V0_En", "EXP_HAT_DETECT",
+-				   "GPIO_AUD_RSTn", "GPIO_eMMC_RSTn",
+-				   "UART1_FET_BUF_EN", "WL_LT_EN",
+-				   "GPIO_HDMI_RSTn", "CSI_GPIO1",
+-				   "CSI_GPIO2", "PRU_3V3_EN",
+-				   "HDMI_INTn", "PD_I2C_IRQ",
+-				   "MCASP1_FET_EN", "MCASP1_BUF_BT_EN",
+-				   "MCASP1_FET_SEL", "UART1_FET_SEL",
+-				   "TSINT#", "IO_EXP_TEST_LED";
+-
+-		interrupt-parent = <&main_gpio1>;
+-		interrupts = <23 IRQ_TYPE_EDGE_FALLING>;
+-		interrupt-controller;
+-		#interrupt-cells = <2>;
+-
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&main_gpio1_ioexp_intr_pins_default>;
+-	};
+-};
+-
+-&sdhci0 {
+-	bootph-all;
+-	non-removable;
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&main_mmc0_pins_default>;
+-	status = "okay";
+-};
+-
+-&sdhci1 {
+-	vmmc-supply = <&vdd_mmc1>;
+-	vqmmc-supply = <&vdd_sd_dv>;
+-};
+-
+-&cpsw3g {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&main_rgmii1_pins_default>, <&main_rgmii2_pins_default>;
+-};
+-
+-&cpsw_port2 {
+-	phy-mode = "rgmii-rxid";
+-	phy-handle = <&cpsw3g_phy1>;
+-};
+-
+-&cpsw3g_mdio {
+-	cpsw3g_phy1: ethernet-phy@1 {
+-		reg = <1>;
+-		ti,rx-internal-delay = <DP83867_RGMIIDCTL_2_00_NS>;
+-		ti,fifo-depth = <DP83867_PHYCR_FIFO_DEPTH_4_B_NIB>;
+-		ti,min-output-impedance;
+-	};
+-};
+-
+-&fss {
+-	bootph-all;
+-};
+-
+-&ospi0 {
+-	bootph-all;
+-	status = "okay";
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&ospi0_pins_default>;
+-
+-	flash@0 {
+-		bootph-all;
+-		compatible = "jedec,spi-nor";
+-		reg = <0x0>;
+-		spi-tx-bus-width = <8>;
+-		spi-rx-bus-width = <8>;
+-		spi-max-frequency = <25000000>;
+-		cdns,tshsl-ns = <60>;
+-		cdns,tsd2d-ns = <60>;
+-		cdns,tchsh-ns = <60>;
+-		cdns,tslch-ns = <60>;
+-		cdns,read-delay = <4>;
+-
+-		partitions {
+-			bootph-all;
+-			compatible = "fixed-partitions";
+-			#address-cells = <1>;
+-			#size-cells = <1>;
+-
+-			partition@0 {
+-				label = "ospi.tiboot3";
+-				reg = <0x0 0x80000>;
+-			};
+-
+-			partition@80000 {
+-				label = "ospi.tispl";
+-				reg = <0x80000 0x200000>;
+-			};
+-
+-			partition@280000 {
+-				label = "ospi.u-boot";
+-				reg = <0x280000 0x400000>;
+-			};
+-
+-			partition@680000 {
+-				label = "ospi.env";
+-				reg = <0x680000 0x40000>;
+-			};
+-
+-			partition@6c0000 {
+-				label = "ospi.env.backup";
+-				reg = <0x6c0000 0x40000>;
+-			};
+-
+-			partition@800000 {
+-				label = "ospi.rootfs";
+-				reg = <0x800000 0x37c0000>;
+-			};
+-
+-			partition@3fc0000 {
+-				bootph-pre-ram;
+-				label = "ospi.phypattern";
+-				reg = <0x3fc0000 0x40000>;
+-			};
+-		};
++		device_type = "memory";
++		bootph-pre-ram;
+ 	};
  };
+-
+-&tlv320aic3106 {
+-	DVDD-supply = <&vcc_1v8>;
+-};
+diff --git a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+index 9d45d8dad381e..be5cc73cf2e4b 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+@@ -8,7 +8,6 @@
+ #include <dt-bindings/leds/common.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/net/ti-dp83867.h>
+-#include "k3-am625.dtsi"
  
- static const struct v4l2_subdev_pad_ops og01a1b_pad_ops = {
-@@ -868,6 +846,8 @@ static const struct v4l2_subdev_pad_ops og01a1b_pad_ops = {
- 	.get_fmt = og01a1b_get_format,
- 	.enum_mbus_code = og01a1b_enum_mbus_code,
- 	.enum_frame_size = og01a1b_enum_frame_size,
-+	.enable_streams = og01a1b_enable_streams,
-+	.disable_streams = og01a1b_disable_streams,
- };
+ / {
+ 	aliases {
+@@ -27,13 +26,6 @@ chosen {
+ 		stdout-path = "serial2:115200n8";
+ 	};
  
- static const struct v4l2_subdev_ops og01a1b_subdev_ops = {
-@@ -1062,7 +1042,6 @@ static void og01a1b_remove(struct i2c_client *client)
- 	media_entity_cleanup(&sd->entity);
- 	v4l2_ctrl_handler_free(sd->ctrl_handler);
- 	pm_runtime_disable(og01a1b->dev);
--	mutex_destroy(&og01a1b->mutex);
- }
- 
- static int og01a1b_probe(struct i2c_client *client)
-@@ -1146,7 +1125,6 @@ static int og01a1b_probe(struct i2c_client *client)
- 		goto power_off;
- 	}
- 
--	mutex_init(&og01a1b->mutex);
- 	og01a1b->cur_mode = &supported_modes[0];
- 	ret = og01a1b_init_controls(og01a1b);
- 	if (ret) {
-@@ -1154,6 +1132,7 @@ static int og01a1b_probe(struct i2c_client *client)
- 		goto probe_error_v4l2_ctrl_handler_free;
- 	}
- 
-+	og01a1b->sd.state_lock = og01a1b->ctrl_handler.lock;
- 	og01a1b->sd.internal_ops = &og01a1b_internal_ops;
- 	og01a1b->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
- 	og01a1b->sd.entity.ops = &og01a1b_subdev_entity_ops;
-@@ -1194,7 +1173,6 @@ static int og01a1b_probe(struct i2c_client *client)
- 
- probe_error_v4l2_ctrl_handler_free:
- 	v4l2_ctrl_handler_free(og01a1b->sd.ctrl_handler);
--	mutex_destroy(&og01a1b->mutex);
- 
- power_off:
- 	og01a1b_power_off(og01a1b->dev);
+-	memory@80000000 {
+-		bootph-pre-ram;
+-		device_type = "memory";
+-		/* 2G RAM */
+-		reg = <0x00000000 0x80000000 0x00000000 0x80000000>;
+-	};
+-
+ 	reserved-memory {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
 -- 
 2.53.0
 
