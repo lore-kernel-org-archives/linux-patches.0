@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590026;
-	b=s6lnYSboyGDhRKKc/Lqu8Vy2qCmfLUh/tBmCs3WhurqvuRpKWKvDo5BRL7qUgPxYylcE
-	 Vx934Yum8fpQZnthfVIgg8T68ycSg5Op42ivE6dtB3rPWZzCq2n9Ar/xEArYLjlYphjNC
-	 ufGztgymDilq8lZzAUiCAdv9YiHYl/3yISRGCBs4prinL2t11FDdUeCqqYCB5uGJSqfI9
-	 zgZ1jCNosjXs0ccO1PPJJD2cxc79nVUl0OWOSULXkXn6LWXpDU/wTdTwTveefiDlctkXW
-	 4HMByLieqqTlIL96upz2pbjNjDwRVVFrdeK3qPvTik2iVS9Jhp8gJ6GeIAM2C0Tfr/Q==
+	t=1794590027;
+	b=aztNSRawhnLxlSPlRN78UoUTaOkfdpt7Cfog9Vuww3uyGKdjrRgj3cinH39Ec4dHq9Zz
+	 Nboc1xqBZOGv/4wfw+L9vy6veVmD+TYVeNG/RIbnC4GXiw5UZI3LKUM5J8zISx/of4r2y
+	 1a6WzMcjN4a7nT2ZCyrpqSKCcN4zasoZshwQN6tG1wmIv7K4+CWfpu723fQtKux871ezN
+	 kQdXAJeHP7vTPvsNLxJv+Dpa/POhchf7eWloI3BsqBEdiOekeJDX1oJ8MrJjLKSWn5Ptt
+	 u9IObyOmJjMeUMUHPr91+zk6JeQLceDAWY69s0QBYPmBTYkLtViih9KvcuRn9fegJIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590027;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WmmXSVeCKV9g/PQLlrXHorskxo2J5GarOxcRjApIOHc=;
-	b=rCJEagqDOoQS0GPMUtWcro39Rz263vgpajGLWdOAiHiFqRoXsFOogU+x5RhnasLpJe1w
-	 iGe9oqQxK7j3LpDeRKVFzRHGJAPIryRPECWJhC+2OmxZ+FaE66gc2jRfdqkRflgLJglLi
-	 Ug5Lzfpda/bHP1+9zW0jFRLCv9AmU3zLt9+g7gvPzaHDoATR/b3R3OA9cTb06PzzecA8Y
-	 9g89Bk0219SR/lqD/d3hb3lVlmbhCDiWDCku86pbsQ/9GQ1N1755kE0bnPcj4iQgTQXNN
-	 ooIQKGyXrPQU0ReZhzWGLHGM7Sxz/c2cYcugrpE4tryKw1gjovTjSaNOTUsNrZhZXNA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=x9rQQhAZTsjVUs2FL+itzUhZSCGb8vsEQItV2+TkXH8=;
+	b=QMpiXrOjoAJRgy0Pnq+eWzg9Xd4lz1Km1VlG9VimBvuYJEzVMQcIh4QOdhBIUyoNpTYh
+	 jvoqC/HcPs8COl1b8lvUiLEYlyNED4DCFbq4rS3vj7KCJNO9t5e/GkQ6Ngjl3LUwKclYe
+	 m7pqBYuX/ScUg/L/Rup/IifaFJzIL2R/NwD/mqO1yl64eoMH5gadZW0CVaKcHfRcP+smb
+	 R5PDv/5uu27ZmL3C0M40dKURx4+cjQH0oc39yKi6iujTolH6++U4AiJ4fxbr0O/d9jL4n
+	 c5Az3q5O1Zxj89wheDj6eoYWBupSIOCTBUo6oLFlUC71qK99NQuK7Wbh2pmGgpzSvqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FiBsfcmQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=paFepDfm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935EA60A2602;
-	Fri, 13 Nov 2026 17:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D1B60A2602;
+	Fri, 13 Nov 2026 17:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FiBsfcmQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24CC1F000C4;
-	Fri, 13 Nov 2026 17:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=paFepDfm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25BE91F000C5;
+	Fri, 13 Nov 2026 17:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590026;
-	bh=WmmXSVeCKV9g/PQLlrXHorskxo2J5GarOxcRjApIOHc=;
+	s=korg; t=1794590027;
+	bh=x9rQQhAZTsjVUs2FL+itzUhZSCGb8vsEQItV2+TkXH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FiBsfcmQNNpr6PkhnFG8bXxwmwFl0LbWnPzyynkrxb5jhydHfm18i2etdiy44vqhd
-	 1/qOxpj4Y5i9D793UsL57yam1UiN7a5wbsVOFuAVmBqfs23mo8Sal9NZWxHfFI8+QC
-	 VjvGpB8m28HX4lMR2s0V+dj04KPazZN3Q+yynk+E=
+	b=paFepDfmmhZre+dy3WVmiCI1ARO5oCxErT0lrHoDYvj7YkQkXRkCv8ro3jo/bTsGV
+	 BL2iC2NL9Qqazl/HxWsUkJYi/rpwLEHXiUNGhqZExjM5dqAJEBEb+d2FP4iYW3sTy+
+	 2tharNj4Vw1fvPqAULsr2c2XN/ue9M4ISNBpeh+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang En Sim <sim@shangen.org>,
+	=?UTF-8?q?Luk=C3=A1=C5=A1=20Lalinsk=C3=BD?= <lukas@lalinsky.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 065/686] io_uring/poll: cancel all matching requests in one pass
-Date: Fri, 13 Nov 2026 10:43:18 -0500
-Message-ID: <20261113153823.134184491@linuxfoundation.org>
+Subject: [PATCH 6.18 066/686] io_uring/poll: dont poll a writer for a read side hangup
+Date: Fri, 13 Nov 2026 10:43:19 -0500
+Message-ID: <20261113153823.166262863@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -62,119 +62,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shang En Sim <sim@shangen.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-Commit 9eff9c07e927dcd9c57150cd6fb3d4ec76f00480 upstream.
+Commit 74c1f1048e4401d6a953ab2299b14ace1ad6a899 upstream.
 
-With IORING_ASYNC_CANCEL_ALL, __io_async_cancel() calls io_try_cancel()
-until nothing is found, and io_poll_cancel() cancels one request per
-call, starting each lookup at the beginning of the hash. A cancelled
-request stays hashed until its task work runs, so every lookup walks
-past the ones already cancelled. Cancelling K of N pending polls visits
-about K*N/2 requests in one io_uring_enter(), with uring_lock held.
+io_init_poll_iocb() adds EPOLLRDHUP to every poll, including the async
+poll of a send that waits for buffer space. Once the peer has shut down
+its sending side, the socket keeps reporting EPOLLRDHUP, so each re-arm
+in __io_arm_poll_handler() finds a ready mask and the request is issued
+again. The send still can't make progress, the request burns through
+APOLL_MAX_RETRY in a few milliseconds and ends up in io-wq.
 
-A single CANCEL_FD|ALL on 80000 polls on one eventfd takes 17.06s,
-0.02s with this change. With voluntary preemption the soft lockup
-watchdog fires:
+A send in io-wq blocks until the peer reads, but sendmsg and writev go
+through ____sys_sendmsg() and sock_write_iter(), which turn O_NONBLOCK
+into MSG_DONTWAIT, and the application gets -EAGAIN for a request that
+never asked for a non-blocking send.
 
-  watchdog: BUG: soft lockup - CPU#1 stuck for 26s! [repro:100]
-  RIP: 0010:io_cancel_req_match+0x19/0xa0
-   io_poll_cancel+0x73/0x170
-   io_try_cancel+0x7b/0xf0
-   __io_async_cancel+0x41/0x110
+Only add EPOLLRDHUP for polls that want to read. A peer that stopped
+sending is no event for a writer, and a poll that asks for it explicitly
+still gets it.
 
-Walk the hash once and cancel every match, as io_cancel_remove() does
-for futex and waitid. Cancel by user_data only needs its own bucket.
-__io_async_cancel() still loops until nothing is found, so a request
-that io-wq parks in the poll hash meanwhile is still cancelled.
-
-A cancel that matches one request now walks the whole hash twice instead
-of stopping at the match.
-
-Cc: stable@vger.kernel.org
-Fixes: 8e29da69fead ("io_uring: add support for IORING_ASYNC_CANCEL_ALL")
-Signed-off-by: Shang En Sim <sim@shangen.org>
-Link: https://patch.msgid.link/20261030050319.1448530-3-sim@shangen.org
+Fixes: 464dca612bc6 ("io_uring: mask in error/nval/hangup consistently for poll")
+Reported-by: Lukáš Lalinský <lukas@lalinsky.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/cancel.c |  2 +-
- io_uring/poll.c   | 39 +++++++++++++++++++++++++++++++++++++--
- 2 files changed, 38 insertions(+), 3 deletions(-)
+ io_uring/poll.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/cancel.c b/io_uring/cancel.c
-index 1db26c66e45c6..471d6f2e5f18f 100644
---- a/io_uring/cancel.c
-+++ b/io_uring/cancel.c
-@@ -192,7 +192,7 @@ static int __io_async_cancel(struct io_cancel_data *cd,
- 			break;
- 		if (!all)
- 			return ret;
--		/* futex and waitid return how many they cancelled */
-+		/* poll, futex and waitid return how many they cancelled */
- 		nr += max(ret, 1);
- 	} while (1);
- 
 diff --git a/io_uring/poll.c b/io_uring/poll.c
-index 48381f0cbe327..6af64c7618e5a 100644
+index 6af64c7618e5a..3239bc3039fb3 100644
 --- a/io_uring/poll.c
 +++ b/io_uring/poll.c
-@@ -824,12 +824,47 @@ static int io_poll_disarm(struct io_kiocb *req)
- 	return 0;
+@@ -128,12 +128,24 @@ static void io_poll_req_insert(struct io_kiocb *req)
+ 	hlist_add_head(&req->hash_node, &table->hbs[index].list);
  }
  
-+/*
-+ * Cancel every request matching @cd in one pass. Cancelled requests stay
-+ * hashed until their task work runs, so finding them one at a time would
-+ * walk past all the earlier ones on each lookup.
-+ */
-+static int io_poll_cancel_all(struct io_ring_ctx *ctx, struct io_cancel_data *cd)
++#define IO_POLL_UNMASK	(EPOLLERR|EPOLLHUP|EPOLLNVAL)
++
++static __poll_t io_poll_unmask(__poll_t events)
 +{
-+	unsigned int nr_buckets = 1U << ctx->cancel_table.hash_bits;
-+	unsigned int i = 0;
-+	struct hlist_node *tmp;
-+	struct io_kiocb *req;
-+	int nr = 0;
-+
-+	if (!(cd->flags & (IORING_ASYNC_CANCEL_FD | IORING_ASYNC_CANCEL_OP |
-+			   IORING_ASYNC_CANCEL_ANY))) {
-+		/* keyed by user_data, so only one bucket can match */
-+		i = hash_long(cd->data, ctx->cancel_table.hash_bits);
-+		nr_buckets = i + 1;
-+	}
-+
-+	for (; i < nr_buckets; i++) {
-+		struct io_hash_bucket *hb = &ctx->cancel_table.hbs[i];
-+
-+		hlist_for_each_entry_safe(req, tmp, &hb->list, hash_node) {
-+			if (!io_cancel_req_match(req, cd))
-+				continue;
-+			io_poll_cancel_req(req);
-+			nr++;
-+		}
-+	}
-+	return nr ?: -ENOENT;
++	/*
++	 * A peer that stopped sending is an event for a reader, but a write
++	 * only poll must stay armed until the file is writable again.
++	 */
++	if (events & (EPOLLIN | EPOLLRDNORM | EPOLLRDBAND))
++		return IO_POLL_UNMASK | EPOLLRDHUP;
++	return IO_POLL_UNMASK;
 +}
 +
- static int __io_poll_cancel(struct io_ring_ctx *ctx, struct io_cancel_data *cd)
+ static void io_init_poll_iocb(struct io_poll *poll, __poll_t events)
  {
- 	struct io_kiocb *req;
+ 	poll->head = NULL;
+-#define IO_POLL_UNMASK	(EPOLLERR|EPOLLHUP|EPOLLNVAL|EPOLLRDHUP)
+ 	/* mask in events that we always want/need */
+-	poll->events = events | IO_POLL_UNMASK;
++	poll->events = events | io_poll_unmask(events);
+ 	INIT_LIST_HEAD(&poll->wait.entry);
+ 	init_waitqueue_func_entry(&poll->wait, io_poll_wake);
+ }
+@@ -1003,7 +1015,7 @@ int io_poll_remove(struct io_kiocb *req, unsigned int issue_flags)
  
--	if (cd->flags & (IORING_ASYNC_CANCEL_FD | IORING_ASYNC_CANCEL_OP |
--			 IORING_ASYNC_CANCEL_ANY))
-+	if (cd->flags & (IORING_ASYNC_CANCEL_ALL | IORING_ASYNC_CANCEL_ANY))
-+		return io_poll_cancel_all(ctx, cd);
-+
-+	if (cd->flags & (IORING_ASYNC_CANCEL_FD | IORING_ASYNC_CANCEL_OP))
- 		req = io_poll_file_find(ctx, cd);
- 	else
- 		req = io_poll_find(ctx, false, cd);
+ 			poll->events &= ~0xffff;
+ 			poll->events |= poll_update->events & 0xffff;
+-			poll->events |= IO_POLL_UNMASK;
++			poll->events |= io_poll_unmask(poll->events);
+ 		}
+ 		if (poll_update->update_user_data)
+ 			preq->cqe.user_data = poll_update->new_user_data;
 -- 
 2.53.0
 
