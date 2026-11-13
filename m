@@ -1,65 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590328;
-	b=YjRFa9cxWyd4TTkFZoctdrSaKVqrNFVbY7o9SzQpTfVwwZXtgqS82/xO4aFclwzzbjJt
-	 /wyxWTuyc3U+dYn44YpbVMnjsNrqYXY9y6RFIvqzTRTWzqEjB1/KdEvBUvF2bu9iBhQHo
-	 08/NBTJX9+yERIU5JItZk8jI+uTscYcR9j7Ff1cdkhea2rqXZC1PtElJjw3vCE2yYEBMy
-	 C5JxvGMTE7WrEn8lMbXxcWYwxrl9WkfbFUsNvX+oYjh4/XREvIuX9x1NqHVxb/U3QdaiV
-	 Y1K7pB5a2+9FWjkysndsnYd+vhhxO6IuJNHOmgVacBPVwlO4KS2M/r9ZRFcafIRtLsQ==
+	t=1794590329;
+	b=KM/g9U0rTgfOS4sy1Wjj00fY7D3IOO3sFSa27yWeNLEbwAP0kbhMbzrSoXEQyl8dke9A
+	 D7KzVCDAoBh2IdbjkNsyQUos0cLDYmSS54+63tYZCRP9CbwFqm5AxDdzj0nI1h3oPqBiF
+	 UcEpvrqSqlHSXq/p/93tqk/EaAwb3ctzSqz/0t3rTPkzLVsxM+dLZQKdfjPBalacJwyQf
+	 +ZBeLOv1dNXlIyuAuzFFShzrHkepCdyYLT0oP0FB4pxmSwGmbB4dN0xv9yIdYa6JcGW8B
+	 EUQ801cmRATT8u70aD04GoMwzODFloLJ0/vLRta+XYs+bI5/IG+V7brQdtRn+6zvcrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590329;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AYsEevfoOySRVMXbui7mnI4rBEl3twK4G7h8gBsLZ4A=;
-	b=ZPtIoW85tE5hRZefvIoJzXPg/60BzKgebWWXPc4QvMgRUgs8aNsqlbBqkYa0ndIQvPh2
-	 B2p+nzOBl84ZMIlKpIUomdaP3+TYVx0MYDJ2lufLxUJP2M+SXaZeMD4WHhMWzJtnwjC1U
-	 ae9Xc/bsK1qRETJUiEOx97QIIJA+nueaXkyQM1vwJmrAIPSZKJPBlOSj6rJ0Pps6vs2qE
-	 nP8yVTm9zX6xgsDlN4a6r8jNqHWE/5vZNsUiFcpQ5AImd7ofTOyfgMhhKTuffC5yCr7bb
-	 T6T0It2UkZHkheqEHEyOGQGtM/iwzm0zRkuoANlgBGQsOuNV5AOPfvjhhFx35tzLJKQ==
+	bh=59ekWSvpUyXQFgxhCKD84+HIlZkVx6uNNd4DE057qHk=;
+	b=m4I8TtsuksNnd0qc/OwpqPZxOxBL7PUdGyrc57Gq/8iU9w8jVe5FxeKPWiOunReU5oNB
+	 +pP9y3TSmMB15VoyEgG3mamN1LUpZ2jK7UvdIxPVWASkOUvptg24nD2jMAiQHdcqABiFW
+	 y05oL0QIAhWyO7EaCJWEJttfY8b4JJt39XO+DuUvpsyXzL0rkZx3LMhcxtEkkJoEs8YSp
+	 BD3VGCf46vYMmCThFFtC/QxMIoUatqF1+KzS2QeUOoOBBYg+GntQtfC9UAB6wwUrmIP9i
+	 oBaKI4wJtxBhCOkoE67P25DyZj8fULfOnoloFfJv3K5un4nNjClrL+KRR+h82tBYGHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMeKI+K3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVQtJ37D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60966607EE78;
-	Fri, 13 Nov 2026 17:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9189C607EE54;
+	Fri, 13 Nov 2026 17:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zMeKI+K3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 031A41F000CD;
-	Fri, 13 Nov 2026 17:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PVQtJ37D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455431F000C7;
+	Fri, 13 Nov 2026 17:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590328;
-	bh=AYsEevfoOySRVMXbui7mnI4rBEl3twK4G7h8gBsLZ4A=;
+	s=korg; t=1794590329;
+	bh=59ekWSvpUyXQFgxhCKD84+HIlZkVx6uNNd4DE057qHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zMeKI+K3TlKrC1iv4+eX+RBx53sZjnXO1KXuengd6ENqlCn9mlFmuQSPPj4WZTWjh
-	 0SMt73Tq1c0zWtUvTRFAvf+op76rJuCh+AZBZh+5l25J5gLSxgLjtO395ng3jWmTsx
-	 btSR5KEmOV0oJmVRtO2LC9GzU8Ls3XOfZNm63/VU=
+	b=PVQtJ37Dq5X51yfNAtDtv9gU33SptpJKr7WaaTU4OeQTvcNV5H10MNJVAgSVDPbb0
+	 fmMCXNvLAQZKIL0pHygLhtQw5T7wFw0uH4h8OinYpFAoWGDhW7TiNqmmNugm0eY27i
+	 MVJctHuZgHnUOdu5WHGtreBKDs5rtNv9OEbWu8/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Hugh Dickins <hughd@google.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Nico Pache <nico.pache@linux.dev>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Usama Arif <usama.arif@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Stefan Roesch <shr@devkernel.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 308/686] mm/khugepaged: flush deferred unmaps before dropping a failed folio
-Date: Fri, 13 Nov 2026 10:47:21 -0500
-Message-ID: <20261113153831.384658878@linuxfoundation.org>
+Subject: [PATCH 6.18 309/686] mm/page-writeback: avoid 32-bit overflow in dirty threshold shares
+Date: Fri, 13 Nov 2026 10:47:22 -0500
+Message-ID: <20261113153831.417404759@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -81,77 +72,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 854e5ff8b3ce2a776586cabebaeae645c992345b ]
+[ Upstream commit 9597c2056e05bd79df9d343a9b42e84a54de1c52 ]
 
-collapse_file() can fail its reference-count or dirty-folio check after
-unmapping with TTU_BATCH_FLUSH.  Both paths put back the isolated folio,
-then unlock it and drop the lookup reference before reaching the common
-try_to_unmap_flush().
+The ratios used by __wb_calc_thresh() are scaled to parts per million, but
+the threshold and ratio operands are unsigned long.  On 32-bit kernels,
+their multiplication can wrap before the result is assigned to u64.
 
-The page-cache reference does not keep the folio stable once the lock is
-released.  Another collapse can replace and free it.  With its PTEs
-already gone, that collapse cannot flush the first task's per-task TLB
-batch, and retract_page_tables() skips short or unaligned VMAs.  A CPU can
-therefore retain a user translation to the freed folio.  This has been
-reproduced with unprivileged MADV_COLLAPSE on a memfd.
+For example, with a threshold of 25600 pages and the default maximum ratio
+of 1000000, wb_max_thresh becomes 4125 pages instead of 25600.  The shared
+threshold and minimum share calculations can overflow in the same way,
+producing incorrect per-writeback dirty limits.
 
-Flush at out_unlock while the lookup reference and folio lock are still
-held.  The common flush continues to cover the accumulated pagelist on
-both success and rollback, preserving batching on successful collapses.
+Use a u64 threshold for the three ratio multiplications and div_u64() to
+retain the existing division order and rounding.
 
-Link: https://lore.kernel.org/20261007041001.43181-1-kylebot@openai.com
-Fixes: 6d9df8a5889c ("mm/thp: collapse_file() do try_to_unmap(TTU_BATCH_FLUSH)")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Link: https://lore.kernel.org/20261021060654.27855-1-dennylin0707@gmail.com
+Fixes: ae82291e9ca4 ("mm: use part per 1000000 for bdi ratios")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Acked-by: Hugh Dickins <hughd@google.com>
-Assisted-by: LLM
-Cc: Barry Song <baohua@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: "Liam R. Howlett" <liam@infradead.org>
-Cc: Nico Pache <nico.pache@linux.dev>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Usama Arif <usama.arif@linux.dev>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Stefan Roesch <shr@devkernel.io>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ mm/page-writeback.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index cc3a09a0c2596..8ed9b2a3e8f07 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -2068,6 +2068,11 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 		index += folio_nr_pages(folio);
- 		continue;
- out_unlock:
-+		/*
-+		 * The folio may have been unmapped with TTU_BATCH_FLUSH.
-+		 * Flush before releasing the lock and our last reference.
-+		 */
-+		try_to_unmap_flush();
- 		folio_unlock(folio);
- 		folio_put(folio);
- 		goto xa_unlocked;
-@@ -2078,9 +2083,8 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- xa_unlocked:
+diff --git a/mm/page-writeback.c b/mm/page-writeback.c
+index 757bc4d3b5b55..17b12b4c4b667 100644
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -902,6 +902,7 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+ {
+ 	struct wb_domain *dom = dtc_dom(dtc);
+ 	struct bdi_writeback *wb = dtc->wb;
++	u64 threshold = thresh;
+ 	u64 wb_thresh;
+ 	u64 wb_max_thresh;
+ 	unsigned long numerator, denominator;
+@@ -913,13 +914,14 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+ 	fprop_fraction_percpu(&dom->completions, dtc->wb_completions,
+ 			      &numerator, &denominator);
+ 
+-	wb_thresh = (thresh * (100 * BDI_RATIO_SCALE - bdi_min_ratio)) / (100 * BDI_RATIO_SCALE);
++	wb_thresh = div_u64(threshold * (100 * BDI_RATIO_SCALE - bdi_min_ratio),
++			    100 * BDI_RATIO_SCALE);
+ 	wb_thresh *= numerator;
+ 	wb_thresh = div64_ul(wb_thresh, denominator);
+ 
+ 	wb_min_max_ratio(wb, &wb_min_ratio, &wb_max_ratio);
+ 
+-	wb_thresh += (thresh * wb_min_ratio) / (100 * BDI_RATIO_SCALE);
++	wb_thresh += div_u64(threshold * wb_min_ratio, 100 * BDI_RATIO_SCALE);
  
  	/*
--	 * If collapse is successful, flush must be done now before copying.
--	 * If collapse is unsuccessful, does flush actually need to be done?
--	 * Do it anyway, to clear the state.
-+	 * Flush before copying the folios, or releasing them in rollback.
-+	 * This is a no-op if out_unlock already flushed the batch.
- 	 */
- 	try_to_unmap_flush();
+ 	 * It's very possible that wb_thresh is close to 0 not because the
+@@ -935,7 +937,7 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+ 			wb_thresh = max(wb_thresh, (thresh - dtc->dirty) / 8);
+ 	}
+ 
+-	wb_max_thresh = thresh * wb_max_ratio / (100 * BDI_RATIO_SCALE);
++	wb_max_thresh = div_u64(threshold * wb_max_ratio, 100 * BDI_RATIO_SCALE);
+ 	if (wb_thresh > wb_max_thresh)
+ 		wb_thresh = wb_max_thresh;
  
 -- 
 2.53.0
