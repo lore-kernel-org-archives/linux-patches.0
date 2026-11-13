@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590244;
-	b=Y/yghkX0OXGXTzlxIxWRrjOowYcaZnevcRvz5fsjeYqWTxaLgwTMkTgyJOLvcqguNtje
-	 YacpVARhhMAByqTg9/r7LyqXcAtNK/HSpHGgyv7bvKdeF6J2mq0aCEyyo3AD9gCP0mhQY
-	 RIA9dEtoAt/KyAgJuzgARAQt0v8cZKNFt1W0XgLqmk9OTITtjJIqw3RQ/jrQ8cjcB73wF
-	 rOJ3auZHtovbsXtkv9BIdsIadTTcXTjntIgB4z2DhX9eJ35x71ddAfpxK4ZHtNBcrahEI
-	 cNpffklbLNRsPyEZiVO+8VVBe9+BQtsjnsPZPEFzMfIfzkp3sxBJ1HfCQmLjAN/8few==
+	t=1794590245;
+	b=gLhghFHXj7+R6ttEWkHXNN28W/UXGxpZcbm3FCTdW681luPYSQWJARavqAZwBKfSmabI
+	 +AzssL0O7hpqn0GeGDQ4BZaCP+keJ9IatVdZIsbk9VBoKaezzjT2JNVQ/kNY7+hFEMCnS
+	 dPhJbjYRb78sjE/iWRm3GfaLy8EGg+Udb4sloGW1HQO10z/z2YpvHKvFAz+FmSawaUxmv
+	 PxpGVFTJStnEkj5EhInFcWx94dp+50A76IihHivoYc9T1sAT9fioKCjq02Etq7j1IoS34
+	 OubOsdFldi4bbgxmaXIZGiH4zEOoEuqW2c891ROhpZpGegJgPirzj+ajSVvDG5GxuxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590244;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590245;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wJ/o/8TIi1qnmOZcaEh37ZvUlGNkDj8qmeKtgx/YmTE=;
-	b=I+ea4peSfPPCtTyirDaIhxHrjX5yAGxdlIs/wrj11j5EHud7kivABSXo4NRJiesHEN2b
-	 7sQb2y/AoSzv+9tjjJDqEXPjNvNA+dxRM9JQKKgPObZ+rANxs+L4qrA04Vn+Rfod6Fh6H
-	 3Y2lRhiE34+k+2mvmWDNqEw02FjhLjiwnaxLgtJibslF1mOY4u4Rv9v4spDRtu/BMj92W
-	 lu/ocQmEVpu/VngNAKte5AGsIY9wtfHcrZ4eXld4Mn8s+2LfrRnHPQJN6wRLeyfw/bF/7
-	 JUSw3fc2IJF2ENrkOUeF8V5cRj3GGNJCdiwpHih60On0Viyi2zGw3eJOqvRFB6ja51A==
+	bh=qFe3h4gnIxABXJaHat80kcE79SJb7yY+1GNcO6A5EP8=;
+	b=mlmbqSpuahFt9cgrqhJMVmFmzSYdFRt+MH5PSyVS4lMYCPEDNYckn5X+BdmhAAJAAg/q
+	 dxmgkZ/ev7nWs+b0IE5Es/ipdGZXd8PVtzDhoqve8kVqdruFhJRu2dtwC0R8TYGdQ2Foa
+	 PUe2t7VrWVbZbEglbzQXQFFxCE7Vymz2Fps3XxZedJBv6pbSK48a6Vm6mp66w0+BGb6Z3
+	 yWfM9wyrHhguGPwq1kGfmDe3BYxQk4ijK5lnVR2vuBx6LzkAv0sW1hafOsfIoNtH0QxV6
+	 Foue5GSftbIXk0i7LBkA9v790ScqPPopDTvOwrydQ+TqImVa1LLJJpM4kDWtpL+HIKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yn2ocQMc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvnXMx3h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EB7606C0BD;
-	Fri, 13 Nov 2026 17:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AED4B6075E3E;
+	Fri, 13 Nov 2026 17:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yn2ocQMc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C911F000C4;
-	Fri, 13 Nov 2026 17:17:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hvnXMx3h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6381F000C8;
+	Fri, 13 Nov 2026 17:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590244;
-	bh=wJ/o/8TIi1qnmOZcaEh37ZvUlGNkDj8qmeKtgx/YmTE=;
+	s=korg; t=1794590245;
+	bh=qFe3h4gnIxABXJaHat80kcE79SJb7yY+1GNcO6A5EP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Yn2ocQMcx2VTgW1PjmpePNC6sPJgduMWnIpmxOc5x7PY9hsk7H0E2NXo8RJs+sjwY
-	 KfW9920G4UihrFqNUUmG5q5cLGUDFwO/B2odyMAatEHiyB3JHlzXhGwzuAiN4Rv0qQ
-	 MDFP19U/n+btHNjvAWnKEm4o++eMNOM/qZkhSbKM=
+	b=hvnXMx3h8FNDMPFqZUr5tJ+JXu5KWv9NCRqIcUwqhDSsv5pXklZKv3QSqUBJGR992
+	 3qFWgHaSQ3qNOmkIq13YNtKWeFNiw/gm7rlH/oLKXjrCldyIVE5/G9JAZM55acJt4G
+	 RN0uIbUq69rXickA5gdq8jFrxX5EcBxKkS9yyANo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Yao <yaolu@kylinos.cn>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
+	Charlton Lin <charlton.lin@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Vidya Srinivas <vidya.srinivas@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 242/686] drm/i915/gem: Reset err for each fence entry
-Date: Fri, 13 Nov 2026 10:46:15 -0500
-Message-ID: <20261113153829.260723572@linuxfoundation.org>
+Subject: [PATCH 6.18 243/686] drm/i915/display: Single scaler per pipe on WCL
+Date: Fri, 13 Nov 2026 10:46:16 -0500
+Message-ID: <20261113153829.293054181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,47 +70,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Yao <yaolu@kylinos.cn>
+From: Vidya Srinivas <vidya.srinivas@intel.com>
 
-[ Upstream commit 31643dc89818d9b65bf42ecb1c67c99b64146fba ]
+[ Upstream commit 25ea7671bdbc85820026776cbe22df41c560d518 ]
 
-If dma_fence_chain_find_seqno() failed once, 'err' will store val in
-the following loop. May causing returns '-EINVAL' even though that
-entry never called dma_fence_chain_find_seqno() at all.
+WCL has only one scaler per pipe. Set num_scalers to 1 for
+WCL.
 
-Fixes: 13149e8bafc4 ("drm/i915: add syncobj timeline support")
-Signed-off-by: Lu Yao <yaolu@kylinos.cn>
-Cc: <stable@vger.kernel.org> # v5.10+
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20261027072832.726435-1-yaolu@kylinos.cn
-(cherry picked from commit 4e9db08db75f55c920986ac929cfd82a4ee99f41)
+v2: Rebase onto latest upstream
+v3: Fix up the commit message
+v4: Split the scaler and joiner changes into separate patches (Jani)
+
+Bspec: 74286
+Fixes: f8e1c3e07db1 ("drm/i915/xe3lpd: Add support for display version 30.02")
+Cc: stable@vger.kernel.org
+Suggested-by: Charlton Lin <charlton.lin@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Vidya Srinivas <vidya.srinivas@intel.com>
+Signed-off-by: Uma Shankar <uma.shankar@intel.com>
+Link: https://patch.msgid.link/20261028070404.1913843-2-vidya.srinivas@intel.com
+(cherry picked from commit 8ff2ba499b20edf6c4aad89527a1e9a70c2b2074)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display_device.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index 61f1b8f172a76..e05b1e98c9b2b 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -2789,7 +2789,6 @@ add_timeline_fence_array(struct i915_execbuffer *eb,
- 	u64 __user *user_values;
- 	struct eb_fence *f;
- 	u64 nfences;
--	int err = 0;
- 
- 	nfences = timeline_fences->fence_count;
- 	if (!nfences)
-@@ -2827,6 +2826,7 @@ add_timeline_fence_array(struct i915_execbuffer *eb,
- 		struct drm_syncobj *syncobj;
- 		struct dma_fence *fence = NULL;
- 		u64 point;
-+		int err = 0;
- 
- 		if (__copy_from_user(&user_fence,
- 				     user_fences++,
+diff --git a/drivers/gpu/drm/i915/display/intel_display_device.c b/drivers/gpu/drm/i915/display/intel_display_device.c
+index f3f1f25b0f383..d94f07bda5ee6 100644
+--- a/drivers/gpu/drm/i915/display/intel_display_device.c
++++ b/drivers/gpu/drm/i915/display/intel_display_device.c
+@@ -1767,7 +1767,10 @@ static void __intel_display_device_info_runtime_init(struct intel_display *displ
+ 	if (display->platform.alderlake_s && IS_DISPLAY_STEP(display, STEP_A0, STEP_A2))
+ 		for_each_pipe(display, pipe)
+ 			display_runtime->num_scalers[pipe] = 0;
+-	else if (DISPLAY_VER(display) >= 11) {
++	else if (DISPLAY_VERx100(display) == 3002) {
++		for_each_pipe(display, pipe)
++			display_runtime->num_scalers[pipe] = 1;
++	} else if (DISPLAY_VER(display) >= 11) {
+ 		for_each_pipe(display, pipe)
+ 			display_runtime->num_scalers[pipe] = 2;
+ 	} else if (DISPLAY_VER(display) >= 9) {
 -- 
 2.53.0
 
