@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591095;
-	b=4ZHVTlhJFQRLcSOXWaeyzz6PylaY+liz75hH9PeitxnNQ3SwSx0GaPTP8O/OZpemVjnP
-	 NZa9gcCIg1X/iagLaVPkydyVjecm4L3in33On4qPgwnupI4SHoOwiTo4EwBHXjxEL8/M4
-	 jPgr3k8+tjX2T/6VN2i+SZTnOZzu+wHfrm1Nhqp99CGY+42Pyq/oRa/30sp5gGrACUy/k
-	 pU7YVIxwtYmp3NntAgtGu8oildklM5k744dbmmspnep4zvXaXIHgLfjVxlyTZGK8mbR7h
-	 E3hRxkPxf24lyZeDesI/ZC3w1UZJ2N/UdLg4rDccFETgPHDYP2Z6LOL+2QfpK0nQJ9g==
+	t=1794591096;
+	b=J5DVwvMr5bOvm9ZyL4iMLObw17ty1+OXoIJFcpHz/+Au4fvUxi3/5N8joUlqAMdi2wav
+	 Nr6qZQK7fjFJU7WkTxjxAF/eg8n6lXZQhIONlerQHo/jp0cSSZLUbLlA8Fm/zxp8qseUN
+	 Hjpv6CGKCbnnw37fQSO5UGEmxNeFKkOLOJW346ddDYzNGviyJ1tFyzCuMWnvAfYMX3YTX
+	 LRXe7n52Eonb5khjLtJ+a3eo9xrN+KvQuJ28fnZbTSuCWWD44hb0EXhjSR0YyZoGPErrg
+	 uc7k2HvRUYMDQo+B4JuN8J1imttVCtPpoOARBic2KNOjXg4vpd1zUC50kjGXbyp3o3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591095;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591096;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Fch+7l9qbGfJM+pXYfoz57fUh7i3r7+g6Tjs5hEkbH0=;
-	b=maNeulimqVt42ca9JlahJpd30cZh408gJmoMq3NRo/7bkASVPnMISWIch+hkZcavZALz
-	 CnK5J/uUFjUArq2LF7NLdoXu2q/DEwQGB7N9ZN7JI0usegDz/XnAXV9Ol03GcBYTi9Hij
-	 m0K8wVMv6Z4F4XkR9QrGIe085yzyn0i5aG4Zt+0i9NDJtKWWiGTQKqYNPFHcm9BH4mZu3
-	 lZb3I8oLWoDNVn7lTu3SLLglfNMu2kw/9IuYvMVI1h/IA3Hd4x86H2990XSc/MagBlssn
-	 Z0hIErIe+q8a5aj5z7gYOLbEx2/glP7MZQjBAqg4tVgNvqdXqfRPDA8OvkU4BRIxYHw==
+	bh=TjAghrY7GTnjldPexS+A3Aij+ck3yHsQlYS5uyIziC4=;
+	b=4ukI4xrXt5xzh6I9yxB2NZ9CfhW/Bqp1c71Ve5EOmPhVRCZjUbU7kbjAfdLatLvAjhEr
+	 /fakyvlrw06LAw4kMVUr4KmwFYU2IE+aXX36i9C0FlkseWptEfPfvXWmmhLQhtsAPuqwE
+	 iByHQV+EAqEzZJSgpJVjGY7Lc7w81Swmb1wYGocQe9lW1JXdvdlSq5RcRzsvhmdz7z4yd
+	 srpr+k5yMJQjVq4zC1vOW0tDAYHxxno2MjG/f3BKqTbFudew0Hp3Y5cTYilOZbAhWqS/5
+	 iM0ofT8dNoBAj8iXFqwlGby1sSE2g2jiEO31ovFKbmOcT37BUUs4UNRL+MUcA15bcHw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a65h9XfE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ev46DKI0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D5A606A880;
-	Fri, 13 Nov 2026 17:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46463607321F;
+	Fri, 13 Nov 2026 17:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a65h9XfE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D581F000C4;
-	Fri, 13 Nov 2026 17:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ev46DKI0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E786C1F000C4;
+	Fri, 13 Nov 2026 17:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591094;
-	bh=Fch+7l9qbGfJM+pXYfoz57fUh7i3r7+g6Tjs5hEkbH0=;
+	s=korg; t=1794591096;
+	bh=TjAghrY7GTnjldPexS+A3Aij+ck3yHsQlYS5uyIziC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a65h9XfErPKr5JaCDq1caJX/j8SeDfs3BqE+Q/GYDid4AFdl/k/DMiDKZmX+0CdTX
-	 L/+aC+6PAH+XNG/N/wvHpnRFqVAQAekz0S9sIBbDhu1MR5YwHXb+RX3+CR3td4uEsz
-	 Hh6sDCHnb2BAo+wtlBlgIDVff1rgxho3pq0m9qeE=
+	b=Ev46DKI0lfDAlDW7swQu5NQjAFoGP9CFgFmw6b3H8YrEbf30df+VsAycf3LF99azL
+	 740S78B/9eNZYjdTfx3BhWab2rot6+EuxlKoypzPAUaSMzz5lwKsNj528tOf+8cmwt
+	 c8fngVCVGgCfCixfPYOpsIBhv9VAodkbATZcpU+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sven Eckelmann <sven@narfation.org>,
+	Franck Baur <franck.baur.67@gmail.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 198/670] batman-adv: stop originator purge worker before freeing TT
-Date: Fri, 13 Nov 2026 10:46:02 -0500
-Message-ID: <20261113153818.690783459@linuxfoundation.org>
+Subject: [PATCH 6.12 199/670] net: jme: keep RX MAC clock enabled for WoL
+Date: Fri, 13 Nov 2026 10:46:03 -0500
+Message-ID: <20261113153818.720569381@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,55 +68,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Franck Baur <franck.baur.67@gmail.com>
 
-[ Upstream commit f89eda5a9ccf82cba06b085b42ebc4886b8dfe9e ]
+[ Upstream commit ed9179fc7228315fb745dc3b111bae446e6894d2 ]
 
-batadv_mesh_free() releases the translation tables via batadv_tt_free()
-before batadv_originator_free() stops orig_work. The purge worker can
-therefore still run while the TT is torn down. When an originator times
-out, batadv_purge_orig_ref() calls batadv_tt_global_del_orig(), which
-loads tt.global_hash and walks all buckets while taking their locks:
+On the JMicron JMC250 revision 03, the MAC reset performed during
+suspend leaves GPREG1_RXCLKOFF set. Although the driver enables Magic
+Packet detection, the gated RX MAC clock prevents wake-up from ACPI S3.
 
-  CPU0                          CPU1
-  batadv_tt_free()              batadv_purge_orig()
-                                  batadv_tt_global_del_orig()
-                                    hash = ...tt.global_hash;
-    batadv_tt_global_table_free()
-      batadv_hash_destroy(hash);
-                                    spin_lock_bh(&hash->list_locks[i]);
+Keep the RX MAC clock enabled while WoL is armed. Restore the gated
+clock state immediately after disabling WoL during resume, preserving
+the RX engine initialization ordering.
 
-Disable orig_work at the beginning of batadv_mesh_free(), directly after
-the mesh was marked as deactivating. The second
-disable_delayed_work_sync() in batadv_originator_free() is harmless because
-it is free'd anyway.
+Prevent concurrent link-change work from gating the clock again after
+WoL has been armed. Quiesce interrupt-driven link-change scheduling,
+synchronize pending interrupts, and cancel outstanding link-change
+work before programming WoL in suspend and shutdown paths.
 
+Restore the deferred processing state before requesting link
+reinitialization on resume.
+
+Tested on an ASUS K42JE with JMC250 [197b:0250] rev 03 using a
+Debian 6.12.111 kernel and an externally built module. ACPI S3 wake
+with a Magic Packet completed in 19 seconds, while a control without
+a Magic Packet resumed through the RTC alarm after 123 seconds.
+Ethernet and SSH recovered after resume.
+
+S4 and S5 wake behaviour has not been validated with this revision.
+
+Fixes: 854a2e7c331a ("jme: Safer MAC processor reset sequence")
 Cc: stable@vger.kernel.org
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260708091821.314516-1-sw%40simonwunderlich.de?part=3
-Fixes: 9d31b3ce8168 ("batman-adv: fix potential TT client + orig-node memory leak")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Assisted-by: LLM
+Signed-off-by: Franck Baur <franck.baur.67@gmail.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/jme.c | 37 ++++++++++++++++++++++++++++++++-----
+ drivers/net/ethernet/jme.h |  1 +
+ 2 files changed, 33 insertions(+), 5 deletions(-)
 
-diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
-index 55055d3290e74..ccfe1c7f33edc 100644
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -263,6 +263,11 @@ void batadv_mesh_free(struct net_device *soft_iface)
+diff --git a/drivers/net/ethernet/jme.c b/drivers/net/ethernet/jme.c
+index d8be0e4dcb072..6cfcfda055545 100644
+--- a/drivers/net/ethernet/jme.c
++++ b/drivers/net/ethernet/jme.c
+@@ -1502,7 +1502,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
+ 		 * all other events are ignored
+ 		 */
+ 		jwrite32(jme, JME_IEVE, intrstat);
+-		schedule_work(&jme->linkch_task);
++		if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
++			schedule_work(&jme->linkch_task);
+ 		goto out_reenable;
+ 	}
  
- 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
+@@ -1546,7 +1547,8 @@ jme_intr_msi(struct jme_adapter *jme, u32 intrstat)
+ 	/*
+ 	 * Re-enable interrupt
+ 	 */
+-	jwrite32f(jme, JME_IENS, INTR_ENABLE);
++	if (!test_bit(JME_FLAG_WOL_QUIESCE, &jme->flags))
++		jwrite32f(jme, JME_IENS, INTR_ENABLE);
+ }
  
-+	/* the originator purge worker accesses (among others) the TT tables
-+	 * and must therefore be stopped before any of them are freed
-+	 */
-+	disable_delayed_work_sync(&bat_priv->orig_work);
+ static irqreturn_t
+@@ -1892,6 +1894,7 @@ jme_powersave_phy(struct jme_adapter *jme)
+ 		jme_set_100m_half(jme);
+ 		if (jme->reg_pmcs & (PMCS_LFEN | PMCS_LREN))
+ 			jme_wait_link(jme);
++		jme_mac_rxclk_on(jme);
+ 		jme_clear_pm_enable_wol(jme);
+ 	} else {
+ 		jme_phy_off(jme);
+@@ -3158,6 +3161,21 @@ jme_shutdown(struct pci_dev *pdev)
+ 	struct net_device *netdev = pci_get_drvdata(pdev);
+ 	struct jme_adapter *jme = netdev_priv(netdev);
+ 
++	if (netif_running(netdev)) {
++		set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
++		netif_device_detach(netdev);
++		netif_stop_queue(netdev);
++		jme_stop_irq(jme);
++		synchronize_irq(pdev->irq);
++		jme_stop_irq(jme);
++		cancel_work_sync(&jme->linkch_task);
++		tasklet_disable(&jme->pcc_task);
++		napi_disable(&jme->napi);
++		tasklet_disable(&jme->txclean_task);
++		tasklet_disable(&jme->rxclean_task);
++		tasklet_disable(&jme->rxempty_task);
++	}
 +
- 	batadv_purge_outstanding_packets(bat_priv, NULL);
- 	batadv_tp_stop_all(bat_priv);
+ 	jme_powersave_phy(jme);
+ 	pci_pme_active(pdev, true);
+ }
+@@ -3172,11 +3190,16 @@ jme_suspend(struct device *dev)
+ 	if (!netif_running(netdev))
+ 		return 0;
  
+-	atomic_dec(&jme->link_changing);
+-
++	set_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
+ 	netif_device_detach(netdev);
+ 	netif_stop_queue(netdev);
+ 	jme_stop_irq(jme);
++	synchronize_irq(jme->pdev->irq);
++	jme_stop_irq(jme);
++	cancel_work_sync(&jme->linkch_task);
++	tasklet_disable(&jme->pcc_task);
++	napi_disable(&jme->napi);
++	atomic_dec(&jme->link_changing);
+ 
+ 	tasklet_disable(&jme->txclean_task);
+ 	tasklet_disable(&jme->rxclean_task);
+@@ -3215,6 +3238,7 @@ jme_resume(struct device *dev)
+ 		return 0;
+ 
+ 	jme_clear_pm_disable_wol(jme);
++	jme_mac_rxclk_off(jme);
+ 	jme_phy_on(jme);
+ 	if (test_bit(JME_FLAG_SSET, &jme->flags))
+ 		jme_set_link_ksettings(netdev, &jme->old_cmd);
+@@ -3226,8 +3250,11 @@ jme_resume(struct device *dev)
+ 
+ 	atomic_inc(&jme->link_changing);
+ 
+-	jme_reset_link(jme);
++	napi_enable(&jme->napi);
++	tasklet_enable(&jme->pcc_task);
++	clear_bit(JME_FLAG_WOL_QUIESCE, &jme->flags);
+ 
++	jme_reset_link(jme);
+ 	jme_start_irq(jme);
+ 
+ 	return 0;
+diff --git a/drivers/net/ethernet/jme.h b/drivers/net/ethernet/jme.h
+index 860494ff37144..ec5dfddf73227 100644
+--- a/drivers/net/ethernet/jme.h
++++ b/drivers/net/ethernet/jme.h
+@@ -450,6 +450,7 @@ enum jme_flags_bits {
+ 	JME_FLAG_SSET		= 2,
+ 	JME_FLAG_POLL		= 5,
+ 	JME_FLAG_SHUTDOWN	= 6,
++	JME_FLAG_WOL_QUIESCE	= 7,
+ };
+ 
+ #define TX_TIMEOUT		(5 * HZ)
 -- 
 2.53.0
 
