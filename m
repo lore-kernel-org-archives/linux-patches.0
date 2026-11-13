@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590314;
-	b=meeHPtmBYo/tVQvIcDQgYpGm7ob751FL9rnkc+m0+C67O9IO8yS6HnT1nnX9rtFA8/Oh
-	 pYfumoRybAa8FYxCWMiRIJLQcfUcXgwtX+l1il1AcXCj8/Z3w/W9Sl7PFT/ZuwcF3P6sB
-	 /pYw48ff8NPVrgigXDB65/jpbKtyNORNJEAs2Wp8ysrWU0jMdYkeErHu1uzP1X0QMQ2Nb
-	 emraaonijZYJ2PPgA6xEsTRm6rBK2G2tiRi9tmhtHj2DUqFaJyAOy/pV67J835lPh8MnS
-	 xiYx4vU8fa7vZM2THy0P3Mh4ERKcTaYqgaogiHoMekcDxZWptMc16QTUPL/uAKq7wAw==
+	t=1794590316;
+	b=4cdgwVeifprV2SGTeyz3mpbz7bfW6Jnj0tn7ycpbGxMO5pJwouIA9ASroz/p/ltsrsiW
+	 NmpH1cU+A51uctz/0Eo+teLOxQ0pxdfNpjGmhRJ44NAS9VKbdRfGxWb0T3mPCKrXdXpcy
+	 xyq2oNsILhtou97iWqgTI6OcjD/PVfSBtagMPvItZMBTWU+jGpuregCjODQt+wo68vaPz
+	 LS0Y3fOd458I3Sg3T5lqZIEb7zfXCoLz2tOhcLyjueQgAX+U2I/bh1mxga//HcwqEriW5
+	 r6vrtHUyOxAXKYON9Zc0GHbcbysxM5KlA4ZIIYc/UYDofcDEx0pkFgHAAlwPgDQsMDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590316;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GkNS4kidgLFGuJbIrYYbH5RcAqGHbrdGD5rp1hAPyLk=;
-	b=wM9+tMv4jtYSNV9KeSPL3b8wdPF5GnIil+lsIZe2S3pUe2I2CI/V9Z9fghRJQAhdT1/g
-	 bshd72sxBGAKhvxAm+4PAlu2m70KZB86bhgsbg4KbvUE3Jax1EdofAuuuMxuXs8D0A2vd
-	 dbb4gfKOfdLzF0N66polJpL6X+Tzfg9X56KB9X0t1+hGW6AiRNCFKFpSjQE43Pmoy92q6
-	 h06fnlKYy8JRzK60j0MHlDcH/zufSfRLV83BK2era9weSulAUssQBlAaI9emKcqxbPa62
-	 ghgcVEepUYIcXPr/KPo4sGeHpeTqEz7s2lIg85eQIWEX6XlDSNbw0QwhO/AjGHQ+2Jg==
+	bh=lh+VMbcCyIC/+cC/bJtOfvsQyIAJMTFwplkQws2VmEs=;
+	b=RZof5ZQMiGhuAlMUwL+/d+bU7NRdt//P/c4u1hCevRXZlm5cJ4vtVWNOzbIwoZG4xfcX
+	 9BD2FXFu2B4vaEs0N6XFpTCm0rbgnNQlKtqL+WRbhee5tgDNrn512GcSOl8OEVZPgqI93
+	 rxrDfX0ecsUknPWDDhYTKoFt3tPPY1Zx6JQAZff8e+1fsGW1xkjIiTAFQnpXa6Pro7Gtf
+	 M4xhoMrzdRVyhxfnjMTpkxavVVezvIJbsnedUyzMpwtucaNkYi9vAoAClgcBuun+939AS
+	 ghjlZuuM1Xz/vjFDucLru6NF5AUcuw/xwzTAvHQwSeith3r3KBH9S8F8cP6ozoLSq7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IUaqJowI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w1bCCRfE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8667607D2E1;
-	Fri, 13 Nov 2026 17:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067EB607D2FB;
+	Fri, 13 Nov 2026 17:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IUaqJowI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BDEC1F000C4;
-	Fri, 13 Nov 2026 17:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w1bCCRfE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6A31F000C4;
+	Fri, 13 Nov 2026 17:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590314;
-	bh=GkNS4kidgLFGuJbIrYYbH5RcAqGHbrdGD5rp1hAPyLk=;
+	s=korg; t=1794590315;
+	bh=lh+VMbcCyIC/+cC/bJtOfvsQyIAJMTFwplkQws2VmEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IUaqJowINWTJfZFWMje0vLXK4ThX8qmTZXBH+MIlC9jKcfqG4gyNpkMxKxmQ/lu9a
-	 +ceO5XPkiBmrGCCwP20pLIzplsWaK+Ks0qqQzl4H4IJ93ynJIU1aQY7uwTSwS0GaO3
-	 Ie1eAydbvDG7N6i5vs0GmD5IrTzwP5XMIzIY/SjE=
+	b=w1bCCRfE2/OF2Kf/2iBhMov5Tn3f9BRtiwpIFXEg+H2Cy76ul79IunLXRURWD04BI
+	 Mdkt5IxBZ+HSjUdMPDKRbLM710MLRahnzMcx/2yyAmyiVNQN4e0oTg3DxFus7kgblM
+	 BBG8hl4xW5oyjBZQLt2lsvlnX/JYYM23a2g1Vwdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	James Houghton <jthoughton@google.com>,
-	Yosry Ahmed <yosry@kernel.org>,
-	David Woodhouse <dwmw2@infradead.org>,
 	Stefan Teodorescu <fane@google.com>,
+	Oren Yomtov <thenameisoren@gmail.com>,
+	Chris Mason <mason@kernel.org>,
+	Yosry Ahmed <yosry@kernel.org>,
 	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 298/686] KVM: x86/mmu: Cap number of parent PTEs per SP at 1000 (the arbitrary rmap limit)
-Date: Fri, 13 Nov 2026 10:47:11 -0500
-Message-ID: <20261113153831.055379402@linuxfoundation.org>
+Subject: [PATCH 6.18 299/686] KVM: x86: Unconditionally reset MMU context when emulating INIT
+Date: Fri, 13 Nov 2026 10:47:12 -0500
+Message-ID: <20261113153831.089823703@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -75,82 +74,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit e4558c3d7198ed9a0adc3304681f561f4e4d80e1 ]
+[ Upstream commit c7c288d178cb0b78d3464a616b16b1aa0b316049 ]
 
-When potentially reusing a shadow page, zap the shadow page if its number
-of parent PTEs exceeds KVM's (mostly) arbitrary rmap recycling threshold.
-Letting the guest create a (mostly) unbounded number of parent PTEs allows
-the guest to coerce KVM into creating lists containing millions of PTEs,
-effectively bounded only by the maximum number of shadow pages.
+Force an MMU reset when emulating an INIT even if paging was already
+disabled, as the MMU page role includes guest_mode (L2), i.e. an INIT while
+L2 is running with CR0.PG=0 will result in KVM running L1 with a stale MMU
+context.
 
-Because PTE lists are simple singly linked lists, removal is O(n).  Even
-worse, if a list is constructed just so, teardown can be O(n^2), e.g. if
-SPTEs are built such that zapping child SPTEs always zaps the last entry
-in the list.  To cap things off, all paths that walk PTE lists do so
-while holding mmu_lock, without conditionally rescheduling.
+Alternatively, the reset could be scoped strictly to paging being enabled
+or L2 being active, but SMM is also encoded in the page role.  Even though
+it _should_ be impossible for the vCPU to be INIT'd while SMM is active,
+there's zero value in not handling SMM.  At that point, the only scenario
+where KVM _doesn't_ need to reset the MMU context is on an INIT with the
+vCPU running in Real Mode or Unpaged Protect Mode, and while INIT in those
+modes is somewhat common, it's far from a hot path and re-initializing the
+MMU is not expensive, especially when the role isn't changing (KVM elides
+most of the re-configuration in that case).
 
-Using a doubly linked list would not address the issue, as removal would
-remain O(n) since KVM still wouldn't know where in the list to remove from.
-Removal could be made O(1) by storing a per-SPTE pointer, but that would
-largely defeat the purpose of reusing SPs, and would penalize well-behaved
-guests, especially for nested TDP where aliasing page tables is uncommon.
+Note, like the Fixes commit, this bug only affects nested SVM as INIT is an
+unconditional intercept on VMX, i.e. it's impossible to emulate INIT while
+L2 is active.
 
-So, cap the maximum number of parent PTEs at the rmap limit.  In practice,
-well-behaved guests will likely never run afoul of the limit.  E.g. when
-running Linux as L1 with TDP, the number of parent PTEs for a single SP
-tops out at under 200 (though undoubtedly obscure workloads can push it
-higher).  Deliberately use a "greater than or equal" as opposed to rmap's
-strictly "greater than", as the rmap code checks the threshold immediately
-*after* inserting into the list, i.e. the limit is 1000 for rmaps, KVM just
-very briefly blows past it.
+Temporarily keep the guest TLB flush when CR0.PG is being cleared even
+though it is fully redundant with the flush that is emitted on all INIT
+events (KVM itself only does RESET when a vCPU is being created, i.e. when
+CR0.PG must be '0').
 
-Apply the check to both indirect and direct SPs, because while a fully
-direct MMU naturally limits the number of parent PTEs to '1', direct SPs in
-indirect MMUs have no such constraint.  E.g. if the guest maps a huge PTE
-into many locations in its page tables, and KVM is backing the hugepage
-with a direct SP, i.e. with a series of smaller pages, then KVM could end
-up with a direct SP with many parents.
-
-Note, shadow_mmu_try_split_huge_pages() always restarts the rmap walk or
-bails entirely if it gets to the point where it tries to grab a SP, i.e.
-there is *no* pre-existing bug that would be tripped by zapping a SP and
-thus rmaps when getting a SP.
-
-Cc: Jim Mattson <jmattson@google.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Yosry Ahmed <yosry@kernel.org>
-Cc: David Woodhouse <dwmw2@infradead.org>
-Cc: stable@vger.kernel.org
+Fixes: ed129ec9057f ("KVM: x86: forcibly leave nested mode on vCPU reset")
 Reported-by: Stefan Teodorescu <fane@google.com>
+Reported-by: Oren Yomtov <thenameisoren@gmail.com>
+Reported-by: Chris Mason <mason@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: Yosry Ahmed <yosry@kernel.org>
 Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261027171518.1432557-1-seanjc@google.com>
+Message-ID: <20261022015407.279870-2-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kvm/x86.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 24f22c10e6774..3b1fb5696ed65 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -2279,6 +2279,16 @@ static struct kvm_mmu_page *kvm_mmu_find_shadow_page(struct kvm *kvm,
- 			continue;
- 		}
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 0a6fb6e08d1bd..3ca396316d3cf 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -12278,18 +12278,23 @@ void kvm_vcpu_reset(struct kvm_vcpu *vcpu, bool init_event)
+ 	kvm_x86_call(set_efer)(vcpu, 0);
+ 	kvm_x86_call(update_exception_bitmap)(vcpu);
  
-+		/*
-+		 * Note!  Unlike fully direct MMUs, direct SPs in indirect MMUs
-+		 * can have an arbitrary number of parents, e.g if the guest is
-+		 * mapping a huge PTE at many points in its page tables.
-+		 */
-+		if (pte_list_count(&sp->parent_ptes) >= RMAP_RECYCLE_THRESHOLD) {
-+			kvm_mmu_prepare_zap_page(kvm, sp, &invalid_list);
-+			break;
-+		}
++	if (old_cr0 & X86_CR0_PG)
++		kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
 +
- 		/* unsync and write-flooding only apply to indirect SPs. */
- 		if (sp->role.direct)
- 			goto out;
+ 	/*
+-	 * On the standard CR0/CR4/EFER modification paths, there are several
+-	 * complex conditions determining whether the MMU has to be reset and/or
+-	 * which PCIDs have to be flushed.  However, CR0.WP and the paging-related
+-	 * bits in CR4 and EFER are irrelevant if CR0.PG was '0'; and a reset+flush
+-	 * is needed anyway if CR0.PG was '1' (which can only happen for INIT, as
+-	 * CR0 will be '0' prior to RESET).  So we only need to check CR0.PG here.
++	 * Unconditionally reset the MMU, even though super strictly speaking,
++	 * a MMU reset is only necessary if and only one of the page role bits
++	 * is changing.  All of the CR0/CR4/EFER bits effectively get covered
++	 * by checking CR0.PG=1, as CR0.WP and the paging-related bits in CR4
++	 * and EFER are irrelevant if CR0.PG was '0'.  Subtly, if the vCPU was
++	 * in guest mode (L2) or SMM (although emulating INIT in SMM _should_
++	 * be impossible), an MMU reset is also necessary as "guest mode" and
++	 * "smm" are both encoded in the shadow page role.  As a result, the
++	 * only scenarios where an MMU reset is *not* needed is if the vCPU is
++	 * in Real Mode or Unpaged Protected Mode, and micro-optimizing those
++	 * paths are not worth the risk of running with a stale MMU context.
+ 	 */
+-	if (old_cr0 & X86_CR0_PG) {
+-		kvm_make_request(KVM_REQ_TLB_FLUSH_GUEST, vcpu);
+-		kvm_mmu_reset_context(vcpu);
+-	}
++	kvm_mmu_reset_context(vcpu);
+ 
+ 	/*
+ 	 * Intel's SDM states that all TLB entries are flushed on INIT.  AMD's
 -- 
 2.53.0
 
