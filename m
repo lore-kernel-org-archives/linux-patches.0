@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585834;
-	b=PQXGO8zhTiSEd0u1apW4/gKdpyraffTTDnjo5HdhNtOFWCbbMv9u0aMR9Ey3rPFjP+WY
-	 JWrsKb8FhEZRDdd+T4lyNeMUfLtaeEXSeMAF/7m3o0DXmpLFkmKHvRbl/Pku7GQrMHb5I
-	 aCboHC87DHl5lKwVGpq46SlvS6HtH7Cwdo2Owd4vQPr9rePTVmWrroPyYDDL47RnhLzUH
-	 maS2p/Qpb7vfHQyBU/ZxIESvygF81KsvWa7DJkCpHIr4Vcl+H3MxpCbjTVaNYSx0sqmcP
-	 CIv9fRwzlgxcOrzblX6rtGlU/ITR4HoJAABBMwDzxMDZVrDJL4JAnw/Idb+rQDmBbUg==
+	t=1794585835;
+	b=gSb861ynqPeVPtdvCJJLLdyjR5p56FmmPLXm4Ek1dMfKuGI4tRoagPWRVDYeO6cWc+Ui
+	 DbkFCZbb+0zddiJimHP7bEWPEaQ3Ev9aF8MTXBBh/RM4kBwdAfEVUKJRdcSzA7LHY+Ocg
+	 +yZYPKO5ZdxtOJM6EcM87UmYixzZpRN/VWwQClGdEbDi7QgIpi8eHFrjbM4dR+hPrSx6M
+	 wv7d/Fp1sp3Ovnv+xFAqH3dTN2pwe5oF3dj6pyzleVOD4N4BP4FX4DKWKJ9Eg0kkyiVOy
+	 GbN4BwEA2ZiJoH5gZudsUAg8Xy8hXb8dJ3w7cDbZ8FVAEFuDDH3JBh8Zd/iA2vTDjhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585834;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IIokZIQGc+lQ9SSmCZJw+YGNpxHcTlkI7kDGwilijdQ=;
-	b=edIMchV1i1qqriqeO0FWgsIqJya+uNgaHHc9INlw9BH5ZpNtfhtL6ELwvGN1OCGGC6vR
-	 J5UVKObKRJHQ5VC1Xdm+DXjTPC3aC0o8uYMjBt1LYsMBAPHk8Gc+1iK3rlSbjiPJXOXx4
-	 iqbpKEUFxl+3sK/hlNu2F/xvql3h+uvYfrajV+Whof5YQOVZQWcOROf9PgddHEjyItLHP
-	 WufSLrq3ugGyzuO/dvTFEW5UFfzRqHud63prsW9mCQIsf+VNGZj+HpMBEYGl1y2POqiaZ
-	 06D4GonSzNM8RqSi1oO5RxPBe0TmfeNNdJl8Wtw+B295ZxHqModIKyWyAZKY5GV7uVw==
+	bh=n+iYoqImGicct81/gqLRWPr7amJyeQQ/wBQweR2OEZg=;
+	b=gE2a7Cu86h3zJBgsIgeHr7LeYWVkF1rYSqnbfByAsz7JH3I4/HTFK8/p/0771XI+1ubq
+	 9T3DC1cvSLDo4tdWQh/+6dIMDVkLDFVNSM5i2JX54ZbN7j3uJfne4RMdAhQl8X96xVC4I
+	 VQSJokDhRhndxu0VVYGesZb99qD0I13WGyYVQbjKS7J5/0nPSZumcQMbicbnKyNH2r/7V
+	 EV+pCCbCcvTMb027H5JkzFOjD7kczi1i3cp2fLAUF1QQjGJNYsjsdhuDvRHAYNDo1y4YN
+	 nZd5X8g2tagM8Hvl8WUuI30e3KN8wvEie54lz74HBr0Dji/9/czwrkM/qf3CZbKcYDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkD47mHq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2f0QFBQa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09909606BAA6;
-	Fri, 13 Nov 2026 16:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43806606BAA6;
+	Fri, 13 Nov 2026 16:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jkD47mHq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24A21F000C4;
-	Fri, 13 Nov 2026 16:03:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2f0QFBQa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CA11F000C4;
+	Fri, 13 Nov 2026 16:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585833;
-	bh=IIokZIQGc+lQ9SSmCZJw+YGNpxHcTlkI7kDGwilijdQ=;
+	s=korg; t=1794585835;
+	bh=n+iYoqImGicct81/gqLRWPr7amJyeQQ/wBQweR2OEZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jkD47mHqh2jhzS+FsaSH945OnDKEKXwTXtJw+D8GtRH/lhkQPKNO9leCPwlYH3FUK
-	 iyYx6WdXOqXnJ/FRL8PISK0TOx2lsNydIkDl2mhPxVih3sf8rAg7nX91He73bhsxDJ
-	 bxfwmvv08MWAI/7G7SgxIaTsFX0lGyNPzjFThxxY=
+	b=2f0QFBQa1iaH/gPlCY2dUWBqWKskNg7AbSt6za6rikatxcxGF4DCeuyuYjuU2G3HA
+	 /sTOVlsmWNQqzx0BKE17vgqGtX0LZIPgGygnZjcAGUfTKZANDjih36qaxarzuYQ/jp
+	 ikx7bBJzJ0MxAgjjvB2dNXaxn3hHgucPSRDoYGs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Wang <kevin.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Erhan Bilgili <erhan.bilgili@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 371/507] drm/amd/pm: populate unique ID for smu 13.0.7
-Date: Fri, 13 Nov 2026 10:51:15 -0500
-Message-ID: <20261113153808.687036107@linuxfoundation.org>
+Subject: [PATCH 7.3 372/507] drm/amdgpu: Fix duplicate dependency fence releases
+Date: Fri, 13 Nov 2026 10:51:16 -0500
+Message-ID: <20261113153808.766405147@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,66 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Wang <kevin.wang@amd.com>
+From: Erhan Bilgili <erhan.bilgili@gmail.com>
 
-[ Upstream commit 079f9103d9cde68fb2ccc414e94520f43ee102de ]
+[ Upstream commit ea47f84199241dd083d40a241beea665415d4f6c ]
 
-The smu 13.0.7 backend does not register get_unique_id, leaving
-adev->unique_id at zero and KFD topology without the stable GPU
-identifier consumed by HIP.
+drm_sched_job_add_dependency() consumes its fence reference on success
+and failure. Do not release the fence again if
+drm_sched_job_add_dependency() fails.
 
-The failure is observed at:
-    auto ierr = hipDeviceGetUuid(&uuid, 0);
-
-Fixes: 113cc31dde66 ("drm/amd/pm: add SMU_13_0_7 ppt_funcs for SMU_13_0_7")
-Signed-off-by: Kevin Wang <kevin.wang@amd.com>
-Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Fixes: 41cc108b2451 ("drm/amdgpu: fix missing dma_fence_put in error path")
+Fixes: c1c4a8b21721 ("drm/amdgpu: grab extra fence reference for drm_sched_job_add_dependency")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Erhan Bilgili <erhan.bilgili@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5e2585daaf8336d9ce1bf52e55a9b7a8cdbf625b)
+(cherry picked from commit e04f3dfb2071451633e6440a3911a9bb65df9144)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c  | 20 +++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c    | 4 +---
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c | 1 -
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-index 8285d4a91589a..13e7e33fa0eb2 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -2912,6 +2912,25 @@ static int smu_v13_0_7_mode1_reset(struct smu_context *smu)
-    return ret;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
+index d6ae9974c952e..4f31021b21520 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sync.c
+@@ -447,10 +447,8 @@ int amdgpu_sync_push_to_job(struct amdgpu_sync *sync, struct amdgpu_job *job)
+ 
+ 		dma_fence_get(f);
+ 		r = drm_sched_job_add_dependency(&job->base, f);
+-		if (r) {
+-			dma_fence_put(f);
++		if (r)
+ 			return r;
+-		}
+ 	}
+ 	return 0;
  }
- 
-+static void smu_v13_0_7_get_unique_id(struct smu_context *smu)
-+{
-+	SmuMetricsExternal_t metrics_external;
-+	SmuMetrics_t *metrics = &metrics_external.SmuMetrics;
-+	struct amdgpu_device *adev = smu->adev;
-+	u32 upper32 = 0, lower32 = 0;
-+	int ret;
-+
-+	ret = smu_cmn_get_metrics_table(smu, &metrics_external, false);
-+	if (ret)
-+		goto out;
-+
-+	upper32 = metrics->PublicSerialNumberUpper;
-+	lower32 = metrics->PublicSerialNumberLower;
-+
-+out:
-+	adev->unique_id = ((u64)upper32 << 32) | lower32;
-+}
-+
- static void smu_v13_0_7_init_msg_ctl(struct smu_context *smu)
- {
- 	struct amdgpu_device *adev = smu->adev;
-@@ -2995,6 +3014,7 @@ static const struct pptable_funcs smu_v13_0_7_ppt_funcs = {
- 	.enable_uclk_shadow = smu_v13_0_enable_uclk_shadow,
- 	.set_wbrf_exclusion_ranges = smu_v13_0_set_wbrf_exclusion_ranges,
- 	.interrupt_work = smu_v13_0_interrupt_work,
-+	.get_unique_id = smu_v13_0_7_get_unique_id,
- };
- 
- void smu_v13_0_7_set_ppt_funcs(struct smu_context *smu)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+index eb8cf0d9d9c59..652266e937664 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm_sdma.c
+@@ -234,7 +234,6 @@ static int amdgpu_vm_sdma_update(struct amdgpu_vm_update_params *p,
+ 		dma_fence_get(fence);
+ 		r = drm_sched_job_add_dependency(&p->job->base, fence);
+ 		if (r) {
+-			dma_fence_put(fence);
+ 			dma_resv_iter_end(&cursor);
+ 			return r;
+ 		}
 -- 
 2.53.0
 
