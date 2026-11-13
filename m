@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590490;
-	b=l70HuNntjV+pFoq0hJuzdqDjkp0z66X9sUKHNQGlEcjMsHTb3HMFhlvHrvinvsq1fkXX
-	 jU9j6vdqpJVwB2cBdYO+vXUei3/VPoxg/bfaO8SPy4o5uhECXJY6s/KMXQUjXrTTFrFO0
-	 +pQV78PDLmrMQ1fM8Dg4EnjDW4YV84vijjcclBGugMi0EY5WcUNI9/PYFx55Vz2rONkX1
-	 MyIQSXIVUkqeFDTV7003ejC7X1XtyUaPIDiBXHjv0vyYbQZBwITXKDcfkE83LZfzL+Bqv
-	 DBBuEuSYwCi3a6HQ9+GZHzwfIDda+Boaogqh9pCb58SCwzOKc6fpuJaai5JcQWp4RDg==
+	t=1794590491;
+	b=nmQtSle+1S+4amlGzybrOiFEhX/5awswx+xpFlZ5QWD3fmqPZMVYAkLghD7Hrf7VhFao
+	 +xS5R2HVUKvFcX/mP7gm8/Pm31gJKvua4zKODjJcwXMa7Em16u6e1DoI85xibS5HNXy2V
+	 6EmW+JkK164hEQWt7AO6EBKfhRpP/LWsPigqMalUoHf/7CszMpIGInMwv+F/pCPO56gYQ
+	 CKCZigYpMv0M0h13/rhCg4cCJcGL0a+1SO5YMW3lVxdEYNCW0Gokki6+d0tiPMrf7Ld1n
+	 mHlqpzZpmDgHFvgXjgrqMtZXtlY29Rx4xSU9ilx/pfVgBJWQcjm5o1erV1fo5T3ChOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590490;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590491;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IJ6AO+k4gvREq4WVT3cAF/j/r+YWRexswUUZeqqwBVo=;
-	b=ULP3RJOfj8r8kEtwQa4fCjQFOJUaxS9KuglW5b+oxnUParuJTQF6wx5wQtDDX8fwoMDK
-	 dL4WWUowd27Hwd5mYDJ3vo2BPc3Z6eLBWy9V0taphgP2o0El7WV6N5Q6Awb1VNN7PUxvn
-	 0fsrwpGh6EM4F8T9IlOfbN//jp2HR9KCNZQTKnhwYJPm5qzr91wyri08fw5BbbmdoH+cU
-	 EMsHnbpVan5T8oKLf6tNnL7A8N8SJgzi8mkgLK0MaGP3VAsG89m2jaie5D7EN9LknUFi0
-	 pouM4i8I8oFhu9MLKPTYSO2bY4qAx/vBUAnr4QN35DiV4SgLNIRq8Vax89aj1x/VhCg==
+	bh=nJ5scjSopMuGr4pMsqQSD0qkWJyrFpKR02VwSAUiUpU=;
+	b=o5eg+puEcqCcu8VnU9f9UjfJ8JpDthpmqzrzjI1gTsyM5BcWDUiUz5vP/s2la7/tm/Y2
+	 Trh/TId0JuG+Jk8MlrM97h/uY1k72zZRBrdRKISDqnQ8fnD1wf0RKwyzrHcKBGpyMI2XH
+	 XX34fAV6K4RyMNvjUjAzwFH1QWK8MMqI6DU9HlShyevuJFipFrUd3PGOEk5BcA+T1BbAD
+	 URvKEE8SJhYgQhzfU0IBQ4iSsjvUE2Pb7VACMVfZ0HxMT2N4KKOQpTS9zp0Mq5nv4M721
+	 o3pjUWkvRC8g6Xo7uth0MvJfjmwibGYOpDQ9HPw2WQJ2yl/91AV6VGkulc6CtfJzRvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0duAbvqw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j+2U4QRp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3A3606B833;
-	Fri, 13 Nov 2026 17:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859E9606B356;
+	Fri, 13 Nov 2026 17:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0duAbvqw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2811F000C6;
-	Fri, 13 Nov 2026 17:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j+2U4QRp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311A31F000C6;
+	Fri, 13 Nov 2026 17:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590490;
-	bh=IJ6AO+k4gvREq4WVT3cAF/j/r+YWRexswUUZeqqwBVo=;
+	s=korg; t=1794590491;
+	bh=nJ5scjSopMuGr4pMsqQSD0qkWJyrFpKR02VwSAUiUpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0duAbvqwE8Sssry7U3VDIRlUTZNgOeYLrGwBnzr6LbbyG53nRLFMea5J8oANTEDuZ
-	 R7q218zj6xLySDUlGKvQTKjp3jDK+GrHUaoCQsXIl+rAeZZv5AcGtEcG6Z7oC6n5cQ
-	 lE9Ze7TZQ94gxAWPrk2CoPosOv5F2hrBm0JjbAls=
+	b=j+2U4QRpqzx/hl3RdBf64YQ4QkXnwkvUdVnqtoCbwD0KQhPhAo0vprcC8lLUFZ6tq
+	 n+r6LvCxts40L/R4fyW0XMQ953OvYqCQAGs5epk8PDqh4ZgraG6Y4bM5xN6kEHwQmb
+	 zXtrc8zSDVaD4E2OOXsnZtw0nTfL8OMRVltuElMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ray Zhang <sgzhang@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
+	James Clark <jjc@jclark.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 439/686] net: count last skb of each sk_backlog pass in __release_sock()
-Date: Fri, 13 Nov 2026 10:49:32 -0500
-Message-ID: <20261113153835.771261661@linuxfoundation.org>
+Subject: [PATCH 6.18 440/686] net: ethernet: ti: am65-cpsw-nuss: Enable timestamping of unicast PTP packets
+Date: Fri, 13 Nov 2026 10:49:33 -0500
+Message-ID: <20261113153835.802454616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,101 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ray Zhang <sgzhang@google.com>
+From: James Clark <jjc@jclark.com>
 
-[ Upstream commit c4e4056b21355356f6a95bcdf03a850edd9f49e7 ]
+[ Upstream commit 6887a8f98244ba4c0fbe2d2461b9b8f8a300e326 ]
 
-Running 500 concurrent TCPv6 streams (neper "tcp_stream -6 -T 1 -F 500")
-on a 2-core Cortex-A53 (CONFIG_PREEMPT_NONE=y, HZ=1000, LATENCY_WARN)
-triggers resched_latency_warn() in __release_sock():
+On a BeagleY-AI (J722S), ptp4l as a unicast master (unicast_listen) logs
+"received DELAY_REQ without timestamp" for each unicast Delay_Req, and
+its port goes to FAULTY after "timed out while polling for tx timestamp"
+for the first unicast Sync.
 
-  [ 3655.311821] sched: CPU 0 need_resched set for > 100006892 ns (100 ticks) without schedule
-  [ 3655.311889] Call trace:
-  ...
-  [ 3655.311944]  resched_latency_warn+0x7c/0x88
-  [ 3655.311958]  sched_tick+0x1c0/0x418
-  ...
-  [ 3655.312578]  net_rx_action+0x238/0x438
-  ...
-  [ 3655.312641]  do_softirq+0x4c/0x90
-  [ 3655.312651]  __local_bh_enable_ip+0x84/0x90
-  [ 3655.312663]  local_bh_enable+0x1c/0x28
-  [ 3655.312674]  __dev_queue_xmit+0x4a8/0xb00
-  ...
-  [ 3655.312782]  tcp_v6_do_rcv+0x240/0x5f8
-  [ 3655.312793]  __release_sock+0x9c/0x188
-  [ 3655.312806]  release_sock+0x150/0x168
-  [ 3655.312817]  tcp_sendmsg+0x4c/0x70
+am65_cpsw_nuss_hwtstamp_set() does not set the TS_UNI_EN bit (bit 24) of
+the port's TS_CTL_LTYPE2 register. According to the TRM (J722S TRM
+SPRUJB3D, 12.2.1.4.7.13.5.1 Ethernet Port Receive Event and
+12.2.1.4.7.13.5.2 Ethernet Port Transmit Event), this bit must be set
+for the port to timestamp PTP event messages over UDP sent to a unicast
+address; without it, only messages sent to the PTP multicast addresses
+selected by the TS_107 and TS_129 to TS_132 bits are timestamped. TI's
+netcp_ethss driver for the Keystone 2 Ethernet switch, which has the
+same timestamping registers, always sets TS_UNI_EN.
 
-__release_sock() can loop past 100 ms without calling cond_resched():
+Set TS_UNI_EN along with the other bits. With this change, ptp4l in the
+same setup gets timestamps for the unicast Delay_Req and Sync messages.
 
-- Each outer-loop pass drains sk_backlog, but "if (!skb) break;" runs
-  before "++nb", so a pass of B skbs only adds B - 1 to nb (0 for 1 skb).
-- With 500 TCPv6 streams and NAPI sharing two Cortex-A53 cores, runnable
-  tasks keep TIF_NEED_RESCHED set on CPU 0.
-- During spin_unlock_bh() and TX softirqs (__dev_queue_xmit() ->
-  local_bh_enable()), tcp_add_backlog() coalesces arriving pure ACKs into
-  a single tail skb.
-- Repeated 1-skb passes never advance nb or call cond_resched(),
-  triggering resched_latency_warn() after 100 ticks.
-
-Restore the do-while loop and drop "if (!skb) break;" so every skb
-increments nb across passes and calls cond_resched() every 16 skbs.
-
-Reproduced the issue and verified the fix on two 2-core Cortex-A53 hosts
-(CONFIG_PREEMPT_NONE=y, HZ=1000, LATENCY_WARN, latency_warn_once=0) with
-a userspace reproducer over /dev/net/tun:
-
-- CPU 0 runs a TCPv6 sender and a second runnable task while CPU 1 writes
-  pure ACKs to /dev/net/tun (~30k TCPBacklogCoalesce/run), sustaining
-  1-skb sk_backlog refills in __release_sock() for ~400 ms (ftrace).
-- Before: CPU 0 stayed unscheduled in __release_sock(), hitting
-  resched_latency_warn() 293 and 275 times on the two hosts (> 100.9 ms).
-- After: cond_resched() yielded CPU 0 inside __release_sock(), with
-  0 resched_latency_warn() hits on both hosts.
-- Also observed no regression with the workload from
-  commit 16c610162d1f ("net: call cond_resched() less often in
-  __release_sock()"), "super_netperf 4 -H srv -T,10 -l 3000 &".
-
-Fixes: 16c610162d1f ("net: call cond_resched() less often in __release_sock()")
+Fixes: b1f66a5bee07 ("net: ethernet: ti: am65-cpsw-nuss: enable packet timestamping support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ray Zhang <sgzhang@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261101075145.698399-1-sgzhang@google.com
+Signed-off-by: James Clark <jjc@jclark.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/20261102135117.419539-1-jjc@jclark.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/ti/am65-cpsw-nuss.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 03136176c7d0f..486989dfaaeee 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3185,7 +3185,7 @@ void __release_sock(struct sock *sk)
+diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+index 5bcf1126d627e..89fdc30d80a43 100644
+--- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
++++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
+@@ -128,6 +128,7 @@
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319	BIT(21)
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320	BIT(22)
+ #define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO BIT(23)
++#define AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN	BIT(24)
  
- 		spin_unlock_bh(&sk->sk_lock.slock);
+ /* The PTP event messages - Sync, Delay_Req, Pdelay_Req, and Pdelay_Resp. */
+ #define AM65_CPSW_TS_EVENT_MSG_TYPE_BITS (BIT(0) | BIT(1) | BIT(2) | BIT(3))
+@@ -1859,7 +1860,8 @@ static int am65_cpsw_nuss_hwtstamp_set(struct net_device *ndev,
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_132 |
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_319 |
+ 			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_320 |
+-			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO;
++			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_TTL_NONZERO |
++			 AM65_CPSW_PN_TS_CTL_LTYPE2_TS_UNI_EN;
  
--		while (1) {
-+		do {
- 			next = skb->next;
- 			prefetch(next);
- 			DEBUG_NET_WARN_ON_ONCE(skb_dst_is_noref(skb));
-@@ -3193,12 +3193,10 @@ void __release_sock(struct sock *sk)
- 			sk_backlog_rcv(sk, skb);
- 
- 			skb = next;
--			if (!skb)
--				break;
- 
- 			if (!(++nb & 15))
- 				cond_resched();
--		}
-+		} while (skb);
- 
- 		spin_lock_bh(&sk->sk_lock.slock);
- 	}
+ 	ts_ctrl = AM65_CPSW_TS_EVENT_MSG_TYPE_BITS <<
+ 		  AM65_CPSW_PN_TS_CTL_MSG_TYPE_EN_SHIFT;
 -- 
 2.53.0
 
