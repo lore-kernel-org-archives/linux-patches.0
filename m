@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591285;
-	b=HluSZhfoUWZhfCXGvBJLYmYzfU4Es4ss+MqgxT11hXF1P5ilO6SEQwWQhw0Qv3a/Vn/A
-	 u2EPcDAtV5z23U1NLv0J1Zx1JIoJVW9h7+KgpVQT+W+WzwGGf0FVEBkYKNwY3zYe+F675
-	 WNc7ghUUxKuohOqW3eWHNb5aQKGw8k7Oegu/5s+pcm8y3PCd8ioxm5knJqdJPJMIDGxXG
-	 SHjWhqs2O3H9/0VO1dJi+6xDeRxSF7iwccmqO65fp18s9uKutRk3SMpSDiRe1ZURF40CA
-	 MP+Wm8t420qMO9QJCfg529RCpmqNmkss0apvZ61TBgxe6TTLTQIalBQ1eWnrlj7bzvA==
+	t=1794591286;
+	b=tfR3d8B3ylmyqX3tuXR3jes+SBCDMrYpqP51EOTngQSw9QFFiqy3btIYtbhdZ3IreTYa
+	 tqQYtSC94N9BIKebNd6CRvpkTmDcNaUYmveeW5Fn8xyig3nHRf4vV99GN5cNo8IrFAKdq
+	 7bJT2qE5kdKV6HBss9iHjrLE3FpgTFp7l/cpYNug7dUAs+TzYyC55jFVKu9rHM6MvJwso
+	 4FpajWVdBOLJXvDbeNGGiDS2Nx9NKyZiydWbv+g4loOuNTgsk8iuGF8Qb/dl1EnOEjr/6
+	 58SdcJH+7Ym2jdyeO5ObVWNcd99yiUyuyK4RFnSncn+AoNqY/Hv+ZNQyIgxjPgS7p2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591285;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591286;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KND6a4y7mWoO8I6LXo3R/8oYKXz9mMUv+mGMME6LenU=;
-	b=x4tItbw4Uf6kHGnG6Sy7jen5Tox38SMPwq82DLvkgO3+8nBtWNez7DqDRTp6T2M8WzA3
-	 SWgQzuew9pFH1exHWRW4f9UzLuc65M4Nni8O/OK89U1kJE6NLyEUyV1g0r073xYELL+p5
-	 E90lKbtjJzvod04V44Egw6ZIkwY5k7i/0N4sJO/jB7897wjNkQfZZWMYxM6wcWdx6IZX3
-	 9gnvxQAfwB/mDj37ry/K556uZ1QTcV2/OWSQVK53/VTYf/asLxRLPNmuKHfb7xnXSsd6A
-	 GqnlBorljARHwlSe1QSVzybc6j+IQChxrigtNGmfUot4DQAWHKsx/s2CEeqaxvt8P8g==
+	bh=sxVtPfdKzMWyPOGAQRiO96uDCvt7LWpJuDTdx2KBOQ8=;
+	b=Y7G2nS+70fsKKFVmQ7VhdMxqtmOayfn3FT5EeUvfjVOGy7mqI5fyE3Y8ETKgM8ZRX+E3
+	 iPKZDsSUjjUzPXP0DWZRKIQlgIbTOzQf6OuePOpNE7a1ov8vvsg+L6PyXiOcYY8elSvAv
+	 Ilz2L6mrKeNJXra7sUx5vqq1IR+Ra/Q/sLrDIO/tdN49V75/ZIZQrW1J1ds7cfddk9ZV+
+	 AwjHwKNRLHw+udEL6bW7RO/gzokfGBcXMy2uUT6dV+hgaNs3nFlNqT4N6vE7QtNVLpf6Q
+	 2gpvP1l4UemrOCVRkGLyJfcIyNfd0YIgqL5RT+fBG+Bz8PfUFKExfXte0inRMVeYKTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NgKPm61M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kOHO4Zap;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBB96077D4B;
-	Fri, 13 Nov 2026 17:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687DA60A3824;
+	Fri, 13 Nov 2026 17:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NgKPm61M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4121F000C4;
-	Fri, 13 Nov 2026 17:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kOHO4Zap
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136851F000C4;
+	Fri, 13 Nov 2026 17:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591285;
-	bh=KND6a4y7mWoO8I6LXo3R/8oYKXz9mMUv+mGMME6LenU=;
+	s=korg; t=1794591286;
+	bh=sxVtPfdKzMWyPOGAQRiO96uDCvt7LWpJuDTdx2KBOQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NgKPm61MOD+kKdC4nsbBscXz0h3eRku5k1OhJ86/8MGFUZtJLdSFRWzMEz9nIekvn
-	 A9PQYhI0vTec+nfvO42+CwUpj80Oa6LnpyjZ9J4pAi7DVILM4yDMV0119UvYl5222P
-	 csXpenmJgx9bRnrs06+luAt9GDc4JIseoOu5Xmig=
+	b=kOHO4ZapuU0CdJ/ssOsEAB4/8S7IbPXpAew0cVt2PmiOsYXSrJepE8OymsKAzVOUp
+	 lpj0/jFkp1hmfMLzKh9U9fMFy2hqUWOujKtfXEaPRJzgijsV6rXEehYVzip8IjXzc5
+	 6gD1n3xNj0D7T6rgzAeEA6pvj5e5HNkowD8DYgBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Blaszczyk <michalblk@google.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 404/670] sched_ext: Reset runnable_at when a task leaves its scheduler
-Date: Fri, 13 Nov 2026 10:49:28 -0500
-Message-ID: <20261113153825.444881850@linuxfoundation.org>
+Subject: [PATCH 6.12 405/670] ata: libata-scsi: reject data-in commands with a data-out buffer
+Date: Fri, 13 Nov 2026 10:49:29 -0500
+Message-ID: <20261113153825.481233293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,84 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Blaszczyk <michalblk@google.com>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-[ Upstream commit 993e8fbfecbbf284b9644c6f10741b28fb914094 ]
+[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
 
-The watchdog measures how long a task has been waiting from
-p->scx.runnable_at, which set_task_runnable() resets when the task becomes
-runnable after it last ran. ops_dequeue() never asks for a reset, as the
-dequeue of a waiting task is temporary, e.g. for a migration or an
-attribute change.
+SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
+scatterlist can then contain pages pinned without write access.
+ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
+in the reported case, the copy tried to write the shared zero page
+and faulted in the kernel.
 
-Leaving the scheduler isn't temporary. A task which is switched out of
-SCHED_EXT while it's waiting keeps its runnable_at. When it's switched back
-and becomes runnable, its wait appears to have started before it left, and
-the time it spent in another class counts towards the timeout. If the
-watchdog checks before the task runs, it aborts the scheduler:
+The same mismatch can affect SG_IO commands translated by libata.
+ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
+the receive buffer even if the drive aborts the command. For ATAPI,
+the successful INQUIRY completion also rewrites the buffer in
+atapi_fixup_inquiry().
 
-  sched_ext: class_switch_stall: runner[418] failed to run for 3.010s
+Reject these mismatched commands before the buffer is written or the
+command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
+the CDB itself can be valid; the supplied transfer direction is wrong.
 
-Here, the task waited for a few milliseconds before it was switched to
-SCHED_OTHER, slept outside of SCHED_EXT for three seconds, and was charged
-for all of it as soon as it woke up on SCHED_EXT again.
+Backport notes: Use the older five-argument ata_scsi_set_sense()
+interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
 
-The same happens when scx_sub_enable_workfn() hands a waiting task over to
-a new sub-scheduler, which can then be blamed for time the task waited
-under the parent. scx_rehome_task() isn't affected, as it moves the task
-through SCX_TASK_INIT, which resets runnable_at. The stale runnable_at also
-skews the default core-sched ordering in scx_prio_less().
-
-Reset runnable_at in scx_disable_task(), when the task leaves the control
-of its scheduler.
-
-Fixes: 8a010b81b3a5 ("sched_ext: Implement runnable task stall watchdog")
-Cc: stable@vger.kernel.org # v6.12+
-Assisted-by: LLM
-Signed-off-by: Michal Blaszczyk <michalblk@google.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-[ michalblk: applied to kernel/sched/ext.c, where the function is
-  scx_ops_disable_task() and has no @sch; adjusted the comments and
-  context accordingly ]
-Signed-off-by: Michal Blaszczyk <michalblk@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index b18c3b4763b79..7a4b23e48cc6f 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -2173,7 +2173,11 @@ static void ops_dequeue(struct task_struct *p, u64 deq_flags)
- {
- 	unsigned long opss;
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index 6198192624141..0e309707f8828 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1989,6 +1989,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
+ 	if (xlat_func(qc))
+ 		goto done;
  
--	/* dequeue is always temporary, don't reset runnable_at */
 +	/*
-+	 * Don't reset runnable_at. If @p is waiting, the wait continues across
-+	 * temporary dequeues, e.g. for a migration or an attribute change.
-+	 * scx_ops_disable_task() ends it if @p leaves its scheduler.
++	 * A data-out request may contain pages pinned without write access.
++	 * Reject a translated data-in command before issuing it, since its
++	 * completion handler may write to the buffer even if the device fails.
 +	 */
- 	clr_task_runnable(p, false);
- 
- 	/* acquire ensures that we see the preceding updates on QUEUED */
-@@ -3794,6 +3798,14 @@ static void scx_ops_disable_task(struct task_struct *p)
- 	if (SCX_HAS_OP(disable))
- 		SCX_CALL_OP_TASK(SCX_KF_REST, disable, p);
- 	scx_set_task_state(p, SCX_TASK_READY);
++	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
++		     ata_is_data(qc->tf.protocol) &&
++		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
++		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		goto done;
++	}
 +
-+	/*
-+	 * If @p is runnable but not running, its wait started at runnable_at,
-+	 * which ops_dequeue() didn't reset. Leaving the BPF scheduler ends the
-+	 * wait. Reset runnable_at the next time @p is enqueued on SCX, so that
-+	 * the watchdog doesn't count the time @p spends elsewhere.
-+	 */
-+	p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
- }
+ 	return ata_scsi_qc_issue(ap, qc);
  
- static void scx_ops_exit_task(struct task_struct *p)
+ done:
+@@ -2020,6 +2032,12 @@ static void ata_scsi_rbuf_fill(struct ata_device *dev, struct scsi_cmnd *cmd,
+ 	unsigned long flags;
+ 	unsigned int len;
+ 
++	/* A data-out request may contain pages pinned without write access. */
++	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
++		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		return;
++	}
++
+ 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
+ 
+ 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
+@@ -3077,6 +3095,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
+ 
+ 	qc->complete_fn = atapi_qc_complete;
+ 
++	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
++	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
++	    scmd->cmnd[0] == INQUIRY) {
++		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		return 1;
++	}
++
+ 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
+ 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
+ 		qc->tf.flags |= ATA_TFLAG_WRITE;
 -- 
 2.53.0
 
