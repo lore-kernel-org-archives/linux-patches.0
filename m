@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591178;
-	b=SEXWjR/ED5P5TGymAUACCFivwRice/jV89u85VKDLPgoLUtX/iQ1A6ve1u1N2S786CiZ
-	 p2+mKkqABdAaxGnZBqH2uw4vBfIjZq0YcGZ+DfAVZ9du11fIMFlYecOLvHeRxbd/lGG1A
-	 oA5zSom+v7nvMY4ZrsUr/PO0nGBDy5N5ZlqkIZKZXLbii2kRGP0K+rfU3E3IuiEHUrqNi
-	 XadIYBXiQieLBUezanz0EVF3AcGR1Pck/C9WxM1q3ZzNFr/aJReFTyrUbBFjNhHRbKxim
-	 dw3cCq/BLE61qLd7kyeOe3M9vs5dujo34TuEdpoL5hYjVLBlEtq+nL8dxEU+4Kk2riQ==
+	t=1794591179;
+	b=U6Jl9Bg6vUw9Q0QfU2/BSzD9vXtvOxvb3mrwsT5NZ3ypjnnb2Jg9q6OWpwtK79OI594c
+	 TyLQT8EwOaLhs8UPv2bH02zFXSuw7LSLAV+xIQXNKZuBgdXgOtoYMux8PhfgiSLC/pdKc
+	 KojcmGUnKL4RBnIw5i9Y9sTo/RdduHBo1DxsO59qJbdKVxOVI5obtnlpDYczU1aCIzyfT
+	 zAePoDawVkN6qT5CC+W/47X8zrYTocVYjtfcgxnGFlWC+GR4ab7lXUDnHMIk2D4KyMJ0j
+	 rk8p/CEiMPaKgv9UHi2BPTbm7OPDV7Wyx7XOV0sTb8hpWaZY6+wsJWHdI9qo3EuUVVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591178;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=k5oX0GoSPKzyxycvw22Gb21MaTjTYBNASXNVgo3svbY=;
-	b=A2sKuLOoScIG6ZFutDNCCtBIzhB4yv66l8M53AZ65CjdtHrk6XA+gbRW6a6dJrKhtijq
-	 U2JSgNKjuYv+XR0PMT7am2WdCYL1ZD/yGPlz3LU4VMIbGh1PwqoeUguRGhhFl7++nyVUX
-	 jwjlYaVgo4rEDA7Blw5ooQy6ijXSOwZ1DFfftrKKcJqGWXrjWT80xPr4hAnyltefzo3OB
-	 BJ7H7w7aeOuYxkIC9iZFOG050nk8IO16puCKfoWaioKTOtCTnCGZT1w+ScXecHLRc+hLC
-	 tHyubmXFy86KXi+4hU8eWQx7phTkC5cYO2+dyi+vXoUzI+b7KavZat26AGt7llpkI5g==
+	bh=UCZHVHccBi6WS2VZJl/tSV69+xuhlUItao1wUdCUwJI=;
+	b=q5kAEoXV8ZvdKNUeJyX8OvGZyvjsakMCoWSkwN3CUQxFwAa4SiEl7zcZQAgsVJ8fTXIv
+	 XSMwIR7lHGTUaI0ZIESBFAyJxvTe/xm+gQMM30b5+euFieWNHSZZjb6HOqn45z1m6LPiE
+	 1Lvq8hQ+NAW1Zfr5lePHz+GvKGDJIcOyOCv2KabRb6CiUMKhUZVhcvJSFPXQDIg0xAQ91
+	 OHBEWsxQ8m65FVPNE5akhW3a06Gn2I6h1AaZ1UP7deycs4dj0ewcDkQqHSMNW4djNiCGO
+	 wz/KHx2Jot6zJuUCQEwqGSfN+xYA2tZt2YjZw/1gmA44/9Vdhzn9ARyXHY2tgFgOgWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAyita6j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ns1a4pkk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468C76073FE2;
-	Fri, 13 Nov 2026 17:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA5E6073FED;
+	Fri, 13 Nov 2026 17:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAyita6j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F5D1F000C4;
-	Fri, 13 Nov 2026 17:32:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ns1a4pkk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACF61F000C4;
+	Fri, 13 Nov 2026 17:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591178;
-	bh=k5oX0GoSPKzyxycvw22Gb21MaTjTYBNASXNVgo3svbY=;
+	s=korg; t=1794591179;
+	bh=UCZHVHccBi6WS2VZJl/tSV69+xuhlUItao1wUdCUwJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QAyita6jyPsBhTJVdYSDapNJQ/UQeB6b8+NKLFaYopWjM2WaVXMxCUI0jzndHZGWs
-	 Gj0peD4+blLvx1uanjr9fRCCJJU0Cd9s2pCiqk0HKhXIFmTVbxhSYzQG3Lx1fkwtYm
-	 07GWGd8QwnKlXbp6jFGZqLZdkrtm5ag3h3NIqvKc=
+	b=ns1a4pkkZMQLxX1e5H04wxhzC+dlQvL+ZlRWUm/zbuEb313LyvqXKuSinswz2wltD
+	 k0UpgN8a1r7rCQ2DABOGPT6Y7nRq63LIAXkdbgrLQx9mk5zlrcaIdmprMpBKN6HgCj
+	 W35TioFzary38gbdQBCchU/c7sMyr/K9Rx6x5cSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Cunhao Lu <1579567540@qq.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
 	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 317/670] can: dev: can_put_echo_skb(): free skb on invalid echo index
-Date: Fri, 13 Nov 2026 10:48:01 -0500
-Message-ID: <20261113153822.640562910@linuxfoundation.org>
+Subject: [PATCH 6.12 318/670] can: isotp: check the return values of can_rx_register() in isotp_bind()
+Date: Fri, 13 Nov 2026 10:48:02 -0500
+Message-ID: <20261113153822.674347476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,74 +68,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cunhao Lu <1579567540@qq.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit b4ebcbbf66ba6c5816dfe229effb4641c46e4b4c ]
+[ Upstream commit 874f5f14cf626f72477071eff381c8485554250d ]
 
-can_put_echo_skb() consumes the skb on all paths except when the echo
-index is out of bounds. This leaves ownership with the caller on -EINVAL,
-unlike the other error paths, and can leak the skb if the caller expects
-consistent semantics.
+isotp_bind() ignores the return values of can_rx_register() for the RX
+and the echo receiver and binds the socket anyway. When a receiver can
+not be allocated, bind() succeeds without this receiver, so the socket
+does not receive frames or its transmissions time out. isotp_release()
+and isotp_notify() later try to remove the missing receiver, which
+triggers the "receive list entry not found" warning in
+can_rx_unregister().
 
-Free the skb before returning -EINVAL so that all return paths consume it.
+As the device has been checked before and RTNL prevents a namespace
+change during bind(), only -ENOMEM can be returned here.
 
-Fixes: 6411959c10fe ("can: dev: can_put_echo_skb(): don't crash kernel if can_priv::echo_skb is accessed out of bounds")
+Check the return values and register the RX receiver as the last step.
+The echo receiver is registered first, as it only handles the socket's
+own echo frames and does nothing while no transmission is in progress.
+So a failed RX registration only needs to remove the echo receiver, and
+isotp_rcv() has never processed a frame for this socket.
+
+Set so->ifindex before the registrations, so that a First Frame received
+before so->bound is set can be answered with a Flow Control frame and
+the RX timeout is started as usual. As the RX receiver is registered
+last, this can only happen for a bind() that succeeds. Reset so->ifindex
+when bind() fails.
+
+Check IFF_UP only after the receivers have been registered, so that a
+bind() that fails on a down device does not report ENETDOWN. As bind()
+holds RTNL, the device state can not change in between.
+
+Fixes: e057dd3fc20f ("can: add ISO 15765-2:2016 transport protocol")
 Cc: stable@vger.kernel.org
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Signed-off-by: Cunhao Lu <1579567540@qq.com>
-Link: https://patch.msgid.link/tencent_683AA16E643DE00211CD2FB62991264DC605@qq.com
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20261027-can-rx-lock-v12-2-eb5afc2d8b9b@hartkopp.net
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-
----
-
-FAQ:
-
-Q: `can_skb_init_valid()` directly modifies `skb->data` without checking if
-   the SKB is cloned or shared. Is this violating SKB shared buffer rules and
-   causing data corruption?
-
-A: The finding about can_skb_init_valid() modifying skb->data on a
-   potentially shared buffer is not relevant for this (correct) patch.
-
-   The FDF-flag write in can_skb_init_valid() only matters for PF_PACKET
-   use: PF_CAN allocators already set CANFD_FDF. The write exists to
-   normalize frames for PF_PACKET observers (tcpdump/Wireshark) so they can
-   distinguish classic CAN from CAN FD at the netdev level, and to
-   compensate for PF_PACKET senders that omit the bit. That normalization
-   is functionally required.
-
-   The shared-buffer concern only becomes realistic through a specific
-   chain: a PF_PACKET sender injects a CANFD-sized frame, the CAN driver's
-   loopback puts an echo skb back into can_rcv(), and cgw (without
-   modfuncs) clones it for forwarding to another interface. Only on that
-   second can_skb_init_valid() call is the skb cloned. By then the bit was
-   already set on the exclusive skb during the initial xmit path, so the
-   flags |= CANFD_FDF write is strictly idempotent for any parallel
-   consumer of the shared buffer - no memory-safety or
-   information-disclosure consequence. It's a formal violation of the skb
-   sharing rules without an observable effect, so the current code can stay
-   as-is.
-
-Link: https://lore.kernel.org/all/54a3cc01-abcf-4a33-b932-39bb1f68cdd5@hartkopp.net/
-[mkl: convert Oliver's mail to FAQ section]
-
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/can/isotp.c | 42 +++++++++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index 3ebd4f779b9bd..6fb1f9b2a9e20 100644
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -52,6 +52,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
- 	if (idx >= priv->echo_skb_max) {
- 		netdev_err(dev, "%s: BUG! Trying to access can_priv::echo_skb out of bounds (%u/max %u)\n",
- 			   __func__, idx, priv->echo_skb_max);
-+		dev_kfree_skb_any(skb);
- 		return -EINVAL;
+diff --git a/net/can/isotp.c b/net/can/isotp.c
+index 9e0901dbcc971..25badeaa0f4a5 100644
+--- a/net/can/isotp.c
++++ b/net/can/isotp.c
+@@ -1523,7 +1523,6 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	struct sock *sk = sock->sk;
+ 	struct isotp_sock *so = isotp_sk(sk);
+ 	struct net *net = sock_net(sk);
+-	int ifindex;
+ 	struct net_device *dev;
+ 	canid_t tx_id = addr->can_addr.tp.tx_id;
+ 	canid_t rx_id = addr->can_addr.tp.rx_id;
+@@ -1600,26 +1599,36 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 		err = -EINVAL;
+ 		goto out_put_dev;
  	}
+-	if (!(dev->flags & IFF_UP))
+-		notify_enetdown = 1;
  
+-	ifindex = dev->ifindex;
+-
+-	if (isotp_register_rxid(so))
+-		can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
+-				isotp_rcv, sk, "isotp", sk);
++	/* switch to new settings */
++	so->ifindex = dev->ifindex;
++	so->rxid = rx_id;
++	so->txid = tx_id;
+ 
+ 	/* no consecutive frame echo skb in flight */
+ 	WRITE_ONCE(so->cfecho, 0);
+ 
+-	/* register for echo skb's */
+-	can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
+-			isotp_rcv_echo, sk, "isotpe", sk);
++	/* register for echo skb's first (no echo traffic at this point) */
++	err = can_rx_register(net, dev, tx_id, SINGLE_MASK(tx_id),
++			      isotp_rcv_echo, sk, "isotpe", sk);
++	if (err)
++		goto out_put_dev;
++
++	if (isotp_register_rxid(so)) {
++		err = can_rx_register(net, dev, rx_id, SINGLE_MASK(rx_id),
++				      isotp_rcv, sk, "isotp", sk);
++		if (err) {
++			/* unregister echo skb subscription */
++			can_rx_unregister(net, dev, tx_id, SINGLE_MASK(tx_id),
++					  isotp_rcv_echo, sk);
++			goto out_put_dev;
++		}
++	}
++
++	/* report a down device only for a successful bind() */
++	if (!(dev->flags & IFF_UP))
++		notify_enetdown = 1;
+ 
+-	/* switch to new settings */
+-	so->ifindex = ifindex;
+-	so->rxid = rx_id;
+-	so->txid = tx_id;
+ 	so->bound = 1;
+ 
+ 	/* bind() ok -> hold a reference for so->dev so that isotp_release()
+@@ -1630,6 +1639,9 @@ static int isotp_bind(struct socket *sock, struct sockaddr *uaddr, int len)
+ 	dev_hold(so->dev);
+ 
+ out_put_dev:
++	if (err)
++		so->ifindex = 0; /* reset on failed bind() */
++
+ 	/* remove potential reference from dev_get_by_index() */
+ 	dev_put(dev);
+ out:
 -- 
 2.53.0
 
