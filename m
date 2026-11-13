@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590745;
-	b=oMlei6I0b9qOGxEgESYrXFfbEaDcLgLV5U+eRkT/9iSfVPheUjUk6jFZCMWdpTqeI9Cz
-	 TfYWBfxKIhWj9FXpYRnVBEXU6bTnkUlQWL6qD0bc6lv6OzCGZiZ4YFtVv7Y0f5IhytYal
-	 dEPvPkIElcb/0ZsPhAHvlPPFO/p33NXFiKAjxsp0y5HCKetr27jLHkBEiQNRGb927KpVu
-	 s9zaKEm0zuGZ4+kYszNvqvJy1SuhRVVeb2rUi2x+EK7YM4aFJvZRjfZW0oowxNqSiV3xI
-	 22E3QELmeMsog4ubv7erfRG5u8Lnxa3STDbLyCozx4etGnQr3LuBfszNtHnxl5+x5GA==
+	t=1794590746;
+	b=loGGdIjct0dmHfAZs6GoG90NaobG3A+6gxS8e8DqUwt14E4/4H+cZtt2qOzVmJ2HwQUU
+	 E4azSW8LkHklGm0Ms/TdipQoZcQyTCN9QQNNvaTrZtmU3vGcX251/HOq6kjLD6LXzDq+C
+	 gsUQZw94k6/Xf8D8iUZHUO/9i/rBsuyfCGyPMxEagAoqIkBipm7SX1O3wLZqJaYznrYuB
+	 /eX8wbwzAwwq8IrPSLhjD5pS9TMOVP2d2iGRVR8Iv9PTA3nueNmM5QLBCe3G26fTeMG/n
+	 RI/lKNKHW2KreaV65UNktmgWgLdPEmv6oAoR6PrYhCyUiAStcWdSjykV5eNjDOcA1kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590745;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590746;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c25qwX6u4mRq0Keuq9Z8qwQDlGzlh8a1ut/Z1fEIwiM=;
-	b=yuBEu/FzYSksNesgUOg8qo2aLNdivUYkp5+NZEHRxXSDJhjqt9/vZu5NPqtYAdqfFJLZ
-	 iQV+Wh+ihyqYlgn1rPjCDHlnYlNqUkkZT3yIY54yrlW3fUxJV19tazD3WJR/zWUSxJZvu
-	 3Vg1acSgv5aJdEDo2CUshFhYa5NbB+B1dVR43LJ6IvLnt1jPjaXDHwybdUYeiO7rx2XIJ
-	 5dVAGEhofdOxoGbs5WQH4plSZ0vn8cOccHsgC/gdVV2hZbDUVv0jj1THyfdD2gYR7Nzvt
-	 fzUbLHJBavzcSGRlqPXV1hiScnW2TlyzrNktEKwOAeEjWUR0vgB6xxAnVxBaxfPKkyQ==
+	bh=z6W8i2g9T2qsUbAAtAMmJETgMKx1ZYSJ8hHU4LlTofM=;
+	b=3xW9ciquFGKlaDtqoqTlBcNyVL7HWVRtNRaxc0zrQhsw0fKGAu5mcNAe6JrkjiTW33x9
+	 yi6QAUpOJI/dyGhmhAmJEUjVjDAwzLgQWLgGiHzw7eZoODmPq7qjMbWSa1yT5HDo6ZB1X
+	 v2wzy57Vnztq92i2z5JK4euG3RW2qisOTdbDkejCUudebHyw3Dk/yBi+48fAnmjzeRV8l
+	 qGZDqSqoG1QCAUowz1SKRzufctZIbgpS9ELJRggA+vO6qNYhnc3/2Co496qWI8uEqll4w
+	 CajTedp2py45gIDvT/bIjGAoENKgD8eFa5WlCO+oJc/tyPEqWRv/1YLXmoxms2IIVjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bUT9jzXB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkShm60g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E96D607B5A3;
-	Fri, 13 Nov 2026 17:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C741607B5BB;
+	Fri, 13 Nov 2026 17:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bUT9jzXB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8BFF1F000C4;
-	Fri, 13 Nov 2026 17:25:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkShm60g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EAC1F000C4;
+	Fri, 13 Nov 2026 17:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590745;
-	bh=c25qwX6u4mRq0Keuq9Z8qwQDlGzlh8a1ut/Z1fEIwiM=;
+	s=korg; t=1794590746;
+	bh=z6W8i2g9T2qsUbAAtAMmJETgMKx1ZYSJ8hHU4LlTofM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bUT9jzXBhEOVWWkTVN6BZKPrAnjzcjCGiPcY6IqZCqDWsHQq7W8SwRKm++GSAj3RQ
-	 Mrq7DBGuNdxyVN5sgEpaJS0y7ph3bsTE+RgtwbR0r1yGErl2YoGkMsJIa+Kc2CEHh0
-	 qrkBDDMq4K6UP3LmFgPwaNwglNZC3sqQFXNEludM=
+	b=AkShm60gPHDKCp1gh3i4FyXgsmnZNU+dZ/xTUgLAR9C+g4d+L4HIVdTFJd0qrowfu
+	 TPcn0DlWPD6cys5J9Fkk3FiLijs4jS5dqO7aOboPtCzw4efShR2htXPmWRaap4dPF7
+	 cwOxNCd+L2G/q/b4/ToSTn18Nkqz/ffF3xDC2U+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hasun Park <hasunpark@gmail.com>,
+	Jasper Smet <josbeir@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 605/686] ASoC: amd: acp: add DMI override for ACP70 flag
-Date: Fri, 13 Nov 2026 10:52:18 -0500
-Message-ID: <20261113153842.416894331@linuxfoundation.org>
+Subject: [PATCH 6.18 606/686] ASoC: amd: acp: Add DMI quirk for ASUS Zenbook S16 UM5606GA
+Date: Fri, 13 Nov 2026 10:52:19 -0500
+Message-ID: <20261113153842.448130689@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,61 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hasun Park <hasunpark@gmail.com>
+From: Jasper Smet <josbeir@gmail.com>
 
-[ Upstream commit d0426510a9e1fabf074e274ceff26ffc6500980a ]
+[ Upstream commit 6e4bfd9da8851f562f04503d8e43221957f96eeb ]
 
-Some ASUS ProArt PX13 systems expose ACP ACPI config flags that can
-select a non-working fallback path.
+The ASUS Zenbook S16 (UM5606GA) with AMD Ryzen AI 9 465 (Strix Point,
+ACP 7.0) has a BIOS that incorrectly sets the ACPI property
+'acp-audio-config-flag' to 0x10 (FLAG_AMD_LEGACY_ONLY_DMIC) for the ACP
+device. This prevents snd_pci_ps from probing the SoundWire bus, resulting
+in no internal audio (dummy output only).
 
-Add a DMI override in snd_amd_acp_find_config() for ACP70+ boards and
-return 0 so ACP ACPI flag-based selection is skipped on this platform.
+The hardware uses a Cirrus Logic CS42L43 (headphone/jack) and four CS35L56
+smart amplifiers (speakers), all on SoundWire link 1. The corresponding
+machine table entry (acp70_cs42l43_l1u0_cs35l56x4_l1u0123) already exists
+in amd-acp70-acpi-match.c and correctly describes this topology.
 
-This keeps machine driver selection on the intended SoundWire path.
+Add a DMI quirk to override the flag to 0, consistent with the existing
+entry for the HN7306EA.
 
-Signed-off-by: Hasun Park <hasunpark@gmail.com>
-Link: https://patch.msgid.link/20260308151654.29059-2-hasunpark@gmail.com
+Signed-off-by: Jasper Smet <josbeir@gmail.com>
+Link: https://patch.msgid.link/20260513052137.56703-1-josbeir@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 38cb2ef26b64 ("ASoC: amd: acp-config: force SoundWire probe on Dell 14S DS14265")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp-config.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ sound/soc/amd/acp-config.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/sound/soc/amd/acp-config.c b/sound/soc/amd/acp-config.c
-index 653e8ce946082..8d7b968c4402c 100644
+index 8d7b968c4402c..cc3620db62bf1 100644
 --- a/sound/soc/amd/acp-config.c
 +++ b/sound/soc/amd/acp-config.c
-@@ -23,6 +23,16 @@
- 
- static int acp_quirk_data;
- 
-+static const struct dmi_system_id acp70_acpi_flag_override_table[] = {
+@@ -30,6 +30,13 @@ static const struct dmi_system_id acp70_acpi_flag_override_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "HN7306EA"),
+ 		},
+ 	},
 +	{
++		/* ASUS Zenbook S16 UM5606GA (Strix Point, ACP 7.0) */
 +		.matches = {
 +			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HN7306EA"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Zenbook S16 UM5606GA"),
 +		},
 +	},
-+	{}
-+};
-+
- static const struct config_entry config_table[] = {
- 	{
- 		.flags = FLAG_AMD_SOF,
-@@ -200,8 +210,11 @@ int snd_amd_acp_find_config(struct pci_dev *pci)
- 	 */
- 	if (!pci->revision)
- 		return 0;
--	else if (pci->revision >= ACP_7_0_REV)
-+	else if (pci->revision >= ACP_7_0_REV) {
-+		if (dmi_check_system(acp70_acpi_flag_override_table))
-+			return 0;
- 		return snd_amd_acp_acpi_find_config(pci);
-+	}
+ 	{}
+ };
  
- 	for (i = 0; i < ARRAY_SIZE(config_table); i++, table++) {
- 		if (table->device != device)
 -- 
 2.53.0
 
