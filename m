@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590540;
-	b=l8arkJ9T03lJONeL72l8WZePUKGdcyVrwxejVbSoYgOgmZ+CDQn81tGXzeN0P17Gqar3
-	 ipgwgmI2BrHJEHD3oH0Cfh9c/kQqjQGfK9u/yWQBwygbja4s7HkkmCBEccYroAZ1pa5Fx
-	 OgGP0mRaP7q6ubQw4mQFhwktuD63h1vrimTgYTxpW41up3Ts2eyhH/VljxKQu1RsmpFGm
-	 tiJRN4cF93JYH4J7MEHti396hA8HuBcWbDUv8Q/NBO/oR6h9yCURzBWGO7hcUwPB5UNOh
-	 izV1nxPGEBSFd5Ua5S3rohJCUV+XaZyB15kUuRxHVycvwJO3c7mWR/4pOGQmYsmie6A==
+	t=1794590541;
+	b=jqIxjCN+Nb/fX+5SwO4w80rbtDEpTU6gF9S1qS6KP9EHmL7oIswMApBJhiq9GcGEoMNh
+	 9549vk99y4ac5C1MevcfcdE7Hmd4loRVCKk1QDEP5cRuUpf68zijpZJlxsDFEsYCvkBcv
+	 RTjxkHT0fenff2jJdhNjBPAAqP1hrZ5cxR9l2v4tjrsf3Nx53OvrVfrkZP3tqGFJEfWX7
+	 b6IgoNA0uHE6tbmMQ05p3rWCl0qiat5mjQV1Ui39IfVSM5a9T4C2rA2piHyIiEPnD2DDZ
+	 9Cm1rx7gmatyoMNvgH1RyL/8BUlyDZM7LyHTUNaoim5xH6Zv1Scw6uBlnNspOzDmEMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UUUABNarg4lj+JLwD5hW9SrVl+Gze6RUngoIGlBOeTo=;
-	b=FU1sYck0IUi+Q+oZwj1yLx4N10+n5v4TJpv+t+ubqGJa7NkrG6SOHZ3SeOwmKpL5bWBN
-	 LsIR1d2nM6OlnDxR0epzRADZT1RhPbKqa1vKEPhf614b9A0O+ywE2ql4wP9niiBocu8ED
-	 Ah/H2by+cx8qut0jOLY6h7Su9AlCGjSuQRkuk5YbvM0J/emXRRztp1pzAAVb7CDxL9xaR
-	 ZUmGi/Ll3o1LGdKlLrB+bz8c62RAhHOZVO+XSj/E66biw7eXK9KGR7mHdpPITft9RaGyS
-	 KJrjYtijo8DQ/FyMj3F12K/h7XehK+sFFBxZhdDjQwbs5xnaonQbUF2vF+0Xb3RxIDw==
+	bh=KTJvfPm5MhrZL6PZHC7k+JPoeEuuln07SQkOE65PihU=;
+	b=10XPNGO18wvlG6gWt6QdebDz5uQxclTqnGZkg3XP7Gm2Ip6I+s8VaRJsT2QQEd7Rkyuv
+	 ZUN4fH1hHoP41hBpiiQ/N24QBqV7/tXytZWuP9izfD0T3xSok+nHuU5GjeRwd/i3z3K9Z
+	 XNfRZfMEgc7mtOi/UaDj1VdeLOdDvfMVmLZOoOiTAhLMY9X48l8uQUKLlYz6en4CsTitd
+	 CMy7TLT/8NG+iCsqaCl4fO717Hxjp5arWj/+3MwsbhPcgSQhzQ3Gdn4o8PLQEdkmz4sec
+	 XYY54TT7tlGnWu/CVVYEB0I1cvmWHin5y7CndKNGJCmSygiFZM2Bft+GjtxBvtLx2Vg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y3l0YSXf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WU7Xv0t8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6741606B36C;
-	Fri, 13 Nov 2026 17:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE48606A893;
+	Fri, 13 Nov 2026 17:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y3l0YSXf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929E91F000C7;
-	Fri, 13 Nov 2026 17:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WU7Xv0t8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C635D1F000C7;
+	Fri, 13 Nov 2026 17:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590539;
-	bh=UUUABNarg4lj+JLwD5hW9SrVl+Gze6RUngoIGlBOeTo=;
+	s=korg; t=1794590541;
+	bh=KTJvfPm5MhrZL6PZHC7k+JPoeEuuln07SQkOE65PihU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y3l0YSXfdPKzuWsD14ks5I0ngrzBLArj4fORWdJx14Zlz9nqzkB0CWOdTGKDnPc1j
-	 Cs8a2IQFA4vXpcFXiVG2CBPWfNF/VbRnf8daNNupTWHa/PQpqgm5N1np3Oyx88yFwX
-	 RLPYXvgaF+GXVCb3cgaiK1se+WDjbR38Ut2guWao=
+	b=WU7Xv0t81ptHYC4jjb7kmoYY7UK33uiGcHLKQhs4E4vsOTMnh3um1XWiX+cWlX13y
+	 ZA8a36yXIpC6rzkEOQroJ5vkFDsL5tQmPAumog73tx44MTwq66JLTIsaubwQBSbXiC
+	 Fsa78Y7o00chPYPkb6V2Rx2IW+YnLegc+V1LDMNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	sashiko-bot@kernel.org,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Abhishek Dubey <adubey@linux.ibm.com>,
+	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
+	Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>,
+	R Nageswara Sastry <rnsastry@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 480/686] ata: libata-scsi: reject data-in commands with a data-out buffer
-Date: Fri, 13 Nov 2026 10:50:13 -0500
-Message-ID: <20261113153837.224581429@linuxfoundation.org>
+Subject: [PATCH 6.18 481/686] powerpc/bpf: fix buffer overflow in JIT for large BPF programs
+Date: Fri, 13 Nov 2026 10:50:14 -0500
+Message-ID: <20261113153837.256131186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,90 +73,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: Abhishek Dubey <adubey@linux.ibm.com>
 
-[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
+[ Upstream commit 78ce55b7913a78e1687306668e078b86bc6508ee ]
 
-SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
-scatterlist can then contain pages pinned without write access.
-ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
-in the reported case, the copy tried to write the shared zero page
-and faulted in the kernel.
+During size calculation in pass-0, exit_addr is 0 since addrs[fp->len]
+is not yet populated. bpf_jit_emit_exit_insn() treats a zero exit_addr
+as in-range and skips bpf_jit_build_epilogue(), so the alternate inline
+epilogue instructions are not counted in alloclen.
 
-The same mismatch can affect SG_IO commands translated by libata.
-ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
-the receive buffer even if the drive aborts the command. For ATAPI,
-the successful INQUIRY completion also rewrites the buffer in
-atapi_fixup_inquiry().
+In later passes, if the real exit_addr falls outside the 32MB branch
+range, the full inline epilogue is emitted into the already-allocated
+buffer, writing past its end and corrupting adjacent memory.
 
-Reject these mismatched commands before the buffer is written or the
-command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
-the CDB itself can be valid; the supplied transfer direction is wrong.
+Fix by ensuring exit_addr is non-zero before treating it as in-range,
+so pass-0 always falls through to bpf_jit_build_epilogue() and
+conservatively accounts for all epilogue instructions in alloclen.
+Also range check alt_exit_addr directly in the else-if condition.
 
-Backport notes: Use the older five-argument ata_scsi_set_sense()
-interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
+Since exit_addr handling now falls through to the epilogue, two
+related issues in bpf_int_jit_compile() must also be addressed:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
+1. Reset cgctx.alt_exit_addr before the second size-calculation pass.
+   Without this, a stale alt_exit_addr from the first pass causes the
+   second pass to emit a single jump instead of the full epilogue,
+   undercounting alloclen and reintroducing the overflow.
+
+2. Recompute addrs[fp->len] at the end of each code-generation pass.
+   The larger pass-0 body can shrink in later passes as out-of-range
+   exits settle into in-range jumps; a stale addrs[fp->len] would
+   leave exit branches targeting past the real (shrunken) epilogue.
+
+Because shrinkage in a later pass can move the epilogue offset, the
+fixed two-pass loop is no longer sufficient: an exit that was out of
+range in an earlier pass may fall in range once the epilogue offset
+shrinks, shrinking the body further and overwriting the start of the
+epilogue. Convert the code-generation loop to iterate until the
+program size converges, bounded by CODEGEN_MAX_PASSES, and fail the
+JIT if it does not converge.
+
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/bpf/20260529015855.364704-2-adubey@linux.ibm.com/T/#mfcb23909d977b949727cca4f59ee56a13fd69b92
+Fixes: 0ffdbce6f4a8 ("powerpc/bpf: Handle large branch ranges with BPF_EXIT")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Abhishek Dubey <adubey@linux.ibm.com>
+Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+Tested-by: Yeswanth Krishna Tellakula <yeswanth@linux.ibm.com>
+Tested-by: R Nageswara Sastry <rnsastry@linux.ibm.com>
+Link: https://lore.kernel.org/bpf/20260529015855.364704-2-adubey@linux.ibm.com/T/#mfcb23909d977b949727cca4f59ee56a13fd69b92
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/eebffa997e07781b384c4480e2b03c5b87c1aeb1.1789982239.git.skb99@linux.ibm.com
+[ sashal: Replaced goto out_err with fp = org_fp followed by goto out_addrs because the out_err label is absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ arch/powerpc/net/bpf_jit.h      |  7 +++++++
+ arch/powerpc/net/bpf_jit_comp.c | 35 +++++++++++++++++++++++++--------
+ 2 files changed, 34 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 8b9530c505315..0988bf574b81e 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1977,6 +1977,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	if (xlat_func(qc))
- 		goto done;
+diff --git a/arch/powerpc/net/bpf_jit.h b/arch/powerpc/net/bpf_jit.h
+index 8334cd667bba1..ae2c92a8b6e77 100644
+--- a/arch/powerpc/net/bpf_jit.h
++++ b/arch/powerpc/net/bpf_jit.h
+@@ -14,6 +14,13 @@
+ #include <asm/ppc-opcode.h>
+ #include <linux/build_bug.h>
  
-+	/*
-+	 * A data-out request may contain pages pinned without write access.
-+	 * Reject a translated data-in command before issuing it, since its
-+	 * completion handler may write to the buffer even if the device fails.
-+	 */
-+	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
-+		     ata_is_data(qc->tf.protocol) &&
-+		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
-+		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		goto done;
-+	}
++/*
++ * We need at least 2 passes for proper code generation, and may need
++ * additional passes if code size changes between passes.
++ */
++#define CODEGEN_MIN_PASSES    2
++#define CODEGEN_MAX_PASSES    3
 +
- 	return ata_scsi_qc_issue(ap, qc);
+ #ifdef CONFIG_PPC64_ELF_ABI_V1
+ #define FUNCTION_DESCR_SIZE	24
+ #else
+diff --git a/arch/powerpc/net/bpf_jit_comp.c b/arch/powerpc/net/bpf_jit_comp.c
+index cedab25aa3a82..829b60ae485ff 100644
+--- a/arch/powerpc/net/bpf_jit_comp.c
++++ b/arch/powerpc/net/bpf_jit_comp.c
+@@ -99,11 +99,10 @@ void bpf_jit_build_fentry_stubs(u32 *image, struct codegen_context *ctx)
  
- done:
-@@ -2008,6 +2020,12 @@ static void ata_scsi_rbuf_fill(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	unsigned long flags;
- 	unsigned int len;
+ int bpf_jit_emit_exit_insn(u32 *image, struct codegen_context *ctx, int tmp_reg, long exit_addr)
+ {
+-	if (!exit_addr || is_offset_in_branch_range(exit_addr - (ctx->idx * 4))) {
++	if (exit_addr && is_offset_in_branch_range(exit_addr - (long)(ctx->idx * 4))) {
+ 		PPC_JMP(exit_addr);
+-	} else if (ctx->alt_exit_addr) {
+-		if (WARN_ON(!is_offset_in_branch_range((long)ctx->alt_exit_addr - (ctx->idx * 4))))
+-			return -1;
++	} else if (ctx->alt_exit_addr && is_offset_in_branch_range(
++			(long)(ctx->alt_exit_addr) - (long)(ctx->idx * 4))) {
+ 		PPC_JMP(ctx->alt_exit_addr);
+ 	} else {
+ 		ctx->alt_exit_addr = ctx->idx * 4;
+@@ -223,6 +222,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+ 	 */
+ 	if (cgctx.seen & SEEN_TAILCALL || !is_offset_in_branch_range((long)cgctx.idx * 4)) {
+ 		cgctx.idx = 0;
++		cgctx.alt_exit_addr = 0;
+ 		if (bpf_jit_build_body(fp, NULL, NULL, &cgctx, addrs, 0, false)) {
+ 			fp = org_fp;
+ 			goto out_addrs;
+@@ -259,10 +259,13 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+ 	code_base = (u32 *)(image + FUNCTION_DESCR_SIZE);
+ 	fcode_base = (u32 *)(fimage + FUNCTION_DESCR_SIZE);
  
-+	/* A data-out request may contain pages pinned without write access. */
-+	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
-+		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return;
-+	}
+-	/* Code generation passes 1-2 */
+-	for (pass = 1; pass < 3; pass++) {
++	/* Code generation passes 1-2+, loop until program size converges. */
++	for (pass = 1; pass <= CODEGEN_MAX_PASSES; pass++) {
++		u32 prev_proglen = proglen;
 +
- 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
+ 		/* Now build the prologue, body code & epilogue for real. */
+ 		cgctx.idx = 0;
++		cgctx.exentry_idx = 0;
+ 		cgctx.alt_exit_addr = 0;
+ 		bpf_jit_build_prologue(code_base, &cgctx);
+ 		if (bpf_jit_build_body(fp, code_base, fcode_base, &cgctx, addrs, pass,
+@@ -272,11 +275,27 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+ 			fp = org_fp;
+ 			goto out_addrs;
+ 		}
++		addrs[fp->len] = cgctx.idx * 4;
+ 		bpf_jit_build_epilogue(code_base, &cgctx);
  
- 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
-@@ -3065,6 +3083,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
- 
- 	qc->complete_fn = atapi_qc_complete;
- 
-+	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
-+	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
-+	    scmd->cmnd[0] == INQUIRY) {
-+		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return 1;
-+	}
++		proglen = cgctx.idx * 4;
 +
- 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
- 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
- 		qc->tf.flags |= ATA_TFLAG_WRITE;
+ 		if (bpf_jit_enable > 1)
+ 			pr_info("Pass %d: shrink = %d, seen = 0x%x\n", pass,
+-				proglen - (cgctx.idx * 4), cgctx.seen);
++				prev_proglen - proglen, cgctx.seen);
++
++		/* Check if program size has converged, but ensure minimum passes */
++		if (pass >= CODEGEN_MIN_PASSES && proglen == prev_proglen)
++			break;
++
++		if (pass == CODEGEN_MAX_PASSES && proglen != prev_proglen) {
++			pr_err("BPF JIT: Program did not converge after %d passes\n",
++								CODEGEN_MAX_PASSES);
++			bpf_arch_text_copy(&fhdr->size, &hdr->size, sizeof(hdr->size));
++			bpf_jit_binary_pack_free(fhdr, hdr);
++			fp = org_fp;
++			goto out_addrs;
++		}
+ 	}
+ 
+ 	if (bpf_jit_enable > 1)
+@@ -336,7 +355,7 @@ int bpf_add_extable_entry(struct bpf_prog *fp, u32 *image, u32 *fimage, int pass
+ 	u32 *fixup;
+ 
+ 	/* Populate extable entries only in the last pass */
+-	if (pass != 2)
++	if (pass < CODEGEN_MIN_PASSES)
+ 		return 0;
+ 
+ 	if (!fp->aux->extable ||
 -- 
 2.53.0
 
