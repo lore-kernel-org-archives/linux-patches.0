@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585391;
-	b=VIg/OoGqLfA4NIKFdDj3RuuNELXU2WuELXxcV056UNZzo9rMPSm7mNnwgV1HTrnRI3sH
-	 A/3STAPjtQ/3/D60m3HxGSlo6V3XVY3auA1KEQVXdZ1FQtQFWE46Yv15mJtzmkZEPn4lc
-	 7+i8QQVublV8phaliP+ksa/+XGP84aQTjxJMg9/w0AnngtN1dBvcCy9d8uKWSExQ1pJcu
-	 YKxs3xq7Dpdohf+zd+lZjQHufVPHSlTyQdF4RF8at+/Zkx53SaJ4JQ0TSC2H6fk3XH7v0
-	 oyQHU43HMs7d3d0ixx62NJgM46gIMOUjWkUAPGjC1ye9kaF8RQgHx3adFzp4TZ/3eyw==
+	t=1794585392;
+	b=a3gj6Je4wOpaJdm8Ad0E06p9hKOu9tZYX4gpE+gKVztbwTt3/EnJ86uPH4Or/jdKaRzd
+	 BzLDVqCPgqxND+uXWvOe11m3kJyGirCsvWsrEBL7cgD9WCNTFcUICGs1beOHxM28mxgaE
+	 n0ZHLmBM70Fsqwy4y7vhiBIZlVN+/8JO8CjlcbFcsoGEU6TWSBf2+xMAqkCh3GE2OrJql
+	 YIqkuvb8ov/iQ13ruibdB6X2u2/qjxG7vaztTmZhkAjZ5OGd8/tiTt/1N0Np8zn8joO9f
+	 V5oVMAeAspH+4diagu9no/fVTgFrmuzm10L3DL7ReyUktuUXViuAsZi23HOp4BHKugw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Kzl4yyCCCZLtF5RG8NKIkrsOJvcvSgNZNGczoLeeSRY=;
-	b=nIfy5NCqwLH25YSe0eclOF4fs0m/GqJNjNCmlXbAyDn6T6Gw2PReIj4R84TPJusjbsS2
-	 s20196g1Hk/SyVvyqbIxIzyHx1gTD5BKnUBRF1EntCO43ufion79pFjAh6hDq/LVMDLkt
-	 vsthjum2qCfjzRv2ljzDlc90A/fIk3Zn/IOi94w94VZ/Cleoo8zeTx1JzbHI7l4yaaJO2
-	 MQecyWhcqc1VAZIScNIP1gXEBOUvmlTf/meYb17yvAocXvdee8LOGfMwBciU0sjBKz143
-	 5aXdACFVcDAn7XcLaPTAPjCzXOFMRtXb0jDw+KostFufgIPM+Z7XxD+6zftLVeUmiRA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=F3XiE5NAzkiemtBKVQgA+CYS1L4hK8J51iXcnNt8XPw=;
+	b=Ybnel3vBGcbqnXwE/TM9w/OXWiPoS0c0vLO+CKGUYP27v8YV2s7/cPpeWRZ9BRYdbTGp
+	 Wuwsa6IU6hbpquB3q51wIbp56Ji3vyvsqUu6cRjc/Mhdafvfz9QSWNEhsYjw4rW/DvPRe
+	 CxAT+/YOLkLOVoQEetFtp0bEAT5LXN7dGwrDOdu6NgFBZzTiKqawzR12V0eHWdVW0rJ1Q
+	 XlgVyOQ2ZfrM0cqqL2u4+dySwEs2C0eu11wOABNOFZjJLorzTyrCz+8UOB1DYJFHjNtdy
+	 WE4G8oIPqHLqBTFhqvLNC/22+DdVVvdq8WWX+47jfKVY7/DY/7ZZVygeAs3/IAiv6lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="DGi/5Cd7";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qk3y8g57;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BC46070FDD;
-	Fri, 13 Nov 2026 15:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646276070FE8;
+	Fri, 13 Nov 2026 15:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DGi/5Cd7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0351F000CE;
-	Fri, 13 Nov 2026 15:56:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qk3y8g57
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116751F000D4;
+	Fri, 13 Nov 2026 15:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585391;
-	bh=Kzl4yyCCCZLtF5RG8NKIkrsOJvcvSgNZNGczoLeeSRY=;
+	s=korg; t=1794585392;
+	bh=F3XiE5NAzkiemtBKVQgA+CYS1L4hK8J51iXcnNt8XPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DGi/5Cd73cFpzLPyDfenWKcFqXcKEo3RQVb8weuF5ujwg3Ekajp9CE8liS4LFm4Vu
-	 MfF5ahDQKikcqPBHRohzQvGYwUSDxvIAMRaLS3KUr1wDC0K5z277T7hfjbZOP1hStO
-	 3WHFZraXUNHQ15+6rvKsq4wTRfg35VPXgsfcW8is=
+	b=qk3y8g572jCMbpKpGoKfVjs0J/PtdxYdiSsp1uPhVxbSME6gGGZgse/2dnwjEO+Zy
+	 0FRlDT9iDpqFoiVvQMJqgVV+Q6JkhCZtA8MUEw3Y6rM9xag4+YYXZoO+q9hJ1K7wcr
+	 In8RByh7M4/0KM4q6L7lCfcr2bFXRrHjGxuB7EY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yili Zhang <zhangyili01@baidu.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 063/507] dma-buf: Fix IOVA offset when linking phys vecs to sgt
-Date: Fri, 13 Nov 2026 10:46:07 -0500
-Message-ID: <20261113153755.684133436@linuxfoundation.org>
+Subject: [PATCH 7.3 064/507] wifi: mac80211: reload TDLS header pointer after skb_linearize()
+Date: Fri, 13 Nov 2026 10:46:08 -0500
+Message-ID: <20261113153755.713598472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -64,57 +62,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yili Zhang <zhangyili01@baidu.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit d57e3a7d880d783c64aa29457d78b0e3c5a40e3c ]
+[ Upstream commit 35c5a5ea4418571997a7e7af3e7e8922b136f6e6 ]
 
-The dma_buf_phys_vec_to_sgt() routine links every physical range into
-the allocated IOVA space at offset zero instead of advancing the offset
-by the already mapped length. This breaks the THRU_HOST_BRIDGE flow
-whenever phys_vec contains more than one entry: the second and
-subsequent dma_iova_link() calls try to install mappings on top of
-PTEs that already exist, which fails and makes the whole conversion
-return an error.
+ieee80211_process_tdls_channel_switch() sets tf = skb->data before it
+calls skb_linearize(), and reads tf->action_code afterwards.
 
-Fix it by passing the accumulated mapped_len as the IOVA offset. This
-matches the pattern used by all other dma_iova_link() callers and is
-consistent with the rest of the function: dma_iova_sync() and the
-error path in dma_iova_destroy() both operate on the [0, mapped_len)
-prefix of the IOVA space, which assumes that the ranges were linked
-contiguously starting at offset 0.
+ieee80211_rx_h_data() queues TDLS channel switch requests and
+responses to the interface after pulling only
+offsetof(struct ieee80211_tdls_data, u) bytes, so the skb can still be
+non-linear when the interface work handles it. Drivers that build
+paged RX skbs do this for every frame that does not fit into the skb
+head, e.g. iwlwifi (mvm), which is also the only mac80211 driver
+that sets NL80211_FEATURE_TDLS_CHANNEL_SWITCH. If the remaining data
+does not fit into the tailroom, skb_linearize() moves the data to a
+new head and frees the old one, and the action code is then read from
+freed memory. Depending on what that memory holds by then, the frame
+is handled as before or ends in the WARN_ON_ONCE() of the default
+case.
 
-Fixes: 3aa31a8bb11e ("dma-buf: provide phys_vec to scatter-gather mapping routine")
+The frame only has to be a data frame with the TDLS ethertype from an
+authorized peer, e.g. relayed by the AP from another station in the
+BSS; the read happens before the sender is checked to be a TDLS peer.
+
+Load tf after skb_linearize(), as the request and response handlers
+already do.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 8a4d32f30d11 ("mac80211: add TDLS channel-switch Rx flow")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yili Zhang <zhangyili01@baidu.com>
-Reviewed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Leon Romanovsky <leon@kernel.org>
-Link: https://lore.kernel.org/r/20260924065508.27245-1-zhangyili01@baidu.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Link: https://patch.msgid.link/20261021145807.3018338-1-geoffreyhe2@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-buf-mapping.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/tdls.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma-buf/dma-buf-mapping.c b/drivers/dma-buf/dma-buf-mapping.c
-index 833be519e1e6a..ef0f22854d018 100644
---- a/drivers/dma-buf/dma-buf-mapping.c
-+++ b/drivers/dma-buf/dma-buf-mapping.c
-@@ -156,7 +156,7 @@ struct sg_table *dma_buf_phys_vec_to_sgt(struct dma_buf_attachment *attach,
- 						       phys_vec[i].paddr);
- 		} else if (dma_use_iova(dma->state)) {
- 			ret = dma_iova_link(attach->dev, dma->state,
--					    phys_vec[i].paddr, 0,
-+					    phys_vec[i].paddr, mapped_len,
- 					    phys_vec[i].len, dir,
- 					    DMA_ATTR_MMIO);
- 			if (ret)
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index f663d28d9209c..71db07aa301b7 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -2021,7 +2021,7 @@ void
+ ieee80211_process_tdls_channel_switch(struct ieee80211_sub_if_data *sdata,
+ 				      struct sk_buff *skb)
+ {
+-	struct ieee80211_tdls_data *tf = (void *)skb->data;
++	struct ieee80211_tdls_data *tf;
+ 	struct wiphy *wiphy = sdata->local->hw.wiphy;
+ 
+ 	lockdep_assert_wiphy(wiphy);
+@@ -2037,6 +2037,7 @@ ieee80211_process_tdls_channel_switch(struct ieee80211_sub_if_data *sdata,
+ 	 * The packet/size was already validated by mac80211 Rx path, only look
+ 	 * at the action type.
+ 	 */
++	tf = (void *)skb->data;
+ 	switch (tf->action_code) {
+ 	case WLAN_TDLS_CHANNEL_SWITCH_REQUEST:
+ 		ieee80211_process_tdls_channel_switch_req(sdata, skb);
 -- 
 2.53.0
 
