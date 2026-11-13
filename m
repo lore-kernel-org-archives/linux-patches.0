@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590102;
-	b=kfvKeAjy6LBKVlGRopiQXD4vzVIS3Vy0lTL8XLlEg98ApPai+s/euixrReLzA4sMGwmq
-	 jJkFRfbGy2NzVPSTTcNGKlJUwbCPuP4DUrqhoiqh+EdmGZEqWepvF8drN8bZRlA3eMGNq
-	 Q2gG2QLvkU4pSvYJ2fyQ6okDKS1C4jBbkN4HnJXLWIz5UsOxZylZa4eZPs6HCBeHYxZOj
-	 pn47ncUU4GR1xc3SU3hUeaS4CtF9VQKIreMbtn42yYRQefFe0UbmzBw083CO3LMUsVSj+
-	 6UPoJOy/h9yCeSC7eRDM/KjH8BQA8bv2gBOe6OLGz/6FhH0lcISg4NoSrI4SLRqpqIw==
+	t=1794590103;
+	b=biuyJmRhapfukM7qJLjVvF2HvxMAcTl6iDHvAAo+3iFEvM+PRKUWIzeMAuse6m6s8gmm
+	 3m7/6548my7V/aKfQZxAdqwr2TDqj7Gz9NjFE/uk7edn7ONCmVzpDw7naDsRM6p4Ggauh
+	 XmzxmdZ+mELoC2MZVgae3o9S/V3Q3yiiqRyHAabeIHa3dPswcuJk8Dy6fuvKeGWVdu885
+	 iQrq9csO7M9scFM5FymYFQReHMEbEkGVMoxujE2TwbzAfa1lsDYQd0LRpiU5pIsK4q640
+	 L7S/PRqGP5AaQgMgrLmTdQT+0QvqcYDeHwUTxVDOiJsqRaiZ0TzXsJDtIds1Rb5/Fjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590103;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V4Sq8LnkfQURbehW2QKUnuUob9kXRYtdkbeBkclTUVw=;
-	b=v4CLOwimC8VKZ3Nf2vHEhoPkTxMBXxSrtWE5oEby3HTJAEF5eDlyIztZ9wb9jS8aOIt+
-	 yhPMtAQMwUyUZsDcYCcAtCj3bVLIsTeVeHRnDmIBBVkoxzmmcD0Ck7lVU6IJJXvp6AA8X
-	 cEOfCV1b2p8mG0Kv/NQUS6hlfZpjOHSBkWoAMa9bEW/HBDDIOebdVYoml+aPVkUGIIWw5
-	 L9hfiluDXZ+DXIO/nETEi7eKealmWgGuxTMqu5JXnjgYBr9iqav+kPWU0B6zcwqJJH7Zw
-	 D91T3ASK1AY6UaTb/k54G4JKd4UUJzykmSVoZPRd3uXqAnJWtlfIjMjZHcJh8RlSd/w==
+	bh=eDD4Gi0jSZJrlqj9PXt+23HwjKy94qpkw3jHE1W9mqY=;
+	b=Gv4N4WCzWqNJrfVjGPSTLjkZ9XQto61if/VrHiUUD24uAzoMxurw5yM0aoo1fiyVNSi8
+	 RKgnJN5BzSNS5K5v156zwxk76Nbe2aWtII5dPVtf8I2hgrkBG82wF174zUPBuHU+NDJPr
+	 Hfvm7UW6B+cV0i4GePllXEkbduatnTk5vqeDBaFdl3sPnlzEVr+qpIvlLMlOY3CS66aQi
+	 dorN/P25XTwlYsvJm7msL53zhRgVn3DJKqMDatq4RIx+TAE7PXd1iGoo6Ugpo2jbJlsgh
+	 HQedeWkY3zn1+iCihrFnO9SoqXhDgI/NMjSR/TUwZzKmkMcC+vFflbvRnuL22fJcn8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7RT21Qi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u/c8er4b";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A68760A3810;
-	Fri, 13 Nov 2026 17:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754DE60A3832;
+	Fri, 13 Nov 2026 17:15:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U7RT21Qi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD96D1F000C5;
-	Fri, 13 Nov 2026 17:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u/c8er4b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97B61F000C4;
+	Fri, 13 Nov 2026 17:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590101;
-	bh=V4Sq8LnkfQURbehW2QKUnuUob9kXRYtdkbeBkclTUVw=;
+	s=korg; t=1794590103;
+	bh=eDD4Gi0jSZJrlqj9PXt+23HwjKy94qpkw3jHE1W9mqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U7RT21Qie7SHfFybGqkmDkdYmIMD76qj2qfxIHezD4jEvQ5GWf+Z0HVlUvxSdWzFb
-	 LUGzedpAVrS2/VfPFqrONPKvV+Py1g9bALc8wZZ/M5NQ4zkf9EQ3zOpL2I2/7DgPea
-	 Kx5+t4mVlHJ0IqShl7rbOjf7zE12DP6XRffgFywE=
+	b=u/c8er4bqJQxS3bA7nbsk1yOjJq+vYMXfAbbfcnK2tcitcdCvth2syl+VjhVGvinw
+	 ytjWEb1XvaY+u8+myhq+3GQlJ9HXCEFj3KlNN8Gm6+PfCv1ZbrM05QKkx50UUu3/es
+	 YAS/c8v4jeGJCnzomI+vcRquVGYSFzx2P7ME19i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/686] ax25: let a socket connect again after a failed or ended connection
-Date: Fri, 13 Nov 2026 10:44:18 -0500
-Message-ID: <20261113153825.060034836@linuxfoundation.org>
+Subject: [PATCH 6.18 126/686] ax25: dont let connect() find its own socket when calling the same station
+Date: Fri, 13 Nov 2026 10:44:19 -0500
+Message-ID: <20261113153825.092707048@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,63 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-When a connection fails or ends, ax25_disconnect() sets SOCK_DEAD on
-the socket and shuts it down for sending, although the socket is still
-open and its owner may call connect() again. ax25_connect() resets the
-socket states but leaves both:
+Before it starts a link, ax25_connect() looks on ax25_list for an
+existing connection with the same source, destination, digipeater path
+and device, and returns -EADDRINUSE if there is one. A bound socket is
+on that list itself, with the destination of its previous attempt, and
+its digipeater path was just freed. When a connect() failed or the
+connection ended, a new connect() to the same station without
+digipeaters thus finds the socket itself, and fails with -EADDRINUSE
+every time.
 
-- the new attempt changes the state under SOCK_DEAD, and both
-  ax25_disconnect() and the UA handling in state 1 skip
-  sk_state_change() on a SOCK_DEAD socket: a blocking connect() is
-  never woken up, whether the new link comes up or fails, and returns
-  only on a signal;
-
-- once connected, every send() fails with -EPIPE, since sendmsg()
-  tests SEND_SHUTDOWN first.
-
-Clear SOCK_DEAD and sk_shutdown when connect() starts a new attempt.
+Forget the previous destination before the lookup, under
+ax25_list_lock, where the list readers compare it.
 
 Tested on a QEMU bench (6.12.94 with KASAN and lockdep, two guests over
-a KISS serial link). A listens on TESTA-9. B calls TESTA-8, where
-nobody listens, then calls TESTA-9 with the same socket, a 20 s alarm
-set, and sends a message:
+a KISS serial link). A starts listening on TESTA-9 after 7 s. B calls
+TESTA-9 with one socket before that, which times out, then calls
+TESTA-9 again with the same socket, non-blocking, and checks 3 s later:
 
-  before: the second connect() returns only when the alarm fires
-          20 s later, send() fails with -EPIPE, A receives nothing
-  after:  the second connect() returns at once, send() succeeds and
-          A receives the message
+  before: -EADDRINUSE on the second call and on the check, A accepts
+          nothing
+  after:  -EINPROGRESS, then the check returns 0 and A accepts the
+          connection, three runs out of three
 
-Applications that open a new socket for each call are not affected.
+send() on the new connection still fails with -EPIPE unless "ax25: let
+a socket connect again after a failed or ended connection" is applied
+as well; with both, and with "ax25: free the old digipeater path of a
+listed socket under ax25_list_lock", A receives the message.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit d3773f1e0b60711b93529c658b672633f55f19fc)
+(cherry picked from commit efd5dce53a6bc296186212d4a16961174fd3df83)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  net/ax25/af_ax25.c | 9 +++++++++
  1 file changed, 9 insertions(+)
 
 diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index 81616e8438ce4..51a066ae4e89f 100644
+index 51a066ae4e89f..d0ac09cc46e74 100644
 --- a/net/ax25/af_ax25.c
 +++ b/net/ax25/af_ax25.c
-@@ -1302,6 +1302,15 @@ static int __must_check ax25_connect(struct socket *sock,
+@@ -1374,6 +1374,15 @@ static int __must_check ax25_connect(struct socket *sock,
  		goto out_release;
  	}
  
 +	/*
-+	 * A connection that failed or ended through ax25_disconnect() left
-+	 * the socket SOCK_DEAD and shut down for sending. The socket is still
-+	 * its owner's: start afresh, or the state changes of the new attempt
-+	 * would wake no one and every send() would fail with -EPIPE.
++	 * The socket is on ax25_list with the destination of its previous
++	 * attempt, if any: forget it, or the lookup below finds the socket
++	 * itself when the same station is called again.
 +	 */
-+	sock_reset_flag(sk, SOCK_DEAD);
-+	sk->sk_shutdown = 0;
++	spin_lock_bh(&ax25_list_lock);
++	ax25->dest_addr = null_ax25_address;
++	spin_unlock_bh(&ax25_list_lock);
 +
- 	sk->sk_state   = TCP_CLOSE;
- 	sock->state = SS_UNCONNECTED;
- 
+ 	if (sk->sk_type == SOCK_SEQPACKET &&
+ 	    (ax25t=ax25_find_cb(&ax25->source_addr, &fsa->fsa_ax25.sax25_call, digi,
+ 			 ax25->ax25_dev->dev))) {
 -- 
 2.53.0
 
