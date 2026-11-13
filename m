@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590742;
-	b=sNOqbaNA9gSlxCDHw6kC6uiEbL8yHFTSr/4TBw1ZW2yDkoCkiLuBwZTI7sW8qZjuNsBq
-	 PZwtRL2fYWcuLu7t/IM6cUjoSAzHUUZUpHe97e3XgotzkJx4sTi1VZQdeNmxpPTo+Vs8c
-	 qBvhpfAXxMPJfbwPDKraCw30eZpGezTf/PNGGFLl3EIlHh4l/2NijvoJf/lJVrW0GYxmM
-	 to3D0PibYLlefM7Pl4RVZ7Y9aOcTFVGDBtGqp/A9jC+dQWJ14FeC5gAnjjYXhryqUelw2
-	 EWIJzBdoKJmt899jridYn5Q23Ye53U4Sgfkb4z2Kh6KUvBDYFOHyB6UWogPyyYMV+UA==
+	t=1794590744;
+	b=22Um18nEJvpw4gJyvAL2xR0dD6nqo4MPkkUOgx7pzm0QYIU5dR/+YP2yNBz1LzbYdkQE
+	 KESvdRpUkvkMpjcRtj3TdwVU40vaG7VpcspJTeK3RuIegU1pNLwYlTKI1WgnbQoznZGi6
+	 dpX8dK2BC9yI3AzMOQXSA3OXlbM3JOnU56qP8O0osdYeGN3/rqiVu3WT3DV3IyLNALoKS
+	 pQDJN/y5+dZhgmRk8m2NJ28A8NBc+juSJIFIQb/+sshWyWFXpTPfC0y/VV4ENMzU02rZh
+	 Z/dK8MjJCqmOvqvzgGAVRz4/4lqLfM+5QgTmPkJye5nmReRVbEZERNnJ0oXe19NLkjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590742;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CRnEI0JvMNKmzoMBSGHLPWku9dIL5axSbFnuGAb0T6g=;
-	b=RsVExFeeOiBqiXz6ZN7j0tsHN4ZMWPoEV8pb3br4e0XrryoMX56b95vaT614I+gCyMFh
-	 rOeJNANzlL9jYsntK0/cvSa2NRQho2CL5E+x7ZvyY0uVz5RVrKEX3d3uSuAYk7zX8XGeY
-	 MrisoB5YQ47h1pTJfjsH1FMUmHJ4C4dyzrCZnmEegvOWPvbCAS9SBQwCbqUIT6Mn8Dqxd
-	 S6NgY31K1YctqqVy93oHPNsIEKQd9+yLg2ubOl78cU5rXzaZ6ifXsOGWEMWrm5y63/I81
-	 DkkHV13I57kvm0R0oxyVhFwS0J6gFLQqrOmukUmUbF8TGvp+cTjCzCz24LnuHpMgSfg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=FdxYTIyeJea7zJO25weEDNXbkXMtYl+UJLMOjqT4+ZM=;
+	b=PqFXOyYKYQsXcKYAuFyz4aKajZhElpamnEfbveM0y+pZZVSA5+JuBvBOae0MdMMi8pqY
+	 mvrdKCSoO0JxV1eTWomRsWsONQAMEv/cvCbGEhdFt3cf/4f9fOvupqH5dEqRdK5/j4bdB
+	 gwvRng24BJqpU48LTxaD9Lvz0VNKcSTr0DU0XkuL3SbnA69zaw7X0UfM/+QfXPZsXAs5B
+	 5fk3KjEL5hgyWBK2sakG5G1rolZlbIPZRk55Yy8a6+q06aNPiZJiw02dy0AWGkiWCHX19
+	 eIgNx6JXmPEFk6LX1+Yc/IraEZ5lkCvqFxEs06euz6AqA3EfOYgtq1fezTCMfCHHlXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzbQfTcP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BZJFCLaE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0823607B5A3;
-	Fri, 13 Nov 2026 17:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AC0607B5A3;
+	Fri, 13 Nov 2026 17:25:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YzbQfTcP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8321F000CB;
-	Fri, 13 Nov 2026 17:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BZJFCLaE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C0F1F000C4;
+	Fri, 13 Nov 2026 17:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590742;
-	bh=CRnEI0JvMNKmzoMBSGHLPWku9dIL5axSbFnuGAb0T6g=;
+	s=korg; t=1794590743;
+	bh=FdxYTIyeJea7zJO25weEDNXbkXMtYl+UJLMOjqT4+ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YzbQfTcPtlCwrWuKpvOaKviYnvSGUCtSi0COzaWxNUe4bBtwtIwkvSZYx21M7Mt8f
-	 i8B3Be4AqauX9UZiC/n5T5s8TWEk7JbdoFXqLUojt1EZnV4OlqtD5XnL6wHCk14SUQ
-	 BFrrLA88mx1ygAeOVcJ/45QBpORSa1Nrtu5sdF2E=
+	b=BZJFCLaEpaT1DHlgIWOlcfgUhkQKX4VjQFmKLbyYkXhtpc3F9cOFKqxL+4DzUvQiv
+	 z02D7qZttPXtQy1k586mfXmmtu4I97ipY/DN4g7NuXZP2Hj73IvE2cozHIcA2C9zj/
+	 bYwf3FXZUeQMtUhs1bsjDsakRSXEtNivm231Fjh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	=?UTF-8?q?Iv=C3=A1n=20Ezequiel=20Rodriguez?= <ivanrwcm25@gmail.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Aksh Garg <a-garg7@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 643/686] arm64/gcs: release GCS on failed fork
-Date: Fri, 13 Nov 2026 10:52:56 -0500
-Message-ID: <20261113153843.577088251@linuxfoundation.org>
+Subject: [PATCH 6.18 644/686] PCI: cadence: Store the core controller in platform drvdata
+Date: Fri, 13 Nov 2026 10:52:57 -0500
+Message-ID: <20261113153843.606097713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -63,102 +64,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit 078e122f3bf000dd45965997b66deac10ee580fa ]
+[ Upstream commit cfe96ce583c51bf6e034d4038c652a1e8227867c ]
 
-copy_thread() can map a CLONE_VM GCS and still return 0. A later
-copy_process() failure calls exit_thread(), but arm64 did not
-implement it, so the VMA stayed in the parent's mm. Wire
-HAVE_EXIT_THREAD to gcs_free().
+cdns_plat_pcie_probe() stores a struct cdns_plat_pcie pointer with
+platform_set_drvdata(). cdns_plat_pcie_shutdown() and the callbacks in
+cdns_pcie_pm_ops retrieve the same pointer with dev_get_drvdata() but use
+it as a struct cdns_pcie pointer. This makes them read phy_count and phy
+beyond the wrapper.
 
-Kernel threads created with CLONE_VM (io_uring and vhost workers)
-inherit the parent's gcs_base/gcs_size from arch_dup_task_struct()
-without allocating their own GCS. When such a thread exits,
-exit_mm() -> mm_release() -> deactivate_mm() -> gcs_free() unmaps the
-parent's GCS. With the new exit_thread(), a failed copy_process() for
-one of these threads would do the same. Clear these fields in
-copy_thread().
+struct cdns_plat_pcie only contains a pointer to struct cdns_pcie. Drop
+the redundant wrapper and store the struct cdns_pcie pointer directly.
 
-Fixes: 506496bcbb42 ("arm64/gcs: Ensure that new threads have a GCS")
+Fixes: bd22885aa188 ("PCI: cadence: Refactor driver to use as a core library")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Aksh Garg <a-garg7@ti.com>
 Cc: stable@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>
-Assisted-by: LLM
-Signed-off-by: Iván Ezequiel Rodriguez <ivanrwcm25@gmail.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Tested-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ sashal: Placed exit_thread() before the existing erratum helper conditional block. ]
+Link: https://patch.msgid.link/20260915082826.4135665-1-lilinmao@kylinos.cn
+[ sashal: adapted the retained PHY-link cleanup loop to use pcie directly instead of the removed wrapper ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/Kconfig          |  1 +
- arch/arm64/kernel/process.c | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
+ .../controller/cadence/pcie-cadence-plat.c    | 33 +++++++------------
+ 1 file changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 2e567a7d89c9b..66b7284ce751d 100644
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -222,6 +222,7 @@ config ARM64
- 	select HAVE_SAMPLE_FTRACE_DIRECT_MULTI
- 	select HAVE_BUILDTIME_MCOUNT_SORT
- 	select HAVE_EFFICIENT_UNALIGNED_ACCESS
-+	select HAVE_EXIT_THREAD
- 	select HAVE_GUP_FAST
- 	select HAVE_FTRACE_GRAPH_FUNC
- 	select HAVE_FUNCTION_TRACER
-diff --git a/arch/arm64/kernel/process.c b/arch/arm64/kernel/process.c
-index 4c328b7c79ba3..b3cde5f60b00f 100644
---- a/arch/arm64/kernel/process.c
-+++ b/arch/arm64/kernel/process.c
-@@ -319,9 +319,18 @@ static int copy_thread_gcs(struct task_struct *p,
- 	return 0;
- }
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-plat.c b/drivers/pci/controller/cadence/pcie-cadence-plat.c
+index 0456845dabb96..c1ec619ab0a4e 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-plat.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-plat.c
+@@ -14,14 +14,6 @@
  
-+static void gcs_reset_thread(struct task_struct *task)
-+{
-+	task->thread.gcs_base = 0;
-+	task->thread.gcs_size = 0;
-+	task->thread.gcspr_el0 = 0;
-+}
-+
- #else
+ #define CDNS_PLAT_CPU_TO_BUS_ADDR	0x0FFFFFFF
  
- static void flush_gcs(void) { }
-+static void gcs_reset_thread(struct task_struct *task) { }
-+
- static int copy_thread_gcs(struct task_struct *p,
- 			   const struct kernel_clone_args *args)
+-/**
+- * struct cdns_plat_pcie - private data for this PCIe platform driver
+- * @pcie: Cadence PCIe controller
+- */
+-struct cdns_plat_pcie {
+-	struct cdns_pcie        *pcie;
+-};
+-
+ struct cdns_plat_pcie_of_data {
+ 	bool is_rc;
+ };
+@@ -40,9 +32,9 @@ static const struct cdns_pcie_ops cdns_plat_ops = {
+ static int cdns_plat_pcie_probe(struct platform_device *pdev)
  {
-@@ -340,6 +349,12 @@ void flush_thread(void)
- 	flush_gcs();
+ 	const struct cdns_plat_pcie_of_data *data;
+-	struct cdns_plat_pcie *cdns_plat_pcie;
+ 	struct device *dev = &pdev->dev;
+ 	struct pci_host_bridge *bridge;
++	struct cdns_pcie *pcie;
+ 	struct cdns_pcie_ep *ep;
+ 	struct cdns_pcie_rc *rc;
+ 	int phy_count;
+@@ -56,11 +48,6 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 	is_rc = data->is_rc;
+ 
+ 	pr_debug(" Started %s with is_rc: %d\n", __func__, is_rc);
+-	cdns_plat_pcie = devm_kzalloc(dev, sizeof(*cdns_plat_pcie), GFP_KERNEL);
+-	if (!cdns_plat_pcie)
+-		return -ENOMEM;
+-
+-	platform_set_drvdata(pdev, cdns_plat_pcie);
+ 	if (is_rc) {
+ 		if (!IS_ENABLED(CONFIG_PCIE_CADENCE_PLAT_HOST))
+ 			return -ENODEV;
+@@ -72,9 +59,9 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 		rc = pci_host_bridge_priv(bridge);
+ 		rc->pcie.dev = dev;
+ 		rc->pcie.ops = &cdns_plat_ops;
+-		cdns_plat_pcie->pcie = &rc->pcie;
++		pcie = &rc->pcie;
+ 
+-		ret = cdns_pcie_init_phy(dev, cdns_plat_pcie->pcie);
++		ret = cdns_pcie_init_phy(dev, pcie);
+ 		if (ret) {
+ 			dev_err(dev, "failed to init phy\n");
+ 			return ret;
+@@ -99,9 +86,9 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 
+ 		ep->pcie.dev = dev;
+ 		ep->pcie.ops = &cdns_plat_ops;
+-		cdns_plat_pcie->pcie = &ep->pcie;
++		pcie = &ep->pcie;
+ 
+-		ret = cdns_pcie_init_phy(dev, cdns_plat_pcie->pcie);
++		ret = cdns_pcie_init_phy(dev, pcie);
+ 		if (ret) {
+ 			dev_err(dev, "failed to init phy\n");
+ 			return ret;
+@@ -119,18 +106,20 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ 			goto err_init;
+ 	}
+ 
++	platform_set_drvdata(pdev, pcie);
++
+ 	return 0;
+ 
+  err_init:
+  err_get_sync:
+ 	pm_runtime_put_sync(dev);
+ 	pm_runtime_disable(dev);
+-	cdns_pcie_disable_phy(cdns_plat_pcie->pcie);
+-	phy_count = cdns_plat_pcie->pcie->phy_count;
++	cdns_pcie_disable_phy(pcie);
++	phy_count = pcie->phy_count;
+ 	while (phy_count--)
+-		device_link_del(cdns_plat_pcie->pcie->link[phy_count]);
++		device_link_del(pcie->link[phy_count]);
+ 
+-	return 0;
++	return ret;
  }
  
-+void exit_thread(struct task_struct *tsk)
-+{
-+	/* Failed fork after copy_thread(); deactivate_mm() does not run. */
-+	gcs_free(tsk);
-+}
-+
- #ifdef CONFIG_ARM64_ERRATUM_4193714
- 
- static void arch_dup_tlbbatch_mask(struct task_struct *dst)
-@@ -537,6 +552,8 @@ int copy_thread(struct task_struct *p, const struct kernel_clone_args *args)
- 
- 		p->thread.cpu_context.x19 = (unsigned long)args->fn;
- 		p->thread.cpu_context.x20 = (unsigned long)args->fn_arg;
-+		/* Kernel threads sharing the parent's mm must not free its GCS. */
-+		gcs_reset_thread(p);
- 
- 		if (system_supports_poe())
- 			p->thread.por_el0 = POR_EL0_INIT;
+ static void cdns_plat_pcie_shutdown(struct platform_device *pdev)
 -- 
 2.53.0
 
