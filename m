@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590766;
-	b=vf9RLeDRY8bMSYIFms9dzuKGLx2k6wu5lt12SSXX5wOqvM4eN9w0WsCHNlQjGpXzAZDM
-	 OQ26yvmGkW8gpYeVSvTGCfvRr8XULYFbo6AWbZJWIzVWgyhS+gM8Gq2YiB9KkYDWZ3sAu
-	 qMFYAcOwiODcdUV8jjHhyHksHn9l8eu+ve/V3OPk50jKInrDmjfpjJ/0D1ZUEueftIZkW
-	 SSKGBJATKvb6YuMUQGZ4lmshIJErXMrVbiGl2CyO8dXXTZo0eBI0VGo/1xCgDOxKvEsgT
-	 ojCzSwX+vC9vfzueiEt6Zz24EGXzcuh/L5yuwnHF/fMQA90DjCELfoGMbxjkjprtGBg==
+	t=1794590767;
+	b=FI1nKas0jdOlC7GIbyhVodsNTi3GLzHevi9V5ikoUKEtf/ZWHUeHwMR/xYbbIhK8MV+9
+	 SgL+NNAfDQA/uQAe1/tynD4JNK2Hi73GH+Ny1eBBmDfculG4RPVoQgiIWGvdplj7xW1gZ
+	 IPHcON+F/vBS6opUjuPPGDNlWGY18iFiuh1xZe5bhpsbXIdUjwKoeymWHl6AO435eDYoe
+	 x2NSTUfZ2t3sActfjiF0UP2hCexRlL/IQ1JBDFpKF7TlAOJ0HNjDoGQkEBfStfkbiLAgJ
+	 JoHreApCltJH8Bj650pCoz7X7+ss2ypHom5JUVlwOywslgr+O5ovJruyqYR4/v+9IxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590767;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KGBLpcSl67VbhHN4EgGsf7VuOCdFrwB3yBOioutFjp8=;
-	b=pTT+WTtSMyty1+VC5LWcICtRWqTvtOEyKIH637XTcg+bZboIQfT/1y84hBJBAKMZ2dFN
-	 ooZ4dKy58pxw7d2DPGbWVhFmfolSelHyx+U2qrCURJI6MhtTGqvsQgIW29gMb0la8egvZ
-	 iXG2Aj734vc1YNMKznJqPWtctCGWogK6g+BMzjVNR6ix6GZKPC4HwGnLi5lwaaW4+a+5b
-	 +wAwMdTNVwvZV4ydk6o3JFT4CPOJdFMQWDgjsBxM1mrjYXPlPQ+KebuRgaLuyJsaf0a94
-	 jrZnlxeAyqsnjBaTP+vCUc8j6jtKoRTXqOaNJ4yc5FG4zt+oahcl/i/LXLlv2idpJDg==
+	bh=gFjWAtEOAXOEzuOM+RAijEmfW36k7ZHvMyxqoWCAcRI=;
+	b=10l9WDz99tlKEugnyg3jDCLFzlKqwG+thTnOhao37tLlumeTeo1v/TILkfxKbYbfvvYY
+	 3S8q7l2JZnLvTbvLOc8Su8ABitUtQhi2ORBP1tzSUyk9k5CAIUKepviaNTJueoG3yfzKu
+	 FcLwtZQssaNJsdFMKd0PwQOhJvRwwX9opVZOkDMXXf+R/5vKzuYPzV3nrubsAD1Ai9xXn
+	 x5cHh4O/AuoUppSyqCbYaa7+qDMZuV3xrpHIWxFvg0gjuGITflj9LTSgfGYA25GpKJwGt
+	 qArH9kNDUfk9o+zu5UNdSZHy6DWMGC0EMdLxCzp8FE6KzRlCp2pTyXzIfrcZVX7QxvA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E5mzsPs4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOzH3FOE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F411607C343;
-	Fri, 13 Nov 2026 17:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776A7607C343;
+	Fri, 13 Nov 2026 17:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E5mzsPs4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDF41F000C4;
-	Fri, 13 Nov 2026 17:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MOzH3FOE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238A41F000C5;
+	Fri, 13 Nov 2026 17:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590766;
-	bh=KGBLpcSl67VbhHN4EgGsf7VuOCdFrwB3yBOioutFjp8=;
+	s=korg; t=1794590767;
+	bh=gFjWAtEOAXOEzuOM+RAijEmfW36k7ZHvMyxqoWCAcRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E5mzsPs4qj4qWh5LE3TEyDHODxAGTBdwCQc+8N7TW/f9Qc+oJfat2kpbgzFXUYUdV
-	 XjUjePlnSj/EHUe9VztPpc+6KsU+zIO6ofsCW8XLKeFZ/lpSZd9OySWc4ktO4WZUuh
-	 RKFtsJdqgmfL2kev8O8Pn10EJq1zdEjIQYqR8p7c=
+	b=MOzH3FOEq6dqZYXBBTuMiW5uZ9Wr+1LItdu6Ui5rFJte8KFJAHjYnsJrnNaubWXPR
+	 a16vMBGHh/S0vHDEN4rf/WWkd9gkKj078mhE2t0oHQp8rNjNKxX7i2HAo0EK0JHd7x
+	 0fhthyVCUSmRdgOIq//9Sxif+sU6nqspBOEV1Pcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Antti Laakso <antti.laakso@linux.intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 647/686] f2fs: fix to invalidate curseg if change_curseg() fails
-Date: Fri, 13 Nov 2026 10:53:00 -0500
-Message-ID: <20261113153843.702187702@linuxfoundation.org>
+Subject: [PATCH 6.18 665/686] media: ipu6: Rename pointer to firmware context
+Date: Fri, 13 Nov 2026 10:53:18 -0500
+Message-ID: <20261113153844.236988383@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,119 +68,279 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Antti Laakso <antti.laakso@linux.intel.com>
 
-[ Upstream commit e74476ad8162c1facc74b74ce2d1372492df872e ]
+[ Upstream commit ac1a76fdf7e1815445c76d90ef688eff85cbb012 ]
 
-Our consistency stress test (fsstress + fio + atomic write workers +
-"f2fs_io shutdown 1") triggers below kernel BUG:
+The name fwcom is used to refer firmware communication context
+and firmware communication configuration. Try to avoid confusion
+and rename context variable.
 
- F2FS-fs (vdd): Stopped filesystem due to reason: 0
- ------------[ cut here ]------------
- kernel BUG at fs/f2fs/segment.c:3989!
- Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
- Workqueue: writeback wb_workfn (flush-253:48)
- RIP: 0010:f2fs_allocate_data_block+0x257a/0x38e0
- Call Trace:
-  <TASK>
-  do_write_block+0x155/0xc10
-  f2fs_outplace_write_data+0x192/0x340
-  f2fs_do_write_data_page+0xc57/0x1880
-  f2fs_write_single_data_page+0xda9/0x15a0
-  f2fs_write_cache_pages+0x973/0x1f20
-  __f2fs_write_data_pages+0x6c4/0x1890
-  do_writepages+0x21e/0x560
-  __writeback_single_inode+0x119/0x11b0
-  writeback_sb_inodes+0x67d/0x17a0
-  wb_writeback+0x207/0x820
-  wb_workfn+0x128/0xc30
-  process_one_work+0x925/0x1600
-  worker_thread+0x60a/0xff0
-  kthread+0x35f/0x460
-  ret_from_fork+0x474/0x7e0
-  ret_from_fork_asm+0x1a/0x30
-  </TASK>
-
-The BUG is f2fs_bug_on(sbi, curseg->next_blkoff >= BLKS_PER_SEG(sbi))
-in f2fs_allocate_data_block(), next_blkoff was 512.
-
-The root cause is a race in between atomic write commit and shutdown
-as below:
-
-Thread A (commit atomic write)  Thread B (shutdown)        Thread C (writeback)
-- f2fs_ioc_commit_atomic_write
- - f2fs_commit_atomic_write
-  - __f2fs_commit_atomic_write
-   - __replace_atomic_write_block
-    - f2fs_replace_block
-     - __f2fs_replace_block
-                                - f2fs_ioc_shutdown
-                                 - f2fs_do_shutdown
-                                 : F2FS_GOING_DOWN_METASYNC
-                                  - f2fs_sync_fs
-                                                           - f2fs_write_single_data_page
-                                                           : pass f2fs_cp_error() check
-                                  - f2fs_stop_checkpoint
-                                  : set CP_ERROR_FLAG
-      - change_curseg
-       - reset_curseg
-       : curseg->segno = new_segno
-       : curseg->alloc_type = SSR
-       : curseg->next_blkoff = __next_free_blkoff()
-         which is BLKS_PER_SEG if there is no free
-         slot in new_segno
-       - f2fs_get_sum_cache
-       : return -EIO due to f2fs_cp_error()
-      : return error w/o restoring curseg
-     : goto out_unlock, skip restoring
-       old segno, blkoff and alloc_type
-                                                            - f2fs_do_write_data_page
-                                                             - f2fs_outplace_write_data
-                                                              - do_write_block
-                                                               - f2fs_allocate_data_block
-                                                               : curseg->segno is valid
-                                                               : f2fs_bug_on(next_blkoff >=
-                                                                 BLKS_PER_SEG)
-
-Since commit 86f33603f8c5 ("f2fs: handle errors of
-f2fs_get_meta_page_nofail"), change_curseg() can fail after the curseg
-has already been switched to the new segment, then the curseg is left
-in an inconsistent state: it points to a segment which may have no
-free slot, its summary block is zeroed, and the caller can not restore
-it. Subsequent block allocation on the curseg will trigger the BUG.
-Moreover, the writeback thread dies with curseg_lock, curseg_mutex and
-sentry_lock held, so the commit, shutdown and other I/O threads hang
-in D state.
-
-Since change_curseg() only fails once CP_ERROR_FLAG is set, no
-checkpoint will be committed afterward, let's invalidate the curseg via
-reset_curseg_fields() on failure, as new_curseg() does for -ENOSPC,
-then f2fs_allocate_data_block() will fail with -ENOSPC on the curseg
-instead of triggering BUG, and do_write_block() can handle the error
-since CP_ERROR_FLAG has been set.
-
-Cc: stable@kernel.org
-Fixes: 86f33603f8c5 ("f2fs: handle errors of f2fs_get_meta_page_nofail")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: adjusted error-path context to use PTR_ERR(sum_folio) instead of PTR_ERR(entry) ]
+Signed-off-by: Antti Laakso <antti.laakso@linux.intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Stable-dep-of: d3d9bc694fe0 ("media: ipu6: Fix firmware config leak on stream start")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/pci/intel/ipu6/ipu6-fw-isys.c   | 56 ++++++++++---------
+ .../media/pci/intel/ipu6/ipu6-isys-video.c    |  4 +-
+ drivers/media/pci/intel/ipu6/ipu6-isys.c      |  6 +-
+ drivers/media/pci/intel/ipu6/ipu6-isys.h      |  5 +-
+ 4 files changed, 36 insertions(+), 35 deletions(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index c0ec2715408e8..1097e688d165f 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -3067,6 +3067,7 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
- 	if (IS_ERR(sum_folio)) {
- 		/* GC won't be able to use stale summary pages by cp_error */
- 		memset(curseg->sum_blk, 0, sbi->sum_entry_size);
-+		reset_curseg_fields(curseg);
- 		return PTR_ERR(sum_folio);
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c b/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
+index 62ed92ff1d303..a65e9f1aa1042 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-fw-isys.c
+@@ -32,7 +32,7 @@ static int handle_proxy_response(struct ipu6_isys *isys, unsigned int req_id)
+ 	struct ipu6_fw_isys_proxy_resp_info_abi *resp;
+ 	int ret;
+ 
+-	resp = ipu6_recv_get_token(isys->fwcom, IPU6_BASE_PROXY_RECV_QUEUES);
++	resp = ipu6_recv_get_token(isys->fwctx, IPU6_BASE_PROXY_RECV_QUEUES);
+ 	if (!resp)
+ 		return 1;
+ 
+@@ -42,7 +42,7 @@ static int handle_proxy_response(struct ipu6_isys *isys, unsigned int req_id)
+ 
+ 	ret = req_id == resp->request_id ? 0 : -EIO;
+ 
+-	ipu6_recv_put_token(isys->fwcom, IPU6_BASE_PROXY_RECV_QUEUES);
++	ipu6_recv_put_token(isys->fwctx, IPU6_BASE_PROXY_RECV_QUEUES);
+ 
+ 	return ret;
+ }
+@@ -52,7 +52,7 @@ int ipu6_fw_isys_send_proxy_token(struct ipu6_isys *isys,
+ 				  unsigned int index,
+ 				  unsigned int offset, u32 value)
+ {
+-	struct ipu6_fw_com_context *ctx = isys->fwcom;
++	struct ipu6_fw_com_context *ctx = isys->fwctx;
+ 	struct device *dev = &isys->adev->auxdev.dev;
+ 	struct ipu6_fw_proxy_send_queue_token *token;
+ 	unsigned int timeout = 1000;
+@@ -96,7 +96,7 @@ int ipu6_fw_isys_complex_cmd(struct ipu6_isys *isys,
+ 			     dma_addr_t dma_mapped_buf,
+ 			     size_t size, u16 send_type)
+ {
+-	struct ipu6_fw_com_context *ctx = isys->fwcom;
++	struct ipu6_fw_com_context *ctx = isys->fwctx;
+ 	struct device *dev = &isys->adev->auxdev.dev;
+ 	struct ipu6_fw_send_queue_token *token;
+ 
+@@ -138,7 +138,7 @@ int ipu6_fw_isys_close(struct ipu6_isys *isys)
+ 	struct device *dev = &isys->adev->auxdev.dev;
+ 	int retry = IPU6_ISYS_CLOSE_RETRY;
+ 	unsigned long flags;
+-	void *fwcom;
++	void *fwctx;
+ 	int ret;
+ 
+ 	/*
+@@ -148,9 +148,9 @@ int ipu6_fw_isys_close(struct ipu6_isys *isys)
+ 	 * spinlock to wait the interrupt handler to be finished
+ 	 */
+ 	spin_lock_irqsave(&isys->power_lock, flags);
+-	ret = ipu6_fw_com_close(isys->fwcom);
+-	fwcom = isys->fwcom;
+-	isys->fwcom = NULL;
++	ret = ipu6_fw_com_close(isys->fwctx);
++	fwctx = isys->fwctx;
++	isys->fwctx = NULL;
+ 	spin_unlock_irqrestore(&isys->power_lock, flags);
+ 	if (ret)
+ 		dev_err(dev, "Device close failure: %d\n", ret);
+@@ -158,14 +158,14 @@ int ipu6_fw_isys_close(struct ipu6_isys *isys)
+ 	/* release probably fails if the close failed. Let's try still */
+ 	do {
+ 		usleep_range(400, 500);
+-		ret = ipu6_fw_com_release(fwcom, 0);
++		ret = ipu6_fw_com_release(fwctx, 0);
+ 		retry--;
+ 	} while (ret && retry);
+ 
+ 	if (ret) {
+ 		dev_err(dev, "Device release time out %d\n", ret);
+ 		spin_lock_irqsave(&isys->power_lock, flags);
+-		isys->fwcom = fwcom;
++		isys->fwctx = fwctx;
+ 		spin_unlock_irqrestore(&isys->power_lock, flags);
  	}
- 	sum_node = SUM_BLK_PAGE_ADDR(sbi, sum_folio, new_segno);
+ 
+@@ -176,11 +176,11 @@ void ipu6_fw_isys_cleanup(struct ipu6_isys *isys)
+ {
+ 	int ret;
+ 
+-	ret = ipu6_fw_com_release(isys->fwcom, 1);
++	ret = ipu6_fw_com_release(isys->fwctx, 1);
+ 	if (ret < 0)
+ 		dev_warn(&isys->adev->auxdev.dev,
+ 			 "Device busy, fw_com release failed.");
+-	isys->fwcom = NULL;
++	isys->fwctx = NULL;
+ }
+ 
+ static void start_sp(struct ipu6_bus_device *adev)
+@@ -212,7 +212,7 @@ static int query_sp(struct ipu6_bus_device *adev)
+ }
+ 
+ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
+-				    struct ipu6_fw_com_cfg *fwcom,
++				    struct ipu6_fw_com_cfg *fwcom_cfg,
+ 				    unsigned int num_streams)
+ {
+ 	unsigned int max_send_queues, max_sram_blocks, max_devq_size;
+@@ -258,14 +258,16 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
+ 	if (!output_queue_cfg)
+ 		return -ENOMEM;
+ 
+-	fwcom->input = input_queue_cfg;
+-	fwcom->output = output_queue_cfg;
++	fwcom_cfg->input = input_queue_cfg;
++	fwcom_cfg->output = output_queue_cfg;
+ 
+-	fwcom->num_input_queues = isys_fw_cfg->num_send_queues[type_proxy] +
++	fwcom_cfg->num_input_queues =
++		isys_fw_cfg->num_send_queues[type_proxy] +
+ 		isys_fw_cfg->num_send_queues[type_dev] +
+ 		isys_fw_cfg->num_send_queues[type_msg];
+ 
+-	fwcom->num_output_queues = isys_fw_cfg->num_recv_queues[type_proxy] +
++	fwcom_cfg->num_output_queues =
++		isys_fw_cfg->num_recv_queues[type_proxy] +
+ 		isys_fw_cfg->num_recv_queues[type_dev] +
+ 		isys_fw_cfg->num_recv_queues[type_msg];
+ 
+@@ -280,7 +282,7 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
+ 			isys_fw_cfg->buffer_partition.num_gda_pages[i] = 0;
+ 	}
+ 
+-	/* FW assumes proxy interface at fwcom queue 0 */
++	/* FW assumes proxy interface at fwcom_cfg queue 0 */
+ 	for (i = 0; i < isys_fw_cfg->num_send_queues[type_proxy]; i++) {
+ 		input_queue_cfg[i].token_size =
+ 			sizeof(struct ipu6_fw_proxy_send_queue_token);
+@@ -314,9 +316,9 @@ static int ipu6_isys_fwcom_cfg_init(struct ipu6_isys *isys,
+ 			IPU6_ISYS_SIZE_RECV_QUEUE;
+ 	}
+ 
+-	fwcom->dmem_addr = isys->pdata->ipdata->hw_variant.dmem_offset;
+-	fwcom->specific_addr = isys_fw_cfg;
+-	fwcom->specific_size = sizeof(*isys_fw_cfg);
++	fwcom_cfg->dmem_addr = isys->pdata->ipdata->hw_variant.dmem_offset;
++	fwcom_cfg->specific_addr = isys_fw_cfg;
++	fwcom_cfg->specific_size = sizeof(*isys_fw_cfg);
+ 
+ 	return 0;
+ }
+@@ -325,23 +327,23 @@ int ipu6_fw_isys_init(struct ipu6_isys *isys, unsigned int num_streams)
+ {
+ 	struct device *dev = &isys->adev->auxdev.dev;
+ 	int retry = IPU6_ISYS_OPEN_RETRY;
+-	struct ipu6_fw_com_cfg fwcom = {
++	struct ipu6_fw_com_cfg fwcom_cfg = {
+ 		.cell_start = start_sp,
+ 		.cell_ready = query_sp,
+ 		.buttress_boot_offset = SYSCOM_BUTTRESS_FW_PARAMS_ISYS_OFFSET,
+ 	};
+ 	int ret;
+ 
+-	ipu6_isys_fwcom_cfg_init(isys, &fwcom, num_streams);
++	ipu6_isys_fwcom_cfg_init(isys, &fwcom_cfg, num_streams);
+ 
+-	isys->fwcom = ipu6_fw_com_prepare(&fwcom, isys->adev,
++	isys->fwctx = ipu6_fw_com_prepare(&fwcom_cfg, isys->adev,
+ 					  isys->pdata->base);
+-	if (!isys->fwcom) {
++	if (!isys->fwctx) {
+ 		dev_err(dev, "isys fw com prepare failed\n");
+ 		return -EIO;
+ 	}
+ 
+-	ret = ipu6_fw_com_open(isys->fwcom);
++	ret = ipu6_fw_com_open(isys->fwctx);
+ 	if (ret) {
+ 		dev_err(dev, "isys fw com open failed %d\n", ret);
+ 		return ret;
+@@ -349,7 +351,7 @@ int ipu6_fw_isys_init(struct ipu6_isys *isys, unsigned int num_streams)
+ 
+ 	do {
+ 		usleep_range(400, 500);
+-		if (ipu6_fw_com_ready(isys->fwcom))
++		if (ipu6_fw_com_ready(isys->fwctx))
+ 			break;
+ 		retry--;
+ 	} while (retry > 0);
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
+index b96ae563b82f0..d9b67502dbd26 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-isys-video.c
+@@ -1116,7 +1116,7 @@ int ipu6_isys_fw_open(struct ipu6_isys *isys)
+ 	 */
+ 	ipu6_cleanup_fw_msg_bufs(isys);
+ 
+-	if (isys->fwcom) {
++	if (isys->fwctx) {
+ 		/*
+ 		 * Something went wrong in previous shutdown. As we are now
+ 		 * restarting isys we can safely delete old context.
+@@ -1149,7 +1149,7 @@ void ipu6_isys_fw_close(struct ipu6_isys *isys)
+ 	isys->ref_count--;
+ 	if (!isys->ref_count) {
+ 		ipu6_fw_isys_close(isys);
+-		if (isys->fwcom) {
++		if (isys->fwctx) {
+ 			isys->need_reset = true;
+ 			dev_warn(&isys->adev->auxdev.dev,
+ 				 "failed to close fw isys\n");
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys.c b/drivers/media/pci/intel/ipu6/ipu6-isys.c
+index 9a9e245edc1a2..a0f209b8141de 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-isys.c
++++ b/drivers/media/pci/intel/ipu6/ipu6-isys.c
+@@ -1227,10 +1227,10 @@ static int isys_isr_one(struct ipu6_bus_device *adev)
+ 	u32 index;
+ 	u64 ts;
+ 
+-	if (!isys->fwcom)
++	if (!isys->fwctx)
+ 		return 1;
+ 
+-	resp = ipu6_fw_isys_get_resp(isys->fwcom, IPU6_BASE_MSG_RECV_QUEUES);
++	resp = ipu6_fw_isys_get_resp(isys->fwctx, IPU6_BASE_MSG_RECV_QUEUES);
+ 	if (!resp)
+ 		return 1;
+ 
+@@ -1339,7 +1339,7 @@ static int isys_isr_one(struct ipu6_bus_device *adev)
+ 
+ 	ipu6_isys_put_stream(stream);
+ leave:
+-	ipu6_fw_isys_put_resp(isys->fwcom, IPU6_BASE_MSG_RECV_QUEUES);
++	ipu6_fw_isys_put_resp(isys->fwctx, IPU6_BASE_MSG_RECV_QUEUES);
+ 	return 0;
+ }
+ 
+diff --git a/drivers/media/pci/intel/ipu6/ipu6-isys.h b/drivers/media/pci/intel/ipu6/ipu6-isys.h
+index 0e2c8b71edfc9..ed38decdd525b 100644
+--- a/drivers/media/pci/intel/ipu6/ipu6-isys.h
++++ b/drivers/media/pci/intel/ipu6/ipu6-isys.h
+@@ -114,8 +114,7 @@ struct sensor_async_sd {
+  * @csi2_rx_ctrl_cached: cached shared value between all CSI2 receivers
+  * @streams_lock: serialise access to streams
+  * @streams: streams per firmware stream ID
+- * @fwcom: fw communication layer private pointer
+- *         or optional external library private pointer
++ * @fwctx: fw communication layer context pointer
+  * @phy_termcal_val: the termination calibration value, only used for DWC PHY
+  * @need_reset: Isys requires d0i0->i3 transition
+  * @ref_count: total number of callers fw open
+@@ -136,7 +135,7 @@ struct ipu6_isys {
+ 	spinlock_t streams_lock;
+ 	struct ipu6_isys_stream streams[IPU6_ISYS_MAX_STREAMS];
+ 	int streams_ref_count[IPU6_ISYS_MAX_STREAMS];
+-	void *fwcom;
++	void *fwctx;
+ 	u32 phy_termcal_val;
+ 	bool need_reset;
+ 	bool icache_prefetch;
 -- 
 2.53.0
 
