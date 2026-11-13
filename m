@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585514;
-	b=nC6buBZtKhz63S3iXwq8dxuGuF3gp0gKbXngf3+l2xOgtbZ2W2IiZoBUO2q6ZzICAKuL
-	 KvAMn3u0YP5pbKn4HImaK3ml3L1Z72cR6QJuf4xy1E3+AUjo6Z/V9m6cRl9ccyLXHzYpZ
-	 REYeTJ8c55g/2Nu4YjAb+RZxQeIrepL3jdXgcXdDDzir87jIkeJgCReaqy5EZpDo0APUz
-	 EbkBXqVwAIp1/Z1mXFp7wdh+V2KIo30NMVOZBNCRlLy1fU6i5GS6pLyzxp40WgsAKXcgH
-	 FSLLmaQhlCI2RXrhiD6lmcLL3z9Fr08AC7vw7/X1/4QblGy9FS8K5J6faQRN1XFz/qQ==
+	t=1794585516;
+	b=2uIlNa04LN+dml87ONJo1H/EHzuJ0l3ak1XymsflH0FRpF+X3kZPf6AXZUQTB66wtIDH
+	 6T/uEdDQrPFyrV4fPNQeq4vhTFGq4+oj/pJVo+w6iG/L3pnCYTSBLHg5V6mleXFhys65/
+	 ermAIq62K9Pljq7LpYFXPfVGZ+YWnbTz+OxXNQwzc2iOFx2kfGdOMV6b6HOqUNo9yecod
+	 1XzIMQX8s3Fl8Ac9qvKrNnf9zgo5Amfglo9be6da8jq+Q4ydhN1btNhHSC5cQ857QAy2V
+	 NcO3NdK91xWILpVALEM4gjIERkb1hjof9BWWfcC41ROHhrqpTTNAgeeFxPJ8DN/IIjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=E53RiAhDySlSQKMRTN6dYEB92OvoHO1DKpn0T+Owvso=;
-	b=3CD/YZarAgBJpEoS3Kz6vnsqsnHbzhiGUtzVTh7JCe+YcxMWfNnr0l3ELvu/b3VK1KPN
-	 I/FfZrSyLoJ2BbGJSUiZcVYzi8ZjvPqqINd5cPVc9JYhv6Q6TIYLrIKAG3pO1kN7mJGLW
-	 W5/L2ZZy2nmPNM4DFnhME1DfMOnaoU/IuCJuQbz9+EzKJ47NQg656GS1LalpsqmYIi0gD
-	 UBQ2nGNCqO4jQJftfCbuUTZZiPYp4lndjAI3ZgVHsUkKoGuLSRwuHPYV8CKKwJ3L6bFsp
-	 VAv7peL6Wj4tAmQav7AUN+10MLc2BCAp4FzhiHVdZpExDte21WhJh79T0Nqfc0nwlfQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=hMRj2aILhPHKeb74B7hTTqnkYiQc2Zjq4YThIh8ojWY=;
+	b=Yzgxfe2YvXNeTdJET2hQixQDf5XTf9o2FWouFKC6weWUZudwKARWLNXbHoY+MdLd7ham
+	 F5xQMBVqL4ED7RE/v8XYnviMn3JRbEukoNYt83rPe78RkNHOBRtIrqnKnqvVnV2Q789Qb
+	 Ghp/RzyDx5jRQJnDCVwm0ZgQzjLyH6q18cAGXXXZ2kMMek7YJ1u+vxEWj8j2W7l7YEnn4
+	 95fhR7pmfg/MojRSl6a9j5bYLpizSesR+JstG06NXkCJ6FDbA0cHdawDoWt/ivoPWDeMv
+	 uWmlmATmp+LnOoF3Wgpf1kf2sNy0peBj/4Unz8dN6Juu1ywePmi4VzjcRbiFtKWBEGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OOYELUow;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pAfs089O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A839D606AE1D;
-	Fri, 13 Nov 2026 15:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CAE606AE3A;
+	Fri, 13 Nov 2026 15:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OOYELUow
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548371F000C4;
-	Fri, 13 Nov 2026 15:58:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pAfs089O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D08C1F000C7;
+	Fri, 13 Nov 2026 15:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585514;
-	bh=E53RiAhDySlSQKMRTN6dYEB92OvoHO1DKpn0T+Owvso=;
+	s=korg; t=1794585515;
+	bh=hMRj2aILhPHKeb74B7hTTqnkYiQc2Zjq4YThIh8ojWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OOYELUowYBL8Ass/KQp8IQ+gTzO7jpyQvNYlimJT7YvbvNMQvUPW6nMiZ+uoY5BgJ
-	 TVs6IBDKn1aqJ7Ji1lO462LM1JrnfzH3BPJ7lD6JAJQUeBk3GnunvylSQPOAVKWt68
-	 Grphtw6XPF8uhnXCnXGkpguD5+j1ut3sT/B0dGw8=
+	b=pAfs089OIhWyM0pgbb7otVvHded7lEZlgu+saJvQvxlgWm1Fkj6L6yK/AHrm1tFC1
+	 +9K3iVtTD2TKY37NG43/T6c4BLgDqRmXHez0H7I8NgSHSK2DO4ogOd4nIcSL3P1ZDQ
+	 bDCcNVyMnNMeC4/4+SyHxJ0d2UJMPzK4+gRHC0vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
-	Iago Toral Quiroga <itoral@igalia.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 160/507] drm/v3d: Initialize timedout_batches when running a CSD job
-Date: Fri, 13 Nov 2026 10:47:44 -0500
-Message-ID: <20261113153759.926483757@linuxfoundation.org>
+Subject: [PATCH 7.3 143/507] mm/shmem: fix accounting of swapin-error markers
+Date: Fri, 13 Nov 2026 10:47:27 -0500
+Message-ID: <20261113153759.285240658@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -63,59 +63,136 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 0afdbdd5b1af729108de8f893d179c3b99eac29d ]
+[ Upstream commit 66ce68a249f4ac56cd6968aa6d8ded20fb4b7d09 ]
 
-v3d_csd_job_timedout() decides whether a compute job made progress by
-comparing CSD_CURRENT_CFG4, the number of batches the dispatcher still
-has to start, against the value saved at the previous timeout. That
-saved value is never initialized, so it is zero on the first timeout.
+A failed swap read replaces the swap entry with a swapin-error marker in
+the page-cache and subtracts its pages from "alloced" and "swapped";
+however, it leaves their block charge in place.
 
-On V3D 7.1.6 and later, CFG4 counts down to zero once the dispatcher has
-started the last batch, but the dispatch keeps running until the batches
-in flight complete. If the first timeout fires in that window, the
-handler sees no change and resets the GPU while the job is about to
-complete. For example, this happens with long dispatches that only keep a
-single supergroup in flight.
+Removing the marker during truncate then subtracts from "swapped" again.
+This can underflow the counters or make swapped reach zero while other
+pages remain swapped out, causing swapoff to loop without finding them.
 
-Initialize timedout_batches to the value programmed in CFG4 when the job
-is started. The register does not return to it once a batch has started:
-it counts down to zero on V3D 7.1.6 and later (CFG4 holds the number of
-batches), and to 0xffffffff on V3D 4.2 (CFG4 holds the number of batches
-minus one).
+When installing the marker, subtract only from "swapped" and let
+shmem_recalc_inode() reduce "alloced" and release the block charge.
 
+Make shmem_free_swap() report successful removal separately from the
+number of swap pages freed, so removing a swapin-error marker does not
+subtract from "swapped" again.
+
+It's a bit confusing, but replacing a swapped out page by a swapin-error
+marker in shmem_set_folio_swapin_error() behaves as follows:
+
+Initially:
+	alloced=1, swapped=1, nrpages=0
+Calling shmem_recalc_inode(inode, 0, -1)
+	-> swapped = 0
+	-> freed =  1 - 0 - 0 = 1
+	-> alloced -= freed
+	-> alloced=0, swapped=0, block charge released
+
+Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
 Cc: stable@vger.kernel.org
-Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
-Signed-off-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
-Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20261101125619.2465064-1-mcanal@igalia.com
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-14-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/v3d/v3d_sched.c | 2 ++
- 1 file changed, 2 insertions(+)
+ mm/shmem.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
-index e6283a75bcdf0..002116efc874b 100644
---- a/drivers/gpu/drm/v3d/v3d_sched.c
-+++ b/drivers/gpu/drm/v3d/v3d_sched.c
-@@ -360,6 +360,8 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
- 		dma_fence_put(job->base.irq_fence);
- 	job->base.irq_fence = dma_fence_get(fence);
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 508ada89151d8..31103314b6b62 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -968,12 +968,11 @@ static void shmem_delete_from_page_cache(struct folio *folio, void *radswap)
+ }
  
-+	job->timedout_batches = job->args.cfg[4];
-+
- 	trace_v3d_submit_csd(dev, to_v3d_fence(fence)->seqno);
+ /*
+- * Remove swap entry from page cache, free the swap and its page cache. Returns
+- * the number of pages being freed. 0 means entry not found in XArray (0 pages
+- * being freed).
++ * Remove a swap entry or swapin-error marker wholly within [index, end].
++ * Return whether it was removed, counting freed swap pages in nr_swaps_freed.
+  */
+-static long shmem_free_swap(struct address_space *mapping,
+-			    pgoff_t index, pgoff_t end, void *radswap)
++static bool shmem_free_swap(struct address_space *mapping,
++		pgoff_t index, pgoff_t end, void *radswap, long *nr_swaps_freed)
+ {
+ 	XA_STATE(xas, &mapping->i_pages, index);
+ 	const softleaf_t swp = radix_to_swp_entry(radswap);
+@@ -994,8 +993,10 @@ static long shmem_free_swap(struct address_space *mapping,
+ 	xas_unlock_irq(&xas);
  
- 	v3d_job_start_stats(&job->base);
+ 	/* A swapin-error marker holds no swap slot, so just drop it. */
+-	if (nr_pages && softleaf_is_swap(swp))
++	if (nr_pages && softleaf_is_swap(swp)) {
+ 		swap_put_entries_direct(swp, nr_pages);
++		*nr_swaps_freed += nr_pages;
++	}
+ 
+ 	return nr_pages;
+ }
+@@ -1149,8 +1150,8 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
+ 			if (xa_is_value(folio)) {
+ 				if (unfalloc)
+ 					continue;
+-				nr_swaps_freed += shmem_free_swap(mapping, indices[i],
+-								  end - 1, folio);
++				shmem_free_swap(mapping, indices[i], end - 1,
++						folio, &nr_swaps_freed);
+ 				continue;
+ 			}
+ 
+@@ -1217,13 +1218,11 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
+ 
+ 			if (xa_is_value(folio)) {
+ 				int order;
+-				long swaps_freed;
+ 
+ 				if (unfalloc)
+ 					continue;
+-				swaps_freed = shmem_free_swap(mapping, indices[i],
+-							      end - 1, folio);
+-				if (!swaps_freed) {
++				if (!shmem_free_swap(mapping, indices[i], end - 1,
++						     folio, &nr_swaps_freed)) {
+ 					pgoff_t base = indices[i];
+ 
+ 					order = shmem_confirm_swap(mapping, indices[i],
+@@ -1244,7 +1243,6 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
+ 					index = base;
+ 					break;
+ 				}
+-				nr_swaps_freed += swaps_freed;
+ 				continue;
+ 			}
+ 
+@@ -2184,11 +2182,10 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
+ 	folio_put_swap(folio, NULL);
+ 	swap_cache_del_folio(folio);
+ 	/*
+-	 * Don't treat swapin error folio as alloced. Otherwise inode->i_blocks
+-	 * won't be 0 when inode is released and thus trigger WARN_ON(i_blocks)
+-	 * in shmem_evict_inode().
++	 * Let shmem_recalc_inode() reduce alloced and release the block charge
++	 * for the freed swap pages.
+ 	 */
+-	shmem_recalc_inode(inode, -nr_pages, -nr_pages);
++	shmem_recalc_inode(inode, 0, -nr_pages);
+ }
+ 
+ static int shmem_split_large_entry(struct inode *inode, pgoff_t index,
 -- 
 2.53.0
 
