@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591125;
-	b=uDnf8hW59Z9mPa0Pa4hQJw9UJxTsIwi4/sdFgb99ucG7lY4TCL9b4Dft+f6o0fDJE+M0
-	 oPf8BDH4aUx9IAggfOnBF9MVRXDIMeSEfeFx5i9H1dXPTJMMJKVkX4tJsNerX2JPaTtPF
-	 eGAMtsutyi8a5ERBG7dW/GGrfOwKTebzS6/druBjrJ7RRiRtyCh8gmo+Alaq5jAPnn2UU
-	 nXCXtbGOPB+cA6ONsPDf1BEM9uZKOcH2dLzADD1LzCrGNWUCqJe2jNWKR+jdwI1TJ99+r
-	 0mqYZu78u/wfBvUUssfONCWjeK2agvesbwHWYi/0+7FNCRAyFCx49GU10D1XL2zsZ6Q==
+	t=1794591127;
+	b=wzMWHDeTY98Pt+EADMPVjHgLnFXIrM9gu0Q5+LyVhS+GKc2ZdCrF1ZENItejaG13+/vm
+	 WvCSFMA5sjJ3sHzjzEPJ9ZePIOBoicgGhUL7JnrvwfLG8Gb/krdEPmJ95Q4tCD4S/5245
+	 pte8il7cPkb931sf57YPo8NVLPQpCg8o+fBf9erEE7LN7ZHYKaki5eBOWwxDu4fV2P9qV
+	 R3erSkYoCVh21XIUUoqLFfDQk+AwDWvqayF99SOvam6mdPRBlX1WO7MXnHzuR15+uDnJW
+	 +X45oU/Ele6Nxz0d7P26ecWA0FuqsjA/kUQNyd4DPxceP+1UEiFf6DLcoMptYyQQ4SQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591125;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r54NnGbigODRLhY00745ZHK+EA1+f41uQyUAaTwsq+M=;
-	b=pOOCjhZR48E6HlfW0LLC46HlVt4vjGw3CpbQ8wj/gs+gFU1oT9Paxq3AeZYR5bdWvqiu
-	 +w77MKANUQOXv1HU/lOLQKh9Wmy0MlMtNWc9KvYeWPf6B/Vx8UqYgDCWu2CKcx8VE4vIO
-	 j0cg1Y+0Y8Qj3NF/AAAYhJUIBzgCBexhMopSxduoz14wzQNHR7g+VM8saokKALw8yCgnr
-	 h8J6UqlzTQb6mnsT/Ieof+nRhpubHcJTa6eabtsbwAdvex+MzzDyLVPZBfBG/fOEk83Wj
-	 o6priVr9g5jcXhMjWevccdNta4geUozekgM8RSz/VK5DOKD/Q5R5xO4o5ZDTlFaB8GA==
+	bh=CNigncW5UEdhrKGwI0wPE9sV47X/hwu3f6B/SiDgZfs=;
+	b=rnAl2IWKmPICIovX+rRKSHnQFlqWI5c+JIhnsOHq0JKiGXLchyXqOzZoftLKTjcaMQKg
+	 sy3tCfmwx1pr0EKQ+z7XgmP2ij+J1EeEUb+uwLOL827EnR7nWGpwJr7fpWvJ3TqQW1k9c
+	 ZyHPQl4NHpVrYI4kBPVaRKAS7sMkr3bntER1zHPljWRqrWAsJ0D+jeJ7NNfz2i14Q+3IA
+	 zrsC8+Gbyq0bcR2UTbaHKDKKcDHnkZQtS2GqBAOHju1xiHBO5bX9YnDFEvs+1MsuvytNX
+	 oBMUJWu59rcJiTMxabLtPbRHyzPSfBdqbHwONvn0bK0wuUxVyzAPed0ToCJevVFxZvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rIAJEaQ9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+BTObg8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D92606B379;
-	Fri, 13 Nov 2026 17:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150A2606B379;
+	Fri, 13 Nov 2026 17:32:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rIAJEaQ9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DCBE1F000C7;
-	Fri, 13 Nov 2026 17:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I+BTObg8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B58031F000C6;
+	Fri, 13 Nov 2026 17:32:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591125;
-	bh=r54NnGbigODRLhY00745ZHK+EA1+f41uQyUAaTwsq+M=;
+	s=korg; t=1794591126;
+	bh=CNigncW5UEdhrKGwI0wPE9sV47X/hwu3f6B/SiDgZfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rIAJEaQ9aslDpXHNRgT64nKXZ9WJk82T/42+a2C2Yfp+8mDK9+ECsS5T1DC+51CP8
-	 d9gCKvL5Szq8P9mcQK2RnE6uL0RJAeWACAwPQS+/R1S9PV2NO4LJJLSTadyNp1I+E0
-	 QfX1O+ZJQa1vkntz82SS1e0LpNdDot405MXdJHos=
+	b=I+BTObg8OMjhJKYwn457xkhddd2dL/IwSTrGkucTr48s069aIDX1hi7EdQvFGkq/W
+	 AWvlcU+w/yFQ2/QmhNQpHlfDYOJ9p1fZg4uJjCSWxnRlmod9HXJYZbjLpJAhNg0HjB
+	 N3/0XX1WS1OVXuZxdv7z9uaIEK2eQ4rsDcygjX+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>,
-	Mohit Sharma <mohit.sharma@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 274/670] ASoC: qcom: q6apm: Guard callbacks until probe data is ready
-Date: Fri, 13 Nov 2026 10:47:18 -0500
-Message-ID: <20261113153821.177536226@linuxfoundation.org>
+Subject: [PATCH 6.12 248/670] hwmon: chipcap2: fix be16 handling
+Date: Fri, 13 Nov 2026 10:46:52 -0500
+Message-ID: <20261113153820.243239216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,77 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit ef7062864c0511bba52775d0eb3aa72d886b5f3a ]
+[ Upstream commit 36b07ddfe20b0fe06a8bc32c5e09974876fb5e42 ]
 
-The GPR bus needs to make response callbacks available before invoking a
-client probe because clients can issue synchronous commands from probe.
-This creates a short interval where a callback can run before the client
-has published its private data.
+The driver currently only works correctly on little-endian
+architectures when writing 16-bit register values.
 
-Make q6apm publish its driver data only after all callback-visible state
-has been initialized. Have the q6apm and q6prm callbacks ignore packets
-received before driver data is available.
+Use i2c_smbus_write_word_swapped() for writes and get_unaligned_be16()
+for reads to correctly handle the ChipCap 2's big-endian data format
+on all architectures.
 
-Fixes: ec1471a898cc ("soc: qcom: apr: Add GPR support")
+Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Signed-off-by: Mohit Sharma <mohit.sharma@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261022144130.2443667-2-mohit.sharma@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-3-27ebfc2c5b9e@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6apm.c | 6 ++++--
- sound/soc/qcom/qdsp6/q6prm.c | 3 +++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/hwmon/chipcap2.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index 426c1429d01be..1025ddde9e316 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -762,8 +762,6 @@ static int apm_probe(gpr_device_t *gdev)
- 	if (!apm)
- 		return -ENOMEM;
+diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+index 148b2c27ee7ea..ede664d22b8a6 100644
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -20,6 +20,7 @@
+ #include <linux/interrupt.h>
+ #include <linux/irq.h>
+ #include <linux/module.h>
++#include <linux/unaligned.h>
+ #include <linux/regulator/consumer.h>
  
--	dev_set_drvdata(dev, apm);
--
- 	mutex_init(&apm->lock);
- 	apm->dev = dev;
- 	apm->gdev = gdev;
-@@ -777,6 +775,7 @@ static int apm_probe(gpr_device_t *gdev)
+ #define CC2_START_CM			0xA0
+@@ -257,8 +258,7 @@ static int cc2_write_reg(struct cc2_data *data, u8 reg, u16 val)
+ 	if (ret < 0)
+ 		goto disable;
  
- 	idr_init(&apm->modules_idr);
+-	cpu_to_be16s(&val);
+-	ret = i2c_smbus_write_word_data(data->client, reg, val);
++	ret = i2c_smbus_write_word_swapped(data->client, reg, val);
+ 	if (ret < 0)
+ 		goto disable;
  
-+	dev_set_drvdata(dev, apm);
- 	g_apm = apm;
+@@ -308,7 +308,7 @@ static int cc2_read_reg(struct cc2_data *data, u8 reg, u16 *val)
+ 	if (ret != CC2_EEPROM_DATA_LEN)
+ 		return ret < 0 ? ret : -EIO;
  
- 	q6apm_get_apm_state(apm);
-@@ -817,6 +816,9 @@ static int apm_callback(struct gpr_resp_pkt *data, void *priv, int op)
- 	struct gpr_ibasic_rsp_result_t *result;
- 	struct gpr_hdr *hdr = &data->hdr;
+-	*val = be16_to_cpup((__be16 *)&buf[1]);
++	*val = get_unaligned_be16(&buf[1]);
  
-+	if (!apm)
-+		return 0;
-+
- 	result = data->payload;
+ 	return cc2_read_command_status(data->client);
+ }
+@@ -348,10 +348,10 @@ static int cc2_data_fetch(struct i2c_client *client,
  
- 	switch (hdr->opcode) {
-diff --git a/sound/soc/qcom/qdsp6/q6prm.c b/sound/soc/qcom/qdsp6/q6prm.c
-index 81554d2026589..22e2a174a3871 100644
---- a/sound/soc/qcom/qdsp6/q6prm.c
-+++ b/sound/soc/qcom/qdsp6/q6prm.c
-@@ -197,6 +197,9 @@ static int prm_callback(struct gpr_resp_pkt *data, void *priv, int op)
- 	struct gpr_ibasic_rsp_result_t *result;
- 	struct gpr_hdr *hdr = &data->hdr;
- 
-+	if (!prm)
-+		return 0;
-+
- 	switch (hdr->opcode) {
- 	case PRM_CMD_RSP_REQUEST_HW_RSC:
- 	case PRM_CMD_RSP_RELEASE_HW_RSC:
+ 	switch (type) {
+ 	case hwmon_humidity:
+-		*val = cc2_rh_convert(be16_to_cpup((__be16 *)&data[0]));
++		*val = cc2_rh_convert(get_unaligned_be16(&data[0]));
+ 		break;
+ 	case hwmon_temp:
+-		*val = cc2_temp_convert(be16_to_cpup((__be16 *)&data[2]));
++		*val = cc2_temp_convert(get_unaligned_be16(&data[2]));
+ 		break;
+ 	default:
+ 		return -EINVAL;
 -- 
 2.53.0
 
