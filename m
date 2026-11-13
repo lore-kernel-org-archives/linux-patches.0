@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585908;
-	b=QSwIXoiUx7HWL4ETd5Q3NSQ65KECmHFONGYOa21x0a68XEit5Uzu+d4Ch3pz5l0doYZc
-	 eMZ2DsGoZGoTo/B5MMmN0jm4ED97rimqGG2t2xQvLyzxrU7t1nTJno/0DgXbdAwy0F7Iq
-	 sJ9Qj07VUFSLVD8tU0QBux8+biklhPOGfgBCq6sNCoG2ac1e2dMgPThEbKqs1oQ3V1Wsj
-	 Fi0dNclTwiGejBRIEXMlUFFWXmAMuOpJqmQD6ixJvKPvkm9wRTW+2gWTW7FuCTMbxmM08
-	 r6CjKJl7oEnFUU9w5BO/ZkIb1CdFKUi9xw9p7CGqug0CjbVFy6d1P3ru9O3cjyzTulA==
+	t=1794585909;
+	b=DIIaVGCGbANrz0GNXqZImL2O/8GcE9f1euw+8ExZzbzfzsbUZ819oJ3Uf0G67+d293jz
+	 O+/od9Pu0p6QcRPLtebPydTNknweva28XswjRztm5np/x0BvKoPE0nufcjeztl7e6e/t4
+	 g8+L5ai6/iUaLIhHTITmYAe/HL5c+Nac6mZXg1kA206FrfQgiO81BSBPn8BrMlIYacVwX
+	 miXMFmy3DODuu9v+BhEIAK4mUw/FwhyzP71aTwJJ22qTftpNNIlXkHtUnnm4cM+SYK35G
+	 GRWxoXbvF4u/r36gcDxDEu9IX9b8ozd4Z07IoXWbCwbbRTbN1SMlRawlVgf9ag4MwdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585908;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Mo6F9Qq6kulubEamTxD2VEGjXuXCYIDZeNkgmoKeq+g=;
-	b=vJYNMiQWL10i3Z2tWpPzj3SdqV+t4p8oaXXQl7cb/IJZFbEjg3mbstvI9Y8nmcK33civ
-	 9No7Gka8lTM0OdexnZt+5CcFjL/VjjdF+DkkVu0S0zTH1SQHPaQ/LqjlNR84DvYFzUNm6
-	 6MAAD3HF/7TFJ0ulsvB6u9jaWTlbFsBxPmRChWaJjKTQdWWpaQ+UYXxVNlMS2V0deKpVo
-	 qpuX51ALgPfVQxqRJ2deExNsJqK9HfLq28IJzRsxy4GH/s2sIf7n+E2SKBpbf2PxxLvht
-	 Zxr8aJ1eP7YGiA0/nJ4MRm52BFXuKcKQuwdjbNAgVI1jSpyFgYTq8UPu314Iliive6Q==
+	bh=neJPA0z3wTosTbobv6odaIe2F5ayKAGpQJsqGUYuSFk=;
+	b=Y51hPaL2nB6/be0YDVNgxw2UQBIFwAXdN6j0TQ9bEhZBZWQpr/48cE9LogMcglw4NAFn
+	 r3tTCNVP2XHrF4pr/FFHr/UrvvEQLWOTLyBD9UNIY+I36kpUV0TQoGlRgtLaUCuiybSJd
+	 GCKK8pjbriTuoDAj80cT264PnDhLv+OUrSXvCy9s5CCXSys1/5WT3Vv4Ypde77N4Y15Eo
+	 ocJs+gD1kxsy1ohqbRQgMLsD/MpjBF16NzRW5SIb4gapIkGPx/3i/8+bMWGqQT3VSitNE
+	 cO0WdBgdWZvI6D5eK2bMOGmzk6DiBqXTh+H1maTjAfIsS1svde6A3EzHxHzcMYOgyHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WW8+JbEB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPwmy19m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7616076210;
-	Fri, 13 Nov 2026 16:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC238606FFF7;
+	Fri, 13 Nov 2026 16:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WW8+JbEB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF7A1F000C6;
-	Fri, 13 Nov 2026 16:05:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPwmy19m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8770C1F000C6;
+	Fri, 13 Nov 2026 16:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585908;
-	bh=Mo6F9Qq6kulubEamTxD2VEGjXuXCYIDZeNkgmoKeq+g=;
+	s=korg; t=1794585909;
+	bh=neJPA0z3wTosTbobv6odaIe2F5ayKAGpQJsqGUYuSFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WW8+JbEBmQlSTIKCpZCPSUeyavLBylVbolswASLpCJqNbBD84S3STXgKk1Z5ZLrsD
-	 eRf7uVCJFZYxAEDjyVUj5d+ZcnodE48R63TVu2W6iHAknQBwc9clRqwnv3Ifx8+jKT
-	 sQT/1w8U2iX0Icoh/6vP0gV5ZCLEJV+1m5sCCg/4=
+	b=TPwmy19m5fdzQrNxN2bEpdQUdBc+LcMOstVRarPem36HvZLd9yBv5ynBJOz3199Os
+	 h9tny02nsWub3bITx2TJMKiCdo7Y8jTvHlwZKtO4VdBy3/xKdd02ROMAsMTpnHg+bf
+	 YUcvf/w940djMIrwgCuX24z39wkBfcW84hPzznZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 473/507] KVM: arm64: Use kvm_s2_fault_vma_info in pkvm_mem_abort()
-Date: Fri, 13 Nov 2026 10:52:57 -0500
-Message-ID: <20261113153812.934062684@linuxfoundation.org>
+Subject: [PATCH 7.3 474/507] f2fs: zone: fix to avoid bio split on sequential zone
+Date: Fri, 13 Nov 2026 10:52:58 -0500
+Message-ID: <20261113153812.961740836@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,141 +68,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 0cdcc1039200b3c4fbc2ae3f9b5c1be1bc9155e8 ]
+[ Upstream commit b9b036bd1e2cfbc189d5811d62d8711e216c40b3 ]
 
-To paraphrase Marc in commit 08f97454b7fa ("KVM: arm64: Fix protected
-mode handling of pages larger than 4kB"), pkvm_pgtable_stage2_map()
-assumes the address passed as a parameter is aligned to the size of the
-intended mapping, while HPFAR_EL2 gives the IPA minus the bottom 12
-bits, regardless of the system page size configuration.
+In the block layer, bio_split_to_limits() splits a bio if it exceeds
+any underlying queue limits:
+1. queue_max_sectors: Splits bios larger than the transfer limit. This
+   limit is set by the device driver/DMA controller (max_hw_sectors) and
+   device-mapper targets. When flushing dirty pages (governed by VFS
+   writeback_chunk_size() and f2fs nr_pages_to_skip()), f2fs merges
+   contiguous pages into bios up to 512KB (1024 sectors) or more without
+   checking queue_max_sectors, which will be split if the device or DM
+   target enforces a smaller limit.
+2. queue_max_segments: Splits bios exceeding scatter-gather segment
+   limits. f2fs allocates bios with up to 256 pages, exceeding the
+   128-segment limit of DM targets (dm-default-key/dm-crypt) if pages
+   are discontiguous.
+3. chunk_sectors: Splits bios crossing chunk/zone boundaries. In f2fs,
+   section_size strictly matches zone_size, and block allocation never
+   spans across section boundaries, so bios never cross chunk_sectors.
 
-To fix this alignment, bring support for kvm_s2_fault_vma_info in
-pkvm_mem_abort() and use its members where possible. They do contain the
-page-alignment we need to fix the fault on system with pages larger than
-4K.
+Crucially, when bio_split_to_limits() splits a bio, bio_submit_split()
+submits the tail half via submit_bio_noacct() before returning the head
+half to the caller. On a sequential zoned device, this causes the tail
+bio to arrive at the zone write plug before the head:
 
-Also, add a check at the start of pkvm_pgtable_stage2_map(), it does not
-support !PAGE_ALIGNED arguments.
+  dm-3: zone 7: prepare_bio wp mismatch: bio sector 30720 offset 2048
+  != wp_offset 248, len 248
 
-Fixes: ea03466e806f ("KVM: arm64: Handle aborts from protected VMs")
+The write plug rejects the out-of-order tail with BLK_STS_IOERR, causing
+f2fs_stop_checkpoint() and remounting the filesystem read-only:
+
+2026-09-30T22:09:23.725678+08:00 localhost kernel: CPU: 9 UID: 0 PID: 243 Comm: kworker/9:1H Not tainted 6.12.81-gb3ef518fb26d #5
+2026-09-30T22:09:23.725750+08:00 localhost kernel: Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+2026-09-30T22:09:23.725753+08:00 localhost kernel: Workqueue: dm-3_zwplugs blk_zone_wplug_bio_work
+2026-09-30T22:09:23.725756+08:00 localhost kernel: Call Trace:
+2026-09-30T22:09:23.725758+08:00 localhost kernel:  <TASK>
+2026-09-30T22:09:23.725758+08:00 localhost kernel:  dump_stack_lvl+0x4d/0x70
+2026-09-30T22:09:23.725759+08:00 localhost kernel:  f2fs_stop_checkpoint+0x1df/0x5d0
+2026-09-30T22:09:23.725759+08:00 localhost kernel:  ? blk_zone_wplug_bio_work+0x4eb/0x740
+2026-09-30T22:09:23.725760+08:00 localhost kernel:  f2fs_cache_write_end_io+0x545/0x6e0
+2026-09-30T22:09:23.725761+08:00 localhost kernel:  blk_zone_wplug_bio_work+0x4eb/0x740
+2026-09-30T22:09:23.725762+08:00 localhost kernel:  process_one_work+0x5c6/0xde0
+2026-09-30T22:09:23.725764+08:00 localhost kernel:  ? assign_work+0x124/0x4e0
+2026-09-30T22:09:23.725765+08:00 localhost kernel:  worker_thread+0x403/0xb70
+2026-09-30T22:09:23.725765+08:00 localhost kernel:  ? __kthread_parkme+0x82/0x140
+2026-09-30T22:09:23.725766+08:00 localhost kernel:  ? __pfx_worker_thread+0x10/0x10
+2026-09-30T22:09:23.725766+08:00 localhost kernel:  kthread+0x235/0x2e0
+2026-09-30T22:09:23.725767+08:00 localhost kernel:  ? recalc_sigpending+0x128/0x1d0
+2026-09-30T22:09:23.725767+08:00 localhost kernel:  ? __pfx_kthread+0x10/0x10
+2026-09-30T22:09:23.725769+08:00 localhost kernel:  ret_from_fork+0x2f/0x70
+2026-09-30T22:09:23.725769+08:00 localhost kernel:  ? __pfx_kthread+0x10/0x10
+2026-09-30T22:09:23.725770+08:00 localhost kernel:  ret_from_fork_asm+0x1a/0x30
+2026-09-30T22:09:23.725771+08:00 localhost kernel:  </TASK>
+2026-09-30T22:09:23.725771+08:00 localhost kernel: F2FS-fs (dm-0): Stopped filesystem due to reason: 3
+
+To prevent write bios destined for sequential zones from being split:
+1. In __bio_alloc(), bound npages to bdev_max_segments(bdev) for writes to
+   sequential zone areas.
+2. In page_is_mergeable(), check queue_max_segments() and queue_max_sectors()
+   for sequential zone areas, so f2fs will not merge beyond the queue limits.
+
+Fixes: 52763a4b7a21 ("f2fs: detect host-managed SMR by feature flag")
+Fixes: 664ba972df9b ("f2fs: use BIO_MAX_PAGES for bio allocation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260928095454.3255918-5-vdonnefort@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: Changed F2FS_BLKSIZE(sbi) to F2FS_BLKSIZE to match the existing constant definition. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/mmu.c  | 27 ++++++++++++++++++---------
- arch/arm64/kvm/pkvm.c |  3 +++
- 2 files changed, 21 insertions(+), 9 deletions(-)
+ fs/f2fs/data.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kvm/mmu.c b/arch/arm64/kvm/mmu.c
-index 9ebc17d3e0c00..cae133805c76b 100644
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -1383,9 +1383,11 @@ static bool fault_supports_stage2_huge_mapping(const struct kvm_s2_fault_desc *s
- 	if (map_size == PAGE_SIZE)
- 		return true;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index c161d8061e693..cc601b65163be 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -501,6 +501,10 @@ static struct bio *__bio_alloc(struct f2fs_io_info *fio, int npages)
+ 	struct bio *bio;
  
--	/* pKVM only supports PMD_SIZE huge-mappings */
--	if (is_protected_kvm_enabled() && map_size != PMD_SIZE)
--		return false;
-+	/* pKVM only supports PMD_SIZE huge-mappings for non-protected VMs */
-+	if (is_protected_kvm_enabled()) {
-+		if (vcpu_is_protected(s2fd->vcpu) || map_size != PMD_SIZE)
+ 	bdev = f2fs_target_device(sbi, fio->new_blkaddr, &sector);
++	/* avoid reversed IO if bio is split due to exceeding max_segments */
++	if (npages > 1 && !is_read_io(fio->op) &&
++	    f2fs_is_sequential_zone_area(sbi, fio->new_blkaddr))
++		npages = min_t(int, npages, bdev_max_segments(bdev));
+ 	bio = bio_alloc_bioset(bdev, npages,
+ 				fio->op | fio->op_flags | f2fs_io_flags(fio),
+ 				GFP_NOIO, &f2fs_bioset);
+@@ -791,7 +795,19 @@ static bool page_is_mergeable(struct f2fs_sb_info *sbi, struct bio *bio,
+ 		return false;
+ 	if (last_blkaddr + 1 != cur_blkaddr)
+ 		return false;
+-	return bio->bi_bdev == f2fs_target_device(sbi, cur_blkaddr, NULL);
++	if (bio->bi_bdev != f2fs_target_device(sbi, cur_blkaddr, NULL))
++		return false;
++	/* avoid reversed IO if bio is split due to exceeding max_segments/sectors */
++	if (f2fs_is_sequential_zone_area(sbi, cur_blkaddr)) {
++		struct request_queue *q = bdev_get_queue(bio->bi_bdev);
++
++		if (bio->bi_vcnt >= queue_max_segments(q))
++			return false;
++		if (bio_sectors(bio) + (F2FS_BLKSIZE >> SECTOR_SHIFT) >
++				queue_max_sectors(q))
 +			return false;
 +	}
++	return true;
+ }
  
- 	size = memslot->npages * PAGE_SIZE;
- 
-@@ -1609,6 +1611,9 @@ struct kvm_s2_fault_vma_info {
- 	bool		map_non_cacheable;
- };
- 
-+static int kvm_s2_fault_get_vma_info(const struct kvm_s2_fault_desc *s2fd,
-+				     struct kvm_s2_fault_vma_info *s2vi);
-+
- static gfn_t get_canonical_gfn(const struct kvm_s2_fault_desc *s2fd,
- 			       const struct kvm_s2_fault_vma_info *s2vi);
- 
-@@ -1698,12 +1703,12 @@ static int gmem_abort(const struct kvm_s2_fault_desc *s2fd)
- static int pkvm_mem_abort(const struct kvm_s2_fault_desc *s2fd)
- {
- 	unsigned int flags = FOLL_HWPOISON | FOLL_LONGTERM | FOLL_WRITE;
-+	struct kvm_s2_fault_vma_info s2vi = {};
- 	struct kvm_vcpu *vcpu = s2fd->vcpu;
- 	struct kvm_pgtable *pgt = vcpu->arch.hw_mmu->pgt;
- 	struct mm_struct *mm = current->mm;
- 	struct kvm *kvm = vcpu->kvm;
- 	void *hyp_memcache;
--	struct page *page;
- 	int ret;
- 
- 	hyp_memcache = get_mmu_memcache(vcpu);
-@@ -1711,12 +1716,16 @@ static int pkvm_mem_abort(const struct kvm_s2_fault_desc *s2fd)
- 	if (ret)
- 		return -ENOMEM;
- 
-+	ret = kvm_s2_fault_get_vma_info(s2fd, &s2vi);
-+	if (ret)
-+		return ret;
-+
- 	ret = account_locked_vm(mm, 1, true);
- 	if (ret)
- 		return ret;
- 
- 	mmap_read_lock(mm);
--	ret = pin_user_pages(s2fd->hva, 1, flags, &page);
-+	ret = pin_user_pages(s2fd->hva, 1, flags, &s2vi.page);
- 	mmap_read_unlock(mm);
- 
- 	if (ret == -EHWPOISON) {
-@@ -1726,7 +1735,7 @@ static int pkvm_mem_abort(const struct kvm_s2_fault_desc *s2fd)
- 	} else if (ret != 1) {
- 		ret = -EFAULT;
- 		goto dec_account;
--	} else if (!folio_test_swapbacked(page_folio(page))) {
-+	} else if (!folio_test_swapbacked(page_folio(s2vi.page))) {
- 		/*
- 		 * We really can't deal with page-cache pages returned by GUP
- 		 * because (a) we may trigger writeback of a page for which we
-@@ -1746,8 +1755,8 @@ static int pkvm_mem_abort(const struct kvm_s2_fault_desc *s2fd)
- 	}
- 
- 	write_lock(&kvm->mmu_lock);
--	ret = pkvm_pgtable_stage2_map(pgt, s2fd->fault_ipa, PAGE_SIZE,
--				      page_to_phys(page), KVM_PGTABLE_PROT_RWX,
-+	ret = pkvm_pgtable_stage2_map(pgt, gfn_to_gpa(s2vi.gfn), PAGE_SIZE,
-+				      page_to_phys(s2vi.page), KVM_PGTABLE_PROT_RWX,
- 				      hyp_memcache, 0);
- 	write_unlock(&kvm->mmu_lock);
- 	if (ret) {
-@@ -1758,7 +1767,7 @@ static int pkvm_mem_abort(const struct kvm_s2_fault_desc *s2fd)
- 
- 	return 0;
- unpin:
--	unpin_user_pages(&page, 1);
-+	unpin_user_page(s2vi.page);
- dec_account:
- 	account_locked_vm(mm, 1, false);
- 	return ret;
-diff --git a/arch/arm64/kvm/pkvm.c b/arch/arm64/kvm/pkvm.c
-index 8e4c6e4bec123..c298a5b9b12a6 100644
---- a/arch/arm64/kvm/pkvm.c
-+++ b/arch/arm64/kvm/pkvm.c
-@@ -414,6 +414,9 @@ int pkvm_pgtable_stage2_map(struct kvm_pgtable *pgt, u64 addr, u64 size,
- 	u64 end = addr + size;
- 	int ret;
- 
-+	if (WARN_ON_ONCE(!PAGE_ALIGNED(addr | size)))
-+		return -EINVAL;
-+
- 	lockdep_assert_held_write(&kvm->mmu_lock);
- 	mapping = pkvm_mapping_iter_first(&pgt->pkvm_mappings, addr, end - 1);
- 
+ static bool io_type_is_mergeable(struct f2fs_bio_info *io,
 -- 
 2.53.0
 
