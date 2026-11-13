@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590979;
-	b=SDgfXpvjZSuuVRD9yO6pJmY+7SGDkpbzQXvxtURpiKKwva0x4afqiiwXgFOmCFB6PW+S
-	 D5D3/j6wprCoW02SppVEFH7/qS7VPX7OCiUYnr1OxeacgZhK6VHwJ7HNGXe+ya9iYOHjE
-	 oKQeS8qLTMbxaAcnl+CredYdPdMPw2XgTHfFloFmVOKGXNeEbz7H4fP5uOJTkcvfRBHSX
-	 0/gCXt8/iJuaGJbMa0Y6pzMI65khXzge8ikPNStrqxa+36uky5W1FNMUMfa3Tc5FKPZKJ
-	 yOMhiqJR4PW1idwbAJLUhPH5l1IczB5fMHHsWMOvYp9XnDq9/sL1Srr9PlBy8/3oMKA==
+	t=1794590980;
+	b=s1y68BQXyFrs5ulhKijzeQlueWqRnqd8n0FgtNc+Q4Y/JyYVxjck0yjrKM6sPT9a/nBz
+	 q7XnObXgIUf6NV8mHOcNhQOI/X+P5OOO0Ias50rR7wZtSDWtNic0pNC7WEtZGHFWV/yF0
+	 ptIaygdu0/6lQwWY6TJ1ij/Xr6OkQx5U+7hsnVOoSm3cqVmoyiNh5ymBiDR0yY1qV3xTn
+	 Q9WcdBYKed/K/dKYgzRdLFqbbuZE5fCP3f4kvvGo7SM3nZb0QPfEDkFIKB3meuc0FAqf+
+	 fOA82OTWzfzIEXppsYs5g24fMIFy5O3OB/ikAt4veLwLoDjzXDKGsHe3zQYSpINcpnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590979;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pMHS05qVVvzdzob7yRKG5zLViaU3ogZutD4mJAkUcvM=;
-	b=VIpTkLp645qzul8c3L3LbXdfnLYMTWMGa/DDXhpTu6m2nGiBpZ7KUxjN7zK9DThyjNE+
-	 OS5AcNjn4Hz5S7d7FGi1SSyd/Ifcqjjtp0OWTTrTjXo/7/K2pObFcdnVk8kiZV64nkxod
-	 oggwZltKPL5G1JhuNg+OKAnMjMiccdsXIqptHn8AmOp9uOwVe3eFXgbqqE5Aj/ee0yHCZ
-	 oF64+3MW9ZV9b74Noandx8+DZK2lhxSVz9/ovT+hwe1HZLqw2WRLpLhvFVvfuCMeUU5+6
-	 9JdygJO8LxLlrixicbQOAONIKf60Ty4gPAy7MPykI6OdxiOa/IYqBukwzwV05IFIiBw==
+	bh=i3sNYxdL1m9gMYyzgj7W7fiSD9IuG9Cxm8uPqi4soYc=;
+	b=KSapLIRor1k1NSc7+qTLgnc5nvkaKHXVmm3RQQKIOmcGHvTiczWimT8vwmYabkffxNsi
+	 RCgg0/Ulxb/IR7IT3LPMeiNs8pDrqq0SvRqBrPajD6fN0jqeYlmkhdGysmX55qrDAxinG
+	 6kaXN0mtmUeYgstM3zzPmBVQA9ZW+23jtklrkpJp1o2P+tb290Mr7cq/uKfvw0WcDeVGu
+	 cH3qHnt4D1opLXWTWLb1Ydv0wyi9R6Jj6+y2WsXi9Uo8fXcTJqN2jJDUvQcAeabF3ptyS
+	 PbclTmUAzpC2RQBgzYmSDR7p+twnrAOXkQ48QqXPb7lvh1rYgFiPUM8TMoNnba/gZFA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jhutG6KV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sT3FDpBf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF17E60703CB;
-	Fri, 13 Nov 2026 17:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC1460703CB;
+	Fri, 13 Nov 2026 17:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jhutG6KV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B6571F000C5;
-	Fri, 13 Nov 2026 17:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sT3FDpBf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C240D1F000C5;
+	Fri, 13 Nov 2026 17:29:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590978;
-	bh=pMHS05qVVvzdzob7yRKG5zLViaU3ogZutD4mJAkUcvM=;
+	s=korg; t=1794590980;
+	bh=i3sNYxdL1m9gMYyzgj7W7fiSD9IuG9Cxm8uPqi4soYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jhutG6KVj7VDySkQACxjfqwweD0p4T+ecckkupJ9WvQ0rapyKBqkZHSWsUWntCIEw
-	 cLeOk15tVqUmsJB3Z4lJFT38w6gXZNf+rZsHpUvPZOdQppFqwQ7D3d5b+SFZ1okGRe
-	 xmRZUxM4PKPKklWKgDl19/nMtuxTTi507DE3Gbe8=
+	b=sT3FDpBftnDzD2NdbAR70VGelYk3t7FSaLIrdu9S4XT6fT++eFfod9lzpn875n13D
+	 PTe7vHgl12v5oGrQiqXHDwOOjw+XSfB4bqIZsLN8SPZTeGYdlj+8huu+abQmRrc042
+	 /8X4V+3FofI8/ePiDXemalUtQ+Bykxd5bVWeYsfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9bda1b9fbb7fbdf9b62b@syzkaller.appspotmail.com,
-	Yun Zhou <yun.zhou@windriver.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 156/670] net: erspan: set lltx to avoid sch_direct_xmit deadlock
-Date: Fri, 13 Nov 2026 10:45:20 -0500
-Message-ID: <20261113153817.428085998@linuxfoundation.org>
+Subject: [PATCH 6.12 157/670] rds: fix out-of-bounds conn_path walks via handshake exthdrs
+Date: Fri, 13 Nov 2026 10:45:21 -0500
+Message-ID: <20261113153817.454611789@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,70 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Zhou <yun.zhou@windriver.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 2d36ec73836e83175deb467fd494c61006107e5d ]
+[ Upstream commit 50f2103fce43922b6e562937b2d2fc62089ff7ec ]
 
-The ERSPAN xmit path re-enters the network stack, causing nested
-acquisition of _xmit_lock on the underlay device while already holding
-the ERSPAN device's _xmit_lock, creating an ABBA deadlock. This happens
-for both IPv4 ERSPAN (erspan_xmit() -> ip_tunnel_xmit()) and IPv6 ERSPAN
-(ip6erspan_tunnel_xmit() -> ip6_tnl_xmit()):
+Both the lane and the connection-generation negotiation are driven by
+extension headers in handshake packets, and both are processed
+unconditionally, even on transports that are not multipath capable.
+A non-MP connection (t_mp_capable unset) owns exactly one
+rds_conn_path slot, so a peer claiming up to RDS_MPATH_WORKERS lanes
+makes every subsequent fan-out walk conn->c_path[0..7] at 504-byte
+strides past the single allocated slot (KASAN: "Read of size 8 in
+rds_conn_path_connect_if_down"); the generation negotiation opens a
+similar out-of-bounds walk on the same array.
 
-  sch_direct_xmit [lock erspan] -> erspan_xmit -> ip_tunnel_xmit ->
-  ip_output -> __dev_queue_xmit -> sch_direct_xmit [lock underlay]
+Only process handshake extension headers when the connection's
+transport is multipath capable, so a peer can never make us walk
+lanes that do not exist.  Both call sites in rds_recv_incoming() are
+gated.
 
-  sch_direct_xmit [lock erspan] -> ip6erspan_tunnel_xmit -> ip6_tnl_xmit ->
-  ip6_output -> __dev_queue_xmit -> sch_direct_xmit [lock underlay]
+This is a port of the Oracle UEK fix for the same issue, picked up
+where Paula's series of the same change left off.
 
-Set dev->lltx = true so HARD_TX_LOCK() skips the spinlock for ERSPAN.
-This is safe as the ERSPAN xmit path has no shared mutable state: o_seqno
-is atomic, TX stats are per-CPU u64_stats, dst_cache is per-CPU, and
-o_flags is no longer modified in the xmit path since commit 9958e69b9893
-("gre: fix ERSPAN o_flags race/corruption in xmit and fill_info").
-GRETAP, the sibling device with identical xmit structure, already sets
-lltx.
+This issue was discovered by Tencent CodeBuddy Security.
 
-Reported-by: syzbot+9bda1b9fbb7fbdf9b62b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=9bda1b9fbb7fbdf9b62b
-Fixes: 84e54fe0a5ea ("gre: introduce native tunnel support for ERSPAN")
-Fixes: 5a963eb61b7c ("ip6_gre: Add ERSPAN native tunnel support")
-Cc: stable@vger.kernel.org # 9958e69b9893 ("gre: fix ERSPAN o_flags race/corruption in xmit and fill_info")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261008093824.119453-1-yun.zhou@windriver.com
+Link: https://lore.kernel.org/netdev/20260825120132.51636-1-pamoutafpro@gmail.com/
+Link: https://github.com/oracle/linux-uek/commit/2fdeb0513f18
+Fixes: 840df162b3eb ("rds: reduce memory footprint for RDS when transport is RDMA")
+Fixes: 905dd4184e07 ("RDS: TCP: Track peer's connection generation number")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Reviewed-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20261012025336.54756-1-bsdhenrymartin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c  | 1 +
- net/ipv6/ip6_gre.c | 1 +
- 2 files changed, 2 insertions(+)
+ net/rds/recv.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 5bf6c6777c348..f4a269938340a 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -1362,6 +1362,7 @@ static int erspan_tunnel_init(struct net_device *dev)
- 	dev->features		|= GRE_FEATURES;
- 	dev->hw_features	|= GRE_FEATURES;
- 	dev->priv_flags		|= IFF_LIVE_ADDR_CHANGE;
-+	dev->lltx = true;
- 	netif_keep_dst(dev);
+diff --git a/net/rds/recv.c b/net/rds/recv.c
+index bd9d00326e94f..110fb22c3e2e4 100644
+--- a/net/rds/recv.c
++++ b/net/rds/recv.c
+@@ -343,7 +343,8 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
+ 		rds_stats_inc(s_recv_ping);
+ 		rds_send_pong(cp, inc->i_hdr.h_sport);
+ 		/* if this is a handshake ping, start multipath if necessary */
+-		if (RDS_HS_PROBE(be16_to_cpu(inc->i_hdr.h_sport),
++		if (conn->c_trans->t_mp_capable &&
++		    RDS_HS_PROBE(be16_to_cpu(inc->i_hdr.h_sport),
+ 				 be16_to_cpu(inc->i_hdr.h_dport))) {
+ 			rds_recv_hs_exthdrs(&inc->i_hdr, cp->cp_conn);
+ 			rds_start_mprds(cp->cp_conn);
+@@ -351,7 +352,8 @@ void rds_recv_incoming(struct rds_connection *conn, struct in6_addr *saddr,
+ 		goto out;
+ 	}
  
- 	return ip_tunnel_init(dev);
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 7cf429f11a1d0..9cb3c1fea4c91 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1902,6 +1902,7 @@ static int ip6erspan_tap_init(struct net_device *dev)
- 		dev->mtu -= 8;
- 
- 	dev->priv_flags |= IFF_LIVE_ADDR_CHANGE;
-+	dev->lltx = true;
- 	ip6erspan_tnl_link_config(tunnel, 1);
- 
- 	netdev_hold(dev, &tunnel->dev_tracker, GFP_KERNEL);
+-	if (be16_to_cpu(inc->i_hdr.h_dport) ==  RDS_FLAG_PROBE_PORT &&
++	if (conn->c_trans->t_mp_capable &&
++	    be16_to_cpu(inc->i_hdr.h_dport) ==  RDS_FLAG_PROBE_PORT &&
+ 	    inc->i_hdr.h_sport == 0) {
+ 		rds_recv_hs_exthdrs(&inc->i_hdr, cp->cp_conn);
+ 		/* if this is a handshake pong, start multipath if necessary */
 -- 
 2.53.0
 
