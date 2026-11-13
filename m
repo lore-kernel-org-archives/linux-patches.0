@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590884;
-	b=NBXA8+rO+MJiFM0MFt8JPiHpdzZrgXktbogRT27GRjzoiMHD+BAgbhm9GUGjSXt4XT79
-	 lGbgPYKMUaeMHIfPcbKcnJ4/hFekXi0HMfCdsfFa/sMtSz8AnAkNxk1gkPqdTW5yrluci
-	 lDsw5Kp5dVTKLDwCGETlte4cpaW3Kf5Cui/tFbS1MyN5x/YZJ6XIOTLySKV/aRiqaKlOd
-	 O1QwHV27hCg+3J/bm996Qcsqzpfb9c0oDSM9jiAA6/2lChQgQGTCkanZu2u/bxvE3ywcZ
-	 ToF9JM6tjC1Ug4jYLwd7gxUBANMIixBGqUAW9VEVMEBR2BncRqjNt3bqAnz8+eMogBg==
+	t=1794590885;
+	b=kZhrOrS7P90IV3emXlBahoACg8NXXiS8Ffxwx04IcNPHm+49EWZjjiXngdpc/kvimSI+
+	 v8dLd3ewT/kmHyttC1cMtrH+UARl1VXncgL12J66khuBvkOZq+T34L8LLGNxlR0BPSAAp
+	 z/29LWlnqUp+63hpRCnTywdMZk4advP0G5nLUB8MJRvXDfm6QopADgQkTm7f9j4QP9J8S
+	 /Ozg0R2luUJDGvgWYVgKNEQBIMDnGOA8M53elgvk+U9E/RpkIcB20AUiy1SEVhJ8Hb6s1
+	 I2AGZBQtAbuI+Xf6i8/ZfiOIlGC7aGAKR1aSxZdUf/UPoGb2UGl6oQnioIyyFqf31FA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590884;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590885;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YX6UDCRsQMv2hmRQq4G6GX/sTSlfUBtxnKk3bP0+phI=;
-	b=NnfIPU/dUYMxfEOj6GLaYggcRrPCi7jcDfkrH7pOyEY1uJ5BBPsuSKKEl7JHGifZHe/H
-	 IhzgBCGscvmzOwD9blPjN0l83fyBgEozt25GIRKnk8d5LH//9ts+TR5en7Gd4D+Nc86/w
-	 UG/T2XeLJz63tgToxmMejuWCnvBNorLbuA2QE6glxthtGVL6E2BG+2MWYc49n7nAcGgSN
-	 /wM9lIgBpi8n5s5OlbEdFFwMjY1ABcgIFcuZX/DSqe1vgETBWYoWGu/VGQQcHv4B8XaDL
-	 Mhz/XtjkrZaZ+6+3fmHYiS5WcXOnpIT+e4N/WtCjNcHhZUTCmyogKRYTbZtiHV9D5og==
+	bh=a4KA6noQtw3sh95VcR3Iakzy4/qrMRHGWVRkPLXpnCY=;
+	b=2CbNC9Cd8j/I/lqXv2k+DwB2OpvHgbOTna2ta6F+K0aKPn05G9N+dnCdawegNtGBS60L
+	 9Tq3g1YVaVGbr+FCoaQjEop13NdxXTlX9sQLE0xQBTYtjps/DiqiCckx38EzxU8B2Vxwo
+	 KN+DJ6yVNQO0GfE8EPRt4PYDo9xZRDEMgv/GgMvFKA3W+whLjA3QKm5xlf4YVlqXY3k0C
+	 EfYnX1JVgYYVdWGj9taG2/VnKy4w8buXcI7VrIOXV2T6camNlAhmrcwn5PwULCHBBllhV
+	 Krp/sQkM5NNSzDtC1jBNUVLCt6jqhbJhoOYaBiMMjs2eGIxokN//5ELzzqwJPINV9VQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVeqz+1V;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zHQiH7Du;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AEF606D875;
-	Fri, 13 Nov 2026 17:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C94A606D875;
+	Fri, 13 Nov 2026 17:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVeqz+1V
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78961F000C6;
-	Fri, 13 Nov 2026 17:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zHQiH7Du
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDDD91F000C6;
+	Fri, 13 Nov 2026 17:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590883;
-	bh=YX6UDCRsQMv2hmRQq4G6GX/sTSlfUBtxnKk3bP0+phI=;
+	s=korg; t=1794590885;
+	bh=a4KA6noQtw3sh95VcR3Iakzy4/qrMRHGWVRkPLXpnCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GVeqz+1VfcmYLTQtUBYVOqPEGZTD251p3lfu+uX5EkvWyhnBqGo3vgHirsyb3uePf
-	 T15OvpOzMWe9qmxNovgth7xf3yCPE6NU+vWgj8qP8tuxuCv9HYGn4S1xu1XCo7oGJJ
-	 3CktG15wQvzEfUgnWXcYs30oKGzE833YUXu4ntT8=
+	b=zHQiH7DuoMxgMDkQNQoAnJX0S8SN5t2TvHDiyD1NEu0M7dejWcuKb9cbbh6YwoPrf
+	 VsMoHhFHEuKX7bnXbxftLGLqlAQbV2i7Ff+ejog76E02hfo61PpyG0sa8AT2eG8stO
+	 pc1W0S1+bw6HKKGmqYgxcTwNiRHgiQSnu8oAgkDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diego Oliva <diego@bynar.io>,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/670] smb: client: reject FIND data areas that run past the received response
-Date: Fri, 13 Nov 2026 10:44:02 -0500
-Message-ID: <20261113153814.263824619@linuxfoundation.org>
+Subject: [PATCH 6.12 079/670] raid6: add missing vzeroupper to AVX2 code
+Date: Fri, 13 Nov 2026 10:44:03 -0500
+Message-ID: <20261113153814.345145677@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,133 +69,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Oliva <diego@bynar.io>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 29bd6773187cb5c1bbbdf90d677c6add7d58af26 ]
+commit 24f1241cdb056fd630e6710a916e0f7c8c910a70 upstream.
 
-CIFSFindFirst() and CIFSFindNext() take the directory entries of a
-TRANS2_FIND_FIRST2 or TRANS2_FIND_NEXT2 response from DataOffset for
-DataCount bytes. validate_t2() bounds DataOffset at 1024 and
-ParameterCount + DataCount by the byte count, and nothing compares
-DataOffset + DataCount with the number of bytes SendReceive() copied
-into the buffer.
+Since the AVX2 optimized RAID6 code uses YMM registers, execute vzeroupper
+before returning from it.  This is needed to avoid degrading the
+performance of any later SSE code that may happen to be executed.
 
-smb_init() places the request and the response in the same
-cifs_request allocation and cifs_buf_get() clears only the start of
-it, so a short response whose data area extends past its end has
-srch_entries_start point at bytes of the request that was just sent,
-or at whatever the allocation held before, and those bytes are parsed
-as directory entries. cifs_readdir() and find_cifs_entry() walk the
-entries with nxt_dir_entry(), which checks every entry but the first
-of a response against the end of the SMB; cifs_query_path_info() and
-cifs_backup_query_path_info() read the first entry with no check at
-all. Those reads stay inside the allocation, but what they return is
-not part of the response. The last entry, which LastNameOffset locates
-relative to the data area, is bounded against the received response
-by an earlier patch of this series, as is every entry that
-cifs_fill_dirent() parses; the walk itself and the two query functions
-are not.
-
-SMB1 is not negotiated by default; reaching this code requires an
-explicit vers=1.0 mount.
-
-Reject a response whose data area extends past the received length,
-with the -EINVAL that validate_t2() returns for the other malformed
-transaction responses. cifs_query_path_info() and
-cifs_backup_query_path_info() still read a whole entry from a data
-area that may be smaller than one; that is not changed here.
-
-A conforming server is not affected. The data block of a transaction
-response is part of the SMB, so DataOffset + DataCount cannot exceed
-the smbCalcSize() bytes that SendReceive() copies; coalesce_t2()
-appends each secondary response to the data area and adds its length
-to both DataCount and the byte count, which keeps that relation.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Assisted-by: Bynario AI
-Signed-off-by: Diego Oliva <diego@bynar.io>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: adjusted declaration context to account for the missing in_len variable ]
+Link: https://lore.kernel.org/20260831212308.213855-1-ebiggers@kernel.org
+Fixes: 2c935842bdb4 ("lib/raid6: Add AVX2 optimized gen_syndrome functions")
+Fixes: 7056741fd9fc ("lib/raid6: Add AVX2 optimized recovery functions")
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifssmb.c | 31 +++++++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 6 deletions(-)
+ lib/raid6/avx2.c       | 6 ++++++
+ lib/raid6/recov_avx2.c | 2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
-index 8062b0328e07d..c893b9fed8a02 100644
---- a/fs/smb/client/cifssmb.c
-+++ b/fs/smb/client/cifssmb.c
-@@ -4005,8 +4005,9 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- /* level 257 SMB_ */
- 	TRANSACTION2_FFIRST_REQ *pSMB = NULL;
- 	TRANSACTION2_FFIRST_RSP *pSMBr = NULL;
--	T2_FFIRST_RSP_PARMS *parms;
-+	unsigned int data_off, data_count;
- 	struct nls_table *nls_codepage;
-+	T2_FFIRST_RSP_PARMS *parms;
- 	unsigned int lnoff;
- 	__u16 params, byte_count;
- 	int bytes_returned = 0;
-@@ -4125,11 +4126,19 @@ CIFSFindFirst(const unsigned int xid, struct cifs_tcon *tcon,
- 		return rc;
+diff --git a/lib/raid6/avx2.c b/lib/raid6/avx2.c
+index 059024234dce1..2d03ce97f655d 100644
+--- a/lib/raid6/avx2.c
++++ b/lib/raid6/avx2.c
+@@ -76,6 +76,7 @@ static void raid6_avx21_gen_syndrome(int disks, size_t bytes, void **ptrs)
  	}
  
-+	data_off = le16_to_cpu(pSMBr->t2.DataOffset);
-+	data_count = le16_to_cpu(pSMBr->t2.DataCount);
-+	if (data_off + data_count > (unsigned int)bytes_returned) {
-+		cifs_dbg(VFS, "%s: data area offset %u count %u past response length %d\n",
-+			 __func__, data_off, data_count, bytes_returned);
-+		cifs_buf_release(pSMB);
-+		return -EINVAL;
-+	}
-+
- 	psrch_inf->unicode = !!(pSMBr->hdr.Flags2 & SMBFLG2_UNICODE);
- 	psrch_inf->ntwrk_buf_start = (char *)pSMBr;
- 	psrch_inf->smallBuf = false;
--	psrch_inf->srch_entries_start = (char *)&pSMBr->hdr.Protocol +
--		le16_to_cpu(pSMBr->t2.DataOffset);
-+	psrch_inf->srch_entries_start = (char *)&pSMBr->hdr.Protocol + data_off;
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
  
- 	parms = (T2_FFIRST_RSP_PARMS *)((char *)&pSMBr->hdr.Protocol +
- 					le16_to_cpu(pSMBr->t2.ParameterOffset));
-@@ -4162,8 +4171,9 @@ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
- {
- 	TRANSACTION2_FNEXT_REQ *pSMB = NULL;
- 	TRANSACTION2_FNEXT_RSP *pSMBr = NULL;
--	T2_FNEXT_RSP_PARMS *parms;
-+	unsigned int data_off, data_count;
- 	unsigned int name_len;
-+	T2_FNEXT_RSP_PARMS *parms;
- 	unsigned int lnoff;
- 	__u16 params, byte_count;
- 	char *response_data;
-@@ -4246,13 +4256,22 @@ int CIFSFindNext(const unsigned int xid, struct cifs_tcon *tcon,
- 		cifs_buf_release(pSMB);
- 		return rc;
+@@ -124,6 +125,7 @@ static void raid6_avx21_xor_syndrome(int disks, int start, int stop,
  	}
-+
-+	data_off = le16_to_cpu(pSMBr->t2.DataOffset);
-+	data_count = le16_to_cpu(pSMBr->t2.DataCount);
-+	if (data_off + data_count > (unsigned int)bytes_returned) {
-+		cifs_dbg(VFS, "%s: data area offset %u count %u past response length %d\n",
-+			 __func__, data_off, data_count, bytes_returned);
-+		cifs_buf_release(pSMB);
-+		return -EINVAL;
-+	}
-+
- 	/* BB fixme add lock for file (srch_info) struct here */
- 	psrch_inf->unicode = !!(pSMBr->hdr.Flags2 & SMBFLG2_UNICODE);
- 	response_data = (char *)&pSMBr->hdr.Protocol +
- 		le16_to_cpu(pSMBr->t2.ParameterOffset);
- 	parms = (T2_FNEXT_RSP_PARMS *)response_data;
--	response_data = (char *)&pSMBr->hdr.Protocol +
--		le16_to_cpu(pSMBr->t2.DataOffset);
-+	response_data = (char *)&pSMBr->hdr.Protocol + data_off;
  
- 	if (psrch_inf->smallBuf)
- 		cifs_small_buf_release(psrch_inf->ntwrk_buf_start);
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -186,6 +188,7 @@ static void raid6_avx22_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	}
+ 
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -254,6 +257,7 @@ static void raid6_avx22_xor_syndrome(int disks, int start, int stop,
+ 	}
+ 
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -347,6 +351,7 @@ static void raid6_avx24_gen_syndrome(int disks, size_t bytes, void **ptrs)
+ 	}
+ 
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -457,6 +462,7 @@ static void raid6_avx24_xor_syndrome(int disks, int start, int stop,
+ 		asm volatile("vmovntdq %%ymm14,%0" : "=m" (q[d+96]));
+ 	}
+ 	asm volatile("sfence" : : : "memory");
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+diff --git a/lib/raid6/recov_avx2.c b/lib/raid6/recov_avx2.c
+index 4e8095403ee28..a7fd1ba177f1b 100644
+--- a/lib/raid6/recov_avx2.c
++++ b/lib/raid6/recov_avx2.c
+@@ -180,6 +180,7 @@ static void raid6_2data_recov_avx2(int disks, size_t bytes, int faila,
+ #endif
+ 	}
+ 
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
+@@ -297,6 +298,7 @@ static void raid6_datap_recov_avx2(int disks, size_t bytes, int faila,
+ #endif
+ 	}
+ 
++	asm volatile("vzeroupper");
+ 	kernel_fpu_end();
+ }
+ 
 -- 
 2.53.0
 
