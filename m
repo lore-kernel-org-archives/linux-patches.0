@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590639;
-	b=C0C1pLc5krSBYiCjueCTNk57Flm27g4WiVl/d8IojyC+th9Tl5kcZtciiQUHczrARQic
-	 N6pKlEzAT1NmAarcU7Jo89eXLEKp1RRuDzyE+L6KNDZj+6bZijf1vv/+ScX1A4QDL/Q5A
-	 loxGr2jWkyFBN25/rRZisfgHRz5vvgUOgWx2Q9KeQOEL6L49IxUEE3MJpzC4T0utZKy+R
-	 DMVGPxzsONeXWZplenEjCeOj1EutzyGypSua6QlNeJIWvKx7HkwTBsJZPyZdT0RStgiT3
-	 6p80fx40lTWk5vzcHvsf+FBWZLiYA+lkT3EocP7F1Jt+B9aC7TnBdXstwa35cWq9b/A==
+	t=1794590641;
+	b=c4cwDsJJF5LP7gaBBHjy4ZdEETF97xz87kmB3dYvuSHxy43guojFrhF5XDcaTVkRtiub
+	 xZ6yO7+Li9lfQpYoNhJRKCwhbNBTaFnCtO56062V+ZD8glas8p9kL0dc3gYtfp66iCtoY
+	 dcAufgJ+Fma4B9EEvgYx18IxjgcgmB99qcMr3COLIBNrLBItz5znyJMXKf5v/CssFcoxu
+	 eO0L1OdN+u0E0aU34dHJJCzQXm1uhDUTxf9L2OZYZ8ZGFkB/bulkPFVFvBDCVwHxmEcop
+	 tUb3Mv1QpSqY3/jyVFyNdITvquI04F1D4cXoy9VKW2GOWC1C2MoOSQuzo01nIajHQUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590641;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+naANbAYGLW47ioEuZDTthEO/2wZSo5fttrq3EsWNa0=;
-	b=TB9dXhOpPotKs0cY0gkM2tShF8smWhgEhNLviXY0f1LF126ncHzhe0kFreIhBKX8puoz
-	 0uuMJI71H+W3M63s+moFUeVuzf4wyfi/lh7l2+S6t2YchRwWNIA16MbfKvXNpoEEHOLLb
-	 zDaH/znNNbnD3PsJU0vfq0k3/S2Gbr2Z+1uZeGY3ihaC+/1OgMqBK6FbEkD7w1xqNoe+G
-	 N4U4OkoSnT+5uaTiLwyBViW/dE9ifB4sh7pQ5ZpmkW+Mxri0I3gk574/hLU7A92TaOKLM
-	 lw/SkqzgGxJsluBXF6AJx9QxVX8ov2AeMiywu9IqrUPxuFhC3gFIRS8YxIHvXlDeVdQ==
+	bh=yUrZHo2yJgflurICqBfnIOMbuXpjetU61tW5+s0t11Y=;
+	b=dBGCVVE/XO6GWrCZn8SbLGuXdjtAkKtzhyJJPrTyHziCwUAwhUSqGDRcJnhs7hPLKFTF
+	 8PXQZbK+pgl0OMJNOCyEIXvth1bpMN0dhmpkdAU6hdAnTx65pJOCD0+DSklqEf3o4QrnR
+	 Miyec1LzsPKEJdfrGMI+UTxFWKhtlgCOgA8F0TTLedbsyC6xn8ta5Cr8htQ6QGJjgAJlG
+	 nQ+NPT1CliyqTo0SQdTJz1co6GeN+DfWGfXVOhzutQCjI2gUTOGLTBnsMrUb+fXZT7hJ+
+	 RidqQa4D1MmIwgN7O2lTpgnDvrjbAd9fa8rMp1D/bZ7aEYMVQGy6fnRepyYsrIwatBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQgN8Ztj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6VYVt8t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97146076F95;
-	Fri, 13 Nov 2026 17:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0168760A3836;
+	Fri, 13 Nov 2026 17:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQgN8Ztj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 665231F000C4;
-	Fri, 13 Nov 2026 17:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6VYVt8t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A031B1F000C4;
+	Fri, 13 Nov 2026 17:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590639;
-	bh=+naANbAYGLW47ioEuZDTthEO/2wZSo5fttrq3EsWNa0=;
+	s=korg; t=1794590640;
+	bh=yUrZHo2yJgflurICqBfnIOMbuXpjetU61tW5+s0t11Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aQgN8Ztj7U6VGsSGBiSkZOzoBVZatGeVMKVNBQ83O581lfjzFCirmk2NMggyAyVtK
-	 ud5yOoZCMrGm9Q+JPV+OCnRZhsS7AQa5jvAz38hydEjWfmnxHfGeRgJRDIJBjs7I1r
-	 TV65XitUjbam3IK7BWpVTO+FiZEkNGiy1qG6lmAI=
+	b=J6VYVt8twzp08xzKRqmSRWTeyG4cntlX4Zx8J9S9LSHV5TyR8mW8MlPDOhcOi2LcP
+	 YBsM5waC2sZUhkHyKrMchLOIvZLMGBaBIy9bTsZn4OK18LOjV5hb49SMnmQbXGXqC1
+	 kEMt9quwAFch30qZWgP++lshTUa/2hD80KffatAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Hobson <nicholas.hobson@outlook.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 507/686] ALSA: usb-audio: keep MIDI input running for Roland TD-11
-Date: Fri, 13 Nov 2026 10:50:40 -0500
-Message-ID: <20261113153838.077603368@linuxfoundation.org>
+Subject: [PATCH 6.18 555/686] dmaengine: qcom: bam_dma: free interrupt before the clock in error path
+Date: Fri, 13 Nov 2026 10:51:28 -0500
+Message-ID: <20261113153840.389954312@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,83 +70,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicholas Hobson <nicholas.hobson@outlook.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit 2e4c9ab2574eeaa7b893c7d35b4a9f60fd681ddd ]
+[ Upstream commit 82eed160cfa7a296ae4eb5acb8dd8f493323eea7 ]
 
-The TD-11 hands MIDI handling off to the host once connected via
-USB. If no MIDI input port is opened on the host, the device itself
-becomes unusable as a standalone instrument until its input is
-serviced, independent of anything happening on the computer.
+The BAM interrupt is requested with a devres helper and so on error it's
+freed after probe() returns. We disable the clock before freeing or
+masking it so it may still fire and we may end up reading BAM registers
+with clock disabled.
 
-Add a per-device keep_input_running flag, set for the TD-11 in
-snd_usbmidi_detect_roland(), and check it alongside the existing
-opened[1] check in snd_usbmidi_input_start()/snd_usbmidi_input_stop()
-so that input is started at device creation and never stopped for
-these devices, regardless of whether a client has the input port
-open.
+Stop using devres for interrupts as we free it in remove() manually
+anyway. Add an appropriate label and free the interrupt before disabling
+the clock in error path and in remove().
 
-Signed-off-by: Nicholas Hobson <nicholas.hobson@outlook.com>
-Link: https://patch.msgid.link/MN2PR15MB3472557AF39DC3A4CA9E753FF8BD2@MN2PR15MB3472.namprd15.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 19b42c1fff7f ("ALSA: usb-audio: Protect Roland control activation")
+Cc: stable@vger.kernel.org
+Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260427-qcom-qce-cmd-descr-v16-0-945fd1cafbbc%40oss.qualcomm.com?part=2
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261008-bam-dma-free-irq-v28-1-5e5b10de441e@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/midi.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/dma/qcom/bam_dma.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/midi.c b/sound/usb/midi.c
-index 787956252e800..30d0684920319 100644
---- a/sound/usb/midi.c
-+++ b/sound/usb/midi.c
-@@ -113,6 +113,7 @@ struct snd_usb_midi {
- 	unsigned int opened[2];
- 	unsigned char disconnected;
- 	unsigned char input_running;
-+	unsigned char keep_input_running;
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index c8cd6112f9003..9f514f9201bcc 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1322,8 +1322,8 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	for (i = 0; i < bdev->num_channels; i++)
+ 		bam_channel_init(bdev, &bdev->channels[i], i);
  
- 	struct snd_kcontrol *roland_load_ctl;
- };
-@@ -1168,7 +1169,7 @@ static int substream_open(struct snd_rawmidi_substream *substream, int dir,
- 			snd_usbmidi_input_start(&umidi->list);
- 	} else {
- 		umidi->opened[dir]--;
--		if (!umidi->opened[1])
-+		if (!umidi->opened[1] && !umidi->keep_input_running)
- 			snd_usbmidi_input_stop(&umidi->list);
- 		if (!umidi->opened[0] && !umidi->opened[1]) {
- 			if (umidi->roland_load_ctl) {
-@@ -2258,6 +2259,10 @@ static int snd_usbmidi_detect_roland(struct snd_usb_midi *umidi,
- 	struct usb_host_interface *hostif;
- 	u8 *cs_desc;
+-	ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
+-			IRQF_TRIGGER_NONE, "bam_dma", bdev);
++	ret = request_irq(bdev->irq, bam_dma_irq, IRQF_TRIGGER_NONE,
++			  "bam_dma", bdev);
+ 	if (ret)
+ 		goto err_bam_channel_exit;
  
-+	/* TD-11 becomes unusable if input isn't serviced continuously */
-+	if (umidi->usb_id == USB_ID(0x0582, 0x0151))
-+		umidi->keep_input_running = 1;
-+
- 	intf = umidi->iface;
- 	if (!intf)
- 		return -ENOENT;
-@@ -2465,7 +2470,7 @@ void snd_usbmidi_input_start(struct list_head *p)
- 	int i;
+@@ -1356,7 +1356,7 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	ret = dma_async_device_register(&bdev->common);
+ 	if (ret) {
+ 		dev_err(bdev->dev, "failed to register dma async device\n");
+-		goto err_bam_channel_exit;
++		goto err_free_irq;
+ 	}
  
- 	umidi = list_entry(p, struct snd_usb_midi, list);
--	if (umidi->input_running || !umidi->opened[1])
-+	if (umidi->input_running || (!umidi->opened[1] && !umidi->keep_input_running))
- 		return;
- 	for (i = 0; i < MIDI_MAX_ENDPOINTS; ++i)
- 		snd_usbmidi_input_start_ep(umidi, umidi->endpoints[i].in);
-@@ -2640,6 +2645,10 @@ int __snd_usbmidi_create(struct snd_card *card,
- 	if (err < 0)
- 		goto exit;
+ 	ret = of_dma_controller_register(pdev->dev.of_node, bam_dma_xlate,
+@@ -1375,6 +1375,8 @@ static int bam_dma_probe(struct platform_device *pdev)
  
-+	/* start input for devices that need continuous servicing */
-+	if (umidi->keep_input_running)
-+		snd_usbmidi_input_start(&umidi->list);
-+
- 	usb_autopm_get_interface_no_resume(umidi->iface);
+ err_unregister_dma:
+ 	dma_async_device_unregister(&bdev->common);
++err_free_irq:
++	free_irq(bdev->irq, bdev);
+ err_bam_channel_exit:
+ 	for (i = 0; i < bdev->num_channels; i++)
+ 		tasklet_kill(&bdev->channels[i].vc.task);
+@@ -1400,7 +1402,7 @@ static void bam_dma_remove(struct platform_device *pdev)
+ 	/* mask all interrupts for this execution environment */
+ 	writel_relaxed(0, bam_addr(bdev, 0,  BAM_IRQ_SRCS_MSK_EE));
  
- 	list_add_tail(&umidi->list, midi_list);
+-	devm_free_irq(bdev->dev, bdev->irq, bdev);
++	free_irq(bdev->irq, bdev);
+ 
+ 	for (i = 0; i < bdev->num_channels; i++) {
+ 		bam_dma_terminate_all(&bdev->channels[i].vc.chan);
 -- 
 2.53.0
 
