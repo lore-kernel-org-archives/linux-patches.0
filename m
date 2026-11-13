@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591218;
-	b=g041jd8yGxb9bYgtB7gnT1XhvwpWubE2QStFWkum1kITpDoK2sv/VW2rU3nYpRhORLAQ
-	 KV/AIGXi9HZLMlUPvkuXMo/opVkNadgEyzi0dfjepIm/zqeDfZvxLeHYwrnKcaZEAywpl
-	 QTDIOsUpwjlGKNQs/JDe6KTXWLMFPi5sAJpIt5yu+a2+GCfk7PuxGtLbXXTEFnXvC818T
-	 biao/RTR1SDIAmpBjAVBu0GAD4s38FwVIP5AjPB//n60OMvjPaoMT9rnlQCREQ6t81Rbw
-	 wR5foPEalQTAiWVOeNwIQSSB3tvrUs6pV0c1gMDn0U2h83Cm/B3wrUMwUmJRt5wiX3A==
+	t=1794591219;
+	b=YXuSlby8SiJDKRTQtVHH6DHgOb/YJ3xabkx6k8zTwD1LSfXFI9QUn+JQ2hrdWzFH0cFs
+	 YNXkQRbvb4HD6N2jYuTVjNbgDrgUwzW26I+bgDT/OoWyeJxUV1n9XUJpwsNhNPjPtqjPm
+	 Kto6o0Iq5w4mjA9/qQQGCTvqg7ZLRFZ8mGgXGOXXydgsfOv7k1SnkwBOv7CqlJJ3audqv
+	 ED8DYr4YzxYCc+eRzygccH+bgfaeOd+38vw8BUHrDUXfN7IdMsjoBAX/PAhgrlylYRxoG
+	 ULjuEevOlQ7wYRIRfzQ7AowEyUY3wBO7cD1Q/gcJmm9fWhaF+LIMdYCpq3EOzxHyc7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591218;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591219;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5DprGU+LnD4cjhU7uHgJ9v4luczDn+qHAyMkTtxBSAE=;
-	b=VNiRkor5pjMgdv0QqbAMfznzAaljmnlNX83c1O+9u+1FTfaT+2ZbkZc6kpcpDc/Vg70j
-	 brtt/2FEgzT8M+rxgA0t9VGCU8zJuBXCaQ9itEQXJfhCX1yGj1J89wurvOB3LYdPk8zmA
-	 rnrpqY3OPCrWfdLahC9gXSCs12xaBNekIibKQ/dKFOqE9cdMgGFLAZlXr7RMfWqJKlmYG
-	 RQu0y+baufUrEU28RMnG4DxCrpMntIC2maJNYU8HqOZimSSiPP4HYNS33TBuyEELQXbS9
-	 cVhbiCxyy0N0U3+TyRH01VDYO5tuiDP61Z69YC8BzjpNPyu5jJ2n7sWQ6/c8uQc4TYA==
+	bh=G2pwzWKshYsdvE+jv2/lsBIvgtSBSCGgpteyoGRFA4Q=;
+	b=H5JucObT6br9ZkZsMjLpxdB9JSXEcni0rKnPaHCQtSjtTFySSRo+/clSqgIYtk1Mqooh
+	 RgdSCdOMwGT8jmEz2OkjC4N1RiD+ByYzflK2J0F46xqViSJPZHqih5AtBJ5MngupO3n0i
+	 H5w4PPg2dycQAsb5udVYx+Eky8nnLCSv8SQ46jCStZ9B2dY1OFH3NiJ6xHk58Xdk2oot2
+	 +bW8E8USNlWsLtR0dIZJoTYgTqTa9rysUYcrrzoQH/SGXjWc0VcJqQzaIUKXR63K6kTkB
+	 pocLrmInZQBX/6eUhKwlQyQ8lsG4ZxJvSAhKIlsd8OV3OM745QLdoMmBxz3BQCe1qGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qB5TzdeP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttzOopGS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C643607587C;
-	Fri, 13 Nov 2026 17:33:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923516075E04;
+	Fri, 13 Nov 2026 17:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qB5TzdeP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092EA1F000C6;
-	Fri, 13 Nov 2026 17:33:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ttzOopGS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E0021F000CD;
+	Fri, 13 Nov 2026 17:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591218;
-	bh=5DprGU+LnD4cjhU7uHgJ9v4luczDn+qHAyMkTtxBSAE=;
+	s=korg; t=1794591219;
+	bh=G2pwzWKshYsdvE+jv2/lsBIvgtSBSCGgpteyoGRFA4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qB5TzdePmtdW8w/ZQnr44o5maybg44KLlikyhbbefAgpoI5+LOCN/oC4gHIjCsSOQ
-	 97AMBlMPlk4VhZ9csM6uXRqE7AP4idC0Bq42DZZLKWQDYNfvkX87GwnbLt0Lcs5Kcz
-	 z3v4sw4qY5Ytfwz71+jHccWOMvka0dGx20BTpJ7Q=
+	b=ttzOopGSwg9nOQ95DFletKPb2l2NFLOMMn0y+zuudoKvemwonZBSWdyCuYoFM7wUZ
+	 higFgz1FwUB8vcoAt5w8Pc3D0ArDE8p3rx/GbEAkewm9VAgvrq0O10Lb/5LM4K121q
+	 DrTnVu9IjZd/88LXzQWmOi2JP4sDdGNKety8tk8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Erhan Bilgili <erhan.bilgili@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 351/670] drm/amdgpu: Report MES ring wait timeouts.
-Date: Fri, 13 Nov 2026 10:48:35 -0500
-Message-ID: <20261113153823.722090996@linuxfoundation.org>
+Subject: [PATCH 6.12 352/670] drm/amdgpu: drop the dma-buf reference when a KFD import fails
+Date: Fri, 13 Nov 2026 10:48:36 -0500
+Message-ID: <20261113153823.752260061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,57 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Erhan Bilgili <erhan.bilgili@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 122e864861144150e905012b5fb52e63ad5de68d ]
+[ Upstream commit fb900f8bfd8a16126affd186d21001e4c6533324 ]
 
-Return -ETIMEDOUT when the fence wait before submission expires instead
-of reporting success without submitting the packet.
+import_obj_create() takes a reference on the dma-buf for the new kgd_mem,
+but the error path after validating the BO doesn't drop it. Since the
+validation reserves the BO interruptibly, an import failing with
+-ERESTARTSYS leaks the exported BO with its memory, and keeps the module
+in use.
 
-Fixes: 34e087e8920e ("drm/amdgpu/mes: fix mes ring buffer overflow")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Erhan Bilgili <erhan.bilgili@gmail.com>
+Importing a 64 MiB VRAM BO in a loop while getting SIGUSR1
+every 20 us and another thread changes the BO's mappings:
+
+  INFO: 171821 imports, VRAM used before 65 MiB, after 129 MiB
+  modprobe: FATAL: Module amdgpu is in use.
+
+Drop the reference, and free the sync object and the mutex of the kgd_mem
+as well. With that VRAM usage returns to 65 MiB after the same test.
+
+Fixes: 0e2e7c5b3d71 ("drm/amdgpu: Attach eviction fence on alloc")
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 34341594a87b4a3f28be41e3e70a4787f02b3d9e)
+(cherry picked from commit b4d1eca2729840148ff2ea957724ce764ca5a94e)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c | 4 +++-
- drivers/gpu/drm/amd/amdgpu/mes_v12_0.c | 4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-index 236fedc5b1838..63762ea6f87cb 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -201,8 +201,10 @@ static int mes_v11_0_submit_pkt_and_poll_completion(struct amdgpu_mes *mes,
- 	r = amdgpu_fence_wait_polling(ring,
- 				      seq - ring->fence_drv.num_fences_mask,
- 				      timeout);
--	if (r < 1)
-+	if (r < 1) {
-+		r = -ETIMEDOUT;
- 		goto error_undo;
-+	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index bc284939cf66d..ef4d8dca3c7af 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -2441,6 +2441,9 @@ static int import_obj_create(struct amdgpu_device *adev,
  
- 	api_status = (struct MES_API_STATUS *)((char *)pkt + api_status_off);
- 	api_status->api_completion_fence_addr = status_gpu_addr;
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-index c432a2a3405d6..98c706fa97fe8 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v12_0.c
-@@ -187,8 +187,10 @@ static int mes_v12_0_submit_pkt_and_poll_completion(struct amdgpu_mes *mes,
- 	r = amdgpu_fence_wait_polling(ring,
- 				      seq - ring->fence_drv.num_fences_mask,
- 				      timeout);
--	if (r < 1)
-+	if (r < 1) {
-+		r = -ETIMEDOUT;
- 		goto error_undo;
-+	}
- 
- 	api_status = (struct MES_API_STATUS *)((char *)pkt + api_status_off);
- 	api_status->api_completion_fence_addr = status_gpu_addr;
+ err_remove_mem:
+ 	remove_kgd_mem_from_kfd_bo_list(*mem, avm->process_info);
++	amdgpu_sync_free(&(*mem)->sync);
++	mutex_destroy(&(*mem)->lock);
++	dma_buf_put(dma_buf);
+ 	drm_vma_node_revoke(&obj->vma_node, drm_priv);
+ err_free_mem:
+ 	kfree(*mem);
 -- 
 2.53.0
 
