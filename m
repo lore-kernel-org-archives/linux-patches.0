@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585660;
-	b=VsC0lXEl0jTBnqYdE8MPOLt/LCaA44k7tFzsBQFvNM9j+OJJwW5yX1SZvQep0HBwBYM+
-	 A3K4ZN3Xcpr2YGJCaXgkeMYWveRnmk4F5kugwIR5920uMwArGw3r7wEn/mWJT3kuW1GvB
-	 cjv5827wuc3mNUVVZ7WLzaiIOg5ncLkGgsmQAzgwAWPGgXyzDm4L11AFKxLFQzjVq+q1h
-	 gEfjte0S80gCsQhNoJMxRKw0gcG38ZtNB5xUzs9NSAVV0ZgUaiJ5rNoBf0oq+6j9tvceC
-	 pTZFGXaQzHvvoDFZ/kD9l+enP6HrYIkTwKe2Ir1c3Ed8a5o+8ytq/4+wmzypKGjtGQg==
+	t=1794585662;
+	b=u8MEk25Wmi7OJ3EjQMeoeKp5ytPPWrcGKUw4fJF7e8SEigBtc6qi7yMqOtqoqyyKhgKE
+	 2kgJW6aj02mvYKNuQ+caOklnG2XjoYMiM/zQ1gy1WqlusxK3JovlBmeWhGghrYq289Mgg
+	 3AXXjKYnAK8mEvTDzn47yeMwsH5rr7wVPjPv4W9LXOKy+hN0A9TZBQod5avwlOx5ARQlc
+	 Yd5p44b/mQp17ct0zAJIKcRS69qUd6iKo0ZtUYI2oe6p6AxEu/8OabcrK0adj0VNS8YR8
+	 xMdkil9xm5+fgXCcKXtcX2vjx4oC5qoOvoM/YTlj1BdeM5IuNrAQ/tTqbysXpbLFy4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585660;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rgWXrLxbqSq7+zISoxFGdAb9yYHtCqLBQcL0NxUZvAg=;
-	b=y/Nmj6U47T0codzigyoloEN1Za19u+5FXybBSxkaO2nybxVpshOrUdsNGc6CwLu156Fe
-	 w6RumBx8IZ/NOS8fG8nsGEO/SIsevmUzOe9kpEByTO2HrLICDrN1XJj/bCyVYmtHHJVof
-	 VQRnkWELep0yw4RveFdpRISsAaoR608M6JoWvkxt1ehnoHQP5ZOUvgDR4syDMrynLM6OZ
-	 XS4Cc03iVBEMDXFV/BoyoUzWiuc8JOksC4M23fKtCj3TFPWGlDHzd42msE1w2leDGkBlC
-	 T0yg/CwqTN6VFC2124lc0tpPixU3Spt4Zt3t19GPU76Gl9F+C4eSJbCH5Fw4+i5B19w==
+	bh=55VpnoZ/trczYprnOb/VswImAn4i5KBYcv98/UhLhfE=;
+	b=Gvf+iMuo0TvGhz1wZl9N5EuJJbzKlMs0A0nCK5WOQfr6CX67NQgFxuAEtxhtCSTQuE67
+	 7xI7lwGzMMa43WNKZetULfyJ2sWLTleyze86ZBWR7AHigR0Y7wOYk7ZR96Zp+ZbolDCSn
+	 tKjpZcik/J2FLYjyOheqpjC2WqbGt90OD/nnaedL5fCGv3R1oqbRxunfXIFZN8c7/oirr
+	 JirxngXHA6GKFISv6M/kt9w2CxsjwPIxoBhr34l5DKw8bGkySJp7VyyKPQfD47Cyja8hf
+	 0ERjpd2TRDX7mMTv5K9NE6umatKZ2AYMNIvtv1LMfIS4AbFXdWIm3WEbsPtu7ApVtkQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=11H45MMX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVer3Z0E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7177606B5ED;
-	Fri, 13 Nov 2026 16:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04600606B2DA;
+	Fri, 13 Nov 2026 16:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=11H45MMX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720CC1F000C6;
-	Fri, 13 Nov 2026 16:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fVer3Z0E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37C71F000C6;
+	Fri, 13 Nov 2026 16:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585660;
-	bh=rgWXrLxbqSq7+zISoxFGdAb9yYHtCqLBQcL0NxUZvAg=;
+	s=korg; t=1794585661;
+	bh=55VpnoZ/trczYprnOb/VswImAn4i5KBYcv98/UhLhfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=11H45MMX8odGUNvZrx2lq7CzWCx/HjqgwPWyjsyaOZ1PNQm35eAci/crRQWLMy1fQ
-	 Kmtr3MeJ6GTe2CzR+kZeepSSJRT+BWK4di+/5Epx5lFYBByRDIivN2xhhZ+oFdN+Il
-	 F1tY8r7ctHXrNZwXqUNRRyqS7Bpdp3NnMnseTFI8=
+	b=fVer3Z0ERvmWmjNOwlAtQvqwSLXMqVP6QHQoVI7moSYad8X2jU7T/0zCncEjMHrHH
+	 Q9brArc0WCy9yvRABQOiQ5Oq4fIY+JRe4SwZ6UCum6yMNxs3zDpBJ1Mu5H7g7k1z4r
+	 12KnUFow5MI8QWsrilG7S9vXBxJaCWWRvYUViqCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amir Goldstein <amir73il@gmail.com>,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 273/507] inotify: do not coalesce rename events
-Date: Fri, 13 Nov 2026 10:49:37 -0500
-Message-ID: <20261113153803.959656105@linuxfoundation.org>
+Subject: [PATCH 7.3 274/507] blk-mq: end the request if getting a keyslot fails
+Date: Fri, 13 Nov 2026 10:49:38 -0500
+Message-ID: <20261113153804.084133470@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,52 +70,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 581230d2ec3c0380917d1255792508851e7c4627 ]
+[ Upstream commit e67cb6ed40e7f45912b63d7d575f18dfd2ebc98a ]
 
-inotify compares the mask, watch descriptor and name when coalescing
-adjacent unread events, but ignores their rename cookies. Distinct
-IN_MOVED_FROM events can therefore be coalesced, losing the cookie needed
-to match a later IN_MOVED_TO event.
+When blk_crypto_rq_get_keyslot() fails, blk_mq_submit_bio() ends the bio
+by hand and frees the request. By then blk_mq_bio_to_request() has done
+the IO accounting, which blk_mq_free_request() doesn't undo, so the
+in_flight counter never drops and iostat shows a device that is 100%
+busy. If the bio went through zone write plugging the zone stays plugged
+as well, and every later write to it waits forever.
 
-For example, watch two directories with IN_MOVE. Move an entry from the
-first directory into an unwatched directory, recreate it under the same
-name, then move it from the first directory into the second watched
-directory before reading the events. The second IN_MOVED_FROM is merged
-with the first, while the IN_MOVED_TO retains the second rename's cookie.
-Userspace can no longer pair the second rename's events.
+Use blk_mq_end_request() like the dispatch path does for a request the
+driver rejected, after marking it for zone write plugging.
 
-The original inotify implementation compared cookies before coalescing.
-The fsnotify conversion lost this comparison. Do not coalesce
-IN_MOVED_FROM or IN_MOVED_TO events, which carry the identity of their
-respective renames. Leave coalescing of other event types unchanged.
+Move the call to blk_zone_write_plug_init_request() before
+blk_crypto_rq_get_keyslot() so that it doesn't need to be duplicated.
+It doesn't depend on the keyslot.
 
-Fixes: 63c882a05416 ("inotify: reimplement inotify using fsnotify")
+Fixes: 99dc422335d8 ("block: support to account io_ticks precisely")
+Fixes: dd291d77cc90 ("block: Introduce zone write plugging")
 Cc: stable@vger.kernel.org
-Suggested-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20261027192027.8617-1-dennylin0707@gmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261029200110.1328103-1-ebiggers@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/notify/inotify/inotify_fsnotify.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-mq.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/fs/notify/inotify/inotify_fsnotify.c b/fs/notify/inotify/inotify_fsnotify.c
-index 7c326ec2e8a8c..6e3af6452dccb 100644
---- a/fs/notify/inotify/inotify_fsnotify.c
-+++ b/fs/notify/inotify/inotify_fsnotify.c
-@@ -36,7 +36,7 @@ static bool event_compare(struct fsnotify_event *old_fsn,
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 5a5dc66fc3b15..6d111c6f0ecd1 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -3193,16 +3193,15 @@ void blk_mq_submit_bio(struct bio *bio)
  
- 	old = INOTIFY_E(old_fsn);
- 	new = INOTIFY_E(new_fsn);
--	if (old->mask & FS_IN_IGNORED)
-+	if (old->mask & (FS_IN_IGNORED | FS_MOVE))
- 		return false;
- 	if ((old->mask == new->mask) &&
- 	    (old->wd == new->wd) &&
+ 	blk_mq_bio_to_request(rq, bio, nr_segs);
+ 
++	if (bio_zone_write_plugging(bio))
++		blk_zone_write_plug_init_request(rq);
++
+ 	ret = blk_crypto_rq_get_keyslot(rq);
+ 	if (ret != BLK_STS_OK) {
+-		bio_endio_status(bio, ret);
+-		blk_mq_free_request(rq);
++		blk_mq_end_request(rq, ret);
+ 		return;
+ 	}
+ 
+-	if (bio_zone_write_plugging(bio))
+-		blk_zone_write_plug_init_request(rq);
+-
+ 	if (op_is_flush(bio->bi_opf) && blk_insert_flush(rq))
+ 		return;
+ 
 -- 
 2.53.0
 
