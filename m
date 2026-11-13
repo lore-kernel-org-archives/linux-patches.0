@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590487;
-	b=MYpoPse6PVYnx7v/wHGXhaiKedc4VVfw7DcJBQFKa+W7vNkmI0KNvYctHq4VnkIfengd
-	 FH08x0eM6xvoY5HzqCQgWtoyiPaBi61ckybPtVNUR/2ZIPasYtQxqG0Z1JXBNJ1kj/sVc
-	 kedOjGDTfTiuJyrHt4Oj6AxPpR58RPbV/+Pcmhrx3/4XHWMjFQChxKQAaQGLiUioOGZgc
-	 oiwkuI5vRYP14XjxoUdn34FXMR4rqZHjqcAijHNt+q4pZfmB1b7p/R4DxhsuKRbvfW/YV
-	 kiXYGNObGWUgXG8xPJAgXl+I8SXcZ0YAgPBeHrSjqHHwzvuI+aVIHF6sS0sM1p33vrQ==
+	t=1794590489;
+	b=lsV9oZJXWU4UenI8GF7ZFT0llxFg4xvd7XWgJcxNuhqv2D7UgGSAn3Leq7tHIRqYDfXU
+	 2kLgFa4m0TVCwBVx4LsmDu6RujBrT8S1f++AJLwg3JoASSCG0lR26Z3zvFSQ2aMcD9rzN
+	 ehS/l/Sm+UjqazSwgWJyxLLvDoBrmTMnKDmvxEdk7lqTGGmArrLxaW/gD6E+vreyR1AAW
+	 tZg9GoLQRmVG+IcMMwU7T/QwSC5rgwGlBbYEPbHyw7EGdDD0lkJQu5pnsqVX77PJB2RFL
+	 shqnigplvBw//nUXH0yajpnlSJsLxiWDaPSgjrWUHyO3eGNWTBucUKEV9y72uPZjGlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590487;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590489;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t0eBzkaPyKmLIUHwlMHOVf4Ep9DLMD1OGS/0tP3GQ8U=;
-	b=mkmK2fnvJapf1JNhNAcW9qwVcTIfqbnKvP+K1W1d4OotIRg0sdc3+ytPDYWT4LRE76Ou
-	 hXu85WnEd7r3Ho4EN7ZCh4LAZ4e8KNz0/Y6cQjD9RG9SmUcLNjeSq29syADY3MGYQfVTk
-	 VmxlfiyVXc3fW5PG1VtZfw7cesCp2Mb3yIyPXgGsrTg3WJ0KD4qP3ww+nk3ou4OLcpXUB
-	 60io4qKUwUj+5lr7sJVfzJC7aV1xMn7dN0RX8Np9G8dda7URc4TH4xSlHOeoCkliYSrR5
-	 qsAgjieGvX22VwUkZZYbgDeg2C9BEXzjp7liYnZdM46X80TwJ1zWIYzVgpMCfRyHcJQ==
+	bh=KG6zOG75CcxS+TA5XnLSDvKlMFPi0X90i0qpW9XZAzs=;
+	b=MK1uc1E+PJJ8IrOB6VAPusgLkNiN2We0knUEM/ROzgoqFpen4FbYDNgVfw1X7SLrmhJR
+	 /qH+n/TPx4aV7py3pTLVsP6V9VS+3TcbU0kr+8rO3oQTq7cTT7rEvAZ9Fw9n6yxeR8qGI
+	 HnTAeVkFn01xy8N1GzmUMFKqja2PlBCOUbnDolHZbKItOoqq+0tVFliftcunIP2Mab0SM
+	 g3/gprFi7vpHiX2s0ALXkMHedU0ZmiqB6OISmF+7enhvlHDEQ5QjuHSiRlN0YzPZXClg+
+	 izX0UHKPWC4MLvPOmWI5ReIMfcJ3v8DjKsRTaOGlNqtXgH29tcV3owEw7qNgo6Mjb0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB1pfXr5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FKpYCk5n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87AD606B82D;
-	Fri, 13 Nov 2026 17:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6BF606B353;
+	Fri, 13 Nov 2026 17:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nB1pfXr5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753891F000C4;
-	Fri, 13 Nov 2026 17:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FKpYCk5n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76381F000C6;
+	Fri, 13 Nov 2026 17:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590487;
-	bh=t0eBzkaPyKmLIUHwlMHOVf4Ep9DLMD1OGS/0tP3GQ8U=;
+	s=korg; t=1794590488;
+	bh=KG6zOG75CcxS+TA5XnLSDvKlMFPi0X90i0qpW9XZAzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nB1pfXr5eXSLf3FE+mu73cRUQ9d1DW4DjRdFB10zndkSLB2ozwsSghNb4uddw675a
-	 KvjvOP3RxwuYwdsyv0ubAh2PUtzHfNXcZGnAkBVz9q3QO8uVUQ17RvDPew1rD5dTb4
-	 YG3PTs2yz4+LIJ/NBt6aNnm3w3EV5WDJ3n6ovPJc=
+	b=FKpYCk5n5mBm4XQk57TI0BJF+M0HHRG4xMaRzAGhKxKlMMGU517qHFLygjHzmXCW0
+	 5D8ZoufkBbCJzO4ZH2l5BLveXeEIRym73hSmt0P9Z5/u+9y4zAmg2nZPbjOnraQEAt
+	 s0rJFhm/y30CpNND29a66SHfzBVNnxL8ODCBR94g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kylie C <kyliepc@proton.me>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Bryam Vargas <hexlabsecurity@proton.me>,
+	Dust Li <dust.li@linux.alibaba.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 411/686] drm/amd/display: Dont select zero V_TOTAL_MIN/MAX on seamless boot
-Date: Fri, 13 Nov 2026 10:49:04 -0500
-Message-ID: <20261113153834.902794599@linuxfoundation.org>
+Subject: [PATCH 6.18 438/686] net/smc: dont spin in smc_rx_recvmsg() while a pipe holds spliced data
+Date: Fri, 13 Nov 2026 10:49:31 -0500
+Message-ID: <20261113153835.740422452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,45 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kylie C <kyliepc@proton.me>
+From: Bryam Vargas <hexlabsecurity@proton.me>
 
-[ Upstream commit d13f36e4e055cce03761de590bc8dc6346b1d5c8 ]
+[ Upstream commit 8288ba942cfd20621c05e16978b7c3da91513ae1 ]
 
-Initialize V_TOTAL_MIN/MAX to V_TOTAL before enabling the selectors if
-they are still 0, as optc1_program_timing() does without seamless boot.
+While bytes spliced off the RMB are still in a pipe, recvmsg() waits
+for the pipe to release them before it copies the data behind them.
+The path to that wait skips the timeout and signal checks, and
+smc_rx_wait() returns at once on RCV_SHUTDOWN. With a signal pending,
+after SHUT_RD, or once the peer closes or shuts down writing,
+recvmsg() spins on a CPU until the pipe is drained, and SIGKILL cannot
+stop it. MSG_DONTWAIT and an expired SO_RCVTIMEO wait there too
+instead of returning -EAGAIN.
 
-Tested on Renoir (DCN 2.1) eDP with amdgpu.seamless=1.
+Check the timeout and signals before that wait, and end it when the
+pipe releases the data or the connection is killed, not on RCV_SHUTDOWN.
+A zero-length read returns 0 without waiting for the pipe; a
+non-blocking one returns -EAGAIN while poll() still reports the socket
+readable (splice() can still take those bytes). The wait sets
+SOCKWQ_ASYNC_WAITDATA like smc_rx_wait(), so a byte arriving behind
+the pipe raises no SIGIO on a reader already asleep for it, and a full
+barrier orders its wait queue entry before its read of splice_pending,
+so no wake is lost.
 
-This removes the flash between the bios logo & plymouth on my laptop.
-
-Signed-off-by: Kylie C <kyliepc@proton.me>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1ad7473e82b9242c4ee7eea82ab16d3f82f01651)
+Fixes: 9014db202cb7 ("smc: add support for splice()")
 Cc: stable@vger.kernel.org
+Signed-off-by: Bryam Vargas <hexlabsecurity@proton.me>
+Reviewed-by: Dust Li <dust.li@linux.alibaba.com>
+Link: https://patch.msgid.link/20261029-b4-disp-da7f8e6a-v2-1-9052904adf72@proton.me
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/smc/smc_rx.c | 39 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c b/drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c
-index e7a90a437fffb..06edf66136597 100644
---- a/drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c
-+++ b/drivers/gpu/drm/amd/display/dc/optc/dcn20/dcn20_optc.c
-@@ -452,6 +452,13 @@ void optc2_lock_doublebuffer_disable(struct timing_generator *optc)
- void optc2_setup_manual_trigger(struct timing_generator *optc)
- {
- 	struct optc *optc1 = DCN10TG_FROM_TG(optc);
-+	uint32_t v_total, v_total_max;
-+
-+	REG_GET(OTG_V_TOTAL_MAX, OTG_V_TOTAL_MAX, &v_total_max);
-+	if (!v_total_max) {
-+		REG_GET(OTG_V_TOTAL, OTG_V_TOTAL, &v_total);
-+		optc->funcs->set_vtotal_min_max(optc, v_total, v_total);
-+	}
+diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
+index 24524dfd55180..4e2b156a52459 100644
+--- a/net/smc/smc_rx.c
++++ b/net/smc/smc_rx.c
+@@ -286,6 +286,27 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo, size_t peeked,
+ 	return rc;
+ }
  
- 	/* Set the min/max selectors unconditionally so that
- 	 * DMCUB fw may change OTG timings when necessary
++/* Wait for the pipe to release the spliced data. Unlike smc_rx_wait()
++ * it does not end on shutdown or sk_err, the data is already in the
++ * RMB; smc_conn_kill() wakes it and the caller checks conn->killed.
++ */
++static void smc_rx_wait_splice(struct smc_sock *smc, long *timeo)
++{
++	DEFINE_WAIT_FUNC(wait, woken_wake_function);
++	struct smc_connection *conn = &smc->conn;
++	struct sock *sk = &smc->sk;
++
++	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
++	add_wait_queue(sk_sleep(sk), &wait);
++	/* pairs with the smp_mb() in wq_has_sleeper(): the release drops
++	 * splice_pending, then looks for a sleeper
++	 */
++	smp_mb();
++	sk_wait_event(sk, timeo, !atomic_read(&conn->splice_pending), &wait);
++	remove_wait_queue(sk_sleep(sk), &wait);
++	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
++}
++
+ static int smc_rx_recv_urg(struct smc_sock *smc, struct msghdr *msg, int len,
+ 			   int flags)
+ {
+@@ -443,7 +464,23 @@ int smc_rx_recvmsg(struct smc_sock *smc, struct msghdr *msg,
+ 		/* could be just 1 byte, even after waiting on data above */
+ 		readable = smc_rx_data_available(conn, peeked_bytes);
+ 		splbytes = atomic_read(&conn->splice_pending);
+-		if (!readable || (msg && splbytes)) {
++		if (msg && splbytes) {
++			/* a pipe holds bytes ahead of these; the copy path
++			 * skips the timeout and signal checks
++			 */
++			if (!read_remaining)
++				break;
++			if (!timeo || signal_pending(current)) {
++				if (!read_done)
++					read_done = timeo ?
++						    sock_intr_errno(timeo) :
++						    -EAGAIN;
++				break;
++			}
++			smc_rx_wait_splice(smc, &timeo);
++			continue;
++		}
++		if (!readable) {
+ 			if (splbytes)
+ 				func = smc_rx_data_available_and_no_splice_pend;
+ 			else
 -- 
 2.53.0
 
