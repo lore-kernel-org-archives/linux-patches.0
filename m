@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585739;
-	b=iNN2X3/oVrVuDrmmwpgS3B2DFD+PSU3TdnuAA0Sk5nXvAuWr7QwumDr897Xro1lh1D1P
-	 0f8ocg4bM7D/MNMQD0sVLt9kyRw/Ckbj/UuM/k+Q/2mlpE9I6+s2sRcrkZ8o7FtTrJhHR
-	 kUYaVxckNyokEQgyug4w8pswyrsr422yv/D+LZR8lXOR5g4M3RhaxSIlkJmFnhbOfAPNf
-	 Ln2xL6siDpT7ZRSWZeUVz2Gv1TQl9zOVbHMz0SpDs34RAgbusO5V2FqLOyn3Qj9jgJUTw
-	 raBD1+niW4E3+HiO5zqg95vLIc2GJcNdw4pU1JSQhDYj8zcuxa8pgiJq0m5BtqFLlMQ==
+	t=1794585740;
+	b=CS3+PpilqXC0D6kTeHgrHJlewYiQe11b/V51b5mEHTGbYmhQoEt8tv5qp5XnxM2yJbe4
+	 uMoYkoDC+flCKqTcuRLA9ltbYwn290lxcwes/ipT/lao6KGoVxHk4V3G+0lgxDjwaI2su
+	 QvPqG2UI0Ayo22IBPFMfcUDgzTi/Kc6DQJ5M1CGyZjurGjQ6JpPK4Sf36BMzYG+Ww3dS6
+	 uINA+nTIYkOA8l+4npUS5icHK8z1VRIfmKaLiiNTeGZQDyToy1wb0vs8Dlz+RB5Oj5CCZ
+	 atUzb/Z9P5jk1xpl7xQ0LzoxcjV8NRovjWXsxn3EFSqfgnSQA/yMpE+ZJHGOLT5m27w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5imtaSRs59VJPCsj2AIe40bifqJ7ZI24cOT3DMubV/U=;
-	b=vEx4ZtOuCU8kic/PBkTAKKMMXDxTkRZT5fvHEhCrJ6evFJvwQJKAu9pgKr+CwR0P5tqR
-	 sotBpQxJq5v+E5YNP466Qc6rGUycHQJRi4sAjolpbF3LHwoYtZN14HYPrfUQoqFOuEqNd
-	 1SYoxiF3IAdIaMufFId/FkmdFxlr6fK56UUu5QZ1bvdmyVC0P4nDnrz+9zOlOyUl7VoAG
-	 Z/YnOMy6K7GpUPt0DFRt8h6Ym+BiBPpWEy3OmJrdc3kjT8+i5PuRlSncV78/UqdaWliVl
-	 g7WFpldfiHi79gsoZIftmvLVN8mQLUM9KIU4cP3OOZMde90xrYFEhaS0StwH9ncT6dg==
+	bh=rsMaSMOWxQGKxNkexoorD5DcI0l2F47rCvkRXrreOpc=;
+	b=K0ADP/JsK+MKaI3A6ErJvALkXSjeLVNjhylS+mMG5k54dkEWfpm+HNrB9hLZ2NrnZmrb
+	 laVI16lNnXkCwcEescbzD2Q93NM/kHYaMJC2efj+nYRTpzQF6gQb4xHnbURxPZesrLDe/
+	 3D5O5DZOtq2AQE5x8JIUE+Sj5/dqEOpjxuf7z6zrpt9jz0itWnOgk00//+CnRHz4uY73H
+	 mOSRxwNXtLE9I9knv6V8zc4uRe9LgY3nDKNl7V7BteG85/f6GaghN1cR87WQ6BJNN91fw
+	 /cqh6Dhol4XP9KIKOsgfNlsYQbLOSYrgd+tnWr6y2JFdRGOCsZDape7MWbTkDkO4w4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="l/WubNdm";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dodGjllV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB4C606A336;
-	Fri, 13 Nov 2026 16:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C6A606A336;
+	Fri, 13 Nov 2026 16:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l/WubNdm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921701F000C6;
-	Fri, 13 Nov 2026 16:02:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dodGjllV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC651F000CB;
+	Fri, 13 Nov 2026 16:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585738;
-	bh=5imtaSRs59VJPCsj2AIe40bifqJ7ZI24cOT3DMubV/U=;
+	s=korg; t=1794585740;
+	bh=rsMaSMOWxQGKxNkexoorD5DcI0l2F47rCvkRXrreOpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l/WubNdmttpY7wa3ZMCIkdHR77YuOjXAdPCDGKbdYZF25rzH/vRLvqr27R3JoKmNe
-	 5B9a/Pfw14Jv4j/YJk1HQUceincl+pErzkeG6vNRdB5Cf2LOCUXsGFSm9ei1Nsr7qD
-	 xzuEcg3dupOoGh55nQZ3UXttfvtupH0UjMGiTEqA=
+	b=dodGjllVYF1+ptMzeO7YedMa0HZJF4KP/xkieOkoawCRFP5rsgLkQjI6kb2wIwLQZ
+	 YCQHh6v1jBV81O6VuTFsLR9xjKTlRkNapGz1OLwuV/wpacIjwJB/CBVFisGr0rFOJn
+	 qZBXZbTmN7I03cB1pQs1xuEzDIUroseB/ftyfKvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Hungyu Lin <dennylin0707@gmail.com>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 338/507] ovl: do not let chattr change the casefold flag
-Date: Fri, 13 Nov 2026 10:50:42 -0500
-Message-ID: <20261113153806.863481444@linuxfoundation.org>
+Subject: [PATCH 7.3 339/507] ovl: fix whiteout creation in casefolded directories
+Date: Fri, 13 Nov 2026 10:50:43 -0500
+Message-ID: <20261113153806.893423330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,86 +71,211 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 83b351c3ade542bbfa1073e8c2d919826628252a ]
+[ Upstream commit e803c82dcdd15e87b48fca1ea8d2cfe6a7ed83d4 ]
 
-chattr +F or -F on an overlay directory can make the directory, or the
-whole mount, unusable. Lookups of the directory, and lookups in it, then
-fail. From code inspection, the caller only needs to own the directory.
-The upper filesystem must support casefolding: ext4 or f2fs with the
-casefold feature, or tmpfs with the casefold option.
+unlink and rmdir fail with EINVAL on an overlay with casefolded
+(case-insensitive) layers, if the name exists in a lower layer.
+Casefolded layers need CONFIG_UNICODE. Root can mount such an overlay,
+and so can an unprivileged user in a user namespace, with tmpfs layers.
 
-chattr +F and -F set and clear FS_CASEFOLD_FL, the casefold flag of a
-directory. The flag enables casefolding (case-insensitive name lookup)
-for the directory. All directories of an overlay must match the casefold
-state that was recorded at mount time, and ovl_lookup_single() enforces
-this:
+Overlayfs does not change a lower layer. To remove a name that exists
+there, it hides the name with a marker file, a whiteout. It creates the
+whiteout in the work directory, a scratch directory on the upper
+filesystem, and renames it over the name in the upper directory:
 
-- A lookup in a directory that does not match fails with -ESTALE.
-- A lookup of the directory itself fails with -EREMOTE.
+- ovl_whiteout() creates the whiteout with mknod, or as a hard link to
+  an earlier whiteout.
+- ovl_cleanup_and_whiteout() then prepares the rename with
+  start_renaming_two_dentries(), which returns -EINVAL if the source or
+  the target dentry is unhashed, that is, not in the dentry hash table.
 
-ovl_fileattr_set() copies the directory up, which creates it in the
-upper layer if it only existed in a lower layer. It then passes
-FS_CASEFOLD_FL on to the upper filesystem. The upper filesystem accepts
-the change if the upper directory is empty, regardless of what the
-merged directory contains. The merged directory is the one that the user
-sees, with the names from the upper and the lower directories.
+With casefolded directories, both dentries can be unhashed:
 
-After the change the upper directory no longer matches the mount. If the
-directory is the root of the overlay, the whole mount is affected.
+- The target. Lookup in a casefolded directory leaves a negative dentry
+  unhashed, so the rename target is unhashed if the name does not exist
+  in the upper directory.
+- The source, which is the new whiteout. tmpfs hashes a dentry when
+  mknod or link makes it positive, but ext4 does not, so on ext4 the
+  source is unhashed as well.
 
-The flag can also change without chattr +F or -F. chattr reads all flags
-of a directory, changes one and writes all of them back. For a directory
-that only exists in a lower layer, overlayfs reads the flags from the
-lower filesystem. xfs with the ascii-ci feature reports FS_CASEFOLD_FL
-on every inode, but never sets S_CASEFOLD, the inode flag that overlayfs
-compares with the mount. So its directories count as not casefolded.
-With a lower layer on such an xfs and an upper layer on ext4 with the
-casefold feature, chattr +A on a lower-only directory therefore sets
-FS_CASEFOLD_FL on the new, empty upper directory.
+The cleanup after the failure also refuses an unhashed dentry, so on
+ext4 the whiteout is left behind in the work directory.
 
-Reproduced as root on tmpfs and on ext4 with chattr +F or -F on an
-overlay directory whose upper directory was empty. Afterwards lookups
-below it failed with ESTALE, and lookups of the directory itself failed
-with EREMOTE. The chattr +A case was seen once, on a kernel with an
-earlier form of this patch that still passed the caller's flag on:
-lookups of the directory failed with EREMOTE.
+Reproduced with rm and rmdir on casefolded tmpfs and ext4 layers, also
+as uid 1000 in a user namespace.
 
-Fix this by returning -EOPNOTSUPP if FS_IOC_SETFLAGS, the only call that
-can change the flag, asks for a casefold flag on a directory that does
-not agree with the casefold state of the mount. This also refuses the
-chattr +A case above.
+Fix this by creating the whiteout with ovl_create_temp(), which repeats
+the lookup if the new dentry is unhashed. Prepare the rename with
+start_renaming_dentry(), which looks up the target name with the
+directories locked. The caller looked the name up without a lock, so
+return -ESTALE if the name now refers to a different inode.
 
-Fixes: 083957f9614a ("ovl: support layers on case-folding capable filesystems")
+Fixes: 833d2b3a072f ("Add start_renaming_two_dentries()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
-[amir: check the flag against the casefold state of the mount instead of
- reading back the flags]
+[amir: pass the name used for lookup instead of taking a name snapshot]
 Tested-by: Hungyu Lin <dennylin0707@gmail.com>
 Signed-off-by: Amir Goldstein <amir73il@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/inode.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/overlayfs/dir.c       | 46 ++++++++++++++++++++++------------------
+ fs/overlayfs/overlayfs.h | 10 +--------
+ fs/overlayfs/readdir.c   |  3 ++-
+ fs/overlayfs/util.c      |  2 +-
+ 4 files changed, 29 insertions(+), 32 deletions(-)
 
-diff --git a/fs/overlayfs/inode.c b/fs/overlayfs/inode.c
-index 7e1ac70c5d97b..e3aa0931bea9f 100644
---- a/fs/overlayfs/inode.c
-+++ b/fs/overlayfs/inode.c
-@@ -658,6 +658,14 @@ int ovl_fileattr_set(struct mnt_idmap *idmap,
- 	unsigned int flags;
- 	int err;
+diff --git a/fs/overlayfs/dir.c b/fs/overlayfs/dir.c
+index f716ac13badf3..c77af9a79d883 100644
+--- a/fs/overlayfs/dir.c
++++ b/fs/overlayfs/dir.c
+@@ -74,39 +74,34 @@ static struct dentry *ovl_start_creating_temp(struct ovl_fs *ofs,
+ 			      &QSTR(name));
+ }
  
++/*
++ * The whiteout is the source of a rename, so it has to be hashed.
++ * ovl_create_temp() takes care of that for a casefolded workdir.
++ */
+ static struct dentry *ovl_whiteout(struct ovl_fs *ofs)
+ {
+ 	int err;
+ 	struct dentry *whiteout, *link;
+ 	struct dentry *workdir = ofs->workdir;
+-	struct inode *wdir = workdir->d_inode;
+-	char name[OVL_TEMPNAME_SIZE];
+ 
+ 	guard(mutex)(&ofs->whiteout_lock);
+ 
+ 	if (!ofs->whiteout) {
+-		whiteout = ovl_start_creating_temp(ofs, workdir, name);
++		whiteout = ovl_create_temp(ofs, workdir, &(struct ovl_cattr) {
++					.mode = S_IFCHR | WHITEOUT_MODE,
++					.rdev = WHITEOUT_DEV });
+ 		if (IS_ERR(whiteout))
+ 			return whiteout;
+-		err = ovl_do_whiteout(ofs, wdir, whiteout);
+-		if (!err)
+-			ofs->whiteout = dget(whiteout);
+-		end_creating(whiteout);
+-		if (err)
+-			return ERR_PTR(err);
++		ofs->whiteout = whiteout;
+ 	}
+ 
+ 	if (!ofs->no_shared_whiteout) {
+-		link = ovl_start_creating_temp(ofs, workdir, name);
+-		if (IS_ERR(link))
++		link = ovl_create_temp(ofs, workdir, &(struct ovl_cattr) {
++					.hardlink = ofs->whiteout });
++		if (!IS_ERR(link))
+ 			return link;
+-		err = ovl_do_link(ofs, ofs->whiteout, wdir, link);
+-		if (!err)
+-			whiteout = dget(link);
+-		end_creating(link);
+-		if (!err)
+-			return whiteout;
+ 
++		err = PTR_ERR(link);
+ 		if (err != -EMLINK) {
+ 			pr_warn("Failed to link whiteout - disabling whiteout inode sharing(nlink=%u, err=%u)\n",
+ 				ofs->whiteout->d_inode->i_nlink,
+@@ -120,9 +115,10 @@ static struct dentry *ovl_whiteout(struct ovl_fs *ofs)
+ }
+ 
+ int ovl_cleanup_and_whiteout(struct ovl_fs *ofs, struct dentry *dir,
+-			     struct dentry *dentry)
++			     struct dentry *dentry, const struct qstr *name)
+ {
+ 	struct dentry *whiteout;
++	struct qstr last = QSTR_LEN(name->name, name->len);
+ 	struct renamedata rd = {};
+ 	int err;
+ 	int flags = 0;
+@@ -139,9 +135,17 @@ int ovl_cleanup_and_whiteout(struct ovl_fs *ofs, struct dentry *dir,
+ 	rd.old_parent = ofs->workdir;
+ 	rd.new_parent = dir;
+ 	rd.flags = flags;
+-	err = start_renaming_two_dentries(&rd, whiteout, dentry);
 +	/*
-+	 * Lookup refuses a directory that does not agree with the casefold
-+	 * state of the mount. Only FS_IOC_SETFLAGS can ask for a change.
++	 * The caller looked up @dentry by @name without a lock on @dir, and a
++	 * casefolded directory leaves a negative dentry unhashed.  Nothing tells
++	 * if such a dentry is still valid, so look up @name again with @dir locked.
 +	 */
-+	if (S_ISDIR(inode->i_mode) && fa->flags_valid &&
-+	    !!(fa->flags & FS_CASEFOLD_FL) != OVL_FS(inode->i_sb)->casefold)
-+		return -EOPNOTSUPP;
-+
- 	err = ovl_copy_up(dentry);
++	err = start_renaming_dentry(&rd, 0, whiteout, &last);
  	if (!err) {
- 		ovl_path_real(dentry, &upperpath);
+-		err = ovl_do_rename_rd(&rd);
++		if (d_inode(rd.new_dentry) != d_inode(dentry))
++			err = -ESTALE;
++		else
++			err = ovl_do_rename_rd(&rd);
+ 		end_renaming(&rd);
+ 	}
+ 	if (err)
+@@ -847,7 +851,7 @@ static int ovl_remove_and_whiteout(struct dentry *dentry,
+ 		goto out_dput_upper;
+ 	}
+ 
+-	err = ovl_cleanup_and_whiteout(ofs, upperdir, upper);
++	err = ovl_cleanup_and_whiteout(ofs, upperdir, upper, &dentry->d_name);
+ 	if (!err)
+ 		ovl_dir_modified(dentry->d_parent, true);
+ 
+diff --git a/fs/overlayfs/overlayfs.h b/fs/overlayfs/overlayfs.h
+index 91cdd7e15696c..4faebb4c6825b 100644
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -394,14 +394,6 @@ static inline int ovl_do_rename(struct ovl_fs *ofs, struct dentry *olddir,
+ 	return ovl_do_rename_rd(&rd);
+ }
+ 
+-static inline int ovl_do_whiteout(struct ovl_fs *ofs,
+-				  struct inode *dir, struct dentry *dentry)
+-{
+-	int err = vfs_whiteout(ovl_upper_mnt_idmap(ofs), dir, dentry);
+-	pr_debug("whiteout(%pd2) = %i\n", dentry, err);
+-	return err;
+-}
+-
+ static inline struct file *ovl_do_tmpfile(struct ovl_fs *ofs,
+ 					  struct dentry *dentry, umode_t mode)
+ {
+@@ -897,7 +889,7 @@ static inline void ovl_copyflags(struct inode *from, struct inode *to)
+ /* dir.c */
+ extern const struct inode_operations ovl_dir_inode_operations;
+ int ovl_cleanup_and_whiteout(struct ovl_fs *ofs, struct dentry *dir,
+-			     struct dentry *dentry);
++			     struct dentry *dentry, const struct qstr *name);
+ struct ovl_cattr {
+ 	dev_t rdev;
+ 	umode_t mode;
+diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
+index 80366424b3dc1..aefa41b163cd8 100644
+--- a/fs/overlayfs/readdir.c
++++ b/fs/overlayfs/readdir.c
+@@ -1322,7 +1322,8 @@ int ovl_indexdir_cleanup(struct ovl_fs *ofs)
+ 			 * Whiteout orphan index to block future open by
+ 			 * handle after overlay nlink dropped to zero.
+ 			 */
+-			err = ovl_cleanup_and_whiteout(ofs, indexdir, index);
++			err = ovl_cleanup_and_whiteout(ofs, indexdir, index,
++						       &QSTR_LEN(p->name, p->len));
+ 		} else {
+ 			/* Cleanup orphan index entries */
+ 			err = ovl_cleanup(ofs, indexdir, index);
+diff --git a/fs/overlayfs/util.c b/fs/overlayfs/util.c
+index b41f4788e4f06..47734eeb97b75 100644
+--- a/fs/overlayfs/util.c
++++ b/fs/overlayfs/util.c
+@@ -1118,7 +1118,7 @@ static void ovl_cleanup_index(struct dentry *dentry)
+ 	} else if (ovl_index_all(dentry->d_sb)) {
+ 		/* Whiteout orphan index to block future open by handle */
+ 		err = ovl_cleanup_and_whiteout(OVL_FS(dentry->d_sb),
+-					       indexdir, index);
++					       indexdir, index, &name);
+ 	} else {
+ 		/* Cleanup orphan index entries */
+ 		err = ovl_cleanup(ofs, indexdir, index);
 -- 
 2.53.0
 
