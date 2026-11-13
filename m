@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590074;
-	b=0XMdf7X1vkAeK6gXOfOB5O55pgyRgKHufsJMwyP8C02VBYE8okgTUr0hh4lAmi8CIkyo
-	 dIWSKyfggzakI44oXNHlBrMJ0mD6oTr/6glbC8EjLxfWLy0j2um8aQYmc5vpQr7jVUq3h
-	 YkGqZxIhCYxiRoEo0gRf0+yRCwedGG6LTPPuXxvGuqKXma/WZkXA4LXlEfUOx1OCa/O3Z
-	 b1AZQmmW8R2+DeWlbxOBILRrG+eIxaWwZdIzQlkREHAsiTdSck9CozZc7F4tG0JoZEbnz
-	 9RS/rOIyWIqk6sOjLJp7+6bBFb6gLWs5987pYrCMlb1MtjoDW7QLV8fkegTm0tYCrdw==
+	t=1794590075;
+	b=zghuqqyeuzqalKxsuXaMCfGxTy8mEzeS3DNjEceqSNONh/t3NazibqIPmvb8wJVxs+KQ
+	 yqAVCA7OR1d8Vv1qTn69WMTzeCuBr55Jw9WVb2S96Y5xm3/U4N98e4lw9dvuJj/eDmj9H
+	 SPaaWDd1NDbWIYu0DUzrJbhel7XqwWD/IEYTJNeTbuX1G/m1ZkX0unOx8D4KmuFm1cTQX
+	 kGVnpGaaa4Uq/iBQAia5AG2N68bPe+jGnOiExMezVYD8XFil9Gmla3rQwW5V6G3tAZ+WW
+	 TBvk/2mLuFIPQCNw0bWw85xE0Qh2LM3XH0bomZVXEqZGsLjR0uWeoC4KQVnRG82skKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590074;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590075;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pPVXb3v/FGUPNb4J0+tvTvyvb6cottBrYjMMlI4Ubh8=;
-	b=Sy5+1HbgKqZCbx90kcElLayvGhoQePUO6USjNJo4uGuqnq+E21UZcIiFalKFOvCevF9L
-	 k8n8HHbj7NLg5q7/OvUIK9KeMSuMi2uv2GndvUD//2Z0sjIMYdpjBDypjW/dvSXrH6J7V
-	 uBVRFhwWy4ZXMyVnrvi1Wpwb7aFCofRA6AL0T3OYszdCItWNz2Zly5UeqEcMDCrLe3w0+
-	 VBki41EGko74LcwgbWL4TsOAUWiWqz7zAFGMcqH1GbJd1TpoTViJt5EGfeuJBeepj+6/A
-	 uqMJZwsiy3QxuRqfoUaLU3RW7rJyVO4BkqthMFVbHOKRnSVF95Pnvdg8smmUqcPUcYQ==
+	bh=XjVydUWNlVIwb2QUDiWpLJAmQVLL5Zyt1X+tnbIcS8c=;
+	b=moIuS4oiowttq88ayM3zaE10+g8SLPnQndcbWlqI1CZWDBi3rlYuYCxJVLom3XlTCi80
+	 saw2OkU+CSUfWxRs0JR0Ep2xy/r9t1f6zvHd9NrMeglF0gpozym+0RJbmb0ZREE+lhjZk
+	 vE90m7p9QG+eTg8+NHM8HnH28J0oa3AQkCM+TGMGqztmWHgBWkRYzXY7GDoBIawmi5Nkk
+	 8HpZt/DI0e2lTF7AUpgml3wOvHUuBjYY9ad7SybU8D5FSxlrur96W3+rVIeKZLhJ3SCNj
+	 gbtBLutk0oKidfaDwkoeG/azkt079m33BOPEvWA9vhWu7Oa/vJNxwMnwobF3RTSyyxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZigoIzfW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWx8VpJH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26A2606C086;
-	Fri, 13 Nov 2026 17:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D8D606A32E;
+	Fri, 13 Nov 2026 17:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZigoIzfW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 276231F000C4;
-	Fri, 13 Nov 2026 17:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fWx8VpJH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614371F000C4;
+	Fri, 13 Nov 2026 17:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590074;
-	bh=pPVXb3v/FGUPNb4J0+tvTvyvb6cottBrYjMMlI4Ubh8=;
+	s=korg; t=1794590075;
+	bh=XjVydUWNlVIwb2QUDiWpLJAmQVLL5Zyt1X+tnbIcS8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZigoIzfW2QJ2GmvzriSBaMiyDEt+XFMThq8mbGnhVay6YCmuNWlD64wTJ7Y9jxZEB
-	 9vv+w2lT8lwSWkNQdxjpyMkUyOzUuB9asf5SEGTxnLnDPQHn+87RZp1RAjktAOzzih
-	 WJ6kvVjA1Ul9z0UY4SW2DhRcTKwOOMTZb117G/bw=
+	b=fWx8VpJHGj8kdhPbrBC9zfQJrG08AQnFKQUVG5WtQthPBXOC4lMvcHm9NlTK1NzBy
+	 mdjE42w9n6Css4EVTM8VfoTrXXA2b0AwgPUuEuSdOMNKVjdU5Y76TzQcjS8WFVCOCN
+	 VjJaMTTzOXhjO071VuhhmPvYe4coW2M4l1NDm544=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 105/686] mkiss: dont use a tty write error as a byte count
-Date: Fri, 13 Nov 2026 10:43:58 -0500
-Message-ID: <20261113153824.417130970@linuxfoundation.org>
+Subject: [PATCH 6.18 106/686] bpqether: leave the Ethernet devices queue and counters alone
+Date: Fri, 13 Nov 2026 10:43:59 -0500
+Message-ID: <20261113153824.449879515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,67 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-ax_encaps() and mkiss_write_wakeup() take whatever tty->ops->write()
-returns as the number of bytes accepted by the tty. Some tty drivers
-return a negative errno instead, USB serial adapters for instance when
-the device is gone or the URB cannot be submitted.
+bpq_xmit() replaces its "dev" argument with the underlying Ethernet
+device before it builds the Ethernet header. The three statements that
+follow were written for the bpq device but now act on the Ethernet one:
 
-A negative value moves ax->xhead to before the start of xbuff and
-makes ax->xleft larger than the frame, so the next write wakeup sends
-memory that does not belong to the transmit buffer down the line. It is
-also added to the tx_bytes counter.
+ - tx_packets and tx_bytes are added to the Ethernet device's
+   statistics, so the bpq device never counts a transmitted frame;
 
-Treat a negative return as a transmit error: count it in tx_errors,
-drop what is left of the frame and restart the queue, as is already
-done for an oversized frame.
+ - netif_wake_queue() restarts the transmit queue of the Ethernet
+   device. If its driver had stopped that queue because its transmit
+   ring is full, bpqether overrides the driver's flow control.
 
-This path could not be exercised on the test bench, where neither the
-8250 driver nor a pty ever returns an error from write(). The change
-was compile tested and checked for regressions only: 46 frames out of
-46 are still sent unchanged.
+Count the frame on the bpq device, which is still at hand in orig_dev,
+and drop the netif_wake_queue() call. The bpq device does not stop its
+own queue outside of ndo_stop, so there is nothing to wake.
 
+Tested in a QEMU guest (6.12.94, KASAN and lockdep) with two e1000
+ports on the same hub, bpq0 on the first and bpq1 on the second. After
+40 UI frames bpq0 reported tx_packets=0 before the change and 40 after.
+With the transmit queue of eth0 stopped by a small helper module, a
+frame sent on bpq0 restarted that queue before the change and leaves it
+stopped after; the frame goes out once the queue is woken. In both
+cases the 40 frames are received unchanged on bpq1.
+
+Fixes: f57505fd7ce5 ("bpqether: convert to internal net_device_stats")
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit eb6e59f373ad5fa6646a3e836a887830addd0687)
+(cherry picked from commit 568cfa4507c2ef88099acd6cf88fdf76f7cef8d4)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/mkiss.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/net/hamradio/bpqether.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/hamradio/mkiss.c b/drivers/net/hamradio/mkiss.c
-index 05c7a234de6ca..f11019d155764 100644
---- a/drivers/net/hamradio/mkiss.c
-+++ b/drivers/net/hamradio/mkiss.c
-@@ -526,6 +526,14 @@ static void ax_encaps(struct net_device *dev, unsigned char *icp, int len)
- 
- 	set_bit(TTY_DO_WRITE_WAKEUP, &ax->tty->flags);
- 	actual = ax->tty->ops->write(ax->tty, ax->xbuff, count);
-+	if (actual < 0) {
-+		/* The tty refused the frame: drop it. */
-+		clear_bit(TTY_DO_WRITE_WAKEUP, &ax->tty->flags);
-+		dev->stats.tx_errors++;
-+		ax->xleft = 0;
-+		netif_start_queue(dev);
-+		return;
-+	}
- 	dev->stats.tx_packets++;
- 	dev->stats.tx_bytes += actual;
- 
-@@ -939,6 +947,14 @@ static void mkiss_write_wakeup(struct tty_struct *tty)
- 	}
- 
- 	actual = tty->ops->write(tty, ax->xhead, ax->xleft);
-+	if (actual < 0) {
-+		/* Give up on the rest of this frame. */
-+		clear_bit(TTY_DO_WRITE_WAKEUP, &tty->flags);
-+		ax->dev->stats.tx_errors++;
-+		ax->xleft = 0;
-+		netif_wake_queue(ax->dev);
-+		goto out;
-+	}
- 	ax->xleft -= actual;
- 	ax->xhead += actual;
+diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
+index 045c5177262ea..209dddef51d06 100644
+--- a/drivers/net/hamradio/bpqether.c
++++ b/drivers/net/hamradio/bpqether.c
+@@ -267,11 +267,10 @@ static netdev_tx_t bpq_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	skb->protocol = ax25_type_trans(skb, dev);
+ 	skb_reset_network_header(skb);
+ 	dev_hard_header(skb, dev, ETH_P_BPQ, bpq->dest_addr, NULL, 0);
+-	dev->stats.tx_packets++;
+-	dev->stats.tx_bytes+=skb->len;
+-  
++	orig_dev->stats.tx_packets++;
++	orig_dev->stats.tx_bytes += skb->len;
++
+ 	dev_queue_xmit(skb);
+-	netif_wake_queue(dev);
+ 	return NETDEV_TX_OK;
+ }
  
 -- 
 2.53.0
