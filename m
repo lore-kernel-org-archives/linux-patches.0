@@ -1,58 +1,83 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794586017;
-	b=tg3tWeyyMae9YEk+nugudGmd0u5iRNohYghz7Z/8LALvxmind25I7ClLX7bHxaGor1n/
-	 NE/JUGdhXZOcak+7whD0t0mmPw4Y7aovuSkLNRN9ISRgJdFLjRmS+i9B+WarrMkVGJSxl
-	 2Y+ro0yg7mPxdvq/IEH/qvwNYixxrFbgqhwfaM3oNF330yQHFj2sflVWULP+fABOO5rIO
-	 IoVNw/pyB9qB+7Ko9GVeb3Hma6SQkUHAIWhrWm38wtp9dCjmn7o0w9bBfbQUQ0qFFrrz5
-	 zzV19JCze262pgT/lkCMGacxrArTB3rZUJAWof0Vtl1G0ZCYTyo6NPbxIdrt1Z44FZg==
+	t=1794587408;
+	b=PKLYHbYbhb3NMvVYx2eGHJuXIdUIkNnC1Sg/PIEaKumRce6TJ+8E4pzHaKQUEVdw1HhV
+	 eq+hBdu6gbsxqZ4iNxkWsI49v17YUbMj2ZKeSGWeIHnnVEWS7Pt0Jy1sFfIBGq2SoENTv
+	 sNrttVMUaMgjZK4a3LfHPmfeYTrbMISlWQYuKS6834wfbEA5f5v2SnEVFw1MkpBi8WTG3
+	 nM8GIkTbN+K0D/DDJKJOVVACHIUwBSVb392Mn+g5SbTyzHkpqJEYvEq9ohgUN7rOOMa80
+	 doOTZ0gyqMyUjAMITKnWOTLcVo1zOrUmfO7MEHgjKXTVu5jNNU+pqoJ9x0fiPaWCXzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794586017;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=OT3eeLFDVbPJELAXbjdJZEyB2MH3e2rHcHONrjlUAqk=;
-	b=h/cFfJZP9FvxHq1RQ62j3LJwYVJUpALyzhikV/SpmmGqf+J6QH48iDn8wLfLlbamhyiZ
-	 Yth+ip9tBnF+Oh4/HobFhYwbhEeoaHqu2xu3ltUC2xuGqRhz9bJZFkGmsvFZW1AJ08AZt
-	 JDEFExVUDAsnvkzQCQYrVmIh+ZCf4QGt8AjH0Ylr3u1bYKhHDHe0BTN4ZFgJ/hoWde4uz
-	 99f4fG2GHVoLxwJS7aROnOBtYrkTsNPgtZM1dHwCsEG0lQ8hZ32BLU8ZegG4OFGY8yXoj
-	 /TZW7omi23gnkia0ElWPxMXSnXtx5aqZjs7y1AnjCMAqSJdHfu6EXAafiVzoZ4JA5Bw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794587408;
+	h=Received:DKIM-Signature:X-Mailer:From:To:Cc:Subject:In-Reply-To:
+	 References:Date:Message-ID:MIME-Version:Content-Type;
+	bh=a05Jwt0oapSs87PUiPXzFARGVbE8ZS0hpaEyecn5Jt4=;
+	b=MfcyjmFZKreqLXI6jWAKaBKv4Q2VaX0mdgqARc3I1Q41yQ44fovEbbJx5x5u5LW0c/qP
+	 pyi5tlvdbgld6hfCAOJz/vmB93CzE6k84XetpfCJVEs6KlyReOlboGgiQ1S057t4XGETC
+	 Uj4ogIf0TjzRij9MucV+rslFNvxNe/acawVC1ERGBDXJW3WCDPeGLx1300wUUuDlkQagM
+	 Tu2yN4KmVcKQTv5Gm1niToc2hjuvs2AogbQcheBWIB8gFThknNBcanU0EHI5IvWodRq3n
+	 BFhvDLnlc/gaYxkjZs9fMeJ2xv2LFT5pOmGbkwj0k1/wFzh/S/alyJm+Wxux4xksphg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAjZWtF3;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oezRNjfB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E38B606B2D0;
-	Fri, 13 Nov 2026 16:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 123F0606A88A;
+	Fri, 13 Nov 2026 16:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAjZWtF3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06E41F000C4;
-	Fri, 13 Nov 2026 16:06:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794586017;
-	bh=OT3eeLFDVbPJELAXbjdJZEyB2MH3e2rHcHONrjlUAqk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lAjZWtF3abMl1Qm2/Q76Zs3w3XkbHjg86fs4ICuBdMODAq9W+yJzeAhnvoI3JgMDx
-	 RS2VY1DHnvC9X4NP6kczOrlr+mX4czeksogE2rcsUE2PBp3Fv3DwM+if3iVbf9vCqD
-	 4z3V5FgwaeFpAaGxZv8IAumfG+QjfBRIrWC69GIY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 056/686] KVM: TDX: Dont assume exit_reason[31:16] is all-0 in tdx_to_vmx_exit_reason()
-Date: Fri, 13 Nov 2026 10:43:09 -0500
-Message-ID: <20261113153822.851276232@linuxfoundation.org>
-X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
-References: <20261113153820.902362109@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=oezRNjfB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E5E1F000C4;
+	Fri, 13 Nov 2026 16:29:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794587407;
+	bh=a05Jwt0oapSs87PUiPXzFARGVbE8ZS0hpaEyecn5Jt4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=oezRNjfBcdX3wZ6PgVIapUnriVLVMyDxIIdKaQ43cul0OGsvkWYMIveRRbnhvh/Wz
+	 aZOlQlcELBiCq1EJ0RcSSr8G9opKYtl9m1f7wVEzpJoekXKoxs6sAT1jSUSZjiyRo6
+	 T1ekeyePC1u1jMKsoLNiH/+bYEDB968llEU49FG4cJI1jlLQOBoFgxbZrk1gc18IUk
+	 hKF6yA0afzbdP7H3XYAvB1xJuyuLE7mBRYX146THajTHRFj6njtasNoCJhiS+HDL3f
+	 xy029+t01kKqQjB72FHQL4WuYNH378tAHJPJYDAauYKoFzDcelHORQtLHhedmnlBaF
+	 GDad5WN8G/1+A==
+X-Mailer: emacs 31.1 (via feedmail 11-beta-1 I)
+From: Aneesh Kumar K.V <aneesh.kumar@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Dave Jiang <dave.jiang@intel.com>, "Reshetova,
+	Elena" <elena.reshetova@intel.com>,
+	Xu Yilun <yilun.xu@linux.intel.com>,
+	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
+	Jiri Pirko <jiri@resnulli.us>, "Tian,
+	Kevin" <kevin.tian@intel.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Kiryl Shutsemau <kas@kernel.org>, "Edgecombe,
+	Rick P" <rick.p.edgecombe@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Jonathan Cameron <jic23@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	John Allen <john.allen@amd.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	Alistair <alistair23@gmail.com>
+Subject: Re: [RFC PATCH v1 10/11] virt: coco: arm-cca-host: Publish slot
+ zero and establish streams after acceptance
+In-Reply-To: <20261113145249.GA3706007@nvidia.com>
+References: <20261103151643.GI274202@nvidia.com>
+ <aurmtTe4ObBQhC4S@yilunxu-OptiPlex-7050>
+ <DS4PPFA84FA90FCDC94900C2FC6CEF4D428E7682@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261104134119.GR274202@nvidia.com>
+ <a3f95140-c49f-42fc-b92c-73c8cf98336d@intel.com>
+ <e05a71df-3b20-45a3-bb46-fb1bdad164c8@intel.com>
+ <20261106193018.GK770409@nvidia.com> <yq5a5wy2qtjs.fsf@kernel.org>
+ <20261112145254.GL738765@nvidia.com> <yq5abj7tm7q4.fsf@kernel.org>
+ <20261113145249.GA3706007@nvidia.com>
+Date: Fri, 13 Nov 2026 21:59:56 +0530
+Message-ID: <yq5a8q2wn18b.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -62,102 +87,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+Jason Gunthorpe <jgg@nvidia.com> writes:
 
-------------------
+> On Fri, Nov 13, 2026 at 02:24:59PM +0530, Aneesh Kumar K.V wrote:
+>> Jason Gunthorpe <jgg@nvidia.com> writes:
+>> 
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+ [ ... 150 lines skipped ... ] 
 
-[ Upstream commit bc335ce04408750585b4b32f248c543c9493d545 ]
+>> BTW, this proposal does require RMM changes. I have also omitted SPDM
+>> 1.3 multi-key support from this diagram because it will be easier to
+>> follow once the SPDM 1.2 flow is clear.
+>
+> IMHO, leave everything alone as is today. We can make it work well
+> enough as is.
+>
 
-When handling the real Exit Reason, don't assume the upper 16 bits as
-all-0 in tdx_to_vmx_exit_reason(), in preparation for enabling Bus Lock
-VM exit.
+Could you describe the flow you have in mind? Would we restrict
+everything to slot 0, without allowing userspace to select another slot,
+as this patch series does?
 
-When Bus Lock VM exit is enabled, the bit 26 of Exit Reason becomes
-valid and it can be 1 with various exit reasons.  Change the logic in
-tdx_to_vmx_exit_reason() to check the 'basic' Exit Reason for correctness.
-Also preserve bit[31:16] when changing the (basic) Exit Reason, to not
-lose the information in bit[31:16].
+>
+> Make a ECN for a 1.3 opt in broadly like the above that fits better
+> into how I sketched the kernel uAPI. Do this once we all agree to the
+> new uAPI. The kernel will always try to use this new mode if RMM
+> supports it and userspace gets a better 1.3 experiance.
 
-Change the return type of tdx_to_vmx_exit_reason() to
-"union vmx_exit_reason" for the convenience of manipulating the basic
-field.
+I'll reply to this separately to avoid confusing it with the flow we are
+trying to upstream without firmware changes.
 
-Fixes: c42856af8f70 ("KVM: TDX: Add a place holder for handler of TDX hypercalls (TDG.VP.VMCALL)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-5-xiaoyao.li@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/x86/kvm/vmx/tdx.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
-
-diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
-index 411291603681f..43d6b20dfbb16 100644
---- a/arch/x86/kvm/vmx/tdx.c
-+++ b/arch/x86/kvm/vmx/tdx.c
-@@ -899,10 +899,10 @@ static __always_inline bool tdx_is_exit_reason_valid(u64 vp_enter_ret)
- 	}
- }
- 
--static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
-+static __always_inline union vmx_exit_reason tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
- {
- 	struct vcpu_tdx *tdx = to_tdx(vcpu);
--	u32 exit_reason;
-+	union vmx_exit_reason exit_reason;
- 
- 	/*
- 	 * Return the synthesized invalid Exit Reason, as the TDX module
-@@ -910,22 +910,26 @@ static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
- 	 * but this is NOT a failed VM-Enter.
- 	 */
- 	if (!tdx_is_exit_reason_valid(tdx->vp_enter_ret))
--		return EXIT_REASON_UNDEFINED;
-+		return (union vmx_exit_reason) {
-+			.basic = EXIT_REASON_UNDEFINED,
-+		};
- 
--	exit_reason = tdx->vp_enter_ret;
-+	exit_reason.full = (u32)tdx->vp_enter_ret;
- 
--	switch (exit_reason) {
-+	switch (exit_reason.basic) {
- 	case EXIT_REASON_TDCALL:
- 		if (tdvmcall_exit_type(vcpu))
--			return EXIT_REASON_VMCALL;
--
--		return tdcall_to_vmx_exit_reason(vcpu);
-+			exit_reason.basic = EXIT_REASON_VMCALL;
-+		else
-+			exit_reason.basic = tdcall_to_vmx_exit_reason(vcpu);
-+		break;
- 	case EXIT_REASON_EPT_MISCONFIG:
- 		/*
- 		 * Defer KVM_BUG_ON() until tdx_handle_exit() because this is in
- 		 * non-instrumentable code with interrupts disabled.
- 		 */
--		return EXIT_REASON_UNDEFINED;
-+		exit_reason.basic = EXIT_REASON_UNDEFINED;
-+		break;
- 	default:
- 		break;
- 	}
-@@ -942,7 +946,7 @@ static noinstr void tdx_vcpu_enter_exit(struct kvm_vcpu *vcpu)
- 
- 	tdx->vp_enter_ret = tdh_vp_enter(&tdx->vp, &tdx->vp_enter_args);
- 
--	vt->exit_reason.full = tdx_to_vmx_exit_reason(vcpu);
-+	vt->exit_reason = tdx_to_vmx_exit_reason(vcpu);
- 
- 	vt->exit_qualification = tdx->vp_enter_args.rcx;
- 	tdx->ext_exit_qualification = tdx->vp_enter_args.rdx;
--- 
-2.53.0
-
-
-
+-aneesh
