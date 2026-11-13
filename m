@@ -1,60 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591190;
-	b=RNXtc8z6OGAJ/PHoPiGso/3vOByLCWvNHZG5MV01wsrDUWVjyrtvuMzZq0h3L1oePzIS
-	 SF9EIs0TG9Gw4hTYdy7b2MAbCilANigHetMyJOWlo71IbWn9y+RbypgYMzQAGHT6fSg8M
-	 Zjnf2UbcgN5Lt2iroWKfx2m2Asvuh4hIWL+JQ6OjgUQ9ZuzKuuK+/QoCwSiTg9aJ6qDIy
-	 JKcMOpAJvlb5z2aMv5LK7/67gkm0O7S1WacvX1AniYVuPzPNYe0zmmnDUrlB6JCkkhde9
-	 /NB3vg1t+dg6qJ5f1qnY+jQVWGAc9OG0jvIdwAAwVMqDVpRTTAvPYABNb7GMHeSXe9A==
+	t=1794591191;
+	b=gwoTdvomfqe4oat2aYumZa/gNHsOA7YRgmRy5zznFKIB9vXgoogyivK89qQCQ1G2nCYg
+	 CsNWZ+ZjxgSoDiHfWUx2jjq5tDmJ2DVQN7mNQBY5znT6Xz1w+ZraiBWWkoNl8WVDCtgae
+	 ZkXXv2FwBV3F+RGiKWGJSVIv6DldKlvzPxL/8TukPq2sK1WpNoB3wNI69AWJxs40le33z
+	 Z/3A19hIsuk7+m0AaD9kTEUg8UjpxOTQ+yHSqr4iD0Pct9ON1mYDSrbNeSzatMROn96Ts
+	 lUaDo6h8fPmroSLfWhmV8Cx+Yl6mvCk/6vwaCnj3Py3KHzWWoXPlrF6sFn+6l1vSAOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591191;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ms6bcW48NmU+b1VbM7k7xCxe3Zn/biFTHgqaWtoSAM8=;
-	b=uXVNbbijpx1YfD2RHacgJq1Dyijr4g/gLW+uX/zANbKTZacZ7VfnL8VM9PTwi6is7jSd
-	 pr9s27mMlF7iXDDulxvi++TjmQc7d4/fS1uPV/9CSLJpIPBhrA4ybLFnbIIE4bPxxhdmO
-	 ueCUYOQhb0HlfkXNOIqJKp7hokZknJY0YME6NjzuW/s6zKCkcl67Fh3gSab8awUJgsHLc
-	 j2zUsLVBxgeFigvRguHM3/2DyJWKnR5W3AS2s4QJbO8Y7wmg310KRbsE67hRjAdwQAxkq
-	 3aeg/KuJoiP4FQtiqx/p0xkLdldWCRuGJqXLwlgKRfr6WncaAPMZBln4Apg+/MJAIGg==
+	bh=nl7IkTuePy8kWNdng/wf7TTxoS/MwmWXyR6bn94O+ls=;
+	b=p3nUS986+FsgEwFXkpdSAI3kc1MnhURTMFWMKVKcHHiPJcc6qkL2BVpo5jk2tt4qwtrk
+	 rA92TGdZrq9zHPUJZom61K6zE3ii8B/kXgxxDU1XmDE2Kv7y/SZ3a9tQWdlvEdEUALrVx
+	 Obv+PRaawdb3Wh9PN+sgkxwpBe5i/Nf+SssktVFbVPSULGQgZfamEtsm6Yw9LbidpRDz8
+	 F6ZIO+KvnlQDkr5wEdbH254TnwUA/pqWtinxE4mqXjWTl7pXKIdrNSkWnOsI8t+L3sxEj
+	 pY6R6ZCssgG6Bx87nh/tV8YCJWgWpfTRSZ7wdTGBgB5KW7wI3G8oMyZ3KosvG2RfLqA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ccuUmZXp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aI6wSMyT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD296075E09;
-	Fri, 13 Nov 2026 17:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DD16075E09;
+	Fri, 13 Nov 2026 17:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ccuUmZXp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141951F000C6;
-	Fri, 13 Nov 2026 17:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aI6wSMyT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4593C1F000C5;
+	Fri, 13 Nov 2026 17:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591190;
-	bh=Ms6bcW48NmU+b1VbM7k7xCxe3Zn/biFTHgqaWtoSAM8=;
+	s=korg; t=1794591191;
+	bh=nl7IkTuePy8kWNdng/wf7TTxoS/MwmWXyR6bn94O+ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ccuUmZXpd3jV8nwoVdJn82sGKJhLev5vD2plQzqNBDQ/ECeGCSYCZZ1W2waQSbkg7
-	 d2j1N0VccALIP/UUly1EUK4Bb1sP/o1fOOD/up/3hBduHTU/kX6W0O8zcTmPDRCSGA
-	 gPTrkJtavre0Mfmq3wqAHfMaseP4osuQbCOWjgfw=
+	b=aI6wSMyTUVNBAqSeHVEnss0plKjy3Qjd6IvywGjd1w7y4PF77DHaQIZ53qX8wIx3y
+	 zKGfcZJnkfNPfsbljO7QI6sawjhCx+mi+hxDVSXpU8aYTxQiJjXS0HVg4eKOVbqAm1
+	 XKvu9GwTW2/9drLkfEPykMBU/USSGYzr0HX46VSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Dev Jain <dev.jain@arm.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Pedro Falcato <pfalcato@suse.de>,
-	SJ Park <sj@kernel.org>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 326/670] mm/mmu_gather: fix flushing ranges with 4 GiB or larger
-Date: Fri, 13 Nov 2026 10:48:10 -0500
-Message-ID: <20261113153822.931843051@linuxfoundation.org>
+Subject: [PATCH 6.12 327/670] mm/mmu_notifier: finish non-blocking interval invalidation on error
+Date: Fri, 13 Nov 2026 10:48:11 -0500
+Message-ID: <20261113153822.964922288@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -78,58 +72,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 64ae7959a1df8af8eec504e31df2ec9670424a4e ]
+[ Upstream commit 6d65925777ecae9d7a571a327e41c63f3940a0c7 ]
 
-__tlb_adjust_range() takes the size of the range which has to be flushed
-as an unsigned int. Its callers, tlb_flush_{pte,pmd,pud,p4d}_range(), get
-and pass an unsigned long. Consequently, a range that is 4 GiB or larger
-gets truncated, possibly to 0.
+When an ordinary MMU notifier rejects a non-blocking invalidation, the
+interval invalidation started beforehand is left unfinished: the caller
+skips mmu_notifier_invalidate_range_end(). Subsequent interval notifier
+operations can then wait forever.
 
-On arm64 with hugetlb, a 64k kernel can have 16 GiB hugetlb folios
-mapped contiguously at the PMD level and flush them when unmapping, and a
-16k kernel can flush 64 GiB PUDs through tlb_unshare_pmd_ptdesc(). So
-at least these two scenarios are affected.
+The only in-tree trigger is nouveau SVM, which uses both notifier types
+and rejects non-blocking invalidations. Reaping via the OOM reaper or
+process_mrelease() can therefore leave the GPU fault worker stuck,
+holding a reference that prevents the dying process's address space
+and memory from being freed.
 
-Fix it by flushing the proper range instead of the truncated one by
-properly using "unsigned long" for range_size.
+End the interval invalidation when an ordinary notifier fails a
+non-blocking invalidation, like mn_itree_invalidate() already does when
+an interval notifier fails. Make that handling clearer in the
+documentation of mmu_notifier_invalidate_range_start_nonblock().
 
 Fix generated by an LLM and sent by Josef Bacik in private.
 
-Fixes: b528e4b6405b ("mm/hugetlb: add tlb_remove_hugetlb_entry for handling hugetlb pages")
-Fixes: 8ce720d5bd91 ("mm/hugetlb: fix excessive IPI broadcasts when unsharing PMD tables using mmu_gather")
+Fixes: 99cb252f5e68 ("mm/mmu_notifier: add an interval tree notifier")
 Cc: stable@vger.kernel.org
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+[ david: simplify description, update function doc ]
 Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-[ david: use two-tab indent, simplify description ]
-Reviewed-by: Qi Zheng <qi.zheng@linux.dev>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Dev Jain <dev.jain@arm.com>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: SJ Park <sj@kernel.org>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-27-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-28-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/asm-generic/tlb.h | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/linux/mmu_notifier.h |  3 ++-
+ mm/mmu_notifier.c            | 17 +++++++++++++----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/include/asm-generic/tlb.h b/include/asm-generic/tlb.h
-index 253dee8077b13..c046a09b0b487 100644
---- a/include/asm-generic/tlb.h
-+++ b/include/asm-generic/tlb.h
-@@ -375,8 +375,7 @@ struct mmu_gather {
- void tlb_flush_mmu(struct mmu_gather *tlb);
- 
- static inline void __tlb_adjust_range(struct mmu_gather *tlb,
--				      unsigned long address,
--				      unsigned int range_size)
-+		unsigned long address, unsigned long range_size)
+diff --git a/include/linux/mmu_notifier.h b/include/linux/mmu_notifier.h
+index d39ebb10caeb6..fe486d52d48e8 100644
+--- a/include/linux/mmu_notifier.h
++++ b/include/linux/mmu_notifier.h
+@@ -444,7 +444,8 @@ mmu_notifier_invalidate_range_start(struct mmu_notifier_range *range)
+ /*
+  * This version of mmu_notifier_invalidate_range_start() avoids blocking, but it
+  * can return an error if a notifier can't proceed without blocking, in which
+- * case you're not allowed to modify PTEs in the specified range.
++ * case you're not allowed to modify PTEs in the specified range or call
++ * mmu_notifier_invalidate_range_end().
+  *
+  * This is mainly intended for OOM handling.
+  */
+diff --git a/mm/mmu_notifier.c b/mm/mmu_notifier.c
+index fc18fe2745050..e614ecafb8817 100644
+--- a/mm/mmu_notifier.c
++++ b/mm/mmu_notifier.c
+@@ -522,16 +522,25 @@ int __mmu_notifier_invalidate_range_start(struct mmu_notifier_range *range)
  {
- 	tlb->start = min(tlb->start, address);
- 	tlb->end = max(tlb->end, address + range_size);
+ 	struct mmu_notifier_subscriptions *subscriptions =
+ 		range->mm->notifier_subscriptions;
+-	int ret;
++	const bool has_itree = subscriptions->has_itree;
++	int ret = 0;
+ 
+-	if (subscriptions->has_itree) {
++	if (has_itree) {
+ 		ret = mn_itree_invalidate(subscriptions, range);
+ 		if (ret)
+ 			return ret;
+ 	}
+ 	if (!hlist_empty(&subscriptions->list))
+-		return mn_hlist_invalidate_range_start(subscriptions, range);
+-	return 0;
++		ret = mn_hlist_invalidate_range_start(subscriptions, range);
++
++	/*
++	 * On error, the non-blocking caller is not allowed to call
++	 * invalidate_range_end(), as in mn_itree_invalidate().
++	 */
++	if (ret && has_itree && !mmu_notifier_range_blockable(range))
++		mn_itree_inv_end(subscriptions);
++
++	return ret;
+ }
+ 
+ static void
 -- 
 2.53.0
 
