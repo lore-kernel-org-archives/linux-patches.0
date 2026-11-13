@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590789;
-	b=nJqh59ikc4LPuzWqJwkcTUvvWwNgjMJM9YDrD78O7MyyLjxsBzpcaUvyVKYUzjX56KDZ
-	 rn1n0UearNp11xSJU71ZaQCsDiFm9PFm0es7ldJyaVyimE+SXKS//SjnmiXl8qY9H8Jof
-	 wmGwTL3YJ7qMbMbiAQSRscFIzmHiGWnQ2vgw0VVSrXT+1t7nQqE65g/NbeBxWPW6MtJmV
-	 B9A3d+zTA0yZOiGurhjgmZEPB0mbnudKql9rKLDPdx0wbDD8E3QvZUrNoXUm9ycBWMYmp
-	 m7rEKPnPXyN0M8o7XP1DymP3kDBiiRAow+W0pAKAYF1BNLLn/5LLib8z2JNHn+X5MNw==
+	t=1794590790;
+	b=Do8MqYdRMCDWnpPVGKHgp1HlqUuisr7W7Y+jG5IWYDqkLmbb8EAmMEKzkhXymnG6P7h8
+	 j8mRDCzIkL1D5Wfpg8PjpU57IBZB097T7krN2N0xkJotDqNtsQC8O2a45FYn+fmCc5iCz
+	 SyCROfVqMTqTl/c8IPLSRz2xRiRh2Gxl6MdSHDbmj8BjcOcqIpHEs6WSscZoWLv0Gtnbj
+	 ytA3YNrTBe7dYjnhNYnALnanDi+TxFlZP5wrgvPwtnhkdDDxqqOTICRLS9tNAyDNcktyz
+	 9F3TepPUVoPLcKi6axaqYdwnvy6OJmC/KkEwOjHRFId6wp8+//Y0ytFY0DPaTVoXMhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590790;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/rxWE+83kWl1XpqwVFIkvrYpvhkFz0q0ZFqeKWLGMYE=;
-	b=ONjL48bUJpn6r7JG/jQYSJjP3E7Ra8otBWPqkkUpzsJdf2q69HzCIVH7ibDwNwhfmy3G
-	 5uvTDxUWEyjMlh6xTQdKpyuFr/WhCqikZ6n7QKFhT+HW75WOWEzJYOKiApIcEI/Iknc0D
-	 z0w7kcEFKjQCqp8fbqmQZC4oNdGwbhpitTn5gG8RWQcwN3vnBmYHq2oYW8O1lhSBokc4L
-	 IulD9mvxBHzTPelSmKVRISPe2wtWOoZvLUVWA46RXXWLnaAQFU3UwcXx3zDwJqMr6zr1L
-	 wwb486yLazDA31Yxh0/tid2hisM/omA0Mx+6nenRRs/VY1ORPa1sdpftEteUUuG0Duw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=13FI5hmePlJ8XcabfL/9nCzfXwhCnk0UL00tmHeJNEA=;
+	b=p85v7ruTIu91ATvet1LdzB6T4/XhlB8612sdxRI2q+tj9KysPz8HA4HuIVsv1zaXR//O
+	 zeLWMdj3+aaD6xCwFkEzuDA4ni4sMkU8A/oCYBreXf/UVuqxP9zOXWgMjwe35sPF8EoQH
+	 HUEWr+qQuO2jg/TnAhu7ZYCgHFWAW0HvzLbs4vVAedN2Mj1UoAvwftklv0qoSkFDjrLYn
+	 IXZYRvbnHjMiUD3mQVfQQ1JAkFx4+CpU+YyPT8NrKPkneN+ePfI03b1vQ7BQFXu9aVm5z
+	 OnbPXg/1nzCM6cucg6FEBOcXF5/k+hafg4OrlCRdPTcCbZecxx0heXbqI8LhJZ3bZZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AjsgQYP+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YGnChTjt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C3E606E20F;
-	Fri, 13 Nov 2026 17:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238C1606E20F;
+	Fri, 13 Nov 2026 17:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AjsgQYP+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E2A1F000C4;
-	Fri, 13 Nov 2026 17:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YGnChTjt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0FC1F000C4;
+	Fri, 13 Nov 2026 17:26:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590788;
-	bh=/rxWE+83kWl1XpqwVFIkvrYpvhkFz0q0ZFqeKWLGMYE=;
+	s=korg; t=1794590790;
+	bh=13FI5hmePlJ8XcabfL/9nCzfXwhCnk0UL00tmHeJNEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AjsgQYP+6OP4ezN/q4UptYN0U8uOlZv+9bKsplkcvBTUkV38HMkcQttJeuhbQZK/c
-	 L2U6vIVmcQdxLeN65nb4QwJOZOlx6YPbaa5OcWMCvkn3TxLECvJxCep0shDEYPA+wA
-	 t+Yfa+qmnhLaf3koYPQ2kVxMDhbmMn56Mif3da5E=
+	b=YGnChTjtBpycPOdZjEflrhudlxSVXsoEoYh4J2NW2cYhcQhipVFCYZ0NndLiUBiE2
+	 0AC1o7CQpBMlA7oOInDSzl9d5X3KVrhkILEPXqj7Z+MXoIkxEasC4FA3XSlvxlHd95
+	 lWpnogVl025HT6QiPekcO5DYTpxm28dRNtgrQud4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haofeng Li <lihaofeng@kylinos.cn>,
-	Wang Yan <wangyan01@kylinos.cn>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Neel Natu <neelnatu@google.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 681/686] selftests/landlock: Fix snprintf truncation checks in test files
-Date: Fri, 13 Nov 2026 10:53:34 -0500
-Message-ID: <20261113153844.716428156@linuxfoundation.org>
+Subject: [PATCH 6.18 682/686] lib/tests: extend cmdline KUnit with next_arg() tests
+Date: Fri, 13 Nov 2026 10:53:35 -0500
+Message-ID: <20261113153844.746155612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -64,95 +67,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wang Yan <wangyan01@kylinos.cn>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-[ Upstream commit 8e4c736cffdd6b133f6498e0d40ba60dc6819d43 ]
+[ Upstream commit dcc8a57815534e3844f342b28ecfb6e626a816a0 ]
 
-Commit b566f7a4f0e4 ("selftests/landlock: Fix snprintf truncation checks
-in audit helpers") fixed the truncation detection in audit.h by changing
-the comparison from ">" to ">=" to correctly handle the edge case where
-snprintf returns a value equal to the buffer size.
+The cmdline KUnit suite covers get_option() and get_options(), but it
+does not exercise next_arg().
 
-However, the same pattern exists in ptrace_test.c, audit_test.c, and
-net_test.c and was not fixed.  snprintf() returns the number of
-characters that would have been written, excluding the terminating NUL
-byte.  When the output is truncated, this return value equals or exceeds
-the buffer size. The existing ">" check therefore fails to detect
-truncation when the return value equals the buffer size.
+Extend the suite with one test for a quoted value containing spaces and
+one regression test for a bare quote token after a normal parameter.
 
-Fix these remaining instances to use ">=" for truncation detection,
-matching the fix in audit.h.
+The regression test covers the bare quote token path fixed by commit
+9847f21225c4 ("lib/cmdline: avoid page fault in next_arg").
 
-Fixes: 6a500b22971c ("selftests/landlock: Add tests for audit flags and domain IDs")
-Signed-off-by: Haofeng Li <lihaofeng@kylinos.cn>
-Signed-off-by: Wang Yan <wangyan01@kylinos.cn>
-Reviewed-by: Günther Noack <gnoack@google.com>
-Link: https://patch.msgid.link/20260626070016.61049-1-wangyan01@kylinos.cn
-Cc: stable@vger.kernel.org
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-[ sashal: Adjusted context for the earlier TCP-specific audit helpers with their existing names and formatting. ]
+[shuvampandey1@gmail.com: extend cmdline next_arg() coverage with mixed tokens]
+  Link: https://lore.kernel.org/20260316211249.88601-1-shuvampandey1@gmail.com
+Link: https://lore.kernel.org/20260316101227.15807-1-shuvampandey1@gmail.com
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Neel Natu <neelnatu@google.com>
+Cc: Dmitry Antipov <dmantipov@yandex.ru>
+Cc: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 5d72266218b1 ("lib/cmdline: fix get_options() count and overflow with large ranges")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/audit_test.c  | 2 +-
- tools/testing/selftests/landlock/net_test.c    | 4 ++--
- tools/testing/selftests/landlock/ptrace_test.c | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ lib/tests/cmdline_kunit.c | 62 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/tools/testing/selftests/landlock/audit_test.c b/tools/testing/selftests/landlock/audit_test.c
-index dcf63b2f822e9..aa6df1b4d42e6 100644
---- a/tools/testing/selftests/landlock/audit_test.c
-+++ b/tools/testing/selftests/landlock/audit_test.c
-@@ -31,7 +31,7 @@ static int matches_log_signal(struct __test_metadata *const _metadata,
+diff --git a/lib/tests/cmdline_kunit.c b/lib/tests/cmdline_kunit.c
+index c1602f797637b..af44ae9e92c3e 100644
+--- a/lib/tests/cmdline_kunit.c
++++ b/lib/tests/cmdline_kunit.c
+@@ -139,11 +139,73 @@ static void cmdline_test_range(struct kunit *test)
+ 	} while (++i < ARRAY_SIZE(cmdline_test_range_strings));
+ }
  
- 	log_match_len =
- 		snprintf(log_match, sizeof(log_match), log_template, opid);
--	if (log_match_len > sizeof(log_match))
-+	if (log_match_len >= sizeof(log_match))
- 		return -E2BIG;
++static void cmdline_test_next_arg_quoted_value(struct kunit *test)
++{
++	char in[] = "foo=\"bar baz\" qux=1";
++	char *next, *param, *val;
++
++	next = next_arg(in, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "foo");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "bar baz");
++	KUNIT_EXPECT_STREQ(test, next, "qux=1");
++
++	next = next_arg(next, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "qux");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "1");
++	KUNIT_EXPECT_STREQ(test, next, "");
++}
++
++static void cmdline_test_next_arg_bare_quote_regression(struct kunit *test)
++{
++	char in[] = "foo=bar \"";
++	char *next, *param, *val;
++
++	next = next_arg(in, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "foo");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "bar");
++	KUNIT_EXPECT_STREQ(test, next, "\"");
++
++	/* This hits the i == 0 quoted-token case fixed by 9847f21225c4. */
++	next = next_arg(next, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "");
++	KUNIT_EXPECT_PTR_EQ(test, val, NULL);
++	KUNIT_EXPECT_STREQ(test, next, "");
++}
++
++static void cmdline_test_next_arg_mixed_tokens(struct kunit *test)
++{
++	char in[] = "bbb= jjj kkk=\"a=b\"";
++	char *next, *param, *val;
++
++	next = next_arg(in, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "bbb");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "");
++	KUNIT_EXPECT_STREQ(test, next, "jjj kkk=\"a=b\"");
++
++	next = next_arg(next, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "jjj");
++	KUNIT_EXPECT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, next, "kkk=\"a=b\"");
++
++	next = next_arg(next, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "kkk");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "a=b");
++	KUNIT_EXPECT_STREQ(test, next, "");
++}
++
+ static struct kunit_case cmdline_test_cases[] = {
+ 	KUNIT_CASE(cmdline_test_noint),
+ 	KUNIT_CASE(cmdline_test_lead_int),
+ 	KUNIT_CASE(cmdline_test_tail_int),
+ 	KUNIT_CASE(cmdline_test_range),
++	KUNIT_CASE(cmdline_test_next_arg_quoted_value),
++	KUNIT_CASE(cmdline_test_next_arg_bare_quote_regression),
++	KUNIT_CASE(cmdline_test_next_arg_mixed_tokens),
+ 	{}
+ };
  
- 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
-diff --git a/tools/testing/selftests/landlock/net_test.c b/tools/testing/selftests/landlock/net_test.c
-index 8f3a780d354b7..822c23425d15a 100644
---- a/tools/testing/selftests/landlock/net_test.c
-+++ b/tools/testing/selftests/landlock/net_test.c
-@@ -2067,7 +2067,7 @@ static int matches_log_tcp(const int audit_fd, const char *const blockers,
- 
- 	log_match_len = snprintf(log_match, sizeof(log_match), log_template,
- 				 blockers, dir_addr, addr, dir_port);
--	if (log_match_len > sizeof(log_match))
-+	if (log_match_len >= sizeof(log_match))
- 		return -E2BIG;
- 
- 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
-@@ -2192,7 +2192,7 @@ static int matches_log_tcp_bound(int audit_fd, const char *const addr,
- 
- 	log_match_len = snprintf(log_match, sizeof(log_match), log_template,
- 				 addr, lport, addr, dport);
--	if (log_match_len > sizeof(log_match))
-+	if (log_match_len >= sizeof(log_match))
- 		return -E2BIG;
- 
- 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
-diff --git a/tools/testing/selftests/landlock/ptrace_test.c b/tools/testing/selftests/landlock/ptrace_test.c
-index 4e356334ecb74..22133c5ae6c56 100644
---- a/tools/testing/selftests/landlock/ptrace_test.c
-+++ b/tools/testing/selftests/landlock/ptrace_test.c
-@@ -446,7 +446,7 @@ static int matches_log_ptrace(struct __test_metadata *const _metadata,
- 
- 	log_match_len =
- 		snprintf(log_match, sizeof(log_match), log_template, opid);
--	if (log_match_len > sizeof(log_match))
-+	if (log_match_len >= sizeof(log_match))
- 		return -E2BIG;
- 
- 	return audit_match_record(audit_fd, AUDIT_LANDLOCK_ACCESS, log_match,
 -- 
 2.53.0
 
