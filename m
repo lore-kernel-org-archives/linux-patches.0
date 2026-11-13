@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590430;
-	b=bXxAlCnZyOZ7gOYK7ShmQWDHc288f53lh+QQId6YrMi09QQIXkiWVsSyqm/Jp9qhEZlr
-	 ASVOizSsKslJbYEVLx4pdZAjo6rNczmkVt/c69z/h75dbi/+F/xjRmNJ00N5uYUYb7Uyd
-	 5/eWY4dMon/4nrcdeoKi5ug5GrQW6MawQNsH0bNXyRRMAGq0Os8KbhfmahgP0ppQrHQFX
-	 STRMXPmFtKM9vlREveFY6w95OL0IK3aIUE7qdYfqRMx5neDpNpqxf96rLQbxn4XfzMYr5
-	 PO+82xUsh8fikfrYvwEa7eiq8H5nn6c9KkGgETzA+jwTNkzuY+dAcz9LHk2eZoC9MWw==
+	t=1794590431;
+	b=viwdysA1VCx3JHW4YUNJthRZmuscu0KxICUNEWdzWdztJmyI1xcotaFqUM3Jc+ewsOZF
+	 uRvc6JamkUXi1gqKB0lv6/LNPg+40RdoFtOXV580/ET5mcDUKUWu3rdTc+O3CvVphohsY
+	 iRqAUADC7lX5vjSXUnCOF7kXyPu4+6I3KuuJUYBFLbyw/9PbeND1xd2xK9yo1hmk9xzf4
+	 Zyp2Pv5X1lgp7Aqg92+MMYpnNyKIeSUp6AboKcq0h+Yg1ZMDFf0i0JmyhnEp0JNruD4Kk
+	 wBAiRC/A2sVXpIOJAplevKx57V54BjqguYy47AZ0hj54H3HDcFfyFjSy38Crvq7UqgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590430;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590431;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xVAh4OsEC72VP2XGmxOgtOWJqd/3v7knyzzNbssZrLo=;
-	b=gKjzg1cPqo75Xf/BKzNXb6sZpV4Y19xLT6JUcV5k7RQACL1yuWZH28WkAgj1yzmN/Euq
-	 D8qwRL64WKrFPkyGhODPccLIqgqu1r9jhd26FtjOGtpq6N+zQ9uaoyabT/fyiBAeScX+J
-	 N+18fD0m1ICAO9JqWDKBtBW2CqymTzN5MLD2gXDJB/EQ5DewVjMczxnVHg80x4oqIAwYu
-	 12daaIIkhU7xBkRkGOWhbrsv8dBKx/3IjEDrvYy1Km260GDIyKiz5COHkELawjAs13+IY
-	 SbrgrjVGKYrGZPbMOhl9/lTP9Btcqmw2poClGzC/ekqFTDvx4Fqvnt7DY2IiIca17tg==
+	bh=2eyv+ttdoR8XhY4rSKpNRCUWwuZGsse1RRtfeO4Sy68=;
+	b=dlRCnXTPMbKiDH0DBENY5r1lYgqWNR3c0EmUxcYM+rtBN99bpAYZiz1vPLkRDMHz2r6p
+	 JeEpkFjuBHMaTGTKAKb2FayOCMJFYyevslDdVMJac9tzpFJoNCus7qWgplP2ORv+99xjU
+	 oNlb2nyW8WgfAFmpPFj5GP6v1C/znUiyezke/MjPYZ4y3Rbt8I02kdjJqTliglZpcPmEw
+	 z49GnU2m0QwRWe9Nfr+kf3/saBV0q/Gw62qqKeu29mXwCYwLdr63tv+TNTUBj9yW8C49A
+	 vMG4rEFBf9vsAB8EyTI6pfWydVAp9DYzM36LT3IsGcKZhH881bkf9XRNw+lF8rteEVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gelC3Cjy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZZHptYJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB0C606E65E;
-	Fri, 13 Nov 2026 17:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A976F606F738;
+	Fri, 13 Nov 2026 17:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gelC3Cjy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 168CF1F000C7;
-	Fri, 13 Nov 2026 17:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cZZHptYJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C191F000C4;
+	Fri, 13 Nov 2026 17:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590430;
-	bh=xVAh4OsEC72VP2XGmxOgtOWJqd/3v7knyzzNbssZrLo=;
+	s=korg; t=1794590431;
+	bh=2eyv+ttdoR8XhY4rSKpNRCUWwuZGsse1RRtfeO4Sy68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gelC3CjyUfquumdMQRrVRCobXEJ7J21mX83XCZyNeSisn9R7rFFKG0mGHmvc6bQlu
-	 Traf0/VaIHoVw4YNJhV1jFC+T6VWoKc3gHDgG8CV8+2cSdo7B39f0JFGkME4EzW7xx
-	 bw3tMtw5a8wYLrHIPMgQYbD35Y8+6RALBgsqQYgM=
+	b=cZZHptYJ2naHrfJlmPyktauXNbbDS71gjSdDHaDL1wpA8OWPy7rJRzG6LEmZsCpj/
+	 9jiyEYu1j5dQU6gxCuJFTvqNQ1WQdRuRGs+0IW4nGu9kZhgroGM6F1dMZF/Mw+HDzn
+	 dHhWUfBGokQHlQjpJVmP9iYOyVrV69QeNSDYCmLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 392/686] ovl: do not let chattr change the casefold flag
-Date: Fri, 13 Nov 2026 10:48:45 -0500
-Message-ID: <20261113153834.288989564@linuxfoundation.org>
+Subject: [PATCH 6.18 366/686] can: proc: skip stats calculation after reset in can_stat_update()
+Date: Fri, 13 Nov 2026 10:48:19 -0500
+Message-ID: <20261113153833.326808376@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,88 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 83b351c3ade542bbfa1073e8c2d919826628252a ]
+[ Upstream commit 01b19ed9fa031a649f3dd103ebe6e0102602e542 ]
 
-chattr +F or -F on an overlay directory can make the directory, or the
-whole mount, unusable. Lookups of the directory, and lookups in it, then
-fail. From code inspection, the caller only needs to own the directory.
-The upper filesystem must support casefolding: ext4 or f2fs with the
-casefold feature, or tmpfs with the casefold option.
+Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+introduced local snapshots of the statistics counters at the beginning
+of can_stat_update(). When can_init_stats() resets the statistics, these
+stale pre-reset snapshots are still used for the following total/current
+/max calculations and overwrite the freshly reset values. Additionally a
+jiffies tick between the snapshot and the reset could trigger a second
+can_init_stats() call.
 
-chattr +F and -F set and clear FS_CASEFOLD_FL, the casefold flag of a
-directory. The flag enables casefolding (case-insensitive name lookup)
-for the directory. All directories of an overlay must match the casefold
-state that was recorded at mount time, and ovl_lookup_single() enforces
-this:
+Merge the reset conditions into a single check and skip the calculation
+for the current interval when the statistics have been reset.
 
-- A lookup in a directory that does not match fails with -ESTALE.
-- A lookup of the directory itself fails with -EREMOTE.
-
-ovl_fileattr_set() copies the directory up, which creates it in the
-upper layer if it only existed in a lower layer. It then passes
-FS_CASEFOLD_FL on to the upper filesystem. The upper filesystem accepts
-the change if the upper directory is empty, regardless of what the
-merged directory contains. The merged directory is the one that the user
-sees, with the names from the upper and the lower directories.
-
-After the change the upper directory no longer matches the mount. If the
-directory is the root of the overlay, the whole mount is affected.
-
-The flag can also change without chattr +F or -F. chattr reads all flags
-of a directory, changes one and writes all of them back. For a directory
-that only exists in a lower layer, overlayfs reads the flags from the
-lower filesystem. xfs with the ascii-ci feature reports FS_CASEFOLD_FL
-on every inode, but never sets S_CASEFOLD, the inode flag that overlayfs
-compares with the mount. So its directories count as not casefolded.
-With a lower layer on such an xfs and an upper layer on ext4 with the
-casefold feature, chattr +A on a lower-only directory therefore sets
-FS_CASEFOLD_FL on the new, empty upper directory.
-
-Reproduced as root on tmpfs and on ext4 with chattr +F or -F on an
-overlay directory whose upper directory was empty. Afterwards lookups
-below it failed with ESTALE, and lookups of the directory itself failed
-with EREMOTE. The chattr +A case was seen once, on a kernel with an
-earlier form of this patch that still passed the caller's flag on:
-lookups of the directory failed with EREMOTE.
-
-Fix this by returning -EOPNOTSUPP if FS_IOC_SETFLAGS, the only call that
-can change the flag, asks for a casefold flag on a directory that does
-not agree with the casefold state of the mount. This also refuses the
-chattr +A case above.
-
-Fixes: 083957f9614a ("ovl: support layers on case-folding capable filesystems")
+Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[amir: check the flag against the casefold state of the mount instead of
- reading back the flags]
-Tested-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20261027-can-rx-lock-v12-6-eb5afc2d8b9b@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/inode.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/can/proc.c | 30 ++++++++++++------------------
+ 1 file changed, 12 insertions(+), 18 deletions(-)
 
-diff --git a/fs/overlayfs/inode.c b/fs/overlayfs/inode.c
-index 78803e40c9619..79ad351298feb 100644
---- a/fs/overlayfs/inode.c
-+++ b/fs/overlayfs/inode.c
-@@ -657,6 +657,14 @@ int ovl_fileattr_set(struct mnt_idmap *idmap,
- 	unsigned int flags;
- 	int err;
+diff --git a/net/can/proc.c b/net/can/proc.c
+index 70104f13077e0..fb144d2adc35d 100644
+--- a/net/can/proc.c
++++ b/net/can/proc.c
+@@ -149,25 +149,18 @@ void can_stat_update(struct timer_list *t)
+ 	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
+ 	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
  
+-	/* restart counting in timer context on user request */
+-	if (user_reset)
+-		can_init_stats(net);
+-
+-	/* restart counting on jiffies overflow */
+-	if (j < pkg_stats->jiffies_init)
+-		can_init_stats(net);
+-
+-	/* prevent overflow in calc_rate() */
+-	if (rx_frames > (LONG_MAX / HZ))
+-		can_init_stats(net);
+-
+-	/* prevent overflow in calc_rate() */
+-	if (tx_frames > (LONG_MAX / HZ))
+-		can_init_stats(net);
+-
+-	/* matches overflow - very improbable */
+-	if (matches > (LONG_MAX / 100))
 +	/*
-+	 * Lookup refuses a directory that does not agree with the casefold
-+	 * state of the mount. Only FS_IOC_SETFLAGS can ask for a change.
++	 * Restart counting in timer context on user request, on jiffies
++	 * overflow or to prevent overflows in calc_rate() and in the
++	 * match ratio calculation. The local snapshots are stale after
++	 * the reset, so skip the calculation for this interval.
 +	 */
-+	if (S_ISDIR(inode->i_mode) && fa->flags_valid &&
-+	    !!(fa->flags & FS_CASEFOLD_FL) != OVL_FS(inode->i_sb)->casefold)
-+		return -EOPNOTSUPP;
-+
- 	err = ovl_copy_up(dentry);
- 	if (!err) {
- 		ovl_path_real(dentry, &upperpath);
++	if (user_reset || j < pkg_stats->jiffies_init ||
++	    rx_frames > (LONG_MAX / HZ) || tx_frames > (LONG_MAX / HZ) ||
++	    matches > (LONG_MAX / 100)) {
+ 		can_init_stats(net);
++		goto out;
++	}
+ 
+ 	/* calc total values */
+ 	if (rx_frames)
+@@ -196,6 +189,7 @@ void can_stat_update(struct timer_list *t)
+ 	if (pkg_stats->max_rx_match_ratio < pkg_stats->current_rx_match_ratio)
+ 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
+ 
++out:
+ 	/* restart timer (one second) */
+ 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
+ }
 -- 
 2.53.0
 
