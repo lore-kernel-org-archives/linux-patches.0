@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591032;
-	b=48LeAYh1w4rFM3a+FXKkyMTxCb9hKg1KVe5OvU8vB5/F+gUuCrz6A2H7hfgvl5Gt7Pmq
-	 xs4xpoMsnrsiItcGEwunsNClJpPUrQFhSKgP02AoKFNShFr7RcNBxzRnnenFPMlODmLQi
-	 jP5w2y+RL4SlVrmcAiym5G2VPcu/DnQ8BeclmvoodKXJ3AMMU2iKkztY29RqaHp9lFtJy
-	 sjd5gWD/apVoozfqMXpaUQJGpCMcHBKpraZ1r7Qsg7UkM33l9HBUw73XQrpGdeGt2F2p/
-	 9eNnYkEaKkOOcbim2OmbsVZfiQSTL75SMsEHTiRqrj3wS8jQ81InW1evv14QyVzBJZQ==
+	t=1794591033;
+	b=Z7pHoLFyoHb/+qaPH03D/DoMTJumqlqzZwBHeJCsI9789pyGfmH9uyv9YroxGjXo37DN
+	 RXlVIIJbYNS/ZdpGLRGA7JS7Any6PRqPMjl2aJX1RLc2t5qZIVKKuLPsI3Ywk9hxHmTBS
+	 XhUOOvY1CyOGSqiDoFOnJzbonB54Y6UcD3QUdgfTOzRwzzhYAyJin6sIAGilnL1zwhJkj
+	 jUwvspvH+Nb0LbfiZwviP+UNeTIMy3x4JrICTY6CDvja1JBGPvWdobUAVSJX+eYHmWWhx
+	 aX/KliagjbuCHDFRLNLGeS6AWUya/xAHhGxh2kvcUApadPok9MTgHTyeJfH92JfXLCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591032;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591033;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YHtYJ3nOY/prXNUYE1B2GT/hzwO+I28BTl67jr3GEvk=;
-	b=R1RYd7y3xhhfotSN6FO/f4HjDnDdltPUEHu4sXEMQLacK4gbwE/9V+pPRhYA/+jSmtip
-	 0N2Y35sZJ/AkgZ5jq8MnrZSZ/q8oClIb6REKZ2X9QQYE7A5JJWot6+6XuIesUE7ubqIoi
-	 +Vmp6plsNbZOPo/PaxA6FNTQjVYHbges61hvBix8cDJ7oNEe5emukv+HTaQsXmPwdqBRm
-	 V1x+LOaH6y3auDQJSAzaTo1Fx3vVqq+5MnKSpJz3xE0nLt+6FdgKvWDNl3OyqvQoBQm3K
-	 msEp+eQ4dBrO6c6x9Rvr7NBZ60wDIoef+6XysO2lJKM0HQhB5AVbtEo4v41odiPzcEw==
+	bh=3s52FCBJ5DQ8hSa3Qoi7LPFriyKhJieOOFjfb+RBHHM=;
+	b=FV0yVa4lGpCd0Ju4ork3u8FkRxQUf9rzSAlhmkse7n08SsiHuDUp9uoXmUOyG5kH5Pf2
+	 DX4cDeym2xfr4oN332QopPYjKlYQctH+wnUVJB1D8efAkX85jBFXVOluSklfHvH9JskoF
+	 3TCtURCKAHX5FU4iHj7UbeW9nbo9QaPDiQ+xIvl0Yc5r5aSrx9sTQM/pQkC9LBvF4mnL2
+	 TPgD5LyMfhmL8FFSa2cjcQL43ZakgfU3cY75eigsMO+oJF5WEV8P1mrXwRh8brndHbQIP
+	 imBrO9WdGODOo6D7tOEeLe9CSMxpIV3x0f3sZ/Un2doQx4wum2YkadgrgLxcRwXQh5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6DXzmj3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OV5lTvNx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B02960703E9;
-	Fri, 13 Nov 2026 17:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40E1606B352;
+	Fri, 13 Nov 2026 17:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C6DXzmj3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C54DF1F000C8;
-	Fri, 13 Nov 2026 17:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OV5lTvNx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB011F000C6;
+	Fri, 13 Nov 2026 17:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591032;
-	bh=YHtYJ3nOY/prXNUYE1B2GT/hzwO+I28BTl67jr3GEvk=;
+	s=korg; t=1794591033;
+	bh=3s52FCBJ5DQ8hSa3Qoi7LPFriyKhJieOOFjfb+RBHHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C6DXzmj3oR+vWbjsmI/mF2d6oo6RMVkkbUYN4oyD1ARcSpImieCAMASjTJjNsrnPQ
-	 jhmzZP3oawIkMFgh/QrDh9g0peQRDAANBBQaa4dtTOcR/ARRT2wqQ9olr46vWphcyt
-	 MQAiteUR0HhFFNpm41pynf+b2u//GM9zmZoOLd0c=
+	b=OV5lTvNx6vwN1OqYD9tGjcODcgr6yA49hOR6sKPNUCs1DAfjrTyDIm4FGjAF0NziM
+	 EkFXbDOXhvX4/esI3dgM2ArfInYx8Dyf5EvOg25vHt6gmXSWsNeCdn5MbIyXiWBaGp
+	 XBfaERHaVvHEWbETqRuSAOvD0NyrGI/uhpJXtno8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugen Hristev <ehristev@kernel.org>,
-	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Andrew Luebke <andrew.luebke@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 143/670] media: microchip-isc: fix WB offset and gain register field masking
-Date: Fri, 13 Nov 2026 10:45:07 -0500
-Message-ID: <20261113153816.729532629@linuxfoundation.org>
+Subject: [PATCH 6.12 192/670] scsi: aic79xx: Fix NULL pointer dereference in device reset
+Date: Fri, 13 Nov 2026 10:45:56 -0500
+Message-ID: <20261113153818.511503316@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,73 +69,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+From: Andrew Luebke <andrew.luebke@gmail.com>
 
-[ Upstream commit 6e9eaa3b93870e4edac1bd2539fe113c24663eaf ]
+[ Upstream commit f057a8bfeb6ff89c65e95540b8700a53c66d4a31 ]
 
-ISC_WB_O_* and ISC_WB_G_* each pack two 13-bit fields. A negative offset
-sign-extends and corrupts the adjacent field. Add masks for the two
-fields and write them with FIELD_PREP(), which masks each value into its
-field, so sign extension can no longer bleed across.
+Since commit c67e63800446 ("scsi: aic79xx: Do not reference SCSI command
+when resetting device") the device reset SCB has no SCSI command, but
+ahd_linux_dev_reset() still sets its residual, and ahd_abort_scbs(), which
+completes it, sets its status. Seen on an AIC-7902 when a failing disk
+triggered a device reset, which killed the SCSI error handler:
 
-Fixes: 73c1a577b839 ("media: atmel: atmel-isc: reworked white balance feature")
+  BUG: kernel NULL pointer dereference, address: 0000009c
+  EIP: ahd_linux_dev_reset.cold+0xee/0x26e
+
+Add NULL command checks to the accessors in aic79xx_osm.h. Also skip
+autosense for an SCB without a command and complete it with ahd_done()
+right away: the REQUEST SENSE path can clear SCB_DEVICE_RESET, after which
+ahd_done() would dereference the missing command.
+
+Fixes: c67e63800446 ("scsi: aic79xx: Do not reference SCSI command when resetting device")
 Cc: stable@vger.kernel.org
-Reviewed-by: Eugen Hristev <ehristev@kernel.org>
-Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Andrew Luebke <andrew.luebke@gmail.com>
+Assisted-by: LLM
+Link: https://patch.msgid.link/20261026172032.749756-1-andrew.luebke@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/microchip/microchip-isc-base.c      | 16 ++++++++--------
- .../platform/microchip/microchip-isc-regs.h      |  6 ++++++
- 2 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/scsi/aic7xxx/aic79xx_core.c |  4 +++-
+ drivers/scsi/aic7xxx/aic79xx_osm.h  | 26 +++++++++++++++++++++-----
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/platform/microchip/microchip-isc-base.c b/drivers/media/platform/microchip/microchip-isc-base.c
-index 97cd1f74ff2b9..3d09c421f370e 100644
---- a/drivers/media/platform/microchip/microchip-isc-base.c
-+++ b/drivers/media/platform/microchip/microchip-isc-base.c
-@@ -62,17 +62,17 @@ static inline void isc_update_awb_ctrls(struct isc_device *isc)
- 	/* In here we set our actual hw pipeline config */
+diff --git a/drivers/scsi/aic7xxx/aic79xx_core.c b/drivers/scsi/aic7xxx/aic79xx_core.c
+index 3e3100dbfda35..287df87238105 100644
+--- a/drivers/scsi/aic7xxx/aic79xx_core.c
++++ b/drivers/scsi/aic7xxx/aic79xx_core.c
+@@ -8942,8 +8942,10 @@ ahd_handle_scsi_status(struct ahd_softc *ahd, struct scb *scb)
+ 		}
+ #endif
  
- 	regmap_write(isc->regmap, ISC_WB_O_RGR,
--		     ((ctrls->offset[ISC_HIS_CFG_MODE_R])) |
--		     ((ctrls->offset[ISC_HIS_CFG_MODE_GR]) << 16));
-+		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_R]) |
-+		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GR]));
- 	regmap_write(isc->regmap, ISC_WB_O_BGB,
--		     ((ctrls->offset[ISC_HIS_CFG_MODE_B])) |
--		     ((ctrls->offset[ISC_HIS_CFG_MODE_GB]) << 16));
-+		     FIELD_PREP(ISC_WB_O_LO, ctrls->offset[ISC_HIS_CFG_MODE_B]) |
-+		     FIELD_PREP(ISC_WB_O_HI, ctrls->offset[ISC_HIS_CFG_MODE_GB]));
- 	regmap_write(isc->regmap, ISC_WB_G_RGR,
--		     ctrls->gain[ISC_HIS_CFG_MODE_R] |
--		     (ctrls->gain[ISC_HIS_CFG_MODE_GR] << 16));
-+		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_R]) |
-+		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GR]));
- 	regmap_write(isc->regmap, ISC_WB_G_BGB,
--		     ctrls->gain[ISC_HIS_CFG_MODE_B] |
--		     (ctrls->gain[ISC_HIS_CFG_MODE_GB] << 16));
-+		     FIELD_PREP(ISC_WB_G_LO, ctrls->gain[ISC_HIS_CFG_MODE_B]) |
-+		     FIELD_PREP(ISC_WB_G_HI, ctrls->gain[ISC_HIS_CFG_MODE_GB]));
+-		if (ahd_perform_autosense(scb) == 0)
++		if (ahd_perform_autosense(scb) == 0) {
++			ahd_done(ahd, scb);
+ 			break;
++		}
+ 
+ 		ahd_compile_devinfo(&devinfo, SCB_GET_OUR_ID(scb),
+ 				    SCB_GET_TARGET(ahd, scb),
+diff --git a/drivers/scsi/aic7xxx/aic79xx_osm.h b/drivers/scsi/aic7xxx/aic79xx_osm.h
+index 793fe19993a90..3bcfcfe18f08b 100644
+--- a/drivers/scsi/aic7xxx/aic79xx_osm.h
++++ b/drivers/scsi/aic7xxx/aic79xx_osm.h
+@@ -499,6 +499,8 @@ int	ahd_linux_show_info(struct seq_file *,struct Scsi_Host *);
+ static inline
+ void ahd_cmd_set_transaction_status(struct scsi_cmnd *cmd, uint32_t status)
+ {
++	if (!cmd)
++		return;
+ 	cmd->result &= ~(CAM_STATUS_MASK << 16);
+ 	cmd->result |= status << 16;
+ }
+@@ -512,6 +514,8 @@ void ahd_set_transaction_status(struct scb *scb, uint32_t status)
+ static inline
+ void ahd_cmd_set_scsi_status(struct scsi_cmnd *cmd, uint32_t status)
+ {
++	if (!cmd)
++		return;
+ 	cmd->result &= ~0xFFFF;
+ 	cmd->result |= status;
+ }
+@@ -525,6 +529,8 @@ void ahd_set_scsi_status(struct scb *scb, uint32_t status)
+ static inline
+ uint32_t ahd_cmd_get_transaction_status(struct scsi_cmnd *cmd)
+ {
++	if (!cmd)
++		return CAM_REQ_INPROG;
+ 	return ((cmd->result >> 16) & CAM_STATUS_MASK);
  }
  
- static inline void isc_reset_awb_ctrls(struct isc_device *isc)
-diff --git a/drivers/media/platform/microchip/microchip-isc-regs.h b/drivers/media/platform/microchip/microchip-isc-regs.h
-index e77e1d9a1db87..166f57e6ed5d7 100644
---- a/drivers/media/platform/microchip/microchip-isc-regs.h
-+++ b/drivers/media/platform/microchip/microchip-isc-regs.h
-@@ -149,6 +149,12 @@
- /* ISC White Balance Gain for B, GB Register */
- #define ISC_WB_G_BGB	0x0000006c
+@@ -537,6 +543,8 @@ uint32_t ahd_get_transaction_status(struct scb *scb)
+ static inline
+ uint32_t ahd_cmd_get_scsi_status(struct scsi_cmnd *cmd)
+ {
++	if (!cmd)
++		return SAM_STAT_GOOD;
+ 	return (cmd->result & 0xFFFF);
+ }
  
-+/* Each WB offset/gain register packs two 13-bit fields, low and high */
-+#define ISC_WB_O_LO	GENMASK(12, 0)	/* R or B  offset [12:0]  */
-+#define ISC_WB_O_HI	GENMASK(28, 16)	/* GR or GB offset [28:16] */
-+#define ISC_WB_G_LO	GENMASK(12, 0)	/* R or B  gain [12:0]  */
-+#define ISC_WB_G_HI	GENMASK(28, 16)	/* GR or GB gain [28:16] */
-+
- /* ISC Color Filter Array Control Register */
- #define ISC_CFA_CTRL    0x00000070
+@@ -564,13 +572,16 @@ u_long ahd_get_transfer_length(struct scb *scb)
+ static inline
+ int ahd_get_transfer_dir(struct scb *scb)
+ {
++	if (!scb->io_ctx)
++		return DMA_NONE;
+ 	return (scb->io_ctx->sc_data_direction);
+ }
  
+ static inline
+ void ahd_set_residual(struct scb *scb, u_long resid)
+ {
+-	scsi_set_resid(scb->io_ctx, resid);
++	if (scb->io_ctx)
++		scsi_set_resid(scb->io_ctx, resid);
+ }
+ 
+ static inline
+@@ -582,6 +593,8 @@ void ahd_set_sense_residual(struct scb *scb, u_long resid)
+ static inline
+ u_long ahd_get_residual(struct scb *scb)
+ {
++	if (!scb->io_ctx)
++		return 0;
+ 	return scsi_get_resid(scb->io_ctx);
+ }
+ 
+@@ -595,11 +608,12 @@ static inline
+ int ahd_perform_autosense(struct scb *scb)
+ {
+ 	/*
+-	 * We always perform autosense in Linux.
+-	 * On other platforms this is set on a
+-	 * per-transaction basis.
++	 * We always perform autosense in Linux, except for the device
++	 * reset SCB, which has no command to return sense data to.
+ 	 */
+-	return (1);
++	if (!scb->io_ctx)
++		return 0;
++	return 1;
+ }
+ 
+ static inline uint32_t
+@@ -629,6 +643,8 @@ void	ahd_platform_freeze_devq(struct ahd_softc *ahd, struct scb *scb);
+ static inline void
+ ahd_freeze_scb(struct scb *scb)
+ {
++	if (!scb->io_ctx)
++		return;
+ 	if ((scb->io_ctx->result & (CAM_DEV_QFRZN << 16)) == 0) {
+ 		scb->io_ctx->result |= CAM_DEV_QFRZN << 16;
+ 		scb->platform_data->dev->qfrozen++;
 -- 
 2.53.0
 
