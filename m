@@ -1,62 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590139;
-	b=0PsDNxWvhGK98YVBz2/1z4PWyrtut4ULuDVDJZCH/4R9eHH7h1HvZ7Aj4e7lalqGTmnh
-	 4iKJ7hM07CFQJdntyobgyc/szJgVplzxPtcHG3VOqqlRzBdwk7kLJHubLxCqdW8pfetES
-	 xoUmA/klQZqJcqfiaj1I+1mv0kEuk1Xky2v4Hz5y8FROseVU1CUEAMPYENg8Df6y68AHh
-	 xXYU6zcwZhPDpfB8chV72PzvGRTk140SqgqDfl6KYMXA7tnI/UEd19/stJAYr/uK6QjAJ
-	 YONiaEB7hejQZMJXGDEjJxq6pKCZQdbz1cJK16SfYW7lhalmvlMV92v/VbMNTud0jwg==
+	t=1794590140;
+	b=J6UGuKSJfnTas8+4RFSnZj400YOwBbZjKyugGkfAb7qHFt2Tplzz7OLq732+WY4aRejz
+	 QeYJFnpY1N2YQ4EsFOEulOitg/vhoBdolU4HUPPlC4aaqoDY5nmxy1bqyC9O7hy1zat2U
+	 7TNHczMry8GJvinlxpDddfHr9ESnu1q9hJh1AOSgADjTZL9pBqtgkT4Zx8Uc9o8qcBA87
+	 DdXm3DJrJs4es9DmDPOrHThJIYRoTc2JSxCkhgDVsCUqhUfkbyVraBCdzH1EuOVOeab+X
+	 hmSPEDobwwRyblHbtx1I5LBv5Vy4RkTKbj0NfcFCbt6Irzm812G48ZVh1VuGskuoe9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xn/8M+rtWplWl8Huhpv3bMuKqKcS5wsbpvpQm5ZgzDM=;
-	b=fRQKoeJgwE5J9Ss3PA63GJIWXtZiy1B2aO0jgabdCrDO2+yIa2e/tPB81VRpLbIpiGVg
-	 88T5wiJPPvODmLnP/MukpZTfEayRpe32AMqd2Ggn6Mnl8TrEZdmE+SAMoP1xUYaQBc28U
-	 NBk8yRGBcw0Uy51LoRn9fz3gK0nZJQ115iT4wT2yUvSBFf2trk9AeQkHMbLTvY8hXTrDY
-	 pj3puzRqsLUIVEszcW9XKT/XdLwIo44gdDBFt1UN3p0hHoCPB9REZZ9oUbUkAjqasgLR9
-	 7onmVGgH2qlxpllaPsK3VLPZzVe5IQ3lKopl2iNOsRyuRnF/D7K1+eGEpJ8oBw7vUZA==
+	bh=29sfPhPceU7Sutp/fXPUgkY6b1hfBYldmBN9NGo05V8=;
+	b=f5gGpgSUAq/THlooPPSGEv2/yCbtnMhJy7SLYuqx4aSIqZUWfqojM7Ymm+2GNyLI9/wU
+	 0hNRP8SyG50Pbp0ZcNkaLxWxTXKVaU8JpiOIj/i1z8FdL8hEhkcUOKlrA9Bj3q9rIYTxO
+	 y7ZJWHmJnEo6+2eK6bPChYnNkci0EfbxomE++hO/+evCarOGt4arT+AHuaPtgKEnOGO0N
+	 dTvcmP+rSjeBQpu7ln5wx9z0OTcYeEYMHYskEjpEsqpOVtt+mRNQXkwaL/JBO9P/zfpp6
+	 K66OzM1hWTRscbeoBFoyvq7dumvCNRtjGoCckmkA/fP7rvx6w6Dv0BVzlvbSwZ0su5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1NlEOFw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JGhsiW2m;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F2F606E20D;
-	Fri, 13 Nov 2026 17:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A2D60A6F5B;
+	Fri, 13 Nov 2026 17:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1NlEOFw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0458E1F000C5;
-	Fri, 13 Nov 2026 17:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JGhsiW2m
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E431F000C4;
+	Fri, 13 Nov 2026 17:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590139;
-	bh=Xn/8M+rtWplWl8Huhpv3bMuKqKcS5wsbpvpQm5ZgzDM=;
+	s=korg; t=1794590140;
+	bh=29sfPhPceU7Sutp/fXPUgkY6b1hfBYldmBN9NGo05V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H1NlEOFwYB98C9HYVLhsQsjCjOf1KnnxKmVmwTfP2DDN7nSeJV6mcXk2ElhIVwQ/J
-	 aXENaDknGpERuWQLzLPf9yEQAx5X5ITRDsYY1YiLqDZHWe2eXL9Ta3H3YaSi2hdYxa
-	 2V3ojjgIOa1E9vvtFIxzp6LLyCXBqGw97P/yvt58=
+	b=JGhsiW2m/KbIenoxdFijpbgMMbDmO9peUhzRLOSHI3JFdGo0ooJSwJysacWiEq8z2
+	 MGQElJnre1TFYoKFbeuGmVvZFtOI1mUSaPZytbN5irjG1IypVie+UX202SmuLBRHlW
+	 UPDSvPLdb4d72cmlhGiQB9GsaSAzC7TJJZL0R6to=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+ced4d9a8cadb5ef3adae@syzkaller.appspotmail.com,
-	Muchun Song <muchun.song@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Chris Li <chrisl@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
+	Zenghui Yu <yuzenghui@huawei.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 156/686] mm/memcontrol: fix data-race on reading jiffies_64
-Date: Fri, 13 Nov 2026 10:44:49 -0500
-Message-ID: <20261113153826.078368387@linuxfoundation.org>
+Subject: [PATCH 6.18 157/686] KVM: arm64: timers: Compute an offset-applied CVAL from the current count
+Date: Fri, 13 Nov 2026 10:44:50 -0500
+Message-ID: <20261113153826.111491588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -78,69 +69,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit c20cf1c3c8cdd98618d6fcc794003a0e003ae858 ]
+[ Upstream commit 49930b1b557ceb698e0ab7f985ea41c99dc8bf22 ]
 
-KCSAN reported a data-race between tick_do_update_jiffies64() updating
-jiffies_64 and mem_cgroup_flush_stats_ratelimited() reading it directly.
+When the hardware won't apply a timer's offset, KVM programs CVAL +
+offset and lets it compare that against the raw counter. The compare is
+unsigned (IsTimerConditionMet, DDI0487M_c J1.4.3.29):
 
-Unlike jiffies, jiffies_64 is not volatile, so raw reads are plain
-accesses and can even be torn on 32-bit.  Use get_jiffies_64() instead,
-and fix the same pattern in mem_cgroup_flush_foreign().
+  condition_met = (UInt(PhysicalCountInt() - offset) -
+                   UInt(compare_value)) >= 0;
 
-Link: https://lore.kernel.org/20260827025457.116191-1-jiayuan.chen@linux.dev
-Fixes: 508bed884767 ("mm: memcg: change flush_next_time to flush_last_time")
-Fixes: 97b27821b485 ("writeback, memcg: Implement foreign dirty flushing")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: syzbot+ced4d9a8cadb5ef3adae@syzkaller.appspotmail.com
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: <stable@vger.kernel.org>
+so adding the offset to both sides holds only while both sums wrap or
+neither does. A guest whose counter is ahead of the host's by more than
+CVAL has an expired timer that never fires, and one behind it can have
+a far-future timer fire at once.
+
+On a CNTPOFF_EL2 host the first case livelocks: each entry reloads the
+guest's CVAL, the timer fires, and the exit rewrites it as CVAL + offset
+before the host can take the interrupt. Without CNTPOFF_EL2 the timer
+hangs until the vCPU is next loaded, which is what Zenghui reported on
+a Kunpeng920.
+
+Program the value from the current count instead: CVAL + offset while
+the deadline is ahead, 0 once the timer has expired for the guest, ~0
+past the counter's wrap. KVM recomputes it at load, at exit and on a
+trapped CVAL write, and an expired timer stays expired in between. The
+value can't be inverted, so with an offset timer_save_state() keeps the
+memory copy, and kvm_hyp_handle_timer() returns that copy for a guest
+hypervisor's read of its physical CVAL rather than subtracting the
+offset back out.
+
+Fixes: c605ee245097 ("KVM: arm64: timers: Allow physical offset without CNTPOFF_EL2")
+Fixes: 9404673293b0 ("KVM: arm64: timers: Correctly handle TGE flip with CNTPOFF_EL2")
+Fixes: 0bc9a9e85fcf ("KVM: arm64: Work around x1e's CNTVOFF_EL2 bogosity")
+Reported-by: Zenghui Yu <yuzenghui@huawei.com>
+Closes: https://lore.kernel.org/r/460258be-0102-e922-c342-4e87cd94b9e5@huawei.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261007074343.324269-2-fuad.tabba@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/kvm/arch_timer.c     | 27 ++++++++++++---------------
+ arch/arm64/kvm/hyp/vhe/switch.c | 11 ++++++-----
+ include/kvm/arm_arch_timer.h    | 15 +++++++++++++++
+ 3 files changed, 33 insertions(+), 20 deletions(-)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index 2aa741316b49f..eec89dcb7801b 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -604,7 +604,7 @@ static void __mem_cgroup_flush_stats(struct mem_cgroup *memcg, bool force)
- 		return;
+diff --git a/arch/arm64/kvm/arch_timer.c b/arch/arm64/kvm/arch_timer.c
+index 3f675875abea2..e3348cfe74dba 100644
+--- a/arch/arm64/kvm/arch_timer.c
++++ b/arch/arm64/kvm/arch_timer.c
+@@ -502,17 +502,11 @@ static void timer_save_state(struct arch_timer_context *ctx)
+ 		goto out;
  
- 	if (mem_cgroup_is_root(memcg))
--		WRITE_ONCE(flush_last_time, jiffies_64);
-+		WRITE_ONCE(flush_last_time, get_jiffies_64());
+ 	switch (index) {
+-		u64 cval;
+-
+ 	case TIMER_VTIMER:
+ 	case TIMER_HVTIMER:
+ 		timer_set_ctl(ctx, read_sysreg_el0(SYS_CNTV_CTL));
+-		cval = read_sysreg_el0(SYS_CNTV_CVAL);
+-
+-		if (has_broken_cntvoff())
+-			cval -= timer_get_offset(ctx);
+-
+-		timer_set_cval(ctx, cval);
++		if (!has_broken_cntvoff() || !timer_get_offset(ctx))
++			timer_set_cval(ctx, read_sysreg_el0(SYS_CNTV_CVAL));
  
- 	css_rstat_flush(&memcg->css);
+ 		/* Disable the timer */
+ 		write_sysreg_el0(0, SYS_CNTV_CTL);
+@@ -538,11 +532,12 @@ static void timer_save_state(struct arch_timer_context *ctx)
+ 	case TIMER_PTIMER:
+ 	case TIMER_HPTIMER:
+ 		timer_set_ctl(ctx, read_sysreg_el0(SYS_CNTP_CTL));
+-		cval = read_sysreg_el0(SYS_CNTP_CVAL);
+-
+-		cval -= timer_get_offset(ctx);
+-
+-		timer_set_cval(ctx, cval);
++		/*
++		 * With an offset, memory already holds the guest's CVAL (the
++		 * trap handler or __deactivate_traps() wrote it).
++		 */
++		if (!timer_get_offset(ctx))
++			timer_set_cval(ctx, read_sysreg_el0(SYS_CNTP_CVAL));
+ 
+ 		/* Disable the timer */
+ 		write_sysreg_el0(0, SYS_CNTP_CTL);
+@@ -621,7 +616,8 @@ static void timer_restore_state(struct arch_timer_context *ctx)
+ 		offset = timer_get_offset(ctx);
+ 		if (has_broken_cntvoff()) {
+ 			set_cntvoff(0);
+-			cval += offset;
++			if (offset)
++				cval = timer_apply_offset(cval, offset, kvm_phys_timer_read());
+ 		} else {
+ 			set_cntvoff(offset);
+ 		}
+@@ -634,7 +630,8 @@ static void timer_restore_state(struct arch_timer_context *ctx)
+ 		cval = timer_get_cval(ctx);
+ 		offset = timer_get_offset(ctx);
+ 		set_cntpoff(offset);
+-		cval += offset;
++		if (offset)
++			cval = timer_apply_offset(cval, offset, kvm_phys_timer_read());
+ 		write_sysreg_el0(cval, SYS_CNTP_CVAL);
+ 		isb();
+ 		write_sysreg_el0(timer_get_ctl(ctx), SYS_CNTP_CTL);
+diff --git a/arch/arm64/kvm/hyp/vhe/switch.c b/arch/arm64/kvm/hyp/vhe/switch.c
+index 552f39d913be1..7a69bc0b6ea81 100644
+--- a/arch/arm64/kvm/hyp/vhe/switch.c
++++ b/arch/arm64/kvm/hyp/vhe/switch.c
+@@ -169,7 +169,8 @@ static void __deactivate_traps(struct kvm_vcpu *vcpu)
+ 		offset = read_sysreg_s(SYS_CNTPOFF_EL2);
+ 
+ 		if (map.direct_ptimer && offset) {
+-			write_sysreg_el0(val + offset, SYS_CNTP_CVAL);
++			val = timer_apply_offset(val, offset, arch_timer_read_cntpct_el0());
++			write_sysreg_el0(val, SYS_CNTP_CVAL);
+ 			isb();
+ 		}
+ 	}
+@@ -290,10 +291,10 @@ static bool kvm_hyp_handle_timer(struct kvm_vcpu *vcpu, u64 *exit_code)
+ 		break;
+ 	case SYS_CNTP_CVAL_EL0:
+ 		if (vcpu_el2_e2h_is_set(vcpu)) {
+-			val = read_sysreg_el0(SYS_CNTP_CVAL);
+-
+-			if (!has_cntpoff())
+-				val -= timer_get_offset(vcpu_hptimer(vcpu));
++			if (!has_cntpoff() && timer_get_offset(vcpu_hptimer(vcpu)))
++				val = __vcpu_sys_reg(vcpu, CNTHP_CVAL_EL2);
++			else
++				val = read_sysreg_el0(SYS_CNTP_CVAL);
+ 		} else {
+ 			val = __vcpu_sys_reg(vcpu, CNTP_CVAL_EL0);
+ 		}
+diff --git a/include/kvm/arm_arch_timer.h b/include/kvm/arm_arch_timer.h
+index 7310841f45121..080096df87c76 100644
+--- a/include/kvm/arm_arch_timer.h
++++ b/include/kvm/arm_arch_timer.h
+@@ -186,4 +186,19 @@ static inline void timer_set_offset(struct arch_timer_context *ctxt, u64 offset)
+ 	WRITE_ONCE(*ctxt->offset.vm_offset, offset);
  }
-@@ -632,7 +632,7 @@ void mem_cgroup_flush_stats(struct mem_cgroup *memcg)
- void mem_cgroup_flush_stats_ratelimited(struct mem_cgroup *memcg)
- {
- 	/* Only flush if the periodic flusher is one full cycle late */
--	if (time_after64(jiffies_64, READ_ONCE(flush_last_time) + 2*FLUSH_TIME))
-+	if (time_after64(get_jiffies_64(), READ_ONCE(flush_last_time) + 2 * FLUSH_TIME))
- 		mem_cgroup_flush_stats(memcg);
- }
  
-@@ -3512,7 +3512,7 @@ void mem_cgroup_flush_foreign(struct bdi_writeback *wb)
- {
- 	struct mem_cgroup *memcg = mem_cgroup_from_css(wb->memcg_css);
- 	unsigned long intv = msecs_to_jiffies(dirty_expire_interval * 10);
--	u64 now = jiffies_64;
-+	u64 now = get_jiffies_64();
- 	int i;
- 
- 	for (i = 0; i < MEMCG_CGWB_FRN_CNT; i++) {
++/*
++ * CVAL to program when the hardware won't apply the timer's offset, so that
++ * its compare against the raw counter matches the guest's at 'now'. An
++ * expired timer stays expired; one past the wrap never fires.
++ */
++static inline u64 timer_apply_offset(u64 cval, u64 offset, u64 now)
++{
++	u64 hw = cval + offset;
++
++	if (now - offset >= cval)
++		return 0;
++
++	return hw > now ? hw : U64_MAX;
++}
++
+ #endif
 -- 
 2.53.0
 
