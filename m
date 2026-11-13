@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590211;
-	b=zE5aW4wQOND8mv7e09XGApKv1zy0ZJO+pwqsxT+eXkv99qSp2oANezg08DBHA8MkYEoc
-	 hEKceRwPo+Qp4CRJnsjaN8yYUQy6ow1VDesC5pxqQyx/Lh0su3CAqcTm2kUrlkiRRPj1J
-	 t9rR1ZFbtcMTZuWOZBcCaYfRUpzX7pDiIsz5Ugy5LoGH7RH5ulNLjKI8wVh3VPvYq/oPz
-	 380u7+sMuTmgzB4ZDD7yrFa2X5BACHJUFcXmmYz4jGrxZzt8GmihSllo+jR00KRhXttif
-	 pQRrGBJq3SUeLmFEGzz5ledP/Yf44o2buZsN6Hlhj+RtXaQkOpiLx7DEO1g1BM2VXBw==
+	t=1794590212;
+	b=Jyr1i/qjeS40vkQiv3+1tFKYKBNk2X2fro0/VksFN7QuEL0FYHN8blvHZkf3q0KjfsiP
+	 rePyl0P3bnF9R4I2et8Kd22Z5EtI/u6aHkDEs1LIDs1jtB/jf4O8XLMEh0H3NXYSbtB3b
+	 oxEO1AZY5KYywczspX2uTYcpwPH4i/3Vd4YCFkKr6S9SZZFO8y936M4q+WlzDREZKkVU0
+	 ahfCPbKwl7ft2KFoubC6g4UOFpiBi1Zil46bAfo5eYUdAm89I4f9nc2MexfYK3ATDRuM8
+	 6LT+WfXro9UioMOPPAqRVmCeyYFcMNXEjbHnBOI2ZhnNZU+p0akt8Rw23dn04dASNag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590211;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590212;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pJ/Rzi1mt4/6bQ/PWrme+rTsbUgeb/AIR8gOLJaxKxE=;
-	b=K6NH5WjT0RfutK+kf3t7Xe/8WGfSw19eLs5ZalsV9QFxycEUd8NshdYvPNb9zuAecUkH
-	 yulX7Vk1BU/EQ9BYliolbSmIJ87Ii1SgCRIULynjTghl4q7V1Ya+nxd6GBEhlnwRIG1KY
-	 VJFD6pUwx80TWAv7yxnzGZViCfTRPxoO56OdkV+IQGupg6EwjudQBKASMo7yItLKlYD7d
-	 vOyuqIjwjXlup8I8SUq1avbs5q2KzfZV4Rqy/WEkIJljbyj+UDv/f9dj59CdznVH+Zhvv
-	 y1CroztborbpIywllmCKXDzIPGTvOA13AA124vRQQqjw+2y7xTkPgA2zp7qvqGsJs2A==
+	bh=RS+Wr/ROGzDbKVH4VrU00nUzvKcMsmgTbRPdtuwGoxM=;
+	b=E149GVxul38RwLMzTPDTI4f/sJZ/G2ViXZ73EcGWksaPOPJgh2E2+cxI0lRZnZ26Pn7e
+	 HvP8m5D34hv6PczuSq0+Gwc4zC1lbgTy4mqgZDt1I01qfJR90Ik6h+QdvT9OXrPWBf3wL
+	 CLUUGbpm2vsLz8ogLbX4WE+7ntTICDlixbdeuIaoXdbv4e9KqZFmWbqSKRu/0GWDxYMeG
+	 XJq6Ikt76g64ztgrUYkMCGQGSaDxuNhRZpx2NTCe5q/a1WCtpfJLc817KkR1BPI9bAJ3j
+	 fuK0y+tL6u6KKdgTw4WBRxvnIyqeZxaAloo3kgIdBqXUo7ufbK3UhXTJhSOB/74w/Mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eau+LoXA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSshe6Gk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C9A606A8B8;
-	Fri, 13 Nov 2026 17:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3682A606A88F;
+	Fri, 13 Nov 2026 17:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eau+LoXA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05811F000C5;
-	Fri, 13 Nov 2026 17:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CSshe6Gk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D713A1F000C6;
+	Fri, 13 Nov 2026 17:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590210;
-	bh=pJ/Rzi1mt4/6bQ/PWrme+rTsbUgeb/AIR8gOLJaxKxE=;
+	s=korg; t=1794590212;
+	bh=RS+Wr/ROGzDbKVH4VrU00nUzvKcMsmgTbRPdtuwGoxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eau+LoXA73YVCmNg2GGPQG1xWsE7CUF84o6wd50QMwvbfg6pdP6mJw5DVL+dsg3r9
-	 AYMrv1yYbTwvY0LgfVmNEjMQIgwufoZpGt0PJGTyHK77uHN+3+iJYMpYRCbhmQd5P2
-	 EBIHD9ZL6mmxqmnO0tjCzlPsxiNCnwO7+WX7EpS4=
+	b=CSshe6GkbAGsikbp883MNW7u/rlNmQh6ZRjOeJMF6jSX4gRunaSGdW+FpM54B3jXA
+	 ni3InvONWzOksNC7+cw1xon7IIcg7iWULeoIJ4Ca9TaZEAIP8ReRkJKb6nQk+H1Er7
+	 5J6/PSCrp7cYyspMDFRXPBeQm0X5vFIGVrSvbyT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 213/686] batman-adv: fix skb leak when hard_iface is being released
-Date: Fri, 13 Nov 2026 10:45:46 -0500
-Message-ID: <20261113153828.253759140@linuxfoundation.org>
+Subject: [PATCH 6.18 214/686] batman-adv: stop originator purge worker before freeing TT
+Date: Fri, 13 Nov 2026 10:45:47 -0500
+Message-ID: <20261113153828.286492578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,46 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 522e4aece2e96cacbb8a6ae1eec0d4c0dd6f4fed ]
+[ Upstream commit f89eda5a9ccf82cba06b085b42ebc4886b8dfe9e ]
 
-batadv_batman_skb_recv() owns the skb it is given. When the hard_iface
-refcount already dropped to zero, the function jumped to err_out, which
-only returned NET_RX_DROP and skipped the kfree_skb() under err_free.
+batadv_mesh_free() releases the translation tables via batadv_tt_free()
+before batadv_originator_free() stops orig_work. The purge worker can
+therefore still run while the TT is torn down. When an originator times
+out, batadv_purge_orig_ref() calls batadv_tt_global_del_orig(), which
+loads tt.global_hash and walks all buckets while taking their locks:
 
-To avoid a leak, free the skb before returning in this case.
+  CPU0                          CPU1
+  batadv_tt_free()              batadv_purge_orig()
+                                  batadv_tt_global_del_orig()
+                                    hash = ...tt.global_hash;
+    batadv_tt_global_table_free()
+      batadv_hash_destroy(hash);
+                                    spin_lock_bh(&hash->list_locks[i]);
+
+Disable orig_work at the beginning of batadv_mesh_free(), directly after
+the mesh was marked as deactivating. The second
+disable_delayed_work_sync() in batadv_originator_free() is harmless because
+it is free'd anyway.
 
 Cc: stable@vger.kernel.org
-Fixes: 4fe56e60ac1b ("batman-adv: Check hard_iface refcnt when receiving skb")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260708091821.314516-1-sw%40simonwunderlich.de?part=3
+Fixes: 9d31b3ce8168 ("batman-adv: fix potential TT client + orig-node memory leak")
 Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/batman-adv/main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
-index f1b41078835b6..870754d1d86f9 100644
+index 870754d1d86f9..6ffa65ef3d162 100644
 --- a/net/batman-adv/main.c
 +++ b/net/batman-adv/main.c
-@@ -427,8 +427,10 @@ int batadv_batman_skb_recv(struct sk_buff *skb, struct net_device *dev,
- 	 * shut down otherwise the packet may trigger de-reference errors
- 	 * further down in the receive path.
- 	 */
--	if (!kref_get_unless_zero(&hard_iface->refcount))
--		goto err_out;
-+	if (!kref_get_unless_zero(&hard_iface->refcount)) {
-+		kfree_skb(skb);
-+		return NET_RX_DROP;
-+	}
+@@ -249,6 +249,11 @@ void batadv_mesh_free(struct net_device *mesh_iface)
  
- 	skb = skb_share_check(skb, GFP_ATOMIC);
+ 	atomic_set(&bat_priv->mesh_state, BATADV_MESH_DEACTIVATING);
  
-@@ -487,7 +489,6 @@ int batadv_batman_skb_recv(struct sk_buff *skb, struct net_device *dev,
- 	kfree_skb(skb);
- err_put:
- 	batadv_hardif_put(hard_iface);
--err_out:
- 	return NET_RX_DROP;
- }
++	/* the originator purge worker accesses (among others) the TT tables
++	 * and must therefore be stopped before any of them are freed
++	 */
++	disable_delayed_work_sync(&bat_priv->orig_work);
++
+ 	batadv_purge_outstanding_packets(bat_priv, NULL);
+ 	batadv_tp_stop_all(bat_priv);
  
 -- 
 2.53.0
