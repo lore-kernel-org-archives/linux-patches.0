@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585932;
-	b=TBtlaaL03jUmj/ovU0TCGodt3M63Qo8LjsW+8T2BWo3B7DDUBj93mpBMgGfWrY9Uawym
-	 6ihrnsclbq6cnWaoQU2BibljgEIOEQLzOOY1rljG3pmdmS+IYnFzzumt7EGUJX4RAA2NG
-	 INz0lkwb6XJX25uMBbPozQ0ZY7ivDwwadmZZhUmAc1buXYaLfb+zHSg/lfzlvYw83I73a
-	 qkgvifgWv9Xj7OU/snblbcJJsfK2geKk1ZjuJMIzJ9bgkDQsZHUYrl77PSEZKxHLYYq+H
-	 yziN+DZagGCtwuLiU8oVeMEBto+jAoG23fN2rHiUab86wcn/Giqb3xXVoh68GfvOaTw==
+	t=1794585934;
+	b=28/MiAaoqSrE2tXcnC1k2pLr2F7n7ZaE2g7EVsKO5YuoXbxnzqID0BfFKngq1Kai0R/P
+	 g1ZFH0FBSIlQUXoO9WOaDJWtcIVpCuxiRplz7yZcIgk+Ar2Yzp369Y/nOSBAAwX4Npxw3
+	 7SWWVuviN/5Pg6m5Mw7kDL+rNt4Hti0F2UtdDdSRoJRM//RQaNjT5CN5jtZJsdYDK3gi8
+	 9RjwuqajPTVCFbFLgAhyKje9i6thanDCSVdUx6w27byARE16LQ+rfL7HnuE7hyKAGyUB4
+	 iloRk5XBvqE09UqRVvI8SQNviHGSWkeYCA1rjmtmC0PzXk/jWF35RimBBjZdhWbA9iQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585932;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585934;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=B7dq/0S/wDaQ6bXxlJPERilZZLOyaQKASs9J/d01Lck=;
-	b=0DEU9EKgASTp9KnmJKTh/TkDDiIV2+iCVBNBXoLreIeDRZKnGnP7PsnAkCx/oFvTCvNx
-	 gFCA7jGDY5h4+gf4jwJAyYI/Brb92bnleTeWMVp5V2hFibuOKFROCHmSO2fGl57ztXtID
-	 FsgCcbQiSSOZEFtWXLIn2b+B+1u68TacTRS2WytcgIVUfQs66NySbDQmdnO13zX4WhPQv
-	 YPWYcGgdJTDZ6YpZ/pUUh5r5BwhMjy8FxV7BvJFjsuU8L5jIjVy29CmvtFxDtM3+XgdcI
-	 b3wuQPGSc5ZBXgWwtXQwbJ3wjnfEfzFYIm0u6xWNlXiCXu0RtuHfYJpWl3CiKLpHXKg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3sqg8yRR9FCKTTNDq9piqfQSLbqqkjbpEYljIXqyDN8=;
+	b=mZ0LX8F/DHVdtT1BlbUjarh8UB4opwKCWuQ8XiZn/agXR7OPb81ltzCvMU20TdnkqUhN
+	 Q8JiyTutLwT3RPIzGZ8X/psVVqS6UjEcIF6gbFx22pDt5K8YEHc/dRFIG9Ss1RmQlZHv7
+	 622Q8afNH2QoI6j2/8ToWW80vk9JQxFyDBca9SHZatP2Fpj9qVzGHGiIiRrSYwo+NYgFx
+	 Y0wLbyHPSHjPP9YjDZQFRZ/Xa1kllCHAfTA6tSmftfHYs7yNXIN4zRhhnrwX1iqsfFLCw
+	 sMItaZFrpRfIPcWyGzKWNJS7PUNCXwygMb3i3EH2h5y2tllkbDTVUipCJuU1UzLyzAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQROQEIt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z8UOnJPE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93D5606A889;
-	Fri, 13 Nov 2026 16:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013926070FC2;
+	Fri, 13 Nov 2026 16:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WQROQEIt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D5321F000C4;
-	Fri, 13 Nov 2026 16:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z8UOnJPE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA6F1F000C4;
+	Fri, 13 Nov 2026 16:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585932;
-	bh=B7dq/0S/wDaQ6bXxlJPERilZZLOyaQKASs9J/d01Lck=;
+	s=korg; t=1794585933;
+	bh=3sqg8yRR9FCKTTNDq9piqfQSLbqqkjbpEYljIXqyDN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WQROQEItT2ZHRnpiYLcf0kla7XeePI2ZAU1S62DObiTy/eZFdT9v0KQgjPlf7wJ1D
-	 VPRexKFfUxg9pknMnGW9hszf5jE+oSPfuKJsxVZ74ObSfbR5o26kBMFJv5Hwd5x/cD
-	 m7dPjJa8k+2oRQye6fkyZX9nLAGz6Cdq3enDf9Dw=
+	b=z8UOnJPEcGw8JqadUQ1TfmFxKtW+nez7sngBKxm31GglJ+rVdVw9BfMwlJ0SWubqv
+	 6si2e1hHTmuRrdhobRwLYl5wcpxLWNucXuJ5Q1oy3+luPZt9WjcIrpeN01VF8ShOli
+	 Enm48G4BysYbAgc97IIR+SutreM/CEPREOXMlkN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charis Stratakis <c.stratakis@proton.me>,
-	=?UTF-8?q?Ali=20Ahmet=20Memi=C5=9F?= <aliamemis@disroot.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Rong Zhang <i@rong.moe>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 490/507] ACPI: battery: Evaluate battery methods exclusively
-Date: Fri, 13 Nov 2026 10:53:14 -0500
-Message-ID: <20261113153813.678326017@linuxfoundation.org>
+Subject: [PATCH 7.3 491/507] PCI: dwc: Set DMA_BYPASS bit in outbound IATU CTRL2 register
+Date: Fri, 13 Nov 2026 10:53:15 -0500
+Message-ID: <20261113153813.711528927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -65,76 +63,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ali Ahmet Memiş <aliamemis@disroot.org>
+From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 
-[ Upstream commit 645f370c932db2cd3893f7fee61aa8b9debc8ac0 ]
+[ Upstream commit efadda401c5c8e2390ba66508eba154dbd0db5a9 ]
 
-On ThinkPad P1 Gen2 and P53, INT3403 _TMP switches the EC page selector
-without taking the AML mutex the battery methods use, so _BIX and _BST
-running at the same time can read the wrong page. Since commit d33e89d12295
-("thermal: core: Suspend thermal zones later and resume them earlier")
-this happens on most resumes.
+An outbound iATU region matches any local (AXI/application-side)
+address that falls within its Base/Limit window and rewrites it to
+the PCIe-side address programmed in that region's Target Address
+Registers before the transaction goes out on the link. This matching
+does not distinguish CPU-initiated transactions from ones issued by
+the internal DMA engine (eDMA/HDMA).
 
-Evaluate the battery methods with acpi_evaluate_object_exclusive().
+Example: outbound region 0 is programmed with Base/Limit covering
+local addresses 0x8000_0000-0x8000_0FFF and Target 0x1_0000_0000, for
+CPU-initiated accesses. The DMA engine is later given a descriptor
+whose destination is the host address 0x8000_0080, which happens to
+fall inside region 0's Base/Limit range. The iATU matches the DMA
+transaction against region 0 too and rewrites it to 0x1_0000_0080
+instead of passing 0x8000_0080 through unchanged. The transaction
+then lands on the wrong host address, causing data corruption or an
+IOMMU fault when the rewritten address has no valid mapping.
 
-Fixes: d33e89d12295 ("thermal: core: Suspend thermal zones later and resume them earlier")
-Reported-by: Charis Stratakis <c.stratakis@proton.me>
-Closes: https://lore.kernel.org/all/37N_jFulf7n-Z55NfKfE71C_wVPxYvZ0xD_iRUg2fXu7TypDiF5PStQ6siSfVBih6fThg5WoPes8U5ZQpfVm_teMFcUGXFxz2DdMbfSWuws=@proton.me/
-Cc: All applicable <stable@vger.kernel.org> # 80892972ff23 ACPI: utils: Add exclusive AML evaluation helpers
-Signed-off-by: Ali Ahmet Memiş <aliamemis@disroot.org>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Reviewed-by: Rong Zhang <i@rong.moe>
-Link: https://patch.msgid.link/20261018122220.678822-3-aliamemis@disroot.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Set the DMA_BYPASS bit (bit 27) in PCIE_ATU_REGION_CTRL2 when
+programming outbound iATU regions so only CPU/AXI-initiated
+transactions are matched against the region; DMA engine transactions
+bypass the translation and go out on the PCIe link with their
+original address.
+
+Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260908-dma_bypass-v2-1-c3c81d408c0c@oss.qualcomm.com
+[ sashal: Adapted ATU_* register macros to the existing PCIE_ATU_* naming convention. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware.c | 2 ++
+ drivers/pci/controller/dwc/pcie-designware.h | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 670853ec3a4d7..7169ac7e83f31 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -583,9 +583,8 @@ static int acpi_battery_get_info(struct acpi_battery *battery)
- 		struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
- 		acpi_status status = AE_ERROR;
+diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+index 593388f29bdd4..9297d0e607e3a 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.c
++++ b/drivers/pci/controller/dwc/pcie-designware.c
+@@ -577,6 +577,8 @@ int dw_pcie_prog_outbound_atu(struct dw_pcie *pci,
+ 		/* The data-less messages only for now */
+ 		val |= PCIE_ATU_INHIBIT_PAYLOAD | atu->code;
+ 	}
++	if (dw_pcie_ver_is_ge(pci, 460A))
++		val |= PCIE_ATU_DMA_BYPASS;
+ 	dw_pcie_writel_atu_ob(pci, atu->index, PCIE_ATU_REGION_CTRL2, val);
  
--		status = acpi_evaluate_object(battery->device->handle,
--					      use_bix ? "_BIX":"_BIF",
--					      NULL, &buffer);
-+		status = acpi_evaluate_object_exclusive(battery->device->handle,
-+							use_bix ? "_BIX" : "_BIF", NULL, &buffer);
- 
- 		if (ACPI_FAILURE(status)) {
- 			acpi_handle_info(battery->device->handle,
-@@ -624,8 +623,7 @@ static int acpi_battery_get_state(struct acpi_battery *battery)
- 			msecs_to_jiffies(cache_time)))
- 		return 0;
- 
--	status = acpi_evaluate_object(battery->device->handle, "_BST",
--				      NULL, &buffer);
-+	status = acpi_evaluate_object_exclusive(battery->device->handle, "_BST", NULL, &buffer);
- 	if (ACPI_FAILURE(status)) {
- 		acpi_handle_info(battery->device->handle,
- 				 "_BST evaluation failed: %s",
-@@ -675,8 +673,8 @@ static int acpi_battery_set_alarm(struct acpi_battery *battery)
- 	    !test_bit(ACPI_BATTERY_ALARM_PRESENT, &battery->flags))
- 		return -ENODEV;
- 
--	status = acpi_execute_simple_method(battery->device->handle, "_BTP",
--					    battery->alarm);
-+	status = acpi_execute_simple_method_exclusive(battery->device->handle, "_BTP",
-+						      battery->alarm);
- 	if (ACPI_FAILURE(status))
- 		return -ENODEV;
- 
+ 	/*
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 0735ae9409240..668a5ba1c6f59 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -201,6 +201,7 @@
+ #define PCIE_ATU_ENABLE			BIT(31)
+ #define PCIE_ATU_BAR_MODE_ENABLE	BIT(30)
+ #define PCIE_ATU_CFG_SHIFT_MODE_ENABLE	BIT(28)
++#define PCIE_ATU_DMA_BYPASS		BIT(27)
+ #define PCIE_ATU_INHIBIT_PAYLOAD	BIT(22)
+ #define PCIE_ATU_FUNC_NUM_MATCH_EN      BIT(19)
+ #define PCIE_ATU_LOWER_BASE		0x008
 -- 
 2.53.0
 
