@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590551;
-	b=H0d8LAVrY4EGfKQlrmDKOx9bSLB+gysY/51ZgpjtkLpoTeUekJh6XNevg3G47eX8JxWx
-	 hXUZk7xbTNEUXX8GFqRbpsvjajM/ygjT8QYTVB6tU7UBeVbdr92JbitwayDBo1k4q1GEY
-	 2h6E6kCw5jznWmgae9cllpf9DSUEpZtS/pik7HzZjV2IQ/PujHHttWayZvhRNUpIoKBSw
-	 B/yBo49kM85diVB+Dv7nMFGT+VmTS41Qd/cNU8CfbSh+J1Lz0xLKi4CF3rggulHlUBlAu
-	 tZzCCZlZIrj7kTa1vXcEOWVYw1RrgIpPE8ijVr5h1cgJJlhDaeve5YFboBOiG0emltA==
+	t=1794590552;
+	b=CWOy+6TaBBt947HLtQnAOBTvSbfgnIL/URvErpasXZ4+v6VXhjww7+9DkAaWBapgDay3
+	 J9SY4D9ck2/9SIj2V/TOK5s3bkkRLxtWe8/UUCS4cJtAy2fW1OT2cqUTPeQ3xMD6hSv1c
+	 5xAWy9I/HKKDHTvgnO57CmXAX46L6g/3Humps8rpHEqJxABgtKGqGB2VvuvhuU307SeSG
+	 nBzsSRCSJI5zgYqYu378Jjtc9qQGIH5a+STthiaUkQGOhxqa7tprQwB6JvTMK6o6Z5IYv
+	 8bnPrHPBvSpGNyCDqdVaM+JXadsaLKwL22o9zVxKpBr+oxiq5nY0JJTCXcdm33u+c6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590551;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590552;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YL8ZwjucrWK3qFcbmMzuaaRSFouaZNOjOOgFX6t6ZT0=;
-	b=nC0oIneVQNmB1V+8AfKKgPXj9c8pRa9Vfrq1vxiF34xmSES18LrsVQf/QZkDGFJdWmfL
-	 BEUiaK2IGiFpBNaxTrKDpU96s3oT9Fe6w2ljgSf8fxg8PfBpBwE0TGKUexdJ4PozpfFtT
-	 EZ83wXD5emDhzT4Ytrt9ca0V+Lfg0EsAfocC+beWTIIXhPoh4x2SQs8oIbyTyVREA3Ptf
-	 WlY7w7Y8tRA+FcGB4bFyrDE0/pFMtTSdrQZKrwL46YypvNR6D2m+1MdH2aDh6dv9sDPIB
-	 Yh88KPUO7+gbMyIh9qiHu88wBpywiSUxLpoIMeCS0EGZ9m0MBWdqHTU2jy77yy8zhdg==
+	bh=dDMss3ueW6yc78YuqfPM9RAHjFwq9YdM/j8Vh3bi9MY=;
+	b=oau4hfs+XN2hjucKx+C6uCffKVZjYi/JlU+k/NQknrCza5cfcvghjRK8uwtwZD8DwhZV
+	 LdWQTQbEZXwkbVZ0pCnH2DrRB4Xgc+gF11r/GmSvQIEmS9PndoLnCkYu9cewTRf2ALZ9E
+	 xQhhqJbEijJUOGoCNmAe0fw3y0nuZFVCKwNCm/zWZCAxWfBXif8ySE02QnttzSAN3YMi/
+	 VeIS6s/bw8VcaQhYNGuzB/hV5sZs9KtgpEgsFKq/uzY1NIpw7u7cDSdUoRoMNahr+53iW
+	 AWNqRAVKQVm4dFHnTbX5wCZ3qdaGruGWbKKCEKNHNG2+HUUmgshSJOBHYJc4DxrksuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AtpTLZVQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcvJID4t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4E8606BD09;
-	Fri, 13 Nov 2026 17:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BBC606B37D;
+	Fri, 13 Nov 2026 17:22:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AtpTLZVQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1C11F000C6;
-	Fri, 13 Nov 2026 17:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NcvJID4t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90AC1F000CA;
+	Fri, 13 Nov 2026 17:22:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590550;
-	bh=YL8ZwjucrWK3qFcbmMzuaaRSFouaZNOjOOgFX6t6ZT0=;
+	s=korg; t=1794590552;
+	bh=dDMss3ueW6yc78YuqfPM9RAHjFwq9YdM/j8Vh3bi9MY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AtpTLZVQcmwZMhe/jgsFm2KOf34+LjMpx5sZmct9thjVBzVCjyrUxYJUigprQUSby
-	 0RfDTWDC5tIaHBtxbMxT4KoRtuvffTjrXvWO/FY8FHP50hzyDm9RPiU7swteGrmMrs
-	 HAEykyw5Fv1JXwTS5VYLs6vEEx3t+uTekjshI7os=
+	b=NcvJID4tSOQy6NvUve7O7S7G1nCHhTMB/miv3Lffgoh2TR3Drb6yBF8Ug0CJl3j+k
+	 M7rthj+MkVyVjY3//FVDitca/0/2zXKMB3DZzmDtFfoMeLdM33sHyyH2HVvM68ifr7
+	 u/hMIBSsj9bUvQ4mxblBRA8yqmtAssN6z1a3Mhzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	linux-media@vger.kernel.org,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Tarang Raval <tarang.raval@siliconsignals.io>,
+	Kate Hsuan <hpa@redhat.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 488/686] PCI: endpoint: pci-epf-vntb: Manage virtual NTB and PCI bus lifetime
-Date: Fri, 13 Nov 2026 10:50:21 -0500
-Message-ID: <20261113153837.483629539@linuxfoundation.org>
+Subject: [PATCH 6.18 489/686] platform: int3472: discrete: Support multiple HIDs per GPIO map entry
+Date: Fri, 13 Nov 2026 10:50:22 -0500
+Message-ID: <20261113153837.515572708@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,214 +72,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Tarang Raval <tarang.raval@siliconsignals.io>
 
-[ Upstream commit 5cdbd6d3a3a147fa9975e35f2602cbec9a72a932 ]
+[ Upstream commit edd0dd59aca038b7f32cf893170928d4a3b2297e ]
 
-The virtual PCI driver registers an ntb_dev but has no remove callback.
-Unbinding the endpoint function can therefore free BARs while the NTB
-device and its client still use them. It also leaves the virtual PCI
-devices and root bus allocated.
+Each int3472_gpio_map entry currently maps exactly one ACPI HID to a
+GPIO quirk. As more sensors needing the same quirk are identified, this
+means adding a full duplicate table entry per HID, differing only in
+the HID string, which does not scale.
 
-Allocate an ntb_dev for each virtual PCI probe and unregister it from the
-matching remove callback. Start command processing only after registration.
-Publish the device for doorbell IRQs at the same point. During remove, stop
-the command work and drain IRQ handlers before unregistering the device.
+Change int3472_gpio_map::hid to a NULL-terminated hids array so a
+single entry can match any number of ACPI HIDs, letting new HIDs be
+added to the relevant array instead of duplicating quirk entries.
 
-Retain the root bus returned by pci_scan_bus() so it can be removed on
-unbind. Unregister the virtual PCI driver before releasing endpoint
-resources. Stop and remove the root bus under the PCI rescan/remove lock,
-then release its host bridge.
+Cc: linux-media@vger.kernel.org
+Suggested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Tarang Raval <tarang.raval@siliconsignals.io>
+Tested-by: Kate Hsuan <hpa@redhat.com>
+Reviewed-by: Kate Hsuan <hpa@redhat.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Daniel Scally <dan.scally@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org # 6.0+
-Link: https://patch.msgid.link/20260901063238.631166-3-den@valinux.co.jp
-[ sashal: adapted doorbell changes to the existing polling implementation without IRQ handlers or a peer-doorbell worker ]
+Keep the consolidated vana mapping for SONY471A and TBE20A0, which
+were not previously listed, so the subsequent handshake-delay fix applies
+unchanged. Perform the HID scan in the existing GPIO mapping routine
+instead of introducing a separate matching helper.
+
+Stable-dep-of: 844982d3b993 ("platform/x86: int3472: Increase handshake GPIO delay to 200 ms")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 69 +++++++++++++++----
- 1 file changed, 55 insertions(+), 14 deletions(-)
+ drivers/platform/x86/intel/int3472/discrete.c | 45 ++++++++++++++++---
+ 1 file changed, 39 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 68110855ea1c7..39d9844873f53 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -118,7 +118,7 @@ struct epf_ntb_ctrl {
- } __packed;
- 
- struct epf_ntb {
--	struct ntb_dev ntb;
-+	struct ntb_dev *ntb;
- 	struct pci_epf *epf;
- 	struct config_group group;
- 
-@@ -144,10 +144,15 @@ struct epf_ntb {
- 	void __iomem *vpci_mw_addr[MAX_MW];
- 
- 	struct delayed_work cmd_handler;
-+	struct pci_bus *vpci_bus;
- };
- 
- #define to_epf_ntb(epf_group) container_of((epf_group), struct epf_ntb, group)
--#define ntb_ndev(__ntb) container_of(__ntb, struct epf_ntb, ntb)
-+
-+static struct epf_ntb *ntb_ndev(struct ntb_dev *ntb)
-+{
-+	return ntb->pdev->sysdata;
-+}
- 
- static struct pci_epf_header epf_ntb_header = {
- 	.vendorid	= PCI_ANY_ID,
-@@ -173,7 +178,7 @@ static int epf_ntb_link_up(struct epf_ntb *ntb, bool link_up)
- 	else
- 		ntb->reg->link_status &= ~LINK_STATUS_UP;
- 
--	ntb_link_event(&ntb->ntb);
-+	ntb_link_event(ntb->ntb);
- 	return 0;
+diff --git a/drivers/platform/x86/intel/int3472/discrete.c b/drivers/platform/x86/intel/int3472/discrete.c
+index 96c33ba80002f..a4c24f1cd0a4d 100644
+--- a/drivers/platform/x86/intel/int3472/discrete.c
++++ b/drivers/platform/x86/intel/int3472/discrete.c
+@@ -123,10 +123,31 @@ skl_int3472_gpiod_get_from_temp_lookup(struct int3472_discrete_device *int3472,
+ 	return desc;
  }
  
-@@ -261,7 +266,7 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
- 	for (i = 1; i < ntb->db_count; i++) {
- 		if (ntb->epf_db[i]) {
- 			ntb->db |= 1 << (i - 1);
--			ntb_db_event(&ntb->ntb, i);
-+			ntb_db_event(ntb->ntb, i);
- 			ntb->epf_db[i] = 0;
- 		}
- 	}
-@@ -796,7 +801,6 @@ static int epf_ntb_epc_init(struct epf_ntb *ntb)
- 	}
- 
- 	INIT_DELAYED_WORK(&ntb->cmd_handler, epf_ntb_cmd_handler);
--	queue_work(kpcintb_workqueue, &ntb->cmd_handler.work);
- 
- 	return 0;
- 
-@@ -1100,6 +1104,7 @@ static int vpci_scan_bus(void *sysdata)
- 		pr_err("create pci bus failed\n");
- 		return -EINVAL;
- 	}
-+	ndev->vpci_bus = vpci_bus;
- 
- 	pci_bus_add_devices(vpci_bus);
- 
-@@ -1144,7 +1149,7 @@ static int vntb_epf_mw_set_trans(struct ntb_dev *ndev, int pidx, int idx,
- 	int ret;
- 	struct device *dev;
- 
--	dev = &ntb->ntb.dev;
-+	dev = &ndev->dev;
- 	barno = ntb->epf_ntb_bar[BAR_MW1 + idx];
- 	epf_bar = &ntb->epf->bar[barno];
- 	epf_bar->phys_addr = addr;
-@@ -1244,7 +1249,7 @@ static int vntb_epf_peer_db_set(struct ntb_dev *ndev, u64 db_bits)
- 	ret = pci_epc_raise_irq(ntb->epf->epc, func_no, vfunc_no,
- 				PCI_IRQ_MSI, interrupt_num + 1);
- 	if (ret)
--		dev_err(&ntb->ntb.dev, "Failed to raise IRQ\n");
-+		dev_err(&ntb->epf->dev, "Failed to raise IRQ\n");
- 
- 	return ret;
- }
-@@ -1327,13 +1332,18 @@ static const struct ntb_dev_ops vntb_epf_ops = {
- 
- static int pci_vntb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
--	int ret;
- 	struct epf_ntb *ndev = (struct epf_ntb *)pdev->sysdata;
- 	struct device *dev = &pdev->dev;
-+	struct ntb_dev *ntb;
-+	int ret;
- 
--	ndev->ntb.pdev = pdev;
--	ndev->ntb.topo = NTB_TOPO_NONE;
--	ndev->ntb.ops =  &vntb_epf_ops;
-+	ntb = devm_kzalloc(dev, sizeof(*ntb), GFP_KERNEL);
-+	if (!ntb)
-+		return -ENOMEM;
++/*
++ * Other vana-supply users (e.g. ST, Toshiba, Sony sensors) can be added to
++ * this array instead of adding new quirk table entries.
++ */
++static const char * const power_enable_hids_vana[] = {
++	"SONY471A", /* imx471 on Lenovo X9-14 and X9-15 */
++	"TBE20A0", /* imx471 on Lenovo X1 Carbon G14 */
++	NULL
++};
 +
-+	ntb->pdev = pdev;
-+	ntb->topo = NTB_TOPO_NONE;
-+	ntb->ops = &vntb_epf_ops;
- 
- 	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
- 	if (ret) {
-@@ -1341,16 +1351,33 @@ static int pci_vntb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		return ret;
- 	}
- 
--	ret = ntb_register_device(&ndev->ntb);
-+	ret = ntb_register_device(ntb);
- 	if (ret) {
- 		dev_err(dev, "Failed to register NTB device\n");
- 		return ret;
- 	}
- 
-+	/* Publish after ntb_register_device() succeeds */
-+	smp_store_release(&ndev->ntb, ntb);
-+	queue_delayed_work(kpcintb_workqueue, &ndev->cmd_handler, 0);
++static const char * const power_enable_hids_vdd[] = {
++	"INT33F0", /* mt9m114 */
++	NULL
++};
 +
- 	dev_dbg(dev, "PCI Virtual NTB driver loaded\n");
- 	return 0;
- }
- 
-+static void pci_vntb_remove(struct pci_dev *pdev)
-+{
-+	struct epf_ntb *ndev = pdev->sysdata;
-+	struct ntb_dev *ntb;
++static const char * const power_enable_hids_enable[] = {
++	"INT347E", /* ov7251 */
++	NULL
++};
 +
-+	/* Stop the work reader */
-+	cancel_delayed_work_sync(&ndev->cmd_handler);
-+
-+	ntb = xchg(&ndev->ntb, NULL);
-+
-+	ntb_unregister_device(ntb);
-+}
-+
- static struct pci_device_id pci_vntb_table[] = {
- 	{
- 		PCI_DEVICE(0xffff, 0xffff),
-@@ -1362,6 +1389,7 @@ static struct pci_driver vntb_pci_driver = {
- 	.name           = "pci-vntb",
- 	.id_table       = pci_vntb_table,
- 	.probe          = pci_vntb_probe,
-+	.remove         = pci_vntb_remove,
- };
- 
- /* ============ PCIe EPF Driver Bind ====================*/
-@@ -1442,12 +1470,25 @@ static int epf_ntb_bind(struct pci_epf *epf)
+ /**
+  * struct int3472_gpio_map - Map GPIOs to whatever is expected by the
+  * sensor driver (as in DT bindings)
+- * @hid: The ACPI HID of the device without the instance number e.g. INT347E
++ * @hids: NULL-terminated array of ACPI HIDs of the devices without the
++ * instance number e.g. INT347E
+  * @type_from: The GPIO type from ACPI ?SDT
+  * @type_to: The assigned GPIO type, typically same as @type_from
+  * @enable_time_us: Enable time in usec for GPIOs mapped to regulators
+@@ -135,7 +156,7 @@ skl_int3472_gpiod_get_from_temp_lookup(struct int3472_discrete_device *int3472,
+  * GPIO_ACTIVE_HIGH otherwise
   */
- static void epf_ntb_unbind(struct pci_epf *epf)
+ struct int3472_gpio_map {
+-	const char *hid;
++	const char * const *hids;
+ 	u8 type_from;
+ 	u8 type_to;
+ 	bool polarity_low;
+@@ -145,25 +166,32 @@ struct int3472_gpio_map {
+ 
+ static const struct int3472_gpio_map int3472_gpio_map[] = {
+ 	{	/* mt9m114 designs declare a powerdown pin which controls the regulators */
+-		.hid = "INT33F0",
++		.hids = power_enable_hids_vdd,
+ 		.type_from = INT3472_GPIO_TYPE_POWERDOWN,
+ 		.type_to = INT3472_GPIO_TYPE_POWER_ENABLE,
+ 		.con_id = "vdd",
+ 		.enable_time_us = GPIO_REGULATOR_ENABLE_TIME,
+ 	},
+ 	{	/* ov7251 driver / DT-bindings expect "enable" as con_id for reset */
+-		.hid = "INT347E",
++		.hids = power_enable_hids_enable,
+ 		.type_from = INT3472_GPIO_TYPE_RESET,
+ 		.type_to = INT3472_GPIO_TYPE_RESET,
+ 		.con_id = "enable",
+ 	},
+ 	{	/* ov08x40's handshake pin needs a 45 ms delay on some HP laptops */
+-		.hid = "OVTI08F4",
++		.hids = (const char * const[]) { "OVTI08F4", NULL },
+ 		.type_from = INT3472_GPIO_TYPE_HANDSHAKE,
+ 		.type_to = INT3472_GPIO_TYPE_HANDSHAKE,
+ 		.con_id = "dvdd",
+ 		.enable_time_us = 45 * USEC_PER_MSEC,
+ 	},
++	{	/* Sensors which expect "vana" as con_id for power enable */
++		.hids = power_enable_hids_vana,
++		.type_from = INT3472_GPIO_TYPE_POWER_ENABLE,
++		.type_to = INT3472_GPIO_TYPE_POWER_ENABLE,
++		.con_id = "vana",
++		.enable_time_us = GPIO_REGULATOR_ENABLE_TIME,
++	},
+ };
+ 
+ static void int3472_get_con_id_and_polarity(struct int3472_discrete_device *int3472, u8 *type,
+@@ -171,6 +199,7 @@ static void int3472_get_con_id_and_polarity(struct int3472_discrete_device *int3
+ 					    unsigned int *enable_time_us)
  {
-+	struct pci_host_bridge *bridge;
- 	struct epf_ntb *ntb = epf_get_drvdata(epf);
+ 	struct acpi_device *adev = int3472->sensor;
++	const char * const *hids;
+ 	unsigned int i;
  
-+	pci_unregister_driver(&vntb_pci_driver);
-+
-+	if (ntb->vpci_bus) {
-+		bridge = to_pci_host_bridge(ntb->vpci_bus->bridge);
-+
-+		pci_lock_rescan_remove();
-+		pci_stop_root_bus(ntb->vpci_bus);
-+		pci_remove_root_bus(ntb->vpci_bus);
-+		ntb->vpci_bus = NULL;
-+		pci_unlock_rescan_remove();
-+
-+		pci_free_host_bridge(bridge);
-+	}
-+
- 	epf_ntb_epc_cleanup(ntb);
- 	epf_ntb_config_spad_bar_free(ntb);
--
--	pci_unregister_driver(&vntb_pci_driver);
- }
+ 	for (i = 0; i < ARRAY_SIZE(int3472_gpio_map); i++) {
+@@ -182,7 +211,11 @@ static void int3472_get_con_id_and_polarity(struct int3472_discrete_device *int3
+ 		if (*type != int3472_gpio_map[i].type_from)
+ 			continue;
  
- // EPF driver probe
+-		if (!acpi_dev_hid_uid_match(adev, int3472_gpio_map[i].hid, NULL))
++		for (hids = int3472_gpio_map[i].hids; *hids; hids++) {
++			if (acpi_dev_hid_uid_match(adev, *hids, NULL))
++				break;
++		}
++		if (!*hids)
+ 			continue;
+ 
+ 		dev_dbg(int3472->dev, "mapping type 0x%02x pin to 0x%02x %s\n",
 -- 
 2.53.0
 
