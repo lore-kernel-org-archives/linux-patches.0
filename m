@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591352;
-	b=t+ivrzRidKNbdKlsKM4hlobsVyjJOeBNd09F/kMOtigYWsfb0ZQwFn4CjchfxIQraAeA
-	 702yH/uPC/ZwLKREbFjMixoCCfd4Y8xv2V70+Xn24HYDPzDaogadBMFGl4kvO6dFBMWL6
-	 XsXWBAGCgqWXWeCF9M/AAahtJdtYVnqwD5jRAXebkijfBPRbBjoDsITt+Shect6w/vzsB
-	 ZBeZYBfvYdOlp0gith1jz/RKLisdY4CrCkEebSn+IhQRy6jLvMJrqhpMlkxs4QJa/sRHK
-	 RYlSNyRyULmjYEvVEBhGr1cBhf6LhxKr9cxO/Xjb8ci28JBjWMt5sYYQ9Nf/kjF77yg==
+	t=1794591354;
+	b=GNJcNEtkNPKIoHsfWcs3uXMtgjKwCQtz3x97P+L5O5+9Y1OqT7jsoTFzy3RQLLrR/zJq
+	 n3kaXOofEixYxKyHvRLXHy6/po3oIHm0xA9ghPADhPpx6SqkOR9nZa+0EdJyRW15a/GKb
+	 Qdph8AM0m4LmtL7L5Takz530SfIOYNstBatgr+Xs4RS5upBKrcIU7MITMf8RmahG6yFCv
+	 A9T1pwGU6na6z1nKPtoiesS3WJOmpylAUvo4TAIyVqiVourCZeZkpF7qpFUkNgvqvOaHm
+	 A8cdR1H15J2r7svAVaMyi10fBzWTTZ1AUAqYL2m2krR9hBQ5lXre3e+aFst5zbjEQQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591352;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591354;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O28wxl4bl+i5UlhxSDTuuga1G4pdcQICXHd+QLIEX4c=;
-	b=rESb+zzlcWcaAgktFu8R7/ZPoicP/6U7svP2GX4ycPF8MihxTYwTBTtnsYVhnAg/30lO
-	 hfNDgLekx35j79RtxKcYBPYD7NC3AKKDuyDAy6m6d9i0W5tJw+G+QE9qCad7j9s/zcbVt
-	 lBXAi+14srDAtdiYtRO+U2JMRX3jRFiV9aYmUbbU0aPhUPO6tQuPpVpaKMSoyplftO5Te
-	 Hy2/vYavHVBdOzaolutSkiQX0gBKpZ+2EysP3Oqx5j3hP+fGkzoxe2lMUVgMJlc2S0eiK
-	 kiehTfRNjcYFPvMQQvceyPB3sb4Ajib6GlINSvTIEYrGeiDe9vfi23VDTdGEUtQGXlQ==
+	bh=/el28muAIbhx6vJ2SO439u14zlh8aW4pahIHklfMt1s=;
+	b=SRU/ZbzqE0ffr6QB5tBu2AUM365rBuRzN+zgqhj+ADyRjgqzRgxtN5Ny1wtIfmKnr9yX
+	 MuNEhFFXWQMgc7WLM+zNollCYR12OQpU8QI8dv+Vtp+SbxG7tr+sqtIvbLdt1AdTkqNfb
+	 QgIJWGV8Vy2MZ6ZJcxNpqTg5klikr2coaJEiZiZ0caF1yT4FGJKUYxGpIxogFIu1yd0NV
+	 OVIboxhUP9QlzA1icvIAivtyuvle3Fhu9TGTZSHRh0Oitn21FA/iZ0qLYxIwSh9fzSU2P
+	 WXZmdURrP3ET5QaEI+11Ztw6+jsVPOBOd5Zkb6OtJOBMMpeTL5Rhlm2MrjGk69gfkqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvee2csq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPSy6a80;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1BA606CEE8;
-	Fri, 13 Nov 2026 17:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F86606CEE8;
+	Fri, 13 Nov 2026 17:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvee2csq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B3BA1F000C4;
-	Fri, 13 Nov 2026 17:35:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPSy6a80
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916211F000C7;
+	Fri, 13 Nov 2026 17:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591352;
-	bh=O28wxl4bl+i5UlhxSDTuuga1G4pdcQICXHd+QLIEX4c=;
+	s=korg; t=1794591353;
+	bh=/el28muAIbhx6vJ2SO439u14zlh8aW4pahIHklfMt1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvee2csqZRpkiew6DpU5Ik8d9J/r/pJy8Vouv8/4IEmY+oVoy/pN4GkhIXYnSibOx
-	 AC7eVgl3TyVZ8EsiiZvqEdn5GqH72fOMc85UndzirjqYRFEucDF/Dg3pGwu6U4F0OY
-	 8mwG2kkVAmPiELKYBEtBb/meUL6Pw7ZdNiXyWz9I=
+	b=RPSy6a80F4pzHSh6IcIpl2yxbnMjWFtTek9Dwxxh529V46xwQrLMT4UjhJTIGqw4K
+	 S4Y6sDZ8yT8uqe/T3f89rg6BJZ3efIo3UiqnC7QLGSb+/lkyVVLkUps7pOtSjPeHnU
+	 eCX0vK4sPqlGPYMx9CWfXQjavJsUuXV3YSQzb5Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 458/670] media: ene_ir: Ensure teardown is done in the correct order
-Date: Fri, 13 Nov 2026 10:50:22 -0500
-Message-ID: <20261113153827.428864895@linuxfoundation.org>
+Subject: [PATCH 6.12 459/670] f2fs: fix to check continuousness in f2fs_sync_meta_pages() correctly
+Date: Fri, 13 Nov 2026 10:50:23 -0500
+Message-ID: <20261113153827.532018777@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,46 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit ae6cfbad7ca346b78f4cdac38438bbfaed8c18a0 ]
+[ Upstream commit 1383cff4ccf3c8833c6255edffa29eb67c6419bb ]
 
-The timer can be re-armed from the irq, so ensure that the timers are
-deleted after the irq and that we only free the rc device once we are
-sure that the irq has been silenced.
+In f2fs_sync_meta_pages(), whenever i becomes zero inside while loop,
+below check may be skipped, it failed to check the continuousness:
 
-Fixes: dccc0c3ddf8f ("media: rc: fix race between unregister and urb/irq callbacks")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Young <sean@mess.org>
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: Adjusted the removal hunk to match del_timer_sync() instead of timer_delete_sync(). ]
+	if (nr_to_write != LONG_MAX && i != 0 &&
+		folio->index != prev +
+		folio_nr_pages(fbatch.folios[i-1])) {
+
+Cc: stable@kernel.org
+Fixes: 580e7a492608 ("f2fs: convert f2fs_sync_meta_pages() to use filemap_get_folios_tag()")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: adapted the cached-block check to folio-based f2fs_sync_meta_pages(), using nr_to_write instead of background and folio_nr_pages() for index increments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/ene_ir.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/checkpoint.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/rc/ene_ir.c b/drivers/media/rc/ene_ir.c
-index 3fd51a41c3b2b..70e28bd4bdb93 100644
---- a/drivers/media/rc/ene_ir.c
-+++ b/drivers/media/rc/ene_ir.c
-@@ -1103,15 +1103,15 @@ static void ene_remove(struct pnp_dev *pnp_dev)
- 	unsigned long flags;
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index dc9540400caae..eb928d644542f 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -423,7 +423,7 @@ long f2fs_sync_meta_pages(struct f2fs_sb_info *sbi, enum page_type type,
+ 				long nr_to_write, enum iostat_type io_type)
+ {
+ 	struct address_space *mapping = META_MAPPING(sbi);
+-	pgoff_t index = 0, prev = ULONG_MAX;
++	pgoff_t index = 0, next = ULONG_MAX;
+ 	struct folio_batch fbatch;
+ 	long nwritten = 0;
+ 	int nr_folios;
+@@ -444,9 +444,8 @@ long f2fs_sync_meta_pages(struct f2fs_sb_info *sbi, enum page_type type,
+ 		for (i = 0; i < nr_folios; i++) {
+ 			struct folio *folio = fbatch.folios[i];
  
- 	rc_unregister_device(dev->rdev);
--	del_timer_sync(&dev->tx_sim_timer);
- 	spin_lock_irqsave(&dev->hw_lock, flags);
- 	ene_rx_disable(dev);
- 	ene_rx_restore_hw_buffer(dev);
- 	spin_unlock_irqrestore(&dev->hw_lock, flags);
- 
--	rc_free_device(dev->rdev);
- 	free_irq(dev->irq, dev);
-+	timer_delete_sync(&dev->tx_sim_timer);
- 	release_region(dev->hw_io, ENE_IO_SIZE);
-+	rc_free_device(dev->rdev);
- 	kfree(dev);
- }
- 
+-			if (nr_to_write != LONG_MAX && i != 0 &&
+-					folio->index != prev +
+-					folio_nr_pages(fbatch.folios[i-1])) {
++			if (nr_to_write != LONG_MAX && next != ULONG_MAX &&
++					folio->index != next) {
+ 				folio_batch_release(&fbatch);
+ 				goto stop;
+ 			}
+@@ -475,7 +474,7 @@ long f2fs_sync_meta_pages(struct f2fs_sb_info *sbi, enum page_type type,
+ 				break;
+ 			}
+ 			nwritten += folio_nr_pages(folio);
+-			prev = folio->index;
++			next = folio->index + folio_nr_pages(folio);
+ 			if (unlikely(nwritten >= nr_to_write))
+ 				break;
+ 		}
 -- 
 2.53.0
 
