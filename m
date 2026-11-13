@@ -1,57 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585249;
-	b=pbr1mBN29qLSmeKO8lO57MtPTvzZnAF4ssj2CuJXXVIzFDL/46LEXH0DCLAMHWbbxKQR
-	 wWmqv2CL2a9TUheC7szS0MijivcnvoOXHIzEAlbfClYSsN0ywt2aSBpXmqkIrOlUiK4Uh
-	 4cWNOpTH6n06uLQWQ8NoM7v+oqqFfjlqIENUAQmKKGF5cuwfYZ67Eiog2GupuO9E3/BSY
-	 JsEX4DSYi8Vfb5OPXQsHzRuJZfDhjJuXma32zGPWaPeTA2Wo3RC7iCgvL1lMivlh+08RT
-	 InkTXKxbInX7m3Ujtv3cS3m66X9B/GaS4nmkGRB72fIGc9o7oD8PHVeizZyzz4FRPgQ==
+	t=1794585250;
+	b=HhzR9dVXy/+LEX9HGi+MfLaQx299lErUl6J/Y92AFjsLtcIygrORJ/kfYtm1vQ/cftwt
+	 5zbw+GvamjcpWw7L7UlLEzAV8kllB44nN3PMzcVbT96yvRCfq4rltR/kjd3mWrVFZ3GHd
+	 0xkQ7vIR4R4HTMZTcToujv8ggkzHovfGbEteabj/AX/DoCkL0GcAEe7TsOycBvdR0oG4x
+	 5RyArmTzQUYb95k3legS8JLMvE/r1Zs8AcVgDxyq12Rojtgg/AXJy252kAk1rEpKd6E/G
+	 HPrP1/DvRRRtkCX77Ey5HcNe7D68fpFluyyuLvEDHxiKrNqBeTGvDJ2glfuR9/iltXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585250;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=K2k2vCDUPppG7hqBsoBdN6vCAGy+I6h3Io/9bLuT1Kk=;
-	b=BU7C1pvmTOg0TKn3qIxjDp5Yo7Epn6ewd/z4D5qoffDuXitEFtaSwbX4TLOI8DVbRWT0
-	 U1o4ZpfJcyEZpLYWRsbbXPwTpQhDp7tMRIFVFYFhYku/WWQU45xyFYmf2bavhtaklkl8+
-	 R24CS7wE2nAoqaEWGJaIhbfMcYeAnjpgL+Q1Mp9tUGK/Rox/SYNF441cCsqwRRoscgF6Y
-	 Xru9jA1Vk9ZaSuV/CeRAATsr6cU4+0b7BxCVGzZXunK2iaZv8oHeXLCbsddqxbz6QuC7h
-	 qKh3Z61Ze0onMt8c7YRBN9aILDanoAibfIBj/xRJhUmvs1Lota3aMu9DDtSnCClBe5Q==
+	bh=31G/NdxMSsGVebpxwl7ph8wBaTzg9G78CFU1JiDVFZs=;
+	b=2u0UOvQbOF2+2uk7GDFiR6lTh0iMPfAQy9n8uqq9pOJmpuNelyjV63VyjBhpoiLP45ke
+	 8ntg8YFN42GvChzAGQT4MUAjrPtUkNuYe3NpdV9hL8xx5a+fxFr7TkWn5IzLTmic6zSmc
+	 MTH8nGYaKANMgV7zT5QrFjqbgZVN14UrWNB9PitDwe/uMXWRz90z9vWj+s0xpYpRganIM
+	 fcLhU39wj12HvsehGk2o6g7yNdPQ5qtOcTTQXVL/wElLdOUiHHZ5ARfhDoozhSkJ62+bn
+	 iR0x4WdSyllN+8zTx/P3LS4+K5utg7x0ZlwfGYJW4nM1QBPLZlE6KBviS3rzHE0DAAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBcAyamh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXo+P24b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66576606A880;
-	Fri, 13 Nov 2026 15:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B27606A889;
+	Fri, 13 Nov 2026 15:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBcAyamh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE451F000C4;
-	Fri, 13 Nov 2026 15:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXo+P24b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326D01F000C5;
+	Fri, 13 Nov 2026 15:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585249;
-	bh=K2k2vCDUPppG7hqBsoBdN6vCAGy+I6h3Io/9bLuT1Kk=;
+	s=korg; t=1794585250;
+	bh=31G/NdxMSsGVebpxwl7ph8wBaTzg9G78CFU1JiDVFZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TBcAyamhSIR6PXGU0Mafdtdrc7jtDelgKDlnyzeZYE2Kkykax4TJ7B0iFMtCiMCd5
-	 dXJk48xRbOrHoOEyGgPt8VHWPDngoE3KTTCjvDK5oEr/E2zbEorZ98CYz+Jo7DB1eo
-	 0osD13qEidPoZr0kI2ASwXtwiO4Zu27ohFkp3AMs=
+	b=qXo+P24bjJ7ZhHo15MwlcIJYclFsR/wMbR1qFM1bgH2y02Wq2wLbNRDLDYb3K/uiM
+	 ngxkVFx1YHntsyAEteaYHqxCBiGdmV3Dwrjmjcc2LS3nzELlq+uhit51Q9mEgQoVZF
+	 CKTNn02lTC2CKI8PvRffGLLsM95nPWo0HznUcCI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashok Raj <ashok.raj@oss.qualcomm.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
-	Ahmed Abdelfattah <me@ahmedabdelfattah.dev>,
+	co+d531129f2f9fbf88@bugs.sh,
+	Weiming Shi <bestswngs@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 003/686] cxl/features: Ensure that count is set before access to ent[] __counted_by()
-Date: Fri, 13 Nov 2026 10:42:16 -0500
-Message-ID: <20261113153821.047069702@linuxfoundation.org>
+Subject: [PATCH 7.3 005/507] smb/server: prevent file publication after tree disconnect
+Date: Fri, 13 Nov 2026 10:45:09 -0500
+Message-ID: <20261113153753.560522999@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
-References: <20261113153820.902362109@linuxfoundation.org>
+In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
+References: <20261113153753.358973689@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -66,71 +65,300 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ashok Raj <ashok.raj@oss.qualcomm.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-commit c1031c2474f73261d8d5e4deef2b5dc20fb964f5 upstream.
+[ Upstream commit 2ff3730998b015b5b0a3f28330bee16c648dd114 ]
 
-get_supported_features() assigns entries->num_features only after the
-memcpy() loop that fills entries->ent[] has already run. Since ent[]
-is __counted_by(num_features), the compiler's bounds instrumentation
-sees a 0-length array during that loop and FORTIFY_SOURCE trips on
-the memcpy. Set @num_features right after allocation, before any
-write into ent[], so the bound is correct for the whole lifetime of
-the array.
+TREE_DISCONNECT closes the tree's published file handles before marking and
+removing the tree connection. A concurrent CREATE that already holds a tree
+reference can therefore publish its file after the close pass. When CREATE
+drops its reference, the tree can be freed while the published file still
+points to it.
 
-This was found via a fortify panic:
+Mark and remove the tree connection before closing its files, and serialize
+both new-open and durable-reconnect volatile ID publication with that state
+transition. An opener is then either published in time for the close pass
+or rejected after disconnect with STATUS_NETWORK_NAME_DELETED.
 
- memcpy: detected buffer overflow: 384 byte write of buffer size 0
- WARNING: lib/string_helpers.c:1035 at __fortify_report+0x54/0xa0
- kernel BUG at lib/string_helpers.c:1043!
- Call trace:
-  __fortify_panic+0x10/0x18
-  get_supported_features.isra.0+0x4a0/0x4d0 [cxl_core]
-  devm_cxl_setup_features+0x84/0x120 [cxl_core]
-  cxl_pci_probe+0x254/0x5e0 [cxl_pci]
+Keep a tree reference while a file carries its tree pointer. This protects
+asynchronous users that can defer the file's final destruction past tree
+disconnect.
 
-Same class of bug, same fix shape as commit 6c9d2e87df40
-("cxl/fwctl: Fix __fortify_panic"), which fixed the analogous issue
-in cxlctl_get_supported_features() but missed this one.
+The close pass can race the successful FP_NEW to FP_INITED transition.
+Take the opening request's file reference atomically with that transition.
+This keeps the file alive until request completion even if teardown removes
+the ID immediately.
 
-[ dj: Fixed up title typo per Jonathan. ]
+  BUG: KASAN: slab-use-after-free in proc_show_files (fs/smb/server/vfs_cache.c:126)
+  Read of size 4 at addr ff11000101540f80 by task poc/153
 
-Fixes: f0e6a2329bf9 ("cxl: Add Get Supported Features command for kernel usage")
-Signed-off-by: Ashok Raj <ashok.raj@oss.qualcomm.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260911215304.1816467-1-ashok.raj@oss.qualcomm.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Ahmed Abdelfattah <me@ahmedabdelfattah.dev>
+  Call Trace:
+    proc_show_files (fs/smb/server/vfs_cache.c:126)
+    seq_read_iter (fs/seq_file.c:231)
+    proc_reg_read_iter (fs/proc/inode.c:299)
+    vfs_read (fs/read_write.c:574)
+    ksys_read (fs/read_write.c:716)
+    do_syscall_64 (arch/x86/entry/syscall_64.c:84)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
+
+  Allocated by:
+    ksmbd_tree_conn_connect (fs/smb/server/mgmt/tree_connect.c:35)
+    smb2_tree_connect (fs/smb/server/smb2pdu.c:2819)
+    handle_ksmbd_work (fs/smb/server/server.c:368)
+
+  Freed by:
+    kfree (mm/slub.c:6801)
+    handle_ksmbd_work (fs/smb/server/server.c:332)
+
+Fixes: f44158485826 ("cifsd: add file operations")
+Cc: stable@vger.kernel.org
+Reported-by: <co+d531129f2f9fbf88@bugs.sh>
+Assisted-by: LLM
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: replaced ksmbd_tree_connect_get() calls with equivalent inline atomic_inc() operations ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/features.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c   | 27 ++++++++++++++----
+ fs/smb/server/vfs_cache.c | 58 ++++++++++++++++++++++++++++-----------
+ 2 files changed, 63 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/cxl/core/features.c b/drivers/cxl/core/features.c
-index bb73f205f16cf..0ea5a31275d38 100644
---- a/drivers/cxl/core/features.c
-+++ b/drivers/cxl/core/features.c
-@@ -97,6 +97,7 @@ get_supported_features(struct cxl_features_state *cxlfs)
- 		kvmalloc(struct_size(entries, ent, count), GFP_KERNEL);
- 	if (!entries)
- 		return NULL;
-+	entries->num_features = count;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 3f1ab9a203070..418610e05ce95 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3097,9 +3097,10 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
+ 		goto err_out;
+ 	}
  
- 	struct cxl_mbox_get_sup_feats_out *mbox_out __free(kvfree) =
- 		kvmalloc(cxl_mbox->payload_size, GFP_KERNEL);
-@@ -174,7 +175,6 @@ get_supported_features(struct cxl_features_state *cxlfs)
- 		start += num_entries;
- 	} while (remain_feats);
++	err = ksmbd_tree_conn_disconnect(sess, tcon);
++
+ 	ksmbd_close_tree_conn_fds(work);
  
--	entries->num_features = count;
- 	entries->num_user_features = user_feats;
+-	err = ksmbd_tree_conn_disconnect(sess, tcon);
+ 	if (err) {
+ 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+ 		goto err_out;
+@@ -4439,8 +4440,12 @@ int smb2_open(struct ksmbd_work *work)
+ 				goto err_out2;
  
- 	return no_free_ptr(entries);
+ 			rc = ksmbd_reopen_durable_fd(work, dh_info.fp);
+-			if (rc)
++			if (rc) {
++				if (rc == -ENOTCONN)
++					rsp->hdr.Status =
++						STATUS_NETWORK_NAME_DELETED;
+ 				goto err_out2;
++			}
+ 
+ 			fp = dh_info.fp;
+ 
+@@ -4874,6 +4879,8 @@ int smb2_open(struct ksmbd_work *work)
+ 	if (IS_ERR(fp)) {
+ 		fput(filp);
+ 		rc = PTR_ERR(fp);
++		if (rc == -ENOTCONN)
++			rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
+ 		fp = NULL;
+ 		goto err_out;
+ 	}
+@@ -5477,11 +5484,20 @@ int smb2_open(struct ksmbd_work *work)
+ 
+ err_out2:
+ 	if (!rc) {
+-		if (!dh_info.replay)
++		if (!dh_info.replay) {
++			smb2_complete_request_open(work);
+ 			rc = ksmbd_update_fstate(&work->sess->file_table, fp,
+ 						 FP_INITED);
+-		if (!rc)
++			if (rc == -ENOENT)
++				rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
++			if (!rc) {
++				work->request_open = fp;
++				work->request_open_chseq =
++					smb3_hdr_channel_sequence(&req->hdr);
++			}
++		} else {
+ 			rc = smb2_set_request_open(work, fp, &req->hdr, false, false);
++		}
+ 		if (!rc)
+ 			rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
+ 	}
+@@ -5496,8 +5512,7 @@ int smb2_open(struct ksmbd_work *work)
+ 				rsp->hdr.Status = STATUS_PRIVILEGE_NOT_HELD;
+ 			else
+ 				rsp->hdr.Status = STATUS_ACCESS_DENIED;
+-		}
+-		else if (rc == -ENOENT)
++		} else if (rc == -ENOENT && !rsp->hdr.Status)
+ 			rsp->hdr.Status = STATUS_OBJECT_NAME_INVALID;
+ 		else if (rc == -EPERM)
+ 			rsp->hdr.Status = STATUS_SHARING_VIOLATION;
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index 1efa9f8145601..38196befa03a5 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -698,16 +698,18 @@ static void __ksmbd_close_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
+ 	}
+ 
+ 	/*
+-	 * Drop fp's strong reference on conn (taken in ksmbd_open_fd() /
+-	 * ksmbd_reopen_durable_fd()).  Durable fps that reached the
+-	 * scavenger have already had fp->conn cleared by session_fd_check(),
+-	 * in which case there is nothing to drop here.
++	 * Drop fp's strong connection references.  Durable fps that reached
++	 * the scavenger have already had these cleared by session_fd_check().
+ 	 */
+ 	if (fp->conn) {
+ 		atomic_dec(&fp->conn->stats.open_files_count);
+ 		ksmbd_conn_put(fp->conn);
+ 		fp->conn = NULL;
+ 	}
++	if (fp->tcon) {
++		ksmbd_tree_connect_put(fp->tcon);
++		fp->tcon = NULL;
++	}
+ 
+ 	if (ksmbd_stream_fd(fp))
+ 		kfree(fp->stream.name);
+@@ -1331,14 +1333,14 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
+ 
+ 	fp->filp		= filp;
+ 	/*
+-	 * fp owns a strong reference on fp->conn for as long as fp->conn is
+-	 * non-NULL, so session_fd_check() and __ksmbd_close_fd() never
+-	 * dereference a dangling pointer.  Paired with ksmbd_conn_put() in
+-	 * session_fd_check() (durable preserve), in __ksmbd_close_fd()
+-	 * (final close), and on the error paths below.
++	 * fp owns strong references on fp->conn and fp->tcon for as long as
++	 * they are non-NULL.  Paired with the puts in session_fd_check()
++	 * (durable preserve), in __ksmbd_close_fd() (final close), and on the
++	 * error paths below.
+ 	 */
+ 	fp->conn		= ksmbd_conn_get(work->conn);
+ 	fp->tcon		= work->tcon;
++	atomic_inc(&fp->tcon->refcount);
+ 	fp->share_conf		= work->tcon->share_conf;
+ 	atomic_inc(&fp->share_conf->refcount);
+ 	fp->volatile_id		= KSMBD_NO_FID;
+@@ -1351,7 +1353,13 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
+ 		goto err_out;
+ 	}
+ 
+-	ret = __open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
++	down_read(&work->sess->tree_conns_lock);
++	if (work->tcon->t_state == TREE_CONNECTED)
++		ret = __open_id(&work->sess->file_table, fp,
++				OPEN_ID_TYPE_VOLATILE_ID);
++	else
++		ret = -ENOTCONN;
++	up_read(&work->sess->tree_conns_lock);
+ 	if (ret) {
+ 		ksmbd_inode_put(fp->f_ci);
+ 		goto err_out;
+@@ -1361,7 +1369,8 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
+ 	return fp;
+ 
+ err_out:
+-	/* fp->conn was set and refcounted before every branch here. */
++	/* fp->conn and fp->tcon were refcounted before every branch here. */
++	ksmbd_tree_connect_put(fp->tcon);
+ 	ksmbd_conn_put(fp->conn);
+ 	ksmbd_share_config_put(fp->share_conf);
+ 	kmem_cache_free(filp_cache, fp);
+@@ -1376,8 +1385,9 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
+  *
+  * Return: 0 on success.  The FP_NEW -> FP_INITED transition is special:
+  * -ENOENT if teardown already unpublished @fp by advancing the state or
+- * clearing the volatile id.  Other state updates preserve the historical
+- * fire-and-forget behavior.
++ * clearing the volatile id.  On success it also takes a reference for the
++ * opening request, which must be released with ksmbd_fd_put().  Other state
++ * updates preserve the historical fire-and-forget behavior.
+  */
+ int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+ 			unsigned int state)
+@@ -1393,6 +1403,8 @@ int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
+ 		ret = -ENOENT;
+ 	} else {
+ 		fp->f_state = state;
++		if (state == FP_INITED)
++			atomic_inc(&fp->refcount);
+ 		ret = 0;
+ 	}
+ 	write_unlock(&ft->lock);
+@@ -1813,6 +1825,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+ 	struct oplock_info *op;
+ 	struct ksmbd_conn *conn;
+ 	struct ksmbd_lock *smb_lock, *tmp_lock;
++	struct ksmbd_tree_connect *tree_conn;
+ 
+ 	if (!is_reconnectable(fp))
+ 		return false;
+@@ -1834,6 +1847,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+ 	ci = fp->f_ci;
+ 	down_write(&ci->m_lock);
+ 	conn = fp->conn;
++	tree_conn = fp->tcon;
+ 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry,
+ 				lockdep_is_held(&ci->m_lock)) {
+ 		if (op->o_fp != fp)
+@@ -1869,6 +1883,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
+ 
+ 	/* Drop fp's own reference on conn. */
+ 	ksmbd_conn_put(conn);
++	ksmbd_tree_connect_put(tree_conn);
+ 	return true;
+ }
+ 
+@@ -1972,7 +1987,8 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
+ 	 * concurrent teardown that iterates the table can observe a valid
+ 	 * volatile_id with fp->conn == NULL and preserve a
+ 	 * partially-initialized fp.  fp owns a strong reference on the new
+-	 * conn (see ksmbd_open_fd()); undo it on __open_id() failure.
++	 * conn (see ksmbd_open_fd()); undo it on __open_id() failure.  Serialize
++	 * publication with tree disconnect just as ksmbd_open_fd() does.
+ 	 */
+ 	spin_lock(&fp->f_lock);
+ 	old_f_state = fp->f_state;
+@@ -1982,12 +1998,19 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
+ 	atomic_inc(&fp->share_conf->refcount);
+ 	fp->conn = ksmbd_conn_get(conn);
+ 	fp->tcon = work->tcon;
++	atomic_inc(&fp->tcon->refcount);
+ 	spin_unlock(&fp->f_lock);
+ 	atomic_inc(&conn->stats.open_files_count);
+ 	write_unlock(&global_ft.lock);
+ 
+-	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
+-	if (!has_file_id(fp->volatile_id)) {
++	down_read(&work->sess->tree_conns_lock);
++	if (work->tcon->t_state == TREE_CONNECTED)
++		ret = __open_id(&work->sess->file_table, fp,
++				OPEN_ID_TYPE_VOLATILE_ID);
++	else
++		ret = -ENOTCONN;
++	up_read(&work->sess->tree_conns_lock);
++	if (ret) {
+ 		write_lock(&global_ft.lock);
+ 		spin_lock(&fp->f_lock);
+ 		fp->conn = NULL;
+@@ -1998,7 +2021,10 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
+ 		atomic_dec(&conn->stats.open_files_count);
+ 		write_unlock(&global_ft.lock);
+ 		ksmbd_conn_put(conn);
++		ksmbd_tree_connect_put(work->tcon);
+ 		ksmbd_share_config_put(work->tcon->share_conf);
++		if (ret != -ENOTCONN)
++			ret = -EBADF;
+ 		goto out;
+ 	}
+ 
 -- 
 2.53.0
 
