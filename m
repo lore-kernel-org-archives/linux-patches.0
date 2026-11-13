@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591304;
-	b=bq5/icWxM5f0driEVlQjcz3A5HbNEdH+sI0UuoueFJRxWdjIV9BDy+4lMNao3hXPiYaM
-	 aPiAUjkMAU0Vx4GyUJZajBr6WBRw6EFuyLl2Y0bfo7T6DMdNGaI8Lfkeap66Rh1iEq8zX
-	 FdV/+6xIaV/g6XIlNyaiOEmfE0isQRTqDBBRg/8JEiw8u7MhY+0v3bnoZw0VjIc6FzWad
-	 65zzeugQs4BblamxvRHCVd1cKsGTUjc7N4pbfrR7Y8FpgUmv5BcqXahwMoRIJPeOYQ4DL
-	 KjSz2MBeY1nY/7ef3VPEgjoziNZKWMTAmBiIvsr4TCw5sfA9FJU9dHQRrsfLfA/Bcdw==
+	t=1794591306;
+	b=DKoLnzLpo4Tgqa1WtrJJevO4CrOogcMg6F6+Cbh1r7boKSCON5HlLxRRzV3SKCQP8vbc
+	 e6/0Q0omWF+NtEtFKRDpLMQDZYoLeLKYGDrOCUyRO6dMyNAvWOHbwj9bO7AFDpyc41h95
+	 3VQGlC53VvXh2EW+fzGfm0YrIgiuxCzGqhPlkR/TP2ukkJv6w4IaU1iLypDWbQADPLlGf
+	 5YyTTHZjGkD9n9SzXbfm09IgEMxUaxtr+VrnV2ZSk6XOaHY8/GVpGz5Sv0fRSfNAJMXCk
+	 rZgVbjUUB4XgcXkB1OFDI3CAqV49KnmlBwNvh2xut6QCnOAKR8HtIgMfsdngxVpHYqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591304;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591306;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L0rNUpcuJHWtdjDdz/JVeUrrUwp0/6IpuGvohB2V+Ng=;
-	b=1yBuq6YYLJ9rxnd+Sk9TZEDbvUFdJIhadG6ETgoBozHI3PiPMF8x8OSCb4SVXKnMw+zB
-	 plNx9zGej7FX7NolP7kj6yJoyjy+L2841tw13XVExOdD8TiGuBqmJv6E+VRsHrqU54W2B
-	 z4NltNYHsjZ4gNlo+LpQg7CWAAyq3JO7DCQMSbnKQPPnYE2OEofPNM9YFvcZG4qdL7DI0
-	 lWQ3DvyVg0dGfg9g8qVNy7ZnS/cRvgM2Ewn6YOLUfNC6A7tbZkWllK7PuiU/P6tGkyimc
-	 3kk3ILGXBgsmz1xUK4Upj3UcNhYDYOzn5SB2TN3MC9/EaAag99lwKKhDzu6T2dHL1+A==
+	bh=jRak4l9Y/7A0Tmbj4qwY/uPYw0dtLHot/fOE0Smy6PQ=;
+	b=n/FH5Xo+Tft8MTqV05KHNYWnNpJciOEh9ndRYh3kCqlnECKyFPtwB5QIjLO0WE4XiokH
+	 InDt5Tam0VJtGefx31RB1a4fwev/NiR1szI+Aoljyk8eFx9+XVyCBp5NeqcwRWBTc/s6V
+	 veGDFLeCQQG2+RXUvBlxnuF0KkjBdr3IUZMLVMJDOYNjnyGYZtPz/cMbVRmtXRiYhzE9z
+	 Dx8FLeYf2NOXhycejNDqpZZFuYhFoxAPjjHC9dAA4p0tKQHe2qvho41npXCkK6T+y5qwO
+	 cEJwiB0idueJNe82akYBPNqBbnkHSfvWnTyzbIUzwayCmlFhXy9gwjTedp8YCxFDdqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OkV9Bn4R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vpi0ZS8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79C9606B202;
-	Fri, 13 Nov 2026 17:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2080606B202;
+	Fri, 13 Nov 2026 17:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OkV9Bn4R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABE21F000C5;
-	Fri, 13 Nov 2026 17:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vpi0ZS8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBEA1F000C5;
+	Fri, 13 Nov 2026 17:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591304;
-	bh=L0rNUpcuJHWtdjDdz/JVeUrrUwp0/6IpuGvohB2V+Ng=;
+	s=korg; t=1794591305;
+	bh=jRak4l9Y/7A0Tmbj4qwY/uPYw0dtLHot/fOE0Smy6PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OkV9Bn4RG+cQGKBVnkZ2dbr0SrnZTa7cPzoZD6OfCrUEAyFckz6jto1TjztEiuyhW
-	 Nho+ZGwh5vUiSKnhn7ueddlkrC5j/njXtAHd9iPFhap5cariIe5k0DX1WWDUjEEOWo
-	 wdET+QoFAFaqRW6xdTHhhLVd6JL/mJoFVMKnYKHY=
+	b=0vpi0ZS8RAqkgnVNs2d2nXhGwdJ8PSNPIa0+5NeQau65+fN/giq0PT9cz3s+XRx6y
+	 dBaOVkRS6l39lLnJd75TcUZLFCmijBa9ghS+rSxeUxFDxcAbQPOsP9EsZdgNOHIYb+
+	 JBrQv3dfZK9eEggQ/JG37Mw9OkJmBcn7tRyDcC+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yangge <yangge1116@126.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <21cnbao@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Mark Bundschuh <mkbund@amazon.com>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 419/670] mm: replace free hugepage folios after migration
-Date: Fri, 13 Nov 2026 10:49:43 -0500
-Message-ID: <20261113153825.943010045@linuxfoundation.org>
+Subject: [PATCH 6.12 384/670] MIPS: sgi-ip32: Leave MACE PCI control alone in config accesses
+Date: Fri, 13 Nov 2026 10:49:08 -0500
+Message-ID: <20261113153824.781816420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -73,185 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yangge <yangge1116@126.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 04f13d241b8b146b23038bffd907cb8278391d07 ]
+[ Upstream commit a55a7df2cf788234850d9053ecc25a5470175929 ]
 
-My machine has 4 NUMA nodes, each equipped with 32GB of memory.  I have
-configured each NUMA node with 16GB of CMA and 16GB of in-use hugetlb
-pages.  The allocation of contiguous memory via cma_alloc() can fail
-probabilistically.
+mace_pci_read_config() clears the master abort interrupt enable in the
+MACE PCI control register around each config read. A register read
+followed by two register writes can hang CRIME 1.1 under DMA load.
 
-When there are free hugetlb folios in the hugetlb pool, during the
-migration of in-use hugetlb folios, new folios are allocated from the free
-hugetlb pool.  After the migration is completed, the old folios are
-released back to the free hugetlb pool instead of being returned to the
-buddy system.  This can cause test_pages_isolated() check to fail,
-ultimately leading to the failure of cma_alloc().
+Ack master aborts in the error register instead, and follow every
+write with a read so back-to-back accesses cannot form that sequence.
 
-Call trace:
-
-cma_alloc()
-    __alloc_contig_migrate_range() // migrate in-use hugepage
-    test_pages_isolated()
-        __test_page_isolated_in_pageblock()
-             PageBuddy(page) // check if the page is in buddy
-
-To address this issue, we introduce a function named
-replace_free_hugepage_folios().  This function will replace the hugepage
-in the free hugepage pool with a new one and release the old one to the
-buddy system.  After the migration of in-use hugetlb pages is completed,
-we will invoke replace_free_hugepage_folios() to ensure that these
-hugepages are properly released to the buddy system.  Following this step,
-when test_pages_isolated() is executed for inspection, it will
-successfully pass.
-
-Additionally, when alloc_contig_range() is used to migrate multiple in-use
-hugetlb pages, it can result in some in-use hugetlb pages being released
-back to the free hugetlb pool and subsequently being reallocated and used
-again.  For example:
-
-[huge 0] [huge 1]
-
-To migrate huge 0, we obtain huge x from the pool.  After the migration is
-completed, we return the now-freed huge 0 back to the pool.  When it's
-time to migrate huge 1, we can simply reuse the now-freed huge 0 from the
-pool.  As a result, when replace_free_hugepage_folios() is executed, it
-cannot release huge 0 back to the buddy system.  To address this issue, we
-should prevent the reuse of isolated free hugepages during the migration
-process.
-
-Link: https://lkml.kernel.org/r/1734503588-16254-1-git-send-email-yangge1116@126.com
-Link: https://lkml.kernel.org/r/1736582300-11364-1-git-send-email-yangge1116@126.com
-Signed-off-by: yangge <yangge1116@126.com>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <21cnbao@gmail.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: SeongJae Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Mark Bundschuh <mkbund@amazon.com>
+Fixes: c990081bf87b ("[MIPS] Fix IP32 breakage")
+Cc: stable@vger.kernel.org
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/hugetlb.h |  7 +++++++
- mm/hugetlb.c            | 42 +++++++++++++++++++++++++++++++++++++++++
- mm/page_alloc.c         | 12 +++++++++++-
- 3 files changed, 60 insertions(+), 1 deletion(-)
+ arch/mips/pci/ops-mace.c | 26 +++++++++++++++++++-------
+ arch/mips/pci/pci-ip32.c |  2 ++
+ 2 files changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index 69bc41be9be90..96a201151a801 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -687,6 +687,7 @@ struct huge_bootmem_page {
- 
- int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list);
- void wait_for_freed_hugetlb_folios(void);
-+int replace_free_hugepage_folios(unsigned long start_pfn, unsigned long end_pfn);
- struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 				unsigned long addr, bool cow_from_owner);
- struct folio *alloc_hugetlb_folio_nodemask(struct hstate *h, int preferred_nid,
-@@ -1078,6 +1079,12 @@ static inline void wait_for_freed_hugetlb_folios(void)
- {
- }
- 
-+static inline int replace_free_hugepage_folios(unsigned long start_pfn,
-+		unsigned long end_pfn)
-+{
-+	return 0;
-+}
-+
- static inline struct folio *alloc_hugetlb_folio(struct vm_area_struct *vma,
- 					   unsigned long addr,
- 					   bool cow_from_owner)
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index d9443bdebc068..929ea7dbd9007 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -48,6 +48,7 @@
- #include <linux/page_owner.h>
- #include "internal.h"
- #include "hugetlb_vmemmap.h"
-+#include <linux/page-isolation.h>
- 
- int hugetlb_max_hstate __read_mostly;
- unsigned int default_hstate_idx;
-@@ -1350,6 +1351,9 @@ static struct folio *dequeue_hugetlb_folio_node_exact(struct hstate *h,
- 		if (folio_test_hwpoison(folio))
- 			continue;
- 
-+		if (is_migrate_isolate_page(&folio->page))
-+			continue;
-+
- 		list_move(&folio->lru, &h->hugepage_activelist);
- 		folio_ref_unfreeze(folio, 1);
- 		folio_clear_hugetlb_freed(folio);
-@@ -2991,6 +2995,44 @@ void wait_for_freed_hugetlb_folios(void)
- 	flush_work(&free_hpage_work);
+diff --git a/arch/mips/pci/ops-mace.c b/arch/mips/pci/ops-mace.c
+index 951d8070fb486..8827e5f2ea460 100644
+--- a/arch/mips/pci/ops-mace.c
++++ b/arch/mips/pci/ops-mace.c
+@@ -35,15 +35,27 @@ static inline int mkaddr(struct pci_bus *bus, unsigned int devfn,
+ 		(reg & 0xfc);
  }
  
 +/*
-+ *  replace_free_hugepage_folios - Replace free hugepage folios in a given pfn
-+ *  range with new folios.
-+ *  @start_pfn: start pfn of the given pfn range
-+ *  @end_pfn: end pfn of the given pfn range
-+ *  Returns 0 on success, otherwise negated error.
++ * On CRIME 1.1, a MACE PCI register read followed by two register writes
++ * can hang the machine under DMA load, so every register write in this
++ * file is followed by a read.  Config cycles to empty slots end in a
++ * master abort; ack it with interrupts still off so the bridge error
++ * interrupt does not report it.
 + */
-+int replace_free_hugepage_folios(unsigned long start_pfn, unsigned long end_pfn)
++static void mace_pci_ack_abort(void)
 +{
-+	struct hstate *h;
-+	struct folio *folio;
-+	int ret = 0;
++	u32 error = mace->pci.error;
 +
-+	LIST_HEAD(isolate_list);
-+
-+	while (start_pfn < end_pfn) {
-+		folio = pfn_folio(start_pfn);
-+		if (folio_test_hugetlb(folio)) {
-+			h = folio_hstate(folio);
-+		} else {
-+			start_pfn++;
-+			continue;
-+		}
-+
-+		if (!folio_ref_count(folio)) {
-+			ret = alloc_and_dissolve_hugetlb_folio(h, folio,
-+							       &isolate_list);
-+			if (ret)
-+				break;
-+
-+			putback_movable_pages(&isolate_list);
-+		}
-+		start_pfn++;
++	if (error & MACEPCI_ERROR_MASTER_ABORT) {
++		mace->pci.error = error & ~MACEPCI_ERROR_MASTER_ABORT;
++		mace->pci.error;
 +	}
-+
-+	return ret;
 +}
-+
- /*
-  * NOTE! "cow_from_owner" represents a very hacky usage only used in CoW
-  * faults of hugetlb private mappings on top of a non-page-cache folio (in
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 480579d7d59e4..063c2a359a1e1 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -6743,7 +6743,17 @@ int alloc_contig_range_noprof(unsigned long start, unsigned long end,
- 	ret = __alloc_contig_migrate_range(&cc, start, end, migratetype);
- 	if (ret && ret != -EBUSY)
- 		goto done;
--	ret = 0;
-+
-+	/*
-+	 * When in-use hugetlb pages are migrated, they may simply be released
-+	 * back into the free hugepage pool instead of being returned to the
-+	 * buddy system.  After the migration of in-use huge pages is completed,
-+	 * we will invoke replace_free_hugepage_folios() to ensure that these
-+	 * hugepages are properly released to the buddy system.
-+	 */
-+	ret = replace_free_hugepage_folios(start, end);
-+	if (ret)
-+		goto done;
  
+ static int
+ mace_pci_read_config(struct pci_bus *bus, unsigned int devfn,
+ 		     int reg, int size, u32 *val)
+ {
+-	u32 control = mace->pci.control;
+-
+-	/* disable master aborts interrupts during config read */
+-	mace->pci.control = control & ~MACEPCI_CONTROL_MAR_INT;
+ 	mace->pci.config_addr = mkaddr(bus, devfn, reg);
+ 	switch (size) {
+ 	case 1:
+@@ -56,9 +68,7 @@ mace_pci_read_config(struct pci_bus *bus, unsigned int devfn,
+ 		*val = mace->pci.config_data.l;
+ 		break;
+ 	}
+-	/* ack possible master abort */
+-	mace->pci.error &= ~MACEPCI_ERROR_MASTER_ABORT;
+-	mace->pci.control = control;
++	mace_pci_ack_abort();
  	/*
- 	 * Pages from [start, end) are within a pageblock_nr_pages
+ 	 * someone forgot to set the ultra bit for the onboard
+ 	 * scsi chips; we fake it here
+@@ -77,6 +87,7 @@ mace_pci_write_config(struct pci_bus *bus, unsigned int devfn,
+ 		      int reg, int size, u32 val)
+ {
+ 	mace->pci.config_addr = mkaddr(bus, devfn, reg);
++	mace->pci.error;
+ 	switch (size) {
+ 	case 1:
+ 		mace->pci.config_data.b[(reg & 3) ^ 3] = val;
+@@ -88,6 +99,7 @@ mace_pci_write_config(struct pci_bus *bus, unsigned int devfn,
+ 		mace->pci.config_data.l = val;
+ 		break;
+ 	}
++	mace_pci_ack_abort();
+ 
+ 	DPRINTK("write%d: reg=%08x,val=%02x\n", size * 8, reg, val);
+ 
+diff --git a/arch/mips/pci/pci-ip32.c b/arch/mips/pci/pci-ip32.c
+index 30aca6f76563d..41ec8453c865d 100644
+--- a/arch/mips/pci/pci-ip32.c
++++ b/arch/mips/pci/pci-ip32.c
+@@ -77,6 +77,8 @@ static irqreturn_t macepci_error(int irq, void *dev)
+ 	}
+ 
+ 	mace->pci.error = flags;
++	/* follow the write with a read, see mace_pci_ack_abort() */
++	mace->pci.error;
+ 
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.53.0
 
