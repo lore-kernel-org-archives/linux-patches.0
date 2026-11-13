@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590872;
-	b=LOJSSuT46O2zmKuOUlf1pmtgq5+4BPyLVkkYAOPjUhM4yCuNn7xiRNOIZRRTWZ/eMdwN
-	 XuYFmSz5AinfQl639h6wii10Z/Okd8DmQdyD3yvQvOuxQjITD4PI+LMhAkrd1YfTCqZ7q
-	 yGChk42Tjaic6zvvlq5m93PggpSZLc9LIr/0zXxmxoeohn/bDj/MhqdpyhchgeN7Lvhp6
-	 FXd2OmMZDrnPTW7XsToYhZX8fovM706XfYNh8NhoDdtFRbwbLk15kcUxd/QZ7K7wBKnKE
-	 Bi7a7BEbQAdxYn73bl2T2RDGZjOqfxB5c/Zzh9E27MJxTe9yTVi5a2/oa+Su8fR6YCg==
+	t=1794590873;
+	b=gkDjDlrANlS4M5gicu3KeotUJGGCtDafCfOsY3I4bQ9M5MzHj9m2XBSeWic+gHbLJefu
+	 3ERbiwRH1viRU5K+Pfvs4roIHTWUp0XUTlZT+SZsfJ2ispuFaosglKGkpCkFcmUjSwDWd
+	 lhAz/axvv3nZA6Zy+wcdJj07/n+YEjebxgASoKWq0LxjVf7hG5/xqGJZqip3WagGfP8cg
+	 I1aoX78mLHOb5NHvhAV71/72zF73mrsT1oyJiHprPRYlll0RA0abCnO660gWDb1froVGB
+	 Y85R58xWHxMNwKrdXbjt5ptJ5mGs7B+y2cClmQWFfcEgJEpHdKgHjsndaaX4NFHD4gA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590872;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zKas6+KMPXNx6e5iN2I1fTHGXixKmtpMig+V7VRmfoU=;
-	b=pj/UJSWdqBmDK4+6EAgNdjt8bkvMffz5cqdzQ2R3vLWGTxtnIuQq8g5WCwWJws/naBX+
-	 Xdw2MPeD50OBXcN30rQo4seNFLJ2wIIAn90ci8krCEsnN6jkQ0Yi+dXLiIOCfXIxmHaSf
-	 GqDtAvJnV5kY+wK+i94880piVfskRoTtrvil1OWAff4zxJ0MBSp6mMllutp+aR5Rj6tma
-	 iPGraUCGSVfpNz4Czmy8JBcgJhRdAGTXd6+BHop7E/O5hWjAU2odlB+wuN0X6OR+p5qYm
-	 nDigSP+CFFoQnPbNJa3UnYSF459Gok121dokiRibPjJI/ZAVC2DyPmGKpeEKfXnKxtw==
+	bh=21O9dfQ8+y4k98ID/qFw53cOQEvx9WAk3TcTZHwUJ50=;
+	b=OC2Wap4uAJSp5DIKVsSUNCFZaxyeA72MP7kNSA2pMifFxhZ15dGxeIPUbip2Qo0nUB4G
+	 2NSSCE8SJAEjieAsKHHilWlJQEtGIJagvBYbtLw18cKPFg0CWpuiOTKeR8W2y4zqhEq97
+	 sqPEGy5yS2JZnF1ZX6LPaoOm1UHMPlo+4CuNtTST2zsuxmWWCssZ5i3qMZd1Y3QbNOLOR
+	 FEfUrTSwzjbWHsw0YzzqBYqe21S81WohD/LzoG+ck20Oq06ATbljYyeZhcnJqDBWl+KjW
+	 njHbG7TpCLDdCNwqUcoRcwzP8wMGVFYbFZ+31kA0s20GStfPTHyBAC86wfAcIVtta6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlKpmBzW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m4uUaA7h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FF9606D4AA;
-	Fri, 13 Nov 2026 17:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0416606D4A9;
+	Fri, 13 Nov 2026 17:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mlKpmBzW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533051F000C5;
-	Fri, 13 Nov 2026 17:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m4uUaA7h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5BF1F000C5;
+	Fri, 13 Nov 2026 17:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590871;
-	bh=zKas6+KMPXNx6e5iN2I1fTHGXixKmtpMig+V7VRmfoU=;
+	s=korg; t=1794590872;
+	bh=21O9dfQ8+y4k98ID/qFw53cOQEvx9WAk3TcTZHwUJ50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mlKpmBzWMyooMJa6U/Plqxu52CL4HoJtpXGYSNhz+2FrVD8PecDpjutLKd7k0GWrL
-	 CSvlxEUWWx6gBfksVV4rHoA03hOKPUaxIT5aHu2vY5Oe+tP0mmNyrSfYrQEZe6l7mo
-	 y0CwbPb0r0Ua/HAHsmrf6c2KtvU/BODCZRe0d+TE=
+	b=m4uUaA7hg2cZNW2dVKBgWO9T0bV+78B+VsZOWSU2bTKtdYjKZqb5BCEoiWk/OQTGe
+	 cFJ9vizYkh0QP1hehFZJJVE6NKqA7rNj42eN4PxtVWoXpDJ6J4vqg7t1Lawg16MVoY
+	 rAkGRlB0t3UugWM1SmkeWxyptrgfq53ZQuX2GvP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/670] xfs: flag excessive delalloc rt extents as corruption
-Date: Fri, 13 Nov 2026 10:43:53 -0500
-Message-ID: <20261113153813.847864906@linuxfoundation.org>
+Subject: [PATCH 6.12 070/670] xfs: mark cow extents bad if theres no rmap mapping for them
+Date: Fri, 13 Nov 2026 10:43:54 -0500
+Message-ID: <20261113153813.920267472@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,44 +71,153 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 2b47be015a5e54f4a3d62afa636ba593de9b67f6 ]
+[ Upstream commit 2ffc0619c9c2881443c5fffb10db8f2bc0aa2ce8 ]
 
-LOLLM observed that we should not allow repairs to proceed if the count
-of delayed-allocation realtime extents exceeds the number of free rt
-extents because we can't install negative numbers into the superblock.
-It's unclear how we could end up in that state in real life, but let's
-at least complain loudly about it if we ever encounter it.
+LOLLM noticed that we fail to mark cow staging extents as bad if there's
+a cow staging extent but no rmap record for the cow staging event.
+Close this gap.
 
-Cc: stable@vger.kernel.org # v6.2
-Fixes: e74331d6fa2c21 ("xfs: online checking of the free rt extent count")
+Cc: stable@vger.kernel.org # v6.8
+Fixes: dbbdbd0086320a ("xfs: repair problems in CoW forks")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: removed the xfs_has_zoned() check because zoned filesystem support is absent ]
+[ sashal: Replaced xfs_gbno_to_fsb() and xfs_agbno_to_fsb() calls with the existing XFS_AGB_TO_FSB() macro. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/fscounters.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/xfs/scrub/cow_repair.c | 66 +++++++++++++++++++++++++--------------
+ 1 file changed, 42 insertions(+), 24 deletions(-)
 
-diff --git a/fs/xfs/scrub/fscounters.c b/fs/xfs/scrub/fscounters.c
-index 98634c668b56c..ac7e6329e46e8 100644
---- a/fs/xfs/scrub/fscounters.c
-+++ b/fs/xfs/scrub/fscounters.c
-@@ -606,6 +606,13 @@ xchk_fscounters(
- 			try_again = true;
+diff --git a/fs/xfs/scrub/cow_repair.c b/fs/xfs/scrub/cow_repair.c
+index e8f7cfd4dd22b..853744729577b 100644
+--- a/fs/xfs/scrub/cow_repair.c
++++ b/fs/xfs/scrub/cow_repair.c
+@@ -194,30 +194,37 @@ xrep_cow_mark_missing_staging_rmap(
+ 	void				*priv)
+ {
+ 	struct xrep_cow			*xc = priv;
+-	xfs_fsblock_t			fsbno;
+-	xfs_agblock_t			rec_bno;
+-	xfs_extlen_t			rec_len;
+-	unsigned int			adj;
++	const xfs_agblock_t		rec_end =
++			rec->rm_startblock + rec->rm_blockcount;
++	int				error = 0;
+ 
+-	if (rec->rm_owner == XFS_RMAP_OWN_COW)
+-		return 0;
+-
+-	rec_bno = rec->rm_startblock;
+-	rec_len = rec->rm_blockcount;
+-	if (rec_bno < xc->irec_startbno) {
+-		adj = xc->irec_startbno - rec_bno;
+-		rec_len -= adj;
+-		rec_bno += adj;
++	/* Was there a gap since the last rmap? */
++	if (xc->next_bno < rec->rm_startblock) {
++		error = xrep_cow_mark_file_range(xc,
++				XFS_AGB_TO_FSB(xc->sc->mp, cur->bc_ag.pag->pag_agno,
++					       xc->next_bno),
++				rec->rm_startblock - xc->next_bno);
++		if (error)
++			return error;
  	}
  
-+	if (fsc->frextents < fsc->frextents_delayed) {
-+		if (fsc->frozen)
-+			xchk_set_incomplete(sc);
-+		else
-+			try_again = true;
+-	if (rec_bno + rec_len > xc->irec_startbno + xc->irec.br_blockcount) {
+-		adj = (rec_bno + rec_len) -
+-		      (xc->irec_startbno + xc->irec.br_blockcount);
+-		rec_len -= adj;
++	if (rec->rm_owner != XFS_RMAP_OWN_COW) {
++		const xfs_agblock_t	bad_bno =
++				max(xc->irec_startbno, rec->rm_startblock);
++		const xfs_agblock_t	irec_end =
++				xc->irec_startbno + xc->irec.br_blockcount;
++		const xfs_extlen_t	bad_end = min(irec_end, rec_end);
++
++		error = xrep_cow_mark_file_range(xc,
++				XFS_AGB_TO_FSB(xc->sc->mp, cur->bc_ag.pag->pag_agno,
++					       bad_bno),
++				bad_end - bad_bno);
++		if (error)
++			return error;
+ 	}
+ 
+-	fsbno = XFS_AGB_TO_FSB(xc->sc->mp, cur->bc_ag.pag->pag_agno, rec_bno);
+-	return xrep_cow_mark_file_range(xc, fsbno, rec_len);
++	xc->next_bno = max(xc->next_bno, rec_end);
++	return error;
+ }
+ 
+ /*
+@@ -235,10 +242,12 @@ xrep_cow_find_bad(
+ 	struct xfs_perag		*pag;
+ 	struct xfs_scrub		*sc = xc->sc;
+ 	xfs_agnumber_t			agno;
++	xfs_agblock_t			irec_end;
+ 	int				error;
+ 
+ 	agno = XFS_FSB_TO_AGNO(sc->mp, xc->irec.br_startblock);
+ 	xc->irec_startbno = XFS_FSB_TO_AGBNO(sc->mp, xc->irec.br_startblock);
++	irec_end = xc->irec_startbno + xc->irec.br_blockcount;
+ 
+ 	pag = xfs_perag_get(sc->mp, agno);
+ 	if (!pag)
+@@ -250,7 +259,7 @@ xrep_cow_find_bad(
+ 
+ 	/* Mark any CoW fork extents that are shared. */
+ 	rc_low.rc_startblock = xc->irec_startbno;
+-	rc_high.rc_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
++	rc_high.rc_startblock = irec_end - 1;
+ 	rc_low.rc_domain = rc_high.rc_domain = XFS_REFC_DOMAIN_SHARED;
+ 	error = xfs_refcount_query_range(sc->sa.refc_cur, &rc_low, &rc_high,
+ 			xrep_cow_mark_shared_staging, xc);
+@@ -259,7 +268,7 @@ xrep_cow_find_bad(
+ 
+ 	/* Make sure there are CoW staging extents for the whole mapping. */
+ 	rc_low.rc_startblock = xc->irec_startbno;
+-	rc_high.rc_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
++	rc_high.rc_startblock = irec_end - 1;
+ 	rc_low.rc_domain = rc_high.rc_domain = XFS_REFC_DOMAIN_COW;
+ 	xc->next_bno = xc->irec_startbno;
+ 	error = xfs_refcount_query_range(sc->sa.refc_cur, &rc_low, &rc_high,
+@@ -267,12 +276,11 @@ xrep_cow_find_bad(
+ 	if (error)
+ 		goto out_sa;
+ 
+-	if (xc->next_bno < xc->irec_startbno + xc->irec.br_blockcount) {
++	if (xc->next_bno < irec_end) {
+ 		error = xrep_cow_mark_file_range(xc,
+ 				XFS_AGB_TO_FSB(sc->mp, pag->pag_agno,
+ 					       xc->next_bno),
+-				xc->irec_startbno + xc->irec.br_blockcount -
+-				xc->next_bno);
++				irec_end - xc->next_bno);
+ 		if (error)
+ 			goto out_sa;
+ 	}
+@@ -281,11 +289,21 @@ xrep_cow_find_bad(
+ 	rm_low.rm_startblock = xc->irec_startbno;
+ 	memset(&rm_high, 0xFF, sizeof(rm_high));
+ 	rm_high.rm_startblock = xc->irec_startbno + xc->irec.br_blockcount - 1;
++	xc->next_bno = xc->irec_startbno;
+ 	error = xfs_rmap_query_range(sc->sa.rmap_cur, &rm_low, &rm_high,
+ 			xrep_cow_mark_missing_staging_rmap, xc);
+ 	if (error)
+ 		goto out_sa;
+ 
++	if (xc->next_bno < irec_end) {
++		error = xrep_cow_mark_file_range(xc,
++				XFS_AGB_TO_FSB(sc->mp, pag->pag_agno,
++					       xc->next_bno),
++				irec_end - xc->next_bno);
++		if (error)
++			goto out_sa;
 +	}
 +
- 	if (!xchk_fscount_within_range(sc, frextents, &mp->m_frextents,
- 			fsc->frextents - fsc->frextents_delayed)) {
- 		if (fsc->frozen)
+ 	/*
+ 	 * If userspace is forcing us to rebuild the CoW fork or someone turned
+ 	 * on the debugging knob, replace everything in the CoW fork.
 -- 
 2.53.0
 
