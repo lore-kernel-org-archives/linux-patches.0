@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590193;
-	b=0jvgqPpDCmWVyTfd/Jrhy/s1r3z1JPyzHmHLeFPTCvpvE4ZcJeioKiqVkKx1dVHtv72x
-	 DwF2ajStoGUv4v1MBUDrRsz6ctu2DScYJvzp7/4sl9XYCsm2oIWoSoQ6hWD60RoqyZMld
-	 1NlqwHJ6KIQcLaeL5b93a3DZwIsasQTjxfFLe9uVZvF3n3N/qWlB8Xxs5/mbiMSoDtMsC
-	 Hl3N2vHkcX1D5Q7+u4v46nJqc/BTzfbtnTK7eU/35CN/rWoRwjaWaJxlbVJiiTYI8w0Cw
-	 XHuc/AyW6uoFiArK1CNmQEIVWy8IIpHzGeLTbKeNhjc0FdW0bpZyAM1utJDvBdgCOug==
+	t=1794590194;
+	b=Rbg0r9p+wPTJ4ZjWQcJFT3129MmF6+w2AEll8jSCQzwRbKSwe1It5H1WRHASOLWlrjhl
+	 a5ptGbrr7DIgCnot+z4ewc817JMG73J8ey04vboaQHzlX1gbZBpH3lvY1naFfnfn+3ZOB
+	 Tjt2jQulfxIPLHGwPZeWcBBTQxCmphtCSsZ7/Hq3Gq25SRIAa+qC4xQUbRU6wdgo07/aN
+	 /6xhJQAMEu3KWebg/QUi2QBULT7qeYIwOIJIXt6p3+K+nRQpFFaBiFT+z6tTsA041fnX7
+	 DQLVscjS4NE32hbIU11hanhabRWH018nB9zmqzAvNZz+okfhnxqFqd0JvzVjb1oQA+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590194;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=pqpopvVU0ib6SyiFSCjUdjg1Tu3dfCipVlnFFwrkFlU=;
-	b=336PpzSHbIEpTKQBlxdH1Hqm49clPsDsNyy/fjXINxmvgsMjvtWYLsT4zruPh1VBWoXn
-	 aNcGldAnK7Aa1bX6DI1QpAilME5SXWX/YXipcirKv7VVZbkt2Fl2X0sLKzyW8n8DTK9aX
-	 Y9MVE2QlekoaNzW0mSdea4gBXmqr64OES+0iu3KIapAMprBr9UlCSsxrVbwkNUxTuiZ+j
-	 W3RWcAPSyFaZ9MHARXzcZccDSRfI1b3vnM6J5ptUlxUTNuscKm0zqkshx3F9SNqx1OiAp
-	 9MnB8B+NW+i/jDVl/X6n9TI3C0RDhsrMEDdvlMzyoff97X4i9oWt2H2v/01uidLs+Ow==
+	bh=S/jjRwobw0q8EX9y+WsUHVUE4V8c94IsliIzms6wjN8=;
+	b=ydHWicSneCtPhdjbbF6gVDRyiL8Gj8Vk7MkCMWBLi5RN4b/TlYFNhyl1SRTCtUDkXgIM
+	 2/6fz+PUbFERv9maOnDB8L7Qw6fHVkfDEDQJUnDie3YSJxiOYdKzZuNRR+VfpaDEDeXoQ
+	 DfOL72KDf/DezBONL6IgzpzyZkotHvuDt4Pxtg3QPz1MhHHA6iIUOjat9CbTwt8ljtUkt
+	 I5iZ5vPcKOC/vx+oL2AnGT6nS1fH/aT0R54mSJWPOdyEphkNiceRLWInPxemKflTj+H5l
+	 Wrmn/xEX0Yq1vaCQAUll9lXz43PtdXXfPNDTgZQ3HcF/tNRD+0/OEH8Dw0BttFEVVAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vwiQTh0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rE7O42vi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8EA606B36A;
-	Fri, 13 Nov 2026 17:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D778F6074B38;
+	Fri, 13 Nov 2026 17:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0vwiQTh0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7DF1F000CB;
-	Fri, 13 Nov 2026 17:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rE7O42vi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E841F000C8;
+	Fri, 13 Nov 2026 17:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590193;
-	bh=pqpopvVU0ib6SyiFSCjUdjg1Tu3dfCipVlnFFwrkFlU=;
+	s=korg; t=1794590194;
+	bh=S/jjRwobw0q8EX9y+WsUHVUE4V8c94IsliIzms6wjN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0vwiQTh0JuyvmAFQ4Vhh4fl4+iUmbKP4heGXfgl0Qltnei/6q/grnPdZTJaZhm6fI
-	 y4BUGE2ON4RqlnNan2XrVP8NF/lxulDaRmbDu+QLhZNUfT0tw0khEzk9BgTKz8EF5N
-	 uoPhNEcbuN69JMEEkVhyq0flkPV+VUMEb4a5SE1Q=
+	b=rE7O42viiPnSPA8T5GBjK8jkFf8x/KL7V9joOJ3xMeAOdBj0BbZupwpgBnz4eJBeb
+	 /d+qyla8Cvfl97IKpZQ4XS8iSz2I0il6y0pryGIbg+r4aUS3g+b2fgrgMFBqH9O30j
+	 EE/S+IKIRPv1SW6tcMFfMtpMA4Gz4PU/bvfsgBeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Iago Toral Quiroga <itoral@igalia.com>,
 	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 201/686] drm/vc4: Publish the output fence outside of job_lock
-Date: Fri, 13 Nov 2026 10:45:34 -0500
-Message-ID: <20261113153827.857460660@linuxfoundation.org>
+Subject: [PATCH 6.18 202/686] drm/vc4: Drop the BO reservations outside of job_lock
+Date: Fri, 13 Nov 2026 10:45:35 -0500
+Message-ID: <20261113153827.892125415@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,81 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 9ee552a42c3905b4547e83173d46413137ec329a ]
+[ Upstream commit 8ef66514d7b993c9fb96a5886f001e3556610c1c ]
 
-job_lock is taken by the V3D interrupt handler, so nesting an IRQ-unsafe
-lock under it creates an inversion. drm_syncobj_replace_fence() takes
-drm_syncobj::lock, which other paths acquire with interrupts enabled. For
-example, a thread interrupted while holding it blocks the handler on
-job_lock, and the handler can only make progress once the submit path
-releases job_lock, which it cannot do while waiting for drm_syncobj::lock.
+vc4_queue_submit() calls drm_exec_fini() with job_lock held and interrupts
+disabled. Besides unlocking the reservations, drm_exec_fini() frees the
+object array with kvfree(), which asks for preemptible task context or a
+non-NMI interrupt, and may reach might_sleep() through vfree().
 
-This is reported by lockdep:
+Considering that an array that exceeds a page can take the vmalloc
+fallback, call drm_exec_fini() once job_lock is dropped. The reservations
+are then held across the job kick, which is harmless as nothing in the
+completion path takes a BO reservation.
 
-[  188.139076] ========================================================
-[  188.139086] WARNING: possible irq lock inversion dependency detected
-[  188.139096] 7.3.0-rc3-00067-gc4f3feeaf60f #67 Tainted: G         C
-[  188.139108] --------------------------------------------------------
-[  188.139116] swapper/0/0 just changed the state of lock:
-[  188.139125] ffff0000054f8ff8 (&vc4->job_lock){-...}-{3:3}, at: vc4_irq+0xa8/0x28c [vc4]
-[  188.139234] but this lock took another, HARDIRQ-unsafe lock in the past:
-[  188.139242]  (&syncobj->lock){+.+.}-{3:3}
-[  188.139256] and interrupts could create inverse lock ordering between them.
-[  188.139267] other info that might help us debug this:
-[  188.139275]  Possible interrupt unsafe locking scenario:
-[  188.139284]        CPU0                    CPU1
-[  188.139291]        ----                    ----
-[  188.139299]   lock(&syncobj->lock);
-[  188.139312]                                local_irq_disable();
-[  188.139320]                                lock(&vc4->job_lock);
-[  188.139335]                                lock(&syncobj->lock);
-[  188.139350]   <Interrupt>
-[  188.139358]     lock(&vc4->job_lock);
-[  188.139372] *** DEADLOCK ***
-
-Hand the fence over after job_lock is dropped. The job can complete and
-drop exec->fence in that window, so take a reference first and publish
-through the local pointer, as exec may already be gone.
+Note that vc4_attach_fences() has to stay inside the critical section, as
+it walks exec, which the job done worker is free to release as soon as
+job_lock is dropped.
 
 Cc: stable@vger.kernel.org
-Fixes: e84fcb95e074 ("drm/vc4: Export fence through syncobj")
+Fixes: 04630796c437 ("drm/vc4: Use DRM Execution Contexts")
 Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
-Link: https://patch.msgid.link/20261004-vc4-misc-fixes-v1-1-b763df9e33e1@igalia.com
+Link: https://patch.msgid.link/20261004-vc4-misc-fixes-v1-2-b763df9e33e1@igalia.com
 Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_gem.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_gem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
-index 5eadf11f289a8..812636318cd9f 100644
+index 812636318cd9f..4fa6e71140a84 100644
 --- a/drivers/gpu/drm/vc4/vc4_gem.c
 +++ b/drivers/gpu/drm/vc4/vc4_gem.c
-@@ -639,8 +639,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
- 	fence->seqno = exec->seqno;
- 	exec->fence = &fence->base;
- 
-+	/* The job can complete and drop exec->fence as soon as job_lock is
-+	 * released, so hold our own reference.
-+	 */
- 	if (out_sync)
--		drm_syncobj_replace_fence(out_sync, exec->fence);
-+		dma_fence_get(&fence->base);
+@@ -647,8 +647,6 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
  
  	vc4_attach_fences(exec);
  
-@@ -662,6 +665,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
+-	drm_exec_fini(exec_ctx);
+-
+ 	list_add_tail(&exec->head, &vc4->bin_job_list);
+ 
+ 	/* If no bin job was executing and if the render job (if any) has the
+@@ -665,6 +663,8 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
  
  	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
  
-+	if (out_sync) {
-+		drm_syncobj_replace_fence(out_sync, &fence->base);
-+		dma_fence_put(&fence->base);
-+	}
++	drm_exec_fini(exec_ctx);
 +
- 	return 0;
- }
- 
+ 	if (out_sync) {
+ 		drm_syncobj_replace_fence(out_sync, &fence->base);
+ 		dma_fence_put(&fence->base);
 -- 
 2.53.0
 
