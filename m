@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591202;
-	b=kE+dIHE5aTwzUgT3P+kc125dHz1zdKyTZs0X+lTApSNRk+pSMzv/7mSE8RzPtoD6Zg2r
-	 S/bgXYBTLAbHw6NESaNMVnJTFZgAMjk6oy8KVnqhDIfcpA4g4vyONsxEbS+81BieIGUoT
-	 q1v2RLIAVjGALk8SrAdCuofB5kXgbTSeDgJXOMx7SH50tHq3esb4votOl+Sjp7dcXW6TW
-	 w9Tgvd3M3Gyk7PDhAHJWIfA2oqoszwYQi5ksmMi/mbr7Dhic/L+g2TJvRAMkqnMTUeWP4
-	 ZTA8PLbOrRREyrdKe4IYHZbJrvzJ+W+XBu5JPrLdiWAAs3f7NCKy1mH766IFzHg8ZVA==
+	t=1794591204;
+	b=5UuztqcXrfOvu/PrV7SvEcw2ikBJEsC283jGIKqrB9RcG5m6rCJQYpN7jrggN5uxvmsQ
+	 TbtCQJeIgLH3re/tVlm9nQzrgqIHpeYagOuM7fdND6TRWDlvRWge+Wz7ZWRzSIWwvj9j8
+	 hwAAnPgbrSl0ZiSdo/B6GBoUJT0vuGmt5g3s+6MsgK2po+mlL7g6Qx1iKwUHP8K/LmeBZ
+	 78CSsAaPZI4CZd9arPJRpNMTKWUo6rj/5o4BjlRCawq4m905MI0QcFaVCYtgykRpAsbH0
+	 ZW5tXqxR5qan7MyY2oxqT5dV/g+Y5+19lD6LCZPp8GJQfeCQyGExoedkL5vXn02/lyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591202;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591204;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j6rQ1ALgZiP9aSWxM0zeTOe+lzKI5IX3178BCfUVN38=;
-	b=P0Cn2I1b4sPzy/igShrz5XZO0SMgKE8xajLVPIu4FOuH6zwtklGFOUAHX1MUtSb0Ea2p
-	 QK9Gi9+dEycJhyoTAV5Xo/fj+mtgB0v6u4R9CbveO9rhxK3UodaRbYxoYIy9FSAKDV1IL
-	 dH7ORjs+XvNr6lrzkOsU4vVPG/QIL003MIgjiXPxAe83gUn66nI1RKEukdrEVygAFUd0u
-	 su+9q7ZAWdpZI1JAfqWfKYmJXnAM+nL8Z0imDthbYw84VjtPRlS0fSHXxY+tctFgpiFBr
-	 dglQ0IwaJBOtEi4ytT+xCxlJ9aRXtCZumRtgDTonqUs5asfNk0jmFOOfgf+2CLx+jEw==
+	bh=7243/7SvpcPK19CYqjONl02chJYuSGVAeFfrM02UH+A=;
+	b=3U+jcER0Wp3PIiD8JWZ8f1bV2KNRTe1IYe7QDGUONe7bP3N+XAy+9Vi/dse5OWLL28LJ
+	 5yerzICaP8SiUVSO7fZQTQwtL3KuU2GYa4KefSiFYYDzQe7ZZDacffCHZD5SggyFao2xk
+	 gGGsnwhAl+TALWciSKVCl8gFkXjbcc1oFSKLmYAMoXwGatRJSn6M4K1R5nlOAzBqs5myl
+	 3Bmx//AX+xVENjctojnndEzgdS5zAgPj+q8z6hLNOd1kS9bjkl5HeSM1DGQvFsVkl1UZx
+	 IJXjzfDryy4ZmQxCdfTp45kaKPpQawzRZx6ILIzhQykPc2K/ZRMnN5Mnifx+ubRmWsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2Ed2uw6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oTHm2JIk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B620607585F;
-	Fri, 13 Nov 2026 17:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EF56075851;
+	Fri, 13 Nov 2026 17:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2Ed2uw6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2034C1F000C4;
-	Fri, 13 Nov 2026 17:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oTHm2JIk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCF51F000C4;
+	Fri, 13 Nov 2026 17:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591202;
-	bh=j6rQ1ALgZiP9aSWxM0zeTOe+lzKI5IX3178BCfUVN38=;
+	s=korg; t=1794591203;
+	bh=7243/7SvpcPK19CYqjONl02chJYuSGVAeFfrM02UH+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h2Ed2uw6Cv34Fh/TopWCT0gAntJEtZ0Rdspxob+O5wlrMapf5MU9nrSV2mTj3XGz4
-	 +Od9GMO/xgXdMfoAe1fceBugCE21hf2T2KYmNs8tRhMEed1mrfiJqQJkEAO+iQ0nLz
-	 VR/NTAwIlFdHplWSFBGw72iDoW35SiCzdlotYcrU=
+	b=oTHm2JIk+6tyVs1Z9XcGEVafBFZUVWRjwEr/1zEK2vGTfCEvAyXxfLZRUVGSYDKuk
+	 Kf5h9hofojjl67jI3S65tJawSCu1pNv9ubrcDjPWIzj5RRkk3S9C6RPJs2IudfGu+O
+	 vQ2fyGV0Sb+cWT45LvkMr9jAkuRsXsjAYeyHEpAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -50,9 +50,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jia-Ju Bai <baijiaju1990@gmail.com>,
 	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 295/670] ocfs2: wait for filecheck kobject release after a failed add
-Date: Fri, 13 Nov 2026 10:47:39 -0500
-Message-ID: <20261113153821.929762919@linuxfoundation.org>
+Subject: [PATCH 6.12 296/670] ocfs2: cache the mount context for dentry lock callbacks
+Date: Fri, 13 Nov 2026 10:47:40 -0500
+Message-ID: <20261113153821.962020970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -76,196 +76,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit a25c02af29c3e95128e4343fceb4bdace8e480a0 ]
+[ Upstream commit 5b4696e0bfc358619adaeab25ad35b4979af8331 ]
 
-The filecheck kobject and its release completion are embedded in
-ocfs2_super, so the osb must outlive the kobject. On a failed
-kobject_init_and_add(), creation clears fs_fcheck and calls
-kobject_put(), but returns without waiting for the release callback.
+ocfs2_drop_dentry_lock() drops the inode reference before releasing the
+DENTRY lock.  This lets inode eviction release the local inode and open
+locks before a remote unlink can proceed past the DENTRY lock.
 
-With CONFIG_DEBUG_KOBJECT_RELEASE, the last put queues delayed cleanup.
-Mount failure can then free the containing osb before the embedded
-release timer expires:
+A DLM callback can still arrive before the DENTRY lock has been dropped.
+ocfs2_get_dentry_osb() obtains the mount context through dl_inode->i_sb,
+which can access a freed inode when the downconvert thread drops the
+last inode reference in its post-unlock callback:
 
-  Mount failure                     Delayed cleanup
-  -------------                     ---------------
-  ocfs2_filecheck_create_sysfs()
-    kobject_init_and_add() fails
-    fs_fcheck = NULL
-    kobject_put()
-      queue delayed release
-  return to mount error cleanup
-  ocfs2_dismount_volume()
-    remove_sysfs() skips the wait
-    kfree(osb)
-                                    expire embedded release timer
-                                      access freed osb
+  Downconvert thread                     DLM callback thread
+  ------------------                     -------------------
+  ocfs2_process_blocked_lock()
+    ocfs2_dentry_post_unlock()
+      ocfs2_dentry_lock_put()
+        ocfs2_drop_dentry_lock()
+          iput(dl->dl_inode)
+          [inode reclaimed after RCU]
+                                         ocfs2_blocking_ast()
+                                           ocfs2_get_dentry_osb()
+                                             dl->dl_inode->i_sb
+          ocfs2_simple_drop_lockres()
 
-The normal removal path waits for fs_kobj_unregister, but it returns
-early when fs_fcheck is NULL. The failed-add path therefore leaves the
-delayed work and its completion in freed storage.
+Store the mount context in the DENTRY lock resource's l_priv field and use
+the default mount-context lookup.  Recover the containing dentry lock with
+container_of(), as already done for refcount locks, and remove
+ocfs2_get_dentry_osb().  ocfs2_dismount_volume() shuts down the DLM before
+freeing the mount context, so callbacks can use it without accessing the
+inode.  Preserve the existing iput-before-unlock order to avoid delaying
+local inode and open lock release until after the DENTRY lock is released.
 
-Wait for the existing release completion after the failed-add
-kobject_put(), before returning to mount error cleanup. This keeps the
-enclosing osb alive until the kobject has finished releasing, matching
-the normal teardown path.
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in __run_timers+0xa6d/0xa90
-    Write of size 8 at addr ffff8881178a5658 by task swapper/0/0
-
-    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <IRQ>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? __run_timers+0xa6d/0xa90
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20e/0x420
-     ? __run_timers+0xa6d/0xa90
-     kasan_report+0xe0/0x110
-     ? __run_timers+0xa6d/0xa90
-     __run_timers+0xa6d/0xa90
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx___run_timers+0x10/0x10
-     ? __lock_acquire+0x5a3/0x2140
-     ? __pfx_do_raw_spin_lock+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     timer_expire_remote+0xfa/0x160
-     ? __pfx_timer_expire_remote+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     tmigr_handle_remote_up+0x4ba/0x9d0
-     ? __pfx_tmigr_handle_remote_up+0x10/0x10
-     ? tmigr_handle_remote+0x21a/0x340
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? __pfx_tmigr_handle_remote_up+0x10/0x10
-     __walk_groups_from+0x5a/0x160
-     tmigr_handle_remote+0x24f/0x340
-     ? __pfx_tmigr_handle_remote+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     run_timer_softirq+0x222/0x270
-     ? __pfx_run_timer_softirq+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lockdep_hardirqs_on_prepare+0xb8/0x1a0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     handle_softirqs+0x1fa/0x8d0
-     ? __pfx_handle_softirqs+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? _raw_spin_unlock+0x23/0x40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __hrtimer_rearm_deferred+0x1fb/0x5d0
-     __irq_exit_rcu+0x113/0x1e0
-     irq_exit_rcu+0xe/0x20
-     sysvec_apic_timer_interrupt+0x6c/0x80
-     </IRQ>
-     <TASK>
-     asm_sysvec_apic_timer_interrupt+0x1a/0x20
-    RIP: 0010:pv_native_safe_halt+0xf/0x20
-    Code: fa 18 01 e9 ee 37 ff fa 0f 1f 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 f3 0f 1e fa eb 07 0f 00 2d 23 c7 14 00 fb f4 <e9> c7 37 ff fa 66 2e 0f 1f 84 00 00 00 00 00 66 90 90 90 90 90 90
-    RSP: 0018:ffffffff87c07cf8 EFLAGS: 00000206
-    RAX: 0000000000045d0f RBX: ffffffff87c2d4c0 RCX: ffffffff86111e95
-    RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffff815b508e
-    RBP: fffffbfff0f85a98 R08: 0000000000000001 R09: ffffed10310c68ba
-    R10: ffff8881886345d3 R11: 0000000000000000 R12: 0000000000000001
-    R13: 0000000000000000 R14: 1ffffffff0f80fa4 R15: dffffc0000000000
-     ? ct_kernel_exit.constprop.0+0xc5/0xf0
-     ? do_idle+0x3ae/0x650
-     default_idle+0x9/0x10
-     default_idle_call+0x6c/0xb0
-     do_idle+0x3ae/0x650
-     ? __pfx___schedule+0x10/0x10
-     ? __pfx_do_idle+0x10/0x10
-     ? rest_init+0x1cd/0x330
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     cpu_startup_entry+0x54/0x60
-     rest_init+0x1e1/0x330
-     ? __pfx_acpi_read_bit_register+0x10/0x10
-     ? __pfx_rest_init+0x10/0x10
-     ? acpi_os_write_port+0x23/0xb0
-     ? __pfx_kernel_init+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? acpi_ut_status_exit+0xd6/0x180
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? acpi_ut_status_exit+0xd6/0x180
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? acpi_enable_subsystem+0x2b0/0x4e0
-     ? __pfx_x86_late_time_init+0x10/0x10
-     start_kernel+0x417/0x4b0
-     x86_64_start_reservations+0x18/0x30
-     x86_64_start_kernel+0x111/0x120
-     common_startup_64+0x13e/0x158
-     </TASK>
-
-    Allocated by task 494:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x28d/0x610
-     ocfs2_initialize_super.isra.0+0xab/0x3070
-     ocfs2_fill_super+0x801/0x3920
-     get_tree_bdev_flags+0x35d/0x5f0
-     vfs_get_tree+0x93/0x320
-     fc_mount+0x1d/0x200
-     path_mount+0x592/0x1e00
-     __x64_sys_mount+0x24b/0x2d0
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 494:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x308/0x580
-     ocfs2_dismount_volume+0x43c/0x9b0
-     ocfs2_fill_super+0x258f/0x3920
-     get_tree_bdev_flags+0x35d/0x5f0
-     vfs_get_tree+0x93/0x320
-     fc_mount+0x1d/0x200
-     path_mount+0x592/0x1e00
-     __x64_sys_mount+0x24b/0x2d0
-     do_syscall_64+0x114/0x620
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff8881178a4000
-     which belongs to the cache kmalloc-8k of size 8192
-    The buggy address is located 5720 bytes inside of
-     freed 8192-byte region [ffff8881178a4000, ffff8881178a6000)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x1178a0
-    head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-    flags: 0x200000000000040(head|node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000040 ffff888100043880 dead000000000122 0000000000000000
-    raw: 0000000000000000 0000000000020002 00000000f5000000 0000000000000000
-    head: 0200000000000040 ffff888100043880 dead000000000122 0000000000000000
-    head: 0000000000000000 0000000000020002 00000000f5000000 0000000000000000
-    head: 0200000000000003 fffffffffffffe01 00000000ffffffff 00000000ffffffff
-    head: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff8881178a5500: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff8881178a5580: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-    >ffff8881178a5600: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                                        ^
-     ffff8881178a5680: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff8881178a5700: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-    ==================================================================
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0087-v6-78f3c3d6d70887d6e0cc@gmail.com
-Fixes: b9fba67b3806 ("ocfs2: fix error path kobject memory leak")
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0012-v9-eeb9084fb29577971229@gmail.com
+Fixes: 8ed6b23709b3 ("ocfs2: revert iput deferring code in ocfs2_drop_dentry_lock")
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
@@ -276,22 +123,89 @@ Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/filecheck.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ocfs2/dcache.h  |  5 ++---
+ fs/ocfs2/dlmglue.c | 16 ++++------------
+ 2 files changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/fs/ocfs2/filecheck.c b/fs/ocfs2/filecheck.c
-index c04b55bfaa6d8..40b59f00ed573 100644
---- a/fs/ocfs2/filecheck.c
-+++ b/fs/ocfs2/filecheck.c
-@@ -189,6 +189,8 @@ int ocfs2_filecheck_create_sysfs(struct ocfs2_super *osb)
- 		/* Mount failure still calls ocfs2_filecheck_remove_sysfs(). */
- 		entry->fs_fcheck = NULL;
- 		kobject_put(&entry->fs_kobj);
-+		/* Keep ocfs2_super alive until the kobject is released. */
-+		wait_for_completion(&entry->fs_kobj_unregister);
- 		kfree(fcheck);
- 		return ret;
- 	}
+diff --git a/fs/ocfs2/dcache.h b/fs/ocfs2/dcache.h
+index 7f246c5692d82..046ab9a807692 100644
+--- a/fs/ocfs2/dcache.h
++++ b/fs/ocfs2/dcache.h
+@@ -17,9 +17,8 @@ struct ocfs2_dentry_lock {
+ 	u64			dl_parent_blkno;
+ 
+ 	/*
+-	 * The ocfs2_dentry_lock keeps an inode reference until
+-	 * dl_lockres has been destroyed. This is usually done in
+-	 * ->d_iput() anyway, so there should be minimal impact.
++	 * The inode reference is dropped before dl_lockres is unlocked.
++	 * Callbacks must not use it to find the mount context during teardown.
+ 	 */
+ 	struct inode		*dl_inode;
+ 	struct ocfs2_lock_res	dl_lockres;
+diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
+index 757f9b91499bc..96d8f39a653a6 100644
+--- a/fs/ocfs2/dlmglue.c
++++ b/fs/ocfs2/dlmglue.c
+@@ -56,7 +56,6 @@ struct ocfs2_mask_waiter {
+ #endif
+ };
+ 
+-static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres);
+ static struct ocfs2_super *ocfs2_get_inode_osb(struct ocfs2_lock_res *lockres);
+ static struct ocfs2_super *ocfs2_get_file_osb(struct ocfs2_lock_res *lockres);
+ static struct ocfs2_super *ocfs2_get_qinfo_osb(struct ocfs2_lock_res *lockres);
+@@ -256,7 +255,6 @@ static const struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
+ };
+ 
+ static const struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
+-	.get_osb	= ocfs2_get_dentry_osb,
+ 	.post_unlock	= ocfs2_dentry_post_unlock,
+ 	.downconvert_worker = ocfs2_dentry_convert_worker,
+ 	.flags		= 0,
+@@ -307,7 +305,7 @@ static inline struct ocfs2_dentry_lock *ocfs2_lock_res_dl(struct ocfs2_lock_res
+ {
+ 	BUG_ON(lockres->l_type != OCFS2_LOCK_TYPE_DENTRY);
+ 
+-	return (struct ocfs2_dentry_lock *)lockres->l_priv;
++	return container_of(lockres, struct ocfs2_dentry_lock, dl_lockres);
+ }
+ 
+ static inline struct ocfs2_mem_dqinfo *ocfs2_lock_res_qinfo(struct ocfs2_lock_res *lockres)
+@@ -608,13 +606,6 @@ static __u64 ocfs2_get_dentry_lock_ino(struct ocfs2_lock_res *lockres)
+ 	return be64_to_cpu(inode_blkno_be);
+ }
+ 
+-static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres)
+-{
+-	struct ocfs2_dentry_lock *dl = lockres->l_priv;
+-
+-	return OCFS2_SB(dl->dl_inode->i_sb);
+-}
+-
+ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
+ 				u64 parent, struct inode *inode)
+ {
+@@ -622,6 +613,7 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
+ 	u64 inode_blkno = OCFS2_I(inode)->ip_blkno;
+ 	__be64 inode_blkno_be = cpu_to_be64(inode_blkno);
+ 	struct ocfs2_lock_res *lockres = &dl->dl_lockres;
++	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
+ 
+ 	ocfs2_lock_res_init_once(lockres);
+ 
+@@ -650,9 +642,9 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
+ 	memcpy(&lockres->l_name[OCFS2_DENTRY_LOCK_INO_START], &inode_blkno_be,
+ 	       sizeof(__be64));
+ 
+-	ocfs2_lock_res_init_common(OCFS2_SB(inode->i_sb), lockres,
++	ocfs2_lock_res_init_common(osb, lockres,
+ 				   OCFS2_LOCK_TYPE_DENTRY, &ocfs2_dentry_lops,
+-				   dl);
++				   osb);
+ }
+ 
+ static void ocfs2_super_lock_res_init(struct ocfs2_lock_res *res,
 -- 
 2.53.0
 
