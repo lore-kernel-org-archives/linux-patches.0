@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591026;
-	b=X6FJfDueDW5BqZ7lwWk0U4hE3mbvqo9L3+XK9ysGZbxv+Fv+E5Kbpho/VwCYGkEIOF8r
-	 0RjuHRRINav80KI3IeO6uG2aPjmJqMHk8KD7FK2vLz/qgGLezZxmJNZRfi2nU2P6ePl4e
-	 CioryWzjtPXZs+pwKHdCqGR+Ut3i+Sw6BQyNREu5+ai32jnQzrq0WTfVgqAatHrQFye5z
-	 raxPwKhYh0RBTXSfUMZ5E0YoMTu7RTqoBpcQj+KIcOLK12ePYvbS83TACx2kVhNvXW9bL
-	 pVCID+bf0XSClEQ6sq8Bm2iFZH6fVmF/GR7vt8MHbjEO0qAhQ+p5gf2EZ0rGJy5brFg==
+	t=1794591027;
+	b=jTQyE40w+2V+VlKD2VbNvP56zxens9yJsAVz8Q+DXF+4m28xUvRla4w02bSo/gDTV8yP
+	 R5IpnuREVPWkxIo6xh/873ougBMxLquzkOemg1hIR7Tca1YAvnk8FB0I4HgfCUz2HCA4q
+	 wpcRlQeVf6wUM+WBDSS3ry//sEHcPsa5+KkyPsIGjEgYKw0vHp62jnqiWUqxrzItEQ6wK
+	 nK0jeFzFOiRbjKzfcmxwVrAxaW7khW0M+fpEdHL5FblC/tv4eSMJW0ywRxwkEqpqVwb/Y
+	 RsbPHg6bRggCz6LGcKcAy/XrqZoPkm20DTYcC1mjtxH9RbW9f5n+l5lpgQ7QBbIvgCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591026;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591027;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VvMONmzaxO8KmqT85cwLRN3izDVzI2RQN2cqD2ExxTw=;
-	b=iX/Pud60bCxDkAAL2320l85DdWyfZ93UNbgZHSrhQpUS94PKhYoHu2HfXNEX0jPC4LJj
-	 RrJXCOMDwRxarFEr96+elsHo750EZcZbH93SFYzfxv/YMBjyJc6sF74aL4fkX7z6f/nTA
-	 moxOLCnY3ua4RD5ye+D0u4/wZTN8EarHeOL1Df+xax4zjuzp0yIi0VzgeMMYs3xDH3M3u
-	 L8vf3Ze+dd/MBU+EnUmC5XH6u3+JxW4V1RL8NZlh4ruZ10eR5ZFFIhePNnmDf6uUmtZXh
-	 YwJezBSM4djQ6oJYprnKjEf0eK/tQcvpXacL0sUZAI55LjM4pzUDJZGFfFFnnLqjAOA==
+	bh=E+v7bLrrQiWMLgCTI0l3GA8V7pN2DEERaI9oGGAfYdI=;
+	b=3vTYy8g9S4dn42r24/qCtsECN3ELCYW+erGCwlTNfDTJDD0CMaNEoQdhESE7mVtWf4Pk
+	 YBUT1AK56q1fhiSMqG2ip1H5ZL1ypIxO4DB6OqQ1+3HrpNQjdE+DJ2maaTZoacF6OOG26
+	 ELjhr2ebls78GTPPc9Nbg9f1alY/tg7C7NM0XltQk+5Oj4DGCs3i/oGHYfNAxj4K6VB8w
+	 o91M+QPyKoFU7IIVY8jznSpVbGLr8EUD3HYKNqzzZ1e70J7SpMXvgzUdM9ixseuUMVJdj
+	 79CDAqQZfgQxX2cAoH/WyXYojTS6Alhg+IiB9edZjE148e712s+yTQlnf/rJmUMa2dw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Hq2gyRH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4HXwI4y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7DA6071422;
-	Fri, 13 Nov 2026 17:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20DF6071424;
+	Fri, 13 Nov 2026 17:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Hq2gyRH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFAC1F000C4;
-	Fri, 13 Nov 2026 17:30:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c4HXwI4y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FC91F000C4;
+	Fri, 13 Nov 2026 17:30:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591026;
-	bh=VvMONmzaxO8KmqT85cwLRN3izDVzI2RQN2cqD2ExxTw=;
+	s=korg; t=1794591027;
+	bh=E+v7bLrrQiWMLgCTI0l3GA8V7pN2DEERaI9oGGAfYdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0Hq2gyRHaPieYx9zsS56SLpsVeI1bm2e6RtCvr0P91AjH86zhhby8JgSlQfdx1zZl
-	 h0omPiOgg9p35a3L7tu76FozobwYX95PJ2PZ98J5AZOoXwAFJq/5vuVvZSbfz4zlG8
-	 kUCRGR0PjalQa/ANTGUxu12q4y9xVvObf3zC7Nw0=
+	b=c4HXwI4yOhn6Qb47ewKtEJkaMjRTk+p2WIALA9kzWseMOKseASWRNiXdp3wPk1rEx
+	 oIYXx1UwuftRgRr5c2fXVh44kO2OePP1z1Y6IubZ2hmUBNLQlQzIGQcvZfghzj+9ER
+	 2Yxo79WHul94WS30aDA1GAgslPg83VOwGUNUzuO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Hanai <hnkz.64@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 148/670] media: mediatek: jpeg: Avoid context access after job finish
-Date: Fri, 13 Nov 2026 10:45:12 -0500
-Message-ID: <20261113153816.939257194@linuxfoundation.org>
+Subject: [PATCH 6.12 149/670] NFSv4/pnfs: Free the netid when draining a data-server address list
+Date: Fri, 13 Nov 2026 10:45:13 -0500
+Message-ID: <20261113153816.974379500@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,55 +68,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kazuki Hanai <hnkz.64@gmail.com>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-[ Upstream commit 7c7f31405b76acd95a628c834ee8a2d6da439782 ]
+[ Upstream commit a7c8e96d1b9fa327cbdea514d047c8295b28d49a ]
 
-v4l2_m2m_job_finish() publishes job completion and wakes waiters
-before it returns. A concurrent file release can therefore finish
-v4l2_m2m_ctx_release() and free the context while the single-core IRQ
-handler continues with its tail.
+nfs4_pnfs_ds_addr_free() releases all three of an address entry's
+allocations, but the four sites that drain a decoded list before it
+reaches a data server open-code the loop and free only da_remotestr and
+the entry, leaking da_netid.  Both layout drivers drain that list when
+nfs4_pnfs_ds_add() returned a data server already in the cache, and
+again on their error exits.
 
-Both handlers only need the device for the matching runtime PM put.
-Use the IRQ-owned jpeg pointer instead of dereferencing ctx after
-completion has been published. This preserves the get/put pairing and
-removes the post-completion context access.
+Lift the drain into nfs4_pnfs_ds_addr_list_free() so an address list has
+one owner.  A striping mount reaches the cached case on nearly every
+GETDEVICEINFO, since many deviceIDs name the same data servers.
 
-Fixes: 45f13a57d813 ("media: platform: Add jpeg enc feature")
-Fixes: 5827e4b14ee7 ("media: platform: Improve power on and power off flow")
+Fixes: 4be78d26810b ("NFSv4/pNFS: Store the transport type in struct nfs4_pnfs_ds_addr")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nfs/filelayout/filelayoutdev.c         | 17 ++---------------
+ fs/nfs/flexfilelayout/flexfilelayoutdev.c | 17 ++---------------
+ fs/nfs/pnfs.h                             |  1 +
+ fs/nfs/pnfs_nfs.c                         | 21 +++++++++++++--------
+ 4 files changed, 18 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index 3a7027459731c..a69ca8fc5701f 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1584,7 +1584,7 @@ static irqreturn_t mtk_jpeg_enc_done(struct mtk_jpeg_dev *jpeg)
- 	v4l2_m2m_buf_done(src_buf, buf_state);
- 	v4l2_m2m_buf_done(dst_buf, buf_state);
- 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
--	pm_runtime_put(ctx->jpeg->dev);
-+	pm_runtime_put(jpeg->dev);
- 	return IRQ_HANDLED;
+diff --git a/fs/nfs/filelayout/filelayoutdev.c b/fs/nfs/filelayout/filelayoutdev.c
+index b878ea466361b..7142958b1265e 100644
+--- a/fs/nfs/filelayout/filelayoutdev.c
++++ b/fs/nfs/filelayout/filelayoutdev.c
+@@ -177,27 +177,14 @@ nfs4_fl_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 		trace_fl_getdevinfo(server, &pdev->dev_id, dsaddr->ds_list[i]->ds_remotestr);
+ 
+ 		/* If DS was already in cache, free ds addrs */
+-		while (!list_empty(&dsaddrs)) {
+-			da = list_first_entry(&dsaddrs,
+-					      struct nfs4_pnfs_ds_addr,
+-					      da_node);
+-			list_del_init(&da->da_node);
+-			kfree(da->da_remotestr);
+-			kfree(da);
+-		}
++		nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ 	}
+ 
+ 	__free_page(scratch);
+ 	return dsaddr;
+ 
+ out_err_drain_dsaddrs:
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ out_err_free_deviceid:
+ 	nfs4_fl_free_deviceid(dsaddr);
+ 	/* stripe_indicies was part of dsaddr */
+diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+index 53655581f9cb2..f33e4f820dece 100644
+--- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
++++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
+@@ -155,26 +155,13 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
+ 		goto out_err_drain_dsaddrs;
+ 
+ 	/* If DS was already in cache, free ds addrs */
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs,
+-				      struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ 
+ 	__free_page(scratch);
+ 	return new_ds;
+ 
+ out_err_drain_dsaddrs:
+-	while (!list_empty(&dsaddrs)) {
+-		da = list_first_entry(&dsaddrs, struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		kfree(da->da_remotestr);
+-		kfree(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&dsaddrs);
+ 
+ 	kfree(ds_versions);
+ out_scratch:
+diff --git a/fs/nfs/pnfs.h b/fs/nfs/pnfs.h
+index 14d2a91250f24..9d612bed74e3c 100644
+--- a/fs/nfs/pnfs.h
++++ b/fs/nfs/pnfs.h
+@@ -426,6 +426,7 @@ int nfs4_pnfs_ds_connect(struct nfs_server *mds_srv, struct nfs4_pnfs_ds *ds,
+ struct nfs4_pnfs_ds_addr *nfs4_decode_mp_ds_addr(struct net *net,
+ 						 struct xdr_stream *xdr,
+ 						 gfp_t gfp_flags);
++void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs);
+ void pnfs_layout_mark_request_commit(struct nfs_page *req,
+ 				     struct pnfs_layout_segment *lseg,
+ 				     struct nfs_commit_info *cinfo,
+diff --git a/fs/nfs/pnfs_nfs.c b/fs/nfs/pnfs_nfs.c
+index 634ee58ced12a..1e457dd3b8bdf 100644
+--- a/fs/nfs/pnfs_nfs.c
++++ b/fs/nfs/pnfs_nfs.c
+@@ -632,23 +632,28 @@ static void nfs4_pnfs_ds_addr_free(struct nfs4_pnfs_ds_addr *da)
+ 	kfree(da);
  }
  
-@@ -1871,7 +1871,7 @@ static irqreturn_t mtk_jpeg_dec_irq(int irq, void *priv)
- 	v4l2_m2m_buf_done(src_buf, buf_state);
- 	v4l2_m2m_buf_done(dst_buf, buf_state);
- 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
--	pm_runtime_put(ctx->jpeg->dev);
-+	pm_runtime_put(jpeg->dev);
- 	return IRQ_HANDLED;
- }
+-static void destroy_ds(struct nfs4_pnfs_ds *ds)
++void nfs4_pnfs_ds_addr_list_free(struct list_head *dsaddrs)
+ {
+ 	struct nfs4_pnfs_ds_addr *da;
  
++	while (!list_empty(dsaddrs)) {
++		da = list_first_entry(dsaddrs, struct nfs4_pnfs_ds_addr,
++				      da_node);
++		list_del_init(&da->da_node);
++		nfs4_pnfs_ds_addr_free(da);
++	}
++}
++EXPORT_SYMBOL_GPL(nfs4_pnfs_ds_addr_list_free);
++
++static void destroy_ds(struct nfs4_pnfs_ds *ds)
++{
+ 	dprintk("--> %s\n", __func__);
+ 	ifdebug(FACILITY)
+ 		print_ds(ds);
+ 
+ 	nfs_put_client(ds->ds_clp);
+ 
+-	while (!list_empty(&ds->ds_addrs)) {
+-		da = list_first_entry(&ds->ds_addrs,
+-				      struct nfs4_pnfs_ds_addr,
+-				      da_node);
+-		list_del_init(&da->da_node);
+-		nfs4_pnfs_ds_addr_free(da);
+-	}
++	nfs4_pnfs_ds_addr_list_free(&ds->ds_addrs);
+ 
+ 	kfree(ds->ds_remotestr);
+ 	kfree(ds);
 -- 
 2.53.0
 
