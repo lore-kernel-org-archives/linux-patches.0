@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591641;
-	b=wJyWJa8I2bL6K6UY6+u4HeSOxJ+bAApegkd7HI5y44scZz0ObWJyCzOXND6w3wTKi0HW
-	 i7xjqzibXWB9nseMrRNtjKRxJK4g5CV/u3EULPn5f8ySJafA8Rrz6KH3btcyF0sMaea2b
-	 bQz4EdcQqVp7w8QQkkarPrpV8CEcBFLl17XU174nQ1B1dtwGQAuxwIiTFuefJbrBIQ04n
-	 mckt3OBgFGswm1jUh38UE1eiZogiK7XgMVsZagOsU7u8sUITOP834ZqH9Yt6LnMNIJgzh
-	 d4H8rU72AN+/lp0QqesD2lNzGDxZ5MfFSHSNm0UjAGoePS8E/NnjYNLlE8KnQVTDTMw==
+	t=1794591642;
+	b=SpzE18a9NNSgjSLOZ6jxjBQLBfslLbo1JuZ6NtjN43F5+3pGnk/as89v52XOgyML5gTW
+	 l1qifjPp6BwIO3xX+h7D5RAeLlNyCGrnTzg7rB6mNLYDuIpPM5oPUrVqv/wjWwx54/EYU
+	 u2a8bdGNiHIrjFTfMJsUrAEyeGZFFHsgSQrIoxz5ASpLpSujxBEw9xQ+raDf/CdaURcSE
+	 YUPeIVZnnh5x+rW/LRUd8q1R1YfEIJvIctIjhge3BUHR6jnyZrr3eqU/XGBvADNr5u0bj
+	 0qNo+bXnQv6UNwgTs5p4MaxuFBPNzBi1b51QZMqC8IkdmR1FRHSVHPFCur3GkcUYZZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591642;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=jKd+2ACZKyreJQAvLZrF2FUU4sjw7brcABh09jW8XvU=;
-	b=XoLM7C1Av7aaGNk1Ja074KQl48pD2Mf1FzXuEp71+SJtC0xTi0w5LA0XNsZ+odyYvLc4
-	 zApIpbHihNxI7s7Z3A+tr5RrYQA0Fw/vThWFwvs0y/UjzzVBUR58X4kiWBU5PduuJ9Ksg
-	 8VXBwsC4gdaisHUAQA34CT2pX/ZiLt9uMXqKAtTynzqQh2g1rgze+hWOF2+k1eUOODSwC
-	 8sE+4wHeFq/vxBhsJB6jquTpB3nC+c13v016Neo6Wu30eZuksIju6iHyeTN4YbpKrpFwb
-	 lVQVUzCBXkPNNtE9ORTIOVU3RcSMpNucCWGkTi+DBC//eUvF2QsvXeH0C6TNuOtKElg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=iuH7r3lx6hBHH21fh6BgRshwi/+2mgQ4pfDaXEyiQkI=;
+	b=taRtEMQ+/oh3lk8KqWz27LCCaECUQQH3WokDdNrTMwFEr9SpDC2VAjazNGGz8EVm7sYP
+	 FqZ5dZ+pXa05whaHTpNReibsJfiYmfGBsnFu1sYl2yj1bVuvsWXrwdyS4pHR8YHVObSZM
+	 wlgJaRYcGjuuIWpOKFMVRzldytZFjRKT30/VvALjRJnmYSgmE2wtvEBA4jyuvceeppRfQ
+	 cxvWXTEjLbWNtg8PiHvxsTaLrom73/yulqZJNwJJo0qkhSstaiqym1ip5OdjVgmuPH2AB
+	 f90c1VVInlxXugXYVevsxkQ0t0PUlGkD0mCXMCKIPJ+xVo1QaKFRE3YjzE7P2GvI7Aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KH/gT4xT";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKSvevoH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D00606F725;
-	Fri, 13 Nov 2026 17:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA57606B46F;
+	Fri, 13 Nov 2026 17:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KH/gT4xT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A1B1F000C4;
-	Fri, 13 Nov 2026 17:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKSvevoH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD4B1F000C4;
+	Fri, 13 Nov 2026 17:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591641;
-	bh=jKd+2ACZKyreJQAvLZrF2FUU4sjw7brcABh09jW8XvU=;
+	s=korg; t=1794591642;
+	bh=iuH7r3lx6hBHH21fh6BgRshwi/+2mgQ4pfDaXEyiQkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KH/gT4xTozM9UHcLEXQ+wyIF8tuU+oa+wMRTwod/0Qrh+sXeV1RgTZ6lJC3z0/+Q0
-	 eIJl5v7CkIs4gAWr50TD7ExWdeEudznTTJkwDY5jq5JBCdTLYsosibqlQbYnwy3Q8o
-	 OlZK0hcgL/HRxerm5hRTPStFpDJit+PAHdkLAy3k=
+	b=LKSvevoHemQs57oDXgN4oQCMgNatpcktupiLH55cjdNYpdD/bFYdsHJYtLJJTUhAj
+	 zFDt0E0mQuEV7WxdsW0hCy3KZH7pMN1rkjeWwv3iL+L3KcrePDY62H8dX6vstzqGdm
+	 urBhL5tmQ0TwSCMl6ghcaaXSVOg3CrHIF+Yv1aek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 659/670] power: supply: core: use power_supply_for_each_psy()
-Date: Fri, 13 Nov 2026 10:53:43 -0500
-Message-ID: <20261113153834.239840902@linuxfoundation.org>
+Subject: [PATCH 6.12 650/670] hwmon: (coretemp) Return -ENODATA for invalid temperature readings
+Date: Fri, 13 Nov 2026 10:53:34 -0500
+Message-ID: <20261113153833.883945571@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -62,173 +62,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
 
-[ Upstream commit 68abaf7323ae857db7ec56a174b7bbf5fc687d47 ]
+[ Upstream commit f63aaa529cbc73146ff0d52235e5479042285cae ]
 
-Simplify the callbacks by removing the need to convert a 'struct device'
-into a 'struct power_supply'.
+IA32_THERM_STATUS and IA32_PACKAGE_THERM_STATUS have a valid bit, bit 31.
+The Intel SDM documents it only for the former, but the package register
+implements it too: x86_pkg_temp_thermal has required it since commit
+f1a18a105660 ("Thermal: CPU Package temperature thermal").
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20241210-power-supply-dev_to_psy-v2-3-9d8c9d24cfe4@weissschuh.net
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: 6bd80f22c764 ("power: supply: core: Honor supplied-from with CONFIG_OF=y")
+This driver checked the bit for both registers as well, until
+commit bf6ea084ebb5 ("hwmon: (coretemp) Do not return -EAGAIN for low
+temperatures") made it ignore the bit because some CPUs clear it while
+the temperature is too low to be measured. Since then, temp%d_input
+reports such a reading as a real temperature. Userspace cannot tell it
+apart from a genuinely low one.
+
+Fail the read with -ENODATA while the CPU reports the reading as invalid.
+On a CPU that clears the bit, reading temp%d_input now fails where it
+used to return a low value. sensors(1) shows N/A in its place.
+
+Cc: stable@vger.kernel.org
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/all/46f9f319-de71-412f-a424-6cb801478456@roeck-us.net/
+Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Link: https://patch.msgid.link/20261006-coretemp-enodata-v2-1-64e788acc7dc@linux.intel.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[ sashal: adapted the validity check to use eax from rdmsr_on_cpu() instead of val.l from rdmsrq_on_cpu() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 36 ++++++++++--------------
- 1 file changed, 15 insertions(+), 21 deletions(-)
+ Documentation/hwmon/coretemp.rst |  3 +++
+ drivers/hwmon/coretemp.c         | 21 +++++++++++++++------
+ 2 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 34de2f39040c4..515772e2ab51e 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -66,10 +66,9 @@ static bool __power_supply_is_supplied_by(struct power_supply *supplier,
- 	return false;
+diff --git a/Documentation/hwmon/coretemp.rst b/Documentation/hwmon/coretemp.rst
+index c609329e3bc45..6089bee1159f1 100644
+--- a/Documentation/hwmon/coretemp.rst
++++ b/Documentation/hwmon/coretemp.rst
+@@ -47,6 +47,9 @@ All Sysfs entries are named with their core_id (represented here by 'X').
+ 
+ ================= ========================================================
+ tempX_input	  Core temperature (in millidegrees Celsius).
++		  Reading fails with -ENODATA while the CPU reports the
++		  temperature as invalid. Some CPUs do this when the
++		  temperature is too low to be measured.
+ tempX_max	  All cooling devices should be turned on (on Core2).
+ tempX_crit	  Maximum junction temperature (in millidegrees Celsius).
+ tempX_crit_alarm  Set when Out-of-spec bit is set, never clears.
+diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
+index 8de1c781ac7a8..cc81b849c09ef 100644
+--- a/drivers/hwmon/coretemp.c
++++ b/drivers/hwmon/coretemp.c
+@@ -61,6 +61,8 @@ enum coretemp_attr_index {
+ 
+ /*
+  * Per-Core Temperature Data
++ * @temp_valid: Whether the CPU reported @temp as valid. @temp is not
++ *		reported when this is false.
+  * @tjmax: The static tjmax value when tjmax cannot be retrieved from
+  *		IA32_TEMPERATURE_TARGET MSR.
+  * @last_updated: The time when the current temperature value was updated
+@@ -73,6 +75,7 @@ enum coretemp_attr_index {
+  */
+ struct temp_data {
+ 	int temp;
++	bool temp_valid;
+ 	int tjmax;
+ 	unsigned long last_updated;
+ 	unsigned int cpu;
+@@ -397,7 +400,8 @@ static ssize_t show_temp(struct device *dev,
+ {
+ 	u32 eax, edx;
+ 	struct temp_data *tdata = container_of(devattr, struct temp_data, sd_attrs[ATTR_TEMP]);
+-	int tjmax;
++	int tjmax, temp;
++	bool valid;
+ 
+ 	mutex_lock(&tdata->update_lock);
+ 
+@@ -406,17 +410,22 @@ static ssize_t show_temp(struct device *dev,
+ 	if (time_after(jiffies, tdata->last_updated + HZ)) {
+ 		rdmsr_on_cpu(tdata->cpu, tdata->status_reg, &eax, &edx);
+ 		/*
+-		 * Ignore the valid bit. In all observed cases the register
+-		 * value is either low or zero if the valid bit is 0.
+-		 * Return it instead of reporting an error which doesn't
+-		 * really help at all.
++		 * Bit 31 indicates whether the reading is valid. Some CPUs
++		 * clear it while the temperature is too low to be measured.
++		 * Such a reading is not a temperature. Do not report it.
+ 		 */
++		tdata->temp_valid = (eax >> 31) & 1;
+ 		tdata->temp = tjmax - ((eax >> 16) & 0xff) * 1000;
+ 		tdata->last_updated = jiffies;
+ 	}
+ 
++	valid = tdata->temp_valid;
++	temp = tdata->temp;
+ 	mutex_unlock(&tdata->update_lock);
+-	return sprintf(buf, "%d\n", tdata->temp);
++
++	if (!valid)
++		return -ENODATA;
++	return sprintf(buf, "%d\n", temp);
  }
  
--static int __power_supply_changed_work(struct device *dev, void *data)
-+static int __power_supply_changed_work(struct power_supply *pst, void *data)
- {
- 	struct power_supply *psy = data;
--	struct power_supply *pst = dev_get_drvdata(dev);
- 
- 	if (__power_supply_is_supplied_by(psy, pst)) {
- 		if (pst->desc->external_power_changed)
-@@ -98,7 +97,7 @@ static void power_supply_changed_work(struct work_struct *work)
- 	if (likely(psy->changed)) {
- 		psy->changed = false;
- 		spin_unlock_irqrestore(&psy->changed_lock, flags);
--		power_supply_for_each_device(psy, __power_supply_changed_work);
-+		power_supply_for_each_psy(psy, __power_supply_changed_work);
- 		power_supply_update_leds(psy);
- 		blocking_notifier_call_chain(&power_supply_notifier,
- 				PSY_EVENT_PROP_CHANGED, psy);
-@@ -190,11 +189,10 @@ static void power_supply_deferred_register_work(struct work_struct *work)
- }
- 
- #ifdef CONFIG_OF
--static int __power_supply_populate_supplied_from(struct device *dev,
-+static int __power_supply_populate_supplied_from(struct power_supply *epsy,
- 						 void *data)
- {
- 	struct power_supply *psy = data;
--	struct power_supply *epsy = dev_get_drvdata(dev);
- 	struct device_node *np;
- 	int i = 0;
- 
-@@ -221,20 +219,19 @@ static int power_supply_populate_supplied_from(struct power_supply *psy)
- {
- 	int error;
- 
--	error = power_supply_for_each_device(psy, __power_supply_populate_supplied_from);
-+	error = power_supply_for_each_psy(psy, __power_supply_populate_supplied_from);
- 
- 	dev_dbg(&psy->dev, "%s %d\n", __func__, error);
- 
- 	return error;
- }
- 
--static int  __power_supply_find_supply_from_node(struct device *dev,
-+static int  __power_supply_find_supply_from_node(struct power_supply *epsy,
- 						 void *data)
- {
- 	struct device_node *np = data;
--	struct power_supply *epsy = dev_get_drvdata(dev);
- 
--	/* returning non-zero breaks out of power_supply_for_each_device loop */
-+	/* returning non-zero breaks out of power_supply_for_each_psy loop */
- 	if (epsy->of_node == np)
- 		return 1;
- 
-@@ -246,16 +243,16 @@ static int power_supply_find_supply_from_node(struct device_node *supply_node)
- 	int error;
- 
- 	/*
--	 * power_supply_for_each_device() either returns its own errors or values
-+	 * power_supply_for_each_psy() either returns its own errors or values
- 	 * returned by __power_supply_find_supply_from_node().
- 	 *
- 	 * __power_supply_find_supply_from_node() will return 0 (no match)
- 	 * or 1 (match).
- 	 *
--	 * We return 0 if power_supply_for_each_device() returned 1, -EPROBE_DEFER if
-+	 * We return 0 if power_supply_for_each_psy() returned 1, -EPROBE_DEFER if
- 	 * it returned 0, or error as returned by it.
- 	 */
--	error = power_supply_for_each_device(supply_node, __power_supply_find_supply_from_node);
-+	error = power_supply_for_each_psy(supply_node, __power_supply_find_supply_from_node);
- 
- 	return error ? (error == 1 ? 0 : error) : -EPROBE_DEFER;
- }
-@@ -335,10 +332,9 @@ struct psy_am_i_supplied_data {
- 	unsigned int count;
- };
- 
--static int __power_supply_am_i_supplied(struct device *dev, void *_data)
-+static int __power_supply_am_i_supplied(struct power_supply *epsy, void *_data)
- {
- 	union power_supply_propval ret = {0,};
--	struct power_supply *epsy = dev_get_drvdata(dev);
- 	struct psy_am_i_supplied_data *data = _data;
- 
- 	if (__power_supply_is_supplied_by(epsy, data->psy)) {
-@@ -356,7 +352,7 @@ int power_supply_am_i_supplied(struct power_supply *psy)
- 	struct psy_am_i_supplied_data data = { psy, 0 };
- 	int error;
- 
--	error = power_supply_for_each_device(&data, __power_supply_am_i_supplied);
-+	error = power_supply_for_each_psy(&data, __power_supply_am_i_supplied);
- 
- 	dev_dbg(&psy->dev, "%s count %u err %d\n", __func__, data.count, error);
- 
-@@ -367,10 +363,9 @@ int power_supply_am_i_supplied(struct power_supply *psy)
- }
- EXPORT_SYMBOL_GPL(power_supply_am_i_supplied);
- 
--static int __power_supply_is_system_supplied(struct device *dev, void *data)
-+static int __power_supply_is_system_supplied(struct power_supply *psy, void *data)
- {
- 	union power_supply_propval ret = {0,};
--	struct power_supply *psy = dev_get_drvdata(dev);
- 	unsigned int *count = data;
- 
- 	if (!psy->desc->get_property(psy, POWER_SUPPLY_PROP_SCOPE, &ret))
-@@ -391,7 +386,7 @@ int power_supply_is_system_supplied(void)
- 	int error;
- 	unsigned int count = 0;
- 
--	error = power_supply_for_each_device(&count, __power_supply_is_system_supplied);
-+	error = power_supply_for_each_psy(&count, __power_supply_is_system_supplied);
- 
- 	/*
- 	 * If no system scope power class device was found at all, most probably we
-@@ -410,9 +405,8 @@ struct psy_get_supplier_prop_data {
- 	union power_supply_propval *val;
- };
- 
--static int __power_supply_get_supplier_property(struct device *dev, void *_data)
-+static int __power_supply_get_supplier_property(struct power_supply *epsy, void *_data)
- {
--	struct power_supply *epsy = dev_get_drvdata(dev);
- 	struct psy_get_supplier_prop_data *data = _data;
- 
- 	if (__power_supply_is_supplied_by(epsy, data->psy))
-@@ -437,7 +431,7 @@ int power_supply_get_property_from_supplier(struct power_supply *psy,
- 	 * This function is not intended for use with a supply with multiple
- 	 * suppliers, we simply pick the first supply to report the psp.
- 	 */
--	ret = power_supply_for_each_device(&data, __power_supply_get_supplier_property);
-+	ret = power_supply_for_each_psy(&data, __power_supply_get_supplier_property);
- 	if (ret < 0)
- 		return ret;
- 	if (ret == 0)
+ static int create_core_attrs(struct temp_data *tdata, struct device *dev)
 -- 
 2.53.0
 
