@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585916;
-	b=Kyheb2qNb7czFToeuAbiAAiI6/4tLV9MD3byPoXbB+1anKltuOwkbCx+UODmfgmYfXSH
-	 2/a9MLYAnM04AIDnOglWO2fpYXpMvwNDulxci/5hIYn7eI6diUleBs1ZuHFsYTDzY0xH1
-	 zi4SdS2TY+iVeQPP1fsX1+pMt6VolsCc3t8/nu8SURg28yF+Ow0YUG26iWLEjvk8+DDYs
-	 9hcJnS41yMgFzVc86SVhUMPwLK10a4bOzhkoksbw6geMdo4CobeXUZi/0k2Xh61UDyCYW
-	 XoOdr4CnzoBfk2XTyT2tP0M/5Kk7Rie4Qgf3M/Db0Y+5qpPuy9C4GmU0TJRxPA8IyNA==
+	t=1794585917;
+	b=OuI8u4gurLxlzsG1+WlCXGz/oUav3t14EhATs84VSnsNPiapVd9Yq3SNNfs1AZ4WRFEf
+	 3/vvw0Ao5LsyHDvjjKI/ptGwqKexi46nCWsFnCN5jY0mnmfqKRZ0ZZzDxgAy0EbqDqduv
+	 kebff/Vl+HvboGuo0J0qFRgrafAYfXe6p80ne+5+Ck0Y7+l7ixY2yFjmeELL66eOb3WWV
+	 or/BYvpcOHFyGNWKjlOdd1UZMZJgMI/r7rn5hXyJ6tIdRcJL+OrUMGuUaSHmsyUdTsbkD
+	 3o5vI8Sl6i50E4DCmAaG1oW0n+gXKZrisNmC0U6CzzfPeMrYhlkgfHGLz1/e6RZdZog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585916;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585917;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7vQAZfhhwm3DQricutNUcHMV4Sj5NM5Hw54FwBqQcCw=;
-	b=kSoy7OOipmfp+6ZZq1Gin0ZU3JpEH3y5ayAZY8cWOBkeNZODsX/+q1Beac28eFkbtMgn
-	 x9oXGNkTiYRiUqZ8Nqj4G9MfCr1P5GDCuc9kVc6zsWUa4lSRjmxgZCZQNl9TnAPAMb+JR
-	 jCiV3S4ITMURXr3rBYvz92OEmi4Lb2iHdA8lEIlIlVI74rn/7ZXZvSu+giGkb1pWykOud
-	 DzsmPRM9d831ATe+2jfZWMNsAh2b+7Eh1UEIjgbxNn6se5IzFysnKV8GdLaynoUiI+HUX
-	 Cz/vVu8vys8E7pCOj31whNx+yQrhLj06agATQaUwT3Ou0P5of5W9qm/nHZsN2+BQBAg==
+	bh=6HVXB3O7bgU8zeCm6CeznP+ZVKf0pOqTKlIaRPR0hiE=;
+	b=2fx2Jq4IZ+MXCB3SijWB0qboUq4aYf1rSybXAFI1QRWrHnckSj2DFK+M+mXtn5UA7KGq
+	 6cDcVowbRJYdONg6EnsfAfcD8fE5U4oB88eaokZXVFS1aVdeqQo+/7252R24keju1sfXz
+	 haCLSML+NB2yGa4FF4JL5+qrVEpLvSnHUyR12iMUsyR3CYLV3z5b4W94pCJV8lXgQRiJ7
+	 5uzMtXPAd3gsPWhyPNyTvb2swJSmte+XobE+5c0NlNjgVcmzW3Gw4YbtkvHPnp+79v8xV
+	 FLbQ/Z/mfFTZ2xNIr7hBSj0u8WKJY7Yhbvjas/DVZFGWwJ9VZsuPhyLCCqAUWJAnxxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQS6Sl9h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EEKIExsb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20177607021A;
-	Fri, 13 Nov 2026 16:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB449607020E;
+	Fri, 13 Nov 2026 16:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VQS6Sl9h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9831F000C4;
-	Fri, 13 Nov 2026 16:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EEKIExsb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8151B1F000C4;
+	Fri, 13 Nov 2026 16:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585916;
-	bh=7vQAZfhhwm3DQricutNUcHMV4Sj5NM5Hw54FwBqQcCw=;
+	s=korg; t=1794585917;
+	bh=6HVXB3O7bgU8zeCm6CeznP+ZVKf0pOqTKlIaRPR0hiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VQS6Sl9hB0WbWWXr4vDMKyifQjZhI0/FBPr5aZP9YOH28PrUGhNC7u5NDrtH78DaL
-	 Xymq+mWe3tkYW43megOP1QWiCI+eUjntq4quYHvdQ3AjUwu3s1fxUywTaPR8JHDUa3
-	 GBc4irJvlTcv39DXxPgLjPceVvUAywbNExojv5Vo=
+	b=EEKIExsbubeSJMSlzO2hWZVDA34LO61bTj7WziRL4GEnKgd80P0bI597cB1hYopN3
+	 SaPcdilDibvckzJ2ciQX8L1tGyOhuw0fjjDY8WF2THq50u61KGuu0At7zqUmOac+zm
+	 1+DYwUU9NPjZJ4VLp6uaGPIXfWXaTg5om9YLNUto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Oliver Upton <oupton@kernel.org>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 478/507] perf evsel: Close the fds opened so far when disabling missing features
-Date: Fri, 13 Nov 2026 10:53:02 -0500
-Message-ID: <20261113153813.188908860@linuxfoundation.org>
+Subject: [PATCH 7.3 479/507] KVM: arm64: vgic: Stop the target vcpu when disabling LPIs
+Date: Fri, 13 Nov 2026 10:53:03 -0500
+Message-ID: <20261113153813.247026516@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,89 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 16d1234793d42a5a594db99522845996ab8e0d29 ]
+[ Upstream commit a1b4bd2c2c262b8094c86afb99364d16ac08cb66 ]
 
-evsel__open_cpu() opens the events one by one and, when an open fails
-with EINVAL and evsel__detect_missing_features() has a feature to leave
-out, goes back to fallback_missing_features to open them all again from
-start_cpu_map_idx, without closing what the abandoned attempt opened:
-the fd of every CPU or thread that was opened before the failing one is
-overwritten in the FD() array, leaking it.
+Disabling LPIs is pretty nasty, as it directly messes with the AP list
+of the affected CPU, which could be running... This has the potential to
+lead to really bad behaviours, and we should not be doing that.
 
-Close them first, the same way out_close does when returning an error,
-leaving the entries at -1 for the retry.
+Take example on the way the Active state is handled and simply pause the
+the vcpu so that we are sure it is in a quiescent state, and the state be
+safely manipulated.
 
-Fixes: af954f76eea5 ("perf tools: Check fallback error and order")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/r/sashiko-outbox-173532@kernel.org
-Reviewed-by: Ian Rogers <irogers@google.com>
-Tested-by: Ian Rogers <irogers@google.com>
+Nobody has any expectation of performance for this anyway.
+
+Fixes: 96085b949672d ("KVM: arm/arm64: vgic-v3: Retire pending interrupts on disabling LPIs")
+Co-developed-by: Oliver Upton <oupton@kernel.org>
+Signed-off-by: Oliver Upton <oupton@kernel.org>
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
+Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261015100539.1011760-7-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: Replaced per-vCPU pause/resume helpers with kvm_arm_halt_guest() and kvm_arm_resume_guest(), which pause all vCPUs. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/evsel.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ arch/arm64/kvm/vgic/vgic-mmio-v3.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index eb429087ebfee..5db43520f25e7 100644
---- a/tools/perf/util/evsel.c
-+++ b/tools/perf/util/evsel.c
-@@ -2974,6 +2974,19 @@ static bool evsel__detect_missing_features(struct evsel *evsel, struct perf_cpu
- 	return false;
- }
+diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+index 5ab789accc9d4..9e6200c5adcef 100644
+--- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
++++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
+@@ -303,9 +303,19 @@ static void vgic_mmio_write_v3r_ctlr(struct kvm_vcpu *vcpu,
+ 		if (ctlr != GICR_CTLR_ENABLE_LPIS)
+ 			return;
  
-+static void evsel__close_fds(struct evsel *evsel, int start_cpu_map_idx,
-+			     int cpu_map_idx, int thread, int nthreads)
-+{
-+	do {
-+		while (--thread >= 0) {
-+			if (FD(evsel, cpu_map_idx, thread) >= 0)
-+				close(FD(evsel, cpu_map_idx, thread));
-+			FD(evsel, cpu_map_idx, thread) = -1;
-+		}
-+		thread = nthreads;
-+	} while (--cpu_map_idx >= start_cpu_map_idx);
-+}
-+
- static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
- 		struct perf_thread_map *threads,
- 		int start_cpu_map_idx, int end_cpu_map_idx)
-@@ -3109,8 +3122,14 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
- 	if (err == -EMFILE && rlimit__increase_nofile(&set_rlimit))
- 		goto retry_open;
- 
--	if (err == -EINVAL && evsel__detect_missing_features(evsel, cpu))
-+	if (err == -EINVAL && evsel__detect_missing_features(evsel, cpu)) {
 +		/*
-+		 * The restart opens the events again, so close what this
-+		 * attempt opened before its entries are overwritten.
++		 * Yes, disabling LPIs is painful, since it can be done from
++		 * a *remote* vcpu! So let's not take any chance, and make
++		 * sure that the target vCPU has written their LRs back to the
++		 * irq structures, and release any reference they would have.
++		 *
++		 * If it hurts, don't do it.
 +		 */
-+		evsel__close_fds(evsel, start_cpu_map_idx, idx, thread, nthreads);
- 		goto fallback_missing_features;
-+	}
- 
- 	if (evsel__precise_ip_fallback(evsel))
- 		goto retry_open;
-@@ -3120,14 +3139,7 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
- 		threads->err_thread = thread;
- 
- 	old_errno = errno;
--	do {
--		while (--thread >= 0) {
--			if (FD(evsel, idx, thread) >= 0)
--				close(FD(evsel, idx, thread));
--			FD(evsel, idx, thread) = -1;
--		}
--		thread = nthreads;
--	} while (--idx >= start_cpu_map_idx);
-+	evsel__close_fds(evsel, start_cpu_map_idx, idx, thread, nthreads);
- 	errno = old_errno;
- out:
- 	if (err)
++		kvm_arm_halt_guest(vcpu->kvm);
+ 		vgic_flush_pending_lpis(vcpu);
+ 		vgic_its_invalidate_all_caches(vcpu->kvm);
+ 		atomic_set_release(&vgic_cpu->ctlr, 0);
++		kvm_arm_resume_guest(vcpu->kvm);
+ 	} else {
+ 		ctlr = atomic_cmpxchg_acquire(&vgic_cpu->ctlr, 0,
+ 					      GICR_CTLR_ENABLE_LPIS);
 -- 
 2.53.0
 
