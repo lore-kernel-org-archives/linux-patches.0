@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585250;
-	b=HhzR9dVXy/+LEX9HGi+MfLaQx299lErUl6J/Y92AFjsLtcIygrORJ/kfYtm1vQ/cftwt
-	 5zbw+GvamjcpWw7L7UlLEzAV8kllB44nN3PMzcVbT96yvRCfq4rltR/kjd3mWrVFZ3GHd
-	 0xkQ7vIR4R4HTMZTcToujv8ggkzHovfGbEteabj/AX/DoCkL0GcAEe7TsOycBvdR0oG4x
-	 5RyArmTzQUYb95k3legS8JLMvE/r1Zs8AcVgDxyq12Rojtgg/AXJy252kAk1rEpKd6E/G
-	 HPrP1/DvRRRtkCX77Ey5HcNe7D68fpFluyyuLvEDHxiKrNqBeTGvDJ2glfuR9/iltXQ==
+	t=1794585251;
+	b=mnjBQR48pDporl3S1osSEH5gYMJvcZ2WrJb5cW39aMbaNwFKwaWkEOQhwIz255bp1TK1
+	 6sc9Gtm7HpeBSz4RQKbyKPRvZLQfa1MZK7Qgtkl8Hy3zexCRs3ia9a3qP9MPSYtwLSf3K
+	 O6u80hRk/3M9ZF5i+jw2uKnsElpkkkGMbfDWjzMGLq+970Aa5hvf8kCFcG+vR1y6NAQKt
+	 8/8Bnk+/WnCxkjWPeDVkb9YzI7cHhwAuKSrK1yBZ7XP8WHnvkWblXsV8IcWW0GgMueW0/
+	 7jnhnzn0UmbtARH0ELuyToKbz1fGNU/rAsHOx8734YB7hfIfztybtpQnNnfaqhMfTUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585251;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=31G/NdxMSsGVebpxwl7ph8wBaTzg9G78CFU1JiDVFZs=;
-	b=2u0UOvQbOF2+2uk7GDFiR6lTh0iMPfAQy9n8uqq9pOJmpuNelyjV63VyjBhpoiLP45ke
-	 8ntg8YFN42GvChzAGQT4MUAjrPtUkNuYe3NpdV9hL8xx5a+fxFr7TkWn5IzLTmic6zSmc
-	 MTH8nGYaKANMgV7zT5QrFjqbgZVN14UrWNB9PitDwe/uMXWRz90z9vWj+s0xpYpRganIM
-	 fcLhU39wj12HvsehGk2o6g7yNdPQ5qtOcTTQXVL/wElLdOUiHHZ5ARfhDoozhSkJ62+bn
-	 iR0x4WdSyllN+8zTx/P3LS4+K5utg7x0ZlwfGYJW4nM1QBPLZlE6KBviS3rzHE0DAAw==
+	bh=lum/mAdnQVFSClkpkaHJ5TKnNR4ws4D0vwEgg50y6yo=;
+	b=LFBdqweQaxK79uS/CIbStzDtCekgJGI4MWMdeI1O38JTzGQsigkGk31CaY7xzO3JAg6d
+	 0dNa1LAGveEG4YgOv3E7bjfDe98mCZI8+FtnA4gLaDghS57nU/tON+T3bUpRz6kpmnVjy
+	 OAKItyP97TJ26oI2SttA5ljM8DfLuWiirANRnzLupoJ0cx5qXwubSpvbOrSrIHlcl6EZH
+	 cNH0ysNKyuEER+PJltd6/ZAuKl6AY29Pfd4+rBoDM7gYAzg9mi11WP1gd2o/WPnI7xY9g
+	 cfijN43ZtKz0bOSNyHETCBLtFRksuh03sqcYUt+CDHTwa6Z9ujTVC42g9NdhUH09uNw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXo+P24b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JayOhfh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B27606A889;
-	Fri, 13 Nov 2026 15:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2A0606A894;
+	Fri, 13 Nov 2026 15:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qXo+P24b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326D01F000C5;
-	Fri, 13 Nov 2026 15:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1JayOhfh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6141F000C4;
+	Fri, 13 Nov 2026 15:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585250;
-	bh=31G/NdxMSsGVebpxwl7ph8wBaTzg9G78CFU1JiDVFZs=;
+	s=korg; t=1794585251;
+	bh=lum/mAdnQVFSClkpkaHJ5TKnNR4ws4D0vwEgg50y6yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qXo+P24bjJ7ZhHo15MwlcIJYclFsR/wMbR1qFM1bgH2y02Wq2wLbNRDLDYb3K/uiM
-	 ngxkVFx1YHntsyAEteaYHqxCBiGdmV3Dwrjmjcc2LS3nzELlq+uhit51Q9mEgQoVZF
-	 CKTNn02lTC2CKI8PvRffGLLsM95nPWo0HznUcCI8=
+	b=1JayOhfhwxZ9hRAw7V6OTH3PiOSKKnAQlmZhfjg9p1FQhqGX9lVeyhZslVCldc/bh
+	 unww9MPCpUs8HqQ15N0Tj831fflt/YchoW8R6ONEgqRP1b1wKjHdEZa+15LbEy++Ua
+	 7l2pJFtekphfFx0rxZ1SD58aq7EmBULrhubp+fXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+d531129f2f9fbf88@bugs.sh,
-	Weiming Shi <bestswngs@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 005/507] smb/server: prevent file publication after tree disconnect
-Date: Fri, 13 Nov 2026 10:45:09 -0500
-Message-ID: <20261113153753.560522999@linuxfoundation.org>
+Subject: [PATCH 7.3 006/507] xfs: break out xattr entry checks into separate functions
+Date: Fri, 13 Nov 2026 10:45:10 -0500
+Message-ID: <20261113153753.593630256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,296 +69,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 2ff3730998b015b5b0a3f28330bee16c648dd114 ]
+[ Upstream commit 9eb04a6d41c7e474d4665118895c3c2d8e5a2741 ]
 
-TREE_DISCONNECT closes the tree's published file handles before marking and
-removing the tree connection. A concurrent CREATE that already holds a tree
-reference can therefore publish its file after the close pass. When CREATE
-drops its reference, the tree can be freed while the published file still
-points to it.
+We're going to add more xattr entry checking code in xchk_xattr_entry so
+break these out into separate functions so that we don't go crazy
+indenting.  There's a slight behavior change here where we skip updating
+the usedmap if we've decided the xattr structure is corrupt.
 
-Mark and remove the tree connection before closing its files, and serialize
-both new-open and durable-reconnect volatile ID publication with that state
-transition. An opener is then either published in time for the close pass
-or rejected after disconnect with STATUS_NETWORK_NAME_DELETED.
-
-Keep a tree reference while a file carries its tree pointer. This protects
-asynchronous users that can defer the file's final destruction past tree
-disconnect.
-
-The close pass can race the successful FP_NEW to FP_INITED transition.
-Take the opening request's file reference atomically with that transition.
-This keeps the file alive until request completion even if teardown removes
-the ID immediately.
-
-  BUG: KASAN: slab-use-after-free in proc_show_files (fs/smb/server/vfs_cache.c:126)
-  Read of size 4 at addr ff11000101540f80 by task poc/153
-
-  Call Trace:
-    proc_show_files (fs/smb/server/vfs_cache.c:126)
-    seq_read_iter (fs/seq_file.c:231)
-    proc_reg_read_iter (fs/proc/inode.c:299)
-    vfs_read (fs/read_write.c:574)
-    ksys_read (fs/read_write.c:716)
-    do_syscall_64 (arch/x86/entry/syscall_64.c:84)
-    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:121)
-
-  Allocated by:
-    ksmbd_tree_conn_connect (fs/smb/server/mgmt/tree_connect.c:35)
-    smb2_tree_connect (fs/smb/server/smb2pdu.c:2819)
-    handle_ksmbd_work (fs/smb/server/server.c:368)
-
-  Freed by:
-    kfree (mm/slub.c:6801)
-    handle_ksmbd_work (fs/smb/server/server.c:332)
-
-Fixes: f44158485826 ("cifsd: add file operations")
-Cc: stable@vger.kernel.org
-Reported-by: <co+d531129f2f9fbf88@bugs.sh>
-Assisted-by: LLM
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-[ sashal: replaced ksmbd_tree_connect_get() calls with equivalent inline atomic_inc() operations ]
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Stable-dep-of: 91c41f952490 ("xfs: check for buffer overruns when examining local/remote xattr entries")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c   | 27 ++++++++++++++----
- fs/smb/server/vfs_cache.c | 58 ++++++++++++++++++++++++++++-----------
- 2 files changed, 63 insertions(+), 22 deletions(-)
+ fs/xfs/scrub/attr.c | 90 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 68 insertions(+), 22 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 3f1ab9a203070..418610e05ce95 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3097,9 +3097,10 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
-+	err = ksmbd_tree_conn_disconnect(sess, tcon);
-+
- 	ksmbd_close_tree_conn_fds(work);
- 
--	err = ksmbd_tree_conn_disconnect(sess, tcon);
- 	if (err) {
- 		rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
- 		goto err_out;
-@@ -4439,8 +4440,12 @@ int smb2_open(struct ksmbd_work *work)
- 				goto err_out2;
- 
- 			rc = ksmbd_reopen_durable_fd(work, dh_info.fp);
--			if (rc)
-+			if (rc) {
-+				if (rc == -ENOTCONN)
-+					rsp->hdr.Status =
-+						STATUS_NETWORK_NAME_DELETED;
- 				goto err_out2;
-+			}
- 
- 			fp = dh_info.fp;
- 
-@@ -4874,6 +4879,8 @@ int smb2_open(struct ksmbd_work *work)
- 	if (IS_ERR(fp)) {
- 		fput(filp);
- 		rc = PTR_ERR(fp);
-+		if (rc == -ENOTCONN)
-+			rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
- 		fp = NULL;
- 		goto err_out;
- 	}
-@@ -5477,11 +5484,20 @@ int smb2_open(struct ksmbd_work *work)
- 
- err_out2:
- 	if (!rc) {
--		if (!dh_info.replay)
-+		if (!dh_info.replay) {
-+			smb2_complete_request_open(work);
- 			rc = ksmbd_update_fstate(&work->sess->file_table, fp,
- 						 FP_INITED);
--		if (!rc)
-+			if (rc == -ENOENT)
-+				rsp->hdr.Status = STATUS_NETWORK_NAME_DELETED;
-+			if (!rc) {
-+				work->request_open = fp;
-+				work->request_open_chseq =
-+					smb3_hdr_channel_sequence(&req->hdr);
-+			}
-+		} else {
- 			rc = smb2_set_request_open(work, fp, &req->hdr, false, false);
-+		}
- 		if (!rc)
- 			rc = ksmbd_iov_pin_rsp(work, (void *)rsp, iov_len);
- 	}
-@@ -5496,8 +5512,7 @@ int smb2_open(struct ksmbd_work *work)
- 				rsp->hdr.Status = STATUS_PRIVILEGE_NOT_HELD;
- 			else
- 				rsp->hdr.Status = STATUS_ACCESS_DENIED;
--		}
--		else if (rc == -ENOENT)
-+		} else if (rc == -ENOENT && !rsp->hdr.Status)
- 			rsp->hdr.Status = STATUS_OBJECT_NAME_INVALID;
- 		else if (rc == -EPERM)
- 			rsp->hdr.Status = STATUS_SHARING_VIOLATION;
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 1efa9f8145601..38196befa03a5 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -698,16 +698,18 @@ static void __ksmbd_close_fd(struct ksmbd_file_table *ft, struct ksmbd_file *fp)
- 	}
- 
- 	/*
--	 * Drop fp's strong reference on conn (taken in ksmbd_open_fd() /
--	 * ksmbd_reopen_durable_fd()).  Durable fps that reached the
--	 * scavenger have already had fp->conn cleared by session_fd_check(),
--	 * in which case there is nothing to drop here.
-+	 * Drop fp's strong connection references.  Durable fps that reached
-+	 * the scavenger have already had these cleared by session_fd_check().
- 	 */
- 	if (fp->conn) {
- 		atomic_dec(&fp->conn->stats.open_files_count);
- 		ksmbd_conn_put(fp->conn);
- 		fp->conn = NULL;
- 	}
-+	if (fp->tcon) {
-+		ksmbd_tree_connect_put(fp->tcon);
-+		fp->tcon = NULL;
-+	}
- 
- 	if (ksmbd_stream_fd(fp))
- 		kfree(fp->stream.name);
-@@ -1331,14 +1333,14 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
- 
- 	fp->filp		= filp;
- 	/*
--	 * fp owns a strong reference on fp->conn for as long as fp->conn is
--	 * non-NULL, so session_fd_check() and __ksmbd_close_fd() never
--	 * dereference a dangling pointer.  Paired with ksmbd_conn_put() in
--	 * session_fd_check() (durable preserve), in __ksmbd_close_fd()
--	 * (final close), and on the error paths below.
-+	 * fp owns strong references on fp->conn and fp->tcon for as long as
-+	 * they are non-NULL.  Paired with the puts in session_fd_check()
-+	 * (durable preserve), in __ksmbd_close_fd() (final close), and on the
-+	 * error paths below.
- 	 */
- 	fp->conn		= ksmbd_conn_get(work->conn);
- 	fp->tcon		= work->tcon;
-+	atomic_inc(&fp->tcon->refcount);
- 	fp->share_conf		= work->tcon->share_conf;
- 	atomic_inc(&fp->share_conf->refcount);
- 	fp->volatile_id		= KSMBD_NO_FID;
-@@ -1351,7 +1353,13 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
- 		goto err_out;
- 	}
- 
--	ret = __open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
-+	down_read(&work->sess->tree_conns_lock);
-+	if (work->tcon->t_state == TREE_CONNECTED)
-+		ret = __open_id(&work->sess->file_table, fp,
-+				OPEN_ID_TYPE_VOLATILE_ID);
-+	else
-+		ret = -ENOTCONN;
-+	up_read(&work->sess->tree_conns_lock);
- 	if (ret) {
- 		ksmbd_inode_put(fp->f_ci);
- 		goto err_out;
-@@ -1361,7 +1369,8 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
- 	return fp;
- 
- err_out:
--	/* fp->conn was set and refcounted before every branch here. */
-+	/* fp->conn and fp->tcon were refcounted before every branch here. */
-+	ksmbd_tree_connect_put(fp->tcon);
- 	ksmbd_conn_put(fp->conn);
- 	ksmbd_share_config_put(fp->share_conf);
- 	kmem_cache_free(filp_cache, fp);
-@@ -1376,8 +1385,9 @@ struct ksmbd_file *ksmbd_open_fd(struct ksmbd_work *work, struct file *filp)
-  *
-  * Return: 0 on success.  The FP_NEW -> FP_INITED transition is special:
-  * -ENOENT if teardown already unpublished @fp by advancing the state or
-- * clearing the volatile id.  Other state updates preserve the historical
-- * fire-and-forget behavior.
-+ * clearing the volatile id.  On success it also takes a reference for the
-+ * opening request, which must be released with ksmbd_fd_put().  Other state
-+ * updates preserve the historical fire-and-forget behavior.
-  */
- int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
- 			unsigned int state)
-@@ -1393,6 +1403,8 @@ int ksmbd_update_fstate(struct ksmbd_file_table *ft, struct ksmbd_file *fp,
- 		ret = -ENOENT;
- 	} else {
- 		fp->f_state = state;
-+		if (state == FP_INITED)
-+			atomic_inc(&fp->refcount);
- 		ret = 0;
- 	}
- 	write_unlock(&ft->lock);
-@@ -1813,6 +1825,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
- 	struct oplock_info *op;
- 	struct ksmbd_conn *conn;
- 	struct ksmbd_lock *smb_lock, *tmp_lock;
-+	struct ksmbd_tree_connect *tree_conn;
- 
- 	if (!is_reconnectable(fp))
- 		return false;
-@@ -1834,6 +1847,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
- 	ci = fp->f_ci;
- 	down_write(&ci->m_lock);
- 	conn = fp->conn;
-+	tree_conn = fp->tcon;
- 	list_for_each_entry_rcu(op, &ci->m_op_list, op_entry,
- 				lockdep_is_held(&ci->m_lock)) {
- 		if (op->o_fp != fp)
-@@ -1869,6 +1883,7 @@ static bool session_fd_check(struct ksmbd_tree_connect *tcon,
- 
- 	/* Drop fp's own reference on conn. */
- 	ksmbd_conn_put(conn);
-+	ksmbd_tree_connect_put(tree_conn);
- 	return true;
+diff --git a/fs/xfs/scrub/attr.c b/fs/xfs/scrub/attr.c
+index 842d65834afbc..f7c00ea1af5d3 100644
+--- a/fs/xfs/scrub/attr.c
++++ b/fs/xfs/scrub/attr.c
+@@ -293,6 +293,66 @@ xchk_xattr_set_map(
+ 	return ret;
  }
  
-@@ -1972,7 +1987,8 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
- 	 * concurrent teardown that iterates the table can observe a valid
- 	 * volatile_id with fp->conn == NULL and preserve a
- 	 * partially-initialized fp.  fp owns a strong reference on the new
--	 * conn (see ksmbd_open_fd()); undo it on __open_id() failure.
-+	 * conn (see ksmbd_open_fd()); undo it on __open_id() failure.  Serialize
-+	 * publication with tree disconnect just as ksmbd_open_fd() does.
- 	 */
- 	spin_lock(&fp->f_lock);
- 	old_f_state = fp->f_state;
-@@ -1982,12 +1998,19 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
- 	atomic_inc(&fp->share_conf->refcount);
- 	fp->conn = ksmbd_conn_get(conn);
- 	fp->tcon = work->tcon;
-+	atomic_inc(&fp->tcon->refcount);
- 	spin_unlock(&fp->f_lock);
- 	atomic_inc(&conn->stats.open_files_count);
- 	write_unlock(&global_ft.lock);
++static unsigned int
++xchk_xattr_local_entry(
++	struct xchk_da_btree		*ds,
++	int				level,
++	char				*buf_end,
++	struct xfs_attr_leafblock	*leaf,
++	int				idx)
++{
++	struct xfs_attr_leaf_name_local	*lentry =
++			xfs_attr3_leaf_name_local(leaf, idx);
++	char				*name_end;
++	unsigned int			namesize;
++
++	namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
++			be16_to_cpu(lentry->valuelen));
++	name_end = (char *)lentry + namesize;
++	if (lentry->namelen == 0) {
++		xchk_da_set_corrupt(ds, level);
++		return 0;
++	}
++	if (name_end > buf_end) {
++		xchk_da_set_corrupt(ds, level);
++		return 0;
++	}
++
++	return namesize;
++}
++
++static unsigned int
++xchk_xattr_remote_entry(
++	struct xchk_da_btree		*ds,
++	int				level,
++	char				*buf_end,
++	struct xfs_attr_leafblock	*leaf,
++	int				idx,
++	struct xfs_attr_leaf_entry	*ent)
++{
++	struct xfs_attr_leaf_name_remote *rentry =
++			xfs_attr3_leaf_name_remote(leaf, idx);
++	char				*name_end;
++	unsigned int			namesize;
++
++	namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
++	name_end = (char *)rentry + namesize;
++	if (rentry->namelen == 0) {
++		xchk_da_set_corrupt(ds, level);
++		return 0;
++	}
++	if (rentry->valueblk == 0 && !(ent->flags & XFS_ATTR_INCOMPLETE)) {
++		xchk_da_set_corrupt(ds, level);
++		return 0;
++	}
++	if (name_end > buf_end) {
++		xchk_da_set_corrupt(ds, level);
++		return 0;
++	}
++
++	return namesize;
++}
++
+ /*
+  * Check this leaf entry's relations to everything else.
+  * Returns the number of bytes used for the name/value data.
+@@ -311,9 +371,6 @@ xchk_xattr_entry(
+ {
+ 	struct xfs_mount		*mp = ds->state->mp;
+ 	struct xchk_xattr_buf		*ab = ds->sc->buf;
+-	char				*name_end;
+-	struct xfs_attr_leaf_name_local	*lentry;
+-	struct xfs_attr_leaf_name_remote *rentry;
+ 	unsigned int			nameidx;
+ 	unsigned int			namesize;
  
--	__open_id(&work->sess->file_table, fp, OPEN_ID_TYPE_VOLATILE_ID);
--	if (!has_file_id(fp->volatile_id)) {
-+	down_read(&work->sess->tree_conns_lock);
-+	if (work->tcon->t_state == TREE_CONNECTED)
-+		ret = __open_id(&work->sess->file_table, fp,
-+				OPEN_ID_TYPE_VOLATILE_ID);
-+	else
-+		ret = -ENOTCONN;
-+	up_read(&work->sess->tree_conns_lock);
-+	if (ret) {
- 		write_lock(&global_ft.lock);
- 		spin_lock(&fp->f_lock);
- 		fp->conn = NULL;
-@@ -1998,7 +2021,10 @@ int ksmbd_reopen_durable_fd(struct ksmbd_work *work, struct ksmbd_file *fp)
- 		atomic_dec(&conn->stats.open_files_count);
- 		write_unlock(&global_ft.lock);
- 		ksmbd_conn_put(conn);
-+		ksmbd_tree_connect_put(work->tcon);
- 		ksmbd_share_config_put(work->tcon->share_conf);
-+		if (ret != -ENOTCONN)
-+			ret = -EBADF;
- 		goto out;
+@@ -333,25 +390,14 @@ xchk_xattr_entry(
  	}
  
+ 	/* Check the name information. */
+-	if (ent->flags & XFS_ATTR_LOCAL) {
+-		lentry = xfs_attr3_leaf_name_local(leaf, idx);
+-		namesize = xfs_attr_leaf_entsize_local(lentry->namelen,
+-				be16_to_cpu(lentry->valuelen));
+-		name_end = (char *)lentry + namesize;
+-		if (lentry->namelen == 0)
+-			xchk_da_set_corrupt(ds, level);
+-	} else {
+-		rentry = xfs_attr3_leaf_name_remote(leaf, idx);
+-		namesize = xfs_attr_leaf_entsize_remote(rentry->namelen);
+-		name_end = (char *)rentry + namesize;
+-		if (rentry->namelen == 0)
+-			xchk_da_set_corrupt(ds, level);
+-		if (rentry->valueblk == 0 &&
+-		    !(ent->flags & XFS_ATTR_INCOMPLETE))
+-			xchk_da_set_corrupt(ds, level);
+-	}
+-	if (name_end > buf_end)
+-		xchk_da_set_corrupt(ds, level);
++	if (ent->flags & XFS_ATTR_LOCAL)
++		namesize = xchk_xattr_local_entry(ds, level, buf_end, leaf,
++				idx);
++	else
++		namesize = xchk_xattr_remote_entry(ds, level, buf_end, leaf,
++				idx, ent);
++	if (!namesize)
++		return;
+ 
+ 	if (!xchk_xattr_set_map(ds->sc, ab->usedmap, nameidx, namesize))
+ 		xchk_da_set_corrupt(ds, level);
 -- 
 2.53.0
 
