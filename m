@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591347;
-	b=EwRPbevgAF1uRROYBqDSS/yKkMnpmjvmkddKSJGaPDkfvI64N9IL/GqRRm8dZggI8o2g
-	 S0O+Saxx9JDFx6E3IbioHViolrUAks5TcoqorsMJW/mPAMtSahYmH0J3CRcr9aRaSDo7E
-	 MOIqxpsVcbtR/NssElW781Z5IDnqFqCc0hcANilpZFbSy5VFmoTm0iWlp/bv1sda3K7eY
-	 lszTvnuR89Pw+wI3a0HHf7lBJFzbvOTMbsxD7CamvrHA3BBHgNJJvjScuA96oe1cnJbgJ
-	 egY2dKFb4LlhLgxecMsSE8ASI3a6N8g3YsaAgwMMrFOmezCsu3ZYo/mlYgd9mcbx0BA==
+	t=1794591349;
+	b=zDJjx9KgNLot7mSgSOxbvCBpInN1pSVOTISMB9TD+HtqieTqu25bnoDvniYiJtxJfQhb
+	 +fwN1ocNPkKrP7zJrlsTCUyQRZQbBM0NTrervTF5VOMtWnwScizOijsjn24KfUdzh88yD
+	 vCoPq9bovDc9dRYVKY6QYROQsyn3pl8OIGMZNPZxEYTUSbr2Cpjic/i9EwkkvRppRlCr+
+	 1EpCEF3YCaW4/9DyV66NilNuiEYKuNQ+F3IznFcCdCbS85p/H6meZbpECWrvBXKj6qdyb
+	 8qIWRERDtIlTWVIm4nDSw7le2G/Uq0iSE4Q6JxA1ruCov52IwJYMeQ1sB0BhchGbTWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591347;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591349;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=atFO0SZCUVHG56QZ95ITUSfU77q7c3I4Vigfckj8GkY=;
-	b=U75lkZp99mOlopapiDaGB3lY/6biUm0hgxWSPeMYOB42b3I1cmhPYlZAt19iPZKhJbsS
-	 loICvkJZSbArao//fop6kQ2eDUZkp2Zts9hS9dI3rUItEokvxsF0AjW60+SRn19/hxVFI
-	 MwQrjf2h4Hjb7W3yicAZJ7gbagpMjcfcFZlbXMl9kbNjcCaGPA+6EWE5VtTlesR6xihGd
-	 Ixzqn2l7FV7AeyhCCH5F6CtpOC7KxpFYwiC8bbOaZNZkdiC9HQbFo7gg8miXzy8MfzyCU
-	 v2mmsebgmQqOF4MPQwBjhVnEGkY/YAOizKrBXYaAqz1eIOK2axqVg022Mp2FO8Iw6gA==
+	bh=1yiPM5BhlXWLijPZsQOLlZMsRuNGF9xVErvkH8V3PtY=;
+	b=Qos9X4MAKI0Wvh0EMajpnJDQ5BN5xu60vgam1giANzWogRi6sCg8oxEIZO/6eqhgyNQ+
+	 MEDDFsvjfem/v7OLNcAGM98auOI275OnfhOh7E8vavoy3k0cDVPff9xVXQrJIXHKEiQ2S
+	 bmd+BXMZXzHUe+YKteAD+fnXf4CV8aY2Uf8fjuRPg0aA9bPDZVa+0ZjtsL5uElZOYbclc
+	 NNn9r3sJAvnGrDyWwkm5iLqtUAagDE4cTyOJvxYePNTcDbs8Qap2HX4fdEcMUCCUQXdFI
+	 E+PyN3H6jrowF54hnHD4v8YLZ69g4Dj8Nfg0IiFY0mRrMZXWHid2MBJ4LYIop8TqVuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqxHqoSC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dB4614ow;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5951606CEDD;
-	Fri, 13 Nov 2026 17:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B87606CEFA;
+	Fri, 13 Nov 2026 17:35:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqxHqoSC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714781F000C4;
-	Fri, 13 Nov 2026 17:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dB4614ow
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C4E1F000C4;
+	Fri, 13 Nov 2026 17:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591347;
-	bh=atFO0SZCUVHG56QZ95ITUSfU77q7c3I4Vigfckj8GkY=;
+	s=korg; t=1794591348;
+	bh=1yiPM5BhlXWLijPZsQOLlZMsRuNGF9xVErvkH8V3PtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CqxHqoSCN+lWtiOE9QHnZ35njR+YTUJVjLC8yrbjpb+OWfDaHYTs2215onYChfHx+
-	 ZvdVWaZLaSUVK5c+4km0onGoScC7GrXymcn2YV2wMlA2wGVwHrs+4euW/SU/NiIQgj
-	 V8ak4WjqgMFM7o5Dk4SCU+V2PfVl+uUgJ5VHl9/A=
+	b=dB4614ownKgcLPxUTKmPIvuSn3Nun2gg4Ko028TkkwdN+SoGdiWq7cCPGN40HwYaU
+	 NR0Cf2pxzEAATaLWfNLpeKbgMhlmwo4lrRR9rbPAcSfVK9x6mDqqJFHbPujgWhJ2sr
+	 POWrQ3d5PnPRznALpRkJwvCR0emOCqqy+8tQouok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Christoph Plattner <christoph.plattner@gmx.at>,
+	Daniel Palmer <daniel@0x0f.com>,
+	Greg Ungerer <gerg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 454/670] media: i2c: og01a1b: power off sensor on remove
-Date: Fri, 13 Nov 2026 10:50:18 -0500
-Message-ID: <20261113153827.291699959@linuxfoundation.org>
+Subject: [PATCH 6.12 455/670] m68k: Fix task info flags handling for 68000
+Date: Fri, 13 Nov 2026 10:50:19 -0500
+Message-ID: <20261113153827.322485216@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,53 +69,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Daniel Palmer <daniel@0x0f.com>
 
-[ Upstream commit a26c5ac46191ae34b3413f7a45d6241f63e15d42 ]
+[ Upstream commit 2c6805145e1605cef39459f78979f7edee251b41 ]
 
-og01a1b_probe() powers the sensor on explicitly before identifying and
-initializing it. After a successful probe, runtime PM is enabled and
-pm_runtime_idle() is used to allow the runtime suspend callback to
-power the sensor off.
+The logic for deciding what to do after a syscall should be checking
+if any of the lower byte bits are set and then checking if the reschedule
+bit is set.
 
-The probe error path explicitly calls og01a1b_power_off(), but the
-normal remove path only disables runtime PM. pm_runtime_disable() does
-not guarantee that an active device is runtime suspended, so the
-sensor can remain powered when the driver is removed. This also leaves
-the xvclk enable performed by og01a1b_power_on() unbalanced.
+Currently we are loading the top word, checking if any bits are set
+(which never seems to be true) and thus jumping over loading the
+whole long and checking if the reschedule bit is set.
 
-After disabling runtime PM, check whether the device is already
-suspended. If it is still active, power the sensor off explicitly and
-update the runtime PM state accordingly. Avoid powering it off again
-when runtime suspend has already done so.
+We get the thread info in two places so split that logic out in
+a macro and then fix the code so that it loads the byte of the flags
+we need to check, checks if anything is set and then checks if
+the reschedule bit in particular is set.
 
-This issue was found by manual code inspection.
-
-Fixes: a95ffde28783 ("media: i2c: og01a1b: Add support of xvclk supply clock in power management")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reported-by: Christoph Plattner <christoph.plattner@gmx.at>
+Signed-off-by: Daniel Palmer <daniel@0x0f.com>
+Signed-off-by: Greg Ungerer <gerg@kernel.org>
+Stable-dep-of: 48859f8018d9 ("m68k: Fix seccomp filtering on ColdFire and 68000")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/og01a1b.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/m68k/68000/entry.S | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/i2c/og01a1b.c b/drivers/media/i2c/og01a1b.c
-index 95ead31dda278..cc8ff6ffd29ac 100644
---- a/drivers/media/i2c/og01a1b.c
-+++ b/drivers/media/i2c/og01a1b.c
-@@ -1042,6 +1042,11 @@ static void og01a1b_remove(struct i2c_client *client)
- 	media_entity_cleanup(&sd->entity);
- 	v4l2_ctrl_handler_free(sd->ctrl_handler);
- 	pm_runtime_disable(og01a1b->dev);
-+
-+	if (!pm_runtime_status_suspended(og01a1b->dev)) {
-+		og01a1b_power_off(og01a1b->dev);
-+		pm_runtime_set_suspended(og01a1b->dev);
-+	}
- }
+diff --git a/arch/m68k/68000/entry.S b/arch/m68k/68000/entry.S
+index 72e95663b62ff..c257cc415c478 100644
+--- a/arch/m68k/68000/entry.S
++++ b/arch/m68k/68000/entry.S
+@@ -18,6 +18,13 @@
  
- static int og01a1b_probe(struct i2c_client *client)
+ .text
+ 
++/* get thread_info pointer into a2 */
++ .macro getthreadinfo
++	movel	%sp,%d1
++	andl	#-THREAD_SIZE,%d1
++	movel	%d1,%a2
++ .endm
++
+ .globl system_call
+ .globl resume
+ .globl ret_from_exception
+@@ -70,9 +77,8 @@ ENTRY(system_call)
+ 
+ 	movel	%sp@(PT_OFF_ORIG_D0),%d0
+ 
+-	movel	%sp,%d1			/* get thread_info pointer */
+-	andl	#-THREAD_SIZE,%d1
+-	movel	%d1,%a2
++	/* Doing a trace ? */
++	getthreadinfo
+ 	btst	#(TIF_SYSCALL_TRACE%8),%a2@(TINFO_FLAGS+(31-TIF_SYSCALL_TRACE)/8)
+ 	jne	do_trace
+ 	cmpl	#NR_syscalls,%d0
+@@ -96,16 +102,15 @@ Luser_return:
+ 	/* heavy interrupt load*/
+ 	andw	#ALLOWINT,%sr
+ 
+-	movel	%sp,%d1			/* get thread_info pointer */
+-	andl	#-THREAD_SIZE,%d1
+-	movel	%d1,%a2
++	getthreadinfo
+ 1:
+-	move	%a2@(TINFO_FLAGS),%d1	/* thread_info->flags */
++	/* check if any of the flags are set */
++	moveb	%a2@(TINFO_FLAGS + 3),%d1	/* thread_info->flags (low 8 bits) */
+ 	jne	Lwork_to_do
+ 	RESTORE_ALL
+ 
+ Lwork_to_do:
+-	movel	%a2@(TINFO_FLAGS),%d1	/* thread_info->flags */
++	/* check if reschedule needs to be called */
+ 	btst	#TIF_NEED_RESCHED,%d1
+ 	jne	reschedule
+ 
 -- 
 2.53.0
 
