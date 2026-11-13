@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590435;
-	b=SYzVEbzyAGNHNfncZcngZYnGht/MdhRmclIlek6rlZxink5EfXlvJgq83o64LHxxrhfO
-	 5pEiuxolPu/ShXdbZhW4Dwk+FSz1rqYsqhsWqXBsOzWxD+AerdcHlzumIGF1160Sp1d6z
-	 fe+mpZL1sB1zFKhBqFIRar+wjYz9tP8Vc1LFV42lJwhi65R82PcYq1K+PPUO8d3oaplHC
-	 pagpA0p9nuktVHM2y1/U0sWqxaPCXsrCo+Bl79++6Ly7oZwrHyXWGwrjTF/JQCKjHoljN
-	 gx/7GX7SQ4J5zB38rERY0u6QSBxmbLZv+r3fEq2oWkEu/dq4RSWQG4PKGoYtmUrpCOg==
+	t=1794590436;
+	b=k5KybyhGz8ppESnTe0I4vzzdY6eEYX4s8noopO8YaUirjxnJiusZORyLSU5YE2rckVwN
+	 1hb5M6uyENHvueDS2SBnI1sCK4UUuJPuhehuRDtPOvhUE60AVljXw3EoAu1nfZ0nsGm/G
+	 Yv8gUr4LSjG0GcEljeMKzzD8zNRwUocSEpagr1w9gJLCVG5ShRkbWQXCk8SNBZj2qKYt0
+	 qcpYlvdygR3Y80B9JZxb/dBKoySf43YJBGvyKtAOZXSbK7WuC8JX7E/VRXypAL3Urv3tz
+	 9vPm7Ldd+jLBSPa+9YxB12IcnyJjzyKOQ8MmnNM9k0ZWiBOxKGT0vr88v08q6j68pBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590435;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=quWE9FASjkdsAR825fBObtXJyUJZTsMRiRxE5fxjpJM=;
-	b=KYWafP9z9vDGZ51b19DsTI9A7lAs0VCtOq7P9jBRgac2D9J1jhIp9aFTTPIirT4rihy7
-	 oKMCmNKD9vhoolKhWiSlY5VqWLIqX03c6r3MSf+Bzei+Hs+I9/wMBJHwiqZwDkZFsGWuu
-	 PRJdlP0PU7oHkgsr9uJPWPCXsWtH1psQ7s0XRPCfORkwACnJ0RPS3ZzvR4GqA+4b4sjK+
-	 yM0qYjEWoarWGnruDkvHWGN7v9JUKLYax5e4ZyC/6M11VPghSCrDgBDtRWIKareP61Zfa
-	 fL4b/gBmjftL0GENFPZvgATshNnrednA93RRknLcy7sXsl5mXJN7LzchY1mHsV2HTqw==
+	bh=ryWPWX+zYmRfcaNRwDNIPDE7YzZvhTPCYK1iHiOMIIg=;
+	b=4hBsPJuGHNN+4Cz8fpz6uS38YIh2weUV8apIOp0ssSfMv0zD+4OabjqqXup+33osREcw
+	 iad3u/S732t+N9fvKkXRqCgUTVhGm4/wPXWR2jyMHC4avb8QmRInXjF10l61lC0iR3DMv
+	 zXTuyvg5xc2Y/qUBMxuub7fPyUKUZY7Bg8nOxY+9hzkUE2luolvyL50Be/waoy/be5YMk
+	 rQFquBittsaLU6PWjUz49fvk9ivqKyjAFYsUdBLRfyT3U0dcnOZIoVuleVloQF4Ym+mFb
+	 LYTS41rk8TNNcc5HcQbwvi4W/fzhImCmYk5q3Z/n1Fh0o2r6fJLCcLXRx48wctRNG0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hVfNvAZO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT367G0t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6859360703C3;
-	Fri, 13 Nov 2026 17:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A234F60703D4;
+	Fri, 13 Nov 2026 17:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hVfNvAZO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197731F000C6;
-	Fri, 13 Nov 2026 17:20:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT367G0t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC5D1F000C4;
+	Fri, 13 Nov 2026 17:20:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590435;
-	bh=quWE9FASjkdsAR825fBObtXJyUJZTsMRiRxE5fxjpJM=;
+	s=korg; t=1794590436;
+	bh=ryWPWX+zYmRfcaNRwDNIPDE7YzZvhTPCYK1iHiOMIIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hVfNvAZOn7EoSst70vc/1mABDL96zOWzUQxW5X4lLTShRopnnwWQnumkzi3pd+YAJ
-	 c9akM7jykXaTevokZ+1mEpaQUCdpQ60pxXF0XcqqTSBKunySvCCgmuF8BB7YNkzBaF
-	 0NsYJI5d1AsLR+vspkiP46/LeAJEzO3LDpwREFc8=
+	b=qT367G0tBQW2Qj4PJSVrnIFn5SYMEbMbrDuJ/bwQ80zEn0Fu/I6j5xEhM9mPEE68V
+	 QsNhV0lrA2vf0sMza0NS+pD3OW0ag0kEpvIaaIoikKk+yi4QTYF9IXCysUnj4v54TZ
+	 FEV3LSlJW/FFcZ6vutXSU0pKhLKFQP209sVEVv94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kimi Security Team <bug-report@moonshot.ai>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Yilin Zhang <yilinzhang@moonshot.ai>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Yitang Yang <yi1tang.yang@gmail.com>,
+	Ming Lei <tom.leiming@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 395/686] mptcp: do not use Fast Open on MP_JOIN subflows
-Date: Fri, 13 Nov 2026 10:48:48 -0500
-Message-ID: <20261113153834.386585598@linuxfoundation.org>
+Subject: [PATCH 6.18 396/686] ublk: add missing DEL_DEV_ASYNC to unprivileged permission check
+Date: Fri, 13 Nov 2026 10:48:49 -0500
+Message-ID: <20261113153834.417402214@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -71,66 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yilin Zhang <yilinzhang@moonshot.ai>
+From: Yitang Yang <yi1tang.yang@gmail.com>
 
-[ Upstream commit 6d2cf411aba2aa0bd641b49be5b1964ac5097a50 ]
+[ Upstream commit e6ac1da6a53c5f670bf09e60a2500d15be68d2fc ]
 
-tcp_fastopen_create_child() hands the SYN packet itself to
-subflow_syn_recv_sock(). For an MP_JOIN request this takes the
-fatal fallback: the cloned child is destroyed and handed back with
-drop_req flagged, but tcp_fastopen_create_child() does not check
-the flag and queues it, so accept() can expose the freed child.
+ublk_ctrl_uring_cmd_permission() is missing the UBLK_CMD_DEL_DEV_ASYNC
+case, causing the command to always return -EINVAL for unprivileged
+ublk devices. Fix it by adding the missing case.
 
-MP_JOIN cannot use Fast Open: data on a subflow requires the
-completed HMAC exchange (RFC 8684, sec. 3.2). Refuse it (only the
-TFO path passes a SYN skb here) and let tcp_conn_request() fall
-back to the regular MP_JOIN handshake; also strip the Fast Open
-cookie from MP_JOIN SYN/ACKs.
-
-Fixes: 90bf45134d55 ("mptcp: add new sock flag to deal with join subflows")
+Fixes: 13fe8e6825e4 ("ublk: add UBLK_CMD_DEL_DEV_ASYNC")
 Cc: stable@vger.kernel.org
-Reported-by: Kimi Security Team <bug-report@moonshot.ai>
-Suggested-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Yilin Zhang <yilinzhang@moonshot.ai>
-[ Moving code to avoid clearing TS and consolidating checks. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261030-mptcp-tfo-mpj-v4-1-e6eff2027342@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Yitang Yang <yi1tang.yang@gmail.com>
+Reviewed-by: Ming Lei <tom.leiming@gmail.com>
+Link: https://patch.msgid.link/20260901142438.237586-1-yi1tang.yang@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/subflow.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/block/ublk_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index e020960f093e0..c2d6a7adca6b2 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -380,6 +380,10 @@ static void subflow_prep_synack(const struct sock *sk, struct request_sock *req,
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(sk);
- 	struct inet_request_sock *ireq = inet_rsk(req);
- 
-+	/* MP_JOIN cannot use TFO, do not send a cookie in the SYN/ACK */
-+	if (foc && mptcp_subflow_rsk(req)->mp_join)
-+		foc->len = -1;
-+
- 	/* clear tstamp_ok, as needed depending on cookie */
- 	if (foc && foc->len > -1)
- 		ireq->tstamp_ok = 0;
-@@ -889,6 +893,13 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 			fallback = true;
- 
- 	} else if (subflow_req->mp_join) {
-+		/* a SYN skb here comes from TFO, which MP_JOIN cannot use: just
-+		 * fall back to the regular path.
-+		 */
-+		if ((TCP_SKB_CB(skb)->tcp_flags & (TCPHDR_SYN | TCPHDR_ACK)) ==
-+		    TCPHDR_SYN)
-+			return NULL;
-+
- 		mptcp_get_options(skb, &mp_opt);
- 		if (!(mp_opt.suboptions & OPTION_MPTCP_MPJ_ACK))
- 			fallback = true;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 8c33a5f86c3d6..6b2035c46daa3 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -3872,6 +3872,7 @@ static int ublk_ctrl_uring_cmd_permission(struct ublk_device *ub,
+ 	case UBLK_CMD_STOP_DEV:
+ 	case UBLK_CMD_ADD_DEV:
+ 	case UBLK_CMD_DEL_DEV:
++	case UBLK_CMD_DEL_DEV_ASYNC:
+ 	case UBLK_CMD_SET_PARAMS:
+ 	case UBLK_CMD_START_USER_RECOVERY:
+ 	case UBLK_CMD_END_USER_RECOVERY:
 -- 
 2.53.0
 
