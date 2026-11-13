@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590023;
-	b=rSukLwssvXJpf3Lf7nQ77WvYAnLUSREHIBBBHrNdN21Fw/+elZwmLoyJqIxbcnbwZ7cw
-	 YIYY5g3p3bCqYUnAnEEiuFdkgvWa50QuEe4kUgbUpdHQ/LVktQ3t8zNxy0LdMgbNRG6nY
-	 2IlQEsvVLJuE+G59YefQjZSNjNzqtxK/JqVdnTt4+e1oeWPAmB5W2sH7kmemQgv2QdCAf
-	 c/TQ2GspZGqisD2JVth5Q612vcD1qeXRl3ADAjf02dYVTaadpLuIcXVn2GBToNLf27hxQ
-	 23zs+rCu+I4+pvAGqFCI8iGZMYeUQz5DVG84I1RFO1TN0fH78O4k1ORpBnDXI1qTCsg==
+	t=1794590025;
+	b=0+8QGgZcPEmzuyGM8vqiRQKvAGDl6apD/4EWTSdyvVoBu60TFhIvvKc0ox0JiagNU9Ge
+	 jgge6nR2Fq4ZWqMRd61aI1BoWw9RwCHUtg3qiR089Pk8jVSefv6sneHaoN38rOUNBkE9M
+	 Ft6SNQyPcI40kncmxsnFcVTCtLORprU6wd5KvK0cSZ/QUJdiN7LX+2GjV/w3VSWHUmN4s
+	 f1Ay+ts5kZvGzJiLeGPtim+yvUThwacQzTC4dlwe31TRJvKjD0Q+huBMjOgGe9UEuUGrB
+	 yncPoivnaUMbmQmtNDapl2CeLpGELarQiXYT3vQZQqHyMhK6GGgRWp4OLi6hw4X7MwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590023;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CJo6NM8J98r5cz3Dk5NQesmREp462e1PXmd9mAs7+Eg=;
-	b=2umkk7W6OMo53sBNG1zGrQyImmGdJIjIw2ESuaIxXYD93Vnc7yOachhoXraMsFGqvarM
-	 WNAEWbVsFSXx8IE254pReFddSWqq8Byyf95l8nTIS9txiwIPv7vDG0S4dRspLsFzsCbA3
-	 l+HLCTF0stmlWxpAixa66YhmlJV3MVNQbWjgrddxRjDiFgAKkuhQopyHuPu+Jjjd02I9d
-	 AseXDb2jxVda6if6kpDOBomcjZWU87SE9NNk4uiu5geESCJtq//6uTDkMm6l4tl6ri9ys
-	 B4fW2uGkZlZkW43Map6MZhKNCKFy2svMrfLbKW+OfvNIvcxarzwDNjHFA2wCucbNhcg==
+	bh=cjD2gquWILre0T5da0+IPL8bj3ELKFY4W8LruqXDVzA=;
+	b=PTXsEUDFJ9u4pkptZ7jDMqFpWD2Z9GZ+bzOH1xKmquBxOPog3ylkNRlaEV+ErXauPESU
+	 /rSUrazxULuRXvzvRLmh7Rc+jHD38a2OfGcPZCNO8C8CTWXw067cfSGbfLlchRhDEtkHS
+	 Qhrc24h25/xV/kxtsRUKJ6dxVIpxwU46n8DCqDZWEnt4pYACs/E5XOZs86tBsBqxw6/Rt
+	 QNW4XGR0dlgwq/oh1quY84vCBy/pO5fT+E5XvqXIqH8m0xYlNfYXznL7TOrDg7uRU+/a4
+	 GiDtLQ2tfwKs+7PMHkMXS09Fp2cLFNKXtXtPgRXMgxTI0auP3V3votN2uqYhuOCnujg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SRsIfBgE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BucX+u+x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C086E606A8B2;
-	Fri, 13 Nov 2026 17:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6E4606A32E;
+	Fri, 13 Nov 2026 17:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SRsIfBgE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E09C1F000C4;
-	Fri, 13 Nov 2026 17:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BucX+u+x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F0E1F000C4;
+	Fri, 13 Nov 2026 17:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590023;
-	bh=CJo6NM8J98r5cz3Dk5NQesmREp462e1PXmd9mAs7+Eg=;
+	s=korg; t=1794590024;
+	bh=cjD2gquWILre0T5da0+IPL8bj3ELKFY4W8LruqXDVzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SRsIfBgEqDp88S2fojCHEMy+ceNO1vHsxOSW2Q6zROXGLR/uwZtnbk1jjmBQx4fbe
-	 Kybo61j6/54Uvz8LjTT/6iUu5tuRNQ8bxl+xO7+xpb8iHi+/gks058myufxI5cKRsp
-	 UQpzouIla9UGlTOGUSsPsjBWLcnCy85u4mkfI9YY=
+	b=BucX+u+xO9AkAX8m3d2M+O6BCK2EjPJJMTckTDFrVb5IKAgjywre+wSx8GHt6eZHT
+	 jszfj1lkUImPbTTbZ9gtp7sJxs3MmhPkAaGncE2DIzTZM+gVq68brAa/WdNhUpDBJA
+	 Iye+IXILzWFvc3KF3lFEDoH45fXZGXAm+xXuwbaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <cel@kernel.org>,
+	Shang En Sim <sim@shangen.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/686] NFSD: Send a meaningful CB_RECALL_ANY keep count
-Date: Fri, 13 Nov 2026 10:42:59 -0500
-Message-ID: <20261113153822.521659509@linuxfoundation.org>
+Subject: [PATCH 6.18 064/686] io_uring/cancel: count all requests that a CANCEL_ALL cancels
+Date: Fri, 13 Nov 2026 10:43:17 -0500
+Message-ID: <20261113153823.104162152@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,89 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Shang En Sim <sim@shangen.org>
 
-[ Upstream commit 9af39c0773ef956039e1ebe9c235532fe6ee1e50 ]
+Commit 21ddbb14f7c3baab50a2a6c13ee375edc2bbe031 upstream.
 
-deleg_reaper() sets craa_objects_to_keep to zero on every
-CB_RECALL_ANY. RFC 8881 Section 20.6.3 defines that field as the
-number of objects the client may keep, leaving the client to choose
-which of the excess to return, because the server cannot read lack
-of recent use as lack of usefulness. Zero asks for every delegation
-the client holds, including the ones backing files an application
-still has open.
+With IORING_ASYNC_CANCEL_ALL, __io_async_cancel() counts one for each
+io_try_cancel() call that cancels something. io_futex_cancel() and
+io_waitid_cancel() cancel every match in one call and return how many,
+so four futex waits cancelled with CANCEL_ALL give a result of 1.
 
-There is also no reason NFSD has to reclaim the entire delegation
-working set on the first sign of memory pressure.
+Add the number that they return.
 
-Derive the keep count from cl_deleg_count so that each callback
-asks for one delegation. Both the shrinker and the laundromat re-arm
-while their condition lasts, so a client with more to give is asked
-again on the next pass.
-
-The Linux client ignores craa_objects_to_keep and returns unused
-delegations selected from the type mask alone, so the count changes
-nothing for it.
-
-Fixes: 44df6f439a17 ("NFSD: add delegation reaper to react to low memory condition")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260817-recall-any-keep-count-v5-4-3b2cffce701e@kernel.org
-Signed-off-by: Chuck Lever <cel@kernel.org>
+Fixes: 194bb58c6090 ("io_uring: add support for futex wake and wait")
+Fixes: f31ecf671ddc ("io_uring: add IORING_OP_WAITID support")
+Signed-off-by: Shang En Sim <sim@shangen.org>
+Link: https://patch.msgid.link/20261030050319.1448530-2-sim@shangen.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ io_uring/cancel.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 222f2aadaafad..44ca5746911c8 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -7306,6 +7306,7 @@ deleg_reaper(struct nfsd_net *nn)
- {
- 	struct list_head *pos, *next;
- 	struct nfs4_client *clp;
-+	unsigned int count;
+diff --git a/io_uring/cancel.c b/io_uring/cancel.c
+index 44d8b7b25267e..1db26c66e45c6 100644
+--- a/io_uring/cancel.c
++++ b/io_uring/cancel.c
+@@ -192,7 +192,8 @@ static int __io_async_cancel(struct io_cancel_data *cd,
+ 			break;
+ 		if (!all)
+ 			return ret;
+-		nr++;
++		/* futex and waitid return how many they cancelled */
++		nr += max(ret, 1);
+ 	} while (1);
  
- 	spin_lock(&nn->client_lock);
- 	list_for_each_safe(pos, next, &nn->client_lru) {
-@@ -7315,21 +7316,33 @@ deleg_reaper(struct nfsd_net *nn)
- 			continue;
- 		if (clp->cl_state != NFSD4_ACTIVE)
- 			continue;
--		if (list_empty(&clp->cl_delegations))
--			continue;
- 		if (atomic_read(&clp->cl_delegs_in_recall))
- 			continue;
- 		if (ktime_get_boottime_seconds() - clp->cl_ra_time < 5)
- 			continue;
- 		if (clp->cl_cb_state != NFSD4_CB_UP)
- 			continue;
-+		/*
-+		 * This read races with hash_delegation_locked() and
-+		 * unhash_delegation_locked() on other CPUs. A stale
-+		 * count only skews the keep value; the next
-+		 * laundromat pass sees a more current one.
-+		 */
-+		count = data_race(READ_ONCE(clp->cl_deleg_count));
-+		if (!count)
-+			continue;
- 		if (test_and_set_bit(NFSD4_CALLBACK_RUNNING, &clp->cl_ra->ra_cb.cb_flags))
- 			continue;
- 
- 		/* release in nfsd4_cb_recall_any_release */
- 		kref_get(&clp->cl_nfsdfs.cl_ref);
- 		clp->cl_ra_time = ktime_get_boottime_seconds();
--		clp->cl_ra->ra_keep = 0;
-+		/*
-+		 * Ask for a single delegation. Recalling one before it
-+		 * is needed costs the client an OPEN when it next
-+		 * touches the file.
-+		 */
-+		clp->cl_ra->ra_keep = count - 1;
- 		clp->cl_ra->ra_bmval[0] = BIT(RCA4_TYPE_MASK_RDATA_DLG) |
- 						BIT(RCA4_TYPE_MASK_WDATA_DLG);
- 		trace_nfsd_cb_recall_any(clp->cl_ra);
+ 	/* slow path, try all io-wq's */
 -- 
 2.53.0
 
