@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591068;
-	b=LMD5C1Vc1JhS1O32Xo/uVNO9S5pMUeQNRQM/W8lUflRyDNydTegNmT6H3RGMPWFrj2Bp
-	 0+llN8bjRarwQHQtFs0fDIQgD44Yo+ZVxJXdLUgM2BLxvmunIwOEjbDU6K76PzqHSNyyW
-	 XJ7rLjrDwt8X5uNvcTNzwBpo2fXTe+PoY62eQYqGBhfp2JMiulCgRvq8dFGw+/4O/g3DI
-	 nR6+p/+IrstfCUKHyeJCC0gynaGC//h2qPAUM6Ufoq46IdeNgbeWnsNSe8fjDsnzhqNgm
-	 C5JrxCSB7nCmV1cWWlcpe2W/N7SPevIcVwlq1Ag7xB/zj6TKgCAV3zkLyj8baddYLNA==
+	t=1794591069;
+	b=xqXnezbagdKWeR0sdlePX5mox8s1QQcVThTGlCMnnMAOjjOkQ/jAebP8F+XmOvZXrpr7
+	 uc66ZbSdsxt5Kwrg/fdGF+ilhKzxRLu2utmCorWpcxWTNAD3BFWoEvctnmp41QAOkxsGC
+	 5gO/mO0PpQ6EI9mSdXcALZqVSitlXf+BZ9UDqN7GZdEOrH3ZZ50P5bXj45vcMP5Xj5Yzf
+	 R3qlsYN1YkZQ7ose1gzATxxDbarAT1jUJXesgROkS/U0Ucvi3/6+3JsaOJM+RK6MkM5Z+
+	 qPGzox8xc6LDnG91l00ODfq28jOX6eFps2MLJ5I7wDeT9uLKDksv3GHde8NNTdZ6WMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591069;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=xTbXpk+xzidUyQH8lYwhkCuDxEokoPHO6ydfwx3DMpo=;
-	b=NfDWsG8pk60RQ17qu++35uQoqtc71WJdyRyTYjOPH9DLi7ndvEaKyROqh9eRwotToEcR
-	 xKeZtggljo1zs8Il43dSRNWLmCl3O4iGu8TxJQ7lkMOFUhGBXxs4CGjEheKU2NnV3t+/v
-	 7DE2w4EfAWtYBlKC9UXRv9/vZ3x+9wYt1iBZSZ6/vXhcv3X1bwsdeCIQoqZ9ADmQA21gU
-	 8ZyPBFmqba4HBVkHiPorSZB83d38cB5xwgiIKDmXy5Q8bThWr/YhA+sIqbHCnuBj9t2bj
-	 DvDp93+TR3D1oOAe2UEQ9VJwjHy6PODkqvK2eh7cb5nksE8tSxBWfkbjaApvVkgO6lQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=jPAvbA2iNJWHWzXUWhtj3K1kgmsggy40kSktIANrYTg=;
+	b=Fhl7a6+DmgzDtZWq9YovNAnvNPQepUmxTvDodO64QspP5/EC0mzgchnINLY+9TOZd+df
+	 Tw0NB/VdbUWqbmUasj4Dj06kRNIRpJCARMXGk2SxoKDQV/5Nyv6IkuPoI58l4zDK1VRnc
+	 dCf2Hy9hi1JsPTXPQTj2b6udjdtLuEeuX32vRzmetWFu/ss8vwDVQMq58cwFd8d87FrDB
+	 tIfzlFUX63w8PDwZleG+vB3MRrngRHGtF2Ux4svwa+OWVZ5AyiGOx1LfCrltMlAN7vThh
+	 jnQe8dZAWzTKZwcgihOPcuL4MURd5djA/nC9sg8dFfEyVdcXpZtWCL3XwIBZa25ujGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QbM7wDra;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPyX6UM4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF35606B83B;
-	Fri, 13 Nov 2026 17:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660E0606A8AD;
+	Fri, 13 Nov 2026 17:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QbM7wDra
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38B21F000C4;
-	Fri, 13 Nov 2026 17:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPyX6UM4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 163B71F000C4;
+	Fri, 13 Nov 2026 17:31:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591068;
-	bh=xTbXpk+xzidUyQH8lYwhkCuDxEokoPHO6ydfwx3DMpo=;
+	s=korg; t=1794591069;
+	bh=jPAvbA2iNJWHWzXUWhtj3K1kgmsggy40kSktIANrYTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QbM7wDraAPEcOuSUGbijOYJffw60guYfZujAifFoH2AWYgios1/ano5GxhCc/YLRZ
-	 hZwYfEtjRWVaJYNG+OF54jzqCIC0FuzwndTTWNQSlqPp3P6c/9m9NS7SgsZTHhuTyY
-	 Mdl0jsE0n/B71iwMkj8+mbFEtVLUCC1t//Vp6DGk=
+	b=HPyX6UM47W4NGAInLXHACq3T6PQpg0OSGaF6Ksj5CeD693x85HP+Xc7J3nXHLBshr
+	 Cbkr3/+7uR28n0rB4kdoprhrQqpFEj+M5kcdCoNfCvjD5GAHgUoF8JZgj37Y49/Yhd
+	 hRZB7FmYdzxJGIPRpYWHV9d6KjFcWWHdw8Tv9wGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
 	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Zi Yan <ziy@nvidia.com>,
 	"Gregory Price (Meta)" <gourry@gourry.net>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 226/670] mm/shmem: preserve data in clean folios when splitting fails
-Date: Fri, 13 Nov 2026 10:46:30 -0500
-Message-ID: <20261113153819.532866344@linuxfoundation.org>
+Subject: [PATCH 6.12 227/670] mm/shmem: discard whole new large folios on fallocate rollback
+Date: Fri, 13 Nov 2026 10:46:31 -0500
+Message-ID: <20261113153819.564051724@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -66,100 +65,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 0c800435394a172f33bf4df4a5a04e187546cc9b ]
+[ Upstream commit 23f2a880c0b9518fcb7e7e2ad54a29c0a2c4fba0 ]
 
-A shared writable mapping can have dirty PTEs while its shmem folio is
-still clean. A read fault can install a writable PTE, and a later store
-sets the PTE's dirty bit without marking the folio dirty.
+When undoing a failed fallocate(), shmem_undo_range() must discard each
+newly allocated folio. Its second scan instead passes large
+folios to truncate_inode_partial_folio(), which does not necessarily
+discard the entire large folio, but instead tries splitting it to
+discard only the requested range.
 
-After shmem_undo_range() has handled the boundary folios, a concurrent
-read fault into a hole below the new EOF can allocate a large folio.
-For example, on a tmpfs mount with huge=always, the fault's offset must
-be within the file, but the allocated folio can extend beyond i_size.
-The final scan then finds this folio and calls
-truncate_inode_partial_folio() without marking it dirty.
+For example, with huge=always, a failed allocation starting at offset
+4 KiB can leave page 0 allocated in an otherwise empty file.
 
-Splitting normally collects the PTE dirty bits when unmapping the
-folio. An extra reference, for example from vmsplice(), can make it
-fail before that step. The fallback unmapping on split failure excludes
-shmem, so the helper still sees a clean folio and drops it, losing data
-outside the range.
+Discard the whole folio when unfalloc is set. Note that we enter this
+path only for folios that are not uptodate, and can consequently be
+dropped without losing any data.
 
-CPU0: ftruncate(fd, 3M)                CPU1: MAP_SHARED, tmpfs huge=always
-─────────────────────────────────────  ──────────────────────────────────
-i_size = 3M
-shmem_undo_range(3M, -1)
-  first pass: hole, nothing to do
-  boundary folio at 3M: hole, none
-                                       read fault at 2M+x (below EOF)
-                                         PMD folio [2M,4M), crosses EOF
-                                         writable PTE, folio clean
-                                       store to 2M+x
-                                         PTE dirty, folio still clean
-                                       vmsplice(2M+x)
-                                         extra folio reference
-  whole_folios: finds [2M,4M) folio
-  truncate_inode_partial_folio()
-    zero [3M,4M)
-    folio_split()
-      unmap_folio(): extra ref
-        → -EAGAIN, PTE dirty bit
-          never reaches the folio
-    folio clean
-      → truncate_inode_folio(whole)
-        [2M,3M) dropped
-                                       read 2M+x → refault → zeroes
-
-Mark large folios dirty before partial truncation in the final scan,
-as the boundary handling already does. Exclude failed-fallocate
-rollback, which must discard the folios it added.
-
-Fix generated by an LLM and sent by Chris Mason in private.
-
-Fixes: b9a8a4195c7d ("truncate,shmem: Handle truncates that split large folios")
+Fixes: 55ac8bbe358b ("mm/shmem: fix race in shmem_undo_range w/THP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
 Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
 Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
 Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: simplify descriptions, adjust comments ]
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-8-392fc715d8f6@kernel.org
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-9-392fc715d8f6@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ mm/shmem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mm/shmem.c b/mm/shmem.c
-index 7061d2217306b..b058e20bf018a 100644
+index b058e20bf018a..319830fead85b 100644
 --- a/mm/shmem.c
 +++ b/mm/shmem.c
-@@ -1155,6 +1155,15 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 				VM_BUG_ON_FOLIO(folio_test_writeback(folio),
- 						folio);
+@@ -1164,7 +1164,7 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
+ 				if (!unfalloc && folio_test_large(folio))
+ 					folio_mark_dirty(folio);
  
-+				/*
-+				 * A shared mapping can have dirty PTEs while
-+				 * the folio is still clean. Mark the folio
-+				 * dirty so a failed split cannot discard data
-+				 * outside the range.
-+				 */
-+				if (!unfalloc && folio_test_large(folio))
-+					folio_mark_dirty(folio);
-+
- 				if (!folio_test_large(folio)) {
+-				if (!folio_test_large(folio)) {
++				if (unfalloc || !folio_test_large(folio)) {
  					truncate_inode_folio(mapping, folio);
  				} else if (truncate_inode_partial_folio(folio, lstart, lend)) {
+ 					/*
 -- 
 2.53.0
 
