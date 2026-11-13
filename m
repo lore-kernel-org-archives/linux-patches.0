@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591287;
-	b=yGI8XM62W3jxyWeVZw5rP5FjQawFQSLv4e6p0RqjlpoK0NdGVrNsQ8p/6BspZS5Upztu
-	 PqIipC9kTpdhy3lf1rUPnbEg7yeCWfUzclvT/4IQNMMVmc9dVzJ8Nu30U1BT872HE7MtT
-	 fON8JnaCy3teQvUMNV81Pt5gVq4qrwWmlNa7gxL0Cg+0fZU2A12GunLl7TNz9g3qIJO7b
-	 T83K/YZL/wFBtPQzmrm/F8I3froUsDJ7I068DYV8EyCHRXAA5VgMawtQZSZUy0FJKLh9S
-	 f7KoBSZnLjhpEgQz8ydsZiqAjys8dYxXbUKLCfWPBKC8aUuFayZmtdNVWxktyk+skKw==
+	t=1794591288;
+	b=yKKy0Ll/UMBYKceOzZejjQCO0g9vpJR+cuLDoHq1N0wL/XyBYvS6b+EjY6wApo5mEBX+
+	 DQ5hXHZCavZ93LGR4a1btYKNkONBjVkNJyaD5W7MwddN60s3cWsFi/YD71Qqgp03i2iOC
+	 uOL13fpPW6P+fb3sVDAghEeg+OmrVUdi570YxUbRAlyCYZcLE98hweMiYf4/Px4HaE/fA
+	 kwpeaUyq12bNLjbgYJ96pHHDLgT/shDZBwZpABdU3oDax8DJyvGtnnzpDf0OdJVObcBwh
+	 vPf1huthB8wGLQm/vPX8OPzeYSx+oBjLQJS/3mb1cbCzkUnueSS+P1vdZAEjuJeHb+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591287;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591288;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=31AqpP3iCAbbdMVqpFCTCZ1U9GwQ88xM2XZe9CsTB24=;
-	b=M21YqGCP4cOUEJZX8mWyzmHKMGh0F8s4bgERzqx97rFnBv9qBQ7ZxI6rx3Wdoi8LFyw+
-	 +VMtZZlQkoZQO3aFoGStPrEfTQawBQRfseCFYWtbkA9lX1vEVGzqb0limN+sr6G26ymUm
-	 OIu7YWQS8BzHFrOeU3Ifeq3HbtoeqT9xjJxqCjRU5xKPhRZb8096lh/9rui2Jz1WCvWPn
-	 1hLiw4KN/6n0Ymtriq4ztSqnVtP1rZibcwQbRIjn+PGVeOg/MnluIWKOxWEI3pLryWIuK
-	 SBrMFyVmf7q6ZUr424j4gz3fEYUtJL2VUROnaizVqAMOq4V7H1RnrR3/KOELOy2y00Q==
+	bh=zj6vwSR5HA6CuQIIx4dpmo2DfmZ6/mByU/9L7gqFE1o=;
+	b=FnbLyqGRIzYB8nV/hmiJ49Tq6S/74NOi7F+mfIUSIm6tRYwG/QoVnkjnDeRpnNuEyuCS
+	 dnvejVZeiYjBypqQDdVyZuVC8O2Q8vh7gRhcpi3FApC72l3gPrZPCpmO49pM5sF+x/b6j
+	 FEUv/V/keGSuzvfp54EBybvxF5g3wM6uW/d2qaPfeLrXGidYv+J190+6VtKzjtPEI4q3k
+	 afhzNaDzJQ3x2Tfkhj0Xp8UNSEzyM4v5UGM1TraedQpeLHMosVXDESHbnc42UXrAw4G/c
+	 itfSAtUbujTyj4hexQ2SsRuVsWhc0RCmA7JoCFrW9Dio5OiW8n+ojtCiLFNdxkO0Ctw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HDV1Rg0t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ld+wX1mw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F26C60776C2;
-	Fri, 13 Nov 2026 17:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60166077D53;
+	Fri, 13 Nov 2026 17:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HDV1Rg0t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5651F000C5;
-	Fri, 13 Nov 2026 17:34:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ld+wX1mw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDE31F000C5;
+	Fri, 13 Nov 2026 17:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591287;
-	bh=31AqpP3iCAbbdMVqpFCTCZ1U9GwQ88xM2XZe9CsTB24=;
+	s=korg; t=1794591288;
+	bh=zj6vwSR5HA6CuQIIx4dpmo2DfmZ6/mByU/9L7gqFE1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HDV1Rg0tlik04NPupTFfBQOzOkZe1rJglqAPeph2k2a3LWT/gJ3I+fJSLKXm/WrC6
-	 8p4dOS11dMOyGfpIZGLQK77pznfw3HN6LN3g7LkrtAVSPbJ8tBdttAq0tvxwM6fRwD
-	 Kt2w0/9Dk/rVFOjIhCLDhOqJ289ZbJsgprswaODE=
+	b=ld+wX1mwP4ddMbDohcyV8YCnDiLjfXaadgd0rM0NhQ6RLFfb4Gj951bkdba13tEsE
+	 IOZ5P50CTtHCcORJdX0s2rii9VvYkvWZ2bRG38A32R+Wo35ywIT8Bz7vKr6BYbBiFK
+	 /prJwBCey4PHXBKd824sLu9prbUUPNN7lJJ9tsIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Lutomirski <luto@amacapital.net>,
-	Samiullah Khawaja <skhawaja@google.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 406/670] mm/gup: check folio->mapping under folio lock in memfd_pin_folios()
-Date: Fri, 13 Nov 2026 10:49:30 -0500
-Message-ID: <20261113153825.511978574@linuxfoundation.org>
+Subject: [PATCH 6.12 407/670] iommu/amd: Force device table to maximum size
+Date: Fri, 13 Nov 2026 10:49:31 -0500
+Message-ID: <20261113153825.546098773@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,106 +69,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samiullah Khawaja <skhawaja@google.com>
+From: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
 
-[ Upstream commit 71555ae8c7572fd99158013ca2e29187c5d2508d ]
+commit 6e2213dae78b41976c60133eb10cf99e81916638 upstream.
 
-memfd_pin_folios() pins folios from the page cache without taking the
-folio lock. khugepaged or MADV_COLLAPSE can therefore replace a folio
-after checking its refcount while memfd_pin_folios() still pins the old
-folio. The caller then receives a folio which is no longer part of the
-memfd.
+IOMMU can perform out-of-bounds read of the device table entry (DTE)
+that is adjacent to the last DTE and falls outside the device table.
+For example, if the device table can hold 0 to N-1 entries, then the
+IOMMU can be made to fetch the Nth entry, which falls outside the
+device table.
 
-For udmabuf and iommufd, this can cause data corruption: DMA accesses
-the detached folio rather than the live memfd contents. DMA reads can
-return stale data, while DMA writes update the detached copy and are
-lost from the live memfd. The detached folio remains pinned, so these
-accesses do not constitute a use-after-free or target another
-application's memory. For memfd live update, the stale contents can
-reappear in the memfd after handover.
+The device table is owned by the hypervisor (HV) and is assigned in 4KB
+pages that are contiguous in system physical address (SPA). If the
+out-of-bound DTE falls on a guest-owned page, then the guest can exploit
+this bug to setup malicious table walks to corrupt HV pages and/or bring
+down the system. Note that this bug does not manifest when the device
+table size is set to its maximum size of 2MB.
 
-Lock the folio and recheck folio->mapping before pinning it, like other
-page cache users do. If the folio was removed, retry the folio lookup
-from the index that was removed.
+Therefore, force the device table size to the maximum 2MB on affected
+processors. These are CPU family 0x17 (Zen1/Zen2) through family 0x1a
+(Zen5/BRH).
 
-Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
-Reported-by: Andy Lutomirski <luto@amacapital.net>
-Closes: https://lore.kernel.org/all/CALCETrV5eqg6d9=+BQhCpRwBNe3aCQiut8vxPBs8b7PToqjaHg@mail.gmail.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
-Reviewed-by: Andy Lutomirski <luto@amacapital.net>
-Link: https://patch.msgid.link/20261031203540.2282507-1-skhawaja@google.com
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ skhawaja: resolve conflict with the existing next_idx variable in 6.12 ]
-Signed-off-by: Samiullah Khawaja <skhawaja@google.com>
+This is a mitigation for CVE-2024-21963.
+
+kdump copies the previous kernel's device table only when the size
+encoded in the IOMMU device-table register matches
+pci_seg->dev_table_size. A mixed rollout disagrees: the unpatched
+kernel uses the IVRS-derived size and the patched kernel uses 2MB,
+so copy_device_table() rejects the table and reinitializes
+translation. Kernels that both have this patch agree on 2MB and the
+copy succeeds. Update the production kernel and the crash kernel
+together.
+
+This backport adds X86_FEATURE_ZEN6. Bit 3*32+6 is still
+X86_FEATURE_P3 here, so the new flag uses free bit 21*32+7.
+Family 0x1a models 0x50-0x5f, 0x80-0xaf, 0xc0-0xcf, and
+0xd8-0xef are Zen6 and are excluded from the workaround.
+
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ arch/x86/include/asm/cpufeatures.h       |  5 +++++
+ arch/x86/kernel/cpu/amd.c                |  6 ++++++
+ drivers/iommu/amd/init.c                 | 23 ++++++++++++++++++++++-
+ tools/arch/x86/include/asm/cpufeatures.h |  5 +++++
+ 4 files changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/mm/gup.c b/mm/gup.c
-index 0e1a0c6c5f213..d9107eb461a02 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -3706,7 +3706,7 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- {
- 	unsigned int flags, nr_folios, nr_found;
- 	unsigned int i, pgshift = PAGE_SHIFT;
--	pgoff_t start_idx, end_idx, next_idx;
-+	pgoff_t start_idx, end_idx, next_idx, retry_idx;
- 	struct folio *folio = NULL;
- 	struct folio_batch fbatch;
- 	struct hstate *h;
-@@ -3747,6 +3747,7 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 			 * reason, we try to allocate them and add them to the
- 			 * page cache.
- 			 */
-+			retry_idx = start_idx;
- 			nr_found = filemap_get_folios_contig(memfd->f_mapping,
- 							     &start_idx,
- 							     end_idx,
-@@ -3771,7 +3772,21 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
+diff --git a/arch/x86/include/asm/cpufeatures.h b/arch/x86/include/asm/cpufeatures.h
+index 383d2bb218dec..d73d6cc249224 100644
+--- a/arch/x86/include/asm/cpufeatures.h
++++ b/arch/x86/include/asm/cpufeatures.h
+@@ -483,6 +483,11 @@
+ #define X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT (21*32+ 4) /* Clear branch history at vmexit using SW loop */
+ #define X86_FEATURE_FAST_CPPC		(21*32 + 5) /* AMD Fast CPPC */
+ #define X86_FEATURE_INDIRECT_THUNK_ITS	(21*32 + 6) /* Use thunk for indirect branches in lower half of cacheline */
++/*
++ * Upstream defines X86_FEATURE_ZEN6 as (3*32+6). That bit is still
++ * X86_FEATURE_P3 in this kernel, so use a free bit in this word.
++ */
++#define X86_FEATURE_ZEN6		(21*32+7) /* CPU based on Zen6 microarchitecture */
  
- 				folio = page_folio(&fbatch.folios[i]->page);
+ #define X86_FEATURE_TSA_SQ_NO          (21*32+11) /* AMD CPU not vulnerable to TSA-SQ */
+ #define X86_FEATURE_TSA_L1_NO          (21*32+12) /* AMD CPU not vulnerable to TSA-L1 */
+diff --git a/arch/x86/kernel/cpu/amd.c b/arch/x86/kernel/cpu/amd.c
+index f06966220602b..686e0d1df92fb 100644
+--- a/arch/x86/kernel/cpu/amd.c
++++ b/arch/x86/kernel/cpu/amd.c
+@@ -531,6 +531,12 @@ static void bsp_init_amd(struct cpuinfo_x86 *c)
+ 		case 0xd0 ... 0xd7:
+ 			setup_force_cpu_cap(X86_FEATURE_ZEN5);
+ 			break;
++		case 0x50 ... 0x5f:
++		case 0x80 ... 0xaf:
++		case 0xc0 ... 0xcf:
++		case 0xd8 ... 0xef:
++			setup_force_cpu_cap(X86_FEATURE_ZEN6);
++			break;
+ 		default:
+ 			goto warn;
+ 		}
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 6cc3d2406812c..835b24524aa8d 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -1579,6 +1579,21 @@ static int __init init_iommu_from_acpi(struct amd_iommu *iommu,
+ 	return 0;
+ }
  
-+				/*
-+				 * The folio might have been removed from the
-+				 * page cache (e.g., truncated or collapsed)
-+				 * after the lookup. Recheck under the folio
-+				 * lock.
-+				 */
-+				folio_lock(folio);
-+				if (unlikely(folio->mapping != memfd->f_mapping)) {
-+					folio_unlock(folio);
-+					start_idx = retry_idx;
-+					break;
-+				}
++/*
++ * Apply workaround for Zen1 to Zen5(BRH) generation of processors.
++ * References: CVE-2024-21963
++ */
++static bool __init amd_iommu_force_max_dev_table(void)
++{
++	if (boot_cpu_data.x86 >= 0x17 && boot_cpu_data.x86 <= 0x1a) {
++		if (cpu_feature_enabled(X86_FEATURE_ZEN6))
++			return false;
++		else
++			return true;
++	}
++	return false;
++}
 +
- 				if (try_grab_folio(folio, 1, FOLL_PIN)) {
-+					folio_unlock(folio);
- 					folio_batch_release(&fbatch);
- 					ret = -EINVAL;
- 					goto err;
-@@ -3782,14 +3797,12 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 				 * page cache that were never cleared.
- 				 */
- 				if (!folio_test_uptodate(folio)) {
--					folio_lock(folio);
--					if (!folio_test_uptodate(folio)) {
--						folio_zero_range(folio, 0, folio_size(folio));
--						flush_dcache_folio(folio);
--						folio_mark_uptodate(folio);
--					}
--					folio_unlock(folio);
-+					folio_zero_range(folio, 0, folio_size(folio));
-+					flush_dcache_folio(folio);
-+					folio_mark_uptodate(folio);
- 				}
-+				retry_idx = folio_next_index(folio);
-+				folio_unlock(folio);
+ /* Allocate PCI segment data structure */
+ static struct amd_iommu_pci_seg *__init alloc_pci_segment(u16 id,
+ 					  struct acpi_table_header *ivrs_base)
+@@ -1601,7 +1616,13 @@ static struct amd_iommu_pci_seg *__init alloc_pci_segment(u16 id,
  
- 				if (nr_folios == 0)
- 					*offset = offset_in_folio(folio, start);
+ 	pci_seg->last_bdf = last_bdf;
+ 	DUMP_printk("PCI segment : 0x%0x, last bdf : 0x%04x\n", id, last_bdf);
+-	pci_seg->dev_table_size     = tbl_size(DEV_TABLE_ENTRY_SIZE, last_bdf);
++	if (amd_iommu_force_max_dev_table()) {
++		pr_info("Force device table to maximum size\n");
++		pci_seg->dev_table_size = SZ_2M;
++	} else {
++		pci_seg->dev_table_size = tbl_size(DEV_TABLE_ENTRY_SIZE,
++						   last_bdf);
++	}
+ 	pci_seg->alias_table_size   = tbl_size(ALIAS_TABLE_ENTRY_SIZE, last_bdf);
+ 	pci_seg->rlookup_table_size = tbl_size(RLOOKUP_TABLE_ENTRY_SIZE, last_bdf);
+ 
+diff --git a/tools/arch/x86/include/asm/cpufeatures.h b/tools/arch/x86/include/asm/cpufeatures.h
+index dd4682857c120..f66ac38c9f6f0 100644
+--- a/tools/arch/x86/include/asm/cpufeatures.h
++++ b/tools/arch/x86/include/asm/cpufeatures.h
+@@ -473,6 +473,11 @@
+ #define X86_FEATURE_CLEAR_BHB_HW	(21*32+ 3) /* BHI_DIS_S HW control enabled */
+ #define X86_FEATURE_CLEAR_BHB_LOOP_ON_VMEXIT (21*32+ 4) /* Clear branch history at vmexit using SW loop */
+ #define X86_FEATURE_FAST_CPPC		(21*32 + 5) /* AMD Fast CPPC */
++/*
++ * Upstream defines X86_FEATURE_ZEN6 as (3*32+6). That bit is still
++ * X86_FEATURE_P3 in this kernel, so use a free bit in this word.
++ */
++#define X86_FEATURE_ZEN6		(21*32+7) /* CPU based on Zen6 microarchitecture */
+ 
+ /*
+  * BUG word(s)
 -- 
 2.53.0
 
