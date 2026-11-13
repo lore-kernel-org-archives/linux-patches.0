@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590456;
-	b=VFVRSyM9Fo7QExRuYrin6L1I5M7E8YhnrbuCypYUXEZog6sCrh7zU/5mfvMqCs5JfXar
-	 lOrrLa06lUSbmm6oqimlCwPAJfD7W5Z/JxtzJRf0ykR8Gh3bnusiFjmVv3BjOHoebBfu5
-	 W/Z+kBrAyMX25EslJS9HlVr1PUrEFvXpnzKiT2QYfRXYY/6inUM/d5ncamIFKFa+yjKKH
-	 Kl2bJd4RPA4s14fDNL5Zp6rBDDtP9UkIIMc0bBQyNrS74AH1ZzuWBHaDVQqGHZr0yWiBP
-	 wTUmu4XpPar7WEt4kUD2NMBahhpJbBj1gqq7zZpR8aUhW8Pub/7FnL7Qe/Z+MRRYWsQ==
+	t=1794590457;
+	b=MujgCuOsertyqkz2OtPyc9JtB8S6r4QMDwjo8PMAWdIezJy+TMA95zk4aX/ZzDZqHi0+
+	 VGxgIXkH6YMXywwYCO/80D5PD8qFfDzl8Dc4/NCB6Duqg4EmRJwGPwCyNQuw1WCRHJnjL
+	 Ffio7ErCTpge6WVs8i+GpxbstLxgmdD+ZBsoeQubF+x5FUo/A6VCp7o538s1Kj2fmxI7s
+	 auwygHoInAMBk8BgLaPBwzJYufmEjUGizDxULeP3O0FStBDeDYnZhJ2df/zycuAo70Y2s
+	 e8KT5tSlb5MCM22n65le0gAQ7f6FFfbDek6M8XABvlSsG8hF1xziUM4oBCETXb1ZOAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590456;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590457;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rihbNsJXqVW5EH+uTVwqSuehqH1GaQrm0RX6HGeya6A=;
-	b=vj7ijBFwce8/DT6IgOCltWplmIanIQP/kzTV3PFIQlOqCo1JoAzgakSX1rj3pHCgQhCo
-	 mlF89nASHWepcLLLZs01VzIghUkc7CXRm4D8ixfeGv8cY58lB5BqZ7RLjvL4s4yP6PAjf
-	 Ttmr60iDafiqVRV+4GnE7lbe8Ggm9twKuD8GvkWGIfl04dS3t9A0uAyC9QW8woOJhVqsJ
-	 ji/lqe+D1bTMzT/6VZHRFfpLn3BcioIlCFohKc7001VcHl98sysoThirckq4bREB+6IFg
-	 LOrQ1GJASHoJUHzbS+Shxv7lNGepwrmmi5D9x2O1CgEydMEkJgh2hz3ESqWSrBTDcdw==
+	bh=9dA3bRaU67oG6FIwyLHY6OhS+j+v4secM0vg1wFDAm0=;
+	b=bIDS2S3p48atKxHSKcumksXNtBOfwNIz/+Lp7NErofdFUosI2RUil04BPnJVTZ/MkdgV
+	 7D60ryTYU0JsyWONoPv2MSLMGh8C72hoSXaY/uFvmgx356tyDtwc+at1IXQBcdgrOgG2f
+	 F0gwHxzAmfWLfsTOMjC112eyy8FIHGYIjrtT8pHg8CIiDgGg9WLXx3oDkxJvug+1ioDV/
+	 bDpWlwvPFT8mVDxqleavDfgxO8WTSSDTgxSmKc6h+VC90dQswUal6S4ARE3D+P3E/i40Y
+	 5VrmxrZraqhbIh+WtJPmNM5qzUBFpM9SECOi/jWblWvBukUsE+jwU+zYBd0MkYzqbBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i6Cq16EI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ne8oMeu/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5326F608434A;
-	Fri, 13 Nov 2026 17:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C445606A8A6;
+	Fri, 13 Nov 2026 17:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i6Cq16EI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0606E1F000C6;
-	Fri, 13 Nov 2026 17:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ne8oMeu/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377A91F000C4;
+	Fri, 13 Nov 2026 17:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590456;
-	bh=rihbNsJXqVW5EH+uTVwqSuehqH1GaQrm0RX6HGeya6A=;
+	s=korg; t=1794590457;
+	bh=9dA3bRaU67oG6FIwyLHY6OhS+j+v4secM0vg1wFDAm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i6Cq16EIP/gvWSwG5dt0eutVOHGWN3w8YmV2huNGxtAovM1HgNiFAphrW89S1/wzS
-	 2niWbIb9d/+cv8jcfJqcvW52B234cW3afPlTO3fnxGHpPPwMlc4PEUbFAmDTb17/sG
-	 tLqUJCCOvRW9hFyagngbjADQUMuW33ZqQxxxU8ec=
+	b=Ne8oMeu/mhUF4mCWbYnzCuXgEpzs9T4Nv6X1saCcM2/EzepNBjeZqqNwVS/h4DTub
+	 T8VHWiU2of/Gz++dXgzZJcokLklNpeXRN7jEZNajOO5/yqWqVjBj1cC6KQ7CeHd162
+	 plUBwNHKLMXb1fAOOOgmkOyfjde6hoH1v4+3tRXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 371/686] mm/khugepaged: preserve dirty bits when collapsing PTE-mapped THPs
-Date: Fri, 13 Nov 2026 10:48:24 -0500
-Message-ID: <20261113153833.487200373@linuxfoundation.org>
+Subject: [PATCH 6.18 372/686] mm/gup: recheck the PUD under PTL in follow_pud_mask()
+Date: Fri, 13 Nov 2026 10:48:25 -0500
+Message-ID: <20261113153833.527764392@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -73,64 +69,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit fe2817e3d5ea347214342c9a5cd8bcbff20c0574 ]
+[ Upstream commit 79cb51d538abc459f74e046d27797d36b133ce0e ]
 
-try_collapse_pte_mapped_thp() clears PTEs without transferring their dirty
-bits to the folio. A shmem read fault can map a clean folio writable, so
-a later store only dirties the PTE. Losing that dirty bit allows reclaim
-to discard modified data.
+follow_pud_mask() reads the PUD without a lock. If it is a leaf, it takes
+the lock and calls follow_huge_pud(), which reads the entry again, but
+only tests whether it is present.
 
-The assumption that regular files are read-only is also obsolete since
-commit 1b6444331bebb ("mm/khugepaged: enable clean pagecache folio collapse
-for writable files"). In any case, transferring PTE dirty bits to the folio
-when removing mappings (and while the folio is still mapped) is the right
-thing to do.
+A leaf can be zapped concurrently and a page fault can fill the empty
+entry with a page table.
 
-Use get_and_clear_ptes() to collect the dirty bits and mark the folio
-dirty before unmapping it. Update the comment.
+This currently only applies when device-dax makes use of PUD entries,
+and the fault after e.g., MADV_DONTNEED would find THPs to be disabled.
 
-This was reproduced with shmem using MADV_COLLAPSE followed by
-MADV_PAGEOUT.
+That requires a sequence like
 
-Fix generated by an LLM and sent by Chris Mason in private.
+1) Fault in the PUD
+2) Disable THP
+3) Have GUP race against concurrent MADV_DONTNEED + refault
 
-Fixes: 27e1f8273113 ("khugepaged: enable collapse pmd for pte-mapped THP")
-Fixes: 1b6444331bebb ("mm/khugepaged: enable clean pagecache folio collapse for writable files")
+Which is rather unlikely to happen in practice, which is why we never
+received a report about such a problem.
+
+Before commit 1b1676180246 ("mm/gup: handle huge pud for
+follow_pud_mask()"), we performed that check in follow_devmap_pud() by
+testing for pud_devmap().
+
+Let's fix it by just structuring follow_pud_mask() similar to
+follow_pmd_mask(), minus protnone stuff that does not apply and minus
+FOLL_SPLIT_PMD handling. That makes it much easier to spot any such
+inconsistencies.
+
+Perform the pud_bad() check early in follow_pmd_mask() and just forward
+the PUD value. We can drop the pud_present() check in follow_huge_pud(),
+just like we have in follow_huge_pmd().
+
+Even though we are performing more changes than strictly necessary, the
+fix should be easy to backport.
+
+Fixes: 1b1676180246 ("mm/gup: handle huge pud for follow_pud_mask()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: adjust comment; simplify description; cover file-thp as well ]
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+Reported-by: Josef Bacik <josef@toxicpanda.com>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-17-d6437171ecc3@kernel.org
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-19-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/khugepaged.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ mm/gup.c | 32 ++++++++++++++++++--------------
+ 1 file changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 3a866347a1cf1..6bff1096de7d8 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1646,9 +1646,10 @@ int collapse_pte_mapped_thp(struct mm_struct *mm, unsigned long addr,
- 		/*
- 		 * Must clear entry, or a racing truncate may re-remove it.
- 		 * TLB flush can be left until pmdp_collapse_flush() does it.
--		 * PTE dirty? Shmem page is already dirty; file is read-only.
- 		 */
--		clear_ptes(mm, addr, pte, nr_batch_ptes);
-+		ptent = get_and_clear_ptes(mm, addr, pte, nr_batch_ptes);
-+		if (pte_dirty(ptent))
-+			folio_mark_dirty(folio);
- 		folio_remove_rmap_ptes(folio, page, nr_batch_ptes, vma);
- 		nr_mapped_ptes += nr_batch_ptes;
+diff --git a/mm/gup.c b/mm/gup.c
+index 2264a36bc773f..50ff90775cbb8 100644
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -658,9 +658,6 @@ static struct page *follow_huge_pud(struct vm_area_struct *vma,
+ 
+ 	assert_spin_locked(pud_lockptr(mm, pudp));
+ 
+-	if (!pud_present(pud))
+-		return NULL;
+-
+ 	if ((flags & FOLL_WRITE) &&
+ 	    !can_follow_write_pud(pud, pfn_to_page(pfn), vma, flags))
+ 		return NULL;
+@@ -896,15 +893,17 @@ static struct page *follow_page_pte(struct vm_area_struct *vma,
+ }
+ 
+ static struct page *follow_pmd_mask(struct vm_area_struct *vma,
+-				    unsigned long address, pud_t *pudp,
+-				    unsigned int flags,
+-				    unsigned long *page_mask)
++		unsigned long address, pud_t *pudp, pud_t pud,
++		unsigned int flags, unsigned long *page_mask)
+ {
+ 	pmd_t *pmd, pmdval;
+ 	spinlock_t *ptl;
+ 	struct page *page;
+ 	struct mm_struct *mm = vma->vm_mm;
+ 
++	if (unlikely(pud_bad(pud)))
++		return no_page_table(vma, flags, address);
++
+ 	pmd = pmd_offset(pudp, address);
+ 	pmdval = pmdp_get_lockless(pmd);
+ 	if (pmd_none(pmdval))
+@@ -953,18 +952,23 @@ static struct page *follow_pud_mask(struct vm_area_struct *vma,
+ 	pud = pudp_get(pudp);
+ 	if (!pud_present(pud))
+ 		return no_page_table(vma, flags, address);
+-	if (pud_leaf(pud)) {
+-		ptl = pud_lock(mm, pudp);
+-		page = follow_huge_pud(vma, address, pudp, flags, page_mask);
++	if (!pud_leaf(pud))
++		return follow_pmd_mask(vma, address, pudp, pud, flags, page_mask);
++
++	ptl = pud_lock(mm, pudp);
++	pud = *pudp;
++	if (unlikely(!pud_present(pud))) {
+ 		spin_unlock(ptl);
+-		if (page)
+-			return page;
+ 		return no_page_table(vma, flags, address);
  	}
+-	if (unlikely(pud_bad(pud)))
+-		return no_page_table(vma, flags, address);
++	if (unlikely(!pud_leaf(pud))) {
++		spin_unlock(ptl);
++		return follow_pmd_mask(vma, address, pudp, pud, flags, page_mask);
++	}
+ 
+-	return follow_pmd_mask(vma, address, pudp, flags, page_mask);
++	page = follow_huge_pud(vma, address, pudp, flags, page_mask);
++	spin_unlock(ptl);
++	return page;
+ }
+ 
+ static struct page *follow_p4d_mask(struct vm_area_struct *vma,
 -- 
 2.53.0
 
