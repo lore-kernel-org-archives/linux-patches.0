@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591406;
-	b=ZHTDdGRJmVmjYD0BeE5CEV0m67BYiPlA/iHfcbAP4vNVcXuJI+G456zpdNfLgUhtuCV2
-	 DEWfF9H8Ygb2KB18RqxhvcAMnx4wjSgF+I74ipvV/pPwc4ykKrmQ2brvmRJGU6Zsd29yU
-	 ZrUhkHRUNYpsKnCMuMkquAYtOIfjXdaTESQFHJTy47zkRVaoAyNgfTYQUqMlwTcVJd8vd
-	 JiJ8Sl7S706QnZ9q/fhtBV6bNgqQ1P6JkoqAN3SuzvS1MEcLiKCzfdFUyCTy2En5saLkW
-	 VQaxmWgo69fuLHUhgzb8rdHEMEh1KkoPknePDG/3dwFGUoJWMVte9w4zT0gGhAvSz7g==
+	t=1794591407;
+	b=EYcDN8ab3J9HcHo+ic9h38kToSvFuITM904c4Ly8e2gk+3+Wv528LkqN2+q5GUDaow0t
+	 BE1SRgwFw20pKLoqrIF0DpyYOVAOPW42UmhuJLQ4aD/Sckdbl0LD3wChiIn73S595w63H
+	 qTmQ63y0u3XI4eLJHfLnsuP/4p05Ho76aam6O4U3VfFWBHxOPhouT4ZyucZvvWWHggM3s
+	 bTi0T4NoVr418Hq9VOnrfs1Ksywv6TJFbBVOXvMc6A9FeBFwV5GBp3lZUKxrEo+sILFNp
+	 Ua5qcSdI5BQuQ6DrCG1UjBdEU+ulOMOrdk/wa1fne4iE4BAD3PjuEIvsjUxxexhPgjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2RNi+zg3a0wp1mfn9SyBJDG+DAb/wx74e9iBaYYm4No=;
-	b=K1mhMcMHz/2BRbsQLOKJOU9KGRp1vj6f4HPF6uR8JTvIHpR+FTs4vXxblEUfM9YHoYWa
-	 f1dlq0rBr33LpS+YWtJjCGesffhSc+FTujnEGZgiQQYFk/pxk4MbC+DpUe1kKVxK/FxpN
-	 JwvZ/qXdkWrG2h4RgUGdcAOfw7jMgz/lKJeJK7xeIDAeKBF7Cj3UOv6jIJpficVgFSlCN
-	 yzVShc0Afi1hsz2RI5pKri2KGE84iXS/3VB27/+a1Aa5w5iX+sPwz2xTUy6DAeZwGMq3D
-	 +ETZEkk3uZ1h0apCvbeJIq2+mjhIMRNQoSH03oY8kU8kEl/6aFQr6rBdi4hFgkJIMLw==
+	bh=EWtkHkNgoLlZ3w5esTtQE0j26/IsA/6XlocKbl9h53k=;
+	b=zI2LVMEd+FGBWE4Qkh9WgbZW7pLFZTQX1SUqeEklP+nHPSjNwCo9UPsmGiNBFFnnQ6hl
+	 eTyoaAkPucBniHqB5Yu87o2yGwEYGKBTgZZWEmNWUeNx/eusDzyLCfrfE3srrgIFDn5lj
+	 vZjZtfHbpnXt5TnZPZkeMIR5jyWKxQlmdR6FjkTpdMuGFIW9rItl3857SH4yq1JshAESw
+	 hlQ6cej6akZgz4Vmr0IzSWOA/ATgcOMMxb+b0Bg89E0RH4LJSKHm3TKxyri3OntsrUtVO
+	 PlrQEkuX1q6+f53kD71WWTPy5mbAdJlJZK4JtHgYHQ6UwOtCtwUdyaDMmQX/tyQDM+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NMilX56t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfhQSupq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9576079D5B;
-	Fri, 13 Nov 2026 17:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6D86079D5B;
+	Fri, 13 Nov 2026 17:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NMilX56t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4693E1F000C4;
-	Fri, 13 Nov 2026 17:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfhQSupq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5B31F000C4;
+	Fri, 13 Nov 2026 17:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591406;
-	bh=2RNi+zg3a0wp1mfn9SyBJDG+DAb/wx74e9iBaYYm4No=;
+	s=korg; t=1794591407;
+	bh=EWtkHkNgoLlZ3w5esTtQE0j26/IsA/6XlocKbl9h53k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NMilX56t1ieWQgdWqYGuvzm5/8qV7c2L9VUIRUL5R+V8RWptJX/jk9NRatSgm3kUA
-	 SlN6wQxFW0KIYRNoTQ5uYOyBnXfhBG709EP4yPPE0kekeJ8eLCrtyJSzoQM101dqjT
-	 vg34fbvpxeKCYCuy9xQ+DzDz/kFX+WcMJo6Eq0AA=
+	b=YfhQSupqas0qFpSUVhRnAqNi4uZUtSMUVzsEtzmbOp7Ro68W1ypckhL8xLuS2X1mD
+	 T3YS7YNFA5QpgxFBvC8Yko1rvaIvZdHFvyDxYHU6+AQUGtvlEetIEWhyWSWHwF6k3E
+	 0PP5x+GB4jx7GoRXb9ri0l+w+RiGjuxPaEaL7vXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mehmet Fide <mehmet.fide@screeningeagle.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 502/670] wifi: rtw88: usb: bound what the driver feeds the after-DTIM queue
-Date: Fri, 13 Nov 2026 10:51:06 -0500
-Message-ID: <20261113153828.967864091@linuxfoundation.org>
+Subject: [PATCH 6.12 503/670] wifi: rtw88: usb: only let the frames a dozing station needs use the after-DTIM queue
+Date: Fri, 13 Nov 2026 10:51:07 -0500
+Message-ID: <20261113153828.998915679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,126 +70,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit 04cc8c59a3d79ef7ec2341f1c7aef1d40a0ce7df ]
+[ Upstream commit 185971f1b4eb4ea9059d76cf1a18f992eef998c1 ]
 
-Frames routed to the high queue are transmitted right after DTIM beacons
-only, inside the ATIM window, while they wait in the shared TX page pool.
-The driver puts no limit on how many it hands over, so as long as one
-station dozes, any sustained broadcast or multicast traffic outruns the
-drain and empties the pool: measured on an RTL8822BU AP with a single
-client in power save and ~40 frames/s of mDNS chatter, the free page
-count at 0x240 goes from 1803 to 16 in about 100 seconds and stays there
-for as long as the traffic lasts. From that point every other transmit
-queues behind the backlog, authentication responses arrive too late for
-anyone to join, and the reserved page download fails ("error beacon
-valid"). The AP keeps beaconing and only a reboot recovers.
+With the budget in place the high queue can no longer take the chip
+down, but ordinary chatter still competes with the frames a sleeping
+station actually needs. mac80211 marks every broadcast and multicast
+frame with IEEE80211_TX_CTL_SEND_AFTER_DTIM while a station dozes,
+mDNS and SSDP included, so under normal traffic the budget is spent on
+frames nobody waits for.
 
-Feed the high queue through a small budget that refills below the
-measured drain rate (about 3 frames per DTIM, ~15/s at dtim_period 2 on
-the default 2 TU ATIM window); whatever exceeds the budget leaves on its
-access category queue right away. The high queue backlog is now bounded
-by the burst size under any load, so the page pool cannot run dry, at
-the price that a dozing station may miss part of a broadcast storm.
+Do what the vendor driver does with its default "allow special" high
+queue filter: admit only ARP, EAPOL and DHCP to the after-DTIM path,
+the frames a station coming out of power save has to see; everything
+else goes out on its access category queue at line rate. The frames
+are classified the way rtw89_core_tx_btc_spec_pkt_notify() does it,
+from skb->protocol and the network and transport header offsets that
+mac80211 keeps from the netdev path; EAPOL is the control port flag.
+Frames the AP relays between its own stations arrive as ETH_P_802_3
+and are not inspected, they leave on the access category queue.
+
+With the filter in place the page pool stays at 1803 through the same
+180 second storm, a DHCP flood still takes the after-DTIM path (and is
+then held by the budget), and join/ping cycling without power save is
+unchanged (10/10).
 
 Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
 Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260910081716.769081-2-mehmet.fide@gmail.com
+Link: https://patch.msgid.link/20260910081716.769081-3-mehmet.fide@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c | 41 ++++++++++++++++++++++--
- drivers/net/wireless/realtek/rtw88/usb.h |  5 +++
- 2 files changed, 43 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw88/usb.c | 27 ++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
-index 006ad50ff24f8..434bc7e0e9d1a 100644
+index 434bc7e0e9d1a..e1df0ad1852b0 100644
 --- a/drivers/net/wireless/realtek/rtw88/usb.c
 +++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -555,7 +555,37 @@ static int rtw_usb_write_data_h2c(struct rtw_dev *rtwdev, u8 *buf, u32 size)
+@@ -2,9 +2,11 @@
+ /* Copyright(c) 2018-2019  Realtek Corporation
+  */
+ 
++#include <linux/ip.h>
+ #include <linux/module.h>
+-#include <linux/usb.h>
+ #include <linux/mutex.h>
++#include <linux/udp.h>
++#include <linux/usb.h>
+ #include "main.h"
+ #include "debug.h"
+ #include "reg.h"
+@@ -555,6 +557,27 @@ static int rtw_usb_write_data_h2c(struct rtw_dev *rtwdev, u8 *buf, u32 size)
  	return rtw_usb_write_data(rtwdev, &pkt_info, buf);
  }
  
--static u8 rtw_usb_tx_queue_mapping_to_qsel(struct sk_buff *skb)
-+#define RTW_USB_HIQ_REFILL_INTERVAL	(HZ / 10)	/* one unit of budget per 100 ms */
-+#define RTW_USB_HIQ_BUDGET_MAX		16
-+
-+static bool rtw_usb_hiq_take_budget(struct rtw_usb *rtwusb)
++static bool rtw_usb_bmc_needs_dtim(struct sk_buff *skb)
 +{
-+	unsigned long flags, elapsed, add;
-+	bool ok;
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
++	struct udphdr *udphdr;
 +
-+	spin_lock_irqsave(&rtwusb->hiq_lock, flags);
++	if (info->control.flags & IEEE80211_TX_CTRL_PORT_CTRL_PROTO)
++		return true;
 +
-+	elapsed = jiffies - rtwusb->hiq_refill;
-+	add = elapsed / RTW_USB_HIQ_REFILL_INTERVAL;
-+	if (add) {
-+		rtwusb->hiq_budget = min_t(unsigned long, rtwusb->hiq_budget + add,
-+					   RTW_USB_HIQ_BUDGET_MAX);
++	if (skb->protocol == htons(ETH_P_ARP))
++		return true;
 +
-+		/* keep the unfinished part of the interval for the next unit */
-+		rtwusb->hiq_refill = jiffies - elapsed % RTW_USB_HIQ_REFILL_INTERVAL;
++	if (skb->protocol == htons(ETH_P_IP) &&
++	    ip_hdr(skb)->protocol == IPPROTO_UDP) {
++		udphdr = udp_hdr(skb);
++
++		return udphdr->dest == htons(67) || udphdr->dest == htons(68);
 +	}
 +
-+	ok = rtwusb->hiq_budget > 0;
-+	if (ok)
-+		rtwusb->hiq_budget--;
-+
-+	spin_unlock_irqrestore(&rtwusb->hiq_lock, flags);
-+
-+	return ok;
++	return false;
 +}
 +
-+static u8 rtw_usb_tx_queue_mapping_to_qsel(struct rtw_usb *rtwusb,
-+					   struct sk_buff *skb)
- {
- 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
-@@ -566,7 +596,8 @@ static u8 rtw_usb_tx_queue_mapping_to_qsel(struct sk_buff *skb)
- 		qsel = TX_DESC_QSEL_MGMT;
+ #define RTW_USB_HIQ_REFILL_INTERVAL	(HZ / 10)	/* one unit of budget per 100 ms */
+ #define RTW_USB_HIQ_BUDGET_MAX		16
+ 
+@@ -597,7 +620,7 @@ static u8 rtw_usb_tx_queue_mapping_to_qsel(struct rtw_usb *rtwusb,
  	else if (is_broadcast_ether_addr(hdr->addr1) ||
  		 is_multicast_ether_addr(hdr->addr1))
--		qsel = (info->flags & IEEE80211_TX_CTL_SEND_AFTER_DTIM) ?
-+		qsel = (info->flags & IEEE80211_TX_CTL_SEND_AFTER_DTIM) &&
-+		       rtw_usb_hiq_take_budget(rtwusb) ?
+ 		qsel = (info->flags & IEEE80211_TX_CTL_SEND_AFTER_DTIM) &&
+-		       rtw_usb_hiq_take_budget(rtwusb) ?
++		       rtw_usb_bmc_needs_dtim(skb) && rtw_usb_hiq_take_budget(rtwusb) ?
  		       TX_DESC_QSEL_HIGH : skb->priority;
  	else if (skb_get_queue_mapping(skb) <= IEEE80211_AC_BK)
  		qsel = skb->priority;
-@@ -586,7 +617,7 @@ static int rtw_usb_tx_write(struct rtw_dev *rtwdev,
- 	u8 *pkt_desc;
- 	int ep;
- 
--	pkt_info->qsel = rtw_usb_tx_queue_mapping_to_qsel(skb);
-+	pkt_info->qsel = rtw_usb_tx_queue_mapping_to_qsel(rtwusb, skb);
- 	pkt_desc = skb_push(skb, chip->tx_pkt_desc_sz);
- 	memset(pkt_desc, 0, chip->tx_pkt_desc_sz);
- 	ep = qsel_to_ep(rtwusb, pkt_info->qsel);
-@@ -937,6 +968,10 @@ static int rtw_usb_init_tx(struct rtw_dev *rtwdev)
- 	struct rtw_usb *rtwusb = rtw_get_usb_priv(rtwdev);
- 	int i;
- 
-+	spin_lock_init(&rtwusb->hiq_lock);
-+	rtwusb->hiq_budget = RTW_USB_HIQ_BUDGET_MAX;
-+	rtwusb->hiq_refill = jiffies;
-+
- 	rtwusb->txwq = create_singlethread_workqueue("rtw88_usb: tx wq");
- 	if (!rtwusb->txwq) {
- 		rtw_err(rtwdev, "failed to create TX work queue\n");
-diff --git a/drivers/net/wireless/realtek/rtw88/usb.h b/drivers/net/wireless/realtek/rtw88/usb.h
-index 86697a5c0103a..36a57a0e0df61 100644
---- a/drivers/net/wireless/realtek/rtw88/usb.h
-+++ b/drivers/net/wireless/realtek/rtw88/usb.h
-@@ -74,6 +74,11 @@ struct rtw_usb {
- 	u8 out_ep[RTW_USB_EP_MAX];
- 	int qsel_to_ep[TX_DESC_QSEL_MAX];
- 
-+	/* protects hiq_budget and hiq_refill */
-+	spinlock_t hiq_lock;
-+	u32 hiq_budget;
-+	unsigned long hiq_refill;
-+
- 	struct workqueue_struct *txwq, *rxwq;
- 
- 	struct sk_buff_head tx_queue[RTW_USB_EP_MAX];
 -- 
 2.53.0
 
