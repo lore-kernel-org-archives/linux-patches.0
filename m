@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590296;
-	b=bQK+MP9IdTcGJikzeSIL5W2lE9lL1w0QO2I2zF17XBJbgBIF1NIkYtudwv858T0paHaI
-	 j4ohp8gbBYzHB+9AyR/NiKh/pm88Y3pqInvW1QwOMoDbQ5rPRlUnx86OyyXOD0tu53e61
-	 jI0F+ycCbxjESExGESQZjsKK8siuLlqu90zvxHGwGjPN5tbOmxkpbJF/oGHQ9jWC4Jkob
-	 stT8GMHSnNcGytzDHJLspUaDdGyhcRp3ftHLZ4jLQ9NPRwpgSKWitbi0m9PYDZB8RHQCs
-	 OnYeWb6Sauv218XSS/OM7Kr6kqy6LODGQG8MtTUUVLxFlrJvVAGo/Rorbap3b3px++g==
+	t=1794590297;
+	b=qhSoN95UjswisWn2a9ccpifG5EGx4iEKtQRAIz0N2icidDSAiIAwnZUV7DEIjjGO5yoR
+	 awDEr3DvStR8dffEhYU6Dq/V6foe84eDwWgGrIfbNWeZQnp6Y+tty0bS7FXuK4dnltjAq
+	 ofLIPSF9ZKtns7lgEDzfT9XqOHZKA4wZ4/WRMlt/jK/JTdA9ox8MaYvY86bXJcooqN6mf
+	 gR+A7atLaSkQOkuWcbxOWdhnfdRJ3z6SBjGaeRc2ObiL1Y/WDLjH6tjObSFk2VhlKnJEb
+	 3akLJiMOLFHz36vslPef7oRPo8ZHA4nG4ptAvc/ZxPWohSu06N31Ye4AZzCckP5p5Jg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590296;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qwo1T+d2gwnbSJiRoY5pgVx9cjJ44MwdFJdV8q8iCq0=;
-	b=Jdkw4y0ZRgyjywe4J5o7z6nzBY3Mkxns2bCcqEHguOJGow/VzWvyt501I/efIbG7A35h
-	 j8lBNhZd6GKyGXNMWmcBWZ3AG5jEQB5bAakwH6+LM2N5Q8REudXet7sbyII0EuBquBbnA
-	 7//P1w6Y+5UIeemhBi2I3pDJfwrM2MG8XIuLrvnJYvc5bLwRUL42cYagxouey1ZfuetIh
-	 Ppk05hkEWbrj2MvrnJur7Q9IoAPJudLTVz8a66MDTxAFgmVwvfUSBTv+eYB1Ege8vireF
-	 rTYXAhISyfqjhGOyrKw5EEVvPmz5hTvenjf5NfTHr7vVgkQxV87sQ5IYhQWjlEsa6gA==
+	bh=2w5oP3oZ1C4lxgex7twunt+uOaTWBWOIWpoVP4Q/Vuc=;
+	b=jrfCXJX2cxsNG8NN4x4QeOAbA/MvnWi76HJ2aixzyjcUqJGsEIBpMntkD4kIXLM0x0Px
+	 88G4JlH2DO/AIo4e+aiH9UDt3B745suflZlXgySrQRty4OAGUP9co/OUBnuN6VazaqTP5
+	 PzcRPRGSktvfCU+XXrrzHA9csvqidMhcZIId+Tp36CaWPyBsEO4Hep1G72chcWo8M8wL+
+	 WVQcBHTSgyKXR14mHijNZOI/ONHpJwHNphtBc7M4dObDQQvUfde1g5VFyCP9YPaF4yimF
+	 boxt4YXMnyI0lzjzXNit8htgZvRO00G6iM3GfkBIqbcUGOSSNb1JedEurxndI/PzdAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kAZ5DeaB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qe7TtB1B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE25607B58F;
-	Fri, 13 Nov 2026 17:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77378607B5A8;
+	Fri, 13 Nov 2026 17:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kAZ5DeaB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17C31F000C9;
-	Fri, 13 Nov 2026 17:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qe7TtB1B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237821F000C5;
+	Fri, 13 Nov 2026 17:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590296;
-	bh=qwo1T+d2gwnbSJiRoY5pgVx9cjJ44MwdFJdV8q8iCq0=;
+	s=korg; t=1794590297;
+	bh=2w5oP3oZ1C4lxgex7twunt+uOaTWBWOIWpoVP4Q/Vuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kAZ5DeaBvfvyfxUVhkBDk2F1/Pg9FZwa3JBZ0KFL9bX9o68rGCa776mjWRlFArefc
-	 unjytICnwZX0V/zCInMS21AAjWOGNtHfjwseCTJUgKhTt5tnar/3Fcdf74+yrVZ8qy
-	 UbWWFY0RBlW3dNm7GDsNTY3QcpLWLOd3PgWU4AOY=
+	b=qe7TtB1B6hzKrzs2IfUOUXeWOzPUK3kQD8/EqYYSEhCpY5DuPAhCCNTAARc4HHD5C
+	 Tq3b2msDkXNXFQR2Y9MyJ63Ms1T2p2zMDc6F2eCL0cSTZAl7X6bOn1fud+0Y7T2QYN
+	 V0R9L6REyTPSzENv6GEvmS7DcxN4sD1V55EivxRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Iwona Winiarska <iwona.winiarska@intel.com>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 284/686] hwmon: (nct6683) Fix incorrect struct cast in show_pwm() and store_pwm()
-Date: Fri, 13 Nov 2026 10:46:57 -0500
-Message-ID: <20261113153830.605333814@linuxfoundation.org>
+Subject: [PATCH 6.18 285/686] hwmon: (peci/dimmtemp) Fix devres leak and UAF on concurrent unbind
+Date: Fri, 13 Nov 2026 10:46:58 -0500
+Message-ID: <20261113153830.643832502@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,57 +70,109 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit c4a01c2a80b203ab5f80885f6994346fe217f19c ]
+[ Upstream commit 61bc4514b8e99e9733c04de028885f6fc906d628 ]
 
-On big-endian architectures, reading or writing the pwm[1-8] sysfs
-attributes in the nct6683 hardware monitoring driver always redirects to
-channel 0 due to an incorrect struct downcast in show_pwm() and
-store_pwm().
-The driver defines the PWM sysfs attributes using SENSOR_TEMPLATE(),
-which initializes them as struct sensor_device_attribute (where the index
-is a 32-bit int). However, the sysfs callbacks show_pwm() and store_pwm()
-incorrectly downcast the attribute to a struct sensor_device_attribute_2
-(where the index is an 8-bit u8). Because both structs start with struct
-device_attribute, container_of() resolves to the same base address. On
-big-endian architectures, reading the 8-bit index field from the memory
-layout of a 32-bit int fetches the most significant byte (which is 0),
-rather than the intended channel number.
-This type mismatch causes all PWM reads to return data for channel 0, and
-any writes intended to configure other channels will silently overwrite the
-duty cycle of PWM channel 0 instead.
+When a peci_dimmtemp device is unbound concurrently with its delayed
+initialization work (detect_work), newly allocated devm resources and
+the hwmon device are leaked, leading to a use-after-free when reading
+the lingering hwmon sysfs attributes.
 
-Fix the type casts in show_pwm() and store_pwm() to solve the problem.
+In peci_dimmtemp_probe(), detect_work is registered for cancellation via
+devm_delayed_work_autocancel(). During driver detach, devres_release_all()
+first moves all existing entries from dev->devres_head onto a local todo
+list before invoking their release callbacks in reverse order. If
+create_dimm_temp_info_delayed() is already running when
+devm_delayed_work_drop() calls cancel_delayed_work_sync(),
+create_dimm_temp_info() can allocate dimmtemp_label strings via
+devm_kzalloc()/devm_kasprintf() and register the hwmon device via
+devm_hwmon_device_register_with_info(), appending new devres entries to
+the now-empty dev->devres_head. Once the work finishes,
+devres_release_all() frees priv and priv->name from the local todo list
+without re-evaluating dev->devres_head, leaving the late devres
+allocations and registered hwmon device behind with a dangling priv
+pointer.
 
-Fixes: 41082d66bfd6 ("hwmon: Driver for NCT6683D")
+Cancel detect_work synchronously in a driver .remove() callback instead
+of relying on devm_delayed_work_autocancel() so that the work is fully
+drained before devres_release_all() detaches dev->devres_head, allowing
+any devm resources registered by the delayed work to be released in
+proper reverse order. Also only schedule detect_work when
+check_populated_dimms() returns -EAGAIN so that probe failure paths do
+not leave delayed work pending.
+
+Fixes: 73bc1b885dae ("hwmon: peci: Add dimmtemp driver")
 Cc: stable@vger.kernel.org
+Cc: Iwona Winiarska <iwona.winiarska@intel.com>
+Reviewed-by: Iwona Winiarska <iwona.winiarska@intel.com>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6683.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/peci/dimmtemp.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hwmon/nct6683.c b/drivers/hwmon/nct6683.c
-index 4a83804140386..05fc440f417c8 100644
---- a/drivers/hwmon/nct6683.c
-+++ b/drivers/hwmon/nct6683.c
-@@ -918,7 +918,7 @@ static ssize_t
- show_pwm(struct device *dev, struct device_attribute *attr, char *buf)
- {
- 	struct nct6683_data *data = nct6683_update_device(dev);
--	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
-+	struct sensor_device_attribute *sattr = to_sensor_dev_attr(attr);
- 	int index = sattr->index;
+diff --git a/drivers/hwmon/peci/dimmtemp.c b/drivers/hwmon/peci/dimmtemp.c
+index fbe82d9852e01..d327e38d59e18 100644
+--- a/drivers/hwmon/peci/dimmtemp.c
++++ b/drivers/hwmon/peci/dimmtemp.c
+@@ -4,7 +4,6 @@
+ #include <linux/auxiliary_bus.h>
+ #include <linux/bitfield.h>
+ #include <linux/bitops.h>
+-#include <linux/devm-helpers.h>
+ #include <linux/hwmon.h>
+ #include <linux/jiffies.h>
+ #include <linux/module.h>
+@@ -331,11 +330,13 @@ static int create_dimm_temp_info(struct peci_dimmtemp *priv)
+ 	if (ret == -ENODEV) {
+ 		dev_dbg(priv->dev, "No DIMMs found\n");
+ 		return 0;
+-	} else if (ret) {
++	}
++	if (ret == -EAGAIN) {
+ 		schedule_delayed_work(&priv->detect_work, DIMM_MASK_CHECK_DELAY_JIFFIES);
+ 		dev_dbg(priv->dev, "Deferred populating DIMM temp info\n");
+-		return ret;
+ 	}
++	if (ret)
++		return ret;
  
- 	return sprintf(buf, "%d\n", data->pwm[index]);
-@@ -928,7 +928,7 @@ static ssize_t
- store_pwm(struct device *dev, struct device_attribute *attr, const char *buf,
- 	  size_t count)
+ 	channels = priv->gen_info->chan_rank_max * priv->gen_info->dimm_idx_max;
+ 
+@@ -405,10 +406,8 @@ static int peci_dimmtemp_probe(struct auxiliary_device *adev, const struct auxil
+ 			 "Unexpected PECI revision %#x, some features may be unavailable\n",
+ 			 peci_dev->info.peci_revision);
+ 
+-	ret = devm_delayed_work_autocancel(priv->dev, &priv->detect_work,
+-					   create_dimm_temp_info_delayed);
+-	if (ret)
+-		return ret;
++	auxiliary_set_drvdata(adev, priv);
++	INIT_DELAYED_WORK(&priv->detect_work, create_dimm_temp_info_delayed);
+ 
+ 	ret = create_dimm_temp_info(priv);
+ 	if (ret && ret != -EAGAIN) {
+@@ -419,6 +418,13 @@ static int peci_dimmtemp_probe(struct auxiliary_device *adev, const struct auxil
+ 	return 0;
+ }
+ 
++static void peci_dimmtemp_remove(struct auxiliary_device *adev)
++{
++	struct peci_dimmtemp *priv = auxiliary_get_drvdata(adev);
++
++	cancel_delayed_work_sync(&priv->detect_work);
++}
++
+ static int
+ read_thresholds_hsx(struct peci_dimmtemp *priv, int dimm_order, int chan_rank, u32 *data)
  {
--	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
-+	struct sensor_device_attribute *sattr = to_sensor_dev_attr(attr);
- 	struct nct6683_data *data = dev_get_drvdata(dev);
- 	int index = sattr->index;
- 	unsigned long val;
+@@ -655,6 +661,7 @@ MODULE_DEVICE_TABLE(auxiliary, peci_dimmtemp_ids);
+ 
+ static struct auxiliary_driver peci_dimmtemp_driver = {
+ 	.probe		= peci_dimmtemp_probe,
++	.remove		= peci_dimmtemp_remove,
+ 	.id_table	= peci_dimmtemp_ids,
+ };
+ 
 -- 
 2.53.0
 
