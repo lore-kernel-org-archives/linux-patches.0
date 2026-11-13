@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590247;
-	b=nWz1R93YPtS0hxPXx/sdJFB7fQSkMGTgIf2/pCNFihT+x+kqnGl2AoVfd8qVl0WaBWUQ
-	 9oC1mcX9DInaulzS/e/+CVBIr7FFvQEQvnqkcIoWi28PP8cbe7cADxXtmmQeXy6Sb8byo
-	 Vwx+OdvUByhQkSCc7dT+zFtTdF7bl+ILWggogepopBQQCgX+9X1hTpmlrQTTBSneRXzNw
-	 7WyAMhyMprWD7WogxaTuQJTmDFNVk4VvNGb1VTI28kiS896+ovqh/SMirUJQtcuJYrHTS
-	 ktWvmW6/G6T2NYXx7FsNaumpbO4a/+y0Efq6bLrmn0RZVRxcFiZmw1oQZbl7PK8ty7Q==
+	t=1794590248;
+	b=ft42ILVaplt+4VVEjMn4PIoPHg/NiXDfsxbE3umOrrLVfvpPaBJWodyR0N7X0JDKsho/
+	 nPB1WYNUL+y6ZhK3cGXA6gFzAEMAjm2HJ/9Ev4YgWAb7g1cS8AjSfHjoKLOcRNHmdxLZ8
+	 zZM6O93jQV9u6hVuWjNNS4KyGmerixnt7w0pNVOisyFcyCZYlD57uBMMxqRW9lhMEecwZ
+	 xHKrE1HFttB8QPKjYi/76oB2f2cubrMMjAcz8CMLDQIKHvcwRXv4rQsPkEm/m/Bweww/F
+	 6hQs+yvnwJT69U8gePd8e3TUdJh7GJU3Jx6w3er25iHEXotm4PQOz4fw7MghrOaKMJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590248;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8rWyK/35Hw/N6YMt5SuIn3+J6y17QS2yYZrbQLUWpgQ=;
-	b=0Ar+cKteQrJqBhoUckWwBmpsItM8+qWOttCYXeV8pV1pa62ineTE2OB+Fp9GiiVUcBPu
-	 pvX38pcJ22YThCofkFcrSiapz3Ae7ZZRLa9loJ7f4nnljJF4PnJDz3EqL92jRi3M+JzHe
-	 jZXw2lna1ZPTTYYnO4fWgx8Q/EB+eFHyMKjepdTdbMX1LSPRxXjG2S1LCtU6S7GE8+1gT
-	 s6hUU8DG4YMpEkaW3FCHK0+qPpN7zoIjkADXC6rx5Kha7nAIj2WwXNqByw9yDjryJRkCW
-	 t0DCCTbVg29GfyCpZYsqVViDAiQKQRqK7TmNISwmVQ3+6wOZ18Z6Jdd7fQDJQnqhnhw==
+	bh=pyumZJgacJHFwOVJ0jxeLB5Qm3If35qC92LVdAZrM2Y=;
+	b=BbFfusboUQq2zFpigWgF9Q1e+bk34rqZUg/wb55Vf+xIj+Jm1Ut32EDpi/i4JPptjdlX
+	 VodX2DivyZ36cG1L1z3rC450EXBDPIz1uY82AtLTowZbroZ+Bwb9Ie9OyU4onsVJJexWI
+	 xR1Y2S0bRipz+b/NuawxHDzigRKH+Tr64Pr2/acd+FDbH2wM7YaYdZLgyy6HYa/EMhP6P
+	 MDDXYTUkulDp4x2fOxIiqfpXdr3yRBHrNZxSitmnmIc6jPCiBrwsnIxOKNzIz2Bbo6VXO
+	 YhXDA108DGuzFlv41VTc4AqdAt8uUGfJsLI6ESGEa/T4DTlZnQDL+ysAJS87rQ6ef8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvkyF8Sn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eif3hrBD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E7D60A2626;
-	Fri, 13 Nov 2026 17:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7AC60A2636;
+	Fri, 13 Nov 2026 17:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvkyF8Sn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C0E1F000C6;
-	Fri, 13 Nov 2026 17:17:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eif3hrBD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6771F000C6;
+	Fri, 13 Nov 2026 17:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590246;
-	bh=8rWyK/35Hw/N6YMt5SuIn3+J6y17QS2yYZrbQLUWpgQ=;
+	s=korg; t=1794590248;
+	bh=pyumZJgacJHFwOVJ0jxeLB5Qm3If35qC92LVdAZrM2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yvkyF8SnNRyfBS5Bp7ub1tCfxAsa2Kz5ecaiVuAh/SHE/iKYV8vTNrqFeV24x4Ywd
-	 nuNkdJwWhofo+bmBRv9YulOQJCBZBsrbZouJX1MOSFQIvqWuyn91piRV3OVo7B7Ind
-	 qPz1cTcQdsihEi5RVulhgr74JmZ7rY/luEkwyMa4=
+	b=eif3hrBDr2Bjspm2P912k2yo2K/2Xqi/wrXdXpsRVfZI1RBuK8/RydbTSEfaSVwfY
+	 KF1O1FWsB/2+M4k97fkYXMfM+CxC9Qh8b5gI50gVNMgzoZtExqXQs2oQgUYtHjnFcs
+	 P+BsXCzXBXAWLVrUEKBJ+M8j1TC3lETTS0cWwWWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Federico Musto <federico@rimpianto.com>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Ian Bridges <icb@fastmail.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 244/686] net: atl1c: drop oversized RX frames instead of panicking
-Date: Fri, 13 Nov 2026 10:46:17 -0500
-Message-ID: <20261113153829.324075462@linuxfoundation.org>
+Subject: [PATCH 6.18 245/686] ksmbd: grant a POSIX ACL group entry only to the groups members
+Date: Fri, 13 Nov 2026 10:46:18 -0500
+Message-ID: <20261113153829.356260335@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,96 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Federico Musto <federico@rimpianto.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit c4ba1716853de5178a9df785844ebb5e397a80e6 ]
+[ Upstream commit c00ec7ad449b68c291a4986e481941302ed399c5 ]
 
-atl1c sizes its receive buffers from the netdev MTU plus a fixed set of L2
-overheads, which comes to 1522 bytes at the default MTU.  A link partner
-that sends a longer frame - in practice a MikroTik CCR2004-1G-2XS-PCIe,
-whose RouterOS side defaults to l2mtu 1600 while the host stays at MTU 1500
-- makes the length reported by the RX return descriptor exceed what the
-hardware wrote, and skb_put() then either includes bytes that were never
-received or trips skb_over_panic and takes the host down.
+When no ACE of the DACL matches the caller, Everyone or Authenticated
+Users, smb_check_perm_dacl() falls back to the file's POSIX ACL. It
+takes the first ACL_USER or ACL_GROUP entry whose id equals the
+caller's uid. For ACL_GROUP, this compares a gid with the caller's uid.
+A numerical match grants the group's permissions even when the caller
+is not a member.
 
-Compare the descriptor length against buffer_info->length, the length the
-hardware was given, rather than against skb_tailroom(): the skb carries 64
-bytes of slack for the DMA erratum, so tailroom is larger than the DMA
-buffer and a frame in between would pass the check and still be delivered
-with a tail the device never wrote.  The same test rejects frames shorter
-than ETH_HLEN + ETH_FCS_LEN; before this change a reported length below
-ETH_FCS_LEN underflowed in skb_put().
+Match a group entry only when the caller is also in the group.
 
-The frame is dropped with kfree_skb_reason(SKB_DROP_REASON_PKT_TOO_BIG) so
-drop_monitor and the kfree_skb tracepoint see it, and counted through
-dev_core_stats_rx_dropped_inc(), which survives atl1c_get_stats()
-overwriting the hardware counters on every read.  It also counts as work:
-atl1c_clean_rfd() has already recycled the RFD, and the refill at the end
-of the poll only runs when work_done is non-zero, so sustained oversized
-traffic would otherwise drain the ring and stop RX.
-
-Tested on a MikroTik CCR2004-1G-2XS-PCIe (4x AR8151) in a Proxmox VE host,
-with atl1c built from a DKMS tree carrying this change: the l2mtu-1600
-traffic that panics the stock driver is dropped and counted with the patch
-applied, and received normally once the host MTU is raised to match.
-
-This complements commit 36c2009d90f2 ("net: atl1c: fix soft lockup on
-out-of-range tpd_cons read"), which fixed the TX side of the same
-"host dies while the card resets" problem.
-
-Fixes: 43250ddd75a3 ("atl1c: Atheros L1C Gigabit Ethernet driver")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Namjae Jeon <linkinjeon@kernel.org>
+Closes: https://lore.kernel.org/linux-cifs/CAKYAXd93czbFD=znZUq_pJLXzDR5N3zc_auvAGWT7pzKR1f9Ag@mail.gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Federico Musto <federico@rimpianto.com>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/atheros/atl1c/atl1c_main.c   | 33 +++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ fs/smb/server/smbacl.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-index e58f1d2c26bdf..eddd8406867f7 100644
---- a/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-+++ b/drivers/net/ethernet/atheros/atl1c/atl1c_main.c
-@@ -1934,6 +1934,39 @@ static int atl1c_clean_rx(struct napi_struct *napi, int budget)
- 			break;
- 		}
- 		atl1c_clean_rfd(rfd_ring, rrs, rfd_num);
-+
-+		/* A link partner whose l2mtu is larger than ours can hand us a
-+		 * frame that does not fit the buffer the hardware was given:
-+		 * the descriptor reports the untruncated length while at most
-+		 * buffer_info->length bytes were written.  skb_put() of such a
-+		 * length would pull in whatever the tail of the buffer holds
-+		 * and, past the end of the skb, trips skb_over_panic and takes
-+		 * the host down.  Bound it by what the device actually wrote
-+		 * rather than by skb_tailroom(): the skb carries 64 bytes of
-+		 * slack for the DMA erratum, so the two are not the same.
-+		 *
-+		 * Frames shorter than an Ethernet header plus its FCS are
-+		 * rejected by the same test; before this, a length below
-+		 * ETH_FCS_LEN underflowed in skb_put().
-+		 */
-+		if (unlikely(length < ETH_HLEN + ETH_FCS_LEN ||
-+			     length > buffer_info->length)) {
-+			dev_core_stats_rx_dropped_inc(netdev);
-+			if (netif_msg_rx_err(adapter))
-+				dev_warn_ratelimited(&pdev->dev,
-+						     "dropped rx frame: %u bytes, buffer %u\n",
-+						     length, buffer_info->length);
-+			kfree_skb_reason(skb, SKB_DROP_REASON_PKT_TOO_BIG);
-+			/* atl1c_clean_rfd() has already recycled the RFD, so
-+			 * count the drop as work: the refill at the end of the
-+			 * poll only runs when work_done is non-zero, and
-+			 * sustained oversized traffic would otherwise drain the
-+			 * ring and stop RX for good.
-+			 */
-+			work_done++;
-+			continue;
-+		}
-+
- 		skb_put(skb, length - ETH_FCS_LEN);
- 		skb->protocol = eth_type_trans(skb, netdev);
- 		atl1c_rx_checksum(adapter, skb, rrs);
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 33a607e709f18..63f7bccb4d9af 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1606,7 +1606,10 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 				else
+ 					continue;
+ 
+-				if (id == uid) {
++				/* A group entry grants only to the group's members */
++				if (id == uid &&
++				    (pa_entry->e_tag == ACL_USER ||
++				     in_group_p(make_kgid(&init_user_ns, id)))) {
+ 					mode_to_access_flags(pa_entry->e_perm,
+ 							     0777,
+ 							     &access_bits);
 -- 
 2.53.0
 
