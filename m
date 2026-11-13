@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590969;
-	b=0Ghdw0ZUiqgqEqzWARhSTekbg7p8ga/OKHh3or1ryGL5QdjwIFoHp8S70LkVKUlROjhG
-	 xmkpZFf96AgBtR2UExEqvjhWYBIEe2mpDt5kg2mX7+G1DyEr5MOGGmS77alQGapAFv8N4
-	 SHjsCJMAog33HT95Xgn90Gt2cxWoXxAAO1MSy4RrlMsHVorj5254/G+xizqWLFLf9a0DM
-	 1q2F24Wy15FXAD++fZpxB0PpEkxA61wCbzqLWzj3OnG+WVfK2MG8un+rilhKWOkHNmuwC
-	 mYrPyiZ4oacxWKtpgwTlARzhX7fBBxij7/8i1gI/Tys+bFOeOPyw+GYKeB7Fvvs5v0w==
+	t=1794590970;
+	b=IlqsUqYv9ruw6ZzJceAHjyowBFiz/hFGuoVNhpvIH4gq1GBZ0spgA+uuhjJJhQcrbcAi
+	 M9hidHgz0y3SohKA2C1xcQBQk+q/epU+C1RpLyQuiymSEIbnUWsM3XpEMNC/oypF0QmZE
+	 W7h+0ej8QUIVnuI9+aMXfHdy/WOqrCKLEVFVfrGePYESow+1/H7E/reGgM8LzJ9eTmR9r
+	 SzkhFCULWRdd5LGd1lBbgI3d31ATYDWKwCVn7t2P0ffYzYf9gaGwsOQxHiGZvhBTUDSba
+	 bX51+SPsH8dE5xxFco2ToB87E+fet3E/NO8PvqXXllNiQF5UuQypladmEfBIB8fqNRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590969;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G1X4y2Wt8zADi4pNUYPeFJewwrtL9V82Z8hiCfUDGFc=;
-	b=xRGr8mOofEH11vRcB8tBph7xHZqD1FU6ZKEyYj0qrXy8aueMC9km29kBGMgXu+sE5UFB
-	 zprsPHchxeBuGu/z425a/Iikd/05zOEZlKyjs6Ca2YXwgVejZz/JTQbqpsZh22CipwwLl
-	 j5iOw8twYE47l2UkBneZUlTaZAyGNYkyB00ryyTiEfQgeweLDeV9phEcgAaUBeq0AiIao
-	 u+boTGcci0DhZxpzMrGqgPKavFDn3AvlYK8OVF0+QKE4BiNPfGoCYoMo4o7qqw6K++ISH
-	 Zp1pE7UBOkjlrm3KNmCYB6ziPLCKC38gfPgxjbtEeR4HiEu3YgxxVnAR/XQ/sa2rleQ==
+	bh=8PdR3vA+oUg/mJ///ZrxVjzjA2+8CVO9Y6mv0fZABAk=;
+	b=Uiua9FonlE5vtYaP1jO32y/nqvGV7MbAPrvFQ67k8x0f48DxDPhtu7bEXyQlixX777G9
+	 m2oOKHKfm6q2QM7aKOlYYnaUk64yfX/mK8hWXmPYmU+WvhMwzfSF5uwClImy9SLEtsZ6h
+	 9kLohFyZqoFCscNBl5s7LQ7LoK2wATBCTU3oSi69rnXVxUWUPkhOgogYXcIYLmrL/XXZs
+	 ZBLXCUMof/zbu+EVmMXL4KTWgiD2IWwp2kiG35sFeHOc0rPJvyW3B2Ifk1OpqiJPsATDE
+	 rxSTv6dwtsc20rvVJbZAVSY8nQMjU7YGM33lsfNGPBR8Sfm2Bu7n8mERaNrb0i8W71w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdUeg4n7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pRqKT/1j";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157E8606A8A3;
-	Fri, 13 Nov 2026 17:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5FF606A8A3;
+	Fri, 13 Nov 2026 17:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kdUeg4n7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B558D1F000C4;
-	Fri, 13 Nov 2026 17:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pRqKT/1j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4FC1F000C4;
+	Fri, 13 Nov 2026 17:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590968;
-	bh=G1X4y2Wt8zADi4pNUYPeFJewwrtL9V82Z8hiCfUDGFc=;
+	s=korg; t=1794590970;
+	bh=8PdR3vA+oUg/mJ///ZrxVjzjA2+8CVO9Y6mv0fZABAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kdUeg4n75ViyJAWcBMcXUuhdt1hdK8udC8HQV1GhltMI/BbayplWJh+81dKyV8EIs
-	 nM2n09SVLEqaVC3jQag+4UuM6fT9g57nasCZX+8UY3ljyHJLqAlME+8QKaatGa5xkx
-	 6n29fKJjN/oyWveO8Ho2eTc1Nj4rZfo7ne9Jf0Bw=
+	b=pRqKT/1j00L+uUf0LcSRkKy918Hpig6es5CnowC5C3o1xGrAQpuG3roY7ZmJ+v4QK
+	 mvoWKGJitMPGiG0C5mSGSQHzJekY/dr3bwXG/T/waJ3DRd3jQMG7MDAdbdv1WqT+L7
+	 c/4nuXn+xu8quRH8lJRrFsylkN/DAy+MaifP3V5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/670] bpqether: fix truncated /proc/net/bpqether on partial reads
-Date: Fri, 13 Nov 2026 10:44:28 -0500
-Message-ID: <20261113153815.403085529@linuxfoundation.org>
+Subject: [PATCH 6.12 105/670] rose: arm the neighbour timers with mod_timer()
+Date: Fri, 13 Nov 2026 10:44:29 -0500
+Message-ID: <20261113153815.433010484@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,40 +69,121 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-bpq_seq_start() walks the device list to find the entry at *pos, but
-never increments its counter. It returns the first device when *pos is
-1 and NULL for any larger value.
+rose_start_t0timer() and rose_start_ftimer() restart a neighbour timer
+in two steps: timer_delete(), then a rewrite of .function and .expires
+followed by add_timer().  Nothing serialises these calls.  Two sockets
+using the same neighbour can reach rose_transmit_link() at the same
+time on two CPUs, for instance rose_connect() in process context and
+rose_route_frame() in softirq context, or a connect racing the
+self-rearm at the end of rose_t0timer_expiry().  Both see the timer
+idle, both call timer_delete(), and the second add_timer() finds the
+timer already pending:
 
-The seq_file core calls ->start() with the saved position each time a
-read() needs more data, so the listing stops after the first device as
-soon as it is not produced in a single pass: when it is read with a
-small buffer, or when it is longer than a page.
+  WARNING: CPU: 1 PID: 11465 at kernel/time/timer.c:1294 add_timer+0x60/0x90
+   rose_write_internal+0x3ab/0x15b0 [rose]
+   rose_connect+0x60f/0x1320 [rose]
 
-With five bpq devices, reading the file 64 bytes at a time returned
-the header and one device before the change, and all five devices
-after.
+With panic_on_warn this takes the machine down.
+
+Set the expiry functions once, when the neighbour is created, and
+start the timers with a single mod_timer() call, which updates a
+pending timer or arms an idle one atomically.
+
+This also stops rewriting .function on every start, so a start
+that would come after timer_shutdown_sync() in rose_neigh_put() is
+ignored, as that function's comment expects, instead of bringing the
+timer back.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 0a529c12d374e1dc74c2360e7ca13ab4e594a445)
+(cherry picked from commit 41748d2730f1eb6b85fb957581d7ffb6dfe39859)
+[ Bernard: 6.12 still has del_timer() instead of timer_delete(); adjusted
+  the context of rose_start_ftimer() and rose_start_t0timer(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/bpqether.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/rose.h    |  1 +
+ net/rose/rose_link.c  | 24 ++++++++++--------------
+ net/rose/rose_route.c |  6 ++----
+ 3 files changed, 13 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/hamradio/bpqether.c b/drivers/net/hamradio/bpqether.c
-index c896b778b77b1..f027205347d34 100644
---- a/drivers/net/hamradio/bpqether.c
-+++ b/drivers/net/hamradio/bpqether.c
-@@ -386,6 +386,7 @@ static void *bpq_seq_start(struct seq_file *seq, loff_t *pos)
- 	list_for_each_entry_rcu(bpqdev, &bpq_devices, bpq_list) {
- 		if (i == *pos)
- 			return bpqdev;
-+		i++;
- 	}
- 	return NULL;
+diff --git a/include/net/rose.h b/include/net/rose.h
+index 2fa0331e36f09..83d6b611eb735 100644
+--- a/include/net/rose.h
++++ b/include/net/rose.h
+@@ -231,6 +231,7 @@ int rose_rcv_frame(struct sock *sk, struct sk_buff *skb);
+ int rose_backlog_rcv(struct sock *sk, struct sk_buff *skb);
+ 
+ /* rose_link.c */
++void rose_neigh_init_timers(struct rose_neigh *neigh);
+ void rose_start_ftimer(struct rose_neigh *);
+ void rose_stop_ftimer(struct rose_neigh *);
+ void rose_stop_t0timer(struct rose_neigh *);
+diff --git a/net/rose/rose_link.c b/net/rose/rose_link.c
+index 9cfd4aa174f81..467a6335f8077 100644
+--- a/net/rose/rose_link.c
++++ b/net/rose/rose_link.c
+@@ -30,26 +30,22 @@ static void rose_t0timer_expiry(struct timer_list *);
+ static void rose_transmit_restart_confirmation(struct rose_neigh *neigh);
+ static void rose_transmit_restart_request(struct rose_neigh *neigh);
+ 
+-void rose_start_ftimer(struct rose_neigh *neigh)
++void rose_neigh_init_timers(struct rose_neigh *neigh)
+ {
+-	del_timer(&neigh->ftimer);
+-
+-	neigh->ftimer.function = rose_ftimer_expiry;
+-	neigh->ftimer.expires  =
+-		jiffies + msecs_to_jiffies(sysctl_rose_link_fail_timeout);
++	timer_setup(&neigh->ftimer, rose_ftimer_expiry, 0);
++	timer_setup(&neigh->t0timer, rose_t0timer_expiry, 0);
++}
+ 
+-	add_timer(&neigh->ftimer);
++void rose_start_ftimer(struct rose_neigh *neigh)
++{
++	mod_timer(&neigh->ftimer,
++		  jiffies + msecs_to_jiffies(sysctl_rose_link_fail_timeout));
  }
+ 
+ static void rose_start_t0timer(struct rose_neigh *neigh)
+ {
+-	del_timer(&neigh->t0timer);
+-
+-	neigh->t0timer.function = rose_t0timer_expiry;
+-	neigh->t0timer.expires  =
+-		jiffies + msecs_to_jiffies(sysctl_rose_restart_request_timeout);
+-
+-	add_timer(&neigh->t0timer);
++	mod_timer(&neigh->t0timer,
++		  jiffies + msecs_to_jiffies(sysctl_rose_restart_request_timeout));
+ }
+ 
+ void rose_stop_ftimer(struct rose_neigh *neigh)
+diff --git a/net/rose/rose_route.c b/net/rose/rose_route.c
+index 6a1de0055e28b..3499f034b83c6 100644
+--- a/net/rose/rose_route.c
++++ b/net/rose/rose_route.c
+@@ -102,8 +102,7 @@ static int __must_check rose_add_node(struct rose_route_struct *rose_route,
+ 
+ 		skb_queue_head_init(&rose_neigh->queue);
+ 
+-		timer_setup(&rose_neigh->ftimer, NULL, 0);
+-		timer_setup(&rose_neigh->t0timer, NULL, 0);
++		rose_neigh_init_timers(rose_neigh);
+ 
+ 		if (rose_route->ndigis != 0) {
+ 			rose_neigh->digipeat =
+@@ -446,8 +445,7 @@ void rose_add_loopback_neigh(void)
+ 
+ 	skb_queue_head_init(&sn->queue);
+ 
+-	timer_setup(&sn->ftimer, NULL, 0);
+-	timer_setup(&sn->t0timer, NULL, 0);
++	rose_neigh_init_timers(sn);
+ 
+ 	spin_lock_bh(&rose_neigh_list_lock);
+ 	sn->next = rose_neigh_list;
 -- 
 2.53.0
 
