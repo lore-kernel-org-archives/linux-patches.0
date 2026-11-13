@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590228;
-	b=E5GNwN5e+hj9KXcxOI5aZxNa/UCz7Ek4hkxseCy7XH8a5Ro9I3Qys2rb0Nt1XIbs391L
-	 rezFIeZuhqwKHOc9jzfkiVTjZ8PHGX1V5z3kr/S8mSvvSdr1EsfDEqpNisN8dSihZlzce
-	 mJ19Ecw0peY4nFZYfPoLZC9BiY9OnciSTBXk+mLXDkKkL0pUQzhUgpyB25DWKH3OmtDiQ
-	 LVcP8DqulqilosiWGAcaSuafi7V+R1LHEVndiZpz6Hf449GSxykIuVxb0GAgdL5HNzaGI
-	 mfG1vQh1tBL0MtQeT6qcDWjrDIFwgCN33QDlRHaCoXE5pE2xtXJ3hETs9AuShRjC/jA==
+	t=1794590229;
+	b=TCnubl6SEA94NYZO5+zBOhizUBDodBXCE3L4k+NZnKM199yoIpeXBTB8t8RgLk1l+4AD
+	 YcgDRz6Qmbc0pbfkHcQC07GxyPVT1CQpLHq0uuw9brsirI2Sx7cVm0OK67QjNmhvaCrk9
+	 oj4QMd6/b2cRvnSrYGSH5WnReU7F9gjr28bpwWQVsuUM7tF6wK2vOujYxkbQRhVMFSUvy
+	 gF0TTut2zkiqRBdgeRD9xC37+YfeN90ek5XmifmYmBFzGC5YR5gLCWtHpdtfFcr8q2sGr
+	 CC2K1Hbq+ZPuMyj/gxPVg6LeNcPboSy5MLw/UMRFZDugEp4Uv1wAiZxSKJIzsPgxvRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590229;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5L5/z6zQJvDZWGCi/QBIVlqhiEhmk17Zliab3lxwXrA=;
-	b=5jV2KlUxdWcBsW+zoLdBlOS4+p3Ja6wWQqgGjo1Mh69w6w7xiy+0HAejakxP4GcFU8c0
-	 mdjh8lgMhW3hw16xBvRSerSCFhh80ctYC7KQYE78tgxarDkjPwOtZnDU+OH2suxkakbGf
-	 TpzPoiGi4OA/ZeP5ru+lzXW4hidQ8Mtxn5P2YcKxcX0MIeJIgF2O4kr4aGCi1SjA4SD+J
-	 MIqRFdvXbJX4Gg+NWV+MC3QlsVdOotdsto7MC/DBxxaIprsP/0NQCgLvxoWdKZkZcWzEH
-	 DTgAC9LFw+8nO6hmzzIQvW5GCEeWjAe8FFOeOKSdqhsHN7qZvbffwQwpw/0yvus90Tg==
+	bh=7uT+xuDihQiWpwk+wTA2Tpe1j9oq7tXMJcPDO16tiqo=;
+	b=4C2Chf1HkPPxxlCXtduhD9ruCATSJvi6q9JF1iItPirpmTZXAAWZS+wa/EMoTVyjdPUK
+	 AVhm1JLYn5AaGXe5JNWltZ6qjLpxMXp8InSXA7/EHLCDopPKN0VvAK8IbdEY1glj+m2KJ
+	 WB+ydngPjI892NQX2yFw9LrhpvboasMAjQk4N3MeMs0Pnjle/cfzCTgzgAng1ndYg+Cc7
+	 5JJxUGHpj8E84CluJqXarnH/vmB632sTqpy07abmjU5V/IuMGyvtYRXjJzgBmWivqCuZv
+	 sVMC/zmMSMmkC4cP6YFoFMMvU/vj+Wq2kRX5TTorg8Czn9gx4luZX4YkeDg1ZyZdOtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lF+URRix;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zzcAfh8N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1D4606A8BA;
-	Fri, 13 Nov 2026 17:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805BA606A8BA;
+	Fri, 13 Nov 2026 17:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lF+URRix
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0AA71F000C4;
-	Fri, 13 Nov 2026 17:17:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zzcAfh8N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D52C1F000C4;
+	Fri, 13 Nov 2026 17:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590228;
-	bh=5L5/z6zQJvDZWGCi/QBIVlqhiEhmk17Zliab3lxwXrA=;
+	s=korg; t=1794590229;
+	bh=7uT+xuDihQiWpwk+wTA2Tpe1j9oq7tXMJcPDO16tiqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lF+URRixpzmt71HxI8haJ38PJNsMaaIg5mHhHMJZ29N+JvaT7fXp6BlufBIIxM1Hf
-	 oShVA8TYUZmP4Xsei5Kgi7YtWxfuzzepbsk9gJNC8hFA/JBm2JGegGa9SvgS6ymJ+O
-	 vGBPOEcKeeokHE7YVAdYUloKDmMYluF20oawf6BY=
+	b=zzcAfh8NVpgpUb3dFqT7C8t7rhPYqDkBDz2HLH9cKDHR0XSsgNx+p/gk+HFrpNiLb
+	 NiTi0gf0X6fhPvQlVF5OA5vpb7mWYCl1SkUI4gwsc4VhzcmnsJl5WrQmyen/OPv6jF
+	 i+Lrz5Y2zqza0+hAmaRAdwbNmVsNoOgTaXJxN+xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Evanshenf <archwse@gmail.com>,
 	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
 	Qianhai Wu <wuqianhai@loongson.cn>,
 	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 226/686] drm/loongson: Fix framebuffer selection in async cursor updates
-Date: Fri, 13 Nov 2026 10:45:59 -0500
-Message-ID: <20261113153828.680363736@linuxfoundation.org>
+Subject: [PATCH 6.18 227/686] drm/loongson: Fix double free on BO initialization failure
+Date: Fri, 13 Nov 2026 10:46:00 -0500
+Message-ID: <20261113153828.711920085@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -73,31 +72,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Evanshenf <archwse@gmail.com>
 
-[ Upstream commit fa66daafbb6d5c984de2502809ff533ab66f6573 ]
+[ Upstream commit f086dbdeb6e56510e158a853d752c6d8ed9e0674 ]
 
-An asynchronous cursor update swaps the new framebuffer into the live
-plane state. However, the driver reads both old_fb and new_fb from the
-live state before this swap. When an enabled cursor changes buffers, the
-address-update condition is therefore false and the hardware continues
-scanning the previous buffer.
+If ttm_bo_init_validate() fails, it drops the buffer object's reference
+and cleans it up through the supplied destroy callback. lsdc_bo_destroy()
+releases the GEM object and frees the enclosing lsdc_bo, so freeing it
+again in lsdc_bo_create() causes a double free on a synchronous failure
+path.
 
-Read new_fb from the new plane state before swapping the framebuffer
-references. This updates the hardware address when the framebuffer
-changes while retaining the existing behavior for cursor movement.
+Let TTM own the cleanup after initialization has started and return the
+error directly. Keep the explicit free on drm_gem_object_init() failure,
+which occurs before ownership is passed to TTM.
 
-Verified on a Loongson 3A5000 with LS7A2000 using 32x32 and 64x64 legacy
-cursor updates. Callback counters and read-only register observations
-confirmed the asynchronous path, the stale address before the change,
-and the new address afterward. Same-framebuffer movement and cursor
-disable/re-enable also passed, with the primary framebuffer and mode
-unchanged.
+Tested on LS7A2000 by making drm_vma_offset_add() return -ENOSPC for one
+selected dumb-buffer creation. The error reached userspace, the destroy
+callback ran once, and no handle was published or tracked BO retained.
+Normal buffer creation, zeroing, mapping, readback and release passed.
 
-AI assistance was used to investigate the existing report, prepare the
-fix and test tools, run the build and hardware comparison, and draft
-this message.
+AI assistance was used for the ownership analysis, fix, fault-injection
+tools, build and test execution.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/r/202311152357.4KFS0M8f-lkp@intel.com/
 Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
@@ -106,25 +100,28 @@ Reviewed-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
 Reviewed-by: Qianhai Wu <wuqianhai@loongson.cn>
 Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Link: https://patch.msgid.link/20261003090006.4e29fdce9913-1-archwse@gmail.com
+Link: https://patch.msgid.link/20261003093415.e64386de1e64-1-archwse@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/loongson/lsdc_plane.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/loongson/lsdc_ttm.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/loongson/lsdc_plane.c b/drivers/gpu/drm/loongson/lsdc_plane.c
-index aa9a97f9c4dc2..df941f13a9699 100644
---- a/drivers/gpu/drm/loongson/lsdc_plane.c
-+++ b/drivers/gpu/drm/loongson/lsdc_plane.c
-@@ -228,7 +228,7 @@ static void lsdc_cursor_plane_atomic_async_update(struct drm_plane *plane,
+diff --git a/drivers/gpu/drm/loongson/lsdc_ttm.c b/drivers/gpu/drm/loongson/lsdc_ttm.c
+index 2e42c6970c9fd..e8805a2a0db43 100644
+--- a/drivers/gpu/drm/loongson/lsdc_ttm.c
++++ b/drivers/gpu/drm/loongson/lsdc_ttm.c
+@@ -474,10 +474,8 @@ struct lsdc_bo *lsdc_bo_create(struct drm_device *ddev,
  
- 	new_state = drm_atomic_get_new_plane_state(state, plane);
+ 	ret = ttm_bo_init_validate(bdev, tbo, bo_type, &lbo->placement, 0,
+ 				   false, sg, resv, lsdc_bo_destroy);
+-	if (ret) {
+-		kfree(lbo);
++	if (ret)
+ 		return ERR_PTR(ret);
+-	}
  
--	new_fb = plane->state->fb;
-+	new_fb = new_state->fb;
- 
- 	plane->state->crtc_x = new_state->crtc_x;
- 	plane->state->crtc_y = new_state->crtc_y;
+ 	return lbo;
+ }
 -- 
 2.53.0
 
