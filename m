@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794586016;
-	b=twl3A7fLto/+l+srzY6/ynHYHg2XCF+HNgNYUHnqXv85+Xrl6+xVW0odmIzsvRRK0y59
-	 891ZGrQzqG8XTGTIVzDlnxgY+WXZODgjw+w8w08ioI3Z9YSFFRcQjKVHlK9huF6yewzfJ
-	 gam+Bq8gr8hfdVqq07pQnJI7qUkVnXInnWmcHRVhuwQ7IxCbYTaI19oBp/FxuTIz1FTdy
-	 ySIj1FCjWuaKzoF4bU3fZzsJSBW9It1Drsgu+utD+MM/dz0/6EucLHv/6k6bG9gAHcj05
-	 6TPkN0KLyWRiBsbXBOTxmTf0Bo756ThwxcLdGMKqFEFTxIjZNc36aLZwXIx7a5U4kow==
+	t=1794586017;
+	b=tg3tWeyyMae9YEk+nugudGmd0u5iRNohYghz7Z/8LALvxmind25I7ClLX7bHxaGor1n/
+	 NE/JUGdhXZOcak+7whD0t0mmPw4Y7aovuSkLNRN9ISRgJdFLjRmS+i9B+WarrMkVGJSxl
+	 2Y+ro0yg7mPxdvq/IEH/qvwNYixxrFbgqhwfaM3oNF330yQHFj2sflVWULP+fABOO5rIO
+	 IoVNw/pyB9qB+7Ko9GVeb3Hma6SQkUHAIWhrWm38wtp9dCjmn7o0w9bBfbQUQ0qFFrrz5
+	 zzV19JCze262pgT/lkCMGacxrArTB3rZUJAWof0Vtl1G0ZCYTyo6NPbxIdrt1Z44FZg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794586016;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794586017;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D0QstuQHuu0YPeEE9u5+8DDRi1o3Ds74h1iFKEB0cwA=;
-	b=gDELcxMeRYTiz5EeYe5lt05ME8XldrFeCYhrU6lK8VM2fssYufjN1HNV3VYm7ajtusoZ
-	 OP0uL8H9iBl7R0e4tjmbA40NSTIFAlCgKSS1NZmMnoRWelujYoDkbB2+yrLCxT4pytJre
-	 v8xK/TX7tnchXZ6JZrF1kL6E9MKWSlm4jfuBSpl0+XtGmzLqphp+M3QArMJxkPP2IFLh2
-	 ptFHqIHSpT+r9Dm/WzzcFe1xUEg39WNhaqokvqhrw+gYChaj8n6q9vnIZ9g+5QYt6vZNV
-	 1PrkjHl7m6BF/azRuM0bZIJWG0d4B7jbW3cWFG5z8tn0zIQgUJOfyKDjXqtEs7FScFA==
+	bh=OT3eeLFDVbPJELAXbjdJZEyB2MH3e2rHcHONrjlUAqk=;
+	b=h/cFfJZP9FvxHq1RQ62j3LJwYVJUpALyzhikV/SpmmGqf+J6QH48iDn8wLfLlbamhyiZ
+	 Yth+ip9tBnF+Oh4/HobFhYwbhEeoaHqu2xu3ltUC2xuGqRhz9bJZFkGmsvFZW1AJ08AZt
+	 JDEFExVUDAsnvkzQCQYrVmIh+ZCf4QGt8AjH0Ylr3u1bYKhHDHe0BTN4ZFgJ/hoWde4uz
+	 99f4fG2GHVoLxwJS7aROnOBtYrkTsNPgtZM1dHwCsEG0lQ8hZ32BLU8ZegG4OFGY8yXoj
+	 /TZW7omi23gnkia0ElWPxMXSnXtx5aqZjs7y1AnjCMAqSJdHfu6EXAafiVzoZ4JA5Bw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vq0oG8qF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAjZWtF3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0738C606B2D3;
-	Fri, 13 Nov 2026 16:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E38B606B2D0;
+	Fri, 13 Nov 2026 16:06:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vq0oG8qF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8FA31F000C4;
-	Fri, 13 Nov 2026 16:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAjZWtF3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E06E41F000C4;
+	Fri, 13 Nov 2026 16:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794586015;
-	bh=D0QstuQHuu0YPeEE9u5+8DDRi1o3Ds74h1iFKEB0cwA=;
+	s=korg; t=1794586017;
+	bh=OT3eeLFDVbPJELAXbjdJZEyB2MH3e2rHcHONrjlUAqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Vq0oG8qFK8wpA1ZL1utOOgrcR/r3r22c8ortLZlVzrNgWnq1okOJ3R3jF4UPK53zz
-	 TA4FVitH8TJ6uyLGSKlljEYK2xwzrRt5ZQtLhT4f3YqJ7TU2xe6/CjuEFBhdSED8In
-	 7aQQmLxu/mycWsalHoNj/07Sc3SiWY6LwoKACYao=
+	b=lAjZWtF3abMl1Qm2/Q76Zs3w3XkbHjg86fs4ICuBdMODAq9W+yJzeAhnvoI3JgMDx
+	 RS2VY1DHnvC9X4NP6kczOrlr+mX4czeksogE2rcsUE2PBp3Fv3DwM+if3iVbf9vCqD
+	 4z3V5FgwaeFpAaGxZv8IAumfG+QjfBRIrWC69GIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 055/686] KVM: TDX: Set bits 31:16 to 0 and use UNDEFINED when synthesizing exit reason
-Date: Fri, 13 Nov 2026 10:43:08 -0500
-Message-ID: <20261113153822.820115879@linuxfoundation.org>
+Subject: [PATCH 6.18 056/686] KVM: TDX: Dont assume exit_reason[31:16] is all-0 in tdx_to_vmx_exit_reason()
+Date: Fri, 13 Nov 2026 10:43:09 -0500
+Message-ID: <20261113153822.851276232@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -72,73 +70,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-[ Upstream commit b43c520b198ab70868307a489ef2117ed6d6c4cc ]
+[ Upstream commit bc335ce04408750585b4b32f248c543c9493d545 ]
 
-Set bits 31:16 to 0 instead of all-1s when synthesizing an exit reason,
-e.g. if the TDX Module never attempted VM-Enter, or when stuffing the exit
-reason due to an unexpected "real" EPT Misconfig.  Opportunistically use
-VMX's KVM-defined EXIT_REASON_UNDEFINED (0xdead) instead of -1u.
+When handling the real Exit Reason, don't assume the upper 16 bits as
+all-0 in tdx_to_vmx_exit_reason(), in preparation for enabling Bus Lock
+VM exit.
 
-KVM is going to support Bus Lock VM exit for TDX, after which bit 26 of
-the Exit Reason becomes meaningful and indicates that a bus lock happened.
-The existing synthesized Exit Reason, -1u, will cause a false positive in
-that case.  Change the synthesized Exit Reason from -1u to U16_MAX, so that
-bits 31:16 are set to 0.  This also avoids the potential issues when other
-bits in 31:16 become valid in the future.
+When Bus Lock VM exit is enabled, the bit 26 of Exit Reason becomes
+valid and it can be 1 with various exit reasons.  Change the logic in
+tdx_to_vmx_exit_reason() to check the 'basic' Exit Reason for correctness.
+Also preserve bit[31:16] when changing the (basic) Exit Reason, to not
+lose the information in bit[31:16].
 
-As a bonus, the check for synthesized Exit Reason in tdx_failed_vmentry()
-becomes unnecessary.  Just drop it.
+Change the return type of tdx_to_vmx_exit_reason() to
+"union vmx_exit_reason" for the convenience of manipulating the basic
+field.
 
+Fixes: c42856af8f70 ("KVM: TDX: Add a place holder for handler of TDX hypercalls (TDG.VP.VMCALL)")
 Cc: stable@vger.kernel.org
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-4-xiaoyao.li@intel.com
-[sean: use EXIT_REASON_UNDEFINED instead of another magic value]
+Link: https://patch.msgid.link/20260819094903.3060020-5-xiaoyao.li@intel.com
 Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/tdx.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ arch/x86/kvm/vmx/tdx.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
 diff --git a/arch/x86/kvm/vmx/tdx.c b/arch/x86/kvm/vmx/tdx.c
-index 02a15ad90c586..411291603681f 100644
+index 411291603681f..43d6b20dfbb16 100644
 --- a/arch/x86/kvm/vmx/tdx.c
 +++ b/arch/x86/kvm/vmx/tdx.c
-@@ -904,8 +904,13 @@ static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+@@ -899,10 +899,10 @@ static __always_inline bool tdx_is_exit_reason_valid(u64 vp_enter_ret)
+ 	}
+ }
+ 
+-static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
++static __always_inline union vmx_exit_reason tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+ {
  	struct vcpu_tdx *tdx = to_tdx(vcpu);
- 	u32 exit_reason;
+-	u32 exit_reason;
++	union vmx_exit_reason exit_reason;
  
-+	/*
-+	 * Return the synthesized invalid Exit Reason, as the TDX module
-+	 * never attempted to run the vCPU, i.e. the Exit Reason is undefined,
-+	 * but this is NOT a failed VM-Enter.
-+	 */
+ 	/*
+ 	 * Return the synthesized invalid Exit Reason, as the TDX module
+@@ -910,22 +910,26 @@ static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+ 	 * but this is NOT a failed VM-Enter.
+ 	 */
  	if (!tdx_is_exit_reason_valid(tdx->vp_enter_ret))
--		return -1u;
-+		return EXIT_REASON_UNDEFINED;
+-		return EXIT_REASON_UNDEFINED;
++		return (union vmx_exit_reason) {
++			.basic = EXIT_REASON_UNDEFINED,
++		};
  
- 	exit_reason = tdx->vp_enter_ret;
+-	exit_reason = tdx->vp_enter_ret;
++	exit_reason.full = (u32)tdx->vp_enter_ret;
  
-@@ -920,7 +925,7 @@ static __always_inline u32 tdx_to_vmx_exit_reason(struct kvm_vcpu *vcpu)
+-	switch (exit_reason) {
++	switch (exit_reason.basic) {
+ 	case EXIT_REASON_TDCALL:
+ 		if (tdvmcall_exit_type(vcpu))
+-			return EXIT_REASON_VMCALL;
+-
+-		return tdcall_to_vmx_exit_reason(vcpu);
++			exit_reason.basic = EXIT_REASON_VMCALL;
++		else
++			exit_reason.basic = tdcall_to_vmx_exit_reason(vcpu);
++		break;
+ 	case EXIT_REASON_EPT_MISCONFIG:
+ 		/*
  		 * Defer KVM_BUG_ON() until tdx_handle_exit() because this is in
  		 * non-instrumentable code with interrupts disabled.
  		 */
--		return -1u;
-+		return EXIT_REASON_UNDEFINED;
+-		return EXIT_REASON_UNDEFINED;
++		exit_reason.basic = EXIT_REASON_UNDEFINED;
++		break;
  	default:
  		break;
  	}
-@@ -951,8 +956,7 @@ static noinstr void tdx_vcpu_enter_exit(struct kvm_vcpu *vcpu)
+@@ -942,7 +946,7 @@ static noinstr void tdx_vcpu_enter_exit(struct kvm_vcpu *vcpu)
  
- static bool tdx_failed_vmentry(struct kvm_vcpu *vcpu)
- {
--	return vmx_get_exit_reason(vcpu).failed_vmentry &&
--	       vmx_get_exit_reason(vcpu).full != -1u;
-+	return vmx_get_exit_reason(vcpu).failed_vmentry;
- }
+ 	tdx->vp_enter_ret = tdh_vp_enter(&tdx->vp, &tdx->vp_enter_args);
  
- static fastpath_t tdx_exit_handlers_fastpath(struct kvm_vcpu *vcpu)
+-	vt->exit_reason.full = tdx_to_vmx_exit_reason(vcpu);
++	vt->exit_reason = tdx_to_vmx_exit_reason(vcpu);
+ 
+ 	vt->exit_qualification = tdx->vp_enter_args.rcx;
+ 	tdx->ext_exit_qualification = tdx->vp_enter_args.rdx;
 -- 
 2.53.0
 
