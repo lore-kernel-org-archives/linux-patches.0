@@ -1,58 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585953;
-	b=0b+6s9Lyes6rfCiJ033I50fTkCwfZuwELHOPxSWU6VaUdxJa3lvLFr2T+aiM8Ulp+26q
-	 GcbYKMFxOgI/NBdWWW57dCJMAwYhqRP1YyRaoOYgIlCN4WGZsnNrMYr1TE4dqa2V7mSsX
-	 EDmwS0wM5xPq9RexvdDVTuxOdiS2p8GvwatTKGHGshb57t3KSDz9OkpdR/+zFMukLW2bO
-	 2q7+1tMEuc1BEf9u7QtXgn7c5hOjswy80Cw7nutcobwFOqYTPaQUz7cf7Q3Z0ow77Wogc
-	 CRZwP7p7Ram+Jj0XqoJv28RoqxaOhRcmZY83b3IW1qegtQA2rhIuR157NDu9DNtffvQ==
+	t=1794585954;
+	b=c8EHhGzI2tGL8q2O3atP9lFMA1WCCaKRP5lTZr15K6q6h2YiX18rWgOMu1E6YGHVd6E5
+	 GEhRjDZv3ljIc3FNZS5UrpGS2jHKTkPTfz7UbAtbDxGDxoqHmYFw8essqT3/IZMul+Yar
+	 uXsQRWHfgLGIEZaSRTIvDBpcpKNkoAn/d9KeIp1Nrtd4O2nHNuRmuBBOo+BLXV03Svk6k
+	 y9on6r7s3TdZC6u8yi3pSVfFGS+XmiXxpQ+I3RTMJ8AyZGPfNOeRXmOvUtkfqAV6jSPll
+	 oR+8zFzrXUQC3sYtym1a605oWMrn5yzs+6Vngq1JYxNKs6gyBwECMqJZCFNMhNGv89A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585953;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5g1pJz/zExJ+CpFN2GTO3Q8NEPOJYBNfY54/XbVlydY=;
-	b=FMGqBlSvFxeJEFnAdYZigkhes2MBWLvwErV63eAy6KN3FNgal/cRGpdAscVeJCDlgsGL
-	 iadyum8fK1Ol3Xm5EM4/s1dj/A5Q4QtaN9v+ZbAvgTwc9n8RbeTkhcSMWzS0Yuma4Jyhx
-	 Jo8k5Ya1wd5L8pw1JeiWLJzB8vh4ADyfdCOnTmra8ePNYCOfg/t48SfZN29vU8pvyOEWx
-	 pZ84oTSA1iPnIejR2rYbzy0eAjpl1Gf8h8NfztMtJoVzzIAen66WYZddFmypeBgpAMWYx
-	 0TYB+VPcH4vyZkC2WmcBxyqQ4RXFEhLX1mXJWxGUffx1rOh9wf33XXeSmlfoazj+Phw==
+	bh=1gAC6Hd/Eb5wAa72PVCJwnfoAlbDBo5KB/iH6ahbkMc=;
+	b=BBJonjZiTdcYGkc7BJkAtarZOO0dBFMLyHUUPR4/R4alpNoNxJ3Vi0aK+k6jdwMCMDhC
+	 teKBVUdJ31hMkkllNS0Znw+QBblejeGw5+zGWTQnzCaVMJdBX9hu0JankYDo4W/3MFp3H
+	 dCVuaRfgN1SJg3mS4fjyufJZxjDtBs2GY5hh2IxqoIuHs06pyI1xTH4w7sNfj0xcOQWF/
+	 GGYVZaTnXA3HoW4zlXdQoPudAHCHz6lYnDdZ/YjT7T/nLbWQr2VJaWdKwE/xLcc8C2txJ
+	 Wkf7AJQ2KnQHlSJjIKZ9Mf4xJ0jyNbKciBoIzk8j4ALHxtfsQLvQITQrh+Zomxkcraw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yJO9hUGe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBV9h0+l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F083F6070FCC;
-	Fri, 13 Nov 2026 16:05:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399906070FCC;
+	Fri, 13 Nov 2026 16:05:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yJO9hUGe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD881F000C4;
-	Fri, 13 Nov 2026 16:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MBV9h0+l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F221F000C4;
+	Fri, 13 Nov 2026 16:05:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585952;
-	bh=5g1pJz/zExJ+CpFN2GTO3Q8NEPOJYBNfY54/XbVlydY=;
+	s=korg; t=1794585954;
+	bh=1gAC6Hd/Eb5wAa72PVCJwnfoAlbDBo5KB/iH6ahbkMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yJO9hUGeZoJysLoaIdIplEX6BvEJpfWPMoRuc8zyWZkHjnt9yIyLjE85LL6UomHkH
-	 5z4FOcq7ii7e5FjPNo1k5SvjDmNwWdmYJZ1+/0WUn6LgP/Ltw6dAMdel5SnB/rgKun
-	 qZUqoHZJYcB9gZn/O1G/oVjaG2h4aykscXlzGYKg=
+	b=MBV9h0+l36FvH2Wr1ATWjgG9BFDvwl6zAO9ZaNmDZaFwPlPHX76rwDZPgVWrbZ6xy
+	 yfvWpWJ7RO7x1GEEUUjhIa2+0Y3+U1lh9E3/bA9u9OLOezSM0ixOaQcLvLPOivllh0
+	 bun6espIKoACQvL3iqd1afH/WjqJ53iDc7Pdahqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Hannes Reinecke <hare@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Martin Belanger <martin.belanger@dell.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 464/507] mm/shmem: honour F_SEAL_EXEC when an ACL is set
-Date: Fri, 13 Nov 2026 10:52:48 -0500
-Message-ID: <20261113153812.461615739@linuxfoundation.org>
+Subject: [PATCH 7.3 465/507] nvme-tcp: skip TLS control records while waiting for the ICResp
+Date: Fri, 13 Nov 2026 10:52:49 -0500
+Message-ID: <20261113153812.494091068@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -74,130 +70,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Martin Belanger <martin.belanger@dell.com>
 
-[ Upstream commit 0237c47ca17005ea41b510c6116f0257dbf84eab ]
+commit 12c20e2903563acfb949342967adb900310a24d4 upstream.
 
-The owner of a memfd sealed with F_SEAL_EXEC can still change its
-execute bits by setting a POSIX access ACL. With CONFIG_TMPFS_POSIX_ACL,
-this lets an unprivileged owner make a non-executable memfd executable,
-bypassing vm.memfd_noexec=2.
+A peer may send a NewSessionTicket as soon as the handshake completes,
+ahead of the ICResp. nvme_tcp_init_connection() fails the connection on
+any record that is not application data, so such a target cannot be
+reached at all. An OpenSSL-based target does this by default.
 
-simple_set_acl() updates i_mode directly, bypassing the seal check in
-shmem_setattr(). Add shmem_set_acl() to check the resulting mode. Share
-the F_SEAL_EXEC check with shmem_setattr() using memfd_check_seals_mode()
-in include/linux/memfd.h.
+RFC 9846 section 4.7.1 requires a client that does not support session
+resumption to ignore a NewSessionTicket. Discard such a record and read
+again, up to a fixed number of records. Report an alert, and fail the
+connection for any other record type.
 
-Fix generated by an LLM and sent by Chris Mason in private.
+The record type is now checked before the length. A control record
+shorter than the ICResp was reported as -ECONNRESET, which hid the real
+cause.
 
-Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: use common helper; simplify description ]
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-4-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Removed const from shmem_set_acl()'s struct mnt_idmap pointer parameter to match existing ACL interfaces. ]
+Fixes: 2837966ab2a8 ("nvme-tcp: control message handling for recvmsg()")
+Assisted-by: LLM
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Martin Belanger <martin.belanger@dell.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+[ Martin: resolved a context conflict next to nvme_tcp_cpu_queues ]
+Signed-off-by: Martin Belanger <martin.belanger@dell.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memfd.h |  9 +++++++++
- mm/shmem.c            | 35 ++++++++++++++++++++++++++++++-----
- 2 files changed, 39 insertions(+), 5 deletions(-)
+ drivers/nvme/host/tcp.c | 162 ++++++++++++++++++++++++++++++++++------
+ 1 file changed, 140 insertions(+), 22 deletions(-)
 
-diff --git a/include/linux/memfd.h b/include/linux/memfd.h
-index c159e40e3f34a..272479317cf10 100644
---- a/include/linux/memfd.h
-+++ b/include/linux/memfd.h
-@@ -2,10 +2,19 @@
- #ifndef __LINUX_MEMFD_H
- #define __LINUX_MEMFD_H
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index ce28c9b038178..2c7e9cfa2253e 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -70,6 +70,12 @@ MODULE_PARM_DESC(tls_handshake_timeout,
+ 		 "nvme TLS handshake timeout in seconds (default 10)");
+ #endif
  
-+#include <linux/fcntl.h>
- #include <linux/file.h>
++/* read a TLS control record in chunks of this size */
++#define NVME_TCP_TLS_REC_CHUNK 256
++
++/* TLS records read while waiting for the ICResp, the ICResp included */
++#define NVME_TCP_ICRESP_MAX_RECORDS 8
++
+ static atomic_t nvme_tcp_cpu_queues[NR_CPUS];
  
- #define MEMFD_ANON_NAME "[memfd]"
+ enum nvme_tcp_send_state {
+@@ -1561,12 +1567,143 @@ static void nvme_tcp_free_queue(struct nvme_ctrl *nctrl, int qid)
+ 	mutex_destroy(&queue->pf_cache_lock);
+ }
  
-+static inline int memfd_check_seals_mode(unsigned int seals, umode_t old_mode,
-+		umode_t new_mode)
++static int nvme_tcp_recv_tls_alert(struct nvme_tcp_queue *queue,
++				   struct msghdr *msg, int len)
 +{
-+	if ((seals & F_SEAL_EXEC) && ((old_mode ^ new_mode) & 0111))
-+		return -EPERM;
++	struct sock *sk = queue->sock->sk;
++	u8 level, description;
++
++	if (len < 2) {
++		dev_err(queue->ctrl->ctrl.device,
++			"queue %d: truncated TLS alert\n",
++			nvme_tcp_queue_id(queue));
++		return -ENOTCONN;
++	}
++
++	/* tls_alert_recv() reads through the iterator */
++	iov_iter_revert(&msg->msg_iter, len);
++	tls_alert_recv(sk, msg, &level, &description);
++
++	if (level == TLS_ALERT_LEVEL_FATAL) {
++		dev_err(queue->ctrl->ctrl.device,
++			"queue %d: fatal TLS alert %u\n",
++			nvme_tcp_queue_id(queue), description);
++		return -ENOTCONN;
++	}
++
++	/* a peer shutting down normally is not worth a warning */
++	if (description == TLS_ALERT_DESC_CLOSE_NOTIFY)
++		dev_dbg(queue->ctrl->ctrl.device,
++			"queue %d: TLS close_notify\n",
++			nvme_tcp_queue_id(queue));
++	else
++		dev_warn(queue->ctrl->ctrl.device,
++			 "queue %d: TLS alert %u\n",
++			 nvme_tcp_queue_id(queue), description);
++
 +	return 0;
 +}
 +
- #ifdef CONFIG_MEMFD_CREATE
- extern long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg);
- struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx);
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 825a5a961086d..597bbc2e7321a 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -77,6 +77,7 @@ static struct vfsmount *shm_mnt __ro_after_init;
- #include <linux/magic.h>
- #include <linux/syscalls.h>
- #include <linux/fcntl.h>
-+#include <linux/memfd.h>
- #include <uapi/linux/memfd.h>
- #include <linux/rmap.h>
- #include <linux/uuid.h>
-@@ -1357,10 +1358,11 @@ static int shmem_setattr(struct mnt_idmap *idmap,
- 	if (error)
- 		return error;
- 
--	if ((info->seals & F_SEAL_EXEC) && (attr->ia_valid & ATTR_MODE)) {
--		if ((inode->i_mode ^ attr->ia_mode) & 0111) {
--			return -EPERM;
--		}
-+	if (attr->ia_valid & ATTR_MODE) {
-+		error = memfd_check_seals_mode(info->seals, inode->i_mode,
-+					       attr->ia_mode);
-+		if (error)
-+			return error;
++/*
++ * Discard a TLS record that arrived in place of the ICResp. A peer may send
++ * a NewSessionTicket as soon as the handshake completes.
++ *
++ * Returns 0 when the record was discarded and the ICResp can be read, or a
++ * negative errno if the connection cannot continue.
++ */
++static int nvme_tcp_skip_tls_record(struct nvme_tcp_queue *queue,
++				    struct msghdr *msg, u8 ctype, int len)
++{
++	u8 buf[NVME_TCP_TLS_REC_CHUNK];
++	int ret;
++
++	switch (ctype) {
++	case TLS_RECORD_TYPE_HANDSHAKE:
++		break;
++	case TLS_RECORD_TYPE_ALERT:
++		ret = nvme_tcp_recv_tls_alert(queue, msg, len);
++		return ret ? : -ENOTCONN;
++	default:
++		pr_err("queue %d: unhandled TLS record %u\n",
++		       nvme_tcp_queue_id(queue), ctype);
++		return -ENOTCONN;
++	}
++
++	/* the ICResp is in a later record, drain this one first */
++	while (!(msg->msg_flags & MSG_EOR)) {
++		struct kvec iov = {
++			.iov_base = buf,
++			.iov_len = sizeof(buf),
++		};
++		char cbuf[CMSG_LEN(sizeof(char))] = {};
++		/* kTLS fails a control record read without a cmsg buffer */
++		struct msghdr drain = {
++			.msg_control = cbuf,
++			.msg_controllen = sizeof(cbuf),
++		};
++
++		ret = kernel_recvmsg(queue->sock, &drain, &iov, 1, sizeof(buf),
++				     0);
++		if (ret <= 0) {
++			pr_warn("queue %d: failed to drain TLS record: %d\n",
++				nvme_tcp_queue_id(queue), ret);
++			return ret ? : -ECONNRESET;
++		}
++		msg->msg_flags = drain.msg_flags;
++	}
++
++	return 0;
++}
++
++/*
++ * Receive the ICResp. Over TLS, skip the records that a peer may send
++ * ahead of it.
++ *
++ * Returns the length received, or a negative errno.
++ */
++static int nvme_tcp_recv_icresp(struct nvme_tcp_queue *queue,
++				struct nvme_tcp_icresp_pdu *icresp)
++{
++	char cbuf[CMSG_LEN(sizeof(char))];
++	struct msghdr msg;
++	struct kvec iov;
++	u8 ctype;
++	int i, ret;
++
++	for (i = 0; i < NVME_TCP_ICRESP_MAX_RECORDS; i++) {
++		memset(&msg, 0, sizeof(msg));
++		memset(cbuf, 0, sizeof(cbuf));
++		iov.iov_base = icresp;
++		iov.iov_len = sizeof(*icresp);
++		if (nvme_tcp_queue_tls(queue)) {
++			msg.msg_control = cbuf;
++			msg.msg_controllen = sizeof(cbuf);
++		}
++		msg.msg_flags = MSG_WAITALL;
++		ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
++				     iov.iov_len, msg.msg_flags);
++		if (ret <= 0 || !nvme_tcp_queue_tls(queue))
++			return ret;
++
++		ctype = tls_get_record_type(queue->sock->sk,
++					    (struct cmsghdr *)cbuf);
++		if (ctype == TLS_RECORD_TYPE_DATA)
++			return ret;
++
++		ret = nvme_tcp_skip_tls_record(queue, &msg, ctype, ret);
++		if (ret < 0)
++			return ret;
++	}
++
++	pr_err("queue %d: too many TLS records before the ICResp\n",
++	       nvme_tcp_queue_id(queue));
++	return -EPROTO;
++}
++
+ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+ {
+ 	struct nvme_tcp_icreq_pdu *icreq;
+ 	struct nvme_tcp_icresp_pdu *icresp;
+-	char cbuf[CMSG_LEN(sizeof(char))] = {};
+-	u8 ctype;
+ 	struct msghdr msg = {};
+ 	struct kvec iov;
+ 	bool ctrl_hdgst, ctrl_ddgst;
+@@ -1604,16 +1741,7 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+ 		goto free_icresp;
  	}
  
- 	if (S_ISREG(inode->i_mode) && (attr->ia_valid & ATTR_SIZE)) {
-@@ -5220,12 +5222,35 @@ static const struct file_operations shmem_file_operations = {
- #endif
- };
- 
-+#ifdef CONFIG_TMPFS_POSIX_ACL
-+static int shmem_set_acl(struct mnt_idmap *idmap, struct dentry *dentry,
-+		struct posix_acl *acl, int type)
-+{
-+	struct inode *inode = d_inode(dentry);
-+	umode_t mode = inode->i_mode;
-+	int error;
-+
-+	if (type == ACL_TYPE_ACCESS) {
-+		error = posix_acl_equiv_mode(acl, &mode);
-+		if (error < 0)
-+			return error;
-+		error = memfd_check_seals_mode(SHMEM_I(inode)->seals,
-+					       inode->i_mode, mode);
-+		if (error)
-+			return error;
-+	}
-+	return simple_set_acl(idmap, dentry, acl, type);
-+}
-+#else
-+#define shmem_set_acl simple_set_acl
-+#endif
-+
- static const struct inode_operations shmem_inode_operations = {
- 	.getattr	= shmem_getattr,
- 	.setattr	= shmem_setattr,
- #ifdef CONFIG_TMPFS_XATTR
- 	.listxattr	= shmem_listxattr,
--	.set_acl	= simple_set_acl,
-+	.set_acl	= shmem_set_acl,
- 	.fileattr_get	= shmem_fileattr_get,
- 	.fileattr_set	= shmem_fileattr_set,
- #endif
+-	memset(&msg, 0, sizeof(msg));
+-	iov.iov_base = icresp;
+-	iov.iov_len = sizeof(*icresp);
+-	if (nvme_tcp_queue_tls(queue)) {
+-		msg.msg_control = cbuf;
+-		msg.msg_controllen = sizeof(cbuf);
+-	}
+-	msg.msg_flags = MSG_WAITALL;
+-	ret = kernel_recvmsg(queue->sock, &msg, &iov, 1,
+-			iov.iov_len, msg.msg_flags);
++	ret = nvme_tcp_recv_icresp(queue, icresp);
+ 	if (ret >= 0 && ret < sizeof(*icresp))
+ 		ret = -ECONNRESET;
+ 	if (ret < 0) {
+@@ -1621,16 +1749,6 @@ static int nvme_tcp_init_connection(struct nvme_tcp_queue *queue)
+ 			nvme_tcp_queue_id(queue), ret);
+ 		goto free_icresp;
+ 	}
+-	ret = -ENOTCONN;
+-	if (nvme_tcp_queue_tls(queue)) {
+-		ctype = tls_get_record_type(queue->sock->sk,
+-					    (struct cmsghdr *)cbuf);
+-		if (ctype != TLS_RECORD_TYPE_DATA) {
+-			pr_err("queue %d: unhandled TLS record %d\n",
+-			       nvme_tcp_queue_id(queue), ctype);
+-			goto free_icresp;
+-		}
+-	}
+ 	ret = -EINVAL;
+ 	if (icresp->hdr.type != nvme_tcp_icresp) {
+ 		pr_err("queue %d: bad type returned %d\n",
 -- 
 2.53.0
 
