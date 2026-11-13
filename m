@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585350;
-	b=bQ2p5pm3IPYVftYXMhB/zPWij4YU8Vruxuim2K9qvRQW9TGqxmaKmdCzjKacZqTAT5M3
-	 r0zSn+khzkO6S9Pd5VgaDdZrL6iud3c0AriC5YCu6LMqJG8WeKcNaNlEUaOQsdh7F7u77
-	 yAhPSR0q7z3UWigS6vaSq1dyNCyHjVyl6cDmKGqjcw/q34u9DG3DYuXZ0vko3I/Rq5U6f
-	 hWDXzjS4wZNGj3Z7QAH7C2jOZu00qes+aJECihLl0keKH63JqpActd/LA7Y9h2Lr4h7NG
-	 DLwQkjBI8phB2iV9SlJ23wbAeGQONd5rRMgTBql1jPVYY3NWvUfKlf15ZOz6ZZFovSQ==
+	t=1794585351;
+	b=Xf9f+SD2izQVtyi5EoEV6O50q3DzPvEQeQwwY8WRXOl1909wlDGonQjHCe/oPzNV99vW
+	 b0Hq5qSXiFZdlCxzMHXDXCsYe92fIZYGicOlF/ckZ713mJXNezXgGznO5lLwfEr6bvlWL
+	 FL8VXmFtQbhbFOksZWNJgp4kU6MAipJhroKs5PRHKGLSQtR7sHoPk7w6ELyjfBC87NP3C
+	 vQs9MEbD/fpno6aBhUWw/TzDSqPcukcCK6s2CsisIVK7/jrjLjVinwt+5+TaZVYWBxY8s
+	 CHpHVauUaOgQtI+Kh1Z/i8S1nhCpYlVMctMHtoePiueYCtqg6encTcrRWorWme3nccQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1Xr3g6JplAfEAcs3cPyh2xrpTV778hnXbtSBieGBxtI=;
-	b=FBsAznU17KeCnc+7KrLpmDMurKhJrYux+nPNJxuQIQOVvnTC1gPG6PaRYbAH5jOkbqna
-	 7+tSlqPAOqRBaLtfogatSIPcTLWX3Mq+PfdU+11NrWKdDhMB8k7bnJ/esNjj1RUhyxrVa
-	 3ojGsbQyo2STUna0JWzgzcscWewSJ86FTIRJJMlyohOfZ02+5/XtkyHLp4gDsGjmRRl6o
-	 YB+fFJjTiYkLC/pmNk7o+roufhD0H9JZh2MJ7bJNidZEQK1NSmRDcAdI4vsxFC7VTEDPc
-	 r2PNIpfSRcs7La0BXK+STkdOHYBglr+R4pTzFW/M9M+FjG/pHRjTNFPWMhrO5XZQ1EQ==
+	bh=AQBdoMlp6HhsrmSerSk0n5s2taouaNscTdohebkP/9Q=;
+	b=C+LyDxmnBtbqDm3IkFHZf9WJ8d2m3GHCVzTsfsF94WVoOjxOoDpbjmO5d0hGSN/Vul+6
+	 HGDx/a6pq8Gx44l4qZxlfS2VKsBL+HYXOSOrBB3KHjYHq8xzVPr3FFOhhZ6inACQEYlxn
+	 l6/Cy7bTivb9VNLZWDwIeXbOVmh2CKVbFQK7ilQF4/jscJN2xE7jXhejZB6cGdquDAVs3
+	 TElUFnccaGX7+CRVvqGM9zmixEMng7rA6c+zgh8a0nWoa/mCX8tDUCbtkB9aZznSErbnj
+	 HpWk52mEoIxcvRs8erFBjsdYi8fssNRngwhQhyqHINc4SHSJy8WIdwbzSby6bucTiVw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RACEo2dB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anPNJnzT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414FA606A8A2;
-	Fri, 13 Nov 2026 15:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D42A60A5BCC;
+	Fri, 13 Nov 2026 15:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RACEo2dB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B6A1F000CB;
-	Fri, 13 Nov 2026 15:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=anPNJnzT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B131F00933;
+	Fri, 13 Nov 2026 15:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585349;
-	bh=1Xr3g6JplAfEAcs3cPyh2xrpTV778hnXbtSBieGBxtI=;
+	s=korg; t=1794585351;
+	bh=AQBdoMlp6HhsrmSerSk0n5s2taouaNscTdohebkP/9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RACEo2dBrI6NG+uTSFmd6Ai9a211dKcLYkriILkGK19VGHaU24SM49kWXMECaHpWU
-	 UrOB2zNsCOel95wB5gKOIyVecX15bJV7ehD349TXQrxOx/HGwJtSO3ka1l0HosWWr6
-	 90y70gyiTjD9IuDWSwZPaGw5KTWfmfdj0mJZY6wA=
+	b=anPNJnzTHW3Y5pLy6N+uN10T7Ujb9G81BIIkDnidTt20VGHfv2NfzYbyebseWsnMa
+	 kIlkfpq6L7yKUlI/Ysrdx6J9i3beAsyCRXusABrmR+YZtpMm+9q+meCjMFBSvIFf4e
+	 9FVdinGvrJ4QdaB1k4uKp1n/Wck9/xDpxGncSKTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SJ Park <sj@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Haocheng Yu <l1za0.sec@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Hannes Reinecke <hare@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 031/507] mm/damon/core: remove unreachable damos charge_{target,addr}_from
-Date: Fri, 13 Nov 2026 10:45:35 -0500
-Message-ID: <20261113153754.437820308@linuxfoundation.org>
+Subject: [PATCH 7.3 032/507] block: restore the iterator when rejecting a misaligned bio
+Date: Fri, 13 Nov 2026 10:45:36 -0500
+Message-ID: <20261113153754.489549426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -68,84 +75,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SJ Park <sj@kernel.org>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-[ Upstream commit 5695abc4e742b947f586bfb6a080a80ad9957e5d ]
+commit 40d070cbb1906896d6fd65c39722d2411830ed9f upstream.
 
-damos_quota->charge_{target,addr}_from saves the target and region the
-scheme's quota limit is reached.  damos_skip_charged_region() skips the
-target and regions before the point.  The target that was assigned to
-charge_target_from could be dynamically removed from the context by the
-runtime parameters update (aka commit) feature.  In this case,
-damos_skip_charged_region() cannot find if the point is passed or not,
-so the scheme is effectively disabled.
+bio_iov_iter_get_pages() can extract some iovecs before encountering a
+misaligned one.  It releases the pages and rejects the entire bio, but
+leaves the supplied iterator advanced.
 
-Similarly, the user could also remove all the regions of the target
-using the runtime parameters update feature.  It would be uncommon to do
-that, but it is a supported feature.  Because the skip pointer detection
-logic (damos_skip_charged_region()) works for each region of targets,
-this result in the logic is entirely skipped and the scheme is
-effectively disabled again.
+An iomap direct-I/O caller may subsequently reexpand the iterator's
+byte count and fall back to buffered I/O.  The reexpanded count then
+includes bytes before the iterator's current segment, potentially
+causing iterate_iovec() to read beyond the imported iovec array.
 
-The user impact is that the DAMOS scheme could suddenly stop working
-under certain uses of the runtime parameters update feature.  It could
-surprise users. No crash or leak happens though.  Users could also
-simply work around by re-installing the scheme.
+In a reproducer using an initial empty iovec followed by 10-byte and
+1015-byte segments, writev() returned 1015 instead of 1025 and KASAN
+reported an 8-byte read beyond the nine-element iovec allocation.
+Saving and restoring the iterator on the rejected-bio path makes
+writev() return 1025 and eliminates the KASAN report.
 
-Catch the corner cases in damos_adjust_quota() and reset the pointers.
+Restore the entire iterator rather than reverting a byte count:
+advancing past an empty segment changes its position without consuming
+any bytes.
 
-Link: https://lore.kernel.org/20261020023958.108276-1-sj@kernel.org
-Fixes: da87878010e5 ("mm/damon/sysfs: support online inputs update")
-Signed-off-by: SJ Park <sj@kernel.org>
+Leave successful and partially accepted bio paths unchanged.
+
+[ Backport to 7.3.y: restore the iterator in the existing inline
+  -EINVAL cleanup, as this tree lacks out_release_pages. ]
+
+Fixes: 14b007e17881 ("block: validate user space vectors during extraction")
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Closes: https://sashiko.dev/#/bug/linux-cd0c55fc-0cc8-45d8-9637-3334811c49b8
-Cc: <stable@vger.kernel.org> # 5.19.x
-Signed-off-by: SJ Park <sj@kernel.org>
+Reported-by: Haocheng Yu <l1za0.sec@gmail.com>
+Closes: https://lore.kernel.org/20261018081203.2431035-1-l1za0.sec@gmail.com
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Keith Busch <kbusch@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Tal Zussman <tz2294@columbia.edu>
+Cc: Daehyeon Ko <4ncienth@gmail.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Hannes Reinecke <hare@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20261020170250.014BD1F000C9@smtp.kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Haocheng Yu <l1za0.sec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/damon/core.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ block/bio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/mm/damon/core.c b/mm/damon/core.c
-index e018635774be5..229ab1674b4c1 100644
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -3200,6 +3200,26 @@ static void damos_trace_esz(struct damon_ctx *c, struct damos *s,
- 	trace_damos_esz(cidx, sidx, quota->esz);
- }
- 
-+static void damos_fix_stale_charge_pointers(struct damon_ctx *c,
-+		struct damos *s)
-+{
-+	struct damos_quota *quota;
-+	struct damon_target *t;
-+
-+	quota = &s->quota;
-+	if (!quota->charge_target_from)
-+		return;
-+	damon_for_each_target(t, c) {
-+		if (t == quota->charge_target_from) {
-+			if (damon_nr_regions(t) > 0)
-+				return;
-+			break;
-+		}
-+	}
-+	quota->charge_target_from = NULL;
-+	quota->charge_addr_from = 0;
-+}
-+
- static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
+diff --git a/block/bio.c b/block/bio.c
+index f95b63c0604af..90104e6abbcf2 100644
+--- a/block/bio.c
++++ b/block/bio.c
+@@ -1285,6 +1285,7 @@ int bio_iov_iter_get_pages(struct bio *bio, struct iov_iter *iter,
+ 			   unsigned mem_align_mask, unsigned len_align_mask)
  {
- 	struct damos_quota *quota = &s->quota;
-@@ -3235,6 +3255,8 @@ static void damos_adjust_quota(struct damon_ctx *c, struct damos *s)
- 			damos_trace_esz(c, s, quota);
- 	}
+ 	iov_iter_extraction_t flags = 0;
++	struct iov_iter saved_iter;
  
-+	damos_fix_stale_charge_pointers(c, s);
-+
- 	if (!c->ops.get_scheme_score)
- 		return;
+ 	if (WARN_ON_ONCE(bio_flagged(bio, BIO_CLONED)))
+ 		return -EIO;
+@@ -1303,6 +1304,7 @@ int bio_iov_iter_get_pages(struct bio *bio, struct iov_iter *iter,
+ 	if (bio->bi_bdev && blk_queue_pci_p2pdma(bio->bi_bdev->bd_disk->queue))
+ 		flags |= ITER_ALLOW_P2PDMA;
  
++	saved_iter = *iter;
+ 	do {
+ 		ssize_t ret;
+ 
+@@ -1320,6 +1322,7 @@ int bio_iov_iter_get_pages(struct bio *bio, struct iov_iter *iter,
+ 				bio_release_pages(bio, false);
+ 				bio_clear_flag(bio, BIO_PAGE_PINNED);
+ 				bio->bi_vcnt = 0;
++				*iter = saved_iter;
+ 			}
+ 			if (!bio->bi_vcnt)
+ 				return ret;
 -- 
 2.53.0
 
