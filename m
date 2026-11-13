@@ -1,57 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590856;
-	b=J7ICR9nLk59DHaBjMtbajZwD1rjtLMYaOHuZxB2w/rFjwhOVsltm+w4880Gh6I/h9be5
-	 PeaPQAqkJqToDtnreX35FggLTaTuSa3bFjT1vzmVOEbiTkNrfkkoApl3gXRRiC7i1smoY
-	 bQXLgC9ACQSZTcKGJ4niw+M6EV1BDIF2Vq3X+4rVzuqur26/D0KyWQWwJFJ7i2vxa0ZWk
-	 vLB9sfmVlymKICYtGws5vpuh/Za99Vxj+Abdbu3qqAvkI6+mgifaudPt8K6xS4ZtRD+01
-	 ru3st1xt8ZbS/jOA86sgCwt/x9ABzXccW5CHaGwC+5/IpeBFmcvx3Whj0WCWc0U7w/w==
+	t=1794590858;
+	b=nEVBoWqbARn08/ndbU2z1N3pcsKDEjyjHTmFkMsp5INiSB23WYmtwEV5Tw2+6m9AworO
+	 bwowxFiui+MuRVDtHr0dhyo8EzfNhI6XM2C8fv5nuROPyVtdQKo+EaeWn9LDXY5EKbLcB
+	 spc1tVmUF8eBJfEc5Ieck81qX7ZUsxz/ICBf5fqmxKoBvIwIOQEra3OGpQ1ET2bwOzKl0
+	 AzYgOm5HSHkUcK8oIz07WBqPK8zEN8j6awqY9Zu/jdESC49SUSuPN5t3DIMdyVu1wDNIA
+	 g5vJO6S2KdjbeIZ157eVNS+TqWNLfhtLAfaFn8b97xiMtoT1Fjn3mTzcC16KlZVQXJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590856;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fKIC7MGBIlT6bUEIaK2m0eOaIh0Ct+b6htHMpxkCkx0=;
-	b=nP21N0eJpnqppxaY+EZ1v+cTCZLuxrKcbFUm6WH9giI12XeCZnIf4F00JuFoB5RXE89W
-	 G1nf/auflwZ+ykU6UMfqj2bAV9PMSVopSUN9FcV+PjgH5DGT4hQg6C47NdCwGAHvAtCfJ
-	 tRDm8CL5Fhih/vGZHA3U+DHCIb/bGju9zXAHXtSDkTVbU8pCpCsdH7QIvXwBuZ4YihWbk
-	 GtJOuXbCVHb7YnDvf17XIdVi8AoJNHGcTQoJRqYjznEGOcr4pixgrM14IaSN68JBahoFa
-	 48ktBJtr31V5DH+VzA9mvJxtr5gZ5u7tmiMjDobRIuJm6Y5S97da4qeSWhaj5rYWN4g==
+	bh=4mBGYEwdBXbqyW5t4wu7yP6SRj4eS2UliaMosh15koM=;
+	b=2Ll6/Tyj+WxNtObRewHP8NbB0KCTVw8IPmU15MvU+sLyDlm1krAMpNdaJB9imB1rWwFN
+	 1T1fKMsBKCxm7rPYm8nTllUT2WM8vI17vOT/geC4zm1nvW/BdDPErxjMi2UxZ5eIRzuZM
+	 Q3vdnNSfcdaoD5UA9554FF/58ac9aG1/A3Y7oqaBcxzpGBZC1+yuZanxm6/bl+NdjgB7H
+	 xDJv5NhAkYuuAOcmWuF8qlPR+d5vWfTm48K3PWzZi2NZGuBDPcigpLjdaQIIGEc0Xk+bk
+	 vV7oLa/Z2Kxet5hXX8qaVLtGk0ZBS7oJ/+SbiSBS0EHQmH03vxLmc/ySy7CZ/h1RULg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJeAcA1F;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfDaPTCB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D871F606D49C;
-	Fri, 13 Nov 2026 17:27:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E89606A8BE;
+	Fri, 13 Nov 2026 17:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FJeAcA1F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA6A1F000C4;
-	Fri, 13 Nov 2026 17:27:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jfDaPTCB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84EF1F000C4;
+	Fri, 13 Nov 2026 17:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590856;
-	bh=fKIC7MGBIlT6bUEIaK2m0eOaIh0Ct+b6htHMpxkCkx0=;
+	s=korg; t=1794590858;
+	bh=4mBGYEwdBXbqyW5t4wu7yP6SRj4eS2UliaMosh15koM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FJeAcA1FzZuQWaDqPX8l3WijAbdIiKr//W5dC5oEEW1uRGeuba4vIkeCsPSjPasDG
-	 1gPOf5Ek3CN9mIpZr97ZW6+GDR8Iy4l9fHd6TQneFzDMcDHaE0vKANkMY9CWCOmaj6
-	 /9e0pfLITt6Wb17czpj8aHCq6sZN6lms/GoW/PRw=
+	b=jfDaPTCBfakioCprKRNgqGKi/crkkdrOc+XSrtjwoAXrr8il538EEYZeeUXpDVo1D
+	 dGDU2ExkWI0GlYc/H2TOwCYnfzI3DmAUDZmfUH2fnQyVB62QxPZUkp/HkjCEiYl00H
+	 aFjxzF7km59fM0ERBdkdvbbB/hpr4+1uKlllmnAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
+	"T.J.Mercier" <tjmercier@google.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Yu Zhao <yuzhao@google.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
+	Wei Xu <weixugc@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/670] smb: client: require stable pages for SMB compression
-Date: Fri, 13 Nov 2026 10:42:59 -0500
-Message-ID: <20261113153811.701361935@linuxfoundation.org>
+Subject: [PATCH 6.12 016/670] mm: remove !root_reclaim checking in should_abort_scan()
+Date: Fri, 13 Nov 2026 10:43:00 -0500
+Message-ID: <20261113153811.735104662@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -73,54 +81,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
 
-[ Upstream commit 8667061cf99394526dd9c0ea2662e6bbc7ae7848 ]
+[ Upstream commit 19999e479c2a38672789e66b4830f43c645ca1f2 ]
 
-Like signing, SMB compression builds the write payload from the pagecache
-folios: should_compress() lets a write request through and smb_compress()
-compresses those folios on the way to the socket.  If a buffered write
-mutates a folio while a write subrequest is still in flight, the compressed
-bytes no longer correspond to a consistent view of the data, and the server
-silently stores corrupted contents - worse than the signed case, which at
-least fails loudly with STATUS_ACCESS_DENIED.
+Android systems usually use memory.reclaim interface to implement user
+space memory management which expects that the requested reclaim target
+and actually reclaimed amount memory are not diverging by too much. With
+the current MGRLU implementation there is, however, no bail out when the
+reclaim target is reached and this could lead to an excessive reclaim
+that scales with the reclaim hierarchy size.For example, we can get a
+nr_reclaimed=394/nr_to_reclaim=32 proactive reclaim under a common 1-N
+cgroup hierarchy.
 
-Mark the mapping for stable writes when a write may be compressed, i.e. the
-same condition should_compress() tests (compression negotiated and the share
-allows compressed data), so netfs_perform_write() waits for writeback to
-complete before modifying an in-flight folio.
+This defect arose from the goal of keeping fairness among memcgs that is,
+for try_to_free_mem_cgroup_pages -> shrink_node_memcgs -> shrink_lruvec ->
+lru_gen_shrink_lruvec -> try_to_shrink_lruvec, the !root_reclaim(sc) check
+was there for reclaim fairness, which was necessary before commit
+b82b530740b9 ("mm: vmscan: restore incremental cgroup iteration") because
+the fairness depended on attempted proportional reclaim from every memcg
+under the target memcg.  However after commit b82b530740b9 there is no
+longer a need to visit every memcg to ensure fairness.  Let's have
+try_to_shrink_lruvec bail out when the nr_reclaimed achieved.
 
-Fixes: f046d71e84e1 ("smb: client: insert compression check/call on write requests")
-Suggested-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: stable@vger.kernel.org
-[ sashal: replaced tcon references with cifs_sb_master_tcon(cifs_sb) calls ]
+Link: https://lore.kernel.org/20260318011558.1696310-1-zhaoyang.huang@unisoc.com
+Link: https://lore.kernel.org/20260212032111.408865-1-zhaoyang.huang@unisoc.com
+Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Suggested-by: T.J.Mercier <tjmercier@google.com>
+Reviewed-by: T.J. Mercier <tjmercier@google.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Qi Zheng <qi.zheng@linux.dev>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Yu Zhao <yuzhao@google.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
+Cc: Wei Xu <weixugc@google.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/inode.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/vmscan.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/fs/smb/client/inode.c b/fs/smb/client/inode.c
-index 9307a2ad9e444..5db59b429fc3b 100644
---- a/fs/smb/client/inode.c
-+++ b/fs/smb/client/inode.c
-@@ -87,7 +87,9 @@ static void cifs_set_ops(struct inode *inode)
- 		else
- 			inode->i_data.a_ops = &cifs_addr_ops;
- 		mapping_set_large_folios(inode->i_mapping);
--		if (cifs_sb_master_tcon(cifs_sb)->ses->server->sign)
-+		if (cifs_sb_master_tcon(cifs_sb)->ses->server->sign ||
-+		    (cifs_sb_master_tcon(cifs_sb)->ses->server->compression.enabled &&
-+		     (cifs_sb_master_tcon(cifs_sb)->share_flags & SMB2_SHAREFLAG_COMPRESS_DATA)))
- 			mapping_set_stable_writes(inode->i_mapping);
- 		break;
- 	case S_IFDIR:
+diff --git a/mm/vmscan.c b/mm/vmscan.c
+index 512a31d7ae9e6..de7a50570db36 100644
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -4752,10 +4752,6 @@ static bool should_abort_scan(struct lruvec *lruvec, struct scan_control *sc)
+ 	int i;
+ 	enum zone_watermarks mark;
+ 
+-	/* don't abort memcg reclaim to ensure fairness */
+-	if (!root_reclaim(sc))
+-		return false;
+-
+ 	if (sc->nr_reclaimed >= max(sc->nr_to_reclaim, compact_gap(sc->order)))
+ 		return true;
+ 
 -- 
 2.53.0
 
