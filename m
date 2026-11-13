@@ -1,63 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585596;
-	b=bS2XQhmrh3Mrof3m4+Uo69DGNAoPP7jdkHISeCXi79kOruNTTLEoxxoJZTNsrx3+YiKY
-	 wvFyorJHRNlmQSYg0aBB5Ev8gd6X1FHK2SwzX9PchuCmL0cJWT2vQptsrQ3+E2d+Tq6/p
-	 wvGalEhKg9mHi2/VSVAEDTMad6ghK+p0n5namM8pKfuDsNHtf3JZDRlJ8rq16xe4106Bl
-	 e3pRt/X4en0djEf8oKWd/NKChmsQBOvSexop0tW1rNSpf5H0/G71RwQKFuiFlEUcE6+oR
-	 Aky5ylVeBe70TKW9dDpSy86dWpFwQV9E+O0cUY2JMUkWSm4c5rDQhl0BIEHw9HtLg7w==
+	t=1794585597;
+	b=q9T8JGm/HRpr+HtA72z0Sprfb0xdt9NLuFaOQZJsKICcVpk+n6jcCOifpwH+fbzMEfk3
+	 PU2BAdRGhnKz2L3x5VxpTaKaz7D9YyOjPWRxecj+H6zz5Ck9VDukWMKv11hNJsD9LHj6z
+	 YHF3te7+oRxfm4WFSShwF0F55AqwrQCPmc+BjlkdO+UEJSpNx2jKpdNxMfzfeMJwtcLPF
+	 92toAlqMjaMp/xMDPB2uoNM+4V/sftlIAaZvZ4+tK8BMl3e2A4RNM3qxRj7X1Rl5YqGrt
+	 hQb66Z8DIzVJXY5RNnX7jgphirwv+eqo1Ev/dS9+79RRGuWyhTG0rt2sVWYeSHJWKpg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585596;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XgrI1JTUD4wBxQcRxBD9VBJqpJ0K3kiUMthNV8cBy+Y=;
-	b=PwdaDasW4h7H7bsWNyfUOoBbIzILqyyp7ndq+lH3uk3xlcsQTLyX3xisj+WVBpsZzShE
-	 6QJ2Y28eciItZI0hrHfhw63M8pv0VjkGGSxd5JWmtvoCsFoqSyYkcWhPGupa9tgfx5Wk9
-	 JwMauIUk+I0oPWb1gTdS1hkKmjc2S/mNjsULbsd8v9K+7+wTuZM91Off9+KvTJAcrmpY1
-	 8QojvACMTdwuHQf54lHi2Fe7Vy5M69uVm+Xfk3oJIXxKODT7xgeOAn0MPsJ2bVi34E7e4
-	 bwLGD9fS6R4jEhK+J2UbNf7ltKHXVysI8toHAbrkqfgF3Ja7MlfhnRAdTrHnmBZDORA==
+	bh=ND+vMn5NnQomdjp35zwtkF9/r2crKLJLhleQQbXKID0=;
+	b=DE8Za/rfXcYONR5cqKwmztFzrPuqZ1m83Wb7C7zu1MmYlcx99RVReI4OQNiczXjVdNAM
+	 rjfTxYMCxt9FupItQrMEOzJ1vAWkl/EEAucsVPK5I6v1r23eX7O2KF1fGHLAaXdxd+2wY
+	 UeE9pmTA1ntW5GZl9BF4P1UIAPd6A79jdaEZbEhjWLf1T40jN2ogfBfLI/Jgv1i5i20/d
+	 0Go0/9AyPjOP8U6b0O3XYaFp095CmLvvqfKep6DJXRIy13/B6Izg/zRFSfPnJ7adCAnxf
+	 c8IWvuQ8XGX7oet/EsGbV+FeDhiUzYug3DVIfk8ZT17krpAJfoged6FPbnnY/yepWDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1xrjZlEF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtSx6ubY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB29F606FFF4;
-	Fri, 13 Nov 2026 15:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F9D606FFF4;
+	Fri, 13 Nov 2026 15:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1xrjZlEF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFC91F000C4;
-	Fri, 13 Nov 2026 15:59:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtSx6ubY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03581F000C4;
+	Fri, 13 Nov 2026 15:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585595;
-	bh=XgrI1JTUD4wBxQcRxBD9VBJqpJ0K3kiUMthNV8cBy+Y=;
+	s=korg; t=1794585597;
+	bh=ND+vMn5NnQomdjp35zwtkF9/r2crKLJLhleQQbXKID0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1xrjZlEFbYVYZemvZNFwlxj3U7V9Om9TUnv1aJb40CCr/E0W/KZZfH6P5XJ1PvAXz
-	 KUOVY2XC/3cm1uvlSvSBIZzhcKSHxMO5eb+lfely7D9zekZboxTMygIFV4Usy4hQDr
-	 J8kYvCNFWcM9PntoQ3T/wVkB922bsCC674DVJH7A=
+	b=rtSx6ubYC65oyoHr8aX2tDLrKfifhHlSGR9zjEFkZASBTEcAxf+4uv0YC5hjHnbIM
+	 OTqhpnrP98biP+IlVLlq9ZxlgOnsDiiWbFtP7HQowqim2LWDtOfYgZR4/RLZQOsDNa
+	 z1UIIFy584pXHHpl9AfeZGwXfCECEQZ2l5XBkvy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Ayush Ranjan <ayushr@modal.com>,
-	Qi Zheng <qi.zheng@linux.dev>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>,
 	Jan Kara <jack@suse.cz>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Stefan Roesch <shr@devkernel.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 223/507] mm: memory: fix truncation removing mapped folios
-Date: Fri, 13 Nov 2026 10:48:47 -0500
-Message-ID: <20261113153802.077053322@linuxfoundation.org>
+Subject: [PATCH 7.3 224/507] mm/page-writeback: avoid 32-bit overflow in dirty threshold shares
+Date: Fri, 13 Nov 2026 10:48:48 -0500
+Message-ID: <20261113153802.107768534@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -79,195 +72,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit 243cf1f67b365668389832463fc31cbb9fec47af ]
+[ Upstream commit 9597c2056e05bd79df9d343a9b42e84a54de1c52 ]
 
-Ayush reported an issue that shmem/tmpfs folios are still mapped when
-truncating them on production:
-"
-BUG: Bad page cache in process ...  pfn:...
-page dumped because: still mapped when deleted
-"
+The ratios used by __wb_calc_thresh() are scaled to parts per million, but
+the threshold and ratio operands are unsigned long.  On 32-bit kernels,
+their multiplication can wrap before the result is assigned to u64.
 
-I reproduced the issue with Ayush's reproducer [1] with the latest
-mm-unstable branch, and I got the following crash info.  From the dump
-message, we can see that truncate_inode_folio() is really trying to remove
-mapped folios, which is incorrect.
+For example, with a threshold of 25600 pages and the default maximum ratio
+of 1000000, wb_max_thresh becomes 4125 pages instead of 25600.  The shared
+threshold and minimum share calculations can overflow in the same way,
+producing incorrect per-writeback dirty limits.
 
-"
-[  189.171977] page: refcount:3 mapcount:1 mapping:00000000fe168ee1
-index:0x3880 pfn:0x191647
-[  189.171995] memcg:ffff0000cc073d40
-[  189.171997] aops:shmem_aops ino:3c01 dentry name(?):"memfd:runsc-memory"
-[  189.172006] flags: 0x17fffef0002022d(locked|referenced|uptodate|lru|
-workingset|swapbacked|node=0|zone=2|lastcpupid=0x3ffff)
-.......
-[  189.172017] page dumped because: VM_BUG_ON_FOLIO(folio_mapped(folio))
-[  189.172026] ------------[ cut here ]------------
-[  189.172027] kernel BUG at mm/filemap.c:155!
-[  189.172057] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-.......
-[  189.177721] CPU: 3 UID: 0 PID: 5521 Comm: repro Kdump: loaded Tainted:
-7.3.0-rc4+ #277 PREEMPT(lazy)
-.......
-[  189.183986] Call trace:
-[  189.184124]  filemap_unaccount_folio+0xf0/0x1e8 (P)
-[  189.184391]  __filemap_remove_folio+0x34/0x160
-[  189.184633]  filemap_remove_folio+0x4c/0xb0
-[  189.184859]  truncate_inode_folio+0x34/0x58
-[  189.185087]  shmem_undo_range+0x220/0x658
-[  189.185308]  shmem_fallocate+0x2f0/0x470
-[  189.185527]  vfs_fallocate+0x128/0x328
-......
-[  189.187078]  el0t_64_sync+0x184/0x188
-"
+Use a u64 threshold for the three ratio multiplications and div_u64() to
+retain the existing division order and rounding.
 
-After analysis, I believe the race exists between truncation and
-MADV_DONTNEED, and shmem's ->map_pages() merely makes the issue easier to
-reproduce.  Since MADV_DONTNEED synchronously releases the pagetable page
-before calling tlb_flush_rmaps(), this could cause another thread's
-truncation to skip zap_pte_range() (due to pmd is none) but still observe
-the folio's mapcount as non-zero.  A possible race scenario is as follows:
-
-CPU 0                           CPU 1
-shmem_fallocate                 madvise_dontneed_single_vma
-  unmap_mapping_range            .......
-  ......
-  (filemap_map_pages() remap folios)
-				  zap_pte_range
-  truncate_inode_folio		    zap_empty_pte_table(pmd clear)
-    unmap_mapping_folio
-    ......
-      zap_pmd_range (saw pmd none, skip)
-
-  filemap_remove_folio
-    BUG_ON(folio_mapped)
-                                    tlb_flush_rmaps(remove rmaps)
-
-To fix this issue, we should move the pmd clear operation (via
-zap_empty_pte_table()) to after tlb_flush_rmaps() and use
-sync_with_folio_pmd_zap() to sync with concurrent zapping, so that when we
-find a pmd_none() while unmapping a folio without holding the PTL, the
-folio's mappings are guaranteed to have been removed via
-tlb_flush_rmaps().
-
-Meanwhile move the second pmd_none() check to where it belongs: if
-splitting zapped the PMD.
-
-Link: https://lore.kernel.org/14ebbd556cc4941f0ebc43da59fa6a2fdca25dc8.1793148609.git.baolin.wang@linux.alibaba.com
-Link: https://lore.kernel.org/all/20260925065013.3682431-1-ayushr@modal.com/ [1]
-Fixes: 6375e95f381e ("mm: pgtable: reclaim empty PTE page in madvise(MADV_DONTNEED)")
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://lore.kernel.org/20261021060654.27855-1-dennylin0707@gmail.com
+Fixes: ae82291e9ca4 ("mm: use part per 1000000 for bdi ratios")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Ayush Ranjan <ayushr@modal.com>
-Closes: https://lore.kernel.org/all/20260924061708.1645968-1-ayushr@modal.com/
-Acked-by: Qi Zheng <qi.zheng@linux.dev>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Jan Kara <jack@suse.cz>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Stefan Roesch <shr@devkernel.io>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/internal.h | 10 ++++++----
- mm/memory.c   | 35 ++++++++++++++++++++---------------
- 2 files changed, 26 insertions(+), 19 deletions(-)
+ mm/page-writeback.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/mm/internal.h b/mm/internal.h
-index 38b1165212c94..a533b56e2f2b9 100644
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -584,14 +584,16 @@ void free_pgtables(struct mmu_gather *tlb, struct unmap_desc *desc);
- void pmd_install(struct mm_struct *mm, pmd_t *pmd, pgtable_t *pte);
+diff --git a/mm/page-writeback.c b/mm/page-writeback.c
+index eeab25d6ce364..1d6aab8781a57 100644
+--- a/mm/page-writeback.c
++++ b/mm/page-writeback.c
+@@ -883,6 +883,7 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+ {
+ 	struct wb_domain *dom = dtc_dom(dtc);
+ 	struct bdi_writeback *wb = dtc->wb;
++	u64 threshold = thresh;
+ 	u64 wb_thresh;
+ 	u64 wb_max_thresh;
+ 	unsigned long numerator, denominator;
+@@ -894,13 +895,14 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+ 	fprop_fraction_percpu(&dom->completions, dtc->wb_completions,
+ 			      &numerator, &denominator);
  
- /**
-- * sync_with_folio_pmd_zap - sync with concurrent zapping of a folio PMD
-+ * sync_with_folio_pmd_zap - sync with concurrent zapping of folios
-  * @mm: The mm_struct.
-  * @pmdp: Pointer to the pmd that was found to be pmd_none().
-  *
-  * When we find a pmd_none() while unmapping a folio without holding the PTL,
-- * zap_huge_pmd() may have cleared the PMD but not yet modified the folio to
-- * indicate that it's unmapped. Skipping the PMD without synchronization could
-- * make folio unmapping code assume that unmapping failed.
-+ * zap_huge_pmd() may have cleared the PMD but not yet updated the folio
-+ * mapcount, and zap_empty_pte_table() clears the PMD only after the rmaps
-+ * for the table have been removed, but nothing orders the pmd_none() read
-+ * against later mapcount reads. Skipping the PMD without synchronization
-+ * could make folio unmapping code assume that unmapping failed.
-  *
-  * Wait for concurrent zapping to complete by grabbing the PTL.
-  */
-diff --git a/mm/memory.c b/mm/memory.c
-index ca6d7e08635ff..243b34f2e54fa 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -2071,6 +2071,15 @@ static unsigned long zap_pte_range(struct mmu_gather *tlb,
- 		}
- 	} while (pte += nr, addr += PAGE_SIZE * nr, addr != end);
+-	wb_thresh = (thresh * (100 * BDI_RATIO_SCALE - bdi_min_ratio)) / (100 * BDI_RATIO_SCALE);
++	wb_thresh = div_u64(threshold * (100 * BDI_RATIO_SCALE - bdi_min_ratio),
++			    100 * BDI_RATIO_SCALE);
+ 	wb_thresh *= numerator;
+ 	wb_thresh = div64_ul(wb_thresh, denominator);
  
-+	add_mm_rss_vec(mm, rss);
-+	lazy_mmu_mode_disable();
-+
-+	/* Do the actual TLB flush before dropping ptl */
-+	if (force_flush) {
-+		tlb_flush_mmu_tlbonly(tlb);
-+		tlb_flush_rmaps(tlb, vma);
-+	}
-+
- 	/*
- 	 * Fast path: try to hold the pmd lock and unmap the PTE page.
- 	 *
-@@ -2078,18 +2087,12 @@ static unsigned long zap_pte_range(struct mmu_gather *tlb,
- 	 * to hold the pmd lock failed, then we need to recheck all pte entries
- 	 * to ensure they are still none, thereby preventing the pte entries
- 	 * from being repopulated by another thread.
-+	 *
-+	 * Clear the PMD after the rmaps for the table have been removed, in case
-+	 * an incorrect mapcount is observed after unmapping the folio.
- 	 */
- 	if (can_reclaim_pt && direct_reclaim && addr == end)
- 		direct_reclaim = zap_empty_pte_table(mm, pmd, ptl, &pmdval);
--
--	add_mm_rss_vec(mm, rss);
--	lazy_mmu_mode_disable();
--
--	/* Do the actual TLB flush before dropping ptl */
--	if (force_flush) {
--		tlb_flush_mmu_tlbonly(tlb);
--		tlb_flush_rmaps(tlb, vma);
--	}
- 	pte_unmap_unlock(start_pte, ptl);
+ 	wb_min_max_ratio(wb, &wb_min_ratio, &wb_max_ratio);
+ 
+-	wb_thresh += (thresh * wb_min_ratio) / (100 * BDI_RATIO_SCALE);
++	wb_thresh += div_u64(threshold * wb_min_ratio, 100 * BDI_RATIO_SCALE);
  
  	/*
-@@ -2136,13 +2139,15 @@ static inline unsigned long zap_pmd_range(struct mmu_gather *tlb,
- 				addr = next;
- 				continue;
- 			}
-+			/* We already synchronized with concurrent zapping. */
-+			if (pmd_none(*pmd)) {
-+				addr = next;
-+				continue;
-+			}
- 			/* fall through */
--		} else if (details && details->single_folio &&
--			   folio_test_pmd_mappable(details->single_folio) &&
--			   next - addr == HPAGE_PMD_SIZE && pmd_none(*pmd)) {
--			sync_with_folio_pmd_zap(tlb->mm, pmd);
--		}
--		if (pmd_none(*pmd)) {
-+		} else if (pmd_none(*pmd)) {
-+			if (details && details->single_folio)
-+				sync_with_folio_pmd_zap(tlb->mm, pmd);
- 			addr = next;
- 			continue;
- 		}
+ 	 * It's very possible that wb_thresh is close to 0 not because the
+@@ -916,7 +918,7 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+ 			wb_thresh = max(wb_thresh, (thresh - dtc->dirty) / 8);
+ 	}
+ 
+-	wb_max_thresh = thresh * wb_max_ratio / (100 * BDI_RATIO_SCALE);
++	wb_max_thresh = div_u64(threshold * wb_max_ratio, 100 * BDI_RATIO_SCALE);
+ 	if (wb_thresh > wb_max_thresh)
+ 		wb_thresh = wb_max_thresh;
+ 
 -- 
 2.53.0
 
