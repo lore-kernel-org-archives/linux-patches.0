@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591573;
-	b=fALmccZqt/0wi9VLOOM1qlJggrcq8jJM3dpcRYgJh1CrZoIX5pJZBH2TgMIxhWuo6yKg
-	 puUf4AGzYa8+vaNa9uhlYgHqJS+maXrkiwHsBFrU4FgFQDZL2UyaxYJ74EOhMgHusSt4q
-	 6gOJLyHQBQXGwHQCHa/UPL9Va83Y5VTt6H1HV0gOl2X/M03MzXA99KJs2yRm2Hm9uIQrh
-	 FRDImKa3/rZcb+5yt1ARxkrk67rNx0nqA7MVpJxzfrLlnCIQ+fMG5T0CNTQYhCLZ7UqcG
-	 56zyai7/o9fg+yTzKBY9yqFxYRCmTlKD5Mg09UH31Y1IqESqtwPYzgUabRO85X8f/yA==
+	t=1794591575;
+	b=eFVE44oxMKjht8A/WB13xUBQvt5UWTWpWfDV5fb4ELm/sTNydHJuyRJkwPjj8ZNlrAMQ
+	 +CJt9GTOeZPKpZweninBBayOJOrz+zytyl68rB/29Ki0p+trWnBBkPlE1UU2ir/fcUdhI
+	 i8hio3WYYZPuuaw4F1Y2xmP1ufhY86r59jc8YpkOSqAVRBUowtVLbHfD1mJcnSbNMkOZg
+	 gyyDNWipZA0o5RhVny/5KuatljGiz+Um09Rbkod5ntXaEQxKDT7ZTsq/d64bleZUIHLFb
+	 0xL1djdBoplGGbSz02eDwwHwOHZOwkIYiw5xV4Thx17cKzHI//XAxDYfd/Mqnp+cU2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591575;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PbcK9TcMWB35MKf4uu2+jLmJAXkgSmtKmfQk4kvLdEU=;
-	b=khuU1FyEytEH9voVJ4z0Oi3Uby0mzG4MQKOHKS1uCaDGK6Q1oiCWVykFPlqZAyMtBbcp
-	 77cxkB1XZK37oO1jjIO1hDGiTKdx0bLBBvDKcizsT6rCCeI0rqdgdd42yuC+krTskx4QT
-	 yLdsfO7OpBWm2iDz+ugrQBVfXwDUfUFDdqPXsWBUrUOP1kcf3zKQHXBCi2b87nnpJrO68
-	 NBZr6REmEFNnqP/kHf2yUK0gl7pKIQlht1o4e1fMVNj9Q9wZNavRtveUWcbezx30zOxFm
-	 i/0x8mFnT26JGzgJMBUkWLXi3X/2zWL+PEle4iqoZYdBKftFyVd+sR6qQznnmwwhrGw==
+	bh=sPeIqu13BsYv18WbawKZ4T1mWM8ld6MMwDxYQQyQULA=;
+	b=Ada+kSUEeEa4CTZ6GgHD/g3dGEYkLxtmmjNSCu5NHm+I87Eg2QF4ilFJuKC+7FmknojZ
+	 h0llUX+J1+UX7g/F7IDRNfrxxag5ZAAB6rzFK5Umd9Ujm9DNNXDKMbVLRkLoZVTENUzKY
+	 tOuRhWQsZD9ozRJ2eSuGOaFjXkCYJAMxybngD0QqehyVgjqGzpGnpgYXItcFhzrTwi9nA
+	 YdQ4avCDOaM+wnIvs1FQAqTt/UcdB9gQyFl9LZwapKfylsEAxf54DWKehZp/+h8Y8R97h
+	 7LfmQoa8S9PvO6uTtuuTdI9rnoGTQuhOIUiO43FwSV6oySubrSEpKhlXmbCGAQZnQtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzr2PtzV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cEGdtmKC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BB2606E658;
-	Fri, 13 Nov 2026 17:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083F1606E64F;
+	Fri, 13 Nov 2026 17:39:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vzr2PtzV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655761F000C4;
-	Fri, 13 Nov 2026 17:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cEGdtmKC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B561F000C4;
+	Fri, 13 Nov 2026 17:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591573;
-	bh=PbcK9TcMWB35MKf4uu2+jLmJAXkgSmtKmfQk4kvLdEU=;
+	s=korg; t=1794591574;
+	bh=sPeIqu13BsYv18WbawKZ4T1mWM8ld6MMwDxYQQyQULA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vzr2PtzVCuXFYcRshd4b6h4rYtxKAhlmfqzcuXNH4nkKcmw9iGiF2aPJD1LULTIhh
-	 u0fnPdvOOaJU2AnGj8GNQegHAZdHHR+6i/Z2CygFWOZOnaXV62YOmUQLzzd/1qUdqk
-	 tQvhMSQ4PDG2yTWB73CfjXm0Qy6XZPHGytO+1T/U=
+	b=cEGdtmKCxZVhSnff2pKRGKeY/mDo7CIaF+U/1/EA8pshc7T7Q0rBRNS/vte4ZO9oc
+	 9ouHsuVSKEpNbjTfQrFneP+uls0o9oTMJKLD87ocfnojGOFeEW0yn+2kNTa9BjbVqq
+	 78LSGW3j5uwe2AU4VkPtGiZTuVVtE22oGx4fgRAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 623/670] LoongArch: Dont init & online empty nodes
-Date: Fri, 13 Nov 2026 10:53:07 -0500
-Message-ID: <20261113153832.913140156@linuxfoundation.org>
+Subject: [PATCH 6.12 624/670] media: serial_ir: Fix race condition where timer can be re-armed
+Date: Fri, 13 Nov 2026 10:53:08 -0500
+Message-ID: <20261113153832.944613971@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -67,49 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 87c6d144bc7bbed0c4573848b9c92006edca7848 ]
+[ Upstream commit d74ac4016ba64cb3b20f395511d0b18025ca0ba9 ]
 
-Don't init & online empty nodes without any CPU cores (and memory), in
-this way "lscpu" will not display confusing empty nodes.
+Ensure the timer cannot be re-armed.
 
-Modify fake_numa_init() to make sure at least Node-0 isn't empty for the
-FDT booting case.
-
+Fixes: 2940c7e49775 ("[media] serial_ir: generate timeout")
+Signed-off-by: Sean Young <sean@mess.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-[ sashal: adjusted context in fake_numa_init(), which still sets node 0 in numa_nodes_parsed ]
+Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: adjusted the replacement to target del_timer_sync() instead of timer_delete_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/numa.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/rc/serial_ir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/loongarch/kernel/numa.c b/arch/loongarch/kernel/numa.c
-index 84fe7f8548209..fc62ec78a8403 100644
---- a/arch/loongarch/kernel/numa.c
-+++ b/arch/loongarch/kernel/numa.c
-@@ -318,6 +318,8 @@ static int __init fake_numa_init(void)
- 	phys_addr_t start = memblock_start_of_DRAM();
- 	phys_addr_t end = memblock_end_of_DRAM() - 1;
+diff --git a/drivers/media/rc/serial_ir.c b/drivers/media/rc/serial_ir.c
+index fc5fd39271772..f6702b3df9a03 100644
+--- a/drivers/media/rc/serial_ir.c
++++ b/drivers/media/rc/serial_ir.c
+@@ -798,7 +798,7 @@ static int __init serial_ir_init_module(void)
  
-+	set_cpuid_to_node(0, 0);
-+	early_numa_add_cpu(0, 0);
- 	node_set(0, numa_nodes_parsed);
- 	pr_info("Faking a node at [mem %pap-%pap]\n", &start, &end);
- 
-@@ -353,8 +355,10 @@ int __init init_numa_memory(void)
- 		return -EINVAL;
- 
- 	for_each_node_mask(node, node_possible_map) {
--		node_mem_init(node);
--		node_set_online(node);
-+		if (!cpumask_empty(&cpus_on_node[node])) {
-+			node_mem_init(node);
-+			node_set_online(node);
-+		}
- 	}
- 	max_low_pfn = PHYS_PFN(memblock_end_of_DRAM());
+ static void __exit serial_ir_exit_module(void)
+ {
+-	del_timer_sync(&serial_ir.timeout_timer);
++	timer_shutdown_sync(&serial_ir.timeout_timer);
+ 	serial_ir_exit();
+ }
  
 -- 
 2.53.0
