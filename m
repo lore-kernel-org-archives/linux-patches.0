@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585965;
-	b=WQggEF2HNyStYII1eMmbRuEYcHJWAtUrZSh0cTmRSopv/OcKR4kOGP9VPNWyVdZhjyaO
-	 /PwnOn3yvmG7yiJQ5TmlBA9h8JzbfqwCCUnSCM4/x3UFp5vn24P4duIfiRR1UDqjESfRQ
-	 cMyUTM/0LkKn4xSwZ29Y1ueuTNzf0RxEhLEQTki2ZjSkZhnAGFjmYyFwUFzZIiNddxNWk
-	 Ph/TvJAg2vXjgxP7XYF3dOJvC/cA8Afrjas2ovumUUyr0ZoUSr14HBDqEiXAZd+GRRJzx
-	 N501i6GL62+9g1CQLPh7fRYUgsHfgI6dhwsVPQW12imGi4h4ua8R+TIFXNFJ/7nZU/w==
+	t=1794585967;
+	b=JboLlhF40xaCukIpQDLgZmEEvVlbw9xlxEQiI/+NTLsYlq/4AqVFL5MXLXBBHcM2q0pe
+	 0sFoVadGvkiiUlBzqqx79ZESYiShRAF40j0JEJUl6/uF8nSCdhKwnaH34qRsTYTPYH7mx
+	 ZkbTKBHtFXYLxnI5rCKYqLTPvgMhYwazUQNuyVP6UEJr/FeGYgbJO0l9VWGgBM1ZWMwn2
+	 6FsWWONf51Cbt959CDHBmMZYJSHAIv9XggLrzeND0vZfQ+VzALK4G4Vdgea7P2DEBVbHm
+	 GGYzHH+McSR6XKuwha+Xd21/4a+jODlQmV3fRYDND+H16KcrzJzUOQe2Lii/n/CbinQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585965;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aHlvN08YGQ6XOb50sTyPrjiKwrHTO6A5kzS55rCYA7U=;
-	b=OxuaBrMIKshtDj1PMh/sRdAoCZ1NmII21nFRUFE6b34FCOVPsIVk8/CLIvJqsyZbFpGz
-	 WXVsvq7B71b/41PxdghWD7uxpAo9hJ618E6VxetdMdQB+Q4b5kvfYkgbFn5TByC916dLk
-	 JjUo3xp3ii3MCChWEEM4nmQ0ByI0E9DYhS9S41+aCis1A2pkYkQhcl4cXTLX7R+XrLtaw
-	 h/j9w6NOkMXLa4Gl4R+KzQgU4a6+/OV8FbhoczlKlNcwAVWMaH5uAne7A84AbYCEiyX2B
-	 zwCMUETV3+C/1QpGQVzb8aATTzzaGzpr7JlDMR+fHEXalXtXeA64wY4k4yhQiE9ccVg==
+	bh=CI6utcqA6tLXlIVZzlTzQt2TwS8xpU5xWrAQ4j6sBeQ=;
+	b=AwvaecsvFDiL3FxuZKh2BuORHJmFDeI63AJ84DgfiZq4f7B9zIjgxwO7EtWbybAEBvBb
+	 Nn7nVK0vkEAYaOafeHRsVtd5CbO4FU1TVVXh9ZuVQ2ozeswSTlF03slyahaulQdiRsSNO
+	 rhbGXpIxNzLkxcaFv2dd0++xUXqXWRC2scp7UPBKFAcdqFizuaetvQ/HJLAuJCfinB4xe
+	 7NQkzdmPhHsNh+fVWi031IJjomn76AXw0NSMrnS+UhmJG1zRk6NNAmj6howraQwSwGc+K
+	 ZnOuR8s7pA7vL1zPL1ySLG9Wt8+YX0NsA6xMflvmPoxJy4e8hsW9CQ2/L55vmhKk9dA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FEFfbMV8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RsztqRAh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D450D6072305;
-	Fri, 13 Nov 2026 16:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F266072300;
+	Fri, 13 Nov 2026 16:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FEFfbMV8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F361F000C4;
-	Fri, 13 Nov 2026 16:06:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RsztqRAh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6961F000C4;
+	Fri, 13 Nov 2026 16:06:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585965;
-	bh=aHlvN08YGQ6XOb50sTyPrjiKwrHTO6A5kzS55rCYA7U=;
+	s=korg; t=1794585967;
+	bh=CI6utcqA6tLXlIVZzlTzQt2TwS8xpU5xWrAQ4j6sBeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FEFfbMV8C0R+UWrwYzduAQSrSdkUcPOsf557ugIwNMtQ/BhfKK62t8DEDDj+n1pC+
-	 Sx27QrbxCt4ga5MH4rlPOvc+Zo9mPl9oCGcAmaXz1nbVoojdQj2bi6d32Zic/68qYw
-	 7+2hly3cCR7JFJMqkSI6zZXufjB/FZzv2sh9qos0=
+	b=RsztqRAhGWZUkWdAL1tHsqZQ3i/qu6EPdBr//BUIDG4kC9SqhL91G5s+5PHiDRN1x
+	 QmClLLXqLJJgaEu8VRcFVeAnfm451ZlzMpAD+P6mF0UwmBhYyD0OzruBnKEm6zTXma
+	 BDFrRu/EA4hrJzegnR7CjxBudAdDtsqwI0fFB4PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <wufan@kernel.org>,
 	Eric Biggers <ebiggers@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 007/686] fsverity: Tell LSMs about signature only after verity is enabled
-Date: Fri, 13 Nov 2026 10:42:20 -0500
-Message-ID: <20261113153821.177318266@linuxfoundation.org>
+Subject: [PATCH 6.18 006/686] crypto: sa2ul - Fix HMAC key preparation
+Date: Fri, 13 Nov 2026 10:42:19 -0500
+Message-ID: <20261113153821.146882067@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,179 +70,239 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit 28d74059fddbd8ae83c7715056b303c402071f6f upstream.
+commit 780cd10c8e78f97ed768be229acff0ffd5483477 upstream.
 
-FS_IOC_ENABLE_VERITY calls security_inode_setintegrity() before verity
-has finished being enabled.  That's broken because enabling verity can
-still fail at that point, e.g. due to insufficient xattr space.
+sa_prepare_iopads() has multiple bugs, as discussed at
+https://lore.kernel.org/linux-crypto/20260831055141.1632832-1-s-vadapalli@ti.com/T/#u
 
-Afterwards, arbitrary contents can be written to the file, which doesn't
-actually have verity enabled.  The in-core inode stays the same, so the
-LSM considers it to have verity enabled with a valid signature.  (Or
-rather, in the case of IPE, which is the only LSM that implements
-security_inode_setintegrity(), it also checks IS_VERITY(), which can be
-bypassed by enabling verity with no signature after the file writes.)
+- Commit 3bf533787910 ("crypto: sha256 - Use the partial block API")
+  introduced a 1-byte buffer overflow in the SHA-256 case by making the
+  crypto_shash_export() write 1 more than sizeof(struct sha256_state).
 
-Fix this by moving the call to security_inode_setintegrity() out of
-fsverity_verify_signature() and into a new function that is called from
-the appropriate places.
+- It never worked for HMAC keys longer than 64 bytes in the first place.
 
-Fixes: 7c373e4f1445 ("fsverity: expose verified fsverity built-in signatures to LSMs")
+Fix both of these bugs by just using the crypto library to prepare the
+key, like what the chelsio and qat drivers do.  Also remove the
+pointless use of an indirect call.
+
+Fixes: 3bf533787910 ("crypto: sha256 - Use the partial block API")
+Fixes: d2c8ac187fc9 ("crypto: sa2ul - Add AEAD algorithm support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Fan Wu <wufan@kernel.org>
-Tested-by: Fan Wu <wufan@kernel.org>
-Link: https://patch.msgid.link/20261025204534.122506-1-ebiggers@kernel.org
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/verity/enable.c           |  8 ++++++
- fs/verity/fsverity_private.h |  8 ++++++
- fs/verity/open.c             |  9 ++++++
- fs/verity/signature.c        | 55 ++++++++++++++++++++++++++----------
- 4 files changed, 65 insertions(+), 15 deletions(-)
+ drivers/crypto/sa2ul.c | 121 +++++++++--------------------------------
+ 1 file changed, 27 insertions(+), 94 deletions(-)
 
-diff --git a/fs/verity/enable.c b/fs/verity/enable.c
-index 95ec42b847972..05fbcae57e5db 100644
---- a/fs/verity/enable.c
-+++ b/fs/verity/enable.c
-@@ -287,6 +287,14 @@ static int enable_verity(struct file *filp,
- 		 * just after the filesystem has successfully enabled verity.
- 		 */
- 		fsverity_set_info(inode, vi);
-+
-+		/*
-+		 * Now that verity is enabled, report the signature (if any) to
-+		 * LSMs.  We tolerate that a process racing with this ioctl can
-+		 * briefly see verity enabled with no signature reported yet.
-+		 */
-+		fsverity_report_valid_sig(inode, desc->signature,
-+					  le32_to_cpu(desc->sig_size));
- 	}
- out:
- 	kfree(params.hashstate);
-diff --git a/fs/verity/fsverity_private.h b/fs/verity/fsverity_private.h
-index dd20b138d452f..0a2ddca3c838d 100644
---- a/fs/verity/fsverity_private.h
-+++ b/fs/verity/fsverity_private.h
-@@ -142,6 +142,8 @@ void __init fsverity_init_info_cache(void);
- extern int fsverity_require_signatures;
- int fsverity_verify_signature(const struct fsverity_info *vi,
- 			      const u8 *signature, size_t sig_size);
-+void fsverity_report_valid_sig(const struct inode *inode, const u8 *signature,
-+			       size_t sig_size);
- 
- void __init fsverity_init_signature(void);
- #else /* !CONFIG_FS_VERITY_BUILTIN_SIGNATURES */
-@@ -152,6 +154,12 @@ fsverity_verify_signature(const struct fsverity_info *vi,
- 	return 0;
- }
- 
-+static inline void fsverity_report_valid_sig(const struct inode *inode,
-+					     const u8 *signature,
-+					     size_t sig_size)
-+{
-+}
-+
- static inline void fsverity_init_signature(void)
- {
- }
-diff --git a/fs/verity/open.c b/fs/verity/open.c
-index 02e2c14ab3ffb..dbc2a25e9158e 100644
---- a/fs/verity/open.c
-+++ b/fs/verity/open.c
-@@ -369,6 +369,15 @@ static int ensure_verity_info(struct inode *inode)
- 		goto out_free_desc;
- 	}
- 
-+	/*
-+	 * Now that the signature (if any) has been verified, report it to LSMs.
-+	 * Do this before setting the fsverity_info, so that anyone who
-+	 * concurrently retrieves the fsverity_info for the same inode is
-+	 * guaranteed to see the LSM's signature status populated.
-+	 */
-+	fsverity_report_valid_sig(inode, desc->signature,
-+				  le32_to_cpu(desc->sig_size));
-+
- 	fsverity_set_info(inode, vi);
- 	err = 0;
- out_free_desc:
-diff --git a/fs/verity/signature.c b/fs/verity/signature.c
-index 0302a4e506ec4..212e873c84998 100644
---- a/fs/verity/signature.c
-+++ b/fs/verity/signature.c
-@@ -42,13 +42,16 @@ static struct key *fsverity_keyring;
-  * @sig_size: size of signature in bytes, or 0 if no signature
-  *
-  * If the file includes a signature of its fs-verity file digest, verify it
-- * against the certificates in the fs-verity keyring. Note that signatures
-- * are verified regardless of the state of the 'fsverity_require_signatures'
-- * variable and the LSM subsystem relies on this behavior to help enforce
-- * file integrity policies. Please discuss changes with the LSM list
-- * (thank you!).
-+ * against the certificates in the fs-verity keyring.
-  *
-- * Return: 0 on success (signature valid or not required); -errno on failure
-+ * Note that signatures are verified regardless of the state of the
-+ * 'fsverity_require_signatures' variable, and the LSM subsystem relies on this
-+ * behavior to help enforce file integrity policies.  (See
-+ * fsverity_report_valid_sig(), which assumes that the signature, if present,
-+ * was verified here.)  Please discuss changes with the LSM list (thank you!).
-+ *
-+ * Return: 0 if the signature is present and valid, or absent and not required;
-+ *	   -errno on failure
+diff --git a/drivers/crypto/sa2ul.c b/drivers/crypto/sa2ul.c
+index 4a766e4351970..563e0f0d574ad 100644
+--- a/drivers/crypto/sa2ul.c
++++ b/drivers/crypto/sa2ul.c
+@@ -125,9 +125,7 @@ struct sa_cmdl_cfg {
+  * @mci_enc: Mode Control Instruction for Encryption algorithm
+  * @mci_dec: Mode Control Instruction for Decryption
+  * @inv_key: Whether the encryption algorithm demands key inversion
+- * @ctx: Pointer to the algorithm context
+  * @keyed_mac: Whether the authentication algorithm has key
+- * @prep_iopad: Function pointer to generate intermediate ipad/opad
   */
- int fsverity_verify_signature(const struct fsverity_info *vi,
- 			      const u8 *signature, size_t sig_size)
-@@ -111,18 +114,40 @@ int fsverity_verify_signature(const struct fsverity_info *vi,
- 		return err;
+ struct algo_data {
+ 	struct sa_eng_info enc_eng;
+@@ -141,10 +139,7 @@ struct algo_data {
+ 	u8 *mci_enc;
+ 	u8 *mci_dec;
+ 	bool inv_key;
+-	struct sa_tfm_ctx *ctx;
+ 	bool keyed_mac;
+-	void (*prep_iopad)(struct algo_data *algo, const u8 *key,
+-			   u16 key_sz, __be32 *ipad, __be32 *opad);
+ };
+ 
+ /**
+@@ -381,86 +376,36 @@ static void sa_swiz_128(u8 *in, u16 len)
+ 	}
+ }
+ 
+-/* Prepare the ipad and opad from key as per SHA algorithm step 1*/
+-static void prepare_kipad(u8 *k_ipad, const u8 *key, u16 key_sz)
++static void sa_prepare_iopads(struct algo_data *data, const u8 *key, u16 key_sz,
++			      __be32 *ipad, __be32 *opad)
+ {
+-	int i;
+-
+-	for (i = 0; i < key_sz; i++)
+-		k_ipad[i] = key[i] ^ 0x36;
+-
+-	/* Instead of XOR with 0 */
+-	for (; i < SHA1_BLOCK_SIZE; i++)
+-		k_ipad[i] = 0x36;
+-}
+-
+-static void prepare_kopad(u8 *k_opad, const u8 *key, u16 key_sz)
+-{
+-	int i;
+-
+-	for (i = 0; i < key_sz; i++)
+-		k_opad[i] = key[i] ^ 0x5c;
+-
+-	/* Instead of XOR with 0 */
+-	for (; i < SHA1_BLOCK_SIZE; i++)
+-		k_opad[i] = 0x5c;
+-}
+-
+-static void sa_export_shash(void *state, struct shash_desc *hash,
+-			    int digest_size, __be32 *out)
+-{
+-	struct sha1_state *sha1;
+-	struct sha256_state *sha256;
+-	u32 *result;
+-
+-	switch (digest_size) {
+-	case SHA1_DIGEST_SIZE:
+-		sha1 = state;
+-		result = sha1->state;
++	union {
++		struct hmac_sha1_key sha1;
++		struct hmac_sha256_key sha256;
++	} k;
++
++	switch (data->aalg_id) {
++	case SA_AALG_ID_HMAC_SHA1:
++		hmac_sha1_preparekey(&k.sha1, key, key_sz);
++		cpu_to_be32_array(ipad, k.sha1.istate.h,
++				  ARRAY_SIZE(k.sha1.istate.h));
++		cpu_to_be32_array(opad, k.sha1.ostate.h,
++				  ARRAY_SIZE(k.sha1.ostate.h));
+ 		break;
+-	case SHA256_DIGEST_SIZE:
+-		sha256 = state;
+-		result = sha256->state;
++	case SA_AALG_ID_HMAC_SHA2_256:
++		hmac_sha256_preparekey(&k.sha256, key, key_sz);
++		cpu_to_be32_array(ipad, k.sha256.key.istate.h,
++				  ARRAY_SIZE(k.sha256.key.istate.h));
++		cpu_to_be32_array(opad, k.sha256.key.ostate.h,
++				  ARRAY_SIZE(k.sha256.key.ostate.h));
+ 		break;
+ 	default:
+-		dev_err(sa_k3_dev, "%s: bad digest_size=%d\n", __func__,
+-			digest_size);
++		dev_err(sa_k3_dev, "%s: bad aalg_id=%d\n", __func__,
++			data->aalg_id);
+ 		return;
  	}
  
--	err = security_inode_setintegrity(inode,
--					  LSM_INT_FSVERITY_BUILTINSIG_VALID,
--					  signature,
--					  sig_size);
-+	return 0;
-+}
+-	crypto_shash_export(hash, state);
+-
+-	cpu_to_be32_array(out, result, digest_size / 4);
+-}
+-
+-static void sa_prepare_iopads(struct algo_data *data, const u8 *key,
+-			      u16 key_sz, __be32 *ipad, __be32 *opad)
+-{
+-	SHASH_DESC_ON_STACK(shash, data->ctx->shash);
+-	int block_size = crypto_shash_blocksize(data->ctx->shash);
+-	int digest_size = crypto_shash_digestsize(data->ctx->shash);
+-	union {
+-		struct sha1_state sha1;
+-		struct sha256_state sha256;
+-		u8 k_pad[SHA1_BLOCK_SIZE];
+-	} sha;
+-
+-	shash->tfm = data->ctx->shash;
+-
+-	prepare_kipad(sha.k_pad, key, key_sz);
+-
+-	crypto_shash_init(shash);
+-	crypto_shash_update(shash, sha.k_pad, block_size);
+-	sa_export_shash(&sha, shash, digest_size, ipad);
+-
+-	prepare_kopad(sha.k_pad, key, key_sz);
+-
+-	crypto_shash_init(shash);
+-	crypto_shash_update(shash, sha.k_pad, block_size);
+-
+-	sa_export_shash(&sha, shash, digest_size, opad);
+-
+-	memzero_explicit(&sha, sizeof(sha));
++	memzero_explicit(&k, sizeof(k));
+ }
  
--	if (err) {
-+/*
-+ * If the signature exists, this tells the LSM that it was verified.
-+ *
-+ * fsverity_verify_signature() must have already been called with the same
-+ * signature, *and* the inode must have verity enabled with the signature
-+ * matching it.  If called from FS_IOC_ENABLE_VERITY, the latter means that we
-+ * must be past the point of no return, i.e. verity won't fail to be enabled at
-+ * a later point.  This is critical, since LSMs must be told about the signature
-+ * only when the verity status is permanent in the in-core inode.
-+ */
-+void fsverity_report_valid_sig(const struct inode *inode, const u8 *signature,
-+			       size_t sig_size)
-+{
-+	int err;
-+
-+	if (WARN_ON_ONCE(!IS_VERITY(inode)))
-+		return;
-+
-+	if (sig_size == 0)
-+		return;
-+
-+	err = security_inode_setintegrity(
-+		inode, LSM_INT_FSVERITY_BUILTINSIG_VALID, signature, sig_size);
-+	if (err)
- 		fsverity_err(inode, "Error %d exposing file signature to LSMs",
- 			     err);
--		return err;
+ /* Derive the inverse key used in AES-CBC decryption operation */
+@@ -544,7 +489,7 @@ static void sa_set_sc_auth(struct algo_data *ad, const u8 *key, u16 key_sz,
+ 
+ 	/* Copy the keys or ipad/opad */
+ 	if (ad->keyed_mac)
+-		ad->prep_iopad(ad, key, key_sz, ipad, opad);
++		sa_prepare_iopads(ad, key, key_sz, ipad, opad);
+ 	else {
+ 		/* basic hash */
+ 		sc_buf[1] |= SA_BASIC_HASH;
+@@ -1697,8 +1642,7 @@ static void sa_aead_dma_in_callback(void *data)
+ 	aead_request_complete(req, err);
+ }
+ 
+-static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
+-			    const char *fallback)
++static int sa_cra_init_aead(struct crypto_aead *tfm, const char *fallback)
+ {
+ 	struct sa_tfm_ctx *ctx = crypto_aead_ctx(tfm);
+ 	struct sa_crypto_data *data = dev_get_drvdata(sa_k3_dev);
+@@ -1707,12 +1651,6 @@ static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
+ 	memzero_explicit(ctx, sizeof(*ctx));
+ 	ctx->dev_data = data;
+ 
+-	ctx->shash = crypto_alloc_shash(hash, 0, CRYPTO_ALG_NEED_FALLBACK);
+-	if (IS_ERR(ctx->shash)) {
+-		dev_err(sa_k3_dev, "base driver %s couldn't be loaded\n", hash);
+-		return PTR_ERR(ctx->shash);
 -	}
 -
--	return 0;
-+	/*
-+	 * Besides the logging above, ignore errors here.  The LSM hook just
-+	 * records the signature and doesn't perform access control.  And in the
-+	 * case of FS_IOC_ENABLE_VERITY verity was already enabled.
-+	 */
+ 	ctx->fallback.aead = crypto_alloc_aead(fallback, 0,
+ 					       CRYPTO_ALG_NEED_FALLBACK);
+ 
+@@ -1744,14 +1682,12 @@ static int sa_cra_init_aead(struct crypto_aead *tfm, const char *hash,
+ 
+ static int sa_cra_init_aead_sha1(struct crypto_aead *tfm)
+ {
+-	return sa_cra_init_aead(tfm, "sha1",
+-				"authenc(hmac(sha1),cbc(aes))");
++	return sa_cra_init_aead(tfm, "authenc(hmac(sha1),cbc(aes))");
  }
  
- void __init fsverity_init_signature(void)
+ static int sa_cra_init_aead_sha256(struct crypto_aead *tfm)
+ {
+-	return sa_cra_init_aead(tfm, "sha256",
+-				"authenc(hmac(sha256),cbc(aes))");
++	return sa_cra_init_aead(tfm, "authenc(hmac(sha256),cbc(aes))");
+ }
+ 
+ static void sa_exit_tfm_aead(struct crypto_aead *tfm)
+@@ -1759,7 +1695,6 @@ static void sa_exit_tfm_aead(struct crypto_aead *tfm)
+ 	struct sa_tfm_ctx *ctx = crypto_aead_ctx(tfm);
+ 	struct sa_crypto_data *data = dev_get_drvdata(sa_k3_dev);
+ 
+-	crypto_free_shash(ctx->shash);
+ 	crypto_free_aead(ctx->fallback.aead);
+ 
+ 	sa_free_ctx_info(&ctx->enc, data);
+@@ -1785,7 +1720,6 @@ static int sa_aead_setkey(struct crypto_aead *authenc,
+ 	if (key_idx >= 3)
+ 		return -EINVAL;
+ 
+-	ad->ctx = ctx;
+ 	ad->enc_eng.eng_id = SA_ENG_ID_EM1;
+ 	ad->enc_eng.sc_size = SA_CTX_ENC_TYPE1_SZ;
+ 	ad->auth_eng.eng_id = SA_ENG_ID_AM1;
+@@ -1795,7 +1729,6 @@ static int sa_aead_setkey(struct crypto_aead *authenc,
+ 	ad->inv_key = true;
+ 	ad->keyed_mac = true;
+ 	ad->ealg_id = SA_EALG_ID_AES_CBC;
+-	ad->prep_iopad = sa_prepare_iopads;
+ 
+ 	memset(&cfg, 0, sizeof(cfg));
+ 	cfg.enc = true;
 -- 
 2.53.0
 
