@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591497;
-	b=ZIVLhkiw9XCJxG7nV0CsYBb6/gOj2ouvtCGunF8FScS1+SlGdpWN0ppCHWAyb4icIRLX
-	 71I+6WH2y6u/W9yHfHuBnqpWeLrdIXu5sUw/OGWFHp9QB7NRPqNiIolHqUd8qu2nhqdru
-	 BrS7EY9QdlUqOIUNHeS/Hn8KfJH1Ehkpe/9UC1D6RvIlask3Xju83Z+l8JmfnxduXnc6L
-	 +0c0Qta2g18BaCfgYuJ5OMJFVMWzkkAjPxJlnoo6rY/5xE4EISB8LPkwdzfw12n11Jw+t
-	 NjUlYWBBKoqjLX2V3/gIxtj3FKr5OSOr2tdmimF/3tnaBy1eqQsTsqdgeHlfjAJCCDg==
+	t=1794591502;
+	b=Fhe0Ek9uYYaMLm54KdnZnaX4HnFa6LEPiyamvetVHtY3keGNHrmSHok1Ru2k5OzLiVih
+	 UjgAmGtzgGxPqSYosoDfFmrOxbtpFjU/HikWDa76NHFVASxRFGPk5Er9p9qUd4CNFzYxn
+	 hpC+pDxNwIJ7uyrAbxi1RXcvMVzfqrxmNQKVZzhyYPBJXKuulRxO8hu57DjU5pXEnY/Om
+	 /b94Jd4RJC9QK+bOPqPKyoq8cyWkmB5ZlSKEKjLIw79cXiEor4qMYU6sIVSx2eRBq0VYy
+	 Pycx6XaPZChvqfErWxnaoFoG4MLV24QqlnRSC46cVnQOzg2HFMBsuTBQVrnGbGqHJHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591497;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591502;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x0PcoYrWa+IOa5xAfsbkWoS2tvQJ4bD5YLgx6v/nmqY=;
-	b=okq2NYWAefh279x0Jsbd+E2ViIIBh3HYO/6dIy451I1QywgOgXDZFpANpHeGwCLUmQKu
-	 ZL2W804shklQ9eCjdGull8ghc0eOB50evaW5QN+LRK6gO2YQZIfTKtMI/2c1GVULzh7tl
-	 xxB64SyTIlMXuS92x6CVhpOJ/OvFOUxqFZIg7/AfaEI/lyi9Szxi9uAZKVeSi+ri2Qd8b
-	 lsVhhRIB6iYiDhSIKSo2ZpHphXvD/LU0IoMccf8DIs6Ea/z2HWlfcntG7/NpMrergbxts
-	 4hR/0WPeiZWtKh6CZNeE0x9WcXkbkqlDctVnBtwvjQKTKatltTuWfQ1qmRLhlwjVPwg==
+	bh=4Zlf/uSWLjOsNZEILpYGNVSokz/LduYpcgK9BBsczDw=;
+	b=SLYqhOOIZXtXJCaxGbWgcEmSmvbsQ2AnsvNMwSHC63G/Bdysm9He1rHDoHAxI5ZMo6m3
+	 VZRygHPPniVVzGm05wx8Aa03LfqC8hCQazU6oTT74Pg1b5pIzkTHuZgBKmMse8OilI+f+
+	 CTD02O/IRdhnT9me2Uz5QisLzlFo6c95DqAaDbNaZxWcBW/h2meCi7ILt/adUmndJl3aC
+	 Umdy5wV9IH25v7HIopBULKallGPDHUAbMfnaAX2D83OWbX3dLA+XyAaJMLEGNk4AIrrtJ
+	 Rn70geJhPxEuwHwaYQWtAioU39oBBCxIf/IJKduFTuyWDUexKbRKgRxPwE8sPOArJnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbjSbm2K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GuonlMp7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EFD607E06F;
-	Fri, 13 Nov 2026 17:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EF7606D491;
+	Fri, 13 Nov 2026 17:38:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IbjSbm2K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9BA1F000C4;
-	Fri, 13 Nov 2026 17:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GuonlMp7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A081F000C4;
+	Fri, 13 Nov 2026 17:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591496;
-	bh=x0PcoYrWa+IOa5xAfsbkWoS2tvQJ4bD5YLgx6v/nmqY=;
+	s=korg; t=1794591502;
+	bh=4Zlf/uSWLjOsNZEILpYGNVSokz/LduYpcgK9BBsczDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IbjSbm2KE30rB0LBhobuSZI4I+wTAQxfuO/dfthKDm25UWnQNUlys3Pmd2mLH1Rfe
-	 XLY9kVDsx6SYD2fH8V1ld8+OJu0SYJE2p94mJnq5Yt7w5/WuQgRvIcIj0uYuo5oaki
-	 SuwtS7ArCw89xaovfz7KKRCyEWk2Mc04dHOUtgu4=
+	b=GuonlMp7EW1W9SiAjgsxMaUsx7TQfzjjXp4+7w7AH1lXkwUB2bh+RNp10zS+DJRUJ
+	 4vgMjy3x7kerHP9ZMEuZmBm08yE5OHCJcI/fvWHmft6IrFt06fUTSe5fFTW8K1A60Q
+	 IR7pl96x6sblRMN96xqRCdM3jUgX5M5KUMzeH/ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jasper Smet <josbeir@gmail.com>,
+	Jackie Dong <xy-jackie@139.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 576/670] ASoC: amd: acp: Add DMI quirk for ASUS Zenbook S16 UM5606GA
-Date: Fri, 13 Nov 2026 10:52:20 -0500
-Message-ID: <20261113153831.368653746@linuxfoundation.org>
+Subject: [PATCH 6.12 577/670] ASoC: amd: acp: Add DMI quirk for Lenovo Yoga Pro 7 15ASH11
+Date: Fri, 13 Nov 2026 10:52:21 -0500
+Message-ID: <20261113153831.402765229@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,26 +68,25 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jasper Smet <josbeir@gmail.com>
+From: Jackie Dong <xy-jackie@139.com>
 
-[ Upstream commit 6e4bfd9da8851f562f04503d8e43221957f96eeb ]
+[ Upstream commit fc12cf16df9af867e1455b011cdd9310474a612e ]
 
-The ASUS Zenbook S16 (UM5606GA) with AMD Ryzen AI 9 465 (Strix Point,
-ACP 7.0) has a BIOS that incorrectly sets the ACPI property
-'acp-audio-config-flag' to 0x10 (FLAG_AMD_LEGACY_ONLY_DMIC) for the ACP
-device. This prevents snd_pci_ps from probing the SoundWire bus, resulting
-in no internal audio (dummy output only).
+Lenovo Yoga Pro 7 15ASH11 with AMD RYZEN AI MAX+ 388 (Strix Halo, ACP
+7.0) uses Realtek ALC287 series codec and no any DMIC connected by ACP.
+All DMICs directly connet with ALC codec.
 
-The hardware uses a Cirrus Logic CS42L43 (headphone/jack) and four CS35L56
-smart amplifiers (speakers), all on SoundWire link 1. The corresponding
-machine table entry (acp70_cs42l43_l1u0_cs35l56x4_l1u0123) already exists
-in amd-acp70-acpi-match.c and correctly describes this topology.
+Without this quirk, Input Device of Gnome Sound settings shows Internal
+Stereo Microphone and Digital Microphone by default. In fact, Digital
+Microphone of ACP doesn't work due to no connecting with ALC287 codec,
+the Internal Stereo Microphone as analog device based on snd_hda_intel
+driver can work well.
 
 Add a DMI quirk to override the flag to 0, consistent with the existing
 entry for the HN7306EA.
 
-Signed-off-by: Jasper Smet <josbeir@gmail.com>
-Link: https://patch.msgid.link/20260513052137.56703-1-josbeir@gmail.com
+Signed-off-by: Jackie Dong <xy-jackie@139.com>
+Link: https://patch.msgid.link/20260527102005.58528-1-xy-jackie@139.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 38cb2ef26b64 ("ASoC: amd: acp-config: force SoundWire probe on Dell 14S DS14265")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -96,18 +95,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 7 insertions(+)
 
 diff --git a/sound/soc/amd/acp-config.c b/sound/soc/amd/acp-config.c
-index 8d7b968c4402c..cc3620db62bf1 100644
+index cc3620db62bf1..a46b9a029cbb0 100644
 --- a/sound/soc/amd/acp-config.c
 +++ b/sound/soc/amd/acp-config.c
-@@ -30,6 +30,13 @@ static const struct dmi_system_id acp70_acpi_flag_override_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "HN7306EA"),
+@@ -37,6 +37,13 @@ static const struct dmi_system_id acp70_acpi_flag_override_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Zenbook S16 UM5606GA"),
  		},
  	},
 +	{
-+		/* ASUS Zenbook S16 UM5606GA (Strix Point, ACP 7.0) */
++		/* Lenovo Yoga Pro 7 15ASH11 (Strix Halo, ACP 7.0) */
 +		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Zenbook S16 UM5606GA"),
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83W5"),
 +		},
 +	},
  	{}
