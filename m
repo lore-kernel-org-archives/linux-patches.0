@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590494;
-	b=FLyKjN4YotOt8CBuJCkiTi0yUAxjG7yNeKDJYyogSaepezNnVwWB0qPLca5ppluGezQ+
-	 VfsUPZPLduVEFYG0VbkxfxUa52+eEKA1+E5VmZBU7CGqfTDqhcxHRvAjeRQqUYbvaqAOa
-	 OgYY6pSNvUO+FmMuDWkoKMI1RoTu0pd82PaAUiqLZ1b3ZEPPVp3mh+KqjnOo0SLCGHw5P
-	 3QYSlzh9ORLjThqD9kXefb5JaWrfT6gygwcJ5I6iUbXOWnqzfcfFgnkJKwcRRlfpnnEqD
-	 xCCXng2m3jquMjPF7ClKaYS2M0xeZKBQktK7GIbM7pMQnU6GSIhrqg0WBpLmIFTxMhg==
+	t=1794590495;
+	b=hjup7+mw138mNMhGdszbxc8J79KZYdOrEdgXUTAG7vcmIDo9cItgqO82RVcff0PEGJ3Y
+	 fCA8o3e1fK/IBH67DBDiPkUItXJbhQL5UIbARyDdESD+mwkeDSlKvKsqGEEkZOl5ceLmz
+	 Uh4W32VzNlibNg3ioepOxdDlujvF4XnGwF+HFDr0WJjRRmZXUWEWLXVo+Nnsr4AClSWDa
+	 3X0UvE5lOQknbdiwkxcQ9j9AVRTABXqqbhLYLTBDEFxxpaeLg9ffSYEMUaM1/rJdMEqZu
+	 KnRwZ3LFN9Sm9wMkXXzlpL7CY4CE+1viftyRkAknM8B/KnbPodp5kTtT2VfmUuzHiUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590495;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IfatEY/1Z7rBOGZMcwP0hihw8f6C6JyiKefFvNHkyhs=;
-	b=x7GxuqI5ZO74QK3NRyWKzPvE6bv4iCx8ZM6lAHCOZc4OTqbgYB9fbRPYj96zzvbZbd2u
-	 8ndnIo0ETrQWR1Za9mzduPiBiLuCSrH1VSmCnHvpGnnI5Nqa4zQlM7JLIyWO3tr7kEs2c
-	 BuulTEPvQi5gShGWRwCpaZVw8RubaYS/eUPkNc93qyIqJ7zGScSpDdTJr1LCjda9T0WxT
-	 tczdMas70+wOvutQN1DFPShDxwYfEIukNUdB3WCVlFozjRS8yRco/VF6DFIRnYFQhrAYF
-	 EJPCMqo41mPabebt9TJX6SU1irqATuQnbLeObCuJzaCMkzKua3a5FuzXD5wTRXsyk0g==
+	bh=cBcL2/Wi4mKNB4XCFC3UKQM+iSnd/mUYuJMlkYFg9uQ=;
+	b=2T6b/JRSlOTl9dVclHTql56w0EGjBKtCpwQoiXfe70y1+94fAg+5So1+KE8v6NXAVf2R
+	 poR4+tWP/0NcKWx/AgrNv4paDvMBh6GmyFRB4YJhslPlTh0uIf0qulppfNWUpo8lbNXdJ
+	 w52krTo28SbG+fyiGfuEetydP2cBf0UESsCfL+8alieHbsDzRzJAvMJB12yYqwnWBs8BB
+	 hm4pE90YGgB0cl2Q7E3eP6SW4LFfbbp21EGAgfHSCr/+n6n8M40U3LySW63re2buZQHq+
+	 4eFA6yYN9XYw1jg1cPIxsKGdoA581dpE6NNT4Cv9lP3L53hQ2IORHpTEPhUejuFOZUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f6T+pLPX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7y76vTo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E52606B356;
-	Fri, 13 Nov 2026 17:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4F9606A889;
+	Fri, 13 Nov 2026 17:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f6T+pLPX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41CA1F000C4;
-	Fri, 13 Nov 2026 17:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a7y76vTo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCC31F000C4;
+	Fri, 13 Nov 2026 17:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590493;
-	bh=IfatEY/1Z7rBOGZMcwP0hihw8f6C6JyiKefFvNHkyhs=;
+	s=korg; t=1794590495;
+	bh=cBcL2/Wi4mKNB4XCFC3UKQM+iSnd/mUYuJMlkYFg9uQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f6T+pLPX+C4/EuxDxV9bvHFxk4BYIr/spEKjgHeXJEW+/So/A6tfHJvIny05npd1u
-	 R2O/F5AnIBOGMvtjILm/ouzDZKDuPvYXG8DkcngvrputJUqgWmOoE878u7m+ouYijC
-	 Gi2S5A9Vz3D4NruDYoULBWhkLcagRw/FWf7vyQLI=
+	b=a7y76vToIqq7Th20WJqc0dXbGweq2cHfDb9tB/6h6yf3pUr/7HoSIFJD57PtGR3ht
+	 1qEWtQJe1EM7vzAYuXAP5giCHUTdNOP5QWTEAYt0rNiMkRXYubGAx65cqjy6nQ20b7
+	 W0KnMdrtmSpjR3/qqry3CpyPiwywzJuu8jqU2i+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	syzbot+799a0e744ac47f928024@syzkaller.appspotmail.com,
+	syzbot+43fc5ba6dcb33e3261ca@syzkaller.appspotmail.com,
+	Matthias Goergens <matthias.goergens@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 442/686] mptcp: pm: kernel: use RCU to free endpoint listeners
-Date: Fri, 13 Nov 2026 10:49:35 -0500
-Message-ID: <20261113153835.867740860@linuxfoundation.org>
+Subject: [PATCH 6.18 443/686] udf: dont let the extent type hide an exhausted free-space table extent
+Date: Fri, 13 Nov 2026 10:49:36 -0500
+Message-ID: <20261113153835.898881508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,47 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Matthias Goergens <matthias.goergens@gmail.com>
 
-[ Upstream commit 49b09ae0bf57b4230187d4cdd0a370558e44a6e8 ]
+[ Upstream commit da582d84fcf5f2f0c1d7760e1a899ca7cedb80fc ]
 
-mptcp_pm_nl_create_listen_socket() starts the TCP listener directly
-instead of going through mptcp_listen(). It consequently misses setting
-SOCK_RCU_FREE on the parent MPTCP socket.
+udf_table_new_block() takes the first block of the free-space table
+extent closest to the goal.  It keeps that extent's type and length
+together in goal_elen, subtracts one block, and deletes the extent only
+if goal_elen then reaches zero.  UDF 2.60 section 2.3.7.1 requires the
+free-space extents of an Unallocated Space Entry to be of type 1
+(allocated but not recorded), and mkudffs writes them that way.  For
+such an extent the type bits keep goal_elen non-zero, so taking its last
+block leaves a type-1 extent of length zero behind, starting at the
+block after the extent, which is in use.
 
-tcp_child_process() can invoke the listener's subflow_data_ready()
-callback without holding the MPTCP parent lock or a reference to the
-parent. An authenticated MP_JOIN racing with endpoint teardown can
-therefore access the parent after its last reference has been dropped.
-The ADD_ADDR error path can also close an already published listener.
+The next allocation that picks this empty extent returns that in-use
+block.  Subtracting a block from 0x40000000 then borrows from the type
+bits, and the extent becomes type 0 with a length of 2^30 - blocksize:
+about a gigabyte of "free" space overlapping live metadata, the other
+table extents and whatever lies behind the partition.  From then on
+blocks are handed out twice, or past the end of the partition.
 
-Set SOCK_RCU_FREE before __inet_listen_sk() publishes the TCP listener,
-matching mptcp_listen(). This protects the parent on every subsequent
-close path, including a failed endpoint addition.
+Extents that udf_table_free_blocks() adds are type 0, where the check
+works, so only tables written by mkudffs or by another implementation
+are affected.  Nothing more than filling such a filesystem is needed:
+on a fresh 1 MiB "mkudffs --space=unalloctable" image, creating empty
+files until the partition is full writes file entries over the reserve
+volume descriptor sequence and the backup anchor, and df then reports a
+negative amount of used space.
 
-Fixes: 1729cf186d8a ("mptcp: create the listening socket for new port")
+On syzbot's images the same double allocation is what the two reports
+below trip over.  In the first, ftruncate() extends a new file with
+enough hole extents to need a chain of allocation extent descriptors;
+one AED is placed on another inode's file entry, and a later one is
+placed on the block of the AED currently being filled, which
+udf_setup_indirect_aext() zeroes, so __udf_add_aext() finds
+lengthAllocDescs out of step with its cursor.  In the second, an AED
+is placed past the end of the device, sb_getblk() fails, and the error
+path of udf_do_extend_file() calls udf_truncate_extents() on an extent
+list that no longer covers i_size.
+
+Keep the type separately from the length, as udf_table_prealloc_blocks()
+already does.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261030042255.74216-1-kylebot@openai.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: syzbot+799a0e744ac47f928024@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=799a0e744ac47f928024
+Reported-by: syzbot+43fc5ba6dcb33e3261ca@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=43fc5ba6dcb33e3261ca
+Signed-off-by: Matthias Goergens <matthias.goergens@gmail.com>
+Link: https://patch.msgid.link/6b51c38d2d069544053c542470950e2a448b0b8d.1793349907.git.matthias.goergens@gmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_kernel.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/udf/balloc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/mptcp/pm_kernel.c b/net/mptcp/pm_kernel.c
-index fa34a333a3110..cf635b84fff4a 100644
---- a/net/mptcp/pm_kernel.c
-+++ b/net/mptcp/pm_kernel.c
-@@ -881,6 +881,7 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
- 	 * old status is known (TCP_CLOSE).
- 	 */
- 	inet_sk_state_store(newsk, TCP_LISTEN);
-+	sock_set_flag(newsk, SOCK_RCU_FREE);
- 	lock_sock(ssk);
- 	WRITE_ONCE(mptcp_subflow_ctx(ssk)->pm_listener, true);
- 	err = __inet_listen_sk(ssk, backlog);
+diff --git a/fs/udf/balloc.c b/fs/udf/balloc.c
+index 30cec56001491..2ec577b4321c9 100644
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -572,7 +572,7 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 	uint32_t elen, goal_elen = 0;
+ 	struct kernel_lb_addr eloc, goal_eloc;
+ 	struct extent_position epos, goal_epos;
+-	int8_t etype;
++	int8_t etype, goal_etype = 0;
+ 	struct udf_inode_info *iinfo = UDF_I(table);
+ 	int ret = 0;
+ 
+@@ -623,7 +623,8 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 			goal_epos.block = epos.block;
+ 			goal_epos.offset = epos.offset - adsize;
+ 			goal_eloc = eloc;
+-			goal_elen = (etype << 30) | elen;
++			goal_elen = elen;
++			goal_etype = etype;
+ 		}
+ 	}
+ 
+@@ -647,7 +648,8 @@ static udf_pblk_t udf_table_new_block(struct super_block *sb,
+ 	goal_elen -= sb->s_blocksize;
+ 
+ 	if (goal_elen)
+-		udf_write_aext(table, &goal_epos, &goal_eloc, goal_elen, 1);
++		udf_write_aext(table, &goal_epos, &goal_eloc,
++			       (goal_etype << 30) | goal_elen, 1);
+ 	else
+ 		udf_delete_aext(table, goal_epos, &freed);
+ 	brelse(goal_epos.bh);
 -- 
 2.53.0
 
