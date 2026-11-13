@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585692;
-	b=Fbs++6X0y0vvo4wXVZ89aoPopGuV6mtvw94xUh4a9hoHzjkLMTlyMkvUEFgrhyzBnyvW
-	 bkhfMZrVEhQEOV/JCP/UNp5FoQAaKdVSlQgODbcve39Gz7CMKo7dIrVnFwEoRNAczmr7F
-	 qDNWmvFXz87VJDDuVuGb7/8Bq8glBX9E9B4bvt0VhV5Xb3bfe14pIbVGm4YWqqVbtamsl
-	 STVnQbCJyqyr+ulossACy12sux2rcwXLupK3PSJ22hxGtFh73TPFmHrbXH/vnoDpt51G9
-	 hb7LQkHhH6dA7DDIeKbxKFkvSNhfZpAnAUfUPjXdfNjdZaaO/vY5BiE6xUcSYXyCiZA==
+	t=1794585694;
+	b=zQvoS8Ik+ZcLA5DlqgL/F+JDzqb4WxYlzxso3ed57JZKlKX7dbyIK3DvPDC/mC90Y4Wc
+	 WdznN09nGFzdZwKSUP8uF6Dumnc6lRHOPb28Hazb1HDfBPaX6gO9ouY3YA2F3G0tuuZdp
+	 Q38isSBuKzbfxCPIQzIWOPOgnO2aTsla386A1GJj3ekJ48IOSGSnBEETFL0IpyI4PKYdN
+	 DVyWGGcF2mwpeLxaOjxedEV2Zp7PKeHce4OdgMhPBjZACVRRgHl76k6JxscrOqRR4ynsn
+	 SnOAtMyETeNakPMqPhvTjjael5pjnaZE+PrhDjHZ59hyT4uEI2DCdrNpMtVdvDkojMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585692;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=j0yqgxmQHo+1UqHSg8z1w4y7rbLGZN16c0IdxRGTEIY=;
-	b=XVDkhaGJXnfRy8TKi2xZojldt7GIwAeABMeiD5HNtLzU27lZTca1JqE0/HDZ4zQdNqWC
-	 6F4bhXSw1/XuveMG1Wxsc0XrCv+behHVlzFhbmI9DeQAY5iQ5fb1a3KQt3+NJKSGF3W5h
-	 J/d91C4SrFpeiqGZJBPD9qS7vfjD8672d0e9nvBS4zPG9/bSRJirEhBP8z9HUxBKOEyY6
-	 UZ5VDO6IZfRofe2XZDYurTw/2gSFTcNaf5MzYsIQu1+TpNNiFZaOWGt8KO4/AxmvzYTd9
-	 f9a+oFWcsuS/rYbh2k3+56kKqqDRnIXpOzivoM1sLIbLIr4tyBER3M/zLV3EH5dgMnQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=zC/faLuFjOmCwBS7xevK9W2nnTve31rnzrHarCwe9HM=;
+	b=DaZfTmEVzElZl6+qD4R8PGbK8aFHWbg3HVLgtn1ILPOdR/zgki4z2bsTqb1RUZFUoXi7
+	 FCkFCoqHBUkhvnrpIXu92SYwxArt9rennXAANcLmDT1raxue94ZEEqjIKzziBYOjIhR3M
+	 sCAbBehCMLI9v188REyCzgIPS6WHoNVCvU30tPXrK8QagdM8XEGkV8AZa1CEhcw63jMhw
+	 aXLmVExDy/NjDrbMTrYAUUt64beCfqadHJjtBgxjnoRB+NUCkOAE5oIzpeP1s+qOazaEX
+	 Q1Ui1+8Ioy6jShZDeT8e5ys2PU1/xnKqmCPAwls6DKEUkxonEH3Wu2zapIcwCZffuKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMQaGV5u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6wOLqfe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB6960744EC;
-	Fri, 13 Nov 2026 16:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25775606A8B9;
+	Fri, 13 Nov 2026 16:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMQaGV5u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A73D1F000C4;
-	Fri, 13 Nov 2026 16:01:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6wOLqfe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C55B51F000C4;
+	Fri, 13 Nov 2026 16:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585692;
-	bh=j0yqgxmQHo+1UqHSg8z1w4y7rbLGZN16c0IdxRGTEIY=;
+	s=korg; t=1794585694;
+	bh=zC/faLuFjOmCwBS7xevK9W2nnTve31rnzrHarCwe9HM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JMQaGV5uzxQ1k2uIeHmEca/Jb0VG958pVNs1O9uo/UlU4ggZfy0O/iyXbNXhmYT5C
-	 sbB6BUcp7lsUDnI4ycVK/ufML+rbytevxx73VDtjYfIgfv4kT/EfpgmYOQt9tvKVIA
-	 7+5uuSMPsQkZYX4P1CIYeBZJ4nwgCNcJCCEheE/c=
+	b=J6wOLqfeV+DOntAzzv91nzx+NOoBiq9RBSr7x8crAAiGfOUXLl71OkQUTWmzi/+5m
+	 peWJ2b3H0aiRZoIlVcToVQ4S7GiYYhwwl6+6M4fjCinHCD0TYE6QQEymJH8242R0uY
+	 PAT+RKAD3lNSDJF4UMkhXsMZJD1fU+PtE3icyH2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Changjie <liucj1228@outlook.com>,
-	=?UTF-8?q?St=C3=A9phane=20Grosjean?= <s.grosjean@peak-system.fr>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Chris Mason <mason@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 301/507] can: peak_usb: pcan_usb_fd_decode_buf(): accept short uCAN end-of-list records
-Date: Fri, 13 Nov 2026 10:50:05 -0500
-Message-ID: <20261113153805.442406300@linuxfoundation.org>
+Subject: [PATCH 7.3 302/507] mm/huge_memory: fix truncate racing with PMD zapping
+Date: Fri, 13 Nov 2026 10:50:06 -0500
+Message-ID: <20261113153805.506592917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -63,97 +66,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Changjie <liucj1228@outlook.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 2d4c272e816a5b784f1fc7899256f8826df34edb ]
+[ Upstream commit e6a07d29b0a60f3a4cfe77fe34eeb4b3fb38d6c4 ]
 
-A PCAN-USB FD v2 running firmware 3.2.0 sends a 16-byte status record
-followed by a four-byte zero-size end marker.
+zap_huge_pmd_folio() removes the rmap before calling folio_mark_dirty().
+If this was the last mapping, truncation can skip unmapping the folio
+and proceed without waiting for the PMD lock, racing with dirtying.
 
-Since commit 93fcab2c6968 ("can: peak_usb: validate uCAN receive record
-lengths") these transfers cause repeated receive-buffer dumps while the
-interface is up.
+ifs_set_range_dirty() can oops if MADV_DONTNEED races with
+ftruncate() on XFS, when we get the folio set dirty after it was found
+to not be mapped anymore.
 
-This has been observed on Linux 7.2.11-arch1-1 with matching kernel
-headers:
-- Classic CAN, 500 kbit/s: 25 decoder errors in 5 s before the fix; none in
-  15 s after.
-- CAN FD, 500 kbit/s nominal and 2 Mbit/s data: 26 decoder errors in 5 s
-  before the fix; none in 60 s after.
-- Three additional down/up cycles: no decoder errors.
+Move folio_mark_dirty() and folio_mark_accessed() before rmap removal,
+matching the PTE zap path. This keeps the folio mapped while updating
+its state, so truncation must wait for the page table lock.
 
-pcan_usb_fd_decode_buf() requires a complete 12-byte struct pucan_msg
-before checking the size field, so it rejects the end marker with -EBADMSG.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Check that the size field is present before testing for an end marker.
-Require the full header for nonzero-size records and keep the remaining
-record and payload length checks.
-
-This patch was created with LLM assistance.
-
-Fixes: 93fcab2c6968 ("can: peak_usb: validate uCAN receive record lengths")
-Signed-off-by: Liu Changjie <liucj1228@outlook.com>
-Reviewed-by: Stéphane Grosjean <s.grosjean@peak-system.fr>
-Link: https://patch.msgid.link/CH5PR19MB997156AB3BE253C3BE445223B0AC992@CH5PR19MB997156.namprd19.prod.outlook.com
+Fixes: fe6cf984939d ("mm/huge_memory: transfer the pmd dirty bit to the folio on zap")
 Cc: stable@vger.kernel.org
-[mkl: copy additional info to commit message]
-[mkl: convert Assisted-by: tag to prose]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
----
-Built and tested the original and patched peak_usb modules on Arch
-Linux 7.2.11-arch1-1 with matching kernel headers.
-
-  - Classic CAN, 500 kbit/s: 25 decoder errors in 5 s before the fix;
-    none in 15 s after.
-  - CAN FD, 500 kbit/s nominal and 2 Mbit/s data: 26 decoder errors
-    in 5 s before the fix; none in 60 s after.
-  - Three additional down/up cycles: no decoder errors.
-
-USB captures during the patched tests contained 406 packets with
-short end markers. Neither receive-buffer dump recurred.
-
-The CAN bus was disconnected; external TX/RX was not tested.
-One startup "can_change_state: oops, state did not change" message and
-an RX dropped count reaching 2 were observed during the patched tests.
-Their causes remain undetermined.
-
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: simplify comment and description ]
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-13-d6437171ecc3@kernel.org
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/peak_usb/pcan_usb_fd.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ mm/huge_memory.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-index 0d46f4ce5dca7..39f0740421c36 100644
---- a/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-+++ b/drivers/net/can/usb/peak_usb/pcan_usb_fd.c
-@@ -755,7 +755,7 @@ static int pcan_usb_fd_decode_buf(struct peak_usb_device *dev, struct urb *urb)
- 		u16 rx_msg_type, rx_msg_size;
- 		size_t rx_msg_min_size;
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index f5e871059ba6b..da96959998692 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2496,10 +2496,6 @@ static void zap_huge_pmd_folio(struct mm_struct *mm, struct vm_area_struct *vma,
+ {
+ 	const bool is_device_private = folio_is_device_private(folio);
  
--		if (msg_end - msg_ptr < sizeof(*rx_msg)) {
-+		if (msg_end - msg_ptr < sizeof(rx_msg->size)) {
- 			err = -EBADMSG;
- 			break;
- 		}
-@@ -766,6 +766,11 @@ static int pcan_usb_fd_decode_buf(struct peak_usb_device *dev, struct urb *urb)
- 			break;
- 		}
+-	/* Present and device private folios are rmappable. */
+-	if (is_present || is_device_private)
+-		folio_remove_rmap_pmd(folio, &folio->page, vma);
+-
+ 	if (folio_test_anon(folio)) {
+ 		add_mm_counter(mm, MM_ANONPAGES, -HPAGE_PMD_NR);
+ 	} else {
+@@ -2513,6 +2509,13 @@ static void zap_huge_pmd_folio(struct mm_struct *mm, struct vm_area_struct *vma,
+ 			folio_mark_accessed(folio);
+ 	}
  
-+		if (msg_end - msg_ptr < sizeof(*rx_msg)) {
-+			err = -EBADMSG;
-+			break;
-+		}
++	/*
++	 * Present and device private folios are rmappable. Remove the
++	 * rmap after transferring young+dirty to the folio.
++	 */
++	if (is_present || is_device_private)
++		folio_remove_rmap_pmd(folio, &folio->page, vma);
 +
- 		rx_msg_size = le16_to_cpu(rx_msg->size);
- 		rx_msg_type = le16_to_cpu(rx_msg->type);
- 
+ 	/* Device private folios are pinned. */
+ 	if (is_device_private)
+ 		folio_put(folio);
 -- 
 2.53.0
 
