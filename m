@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590817;
-	b=NnkumDrI1V6YlJ1bShY6V8Olk1d6hEp9R71kfNRLdvr1gbQxrDLqnye4ygEBo+OGddc3
-	 6sAT16VKOnO/STZ7jPwT+pzVdyoG0RNtdxny81WFBFCOZokiLPQLuo7czzDdCUtf9ds2n
-	 +IXqd3pOFMV6yyS4ZAUPEiGVnSxrbIKOc+O9UHaWJ/Nz8MS02z7A5p9eWX3dOaEXsQfCp
-	 y4KbVMVWNFSzjv0a5X8r+wXnW9eQVHtJOTJZGpg332vrdaNZZpH6mZ+53B2yHreswhDzL
-	 RwPRq0ZaFgd5ae3XJMzgRrpZ0H+dAHj2pMKX2rdITGnlNLspliBXt6mm1G4f7Ac4C0A==
+	t=1794590818;
+	b=kuyHAtOeDTPWadbrRQRZ6s+C9+fLKIktsGEPVe0jHXnc4gGsdkxJwHu3QO3iC4yi+Nbn
+	 PuxWDxvu0daEvi9FT1eCw8gTOKMOlqSCU8K140SuRQ5p5xh5mZu5pmZbhqe3B+K0DVJeX
+	 eR4RTdpDD8IvebYAUOSIKZlqbQOmTnT8y6N78PTFLhbDEmX92C7d0J0xiuj1406INrzR8
+	 /Si7xEuDSzroCUZxLH8I9r5dAfmHyGW029v9epbVmTN9VHFy9did679TyjhkSanDS8BsL
+	 o6D8RPg7KS2N7vhv9GZN6DFSmtlSJe2wNjVOPPP7fxlq018YwvqwBTd58/Mu8Y8g4ag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590818;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gmWLcpV4G/CSyOGRk+YtQf8kaqmCgsqTEZWUhaXDhiM=;
-	b=IPUQqH0jCy4AEXHf8W1Fr9C2ZvReTsQYmXqfAdlg7+vomppFk5AwMS5CEAzaPa5jHgD9
-	 8U0rap2qVmM1ni7drxN8W1ZdKC+YJfGqd8aFe8GdmSR8dBMLWBWhPumNh+EXB7u7wFbI2
-	 o16OoGfMzekrzj2DJXQHTgOgZ8BHFzzTRvcH/CnTw9PkOY8Olr/BYfiGeUbuMH4hfyU7H
-	 9ayzq5pVIQAwNpxKGhiYRtO7ixv0dI7hbMeprrVQK2DbJsocVkbnXMdo6D3J3YCCHLbnE
-	 iAIr2/IDs2NleyDcNJCM7u016beSoE+Qo/eJRICLEkRCZtSnVmPoG4qzuGDEuuOhZ6Q==
+	bh=RbcwvjjJixt79BVnlrRNpZI/4wv7kR4sHXqnsiI5BuU=;
+	b=VfRD2AVzC5uVvXAdbsbxXANW8iDjw7D9UX6Heu5iXB7Cytxf3756L5MeNXbFImTS1HSd
+	 mRJHs0lQ3+8FlOXZ4xyKKmHXOpzgfGDnJ5oTdlHjPQvZk33P6aXoyiQK5HEENKhMj8aEG
+	 YU9BXBwr74XTlFL1yEH0HtfTwheuWa9EjZklfBCttIxxTf5165fLiN9EXpCpfSuaE8rQO
+	 X1cceQ52LeeTRZdVVZeY2lofpX9bc9iGMPX82EgJZOiqGaC2KuiGprlSHHwjyaNKeq+IP
+	 sCxWjnOjgPUDl4gTnqLlSrGQ3VQ/SPY0WOfxYGabcI5eB+Bl74q1ZrDShdygkwY0XAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uMVDUraD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lvKMHg0u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1A6607E053;
-	Fri, 13 Nov 2026 17:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865C1606D485;
+	Fri, 13 Nov 2026 17:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uMVDUraD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED9801F000C4;
-	Fri, 13 Nov 2026 17:26:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lvKMHg0u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 331531F000C4;
+	Fri, 13 Nov 2026 17:26:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590817;
-	bh=gmWLcpV4G/CSyOGRk+YtQf8kaqmCgsqTEZWUhaXDhiM=;
+	s=korg; t=1794590818;
+	bh=RbcwvjjJixt79BVnlrRNpZI/4wv7kR4sHXqnsiI5BuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uMVDUraD3bA0RV/ABa0ORvejPuYl7xvoIWXIXSvkNWTHKycVDYui8ww3M+cOPkrTA
-	 WZeX3MebOh4EPgQsQXWaddBy8BWBAXZA2VeKBEujbSnU7hnB+U+HJHIlSCRn4AZp5i
-	 mBImSgEro7eo1LYUneNGWCNkGZyCU6FiDMPvB3WI=
+	b=lvKMHg0uWBSxPd8QcXNQRYbKPUoJNqlRI6JfBb21oC5Rf6djwmT4jtx09uNWz5BeN
+	 9gbjbJYMr5NQTbXDwvm0uQtrw+9C0pwK2kyBTMNV/pRxOgKqWlACSSNhW5/lKzsjgE
+	 fYNMJTiAxwLkr2geTtykqjRuSlK7xCfVgC/xVdaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benji Wiebe <itsme@benjiwiebe.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/670] nfsd: dont offer flexfiles layouts when NFSv3 isnt being served
-Date: Fri, 13 Nov 2026 10:43:09 -0500
-Message-ID: <20261113153812.037512897@linuxfoundation.org>
+Subject: [PATCH 6.12 026/670] NFSD: report listener creation failures through extack
+Date: Fri, 13 Nov 2026 10:43:10 -0500
+Message-ID: <20261113153812.070308559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,54 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 5d28b2c920d9d9d3c45b41769342ad785eb372a7 ]
+[ Upstream commit 8e590a16853fedd2697a3b0c32b3cbf1a444f7b2 ]
 
-The flexfiles layout driver hands out a deviceinfo that names this server
-as an NFSv3 DS (flexfilelayout.c hardcodes da->version = 3). With v3
-disabled, the client can't talk to the DS: it loops on v3 NULL calls that
-the server answers with PROG_MISMATCH, and I/O hangs in D state.
+nfsd_nl_listener_set_doit() returns the raw errno from
+svc_xprt_create_from_sa() and sets no extack. A failed LISTENER_SET
+therefore tells userland only "Address already in use", or whatever else
+the transport returned. It never tells userland which entry failed.
 
-Skip LAYOUT_FLEX_FILES in nfsd4_setup_layout_type() unless v3 is enabled.
+Record the attribute and the transport name of the entry whose errno the
+call returns, and report both after the loop. NL_SET_BAD_ATTR() names the
+entry, which the message alone cannot do: a request can carry several
+entries with the same transport name.
 
-Reported-by: Benji Wiebe <itsme@benjiwiebe.com>
-Closes: https://lore.kernel.org/linux-nfs/c734eeb8-8486-4491-bb4d-b9656cbaffbe@app.fastmail.com/
-Fixes: 9b9960a0ca47 ("nfsd: Add a super simple flex file server")
-Cc: stable@vger.kernel.org
+The rejections in nfsd_nl_validate_listeners() other than -E2BIG and the
+unsupported transport name still carry no extack. This patch does not
+change them.
+
 Assisted-by: LLM
 Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Link: https://patch.msgid.link/20260904-pnfs-ff-v1-1-5f502cf25401@kernel.org
+Link: https://patch.msgid.link/20260901-nfsd-nl-hang-v5-5-a540d86668b0@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
-[ sashal: adapted the flexfiles condition to the older layout-selection code that uses direct block/SCSI checks ]
+Stable-dep-of: bf0f3a37e6cc ("NFSD: stop registering with rpcbind after a failure in listener_set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4layouts.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/nfsd/nfsctl.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
-index 0ff8994752637..a78e0bfdc9363 100644
---- a/fs/nfsd/nfs4layouts.c
-+++ b/fs/nfsd/nfs4layouts.c
-@@ -125,6 +125,7 @@ nfsd4_set_deviceid(struct nfsd4_deviceid *id, const struct svc_fh *fhp,
- 
- void nfsd4_setup_layout_type(struct svc_export *exp)
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 2a225756ef0d8..ecfdd8e5fd3d3 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2107,7 +2107,9 @@ static int nfsd_nl_validate_listeners(struct genl_info *info)
+ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
  {
-+	struct nfsd_net *nn = net_generic(exp->cd->net, nfsd_net_id);
- #if defined(CONFIG_NFSD_BLOCKLAYOUT) || defined(CONFIG_NFSD_SCSILAYOUT)
- 	struct super_block *sb = exp->ex_path.mnt->mnt_sb;
- #endif
-@@ -132,9 +133,9 @@ void nfsd4_setup_layout_type(struct svc_export *exp)
- 	if (!(exp->ex_flags & NFSEXP_PNFS))
- 		return;
+ 	struct net *net = genl_info_net(info);
++	const struct nlattr *bad_attr = NULL;
+ 	struct svc_xprt *xprt, *tmp;
++	const char *bad_xprt = NULL;
+ 	const struct nlattr *attr;
+ 	struct svc_serv *serv;
+ 	LIST_HEAD(permsocks);
+@@ -2226,8 +2228,22 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, 0,
+ 					      current_cred());
+ 		/* always save the latest error */
+-		if (ret < 0)
++		if (ret < 0) {
++			bad_attr = attr;
++			bad_xprt = xcl_name;
+ 			err = ret;
++		}
++	}
++
++	/*
++	 * The ack carries the errno of the last entry that failed. Point at
++	 * that entry as well, since several entries can share a transport
++	 * name and the errno alone cannot tell them apart.
++	 */
++	if (err) {
++		NL_SET_BAD_ATTR(info->extack, bad_attr);
++		NL_SET_ERR_MSG_FMT(info->extack, "cannot create %s listener",
++				   bad_xprt);
+ 	}
  
--#ifdef CONFIG_NFSD_FLEXFILELAYOUT
--	exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
--#endif
-+	if (IS_ENABLED(CONFIG_NFSD_FLEXFILELAYOUT) &&
-+	    nfsd_vers(nn, 3, NFSD_TEST))
-+		exp->ex_layout_types |= 1 << LAYOUT_FLEX_FILES;
- #ifdef CONFIG_NFSD_BLOCKLAYOUT
- 	if (sb->s_export_op->get_uuid &&
- 	    sb->s_export_op->map_blocks &&
+ 	if (!serv->sv_nrthreads && list_empty(&nn->nfsd_serv->sv_permsocks))
 -- 
 2.53.0
 
