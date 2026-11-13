@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590047;
-	b=ESc6XHSonA8dNloYaf1KPooKhBDv3m0oxzrjM1tkRHhQpW4spRjET44FtJyND8xmCaeN
-	 QEH5LbaTi4pndcjZs1nqAH7daOgbV2YE09svQcpMlfj9dFCk8HajfJTDImhwv23XL2llC
-	 dhQPwrplY8V8S0jEt/syFr8lbP5F9/RVOh7wUPyxPFkWlC2+joSlKRk2YFQlHeXBBR2Qt
-	 l5jzj4mcBzUMaHz6VC/CHxHw8cIEEl1pclIbnkXWUYjCXaw6no/Vt83bDp0d4BSytW8E2
-	 4NiMTnNn55CHXqDQps5mMymQY8ayy9eZLOe+eyHJbulRek9wID8Q2U/aL2ZFWHQoS2w==
+	t=1794590048;
+	b=gJPlPakR3+H/N0SZP/HBGytcQss9uo0X0djwehyaw6vVcw7Vxs5FzHlc/zpW9/E71pte
+	 8xaJCQnV+1aETfZbh6en1aepzVztGvUu6fD5DwUGhqmud/qBhuf0Iy5uCcLpcqyKDcgtA
+	 lJsiPJWNyZJoKcPkeZB+YQuPKt4vRiSnyOJFWx3ocu5v8FzcTZ1EU8Lx/YcfaHJSEtYom
+	 IWVu1J/16TBftDf8mc5dKP3zmdOToBJlB8F4xh/aNsQy4YRSzz2+Qb3SjndYFFzhTLEEE
+	 j5Ben82rKykHP6msojySPCDebcSyEo8xkHn1CqeFbix+CPdgNxgNbqq22e5+KLfTq1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590048;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FQjKBQugbQth2vhiKHfq3ZcuQY1GXSHQlqhlVLbHyvU=;
-	b=WHcz5tF6MQb63SVkffzWBjDvFS3al8XkBMcGBv3dqzBmPMsq6wy8N6DBbiXVZfVBqebJ
-	 iVlqMZaRJ13pWloZ905VCGPm9q1IalracMvOcmk00h9sGUiyqSbdn7C1PJO7DhcSvcLkP
-	 w/R3dhTI1iaXBckYUBMYafyLtVjTC2OVQqYPlIk9JwPSHXUkXwCm15CGIo0/qWmrSatoK
-	 pMG0yvT0EdLNaixnY0SztNDmryznz/qY+DktA4KYdvR22qFDsw09m4545q82scjhu4MBL
-	 FB3ZoBKSJtYP3GXKRBC0l2cBC6UXUxYvjzyNUItzrcIENuz9s1emdQf9M7KtDPIVTsg==
+	bh=BS3NN0rAFgSYM+lR1NQkKkl5aufaybtsOWUcUgNjGNk=;
+	b=ppHkh+tHPvDXrIX6wc9KNw66gYoqxSWltv8NtMkXUHWZ1eJXpTKTqB0kNCh2G9cuYKRK
+	 /JxyTAcdWJqm0L9opK83mH02F9pkFFzf9npfSwBTOoQYad9knwPqlTIPUfRHi0WfIje9N
+	 EfZT1in4PHQVHlhZJ2cKoOWIFmBuTOThezp1gwct5XSYCIZI7gUm4m7ZUcYVKdXa2bra2
+	 3vO3pZ9djQCqebU62kVSqTM7a4OQ+Sr+1kUuW+9Uibqf11bMGdLSho0k6U3CsMJ/dgnBy
+	 vfu2+MAs2dTDajaqKmSx1jrCtZdeMVKcTsELN65u/+MEIPyLE2BQBp2GnCwAIefEqxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ts072M+1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="C43e/MV6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E15606A33B;
-	Fri, 13 Nov 2026 17:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CDE606A336;
+	Fri, 13 Nov 2026 17:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ts072M+1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D911F000C5;
-	Fri, 13 Nov 2026 17:14:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C43e/MV6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32FE41F000C5;
+	Fri, 13 Nov 2026 17:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590047;
-	bh=FQjKBQugbQth2vhiKHfq3ZcuQY1GXSHQlqhlVLbHyvU=;
+	s=korg; t=1794590048;
+	bh=BS3NN0rAFgSYM+lR1NQkKkl5aufaybtsOWUcUgNjGNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ts072M+1rYrhby2CHakB4Ft47fPQa6CvemOSr/qN3CNGmcLYWAWInMqcB+UKO5luL
-	 hZCVmTMBBP90oQjmTeNNQUrUMBh4CMIg5Bxnh7l1bHZn4WvvYQR4prBxgbtE6uFlol
-	 2vhBG/llgPeFr4tPgd355hGhP02FLx7hrDY96LTc=
+	b=C43e/MV64XLI7FUkoF2fyU+Aix5OeO5wBqmRKLgMQRCkyRG6XVGztWMhZLf8oxgQg
+	 XBAvD/zrUh0PlSVgN4Rkn1LGkjrAMVng4/z2FpqKyTWHwGgkcJs+++IIWd3MFb84x0
+	 m+O/AiGPHZzXdAXjkh1x273ghHmsM6YPKB9h0mW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Loehle <christian.loehle@arm.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Tejun Heo <tj@kernel.org>,
+	Liz Fong-Jones <lizf@honeycomb.io>,
+	Jan Kara <jack@suse.cz>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 081/686] ACPI: CPPC: Accept requests to retain immutable autonomous selection
-Date: Fri, 13 Nov 2026 10:43:34 -0500
-Message-ID: <20261113153823.629703667@linuxfoundation.org>
+Subject: [PATCH 6.18 082/686] writeback: keep cleanup_offline_cgwb()s scan out of syncs
+Date: Fri, 13 Nov 2026 10:43:35 -0500
+Message-ID: <20261113153823.664349917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,223 +70,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Loehle <christian.loehle@arm.com>
+From: Liz Fong-Jones <lizf@honeycomb.io>
 
-commit 4bcc60d326c5acaa28c5913259decb22a33a83a1 upstream.
+[ Upstream commit 90c96612460e6accddbda5a195e6ddaa391ecde0 ]
 
-ACPI permits Autonomous Selection Enable to be Integer 1 when the platform
-always selects performance autonomously. cppc_get_auto_sel() returns that
-value, but cppc_set_auto_sel() rejects the Integer even when asked to keep
-autonomous selection enabled. AMD shared-memory initialization consequently
-fails in active or guided mode after successfully reading the capability.
+On a filesystem mounted with lazytime, sync() and syncfs() can return
+without persisting timestamp updates of inodes attached to a dying
+cgroup wb, so a crash after the sync loses them. File data and sizes are
+not affected.
 
-Accept a request to keep this immutable field enabled without issuing a
-register access. Expose the immutable encoding to callers, separately from
-the current value of a writable register.
+Since commit f6988c90671e ("writeback: bound cleanup_offline_cgwb()
+rescans by rotating scanned inodes"), isw_prepare_wbs_switch() moves the
+inodes it walks to the newest end of the list. When a pass fills its isw
+before reaching an inode that got its lazytime update after a sync's
+cutoff, the walked inodes land past it on b_dirty_time, and the sync's
+queue_io(), which stops at the first inode dirtied after the cutoff,
+misses them. The late inode has to be one without a pending lazytime
+update; one already on b_dirty_time keeps its position.
 
-Before an AMD shared-memory transition to passive mode, reject immutable
-autonomous selection on any present CPU. Otherwise a guided-to-passive
-transition ignores the failed disable and reports the wrong mode, while
-active-to-passive unregisters the working driver before passive policy
-initialization fails. Check under the driver mode lock before invoking
-either transition, including known offline CPUs.
+The window is narrow. cleanup_offline_cgwbs_workfn() skips wbs with
+anything on b_dirty, b_io or b_more_io, so the scan has to land between
+wb_writeback() fixing dirtied_before and taking list_lock for its first
+queue_io(), unless a multi-pass drain started before the wb got dirty
+IO.
 
-Serialize this capability query with descriptor publication and removal.
-ACPI processor removal drops the descriptor before taking the CPU hotplug
-write lock, so the caller's cpus_read_lock() alone cannot protect the
-lookup. Unpublish under the same mutex before releasing a descriptor,
-including when adding its kobject fails.
+Take wb_switch_rwsem for read across the scan, as
+process_inode_switch_wbs() does for the switches.
 
-The cppc-cpufreq auto_select attribute can also request one while
-autonomous selection is already enabled. If the subsequent bounds update
-fails, its rollback requests zero and clears the cached mode regardless
-of the previous state. For an immutable field the disable request fails,
-leaving the cached mode wrong. Save and restore the previous mode instead.
-This also avoids disabling an already-enabled writable control on that
-error path.
-
-Fixes: c984f5d5d45b ("ACPI: CPPC: Add auto select register read/write support")
-Fixes: ea3db45ae476 ("cpufreq: cppc: Update MIN_PERF/MAX_PERF in target callbacks")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
-Tested-by: Sumit Gupta <sumitg@nvidia.com>
-Link: https://patch.msgid.link/20260916162805.1039247-19-christian.loehle@arm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Christian Loehle <christian.loehle@arm.com>
+Fixes: f6988c90671e ("writeback: bound cleanup_offline_cgwb() rescans by rotating scanned inodes")
+Cc: stable@vger.kernel.org
+Suggested-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/all/0bc5d58533f10b4841807be3025daa11@kernel.org/
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
+Link: https://patch.msgid.link/20261017040710.1174009-1-lizf@honeycomb.io
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ Take wb_switch_rwsem before this branch's rcu_read_lock(), as
+  down_read() can sleep. ]
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Liz Fong-Jones <lizf@honeycomb.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c     | 48 ++++++++++++++++++++++++++++++++++--
- drivers/cpufreq/amd-pstate.c | 25 +++++++++++++++----
- include/acpi/cppc_acpi.h     |  6 +++++
- 3 files changed, 72 insertions(+), 7 deletions(-)
+ fs/fs-writeback.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index a3984e061ce0c..2668004e89ec7 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -36,6 +36,7 @@
- #include <linux/delay.h>
- #include <linux/iopoll.h>
- #include <linux/ktime.h>
-+#include <linux/mutex.h>
- #include <linux/rwsem.h>
- #include <linux/wait.h>
- #include <linux/topology.h>
-@@ -93,6 +94,16 @@ static DEFINE_PER_CPU(int, cpu_pcc_subspace_idx);
-  */
- static DEFINE_PER_CPU(struct cpc_desc *, cpc_desc_ptr);
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 3025fc7ddfe84..85f21ecc59958 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -757,6 +757,13 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 		new_wb = &wb->bdi->wb; /* wb_get() is noop for bdi's wb */
  
-+/* Protect immutable capability queries against descriptor removal. */
-+static DEFINE_MUTEX(cpc_desc_lock);
-+
-+static void cpc_set_desc(unsigned int cpu, struct cpc_desc *desc)
-+{
-+	mutex_lock(&cpc_desc_lock);
-+	per_cpu(cpc_desc_ptr, cpu) = desc;
-+	mutex_unlock(&cpc_desc_lock);
-+}
-+
- /* pcc mapped address + header size + offset within PCC subspace */
- #define GET_PCC_VADDR(offs, pcc_ss_id) (pcc_data[pcc_ss_id]->pcc_channel->shmem + \
- 						0x8 + (offs))
-@@ -899,12 +910,12 @@ int acpi_cppc_processor_probe(struct acpi_processor *pr)
- 	}
+ 	nr = 0;
++	/*
++	 * The scan moves walked inodes to the newest end of b_dirty_time,
++	 * past ones it didn't reach. If one of those was dirtied after a
++	 * sync's cutoff, the sync's queue_io() stops there and misses the
++	 * moved ones. Exclude syncs as process_inode_switch_wbs() does.
++	 */
++	down_read(&wb->bdi->wb_switch_rwsem);
+ 	/*
+ 	 * Paired with synchronize_rcu() in cgroup_writeback_umount().
+ 	 * Holding rcu_read_lock across the SB_ACTIVE check, the inode grab
+@@ -779,6 +786,7 @@ bool cleanup_offline_cgwb(struct bdi_writeback *wb)
+ 		restart = isw_prepare_wbs_switch(new_wb, isw, &wb->b_dirty_time,
+ 						 &nr);
+ 	spin_unlock(&wb->list_lock);
++	up_read(&wb->bdi->wb_switch_rwsem);
  
- 	/* Plug PSD data into this CPU's CPC descriptor. */
--	per_cpu(cpc_desc_ptr, pr->id) = cpc_ptr;
-+	cpc_set_desc(pr->id, cpc_ptr);
- 
- 	ret = kobject_init_and_add(&cpc_ptr->kobj, &cppc_ktype, &cpu_dev->kobj,
- 			"acpi_cppc");
- 	if (ret) {
--		per_cpu(cpc_desc_ptr, pr->id) = NULL;
-+		cpc_set_desc(pr->id, NULL);
- 		kobject_put(&cpc_ptr->kobj);
- 		goto out_free;
- 	}
-@@ -956,6 +967,8 @@ void acpi_cppc_processor_exit(struct acpi_processor *pr)
- 	if (!cpc_ptr)
- 		return;
- 
-+	cpc_set_desc(pr->id, NULL);
-+
- 	/* Free all the mapped sys mem areas for this CPU */
- 	for (i = 2; i < cpc_ptr->num_entries; i++) {
- 		addr = cpc_ptr->cpc_regs[i-2].sys_mem_vaddr;
-@@ -1273,6 +1286,11 @@ static int cppc_set_reg_val(int cpu, enum cppc_regs reg_idx, u64 val)
- 
- 	reg = &cpc_desc->cpc_regs[reg_idx];
- 
-+	/* Integer 1 describes autonomous selection that is always enabled. */
-+	if (reg_idx == AUTO_SEL_ENABLE && reg->type == ACPI_TYPE_INTEGER &&
-+	    reg->cpc_entry.int_value == 1)
-+		return val == 1 ? 0 : -EOPNOTSUPP;
-+
- 	/* if a register is writeable, it must be a buffer and not null */
- 	if ((reg->type != ACPI_TYPE_BUFFER) || IS_NULL_REG(&reg->cpc_entry.reg)) {
- 		pr_debug("CPC register is not supported\n");
-@@ -1722,6 +1740,32 @@ int cppc_get_auto_sel(int cpu, bool *enable)
- }
- EXPORT_SYMBOL_GPL(cppc_get_auto_sel);
- 
-+/**
-+ * cppc_auto_sel_is_immutable - Check for always-enabled autonomous selection.
-+ * @cpu: CPU whose _CPC descriptor to check.
-+ *
-+ * Context: Process context.
-+ * Return: true for Integer 1, false for a register or an absent descriptor.
-+ */
-+bool cppc_auto_sel_is_immutable(int cpu)
-+{
-+	struct cpc_desc *cpc_desc;
-+	struct cpc_register_resource *reg;
-+	bool immutable = false;
-+
-+	mutex_lock(&cpc_desc_lock);
-+	cpc_desc = per_cpu(cpc_desc_ptr, cpu);
-+	if (cpc_desc) {
-+		reg = &cpc_desc->cpc_regs[AUTO_SEL_ENABLE];
-+		immutable = reg->type == ACPI_TYPE_INTEGER &&
-+			    reg->cpc_entry.int_value == 1;
-+	}
-+	mutex_unlock(&cpc_desc_lock);
-+
-+	return immutable;
-+}
-+EXPORT_SYMBOL_GPL(cppc_auto_sel_is_immutable);
-+
- /**
-  * cppc_set_auto_sel - Write autonomous selection register.
-  * @cpu    : CPU to which to write register.
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 0b06bbd7215ff..c5047b56be50f 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -1653,7 +1653,7 @@ EXPORT_SYMBOL_GPL(amd_pstate_get_status);
- 
- int amd_pstate_update_status(const char *buf, size_t size)
- {
--	int mode_idx;
-+	int cpu, mode_idx, ret = 0;
- 
- 	if (size > strlen("passive") || size < strlen("active"))
- 		return -EINVAL;
-@@ -1663,12 +1663,27 @@ int amd_pstate_update_status(const char *buf, size_t size)
- 	if (mode_idx < 0 || mode_idx >= AMD_PSTATE_MAX)
- 		return -EINVAL;
- 
--	if (mode_state_machine[cppc_state][mode_idx]) {
--		guard(mutex)(&amd_pstate_driver_lock);
--		return mode_state_machine[cppc_state][mode_idx](mode_idx);
-+	guard(mutex)(&amd_pstate_driver_lock);
-+
-+	if (!mode_state_machine[cppc_state][mode_idx])
-+		return 0;
-+
-+	if (mode_idx == AMD_PSTATE_PASSIVE &&
-+	    !cpu_feature_enabled(X86_FEATURE_CPPC)) {
-+		cpus_read_lock();
-+		/* Check offline CPUs too, before changing or removing the driver. */
-+		for_each_present_cpu(cpu) {
-+			if (cppc_auto_sel_is_immutable(cpu)) {
-+				ret = -EOPNOTSUPP;
-+				break;
-+			}
-+		}
-+		cpus_read_unlock();
-+		if (ret)
-+			return ret;
- 	}
- 
--	return 0;
-+	return mode_state_machine[cppc_state][mode_idx](mode_idx);
- }
- EXPORT_SYMBOL_GPL(amd_pstate_update_status);
- 
-diff --git a/include/acpi/cppc_acpi.h b/include/acpi/cppc_acpi.h
-index 13fa815048445..382a74430e748 100644
---- a/include/acpi/cppc_acpi.h
-+++ b/include/acpi/cppc_acpi.h
-@@ -171,6 +171,7 @@ extern int cppc_set_epp(int cpu, u64 epp_val);
- extern int cppc_get_auto_act_window(int cpu, u64 *auto_act_window);
- extern int cppc_set_auto_act_window(int cpu, u64 auto_act_window);
- extern int cppc_get_auto_sel(int cpu, bool *enable);
-+bool cppc_auto_sel_is_immutable(int cpu);
- extern int cppc_set_auto_sel(int cpu, bool enable);
- extern int amd_get_highest_perf(unsigned int cpu, u32 *highest_perf);
- extern int amd_get_boost_ratio_numerator(unsigned int cpu, u64 *numerator);
-@@ -256,6 +257,11 @@ static inline int cppc_get_auto_sel(int cpu, bool *enable)
- {
- 	return -EOPNOTSUPP;
- }
-+static inline bool cppc_auto_sel_is_immutable(int cpu)
-+{
-+	return false;
-+}
-+
- static inline int cppc_set_auto_sel(int cpu, bool enable)
- {
- 	return -EOPNOTSUPP;
+ 	/* no attached inodes? bail out */
+ 	if (nr == 0) {
 -- 
 2.53.0
 
