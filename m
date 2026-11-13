@@ -1,51 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590181;
-	b=mGD9ATB/x2wbtuS2ItrGZXYx2Hj6SzyTkLqTXtmAkNXWZHX8MzvF4EbdSxjdIMWAOoSJ
-	 4YW40/uo1L8fMkAheuWNx/O7FHoTygoXZxK0ueu0TmoHwGnVrhVA5PDDqrRC+bzbKmPW0
-	 ZFDDHtuhoToMbVPFskRL5Sm0n9bEbt6WC8kjQEAXl2XADOn7GVn5mj+9w9D/wiLeyTDnS
-	 WllIGfTiBHKqJ3SorRj5q3Qh6wBHk7EBZg/+W5Nx0vr7VJ0pzvR1fcEElKcoztm/n0Btp
-	 RWm0zUOZeN0EGj8oPYBA8WXgscyr/L3uAp7jo5/O+XE2lyXK/UyaF7g6B0mtVi4vmew==
+	t=1794590182;
+	b=HgbccUL00bTWlXHevPz+AGLf4TBKBGJhse1LGxWfYkfil1tYP6SFwYytmk6x/aaQlDBw
+	 IUbNXcISGouP69+VA6O/tcm7ye/wzTIYGDdx137CO/ybyae/WEAdSIFMBMFVxwDFMT4v9
+	 rywYVJ0XlJDd4QcEt+64JmlXxgscTGS7DsP+xQFlRr3H8wJzYzttT6picKrOLB0/4QLx3
+	 18nv3z69fxhsKAz2EnCKmbWQqP3CAYg6iFjgGSx2iIMtqpj56z95qg5dtIrGhGNu49tDy
+	 qgs8YEYYKIgo0uRYNzIBcIYSVuednUm5Ex4AVz/ZdUgGS5gmwfS12F9rl8kMaaaxfqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590181;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QTN30DBoDd91uAaI7/dn9Ew1rRdoXHBy4XrnxEnAT94=;
-	b=jrFAdx++CDsMzp64ukUnCBJe2AZ9uJ2x/jQ0FGqnGz+bjX/GE4oh98m+AA2vypeF2Hto
-	 rRqIrG4Uf2JF/8tohJDFmxFjYayd9GbaBmSpevE/NeP7yu8y1hL60j22ryIM9oIZHqVzw
-	 loccuyd7ZCTMLYd0+vKcOQfLb8uvyAnARQfX6HhwXSE0NbBiVsYE/vse/Ft4e9q1mikzv
-	 ahsCKRFQv6ibDWbGsHy2yzc3+PiQNSfmSJYbpZUgwfj/RFjK62DAWQKqbMCNXNp6lqQvQ
-	 OPYV7zJsJgv59tAo+X/qb26xnTatYZMW3hrI2rUwFQ8uKPse6/a6Hz+JvQ2aCybQc1A==
+	bh=v76LMvKh/Ru/Nv5foWpkeVoq5Y3txKrbmozGO6lEwSE=;
+	b=l+ebV8J7isf69OEBvo16IeCcbPCZT9EnPXOCgzUMYVYLN6nqSOUdwaNt+wDY0QoEW2iq
+	 yQzU5SxJA4tB8e8wu/IqXULLAh/UlsKiYbxYIPRihc8ZbobQl2ROfM9wG0RKFKL5o5zMl
+	 9Ebcl4wIRHw9rf8kKB4LmP/FD5y22wYGYXJbdRHanI3I5zgoKF9/cPTxD+eGu1Z6eg3Qj
+	 cAOs8O0Nwel3D/AhfyrUX965AH4TKeRX1O5cbIc5JGAe9WjNJmuIyLcb0whWe4avZJmq0
+	 VUsh2xq9ieb2lsgdgmuYnNgQ0MKC7C4U5c4yddaicCJzynA8J0iid+J/HLCXo25Z5Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E9HXWkKG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TIpFRG2i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD46606A33F;
-	Fri, 13 Nov 2026 17:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E0E606B836;
+	Fri, 13 Nov 2026 17:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E9HXWkKG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D930C1F000C4;
-	Fri, 13 Nov 2026 17:16:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TIpFRG2i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFB01F000C6;
+	Fri, 13 Nov 2026 17:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590181;
-	bh=QTN30DBoDd91uAaI7/dn9Ew1rRdoXHBy4XrnxEnAT94=;
+	s=korg; t=1794590182;
+	bh=v76LMvKh/Ru/Nv5foWpkeVoq5Y3txKrbmozGO6lEwSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E9HXWkKGUh27ZQebDtn1bNAEYzzgLLRUwojgzwb/TfiFAM4GFdNrigZxi4VvZ0CeE
-	 9GhyFQDDeEaDO3IRzPRkWbmJd3Df0y+9KRWcNo1XGlYMePD67TKWiYYyHprji1A/Vc
-	 4NhOhehYmmyhbN/vlHoMrSeeyoNlmobNK3wY/m14=
+	b=TIpFRG2iFedmaU4Dk03a8tDM6FIxSsnFdJJ5dsy+498tJfZO7bdydGGUbwYxME5ez
+	 O++1CfYREtbTFbRiJLu4LdhQxNEsQ5qvvpbcq0IsvJkr19V2LuiC4ZAuM1kZkZd3YZ
+	 n6nME3dj5+3dMMWhTgv3ztBrNfeeEMKOwjoXeQm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bernard Pidoux <bernard.f6bvp@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Zhengchuan Liang <zcliangcn@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Zhao Zhang <zzhan461@ucr.edu>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 136/686] netrom: dont send part of a message that cannot be fragmented whole
-Date: Fri, 13 Nov 2026 10:44:29 -0500
-Message-ID: <20261113153825.414601926@linuxfoundation.org>
+Subject: [PATCH 6.18 184/686] 9p: fix caches_show() out-of-bounds write
+Date: Fri, 13 Nov 2026 10:45:17 -0500
+Message-ID: <20261113153827.241080707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -67,144 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bernard Pidoux <bernard.f6bvp@gmail.com>
+From: Zhao Zhang <zzhan461@ucr.edu>
 
-nr_output() cuts a message longer than one frame into fragments and puts
-each one on the write queue as soon as it is built, the more flag set on
-all but the last. If allocating a fragment fails, it frees the rest of
-the message and returns, and nr_sendmsg() still reports the whole
-length as sent. The allocation waits for send buffer space, so this
-happens not only when memory is short but whenever a signal interrupts
-that wait.
+[ Upstream commit 2acd800de8827b7cdce8cb5c2c63b8e8608ec8e3 ]
 
-The fragments already queued then go out ending with the more flag set:
-the peer joins them to the next message. If the first allocation fails,
-nothing is sent and the caller is told the message went.
+The sysfs show handler for /sys/fs/9p/caches appends cache tags with
+snprintf(buf + count, limit, ...) and then advances count and limit by
+the return value. This is incorrect for truncation because snprintf()
+returns the full would-have-been length, not the number of bytes stored.
 
-Build the fragments on a list of our own and only put them on the write
-queue once all of them exist; on failure, drop them and return the
-error, which nr_sendmsg() passes on. This is what ax25_output() does
-since #56.
+Once the accumulated output exceeds PAGE_SIZE, count can advance past
+the sysfs buffer and limit can become negative. A later iteration then
+passes an out-of-bounds destination pointer and an oversized size_t
+into snprintf(), leading to an out-of-bounds write.
 
-Tested on two QEMU guests (6.12.94, KASAN, lockdep) linked by KISS. A
-speaks NET/ROM itself and never acknowledges; on the circuit it accepted,
-B sends a 4000-byte message with SIGALRM set to interrupt it after 3 s,
-then the 4-byte message "fin.":
+Use sysfs_emit_at() for the append instead. It follows the sysfs buffer
+contract and returns the number of bytes actually stored, so the offset
+remains bounded even when the output is truncated.
 
-  SO_SNDBUF 6000:
-    before: send() = 4000; A receives 4 fragments of 236 bytes, all with
-            the more flag, and "fin." is queued behind them
-    after:  send() = -1 EINTR; A receives "fin." alone
-  SO_SNDBUF at the minimum:
-    before: send() = 4000 but nothing of it is sent
-    after:  send() = -1 EINTR
-
-No kernel report in any run.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
-Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 6ab9b08cf19bef1a63c92bc030ae80d5f8e9c40a)
+Fixes: 86db0c32f16c ("9p: fix /sys/fs/9p/caches overwriting itself")
+Cc: stable@vger.kernel.org
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Zhengchuan Liang <zcliangcn@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Assisted-by: Codex:GPT-5.4
+Signed-off-by: Zhao Zhang <zzhan461@ucr.edu>
+Co-authored-by: Ren Wei <n05ec@lzu.edu.cn>
+Signed-off-by: Ren Wei <n05ec@lzu.edu.cn>
+Message-ID: <abfb65f4800634dafb08238bba20cb48797e796f.1781908090.git.zzhan461@ucr.edu>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netrom.h   |  2 +-
- net/netrom/af_netrom.c |  6 +++---
- net/netrom/nr_out.c    | 23 ++++++++++++++++++++---
- 3 files changed, 24 insertions(+), 7 deletions(-)
+ fs/9p/v9fs.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/include/net/netrom.h b/include/net/netrom.h
-index b8f2e324962ba..3f6fd2f894344 100644
---- a/include/net/netrom.h
-+++ b/include/net/netrom.h
-@@ -202,7 +202,7 @@ void nr_loopback_clear(void);
- int nr_loopback_queue(struct sk_buff *);
- 
- /* nr_out.c */
--void nr_output(struct sock *, struct sk_buff *);
-+int nr_output(struct sock *sk, struct sk_buff *skb);
- void nr_send_nak_frame(struct sock *);
- void nr_kick(struct sock *);
- void nr_transmit_buffer(struct sock *, struct sk_buff *);
-diff --git a/net/netrom/af_netrom.c b/net/netrom/af_netrom.c
-index ff7f6ba9754cc..77a8f4d6a59b4 100644
---- a/net/netrom/af_netrom.c
-+++ b/net/netrom/af_netrom.c
-@@ -1173,9 +1173,9 @@ static int nr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 		goto out;
- 	}
- 
--	nr_output(sk, skb);	/* Shove it onto the queue */
--
--	err = len;
-+	err = nr_output(sk, skb);	/* Shove it onto the queue */
-+	if (!err)
-+		err = len;
- out:
- 	release_sock(sk);
- 	return err;
-diff --git a/net/netrom/nr_out.c b/net/netrom/nr_out.c
-index 2b3cbceb0b52d..150cb4263d314 100644
---- a/net/netrom/nr_out.c
-+++ b/net/netrom/nr_out.c
-@@ -28,11 +28,19 @@
- /*
-  *	This is where all NET/ROM frames pass, except for IP-over-NET/ROM which
-  *	cannot be fragmented in this manner.
-+ *
-+ *	A message too long for one frame is cut into fragments built on a list
-+ *	of our own, and only put on the write queue once all of them exist: a
-+ *	message that cannot be fragmented whole (no memory, or a signal while
-+ *	waiting for send buffer space) is not sent at all, and the error is
-+ *	returned. Consumes skb in all cases.
-  */
--void nr_output(struct sock *sk, struct sk_buff *skb)
-+int nr_output(struct sock *sk, struct sk_buff *skb)
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index bde3ffb0e319a..20dc6a03826a3 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -16,6 +16,7 @@
+ #include <linux/parser.h>
+ #include <linux/slab.h>
+ #include <linux/seq_file.h>
++#include <linux/sysfs.h>
+ #include <net/9p/9p.h>
+ #include <net/9p/client.h>
+ #include <net/9p/transport.h>
+@@ -554,21 +555,14 @@ static ssize_t caches_show(struct kobject *kobj,
+ 			   struct kobj_attribute *attr,
+ 			   char *buf)
  {
-+	struct sk_buff_head frags;
- 	struct sk_buff *skbn;
- 	unsigned char transport[NR_TRANSPORT_LEN];
-+	unsigned long flags;
- 	int err, frontlen, len;
+-	ssize_t n = 0, count = 0, limit = PAGE_SIZE;
++	ssize_t count = 0;
+ 	struct v9fs_session_info *v9ses;
  
- 	if (skb->len - NR_TRANSPORT_LEN > NR_MAX_PACKET_SIZE) {
-@@ -42,10 +50,13 @@ void nr_output(struct sock *sk, struct sk_buff *skb)
- 
- 		frontlen = skb_headroom(skb);
- 
-+		__skb_queue_head_init(&frags);
-+
- 		while (skb->len > 0) {
- 			if ((skbn = sock_alloc_send_skb(sk, frontlen + NR_MAX_PACKET_SIZE, 0, &err)) == NULL) {
-+				__skb_queue_purge(&frags);
- 				kfree_skb(skb);
--				return;
-+				return err;
- 			}
- 
- 			skb_reserve(skbn, frontlen);
-@@ -63,15 +74,21 @@ void nr_output(struct sock *sk, struct sk_buff *skb)
- 			if (skb->len > 0)
- 				skbn->data[4] |= NR_MORE_FLAG;
- 
--			skb_queue_tail(&sk->sk_write_queue, skbn); /* Throw it on the queue */
-+			__skb_queue_tail(&frags, skbn);
- 		}
- 
- 		kfree_skb(skb);
-+
-+		spin_lock_irqsave(&sk->sk_write_queue.lock, flags);
-+		skb_queue_splice_tail_init(&frags, &sk->sk_write_queue);
-+		spin_unlock_irqrestore(&sk->sk_write_queue.lock, flags);
- 	} else {
- 		skb_queue_tail(&sk->sk_write_queue, skb);		/* Throw it on the queue */
+ 	spin_lock(&v9fs_sessionlist_lock);
+ 	list_for_each_entry(v9ses, &v9fs_sessionlist, slist) {
+-		if (v9ses->cachetag) {
+-			n = snprintf(buf + count, limit, "%s\n", v9ses->cachetag);
+-			if (n < 0) {
+-				count = n;
+-				break;
+-			}
+-
+-			count += n;
+-			limit -= n;
+-		}
++		if (v9ses->cachetag)
++			count += sysfs_emit_at(buf, count, "%s\n",
++					       v9ses->cachetag);
  	}
  
- 	nr_kick(sk);
-+
-+	return 0;
- }
- 
- /*
+ 	spin_unlock(&v9fs_sessionlist_lock);
 -- 
 2.53.0
 
