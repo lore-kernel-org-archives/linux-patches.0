@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591470;
-	b=LPmX35Zg39yX+5MYpehJUKrlYYRLtffF26vdAfkDrO/zX1CHHAP71UZ7XCnygWr8Mewx
-	 MCKkbeDNCQc/SgxuObSWRIukb8kar6JbvwQxzmsQDkY+Rwu1dJ/Nvx2Ut0gGNZ0y7t8VM
-	 UsanpA6vH4RIx3XftMMy7Du6848w68jElRNOUpJuSpZ5cu/30wtbRdhb9B7nG7rs8XFzi
-	 mNfBbAZc6/aqgYKQCAFeh4Q7Ou7Psm76H/xXHCFNMKyQhiSTNliyrX3BJOPRKYpd1enFT
-	 p6W97SRRba5eBcPlBqXbMTqAj20dxcBk2K7SXgnBGq24F4PVN5D/akThjSmNWK24qOw==
+	t=1794591472;
+	b=Doe1Xa0vszjuy5zU/B2rDVlyqBa0QPTkODy+aP+cQTjCv4hfChuULxkqdRxy8vv8jC/e
+	 89lOX+oeWw6lqUmnJO/vRUKOF7RAPgd8ANxM/ib4k5XKjWIA4XIXW8HOkn9EKaS46fokc
+	 nTDCCTm4Cf4kZhNLPk0onLvPY1IdGrCbIuvRIQ49wqk7i51HA3w/D3rJPG5l/3wTxUiyb
+	 VG2fBxbPghrxXG6mKGMzHwVyWL4HI6FtIkVL21R95kB46R4nXeSqcMuhgGh8E/pCkwhmU
+	 yVmPWiTBojFPLKecsRMLAe8a8/anB80QGfpAryfmyH8aTwDxDUF+QZjxWhOd0rdYRrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591470;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xYEiw1hS8UxoN0lEeZErjAM1vOoY1q94BFq+IK8m4KU=;
-	b=doIAHoIsvuWTpJ5LptQJWQ2QtK43/GlMx8oKqB7rpEquC8KTqqjcJjBYQMzcXTP7ZUfa
-	 wBH1EJsRxZB3LQ230SrgyXfYlgGD9zX3hEhMa6KY2MEBW0kxzmXU4XH/+fLoaY+JBETwG
-	 DrBE3157XaDk6nYEFuFap81vDRZw3GgLeTtCLWaM4vifwCwJNCKwY+Rkc/WL172dhuXhE
-	 mKlIoUbfQOlGWa0JOMJ67Rqrn99poCLaLp632NuNcJUKLbVS5Vp57IjcLefP0SwQDWS6k
-	 PsPiYwL9abdF5QI/IT7NsrSPUi3pnWCr6fXHXRAIDqT/2hUXNv4/Gr0NHZGKvT1NeLQ==
+	bh=29SEUTKuPmPl0k19Jkhug/1XkvRmPYtp2Za/uSSpPn8=;
+	b=avBADc9tPs2NdQfiF1dPZoWsrUc+e0qqKqyn8YyYOOD3ML4iMR7VipYoYeh+cDZKT/Yc
+	 VXe6ja0nmcLHS7u/DgYY9lhViCzF+eq8CMWQUEM7bKF2gQUR7bVHHNdUcTRP6x7M0HD6a
+	 l04ZZFHrKKCvbm+51RyO6CAWE5hwBfXOhfvdqTx7/4MSgc1QuzxzHD3AjkM2Fjcb2wxRD
+	 p0sTZXdvXqju/S7cYf95n4WHY+JfAC4x9dBcHnvwkebzoGUys2VveiW3BnJccGbUjZunH
+	 39d6IAg/DlVxiWFEoprSrTlA/IfZBPdw6YIp7PORJfNfw48Clp/2hwyuwyvWv61n1Wg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c43ElnXt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ohl6Tkbr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6ED6607D2D1;
-	Fri, 13 Nov 2026 17:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6782F606A88E;
+	Fri, 13 Nov 2026 17:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c43ElnXt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8325F1F000C4;
-	Fri, 13 Nov 2026 17:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ohl6Tkbr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68E11F000C4;
+	Fri, 13 Nov 2026 17:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591470;
-	bh=xYEiw1hS8UxoN0lEeZErjAM1vOoY1q94BFq+IK8m4KU=;
+	s=korg; t=1794591472;
+	bh=29SEUTKuPmPl0k19Jkhug/1XkvRmPYtp2Za/uSSpPn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c43ElnXt/gxpNqRrFRAnb0Z4+wV/b47/e0zfIF1bPFCryWIfMuXRQ14u7H0GRCwI2
-	 ggVVg4i90fg2MsuDga05lzRxnNys6/G7zWIXsNVVkHwWRnktY7PRPg/cVoh8BeBKpL
-	 BFpsOsbamPJ3rKUKdoMogn/8i0wGrW9qiugsnQT0=
+	b=Ohl6Tkbr/5tuVemg3qp1n2tRdnzSnhK6VT52hxoSxw5AuKgnXopzmz3FAPIrpcbTn
+	 WMj8l9RO/MOqVZMK7vtahR9N/bJpqcdiq6W8BxuFCCKPerA9U+o2qopAhqbxD85nUj
+	 0+eBBPedii4lBej4/jO19jVX0EkCuArJAUxX5guE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Fuzzey <martin.fuzzey@flowbird.group>,
-	stable@kernel.org,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 554/670] serial: sc16is7xx: fix data corruption due to unexpected xon/xoff
-Date: Fri, 13 Nov 2026 10:51:58 -0500
-Message-ID: <20261113153830.660279046@linuxfoundation.org>
+Subject: [PATCH 6.12 519/670] ata: libata-eh: Rename and make ata_set_mode() static
+Date: Fri, 13 Nov 2026 10:51:23 -0500
+Message-ID: <20261113153829.521148831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,59 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Fuzzey <martin.fuzzey@flowbird.group>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 8bb50e95c0abd44607bc60a43032c1dbf7470d5a ]
+[ Upstream commit 6ba4d05c1425fe220d95395b4485443ce895bb95 ]
 
-The hardware supports automatically sending XON/OFF based on the
-FIFO status and that is already implemented by the driver.
-However that capability was not announced with the UPF_SOFT_FLOW bit.
+The function ata_set_mode() is defined and used only in libata-eh.c.
+Make this function static and rename it ata_eh_set_mode() to make it
+clear where its definition is.
 
-When the port is opened with the default of XON enabled the driver
-configures that in the hardware.
-If userspace does not want XON/OFF (which is normally the case) it will
-use TCSETS to disactivate it. However the serial core optimises this
-to only notify the driver if someting imporant has changed, and for
-XON/XOFF thit is only if the  driver declares UPF_SOFT_FLOW.
+No functional changes.
 
-So we end up with unwanted XON/XOFF in the data stream.
-
-The problem only occurs if nothing else needed to be set by termios,
-ie if the user space requested values are the same as the default values,
-except for XON/XOFF.
-Since the default speed is 9600 this means that the problem only occurs
-when requesting 9600, otherwise the call to the driver will be made to
-change the speed, and that will also clear the XON/XOFF.
-As 9600 is quite rare these days that probably explains why this hasn't
-already been seen.
-
-It also only occurs on the first port open after boot since the subsequent
-opens will use the "logical state" set by TCSETS but not communicated to
-the driver the first time.
-
-Signed-off-by: Martin Fuzzey <martin.fuzzey@flowbird.group>
-Fixes: dfeae619d781 ("serial: sc16is7xx")
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20261001100534.1225894-1-martin.fuzzey@flowbird.group
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Link: https://lore.kernel.org/r/20250703103622.291272-4-dlemoal@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Stable-dep-of: 96fdeb7e3fd8 ("ata: sata_inic162x: remove dangerous broken driver")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sc16is7xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/libata-eh.c | 9 +++++----
+ drivers/ata/libata.h    | 1 -
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
-index 5c6339f6f1bcb..f104d6a7a3fd1 100644
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -1619,7 +1619,7 @@ int sc16is7xx_probe(struct device *dev, const struct sc16is7xx_devtype *devtype,
- 		s->p[i].port.irq	= irq;
- 		s->p[i].port.type	= PORT_SC16IS7XX;
- 		s->p[i].port.fifosize	= SC16IS7XX_FIFO_SIZE;
--		s->p[i].port.flags	= UPF_FIXED_TYPE | UPF_LOW_LATENCY;
-+		s->p[i].port.flags	= UPF_FIXED_TYPE | UPF_LOW_LATENCY | UPF_SOFT_FLOW;
- 		s->p[i].port.iobase	= i;
- 		/*
- 		 * Use all ones as membase to make sure uart_configure_port() in
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 32ec1cfd648e3..1cf737f17d0a3 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -3248,12 +3248,12 @@ static int ata_eh_revalidate_and_attach(struct ata_link *link,
+ }
+ 
+ /**
+- *	ata_set_mode - Program timings and issue SET FEATURES - XFER
++ *	ata_eh_set_mode - Program timings and issue SET FEATURES - XFER
+  *	@link: link on which timings will be programmed
+  *	@r_failed_dev: out parameter for failed device
+  *
+  *	Set ATA device disk transfer mode (PIO3, UDMA6, etc.).  If
+- *	ata_set_mode() fails, pointer to the failing device is
++ *	ata_eh_set_mode() fails, pointer to the failing device is
+  *	returned in @r_failed_dev.
+  *
+  *	LOCKING:
+@@ -3262,7 +3262,8 @@ static int ata_eh_revalidate_and_attach(struct ata_link *link,
+  *	RETURNS:
+  *	0 on success, negative errno otherwise
+  */
+-int ata_set_mode(struct ata_link *link, struct ata_device **r_failed_dev)
++static int ata_eh_set_mode(struct ata_link *link,
++			   struct ata_device **r_failed_dev)
+ {
+ 	struct ata_port *ap = link->ap;
+ 	struct ata_device *dev;
+@@ -3900,7 +3901,7 @@ int ata_eh_recover(struct ata_port *ap, ata_prereset_fn_t prereset,
+ 
+ 		/* configure transfer mode if necessary */
+ 		if (ehc->i.flags & ATA_EHI_SETMODE) {
+-			rc = ata_set_mode(link, &dev);
++			rc = ata_eh_set_mode(link, &dev);
+ 			if (rc)
+ 				goto rest_fail;
+ 			ehc->i.flags &= ~ATA_EHI_SETMODE;
+diff --git a/drivers/ata/libata.h b/drivers/ata/libata.h
+index 4b3e246227e68..898d5b368d82f 100644
+--- a/drivers/ata/libata.h
++++ b/drivers/ata/libata.h
+@@ -199,7 +199,6 @@ extern void ata_eh_report(struct ata_port *ap);
+ extern int ata_eh_reset(struct ata_link *link, int classify,
+ 			ata_prereset_fn_t prereset, ata_reset_fn_t softreset,
+ 			ata_reset_fn_t hardreset, ata_postreset_fn_t postreset);
+-extern int ata_set_mode(struct ata_link *link, struct ata_device **r_failed_dev);
+ extern int ata_eh_recover(struct ata_port *ap, ata_prereset_fn_t prereset,
+ 			  ata_reset_fn_t softreset, ata_reset_fn_t hardreset,
+ 			  ata_postreset_fn_t postreset,
 -- 
 2.53.0
 
