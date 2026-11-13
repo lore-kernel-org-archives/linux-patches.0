@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585529;
-	b=IlTC0yMbYatXKOtHne27/H0B57bqDbTmCZwTu3HkQIvMhWjqru1nJEbbI7EtNKNjeFQm
-	 TspFy1dum7plA+f/l01Pa3ejCZeyBvw7G+trTK62a1tjHtSoijH59y4uORbNJQGaWRgjy
-	 SXz2aVXOO2jUJ5i+CreJ3J5AYichOQ00BZu63cAqL1iohW+qXTdDUddmgnlByC+qlGbF/
-	 bthoyCoOCTVx+EBU1twKFO5b2SJhfCs5t0azYGvApaa0ReBROYRXCxcOGpL5soMQCU3ez
-	 4YkRiM6P2MydBdpqJvBhhzYUD/vd6b9O+KZV5oTf0/ZbJHolveuP5jWMx1GnTBWHVvQ==
+	t=1794585530;
+	b=Rj2a9oYRG3yiH2bhv7y3uD5UK/UWno881U13tTd4sM6ElqDGR4+c/M3Mnba7wCJBguEk
+	 dMrEWF87zQVVKXLzkG/15xfetqWeespKvpgzq5q/fDXQ/5ZIjWV/6JJ+WFDwm2geErA5n
+	 HwhaOh7Eioeehip//YmhlSLRYwRhVj3eWJDumbV27GaCaHpzCFTqk4U5kfGkeDci3taPv
+	 JaqZb+JEP4Xtlor2P4HkTBxYX0zSex+iAPf4vXKbeauxo4j2s28zlJcQT+NS803SNtWaL
+	 asR2swTyD0rtP8pz3Ph4megXFsXdZ4RzS5uXy096IC0SM30T4pin8tNM+VdddepCOQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UJ28QbOD8npzRwc2Gg4KUzQlXL20/RHDadxFZwqW9Ao=;
-	b=zbxyUCQUfwown5y4IfWD/UeMe+wYwKhKMOdVoLnp/2SpOjcCvboTnqlWlypOX4bjrQ97
-	 7vEanndHiZ7eFFzRrOU0TTw1sfCRDFUhWllKqyw2r3DfVS15HUB3rDuALHEkIPRxrec/p
-	 54BjsjEuDLLnLp3S6mcuScOmzQmnAFIS5GZV9CfHE9iV4Bo0AyzjcifXUOLA7u5tsJ67T
-	 fPLg2b8YV/OARdtCcnEt171tRYMk323a/xoNwQ4KkiVLP9oBPgqdlI2ctDgKukB9CAIZ9
-	 0LrD3VVJZVssO9lCoo6Z4CgnHKJe+/TZBXuEFDJINIrqj59/EX5yBmAyud3gnJJeFYA==
+	bh=ButShEb7whK3pmasVwDRMYrATgqvm362TTVqvrD/vK8=;
+	b=J2aC/XuGdo6NbnEonSMQ6Lvob7X4mvFUL55AR7Q0CmWLhj/gtyzlIlmio9lBDwkz5+A1
+	 VgTKNCP0DHnt0Ax/FteOnMwq80kXbvd245eb9qLdwQpkUQcF5qP6pdzkmi7injuzOBGlt
+	 9EhtDItETeVAINqfl0AXDPf/Pzs8ENtSTXt+ovO1NIw0CkgwzOnfsjHY0ndowEM255Upu
+	 V1fZTJ1PO6sR/+L3DtKLJnf/2V0KoySGe96TA1rxUOUACNAR6yBgPwyF1NuOjfdKeRwVd
+	 /p2sO1sjVfSSl/SZghyLNdImjMFUsAdzF87Wpxv2oghTr6l4vk1aISwxvTL8r+7Gv4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=No4pjW0b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5AquhQf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B54606A331;
-	Fri, 13 Nov 2026 15:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF45F606D450;
+	Fri, 13 Nov 2026 15:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=No4pjW0b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC9E1F000C4;
-	Fri, 13 Nov 2026 15:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5AquhQf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE5D1F000C4;
+	Fri, 13 Nov 2026 15:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585529;
-	bh=UJ28QbOD8npzRwc2Gg4KUzQlXL20/RHDadxFZwqW9Ao=;
+	s=korg; t=1794585530;
+	bh=ButShEb7whK3pmasVwDRMYrATgqvm362TTVqvrD/vK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=No4pjW0b7EFfVVeEpwfXotA2INhgPWhYnRQehXpYGSAPn1MOG3Y6O3u+Hz1meMERA
-	 h4yLXEAj1S0cDl+AgL+acnEHmB8J86XWsgTo95LeOF9ZvQBLSvcbPDC7rdDa86C3gh
-	 yeZKfVe0IBiyfuqQonbK6Ejq4qUccYf8zOhrIV10=
+	b=F5AquhQfhCfs9z0svUAZsC8p1KbsqjWnpSf9HX5zUGQRZgv/HN/QXIgYejr+zpjXu
+	 dmmLScCZZSXzWBrceoFpgVKs5xMrA526W4+jhBeZUQyyDzIVUn/0jAnyyu7U0sg0Ey
+	 X7hXBqK3APR/SZqiBL239xGGKEVT5mvOaF6jPq2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Edward Blair <edward.blair@gmail.com>,
+	Zac Lanzon <lanzonza@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 144/507] mm/shmem: fix truncation of files containing only swapin-error markers
-Date: Fri, 13 Nov 2026 10:47:28 -0500
-Message-ID: <20261113153759.316393043@linuxfoundation.org>
+Subject: [PATCH 7.3 171/507] hwmon: (asus_rog_ryujin) Fix pump control source on the Ryujin III
+Date: Fri, 13 Nov 2026 10:47:55 -0500
+Message-ID: <20261113153800.277138920@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -69,51 +69,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Zac Lanzon <lanzonza@gmail.com>
 
-[ Upstream commit 59511d630a6942356ac4b6984797998a8f3a9017 ]
+[ Upstream commit 743b4481b6112d8ac11c165628daa8e0f0ecf78c ]
 
-It might not be very common, but we can end up with shmem files that are
-composed only of swapin-error/poison markers.
+The RYUJIN III pump has a 4-pin cable for a motherboard fan header in
+addition to USB. Byte 2 of the set cooler duty command selects the pump
+control source: 0 hands the pump to its internal controller, which
+follows the PWM of the header its 4-pin cable is plugged into, and 1
+makes it follow the pump duty in byte 3. Byte 3 of the cooler duty
+report returns the current source.
 
-Such markers are not counted in info->alloced. Consequently,
-shmem_setattr() can skip shmem_truncate_range(), leaving the markers
-behind.
+The driver fills byte 2 with duty_channel, which is 1 for the RYUJIN
+III, and a pwm2 write re-sends the reported pump duty with the new fan
+duty. So writing only the internal fan duty takes the pump away from
+its internal controller.
 
-Truncating the file to zero and growing it again will result in reads
-failing with -EIO instead of returning zeroes.
+Measured on a RYUJIN III 360 (firmware AURJ2-S750-0108) with the pump
+cable on AIO_PUMP and the header PWM set through nct6775, after loading
+the driver with the pump on its internal controller (pump rpm):
 
-Check whether the mapping contains entries, in addition to
-info->alloced, before skipping the truncation. Keep the info->alloced
-check so that shmem_recalc_inode(), called at the end of
-shmem_undo_range(), can fix up accounting after reclaim has emptied the
-mapping.
+                                   header 50%   header 80%   source
+  no write yet                        2160         3090         0
+  pwm2 = 40%, before this patch       1740         1740         1
+  pwm2 = 40%, with this patch         2130         3090         0
 
-Fixes: 6cec2b95dadf ("mm/shmem: fix infinite loop when swap in shmem error at swapoff time")
+Send the reported source with pwm2 writes. The fan duty applies with
+either source (40%: 1545 to 1590 rpm, 30%: 870 rpm). A pwm2 write sent
+right after a pwm1 write that took the pump over, before the report
+could show the change, left the pump on USB and applied its fan duty
+(2 of 2 trials, and 7 of 7 with raw commands up to 0.9 s after).
+
+pwm1 writes keep selecting source 1. The cooler reports the pump duty of
+the last write, whichever source it selected, and 40% after power-on.
+Byte 9 of the status report follows the duty the pump runs at. Measured
+from power-on (PSU switched off) once per driver, with the header at
+100%:
+
+                                  before this patch   with this patch
+                                  source duty  rpm    source duty  rpm
+  no write yet                       0    100  3570      0    100  3570
+  pwm2 = 40%                         1    100  3570      0    100  3570
+  pwm1 = 40%, the reported duty      1    100  3570      1     40  1710
+  pwm1 = 60%                         1     60  2430
+  pwm1 = 40%                         1     40  1725
+
+So a pwm1 write of the reported duty did not reach the pump, while
+other duties applied in one write, also when taking the pump from its
+internal controller (60%: 2460 rpm). When a pwm1 write requests the
+reported duty, write a duty 1% away first (below at 100%), then the
+requested one. Sent back to back, the two writes left the pump at the
+requested duty in all 19 trials, 9 with raw commands and 10 through
+this driver.
+
+Tested on the RYUJIN III 360 only. The EXTREME, EVA and WHITE EDITION
+use the same rog_ryujin_iii_info and send the same command, and Edward
+Blair's analysis of the WHITE EDITION firmware shows the same pump
+control source. The RYUJIN II, whose duty_channel is 0, is unchanged.
+
+Fixes: cd258aca0dc4 ("hwmon: (asus_rog_ryujin) Add ROG Ryujin III support")
+Closes: https://github.com/aleksamagicka/asus_rog_ryujin-hwmon/issues/12
+Suggested-by: Edward Blair <edward.blair@gmail.com>
 Cc: stable@vger.kernel.org
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-15-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Zac Lanzon <lanzonza@gmail.com>
+Link: https://patch.msgid.link/7ca8fe6cd6b4125813613bd4187ff6cdda72e4b6.1790512964.git.lanzonza@gmail.com
+[groeck: Dropped obsolete 'Assisted-by: tag]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/hwmon/asus_rog_ryujin.rst |  6 +++
+ drivers/hwmon/asus_rog_ryujin.c         | 54 ++++++++++++++++++++++++-
+ 2 files changed, 59 insertions(+), 1 deletion(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 31103314b6b62..199e8a9c2a2b4 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1384,7 +1384,8 @@ static int shmem_setattr(struct mnt_idmap *idmap,
- 			if (oldsize > holebegin)
- 				unmap_mapping_range(inode->i_mapping,
- 							holebegin, 0, 1);
--			if (info->alloced)
-+			/* Swapin-error markers are not counted in alloced. */
-+			if (info->alloced || !mapping_empty(inode->i_mapping))
- 				shmem_truncate_range(inode,
- 							newsize, (loff_t)-1);
- 			/* unmap again to remove racily COWed private pages */
+diff --git a/Documentation/hwmon/asus_rog_ryujin.rst b/Documentation/hwmon/asus_rog_ryujin.rst
+index b0d7ce8dd921f..24dccef2d2df1 100644
+--- a/Documentation/hwmon/asus_rog_ryujin.rst
++++ b/Documentation/hwmon/asus_rog_ryujin.rst
+@@ -33,6 +33,12 @@ Usage notes
+ As these are USB HIDs, the driver can be loaded automatically by the kernel and
+ supports hot swapping.
+ 
++The pump of the RYUJIN III also has a 4-pin cable for a motherboard fan header.
++The cooler either hands the pump to its internal controller, which follows the
++PWM of the header its 4-pin cable is plugged into, or runs it at the pump duty
++set over USB. Writing pwm1 selects the duty set over USB. Writing pwm2 sets
++only the internal fan duty and leaves the pump control as it is.
++
+ Sysfs entries
+ -------------
+ 
+diff --git a/drivers/hwmon/asus_rog_ryujin.c b/drivers/hwmon/asus_rog_ryujin.c
+index e297557ca3463..a400e523d2e9c 100644
+--- a/drivers/hwmon/asus_rog_ryujin.c
++++ b/drivers/hwmon/asus_rog_ryujin.c
+@@ -49,6 +49,7 @@ static const struct rog_ryujin_device_info rog_ryujin_iii_info = {
+ #define MAX_REPORT_LENGTH	65
+ 
+ /* Cooler duty report offsets */
++#define RYUJIN_PUMP_SOURCE		3
+ #define RYUJIN_PUMP_DUTY		4
+ #define RYUJIN_INTERNAL_FAN_DUTY	5
+ 
+@@ -69,10 +70,15 @@ static const u8 get_cooler_duty_cmd[] = { RYUJIN_CMD_PREFIX, 0x9A };
+ static const u8 get_controller_speed_cmd[] = { RYUJIN_CMD_PREFIX, 0xA0 };
+ static const u8 get_controller_duty_cmd[] = { RYUJIN_CMD_PREFIX, 0xA1 };
+ 
++#define RYUJIN_SET_COOLER_CHANNEL_OFFSET	2
+ #define RYUJIN_SET_COOLER_PUMP_DUTY_OFFSET	3
+ #define RYUJIN_SET_COOLER_FAN_DUTY_OFFSET	4
+ static const u8 set_cooler_duty_cmd[] = { RYUJIN_CMD_PREFIX, 0x1A, 0x00, 0x00, 0x00 };
+ 
++/* Pump control sources in the set cooler duty command and the cooler duty report */
++#define RYUJIN_SOURCE_HEADER	0
++#define RYUJIN_SOURCE_USB	1
++
+ #define RYUJIN_SET_CONTROLLER_FAN_DUTY_OFFSET	4
+ static const u8 set_controller_duty_cmd[] = { RYUJIN_CMD_PREFIX, 0x21, 0x00, 0x00, 0x00 };
+ 
+@@ -116,6 +122,7 @@ struct rog_ryujin_data {
+ 	s32 temp_input[1];
+ 	u16 speed_input[6];	/* Pump, internal fan and four controller fan speeds in RPM */
+ 	u8 duty_input[3];	/* Pump, internal fan and controller fan duty in PWM */
++	u8 pump_source;		/* Pump control source from the cooler duty report */
+ 
+ 	u8 *buffer;
+ 	unsigned long updated;	/* jiffies */
+@@ -305,6 +312,44 @@ static int rog_ryujin_read_string(struct device *dev, enum hwmon_sensor_types ty
+ 	return 0;
+ }
+ 
++/*
++ * On devices with a non-zero duty_channel (the RYUJIN III), the channel byte of
++ * the set cooler duty command selects the pump control source.
++ * RYUJIN_SOURCE_HEADER hands the pump to its internal controller, which follows
++ * the PWM of the header its 4-pin cable is plugged into. RYUJIN_SOURCE_USB
++ * makes the pump follow the pump duty in the command. The cooler duty report
++ * returns the current source.
++ *
++ * A fan duty write sends the reported source back, so that it leaves the pump
++ * control source as it is. A pump duty write selects USB. The cooler does not
++ * pass on a pump duty equal to the one it reports, and after power-on it
++ * reports 40% while a pump handed over at that duty runs at full speed. So
++ * when a pump duty write asks for the reported duty, write a duty 1% away
++ * first.
++ */
++static int rog_ryujin_select_pump_source(struct rog_ryujin_data *priv, u8 *set_cmd,
++					 int channel)
++{
++	u8 duty = set_cmd[RYUJIN_SET_COOLER_PUMP_DUTY_OFFSET];
++	int ret;
++
++	if (channel == 1) {
++		set_cmd[RYUJIN_SET_COOLER_CHANNEL_OFFSET] = priv->pump_source;
++		return 0;
++	}
++
++	set_cmd[RYUJIN_SET_COOLER_CHANNEL_OFFSET] = RYUJIN_SOURCE_USB;
++
++	if (duty != rog_ryujin_pwm_to_percent(priv->duty_input[0]))
++		return 0;
++
++	set_cmd[RYUJIN_SET_COOLER_PUMP_DUTY_OFFSET] = duty < 100 ? duty + 1 : duty - 1;
++	ret = rog_ryujin_execute_cmd(priv, set_cmd, SET_CMD_LENGTH, &priv->cooler_duty_set);
++	set_cmd[RYUJIN_SET_COOLER_PUMP_DUTY_OFFSET] = duty;
++
++	return ret;
++}
++
+ static int rog_ryujin_write_fixed_duty(struct rog_ryujin_data *priv, int channel, int val)
+ {
+ 	u8 set_cmd[SET_CMD_LENGTH];
+@@ -322,7 +367,7 @@ static int rog_ryujin_write_fixed_duty(struct rog_ryujin_data *priv, int channel
+ 			return ret;
+ 
+ 		memcpy(set_cmd, set_cooler_duty_cmd, SET_CMD_LENGTH);
+-		set_cmd[2] = priv->info->duty_channel;
++		set_cmd[RYUJIN_SET_COOLER_CHANNEL_OFFSET] = priv->info->duty_channel;
+ 
+ 		/* Cooler duties are set as 0-100% */
+ 		val = rog_ryujin_pwm_to_percent(val);
+@@ -339,6 +384,12 @@ static int rog_ryujin_write_fixed_duty(struct rog_ryujin_data *priv, int channel
+ 			set_cmd[RYUJIN_SET_COOLER_FAN_DUTY_OFFSET] = val;
+ 		}
+ 
++		if (priv->info->duty_channel) {
++			ret = rog_ryujin_select_pump_source(priv, set_cmd, channel);
++			if (ret < 0)
++				return ret;
++		}
++
+ 		return rog_ryujin_execute_cmd(priv, set_cmd, SET_CMD_LENGTH, &priv->cooler_duty_set);
+ 	} else {
+ 		/*
+@@ -481,6 +532,7 @@ static int rog_ryujin_raw_event(struct hid_device *hdev, struct hid_report *repo
+ 			goto unlock;
+ 		}
+ read_cooler_duty:
++		priv->pump_source = data[RYUJIN_PUMP_SOURCE];
+ 		priv->duty_input[0] = rog_ryujin_percent_to_pwm(data[RYUJIN_PUMP_DUTY]);
+ 		priv->duty_input[1] = rog_ryujin_percent_to_pwm(data[RYUJIN_INTERNAL_FAN_DUTY]);
+ 
 -- 
 2.53.0
 
