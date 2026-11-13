@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590418;
-	b=TFMkFiEuivAjVoEU+RaZVz5xhjKPy9ZXegCNEgNemkc7MueiPVeupYsbJgKbNCN1hg1s
-	 UTH7Ryu7nFJ0pxRb0Dg8+WKSUNOI9BLnXXofWJpUScpmWenDw94UrAHhkeWz8QOYTlcYa
-	 Jh6107c3LfNBL3ymd2/YbXxm/SN2S+/NmPiy6ndvZU5D5alQLVH70UkBpQs/5INqJGJGE
-	 W9ypisVm3w2+CgTSaykZo9+B96FqKWnByJHE4b1pyq/5jOQb6BDOpwsMlDBoUhLrb3w49
-	 k+vmWLu0GhDd/nFfLlVQeUSs/8ANZC2KB4BrbddYeEZMyKytkU+EhkYdlEITJMEbUpw==
+	t=1794590419;
+	b=WCZRnvkVLDXPuakRN37icteNGeOCHFK7qzzj4WfpLdt4G/ehjaeyacLg0RDiBBpBbadT
+	 jSQlhjdRiL7+jWWrLGrj42m1TaW1cGpsLLyLC+oQHo2Hvxvi0TVsBlnUA2yzyyGJXfRvu
+	 kLHtN9JRt61Mb1LmSz8SPT7iMf+L84aREMr4AiI7J00rEzfEkac9hrJgKiDNXg0hQTXKC
+	 zXc9nXTaoohvzNTW2jtMHF7kq1TIvHZIXlfog0Jy0EJbZ20g/5mfBxE8GFzKw7vRrlFd1
+	 zDpdCZOQimVoGKX4ptqldrDhgNKCNH+j6fQWo5HfWnM+CfFQxyaCBiBDHXLMHsxHgyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590418;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590419;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7DqeIXVW5Sn0+M6XZTnRhhBHBXRzyZPA4XpQ65/sroU=;
-	b=fkqtsh057Jhp15nwZi2tg+sh19ByQvF0Vi7e0zCA3WYZo5ymhzohKeiwPXBpQvhLVOzc
-	 YdvUNtCEo90+wprK5yEOHehEAMKltc35lByWvtWWu9ytVR+vpArTdgrb+P4HMDLIuONXd
-	 z/qBHNJPyzLTKo6txB/ObbzVqBQL9jY/+LU4c8Vyyk0my+hrB7h/AtxlOeXzOjXIB43tL
-	 mtNxDs2kom1r4leH9Z+ZUlKQe2h4xLcRo2Ci3YlgnHZdnjAIWHZ1AONBnph8g5yEIogzU
-	 2cq9SWF0/59e5nwM1kWkpbIBiG2XFeOhL71OfIjC1ydOR+rPsgy8IZMj7KIVaXaVocg==
+	bh=nWkeHnqicgnoNZ9OVaslK0e+q5vtVBovCZvvKsQRwNk=;
+	b=jonmSSGU2aIiYAN1xMbWNci8eac8YRBnl8fAQ4qYXEkjPaogLhydwJRDOjU7YZ9E6giL
+	 bZXvXvqP3P2U+e5oko0fhOgE5SaLy7TlEE1u9KlkVRRu/Gu/iqNpWRs+uSpxBHBKwBqvY
+	 UsqaGx6T44wK2B36R8tNzvzXs4fcr7DentN6AaqkM5RzwJ2thefrKdYsczvHfV5ait+DJ
+	 xUV/DFfKmYBdc49kkTRLpCY7X5jVGglrHgovKqFPx9lS76dAl/eV/JV66Ez8D7/bFLp4J
+	 FWyS1w1+bicLgqT2rNpqTE7IODXFpsojbuMc0unkQ/UIYKKE+fqvih1Fv5oBnbOVp2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1yP/GmaW";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9sZ+mrJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F258606F725;
-	Fri, 13 Nov 2026 17:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65990606B46F;
+	Fri, 13 Nov 2026 17:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1yP/GmaW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2E51F000C4;
-	Fri, 13 Nov 2026 17:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q9sZ+mrJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157241F000C4;
+	Fri, 13 Nov 2026 17:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590418;
-	bh=7DqeIXVW5Sn0+M6XZTnRhhBHBXRzyZPA4XpQ65/sroU=;
+	s=korg; t=1794590419;
+	bh=nWkeHnqicgnoNZ9OVaslK0e+q5vtVBovCZvvKsQRwNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1yP/GmaW8Xf76pbnW2C6Ke17RsL6FdJHk+UC4gVekTgWWViz0SKcgCuzBoR8XaItV
-	 EIAXNhKF6CAsol43coLMTxxNeSXnS7IlFVDTqU+xMUBaodhamL9tP3JAjLnODJmrLD
-	 5JS//MV3CTvezk5hPnmcKYRfqYLaFXt7p8b1hllo=
+	b=Q9sZ+mrJSeW+4g3PBxuAGQv3K+0dwBE0C5L5M6v6ZkyXuRqQW2PWcppiLrXP0XLRw
+	 pxL42iPnYlc5iv3w79ufkFtKAlHxgddMfJtfQmlQkQBLYIXbz4b+GWSydSz3WmcOeT
+	 AB9xte1nQ1xCkV5eDUD8sTRA/fVuPJ8YJETHKmz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runyu Xiao <runyu.xiao@seu.edu.cn>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Chris Mason <mason@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 365/686] can: proc: reset pkg_stats atomics individually
-Date: Fri, 13 Nov 2026 10:48:18 -0500
-Message-ID: <20261113153833.285824586@linuxfoundation.org>
+Subject: [PATCH 6.18 383/686] mm/memory: reject remote COW faults on PFN mappings
+Date: Fri, 13 Nov 2026 10:48:36 -0500
+Message-ID: <20261113153833.931484320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,136 +71,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Runyu Xiao <runyu.xiao@seu.edu.cn>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 12297f855bbd943847cb8893a3614caef5a9c2a8 ]
+[ Upstream commit 8db6921cc07b74197a3866d62ed262b68aeadcf3 ]
 
-Commit 80b5f90158d1 ("can: statistics: use atomic access in hot path")
-converted several members of struct can_pkg_stats to atomic_long_t and
-updated the hot TX/RX and procfs read paths to use atomic_long_*()
-helpers. However, can_init_stats() still clears the whole struct with
-memset().
+When handling a COW fault without a normal source page (PFN mappings),
+__wp_page_copy_user() copies from the faulting user address. For remote
+faults, this accesses the wrong address space, resulting in wrong data
+getting copied.
 
-can_init_stats() is reached from can_stat_update() in timer context and
-also from the procfs reset path. Those paths can run while the TX/RX hot
-paths are concurrently updating rx_frames, tx_frames, matches and their
-*_delta counters. Hitting the whole-struct memset() in that window
-performs plain writes to fields that otherwise follow an atomic_long_t
-access contract, which can lose or mix live statistics updates.
+For example, user_events updates an enable bit in the registering
+process's memory. If that memory needs to be faulted in,
+user_event_enabler_fault_fixup() calls fixup_user_fault() from a work
+item. Placing the enable bit in a private PFN mapping can trigger this
+remote COW path.
 
-This issue was found by source-level API-misuse analysis looking for
-whole-object resets left behind after atomic_long_t conversions, then
-manually audited on Linux v6.18.21.
+Reject these faults with VM_FAULT_SIGBUS when the target mm differs from
+current->mm: remote faults. Ordinary (non-PFN) mappings are not affected.
 
-Replace the whole-struct memset() with a helper that resets the
-atomic_long_t counters via atomic_long_set() and clears the derived
-scalar statistics explicitly. This preserves the existing reset
-semantics for scalar fields while restoring atomic access discipline for
-the live counters.
+The user-address copy dates back to commit 6aab341e0a28 ("mm: re-architect
+the VM_UNPAGED logic"); likely, actual ways to get remote faults in
+there on COW PFN mappings appeared afterwards. But the fix is simple and
+straight forward.
 
-Build-tested by compiling net/can/proc.o on x86_64 netdev/main.
-Runtime-tested with a QEMU + vcan setup on Linux v6.18.21 by driving
-concurrent traffic and reset_stats reads, which reproduced inconsistent
-exported statistics before the fix.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-[Hartkopp] can_stat_update() also read the *_delta counters at the
-beginning and cleared them with atomic_long_set() at the end. Increments
-from the hot path in between were lost for both the current and the next
-interval. Use atomic_long_xchg() to fetch and clear the *_delta counters
-in one atomic step instead.
-
-On x86_64 atomic_long_set() is a plain store like memset(), so the
-memset() is an actual problem only on architectures with lock-based
-atomics (e.g. parisc). The inconsistencies seen on x86_64 come from the
-*_delta handling and from the stale snapshots, which are fixed in "can:
-proc: skip stats calculation after reset in can_stat_update()". As
-before, the counters are reset one at a time and the derived scalar
-statistics use plain stores.
-
-Fixes: 80b5f90158d1 ("can: statistics: use atomic access in hot path")
+Fixes: 6aab341e0a28 ("mm: re-architect the VM_UNPAGED logic")
 Cc: stable@vger.kernel.org
-Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
-Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20261027-can-rx-lock-v12-5-eb5afc2d8b9b@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+[ david: simplify comment and description ]
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-35-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/proc.c | 39 +++++++++++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 10 deletions(-)
+ mm/memory.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/can/proc.c b/net/can/proc.c
-index de4d05ae34597..70104f13077e0 100644
---- a/net/can/proc.c
-+++ b/net/can/proc.c
-@@ -76,16 +76,39 @@ static const char rx_list_name[][8] = {
-  * af_can statistics stuff
-  */
+diff --git a/mm/memory.c b/mm/memory.c
+index 01d14ca0e74d2..08dcd668c2d6b 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -3387,6 +3387,13 @@ static inline int __wp_page_copy_user(struct page *dst, struct page *src,
+ 		return 0;
+ 	}
  
-+static void can_reset_pkg_stats(struct can_pkg_stats *pkg_stats)
-+{
-+	atomic_long_set(&pkg_stats->rx_frames, 0);
-+	atomic_long_set(&pkg_stats->tx_frames, 0);
-+	atomic_long_set(&pkg_stats->matches, 0);
++	/*
++	 * __copy_from_user_inatomic() only works as expected for local faults.
++	 * Reject remote faults.
++	 */
++	if (unlikely(mm != current->mm))
++		return -EFAULT;
 +
-+	pkg_stats->total_rx_rate = 0;
-+	pkg_stats->total_tx_rate = 0;
-+	pkg_stats->total_rx_match_ratio = 0;
-+
-+	pkg_stats->current_rx_rate = 0;
-+	pkg_stats->current_tx_rate = 0;
-+	pkg_stats->current_rx_match_ratio = 0;
-+
-+	pkg_stats->max_rx_rate = 0;
-+	pkg_stats->max_tx_rate = 0;
-+	pkg_stats->max_rx_match_ratio = 0;
-+
-+	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
-+	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
-+	atomic_long_set(&pkg_stats->matches_delta, 0);
-+}
-+
- static void can_init_stats(struct net *net)
- {
- 	struct can_pkg_stats *pkg_stats = net->can.pkg_stats;
- 	struct can_rcv_lists_stats *rcv_lists_stats = net->can.rcv_lists_stats;
  	/*
--	 * This memset function is called from a timer context (when
-+	 * This stats reset is called from a timer context (when
- 	 * can_stattimer is active which is the default) OR in a process
- 	 * context (reading the proc_fs when can_stattimer is disabled).
- 	 */
--	memset(pkg_stats, 0, sizeof(struct can_pkg_stats));
-+	can_reset_pkg_stats(pkg_stats);
- 	pkg_stats->jiffies_init = jiffies;
+ 	 * If the source page was a PFN mapping, we don't have
+ 	 * a "struct page" for it. We do a best-effort copy by
+@@ -3712,6 +3719,8 @@ static vm_fault_t wp_page_copy(struct vm_fault *vmf)
+ 				folio_put(old_folio);
  
- 	rcv_lists_stats->stats_reset++;
-@@ -121,9 +144,10 @@ void can_stat_update(struct timer_list *t)
- 	long rx_frames = atomic_long_read(&pkg_stats->rx_frames);
- 	long tx_frames = atomic_long_read(&pkg_stats->tx_frames);
- 	long matches = atomic_long_read(&pkg_stats->matches);
--	long rx_frames_delta = atomic_long_read(&pkg_stats->rx_frames_delta);
--	long tx_frames_delta = atomic_long_read(&pkg_stats->tx_frames_delta);
--	long matches_delta = atomic_long_read(&pkg_stats->matches_delta);
-+	/* fetch and clear values for 'current rate' calculation */
-+	long rx_frames_delta = atomic_long_xchg(&pkg_stats->rx_frames_delta, 0);
-+	long tx_frames_delta = atomic_long_xchg(&pkg_stats->tx_frames_delta, 0);
-+	long matches_delta = atomic_long_xchg(&pkg_stats->matches_delta, 0);
- 
- 	/* restart counting in timer context on user request */
- 	if (user_reset)
-@@ -172,11 +196,6 @@ void can_stat_update(struct timer_list *t)
- 	if (pkg_stats->max_rx_match_ratio < pkg_stats->current_rx_match_ratio)
- 		pkg_stats->max_rx_match_ratio = pkg_stats->current_rx_match_ratio;
- 
--	/* clear values for 'current rate' calculation */
--	atomic_long_set(&pkg_stats->tx_frames_delta, 0);
--	atomic_long_set(&pkg_stats->rx_frames_delta, 0);
--	atomic_long_set(&pkg_stats->matches_delta, 0);
--
- 	/* restart timer (one second) */
- 	mod_timer(&net->can.stattimer, round_jiffies(jiffies + HZ));
- }
+ 			delayacct_wpcopy_end();
++			if (err == -EFAULT)
++				return VM_FAULT_SIGBUS;
+ 			return err == -EHWPOISON ? VM_FAULT_HWPOISON : 0;
+ 		}
+ 		kmsan_copy_page_meta(&new_folio->page, vmf->page);
 -- 
 2.53.0
 
