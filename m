@@ -1,55 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591426;
-	b=qdqsi7J7cUjbb7H0IC2jpPd7HEIaj84QWNj4TaMUIb/rqmuH0GW2q0QX21t/0oKUQiAH
-	 85xX+1aH1aoOwmdlcDgQSZycJKvSPPyEAkwMaXq74w1tQMlrFugw7SWK5F8hk7k9+n60M
-	 rRUnZlzRPd/WmiwhE40ShfYjQTCO2+1/ONFtWuGdRtQzJbUWN3aFmJR1vruKx0BBILAi4
-	 9HTPg6npfWcbWJ0UsN7VfU1ODWZ7aocpDBfpdgmNt9rWKOfdeFUBfh9nae3bwxOBSagF2
-	 0oIOumVQciFFuQNa9U7ZQJEPH84spWg7jmUc6c9YWVtf+S3wQmgLui3tcD+9rQljEYQ==
+	t=1794591427;
+	b=hB46aRm3cKBN52XPWJkIZt/wytsLR0w3SgEbnt0PKtua3iHXGqx0t90KiOw5Qdr9jAfx
+	 kDbtmpRND79H+c4VC0UbnPCKmgxVgr12PlnZfgufaZyjVviuJY9QmkA6CAOe1qbQXkaEZ
+	 +4AllHX9xG86IKzKguYpji1T8yDkJav2Qp9yjekzVZjlLqhhyF+ies5MjbVtw2dJS0pyf
+	 elFRFWh2KEmfDN5h8oqkE2aeyauMeN6rNZM0QpIb8BGHu0hvWFFbFz2Ng0u3UirKwfELt
+	 vif9CR/vJK9hyW46naL5MhLadogAzsxp3nnoV0DgrKUO9HvXbc1PbbG0S+eoXGMQKSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591426;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591427;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=P1bHk9HPZAKmenG2hySMowdn2v+z2mCSI1Lt1EWDKf4=;
-	b=ZbuTLLFM5+Xojrc+DY4OsM/VQJXBCKT2ZDZZ+3doLmpM6HpRk+WIWSWAQLte/8gwBwvf
-	 sspeLl9pkz9lOe+xBkh/f+nEQKbzj/dyaWZ1RMUii+mjw5Ffoj7GLy9rSajcFcn9DuV4A
-	 hEBGC5ugLSMsdFh2nxA0DyJCjILzARhifkzGThKmrfVi9yjDA1JvdXkI2Lw8g/TTtgOO2
-	 bESq/600YCWvProzvmKufKrIy1nNmW027GGO/XCB8OAy8YFOGqFYirT6G+FbmfNDRiKzn
-	 A5GSHnhV+79vVgrZ2ZU47QUX93L9O6Vz0ZId/jYRE1DqtFf5xh/2AXXB7LzwLv4HlNw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=19+RZEp3Fg/g1IFmSrX819kN8FrREEIScXhVE/RmLO8=;
+	b=nhXJoBbPZpAg3LfEFgKTw5NHzk4Xijd+q3PCOvnL4d0GLxsvR7dNKX0em3bj6xds+eYI
+	 V6SFaHI6ohUBzIDKGgdNB50Dp4kRTMcbAoKfatevbIEsl+PUaxbOZoBor/mUHRe/lxZsb
+	 8U2/7Uw1L/5obvJpU619+viZzYJbVEqLvZHskJOzjpJBM22POlknqM3DcavtKoXDcYZXd
+	 d+z16kGZvgMu+xCd8XFeoZpymuh7R1ib29dVxM2wfGuE8M4GJ43/AgjPw4DlMYtdS3sK3
+	 WUUDNRY/Y0Wbn7TszheSeHl+BtMU0d+8cDdHD1fsEeqdXqfJaSHQaikuK+ARM2hVehw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P6Bb1RGl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hrQqw87X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BABC606E203;
-	Fri, 13 Nov 2026 17:37:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E479607B5A2;
+	Fri, 13 Nov 2026 17:37:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P6Bb1RGl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF8F1F000C4;
-	Fri, 13 Nov 2026 17:37:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hrQqw87X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F52D1F000C4;
+	Fri, 13 Nov 2026 17:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591426;
-	bh=P1bHk9HPZAKmenG2hySMowdn2v+z2mCSI1Lt1EWDKf4=;
+	s=korg; t=1794591427;
+	bh=19+RZEp3Fg/g1IFmSrX819kN8FrREEIScXhVE/RmLO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P6Bb1RGlXQcDzcvr2kiJ76DABQOm2x+sp8SUIg63zQmfFo5O/kooiUGD9H3pE80oI
-	 0HVTdnlZhlEZIoSJ0tiScxKJ8LuvrgQcvdFDqEBj+ohqembcLBLLTEXSx5PVPLVKmJ
-	 6FQcF0yX3Ce5+A0iGGBd+jCC+gidFpXyQYaLsM4M=
+	b=hrQqw87XRPgVCcTECJ7kKyv9KnilJ6BI63A4RCc9h1i+Qg++7eim5WqPHyHzSuMrY
+	 QTeDwpDSF0LwLZ1zjdV97k+UZ55Jycf5j1b1A0xGLolz9tR4xGfgy4cXNcx5J+gfYV
+	 BXmBaqBcv2CPsR7HCnvVYTAHVBV2d8zB7YffjfTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	TencentOS Corvus AI <corvus@tencent.com>,
-	Jun Yang <junvyyang@tencent.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Cen Zhang (Microsoft)" <cenzhang@linux.microsoft.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	AutonomousCodeSecurity@microsoft.com,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Mike Rapoport <rppt@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	tgopinath@linux.microsoft.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 477/670] sctp: re-point retained control chunks on association migration
-Date: Fri, 13 Nov 2026 10:50:41 -0500
-Message-ID: <20261113153828.116926741@linuxfoundation.org>
+Subject: [PATCH 6.12 478/670] userfaultfd: fix UFFDIO_MOVE livelock on large folio with extra references
+Date: Fri, 13 Nov 2026 10:50:42 -0500
+Message-ID: <20261113153828.151493161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -65,166 +69,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jun Yang <junvyyang@tencent.com>
+From: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
 
-[ Upstream commit 52ffeaa358d1f3d91aa87a26ad90d77769cff74b ]
+[ Upstream commit 454143aeb4c6c85ca7d50df36d1a66a64d88283e ]
 
-sctp_sock_migrate() transfers DATA chunk ownership but leaves retained
-control chunks pointing at the old socket. A later retransmission can
-therefore access the socket after it has been freed.
+To move one page out of a large folio, move_pages_ptes() first has to
+split the folio.  __folio_split() refuses if the folio has any reference
+beyond its page table mappings and the caller's own, and it reports the
+refusal as -EAGAIN.  move_pages() treats returned -EAGAIN as a transient
+race and keeps retrying the same address, holding the VMA read locks the
+whole time.  This is incorrect since in some cases userspace can hold such
+a reference indefinitely, such as by registering the page as an io_uring
+buffer.
 
-Extend the migration walk to cover retained control chunks and use
-sctp_control_set_owner_w() to assign their new owner. Reuse the DATA
-ownership check so each chunk is processed once per pass, even when it
-is reachable through multiple lists or retained pointers.
+An unprivileged user can trigger this with three threads: first holds such
+a reference on a page of a THP, second calls UFFDIO_MOVE on another page
+of the same THP and spins in the kernel forever holding the VMA read
+locks, and third calls fork() or mprotect(), which takes mmap_lock for
+writing and then waits forever for those read locks.  From then on every
+mmap_lock user of that mm hangs, including other processes inspecting it
+through /proc/<pid>/, until the process is SIGKILLed.  The hung task
+detector reports the blocked tasks (third one), and with
+kernel.hung_task_panic=1 the machine panics:
 
-Preserve a control chunk's existing authentication key across migration
-so its final release can still generate SCTP_AUTH_FREE_KEY when needed.
+  INFO: task wedge:95 blocked for more than 122 seconds.
+  task:wedge  state:D stack:12528 pid:95 tgid:95 ppid:94
+  Call Trace:
+   __schedule+0x596/0x1110
+   schedule+0x36/0xf0
+   __vma_start_exclude_readers+0x100/0x170
+   __vma_start_write+0x51/0xd0
+   __split_vma+0x208/0x3d0
+   vma_modify+0x6a8/0x840
+   vma_modify_flags+0xce/0x110
+   mprotect_fixup+0xbe/0x480
+   do_mprotect_pkey+0x2d9/0x580
+   __x64_sys_mprotect+0x1a/0x30
 
-Fixes: d04adf1b3551 ("sctp: reset owner sk for data chunks on out queues when migrating a sock")
-Cc: stable@kernel.org
-Reported-by: TencentOS Corvus AI <corvus@tencent.com>
-Signed-off-by: Jun Yang <junvyyang@tencent.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20261009074244.3718-3-juny24602@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix by returning -EBUSY instead of -EAGAIN in move_pages_ptes(), the
+caller of split_folio(), when the split fails.  Thus, move_pages() does
+not retry -EBUSY and the ioctl drops its locks and returns to userspace
+instead of spinning.
+
+Link: https://lore.kernel.org/20261012201514.97015-1-cenzhang@linux.microsoft.com
+Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
+Signed-off-by: Cen Zhang (Microsoft) <cenzhang@linux.microsoft.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: <AutonomousCodeSecurity@microsoft.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Assisted-by: LLM
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: <tgopinath@linux.microsoft.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: Adapted upstream’s ret variable to the local err variable in move_pages_pte(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sctp/sm.h    |  1 +
- net/sctp/sm_make_chunk.c |  5 ++--
- net/sctp/socket.c        | 53 ++++++++++++++++++++++++++++++----------
- 3 files changed, 44 insertions(+), 15 deletions(-)
+ mm/userfaultfd.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/sctp/sm.h b/include/net/sctp/sm.h
-index 64c42bd56bb24..84e71381e19bc 100644
---- a/include/net/sctp/sm.h
-+++ b/include/net/sctp/sm.h
-@@ -253,6 +253,7 @@ struct sctp_chunk *sctp_make_fwdtsn(const struct sctp_association *asoc,
- 				    struct sctp_fwdtsn_skip *skiplist);
- struct sctp_chunk *sctp_make_auth(const struct sctp_association *asoc,
- 				  __u16 key_id);
-+void sctp_control_set_owner_w(struct sctp_chunk *chunk);
- struct sctp_chunk *sctp_make_strreset_req(const struct sctp_association *asoc,
- 					  __u16 stream_num, __be16 *stream_list,
- 					  bool out, bool in);
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 6d0df43e08a86..6dae9831613ab 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -95,7 +95,7 @@ static void sctp_control_release_owner(struct sk_buff *skb)
- 	}
- }
- 
--static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
-+void sctp_control_set_owner_w(struct sctp_chunk *chunk)
- {
- 	struct sctp_association *asoc = chunk->asoc;
- 	struct sk_buff *skb = chunk->skb;
-@@ -108,7 +108,8 @@ static void sctp_control_set_owner_w(struct sctp_chunk *chunk)
- 	 *  For now don't do anything for now.
- 	 */
- 	if (chunk->auth) {
--		chunk->shkey = asoc->shkey;
-+		if (!chunk->shkey)
-+			chunk->shkey = asoc->shkey;
- 		sctp_auth_shkey_hold(chunk->shkey);
- 	}
- 	skb->sk = asoc ? asoc->base.sk : NULL;
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 3d45188488b97..7734ca92335aa 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -157,9 +157,24 @@ static void sctp_clear_owner_w(struct sctp_chunk *chunk)
- 
- static void sctp_set_owner_w_migrate(struct sctp_chunk *chunk)
- {
--	sctp_set_owner_w(chunk);
--	if (chunk->shkey)
--		sctp_auth_shkey_release(chunk->shkey);
-+	struct sctp_shared_key *shkey = chunk->shkey;
-+
-+	if (chunk->msg)
-+		sctp_set_owner_w(chunk);
-+	else
-+		sctp_control_set_owner_w(chunk);
-+
-+	if (shkey)
-+		sctp_auth_shkey_release(shkey);
-+}
-+
-+static void sctp_process_tx_chunk(struct sctp_association *asoc,
-+				  struct sctp_chunk *chunk, bool clear,
-+				  void (*cb)(struct sctp_chunk *))
-+{
-+	if ((clear && asoc->base.sk == chunk->skb->sk) ||
-+	    (!clear && asoc->base.sk != chunk->skb->sk))
-+		cb(chunk);
- }
- 
- #define traverse_and_process()	\
-@@ -167,17 +182,14 @@ do {				\
- 	msg = chunk->msg;	\
- 	if (msg == prev_msg)	\
- 		continue;	\
--	list_for_each_entry(c, &msg->chunks, frag_list) {	\
--		if ((clear && asoc->base.sk == c->skb->sk) ||	\
--		    (!clear && asoc->base.sk != c->skb->sk))	\
--			cb(c);	\
--	}			\
-+	list_for_each_entry(c, &msg->chunks, frag_list)	\
-+		sctp_process_tx_chunk(asoc, c, clear, cb);	\
- 	prev_msg = msg;		\
- } while (0)
- 
--static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
--				       bool clear,
--				       void (*cb)(struct sctp_chunk *))
-+static void sctp_for_each_tx_chunk(struct sctp_association *asoc,
-+				   bool clear,
-+				   void (*cb)(struct sctp_chunk *))
- 
- {
- 	struct sctp_datamsg *msg, *prev_msg = NULL;
-@@ -200,6 +212,21 @@ static void sctp_for_each_tx_datachunk(struct sctp_association *asoc,
- 
- 	list_for_each_entry(chunk, &q->out_chunk_list, list)
- 		traverse_and_process();
-+
-+	list_for_each_entry(chunk, &q->control_chunk_list, list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	list_for_each_entry(chunk, &asoc->asconf_ack_list, transmitted_list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	list_for_each_entry(chunk, &asoc->addip_chunk_list, list)
-+		sctp_process_tx_chunk(asoc, chunk, clear, cb);
-+
-+	if (asoc->strreset_chunk)
-+		sctp_process_tx_chunk(asoc, asoc->strreset_chunk, clear, cb);
-+
-+	if (asoc->addip_last_asconf)
-+		sctp_process_tx_chunk(asoc, asoc->addip_last_asconf, clear, cb);
- }
- 
- static void sctp_for_each_rx_skb(struct sctp_association *asoc, struct sock *sk,
-@@ -9715,9 +9742,9 @@ static int sctp_sock_migrate(struct sock *oldsk, struct sock *newsk,
- 	 * paths won't try to lock it and then oldsk.
- 	 */
- 	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
--	sctp_for_each_tx_datachunk(assoc, true, sctp_clear_owner_w);
-+	sctp_for_each_tx_chunk(assoc, true, sctp_clear_owner_w);
- 	sctp_assoc_migrate(assoc, newsk);
--	sctp_for_each_tx_datachunk(assoc, false, sctp_set_owner_w_migrate);
-+	sctp_for_each_tx_chunk(assoc, false, sctp_set_owner_w_migrate);
- 
- 	/* If the association on the newsk is already closed before accept()
- 	 * is called, set RCV_SHUTDOWN flag.
+diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
+index 9951b4f42c65a..e2cb788e6ad89 100644
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -1323,8 +1323,12 @@ static int move_pages_pte(struct mm_struct *mm, pmd_t *dst_pmd, pmd_t *src_pmd,
+ 			pte_unmap(dst_pte);
+ 			src_pte = dst_pte = NULL;
+ 			err = split_folio(src_folio);
+-			if (err)
++			if (err) {
++				/* do not retry, extra refs may be held forever */
++				if (err == -EAGAIN)
++					err = -EBUSY;
+ 				goto out;
++			}
+ 			/* have to reacquire the folio after it got split */
+ 			folio_unlock(src_folio);
+ 			folio_put(src_folio);
 -- 
 2.53.0
 
