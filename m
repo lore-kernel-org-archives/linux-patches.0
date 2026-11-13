@@ -1,53 +1,85 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591578;
-	b=jXvFR9IbOKr51xn0f5ugabQ3igp6is6mHxwk+dTwmE7ftY8NvYwSM3TM143qoGfbV3Uq
-	 GIerVY+NDKXeldZkxxVTxH8PQDjR5lJfI/0GHWoPcU7TSj+aDOfttqUx6bmz9v1w+8dRa
-	 WEae9HHJawOE1OgnyoBlF17vYDbjnZrRSQBhlJO072bPemdJihxZ690PPgT23XznN73jR
-	 VXI+7VNalt27m+vFARkVzny5M+iOXykocNYilVuh1THC6Yr0YH2wEwW5FzhhQhowZGvvF
-	 M8mbB4G62uraakOJzQyEEk009vy+4ZAL6lCymaKbL8eS3YOEMTvIdq4a9sa8dSdh1jg==
+	t=1794591580;
+	b=ZDNVfVLzTRxGWZbw4kQ+SDHqvojYB/76v/7OVK4l3L1HfykWB9v9eSeF4sI+yZxBoMXN
+	 oTRPtMhYp9lMwAXHv4rxj5xl+6PTIYZx5zsg6cjHAvfkBKWw3J4yZ3hIJ5xlZiSk62fJk
+	 8yiP1zcEIMeGCgPDJ2xGA9XsBmXoK+6CPT5yWkE9l37J++RVSkHBdEY1fqkmrm00hvSq9
+	 bUO3sL7lJ2r7CnmoYHSaP545fgRLiM95FAY5tH8TRnYK3zR5YscogC/E69ihhttEtRyMh
+	 qnlx3g0tKzMBd5RO3nenHZAw4tk4Dmrc+gvZ9lnIe0Fd2RO17ZsMEUnLxA9MQUy3igQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VGH6B3xl1M9V+6SOfpo+g5wKwI28bOkb5I9ytjDDKhw=;
-	b=s0uu1ySnogk/z5/NkBV2t6OBBQDvUOJkPFNZUVvFOgzRpqqMrYIX+q4BvENuWYnqo6K6
-	 C+7p97wd3NNNA+Ix0MXLT9j/mFk/2I9BUB2unWPJuZyU74QEAJAPmtmeLfeAgiXRxwu87
-	 vG7FaxEyLuin7Er7YlP82mGxYKJtIeBIEnWnsfspk5NPdJZf+2hgx72heY2Ld7NKXxrtG
-	 zA7LYgsqjsivBC5dB1Y/f/0eeiUSOOSdN4WAOjWuGdC01EDqw+8ay2LqeyiSpvUtlFS43
-	 Z/6y1R6p3e+gB1f+h8djIpaGczEB0TsBRZugfVdOryWXFdwh67AA3s/aD4XpAbFy0Dw==
+	bh=YrsjRn+mW3qsS8V7ETjRQxOXMo/v5hXx1uwwgwf50hw=;
+	b=dEeYcwB2mYcJLXTvwAq135qb8vnjSZyem3XpurIjV8oO4b336Yx9HSQNDlvvH9tTbQCp
+	 9KWAAeXPJqmsHMVTSDw1uqdkF+n6rjnjgHxJXD0f9ndgBkCr717pe7shKD+Rrp1yrSRer
+	 24fPbGHChUNO9+1m1ihjxGyh+dNtpaDyM1sgDc0VYVzQUTSLA9kDXq7ZKLCaVfUQPwP1Q
+	 PYShZu+q7Wwu+i0OsCII8oHb6WcRWGle88ZKwrR4WkQJK1RAqMh0bw0js73n1QYYo2QC8
+	 8ExbttAaOWWqpcmiByBupbzY34+N7+1WuXeVyjTsOSL1I94OKVOjbivqk5lzd0UbXAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vj3nFk9H;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pe8gHGjV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44A0606E234;
-	Fri, 13 Nov 2026 17:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE09D606E64F;
+	Fri, 13 Nov 2026 17:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vj3nFk9H
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604351F000C9;
-	Fri, 13 Nov 2026 17:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pe8gHGjV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8796C1F000C6;
+	Fri, 13 Nov 2026 17:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591578;
-	bh=VGH6B3xl1M9V+6SOfpo+g5wKwI28bOkb5I9ytjDDKhw=;
+	s=korg; t=1794591579;
+	bh=YrsjRn+mW3qsS8V7ETjRQxOXMo/v5hXx1uwwgwf50hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vj3nFk9HRt3F7dBn/QqL1uLSCM4OIDhAXiNPhKByWUd2DG+zEHgjAGV2IbLydwAlP
-	 Lr36JVUQkdXHLHh3bYz+SnTI4wmsxFFYufkX/n3pKPHC02Pjq0PoiwECDcSlXupi6a
-	 d/d7IszlYgcWg9afi8TzTNASUWuQvhMfPblGyjPE=
+	b=pe8gHGjVu/TX0ygXRUtZxm/f7zUnTFeC26rXxcEfj1AluD5ExFe1zI7/uRHavpPhc
+	 IkaD7WvqJPHb7yuUK5yEdEtEuGV3yJ/vixvY2KRU/JaN1Kd/Ap5FO37tH4KX96g0Eh
+	 koU5L9lOfqIhJmm4JqCEo41ATLh16bf1Y0dulfCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Ambrozewicz <aambrozewicz@nvidia.com>,
-	Kent Gibson <warthog618@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Jinchao Wang <wangjinchao600@gmail.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
+	Baoquan He <bhe@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Young <dyoung@redhat.com>,
+	Doug Anderson <dianders@chromium.org>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Helge Deller <deller@gmx.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joanthan Cameron <Jonathan.Cameron@huawei.com>,
+	Joel Granados <joel.granados@kernel.org>,
+	John Ogness <john.ogness@linutronix.de>,
+	Kees Cook <kees@kernel.org>,
+	Li Huafei <lihuafei1@huawei.com>,
+	"Luck, Tony" <tony.luck@intel.com>,
+	Luo Gengkun <luogengkun@huaweicloud.com>,
+	Max Kellermann <max.kellermann@ionos.com>,
+	Nam Cao <namcao@linutronix.de>,
+	oushixiong <oushixiong@kylinos.cn>,
+	Petr Mladek <pmladek@suse.com>,
+	Qianqiang Liu <qianqiang.liu@163.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Tejun Heo <tj@kernel.org>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Thomas Zimemrmann <tzimmermann@suse.de>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Ville Syrjala <ville.syrjala@linux.intel.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Yunhui Cui <cuiyunhui@bytedance.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 626/670] gpiolib: cdev: dont set GPIOD_FLAG_IS_OUT
-Date: Fri, 13 Nov 2026 10:53:10 -0500
-Message-ID: <20261113153833.006905022@linuxfoundation.org>
+Subject: [PATCH 6.12 627/670] panic: use panic_try_start() in nmi_panic()
+Date: Fri, 13 Nov 2026 10:53:11 -0500
+Message-ID: <20261113153833.039991545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,87 +101,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
+From: Jinchao Wang <wangjinchao600@gmail.com>
 
-[ Upstream commit 974d2712cb15014019595799b3ed68fef5fe9695 ]
+[ Upstream commit 6b69c7ef96f1afc7b426195087f7488f1510c2a4 ]
 
-When a line is requested or reconfigured through the v2 uAPI,
-gpio_v2_line_config_flags_to_desc_flags() copies the requested
-configuration into the descriptor flags, GPIOD_FLAG_IS_OUT included,
-before gpiod_direction_input_nonotify() or
-gpiod_direction_output_nonotify() asks the driver for the direction.
-If the driver refuses, for instance with -EOPNOTSUPP from
-.direction_input() for a line that can only be an output, the ioctl
-fails but the flag keeps the refused direction. gpiod_free_commit()
-does not touch GPIOD_FLAG_IS_OUT, so this outlives the failed request,
-and GPIO_V2_GET_LINEINFO_IOCTL reports the line as an input while the
-hardware still drives it, until a request without direction flags
-makes gpiod_request_commit() read the direction back from the driver:
+nmi_panic() duplicated the logic to claim panic_cpu with
+atomic_try_cmpxchg.  This is already wrapped in panic_try_start().
 
-  GPIO_V2_GET_LINE_IOCTL, line 0, input:         -EOPNOTSUPP
-  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            input
-  GPIO_V2_GET_LINE_IOCTL, line 0, no direction:  ok
-  GPIO_V2_GET_LINEINFO_IOCTL, line 0:            output
+Replace the open-coded logic with panic_try_start(), and use
+panic_on_other_cpu() for the fallback path.
 
-GPIO_V2_LINE_SET_CONFIG_IOCTL updates the flags in the same order.
-There the line stays requested, and since commit 92ac7de3175e
-("gpiolib: don't allow setting values on input lines")
-GPIO_V2_LINE_SET_VALUES_IOCTL on it then fails with -EPERM, though the
-line is still an output. A line whose driver refuses to make it an
-output is likewise reported as one.
+This removes duplication and keeps panic handling code consistent.
 
-gpiod_direction_input_nonotify() and gpiod_direction_output_nonotify()
-set or clear GPIOD_FLAG_IS_OUT themselves once the driver has accepted
-the direction, emulated open drain and open source included, and
-nothing between the copy and those calls reads the flag. Leave it to
-them, as the v1 uAPI already does.
-
-The other flags that the helper copies stay as they are. Active low,
-drive and bias are what gpiod_direction_*() applies, drive and bias
-possibly before the driver refuses the direction; edges and event
-clock are the character device's own. None of them is read back from
-the driver, so there is no earlier state that is more accurate to go
-back to. A failed request releases the line, which clears them, and a
-failed reconfiguration leaves the line, like the lines before it, with
-what was applied up to the failure.
-
-Reproduced under QEMU with a test GPIO chip whose line 0 refuses input
-and line 1 refuses output: both refused requests and both refused
-reconfigurations leave the line info with the refused direction, and
-setting the value of the reconfigured output fails with -EPERM. With
-this change the line info shows the direction of the hardware in all
-four cases and setting the value works. First seen on real hardware
-with v6.12.
-
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Adrian Ambrozewicz <aambrozewicz@nvidia.com>
-Reviewed-by: Kent Gibson <warthog618@gmail.com>
-Link: https://patch.msgid.link/20261016-gpiolib-cdev-direction-v2-1-aambrozewicz@nvidia.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-[ sashal: adapted the deleted block to FLAG_IS_OUT and direct flagsp access instead of GPIOD_FLAG_IS_OUT and a local flags snapshot ]
+Link: https://lkml.kernel.org/r/20250825022947.1596226-5-wangjinchao600@gmail.com
+Signed-off-by: Jinchao Wang <wangjinchao600@gmail.com>
+Cc: Anna Schumaker <anna.schumaker@oracle.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Dave Young <dyoung@redhat.com>
+Cc: Doug Anderson <dianders@chromium.org>
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joanthan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Joel Granados <joel.granados@kernel.org>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Li Huafei <lihuafei1@huawei.com>
+Cc: "Luck, Tony" <tony.luck@intel.com>
+Cc: Luo Gengkun <luogengkun@huaweicloud.com>
+Cc: Max Kellermann <max.kellermann@ionos.com>
+Cc: Nam Cao <namcao@linutronix.de>
+Cc: oushixiong <oushixiong@kylinos.cn>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Qianqiang Liu <qianqiang.liu@163.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Sohil Mehta <sohil.mehta@intel.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Tejun Heo <tj@kernel.org>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Thomas Zimemrmann <tzimmermann@suse.de>
+Cc: Thorsten Blum <thorsten.blum@linux.dev>
+Cc: Ville Syrjala <ville.syrjala@linux.intel.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Cc: Yunhui Cui <cuiyunhui@bytedance.com>
+Cc: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 75eb687ff2bc ("panic: flatten nmi_panic control flow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 5 -----
- 1 file changed, 5 deletions(-)
+ kernel/panic.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index b85ba9989b143..e7416a018a548 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -1367,11 +1367,6 @@ static void gpio_v2_line_config_flags_to_desc_flags(u64 flags,
- 	assign_bit(FLAG_ACTIVE_LOW, flagsp,
- 		   flags & GPIO_V2_LINE_FLAG_ACTIVE_LOW);
- 
--	if (flags & GPIO_V2_LINE_FLAG_OUTPUT)
--		set_bit(FLAG_IS_OUT, flagsp);
--	else if (flags & GPIO_V2_LINE_FLAG_INPUT)
--		clear_bit(FLAG_IS_OUT, flagsp);
+diff --git a/kernel/panic.c b/kernel/panic.c
+index 97c472164393b..b4db7f62b8ed5 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -248,15 +248,9 @@ EXPORT_SYMBOL(panic_on_other_cpu);
+  */
+ void nmi_panic(struct pt_regs *regs, const char *msg)
+ {
+-	int old_cpu, this_cpu;
 -
- 	assign_bit(FLAG_EDGE_RISING, flagsp,
- 		   flags & GPIO_V2_LINE_FLAG_EDGE_RISING);
- 	assign_bit(FLAG_EDGE_FALLING, flagsp,
+-	old_cpu = PANIC_CPU_INVALID;
+-	this_cpu = raw_smp_processor_id();
+-
+-	/* atomic_try_cmpxchg updates old_cpu on failure */
+-	if (atomic_try_cmpxchg(&panic_cpu, &old_cpu, this_cpu))
++	if (panic_try_start())
+ 		panic("%s", msg);
+-	else if (old_cpu != this_cpu)
++	else if (panic_on_other_cpu())
+ 		nmi_panic_self_stop(regs);
+ }
+ EXPORT_SYMBOL(nmi_panic);
 -- 
 2.53.0
 
