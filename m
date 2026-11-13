@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590406;
-	b=zkm0L9RWLabBte2CAG6xMvbPsTyM1kE11m1qQ6DYS5ayQu981B23S+/JV0o7jpvB70mH
-	 q75nZUT2lcMnsUjCQBoeOF6zsyVvrBd/x0OeHpj2sX3cySvEZsT89VZV9C4gziLhxVbmn
-	 5ky57auJjdJjPC0LRdsBCk3ZBmgUJ3iNsD2H2hYdUZleZDEIKBcnSAtcXgeH6SGMGjTjc
-	 FIwO7ZY3xHXHzVAgldQsPvA1k7no+he3R2XgyhAoxNYOUawyYRLkpN9LSj1dxvY5RdxCp
-	 mQUTF2LaWU/Ll0SHe3O/+rMIn9qHmZbfYGyfOQqBsLlcIsDnSfZRtN8FFBCXRupPKdQ==
+	t=1794590407;
+	b=T9gbFHmITi7OjyHQmJ/dVWEAG//NLVnUOLnfVWVBvFVvbuaSXELfTquqRc856v9BPkiT
+	 aacZgzNxiDf8+HcDpmavGO2hcApCAM84zI4D0YfcYBZaiI735T5jWjFy7oURaWvUQvhqM
+	 Th0El2t8v1inij4Sosxaib1gOj9F8QAnvZVeAPSjtLRfYQtvQh+79i5xkeIUzn+obM1oq
+	 wMPxH5mVb4+QhI86Q30j0mHd90R+85VIosKnRpXWJh/mwygUVZwJjbvx+Z7zgKtUUwBhW
+	 IG2Pb2jIP2yA1AFEw/gYoHFh6rUVgSWm5nZXQrvrocF2kfeV6GJ5b2gQfGcU5Fuw/HA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590406;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590407;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LSyEWyjPs4t3MEG08rwgSe7G+8rVc/yqd8HN/ziItSI=;
-	b=4DHvb9ZhhSJYn2QFTIMYSBxSUoZ/e+E7zgiQY52mJeDNmdLNCtMK994AHzej3Y+GhLYt
-	 qrqs9NtV9HC74jGg9F1WQ3+oNlgMiXsZ0wLg9nm/sKMd1dnCbba3sf9XOxJf5AMKHOGFy
-	 mJIdNWl0/WuHAgPMFClobDt5kuf+l98h3qpKGTdWCjq1cswaTTo9k8xZmX61sb8tqTXBW
-	 WdkixuUKyi7d8iZMr4o0/o0H7nUzW6WjHOVy6dO0uEiBARil/exF8PPrp/M2kRbZhBzIV
-	 UeadyaT1KtyXxh1FuQRkNm3G6ks/geCyTu2JctnWIXIy7+gCEu5Mzby1HQ8mYA/9J6Q==
+	bh=EcpNon18O9o1otibpwnCFv1BMFpd5uZjm4OtiS5v/P8=;
+	b=yC4ZgrdIvsmufNp6yjQt0EFa3dbHcUYsz1SGjzVglqU5TsM5pP/nbOGTWzuXAIGjqoqX
+	 0zzmMdLZ9NPXA6Vbb9Mb2N7ncjA1KCxvOyd/UUiJN+Gf+I/Hgp+CbGHGiQavHO9T7+nDi
+	 SAzuR/exXo5WZyqJIR5qT80mNJJ65KxabLaIs7DdXk+989KbITekZ7COiqDGRm8AR/0rI
+	 Kx9BuvGDHK9ghmhz/pEQ5/NirPlYsan4fNhsu4OSULgBwzqr1olSkHmNL20kK2BiXRfh4
+	 Zxe2/DuoZuDdh95HIRxkE/xzEix0rghbRtfLmdstZH1JbAXlqOytsIsXZIDguS/H5xw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSxXTmCo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TuLTRAPH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF63B606B451;
-	Fri, 13 Nov 2026 17:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F4060A6F7A;
+	Fri, 13 Nov 2026 17:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cSxXTmCo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0C61F000C4;
-	Fri, 13 Nov 2026 17:20:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TuLTRAPH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C57C41F000C4;
+	Fri, 13 Nov 2026 17:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590405;
-	bh=LSyEWyjPs4t3MEG08rwgSe7G+8rVc/yqd8HN/ziItSI=;
+	s=korg; t=1794590407;
+	bh=EcpNon18O9o1otibpwnCFv1BMFpd5uZjm4OtiS5v/P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cSxXTmCoKdoqk0NRYaRo7MqGMvMWYJDMLBmpTc7kLTuybTVUEc3q28v5dScK8EzNk
-	 kM3Cp95D1IUQJUjLY0+ukT//GKBPJ3pbAapzLawy02a0iDOydek0mB4dUMjopCCxaL
-	 rfUQotUDyFyQ1BPYkvyMX73GwPQGLZegnCXMSVK0=
+	b=TuLTRAPHfPPbkjgJcLC5WpFQTh1HgMuCF700VVnXSCEzVws56W0zGWCrOHgfQpJDn
+	 krr+GAP6OsGyfMgWTFdDakfPehk65SEjBo9ik+BE42RQEISfKaburQHkLTS6rhOuge
+	 DpkLXYZ6PPIh2MeERxjAshTJ41fAvLFSyHc/ajdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chris Mason <mason@kernel.org>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	Samiullah Khawaja <skhawaja@google.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Muchun Song <muchun.song@linux.dev>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	Lance Yang <lance.yang@linux.dev>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 373/686] mm/gup: fix clearing folios in memfd_pin_folios()
-Date: Fri, 13 Nov 2026 10:48:26 -0500
-Message-ID: <20261113153833.560952536@linuxfoundation.org>
+Subject: [PATCH 6.18 374/686] mm/gup: fix out-of-bounds write for nr_pages == 0 in GUP-fast
+Date: Fri, 13 Nov 2026 10:48:27 -0500
+Message-ID: <20261113153833.592250619@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -74,58 +73,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit c83ee2fa5a94edb2e04102b9dd4f1ee0eeb2b932 ]
+[ Upstream commit 1dfe4b276c23189394afb42d114ee8a54cc3aff2 ]
 
-memfd_pin_folios() pins folios obtained directly from the page cache
-without checking whether they are uptodate. However, shmem fallocate()
-can leave newly allocated folios uncleared and not uptodate. Callers
-such as udmabuf can then expose uninitialized memory to userspace.
+With nr_pages == 0, GUP-fast still enters its page table walk and can
+write past the caller's page array. The old end <= start check caught
+empty ranges, but was replaced with an overflow check.
 
-Clear non-uptodate folios and mark them uptodate under the folio lock
-before returning them to the caller.
+Users such as OrangeFS can pass a zero page count derived from a
+userspace-supplied length. So let's return zero for nr_pages == 0 before
+starting the walk, just like GUP-slow.
 
 Fix generated by an LLM and sent by Chris Mason in private.
 
-Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
+Fixes: c28b1fc70390 ("mm/gup: reorganize internal_get_user_pages_fast()")
 Cc: stable@vger.kernel.org
 Signed-off-by: Chris Mason <mason@kernel.org>
-[ david: simplify description and comment ]
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Tested-by: Samiullah Khawaja <skhawaja@google.com>
+[ david: simplify description ]
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-20-d6437171ecc3@kernel.org
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-21-d6437171ecc3@kernel.org
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ mm/gup.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/mm/gup.c b/mm/gup.c
-index 50ff90775cbb8..6ea400b5b8c5e 100644
+index 6ea400b5b8c5e..ac5abfc3dff7e 100644
 --- a/mm/gup.c
 +++ b/mm/gup.c
-@@ -3519,6 +3519,20 @@ long memfd_pin_folios(struct file *memfd, loff_t start, loff_t end,
- 					goto err;
- 				}
+@@ -3207,6 +3207,9 @@ static int gup_fast_fallback(unsigned long start, unsigned long nr_pages,
+ 				       FOLL_PCI_P2PDMA | FOLL_HONOR_NUMA_FAULT)))
+ 		return -EINVAL;
  
-+				/*
-+				 * fallocate() can leave folios in the
-+				 * page cache that were never cleared.
-+				 */
-+				if (!folio_test_uptodate(folio)) {
-+					folio_lock(folio);
-+					if (!folio_test_uptodate(folio)) {
-+						folio_zero_range(folio, 0, folio_size(folio));
-+						flush_dcache_folio(folio);
-+						folio_mark_uptodate(folio);
-+					}
-+					folio_unlock(folio);
-+				}
++	if (unlikely(!nr_pages))
++		return 0;
 +
- 				if (nr_folios == 0)
- 					*offset = offset_in_folio(folio, start);
+ 	if (gup_flags & FOLL_PIN)
+ 		mm_set_has_pinned_flag(current->mm);
  
 -- 
 2.53.0
