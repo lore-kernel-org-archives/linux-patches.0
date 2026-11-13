@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590525;
-	b=dSnaCJ6LUlYCrCX1S4AX1Rr2xw4N/cAAjmhbf86JnM3LalA631M1O+ePUs5ix7nqJ/3y
-	 I2RQbV2s6VUuI19fPlPvuZDW2La7+VBmd3ya9cP/BN8a70YAASNM1/2b09KrN7V4N/teg
-	 z5GIFJanRBXgCqECrYMg4i9qaeCvmTXajRAJJT0C8E9qjDMiMM33fzaNPm/sWwdARcdGe
-	 8mlCcvFy59WwcteU28FIruw4lNrS2cnnhE4PEwuYgHcGsYVuhwVOvfPl1Nj8MiYPGLNnw
-	 VZYTkLfJEWsYgzwa2IXRPoY8BcLeMKKcddGVD3xyvFi4VPcv1v4qQzTLKMcDjT2sEOQ==
+	t=1794590526;
+	b=KFLhQD17waXh5heSf4gIyW8y70EbmCX/k5ogjCguGsi0sDU0rCCTcpDmGWUhgDyPdOKY
+	 t8MhdzUwfhonz6FgvB87eGBuiJboqltpEoEQXZdHHaSUN30XlQz0Rdn3lreTJltfdgg0i
+	 LgHXP5fQOWC6mNr20NieScEwmkyA73eG+WkHRgDcnxO4dult036au4NCFUeMZFoVXRdX5
+	 wDcNTSWmhMJvS+EmHkvaSJgPqlhCdOInd6esP1bZRG37tVD73bNj5NdsBLl9uNqyU0Rws
+	 viaZwAsYHTOQtHK1zzSyTRtA5T6ghoAljc6fB2ozrvs0ILkQmivF/u4cb4mCDd47u9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590525;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590526;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mljwpqVNVctO7Z5Z+M25HdBYBcAHOZ0vW8guwEj5K8s=;
-	b=jEwHt6//dON3nwURNyAbMMEvXm0myvCiMPXP8WTO3bkj/3zyzjuiilr0B/3WRIigxllZ
-	 gicUryC7eac6Hrm2dXXn1Mkwkp+qHjGlzshBtZ5vCOK5sHfPAYkL6H2bzorNkighSzx1L
-	 /4i5tChjE9bu2/TbYZT2ER9kAsiU8i/G7kxjZumqCpotc7a7belprP3PbRCBxfFJALBov
-	 uQ25EbpZasXzJxEwxnPn/ATvCG6OGVNPCiWYgrWgKuj43P9OXQKcfZX8kE+UmUpc/ySpZ
-	 So2F4nB+944ztrNeM96y+B43gBoUMO9G9lWtpNd07veJDKScbiubEGbwdAN4Ob/kiFw==
+	bh=33nSFuSKMTKs4kM339oOVkWTZy0i48/rR5LL5ZiUUBc=;
+	b=AtfL8rrEgdd8zp+x70d/kqDqrJ9IY1fEFNdeYLo7wxaplH0KxeawaT2WtzVkkikV0wt8
+	 FcYLqw+UOb/EgzAWikxlvErDYjfqzuMD8yO5WNDvHqXDc7PD4tgAc55Uq24pC5lOh0mbV
+	 02UPhqkm/G1GR502X5caIorZyqOAEoVJwTeNeNKlWtLdpMF3jj87jFnEtxqQ72L/Bd1Cg
+	 GlHzZhfbohgSYn6WWISyV++4EREQ1LOc96qAxtBbgolB6yF+J0weZPTiJyRU47eowu74m
+	 tQQAo0xKGOAtVOpIzrKMp6YbMTMG3X8/5ASCvmgeZ9D2SvCCtTXXWTyYDYKWqK19CZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0c+J8Oxr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNDkqc3z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B966073233;
-	Fri, 13 Nov 2026 17:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558B0606B362;
+	Fri, 13 Nov 2026 17:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0c+J8Oxr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01B11F000C4;
-	Fri, 13 Nov 2026 17:22:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CNDkqc3z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB2351F000C4;
+	Fri, 13 Nov 2026 17:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590524;
-	bh=mljwpqVNVctO7Z5Z+M25HdBYBcAHOZ0vW8guwEj5K8s=;
+	s=korg; t=1794590526;
+	bh=33nSFuSKMTKs4kM339oOVkWTZy0i48/rR5LL5ZiUUBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0c+J8Oxr88HLyBPQEz0r4EJzyxyjZx1AUpoa/3RxPEz+myFpxoMqsxo9XBEUbrYf/
-	 F1emlAFUtFlh/ghXiXD4Y5LTZ7KYWs5+wDLERKEd6QDswQOVox8W4YYr9SYu5rzX5w
-	 NFTkBrzArZTNuCh1OGZB8yYA0qDlZmOLW/SGDhjc=
+	b=CNDkqc3z4brHhgwuuWjSmueZHnVE5BLn2yC4dycnn7DYC5TWR8ipqaXuuge8J6t1/
+	 tZ5uiWkeyAdCXql0utdn5IChwdAKyFJhP8FnKMSa0J2pMZ/qjmvEy0bHaduYlhJHwq
+	 p4Y9wxFxTQPeYvH3zpknehaugcxupjG8ZRjGcXOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Frey <sf@techfak.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	SeongJae Park <sjpark@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 469/686] vxlan: Stop rejecting dynamic FDB entries with a nexthop ID
-Date: Fri, 13 Nov 2026 10:50:02 -0500
-Message-ID: <20261113153836.790974902@linuxfoundation.org>
+Subject: [PATCH 6.18 470/686] mm/damon/core: move static variable last_nr_regions to damon_ctx
+Date: Fri, 13 Nov 2026 10:50:03 -0500
+Message-ID: <20261113153836.829548482@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,217 +70,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 7308ef8b4a6779a39f68d053c19b53a5c584a663 ]
+[ Upstream commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c ]
 
-Commit 98fc57d16744 ("vxlan: reject dynamic fdb entries that reference a
-nexthop id") started rejecting FDB entries that point to FDB nexthops
-unless they are configured as "permanent" or "static". The intent was to
-prevent such entries from being aged out by vxlan_cleanup(), which runs
-without RTNL and can therefore race with other VXLAN devices that modify
-the same per-nexthop FDB list.
+kdamond_split_regions() uses a static variable last_nr_regions, to infer
+if the region boundaries are too stable.  If it looks too stable, it
+does a more aggressive region split because it might be a fake stability
+coming from non-aggressive split.  Because the variable is static, the
+inference can be racy and wrong when multiple kdamonds are running in
+parallel.
 
-However, FRR installs remote MACs that are behind a multihomed Ethernet
-Segment (EVPN-MH) as dynamic FDB entries that point to an FDB nexthop
-group. Since the above commit, these entries are rejected and traffic
-towards the corresponding MACs is flooded to all the remote VTEPs.
+The user impact is not critical.  No crash, no leak.  DAMON's
+best-effort monitoring accuracy can be degraded when multiple kdamonds
+are used in parallel and the workload has certain access patterns. Still
+it is a bug that is better to fix.
 
-These entries are also marked as externally learned ("extern_learn")
-and are therefore skipped by vxlan_cleanup(), but exempting externally
-learned entries from the checks is not enough: vxlan_cleanup() reads
-the state and flags of an entry without the hash lock, so an entry that
-is concurrently changed from dynamic and externally learned to static
-can still be aged out.
+Move the variable into the damon_ctx struct to fix the problem.
 
-Instead, remove the checks added by the above commit and make
-vxlan_cleanup() skip FDB entries that point to FDB nexthops. Such
-entries can only be configured from user space, cannot be learned and
-cannot roam, so there is no reason to age them out. The nexthop pointer
-of an FDB entry is set before the entry is linked and is only cleared
-after it was unlinked and an RCU grace period has passed, so it can be
-checked without the hash lock.
-
-Adjust the test cases added by the above commit and add a test case
-that checks that dynamic FDB entries that point to FDB nexthops are not
-aged out. Without the fix:
-
- # ./fib_nexthops.sh -t "ipv4_fdb_grp_fcnal ipv6_fdb_grp_fcnal"
-
- IPv4 fdb groups functional
- --------------------------
- [...]
- TEST: Fdb mac add with nexthop group and dynamic state              [FAIL]
- TEST: Fdb mac add with nexthop group and extern_learn               [FAIL]
- TEST: Fdb mac without nexthop group aged out                        [ OK ]
- TEST: Fdb mac with nexthop group not aged out                       [FAIL]
- [...]
-
- IPv6 fdb groups functional
- --------------------------
- [...]
- TEST: Fdb mac add with nexthop group and dynamic state              [FAIL]
- TEST: Fdb mac add with nexthop group and extern_learn               [FAIL]
- TEST: Fdb mac without nexthop group aged out                        [ OK ]
- TEST: Fdb mac with nexthop group not aged out                       [FAIL]
- [...]
-
- Tests passed:  44
- Tests failed:   6
- Tests skipped:  0
-
-With the fix:
-
- # ./fib_nexthops.sh -t "ipv4_fdb_grp_fcnal ipv6_fdb_grp_fcnal"
-
- IPv4 fdb groups functional
- --------------------------
- [...]
- TEST: Fdb mac add with nexthop group and dynamic state              [ OK ]
- TEST: Fdb mac add with nexthop group and extern_learn               [ OK ]
- TEST: Fdb mac without nexthop group aged out                        [ OK ]
- TEST: Fdb mac with nexthop group not aged out                       [ OK ]
- [...]
-
- IPv6 fdb groups functional
- --------------------------
- [...]
- TEST: Fdb mac add with nexthop group and dynamic state              [ OK ]
- TEST: Fdb mac add with nexthop group and extern_learn               [ OK ]
- TEST: Fdb mac without nexthop group aged out                        [ OK ]
- TEST: Fdb mac with nexthop group not aged out                       [ OK ]
- [...]
-
- Tests passed:  50
- Tests failed:   0
- Tests skipped:  0
-
-Fixes: 1274e1cc4226 ("vxlan: ecmp support for mac fdb entries")
-Fixes: 98fc57d16744 ("vxlan: reject dynamic fdb entries that reference a nexthop id")
-Cc: stable@vger.kernel.org
-Reported-by: Sascha Frey <sf@techfak.net>
-Closes: https://lore.kernel.org/netdev/20261028142928.GA8406@techfak.de/
-Tested-by: Sascha Frey <sf@techfak.net>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20261030133750.28668-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ idosch: fixed a small conflict in vxlan_fdb_add() and vxlan_cleanup() ]
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
+Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
+Cc: Fernand Sieber <sieberf@amazon.com>
+Cc: SeongJae Park <sjpark@amazon.de>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c              | 14 ++------
- tools/testing/selftests/net/fib_nexthops.sh | 40 ++++++++++++++-------
- 2 files changed, 31 insertions(+), 23 deletions(-)
+ include/linux/damon.h | 6 ++++++
+ mm/damon/core.c       | 5 ++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 580fdec50bd59..090d50b163816 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -997,12 +997,6 @@ static int vxlan_fdb_update_existing(struct vxlan_dev *vxlan,
- 		return -EOPNOTSUPP;
- 	}
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index 656a314ad2159..125fbe1c73a9d 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -804,6 +804,12 @@ struct damon_ctx {
  
--	if (rcu_access_pointer(f->nh) &&
--	    !(state & (NUD_PERMANENT | NUD_NOARP))) {
--		NL_SET_ERR_MSG(extack, "Cannot make a nexthop fdb dynamic");
--		return -EOPNOTSUPP;
--	}
--
- 	/* Do not allow an externally learned entry to take over an entry added
- 	 * by the user.
- 	 */
-@@ -1264,11 +1258,6 @@ static int vxlan_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
- 	if (err)
- 		return err;
+ 	struct list_head adaptive_targets;
+ 	struct list_head schemes;
++/* private: */
++	/*
++	 * number of regions after last merge.  Read kdamond_split_regions()
++	 * for more details.
++	 */
++	unsigned long last_nr_regions;
+ };
  
--	if (nhid && !(ndm->ndm_state & (NUD_PERMANENT | NUD_NOARP))) {
--		NL_SET_ERR_MSG(extack, "A nexthop fdb cannot be dynamic");
--		return -EINVAL;
--	}
--
- 	if (vxlan->default_dst.remote_ip.sa.sa_family != ip.sa.sa_family)
- 		return -EAFNOSUPPORT;
+ static inline struct damon_region *damon_next_region(struct damon_region *r)
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 54a29d21d0dd1..ec44433200c63 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -2568,7 +2568,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ {
+ 	struct damon_target *t;
+ 	unsigned int nr_regions = 0;
+-	static unsigned int last_nr_regions;
+ 	int nr_subregions = 2;
  
-@@ -2889,6 +2878,9 @@ static void vxlan_cleanup(struct timer_list *t)
- 		if (f->flags & NTF_EXT_LEARNED)
- 			continue;
+ 	damon_for_each_target(t, ctx)
+@@ -2578,14 +2577,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ 		return;
  
-+		if (rcu_access_pointer(f->nh))
-+			continue;
-+
- 		timeout = READ_ONCE(f->updated) + vxlan->cfg.age_interval * HZ;
- 		if (time_before_eq(timeout, jiffies)) {
- 			spin_lock(&vxlan->hash_lock);
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index 7e450fb9d65b0..db65dd4abd3f7 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -423,6 +423,14 @@ stop_ip_monitor()
- 	return $rc
+ 	/* Maybe the middle of the region has different access frequency */
+-	if (last_nr_regions == nr_regions &&
++	if (ctx->last_nr_regions == nr_regions &&
+ 			nr_regions < ctx->attrs.max_nr_regions / 3)
+ 		nr_subregions = 3;
+ 
+ 	damon_for_each_target(t, ctx)
+ 		damon_split_regions_of(t, nr_subregions, ctx->min_sz_region);
+ 
+-	last_nr_regions = nr_regions;
++	ctx->last_nr_regions = nr_regions;
  }
  
-+fdb_entry_aged()
-+{
-+	local mac=$1
-+	local dev=$2
-+
-+	! $BRIDGE fdb get to $mac dev $dev self &> /dev/null
-+}
-+
- check_nexthop_fdb_support()
- {
- 	$IP nexthop help 2>&1 | grep -q fdb
-@@ -527,14 +535,18 @@ ipv6_fdb_grp_fcnal()
- 	log_test $? 0 "Fdb mac add with nexthop group and static state"
- 
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
--	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
-+	log_test $? 0 "Fdb mac add with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self dynamic extern_learn"
-+	log_test $? 0 "Fdb mac add with nexthop group and extern_learn"
- 
--	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
--	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
--	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
-+	run_cmd "$IP link set dev vx10 up type vxlan ageing 1"
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:18 dev vx10 dst 2001:db8:91::11 self dynamic"
-+	slowwait 20 fdb_entry_aged 02:02:00:00:00:18 vx10
-+	log_test $? 0 "Fdb mac without nexthop group aged out"
- 
--	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 2001:db8:91::11 self dynamic"
--	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
-+	run_cmd "$BRIDGE fdb get to 02:02:00:00:00:16 dev vx10 self"
-+	log_test $? 0 "Fdb mac with nexthop group not aged out"
- 
- 	run_cmd "$IP -6 ro add 2001:db8:101::1/128 nhid 66"
- 	log_test $? 2 "Route add with fdb nexthop"
-@@ -641,14 +653,18 @@ ipv4_fdb_grp_fcnal()
- 	log_test $? 0 "Fdb mac add with nexthop group and static state"
- 
- 	run_cmd "$BRIDGE fdb add 02:02:00:00:00:16 dev vx10 nhid 102 self dynamic"
--	log_test $? 255 "Fdb mac add with nexthop group and dynamic state"
-+	log_test $? 0 "Fdb mac add with nexthop group and dynamic state"
-+
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self dynamic extern_learn"
-+	log_test $? 0 "Fdb mac add with nexthop group and extern_learn"
- 
--	run_cmd "$BRIDGE fdb add 02:02:00:00:00:17 dev vx10 nhid 102 self"
--	run_cmd "$BRIDGE fdb replace 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
--	log_test $? 255 "Fdb mac replace with nexthop group and dynamic state"
-+	run_cmd "$IP link set dev vx10 up type vxlan ageing 1"
-+	run_cmd "$BRIDGE fdb add 02:02:00:00:00:18 dev vx10 dst 10.0.0.3 self dynamic"
-+	slowwait 20 fdb_entry_aged 02:02:00:00:00:18 vx10
-+	log_test $? 0 "Fdb mac without nexthop group aged out"
- 
--	run_cmd "$BRIDGE fdb append 02:02:00:00:00:17 dev vx10 dst 10.0.0.3 self dynamic"
--	log_test $? 255 "Fdb mac append with nexthop group and dynamic state"
-+	run_cmd "$BRIDGE fdb get to 02:02:00:00:00:16 dev vx10 self"
-+	log_test $? 0 "Fdb mac with nexthop group not aged out"
- 
- 	run_cmd "$IP ro add 172.16.0.0/22 nhid 16"
- 	log_test $? 2 "Route add with fdb nexthop"
+ /*
 -- 
 2.53.0
 
