@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585486;
-	b=B5WtdC3ER/QgbizIShfYb8vOc5qJqTSVkl8ojQPgoCARjiTE1XtddQa8ke+pQlI2KumF
-	 Dt7Ahs8EQc7PG9nZXiJ1Xbhd4Z3B8Ixb1amUa+pmH/WM712QA867m6O52FCzPyXa1Rwa6
-	 ES9u0qIuWAAQVqCE/fyie3TeklSjmp6sFbb2Kxqp0ty2Tw0PWiBMIxkNXhqe+iVkQMLJq
-	 kI7j8cLK9ItqkfNrGIZUQP8J4SkeJiScBufd9EPTzvUW3zebxVbnRBF36ZOlN2GsKXbOt
-	 +gXmylLLAoAys3vlZIBvt1coANcqPuN2dmrVBeM9iz7wJnKeh7INNmp7W7+d9oP7aow==
+	t=1794585487;
+	b=Nii85W243DjIdcPtsDd9M8LfC4KMc/ewi8nn7E5z/u6fPLD1wdJHcHHKkDoDUHb5YRff
+	 SDin9oqLAa9u0vyRHPzHo9ib7GAk5AZRr+LoVR3eNhYB76tXMiFCEpxuBdOnXT7UZ0jCh
+	 ZJKPjnyJzFtL8XtY9hNHVR3fXveO3HmL4aSQgmtJ7ZY8tZRcAvNz6Wu4UwvY3bg+qe39v
+	 L/g8XhdmJ5kwQ+QDlhJgAQSFxnXDax8RAUDJCt9U3Rr6SVyQBj4RPFfktNVKl6J4fGxBk
+	 dSygtqsElPQRUyV6YLrCYbXxr1BHsJ1J46Xa5kPSioFuMPhayFiKBwRvc+/jDRR8dHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585487;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6DRvswLZBDbB09t2r42eEuwPiypCW01X/ZwSf/wuN8M=;
-	b=2vlsd9Ztdzg5czZyiO+0ipj0u1VHztU2auaIdNCOnJ135TvWCfgDZkYjGJw7fGOjFPmY
-	 zbMg//8NjQsp7J4WdQmoKXIrx/8zATXCqccSplbwnd+FTVLpmevrJeezhgRAIyzboamJb
-	 8j1gU+jWBlVczPj4vLqaKV3t9l9DQBhheQOVvVb2xi0j/T4NkHGFQstT1MSRqJxi0kxgX
-	 ZgoDMxPQ9OHug1DCsZ+vRaBAoLwOOSIo2/ySiLOuI6lim+f3VyEdbHrIAZJ0XiFp2gW5A
-	 xwLZ+99fUJqy6h0Kwc7dWTFvaJh0vN/dgKxtyThOZUBpwyvZ0hQ1MI60ipRx7tFcF0w==
+	bh=tZ7zrlJ692gL5VeoXOgnpdnv26FxzrS2SiW/5S1BlsU=;
+	b=Vcn9uRXXcAyjTVUx84WE1WAOclvdbSdV4e7RJoUD3i2KjPB1XUa8FnhMxU2CsKU8lgoA
+	 YSKxLNKQETm+zrJKioTPdmzZeqVvFtW6tafEh7ZNcgsZmykCUOGbKiPXsG8Om4RiXwJFo
+	 YJfSc2gHRpDY6mkFiQcazObgwRDtnDdboxiiBv8hjrPFhUh+HOo1wAddVN4O3DbUvYfmr
+	 khlq9Pa8IvfC8Fhr2Z/9cYE4JI4LMedCekvLk1a6x+QuYXW8b3xQXmzQS5diiohv3R4bq
+	 mgt4aDpvnzTzPdLv5N5hpvnMY/3rnEbhYR2//T8hoC+zlInMEO0/C9EqbjJkMHhGlTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GE3qtPWj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMz5531f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C70606EBAC;
-	Fri, 13 Nov 2026 15:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE89606EBAC;
+	Fri, 13 Nov 2026 15:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GE3qtPWj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D7851F000C8;
-	Fri, 13 Nov 2026 15:58:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xMz5531f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695981F000C8;
+	Fri, 13 Nov 2026 15:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585486;
-	bh=6DRvswLZBDbB09t2r42eEuwPiypCW01X/ZwSf/wuN8M=;
+	s=korg; t=1794585487;
+	bh=tZ7zrlJ692gL5VeoXOgnpdnv26FxzrS2SiW/5S1BlsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GE3qtPWjA5TMhddkhOcPIE53Xuz8f6cXLeKilVzMJkvEDVIYBiouz2+cZd5FlYik0
-	 mWfPlTLq/hAurU9t6PBZyAsWmKECAWJRs5nqOcNbkuma+LNRNFvewPljPW2bWw/Qzk
-	 XnPBlv7Giu2ugO6Ll6iZfun7m9Lu4TT1vzpSLw0Q=
+	b=xMz5531fEDqPsWSUHDY7i+5q7w+x2BT8xhXCpIhtwCy1tWwrqiuAvYYbWnQps8fak
+	 dFgss4bzp5qtEhCl6XXm8xips8na00i8eu8mw8OkKYV2i1IZxiTO/m2XvH9+X1YmX7
+	 EfbClv3XAW3VQsOhyF3Qk15kOHzvYxovmNsiK4iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingjie Wang <x-professor@outlook.com>,
-	Yang Xiuwei <yangxiuwei@kylinos.cn>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Chris Mason <mason@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Zi Yan <ziy@nvidia.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 100/507] scsi: bsg: Report io_uring data copyback failures
-Date: Fri, 13 Nov 2026 10:46:44 -0500
-Message-ID: <20261113153757.581285441@linuxfoundation.org>
+Subject: [PATCH 7.3 136/507] mm/shmem: stop retrying folios that cannot be split
+Date: Fri, 13 Nov 2026 10:47:20 -0500
+Message-ID: <20261113153759.061082583@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -70,47 +71,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <x-professor@outlook.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit ffb7b533a47906b96166eec4b7eaa4199b7a7462 ]
+[ Upstream commit a842a1f947da8a7020e72f885ffbf2ce6a93685f ]
 
-scsi_bsg_uring_task_cb() discards the result of blk_rq_unmap_user(). For a
-data-in command that uses a bounce buffer, the task work can therefore post
-a CQE with res == 0 despite a copyback failure.
+A fault or collapse can insert a large folio crossing EOF after
+shmem_undo_range() has handled the boundary folios. If splitting that
+folio fails, truncate_inode_partial_folio() retains it when it is dirty.
+The final scan then repeatedly finds it because it restarts from an
+unchanged start.
 
-Use the unmap result as the CQE status. A later sense-buffer copy failure
-continues to take precedence.
+Truncation keeps the inode lock and ignores fatal signals while looping.
+A concurrent unlink() can then block other directory operations while
+holding the directory lock and waiting for the file's lock.
 
-On x86_64, a raw BSG INQUIRY into an unaligned anonymous PROT_NONE mapping
-posted a CQE with res == 0 in 20/20 runs before this change and res ==
--EFAULT in 20/20 runs afterward. Writable controls succeeded in 20/20 runs
-on both kernels.
+Advance start past the retained folio, whose truncated part has already
+been zeroed. Do not move start backwards if the failed split has shrunk
+the folio.
 
-Fixes: 7b6d3255e7f8 ("scsi: bsg: add io_uring passthrough handler")
+Fix generated by an LLM and sent by Chris Mason in private.
+
+Fixes: 55ac8bbe358b ("mm/shmem: fix race in shmem_undo_range w/THP")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yingjie Wang <x-professor@outlook.com>
-Reviewed-by: Yang Xiuwei <yangxiuwei@kylinos.cn>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/0b35d2d46bf8ff9f2dbba83ae093d17351e950e9.1792772194.git.x-professor@outlook.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+[ david: split fixes, simplify descriptions, adjust comments ]
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-7-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_bsg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/shmem.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/scsi/scsi_bsg.c b/drivers/scsi/scsi_bsg.c
-index 37393a8dedd84..e4a65d7a23742 100644
---- a/drivers/scsi/scsi_bsg.c
-+++ b/drivers/scsi/scsi_bsg.c
-@@ -41,7 +41,7 @@ static void scsi_bsg_uring_task_cb(struct io_tw_req tw_req, io_tw_token_t tw)
- 	u8 sense_len_wr = 0;
- 
- 	if (pdu->bio)
--		blk_rq_unmap_user(pdu->bio);
-+		ret = blk_rq_unmap_user(pdu->bio);
- 
- 	if (scsi_status_is_check_condition(scmd->result)) {
- 		driver_status = DRIVER_SENSE;
+diff --git a/mm/shmem.c b/mm/shmem.c
+index de2362209cc38..249914d48f2ca 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1275,6 +1275,15 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, uoff_t lend,
+ 						index = start;
+ 						break;
+ 					}
++				} else if (folio->mapping) {
++					/*
++					 * Splitting failed, but the part in the
++					 * range is already zeroed. The folio
++					 * was not dropped, so skip it when
++					 * restarting the scan to avoid retrying
++					 * it forever.
++					 */
++					start = max(start, folio_next_index(folio));
+ 				}
+ 			}
+ 			folio_unlock(folio);
 -- 
 2.53.0
 
