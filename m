@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585555;
-	b=boCyQEd/oa80xhTiarV2YorCxExtd2RnI/AzDcu4pXkq/8lTjqQ0CS/QAU0chzihm2as
-	 elvbhmqfpM9tDTEwiw/awP4YSD4g3hABlUEZCI8TLkOr+e/52dS3ES1BRqwIYsaUMy+py
-	 Txv0iiw5w/HCnuYi4wsKOjc3B2oIkdoPMzdDLxqKpZKPmFjnuEA61ijkw+9ihRVY8GM4x
-	 qtYYRMy6QY7h1UuPjclexGW5OL9X1lhQSVdIZj/GHEHfIrg+6YS0P6dbzGPnCV9qnJ3uk
-	 6QprKwumATE/YaCi9z0uYGeVARi+C05D/1u/8NjVBwVDT3DKZX2rCZJRKZlzQWMVoVQ==
+	t=1794585556;
+	b=FQEZ0o9XzGlbA79afDY/j6f1huR26KL4i2um1rgjx5RcurqD0vbZh9qZkuUbMK6ou11f
+	 ZOCrMVzcqgEH5KA79qkPBrSjpBhudb1hNbjf2YEi5oQepQzKHCrLdeoJNpu+44ag4S89H
+	 3+hTklXTvRW3Sl/+s+Qn93PnEym9n/u1MxDaavRUFL7d6N5mszbaox4nZTi3D8/iYOacC
+	 kLJ/zcpdu/twotofDw5GVzeYyTQF4tT8jbDExB+PdQ/5cIKv8W84ZdD0nZNXrbg7zujBZ
+	 2wlHxmDtlGg2Ly2Nyk/Wg1HS2XoSDTWf5EAztnKAHWTuiickcdrjPg+1xoGB7r56WNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585555;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JQSgYDk72tpQVvIZF+vyzBnbaXdIw+VK4sUmdst2kn4=;
-	b=plKOpjFCAEYtFs9glLD1QfBSg6Q3lEf+0PsaGRLEzUyfaqjpARXV3yCP/O27jS5eI14N
-	 hLpFaheG0dHgyWNDPCa/0o82ev2YACxIUV5jZEXcDAsEjifCtzT/Vw804TPe5tZoDQ0Mw
-	 dJofpSZe3iNJi4tpqDFkbmrrMcZnBi0DzlSvrcRBeo56qTzmCdLj+R/jokfQBcjO2Ol8U
-	 HRTcNpRCAG8vDQuUKlaI82anBJKPajbCSQRnhvCEslxW24QneLIlHp3Yn1g0L0JtEPY7l
-	 1M6F2jLxQeT2A0nH9yr9y6VhIjHNllfD8IO2oeJWUkJeGO7iXk1Klx2xxsHIC2HvhiQ==
+	bh=WZLmTozchpCXVR7UNT7UldEHt96CohhPteoaJGB2CjQ=;
+	b=eAQu9nuwjehEumoTKRDJ7OB+aS8Vk2M+YleJdhm4XLtv8oBh5rSKN8im85xVW9GzN0mS
+	 RpJ8m71iaO45GbfQINvMKbi6FaLVlxpVQ7BuowIkhscvHZeJMwDMkJlbyIR0KGaxA8qyr
+	 rgJiSxI1O4aJ4rcbb2R9nCRvvz8NV9OAW0rW/oHCmHEQOiNa1jJLqH6vTdUrIUu808kYD
+	 VSy/Ie02xMtr63zIad6dlDPyhN4EyBI0wtshC1dW+lQckWn9z/hGzcoFRbWJojEx63RBL
+	 hbkABZpgdQ/3cPVDRQ98PVsS6QwXV/0SHbFpDAE9UIR3NlkAwWy0qaeyn8tkotFOuJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HWGXJBvC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXGKXP6s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B49860A2628;
-	Fri, 13 Nov 2026 15:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EDA606BA86;
+	Fri, 13 Nov 2026 15:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HWGXJBvC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBEF1F000C4;
-	Fri, 13 Nov 2026 15:59:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXGKXP6s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 723071F000C6;
+	Fri, 13 Nov 2026 15:59:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585555;
-	bh=JQSgYDk72tpQVvIZF+vyzBnbaXdIw+VK4sUmdst2kn4=;
+	s=korg; t=1794585556;
+	bh=WZLmTozchpCXVR7UNT7UldEHt96CohhPteoaJGB2CjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HWGXJBvC9zuyQM/WyXHx3/Fl1s6D3htbqnrtudMz/A5QRwlCUOjcec/69GZqoGI5E
-	 HUZOmNc6CCFd5jqolailIYrI9qYEYa7tyMp5CBL6QTnLf0fR3xsLN2rK9JwF/qB5hk
-	 dvp7fbH4CqkKLFcTisJ2Kx/NP7ERinCXz5OPDhxg=
+	b=DXGKXP6sb99G7EBhhBsoCbAAbofCAfA7kuzruGqpKBBFDLqD3fV49BECwjGm7JiIw
+	 d+ypddEvaYkY9oiYOs9cqS1i8T96Fmqq/TVCb7NDliVz3cz2gYsuIdxxUEIVVV8XJj
+	 c7GE06v/fohFVOut0kTdnvg1cjvfJysDTWAmKSsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	James Seo <james@equiv.tech>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 141/507] mm/shmem: preserve allocation errors when swapping in large entries
-Date: Fri, 13 Nov 2026 10:47:25 -0500
-Message-ID: <20261113153759.225941178@linuxfoundation.org>
+Subject: [PATCH 7.3 186/507] hwmon: (hp-wmi-sensors) Avoid global struct mutation
+Date: Fri, 13 Nov 2026 10:48:10 -0500
+Message-ID: <20261113153800.824745947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -71,51 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit f4ce23b1feef16d435aa1188b6c2a637a5373ed5 ]
+[ Upstream commit dc992efeace99e479aec7a8f0c49a9493c729606 ]
 
-shmem_swapin_folio() adjusts swap to the requested slot within a large
-swap entry before allocating a folio. If allocation or charging fails,
-the error path compares this adjusted value with the original entry
-still stored in the XArray in shmem_confirm_swap().
+In the HP WMI sensors driver, make_chip_info() assigns a device-managed
+memory allocation to a static global structure, resulting in a
+use-after-free when the device unbinds.
+During hp_wmi_sensors_probe(), make_chip_info() dynamically allocates a
+hwmon_channel_info array using devm_kcalloc() and assigns it to the
+static global hp_wmi_chip_info.info pointer.
 
-Unless the index is at the start of the entry, this turns -ENOMEM into
--EEXIST even though nothing changed.
+If multiple instances probe sequentially or concurrently, the shared
+global pointer is overwritten by each new device. When any device unbinds,
+its devm-managed memory is automatically freed, leaving the global
+hp_wmi_chip_info struct and any other active device instances with a
+dangling pointer. Subsequent accesses by the hwmon core (such as thermal
+zone reads) will dereference this freed memory, causing a use-after-free.
 
-The caller retries -EEXIST, so persistent allocation failures can leave
-the task spinning instead of returning the error.
+While this is not supposed to happen in the real world (there should only
+be one instance of the driver in any system), modifying global structures
+is undesirable and should be avoided whenever possible. Allocate struct
+hwmon_chip_info as part of struct hp_wmi_sensors instead and initialize it
+in make_chip_info() to avoid mutating the global structure.
 
-Restore swap to index_entry on allocation failure so the existing error
-path checks the original entry. This preserves the allocation error if
-the entry is unchanged and still retries if it changed concurrently.
-
-Fixes: 91ab656ece13 ("mm/shmem, swap: tidy up swap entry splitting")
+Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
 Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-12-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: James Seo <james@equiv.tech>
+Acked-by: James Seo <james@equiv.tech
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/shmem.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/hp-wmi-sensors.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index fab3f1d24550a..2b2f347bb8a71 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -2327,6 +2327,8 @@ static int shmem_swapin_folio(struct inode *inode, pgoff_t index,
- 			else
- 				error = -ENOMEM;
- 			folio = NULL;
-+			/* Make sure to validate the original value. */
-+			swap = index_entry;
- 			goto failed;
- 		}
- 		if (fault_type) {
+diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
+index cfa0d6ad0fb3f..dd1fa48314a54 100644
+--- a/drivers/hwmon/hp-wmi-sensors.c
++++ b/drivers/hwmon/hp-wmi-sensors.c
+@@ -390,6 +390,7 @@ struct hp_wmi_info {
+  */
+ struct hp_wmi_sensors {
+ 	struct wmi_device *wdev;
++	struct hwmon_chip_info chip_info;
+ 	struct hp_wmi_info **info_map[hwmon_max];
+ 	u8 channel_count[hwmon_max];
+ 	bool has_intrusion;
+@@ -1531,11 +1532,6 @@ static const struct hwmon_ops hp_wmi_hwmon_ops = {
+ 	.write	     = hp_wmi_hwmon_write,
+ };
+ 
+-static struct hwmon_chip_info hp_wmi_chip_info = {
+-	.ops         = &hp_wmi_hwmon_ops,
+-	.info        = NULL,
+-};
+-
+ static struct hp_wmi_info *match_fan_event(struct hp_wmi_sensors *state,
+ 					   const char *event_description)
+ {
+@@ -1962,7 +1958,8 @@ static int make_chip_info(struct hp_wmi_sensors *state, bool has_events)
+ 	if (!ptr_channel_info)
+ 		return -ENOMEM;
+ 
+-	hp_wmi_chip_info.info = ptr_channel_info;
++	state->chip_info.ops = &hp_wmi_hwmon_ops;
++	state->chip_info.info = ptr_channel_info;
+ 
+ 	for (type = hwmon_chip; type < hwmon_max; type++) {
+ 		count = channel_count[type];
+@@ -2053,7 +2050,7 @@ static int hp_wmi_sensors_init(struct hp_wmi_sensors *state)
+ 		return err;
+ 
+ 	hwdev = devm_hwmon_device_register_with_info(dev, "hp_wmi_sensors",
+-						     state, &hp_wmi_chip_info,
++						     state, &state->chip_info,
+ 						     NULL);
+ 	return PTR_ERR_OR_ZERO(hwdev);
+ }
 -- 
 2.53.0
 
