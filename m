@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590457;
-	b=MujgCuOsertyqkz2OtPyc9JtB8S6r4QMDwjo8PMAWdIezJy+TMA95zk4aX/ZzDZqHi0+
-	 VGxgIXkH6YMXywwYCO/80D5PD8qFfDzl8Dc4/NCB6Duqg4EmRJwGPwCyNQuw1WCRHJnjL
-	 Ffio7ErCTpge6WVs8i+GpxbstLxgmdD+ZBsoeQubF+x5FUo/A6VCp7o538s1Kj2fmxI7s
-	 auwygHoInAMBk8BgLaPBwzJYufmEjUGizDxULeP3O0FStBDeDYnZhJ2df/zycuAo70Y2s
-	 e8KT5tSlb5MCM22n65le0gAQ7f6FFfbDek6M8XABvlSsG8hF1xziUM4oBCETXb1ZOAQ==
+	t=1794590458;
+	b=ql2OTM12HNU/qSfx4Knv9+ohcvBZgR/407zg1xy+TaJgN29uEZMBeTkgwLD6D/8EWj53
+	 LgeYAA+OkRVLRBOt/+SkGvx/5Dp1W/kj7iaVpedvYFNiJn9mQP9Qn6dGdOHhtJsdFNbLq
+	 8HpsFF8Cm21zuyUPU2HO+rpHs+nmIz+7jq+bdvOHE6h0EX9Ly6VEKIjD3MKC0OHPraTao
+	 nWx9soQxYHCLB2BEuzB/RBdLjEVmWhitaLaTT+Senq85jcbrQWqyuSP1MEFFosF+bvCHZ
+	 G2BkejAGMxZ7cpix8JqH0A1jmEoPtBO3DQ1jVWvDkYE2pgBdwHUThuqze1X4Oo8pzXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590458;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9dA3bRaU67oG6FIwyLHY6OhS+j+v4secM0vg1wFDAm0=;
-	b=bIDS2S3p48atKxHSKcumksXNtBOfwNIz/+Lp7NErofdFUosI2RUil04BPnJVTZ/MkdgV
-	 7D60ryTYU0JsyWONoPv2MSLMGh8C72hoSXaY/uFvmgx356tyDtwc+at1IXQBcdgrOgG2f
-	 F0gwHxzAmfWLfsTOMjC112eyy8FIHGYIjrtT8pHg8CIiDgGg9WLXx3oDkxJvug+1ioDV/
-	 bDpWlwvPFT8mVDxqleavDfgxO8WTSSDTgxSmKc6h+VC90dQswUal6S4ARE3D+P3E/i40Y
-	 5VrmxrZraqhbIh+WtJPmNM5qzUBFpM9SECOi/jWblWvBukUsE+jwU+zYBd0MkYzqbBg==
+	bh=UgSXYHKPaO0fGYBbTt+O45hsAucjKFC6ktedrYdtix8=;
+	b=Bc1c5xuaO4GogGIFWJ/YwO8BXz5ymRbEbWt9dqMMlF736uemPc+FBB20AkJqEervPBuO
+	 7JLy3FC10muLJXDzh2N68xGrTKIaVrvf88qv/9FmG+YRhaSp3pRMpwgK3Pr+Yza0KE4d3
+	 IdMhD0vL5hE4iziHN9gySB08b6o/GOahIBVYMa50CYEpe+Le2+l3eQ3doq7aMc8rglyAd
+	 wcHITDBzxwGQyV31mrcOE48DnGUcb6aCIleRLtexb9hURqqvta+4CWWZb5TRqe81B2Suq
+	 KzbX5LJfc92dWeDD5OJUfucepRBenIl5/eLf6Wd3S0+3CjEOiHHxHZ8dfDWphyppRrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Ne8oMeu/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6l3OVqM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C445606A8A6;
-	Fri, 13 Nov 2026 17:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43D6606A339;
+	Fri, 13 Nov 2026 17:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ne8oMeu/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377A91F000C4;
-	Fri, 13 Nov 2026 17:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j6l3OVqM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713481F000C4;
+	Fri, 13 Nov 2026 17:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590457;
-	bh=9dA3bRaU67oG6FIwyLHY6OhS+j+v4secM0vg1wFDAm0=;
+	s=korg; t=1794590458;
+	bh=UgSXYHKPaO0fGYBbTt+O45hsAucjKFC6ktedrYdtix8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ne8oMeu/mhUF4mCWbYnzCuXgEpzs9T4Nv6X1saCcM2/EzepNBjeZqqNwVS/h4DTub
-	 T8VHWiU2of/Gz++dXgzZJcokLklNpeXRN7jEZNajOO5/yqWqVjBj1cC6KQ7CeHd162
-	 plUBwNHKLMXb1fAOOOgmkOyfjde6hoH1v4+3tRXw=
+	b=j6l3OVqMhRxKGdHpt/Gi6+w2aoRjTSGVb/RziCN+luFWfdcj5cOQ8llkNKIxjhRj5
+	 LfSa+zn7FLxKeNe44vkmQjbxfjCdWEcGfQhtGKG70Z6S0lbPiDQIBh2etOGBUvYddl
+	 wcyCjvfN1mV0n8ct3VffwdLp51ivsdian7L410Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Cunhao Lu <1579567540@qq.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 372/686] mm/gup: recheck the PUD under PTL in follow_pud_mask()
-Date: Fri, 13 Nov 2026 10:48:25 -0500
-Message-ID: <20261113153833.527764392@linuxfoundation.org>
+Subject: [PATCH 6.18 363/686] can: dev: can_put_echo_skb(): free skb on invalid echo index
+Date: Fri, 13 Nov 2026 10:48:16 -0500
+Message-ID: <20261113153833.203328309@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,123 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Cunhao Lu <1579567540@qq.com>
 
-[ Upstream commit 79cb51d538abc459f74e046d27797d36b133ce0e ]
+[ Upstream commit b4ebcbbf66ba6c5816dfe229effb4641c46e4b4c ]
 
-follow_pud_mask() reads the PUD without a lock. If it is a leaf, it takes
-the lock and calls follow_huge_pud(), which reads the entry again, but
-only tests whether it is present.
+can_put_echo_skb() consumes the skb on all paths except when the echo
+index is out of bounds. This leaves ownership with the caller on -EINVAL,
+unlike the other error paths, and can leak the skb if the caller expects
+consistent semantics.
 
-A leaf can be zapped concurrently and a page fault can fill the empty
-entry with a page table.
+Free the skb before returning -EINVAL so that all return paths consume it.
 
-This currently only applies when device-dax makes use of PUD entries,
-and the fault after e.g., MADV_DONTNEED would find THPs to be disabled.
-
-That requires a sequence like
-
-1) Fault in the PUD
-2) Disable THP
-3) Have GUP race against concurrent MADV_DONTNEED + refault
-
-Which is rather unlikely to happen in practice, which is why we never
-received a report about such a problem.
-
-Before commit 1b1676180246 ("mm/gup: handle huge pud for
-follow_pud_mask()"), we performed that check in follow_devmap_pud() by
-testing for pud_devmap().
-
-Let's fix it by just structuring follow_pud_mask() similar to
-follow_pmd_mask(), minus protnone stuff that does not apply and minus
-FOLL_SPLIT_PMD handling. That makes it much easier to spot any such
-inconsistencies.
-
-Perform the pud_bad() check early in follow_pmd_mask() and just forward
-the PUD value. We can drop the pud_present() check in follow_huge_pud(),
-just like we have in follow_huge_pmd().
-
-Even though we are performing more changes than strictly necessary, the
-fix should be easy to backport.
-
-Fixes: 1b1676180246 ("mm/gup: handle huge pud for follow_pud_mask()")
+Fixes: 6411959c10fe ("can: dev: can_put_echo_skb(): don't crash kernel if can_priv::echo_skb is accessed out of bounds")
 Cc: stable@vger.kernel.org
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-19-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Signed-off-by: Cunhao Lu <1579567540@qq.com>
+Link: https://patch.msgid.link/tencent_683AA16E643DE00211CD2FB62991264DC605@qq.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+
+---
+
+FAQ:
+
+Q: `can_skb_init_valid()` directly modifies `skb->data` without checking if
+   the SKB is cloned or shared. Is this violating SKB shared buffer rules and
+   causing data corruption?
+
+A: The finding about can_skb_init_valid() modifying skb->data on a
+   potentially shared buffer is not relevant for this (correct) patch.
+
+   The FDF-flag write in can_skb_init_valid() only matters for PF_PACKET
+   use: PF_CAN allocators already set CANFD_FDF. The write exists to
+   normalize frames for PF_PACKET observers (tcpdump/Wireshark) so they can
+   distinguish classic CAN from CAN FD at the netdev level, and to
+   compensate for PF_PACKET senders that omit the bit. That normalization
+   is functionally required.
+
+   The shared-buffer concern only becomes realistic through a specific
+   chain: a PF_PACKET sender injects a CANFD-sized frame, the CAN driver's
+   loopback puts an echo skb back into can_rcv(), and cgw (without
+   modfuncs) clones it for forwarding to another interface. Only on that
+   second can_skb_init_valid() call is the skb cloned. By then the bit was
+   already set on the exclusive skb during the initial xmit path, so the
+   flags |= CANFD_FDF write is strictly idempotent for any parallel
+   consumer of the shared buffer - no memory-safety or
+   information-disclosure consequence. It's a formal violation of the skb
+   sharing rules without an observable effect, so the current code can stay
+   as-is.
+
+Link: https://lore.kernel.org/all/54a3cc01-abcf-4a33-b932-39bb1f68cdd5@hartkopp.net/
+[mkl: convert Oliver's mail to FAQ section]
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/gup.c | 32 ++++++++++++++++++--------------
- 1 file changed, 18 insertions(+), 14 deletions(-)
+ drivers/net/can/dev/skb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/mm/gup.c b/mm/gup.c
-index 2264a36bc773f..50ff90775cbb8 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -658,9 +658,6 @@ static struct page *follow_huge_pud(struct vm_area_struct *vma,
- 
- 	assert_spin_locked(pud_lockptr(mm, pudp));
- 
--	if (!pud_present(pud))
--		return NULL;
--
- 	if ((flags & FOLL_WRITE) &&
- 	    !can_follow_write_pud(pud, pfn_to_page(pfn), vma, flags))
- 		return NULL;
-@@ -896,15 +893,17 @@ static struct page *follow_page_pte(struct vm_area_struct *vma,
- }
- 
- static struct page *follow_pmd_mask(struct vm_area_struct *vma,
--				    unsigned long address, pud_t *pudp,
--				    unsigned int flags,
--				    unsigned long *page_mask)
-+		unsigned long address, pud_t *pudp, pud_t pud,
-+		unsigned int flags, unsigned long *page_mask)
- {
- 	pmd_t *pmd, pmdval;
- 	spinlock_t *ptl;
- 	struct page *page;
- 	struct mm_struct *mm = vma->vm_mm;
- 
-+	if (unlikely(pud_bad(pud)))
-+		return no_page_table(vma, flags, address);
-+
- 	pmd = pmd_offset(pudp, address);
- 	pmdval = pmdp_get_lockless(pmd);
- 	if (pmd_none(pmdval))
-@@ -953,18 +952,23 @@ static struct page *follow_pud_mask(struct vm_area_struct *vma,
- 	pud = pudp_get(pudp);
- 	if (!pud_present(pud))
- 		return no_page_table(vma, flags, address);
--	if (pud_leaf(pud)) {
--		ptl = pud_lock(mm, pudp);
--		page = follow_huge_pud(vma, address, pudp, flags, page_mask);
-+	if (!pud_leaf(pud))
-+		return follow_pmd_mask(vma, address, pudp, pud, flags, page_mask);
-+
-+	ptl = pud_lock(mm, pudp);
-+	pud = *pudp;
-+	if (unlikely(!pud_present(pud))) {
- 		spin_unlock(ptl);
--		if (page)
--			return page;
- 		return no_page_table(vma, flags, address);
+diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
+index 3ebd4f779b9bd..6fb1f9b2a9e20 100644
+--- a/drivers/net/can/dev/skb.c
++++ b/drivers/net/can/dev/skb.c
+@@ -52,6 +52,7 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
+ 	if (idx >= priv->echo_skb_max) {
+ 		netdev_err(dev, "%s: BUG! Trying to access can_priv::echo_skb out of bounds (%u/max %u)\n",
+ 			   __func__, idx, priv->echo_skb_max);
++		dev_kfree_skb_any(skb);
+ 		return -EINVAL;
  	}
--	if (unlikely(pud_bad(pud)))
--		return no_page_table(vma, flags, address);
-+	if (unlikely(!pud_leaf(pud))) {
-+		spin_unlock(ptl);
-+		return follow_pmd_mask(vma, address, pudp, pud, flags, page_mask);
-+	}
  
--	return follow_pmd_mask(vma, address, pudp, flags, page_mask);
-+	page = follow_huge_pud(vma, address, pudp, flags, page_mask);
-+	spin_unlock(ptl);
-+	return page;
- }
- 
- static struct page *follow_p4d_mask(struct vm_area_struct *vma,
 -- 
 2.53.0
 
