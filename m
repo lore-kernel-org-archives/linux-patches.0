@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590637;
-	b=OVxbEUY8+erl5uNiNmu+SOPpFGnJKn7j9gXytQc5j8IzjpfBhrkL4UAG4e48p3ucbynF
-	 bDGeIWGze46aW8kdsvp0iRBFTcOw6sMsB+lzWCHo9E162ssx6uhY49c9h6XchdzBkP3qq
-	 Ce5vOf/NLb+YXjdFRXn4ATFTiXwg9cWE5dwfY1o/msS11KbmubQA1mJh6gfpa+HthWr/6
-	 k4jzCHzuJ94IY5fEjNhSseRSqdWW8iwQ1uGlN32p3bRXi/VWFBtDDJrxfm7urk/OA2CxR
-	 PCxYgp0Mi42jgr48Qll+zaGDz58nY1x3uAi3NUwOOZhxs1pE5mkDd5JDhgWSxidSmyA==
+	t=1794590638;
+	b=QVjz1prGjQp2T/poyD8cybVrU32/E1cDTzIQOt/dnEa6f46Ug/niy5pL+Ho6LgqSUe6T
+	 1KMQPmlgc6H4Zu5jpNJdSIZpIzLHWN7gwKCj52ZY06ZIhVRoKW8M9NZX+I/jjZHNWcN9t
+	 w/KOdyBaFu9JfRKFIzZk/U0XCm8VcUIjvslW6EUmNyffSK+0erPjE3sAMkOc2QUYqmJ4l
+	 J6oAfTHSEtlxlaCA1CPpm6NZLtUD+eO230dERt9mM1+u945cn0H/UNBotBIIKqb9iv3m4
+	 p4WH4EyTNWWbNOc9/+DMh6K2sFgpZ9pnTZDwaeDriMtb078BYSPO1EMmmecBIRoN+uQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590637;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590638;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NgJ0aKNqMymfngXIOjy0zhXukKcc/XQ08clvMzDX+gA=;
-	b=U7yyG6JK2W4xByGQt/dqAJ6yG+B0elD358UCriD7ojsliYOGF/Gfh9QILj1yfHSeOMuF
-	 LiJc/2yGX6XLZvARIMFjjz/KlAShd4tDJsTt5okSuR1+2J8TNMKdrimdeGvjPtNCiebAs
-	 hOzJuAB1FFNx/XWZzKUcB2giNE5IOtF1LaS0s45iMJDghC34b+VrDHqjE3xgvzcUwYK20
-	 TIrn8ZSlSxBGGdKszhGD3K4nplbLEJVlJxdQ9LBT+H4B/IMJB9GC2ZPhTIP3Bf0Bmu1gk
-	 T8RTlxe5p/WFm8E3E4RbGcPISRXdqdnFLUrodgZzdJe1WeOnWok9yuZFZfR2/W9WFMw==
+	bh=4GVTOmSikl8LEelBG4b9/C4dhdytOjVvZ30IJpUpI1o=;
+	b=i6IdtleTAqCkPtJiSlA7xSOSEiXePLpJo0EpDwboVW6q1iOPSITSuQmHGNQyZZd3+E8K
+	 LuWgVy7vbacMlEFewOZ0G6jy/mKVbtdNfXpoZh5dT+OGA8hF29t7RLvdYUPteFeGNLHFj
+	 CKv+Wxin1725bqnSTTJeW7X4oluU88i4btAO296bHXaSUTph0Fl+1kJ+lXf8dR4FeW63W
+	 aReIN98xuZNYjiUYhweFErAtS7Io60m3Oz4VVRRqlAWz9JgKWq65XGi1Ke1f0cC53t3vw
+	 dwEgoPQEFZadPqJh0fsdFmBZMM6Vk+Ape7HaDS7wXkMb8nNcR9wSN1m7UjIjME2W/4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rz9bCEsA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UkR97SUs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE4560A3820;
-	Fri, 13 Nov 2026 17:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D5B60A3831;
+	Fri, 13 Nov 2026 17:23:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rz9bCEsA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB3D81F000CB;
-	Fri, 13 Nov 2026 17:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UkR97SUs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0171F000C7;
+	Fri, 13 Nov 2026 17:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590637;
-	bh=NgJ0aKNqMymfngXIOjy0zhXukKcc/XQ08clvMzDX+gA=;
+	s=korg; t=1794590638;
+	bh=4GVTOmSikl8LEelBG4b9/C4dhdytOjVvZ30IJpUpI1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rz9bCEsAeXX6k8LjxRxth9fdvn/2Sdu4l0akV0KaeMZ3myZq0Mq7L9Y6w5+qgGtFH
-	 bpIvZ4DbgUed2MN3ARuKtcAwM9xIao2+ixeEomDIogX6Z4w2hmeu5FsRZ45cvfmiAe
-	 ZMhIA/4NaDFdHU9QAv/9lXMuq1G0PGhTpgCQKegI=
+	b=UkR97SUs0DnPwg54LjKiO5JSp6YnnIpLx1+vrNj7Su97hesZoH9SO8pzoB4kNYt/1
+	 yNzGtmRKO8kCri47ZwqdCYhROFAIm4R1ZiStGjkHEJDTtDs2IoZGBRVpiifeZj9I66
+	 9/K+SB/XKzDHmiPZomEBQb3b7u75tf635cwcsy4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Christopher Lusk <clusk@northecho.dev>,
-	Greg Ungerer <gerg@linux-m68k.org>,
+	Gaurav Batra <gbatra@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 515/686] m68k: Fix seccomp filtering on ColdFire and 68000
-Date: Fri, 13 Nov 2026 10:50:48 -0500
-Message-ID: <20261113153838.554193204@linuxfoundation.org>
+Subject: [PATCH 6.18 516/686] powerpc/pseries/iommu: Add TCEs for 16GB pages when RAM is pre-mapped
+Date: Fri, 13 Nov 2026 10:50:49 -0500
+Message-ID: <20261113153838.659462114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,69 +69,217 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christopher Lusk <clusk@northecho.dev>
+From: Gaurav Batra <gbatra@linux.ibm.com>
 
-[ Upstream commit 48859f8018d93bd93ef35f7430fdf5b97f2f9715 ]
+[ Upstream commit 0b8b0c17a8998709ecb2852d56442ea981102941 ]
 
-m68k selects HAVE_ARCH_SECCOMP_FILTER for all configurations, but the
-ColdFire and 68000 syscall entry paths only branch to
-syscall_trace_enter() for TIF_SYSCALL_TRACE. TIF_SECCOMP alone falls
-through to syscall dispatch, leaving installed filters ineffective.
+In powerPC, if Dynamic DMA Window is big enough, RAM is pre-mapped. To
+determine the size of RAM, a PAPR+ property "ibm,lrdr-capacity" is used.
+This OF property dictates what is the max size of RAM an LPAR can have,
+including DR added memory.
 
-Test the combined TIF_SYSCALL_TRACE and TIF_SECCOMP mask in both paths
-and route either flag through the existing slow path. Leave the classic
-MMU syscall entry implementation unchanged.
+In PowerPC, 16GB pages can be allocated at machine level and then
+assigned to LPARs. These 16GB pages are added to LPAR memory at the time
+of boot. The address range for these 16GB pages is above MAX RAM an LPAR
+can have (ibm,lrdr-capacity). In the current implementation, these 16GB
+pages are being excluded from pre-mapped TCEs. A driver can have DMA
+buffers allocated from 16GB pages. This results in platform to raise an
+EEH when DMA is attempted on buffers in 16GB memory range.
 
-Validated the combined test under QEMU mcf5208evb (ColdFire): filters
-denying getpid, openat, unlinkat, and reboot each returned -EPERM. A
-classic-MMU control (q800) denied the filtered getpid syscall both before
-and after this change. The 68000 path shares the same source-level
-omission and receives the identical masked test but was not separately
-emulated. Compile-tested W=1 with CONFIG_SECCOMP_FILTER=y on both
-m5208evb_defconfig and a custom no-MMU UCSIMM configuration; the latter
-built arch/m68k/68000/entry.o and vmlinux.
+commit 6aa989ab2bd0 ("powerpc/pseries/iommu: memory notifier incorrectly
+adds TCEs for pmemory")
 
-Fixes: 6baaade15594 ("m68k: Add kernel seccomp support")
-Cc: stable@vger.kernel.org # v6.3+
-Suggested-by: Andreas Schwab <schwab@linux-m68k.org>
-Assisted-by: Claude:claude-opus-4-8
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Christopher Lusk <clusk@northecho.dev>
-Signed-off-by: Greg Ungerer <gerg@linux-m68k.org>
+Prior to the above patch, memblock_end_of_DRAM() was being used to
+determine the MAX memory of an LPAR. This included 16GB pages as well.
+The issue with using memblock_end_of_DRAM() is that when pmemory is
+converted to RAM via daxctl command, the DDW engine will incorrectly try
+to add TCEs for pmemory as well.
+
+Below is the address distribution of RAM, 16GB pages and pmemory for an
+LPAR with max memory of 256GB, memory allocated 64GB, 2 16GB pages and
+assigned pmemory of 8GB.
+
+RANGE                                 SIZE  STATE REMOVABLE     BLOCK
+0x0000000000000000-0x0000000fffffffff  64G online       yes     0-255
+0x0000004000000000-0x00000047ffffffff  32G online       yes 1024-1151
+
+cat /sys/bus/nd/devices/region0/resource
+0x40100000000
+cat /sys/bus/nd/devices/region0/size
+8589934592
+
+The approach to fix this problem is to revert back the code changes
+introduced by the above patch and to stash away the MAX memory of an
+LPAR, including 16GB pages, at the LPAR boot time. This value is then
+used whenever TCEs are needed to be pre-mapped - enable_DDW() or,
+iommu_mem_notifier()
+
+Fixes: 6aa989ab2bd0 ("powerpc/pseries/iommu: memory notifier incorrectly adds TCEs for pmemory")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gaurav Batra <gbatra@linux.ibm.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260806205027.86428-1-gbatra@linux.ibm.com
+[ sashal: retained the existing bus_dma_limit condition because the coherent-DMA bypass changes are absent ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/68000/entry.S    | 3 ++-
- arch/m68k/coldfire/entry.S | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ arch/powerpc/platforms/pseries/iommu.c | 67 +++++++++++++++++---------
+ 1 file changed, 45 insertions(+), 22 deletions(-)
 
-diff --git a/arch/m68k/68000/entry.S b/arch/m68k/68000/entry.S
-index c257cc415c478..0d3cbededc43c 100644
---- a/arch/m68k/68000/entry.S
-+++ b/arch/m68k/68000/entry.S
-@@ -79,7 +79,8 @@ ENTRY(system_call)
+diff --git a/arch/powerpc/platforms/pseries/iommu.c b/arch/powerpc/platforms/pseries/iommu.c
+index 4bcb6f2220658..aad5200b7bc1c 100644
+--- a/arch/powerpc/platforms/pseries/iommu.c
++++ b/arch/powerpc/platforms/pseries/iommu.c
+@@ -69,6 +69,8 @@ static struct iommu_table *iommu_pseries_alloc_table(int node)
+ 	return tbl;
+ }
  
- 	/* Doing a trace ? */
- 	getthreadinfo
--	btst	#(TIF_SYSCALL_TRACE%8),%a2@(TINFO_FLAGS+(31-TIF_SYSCALL_TRACE)/8)
-+	moveb	%a2@(TINFO_FLAGS+2),%d1
-+	andl	#((_TIF_SYSCALL_TRACE + _TIF_SECCOMP) >> 8),%d1
- 	jne	do_trace
- 	cmpl	#NR_syscalls,%d0
- 	jcc	badsys
-diff --git a/arch/m68k/coldfire/entry.S b/arch/m68k/coldfire/entry.S
-index 4ea08336e2fb0..d658abdc52075 100644
---- a/arch/m68k/coldfire/entry.S
-+++ b/arch/m68k/coldfire/entry.S
-@@ -72,7 +72,8 @@ ENTRY(system_call)
- 	movel	%d2,%a0
- 	movel	%a0@,%a1		/* save top of frame */
- 	movel	%sp,%a1@(TASK_THREAD+THREAD_ESP0)
--	btst	#(TIF_SYSCALL_TRACE%8),%a0@(TINFO_FLAGS+(31-TIF_SYSCALL_TRACE)/8)
-+	moveb	%a0@(TINFO_FLAGS+2),%d2
-+	andl	#((_TIF_SYSCALL_TRACE + _TIF_SECCOMP) >> 8),%d2
- 	bnes	1f
++static phys_addr_t pseries_ddw_max_ram __ro_after_init;
++
+ #ifdef CONFIG_IOMMU_API
+ static struct iommu_table_group_ops spapr_tce_table_group_ops;
+ #endif
+@@ -1284,15 +1286,19 @@ struct failed_ddw_pdn {
  
- 	movel	%d3,%a0
+ static LIST_HEAD(failed_ddw_pdn_list);
+ 
+-static phys_addr_t ddw_memory_hotplug_max(void)
++static phys_addr_t __init ddw_memory_hotplug_max(void)
+ {
+-	resource_size_t max_addr;
++	resource_size_t max_addr = memory_hotplug_max();
++	struct device_node *memory;
+ 
+-#if defined(CONFIG_NUMA) && defined(CONFIG_MEMORY_HOTPLUG)
+-	max_addr = hot_add_drconf_memory_max();
+-#else
+-	max_addr = memblock_end_of_DRAM();
+-#endif
++	for_each_node_by_type(memory, "memory") {
++		struct resource res;
++
++		if (of_address_to_resource(memory, 0, &res))
++			continue;
++
++		max_addr = max_t(resource_size_t, max_addr, res.end + 1);
++	}
+ 
+ 	return max_addr;
+ }
+@@ -1447,7 +1453,7 @@ static struct property *ddw_property_create(const char *propname, u32 liobn, u64
+ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mask)
+ {
+ 	int len = 0, ret;
+-	int max_ram_len = order_base_2(ddw_memory_hotplug_max());
++	int max_ram_len = order_base_2(pseries_ddw_max_ram);
+ 	struct ddw_query_response query;
+ 	struct ddw_create_response create;
+ 	int page_shift;
+@@ -1617,12 +1623,12 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mas
+ 		if (default_win_removed && pmem_present && !direct_mapping) {
+ 			/* DDW is big enough to be split */
+ 			if ((1ULL << ddw_sz) >=
+-			    MIN_DDW_VPMEM_DMA_WINDOW + (1ULL << max_ram_len)) {
++			    MIN_DDW_VPMEM_DMA_WINDOW + pseries_ddw_max_ram) {
+ 
+ 				direct_mapping = true;
+ 
+ 				/* offset of the Dynamic part of DDW */
+-				dynamic_offset = 1ULL << max_ram_len;
++				dynamic_offset = pseries_ddw_max_ram;
+ 			}
+ 
+ 			/* DDW will at least have dynamic allocation */
+@@ -1669,7 +1675,7 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mas
+ 
+ 	if (direct_mapping) {
+ 		/* DDW maps the whole partition, so enable direct DMA mapping */
+-		ret = walk_system_ram_range(0, ddw_memory_hotplug_max() >> PAGE_SHIFT,
++		ret = walk_system_ram_range(0, pseries_ddw_max_ram >> PAGE_SHIFT,
+ 					    win64->value, tce_setrange_multi_pSeriesLP_walk);
+ 		if (ret) {
+ 			dev_info(&dev->dev, "failed to map DMA window for %pOF: %d\n",
+@@ -1774,8 +1780,7 @@ static bool enable_ddw(struct pci_dev *dev, struct device_node *pdn, u64 dma_mas
+ 	 * to directly map both RAM and vPMEM, then we need to set DMA limit.
+ 	 */
+ 	if (pmem_present && direct_mapping && len != MAX_PHYSMEM_BITS)
+-		dev->dev.bus_dma_limit = dev->dev.archdata.dma_offset +
+-						(1ULL << max_ram_len);
++		dev->dev.bus_dma_limit = dev->dev.archdata.dma_offset + pseries_ddw_max_ram;
+ 
+ 	dev_info(&dev->dev, "lsa_required: %x, lsa_enabled: %x, direct mapping: %x\n",
+ 			limited_addr_req, limited_addr_enabled, direct_mapping);
+@@ -2422,23 +2427,35 @@ static int iommu_mem_notifier(struct notifier_block *nb, unsigned long action,
+ {
+ 	struct dma_win *window;
+ 	struct memory_notify *arg = data;
++	unsigned long limit = arg->nr_pages;
++	unsigned long max_ram_pages = pseries_ddw_max_ram >> PAGE_SHIFT;
+ 	int ret = 0;
+ 
+ 	/* This notifier can get called when onlining persistent memory as well.
+ 	 * TCEs are not pre-mapped for persistent memory. Persistent memory will
+-	 * always be above ddw_memory_hotplug_max()
++	 * always be above pseries_ddw_max_ram
+ 	 */
++	if (arg->start_pfn >= max_ram_pages)
++		return NOTIFY_OK;
++
++	/* RAM is being DLPAR'ed. The range should never exceed max ram.
++	 * Just in case, clamp the range and throw a warning.
++	 */
++	if (arg->start_pfn + limit > max_ram_pages) {
++		limit = max_ram_pages - arg->start_pfn;
++		WARN_ONCE(1, "Limiting Page Range %lx - %lx to Max Mem Pages: %lx\n",
++					arg->start_pfn, arg->start_pfn + arg->nr_pages,
++					max_ram_pages);
++	}
+ 
+ 	switch (action) {
+ 	case MEM_GOING_ONLINE:
+ 		spin_lock(&dma_win_list_lock);
+ 		list_for_each_entry(window, &dma_win_list, list) {
+-			if (window->direct && (arg->start_pfn << PAGE_SHIFT) <
+-				ddw_memory_hotplug_max()) {
++			if (window->direct) {
+ 				ret |= tce_setrange_multi_pSeriesLP(arg->start_pfn,
+-						arg->nr_pages, window->prop);
++						limit, window->prop);
+ 			}
+-			/* XXX log error */
+ 		}
+ 		spin_unlock(&dma_win_list_lock);
+ 		break;
+@@ -2446,12 +2463,10 @@ static int iommu_mem_notifier(struct notifier_block *nb, unsigned long action,
+ 	case MEM_OFFLINE:
+ 		spin_lock(&dma_win_list_lock);
+ 		list_for_each_entry(window, &dma_win_list, list) {
+-			if (window->direct && (arg->start_pfn << PAGE_SHIFT) <
+-				ddw_memory_hotplug_max()) {
++			if (window->direct) {
+ 				ret |= tce_clearrange_multi_pSeriesLP(arg->start_pfn,
+-						arg->nr_pages, window->prop);
++						limit, window->prop);
+ 			}
+-			/* XXX log error */
+ 		}
+ 		spin_unlock(&dma_win_list_lock);
+ 		break;
+@@ -2535,6 +2550,14 @@ void __init iommu_init_early_pSeries(void)
+ 	register_memory_notifier(&iommu_mem_nb);
+ 
+ 	set_pci_dma_ops(&dma_iommu_ops);
++
++	/* During init determine the max memory an LPAR can have and set it. This
++	 * will be used for pre-mapping RAM in DDW. memblock_end_of_DRAM() can
++	 * change during the running of LPAR - daxctl can add pmemory as
++	 * "system-ram". This memory range should not be pre-mapped in DDW since
++	 * the address of pmemory can be much higher than the DDW size.
++	 */
++	pseries_ddw_max_ram = ddw_memory_hotplug_max();
+ }
+ 
+ static int __init disable_multitce(char *str)
 -- 
 2.53.0
 
