@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591035;
-	b=pYsMWwAhND/OsVNbqrUJvV5Fkz3AafzaaNGBtUbNeBE+ZYhCP4nNfcjXGg0cGjChsyAC
-	 qARo2qvr7t5arbZWH03+077KQVldY4clOjHAvZGmWgPse0yFnTAwf5Dxhl71Mg2tBPrvL
-	 sJ9A8aMoMOf15/b4+g/U+3/Nba8Ml683RVJAzx2Xg7bq78v/nUp59c8rX6qYrJqtN7h2k
-	 ndRWh2OsuyUE+VJsmaWU5H94xz5EaRJ0TfrCUFMngqPAJor9gSAn6fftcNLNB68xfTMd6
-	 Y2vhPXKlp6k6sSxWn7W2RAyR8nXafhDS1YH3hfi/X17W/tlBgIxd8QzU1jI1yrvxPFw==
+	t=1794591037;
+	b=4xva8hU4/NjTWZ1xueOooQsBCYwaN7S9+ppPc1zajXE67LVODAagzl6W+L84xqsNUvkw
+	 fm5vF59XITNT+nnkyOBu1xDXfVb1n3gnLReDJb2E0M1uk80rJoQtLTIj4u2UaV6kzzPHD
+	 gKK6B+Ao9ichrbGEDOJyo/DFzdKRw77vQiZGllIliofzTx836CE01p/h4zLaekw6q3kX9
+	 +cpzrCy64+E1Pl/RpDFWiyUO2g02YOD6dcRAPMBKzqhZ2dkWJp0l9lPSTPC7ROI8g48yC
+	 7IIEdWjvJWu1pS91qJQZ5S14Zzn7VXyPHt1yrDVby5E4HldE6T+U5KKSJ0Hkyc7dkGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591035;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591037;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=mJ4i36FbyXA40qwhK6GM/IGwxhnFDGG1zxVZoZpvjWE=;
-	b=UyYC5BZAyyGeh/ZXqX2/Lj5B21FE0FSZ5l+XCHu5bGsl3YAVmqa9GqW7yguXkY24I6Mv
-	 Y4ADkohl/UR+3/CbwaRdIB/RwJ77wkMapOejlyMGijHLI8NGVgcR+0xuYOM/X5qMIubUb
-	 Lg2RdA7JJA960Imeb74zgnUur0yASbJWRDwj1TLog0SlvZL3AuykLTXSJ2V2dDbupHWEd
-	 tOe97B4w7EUCZJEHrRE2fQ/xmGBEQUOs8U9XLtR8pr0JcRDXDFtjNPAM8TRTgsXwd+JBG
-	 O+vUIFzdO4Qva2TbP40/UmV9JkPHd8SQOvshxYB+hXjZlOmDeqDGDWDSd8hWYFmyhuA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=quhIjbY2KVig9KuRGxKCWJv8jJGqxaJ5A7/lXQb+R5A=;
+	b=ALVnzg+bFXSTpneNmxwLaMI4bvMR8f7i03Vzl9dzKlcqenGUApGb+CzaZcScE9jmFEmA
+	 L7cOvxAn8Jl6jjQbLZgQXxNMN9Y7k6FjEYeWuUSNjHC0gRRjt4AAyXwxD1erryaXhKRzh
+	 I9VHDKzs9eZ0pgC1E4x7pq94mx1vmQeewZOAApNl4LrXN7f04Fyuz0gTrjZgp1tdVZe09
+	 MoaYVhhnTo7yuvHm2VLilwR7thua9D/4Sn7vvMgDCkNRPikcEsS34QmvexeWntGRtd5hy
+	 kw0TdtFFIhOnNZm4z9BsbB/RHZVUoSVslKTiYsNz7TtklP0ggNgoePUSfn19QQ4uTuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LcOA/ved";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RdUO6WN0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D441C606B809;
-	Fri, 13 Nov 2026 17:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B048606B804;
+	Fri, 13 Nov 2026 17:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LcOA/ved
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801EB1F000C6;
-	Fri, 13 Nov 2026 17:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RdUO6WN0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AB21F000C4;
+	Fri, 13 Nov 2026 17:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591035;
-	bh=mJ4i36FbyXA40qwhK6GM/IGwxhnFDGG1zxVZoZpvjWE=;
+	s=korg; t=1794591037;
+	bh=quhIjbY2KVig9KuRGxKCWJv8jJGqxaJ5A7/lXQb+R5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LcOA/vedAF30m1S62f7p3IRp83OOvvzsiq4DCLfHhAa+U5gFXYt9hope3U+taf0iM
-	 69QjU94NwXSaeSBIx10hO3Jwcr2m5ouY9y3Q1QR95xPyFkI4+qaDJEzuld7624TFNc
-	 r3/m0iaWKPaWvmVfCa/oIOKVNGwC8btH3hMOfRQ0=
+	b=RdUO6WN0FYFilHS6F8FG5lrBgPz2ahvYQUR4oAK3PSs3719KhTHWK1gKIGU78920d
+	 uTsRsWUOY8ezyGWEzG0cUfRh2KDGrpAJJgwcQg1hNtUv2QZQEYpvxBhF7ouHKXVWKI
+	 3nWAHAzTNvCAGj0Ef+u9WB4O70cgSeatr5E1QY+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Tanure <lucas.tanure@neat.no>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Masafumi Suzuki <shengshilingmu97@gmail.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 202/670] drm/vc4: hdmi: enable scrambling before the TMDS clock starts
-Date: Fri, 13 Nov 2026 10:46:06 -0500
-Message-ID: <20261113153818.810233318@linuxfoundation.org>
+Subject: [PATCH 6.12 203/670] sctp: account for chunk padding in sctp_init_cause()
+Date: Fri, 13 Nov 2026 10:46:07 -0500
+Message-ID: <20261113153818.838423535@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -62,88 +63,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas Tanure <lucas.tanure@neat.no>
+From: Masafumi Suzuki <shengshilingmu97@gmail.com>
 
-[ Upstream commit 81383bd290a18f06ccf9b0bfb29e1a3ef73d9357 ]
+[ Upstream commit ed6c53b27be492643da2017c6f8e2732be5edf1a ]
 
-HDMI 2.0 requires a source to suspend the TMDS clock, write the
-TMDS_Bit_Clock_Ratio bit in the sink's SCDC registers, wait at least
-1 ms and only then resume the clock. vc4 does the opposite: the PHY
-starts at the new rate first, and the SCDC bits are written tens of
-milliseconds later, at the very end of the enable sequence, together
-with the source side scrambler. On disable the bits are cleared while
-the clock is still running.
+sctp_init_cause() accepts a chunk when skb_tailroom() can hold the
+cause header and the payload. sctp_addto_chunk() then writes 0-3
+bytes of padding before that header so the chunk stays 4-byte
+aligned. The check does not include the padding, and the following
+skb_put() calls skb_over_panic() from softirq.
 
-Some sinks sample the bit only when the clock appears. One HDMI 2.0
-sink we tested then sets up its receiver for a 1/10 clock and never
-recovers: a Raspberry Pi 5 at 3840x2160@60 shows no picture, while
-1080p60 and 4K30 work and other sources work at 4K60 on the same sink.
-Writing the bit by hand before enabling the output makes the same mode
-lock every time.
+Count the padding sctp_addto_chunk() is about to write. The cause
+length on the wire stays the header plus the payload.
 
-Enable scrambling, on the sink and in the controller, before the PHY is
-started, and disable it only after the PHY has been stopped. The SCDC
-helper already waits the required time after writing the ratio bit.
+Found by LLM inspection, triggered and tested the fix.
 
+Fixes: 8914f4bace3f ("sctp: add sctp_make_op_error_limited and reuse inner functions")
 Cc: stable@vger.kernel.org
-Fixes: c85695a2016e ("drm/vc4: hdmi: Enable the scrambler")
-Link: https://github.com/raspberrypi/linux/issues/7693
-Assisted-by: LLM
-Signed-off-by: Lucas Tanure <lucas.tanure@neat.no>
-Reviewed-by: Maíra Canal <mcanal@igalia.com>
-Link: https://patch.msgid.link/20261026164028.78792-4-lucas.tanure@neat.no
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Signed-off-by: Masafumi Suzuki <shengshilingmu97@gmail.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20261027082405.1297-1-shengshilingmu97@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vc4/vc4_hdmi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/sctp/sm_make_chunk.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
-index 419ea3bcddfc8..2fa0e0f4bcd21 100644
---- a/drivers/gpu/drm/vc4/vc4_hdmi.c
-+++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
-@@ -869,8 +869,6 @@ static void vc4_hdmi_encoder_post_crtc_disable(struct drm_encoder *encoder,
- 		   HDMI_READ(HDMI_VID_CTL) & ~VC4_HD_VID_CTL_ENABLE);
- 	spin_unlock_irqrestore(&vc4_hdmi->hw_lock, flags);
+diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
+index 1bbc041c06440..6d0df43e08a86 100644
+--- a/net/sctp/sm_make_chunk.c
++++ b/net/sctp/sm_make_chunk.c
+@@ -145,6 +145,7 @@ int sctp_init_cause(struct sctp_chunk *chunk, __be16 cause_code,
+ 		    size_t paylen)
+ {
+ 	struct sctp_errhdr err;
++	int chunklen, padlen;
+ 	__u16 len;
  
--	vc4_hdmi_disable_scrambling(encoder);
--
- 	drm_dev_exit(idx);
+ 	/* Cause code constants are now defined in network order.  */
+@@ -152,7 +153,13 @@ int sctp_init_cause(struct sctp_chunk *chunk, __be16 cause_code,
+ 	len = sizeof(err) + paylen;
+ 	err.length = htons(len);
  
- out:
-@@ -899,6 +897,8 @@ static void vc4_hdmi_encoder_post_crtc_powerdown(struct drm_encoder *encoder,
- 	if (vc4_hdmi->variant->phy_disable)
- 		vc4_hdmi->variant->phy_disable(vc4_hdmi);
- 
-+	vc4_hdmi_disable_scrambling(encoder);
+-	if (skb_tailroom(chunk->skb) < len)
++	/* sctp_addto_chunk() pads the chunk up to a 4-byte boundary before
++	 * appending the cause, so account for that padding here as well.
++	 */
++	chunklen = ntohs(chunk->chunk_hdr->length);
++	padlen = SCTP_PAD4(chunklen) - chunklen;
 +
- 	clk_disable_unprepare(vc4_hdmi->pixel_bvb_clock);
- 	clk_disable_unprepare(vc4_hdmi->pixel_clock);
++	if (skb_tailroom(chunk->skb) < padlen + len)
+ 		return -ENOSPC;
  
-@@ -1509,6 +1509,8 @@ static void vc4_hdmi_encoder_pre_crtc_configure(struct drm_encoder *encoder,
- 		goto err_disable_pixel_clock;
- 	}
- 
-+	vc4_hdmi_enable_scrambling(encoder);
-+
- 	if (vc4_hdmi->variant->phy_init)
- 		vc4_hdmi->variant->phy_init(vc4_hdmi, conn_state);
- 
-@@ -1640,7 +1642,6 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
- 	}
- 
- 	vc4_hdmi_recenter_fifo(vc4_hdmi);
--	vc4_hdmi_enable_scrambling(encoder);
- 
- 	drm_dev_exit(idx);
- 
+ 	chunk->subh.err_hdr = sctp_addto_chunk(chunk, sizeof(err), &err);
 -- 
 2.53.0
 
