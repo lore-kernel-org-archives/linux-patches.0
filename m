@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585597;
-	b=q9T8JGm/HRpr+HtA72z0Sprfb0xdt9NLuFaOQZJsKICcVpk+n6jcCOifpwH+fbzMEfk3
-	 PU2BAdRGhnKz2L3x5VxpTaKaz7D9YyOjPWRxecj+H6zz5Ck9VDukWMKv11hNJsD9LHj6z
-	 YHF3te7+oRxfm4WFSShwF0F55AqwrQCPmc+BjlkdO+UEJSpNx2jKpdNxMfzfeMJwtcLPF
-	 92toAlqMjaMp/xMDPB2uoNM+4V/sftlIAaZvZ4+tK8BMl3e2A4RNM3qxRj7X1Rl5YqGrt
-	 hQb66Z8DIzVJXY5RNnX7jgphirwv+eqo1Ev/dS9+79RRGuWyhTG0rt2sVWYeSHJWKpg==
+	t=1794585598;
+	b=G7YxCGLv368pxfncvoMTzo9cToNT83g7gn4dolgt/zOsn2yA2qe19+DN4sGMOGjR+ege
+	 iMrRo2WjyFpUJD6ZWwbJ3bSn0NOJsfiAw7aOVqhZhDswoOlYk79m3xSTXZnJuk9W9AWDN
+	 rDrA25RnIN4RypPMIlQUCfV6nO7H78lYCGL111++7wBrbc+Ivrx5/L4g+kxo3yAWmJjNL
+	 YWRcRrzoE/giRYIkJ+LD6NucoA8upoSvYUaq8/CMRlcCaYxNt5G+X2VwA5Szdmrjvcauy
+	 J/BXspfyqHJfZGOulBIqcVWL/GiOSYKLHtFcG9JO37CSRdFgWNFttlHy75I7g3TfLFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585597;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ND+vMn5NnQomdjp35zwtkF9/r2crKLJLhleQQbXKID0=;
-	b=DE8Za/rfXcYONR5cqKwmztFzrPuqZ1m83Wb7C7zu1MmYlcx99RVReI4OQNiczXjVdNAM
-	 rjfTxYMCxt9FupItQrMEOzJ1vAWkl/EEAucsVPK5I6v1r23eX7O2KF1fGHLAaXdxd+2wY
-	 UeE9pmTA1ntW5GZl9BF4P1UIAPd6A79jdaEZbEhjWLf1T40jN2ogfBfLI/Jgv1i5i20/d
-	 0Go0/9AyPjOP8U6b0O3XYaFp095CmLvvqfKep6DJXRIy13/B6Izg/zRFSfPnJ7adCAnxf
-	 c8IWvuQ8XGX7oet/EsGbV+FeDhiUzYug3DVIfk8ZT17krpAJfoged6FPbnnY/yepWDw==
+	bh=s11kQG0rT9XAYcNaoOe/yPBlDR/fnElR3GP/ThhDBT8=;
+	b=xGs88fHV3DupITKWlVZ0WjFP9411r51bLxYMpt/WHvgUdm3VbXDVKA7n41a8ii1bZ326
+	 xcfghr1XnffxSS7l3PvkL76PIkHZT8KpVNfH/G9u3hMoR98TKYod6mDPIWOviWWlOpJJu
+	 aspi36ksRzABG2dXWvK/Gn2oQIO25kswPTWlMQVUDcn2T7VFU4ndZruPPuwNNM6IYUHlv
+	 G6q80EyOjVw+OO9B22mHWWXqVZzD1Son+wcJVISkXxFxKovmt2sivd/iXpNzFObEebt/D
+	 Gr/6lbuokpyr0Yk+WMimE1bK9bxmxafiXb4ssx5Q/PtIIiYjvLb0zyq+Fh9a2+7/zIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtSx6ubY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DROS0w3k;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F9D606FFF4;
-	Fri, 13 Nov 2026 15:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62EEB606FFEC;
+	Fri, 13 Nov 2026 15:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rtSx6ubY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03581F000C4;
-	Fri, 13 Nov 2026 15:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DROS0w3k
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EED41F000C5;
+	Fri, 13 Nov 2026 15:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585597;
-	bh=ND+vMn5NnQomdjp35zwtkF9/r2crKLJLhleQQbXKID0=;
+	s=korg; t=1794585598;
+	bh=s11kQG0rT9XAYcNaoOe/yPBlDR/fnElR3GP/ThhDBT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rtSx6ubYC65oyoHr8aX2tDLrKfifhHlSGR9zjEFkZASBTEcAxf+4uv0YC5hjHnbIM
-	 OTqhpnrP98biP+IlVLlq9ZxlgOnsDiiWbFtP7HQowqim2LWDtOfYgZR4/RLZQOsDNa
-	 z1UIIFy584pXHHpl9AfeZGwXfCECEQZ2l5XBkvy8=
+	b=DROS0w3kyQE22i5FF8HtK0m2MwBweV+LTyiUyQ8+JWntG63en6YKLwqH4LaItFiuh
+	 0+7f492ms4e7FaOZBCswAZzYKDYv0K8VcjCGjcASjd6KK1jopUPOOwfs5WOcd+qvAf
+	 DRlZ0Hub3+B9VEvYJLy+fTFIZofkzayBON+nFc7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jan Kara <jack@suse.cz>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Stefan Roesch <shr@devkernel.io>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 224/507] mm/page-writeback: avoid 32-bit overflow in dirty threshold shares
-Date: Fri, 13 Nov 2026 10:48:48 -0500
-Message-ID: <20261113153802.107768534@linuxfoundation.org>
+Subject: [PATCH 7.3 189/507] hwmon: (nct6683) Fix incorrect struct cast in show_pwm() and store_pwm()
+Date: Fri, 13 Nov 2026 10:48:13 -0500
+Message-ID: <20261113153800.918703136@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -72,74 +67,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 9597c2056e05bd79df9d343a9b42e84a54de1c52 ]
+[ Upstream commit c4a01c2a80b203ab5f80885f6994346fe217f19c ]
 
-The ratios used by __wb_calc_thresh() are scaled to parts per million, but
-the threshold and ratio operands are unsigned long.  On 32-bit kernels,
-their multiplication can wrap before the result is assigned to u64.
+On big-endian architectures, reading or writing the pwm[1-8] sysfs
+attributes in the nct6683 hardware monitoring driver always redirects to
+channel 0 due to an incorrect struct downcast in show_pwm() and
+store_pwm().
+The driver defines the PWM sysfs attributes using SENSOR_TEMPLATE(),
+which initializes them as struct sensor_device_attribute (where the index
+is a 32-bit int). However, the sysfs callbacks show_pwm() and store_pwm()
+incorrectly downcast the attribute to a struct sensor_device_attribute_2
+(where the index is an 8-bit u8). Because both structs start with struct
+device_attribute, container_of() resolves to the same base address. On
+big-endian architectures, reading the 8-bit index field from the memory
+layout of a 32-bit int fetches the most significant byte (which is 0),
+rather than the intended channel number.
+This type mismatch causes all PWM reads to return data for channel 0, and
+any writes intended to configure other channels will silently overwrite the
+duty cycle of PWM channel 0 instead.
 
-For example, with a threshold of 25600 pages and the default maximum ratio
-of 1000000, wb_max_thresh becomes 4125 pages instead of 25600.  The shared
-threshold and minimum share calculations can overflow in the same way,
-producing incorrect per-writeback dirty limits.
+Fix the type casts in show_pwm() and store_pwm() to solve the problem.
 
-Use a u64 threshold for the three ratio multiplications and div_u64() to
-retain the existing division order and rounding.
-
-Link: https://lore.kernel.org/20261021060654.27855-1-dennylin0707@gmail.com
-Fixes: ae82291e9ca4 ("mm: use part per 1000000 for bdi ratios")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Stefan Roesch <shr@devkernel.io>
-Cc: <stable@vger.kernel.org>
+Fixes: 41082d66bfd6 ("hwmon: Driver for NCT6683D")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page-writeback.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/hwmon/nct6683.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/page-writeback.c b/mm/page-writeback.c
-index eeab25d6ce364..1d6aab8781a57 100644
---- a/mm/page-writeback.c
-+++ b/mm/page-writeback.c
-@@ -883,6 +883,7 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
+diff --git a/drivers/hwmon/nct6683.c b/drivers/hwmon/nct6683.c
+index e1c36c95affb2..f34cb62305be8 100644
+--- a/drivers/hwmon/nct6683.c
++++ b/drivers/hwmon/nct6683.c
+@@ -920,7 +920,7 @@ static ssize_t
+ show_pwm(struct device *dev, struct device_attribute *attr, char *buf)
  {
- 	struct wb_domain *dom = dtc_dom(dtc);
- 	struct bdi_writeback *wb = dtc->wb;
-+	u64 threshold = thresh;
- 	u64 wb_thresh;
- 	u64 wb_max_thresh;
- 	unsigned long numerator, denominator;
-@@ -894,13 +895,14 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
- 	fprop_fraction_percpu(&dom->completions, dtc->wb_completions,
- 			      &numerator, &denominator);
+ 	struct nct6683_data *data = nct6683_update_device(dev);
+-	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
++	struct sensor_device_attribute *sattr = to_sensor_dev_attr(attr);
+ 	int index = sattr->index;
  
--	wb_thresh = (thresh * (100 * BDI_RATIO_SCALE - bdi_min_ratio)) / (100 * BDI_RATIO_SCALE);
-+	wb_thresh = div_u64(threshold * (100 * BDI_RATIO_SCALE - bdi_min_ratio),
-+			    100 * BDI_RATIO_SCALE);
- 	wb_thresh *= numerator;
- 	wb_thresh = div64_ul(wb_thresh, denominator);
- 
- 	wb_min_max_ratio(wb, &wb_min_ratio, &wb_max_ratio);
- 
--	wb_thresh += (thresh * wb_min_ratio) / (100 * BDI_RATIO_SCALE);
-+	wb_thresh += div_u64(threshold * wb_min_ratio, 100 * BDI_RATIO_SCALE);
- 
- 	/*
- 	 * It's very possible that wb_thresh is close to 0 not because the
-@@ -916,7 +918,7 @@ static unsigned long __wb_calc_thresh(struct dirty_throttle_control *dtc,
- 			wb_thresh = max(wb_thresh, (thresh - dtc->dirty) / 8);
- 	}
- 
--	wb_max_thresh = thresh * wb_max_ratio / (100 * BDI_RATIO_SCALE);
-+	wb_max_thresh = div_u64(threshold * wb_max_ratio, 100 * BDI_RATIO_SCALE);
- 	if (wb_thresh > wb_max_thresh)
- 		wb_thresh = wb_max_thresh;
- 
+ 	return sprintf(buf, "%d\n", data->pwm[index]);
+@@ -930,7 +930,7 @@ static ssize_t
+ store_pwm(struct device *dev, struct device_attribute *attr, const char *buf,
+ 	  size_t count)
+ {
+-	struct sensor_device_attribute_2 *sattr = to_sensor_dev_attr_2(attr);
++	struct sensor_device_attribute *sattr = to_sensor_dev_attr(attr);
+ 	struct nct6683_data *data = dev_get_drvdata(dev);
+ 	int index = sattr->index;
+ 	unsigned long val;
 -- 
 2.53.0
 
