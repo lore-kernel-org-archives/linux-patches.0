@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585462;
-	b=4dxtmLIdAok8vcPj2ydZ4H7Ep8XQDNsCwfwQb/rFGBF/9nJTLI+fsfDvJh+d1iBCG69w
-	 ZbtkKgyQPewHQiWEPqPdDNxWI2SnqTVr8BQkQw3ei8o7j6v3upJSS90FpBefNplKB1H+o
-	 dQkPeBhEH7ThvC7W90WFGDPbulfA3KuOtEwA2FlkG6pD/1tfT3sCClkV5QzrDL52q6FBe
-	 gmdovbRdLg0tLGUmgGA5ae0tS0LQmQRGQAGnOmbXM1YMb7UlvmJ+MCqIWOxm6Aubrm60F
-	 MH53uQ6DBvm8LNZKhMp9uj2qMaEpI+1c0vv8ZoKNnF0q+soJj2Ku+hHW4Olichp9ciw==
+	t=1794585463;
+	b=pk713HSvRps/MnvHVjDEoi6AlC6AfdApucdFrGQXYBnqo4yuiDKxtj9Ul4zy5q9Tbw2k
+	 K5PFGbQgX+fTY6UvXqd9+aufcsgodKXtQrssGvmTbVPJQFqwI+MErsA7/Ywb3M1nJ77kG
+	 fshQQ6H2pSdJGC5KqiCER9U/vul+YDWzaI3xNw2Me7f6MjVKiEVfVbfl8vNNh3qOyrjfL
+	 +oHwdb1A80AxNf840qXNLDcG6xcadJR9cnUqgTByMXWjUzU9Wk5DZKwmoVQXkzhoXQ+b8
+	 h7X0oU1bqiLsUhUdyMUhqXuqWFv175YM8jxj0eWfvhNk+pzMFCXl1xxn+Dz829qrPSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=6er7Nq8k1hOFD6BCdsWrMCs0ICI7DaWm5ZdWSY9gazM=;
-	b=L3lb6osI1+hcuPuQxPV3N8q/EDo5mUqHUfkY/ai/rJcEEA5rzdkK3UFSC2HwMMoJxTYJ
-	 7cNGgsyEEqea+2Ny5TgsT/NPa6nAfo7M5mrXHox6djKzdQ1dkf2f14vWb/0TCz2HYka37
-	 og/5RFxf+KPlvXkXt2k3UwsYrzx00wO6UhpJoPZNnqK6nYL/L17+vy/CjdfdMrde8SPye
-	 TdweCyyaTmuXeTR6C6qBKUZitK2ikqWiouOS5Pk1zbhEh6cU5fQSvFfWxPTSYN8xhAdgb
-	 NcfN77pq4fJHcZuH2aeannHQ9JIdtU6/JLWCEFGJig7n2Z/qauAumooPCTVNTNTHxJg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=U0w7CcjXrDd0DwxwVGfNMXYFVV0nGPG4MfviDvyekOI=;
+	b=UznKl4C5pjm0/eLDjXeny6AApQgd0uz7/HrCmS7EzW+eiSE0FrQ5ErvWh0Wg6Cc6DWPx
+	 NrIgcsXI4nqQWsgkAoQ2p5DUih1fGVXEwQculY4r2kE/ow/JTZoHwOW0ycWMSwMx1owQA
+	 IYtZAjewM/+00eo3OE5JSM9iXd3cuY7A3w6hNu2AeP7Em2StL8O7ZoYmp/lIZov3yBerr
+	 BM8MCBltwj+nHHUHjxF22MUn5yYNdYY8bgp1L9seMYb/hQGw5J6XShuUE9qPqDkQUEorm
+	 ldxtsccNZQbin41Zkieuyr8CFe1LfgypUT/qMZsNuL6wVkW+emAk6E41g6cq+utpTfg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrM6SYZl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="X0mF/Z3f";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDC760A6F4F;
-	Fri, 13 Nov 2026 15:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4841F606A33E;
+	Fri, 13 Nov 2026 15:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrM6SYZl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26F61F000C6;
-	Fri, 13 Nov 2026 15:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X0mF/Z3f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E914A1F000C5;
+	Fri, 13 Nov 2026 15:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585461;
-	bh=6er7Nq8k1hOFD6BCdsWrMCs0ICI7DaWm5ZdWSY9gazM=;
+	s=korg; t=1794585463;
+	bh=U0w7CcjXrDd0DwxwVGfNMXYFVV0nGPG4MfviDvyekOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FrM6SYZlzBmTSo2fSS7ovo3qluNqCG63Yo3iVkQ50mKQ54qZkt9CCfFS+HlcrHPtZ
-	 7u4oeRYNpBzX9NVoBI5qHnxLiGx7CvO0xZyfND6TiCReBdZcWQdjZnqaadFPeKEoJt
-	 /8mJVGz0JUubr5Vvvg0FAKbgqdjBfDZZVt6UE3WE=
+	b=X0mF/Z3fiIyUYvAOme3vbFMK6ges0uX9UZN4QLu0kE6oSgEfTqLWgl5nvyoND9SYj
+	 xxye2ylFLa7ajBaMTSOlR+ZXkCXp0SEw8E70HY65CPVel2RYJK6j2+BJ5yokpWln22
+	 OsEeduOJ6+lnjjVswOGrvZOBpB8OERL4K2VEQBZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"kernelci.org bot" <bot@kernelci.org>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Rosen Penev <rosenp@gmail.com>,
-	Sasha Levin <sashal@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nick Desaulniers <ndesaulniers@google.com>
-Subject: [PATCH 7.3 118/507] x86/csum: Relax the len and proto constraints in 32-bit csum_ipv6_magic()
-Date: Fri, 13 Nov 2026 10:47:02 -0500
-Message-ID: <20261113153758.346184062@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Mika Kahola <mika.kahola@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 119/507] drm/i915/psr: Clear selective fetch area when duplicating plane state
+Date: Fri, 13 Nov 2026 10:47:03 -0500
+Message-ID: <20261113153758.415827418@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -65,82 +63,132 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit f01a394fe2a00d3cb4cf2cda279c58604a2540ad ]
+[ Upstream commit cbe565475988d3b22dc36f13c14d9f0eec1685cd ]
 
-Building an i386 allmodconfig kernel with clang fails since allmodconfig
-started building netfilter with GCOV profiling:
+We are currently not clearing selective fetch area when duplicating plane
+state. This is causing problem when plane is re-used for another
+purpose. Fix this by clearing selective fetch area when duplicating plane
+state.
 
-  In file included from net/netfilter/nf_synproxy_core.c:7:
-  In file included from ./include/linux/skbuff.h:26:
-  In file included from ./include/net/checksum.h:21:
-  In file included from ./arch/x86/include/asm/checksum.h:9:
-  ./arch/x86/include/asm/checksum_32.h:149:6: error: inline assembly requires more registers than available
+Now as the state is cleared we need to ensure we have consistent selective
+fetch area in plane state on full update. Earlier this was relying on
+selective fetch area being copied from old state on state duplicate. Now
+this isn't true anymore as we are clearing it. Tackle this by setting full
+plane area as selective fetch area for each plane on full update. Rename
+the label as skip_su_area_calc as the loop setting the plane selective
+fetch area is not skipped anymore.
 
-The csum_ipv6_magic() asm needs five registers at once: the early-clobber sum
-plus register-only inputs for saddr, daddr, htonl(len) and htonl(proto). With
-frame pointers enabled, six general purpose registers are left to choose from.
+Move also psr2_sel_fetch_pipe_state_supported check after psr2_su_area
+initialization. The loop is run on full update as well now and it needs
+initialized psr2_su_area. Clip_area_update is only touching rect height and
+x1/x2 are left untouched.
 
-In synproxy_send_tcp_ipv6(), the GCOV instrumentation lets clang's machine
-scheduler move the copies of two incoming register arguments, EDX and ECX,
-below the asm.
+Don't set the area at all for planes not intersecting with the selective
+update area. It is already zero sized after plane state duplicate.
 
-Both registers then stay live across the asm, which leaves four registers for
-its five operands. This is LLVM issue #206307. The error goes away without
-either GCOV or frame pointers, and it reproduces with clang 19-22.
-
-Neither len nor proto has to be in a register: ADCL also takes a 32-bit memory
-or immediate source operand. Use "g" for both, so the asm needs at most three
-registers whatever the caller looks like.
-
-ASM_INPUT_G, which normally replaces "g" to avoid clang's poor handling of it,
-is not enough here. It expands to "ir" for clang, so callers that pass
-a variable protocol, like nf_ip6_checksum(), would still need five registers.
-With "g", clang passes a non-constant len or proto through the stack and still
-turns constants into immediates.
-
-  [ bp: Make Rosen Penev the author because of a previous identical submission
-    https://lore.kernel.org/all/20260904000833.2058186-1-rosenp@gmail.com/ and
-    Sasha graciously agreeing and giving his much more detailed commit message
-    explaining the background of why this exists. ]
-
-Fixes: 403cec8ab6d0 ("netfilter: add option for GCOV profiling")
-Closes: https://dashboard.kernelci.org/build/maestro:6ad55fe255fda507603d2651
-Closes: https://lore.kernel.org/a28df759-d0e9-41c0-97c7-5f89a18d54e2@oss.qualcomm.com
-Reported-by: kernelci.org bot <bot@kernelci.org>
-Reported-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Assisted-by: LLM
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Nick Desaulniers <ndesaulniers@google.com>
-Cc: stable@vger.kernel.org
-Link: https://github.com/llvm/llvm-project/issues/206307
+Fixes: efab47658a6c ("drm/i915/display/psr: Calculate selective fetch plane registers")
+Cc: <stable@vger.kernel.org> # v5.12+
+Assisted-by: GitHub-Copilot:claude-opus-5
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Mika Kahola <mika.kahola@intel.com>
+Link: https://patch.msgid.link/20260929094434.77129-2-jouni.hogander@intel.com
+(cherry picked from commit bd58f0e221386808cd614bb205112e807dc6b159)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/checksum_32.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_plane.c |  1 +
+ drivers/gpu/drm/i915/display/intel_psr.c   | 24 ++++++++++------------
+ 2 files changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/arch/x86/include/asm/checksum_32.h b/arch/x86/include/asm/checksum_32.h
-index 17da953879976..f74873a5e3510 100644
---- a/arch/x86/include/asm/checksum_32.h
-+++ b/arch/x86/include/asm/checksum_32.h
-@@ -159,7 +159,7 @@ static inline __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
- 	    "adcl $0, %0	;\n"
- 	    : "=&r" (sum)
- 	    : "r" (saddr), "r" (daddr),
--	      "r" (htonl(len)), "r" (htonl(proto)), "0" (sum)
-+	      "g" (htonl(len)), "g" (htonl(proto)), "0" (sum)
- 	    : "memory");
+diff --git a/drivers/gpu/drm/i915/display/intel_plane.c b/drivers/gpu/drm/i915/display/intel_plane.c
+index d0f99a87c42e8..d0e7309483234 100644
+--- a/drivers/gpu/drm/i915/display/intel_plane.c
++++ b/drivers/gpu/drm/i915/display/intel_plane.c
+@@ -140,6 +140,7 @@ intel_plane_duplicate_state(struct drm_plane *plane)
+ 	intel_state->dpt_vma = NULL;
+ 	intel_state->fence_id = -1;
+ 	intel_state->damage = DRM_RECT_INIT(0, 0, 0, 0);
++	intel_state->psr2_sel_fetch_area = DRM_RECT_INIT(0, 0, 0, 0);
  
- 	return csum_fold(sum);
+ 	/* add reference to fb */
+ 	if (intel_state->hw.fb)
+diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
+index c28bcb1a01841..15421b0a3bb0d 100644
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2913,16 +2913,16 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 	if (!crtc_state->enable_psr2_sel_fetch)
+ 		return 0;
+ 
+-	if (!psr2_sel_fetch_pipe_state_supported(crtc_state)) {
+-		full_update = true;
+-		goto skip_sel_fetch_set_loop;
+-	}
+-
+ 	crtc_state->psr2_su_area.x1 = 0;
+ 	crtc_state->psr2_su_area.y1 = -1;
+ 	crtc_state->psr2_su_area.x2 = drm_rect_width(&display_area);
+ 	crtc_state->psr2_su_area.y2 = -1;
+ 
++	if (!psr2_sel_fetch_pipe_state_supported(crtc_state)) {
++		full_update = true;
++		goto skip_su_area_calc;
++	}
++
+ 	/*
+ 	 * Calculate minimal selective fetch area of each plane and calculate
+ 	 * the pipe damaged area.
+@@ -3006,7 +3006,7 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 	}
+ 
+ 	if (full_update)
+-		goto skip_sel_fetch_set_loop;
++		goto skip_su_area_calc;
+ 
+ 	intel_psr_apply_su_area_workarounds(crtc_state);
+ 
+@@ -3042,6 +3042,11 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 			break;
+ 	} while (su_area_changed);
+ 
++skip_su_area_calc:
++	if (full_update)
++		clip_area_update(&crtc_state->psr2_su_area, &display_area,
++				 &display_area);
++
+ 	/*
+ 	 * Now that we have the pipe damaged area check if it intersect with
+ 	 * every plane, if it does set the plane selective fetch area.
+@@ -3058,8 +3063,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		inter = crtc_state->psr2_su_area;
+ 		sel_fetch_area = &new_plane_state->psr2_sel_fetch_area;
+ 		if (!drm_rect_intersect(&inter, &new_plane_state->uapi.dst)) {
+-			sel_fetch_area->y1 = -1;
+-			sel_fetch_area->y2 = -1;
+ 			/*
+ 			 * if plane sel fetch was previously enabled ->
+ 			 * disable it
+@@ -3099,11 +3102,6 @@ int intel_psr2_sel_fetch_update(struct intel_atomic_state *state,
+ 		}
+ 	}
+ 
+-skip_sel_fetch_set_loop:
+-	if (full_update)
+-		clip_area_update(&crtc_state->psr2_su_area, &display_area,
+-				 &display_area);
+-
+ 	psr2_man_trk_ctl_calc(crtc_state, full_update);
+ 	crtc_state->pipe_srcsz_early_tpt =
+ 		psr2_pipe_srcsz_early_tpt_calc(crtc_state, full_update);
 -- 
 2.53.0
 
