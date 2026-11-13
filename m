@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590924;
-	b=nBPcyACmbHAv2FvNWo7kUwaORksBVLL1cW2Ka8UWN4IDXkdbebtsmVeweUJa8cxquziN
-	 UgsDC/2S8YgmXWdSNw+IdAelNr9ancEWbb9wbB6iBm4N8O9Lax9SC1XZ5iaRmPGUcBdMM
-	 wLmi9YiSfrKDMdCtYG/rWeYhBxG/2CFg53BbvBxJJ9BstDqcdWhkKQTVmc8dRrsKqoINF
-	 GUfdRlFwu7dTcNwJnRDyPdEJN/ce66xJZB7taoDDrNs9/hi7HlrXhIxQspJi/4UxTQ+cL
-	 qoh2KsS+sSmAkFkoD8ooA/IzQkHaY6i2g3r19MgOP9b99wdtzdZuYvFoL0lX4x6zD/w==
+	t=1794590925;
+	b=lvZEWg/m/BxYSQyWjak1mt4EUrAxuKca2zMSnXfP3tHAxzA0mFxfJPPMNs0bO1hmS617
+	 5IixP9cxSoVg2rtq4tsXnt8/Ps1xEGt3LJZc2xjHyW3WUb+KOlyJdNQ0YfA5Q18ZlkVMS
+	 J6jcejiFr3PPRB7RIiYBnzTXt9PqzPFJSfJLAXjj8UeQ+CGZRt8CcmihTDhiKVHzlKrqx
+	 VdDmx7I6bYjUBLyJUFNd/IAEOzjtOkFVz4HeU49PMIehF1ggBIEgigMdz0XGd6b0L5DLZ
+	 abebvZgFJYMOpFZkorqMtRAkCTtkqOytS3sRErxUwfTyQafp5oG6SmU0OTcVI90WHwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590925;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DhpfDa2A3yAEXiIFRTH7yuVp4xfyFPT/FPtMeIiI2Zc=;
-	b=M2KX/JEoq/Hy9NO+57KGewj5OwcRkuX/JgtZkagZxWbStlEA5mG41726Jl1Ve3touZWx
-	 P6P/5NMX7+FBQQLwoN87ezv972C59Fqso5z+MOWfQzMe6jPnroDVt8fZlStFuEuiV8lb9
-	 Bc6Eq7kjDT1NbdmKQ5R1VA9126fK/jzy16LuE7r79TEjgiIMrp7bL/DyjvIYUbhc/Yt8s
-	 vNKIbP18/Lkcx3mtxF39OlR6JtJHMCnJl3cJHm4CFkkT9rGdWYeQVWXQTiGX95BCTVeFL
-	 tZWUhFy4JvuSCu1xe5elab6t87pIj7Gg+/aY2QapR2AuzyQGezxIzZDTMLDF6q/Swpw==
+	bh=YbjSb9pzvRcfef+O7S0c6eR8ufzr5pVaQmxESWgbj4A=;
+	b=lmfPoIY9VEtzMxiMHCVcZHdLO1WSI9cgzUrExM8PlTUX/0HWhtmvF4DZ8aPY6L0IZjM6
+	 9MMk+Eshmlh1LA3o9kdA6f99mWEWf/cRS54eFFr8K51dL1DQTqcZ8UngUFzTwSHdCqGeb
+	 4vfKmw5U6vW539fidNn8equqs6tdmIZalUqhmvrvVIRdWUVcog8qSP5eWX4jfhcaxjnt6
+	 bh1PM365z0jWDcyrA7VdYiCOLmjaE64+LXFR1At9BH8mzzulox2QDF/vsp3ms/A+G0Sbp
+	 yEw05PbYp/aZOu4uYWEMtK77zQt23rsjBz7JjrOC25PoXAum9pkD3PghRj/WnpU6E/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypU4X2Xr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X0WzixJe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704FF606E677;
-	Fri, 13 Nov 2026 17:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9E6606E674;
+	Fri, 13 Nov 2026 17:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ypU4X2Xr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE441F000C4;
-	Fri, 13 Nov 2026 17:28:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X0WzixJe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5906A1F000C4;
+	Fri, 13 Nov 2026 17:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590924;
-	bh=DhpfDa2A3yAEXiIFRTH7yuVp4xfyFPT/FPtMeIiI2Zc=;
+	s=korg; t=1794590925;
+	bh=YbjSb9pzvRcfef+O7S0c6eR8ufzr5pVaQmxESWgbj4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ypU4X2XrUvFO6r5BKDBv5LpiJKdr8zXtLrYHtI+bRt0S+SotPj07d3CRwaO4DtSbH
-	 qkcvOB8O92mDSxGmWEluyAjicOLh/R7Fkgpv8Oa3es5PDNK30KGxFacbPEKLQiYE0e
-	 Fs/98jRB7gfuLd4CBbqF7d+dhY0cyXV61tAks8To=
+	b=X0WzixJeGjZ7hlg12+cl1c+RqQreup7XV/WbD6c5qngDvjpmHJ2Q4KBZKbij21LWC
+	 lh35zW9RghHaE2Ri/cp9xbCajHSEV8nqVHby8cwXH5splef1F+/MgJgyNX+dao7WEd
+	 zhoZIPYUJo1XMWSPvaHATv7fiu/XZI9HGOC3I/zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bernard Pidoux <bernard.f6bvp@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/670] ax25: dont build a frame header from an uninitialised digipeater list
-Date: Fri, 13 Nov 2026 10:44:36 -0500
-Message-ID: <20261113153815.640763124@linuxfoundation.org>
+Subject: [PATCH 6.12 113/670] ax25: dont take a reference on a gone device in ax25_accept()
+Date: Fri, 13 Nov 2026 10:44:37 -0500
+Message-ID: <20261113153815.670469517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,80 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Bernard Pidoux <bernard.f6bvp@gmail.com>
 
-ax25_sendmsg() reads the digipeaters given with the destination only
-when the address is a full_sockaddr_ax25, but it then points dp at its
-local ax25_digi whenever sax25_ndigis is not zero. sax25_ndigis is part
-of the 16 byte struct sockaddr_ax25 as well, so a sendto() with that
-short address and a non-zero sax25_ndigis makes ax25_sendmsg() build
-the header from an ax25_digi that was never written: ax25_addr_size()
-and ax25_addr_build() use whatever ndigi and calls[] the stack holds.
+A connection made on an incoming SABM waits on the listener's receive
+queue until accept(). If its device goes down meanwhile,
+ax25_kill_by_device() finds it on ax25_list, disconnects it and clears
+its ax25_dev. It drops no device reference, since the socket has not
+been grafted yet, but the skb stays on the listener's queue. The next
+accept() then reads ax25->ax25_dev and passes NULL->dev to
+netdev_hold():
 
-On a datagram socket the frame then goes out with kernel stack bytes as
-digipeater calls, or skb_push() is asked for more than the headroom and
-the kernel stops in skb_under_panic(). Any local user who can bind an
-AX.25 socket can do it, and bind() is open to all with the default uid
-policy. Kernels built with CONFIG_INIT_STACK_ALL_ZERO hide it, ndigi
-is then 0.
+  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+  RIP: 0010:ax25_accept+0x58f/0x7e0 [ax25]
 
-Point dp at the local list only once the digipeaters have been read
-into it. A short address now sends without digipeaters, as connect()
-already does with the same address.
+A listener bound to a device is itself closed by ax25_kill_by_device(),
+so accept() returns -EINVAL unless it was already waiting and wakes up
+in between. A listener bound to no device, which any user can create,
+stays open, and the next accept() crashes every time.
 
-Tested on a QEMU bench (6.12.94 with KASAN, ax0 on mkiss, the frames
-recorded on the serial line): ten sendto() with a full address and 8
-digipeaters, each followed by one with a 16 byte address and
-sax25_ndigis = 8, ax25 built with -ftrivial-auto-var-init=pattern as
-with CONFIG_INIT_STACK_ALL_PATTERN:
+ax25_accept() also grafts the socket and takes the device references
+without the lock of the new socket, while ax25_kill_by_device() decides
+under that lock, from sk->sk_socket, whether those references are there
+to drop.
 
-  before: skb_under_panic (put:1793), kernel BUG on the first short one
-  after:  20 frames, the short ones without digipeaters, the full ones
-          with their 8 digipeaters, no KASAN report
+Graft the socket and take the references under its lock, and take none
+when the device has already gone. accept() then returns the connection
+closed, as it is: getpeername() and recv() give -ENOTCONN, and close()
+frees it.
 
-With the zero init used by most distribution kernels, and on this bench
-without any init, the stack held 0 there and the short frames already
-went out without digipeaters before the change.
+Tested on a QEMU bench (6.12.94 with KASAN and lockdep, two guests over
+a KISS serial link). A listens on TESTA-9 bound to no device, B calls
+it, A removes ax0 by detaching the N_AX25 line discipline, then calls
+accept():
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+  before: null-ptr-deref in ax25_accept(), kernel panic
+  after:  accept() returns the socket, -ENOTCONN on it, ax25 refcount
+          back to its starting value once closed, no KASAN or lockdep
+          report, five runs out of five
+
+A plain accept() run before that case behaves the same before and
+after.
+
+Fixes: 9fd75b66b8f6 ("ax25: Fix refcount leaks caused by ax25_cb_del()")
 Signed-off-by: Bernard Pidoux <bernard.f6bvp@gmail.com>
 Assisted-by: Claude:claude-opus-5-5
-(cherry picked from commit 15f2d99ffa155d65e591fb171f3df048d3d3802c)
+(cherry picked from commit b75827388dea3c54c44df39b003750b0849f9d31)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ax25/af_ax25.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/ax25/af_ax25.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/net/ax25/af_ax25.c b/net/ax25/af_ax25.c
-index a3bfc14a249ce..abb7621d03e04 100644
+index abb7621d03e04..2cfceeb2c8b92 100644
 --- a/net/ax25/af_ax25.c
 +++ b/net/ax25/af_ax25.c
-@@ -1569,7 +1569,7 @@ static int ax25_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 	struct sock *sk = sock->sk;
- 	struct sockaddr_ax25 sax;
- 	struct sk_buff *skb;
--	ax25_digi dtmp, *dp;
-+	ax25_digi dtmp, *dp = NULL;
- 	ax25_cb *ax25;
- 	size_t size;
- 	int lv, err, addr_len = msg->msg_namelen;
-@@ -1644,6 +1644,7 @@ static int ax25_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 			}
+@@ -1498,16 +1498,29 @@ static int ax25_accept(struct socket *sock, struct socket *newsock,
+ 		goto out;
  
- 			dtmp.lastrepeat = 0;
-+			dp = &dtmp;
- 		}
+ 	newsk		 = skb->sk;
++
++	/*
++	 * ax25_kill_by_device() detaches a connection from a device going
++	 * down under the lock of its socket, clears its ax25_dev and drops
++	 * the device references if the socket has been grafted by then.
++	 * Graft the socket and take those references under the same lock,
++	 * and take none if the device has already gone: the connection is
++	 * closed then, and the socket is returned as such.
++	 */
++	lock_sock_nested(newsk, SINGLE_DEPTH_NESTING);
+ 	sock_graft(newsk, newsock);
++	ax25 = sk_to_ax25(newsk);
++	ax25_dev = ax25->ax25_dev;
++	if (ax25_dev) {
++		netdev_hold(ax25_dev->dev, &ax25->dev_tracker, GFP_ATOMIC);
++		ax25_dev_hold(ax25_dev);
++	}
++	release_sock(newsk);
  
- 		sax = *usax;
-@@ -1652,10 +1653,6 @@ static int ax25_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 			err = -EISCONN;
- 			goto out;
- 		}
--		if (usax->sax25_ndigis == 0)
--			dp = NULL;
--		else
--			dp = &dtmp;
- 	} else {
- 		/*
- 		 *	FIXME: 1003.1g - if the socket is like this because
+ 	/* Now attach up the new socket */
+ 	kfree_skb(skb);
+ 	sk_acceptq_removed(sk);
+ 	newsock->state = SS_CONNECTED;
+-	ax25 = sk_to_ax25(newsk);
+-	ax25_dev = ax25->ax25_dev;
+-	netdev_hold(ax25_dev->dev, &ax25->dev_tracker, GFP_ATOMIC);
+-	ax25_dev_hold(ax25_dev);
+ 
+ out:
+ 	release_sock(sk);
 -- 
 2.53.0
 
