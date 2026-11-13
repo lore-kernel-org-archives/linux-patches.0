@@ -1,53 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590361;
-	b=JCZJyiwtKFM8/XQq+74Z9sWHqEqVk5U1Z5irOYzmkIxmnxMlM+IAy7S1ULtnbYJM/VSv
-	 oZW7XhNIVceP/f19qFlCJmqqYClvU6b29pBiMf57AuXRLRDhqu7lxQWVJj6AwZ5zq/ba1
-	 f2/eF9xU6VnExrjzt+aNImRSqpzDLvbqd+HGfbNWl6zytyOZdtygUHp08yxYIP4uEGsk4
-	 1qErcXh+iuXH1/RiXC07wktGlHFrIcfUpf7qs3qunP+ZOWoG53R9IvXb0yRgsXxem+FIp
-	 Y7ayMC7dJlnc9obOgVFUNHwTjPrVCjHsAFhgXgBwcskBRR7rseP8+att774ydJhWngw==
+	t=1794590362;
+	b=3KwAFpgc/pKSU6AfC2a9pdJ+PCVYC57Ya6nqqcQtt0CP9ZRi+zIUvJMwhScX/APWf3/s
+	 XG49n9U64juPuV268W8bOD1TL1RwVCALJWA//7k4YH17NMAoJH06/q/enJVitb5sRI0qG
+	 qFDu6IarekCSt5EnLDUbSdS7S0erxAledi1i9RHkAtJ1GhNsmIx7zY/mM9jbjiyZitIdX
+	 ClQKuN6zFjejlyQ5eZKbLZ2OCPhFQqvomG1d5rvxxCEl0xiGwUm8a8MhaIcl1j4jTax2l
+	 6WxnXJknygf2lFNdBevTgfx7ujKF6criemKHmBWxvwddqHs8/qT1hOj2HI7T5fTcB1g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JYgzkLKt0+oJGG2ftdCDy2tB5Y0V45ODmgKOoqzJWow=;
-	b=Olm9GpvwEqsO1aDuLXdTmaauSJ62dU9EWTDn29OlGSmJdyy5ETJG3+x+rjimIIFgUZgQ
-	 m05XSrfj0C5UQ0MU2nHSPZQ/LtQ+XWVqwiULr/8YfEyshT4n1Ato+OjvytFgPMZh3wpVE
-	 ePaHLHxcFKnWNrleUUIj+8cFo+qU/H6NqwM8t0aVBG70Esme5HDuhRncpbDF+CGc0Vqd+
-	 pH4Z7lDDPZFjJ9V+ms1jpmO3Cm+L2FVIBGk5ZebDvrHlgqAKWcW2/OkgcYh5zzrpk7TdF
-	 nC6fECwC8eLSfS/pWcdfHX6sggHyvT4cvnTZtZGrHL9T/IaQUmE6kyH1mwyOt6AL54g==
+	bh=5Wc0OqCJenM4HLv6hQUAXTS4BPDczhDEuyOSpOlash8=;
+	b=T+dcPnn0PBw+zxMbPBAwkmgx/hxHhCV6mSMX4pDLa/ntBqCqWgLQvh3itcRkgKNaDDyB
+	 nxCAPFx/dhdeMm2C8crH82OH0q5AH3ZIo+GyGgr4LGWm0xaOqj8yHGAFXFn2XiLYhJDra
+	 GqBEcKF9eEsKwG0F/xfGHkWq2vt96VjbaK4PxibsLSP1R3cmhSm5Bni0mWhbnG029AQ4L
+	 /E1HHj7V0KK0cO09YedoCmPa9wi87dphFD6utaYb04/NFceeJgi+VFHBfzJ7ciECohI41
+	 oMrMnBfr6OM0lc1g8xI172vsQZP8zyzXLTVsjX9LFgZux1+J+z8ZYZ8K2NCjLQe6M6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M3uk8OJY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5vhCbM8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326B9606E219;
-	Fri, 13 Nov 2026 17:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A92608316B;
+	Fri, 13 Nov 2026 17:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M3uk8OJY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CC81F000C7;
-	Fri, 13 Nov 2026 17:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F5vhCbM8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BE71F000C7;
+	Fri, 13 Nov 2026 17:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590361;
-	bh=JYgzkLKt0+oJGG2ftdCDy2tB5Y0V45ODmgKOoqzJWow=;
+	s=korg; t=1794590362;
+	bh=5Wc0OqCJenM4HLv6hQUAXTS4BPDczhDEuyOSpOlash8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M3uk8OJYdZ1K8WZ2FF0rpKgs95neXbyGgTe6+jakVKWtlkLEGCMUv+ZEB0nUsHtOj
-	 O2mwTZwIbeoInXKMTQCXVsvyJYG0mHfdkpzFxXfUK6wKjklqWLa0mSb7xoYRtsAV2i
-	 KJl4XJMDXqsi9PedDPinmhMVPBU94jm5Moc5kdCs=
+	b=F5vhCbM8Dzdadh4XR0LD00phMR+E9sl1X2+8MYnj0m/FlT2HqJ5lxz1aB/ufQq+81
+	 FqcOai7dnMaBzzBk6/w3FJj4Q/03CIuAIJ5zrvDemOJxOdtvzPEM9/uvhtY4BDR6mB
+	 n5xeYwaqh9kU4HUUh+pJOKJ/VerYM/xryw+AMxm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianyun Gao <jianyungao89@gmail.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Pankaj Gupta <pankaj.gupta@amd.com>,
+	David Hildenbrand <david@kernel.org>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Lorenzo Stoakes <ljs@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 337/686] xfs: fix temporary cursor leak in btree shift corruption paths
-Date: Fri, 13 Nov 2026 10:47:50 -0500
-Message-ID: <20261113153832.362868808@linuxfoundation.org>
+Subject: [PATCH 6.18 320/686] mm/cma: accept memory of multi-range CMA areas
+Date: Fri, 13 Nov 2026 10:47:33 -0500
+Message-ID: <20261113153831.776866065@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,51 +76,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianyun Gao <jianyungao89@gmail.com>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 2bbca049deeb1699cafd966cb2793fee576ee409 ]
+[ Upstream commit 5d002001601a163b6c3500cdc098ff66c34f62d8 ]
 
-In xfs_btree_lshift and xfs_btree_rshift, when XFS_IS_CORRUPT detects
-an invalid firstrec/lastrec result after xfs_btree_dup_cursor has
-successfully allocated a temporary cursor, the error path jumps to
-error0 which returns without freeing tcur.  This leaks the cursor
-memory, the xfs_group reference, and the per-level buffer references
-held by the duplicated cursor.  Jump to error1 instead, which calls
-xfs_btree_del_cursor(tcur, XFS_BTREE_ERROR) to properly release all
-resources.
+Patch series "mm/cma: accept memory of CMA areas reserved with
+memblock_reserve()", v1.
 
-Cc: stable@vger.kernel.org
-Fixes: 9eaead51bed95 ("[XFS] implement generic xfs_btree_rshift")
-Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Pages of allocated CMA areas are released to the buddy allocator with
+__free_pages(), which does not check for unaccepted memory.
+
+This usually works because memblock accepts the memory it allocates.
+
+However, multi-range CMA areas, used by hugetlb_cma, and fixed CMA areas
+requested with cma=<size>@<base> are reserved with memblock_reserve() and
+their memory is never accepted.
+
+On TDX and SEV-SNP guests the first access to such a page is fatal.
+
+To ease the backporting, each case is addressed by a separate patch:
+- patch 1 accepts the memory of multi-range CMA areas
+- patch 2 does the same for the fixed CMA areas
+
+The second patch won't apply cleanly to 6.6 and 6.12, but I believe the
+stable team LLMs will take care of that :)
+
+This patch (of 2):
+
+On systems with unaccepted memory, memblock allocations accept the
+allocated range, but when cma_declare_contiguous_multi() uses open coded
+allocation of multiple ranges, it reserves them with memblock_reserve()
+and they are never accepted.
+
+These pages are released to the buddy allocator by cma_activate_area()
+with __free_pages() that does not check for unaccepted memory, so the
+first access to such a page in a TDX or SEV-SNP guest is fatal.
+
+Accept the memory of each range when it is reserved.
+
+Link: https://lore.kernel.org/20261029-cma-multi-v1-0-2cbced8b5cb7@kernel.org
+Link: https://lore.kernel.org/20261029-cma-multi-v1-1-2cbced8b5cb7@kernel.org
+Fixes: c009da4258f9 ("mm, cma: support multiple contiguous ranges, if requested")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Tested-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Lorenzo Stoakes <ljs@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_btree.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/cma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
-index dbe9df8c33004..b0824d381e7c6 100644
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -2567,7 +2567,7 @@ xfs_btree_lshift(
- 		if (XFS_IS_CORRUPT(tcur->bc_mp, i != 1)) {
- 			xfs_btree_mark_sick(cur);
- 			error = -EFSCORRUPTED;
--			goto error0;
-+			goto error1;
+diff --git a/mm/cma.c b/mm/cma.c
+index 90d3ab262dae0..d829726319d81 100644
+--- a/mm/cma.c
++++ b/mm/cma.c
+@@ -674,6 +674,8 @@ int __init cma_declare_contiguous_multi(phys_addr_t total_size,
+ 			break;
  		}
  
- 		error = xfs_btree_decrement(tcur, level, &i);
-@@ -2737,7 +2737,7 @@ xfs_btree_rshift(
- 	if (XFS_IS_CORRUPT(tcur->bc_mp, i != 1)) {
- 		xfs_btree_mark_sick(cur);
- 		error = -EFSCORRUPTED;
--		goto error0;
-+		goto error1;
- 	}
- 
- 	error = xfs_btree_increment(tcur, level, &i);
++		accept_memory(mlp->base, size);
++
+ 		pr_debug("created region %d: %016llx - %016llx\n",
+ 		    nr, (u64)mlp->base, (u64)mlp->base + size);
+ 		cmrp = &cma->ranges[nr++];
 -- 
 2.53.0
 
