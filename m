@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585866;
-	b=xNtdDW/qP7afHK2KG5lX1qnUQKPmdNgxjuaX4HXep7ESxzrn+yopM8NbKKCgGlfUnzlA
-	 YVIERK9YNU4sJnJAjSf1HNTmYIVixFXHNwFHGzAmiEZLTrk5Fgw8HfU2b2fjQCxRsZ+CY
-	 ZkPcWlvQfLKDkZ2lT9wsDSRi7SLrRLP9dUBm1APyIyYTfkl55ZYqC29+h9nUaAISXWUEO
-	 1fRSBT7JJO66udU8aC/GZL1SBwhA2v3Vr7lh7Y5jfNl8a5YI6Xx9gLas2lsGqh84b/MP2
-	 zVMkWKdR/8glRYUg5VcSAltFcSdbJZx+6CAgdO+e/OunRt6pq9BpmluWhwydYAWUcFQ==
+	t=1794585867;
+	b=ftKHqI+ieBMT3RWf1Vh+ZLf4nc1N0QAvo7BOnz8DwU/v0UWQEYW6iIQXBPTqMZriXzPq
+	 hw1Fm3p9n4GGzH2G1AwhBw9JOqMVMDwwRslXY9W6nk7y4Pz/D+lwa0G50MF7nw1X3Glr0
+	 63WhGI1Xq0f+EQHEJiqeoRLaQPOkTblt5+7kx5VF/5Gubq9lUAmi5+LrcLaiZHSW2ucsT
+	 xxeGVIwtWzh0Tfj1DKmi3qdYyKMAs7Gbz6C8rdRzqoXKIQjf7fGkwEcKocSl1U9WtC10l
+	 ItUbiDd+JNVTBUXd3ARP2CP2RAa1+6+S2W0XEQLMpJVJeJ2tQgdVZMkfLCO41hWsT0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585866;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585867;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4aZucxH1upUGZ38iaDfPLY+ONh3mzQ1THru2D9a9RXs=;
-	b=W5l9Cj3HmC4nDhklgYKb6ZiFcaQZP4FnMhq0/pobJW1543oqrn1jt8Uh0K37MZFKSeEd
-	 AuZh2bTvWhZBvKhFJQ1wZGDcR1ASWvrkJ1uHKpqROrN3u5JNlOnBsH929SpWvEq9LMmHT
-	 SNZx+Z8apumZtEfh/QdhJUuOMFHBpO9zLNzeP5FOknOzCopFaaB8tnyxWuSAiRz0zGDGI
-	 uDe1Kq2f6MIPPOc7VvkMAY6Vqjy8bojvLLn+qcTjkCNEZpF3064PoeTFt3HhYBSfhZaW1
-	 +6taFzoZYT6lMwY8XXp64tD4j0IGW/M4Zx4k+fiIemcfZ5oDbyyNkQgrqaOBvqbjbjQ==
+	bh=8liOu5mEdUuION2PNajMeeViXr0CCi02uf+h9+4X6uE=;
+	b=GDt7je56n1slGDddJ2fhf4DHXDvgsBQkTXE62IFRJTeYagqC/UddQhH1L100Gl5N02be
+	 j9c3EKrFtT3GwNkJqiH7TfZ0byPSZlBEiTjrdmdOIj6zi9N9PBvaLsr74wZZTY01rkutW
+	 dCEiMR+/MwTy4j44YGyDoI6MYBpfY0l6EmZf/APzVFmpEDtl9TqWWHQ8+P8kD8PTx6mhJ
+	 Gxt1h4CCLdZkJO3AeQ/2kIGKqIiaE/A629yt4uf0tCDyPs+wGT+3o08QIW/BRu43lLjkO
+	 L1X/ChXfOgP22ztNUFY+apXXggGhlS+3SHPp1oPs+vVPNm2GoAtQi2dbp7tfrNesjvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tDJqzc8t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wUhAQkWA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4CC606EA80;
-	Fri, 13 Nov 2026 16:04:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97AE5606BAB8;
+	Fri, 13 Nov 2026 16:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tDJqzc8t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A94A1F000C6;
-	Fri, 13 Nov 2026 16:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wUhAQkWA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435261F000C4;
+	Fri, 13 Nov 2026 16:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585866;
-	bh=4aZucxH1upUGZ38iaDfPLY+ONh3mzQ1THru2D9a9RXs=;
+	s=korg; t=1794585867;
+	bh=8liOu5mEdUuION2PNajMeeViXr0CCi02uf+h9+4X6uE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tDJqzc8txGhU4yWcv1uIOFzKCbH3x1JlLQ0s46B4Hd/Ftafn1vrehAg9jDLdxafRM
-	 jpbYhDH0MrOJPdp/MxcIkAF9VQ4YhNzmvBJwiI6CLchiKlREHiiQzft+P+CJIIdpKl
-	 TEbibvh7oJjvM2m8ye+HaV1nlcj6D0D6hC8RbqOE=
+	b=wUhAQkWA0ntsT/ipOJrgM9BPvILMbz15xnjEip0zNirZZPiIV67y3YYh64XOikjll
+	 r5Lr1xo702TYGXb1KFmaowpt/exFTPpRwHDahB7QRcTpfwz09k15oD35cX8aD/BtBj
+	 1dW8X0x8EtDYeL1NkvV0TNij/bcliFDPIWTJFvnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 439/507] batman-adv: tt: only update flags for TT events
-Date: Fri, 13 Nov 2026 10:52:23 -0500
-Message-ID: <20261113153811.615506485@linuxfoundation.org>
+Subject: [PATCH 7.3 440/507] ata: libata-scsi: reject data-in commands with a data-out buffer
+Date: Fri, 13 Nov 2026 10:52:24 -0500
+Message-ID: <20261113153811.650813679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -67,108 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-commit ad1fd828aa3944efc393b84b0d7c02483f1b5638 upstream.
+[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
 
-In the first implementation of the translation table events, it was only
-possible to announce:
+SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
+scatterlist can then contain pages pinned without write access.
+ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
+in the reported case, the copy tried to write the shared zero page
+and faulted in the kernel.
 
-* ADD: new locally detected client
-* DEL: disappeared local client
+The same mismatch can affect SG_IO commands translated by libata.
+ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
+the receive buffer even if the drive aborts the command. For ATAPI,
+the successful INQUIRY completion also rewrites the buffer in
+atapi_fixup_inquiry().
 
-If an ADD event was queued and then a DEL event was queued in the same
-timeslot, it is valid to destroy both events because nothing actually
-changed for remode nodes
+Reject these mismatched commands before the buffer is written or the
+command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
+the CDB itself can be valid; the supplied transfer direction is wrong.
 
-But with commit 3c4f7ab60cc2 ("batman-adv: improve the TT component to
-support runtime flag changes") and subsequent changes, it could also happen
-that there are extra ADD events:
+Backport notes: Use the older five-argument ata_scsi_set_sense()
+interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
 
-* ADD: _NEW_ locally detected client
-* ADD: already existing client with new flags
-* DEL: disappeared local client
-
-The first and the last type of event could in theory still be removed
-together from the (to be announced) events queue. But if the "update flags"
-ADD is dropped together with the DEL, it would still leave global
-translation table of a remote node in the incorrect state - believing that
-the client didn't disappear.
-
-If a detected client was previously announced, a DEL event must only
-overwrite the "update flags" ADD but the DEL itself must still continue to
-exist in the (to be anounced) events queue. For now, adjustment of the
-announced flags is used for everything instead of dropping already queued
-up events completely.
-
-Similarly, a DEL followed by an ADD caused both entries to be deleted. But
-the new ADD could announce flags changes which were not yet present for the
-client before it was marked for DELetion. The new ADD must therefore only
-overwrite the DEL - but still be kept.
-
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
 Cc: stable@vger.kernel.org
-Fixes: 3c4f7ab60cc2 ("batman-adv: improve the TT component to support runtime flag changes")
-[ Context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/translation-table.c | 29 +++++++++--------------------
- 1 file changed, 9 insertions(+), 20 deletions(-)
+ drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/net/batman-adv/translation-table.c b/net/batman-adv/translation-table.c
-index 4ade3ca5af99c..ed8dcb8a66b13 100644
---- a/net/batman-adv/translation-table.c
-+++ b/net/batman-adv/translation-table.c
-@@ -418,6 +418,9 @@ batadv_tt_orig_list_entry_put(struct batadv_tt_orig_list_entry *orig_entry)
-  * @bat_priv: the bat priv with all the mesh interface information
-  * @tt_local_entry: the TT entry involved in the event
-  * @event_flags: flags to store in the event structure
-+ *
-+ * Only a single change per client is queued. It describes the latest state of
-+ * the client and a new event therefore replaces an already queued one.
-  */
- static void batadv_tt_local_event(struct batadv_priv *bat_priv,
- 				  struct batadv_tt_local_entry *tt_local_entry,
-@@ -429,7 +432,6 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
- 	struct batadv_tt_change_node *entry;
- 	struct batadv_tt_change_node *safe;
- 	bool del_op_requested;
--	bool del_op_entry;
- 	size_t changes;
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index b86ac50f16b9e..023de0e633b71 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1984,6 +1984,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
+ 	if (xlat_func(qc))
+ 		goto done;
  
- 	tt_change_node = kmem_cache_alloc(batadv_tt_change_cache, GFP_ATOMIC);
-@@ -463,25 +465,12 @@ static void batadv_tt_local_event(struct batadv_priv *bat_priv,
- 		if (entry->change.vid != tt_change_node->change.vid)
- 			continue;
++	/*
++	 * A data-out request may contain pages pinned without write access.
++	 * Reject a translated data-in command before issuing it, since its
++	 * completion handler may write to the buffer even if the device fails.
++	 */
++	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
++		     ata_is_data(qc->tf.protocol) &&
++		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
++		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		goto done;
++	}
++
+ 	return ata_scsi_qc_issue(ap, qc);
  
--		del_op_entry = entry->change.flags & BATADV_TT_CLIENT_DEL;
--		if (del_op_requested != del_op_entry) {
--			/* DEL+ADD in the same orig interval have no effect and
--			 * can be removed to avoid silly behaviour on the
--			 * receiver side. The  other way around (ADD+DEL) can
--			 * happen in case of roaming of  a client still in the
--			 * NEW state. Roaming of NEW clients is now possible due
--			 * to automatically recognition of "temporary" clients
--			 */
--			list_del(&entry->list);
--			kmem_cache_free(batadv_tt_change_cache, entry);
--			changes--;
--		} else {
--			/* this is a second add or del in the same originator
--			 * interval. It could mean that flags have been changed
--			 * (e.g. double add): update them
--			 */
--			entry->change.flags = flags;
--		}
-+		/* the other nodes may know the client with different
-+		 * flags. A DEL+ADD must therefore still announce the
-+		 * current flags and an ADD+DEL must still remove the
-+		 * client. ADD+ADD and DEL+DEL only update the flags
-+		 */
-+		entry->change.flags = flags;
+ done:
+@@ -2015,6 +2027,12 @@ static void ata_scsi_rbuf_fill(struct ata_device *dev, struct scsi_cmnd *cmd,
+ 	unsigned long flags;
+ 	unsigned int len;
  
- 		kmem_cache_free(batadv_tt_change_cache, tt_change_node);
- 		goto update_changes;
++	/* A data-out request may contain pages pinned without write access. */
++	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
++		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		return;
++	}
++
+ 	spin_lock_irqsave(&ata_scsi_rbuf_lock, flags);
+ 
+ 	memset(ata_scsi_rbuf, 0, ATA_SCSI_RBUF_SIZE);
+@@ -3108,6 +3126,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
+ 
+ 	qc->complete_fn = atapi_qc_complete;
+ 
++	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
++	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
++	    scmd->cmnd[0] == INQUIRY) {
++		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
++		return 1;
++	}
++
+ 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
+ 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
+ 		qc->tf.flags |= ATA_TFLAG_WRITE;
 -- 
 2.53.0
 
