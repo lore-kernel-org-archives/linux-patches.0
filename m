@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590271;
-	b=0bJQaqN5wAyd8kQlUE/eiICyRi/XadccnFsP/V9v0ZmHcxBQskwGEEUu2n4U3iQSjFjd
-	 6bH1ys25OhPpjIqh3Sh6ArE/Minp08d8YxCKUU8zC0brmXvOlF7o/x+OII5vyxGJk2Bl5
-	 6tq8uf3qdDcJnBfrhqAOL58tnh5Ws5K4BJFNO00KK6c0Os3yzD4Mfyrqy4zpZ4GDN7Y8O
-	 AeNyRbXN1c5CzEaCkypmhewGil5tNK8ZuSZ+sq/llP+yeP4k3JthPDriVv4f3yQsie2y0
-	 rwHVgT1S7ThsZz+s8XWFcSSrQM1tMGGRbJZ+Kb4Nm0W4W4fppxKFv6szPHXQqvot7Eg==
+	t=1794590272;
+	b=ljbjlKRg4WoBsvR7XjLRhoStfctxIhARwoQZYyC98elYffgsDibRWesv7q/sRY6DBN37
+	 IPFXc4CGtgsLUJlk3djF82Jysa4NpyiOX1ntYG+LxfBdOt2MayWKcnoDb8+WnZ9A262jZ
+	 emSZRk83CqJp5TIJ6VrNOHZZZGcO3089YXeBb1bsJZ6pIJ7dOZZnm0M2DdVjjhgwKyncu
+	 R0ahuJ0KkyeYPOb57b6UadgIXbi76Ab6BJSLJ8E9M6MsF4L7sao/5A/iGjRVKenAK60WX
+	 PFkzXSDuJ79pv1QOFhCOF3Bj+fPlip+lD/HIvZp/Vkxis0V6MjOnPVmNxJf0YP2N+Fw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590271;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590272;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=FJF6g4LMOZFHoFIIfLlksWgrm5HjFy7ruJVKn2mNfiE=;
-	b=GHyAEcorf4P4Up52ptkpffUxTMpWsDLW0ZVdJI9HfaqEsWeyVXR2TkPFSyeyuurHIj6I
-	 1qvwdHU8nILzdHE+RGcRWCn/XZITpO/VsUpUxUZrf5q1HuEpOfj+JxBao621+99TiAMdm
-	 h/2wpfCTLneKkcO9uAOtqtG2TjKi6l+WD/tXN5k+h8ram++Wpfzfx1utB1odOqLvskCnZ
-	 jaGebWA0zpxeNzGhFc5mSt7fi+Gxg8JkdsnVOhyIuJTNy6moUE+Zr0Djsh/Q4VV1WUQUn
-	 SsMQwpzZR5fvOjJu7iJ6aSu4NWD2GTRIa6kuozaq3se3xmUM8OCtkdxiU1vEwOPwitQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=61xF2ly0dzkoJcN3n83wisiUHRj5NaQd14O3a72YR84=;
+	b=Ko6+VYJU28bw6679rF14GxhldyGlh2BMU0OuDIU/zKRdfPBx0FKq6+RgZapb+c+ToZ4W
+	 qTpRMxFmVdmxZz8c9aPus300yXHOLrjNGfqf0NyWSR+gwLg39r1jDwLrMK/3TUi0RjkGM
+	 qNjkEAkXQcg4NKy7Wy32xM7r8U7QlAZ7KcG6dU12N0QheNIirfx/EzNyLhtYRug8UpywH
+	 SaHsIyXtVqEN8YPPfiiMNp35lnqoTFfawJX1jkfAzDbJBJUBNyliY3stEcDQOn6Wg8vRY
+	 CviJXsJ2dLrOsKVBIvzpLrxzph0Zb/c8urTd3c6n/mF32rOUsVl5B7+NPJPl+cjkm8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oaj50HpK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RFsXBegc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDF7606A898;
-	Fri, 13 Nov 2026 17:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DD4606B204;
+	Fri, 13 Nov 2026 17:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oaj50HpK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8FA1F000C4;
-	Fri, 13 Nov 2026 17:17:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RFsXBegc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71AF61F000C4;
+	Fri, 13 Nov 2026 17:17:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590271;
-	bh=FJF6g4LMOZFHoFIIfLlksWgrm5HjFy7ruJVKn2mNfiE=;
+	s=korg; t=1794590272;
+	bh=61xF2ly0dzkoJcN3n83wisiUHRj5NaQd14O3a72YR84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Oaj50HpKGA8raGxpJm2YJKu2ScLI8/ExVCxlF7+ykliZgZ02CxDLbV/aaM8bqvCUN
-	 j3MBrgK6ix6uWiyd34BLm70+e79S5MNJKSYGEMGEhlqzCBEc1LK9o51S9E+5lAOKFt
-	 w7+ML4IniBdhgjALS5AGYx1bFZie+h4dlsixF0tI=
+	b=RFsXBegcyk/G4943xuUqiiC5ETwdeUs1h9uKvku3m1kCg7zl8RiC5y1cODTxzaOra
+	 xJdj6+4MHd95wi7Bk4z2x/G665K4Tqxk7xJb8QsI/6KbbnzQS3MvbRnVTbGalvGxlS
+	 CUVFBB5F9cPeZg+qDm9NO9eoLy3TXltqnOKxnoSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dgc@kernel.org>,
-	Daejun Park <daejun7.park@samsung.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 262/686] xfs: dont skip free extents of the longest length in a whole-AG FITRIM
-Date: Fri, 13 Nov 2026 10:46:35 -0500
-Message-ID: <20261113153829.907259140@linuxfoundation.org>
+Subject: [PATCH 6.18 263/686] drm/v3d: Initialize timedout_batches when running a CSD job
+Date: Fri, 13 Nov 2026 10:46:36 -0500
+Message-ID: <20261113153829.941770857@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -64,59 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
 
-[ Upstream commit 5745f4f10a1a16aa5bb020acc38afa33f2d5ff99 ]
+[ Upstream commit 0afdbdd5b1af729108de8f893d179c3b99eac29d ]
 
-Since commit a66d636385d6 ("xfs: fix fstrim offset calculations"), the
-by-length walk of an AG in FITRIM starts with
-xfs_alloc_lookup_ge(cur, 0, pagf_longest) and walks down. The lookup
-lands on the longest free extent with the lowest block number. The
-other free extents of that length sort after it and are never
-discarded.
+v3d_csd_job_timedout() decides whether a compute job made progress by
+comparing CSD_CURRENT_CFG4, the number of batches the dispatcher still
+has to start, against the value saved at the previous timeout. That
+saved value is never initialized, so it is zero on the first timeout.
 
-Start every by-length batch with xfs_alloc_lookup_le() at restart_bno.
+On V3D 7.1.6 and later, CFG4 counts down to zero once the dispatcher has
+started the last batch, but the dispatch keeps running until the batches
+in flight complete. If the first timeout fires in that window, the
+handler sees no change and resets the GPU while the job is about to
+complete. For example, this happens with long dispatches that only keep a
+single supergroup in flight.
 
-Suggested-by: Dave Chinner <dgc@kernel.org>
-Link: https://lore.kernel.org/r/ZgiJWxVcVwag0fIP@dread.disaster.area
+Initialize timedout_batches to the value programmed in CFG4 when the job
+is started. The register does not return to it once a batch has started:
+it counts down to zero on V3D 7.1.6 and later (CFG4 holds the number of
+batches), and to 0xffffffff on V3D 4.2 (CFG4 holds the number of batches
+minus one).
+
 Cc: stable@vger.kernel.org
-Fixes: a66d636385d6 ("xfs: fix fstrim offset calculations")
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
+Signed-off-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20261101125619.2465064-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_discard.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/v3d/v3d_sched.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/xfs/xfs_discard.c b/fs/xfs/xfs_discard.c
-index b866329c7a28d..98933c1725214 100644
---- a/fs/xfs/xfs_discard.c
-+++ b/fs/xfs/xfs_discard.c
-@@ -211,12 +211,12 @@ xfs_trim_gather_extents(
- 		error = xfs_alloc_lookup_le(cur, tcur->start, 0, &i);
- 		if (!error && !i)
- 			error = xfs_alloc_lookup_ge(cur, tcur->start, 0, &i);
--	} else if (tcur->restart_bno == NULLAGBLOCK) {
--		/* first time through a by-len starts with max length */
--		cur = xfs_cntbt_init_cursor(mp, tp, agbp, pag);
--		error = xfs_alloc_lookup_ge(cur, 0, tcur->count, &i);
- 	} else {
--		/* nth time through a by-len starts where we left off */
-+		/*
-+		 * A by-len walk starts at the last record of the longest
-+		 * length (restart_bno is NULLAGBLOCK until the first batch
-+		 * ends) and then where the previous batch stopped.
-+		 */
- 		cur = xfs_cntbt_init_cursor(mp, tp, agbp, pag);
- 		error = xfs_alloc_lookup_le(cur, tcur->restart_bno,
- 					    tcur->count, &i);
+diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
+index 9b98386965796..5cdfc107a012d 100644
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -403,6 +403,8 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 		dma_fence_put(job->base.irq_fence);
+ 	job->base.irq_fence = dma_fence_get(fence);
+ 
++	job->timedout_batches = job->args.cfg[4];
++
+ 	trace_v3d_submit_csd(dev, to_v3d_fence(fence)->seqno);
+ 
+ 	v3d_job_start_stats(&job->base, V3D_CSD);
 -- 
 2.53.0
 
