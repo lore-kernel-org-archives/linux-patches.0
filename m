@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591390;
-	b=D3oIfilCpMFC3UsEC+w6GiZKES/b2GqhU4fQSv2qpfhvkjdJUmNooxzFJyCY0zMNdHBu
-	 5b3Svv3hELDhsHph+hjsXsXKvv09WfJt4bjwkEso8NAgKEzQORqSvc8/hUO6ZNr1Ej6x7
-	 kBDOXNR9rbMH3t7lf7MulWV1gln1+BAZszMeG9GTCCJoUUT+2gZdn9uIMqRPL5tjW1ZGK
-	 muy0ssC5AuZxA6j2wTgptQelN8wkkwg0cNCmmkfPZXXT19fckQ008INxZMzwwVedFRhaO
-	 SbSaHkFz4LfUC03/oYfh53qdfLmWXwgSdlnawC8s6ZJqsqrG8fojfcwB7YJCtGXtTaw==
+	t=1794591392;
+	b=cxWPaiPaVYbk22oH9kHSInlM/kqgfN+o/SR/eJtQCeIgIMaRcWZ3Kn3qXvUCT8bT0Aev
+	 4uNtANIAgC1eBPU9iwz1AU6gJXoDOqlojtKJCfBepoMoCTTwYR5vK7UFbUbamUTbiTUyC
+	 9mcUNyFkJjgJ8aOb9SWnQLdAaq0iCDoJXSo4wzM7wDHpz+ue3B1ZOOJFTN3qANIeQluQV
+	 G+7yWUZm5RZZCFpgxMrYFxxQzlVBgtRkUvDGCXKX3TyPKeQBFEDNjq0iKSoy9Mj7kZj26
+	 X5bw48fAMPnQ83Ewhgkpgi6OIsu9fW1I7f6VXXAClIke9O0/N2ytd9rNZ9fmc27/MAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JwN85pOFPytDgI7ePoh1pLvgsifdUy+ViNx55jw2Y3k=;
-	b=ZN2qiBoSYTY0SbEFtAT4vDk2MM+09yvO9seAfhBMztqPFDbyb9VzWn/1TbQFZIg1PzKh
-	 NgsQgSJivtGbkL2ef4KdenMor1QFlm3Z1D4rix3YIcDQo5UqSASKJzVbGxbPKlxbU01Uw
-	 W3d1kOPtaIM8YEwXbq/mMOwacIvfURPr1LD/mCLb7RhiPmDqex4C8dhK5yu30emLF84Xs
-	 cBq9MWFnidAd2nDAbf702ef3p52ubwjie0BKGdVr6z7MJO+/KVkfd/t8sZIzlcrC+HpxC
-	 LFWSLh7D1AMKD1pd5/1uihd5a+vKCsLfCQMfsaMWpZPtVC+UeB+xxkSx5qTy8Ub+DXw==
+	bh=cBg0ru7px8tVcc+gXf7hXjEI+vO0ZEG5AttLBnDnHBo=;
+	b=to7cT5L/dsJbDxNhgkkPGwiYgVzkxLtf+1IiXPiO6ALYgndaX6CqZx8l6UevEqpHUlID
+	 gWIP1PHKNN4AZlwCN7b2/Laq1XPXtzdzwQOcLSQ+Ipv/Z42ZmL9tdhH2GQRAqMq4FUBFF
+	 sGm+9K4Cr7wAgAUoA7xtyAltGqf5rV78hXeGOT9N1LbLkFCxbIZ0P8gntycwADoYjhsoM
+	 1RU8jb4xdYuAjEJ/rqhuuIs6L7LeWJu7hJbmOLvJwQMjZTpswWPBvvXpCcHVYQw29TJw1
+	 B5Qkf8vaQ1wLJmMrV+5pF6atrK/o8qg5IAxQN8AiFvc8bGvegltXwJuepMADU22Bivg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NOnjveZM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ryYxzec7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA92606A882;
-	Fri, 13 Nov 2026 17:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AB1607A5CD;
+	Fri, 13 Nov 2026 17:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NOnjveZM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D3741F000C4;
-	Fri, 13 Nov 2026 17:36:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ryYxzec7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905CB1F000C4;
+	Fri, 13 Nov 2026 17:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591390;
-	bh=JwN85pOFPytDgI7ePoh1pLvgsifdUy+ViNx55jw2Y3k=;
+	s=korg; t=1794591391;
+	bh=cBg0ru7px8tVcc+gXf7hXjEI+vO0ZEG5AttLBnDnHBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NOnjveZMDXl7pu+0ay5gnXlhkMbLMFjftiPi08ws/ZUeVVRvqbGyc6K36essB700t
-	 N7yqB35g43BaVXh5WRDB2C6kj0qN9r+0+JMt6J4q9cG6HBFkEYHVsU+Nn00tcwxfIP
-	 Oske8egzoNkDXJXmT8oAmL7h4V1mb9s8dPSdVE+M=
+	b=ryYxzec7ysWwzxu5iTnfDY65RNCR1tBwV4KdMdpEFUtOrUueKZMCPVmxSQ7VWTL9R
+	 mGVN3xaUNcuI9RaRh0X9rX6YckrXIN+BF0jtSmNcKCzYyUEE9MHeIhAp2pyxrECtKU
+	 Dv2ATBjpQ+YLeozTUEK/dx30ak0BJPuxU2B3vIP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Luo Jie <quic_luoj@quicinc.com>,
+	Yury Norov <yury.norov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 490/670] mm/shmem: honour F_SEAL_EXEC when an ACL is set
-Date: Fri, 13 Nov 2026 10:50:54 -0500
-Message-ID: <20261113153828.541490982@linuxfoundation.org>
+Subject: [PATCH 6.12 491/670] bitfield: Add FIELD_MODIFY() helper
+Date: Fri, 13 Nov 2026 10:50:55 -0500
+Message-ID: <20261113153828.575010850@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -74,128 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Luo Jie <quic_luoj@quicinc.com>
 
-[ Upstream commit 0237c47ca17005ea41b510c6116f0257dbf84eab ]
+[ Upstream commit a256ae22570ee4c3427fdc703a58a89afee6a332 ]
 
-The owner of a memfd sealed with F_SEAL_EXEC can still change its
-execute bits by setting a POSIX access ACL. With CONFIG_TMPFS_POSIX_ACL,
-this lets an unprivileged owner make a non-executable memfd executable,
-bypassing vm.memfd_noexec=2.
+Add a helper for replacing the contents of bitfield in memory
+with the specified value.
 
-simple_set_acl() updates i_mode directly, bypassing the seal check in
-shmem_setattr(). Add shmem_set_acl() to check the resulting mode. Share
-the F_SEAL_EXEC check with shmem_setattr() using memfd_check_seals_mode()
-in include/linux/memfd.h.
+Even though a helper xxx_replace_bits() is available, it is not
+well documented, and only reports errors at the run time, which
+will not be helpful to catch possible overflow errors due to
+incorrect parameter types used.
 
-Fix generated by an LLM and sent by Chris Mason in private.
+FIELD_MODIFY(REG_FIELD_C, &reg, c) is the wrapper to the code below.
 
-Fixes: 6fd7353829ca ("mm/memfd: add F_SEAL_EXEC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-[ david: use common helper; simplify description ]
-Link: https://patch.msgid.link/20261029-fixes_shmem-v4-4-392fc715d8f6@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: removed const from the mnt_idmap parameter of shmem_set_acl() to match the existing ACL interface ]
+	reg &= ~REG_FIELD_C;
+	reg |= FIELD_PREP(REG_FIELD_C, c);
+
+Yury: trim commit message, align backslashes.
+
+Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+Signed-off-by: Yury Norov <yury.norov@gmail.com>
+Stable-dep-of: ea9854a169e9 ("spi: cadence-xspi: reject SDMA transfers larger than the requested length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memfd.h |  9 +++++++++
- mm/shmem.c            | 35 ++++++++++++++++++++++++++++++-----
- 2 files changed, 39 insertions(+), 5 deletions(-)
+ include/linux/bitfield.h | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/memfd.h b/include/linux/memfd.h
-index 246daadbfde82..bb07ba2992908 100644
---- a/include/linux/memfd.h
-+++ b/include/linux/memfd.h
-@@ -2,8 +2,17 @@
- #ifndef __LINUX_MEMFD_H
- #define __LINUX_MEMFD_H
+diff --git a/include/linux/bitfield.h b/include/linux/bitfield.h
+index 20978c60b565d..c60554acc16dd 100644
+--- a/include/linux/bitfield.h
++++ b/include/linux/bitfield.h
+@@ -8,6 +8,7 @@
+ #define _LINUX_BITFIELD_H
  
-+#include <linux/fcntl.h>
- #include <linux/file.h>
+ #include <linux/build_bug.h>
++#include <linux/typecheck.h>
+ #include <asm/byteorder.h>
  
-+static inline int memfd_check_seals_mode(unsigned int seals, umode_t old_mode,
-+		umode_t new_mode)
-+{
-+	if ((seals & F_SEAL_EXEC) && ((old_mode ^ new_mode) & 0111))
-+		return -EPERM;
-+	return 0;
-+}
+ /*
+@@ -38,8 +39,7 @@
+  *	  FIELD_PREP(REG_FIELD_D, 0x40);
+  *
+  * Modify:
+- *  reg &= ~REG_FIELD_C;
+- *  reg |= FIELD_PREP(REG_FIELD_C, c);
++ *  FIELD_MODIFY(REG_FIELD_C, &reg, c);
+  */
+ 
+ #define __bf_shf __builtin_ctzll
+@@ -156,6 +156,23 @@
+ 		(typeof(_mask))(((_reg) & (_mask)) >> __bf_shf(_mask));	\
+ 	})
+ 
++/**
++ * FIELD_MODIFY() - modify a bitfield element
++ * @_mask: shifted mask defining the field's length and position
++ * @_reg_p: pointer to the memory that should be updated
++ * @_val: value to store in the bitfield
++ *
++ * FIELD_MODIFY() modifies the set of bits in @_reg_p specified by @_mask,
++ * by replacing them with the bitfield value passed in as @_val.
++ */
++#define FIELD_MODIFY(_mask, _reg_p, _val)						\
++	({										\
++		typecheck_pointer(_reg_p);						\
++		__BF_FIELD_CHECK(_mask, *(_reg_p), _val, "FIELD_MODIFY: ");		\
++		*(_reg_p) &= ~(_mask);							\
++		*(_reg_p) |= (((typeof(_mask))(_val) << __bf_shf(_mask)) & (_mask));	\
++	})
 +
- #ifdef CONFIG_MEMFD_CREATE
- extern long memfd_fcntl(struct file *file, unsigned int cmd, unsigned int arg);
- struct folio *memfd_alloc_folio(struct file *memfd, pgoff_t idx);
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 881cbeaf3f747..8de38d7a98f92 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -75,6 +75,7 @@ static struct vfsmount *shm_mnt __ro_after_init;
- #include <linux/magic.h>
- #include <linux/syscalls.h>
- #include <linux/fcntl.h>
-+#include <linux/memfd.h>
- #include <uapi/linux/memfd.h>
- #include <linux/rmap.h>
- #include <linux/uuid.h>
-@@ -1255,10 +1256,11 @@ static int shmem_setattr(struct mnt_idmap *idmap,
- 	if (error)
- 		return error;
- 
--	if ((info->seals & F_SEAL_EXEC) && (attr->ia_valid & ATTR_MODE)) {
--		if ((inode->i_mode ^ attr->ia_mode) & 0111) {
--			return -EPERM;
--		}
-+	if (attr->ia_valid & ATTR_MODE) {
-+		error = memfd_check_seals_mode(info->seals, inode->i_mode,
-+					       attr->ia_mode);
-+		if (error)
-+			return error;
- 	}
- 
- 	if (S_ISREG(inode->i_mode) && (attr->ia_valid & ATTR_SIZE)) {
-@@ -4939,12 +4941,35 @@ static const struct file_operations shmem_file_operations = {
- #endif
- };
- 
-+#ifdef CONFIG_TMPFS_POSIX_ACL
-+static int shmem_set_acl(struct mnt_idmap *idmap, struct dentry *dentry,
-+		struct posix_acl *acl, int type)
-+{
-+	struct inode *inode = d_inode(dentry);
-+	umode_t mode = inode->i_mode;
-+	int error;
-+
-+	if (type == ACL_TYPE_ACCESS) {
-+		error = posix_acl_equiv_mode(acl, &mode);
-+		if (error < 0)
-+			return error;
-+		error = memfd_check_seals_mode(SHMEM_I(inode)->seals,
-+					       inode->i_mode, mode);
-+		if (error)
-+			return error;
-+	}
-+	return simple_set_acl(idmap, dentry, acl, type);
-+}
-+#else
-+#define shmem_set_acl simple_set_acl
-+#endif
-+
- static const struct inode_operations shmem_inode_operations = {
- 	.getattr	= shmem_getattr,
- 	.setattr	= shmem_setattr,
- #ifdef CONFIG_TMPFS_XATTR
- 	.listxattr	= shmem_listxattr,
--	.set_acl	= simple_set_acl,
-+	.set_acl	= shmem_set_acl,
- 	.fileattr_get	= shmem_fileattr_get,
- 	.fileattr_set	= shmem_fileattr_set,
- #endif
+ extern void __compiletime_error("value doesn't fit into mask")
+ __field_overflow(void);
+ extern void __compiletime_error("bad bitfield mask")
 -- 
 2.53.0
 
