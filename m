@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590463;
-	b=lvRukc8M3kThu9uJk2r/H26asvSvLbe3TfH6q1ZRgumwuP8fg6xhVm7n18grxHWWfBBU
-	 u7z2YC6HlX5xXAjHxUAJg3TNEciMFlTWVMeJyXJ2ACA3lC7wnIQa29CKcLvD6/iBjeyHz
-	 UqKZGTTAnkG0Cgv6ZAIQ8DQ6OkoVXVSfE4G+1LiNTrz18hUhoCNBChTwkvBHYojhRvb0B
-	 bncLbCQa/S6WfmQZRApGAfy75KOJUHmTU1UibgoqfPIRkmb144hnEHl0g+Ehjqu7APjS+
-	 vPctz3mwo6jJIJudfsgsUliRoIrmR+V+M1aXSQ5J6gTo/7Jw6G1brwrXUorB3QYx+zQ==
+	t=1794590464;
+	b=aPl+WWFHPV92yMAWWu3qu/O0k30ZsspwHT8oN+Lri7RX/BfbzGxZZKh7L17/oT1CQ656
+	 R9AJtIHrCfpkrxkY9jVbz7w9Gr7yiFi2bBpp4P8whGFzDuaXR+EOUVCSFKrRh1SsHlZON
+	 afmK82XzwW7hQE8dYDEdZnDCTgTjpig4ybSAUUWS6nzqF6pZwIV81v/puJtu/HqLLNQMv
+	 Pz7x98Lxgt4Y4njlGI/plIwLzhusaQVgZlA1hHMQHi5Im4+gF7XTLS111frBKlbHFetdJ
+	 OGrmAsVcRM0QVxDKfv8e3fqzFdFKbCTKiWgbFN3YqvzVSB7ddnsCiaZJc3GnZo9vf3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590464;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sAJIeBUQ6isnB+FNdMHQGqbbQLes8vbyPla7l/KbwRE=;
-	b=h1qhiWIprITsKOOv/vj2YxOqlXb+MPjfUt9AHNJZlOWMj8+qi0ZSb7LWjp029TsS6WTA
-	 vZ37TAtoHZl5R58cXDJHdevJS5D5Sv+w+weIFKFORo5w4PSnxBQ4vSXFuL53Xa9xjKB1V
-	 e1MO7U6CgSmjaCgR4pWjKP88yE53suHPRjmQwC0VWa2xDHkWOqyaOORdjvwqfa/MhkdHD
-	 BqLUWrr/xlQvcidLHEqZfugW37oF9XPJNWUyF/gH2KVHhfxwipo7U31ybyT4bzQT7lOtV
-	 RmyBAcTz2OOJzV3FRU9gyWEk+oTU5XPgen5IrSboOyEiLdeORaE/lJvylwZ4LQzoAuw==
+	bh=d3ag0IXAxMYLRDwNnRjAtUO+89XBTeRSsTP9WyX33cg=;
+	b=TyqRZgm9PdlFTZBnvBz2qx/CLhN3ZII49sVTqsa0kTXtRqJDz0QJfj0eiNJ808rOKVGh
+	 RzrAmFp6F4a+V/jIeO7CMHAGKmkvERUHNeBNCdohAwRU1isFUE2BG3slUJn5Vvx7BqXjH
+	 NfyqYodUBMiHJGFaMryBZ5dEy0YWgWXJH/iUUWH5iJj62iMQpJCwTqGHVUb6aiKMdkHct
+	 N2u7m4i5hYYWDHN6dV5KMQWuWGMU57T+vHDHx5gpBcQwckDTkzssjg0aTFF5RY6z/fSql
+	 XKkCbNJybzf5RfhjYDoeFG/aHp3iCsUK4H7HhT7uTgHgw+r8tVI8lgygGzQuuZvZfIQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aABD5i9p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaMIpGJy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2C2606B34F;
-	Fri, 13 Nov 2026 17:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757A2606B34F;
+	Fri, 13 Nov 2026 17:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aABD5i9p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4651F000C7;
-	Fri, 13 Nov 2026 17:21:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yaMIpGJy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88EB1F000CD;
+	Fri, 13 Nov 2026 17:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590462;
-	bh=sAJIeBUQ6isnB+FNdMHQGqbbQLes8vbyPla7l/KbwRE=;
+	s=korg; t=1794590464;
+	bh=d3ag0IXAxMYLRDwNnRjAtUO+89XBTeRSsTP9WyX33cg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aABD5i9p/2luK+9dTWn69UuCXt8Rp7auZftCELxwSG3MsXjubFu3y1b6zfBZV3XgM
-	 vM5ON1hZHsTzVi5pEtdLJJ2/b3a1wn7wMiLIAP5Un7DPfO9Q5TeCCm6PltAK2GjiDY
-	 phmfUAbHtcwfoZxKA247vrLlTZ7ual5ELIDCI7hk=
+	b=yaMIpGJyXVwMsKfBs4eCfgTUgh+gTK6803l7iEIdIjfvs2VmM6VbVzYb+RDjSFte/
+	 CdzjIi8JQyC+0ZbZkehSwPKO2SokjGVFbwW3R4z35/7sQLX7Lq3hza6NW3gykM1QBv
+	 L31NyuJ6Arrfh0Izy5KNvMsBPWMYoz93EM386WmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Deacon <will@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Wei Wang <wvw@google.com>,
+	Zhao Gongyi <zhaogongyi@bytedance.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 419/686] arm64: suspend: Save and restore TPIDR2_EL0 across CPU suspend
-Date: Fri, 13 Nov 2026 10:49:12 -0500
-Message-ID: <20261113153835.156100429@linuxfoundation.org>
+Subject: [PATCH 6.18 420/686] arm64: mm: validate /dev/mem mmap ranges without overflow
+Date: Fri, 13 Nov 2026 10:49:13 -0500
+Message-ID: <20261113153835.184417286@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,70 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Wang <wvw@google.com>
+From: Zhao Gongyi <zhaogongyi@bytedance.com>
 
-[ Upstream commit beeec04046227eba42b7cc5ab32498aa43da9632 ]
+[ Upstream commit b0958b1397fb5ffdb995c0ccc74349841929c08d ]
 
-TPIDR2_EL0 is a live EL0 register on systems with SME, but
-cpu_do_suspend()/cpu_do_resume() don't preserve it. Its value is
-UNKNOWN after a warm reset, so the task that initiates suspend can
-return to userspace with a corrupted TPIDR2_EL0.
+An arm64 syzkaller reproducer creates a FUSE character device with
+major:minor 1:1, so opening it uses the /dev/mem file operations. It
+maps one page from offset 0xfffffffffffff000 at user address zero.
+The next openat() with a NULL pathname triggers a synchronous external
+abort (SEA, ESR 0x96000010) in strncpy_from_user() via do_getname(),
+panicking the kernel.
 
-Save and restore it alongside TPIDR_EL0 and TPIDRRO_EL0. The new slot
-fits in existing padding, so sizeof(struct cpu_suspend_ctx) is
-unchanged.
+valid_mmap_phys_addr_range() checks the exclusive end by adding the
+mapping size to the starting address. For this offset, the sum wraps
+to zero and passes the PHYS_MASK test, allowing an out-of-range PFN to
+reach remap_pfn_range(). The inclusive-end overflow check in
+mmap_mem_prepare() does not catch it because the end is ULONG_MAX.
 
-Fixes: a9d691585950 ("arm64/sme: Implement support for TPIDR2")
+Reject starting PFNs outside PHYS_MASK and compare the inclusive length
+against the remaining physical range without overflowing. This also
+allows mappings that end exactly at PHYS_MASK, which the old check
+incorrectly rejects.
+
+Fixes: 1d18c47c735e ("arm64: MMU fault handling and page table management")
 Cc: stable@vger.kernel.org
-Acked-by: Will Deacon <will@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Wei Wang <wvw@google.com>
+Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
+[catalin.marinas@arm.com: changed the check to look more like __access_ok()]
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/suspend.h | 2 +-
- arch/arm64/mm/proc.S             | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ arch/arm64/mm/mmap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/suspend.h b/arch/arm64/include/asm/suspend.h
-index eb60c97355530..2cc5fb405769c 100644
---- a/arch/arm64/include/asm/suspend.h
-+++ b/arch/arm64/include/asm/suspend.h
-@@ -2,7 +2,7 @@
- #ifndef __ASM_SUSPEND_H
- #define __ASM_SUSPEND_H
+diff --git a/arch/arm64/mm/mmap.c b/arch/arm64/mm/mmap.c
+index 92b2f5097a96c..dabc61000ecc4 100644
+--- a/arch/arm64/mm/mmap.c
++++ b/arch/arm64/mm/mmap.c
+@@ -61,7 +61,9 @@ int valid_phys_addr_range(phys_addr_t addr, size_t size)
+  */
+ int valid_mmap_phys_addr_range(unsigned long pfn, size_t size)
+ {
+-	return !(((pfn << PAGE_SHIFT) + size) & ~PHYS_MASK);
++	const phys_addr_t limit = PHYS_MASK + 1;
++
++	return size <= limit && pfn <= (limit - size) >> PAGE_SHIFT;
+ }
  
--#define NR_CTX_REGS 14
-+#define NR_CTX_REGS 15
- #define NR_CALLEE_SAVED_REGS 12
- 
- /*
-diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
-index 17df19647556f..5e7bc1a8d9ca7 100644
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -103,6 +103,10 @@ SYM_FUNC_START(cpu_do_suspend)
- alternative_if ARM64_HAS_TCR2
- 	mrs	x2, REG_TCR2_EL1
- 	str	x2, [x0, #104]
-+alternative_else_nop_endif
-+alternative_if ARM64_SME
-+	mrs_s	x2, SYS_TPIDR2_EL0
-+	str	x2, [x0, #112]
- alternative_else_nop_endif
- 	ret
- SYM_FUNC_END(cpu_do_suspend)
-@@ -142,6 +146,10 @@ alternative_if ARM64_HAS_TCR2
- 	ldr	x2, [x0, #104]
- 	msr	REG_TCR2_EL1, x2
- alternative_else_nop_endif
-+alternative_if ARM64_SME
-+	ldr	x2, [x0, #112]
-+	msr_s	SYS_TPIDR2_EL0, x2
-+alternative_else_nop_endif
- 
- 	msr	sctlr_el1, x12
- 	set_this_cpu_offset x13
+ static int __init adjust_protection_map(void)
 -- 
 2.53.0
 
