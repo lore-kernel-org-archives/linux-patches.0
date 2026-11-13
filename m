@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591013;
-	b=p6Rcuk/twtjeTAQRQsJoiULIrcoJPEaEze5Mdqxtd002PCL5X0HFPwSsJyWhIEFEflKA
-	 tKqSDJfSZ+XeA16HO3Gviei3J3akhKLruXr51hrskiRPBuYwpFMc4aUrqJtZkSGTZU7lq
-	 DBReYv3ms5NutR0e45WDoCqx1B9PuQLwf5NS3v+iUHdRaN4sriH40rp5PAHbH0bdTeaZ9
-	 PdJuy7Za5dEGzRNBpqLd3wyfmaADYyxFR7yysH2wy6kTkWFbn+Z5exhlLbVNiz9b3gWVl
-	 Hu9NhpynlFuyj/zksfn7UXP0uOtoOSEQloiTtPKKu5FIaRn8amj5D4IBOHFkUEvprXg==
+	t=1794591015;
+	b=S4c+WDhIGSenKAO0fmAgjhQFtFyxINvhBD4B5H0ZFVFlbN6QhjveBGWBeDMcnzh9JCh2
+	 NXCGYKyHubomMz9rFrBek176FU1tW0LNrl6sjajLktoiCW0Dq03B3uNzN9j7yAEaJlP2g
+	 5tzXJMKppmS8cxdx1XuHQ1CoagYtGJTevTu4VUQg9EqKmQJpjAo0dxo/lL3pipnt0hXmw
+	 LpcX49k4CFcoo5ZlCQ/f0I5he5/qMeSL+4ZeUAvh+p1oWq3Dd7egYSqqW7Hop5m6beXj0
+	 OPmy/cynQde0+mvk5qrQWM7ZqXlyRnOkKz20ngbb/G76m0wHEtB8lbwGUx3Jq/nsk7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591013;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591015;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wm2kg828UxSgnnb+BawMJ5EkqXc7fIDac9NprPbOyeI=;
-	b=D0PCJL8rWXSkN3Mg5DBq7jr9PGR7fnVdtu5+C3GIH5yrzwid436lGTPHh6Ld06N8iQ/L
-	 KjRTx9HFR1w1KQATCj0kAE1yJgNKhuE8kTxgAiQjVGubt9todTJpbNCvP9Us6enLpZlKY
-	 BxBxLvtTy3qkrev9cuFetG09W3venfkzn41GlKRExCjMw5ChAsAAzYtYalDluC5RAKo/M
-	 a0U5pgDcGURzFYZ2w8+Z/bl18B8zf6ZaL3CZWKPUBOVCbf4Bp6wyXzzFC2/8xatM2JfYl
-	 4DiEauffqQJEvoYHnYenM/KU9o8j++Yh7oazbuw5YUfYqVMn+2aYVCXuMfncF1egpxA==
+	bh=13iOjSnK+4OGzZbpf4DU6GJGLpC+aHu1aqcRVPpcAMs=;
+	b=dqgGhASC3UjU5C0UZQbIzE3kQkhksgQG95Oer7RRb4dsXluBvgmcf2BdI9WVCGy21PCZ
+	 3GbxyLUoJqmP4JpG37gBpt9o6iCeQoY9QTl8u+4K0R+W/wGludTvpUb2aeqfwXXZQrJVj
+	 EzU+8NKLPtY4tWo594aMYdrENDBAkELU9lt+dAE4fdAi0UNo6Mxr0vxDP+rSRsdNGUwat
+	 IvouSx57vADiN6PWkvJj31GpJZwQSqYZALzQGKVxYCqXHEezt5lVmdeufBELMoZYwO/Za
+	 hyXY8jHUFl0W35hbFzLYCS57vJXngBrwMfn16G8wHvrpqceo+DkGI1L5i7hZ62Hct6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z3CIgebE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dm8B0LT/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8996070F1A;
-	Fri, 13 Nov 2026 17:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2155B6070F1A;
+	Fri, 13 Nov 2026 17:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z3CIgebE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870E41F000C5;
-	Fri, 13 Nov 2026 17:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dm8B0LT/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C9F1F000C4;
+	Fri, 13 Nov 2026 17:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591013;
-	bh=wm2kg828UxSgnnb+BawMJ5EkqXc7fIDac9NprPbOyeI=;
+	s=korg; t=1794591015;
+	bh=13iOjSnK+4OGzZbpf4DU6GJGLpC+aHu1aqcRVPpcAMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z3CIgebEd4zI+sv2gxcFMzLoBUKDcrML0b7C+swfn67mqyOGo6l8tSqYm3OOpu6gI
-	 K1NmffKgR8RPh2mfsqw10cw4sEbcwpqz4n2a2IEdFqgykuxnto7WXD1oOzcWGccPvN
-	 7k5/m6CBtNGRAwB/1pvRjagLh0p97gV1Ib3hobG0=
+	b=dm8B0LT/AcQa5xkDQ05LISSpHAoPoZ69e0EIVbrnM7kyhH6brWAnCiAW0spR2TlKv
+	 wb24jdImyTPWOAwpdzDvPfbGYB/DGRd/BsbhJo9j9AF5NjoBWzlZpAGCebLYk333Mm
+	 bleKuitKmNMd1/e0DYpFMdlarsjm6sEI9jgC0fRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang <q.h.hack.winter@gmail.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Rupesh Majhi <zoone.rupert@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 182/670] xfrm: interface: validate the IP header on xmit
-Date: Fri, 13 Nov 2026 10:45:46 -0500
-Message-ID: <20261113153818.198564486@linuxfoundation.org>
+Subject: [PATCH 6.12 147/670] iio: pressure: dps310: fix CFG_REG bit definitions
+Date: Fri, 13 Nov 2026 10:45:11 -0500
+Message-ID: <20261113153816.909463917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,59 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang <q.h.hack.winter@gmail.com>
+From: Rupesh Majhi <zoone.rupert@gmail.com>
 
-[ Upstream commit 86de3a1118a16dbbbe5fabe9aa20ffb93c072ed5 ]
+[ Upstream commit 4334dc4092c271e6cd010c2ee70b7f4415c4c199 ]
 
-Packets injected into an xfrm interface (e.g. AF_PACKET on an xfrmi
-device) reach the xfrm output path without IP header validation, but
-xfrm4_transport_output() uses iph->ihl for __skb_pull() and memmove()
-and expects the header to be valid.
+Driver defines them as BIT(4), BIT(5) and BIT(6). Per datasheet P_SHIFT
+is bit 2, FIFO_EN is bit 1 and SPI_MODE is bit 0.
 
-vti_tunnel_xmit() already calls pskb_inet_may_pull() before handing
-packets to the xfrm output path.  Do the same in xfrmi_xmit() and
-perform the header checks ip_rcv_core()/ip6_rcv_core() do on entry
-to the IP stack: reject wrong IP versions and malformed IPv4 header
-lengths.
+Only P_SHIFT has a user. dps310_set_pres_precision() sets it at
+oversampling 16 or above, so with wrong bit the result register is never
+shifted and stops matching the scale factor compensation divides by.
+in_pressure_input returns -ERANGE at oversampling 16, 32 and 64.
 
-Fixes: f203b76d7809 ("xfrm: Add virtual xfrm interfaces")
+FIFO_EN needed by FIFO support later in this series.
+
+Fixes: ba6ec48e76bc ("iio: Add driver for Infineon DPS310")
+Fixes: d711a3c7dc82 ("iio: dps310: Add pressure sensing capability")
 Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_interface_core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/iio/pressure/dps310.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
-index be0000448af2d..2ff96577ff722 100644
---- a/net/xfrm/xfrm_interface_core.c
-+++ b/net/xfrm/xfrm_interface_core.c
-@@ -532,8 +532,13 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
- 
- 	memset(&fl, 0, sizeof(fl));
- 
-+	if (!pskb_inet_may_pull(skb))
-+		goto tx_err;
-+
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IPV6):
-+		if (ipv6_hdr(skb)->version != 6)
-+			goto tx_err;
- 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
- 		xfrm_decode_session(dev_net(dev), skb, &fl, AF_INET6);
- 		if (!dst) {
-@@ -549,6 +554,9 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
- 		}
- 		break;
- 	case htons(ETH_P_IP):
-+		if (ip_hdr(skb)->version != 4 || ip_hdr(skb)->ihl < 5 ||
-+		    !pskb_network_may_pull(skb, ip_hdr(skb)->ihl * 4))
-+			goto tx_err;
- 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
- 		xfrm_decode_session(dev_net(dev), skb, &fl, AF_INET);
- 		if (!dst) {
+diff --git a/drivers/iio/pressure/dps310.c b/drivers/iio/pressure/dps310.c
+index 5a986d5d6b66f..aa2284b388787 100644
+--- a/drivers/iio/pressure/dps310.c
++++ b/drivers/iio/pressure/dps310.c
+@@ -50,9 +50,9 @@
+ #define DPS310_CFG_REG		0x09
+ #define  DPS310_INT_HL		BIT(7)
+ #define  DPS310_TMP_SHIFT_EN	BIT(3)
+-#define  DPS310_PRS_SHIFT_EN	BIT(4)
+-#define  DPS310_FIFO_EN		BIT(5)
+-#define  DPS310_SPI_EN		BIT(6)
++#define  DPS310_PRS_SHIFT_EN	BIT(2)
++#define  DPS310_FIFO_EN		BIT(1)
++#define  DPS310_SPI_EN		BIT(0)
+ #define DPS310_RESET		0x0c
+ #define  DPS310_RESET_MAGIC	0x09
+ #define DPS310_COEF_BASE	0x10
 -- 
 2.53.0
 
