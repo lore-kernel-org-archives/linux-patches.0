@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590641;
-	b=c4cwDsJJF5LP7gaBBHjy4ZdEETF97xz87kmB3dYvuSHxy43guojFrhF5XDcaTVkRtiub
-	 xZ6yO7+Li9lfQpYoNhJRKCwhbNBTaFnCtO56062V+ZD8glas8p9kL0dc3gYtfp66iCtoY
-	 dcAufgJ+Fma4B9EEvgYx18IxjgcgmB99qcMr3COLIBNrLBItz5znyJMXKf5v/CssFcoxu
-	 eO0L1OdN+u0E0aU34dHJJCzQXm1uhDUTxf9L2OZYZ8ZGFkB/bulkPFVFvBDCVwHxmEcop
-	 tUb3Mv1QpSqY3/jyVFyNdITvquI04F1D4cXoy9VKW2GOWC1C2MoOSQuzo01nIajHQUQ==
+	t=1794590642;
+	b=Asbt2cqWZJZkJXt7YiDuN9a6MFaLoDFTHh9VAzietnE1mTJRLRdTVKJVAOzK2I8ygwtQ
+	 9mv570VtTtxndhIdJOXOdP0NrQaTZqo88hXi9dNAcSexeq0dNLLLuwexBkg483jGc912i
+	 kxpV9+Mi8sACrVxTQu5htJCB+jKbaCbNiw5Xql2wwDuAD3qrkbtKeYeq9wX6YLq+nFjEX
+	 5crb3XWiYcn6sUBoxMLDc5vV/CJKzWMDEQFtpaPJpn67W3MuSpRqtLGobC+djFrFUNZsQ
+	 Hc1oUjapHhWAgrrDtkWTWtzKs3UNqclEl+DbWW/uODcjEi01vjnpNFmOWBRKyGWhiFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590642;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yUrZHo2yJgflurICqBfnIOMbuXpjetU61tW5+s0t11Y=;
-	b=dBGCVVE/XO6GWrCZn8SbLGuXdjtAkKtzhyJJPrTyHziCwUAwhUSqGDRcJnhs7hPLKFTF
-	 8PXQZbK+pgl0OMJNOCyEIXvth1bpMN0dhmpkdAU6hdAnTx65pJOCD0+DSklqEf3o4QrnR
-	 Miyec1LzsPKEJdfrGMI+UTxFWKhtlgCOgA8F0TTLedbsyC6xn8ta5Cr8htQ6QGJjgAJlG
-	 nQ+NPT1CliyqTo0SQdTJz1co6GeN+DfWGfXVOhzutQCjI2gUTOGLTBnsMrUb+fXZT7hJ+
-	 RidqQa4D1MmIwgN7O2lTpgnDvrjbAd9fa8rMp1D/bZ7aEYMVQGy6fnRepyYsrIwatBw==
+	bh=jHqR/CzwHraIMkYvx8MTzNxaQJaWYxz4k5j0EByj1lc=;
+	b=F0Kjk0k9nFVM9RKYxOKVglKJ7b716vqZwY/O44x3K7NBxapg7PwihOtDptjXsAAY4Pbw
+	 dWyxB9DwQ5pPUQACCJqvVHZNKqBpDjOXg0FYRvjlgjyGUT4qJrvsx86rIW4dM1LNYBpGJ
+	 P7x5vFEutq0y3ceCo73IkOot8Xqluu5iflKpeSTTaCw14J/FOWl7epUmM+1sPDi/pd7pH
+	 /R1PYbtFl/4C8FprBWzna/h08mB6cuL1865DenGV3NZy9TWvL/EbBjwut+VF4E1wGP/RJ
+	 dDsPZjlLQECzLMBy1R6PxRvwuH2QHI3OQTMxPXGHA88JoOL6fnPegcTieINBggewcxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6VYVt8t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0R9hD911;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0168760A3836;
-	Fri, 13 Nov 2026 17:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8566077D5A;
+	Fri, 13 Nov 2026 17:24:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J6VYVt8t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A031B1F000C4;
-	Fri, 13 Nov 2026 17:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0R9hD911
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4521F000C5;
+	Fri, 13 Nov 2026 17:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590640;
-	bh=yUrZHo2yJgflurICqBfnIOMbuXpjetU61tW5+s0t11Y=;
+	s=korg; t=1794590642;
+	bh=jHqR/CzwHraIMkYvx8MTzNxaQJaWYxz4k5j0EByj1lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J6VYVt8twzp08xzKRqmSRWTeyG4cntlX4Zx8J9S9LSHV5TyR8mW8MlPDOhcOi2LcP
-	 YBsM5waC2sZUhkHyKrMchLOIvZLMGBaBIy9bTsZn4OK18LOjV5hb49SMnmQbXGXqC1
-	 kEMt9quwAFch30qZWgP++lshTUa/2hD80KffatAQ=
+	b=0R9hD911qMgJZM4FSYr/W5SlC+xESbKojJrhddozNRAfWWWtWTTx6LYP2B7FA3QRP
+	 fiEKKh+9oNmC4akxr5dLlYrmx4o3/AaxFpAd/z/s47WQpsLLT/e9VwZj+I6xEgci54
+	 O0tdqcCeZP0RGfZg+a7/p2D+B6whPOl8+h5luk/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sashiko <sashiko-bot@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 555/686] dmaengine: qcom: bam_dma: free interrupt before the clock in error path
-Date: Fri, 13 Nov 2026 10:51:28 -0500
-Message-ID: <20261113153840.389954312@linuxfoundation.org>
+Subject: [PATCH 6.18 564/686] spi: atmel-quadspi: balance runtime PM and pclk across system sleep
+Date: Fri, 13 Nov 2026 10:51:37 -0500
+Message-ID: <20261113153840.767108119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -70,74 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 82eed160cfa7a296ae4eb5acb8dd8f493323eea7 ]
+[ Upstream commit 717e45f97246d1070cdf86ccd7a0fb872b45933a ]
 
-The BAM interrupt is requested with a devres helper and so on error it's
-freed after probe() returns. We disable the clock before freeing or
-masking it so it may still fire and we may end up reading BAM registers
-with clock disabled.
+On the controllers with a generic clock (SAMA7G5, SAMA7D65, SAM9X7 and
+LAN969x), atmel_qspi_suspend() takes a runtime PM reference and returns
+without dropping it or suspending the device. It disables the peripheral
+clock directly. atmel_qspi_resume() only prepares the peripheral clock
+and then reinitializes the controller with that clock still off.
 
-Stop using devres for interrupts as we free it in remove() manually
-anyway. Add an appropriate label and free the interrupt before disabling
-the clock in error path and in remove().
+On a SAM9X75 Curiosity board, the tested standby and mem resumes
+failed:
 
-Cc: stable@vger.kernel.org
-Fixes: e7c0fe2a5c84 ("dmaengine: add Qualcomm BAM dma driver")
+  atmel_qspi f0014000.spi: PM: failed to resume: error -110
+  spi-nor spi0.0: resume() failed
+
+Reading the flash afterwards returned no data. The runtime usage count
+grew by one with each cycle, and the second suspend disabled the
+peripheral clock again:
+
+  WARNING: drivers/clk/clk.c:1257 at clk_core_disable+0x6c/0xcc
+  qspi_clk already disabled
+
+Use the same runtime PM sequence as the other variants. Suspend disables
+the controller and forces a runtime suspend. Resume forces a runtime
+resume, which enables the peripheral clock, before it runs the init
+callback, and drops the reference afterwards. With this change the
+tested resumes succeed on the board in both modes, the controller
+returns to runtime suspend, and the flash reads back.
+
+Fixes: 5af42209a4d2 ("spi: atmel-quadspi: Add support for sama7g5 QSPI")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260427-qcom-qce-cmd-descr-v16-0-945fd1cafbbc%40oss.qualcomm.com?part=2
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261008-bam-dma-free-irq-v28-1-5e5b10de441e@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260709112006.390742-1-robert.marko%40sartura.hr?part=3
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20260923012950.15651-1-kmehltretter@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/bam_dma.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/spi/atmel-quadspi.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index c8cd6112f9003..9f514f9201bcc 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1322,8 +1322,8 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	for (i = 0; i < bdev->num_channels; i++)
- 		bam_channel_init(bdev, &bdev->channels[i], i);
+diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
+index a917530f81741..d3c14e2ec8c86 100644
+--- a/drivers/spi/atmel-quadspi.c
++++ b/drivers/spi/atmel-quadspi.c
+@@ -1543,12 +1543,14 @@ static int __maybe_unused atmel_qspi_suspend(struct device *dev)
  
--	ret = devm_request_irq(bdev->dev, bdev->irq, bam_dma_irq,
--			IRQF_TRIGGER_NONE, "bam_dma", bdev);
-+	ret = request_irq(bdev->irq, bam_dma_irq, IRQF_TRIGGER_NONE,
-+			  "bam_dma", bdev);
- 	if (ret)
- 		goto err_bam_channel_exit;
- 
-@@ -1356,7 +1356,7 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	ret = dma_async_device_register(&bdev->common);
- 	if (ret) {
- 		dev_err(bdev->dev, "failed to register dma async device\n");
--		goto err_bam_channel_exit;
-+		goto err_free_irq;
+ 	if (aq->caps->has_gclk) {
+ 		ret = atmel_qspi_sama7g5_suspend(aq);
+-		clk_disable_unprepare(aq->pclk);
+-		return ret;
++		if (ret) {
++			pm_runtime_put_autosuspend(dev);
++			return ret;
++		}
++	} else {
++		atmel_qspi_write(QSPI_CR_QSPIDIS, aq, QSPI_CR);
  	}
  
- 	ret = of_dma_controller_register(pdev->dev.of_node, bam_dma_xlate,
-@@ -1375,6 +1375,8 @@ static int bam_dma_probe(struct platform_device *pdev)
+-	atmel_qspi_write(QSPI_CR_QSPIDIS, aq, QSPI_CR);
+-
+ 	pm_runtime_mark_last_busy(dev);
+ 	pm_runtime_force_suspend(dev);
  
- err_unregister_dma:
- 	dma_async_device_unregister(&bdev->common);
-+err_free_irq:
-+	free_irq(bdev->irq, bdev);
- err_bam_channel_exit:
- 	for (i = 0; i < bdev->num_channels; i++)
- 		tasklet_kill(&bdev->channels[i].vc.task);
-@@ -1400,7 +1402,7 @@ static void bam_dma_remove(struct platform_device *pdev)
- 	/* mask all interrupts for this execution environment */
- 	writel_relaxed(0, bam_addr(bdev, 0,  BAM_IRQ_SRCS_MSK_EE));
+@@ -1574,20 +1576,20 @@ static int __maybe_unused atmel_qspi_resume(struct device *dev)
+ 		return ret;
+ 	}
  
--	devm_free_irq(bdev->dev, bdev->irq, bdev);
-+	free_irq(bdev->irq, bdev);
+-	if (aq->caps->has_gclk)
+-		return aq->caps->init(aq);
+-
+ 	ret = pm_runtime_force_resume(dev);
+ 	if (ret < 0)
+ 		return ret;
  
- 	for (i = 0; i < bdev->num_channels; i++) {
- 		bam_dma_terminate_all(&bdev->channels[i].vc.chan);
+-	atmel_qspi_init(aq);
+-
+-	atmel_qspi_write(aq->scr, aq, QSPI_SCR);
++	if (aq->caps->has_gclk) {
++		ret = aq->caps->init(aq);
++	} else {
++		atmel_qspi_init(aq);
++		atmel_qspi_write(aq->scr, aq, QSPI_SCR);
++	}
+ 
+ 	pm_runtime_put_autosuspend(dev);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int __maybe_unused atmel_qspi_runtime_suspend(struct device *dev)
 -- 
 2.53.0
 
