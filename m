@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590461;
-	b=FavkF62oCsho3XA9hFw1DiFs1sfh6qE1OeykYjRED1RZqxf+Cch4uWhFCahaoS3QfrUO
-	 0R0CQFbIoMBzcZ/5hPVFt3Mgcw8be21xHZYwGufdgR8J/RrruIoq7YMpQGa6MXnbwS9yH
-	 Ood2OAKDl1yaTPbUC7CdzPjHyud6/71lMSshiRRuTt//4/AvhDvbRewJ/CCK35ed0563F
-	 UiYHp2q3ZjhF+xeX4sYK8YQx8S+XpfRdXccz4NuZhvmaDfqBUDgY48dkJ8nJacNAIbueQ
-	 hSGeef3s+atw2pr4/4Z+XXCDUSUAtlgSqdwPbWREx4Mf+dncDG+UAgdLuduGHU9R6wQ==
+	t=1794590463;
+	b=lvRukc8M3kThu9uJk2r/H26asvSvLbe3TfH6q1ZRgumwuP8fg6xhVm7n18grxHWWfBBU
+	 u7z2YC6HlX5xXAjHxUAJg3TNEciMFlTWVMeJyXJ2ACA3lC7wnIQa29CKcLvD6/iBjeyHz
+	 UqKZGTTAnkG0Cgv6ZAIQ8DQ6OkoVXVSfE4G+1LiNTrz18hUhoCNBChTwkvBHYojhRvb0B
+	 bncLbCQa/S6WfmQZRApGAfy75KOJUHmTU1UibgoqfPIRkmb144hnEHl0g+Ehjqu7APjS+
+	 vPctz3mwo6jJIJudfsgsUliRoIrmR+V+M1aXSQ5J6gTo/7Jw6G1brwrXUorB3QYx+zQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590461;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=e8eWOAj6MRcA3BcoHPQ2ir/wBKyFy/lRhy8xb0q2l7c=;
-	b=MP2vmQG1I0tAeztlz06scRKkHWJVKUp1TLROxoV+HRe0UWb672QNxJQM2xKh2UBxLpB3
-	 QTMz64HZTgaJ55PUDT87VrjQq65XdZ2XWT6Tb3eDpqedd9BUQPqZ5ZmTpCEHDLjn/mn0Q
-	 lqLKGLtGUjkd9FfzBoZpjN8n2pE0pjKP9KJoteMfQkTzRMGhlquFr7t504V1U91gg2wXH
-	 w2Oec7owvhIHjvgVQMKHSIxKFety5TEKDQ6WjF5ubOJQuqyf2pgkye82Ejg+LO0cUijTc
-	 FkMEnqCO/1k9Qal0loQYQgUT4cY6lWUhH0puCLeSa5VNC2sO6j9LawzA4MfqmzYMQgg==
+	bh=sAJIeBUQ6isnB+FNdMHQGqbbQLes8vbyPla7l/KbwRE=;
+	b=h1qhiWIprITsKOOv/vj2YxOqlXb+MPjfUt9AHNJZlOWMj8+qi0ZSb7LWjp029TsS6WTA
+	 vZ37TAtoHZl5R58cXDJHdevJS5D5Sv+w+weIFKFORo5w4PSnxBQ4vSXFuL53Xa9xjKB1V
+	 e1MO7U6CgSmjaCgR4pWjKP88yE53suHPRjmQwC0VWa2xDHkWOqyaOORdjvwqfa/MhkdHD
+	 BqLUWrr/xlQvcidLHEqZfugW37oF9XPJNWUyF/gH2KVHhfxwipo7U31ybyT4bzQT7lOtV
+	 RmyBAcTz2OOJzV3FRU9gyWEk+oTU5XPgen5IrSboOyEiLdeORaE/lJvylwZ4LQzoAuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M21VJlWk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aABD5i9p;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4292A6071431;
-	Fri, 13 Nov 2026 17:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2C2606B34F;
+	Fri, 13 Nov 2026 17:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M21VJlWk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E33091F000C4;
-	Fri, 13 Nov 2026 17:21:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aABD5i9p
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD4651F000C7;
+	Fri, 13 Nov 2026 17:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590461;
-	bh=e8eWOAj6MRcA3BcoHPQ2ir/wBKyFy/lRhy8xb0q2l7c=;
+	s=korg; t=1794590462;
+	bh=sAJIeBUQ6isnB+FNdMHQGqbbQLes8vbyPla7l/KbwRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M21VJlWkNdiAP7dp+vAM2aiGH5xmqQAaxnAbMcYWDt8frgJHLBMuXUcV6gLEWqj6Z
-	 /9lTCsT11bJxIJbhAvk/VaVC9Y8uEFMDT87Hhw/Ocb+LYYFjkv/+dyMA7DeY0dIzL2
-	 E/QxE11vGq9movMZ90/lE1lhclDojLYP2apjEsHE=
+	b=aABD5i9p/2luK+9dTWn69UuCXt8Rp7auZftCELxwSG3MsXjubFu3y1b6zfBZV3XgM
+	 vM5ON1hZHsTzVi5pEtdLJJ2/b3a1wn7wMiLIAP5Un7DPfO9Q5TeCCm6PltAK2GjiDY
+	 phmfUAbHtcwfoZxKA247vrLlTZ7ual5ELIDCI7hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Wei Wang <wvw@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 418/686] nvmet: dont return memory contents beyond valid data when reading ANA log page
-Date: Fri, 13 Nov 2026 10:49:11 -0500
-Message-ID: <20261113153835.125573338@linuxfoundation.org>
+Subject: [PATCH 6.18 419/686] arm64: suspend: Save and restore TPIDR2_EL0 across CPU suspend
+Date: Fri, 13 Nov 2026 10:49:12 -0500
+Message-ID: <20261113153835.156100429@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,45 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ewan D. Milne <emilne@redhat.com>
+From: Wei Wang <wvw@google.com>
 
-[ Upstream commit 29b8758b4700357909f06705a0c48c7a60c556d5 ]
+[ Upstream commit beeec04046227eba42b7cc5ab32498aa43da9632 ]
 
-The host side does not know how much valid data will be returned by the target
-so it will typically provide a buffer larger than the amount of valid data in
-the ANA log page.  The memory allocation used by the target does not guarantee
-that prior kernel memory contents will not be returned past the end of the valid
-page data.  Fix this to ensure that the SGL is zeroed before copying the data.
+TPIDR2_EL0 is a live EL0 register on systems with SME, but
+cpu_do_suspend()/cpu_do_resume() don't preserve it. Its value is
+UNKNOWN after a warm reset, so the task that initiates suspend can
+return to userspace with a corrupted TPIDR2_EL0.
 
-Fixes: 72efd25dcf4f ("nvmet: add minimal ANA support")
+Save and restore it alongside TPIDR_EL0 and TPIDRRO_EL0. The new slot
+fits in existing padding, so sizeof(struct cpu_suspend_ctx) is
+unchanged.
+
+Fixes: a9d691585950 ("arm64/sme: Implement support for TPIDR2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Wei Wang <wvw@google.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/admin-cmd.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/include/asm/suspend.h | 2 +-
+ arch/arm64/mm/proc.S             | 8 ++++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-index f86336c79056d..007029eaca39b 100644
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -543,6 +543,15 @@ static void nvmet_execute_get_log_page_ana(struct nvmet_req *req)
- 	u16 ngrps = 0;
- 	u16 status;
+diff --git a/arch/arm64/include/asm/suspend.h b/arch/arm64/include/asm/suspend.h
+index eb60c97355530..2cc5fb405769c 100644
+--- a/arch/arm64/include/asm/suspend.h
++++ b/arch/arm64/include/asm/suspend.h
+@@ -2,7 +2,7 @@
+ #ifndef __ASM_SUSPEND_H
+ #define __ASM_SUSPEND_H
  
-+	/*
-+	 * The header and one descriptor per enabled group are the only bytes
-+	 * written below; zero the whole transfer first so the unwritten tail
-+	 * does not leak stale kernel memory to the host.
-+	 */
-+	status = nvmet_zero_sgl(req, 0, req->transfer_len);
-+	if (status)
-+		goto out;
-+
- 	status = NVME_SC_INTERNAL;
- 	desc = kmalloc(struct_size(desc, nsids, NVMET_MAX_NAMESPACES),
- 		       GFP_KERNEL);
+-#define NR_CTX_REGS 14
++#define NR_CTX_REGS 15
+ #define NR_CALLEE_SAVED_REGS 12
+ 
+ /*
+diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+index 17df19647556f..5e7bc1a8d9ca7 100644
+--- a/arch/arm64/mm/proc.S
++++ b/arch/arm64/mm/proc.S
+@@ -103,6 +103,10 @@ SYM_FUNC_START(cpu_do_suspend)
+ alternative_if ARM64_HAS_TCR2
+ 	mrs	x2, REG_TCR2_EL1
+ 	str	x2, [x0, #104]
++alternative_else_nop_endif
++alternative_if ARM64_SME
++	mrs_s	x2, SYS_TPIDR2_EL0
++	str	x2, [x0, #112]
+ alternative_else_nop_endif
+ 	ret
+ SYM_FUNC_END(cpu_do_suspend)
+@@ -142,6 +146,10 @@ alternative_if ARM64_HAS_TCR2
+ 	ldr	x2, [x0, #104]
+ 	msr	REG_TCR2_EL1, x2
+ alternative_else_nop_endif
++alternative_if ARM64_SME
++	ldr	x2, [x0, #112]
++	msr_s	SYS_TPIDR2_EL0, x2
++alternative_else_nop_endif
+ 
+ 	msr	sctlr_el1, x12
+ 	set_this_cpu_offset x13
 -- 
 2.53.0
 
