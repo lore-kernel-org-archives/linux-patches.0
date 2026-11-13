@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591632;
-	b=HE0CysgY4dYkNzQ5a5QcJxQjCDKcPxbrFIASBgRjTtBmNAD3kBQGomuMcITVViktxq0t
-	 KW6he2WX+1FgHLwjmLpd7LQAleSQBOT30ANVC2VQKHmNZyOCEHJQgqXwL8C7xYDbJiKg2
-	 EJkp6WsfqvAk/7DQ0sl5D9NCoW6nkXvbJ8X7S54X5YmfIX/XQYcO9A0+VbruRp+KwK5k9
-	 yVcZ1yTS7uBPBvR0tTHhkNq838YGG4y8/QqlgcPt90jcBIAkP/12Ps2X7Ys6TUANexe4r
-	 lxr53E+4CiImGbfBMyk/HrXI2tLyuhT2lk4N4fSgxWKN3RROdFJBD6es1zuLSnI4EIg==
+	t=1794591634;
+	b=MAaCGKcALSWEprqwNvluTLDAC39xxgCXNdZyf1JdTXtxOilYW30Tl+a7F1i62Y40Y47f
+	 GvoWJmMIYuXhlPPDPXzofIiJGy43ke2jxCMDXOJ8pBagBeH3kKBKq4Od0OqTXFK/51nI+
+	 utNxJn3LlYsDa4sk/SteeZyRvhyTSEycImjNBCb3I+sBHS4C8SG8ujRFDW8jJcxXXqP0u
+	 ZVmlWcDvw+SFgXkTYlx59njKawNkJWlU82hmdqr1Zn7cOBQWHj2Yc2/+Cgd01YEtCWw1G
+	 bztDmyClDulpQ4ZshHGfISGYyCQArPJHmhdrNtCWSDmAXH14m1aoLp5AEolv0NnaFxA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591632;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591634;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X0TJ+9Q30OMzoOop6QgbC/Ysx4H2pjBM0kRhBETYfvo=;
-	b=HbvGXoFoyvWQMbBdDqqud9VwO+rcX+Se752hxmppUKjyg41ZF8ezH8X+ygsEN+QnkEKf
-	 yjU5uFdpXo7GAbBD7xndojtv+YpJklqUGbobKZcujM3dVwgKUp8lV3rgnD5Ua/oGU7VNq
-	 2ltl4Hv/XxAhMStdxe9eWz6Gbgt522hEFsftNUrPjl6LFmCQ5IYXomtpclRmCMfBRm+3x
-	 ZHHVi4rMAQESHqz2KsNyKOqBvEexAUX3rXkQacNZuR3X5hhO+gOx7enr/eofPVG0pTMy6
-	 9a/D5g2sD6bRKrRvzDHLSCFyhgmyv2rj4UJ1xdfOB+MuncgOhPyB+EidEde4/nVG45Q==
+	bh=vyoxeHng3PTWlIplQJNdF3SaGiT28b5c96vNQRkbS9s=;
+	b=3RcrhwJUwzcd9m2LM/907pxzY8j2/WxafvqONSjDl6o0JZ5td8ZPk/QVw1eIdZv7Nl/Y
+	 eGBhIjlczMGVivOQj9q5/JETrA7yOpzNFYlN20vhDXb1yG4ciCKaqV325rIO9bIRYmvF3
+	 IXGZV8xudFcOOvaGXxXQfrVAd7z/zIecANku5qd6Arx13YyNDkjFuzIXY/dPbnE3rNYl0
+	 RCw9W3th48fWaPdZ6RbJU3shaKvDu1itBWuDCpSI5yStMQqLBbzpoUfdMVUh5IiZVhQKU
+	 Iq4usDdVdMVNR59OvOuX9tkR6ClzoiONdIJB3+4y9HI2Er3PK2keEr5W3szzOLglwHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIY9jdpm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f4/nYYk2";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3367606E672;
-	Fri, 13 Nov 2026 17:40:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1719F606E645;
+	Fri, 13 Nov 2026 17:40:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hIY9jdpm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C581F000C5;
-	Fri, 13 Nov 2026 17:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f4/nYYk2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6A7B1F000C4;
+	Fri, 13 Nov 2026 17:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591632;
-	bh=X0TJ+9Q30OMzoOop6QgbC/Ysx4H2pjBM0kRhBETYfvo=;
+	s=korg; t=1794591633;
+	bh=vyoxeHng3PTWlIplQJNdF3SaGiT28b5c96vNQRkbS9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hIY9jdpmpaj9WFlaC7MNush4veEGtyS9cPJ4rSZvpeVmMDQ5Os4e5g71yQAcsnkFQ
-	 w10bDaXxXJiHfL4A8yRjP76yDsyWOsFB1ZhlIIZ+gXMVL4wt7SYKCpg1jZ6ZGyUVjY
-	 KXZJ6Jo+ucHWvgej2HFC++y6n8RmKwhYOYq/Rglo=
+	b=f4/nYYk2av1Ag9N4z3KMrxQV1BaCXAD8R2xuCo2q/4ruJp1j8PZjyrRfYFs8zOad/
+	 s2byVUqV8VHuJeQ4KKcM+XelZRJbQfVz7ZnSLxbUxTVsFp+BYNBszpKH9o8yQg6XGY
+	 GZ6W11zt4c4P1iCR83KjB8AC4JVlTNffd39Jl6DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Depeng Shao <quic_depengs@quicinc.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bryan ODonoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil@xs4all.nl>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 670/670] media: qcom: camss: vfe: suppress VFE version log spam
-Date: Fri, 13 Nov 2026 10:53:54 -0500
-Message-ID: <20261113153834.595035162@linuxfoundation.org>
+Subject: [PATCH 6.12 653/670] ALSA: usb-audio: rename QUIRK_FLAG_MIXER_MIN_MUTE to QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE
+Date: Fri, 13 Nov 2026 10:53:37 -0500
+Message-ID: <20261113153834.044651679@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,61 +68,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit b6fafb3941fa0f065def304d44d6c3c6d6ac0f64 ]
+[ Upstream commit ace1817ab49b3f92b3e965caa63b4a78e69266cd ]
 
-A recent commit refactored the printing of the VFE hardware version, but
-(without it being mentioned) also changed the log level from debug to
-info.
+As a preparation of introduction QUIRK_FLAG_MIXER_CAPTURE_MIN_MUTE
 
-This results in several hundred lines of repeated log spam during boot
-and use, for example, on the Lenovo ThinkPad X13s:
+Also make it printing an info while applying
 
-	qcom-camss ac5a000.camss: VFE:1 HW Version = 1.2.2
-	qcom-camss ac5a000.camss: VFE:0 HW Version = 1.2.2
-	qcom-camss ac5a000.camss: VFE:2 HW Version = 1.2.2
-	qcom-camss ac5a000.camss: VFE:2 HW Version = 1.2.2
-	qcom-camss ac5a000.camss: VFE:3 HW Version = 1.2.2
-	qcom-camss ac5a000.camss: VFE:5 HW Version = 1.3.0
-	qcom-camss ac5a000.camss: VFE:6 HW Version = 1.3.0
-	qcom-camss ac5a000.camss: VFE:4 HW Version = 1.3.0
-	qcom-camss ac5a000.camss: VFE:5 HW Version = 1.3.0
-	qcom-camss ac5a000.camss: VFE:6 HW Version = 1.3.0
-	qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
-	qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
-	qcom-camss ac5a000.camss: VFE:7 HW Version = 1.3.0
-	...
-
-Suppress the version logging by demoting to debug level again.
-
-Fixes: 10693fed125d ("media: qcom: camss: vfe: Move common code into vfe core")
-Cc: stable@vger.kernel.org
-Cc: Depeng Shao <quic_depengs@quicinc.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250903-sound-v1-1-d4ca777b8512@uniontech.com
+Stable-dep-of: 874323b68c93 ("ALSA: usb-audio: Add mic resolution quirk for Logitech Webcam C200")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/mixer_quirks.c |  7 +++++--
+ sound/usb/quirks.c       | 20 ++++++++++----------
+ sound/usb/usbaudio.h     |  4 ++--
+ 3 files changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index c1c4c97609a66..e86e648d8a0d5 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -425,8 +425,8 @@ u32 vfe_hw_version(struct vfe_device *vfe)
- 	u32 rev = (hw_version >> HW_VERSION_REVISION) & 0xFFF;
- 	u32 step = (hw_version >> HW_VERSION_STEPPING) & 0xFFFF;
+diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
+index 48f6b53fefd8a..18e41ea179565 100644
+--- a/sound/usb/mixer_quirks.c
++++ b/sound/usb/mixer_quirks.c
+@@ -4501,9 +4501,12 @@ void snd_usb_mixer_fu_apply_quirk(struct usb_mixer_interface *mixer,
+ 	}
  
--	dev_info(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
--		 vfe->id, gen, rev, step);
-+	dev_dbg(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
-+		vfe->id, gen, rev, step);
+ 	/* lowest playback value is muted on some devices */
+-	if (mixer->chip->quirk_flags & QUIRK_FLAG_MIXER_MIN_MUTE)
+-		if (strstr(kctl->id.name, "Playback"))
++	if (mixer->chip->quirk_flags & QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE)
++		if (strstr(kctl->id.name, "Playback")) {
++			usb_audio_info(mixer->chip,
++				       "applying playback min mute quirk\n");
+ 			cval->min_mute = 1;
++		}
  
- 	return hw_version;
- }
+ 	/* ALSA-ify some Plantronics headset control names */
+ 	if (USB_ID_VENDOR(mixer->chip->usb_id) == 0x047f &&
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index f224e41209e86..70026525972b0 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2202,9 +2202,9 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x0556, 0x0014, /* Phoenix Audio TMX320VC */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0572, 0x1b08, /* Conexant Systems (Rockwell), Inc. */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x0572, 0x1b09, /* Conexant Systems (Rockwell), Inc. */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x05a3, 0x9420, /* ELP HD USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x05a7, 0x1020, /* Bose Companion 5 */
+@@ -2254,15 +2254,15 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x0b0e, 0x0349, /* Jabra 550a */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x0bda, 0x498a, /* Realtek Semiconductor Corp. */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0c45, 0x636b, /* Microdia JP001 USB Camera */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0d8c, 0x000c, /* C-Media */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x0d8c, 0x0014, /* C-Media */
+-		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_CTL_MSG_DELAY_1M | QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2125, /* JBL Quantum650 Wireless */
+@@ -2274,7 +2274,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x1101, 0x0003, /* Audioengine D1 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x12d1, 0x3a07, /* Huawei Technologies Co., Ltd. */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x1224, 0x2a25, /* Jieli Technology USB PHY 2.0 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE | QUIRK_FLAG_MIC_RES_16),
+ 	DEVICE_FLG(0x1395, 0x740a, /* Sennheiser DECT */
+@@ -2320,7 +2320,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x1901, 0x0191, /* GE B850V3 CP2114 audio interface */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x19f7, 0x0003, /* RODE NT-USB */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x19f7, 0x0035, /* RODE NT-USB+ */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x1bcf, 0x2281, /* HD Webcam */
+@@ -2378,7 +2378,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x2912, 0x30c8, /* Audioengine D1 */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x2a70, 0x1881, /* OnePlus Technology (Shenzhen) Co., Ltd. BE02T */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x2b53, 0x0023, /* Fiero SC-01 (firmware v1.0.0 @ 48 kHz) */
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x2b53, 0x0024, /* Fiero SC-01 (firmware v1.0.0 @ 96 kHz) */
+@@ -2390,7 +2390,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x2d95, 0x8021, /* VIVO USB-C-XE710 HEADSET */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+@@ -2398,7 +2398,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x3255, 0x0000, /* Luxman D-10X */
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x339b, 0x3a07, /* Synaptics HONOR USB-C HEADSET */
+-		   QUIRK_FLAG_MIXER_MIN_MUTE),
++		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
+ 	DEVICE_FLG(0x413c, 0xa506, /* Dell AE515 sound bar */
+ 		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x534d, 0x0021, /* MacroSilicon MS2100/MS2106 */
+diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
+index 1ef4d39978df3..8a951394cabf7 100644
+--- a/sound/usb/usbaudio.h
++++ b/sound/usb/usbaudio.h
+@@ -196,7 +196,7 @@ extern bool snd_usb_skip_validation;
+  *  for the given endpoint.
+  * QUIRK_FLAG_MIC_RES_16 and QUIRK_FLAG_MIC_RES_384
+  *  Set the fixed resolution for Mic Capture Volume (mostly for webcams)
+- * QUIRK_FLAG_MIXER_MIN_MUTE
++ * QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE
+  *  Set minimum volume control value as mute for devices where the lowest
+  *  playback value represents muted state instead of minimum audible volume
+  */
+@@ -225,6 +225,6 @@ extern bool snd_usb_skip_validation;
+ #define QUIRK_FLAG_FIXED_RATE		(1U << 21)
+ #define QUIRK_FLAG_MIC_RES_16		(1U << 22)
+ #define QUIRK_FLAG_MIC_RES_384		(1U << 23)
+-#define QUIRK_FLAG_MIXER_MIN_MUTE	(1U << 24)
++#define QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE	(1U << 24)
+ 
+ #endif /* __USBAUDIO_H */
 -- 
 2.53.0
 
