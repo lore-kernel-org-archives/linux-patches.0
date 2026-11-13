@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591364;
-	b=iB1wKUaajpjP3PIIqyp+UjHtID5URvXGPFdTZOa5RCnWOYPmKKK3twJ8/tpJrOTg5+ln
-	 aZK6yETYppYrqYv0u+xoXV7SW9Kg6hvGkdkAHQ9RurZuwdWLGqt1AERStlPNUsPOJqpLH
-	 5Pd3sjevx2nwA961Io80PuHFOoqQKHo1fWRchVJI6O6m9HRZiL1Y64AOZrdCWpQvyzIez
-	 t4j8COdY0jSyHbVQR8FQnd1Q8HVUIVrS62tU8I/wxI+sBnAD++MZt1yc8yfU77Ixu3Pac
-	 x62jrbogYZ2017tNktM9sQLldT6e3PjT6S4Rub/werak44fzjeG3flx1DUCBUaE3mSQ==
+	t=1794591365;
+	b=Mw/fJP4ivhPJUuhiPV2TSeYkKerzj7YoL0OW1gaW7+TjaUjYOd+B+ysgE7FX1g0p5eyp
+	 +8J0w9AdYE/xJXn2wx9J09GuhGlR8KifSpW9cSyHrZZwnE3+FGlfGCLEjjXID63qvkJt0
+	 mPah4bAMOYwDDLZr7NYgSl6EBi9Hzd5GtctJsSWhEsowFd7oO9mFpraG4JwcOqoAFBa+N
+	 KG9EElSc8l6Ze/h16yAlTO+wu0tXMkPQQ7gE7XkQvNv41oLaO+Rm1BtZLirblOLNSgzi9
+	 fxzIL30BjKoA+nXgbwYsomEWM2nsUYudnb/ymDOgMxr1asl9Ii1wOotgEYtrOLCA4sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591364;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591365;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y9kMPT4lvc1oVPatZtF5GWtCXYDTVG/bwcV3P2pMqPk=;
-	b=EKfePtCRWwmSQF8Y2qFVJ5Ce3h5/pRg6rAtLMD9dcefSqoo92xRsQIrvjvM/s7+iVddB
-	 5Ej02vRt2+lE7yI/jDXORNydgyVGAOlcWOvqd/6KVMjcQQ2wFUNLQEbrTjwgGYRQj2MoT
-	 Z+guZXdw7YChcXWzJ2m0VJCWfOYo0wHrSHeKOa2/qCxC8If74EufiD6oLSWOndyaQFyLF
-	 dd+/2GNtGgvJJTnmoS1cCWBIuR2IqLMxXI5CrGtKhtYCbYShp6oawCi01qNh/Gtv8DFeC
-	 uSNaKX/zibTQKlxVVV195r93jIPVLB+zgRJpXx1EOCTGPLbWaRw7bauWogcW65N6lig==
+	bh=banU3WJI6qDdbjuUFBEIr5aOjo9mES5vnlleKc/YGdg=;
+	b=Dy7qN8LOstXsFwrFmWUYsiILj6TIZe1yHrhynD4J8j9Ha8pjbb6PqAr7/b0ewJ0RBr8D
+	 6hNtB3XP3m8TTgw5brfYdwPNzuh36O5PxS1dHejHooY5y5Ztgyd8QWm2noukIMMGv7hjP
+	 bP9Sm3Flwjo9ysVypA9cGbtQZYrnY7G0Y7eo2rn4cNf+2+ujg9XXHPiHQq7eA0J3LLuaW
+	 d8nPEOSA3fDnU4itMyMVFqDkuuvEtk+dHSYRBNa4VbALRezUpwRADl0fyaJOg6Ln5pVoS
+	 z0UOcP5DnrtfdQVJ4Q3o7j0erDXjM7e/d4tDaKAS1QrVEMPZ+qVJV+6auAmPbbP/Xpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VeYeKSxl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ui5YjbOB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD81606B22B;
-	Fri, 13 Nov 2026 17:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A06606EDA6;
+	Fri, 13 Nov 2026 17:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VeYeKSxl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9949A1F000C4;
-	Fri, 13 Nov 2026 17:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ui5YjbOB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E271F000C4;
+	Fri, 13 Nov 2026 17:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591363;
-	bh=y9kMPT4lvc1oVPatZtF5GWtCXYDTVG/bwcV3P2pMqPk=;
+	s=korg; t=1794591365;
+	bh=banU3WJI6qDdbjuUFBEIr5aOjo9mES5vnlleKc/YGdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VeYeKSxlj+DENCpVU49tTb7+Ru0ZX9DeDqxN20RZPOnfxuxpxgZstlFS93cAQW0DV
-	 /+2CThI5ZWNqr7WKgDnWAEXEL4H8qyWA58f5EX2BfD4Lepj90fISeJIBGg/HgsohSs
-	 z7li0IWvPWk+9s6FGRKsB6N1ZxB9Zq9wm3j+3xW0=
+	b=ui5YjbOBRse0PGHa9sPP/RU4QG2PxFDCNNHeL6X/MdTfPAWqxSO4C1M5hcM0NTktL
+	 8+/SUI67+yoQ9t4+/LgcqeRDEABK0N/eMa3DM54mms32cX4wdmobFMHqjMDSqbfWwy
+	 LQN5kSkcusKeV6TXxKS6HHz2hiHcv/kHf2S4yoAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	dri-devel@lists.freedesktop.org,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 466/670] drm/panic: Do not use un-escaped URL as format string
-Date: Fri, 13 Nov 2026 10:50:30 -0500
-Message-ID: <20261113153827.740392404@linuxfoundation.org>
+Subject: [PATCH 6.12 467/670] media: i2c: ov5647: fix power cleanup on remove
+Date: Fri, 13 Nov 2026 10:50:31 -0500
+Message-ID: <20261113153827.799560532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,45 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 6596aae25585b183ebd528206bde6f12efaf8db1 ]
+[ Upstream commit 6e81cfc38548109021ab761b94ecdd01f8753154 ]
 
-Replace the direct use of DRM_PANIC_SCREEN_QR_CODE_URL in snprintf()
-with a %s conversion specifier. Avoids a possible vulnerabilty from
-a crafted URL string.
+ov5647_remove() disables runtime PM without powering off the sensor if
+it is still runtime active. pm_runtime_disable() does not invoke the
+runtime suspend callback, so the sensor can remain powered on.
 
-As the attacker needs to control the kernel at the Kconfig level, the
-potential for an exploit is likely low.
+If the device is not already runtime suspended, call ov5647_power_off()
+and mark the runtime PM state as suspended.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Fixes: cb5164ac43d0 ("drm/panic: Add a QR code panic screen")
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.12+
-Link: https://patch.msgid.link/20260911124540.279841-2-tzimmermann@suse.de
-[ sashal: Retained the zl= URL parameter instead of z= to match the older QR encoding. ]
+This issue was found by manual code inspection.
+
+Fixes: 089b7c70f0d8 ("media: ov5647: Use pm_runtime infrastructure")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+[ sashal: adjusted context to account for the existing mutex_destroy() call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panic.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/i2c/ov5647.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
-index 06f0aa1cb4f74..f4662f88e2173 100644
---- a/drivers/gpu/drm/drm_panic.c
-+++ b/drivers/gpu/drm/drm_panic.c
-@@ -507,7 +507,8 @@ static int drm_panic_get_qr_code_url(u8 **qr_image)
- 	char *kmsg;
- 	int max_qr_data_size, url_len;
+diff --git a/drivers/media/i2c/ov5647.c b/drivers/media/i2c/ov5647.c
+index 305677913a0c3..3e7fd8f28df3a 100644
+--- a/drivers/media/i2c/ov5647.c
++++ b/drivers/media/i2c/ov5647.c
+@@ -1481,6 +1481,10 @@ static void ov5647_remove(struct i2c_client *client)
+ 	v4l2_ctrl_handler_free(&sensor->ctrls);
+ 	v4l2_device_unregister_subdev(sd);
+ 	pm_runtime_disable(&client->dev);
++	if (!pm_runtime_status_suspended(&client->dev)) {
++		ov5647_power_off(&client->dev);
++		pm_runtime_set_suspended(&client->dev);
++	}
+ 	mutex_destroy(&sensor->lock);
+ }
  
--	url_len = snprintf(url, sizeof(url), CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL "?a=%s&v=%s&zl=",
-+	url_len = snprintf(url, sizeof(url), "%s?a=%s&v=%s&zl=",
-+			   CONFIG_DRM_PANIC_SCREEN_QR_CODE_URL,
- 			   utsname()->machine, utsname()->release);
- 
- 	max_qr_data_size = drm_panic_qr_max_data_size(panic_qr_version, url_len);
 -- 
 2.53.0
 
