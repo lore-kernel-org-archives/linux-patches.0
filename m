@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591567;
-	b=xHhj0YxgFWKKN/URR95FgAxg7O2Zpi5yQQ8Wr0fk7lD3UYafRWe7+PIq0P8vlbpSel+0
-	 BRDrNtvohTUMvrDTgALfZtDT8IIZWK09Ir+yHIyTCbUr0W76YRZLH2Ue3+sWAEvIXmpzg
-	 sFE2/ryL2NznGlFrzvM3xhO1ernzKdRno/CkWUH8IPIueCH6xVV8nDWN8KGyFwMQdHmPW
-	 FGMElO/GsVw3K2doCGFPIiAQIAsnq9f2zgAA3flkqpw84xQoCmcbtDOpwzT9PQdeu1uwZ
-	 9dgRN1f273EpTWZqLxWGcGiANvV6uLQ6H1xbOgQRTzlsumN9gB46gsuPeyWI+H8+nIA==
+	t=1794591568;
+	b=MG2V+f+YMyeQ/10sKRHsbgYFxIaW9dQqjawLTPa3FuWFaKP3J6ECdCWK8kS+XF4u2lWU
+	 7xuYUUAHo+a2aNlLCC2vkdz0JQ1xrQuJ7JRGYG0HdIm8Em3jucso7frsy+uo0KSRWNgWm
+	 rzX5OR0+Xqynjbj7slEY2ZJFZZfr9AzoKeQZMuMNpXD2vt9MJoTkTWrlKJ3siD5yxamBM
+	 0Cq2Y4C3qwCy6vxw5QuecUOBAC0FZoOn0T4iXr9F25Nci27EpFfq7PTuQeFEED1vbVRkM
+	 GyJMsQLT/J8FltTtY7FWqeUqV13GUMe2vmC2YunIXZOGHT0Z0eEovrg8ohI0gj0UCeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591567;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cahpLFOb9eFRkp3NxAvM8sboWeJ+/hBGgCD79vPlv3g=;
-	b=ZHp/Wwk+Ijm1gl9FIHNX0DR99r7eooKAzoLT7ieNwWj49psplsp4GN3lpOAOfNOdDL0i
-	 kIkIB/4wwgBGcHgDQ5Qijp64uJFUi9funlUJmy6XVzJfs1rdLs268J502uUscVhnAT49G
-	 i901gpz8+JOqU5jx8WljWpepag9WjDjzOlm4xXm8GCImTDvWiu6OXzXwQwyx/rA85/4DI
-	 E6jRITOhl7QFj0RzGNoHjPptq7gk421JS3U5mrmEW9ejqaRc2xbDo+SH3tgiPjH38Psu+
-	 qg/atWBZ/mQ6OFYFtc8BTY8ZPI0pfvKGQFirNfIhEI4ic1CYuVAGk6PUeDvG/+At/4g==
+	bh=kzOgv++CzZzDI9N3hqs6E4tMNXpBhB/lKpyGFqsrQ4M=;
+	b=gh3VOj/qeNGr5k1pKK/WCqrVBd/Fcy0a4KuXY5Rgw3cPsquKz6LFQS3cbQMneZObSqJz
+	 T8GWUD5TqvRIKra2OK1gab5S4KN0gqwr0xFW64A0nljoPIG52R9OqVRauxyKYX+E6WTLV
+	 Rts2ADytrKn2AISppfuCRIya8YSsrpZZNmcxnH9OwXN3RQ5FoRs4k2JATtJB39gyVug52
+	 OMThUVJpQhj7yySfeITjNjur0eFMBuexV/6gdMwwB2DtwpJTYTLvb714yJXc5c4t9b3nO
+	 9PgyI0Ouy2iRL+yNPAMNfKGhMNxDBgOQMQ8V4xSMiRxIkTdGRmRU6msg1MLcun9UyAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGmKmxiF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRncE5ND;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA2F607E80B;
-	Fri, 13 Nov 2026 17:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DC4606E641;
+	Fri, 13 Nov 2026 17:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oGmKmxiF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7271F000C7;
-	Fri, 13 Nov 2026 17:39:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VRncE5ND
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710D71F000C5;
+	Fri, 13 Nov 2026 17:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591567;
-	bh=cahpLFOb9eFRkp3NxAvM8sboWeJ+/hBGgCD79vPlv3g=;
+	s=korg; t=1794591568;
+	bh=kzOgv++CzZzDI9N3hqs6E4tMNXpBhB/lKpyGFqsrQ4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oGmKmxiFijHkS1PuXmI6kSrAjigJeLgLt43xY+OjJDXO8HRC1BtkpPtRHMkuuVcyR
-	 mhCFOrzyJ5yLJ+AdktJPcJWw1qleQRb/ZYRD+mBts+nNP9R9GR9ArYT/AkxzOuDpQ/
-	 btzVvUqp5TGW11FWOjHQ+XI591oKc/XbOsd7oEkQ=
+	b=VRncE5NDgOaTankLnTjwIhXeTh7O2Edk2YaiAmMdCzWcBsYjymnmBUNsHb038hG0p
+	 88SdXUN6AgeYMabeK0b1+ZdWouVWSWEiKZNiGvR8Mgpb9dcQhQom9okElgMO08Z6m5
+	 xGGduOrbn82M5OV5qIifBKlG5nkw4vRvM68yHkX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linmao Li <lilinmao@kylinos.cn>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Aksh Garg <a-garg7@ti.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Depeng Shao <quic_depengs@quicinc.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 618/670] PCI: cadence: Store the core controller in platform drvdata
-Date: Fri, 13 Nov 2026 10:53:02 -0500
-Message-ID: <20261113153832.748608331@linuxfoundation.org>
+Subject: [PATCH 6.12 619/670] media: qcom: camss: vfe: Move common code into vfe core
+Date: Fri, 13 Nov 2026 10:53:03 -0500
+Message-ID: <20261113153832.780972122@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -70,123 +69,991 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linmao Li <lilinmao@kylinos.cn>
+From: Depeng Shao <quic_depengs@quicinc.com>
 
-[ Upstream commit cfe96ce583c51bf6e034d4038c652a1e8227867c ]
+[ Upstream commit 10693fed125d26ce6beb52aee66ea6f02f949206 ]
 
-cdns_plat_pcie_probe() stores a struct cdns_plat_pcie pointer with
-platform_set_drvdata(). cdns_plat_pcie_shutdown() and the callbacks in
-cdns_pcie_pm_ops retrieve the same pointer with dev_get_drvdata() but use
-it as a struct cdns_pcie pointer. This makes them read phy_count and phy
-beyond the wrapper.
+Some v4l2 buffer related logic functions can be moved to vfe core as
+common code, then the vfe driver of different hw version can reuse them,
+this also can avoid adding duplicate code for new version supporting.
 
-struct cdns_plat_pcie only contains a pointer to struct cdns_pcie. Drop
-the redundant wrapper and store the struct cdns_pcie pointer directly.
-
-Fixes: bd22885aa188 ("PCI: cadence: Refactor driver to use as a core library")
-Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Aksh Garg <a-garg7@ti.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260915082826.4135665-1-lilinmao@kylinos.cn
-[ sashal: adapted probe error cleanup to access PHY device links through pcie ]
+Suggested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Stable-dep-of: fc02156a3efb ("media: qcom: camss: vfe-17x: Fix write master selection for RDI lines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../controller/cadence/pcie-cadence-plat.c    | 33 +++++++------------
- 1 file changed, 11 insertions(+), 22 deletions(-)
+ .../media/platform/qcom/camss/camss-vfe-17x.c | 112 +------
+ .../media/platform/qcom/camss/camss-vfe-4-1.c |   9 -
+ .../media/platform/qcom/camss/camss-vfe-4-7.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |  11 -
+ .../media/platform/qcom/camss/camss-vfe-480.c | 274 ++----------------
+ drivers/media/platform/qcom/camss/camss-vfe.c | 268 +++++++++++++++++
+ drivers/media/platform/qcom/camss/camss-vfe.h |  58 +++-
+ 7 files changed, 361 insertions(+), 382 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-plat.c b/drivers/pci/controller/cadence/pcie-cadence-plat.c
-index 0456845dabb96..c1ec619ab0a4e 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-plat.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-plat.c
-@@ -14,14 +14,6 @@
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-17x.c b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+index bf9aab7658582..c011f64f63e93 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-17x.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-17x.c
+@@ -14,8 +14,6 @@
+ #include "camss.h"
+ #include "camss-vfe.h"
  
- #define CDNS_PLAT_CPU_TO_BUS_ADDR	0x0FFFFFFF
- 
--/**
-- * struct cdns_plat_pcie - private data for this PCIe platform driver
-- * @pcie: Cadence PCIe controller
-- */
--struct cdns_plat_pcie {
--	struct cdns_pcie        *pcie;
--};
+-#define VFE_HW_VERSION				(0x000)
 -
- struct cdns_plat_pcie_of_data {
- 	bool is_rc;
- };
-@@ -40,9 +32,9 @@ static const struct cdns_pcie_ops cdns_plat_ops = {
- static int cdns_plat_pcie_probe(struct platform_device *pdev)
+ #define VFE_GLOBAL_RESET_CMD			(0x018)
+ #define		GLOBAL_RESET_CMD_CORE		BIT(0)
+ #define		GLOBAL_RESET_CMD_CAMIF		BIT(1)
+@@ -176,20 +174,6 @@
+ #define VFE_BUS_WM_FRAME_INC(n)			(0x2258 + (n) * 0x100)
+ #define VFE_BUS_WM_BURST_LIMIT(n)		(0x225c + (n) * 0x100)
+ 
+-static u32 vfe_hw_version(struct vfe_device *vfe)
+-{
+-	u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
+-
+-	u32 gen = (hw_version >> 28) & 0xF;
+-	u32 rev = (hw_version >> 16) & 0xFFF;
+-	u32 step = hw_version & 0xFFFF;
+-
+-	dev_dbg(vfe->camss->dev, "VFE HW Version = %u.%u.%u\n",
+-		gen, rev, step);
+-
+-	return hw_version;
+-}
+-
+ static inline void vfe_reg_set(struct vfe_device *vfe, u32 reg, u32 set_bits)
  {
- 	const struct cdns_plat_pcie_of_data *data;
--	struct cdns_plat_pcie *cdns_plat_pcie;
- 	struct device *dev = &pdev->dev;
- 	struct pci_host_bridge *bridge;
-+	struct cdns_pcie *pcie;
- 	struct cdns_pcie_ep *ep;
- 	struct cdns_pcie_rc *rc;
- 	int phy_count;
-@@ -56,11 +48,6 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
- 	is_rc = data->is_rc;
- 
- 	pr_debug(" Started %s with is_rc: %d\n", __func__, is_rc);
--	cdns_plat_pcie = devm_kzalloc(dev, sizeof(*cdns_plat_pcie), GFP_KERNEL);
--	if (!cdns_plat_pcie)
--		return -ENOMEM;
--
--	platform_set_drvdata(pdev, cdns_plat_pcie);
- 	if (is_rc) {
- 		if (!IS_ENABLED(CONFIG_PCIE_CADENCE_PLAT_HOST))
- 			return -ENODEV;
-@@ -72,9 +59,9 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
- 		rc = pci_host_bridge_priv(bridge);
- 		rc->pcie.dev = dev;
- 		rc->pcie.ops = &cdns_plat_ops;
--		cdns_plat_pcie->pcie = &rc->pcie;
-+		pcie = &rc->pcie;
- 
--		ret = cdns_pcie_init_phy(dev, cdns_plat_pcie->pcie);
-+		ret = cdns_pcie_init_phy(dev, pcie);
- 		if (ret) {
- 			dev_err(dev, "failed to init phy\n");
- 			return ret;
-@@ -99,9 +86,9 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
- 
- 		ep->pcie.dev = dev;
- 		ep->pcie.ops = &cdns_plat_ops;
--		cdns_plat_pcie->pcie = &ep->pcie;
-+		pcie = &ep->pcie;
- 
--		ret = cdns_pcie_init_phy(dev, cdns_plat_pcie->pcie);
-+		ret = cdns_pcie_init_phy(dev, pcie);
- 		if (ret) {
- 			dev_err(dev, "failed to init phy\n");
- 			return ret;
-@@ -119,18 +106,20 @@ static int cdns_plat_pcie_probe(struct platform_device *pdev)
- 			goto err_init;
- 	}
- 
-+	platform_set_drvdata(pdev, pcie);
-+
- 	return 0;
- 
-  err_init:
-  err_get_sync:
- 	pm_runtime_put_sync(dev);
- 	pm_runtime_disable(dev);
--	cdns_pcie_disable_phy(cdns_plat_pcie->pcie);
--	phy_count = cdns_plat_pcie->pcie->phy_count;
-+	cdns_pcie_disable_phy(pcie);
-+	phy_count = pcie->phy_count;
- 	while (phy_count--)
--		device_link_del(cdns_plat_pcie->pcie->link[phy_count]);
-+		device_link_del(pcie->link[phy_count]);
- 
--	return 0;
-+	return ret;
+ 	u32 bits = readl_relaxed(vfe->base + reg);
+@@ -437,62 +421,6 @@ static int vfe_get_output(struct vfe_line *line)
+ 	return -EINVAL;
  }
  
- static void cdns_plat_pcie_shutdown(struct platform_device *pdev)
+-static int vfe_enable_output(struct vfe_line *line)
+-{
+-	struct vfe_device *vfe = to_vfe(line);
+-	struct vfe_output *output = &line->output;
+-	const struct vfe_hw_ops *ops = vfe->res->hw_ops;
+-	struct media_entity *sensor;
+-	unsigned long flags;
+-	unsigned int frame_skip = 0;
+-	unsigned int i;
+-
+-	sensor = camss_find_sensor(&line->subdev.entity);
+-	if (sensor) {
+-		struct v4l2_subdev *subdev = media_entity_to_v4l2_subdev(sensor);
+-
+-		v4l2_subdev_call(subdev, sensor, g_skip_frames, &frame_skip);
+-		/* Max frame skip is 29 frames */
+-		if (frame_skip > VFE_FRAME_DROP_VAL - 1)
+-			frame_skip = VFE_FRAME_DROP_VAL - 1;
+-	}
+-
+-	spin_lock_irqsave(&vfe->output_lock, flags);
+-
+-	ops->reg_update_clear(vfe, line->id);
+-
+-	if (output->state > VFE_OUTPUT_RESERVED) {
+-		dev_err(vfe->camss->dev, "Output is not in reserved state %d\n",
+-			output->state);
+-		spin_unlock_irqrestore(&vfe->output_lock, flags);
+-		return -EINVAL;
+-	}
+-
+-	WARN_ON(output->gen2.active_num);
+-
+-	output->state = VFE_OUTPUT_ON;
+-
+-	output->sequence = 0;
+-	output->wait_reg_update = 0;
+-	reinit_completion(&output->reg_update);
+-
+-	vfe_wm_start(vfe, output->wm_idx[0], line);
+-
+-	for (i = 0; i < 2; i++) {
+-		output->buf[i] = vfe_buf_get_pending(output);
+-		if (!output->buf[i])
+-			break;
+-		output->gen2.active_num++;
+-		vfe_wm_update(vfe, output->wm_idx[0], output->buf[i]->addr[0], line);
+-	}
+-
+-	ops->reg_update(vfe, line->id);
+-
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-
+-	return 0;
+-}
+-
+ /*
+  * vfe_enable - Enable streaming on VFE line
+  * @line: VFE line
+@@ -517,7 +445,7 @@ static int vfe_enable(struct vfe_line *line)
+ 	if (ret < 0)
+ 		goto error_get_output;
+ 
+-	ret = vfe_enable_output(line);
++	ret = vfe_enable_output_v2(line);
+ 	if (ret < 0)
+ 		goto error_enable_output;
+ 
+@@ -626,40 +554,6 @@ static void vfe_isr_wm_done(struct vfe_device *vfe, u8 wm)
+ 	spin_unlock_irqrestore(&vfe->output_lock, flags);
+ }
+ 
+-/*
+- * vfe_queue_buffer - Add empty buffer
+- * @vid: Video device structure
+- * @buf: Buffer to be enqueued
+- *
+- * Add an empty buffer - depending on the current number of buffers it will be
+- * put in pending buffer queue or directly given to the hardware to be filled.
+- *
+- * Return 0 on success or a negative error code otherwise
+- */
+-static int vfe_queue_buffer(struct camss_video *vid,
+-			    struct camss_buffer *buf)
+-{
+-	struct vfe_line *line = container_of(vid, struct vfe_line, video_out);
+-	struct vfe_device *vfe = to_vfe(line);
+-	struct vfe_output *output;
+-	unsigned long flags;
+-
+-	output = &line->output;
+-
+-	spin_lock_irqsave(&vfe->output_lock, flags);
+-
+-	if (output->state == VFE_OUTPUT_ON && output->gen2.active_num < 2) {
+-		output->buf[output->gen2.active_num++] = buf;
+-		vfe_wm_update(vfe, output->wm_idx[0], buf->addr[0], line);
+-	} else {
+-		vfe_buf_add_pending(output, buf);
+-	}
+-
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-
+-	return 0;
+-}
+-
+ static const struct vfe_isr_ops vfe_isr_ops_170 = {
+ 	.reset_ack = vfe_isr_reset_ack,
+ 	.halt_ack = vfe_isr_halt_ack,
+@@ -670,7 +564,7 @@ static const struct vfe_isr_ops vfe_isr_ops_170 = {
+ };
+ 
+ static const struct camss_video_ops vfe_video_ops_170 = {
+-	.queue_buffer = vfe_queue_buffer,
++	.queue_buffer = vfe_queue_buffer_v2,
+ 	.flush_buffers = vfe_flush_buffers,
+ };
+ 
+@@ -694,5 +588,7 @@ const struct vfe_hw_ops vfe_ops_170 = {
+ 	.vfe_enable = vfe_enable,
+ 	.vfe_halt = vfe_halt,
+ 	.violation_read = vfe_violation_read,
++	.vfe_wm_start = vfe_wm_start,
+ 	.vfe_wm_stop = vfe_wm_stop,
++	.vfe_wm_update = vfe_wm_update,
+ };
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+index 1bd3a6ef1d04d..6930799f77c27 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+@@ -210,15 +210,6 @@
+ #define MSM_VFE_VFE0_UB_SIZE 1023
+ #define MSM_VFE_VFE0_UB_SIZE_RDI (MSM_VFE_VFE0_UB_SIZE / 3)
+ 
+-static u32 vfe_hw_version(struct vfe_device *vfe)
+-{
+-	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
+-
+-	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
+-
+-	return hw_version;
+-}
+-
+ static u16 vfe_get_ub_size(u8 vfe_id)
+ {
+ 	if (vfe_id == 0)
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+index ce0719106bd34..76729607db02d 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+@@ -18,8 +18,6 @@
+ #include "camss-vfe-gen1.h"
+ 
+ 
+-#define VFE_0_HW_VERSION		0x000
+-
+ #define VFE_0_GLOBAL_RESET_CMD		0x018
+ #define VFE_0_GLOBAL_RESET_CMD_CORE	BIT(0)
+ #define VFE_0_GLOBAL_RESET_CMD_CAMIF	BIT(1)
+@@ -254,15 +252,6 @@
+ #define MSM_VFE_VFE1_UB_SIZE 1535
+ #define MSM_VFE_VFE1_UB_SIZE_RDI (MSM_VFE_VFE1_UB_SIZE / 3)
+ 
+-static u32 vfe_hw_version(struct vfe_device *vfe)
+-{
+-	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
+-
+-	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
+-
+-	return hw_version;
+-}
+-
+ static u16 vfe_get_ub_size(u8 vfe_id)
+ {
+ 	if (vfe_id == 0)
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+index 6b59c8107a3c7..b2f7d855d8dd0 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+@@ -17,8 +17,6 @@
+ #include "camss-vfe.h"
+ #include "camss-vfe-gen1.h"
+ 
+-#define VFE_0_HW_VERSION		0x000
+-
+ #define VFE_0_GLOBAL_RESET_CMD		0x018
+ #define VFE_0_GLOBAL_RESET_CMD_CORE	BIT(0)
+ #define VFE_0_GLOBAL_RESET_CMD_CAMIF	BIT(1)
+@@ -247,15 +245,6 @@
+ #define MSM_VFE_VFE1_UB_SIZE 1535
+ #define MSM_VFE_VFE1_UB_SIZE_RDI (MSM_VFE_VFE1_UB_SIZE / 3)
+ 
+-static u32 vfe_hw_version(struct vfe_device *vfe)
+-{
+-	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
+-
+-	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
+-
+-	return hw_version;
+-}
+-
+ static inline void vfe_reg_clr(struct vfe_device *vfe, u32 reg, u32 clr_bits)
+ {
+ 	u32 bits = readl_relaxed(vfe->base + reg);
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+index 003e1900d3c98..d73f733fde045 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+@@ -15,8 +15,6 @@
+ #include "camss.h"
+ #include "camss-vfe.h"
+ 
+-#define VFE_HW_VERSION			(0x00)
+-
+ #define VFE_GLOBAL_RESET_CMD		(vfe_is_lite(vfe) ? 0x0c : 0x1c)
+ #define	    GLOBAL_RESET_HW_AND_REG	(vfe_is_lite(vfe) ? BIT(1) : BIT(0))
+ 
+@@ -92,19 +90,6 @@ static inline int bus_irq_mask_0_comp_done(struct vfe_device *vfe, int n)
+ 
+ #define MAX_VFE_OUTPUT_LINES	4
+ 
+-static u32 vfe_hw_version(struct vfe_device *vfe)
+-{
+-	u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
+-
+-	u32 gen = (hw_version >> 28) & 0xF;
+-	u32 rev = (hw_version >> 16) & 0xFFF;
+-	u32 step = hw_version & 0xFFFF;
+-
+-	dev_dbg(vfe->camss->dev, "VFE HW Version = %u.%u.%u\n", gen, rev, step);
+-
+-	return hw_version;
+-}
+-
+ static void vfe_global_reset(struct vfe_device *vfe)
+ {
+ 	writel_relaxed(IRQ_MASK_0_RESET_ACK, vfe->base + VFE_IRQ_MASK(0));
+@@ -167,18 +152,16 @@ static inline void vfe_reg_update_clear(struct vfe_device *vfe,
+ 	vfe->reg_update &= ~REG_UPDATE_RDI(vfe, line_id);
+ }
+ 
+-static void vfe_enable_irq_common(struct vfe_device *vfe)
+-{
+-	/* enable reset ack IRQ and top BUS status IRQ */
+-	writel_relaxed(IRQ_MASK_0_RESET_ACK | IRQ_MASK_0_BUS_TOP_IRQ,
+-		       vfe->base + VFE_IRQ_MASK(0));
+-}
+-
+-static void vfe_enable_lines_irq(struct vfe_device *vfe)
++static void vfe_enable_irq(struct vfe_device *vfe)
+ {
+ 	int i;
+ 	u32 bus_irq_mask = 0;
+ 
++	if (!vfe->stream_count)
++		/* enable reset ack IRQ and top BUS status IRQ */
++		writel(IRQ_MASK_0_RESET_ACK | IRQ_MASK_0_BUS_TOP_IRQ,
++		       vfe->base + VFE_IRQ_MASK(0));
++
+ 	for (i = 0; i < MAX_VFE_OUTPUT_LINES; i++) {
+ 		/* Enable IRQ for newly added lines, but also keep already running lines's IRQ */
+ 		if (vfe->line[i].output.state == VFE_OUTPUT_RESERVED ||
+@@ -188,11 +171,10 @@ static void vfe_enable_lines_irq(struct vfe_device *vfe)
+ 			}
+ 	}
+ 
+-	writel_relaxed(bus_irq_mask, vfe->base + VFE_BUS_IRQ_MASK(0));
++	writel(bus_irq_mask, vfe->base + VFE_BUS_IRQ_MASK(0));
+ }
+ 
+ static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id);
+-static void vfe_isr_wm_done(struct vfe_device *vfe, u8 wm);
+ 
+ /*
+  * vfe_isr - VFE module interrupt handler
+@@ -228,7 +210,7 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 		/* Loop through all WMs IRQs */
+ 		for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
+ 			if (status & BUS_IRQ_MASK_0_COMP_DONE(vfe, RDI_COMP_GROUP(i)))
+-				vfe_isr_wm_done(vfe, i);
++				vfe_buf_done(vfe, i);
+ 		}
+ 	}
+ 
+@@ -247,132 +229,6 @@ static int vfe_halt(struct vfe_device *vfe)
+ 	return 0;
+ }
+ 
+-static int vfe_get_output(struct vfe_line *line)
+-{
+-	struct vfe_device *vfe = to_vfe(line);
+-	struct vfe_output *output;
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&vfe->output_lock, flags);
+-
+-	output = &line->output;
+-	if (output->state > VFE_OUTPUT_RESERVED) {
+-		dev_err(vfe->camss->dev, "Output is running\n");
+-		goto error;
+-	}
+-
+-	output->wm_num = 1;
+-
+-	/* Correspondence between VFE line number and WM number.
+-	 * line 0 -> RDI 0, line 1 -> RDI1, line 2 -> RDI2, line 3 -> PIX/RDI3
+-	 * Note this 1:1 mapping will not work for PIX streams.
+-	 */
+-	output->wm_idx[0] = line->id;
+-	vfe->wm_output_map[line->id] = line->id;
+-
+-	output->drop_update_idx = 0;
+-
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-
+-	return 0;
+-
+-error:
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-	output->state = VFE_OUTPUT_OFF;
+-
+-	return -EINVAL;
+-}
+-
+-static int vfe_enable_output(struct vfe_line *line)
+-{
+-	struct vfe_device *vfe = to_vfe(line);
+-	struct vfe_output *output = &line->output;
+-	unsigned long flags;
+-	unsigned int i;
+-
+-	spin_lock_irqsave(&vfe->output_lock, flags);
+-
+-	vfe_reg_update_clear(vfe, line->id);
+-
+-	if (output->state > VFE_OUTPUT_RESERVED) {
+-		dev_err(vfe->camss->dev, "Output is not in reserved state %d\n",
+-			output->state);
+-		spin_unlock_irqrestore(&vfe->output_lock, flags);
+-		return -EINVAL;
+-	}
+-
+-	WARN_ON(output->gen2.active_num);
+-
+-	output->state = VFE_OUTPUT_ON;
+-
+-	output->sequence = 0;
+-	output->wait_reg_update = 0;
+-	reinit_completion(&output->reg_update);
+-
+-	vfe_wm_start(vfe, output->wm_idx[0], line);
+-
+-	for (i = 0; i < 2; i++) {
+-		output->buf[i] = vfe_buf_get_pending(output);
+-		if (!output->buf[i])
+-			break;
+-		output->gen2.active_num++;
+-		vfe_wm_update(vfe, output->wm_idx[0], output->buf[i]->addr[0], line);
+-	}
+-
+-	vfe_reg_update(vfe, line->id);
+-
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-
+-	return 0;
+-}
+-
+-/*
+- * vfe_enable - Enable streaming on VFE line
+- * @line: VFE line
+- *
+- * Return 0 on success or a negative error code otherwise
+- */
+-static int vfe_enable(struct vfe_line *line)
+-{
+-	struct vfe_device *vfe = to_vfe(line);
+-	int ret;
+-
+-	mutex_lock(&vfe->stream_lock);
+-
+-	if (!vfe->stream_count)
+-		vfe_enable_irq_common(vfe);
+-
+-	vfe->stream_count++;
+-
+-	vfe_enable_lines_irq(vfe);
+-
+-	mutex_unlock(&vfe->stream_lock);
+-
+-	ret = vfe_get_output(line);
+-	if (ret < 0)
+-		goto error_get_output;
+-
+-	ret = vfe_enable_output(line);
+-	if (ret < 0)
+-		goto error_enable_output;
+-
+-	vfe->was_streaming = 1;
+-
+-	return 0;
+-
+-error_enable_output:
+-	vfe_put_output(line);
+-
+-error_get_output:
+-	mutex_lock(&vfe->stream_lock);
+-
+-	vfe->stream_count--;
+-
+-	mutex_unlock(&vfe->stream_lock);
+-
+-	return ret;
+-}
+-
+ /*
+  * vfe_isr_reg_update - Process reg update interrupt
+  * @vfe: VFE Device
+@@ -396,114 +252,48 @@ static void vfe_isr_reg_update(struct vfe_device *vfe, enum vfe_line_id line_id)
+ 	spin_unlock_irqrestore(&vfe->output_lock, flags);
+ }
+ 
+-/*
+- * vfe_isr_wm_done - Process write master done interrupt
+- * @vfe: VFE Device
+- * @wm: Write master id
+- */
+-static void vfe_isr_wm_done(struct vfe_device *vfe, u8 wm)
+-{
+-	struct vfe_line *line = &vfe->line[vfe->wm_output_map[wm]];
+-	struct camss_buffer *ready_buf;
+-	struct vfe_output *output;
+-	unsigned long flags;
+-	u32 index;
+-	u64 ts = ktime_get_ns();
+-
+-	spin_lock_irqsave(&vfe->output_lock, flags);
+-
+-	if (vfe->wm_output_map[wm] == VFE_LINE_NONE) {
+-		dev_err_ratelimited(vfe->camss->dev,
+-				    "Received wm done for unmapped index\n");
+-		goto out_unlock;
+-	}
+-	output = &vfe->line[vfe->wm_output_map[wm]].output;
+-
+-	ready_buf = output->buf[0];
+-	if (!ready_buf) {
+-		dev_err_ratelimited(vfe->camss->dev,
+-				    "Missing ready buf %d!\n", output->state);
+-		goto out_unlock;
+-	}
+-
+-	ready_buf->vb.vb2_buf.timestamp = ts;
+-	ready_buf->vb.sequence = output->sequence++;
+-
+-	index = 0;
+-	output->buf[0] = output->buf[1];
+-	if (output->buf[0])
+-		index = 1;
+-
+-	output->buf[index] = vfe_buf_get_pending(output);
+-
+-	if (output->buf[index])
+-		vfe_wm_update(vfe, output->wm_idx[0], output->buf[index]->addr[0], line);
+-	else
+-		output->gen2.active_num--;
+-
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-
+-	vb2_buffer_done(&ready_buf->vb.vb2_buf, VB2_BUF_STATE_DONE);
+-
+-	return;
++static const struct camss_video_ops vfe_video_ops_480 = {
++	.queue_buffer = vfe_queue_buffer_v2,
++	.flush_buffers = vfe_flush_buffers,
++};
+ 
+-out_unlock:
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
++static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
++{
++	vfe->video_ops = vfe_video_ops_480;
+ }
+ 
+-/*
+- * vfe_queue_buffer - Add empty buffer
+- * @vid: Video device structure
+- * @buf: Buffer to be enqueued
+- *
+- * Add an empty buffer - depending on the current number of buffers it will be
+- * put in pending buffer queue or directly given to the hardware to be filled.
+- *
+- * Return 0 on success or a negative error code otherwise
+- */
+-static int vfe_queue_buffer(struct camss_video *vid,
+-			    struct camss_buffer *buf)
++static void vfe_isr_read(struct vfe_device *vfe, u32 *value0, u32 *value1)
+ {
+-	struct vfe_line *line = container_of(vid, struct vfe_line, video_out);
+-	struct vfe_device *vfe = to_vfe(line);
+-	struct vfe_output *output;
+-	unsigned long flags;
+-
+-	output = &line->output;
+-
+-	spin_lock_irqsave(&vfe->output_lock, flags);
+-
+-	if (output->state == VFE_OUTPUT_ON && output->gen2.active_num < 2) {
+-		output->buf[output->gen2.active_num++] = buf;
+-		vfe_wm_update(vfe, output->wm_idx[0], buf->addr[0], line);
+-	} else {
+-		vfe_buf_add_pending(output, buf);
+-	}
+-
+-	spin_unlock_irqrestore(&vfe->output_lock, flags);
+-
+-	return 0;
++	/* nop */
+ }
+ 
+-static const struct camss_video_ops vfe_video_ops_480 = {
+-	.queue_buffer = vfe_queue_buffer,
+-	.flush_buffers = vfe_flush_buffers,
+-};
++static void vfe_violation_read(struct vfe_device *vfe)
++{
++	/* nop */
++}
+ 
+-static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
++static void vfe_buf_done_480(struct vfe_device *vfe, int port_id)
+ {
+-	vfe->video_ops = vfe_video_ops_480;
++	/* nop */
+ }
+ 
+ const struct vfe_hw_ops vfe_ops_480 = {
++	.enable_irq = vfe_enable_irq,
+ 	.global_reset = vfe_global_reset,
+ 	.hw_version = vfe_hw_version,
+ 	.isr = vfe_isr,
++	.isr_read = vfe_isr_read,
++	.reg_update = vfe_reg_update,
++	.reg_update_clear = vfe_reg_update_clear,
+ 	.pm_domain_off = vfe_pm_domain_off,
+ 	.pm_domain_on = vfe_pm_domain_on,
+ 	.subdev_init = vfe_subdev_init,
+ 	.vfe_disable = vfe_disable,
+-	.vfe_enable = vfe_enable,
++	.vfe_enable = vfe_enable_v2,
+ 	.vfe_halt = vfe_halt,
++	.violation_read = vfe_violation_read,
++	.vfe_wm_start = vfe_wm_start,
+ 	.vfe_wm_stop = vfe_wm_stop,
++	.vfe_buf_done = vfe_buf_done_480,
++	.vfe_wm_update = vfe_wm_update,
+ };
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 0eeba59dd933a..c1c4c97609a66 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -32,6 +32,11 @@
+ 
+ #define SCALER_RATIO_MAX 16
+ 
++#define VFE_HW_VERSION		0x0
++#define		HW_VERSION_STEPPING	0
++#define		HW_VERSION_REVISION	16
++#define		HW_VERSION_GENERATION	28
++
+ static const struct camss_format_info formats_rdi_8x16[] = {
+ 	{ MEDIA_BUS_FMT_UYVY8_1X16, 8, V4L2_PIX_FMT_UYVY, 1,
+ 	  PER_PLANE_DATA(0, 1, 1, 1, 1, 16) },
+@@ -406,6 +411,269 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
+ 	return 0;
+ }
+ 
++/*
++ * vfe_hw_version - Process write master done interrupt
++ * @vfe: VFE Device
++ *
++ * Return vfe hw version
++ */
++u32 vfe_hw_version(struct vfe_device *vfe)
++{
++	u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
++
++	u32 gen = (hw_version >> HW_VERSION_GENERATION) & 0xF;
++	u32 rev = (hw_version >> HW_VERSION_REVISION) & 0xFFF;
++	u32 step = (hw_version >> HW_VERSION_STEPPING) & 0xFFFF;
++
++	dev_info(vfe->camss->dev, "VFE:%d HW Version = %u.%u.%u\n",
++		 vfe->id, gen, rev, step);
++
++	return hw_version;
++}
++
++/*
++ * vfe_buf_done - Process write master done interrupt
++ * @vfe: VFE Device
++ * @wm: Write master id
++ */
++void vfe_buf_done(struct vfe_device *vfe, int wm)
++{
++	struct vfe_line *line = &vfe->line[vfe->wm_output_map[wm]];
++	const struct vfe_hw_ops *ops = vfe->res->hw_ops;
++	struct camss_buffer *ready_buf;
++	struct vfe_output *output;
++	unsigned long flags;
++	u32 index;
++	u64 ts = ktime_get_ns();
++
++	spin_lock_irqsave(&vfe->output_lock, flags);
++
++	if (vfe->wm_output_map[wm] == VFE_LINE_NONE) {
++		dev_err_ratelimited(vfe->camss->dev,
++				    "Received wm done for unmapped index\n");
++		goto out_unlock;
++	}
++	output = &vfe->line[vfe->wm_output_map[wm]].output;
++
++	ready_buf = output->buf[0];
++	if (!ready_buf) {
++		dev_err_ratelimited(vfe->camss->dev,
++				    "Missing ready buf %d!\n", output->state);
++		goto out_unlock;
++	}
++
++	ready_buf->vb.vb2_buf.timestamp = ts;
++	ready_buf->vb.sequence = output->sequence++;
++
++	index = 0;
++	output->buf[0] = output->buf[1];
++	if (output->buf[0])
++		index = 1;
++
++	output->buf[index] = vfe_buf_get_pending(output);
++
++	if (output->buf[index]) {
++		ops->vfe_wm_update(vfe, output->wm_idx[0],
++				   output->buf[index]->addr[0],
++				   line);
++		ops->reg_update(vfe, line->id);
++	} else {
++		output->gen2.active_num--;
++	}
++
++	spin_unlock_irqrestore(&vfe->output_lock, flags);
++
++	vb2_buffer_done(&ready_buf->vb.vb2_buf, VB2_BUF_STATE_DONE);
++
++	return;
++
++out_unlock:
++	spin_unlock_irqrestore(&vfe->output_lock, flags);
++}
++
++int vfe_enable_output_v2(struct vfe_line *line)
++{
++	struct vfe_device *vfe = to_vfe(line);
++	struct vfe_output *output = &line->output;
++	const struct vfe_hw_ops *ops = vfe->res->hw_ops;
++	struct media_entity *sensor;
++	unsigned long flags;
++	unsigned int frame_skip = 0;
++	unsigned int i;
++
++	sensor = camss_find_sensor(&line->subdev.entity);
++	if (sensor) {
++		struct v4l2_subdev *subdev = media_entity_to_v4l2_subdev(sensor);
++
++		v4l2_subdev_call(subdev, sensor, g_skip_frames, &frame_skip);
++		/* Max frame skip is 29 frames */
++		if (frame_skip > VFE_FRAME_DROP_VAL - 1)
++			frame_skip = VFE_FRAME_DROP_VAL - 1;
++	}
++
++	spin_lock_irqsave(&vfe->output_lock, flags);
++
++	ops->reg_update_clear(vfe, line->id);
++
++	if (output->state > VFE_OUTPUT_RESERVED) {
++		dev_err(vfe->camss->dev,
++			"Output is not in reserved state %d\n",
++			output->state);
++		spin_unlock_irqrestore(&vfe->output_lock, flags);
++		return -EINVAL;
++	}
++
++	WARN_ON(output->gen2.active_num);
++
++	output->state = VFE_OUTPUT_ON;
++
++	output->sequence = 0;
++	output->wait_reg_update = 0;
++	reinit_completion(&output->reg_update);
++
++	ops->vfe_wm_start(vfe, output->wm_idx[0], line);
++
++	for (i = 0; i < 2; i++) {
++		output->buf[i] = vfe_buf_get_pending(output);
++		if (!output->buf[i])
++			break;
++		output->gen2.active_num++;
++		ops->vfe_wm_update(vfe, output->wm_idx[0],
++				   output->buf[i]->addr[0], line);
++		ops->reg_update(vfe, line->id);
++	}
++
++	spin_unlock_irqrestore(&vfe->output_lock, flags);
++
++	return 0;
++}
++
++/*
++ * vfe_queue_buffer_v2 - Add empty buffer
++ * @vid: Video device structure
++ * @buf: Buffer to be enqueued
++ *
++ * Add an empty buffer - depending on the current number of buffers it will be
++ * put in pending buffer queue or directly given to the hardware to be filled.
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_queue_buffer_v2(struct camss_video *vid,
++			struct camss_buffer *buf)
++{
++	struct vfe_line *line = container_of(vid, struct vfe_line, video_out);
++	struct vfe_device *vfe = to_vfe(line);
++	const struct vfe_hw_ops *ops = vfe->res->hw_ops;
++	struct vfe_output *output;
++	unsigned long flags;
++
++	output = &line->output;
++
++	spin_lock_irqsave(&vfe->output_lock, flags);
++
++	if (output->state == VFE_OUTPUT_ON &&
++	    output->gen2.active_num < 2) {
++		output->buf[output->gen2.active_num++] = buf;
++		ops->vfe_wm_update(vfe, output->wm_idx[0],
++				   buf->addr[0], line);
++		ops->reg_update(vfe, line->id);
++	} else {
++		vfe_buf_add_pending(output, buf);
++	}
++
++	spin_unlock_irqrestore(&vfe->output_lock, flags);
++
++	return 0;
++}
++
++/*
++ * vfe_enable_v2 - Enable streaming on VFE line
++ * @line: VFE line
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_enable_v2(struct vfe_line *line)
++{
++	struct vfe_device *vfe = to_vfe(line);
++	const struct vfe_hw_ops *ops = vfe->res->hw_ops;
++	int ret;
++
++	mutex_lock(&vfe->stream_lock);
++
++	if (vfe->res->hw_ops->enable_irq)
++		ops->enable_irq(vfe);
++
++	vfe->stream_count++;
++
++	mutex_unlock(&vfe->stream_lock);
++
++	ret = vfe_get_output_v2(line);
++	if (ret < 0)
++		goto error_get_output;
++
++	ret = vfe_enable_output_v2(line);
++	if (ret < 0)
++		goto error_enable_output;
++
++	vfe->was_streaming = 1;
++
++	return 0;
++
++error_enable_output:
++	vfe_put_output(line);
++
++error_get_output:
++	mutex_lock(&vfe->stream_lock);
++
++	vfe->stream_count--;
++
++	mutex_unlock(&vfe->stream_lock);
++
++	return ret;
++}
++
++/*
++ * vfe_get_output_v2 - Get vfe output port for corresponding VFE line
++ * @line: VFE line
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_get_output_v2(struct vfe_line *line)
++{
++	struct vfe_device *vfe = to_vfe(line);
++	struct vfe_output *output;
++	unsigned long flags;
++
++	spin_lock_irqsave(&vfe->output_lock, flags);
++
++	output = &line->output;
++	if (output->state > VFE_OUTPUT_RESERVED) {
++		dev_err(vfe->camss->dev, "Output is running\n");
++		goto error;
++	}
++
++	output->wm_num = 1;
++
++	/* Correspondence between VFE line number and WM number.
++	 * line 0 -> RDI 0, line 1 -> RDI1, line 2 -> RDI2, line 3 -> PIX/RDI3
++	 * Note this 1:1 mapping will not work for PIX streams.
++	 */
++	output->wm_idx[0] = line->id;
++	vfe->wm_output_map[line->id] = line->id;
++
++	output->drop_update_idx = 0;
++
++	spin_unlock_irqrestore(&vfe->output_lock, flags);
++
++	return 0;
++
++error:
++	spin_unlock_irqrestore(&vfe->output_lock, flags);
++	output->state = VFE_OUTPUT_OFF;
++
++	return -EINVAL;
++}
++
+ int vfe_reset(struct vfe_device *vfe)
+ {
+ 	unsigned long time;
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
+index 10e2cc3c0b839..fcbf4f6091298 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.h
++++ b/drivers/media/platform/qcom/camss/camss-vfe.h
+@@ -99,7 +99,7 @@ struct vfe_line {
+ struct vfe_device;
+ 
+ struct vfe_hw_ops {
+-	void (*enable_irq_common)(struct vfe_device *vfe);
++	void (*enable_irq)(struct vfe_device *vfe);
+ 	void (*global_reset)(struct vfe_device *vfe);
+ 	u32 (*hw_version)(struct vfe_device *vfe);
+ 	irqreturn_t (*isr)(int irq, void *dev);
+@@ -114,7 +114,12 @@ struct vfe_hw_ops {
+ 	int (*vfe_enable)(struct vfe_line *line);
+ 	int (*vfe_halt)(struct vfe_device *vfe);
+ 	void (*violation_read)(struct vfe_device *vfe);
++	void (*vfe_wm_start)(struct vfe_device *vfe, u8 wm,
++			     struct vfe_line *line);
+ 	void (*vfe_wm_stop)(struct vfe_device *vfe, u8 wm);
++	void (*vfe_buf_done)(struct vfe_device *vfe, int port_id);
++	void (*vfe_wm_update)(struct vfe_device *vfe, u8 wm, u32 addr,
++			      struct vfe_line *line);
+ };
+ 
+ struct vfe_isr_ops {
+@@ -252,4 +257,55 @@ void vfe_put(struct vfe_device *vfe);
+  */
+ bool vfe_is_lite(struct vfe_device *vfe);
+ 
++/*
++ * vfe_hw_version - Process write master done interrupt
++ * @vfe: VFE Device
++ *
++ * Return vfe hw version
++ */
++u32 vfe_hw_version(struct vfe_device *vfe);
++/*
++ * vfe_enable - Enable streaming on VFE line
++ * @line: VFE line
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_enable_v2(struct vfe_line *line);
++
++/*
++ * vfe_buf_done - Process write master done interrupt
++ * @vfe: VFE Device
++ * @wm: Write master id
++ */
++void vfe_buf_done(struct vfe_device *vfe, int wm);
++
++/*
++ * vfe_get_output_v2 - Get vfe output line
++ * line: VFE line
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_get_output_v2(struct vfe_line *line);
++
++/*
++ * vfe_enable_output_v2 - Enable vfe output line
++ * line: VFE line
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_enable_output_v2(struct vfe_line *line);
++
++/*
++ * vfe_queue_buffer_v2 - Add empty buffer
++ * @vid: Video device structure
++ * @buf: Buffer to be enqueued
++ *
++ * Add an empty buffer - depending on the current number of buffers it will be
++ * put in pending buffer queue or directly given to the hardware to be filled.
++ *
++ * Return 0 on success or a negative error code otherwise
++ */
++int vfe_queue_buffer_v2(struct camss_video *vid,
++			struct camss_buffer *buf);
++
+ #endif /* QC_MSM_CAMSS_VFE_H */
 -- 
 2.53.0
 
