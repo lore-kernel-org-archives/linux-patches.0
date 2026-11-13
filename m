@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591098;
-	b=yOZZ49Y/cK/ine3R+aeOWUAYNIrSgF8ejrTzMX4mA79eN2M090+MRRC6cOH/mWz8TmvJ
-	 DUASBxYOW9TqG/gbLW/nlCQlXdZMy9COxAaUuGjPZl+tWHrgttNWQMt647nDUUktRz2nj
-	 QHpC8wzMuy5E01F5T6+VH0ReEmofJSbWV5BegDb7uilmVDHIRmK/RBhhntcr6NlvCriBY
-	 JAeY/hMqSkUHCieZ3A2TOkSfBwuMz6zRO9x/G3ljRrgug0Kdamz53aEiMqie/aApB5Je3
-	 t/EkwwobpCQQFqIVfEbT7yKm8BoJZBbYYDs+OtoeYp/yLN5csLVkJKGanAvDdIT8nVg==
+	t=1794591100;
+	b=hsoRIYnMAOdEydZCNN034AlAbCFVQpuLxpgKs3S7RfhgrGF1nx+PKJqW/Z9yXTBoXrsb
+	 bGjivG4Aaa3FOXOCC1IMHP17go036R3V1XqdFuAj+RSrK/2u7a2E+sRETV7l+GY7HG7/u
+	 xeRaiIuHJyEFHVRLuW8M1e34J0k5VpOHOAsxvKfAsYG1Y8Z42rHZ7jFhC+OHOvSGgJ957
+	 khI1sv56LV54Pwibh9MLwOE6VQB9E071eMBKnAgpctDc3Krp66VLAWFbNBvcs5ro3YHQ7
+	 absPXBXuukbRNvX2SCj85QfTpIZe3+1jQi9qU6cRNn+jQvy5PKPjdD14xaHwlw5aH2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591098;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591100;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gDeFzikP0C9R7W6qwzeJPqJvcvxaze5/xTesp9iU55o=;
-	b=erC2cYnBbetPheD8NQVL3zzHXm7xzJYxxUWlCaubUL8AgnYeeVivMScD/LHe/2MimQJF
-	 I/x6tbgjz+kGdIP/9Kjly+ammrg+Xl7lxl50DheaSZ90LgEoqHQaMVdv42kK0V3F8hgmS
-	 rJEZ42MBNk7ts3kDo1OQ9K29K/x1OJBhuhmy2fG9am8cwXjG+wUXOCdgPoz9+G+VDqBEg
-	 kiggcI/Wn1GkWKtE1BIi8u/UuzF6zkizGUPkmZxag53y8+kcprO/ZE7fmdImCx9K9wSsm
-	 7xXhLl0bHb0IOto7V1tBAG+U30oTX9kHpPEG7+M5BYslAq4w3Au+L+I0ZgT12FWo5cQ==
+	bh=5I7DvLEGdF5Jjfn5Qb2a7FsabQj95JSbAQoylXnm414=;
+	b=ZpPRs+ce4dtBfNv5SO47Y+LVmXBai8Akbpso9sLh+quUeWiJZ7KAn2eYWA0eCCQrPEvJ
+	 a5tXQg2Y8ZuTcF+HMABoHEjG2GE/VfXKLbI5e9YihPJ/WyLsu5n8ZQGRBzt7Zyb1pwY4o
+	 qqmW4Fdi+ux7bWaKEoZbzt1VTVqPO5ygktx57Dqb/0feAQyJw+1TvneO2q7ov/SgFxf8u
+	 sWhDrsMwLrLuFfvKbN0M2l1dNkFUyo5woJtnqGBui2/zDYEoWGkiwa2OmYyIc7k4d+ddr
+	 hiKx2DEe1gaVXtSamC4xGKAi5t8YX/MmZmoO1ljEEKoMA/CbIdSkWPARr16n3IztyCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fw6OzLOm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JN6M5+ds;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5873606BD08;
-	Fri, 13 Nov 2026 17:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1A2606BD08;
+	Fri, 13 Nov 2026 17:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fw6OzLOm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615071F000C4;
-	Fri, 13 Nov 2026 17:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JN6M5+ds
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995501F000C4;
+	Fri, 13 Nov 2026 17:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591098;
-	bh=gDeFzikP0C9R7W6qwzeJPqJvcvxaze5/xTesp9iU55o=;
+	s=korg; t=1794591099;
+	bh=5I7DvLEGdF5Jjfn5Qb2a7FsabQj95JSbAQoylXnm414=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fw6OzLOmAH1ggy4NYq692lVs4oFFggNZ/UsBl/1lhP4gSy02+ZD2tkjRbEOg1RyCr
-	 xcO8LpiP4yj3eINvXN834CUY5F1J8j4dAa3GJ/grHtAeiL7ckFdB7IZbqpN2HF/nmn
-	 Ml9ss6btEItRGymtmKk7IgG43K221kRK6qK98R/U=
+	b=JN6M5+dsTb8wizFKUJV2OPp6CXV56af+tU++qZw/NbmXBjY3OfPzV/ZFq3ID1fEH8
+	 hdiQMcse19bhkygx7uWT/xeqcUcjxNfRDx5O+c0KNnmqzloXexgKshsgyiMz7Qc5VE
+	 tZW4jWTcZ3Sc6ebpYy64yVbejP3+vAHcGtzb4u7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Kaloz <kaloz@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 191/670] scsi: aic7xxx: Use default settings on the SGI O2 onboard controllers
-Date: Fri, 13 Nov 2026 10:45:55 -0500
-Message-ID: <20261113153818.478638172@linuxfoundation.org>
+Subject: [PATCH 6.12 246/670] hwmon: chipcap2: fix command error diagnostics
+Date: Fri, 13 Nov 2026 10:46:50 -0500
+Message-ID: <20261113153820.171966786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,93 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Imre Kaloz <kaloz@kernel.org>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 696bdfc58975fbc70d2e2347a74e0b562e7e2494 ]
+[ Upstream commit d0a03e1a2d9bd53b94fe6dff7a1a8058d25be82d ]
 
-The SGI O2 firmware runs its onboard aic7880s without the Adaptec BIOS, so
-scratch RAM holds no settings. The left over BIOS path reads uninitialised
-bytes, and bad parity panics the boot.
+The command response field only contains bits 1:0, while the
+error flags are stored in bits 2:5. The existing diagnostic
+checks test the extracted response field, so they can never report
+an error flag.
 
-Use the defaults there with host ID 0. ahc_init() keeps the default host ID
-ahc_pci_config() chose, 7 on other PCI controllers, so only the O2 changes.
+Test the full status byte for the error flags, and check the
+configuration-load flag instead of RAM parity for the last diagnostic.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Imre Kaloz <kaloz@kernel.org>
-Link: https://patch.msgid.link/20261026131432.26065-1-kaloz@kernel.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-1-27ebfc2c5b9e@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/aic7xxx/aic7xxx_core.c |  8 ++++++--
- drivers/scsi/aic7xxx/aic7xxx_pci.c  | 20 +++++++++++++++++++-
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ drivers/hwmon/chipcap2.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/aic7xxx/aic7xxx_core.c b/drivers/scsi/aic7xxx/aic7xxx_core.c
-index a396f048a031e..d747d0b72a13a 100644
---- a/drivers/scsi/aic7xxx/aic7xxx_core.c
-+++ b/drivers/scsi/aic7xxx/aic7xxx_core.c
-@@ -5266,9 +5266,13 @@ ahc_init(struct ahc_softc *ahc)
- 
- 	/*
- 	 * Assume we have a board at this stage and it has been reset.
-+	 * PCI controllers keep the host ID ahc_pci_config() chose.
- 	 */
--	if ((ahc->flags & AHC_USEDEFAULTS) != 0)
--		ahc->our_id = ahc->our_id_b = 7;
-+	if ((ahc->flags & AHC_USEDEFAULTS) != 0) {
-+		if ((ahc->chip & AHC_PCI) == 0)
-+			ahc->our_id = 7;
-+		ahc->our_id_b = 7;
-+	}
- 
- 	/*
- 	 * Default to allowing initiator operations.
-diff --git a/drivers/scsi/aic7xxx/aic7xxx_pci.c b/drivers/scsi/aic7xxx/aic7xxx_pci.c
-index 2d4c85426dc3e..5a04c7d55e4b5 100644
---- a/drivers/scsi/aic7xxx/aic7xxx_pci.c
-+++ b/drivers/scsi/aic7xxx/aic7xxx_pci.c
-@@ -701,6 +701,21 @@ ahc_find_pci_device(ahc_dev_softc_t pci)
- 	return (NULL);
- }
- 
-+/*
-+ * The SGI O2 firmware runs its onboard controllers, in slots 1 and 2 of the
-+ * root bus, without the Adaptec BIOS and at host ID 0.  It leaves no settings
-+ * in scratch RAM, which may still hold power-on contents with bad parity.
-+ */
-+static bool
-+ahc_pci_sgi_o2_onboard(struct ahc_softc *ahc)
-+{
-+	int slot = ahc_get_pci_slot(ahc->dev_softc);
-+
-+	return IS_ENABLED(CONFIG_SGI_IP32) &&
-+	       ahc_get_pci_bus(ahc->dev_softc) == 0 &&
-+	       (slot == 1 || slot == 2);
-+}
-+
- int
- ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
- {
-@@ -782,6 +797,9 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
- 	ahc->bus_intr = ahc_pci_intr;
- 	ahc->bus_chip_init = ahc_pci_chip_init;
- 
-+	if (ahc_pci_sgi_o2_onboard(ahc))
-+		ahc->flags |= AHC_NO_BIOS_INIT;
-+
- 	/* Remember how the card was setup in case there is no SEEPROM */
- 	if ((ahc_inb(ahc, HCNTRL) & POWRDN) == 0) {
- 		ahc_pause(ahc);
-@@ -898,7 +916,7 @@ ahc_pci_config(struct ahc_softc *ahc, const struct ahc_pci_identity *entry)
- 			 * Assume only one connector and always turn
- 			 * on termination.
- 			 */
-- 			our_id = 0x07;
-+			our_id = ahc_pci_sgi_o2_onboard(ahc) ? 0 : 0x07;
- 			sxfrctl1 = STPWEN;
- 		}
- 		ahc_outb(ahc, SCSICONF, our_id|ENSPCHK|RESET_SCSI);
+diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
+index d9adb9e1f9ab0..0c66a0af36528 100644
+--- a/drivers/hwmon/chipcap2.c
++++ b/drivers/hwmon/chipcap2.c
+@@ -164,13 +164,13 @@ static int cc2_cmd_response_diagnostic(struct device *dev, u8 status)
+ 	case CC2_RESPONSE_BUSY:
+ 		return -EBUSY;
+ 	case CC2_RESPONSE_NACK:
+-		if (resp & CC2_ERR_CORR_EEPROM)
++		if (status & CC2_ERR_CORR_EEPROM)
+ 			dev_dbg(dev, "Command failed: corrected EEPROM\n");
+-		if (resp & CC2_ERR_UNCORR_EEPROM)
++		if (status & CC2_ERR_UNCORR_EEPROM)
+ 			dev_dbg(dev, "Command failed: uncorrected EEPROM\n");
+-		if (resp & CC2_ERR_RAM_PARITY)
++		if (status & CC2_ERR_RAM_PARITY)
+ 			dev_dbg(dev, "Command failed: RAM parity\n");
+-		if (resp & CC2_ERR_RAM_PARITY)
++		if (status & CC2_ERR_CONFIG_LOAD)
+ 			dev_dbg(dev, "Command failed: configuration error\n");
+ 		return -ENODATA;
+ 	default:
 -- 
 2.53.0
 
