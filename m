@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590133;
-	b=C0biD5BDSnFDlr+/QYYLctIBxn4tC68e15vi9ZhFqkL/8MD4JymFq8P6EkU5mQim/d2q
-	 3VWo6IByNx2ouphy+jgMauXmiTdwDRK3bLdDqLS+ZWWBIuPZbJItWja4DchMVDNT8v/Bp
-	 5sVOWf1R7XK+SqyXLP4xawUt9Cbzw17+RAUBcjvGKyN87PHegwUomLslC9AOsm4AvRRxl
-	 9swndwG/mXhNk21UJ92gZg3c+v//ugubddYWtFnhr4tbR3cKfj6GxJ9qwnD4sSf9sBODd
-	 rr0FW4kNhrPp1Kd92/mrQFMxRL4uNsEtyskHsBl0xAZ6aEdKzOztljZXig0lkfMNAGA==
+	t=1794590134;
+	b=ftX9EdRM/PE44Cp5kUpduo+7u2wgnZEMoOUQRRe2sRgpndoffFu3Y7Y0wYNVOA2UypPs
+	 5pdyxq0Xjza9lR7hcy1Q0cWjKdgZwzJHtTvzzxg7S4KBJojH0pyvVPhjtRJh5RXd66qHb
+	 P91v3mAlTfR8F7xBfY5wsYJEWBQZLpnTef6Yxbx3O7S1HOqVd9303wYvjKhhJy8e9g1yI
+	 byP7GJku1FN8rDUMWeqyzUTGdgTLnv5taNdjJI9C2mmEYm2jzdm9UMftVfhp8/QGNUGSZ
+	 fcc8IqyRarG6rtSvf59LeycXlRRfOOwFqeVIHdCF4CE0hdZfRE95YooeNnAuhHQFmPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590133;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590134;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=85zfZRb5+DRAa4lLZVg743/vK4diHAbW5mdfeH1V6G4=;
-	b=CPKt3eiIWCaTo3h23IDD8fGkkgAiGIooo9Y3paxyoeR2rVB2HdfndIJPrMxgfEetZ1oM
-	 UaOSgiXpYeEjAXZO8tjFIt5NQv+yryCRyZJNjpuwSvxwe3QaUgC28JJJUmNYMdkfKPt5g
-	 a4KiHdGTsShaSdOp5XHo5+PRrVpgImJ8xqKXSbZu3obZBZW3MIOUWkEEO7B/iHzecjF/S
-	 UWu0paJoeTtxJht/AflkKOO/Tz0crv0lZK9yDtCgXltOaB4lunAHCu5i/00mrIarK2i8x
-	 2rzNTRoev+a6Jivf6VJlnqLeVxh5aniP5kodW+KJTmSgyIBwnIZdF3fE6C4S4dyrSXg==
+	bh=4VI6vdiVE6K4SsnZS5llBBcs47jEtu5rUvTfXSN0i6Q=;
+	b=pQbCgtraZpGdCPQmfd2xBqoc1tqiiBYEe89NxrkRMZFEoTMmofcCMwdrHukBjEnlKS/I
+	 m/v1zQyS2gWtADCkYdF0H55DNvJ6LC7QR8CYp6gU+xRujEKOQTQd9eVHkf00bqQgsUSr3
+	 7vbUNumsCC3byt/ft1OV83/GSDj+0vGtcQN9/swP82c77kGGQLiU90pyO78HxLAHA3U0Z
+	 WnZqxxq/+1ABvBpKIn7nWizF4ce44KoHNWsgLLVIvFoOcWLCa9odrRT/3UVCuYJhw4ygI
+	 q48ZvdNjfuEZPSKZOfRqY6BXcV6KSyVF5b4vPFzaoFlqb/0xv+8bO2aKo7lPPrbvWcw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wv9eYcRB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D75nkYog;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E336160A5BCE;
-	Fri, 13 Nov 2026 17:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7AD60A5BDC;
+	Fri, 13 Nov 2026 17:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wv9eYcRB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6641F000C4;
-	Fri, 13 Nov 2026 17:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D75nkYog
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB4D1F000C9;
+	Fri, 13 Nov 2026 17:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590132;
-	bh=85zfZRb5+DRAa4lLZVg743/vK4diHAbW5mdfeH1V6G4=;
+	s=korg; t=1794590134;
+	bh=4VI6vdiVE6K4SsnZS5llBBcs47jEtu5rUvTfXSN0i6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wv9eYcRBSQGrDOnntPtNN1z7BM55V993efiToxOqNFg0NawbleQY6WP5kEmFDqSk6
-	 5YM4K8hKUqydq4ZyobN2NUiwt8YByRssWhMTbdSx+I8KiEFAzZblBYmvRcwDwH5eaa
-	 bkaTVUXl8kHx2+GI9lQMm/HlbhiwEiK79ZKu12E0=
+	b=D75nkYog/SE2voLXomVElxVcnbjuKtMys0e0djZEV/5jrIR8jhC1DOPVj3GaytQUq
+	 4gdyts66XQHEwFGFIiHBHbEWYtRIFQd1beJAfFm31S0FnZZixWXnsha0tUxBkkSbh3
+	 jYJrwv5TT6KskFiTI/EYY3o8caN/d6FGTy3SKi1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ridham Khurana <khurana.ridham222@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Rupesh Majhi <zoone.rupert@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 152/686] hwmon: (lm70) Fix rounding of negative temperatures
-Date: Fri, 13 Nov 2026 10:44:45 -0500
-Message-ID: <20261113153825.948055149@linuxfoundation.org>
+Subject: [PATCH 6.18 153/686] iio: pressure: dps310: fix CFG_REG bit definitions
+Date: Fri, 13 Nov 2026 10:44:46 -0500
+Message-ID: <20261113153825.980510372@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,66 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ridham Khurana <khurana.ridham222@gmail.com>
+From: Rupesh Majhi <zoone.rupert@gmail.com>
 
-[ Upstream commit eddb0aaacce4baa9d8176eb2f4bd9e99e867f8fc ]
+[ Upstream commit 4334dc4092c271e6cd010c2ee70b7f4415c4c199 ]
 
-temp1_input_show() drops the low bits of the temperature register by
-dividing the raw value (raw / 32 on the LM70). These bits are not part
-of the temperature: the LM70, LM71, LM74 and TMP122/TMP124 always
-return some of them as 1, and the TMP125 fills them with copies of the
-temperature LSB. Division rounds toward zero, so a negative temperature
-with any of these bits set is reported one LSB too high.
+Driver defines them as BIT(4), BIT(5) and BIT(6). Per datasheet P_SHIFT
+is bit 2, FIFO_EN is bit 1 and SPI_MODE is bit 0.
 
-For example, the TMP122 returns 0xffff for -0.0625 degrees C, which the
-driver reports as 0. The LM70 returns 0xf39f for -25 degrees C, which
-the driver reports as -24750.
+Only P_SHIFT has a user. dps310_set_pres_precision() sets it at
+oversampling 16 or above, so with wrong bit the result register is never
+shifted and stops matching the scale factor compensation divides by.
+in_pressure_input returns -ERANGE at oversampling 16, 32 and 64.
 
-Use an arithmetic right shift instead, which drops the low bits and
-rounds down.
+FIFO_EN needed by FIFO support later in this series.
 
-Fixes: e1a8e913f97e ("[PATCH] lm70: New hardware monitoring driver")
-Fixes: a86e94dc946d ("hwmon: (lm70) Add support for LM71 and LM74")
-Fixes: cd929672a9ef ("hwmon: (lm70) Add ti,tmp125 support")
+Fixes: ba6ec48e76bc ("iio: Add driver for Infineon DPS310")
+Fixes: d711a3c7dc82 ("iio: dps310: Add pressure sensing capability")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ridham Khurana <khurana.ridham222@gmail.com>
-Link: https://patch.msgid.link/20260924205326.1739229-1-khurana.ridham222@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Assisted-by: LLM
+Signed-off-by: Rupesh Majhi <zoone.rupert@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/lm70.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/iio/pressure/dps310.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/lm70.c b/drivers/hwmon/lm70.c
-index 0d5a250cb6722..ee06c5641870a 100644
---- a/drivers/hwmon/lm70.c
-+++ b/drivers/hwmon/lm70.c
-@@ -97,21 +97,21 @@ static ssize_t temp1_input_show(struct device *dev,
- 	 */
- 	switch (p_lm70->chip) {
- 	case LM70_CHIP_LM70:
--		val = ((int)raw / 32) * 250;
-+		val = ((int)raw >> 5) * 250;
- 		break;
- 
- 	case LM70_CHIP_TMP121:
- 	case LM70_CHIP_TMP122:
- 	case LM70_CHIP_LM74:
--		val = ((int)raw / 8) * 625 / 10;
-+		val = ((int)raw >> 3) * 625 / 10;
- 		break;
- 
- 	case LM70_CHIP_LM71:
--		val = ((int)raw / 4) * 3125 / 100;
-+		val = ((int)raw >> 2) * 3125 / 100;
- 		break;
- 
- 	case LM70_CHIP_TMP125:
--		val = (sign_extend32(raw, 14) / 32) * 250;
-+		val = (sign_extend32(raw, 14) >> 5) * 250;
- 		break;
- 	}
- 
+diff --git a/drivers/iio/pressure/dps310.c b/drivers/iio/pressure/dps310.c
+index 41b2d0b014e18..a617f26eeb300 100644
+--- a/drivers/iio/pressure/dps310.c
++++ b/drivers/iio/pressure/dps310.c
+@@ -50,9 +50,9 @@
+ #define DPS310_CFG_REG		0x09
+ #define  DPS310_INT_HL		BIT(7)
+ #define  DPS310_TMP_SHIFT_EN	BIT(3)
+-#define  DPS310_PRS_SHIFT_EN	BIT(4)
+-#define  DPS310_FIFO_EN		BIT(5)
+-#define  DPS310_SPI_EN		BIT(6)
++#define  DPS310_PRS_SHIFT_EN	BIT(2)
++#define  DPS310_FIFO_EN		BIT(1)
++#define  DPS310_SPI_EN		BIT(0)
+ #define DPS310_RESET		0x0c
+ #define  DPS310_RESET_MAGIC	0x09
+ #define DPS310_COEF_BASE	0x10
 -- 
 2.53.0
 
