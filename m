@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590292;
-	b=Lga+xCDzMhftGP/HcUfBa+WCxqSV1wQHAwxaZCHI0znXSM3TJYEJrH1ioJ5YXPx+mwbK
-	 1ChbkcOr+5QIuifR6338rhvaOm/eEd4Wxofpp1YfEZFrkp7EUc4MYd8eodgt+lAxbcswd
-	 JYn8vujVF7QwatPvXxRD4PAcA2ZjQDkhthqcOb2M3FfrxmEQL8y/DQq8adTfqdwRCmjXe
-	 u+b067UPcEb+RFrS1dBnUONzWbZYrZn73SZ7unFhFMBdBrKIuPGMD6YTqrefrzyLsgxze
-	 XQQ+5DDbB46hAom/2uLiLRk0FZL9xpBDUvCLKJAnjERyQGO6x4M3zEFBhkCovY8zWfw==
+	t=1794590293;
+	b=NeFNUJILCwkezy2frrEZ3DoRmgG40TsoYOFrjss9wutVfQFouMic2Y5xRUbPaJGeUWbI
+	 M64BwNwtoPLlTohKRRVFV5vIFMRW9fsrxnigfWaqMtBx3A45GqBJI5Dq0rCLR0qJUNaZo
+	 SVlckM5tN88WBxPjnj9LCvzQ6FN+GlAokbKW4ARIqF9CwBrrZ0ADV2rtFP4Vg7bjCftK5
+	 HoRWvrA5qeLqji2PR0bjshV7WhAESzfbplQOwQlwUi2Zi4wnrdmmxuksxJ3p2RTQydHVN
+	 wTyjI3h+6ZZ1UgBwIxlxk8xi0TiM5Bs4H50UlXmqXjMI0ytgb+bcOT8u33GPtMrCVDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590292;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590293;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SgiF7bWoMTgGYrpzUiSSoDrP3pPwYtvA9x5DNTwy75Q=;
-	b=FAPzuQ3RrXUjoHdwJMmn3rCcUCu8r67iesb2eMrWPmLAAe17sO/lSFyF5R3+sKsHFAFw
-	 UN2CQE66qAD/w0FCbcW5+gR6WSd3VGusHWHEG7uBnJ8y0AHac0Y4d++2FKqkXLbVkpvM7
-	 3paSFuntY42vG+0hXc8dTCW8Ick6+8xvedNuI93rCKPJS91V+1/4IVWyibFucrE8hV3Ki
-	 JeL6gbX/TAFA3xMDL1+TICNaUsXB4xrNVKji6Ax1OXDBXvAeY2MiMbMnzrRt6BOt4LpVH
-	 zIcBojrXXYJ/i5/Z9/rjuTcpKxQ28yICU7La+6F6ot8GVHyPQS8qlJ+3/KzOzERzEAQ==
+	bh=SKLY+4uY5q4zM0W8B745ApvcP6xsCzR8fRXxXnYDTeA=;
+	b=vKbi7ODeO5iPV3kWc99r8W2Vo9ZsEzwOUsSVTgTglqW9AN0XyLdGs+ztz2z7aaw/12/i
+	 5Od1FaoJvNIj0s5OYRrlG8S1KZTwQynVTuxUCnE8ZM3U+NjDleKFDNrkWtrFxRho9e+Rk
+	 iBbtDw/QfM96WMY+8aKHK14nabLSZCJgysIym/vDp3/oRYbHHVEDyypYVRDaOZ8MLLs+2
+	 RQLSGHuSGbZX5ClGXuxyOfnW9d1OkBNCy+QxwxmhDXUCBSGEF96bLzHfKhwZ7waE438XD
+	 c2jGq13r4m64JfYw7iDBY7eMZAX0dyJaqWckmdSOVzQvYJ8tJSkxkFEvoBgwL7DO0ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="izT86g/0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkyBcvCt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF47560A260B;
-	Fri, 13 Nov 2026 17:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F0B607B586;
+	Fri, 13 Nov 2026 17:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=izT86g/0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D54D1F000C5;
-	Fri, 13 Nov 2026 17:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AkyBcvCt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3CC1F000CA;
+	Fri, 13 Nov 2026 17:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590292;
-	bh=SgiF7bWoMTgGYrpzUiSSoDrP3pPwYtvA9x5DNTwy75Q=;
+	s=korg; t=1794590293;
+	bh=SKLY+4uY5q4zM0W8B745ApvcP6xsCzR8fRXxXnYDTeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=izT86g/0T+3eLgAtI7Nw/cYJRYXwD849+5+jj5c78aES3j6IYwO0uJYdj9PJSA5Sa
-	 +U3l0L4L43Ml9eR+aqboMOvu12zHRLOtUNZuYxYo22YZHih4wKMVvW4WKTt6H3CnZO
-	 ZqM/VrpjamccB02YwqX1newI5qbdZcWNFsA5uqFQ=
+	b=AkyBcvCtn+fT+C4aVza+NN8WSbuhYy9o7nTgA7PSQdkAWIuYVbc3jxqzKcjCdX/Qw
+	 23AfDAxdhojlJCveAkw4OlO5W7xt06Q9YrHE8CF6H6tQZfoA11IipIHudy1TF/dg+C
+	 uWWupj6fwmjhLnYlaCHsnxkinKT+CSc6F7QhALSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	James Seo <james@equiv.tech>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 273/686] hwmon: chipcap2: fix off-by-one in command mode retry loop
-Date: Fri, 13 Nov 2026 10:46:46 -0500
-Message-ID: <20261113153830.255623068@linuxfoundation.org>
+Subject: [PATCH 6.18 282/686] hwmon: (hp-wmi-sensors) Fix unbounded loops in scale_numeric_sensor()
+Date: Fri, 13 Nov 2026 10:46:55 -0500
+Message-ID: <20261113153830.539561905@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,39 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 4c0e65a4ed665c416ccb1524c58a646a580e491f ]
+[ Upstream commit 185039b1c0389b70ec52a6d3e3c1494e2d0e23da ]
 
-i == CC2_CM_RETRIES can never be true inside the loop, since it
-only runs while i < CC2_CM_RETRIES. Use CC2_CM_RETRIES - 1 so the
-last failed retry breaks out immediately instead of doing a useless
-disable + 80 ms power-cycle delay before the loop condition ends it
-anyway.
+In scale_numeric_sensor() in the hp-wmi-sensors hwmon driver, an unbounded
+loop occurs if the ACPI WMI implementation provides a highly anomalous or
+malformed UnitModifier value for a numeric sensor.
+The UnitModifier property is extracted from a WMI ACPI object without
+bounds checking and cast to a signed 32-bit integer. This value directly
+controls the iteration count of two scaling loops. If the provided
+unit_modifier is extremely negative (e.g., INT_MIN), the first loop
+executes billions of times before reaching target_modifier. Conversely,
+if unit_modifier is extremely large (e.g., INT_MAX) and the current
+sensor reading (val) is exactly 0, the second loop's overflow safeguard
+(val > LONG_MAX / 10) never evaluates to true, resulting in billions of
+unnecessary iterations. This prolonged execution causes severe CPU stalls
+and thread soft lockups during driver initialization or whenever a
+user-space process reads the sensor attribute via sysfs, resulting in a
+denial of service on the affected CPU core.
 
-Fixes: 3af350929e75 ("hwmon: Add support for Amphenol ChipCap 2")
+Fix the problem in the first loop by exiting it as soon as val is zero.
+Fix the problem with the second loop by only entering it if val is not
+zero. Also add a check for val < LONG_MIN / 10 and exit the loop if that
+is the case.
+
+Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Link: https://patch.msgid.link/20261014-chipcap2_locks-v3-2-27ebfc2c5b9e@gmail.com
+Cc: James Seo <james@equiv.tech>
+Acked-by: James Seo <james@equiv.tech>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/chipcap2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/hp-wmi-sensors.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/chipcap2.c b/drivers/hwmon/chipcap2.c
-index b3d944852e73a..c5b6e147467cf 100644
---- a/drivers/hwmon/chipcap2.c
-+++ b/drivers/hwmon/chipcap2.c
-@@ -224,7 +224,7 @@ static int cc2_command_mode_start(struct cc2_data *data)
- 				     2 * CC2_RESP_START_CM_US);
- 		}
- 		ret = cc2_read_command_status(data->client);
--		if (ret != -ETIMEDOUT || i == CC2_CM_RETRIES)
-+		if (ret != -ETIMEDOUT || i == CC2_CM_RETRIES - 1)
- 			break;
+diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
+index dd1fa48314a54..12950666c9810 100644
+--- a/drivers/hwmon/hp-wmi-sensors.c
++++ b/drivers/hwmon/hp-wmi-sensors.c
+@@ -739,15 +739,21 @@ static long scale_numeric_sensor(const struct hp_wmi_numeric_sensor *nsensor)
  
- 		/* command window missed, prepare for a retry */
+ 	val = current_reading;
+ 
+-	for (; unit_modifier < target_modifier; unit_modifier++)
++	for (; val && unit_modifier < target_modifier; unit_modifier++)
+ 		val = DIV_ROUND_CLOSEST(val, 10);
+ 
+-	for (; unit_modifier > target_modifier; unit_modifier--) {
+-		if (val > LONG_MAX / 10) {
+-			val = LONG_MAX;
+-			break;
++	if (val) {
++		for (; unit_modifier > target_modifier; unit_modifier--) {
++			if (val > LONG_MAX / 10) {
++				val = LONG_MAX;
++				break;
++			}
++			if (val < LONG_MIN / 10) {
++				val = LONG_MIN;
++				break;
++			}
++			val *= 10;
+ 		}
+-		val *= 10;
+ 	}
+ 
+ 	if (sensor_type == HP_WMI_TYPE_TEMPERATURE) {
 -- 
 2.53.0
 
