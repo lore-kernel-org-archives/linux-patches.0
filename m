@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590848;
-	b=fTdsZg7bK0g49FnjRSO4YkUBIyoTAUrLsgpZ0D4WZq2DsCyoH9c5wR3r5/sDQViTy8+z
-	 GmDZbcofyDbzVFArOKyDSPFypvgEQcrvscoit9GoMSWClpiyctxQ8dLmnP6ieTtHGsEnF
-	 B1BAm7y5+urZdf54LHgFKv7zh3sXvGueHBbxg+Y4UZ0L3AF532nhMq1XBVaq+JGyb9eSn
-	 TXHpuwLAchmcV77PFD6uC6JcEYRyGQyszh5av/z7XTSSiC6/jrWkzhlaUK2lXh60cO+zq
-	 J60Io3qrLtEYqJzAJQS+r+or2bdMjIqKKcp8B+ZZAiFGpONA60TIsiecftC6x0n3yTQ==
+	t=1794590849;
+	b=p1Kh4AM5Qvbu4N0h9GToAAELa0DP1/08LsCzj3O2zaH2Msp/4Fhm/ajsI/sOLCKpez0j
+	 gyCdu+jKc2FxZ4pVyhbNpACSt5fZPN7lIysnT7QuJFebVNhj0e1HMTxVUMu82MmjtGojQ
+	 YjPgZCtxe1Ur1mhREhpj10tcYwo3qHb+frGN34MRIFjBBsJZ7+E12AzmhlNYjPY/Uocwo
+	 DF8lYkHCzX5eWrzVlVHwuZaIbd5Rvk5WEq0Le7OzEW1ZPEVkI//5P9ofLmxXMczYvfT5n
+	 BqBb5msdjLT55VAdLSWotdA4mL1OTiTecG2ApLqTFFB+maf480DbUEfB/ZSxVzy4L/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590848;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590849;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FGrUuiFkxPn9kRFeIL3ct/k1OjrNRryaDQocvYRo8DQ=;
-	b=rniyG747lockd3gYnrp/P3eiKyq2rMtrkkmpv5S/wFuW+IUku6UzMxh2BFJGpeO8XS6h
-	 AtsYeGA+ZB5BEsg37hs2YHbXEYljDa0dqvo+/gLRd+VVr6Q/ovY3QzKDViOTcSqoaffh4
-	 NMHUJUGP490YnhJ3ooqXRfI9S9Grei6Rbq3xBJzfQp2IrNzATzoIYBjXVBvdB2qLGo8zL
-	 UPzUvjMJJMX8ChZlHN42CNsfkWQMY1N8MXo2z4aA7DBFGntTXXygRgHqfAzDFOUZ3TNos
-	 xcMyzv2MPVMx5TljraDBDenEQ249gI647Frlmafoj43WS2eJh/dH7ABk6hGMJyA2amw==
+	bh=OnlaHB2qlHb/prHcvGd2qkVvk/rzkRbNLgUYBTwi8rU=;
+	b=avDLtVDEycP5rSXoP4gYYv2Q+QqlP3gIL9YfZYubBhJIDHUx60eYpWnev8vYsg+i6TLX
+	 t06XRTr3JiHqdZB9e8kC1lCQbKrFR4xA5V6RPnVaNLC2nrl4f3fWna7mUZUHZKDm3mvf2
+	 8OgxbBNAVtGR0/s3iv526cm1uOLkXWp1VGIxoatOH1KYCtOxEvlW8caHl74bC6c55UsC6
+	 vIGOt8FcciWGzDP4IqL8tkJZH2Fj/D/mLsEVTrNlkiITiRvOBkqhf5l5cQSALK46VLXcc
+	 y7tbk6SxYMGnPF2larSn2/ga1MGRHve+Wv+sx3gDsUzr3b35ucXv8Wo90pVs5QmcZBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pp1CSA5b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXhSYRAL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0A4606D482;
-	Fri, 13 Nov 2026 17:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AC5606D48F;
+	Fri, 13 Nov 2026 17:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pp1CSA5b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30341F000C4;
-	Fri, 13 Nov 2026 17:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXhSYRAL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A191F000C4;
+	Fri, 13 Nov 2026 17:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590848;
-	bh=FGrUuiFkxPn9kRFeIL3ct/k1OjrNRryaDQocvYRo8DQ=;
+	s=korg; t=1794590849;
+	bh=OnlaHB2qlHb/prHcvGd2qkVvk/rzkRbNLgUYBTwi8rU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pp1CSA5b+bSOF1EXxHgajJDHnCRweyXgAFsjK4hSTAnb4tXEc8GB/1/kAodbNHQZG
-	 iNPobSFsgEc8kisDxPCV289e4yI7M3U3mhh2Xxf0ICtnSfb0JJalG1YZNEizebofRs
-	 Jis9v4vXY99F95PIrocRLFeYc5PfLXzdLplnef1k=
+	b=DXhSYRALeZEf0vamMDNwEX5KuYKsak7obiTVOT5A7giami02Bu3LQjTZWr8X6diY1
+	 fzqI45VbSIQI63i9hmz3sPI8omXaZkjbzbKCyTDNQuu97q+VYBNGeyJy9hpAayS6gd
+	 6eGgDmRKw480UyOaweTPOgoWsYorSz6bZRnDwwjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com,
-	syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com,
-	Eduard Zateev <hackerowskiy@gmail.com>,
-	Michail Andreas Michalopoulos <mike.michalo@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Andreas Wild <andiwild@gmail.com>,
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/670] smb: client: hold server info until cifsd exits
-Date: Fri, 13 Nov 2026 10:42:56 -0500
-Message-ID: <20261113153811.601112649@linuxfoundation.org>
+Subject: [PATCH 6.12 048/670] PCI: Skip Target Speed quirk on clamped ports with no link
+Date: Fri, 13 Nov 2026 10:43:32 -0500
+Message-ID: <20261113153812.972789671@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,148 +69,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zateev <hackerowskiy@gmail.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 482c117c6dbeee382790168af10959810450ab09 ]
+[ Upstream commit ff8a969f7dc8e79ea6113abcfa983e070b2b585a ]
 
-The last session reference can be dropped while the cifsd demultiplex
-thread is still running clean_demultiplex_info(). That thread frees
-TCP_Server_Info there, racing with cifs_put_tcp_session() as it releases
-the server crypto state. syzbot reported a KASAN use-after-free in
-cifs_crypto_secmech_release().
+Since commit 72780f796468 ("PCI: Always lift 2.5GT/s restriction in PCIe
+failed link retraining") the Target Speed quirk lifts a firmware-imposed
+2.5GT/s restriction on any downstream port, without checking whether the
+link is up.  Where nothing is plugged in, the retraining that follows can
+never complete, so each attempt costs PCIE_LINK_RETRAIN_TIMEOUT_MS.  The
+quirk makes two of them -- the initial one and the restore on the error
+path -- adding a fixed 2 s to every boot.
 
-Keep an object reference for the cifsd thread. Defer final crypto,
-session-key, network namespace, string, and structure cleanup until both
-the last session reference and the thread reference are dropped. Drop the
-thread reference after clean_demultiplex_info() has finished using the
-server.
+On an MSI PRO Z690-A WIFI DDR4 (Intel 600 Series PCH) with one empty x1
+slot, running v7.2-rc5:
 
-Build-tested with ARCH=arm64 and W=1 for
-fs/smb/client/connect.o. The KASAN reproducer was not run on the patched
-kernel.
+  0.541 pci 0000:00:1c.0: removing 2.5GT/s downstream link speed restriction
+  1.541 pci 0000:00:1c.0: retraining failed
+  2.541 pci 0000:00:1c.2: [8086:7aba] type 01 class 0x060400
 
-Fixes: a5c3e1c725af ("Revert "cifs: No need to send SIGKILL to demux_thread during umount"")
-Reported-by: syzbot+5c3ed2a0de3270efc921@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5c3ed2a0de3270efc921
-Reported-by: syzbot+c2ec61adfbcb24e5ec20@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=c2ec61adfbcb24e5ec20
-Assisted-by: LLM OpenAI Codex
-Signed-off-by: Eduard Zateev <hackerowskiy@gmail.com>
+Where the Link Speed has already been clamped at 2.5GT/s and no link has
+been established there is nothing worth doing, which is what the kerneldoc
+for the quirk already describes: the restriction is to be lifted where
+firmware arranged it "and the port reports its link already being up".
+Bail out early in that case, before either the ASM2824 workaround or the
+removal of the restriction is considered.
+
+Ports whose link is up are unaffected, and so is the ASM2824 workaround,
+which is reached with the Target Link Speed not clamped.
+
+With this applied the quirk returns without touching the port: both
+messages are gone, enumeration proceeds from 0000:00:1c.0 to 0000:00:1c.2
+in 1 ms rather than 2 s, and the systemd "kernel" boot phase goes from
+3.011 s to 1.036 s.
+
+Fixes: 72780f796468 ("PCI: Always lift 2.5GT/s restriction in PCIe failed link retraining")
+Reported-by: Andreas Wild <andiwild@gmail.com>
+Closes: https://lore.kernel.org/lkml/20260801092152.5643-1-andiwild@gmail.com/
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221801
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Signed-off-by: Andreas Wild <andiwild@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Andreas Wild <andiwild@gmail.com>
 Cc: stable@vger.kernel.org
-Tested-by: Michail Andreas Michalopoulos <mike.michalo@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Adjusted patch context for missing NetBIOS fields and existing kfree() cleanup instead of kfree_sensitive(). ]
+Link: https://patch.msgid.link/20260801201244.4421-1-andiwild@gmail.com
+[ Andreas: this tree predates pcie_lbms_seen() and pcie_set_target_speed()
+  and still tests LBMS and DLLLA in one expression, so the hunk did not
+  apply.  Split that test the same way as upstream and compare the
+  LNKCTL2 Target Link Speed field against PCI_EXP_LNKCTL2_TLS_2_5GT
+  directly, as the existing code further down already does. ]
+Signed-off-by: Andreas Wild <andiwild@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsglob.h |  2 ++
- fs/smb/client/connect.c  | 33 +++++++++++++++++++++------------
- 2 files changed, 23 insertions(+), 12 deletions(-)
+ drivers/pci/quirks.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/cifsglob.h b/fs/smb/client/cifsglob.h
-index f5ca2cd653e95..8ffc8b2ab6db4 100644
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -16,6 +16,7 @@
- #include <linux/scatterlist.h>
- #include <linux/mm.h>
- #include <linux/mempool.h>
-+#include <linux/refcount.h>
- #include <linux/workqueue.h>
- #include <linux/utsname.h>
- #include <linux/sched/mm.h>
-@@ -647,6 +648,7 @@ struct TCP_Server_Info {
- 	spinlock_t srv_lock;  /* protect anything here that is not protected */
- 	__u64 conn_id; /* connection identifier (useful for debugging) */
- 	int srv_count; /* reference counter */
-+	refcount_t obj_refs; /* struct lifetime: srv_count users + cifsd */
- 	/* 15 character server name + 0x20 16th byte indicating type = srv */
- 	char server_RFC1001_name[RFC1001_NAME_LEN_WITH_NULL];
- 	struct smb_version_operations	*ops;
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index eace4d1a3dce7..82a70370a60f8 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -977,6 +977,19 @@ cifs_enable_signing(struct TCP_Server_Info *server, bool mnt_sign_required)
- 	return 0;
- }
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 8cfa7a3f55cb3..5b266583acb57 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -93,8 +93,12 @@ int pcie_failed_link_retrain(struct pci_dev *dev)
+ 	pcie_capability_read_word(dev, PCI_EXP_LNKCTL2, &lnkctl2);
+ 	pcie_capability_read_word(dev, PCI_EXP_LNKSTA, &lnksta);
+ 	oldlnkctl2 = lnkctl2;
+-	if ((lnksta & (PCI_EXP_LNKSTA_LBMS | PCI_EXP_LNKSTA_DLLLA)) ==
+-	    PCI_EXP_LNKSTA_LBMS) {
++	if (lnksta & PCI_EXP_LNKSTA_DLLLA) {
++		;
++	} else if ((lnkctl2 & PCI_EXP_LNKCTL2_TLS) ==
++		   PCI_EXP_LNKCTL2_TLS_2_5GT) {
++		return ret;
++	} else if (lnksta & PCI_EXP_LNKSTA_LBMS) {
+ 		pci_info(dev, "broken device, retraining non-functional downstream link at 2.5GT/s\n");
  
-+static void cifs_tcp_server_put(struct TCP_Server_Info *server)
-+{
-+	if (!refcount_dec_and_test(&server->obj_refs))
-+		return;
-+
-+	cifs_crypto_secmech_release(server);
-+	kfree_sensitive(server->session_key.response);
-+	put_net(cifs_net_ns(server));
-+	kfree(server->leaf_fullpath);
-+	kfree(server->hostname);
-+	kfree_sensitive(server);
-+}
-+
- static noinline_for_stack void
- clean_demultiplex_info(struct TCP_Server_Info *server)
- {
-@@ -1062,14 +1075,11 @@ clean_demultiplex_info(struct TCP_Server_Info *server)
- 		 */
- 	}
- 
--	put_net(cifs_net_ns(server));
--	kfree(server->leaf_fullpath);
--	kfree(server->hostname);
--	kfree(server);
--
- 	length = atomic_dec_return(&tcpSesAllocCount);
- 	if (length > 0)
- 		mempool_resize(cifs_req_poolp, length + cifs_min_rcv);
-+
-+	cifs_tcp_server_put(server);
- }
- 
- static int
-@@ -1680,7 +1690,7 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
- 	else
- 		cancel_delayed_work_sync(&server->reconnect);
- 
--	/* For secondary channels, we pick up ref-count on the primary server */
-+	/* For secondary channels, drop the reference on the primary server */
- 	if (SERVER_IS_CHAN(server))
- 		cifs_put_tcp_session(server->primary_server, from_reconnect);
- 
-@@ -1688,15 +1698,11 @@ cifs_put_tcp_session(struct TCP_Server_Info *server, int from_reconnect)
- 	server->tcpStatus = CifsExiting;
- 	spin_unlock(&server->srv_lock);
- 
--	cifs_crypto_secmech_release(server);
--
--	kfree_sensitive(server->session_key.response);
--	server->session_key.response = NULL;
--	server->session_key.len = 0;
--
- 	task = xchg(&server->tsk, NULL);
- 	if (task)
- 		send_sig(SIGKILL, task, 1);
-+
-+	cifs_tcp_server_put(server);
- }
- 
- struct TCP_Server_Info *
-@@ -1718,6 +1724,7 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 		rc = -ENOMEM;
- 		goto out_err;
- 	}
-+	refcount_set(&tcp_ses->obj_refs, 1);
- 
- 	tcp_ses->hostname = kstrdup(ctx->server_hostname, GFP_KERNEL);
- 	if (!tcp_ses->hostname) {
-@@ -1858,6 +1865,8 @@ cifs_get_tcp_session(struct smb3_fs_context *ctx,
- 		module_put(THIS_MODULE);
- 		goto out_err_crypto_release;
- 	}
-+	/* Keep the server alive until the demultiplex thread has exited */
-+	refcount_inc(&tcp_ses->obj_refs);
- 	/* thread created, put it on the list */
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_add(&tcp_ses->tcp_ses_list, &cifs_tcp_ses_list);
+ 		lnkctl2 &= ~PCI_EXP_LNKCTL2_TLS;
 -- 
 2.53.0
 
