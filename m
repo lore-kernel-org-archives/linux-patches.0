@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590765;
-	b=5f961trlvzfAEeewt95y/444INdpthU4rxPy+FuBRrHjMotG90HPps3rXWFI5tKVeNhf
-	 VjTKPL3LfWzOgAOfbusBSRNz2IA9N3rE/hfnYt/xWeGy977D7g7oNj1+OBA1INnGQL6kW
-	 TD7mytcbZv2sRzPrrCWeJ21YTc5y3lS1k+/wwKU3ceeDpTx90/ofEkQ8r8e8jcIPxa20h
-	 QqwRim0KZTVgCtVwszTYf7RoAVzt0PnHwW9hTAFGqMZ0+3qFZjfmRPO+f86Sf16Uf06IY
-	 wXT6e/Yc/AJrsOm/i8MxiqBPZOyBm9kFJNHcJtG7Qhu3UcZ7+r0BU1XZMXWQjzCR+sA==
+	t=1794590766;
+	b=vf9RLeDRY8bMSYIFms9dzuKGLx2k6wu5lt12SSXX5wOqvM4eN9w0WsCHNlQjGpXzAZDM
+	 OQ26yvmGkW8gpYeVSvTGCfvRr8XULYFbo6AWbZJWIzVWgyhS+gM8Gq2YiB9KkYDWZ3sAu
+	 qMFYAcOwiODcdUV8jjHhyHksHn9l8eu+ve/V3OPk50jKInrDmjfpjJ/0D1ZUEueftIZkW
+	 SSKGBJATKvb6YuMUQGZ4lmshIJErXMrVbiGl2CyO8dXXTZo0eBI0VGo/1xCgDOxKvEsgT
+	 ojCzSwX+vC9vfzueiEt6Zz24EGXzcuh/L5yuwnHF/fMQA90DjCELfoGMbxjkjprtGBg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590765;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UOGvaxCXAtiR/1fil79lDyVM28MIGJbUpAGH+rEMMgk=;
-	b=0JyJcbh3cjXtOrPE5pJC4/d5nSgDYhZGNepCxfU5z1NsZlApSJK1txwfOVQYyyimwOvH
-	 AZsfOXKkizZMWh38WyyfWGEqrXyu/gd1P/itRgp65MsdFcw2auhiGELaKck5ScvvxQcBk
-	 alw0TFEXaS/iD3+WooGpzZNOU21K4IJd8G+/+nzLr1Zz9QqdMgAo1N36lu7J3cN9MhcIU
-	 TdTQ0Mf1JvehNwo2v8tz2i2h72DaaXtJSV3Mi7miD3/n2n1rott4aJgquZnocc2OiutH3
-	 ddVi9MG+QWBx4C61LhTGXIAgw14NQ/GzUOmAC/8ohS8VcsUTKd5TljPx5PgMyynl6Fw==
+	bh=KGBLpcSl67VbhHN4EgGsf7VuOCdFrwB3yBOioutFjp8=;
+	b=pTT+WTtSMyty1+VC5LWcICtRWqTvtOEyKIH637XTcg+bZboIQfT/1y84hBJBAKMZ2dFN
+	 ooZ4dKy58pxw7d2DPGbWVhFmfolSelHyx+U2qrCURJI6MhtTGqvsQgIW29gMb0la8egvZ
+	 iXG2Aj734vc1YNMKznJqPWtctCGWogK6g+BMzjVNR6ix6GZKPC4HwGnLi5lwaaW4+a+5b
+	 +wAwMdTNVwvZV4ydk6o3JFT4CPOJdFMQWDgjsBxM1mrjYXPlPQ+KebuRgaLuyJsaf0a94
+	 jrZnlxeAyqsnjBaTP+vCUc8j6jtKoRTXqOaNJ4yc5FG4zt+oahcl/i/LXLlv2idpJDg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MurTBpSN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E5mzsPs4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FDF607C343;
-	Fri, 13 Nov 2026 17:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F411607C343;
+	Fri, 13 Nov 2026 17:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MurTBpSN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06201F000C6;
-	Fri, 13 Nov 2026 17:26:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E5mzsPs4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDF41F000C4;
+	Fri, 13 Nov 2026 17:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590764;
-	bh=UOGvaxCXAtiR/1fil79lDyVM28MIGJbUpAGH+rEMMgk=;
+	s=korg; t=1794590766;
+	bh=KGBLpcSl67VbhHN4EgGsf7VuOCdFrwB3yBOioutFjp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MurTBpSNBQKR/93CixHbMHr5iH8jh0BnSWm+fRacYADV77pmI3yXDPALIMy320+ZL
-	 OyNF2vyVaeWflJsJLKp7jYZ6gClwTMz1y1UhjmtAqdlJM2cCfU2RbefSZO9S/IAmkd
-	 utG+/yKC3Y4bIlG9AwCtg2mtAEyKPph3psprDQ9s=
+	b=E5mzsPs4qj4qWh5LE3TEyDHODxAGTBdwCQc+8N7TW/f9Qc+oJfat2kpbgzFXUYUdV
+	 XjUjePlnSj/EHUe9VztPpc+6KsU+zIO6ofsCW8XLKeFZ/lpSZd9OySWc4ktO4WZUuh
+	 RKFtsJdqgmfL2kev8O8Pn10EJq1zdEjIQYqR8p7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
+	stable@kernel.org,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 664/686] f2fs: release a removed xattr node in roll-forward recovery
-Date: Fri, 13 Nov 2026 10:53:17 -0500
-Message-ID: <20261113153844.205938876@linuxfoundation.org>
+Subject: [PATCH 6.18 647/686] f2fs: fix to invalidate curseg if change_curseg() fails
+Date: Fri, 13 Nov 2026 10:53:00 -0500
+Message-ID: <20261113153843.702187702@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -69,93 +69,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit f5924de8867c09206ba631b9faed63862ec00a10 ]
+[ Upstream commit e74476ad8162c1facc74b74ce2d1372492df872e ]
 
-When xattrs shrink enough to fit in the inline xattr area,
-write_all_xattrs() truncates the xattr node and clears i_xattr_nid. If
-the file is then fsynced without a checkpoint, only the inode block is
-written, with i_xattr_nid of 0.
+Our consistency stress test (fsstress + fio + atomic write workers +
+"f2fs_io shutdown 1") triggers below kernel BUG:
 
-Roll-forward recovery starts from the checkpointed inode, whose
-i_xattr_nid still points to the old xattr node.
-f2fs_recover_inline_xattr() copies only the inline xattr area, and
-f2fs_update_inode() writes the old i_xattr_nid back. So the inode keeps
-the stale xattr node:
+ F2FS-fs (vdd): Stopped filesystem due to reason: 0
+ ------------[ cut here ]------------
+ kernel BUG at fs/f2fs/segment.c:3989!
+ Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+ Workqueue: writeback wb_workfn (flush-253:48)
+ RIP: 0010:f2fs_allocate_data_block+0x257a/0x38e0
+ Call Trace:
+  <TASK>
+  do_write_block+0x155/0xc10
+  f2fs_outplace_write_data+0x192/0x340
+  f2fs_do_write_data_page+0xc57/0x1880
+  f2fs_write_single_data_page+0xda9/0x15a0
+  f2fs_write_cache_pages+0x973/0x1f20
+  __f2fs_write_data_pages+0x6c4/0x1890
+  do_writepages+0x21e/0x560
+  __writeback_single_inode+0x119/0x11b0
+  writeback_sb_inodes+0x67d/0x17a0
+  wb_writeback+0x207/0x820
+  wb_workfn+0x128/0xc30
+  process_one_work+0x925/0x1600
+  worker_thread+0x60a/0xff0
+  kthread+0x35f/0x460
+  ret_from_fork+0x474/0x7e0
+  ret_from_fork_asm+0x1a/0x30
+  </TASK>
 
- - The node block is never released, and fsck reports "nonzero bytes in
-   xattr space after end of list".
- - If the inline xattr list ends exactly at the end of the inline area,
-   its terminator is read from the stale node, and the removed xattrs
-   come back after recovery.
+The BUG is f2fs_bug_on(sbi, curseg->next_blkoff >= BLKS_PER_SEG(sbi))
+in f2fs_allocate_data_block(), next_blkoff was 512.
 
-When the fsynced inode has no xattr node but the checkpointed one has,
-release the old xattr node as truncate_node() does: check its block
-address, invalidate the block and drop its node cache, which may still
-be dirty.
+The root cause is a race in between atomic write commit and shutdown
+as below:
 
-Fixes: 28cdce0459cc ("f2fs: recover inline xattr data in roll-forward process")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Thread A (commit atomic write)  Thread B (shutdown)        Thread C (writeback)
+- f2fs_ioc_commit_atomic_write
+ - f2fs_commit_atomic_write
+  - __f2fs_commit_atomic_write
+   - __replace_atomic_write_block
+    - f2fs_replace_block
+     - __f2fs_replace_block
+                                - f2fs_ioc_shutdown
+                                 - f2fs_do_shutdown
+                                 : F2FS_GOING_DOWN_METASYNC
+                                  - f2fs_sync_fs
+                                                           - f2fs_write_single_data_page
+                                                           : pass f2fs_cp_error() check
+                                  - f2fs_stop_checkpoint
+                                  : set CP_ERROR_FLAG
+      - change_curseg
+       - reset_curseg
+       : curseg->segno = new_segno
+       : curseg->alloc_type = SSR
+       : curseg->next_blkoff = __next_free_blkoff()
+         which is BLKS_PER_SEG if there is no free
+         slot in new_segno
+       - f2fs_get_sum_cache
+       : return -EIO due to f2fs_cp_error()
+      : return error w/o restoring curseg
+     : goto out_unlock, skip restoring
+       old segno, blkoff and alloc_type
+                                                            - f2fs_do_write_data_page
+                                                             - f2fs_outplace_write_data
+                                                              - do_write_block
+                                                               - f2fs_allocate_data_block
+                                                               : curseg->segno is valid
+                                                               : f2fs_bug_on(next_blkoff >=
+                                                                 BLKS_PER_SEG)
+
+Since commit 86f33603f8c5 ("f2fs: handle errors of
+f2fs_get_meta_page_nofail"), change_curseg() can fail after the curseg
+has already been switched to the new segment, then the curseg is left
+in an inconsistent state: it points to a segment which may have no
+free slot, its summary block is zeroed, and the caller can not restore
+it. Subsequent block allocation on the curseg will trigger the BUG.
+Moreover, the writeback thread dies with curseg_lock, curseg_mutex and
+sentry_lock held, so the commit, shutdown and other I/O threads hang
+in D state.
+
+Since change_curseg() only fails once CP_ERROR_FLAG is set, no
+checkpoint will be committed afterward, let's invalidate the curseg via
+reset_curseg_fields() on failure, as new_curseg() does for -ENOSPC,
+then f2fs_allocate_data_block() will fail with -ENOSPC on the curseg
+instead of triggering BUG, and do_write_block() can handle the error
+since CP_ERROR_FLAG has been set.
+
+Cc: stable@kernel.org
+Fixes: 86f33603f8c5 ("f2fs: handle errors of f2fs_get_meta_page_nofail")
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: adapted cached-block operations to the existing folio and page-cache APIs ]
+[ sashal: adjusted error-path context to use PTR_ERR(sum_folio) instead of PTR_ERR(entry) ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ fs/f2fs/segment.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index 010f94963ea7d..ad59d52f17aeb 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -2851,6 +2851,45 @@ int f2fs_recover_inline_xattr(struct inode *inode, struct folio *folio)
- 	f2fs_folio_wait_writeback(ifolio, NODE, true, true);
- 	memcpy(dst_addr, src_addr, inline_size);
- update_inode:
-+	/*
-+	 * The xattr node of the checkpoint was removed before fsync, e.g. the
-+	 * xattrs became small enough to fit inline. Release it as well, or
-+	 * the inode keeps pointing to the stale xattrs.
-+	 */
-+	if (!ri->i_xattr_nid && F2FS_I(inode)->i_xattr_nid) {
-+		struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
-+		struct node_info ni;
-+		int err;
-+
-+		err = f2fs_get_node_info(sbi, F2FS_I(inode)->i_xattr_nid,
-+								&ni, false);
-+		if (err) {
-+			f2fs_folio_put(ifolio, true);
-+			return err;
-+		}
-+
-+		if (ni.blk_addr != NEW_ADDR &&
-+		    !f2fs_is_valid_blkaddr(sbi, ni.blk_addr,
-+					   DATA_GENERIC_ENHANCE)) {
-+			f2fs_err_ratelimited(sbi,
-+				"nat entry is corrupted, run fsck to fix it, ino:%u, nid:%u, blkaddr:%u",
-+				ni.ino, ni.nid, ni.blk_addr);
-+			set_sbi_flag(sbi, SBI_NEED_FSCK);
-+			f2fs_handle_error(sbi, ERROR_INCONSISTENT_NAT);
-+			f2fs_folio_put(ifolio, true);
-+			return -EFSCORRUPTED;
-+		}
-+
-+		f2fs_invalidate_blocks(sbi, ni.blk_addr, 1);
-+		dec_valid_node_count(sbi, inode, false);
-+		set_node_addr(sbi, &ni, NULL_ADDR, false);
-+		/* drop the cached xattr node, which may be dirty */
-+		truncate_inode_pages_range(NODE_MAPPING(sbi),
-+				F2FS_BLK_TO_BYTES((loff_t)ni.nid),
-+				F2FS_BLK_END_BYTES((loff_t)ni.nid));
-+		f2fs_i_xnid_write(inode, 0);
-+	}
-+
- 	f2fs_update_inode(inode, ifolio);
- 	f2fs_folio_put(ifolio, true);
- 	return 0;
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index c0ec2715408e8..1097e688d165f 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3067,6 +3067,7 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
+ 	if (IS_ERR(sum_folio)) {
+ 		/* GC won't be able to use stale summary pages by cp_error */
+ 		memset(curseg->sum_blk, 0, sbi->sum_entry_size);
++		reset_curseg_fields(curseg);
+ 		return PTR_ERR(sum_folio);
+ 	}
+ 	sum_node = SUM_BLK_PAGE_ADDR(sbi, sum_folio, new_segno);
 -- 
 2.53.0
 
