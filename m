@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591557;
-	b=o3g8Ka9Zl1e3IY6kDn9KNHQws5B+szIdd9/TWWJ5GEfntLVHX57UKYvtcMwCD8AI2fOy
-	 Z881KoINJ7ug/7EmDplrHB1HM8tt3GQWunYen1o48jqe5gRjcKes3iLEO6NjpE0osjqeT
-	 jPoe4DEpxu6wGMBxsLzYUO7BwZEscDTyH2kpVW5qr4oKoz3n+SCrV7gKOCTG8ub/2o4PN
-	 v7VdkFgL6to1N1zTvvDhTKd51WzqzcAbeDjc1AleFoxn9CeqY/d0BRxG81KHs9aRCvja1
-	 r9SD0Q1o6/5IZc+F/ejQquIMQzcu4ekYj9b75J1tIy0xPm6e1/ynr/VlLg1YASp59Ow==
+	t=1794591559;
+	b=dA1FCaJmSOjSOMuY/uVI26QrU6dfmXzcI/vzsoSqY9ERDmKKNrPNYl31QAzkv3bMRPZR
+	 hbCT24vgZXK3lRVBb+JRjmn4E0m4uDQ7eFPHocypOZt70MizE9i/pcsdglPEJKsSVXwSs
+	 JE1azEd46h0KMfv3I+GK5/NWVCWv1bMhF2bZ8ksuV+oadMzYK38BpjYjrcZZ6k0tfX3R3
+	 KhURChyxBmEgtpHCIq2oZfbZBOAacRXFX+ptfUZZkmKDaI/Xw/EBgmvpRENa8xQp/08sC
+	 0bhou6LH4A4lV0JicSZwV955vQxKX4F8Ar0YJsRQO1BMA4bt4q56fH8rs/7+ph7OPaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591557;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591559;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ESBa0kQSoNZhtcelXqhlGsGlUClv/J1UcbgbhABocsE=;
-	b=L7aQ9rJlLz8pNQwthB6WPKIkz/PWuGBuZpgZ0H5a9VNG67l+kg6tUnfEprGPDdRQ2eFc
-	 nU+96ZA8u2nAFijUcLGSD+pLwizmfh7lW+GY8AaPsKw2k9FUEQniLtt5KkvZf+WE7OQA0
-	 lK9X7+DYKw8cJgvb5mxoYxsLz+5nz7HUoGRKVQAlbsxMmO/zJasb7iyr7TWiWqxHPlK9L
-	 NTn0g9cYSsoezJ1yZ3Gzkc3EYmipNP/3LxfBAfWi7CLAOHw0Xjg+QlHMtfMpYF09vqgER
-	 +gDlxCto7w6OwKeh50z542bCJ7zLMarN4mL7AFwdDiq7gF+Fyud4lEPn0G8PZoWEUbg==
+	bh=vt/pEqEV4Ze1PApSrc6JPObeKAG5So8mdGEh7MoXoNg=;
+	b=GjlHxOn6/rqNQm5iNHOvcRF/gQso6mQtHct3WNA7o0Dvte/qb1eswWgIW/i2ugwSDIwQ
+	 jKql/gxBg9hTUBhQRFfYRBx/Xiz7CqIjmpPdVvNFveXfTImZpvACDX1Ma6rMmx5nvN5g+
+	 nud9P3Xh6UBEQPOV+YEd2ru2652D0jlzommp3xHYcv3fvnbWgfRo3XLcQAkj9VkYFR12S
+	 nHoGjsWb3Y2BmyvUFHnaUjiL83QorWlHWtjrySNXftHf3i+moKV8W3JlHFOO1isPYU1ps
+	 DpUWxFjdJye+xrspVClVxTqW+4YcTQ6nqUmenBl/PxoHrtGTBmFeyKZZXGtUX7PPDxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QnyXiH6y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eo19dYUo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF434607EE74;
-	Fri, 13 Nov 2026 17:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69945606E228;
+	Fri, 13 Nov 2026 17:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QnyXiH6y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F261F000C4;
-	Fri, 13 Nov 2026 17:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eo19dYUo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C119C1F000C4;
+	Fri, 13 Nov 2026 17:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591557;
-	bh=ESBa0kQSoNZhtcelXqhlGsGlUClv/J1UcbgbhABocsE=;
+	s=korg; t=1794591559;
+	bh=vt/pEqEV4Ze1PApSrc6JPObeKAG5So8mdGEh7MoXoNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QnyXiH6yNOath/9upTkwPLppaBd+8ba1MVRELt0ufz3ikH2A2Oj5ZwmidQcb8z9Gw
-	 hKMHsNLkG41jiCIModQafYtN/67dRlArlT3H7LcJ+P/lCgMQaP0+0SBviqi15E7wQb
-	 N4I5FLJooNkUo74Mt9FRMtQAojHJFIf/NRhiHe1U=
+	b=Eo19dYUoSGDJ175x5bplfezJHCMGg8y3WypED4CaGsqLDxVSmIPDT9ewyS1zi/z+R
+	 vNIZkakOAbg7YcWVTfiwiYcLsX97EEJ4TlhQ20MjK+N2nrH7i1QrRSZRHSPA2HQxKs
+	 tUE00+3i/PiQ9oCI3mXVA8zJ23aus4qxHDL+rW9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahzeb Ahmed <shahzeb.ahmed@amd.com>,
-	Manjunath Gaonkar <Manjunath.Gaonkar@amd.com>,
-	Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>,
-	Apurv Mishra <apurv.mishra@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 567/670] drm/amdgpu/gmc9: add extra type-2 TLB flush for gfx942/gfx950
-Date: Fri, 13 Nov 2026 10:52:11 -0500
-Message-ID: <20261113153831.084236286@linuxfoundation.org>
+Subject: [PATCH 6.12 568/670] exfat: advance valid_size to EOF for append writes
+Date: Fri, 13 Nov 2026 10:52:12 -0500
+Message-ID: <20261113153831.117386379@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -71,56 +68,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>
+From: Chi Zhiling <chizhiling@kylinos.cn>
 
-[ Upstream commit 232213c9bd7f703836164f23160b76657094a7db ]
+[ Upstream commit b70ab407503706289163dd59f1ac3e942bacc37d ]
 
-Add extra type-2 TLB flush for GC 9.5.0, similar race condition was
-observed as Vega20+XGMI. Add to GC 9.4.3 and 9.4.4 too, as they share
-the same multi-XCD TLB topology.
+For an append write, the write position is recalculated by
+generic_write_checks(). Therefore, the write position must be obtained
+after generic_write_checks() returns.
 
-Reported-by: Shahzeb Ahmed <shahzeb.ahmed@amd.com>
-Reported-by: Manjunath Gaonkar <Manjunath.Gaonkar@amd.com>
-Signed-off-by: Elena Sakhnovitch <Elena.Sakhnovitch@amd.com>
-Reviewed-by: Apurv Mishra <apurv.mishra@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 138cfb165ae6aa98c0767b431e718d1a8199db28)
+Using the original write position to advance valid_size may cause the
+valid_size update to be skipped, potentially exposing stale data.
+
+Also move the truncate_pagecache() check below the recalculated
+position, so that pos is never read before it is assigned.
+
+Fixes: 11a347fb6cef ("exfat: change to get file size from DataLength")
 Cc: stable@vger.kernel.org
+Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: moved pos initialization before the existing direct I/O alignment checks ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/exfat/file.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-index c095a1489bd80..06e4b393d1ce6 100644
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-@@ -2324,10 +2324,22 @@ static int gmc_v9_0_hw_init(void *handle)
- 	 * (type 2), which flushes both. Due to a race condition with
- 	 * concurrent memory accesses using the same TLB cache line, we still
- 	 * need a second TLB flush after this.
-+	 *
-+	 * GC 9.4.3, 9.4.4 and 9.5.0 hit a similar race.
- 	 */
--	adev->gmc.flush_tlb_needs_extra_type_2 =
--		amdgpu_ip_version(adev, GC_HWIP, 0) == IP_VERSION(9, 4, 0) &&
--		adev->gmc.xgmi.num_physical_nodes;
-+	switch (amdgpu_ip_version(adev, GC_HWIP, 0)) {
-+	case IP_VERSION(9, 4, 0):
-+		adev->gmc.flush_tlb_needs_extra_type_2 =
-+			adev->gmc.xgmi.num_physical_nodes;
-+		break;
-+	case IP_VERSION(9, 4, 3):
-+	case IP_VERSION(9, 4, 4):
-+	case IP_VERSION(9, 5, 0):
-+		adev->gmc.flush_tlb_needs_extra_type_2 = true;
-+		break;
-+	default:
-+		break;
-+	}
+diff --git a/fs/exfat/file.c b/fs/exfat/file.c
+index 033852efe5dc3..b624dc527f675 100644
+--- a/fs/exfat/file.c
++++ b/fs/exfat/file.c
+@@ -581,23 +581,18 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 	struct file *file = iocb->ki_filp;
+ 	struct inode *inode = file_inode(file);
+ 	struct exfat_inode_info *ei = EXFAT_I(inode);
+-	loff_t pos = iocb->ki_pos;
+-	loff_t valid_size;
++	loff_t pos, valid_size;
  
- 	/* The sequence of these two function calls matters.*/
- 	gmc_v9_0_init_golden_registers(adev);
+ 	if (unlikely(exfat_forced_shutdown(inode->i_sb)))
+ 		return -EIO;
+ 
+ 	inode_lock(inode);
+ 
+-	if (pos > i_size_read(inode))
+-		truncate_pagecache(inode, i_size_read(inode));
+-
+-	valid_size = ei->valid_size;
+-
+ 	ret = generic_write_checks(iocb, iter);
+ 	if (ret <= 0)
+ 		goto unlock;
+ 
++	pos = iocb->ki_pos;
+ 	if (iocb->ki_flags & IOCB_DIRECT) {
+ 		unsigned long align = pos | iov_iter_alignment(iter);
+ 
+@@ -608,6 +603,10 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 		}
+ 	}
+ 
++	if (pos > i_size_read(inode))
++		truncate_pagecache(inode, i_size_read(inode));
++
++	valid_size = ei->valid_size;
+ 	if (pos > valid_size) {
+ 		ret = exfat_extend_valid_size(file, pos);
+ 		if (ret < 0 && ret != -ENOSPC) {
+@@ -617,6 +616,8 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 		}
+ 		if (ret < 0)
+ 			goto unlock;
++
++		pos = valid_size;
+ 	}
+ 
+ 	ret = __generic_file_write_iter(iocb, iter);
+@@ -625,9 +626,6 @@ static ssize_t exfat_file_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 
+ 	inode_unlock(inode);
+ 
+-	if (pos > valid_size)
+-		pos = valid_size;
+-
+ 	if (iocb->ki_pos > pos) {
+ 		ssize_t err = generic_write_sync(iocb, iocb->ki_pos - pos);
+ 		if (err < 0)
 -- 
 2.53.0
 
