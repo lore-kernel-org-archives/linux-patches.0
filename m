@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590773;
-	b=k6XNaqWnBh0OJaDqrE0Y+noxCD7XxRcqyLqy+eGthiqNDwQKzYn8Zndtv7sgXHBgUcPA
-	 C76C3dqgt0RJiiol0O5cHFgyDKMnARbpcxM2yyVJeuvV98j3W+UVOKnPYZDBfIQRgMEqv
-	 7DyR63op0gZ6ubr5QuxRlYMzizPLVJKsAyPF1BgV8W7OfSn6RUql2Mxojbv7wtvyTLF1C
-	 nXs4Nb5D3jm8JGGt9WVmawnK4/78BfmTc2CVqEoQ7uRWAz8ENs6/2Na8YBGOkesfn1Jm3
-	 db3TrPlH5BNc8reo7QlLbTX2GuRIIAgHBBWcC2nEXpiciQYwJPH2qj8gmBrPtCqOLqg==
+	t=1794590775;
+	b=bDEv7xb873f8EiCdRWOCl86m5RNQGczEf97Q1fktD2WRbhxd24Pwcr4HhJYKiJvCUmSl
+	 VLO0MsmDK8PPm7q7ovXY3PLMwCctHpiLand4/m05l0X9eGgQBfhptATVfue577aFh7ggS
+	 HIvr50uRc2XW41cJGMyU67C7+di+bAMilmwO+ZbmYcXXA5xCrQO1X8PfEOcJ145D4UaQN
+	 RW0S68134GuNrL6xSJ8DQerd5j3ldxPLiGw54xGD8ltOPh/M+Zi6jJz/DYgWTXApgVdV+
+	 RwFPNAVhLUb8gWrWGJ2cFpcPzKirYPjpIveQp8jwDfv9cSbeZ19FsQOEH54cDirpEvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590773;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zqeVhQDdgXfJ+eGDjEkxafoPdfIOtSjEaYp1A04iNLg=;
-	b=rgQuPN/ALWjlShcnwHqn4oB/2BfEKIOxCXVuI7eSFB10znoRbyCOL2N0ChLoA0ZNF1rD
-	 YXJJ7BGpxdt+4Qs9oe+X7O1fHfdWWcq85kfyhPhg/cg5OXD8ioLXRFErfrV0yuPE94YUt
-	 28D2WX45wFQ+OKR8X+VBN43ZX58y02Y9dunTAQfuG51NZhldF9CePZogA4zHrvxFY2BeJ
-	 p70oyQ+CUTqXxxMWeu2lcZU8gvTy+Mlq0EoXJNtICaEiVi/j56KZXZoNdGCUNVH5C3Tkz
-	 /4fCg+9JZaOff6tr880Y15LPbqMPVWIyOk52R2/J2qYlJH3f1r/oodmhySTWnxqLHSw==
+	bh=+oA0mEjk4k+ptOg2Tkulso+gh0GKEn+KkQcH0JhU8yc=;
+	b=muoC+4cEpK25Jk5k9+b6XvQjkGpn5EvWY/EZrHwKmNaGcx09uuY/0XMuvcAD0dngE+xJ
+	 ec8bh+GfqG731o9JFV3w1YHkNlXi1XTUK+Y5+NYb/LxHYzdRj/pU1LlZH4Nn+gceKDKK/
+	 XLQQibDoCPiqj7NUR0rSb7pS29VWtwnqMvaQ7r4QCPtf5LKjB8TPkkYBaQUa1fRLbrzBX
+	 /abXBg7sHzN1UnuybIRctHuWkgMDjFMm8qKKK/upb75aq4G0vdoCOTH8f9UWOWZgLFS9E
+	 cS0icXU/lBaQvbTWJRySSUheMmy3TRS0OcNfTJwODfJPWQBzyqVJ0IELG6nCrxaHLyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rj5etfc0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0DmM0Ol;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B77606E207;
-	Fri, 13 Nov 2026 17:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42A7606E20E;
+	Fri, 13 Nov 2026 17:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rj5etfc0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545891F000C5;
-	Fri, 13 Nov 2026 17:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T0DmM0Ol
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED851F000C6;
+	Fri, 13 Nov 2026 17:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590773;
-	bh=zqeVhQDdgXfJ+eGDjEkxafoPdfIOtSjEaYp1A04iNLg=;
+	s=korg; t=1794590774;
+	bh=+oA0mEjk4k+ptOg2Tkulso+gh0GKEn+KkQcH0JhU8yc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Rj5etfc0UBaOtDa8wPIupEtoxma6VPa04GFpX6uxrEFS7nxCGODCKtzNGh3CSrid4
-	 O17Jxd+l3NNyqnce9BF/M5R2/1ChAzw5Lp2geQMMybsKcHa7npPYTe6SS/RzbR7aT2
-	 zLL6KNlY8S41fT/HitFIFDcB7qb+UAMZGosrzcxc=
+	b=T0DmM0OlN4b8k3Ixzdisx3lWjfUW5haOQkc7owI6kgnkAq7eUTG9aY//rZvQ+WmdC
+	 eoIVqrNgU0UjipqC0J05mC+74k9uTg730vHs5AzWBuVXT03Fy2cI4NFKlsJ5/nkfbe
+	 NK8z0tFyPP0RFz4vuaS/PM0miFLWweAsuecEAf9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 670/686] crypto: omap - add omap_sham_unregister_algs helper
-Date: Fri, 13 Nov 2026 10:53:23 -0500
-Message-ID: <20261113153844.386836961@linuxfoundation.org>
+Subject: [PATCH 6.18 671/686] crypto: omap-sham - fix crypto engine cleanup
+Date: Fri, 13 Nov 2026 10:53:24 -0500
+Message-ID: <20261113153844.414633558@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,77 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit c3494e6fbb35579a131de11369b658a59b1323e5 ]
+[ Upstream commit be51ea091c6563158531e8c74e040552fdb1e28c ]
 
-Add a new helper omap_sham_unregister_algs() and replace two for loops
-in omap_sham_probe() and omap_sham_remove(), which also ensure
-->registered is reset to 0.
+omap_sham_probe() allocates and starts a crypto engine, but the remove
+path does not call the matching crypto_engine_exit(). The probe failure
+path already performs this cleanup.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+crypto_engine_alloc_init() creates a kthread worker for processing
+requests. Without crypto_engine_exit() during driver removal, the
+worker is left running after the device is removed.
+
+Call crypto_engine_exit() after unregistering the algorithms and before
+tearing down the remaining request handling resources. This stops the
+engine and destroys its worker.
+
+This issue was found by manual code inspection.
+
+Fixes: 133c3d434d91 ("crypto: omap-sham - convert to use crypto engine")
+Cc: stable@vger.kernel.org
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: be51ea091c65 ("crypto: omap-sham - fix crypto engine cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/omap-sham.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ drivers/crypto/omap-sham.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/crypto/omap-sham.c b/drivers/crypto/omap-sham.c
-index ff8aac02994a4..7b3612d097700 100644
+index 7b3612d097700..2cda2e05ab42c 100644
 --- a/drivers/crypto/omap-sham.c
 +++ b/drivers/crypto/omap-sham.c
-@@ -2041,6 +2041,20 @@ static struct attribute *omap_sham_attrs[] = {
- };
- ATTRIBUTE_GROUPS(omap_sham);
- 
-+static void omap_sham_unregister_algs(const struct omap_sham_pdata *pdata)
-+{
-+	struct omap_sham_algs_info *alg_info;
-+	int i;
-+
-+	for (i = pdata->algs_info_size - 1; i >= 0; i--) {
-+		alg_info = &pdata->algs_info[i];
-+
-+		crypto_engine_unregister_ahashes(alg_info->algs_list,
-+						 alg_info->registered);
-+		alg_info->registered = 0;
-+	}
-+}
-+
- static int omap_sham_probe(struct platform_device *pdev)
- {
- 	struct omap_sham_dev *dd;
-@@ -2158,10 +2172,7 @@ static int omap_sham_probe(struct platform_device *pdev)
- 	return 0;
- 
- err_algs:
--	for (i = dd->pdata->algs_info_size - 1; i >= 0; i--)
--		for (j = dd->pdata->algs_info[i].registered - 1; j >= 0; j--)
--			crypto_engine_unregister_ahash(
--					&dd->pdata->algs_info[i].algs_list[j]);
-+	omap_sham_unregister_algs(dd->pdata);
- err_engine_start:
- 	crypto_engine_exit(dd->engine);
- err_engine:
-@@ -2182,19 +2193,13 @@ static int omap_sham_probe(struct platform_device *pdev)
- static void omap_sham_remove(struct platform_device *pdev)
- {
- 	struct omap_sham_dev *dd;
--	int i, j;
- 
- 	dd = platform_get_drvdata(pdev);
- 
- 	spin_lock_bh(&sham.lock);
+@@ -2200,6 +2200,7 @@ static void omap_sham_remove(struct platform_device *pdev)
  	list_del(&dd->list);
  	spin_unlock_bh(&sham.lock);
--	for (i = dd->pdata->algs_info_size - 1; i >= 0; i--)
--		for (j = dd->pdata->algs_info[i].registered - 1; j >= 0; j--) {
--			crypto_engine_unregister_ahash(
--					&dd->pdata->algs_info[i].algs_list[j]);
--			dd->pdata->algs_info[i].registered--;
--		}
-+	omap_sham_unregister_algs(dd->pdata);
+ 	omap_sham_unregister_algs(dd->pdata);
++	crypto_engine_exit(dd->engine);
  	cancel_work_sync(&dd->done_task);
  	pm_runtime_dont_use_autosuspend(&pdev->dev);
  	pm_runtime_disable(&pdev->dev);
