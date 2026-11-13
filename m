@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590895;
-	b=Gyn47gU0TYn5b5ak6pZy/d9t9PTdaU4UjBmbuLk7FuyKlvh6Ku8efc9MLcBWhcz+Xmvr
-	 +doKL3gOMHWXBIpQqTJ58jIx7Q7rwGWhbWfQHSqywQZYV82o+0lwd9CwCiL04w32cOb0m
-	 enGoMbYvJzehfXjuhiya/wlLh2vMzm11Xma53fxA7lKJ4nF/rb65gbdgt5I1UpFfVhkhF
-	 4gZuLqZZwuSjK25G/AD25o9LF4B2O0OwqG+qd3mOuYJytyMjJmmmKnO5EAxCo3+RBu+v9
-	 8904rty6UwLhd66lbTnK+KuXZ18zF6rvCsw4CpWpOpUjNt8kXTW2OJH80K3m83J9slg==
+	t=1794590896;
+	b=mBmxMgkE7UWvjqKfd1H2sMBp3b0zCRZ/PqJJV1OoZ+hGzLendglsrfNz1xWwh21+4qAO
+	 /aJs5L15H2YPOxfZUUMPTfkeq729q9IBsNTRx8xxgR+pfLhxBLnHZCp+DPI7KTwYkz7JO
+	 b7cDBy+j8WDB1yLyM2PZrKiwl705mBMdGhhuYbR46zfkmT3rzQUs4cGiF0lIJF2xRn416
+	 o+xsOKxT3zXdCpoILse8QR1wkos/AShQRvxYLjzIVuBm7Fpd4Dy7mWDWboFnVl3cdze9C
+	 p8vSu3FtkEv54YczXrIjMFCy0gsbNxnM9hb4O7X5086AGslJQRmkre4OXdwFfftAPqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590895;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590896;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=i0DTZWFPQDIsb+XPpsqkiNT0kKurzAOySvGMfv56foA=;
-	b=pW+lykXxQOe6xZwyqyYaYgG35QFkgfYPrA4CULSK2pM4DKSxdTsWlk850jLv8nwNzPZu
-	 JCGqLR4xia+nDO/TSuyfKtDXcvmI9ujO76vaZmA7BIT5DUa6U+sS4mhvu2/hkr8LWaxC9
-	 +rhAMIVguFUkW4SPFq6ntQ5r2WLygY1BDd9PSJ6YE1OBBBFMWKKAp+g/KxyPm+xMwvC/l
-	 UyfhE1OnYX0PdbXZ0geo7QfNiNC/0DdxVar9OazOvseh5oM+Q2g6AhUsvkyR5bYxkSGO3
-	 YNG6rVPM3UNOydaYjj0N6Ev8w7LvO6HT5438IcyhRMf5uaML/V8bv8t6hpHgUEQ9ZTw==
+	bh=DvfJf3OD99Zipu/lIWgNfAOwb/K+xaOW4dzeshNVn8o=;
+	b=4afZbW646LZPD2V2TMo6pgAXYEG7/yzImjA//Cp7RquQVoiyYj9Tf7fvLCl6Q5i3SVQv
+	 DV4tTK/IyoBpMtqv8GKKkesgzmm0cB2BN08s9Pu5JCaoZ0bNNyFXX5l2dgZ5aahZNZN6a
+	 rPddXldWeujzLkpco1WpFEwYk/CJ7VxxHvUNdm3Zci1hz7h7Y+ry4U7bTEnrajpvTUUSk
+	 LPo5CELDZLTmNLjA8NZ4q28cISRNH2Evay7JJTayHb1//Se7vu+znFzLkKgQOK4xJbcpG
+	 k461C7BOhwQZd6fpEbO4cJcYXs9cPipY6/biWlHWQxfDBhlbscR9bPkveUBh6fI3KaA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWXZGlXp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KoWIReZ0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A035607EE65;
-	Fri, 13 Nov 2026 17:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFA5607EE64;
+	Fri, 13 Nov 2026 17:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yWXZGlXp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA60C1F000C5;
-	Fri, 13 Nov 2026 17:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KoWIReZ0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3961F000C5;
+	Fri, 13 Nov 2026 17:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590895;
-	bh=i0DTZWFPQDIsb+XPpsqkiNT0kKurzAOySvGMfv56foA=;
+	s=korg; t=1794590896;
+	bh=DvfJf3OD99Zipu/lIWgNfAOwb/K+xaOW4dzeshNVn8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yWXZGlXpcRRufZ3PPGS9XrrNhUqKZboWR8DSln67JvuDG3UNlFEo0qTFmUvRuWno9
-	 DfO5MbfCnu5R0HadC0gEoEJw0lJfYbJTZQYDRy8lnQX6a0cfR68W3j1mPn05wLtNol
-	 YptUTmHM4DleJ9lKIAfjDsI5utvL8PsCsvHpdGp0=
+	b=KoWIReZ0DZUVG0EJ4bf3npfu3ciAHWJrornSXkT/uRHqfFjkF/4KOmKU8rokRdEQ9
+	 GgWtVCNyvGr5bGaAkQzFUd5RceZ6QzfOHo1qK0zFYn9odPJ5pDPYHK8ATUuySRZmx2
+	 ob9HVZTBYp5IgimlCStzmYgGZlmMDH2JhsL8QizM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	kernel test robot <lkp@intel.com>,
 	Rosen Penev <rosenp@gmail.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 086/670] mtd: rawnand: ndfc: add CONFIG_OF dependency
-Date: Fri, 13 Nov 2026 10:44:10 -0500
-Message-ID: <20261113153814.829243384@linuxfoundation.org>
+Subject: [PATCH 6.12 087/670] mtd: rawnand: ndfc: fix gcc uninitialized var
+Date: Fri, 13 Nov 2026 10:44:11 -0500
+Message-ID: <20261113153814.861940461@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,45 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 97f9e509d839f7e5b9a32105ae322e5223c86786 ]
+[ Upstream commit cceca8cb776b03e83985578f84bd730c30d57f70 ]
 
-When compile-testing on x86 without CONFIG_OF, the ndfc driver produces
-a harmless warning:
+Now that this can be built with COMPILE_TEST, an unassigned variable was
+found. Set to 0 to fix the W=1 error under GCC.
 
-drivers/mtd/nand/raw/ndfc.c: In function 'ndfc_probe':
-include/linux/dev_printk.h:154:31: error: 'len' is used uninitialized [-Werror=uninitialized]
-  154 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-      |                               ^
-drivers/mtd/nand/raw/ndfc.c:196:17: note: in expansion of macro 'dev_err'
-  196 |                 dev_err(&ofdev->dev, "unable read reg property (%d)\n", len);
-
-Limit compile-testing to configurations with CONFIG_OF to trivially
-avoid this. The driver will still be built in allmodconfig and many
-randconfig builds.
-
-Fixes: 4f2692a5383e ("mtd: rawnand: ndfc: use ioread32be/iowrite32be and allow COMPILE_TEST")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Rosen Penev <rosenp@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202606141301.iyVdFgl7-lkp@intel.com/
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/nand/raw/ndfc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
-index 0c39b4f346a69..91fae26a3d91d 100644
---- a/drivers/mtd/nand/raw/Kconfig
-+++ b/drivers/mtd/nand/raw/Kconfig
-@@ -72,6 +72,7 @@ config MTD_NAND_AU1550
- config MTD_NAND_NDFC
- 	tristate "IBM/MCC 4xx NAND controller"
- 	depends on 44x || COMPILE_TEST
-+	depends on OF
- 	select MTD_NAND_ECC_SW_HAMMING
- 	select MTD_NAND_ECC_SW_HAMMING_SMC
- 	help
+diff --git a/drivers/mtd/nand/raw/ndfc.c b/drivers/mtd/nand/raw/ndfc.c
+index 29198c4af5e6d..a2e2238339ec1 100644
+--- a/drivers/mtd/nand/raw/ndfc.c
++++ b/drivers/mtd/nand/raw/ndfc.c
+@@ -188,7 +188,7 @@ static int ndfc_probe(struct platform_device *ofdev)
+ 	const __be32 *reg;
+ 	u32 ccr;
+ 	u32 cs;
+-	int err, len;
++	int err, len = 0;
+ 
+ 	/* Read the reg property to get the chip select */
+ 	reg = of_get_property(ofdev->dev.of_node, "reg", &len);
 -- 
 2.53.0
 
