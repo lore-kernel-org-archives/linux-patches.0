@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591610;
-	b=p9nuRof64wMpeje6DbO94TezJRxeElwKAxcmpYeX2TlhEonjP8H1VD+/xsV66BCrYJID
-	 RDDt0GEp1MdKHRCP4UKMVjZv0jM+ouqgQ7dWQl5yMLPxDVZmtU12AVFB+9upR6oy1+60c
-	 CcLbVeVf8KhtqnQo9/vJSX5ukW/nwnLY/LEId+pfv9xlXeQfswWT5qQcQEnr0kd603QCn
-	 7RnasEWdSePVV2K0EPyK6rGrDoaZM5CX+cwSDFcn9kxZ+mYOImwbbC7Z1uGaOc1LyXUVv
-	 KKbQFisNKM9/pNKTbcjOq/Ijb+2THEO3C12ES3vJ/5FDgGiuWaszCCy1qsoNuwfjOKA==
+	t=1794591611;
+	b=FVwHa5aGFQB9JVpINR4oKb57YE861zynOsxQksBkMfgqE2iMQsqvOOsiNGTymjolESN6
+	 IM1oakDO49kGHDPARn29jheeFaPR+PrerFQ3bYbMkKfMCDzcuJsZ0qN1EybzuIC80peD6
+	 4TcLX/MgcIt4Qhe96R0bVebbvCup4lJwKuRFrX/XavtOD+U8nbFsGn9xkG/rrd9Isurl3
+	 +fO/FdNixwEDxdiO8D95PseRIl0P5m4rparTjGUqbOXgljgU+6tdopyI6yQ9jQrXYtaxl
+	 SlMDm/WkvkmezWfTj/iuoM0gqknEP76Fr47uKiYY2yM73u25YofLL3LWqL82Obm2BCQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591611;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gavxagfj07vI/xva/nIAm4lfoQj4FgpSClcq5DcfvhU=;
-	b=Y1UAX4xLnSHbPPJ7ON1VhTb6rfGFoVr2BgiKVP82G7JvdZknnC9ZI5ETU9YX2eQrH58I
-	 lyXk+dPrJbt4vhar9tSwZy4P3oOdZsBxJR272HeGugPQdFeDUL0Oxks14YVH9WwMIVuQl
-	 vFcaXXpIqRIu2F1utSk7XZHn9Nl+J8TVjXpNFYf3goapds4xPYFJBMQmNuO8AUMcN1JH1
-	 QTZewyWRqNti1RGVBJwD0fCGJksBFzlFishM9LaOR8F2tuYQvXm6sV71Inz37q5mVE0iZ
-	 exg0aS/rDN1ZfO9qQRBBVY244WraYOv6IWHkFsfGgF4q4/K9JtSeYEQNi2MITcyddFQ==
+	bh=HQUcIyNC+XMXTtoPaw+JUPJ67sSY0Cbz3H9/D0+wd48=;
+	b=lV3wEN89JyTW/QKoAJS1JFbQHArCuDtG4UHK3+A+MnP1G4ZBK7ufLCA88LUaU+K6i0mj
+	 hPArBL9fAG30XH2aho1Q/WYvbCyS2PVOIcugnhmEiqb9YgBtkWjqgOo4Dbnezu5WHLE/Q
+	 iMvOyURNKaEwPDj3/wu4NAg4yKVwbqMybAknQvWx63zeIK5VITm8/VdJEeLl/W3vW+Jz8
+	 vPnEbtI/enHR0YcD+sInV5E2/p7Ug24Jrx5PhLDCnFCjmzMfWDtyg4mGgGgtn4wc8AOSv
+	 IfwqiiwWKYfB72ZIhkSBk9X6724LPrNmTERLAEfvLFxCcyQiaDVoGgYiQYUVc5PFVLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+qP5Iku;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwpxGmts;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1366606B45B;
-	Fri, 13 Nov 2026 17:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD1E606B466;
+	Fri, 13 Nov 2026 17:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q+qP5Iku
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5AF1F000C6;
-	Fri, 13 Nov 2026 17:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rwpxGmts
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8185B1F000C4;
+	Fri, 13 Nov 2026 17:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591610;
-	bh=gavxagfj07vI/xva/nIAm4lfoQj4FgpSClcq5DcfvhU=;
+	s=korg; t=1794591611;
+	bh=HQUcIyNC+XMXTtoPaw+JUPJ67sSY0Cbz3H9/D0+wd48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q+qP5IkuzYAMYP5GS1VSAbpcAidBd27ADRcLWjjc8ZN1Ci/kTsDiNEc4btZ9FFgw3
-	 D7HDA0/0L5URSD8eIcnbvsjJQ6xCJPGZuT6zhGLcOyq1N2rbBmKdosiGMv5Pwx42FU
-	 glATzmoebhpzYz5b0JHaaeKJC8bj+Nr4xPzuauxs=
+	b=rwpxGmtsqEk+svBGteCTqOc5v3WP+pHm1vwUWRCBoincTk7jImYQsg7bV0uB+d+GB
+	 oRxl+OrCRb4TikyBoNOoIjgSx0PFVuq7YKD8c8mqdn812xp94kyT8eerLlOL4T24m1
+	 A5N/yL3UtQAMbc0ymuA6L4zwWJ5EUfUjKWpBXQok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Longlong Xia <xialonglong@kylinos.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Yosry Ahmed <yosry@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 610/670] ASoC: hdac_hda: Restore the codec device type on unbind
-Date: Fri, 13 Nov 2026 10:52:54 -0500
-Message-ID: <20261113153832.489104727@linuxfoundation.org>
+Subject: [PATCH 6.12 611/670] mm/zswap: publish the initial pool with list_add_rcu()
+Date: Fri, 13 Nov 2026 10:52:55 -0500
+Message-ID: <20261113153832.521746471@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -68,62 +73,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit 08a44bde821d4fe22c0b6e63da04b3c59ac243a8 ]
+[ Upstream commit c1dd5e24a82d19bff8eef50ba8205d4776584aff ]
 
-hdac_hda_codec_probe() changes the type of the codec device to
-HDA_DEV_ASOC to prevent snd_hda_codec_unregister() from unregistering
-the device when the card is freed.
+zswap_setup() publishes the pool on the zswap_pools list with a plain
+list_add(), but the list is walked by concurrent RCU readers holding
+nothing but rcu_read_lock() through zswap_total_pages(), e.g.
+/proc/meminfo and the shrinker count path.
 
-The type is never restored, and hda_bus_match() requires the device and
-driver types to be equal. After unbinding the codec driver via sysfs the
-HDA_DEV_LEGACY codec drivers no longer match the device and bind fails
-with -ENODEV.
+    CPU 0 (writer)                          CPU 1 (reader)
+    --------------                          --------------
+    zswap_pool_create():
+      pool->zs_pool = zs_create_pool(); (1)
+    list_add() -> __list_add():
+      WRITE_ONCE(zswap_pools.next,
+          &pool->list);                (2)   zswap_total_pages():
+                                                pool = READ_ONCE(     (a)
+                                                    zswap_pools.next);
+                                                zs_get_total_pages(   (b)
+                                                    pool->zs_pool);
 
-Restore HDA_DEV_LEGACY with a device managed action registered before
-the component, so it runs after the component and the card are gone.
+If (2) becomes visible to CPU 1 before (1), CPU 1 finds the pool at (a)
+but dereferences a wild pointer at (b).  Publish the node with
+list_add_rcu().
 
-Fixes: b60ee2e281b6 ("ASoC: hdac_hda: overwrite hdev type to HDA_DEV_ASOC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027083840.28813-3-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/20260908012801.1864430-1-xialonglong2025@163.com
+Fixes: 91cdcd8d624b ("mm: zswap: optimize zswap pool size tracking")
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20260906133601.3563324-1-xialonglong2025%40163.com
+Acked-by: Yosry Ahmed <yosry@kernel.org>
+Acked-by: Nhat Pham <nphamcs@gmail.com>
+Assisted-by: Zcode:GLM-5.3
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: <stable@vger.kernel.org>
+[ sashal: Adjusted context to preserve existing logging of both the compressor and the zpool backend. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ mm/zswap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index 26c2cc1d6a18c..fc5067edd5302 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -635,6 +635,13 @@ static const struct snd_soc_component_driver hdac_hda_hdmi_codec = {
- 	.endianness		= 1,
- };
- 
-+static void hdac_hda_restore_dev_type(void *data)
-+{
-+	struct hdac_device *hdev = data;
-+
-+	hdev->type = HDA_DEV_LEGACY;
-+}
-+
- static int hdac_hda_dev_probe(struct hdac_device *hdev)
- {
- 	struct hdac_hda_priv *hda_pvt;
-@@ -652,6 +659,11 @@ static int hdac_hda_dev_probe(struct hdac_device *hdev)
- 		hda_pvt->need_display_power = true;
- 	dev_set_drvdata(&hdev->dev, hda_pvt);
- 
-+	/* Allow the legacy codec driver to match again after unbind */
-+	ret = devm_add_action(&hdev->dev, hdac_hda_restore_dev_type, hdev);
-+	if (ret)
-+		return ret;
-+
- 	/* hold the ref while we probe */
- 	hlink = snd_hdac_ext_bus_get_hlink_by_name(hdev->bus, dev_name(&hdev->dev));
- 	if (!hlink) {
+diff --git a/mm/zswap.c b/mm/zswap.c
+index 6c50249d5398f..61311c92bd6f6 100644
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -1778,7 +1778,7 @@ static int zswap_setup(void)
+ 	if (pool) {
+ 		pr_info("loaded using pool %s/%s\n", pool->tfm_name,
+ 			zpool_get_type(pool->zpool));
+-		list_add(&pool->list, &zswap_pools);
++		list_add_rcu(&pool->list, &zswap_pools);
+ 		zswap_has_pool = true;
+ 	} else {
+ 		pr_err("pool creation failed\n");
 -- 
 2.53.0
 
