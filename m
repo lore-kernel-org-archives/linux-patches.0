@@ -1,60 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794585621;
-	b=Yp9wFhr7fLRKOy+2k6nd3XNAcxq/TM62gcIbHiVhzzgnniHwWsLvfxOMCD7TQs5YIg0F
-	 30Klr3VPJDCcrHUbnkr3fb+AVNjE024HJnALMQhMp98hGX0SB6lDjNL99IdGrzpApS7bu
-	 T4jp9HJOEklGUcV5GVP3S7N32Hh3JDD5cF2yNQKHl6AA7cJBt733vIJElr/AX8qLhQ3B6
-	 Z44Pcn7zrm1FbVwQNZmkFSpuMaaBm3zrIjoy3aoepxbJSPawph3dTRxMR9hT9vnVMp0TN
-	 ZOFS1jm2MVT9uP75EkkypaZ4NNCx4160tChaYc3tBQgmV00KWdD8Mva4t8h83uGKTUg==
+	t=1794585623;
+	b=J+REsa/hkK18bgRasFpPO+hX4ryPpZP3XmV66pj+y9zsgYJbg8hg3eWuFOB1NcP7dafR
+	 273sOTJTSWmw5NLc8S68zcF7AMjQFvfq+OL+rr7SR/zU8h/DKQwSeVkmSc2INxAXEhAWE
+	 /tYKUioBYXHnr9OcwKllJ3yFWVs3vyM+qRIdjzDSjWZOChoIchnZDq1tNoaHvH8CfN+Lt
+	 zsBGvvL1mFfawrl1VJJcUI926gQgH3o07TI7D+jrA7nmxmO039Qkq6o1AvaLWV1zTt1dB
+	 Rs+alcXqyoSCuKMRiioFvMFl/eXNt9uZv2h9MvSOeObKpqRfsySYA3u/4hKCBOdxMEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794585621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794585623;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JKndjGrSuGEbziLw5tCSNDD/V13ghyVPUS64K3V/JFE=;
-	b=ZfqCZzSJCnsFaMcx8MrQajRg6d36nwUXLGFWv0WrjjkPHenFrpJK2q4X6cJPsH+BVwae
-	 4gQb4aHp1Hmv8TeqEcyReczpgicG/tDq/a9tW3gQLNsCQHvgJAIxT1lzMRhe/iFYeyAjZ
-	 EpraaHEY1zLT2FYtPjUL2PvNk5HamnW56b9hJel/b8Qgg3UdhdGhl6vQarBArV8BlMuzh
-	 JGvt4arLNPNMOt9iFIfumS+exto1AetcLPnPnkpzIAsWtIpzzQodUFZHZ+SMlU/0HIUcD
-	 NFJFl0LGF4u5f8Tf8IzK3mUK4Uj+X1U8XYM2+gPw7oGJlcf+nwXvkJhcNUoeEpJr7Pw==
+	bh=mHWCEc5fe4PrOC58JS41xN+gOP2INnFn2lRzwKyU758=;
+	b=Dmt52FyOSRAku+ndnpyXluCgjSTN9BxXqbR7TNxxkcnZWLGNhG71bjV3MOGmGp1piNkn
+	 EcYPf7c8mHXP5u43Hw1RP3AjTX5umC2sWEAYBfopxB5GgxX0YFOLb5bqEz+NccSY4izqI
+	 hR3nPq5ySZZo3bhfz1xILKgQG7GsfE7sxnMYQdRAueZv0+1bt7EsgQMTkanLTqK+HMGqi
+	 lS3UYflSCmOW7QRTckofw7y5idNFw7xTNkyhEWeT6ILKAWQl4BC4GpE29RBJ9sonrciqa
+	 9v7WTIy7jiLM8FrhPDQ/o8IOB2ZxevCthwEZZHvgR/4KxHyXIhT6T+bq/0dGUt4WaIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ht7SYi3O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHtBlJJs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86234606A896;
-	Fri, 13 Nov 2026 16:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4C7606A894;
+	Fri, 13 Nov 2026 16:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ht7SYi3O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C141F000C5;
-	Fri, 13 Nov 2026 16:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RHtBlJJs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618491F000C4;
+	Fri, 13 Nov 2026 16:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794585621;
-	bh=JKndjGrSuGEbziLw5tCSNDD/V13ghyVPUS64K3V/JFE=;
+	s=korg; t=1794585622;
+	bh=mHWCEc5fe4PrOC58JS41xN+gOP2INnFn2lRzwKyU758=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ht7SYi3O761Bkw6TSGZ/Y1OJesSzLdF9YkeCCKDIZR89OWWct4vj4BsK4ASv5NvGq
-	 Bq0GcZHs05f1uoT0L/vgsQyZGrmQj0dZfGpKQuF73mXbAaXutKKpPwWAh5lCTxMzN4
-	 0rwELiIjnCvL+DOzPxAO2TjavRtVZO0T0YSdpPOs=
+	b=RHtBlJJs4zP4A92wXJTQiN16uDJctxskt9LGv2pCMCHX3x5O4sNJISSNkkawW7aXb
+	 49oRFtqJQuXSeeqHa8avi0UMBz4hkcSma12WlTVCDZWLTPoVytZpaHXfJOp6N2uu8l
+	 EzFFTN9qZs4+KnclYa6JVia7eHQ4QizKKqRoUcgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	"T.J. Mercier" <tjmercier@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	David Hildenbrand <david@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Michal Hocko <mhocko@suse.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Michal Hocko <mhocko@kernel.org>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Qi Zheng <qi.zheng@linux.dev>,
+	JP Kobryn <jp.kobryn@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 244/507] mm/cma: accept memory of CMA areas reserved at a fixed address
-Date: Fri, 13 Nov 2026 10:49:08 -0500
-Message-ID: <20261113153802.852256255@linuxfoundation.org>
+Subject: [PATCH 7.3 245/507] mm: memcontrol: fix NULL pointer deref and UAF from high_work_func() on dying memcg
+Date: Fri, 13 Nov 2026 10:49:09 -0500
+Message-ID: <20261113153802.883864440@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
 References: <20261113153753.358973689@linuxfoundation.org>
@@ -76,52 +76,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Rapoport (Microsoft) <rppt@kernel.org>
+From: T.J. Mercier <tjmercier@google.com>
 
-[ Upstream commit f8f9cbc34a309a388c052706f3329d1b52985aa3 ]
+[ Upstream commit dd94d8c7660a60dbfcd425e0d10120de6d02a7bd ]
 
-CMA areas allocated from memblock have their memory accepted by
-memblock_alloc_range_nid(), but areas reserved at a fixed address with
-memblock_reserve() are not.
+When memory.high is exceeded in non-task context, try_charge_memcg()
+schedules memcg->high_work without taking a reference on the memcg, and
+high_work_func() invokes reclaim_high() without pinning the memcg.
 
-If a fixed CMA area is requested by the cma=<size>@<base> command line
-parameter, it may be in regular RAM and on TDX and SEV-SNP guests it
-must be accepted.
+With obj_cgroup reparenting, introduced in commit bf4f059954dc ("mm:
+memcg/slab: obj_cgroup API"), objects charged to a child memcg are
+reparented to its parent in mem_cgroup_css_offline() instead of holding a
+reference on the child until uncharged.  Subsequent uncharges of those
+objects go to the parent, which can leave the child's memory use
+permanently above its high limit, so any later charge on the offlined
+memcg in non-task context schedules high_work.  This was later widened
+from kernel memory to LRU folios when commit f1cf8d2f36dc ("mm:
+memcontrol: eliminate the problem of dying memory cgroup for LRU folios")
+converted LRU folios to use obj_cgroup reparenting.
 
-Accept the memory of fixed CMA areas as well, so that all CMA areas are
-accepted regardless of how they were reserved.
+cancel_work_sync(&memcg->high_work) only runs at the end of teardown in
+mem_cgroup_css_free(), so high_work_func() can start or still be running
+reclaim_high() after mem_cgroup_css_released() or shrink_many() has called
+lru_gen_release_memcg() and unhashed lruvec->lrugen.list.  If reclaim
+tries to rotate the memcg, lru_gen_rotate_memcg() dereferences a NULL
+pprev pointer.  This issue is specific to MGLRU and was introduced with
+the memcg LRU in commit e4dde56cd208 ("mm: multi-gen LRU: per-node
+lru_gen_folio lists").
 
-Link: https://lore.kernel.org/20261029-cma-multi-v1-2-2cbced8b5cb7@kernel.org
-Fixes: 75d090fd167a ("x86/tdx: Add unaccepted memory support")
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+With either traditional LRU or MGLRU, css_free_rwork_fn() calls
+css_rstat_exit() which frees per-CPU rstat data before calling
+mem_cgroup_css_free().  If reclaim_high() is still running, rstat updates
+via mod_lruvec_state() -> __css_rstat_updated() cause a use-after-free on
+the per-CPU rstat data.  This was introduced when commit 5da3bfa029d6
+("cgroup: use separate rstat trees for each subsystem") moved
+css_rstat_exit() ahead of ss->css_free().
+
+Fix both problems by acquiring a reference with css_tryget_online() in
+high_work_func() before calling reclaim_high(), and by resetting
+memory.high and swap.high to PAGE_COUNTER_MAX in mem_cgroup_css_offline()
+so that charges via references on an offlined memcg do not trigger
+high_work on the dead child and skip checking live ancestors in
+try_charge_memcg().
+
+Acquiring the reference in high_work_func() rather than before scheduling
+high_work is safe because mem_cgroup_css_free() calls irq_work_sync() and
+cancel_work_sync() which cancels pending work and waits for an already
+running high_work_func() to complete before mem_cgroup_free() frees the
+memcg.  css_tryget_online() uses percpu_ref_tryget_live() and is safe to
+call after percpu_ref_exit() before the cgroup is freed unlike
+css_tryget().
+
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 1 UID: 0 PID: 27 Comm: kworker/1:0 Tainted: G    B   W           7.3.0-rc5-g2bba28e98578 #284 PREEMPT(full)
+Tainted: [B]=BAD_PAGE, [W]=WARN  <-- Taint from lru_gen_rotate_memcg() VM_WARN_ON_ONCE
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+Workqueue: events high_work_func
+RIP: 0010:lru_gen_rotate_memcg+0x1a3/0xe90
+Call Trace:
+ <TASK>
+ ? read_ctrl_pos+0x22f/0x3f0
+ shrink_lruvec+0x16cb/0x1b80
+ ? ret_from_fork_asm+0x1a/0x30
+ ? lapic_next_event+0x15/0x20
+ ? clockevents_program_event+0x2bb/0x6f0
+ ? lapic_next_event+0x15/0x20
+ ? __pfx_shrink_lruvec+0x10/0x10
+ ? __pfx_clockevents_program_event+0x10/0x10
+ ? _raw_spin_lock+0x84/0xe0
+ ? __pfx__raw_spin_lock+0x10/0x10
+ ? kasan_save_stack+0x30/0x50
+ ? psi_group_change+0x381/0x740
+ ? __pfx_sched_clock_cpu+0x10/0x10
+ ? save_fpregs_to_fpstate+0xc4/0x2c0
+ ? finish_task_switch.isra.0+0x1de/0xac0
+ ? __schedule+0xf62/0x42c0
+ ? __pfx___schedule+0x10/0x10
+ ? __pfx___irq_work_queue_local+0x10/0x10
+ ? shrink_node+0x626/0x31e0
+ shrink_node+0x626/0x31e0
+ ? ring_buffer_unlock_commit+0x11d/0x5c0
+ ? kswapd_clear_hopeless+0xa0/0x150
+ ? __pfx_shrink_node+0x10/0x10
+ ? 0xffffffffc0000095
+ do_try_to_free_pages+0x255/0x13b0
+ ? ring_buffer_unlock_commit+0x11d/0x5c0
+ ? reclaim_high+0x10a/0x1b0
+ try_to_free_mem_cgroup_pages+0x1f9/0x5a0
+ ? __pfx_try_to_free_mem_cgroup_pages+0x10/0x10
+ ? irqentry_exit+0xc6/0x670
+ reclaim_high+0x10a/0x1b0
+ ? __pfx_reclaim_high+0x10/0x10
+ ? process_one_work+0x5ff/0x1030
+ ? __pfx_high_work_func+0x10/0x10
+ process_one_work+0x6e2/0x1030
+ ? __pfx___schedule+0x10/0x10
+ ? __pfx_process_one_work+0x10/0x10
+ worker_thread+0x422/0xbb0
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x2cd/0x3a0
+ ? recalc_sigpending+0x15c/0x200
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x368/0x590
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? __switch_to+0x588/0xf50
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Link: https://lore.kernel.org/20261029201858.2932905-1-tjmercier@google.com
+Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
+Fixes: 5da3bfa029d6 ("cgroup: use separate rstat trees for each subsystem")
+Signed-off-by: T.J. Mercier <tjmercier@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Tested-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Reviewed-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Qi Zheng <qi.zheng@linux.dev>
+Cc: JP Kobryn <jp.kobryn@linux.dev>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/cma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ mm/memcontrol.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/mm/cma.c b/mm/cma.c
-index 0035efb1130a5..f61d52796f4ef 100644
---- a/mm/cma.c
-+++ b/mm/cma.c
-@@ -381,6 +381,8 @@ static int __init cma_fixed_reserve(phys_addr_t base, phys_addr_t size)
- 		return -EBUSY;
- 	}
+diff --git a/mm/memcontrol.c b/mm/memcontrol.c
+index b5137e86bed70..b303bfc6b46ea 100644
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -2419,7 +2419,10 @@ static void high_work_func(struct work_struct *work)
+ 	struct mem_cgroup *memcg;
  
-+	accept_memory(base, size);
-+
- 	return 0;
+ 	memcg = container_of(work, struct mem_cgroup, high_work);
++	if (!css_tryget_online(&memcg->css))
++		return;
+ 	reclaim_high(memcg, MEMCG_CHARGE_BATCH, GFP_KERNEL);
++	css_put(&memcg->css);
  }
+ 
+ /*
+@@ -4369,6 +4372,8 @@ static void mem_cgroup_css_offline(struct cgroup_subsys_state *css)
+ 
+ 	page_counter_set_min(&memcg->memory, 0);
+ 	page_counter_set_low(&memcg->memory, 0);
++	page_counter_set_high(&memcg->memory, PAGE_COUNTER_MAX);
++	page_counter_set_high(&memcg->swap, PAGE_COUNTER_MAX);
+ 
+ 	zswap_memcg_offline_cleanup(memcg);
  
 -- 
 2.53.0
