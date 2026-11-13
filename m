@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591047;
-	b=iOujsH4NC2JH3F82LIO8QV5IKeNJYiLo3YGg5UaubnLPPItyPkBepkuGPv9+9xm1edY8
-	 FkChMBdoN7Ejikm+XZui6JnhWyHJ6+MUN1SoJ/ENuTZgThhNeaP9vzJHotDrTw5JqKhC7
-	 OULby6aFetYPmsNHs0J/DqlQ9fh4cDvM8WZwftNlFWr10ZfDV+wDrEr6t/J0T+lvaBP0Q
-	 xeiXbVidG++lBmmc5X0tUIy6LLu9r6Vh+e026KQjNoW42hn3QBZ8drAczlwNTY/02Xzqa
-	 nhSyi18CFNY8sqgnfR6L77uqiEm8Fs4axASxHNuaZVUM+hYquy2TPpBB/CV30otll5w==
+	t=1794591048;
+	b=DUPVuZlYr9ZUJ+I1ifdvDKebIylQYqK6fHxQk0tVkNQ1YTwwFBh+jWjLVHAdgQ6qJNTY
+	 2O61JWM4n1rLfe+iXU64DF4yo4L0gNSV+hOzACatsUxYFAPnLuryqBS6ixHuqiifSOAsP
+	 ZXhoamPBJ5RXF/wDN1VIVtOXUcwir9ItbLZWr8Coy3dMdwCt4jSjfNhEEhihO/91x4lSx
+	 Fj9u2wfw+mRlUOQ85Jb96dGK3nvtaYQL5QpsOnXkfJU0VqCXAs4fM0JasrSJ6eVJ/WH+n
+	 v3CgvR16Ru9HaD4m6AgyRI3k3hH2u+se7siPnJA1nHxD/EFBSueGO7YopJrpQIyh+Og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591048;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IockYYAB1o80gijxegbHVOky1OYH5nGx5jrqOV69H7s=;
-	b=MW+zGZbO8xqKAwLt5M3CrCVL3RNMbOVi9e4JpDqQ3ryBWlfxbKKrCpqKMeuXUYQuj/ia
-	 McBmsj8kRGlQPzIJ3I0FG+bSd90VqsqzcqRbnhg5E95dB1EHR6Qc5nsu6pKF1Iif7liXB
-	 oTam0PdmbsvYdr3p8HKsIaXtG3+onz5ayym5UBo/X+JfKmHzPwaFc7uSSrOd6Fk708MuL
-	 B3Lw13EJ6ow3uwTPNOtcB3iuHse/tdxEsn9rdMhi7yQkLpZtCgDMYAff326zBShsoZxtS
-	 AlJ0zkfOkapJ+nCv8Xkn4L5TISBGxhjR956N5Win2tw2QUpoPdlnU91M16zikU9fL+A==
+	bh=jzod33bezWyVeOrH0o69V/dJPsiIlnnKViJwNN8oufc=;
+	b=qXtrJkwuzZ1T4h5Hmi6N38Ekq3fzVHk9Exu5cnxllcSQ0KHPu/tqS38oyRstZXmN6Wgr
+	 NnBB9PNQGlvbEwojk1MKBrx1FsUMjZbAX+SsJdvaWbe8krLBSHXw59keR/c7hHM8ozmwl
+	 tc6MfzkOZentHl/tMNM9Xeqpqnb1PCkY5avGWXY0fk75nsdifsafoXWQKzjH9y+bsOIZ3
+	 KFiKuIDugpe/9X6KuGgKXUFAhP1cO5IetPtbEe6f7BODoXSCwkbGSAgvz5ORJXj8z+GCO
+	 KpuoIy+VyizbXZLYHGvJmK4oiudSKTSouX/ZSaNoEZwt+e7CSyRJtzL8UdsiI0ZSwlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJ51JnNz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kqkqLR1j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E027F606B357;
-	Fri, 13 Nov 2026 17:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EDB606B357;
+	Fri, 13 Nov 2026 17:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uJ51JnNz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC641F000C5;
-	Fri, 13 Nov 2026 17:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kqkqLR1j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30DE1F000C4;
+	Fri, 13 Nov 2026 17:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591046;
-	bh=IockYYAB1o80gijxegbHVOky1OYH5nGx5jrqOV69H7s=;
+	s=korg; t=1794591048;
+	bh=jzod33bezWyVeOrH0o69V/dJPsiIlnnKViJwNN8oufc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uJ51JnNzuIP430acW7layM0y4pOTqTMyjhdeN5cUrp5LuiHxqLwECM4mryxY8apcJ
-	 M8GOb2gvX7uuXg0C0SzXBmRc9wbLfF28/bp95UOf9/ZG4iKOIySMEwPWJDP6HyGUSm
-	 jyhIydj0tjcxQ87JhIK0eun4sgTEZahVCyzzTFU0=
+	b=kqkqLR1jb9C6ql7QLwDpt7HiYhFftBH8DTouI/5ohUkBjaF7MkS46yJUFtJrfv+cD
+	 0LyhHHBSfNLBofXXXqfxTwIvIwrtjvGApEgmbCFGSeXIciVsYBxEwwJm/dfUybWAFm
+	 Qn2Su4rH4X3/wqvZcAoYf28As19J8i+60UdEmdOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Juergen Gross <jgross@suse.com>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Evanshenf <archwse@gmail.com>,
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 193/670] 9p/xen: validate the response size from the backend
-Date: Fri, 13 Nov 2026 10:45:57 -0500
-Message-ID: <20261113153818.541167890@linuxfoundation.org>
+Subject: [PATCH 6.12 211/670] drm/loongson: Handle buffer mapping failures when clearing a BO
+Date: Fri, 13 Nov 2026 10:46:15 -0500
+Message-ID: <20261113153819.080490280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -69,90 +68,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Evanshenf <archwse@gmail.com>
 
-[ Upstream commit 9b4cf60c6b739461c5b4ec9c52587da6b2608786 ]
+[ Upstream commit f00d7a241f846b053e89c0bb2285ef5988d4cafc ]
 
-p9_xen_response() takes the length of an incoming response from the ring
--- the first field of the 9p header, which the Xen transport reuses as
-its framing header -- and uses it to advance the consumer index, but
-never checks that it is at least the header size or no larger than the
-number of bytes the backend has actually produced.
+lsdc_bo_clear() ignores the return value from lsdc_bo_kmap() and writes
+to lbo->kptr unconditionally. When the first mapping of a newly allocated
+buffer fails, kptr is still NULL and the subsequent memset accesses it.
 
-A malicious or buggy backend can post a response whose size is smaller
-than the header (for example 0). The consumer index then never advances,
-so the response work re-reads the same ring contents instead of making
-progress. In testing this raced with the teardown that the malformed
-reply triggers and dereferenced a freed p9_client:
+Return the mapping error without touching the buffer and propagate it
+from lsdc_gem_object_create(). Install the GEM object functions before
+clearing so that drm_gem_object_put() can release the buffer correctly
+on failure. Do not add the failed object to the tracking list or return
+an uncleared buffer to the caller.
 
-  9pfs 9pfs-0: Wrong req tag=ffff
-  BUG: kernel NULL pointer dereference, address: 0000000000000060
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: Oops: 0000 [#1] SMP NOPTI
-  CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 7.2.0-rc5 #6 PREEMPT(lazy)
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-  Workqueue: events p9_xen_response
-  RIP: 0010:idr_find+0x4/0x10
-  RSP: 0018:ffffbf5d80063de8 EFLAGS: 00010202
-  RAX: 0000000000000001 RBX: ffffa229c21195a0 RCX: ffffa229c2400000
-  RDX: ffffa229c11c2200 RSI: 000000000000ffff RDI: 0000000000000050
-  RBP: 000000000000ffff R08: 3fffffffffffdfff R09: ffffffffffffffff
-  R10: 3fffffffffffdfff R11: ffffffff87a60e80 R12: 0000000000000050
-  R13: 0000000000000000 R14: 000000000000ffff R15: 0000000000100000
-  FS:  0000000000000000(0000) GS:ffffa22a7661c000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: 0000000000000060 CR3: 000000003ac34002 CR4: 0000000000770ef0
-  PKRU: 55555554
-  Call Trace:
-   <TASK>
-   p9_tag_lookup+0x2b/0x90
-   p9_xen_response+0x17c/0x2e0
-   process_one_work+0x16a/0x3a0
-   worker_thread+0x172/0x2e0
-   kthread+0xdd/0x110
-   ret_from_fork+0x18b/0x240
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
-  Modules linked in:
-  CR2: 0000000000000060
-  ---[ end trace 0000000000000000 ]---
+Imported buffers still skip clearing, and successfully mapped buffers
+are cleared and unmapped as before.
 
-Reject a response whose size is outside [sizeof(header), queued] before
-using it, matching the validation the backend already applies to
-incoming requests.
+Tested on LS7A2000 with a one-shot range error in ttm_bo_kmap(). Its
+-EINVAL return reached userspace, the object was destroyed once, and
+no GEM handle was published. Normal create/map/zero/write/read/close
+cycles passed, with the tracked BO count and VRAM usage unchanged.
 
-Fixes: f66c72bea129 ("xen/9pfs: receive responses")
+AI assistance was used for the lifetime analysis, fix, fault-injection
+tools, build and test execution.
+
+Fixes: f39db26c5428 ("drm: Add kms driver for loongson display controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20261005125640.274054-1-yhlee@isslab.korea.ac.kr>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Assisted-by: LLM
+Signed-off-by: Evanshenf <archwse@gmail.com>
+Reviewed-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Link: https://patch.msgid.link/20261003093415.902f89244043-2-archwse@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/9p/trans_xen.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/loongson/lsdc_gem.c | 12 ++++++++----
+ drivers/gpu/drm/loongson/lsdc_ttm.c | 10 ++++++++--
+ drivers/gpu/drm/loongson/lsdc_ttm.h |  2 +-
+ 3 files changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/net/9p/trans_xen.c b/net/9p/trans_xen.c
-index 92701a16511d4..67f464acf6171 100644
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -198,6 +198,14 @@ static void p9_xen_response(struct work_struct *work)
- 				     masked_prod, &masked_cons,
- 				     XEN_9PFS_RING_SIZE(ring));
+diff --git a/drivers/gpu/drm/loongson/lsdc_gem.c b/drivers/gpu/drm/loongson/lsdc_gem.c
+index a720d8f532093..5eb6b4f92302b 100644
+--- a/drivers/gpu/drm/loongson/lsdc_gem.c
++++ b/drivers/gpu/drm/loongson/lsdc_gem.c
+@@ -155,14 +155,18 @@ struct drm_gem_object *lsdc_gem_object_create(struct drm_device *ddev,
+ 		return ERR_PTR(ret);
+ 	}
  
-+		if (h.size < sizeof(h) ||
-+		    h.size > xen_9pfs_queued(prod, cons,
-+					     XEN_9PFS_RING_SIZE(ring))) {
-+			dev_warn_ratelimited(&priv->dev->dev,
-+					     "bad response size %u from backend\n", h.size);
-+			break;
-+		}
++	gobj = &lbo->tbo.base;
++	gobj->funcs = &lsdc_gem_object_funcs;
 +
- 		req = p9_tag_lookup(priv->client, h.tag);
- 		if (!req || req->status != REQ_STATUS_SENT) {
- 			dev_warn(&priv->dev->dev, "Wrong req tag=%x\n", h.tag);
+ 	if (!sg) {
+ 		/* VRAM is filled with random data */
+-		lsdc_bo_clear(lbo);
++		ret = lsdc_bo_clear(lbo);
++		if (ret) {
++			drm_gem_object_put(gobj);
++			return ERR_PTR(ret);
++		}
+ 	}
+ 
+-	gobj = &lbo->tbo.base;
+-	gobj->funcs = &lsdc_gem_object_funcs;
+-
+ 	/* tracking the BOs we created */
+ 	mutex_lock(&ldev->gem.mutex);
+ 	list_add_tail(&lbo->list, &ldev->gem.objects);
+diff --git a/drivers/gpu/drm/loongson/lsdc_ttm.c b/drivers/gpu/drm/loongson/lsdc_ttm.c
+index e8805a2a0db43..17b1998254e23 100644
+--- a/drivers/gpu/drm/loongson/lsdc_ttm.c
++++ b/drivers/gpu/drm/loongson/lsdc_ttm.c
+@@ -387,9 +387,13 @@ void lsdc_bo_kunmap(struct lsdc_bo *lbo)
+ 	ttm_bo_kunmap(&lbo->kmap);
+ }
+ 
+-void lsdc_bo_clear(struct lsdc_bo *lbo)
++int lsdc_bo_clear(struct lsdc_bo *lbo)
+ {
+-	lsdc_bo_kmap(lbo);
++	int ret;
++
++	ret = lsdc_bo_kmap(lbo);
++	if (ret)
++		return ret;
+ 
+ 	if (lbo->is_iomem)
+ 		memset_io((void __iomem *)lbo->kptr, 0, lbo->size);
+@@ -397,6 +401,8 @@ void lsdc_bo_clear(struct lsdc_bo *lbo)
+ 		memset(lbo->kptr, 0, lbo->size);
+ 
+ 	lsdc_bo_kunmap(lbo);
++
++	return 0;
+ }
+ 
+ int lsdc_bo_evict_vram(struct drm_device *ddev)
+diff --git a/drivers/gpu/drm/loongson/lsdc_ttm.h b/drivers/gpu/drm/loongson/lsdc_ttm.h
+index 843e1475064e2..df47d9bb0d035 100644
+--- a/drivers/gpu/drm/loongson/lsdc_ttm.h
++++ b/drivers/gpu/drm/loongson/lsdc_ttm.h
+@@ -89,7 +89,7 @@ size_t lsdc_bo_size(struct lsdc_bo *lbo);
+ 
+ int lsdc_bo_kmap(struct lsdc_bo *lbo);
+ void lsdc_bo_kunmap(struct lsdc_bo *lbo);
+-void lsdc_bo_clear(struct lsdc_bo *lbo);
++int lsdc_bo_clear(struct lsdc_bo *lbo);
+ 
+ int lsdc_bo_evict_vram(struct drm_device *ddev);
+ 
 -- 
 2.53.0
 
