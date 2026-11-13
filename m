@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591049;
-	b=XrCxFxG0p06zOz4uMs6vEGI/D4q2dqgjftkaxknUpASFrjalKAOD0HZQEvdDq4KH8KLc
-	 7wpp3USu1UgtoRw4ldElCMWfH337sxfwQ4Sf2BJ/bzzrKMgjhvoW9bcneEtdIcxqg3hmg
-	 GBMMExIIGA/maYplj80osCqlcYqRcSJmrPMoI4K+lhcNuWNBkLVMZI36dy9NLnfpiL/SN
-	 dUKNPJF1fVMzamDBn0gl375pmcXMfH2CAaR7EBrIlNqIri7MnQNHatiLRChfBXxfgex5l
-	 AeIYAtdanCd3ne8sF3J44A2PoPxnh/Z8BSdYJ9UFKbho2LISSE/rqImEagZgaH/L+RA==
+	t=1794591050;
+	b=K44mUGypGx7nyhHC36/63qCD7uMMnDa6xZrA0F3lRSMBQ9Oa8HuEU0wczxzGIM0COjLG
+	 rlz5FJjMUerPVfRn3ppCDuChAB099YRxDVckJxcz+mohk8s174xOCKGwwk2Qdjp1LnPl+
+	 hDPaja7Q+nEbOoUtb8a/9QRf9OUl9FSLlQra68QIYKZQA5HxR5joI3QwrM0WeetdS9XuI
+	 +2cXsWPPBuP0j+bGtGu4RzN+1LsO5RSgzFpxQWQY9/gpPTRYWBIuItXITMGqeDgF2n6Zg
+	 LPVGftt40j6XzcZ1sahcXI8+YYz1l4AaWUHDHK0i5DZVcVIgeZxhtaOnaxTyu1J2nVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591049;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2JSXHNsho6Y8bC6qc7n4Cbhmz+qW1ucVvXBS0hOWa/8=;
-	b=c7AksjxeHFfHWU89UM8hClm93/QRs2PrC3SWtu3csW7KohqTWe7I0Z0ME7c6K3e7F9iw
-	 smRFHWOq/DF+CEVdo7oVEB+9ZYR5Nzjwh6l48N53QJJlU/d6I8XnOoHE5cTcd3sHeU2qQ
-	 JtHpyZ7/KSui+talW2cHSQOJwJfkmrht0uw+oieOItEmedcwwxXqDqkBK7BRdIO80Ruwu
-	 9gjAoF5oiTdNdyVsYmDIBX3ntZCsIKNh+EGpNQ1w+h0UwAciG0LJgaxkY/7a9rwkgK6zT
-	 yZSO5rE/N9jgT671chAq/6NcdsG6pT+lAhVE0KEtSGWs2qQgnaXawfuzgl00zd2M3jw==
+	bh=ypS1EiS3kSM1IMVgSYsZc65aoNUphSguqU4sqSl5rH8=;
+	b=IjDG+LLinj9ErWBvuNE/uN1CmS8NaoiEFrnLsfZtilGCyrhslaGFDeUDrBVxI8YXqruM
+	 JgAyQAaYVIEfqPVAG8RcnPOrVI+7JV3Xa1TAC1ZHVfXub5UsIhArRr1ZLptojmhENGK3N
+	 9m67tgJc2Kzos6nLTSpiPsFg3SCHSrdMiXlUooBJBPQiennT9qov2mPeqh5UmSPLO2i1d
+	 gl0+2WV5/7PhlAuOEhgYGdwor1LWPNLsLlrUuTu2wU8voNQLjA8jvL8ESpsgbQ940hZUu
+	 RUjg70Vauq+ma59kiqL56BEnlZriyOCnZuaJY1V+m3oyZLkWKjOGa/zkPzHrE7TaKSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dNGfDyoO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FMObmspe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CBF606B357;
-	Fri, 13 Nov 2026 17:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF55606B81B;
+	Fri, 13 Nov 2026 17:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dNGfDyoO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036BF1F000C4;
-	Fri, 13 Nov 2026 17:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FMObmspe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4951F000C4;
+	Fri, 13 Nov 2026 17:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591049;
-	bh=2JSXHNsho6Y8bC6qc7n4Cbhmz+qW1ucVvXBS0hOWa/8=;
+	s=korg; t=1794591050;
+	bh=ypS1EiS3kSM1IMVgSYsZc65aoNUphSguqU4sqSl5rH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dNGfDyoO6PBV8200Duxm4Kb6xqh4MsTzVbuRQXBWS6uJ87Db/YmoK4bpVJqNWEhaU
-	 OK5fUdVggVWvUYZO28EMMTYkw71ZUwlA+fL5enQH3mFAyxKDUURZ1yhiULfRnB1UNN
-	 mFBZLnKDVa4uehJGg6q62aXdYQYUO+t0ZjQG8jRM=
+	b=FMObmspe15A8XACt6gJXs/JikX16wy+EKkPmyI7Sb2e8THizoEQ4hk341WzUb0wjL
+	 M/91Vdh1ZM7ib7179ZjRM5DNzM12tqqi10ENLkxb1ZsbalyEu4v5TDVSWoedZIzkYT
+	 xDRfe5n2htR6CvZNHjyEcuafkDn2CvR2ZOpR/ulU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 212/670] ALSA: us122l: Add missing NULL check in usb_stream_hwdep_mmap()
-Date: Fri, 13 Nov 2026 10:46:16 -0500
-Message-ID: <20261113153819.109596172@linuxfoundation.org>
+Subject: [PATCH 6.12 213/670] ALSA: us122l: Fix NULL dereference at hwdep open and release
+Date: Fri, 13 Nov 2026 10:46:17 -0500
+Message-ID: <20261113153819.142502845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: <20261113153811.177190860@linuxfoundation.org>
@@ -72,52 +72,92 @@ Content-Transfer-Encoding: 8bit
 
 From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-[ Upstream commit f5d3eb483fed59fc0f3b059b8b6a32cedc922360 ]
+[ Upstream commit 820e0050866942b5498488496462d12c6ce1c7a9 ]
 
-usb_stream_hwdep_mmap() reads us122l->sk.s and dereferences it without
-checking for NULL.  The stream object is released by usb_stream_free(),
-which is reached through us122l_stop() both when the device is
-disconnected and when us122l_start() fails, and it leaves us122l->sk.s
-set to NULL.  The hwdep file stays usable after that, so a later mmap()
+usb_stream_hwdep_open() and usb_stream_hwdep_release() pass the result of
+usb_ifnum_to_if() straight to usb_autopm_get_interface() and
+usb_autopm_put_interface(), without checking it for NULL.
 
-	KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-	RIP: 0010:usb_stream_hwdep_mmap+0x107/0x890 sound/usb/usx2y/us122l.c:182
+usb_ifnum_to_if() returns NULL once the device is gone, since
+usb_disable_device() clears udev->actconfig on disconnect.  The hwdep file
+can outlive the disconnect: the card is released with
+snd_card_free_when_closed(), so a process that keeps the character device
+open reaches the driver's release callback after the USB configuration has
+been dropped, and interface_to_usbdev() then dereferences the NULL
+interface at offsetof(struct device, parent).  The open callback has the
+same problem when it races with the disconnect.
 
-crashes while reading s->read_size, which sits at offset 0x10.
+Check both lookups and fail the open with -ENODEV; in release, skip the
+runtime PM put when the interface is already gone and still run the rest
+of the per-file cleanup.  Move the us122l->first bookkeeping after the
+checks so that a failed open no longer leaves a stale file pointer behind.
 
-That NULL is an expected state for this field: usb_stream_hwdep_vm_fault(),
-usb_stream_hwdep_poll(), usb_stream_hwdep_ioctl(), usb_stream_stop() and
-usb_stream_free() all test it before use.  Only the mmap callback misses
-the check, so let it return -ENODEV, matching what the other hwdep mapping
-in usx2yhwdeppcm.c does when its shared buffer has not been allocated.
-
-Fixes: 030a07e441296c372f946cd4065b5d831d8dc40c ("ALSA: Add USB US122L driver")
+Fixes: 030a07e44129 ("ALSA: Add USB US122L driver")
 Cc: stable@vger.kernel.org
 Co-developed-by: Bin Yu <byu@xidian.edu.cn>
 Signed-off-by: Bin Yu <byu@xidian.edu.cn>
 Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
 Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
 Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261028042525.8737-1-25031212351@stu.xidian.edu.cn
+Link: https://patch.msgid.link/20261028074143.14440-1-25031212351@stu.xidian.edu.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/usx2y/us122l.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/usx2y/us122l.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/sound/usb/usx2y/us122l.c b/sound/usb/usx2y/us122l.c
-index 2a107803af880..1458dd16711fe 100644
+index 1458dd16711fe..8880051927044 100644
 --- a/sound/usb/usx2y/us122l.c
 +++ b/sound/usb/usx2y/us122l.c
-@@ -200,6 +200,8 @@ static int usb_stream_hwdep_mmap(struct snd_hwdep *hw,
- 	offset = area->vm_pgoff << PAGE_SHIFT;
- 	mutex_lock(&us122l->mutex);
- 	s = us122l->sk.s;
-+	if (!s)
+@@ -148,19 +148,26 @@ static const struct vm_operations_struct usb_stream_hwdep_vm_ops = {
+ static int usb_stream_hwdep_open(struct snd_hwdep *hw, struct file *file)
+ {
+ 	struct us122l	*us122l = hw->private_data;
+-	struct usb_interface *iface;
++	struct usb_interface *iface, *iface0 = NULL;
+ 
+ 	if (hw->used >= 2)
+ 		return -EBUSY;
+ 
+-	if (!us122l->first)
+-		us122l->first = file;
+-
+ 	if (us122l->is_us144) {
+-		iface = usb_ifnum_to_if(us122l->dev, 0);
+-		usb_autopm_get_interface(iface);
++		iface0 = usb_ifnum_to_if(us122l->dev, 0);
++		if (!iface0)
++			return -ENODEV;
+ 	}
++
+ 	iface = usb_ifnum_to_if(us122l->dev, 1);
++	if (!iface)
 +		return -ENODEV;
- 	read = offset < s->read_size;
- 	if (read) {
- 		if (area->vm_flags & VM_WRITE) {
++
++	if (!us122l->first)
++		us122l->first = file;
++
++	if (iface0)
++		usb_autopm_get_interface(iface0);
+ 	usb_autopm_get_interface(iface);
+ 	return 0;
+ }
+@@ -172,10 +179,12 @@ static int usb_stream_hwdep_release(struct snd_hwdep *hw, struct file *file)
+ 
+ 	if (us122l->is_us144) {
+ 		iface = usb_ifnum_to_if(us122l->dev, 0);
+-		usb_autopm_put_interface(iface);
++		if (iface)
++			usb_autopm_put_interface(iface);
+ 	}
+ 	iface = usb_ifnum_to_if(us122l->dev, 1);
+-	usb_autopm_put_interface(iface);
++	if (iface)
++		usb_autopm_put_interface(iface);
+ 	if (us122l->first == file)
+ 		us122l->first = NULL;
+ 	mutex_lock(&us122l->mutex);
 -- 
 2.53.0
 
