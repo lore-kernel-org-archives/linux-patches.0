@@ -1,58 +1,75 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.17
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794591642;
-	b=SpzE18a9NNSgjSLOZ6jxjBQLBfslLbo1JuZ6NtjN43F5+3pGnk/as89v52XOgyML5gTW
-	 l1qifjPp6BwIO3xX+h7D5RAeLlNyCGrnTzg7rB6mNLYDuIpPM5oPUrVqv/wjWwx54/EYU
-	 u2a8bdGNiHIrjFTfMJsUrAEyeGZFFHsgSQrIoxz5ASpLpSujxBEw9xQ+raDf/CdaURcSE
-	 YUPeIVZnnh5x+rW/LRUd8q1R1YfEIJvIctIjhge3BUHR6jnyZrr3eqU/XGBvADNr5u0bj
-	 0qNo+bXnQv6UNwgTs5p4MaxuFBPNzBi1b51QZMqC8IkdmR1FRHSVHPFCur3GkcUYZZw==
+	t=1794591715;
+	b=QSZRPLaOfKNOA1BerfurgDvT3uc9k7PA6erj7B1gm33jBHla5fSnGtw8YE+595A5u2RU
+	 INvQYJUGWNcHLGXXAj2OXvn40arF7cEnsQUyG95/ce4/berov/JSb2Fecxrgo15uh5cZJ
+	 8izcUK0Xw2c2qYHNLpXFNdwRPKBm4fYy1wrseXTrDgNyGX+50oBCWu8sT+YZGLrgnJz0Y
+	 Nrs96e4t0O1BQkryyAqrpI5YVGDTJXfoKYFeGIeosxNv0+5X5PdlQi5fCHNDfDeG+H2k/
+	 eNGRyDxXLwgh2fCOqyYg4+XVyAWJw+f/Tws98OLSItJ6R9jR4WkfLXs2EY5/nOAw6ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794591642;
-	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
-	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=iuH7r3lx6hBHH21fh6BgRshwi/+2mgQ4pfDaXEyiQkI=;
-	b=taRtEMQ+/oh3lk8KqWz27LCCaECUQQH3WokDdNrTMwFEr9SpDC2VAjazNGGz8EVm7sYP
-	 FqZ5dZ+pXa05whaHTpNReibsJfiYmfGBsnFu1sYl2yj1bVuvsWXrwdyS4pHR8YHVObSZM
-	 wlgJaRYcGjuuIWpOKFMVRzldytZFjRKT30/VvALjRJnmYSgmE2wtvEBA4jyuvceeppRfQ
-	 cxvWXTEjLbWNtg8PiHvxsTaLrom73/yulqZJNwJJo0qkhSstaiqym1ip5OdjVgmuPH2AB
-	 f90c1VVInlxXugXYVevsxkQ0t0PUlGkD0mCXMCKIPJ+xVo1QaKFRE3YjzE7P2GvI7Aw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794591715;
+	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
+	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
+	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:From:To:Cc:Subject:
+	 Date:Message-ID:X-Mailer:MIME-Version:Content-Transfer-Encoding;
+	bh=IfmSocrZvEleSEw8e1476dtq8P/mTSo2YReK7ZjdB2Q=;
+	b=mhKBsOVeh1MVT00xsFXc+Uapn3ZlK4tTFCJYtZqzDitnbG2V2/p5HlUOfhvAkrUlnXUw
+	 QUi31f+NqdgUZkZQFDlpPu3dgekCi1D8jMIfOZy5iCt7cTWaY3szL6nxMtDh5gIz6iliZ
+	 n7i3QesTMl0s6cLkF6Y0q/yIn8uB4mfi9aJOne/9OSXSUrd0HxyfLXuY+ejspJ2dl9JTo
+	 OpisLmXMkHeWEFcmn69mC2wmeeGgAlAYR4C9G2jBXlDQHg2HJJkpT3cX3+/2go0H4uS5U
+	 quEMVOw1wz1Qz+RsiZdJ/iYJoEvLuVGtHU4YPyBIJjwlCIiwY1A8copEykzOBAaePLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKSvevoH;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=intel.com;
+	spf=pass smtp.mailfrom=intel.com;
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eEJHnZ01;
+	arc=none smtp.remote-ip=198.175.65.17
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA57606B46F;
-	Fri, 13 Nov 2026 17:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F106070F15
+	for <patches@lists.linux.dev>; Fri, 13 Nov 2026 17:41:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B8F106070F15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LKSvevoH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD4B1F000C4;
-	Fri, 13 Nov 2026 17:40:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794591642;
-	bh=iuH7r3lx6hBHH21fh6BgRshwi/+2mgQ4pfDaXEyiQkI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LKSvevoHemQs57oDXgN4oQCMgNatpcktupiLH55cjdNYpdD/bFYdsHJYtLJJTUhAj
-	 zFDt0E0mQuEV7WxdsW0hCy3KZH7pMN1rkjeWwv3iL+L3KcrePDY62H8dX6vstzqGdm
-	 urBhL5tmQ0TwSCMl6ghcaaXSVOg3CrHIF+Yv1aek=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eEJHnZ01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1794591715; x=1826127715;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=yhhgobd8eM/gIokmkqi2ACthXUuyo2eBk292YnghZ/k=;
+  b=eEJHnZ01FlWR/E3j5BaDAlFxyZsiY46LFAOzJpxfPjqEsZqeISXKrN2G
+   3oMu16wGKi8j27S+rj/5vw42UdJfUXVTQMR9ah5xFl71D/NfKQp2KwTgv
+   quQef0xJPndSKOak3Zet4qXdeaQ7ytm21jnDQ+OG3x5lI+ig5z3rDH4zS
+   KUCFFI8IdOvqB8rKkl3JkZIHMAmuGgfIlxCBKW3soypjsQkif38aY+SJa
+   t65lRSa74uZZK4jfEOR7GcTNi3ffcDSOu+bm27NNmMrguc60LJgSGQipl
+   F9XU/keA5YyZOt+C1DmCijoU0c+eNXXrEK7xsQeyI+HF4S9YqGAQWK7XB
+   Q==;
+X-CSE-ConnectionGUID: 3VrVxlSqTCi9WzkGGVgjjQ==
+X-CSE-MsgGUID: f9K/pmt1QkGs4rgMP8ANyQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11965"; a="3415603"
+X-IronPort-AV: E=Sophos;i="6.27,212,1787036400"; 
+   d="scan'208";a="3415603"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2026 09:41:54 -0800
+X-CSE-ConnectionGUID: f8HBsq0fSe68/GlFMYl16A==
+X-CSE-MsgGUID: piIFZ4jCR8mp/xSrHgi4eQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.27,212,1787036400"; 
+   d="scan'208";a="9290941"
+Received: from gabaabhi-mobl2.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.53])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Nov 2026 09:41:54 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 650/670] hwmon: (coretemp) Return -ENODATA for invalid temperature readings
-Date: Fri, 13 Nov 2026 10:53:34 -0500
-Message-ID: <20261113153833.883945571@linuxfoundation.org>
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH] x86/cpu: Add Intel Coral Rapids and Razor Lake CPU models
+Date: Fri, 13 Nov 2026 09:41:45 -0800
+Message-ID: <20261113174145.13513-1-tony.luck@intel.com>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
-References: <20261113153811.177190860@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -64,118 +81,40 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+November 2026 "Intel Architecture Instruction Set Extensions and
+Future Features" published the model numbers for the upcoming
+Coral Rapids server and four Razor Lake (two desktops, two mobile).
 
-------------------
-
-From: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-
-[ Upstream commit f63aaa529cbc73146ff0d52235e5479042285cae ]
-
-IA32_THERM_STATUS and IA32_PACKAGE_THERM_STATUS have a valid bit, bit 31.
-The Intel SDM documents it only for the former, but the package register
-implements it too: x86_pkg_temp_thermal has required it since commit
-f1a18a105660 ("Thermal: CPU Package temperature thermal").
-
-This driver checked the bit for both registers as well, until
-commit bf6ea084ebb5 ("hwmon: (coretemp) Do not return -EAGAIN for low
-temperatures") made it ignore the bit because some CPUs clear it while
-the temperature is too low to be measured. Since then, temp%d_input
-reports such a reading as a real temperature. Userspace cannot tell it
-apart from a genuinely low one.
-
-Fail the read with -ENODATA while the CPU reports the reading as invalid.
-On a CPU that clears the bit, reading temp%d_input now fails where it
-used to return a low value. sensors(1) shows N/A in its place.
-
-Cc: stable@vger.kernel.org
-Suggested-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/all/46f9f319-de71-412f-a424-6cb801478456@roeck-us.net/
-Signed-off-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Link: https://patch.msgid.link/20261006-coretemp-enodata-v2-1-64e788acc7dc@linux.intel.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: adapted the validity check to use eax from rdmsr_on_cpu() instead of val.l from rdmsrq_on_cpu() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- Documentation/hwmon/coretemp.rst |  3 +++
- drivers/hwmon/coretemp.c         | 21 +++++++++++++++------
- 2 files changed, 18 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/intel-family.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/hwmon/coretemp.rst b/Documentation/hwmon/coretemp.rst
-index c609329e3bc45..6089bee1159f1 100644
---- a/Documentation/hwmon/coretemp.rst
-+++ b/Documentation/hwmon/coretemp.rst
-@@ -47,6 +47,9 @@ All Sysfs entries are named with their core_id (represented here by 'X').
+diff --git a/arch/x86/include/asm/intel-family.h b/arch/x86/include/asm/intel-family.h
+index 66d964afe18a..2a5761d475b8 100644
+--- a/arch/x86/include/asm/intel-family.h
++++ b/arch/x86/include/asm/intel-family.h
+@@ -129,6 +129,8 @@
  
- ================= ========================================================
- tempX_input	  Core temperature (in millidegrees Celsius).
-+		  Reading fails with -ENODATA while the CPU reports the
-+		  temperature as invalid. Some CPUs do this when the
-+		  temperature is too low to be measured.
- tempX_max	  All cooling devices should be turned on (on Core2).
- tempX_crit	  Maximum junction temperature (in millidegrees Celsius).
- tempX_crit_alarm  Set when Out-of-spec bit is set, never clears.
-diff --git a/drivers/hwmon/coretemp.c b/drivers/hwmon/coretemp.c
-index 8de1c781ac7a8..cc81b849c09ef 100644
---- a/drivers/hwmon/coretemp.c
-+++ b/drivers/hwmon/coretemp.c
-@@ -61,6 +61,8 @@ enum coretemp_attr_index {
+ #define INTEL_DIAMONDRAPIDS_X		IFM(19, 0x01) /* Panther Cove */
  
- /*
-  * Per-Core Temperature Data
-+ * @temp_valid: Whether the CPU reported @temp as valid. @temp is not
-+ *		reported when this is false.
-  * @tjmax: The static tjmax value when tjmax cannot be retrieved from
-  *		IA32_TEMPERATURE_TARGET MSR.
-  * @last_updated: The time when the current temperature value was updated
-@@ -73,6 +75,7 @@ enum coretemp_attr_index {
-  */
- struct temp_data {
- 	int temp;
-+	bool temp_valid;
- 	int tjmax;
- 	unsigned long last_updated;
- 	unsigned int cpu;
-@@ -397,7 +400,8 @@ static ssize_t show_temp(struct device *dev,
- {
- 	u32 eax, edx;
- 	struct temp_data *tdata = container_of(devattr, struct temp_data, sd_attrs[ATTR_TEMP]);
--	int tjmax;
-+	int tjmax, temp;
-+	bool valid;
- 
- 	mutex_lock(&tdata->update_lock);
- 
-@@ -406,17 +410,22 @@ static ssize_t show_temp(struct device *dev,
- 	if (time_after(jiffies, tdata->last_updated + HZ)) {
- 		rdmsr_on_cpu(tdata->cpu, tdata->status_reg, &eax, &edx);
- 		/*
--		 * Ignore the valid bit. In all observed cases the register
--		 * value is either low or zero if the valid bit is 0.
--		 * Return it instead of reporting an error which doesn't
--		 * really help at all.
-+		 * Bit 31 indicates whether the reading is valid. Some CPUs
-+		 * clear it while the temperature is too low to be measured.
-+		 * Such a reading is not a temperature. Do not report it.
- 		 */
-+		tdata->temp_valid = (eax >> 31) & 1;
- 		tdata->temp = tjmax - ((eax >> 16) & 0xff) * 1000;
- 		tdata->last_updated = jiffies;
- 	}
- 
-+	valid = tdata->temp_valid;
-+	temp = tdata->temp;
- 	mutex_unlock(&tdata->update_lock);
--	return sprintf(buf, "%d\n", tdata->temp);
++#define INTEL_CORALRAPIDS_X		IFM(19, 0x08)
 +
-+	if (!valid)
-+		return -ENODATA;
-+	return sprintf(buf, "%d\n", temp);
- }
+ #define INTEL_BARTLETTLAKE		IFM(6, 0xD7) /* Raptor Cove */
  
- static int create_core_attrs(struct temp_data *tdata, struct device *dev)
+ /* "Hybrid" Processors (P-Core/E-Core) */
+@@ -159,6 +161,11 @@
+ #define INTEL_NOVALAKE			IFM(18, 0x01) /* Coyote Cove / Arctic Wolf */
+ #define INTEL_NOVALAKE_L		IFM(18, 0x03) /* Coyote Cove / Arctic Wolf */
+ 
++#define INTEL_RAZORLAKE			IFM(18, 0x06)
++#define INTEL_RAZORLAKE_L		IFM(18, 0x07)
++#define INTEL_RAZORLAKE_U		IFM(18, 0x09)
++#define INTEL_RAZORLAKE_S		IFM(18, 0x0A)
++
+ /* "Small Core" Processors (Atom/E-Core) */
+ 
+ #define INTEL_ATOM_BONNELL		IFM(6, 0x1C) /* Diamondville, Pineview */
 -- 
-2.53.0
-
-
+2.56.0
 
