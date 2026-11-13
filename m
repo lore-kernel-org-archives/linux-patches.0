@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794590205;
-	b=VW9EhAibuZC4lYkjEOWr3CflzPGFIph6s+RWg64uIKTxEcGi4uM3KeEiKd6efiviz/Za
-	 P3giRzXTd65sB9opGKgVZqSalypOQRiDu4miVELng6JJD1PLoUG+PGvSpuTH9fevdCfu7
-	 2Jj3QW0hf2OatZZcClDft8uUSYF3czO6T5MCWQA7KDyNcG1qk2dESNLdJasPi7O8PIJgQ
-	 9nwqZuds4HY49TQvwI+eXB5OzkDWZ8UW3vvv5FzIRd2HY6C1XWod2KeYRaTkCQjgxToy1
-	 usBXpcPZiifrb6Ml5o+OmGJNiNIHD2VeY+6wfKJ+RmF95vt4ZkpwjUFvWIcdujKO3+w==
+	t=1794590206;
+	b=N25MBch4Dgw6qARZvIW+4jsgHXSYBU87IUUGMkBuHF1v1guLSdveKRXrgA8jw56YWeE/
+	 yEBDWuFSajSh2W2o1WNxlHQ3g3U2XcDFnkrjbFwtwrmiiX/MciBZg/YM4BLbXNsH86HZy
+	 /u5IlQ/vIQDeUT+6aN1U05RFVm2ATSk9E0Zk7ID4A+XF8zahv2WsAuk4aDEqk/S4dtLaP
+	 tuupLXIJv+JjlwWoMKLbAf3CJFsN08LGSQchrsIjGfgvpCBc/e83sMNH5M92D3QWF22dj
+	 /fO+38LgqOUfeTWm/JntPJITfUE4IAVZxm3nWAwmp5r/JkDqyo9OGEIf+1g74s52Izw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794590205;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794590206;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/NbDiAg4YLBtvbm7EjC9VFgiatI7WNoNgQ9pI+ndq+w=;
-	b=YUWcSZQ0CTI+kVqO1mVZX0A97HzSByXYoQMHn8BK1WgTvPRN7b0RgkGJp3rYoNHle/wd
-	 h+FxgsAfzQoDIN9ACwwyviiaiOED8eZNSH4BlWDJNiqnDZ/yLdiq43N5I+LN8QevIM5j4
-	 RYYes+H4p8ao4mRBmGUcW0a0FIDJ0obtMVmH9Oyus3wIb/9ZK3qhWtQ5zc/K0HWM3KwoM
-	 8SsYH+MqLkxve9KLn/bGaPxmm6fxy5WpnvzUUGS/u8DTw3ZGMrjYjMh7jAQV8RnR3w/Du
-	 IRhkrLAjPdxen1mzLSdlawBVVXPBIsMUj1pc8bJto7399w/aiBWQ1etLIv/Uw/TEDiQ==
+	bh=Bcxw3jBbAD2/5E9mO3ABkPt9GaJr6jpkO5FxTLGoO5s=;
+	b=PztWYoduIqYku0AKnQ1AnJdwelYsNhLRrhhZQLpQSEJGjnu76xDJhBv1tbD/ZEJ0+LXG
+	 1J3n4xHrcfVI1z0wYqRVMV5hvS3ZH/Xw9PvycTB82PdNbYszyom1DkV0ZCLuLgkpu/2AV
+	 N2zxZVibrl1fHQeuEKnRx3QnP3tGUvMfglCSXq3Q1qifGZZlB4jG0jgAZYu4K+UhoWcgx
+	 x1jdXuUFL03Y6fqdJDoT3nSYWRaRFuypycG9l2jsNls2vXaeOo/TBqHE0Ny0YfZJGUUz+
+	 SHDWnOiya1zGOEY0q+xuGrUR822WCyzoHwVI0M4NGQ5BFZF+WG10vvxYfEZi50Y3OWg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h8u45drt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M1UFlRag;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13072606A8B6;
-	Fri, 13 Nov 2026 17:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D34B606B37B;
+	Fri, 13 Nov 2026 17:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h8u45drt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559781F000C8;
-	Fri, 13 Nov 2026 17:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M1UFlRag
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B641C1F000C9;
+	Fri, 13 Nov 2026 17:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1794590204;
-	bh=/NbDiAg4YLBtvbm7EjC9VFgiatI7WNoNgQ9pI+ndq+w=;
+	s=korg; t=1794590206;
+	bh=Bcxw3jBbAD2/5E9mO3ABkPt9GaJr6jpkO5FxTLGoO5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h8u45drtTOuxkTY12PFCDXKdTlXN5nj6gmaY/pn7wo1tQf4zNzhy8MNebLgHl1ICY
-	 GhsWzvPXYzPpCZHCVTADcHEJ9B33csQoErLf8MQOTP5//InKn9LuXDDJ1cpUoueWK3
-	 hje01hrOFjTLwUffDjYXfTlykGoRQc6/zHDqBEAE=
+	b=M1UFlRagvL3edUq5zhkF/T4vfdTv+hck/3WPvdLrwESIqX2OyIZk6J43CnheAXMcS
+	 07ak+RgaAV4z7vcEBUTTxeNdENUZjkNGiuf3czGfXjObYA0dIUORazvPkk6IGIxGTg
+	 bBYp7bkzwApoHvUmwnOvoSXSA8Wg1n9t25HwUJyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 209/686] 9p: dont decrement a server-owned zero nlink
-Date: Fri, 13 Nov 2026 10:45:42 -0500
-Message-ID: <20261113153828.115004429@linuxfoundation.org>
+Subject: [PATCH 6.18 210/686] batman-adv: Close OGM aggregation before transmission
+Date: Fri, 13 Nov 2026 10:45:43 -0500
+Message-ID: <20261113153828.150141234@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 References: <20261113153820.902362109@linuxfoundation.org>
@@ -68,86 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit 4e915aa8566173b44146bc46177c85afbe6bdf96 ]
+[ Upstream commit f91f64a91682c07e6c5f059804e709656364e8a6 ]
 
-A 9P2000.L server can report nlink=0 for a regular file that still
-exists.  On a cache=loose or cache=fscache mount, lookup stores that
-value with set_nlink().  A later successful unlink calls
-v9fs_dec_count(), which still calls drop_nlink() for a non-directory.
-drop_nlink() warns, and the unsigned link count wraps to 4294967295.
-fstat() on a descriptor opened before the unlink shows 0 before and
-4294967295 after.
+The OGM send worker leaves its forwarding packet on forw_bat_list until
+after batadv_iv_ogm_emit() returns. Aggregation holds forw_bat_list_lock,
+but emission reads and clones the packet without that lock.
 
-The warning on the unpatched kernel, trimmed:
+CPU 0 can therefore start emitting a queued packet while CPU 1 takes the
+list lock, finds the same packet and appends another OGM. The sender can
+observe the new packet length before the corresponding direct-link flag
+is set, or clone the skb while its length and payload are being updated.
+This can transmit an OGM with incorrect flags or inconsistent data.
 
-WARNING: fs/inode.c:408 at drop_nlink+0xac/0xd0, CPU#1: trigger/188
-CPU: 1 UID: 0 PID: 188 Comm: trigger Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
-RIP: 0010:drop_nlink+0xac/0xd0
-Call Trace:
- <TASK>
- v9fs_remove+0x529/0x750
- vfs_unlink+0x2f0/0xbd0
- filename_unlinkat+0x340/0x6c0
- __x64_sys_unlink+0x46/0x70
- do_syscall_64+0xe8/0x4f0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
----[ end trace 0000000000000000 ]---
+KCSAN reported:
 
-Directories whose cached nlink is at most 2 already skip this
-decrement, because the exported filesystem may not maintain nlink
-(commit ac89b2ef9b559).  cache=none skips it as well (commit
-574aa0b479947).  cache=mmap does not take this path: it sets neither
-CACHE_META nor CACHE_LOOSE.  A regular file on cache=loose or
-cache=fscache still does.  Its count came from GETATTR and may
-already be zero, so skip the decrement when i_nlink is already 0.
+  BUG: KCSAN: data-race in batadv_iv_ogm_queue_add / batadv_iv_send_outstanding_bat_ogm_packet
+  write to 0xffff888100fedcf8 of 2 bytes by interrupt on cpu 1:
+  read to 0xffff888100fedcf8 of 2 bytes by task 70 on cpu 2:
+  value changed: 0x00c0 -> 0x00d8
 
-Verified on 7.3-rc4-00537-ga3ff15db6820 with only this change.  A
-server that advertises nlink=0 and accepts the unlink no longer
-warns, and the open descriptor stays at nlink 0.  An honest server
-on the same mount still goes from 1 to 0.  A rejected unlink leaves
-the count unchanged.  cache=none is unchanged.  With panic_on_warn
-the unpatched kernel panics on the warning; the patched kernel does
-not.
+Mark the aggregate as full under forw_bat_list_lock before emission. This
+waits for any ongoing append and prevents further aggregation. Emission
+uses packet_len to walk the OGMs, so all queued packets are still sent.
+Keep the packet on the list so interface purging can find the worker,
+wait for it to finish and free the packet.
 
-Fixes: ac89b2ef9b559 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Message-ID: <8B490036-EBB0-4A36-AE39-F294F7C79649@stu.pku.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 9b4aec647a92 ("batman-adv: fix rare race conditions on interface removal")
+Cc: stable@vger.kernel.org # 4.10.x: 434becf57bdc ("batman-adv: Limit number of aggregated packets directly")
+Cc: stable@vger.kernel.org # 4.10.x
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+[ sven: drop assisted tag, document new meaning of num_packets ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/batman-adv/bat_iv_ogm.c | 5 +++++
+ net/batman-adv/types.h      | 8 +++++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index b2368334f6eea..34fda75c77607 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -493,6 +493,12 @@ static int v9fs_at_to_dotl_flags(int flags)
-  * nothing and races with concurrent metadata fetches that may already
-  * have observed the post-unlink value (nlink == 0).
-  *
-+ * The same applies to a regular file whose cached nlink has already been
-+ * driven to zero by the server: in the cached modes the attributes come
-+ * from GETATTR and are applied verbatim, so decrementing a link count the
-+ * server does not maintain only trips the drop_nlink() WARN_ON and
-+ * underflows i_nlink.
-+ *
-  * @inode: inode whose nlink is being dropped
-  */
- static void v9fs_dec_count(struct inode *inode)
-@@ -501,6 +507,8 @@ static void v9fs_dec_count(struct inode *inode)
+diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
+index 6e79f69c2fede..38320f6a1dd1f 100644
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -1787,6 +1787,11 @@ static void batadv_iv_send_outstanding_bat_ogm_packet(struct work_struct *work)
+ 		goto out;
+ 	}
  
- 	if (!(v9ses->cache & (CACHE_META | CACHE_LOOSE)))
- 		return;
-+	if (inode->i_nlink == 0)
-+		return;
- 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
- 		drop_nlink(inode);
- }
++	/* Mark aggregate as full before forcing emit. */
++	spin_lock_bh(&bat_priv->forw_bat_list_lock);
++	forw_packet->num_packets = BATADV_MAX_AGGREGATION_PACKETS;
++	spin_unlock_bh(&bat_priv->forw_bat_list_lock);
++
+ 	batadv_iv_ogm_emit(forw_packet);
+ 
+ 	/* we have to have at least one packet in the queue to determine the
+diff --git a/net/batman-adv/types.h b/net/batman-adv/types.h
+index 51d04f351fdd4..1944398e0ed65 100644
+--- a/net/batman-adv/types.h
++++ b/net/batman-adv/types.h
+@@ -1970,7 +1970,13 @@ struct batadv_forw_packet {
+ 	/** @direct_link_flags: direct link flags for aggregated OGM packets */
+ 	DECLARE_BITMAP(direct_link_flags, BATADV_MAX_AGGREGATION_PACKETS);
+ 
+-	/** @num_packets: counter for aggregated OGMv1 packets */
++	/**
++	 * @num_packets: counter for aggregated OGMv1 packets. Set to
++	 *  BATADV_MAX_AGGREGATION_PACKETS (independent of the real number of
++	 *  aggregated packets) by the send worker to prevent further
++	 *  aggregation while the packet is emitted. It must therefore not be
++	 *  used to iterate over the aggregated packets
++	 */
+ 	u8 num_packets;
+ 
+ 	/** @delayed_work: work queue callback item for packet sending */
 -- 
 2.53.0
 
