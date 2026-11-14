@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794623266;
-	b=SSrLYvGQJnM0+2Vbcvwew+y4ULUjx8LGutlkhcnKG8hXk3dngOEJFWQztFG/nsiMl9Z0
-	 hm89BDDk2KiUmcxEYZY1L/aui8bc3jVRl5ZWGA+kFD5z9QbRwi1y8ZjlY3jypl68RjLCx
-	 KONRYufUdvEvGUqYjoqDg6n/wcMmeH1jP6tTfpCUDvAFJiuwFA+0FjLzdm938/A9fqRjg
-	 dKanoN26MzmoqiJ0ZeswPboep4C66ek3tixEl4IeZEZUCvbtOD2x+NhkabxLGNY4v4g7H
-	 va+m5K5p1QwNZ9YMrFQcpXItRlwUP7vM47+xfgdL5o/9qE8vpm+XsIRKg2t5omfir/A==
+	t=1794623318;
+	b=ev12nGWYwgiVeOw96DUqi4XtXuDLH6O1razXrfBaehG0nRil9IR+CMAFSvHEyJnzsQYf
+	 PH4BCHKfUiClNEx/TFCwnG4BIGDlgXiQiPn1Yxeej84wKNMOg/Zf4P46NjFb4tAZ3DjMY
+	 wwWXLKw5ar/3z5I2O/B5xtt14EuactQgWtb9g2Gtw4jGWvv4yFBrAquvaCHoAso56M+xL
+	 3ApaWm4MwGJtAE3rmQYzz8YteHbwwB4S/bLcRxlIcw5Zw+t2ryYJus8ubcT94kq1GsH7F
+	 tq2f5xafEaFdCm030s9w/vNy7giL6om4++29V/WY3yBEZjoPxZ8ILFtQHgWfRHE4FSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794623266;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794623318;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=yaLTihFeNHJYB8qT3CWD6+O9GuqHwl+Xob3ryUVJY0U=;
-	b=QhqdxNLuw7WjP6qoMFm8VKCe/EdRjU0flsrIlMpTlaOJjKgudgphpg9Nhtvtf1bTj5e1
-	 Cygl/+Ws2woIRXjOmLxXCREc5gWizgNr3izXRtohLmMEpOOz61LxYdrC/oI+kBiVLWyN+
-	 Yx7NAe0PyfUTv4CjQogjP/Wwz7y6j0Kj9vQdhQ0K5LABGzGQ/UaNq57iG6XDfjTbxzUtH
-	 padEKZ6qFWCdMBgoGOGe1ys3mnzAjA4QTeP5Rc5JB5YQYTcSJmQfhO2+t15fQ97eJiE7k
-	 CrIimXAl5f9eDn4ld9ScY/dmMKIEFfCwtumgYgoUnMuK0V6iLnEFnLH7HndVSgN9HgA==
+	bh=GAeLe4QQAu7WcTf8cfYQxoj6i3UEzxa1BxAfHHs7UUw=;
+	b=fmEP/uAPcHRLq8d+t0xdpEldSwHmpLMxb/nwN72oiu5aWSNs7YBjZ/P4ju7HXJ7C8hxi
+	 +1w22shl704RrUQv6OIjkeZiiZLAIuEjf40OnA0jNsUUTbgkPU1ImxjampZrtUAR4NlaN
+	 ricgvBImyUaiAYe1Ptx2pIIty2iOZWg3yTV4flgrw9vwnHVEVGpWzVq490bxrNkJH10MZ
+	 4HX1mQJWqP5X7VZeTmgEh/3FPi6nlUjyKMLtJmoVqsQSwfg8eqtj5co/L+qrOfvy5eMt2
+	 FA7AGk1wnx1jK3gTSPHoDIUuMKsBSX4C5au5YunQlUmbpgKnokej2PAZUCgSWu5Z6Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DN9b1Y4U;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="S/OCUYx6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52E95606A32D;
-	Sat, 14 Nov 2026 02:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B24606A329;
+	Sat, 14 Nov 2026 02:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=DN9b1Y4U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461921F000C4;
-	Sat, 14 Nov 2026 02:27:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=S/OCUYx6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395381F000C4;
+	Sat, 14 Nov 2026 02:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794623266;
-	bh=yaLTihFeNHJYB8qT3CWD6+O9GuqHwl+Xob3ryUVJY0U=;
+	s=k20260515; t=1794623317;
+	bh=GAeLe4QQAu7WcTf8cfYQxoj6i3UEzxa1BxAfHHs7UUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DN9b1Y4Ug0xc3eeRrzzhBwa5PPGi5NphXTyxz7dMj9s952NFVKVoF/bLwMZj9d06j
-	 7arKH+gzOxzMMlgBlyBDQoiRlvNyoCG62SOYWAmDCkuItvawV80heMOQgzMOoYLhZY
-	 RcSkGY3Eul7Qcnc/agT2DoSXKGQXK9VLiiGvPl8fRvbTm415BUa4habNaUAdNu9Lwc
-	 4yEoygsFC+oOr4Z/oa0b7n2oT3rIA0lEY8rxDoOfTyAWF+CWHBZKA+h/TdIKy/ywOg
-	 5lbE4WjeSvmHrykP8/rykLuGSFOzPsxEh/KT3OuMNUK7r68G00aZEwxNai3GFjayuA
-	 S4YfoCzZPpmtg==
+	b=S/OCUYx62DF44HXXGwNmyFxG9RvK3opIoNoF17lYClrjx8vM0W3QBqySEYsaca3cb
+	 5AS1HAjNX3IwG58KXgpHWt1aSQRqhdDC0Bwd912uAhPtU3M4QuFahzX9Ggj1wZENP3
+	 USiA6x5tw5SebHC9I4c+g8aN1SFA7bUmu8B71q32txRVvvFlYjy1EU9m/+zH2L8t4R
+	 WJNYrwaT+Hk63jR9t37jYw1+sQfJExPR/ST7/2MZB4Rd1K88UA2JNgoWHhCoNx+9EN
+	 X4RqfbMq1797VEzu8fzlHhwizlx9Oou6YyPj3zdUrrxm+60P/6aaJnRbkRHW6rQmoK
+	 MF8ENaFc9z1Jg==
 From: SJ Park <sj@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: SJ Park <sj@kernel.org>,
@@ -61,11 +61,11 @@ Cc: SJ Park <sj@kernel.org>,
 	broonie@kernel.org,
 	achill@achill.org,
 	sr@sladewatkins.com
-Subject: Re: [PATCH 6.18 000/686] 6.18.64-rc1 review
-Date: Fri, 13 Nov 2026 18:27:32 -0800
-Message-ID: <20261114022733.110657-1-sj@kernel.org>
+Subject: Re: [PATCH 6.12 000/670] 6.12.118-rc1 review
+Date: Fri, 13 Nov 2026 18:28:29 -0800
+Message-ID: <20261114022830.110809-1-sj@kernel.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
+In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
 References: 
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -78,10 +78,10 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 13 Nov 2026 10:42:13 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Fri, 13 Nov 2026 10:42:44 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-> This is the start of the stable review cycle for the 6.18.64 release.
-> There are 686 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.12.118 release.
+> There are 670 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
