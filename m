@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794660358;
-	b=zSnXXCGnOpPE7iGLpcivMoPzg9d6+16HeW4BAu7V5nug+bQBe80YFt8R3xcbXH+0KnWL
-	 miJT4VUeIrfRLhgxX0Myx6dsoVmLYtwwCj8atMAWasFuK08JcCfbknNpwAQ7b+8dLFWJ/
-	 yo5rYmh9R5T35XmB/+WP54lhfO9G76/Ok4o5lcgR3cIRlJXXR4vDWkpwRxxGT1yQFV5jt
-	 ZexOZfRREdlvntEbZVlmHa/E13Zo9dcwr+PIeCrsSbDaSi8Z0rBqbL7uJDXZMfXu8VQJ1
-	 mN9M5Fp5uaVIp9IYnOK4fjYNEU+uRDz1HtIP6jwdK2F6G6vkmDUvDqXKO0NGNA9lIJw==
+	t=1794660474;
+	b=JLK9hfmjHCNKYvfO7N0gmXmhSdJSkmwWY8ddTRTD529ujx/3AppquLanvHTiyrJaK6eM
+	 PoVqy4/D4rrQqCASgMSinnSYj9FC87Wj1DKNDElKfmuAAU8ihoCFDhRdGvCoFy2uGFT88
+	 f0xaDpl2fg3jBgSmU3NJoPQ//jlvoL87/yp8NQWcZeKmX+ZLc6MxbFZR3cQ2Zvs89RF0P
+	 PlQLGlvUEtg55EXL8B68RAe9QYAkq8RuYBB6u6oGSzieWOccKp6KS/6gg7oqASnA498c8
+	 etuXxQzvF3DY0d7Yf+KRMlv+rdZUYzUoTAA4wfUMUB8tPJSK8cCETp099b9uV0FZZJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794660358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794660474;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=lJm6O1l+2+nef1rFR0DXw+S4bSDJ6mFyNgYeSHA3MUE=;
-	b=OlrUSJr8cHqyUL7ItiZOYvI5Zbq83rDbtK2SO53rLWz1ucygnT9yGbXVSaOLBXtfHuwW
-	 ostGBGAGiaFoKBQmJi7/tI5r558eI7YXFhpnXYS2vOlHpVUS/GOhP3nJYw8kF7M/kAv72
-	 Ssnam08PKp/L7YlBgvFOvhFn67qsMgLZUCIqe7hcYSn2sJo0Iot3PZK42E8uuZPAz+MNx
-	 +VSoc7wAJ69vANArAXrEEjX42zoh+7jbhe96eiyCwxHQoR11Wx3tSO6wPCxmlqyEaxB6B
-	 o+svZm1z7qvo+Oaox+W84QDPVAvMQCNkxgd5+o2sx+wzM7Qdl8Z83BZEY74aEkGEhYg==
+	bh=hFIUN2HO4UdWlq9ef7jMaiMb9F6qBVRxjF+QPdOWjgk=;
+	b=kEgbRZkyYJJo/GKz2a9LjaA8YAY7n/MeTwPGH6hWdtAa1DI77T2v2qHVctI/S8YeaX0d
+	 cK1kBNJcz6w54Pkpm2V3fxrH0E5NeVEqtgzMSCsluDtOudDy0WrMWF+aGdIQW6KKimXAo
+	 +oBYXxQsOouLOh1f6WgLJealchFlPAROg/B2I754zIjkLEOpnHa4s0LQVfl/7ce/lxwUE
+	 4A2R1D+7u3ziLFHD7uRyQk7OmKdXEgA06/ncqUNGQmgUEMgtgtSk92p35qOVEWMRxwCKj
+	 ZjKMcmy3rnMc6YVaVAxWXeuIY5paWr3RUJBPY8bdQ+DvaTBOtGbbltAcTCZoIR9/ILQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Z0CMBATD;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b="XHxXO/BO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B0B606A32D;
-	Sat, 14 Nov 2026 12:45:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FD1E606A323;
+	Sat, 14 Nov 2026 12:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Z0CMBATD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784C71F000C4;
-	Sat, 14 Nov 2026 12:45:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=XHxXO/BO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985BA1F000C4;
+	Sat, 14 Nov 2026 12:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794660357;
-	bh=lJm6O1l+2+nef1rFR0DXw+S4bSDJ6mFyNgYeSHA3MUE=;
+	s=k20260515; t=1794660474;
+	bh=hFIUN2HO4UdWlq9ef7jMaiMb9F6qBVRxjF+QPdOWjgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Z0CMBATDY7IW+0FJ85+7bR93J+Pnm4OVI3wt1/WuFbLl/YMAWhpfRciQDRpStjDnV
-	 095ZkW5EGy2wp40YeVV99WR6RadljFBEqwAPHg0kK0DjfjT700EpuMaP17DgnQtqvl
-	 llt7pcMH3EELBfw3n54lP8sIHHi5QERwxinsATrOwn626BaISNigHMynXzSaTaxx+9
-	 WCxpGG7Z2MIHkKsREgEbxiwWXEdynobYEw3KrGqVFH8KRLmd1ucak65F+vU/HlFWkg
-	 7hEG/Ns/QmQl7/SVAL49JBGZOQTrpcGrOVjlbsTw3O/F1ar8+TcTXun3I6/ZGeRRrN
-	 bHHmNtqtn7FbA==
+	b=XHxXO/BOeCOYsF+UPdmcw9EHaIV7ga4jY+kt7sG5KJX+eE86Ycf5xEJZZFu8nQbTb
+	 +4vQhYyt7IAKEY2ZR/piOOPbFm9XFwOHHoQLDIfxQP2IOwm8hrsdZIt1cS+CWeFypK
+	 OkKwTTan8KBxM1qw4Gc5tEfmn7FcnhuUJs54XTmGkqzDpoGZP62RvGJLlo7VTxSHD1
+	 ARrp6ucr0Yf/7QHu1YVkWWuod0J6nemFv2sFNF7boCZCWjD4YYgUBLhLCIRccJevxz
+	 aVlL7dQOLDYp65p+lgEb/vk7ut/xy3NqDiWDY6g/PqGCGcq8rv7CU7Do29L+NMYVEd
+	 TXTesGzHPtB8w==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
 Cc: achill@achill.org,
@@ -61,11 +61,11 @@ Cc: achill@achill.org,
 	sudipm.mukherjee@gmail.com,
 	torvalds@linux-foundation.org,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.18 000/686] 6.18.64-rc1 review
-Date: Sat, 14 Nov 2026 13:45:47 +0100
-Message-ID: <20261114124547.114207-1-ojeda@kernel.org>
-In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
-References: <20261113153820.902362109@linuxfoundation.org>
+Subject: Re: [PATCH 6.12 000/670] 6.12.118-rc1 review
+Date: Sat, 14 Nov 2026 13:47:43 +0100
+Message-ID: <20261114124743.114465-1-ojeda@kernel.org>
+In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
+References: <20261113153811.177190860@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -77,24 +77,20 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Fri, 13 Nov 2026 10:42:13 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Fri, 13 Nov 2026 10:42:44 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.18.64 release.
-> There are 686 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 6.12.118 release.
+> There are 670 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Sun, 15 Nov 2026 15:36:17 +0000.
 > Anything received after that time might be too late.
 
 Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64 and arm32:
+for loongarch64:
 
 Tested-by: Miguel Ojeda <ojeda@kernel.org>
-
-I noticed in UML the following, though:
-
-  https://lore.kernel.org/stable/20261114003912.82206-1-ojeda@kernel.org/
 
 Thanks!
 
