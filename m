@@ -1,78 +1,71 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794643232;
-	b=QxoSWHtj+O5eHZygHagB7TmnjZbhxJgAS5THw9o9UEF9mDBlAhdEEu+nVXY0/BlMNS0G
-	 4Q9WPZhoIlVrRd732yHIPchOwHZ5gNr9wqyrR74DkFgw75G5yZMA3JTUI7tD0aXHihyEk
-	 BOGk4VpAeIh8EOUGlW7FAYI8JFcol3LzRaY1M5Yj7xL4hfdqhx8xFH0mXkmWpej6oHn8T
-	 OuTQObUFo3+b6geMN5l9VyQ/lUa9rRU9UW+XQojIH9mnetYABGNnDHHgNhkKCZQDP/4FU
-	 8HILAdL+eLY6j3wgV4+m4eKAEvl5Po6MIXOCIRU2SIazZwQsjrJaqZplAUW+ytcwBuA==
+	t=1794660163;
+	b=5TqsUvl+DZ6PZN3gk8u6XUZMIyyXE7G9R8c7i5o/4u0TETfnF/C6SICbxP6S4mqw5IMe
+	 njaH+hHrTSIiAH9qFS7s7uj4fz0NUazDn4IXw8hyaJ5I2N3AJQshDrwOOLobjZYkzz0mX
+	 P5dytrwBEIEqwaYNXPrs52kC+Pcu38ajCPf0a2x7N9r86ayqpGEJAlgg+X+wEgqLT6+ix
+	 C7X595eKKgoDuFJQXVYrrLyB7zUTOTKfHWiaGk5sWbExw1QlIPVoKLSRvkK3lGynZ8E0C
+	 tHGCqCoe8/ke/ybJCTaLkMSMFfiIRQpiIyK27hdVSWIqYjE70GwLW2MppRywzjhaDbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794643232;
-	h=DMARC-Filter:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
-	 X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=HlAJQDRNS3wb647fcEyzYriwXRRuzHo0Z4HCUvN0pNE=;
-	b=gFYiSEy6P8ghpxH2Kr3dI9jzhPF8E6UQJTrR5MekpuViv7BzE/F1PEoOCqSdbzOiZplr
-	 khTKzLLac5CERpyjrtXlEZ9cA5+oqRxeLs4SLea5uwF6pb6utvgc/dqcklubMInLI98Wl
-	 tHfZIbSg4Wm6vwZWzx49caRkHQLbX2Bqa9hGMMbGm9y0qcUDAOK17eW+sZOU94vNkA+6K
-	 kI5EF6oZxo6R/Jamz6pg4JKOI6+e3jDSO9t3FbLgIZU8LfUSh6wGNYvhKc/mSaV8E1rWE
-	 KBAnnviyeEpDYuCGkJhMwUiDxBmD//KcmjoHTFOJFX5NkhbvPdaZdMI91WthEE3EXlw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794660163;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:
+	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
+	bh=F6/bO5cetFPqhbMOtc9PwyTK7K9vR8m2Fecpdpp0T+k=;
+	b=srvB95Eshu2VDhtVug4T5oyRFonuvQYEdsQS4tGT0ghAedd5WnDlEE6KZ8boLUpI+O1T
+	 ulWH2efBDgVzj5tOAYNPl9MT9MVfS8CDssZQy5XHkWFrjyZXj0n9JJU2v/Rq0boyAOu4n
+	 vANQXX/sOiozzE0ybZ+1Rhrkryktr0rGOZrvAXn94V2B83tW9SzNkPXEYLemZ8o9gLvWY
+	 T7nCeGXM7ipMsI9dJs2cxONPP0cyUAs8NXdVrJpP9YFpdpvzIUFSEM6iC+7ysGJ11HZsM
+	 qkHb0byB2vfC4ADCbwZQNr45W7TQY2ixN/Hxinsa+F++jdWgYo2JTFUUvUY/bEoVOBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=librecast.net;
-	spf=pass smtp.mailfrom=librecast.net;
-	dkim=pass header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=Gr12Pwib;
-	arc=none smtp.remote-ip=185.128.210.58
-Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OmPuvUyu;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BB1606A880;
-	Sat, 14 Nov 2026 08:00:31 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 92BB1606A880
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0515606A327;
+	Sat, 14 Nov 2026 12:42:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=Gr12Pwib
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=librecast.net; s=2026110900; h=Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
-	Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=HlAJQDRNS3wb647fcEyzYriwXRRuzHo0Z4HCUvN0pNE=; t=1794643231; x=1795507231; 
-	b=Gr12PwibIakuDLwy6jyztVqdQWgUyouwH7blkx6VvA4dDK//7mr5GeJbAft9qzSYCoxMacKEJSE
-	B08FArPbZWa55gORQYoxrZNXnImPtIPWb+DmCwa39pdPAjjXOQLJR69+p8g7oc0duGGdPVwlr5gYM
-	t3PlOa773iCqTLurqh1abEmnkIOjLF/c2sKm+plP6TsQRN2N+W6PHr9t/qGu6Y/pb3IJN247s15gi
-	x7r/8FpVfMpC8pGJvLm8jkcOg/0tCn6u4Z8ST41JqqAHaS6tZtq0VrTDa52lN7jSIEOziHReMdVEk
-	fQKLxnhSiDdLUk1ETbauSzK3Z7WjQ/7YRLIw==;
-From: Brett A C Sheffield <bacs@librecast.net>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OmPuvUyu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FCD21F000C4;
+	Sat, 14 Nov 2026 12:42:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794660162;
+	bh=F6/bO5cetFPqhbMOtc9PwyTK7K9vR8m2Fecpdpp0T+k=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=OmPuvUyuDkXaCtdfFpDiLL3kKlMoP6dY6y16s2cWfAhkxxU+pK2vgrDvb9kNSTi9U
+	 3q5NWph90FOV/fj6SunSyIVOMteEUvbnWJOm1DkzpzYM/L2p19ycEvdx4uyhEN3gM7
+	 Odzm6ySi5nvEa2fhP2KD13n6Vj/GubMPIR1kU9FbOh6zYqS6MNkYl3ccolcDOj+uXb
+	 QZHLxSYTnF953pqTVzLwQN9A/o4beC7mP9SSm0qQyMgH+5Ly+agaH4XLttVjoU3BJZ
+	 kuD3gx/3ABQEgbeVOH4o8gSj0ph1mQzBj5MOVv3sFzjkCU6GvMbfHoav0VqFUZ7IvC
+	 xCSP2NTHhIXhA==
+From: Miguel Ojeda <ojeda@kernel.org>
 To: gregkh@linuxfoundation.org
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
+Cc: achill@achill.org,
 	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
 	broonie@kernel.org,
-	achill@achill.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
 	sr@sladewatkins.com,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 6.12 000/670] 6.12.118-rc1 review
-Date: Sat, 14 Nov 2026 07:51:30 +0000
-Message-ID: <20261114075133.50635-1-bacs@librecast.net>
-X-Mailer: git-send-email 2.56.1
-In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
-References: <20261113153811.177190860@linuxfoundation.org>
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 7.3 000/507] 7.3.5-rc1 review
+Date: Sat, 14 Nov 2026 13:42:31 +0100
+Message-ID: <20261114124231.113692-1-ojeda@kernel.org>
+In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
+References: <20261113153753.358973689@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -84,12 +77,22 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-# Librecast Test Results
+On Fri, 13 Nov 2026 10:45:04 -0500 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 7.3.5 release.
+> There are 507 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sun, 15 Nov 2026 15:36:17 +0000.
+> Anything received after that time might be too late.
 
-044/044 [ OK ] liblcrq
-010/010 [ OK ] libmld
-120/120 [ OK ] liblibrecast
+Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
+for loongarch64 and arm32:
 
-CPU/kernel: Linux auntie 6.12.118-rc1-g8ea1fd6d2bee #1 SMP PREEMPT_DYNAMIC Sat Nov 14 07:22:16 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-Tested-by: Brett A C Sheffield <bacs@librecast.net>
+Thanks!
+
+Cheers,
+Miguel
