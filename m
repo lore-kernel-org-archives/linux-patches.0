@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.195.60
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.51
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794785455;
-	b=OMz1DT0ySGARQLHQ2XF+brwgjUvpDEmGtysFTtMYpkqTzgYeCkG4vu/tTNGicMA9NsK0
-	 Ld+TdHHoXxeKIhi+0cJpErllBN3kf+2gVe0n3wuTUAWAEZt917FP3+5exdzu9XLuN2BxU
-	 5myFzfVM1lgqlUrElTLOzOBs43BmSLSE7sUVLe52OycPeMdYjPuV4N1whdLCGBkKKCSan
-	 xTVzq29yRh9m07+e+IuHG1C+TFZwGkxUUsVkQI0KyuUkPYRKSlE43Jh7Scj55Dkg3IvT7
-	 8EMLnVDeh0KW6TiwUowtVk2chrjWvPfzcPrKGjMsZUVmrKw4Bi16FGxiqxuGJ+0hOIg==
+	t=1794785456;
+	b=HemnJh30H+ZVfRTUwmG2wBIlFXSY89PqKgpSZuvN82y6M38MTTy5bIg4wyCWQ3RO2hGJ
+	 y85lVv33sQWy85cACxHBFRgVsUt25F4th3F84JII4TUiW4Mbq7fHV3uAPY8jHkL2EGp6D
+	 WV2fQFmMAWkCwhOwCw6X2rwJ516IKajpEjzxY4fh2XcKE7fAvM95HnUdhldUHs8VVVu/L
+	 sq7SdoGHr3erJnwQ5/ebXO1G0PqgPCYivCXuSOXaW/fCA3HlGp8pimzrEybzKvcGap1AY
+	 VsTt4ise9kkBz+Vpf/QUppfgPwUeR2hq1VL2eVcIEn6G52xf2Yz2/kf9pZJ3JUCUhmA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794785455;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794785456;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
 	 Date:Message-ID:In-Reply-To:References:Content-Transfer-Encoding:
 	 Content-Type:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
@@ -24,54 +24,54 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=sNCjvoGtX6vFzCMCwYP/EL6WkBotG7FL2h03cr5uILU=;
-	b=VxwcpSminZI1oQQuZq5V5Y9x7V79gzuRQXJ62j8py6he5PyVcEi2zsV6K75F8eeQkHy6
-	 AQpVnHRS+/OaD6NgLyeDl3qS84aqtmO9gzMANOTgXKSj/YDjpmibzVOgvSEXoKxC14hOe
-	 TGfQ48iqmZ2XZuQC3YAhwagIuqFnCRY0EePLVOzlrnQlbsGEA950ULMSNUenwQ9h/7/O5
-	 BFwObTCUuEnHE17n5rAvwoxHg20BLspkzFsnkIUDswluUlWckzi3Ny1EymD5po7W2zy9L
-	 90aLHswVfVOo/jBxZLWpifHkoD/mvTB20jqvrxJfMzBXFr7dzZt/+rhDgS7vqQp3dhQ==
+	bh=+dafhMVimh6tyShLK6Ug8V30cAEvvhjVz6GLr12HkDM=;
+	b=vOx84a0QZxUeNX5OuUsNISDB0xNL5lwqk1AWA2Oh1N7TzmbYMn6EfJg7P/UdQjgteDW0
+	 RNtuz7T3z0LsfGifuwqLzF4N+THq6z1ToZtPYaffAhWTY31mgHX8DS1artSpHnTxvnsyz
+	 kjB7iMk9an/aJFNUctkw/rgx8Z4ttxU1nOK/okID5LyU0cDFzvHDPsCPLc6aQ2/1wZnDd
+	 Ln14qM7CWvlaP2p+mQcajIFzQ15YYEXoXqItpUKNtXWQDGP+t5EYRl1QEjAU1uWUsWhpc
+	 E7SaV5t3LBAt1JhujNcsoAHO/x9S/FepBWgT5/AF7ANvg0+zZKD4pQcdGPGPjF7DdAQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=MsYGa9RW;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.195.60
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012060.outbound.protection.outlook.com [40.93.195.60])
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b="b/8lNGW+";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.194.51
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011051.outbound.protection.outlook.com [40.93.194.51])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40259606A33A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF79606A33F;
 	Sun, 15 Nov 2026 23:30:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 40259606A33A
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CFF79606A33F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=MsYGa9RW
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=b/8lNGW+
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=McIMV1qCdhXmdFTUCj8bmpCnOVumvLvRkajRvg5106hs2IYzVw8rhtuLQ08kkdPWLxEon8uJcHsB1Z+61ro0xermWq01/525pZf8KHQ8IHj1Q820xqv+7ns0kDZgMDqTy4Q/jvMyL+RHNMqnI97H+JpVYm04y/HIrnotHP7fYIiscfhU0J2u2T9g8nB+WJDPy5Q6UBU5H9bZLzAhkwWreW5iXMUYmCequInStZulVaf1n5uDfZUXfKZy8heR+SHrNKERDB0IrdgrJrsjUQrk0k+BHBPkN1xvl++v9+NGccwgBPm86iUfwx8jrJHnPQCIcPVpeNPTrOmJxN8aMPqKBg==
+ b=bvRjaGuMNbENDPKKTxfDUK4WRuh+7Xm602PLdMh154crLI8b9jxAr71gptNhsIa8YqFu09w0oINbM2ia4VgSTOaTL7cn6jpAM3xvy8N78Ae0X9q7Tc1iA7Oe8vUGVpRHS/rMx2sYRMZLqffQ6L4uUCtewf9BHAMtZ5CHwt5kP9uw+wlJGEazzhZqH6K9gIPPhlvL2dLXqgN6vWyhUKVyPaJaKjOfD3OAWTAYJdUbXWxNEfzWcl98RyjZ3rCz3KONtReP/KVDuVjkNXLv/F+hLZrdoMwa4SNE7DanNVVEMw2pJorXJltxCOxtMkDnEO/srZARAMvh18r57KX3zmSkzw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sNCjvoGtX6vFzCMCwYP/EL6WkBotG7FL2h03cr5uILU=;
- b=tvy9H6xhH+HHvC7Tomx30kKZFYUReCh6fTu1RfvnEch+hukeLjXFgtFmgeR/9ri3xnXR4Uim/7oyHMTwkOEPfCwwpFvRuxCP6Q07WSU0bdrRVuOvs9v0TgBJ0Be/9MrYtSFI9nDFwlehMwLjsViqvCeF7Ix1QFRolQEfjysl11LKW6/n1u8v2+m7z2Laf2An7YsZnItpJ8CdPPLYNIr/BBeSgStEZ52BmOREb7OVcd+ZhqUM0er4N1QGziUD0zUeMdzC8fHFj+AU2EjcjeDu/ftzNDPysYc6iFjq4o6km8Suvdki/dqiVrFUCeNS2VB9ebWPZPwjs8W9I8YA9VDYeg==
+ bh=+dafhMVimh6tyShLK6Ug8V30cAEvvhjVz6GLr12HkDM=;
+ b=CeuWWUqWn0KcwKCuw4kTZAhmkunAzyZMM9i7ctYuwhwwWs0TcfWCio1ps+BaQIa3nZhcgqKoQmm8p2OkfEotNxSyHz6WX4bx+0giS0p115OXDHiWupZFRBch4q+8ANhCvZ7VbeAsED8F+Dq/Xpzdx25yRe90KxKD3cgeuheg/KojheIR9VJFoV9flSjyXY29J6QEW+1hmJ5XD3diXVhgHdnqkpKROO/1GXMewhQ2yFzWx1aWkShGZkQEn2BIqHtYYeVpdOh0qOZGZxVOAucD+ZWql0eH+x3MBlWaYKuTnyFPFNTG42jDU50gqz2wJbNlMhhg0xM/zFQLY/VAR+dY2A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sNCjvoGtX6vFzCMCwYP/EL6WkBotG7FL2h03cr5uILU=;
- b=MsYGa9RWzxIuYSYhfFgWa35oQc6vsoXa6yhqVBcZIIbEY+PxwS/iF2CjqCGQuMQ1ypGbVA3ZbwJ8a+xJLkjzAO7DHv0KQc6+gbSQmf35LZRVwbxNrr5vzlz7cei2QYzzKDtMq18VQxkZuvLDajhpD/ifAntsYfnHaanRHLwA4Dh5F+zHrYWniWX9qHPCtE90rQVpD/fHHmPBMCfPsaCx/ZgSDeU73SJ/1dLysxvI6VyuCX7Gc0GGp7xbOeIMvZM9CVrd4s5VmdlIw61yRREZqu+lS7f6c0EM3tMfdIy6UbSJmKquu52WTYdzqUveU4ivCkJ5E+V9E6zftj0Rc9XD9g==
+ bh=+dafhMVimh6tyShLK6Ug8V30cAEvvhjVz6GLr12HkDM=;
+ b=b/8lNGW+I1mPq4FPoFe+NSGXuhmFYEbipvFG07Xl1lTA7qF69duM4kJ+iifWkcGfoY76H/0LZbZW5xzw70h5cJ584ebA+Z8haToI6LkEbOqSz9wEHDmK9JeOpjcwiIHg7FA3ZqkEmeVhUwhQ5e+HxVJX9flyCkaWjj8LNCssvNSJrXMHXC+IzREjhrwqKbWmEivT6HAzJZfHNUWE+xSHqHyw2qzWGX4YfXayaOiqE5kXizFuXxvqbBZs5LK9dnQmiF8LVsE0A7FuJt9B80+INOtYcWomM1GqpNJWBlImCR0yB843WXFnASNhkzVB7HWBXNzCUxp32fReaDeAfV3Eww==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12) by DS0PR12MB8815.namprd12.prod.outlook.com
  (2603:10b6:8:14f::16) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Sun, 15 Nov
- 2026 23:30:48 +0000
+ 2026 23:30:49 +0000
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0615.013; Sun, 15 Nov 2026
- 23:30:48 +0000
+ 23:30:49 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: iommu@lists.linux.dev,
 	"Joerg Roedel (AMD)" <joro@8bytes.org>,
@@ -87,15 +87,15 @@ Cc: David Matlack <dmatlack@google.com>,
 	Pranjal Shrivastava <praan@google.com>,
 	Samiullah Khawaja <skhawaja@google.com>,
 	Mostafa Saleh <smostafa@google.com>
-Subject: [PATCH v3 11/13] iommu/arm-smmu-v3: Support CONT in paging domains with errata
-Date: Sun, 15 Nov 2026 19:30:41 -0400
-Message-ID: <11-v3-97feb2edfbab+748d0a-iommupt_armv8_jgg@nvidia.com>
+Subject: [PATCH v3 07/13] iommupt/armv8: Add DBM support
+Date: Sun, 15 Nov 2026 19:30:37 -0400
+Message-ID: <7-v3-97feb2edfbab+748d0a-iommupt_armv8_jgg@nvidia.com>
 In-Reply-To: <0-v3-97feb2edfbab+748d0a-iommupt_armv8_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BLAPR03CA0008.namprd03.prod.outlook.com
- (2603:10b6:208:32b::13) To CHBPR12MB731189.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL1PR13CA0426.namprd13.prod.outlook.com
+ (2603:10b6:208:2c3::11) To CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -108,331 +108,209 @@ Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|DS0PR12MB8815:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9cddb170-4064-4162-3407-08df43707905
+X-MS-Office365-Filtering-Correlation-Id: 301400c2-2bd1-41d5-e71e-08df4370790e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|7416014|23010399003|10067099003|11063799006|56012099006|261026121527099003|261026140227099003|261028144727099003|261022113327099003|261022105027099003|261022075727099003|261021123027099003|261021121427099003|261102123227099003|261009223027099003|18002099003|22082099003;
+	BCL:0;ARA:13230040|1800799024|366016|376014|7416014|23010399003|10067099003|11063799006|56012099006|261026121527099003|261022075727099003|261021123027099003|261021121427099003|261102123227099003|261009223027099003|18002099003|22082099003|6133799003;
 X-Microsoft-Antispam-Message-Info:
-	7tQ3heEURrMLkDTJGh1nqlFwctAqY3BbOTE44pODC56TGzXK4LhbRVeXAuobrkycq1zWHFwz8E5Qmlo4UJnZbhSjPZCR0UiIjRptLMhVosJGqx2b/PHHng+SH5Ml46SJwqlSukLOTHtICCfHeWONYLmVI8dd9fG3uB58kZBumNrEBrQ/gVOa67DWOFEEbaxP0yTL7SbyG/EfSqTFWgo6wDGB3gBWurxATZRC9pejrInZeAGKyKvE2VavDUc8rBT6NDgcaz+uIDNB1vs/FGhcoFmptbQBhcW+o56lZmdfwngzWbk6a1cYA8HNuFUXWBbpMYhY6/48U8/9dzCpIJ+C3YakpfSh0v3U9bif1aENxZQmrvWboeSjbu18Ji0nKdi+PaoQKg0h98bnGkpliAdwkUxoZIBS0EokJR0VT/2IDTzDk4/wJMp2quY6qoH2gWmh8qvMD6Gn9e1++odHWV3+UdnXr4/yqXoLDQ1R4w0u9gqDLv4IkhZJdBqgJYxaZdYVUK9zSsLcV/0Gw1Z4nmtpQBH72pS7sapOGCCMICeWcMhpYLTU0lmYrGzpBKV488+6/XaQWIYsS+d0Mwa4MuxX129qudyHy1/nuGRHOj77KJYyx9VpETS1GXr6Linlc1xzjYFTBrw2G4tKKj6IQhNRScNwvrU3kOFccuBr7J2liLs=
+	2fSRsaOsF3RDSFaEK6O6urq1qt0mXM4yuH65p7X/4bVTEDbG+C1oDBspoSjfC2+0srZodNxOPF6t4l807tDipeRu4W/fC0PQZyXmjyYkdlYA7EFmcM4l/PW0Yuo/BfqZy2c8STypQROiDzI/cxWHPlgxTcpH2tjNyRtnqgT3DiLnoNb1bEprZqjuqbP6lFgL29+NG1dOACsyLMJ+JBnWewnlb/K70XadawtIsKa4akWiCmvxLoXkYwY1it+LoIQhA5qBETodN/yBNHI99UG8GDj5hQrgQr0Jl1YNL2UpcAqf8a+CDp5rUNHDo4F9Eh+mrwKfGopsFqkQlu3O/kSxePDdqCDuSWBMsthjIjxkSCgwr7xWLhCgn7xd7DKyCLi2LLTBaJNmopG8foDc8xMVAu+XfAoMEvXBgu/k5kVf/ystHPHHE7dOBBoSxQghcclzixnin+UCGFq3h6YdIb8Wf02IsfLs5/pon4mATPn2FgWfYK6kP7/Li3GYCdlu1doC3eQqn++Bu9VgPdTZdQ5pNdynDrq9llRQRjWtzUgglkUN6h0QqUie605R75VX/V5X6nzDxTFIZakgimVmyA6P9JP1k12C0TOrvGt/Y2Ge7iJcbky9/AAWtwqhZnLCnLkN13u/Eqfp0139TTbyCL0ikw==
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(10067099003)(11063799006)(56012099006)(261026121527099003)(261026140227099003)(261028144727099003)(261022113327099003)(261022105027099003)(261022075727099003)(261021123027099003)(261021121427099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(10067099003)(11063799006)(56012099006)(261026121527099003)(261022075727099003)(261021123027099003)(261021121427099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(6133799003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?i/U81s64xyuZ6FuEn29QB4ojdAqVeVabwaIXYo/fEqJ9c98jdfSjko9WSy6c?=
- =?us-ascii?Q?bPTcpo4HhSC/lSMoJzgMRn/0IAzl8o/QrqFFKaAqz4VWiq8oNvAjegZklRN9?=
- =?us-ascii?Q?McRJdZqGhBFoCA6qcVdyvQDxgyWU+JWzrKem8h1e0I7swBnumWrXwl8F/Xyd?=
- =?us-ascii?Q?c9txIEkQOXAC45n5a0IW2AitQRlL2Hg55yynrTZvRbuVMZQTQeS0fmzV/+7J?=
- =?us-ascii?Q?DjPJ9SBlultllzKNmKEkxFiqdtB7j7+xjDA09wm6K6aILKea36/lW0cv1K9x?=
- =?us-ascii?Q?ZgX2Mn/abd8xG3T9RRlWvmll47/mDQwA/qhM5KNE4qTXajXWPYfgiBV2W4CU?=
- =?us-ascii?Q?DT4EUr0fOl6X57dqtuRU/mpa7HAGRNxe5dn/LBeHYYXDVhWqX81u9dLjkqlK?=
- =?us-ascii?Q?uVSJDYMAj1uvEgnBmz3KtuFWvbWfj/KRvzSgdJdcwJVKoDSSMRYOkujQHXjb?=
- =?us-ascii?Q?FWqoKjW+FpyOwtWbIUscEjq3oIYxiKy5dPPvZXNWruiRXXoaSmkkXTCSWQ1V?=
- =?us-ascii?Q?923lGE+YuPErQYmUnZk0RayC7uhOolk3sW76XbX9FM/sQMIy4TF7E1OAt6i0?=
- =?us-ascii?Q?FVxdTZkzpFtKxgXs82LsSKFh8Ln5hIydEeuFbyss70WkX70qrJY6KuyejZnD?=
- =?us-ascii?Q?sC9O/X0zR0yUeyzXIfvRqRzHe8vRBxCCuijdHxE6usqvWrMx4po3zdShRR7E?=
- =?us-ascii?Q?5uc0lRPL9y/tUcI7rVqnEBRxVm9Kzm+H421syECGN8cbTLoryijllQccJ+7/?=
- =?us-ascii?Q?Q2g0tb7Fy02br37QnXSbpon0hG47mS8Bnxlp7RcSONqWGNvi9EvGVMr/d7tK?=
- =?us-ascii?Q?cm4D4DRA7z3oAW7gRLmGr4poQljrvxSJIWo7vzh3NqdWr5ag03Dqz2rC8XXQ?=
- =?us-ascii?Q?TRI7eaIOJrhf9rTh9KkU12fC61ty6Fqylsn8IeUlvkGLInko6XQgu6p7J4g5?=
- =?us-ascii?Q?fePl8b4r3p/5TrX2TdANYRbBD7vQVkArwUUVSpT3lEW2FtWMFcVgkTo/+psR?=
- =?us-ascii?Q?Di0Uu9toKZIwRWTdAnA6CWt9qC9u45kboWtTjg3QEBQyY8tq6bXSvchHdFLq?=
- =?us-ascii?Q?NUNncecnKbBgjgVzRY5aH8Gp8NxrDJoI5eQ9VDLizKdVbJZBB7Khko/2X8pZ?=
- =?us-ascii?Q?7sJ8oZSQgnbt6obE8fMBrJ9iYk44waeRscBTheyujuoYVwY3k1NoKQNNtOsW?=
- =?us-ascii?Q?PJ2BxQnae4tJ+YZR6YTNlxKuARalnoxs2rxr6IgL7TPOZf+DqUTksEThpLS2?=
- =?us-ascii?Q?e+HOcr1jIDtVxdocn6+d4sWFsy5donRCpUhrhfzLvfNZC1hnfsQV+Q5O33sQ?=
- =?us-ascii?Q?9LZIaME7Kb0uOVDJ3ukvePkf06hv3HExs8frxD3FzP1uJC1vuffps2QGeT3C?=
- =?us-ascii?Q?qLyxQGb+qpmCE0fTw5DdzSKhl35qLopfRFWZ7ZLEJ/S10xhUgYrwn0UMb3H8?=
- =?us-ascii?Q?mhbbVJy2Ntz8dba5Vyq1Mhe+NrxgeapMFc8s0KJHw5vwL6JbZPfxsa+5QDvw?=
- =?us-ascii?Q?Pw1GjCNygOFToHaMFa00L33Ocb6aI+A+UrhrYcLCvPFvtdmEgK0Yxa9d0wz3?=
- =?us-ascii?Q?bGt4ywAGdL6tl9WfQqwcMryl348vuJpWN2+6xcSCPrsJRKSNwISoMK74jZPR?=
- =?us-ascii?Q?UuS6BaeBPD9jDzsNVS1PKm7SJQKz9paM4P3B2jJJUWodyQorAK8p0OQuw3uF?=
- =?us-ascii?Q?ypV65NOyf0XUJ2lpjMXNSSdBZSLdOZE0Gl+pnMydJ0QwXZjW?=
+	=?us-ascii?Q?S4494D4RyCh0iEq69oNPsJKyxEb1eMcMm8gXWVVNdUj3IW4uTycir0RHgVbG?=
+ =?us-ascii?Q?soJ6BLRVe807/ExifY3uVHukdNoto1AeANHpxHWJHHOwD89c/ALE5XPs1fox?=
+ =?us-ascii?Q?QhJncORn3Rlb2xqEffKxzighbwaUfXC35Rv2xXs8nazg7X0G6EdqBnVqKzzf?=
+ =?us-ascii?Q?uCtnWSb9hoWBq7N5NiNL8pTAd4NcsJSnBVsD5aDQvyWKnhpLterXi+f1APEK?=
+ =?us-ascii?Q?QhMnYsXSjr7K9p02z3zr6l+Li2KNluBGGv/FQsSDdB+35HSGpHWtq206prIc?=
+ =?us-ascii?Q?lrprZl6eT5eigagDkxF33UE2tbK1pBBeUkIS7aatj+Bo2oPr040oWAjxghra?=
+ =?us-ascii?Q?We6KIxK2hGM6pVnhvs0bZUJG+cAgcV1UU/HbbIOzVbBRDA2sqmFu4eEGmkq+?=
+ =?us-ascii?Q?dczfLwv4/0YrDP55NMOsw8DaYX/y4GXiij5yROpAun9smc7GiesXgBs7aSPk?=
+ =?us-ascii?Q?VtZZT0/P4NwBY840YZFZJifXNb3Oqm8EsMpXDBahvcS66cgNkHO6AQglGF/l?=
+ =?us-ascii?Q?tKvemhNHgzuk3mr+3PyYVn+hld7Itcencsq4r/QCXXN2HsCUrf5RLtVuS1L5?=
+ =?us-ascii?Q?FiJXu1YFe+8JfJ1yy3okvIVA+WT7iMof3Qj9Zju44PZvF7CpN3OTjH9cPhgK?=
+ =?us-ascii?Q?KOPZdOt2HEG4i2aGbDgd1YSbMdO6dQ68u7pCmP9MoCR0ompJm16SpdB3f3xA?=
+ =?us-ascii?Q?OKcPUZts28MbsI/t5GDMTYilWvCVcEsQiWhzaCfJrISeP5/3duJfd9U0XE2T?=
+ =?us-ascii?Q?l1XfZaZyxwZCA8pyHim9nH/e+nXhsrdnR7zL4kmX1FJ7dPP13uQMykHDuhr5?=
+ =?us-ascii?Q?KuW730xeVyJ3MK+35kT033pEPOmzIR6sUV7w9dkKtSo+x250/OW7xW5eTb8Q?=
+ =?us-ascii?Q?yAyMpy7/bzqUUX45h4nBz1W25I3HTaALkCPI4UcQN45hfKoaVTaNXzKxntrV?=
+ =?us-ascii?Q?EUQ/truCfllHAKR/ZcjRAjnW0Af0B9/NlV1jSWfHVv1OAUCab2Z2w5L9FpKu?=
+ =?us-ascii?Q?EkabN0aRfcL/yLqOZdWJLLPcIpKfb3FXTlk9E4ja7n0ga+kRpwdT54PvsIpG?=
+ =?us-ascii?Q?8zymvMuORBb5Uo8cItf6igcYU+Vxtd5Q5cQoZDdj2eNCeW3w8mCPr6tWOblG?=
+ =?us-ascii?Q?udzRr0lsGpg7tAuDi6G59gU5XZuDPoHrBBbY5rEeqWd2uzj73ujzjVvzAGyE?=
+ =?us-ascii?Q?mMS48Rq24KhTFbHFX4bCrOlJUWccT7rYrE6/xNjcUL1P5y15Ps5uOtULu4li?=
+ =?us-ascii?Q?lLDenQ/vJ9s844Ef1LoKUnhb1xmaYktMjJ+MWZ1dLcee8FL2/kblQzNOrF8u?=
+ =?us-ascii?Q?5nYVvP3aOJSBUWPsaUGhlvfli6AyieQwkiwt4wMkUJa28hzY345eq4USeLlY?=
+ =?us-ascii?Q?jG2dlFMQ9rXDXR9pA6kVtelNgtiaa8zPLR7iqOh+u0JE77KUhCB2WRTOpk4u?=
+ =?us-ascii?Q?nbVgpzMXf4cLQyMmcW0cGmAy3S3rRHuIYziqfKhdUpkc2tcc52nrykrZwOeB?=
+ =?us-ascii?Q?Hnn42TK/KkDEWiMIo1l6p7MCv2fGDYhAZ8SPjO8VaDTBPLJPEVEd/bWcgZbD?=
+ =?us-ascii?Q?on4x0wYiMSL6W5lfQHj5WzKX9IsJR4kSTM6FwN7Bqd4eW+PjAGVxaNlWY9OA?=
+ =?us-ascii?Q?2Knn7zIC6a8v/i5mgXXEn1vaMuQJ3vHdr65zxb1QVgqp62sxM39UaFw6NJ3h?=
+ =?us-ascii?Q?yl+w/toFMaH0QqblAoSvp3k5ImZ2r31pJOOIxyPM9P9fiX+/?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9cddb170-4064-4162-3407-08df43707905
+X-MS-Exchange-CrossTenant-Network-Message-Id: 301400c2-2bd1-41d5-e71e-08df4370790e
 X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2026 23:30:45.6974
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2026 23:30:45.7206
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: j59wDXn/LwzfzmaMzJHjJJb4M5LAgAvpEhPmGrH0m0WCp1ddWpJ6KjH3cQRKURX/
+X-MS-Exchange-CrossTenant-UserPrincipalName: v2L5N9qsMgkDrLmAxDWDi6pE1oifZZvhWfeqMwRwVTcjAgxiWiiQiaCWXqKduUsd
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8815
 
-The erratum (MMU-700: #3777127, S3: #3673557) deals with under
-invalidation of a CONT PTE grouping in the SMMU. The previous fix was
-simplified and just assumed the paging domains would never have CONT.
-
-Extend that fix to support CONT in paging domains by making use of the
-leaf bitmap in the new gather.
-
-If two range invalidations are generated then the middle overlap of the
-range invalidations may slice a CONT such that it will be
-under-invalidated for this errata. Search through all possible CONTs in
-the gather's range and find the largest CONT that could have been sliced.
-
-First try to extend the existing trailing range invalidation to cover the
-CONT range also, if that isn't possible then issue a third range
-invalidation that just covers the CONT.
-
-Since iommupt will record what leaf levels it is changing the search can
-be limited to the the CONT groupings that might have actually been
-effected, and this in turn reduces the required adjustment to the trailing
-range invalidation.
-
-This allows all CONTs to work with HW that has the errata and requires at
-most three range invalidations per gather with no over invalidation.
+Provide the functions required to do dirty tracking with variations for S1
+and S2 formats. This follows the same scheme as iopgtable where the table
+starts off dirty to avoid any HW updates, and once dirty tracking is
+started it will be cleaned.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c | 165 ++++++++++++++++++--
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |   2 +-
- 2 files changed, 152 insertions(+), 15 deletions(-)
+ drivers/iommu/generic_pt/fmt/armv8.h | 102 ++++++++++++++++++++++++++-
+ include/linux/generic_pt/common.h    |   2 +
+ 2 files changed, 101 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 3eb61eb35d0b38..c0daf5102d88a5 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -24,6 +24,7 @@
- #include <linux/of.h>
- #include <linux/of_address.h>
- #include <linux/of_platform.h>
-+#include <linux/overflow.h>
- #include <linux/pci.h>
- #include <linux/pci-ats.h>
- #include <linux/platform_device.h>
-@@ -2516,9 +2517,24 @@ static u64 arm_smmu_range_inv_calc_num(u64 num_tg, unsigned int scale)
- 	return DIV_ROUND_UP_ULL(num_tg, 1ULL << scale);
- }
+diff --git a/drivers/iommu/generic_pt/fmt/armv8.h b/drivers/iommu/generic_pt/fmt/armv8.h
+index 68fedda41fc198..f204f6906bb14f 100644
+--- a/drivers/iommu/generic_pt/fmt/armv8.h
++++ b/drivers/iommu/generic_pt/fmt/armv8.h
+@@ -101,6 +101,7 @@ enum {
+ 	/* 4K/16K FEAT_LPA2 (DS=1): OA[51:50] in bits[9:8], Figures D8-14/15 */
+ 	ARMV8PT_FMT_OA52_LPA2 = GENMASK_ULL(9, 8),
  
-+static u64
-+arm_smmu_range_inv_last_tg(const struct arm_smmu_range_inv *range_inv)
-+{
-+	return range_inv->start_tg + (range_inv->num << range_inv->scale) - 1;
-+}
-+
-+/* Range invalidation A encloses the range covered by range invalidation B */
-+static bool arm_smmu_range_inv_encloses(const struct arm_smmu_range_inv *a,
-+					const struct arm_smmu_range_inv *b)
-+{
-+	return a->start_tg <= b->start_tg &&
-+	       arm_smmu_range_inv_last_tg(a) >= arm_smmu_range_inv_last_tg(b);
-+}
-+
- /*
-  * Initialize the smallest range invalidation covering num_tg and ending at
-- * last_tg.
-+ * last_tg. Returns a range invalidation with num == 0 if it cannot be
-+ * represented without wrapping.
-  */
- static struct arm_smmu_range_inv arm_smmu_range_inv_init_end(u64 last_tg,
- 							     u64 num_tg)
-@@ -2530,7 +2546,9 @@ static struct arm_smmu_range_inv arm_smmu_range_inv_init_end(u64 last_tg,
- 
- 	range_inv.scale = arm_smmu_range_inv_calc_scale(num_tg);
- 	range_inv.num = arm_smmu_range_inv_calc_num(num_tg, range_inv.scale);
--	range_inv.start_tg = last_tg - ((range_inv.num << range_inv.scale) - 1);
-+	if (check_sub_overflow(last_tg, (range_inv.num << range_inv.scale) - 1,
-+			       &range_inv.start_tg))
-+		range_inv.num = 0;
- 	return range_inv;
- }
- 
-@@ -2639,9 +2657,109 @@ static unsigned int arm_smmu_compute_range_ttl(u8 leaf_bitmap, u8 table_bitmap,
- 	return ttl;
- }
- 
-+enum arm_smmu_range_inv_mode {
-+	ARM_SMMU_RANGE_INV_NORMAL,
-+	ARM_SMMU_RANGE_INV_SINGLE,
-+	ARM_SMMU_RANGE_INV_CONT_ERRATA,
-+};
-+
-+/* Number of contiguous entries grouped by CONT at an iommupt leaf level. */
-+static unsigned int arm_smmu_tlbi_cont_count_lg2(u8 tgsz_lg2,
-+						 unsigned int level)
-+{
-+	if (tgsz_lg2 == 12 && level <= 3)
-+		return ilog2(16); /* 64KB, 32MB, 16GB, 8TB */
-+	else if (tgsz_lg2 == 14 && level == 1)
-+		return ilog2(32); /* 1GB */
-+	else if (tgsz_lg2 == 14 && level == 0)
-+		return ilog2(128); /* 2M */
-+	else if (tgsz_lg2 == 16 && level <= 2)
-+		return ilog2(32); /* 2MB, 16GB, 128TB */
-+	return 0;
-+}
-+
- /*
-- * Generate up to two range TLBI command payloads covering [start, last]. Sets
-- * use_full_inv if the range is too large to represent.
-+ * For the ARM_SMMU_OPT_FULL_CONT_RANGE_INV errata any CONT group must be fully
-+ * enclosed by a single range invalidation. The algorithm using two range
-+ * invalidations in arm_smmu_tlbi_calc_range() does not guarantee this. So if
-+ * two range invalidations were produced we may need to extend the trailing
-+ * range invalidation or add a third range invalidation to cover a sliced CONT.
-+ * Search for the largest CONT that could have been sliced, extend the trailing
-+ * range invalidation when that stays inside the gathered range, or queue an
-+ * exact third range invalidation.
-+ */
-+static void arm_smmu_tlbi_cont_errata(struct arm_smmu_tlbi *tlbi,
-+				      const struct arm_smmu_range_inv *first,
-+				      struct arm_smmu_range_inv *trail,
-+				      unsigned int scale_max, u8 ttl, u8 tg_enc)
-+{
-+	u8 leaf_levels = tlbi->leaf_levels_bitmap;
-+	u64 range_start_tg = tlbi->start >> tlbi->tgsz_lg2;
-+	u64 range_last_tg = tlbi->last >> tlbi->tgsz_lg2;
-+
-+	/* Table only invalidation cannot slice a CONT */
-+	if (!leaf_levels)
-+		return;
-+
-+	/*
-+	 * Iterate through all the leaf levels that were changed, from highest
-+	 * to lowest iommupt level. Check if a possible CONT at that level has
-+	 * been sliced between the two range invalidations.
-+	 */
-+	while (leaf_levels) {
-+		struct arm_smmu_range_inv cont = { .num = 1 };
-+		unsigned int level = fls(leaf_levels) - 1;
-+		struct arm_smmu_range_inv new_trail;
-+		unsigned int cont_count_lg2;
-+		u64 cont_last_tg;
-+
-+		leaf_levels &= ~BIT(level);
-+		cont_count_lg2 =
-+			arm_smmu_tlbi_cont_count_lg2(tlbi->tgsz_lg2, level);
-+		if (!cont_count_lg2)
-+			continue;
-+
-+		/* A NUM=0 range invalidation with this SCALE covers the entire CONT. */
-+		cont.scale = (tlbi->tgsz_lg2 - 3) * level + cont_count_lg2;
-+		if (WARN_ON(cont.scale > scale_max)) {
-+			tlbi->range.use_full_inv = true;
-+			return;
-+		}
-+
-+		/*
-+		 * If the CONT is fully covered by the other range
-+		 * invalidations, or is outside the gather's range then it has
-+		 * not been sliced.
-+		 */
-+		cont.start_tg =
-+			round_down(trail->start_tg - 1, BIT_ULL(cont.scale));
-+		cont_last_tg = arm_smmu_range_inv_last_tg(&cont);
-+		if (cont.start_tg < range_start_tg ||
-+		    cont_last_tg > range_last_tg ||
-+		    arm_smmu_range_inv_encloses(first, &cont) ||
-+		    arm_smmu_range_inv_encloses(trail, &cont))
-+			continue;
-+
-+		/*
-+		 * Extend the trailing range invalidation backwards to cover the
-+		 * CONT. Rounding may move its start before the CONT, but it
-+		 * must remain inside the gathered range.
-+		 */
-+		new_trail = arm_smmu_range_inv_init_end(
-+			range_last_tg, range_last_tg - cont.start_tg + 1);
-+		if (new_trail.num && new_trail.start_tg >= range_start_tg) {
-+			*trail = new_trail;
-+			return;
-+		}
-+
-+		arm_smmu_tlbi_add_range_cmd(tlbi, &cont, ttl, tg_enc);
-+		return;
-+	}
-+}
-+
-+/*
-+ * Generate up to three range TLBI command payloads covering [start, last].
-+ * Sets use_full_inv if the range is too large to represent.
-  *
-  * Normally the first range invalidation is the largest representable span which
-  * does not exceed the requested range. If necessary, the second range
-@@ -2652,10 +2770,16 @@ static unsigned int arm_smmu_compute_range_ttl(u8 leaf_bitmap, u8 table_bitmap,
-  * For SVA on an invs containing an SMMU with ARM_SMMU_OPT_FULL_CONT_RANGE_INV,
-  * produce only a single range invalidation and overinvalidate so any potential
-  * CONT is covered by one command.
-+ *
-+ * For paging domains affected by ARM_SMMU_OPT_FULL_CONT_RANGE_INV, extend the
-+ * normal trailing range invalidation to span a possible CONT group sliced at
-+ * the seam. If extending it would invalidate outside the requested range, issue
-+ * an exact extra range invalidation.
-  */
--static void arm_smmu_tlbi_calc_range(struct arm_smmu_tlbi *tlbi,
--				     bool single_range_inv,
--				     unsigned int scale_max)
-+static void
-+arm_smmu_tlbi_calc_range(struct arm_smmu_tlbi *tlbi,
-+			 enum arm_smmu_range_inv_mode range_inv_mode,
-+			 unsigned int scale_max)
++	ARMV8PT_FMT_DBM = BIT_ULL(51),
+ 	ARMV8PT_FMT_CONTIG = BIT_ULL(52),
+ 	ARMV8PT_FMT_UXN = BIT_ULL(53),
+ 	ARMV8PT_FMT_PXN = BIT_ULL(54),
+@@ -424,9 +425,9 @@ static inline bool armv8pt_install_table(struct pt_state *pts,
+ static inline void armv8pt_attr_from_entry(const struct pt_state *pts,
+ 					   struct pt_write_attrs *attrs)
  {
- 	u8 tgsz_lg2 = tlbi->tgsz_lg2;
- 	unsigned int ttl = arm_smmu_compute_range_ttl(
-@@ -2683,7 +2807,7 @@ static void arm_smmu_tlbi_calc_range(struct arm_smmu_tlbi *tlbi,
- 		return;
- 	}
+-	u64 mask = ARMV8PT_FMT_AF | ARMV8PT_FMT_UXN | ARMV8PT_FMT_PXN |
+-		   ARMV8PT_FMT_ATTRINDX | ARMV8PT_FMT_AP | ARMV8PT_FMT_nG |
+-		   ARMV8PT_FMT_S2MEMATTR | ARMV8PT_FMT_S2AP;
++	u64 mask = ARMV8PT_FMT_AF | ARMV8PT_FMT_DBM | ARMV8PT_FMT_UXN |
++		   ARMV8PT_FMT_PXN | ARMV8PT_FMT_ATTRINDX | ARMV8PT_FMT_AP |
++		   ARMV8PT_FMT_nG | ARMV8PT_FMT_S2MEMATTR | ARMV8PT_FMT_S2AP;
  
--	if (single_range_inv) {
-+	if (range_inv_mode == ARM_SMMU_RANGE_INV_SINGLE) {
- 		/*
- 		 * Produce a single invalidation by rounding up and disabling
- 		 * the trailer.
-@@ -2701,8 +2825,12 @@ static void arm_smmu_tlbi_calc_range(struct arm_smmu_tlbi *tlbi,
- 	}
- 	arm_smmu_tlbi_add_range_cmd(tlbi, &first, ttl, tg_enc);
- 
--	if (trail.num)
-+	if (trail.num) {
-+		if (range_inv_mode == ARM_SMMU_RANGE_INV_CONT_ERRATA)
-+			arm_smmu_tlbi_cont_errata(tlbi, &first, &trail,
-+						  scale_max, ttl, tg_enc);
- 		arm_smmu_tlbi_add_range_cmd(tlbi, &trail, ttl, tg_enc);
-+	}
+ 	/* Tables D8-52/53: with LPA2 bits [9:8] are OA[51:50], not SH */
+ 	if (!pts_feature(pts, PT_FEAT_ARMV8_LPA2))
+@@ -446,6 +447,101 @@ static inline void armv8pt_clear_entries(struct pt_state *pts,
  }
+ #define pt_clear_entries armv8pt_clear_entries
  
- /*
-@@ -2950,11 +3078,20 @@ void arm_smmu_domain_tlbi(struct arm_smmu_tlbi *tlbi,
- 	 */
- 	if (invs->range_inv_scale_max) {
- 		if (!tlbi->range.use_full_inv) {
--			arm_smmu_tlbi_calc_range(
--				tlbi,
--				smmu_domain->stage == ARM_SMMU_DOMAIN_SVA &&
--					invs->has_full_cont_range_inv,
--				invs->range_inv_scale_max);
-+			enum arm_smmu_range_inv_mode range_inv_mode =
-+				ARM_SMMU_RANGE_INV_NORMAL;
++/*
++ * Call fn over all the items in an entry. If the entry is contiguous this
++ * iterates over the entire contiguous entry, including items preceding
++ * pts->va. always_inline avoids an indirect function call.
++ */
++static __always_inline bool armv8pt_reduce_contig(const struct pt_state *pts,
++						  bool (*fn)(u64 *tablep,
++							     u64 entry))
++{
++	u64 *tablep = pt_cur_table(pts, u64);
 +
-+			if (invs->has_full_cont_range_inv) {
-+				if (smmu_domain->stage == ARM_SMMU_DOMAIN_SVA)
-+					range_inv_mode =
-+						ARM_SMMU_RANGE_INV_SINGLE;
-+				else
-+					range_inv_mode =
-+						ARM_SMMU_RANGE_INV_CONT_ERRATA;
-+			}
++	if (pts->entry & ARMV8PT_FMT_CONTIG) {
++		unsigned int num_contig_lg2 = armv8pt_contig_count_lg2(pts);
++		u64 *end;
 +
-+			arm_smmu_tlbi_calc_range(tlbi, range_inv_mode,
-+						 invs->range_inv_scale_max);
- 		}
- 	}
- 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index 7106bd3a8bd7f6..a59b17679e6716 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -860,7 +860,7 @@ struct arm_smmu_tlbi {
- 	struct {
- 		bool use_full_inv;
- 		u8 num_cmds;
--		struct arm_smmu_cmd cmds[2];
-+		struct arm_smmu_cmd cmds[3];
- 	} range;
++		tablep += log2_set_mod(pts->index, 0, num_contig_lg2);
++		end = tablep + log2_to_int(num_contig_lg2);
++		for (; tablep != end; tablep++)
++			if (fn(tablep, READ_ONCE(*tablep)))
++				return true;
++		return false;
++	}
++	return fn(tablep + pts->index, pts->entry);
++}
++
++static inline bool armv8pt_check_is_dirty_s1(u64 *tablep, u64 entry)
++{
++	return (entry & (ARMV8PT_FMT_DBM |
++			 FIELD_PREP(ARMV8PT_FMT_AP, ARMV8PT_AP_RDONLY))) ==
++	       ARMV8PT_FMT_DBM;
++}
++
++static bool armv8pt_clear_dirty_s1(u64 *tablep, u64 entry)
++{
++	WRITE_ONCE(*tablep,
++		   entry | FIELD_PREP(ARMV8PT_FMT_AP, ARMV8PT_AP_RDONLY));
++	return false;
++}
++
++static inline bool armv8pt_check_is_dirty_s2(u64 *tablep, u64 entry)
++{
++	const u64 DIRTY = ARMV8PT_FMT_DBM |
++			  FIELD_PREP(ARMV8PT_FMT_S2AP, ARMV8PT_S2AP_WRITE);
++
++	return (entry & DIRTY) == DIRTY;
++}
++
++static bool armv8pt_clear_dirty_s2(u64 *tablep, u64 entry)
++{
++	WRITE_ONCE(*tablep, entry & ~(u64)FIELD_PREP(ARMV8PT_FMT_S2AP,
++						     ARMV8PT_S2AP_WRITE));
++	return false;
++}
++
++static inline bool armv8pt_entry_is_write_dirty(const struct pt_state *pts)
++{
++	if (!pts_feature(pts, PT_FEAT_ARMV8_S2))
++		return armv8pt_reduce_contig(pts, armv8pt_check_is_dirty_s1);
++	else
++		return armv8pt_reduce_contig(pts, armv8pt_check_is_dirty_s2);
++}
++#define pt_entry_is_write_dirty armv8pt_entry_is_write_dirty
++
++static inline void armv8pt_entry_make_write_clean(struct pt_state *pts)
++{
++	if (!pts_feature(pts, PT_FEAT_ARMV8_S2))
++		armv8pt_reduce_contig(pts, armv8pt_clear_dirty_s1);
++	else
++		armv8pt_reduce_contig(pts, armv8pt_clear_dirty_s2);
++}
++#define pt_entry_make_write_clean armv8pt_entry_make_write_clean
++
++static inline bool armv8pt_entry_make_write_dirty(struct pt_state *pts)
++{
++	u64 *tablep = pt_cur_table(pts, u64) + pts->index;
++	u64 new = pts->entry;
++
++	if (!(pts->entry & ARMV8PT_FMT_DBM))
++		return false;
++
++	if (!pts_feature(pts, PT_FEAT_ARMV8_S2))
++		new &= ~FIELD_PREP(ARMV8PT_FMT_AP, ARMV8PT_AP_RDONLY);
++	else
++		new |= FIELD_PREP(ARMV8PT_FMT_S2AP, ARMV8PT_S2AP_WRITE);
++
++	return try_cmpxchg64(tablep, &pts->entry, new);
++}
++#define pt_entry_make_write_dirty armv8pt_entry_make_write_dirty
++
++static inline bool armv8pt_dirty_supported(struct pt_common *common)
++{
++	return pt_feature(common, PT_FEAT_ARMV8_DBM);
++}
++#define pt_dirty_supported armv8pt_dirty_supported
++
+ static inline unsigned int armv8pt_max_sw_bit(struct pt_common *common)
+ {
+ 	/*
+diff --git a/include/linux/generic_pt/common.h b/include/linux/generic_pt/common.h
+index 09f4767b4410a4..b5a551a22fbc5e 100644
+--- a/include/linux/generic_pt/common.h
++++ b/include/linux/generic_pt/common.h
+@@ -194,6 +194,8 @@ enum {
+ 	PT_FEAT_ARMV8_LVA,
+ 	/* Use the Stage 2 format instead of Stage 1 */
+ 	PT_FEAT_ARMV8_S2,
++	/* Use Dirty Bit Modifier, necessary for IOMMU dirty tracking */
++	PT_FEAT_ARMV8_DBM,
+ 	/* For S2 uses the Force Write Back coding of the S2MEMATTR */
+ 	PT_FEAT_ARMV8_S2FWB,
  };
- 
 -- 
 2.43.0
 
