@@ -1,110 +1,110 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.147
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794709319;
-	b=mbUMW1YAUx/MSCjolIvolfndmVq/i7bXxejyNJZ+/VzknWNed3JXraHCOZD08doCKzkx
-	 A712BP6Vglk64TvZ9hatjQ6xw3CeN9evCj2ZFQUhvxH9GgDaCfctP7kx3aE8GctmQayw3
-	 yXr9+o808YixMf8ZMDFsLKMuvcJyueA4PodTQYObPYdps0pZmjtD/htoGj3eilxJq7xMy
-	 m65aPmi4Pn7OWl3d3VH6nAaIloT0cdmsUkk4ZsZeHa342rjeQOeP9ZytNnxALjtNFC+fF
-	 mOCiusW6nZFFTZaNpSmep0P74u7LS1nYj+RFePgXgeqRfz1Yv60/I4hy5HCHIFKwrVw==
+	t=1794709423;
+	b=unmBbv0gDx+yVbyxFeQcwFWWTz9D77QcGVyRLnvYc+mvQQ6kVsdr7NM/GY9O3t/NDYG7
+	 h/bplCncWII+v7dvewPnGUZmeM5AeKRq0tgEtDpG9ZX5d4sTtxmSgqFBamGIIcBldme6j
+	 xSljFmEGzbf66EBmz1hjPgeSi03nI6b2nA+XUXNGQdj0xu8o968FQUxfvZCXOc4bg84ap
+	 tF0mPxxk8YsoJcu8zCdyYqEIOUxdCkaEUrzLdhR8txof8AzQGuGOJwl2paEmbovhWk2J9
+	 FHkwkF9vbuyZmnToiDANUJZdNiwJ9pC8zdEwDv/J94LTFR9uksTYsAUc6+IF6b58buA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794709319;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794709423;
 	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
 	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
 	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
 	 Received:Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
 	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=qXHHHc41FWF6q3BZigrkQJCdqW/gMYOPhflhdnzvf/M=;
-	b=xmcq5YkWdTNkOGEx2tdrRLjDc4unDqK9opeOFFc2SJH4BfK9YaUuZmHXjPgMmBVqpXLa
-	 ruoVS/U7gyDgVOW4n9RvtdZkjwJ2FqG42H2Sj+DsWagbnmckBVFv+m48053UB9rpuC/3q
-	 K0VUE7+plxsSCMWuU1Wjsn3NxfykNrP+768rmaY1qAIpL1JgcKDjgOdSb4DjbBZ+HOtzs
-	 LXzmhMcYmJ9Ndut8nS/CT/HK9MkcJGm/4Cy6Eil58ubIxONrVYIc3VAXtnwOE/gsGdUGf
-	 TI5uLJhnWz5mBsMUx0v5V8+GejLzdM4cD5A+yUNUiVyNOoTJwpClyDRnn6FCT+NWEbQ==
+	bh=pyJEuL9qie4Q5tdeck4L8shD9qsGn8RQvwkmrVaX+94=;
+	b=0SMHv5VgXoSjxp9c1R1Tlt5L4146dQ2lkwVX+vOUpd20OPI7wh9VfF/vHOXjs9muqCWM
+	 MTqPvLNHise2h3MUBLEukmJk/UfsBmoi/6V+IPtQBdAVFHVeCCiw4K3CgpSTs28VpuDKc
+	 ehYiEMO/WaK0KLLYlVXnUEJWek5ah48MAvX6sAGY6L3cNRhVtso4J7zNgvZnyMX/Qy8oZ
+	 ooIvsCGr5Bb5lEJodWEfERfUv8maF7PDfhfvQnHGVy1Ky0dULNIykdonKBojJ8HsjRq2r
+	 Qq+a7/JNvqGO0vYxuhiNTUPLUpCCc93a79ElLgKhcwAcNee0d4RPqZ0bkDoOIxAz8uA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=none header.from=seanlyon.dev;
 	spf=pass smtp.mailfrom=seanlyon.dev;
-	dkim=pass header.d=seanlyon.dev header.i=@seanlyon.dev header.a=rsa-sha256 header.s=fm1 header.b=nzWwNdHq;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QLZIT08I;
+	dkim=pass header.d=seanlyon.dev header.i=@seanlyon.dev header.a=rsa-sha256 header.s=fm1 header.b=Snaabcmi;
+	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=VvgkzkDz;
 	arc=none smtp.remote-ip=202.12.124.147
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B60606A327
-	for <patches@lists.linux.dev>; Sun, 15 Nov 2026 02:21:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B0B60606A327
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CE9606A323
+	for <patches@lists.linux.dev>; Sun, 15 Nov 2026 02:23:43 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 46CE9606A323
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=seanlyon.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seanlyon.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=seanlyon.dev header.i=@seanlyon.dev header.a=rsa-sha256 header.s=fm1 header.b=nzWwNdHq;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=QLZIT08I
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 40B311D000C7
-	for <patches@lists.linux.dev>; Sat, 14 Nov 2026 21:21:58 -0500 (EST)
+	dkim=pass (2048-bit key, unprotected) header.d=seanlyon.dev header.i=@seanlyon.dev header.a=rsa-sha256 header.s=fm1 header.b=Snaabcmi;
+	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=VvgkzkDz
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id C35AE1D000C9
+	for <patches@lists.linux.dev>; Sat, 14 Nov 2026 21:23:42 -0500 (EST)
 Received: from phl-frontend-04 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Sat, 14 Nov 2026 21:21:58 -0500
+  by phl-compute-07.internal (MEProxy); Sat, 14 Nov 2026 21:23:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seanlyon.dev; h=
 	cc:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1794709317; x=1794795717; bh=qXHHHc41FW
-	F6q3BZigrkQJCdqW/gMYOPhflhdnzvf/M=; b=nzWwNdHqrVjyHJBgIP0HliZnmK
-	48aeWu3Ti8o5sjWv1BsiwhDzZ1CSC4E1MFkhds8yJn3Sl7bwiHeoPq3/dFRUJHLc
-	7vj/ctfSwR2PB5ETfIdXVL/n1xg0+tpb4lETThtTcJAN6cz2AmL5KxPPj5Xc2uNd
-	78BRtjtUAyXj0QNtljK/PDx+mGu6o5qe3QOPTcn0/yRnLpwWVW2Hi6Exo0v7CQlv
-	2okaVJpCHp6tSIf8olTOaowaN/V/Fzz3IJB90VHSqvZISSn3hTUWg0Jk6n5Y4f11
-	mCYODqbljLCngcBTdDrJMLEb9CDZNueaPx8TESjxQGAN0PYAjXG7I4vc8ULA==
+	:subject:to:to; s=fm1; t=1794709422; x=1794795822; bh=pyJEuL9qie
+	4Q5tdeck4L8shD9qsGn8RQvwkmrVaX+94=; b=SnaabcmieKA0HBR+6ETwRvUOJ0
+	DcIeTTfEC/ehin+epd2xDJMaZ/Z1BzOS1K+MhlXfOE7X9/1siRqowj/RLTZML3Ye
+	PTVBzMEmNKxB5jZIvuucVONuVLSVbUxkH63s9JXjEDc0cV3FFQxa1Squi2Kceeca
+	i6aW7AdKxd3nzLSyVTCFJkbRSOfc2A66gGoj9O8X/s2UDEKglw1X1tPEEoDttJKE
+	TgKi2UZFt6yE7DZ+Akj7b3XHmBm4i5HlFebidgitpGyILX7M7Gp5JsfKwzx4R8d9
+	uBofVlKDvR9MPMyxOcCLQm3iZkHQ4tcBS/GyIWg5Vu23PJe+i53gKqcPejzg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1794709317; x=1794795717; bh=qXHHHc41FWF6q3BZigrkQJCdqW/gMYOPhfl
-	hdnzvf/M=; b=QLZIT08I9Lu+pGyRMyF2bHI86+e5DrFX50nB8ZJoA5KX3WLqlf1
-	VTFEmjDNCOBqQx7mkqekcxvlBKnvGxqqbAaT1Vg8FIN+Tsl+1TFrknZKdKMAq35G
-	ywS31d82AInBdZ4IMGxAbWt+oUyWikdy8k+Wh4/2RXxsCQWq6dPeqMXmwUDJKXoM
-	3iw6ZuIwcAW0tSB1EOdyUiUz7sQcGKHBVCorIrYP2+pcJjeG2GGr++iTfy4C3fKD
-	gA8e3atQB1PrU6fhbw2XtImg/pQBufZ7LyG06iaH/G7/nVLq94RIA7oiSNPst8pV
-	gghB/5gm5tBn09Ntkd3+WHM7Nw3cjEx30+g==
+	1794709422; x=1794795822; bh=pyJEuL9qie4Q5tdeck4L8shD9qsGn8RQvwk
+	mrVaX+94=; b=VvgkzkDz7kWeVJUCIcV0FvjVrOp4a3GEQ110MuT+pLRhPThK+9w
+	jfwqb2hu6qhhLVC0EeMUXs/CQJTNAwNTU1Zq+L75TIYeANNlGC044hucg95mwPsI
+	bO3RWSZFUMSM+TQnhfXu+rob7gj4PikTOyFyOyduKQor46k4ZcC7z4uK2aZRWQ8q
+	XRd8GPA+XzRwQiclNvysQCXYbifBwQvV3lUSo6Ukd07BVRpzExgmJcYvEULNXloZ
+	mMdIoux1Uq4YYpNigL9gCRCyQrZ1q8F15yKDFEZSSJssmZf0P+WIeZiXWJ6unFLp
+	jagStuU2shlLhrL3lPNHx7O3WW7tIIwiWCQ==
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=sign d=seanlyon.dev a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1794709317; d=seanlyon.dev;
+DKIM2-Signature: i=1; m=1; t=1794709422; d=seanlyon.dev;
 	mf=PHNlYW5Ac2Vhbmx5b24uZGV2Pg==;
 	rt=PHBhdGNoZXNAbGlzdHMubGludXguZGV2Pg==;
-	s=fm1:rsa-sha256:sjm3e8VsJbGu+fQW/eHM9k/9bCi5ziMVjO3p8gMJTMyU4iS
-	DFw5OcnArWl9YGChVItOYO2gz1PE9wAhhabPCxGei3hRyT2Txd/i1Kpn0Tg/nV4j
-	hoPQtXKzlnwRT7YVRdJHMf24Z3gPF23NMvefIM4S1guh6tKkKXVMbIky9V8ceuGc
-	yoBoEnLP/kf0GtcpWYul5wPJIkkSHfA/gdsc6u6sQdTBUvVIodNLbTgBSEh5zl61
-	MVOokTQZ1jRUv7j4StBRH6gB2e+x4K9oNFx51IefPCy0ocDeaOAE9DeQvQkAYqoP
-	QUyaG2Mgaj41rMuuuTvEFpWFrKHxFRdq1xLr6Rg==;
+	s=fm1:rsa-sha256:Uj0yFE6nxExoBcw8IkFWSgLejV0QFNKbpbKXNsikRvAZKdU
+	4MVpcaRw/Z/Cx9t7KgZTcpT3tiTEPHJhHvEniNB7MhK+fKW+SUSXpFQlTjpmZfvU
+	VgklY/hOHe5px4Nk57dpmPYNz/KEkU0Fw5ImgbNByjuMUTQ3nzKCwfpBeJzQeOda
+	26IdbKWyx6EmeP4lUNFE7zWBs6aGvZqOSrAYSrXmSg+iR1KU1MMExUZ29OFJ5Mq9
+	pSMjaUncjpOSCNA6Z/lDolRCcto8RE8U9sWRVT8/dUxU5IeG1Hx2i+B6fGeXZWxU
+	6PIBZ4bir7DaFBa15mfHHasty2KvdHu7ttyg+nA==;
 X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
 	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
 	action=mi-m=1; hc=12;
 	hn=cc,content-disposition,content-type,date,feedback-id,from,
 	in-reply-to,message-id,mime-version,references,subject,to;
-Message-Instance: m=1; h=sha256:NEzhz4Fw4n9vjuOdz/kG5LzYlIst2edlg/5JQ4+VnHo=:8Oz77JzRfdquwOGo2NWoEYod6kQGN1m3tBuI9IpBC44=;
-X-ME-Sender: <xms:RRf5alqI9wp-ZOHnH3OqB-U-Oll2ogPu9c7vK-R-ukXqDXTm9gTwcw>
-    <xme:RRf5alXR8dfJikQNNZMwg2hVuE7-RdVgbGBy90OSglDM9bdsaHv8Spb7cXymZ_LpA
-    eb4qvFel8kPPTdQzfSwyIFY9VcCaNY5KeLABpz4qTGhC0UUAFlScDk>
-X-ME-Received: <xmr:RRf5aj9p1zeFXQ2yikg0JbTBlbeYwNX440EXznatlxSSJYAwpFfFdPSdTIOIvupoY4s8ctkU79doY_RZr0C0Td7rDRg>
+Message-Instance: m=1; h=sha256:mMsIwSRy4Fo0fenOyS5an8wFuhyEnAJCw2MD5Xu1iI0=:UCYJ4TatcK52EVb5/wCjCGvBMqkoHuWp7r1J7OEchiI=;
+X-ME-Sender: <xms:rRf5alau5CLrwvW9PNl6YR05OsrqeHs6mnu1VlHpRSBUxOp5Wun8DA>
+    <xme:rRf5aoTNSnf5mw-lEps60mCiIdm0CbHOH8Y4yMVoh-9gIipqrtEmTiJXbaJH-5tV4
+    ZLtUOjT4-mu1PQedSqRNNESvOseWefLTeTPq_-PSvd2F17YHR6djQY>
+X-ME-Received: <xmr:rRf5ajcAQvbvVibJiy6Vc47gi3BmhKOJAOZykBV_9oGcpeJofHpDCZ5TEzrraa6301YCB3KACnLGOfyTSLU9rzAk_Fk>
 X-ME-Proxy-Cause: dmFkZTFZjYd7mGpZLTuxKaaFHRoYdX4i2NEzO9HuaJQJQXexzsQxFWJpruajcEOtNfm125
     IN8fVsjuYx++xYPC9l2GGtQqH5GoAtFP8SpUPBA3WT/KVbvUGNozjI1opdcjs62uqwRl8V
     hCNLu2O9B+yCI5nm0ys6Yewfc+IH3pkdkGdlcHTMhxk+0WQcD1N9INX1NenQvaQo5ZL0Je
     oE85VCJTP6I6oPToVijoI4I0XvOLZyGHAGMTrsGjuTZC4kSHrz5HPAk7m7yCxVDnYepdyW
-    H4MOhW6eCoeuSmkxNXVx9BRgf/XRgwk9G6iNN6eEPvd0pDjYhPcfvdcuyctibHTm1x42Q7
-    fo7YOv4sigSmtsqE9oYZKTv2jUhzvh7vy9LRQ0My9dGzAOAm5tCaiN1aLSGvTGpaA81GFy
-    a5lgcmTVnwnAlafDP+OCNd45YJIhOFYmPXpWhL03AD9B4ytpF7Ahy1ZqOdyYpLSkvUqUxb
-    bu9WGzLjSPedx6JZ9E4VELe+iy+H1rh7h+D4B24yox1Qs322aWKhVHKbTFa/n8GRBacZEN
-    l2lD84qWjqNO7/QYKP2TGdxrQYKdXnMuF8cda/UepNAT2ctTtqOd9CjPlXOsXrsOqqIfiz
-    KSxIpgvlpBnLof1lH9ctG5jg8AwzB3dt2AY3WK/27zDpO3lH6cTt1y0SbX8w
-X-ME-Proxy: <xmx:RRf5atYixnIFXx8x9cVn2JQIUFoZ9XTn2J5NQol88r7KIRm-clEzzA>
-    <xmx:RRf5arevTFPYXIWtWzmjd0kNnWpvwnhLGCXDckkJuBQf61pq3BgNXA>
-    <xmx:RRf5anpcAxbS2QEVLTz3VvBBWjhFaATHC-BlIfMfGcBRRkoaxMkIPQ>
-    <xmx:RRf5aiCwCjuZ-RWxyb1R1mnIBntR21docKjOeqtm5yfxIle_B7nODA>
-    <xmx:RRf5anFv7HokLOkdzIQGTU1sl0LSbm9HAgnU1ooaPehO96PfVXGWL6P4>
+    H4MOhW6eCoeuSmkxNXVx9BRgf/XRgwk9G6iNN6eEPvd0pDjYhPcfvdcuyctibHTm1x42m3
+    cKIzen5Y1FTerOEoYo/a+IL5BIBSBH/juCipeqC4D0W9Hc9XvZgW5Pn8UJLHmDoeVV0U5W
+    3ZGUN8zj1kM50S+ImqhD2LPvI1PAXa80t7hV90/AP9odxmWlilj+Zhs1QOFn78O1tIE3ad
+    YquPeeYTfaxhIECBu/DBmlOpKGbC7EpZrGlBd0SWO6Ory2dLvktphYshLqWtcw4vaMM3YH
+    gIenoDKBP4CTkXF94X0jfelctjuQaF65XaGYz36kBFa0x2nElWssj/pCi4QG145Ib6fz1C
+    94hglDq84v/eMHi4KEGHgVmOPmiOvbh0SZiIH9Xmv9Ga1f8QmXR/GPVdVqJA
+X-ME-Proxy: <xmx:rRf5anlrcl5Ke9HijzRZ0pkqqToytRdPRbDhV9UH4bdyiZwvEQujgw>
+    <xmx:rRf5aogxPoCWiHSf4mxWKlwwnr3FDAyawbj_fMsLhEDtLK8hMPkFIw>
+    <xmx:rRf5aoHdttR1jYTZW5dB44I0W73ALcFezsb3k1laOB5ezeVeOhSj7A>
+    <xmx:rRf5anxXlPePEFikKqZkUL2_ucOqTb0vBu1KuVrHykImvnMSzFOiOw>
+    <xmx:rhf5ajvYu_yPqVZ3d6P8eiKHXHw1is8GJX_qtiy9HUtks-PL2IleVCU2>
 Feedback-ID: i07c64b5b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Nov 2026 21:21:56 -0500 (EST)
-Date: Sat, 14 Nov 2026 21:21:56 -0500
+ 14 Nov 2026 21:23:41 -0500 (EST)
+Date: Sat, 14 Nov 2026 21:23:40 -0500
 From: Sean Lyon <sean@seanlyon.dev>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -115,9 +115,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
 	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
 	sr@sladewatkins.com
-Subject: Re: [PATCH 6.12 000/670] 6.12.118-rc1 review
-Message-ID: <avkXRItw_Qahug4P@ncase>
-References: <20261113153811.177190860@linuxfoundation.org>
+Subject: Re: [PATCH 6.18 000/686] 6.18.64-rc1 review
+Message-ID: <avkXrIG1xqzHWMcv@ncase>
+References: <20261113153820.902362109@linuxfoundation.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -129,16 +129,17 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20261113153811.177190860@linuxfoundation.org>
+In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
 
-On Fri, Nov 13, 2026 at 10:42:44AM -0500, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.118 release.
-> There are 670 patches in this series, all will be posted as a response
+On Fri, Nov 13, 2026 at 10:42:13AM -0500, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.64 release.
+> There are 686 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 
 Built, booted, and tested on hardware for x86_64:
 
+- AMD Ryzen 9 5900X, Nvidia RTX 3080 (nouveau)
 - Intel N100
 
 No regressions found.
