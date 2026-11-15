@@ -1,11 +1,11 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.52.29
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.195.60
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
 	t=1794785454;
-	b=eeba4eIprRNSHweQNw03aAR1hb5kbunBDvO6VHuGY+lJ3UAFnNer5HR63NJEbcnDPdk/
-	 +Te5RsBI80iHtepy+tuNrBQBlMrvMTCAgNkMY5WXSEVJKb68iwOgQtiuEh6pyzmOuTcXW
-	 IVVGrkIe0U7cYDCMy4KL1ESvuIcJprGNlWuTyQ1OsPyhIUW0b0ClCo2w+WXW9cHfaRO4N
-	 gvtDOR3wIFqV1yQA7ufxIji1CTeLXIFe4oasKloCxc98vkaHW/jx4lXPL7/HsChQRqlMq
-	 wPOE+PxMrk6FZB8JAxTzb1vVF1UoEL3mkie/6uPsrg5Cv6I4od1tTHtSnvGfbLSC68g==
+	b=WZv7IIvMq4ftRW2fj8ttkLQipE8AafXiOx/fLl2BLhBzguCY3uKOdUFUF5Ven64comdb
+	 ixPdgxG0F1jb7wD+KolOds7l5f5epGmp56QNtENILNaPqdfSd6w9SrH3g1giB4E7dVDcX
+	 b9UjS1iDEUlnRH5CgjgTs4D3ipv90bwnzt0zKmrrhUShK3C7WNaf0NILQeOHdE/e5CCiG
+	 LiTlidCMFC3Yxw++VG31W6E1fkkxKTVKmCVCSy3Dx91mnz+KpaEpoW7t9P5aQt7ayuWtU
+	 LW98W661eLnbQW2G3ro1uQYZGccdGTSh7le9daJU0b1BNWYq5OKIyCs7nBsGNiGytbw==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1794785454;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:From:To:Cc:Subject:
@@ -24,54 +24,54 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=yBceUHc0juSB4msgnOEx+rMbLLKcD6wtYjNEq68B84w=;
-	b=IdVLBzLDxQrBX2Rj05KnIbXJGeUInAezgSk1hVTEjDbf19ULPHawS/1SuBtS1N2UgkXM
-	 glAB5Q10WxBpEgSD8hb5JGXfwuPVFlzld1Z7DaXP0jHpbXMm27ES/zESZwsfWYt4DSu3e
-	 rs9j6BwGWnCoN6KZakWuAuJA32vD0OH8CGt860nREXsBZoJ5HiGC3YmyeI3c9Oxhb1Lrh
-	 UaXlCnarBsdfZrTUFY756DdkiSAWq1JsoYKeLsoAU9e2bUhrym8/lrBXrywHF1zLbHkdt
-	 IxqNgQSZd0YlPvhOAnc3hJ6+XbIbPfjZTLxU9rCE+ib4bpK7usZLo9XJ9XuMlvbzxFw==
+	bh=xyp1buzycIzqa8M+araXIBo295+MZBDKOqj/6Zt7Zro=;
+	b=uUKM9301sylRp1MIZbRTrcgPcNAEYkBUTdWRXzZAG7jXF52Wzcyp3MrjIRa6fMXHTnXH
+	 VajUF2x6UxRrkqqjDICD1bpuJmXD6n1YdiIPCRCWKLbKNCzPn9BNw4zC2U9WVLPo6cbnv
+	 LRQAKCjSTFO08vYbKTQhtJ4G4/y1LBwaVc0lTftgO/ViWBp702NyHZwEfoPbyX3edHg6r
+	 6+jXIHWIQokvFA/6HiIcsIeVx7GrMv9YXfXq2s2sI9OV7SuwN1SxvN21uAR0rQpgAkk9Y
+	 Bfl0CCJ2yssgsiAe+NaaosuD/I311t52eIJ1GEqCj/wrBojrImlSTfCS3/DM2sz1YxQ==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=e+Ihbon5;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.52.29
-Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011029.outbound.protection.outlook.com [52.101.52.29])
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b="pDC/xH8E";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=40.93.195.60
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012060.outbound.protection.outlook.com [40.93.195.60])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C45606A33A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9646F606A31F;
 	Sun, 15 Nov 2026 23:30:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 72C45606A33A
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 9646F606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=e+Ihbon5
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=pDC/xH8E
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=b4gQyQdm/z3npwHqi+kNhBAt9jrwY4Z9Kz+q0cFVyJhs3MWFxvxvK4+owO6Negy/S6BdIEiArYAZAl7s9vWHYqPiKaG6AbgP5tAzG1Qx5+c7aQeQ51D2rs0QKQ5kUAUd5edZs5VgdcxWI9tOT/f7nQiAe7zy1emZTlrCWNgN7IlkjpX54Ugy4UyTTnmEdBCr/8uAckQ6AWLGxfzxX4MBYYToXhwmtkrgymuT1seFtanMmc58LUN7n9Ok2RygWjn40ELbuOZQs/bm1POXFQDXThGrhteeYAI9KyrTTs1Kx5ffSk88SGwXQmIqqexhScVicDoxAd/frpOLuCqwv1AfgQ==
+ b=uUWE6h/Q9TGhqfXUkC3U8sYCyXOycR9okLrhDEriu46IH0NR2FuUiusuovPQ8u6dt12lTT0C5NHhMH5t02jK0XGq2IkPpWssup1I50zSXZBzD0uKUySh/UXZgkuDTr8wV5C3W/nuJatiUF439xkEd0As4sOvwjst9IhaOKEg1HspWxyBNHTv59FsiKaWisHUXFeAGQLxE/5gXG153RPgQvY9m+iPZRn6J/7zqfihARlKvUk5/ce60ufhlfQaeaxYCYgP2+JTXFKa6XoSaVQ2d75FHbw3gla/Etu/kZIdeDYzYbiOURjo3lNdEhqCAh6d9ZKo3yuCoUdryHFiZYVToQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yBceUHc0juSB4msgnOEx+rMbLLKcD6wtYjNEq68B84w=;
- b=RNCJNA83vtxT8WMBMMujo8oqkaWyiYFodqNpuXCsa8wkXyzr6wev3lOX0/Avh6yoxsfg/LuHzC3QHHc2vTczHG4tYHVu0Hsz7wpyie2djTnjrZ+ghv5wWsnRjQhzqkXokjiSDcUrjbgr06D7gnfl0Iv5IhPQRRpvFp8JQpbcdQ1JNc5tHNCdh85XgHuHqbmjiEWJK2GkgvuNqb3IkNHwTniEmvMrsj8vFci1mLojUxezrvXJULEYmUvdmbSSij2TW8R/dR+xqZhC/8+TXLZF+Pyh8A5PuMptZ2vQ3bbLHa4rzup6PXouuoOgIUYSJUxWamSrW/kzY0Q0e2RL9gDCzw==
+ bh=xyp1buzycIzqa8M+araXIBo295+MZBDKOqj/6Zt7Zro=;
+ b=fUIHZFby5AQfqFcA165OyF3c2mCEjPzC+ulTXidhBTYliD9fpiqThltUI/1E3nr/NyxU3eMKAYBoSNjrN7Yu46sj5Kj45Dc310lg9LI73TUYfpRSESB0HzMXouw9mTuM3MZ8Ew+68OI9SsbT4z3e9QD6UUfyWERFE7a3EuXh6gDvEmJMmMwea/DIZ7RUVrIaAabjO5c5iQUFbSLq/5DToIjH5w+OzPLIDQ2XNUWMfKaecKzVmc/1FefOoU0OrpHj4DIJrVbX0xGJ79wLHaj67/VVN9u2T97SUywmkf1xkOJDi4aSIC3Pqvg1IUTXm+PYPjwa7QlWyAASs48w2EeKqw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yBceUHc0juSB4msgnOEx+rMbLLKcD6wtYjNEq68B84w=;
- b=e+Ihbon5E2EkgImcajZL37hITRCt08a/EUJd4flue6EhZGV52bB/hpO0/7bJwyur/xmPmeF2wtbkw6BlpfRVGJW4dHTt+CGMvtpC054A6hsbxxbN/zEyWDSNsKu327d4iWq03xczbyhP7ymcKOjGvKJ6GLgiOvpPam/V6qYjNCrRKgZ78fJ6x6cv9wqx7emZyX3cGfkl/t5dmNGLlhXqemzAGsGZj4HrL2SD+BqwYwgKKKstQR2jOvSYB0s+qnkQeZAIfDD7J+50UdRlbAUqaMwHoTV8fWXqeqeeOus7L4KELvudBa5BOMzCZjOPImfoSskbKE7IsDeLUilmFNlRIw==
+ bh=xyp1buzycIzqa8M+araXIBo295+MZBDKOqj/6Zt7Zro=;
+ b=pDC/xH8E+PASeLlNSwnISr9/DNbRVbz3HmhiLWDS5dAFoQIAW5Ndgpnkho509FedkmzYlAv9d9JXStyWjZRLrlRVJdQqLngo+G1KwjmOu6tvEGJfr8za5w+KsM96CrkmQBWr0hoYGb21zwY0J542fBMzFHeMph5GQQ8C6JbSYXaTyrzAWMQIYnAxWn39sZ+XLwTicHodpJXIRYYFOKt5/DZuM5VG+rbEc0hU8OcTjAZaGYNy7oEyaNAVsG9BDDg8V3hpNGMGkRj46O/L3gNyW16SMQCiK/MRoVBhXY9JxJk0mY1cvGtrNKeO7r488CHDWOTgK6jREGiihkCZzb0AHA==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by CH4PR12MB540976.namprd12.prod.outlook.com
- (2603:10b6:610:51e::22) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:10b6:610:33d::12) by DS0PR12MB8815.namprd12.prod.outlook.com
+ (2603:10b6:8:14f::16) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Sun, 15 Nov
- 2026 23:30:49 +0000
+ 2026 23:30:46 +0000
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0615.013; Sun, 15 Nov 2026
- 23:30:49 +0000
+ 23:30:46 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: iommu@lists.linux.dev,
 	"Joerg Roedel (AMD)" <joro@8bytes.org>,
@@ -87,15 +87,15 @@ Cc: David Matlack <dmatlack@google.com>,
 	Pranjal Shrivastava <praan@google.com>,
 	Samiullah Khawaja <skhawaja@google.com>,
 	Mostafa Saleh <smostafa@google.com>
-Subject: [PATCH v3 13/13] iommu: Remove pgsize from iommu_iotlb_gather
-Date: Sun, 15 Nov 2026 19:30:43 -0400
-Message-ID: <13-v3-97feb2edfbab+748d0a-iommupt_armv8_jgg@nvidia.com>
+Subject: [PATCH v3 05/13] iommupt/kunit: Skip test configs without supported features
+Date: Sun, 15 Nov 2026 19:30:35 -0400
+Message-ID: <5-v3-97feb2edfbab+748d0a-iommupt_armv8_jgg@nvidia.com>
 In-Reply-To: <0-v3-97feb2edfbab+748d0a-iommupt_armv8_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: IA4P221CA0005.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:559::10) To CHBPR12MB731189.namprd12.prod.outlook.com
+X-ClientProxiedBy: MN2PR22CA0011.namprd22.prod.outlook.com
+ (2603:10b6:208:238::16) To CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -107,149 +107,92 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|CH4PR12MB540976:EE_
-X-MS-Office365-Filtering-Correlation-Id: f847bbd2-c46f-4e97-34ba-08df4370791c
+X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|DS0PR12MB8815:EE_
+X-MS-Office365-Filtering-Correlation-Id: ccbed500-99db-4df8-e2e9-08df437078ed
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|366016|1800799024|376014|7416014|10067099003|56012099006|11063799006|261026121527099003|261026140227099003|261028144727099003|261022105027099003|261022075727099003|261021123027099003|261021121427099003|261102123227099003|261009223027099003|18002099003|22082099003|3023799007;
+	BCL:0;ARA:13230040|1800799024|366016|376014|7416014|23010399003|10067099003|11063799006|56012099006|261026121527099003|261026140227099003|261028144727099003|261022105027099003|261022075727099003|261021121427099003|261102123227099003|261009223027099003|18002099003|22082099003;
 X-Microsoft-Antispam-Message-Info:
-	4Ss9kEqkxIMRqO6pxPVIXU7qHSseS5+kRzxztDLLYuVO79EsIqEUvSuHVhwpeuQ7clT8bnjYSr5WLeBbLNl/bTZhwfnhQkgOdu5FNbgirCT/6DCdq4NkCNboo+Ac0maWQloEQT2qN0ISimv81H82wnPAb1pFCXHD2PaMFw+mGpYNYoRuxn+afaPGDpg2s841Evxb7mJuazWumk1GQTwWCUNMiycFMihSA5kg0MS3amOIkl3JHPpXVh+ymfLhKh39vH4ChZiCHcq1nfUKaa9ZMMbnHq7udZXcN1kPte/XGXYnS56zVC+gZFvtV2+7Fq26vHB6zugo4UfVyDxd6u4nmlPsXWuJn7VjmMJ5APP69f0t90WKNyBsd99x32430yXDjehWgsFdDwxSMSb9XDOvhxVip+Ngvyu/O7oZs2djJ2qbZ7ORbHQsnkiovufd2wgwPHkSST9WhCExwPvZ/JKpb/CAtyu8l+Q+PzdaSb+ukz8fW8CmI4OCHQ9qbYrDPT57Bf3AC7dXUIk26qp/RTf9GNPEjBxnbuwRydXC+YGq7QQDyDYN+sxQrJT/tFSBNvCbroUUd9c8BDG39VnAWPWNWsk3wZUAMZdN9Jsa5rLRw5W3aTajM7fJGNxq2Y9vGZqJrNvX9Iy4X8iMisnEMYT2+/GQ8k59evPnxdUFEnHD8gE=
+	zAafzJBgOQlh4Tu2TqFs8nPbkcLOj3nScAGzoxhaNxMew0coi/SCcBQRdq7/qmrn2NYKoCOg71pmuVmeiWgtSaigt4jhzwO9l46ezWPWbuuXBn9nTDEa+yGOlAQ86jLtUbMQXSWlepu/TpjQxSEqndm3TgAMdnvspVJn5hd8ZNsxTSZJC0xKH4bvm0eK54ihP3M7RuRDP5lPpLMP49RH4JsaOhgwP/bek65kYClwLRDDTWnOXfDvaYf0g1wjB28i1CZf5x3RrPQ+8GYB9jghqdhdT4vJROT2hixYA3O33ANVRo7659ESth8/Eca7/lIGtnt3sQvFEEHEA1TDA3n6vWkbdF306t8n7wmYDAiebW6bFf1q4eHvDLtuXJhuIukr9K5bRCudslXC2M1ULmQ4nU1jeRvVaoXUpqW+H22wtTqTZrApRwHJaXJItGlrJCyw067tSCy8KZP24FKzWF9PdSTALG7BnroHEjcPyR9Zg6dRJ/fYg2ITODa8crt4x28ewF2DL02lHazGOu6OHZgPYGBeQuP56dfUwlZ23s/ANGpVX/HV4VLEXRVs92zq/R23uDiDBYJNs5VfItDbuqsWOJw/IHuGsZmZgyi6/Lfvt/ZD+tlULRyrJNpo4KjT3eWtc3a+Jv/JPqwxzFEDLT53luph+dal3vU113RrZZ7aWHc=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(366016)(1800799024)(376014)(7416014)(10067099003)(56012099006)(11063799006)(261026121527099003)(261026140227099003)(261028144727099003)(261022105027099003)(261022075727099003)(261021123027099003)(261021121427099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003)(3023799007);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(10067099003)(11063799006)(56012099006)(261026121527099003)(261026140227099003)(261028144727099003)(261022105027099003)(261022075727099003)(261021121427099003)(261102123227099003)(261009223027099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?+/WblEDE8f9BflmpR29TF2yY/M6exEnEubNoe0+QkEw76EY9xOICpuMwZRgM?=
- =?us-ascii?Q?WFmRrCvAxI7KaNpX13W6Ld53Bu4HCBxY8ARWEHnkhVCSKUJrEfX5GALzohFs?=
- =?us-ascii?Q?pxgzOaizFFTAuvxrBNzR8DJJzSXcWFv4TgXjUc+EC9aFP5vA3ok7F8Cam8EU?=
- =?us-ascii?Q?ZBwH26VXLO58Kjg/r/YNGT6Hk8E3MSvA8g0TmsQyHkZIx7IDk5AvJZw8Mn87?=
- =?us-ascii?Q?3eUmpKPqqLvdCaW0t8UBS4VGhZ142Sgn6MOubixe7Zc0LFzje942sE4D1tkS?=
- =?us-ascii?Q?ARWF3BDZ/0DZNDLb2T40N83pBh+UgenYgAB1nSUi9uTUBXRc2jv3l1AwXgse?=
- =?us-ascii?Q?vtVZFLy2H8hdJbVRrbjOygH3aUUidU9DIm+gMxBbw7EQD1Y1KzUoRHqDMIES?=
- =?us-ascii?Q?Nr1cMhbis/eNFk1VZOPUt85O+gG9cDgVcvNxQeLmpWW0eCfsy0mPbj7T07hH?=
- =?us-ascii?Q?V9bUqndhBG6/n39NJ2FHKAHhJaklEAyg13IW88mpaqGC+GgJuB51OxR1NvcZ?=
- =?us-ascii?Q?xiANwJkyLD/0tD8jOPgEe/wC1C1c1VAxYY3kBugm/Suiv9o2MnqpxZgKDbf+?=
- =?us-ascii?Q?g+GL7aShhlHlEI0wQvaUgWQ3oGH0M8GoyUHqXhUFfggUnwZYmad/S/jw5g4S?=
- =?us-ascii?Q?nK5sR2+mAetsxA8WFbieCelkFRDJM0Z9gs1jch8vtYPYY5Uvu7fL2VKZ3DN+?=
- =?us-ascii?Q?nJdkyUlq3fXknlrgEXOpUt/Lz4TaYHQwGZdxG5UGMiGKJAx90FBFXzaqIKOb?=
- =?us-ascii?Q?vX80EoxKAbooswKcWPwM3bOb9hEzJ1vvPUSEIqxZLTX7eOYTqfecgkbuIfqD?=
- =?us-ascii?Q?d3UrgEKvNjEvAOQJvi7wf5sQ7E0VdlhZ06d+nnciLJpo4IUt00F8gliCfYNu?=
- =?us-ascii?Q?sdroHXVVjroqVBVv8/dUTdBR7K3ZO86p2I00pL+JIyEwLdC+r1nXZVjHQhk6?=
- =?us-ascii?Q?NF2FprAU+E29ap5p+HSh4sVuXOVQV90wFIMuLc2zwbQ9JUeGJ0026aOahbcB?=
- =?us-ascii?Q?+NOSw9Y4M+5f3OOQZ4zwQuwkAX031JvoKMu9P1/ekWGvon+uAcvGCaKIL5PW?=
- =?us-ascii?Q?azAfb8/PEzRdSszbqb9YHo/WIhW6tDjNbK3LN/lYT7KFsEM6T45yHCA0zEcn?=
- =?us-ascii?Q?B4LoGA/xZdES4AnCeAuNLSodk7uWiRG5W6gABJ5YROJb3R1VA2XI0OsAYv5/?=
- =?us-ascii?Q?2WkrIzw9dT15kubFDLCotKcnmzUhlvVAv5QAuYL2c+U/DEj4g5MHUmABa9iD?=
- =?us-ascii?Q?F5nGxEioqGuJC+JjVu3pe26G4xz7RyOo24h4AsTrvJn/8ewgXrwnQnBpia/V?=
- =?us-ascii?Q?7O3w6zpgyN029dIRnwz+N6vQoARsuxfsJMrN4iWpjtQcAfZbpTnXFSqN9bRv?=
- =?us-ascii?Q?tf1v0KT0qBdrVdAzhAP1ERQtsDqkGjxxHFno0zqcaH49zUIU7xVnZHb1TL+j?=
- =?us-ascii?Q?TEw4EwAorJsCqeaQ4/X56Cn43AAsj5vUjX+G4/7PgPYvaCfvzlO6PbGmhDbL?=
- =?us-ascii?Q?puaHzD88RL8Bu8EznwwhWrNOJh5go5i+R+ngvxHcutW3HvqmJkEc0boEniEV?=
- =?us-ascii?Q?2vrPic7TVqO0nw4MnZ6b5qRE3elsqDkGNYC6AGegFsjOryiG46vpNWVj9fl8?=
- =?us-ascii?Q?WePG7lndN+pBeWCe7UD3PSQ0KBwvkN1s9i9fESPR5fbrbudks3uVSJLQsJ+V?=
- =?us-ascii?Q?bF5BtY7uShKQpXGr0FR15u7Yw6kWoJckgzz0syabaFA2xOHj?=
+	=?us-ascii?Q?XnrNazG6xXWHOAMThITZPoB1Si2otgk6j/tgE6KHETAaY69sposFIQoCw2zt?=
+ =?us-ascii?Q?ZxR10gOSgzOwW0EB85WJR0VKw9ewhW9yXnK4WfzvDyNNhWYqFcuKAIc+kDXZ?=
+ =?us-ascii?Q?dMSiI2xvea+QURV0f0QUpA1ek5+fFWyng7m/VD80zzCIqSMLSNmTNJWf3Qz6?=
+ =?us-ascii?Q?VZvRe1mdgxU99AJYkv/NQRiJEN4ayN8BSv4O9aTkDuGVCxkFBTo7uqR0Zn5H?=
+ =?us-ascii?Q?564jAm9sInJKcbP+nZXk5RB4aoc4yMQdpNENqfNUmEJUzc87AAZnaugvM4Eq?=
+ =?us-ascii?Q?Wzk12yWzyZrG/6S4J02niPbBypl9wBKcOeJLAJKWGLtJ9Z4eIvBgHxdtpV2u?=
+ =?us-ascii?Q?eAPF9nMWKcXa+lzwci8PIc3TWRToypzMMKfMNH19tPXA6w6nJCcfs+d8fkJm?=
+ =?us-ascii?Q?RLAsin58jXyuENILxBBneAjcGckJNNmVRjJCB3JKIO87a4qK+liGjHoUccbk?=
+ =?us-ascii?Q?YFMrIiSLx55Shy2cwMDD58e3L5BHI04eoe+Mf4fdWMM89Na8gdkalgCS3fvQ?=
+ =?us-ascii?Q?IHm3gB5XqwO2BwCnX+OLqBqZg5yG9/ZiBoYhPEEkEp5FeLNODwU/Wx6v+5oh?=
+ =?us-ascii?Q?YVPXOHjdsgP8LpFmJqOHVr4kaiHnk9B32RWKnbGruTqwRhVNMz9LBohHjSkM?=
+ =?us-ascii?Q?ncITCkkWAplevqRSP2sxXhMC/2DDPpVdwrBBh4kzgBf0v39D4MSAY0R2ZQDL?=
+ =?us-ascii?Q?DaK8QwvYZnTBzhuwTy9g30+oQxj6JCyINzDOUMUtuh6n+LkC8G6oQXrq7zkE?=
+ =?us-ascii?Q?hhPPkhc+roN5kKX1JtE9qgRUdN7bG6RHao1SrBvbabsQ4PRgHgWbZRIP4MXl?=
+ =?us-ascii?Q?B1Vwr3UIJpjxYpU7T7uZ608NiQzyn/t4pugRsEshPIuUTCtslOF+OhXqOLl9?=
+ =?us-ascii?Q?T3iWCgSpQNU1aJ1oUy5J8RggO+AeVQOESn/+EyhAY+rsJRgZfySU2G6TRYGM?=
+ =?us-ascii?Q?JsrbhsiKFBiOZLkqcDab8DK0eZ5MBGRBIaYYkq4SFWBBS6r+28l11lo82NNr?=
+ =?us-ascii?Q?w34Q9dsc17Figt7Nkh88InFk5roP3Roquw9c5y5vY0i3X9C77kRz0B1sL34E?=
+ =?us-ascii?Q?6Qqq2+GS7y+HQnSUcqxbLK9YxlqUrWd0s4xV2eHUycM0eQdQEkg+10QZTGTZ?=
+ =?us-ascii?Q?znOQogSyTqDZifUPLUS7b9yqIJjTJSECdO5t8yeR8Sq4Ljk0x0fMVRGm48nL?=
+ =?us-ascii?Q?R/FTE3fP6mt6ktReoceH8jjl+BX8N6G6ppW4lnsrHUZwTVk397xAoZjJ7Y2e?=
+ =?us-ascii?Q?eiSvq+yLo/UQEGaq631s5AhxecBY3azo2NpR9TcGjs9OGahuIIEO0YebLUPY?=
+ =?us-ascii?Q?N/8lseZlwJSYrFvQC8BD/Lhg4830voRv2XNn1TdsVhr8nMqGKGSgf0HLKKLG?=
+ =?us-ascii?Q?SyYzUfjNjjNmxOhF4awUZDy0SKnD3Kz+Bt4QPL+h6+UvppHDfykfSm8U98V0?=
+ =?us-ascii?Q?LKpIrj2m/d1NNQPXzXnDkcBLmYaxewN4y13X+PqVNa8agXVQ95FOPyXu8iS4?=
+ =?us-ascii?Q?f8U4sukD2c53jP4Sz6LYzYqnyNvh/DNjAMhHh2MViPake3C3aACrdiQnwGr8?=
+ =?us-ascii?Q?KQaD8kfqJuyoY25y/8vnXTp3EGlcTHF7ZR46fJsfIdMlZvREtIgv++/0GEDH?=
+ =?us-ascii?Q?ZJupcJcD7nWckCxuGXUbruwXICvuoVMMRYiHbF61WH3wLCZhRhYRqQf0gap8?=
+ =?us-ascii?Q?a6Mw8ELVWqL1liVs5OvtvLV1ICBbRXfPOdTnOF+NzTIqBrj6?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f847bbd2-c46f-4e97-34ba-08df4370791c
+X-MS-Exchange-CrossTenant-Network-Message-Id: ccbed500-99db-4df8-e2e9-08df437078ed
 X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2026 23:30:45.7993
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Nov 2026 23:30:45.5165
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 8yMNNPPf0zuX0to59A17vH/e2i+Nlvpf6eGlJYRAGi3o+scEzKbRW5LQIefLS3a4
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH4PR12MB540976
+X-MS-Exchange-CrossTenant-UserPrincipalName: ICon6hYNjnM1EBGdmL4rGkWtLvdGOeQehDdN2Jt2aWkZmsBQ1yvJeMUYnn772d71
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8815
 
-SMMUv3 was the only user, remove it and
-iommu_iotlb_gather_add_range_pgsize() which is also unused now.
+Some of the tests configs can test features we don't currently enable,
+like TTBR1 on ARMv8. Instead of blowing up, skip the test. When
+CONFIG_DEBUG_GENERIC_PT is set all features are force enabled during
+the build so everything can be tested. That is the normal mode for the
+kunit.py runner.
 
+Reviewed-by: Pranjal Shrivastava <praan@google.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- include/linux/iommu.h | 62 +++++++++----------------------------------
- 1 file changed, 13 insertions(+), 49 deletions(-)
+ drivers/iommu/generic_pt/kunit_iommu.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index ef5043752a3651..339ea708f352fb 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -361,29 +361,21 @@ struct iommu_iotlb_gather {
- 	 */
- 	unsigned long		end;
+diff --git a/drivers/iommu/generic_pt/kunit_iommu.h b/drivers/iommu/generic_pt/kunit_iommu.h
+index 79d7f9c8e7868f..558e161eacb05f 100644
+--- a/drivers/iommu/generic_pt/kunit_iommu.h
++++ b/drivers/iommu/generic_pt/kunit_iommu.h
+@@ -134,6 +134,16 @@ static int pt_kunit_priv_init(struct kunit *test, struct kunit_iommu_priv *priv)
  
--	union {
-+	struct {
- 		/**
--		 * @pgsize: The interval at which to perform the flush, only
--		 *          used by arm-smmu-v3
-+		 * @pt.leaf_levels_bitmap: Bitmap of generic_pt levels where
-+		 * leaf entries were unmapped. Bit 0 means the leaf only level.
-+		 * If 0 no leafs were unmapped.
- 		 */
--		size_t pgsize;
--		struct {
--			/**
--			 * @pt.leaf_levels_bitmap: Bitmap of generic_pt
--			 * levels where leaf entries were unmapped. Bit 0
--			 * means the leaf only level. If 0 no leafs
--			 * were unmapped.
--			 */
--			u8 leaf_levels_bitmap;
--			/**
--			 * @pt.table_levels_bitmap: Bitmap of generic_pt levels
--			 * of table entries that were removed. Bit 0 is never
--			 * set, bit 1 means a table of all leafs was removed.
--			 * When freelist is empty this must be 0.
--			 */
--			u8 table_levels_bitmap;
--		} pt;
--	};
-+		u8 leaf_levels_bitmap;
-+		/**
-+		 * @pt.table_levels_bitmap: Bitmap of generic_pt levels of table
-+		 * entries that were removed. Bit 0 is never set, bit 1 means a
-+		 * table of all leafs was removed. When freelist is empty this
-+		 * must be 0.
-+		 */
-+		u8 table_levels_bitmap;
-+	} pt;
- 
- 	/**
- 	 * @freelist: Removed pages to free after sync, only used by
-@@ -1062,34 +1054,6 @@ static inline void iommu_iotlb_gather_add_range(struct iommu_iotlb_gather *gathe
- 		gather->end = end;
- }
- 
--/**
-- * iommu_iotlb_gather_add_page - Gather for page-based TLB invalidation
-- * @domain: IOMMU domain to be invalidated
-- * @gather: TLB gather data
-- * @iova: start of page to invalidate
-- * @size: size of page to invalidate
-- *
-- * Helper for IOMMU drivers to build invalidation commands based on individual
-- * pages, or with page size/table level hints which cannot be gathered if they
-- * differ.
-- */
--static inline void iommu_iotlb_gather_add_page(struct iommu_domain *domain,
--					       struct iommu_iotlb_gather *gather,
--					       unsigned long iova, size_t size)
--{
--	/*
--	 * If the new page is disjoint from the current range or is mapped at
--	 * a different granularity, then sync the TLB so that the gather
--	 * structure can be rewritten.
--	 */
--	if ((gather->pgsize && gather->pgsize != size) ||
--	    iommu_iotlb_gather_is_disjoint(gather, iova, size))
--		iommu_iotlb_sync(domain, gather);
--
--	gather->pgsize = size;
--	iommu_iotlb_gather_add_range(gather, iova, size);
--}
--
- static inline bool iommu_iotlb_gather_queued(struct iommu_iotlb_gather *gather)
- {
- 	return gather && gather->queued;
+ #ifdef kunit_fmt_cfgs
+ 	priv->cfg = kunit_fmt_cfgs[((uintptr_t)test->param_value) - 1];
++	/*
++	 * Without CONFIG_DEBUG_GENERIC_PT only the format's compiled-in
++	 * PT_SUPPORTED_FEATURES are available, so cfgs requesting bits outside
++	 * that set cannot be tested.
++	 */
++	if (priv->cfg.common.features & ~KUNIT_PT_SUPPORTED_FEATURES)
++		kunit_skip(
++			test,
++			"cfg requires features not built into this format (enable CONFIG_DEBUG_GENERIC_PT)");
++
+ 	/*
+ 	 * The format can set a list of features that the kunit_fmt_cfgs
+ 	 * controls, other features are default to on.
 -- 
 2.43.0
 
