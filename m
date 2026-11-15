@@ -1,83 +1,72 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=44.202.169.35
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794741566;
-	b=T5ZW84tnLeBnTX9E+/VyTYV2xWpVHqs38FUk55tJMxeloq6RHCT2i/xM4zUUuphxL4z/
-	 mVtCrZyaz9+JDzrMLNL4i7yMZdiq0Ngz8cynY19GZpIHY78vVE1roVt8dGSaZl/XPDqij
-	 WvfFVf+qQANvlKsdLa310KQSMgUZQhfB8En1JZRO4X17nxTFKWDpEeTQkfck67rlEQbnR
-	 kmpYfwi3lVqsD1LJJ1YLMBO3gCjOFrVZC2NFXJJ+gK/oclLqpxccf35rNEAjmEsPmBwDa
-	 8133VJKNipfzqcmWqPP0OIVQ5vzjWCJafp2r65RTQY1chnAvS+gIi8sh+Zv6WYlXnYQ==
+	t=1794752010;
+	b=XsJ8tA9B7ahpXrmbP6cy56ZWgCv5CpzlY7YaisL9xFzWpTBGL9TIIixvRVkDyobKhd8e
+	 0mCIwCuA5cXCiXqoRNKmeJliZW/d+C39H1kGy3s+VQkM+yDiC7mi5XmJ+OkVU9V7csU07
+	 4LFf6CPSz6q4ixTye0V2wcw3v5ErfKrK8hmdd2Qmjg5YLLwMsUr3aqIAbf+Momg8O8LmA
+	 YprKsz6WspsH6OagB/w7O51joP3fBaLgt7paljZvRBcYCw0dlH5GMxWw717DefhHAkUXz
+	 dhcVOTgUg1wozEdqiwC5Nfklf4/njnCS68KDkQV5FqVq3KAbQJoqSYGoYf7Rk2ZWh8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794741566;
-	h=DMARC-Filter:DKIM-Signature:X-QQ-mid:X-QQ-Originating-IP:Received:
-	 X-QQ-SSF:X-QQ-GoodBg:X-BIZMAIL-ID:EX-QQ-RecipientCnt:From:To:Cc:
-	 Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:MIME-Version:
-	 Content-Transfer-Encoding:X-QQ-SENDSIZE:Feedback-ID:X-QQ-XMAILINFO:
-	 X-QQ-XMRINFO:X-QQ-RECHKSPAM;
-	bh=80R9EfORix9MyhYi1pf17AWudSobYjYqJIUm704fLuU=;
-	b=lu6SYPbLWErzF9tb0SS8TR+uoxdU+Kyqxf8sz8e0Tifc0InUQChtWdjMVOMwYIbGx5gT
-	 EfoWxfljG6l3zZfz6xAX1C15FluL27xRCXiNY+uXO3BjdquljeFgm8PoqySRxLiVEyyH3
-	 b1idC6bXj1FxDNq+IHBJCsljpO1jh5WdQpG90WF2oqZjtTjKeGLrX3HL34NCoUHOzFiaN
-	 hNDNp0KGnx3FmeMb7fdtxvKMISgE9cK5euFll+lGCj85RRW0ZRlPOPhMs+2QSX0yDs6yC
-	 Dn480LWf54GynWZMfjRWNhB+vVgUemw+s/izWksQBPaOGPgIgl4uaOWindnDoF+5uWQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794752010;
+	h=DMARC-Filter:Received:Received:X-Authority-Analysis:DKIM-Signature:
+	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
+	 References:Content-Language:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:X-AntiAbuse:X-AntiAbuse:X-AntiAbuse:
+	 X-AntiAbuse:X-AntiAbuse:X-BWhitelist:X-Source-IP:X-Source-L:X-Exim-ID:
+	 X-Source:X-Source-Args:X-Source-Dir:X-Source-Sender:X-Source-Auth:
+	 X-Email-Count:X-Org:X-Source-Cap:X-Local-Domain:X-CMAE-Envelope;
+	bh=0xim+q1z6hKsGOa03BvjGqO7rsl/bsEW2TceTriCWhs=;
+	b=SydLAG0op1YcRhrKdz/DHr9rCTjX+kzFUWnyKr6aprChCukoP+lJzap1GdAJ2c3NNWA0
+	 MwWmJZwg4G2i63Mq+07KgkJGGaDxuA3uy5WU1fhbkFKgr1A6rb0F9stjRjSD1RYzFXkRT
+	 AaWblZaorEz6A+CONA+TfrKLah4EzUK0LqVXNICk5NZnzRqKfUJT9sXgGz3pGB1iOv89S
+	 BDIxYlwQmAwtGM3Yh5qkBLm7l49WTpn53ZfCF5TraLx+NUc57cxhwz3eyC5OkYsSdSV2K
+	 pW1bv/jrOjeUUjyJ6LMHKAej7Q4u0ip3/1F6OgF6uAVSpQmlNuP1ynx59Hw/lRd6xkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=uniontech.com;
-	spf=pass smtp.mailfrom=uniontech.com;
-	dkim=pass header.d=uniontech.com header.i=@uniontech.com header.a=rsa-sha256 header.s=onoh2408 header.b=PyLne98z;
-	arc=none smtp.remote-ip=54.206.16.166
-Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+	dmarc=none header.from=w6rz.net;
+	spf=pass smtp.mailfrom=w6rz.net;
+	dkim=pass header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=iOZau65r;
+	arc=none smtp.remote-ip=44.202.169.35
+Received: from omta036.useast.a.cloudfilter.net (omta036.useast.a.cloudfilter.net [44.202.169.35])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01D0606A31D
-	for <patches@lists.linux.dev>; Sun, 15 Nov 2026 11:19:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B01D0606A31D
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FE2606A31E
+	for <patches@lists.linux.dev>; Sun, 15 Nov 2026 14:13:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 59FE2606A31E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=uniontech.com header.i=@uniontech.com header.a=rsa-sha256 header.s=onoh2408 header.b=PyLne98z
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1794741541;
-	bh=80R9EfORix9MyhYi1pf17AWudSobYjYqJIUm704fLuU=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version;
-	b=PyLne98z3LWnDqUrLSDm1nbLww33pgoz5tGaYqU8YhShPglZXO6v2V6aUfc3AvMOy
-	 A0dGsaYnmGCBr8tvPH78TEhZKSQsxpkJtnzTSUW/0VGC5yu4XX1d4NpU2g3chxYxmu
-	 o1UVtypmmt/30tHJZUGsV73njHFOQNtdOtSNw2ZI=
-X-QQ-mid: esmtpsz21t1794741536t4686ba69
-X-QQ-Originating-IP: XhL8AzStSBSMW5oQl38KzZPC+6Ga/5P8TR9YT+DtGvc=
-Received: from localhost.localdomain ( [61.183.83.60])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sun, 15 Nov 2026 19:18:19 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 12140221221863691289
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.18 000/686] 6.18.64-rc1 review
-Date: Sun, 15 Nov 2026 19:18:16 +0800
-Message-ID: <B8B7B99F37A65A88+20261115111816.3553925-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20261113153820.902362109@linuxfoundation.org>
-References: <20261113153820.902362109@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.a=rsa-sha256 header.s=default header.b=iOZau65r
+Received: from eig-obgw-6004b.ext.cloudfilter.net ([10.0.30.210])
+	by cmsmtp with ESMTPS
+	id S6nzxGSsv4vCDSaz3x4WPP; Sun, 15 Nov 2026 14:13:29 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id Saz2x8nRGlaNKSaz2xKnXD; Sun, 15 Nov 2026 14:13:28 +0000
+X-Authority-Analysis: v=2.4 cv=UbpRSLSN c=1 sm=1 tr=0 ts=6af9be08
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=zJRp6_cAMcgA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=lrVcCulGc5HbUcuc2QIA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Unsubscribe-Post:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=0xim+q1z6hKsGOa03BvjGqO7rsl/bsEW2TceTriCWhs=; b=iOZau65rg9utc7aZzy67lPpjHG
+	6Pfcd4FyUKX48RkDBWa5vcrvlgUCr/xpH8lX4bPfaaw7kWplKHUc3V65zfXlIaqWAoe3+h9hhc5ri
+	pXsJVBQBtkhsB6Szw+1nVei0aobOXL74P6dFwRKp3YceqcY7rLFWmKyLNfWKMeFMJgra4ARecBHGS
+	a7zkwtPs9ivQoVZKRXHNciW7GBJ4x3q8zNZ21aIK3yEhqwIhCujx2UdEgk1rcseyCgW8Rp5DOOobZ
+	VK3kxYAmAPgAPgaja0hf4ErIeXJhh2OjTJmxvUhDLpAq7T4b43tEreN0of7PU8WTjoaXycYT+AJuD
+	Q3zjVybg==;
+Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:39976 helo=[10.0.1.180])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.100.1)
+	(envelope-from <re@w6rz.net>)
+	id 1xSaz1-00000003Pm7-2fd6;
+	Sun, 15 Nov 2026 07:13:27 -0700
+Message-ID: <0ebe7e46-ed0e-4afa-a4ca-6921a2d2fb9e@w6rz.net>
+Date: Sun, 15 Nov 2026 06:13:25 -0800
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -87,38 +76,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: N2bAIxLK0eln7YnjYRThX4m4cb3k+iWRaM9W7UUt7garlrJ76kW+bpGp
-	o78Hk84mAY2JrKqjDm0k6J4tueXdJGDxvNZJkdRx/k0jI5DxJqubqSAgqzT+rhvKamt3YJp
-	anGLezBmsIk9a94Msfx41GJfcbq4S7B0/ejrLo15qXcBugpcxkd95NDALzfbuC/MvyGGr54
-	Dj3ybgj9ZREPiHaP/6QAo9gLy7aMQZNpDdpjTWVwVlnrsV6VApstyfC7PBF414jY1bbAcKl
-	9IX5jUSOV2L0kO79hYQaN7eIksFHe0aeLgjpl20MkHAnNWY/QSzThiXmE09qU4uy8FnTQpL
-	/HYS9BT9hzgggPH8yzVGEPrAxnkQllVIfQexA3++8ZmC2A9ycdJGqBxaxx9FCB+1FKBbJ5X
-	uXD4DKCvsfcwmhT56T63Hui4k8bch0K7EoSr8x8y20Og4uIVq5kW98So72kSxe7U7Mx068E
-	510nrGn+QruPoxHPdw3Qux+oVAuzkjDdHcMHO4aEg7+9pPZb0cYFcgKAdZHIm1CnAvq4bp1
-	ZWPWEm7GYRsCJaGe8JCikXkMr5G3XjoY1NpccLHdbjm1QNLRmnd3UIVmN4GmCAHqIpGLECH
-	gyfWygPMZDcxGhqS06wxntzvDYW/U/tzVEaAj56+LoNwICcrKKJtkdYARvDDgZ+4PdyLw+5
-	PQ+fGpTVpNLJlbPqZ87f3ce2NDOn/QC0fkOKWKTTH72qB6UJkAMSRb4+zCszu2LzYDfwn6q
-	9I3TP+vpjvM9J0i0+0a4xHWaYv5OQPjqCukHQvnnBgWxXy1LsxwlFoiTQBRtFSntAtptrHx
-	JK3olP1J05zx88nUc5nreQaKMkPlv1gVU4RHPeSR42PxXfou14SlH/RCDGu4STxkmkYZ8vg
-	YY3YLTInX+0fvoqZFG8DWldHl+BLPh2J6v7XTjfX0nVnWqUWaBISublRUsb9dusmJMDIbkm
-	rJDKx54xft5jUDTF98H01nlaHW+elStH8eMGOfK3kqnck9gQjXJJewqClfF4Qw5yEbbgb3U
-	U+URG7iRpwqHHMIVKGWrNEyj1muZCWjWrbDZva5HTNVcndl/0NRLA4jKI1ECI=
-X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
-X-QQ-RECHKSPAM: 0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7.3 000/507] 7.3.5-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20261113153753.358973689@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.206.103
+X-Source-L: No
+X-Exim-ID: 1xSaz1-00000003Pm7-2fd6
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:39976
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 18
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfJmD2jJO/QyAJVa2mWb8u3WDT7EU66E8X8hOjAv8gH7csRpcjwLJEdyQysEUJtG9OHPCv9+KOBaKYRiEDazVCQfa3K4JfOcEDavo+BZ7GWEyHnrSD9h1
+ 4kgYaxe+Ki25n8C6UofoKV/lSVnn5N/dYPf2/81Fgj1A/tprf1amGWts95Y6//chcMRxJ3DLI4WMyw==
 
-Build tested in our x86,arm64,loongarch,riscv config successfully without error.
+On 11/13/26 07:45, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 7.3.5 release.
+> There are 507 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 15 Nov 2026 15:36:17 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v7.x/stable-review/patch-7.3.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-7.3.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Best Regards
-Wentao Guan
-
-Log:
-Linux version 6.18.64-rc1-g910b5c0af479 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT_DYNAMIC Sun Nov 15 18:18:39 CST 2026
-Linux version 6.18.64-rc1-g910b5c0af479 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #3 SMP PREEMPT_DYNAMIC Sun Nov 15 18:36:37 CST 2026
-Linux version 6.18.64-rc1+ (guanwentao@uos-PC) (riscv64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #4 SMP PREEMPT Sun Nov 15 18:56:07 CST 2026
-Linux version 6.18.64-rc1-g910b5c0af479 (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin18) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Sun Nov 15 17:54:57 CST 2026
+Tested-by: Ron Economos <re@w6rz.net>
 
