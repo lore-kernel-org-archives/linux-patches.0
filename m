@@ -1,63 +1,111 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=178.251.229.89
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794818868;
-	b=V52BnQeDUZI31bAJ9ccE90vMSTUrSIQ/JhxdZaWbQRP+1gFOEkyPehi/GmLpJG3hsTHG
-	 F3+iHo5+B3FWmKCsO+7Zto5AFfCWyJ3k2PC3EV1XGMY7XTBbpjEPE/j6fOdZiTutWYvw7
-	 QfqmKhbHrGoU1wtK8Y6eGwyDmvwAKxWgsjgdvqjGc40SEzeFiaQHJCTjWF4VHw9cg6Azh
-	 uD/a0maCr2w903QykZFw3qHMG/WwpyVaLQetESXbIN5wOOrZkn/S3XBJBfBX8+qzQ5Q5N
-	 mGARf18eJkMMxoTCiUeA62V9ltQ51Ld+SnhbbhA+nAoX2YZyN/3Umf2jiVO7p3xu47w==
+	t=1794820319;
+	b=4sDlCK0KgI9Y6mrpn1997JZ8rB4Ru7GHo/5XNediXFaQf3Nr6rhQNsjqA8TLp+At4X+O
+	 cwuHMpei45sr+kiCvQENGziwiMmeiIlur84DoZ2IKkrnqSRZ59QKKtRw6PkvnariTopud
+	 l+BCr/hRGvvEfj3AyA3D63n/0/tbJF63oqJeaogniZnd3eUMhL9ImVXFZKBj2YIPMCZBO
+	 6AED6EqmvqvhnJvkSotqmD6N4Y7fSF7/rFCHx5EcYjdZ2jBYI0M/Rft7GZ8hNFplOWc44
+	 sHYooHmhEPiPnsu2GHG9DKbFK4vspiAAzIzaNyZ0E5nHXRPtIB+/ijMHw9kViui0QPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794818868;
-	h=DMARC-Filter:Received:DKIM-Signature:Date:From:To:Cc:Subject:
-	 Message-ID:References:MIME-Version:Content-Type:Content-Disposition:
-	 In-Reply-To:X-Last-TLS-Session-Version;
-	bh=qs1+XyJIBcRXvNK4eAjtS4NGdjhzHm1jJtJ5wQ/HE4A=;
-	b=iKQN7jDeACAQ+fWzYQYMzpNsydxX69e4VI9vzIHZEMb/SzzwJWnhoa1ggV+s3BNx45Fy
-	 SHPuYHy+GLI2N/TvCNefqlmwAYPP0Q2ppOA2Tji6fO2yfWh0K0jDmr8gIzoA7AkdQ9rms
-	 zmJQGk8d5natBzyAkD9bFvQ5YHXvVzpBr88iBVdtaWe7Th8AkgjLmO1QrHYG9Dxn4xz/T
-	 8nxpCirreXy7bvv5/hqjyYa+uWlr/wDunMh41MuVmKqDRI/1n98uy+nv1cjia5Ks+UKP6
-	 qnRg+MYGqO5IW8beSKgRxxzSJXr0/dvsSK2wZMON5AM5Q7ZWYbtJvHH5+TL91vmZvvQ==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794820319;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=w3ZTI2Hxpp8i0Nf4hdErNJ38SFIe71jHPYvPRCA1ED0=;
+	b=oNxhyQcGivrb/bW0V0opA+txQLOobmA4iB4ws0OAInDMCUKkVyvz/6nnk7xeKNAkS/2/
+	 OV7Ix0GyLckxMKmKn9x0aQpFcIhDZEAyukdtD4PICFjwGDRrMhScCnAnR62t+DG/N05/v
+	 nIl0mfSeyGYikwIe/EfEpRgG3BMhalLtV2g6ZnA5pvYHZz521YJPnB17UJiZ/4RoetwhX
+	 URseqZOzMOUdKyjiGBk7W1ng5hFFl4hB/ksBkRYwbrmSRsNzx3SzZJn2KSrds53lywONW
+	 mEDPwZ2ZeH4yTYxjn4vW/qS+8yvctecQulp95m5OGE3KXBvquSesEWf7Ym/amPUjo6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=nabladev.com;
-	spf=pass smtp.mailfrom=nabladev.com;
-	dkim=pass header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=Dszj5M7U;
-	arc=none smtp.remote-ip=178.251.229.89
-Received: from mx.nabladev.com (mx.nabladev.com [178.251.229.89])
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Uyb2DaQC;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6696A606A323
-	for <patches@lists.linux.dev>; Mon, 16 Nov 2026 08:47:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 6696A606A323
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nabladev.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nabladev.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD75606A31C;
+	Mon, 16 Nov 2026 09:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nabladev.com header.i=@nabladev.com header.a=rsa-sha256 header.s=dkim header.b=Dszj5M7U
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 9661410EF78;
-	Mon, 16 Nov 2026 09:47:38 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nabladev.com;
-	s=dkim; t=1794818861;
-	h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=qs1+XyJIBcRXvNK4eAjtS4NGdjhzHm1jJtJ5wQ/HE4A=;
-	b=Dszj5M7U3OEX3vPhggvupYiDIDtgJ1CjrqH5Jt0f645TpAqgjRC9P+8/lrpkHKJ+4JoiTI
-	L6UReXGEDu+KJYLwUgrhEDOaOLHm8TXhzjZsjwb1Cvq8TSacvTA4Zi7CQC+V2kbXr6z2Ec
-	oJYa65T0uQ1X8vP0Ux1FzzD28Tw5cWSUL3S4IYBT8R50BW7hIMwlI/8f42jVXfRI2av8Qg
-	Nr8K2WPco6yYOr8L9d1lNx14IvPMRsO1EjKVZuGoVCeILnDjUDnlM/+rpDR6UfPcoSs0l3
-	x6LaUOrQKikwH0C250Caia2m9t8ssLX83VmU+40Km/H10RKzqjVPiq2+uJXVfA==
-Date: Mon, 16 Nov 2026 09:47:36 +0100
-From: Pavel Machek <pavel@nabladev.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 7.3 000/507] 7.3.5-rc1 review
-Message-ID: <avrDKGcdTCqA4RFn@duo.ucw.cz>
-References: <20261113153753.358973689@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Uyb2DaQC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008BB1F000C4;
+	Mon, 16 Nov 2026 09:11:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794820318;
+	bh=w3ZTI2Hxpp8i0Nf4hdErNJ38SFIe71jHPYvPRCA1ED0=;
+	h=From:To:Cc:Subject:Date;
+	b=Uyb2DaQCAcHg85gbVmEVzpWpk6cmUuQqb7L3dErPgBimrtNH86oMfqwAwDJKZIuZS
+	 d/pzsSf0375D2Go2BKd6dIXZKeeYz/iB89b+kk1IfO1JTN/VTdLsq838cn/oIKUHhh
+	 8c/PUUfnDANeuad296V9eMDCARmnazBLzWmMvE5zaeNSMYDn5ZUttTQyYD7WHrE8QY
+	 1AwiiaItY6Z4MBj8zI13BoPXPTmA3KFrCE/vqBp7iR8vrO0UgKme2FAd9uXkuKUdY8
+	 iCf7ja74Uz8JlZ60MJ9Yp7ZGPZh+jV1gsLPGwZRuAVi+v3lBjuyEgqnf2fpPULqx/n
+	 RBo3ZCLh5dD9w==
+From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
+To: linux-coco@lists.linux.dev
+Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Mike Rapoport <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joerg Roedel <joro@8bytes.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Brian Starkey <Brian.Starkey@arm.com>,
+	John Stultz <jstultz@google.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Radu Rendec <radu@rendec.net>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <chleroy@kernel.org>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org,
+	"H . Peter Anvin" <hpa@zytor.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	"K . Y . Srinivasan" <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	dri-devel@lists.freedesktop.org,
+	iommu@lists.linux.dev,
+	linaro-mm-sig@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-media@vger.kernel.org,
+	linux-mm@kvack.org,
+	kvmarm@lists.linux.dev,
+	patches@lists.linux.dev
+Subject: [PATCH v10 00/13] coco: guest: Add a shared-granule allocator for host-shared memory
+Date: Mon, 16 Nov 2026 14:41:23 +0530
+Message-ID: <20261116091137.94252-1-aneesh.kumar@kernel.org>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,72 +115,271 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7nLTaoNpBa1RI6kS"
-Content-Disposition: inline
-In-Reply-To: <20261113153753.358973689@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
 
---7nLTaoNpBa1RI6kS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This series tightens the alignment requirements for buffers that are shared
+between confidential-computing guests and the host, and adds a common
+allocator for host-shared memory.
 
-Hi!
+When a guest runs with private memory, buffers shared with the hypervisor
+are not only accessed by the guest. They are also accessed by the host
+kernel, and the host may manage the corresponding shared/private state at a
+granularity larger than the guest page size.
 
-> This is the start of the stable review cycle for the 7.3.5 release.
-> There are 507 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Architectures such as Arm can detect incorrect accesses to Realm physical
+address space PFNs through GPC faults. However, relying on that as the only
+line of defence is fragile and can still lead to kernel crashes. The risk
+is especially visible for shared buffers that are later mmapped into
+userspace, such as guest_memfd or dma-buf backed allocations. Once
+userspace can access the mapping, the kernel cannot guarantee that
+applications will only touch the intended 4K region rather than the whole
+host page mapped into their address space. Those userspace addresses may
+also be passed back into the kernel and accessed through the linear map,
+resulting in a GPC fault.
 
-We get build errors here:
+To avoid this, host-shared buffers must satisfy two constraints:
+
+  - the address must be aligned to the CoCo shared-granule size
+  - the size must be a multiple of that granule size
+
+The series adds a common CoCo shared-memory layer for enforcing these
+constraints. It provides shared-granule geometry and range-validation
+helpers, byte-oriented private/shared transition helpers, and
+alloc_cc_shared_pages(). The allocator rounds a request to the architecture
+shared granule, allocates suitably aligned contiguous pages, transitions
+the complete allocation to shared state, and returns the transitioned size
+alongside the page.
+
+The corresponding free helper restores the complete allocation to private
+state before returning it to the buddy allocator. If private state cannot
+be restored safely, the allocation is deliberately leaked rather than
+returning potentially shared memory for unrelated use.
+
+The series also makes zeroing part of private-to-shared transitions, with
+each architecture clearing memory at the appropriate point. Callers must
+therefore initialize shared buffers after the transition; existing contents
+are not preserved.
+
+The shared-granule size defaults to PAGE_SIZE and can be overridden by an
+architecture. The arm64 CCA changes to discover the host's IPA state change
+alignment are not included in this series.
+
+GIC ITS command queues and tables and the dma-buf system_cc_shared heap
+use the common allocator. DMA direct, atomic DMA pools and SWIOTLB retain
+their allocation paths and use the common layout or transition helpers.
+Restricted DMA pools are checked for shared-granule alignment.
+
+Hyper-V users of set_memory_encrypted() and set_memory_decrypted() are not
+changed to use cc_make_shared() by this series. Those paths are not
+currently used by the arm64 CCA code path, and therefore are not part of
+the arm64 CCA IPA state change alignment problem addressed here.
+
+Notes:
+* Codex assisted with implementation, review and series organization.
+
+Changes from v9:
+https://lore.kernel.org/all/20261104164555.3555725-1-aneesh.kumar@kernel.org
+* Leak allocations after failed sharing in the common allocator and SWIOTLB.
+* Move x86 zeroing from the AMD, TDX and Hyper-V vTOM callbacks to
+  set_memory_decrypted(), after a successful transition
+* Add set_memory_decrypted_nozero() for VGA mappings, which must change
+  memory attributes without clearing device memory.
+* Zero memory even when encryption is inactive in the generic, arm64 and
+  pSeries implementations of set_memory_decrypted().
+* Move pSeries zeroing after sharing. Document why pKVM and s390 must clear
+  private contents before sharing
+* Drop the GIC ITS VPE L1 preallocation patch from this series.
+  This issue predates the series and will be addressed separately.
+* Add mm/cc_shared.c and include/linux/cc_shared.h to the TSM MAINTAINERS
+  entry.
+
+Changes from v8:
+https://lore.kernel.org/all/20260924100529.1398790-1-aneesh.kumar@kernel.org
+* Rebase onto the 7.4-rc1
+* Move TDX and AMD (including SEV-SNP) zeroing to their finish callbacks
+  so private-to-shared transitions clear the final shared mapping.
+* Clear __GFP_MOVABLE for shared allocations, which cannot be migrated.
+* Resolve NUMA_NO_NODE in the common ITS allocation helper to preserve
+  placement for all ITS callers.
+* Stop SWIOTLB allocation retries when the reduced pool would fall below
+  the shared granule size, avoiding an allocation retry loop.
+
+Changes from v7:
+https://lore.kernel.org/all/20260921144847.501151-1-aneesh.kumar@kernel.org
+* Add the following new patches:
+  * "irqchip/gic-v3-its: Preallocate VPE L1 tables"
+  * "mm: Assert CoCo shared allocations may sleep"
+  * "mm: Zero memory during shared memory transitions"
+* Drop the arm64 RHI and shared granule size patches so that the series can
+  be rebased on top of upstream to enable Shashiko review.
+
+Changes from v6:
+https://lore.kernel.org/all/20260904103452.1197239-1-aneesh.kumar@kernel.org
+* Add a common allocator and geometry/transition helpers for CoCo host-shared
+  memory.
+* Convert GIC ITS, dma-direct, atomic DMA pools, and the dma-buf
+  system_cc_shared heap to the common allocator.
+* Limit dma-buf scatterlist entries to the requested buffer size so rounded
+  backing is not exposed to importers.
+
+Changes from v5:
+https://lore.kernel.org/all/20260706060432.1375570-1-aneesh.kumar@kernel.org
+* Rebased to latest kernel
+* Drop patch arm64: realm: Move Realm memory encryption ops to RSI code
+
+Changes from v4:
+https://lore.kernel.org/all/20260427063108.909019-1-aneesh.kumar@kernel.org
+* Rename the helpers to use CoCo terminology
+  (mem_cc_shared_granule_size() / mem_cc_align_to_shared_granule() instead of
+  mem_decrypt_granule_size() / mem_decrypt_align()).
+* Use __DMA_ATTR_ALLOC_CC_SHARED to pass CoCo shared allocation requirements
+  down to CMA-based allocation helpers.
+* Add validation for restricted DMA pools to reject pools that are not aligned
+  to the shared granule size.
+* Add dma-buf system heap handling for cc-shared buffers.
+* Split the previous combined DMA/SWIOTLB/ITS change into smaller subsystem
+  patches covering ITS, DMA direct, SWIOTLB, restricted DMA pools, dma-buf
+  system heap, and arm64 Realm support.
+* Rework arm64 Realm support by moving Realm memory encryption ops into RSI
+  code and exposing the CCA shared granule size through arm64_mem_crypt_ops.
+
+Changes from v3:
+https://lore.kernel.org/all/20260309102625.2315725-1-aneesh.kumar@kernel.org
+* Fix build error reported by kernel test robot <lkp@intel.com>
+
+Changes from v2:
+https://lore.kernel.org/all/20251221160920.297689-1-aneesh.kumar@kernel.org
+* Rebase to latest kernel
+* Consider swiotlb always decrypted and don't align when allocating from swiotlb.
+
+Changes from v1:
+* Rename the helper to mem_encrypt_align
+* Improve the commit message
+* Handle DMA allocations from contiguous memory
+* Handle DMA allocations from the pool
+* swiotlb is still considered unencrypted. Support for an encrypted swiotlb pool
+  is left as TODO and is independent of this series.
+
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Pratyush Yadav <pratyush@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joerg Roedel (AMD) <joro@8bytes.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Marek Szyprowski <m.szyprowski@samsung.com>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Steven Price <steven.price@arm.com>
+Cc: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Thomas Gleixner <tglx@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc: Brian Starkey <Brian.Starkey@arm.com>
+Cc: John Stultz <jstultz@google.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Radu Rendec <radu@rendec.net>
+Cc: "T.J. Mercier" <tjmercier@google.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Cc: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Shrikanth Hegde <sshegde@linux.ibm.com>
+Cc: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: x86@kernel.org
+Cc: H. Peter Anvin <hpa@zytor.com>
+Cc: Kiryl Shutsemau <kas@kernel.org>
+Cc: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Cc: K. Y. Srinivasan <kys@microsoft.com>
+Cc: Haiyang Zhang <haiyangz@microsoft.com>
+Cc: Wei Liu <wei.liu@kernel.org>
+Cc: Dexuan Cui <decui@microsoft.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: dri-devel@lists.freedesktop.org
+Cc: iommu@lists.linux.dev
+Cc: linaro-mm-sig@lists.linaro.org
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-media@vger.kernel.org
+Cc: linux-mm@kvack.org
+Cc: kvmarm@lists.linux.dev
+Cc: patches@lists.linux.dev
+
+Aneesh Kumar K.V (Arm) (13):
+  mm: Add an allocator for CoCo shared memory
+  mm: Zero memory during shared memory transitions
+  irqchip/gic-v3-its: Resolve the default NUMA node explicitly
+  irqchip/gic-v3-its: Allocate shared tables using CoCo shared memory
+    allocator
+  dma-contiguous: Derive shared alignment from DMA attributes
+  dma-pool: Allocate CoCo atomic pools using CoCo shared memory
+    allocator
+  dma-direct: Align CoCo shared DMA allocations to the shared granule
+    size
+  swiotlb: Align shared IO TLB pools to the shared granule size
+  swiotlb: Reject misaligned restricted DMA pools for CoCo guests
+  dma-buf: system_heap: Limit scatterlist entries to the buffer size
+  dma-buf: system_heap: Allocate shared buffers using CoCo shared memory
+    allocator
+  swiotlb: Make rounded shared pool capacity allocatable
+  mm: Assert CoCo shared allocations may sleep
+
+ MAINTAINERS                                   |   2 +
+ arch/arm/mm/dma-mapping.c                     |   5 +-
+ arch/arm64/mm/mem_encrypt.c                   |   8 +-
+ arch/powerpc/platforms/pseries/svm.c          |  13 +-
+ arch/s390/mm/init.c                           |   7 +
+ arch/x86/hyperv/hv_init.c                     |   6 +-
+ arch/x86/include/asm/set_memory.h             |   1 +
+ arch/x86/include/asm/vga.h                    |   4 +-
+ arch/x86/kernel/kvmclock.c                    |   6 +-
+ arch/x86/mm/mem_encrypt_amd.c                 |   1 +
+ arch/x86/mm/pat/set_memory.c                  |  19 +-
+ drivers/dma-buf/heaps/system_heap.c           | 128 +++++-----
+ drivers/firmware/arm_rmm/rsi.c                |   9 +
+ drivers/hv/connection.c                       |  41 ++-
+ drivers/hv/hv.c                               |  11 +-
+ drivers/hv/hv_common.c                        |   2 -
+ drivers/iommu/dma-iommu.c                     |   2 +-
+ drivers/irqchip/irq-gic-v3-its.c              |  42 ++--
+ drivers/virt/coco/pkvm-guest/arm-pkvm-guest.c |   4 +
+ include/linux/cc_shared.h                     |  39 +++
+ include/linux/dma-map-ops.h                   |   9 +-
+ include/linux/set_memory.h                    |   8 +-
+ kernel/dma/contiguous.c                       |  41 ++-
+ kernel/dma/direct.c                           |  73 ++++--
+ kernel/dma/ops_helpers.c                      |   2 +-
+ kernel/dma/pool.c                             |  27 +-
+ kernel/dma/swiotlb.c                          |  94 ++++---
+ kernel/kexec_file.c                           |   3 +-
+ mm/Makefile                                   |   1 +
+ mm/cc_shared.c                                | 238 ++++++++++++++++++
+ 30 files changed, 635 insertions(+), 211 deletions(-)
+ create mode 100644 include/linux/cc_shared.h
+ create mode 100644 mm/cc_shared.c
 
 
-236
-19:06:22
-  CC      arch/arm/kernel/asm-offsets.s
-237
-19:06:23
-In file included from arch/arm/kernel/asm-offsets.c:12:
-238
-19:06:23
-./include/linux/mmap_lock.h: In function 'vma_end_write_all':
-239
-19:06:23
-./include/linux/mmap_lock.h:604:25: error: 'struct mm_struct' has no member named 'mm_lock_seq'
-240
-19:06:23
-  604 |         if (unlikely(!mm->mm_lock_seq.sequence))
-241
-19:06:23
-      |                         ^~
-242
-19:06:23
-./include/linux/compiler.h:77:45: note: in definition of macro 'unlikely'
-243
-19:06:23
-   77 | # define unlikely(x)    __builtin_expect(!!(x), 0)
-244
-19:06:23
-      |                                             ^
-245
-19:06:23
-make[2]: *** [scripts/Makefile.build:185:
-arch/arm/kernel/asm-offsets.s] Error 1
+base-commit: aebb7274476403040d582c61478df8f4a7bf9cd3
+prerequisite-patch-id: 121492d71cc22b2adbfdedd668868c5a449ad764
+prerequisite-patch-id: ed31fd728f0adba3d60dcd6f3bae8da1a2193bcc
+-- 
+2.43.0
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/3065943408
-
-Best regards,
-								Pavel
-
---7nLTaoNpBa1RI6kS
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCavrDKAAKCRAw5/Bqldv6
-8ul/AJ9f+PnOukZPzcN2ZHZtw9cnclNmZACeMOiCeO2h+nlj4rHyzyH6uojigtI=
-=Qmfa
------END PGP SIGNATURE-----
-
---7nLTaoNpBa1RI6kS--
