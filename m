@@ -1,49 +1,102 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794823787;
-	b=iAqocPwtWLLzX5ULxX5rfsySIfkohj6thoMUikcObLzu1QwKA845JkGVIKmrH2QZwLan
-	 Is374umiUVLxNuYO5BZCQLdwWIZXmihr0UrxloENCf82K8+IgJ91ABfspxY28EOSclzzl
-	 m01/CTZr+b8FGo1c1URRdhYwf5L/ijD2k+CW8sOgrqbburrxffBtqhST0sC1Rzp+I5g3U
-	 vXF1BF2wzaQbij4GZbxwMu7eIzwnQLVx1hRUG303KifMvCfsPstLLLi/bxIuxSirh9r8k
-	 UqbtVJjdZQO4aLtlyNCVT57L8l5QwCvblqcE39a1tCcxeurNs2l1Xqs5CuGhGcwpjCA==
+	t=1794826308;
+	b=gWQfDnrK1/0L9BgVtRPMmlBmMHYejTPXXZjSZM/wW7yMwaoorlKHWNXxSwhqzN6B1wnp
+	 QKrB8nXeTBHDUKQdkQ1/SUwfYXS8IdXJl7ObhWmRlULir9oj3a3CfbM5iD7zJsLQYoLLA
+	 eLPjfRP76DvcCOa31N6BWNK7NnK6eUrD/kHo5bMARV9GH8nfefQe87ZdcFbCAZ184wpqU
+	 mP4lC6/S+S4fpd1NnDmTv0DYR4kp2HiGMEZSY85aoYFvc97NSu2LkKYPBKI0gCfLruZCq
+	 AoTFgnxw2wkOMNxtvtvgn7pQR0lPijTjdDWkO922xRKnLgJr7Z4dsiKdqm2w22T6xsQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794823787;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=koCbOd0tdqhrnAzypAwoIYt0Xseq42FLcbswCn/kURA=;
-	b=Yit+x8nQHtlG4uQU1kDZ8YaO/9rHXpihOXenkvRkQner5HriD/V3WmUszwjlqgkkWWiR
-	 IoZVy+Chr1WwXqXm5xeGXGfGNxfjcPenqwKII8Jf+JnIBZp1Mhw/Hmoz7T0q52qtPmJFe
-	 ZDX8S5ZXdtCabg2q1zWgp0sw1My0KNEnuJ3t05+9RXz/Mu7YEfgorJ0amQa4k5gD8mxOU
-	 Z1OWue6EupSyUC77rJ1PCIXU+aZAnWSOUwy9stwFDG2A8KZKtD7U8Kq4NWhzc1m9DA5kE
-	 +W0rEC9YrXcyaPvPvmA9Z6LC2XCkchqCkteW4JBMHLHuErEh4eiaXmIO/lp8aB9i0oA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794826308;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=rny6q4V2AlEW+9be9hzTdzBqG+gm95vTnvqQb/sLFhY=;
+	b=5b5esu/0xqorC65i+yXG3cQxkhl5GUzHawAjm1LPdaiHvhOr1/n4J+maYcTTBat4hm4b
+	 pnoWr+MF9cyL2KcHyZKqZehPRJIhpOKpmtg82rqxDV38GwuyAdlH5OhOMh5N7uTfLZNbc
+	 /MApL1XFrM2M016XOTLkRxbWBb1pScOq72WSNUY143ooLxt/SCUwR31pwlZ/wq7Wf/bUz
+	 A47ERk4YVFT2pHcHixNUiId53VUU3meDXhTslRZ1ZSlymc4wo9GncT7D7OEV7BkQi8Kq9
+	 G1bPvSwv59o3biQkxo+bMoM2aVZ3J4JgIIWkUrBAwnVbGhf+GpBBs+mOVDEekrbouUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=arm.com;
-	spf=pass smtp.mailfrom=arm.com;
-	dkim=pass header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=HEymC+HY;
-	arc=none smtp.remote-ip=217.140.110.172
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56C02606A329
-	for <patches@lists.linux.dev>; Mon, 16 Nov 2026 10:09:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 56C02606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KKO0GtmL;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AFC606A323;
+	Mon, 16 Nov 2026 10:51:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=arm.com header.i=@arm.com header.a=rsa-sha256 header.s=foss header.b=HEymC+HY
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A03211713;
-	Mon, 16 Nov 2026 02:09:43 -0800 (PST)
-Received: from [10.2.197.99] (ewhatever.cambridge.arm.com [10.2.197.99])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 726053F632;
-	Mon, 16 Nov 2026 02:09:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
-	t=1794823786; bh=2ad7YSntj3N8mQFw+MdlSPpSYmiwoq+kfn6LiXSNNQs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HEymC+HY2cjrTWlk5Rrica1pXk+RwFDrHn67MHbsdlytf78F9T92did0jsY25RToE
-	 sSptL9z9vRblTwNCeZdQbDIdCAcbDlQ2zYp18Tdyi36jH6aNLiGqDcEjfxLEaws769
-	 jKj/QuiKH6fEL8kQv4xYSwiCkECe+c4s3EoSb1ZQ=
-Message-ID: <0524abf4-2306-4046-aade-c23aa7d1e0e6@arm.com>
-Date: Mon, 16 Nov 2026 10:09:35 +0000
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=KKO0GtmL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA0D1F000C5;
+	Mon, 16 Nov 2026 10:51:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794826308;
+	bh=rny6q4V2AlEW+9be9hzTdzBqG+gm95vTnvqQb/sLFhY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=KKO0GtmLmo3FANikUbE0i8Y6q8f05SERDvSmxDTTrvZcguvwuOPJiERRLiY3km+p9
+	 zo6CwRf5CpRVfMsRxBO5VC7BJ8aswdfaLrTnWNGso8MYwfkMSlZlr/JCwl7Yb0DKYI
+	 eBWEl8S+pydXFjwbZYHaKbLWD1FXtNqR/hU+W0ogRIXX/8Ttqui5864q8rXI5QbV1c
+	 R6fnfNJlYbpdNAOv54aoayBIVtR/wby4m5kxP9JLbu1/7ECYHfn8X6ZW0o2rJV/Mfu
+	 EVIiWUPpZlAFacz9vc7Vc16Rny5Ozfd3TgFqBoUQmnJ8ExsrAtD4LpzCw5QASx/URm
+	 B8JnGpBuX+mvA==
+Date: Mon, 16 Nov 2026 11:51:32 +0100
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+To: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>, linux-coco@lists.linux.dev,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>, Joerg Roedel <joro@8bytes.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Steven Price <steven.price@arm.com>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Thomas Gleixner <tglx@kernel.org>, Will Deacon <will@kernel.org>,
+	Russell King <linux@armlinux.org.uk>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Brian Starkey <Brian.Starkey@arm.com>,
+	John Stultz <jstultz@google.com>,
+	Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
+	"T.J. Mercier" <tjmercier@google.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Christophe Leroy <chleroy@kernel.org>,
+	Ritesh Harjani <ritesh.list@gmail.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org,
+	"H . Peter Anvin" <hpa@zytor.com>, Kiryl Shutsemau <kas@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	"K . Y . Srinivasan" <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>, Paolo Bonzini <pbonzini@redhat.com>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Andy Lutomirski <luto@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
+	linaro-mm-sig@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+	linux-mm@kvack.org, kvmarm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH v9 14/14] irqchip/gic-v3-its: Preallocate VPE L1 tables
+Message-ID: <avrgNBXDFMGL6dqO@red-moon>
+References: <20261104164555.3555725-1-aneesh.kumar@kernel.org>
+ <20261104164555.3555725-15-aneesh.kumar@kernel.org>
+ <86zevn1c9a.wl-maz@kernel.org>
+ <yq5ah5huoteu.fsf@kernel.org>
+ <87ld6x8zb7.wl-maz@kernel.org>
+ <yq5apkw5xpnz.fsf@kernel.org>
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -53,85 +106,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 00/13] coco: guest: Add a shared-granule allocator for
- host-shared memory
-To: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
- linux-coco@lists.linux.dev
-Cc: Andrew Morton <akpm@linux-foundation.org>,
- Baoquan He <baoquan.he@linux.dev>, Mike Rapoport <rppt@kernel.org>,
- Pasha Tatashin <pasha.tatashin@soleen.com>,
- Pratyush Yadav <pratyush@kernel.org>,
- Catalin Marinas <catalin.marinas@arm.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Jason Gunthorpe <jgg@ziepe.ca>, Joerg Roedel <joro@8bytes.org>,
- Marc Zyngier <maz@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>,
- Robin Murphy <robin.murphy@arm.com>, Steven Price <steven.price@arm.com>,
- Sumit Semwal <sumit.semwal@linaro.org>, Thomas Gleixner <tglx@kernel.org>,
- Will Deacon <will@kernel.org>, Russell King <linux@armlinux.org.uk>,
- Benjamin Gaignard <benjamin.gaignard@collabora.com>,
- Brian Starkey <Brian.Starkey@arm.com>, John Stultz <jstultz@google.com>,
- Mark Rutland <mark.rutland@arm.com>, Radu Rendec <radu@rendec.net>,
- "T.J. Mercier" <tjmercier@google.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- Christophe Leroy <chleroy@kernel.org>, Ritesh Harjani
- <ritesh.list@gmail.com>, Shrikanth Hegde <sshegde@linux.ibm.com>,
- Alexander Gordeev <agordeev@linux.ibm.com>,
- Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Sven Schnelle <svens@linux.ibm.com>, Ingo Molnar <mingo@redhat.com>,
- Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>,
- x86@kernel.org, "H . Peter Anvin" <hpa@zytor.com>,
- Kiryl Shutsemau <kas@kernel.org>, Rick Edgecombe
- <rick.p.edgecombe@intel.com>, "K . Y . Srinivasan" <kys@microsoft.com>,
- Haiyang Zhang <haiyangz@microsoft.com>, Wei Liu <wei.liu@kernel.org>,
- Dexuan Cui <decui@microsoft.com>, Long Li <longli@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- Andy Lutomirski <luto@kernel.org>, Peter Zijlstra <peterz@infradead.org>,
- dri-devel@lists.freedesktop.org, iommu@lists.linux.dev,
- linaro-mm-sig@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-media@vger.kernel.org, linux-mm@kvack.org, kvmarm@lists.linux.dev,
- patches@lists.linux.dev, Alexey Kardashevskiy <aik@amd.com>,
- Michael Roth <michael.roth@amd.com>, pankaj.gupta@amd.com
-References: <20261116091137.94252-1-aneesh.kumar@kernel.org>
-Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20261116091137.94252-1-aneesh.kumar@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <yq5apkw5xpnz.fsf@kernel.org>
 
-Cc Michael Roth, Alexey, Pankaj Gupta
-
-On 16/11/2026 09:11, Aneesh Kumar K.V (Arm) wrote:
+On Mon, Nov 16, 2026 at 11:51:04AM +0530, Aneesh Kumar K.V wrote:
+> Marc Zyngier <maz@kernel.org> writes:
 > 
-> This series tightens the alignment requirements for buffers that are shared
-> between confidential-computing guests and the host, and adds a common
-> allocator for host-shared memory.
+> > On Fri, 06 Nov 2026 15:45:29 +0000,
+> > Aneesh Kumar K.V <aneesh.kumar@kernel.org> wrote:
+> >> 
+> >> Marc Zyngier <maz@kernel.org> writes:
+> >> 
+> >> > On Wed, 04 Nov 2026 16:45:55 +0000,
+> >> > "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org> wrote:
+> >> >> 
+> >> >> VPE L1 tables are allocated from the CPU-starting callback, where sleeping is
+> >> >> not allowed.  Remove the page allocation from this atomic path.
+> >> >> 
+> >> >> Use a blocking allocation for the boot CPU and record the resulting table
+> >> >> order.  Allocate a page of that order from the sleepable CPU hotplug prepare
+> >> >> stage for each secondary CPU.  Consume the preallocated page only when the CPU
+> >> >> cannot inherit an existing redistributor or ITS table.
+> >> >> 
+> >> >> Reclaim unused preallocations after the CPU reaches the online state, and from
+> >> >> the prepare-state teardown when CPU bring-up aborts.
+> >> >
+> >> > No. The way to do it is to move the ITS probing out of the
+> >> > non-sleepable CPU hotplug path.
+> >> >
+> >> > I proposed a potential hack at [1] (which I find far more palatable
+> >> > than this proposal), but the real fix is to probe the ITSs as
+> >> > devices.
+> >> >
+> >> 
+> >> Could you share a bit more detail on what you have in mind?
+> >> 
+> >> Are you suggesting that we create a platform device for each ITS and
+> >> initialize it through the driver's probe callback, while the rest of the
+> >> GIC initialization stays in the existing early boot path?
+> >> 
+> >> Would that mean the main GIC is operational during early boot, while
+> >> ITS-dependent features, such as MSI delivery and direct injection, become
+> >> available after the ITS devices probe?
+> >> 
+> >> Is that the split you have in mind?
+> >
+> > Yes. Then once this is done, all the tables become normal DMA
+> > allocations, for which there should already be adequate support.
+> >
 > 
-> When a guest runs with private memory, buffers shared with the hypervisor
-> are not only accessed by the guest. They are also accessed by the host
-> kernel, and the host may manage the corresponding shared/private state at a
-> granularity larger than the guest page size.
+> Thanks for confirming. Can we handle the ITS platform-device conversion
+> and the switch to DMA allocations in a separate series?
 > 
-> Architectures such as Arm can detect incorrect accesses to Realm physical
-> address space PFNs through GPC faults. However, relying on that as the only
-> line of defence is fragile and can still lead to kernel crashes. The risk
-> is especially visible for shared buffers that are later mmapped into
-> userspace, such as guest_memfd or dma-buf backed allocations. Once
-> userspace can access the mapping, the kernel cannot guarantee that
-> applications will only touch the intended 4K region rather than the whole
-> host page mapped into their address space. Those userspace addresses may
-> also be passed back into the kernel and accessed through the linear map,
-> resulting in a GPC fault.
+> The existing VPE L1 allocation path calls set_memory_decrypted() from
+> the non-sleepable CPU-starting callback, even though
+> set_memory_decrypted() can sleep. This issue predates the shared-granule
+> allocator changes.
 
-IIUC, AMD SEV-SNP also has a similar requirement for other reasons, to
-align the "shared" allocations within a guest (2MB ?, as mentioned by
-David Kaplan at the LPC).
+If I may ask, why does the existing code ends up calling set_memory_decrypt(),
+or reworded, why does the VPE L1 allocation path goes through the ITS specific
+allocation function rather than using alloc_pages() (as it was before
+b08e2f42e86b5) ?
 
-Michael, Alexey,
+Why did b08e2f42e86b5 patched allocate_vpe_l1_table() allocation and moved
+it to using its_alloc_pages() ?
 
-Please could you share your thoughts on this series ?
+Thanks,
+Lorenzo
 
-Suzuki
+> 
+> Since fixing this properly needs a broader ITS rework, can we handle
+> that separately and drop the preallocation patch from this series?
+> 
+> -aneesh
