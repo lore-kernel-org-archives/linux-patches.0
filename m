@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794820535;
-	b=Je8hyCjiJR72QyrDuOlM7Xj/laqJHXZGItm2q++0L7Zn7UIa6k8Lfc/tQ8iIDlmC0dia
-	 UcmtRj7UrYmPhQyompvQJITO0/SW5SJ0NeaMGbLHcKbi3SUcID299DfX1ttaC1o1TTi9g
-	 arTAnKPf4aMK4/VPy4sbw4G8vaK82lVyvi1LTDiJH4K++/Jswb4bVxsQZeO8/pM0LFRqQ
-	 4hLp8LqqEFIfKoZCihDxvAJ5qKhZbOtWTEMHcgUiNu7IM1/oy9tp1n9VolKuz9CBbqO2a
-	 H41yU6EjPP1nJGCSB7fK4oTSF11TOB+yWglmMLdo12e0JtbP2YcnTXpI5tcWGRnbUGw==
+	t=1794820553;
+	b=m1bZH0UUq28ECxAmgtmCZbhTcdqkZMK+O+InQVidXH67O4vksf9ajeFVYGZk4oEmSecP
+	 WPOOjduynQj0Tmd1Roxv9WQzOZu+/lITac0bwttdVbpHS69g3SvuRIp0GeEaw/zH6uDCy
+	 Ut0yvdBsEcucp7GazdK+yLGWNM2tMWnn5iSdK8yjn6rHDY6Ndxw1mk7P9A0Rh5FlZ+e54
+	 b6/7vEdjRAF7Hk9EJXssckM4A/B1LxMq+6kOFD6iqYz6zMPGt1hQPNxzoysaNKqk1J/8H
+	 2S9S81fwdmB0Xknz85GG1Lt59bwkISHZlkrFMQkUaWKIoNYKTgUNtpZIr6+a2QBxOMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794820535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794820553;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=KUD0zGvsKdu3zcOD5zlTuN8g1sBTSA2EazIJOi3ONjA=;
-	b=DwbDMUbca8yvJIqvz2PcAk82DXD709CLTMx/DHwzCVabI3h8/k16cGG90E19sIA8LbmE
-	 qiD/hhXyQSGV6nNmZ3kk2Pl3wbLAAE0tILkZgRQYUKoxAoyLRnhXHfqZ41bo8BX2lMhao
-	 Va6n3lEFfqLBMi4Z+18h0By9rz2wmluPAow6s9rqBWxlXZX38DzqLTDbtAGXiPyWUoQ/t
-	 tBo5HJZs36YC5Udit/a9wjrBpAmtFrvgp1zlmUWV0NKBuwSWWeyhqllOhTMjk5FpMm/Ze
-	 QlMpcZh93T2xJz/2IOmpMJMOd9sWBLuF48TNQ2+6LlE7flDiA/nIci66bmPdcZPT2WQ==
+	bh=vl/C5jn+1tPTrCTsFhPelusdvJCp3xW8fwCUnP8k0/4=;
+	b=X2wPRakWaqyi5WtzKPe3RM2diQp/7aa56n3JGGmdx8WzNIWnihrUEvRfTgkaTURhSd2+
+	 wWFKaG7+9AKku+fjBlE52+RUDa7nUjwAt8zK8wC027/fWd8VhVFtmmzZj/xigghCxd4oP
+	 cUsNM968c7jVGM6sSxPwIhnAJSMA1MJ9D/m5dhf7AUuoC/0XUCFp22suTQoqxQPnA3lU6
+	 NzsBL66uU397nyRn5TdNMSqd69hISw1AtVw2WGwDWZcP64gQVNJTlGfy5XGefCkjykdaw
+	 CF1gwtTJB/dMBkSXsj7eX4Nh9XFpE3Bv/ZNjaku8xyOLUfGgmhSXGwwePxa5cALQuQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Iti3eb2x;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cHKJSbPk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE05C606A323;
-	Mon, 16 Nov 2026 09:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98453606A323;
+	Mon, 16 Nov 2026 09:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Iti3eb2x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 205B51F000C4;
-	Mon, 16 Nov 2026 09:15:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=cHKJSbPk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C371F000C4;
+	Mon, 16 Nov 2026 09:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794820535;
-	bh=KUD0zGvsKdu3zcOD5zlTuN8g1sBTSA2EazIJOi3ONjA=;
+	s=k20260515; t=1794820553;
+	bh=vl/C5jn+1tPTrCTsFhPelusdvJCp3xW8fwCUnP8k0/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Iti3eb2x9l3uC7iAUO/qk6aC/3ijuwvDgqSujOaVwMhCxDfkHsA/yeUxufDGnQv2t
-	 RYAIDdBUin6OACLcpfH8H4L4l+H6vRw7vM01FsnjWz3QsmsKMzPuYQzvgEYBs9jERm
-	 scVMBZ9arWuicvpZehYQnwkKmcu3h+cFgc74vKjIbFqAGdXsRfNPdPSY6s0i/sExxy
-	 v/XiYxGvSTSMxnGsoqQIKFio/6w/lKxreLjwj7wA54j5dvdq6+WmGrSmkSeHBsHNSe
-	 KsYGwpPNRffHROPnBHj2m4ymXrtff+WfLFb215uhRLZ83U+gB+dFPyunVsHBCTa7rH
-	 TsteO9LkFpO9w==
+	b=cHKJSbPkOmS/vgJzoXZ32XAOeuVSd+4AR7wQLkrcipLJYDsoZKVmhqWehLYzXMbaw
+	 R3B/AWlh1S33BLxY0EBupbn4erb2GjPok1Jk/A55GVWK5wNLgVoyr2G0xYzkPsQqrS
+	 gEcKCWeL+Dx8daRQR7LlmEGmvbevX+pW1mWsLtDL+aO8GHfANkZfhz3lX/pcDnwZbc
+	 UHkMOWPm7+qImQLYnPoIXD7VjI+BnQheFEUtLhUtYGPZ9yo3CCvw5jJbAJwFim9sxs
+	 Sn+0K23n/zloQoNpUknUCmfvqa20zhvkh18bHTM68vSbFX62rWnlkpstGAqA6zLKhe
+	 SJxi6oLHRkgQw==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -102,9 +102,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	linux-mm@kvack.org,
 	kvmarm@lists.linux.dev,
 	patches@lists.linux.dev
-Subject: [PATCH v10 12/13] swiotlb: Make rounded shared pool capacity allocatable
-Date: Mon, 16 Nov 2026 14:41:35 +0530
-Message-ID: <20261116091137.94252-13-aneesh.kumar@kernel.org>
+Subject: [PATCH v10 13/13] mm: Assert CoCo shared allocations may sleep
+Date: Mon, 16 Nov 2026 14:41:36 +0530
+Message-ID: <20261116091137.94252-14-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116091137.94252-1-aneesh.kumar@kernel.org>
 References: <20261116091137.94252-1-aneesh.kumar@kernel.org>
@@ -119,140 +119,38 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-CoCo shared memory may need to be allocated and transitioned in units larger
-than the requested object. Before this change, users handled the resulting
-capacity as follows:
+On platforms with memory encryption, alloc_cc_shared_pages_node()
+transitions the allocated memory to the shared state.
+set_memory_decrypted() may sleep, so the transition must run from a
+sleepable context.
 
-  User                         Rounded capacity reused
-  dma-buf system heap          no
-  DMA-direct                   no
-  regular GIC tables           no
-  small GIC ITTs               yes, through a gen_pool
-  early SWIOTLB pool           no
-  late SWIOTLB pool            yes
-  persistent dynamic SWIOTLB   no
-  transient dynamic SWIOTLB    no, one mapping only
-  atomic DMA pools             yes, through a gen_pool
-  restricted SWIOTLB pool      no additional padding
-
-Improve the early and persistent dynamic SWIOTLB pools. They already own
-and transition backing rounded to the shared granule size, and SWIOTLB
-is itself a suballocator. Advertise the rounded extent as slots, size
-the slot metadata to match. This makes the extra capacity available
-without reserving more backing memory.
-
-Keep transient dynamic pools unchanged. A transient pool belongs to one
-DMA mapping and is destroyed when that mapping is unmapped, so its spare
-backing cannot satisfy a later request without changing the lifetime
-model.
-
-Do not attempt the same optimization for dma-buf, DMA-direct or regular
-GIC objects. Those allocations have independent caller-visible sizes and
-lifetimes. Reusing their padding requires a shared-granule suballocator
-with reference counting, per-object mappings and accounting.
-
-Note:
-For the current 64 KiB CCA shared granule size, SWIOTLB pool sizes are
-already multiples of the 256 KiB IO_TLB segment size. Consequently, the
-rounding does not change any runtime values on current CCA systems. It
-instead makes the code express the intended invariant that pool metadata
-describes the complete shared-granule-aligned backing allocation.
-
-Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- kernel/dma/swiotlb.c | 30 ++++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ mm/cc_shared.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index 24366038dfd3..a245c508fb3a 100644
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -328,6 +328,14 @@ static inline unsigned long nr_slots(u64 val)
- 	return DIV_ROUND_UP(val, IO_TLB_SIZE);
- }
+diff --git a/mm/cc_shared.c b/mm/cc_shared.c
+index c9b4e3dfe06a..b30b8e78da32 100644
+--- a/mm/cc_shared.c
++++ b/mm/cc_shared.c
+@@ -8,6 +8,7 @@
+ #include <linux/errno.h>
+ #include <linux/export.h>
+ #include <linux/gfp.h>
++#include <linux/kernel.h>
+ #include <linux/log2.h>
+ #include <linux/mm.h>
+ #include <linux/mem_encrypt.h>
+@@ -106,6 +107,8 @@ static int __alloc_cc_shared_pages_node(int nid, gfp_t gfp,
+ 	unsigned int order;
+ 	int ret;
  
-+static unsigned long swiotlb_align_nslabs(unsigned long nslabs)
-+{
-+	unsigned long granule_nslabs;
++	might_sleep();
 +
-+	granule_nslabs = cc_shared_granule_size() >> IO_TLB_SHIFT;
-+	return ALIGN(nslabs, granule_nslabs);
-+}
-+
- static void swiotlb_mark_pool_used(struct io_tlb_pool *pool)
- {
- 	unsigned long i;
-@@ -431,11 +439,12 @@ static void add_mem_pool(struct io_tlb_mem *mem, struct io_tlb_pool *pool)
- }
- 
- static void __init *swiotlb_memblock_alloc(unsigned long nslabs,
--		unsigned int flags,
-+		unsigned long *alloc_nslabs, unsigned int flags,
- 		int (*remap)(void *tlb, unsigned long nslabs))
- {
-+	unsigned long aligned_nslabs = swiotlb_align_nslabs(nslabs);
-+	size_t bytes = aligned_nslabs << IO_TLB_SHIFT;
- 	void *tlb;
--	size_t bytes = ALIGN(nslabs << IO_TLB_SHIFT, cc_shared_granule_size());
- 
- 	/*
- 	 * By default allocate the bounce buffer memory from low memory, but
-@@ -453,12 +462,13 @@ static void __init *swiotlb_memblock_alloc(unsigned long nslabs,
- 		return NULL;
- 	}
- 
--	if (remap && remap(tlb, nslabs) < 0) {
-+	if (remap && remap(tlb, aligned_nslabs) < 0) {
- 		memblock_free(tlb, bytes);
- 		pr_warn("%s: Failed to remap %zu bytes\n", __func__, bytes);
- 		return NULL;
- 	}
- 
-+	*alloc_nslabs = aligned_nslabs;
- 	return tlb;
- }
- 
-@@ -471,6 +481,7 @@ void __init swiotlb_init_remap(bool addressing_limit, unsigned int flags,
- {
- 	struct io_tlb_pool *mem = &io_tlb_default_mem.defpool;
- 	unsigned long nslabs;
-+	unsigned long alloc_nslabs;
- 	unsigned int nareas;
- 	size_t alloc_size;
- 	void *tlb;
-@@ -495,13 +506,14 @@ void __init swiotlb_init_remap(bool addressing_limit, unsigned int flags,
- 		swiotlb_adjust_nareas(num_possible_cpus());
- 
- 	nslabs = default_nslabs;
--	nareas = limit_nareas(default_nareas, nslabs);
--	while ((tlb = swiotlb_memblock_alloc(nslabs, flags, remap)) == NULL) {
-+	while ((tlb = swiotlb_memblock_alloc(nslabs, &alloc_nslabs, flags,
-+					     remap)) == NULL) {
- 		if (nslabs <= IO_TLB_MIN_SLABS)
- 			return;
- 		nslabs = ALIGN(nslabs >> 1, IO_TLB_SEGSIZE);
--		nareas = limit_nareas(nareas, nslabs);
- 	}
-+	nslabs = alloc_nslabs;
-+	nareas = limit_nareas(default_nareas, nslabs);
- 
- 	if (default_nslabs != nslabs) {
- 		pr_info("SWIOTLB bounce buffer size adjusted %lu -> %lu slabs",
-@@ -867,6 +879,12 @@ static struct io_tlb_pool *swiotlb_alloc_pool(struct device *dev,
- 		tlb_size = nslabs << IO_TLB_SHIFT;
- 	}
- 
-+	/* Transient pools are tied to one mapping and cannot reuse padding. */
-+	if (mem->cc_shared && !dev) {
-+		nslabs = swiotlb_align_nslabs(nslabs);
-+		tlb_size = nslabs << IO_TLB_SHIFT;
-+	}
-+
- 	slot_order = get_order(array_size(sizeof(*pool->slots), nslabs));
- 	pool->slots = (struct io_tlb_slot *)
- 		__get_free_pages(gfp, slot_order);
+ 	ret = cc_shared_calc_layout(requested, &layout);
+ 	if (ret)
+ 		return ret;
 -- 
 2.43.0
 
