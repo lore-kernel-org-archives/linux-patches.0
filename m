@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794817284;
-	b=Ti8IleVVSAXuCFzxnUGf+ebse6jD80y/2zCaVJ8Tm7KtThzDV2t6dCBjlMfOjr6wsHXR
-	 2yi4Sv0RQW8vTJHTNVgVfhPjXRkerpgKelP1eTGcF7c9EPaSDp4GZiWkCUvOb4OO8EsfE
-	 22K0VoBL4xbF8599ZfbFiSAJWdoUBZyVv1QHxfZSB0qaltyIi6CubDROeZNJi6WyeyPsB
-	 BqPLi4FpQzfxp+kURQ41H7eB2+kpA6lDEwHAfTdEQKlxBWs7xPv/gfPQqn5BFKne4C+B+
-	 ZvjZxUisATEenzB5vpZUUiW/SCHmUOpgb4cvVb8LfG1Z7YtI8oOYSvnilgRrA7LC1Ow==
+	t=1794817295;
+	b=ovqX+ySxXJ1n4SAhL/Mn+NoRREOjHibtSDFB6RJR8J8g9sUXrCw3qu8AOPb1eIVyZNqU
+	 6TOubEoJc7jJW3wK57eNGAZsxEIXOq5FBKj8cpNldXnLK1ks0JeXj5RC+DUkCqQx2MB92
+	 PahVdbfpAWSDUeUzq6OJooHeJW+O3oJX6fwTjWle7U23ZWuG9B3N/w6ZjQeuuleLBU3Ac
+	 5JJg7FDV3A03VBBnXkIxovFg9qp3INCkIj3s8VL1oHIU93LD4SXLgbexPOBQb3t8OY9xK
+	 4xRjQdAjEgxcHmYM7hwORYPBfzY/f61AufOdFnHF4QALl/5GPfbMJ/ztJKicwSQ9AQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794817284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794817295;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=PYQyR0BjqRaBzIT+DUmgaAUcE9ZmRLTzyfgBIMl9tio=;
-	b=c56mfpEQzAJ5cyhe04xnQCmG5IqkGT5COHi0SLt8J2kxohJlBL67yK9Gu3qgPTNOy3ZC
-	 0KwBNBsqMiokBejmHHlsRk5hlFRvrVvk6vTUS5bDNRjltCx1KHoFLi8pdrgy0nNMc3BIc
-	 l58/pAMPNAjxBiVwkvH62zuamxKZaylZX7HJlsS/8+tGuG6C6Z+6apxzYYFnvysjIznAL
-	 bMzZhXOpE6mWPfHXO8+bdKOAkxX0Iqk2EV2yIu7wAiBCVxjnq7lcyx/nBCHmU+2ECmfgN
-	 X7LH9JBH94o/durH9ltjAp7RcvU/QdoDK60rmP5zLr0/Xf/OhvjlAhCmGRdnnhD1i1w==
+	bh=A6Xj23FIEaFeM37IBMzXKP6MnIBdZMu6s0WQEXC7JzE=;
+	b=cyUuAVlCODudKWwF4WY9w2+ziZABMezmtO0SferrLZ+DnwNul+YBVrgVNtOXUverzuD2
+	 MaCVMidcTm2j6n0nTlKW4XZKXeeLOfslXQzWrTcR+j8Titr5voKwOrJwrdSHap25BAAZM
+	 RvbtSM68y5sjs6KGnPZKAi2Mu2srEFZiUfCuvCq2SXxRMWqCJcGTVXQfFfRGMUQQdCW49
+	 LJQ1YQqA+ulyLTiZwappD4dkwNhZ1thaODF5B9OAad7CwpTEDCQYybl6zcCzhlZQDwa8H
+	 dsUMRTn3PzQThsevPYPpTRUtn5RX18u+HPwaB06Jgz+TcOAa7BL4lZI/Dk3jEPtk+Iw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WyFamGFA;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K312HXAe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8853606A329;
-	Mon, 16 Nov 2026 08:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CAC606A323;
+	Mon, 16 Nov 2026 08:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WyFamGFA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E39D1F000C6;
-	Mon, 16 Nov 2026 08:21:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=K312HXAe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65D01F000C6;
+	Mon, 16 Nov 2026 08:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794817284;
-	bh=PYQyR0BjqRaBzIT+DUmgaAUcE9ZmRLTzyfgBIMl9tio=;
+	s=k20260515; t=1794817294;
+	bh=A6Xj23FIEaFeM37IBMzXKP6MnIBdZMu6s0WQEXC7JzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WyFamGFA9OyPDxHaV4FIuCASDnlJJRQqy8C8VffZSdYBjdjDPDkcrs/7voytuERrM
-	 LQzIe5FHUL3hWQNSpM5UbiuG0udyKS0uEyz83w32ssLK4sLk4zPR6Sz8M2ITvHLGJD
-	 oPPtmD51o5/NgZIS81aFvv9OsVf/7idFbh6oZmpSNW+w3DbnWBeutCEfHAhDZylmTI
-	 pXCzJQVRsK13z7OxW3cTsdBSSZmVmlzYYiY8wvoZ5dr5TH+ArJuY9i878soSBybDHH
-	 qClo+Ag9+4cG2qeUNK45u82bY2aQykWJCxeSxAegMckGInV3Mbva/5cLiEqAFMuQaj
-	 DgnrrZmIkuKlA==
+	b=K312HXAenwu70JRQBv5ILd8TVHIH0kOvJuJ7tX/q8fGH8SOS7mm8mBr6hfEHZRXbY
+	 XVcR7/qDFzvaUxdwU2JhrHD2OtMYJSP7GF8G58PDV/nDMxQOhAgBNq3W5lOczNefdW
+	 zwuzbpYTw1kLgJok3rwSfTHik+gQpK1cTcffyx3FQLljnnXVD7xY6jNhlGdxofRU/v
+	 JY767Li+2tTxt4ghIXf9lLe+TJ/pTNoHHcEui5IzMofBOgRMJ73jxwH2gAYs/M03JS
+	 2Y5fEwHXhQFQMEaQO3jANelTC96i/F/rDbpFWNyMkG8pEYV5UBrS3l8o17dXg8QvCI
+	 EoilM5tyTdRPg==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -75,9 +75,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	linux-pci@vger.kernel.org,
 	linux-tegra@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v9 09/13] iommufd/viommu: Select vIOMMU operations before allocation
-Date: Mon, 16 Nov 2026 13:49:31 +0530
-Message-ID: <20261116081935.85372-10-aneesh.kumar@kernel.org>
+Subject: [PATCH v9 10/13] iommufd/viommu: Allow PCI TSM backends to provide vIOMMU operations
+Date: Mon, 16 Nov 2026 13:49:32 +0530
+Message-ID: <20261116081935.85372-11-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116081935.85372-1-aneesh.kumar@kernel.org>
 References: <20261116081935.85372-1-aneesh.kumar@kernel.org>
@@ -92,596 +92,344 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Physical IOMMU drivers currently provide the vIOMMU size and
-initialization callbacks through iommu_ops. The initialization callback
-then selects and installs the corresponding iommufd_viommu_ops.
+In confidential-computing configurations, a vIOMMU may be implemented by
+a TSM driver rather than by the physical IOMMU driver. Such an
+implementation also needs the TSM identity when creating and validating
+vdevices.
 
-Add iommu_ops::get_viommu_ops() to select the operations from the
-physical device and requested vIOMMU type before allocation. Move the
-size and initialization callbacks into iommufd_viommu_ops. The core can
-then validate the selected operations, allocate the driver structure,
-initialize it, and install the operations.
+Allow VIOMMU_ALLOC to first query the TSM associated with the target PCI
+device for vIOMMU operations. Fall back to the physical IOMMU driver
+when the TSM does not provide operations for the requested vIOMMU type.
 
-Convert AMD, Arm SMMUv3, Tegra CMDQV, and the selftest backend to the
-new interface.
+Resolve the PCI TSM association under pci_tsm_rwsem, take a TSM device
+reference, and pin the module providing the operations. Store the TSM
+device in the vIOMMU. Release the device reference and module pin on
+allocation failure, fallback to the physical IOMMU driver, or vIOMMU
+destruction. Drop the device reference before releasing the module pin,
+since the final put may call into the backend module.
 
-The current code requires a valid parent HWPT before calling
-viommu_init(), which selects the vIOMMU operations. A later patch adds
-an operations flag indicating that a vIOMMU type does not require a
-parent HWPT. Selecting the operations earlier allows the core to check
-that flag before deciding whether to look up and validate a parent HWPT.
+The device reference preserves the TSM allocation. Backends providing
+vIOMMU operations must not unregister their TSM while the module is pinned,
+since the reference does not prevent backend resource teardown.
 
-Temporarily disable AMD vIOMMU allocation by returning NULL from
-amd_iommufd_get_viommu_ops() while the vIOMMU interfaces are being
-updated.
-
-Cc: Joerg Roedel <joro@8bytes.org>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Cc: Vasant Hegde <vasant.hegde@amd.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Thierry Reding <thierry.reding@kernel.org>
-Cc: Krishna Reddy <vdumpa@nvidia.com>
-Cc: Jonathan Hunter <jonathanh@nvidia.com>
 Cc: Jason Gunthorpe <jgg@ziepe.ca>
 Cc: Kevin Tian <kevin.tian@intel.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-tegra@vger.kernel.org
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Alexey Kardashevskiy <aik@amd.com>
+Cc: Lukas Wunner <lukas@wunner.de>
+Cc: Xu Yilun <yilun.xu@linux.intel.com>
 Cc: iommu@lists.linux.dev
-Based on original patch by Jason Gunthorpe <jgg@nvidia.com>
+Cc: linux-pci@vger.kernel.org
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- drivers/iommu/amd/iommu.c                     |  3 +-
- drivers/iommu/amd/iommufd.c                   | 18 ++++++---
- drivers/iommu/amd/iommufd.h                   | 11 ++++--
- drivers/iommu/amd/nested.c                    |  4 +-
- .../arm/arm-smmu-v3/arm-smmu-v3-iommufd.c     | 37 +++++++++++--------
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c   |  7 ++--
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h   | 16 ++++----
- .../iommu/arm/arm-smmu-v3/tegra241-cmdqv.c    | 24 ++++++++----
- drivers/iommu/iommufd/selftest.c              | 31 +++++++++++-----
- drivers/iommu/iommufd/viommu.c                | 32 ++++++++--------
- include/linux/iommu.h                         | 20 +++-------
- include/linux/iommufd.h                       | 14 +++++++
- 12 files changed, 129 insertions(+), 88 deletions(-)
+ drivers/iommu/iommufd/viommu.c | 35 +++++++++++++++++++++++++++-----
+ drivers/pci/tsm/core.c         | 22 ++++++++++++++++++++
+ drivers/virt/coco/tsm-core.c   | 37 ++++++++++++++++++++++++++++++++++
+ include/linux/iommufd.h        |  2 ++
+ include/linux/pci-tsm.h        | 24 ++++++++++++++++++++++
+ include/linux/tsm.h            | 25 +++++++++++++++++++++++
+ 6 files changed, 140 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 41ee4ad1dcf8..2b318d8c82a0 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -3265,8 +3265,7 @@ const struct iommu_ops amd_iommu_ops = {
- 	.is_attach_deferred = amd_iommu_is_attach_deferred,
- 	.def_domain_type = amd_iommu_def_domain_type,
- 	.page_response = amd_iommu_page_response,
--	.get_viommu_size = amd_iommufd_get_viommu_size,
--	.viommu_init = amd_iommufd_viommu_init,
-+	.get_viommu_ops = amd_iommufd_get_viommu_ops,
- };
+diff --git a/drivers/iommu/iommufd/viommu.c b/drivers/iommu/iommufd/viommu.c
+index 2eba1562a704..7e74d3992ae4 100644
+--- a/drivers/iommu/iommufd/viommu.c
++++ b/drivers/iommu/iommufd/viommu.c
+@@ -15,6 +15,8 @@ void iommufd_viommu_destroy(struct iommufd_object *obj)
  
- #ifdef CONFIG_IRQ_REMAP
-diff --git a/drivers/iommu/amd/iommufd.c b/drivers/iommu/amd/iommufd.c
-index 52300b867c1f..dcbe80fcb8c7 100644
---- a/drivers/iommu/amd/iommufd.c
-+++ b/drivers/iommu/amd/iommufd.c
-@@ -32,13 +32,21 @@ void *amd_iommufd_hw_info(struct device *dev, u32 *length, enum iommu_hw_info_ty
- 	return hwinfo;
+ 	if (viommu->ops && viommu->ops->destroy)
+ 		viommu->ops->destroy(viommu);
++	if (viommu->tsm_dev)
++		tsm_put_device(viommu->tsm_dev);
+ 	refcount_dec(&viommu->hwpt->common.obj.users);
+ 	if (viommu->kvm_file)
+ 		fput(viommu->kvm_file);
+@@ -30,6 +32,7 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
+ 		.len = cmd->data_len,
+ 	};
+ 	struct iommufd_hwpt_paging *hwpt_paging;
++	struct tsm_dev *tsm_dev = NULL;
+ 	struct iommufd_viommu *viommu;
+ 	struct iommufd_device *idev;
+ 	struct iommu_device *iommu_dev;
+@@ -49,15 +52,33 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
+ 		rc = -EOPNOTSUPP;
+ 		goto out_put_idev;
+ 	}
+-	if (!iommu_dev->ops->get_viommu_ops) {
+-		rc = -EOPNOTSUPP;
++	tsm_dev = tsm_get_device(idev->dev);
++	if (IS_ERR(tsm_dev)) {
++		rc = PTR_ERR(tsm_dev);
++		tsm_dev = NULL;
+ 		goto out_put_idev;
+ 	}
+-	ops = iommu_dev->ops->get_viommu_ops(idev->dev, cmd->type);
+-	if (!ops) {
+-		rc = -EOPNOTSUPP;
++	ops = tsm_dev ? tsm_viommu_get_ops(tsm_dev, idev->dev, cmd->type) : NULL;
++	if (IS_ERR(ops)) {
++		rc = PTR_ERR(ops);
+ 		goto out_put_idev;
+ 	}
++	if (!ops) {
++		if (tsm_dev) {
++			tsm_put_device(tsm_dev);
++			tsm_dev = NULL;
++		}
++		if (!iommu_dev->ops->get_viommu_ops) {
++			rc = -EOPNOTSUPP;
++			goto out_put_idev;
++		}
++		ops = iommu_dev->ops->get_viommu_ops(idev->dev, cmd->type);
++		if (!ops) {
++			rc = -EOPNOTSUPP;
++			goto out_put_idev;
++		}
++	}
++
+ 	/*
+ 	 * It is a driver bug to omit the required operations or provide a size
+ 	 * smaller than the core vIOMMU structure.
+@@ -95,6 +116,8 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
+ 		viommu->kvm_file = get_file(idev->kvm_file);
+ 	viommu->type = cmd->type;
+ 	viommu->ictx = ucmd->ictx;
++	viommu->tsm_dev = tsm_dev;
++	tsm_dev = NULL;
+ 	viommu->hwpt = hwpt_paging;
+ 	refcount_inc(&viommu->hwpt->common.obj.users);
+ 	INIT_LIST_HEAD(&viommu->veventqs);
+@@ -119,6 +142,8 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
+ out_put_hwpt:
+ 	iommufd_put_object(ucmd->ictx, &hwpt_paging->common.obj);
+ out_put_idev:
++	if (tsm_dev)
++		tsm_put_device(tsm_dev);
+ 	iommufd_put_object(ucmd->ictx, &idev->obj);
+ 	return rc;
+ }
+diff --git a/drivers/pci/tsm/core.c b/drivers/pci/tsm/core.c
+index 8f0e5af808a5..4107ff443228 100644
+--- a/drivers/pci/tsm/core.c
++++ b/drivers/pci/tsm/core.c
+@@ -9,6 +9,8 @@
+ #define dev_fmt(fmt) "PCI/TSM: " fmt
+ 
+ #include <linux/bitfield.h>
++#include <linux/iommufd.h>
++#include <linux/module.h>
+ #include <linux/pci.h>
+ #include <linux/pci-doe.h>
+ #include <linux/pci-tsm.h>
+@@ -36,6 +38,26 @@ static const struct pci_tsm_ops *to_pci_tsm_ops(struct pci_tsm *tsm)
+ 	return tsm->tsm_dev->pci_ops;
  }
  
--size_t amd_iommufd_get_viommu_size(struct device *dev, enum iommu_viommu_type viommu_type)
-+static size_t amd_iommufd_get_viommu_size(struct device *dev,
-+		enum iommu_viommu_type viommu_type)
++struct tsm_dev *pci_tsm_get_device(struct pci_dev *pdev)
++{
++	const struct pci_tsm_ops *ops;
++	struct tsm_dev *tsm_dev;
++
++	guard(rwsem_read)(&pci_tsm_rwsem);
++	if (!pdev->tsm)
++		return NULL;
++
++	tsm_dev = pdev->tsm->tsm_dev;
++	ops = tsm_dev->pci_ops;
++	if (!ops->viommu_get_ops)
++		return NULL;
++	if (!try_module_get(ops->owner))
++		return ERR_PTR(-ENODEV);
++	get_device(&tsm_dev->dev);
++	return tsm_dev;
++}
++EXPORT_SYMBOL_GPL(pci_tsm_get_device);
++
+ static inline bool is_dsm(struct pci_dev *pdev)
  {
- 	return VIOMMU_STRUCT_SIZE(struct amd_iommu_viommu, core);
+ 	return pdev->tsm && pdev->tsm->dsm_dev == pdev;
+diff --git a/drivers/virt/coco/tsm-core.c b/drivers/virt/coco/tsm-core.c
+index 181d6114086f..766f4ad67ed7 100644
+--- a/drivers/virt/coco/tsm-core.c
++++ b/drivers/virt/coco/tsm-core.c
+@@ -9,6 +9,16 @@
+ #include <linux/cleanup.h>
+ #include <linux/pci-tsm.h>
+ 
++/* The caller must hold a tsm_get_device() reference for the entire use. */
++const struct iommufd_viommu_ops *tsm_viommu_get_ops(struct tsm_dev *tsm_dev,
++		struct device *dev, enum iommu_viommu_type type)
++{
++	if (!tsm_dev->pci_ops->viommu_get_ops)
++		return NULL;
++	return tsm_dev->pci_ops->viommu_get_ops(dev, type);
++}
++EXPORT_SYMBOL_GPL(tsm_viommu_get_ops);
++
+ static void tsm_release(struct device *);
+ static const struct class tsm_class = {
+ 	.name		= "tsm",
+@@ -16,6 +26,33 @@ static const struct class tsm_class = {
+ };
+ static DEFINE_IDA(tsm_ida);
+ 
++/**
++ * tsm_get_device() - Pin the TSM attached to a device
++ * @dev: device whose TSM is to be pinned
++ *
++ * A successful lookup takes a TSM device reference and pins the backend
++ * module. Release both with tsm_put_device(). Backends providing vIOMMU
++ * operations must not unregister their TSM independently of module unload.
++ * Return: NULL if no vIOMMU-capable TSM is attached, an error if the module
++ * cannot be pinned, or the TSM device associated with the pinned backend.
++ */
++struct tsm_dev *tsm_get_device(struct device *dev)
++{
++	if (!dev_is_pci(dev))
++		return NULL;
++	return pci_tsm_get_device(to_pci_dev(dev));
++}
++EXPORT_SYMBOL_GPL(tsm_get_device);
++
++void tsm_put_device(struct tsm_dev *tsm_dev)
++{
++	struct module *owner = tsm_dev->pci_ops->owner;
++
++	put_device(&tsm_dev->dev);
++	module_put(owner);
++}
++EXPORT_SYMBOL_GPL(tsm_put_device);
++
+ static int match_id(struct device *dev, const void *data)
+ {
+ 	struct tsm_dev *tsm_dev = container_of(dev, struct tsm_dev, dev);
+diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
+index 5f5c67b24134..a4b29915d0ca 100644
+--- a/include/linux/iommufd.h
++++ b/include/linux/iommufd.h
+@@ -23,6 +23,7 @@ struct iommufd_access;
+ struct iommufd_ctx;
+ struct iommufd_device;
+ struct iommufd_viommu_ops;
++struct tsm_dev;
+ struct page;
+ 
+ enum iommufd_object_type {
+@@ -104,6 +105,7 @@ struct iommufd_viommu {
+ 	struct iommu_device *iommu_dev;
+ 	struct iommufd_hwpt_paging *hwpt;
+ 	struct file *kvm_file;
++	struct tsm_dev *tsm_dev;
+ 
+ 	const struct iommufd_viommu_ops *ops;
+ 
+diff --git a/include/linux/pci-tsm.h b/include/linux/pci-tsm.h
+index 1458935234a4..27a76aeedf50 100644
+--- a/include/linux/pci-tsm.h
++++ b/include/linux/pci-tsm.h
+@@ -3,7 +3,10 @@
+ #define __PCI_TSM_H
+ #include <linux/mutex.h>
+ #include <linux/pci.h>
++#include <uapi/linux/iommufd.h>
+ 
++struct iommufd_viommu_ops;
++struct module;
+ struct pci_tsm;
+ struct pci_tsm_context;
+ struct tsm_dev;
+@@ -16,12 +19,27 @@ struct tsm_dev;
+  * @devsec_ops: Lock, unlock, and interrogate the security state of the
+  *		function via the platform TSM (typically virtual function
+  *		operations).
++ * @viommu_get_ops: Return operations for a supported TSM-owned vIOMMU type,
++ *		  or NULL if unsupported
++ * @owner: Module providing the vIOMMU operations, if built as a module
++ *
++ * The vIOMMU owner holds a TSM device reference and pins the backend module
++ * before querying @viommu_get_ops, releasing both after vIOMMU destruction.
++ * A backend providing this callback must not unregister its TSM while the
++ * module is pinned.
+  *
+  * This operations are mutually exclusive either a tsm_dev instance
+  * manages physical link properties or it manages function security
+  * states like TDISP lock/unlock.
++ *
++ * @viommu_get_ops runs with the backend module pinned. The PCI/TSM
++ * association is checked during acquisition under pci_tsm_rwsem.
+  */
+ struct pci_tsm_ops {
++	struct module *owner;
++	const struct iommufd_viommu_ops *(*viommu_get_ops)(
++		struct device *dev, enum iommu_viommu_type type);
++
+ 	/*
+ 	 * struct pci_tsm_link_ops - Manage physical link and the TSM/DSM session
+ 	 * @probe: establish context with the TSM (allocate / wrap 'struct
+@@ -151,6 +169,7 @@ struct pci_tsm_pf0 *pci_tsm_context_pf0(struct pci_tsm_context *context);
+ struct pci_dev *pci_tsm_context_dsm_dev(struct pci_tsm_context *context);
+ bool pci_tsm_context_match_device(struct pci_tsm_context *context,
+ 				  struct pci_dev *pdev);
++struct tsm_dev *pci_tsm_get_device(struct pci_dev *pdev);
+ #else
+ static inline int pci_tsm_register(struct tsm_dev *tsm_dev)
+ {
+@@ -165,6 +184,11 @@ static inline bool pci_tsm_is_configured(struct pci_dev *pdev)
+ 	return false;
  }
  
--int amd_iommufd_viommu_init(struct iommufd_viommu *viommu, struct iommu_domain *parent,
--			    const struct iommu_user_data *user_data)
-+const struct iommufd_viommu_ops *
-+amd_iommufd_get_viommu_ops(struct device *dev, enum iommu_viommu_type viommu_type)
++static inline struct tsm_dev *pci_tsm_get_device(struct pci_dev *pdev)
 +{
 +	return NULL;
 +}
 +
-+int amd_iommufd_viommu_init(struct iommufd_viommu *viommu,
-+		struct device *dev, struct iommu_domain *parent,
-+		const struct iommu_user_data *user_data)
+ static inline struct pci_tsm_context *
+ pci_tsm_context_get(struct pci_dev *pdev, struct tsm_dev *tsm_dev)
  {
- 	unsigned long flags;
- 	struct protection_domain *pdom = to_pdomain(parent);
-@@ -47,8 +55,6 @@ int amd_iommufd_viommu_init(struct iommufd_viommu *viommu, struct iommu_domain *
- 	xa_init_flags(&aviommu->gdomid_array, XA_FLAGS_ALLOC1);
- 	aviommu->parent = pdom;
- 
--	viommu->ops = &amd_viommu_ops;
--
- 	spin_lock_irqsave(&pdom->lock, flags);
- 	list_add(&aviommu->pdom_list, &pdom->viommu_list);
- 	spin_unlock_irqrestore(&pdom->lock, flags);
-@@ -73,5 +79,7 @@ static void amd_iommufd_viommu_destroy(struct iommufd_viommu *viommu)
-  * struct iommufd_viommu_ops - vIOMMU specific operations
-  */
- static const struct iommufd_viommu_ops amd_viommu_ops = {
-+	.get_viommu_size = amd_iommufd_get_viommu_size,
-+	.viommu_init = amd_iommufd_viommu_init,
- 	.destroy = amd_iommufd_viommu_destroy,
- };
-diff --git a/drivers/iommu/amd/iommufd.h b/drivers/iommu/amd/iommufd.h
-index 62e9e1bebfbe..0d8e7c0902cf 100644
---- a/drivers/iommu/amd/iommufd.h
-+++ b/drivers/iommu/amd/iommufd.h
-@@ -8,13 +8,16 @@
- 
- #if IS_ENABLED(CONFIG_AMD_IOMMU_IOMMUFD)
- void *amd_iommufd_hw_info(struct device *dev, u32 *length, enum iommu_hw_info_type *type);
--size_t amd_iommufd_get_viommu_size(struct device *dev, enum iommu_viommu_type viommu_type);
--int amd_iommufd_viommu_init(struct iommufd_viommu *viommu, struct iommu_domain *parent,
--			    const struct iommu_user_data *user_data);
-+const struct iommufd_viommu_ops *
-+amd_iommufd_get_viommu_ops(struct device *dev,
-+		enum iommu_viommu_type viommu_type);
-+int amd_iommufd_viommu_init(struct iommufd_viommu *viommu,
-+		struct device *dev, struct iommu_domain *parent,
-+		const struct iommu_user_data *user_data);
- #else
- #define amd_iommufd_hw_info NULL
- #define amd_iommufd_viommu_init NULL
--#define amd_iommufd_get_viommu_size NULL
-+#define amd_iommufd_get_viommu_ops NULL
- #endif /* CONFIG_AMD_IOMMU_IOMMUFD */
- 
- #endif /* AMD_IOMMUFD_H */
-diff --git a/drivers/iommu/amd/nested.c b/drivers/iommu/amd/nested.c
-index f1c7987fc585..a4d856689e57 100644
---- a/drivers/iommu/amd/nested.c
-+++ b/drivers/iommu/amd/nested.c
-@@ -90,7 +90,7 @@ static void *gdom_info_load_or_alloc_locked(struct xarray *xa,
- 
- /*
-  * This function is assigned to struct iommufd_viommu_ops.alloc_domain_nested()
-- * during the call to struct iommu_ops.viommu_init().
-+ * during the call to struct iommufd_viommu_ops.viommu_init().
-  */
- struct iommu_domain *
- amd_iommu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
-@@ -198,7 +198,7 @@ static void set_dte_nested(struct amd_iommu *iommu, struct iommu_domain *dom,
- 
- 	/*
- 	 * The nest parent domain is attached during the call to the
--	 * struct iommu_ops.viommu_init(), which will be stored as part
-+	 * struct iommufd_viommu_ops.viommu_init(), which will be stored as part
- 	 * of the struct amd_iommu_viommu.parent.
- 	 */
- 	if (WARN_ON(!ndom->viommu || !ndom->viommu->parent))
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-index e68b46485095..d8c837df9f47 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3-iommufd.c
-@@ -533,20 +533,29 @@ int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
- 	return ret;
- }
- 
-+static size_t arm_vsmmu_get_size(struct device *dev,
-+				 enum iommu_viommu_type viommu_type)
-+{
-+	return VIOMMU_STRUCT_SIZE(struct arm_vsmmu, core);
-+}
-+
- static const struct iommufd_viommu_ops arm_vsmmu_ops = {
-+	.get_viommu_size = arm_vsmmu_get_size,
-+	.viommu_init = arm_vsmmu_init,
- 	.alloc_domain_nested = arm_vsmmu_alloc_domain_nested,
- 	.cache_invalidate = arm_vsmmu_cache_invalidate,
- 	.vdevice_init = arm_vsmmu_vdevice_init,
+diff --git a/include/linux/tsm.h b/include/linux/tsm.h
+index 19dedf971f14..3d5286aeaa42 100644
+--- a/include/linux/tsm.h
++++ b/include/linux/tsm.h
+@@ -110,6 +110,8 @@ struct tsm_report_ops {
  };
  
--size_t arm_smmu_get_viommu_size(struct device *dev,
--				enum iommu_viommu_type viommu_type)
-+const struct iommufd_viommu_ops *
-+arm_smmu_get_viommu_ops(struct device *dev,
-+		enum iommu_viommu_type viommu_type)
- {
- 	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
- 	struct arm_smmu_device *smmu = master->smmu;
- 
- 	if (!(smmu->features & ARM_SMMU_FEAT_NESTING))
--		return 0;
-+		return NULL;
- 
- 	/*
- 	 * FORCE_SYNC is not set with FEAT_NESTING. Some study of the exact HW
-@@ -554,7 +563,7 @@ size_t arm_smmu_get_viommu_size(struct device *dev,
- 	 * any change to remove this.
- 	 */
- 	if (WARN_ON(smmu->options & ARM_SMMU_OPT_CMDQ_FORCE_SYNC))
--		return 0;
-+		return NULL;
- 
- 	/*
- 	 * Must support some way to prevent the VM from bypassing the cache
-@@ -566,19 +575,19 @@ size_t arm_smmu_get_viommu_size(struct device *dev,
- 	 */
- 	if (!arm_smmu_master_canwbs(master) &&
- 	    !(smmu->features & ARM_SMMU_FEAT_S2FWB))
--		return 0;
-+		return NULL;
- 
- 	if (viommu_type == IOMMU_VIOMMU_TYPE_ARM_SMMUV3)
--		return VIOMMU_STRUCT_SIZE(struct arm_vsmmu, core);
-+		return &arm_vsmmu_ops;
- 
--	if (!smmu->impl_ops || !smmu->impl_ops->get_viommu_size)
--		return 0;
--	return smmu->impl_ops->get_viommu_size(viommu_type);
-+	if (!smmu->impl_ops || !smmu->impl_ops->get_viommu_ops)
-+		return NULL;
-+	return smmu->impl_ops->get_viommu_ops(viommu_type);
- }
- 
--int arm_vsmmu_init(struct iommufd_viommu *viommu,
--		   struct iommu_domain *parent_domain,
--		   const struct iommu_user_data *user_data)
-+int arm_vsmmu_init(struct iommufd_viommu *viommu, struct device *dev,
-+		struct iommu_domain *parent_domain,
-+		const struct iommu_user_data *user_data)
- {
- 	struct arm_vsmmu *vsmmu = container_of(viommu, struct arm_vsmmu, core);
- 	struct arm_smmu_device *smmu =
-@@ -593,10 +602,8 @@ int arm_vsmmu_init(struct iommufd_viommu *viommu,
- 	/* FIXME Move VMID allocation from the S2 domain allocation to here */
- 	vsmmu->vmid = s2_parent->s2_cfg.vmid;
- 
--	if (viommu->type == IOMMU_VIOMMU_TYPE_ARM_SMMUV3) {
--		viommu->ops = &arm_vsmmu_ops;
-+	if (viommu->type == IOMMU_VIOMMU_TYPE_ARM_SMMUV3)
- 		return 0;
--	}
- 
- 	return smmu->impl_ops->vsmmu_init(vsmmu, user_data);
- }
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index 100b34f07032..62dd769f1f6c 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -4597,8 +4597,7 @@ static const struct iommu_ops arm_smmu_ops = {
- 	.get_resv_regions	= arm_smmu_get_resv_regions,
- 	.page_response		= arm_smmu_page_response,
- 	.def_domain_type	= arm_smmu_def_domain_type,
--	.get_viommu_size	= arm_smmu_get_viommu_size,
--	.viommu_init		= arm_vsmmu_init,
-+	.get_viommu_ops	= arm_smmu_get_viommu_ops,
- 	.user_pasid_table	= 1,
- 	.owner			= THIS_MODULE,
- 	.default_domain_ops = &(const struct iommu_domain_ops) {
-@@ -5761,8 +5760,8 @@ static struct arm_smmu_device *arm_smmu_impl_probe(struct arm_smmu_device *smmu)
- 
- 	ops = new_smmu->impl_ops;
- 	if (ops) {
--		/* get_viommu_size and vsmmu_init ops must be paired */
--		if (WARN_ON(!ops->get_viommu_size != !ops->vsmmu_init)) {
-+		/* get_viommu_ops and vsmmu_init ops must be paired */
-+		if (WARN_ON(!ops->get_viommu_ops != !ops->vsmmu_init)) {
- 			ret = -EINVAL;
- 			goto err_remove;
- 		}
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-index bb048e08d613..d93388e8eefb 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h
-@@ -931,7 +931,8 @@ struct arm_smmu_impl_ops {
- 	 */
- 	void *(*hw_info)(struct arm_smmu_device *smmu, u32 *length,
- 			 enum iommu_hw_info_type *type);
--	size_t (*get_viommu_size)(enum iommu_viommu_type viommu_type);
-+	const struct iommufd_viommu_ops *(*get_viommu_ops)(
-+		enum iommu_viommu_type viommu_type);
- 	int (*vsmmu_init)(struct arm_vsmmu *vsmmu,
- 			  const struct iommu_user_data *user_data);
- };
-@@ -1321,11 +1322,12 @@ struct arm_vsmmu {
- #if IS_ENABLED(CONFIG_ARM_SMMU_V3_IOMMUFD)
- void *arm_smmu_hw_info(struct device *dev, u32 *length,
- 		       enum iommu_hw_info_type *type);
--size_t arm_smmu_get_viommu_size(struct device *dev,
--				enum iommu_viommu_type viommu_type);
--int arm_vsmmu_init(struct iommufd_viommu *viommu,
--		   struct iommu_domain *parent_domain,
--		   const struct iommu_user_data *user_data);
-+const struct iommufd_viommu_ops *
-+arm_smmu_get_viommu_ops(struct device *dev,
-+		enum iommu_viommu_type viommu_type);
-+int arm_vsmmu_init(struct iommufd_viommu *viommu, struct device *dev,
-+		struct iommu_domain *parent_domain,
-+		const struct iommu_user_data *user_data);
- int arm_smmu_attach_prepare_vmaster(struct arm_smmu_attach_state *state,
- 				    struct arm_smmu_nested_domain *nested_domain);
- void arm_smmu_attach_commit_vmaster(struct arm_smmu_attach_state *state);
-@@ -1337,7 +1339,7 @@ arm_vsmmu_alloc_domain_nested(struct iommufd_viommu *viommu, u32 flags,
- int arm_vsmmu_cache_invalidate(struct iommufd_viommu *viommu,
- 			       struct iommu_user_data_array *array);
- #else
--#define arm_smmu_get_viommu_size NULL
-+#define arm_smmu_get_viommu_ops NULL
- #define arm_smmu_hw_info NULL
- #define arm_vsmmu_init NULL
- #define arm_vsmmu_alloc_domain_nested NULL
-diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 710a4c694b94..b48306b67ac2 100644
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -892,11 +892,14 @@ static void *tegra241_cmdqv_hw_info(struct arm_smmu_device *smmu, u32 *length,
- 	return info;
- }
- 
--static size_t tegra241_cmdqv_get_vintf_size(enum iommu_viommu_type viommu_type)
-+static const struct iommufd_viommu_ops tegra241_cmdqv_viommu_ops;
-+
-+static const struct iommufd_viommu_ops *
-+tegra241_cmdqv_get_viommu_ops(enum iommu_viommu_type viommu_type)
- {
- 	if (viommu_type != IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV)
--		return 0;
--	return VIOMMU_STRUCT_SIZE(struct tegra241_vintf, vsmmu.core);
-+		return NULL;
-+	return &tegra241_cmdqv_viommu_ops;
- }
- 
- static struct arm_smmu_impl_ops tegra241_cmdqv_impl_ops = {
-@@ -907,7 +910,7 @@ static struct arm_smmu_impl_ops tegra241_cmdqv_impl_ops = {
- 	.device_remove = tegra241_cmdqv_remove,
- 	/* For user-space use */
- 	.hw_info = tegra241_cmdqv_hw_info,
--	.get_viommu_size = tegra241_cmdqv_get_vintf_size,
-+	.get_viommu_ops = tegra241_cmdqv_get_viommu_ops,
- 	.vsmmu_init = tegra241_cmdqv_init_vintf_user,
- };
- 
-@@ -1289,7 +1292,15 @@ static int tegra241_vintf_init_vsid(struct iommufd_vdevice *vdev)
- 	return 0;
- }
- 
--static struct iommufd_viommu_ops tegra241_cmdqv_viommu_ops = {
-+static size_t tegra241_cmdqv_get_vintf_size(struct device *dev,
-+					    enum iommu_viommu_type viommu_type)
-+{
-+	return VIOMMU_STRUCT_SIZE(struct tegra241_vintf, vsmmu.core);
-+}
-+
-+static const struct iommufd_viommu_ops tegra241_cmdqv_viommu_ops = {
-+	.get_viommu_size = tegra241_cmdqv_get_vintf_size,
-+	.viommu_init = arm_vsmmu_init,
- 	.destroy = tegra241_cmdqv_destroy_vintf_user,
- 	.alloc_domain_nested = arm_vsmmu_alloc_domain_nested,
- 	/* Non-accelerated commands will be still handled by the kernel */
-@@ -1312,7 +1323,7 @@ tegra241_cmdqv_init_vintf_user(struct arm_vsmmu *vsmmu,
- 	int ret;
- 
- 	/*
--	 * Unsupported type should be rejected by tegra241_cmdqv_get_vintf_size.
-+	 * Unsupported type should be rejected by tegra241_cmdqv_get_viommu_ops.
- 	 * Seeing one here indicates a kernel bug or some data corruption.
- 	 */
- 	if (WARN_ON(vsmmu->core.type != IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV))
-@@ -1364,7 +1375,6 @@ tegra241_cmdqv_init_vintf_user(struct arm_vsmmu *vsmmu,
- 	dev_dbg(cmdqv->dev, "VINTF%u: allocated with vmid (%d)\n", vintf->idx,
- 		vintf->vsmmu.vmid);
- 
--	vsmmu->core.ops = &tegra241_cmdqv_viommu_ops;
- 	return 0;
- 
- free_mmap:
-diff --git a/drivers/iommu/iommufd/selftest.c b/drivers/iommu/iommufd/selftest.c
-index b17cca7096b6..09d1b0f8f1da 100644
---- a/drivers/iommu/iommufd/selftest.c
-+++ b/drivers/iommu/iommufd/selftest.c
-@@ -767,7 +767,19 @@ static int mock_hw_queue_init_phys(struct iommufd_hw_queue *hw_queue, u32 index,
- 	return rc;
- }
- 
--static struct iommufd_viommu_ops mock_viommu_ops = {
-+static int mock_viommu_init(struct iommufd_viommu *viommu, struct device *dev,
-+		struct iommu_domain *parent_domain,
-+		const struct iommu_user_data *user_data);
-+
-+static size_t mock_get_viommu_size(struct device *dev,
-+				   enum iommu_viommu_type viommu_type)
-+{
-+	return VIOMMU_STRUCT_SIZE(struct mock_viommu, core);
-+}
-+
-+static const struct iommufd_viommu_ops mock_viommu_ops = {
-+	.get_viommu_size = mock_get_viommu_size,
-+	.viommu_init = mock_viommu_init,
- 	.destroy = mock_viommu_destroy,
- 	.alloc_domain_nested = mock_viommu_alloc_domain_nested,
- 	.cache_invalidate = mock_viommu_cache_invalidate,
-@@ -775,17 +787,18 @@ static struct iommufd_viommu_ops mock_viommu_ops = {
- 	.hw_queue_init_phys = mock_hw_queue_init_phys,
- };
- 
--static size_t mock_get_viommu_size(struct device *dev,
--				   enum iommu_viommu_type viommu_type)
-+static const struct iommufd_viommu_ops *
-+mock_get_viommu_ops(struct device *dev,
-+		enum iommu_viommu_type viommu_type)
- {
- 	if (viommu_type != IOMMU_VIOMMU_TYPE_SELFTEST)
--		return 0;
--	return VIOMMU_STRUCT_SIZE(struct mock_viommu, core);
-+		return NULL;
-+	return &mock_viommu_ops;
- }
- 
- static int mock_viommu_init(struct iommufd_viommu *viommu,
--			    struct iommu_domain *parent_domain,
--			    const struct iommu_user_data *user_data)
-+		struct device *dev, struct iommu_domain *parent_domain,
-+		const struct iommu_user_data *user_data)
- {
- 	struct mock_iommu_device *mock_iommu = container_of(
- 		viommu->iommu_dev, struct mock_iommu_device, iommu_dev);
-@@ -827,7 +840,6 @@ static int mock_viommu_init(struct iommufd_viommu *viommu,
- 	mutex_init(&mock_viommu->queue_mutex);
- 	mock_viommu->s2_parent = to_mock_domain(parent_domain);
- 
--	viommu->ops = &mock_viommu_ops;
- 	return 0;
- 
- err_destroy_mmap:
-@@ -854,8 +866,7 @@ static const struct iommu_ops mock_ops = {
- 	.probe_device = mock_probe_device,
- 	.page_response = mock_domain_page_response,
- 	.user_pasid_table = true,
--	.get_viommu_size = mock_get_viommu_size,
--	.viommu_init = mock_viommu_init,
-+	.get_viommu_ops = mock_get_viommu_ops,
- };
- 
- static void mock_domain_free_nested(struct iommu_domain *domain)
-diff --git a/drivers/iommu/iommufd/viommu.c b/drivers/iommu/iommufd/viommu.c
-index 0d162a3fdc98..2eba1562a704 100644
---- a/drivers/iommu/iommufd/viommu.c
-+++ b/drivers/iommu/iommufd/viommu.c
-@@ -33,7 +33,7 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
- 	struct iommufd_viommu *viommu;
- 	struct iommufd_device *idev;
- 	struct iommu_device *iommu_dev;
--	const struct iommu_ops *ops;
-+	const struct iommufd_viommu_ops *ops;
- 	size_t viommu_size;
- 	int rc;
- 
-@@ -49,23 +49,25 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
- 		rc = -EOPNOTSUPP;
- 		goto out_put_idev;
- 	}
--	ops = iommu_dev->ops;
--	if (!ops->get_viommu_size || !ops->viommu_init) {
-+	if (!iommu_dev->ops->get_viommu_ops) {
- 		rc = -EOPNOTSUPP;
- 		goto out_put_idev;
- 	}
--
--	viommu_size = ops->get_viommu_size(idev->dev, cmd->type);
--	if (!viommu_size) {
-+	ops = iommu_dev->ops->get_viommu_ops(idev->dev, cmd->type);
-+	if (!ops) {
- 		rc = -EOPNOTSUPP;
- 		goto out_put_idev;
- 	}
--
- 	/*
--	 * It is a driver bug for providing a viommu_size smaller than the core
--	 * vIOMMU structure size
-+	 * It is a driver bug to omit the required operations or provide a size
-+	 * smaller than the core vIOMMU structure.
- 	 */
--	if (WARN_ON_ONCE(viommu_size < sizeof(*viommu))) {
-+	if (WARN_ON_ONCE(!ops->get_viommu_size || !ops->viommu_init)) {
-+		rc = -EOPNOTSUPP;
-+		goto out_put_idev;
-+	}
-+	viommu_size = ops->get_viommu_size(idev->dev, cmd->type);
-+	if (!viommu_size || WARN_ON_ONCE(viommu_size < sizeof(*viommu))) {
- 		rc = -EOPNOTSUPP;
- 		goto out_put_idev;
- 	}
-@@ -104,16 +106,12 @@ int iommufd_viommu_alloc_ioctl(struct iommufd_ucmd *ucmd)
- 	 */
- 	viommu->iommu_dev = iommu_dev;
- 
--	rc = ops->viommu_init(viommu, hwpt_paging->common.domain,
-+	rc = ops->viommu_init(viommu, idev->dev,
-+			      hwpt_paging->common.domain,
- 			      user_data.len ? &user_data : NULL);
- 	if (rc)
- 		goto out_put_hwpt;
--
--	/* It is a driver bug that viommu->ops isn't filled */
--	if (WARN_ON_ONCE(!viommu->ops)) {
--		rc = -EOPNOTSUPP;
--		goto out_put_hwpt;
--	}
-+	viommu->ops = ops;
- 
- 	cmd->out_viommu_id = viommu->obj.id;
- 	rc = iommufd_ucmd_respond(ucmd, sizeof(*cmd));
-diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-index ef5043752a36..f27064917df7 100644
---- a/include/linux/iommu.h
-+++ b/include/linux/iommu.h
-@@ -46,6 +46,7 @@ struct iommu_dma_msi_cookie;
- struct iommu_fault_param;
- struct iommufd_ctx;
- struct iommufd_viommu;
+ struct pci_tsm_ops;
 +struct iommufd_viommu_ops;
- struct msi_desc;
- struct msi_msg;
- 
-@@ -669,16 +670,8 @@ __iommu_copy_struct_to_user(const struct iommu_user_data *dst_data,
-  *		- IOMMU_DOMAIN_DMA: must use a dma domain
-  *		- 0: use the default setting
-  * @default_domain_ops: the default ops for domains
-- * @get_viommu_size: Get the size of a driver-level vIOMMU structure for a given
-- *                   @dev corresponding to @viommu_type. Driver should return 0
-- *                   if vIOMMU isn't supported accordingly. It is required for
-- *                   driver to use the VIOMMU_STRUCT_SIZE macro to sanitize the
-- *                   driver-level vIOMMU structure related to the core one
-- * @viommu_init: Init the driver-level struct of an iommufd_viommu on a physical
-- *               IOMMU instance @viommu->iommu_dev, as the set of virtualization
-- *               resources shared/passed to user space IOMMU instance. Associate
-- *               it with a nesting @parent_domain. It is required for driver to
-- *               set @viommu->ops pointing to its own viommu_ops
-+ * @get_viommu_ops: Return the vIOMMU operations supported by @dev for a type.
-+ *                  Return NULL if the type is unsupported.
-  * @owner: Driver module providing these ops
-  * @identity_domain: An always available, always attachable identity
-  *                   translation.
-@@ -729,11 +722,8 @@ struct iommu_ops {
- 
- 	int (*def_domain_type)(struct device *dev);
- 
--	size_t (*get_viommu_size)(struct device *dev,
--				  enum iommu_viommu_type viommu_type);
--	int (*viommu_init)(struct iommufd_viommu *viommu,
--			   struct iommu_domain *parent_domain,
--			   const struct iommu_user_data *user_data);
-+	const struct iommufd_viommu_ops *(*get_viommu_ops)(
-+		struct device *dev, enum iommu_viommu_type viommu_type);
- 
- 	const struct iommu_domain_ops *default_domain_ops;
- 	struct module *owner;
-diff --git a/include/linux/iommufd.h b/include/linux/iommufd.h
-index d1fd7888fc91..5f5c67b24134 100644
---- a/include/linux/iommufd.h
-+++ b/include/linux/iommufd.h
-@@ -148,6 +148,15 @@ struct iommufd_hw_queue {
- 
- /**
-  * struct iommufd_viommu_ops - vIOMMU specific operations
-+ * @get_viommu_size: Get the size of a driver-level vIOMMU structure for a given
-+ *                   @dev corresponding to @viommu_type. Driver should return 0
-+ *                   if vIOMMU isn't supported accordingly. It is required for
-+ *                   driver to use the VIOMMU_STRUCT_SIZE macro to sanitize the
-+ *                   driver-level vIOMMU structure related to the core one
-+ * @viommu_init: Init the driver-level struct of an iommufd_viommu on a physical
-+ *               IOMMU instance @viommu->iommu_dev, as the set of virtualization
-+ *               resources shared/passed to user space IOMMU instance. Associate
-+ *               it with a nesting @parent_domain.
-  * @destroy: Clean up all driver-specific parts of an iommufd_viommu. The memory
-  *           of the vIOMMU will be free-ed by iommufd core after calling this op
-  * @alloc_domain_nested: Allocate a IOMMU_DOMAIN_NESTED on a vIOMMU that holds a
-@@ -190,6 +199,11 @@ struct iommufd_hw_queue {
-  *                      does, it should set it to the @hw_queue->destroy pointer
-  */
- struct iommufd_viommu_ops {
-+	size_t (*get_viommu_size)(struct device *dev,
-+		enum iommu_viommu_type type);
-+	int (*viommu_init)(struct iommufd_viommu *viommu, struct device *dev,
-+		struct iommu_domain *parent_domain,
-+		const struct iommu_user_data *user_data);
- 	void (*destroy)(struct iommufd_viommu *viommu);
- 	struct iommu_domain *(*alloc_domain_nested)(
- 		struct iommufd_viommu *viommu, u32 flags,
++
+ struct tsm_dev {
+ 	struct device dev;
+ 	int id;
+@@ -124,4 +126,27 @@ int tsm_report_unregister(const struct tsm_report_ops *ops);
+ struct tsm_dev *tsm_register(struct device *parent, struct pci_tsm_ops *ops);
+ void tsm_unregister(struct tsm_dev *tsm_dev);
+ struct tsm_dev *find_tsm_dev(int id);
++
++#ifdef CONFIG_TSM
++struct tsm_dev *tsm_get_device(struct device *dev);
++void tsm_put_device(struct tsm_dev *tsm_dev);
++const struct iommufd_viommu_ops *tsm_viommu_get_ops(struct tsm_dev *tsm_dev,
++		struct device *dev, enum iommu_viommu_type type);
++#else
++static inline struct tsm_dev *tsm_get_device(struct device *dev)
++{
++	return NULL;
++}
++
++static inline void tsm_put_device(struct tsm_dev *tsm_dev)
++{
++}
++
++static inline const struct iommufd_viommu_ops *
++tsm_viommu_get_ops(struct tsm_dev *tsm_dev, struct device *dev,
++		enum iommu_viommu_type type)
++{
++	return NULL;
++}
++#endif
+ #endif /* __TSM_H */
 -- 
 2.43.0
 
