@@ -1,44 +1,44 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794820463;
-	b=CwrkwWUSYxflhI/Kn4Pz3XaAVrgbuS7AOHFBVY5Z4AxFgki3IVkEL+TOsya0KBDfNvGT
-	 6TiBRC5hGfkhYWiT+xW7eKBbiz20cjo5+PpzR86NVb9wscthAbUEzmQiFwJcYQ9WZt0Dy
-	 GwuxD4uMJ0tuVNrTsiMzitQdW5RRSOdRMcPKUbFIba5zjJtxqZK9pRgb4055x2JXgjvvg
-	 71lENG3AIeguTn4/XdivDCZRp9wMT7i1Oy1TNZXhFnqt9jWPfLHseIKODI3uL59jnQ1Pp
-	 7TsGPyDtOnuFLbpStctTfwqvE1rUw6+g9KOq7AWXMBxW6cOrO+3kccyryKz9EeOJCxQ==
+	t=1794820481;
+	b=do04vRUV9bfdTl4I2ZHAAneHhFSCZ9YbiUXEWIYH+LnQLiYA2n2+N3PxdAf1a5hSZBtX
+	 KMa7qvANBPNFUjbFw7+07LsxYTJEmMR1eSlZNoYeK6p8g/Ae419krpTmqYORVIb9rfKOE
+	 rnRNaZFAFQ34aFJWeCFAYek1zhauy5YSJSuu4eGBPTMwC5o+1IfOdvWmupTCmqIpVYeBN
+	 4L0kBQ+2XkGRaVZXrIdEH77IjYmBpdbHAG3ufUzkvauXlilsZwbNc2fu67YBmgI1aZtYO
+	 S7rAEsud0y50KmLHpUQ35J66IMNdk+KRz9nxEqYGteOnlyhWazcC4C7OwkPymYkVf4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794820463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794820481;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:MIME-Version:Content-Transfer-Encoding;
-	bh=IHfQ+J8qsgYVcG2qrN2v5b0dwvl+0v/d64C0YQIVcm4=;
-	b=Cq8nEdgEh3Gtl6vU2+ml2ly7rGWNzjnzXMduzmRDsRvbyUe00Ae5+mCf9Szh+FQmweqt
-	 gZXfc/QdFP4w6MlzYW8YVMp7SgzkdsdIdp0SVBaIeNokEnMANC+hjxn7A9aM505cIdbON
-	 G/K01FvW0vGNedlpGYvF+jzmp2lVRcyVPfQS0E+ugtp9lMtv11K2Q9i3UKnNvQf8utzfP
-	 6Htfp2bE2AfNUX0zF/CmMFxoK2rQrFWqqw0KuANWFWcFpUmt2E9889fxewoIGJmQHciJY
-	 j9TBcIvp/dbKaNbZ1ERELOP3iAEOJnCS1xsRWCkzG6+de06tXjCudBzY341X9uPrrwg==
+	bh=K4jy8IbP53ZuSPYyRskO/hfiiIRx+iysrGQG2bzb9wc=;
+	b=jqtgT5bvn069srRlfPSSYHuy2CppIpbTIl09c2YyhhBTeHdnzjnd5fJ6A1Nyau3rztUi
+	 lObaNpaogpqq6TvGIDheNEReAYmo1fYcfZxHKPqeMrq/OxQVwC+WdwIJ8PRH7ynwxuxBo
+	 oe3butrwvReLCv6rgaz/Z8rvvWnv3jU2/+7P4GF1PuRhKLF13H86C8INPY9x4aM+4r6Bc
+	 zMDCpL8ZENdt6c6r9YLCmhawO2jx2yYvW/XLa8zwDqgeALmdyQocXdL/WJTjAW+YzBHt8
+	 Wo0acm5magFhVP1W10iwchBV54YX1TuPHam+ELKwPsnSCMbisnTolLfxuS0nnjN/uhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Fvdw4mJp;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LM5n551J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A630606A329;
-	Mon, 16 Nov 2026 09:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7310D606A323;
+	Mon, 16 Nov 2026 09:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Fvdw4mJp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E2A1F000C4;
-	Mon, 16 Nov 2026 09:14:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=LM5n551J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE25D1F000C4;
+	Mon, 16 Nov 2026 09:14:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794820463;
-	bh=IHfQ+J8qsgYVcG2qrN2v5b0dwvl+0v/d64C0YQIVcm4=;
+	s=k20260515; t=1794820481;
+	bh=K4jy8IbP53ZuSPYyRskO/hfiiIRx+iysrGQG2bzb9wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fvdw4mJpFECg2KA6LPT1DGFJnSbwZKVEO+AN1WvYFLAq83I7d06o6FvOn9gRG5jwm
-	 GTJibKHMWrptK0v6ilX/UDndcV4rp/Pcq8X+JKUQoMoNCgRxGH5Hzji/WTfXno1W5J
-	 TS3/L2R/F/jAlFHd5HZe+DsvgLvv2xbPfvjhMqcA/d3Z9R5AjmIhPOisYmQEsAuxRk
-	 rp2K+8yL33dV07r/FAo2j4+tMgMScSIWxMh5IsG3o7nllonmoiUriwzdibZ2SwfC14
-	 p4xzdNHQXihXs8TosqXxyqQVrCAZOvMT5JT/7jbO0smFnrZoeBVsSE7zAe0NyM9MfI
-	 BHn/gdR4i2x1g==
+	b=LM5n551JdLsydZmHMtrzZTVMgbKp3UNt8LIepdvq5vXecnB8jqO2/e1PBnAnqwLYx
+	 MHC/xxNyvkRhgENg0YivIMEi1NzQ/pK0XOtRajfws6WJlYcxdiaO8rZ0sENQvewqZq
+	 Xmtpy9NW2zIdjike3QZwnAdQYMlWzPpOW4wLVrG3ZzdHUqC4hnVq10WTMHNs1bQLxS
+	 wlVQKBh4GVQfjjQi8xJ4gckbg+XTk9EHkUHmom9GVd7GoGgq944kL0BI0ldTRHl+TY
+	 gkYFmgnnU/TcFc7xHEGyn/eiBju7caeobi/FMlP1OOMOYrzylAEXXEOOVgVp1l0FAY
+	 VkdKDndimmsMw==
 From: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>
 To: linux-coco@lists.linux.dev
 Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
@@ -102,9 +102,9 @@ Cc: "Aneesh Kumar K.V (Arm)" <aneesh.kumar@kernel.org>,
 	linux-mm@kvack.org,
 	kvmarm@lists.linux.dev,
 	patches@lists.linux.dev
-Subject: [PATCH v10 08/13] swiotlb: Align shared IO TLB pools to the shared granule size
-Date: Mon, 16 Nov 2026 14:41:31 +0530
-Message-ID: <20261116091137.94252-9-aneesh.kumar@kernel.org>
+Subject: [PATCH v10 09/13] swiotlb: Reject misaligned restricted DMA pools for CoCo guests
+Date: Mon, 16 Nov 2026 14:41:32 +0530
+Message-ID: <20261116091137.94252-10-aneesh.kumar@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261116091137.94252-1-aneesh.kumar@kernel.org>
 References: <20261116091137.94252-1-aneesh.kumar@kernel.org>
@@ -119,190 +119,65 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Align and size the early memblock pool to the common CoCo shared
-granule. Use the same rounded extent when the pool is transitioned and
-when it is released. This deliberately leaves the slot count unchanged:
-any rounded tail belongs to the pool allocation but is not advertised as
-allocatable SWIOTLB space.
+A restricted DMA pool is a firmware-described ownership boundary. Unlike
+a pool allocated by SWIOTLB itself, its base cannot be moved and its
+size cannot be rounded without claiming memory outside the reserved
+region.
 
-Replace the default and dynamic pool set_memory calls with the helpers
-so alignment validation and architecture dispatch are kept in one place.
-As before, pages are intentionally leaked if their private state cannot
-be restored safely.
+Confidential-computing guests may require private/shared state changes
+to cover units larger than PAGE_SIZE. Passing a misaligned restricted
+region to set_memory_decrypted() can therefore fail.
+
+Validate both the physical base and the complete reserved size with the
+common CoCo shared-range helper before allocating SWIOTLB metadata or
+performing a state transition. Perform the transition through
+cc_make_shared().
 
 Cc: Marek Szyprowski <m.szyprowski@samsung.com>
 Cc: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: Aneesh Kumar K.V (Arm) <aneesh.kumar@kernel.org>
 ---
- kernel/dma/swiotlb.c | 53 +++++++++++++++++++++++++-------------------
- 1 file changed, 30 insertions(+), 23 deletions(-)
+ kernel/dma/swiotlb.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index 2c57b49ac7c0..2bb7d83ee479 100644
+index 2bb7d83ee479..24366038dfd3 100644
 --- a/kernel/dma/swiotlb.c
 +++ b/kernel/dma/swiotlb.c
-@@ -22,6 +22,7 @@
+@@ -39,7 +39,6 @@
+ #include <linux/pfn.h>
+ #include <linux/rculist.h>
+ #include <linux/scatterlist.h>
+-#include <linux/set_memory.h>
+ #include <linux/spinlock.h>
+ #include <linux/string.h>
+ #include <linux/swiotlb.h>
+@@ -2007,6 +2006,14 @@ static int rmem_swiotlb_device_init(struct reserved_mem *rmem,
+ 		return -EINVAL;
+ 	}
  
- #include <linux/cache.h>
- #include <linux/cc_platform.h>
-+#include <linux/cc_shared.h>
- #include <linux/ctype.h>
- #include <linux/debugfs.h>
- #include <linux/dma-direct.h>
-@@ -367,13 +368,13 @@ void __init swiotlb_update_mem_attributes(void)
- 
- 	if (!mem->nslabs || mem->late_alloc)
- 		return;
--	bytes = PAGE_ALIGN(mem->nslabs << IO_TLB_SHIFT);
++	if (cc_platform_has(CC_ATTR_MEM_ENCRYPT) &&
++	    !cc_shared_range_valid(rmem->base, rmem->size)) {
++		dev_err(dev,
++			"Restricted DMA pool must be aligned to %#zx bytes for memory encryption\n",
++			cc_shared_granule_size());
++		return -EINVAL;
++	}
 +
-+	bytes = ALIGN(mem->nslabs << IO_TLB_SHIFT, cc_shared_granule_size());
- 
- 	if (io_tlb_default_mem.cc_shared) {
- 		int ret;
- 
--		ret = set_memory_decrypted((unsigned long)mem->vaddr,
--					   bytes >> PAGE_SHIFT);
-+		ret = cc_make_shared(mem->vaddr, bytes);
- 		if (ret) {
- 			pr_warn("Failed to decrypt default memory pool, disabling it\n");
- 			swiotlb_mark_pool_used(mem);
-@@ -434,8 +435,8 @@ static void __init *swiotlb_memblock_alloc(unsigned long nslabs,
- 		unsigned int flags,
- 		int (*remap)(void *tlb, unsigned long nslabs))
- {
--	size_t bytes = PAGE_ALIGN(nslabs << IO_TLB_SHIFT);
- 	void *tlb;
-+	size_t bytes = ALIGN(nslabs << IO_TLB_SHIFT, cc_shared_granule_size());
- 
  	/*
- 	 * By default allocate the bounce buffer memory from low memory, but
-@@ -443,9 +444,9 @@ static void __init *swiotlb_memblock_alloc(unsigned long nslabs,
- 	 * memory encryption.
- 	 */
- 	if (flags & SWIOTLB_ANY)
--		tlb = memblock_alloc(bytes, PAGE_SIZE);
-+		tlb = memblock_alloc(bytes, cc_shared_granule_size());
- 	else
--		tlb = memblock_alloc_low(bytes, PAGE_SIZE);
-+		tlb = memblock_alloc_low(bytes, cc_shared_granule_size());
+ 	 * Since multiple devices can share the same pool, the private data,
+ 	 * io_tlb_mem struct, will be initialized by the first device attached
+@@ -2040,8 +2047,8 @@ static int rmem_swiotlb_device_init(struct reserved_mem *rmem,
+ 			int ret;
  
- 	if (!tlb) {
- 		pr_warn("%s: Failed to allocate %zu bytes tlb structure\n",
-@@ -454,7 +455,7 @@ static void __init *swiotlb_memblock_alloc(unsigned long nslabs,
- 	}
- 
- 	if (remap && remap(tlb, nslabs) < 0) {
--		memblock_free(tlb, PAGE_ALIGN(bytes));
-+		memblock_free(tlb, bytes);
- 		pr_warn("%s: Failed to remap %zu bytes\n", __func__, bytes);
- 		return NULL;
- 	}
-@@ -576,7 +577,7 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
- 		swiotlb_adjust_nareas(num_possible_cpus());
- 
- retry:
--	order = get_order(nslabs << IO_TLB_SHIFT);
-+	order = get_order(ALIGN(nslabs << IO_TLB_SHIFT, cc_shared_granule_size()));
- 	nslabs = SLABS_PER_PAGE << order;
- 
- 	while ((SLABS_PER_PAGE << order) > IO_TLB_MIN_SLABS) {
-@@ -585,6 +586,8 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
- 		if (vstart)
- 			break;
- 		order--;
-+		if (order < get_order(cc_shared_granule_size()))
-+			break;
- 		nslabs = SLABS_PER_PAGE << order;
- 		retried = true;
- 	}
-@@ -598,8 +601,13 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
- 		free_pages((unsigned long)vstart, order);
- 
- 		nslabs = ALIGN(nslabs >> 1, IO_TLB_SEGSIZE);
--		if (nslabs < IO_TLB_MIN_SLABS)
-+		if (nslabs <= IO_TLB_MIN_SLABS)
- 			return rc;
-+
-+		/* Avoid infinite loop */
-+		if (WARN_ON(nslabs < (cc_shared_granule_size() >> IO_TLB_SHIFT)))
-+			return rc;
-+
- 		retried = true;
- 		goto retry;
- 	}
-@@ -624,8 +632,7 @@ int swiotlb_init_late(size_t size, gfp_t gfp_mask,
- 		goto error_slots;
- 
- 	if (io_tlb_default_mem.cc_shared) {
--		rc = set_memory_decrypted((unsigned long)vstart,
--					  (nslabs << IO_TLB_SHIFT) >> PAGE_SHIFT);
-+		rc = cc_make_shared(vstart, nslabs << IO_TLB_SHIFT);
- 		if (rc) {
- 			leak_pages = true;
- 			goto error_decrypt;
-@@ -665,11 +672,11 @@ void __init swiotlb_exit(void)
- 
- 	pr_info("tearing down default memory pool\n");
- 	tbl_vaddr = (unsigned long)phys_to_virt(mem->start);
--	tbl_size = PAGE_ALIGN(mem->end - mem->start);
-+	tbl_size = ALIGN(mem->end - mem->start, cc_shared_granule_size());
- 	slots_size = PAGE_ALIGN(array_size(sizeof(*mem->slots), mem->nslabs));
- 
- 	if (io_tlb_default_mem.cc_shared) {
--		if (set_memory_encrypted(tbl_vaddr, tbl_size >> PAGE_SHIFT))
-+		if (cc_make_private((void *)tbl_vaddr, tbl_size))
- 			leak_pages = true;
- 	}
- 
-@@ -709,12 +716,15 @@ void __init swiotlb_exit(void)
- static struct page *alloc_dma_pages(gfp_t gfp, size_t bytes,
- 		u64 phys_limit, unsigned long attrs)
- {
--	unsigned int order = get_order(bytes);
- 	bool cc_shared = attrs & __DMA_ATTR_ALLOC_CC_SHARED;
-+	unsigned int order;
- 	struct page *page;
- 	phys_addr_t paddr;
- 	void *vaddr;
- 
-+	if (cc_shared)
-+		bytes = ALIGN(bytes, cc_shared_granule_size());
-+	order = get_order(bytes);
- 	page = alloc_pages(gfp, order);
- 	if (!page)
- 		return NULL;
-@@ -726,15 +736,10 @@ static struct page *alloc_dma_pages(gfp_t gfp, size_t bytes,
- 	}
- 
- 	vaddr = phys_to_virt(paddr);
--	if (cc_shared && set_memory_decrypted((unsigned long)vaddr, PFN_UP(bytes)))
--		goto error;
-+	if (cc_shared && cc_make_shared(vaddr, bytes))
-+		/* leak pages on error */
-+		return NULL;
- 	return page;
--
--error:
--	/* Intentional leak if pages cannot be encrypted again. */
--	if (cc_shared && !set_memory_encrypted((unsigned long)vaddr, PFN_UP(bytes)))
--		__free_pages(page, order);
--	return NULL;
- }
- 
- /**
-@@ -805,9 +810,11 @@ static void swiotlb_free_tlb(void *vaddr, size_t bytes, bool cc_shared)
- 	    dma_free_from_pool(NULL, vaddr, bytes))
- 		return;
- 
-+	if (cc_shared)
-+		bytes = ALIGN(bytes, cc_shared_granule_size());
- 	/* Intentional leak if pages cannot be encrypted again. */
- 	if (!cc_shared ||
--	    !set_memory_encrypted((unsigned long)vaddr, PFN_UP(bytes)))
-+	    !cc_make_private(vaddr, bytes))
- 		__free_pages(virt_to_page(vaddr), get_order(bytes));
- }
- 
+ 			mem->cc_shared = true;
+-			ret = set_memory_decrypted((unsigned long)phys_to_virt(rmem->base),
+-						   rmem->size >> PAGE_SHIFT);
++			ret = cc_make_shared(phys_to_virt(rmem->base),
++					     rmem->size);
+ 			if (ret) {
+ 				dev_err(dev, "Failed to decrypt restricted DMA pool\n");
+ 				kfree(pool->areas);
 -- 
 2.43.0
 
