@@ -1,13 +1,13 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.200.35
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.71
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1794922132;
-	b=VwhW9HuOgQU6O5BkI/RvoXFO7RNKpqTB7+ndqVIewWtzl+s0mLCQNwJT977Psq/j523h
-	 c6h/KVAj4jmoTJ/0Q5v8uc2bEjvCSLN3Y/U7bNRZ4kLE71F/AQQPhFhxeMJS5qIW8rYSl
-	 PFD56V5YYuOtwlgini8qbXuPGVwsC+maox8SSAaHeOlsWwks/CoqoBWptj5h7FGlySgw1
-	 R3aDvQDXpyvKQVZOsqCsgwYa868EF//8NNgLFa7F6cs+5gcEE/w6P930B/Uy9itXOkp3B
-	 R6avzY8/HxwPhKgKEaWJSyseWXoWaQYSDZoQ6UqNo1spIrIhyFmfi0f7mU1GpJo34zw==
+	t=1794925235;
+	b=1q7G+EPUi25Mr55fAPt2iDiYsibKcXnVlZDTM+ye2XkHL/VnUN9ACHltJA+sJ+27Gmfe
+	 XLGm8STwBjmXp9rfNK9SMvhPDaw4iyBYIGVQXpcZyH/WGnT1l60CDyXBaJL0fCbYZ4wMf
+	 qlZ0MHjNHiRUninJPUTMZ0DkhEjXXbMNPqNniZuLZmIFHryLRX6rm85kZr3Ry0W4MuoT0
+	 UXP8gXqkcl/xJ8exklQ+/tYXtlcyUDGTZhqg7I8ARCUC14PkGmLowraGAMMPAXgrfFfy5
+	 a0YzVJnjTwYcPm/ushDllmbqE8aMosI0Oqbn1OQ4ZvvLG9dEfDHxGkHEWgjW2fUrl3g==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794922132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794925235;
 	h=DMARC-Filter:DKIM-Signature:Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:Content-Type:Content-Disposition:
 	 In-Reply-To:X-ClientProxiedBy:MIME-Version:X-MS-PublicTrafficType:
@@ -24,63 +24,63 @@ ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	 X-MS-Exchange-CrossTenant-Id:X-MS-Exchange-CrossTenant-MailboxType:
 	 X-MS-Exchange-CrossTenant-UserPrincipalName:
 	 X-MS-Exchange-Transport-CrossTenantHeadersStamped;
-	bh=RR8wOp948mDPqPY6f4GsNJmB1ROnnfpH5TlfF86gxK0=;
-	b=cC4s1igoL7SXZdxMOMa6mFlgAog4IoL4M7KyFbj6KvHyN/o2kd/S6DdHk2cxd2BiRhpP
-	 +dgIcG9MFNHrjgG5DGbdLmMSvXvtTpijNPIx0Z/lEcIfHhK8e/Nq+GyTUQVJA/2cVWnP6
-	 OTRMwjvC+LIzwf2FbDkP1Jqycoe6Tb9jiCNuk5SderyEXJioSp+LNYtqv6LiWKXTZ1zYz
-	 kqM9kRF/Ur+bIuvukasRnnBXsvI7EIJYo24xK/XLbkVEPqu1JQOusZQnzElb2sv0glSI5
-	 qBVFjIZ441tc9o+XEqNSN5l4th8q17ny3QvhxnHRZqlWKIWebtHvMPXvdvNH1wkarzQ==
+	bh=jcaBsuHtCy9NzW852TQGGPETuRG9kQ06yN2snWy34b8=;
+	b=inMxe5/yFFeU7aGK9QSWy4ykHhLJoZb3uqHfRc5l29HI6rCGcjn0MlbQ1Cve/SLY60ri
+	 Ffz+2dybAJ7/F/nVdMdsH/JI+mFYoHOPumCkgoLD69OPI0wnCyYxeJ1mAHqlfRYtIaAGB
+	 BX1sz82nTbwI6HSKW3p86K4LE+VDEPrc4J+eglV9WEHJHw6PPDfUTUVMwkm5IhXJLqP4P
+	 t4rnE6TZXMUJUBw8SfOfvSWdPSbVp3xfHPhDoUpEUuyzaTc5ZzeJZ1r/QrzO3ev6CxUAz
+	 4LQo8nF+Y1fxt1p0HQeD9VN7klmMx5kiIx76kzXkIJsR9hu6pfglZ3zbkv8DaXmHLRA==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=nvidia.com;
 	spf=fail smtp.mailfrom=nvidia.com;
-	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=eDbgA1Dg;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=40.107.200.35
-Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012035.outbound.protection.outlook.com [40.107.200.35])
+	dkim=pass header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=VkXitjOt;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=52.101.46.71
+Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010071.outbound.protection.outlook.com [52.101.46.71])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (secp384r1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476F8606A31C;
-	Tue, 17 Nov 2026 13:28:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 476F8606A31C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F64E606A31C;
+	Tue, 17 Nov 2026 14:20:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 2F64E606A31C
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=eDbgA1Dg
+	dkim=pass (2048-bit key, unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=VkXitjOt
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=y7SNOWtC3mNVtRWKnBDD/Vr7nuHofLL0Tdga1Z66HJirGqRQ45jJJ8A1Lk6P+kBatvfta+rvPgFX3HfHi5+NHEIfgX7qTvInT3xYKHQ14G7Re6IgKPg3gbq1JKuEVY2bQmEbrzm7BxBBBgUMkvVosskMN5GAdrFMoIEk/hejN0ePqEbfKda5YCRYUBz2+dxkgswrFXjnIEZTqwJUAlSjlMCszTC4FOzP6Ri4na9SS01Kw9roMj+UdhPFnpg+5NFIsCTQgkNqXX5tfQFkhyHPT/l4WPhSrbagb1gXwTB/QLZNLNx8SDM3WfAEPaV51l12DgMrk1JZg1NttNqOCU0udg==
+ b=jDUTcbm8G2FEHDdRzSfizQwE7PExUsG0NHdSyz2AVASox5PLsiq5PiVwPbmL9X9LO/v889YnlShwhjVk5YGUMcwsR9bvnZYack3n4l6O0rFaZvgqRez3TZUmQ47IKzKopB3wSgSv9AkISwv5a422xXqMiuM/kxrMOA3VjinX85zrvEjb0AluwaUwlz8ErgHW4xhdTYliZfvFgQEkcV8Bs0EJiH0Bc8Ilo/4XxCUi7WDwe35JWYAX3+3cfVfTGgT2VaUo8jImn14Z1o6y82YdlkVTnOn3KW7GC+2XGxez1sf1ckA0gkw4vVpDxpYUbpCi1iyleTVKJUPLDwWu6IrZjQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RR8wOp948mDPqPY6f4GsNJmB1ROnnfpH5TlfF86gxK0=;
- b=vX626qdVI41zqSt71zQAaEAUgV9RwYkP6RTkMAUcqYqYOfNepsTSsRXfN14uQr6petxPFXlgyhmLeh11JFRfAPhF6zDnQw5yTC27V46+1k1itcgxYKpyd3OzABhqzMyxFOoGi80O9F3i5TNFnTztXHkwdVedDuOXExgdSgQHWxRjmc6INhqDvXlRa9mo1AiVHHgjTihORIEOW4zpRls+OSAmJ0GWOAwzzKgeTvfLg+u7oJYuZLJBVHmcFL+BVrnPod+uc2EZ2+MYxVEIrrphFuYxIiGaVbv78KTMa24hdtN6u416QZW07jiIA1r/m8S8RWvsZwQGY4LUeZaI+H9HJQ==
+ bh=jcaBsuHtCy9NzW852TQGGPETuRG9kQ06yN2snWy34b8=;
+ b=RFBkcA1/DYaUXUcC4cHXriWLM10Ci92ATT9yQIaY9j5u+S9/gY76hLd9nyTkOAkZ0a5HsfLmcPZRJUrKFCws9loXzX80HQMcEmuDtJRzTOwgKv8G1pz5bBi3Uf6jauZoZZ3+tQRcoBYqQSbL4qqIMAdKaFPPjJXWxzL9TI54oMcE+tN8NWXwFdOSuNVEMZ23ZmIo68jcPLgP2wYwAk949vbb9D8L5BwZvVJMjWHh5YjD0UCQU4pYRxtKZF5MBD9xE2vgJG6fyYGmhhvi/HTSBy+qz0Ge7afyyHithXCfJpBnatLLS80zEVCocQcSfEiBByC0rtpxjxVC3+wbxNeuOQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RR8wOp948mDPqPY6f4GsNJmB1ROnnfpH5TlfF86gxK0=;
- b=eDbgA1Dgrh1Cfq1Jd4iNtVV31bGjmwhtn7DQFtL0FES/9gD8l+OiQxWXP50TAI4qCBGGybGscmDhCLIL+v4i7tvcTeFZvR5G3TqT2Qcvw08FoKVCMUEt7sU1CYM5qeJP5H4qFb06o5BItnu8KPF/z3wmiks+XN+YgNM4vwnsP82Ev0OeJaHRp9HbWg/Lx53VmbjT8tdYFEPZcCacpLM0hLzDBF0BG2t+G/3Ti91nAbMwZC/2AGcxxfsng7eDtBeW6jIECPhqz9S2io3k079X6Sdcbemgqi/iCTekmb4RjkD6ANfvbQejjtvY00J4GTRArJcxxgv10FHIzJscMFWEBw==
+ bh=jcaBsuHtCy9NzW852TQGGPETuRG9kQ06yN2snWy34b8=;
+ b=VkXitjOtuQmmX4fxTupguV62tlBf/AYq14RJMCB/+klOxkRvm8Ac/J/ZC8mqFeQ1MjO/jB+YczUaZeqgDFtIS+DUIj6kwhMxk8HMh0ex+xECDiPAB0nLJz5Rsqw4BHkbFKWVe/f3f0hJzjA2kmVwJtQ22lB+7n7XA8QLttMPvauDlYc0nFaNKwHHH95xE9MzQrK9m/IrHjOzAJLdJsNAIVyF7uMizHzbPjJyVNAi60xOVhREI97YAgWjkyagzYTZQxwPbnnz6ZePil894KtfqEHxzKK8F5M/MflWHoCjb87WOIQ1v9NnKsVfPS/xMcxSuRdIWWghg7daYPQv3Z0r/g==
 Authentication-Results: mx.microsoft.com 1; dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
- (2603:10b6:610:33d::12) by DM4PR12MB5721.namprd12.prod.outlook.com
- (2603:10b6:8:5c::10) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:10b6:610:33d::12) by DS0PR12MB9038.namprd12.prod.outlook.com
+ (2603:10b6:8:f2::20) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.615.14; Tue, 17 Nov
- 2026 13:28:45 +0000
+ 2026 14:20:28 +0000
 Received: from CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d]) by CHBPR12MB731189.namprd12.prod.outlook.com
  ([fe80::b0e5:123d:fe06:e10d%6]) with mapi id 15.21.0615.013; Tue, 17 Nov 2026
- 13:28:45 +0000
-Date: Tue, 17 Nov 2026 09:28:43 -0400
+ 14:20:28 +0000
+Date: Tue, 17 Nov 2026 10:20:27 -0400
 From: Jason Gunthorpe <jgg@nvidia.com>
-To: Alexey Kardashevskiy <aik@amd.com>
+To: "Reshetova, Elena" <elena.reshetova@intel.com>
 Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
-	Dave Jiang <dave.jiang@intel.com>,
-	"Reshetova, Elena" <elena.reshetova@intel.com>,
+	"Jiang, Dave" <dave.jiang@intel.com>,
 	Xu Yilun <yilun.xu@linux.intel.com>,
 	"linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
 	Jiri Pirko <jiri@resnulli.us>, "Tian, Kevin" <kevin.tian@intel.com>,
+	Alexey Kardashevskiy <aik@amd.com>,
 	Catalin Marinas <catalin.marinas@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Steven Price <steven.price@arm.com>,
@@ -97,22 +97,22 @@ Cc: "Aneesh Kumar K.V" <aneesh.kumar@kernel.org>,
 	Alistair <alistair23@gmail.com>
 Subject: Re: [RFC PATCH v1 10/11] virt: coco: arm-cca-host: Publish slot zero
  and establish streams after acceptance
-Message-ID: <20261117132843.GH2245175@nvidia.com>
-References: <20261103151643.GI274202@nvidia.com>
- <aurmtTe4ObBQhC4S@yilunxu-OptiPlex-7050>
- <DS4PPFA84FA90FCDC94900C2FC6CEF4D428E7682@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+Message-ID: <20261117142027.GI2245175@nvidia.com>
+References: <DS4PPFA84FA90FCDC94900C2FC6CEF4D428E7682@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
  <20261104134119.GR274202@nvidia.com>
  <a3f95140-c49f-42fc-b92c-73c8cf98336d@intel.com>
  <e05a71df-3b20-45a3-bb46-fb1bdad164c8@intel.com>
  <20261106193018.GK770409@nvidia.com>
  <yq5a5wy2qtjs.fsf@kernel.org>
  <20261112145254.GL738765@nvidia.com>
- <53ab900a-8a6d-49e8-ac69-3b2d1130b2db@amd.com>
+ <DS4PPFA84FA90FC465DE2D4A57521CEB991E77C2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+ <20261116143319.GA2245175@nvidia.com>
+ <DS4PPFA84FA90FC9031C253514720694AFBE77B2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <53ab900a-8a6d-49e8-ac69-3b2d1130b2db@amd.com>
-X-ClientProxiedBy: BLAPR03CA0085.namprd03.prod.outlook.com
- (2603:10b6:208:329::30) To CHBPR12MB731189.namprd12.prod.outlook.com
+In-Reply-To: <DS4PPFA84FA90FC9031C253514720694AFBE77B2@DS4PPFA84FA90FC.namprd11.prod.outlook.com>
+X-ClientProxiedBy: CH0P220CA0011.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:610:ef::13) To CHBPR12MB731189.namprd12.prod.outlook.com
  (2603:10b6:610:33d::12)
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -124,188 +124,283 @@ List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|DM4PR12MB5721:EE_
-X-MS-Office365-Filtering-Correlation-Id: 72d60821-b0ae-4d55-c414-08df44aeb441
+X-MS-TrafficTypeDiagnostic: CHBPR12MB731189:EE_|DS0PR12MB9038:EE_
+X-MS-Office365-Filtering-Correlation-Id: 691ad710-75e8-45cb-a9aa-08df44b5ee3b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|23010399003|1800799024|366016|7416014|376014|22082099003|18002099003|11063799006|56012099006|4143699003|261026121527099003|261026140227099003|261102123227099003|261022105027099003|261021135927099003|261022075727099003|261021121427099003|261028144727099003|10067099003;
+	BCL:0;ARA:13230040|366016|23010399003|7416014|376014|1800799024|22082099003|18002099003|6133799003|3023799007|5023799004|11063799006|4143699003|56012099006|261022075727099003|261022115727099003|261026121527099003|261022113327099003|261028144727099003|261021121427099003|10067099003|261021123027099003|261026140227099003|261009223027099003|261102130727099003|261021130227099003|261102123227099003|261021135927099003|261026130827099003|261022105027099003;
 X-Microsoft-Antispam-Message-Info:
-	6oSakKuDG4uOlMUM6cxDtbqz12MeJMm3q3yAVrNs75f4tG3ebC4R8LBX/psMH19jtA84OeDTx39CE4hox6I83JXrE0fPAMaI2y+ADVg+kjYbZkscg4HIkcucgCYcLiaijJMjwGTPvDeSQ0wqfkg3N7+M3enebpC9ZXm30hYoj3mDD/wIQcTMvLK/w+05YpgTlqrft/aeBCBOiD8FBKXxhXRwETy6HrgCE7x1e+OJcPGummWqsyVfGq51+wnJGa9cnoQnHoKUSDfm8B4XjHatoZ/IAkDbFa6dKj/4lx/gSok+KnqtFZ+/gmnmhMJoiYXrvBPcPC6wCnn02VbAEot4aiYr/s7ME9EWptGqPjRJDxDmNwQdL1d3+lN1KrO0AOD+G26nbLeD4Hm5DAAeHFqvOHl7a7cVtazOVtnhTRiW54b5x5dRW73tOnyTLjDx1b39vHY1s5pAJvvxVZVn+1N/HiknUnWE4uf/S6VvNsSbuhvtY4LvI7shHqbij2rN/KfIEMaxXft74jFQF88hIjkm2yMxQIEbXv+mzPoM2fgXlv7+eiedVSA62vnP9KhFuKRRHW7xHHoJrcx4PaAxrIilxi2PIp310dfycTgaBQ2G4CiR8r/w57utyf6i29D9dQCS2efGJNY7ThuBTbfBb5kv5aUHO4fkFK6K1r2hYzrOBAU=
+	yaCnaB+UUOnqlvqTDnANaMcIjvi2z+qYdIF3aVASdORfaFh8ru7BDqdS+gcKq+MEvkuc0KwWk7TGaVGMuFBM6AIowKvjS7QmAFWEzlEeNYBGrqRHGju36kkUP1KjHVloWirDZT6qM9FibQhNPCXFoFxjBluKPr4xItar9e0SBK8BJDLTAOkzPlJ8jyxXRqEsKj6FsdjFDOepRXIlxEutdczpQfk8uPFed/OJtpW4CqL7k9nO3hl6OgogKT4R13GbhUD3U5K/pX8hCQJorRB9CgrqIG3t2QV6KW7xnDxDdah7N7Qm+FHGxK+dTV15P3cSpxbpm7Pu4nfGSPO1qimmveoDpj0FXubHrGHpzBOLgVtoZQxhAji4OR5gwVGjXhJdmNgKNxAcv8DDPtijHdo/4gZ4pZg+npXUJ2L3p4FUT8uSd4LB/kzR7gwGHH+QelnqS3IHltF9RCt7738qHVTeWUrNcHJnuIDKytwBJcmZBX1idDLo5WQaxZn6PZu4vmOMY5zSF/E8PrOuDmFIlE7YerAHjo0ni8G9ojnUaVsb22nP1AmsBWNv9PBy1r+2Ki6XC/aQpqn0b+j2fYNXdov+DTVZ3VzDZ+rL/ti6ZmY7slJPeH/YT7FoIPtT9KIeRyeAnDjmbwsm9ce2uMmL4Zr16ChT+wd8MKqMbd1HqDz4u/E=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(7416014)(376014)(22082099003)(18002099003)(11063799006)(56012099006)(4143699003)(261026121527099003)(261026140227099003)(261102123227099003)(261022105027099003)(261021135927099003)(261022075727099003)(261021121427099003)(261028144727099003)(10067099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CHBPR12MB731189.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(23010399003)(7416014)(376014)(1800799024)(22082099003)(18002099003)(6133799003)(3023799007)(5023799004)(11063799006)(4143699003)(56012099006)(261022075727099003)(261022115727099003)(261026121527099003)(261022113327099003)(261028144727099003)(261021121427099003)(10067099003)(261021123027099003)(261026140227099003)(261009223027099003)(261102130727099003)(261021130227099003)(261102123227099003)(261021135927099003)(261026130827099003)(261022105027099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?aOKibP2s72LQUhpZfPzhrXaZpfn8j57AYHlaiBrWn1hUzYw1/RoqEqzG0DWS?=
- =?us-ascii?Q?Wfeto+jt54Wsj8Hm7bg7AW+FBBmFArLAIcuxsIFMNisP3VkU8HWxQo7+ExtO?=
- =?us-ascii?Q?ecTVA95Ndj4gPMytow/AVSyD9sXVpgrVWP5txlD+I/d1IROqWUDG2+s4tJoT?=
- =?us-ascii?Q?uABGwFGgGIqSVsOJODf8Rer2jKuAG7BfPhfpn+4plaBd8/nuy4LwW7ngzHl+?=
- =?us-ascii?Q?a68XqngbX08Q6JMEPLO3lWnVTiUjzxGMRX5d+FFNFp0qXzJMhRjoVwPeTlGV?=
- =?us-ascii?Q?9bGNqjTy+/BEwUJFUbI7TrOBuRKMOmM/eP7su47JQIS4WRZuFXHO4BXXfbX1?=
- =?us-ascii?Q?TcMyFTjjSi9SPk69OHBF3eizBTuBFYwPMG5SgPeNJw35jgBdI3POL+jK72pu?=
- =?us-ascii?Q?fAFUYj/oTwKIxebel95BRO8CEMv4xKrFLv1hRGA6Tw8APdq9esqgwelfq8j8?=
- =?us-ascii?Q?9kfnK9ZT9+OqayV0SoQPQCNdxYUZxrhRrFAnFEebWssb93m7DRoSzJpWe26P?=
- =?us-ascii?Q?Va6oc97zfLSfi52GkLMhF8F5BvardmYTqTu7pvncPr4R6OlRYwygRY9IRlUG?=
- =?us-ascii?Q?Svbjruc2wKwSlRJBZ4Wo9VFeD5K6J0j6jncGPzts4xUgOYpNO9oCsiXwQJxk?=
- =?us-ascii?Q?YYDxy1NwC2VQmVynbsw0W7dz06vlylmRSn8yVgouB+kNBUEnhacChfhqu+ml?=
- =?us-ascii?Q?p8fqeEqCoNvgKQIIpzlQOQgX+UrXWnVemD/zCLtnKZAa43NeGdb/ZT5T3Cxw?=
- =?us-ascii?Q?cOTpPi+9dIzjqhg/hzIF18TbtwU4mRzagD5JLtNU05olAJvhOu76gkbYh/3i?=
- =?us-ascii?Q?+KNlmkLbohnqbss1Q/L22u4e9JWMpYl9pUgpUdJm2mGgMO778G1noqguGzx7?=
- =?us-ascii?Q?2SLQzLXUlAF2ixSayQESVcE0bJNkh7NZL3kw2ZOvYClTcUGlTT6FVLwZQ82r?=
- =?us-ascii?Q?XCVB5WDsBVfdZwA6ssVmMhK3XHuliujLst17hhiew+//EkSVILSgL/pQ7vZc?=
- =?us-ascii?Q?4qXdVUIubJCBfErHjVPqkSi8Mqi0hefG8K3pl+nbYBUUYpndaG4JD6is/ae+?=
- =?us-ascii?Q?3z0sLAWA6MzhAs3IjGE/+0uQfGv3OzO9tZPw2JgI5oLfQh/DnXANLy9v8O2C?=
- =?us-ascii?Q?iWSlEQbFFRHRR5MTfdzIt6f1B/VxMDz9uTVqU6LrB5ANz0sVi4H5RpN0ZMmj?=
- =?us-ascii?Q?HznzGi4b4Q0mPWwVdsQqo3V+c8qsX4ZFyzIWTGuKo7oTetvQ9y1vS46JK6aZ?=
- =?us-ascii?Q?q2zpuXwF3NDiJOXacG7fi7nSTNV09UzEmJ1s4Fo0NWhwJLfBWpqBznrtYeN+?=
- =?us-ascii?Q?XeyQqCXbedT0VEndMKU29G1aw6VRKiYwKgrMsomeIIjA/j+jR5sj97ZrN51x?=
- =?us-ascii?Q?BCJwZLTKtQgUU3pYvxnmEozkDviQO4/cIyz3z5UYpkLDsyWOnxRhM/6t6Htl?=
- =?us-ascii?Q?phjdB2/DOuRzkkqV2G/iM7kCQjWHcp182uNZmPO9TOlL8NgknDGPJ3U7gkMb?=
- =?us-ascii?Q?oG8o6aMNzpfxA3AO9snEoj1KU48Om0D3bdALcug1Zxi/LC668wF87Nu/8qZS?=
- =?us-ascii?Q?llQnfmoAlfyabfgTlsR5jkGGYXZwktN7l4hGEmOHjR4v5b3jy880wFg+iAj+?=
- =?us-ascii?Q?3scG1uZ4XpM90LuUODgpC5umvuWS81STqn6O9DbzJ80CvvrXaLsrkEYlkQH+?=
- =?us-ascii?Q?nNicgekJAfm2kl9MBGBxkVM+swArDnVdDASFBDQJ3F4ZZ8kT?=
+	=?us-ascii?Q?sh/edrSQsRMTP2JPniRIu6+45eaqIne2wJBNjNc+dMU+nfCyyAOddoOWzx1R?=
+ =?us-ascii?Q?q0OYAs0Syvj2eE1POWrpyqPG6GPnluzw1i8Tma3QBUjphojFut3UO3BSmDf/?=
+ =?us-ascii?Q?mAa/MsE4A40L3x2xUN8oFKFtWkJU6igvW84B2ETJ7Rah5GYDLkqOpWiPvpfs?=
+ =?us-ascii?Q?6fQ36uV+1gWBjFTc4H/fn9Aj/utK1HwAtk16EncaCM5F1I8Ao9SvXVibp/QJ?=
+ =?us-ascii?Q?FcxcEIrzOdyD+rFxvJlRPIbMgkBmWzMBCJuApJDaRoI0YuQjDVNoM6mYzffw?=
+ =?us-ascii?Q?MfcNQGr+n214AeIg8wn6VmndbDkcWphNIUOT/e5NJ9YV2oIrb1e2J9ciJCF+?=
+ =?us-ascii?Q?oyDWTXdzHOd9ol0GI2Jv7o9SnANhOmxW+T1md8odvYUpKhKl+5Qqh7yS4GjL?=
+ =?us-ascii?Q?0xKOYbLec+x6acdSu0epWWs3Da9EvuwcO/z09DE/WmFZszQCi0J1Ppne36JQ?=
+ =?us-ascii?Q?cPYmFOpwSGvWIZYpMpDcQwLT/5qTea8/YiGsbu4RVQ2w+GKgNyzuvNH5pZUw?=
+ =?us-ascii?Q?0nmiCvoVFWvhh/4EnPdP3XuuVWzHzVa71hyVHQ+bE6Ixtc5w/4LuKrnXT6P7?=
+ =?us-ascii?Q?uNs0dT59fMUJtYcUapo0gjC+NCjg+fcxLboxib9UNJarKg1Wj6zckWStO5G2?=
+ =?us-ascii?Q?ufN9JJKxyrh2KqtdZwfC1Ig8OK2aASUKU1ys3dGR+Iy+hi1Taed+0Jf/slNE?=
+ =?us-ascii?Q?rat+cI7iDsFkAeLLBVm7tDZGWBsx2XwW6DpXuuKbRkCmXEGIThybt5YUmqVo?=
+ =?us-ascii?Q?niArHZOnLhT1Ez0GDXUuPihkuiPkCvt0n6SKjumpJhxJT/zsMeVvZ4iwnURn?=
+ =?us-ascii?Q?HJVwXVBtoQMNU0yXYNHzaUSe5tU+mswHEIN3iE4izD44wE9yBN4Lpk6eRtKE?=
+ =?us-ascii?Q?hmeCJhFjsRYovIXc4a7Aqn7l9A+B4B1LxrA7+mC21GP6kZtxlIfkP1EIHA1p?=
+ =?us-ascii?Q?dXyJRBxfpGWduCXyojATdU5JO0gSHiDdJqrYIcq11Xv8dxWovWHHTQOBNxog?=
+ =?us-ascii?Q?ZM1GKi7A6XELiHHZZXF7ObdQWzkkI/DpM1WZ0P7P4xFyzK5wynp6IM7VQ9vB?=
+ =?us-ascii?Q?jwXXSa8ThrXrab+9cLX+SaMl3FQl9Lc5xAGMPRWC8VjthDzcpk1l0XN/STZd?=
+ =?us-ascii?Q?9ssUaiSzuZeYCPUu4OkuWFEFNYyUhz7J4pkrvUbiz6ja44VzVjckKHJ4RTOj?=
+ =?us-ascii?Q?07yRT2qUE22mxs1UU8XZbVxctlRi+VCWeA8xygyhFk4qN4uLIB4WW6BUAtBi?=
+ =?us-ascii?Q?tnKIwPNR5yUuqNWgso0d7VOKTtKJAbH7yYWWgvVOOOyQXrLsqhFjNpwgdtc+?=
+ =?us-ascii?Q?o3eWUDry8dJ/4B8/zler0yxcfkIS51iAZElksD4b92Hrp/z0JdsmJuMEVnK7?=
+ =?us-ascii?Q?TZ1eO2d4x+uIgwxMwRY0CLvWpcceiyj5wAm664rdNcpWSMkh1JAHOPn/N1tN?=
+ =?us-ascii?Q?PJnf8ytDFolVXFtidm/Q6JNhYMo/f+UowUDF+rFgawZm7f54Ttg6EyS65XlV?=
+ =?us-ascii?Q?xptL0uzPPCpmp4DTldB03yEMjotcj4qrSCzDYq4eQWMHXiVORHv3AD7DvbLq?=
+ =?us-ascii?Q?0pCTz7x6ShRC+B77y+Mn4+Fx4iRFTjtpGjich240RBMfnC7IvEd3gB5flk6u?=
+ =?us-ascii?Q?pqxCpZCRrTDJEoB878/60p/seC8t7OB9+xNyKIEeKEQdF4wUk/fA9JGzgwHq?=
+ =?us-ascii?Q?DRcAqT5Z2/VxfUJLBLDEjqZ39IjrEIVGwC2KHMJMi2Sz+XcQ?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 72d60821-b0ae-4d55-c414-08df44aeb441
+X-MS-Exchange-CrossTenant-Network-Message-Id: 691ad710-75e8-45cb-a9aa-08df44b5ee3b
 X-MS-Exchange-CrossTenant-AuthSource: CHBPR12MB731189.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 13:28:45.0721
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2026 14:20:28.8076
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OcC5XCNAF61K/hxQFR6xB/LJytYbp5UoeFYiWLiZUz95L1QhRUpicbaNMdl6w3og
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5721
+X-MS-Exchange-CrossTenant-UserPrincipalName: zZ5EiYvmUi3/9nH+3c0MuVBzl4USEHpgsr0qko7C6lbDrAUxGeZPYxg1MueVh/Mh
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9038
 
-On Tue, Nov 17, 2026 at 10:17:14PM +1100, Alexey Kardashevskiy wrote:
-
-> > Userspace gets to see KEY_EXCHANGE which means the verifier can prove
-> > the certificate binding, this is the ONLY way to let the verifier do
-> > this proof if it wants.
-> 
-> Say, the guest userspace can see the certificate chain and the
-> measurements signed with the key from slotidX used for the
-> session. The PSP promised it is the same slotid. Which part does
-> this verifier not trust?
-
-In 1.2 there is only one device public key so all PSP knows is that
-the public key that signed the key exchange is the same public key
-that signed the measurement. It doesn't know what certificate chains
-are actually in the HW for the same reasons nobody else knows.
-
-Further, from a verifier perspective we don't have any crypto evidence
-that the PSP was involved in this process, and we don't have any
-crypto evidence that the certificate chain was bound to the device. It
-is not optimal.
-
-> > Further with capture we have a nice primitive to pause and do slot
-> > selection before going to KEY_EXCHANGE. If we know the kernel has
-> > capture then the ideal FW design for 1.3 multikey is much simpler and
-> > clearer (more like ARM).
-> 
-> No CHALLENGE, then we read digests and certificates before
-> KEY_EXHANGE so the digests won't come signed and you stated before
-> you wanted them signed. I am confused.
-
-Without challenge you can get a weaker version of signing by fetching
-GET_DIGESTS again after KEY_EXCHANGE inside the encrypted session. If
-it is the same as the plaintext fetch then succeed KEY_EXCHANGE.
-
-At least in 1.2 there is only one key and slot slection doesn't effect
-it. So you end up with the 2nd GET_DIGESTS indirectly signed because
-it is in the symmetric stream.
-
-This is inferior to CHALLENGE or 1.3 multikey since there is no
-evidence of GET_DIGESTS binding in the transcript, but as part of a
-compatibility option so 1.2 can have the same flow as 1.3 it would be
-helpful.
-
-> > 1) The uAPI presents a transcript interface, every message and reply
-> >     individually presented to userspace. Perfectly future extensible to
-> >     include GET_DIGESTS with 1.3 and whatever else comes down the road.
-> >     These are consistent spec defined message blobs 100% the same for
-> >     every single SPDM implementation and TSM.
-> >     The kernel will start with a partial transcript, but the API
-> >     can carry a full one as we improve with no uAPI change.
-> >     The guest will see partial transcript until/if vmm/guest changes
-> >     are made
+On Tue, Nov 17, 2026 at 01:00:03PM +0000, Reshetova, Elena wrote:
+> > On Mon, Nov 16, 2026 at 01:38:50PM +0000, Reshetova, Elena wrote:
 > > 
-> > 2) The uAPI presents the x509 certificate chains in a consistent spec
-> >     defined way that userspace can hash back to GET_DIGESTS
+> > > >  1) No easy way to get the VCA, no easy way to do capture
+> > >
+> > > My understanding is that VCA must have been included into
+> > > SPDM_DEVICE_ATTESTATION_INFO_T from the beginning, it was omitted
+> > > by mistake and we asked to fix it as Dave already pointed out.
 > > 
-> > 3) The uAPI presents the signed measurement result and tdisp in
-> >     a consistent spec defined way
+> > That makes some sense, but it just makes this struct bigger and
+> > worser. As I explained ot Aneesh I'd rather not have a VCA at all but
+> > the transcript that includes VCA (or is maybe only VCA) with preserved
+> > message boundary markers. Userspace can compute VCA for the purposes
+> > of the signature hash.
 > > 
-> > 4) We have the four step
-> >        Start
-> >        Get certificate
-> >        Finish using slot
+> > > >  2) Wrong digests design for the guest.
+> > SPDM_DEVICE_ATTESTATION_INFO_T
+> > > >     is a terrible idea since it is not grounded in any spec. The other
+> > > >     two have multiple guest digests computed directly over spec
+> > > >     defined objects.
+> > > >
+> > > >  3) Even if you like SPDM_DEVICE_ATTESTATION_INFO_T it includes
+> > > >     TDISP_CAPABILITIES for some bad reason. Nobody else even
+> > > >     exports this info from their TSM or digests it. Thus Intel would
+> > > >     need unique API for the VMM to even build
+> > > >     SPDM_DEVICE_ATTESTATION_INFO_T. Not nice.
+> > >
+> > > I dont think there is an expectation that there needs to be unique API
+> > > to build this structure (I think we can hide it in the tdx-specific code), but
+> > > your point below is valid: this SPDM_DEVICE_ATTESTATION_INFO_T blob
+> > > needs to end up on the guest side because only using this blob the guest
+> > > can currently verify the evidence of the SPDM connection establishment.
+> > 
+> > Right.
+> > 
+> > Any every other arch can build their digested data in the VMM using
+> > the standard APIs because all their digests are over standard things.
 > 
-> I am trying to think of a simple DEV_CONNECT modification.
+> So, yes, if we dissect this structure, then the unique fields that Intel has
+> are:
+> HEARTBEAT_PERIOD, TDISP_CAPABILITIES, TDISP_VERSION
+> (I am not listing SPDM_CAPABILITIES, this must be part of VCA)
 
-You'll have to do the full picture to support 1.3, I don't see a
-reason to do a half job right now. See my answer to Aneesh.
+HEARTBEAT_PERIOD will come out of the transcript as a field in
+KEY_EXCHANGE_RSP
 
-> Then, if the userspace wanted another slotid - run
-> DEV_CONNECT(slotidY). Slow but simple.
+SPDM_CAPABILITIES is in the VCA
 
-Oh? Since you setup IDE during DEV_CONNECT I'm surprised you can tear
-it down and reconnect it? I thought there were significant spec issues
-with resetting IDE?
+TDISP_VERSION is in the data from GET_INTERFACE_REPORT which needs to
+be a common API. Though this is probably the selected version not the
+offered version.
 
-Anyhow, assuming this somehow works for you and interoperates with
-other devices, userspace would have to do it and you won't be able to
-present the same interface as better drivers. Start -> Finish has to
-be under a single SPDM session protected by one signed transcript. You
-can't split it into two sessions and still have things make any sense
-from an API perspective.
+Only TDSIP_CAPABILITIES is unknown to userspace. I don't know why
+anyone needs this or why it needs to be digested. Nobody else did
+this.
 
-> The AI tells me we cannot change the slot in SPDM (1.2 or 1.3) after
-> KEY_EXCHANGE which means restarting the SPDM session so we cannot
-> just change the key on the go, right?
+> Here I also have a generic question: does Linux plan for the host to
+> implement heartbeat (can be very useful to understand whenever
+> the device is still alive and didnt silently terminated session) or not? 
+> And if needed, how do other coco arches expose this info?
 
-The slot isn't used in 1.2 once the connection is up. I guess this is
-correct in the sense you can't change the key being used, but in 1.3
-you can get the measurement signed by different slots and thus keys.
+I don't know. I haven't investigated this question..
 
-But without establishing a GET_DIGESTS binding this is not a good
-idea. Part of the reason we want to ensure the verifier sees the
-GET_DIGEST binding is so we could use a different slot for
-GET_MEASUREMENTS and the verifier can tell the cert chain is still
-bound to the connection. Especially for auditing after booting when we
-can no longer trust that the OS is not lying.
+> TDISP_VERSION is more interesting. 
+> It may be security sensitive, i.e. assuming some
+> problems later on found in existing version of TDSIP, new version is
+> released, etc. So, downgrade attack is possible from the host
+> side and the guest wont know, if vulnerable version is in use. 
 
-> >        Accept
+Huh? TDX module is trusted to negotiate the TDSIP_VERSION, host has
+nothing to do with this? The selected vesion is reported in
+GET_INTERFACE_REPORT and that must be digested.
+
+AFAICT we don't need to double check the TDX modules work by seeing
+the TDISP_VERSION from earlier in the exchange.
+
+> TDISP_CAPABILITIES are harder for me to judge, but I can imagine
+> a scenario where a guest without this info can be led to believe
+> that a reason that a given TDI is not locked with certain flags is 
+> because a device does not support such TDSIP capability (while
+> it does in practice). But I think it is still guest decision to either
+> accept such configuration or not regardless of what device supports. 
+> I will ask around more for potential problematic scenarios.
+
+Right now I don't see a reason to even expose TDSIP_CAPABILITIES
+through the UAPI since no other arch will implement it and it isn't
+clear what it should be even used for.
+
+Again the TSM is trusted to do the TDISP negotiation, we know this was
+done right because we will attest the TSM.
+
+I don't see that we need to double check its work. None of this is
+even signed so a malfunctioning TSM or OS can simply lie in the
+report.
+
+> > So if you keep this then you have to get a uAPI 'give me the intel
+> > blob' to build your VMM with. It is not impossible but it seems
+> > unnecessary if you'd just digest the right stuff instead of a giant
+> > struct.
+> > 
+> > ARM keeps several digests:
+> > 
+> > protocol_data_digest = H_rmm(VCA)
+> > identity_digest      = H_rmm(cert_1 || ... || cert_n)
+> > pubkey_digest        = H_rmm(<public key>)
+> > meas_digest          = H_rmm(GET_MEASUREMENTS || MEASUREMENTS)
+> > report_digest        = H_rmm(interface_report)
+> > 
+> > I'm not sure VCA is strictly necessary. pubkey_digest is because RMM
+> > does not parse x509, since TDX does it also isn't necessary.
 > 
-> I keep missing the point of doing this on the host (in the TDISP or
-> CMA case). The host "accepts" a PF by enabling IOMMU for that PF,
-> not the PSP's (==TSM) job.
+> Per SPDM the signed GET_MEASURMENTS || MEASUREMENTS transcript
+> actually includes VCA.
 
-This is the standard SPDM flow. You do all the measurements then you
-ack back to the kernel that they are OK so can it should proceed to
-the next security step.
+This is the hash of the message bodies, which don't include VCA.
 
-For IDE I can't think of any strong reason why it *has* to be setup
-after accept, but since other CPUs have split things up then they
-should get the right flow. Not doing IDE setup during accept means you
-are committed to and stuck in IDE mode during finish, which is not
-really the intended API design. See above.
+You need VCA to compute the signature hash which is why everyone ships
+it around.
 
-However for something like NVMe OPAL key release we *must* have accept
-and it *must* gate sending the media decryption keys. Pretty much
-every other use of SPDM will have some step that follows accept that
-we don't want to happen before.
+> And this is where in our original SPDM_DEVICE_ATTESTATION_INFO_T
+> struct VCA should have lived instead of being a separate structure with digest. 
+> Would that be acceptable? 
 
-Remember this is intended to be a general interface for all SPDM use
-cases in the kernel.
+I'm not sure what you are proposing?
 
-> >     Except for Intel all the guest defined digests can be calculated
-> >     from the common spec messages. Well, maybe AMD has an issue, their
-> >     spec is too vauge to tell exactly what bytes are digested.
+My concern is you have this digest over a struct that isn't a protocol
+struct, so we have to make a special API to pass your special struct.
+
+Unless we can get rid of that I don't know if I care what you put in
+the struct, but the kernel will have to break it up and your driver
+will be more complicated than it needed to be. 
+
+VCA is immutable. It should be made available once and not repeated in
+every single measurement fetch.
+
+> And yes, in our case pubkey_digest is not needed. 
+
+ARM's version of having the host parse the x509 is better, IMHO :)
+
+> > What you want is an API to retrive measurements for a vdevice
+> > triggered by the guest that updates the guest visisble information
+> > 
+> > And another one to retrive measurements for the host pci device that
+> > doesn't change the vdevice at all.
 > 
-> True, I asked for some clarifications there recently, the new SEV
-> TIO spec update is on its way. Thanks,
+> Ok, so let me re-iterate to make sure I got it right. 
+> You want these three things:
+> 
+> 1. No implicit TSM measurement collection at the time of SPDM.CONNECT
+> (inside SPDM secure session) before or after LOCK
 
-Hopefully they choose to digest the right things :\
+Yes. Host and VMM can manage evidence collection through the uAPI. We
+don't need to slow things down by doing collections that many use
+cases will simply discard.
+
+> 2. Guest-requested (with a guest provided nonce) measurement collection
+> that collects only SPDM signed measurement transcript (that includes VCA)
+> and not certificates. 
+> This collection refreshes the guest-visible digest of the SPDM signed measurement
+> transcript.
+
+Yes, certificates should be fixed during the plaintext setup
+sequence. We don't need to refresh them, or at least if we ever do
+want to refresh them that is some other independent activity from
+evidence collection.
+
+IMHO devices that change their GET_DIGESTS output while a SPDM
+connection is active are broken.
+
+> The purpose of this collection is for guest to obtain fresh device measurements 
+> after the lock in trusted way. 
+
+Yes.
+
+> 3. Host-requested (with a host provided nonce? I would rather not, because
+> it feels we need a clear way to distinguish collection 2 and 3, so I would keep
+> nonce fixed to zero in this case or any other fixed pattern)
+
+No good, it must be a host provide nonce. This is a host evidence
+collection and it must have a fresh nonce to have any security. If
+everything uses the same nonce it can be replayed.
+
+Collection 2 and 3 are the same action. Anyone who can make
+measurements can provide the nonce and generate a replayed nonce. The
+only difference is if the vdevice digests are changed.
+
+I don't see a reason to tag them, the mechanisms we have in userspace
+to ensure the nonce is legit and bound to the VM are sufficient.
+
+>  measurement collection that collects only SPDM signed measurement
+> transcript (that includes VCA) and not certificates.  This
+> collection does not refresh the guest-visible digest of the SPDM
+> signed measurement transcript.
+
+Yes
+
+> The purpose of this collection is to allow host to discover device measurements
+> by itself and potentially make its own independent security decision like
+> it would do for native SPDM case (without TEE-IO) where host is a decision
+> maker. 
+
+Yes
+ 
+> Btw, does any other arch provide #3 today? I am not able to see this in ARM 
+> spec at least. 
+
+It is coming, currently ARM doesn't even allow the host to see the
+measurements *at all* which is a really big miss on their part.
+
+AMD is probably broken the same way as TDX is right now from what I
+can tell.
+
+You probably also want
+
+4. TSM controlled nonce
+
+A way to put the vdevice into "tsm controlled nonce" where the vdevice
+evidence collection no longer accepts a guest nonce and the TSM
+provides its own random one. This would be a permanent choice when the
+vdevice is created.
+
+You may also want a way for #3 to run as "tsm controlled nonce" and
+set the initial digest for all future vdevices. I'm not really sure I
+understand how this "single collection" flow is supposed to work
+though to be sure.
 
 Jason
