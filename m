@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061171;
-	b=aaAGMdBsiTop+VebU0wv/xF4J1CpuRa2Kex44wn5zQ/IF2gOXtCx2X09ft8qrSWfjac5
-	 HYy7envLnrAarXQa0meFwplmiC1jrDVPIbjkVI9jj4t9H/c29QfpK5autkvrCsDXyR7hT
-	 Du1JxN5t8nSPc6QpSwnP24LsriSIp46f9s9TpQXDwiTnFrULl8axA4MImmYRFuuXcyoEY
-	 UtzQLhHrZIuG0PhAUDF1YTEfVJLgN4J86jd9SXGzIqDE5Ad9x5a36knc5ZZCGk6VFfdst
-	 US+f1scCq59LQ7/yybozO8lpR//ejw4zhye1tq5SLlqdZHAUUwrY5s7pA5/rZ9fGKfg==
+	t=1795061173;
+	b=OxdMSf+kS8+5UIm9pau0vjLln1tu3qQm38+Cz0Te88zO3GjcY9uoer1wfTW1XHD21mEc
+	 GXF+TzoUDDMDGiInHSB5+YA26XYG2qGqjrm1tdMfoLQR/SE1sE+6pwh2dTYCKyLQh6yb4
+	 fBhtb1QDkLXEDgYw73wpr3LWn3k8bk0+5EutXTafUMjDVA2LEqlks6HKsEoG4YAUHbZPs
+	 cVeH7TRGvmYSWsTf93n1Rr9jxwGAgbUl2SSkKBRXUzdJk96nAWKtmywdGDT4+hCGL64gk
+	 Koc4HRc5JHh1bxX9QPTmitBM32e8nsomDTZut+f50euBUyTSacZF6N8A5yRclmkI3CQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061171;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061173;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LfaTem1fDitRZujxOGirT0l/8smvDu7hg0PjglBotQI=;
-	b=rvAXgaJEAuWQyWnuajF/JrWb0FNhMM/YsmwCB7O5K4eYRd0UOvIw9Opjk2byeZjWCWFT
-	 UTHE1DBxcRAsy/RiPa76eW3xPZNJqj+SAH6E27/nV7hO91TWO7Nx3Fuavf1YQHIOd3C8N
-	 lzBePlkf0qK80TP4Jl+GzpZp5K8KOwIaOwK5+iO4y99CsuSI8+bj7RyJKXNheiTDXN/pz
-	 NTZVwv3WhVV6gZ7lw07mAVQLuCQMXEl7KJNNC2TpsumukvjB/F4rt3ZLxifNbQoyDwome
-	 4FwoTQRZ83+EY4ZVlCujZSaiZSgOEG4INlTrduvIN/IEpAQ09DMBhrHsHKDVXlQlZqw==
+	bh=VTQj/eEwLiSV7L2mtTHT7+zwqva3welEiZjXlKHYXLU=;
+	b=RGlLd1LtIpkpSfZRSNW2iPwTekbKjpZi+Aj0NuNNxezBa5sQaDAFpnA4wqGaHuSMGYVA
+	 ErErpH+J1GE0Fuii0YmOSexxJgX5/M4KR3YvJjhcccJGflPVNsX3r6R2LBqsVlh8zfrhS
+	 IxjLhyRBsN60r1FyExLHavuzdDCGm1kNk1+V10ije2mPWOAOMFo3AOFxKmM6e6zC/HT8J
+	 xEaejgoFswcA+VQn3sesdQrtFHF3kF63Ioi6/ps6Qfuq7n4a6ipFj00pJAdf51UjJELDJ
+	 RTffMo22e5IHrbPtdPyZtdTnjWYupUP5OBtfuCCadC5tQJrI8fKizI6JyXUyEBfB2Zg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhoRxw1s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsefkEwa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9CE606A325;
-	Thu, 19 Nov 2026 04:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE719606A320;
+	Thu, 19 Nov 2026 04:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UhoRxw1s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96601F000C4;
-	Thu, 19 Nov 2026 04:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IsefkEwa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45CE1F000C4;
+	Thu, 19 Nov 2026 04:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061170;
-	bh=LfaTem1fDitRZujxOGirT0l/8smvDu7hg0PjglBotQI=;
+	s=korg; t=1795061173;
+	bh=VTQj/eEwLiSV7L2mtTHT7+zwqva3welEiZjXlKHYXLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UhoRxw1slNbeiyeJ0JEqkF1umZZmjpd0qAcZO8bjaxSQCDGJUyT8w8DQ/5OtBvyx2
-	 DjPDfoiM7opCBX92zIg6pxpHf/M6aRf4EwU3qulTqyfc7Eep5uh6NQitXlqnboRKhU
-	 C/iKFpon8QTSoo24dNG1R0UTQy57EDXwpEKLiH3A=
+	b=IsefkEwanAlLFBhIatpRxbASiPaM+qujKDzpz+BlZoZ1/bcdbsK0T81QdYGlGt6ff
+	 y8KvGv7RJQgTOpra+v5yfGaftQ4y2a/vygWAhWhUYFyVH7+SkP1oTPeGeBPT3kuTHP
+	 q0i2VL+GmujWrFyVdbl3pi4eBPYJps2t4d2fAeDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Cooper <codekipper@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1456/1848] power: supply: ab8500: Convert to dev_pm_ops
-Date: Wed, 18 Nov 2026 15:58:14 +0100
-Message-ID: <20261118150020.333325604@linuxfoundation.org>
+Subject: [PATCH 5.10 1421/1848] drm/msm/mdp5: drop cursor pipe for msm8x76
+Date: Wed, 18 Nov 2026 15:57:39 +0100
+Message-ID: <20261118150018.960174034@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,276 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit f8efa0a881e2504d55a1d8d9e8dff847a378d717 ]
+[ Upstream commit c33cee4c07f1533ad48ed8e3eef75df57edf44c1 ]
 
-Switch over to using generic dev_pm_ops since these
-drivers aren't even using the special power state passed
-to the legacy call.
+The MSM8976/56 family of platforms doe't have a separate cursor plane.
+Instead the cursor is a part of the LM block. Drop the erroneously added
+pipe configuration, letting LM to provide a legacy cursor instead.
 
-Cc: Marcus Cooper <codekipper@gmail.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: 1098c619ce75 ("power: supply: ab8500_charger: Handle detection errors")
+Fixes: 1860f2a8b8b1 ("drm/msm/mdp5: Add configuration for msm8x76")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/753150/
+Link: https://lore.kernel.org/r/20260914-mdp5-fix-cursor-v1-1-9fba3ace6cb9@oss.qualcomm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_btemp.c    | 19 +++++++------------
- drivers/power/supply/ab8500_charger.c  | 19 +++++++------------
- drivers/power/supply/ab8500_fg.c       | 19 +++++++------------
- drivers/power/supply/abx500_chargalg.c | 19 +++++++------------
- 4 files changed, 28 insertions(+), 48 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
-index d818fd9714695..ce99b7289fbd7 100644
---- a/drivers/power/supply/ab8500_btemp.c
-+++ b/drivers/power/supply/ab8500_btemp.c
-@@ -924,29 +924,23 @@ static struct ab8500_btemp_interrupts ab8500_btemp_irq[] = {
- 	{"BTEMP_MEDIUM_HIGH", ab8500_btemp_medhigh_handler},
- };
- 
--#if defined(CONFIG_PM)
--static int ab8500_btemp_resume(struct platform_device *pdev)
-+static int __maybe_unused ab8500_btemp_resume(struct device *dev)
- {
--	struct ab8500_btemp *di = platform_get_drvdata(pdev);
-+	struct ab8500_btemp *di = dev_get_drvdata(dev);
- 
- 	ab8500_btemp_periodic(di, true);
- 
- 	return 0;
- }
- 
--static int ab8500_btemp_suspend(struct platform_device *pdev,
--	pm_message_t state)
-+static int __maybe_unused ab8500_btemp_suspend(struct device *dev)
- {
--	struct ab8500_btemp *di = platform_get_drvdata(pdev);
-+	struct ab8500_btemp *di = dev_get_drvdata(dev);
- 
- 	ab8500_btemp_periodic(di, false);
- 
- 	return 0;
- }
--#else
--#define ab8500_btemp_suspend      NULL
--#define ab8500_btemp_resume       NULL
--#endif
- 
- static int ab8500_btemp_remove(struct platform_device *pdev)
- {
-@@ -1125,6 +1119,8 @@ static int ab8500_btemp_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static SIMPLE_DEV_PM_OPS(ab8500_btemp_pm_ops, ab8500_btemp_suspend, ab8500_btemp_resume);
-+
- static const struct of_device_id ab8500_btemp_match[] = {
- 	{ .compatible = "stericsson,ab8500-btemp", },
- 	{ },
-@@ -1134,11 +1130,10 @@ MODULE_DEVICE_TABLE(of, ab8500_btemp_match);
- static struct platform_driver ab8500_btemp_driver = {
- 	.probe = ab8500_btemp_probe,
- 	.remove = ab8500_btemp_remove,
--	.suspend = ab8500_btemp_suspend,
--	.resume = ab8500_btemp_resume,
- 	.driver = {
- 		.name = "ab8500-btemp",
- 		.of_match_table = ab8500_btemp_match,
-+		.pm = &ab8500_btemp_pm_ops,
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+index df10c1ac7591a..46b4c3f54a68c 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+@@ -671,15 +671,6 @@ const struct mdp5_cfg_hw msm8x76_config = {
+ 			MDP_PIPE_CAP_SW_PIX_EXT	|
+ 			0,
  	},
- };
- 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 1a46ec8986a94..8dadea5d158eb 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -3225,11 +3225,10 @@ static int ab8500_charger_usb_notifier_call(struct notifier_block *nb,
- 	return NOTIFY_OK;
- }
- 
--#if defined(CONFIG_PM)
--static int ab8500_charger_resume(struct platform_device *pdev)
-+static int __maybe_unused ab8500_charger_resume(struct device *dev)
- {
- 	int ret;
--	struct ab8500_charger *di = platform_get_drvdata(pdev);
-+	struct ab8500_charger *di = dev_get_drvdata(dev);
- 
- 	/*
- 	 * For ABB revision 1.0 and 1.1 there is a bug in the watchdog
-@@ -3263,10 +3262,9 @@ static int ab8500_charger_resume(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int ab8500_charger_suspend(struct platform_device *pdev,
--	pm_message_t state)
-+static int __maybe_unused ab8500_charger_suspend(struct device *dev)
- {
--	struct ab8500_charger *di = platform_get_drvdata(pdev);
-+	struct ab8500_charger *di = dev_get_drvdata(dev);
- 
- 	/* Cancel any pending jobs */
- 	cancel_delayed_work(&di->check_hw_failure_work);
-@@ -3288,10 +3286,6 @@ static int ab8500_charger_suspend(struct platform_device *pdev,
- 
- 	return 0;
- }
--#else
--#define ab8500_charger_suspend      NULL
--#define ab8500_charger_resume       NULL
--#endif
- 
- static struct notifier_block charger_nb = {
- 	.notifier_call = ab8500_external_charger_prepare,
-@@ -3674,6 +3668,8 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static SIMPLE_DEV_PM_OPS(ab8500_charger_pm_ops, ab8500_charger_suspend, ab8500_charger_resume);
-+
- static const struct of_device_id ab8500_charger_match[] = {
- 	{ .compatible = "stericsson,ab8500-charger", },
- 	{ },
-@@ -3683,11 +3679,10 @@ MODULE_DEVICE_TABLE(of, ab8500_charger_match);
- static struct platform_driver ab8500_charger_driver = {
- 	.probe = ab8500_charger_probe,
- 	.remove = ab8500_charger_remove,
--	.suspend = ab8500_charger_suspend,
--	.resume = ab8500_charger_resume,
- 	.driver = {
- 		.name = "ab8500-charger",
- 		.of_match_table = ab8500_charger_match,
-+		.pm = &ab8500_charger_pm_ops,
- 	},
- };
- 
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index c7674eda8263e..161abfd4afeb0 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -2949,10 +2949,9 @@ static void ab8500_fg_sysfs_psy_remove_attrs(struct ab8500_fg *di)
- 
- /* Exposure to the sysfs interface <<END>> */
- 
--#if defined(CONFIG_PM)
--static int ab8500_fg_resume(struct platform_device *pdev)
-+static int __maybe_unused ab8500_fg_resume(struct device *dev)
- {
--	struct ab8500_fg *di = platform_get_drvdata(pdev);
-+	struct ab8500_fg *di = dev_get_drvdata(dev);
- 
- 	/*
- 	 * Change state if we're not charging. If we're charging we will wake
-@@ -2966,10 +2965,9 @@ static int ab8500_fg_resume(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int ab8500_fg_suspend(struct platform_device *pdev,
--	pm_message_t state)
-+static int __maybe_unused ab8500_fg_suspend(struct device *dev)
- {
--	struct ab8500_fg *di = platform_get_drvdata(pdev);
-+	struct ab8500_fg *di = dev_get_drvdata(dev);
- 
- 	flush_delayed_work(&di->fg_periodic_work);
- 	flush_work(&di->fg_work);
-@@ -2987,10 +2985,6 @@ static int ab8500_fg_suspend(struct platform_device *pdev,
- 
- 	return 0;
- }
--#else
--#define ab8500_fg_suspend      NULL
--#define ab8500_fg_resume       NULL
--#endif
- 
- static int ab8500_fg_remove(struct platform_device *pdev)
- {
-@@ -3251,6 +3245,8 @@ static int ab8500_fg_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static SIMPLE_DEV_PM_OPS(ab8500_fg_pm_ops, ab8500_fg_suspend, ab8500_fg_resume);
-+
- static const struct of_device_id ab8500_fg_match[] = {
- 	{ .compatible = "stericsson,ab8500-fg", },
- 	{ },
-@@ -3260,11 +3256,10 @@ MODULE_DEVICE_TABLE(of, ab8500_fg_match);
- static struct platform_driver ab8500_fg_driver = {
- 	.probe = ab8500_fg_probe,
- 	.remove = ab8500_fg_remove,
--	.suspend = ab8500_fg_suspend,
--	.resume = ab8500_fg_resume,
- 	.driver = {
- 		.name = "ab8500-fg",
- 		.of_match_table = ab8500_fg_match,
-+		.pm = &ab8500_fg_pm_ops,
- 	},
- };
- 
-diff --git a/drivers/power/supply/abx500_chargalg.c b/drivers/power/supply/abx500_chargalg.c
-index 175c4f3d79553..a9d84d845f24e 100644
---- a/drivers/power/supply/abx500_chargalg.c
-+++ b/drivers/power/supply/abx500_chargalg.c
-@@ -1913,10 +1913,9 @@ static int abx500_chargalg_sysfs_init(struct abx500_chargalg *di)
- }
- /* Exposure to the sysfs interface <<END>> */
- 
--#if defined(CONFIG_PM)
--static int abx500_chargalg_resume(struct platform_device *pdev)
-+static int __maybe_unused abx500_chargalg_resume(struct device *dev)
- {
--	struct abx500_chargalg *di = platform_get_drvdata(pdev);
-+	struct abx500_chargalg *di = dev_get_drvdata(dev);
- 
- 	/* Kick charger watchdog if charging (any charger online) */
- 	if (di->chg_info.online_chg)
-@@ -1931,10 +1930,9 @@ static int abx500_chargalg_resume(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int abx500_chargalg_suspend(struct platform_device *pdev,
--	pm_message_t state)
-+static int __maybe_unused abx500_chargalg_suspend(struct device *dev)
- {
--	struct abx500_chargalg *di = platform_get_drvdata(pdev);
-+	struct abx500_chargalg *di = dev_get_drvdata(dev);
- 
- 	if (di->chg_info.online_chg)
- 		cancel_delayed_work_sync(&di->chargalg_wd_work);
-@@ -1943,10 +1941,6 @@ static int abx500_chargalg_suspend(struct platform_device *pdev,
- 
- 	return 0;
- }
--#else
--#define abx500_chargalg_suspend      NULL
--#define abx500_chargalg_resume       NULL
--#endif
- 
- static int abx500_chargalg_remove(struct platform_device *pdev)
- {
-@@ -2080,6 +2074,8 @@ static int abx500_chargalg_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
-+static SIMPLE_DEV_PM_OPS(abx500_chargalg_pm_ops, abx500_chargalg_suspend, abx500_chargalg_resume);
-+
- static const struct of_device_id ab8500_chargalg_match[] = {
- 	{ .compatible = "stericsson,ab8500-chargalg", },
- 	{ },
-@@ -2088,11 +2084,10 @@ static const struct of_device_id ab8500_chargalg_match[] = {
- static struct platform_driver abx500_chargalg_driver = {
- 	.probe = abx500_chargalg_probe,
- 	.remove = abx500_chargalg_remove,
--	.suspend = abx500_chargalg_suspend,
--	.resume = abx500_chargalg_resume,
- 	.driver = {
- 		.name = "ab8500-chargalg",
- 		.of_match_table = ab8500_chargalg_match,
-+		.pm = &abx500_chargalg_pm_ops,
- 	},
- };
- 
+-	.pipe_cursor = {
+-		.count = 1,
+-		.base = { 0x440DC },
+-		.caps = MDP_PIPE_CAP_HFLIP	|
+-			MDP_PIPE_CAP_VFLIP	|
+-			MDP_PIPE_CAP_SW_PIX_EXT	|
+-			MDP_PIPE_CAP_CURSOR	|
+-			0,
+-	},
+ 	.lm = {
+ 		.count = 2,
+ 		.base = { 0x44000, 0x45000 },
 -- 
 2.53.0
 
