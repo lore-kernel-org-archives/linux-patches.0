@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026138;
-	b=41l8Fc20Uj7RybFs3+ujM2HI54iYVsvfLk2cW4cnm4Xb1I5ZoZHRRg09OixxmSHmsCww
-	 aL/uxMYZxjAry08JlROqmOnCdSEdosW7sfJxKOQS8eZLw5lECcha0ipX5VUGo56EhUDzk
-	 vl17dS058Z7mldDbt1AQ051uVu60+zrpMTSviig8IuvMIpHFKM5QUf6ir0JwqqRe5AbN9
-	 waGYowoCx3w1yiBR1B62itl9Gfp9cT1A05ebKkqsViVufBaSQMUFeOHcgo8viPyIdMICz
-	 eQipvqWC6FgAXGqvA4EsfzSZvkrl1qZP/weAos/4OlmYmfuUawQp9JC34ApqmMuRW3Q==
+	t=1795026141;
+	b=gx0Zx383MAvIFw3BWmi3JnfSsUq1YZYU55yAl2jUvBe6JYcazjAqLNikTxIVsL5+iigU
+	 L0vIxCzYpWaB9TQuGLeG6twvsDrG2SkUhy8siHVNzO5bdWqDiZ9m+v2guzyCuk31pBB4r
+	 3IzgKRYgy4j8ik21GJ9Ss2yjILDHmakeQ/HRxZ+k7SUq0EE6GVHBxEsG442IXEqUC1Fsu
+	 IFK//ZKwRjx6Xr/uNo8rFvMfibXYPU/MvmIO3S/NBtk+Feh5o83bRk7TKdaU/h9G/CfsL
+	 js8AalWEiL/UUnkQDvFcI5O+saYv2zm5E2lEcMA5bHOlMRhToQ5lLwUMjhv1IKPwfag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026141;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=G+MVBHelLvSF4Y36ODOnAvQ6zOJwVqb4EdvA3UWnlBs=;
-	b=m7NffeZjO/3mbVIKiBxYiT6iaFASbPUrLbL1mJukNXxTgyiW5gkPT9OIKPdqUExFpe51
-	 1CaPg7p6B7Ptiq0OZVToyQlyJN0BjaUNMmhx1e0ySASDg86L+qW0SnuZq3X1KrgXp+ziN
-	 fKWnkOqgUaHm8CsUjd0QGAkb7mD1cXZ2guxolfHRux1VEmEmZ8myughMZCYJtG9wnU5bt
-	 LGAhpnE50Dig2znWgD4YyJWba/k85PgYTty2zJsxzBTd8pAQR4O3qxZde6eStbrNyKU/5
-	 fF25/9nrZ/5Dif+coiyCx6xhyqJaYn25okn3Iea+aBiqTQVxmw4DkkVKl9WXwGbOUSg==
+	bh=NnhYN38T0o5Ov6DZswe/UrS1zb76wudpauEDr7D6nKM=;
+	b=UTZPFryoBsJNgumK6kySqS8Gr1kutfgZuPzZI+9tkF8YcacYTBje4ft0Qyri2FJFt8f6
+	 dntTE5byaStjunJME5XLQR0lfjTyiTyBYSDT1exM23v9H/G4V+M7L2l8wWpIPaZBAY7sQ
+	 vvdA+NhSiUBM6gydEGNe202PXybuks3MYgN8mYXnEhpIx+2u1anOjl1K0dCfSPGvsgMZ6
+	 0fPjCUnTN5WCb4NZmt224w1yGMJZIOYjATHfJuxdFgB0zcqJq4Zf9qiZrjQcVFolyMzfB
+	 1P6aOv0lABfldr8o1E+hQisRVrHeSCwUowrOpGqh7h7BEW3qHhSeg/1IYI/ZDa3G/AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFMfkIzb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1YUEVUBi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF92606A331;
-	Wed, 18 Nov 2026 18:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601B4606A32C;
+	Wed, 18 Nov 2026 18:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bFMfkIzb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07371F000CB;
-	Wed, 18 Nov 2026 18:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1YUEVUBi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B70E91F000CD;
+	Wed, 18 Nov 2026 18:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026138;
-	bh=G+MVBHelLvSF4Y36ODOnAvQ6zOJwVqb4EdvA3UWnlBs=;
+	s=korg; t=1795026141;
+	bh=NnhYN38T0o5Ov6DZswe/UrS1zb76wudpauEDr7D6nKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bFMfkIzbtFe6tuEgzSXCDWvqop/WbvK/GTuV/g6LeNHmZ3cAMirQ4ZrqKiowLu9YF
-	 5/b9dwPH53P5iwwPuSyKRJcwSYOHfRj1t3sTplRlPAaCbxilYBZoI7+4DovwhYsmcM
-	 Fi1CTp6A2STaANmwnTbjDA+6U83fjIlCL3LqXEDM=
+	b=1YUEVUBiHB0RJVLfK2PJiMURShPwZgYv0x8U6h5crk5QKLLplKppsl8Jk3cSyZQps
+	 QJmYfrEyCxf3e8UOiBZOsrcp8csW71m1WTwigJewOtQ0gJ+B37xmu5PQ8fBnP82tVa
+	 9OXR7h1atgFLXRp3YNRFi3CpjgzSOeBj9fOVJaxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Beleswar Padhi <b-padhi@ti.com>,
-	Andrew Davis <afd@ti.com>,
+	Linkai Gong <gonglinkai@kylinos.cn>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1326/2151] mailbox: ti-msgmgr: Read exact number of trailing message bytes
-Date: Wed, 18 Nov 2026 15:51:01 +0100
-Message-ID: <20261118150210.382066478@linuxfoundation.org>
+Subject: [PATCH 6.18 1327/2151] mailbox: arm_mhuv2: time out if the receiver never comes up
+Date: Wed, 18 Nov 2026 15:51:02 +0100
+Message-ID: <20261118150210.420499566@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,63 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Beleswar Padhi <b-padhi@ti.com>
+From: Linkai Gong <gonglinkai@kylinos.cn>
 
-[ Upstream commit 645ae2edd5597501b4af3837a644877fbe194227 ]
+[ Upstream commit 86976f7cc324aac254136a352f74ac17f21e574c ]
 
-ti_msgmgr_send_data() copies the message to the data registers in u32
-units. This has been harmless so far because the clients (TI-SCI)
-always passed its preallocated message buffer, which is sized to the
-maximum message size (60 or 64 bytes, a multiple of 4), so the extra
-bytes read were still within the buffer. But, with a later TI-SCI
-update, the message size can be varying now and not guaranteed to be a
-multiple of 4, which would trigger KASAN out-of-bounds reports.
+mhuv2_tx_init() waits forever for access_ready. Fail probe
+after 1s instead of hanging boot.
 
-Therefore, memcpy() only the trailing bytes into a zeroed u32 before
-writing it to the register. This is at most 3 bytes, so the overhead
-is negligible.
-
-Fixes: aace66b170ce ("mailbox: Introduce TI message manager driver")
-Signed-off-by: Beleswar Padhi <b-padhi@ti.com>
-Acked-by: Andrew Davis <afd@ti.com>
+Fixes: 5a6338cce9f4 ("mailbox: arm_mhuv2: Add driver")
+Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/ti-msgmgr.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/mailbox/arm_mhuv2.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mailbox/ti-msgmgr.c b/drivers/mailbox/ti-msgmgr.c
-index 8eb8df8d95a4c..fb3f7e41ac36b 100644
---- a/drivers/mailbox/ti-msgmgr.c
-+++ b/drivers/mailbox/ti-msgmgr.c
-@@ -20,6 +20,7 @@
- #include <linux/platform_device.h>
- #include <linux/property.h>
- #include <linux/soc/ti/ti-msgmgr.h>
-+#include <linux/string.h>
+diff --git a/drivers/mailbox/arm_mhuv2.c b/drivers/mailbox/arm_mhuv2.c
+index 213fd4a399937..a5d5a2e09bca4 100644
+--- a/drivers/mailbox/arm_mhuv2.c
++++ b/drivers/mailbox/arm_mhuv2.c
+@@ -27,6 +27,7 @@
  
- #define Q_DATA_OFFSET(proxy, queue, reg)	\
- 		     ((0x10000 * (proxy)) + (0x80 * (queue)) + ((reg) * 4))
-@@ -425,10 +426,15 @@ static int ti_msgmgr_send_data(struct mbox_chan *chan, void *data)
+ #include <linux/amba/bus.h>
+ #include <linux/interrupt.h>
++#include <linux/iopoll.h>
+ #include <linux/mailbox_controller.h>
+ #include <linux/mailbox/arm_mhuv2_message.h>
+ #include <linux/module.h>
+@@ -968,6 +969,7 @@ static int mhuv2_tx_init(struct amba_device *adev, struct mhuv2 *mhu,
+ {
+ 	struct device *dev = mhu->mbox.dev;
+ 	int ret, i;
++	u32 val;
  
- 	trail_bytes = message->len % sizeof(u32);
- 	if (trail_bytes) {
--		u32 data_trail = *word_data;
--
--		/* Ensure all unused data is 0 */
--		data_trail &= 0xFFFFFFFF >> (8 * (sizeof(u32) - trail_bytes));
-+		/*
-+		 * Copy only the trailing bytes instead of reading a full u32,
-+		 * as the message buffer may end right after them and a u32
-+		 * read would go past the end of it. This also leaves all
-+		 * unused data as 0.
-+		 */
-+		u32 data_trail = 0;
-+
-+		memcpy(&data_trail, word_data, trail_bytes);
- 		writel(data_trail, data_reg);
- 		data_reg += sizeof(u32);
- 	}
+ 	mhu->frame = SENDER_FRAME;
+ 	mhu->mbox.ops = &mhuv2_sender_ops;
+@@ -1008,8 +1010,11 @@ static int mhuv2_tx_init(struct amba_device *adev, struct mhuv2 *mhu,
+ out:
+ 	/* Wait for receiver to be ready */
+ 	writel_relaxed(0x1, &mhu->send->access_request);
+-	while (!readl_relaxed(&mhu->send->access_ready))
+-		continue;
++	if (readl_relaxed_poll_timeout(&mhu->send->access_ready, val, val,
++				       100, 1000000)) {
++		dev_err(dev, "receiver not ready\n");
++		return -ETIMEDOUT;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
