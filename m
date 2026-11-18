@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016159;
-	b=Dmm/ws0it5YxHP+/6ZLcZvWEu5ncpq6EdAHWdybYmWpqShLSMs0LmL2D+Fe+OsA4/1pn
-	 u7AU9hLSIQ3sDFnb1LJk4TxfoJrv3RFDMKle2SlqJAfGDLI28ZSb/74phvcXepallJKOb
-	 mY/WvNwi5Bm7gD3r6fM6+Be2ZpevF3M0/R9D7jadNu4mafVYHPBmEO8yrSrehOUeyP7hR
-	 12MDSETXLUmN75z3B1ORxS/YBwDLJMoVjj+gqJ+LnKi4S+yxmk13sKIPWJ5VOfaxhyXF1
-	 KTgfr2X0xzVWuHhKfQ1x29fZK/HseAdxI85a3NNssKPy37OQFp9uNpJZ5ry96tRADAg==
+	t=1795016162;
+	b=q9bMqxa+P3sElJG1RulI8a8eMLEsDzoeRzdFz/A7IQIQ7qhNXqh5sw0OMsxYkZwvw+kS
+	 8dZ8asHMcoKQ1556EZD1pS9AFut5GHzskUzSV/JuTKsc43hbYPK054xQGNnBSvscnsd3W
+	 jI4QSfvhZhpWcfFLMyfKlBiTp0yp9mojWqcBnQFjfC+dSn6+8hd0xAxAiS5c4uy/M39nj
+	 /lKlhPaqUsSn+UHFfxhVqZnvaEoXlxBFmBZ27TJocNyfaEZ7/49uW6tjjug0fzl0TgcDV
+	 2O7+tfRRfcrZ3o1NAYpC1gxCBFYzWDfbYnVBNpd8yTtb7BHedm8H+yciPv3zXXaPv2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v3tdc5cjGvUUhJS8sXbgGYM32x4+F8xXvaryawsjdzk=;
-	b=hbsWZZ3Ck2pOuqDcdTaME6nbeKc0v8WmE5Gvv1hSU9JW7acuPnslCnX9xniQeA0j1Nwq
-	 adq1+7Z4TMPSvaRcyLEix779BBoSfcqVyGgrTYovvja7b3ItaShQeyCZL/YNTQOuU0rM7
-	 ugwWEb1Gwl5+KTtwuwbbFyLAIF8XLybc3eWCgrL+ChqMZr9n6hpxoZYDEm0EDQ/0R5uT7
-	 qY3qQTM7bZIPxbJr/wnV5U4IVTciLd9LsMOVZxe522j47AV51upGsr89dXIwTxANu5rN4
-	 E24qMe3VK1EyrG6+jAjhksGiOSCvWWvlEgVqr9vLkl5TaCLQPgNA2FnZ2V1IhM+YoPQ==
+	bh=3M9T2sT1Q5gsOkxyA8WaYCFJ6FaEksl4oTU1ZxSvSwQ=;
+	b=w131Yq2ZWapwGmMhw6pdY2oCryGFyuG+5bko6ACOZiLHx0diuZsKThl1vrc5FlPm4N73
+	 orFNSu1OSipJ106vWa/OhnfWRZR53ifkP4e73ghq0TMa83X3e2W3hqJFYBu2hh5L7l3Rh
+	 Y8sv/XmYCznK/PMR+s/QwODf7PNhjOmciJ/gzn6gBCYKtoYW4vLqa3Pgl0VIkAmigFane
+	 e+ms6YXm6jiGgjxRoBAL9lw3I2MQVZwY7ZBAd5AQbkvaE0iv7w1t+VkUWztzIk95GhX8y
+	 wD0AyxEMoYFaNMwrac3ODSYyUROQNaxA1p+liNIHph65SKJoS5yQm5YUzqo+w45Cj7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DpMZPJCr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=erGjbwBI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8D1606A335;
-	Wed, 18 Nov 2026 15:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B89A606A31C;
+	Wed, 18 Nov 2026 15:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DpMZPJCr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6A321F000C4;
-	Wed, 18 Nov 2026 15:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=erGjbwBI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12D41F000C4;
+	Wed, 18 Nov 2026 15:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016159;
-	bh=v3tdc5cjGvUUhJS8sXbgGYM32x4+F8xXvaryawsjdzk=;
+	s=korg; t=1795016162;
+	bh=3M9T2sT1Q5gsOkxyA8WaYCFJ6FaEksl4oTU1ZxSvSwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DpMZPJCrI5iZ7jammDCUUJ9J8oxPp59koa4qpOlvQfmyBnumTAqCEIsSoAiDjE1oh
-	 /QKOdRnaCygzZVbQ4twiOW8dIQoYdA8eqC2gXjaB9vWXpznjzaezKzLWutLnhDP/Ol
-	 /Jdy2gz5AusJfqtleZIPHrfpuseg7DMcO+i5JVJk=
+	b=erGjbwBIOD4Ibxs7J87TWh1rJ6j1H+YCs3uqaEP6UN60HIK/W272bV6vVFSDjcmIZ
+	 ZJ71qb3ZLRckIzDqT9EQpEV7WaNPeKjr41TE6VLZ9ENO8AyOytS9yHRQY0FFKfENGU
+	 iyi9lmGSTEUqIzqy6fjARHO2bL0bu2mPjU7ohwOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0388/2651] sit: charge ip_tunnel_prl_entry allocations to memcg
-Date: Wed, 18 Nov 2026 15:27:08 +0100
-Message-ID: <20261118150301.801532474@linuxfoundation.org>
+Subject: [PATCH 7.3 0389/2651] ip_tunnel: use WRITE_ONCE in ip_tunnel_encap_setup
+Date: Wed, 18 Nov 2026 15:27:09 +0100
+Message-ID: <20261118150301.835088169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,43 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 40a2b90f5190fcc7b083809fa93f2799abefeeb1 ]
+[ Upstream commit 88b84cae6b94087d3a9679845fe28ad19c7bef8b ]
 
-ipip6_tunnel_add_prl() allocates struct ip_tunnel_prl_entry for each
-potential router entry added via SIOCADDPRL.
-An unprivileged user with CAP_NET_ADMIN in a user namespace can add
-an unbounded number of entries, consuming uncharged kernel memory.
+Update ip_tunnel_encap_setup() to use WRITE_ONCE() when writing
+to encap fields (type, sport, dport, flags) and hlen fields.
+This ensures that concurrent lockless readers (like fill_info)
+do not see torn writes.
 
-Commit 1b51d8271973 ("memcg: ipv6/sit: account and don't WARN on
-ip_tunnel_prl structs allocation") added accounting to the temporary
-buffer in ipip6_tunnel_get_prl(), but missed the entry allocations
-in ipip6_tunnel_add_prl().
+Also remove the unsafe memset() on t->encap which could cause
+concurrent readers to transiently see zeroed fields.
+Removing it also fixes a bug where t->encap was left cleared
+even if ip_encap_hlen() failed, resulting in partial configuration.
 
-Use GFP_KERNEL_ACCOUNT when allocating struct ip_tunnel_prl_entry.
-
-Fixes: 1b51d8271973 ("memcg: ipv6/sit: account and don't WARN on ip_tunnel_prl structs allocation")
+Fixes: 56328486539d ("net: Changes to ip_tunnel to support foo-over-udp encapsulation")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260907075846.2913645-3-edumazet@google.com
+Link: https://patch.msgid.link/20260907075846.2913645-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/sit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ip_tunnel.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index 4438b2472b287..9a2bbd76d3794 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -395,7 +395,7 @@ ipip6_tunnel_add_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a, int chg)
- 		goto out;
- 	}
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index e6bcf01411d0b..13b5e35e8790b 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -491,19 +491,17 @@ int ip_tunnel_encap_setup(struct ip_tunnel *t,
+ {
+ 	int hlen;
  
--	p = kzalloc_obj(struct ip_tunnel_prl_entry);
-+	p = kzalloc_obj(struct ip_tunnel_prl_entry, GFP_KERNEL_ACCOUNT);
- 	if (!p) {
- 		err = -ENOBUFS;
- 		goto out;
+-	memset(&t->encap, 0, sizeof(t->encap));
+-
+ 	hlen = ip_encap_hlen(ipencap);
+ 	if (hlen < 0)
+ 		return hlen;
+ 
+-	t->encap.type = ipencap->type;
+-	t->encap.sport = ipencap->sport;
+-	t->encap.dport = ipencap->dport;
+-	t->encap.flags = ipencap->flags;
++	WRITE_ONCE(t->encap.type, ipencap->type);
++	WRITE_ONCE(t->encap.sport, ipencap->sport);
++	WRITE_ONCE(t->encap.dport, ipencap->dport);
++	WRITE_ONCE(t->encap.flags, ipencap->flags);
+ 
+-	t->encap_hlen = hlen;
+-	t->hlen = t->encap_hlen + t->tun_hlen;
++	WRITE_ONCE(t->encap_hlen, hlen);
++	WRITE_ONCE(t->hlen, hlen + t->tun_hlen);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
