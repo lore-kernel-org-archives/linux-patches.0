@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060565;
-	b=faKoU/vslxIslcoLPxpZ+m5sqqGItCWTUadwiCU9/F1euNZqWX/SSWYlEI7S0CVo/QJ6
-	 cRehk9xOTipRq1DRCkGfZePa2E+dgRe38tYYWzMmzMkQ9KgfoHoNJc9w1Zz3AGXlKw7gF
-	 ZsZ2ScgJUJxY4dhove5ehabJ84Up44mRNSVveWaNiZE7NlCcQ23Jyl+DL0GZ82+INUXGz
-	 p5WdbAzcv3alJNPDOYkln6h/Y/m7q7QTQQJc023f3yz825xkYLJkxArt6rOSDs322We24
-	 vlUoDt4E1Ubj6Ob6/hywCp0yNFte++SgQIEGd4/jHDoJoZK4/hVTfBUxIQj9rESNuyQ==
+	t=1795060567;
+	b=hHiXe3y2RNA6EbXvABv2yD4/iBFmINGkS6v/wK/BdqduGGq2lWDyDHbbPed8rx8GbzLV
+	 mzgZM/04OHlFTtCVCkCG98/X+6Mo5sg/I+4tRHP5OxVKGi3iDiNt/lVbiRstALD/9Zc4O
+	 fBkal9Lxg3X7zkQ9gW6EB2uRrl6G+vYeLTmDEPvvvJossKP7QHPgEafUzjqbULmetH0pb
+	 0J3V6BBFFoU6iSy/Cx3/1F+XmczYTFdjOYgoWm5yNeZCK9/gmDEohTL/Xgub4qeqKVL+8
+	 az2yNfjYfDISvSrZ9PFRKZLMzm35gyWD/5v50wMV/VOs+wSdWGH59zpFR2mRa2fcIVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060567;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f9dCLG4DWEHoUDXEvwtTOIZMtY5RkhMwUYuEmSjxiyI=;
-	b=CJX7A9NXt5HoUSj/BunrrNW/RQQ6EyXC9S6CMUF0YnU9Kt3VBrtwON6QOZ/ArRP30d9+
-	 WhQveTadEVwU19Cxd4JhA2O5MZHHbDdLzLMl5Xt2nFPyqYJcL7Klgnii4VWm6gWZQvKVw
-	 xjRNt7e8296cfcU4A1B7DMg+Svijw+0o9qOt8ZUO+EGVrfsjCqEzE/wDvsiaYOPZYvl5a
-	 kGIGxLDk8LNeRKBRb5fQshbzBBpBUC4J4Z7xtYw/ZivOYYjyHgZqTpZQFCUcqO6DliJX3
-	 b8Dik90wdjeyufXQGfkA8CmQSHud1H/pICyuk3ihYdZ5ER0kE1EIZIZlt56uOkDq2Fg==
+	bh=mtWmMSqCEs7r1VGbFHJX68yhz4Y58D49lRXlDbHldmw=;
+	b=E2bDB3D9srw0/QjHfYcfmKoCywANIXvb75MuV5I/EwdCgnEMgcUpS0jVvtHsSPXzvQ23
+	 trA4gCOelgbhntlqVHmLvLlJRThlMTLidX8inrL31I5ZK5IXoUJtrTy2hGByay9D0Muvv
+	 kkBT6Rh587hYOmlC8X3udyZ3pXXNhXnZYx/ohUiBVgww3/jn5FFdOwtP6wLkWG6XJZrSG
+	 ljSFfUAXXleLDClKlKKWmNNTTgr/+eHw1NKhl+H1Bgvmhx4VCN3+FT/f89nXJ19Y0Pd7Z
+	 aM5cCBCSJ2hpjP2FIV60NpqrncGg857XylB01jr18h8+uT1E0Am0l8KgKfPuq92b0AQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WjbOXGIW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IBdHbmX1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0247A606A320;
-	Thu, 19 Nov 2026 03:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63549606A333;
+	Thu, 19 Nov 2026 03:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WjbOXGIW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAF51F000C4;
-	Thu, 19 Nov 2026 03:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IBdHbmX1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1FE1F000C5;
+	Thu, 19 Nov 2026 03:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060564;
-	bh=f9dCLG4DWEHoUDXEvwtTOIZMtY5RkhMwUYuEmSjxiyI=;
+	s=korg; t=1795060567;
+	bh=mtWmMSqCEs7r1VGbFHJX68yhz4Y58D49lRXlDbHldmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WjbOXGIW3e/dMQnF1pMUXnP7ZzbXbILPLKD0oJf+QzR5io5pjKibsfVX2P2MIZTTc
-	 I/o70QRp2zRNQwD3pNAZEvGczwfytQiTQpUqRtn/LFvBgXU+TnVlCeIg5ggh4LIDf4
-	 Pw4RDKOmDPlexoCUA4u+amdjVU1kBogYEI2AXPCk=
+	b=IBdHbmX105N8e7Cr59Vu7F5/W3wewEBMZaKTw7nJc+EXLdsI2iWXcgdAq8L5eRXb1
+	 OEbpavLvu9I4jz5lzpmO0BG1W3E0EBZiKOlXDymxvEgMlcVmKE8fzpP6k7YZVGPedM
+	 yEET1ppL0b+b6u+WaCS1UZnVrAalmoPWBZVq7Z0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Brue <ryanbrue.dev@gmail.com>,
+	Linmao Li <lilinmao@kylinos.cn>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1202/1848] power: supply: bq24190_charger: use the wake irq API
-Date: Wed, 18 Nov 2026 15:54:00 +0100
-Message-ID: <20261118150010.248017636@linuxfoundation.org>
+Subject: [PATCH 5.10 1203/1848] power: supply: bq2515x: Propagate charge-enable read errors
+Date: Wed, 18 Nov 2026 15:54:01 +0100
+Message-ID: <20261118150010.358370464@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,79 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Brue <ryanbrue.dev@gmail.com>
+From: Linmao Li <lilinmao@kylinos.cn>
 
-[ Upstream commit ece9baab2a6e79224d3f591893be23b540b1625f ]
+[ Upstream commit 4a35810a847411c466a15d1737d11e8e818dc197 ]
 
-bq24190_probe() calls enable_irq_wake() on the charger interrupt and
-never calls disable_irq_wake(). That is wrong in three ways.
+bq2515x_get_charge_disable() returns bool even though reading the
+charger-disable state can fail. A negative error is therefore converted to
+true, so POWER_SUPPLY_PROP_STATUS reports NOT_CHARGING with success instead
+of propagating the failure. The GPIO read is not checked for errors either.
 
-It is unbalanced. free_irq() does not touch desc->wake_depth -- only
-irq_set_irq_wake() does -- so after the driver is unbound the descriptor
-is still one wake reference deep and the irqchip is still configured for
-wake, forever, for an interrupt nobody owns any more.
+Return an int from the helper, check both reads, and only convert a valid
+charger-disable state to the charging-status boolean.
 
-It ignores the device's wakeup policy. The chip is made a system wake
-source whether or not anyone asked for it, and because
-device_init_wakeup() is never called there is no power/wakeup attribute
-for userspace to say otherwise. A board that would rather not be woken
-by its charger has no way to express that.
-
-And it arms the interrupt for wake permanently, from probe onwards,
-rather than for the sleep it is meant to cover.
-
-Use the wake irq API instead: devm_device_init_wakeup() to make the
-device wakeup-capable and enabled -- preserving today's behaviour -- and
-devm_pm_set_wake_irq() to hand the interrupt to the PM core, which arms
-it in dpm_suspend_noirq() (only if device_may_wakeup(), immediately
-before suspend_device_irqs()) and disarms it on resume. Both are unwound
-by devm, so the reference is balanced on unbind, and userspace gets the
-power/wakeup control it should have had.
-
-No intended change in behaviour: charger events still wake the system by
-default.
-
-The same conversion was made to another charger driver for the same
-reason, in commit 6c5393771c50 ("power: supply: qcom_pmi8998_charger: fix
-wakeirq").
-
-Fixes: f385e6e2a153 ("power: bq24190_charger: Use PM runtime autosuspend")
-Assisted-by: LLM
-Signed-off-by: Ryan Brue <ryanbrue.dev@gmail.com>
-Link: https://patch.msgid.link/20260908-rbrue-suez-upstreaming-bq24190_charger-use-wake-irq-api-v1-1-c3f10ae2a34a@gmail.com
+Fixes: 44908459275e ("power: supply: bq25150 introduce the bq25150")
+Signed-off-by: Linmao Li <lilinmao@kylinos.cn>
+Link: https://patch.msgid.link/20260824084217.670213-1-lilinmao@kylinos.cn
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq24190_charger.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/power/supply/bq2515x_charger.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/bq24190_charger.c b/drivers/power/supply/bq24190_charger.c
-index 5769b36851c34..32e5c6dad7535 100644
---- a/drivers/power/supply/bq24190_charger.c
-+++ b/drivers/power/supply/bq24190_charger.c
-@@ -11,6 +11,7 @@
- #include <linux/of_irq.h>
- #include <linux/of_device.h>
- #include <linux/pm_runtime.h>
-+#include <linux/pm_wakeirq.h>
- #include <linux/power_supply.h>
- #include <linux/power/bq24190_charger.h>
- #include <linux/regulator/driver.h>
-@@ -1821,7 +1822,13 @@ static int bq24190_probe(struct i2c_client *client,
- 	if (ret < 0)
- 		goto out_charger;
+diff --git a/drivers/power/supply/bq2515x_charger.c b/drivers/power/supply/bq2515x_charger.c
+index 374b112f712ae..56e9bbd48b790 100644
+--- a/drivers/power/supply/bq2515x_charger.c
++++ b/drivers/power/supply/bq2515x_charger.c
+@@ -415,7 +415,7 @@ static int bq2515x_get_battery_current_now(struct bq2515x_device *bq2515x)
+ 							BQ2515X_ICHG_DIVISOR);
+ }
  
--	enable_irq_wake(client->irq);
-+	ret = devm_device_init_wakeup(dev);
+-static bool bq2515x_get_charge_disable(struct bq2515x_device *bq2515x)
++static int bq2515x_get_charge_disable(struct bq2515x_device *bq2515x)
+ {
+ 	int ret;
+ 	int ce_pin;
+@@ -423,6 +423,8 @@ static bool bq2515x_get_charge_disable(struct bq2515x_device *bq2515x)
+ 	int charger_disable;
+ 
+ 	ce_pin = gpiod_get_value_cansleep(bq2515x->ce_gpio);
++	if (ce_pin < 0)
++		return ce_pin;
+ 
+ 	ret = regmap_read(bq2515x->regmap, BQ2515X_ICCTRL2, &icctrl2);
+ 	if (ret)
+@@ -430,10 +432,7 @@ static bool bq2515x_get_charge_disable(struct bq2515x_device *bq2515x)
+ 
+ 	charger_disable = icctrl2 & BQ2515X_CHARGER_DISABLE;
+ 
+-	if (charger_disable || ce_pin)
+-		return true;
+-
+-	return false;
++	return charger_disable || ce_pin;
+ }
+ 
+ static int bq2515x_set_charge_disable(struct bq2515x_device *bq2515x, int val)
+@@ -610,7 +609,11 @@ static int bq2515x_charging_status(struct bq2515x_device *bq2515x,
+ 	else
+ 		status1_no_fault = false;
+ 
+-	ce_status = (!bq2515x_get_charge_disable(bq2515x));
++	ret = bq2515x_get_charge_disable(bq2515x);
 +	if (ret < 0)
-+		goto out_charger;
++		return ret;
 +
-+	ret = devm_pm_set_wake_irq(dev, client->irq);
-+	if (ret < 0)
-+		goto out_charger;
++	ce_status = !ret;
  
- 	pm_runtime_mark_last_busy(dev);
- 	pm_runtime_put_autosuspend(dev);
+ 	/*
+ 	 * If there are no faults and charging is enabled, then status is
 -- 
 2.53.0
 
