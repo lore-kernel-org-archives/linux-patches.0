@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032515;
-	b=r0v/JZaanrKo9DGDwLFWC4G5/yjWfosvqbQz9EUnuOcnAvnwH1AgE0I+dEK+7F/W+WvD
-	 8R4tlDy56fl9qsOeWeONaee4Kt+7xy00eBQh8QYBtvTDLRxGFOPPGTDOsICWlmag7f5PR
-	 1Vw99dtSerQZrqQCKD3DmMb8rOTr+zmxT5fPmUrVk1fqHvi+M/ryQE0HaZN4EPdHCUeXV
-	 t58mMnuW2pCQh4WwzxRnp2OJYNjvAtShUTx/YoI0z2Y5DVlDiSpYD3A7/Vm8E7dyS3C5U
-	 4lT9fUFBxhXlqmgdqZNKVsZvoWaSroGR5RqWNfC1gI91CTnikDkZWDHB3AHUv7sO+hQ==
+	t=1795032517;
+	b=mLMyDFrk5fh3NjwOZKzCrXUEiruIfDPMZMv0pvr1NhaMboQCsuoOPOJeHE6htP2hkyun
+	 9LNMyVCHq8DP3IHuD7SOT4kGxcA2TU21QznM8t5QWamiVuz7RSd+KGtuw6kilAngvqAX+
+	 2SeDhyW5HyosRqiI1JQ54XfRPeSMwnbAzej21NMtjESbs9MNiDsdtzWsJ4YkLWL33/c7Y
+	 E5abv2n+5xG9WMeWRxW7HNC4juYZ2NtaoDzqymVLU3RB4TFd+qx1Q4peZstu+Xe0/6WCL
+	 Vn+DFC+hcdmtBWiVkaqmE0aTSMQE1wla6GJNZ3mbFhB8ONU650XF08XJrhxLWRc7P7g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GlM4XV6cYGSbEiT+Oj/ZS8G9ZaSTmC4kw6j35ffADUE=;
-	b=XIuCQfP7M8c3s0KGaWN+wZyNQsEou0Auu4p/hRhXPkrA2vhAnCCL2XKBrfyO6vvlX3F5
-	 X0fIfqCDGK9MDcfcg9w3nVm1kIkHzD4OW+Jg1WID52U6DpRSAaAvlGg8R21aAcpiPQvd2
-	 b6YBAy488dn6M/+0FIpMyPItL8dG1ilbjqr+Yrd7qraUTSqXP8hsUztFowvWPepQESlgp
-	 hSlRmtwRyyYKEom9gqFdw4ETWG9Dx71BWDvmk2n+N1f4tKMWJ/kN5sN21IMe+PTKI86UY
-	 02DPPyOopS/pFDpIcixWtG61S7xpMUF0ykr4I46uNWA8c8AOj5OlBzlOJUQAZxIYqPQ==
+	bh=q3vMw+z4wgiI+NZfmTYq5yMmORpOnZGrI2BD4uhW72s=;
+	b=2k3qpl7zkrk3Q2E8kG9W0ATCkIOX7X4RcXdJrFSoTAP/1oA3c3I3zlsKibYQ/qJWQX7j
+	 8OdcWBpy4G4FFBuUwzQ/G8VeYYTBh2GBqiPa8Z/uug0VECYVsEyKvb9o/pvtpADE4mQ/K
+	 bVAsJdfAM7m9mxobApNXnvlED8Yvy+h+yUWbS0mEvUmcv1GJNrtfckFJq25k0YDKGq0i+
+	 8oyi6ECNhvJwA2EKr/o0G96uxeU/6qSE8C2iMOLH1Sx41YjcY/a8CmgrzTRxJhzMqpFDY
+	 vuoty+8wcjrbl27p72gFlN/x/68jTKio1DME6QczQLjBOp91XwZH6cRDJZdamYd2a+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc0DDYb1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12a5x8uv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3CC606A31C;
-	Wed, 18 Nov 2026 20:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90A6606A31C;
+	Wed, 18 Nov 2026 20:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xc0DDYb1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 275161F000C4;
-	Wed, 18 Nov 2026 20:08:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=12a5x8uv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC981F000C4;
+	Wed, 18 Nov 2026 20:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032514;
-	bh=GlM4XV6cYGSbEiT+Oj/ZS8G9ZaSTmC4kw6j35ffADUE=;
+	s=korg; t=1795032517;
+	bh=q3vMw+z4wgiI+NZfmTYq5yMmORpOnZGrI2BD4uhW72s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xc0DDYb1apfmsvb6ro+i/86TYqyxcPLEI3cq0JiXOrjZYXPmShMJpZlrF792Eenml
-	 Kv6HR8V2PWwqVbZzCT+ARen5Ud+IRpsvmkUI90qXHNmWS7gfw2/Ny3TmKiwGrh2PzF
-	 2ItPlM7wUQmunNAbXsu3Qbj24VbjV/XUkLM5fg7w=
+	b=12a5x8uvTZjNl973MQ62KfzVAwou1XqWiSjs0eRWpWejCBdpfhikF0piDQRYr4mpn
+	 /KBe/ynm4DaK1D65nPBn6vdTG1FGVZ46YlJ6S50rta50QQysrGkDMTqrMGtZN/JXCI
+	 66z+nxaW2JDJiKuAjKbceSKNw+ne25OMA2B8Dijc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
+	Binbin Deng <18983559317@163.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1439/1756] tls: device: protect async RX resync state during device-down
-Date: Wed, 18 Nov 2026 15:59:26 +0100
-Message-ID: <20261118150106.438176681@linuxfoundation.org>
+Subject: [PATCH 6.12 1440/1756] octeontx2: Fix use-after-free of qos node in delete path
+Date: Wed, 18 Nov 2026 15:59:27 +0100
+Message-ID: <20261118150106.473349950@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,105 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Binbin Deng <18983559317@163.com>
 
-[ Upstream commit f89a228125238f8d4c7e2b8161e2a85fe35307b6 ]
+[ Upstream commit dcaa6219648955f7a8160313f1685321dbd1bf28 ]
 
-tls_device_rx_resync_new_rec() can run in process context with the
-socket lock held, but without an RCU read lock: from the strparser work
-item (tls_strp_work()) and from the receive paths (tls_rx_rec_wait(),
-tls_rx_rec_done()). The resync_async pointer belongs to the driver RX
-context, which tls_device_down() tears down from the netdev notifier
-without taking the socket lock; only the softirq entry to the parser is
-implicitly inside an RCU section.
+hash_del_rcu() only unlinks the node; a reader that already holds the
+bucket iterator still uses the node.  The immediate kfree() has no
+grace period, so a concurrent transmit on a socket whose skb priority
+carries the deleted classid reads node->classid / node->qid from freed
+memory (use-after-free in the softirq transmit path).
 
-If the parser passes the TLS_RX_DEV_DEGRADED check before device-down
-sets it, tls_device_down() can complete synchronize_net() and delete the
-driver context before the parser accesses resync_async->req or its
-record log. In the asynchronous stage the parser also writes the record
-log, so this is a write to freed memory, not only a stale read. The RCU
-section in tls_device_resync_rx() starts after those accesses and
-therefore does not prevent the use-after-free.
+Fix this by calling synchronize_net() before the node is freed, as
+mlx5e does.
 
-Found by code inspection; not reproduced. Hitting the window requires
-the parser to be preempted between the DEGRADED check and the
-resync_async access across the device-down grace period and the
-driver's teardown.
+Found during a static-analysis-assisted audit: candidate sites were
+surfaced by a Coccinelle rule, and the reader/writer paths were
+confirmed by LLM-assisted (GLM-5.3) code inspection.  The issue was
+not observed at runtime; it is identified by code inspection only.
 
-Fixes: ed9b7646b06a ("net/tls: Add asynchronous resync")
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Link: https://patch.msgid.link/20261013213517.2219663-1-rjethwani@purestorage.com
+Fixes: 5e6808b4c68d ("octeontx2-pf: Add support for HTB offload")
+Signed-off-by: Binbin Deng <18983559317@163.com>
+Reviewed-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20261014064204.291688-1-18983559317@163.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_device.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/qos.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 918dc6c4697b7..099cf5d093689 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -782,8 +782,15 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 
- 	if (tls_ctx->rx_conf != TLS_HW)
- 		return;
-+
-+	/* The parser also runs in process context, without an RCU read lock.
-+	 * Protect the driver's resync_async state before checking the flags:
-+	 * device-down sets DEGRADED and waits for synchronize_net() before
-+	 * freeing it, without taking the socket lock.
-+	 */
-+	rcu_read_lock();
- 	if (unlikely(test_bit(TLS_RX_DEV_DEGRADED, &tls_ctx->flags)))
--		return;
-+		goto out;
- 
- 	prot = &tls_ctx->prot_info;
- 	rx_ctx = tls_offload_ctx_rx(tls_ctx);
-@@ -798,11 +805,11 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 
- 		if (likely(!is_req_pending) || req_seq != seq ||
- 		    !atomic64_try_cmpxchg(&rx_ctx->resync_req, &resync_req, 0))
--			return;
-+			goto out;
- 		break;
- 	case TLS_OFFLOAD_SYNC_TYPE_CORE_NEXT_HINT:
- 		if (likely(!rx_ctx->resync_nh_do_now))
--			return;
-+			goto out;
- 
- 		/* head of next rec is already in, note that the sock_inq will
- 		 * include the currently parsed message when called from parser
-@@ -811,7 +818,7 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 		if (sock_data > rcd_len) {
- 			trace_tls_device_rx_resync_nh_delay(sk, sock_data,
- 							    rcd_len);
--			return;
-+			goto out;
- 		}
- 
- 		rx_ctx->resync_nh_do_now = 0;
-@@ -822,16 +829,18 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 		resync_req = atomic64_read(&rx_ctx->resync_async->req);
- 		is_req_pending = resync_req;
- 		if (likely(!is_req_pending))
--			return;
-+			goto out;
- 
- 		if (!tls_device_rx_resync_async(rx_ctx->resync_async,
- 						resync_req, &seq, &rcd_delta))
--			return;
-+			goto out;
- 		tls_bigint_subtract(rcd_sn, rcd_delta);
- 		break;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+index 69dfb34008572..7f22de0df3a5b 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/qos.c
+@@ -331,6 +331,8 @@ static void otx2_qos_sw_node_delete(struct otx2_nic *pfvf,
+ 		otx2_qos_update_tx_netdev_queues(pfvf);
  	}
  
- 	tls_device_resync_rx(tls_ctx, sk, seq, rcd_sn);
-+out:
-+	rcu_read_unlock();
++	synchronize_net();
++
+ 	list_del(&node->list);
+ 	kfree(node);
  }
- 
- static void tls_device_core_ctrl_rx_resync(struct tls_context *tls_ctx,
 -- 
 2.53.0
 
