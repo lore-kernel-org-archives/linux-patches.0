@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028459;
-	b=XcW76IzCRIbo6vhbIbBc8AMgNdbPMd+2zQBpBcuEREk4LbJUcnYzaDGkkvvJkDiX287x
-	 3pPgjeZHPmfqOGy8NGJrBMduK2S7qdOBZYADGJppfqlSb0PQ4qMg0NkdVX5S4rNGm85eg
-	 WTuU1seJuPY8Bg2Sw6bsZZjc+TcJ4yJ9lxPcRQBp87YgKVbCBAJWtDWeDKaAdvtPqK/J3
-	 pzRBK7ca2GaX73jMUg3dwWiZ15VGAhlwcyGQLSUpT3CdrcBuslIhseXLCfIOuu8/VYaYc
-	 Kx/lBxbqlwqhrdQPua3gZ6IdQYDhSiPF00yBsnf+f9S0ACQmaVvQwAEcX+0iyMB/fEg==
+	t=1795028463;
+	b=lZyMlG9f9QlMunbt4qfVZSe4XEcrF0khetYcbsWGAiWbDKgp6VmztOpC0B7X7d/i5aoC
+	 Q0pcyC19YSwN9JcsnknRvKyVVfLEHv+EVncZrzQ5pyReUhOkvaiSMqfCtnuijAorkO0g2
+	 Q7e9GI6DUSCiYkOUqsPRq5V02eTfEsi/m5ku56Ju0XfvfYDzXOBVGqkS+PG4sf11VxP30
+	 GhA2iEWL9rQy2IinqDmaIi3gVcES9VZeb+GrJmz1XS0XW22+iC4B28bgYE2RbEifLWeFH
+	 jvjmLGWl19Wrfr3TCqQorGjiM+l0pKTsyFSraJ8G7CRIueqYlqJTz0tI0Mww8K9buFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028459;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SEtZ7HjPTbFa3r7r6uXrCZS4Ij3minuT/nMl257BWqs=;
-	b=WKNbVd4Mdc4n/BKzpU+UnWFCA09xIhfzW7/6h3rNLs7C7dSelQASp5DSv3cS0x6LAuN2
-	 R4eh1JNnD1wloNq5FVXZ6s1xiA60D5cXHeAmmqp+1+I6uq5+aKo/0SG9TgPT6HRPrQjW9
-	 haXlRHg6eVjFdgWwVB7XIitskHc28sPTarXUlG4qaB7hwlMtbDis/B8WLDFjN4qAznr1D
-	 7s86N2XMd1PdRXN9L5ZwnTUHIIvMai6E2WAN0a/OV02de3F0wq5fDXzLKdJ7eWkEIjAOK
-	 zVvfCQLdsVqNXxtmDb1lNAxQaDolUinbTBmKEOo6CO74aYU2ATBofZMgev+l+yywXJA==
+	bh=uPgRoL9ig+CqQPJhwzubiQAwrjxTbfazZcm+9t5YFjQ=;
+	b=31sLhvnPNlrDemc8qI4lCL4wNXt3YxN/MUeBfc+DMx8ajL+dH4CkY+2M3mdcCIm244j/
+	 s3QiYP2f0Z3r88JFi3WUKL9ey926A+wYjSpxg8E6mDOszn8sFSrqTfPZZLZURQKSlegcR
+	 WGyYtF9c91AqTb9A06eIWL7MFr+f/trDasSa9qE8bPNGnjZ9tmFCRQgMJ6KFJ7SPEWZy9
+	 YpCl/WheHp7wrr0S/Wgtm3L8fh0btCcdRNm5C/AfffNOjtLCiUgLQCuG2VF91EklKSnsM
+	 23e7f4uRz/nzYCUc/CQPNnI4UtxqNyiHsYKNLDUxLsLwYC1MxgL1pygxNdGHh7e2GRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uIPOqbXF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXf3sxAV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB4F606A336;
-	Wed, 18 Nov 2026 19:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE27606A31C;
+	Wed, 18 Nov 2026 19:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uIPOqbXF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2FE1F000C5;
-	Wed, 18 Nov 2026 19:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xXf3sxAV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D25D1F000C4;
+	Wed, 18 Nov 2026 19:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028459;
-	bh=SEtZ7HjPTbFa3r7r6uXrCZS4Ij3minuT/nMl257BWqs=;
+	s=korg; t=1795028462;
+	bh=uPgRoL9ig+CqQPJhwzubiQAwrjxTbfazZcm+9t5YFjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uIPOqbXFbMay9AifIrp8C+PFvz8SzpngymJ1RLPIg7bO1sWG7XrMs3T+Odvc4I2Q3
-	 bjutYO/QuW2wTM8VP7ZNG/feHVnOIWKls2zcZfOPTmj5dmU4D1Gr6o8DfdFj89mtxc
-	 eUCKieK9rEIJSFKNr1soVD6uydzs2QRE9Ivieus4=
+	b=xXf3sxAVekXkTDraFrwpwCQiUwFuKt1M17/h2YEYr75Wr7KQ1jkXAdUH6k0IB9uGI
+	 nhHeYNE1iapV8mFTspAnvBsLQ7lCfuTW4Wdkaojm34YM3t3RkKqIMgqcmVNeupxqJj
+	 1yi2gbuw1s5yiSafplR2A6UjVAHg0DYnvveht8Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 2134/2151] kernfs: avoid READ_ONCE() on a kgid_t in kernfs_new_node()
-Date: Wed, 18 Nov 2026 16:04:29 +0100
-Message-ID: <20261118150239.414280170@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 2135/2151] zloop: fix block size query
+Date: Wed, 18 Nov 2026 16:04:30 +0100
+Message-ID: <20261118150239.448710060@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,50 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Christoph Hellwig <hch@lst.de>
 
-commit ef179363b04306dbc645c53207b9ad3516ebc75f upstream.
+commit 8fbee85a90789d367c347b1cfd5a5ef37f3a934a upstream.
 
-kernfs_new_node() reads the parent's gid with READ_ONCE(attrs->ia_gid).
-That gid is a kgid_t, which is a struct.
+The block size obviously needs to be queried when it is not set, not when
+it already is set.
 
-On SMP alpha, READ_ONCE() ends by casting the value it loaded back to
-the type of its argument. Here that is a cast from a struct to the same
-struct. GCC accepts that as an extension, but ISO C does not allow a
-cast to or from a struct type, so sparse warns:
-
-  fs/kernfs/dir.c:751:31: sparse: sparse: cast to non-scalar
-  fs/kernfs/dir.c:751:31: sparse: sparse: cast from non-scalar
-
-Read the gid_t inside the kgid_t instead, and wrap it back up with
-KGIDT_INIT(). This is still a single marked load of the same four bytes.
-
-There is no functional change. With GCC 12 for alpha (the config from
-the report) and GCC 14 for x86-64 (with and without KCSAN),
-fs/kernfs/dir.o has the same object code before and after this change.
-
-Fixes: 81bdc85b4c08 ("kernfs: fix up the unlocked attribute reads on the creation paths")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610261608.vItiXCGW-lkp@intel.com/
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261027143247.3537239-1-shakeel.butt@linux.dev
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Reported: Damien Le Moal <dlemoal@kernel.org>
+Fixes: 5e9929e2f03c ("zloop: share more code for opening a zone backing file")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://patch.msgid.link/20261102055558.3212814-1-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/kernfs/dir.c |    2 +-
+ drivers/block/zloop.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -714,7 +714,7 @@ struct kernfs_node *kernfs_new_node(stru
- 		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -841,7 +841,7 @@ static int zloop_init_zone(struct zloop_
+ 		goto out_fput;
+ 	}
  
- 		if (attrs)
--			gid = READ_ONCE(attrs->ia_gid);
-+			gid = KGIDT_INIT(READ_ONCE(attrs->ia_gid.val));
- 
- 		if (flags & KERNFS_DIR)
- 			mode |= S_ISGID;
+-	if (zlo->block_size) {
++	if (!zlo->block_size) {
+ 		ret = zloop_get_block_size(zlo, zone);
+ 		if (ret)
+ 			goto out_fput;
 
 
