@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023498;
-	b=kNDRxKbuQq3wD9C4N2KnrJdLER/TBa2KFjBNDB0QlvAmsVA/SXgAs5AveUS899MinCyL
-	 N84RjRjrmRL0HfT7IEsWAM+7eZ3QHFWc8o0DSKiTdQ9ng7avTuBzNs8zm4ESmzJvLW/yN
-	 X0Ae4MmhjBImuDBMtM0j0xdFMWlEJI0OtgdDvstyVIRzjGyFrwjrl1SWLGKSaRl0+3ZwK
-	 P6owWfUNXMUyhmCSBtH8uFTyNZtdib+qoEljWTnAa2RrWInNZFtxBpSwoS5rYDyBk+KO5
-	 IwI4/Kc++IbAHEEdEBqyEt6E543lpolNf1ad4IqK5fJ+HoHg5LA4yiWOy9E6KhOwNOQ==
+	t=1795023501;
+	b=a2IyNiOauRlp2CiaPA5MGWV1cocx1I4N606LXW67yjAoGAOIvDNRFqEPxlG4U/MMQ4QX
+	 M4XTkwL5gobsir2UjZpna74ViLaOTprKxTan1VukYKB+p7cdVgKsYba6UhffzJG43ytVM
+	 ZTDcK92z/GAWqR4kReda2o+tGF1ahW8fzQNZt1cgryMy5nb8dQ63HC7d0y4G8E6pEqAyO
+	 +IuSnsHekoDl/9xJJw03TtedRCZ9GtrbZIq99M67ifAwpgMVbhcdqvyPi3TQliVy3YVsl
+	 xzGWJbhfyfZIZmy/Gbvxqas4IvA0kyOWq/sQbCU6yXTLh8jZI5Z9w+wrt7GwrEkVK0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023498;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023501;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OqI2lCktrEoAQCCzdbYFoTWQirdBHx6Vlkck4639758=;
-	b=D0oyRvZl8KHL5NmlR45bqODGEiALHaTsflJh6Y4IkDZEYChnXS0KOWJtUYXIGUvDeYcj
-	 9+v5FbBjwjwqvWBaVBHXRBVbsHxgQ++q0qU/g813DDAONCGAUtrnD8SMVrNXFfWNb3irG
-	 R6/tQLQHSLt1m6ZNgNLFP7y2+zgVv/PjuK+LwZ261rpUvqmKTxg065m45MbuFNcab1C7c
-	 GQg/dvloImx5e4dMLtMf6nEoHpRRep6ACalxomPLxsRgI2S5nkI2Uo+GO+474/q9IOO0P
-	 f9/ldRMX61z1ecLTBLuFXUuaLUKzuycRI7zU8HjLS6bLP+3/C2met2zmiUrehi+wwPw==
+	bh=G/puEVfCiRX0DXQhhMSXtOF2azLj958UfD912Ivufp0=;
+	b=Tciuke6itGnblgE6sHDT7Dy3dG7tKbm4D9pZXQZDzDD8SB2YISjdyCRAG7vubswjyde3
+	 1W/2NA3QXWb525HBSi+iWx18ScoViZ7SEE/QZFtycbgRQssV6poW8uB4/P3KALvPoBZpm
+	 q5EiMPc/1/FlbO7M7NnVT9TNiu5qxTuaSfensavzB73Jdb6VLxUPxCtaMQce+f8rKamat
+	 xbbg0mIWkudzHbhXUI32Eu97NYs7TFEOHi9CaJ6XzPEb6oFXGg9ZqovtdfdKoZE30n2g4
+	 IQlbSs+YGVeuq0qYJIpRtiV5Szo9eaUZxXxO9s6UTKUNDHNUUryOcP8Z8EJLwp7yMfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CtmJmfKD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZpnvI9yu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FEF606A333;
-	Wed, 18 Nov 2026 17:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDB760A2613;
+	Wed, 18 Nov 2026 17:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CtmJmfKD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D301F000C4;
-	Wed, 18 Nov 2026 17:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZpnvI9yu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6201F000CC;
+	Wed, 18 Nov 2026 17:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023498;
-	bh=OqI2lCktrEoAQCCzdbYFoTWQirdBHx6Vlkck4639758=;
+	s=korg; t=1795023501;
+	bh=G/puEVfCiRX0DXQhhMSXtOF2azLj958UfD912Ivufp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CtmJmfKDB8856ouluvsRqk3au3PzZ3uJEWshff1dziaXtWlhZ8w5cjK/mGlWRsvQ1
-	 u+5LgrlZs0EMu9Nng5309+wHcaXiNJLLj7liKvchX10rFewvgE7i9l38Tpd9mE8zw9
-	 QXeOxC88+1Aw286Ifz2sBmRp2m7hzV7nK0cnQr7o=
+	b=ZpnvI9yurtpAJF64fXQlbd2vJe5VqV87Yu5RYZHDqQEhd6sNl0ZSJR1iFuv2rl+/u
+	 wdKPLr+lu64MWfsMgm/lrmesJw8ou0Cj0Ta2/Jx99/uuxMxILezd6TQRAPxv+I+8IS
+	 EArStRfTeEAle9O+H1vEQ0kD0QDbbYKP1b+AF8bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumeet Pawnikar <sumeet4linux@gmail.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0392/2151] thermal: gov_power_allocator: Fix NULL pointer dereference in update_tz()
-Date: Wed, 18 Nov 2026 15:35:27 +0100
-Message-ID: <20261118150136.347809847@linuxfoundation.org>
+Subject: [PATCH 6.18 0393/2151] firewire: cdev: Fix FW_CDEV_IOC_CREATE_ISO_CONTEXT references in kernel-doc
+Date: Wed, 18 Nov 2026 15:35:28 +0100
+Message-ID: <20261118150136.381861145@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,62 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sumeet Pawnikar <sumeet4linux@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit d3515092f1bff9cfb4d99ea82dcd4ac66f32f50d ]
+[ Upstream commit 0a6cf2b7adcbd362039e9d282f73aff3f24022ca ]
 
-power_allocator_update_tz() unconditionally derives the trip descriptor of
-params->trip_max as below,
-  const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
-and then walks td->thermal_instances. However, params->trip_max is allowed
-to be NULL and in that case the list walk dereferences a bogus pointer
-derived from NULL which oops the kernel.
+The fw_cdev_event_iso_interrupt and fw_cdev_event_iso_interrupt_mc
+comments refer to FW_CDEV_CREATE_ISO_CONTEXT, but the ioctl is named
+FW_CDEV_IOC_CREATE_ISO_CONTEXT.
 
-get_governor_trips() picks trip_switch_on and trip_max out of the trip
-table of the zone. When the zone has neither a passive nor an active trip
-point, last_active is NULL and params->trip_max is left NULL. This is an
-explicitly supported configuration, as documented in the function
-get_governor_trips() as below,
-  If there are no passive or active trip points, then the governor won't
-  do anything. In fact, its throttle function won't be called at all.
+Correct both references. The misspellings were introduced separately
+with the userspace interface documentation and multichannel reception
+support.
 
-Return early from power_allocator_update_tz() when params->trip_max is NULL
-and only compute the trip descriptor after that check. There is nothing to
-update in that case anyway, with no trip_max and there are no thermal
-instances for the governor to account for, num_actors stays zero and
-total_weight is irrelevant.
-
-Fixes: 912e97c67cc3 ("thermal: gov_power_allocator: Move memory allocation out of throttle()")
-Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
-Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
-Link: https://patch.msgid.link/20260822114236.15998-1-sumeet4linux@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 7ada60e36764 ("firewire: Document userspace ioctl interface.")
+Fixes: 872e330e3880 ("firewire: add isochronous multichannel reception")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260911222807.7673-1-kmehltretter@gmail.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/gov_power_allocator.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/uapi/linux/firewire-cdev.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/thermal/gov_power_allocator.c b/drivers/thermal/gov_power_allocator.c
-index 0d9f636c80f4d..215c0cbd011b5 100644
---- a/drivers/thermal/gov_power_allocator.c
-+++ b/drivers/thermal/gov_power_allocator.c
-@@ -661,10 +661,15 @@ static void power_allocator_update_tz(struct thermal_zone_device *tz,
- 				      enum thermal_notify_event reason)
- {
- 	struct power_allocator_params *params = tz->governor_data;
--	const struct thermal_trip_desc *td = trip_to_trip_desc(params->trip_max);
-+	const struct thermal_trip_desc *td;
- 	struct thermal_instance *instance;
- 	int num_actors = 0;
- 
-+	if (!params->trip_max)
-+		return;
-+
-+	td = trip_to_trip_desc(params->trip_max);
-+
- 	switch (reason) {
- 	case THERMAL_TZ_BIND_CDEV:
- 	case THERMAL_TZ_UNBIND_CDEV:
+diff --git a/include/uapi/linux/firewire-cdev.h b/include/uapi/linux/firewire-cdev.h
+index 05e3aa8fa8bcb..4f83d6babc921 100644
+--- a/include/uapi/linux/firewire-cdev.h
++++ b/include/uapi/linux/firewire-cdev.h
+@@ -293,7 +293,7 @@ struct fw_cdev_event_request3 {
+ /**
+  * struct fw_cdev_event_iso_interrupt - Sent when an iso packet was completed
+  * @closure:	See &fw_cdev_event_common;
+- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
++ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
+  * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_ISO_INTERRUPT
+  * @cycle:	Cycle counter of the last completed packet
+  * @header_length: Total length of following headers, in bytes
+@@ -353,7 +353,7 @@ struct fw_cdev_event_iso_interrupt {
+ /**
+  * struct fw_cdev_event_iso_interrupt_mc - An iso buffer chunk was completed
+  * @closure:	See &fw_cdev_event_common;
+- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
++ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
+  * @type:	%FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
+  * @completed:	Offset into the receive buffer; data before this offset is valid
+  *
 -- 
 2.53.0
 
