@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046811;
-	b=PSd56B0lzbWGnEZYgTCqcKrnSmaT6s6QwGlsitk+7pw8movfxlc6YHMqcR6+1GIxA+UY
-	 rjkDLhHZW9auGwphUHCkBVxnZO5c6T+fBrQJwqqFze9BJdyOnqGkjFLeSzuuP6No5JSRo
-	 I2cY07ej9pNkEXTI+JMguiGyxrUbblBt8vMjDA2aPcftRDimnm5oe8BUHrRG1Cstrt54H
-	 T/i+3bV1jhuNoHbCygNRBXu4VZz1mZCa75fDj+dNuBH5uDj8HEnVubYmOJAJdb26KJHea
-	 NoJDm1HkNtycdcq3t100tmRR8KIW6ADLfgBjkgKiq4+1kEDb3hpaXNXxWRyfcdemDSQ==
+	t=1795046813;
+	b=e3NbME0gF9Cm1tqhW0mUzusJPJV1RsOyeleskazQA53FItrAQ+FcOSqtpI17ftqWeZZl
+	 MC56XTnUB4BWpXy3yXSbkqyPhQjusiRpTqOuNCBeejtipEHMK/5qKZ48Czni6edk7sfin
+	 9MM8S/a4ZzFhPsBNrO66RjU3cnvGfvnrcbUYPhLSyEumz+u6JHVEfFwsMVpjWNuhBABzw
+	 GR4VamW/RxI2N/y5gPadimpIkclEJGZOxllqqtsg1X0vUSxoui8V66GyhkSN3vrTbFA2H
+	 eEPHYuptF7r4vazazcZxY65GyjHpAUs4lSEsu93Jkl2hs0cZ5atHP7c1zuRx1PSRaJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046813;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E8TNic8K7be9mTsY0YD4N1mGvBYEXVrU1qgqIpF3KuM=;
-	b=TjUas1td5AXkPbO+WfS9+2XTN1pCgp7LXHys1s+YwMeLdIPftPalBdJoCWZ05c8S9d1r
-	 RiFmXpUJwB9JTH2UGwBhu75hdWqqyrIBfaU5qpZbJOYpKGwfxFC77ZxXirU526JiLCGiQ
-	 XnDSBX4Wqbz3R5OVHo8hZL+eJv7l8qUqiUDXD6l2xPsxQJKr1sLhTrUVFDVgkucXJU2SL
-	 XqdAemsCctIjKsXUCahfiv0fb6Ef9cqW6/P05I5ALHbgqjMiTUvQPM6nmfkMTDZ1JSdhS
-	 L6iSqgFZ9FWU+460fHgdGQ0A+DFel7X2m/jrVkVZzeUWtT06AwPQ6GQIKCcZ+6MyaHA==
+	bh=COaMEWQ77HTJs5CAkgqomGHjB+RBQjzUPcO+dLlPXY0=;
+	b=If5bVoCasnWEsTBqcfRAeCo9sN+p9QK2omXFhhhzC7eOUHV+s68wn4NkePMYoAy6o/lO
+	 2KjAvSabtWQoKuaTwMEccKejsLXHiB8+aOdsF7DTGtdoKatmp86dQB+Vz6LrFCFCNWKj2
+	 eWTXc/Jx17VNAfHMY8xqKbRrDATlS2EvGLnqVJr+e+56raROxFbz+miNLuxOBPgFdysMV
+	 2CllkbZENCEvukuQs9s0xux/6DODJQfcOU2+AvQSgYDIt6/rhCXImpKeMXiwU/dONWxIz
+	 MSBGdR8CCAbGdYKI+tyd6g6n0zKIyDj6jBeYP2Ump2csskYbKRI8Tkf01ccdD2JA7vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKzrRB0g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jg2NQRci;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2830606A320;
-	Thu, 19 Nov 2026 00:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6962606A32F;
+	Thu, 19 Nov 2026 00:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKzrRB0g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55DB71F000C5;
-	Thu, 19 Nov 2026 00:06:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jg2NQRci
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D60E1F000C4;
+	Thu, 19 Nov 2026 00:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046810;
-	bh=E8TNic8K7be9mTsY0YD4N1mGvBYEXVrU1qgqIpF3KuM=;
+	s=korg; t=1795046813;
+	bh=COaMEWQ77HTJs5CAkgqomGHjB+RBQjzUPcO+dLlPXY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKzrRB0gesdxgjPNUgbhDyj7kiKzSAt23PvEzJKm9tI6cyiR4K/u5KBimdinXsfuY
-	 3SGTP1efyJBgc7bOupRBewatPye7cPiXxcpjKbtOQ3cR4Kv3uwSuYQ88zHMDQfE53+
-	 3ifu4SoQ658hrQic4oAjv17KFvNS8K8rpqaMV6v4=
+	b=Jg2NQRciZ4IYxb1MV/Jr82uOcRTmD4shY5WbQzdQElMYK7588fHKtKm51uRJOMqvO
+	 4zVX3ubS5N1zCn37Dn7djkppx3lb7olmrkck9aGUs9KVfGxPx6w4HcsbOvGjV62GnW
+	 8EVPDGAtuNbpgQByrML1/W4FL93A9qX7U7Wd9JAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Xu Xin <xu.xin@linux.dev>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1413/2857] nvme-auth: fail when the controller does not authenticate itself
-Date: Wed, 18 Nov 2026 15:40:47 +0100
-Message-ID: <20261118150252.209910633@linuxfoundation.org>
+Subject: [PATCH 6.1 1414/2857] mm/madvise: fix data loss from MADV_FREE on a KSM page
+Date: Wed, 18 Nov 2026 15:40:48 +0100
+Message-ID: <20261118150252.245459036@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,71 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit f9e43d924bc74feeb56197de82b2845de2a4b85a ]
+[ Upstream commit 22d043c1da48d6c7274f9dd900714b6d58b7b9c6 ]
 
-nvme_auth_process_dhchap_success1() returns success as soon as the
-controller clears the rvalid flag in its DH-HMAC-CHAP success1 message,
-without looking at whether the host had asked the controller to
-authenticate.  A host configured with a controller secret sends a
-challenge in its reply, computes the expected controller response, and
-sets chap->bi_directional; if the controller then answers with
-rvalid = 0 the response is never compared, the host still sends
-success2, and the queue is marked as authenticated.
+MADV_FREE can clear the dirty flag of a singly mapped KSM folio. The
+folio remains in the stable tree and can gain new mappings without being
+dirtied again. Once marked lazyfree, reclaim can discard data that those
+mappings still need.
 
-A malicious or man-in-the-middle controller therefore only has to clear
-one flag to turn the configured bidirectional authentication into a
-one-way one, without holding any secret of its own.  The target side
-already treats the mirror image of this as fatal: when the host supplied
-a challenge but no controller key is configured, nvmet_auth_success1()
-fails the authentication rather than answering with rvalid = 0.
+KSM always marks a folio dirty when converting it to a KSM folio in
+try_to_merge_one_page(). Marking a folio lazyfree clears PG_swapbacked
+but leaves PG_dirty unchanged. Preserving PG_dirty makes reclaim restore
+PG_swapbacked instead of discarding the folio. This also protects folios
+that were already lazyfree when KSM converted them.
 
-Refuse the connection if the controller returns no response although
-bidirectional authentication was requested.  chap->bi_directional is the
-right condition rather than ctrl->ctrl_key, because secure concatenation
-sends a challenge only to derive the PSK and deliberately clears
-bi_directional; a one-way setup without a controller secret keeps
-returning success as before.
+Skip KSM folios before clearing their dirty flag, checking under the
+folio lock to serialize with KSM conversion.
 
-Fixes: f50fff73d620 ("nvme: implement In-Band authentication")
+Fixes: 854e9ed09ded ("mm: support madvise(MADV_FREE)")
 Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reported-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Reviewed-by: Xu Xin <xu.xin@linux.dev>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-34-d6437171ecc3@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: adjusted context to match the existing shared-folio dirty-flag comment ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/auth.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ mm/madvise.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/nvme/host/auth.c b/drivers/nvme/host/auth.c
-index 5bac8a34a9a43..a6dd41057737e 100644
---- a/drivers/nvme/host/auth.c
-+++ b/drivers/nvme/host/auth.c
-@@ -369,8 +369,21 @@ static int nvme_auth_process_dhchap_success1(struct nvme_ctrl *ctrl,
- 			 nvme_auth_hmac_name(chap->hash_id),
- 			 nvme_auth_dhgroup_name(chap->dhgroup_id));
- 
--	if (!data->rvalid)
-+	if (!data->rvalid) {
-+		/*
-+		 * The controller did not return a response.  If we asked it to
-+		 * authenticate itself the session must not be used, otherwise
-+		 * mutual authentication would silently degrade to one-way.
-+		 */
-+		if (chap->bi_directional) {
-+			dev_warn(ctrl->device,
-+				 "qid %d: controller did not authenticate\n",
-+				 chap->qid);
-+			chap->status = NVME_AUTH_DHCHAP_FAILURE_FAILED;
-+			return -ECONNREFUSED;
-+		}
- 		return 0;
-+	}
- 
- 	/* Validate controller response */
- 	if (memcmp(chap->response, data->rval, data->hl)) {
+diff --git a/mm/madvise.c b/mm/madvise.c
+index 5640bacba5384..40e23e42d62b5 100644
+--- a/mm/madvise.c
++++ b/mm/madvise.c
+@@ -675,6 +675,15 @@ static int madvise_free_pte_range(pmd_t *pmd, unsigned long addr,
+ 		if (folio_test_swapcache(folio) || folio_test_dirty(folio)) {
+ 			if (!folio_trylock(folio))
+ 				continue;
++			/*
++			 * KSM folios can gain new mappings at any time, so we must
++			 * not clear their dirty flag.
++			 */
++			if (folio_test_ksm(folio)) {
++				folio_unlock(folio);
++				continue;
++			}
++
+ 			/*
+ 			 * If folio is shared with others, we mustn't clear
+ 			 * the folio's dirty flag.
 -- 
 2.53.0
 
