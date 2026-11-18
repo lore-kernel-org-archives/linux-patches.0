@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028373;
-	b=rgCvaFLCpIR5+pBQtwfRg8mYYSE8FbOjGhdQw7UNupi8KbUdRtc5H4HBdUjtCsEflDsb
-	 wlTRlvU7vUBIaDIuLF9djK5UPuYyZYbbr4tSPMVYOFUyCpgTbGEeOPebyFB830+nopw+3
-	 /fjgWRjNxGQYajTiBizoMUiIlKhQpHZCFFsWjkD+aUeyveePKoCJCUdcem7fLMLlhkq1S
-	 VKOK3SHfEgiHaNu03GY5sa+yi9PcZ6fVT2yHqBSJo2MvD93DV84mN12SfsyNjHpgZDCDm
-	 TR8YyW95bX9COR0ZEeYtk3EuUapzeN6mDxDIIKKy+APIgpR78k2/ZYyPWdVX2m5gqlg==
+	t=1795028375;
+	b=upS6Tg6gjfBsdfDw6vrwpOeibAsgaEfIj4LmOSyJ3CHemq4ibXPzNsTozSXeAfPuYNHw
+	 CSDLaVWDFdhf16Lb21PCE+/GbDo+T2zNdmCMhGqYd0PDB7So9HKBfMRzpJZ4QBnAv4WKc
+	 zzbmRYpy91PfkMxKLUpINiI6BG6Heo/chWN++OBgwPkC6ojxKZInZD4M9pRXvvDGg0Mhn
+	 HctWvlkUOJP/JE6HJMbG2E/T1targy9XvdBjmlfvEpKLmV0OaFQpa6KIDhBA0kaIT3s6I
+	 U6iVMrY4dofgoTdHYOwX/r45yG337LJKYJQL4GCLdhNO6vEyNPLDQq2a3dWZzt7xFzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028373;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028375;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Xos/t0U+uUAA/YdlJpLfFOAUemPlNtcvhjk1/Y4k3VE=;
-	b=C/ygcjXuB6pY9NUUX1X1WoFfeFny/FaicpB7ihZGbSg/KZfwAq1Xir5RXxfVWs/nl0G6
-	 CS9gZSENVufxOchZQtg1Uk55vPj87vhqh1v33Ht72BqlbgfFiTahcMNpPOpvacCm5l1SA
-	 O8oDQGyWWcgfL/Nto5gJuAS7mLbXXkqgAidNvWPEWiANDOt2lgLP30zOU6MocIyGD0jZN
-	 drx1dChCkADXHWQQikT2HAwGkAM9ymVyOdU+d+SgI08KigTcDZlc1xh4UWJWe7LXLyzVx
-	 U1hOhvZrES0UoivnCpPUZm8qUh2unui6yDYP9xoIjWMqRYhBY8p4zwz/2m8Q/EyqF8Q==
+	bh=c7LeWEsFEDZh0T50idPxpBtdpuIneCmvAqF3nELdhf8=;
+	b=CYlghYzBc5SgbZhldJtTA9aUyOSg9ZcT8Z5ilGsmq3t0Kjnd0duJgmy9OvkFCA2FHT1N
+	 nHTXEAXSRxAukQFY1GXyVWRo7Xe2HJIzoCQTH5GBCocrrwzxJbDHSyeBIYPkQ+7qtq8U6
+	 tClcuZNaqdOWC7UGDtxNEN99VfcDAwWY87X05z1wFNLzM9zvsvfvd5yk7NgvjeipAq09e
+	 vrsiFQkypPNCCfqY0PST33DGCi8PbBX6ytbGgS75XmdAcfwLrDdRAtC372NYFi523FauJ
+	 wLw+tTwyB3TZHk0KMe9YdKBUdkuPHGG8xRImIFGbsf3hKBqfbzOpeu8LA9PvYfHCn0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="h/Nl1KWJ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JFXAleMT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FAE606A32C;
-	Wed, 18 Nov 2026 18:59:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264C606A325;
+	Wed, 18 Nov 2026 18:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h/Nl1KWJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4971A1F000C4;
-	Wed, 18 Nov 2026 18:59:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JFXAleMT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD6A1F000C5;
+	Wed, 18 Nov 2026 18:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028372;
-	bh=Xos/t0U+uUAA/YdlJpLfFOAUemPlNtcvhjk1/Y4k3VE=;
+	s=korg; t=1795028375;
+	bh=c7LeWEsFEDZh0T50idPxpBtdpuIneCmvAqF3nELdhf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h/Nl1KWJXAkzc8epWWUUXPfBwOIIngS2nHsEVpNB8mGvY04IV6yWTwUqGwH8q8mFN
-	 NDFF7yz6tuyQSra4tJOrBQBN7bzWPeMCgUAlYOW3FO1a3mJoHi4w1obORQ9WuQXSua
-	 8DzH6RgnW82lDdE0dP+CGhf/rMMomiFKXHXd41e4=
+	b=JFXAleMT6ngcyHnAIv9JUawwSwMDtmWXKuV8YgwEC2ZWoDqMdosGxvcfS1devAY0p
+	 koXqKxICcfmq5g/kZmrMrVaNv754/MA+4SNuC3XuQXoXR+IH7axMgtWVZ+EZW+sUeD
+	 PEhC5XLDa3XNtsz8xor0Noo0un7vlNMzE91yD/lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Nickolai Zeldovich <nickolai@csail.mit.edu>,
+	Bradley Morgan <brads@mainlining.org>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2121/2151] splice: retry tee() instead of returning 0 when it races
-Date: Wed, 18 Nov 2026 16:04:16 +0100
-Message-ID: <20261118150238.953128498@linuxfoundation.org>
+Subject: [PATCH 6.18 2122/2151] ucount: read the parent ucounts before dropping the rlimit count
+Date: Wed, 18 Nov 2026 16:04:17 +0100
+Message-ID: <20261118150238.989269886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,113 +71,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Nickolai Zeldovich <nickolai@csail.mit.edu>
 
-[ Upstream commit b2aa970a0a03c117306f48d75a4c3125a8cc9957 ]
+[ Upstream commit 38bf603d1ea5d5a65a9cb277df75327ffec01ff1 ]
 
-tee() can return 0 while the input pipe still has writers, when
-another task reads the input pipe or fills the output pipe at the same
-time. tee(2) documents 0 as "no data was copied" because the input pipe
-has no writers, and loops built on it (the man page example breaks out
-on 0) stop early. In a test with one thread writing 1 byte at a time
-to the input pipe, one reading it and one draining the output pipe,
-about one tee() call in 150 returned 0.
+do_dec_rlimit_put_ucounts() drops its share of iter->rlimit[type] and
+only then loads iter->ns->ucounts. If the decrement leaves the count
+non-zero, a concurrent caller can take it to zero and put the last
+reference, which frees the ucounts and possibly its user namespace with
+kfree_rcu(). An exiting task frees its pending signals without siglock
+or any RCU read-side section, so when it is preempted between the
+decrement and the load for a grace period it reads freed memory and
+then decrements a counter through the pointer it found there.
 
-do_tee() runs ipipe_prep() and opipe_prep() to wait for data and room,
-each under its own pipe lock, and only then takes both locks in
-link_pipe(). If the input pipe was emptied or the output pipe filled in
-between, link_pipe() finds nothing to do and returns 0.
-splice_pipe_to_pipe(), which was modelled on tee(), handles the same
-race by dropping both locks and going back to the prep steps ("A zero
-return value means EOF, so retry instead"), and returns -EAGAIN for
-SPLICE_F_NONBLOCK.
+A pending signal holds no reference on its ucounts: the reference is
+taken by whoever moves the count from 0 to 1 and dropped by whoever
+moves it back to 0, so the caller's share of the count is all that
+keeps iter alive, and only until it is dropped.
 
-Do the same in link_pipe(): move the prep steps into it and retry when
-nothing was linked although the input pipe still has writers.
+Load the parent first; it stays pinned by the caller's share of its
+own count.
 
-Tested under QEMU (x86_64) with the program in the notes: 154 of 22698
-tee() calls returned 0 before the change, none of 34429 after it.
-
-Fixes: aadd06e5c56b ("[PATCH] splice: fix problems with sys_tee()")
+Fixes: 15bc01effefe ("ucounts: Fix signal ucount refcounting")
 Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261018025541.799135-1-nickolai@csail.mit.edu
+Link: https://patch.msgid.link/20261024015513.830312-1-nickolai@csail.mit.edu
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/splice.c | 43 +++++++++++++++++++++++++++++++------------
- 1 file changed, 31 insertions(+), 12 deletions(-)
+ kernel/ucount.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/splice.c b/fs/splice.c
-index 8ac45441e2193..0c38b36df3992 100644
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -1858,6 +1858,15 @@ static ssize_t link_pipe(struct pipe_inode_info *ipipe,
- 	unsigned int i_tail, o_tail;
- 	ssize_t ret = 0;
- 
-+retry:
-+	ret = ipipe_prep(ipipe, flags);
-+	if (ret)
-+		return ret;
+diff --git a/kernel/ucount.c b/kernel/ucount.c
+index 5cbf1553658ea..56d5566477942 100644
+--- a/kernel/ucount.c
++++ b/kernel/ucount.c
+@@ -279,9 +279,12 @@ static void do_dec_rlimit_put_ucounts(struct ucounts *ucounts,
+ {
+ 	struct ucounts *iter, *next;
+ 	for (iter = ucounts; iter != last; iter = next) {
+-		long dec = atomic_long_sub_return(1, &iter->rlimit[type]);
+-		WARN_ON_ONCE(dec < 0);
++		long dec;
 +
-+	ret = opipe_prep(opipe, flags);
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * Potential ABBA deadlock, work around it by ordering lock
- 	 * grabbing by pipe info address. Otherwise two different processes
-@@ -1879,13 +1888,32 @@ static ssize_t link_pipe(struct pipe_inode_info *ipipe,
- 		i_head = ipipe->head;
- 		o_tail = opipe->tail;
- 
-+		if (pipe_empty(i_head, i_tail) && !ipipe->writers)
-+			break;
-+
- 		/*
- 		 * If we have iterated all input buffers or run out of
- 		 * output room, break.
- 		 */
- 		if (pipe_empty(i_head, i_tail) ||
--		    pipe_full(o_head, o_tail, opipe->max_usage))
--			break;
-+		    pipe_full(o_head, o_tail, opipe->max_usage)) {
-+			if (ret)
-+				break;
-+
-+			if (flags & SPLICE_F_NONBLOCK) {
-+				ret = -EAGAIN;
-+				break;
-+			}
-+
-+			/*
-+			 * We raced with another reader/writer and haven't
-+			 * linked any buffers. A zero return value means EOF,
-+			 * so retry instead.
-+			 */
-+			pipe_unlock(ipipe);
-+			pipe_unlock(opipe);
-+			goto retry;
-+		}
- 
- 		ibuf = pipe_buf(ipipe, i_tail);
- 		obuf = pipe_buf(opipe, o_head);
-@@ -1956,16 +1984,7 @@ ssize_t do_tee(struct file *in, struct file *out, size_t len,
- 		if ((in->f_flags | out->f_flags) & O_NONBLOCK)
- 			flags |= SPLICE_F_NONBLOCK;
- 
--		/*
--		 * Keep going, unless we encounter an error. The ipipe/opipe
--		 * ordering doesn't really matter.
--		 */
--		ret = ipipe_prep(ipipe, flags);
--		if (!ret) {
--			ret = opipe_prep(opipe, flags);
--			if (!ret)
--				ret = link_pipe(ipipe, opipe, len, flags);
--		}
-+		ret = link_pipe(ipipe, opipe, len, flags);
++		/* Our count pins @iter; once it is dropped @iter may be freed. */
+ 		next = iter->ns->ucounts;
++		dec = atomic_long_sub_return(1, &iter->rlimit[type]);
++		WARN_ON_ONCE(dec < 0);
+ 		if (dec == 0)
+ 			put_ucounts(iter);
  	}
- 
- 	if (ret > 0) {
 -- 
 2.53.0
 
