@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033704;
-	b=Bp21wIy3EqL94Y3vot+jUHuFnLmMSJrd7QqanTN/05xiRtzqyNLfqJK7jkiM7I2nif8o
-	 IoyFJGGe7TxSj37efa0G3OIakQcmqSLjE2fLKcn/ghkHJ/DNuo/Q15fGFbIKQdB8+BfN5
-	 CtPcWQj6iYbJKhas2lvzp6Lvg1fxMU6CwyxDQbJR8kN/BMeScftUr+f0q3U/8c6JvJmCb
-	 mDtid/HJC21VuE85kSXoWeR35cfMdzmm84gqgx7KxuTi7xDiOTyNlAp2eLSYuARaQMuXz
-	 H7J1jN2C9wNuMQVUuR8BsWHs+MQeBZAjaXPYVbJglzCvXAMLfTbHHdO4TzKB7xa6ovw==
+	t=1795033707;
+	b=vlyok4iHOYonhS0CBXFeGEt0dUdZdhJkWLgvjjnynToV4jqGCEG2XIm/cLMT0RcxEopP
+	 Uy/77Sf4mrqqR/68r73yqKpbL6kbwWH1iBlUIksao1FgeKq1fkRuSu9GXpu9F6yU1W5Og
+	 1z2N8F4PGXNxpA3cQ3yk/ivkrn5MQ22XeRX82GxJnaLl9FZv7nyobTJeFKLYGDgfajw2k
+	 X2l2d8zYgshwdX1TDa4S4O0pulZ+St60Ai0QBAYZe5612NoBCVmTt8czmm2gW7CxKR8yZ
+	 YDfY7T7Ps4uNYXSNGdz5cjOSaqPDJFrxct+yNFnejlUicNlZ31swQK1CUsC3rM/HxjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033704;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033707;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N17kXFYycTS0o4HU45v6dTTlD/2kd8S68u2Cc+XWawk=;
-	b=eyxDfIF49/hXCyCFkY6ark8SkO0HXtbpHgkFPbyaStYX2hM8ddMr9boZgrxuP+DtlQXa
-	 rkttp+lbzVo8HHKVn4vAPBFtaU+hi+UUtDiDPM1MrcwZU2k/lMPd/tP1GQC1uJY8p3PDi
-	 70AQDgqoZwYW34HoA34JEWbGOZxtxd3tTi1vt/RaQU0Nwh6V54XWc3kqIjuu+01Rn651u
-	 z8O3E2+jGX942bawNHpXdmXu223cUv8JlEmwdG/y1qb0PLYjkyq7eRM3Q2Z39Rc3IIVJz
-	 Ybo7lHBwdoELl6y7Daep2KbLMl48zS/V0CmAp2kR+sUzGBeQRjbabLFxeajDYWmET/A==
+	bh=JQb12e1WNkV+ZlvqokUx/sjvQ5rn2RpLzX8bfw01LPA=;
+	b=Odsul0U0ZO9oTexBIipD9DRLZr/YfZRV4QekO/PR1UC2VStw3oLuahCuQMBmXxfpeieT
+	 KXGvya04XAggsY+EhbFRNwpELQUbd1DNA5ldhabO9t4L0j7ZVSq7rC4++rhYM3ut19D32
+	 o7fDS7TEuqbTllD3+H5hz6YFzlq8ILw2MHImD2QfPOcN57od+nZmLXIsf1Fn/Ql5audOG
+	 7ReAKsk/07oFvYpkwwcMfmukLfF4nl68HtoLbSe9f84xdOkg7LBKsHnt6Rm8Qhxc6ALBz
+	 aFrTfrQmNsTWPtK/WJ4CXGyS1fTb7Pos0Uw3V/EqvLPg29gDS+MQ0joODLtxjQ/eZYw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vi456Jes;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y17kjpW+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58F9606A320;
-	Wed, 18 Nov 2026 20:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABEB606A331;
+	Wed, 18 Nov 2026 20:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vi456Jes
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D641F000C6;
-	Wed, 18 Nov 2026 20:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=y17kjpW+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C171F000C4;
+	Wed, 18 Nov 2026 20:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033704;
-	bh=N17kXFYycTS0o4HU45v6dTTlD/2kd8S68u2Cc+XWawk=;
+	s=korg; t=1795033707;
+	bh=JQb12e1WNkV+ZlvqokUx/sjvQ5rn2RpLzX8bfw01LPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vi456JesS6ltYmPtvtfsmAZ6nbVaVeXdpm4/sOunPGY/Dck/gCxD9HHPL6nhWkLGF
-	 nLU4V06tpwSCSpMC00kSQq5T0q9whbGARYmxghS4NNr8kTN/oIcZx88zedSHV4DshH
-	 YnOiTqzbLX2TA6fzgSDZLeEU0ninArhgZNKK0E2U=
+	b=y17kjpW+I5yv2ZuOkrrRrmBEvOBfKw6ELGimhBH5PxfJJoOQNYwdAG+cQpWnK9I5Q
+	 jfHNV7/Y+r60TZZzd3dlFnncxHGyg8UJ2/aP0kWE03dextdv+pA2BCDtne/QWF3ehk
+	 awhCSoBG/QNqqiuTJHicF/+qkOBUcYVAStXGwTGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0108/3318] media: cx18: stop VBI start-code scan before short tail
-Date: Wed, 18 Nov 2026 15:12:10 +0100
-Message-ID: <20261118150317.504730869@linuxfoundation.org>
+Subject: [PATCH 6.6 0073/3318] clk: sunxi-ng: fix ccu probe clock unregister on error
+Date: Wed, 18 Nov 2026 15:11:35 +0100
+Message-ID: <20261118150316.238492055@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,36 +69,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit bf533acaaa7dee21d49bcaabf8e813ea36bddcd8 ]
+[ Upstream commit 81f4ddc9f7e0c11d3e9d24d0f30023845a02f7ee ]
 
-compress_sliced_buf() scans one byte at a time while testing a four-byte
-VBI start code.  The final iterations can read beyond the remaining
-buffer tail.
+When registering clocks with sunxi_ccu_probe(), the number of ccu_clocks
+and the number of hw clocks might be different, eventhough they usually are
+the same.
 
-Stop the scan once fewer than four bytes remain.
+If they are different, it could lead to out-of-bound access or registered
+clock left behind on error.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Use a different variable when iterating on hw clocks so every registered
+clock, and only those, gets unregistered on error.
+
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260629131254.7E34C1F00A3A@smtp.kernel.org
+Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20260706-a733-rtc-v4-3-f330728db3d3@baylibre.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx18/cx18-vbi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/sunxi-ng/ccu_common.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/pci/cx18/cx18-vbi.c b/drivers/media/pci/cx18/cx18-vbi.c
-index c7cce38dd7547..38b2cfd2372c0 100644
---- a/drivers/media/pci/cx18/cx18-vbi.c
-+++ b/drivers/media/pci/cx18/cx18-vbi.c
-@@ -135,7 +135,7 @@ static u32 compress_sliced_buf(struct cx18 *cx, u8 *buf, u32 size,
- 				    : VBI_HBLANK_SAMPLES_50HZ;
+diff --git a/drivers/clk/sunxi-ng/ccu_common.c b/drivers/clk/sunxi-ng/ccu_common.c
+index be375ce0149c8..f797b50fef8b0 100644
+--- a/drivers/clk/sunxi-ng/ccu_common.c
++++ b/drivers/clk/sunxi-ng/ccu_common.c
+@@ -114,7 +114,7 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
+ 			   const struct sunxi_ccu_desc *desc)
+ {
+ 	struct ccu_reset *reset;
+-	int i, ret;
++	int i, j, ret;
  
- 	/* find the first valid line */
--	for (i = hdr_size, buf += hdr_size; i < size; i++, buf++) {
-+	for (i = hdr_size, buf += hdr_size; i + 3 < size; i++, buf++) {
- 		if (buf[0] == 0xff && !buf[1] && !buf[2] &&
- 		    (buf[3] == sliced_vbi_eav_rp[0] ||
- 		     buf[3] == sliced_vbi_eav_rp[1]))
+ 	ccu->desc = desc;
+ 
+@@ -130,8 +130,8 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
+ 		cclk->lock = &ccu->lock;
+ 	}
+ 
+-	for (i = 0; i < desc->hw_clks->num ; i++) {
+-		struct clk_hw *hw = desc->hw_clks->hws[i];
++	for (j = 0; j < desc->hw_clks->num ; j++) {
++		struct clk_hw *hw = desc->hw_clks->hws[j];
+ 		const char *name;
+ 
+ 		if (!hw)
+@@ -143,7 +143,7 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
+ 		else
+ 			ret = of_clk_hw_register(node, hw);
+ 		if (ret) {
+-			pr_err("Couldn't register clock %d - %s\n", i, name);
++			pr_err("Couldn't register clock %d - %s\n", j, name);
+ 			goto err_clk_unreg;
+ 		}
+ 	}
+@@ -186,8 +186,8 @@ static int sunxi_ccu_probe(struct sunxi_ccu *ccu, struct device *dev,
+ err_del_provider:
+ 	of_clk_del_provider(node);
+ err_clk_unreg:
+-	while (--i >= 0) {
+-		struct clk_hw *hw = desc->hw_clks->hws[i];
++	while (--j >= 0) {
++		struct clk_hw *hw = desc->hw_clks->hws[j];
+ 
+ 		if (!hw)
+ 			continue;
 -- 
 2.53.0
 
