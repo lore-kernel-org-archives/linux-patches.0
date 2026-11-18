@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044951;
-	b=Qa0mxU+T6AEg6O3KDzmT+obXecvGm2WJmeLqCrnGJJcY5Cnpwt91V5OfKDT2m/R1mR7m
-	 ZQWbNWys+fKVqa7CbUyjeiF81pSSe5Y/oS8R/S0UyHylpYM0UoH9J9vR4vRlN28vgPZCj
-	 /VSvCOkEMsz9VUDacUVrHDU0DU1oUiRxQi+0fNARvCq1+FBnWJd+gZ8V5MVQARAYRqELf
-	 jn4ZT7eH5Lr6v5vqEOK1EGa9FBwrS2HCcDmgHAoiKFEYDMsvlydi48WXOkm7Xf2aPmBSX
-	 3HNLjLgaUsi6g1vsavZCwx7p8i6j7SEOi9hEjTWRwMIPCH3FOtp9UUr/SZNSH3mK3Og==
+	t=1795044954;
+	b=S6FsqujH2GqVest9Rp6M8MaemdX61RTpZnN55MRN6u4O2EP32T1wOfkVSMAMj2KSJnHR
+	 c7JTa/QLCCGlJIpB8QiWn8RJ03BWsXszTDnKzjtb5Ikyxy2+WcWEeaXAWs35Ok+KC7UkO
+	 3ej+UYoQpE5AgK8em6mH2ug5H1Io1nDYi8m/ixe5mlmdUTlZq/hRdKFbpIN8/8eCg+fqx
+	 k2g+7vAU3/6TPDiZf/v+kMpIOu5m+vpqLhDYSndXsihC8NFZpdfcutRI5fiRIxtlaIekQ
+	 dVk2KEUlLstuKr2EM5yxovkH7biGRMBrQdwbix8wtohP8Lzc4UOqF3AFiyU8UEMqiwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2bABoM5iGEVPpN/e9gd+kT4nES6NS8Z1ly2WMJGdKdo=;
-	b=3HIfoglUq7wLzW1QFPnVnhk27uYxAaDU5vWjZZBnMC6VkqEUwwojG/EKttItSg58sZVO
-	 7ivtbMa+Eb85KdrJpXzgTTGdDlOo22bhZWY68HSl3854pixsa+cX7brWsJ9ezMojXZGk6
-	 VW3NHRMsT/j1bM3ANYGN0tRmFeznQ8QYvoj11oy6iydRn6XAjPBvu4gOgxn/TdPx7RjSM
-	 IOQdVnZ5hCv9/FCpgBPVXAXLoHUBy1Dzmu9AVO+hCjncsIFKVsLwvGNg9Y5k1fFIFdycu
-	 ArMVVOrTgZM+pxyecABU8NOsPnq26m2rRthtPSYpCvh9/FPRhPw6+qHwPp+u9Fx95vA==
+	bh=hnnSP4OF9mG3Lzx0WIKoGTn5bwzZwApb7PPxlsRVhP8=;
+	b=2iVMKSejTiC7wLUrRl83RyEzyyWz1aGYtWAYxb983EoVh7XLdn69RV9iwNeNLGQGh2S2
+	 B4HczTG7AG9wDsnCrd6C7Udgmz7hpkpd0TWB9HUoJkWEfmGtNrByilB/VY++ThoeVMokA
+	 Qx7CMRJbNMRtdVaPNv50adfThOUH07iTjuzLlvA77wHqAXTmwivSnqxynsLDSTnLQ/+w+
+	 Nu3ASWpPx9GgkKKPTbE57aXT2QUBvDl++Qn0Vp5s4bSP1eJiFc7Hyx+WnR9zy5bI/vODp
+	 cEgb8MC+4mNQV07Y0N+QwvELiYouB/AYcIfCls9ih+9/rWbas1067IL+y5fbPDEeB9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+JsnzZW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXxTm5MV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDC2606A31C;
-	Wed, 18 Nov 2026 23:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3353B606A32C;
+	Wed, 18 Nov 2026 23:35:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+JsnzZW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0101F000C4;
-	Wed, 18 Nov 2026 23:35:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kXxTm5MV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C94F1F000C4;
+	Wed, 18 Nov 2026 23:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044951;
-	bh=2bABoM5iGEVPpN/e9gd+kT4nES6NS8Z1ly2WMJGdKdo=;
+	s=korg; t=1795044954;
+	bh=hnnSP4OF9mG3Lzx0WIKoGTn5bwzZwApb7PPxlsRVhP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M+JsnzZWdGWX1Fy+snOyPNjkHPHP/Qw2UxKNWNsEFra8nFywPP8IJ3Tj4gxjKJhyQ
-	 7mNyNpwxZSjhjUHySqu1OuRbE7C2XFmt5RW+eY/5XUUYGaPI7SwJn2Jh9woeLdqXNj
-	 xp/o6mSnNAWc+BifWE9Ocv1UzPN+CIpennI61EWQ=
+	b=kXxTm5MVtxOO7gfTKgXwjvV4n89I5EvR6DtP7Gr2SDoETkSl5wtZ9s7Sm02Dzmlhv
+	 71p9FDMPxWPoni+fzaD15sKRxvki7tlbEdqbIeLUbwmNa+rR77MoQEDPFrubxSeZ+Z
+	 sZvFtBFCGpuM4ZgjmYiVMuvIodyRzE+S0NG63Dx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	stable@kernel.org,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0750/2857] mtd: rawnand: sunxi: reject ECC maximization on small pages
-Date: Wed, 18 Nov 2026 15:29:44 +0100
-Message-ID: <20261118150228.557400355@linuxfoundation.org>
+Subject: [PATCH 6.1 0751/2857] media: adv7604: avoid negative array index in log_status when cp_read fails
+Date: Wed, 18 Nov 2026 15:29:45 +0100
+Message-ID: <20261118150228.592462163@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit a3c84084a73e170374b7dd493947efdef4ee57bc ]
+[ Upstream commit 10d8dfda1c08f6788049aa100685e223d857f901 ]
 
-When nand-ecc-maximize is set, the driver selects a 1024-byte ECC step
-and divides the available OOB bytes by the resulting number of steps. A
-NAND with a smaller page therefore produces zero steps and a division by
-zero.
+cp_read() returns the negative errno from regmap_read() on I2C failure.
+adv76xx_log_status() shifts the result right by 4 and uses it directly
+to index csc_coeff_sel_rb[16] causing the right shift of a negative
+number to result in -1, reading a negative place in the array.
 
-The older controllers also provide a 512-byte ECC block mode, but the
-hardware documentation describes that as an ECC block size within NAND
-pages whose supported sizes start at 1024 bytes. It does not document a
-512-byte NAND page mode.
+Commit 8163419e3e05 ("media: adv7842: Avoid possible out-of-bounds
+array accesses in adv7842_cp_log_status()") fixed the identical pattern
+in the adv7842, so do the same thing here.
 
-Reject pages smaller than 1024 bytes before deriving the step count. This
-prevents the division by zero at the point where the incompatible
-maximized geometry is selected without changing explicitly configured
-512-byte ECC block handling.
-
-Fixes: 4796d8655915 ("mtd: nand: sunxi: Support ECC maximization")
-Cc: stable@vger.kernel.org
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 54450f591c99 ("[media] adv7604: driver for the Analog Devices ADV7604 video decoder")
+Cc: stable@kernel.org
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/sunxi_nand.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/i2c/adv7604.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/nand/raw/sunxi_nand.c b/drivers/mtd/nand/raw/sunxi_nand.c
-index 16231ca93b599..279442fe2f205 100644
---- a/drivers/mtd/nand/raw/sunxi_nand.c
-+++ b/drivers/mtd/nand/raw/sunxi_nand.c
-@@ -1642,6 +1642,9 @@ static int sunxi_nand_hw_ecc_ctrl_init(struct nand_chip *nand,
- 	if (nanddev->ecc.user_conf.flags & NAND_ECC_MAXIMIZE_STRENGTH) {
- 		int bytes;
+diff --git a/drivers/media/i2c/adv7604.c b/drivers/media/i2c/adv7604.c
+index 1f6ac602ad5a7..ae7e4dbab0146 100644
+--- a/drivers/media/i2c/adv7604.c
++++ b/drivers/media/i2c/adv7604.c
+@@ -2634,8 +2634,9 @@ static int adv76xx_log_status(struct v4l2_subdev *sd)
+ 					"(16-235)" : "(0-255)",
+ 				(reg_io_0x02 & 0x08) ? "enabled" : "disabled");
+ 	}
++	ret = cp_read(sd, info->cp_csc) >> 4;
+ 	v4l2_info(sd, "Color space conversion: %s\n",
+-			csc_coeff_sel_rb[cp_read(sd, info->cp_csc) >> 4]);
++			ret < 0 ? "" : csc_coeff_sel_rb[ret]);
  
-+		if (mtd->writesize < 1024)
-+			return -EINVAL;
-+
- 		ecc->size = 1024;
- 		nsectors = mtd->writesize / ecc->size;
- 
+ 	if (!is_digital_input(sd))
+ 		return 0;
 -- 
 2.53.0
 
