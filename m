@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027917;
-	b=j5kyQuksmYjfRYQFIBUU9GQf+7ulmuUIdSG/c3+gm4Zk9FHyVvEm+dzFkPWXQcRh7Mdc
-	 A6HnTOwdhZYWFydp1Q4KPSchD4tfqvM027+Ar5d7Of3xo9UdCc4FQyMztP3GJMGNEXQCQ
-	 M3edNmjomGTh/afyyzc55mMsWvlnJGosMQsmuf1DyJNmBIa1aXoAqXDIjE3vwFX0IwZsr
-	 zlV4g2st0B0D3YYHKEUN7BoadFHAvPZwxjQEdBunpwCX3lmLj1eqruL9hrOsOlOJWDvv5
-	 81AGjQMgwUkyWIuA/BJGJ+k5rUeJBTvhI3vmUJ/lfO9NaRcIqUSIuOyLBgb5ESe4nbw==
+	t=1795027920;
+	b=gjBK7s5CyT60x6VYfVI4CSxfxzwDdkKS3Mx2jK0pWFYK7ulKq02JMolD9SY5q4Ftql+Q
+	 /lydJkNido+uBptS/98m/Khb+XZ6C0t4yqZWTheBHd/KkCLLGHIuUOUsT7K/5cdJMxlM+
+	 pKebRaJ/xefaw/kXCbIEwEzWZMLzDixOMeU/YYMl2HobdXTlY0xpuGGeQ0Y/x462XqEfi
+	 JqsJk/NXeBKEy88wFufoTkf5sazza2yuL4qPG3OzOzPEUoKPSaAeiOjghcBNCbZWPX0O/
+	 4nGCdeaPXcYEmtwXKJt3x1WOpePiHrbr0TRNrXAayjLKIZKtzkDattQ8WRGD1QMxV8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027917;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027920;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iXECx5WCDH0ES78ytPTxSOzr39JSS3qFXsHXrFjxSAs=;
-	b=dgvz681Qhijb9VOKd+ZYaLFr6if1dUet7USTl5JYRMnilc2GvNz6wimyUuB1aKviKz78
-	 loIYLeseNp1NwVDz3X31FOIF0VhLffMlu4AsFxXbezClNezFhYfEVFhg36t1fuBy9ZP+R
-	 XVGPRXtbxARyLWXCEU6UJLIWjixA2gkG5us3kg15891yl/GBR4wM2kNgtu4cV3M2dTCp9
-	 i6bbTJ+kRvIajMOTlN8iHU9l6ES3rmzIO3QV2lAmuyivWVFwnpFCtSayeB1YpU24BcOUS
-	 QzHzonCqbH/ub7z+rcAIVu7aKLCreSEAe/+3qq/ycWiC9KTRre/2aFE2Z6Na72rCMyQ==
+	bh=i1g/mVzWbi2HywpwJj/FbajJ26PFOF3l29SgFydheoY=;
+	b=KsxfqVpCu4Wu2vJsnai21KgGi/TaTEMw2IzXLYRiodQTbm9Sp9xETHmbPaDKslRrEy93
+	 yAElp5o1YwctAewV1BsozsRoG1f/VKRFqNiqlH2/CwbU91PpY9Gwml8VkU1957TmJ0pD3
+	 R+Es2ev6kwf5h3AshKlzSZb8jldMEnP2T8pAknp4KBZX14x2RtfykKtklHekdNfsUltqJ
+	 dBa8Q32AqzECKzTrAJ3NF4VtBrYNL1JYFfQtSGOJoioqC8dlwgqVaxVyWMQcAuSx2XQf1
+	 OMyVXIJwWGs33H6Q2sM7WiYwdV8HWCezYpHYBelbk7hVYp1AYvCVp3kfZCjOVdvZeag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3LwNABa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYRxYccg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C023606A31C;
-	Wed, 18 Nov 2026 18:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003B1606A320;
+	Wed, 18 Nov 2026 18:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3LwNABa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2AF1F000C5;
-	Wed, 18 Nov 2026 18:51:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TYRxYccg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5596C1F000C4;
+	Wed, 18 Nov 2026 18:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027917;
-	bh=iXECx5WCDH0ES78ytPTxSOzr39JSS3qFXsHXrFjxSAs=;
+	s=korg; t=1795027919;
+	bh=i1g/mVzWbi2HywpwJj/FbajJ26PFOF3l29SgFydheoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3LwNABawxH/AD2R6KRtrnh+Xa7w2wJMBA1IplgfiWoknjuwbIZCZbhVA1ruY8LjT
-	 j2Gpw1BO5J8gE3KDZF4oP1+HHGUIBJa0hG0hqBZG9+nj6ulk7E6EWaA3NAFXlnO7Vc
-	 uxzwjrIBgYFKM9cqgb3JDGaRoyTKGJztC3+GOXUw=
+	b=TYRxYccgNPp7n+uPBBjHjfp862t9Z9IFty5+JU/fLCjO1cB948zqC0lmuaScB5tGw
+	 SBMGcyCYivK+Lvuwd27KxYQ4KzolQpDv6i46sVMLydPCMrhkYCemPF9Z3YeKcjVWol
+	 IdoV76OqAQYJJ9Nj96azhCjIbYpftdOjIfE36Vv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Waiman Long <longman@redhat.com>,
-	Ridong Chen <ridong.chen@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
+	Florian Fuchs <fuchsfl@gmail.com>,
+	Adrian McMenamin <adrianmcmenamin@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1917/2151] cgroup/cpuset: check effective mems for a movable-only configuration
-Date: Wed, 18 Nov 2026 16:00:52 +0100
-Message-ID: <20261118150231.615498159@linuxfoundation.org>
+Subject: [PATCH 6.18 1918/2151] ALSA: sh: aica: Fix spu_memset() stride
+Date: Wed, 18 Nov 2026 16:00:53 +0100
+Message-ID: <20261118150231.651553937@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,84 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price (Meta) <gourry@gourry.net>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-[ Upstream commit 4c047bd0499602161959478b90e66f4c8e523c9b ]
+[ Upstream commit 0d01f90b07e877ef31f9959e9b0bc6bcca9b99df ]
 
-check_insane_mems_config() warns and enables cpusets_insane_config_key
-when a cpuset's tasks can allocate only from movable memory.
+spu_memset() writes one 32-bit word per iteration, but advances the
+destination offset by only one byte. spu_reset() calls it with
+0x200000 / 4 words to clear the 2 MiB of sound RAM, so:
 
-In cgroup v2 the request may name a memoryless node, which has no zones
-and cpusets reports it as a movable-only nodemask.
+ - three out of four writel() calls target an unaligned address. The
+   SH4 can't do that. Each one traps and is emulated by the unaligned
+   access fixup. This call to spu_memset() causes 393216 unaligned
+   accesses, visible in /proc/cpu/alignment.
+ - the clear covered only about 512 KiB of sound RAM, not 2 MiB.
 
-For example, with node 2 a CPU-only node:
+Advance the offset by the size of the written word, to clear the full
+sound RAM using aligned writes.
 
-  # echo +cpuset > /sys/fs/cgroup/cgroup.subtree_control
-  # mkdir /sys/fs/cgroup/test
-  # echo 2 > /sys/fs/cgroup/test/cpuset.mems
-  # cat /sys/fs/cgroup/test/cpuset.mems.effective
-    0-1
-  # dmesg
-    Unsupported (movable nodes only) cpuset configuration detected (nmask=2)!
-
-This is a bit confusing, especially consider mems.effective ends up with
-a valid nodemask by-design (cpuset.mems is treated as-if it were empty).
-
-Check each new effective mask in update_nodemasks_hier() instead, as the
-hotplug path already does. The allocator's bail-out tests the task's
-mems_allowed, which comes from the effective mask.
-
-A request naming a movable-only not present in the parent's nodemask
-no longer warns (since, again, the cpuset.mems gets overridden and
-treated as empty). However, it will warn if the parent's mems include
-the node later.
-
-For Example, with node 3 a movable-only node:
-
-  # echo 0 > /sys/fs/cgroup/test/cpuset.mems
-  # echo 3 > /sys/fs/cgroup/test/child/cpuset.mems
-  # cat /sys/fs/cgroup/test/child/cpuset.mems.effective
-    0
-  # dmesg
-    { empty }
-  # echo 0,3 > /sys/fs/cgroup/test/cpuset.mems
-  # cat /sys/fs/cgroup/test/child/cpuset.mems.effective
-    3
-  # dmesg
-    Unsupported (movable nodes only) cpuset configuration detected (nmask=3)!
-
-Fixes: 8ca1b5a49885 ("mm/page_alloc: detect allocation forbidden by cpuset and bail out early")
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Reviewed-by: Ridong Chen <ridong.chen@linux.dev>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 198de43d758c ("[ALSA] Add ALSA support for the SEGA Dreamcast PCM device")
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
+Acked-by: Adrian McMenamin <adrianmcmenamin@gmail.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261022163241.2504922-1-fuchsfl@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/sh/aica.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 4f73656ff5c37..df0d3bff50102 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2926,6 +2926,8 @@ static void update_nodemasks_hier(struct cpuset *cs, nodemask_t *new_mems)
- 			continue;
- 		rcu_read_unlock();
+diff --git a/sound/sh/aica.c b/sound/sh/aica.c
+index fa81bfba59c14..2ba5f78f0c9a5 100644
+--- a/sound/sh/aica.c
++++ b/sound/sh/aica.c
+@@ -94,7 +94,7 @@ static void spu_memset(u32 toi, u32 what, int length)
+ 		local_irq_save(flags);
+ 		writel(what, toi + SPU_MEMORY_BASE);
+ 		local_irq_restore(flags);
+-		toi++;
++		toi += sizeof(what);
+ 	}
+ }
  
-+		check_insane_mems_config(new_mems);
-+
- 		spin_lock_irq(&callback_lock);
- 		cp->effective_mems = *new_mems;
- 		spin_unlock_irq(&callback_lock);
-@@ -2981,8 +2983,6 @@ static int update_nodemask(struct cpuset *cs, struct cpuset *trialcs,
- 	if (retval < 0)
- 		goto done;
- 
--	check_insane_mems_config(&trialcs->mems_allowed);
--
- 	spin_lock_irq(&callback_lock);
- 	cs->mems_allowed = trialcs->mems_allowed;
- 	spin_unlock_irq(&callback_lock);
 -- 
 2.53.0
 
