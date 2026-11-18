@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021830;
-	b=liNwVTJ9R/gGuEvI/7UbfIMs24u6t9aM61c4RLffQlJgyk7CMcwHcTLHr05TAzjBlr2g
-	 gideaZ6orFWBcHSPTiP7fuzc3d3k/Z0O7IiUfa/42vGFnBISfL/MFqb1tO3H4Vjyos6gb
-	 J6mLHXj/6n0p0fSjSBAAtrBgF71jJd1GpW1MIdLx+LWAUTsc4sUWrgddQxONrC4P3h0tJ
-	 VX3mMMnaOjm021+Ns644pp5neokb+W6NMHSSp4iVTFTY1R32VJn0t8IYa2s6yKS8yqRo5
-	 9UxNKbU3SNntY7/76hhwiCyFCXlG4srpcd7adIaCo78yqDTm7PVy+21buIHlqEFyXeg==
+	t=1795021833;
+	b=azFg3HUO9iMRDyx3uxBhVm5XWZGboZjLJIroy3JKAluqahU3P6IR5/zxBfskI4P/umRN
+	 tOU1P8jBgBjdGpBEODitUOlZvBWYQHZFH+uicPy25qpdtU3seiGAr2qK6wgJ2LK7xvMAT
+	 cERRfxc9+R6uRymm7cP2KZ1mGBybnYhyS0xW5tsmO9niTifCGOHmxHiUUVBDXLgFjqbGS
+	 hkN/k8eiWzVJaqSW35snizFs9vKtiUMMxNsP4r9SPq2rlKXe2CwdwMgsPsNfgFFX9HW3r
+	 I8lHxXjhaCsyxN1on0oY2NEI5jRRVrTUtbybgS31hnP8SsVD7XXpBdKvRJiWsfcuamg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021830;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021833;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IoMqjaz3gB2iO2fQI7dFnTGfp9sR61nqd19+pBvmbj0=;
-	b=ozPgEVOnV4cUqsvumDKyPIHs4LWl5Mw/u9R7PGelF+1SIfNTLILpLGx5PXHfhusic7fh
-	 wPbUq77yVmAM3V+i5dv8RDzRGw4DDf1cLVxQbc/MIT/7FnGcaqDGxX0I9WUuRo+jQ0VWU
-	 AFpMwNLNM24eOQWcPuvI9kPwJv1RNrb/uCv535Nz3EtlWjWwhTyQWjbXLHhBDE0R6DPdV
-	 LFX8JJMuAM8uYcJ15kZ/0TYjLGpfM7/hVVhcwe2Xd0C1oJT2QsaW2kQZzl6a/fryrP039
-	 09dxOzADZyjcYMcIcOCv1F3dTd+H7J9I5CTtqb1o5HYnNy/+uRpqE7XjqkvnMXBcp3w==
+	bh=6J4DSPjedmmrOrBWxfoidzYfGHS8hapeOJcb82xNMbU=;
+	b=DBDGoU7kUlhpXag5G477T9KS1X7LI9LwYYWiX3ZhFzPUcb1qR7CF0qfW87PsnSeKyjHq
+	 fsafKf7Jy5IiBSUhmBLvq/176rtwpHlnRHb8IOZW0llDWAuDtKB4XI0TkXTx5XpAkisVv
+	 NtyswJB8/W58WoRd1vGgpUl1QVxidBukz6cxcnGDHOEYHJUhBbeyoJ1Lw1gbwMJLNB2Ah
+	 5zTqMdDETfaZfgQ7szuFgXU68D7kZ5T22/+Pfu9t6s3xJJ+2lN8/D+83Ox+6tY8UlJCOM
+	 9fmgZIWKYVhz/X0MG3KZkUN2NYkxuADM9F9HfzLSus1Mon9Z/O+Ewn5GHGqpBndo5ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qPII08zR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CcpWJAdV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7503606A320;
-	Wed, 18 Nov 2026 17:10:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A67E606A31C;
+	Wed, 18 Nov 2026 17:10:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qPII08zR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1F401F000C4;
-	Wed, 18 Nov 2026 17:10:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CcpWJAdV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4361F000C4;
+	Wed, 18 Nov 2026 17:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021830;
-	bh=IoMqjaz3gB2iO2fQI7dFnTGfp9sR61nqd19+pBvmbj0=;
+	s=korg; t=1795021833;
+	bh=6J4DSPjedmmrOrBWxfoidzYfGHS8hapeOJcb82xNMbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qPII08zRWdbbnSV+EQhp8esfSOCtvCMSdSVNPYVvIJCCAn7kUSW2KcHmY5cuwZEO0
-	 BuDXQT52PTBlnQA1PE3zkQdbyAAfD0dc4KxCZg36lfPxXsRJA/cIGLFho2fL8fD3Nb
-	 e8WUzSL2R9dRI+dCJoUYBAB50FSSiUZkR7Pcrrbs=
+	b=CcpWJAdVTLDGdGbyN/L7FdRkiCp+/gjIZjm8cgiHlqpCVgPwx7gcpgpH9rcDBDoz0
+	 qFR0t5EV0NbKt6KqhBqGwWI144l7QeDhRH2oaewuxp5LfCLVKNkEUXt+wm08cfZDp/
+	 JxfMkAJQLoAUyCf+1feg7WLa5vw7RS1/SAqyt8tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashant Sengar <prashantsengar25031@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2444/2651] net: usb: lan78xx: avoid NULL PHY dereference in WoL setup
-Date: Wed, 18 Nov 2026 16:01:24 +0100
-Message-ID: <20261118150413.137463799@linuxfoundation.org>
+Subject: [PATCH 7.3 2445/2651] net/sched: act_api: inherit filter offload flags only on new actions
+Date: Wed, 18 Nov 2026 16:01:25 +0100
+Message-ID: <20261118150413.167252409@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,62 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prashant Sengar <prashantsengar25031@gmail.com>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit dacb77e32e2bba78f90a8637fd27e13e2c9775dd ]
+[ Upstream commit 9463e8d8c6922a5aa87f7e4fe6deb4f16925d498 ]
 
-LAN7801 supports fixed-link configurations without an attached PHY.
-However, lan78xx_set_wol() unconditionally passes netdev->phydev
-to phy_ethtool_set_wol(), causing a NULL pointer dereference when
-a userspace WoL request reaches this path.
+tcf_action_init() gives the skip_sw and skip_hw flags of a filter to the
+actions it binds. An action that another filter created gets them too,
+they then apply to every filter that uses this action. When a
+skip_sw filter reuses the action of a software filter, the software
+filter silently stops running it. This happens even when the filter add
+fails on a later action. A skip_hw filter likewise prevents a later
+filter without flags from reusing the action.
 
-Report no WoL capabilities when no PHY is attached, and return
--EOPNOTSUPP from lan78xx_set_wol() before modifying the wakeup
-configuration. Keep the existing phylib WoL handling for devices
-with an attached PHY.
+Give the flags only to the actions that the filter creates. The mismatch
+check still rejects a filter that reuses an action with a flag that the
+filter does not have.
 
-The issue was reproduced using USB Raw Gadget and dummy_hcd in QEMU.
-An ETHTOOL_SWOL ioctl triggered a kernel Oops with the original
-driver. With this change, the PHY-less configuration no longer
-advertises unsupported WoL operations, avoiding the crash.
+Discovered by manual code inspection after the Sashiko AI review [1] of
+a tunnel_key patch questioned how actions get the filter flags.
+Reproduced on netdevsim without kernel changes. The egress filter below
+runs in software only, since netdevsim offloads only ingress filters.
+Once the skip_sw filter reuses its drop action, the last command shows
+skip_sw on this action and the egress filter stops dropping packets:
 
-Fixes: e110bc825897 ("net: usb: lan78xx: Convert to PHYLINK for improved PHY and MAC management")
-Signed-off-by: Prashant Sengar <prashantsengar25031@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20261020201537.2465655-1-prashantsengar25031@gmail.com
+  ethtool -K eth0 hw-tc-offload on
+  tc qdisc add dev eth0 clsact
+  tc filter add dev eth0 egress protocol ip flower dst_ip 192.0.2.1 \
+     action gact drop index 1
+  tc filter add dev eth0 ingress protocol ip flower skip_sw \
+     dst_ip 192.0.2.2 action gact drop index 1
+  tc actions get action gact index 1
+
+Tested with the reproducer and the tc-testing action, matchall and
+flower tests.
+
+Fixes: 34d35b4edbbe ("net/sched: act_api: deny mismatched skip_sw/skip_hw flags for actions created by classifiers")
+Link: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20261009051930.3619697-1-acassen%40corp.free.fr [1]
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261021193222.1318333-2-acassen@corp.free.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/lan78xx.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/sched/act_api.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/usb/lan78xx.c b/drivers/net/usb/lan78xx.c
-index 2fed938fc7f41..af845623bf609 100644
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -1767,6 +1767,12 @@ static void lan78xx_get_wol(struct net_device *netdev,
- 	u32 buf;
- 	struct lan78xx_priv *pdata = (struct lan78xx_priv *)(dev->data[0]);
- 
-+	if (!netdev->phydev) {
-+		wol->supported = 0;
-+		wol->wolopts = 0;
-+		return;
-+	}
-+
- 	if (usb_autopm_get_interface(dev->intf) < 0)
- 		return;
- 
-@@ -1798,6 +1804,9 @@ static int lan78xx_set_wol(struct net_device *netdev,
- 	if (wol->wolopts & ~WAKE_ALL)
- 		return -EINVAL;
- 
-+	if (!netdev->phydev)
-+		return -EOPNOTSUPP;
-+
- 	ret = usb_autopm_get_interface(dev->intf);
- 	if (ret < 0)
- 		return ret;
+diff --git a/net/sched/act_api.c b/net/sched/act_api.c
+index 42b5e40b52d09..3918e277464f1 100644
+--- a/net/sched/act_api.c
++++ b/net/sched/act_api.c
+@@ -1544,6 +1544,9 @@ int tcf_action_init(struct net *net, struct tcf_proto *tp, struct nlattr *nla,
+ 					err = -EINVAL;
+ 					goto err;
+ 				}
++				/* Other filters share an existing action */
++				if (init_res[i - 1] != ACT_P_CREATED)
++					continue;
+ 				if (skip_sw)
+ 					act->tcfa_flags |= TCA_ACT_FLAGS_SKIP_SW;
+ 				if (skip_hw)
 -- 
 2.53.0
 
