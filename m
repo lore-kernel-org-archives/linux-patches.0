@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043197;
-	b=Jbjbpjde/QFcym67qtlgzPMkxlbdDdTCXPltBPmWQHzMZ4NGu20CE32JN1bF9L9g/k9+
-	 76QBtpnQOZz4zVPdGgl3pAI1lRVOXBCEMvms7t0qwM7xVrOL8+Co3tDHnYFN7LA/GgyYJ
-	 83pcCSwFkwsYUXRHurUQ3/8aGwKLPXTszOo2+JdMYZ7rdd6hOQDUAGfcjlMUtD4EdItMk
-	 4z3noKuGxkue1DKjMB3j/4QUz3RD+PrXTyfvLytiwd6QOYkFgvqhPalvpWOfaaXXaUz4E
-	 +kwMm5OikNeaj6tZ2Hu7rnhPs5PVCHYxLzVVtA7K6ApftnOMplCrOGr4WkUZPRId8CQ==
+	t=1795043200;
+	b=tXNs2yl9fIzyw/ePlpFCsDNm3EbrbTrM3eT5P0DZxQjcC0RUHwmOXv1S0E9BcqT8PXpS
+	 le/eq8Ej7l4usGJc9I3JIHQG25lMxyb2GfCiociCkbZdj138BS659KrEaZS46EVE+To7w
+	 KLPZnPqvTTw8a3VJgu4IzYURznE3kBBoHiqd32d4VpA1v/C24vjKKISZ17xdDFhIW34J0
+	 JD6S+4AnGsdtuXzFLIdvSjo9HkiEGcGMVhdZOocomzaULrh62lo66dgizdfQiLuJ+8DpW
+	 2r6WUoMh6hljs1Vjmeui26Fzrbxuh3H0eA13jaGBOj873elc/AcRLeTZ43BSNUOkoUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043197;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043200;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o5pD/hb9B0+LI3SKoOgobNaRFAqC7fP4Kgeqq5dwncs=;
-	b=4iW1rBae0+WOPXsH7OhqGaI9yk4DfuG30uy9aFC4/QhAKO0qIuK3QOfkx0WkNufg9wh0
-	 Q1FwapsKuTlROk/fCOZAelGNpH/SDXemKNVqR/X1fmkRgDGS5gwdh++vYf6fuhQuJnv1a
-	 8FkSgKqpw5G8p7QAkZe4c8vgDYqL2L/s3f4T+FfEVkEQVaFIjommX0ZpPUmbbAMSlcEj3
-	 Du6gsZSNJl2zkN7lyCcPhXsFO/4dbHXUTe2oq61N/9QZbdZqdA34EdsqhGEyXvaehfv62
-	 g5i6PB1TeuC04QUm5RTG8UqpZSq6dRA/VhpcaEPTN7Ftw5rEN2E8M2vXRS/7ZqVIBYQ==
+	bh=Cq2QVLf22UWt+ZCyijpL9OKs7doWtZv6K61JdwMMXOA=;
+	b=0BsIazZjAAs//6OgPiSAGOCyPZET7KFgfEKWGP7ehcUbhXueb9o+XzTvj407BOAF2vgi
+	 xXimtXq1SGgTrHZnz4XRw6YqECNuu8TNx0smfLd+BNqfHM2fkKXNVspdzc7f0xvMUzDYP
+	 t5bJ86/HwJy/QfTE7Yq+XXXOIbhoftosRXkRHoln8ORqjaEroQoiAABu9NJ3/PAvcmXBM
+	 oupzt4Xc+zZepg9kOUIRpklGX+Dbyc0kc8yl2S2zLydYZENEen5cn4JH+EtzuWHgcwx5P
+	 Xa6GQmwfXHm9q+1nmfkO3NMPfQqhnARzt1jUsGV0sU5aIQ2niW7Jg9vqy8IE3Zuq7qA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZB9LLyCm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wv7hqRY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A64606A31C;
-	Wed, 18 Nov 2026 23:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E9F606A325;
+	Wed, 18 Nov 2026 23:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZB9LLyCm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 087311F000C4;
-	Wed, 18 Nov 2026 23:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0wv7hqRY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C43E71F000C4;
+	Wed, 18 Nov 2026 23:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043197;
-	bh=o5pD/hb9B0+LI3SKoOgobNaRFAqC7fP4Kgeqq5dwncs=;
+	s=korg; t=1795043200;
+	bh=Cq2QVLf22UWt+ZCyijpL9OKs7doWtZv6K61JdwMMXOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZB9LLyCmrTPHiE3Ai0SCoM/QabfsXTuvqk49NHSznYEwZbT/qeIH9r/YxkF4r1Uh3
-	 yJNElsLwmtmljAJiGzQrM0V9YwDCkk9JFxhbxZsi4qbJXvw9GJQdwfxqGHLzvnb/aG
-	 aOFMACKnFZGJjgavXpHtxMAEwsGzQAZV/lx4zjwM=
+	b=0wv7hqRYkjhwZ7ylSSFwigVj3cZs8bQLf6IhP5RsJU7Sx/6fxzkmIovDOGYM6r/GV
+	 bObAbza4Nyi9QdQqXz2DfyNR75tUljIQXa/3FBajP+yvU6qun0ciWQ+SjVZY1FLhLB
+	 t9v24hxSUwZ7Oei9Z8ECf+6J625FeSB5ilPcw4so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e9a1f5e196de6663631b@syzkaller.appspotmail.com,
-	Rituparna Warwatkar <rwarwatkar@gmail.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0125/2857] media: dvb-core: fix feed leak on failed DMX_ADD_PID
-Date: Wed, 18 Nov 2026 15:19:19 +0100
-Message-ID: <20261118150205.849676936@linuxfoundation.org>
+Subject: [PATCH 6.1 0126/2857] media: go7007: s2250: propagate control I/O failures
+Date: Wed, 18 Nov 2026 15:19:20 +0100
+Message-ID: <20261118150205.887883248@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,63 +68,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rituparna Warwatkar <rwarwatkar@gmail.com>
+From: Yousef Alhouseen <alhouseenyousef@gmail.com>
 
-[ Upstream commit 9fa26c971ca310dd10a3bc0014f2fc7ea7167bba ]
+[ Upstream commit 59dc14a6cb5ff1ae5ce2f6ebf51fe0139e1c0623 ]
 
-dvb_dmxdev_add_pid() allocates a new dmxdev_feed, links it into
-filter->feed.ts and, when the filter is already running, immediately
-starts the feed.
+The brightness and contrast paths use oldvalue after read_reg_fp()
+without checking whether the read succeeded.  A failed read leaves
+oldvalue uninitialized and can write arbitrary reserved register bits.
 
-If starting the feed fails, the newly allocated feed remains on the
-list. Subsequent restart and rollback paths may then operate on this
-stale entry, leaving feed resources allocated and causing leaks in
-drivers that allocate resources from ->start_feed() and release them
-from ->stop_feed().
+Return read and write errors from every control path so failed hardware
+access cannot be reported as a successful control update.
 
-Remove the feed from the list and free it when
-dvb_dmxdev_start_feed() fails.
-
-Reported-by: syzbot+e9a1f5e196de6663631b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e9a1f5e196de6663631b
-Signed-off-by: Rituparna Warwatkar <rwarwatkar@gmail.com>
-Link: https://patch.msgid.link/20260714141059.63582-1-rwarwatkar@gmail.com
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Message-ID: <20260714141059.63582-1-rwarwatkar@gmail.com>
+Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dmxdev.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/media/usb/go7007/s2250-board.c | 54 ++++++++++++++++----------
+ 1 file changed, 33 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dmxdev.c b/drivers/media/dvb-core/dmxdev.c
-index a67cce02d1577..93fc040cfaddf 100644
---- a/drivers/media/dvb-core/dmxdev.c
-+++ b/drivers/media/dvb-core/dmxdev.c
-@@ -870,6 +870,7 @@ static int dvb_dmxdev_add_pid(struct dmxdev *dmxdev,
- 			      struct dmxdev_filter *filter, u16 pid)
- {
- 	struct dmxdev_feed *feed;
+diff --git a/drivers/media/usb/go7007/s2250-board.c b/drivers/media/usb/go7007/s2250-board.c
+index 2f45188bf9d47..6635c82cc1983 100644
+--- a/drivers/media/usb/go7007/s2250-board.c
++++ b/drivers/media/usb/go7007/s2250-board.c
+@@ -365,36 +365,48 @@ static int s2250_s_ctrl(struct v4l2_ctrl *ctrl)
+ 	struct s2250 *state = container_of(ctrl->handler, struct s2250, hdl);
+ 	struct i2c_client *client = v4l2_get_subdevdata(&state->sd);
+ 	u16 oldvalue;
 +	int ret;
  
- 	if ((filter->type != DMXDEV_TYPE_PES) ||
- 	    (filter->state < DMXDEV_STATE_SET))
-@@ -887,8 +888,14 @@ static int dvb_dmxdev_add_pid(struct dmxdev *dmxdev,
- 	feed->pid = pid;
- 	list_add(&feed->next, &filter->feed.ts);
- 
--	if (filter->state >= DMXDEV_STATE_GO)
--		return dvb_dmxdev_start_feed(dmxdev, filter, feed);
-+	if (filter->state >= DMXDEV_STATE_GO) {
-+		ret = dvb_dmxdev_start_feed(dmxdev, filter, feed);
-+		if (ret < 0) {
-+			list_del(&feed->next);
-+			kfree(feed);
+ 	switch (ctrl->id) {
+ 	case V4L2_CID_BRIGHTNESS:
+-		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
+-		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
+-			     ctrl->val | (oldvalue & ~0xff));
+-		read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
+-		write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
+-			     ctrl->val | (oldvalue & ~0xff));
+-		write_reg_fp(client, 0x140, 0x60);
+-		break;
++		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS0, &oldvalue);
++		if (ret)
 +			return ret;
-+		}
-+	}
- 
- 	return 0;
++		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS0,
++				   ctrl->val | (oldvalue & ~0xff));
++		if (ret)
++			return ret;
++		ret = read_reg_fp(client, VPX322_ADDR_BRIGHTNESS1, &oldvalue);
++		if (ret)
++			return ret;
++		ret = write_reg_fp(client, VPX322_ADDR_BRIGHTNESS1,
++				   ctrl->val | (oldvalue & ~0xff));
++		if (ret)
++			return ret;
++		return write_reg_fp(client, 0x140, 0x60);
+ 	case V4L2_CID_CONTRAST:
+-		read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
+-		write_reg_fp(client, VPX322_ADDR_CONTRAST0,
+-			     ctrl->val | (oldvalue & ~0x3f));
+-		read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
+-		write_reg_fp(client, VPX322_ADDR_CONTRAST1,
+-			     ctrl->val | (oldvalue & ~0x3f));
+-		write_reg_fp(client, 0x140, 0x60);
+-		break;
++		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST0, &oldvalue);
++		if (ret)
++			return ret;
++		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST0,
++				   ctrl->val | (oldvalue & ~0x3f));
++		if (ret)
++			return ret;
++		ret = read_reg_fp(client, VPX322_ADDR_CONTRAST1, &oldvalue);
++		if (ret)
++			return ret;
++		ret = write_reg_fp(client, VPX322_ADDR_CONTRAST1,
++				   ctrl->val | (oldvalue & ~0x3f));
++		if (ret)
++			return ret;
++		return write_reg_fp(client, 0x140, 0x60);
+ 	case V4L2_CID_SATURATION:
+-		write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
+-		break;
++		return write_reg_fp(client, VPX322_ADDR_SAT, ctrl->val);
+ 	case V4L2_CID_HUE:
+-		write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
+-		break;
++		return write_reg_fp(client, VPX322_ADDR_HUE, ctrl->val);
+ 	default:
+ 		return -EINVAL;
+ 	}
+-	return 0;
  }
+ 
+ static int s2250_set_fmt(struct v4l2_subdev *sd,
 -- 
 2.53.0
 
