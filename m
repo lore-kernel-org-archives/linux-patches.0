@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015899;
-	b=MtBtYyr0H1bquIQTtHmYQ7jj87sCyMHu77L/974t0lNWhihxs+KmoTRftv6A6ASWiyxa
-	 1lCyPv7erH+hlpS6bNnlC2vWJ9keag3OpKjc5fT4NH8d77j2lktApxVrcYT69hh1Wb8Da
-	 dN5N98Iy9j1Gr28NbGrCVxYFjZZyaYEOhX2TOlxXoFdJUowLTwIXVO4xrQIO98npaibxN
-	 p3/yQ2pEtMqnpF5zHJW7RGtIB6GDvDvdCnIs8Sxyhl6T9qGwobPgvsfILlIOEb8ZMg5Ra
-	 Z4g4e28kBYwiF7q/nFGnDRnUQLA5I4rHP4uA40tnOlHylIEhAI32cn4cTBTFXStel1A==
+	t=1795015902;
+	b=hpeoH4HI9lF+eyvz8IDt/Jin7qrNzojHsisgwRSFJ0inNy6A35H2gi2lXehxvKB52tPp
+	 w7/tKM5AYMvniOk0FAvAM6edqlGkgpD5/l0zr5deAEc1ISaS8z2/NBGxutsdWBj7vig6c
+	 +8jgBBMhVU43onnRFmDFRdxU2jlAe3oo1Z42Gkd6+/3MQ3zYCo1RBjczbLDY3/Yg/zj/k
+	 /MP6RcJb0hj9Jyt0EJ9+6jfpN8JYIholiX4ttzZ4o5y2EHILlCqV2egf+yc/giBlkhIyh
+	 mTZdRSGIOJ1XJI612iebB1h0wZcToBFB7L5IjB32TWOielLBQbFyZbAGy5F7QFmRBFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015902;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QKZpvlXgEZONoFaUAZl6aSuxF9mUeH+5eBNUkmEQGNg=;
-	b=1/c1f558rSzqQWx2yXHO1cjiOwEeQ+mNLmeA+kbNTEJOeEAWZkU5U6o6PqHjQjHGS4Ff
-	 5E2UxHDihcN7E5BYnf2xomTeldwnRhxcmlMZww/UNXOUmBuGhTmC9YlbGT+EYjlKNReJ9
-	 rk8fep8fsZ5fedzRBo1TO0hvB8SfnBH0merVcHIy08a5yq//BgffT9HXIR0U4TpNK4CBd
-	 FIieexXweU1YyMw4N8xcmKOlOBrSBeWkkesEr4M1C4Ph7d59Ml3sE7ERnEhPfnR0EF2qK
-	 ZCdEAmJ83HlDTEpxTfrxCAGivla3Y1f64sWr2uHyQ9uNLrgCFjGtxky4+ZYaeWtPX/g==
+	bh=iNo/XgRHTKj/cyfIjbiNDhwxQE3AYH9b8OlX8YCs0xw=;
+	b=2c0Ukhket6LbObKTu6TunbqUOzUIfJfBGtfHKbpvr+sGgUQdvgKmp4K+At+s06x6va37
+	 fIPetvfAuIfOiQUYxe14JLaD7kBxQDot+L5Dba0i0R/u3jU5+1UhtQLjyrdgjH4HMBCXx
+	 8DDkC6G5GrmtPbrDu5joqG6s9Lakxjlf1rAX4eQF9bn3gEeZIM/N8Jugzclg1zD6KxU7S
+	 fngJmG9F2ymZvzQDtyXACgR9KMUTz1Ail+kvSvC/MoNOawmfLhbHhyn8Iu7QMUw6PBqQL
+	 Li7AoKMQocaowPiNJttx9n+6M9yRJp/5SmOblzRJOYmPNM3rymkUcL/VmUx9gjBB4GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="a/PQxW20";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UDZX+SuR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B0A606A336;
-	Wed, 18 Nov 2026 15:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B666606A333;
+	Wed, 18 Nov 2026 15:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a/PQxW20
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264901F000C5;
-	Wed, 18 Nov 2026 15:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UDZX+SuR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF58C1F000C7;
+	Wed, 18 Nov 2026 15:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015899;
-	bh=QKZpvlXgEZONoFaUAZl6aSuxF9mUeH+5eBNUkmEQGNg=;
+	s=korg; t=1795015902;
+	bh=iNo/XgRHTKj/cyfIjbiNDhwxQE3AYH9b8OlX8YCs0xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a/PQxW20bq30aVng1gpMgm9iLmKu+wfYKO8OkLeGTBSvjBQmJbmxbW+Hkn1tygBQN
-	 wKOhimKpM1PzcvNsCmOntqwi/i1xciHGDdAWYo4w+ccYgNHQvl+7HreXn7hSr9LqnG
-	 XzRZH2unPAfaaE6aPYAJI+dTan9xkD6IEXwictNA=
+	b=UDZX+SuRFGd02nYO7eNhhbedJtEPfG/0TF2jkpab8Aq6Tng9Ce8kwPVd1x8ETRhQf
+	 zXVsmZnJNhqxlr0lPRUZHuPKbzcR61qAlfEwyfAofRJZ87iBtWgSr2B3IWCA6oTWpk
+	 6Ci/jxPgL4CCBiD1Y2ByH/+sDe+l9UiWnm8N3OQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0335/2651] scsi: mpi3mr: Fix out-of-bounds reply frame access
-Date: Wed, 18 Nov 2026 15:26:15 +0100
-Message-ID: <20261118150259.919213244@linuxfoundation.org>
+Subject: [PATCH 7.3 0297/2651] dmaengine: img-mdc: Fix runtime PM usage counter leak
+Date: Wed, 18 Nov 2026 15:25:37 +0100
+Message-ID: <20261118150258.598516469@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,48 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit bcf0a5bed59acd5ae19d80e1f617c1a5b355af0b ]
+[ Upstream commit 4a1a2d8b8529cc569b769b92fcd71c53805cbeb2 ]
 
-The reply frame address reported on completion is only checked against the
-start and the end of the pool. An address near the top can pass the check
-while leaving less than a full frame, and an unaligned one resolves into
-the middle of a frame instead of the start of one.
+pm_runtime_get_sync() leaves the IMG MDC device's usage counter
+incremented when runtime resume fails. mdc_alloc_chan_resources() returns
+that error to the DMA core, so the channel's client count is not
+incremented and mdc_free_chan_resources() is not called to drop the
+reference. Repeated allocation attempts can therefore accumulate usage
+references and prevent runtime suspend.
 
-Require a whole frame to fit and the address to be frame aligned.
+Use pm_runtime_resume_and_get() so a failed resume does not retain a
+usage reference while successful allocations remain paired with
+mdc_free_chan_resources(). DMA core only treats negative return values as
+allocation failures, so the helper's zero success return preserves
+behavior.
 
-Fixes: 824a156633df ("scsi: mpi3mr: Base driver code")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-7-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+This issue was found by a static analysis checker and confirmed by manual
+source review.
+
+Fixes: 56d355e6f586 ("dmaengine: img-mdc: Add runtime PM")
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260813153143.3953303-1-ruoyuw560@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/dma/img-mdc-dma.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index 681868716ebdb..82fadb4d2b21f 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -124,11 +124,16 @@ void mpi3mr_build_zero_len_sge(void *paddr)
- void *mpi3mr_get_reply_virt_addr(struct mpi3mr_ioc *mrioc,
- 	dma_addr_t phys_addr)
- {
-+	u64 offset;
-+
- 	if (!phys_addr)
- 		return NULL;
+diff --git a/drivers/dma/img-mdc-dma.c b/drivers/dma/img-mdc-dma.c
+index b3765ba158030..a3192d49b6c86 100644
+--- a/drivers/dma/img-mdc-dma.c
++++ b/drivers/dma/img-mdc-dma.c
+@@ -738,7 +738,7 @@ static int mdc_alloc_chan_resources(struct dma_chan *chan)
+ 	struct mdc_chan *mchan = to_mdc_chan(chan);
+ 	struct device *dev = mdma2dev(mchan->mdma);
  
-+	offset = phys_addr - mrioc->reply_buf_dma;
-+
- 	if ((phys_addr < mrioc->reply_buf_dma) ||
--	    (phys_addr > mrioc->reply_buf_dma_max_address))
-+	    (phys_addr > mrioc->reply_buf_dma_max_address - mrioc->reply_sz) ||
-+	    do_div(offset, mrioc->reply_sz))
- 		return NULL;
+-	return pm_runtime_get_sync(dev);
++	return pm_runtime_resume_and_get(dev);
+ }
  
- 	return mrioc->reply_buf + (phys_addr - mrioc->reply_buf_dma);
+ static void mdc_free_chan_resources(struct dma_chan *chan)
 -- 
 2.53.0
 
