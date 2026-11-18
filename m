@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020112;
-	b=r/X5bEfqCBm92SUubfhWI04MEqg2gHiEQs4seDshn1zFknlfrEiRJZa8AC83pRsTklIX
-	 5IjB4rivAd5F7yHVbI5A9DbYDkWaSMg+vPlv2Avtc5O9ezHiSw+Fa8lUQaq67Yflqiwc0
-	 0z7WS7t1RraA1diO+el2TUAk4Wz35UCrnDTcg8xub2Ge2hTcRSZZCJ09Yi5ICZTzS0a8G
-	 B4blmBBJJJCjrk+iCrd1JfW7G+10Vj58AiHE6W/e8BpQ7gAqXOExF53UTAWFgu5gcu5Wv
-	 XcqWH4QYwMKfmvzqCBXIbIK4O26JwTthPPo+lF/UVSzX+EwRse4C1fX960ZKwPPkRaw==
+	t=1795020116;
+	b=Mkl2g6+h57o8uJbdyxmsVKlIheAlvG5W5kWToWshjDTGV1noxuEXpnhN8Kn+zEoX3K5k
+	 RZuRdPioAC5hjtDRXpPSQZ1Pl2JdMlSCFSDWVFKeaIzLO5JmQvMFafvA3RsCiVVsOv/XK
+	 P8CkASnIH1W4EZqi4oTwDsT1t/M1IeZRZpIy/fNsrPKRvL9n7sPL+VMysv1TmkhiM0XUh
+	 WTjYbuZvYk2SLYOZW7Ynpa/LTdcR0eKYNuyUHkNfskF/fkQKdwffsGpsW8PcdWF7dwWvw
+	 FFCvi2ns8CUw6DwGIqGGsDMwb4dZFhONjY5v9vtkI4RymrAmhiCj2wVWmDiSC28uIlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020112;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020116;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ajTlOFu2gwfcmwtyHfxt8DJcM0J8+6M5K5Yvdlx5XjA=;
-	b=YAMOhEe4as6sBaP5kC38ofFV9yO94ceo/oED9IX9bFF/crWchhePjMWyz73tIsn9gRmI
-	 8zLAyi7CFVdsSPXXgc8J3Kn8cKp5Dxuh7ie6MkiDRUnE2lv4E/CSZz68WJY5CQbjvwtxB
-	 egFB5sDMnR9oObJ4JNP0x6TigYTPD58xM1oMvq8q5+OLik/VSYvHqGaTc6nBtfz2E2Z11
-	 NSXYR1CUg+tKE/uOOT+pwLGwCykpxyJM3P6YGboQ1vrI6kZ2MUlg+Xu9lygH9qwPwOJWN
-	 d/FhZbncAKSRxL+fJvggKam6pqbq1Tp7U4ryE4jmyFEYSB+ZQGENqoLrN8+4/hi2fpQ==
+	bh=gOjWm/jiLni4OwnIe7lVbPrRWUmZtjxAVtjnyr9puKE=;
+	b=Cp/d+yT9/dM/p4Ktf6eJKEwN/Qso22O2bG0VjipVK3D+LnI+3ch0PfR/I5rKuiWhx4DE
+	 olZszeTlEZRwo/nSE6mhN50vwHXVNmL/0KtR/CP2ymbovz6/qDoYu5iPxFuxoMEWtjeB7
+	 kumDsUfyAjKmhyuvlKJmhmpaT6WCiZ/AGNZb0rnEZanbX4uynRtbe2Kwatm81IZCVzC0g
+	 6Ry0/U3z9E4W3icC8NxwqKiA+7pozkmZ0gA0XMpSS2Ls4d9dwzj1N2sjANc2nKcMRZy8y
+	 vIWnCMQoxWSm2Cj2HJS+PmMVIyxd92jo3t/XSOjbocxRoAAXlfyFpr5ouV7tts44Xrg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Em96NFa/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZZuJwvS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BA5606A320;
-	Wed, 18 Nov 2026 16:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4FB606A33D;
+	Wed, 18 Nov 2026 16:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Em96NFa/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DDBD1F000C5;
-	Wed, 18 Nov 2026 16:41:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LZZuJwvS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06A931F000C5;
+	Wed, 18 Nov 2026 16:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020112;
-	bh=ajTlOFu2gwfcmwtyHfxt8DJcM0J8+6M5K5Yvdlx5XjA=;
+	s=korg; t=1795020115;
+	bh=gOjWm/jiLni4OwnIe7lVbPrRWUmZtjxAVtjnyr9puKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Em96NFa/hWmx6H5Mttwotq+szsBdOQJPsSLBVMpfjlkiPfgA1WfS36CKB2Lw8rnJD
-	 fgObo4Z1V3YpuKe1/Zy1BuU+WYmmxy1Lhu/pFn5lm0ykj7c3zGrvlCH8AIa53Vfe6b
-	 Nd+90iwROtpFTSDNbevLR419+zenGblvBGor91pc=
+	b=LZZuJwvSQ+dThcYNcTxBAYNJq/gjZu4L1stArIXxldaM3nHY9KTkxsqadUImd73Jh
+	 joSdzvaBp0oq5tFxrkZ4OiyMyGJGtXzK7UoW+WqpH7GhdTY4MI+g2bk9cviLeX1673
+	 lI5h3swXz5+meRppedal/vxhZuVIuJgRQQl/6Mcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1795/2651] ASoC: mediatek: mt8196: propagate main clock errors
-Date: Wed, 18 Nov 2026 15:50:35 +0100
-Message-ID: <20261118150351.935207166@linuxfoundation.org>
+Subject: [PATCH 7.3 1796/2651] ASoC: mediatek: mt8196: fix runtime resume error handling
+Date: Wed, 18 Nov 2026 15:50:36 +0100
+Message-ID: <20261118150351.973398037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,41 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit c33bc2dd217d249de7b1ddffb80b8e4a0c597cf3 ]
+[ Upstream commit 3a9a93cafb376541fecac10c5bb734cd2f26bfc8 ]
 
-Propagate errors from the main clock enable and disable operations
-instead of always returning success.
+Propagate errors from regcache_sync() and main clock enable operations
+instead of ignoring them.
+
+On failure, restore cache-only mode, disable register access clocks, and
+clear the 26M clock request as needed to clean up the runtime resume
+state.
 
 Fixes: 7384ecab34eb ("ASoC: mediatek: mt8196: support audio clock control")
 Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260929061121.124001-6-phucduc.bui@gmail.com
+Link: https://patch.msgid.link/20260929061121.124001-8-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8196/mt8196-afe-clk.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/soc/mediatek/mt8196/mt8196-afe-pcm.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8196/mt8196-afe-clk.c b/sound/soc/mediatek/mt8196/mt8196-afe-clk.c
-index 6198711e01b5c..dbfd02d20338d 100644
---- a/sound/soc/mediatek/mt8196/mt8196-afe-clk.c
-+++ b/sound/soc/mediatek/mt8196/mt8196-afe-clk.c
-@@ -598,14 +598,12 @@ int mt8196_afe_disable_reg_rw_clk(struct mtk_base_afe *afe)
- 
- int mt8196_afe_enable_main_clock(struct mtk_base_afe *afe)
+diff --git a/sound/soc/mediatek/mt8196/mt8196-afe-pcm.c b/sound/soc/mediatek/mt8196/mt8196-afe-pcm.c
+index a1ae8322d8b6c..f8e9059170a52 100644
+--- a/sound/soc/mediatek/mt8196/mt8196-afe-pcm.c
++++ b/sound/soc/mediatek/mt8196/mt8196-afe-pcm.c
+@@ -2211,7 +2211,7 @@ static int mt8196_afe_runtime_suspend(struct device *dev)
+ static int mt8196_afe_runtime_resume(struct device *dev)
  {
--	mt8196_afe_enable_top_cg(afe, MT8196_AUDIO_26M_EN_ON);
--	return 0;
-+	return mt8196_afe_enable_top_cg(afe, MT8196_AUDIO_26M_EN_ON);
+ 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
+-	int ret = 0;
++	int ret;
+ 
+ 	ret = mt8196_afe_enable_reg_rw_clk(afe);
+ 	if (ret)
+@@ -2222,7 +2222,9 @@ static int mt8196_afe_runtime_resume(struct device *dev)
+ 		goto skip_regmap;
+ 	}
+ 	regcache_cache_only(afe->regmap, false);
+-	regcache_sync(afe->regmap);
++	ret = regcache_sync(afe->regmap);
++	if (ret)
++		goto err_set_cache_only;
+ 
+ 	/* set audio 26M request */
+ 	regmap_update_bits(afe->regmap, AFE_SPM_CONTROL_REQ, 0x1, 0x1);
+@@ -2233,10 +2235,20 @@ static int mt8196_afe_runtime_resume(struct device *dev)
+ 			   CPU_HD_ALIGN_MASK_SFT, 0 << CPU_HD_ALIGN_SFT);
+ 
+ 	/* enable AFE */
+-	mt8196_afe_enable_main_clock(afe);
++	ret = mt8196_afe_enable_main_clock(afe);
++	if (ret)
++		goto err_reset_26m_req;
+ 
+ skip_regmap:
+ 	return 0;
++
++err_reset_26m_req:
++	regmap_update_bits(afe->regmap, AFE_SPM_CONTROL_REQ, 0x1, 0x0);
++err_set_cache_only:
++	regcache_cache_only(afe->regmap, true);
++	mt8196_afe_disable_reg_rw_clk(afe);
++
++	return ret;
  }
  
- int mt8196_afe_disable_main_clock(struct mtk_base_afe *afe)
- {
--	mt8196_afe_disable_top_cg(afe, MT8196_AUDIO_26M_EN_ON);
--	return 0;
-+	return mt8196_afe_disable_top_cg(afe, MT8196_AUDIO_26M_EN_ON);
- }
- 
- int mt8196_init_clock(struct mtk_base_afe *afe)
+ static int mt8196_afe_component_probe(struct snd_soc_component *component)
 -- 
 2.53.0
 
