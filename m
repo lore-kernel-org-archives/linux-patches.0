@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058518;
-	b=Mw+cvYU+5bI9/apD4aHgr60TTIDnK0D5ze0T6nkRP0VyyixqaoDv2aQ0zoLm2pErvGfp
-	 a60Iaj/DvojliJejKIqi0rGMoMcHDms0klWPMEvmXMFT6avmdxfiB4rj9Ko/PAnYFeEsJ
-	 qBmQZU2pckQhWbPakfJqEX5cLIZ0i2+IkAGdChTMXBfe8wPz2A1SS0trnTi8fGxGdqbD6
-	 gDyLkr5ftlpTs4um9X9DKjkxgafeON4uKrnC0zzPJbAW9l+corY6a0b4xaVDGCuaxJICf
-	 WwqkpxQFFULL2ZBJAKguhI1ksUlmeh+/By20B+6nXFYa9mkt5td8YAzpEvsDQc0ulKQ==
+	t=1795058520;
+	b=i0UEsoUaNUbTU8Vu/W81l7qg3YSPFPBVBpAtI+d9PMvdJbkrt9mzJboTDsfNAdr/tGSB
+	 bOrajHfsR2tDXP0QIzkZlDjq749bKMeQP0dYVrh50PdM74fuQp7i1U7sc2I3JBVNBAuKf
+	 d/ztOr2kR/fuJWqTLUqaoGceBIAMtuWKoUX6SviQ7dF0obhTOmMe0oIyn53Y9Um1RAABm
+	 mjb8fyS5uZaIebi8xPguROfZfZm2tuOfq0YCxdQBt+1tUwRODcsoHW69nHRHKJDxQtYcu
+	 CS3YCEnbhTfT4qqd4JhfeQYXExpTivH3UuvKOirlPNvKB6ddtOBVuUNk3ySL2YPBkLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Soa1x866/w6clWdQj8wRhL0goFFiKwquOfuFeoctODo=;
-	b=t1bkNrjdzmXmGvcB9G/BQjSQyZGMnVAyxH6QeIGYLRbvEIfU4nZ4DF8FNEtoHPvtv3vU
-	 nCwiznq6a5ORpPtn4MbvN6sQgcJozGV25hqCOKjqZUhEc41sFKVY8u8SoLHGP0a29gBSy
-	 H2v8zRnOc/h8txhqKP8L5J6KVWlq02m6FCE8+/K9eYFft97k1/H0nKVMEdJbbvA+/Au5g
-	 7+OXInskXc9DeduyMB680PJKhfQRqVV9fN3PgJZ0uIciF5jtn6kEYHynDc6kOe+gH3sqB
-	 7TK4CXrOgoREwhVj6QVSm+VteIzK/Uc/lwTG6EXCNHSw0sB4FS2jBXRfMbNCCRyL/Pw==
+	bh=Wv6uNWguEnrJNUuxLeIigHpDdLZCgjO0mzNEM8BjuHA=;
+	b=F0CMzpYcoH8tEI4cFfp4Eg91vAd0uogcN9lzjEu51nPQFhs1OfEtW781P/0iKjMOfFZQ
+	 fmYRgr7pFEAA5xMG5rqPVbAqRiFnJp0f/621aSZuIcv3+Dxu7Z98mgn/id9DakL1n14ju
+	 WVaCWkXuUD2wvNHAjsos1CXNBKt9h9GShqcpkbLuuove2N5cyQEE/OWz5GhnIAfz7ntHd
+	 K/sgupeVytSBpj6GKqV6HRC2KIqY63mJHpe+0S/Sm++JOd3AOGLzXOzoG9iCgX/nRMsND
+	 fc7OdYySRi29oRMqIwV5R8JGvdIoshjPKF8Sj+1+mx/ubUHif8s6rI6rXt5EUuOQE+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2G5Cq2Wy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yuAST+oy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8D1606A334;
-	Thu, 19 Nov 2026 03:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF598606A33A;
+	Thu, 19 Nov 2026 03:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2G5Cq2Wy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7861F000C4;
-	Thu, 19 Nov 2026 03:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yuAST+oy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279921F000C8;
+	Thu, 19 Nov 2026 03:21:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058517;
-	bh=Soa1x866/w6clWdQj8wRhL0goFFiKwquOfuFeoctODo=;
+	s=korg; t=1795058520;
+	bh=Wv6uNWguEnrJNUuxLeIigHpDdLZCgjO0mzNEM8BjuHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2G5Cq2Wy25vIm6OvKYAGONFJUrzC7i1CQ+uuiCnzpdWOFqy7Rgtvl5Qj7BbCxh+kn
-	 JArougfeHgvylryecvFiVKwIkeRO6zbqEn5b4g89cV+a8zKslWq1Te4A2TVipl6umF
-	 fGrIJvYbeB2U+nVm8CJUbPfGlCQoMOfwzUEYHzNk=
+	b=yuAST+oyAgsACOlOpqwsyPukYcrnwzPbAyMCAUaB7owhN6DIR+kbuOEi+1/CwJ35X
+	 45TLa063l1W0Gy39Azh9rhdM4rDrwNknbkDcalgcOCkyG2zxRDY//sP9o9K6OX/xiN
+	 j/EPSzY8WMWnHMd/js7bY2Gn96YlfleY5Ej50was=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	Takashi Iwai <tiwai@suse.de>,
+	stable@kernel.org,
+	syzbot+4b03894b6ec5753ddf24@syzkaller.appspotmail.com,
+	Hemanth Selam <hemanth.selam@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Jun Nie <jun.nie@linaro.org>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0514/1848] ALSA: cs46xx: fix unit mismatch in DSP code area bounds check
-Date: Wed, 18 Nov 2026 15:42:32 +0100
-Message-ID: <20261118145936.232123675@linuxfoundation.org>
+Subject: [PATCH 5.10 0488/1848] ext4: skip extra isize expansion while unmounting
+Date: Wed, 18 Nov 2026 15:42:06 +0100
+Message-ID: <20261118145934.728565829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,51 +72,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Hemanth Selam <hemanth.selam@gmail.com>
 
-[ Upstream commit fd65108f5001ffb416dc9bd37ec1893f55cff24a ]
+[ Upstream commit 418adcde99032194416248168df810535a1a93f9 ]
 
-ins->code.offset and code->size are measured in 32-bit words, while
-DSP_CODE_BYTE_SIZE is the size of the DSP code area in bytes. The
-check ins->code.offset + code->size > DSP_CODE_BYTE_SIZE in
-cs46xx_dsp_load_module() therefore allowed up to four times more code
-than the code area can hold.
+syzbot reports a WARN from ext4_xattr_inode_create() reached through the
+unmount path:
 
-The shadow buffer ins->code.data is allocated with
-kmalloc(DSP_CODE_BYTE_SIZE), i.e. it holds DSP_CODE_BYTE_SIZE/4
-words. A firmware file with a code segment larger than
-DSP_CODE_BYTE_SIZE/4 words (28 KiB) passed the check and caused an
-out-of-bounds write in shadow_and_reallocate_code() and an
-out-of-bounds read in snd_cs46xx_download().
+  EXT4-fs warning (device loop0): ext4_xattr_inode_create:1485: refuse to
+  create EA inode when umounting
+  WARNING: fs/ext4/xattr.c:1486 at ext4_xattr_inode_lookup_create
+   ext4_xattr_block_set
+   ext4_expand_extra_isize_ea
+   __ext4_expand_extra_isize
+   __ext4_mark_inode_dirty
+   ext4_dirty_inode
+   __mark_inode_dirty
+   sync_lazytime
+   iput
+   dentry_kill
+   shrink_dentry_list
+   shrink_dcache_for_umount
+   generic_shutdown_super
+   kill_block_super
+   ext4_kill_sb
 
-Compare the sum in words against DSP_CODE_BYTE_SIZE/4 and cast it to
-u64 so that the sum cannot wrap for large code->size values.
+shrink_dcache_for_umount() clears s_root before generic_shutdown_super()
+clears SB_ACTIVE, so during the dcache shrink the last iput() of a
+lazytime inode still redirties it and reaches the isize expansion.  The
+expansion can move xattrs out to a block, and creating the EA inode for
+them needs s_root, which ext4_xattr_inode_create() refuses without.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+ext4_try_to_expand_extra_isize() already declines to expand when the
+superblock is not active, but that test does not cover this window.
+Decline while s_root is gone as well.  The expansion is best effort and
+__ext4_mark_inode_dirty() ignores its return value, so nothing else
+changes; the inode can be expanded on a later mount.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Link: https://patch.msgid.link/20261014102619.16415-1-arefev@swemel.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Running the syzbot reproducer for 60 seconds produced 3583 splats before
+this change and none after it, with the same number of mount cycles.
+
+Cc: stable@kernel.org
+Reported-by: syzbot+4b03894b6ec5753ddf24@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=4b03894b6ec5753ddf24
+Fixes: f31173c19901 ("ext4: refuse to create ea block when umounted")
+Signed-off-by: Hemanth Selam <hemanth.selam@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Jun Nie <jun.nie@linaro.org>
+Link: https://patch.msgid.link/20260824094512.2436628-1-hemanth.selam@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/cs46xx/dsp_spos.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/inode.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/cs46xx/dsp_spos.c b/sound/pci/cs46xx/dsp_spos.c
-index 05f3f6dc918dc..5d7c38a0ac7be 100644
---- a/sound/pci/cs46xx/dsp_spos.c
-+++ b/sound/pci/cs46xx/dsp_spos.c
-@@ -396,7 +396,7 @@ int cs46xx_dsp_load_module (struct snd_cs46xx * chip, struct dsp_module_desc * m
- 		dev_dbg(chip->card->dev,
- 			"dsp_spos: module got no code segment\n");
- 	} else {
--		if (ins->code.offset + code->size > DSP_CODE_BYTE_SIZE) {
-+		if ((u64)ins->code.offset + code->size > DSP_CODE_BYTE_SIZE / 4) {
- 			dev_err(chip->card->dev,
- 				"dsp_spos: no space available in DSP\n");
- 			return -ENOMEM;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index cd35375e483c5..b04bec4430e98 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -6024,8 +6024,14 @@ static int ext4_try_to_expand_extra_isize(struct inode *inode,
+ 	 * When !SB_ACTIVE, iput triggers write_inode_now() which acquires
+ 	 * s_writepages_rwsem, causing a deadlock with the caller's active
+ 	 * jbd2 handle (lock order: s_writepages_rwsem -> jbd2_handle).
++	 *
++	 * Skip it while unmounting as well.  shrink_dcache_for_umount()
++	 * clears s_root before generic_shutdown_super() clears SB_ACTIVE, and
++	 * the last iput() of a lazytime inode in that window redirties it and
++	 * lands here.  Moving xattrs out to a block then needs a new EA inode,
++	 * which ext4_xattr_inode_create() refuses without s_root.
+ 	 */
+-	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE)))
++	if (unlikely(!(inode->i_sb->s_flags & SB_ACTIVE) || !inode->i_sb->s_root))
+ 		return -EBUSY;
+ 
+ 	/*
 -- 
 2.53.0
 
