@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041772;
-	b=BIQrOwRk4qJ8SnXEeAx32FTC4Td8Regm5RZIVg5M2Z3YahK/a5KRBPap/nF/wCtY0mV+
-	 JsA6CnPNDsR8Zjn0sQ/OZ6ELZIiWmuxnfDBPmYsf8CxdlJBsZWbSS/aIz1nvGXth+nNeW
-	 /oF18QT6AZI0UEWY+Gin1nzhN23jwdBhKRVOS8nb0uZYvX+ua6vvr3VqcY/hTnEblvj+2
-	 MxANHC9EuPibwXGLp3ke5DoI87bCyeYq9ZMxX4hxsZCbjJ+jotQd85xmu91H8jYeaK7ou
-	 m6iDR7f7PXFnz2SX4LLraBlA0Nq/hMx79wFs4Exfeb+JoE5Um55pt7R6bIt5J4WUF7w==
+	t=1795041774;
+	b=LnOhCu4+R42WbP4prMbHyI4GFEbSSByWRvh/IOy0odMAOZkczr5dhVAd784GAX38hPIi
+	 Z/zd0eDVFDxAJV/1Jx/699dPyq/C9iZ5dshTx1VOz0YcMewTxS5KyI9RQyBGYX1gL8S+U
+	 sN8n1n2a2POUXsnK5u/6UYzRAvk2U7fhBC9g5Z5xlXb6dHI2XHBlIPcfsYPjvNZi9mRGu
+	 GwPpPXF4oQp38HNvMjRV4QQ+mohQBw4vk3PPOoGNkE+QlYKebPDPBsoqSFdSuvsxDaunG
+	 jR99liVB96u+Cohe/f26asKElZr8rftECD479pwwAiLmFJiU66FxiIO2MWM9HAPolsA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041774;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1wR9pzkg6tXBbeOhYdyg7i+biav7z95rWhID9m4tKkY=;
-	b=RQ8pUMiSVTa2TkmhArI3G+uFHcXfp0l2xmyzY3IfEIXoBavveZ070xW2CSHdN+P7Q9ya
-	 meg2e3QcADvr/d3KJr5E5GS9KonGV+gSVf7IurkIHUu99v+wlTWqr1Ul0HNB3VkOSyv6s
-	 AfPdRsorwYiAISEq4b7cL7HuJqtWlqurrePqf9bVJRW/OskEOzgqGyqYCFqaPYTc6UMcT
-	 BOwA948dBCGdlGO24ChNK7aawL9YQEXEg2eUaGyGCI5ZeWkGFoWbBOPlg7j6aghyW1cKG
-	 ZxbD2thGW9eaTUzY6X0il4CS6q3G67jAt5Q5W1U/15M3o4Tvk+oamD3/1o4boBoNwhA==
+	bh=ahRibazSsS07+5oK4WhPCMAc2nnDiAxnwz4SBa7j/+Y=;
+	b=tvrxQ7Fz1Cd1JFiUR6IHuX2TCWe77nw1KGm/ktqZtlyOxxFwwo8vzCAl3vsj8RekuQor
+	 xFlT06v/byntuUyGg/X7b5391xNpDareWncHtTu6oSI6KX6zGzfTy9dR8x3E8cHh07HFK
+	 LtczcV4btL0eIS5yvS1eM+QGt47u0OdRfgAdNU4HMkK9nQ4/h9kQ4iBH5Hez8PXJv3aSl
+	 t7Y8aw9NEawbGmj/8XWd1fGBaiVcYP/Zrwik3/q/8X1uinu41GthOxXrCDtru7Z7SdrwQ
+	 uYGH6Pnl7wBs3Oso1zRqRfcVeFp4nrMdkZJ2XUL3hTL1pb5yBMdFSU8e0vXe92hzR6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oXeofGua;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0P6/OTaQ";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3088A606A31C;
-	Wed, 18 Nov 2026 22:42:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF8B606A332;
+	Wed, 18 Nov 2026 22:42:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oXeofGua
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830601F000CA;
-	Wed, 18 Nov 2026 22:42:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0P6/OTaQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5C91F000C7;
+	Wed, 18 Nov 2026 22:42:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041772;
-	bh=1wR9pzkg6tXBbeOhYdyg7i+biav7z95rWhID9m4tKkY=;
+	s=korg; t=1795041774;
+	bh=ahRibazSsS07+5oK4WhPCMAc2nnDiAxnwz4SBa7j/+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oXeofGuaXXbkCNa0SB6akTL2uxkVS334n55k9Xfti+in4NWftuazsU80qnAiMKNdF
-	 8zkYhXhrZYbfcm3Klng+LhBOG718wZJsN/j+KpnlmsBigkqCXAcgvVYSv7GtZszRGN
-	 ZhO93bqHLlBPiLV7lLbsfQzcySkmfyPTI+NeYGVM=
+	b=0P6/OTaQ0t37oszA8di6Vy96xwr/2RfHe5mxtZ/LIu9bQgyS8Z7RFg6o7rRDWYMLX
+	 DykAnk+vj4Yq82VthBOl5qTfefDuLgaAq6hNSUzYv/KcQId3Uj675PDj/mz576DR4Z
+	 tmWXd1wbQfQabpl1OMwjsI+q7KDGETzuc/lFDTeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
 	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Jaroslav Kysela <perex@perex.cz>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2931/3318] ALSA: pcm: Introduce MSBITS subformat interface
-Date: Wed, 18 Nov 2026 15:59:13 +0100
-Message-ID: <20261118150448.315276528@linuxfoundation.org>
+Subject: [PATCH 6.6 2932/3318] ALSA: hda: Upgrade stream-format infrastructure
+Date: Wed, 18 Nov 2026 15:59:14 +0100
+Message-ID: <20261118150448.343271479@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,216 +70,259 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 2112aa034907c428785e1a5730927181276ee45b ]
+[ Upstream commit d24f1a090d3f2a5c86a8782afeda71c2d2539966 ]
 
-Improve granularity of format selection for S32/U32 formats by adding
-constants representing 20, 24 and MAX most significant bits.
+Introduce a set of functions that ultimately facilite SDxFMT-related
+calculations in atomic manner:
 
-The MAX means the maximum number of significant bits which can
-the physical format hold. For 32-bit formats, MAX is related
-to 32 bits. For 8-bit formats, MAX is related to 8 bits etc.
+First, introduce snd_pcm_subformat_width() and snd_pcm_hw_params_bits()
+helpers that separate the base functionality from the HDAudio-specific
+one.
 
-As there is only one user currently (format S32_LE), subformat is
-represented by a simple u32 and stores flags only for that one user
-alone. The approach of subformat being part of struct snd_pcm_hardware
-is a compromise between ALSA and ASoC allowing for
-hw_params-intersection code to be alloc/free-less while not adding any
-new responsibilities to ASoC runtime structures.
+snd_hdac_format_normalize() - format converter. S20_LE, S24_LE and their
+unsigned and BE friends are invalid from HDAudio perspective but still
+can be specified as function argument due to compatibility reasons.
+
+snd_hdac_stream_format_bits() - obtain just the bits-per-sample value.
+Does not ignore subformat and msbits parameters.
+
+snd_hdac_stream_format() and snd_hdac_spdif_stream_format() - obtain the
+SDxFMT value given the audio format parameters. The former is stripped
+away of spdif-related information. Useful for users that do not care
+about them.
 
 Acked-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Co-developed-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20231117120610.1755254-2-cezary.rojewski@intel.com
+Acked-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://lore.kernel.org/r/20231117120610.1755254-5-cezary.rojewski@intel.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Stable-dep-of: 85bc213f96ac ("ASoC: Intel: avs: Unprepare a stream when recovery occurs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/pcm.h               |  7 ++++
- include/uapi/sound/asound.h       |  7 ++--
- sound/core/pcm.c                  |  3 ++
- sound/core/pcm_native.c           | 55 +++++++++++++++++++++++++++++--
- tools/include/uapi/sound/asound.h |  7 ++--
- 5 files changed, 73 insertions(+), 6 deletions(-)
+ include/sound/hdaudio.h    |   5 ++
+ include/sound/pcm_params.h |   2 +
+ sound/core/pcm_lib.c       |  34 ++++++++++
+ sound/hda/hdac_device.c    | 124 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 165 insertions(+)
 
-diff --git a/include/sound/pcm.h b/include/sound/pcm.h
-index 5828508e1e5f0..7b6765e09c3da 100644
---- a/include/sound/pcm.h
-+++ b/include/sound/pcm.h
-@@ -33,6 +33,7 @@
- struct snd_pcm_hardware {
- 	unsigned int info;		/* SNDRV_PCM_INFO_* */
- 	u64 formats;			/* SNDRV_PCM_FMTBIT_* */
-+	u32 subformats;			/* for S32_LE, SNDRV_PCM_SUBFMTBIT_* */
- 	unsigned int rates;		/* SNDRV_PCM_RATE_* */
- 	unsigned int rate_min;		/* min rate */
- 	unsigned int rate_max;		/* max rate */
-@@ -218,6 +219,12 @@ struct snd_pcm_ops {
- #define SNDRV_PCM_FMTBIT_U20		SNDRV_PCM_FMTBIT_U20_BE
- #endif
+diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
+index 32c59053b48ed..ed52ca898c3bb 100644
+--- a/include/sound/hdaudio.h
++++ b/include/sound/hdaudio.h
+@@ -140,6 +140,11 @@ int snd_hdac_get_connections(struct hdac_device *codec, hda_nid_t nid,
+ 			     hda_nid_t *conn_list, int max_conns);
+ int snd_hdac_get_sub_nodes(struct hdac_device *codec, hda_nid_t nid,
+ 			   hda_nid_t *start_id);
++unsigned int snd_hdac_stream_format_bits(snd_pcm_format_t format, snd_pcm_subformat_t subformat,
++					 unsigned int maxbits);
++unsigned int snd_hdac_stream_format(unsigned int channels, unsigned int bits, unsigned int rate);
++unsigned int snd_hdac_spdif_stream_format(unsigned int channels, unsigned int bits,
++					  unsigned int rate, unsigned short spdif_ctls);
+ unsigned int snd_hdac_calc_stream_format(unsigned int rate,
+ 					 unsigned int channels,
+ 					 snd_pcm_format_t format,
+diff --git a/include/sound/pcm_params.h b/include/sound/pcm_params.h
+index ba184f49f7e18..fbf35df6e5cf5 100644
+--- a/include/sound/pcm_params.h
++++ b/include/sound/pcm_params.h
+@@ -362,6 +362,8 @@ static inline int params_physical_width(const struct snd_pcm_hw_params *p)
+ 	return snd_pcm_format_physical_width(params_format(p));
+ }
  
-+#define _SNDRV_PCM_SUBFMTBIT(fmt)	BIT((__force int)SNDRV_PCM_SUBFORMAT_##fmt)
-+#define SNDRV_PCM_SUBFMTBIT_STD		_SNDRV_PCM_SUBFMTBIT(STD)
-+#define SNDRV_PCM_SUBFMTBIT_MSBITS_MAX	_SNDRV_PCM_SUBFMTBIT(MSBITS_MAX)
-+#define SNDRV_PCM_SUBFMTBIT_MSBITS_20	_SNDRV_PCM_SUBFMTBIT(MSBITS_20)
-+#define SNDRV_PCM_SUBFMTBIT_MSBITS_24	_SNDRV_PCM_SUBFMTBIT(MSBITS_24)
++int snd_pcm_hw_params_bits(const struct snd_pcm_hw_params *p);
 +
- struct snd_pcm_file {
- 	struct snd_pcm_substream *substream;
- 	int no_compat_mmap;
-diff --git a/include/uapi/sound/asound.h b/include/uapi/sound/asound.h
-index 36aec82c7c133..d9806fcac815a 100644
---- a/include/uapi/sound/asound.h
-+++ b/include/uapi/sound/asound.h
-@@ -142,7 +142,7 @@ struct snd_hwdep_dsp_image {
-  *                                                                           *
-  *****************************************************************************/
+ static inline void
+ params_set_format(struct snd_pcm_hw_params *p, snd_pcm_format_t fmt)
+ {
+diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
+index 5d455bedb7c9d..459c1be526391 100644
+--- a/sound/core/pcm_lib.c
++++ b/sound/core/pcm_lib.c
+@@ -1706,6 +1706,40 @@ int snd_pcm_hw_param_last(struct snd_pcm_substream *pcm,
+ }
+ EXPORT_SYMBOL(snd_pcm_hw_param_last);
  
--#define SNDRV_PCM_VERSION		SNDRV_PROTOCOL_VERSION(2, 0, 15)
-+#define SNDRV_PCM_VERSION		SNDRV_PROTOCOL_VERSION(2, 0, 16)
++/**
++ * snd_pcm_hw_params_bits - Get the number of bits per the sample.
++ * @p: hardware parameters
++ *
++ * Return: The number of bits per sample based on the format,
++ * subformat and msbits the specified hw params has.
++ */
++int snd_pcm_hw_params_bits(const struct snd_pcm_hw_params *p)
++{
++	snd_pcm_subformat_t subformat = params_subformat(p);
++	snd_pcm_format_t format = params_format(p);
++
++	switch (format) {
++	case SNDRV_PCM_FORMAT_S32_LE:
++	case SNDRV_PCM_FORMAT_U32_LE:
++	case SNDRV_PCM_FORMAT_S32_BE:
++	case SNDRV_PCM_FORMAT_U32_BE:
++		switch (subformat) {
++		case SNDRV_PCM_SUBFORMAT_MSBITS_20:
++			return 20;
++		case SNDRV_PCM_SUBFORMAT_MSBITS_24:
++			return 24;
++		case SNDRV_PCM_SUBFORMAT_MSBITS_MAX:
++		case SNDRV_PCM_SUBFORMAT_STD:
++		default:
++			break;
++		}
++		fallthrough;
++	default:
++		return snd_pcm_format_width(format);
++	}
++}
++EXPORT_SYMBOL(snd_pcm_hw_params_bits);
++
+ static int snd_pcm_lib_ioctl_reset(struct snd_pcm_substream *substream,
+ 				   void *arg)
+ {
+diff --git a/sound/hda/hdac_device.c b/sound/hda/hdac_device.c
+index 51984633ea64d..1410f3e6ca3b5 100644
+--- a/sound/hda/hdac_device.c
++++ b/sound/hda/hdac_device.c
+@@ -13,6 +13,7 @@
+ #include <sound/hdaudio.h>
+ #include <sound/hda_regmap.h>
+ #include <sound/pcm.h>
++#include <sound/pcm_params.h>
+ #include "local.h"
  
- typedef unsigned long snd_pcm_uframes_t;
- typedef signed long snd_pcm_sframes_t;
-@@ -267,7 +267,10 @@ typedef int __bitwise snd_pcm_format_t;
- 
- typedef int __bitwise snd_pcm_subformat_t;
- #define	SNDRV_PCM_SUBFORMAT_STD		((__force snd_pcm_subformat_t) 0)
--#define	SNDRV_PCM_SUBFORMAT_LAST	SNDRV_PCM_SUBFORMAT_STD
-+#define	SNDRV_PCM_SUBFORMAT_MSBITS_MAX	((__force snd_pcm_subformat_t) 1)
-+#define	SNDRV_PCM_SUBFORMAT_MSBITS_20	((__force snd_pcm_subformat_t) 2)
-+#define	SNDRV_PCM_SUBFORMAT_MSBITS_24	((__force snd_pcm_subformat_t) 3)
-+#define	SNDRV_PCM_SUBFORMAT_LAST	SNDRV_PCM_SUBFORMAT_MSBITS_24
- 
- #define SNDRV_PCM_INFO_MMAP		0x00000001	/* hardware supports mmap */
- #define SNDRV_PCM_INFO_MMAP_VALID	0x00000002	/* period data are valid during transfer */
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index 5bc6c3b0e18d2..a921e4e05baf2 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -266,6 +266,9 @@ static const char * const snd_pcm_access_names[] = {
- 
- static const char * const snd_pcm_subformat_names[] = {
- 	SUBFORMAT(STD), 
-+	SUBFORMAT(MSBITS_MAX),
-+	SUBFORMAT(MSBITS_20),
-+	SUBFORMAT(MSBITS_24),
+ static void setup_fg_nodes(struct hdac_device *codec);
+@@ -723,6 +724,129 @@ static const struct hda_rate_tbl rate_bits[] = {
+ 	{ 0 } /* terminator */
  };
  
- static const char * const snd_pcm_tstamp_mode_names[] = {
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 68276daedd821..96b1de0537d04 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -480,6 +480,7 @@ static int fixup_unreferenced_params(struct snd_pcm_substream *substream,
- {
- 	const struct snd_interval *i;
- 	const struct snd_mask *m;
-+	struct snd_mask *m_rw;
- 	int err;
- 
- 	if (!params->msbits) {
-@@ -488,6 +489,22 @@ static int fixup_unreferenced_params(struct snd_pcm_substream *substream,
- 			params->msbits = snd_interval_value(i);
- 	}
- 
-+	if (params->msbits) {
-+		m = hw_param_mask_c(params, SNDRV_PCM_HW_PARAM_FORMAT);
-+		if (snd_mask_single(m)) {
-+			snd_pcm_format_t format = (__force snd_pcm_format_t)snd_mask_min(m);
++static snd_pcm_format_t snd_hdac_format_normalize(snd_pcm_format_t format)
++{
++	switch (format) {
++	case SNDRV_PCM_FORMAT_S20_LE:
++	case SNDRV_PCM_FORMAT_S24_LE:
++		return SNDRV_PCM_FORMAT_S32_LE;
 +
-+			if (snd_pcm_format_linear(format) &&
-+			    snd_pcm_format_width(format) != params->msbits) {
-+				m_rw = hw_param_mask(params, SNDRV_PCM_HW_PARAM_SUBFORMAT);
-+				snd_mask_reset(m_rw,
-+					       (__force unsigned)SNDRV_PCM_SUBFORMAT_MSBITS_MAX);
-+				if (snd_mask_empty(m_rw))
-+					return -EINVAL;
-+			}
++	case SNDRV_PCM_FORMAT_U20_LE:
++	case SNDRV_PCM_FORMAT_U24_LE:
++		return SNDRV_PCM_FORMAT_U32_LE;
++
++	case SNDRV_PCM_FORMAT_S20_BE:
++	case SNDRV_PCM_FORMAT_S24_BE:
++		return SNDRV_PCM_FORMAT_S32_BE;
++
++	case SNDRV_PCM_FORMAT_U20_BE:
++	case SNDRV_PCM_FORMAT_U24_BE:
++		return SNDRV_PCM_FORMAT_U32_BE;
++
++	default:
++		return format;
++	}
++}
++
++/**
++ * snd_hdac_stream_format_bits - obtain bits per sample value.
++ * @format:	the PCM format.
++ * @subformat:	the PCM subformat.
++ * @maxbits:	the maximum bits per sample.
++ *
++ * Return: The number of bits per sample.
++ */
++unsigned int snd_hdac_stream_format_bits(snd_pcm_format_t format, snd_pcm_subformat_t subformat,
++					 unsigned int maxbits)
++{
++	struct snd_pcm_hw_params params;
++	unsigned int bits;
++
++	memset(&params, 0, sizeof(params));
++
++	params_set_format(&params, snd_hdac_format_normalize(format));
++	snd_mask_set(hw_param_mask(&params, SNDRV_PCM_HW_PARAM_SUBFORMAT),
++		     (__force unsigned int)subformat);
++
++	bits = snd_pcm_hw_params_bits(&params);
++	if (maxbits)
++		return min(bits, maxbits);
++	return bits;
++}
++EXPORT_SYMBOL_GPL(snd_hdac_stream_format_bits);
++
++/**
++ * snd_hdac_stream_format - convert format parameters to SDxFMT value.
++ * @channels:	the number of channels.
++ * @bits:	bits per sample.
++ * @rate:	the sample rate.
++ *
++ * Return: The format bitset or zero if invalid.
++ */
++unsigned int snd_hdac_stream_format(unsigned int channels, unsigned int bits, unsigned int rate)
++{
++	unsigned int val = 0;
++	int i;
++
++	for (i = 0; rate_bits[i].hz; i++) {
++		if (rate_bits[i].hz == rate) {
++			val = rate_bits[i].hda_fmt;
++			break;
 +		}
 +	}
 +
- 	if (!params->rate_den) {
- 		i = hw_param_interval_c(params, SNDRV_PCM_HW_PARAM_RATE);
- 		if (snd_interval_single(i)) {
-@@ -2520,6 +2537,41 @@ static int snd_pcm_hw_rule_buffer_bytes_max(struct snd_pcm_hw_params *params,
- 	return snd_interval_refine(hw_param_interval(params, rule->var), &t);
- }		
- 
-+static int snd_pcm_hw_rule_subformats(struct snd_pcm_hw_params *params,
-+				      struct snd_pcm_hw_rule *rule)
-+{
-+	struct snd_mask *sfmask = hw_param_mask(params, SNDRV_PCM_HW_PARAM_SUBFORMAT);
-+	struct snd_mask *fmask = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
-+	u32 *subformats = rule->private;
-+	snd_pcm_format_t f;
-+	struct snd_mask m;
++	if (!rate_bits[i].hz)
++		return 0;
 +
-+	snd_mask_none(&m);
-+	/* All PCMs support at least the default STD subformat. */
-+	snd_mask_set(&m, (__force unsigned)SNDRV_PCM_SUBFORMAT_STD);
++	if (channels == 0 || channels > 8)
++		return 0;
++	val |= channels - 1;
 +
-+	pcm_for_each_format(f) {
-+		if (!snd_mask_test(fmask, (__force unsigned)f))
-+			continue;
-+
-+		if (f == SNDRV_PCM_FORMAT_S32_LE && *subformats)
-+			m.bits[0] |= *subformats;
-+		else if (snd_pcm_format_linear(f))
-+			snd_mask_set(&m, (__force unsigned)SNDRV_PCM_SUBFORMAT_MSBITS_MAX);
++	switch (bits) {
++	case 8:
++		val |= AC_FMT_BITS_8;
++		break;
++	case 16:
++		val |= AC_FMT_BITS_16;
++		break;
++	case 20:
++		val |= AC_FMT_BITS_20;
++		break;
++	case 24:
++		val |= AC_FMT_BITS_24;
++		break;
++	case 32:
++		val |= AC_FMT_BITS_32;
++		break;
++	default:
++		return 0;
 +	}
 +
-+	return snd_mask_refine(sfmask, &m);
++	return val;
 +}
++EXPORT_SYMBOL_GPL(snd_hdac_stream_format);
 +
-+static int snd_pcm_hw_constraint_subformats(struct snd_pcm_runtime *runtime,
-+					   unsigned int cond, u32 *subformats)
++/**
++ * snd_hdac_spdif_stream_format - convert format parameters to SDxFMT value.
++ * @channels:	the number of channels.
++ * @bits:	bits per sample.
++ * @rate:	the sample rate.
++ * @spdif_ctls:	HD-audio SPDIF status bits (0 if irrelevant).
++ *
++ * Return: The format bitset or zero if invalid.
++ */
++unsigned int snd_hdac_spdif_stream_format(unsigned int channels, unsigned int bits,
++					  unsigned int rate, unsigned short spdif_ctls)
 +{
-+	return snd_pcm_hw_rule_add(runtime, cond, -1,
-+				   snd_pcm_hw_rule_subformats, (void *)subformats,
-+				   SNDRV_PCM_HW_PARAM_SUBFORMAT,
-+				   SNDRV_PCM_HW_PARAM_FORMAT, -1);
-+}
++	unsigned int val = snd_hdac_stream_format(channels, bits, rate);
 +
- static int snd_pcm_hw_constraints_init(struct snd_pcm_substream *substream)
- {
- 	struct snd_pcm_runtime *runtime = substream->runtime;
-@@ -2671,8 +2723,7 @@ static int snd_pcm_hw_constraints_complete(struct snd_pcm_substream *substream)
- 	if (err < 0)
- 		return err;
- 
--	err = snd_pcm_hw_constraint_mask(runtime, SNDRV_PCM_HW_PARAM_SUBFORMAT,
--					 PARAM_MASK_BIT(SNDRV_PCM_SUBFORMAT_STD));
-+	err = snd_pcm_hw_constraint_subformats(runtime, 0, &hw->subformats);
- 	if (err < 0)
- 		return err;
- 
-diff --git a/tools/include/uapi/sound/asound.h b/tools/include/uapi/sound/asound.h
-index f9939da411227..d5b9cfbd9ceac 100644
---- a/tools/include/uapi/sound/asound.h
-+++ b/tools/include/uapi/sound/asound.h
-@@ -142,7 +142,7 @@ struct snd_hwdep_dsp_image {
-  *                                                                           *
-  *****************************************************************************/
- 
--#define SNDRV_PCM_VERSION		SNDRV_PROTOCOL_VERSION(2, 0, 15)
-+#define SNDRV_PCM_VERSION		SNDRV_PROTOCOL_VERSION(2, 0, 16)
- 
- typedef unsigned long snd_pcm_uframes_t;
- typedef signed long snd_pcm_sframes_t;
-@@ -267,7 +267,10 @@ typedef int __bitwise snd_pcm_format_t;
- 
- typedef int __bitwise snd_pcm_subformat_t;
- #define	SNDRV_PCM_SUBFORMAT_STD		((__force snd_pcm_subformat_t) 0)
--#define	SNDRV_PCM_SUBFORMAT_LAST	SNDRV_PCM_SUBFORMAT_STD
-+#define	SNDRV_PCM_SUBFORMAT_MSBITS_MAX	((__force snd_pcm_subformat_t) 1)
-+#define	SNDRV_PCM_SUBFORMAT_MSBITS_20	((__force snd_pcm_subformat_t) 2)
-+#define	SNDRV_PCM_SUBFORMAT_MSBITS_24	((__force snd_pcm_subformat_t) 3)
-+#define	SNDRV_PCM_SUBFORMAT_LAST	SNDRV_PCM_SUBFORMAT_MSBITS_24
- 
- #define SNDRV_PCM_INFO_MMAP		0x00000001	/* hardware supports mmap */
- #define SNDRV_PCM_INFO_MMAP_VALID	0x00000002	/* period data are valid during transfer */
++	if (val && spdif_ctls & AC_DIG1_NONAUDIO)
++		val |= AC_FMT_TYPE_NON_PCM;
++
++	return val;
++}
++EXPORT_SYMBOL_GPL(snd_hdac_spdif_stream_format);
++
+ /**
+  * snd_hdac_calc_stream_format - calculate the format bitset
+  * @rate: the sample rate
 -- 
 2.53.0
 
