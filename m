@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050247;
-	b=02yQcZd2kHwOSZkHkaNXPaQ98lSGEwbUPeoWdPCzmuAsf6ZCzVPxTKrHOQTYyr5iMtwG
-	 ntlk/0hEx3xZBu+BZexzrfCTj2p/FohyamBgRNJ4y0rp353b8lrFXkCba7jSKCR74w7xg
-	 0O1qkP4UGjrPBRomWlIU3jLRQ1DoUgwd2QlKwP+bn/LCMP8I4mxAAZ+G5eVGMVnNgbZIo
-	 GAJI1G28cH5BtswoLZsWpI3rq4L0pSVIc6koZQrzBYoS9+ki39vvCorsstLopFdruBLgc
-	 VRAJH4a5qMFSqP1WdAXTtHWYLxFhL4HbXv7CJ3gRRSw6UJSYTNdNwBvoWubzkPpKpQQ==
+	t=1795050249;
+	b=EN0V4CP2h1gWi/Ws0Xc351lV6MpoSzPIcIdLdsBgZvI8Yjh6MZsiW3aU3etnhWvdtyE/
+	 gOP3/eFc34UXLK2UzdYvrWLiUouozOXSy5uMp0bIhEkBqzojjKe14gahvG5cjLdw+Xn4m
+	 o8RNMK6GJQ2etxlGjBA1f8GNw8a3HMaUh3SOycuRRUd6OfpAkr9zqqgV2SCtq8w0vQlBH
+	 uoP62EcOdJ4Mv7P7LT8Ttzc55/cC19fQKaDmqZ3kGQu5LtQv8VpeOcs7sFkMukYb8qtbS
+	 4FxJUGHRg0GmAIRgX7P7SoP0yOR2f8uM6YZGMWJ4zsZAZ1xDbwwFuPJ/Ej3Lo+Ak/eA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050247;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050249;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dMbDLG4EVRr6bTvsPt3Yqqa+d9umT0qoukB4fd2/42E=;
-	b=ebIKjoPgi9FpDm3TtoYrfrw00smFqIjpwJxg4EhYgGy+Ak1ec2bLK67ZWzZFgT693Cx7
-	 W6njxupkT6/SnOKofBDqQLSyUoT29/qIuRUzLh+2ZvBRZ3Nmo83/xG5fk9h8Oc7m32YRZ
-	 4whqrKmfmzv3gVDThHept1SFPEBfEypv54kvVttU1P778a1k7eD+xECLaY/TPAnlAjDm/
-	 F3RxBcmZMMkvkMHyChBrMqu8FSHLZxSp96abS1Dh4uVMSgJzAhUzRSvqJDEboeGsm3cZ/
-	 0mDiAbuZ6TublLULlKynLW9h5ByqfL6yluisCLqvquurKz1zKKhnNwl2NJvReACtTQQ==
+	bh=sXTRbl4Fy41i17PfvHeh5oQ1pm3OyyeEFPseB8vINgo=;
+	b=IQOp0FN/eFQ5BDMQn9DNeJm8xauvE84oe/urD3cZh1uz1bwHyGe4h4qP2K48ytVbf2d2
+	 lmQRhy3fP2ZAg300bIW9/imcf3QDmcXgo8DjJdbRND8epCaIQiimGurLo8v/rKFyNbQag
+	 YdE6eJ5V+dkIwTrZIcjocT9OZg67othxazGs8/GqQ6fkTNFmuHzhLIUqUGrabAQgSZCpF
+	 PtOLeVxEgST+aeSzEksiJY4XM7Yw39UVeVUgEqhADY/06Cug9CxC5mi/wnc7XnQVIlxfD
+	 nCOVB366OKQCSOFtBRbP9yT0PR0Jjz+HwhvL3DEVOXnmZPSYh3QISxEWuENFRAdaQow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIxiN69j;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wysfpeIC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12576606A32A;
-	Thu, 19 Nov 2026 01:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC660606A31C;
+	Thu, 19 Nov 2026 01:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MIxiN69j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA961F000C4;
-	Thu, 19 Nov 2026 01:04:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wysfpeIC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207121F000C4;
+	Thu, 19 Nov 2026 01:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050246;
-	bh=dMbDLG4EVRr6bTvsPt3Yqqa+d9umT0qoukB4fd2/42E=;
+	s=korg; t=1795050249;
+	bh=sXTRbl4Fy41i17PfvHeh5oQ1pm3OyyeEFPseB8vINgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MIxiN69jQHX/a23Its3KDSmfI5NICjqziVnUwauHQGAgcefmsdC5zkl3TUfFm6JTc
-	 +1DdD7fpsGUr9B7LBbpYHl6VRUoZem6ulpIbSvae4IeE/HZHO6FrdJuM27QSkcAVCV
-	 alNabGSA38BndiudmCUvlYuEqExuUdcFxWiSZFBA=
+	b=wysfpeIC5T9/3lFE02D75jgUSPtHr/y7SB0nf21bVGp79+Pk0vKo0t8+w8IeudRf/
+	 9uTsTc7wjTnFheeQ8BvCTJV/PL8see/iE7bMfIUcQ7jlv0JRF47jiPN++zvqnq/hFU
+	 Rs+AgFa2dgwZFVa5Ruz9vJ1v5SSETWsRRnqf1q9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2641/2857] rtc: class: Make the time32 hctosys limit configurable
-Date: Wed, 18 Nov 2026 16:01:15 +0100
-Message-ID: <20261118150336.682679232@linuxfoundation.org>
+Subject: [PATCH 6.1 2624/2857] ipvs: fix more races around the overload flag
+Date: Wed, 18 Nov 2026 16:00:58 +0100
+Message-ID: <20261118150336.049506162@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,114 +68,524 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit b253c2e96a80aac8e2bc67b425bf007ed78d4d8c ]
+[ Upstream commit 3ba20137287f4f34ddbf0afb53c5d1ba03b6a8c2 ]
 
-The RTC_HCTOSYS feature faces an impossible dilemma on 32-bit systems:
+Sashiko warns that we still have races when the dest overload
+thresholds are updated. If we narrow the range between
+thresholds the lockless readers (ip_vs_bind_dest and
+ip_vs_unbind_dest) may use old threshold values and
+as result to skip the required flag change.
 
- a) systemd requires RTC_HCTOSYS=y with the correct timestamp
-    for its intended operation
+To solve the problem ip_vs_bind_dest() and ip_vs_unbind_dest()
+will have the chance as before to change the overload
+state not only at the exact threshold positions but
+at any conn count below the lower and above the upper thresholds.
+To make it work without entering the locked region for
+every connection, we introduce l_threshold_val. Together with
+u_threshold_val we will switch between two states:
 
- b) broken RTC hardware can produce random future timestamps
-    beyond 2038 at boot time
+1. not overloaded: where l_threshold_val is set to 0
+to close the door for more ip_vs_unbind_dest() calls
+to clear the overload state.
 
- c) time32 userspace immediately hangs if the time is set to a
-    date beyond 2038 and requires timestamps to be clamped
+2. overloaded: where u_threshold_val is set to INT_MAX
+to close the door for more ip_vs_bind_dest() calls
+to set the overload state.
 
- d) time64 userspace is intended to survive the actual 2038
-    date and requires timestamps to not be clamped
+If a race occurs, multiple CPUs can repeat the state change
+but this should be for short time window.
 
-Commit b3a5ac42ab18 ("rtc: hctosys: Ensure system time doesn't overflow
-time_t") introduced this limit to protect time32 userspace from future
-RTC dates that can break boot and address constraints a), b) and c),
-but broke d) in the process by limiting RTC_HCTOSYS to the time32 range
-and falling back to RTC_HCTOSYS=n behavior when the RTC time overflows
-that.
+With the introduction of l_threshold_val the
+IP_VS_DEST_F_OVERLOAD flag and the 'flags' field are not
+needed anymore. We will use the ip_vs_dest_is_overloaded()
+helper for all places that read the overload state.
 
-Make the behavior configurable with a new RTC_HCTOSYS_TIME32_LIMIT
-option that chooses between breaking c) or d). On systems with
-COMPAT_32BIT_TIME=n, only RTC_HCTOSYS_TIME32_LIMIT=n is allowed since
-userspace can be assumed to be fully built for time64. 64-bit kernels
-running 32-bit userland never had the cutoff and continue to not offer
-the option.
+Do not check IP_VS_DEST_CF_AVAILABLE in ip_vs_dh.c because
+we do not hold reference to dest after it is removed and
+rely on RCU to access the available dests.
 
-Warn on rejection with the RTC date and option name so users can
-identify the cause and find the setting.
+To reduce the cacheline accesses while selecting destination,
+keep the mostly used fields (weight and l_threshold_val)
+at the first read-mostly cacheline together with the hash
+nodes.
 
-[arnd: reword Kconfig text and patch description,
-       add COMPAT_32BIT_TIME dependency]
-----
-I ended up rewriting most of the text but kept Karl's ownership
-as he did the original patch.
-
-Fixes: b3a5ac42ab18 ("rtc: hctosys: Ensure system time doesn't overflow time_t")
-Link: https://lore.kernel.org/all/20220908115337.1604277-1-arnd@kernel.org/
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20261020080026.2461578-1-arnd@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 8f843441c4e7 ("ipvs: properly update the overload flag on dest edit")
+Link: https://sashiko.dev/#/patchset/20260810190621.894119-1-pablo%40netfilter.org
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/Kconfig | 21 +++++++++++++++++++++
- drivers/rtc/class.c |  8 +++++---
- 2 files changed, 26 insertions(+), 3 deletions(-)
+ include/net/ip_vs.h              | 50 ++++++++++++++++++++------------
+ net/netfilter/ipvs/ip_vs_conn.c  |  8 ++---
+ net/netfilter/ipvs/ip_vs_ctl.c   | 38 ++++++++++++------------
+ net/netfilter/ipvs/ip_vs_dh.c    | 16 ++--------
+ net/netfilter/ipvs/ip_vs_fo.c    |  2 +-
+ net/netfilter/ipvs/ip_vs_lblc.c  |  4 +--
+ net/netfilter/ipvs/ip_vs_lblcr.c |  8 ++---
+ net/netfilter/ipvs/ip_vs_lc.c    |  2 +-
+ net/netfilter/ipvs/ip_vs_mh.c    |  2 +-
+ net/netfilter/ipvs/ip_vs_nq.c    |  2 +-
+ net/netfilter/ipvs/ip_vs_ovf.c   |  2 +-
+ net/netfilter/ipvs/ip_vs_rr.c    |  2 +-
+ net/netfilter/ipvs/ip_vs_sed.c   |  4 +--
+ net/netfilter/ipvs/ip_vs_sh.c    |  2 +-
+ net/netfilter/ipvs/ip_vs_twos.c  |  4 +--
+ net/netfilter/ipvs/ip_vs_wlc.c   |  4 +--
+ net/netfilter/ipvs/ip_vs_wrr.c   |  2 +-
+ 17 files changed, 76 insertions(+), 76 deletions(-)
 
-diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
-index 87dc050ca004c..95fc91fcd193d 100644
---- a/drivers/rtc/Kconfig
-+++ b/drivers/rtc/Kconfig
-@@ -30,6 +30,27 @@ config RTC_HCTOSYS
- 	  the value read from a specified RTC device. This is useful to avoid
- 	  unnecessary fsck runs at boot time, and to network better.
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 9ac0ffb54bebd..49e0dd79592a6 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -33,9 +33,6 @@
+ #define IP_VS_HDR_INVERSE	1
+ #define IP_VS_HDR_ICMP		2
  
-+config RTC_HCTOSYS_TIME32_LIMIT
-+	bool "Reject RTC dates after the 2038 cutoff"
-+	depends on RTC_HCTOSYS && COMPAT_32BIT_TIME && !64BIT
-+	default y
-+	help
-+	  Reject RTC dates after 03:14:07 UTC on 19 January 2038 when
-+	  initializing the system clock in order to work around broken
-+	  RTC implementations that produce nondeterministic timestamps
-+	  without a working backup battery.
-+
-+	  A rejected date leaves system time unchanged, normally near
-+	  the Unix epoch, and the RTC's hctosys sysfs attribute reads
-+	  0. Userspace must supply the time if no other source has
-+	  initialized it.
-+
-+	  Say Y here if the kernel may have to run old time32 userspace on
-+	  hardware that can produce unpredictable RTC timestamps.  If the
-+	  kernel is intended to only run time64 compatible userspace and
-+	  continue working past 2038, you must pick N here in order to
-+	  have a working RTC_HCTOSYS functionality.
-+
- config RTC_HCTOSYS_DEVICE
- 	string "RTC used to set the system time"
- 	depends on RTC_HCTOSYS
-diff --git a/drivers/rtc/class.c b/drivers/rtc/class.c
-index adf2a3d475cad..1f34f5e26c25d 100644
---- a/drivers/rtc/class.c
-+++ b/drivers/rtc/class.c
-@@ -73,12 +73,14 @@ static void rtc_hctosys(struct rtc_device *rtc)
+-/* Destination Server Flags */
+-#define IP_VS_DEST_F_OVERLOAD	0x0002		/* server is overloaded */
+-
+ /* Destination Server Config Flags */
+ #define IP_VS_DEST_CF_AVAILABLE	0x0001		/* server is available */
  
- 	tv64.tv_sec = rtc_tm_to_time64(&tm);
+@@ -661,32 +658,43 @@ struct ip_vs_dest_dst {
+  * and so on.
+  */
+ struct ip_vs_dest {
++	/* Cacheline for hash table nodes - read-mostly */
++
+ 	struct list_head	n_list;   /* for the dests in the service */
+ 	struct hlist_node	d_list;   /* for table with all the dests */
  
--#if BITS_PER_LONG == 32
--	if (tv64.tv_sec > INT_MAX) {
-+	if (IS_ENABLED(CONFIG_RTC_HCTOSYS_TIME32_LIMIT) &&
-+	    tv64.tv_sec > INT_MAX) {
-+		dev_warn(rtc->dev.parent,
-+			 "hctosys: rejecting %ptR UTC due to CONFIG_RTC_HCTOSYS_TIME32_LIMIT=y\n",
-+			 &tm);
- 		err = -ERANGE;
- 		goto err_read;
+-	u16			af;		/* address family */
+-	__be16			port;		/* port number of the server */
+-	union nf_inet_addr	addr;		/* IP address of the server */
+-	volatile unsigned int	flags;		/* dest status flags */
+-	atomic_t		conn_flags;	/* flags to copy to conn */
+ 	atomic_t		weight;		/* server weight */
+-	unsigned long		cflags;		/* config flags */
+ 	atomic_t		last_weight;	/* server latest weight */
++
++	/* connection thresholds */
++	u32			l_threshold_val;/* used lower threshold */
++	u32			u_threshold_val;/* used upper threshold */
++	/* 32/48 */
++	u32			l_threshold;	/* lower threshold */
++	u32			u_threshold;	/* upper threshold */
++
++	unsigned long		cflags;		/* config flags */
++
++	/* 44/64 */
++	atomic_t		conn_flags;	/* flags to copy to conn */
++
+ 	__u16			tun_type;	/* tunnel type */
+ 	__be16			tun_port;	/* tunnel port */
+ 	__u16			tun_flags;	/* tunnel flags */
+ 
+-	refcount_t		refcnt;		/* reference counter */
+-	struct ip_vs_stats      stats;          /* statistics */
+-	unsigned long		idle_start;	/* start time, jiffies */
++	u16			af;		/* address family */
++	__be16			port;		/* port number of the server */
++	/* 60/80 */
++	union nf_inet_addr	addr;		/* IP address of the server */
+ 
+-	/* connection counters and thresholds */
+-	atomic_t		activeconns;	/* active connections */
++	/* connection counters */
+ 	atomic_t		totalconns;	/* total connections */
++	atomic_t		activeconns;	/* active connections */
+ 	atomic_t		persistconns;	/* persistent connections */
+-	__u32			u_threshold;	/* upper threshold */
+-	__u32			l_threshold;	/* lower threshold */
+-	__u32			l_threshold_val;/* used lower threshold */
++
++	refcount_t		refcnt;		/* reference counter */
++	struct ip_vs_stats      stats;          /* statistics */
++	unsigned long		idle_start;	/* start time, jiffies */
+ 
+ 	/* for destination cache */
+ 	spinlock_t		dst_lock;	/* lock of dst_cache */
+@@ -1476,7 +1484,13 @@ static inline void ip_vs_dest_put_and_free(struct ip_vs_dest *dest)
+ 		kfree(dest);
+ }
+ 
+-void ip_vs_dest_update_overload(struct ip_vs_dest *dest, int mode);
++void ip_vs_dest_update_overload(struct ip_vs_dest *dest, bool overload);
++
++/* Check if dest is in overloaded state */
++static inline bool ip_vs_dest_is_overloaded(const struct ip_vs_dest *dest)
++{
++	return READ_ONCE(dest->l_threshold_val);
++}
+ 
+ /* IPVS sync daemon data and function prototypes
+  * (from ip_vs_sync.c)
+diff --git a/net/netfilter/ipvs/ip_vs_conn.c b/net/netfilter/ipvs/ip_vs_conn.c
+index 50a768bf83bc2..dd6daa9e5d377 100644
+--- a/net/netfilter/ipvs/ip_vs_conn.c
++++ b/net/netfilter/ipvs/ip_vs_conn.c
+@@ -633,8 +633,8 @@ ip_vs_bind_dest(struct ip_vs_conn *cp, struct ip_vs_dest *dest)
+ 		if (!(flags & IP_VS_CONN_F_INACTIVE))
+ 			atomic_inc(&dest->activeconns);
+ 		tc = atomic_inc_return(&dest->totalconns);
+-		if (tc == READ_ONCE(dest->u_threshold))
+-			ip_vs_dest_update_overload(dest, 1);
++		if (tc >= READ_ONCE(dest->u_threshold_val))
++			ip_vs_dest_update_overload(dest, true);
+ 	} else {
+ 		/* It is a persistent connection/template, so increase
+ 		   the persistent connection counter */
+@@ -726,8 +726,8 @@ static inline void ip_vs_unbind_dest(struct ip_vs_conn *cp)
+ 		if (!(cp->flags & IP_VS_CONN_F_INACTIVE))
+ 			atomic_dec(&dest->activeconns);
+ 		tc = atomic_fetch_dec(&dest->totalconns);
+-		if (tc == READ_ONCE(dest->l_threshold_val))
+-			ip_vs_dest_update_overload(dest, -1);
++		if (tc <= READ_ONCE(dest->l_threshold_val))
++			ip_vs_dest_update_overload(dest, false);
+ 	} else {
+ 		/* It is a persistent connection/template, so decrease
+ 		   the persistent connection counter */
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 40808918c8b8e..d66dc47d3d870 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -869,32 +869,32 @@ ip_vs_zero_stats(struct ip_vs_stats *stats)
+  * - conns reach u_threshold and exceed it: set the flag
+  * - conns go below l_threshold (or 75% of u_threshold): clear the flag
+  */
+-static void __ip_vs_dest_update_overload(struct ip_vs_dest *dest, int mode)
++static void __ip_vs_dest_update_overload(struct ip_vs_dest *dest, bool overload)
+ {
+ 	int conns;
+ 	u32 l, u;
+ 
+ 	lockdep_assert_held(&dest->dst_lock);
+ 	u = READ_ONCE(dest->u_threshold);
+-	if (!u)
+-		goto unset;
+-	l = READ_ONCE(dest->l_threshold_val);
+-	conns = atomic_read(&dest->totalconns);
+-	if (conns >= (mode > 0 ? l : u)) {
+-		dest->flags |= IP_VS_DEST_F_OVERLOAD;
+-		return;
++	if (u) {
++		/* Low threshold defaults to 75% of upper threshold */
++		l = READ_ONCE(dest->l_threshold) ? : (u - (u >> 2));
++		conns = atomic_read(&dest->totalconns);
++		if (conns >= (overload ? l : u)) {
++			WRITE_ONCE(dest->u_threshold_val, INT_MAX);
++			WRITE_ONCE(dest->l_threshold_val, l);
++			return;
++		}
  	}
--#endif
+-	if (conns >= (mode < 0 ? u : l))
+-		return;
  
- 	err = do_settimeofday64(&tv64);
+-unset:
+-	dest->flags &= ~IP_VS_DEST_F_OVERLOAD;
++	WRITE_ONCE(dest->u_threshold_val, u ? : INT_MAX);
++	WRITE_ONCE(dest->l_threshold_val, 0);
+ }
  
+-void ip_vs_dest_update_overload(struct ip_vs_dest *dest, int mode)
++void ip_vs_dest_update_overload(struct ip_vs_dest *dest, bool overload)
+ {
+ 	spin_lock_bh(&dest->dst_lock);
+-	__ip_vs_dest_update_overload(dest, mode);
++	__ip_vs_dest_update_overload(dest, overload);
+ 	spin_unlock_bh(&dest->dst_lock);
+ }
+ 
+@@ -966,15 +966,13 @@ __ip_vs_update_dest(struct ip_vs_service *svc, struct ip_vs_dest *dest,
+ 
+ 	if (READ_ONCE(dest->u_threshold) != udest->u_threshold ||
+ 	    READ_ONCE(dest->l_threshold) != udest->l_threshold) {
++		bool overload;
++
+ 		spin_lock_bh(&dest->dst_lock);
+ 		WRITE_ONCE(dest->u_threshold, udest->u_threshold);
+ 		WRITE_ONCE(dest->l_threshold, udest->l_threshold);
+-		/* Low threshold defaults to 75% of upper threshold */
+-		WRITE_ONCE(dest->l_threshold_val,
+-			   udest->l_threshold ? :
+-			   (udest->u_threshold -
+-			    (udest->u_threshold >> 2)));
+-		__ip_vs_dest_update_overload(dest, 0);
++		overload = ip_vs_dest_is_overloaded(dest);
++		__ip_vs_dest_update_overload(dest, overload);
+ 		spin_unlock_bh(&dest->dst_lock);
+ 	}
+ 
+diff --git a/net/netfilter/ipvs/ip_vs_dh.c b/net/netfilter/ipvs/ip_vs_dh.c
+index 6d88bb4bf4ae8..21f61467fc140 100644
+--- a/net/netfilter/ipvs/ip_vs_dh.c
++++ b/net/netfilter/ipvs/ip_vs_dh.c
+@@ -196,16 +196,6 @@ static int ip_vs_dh_dest_changed(struct ip_vs_service *svc,
+ }
+ 
+ 
+-/*
+- *      If the dest flags is set with IP_VS_DEST_F_OVERLOAD,
+- *      consider that the server is overloaded here.
+- */
+-static inline int is_overloaded(struct ip_vs_dest *dest)
+-{
+-	return dest->flags & IP_VS_DEST_F_OVERLOAD;
+-}
+-
+-
+ /*
+  *      Destination hashing scheduling
+  */
+@@ -220,10 +210,8 @@ ip_vs_dh_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 
+ 	s = (struct ip_vs_dh_state *) svc->sched_data;
+ 	dest = ip_vs_dh_get(svc->af, s, &iph->daddr);
+-	if (!dest ||
+-	    !(dest->cflags & IP_VS_DEST_CF_AVAILABLE)
+-	    || atomic_read(&dest->weight) <= 0
+-	    || is_overloaded(dest)) {
++	if (!dest || atomic_read(&dest->weight) <= 0 ||
++	    ip_vs_dest_is_overloaded(dest)) {
+ 		ip_vs_scheduler_err(svc, "no destination available");
+ 		return NULL;
+ 	}
+diff --git a/net/netfilter/ipvs/ip_vs_fo.c b/net/netfilter/ipvs/ip_vs_fo.c
+index b846cc385279e..9319339c525bf 100644
+--- a/net/netfilter/ipvs/ip_vs_fo.c
++++ b/net/netfilter/ipvs/ip_vs_fo.c
+@@ -30,7 +30,7 @@ ip_vs_fo_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 	 * Find virtual server with highest weight and send it traffic
+ 	 */
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+-		if (!(dest->flags & IP_VS_DEST_F_OVERLOAD) &&
++		if (!ip_vs_dest_is_overloaded(dest) &&
+ 		    atomic_read(&dest->weight) > hw) {
+ 			hweight = dest;
+ 			hw = atomic_read(&dest->weight);
+diff --git a/net/netfilter/ipvs/ip_vs_lblc.c b/net/netfilter/ipvs/ip_vs_lblc.c
+index 49ff1f9fe1474..ab497413ab2a3 100644
+--- a/net/netfilter/ipvs/ip_vs_lblc.c
++++ b/net/netfilter/ipvs/ip_vs_lblc.c
+@@ -419,7 +419,7 @@ __ip_vs_lblc_schedule(struct ip_vs_service *svc)
+ 	 * new connection.
+ 	 */
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(dest))
+ 			continue;
+ 		if (atomic_read(&dest->weight) > 0) {
+ 			least = dest;
+@@ -434,7 +434,7 @@ __ip_vs_lblc_schedule(struct ip_vs_service *svc)
+ 	 */
+   nextstage:
+ 	list_for_each_entry_continue_rcu(dest, &svc->destinations, n_list) {
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(dest))
+ 			continue;
+ 
+ 		doh = ip_vs_dest_conn_overhead(dest);
+diff --git a/net/netfilter/ipvs/ip_vs_lblcr.c b/net/netfilter/ipvs/ip_vs_lblcr.c
+index 6feab18861e16..69e961163d3ab 100644
+--- a/net/netfilter/ipvs/ip_vs_lblcr.c
++++ b/net/netfilter/ipvs/ip_vs_lblcr.c
+@@ -167,7 +167,7 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
+ 	/* select the first destination server, whose weight > 0 */
+ 	list_for_each_entry_rcu(e, &set->list, list) {
+ 		least = e->dest;
+-		if (least->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(least))
+ 			continue;
+ 
+ 		if ((atomic_read(&least->weight) > 0) &&
+@@ -182,7 +182,7 @@ static inline struct ip_vs_dest *ip_vs_dest_set_min(struct ip_vs_dest_set *set)
+   nextstage:
+ 	list_for_each_entry_continue_rcu(e, &set->list, list) {
+ 		dest = e->dest;
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(dest))
+ 			continue;
+ 
+ 		doh = ip_vs_dest_conn_overhead(dest);
+@@ -581,7 +581,7 @@ __ip_vs_lblcr_schedule(struct ip_vs_service *svc)
+ 	 * new connection.
+ 	 */
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(dest))
+ 			continue;
+ 
+ 		if (atomic_read(&dest->weight) > 0) {
+@@ -597,7 +597,7 @@ __ip_vs_lblcr_schedule(struct ip_vs_service *svc)
+ 	 */
+   nextstage:
+ 	list_for_each_entry_continue_rcu(dest, &svc->destinations, n_list) {
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(dest))
+ 			continue;
+ 
+ 		doh = ip_vs_dest_conn_overhead(dest);
+diff --git a/net/netfilter/ipvs/ip_vs_lc.c b/net/netfilter/ipvs/ip_vs_lc.c
+index 534db3c4a0160..43b7130e654ba 100644
+--- a/net/netfilter/ipvs/ip_vs_lc.c
++++ b/net/netfilter/ipvs/ip_vs_lc.c
+@@ -39,7 +39,7 @@ ip_vs_lc_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 	 */
+ 
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+-		if ((dest->flags & IP_VS_DEST_F_OVERLOAD) ||
++		if (ip_vs_dest_is_overloaded(dest) ||
+ 		    atomic_read(&dest->weight) == 0)
+ 			continue;
+ 		doh = ip_vs_dest_conn_overhead(dest);
+diff --git a/net/netfilter/ipvs/ip_vs_mh.c b/net/netfilter/ipvs/ip_vs_mh.c
+index e3d7f5c879ceb..0440891670432 100644
+--- a/net/netfilter/ipvs/ip_vs_mh.c
++++ b/net/netfilter/ipvs/ip_vs_mh.c
+@@ -81,7 +81,7 @@ static inline void generate_hash_secret(hsiphash_key_t *hash1,
+ static inline bool is_unavailable(struct ip_vs_dest *dest)
+ {
+ 	return atomic_read(&dest->weight) <= 0 ||
+-	       dest->flags & IP_VS_DEST_F_OVERLOAD;
++	       ip_vs_dest_is_overloaded(dest);
+ }
+ 
+ /* Returns hash value for IPVS MH entry */
+diff --git a/net/netfilter/ipvs/ip_vs_nq.c b/net/netfilter/ipvs/ip_vs_nq.c
+index f56862a875188..9ae7c3d12872a 100644
+--- a/net/netfilter/ipvs/ip_vs_nq.c
++++ b/net/netfilter/ipvs/ip_vs_nq.c
+@@ -73,7 +73,7 @@ ip_vs_nq_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+ 
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD ||
++		if (ip_vs_dest_is_overloaded(dest) ||
+ 		    !atomic_read(&dest->weight))
+ 			continue;
+ 
+diff --git a/net/netfilter/ipvs/ip_vs_ovf.c b/net/netfilter/ipvs/ip_vs_ovf.c
+index c03066fdd5ca6..5f0a3dc06ffbf 100644
+--- a/net/netfilter/ipvs/ip_vs_ovf.c
++++ b/net/netfilter/ipvs/ip_vs_ovf.c
+@@ -34,7 +34,7 @@ ip_vs_ovf_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 	*/
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+ 		w = atomic_read(&dest->weight);
+-		if ((dest->flags & IP_VS_DEST_F_OVERLOAD) ||
++		if (ip_vs_dest_is_overloaded(dest) ||
+ 		    atomic_read(&dest->activeconns) > w ||
+ 		    w == 0)
+ 			continue;
+diff --git a/net/netfilter/ipvs/ip_vs_rr.c b/net/netfilter/ipvs/ip_vs_rr.c
+index 38495c6f6c7cc..c7edc6aa8e7b2 100644
+--- a/net/netfilter/ipvs/ip_vs_rr.c
++++ b/net/netfilter/ipvs/ip_vs_rr.c
+@@ -67,7 +67,7 @@ ip_vs_rr_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 		list_for_each_entry_continue_rcu(dest,
+ 						 &svc->destinations,
+ 						 n_list) {
+-			if (!(dest->flags & IP_VS_DEST_F_OVERLOAD) &&
++			if (!ip_vs_dest_is_overloaded(dest) &&
+ 			    atomic_read(&dest->weight) > 0)
+ 				/* HIT */
+ 				goto out;
+diff --git a/net/netfilter/ipvs/ip_vs_sed.c b/net/netfilter/ipvs/ip_vs_sed.c
+index 7663288e53587..c6ecb2e7b2701 100644
+--- a/net/netfilter/ipvs/ip_vs_sed.c
++++ b/net/netfilter/ipvs/ip_vs_sed.c
+@@ -76,7 +76,7 @@ ip_vs_sed_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 	 */
+ 
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+-		if (!(dest->flags & IP_VS_DEST_F_OVERLOAD) &&
++		if (!ip_vs_dest_is_overloaded(dest) &&
+ 		    atomic_read(&dest->weight) > 0) {
+ 			least = dest;
+ 			loh = ip_vs_sed_dest_overhead(least);
+@@ -91,7 +91,7 @@ ip_vs_sed_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 	 */
+   nextstage:
+ 	list_for_each_entry_continue_rcu(dest, &svc->destinations, n_list) {
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(dest))
+ 			continue;
+ 		doh = ip_vs_sed_dest_overhead(dest);
+ 		if ((__s64)loh * atomic_read(&dest->weight) >
+diff --git a/net/netfilter/ipvs/ip_vs_sh.c b/net/netfilter/ipvs/ip_vs_sh.c
+index c2028e4120929..f1f7b879e6a89 100644
+--- a/net/netfilter/ipvs/ip_vs_sh.c
++++ b/net/netfilter/ipvs/ip_vs_sh.c
+@@ -74,7 +74,7 @@ struct ip_vs_sh_state {
+ static inline bool is_unavailable(struct ip_vs_dest *dest)
+ {
+ 	return atomic_read(&dest->weight) <= 0 ||
+-	       dest->flags & IP_VS_DEST_F_OVERLOAD;
++	       ip_vs_dest_is_overloaded(dest);
+ }
+ 
+ /*
+diff --git a/net/netfilter/ipvs/ip_vs_twos.c b/net/netfilter/ipvs/ip_vs_twos.c
+index f2579fc9c75bd..5e800d622f738 100644
+--- a/net/netfilter/ipvs/ip_vs_twos.c
++++ b/net/netfilter/ipvs/ip_vs_twos.c
+@@ -53,7 +53,7 @@ static struct ip_vs_dest *ip_vs_twos_schedule(struct ip_vs_service *svc,
+ 
+ 	/* Generate a random weight between [0,sum of all weights) */
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+-		if (!(dest->flags & IP_VS_DEST_F_OVERLOAD)) {
++		if (!ip_vs_dest_is_overloaded(dest)) {
+ 			weight = atomic_read(&dest->weight);
+ 			if (weight > 0) {
+ 				total_weight += weight;
+@@ -76,7 +76,7 @@ static struct ip_vs_dest *ip_vs_twos_schedule(struct ip_vs_service *svc,
+ 
+ 	/* Pick two weighted servers */
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(dest))
+ 			continue;
+ 
+ 		weight = atomic_read(&dest->weight);
+diff --git a/net/netfilter/ipvs/ip_vs_wlc.c b/net/netfilter/ipvs/ip_vs_wlc.c
+index 09f584b564a0e..5f3e3a1067cbc 100644
+--- a/net/netfilter/ipvs/ip_vs_wlc.c
++++ b/net/netfilter/ipvs/ip_vs_wlc.c
+@@ -48,7 +48,7 @@ ip_vs_wlc_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 	 */
+ 
+ 	list_for_each_entry_rcu(dest, &svc->destinations, n_list) {
+-		if (!(dest->flags & IP_VS_DEST_F_OVERLOAD) &&
++		if (!ip_vs_dest_is_overloaded(dest) &&
+ 		    atomic_read(&dest->weight) > 0) {
+ 			least = dest;
+ 			loh = ip_vs_dest_conn_overhead(least);
+@@ -63,7 +63,7 @@ ip_vs_wlc_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 	 */
+   nextstage:
+ 	list_for_each_entry_continue_rcu(dest, &svc->destinations, n_list) {
+-		if (dest->flags & IP_VS_DEST_F_OVERLOAD)
++		if (ip_vs_dest_is_overloaded(dest))
+ 			continue;
+ 		doh = ip_vs_dest_conn_overhead(dest);
+ 		if ((__s64)loh * atomic_read(&dest->weight) >
+diff --git a/net/netfilter/ipvs/ip_vs_wrr.c b/net/netfilter/ipvs/ip_vs_wrr.c
+index 1bc7a0789d85a..416d9e2477b83 100644
+--- a/net/netfilter/ipvs/ip_vs_wrr.c
++++ b/net/netfilter/ipvs/ip_vs_wrr.c
+@@ -177,7 +177,7 @@ ip_vs_wrr_schedule(struct ip_vs_service *svc, const struct sk_buff *skb,
+ 		list_for_each_entry_continue_rcu(dest,
+ 						 &svc->destinations,
+ 						 n_list) {
+-			if (!(dest->flags & IP_VS_DEST_F_OVERLOAD) &&
++			if (!ip_vs_dest_is_overloaded(dest) &&
+ 			    atomic_read(&dest->weight) >= mark->cw)
+ 				goto found;
+ 			if (dest == stop)
 -- 
 2.53.0
 
