@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044578;
-	b=p+aGYoPMhGS0brZu6yj4D/x3n4qG0yYGo98OQEVt2cLMGwqngT7//pyv1G0akc21do6n
-	 GObsWRtaMpuZPrMc2UYM5ba8yvNUrqvZSim9yUS/4AR8Ye7ZgDeMW6T7kVjmGKu0ES0jE
-	 9tv1qSf8UlK56hd8UPOIuZ3UZAuPPOscDQ6J1hlmz4zr9cMVFYX5nw6ynIJzM6B9Rt7Pv
-	 82+KX9F7p1zC1eaaeMvyyNos9OdPZUssCxSooECMoSBjieo5QuPZ5ZquO1wzyqIHKHg+Y
-	 LEPu1aoDg+H3fHXK5JgnIaqA1XUJSSoQKqy5STPYmJqsO3uzT0RWvnFAtkhImzCAA4w==
+	t=1795044581;
+	b=vOGIn6UBsiAQq3yWqKfBJl4Nxe8ZeOTANzkZJZFwE67d+xW7Wd9v48gMYcNM2aU1ypPX
+	 bBPEiMApFOeWcUtN+TqwF/xH73wOI62tWUV8l4TB596x00m/1GWPcbbXqG8jEQmtewghi
+	 A7TAUt5IRDA9Op+Y960HFxDr2lO9nXREnXo6xNkmuVc3pCY9XcokgbJeMZsPoQobL4KPt
+	 kY1Vr+QXnj7CsDxTiIAy22MNaT5/u1LAoBd1T9y7TlLLNkZ3z2c9nooV3b94qcnbk3ado
+	 KZJ9AYjFaHA/2jB/x024ZTdNq21UyTDIs2uq1HA6Sg8cqqaSluEFpj/ozbGyo4Yj2CA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lDUFh56MAEW2iBWWS7AUN2OntFtxxpgBdUYLZimGq24=;
-	b=OhOvCr3/o3hlhqa8/wppXS2K+6GMYT9KYZO7ol+nwul1Bw4OVJzq7mD3r2UnFhkxsLcq
-	 Jnp3fzBBkeQhdcS38vebbX2jYB1yNSyKO4Xuh1AR1r3xGTuu1+oUNpqaOm0fG04wD3CSW
-	 pHsPecl+FnrTIQM/25LX71sr6mz89/SlmhNwzMifb4B0UwA5DM3gMrw0gjmYl11hlpP+t
-	 WDw/DPWWtg/Ip4MV8TA51Sq5VuWHDAVMw+Jyo9dnNanBFczCmIECLQk40BLLY6I+XT6SO
-	 QipwaxqMdB9lX76EMieEV+7GqJhvw7aT8RPhAqjNSEyiIpwpCD/RYv7cKN0tQP39D/Q==
+	bh=zZ3a81sAsrDTtFnhlQQdmmNItbI2EvKb/DjzVA3SuSA=;
+	b=KNUOZr5ToQ52SbIEYVTL+hCOSE+pDeLFeCWxPzWtg2nngwlbrIu26iQyxcKYjwse/tdm
+	 w7bSOziF8bRViU+26HSkjbWZdY+XDW6F98xRrgwlgS2Kbr0Ob4el9kYVs/Unp/mEz/EiK
+	 qZMFBkHvBANHCDflJrGJQuzcSxPTT02XCDVO7nR0ztkSYrOaX9TOEZkJ1QtjdAKpE9Ewn
+	 hGwhiltrX7Z1FPjFp2FWJw1kvv3RAmOTCnIlWIC2SUmOlBPuhdtGhs+uDP5TR2cN31cRX
+	 vAhnfjlBUXD9Es83fJRKx781oeshB7/AiLGZ498snNgBSShbA9mj+9AwaXD4xLfP6JA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bm7J7cjO;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KEP3z4Ui;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F33C606A320;
-	Wed, 18 Nov 2026 23:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EAF606A31C;
+	Wed, 18 Nov 2026 23:29:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bm7J7cjO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB9D1F000C4;
-	Wed, 18 Nov 2026 23:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KEP3z4Ui
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AEFC1F000C4;
+	Wed, 18 Nov 2026 23:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044578;
-	bh=lDUFh56MAEW2iBWWS7AUN2OntFtxxpgBdUYLZimGq24=;
+	s=korg; t=1795044580;
+	bh=zZ3a81sAsrDTtFnhlQQdmmNItbI2EvKb/DjzVA3SuSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bm7J7cjO4OCFXJ6c/0jXrqFyeZGQSi/JSa6KsilYwop1A3xvuBmaHXeoocuNCJX2r
-	 tIxpchaP+4aDbu6Ipta+fxKYjarWOB1pWP4sICl/e3D3ilD1WoxKL7j6nKKgXPfcO3
-	 BNdkW8BZB7lGTPCUkegWp6o0jKkrTN+2Yk3LtM3Q=
+	b=KEP3z4UiIhV8P4mLQwp34UHpnlE1ahu84ZWjIKowFenHZDw3yyojt9qXZreUkL5Za
+	 DZlH+q4lLPyCSELAmubb8oLp2CWSSXkqvlLkclUeE744NpzDh/kF4VnW+cx7sIWpRZ
+	 S3O5QJ1Ut+ORLwAe0Jne7X98FQJZoGfPg92OuIrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
 	Jeff Layton <jlayton@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0615/2857] NFSD: Resolve the recall-any mask names in the trace format
-Date: Wed, 18 Nov 2026 15:27:29 +0100
-Message-ID: <20261118150223.636431624@linuxfoundation.org>
+Subject: [PATCH 6.1 0616/2857] nfsd: zero NFSv4 COMPOUND tag padding
+Date: Wed, 18 Nov 2026 15:27:30 +0100
+Message-ID: <20261118150223.670799046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,50 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <cel@kernel.org>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit c563a1f0679566d7d586802e5346591d0af8da78 upstream.
+commit 3f1181cb09c85499286c7f462d93530b0ebcafcc upstream.
 
-RCA4_TYPE_MASK_* are enum constants, so the preprocessor cannot fold
-them into the print format that show_rca_mask() builds for the
-nfsd_cb_recall_any event. Nothing declares an eval map for them
-either, so trace_event_eval_update() has no substitution to apply at
-module load, and the event's format file ships the enumerator names
-verbatim. trace-cmd and perf cannot decode the bmval0 field.
+nfs4svc_encode_compoundres() copies the tag bytes into reserved XDR space
+and skips directly to the aligned end of the field. xdr_reserve_space()
+rounds the reservation up but does not initialize the padding bytes.
 
-Declare the eval maps for the nine mask bits show_rca_mask() decodes.
-The format then carries the shift counts as integers, the same shape
-the SUNRPC trace points already emit from their BIT() flag decoders.
+A remote client can choose a tag length that is not a multiple of four,
+causing one to three stale bytes from the response page to be returned in
+the COMPOUND reply.
 
-Fixes: 638593be55c0 ("NFSD: add CB_RECALL_ANY tracepoints")
+Use xdr_encode_opaque_fixed() to copy the tag and clear its XDR padding.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20260818184151.31180-1-cel@kernel.org
+Link: https://patch.msgid.link/20260915160049.3105481-1-qwe.aldo@gmail.com
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/misc/nfs.h |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/nfsd/nfs4xdr.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/include/trace/misc/nfs.h
-+++ b/include/trace/misc/nfs.h
-@@ -359,6 +359,16 @@ TRACE_DEFINE_ENUM(IOMODE_ANY);
- 		{ IOMODE_RW,			"RW" }, \
- 		{ IOMODE_ANY,			"ANY" })
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -5545,8 +5545,7 @@ nfs4svc_encode_compoundres(struct svc_rq
+ 	rqstp->rq_next_page = xdr->page_ptr + 1;
  
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_RDATA_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_WDATA_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_DIR_DLG);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_FILE_LAYOUT);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_BLK_LAYOUT);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MIN);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MAX);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MIN);
-+TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MAX);
-+
- #define show_rca_mask(x) \
- 	__print_flags(x, "|", \
- 		{ BIT(RCA4_TYPE_MASK_RDATA_DLG),	"RDATA_DLG" }, \
+ 	*p++ = htonl(resp->taglen);
+-	memcpy(p, resp->tag, resp->taglen);
+-	p += XDR_QUADLEN(resp->taglen);
++	p = xdr_encode_opaque_fixed(p, resp->tag, resp->taglen);
+ 	*p++ = htonl(resp->opcnt);
+ 
+ 	nfsd4_sequence_done(resp);
 
 
