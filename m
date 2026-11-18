@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030697;
-	b=Q2sdoH1xjvGTQ9nbNWDQa31YO9Z1vNdHGWGAk4kzJxkdZDNQ+XfRosrkx0tWI3lAMnGd
-	 xJaKn/MqPVBAKETt/yG5BqhXrTFCaMGHTXGgOo6S699L8/6IR0PmZhmsE4C4ENH4RfU71
-	 /Pik1jQWqKadTC0m0ew9VphyzqP/Xpt/uqenTNmM95b2jZ4dTBJjUD4RKj0hxJWg5z3Vm
-	 Lq8bTZFL+Zv//ZvsoLNH45vHSHDdIaslsjL+rJDgEghKXiyjgPW9/xX/7LQBxcNONtYPH
-	 TUNn6+0w5n11xHWPqwowmEGTZcuJp2tlKdZXFFJh2Ma821mU6MWtEY3Fqx+/2pvMyEQ==
+	t=1795030700;
+	b=TrEDulTfIQDeGlabuCQrQGYytWLFyFuVKXrHriruwkysHywThWHVzGnf7sTlWBRvhYp8
+	 52qpjpcMdVnNmonJao+OSa43+7uRTNiJcGQIxUxmQuAmQjCUOEivH0dRY1Y1PkG+B1hmk
+	 dJB73IV960AzVXANI/ZD/FOvzPQlSPIHAc3pX1BAUJ1SWGF4J1oGYDuhWdcBBKRqia0e3
+	 CI/zi9wnlhhgFN7j6M1f6h+xUG3OgUl3ziUIum//ZFTpjulqWpxBwCGWAD10Yi1ek+8vz
+	 q3TQ7lV6PUxY7cZ73bgpRIx3YQDlMWKHwiNqtz88zgIh+ZizcaAH9wkz3rmm5V70XVg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=MwM1snRvu9OzxfEbNDTNbLlug0v5AF9zlHL+vnZFF08=;
-	b=WbPa1Mq5iuX0UkZYpMtk91AQNaGt9UXfLU4PiUJ5BZbnLUo9gsnkuSttthLnRlJmTs7e
-	 8r+bkcbZymbwqCkDniiMUPUJ/4vH9F4BHvue98C6MVWHMj25XpxL39uWv1RMivZdaixNb
-	 GW2Xxs8Lz1FClxThStkGy3S3nuW2Z93/vj/6VoL1JxqNNW9h7cDIVcbSU+hXyHkhFSa5s
-	 kiDXni6eJhxDi52JtSyzqsLzUOHkQSxVsmKCDro4GGHgnDG2vrgHcDk5W67q4uY6vr+zX
-	 tFoAPLk5rlZtZLrL4RhdgtC6F8vudBf4QGtwrzEdl1Yjr/yU/pdy4hUyfZg42LkzjxA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=vaiNvGSglu5H/tBx5galpCDD7Q970OASm819NLg2sLE=;
+	b=O4Unc9va0Eh5LQxxQE1qQMyphf6n/V0qtVKJvk67pg1MXa+rWUBwyQ2TeEdk/DfEm1EA
+	 g+p3E7MPqsdPvyzKQ4bp964XMi+AMFzv7m3pBYSf9rTijbkSeUm2DlYAe52K1+LX4+21E
+	 lO60vk3rLeHyQitXqLwVhE3dPKukr1PSzC6fgFvPglX2qv7HVCjEtzXt3KQh3DsfEp2ut
+	 WyT7GFOx8FF2loN4AxaJKj7cp3sk7+4NNgXz7rAuT5IXdZ2ujwi/Vgs/Wi8sDI9m+5mZo
+	 TB1NP2O0KFO3LV/1A9N3lgO67HRoLSNyIwNakQeqIeEw60yPWiLfLRO4kdOUFdy/Nng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCD8QmD9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RxXfJODW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E937606A33B;
-	Wed, 18 Nov 2026 19:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77280606A333;
+	Wed, 18 Nov 2026 19:38:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DCD8QmD9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04C61F000C4;
-	Wed, 18 Nov 2026 19:38:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RxXfJODW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755451F000C4;
+	Wed, 18 Nov 2026 19:38:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030697;
-	bh=MwM1snRvu9OzxfEbNDTNbLlug0v5AF9zlHL+vnZFF08=;
+	s=korg; t=1795030700;
+	bh=vaiNvGSglu5H/tBx5galpCDD7Q970OASm819NLg2sLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DCD8QmD9FBKSZ7pIHIh8bh2QONWWf3H0Ul2u1ra6Je/bEqr+h8dG41QYaEZ9FIPaF
-	 8Da2xqU6z8xAN55Xc3vYE7/bzkFXbHftGXTJtLulZUlthSitc1PVs3cM7aZ9fItcLP
-	 rZwfbIUWOz/QSX8dpASMdqKccQQS1rmbmhRmSfzc=
+	b=RxXfJODWYtOv/9kouJrV3QSRQTx7xNHCa6W19X7iLiNOefSNHPOnUM+hTsKwvwNiN
+	 U53NWAGoS2M4Fwu/5uHzqqe9BOQ27XcwA/uAMGwa6XC8EYY3HGCplTtOM+aUsh4BMi
+	 eKjCGW7jle6JOexhhnuEou88P5kJwWiSuhcMlGic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	John Garry <john.garry@linux.dev>,
-	Niklas Cassel <cassel@kernel.org>,
+	Laurence Oberman <loberman@redhat.com>,
+	=?UTF-8?q?Kai=20M=C3=A4kisara?= <kai.makisara@kolumbus.fi>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0797/1756] scsi: scsi_debug: Validate the access parameters of WRITE ATOMIC (16)
-Date: Wed, 18 Nov 2026 15:48:44 +0100
-Message-ID: <20261118150041.426924005@linuxfoundation.org>
+Subject: [PATCH 6.12 0798/1756] scsi: st: Restore changed drive settings after reset also for MTLOAD and MTRETEN
+Date: Wed, 18 Nov 2026 15:48:45 +0100
+Message-ID: <20261118150041.465807531@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -64,53 +63,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Laurence Oberman <loberman@redhat.com>
 
-[ Upstream commit a6c339feb830daa097ccc4c50c339c1733c12d42 ]
+[ Upstream commit 8d1cc285194dbcba88c136e1ff7c25cb10e38a5b ]
 
-resp_atomic_write() validates the fields that are specific to an atomic
-write, but never the range that the command addresses. Every other command
-that writes user data calls check_device_access_params() first, which
-rejects a transfer that ends beyond the capacity of the device, one whose
-length exceeds the size of the store, and any write to a write protected
-device.
+A device reset returns the drive's density and block size to their
+defaults.  Commit 7081dc75df79 ("scsi: st: Restore some drive settings
+after reset") re-applies values changed by the user when the position is
+recovered with MTREW, MTSEEK or MTEOM.  MTLOAD and MTRETEN are also allowed
+to clear the reset condition and also leave the same medium at BOT, but
+they restore nothing.
 
-Call check_device_access_params(). The zone checks that it ends with are
-unreachable, as atomic writes and ZBC emulation are mutually exclusive.
+Because check_tape() reads the drive's block size with MODE SENSE on every
+open, the driver silently switches to the drive default after the reset.
+An application that set fixed-block mode with MTSETBLK and recovers with
+MTLOAD or MTRETEN keeps writing, but variable-length blocks, without any
+error.
 
-Assisted-by: LLM
-Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: John Garry <john.garry@linux.dev>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260929082456.857423-28-cassel@kernel.org
+Restore the changed density and block size for MTLOAD and MTRETEN as well.
+Both operations may make the drive report a new medium, and the new session
+started by check_tape() clears the "changed" flags and applies the mode
+defaults.  So save the values before the operation, let check_tape() run
+first (do_load_unload() already calls it for MTLOAD; call it after
+MTRETEN), and then re-apply them.  Retry the restore once in case a unit
+attention is still pending.  Only restore when the drive is ready after the
+operation: with an immediate-mode load and O_NONBLOCK, check_tape() does
+not wait and the drive may still be loading.  In immediate mode
+(MT_ST_NOWAIT) MTRETEN may return before the retension has finished; do not
+wait for it there.
+
+MTOFFL is not changed: the medium is unloaded and a different one may be
+loaded next, for which the mode defaults apply.
+
+Reproduced with scsi_debug (which reports a new medium after MTRETEN and
+MTLOAD) and with IBM LTO drives on FC (which do not).
+
+Fixes: 7081dc75df79 ("scsi: st: Restore some drive settings after reset")
+Assisted-by: Claude sashiko
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Kai Mäkisara <kai.makisara@kolumbus.fi>
+Link: https://patch.msgid.link/20260929192821.997675-2-loberman@redhat.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/st.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 1d9947dc14351..0906ef5d7798e 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -5385,6 +5385,10 @@ static int resp_atomic_write(struct scsi_cmnd *scp,
- 		}
- 	}
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 53d37c8497714..39c9b1dfe6b67 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -3513,6 +3513,23 @@ static int partition_tape(struct scsi_tape *STp, int size)
+ 
  
-+	ret = check_device_access_params(scp, lba, len, true);
-+	if (ret)
-+		return ret;
+ 
++/*
++ * Re-apply a density and block size that were changed by the user before a
++ * device reset (a negative value means "not changed").  A unit attention
++ * still pending after the operation (e.g. new medium after a load) fails the
++ * first MODE SELECT, so retry each once.  As in the other post-reset restore
++ * path, errors are ignored and one setting failing does not prevent
++ * restoring the other.
++ */
++static void st_restore_changed_settings(struct scsi_tape *STp, int density,
++					int blksize)
++{
++	if (density >= 0 && st_int_ioctl(STp, MTSETDENSITY, density))
++		st_int_ioctl(STp, MTSETDENSITY, density);
++	if (blksize >= 0 && st_int_ioctl(STp, MTSETBLK, blksize))
++		st_int_ioctl(STp, MTSETBLK, blksize);
++}
 +
- 	/*
- 	 * Short atomic writes are not allowed: SBC-6 4.28.2 requires an
- 	 * atomic write that cannot complete to leave its LBAs unaltered, and
+ /* The ioctl command */
+ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ {
+@@ -3521,6 +3538,7 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 	int retval = 0;
+ 	unsigned int blk;
+ 	bool cmd_mtiocget;
++	int restore_density = -1, restore_blksize = -1;
+ 	struct scsi_tape *STp = file->private_data;
+ 	struct st_modedef *STm;
+ 	struct st_partstat *STps;
+@@ -3660,6 +3678,17 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 					st_int_ioctl(STp, MTSETDENSITY, STp->changed_density);
+ 				if (STp->blksize_changed)
+ 					st_int_ioctl(STp, MTSETBLK, STp->changed_blksize);
++			} else if (mtc.mt_op == MTLOAD || mtc.mt_op == MTRETEN) {
++				/*
++				 * The same medium ends up at BOT, so the settings
++				 * apply as with MTREW.  The operation may start a
++				 * new session, which clears the "changed" flags:
++				 * save the values and restore them afterwards.
++				 */
++				if (STp->density_changed)
++					restore_density = STp->changed_density;
++				if (STp->blksize_changed)
++					restore_blksize = STp->changed_blksize;
+ 			}
+ 		}
+ 
+@@ -3739,6 +3768,14 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 
+ 		if (mtc.mt_op == MTLOAD) {
+ 			retval = do_load_unload(STp, file, max(1, mtc.mt_count));
++			/*
++			 * Restore only if the drive is ready: after an
++			 * immediate-mode load with O_NONBLOCK, check_tape()
++			 * does not wait and the drive may still be loading.
++			 */
++			if (!retval && STp->ready == ST_READY)
++				st_restore_changed_settings(STp, restore_density,
++							    restore_blksize);
+ 			goto out;
+ 		}
+ 
+@@ -3757,6 +3794,20 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 			retval = st_compression(STp, (mtc.mt_count & 1));
+ 		else
+ 			retval = st_int_ioctl(STp, mtc.mt_op, mtc.mt_count);
++		if (!retval && mtc.mt_op == MTRETEN && !STp->immediate &&
++		    (restore_density >= 0 || restore_blksize >= 0)) {
++			/*
++			 * Retension reloads the medium and the drive may
++			 * report a new medium.  Let check_tape() start the new
++			 * session (applying the mode defaults) now, as for
++			 * MTLOAD; otherwise it happens at the next open and
++			 * overrides the restored settings.
++			 */
++			if (check_tape(STp, file) >= 0 &&
++			    STp->ready == ST_READY)
++				st_restore_changed_settings(STp, restore_density,
++							    restore_blksize);
++		}
+ 		goto out;
+ 	}
+ 	if (!STm->defined) {
 -- 
 2.53.0
 
