@@ -1,58 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043920;
-	b=GegjH7JdAFrQid3d2BErtdRipXP7qk1uiJNNdvN3dQpfccqICfUZV+ot9Novc3uqM6JZ
-	 55mJstptqiA9KHEwYD0hIIYsv6kEucZ4QIusFnjDkNChXjLNUlWpae3NJ6SLlolQX2UXv
-	 FGvZar7C+zFSpM8VX2NMdgmaEdflatEvFvOcHCFOlgEhj7uOupEmpHhvB/jWnVGuazh11
-	 5uwWDkuMBiTkrHS9u5akzrrRdyw5fUHB3Gz147dhyOktIhoTkUstbdnAAAoHrmv6Gx1p6
-	 HWoNNrxUXF38mAjaOhRl6FRarvJND8WKwafznkacssqS9RjrTF0MRTLQRSnhbffVMuA==
+	t=1795043923;
+	b=Fm7fai8S7ymLkauxqX4RUIs9Yuv5maA/qKDsVSuBa1RQwz7EMqWo1XsrUolZRnag1g62
+	 zn14L9PpMAmZN60j/dCnjGOa8/Utkvef+Xu2PUd+8CrwZ5FNV8yiRJEd6RscHsqQeWCmj
+	 rv0zmXWXuWJj04FshY5BNZk4xvzd2wXF/m1mNxvVNaJOO/Lfm/h/xaBWCRQgbxokvyW7D
+	 MBm90iH3UA7uDbTR0pqJTtMtkOMsh8YxNND/cc0gw6cMH280QPXmOXR/bGIr9mIEhagkQ
+	 XvqEr3102vedLUPJtCSBM/G8eyc+P3gYlbklqEXUcn1vlkhTcV3TSqkppbWuL135DBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043923;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9nZz5oizFDrTVdUIhF86Hv37FfcIDZZxtNQifQrhHE4=;
-	b=b0aM4FnRhxGwP59rD59ILhuYR5oxNDjlEY/85A0fNaYO4Q2RQI92xIyv8gcvin0mNSA9
-	 8EyJgukI2UqJLud0V4ymKlga7iAtMWyYSM02qW3mkEllF+6CicM6ty3LhQXwGkX1LLn+4
-	 rpejjkPf8W6GxWWi749+oJyxynsm545MZoYEHw9fSq5pcgMDSakp4Pvy0+89IgsbMIq6e
-	 UwLQyOiyhCtEoCnorQC5bz8d07WW2iXG0CQ2JyjvZ7yJ5y6Yn6tM1bMfpvO2tFPv4/qOW
-	 aCYFEKC2EE9Tr5V24MBJzkRo253S3hUpyIzZPkOjGMUtzptl1YTSLqHSUKkr02gRCrQ==
+	bh=D8nAedCADQnzFR4SAcxNpSFI+Z/FPmcb9sXE+eSIOZ0=;
+	b=CFBpY1ti49AKr5cG+d+KamJFn/qYa8l2VPqtP5ICdMMyBiH0uImX4V4zEyfUJgMeCD5D
+	 sifTbNyEWJFY/nsW+HgWbod5fUM8aRGf+JYhqDACt9O/hJGz5hF1kcYQOwoBhbxiW8g9s
+	 kg60ck7q8hXs/UEIx8rRuPGCY93T+it9G5IEPxJwMXfCaHDGK8s1Zj0q9p3JPfrjXnnFJ
+	 HYFdJPjaktTy4g5hD+Imk3f9zmU7GYpQN4idgU+4whmFy1lOV49YVY0s7sBPdBFMRrQfD
+	 0swUdArsHEvfuN1bue0nt0O2kHSM4rsdK40cBeJAuTXMhrTvH7IyFdPKr+StEZ1Dn4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LfhYc3oP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5FUKLOs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C97606A32A;
-	Wed, 18 Nov 2026 23:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6D8606A31C;
+	Wed, 18 Nov 2026 23:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LfhYc3oP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D33B1F000C4;
-	Wed, 18 Nov 2026 23:18:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S5FUKLOs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6F91F000C4;
+	Wed, 18 Nov 2026 23:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043920;
-	bh=9nZz5oizFDrTVdUIhF86Hv37FfcIDZZxtNQifQrhHE4=;
+	s=korg; t=1795043923;
+	bh=D8nAedCADQnzFR4SAcxNpSFI+Z/FPmcb9sXE+eSIOZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LfhYc3oPmJqafpWCVL1fghqqU5esHe5r4GLhapWK0d/KSWlPxZAQikbaggC6sKRVZ
-	 uK+k01hTYoewvVv/gqIGSnt2zvV6Arkbj/RycK3Q4KgLkSyl+ws8PnGIh3O2TX7he5
-	 0otjg2UzQ6heGhmzipdkaSEEvfVbjsatYVWgCElQ=
+	b=S5FUKLOs2/f2TardXG/dYd89OPW4o++QdOP5TnzDzrwH3Q2hmc5Za/ITaukC3afLH
+	 dDQ42CG2NVIFeSvk5YX47gJyvnV71ia3kFhneA6QjnfXFbln8cEm1ACYqDZHAiStvN
+	 LZDA5AmmoLo/eoKjCs7Gz0RD94rUTg0vAhq60/ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AutonomousCodeSecurity@microsoft.com,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Bradley Morgan <include@grrlz.net>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Pavel Tikhomirov <ptikhomirov@virtuozzo.com>,
-	"Cen Zhang (Microsoft)" <blbllhy@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Yunpeng Tian <shionthanatos@gmail.com>,
+	Mingda Zhang <npczmd@qq.com>,
+	Gongming Wang <gmwgg05@gmail.com>,
+	Qinrun Dai <jupmouse@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0383/2857] reboot: fix cad_pid use-after-free race
-Date: Wed, 18 Nov 2026 15:23:37 +0100
-Message-ID: <20261118150215.195095834@linuxfoundation.org>
+Subject: [PATCH 6.1 0384/2857] smb: client: reject SetEA requests that do not fit the request buffer
+Date: Wed, 18 Nov 2026 15:23:38 +0100
+Message-ID: <20261118150215.231973397@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -74,190 +72,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang (Microsoft) <blbllhy@gmail.com>
+From: Yunpeng Tian <shionthanatos@gmail.com>
 
-[ Upstream commit 5a88f78df753993469dab4d1831f8fb4256a9468 ]
+[ Upstream commit 4aa2c106aef4bf3dfd97c30842db0767b26e8428 ]
 
-cad_pid is a single kernel-wide struct pid pointer. proc_do_cad_pid()
-reads it and passes it to pid_vnr() without protecting the lifetime of
-the referenced struct pid. A concurrent writer can replace cad_pid and
-drop the final reference to the old struct pid after the reader has
-loaded the pointer but before pid_vnr() has finished dereferencing it,
-causing a use-after-free.
+CIFSSMBSetEA() copies the caller's extended attribute value into the
+SMB request buffer without checking that it fits.  The requirement is
+stated in the source but was never implemented:
 
-kill_cad_pid() has the same lifetime race when it passes cad_pid to
-kill_pid().
+	/*BB add length check to see if it would fit in
+	     negotiated SMB buffer size BB */
+	/* if (ea_value_len > buffer_size - 512 (enough for header)) */
+	if (ea_value_len)
+		memcpy(parm_data->list.name + name_len + 1,
+		       ea_value, ea_value_len);
 
-At the time this issue was reported, an unprivileged user could reach the
-sysctl through user and PID namespaces because cad_pid was registered in
-pid_table[]. Moving cad_pid back to the global reboot sysctl table
-corrected that namespace and permission mismatch, but did not fix the
-underlying lifetime race.
+The only bound applied on the way in is in cifs_xattr_set():
 
-Fix this by treating cad_pid as an RCU-protected pointer at both read
-sites and by waiting for a grace period before dropping the old reference
-on the write side.
+	#define MAX_EA_VALUE_SIZE CIFSMaxBufSize
+	...
+	if (size > MAX_EA_VALUE_SIZE)
 
-call_rcu(&old_pid->rcu, ...) cannot be used here because free_pid()
-also queues pid->rcu; queueing the same rcu_head twice can corrupt the
-RCU callback list.
+CIFSMaxBufSize is the full payload capacity of the buffer, so a value
+of exactly that size leaves no room for the SMB header, the TRANS2
+parameter block, the fealist header and the EA name that are written
+ahead of it in the same object.
 
-Original KASAN crash stack:
-  kernel/pid.c:545 pid_nr_ns()        # reads freed pid->level
-  kernel/pid.c:556 pid_vnr()          # calls pid_nr_ns()
-  kernel/pid.c:775 proc_do_cad_pid()  # calls pid_vnr(cad_pid)
+SendReceive() already enforces the correct limit on this very length:
 
-Fixes: 9ec52099e4b8 ("[PATCH] replace cad_pid by a struct pid")
-Reported-by: AutonomousCodeSecurity@microsoft.com
-Closes: https://lore.kernel.org/all/20260717210143.4734-1-blbllhy@gmail.com/
-Link: https://lore.kernel.org/all/alz5ZYLE4kaq_v2P@redhat.com/
-Link: https://lore.kernel.org/all/al4ICz9biJKtdZc4@redhat.com/
-Suggested-by: Mateusz Guzik <mjguzik@gmail.com>
-Suggested-by: Bradley Morgan <include@grrlz.net>
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Suggested-by: Eric W. Biederman <ebiederm@xmission.com>
-Suggested-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
+	if (in_len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE)
+
+but it is called after the copy has taken place.  An unprivileged
+setxattr(2) on an SMB1 mount with a 250-byte name and a 16384-byte
+value writes 16384 bytes starting 345 bytes into a 16588-byte
+cifs_request object, ending 141 bytes past it:
+
+  BUG: KASAN: slab-out-of-bounds in CIFSSMBSetEA+0xabc/0xde0
+  Write of size 16384 at addr ffff888003aa0159 by task init/68
+   __asan_memcpy+0x3c/0x60
+   CIFSSMBSetEA+0xabc/0xde0
+   cifs_xattr_set+0xd3a/0xff0
+   __vfs_setxattr+0x13e/0x1a0
+  The buggy address is located 345 bytes inside of
+   allocated 16588-byte region
+
+Apply SendReceive()'s limit to the assembled request before the copy
+rather than after it, and widen the byte counters so the sum cannot
+wrap before it is tested.
+
+byte_count is also tested against U16_MAX, because it is stored in the
+16-bit pSMB->ByteCount.  That becomes reachable when CIFSMaxBufSize is
+raised at module load, where it may be set as high as 1024*127: with a
+5-byte EA name and a 65521-byte value, count is exactly U16_MAX while
+byte_count is 65556, and cpu_to_le16() would truncate it to 20 and
+transmit a frame whose ByteCount does not match its length.  Testing
+byte_count covers count as well, since byte_count is the larger of the
+two and count's only 16-bit consumer is written after this point.
+
+check_add_overflow() is evaluated first so that total_len is assigned
+before it is reported.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reported-by: Mingda Zhang <npczmd@qq.com>
+Reported-by: Gongming Wang <gmwgg05@gmail.com>
+Reported-by: Qinrun Dai <jupmouse@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Cen Zhang (Microsoft) <blbllhy@gmail.com>
-Link: https://patch.msgid.link/20260814040944.16561-1-blbllhy@gmail.com
-Reviewed-by: Bradley Morgan <include@grrlz.net>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Reviewed-by: Pavel Tikhomirov <ptikhomirov@virtuozzo.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: Moved proc_do_cad_pid() changes into kernel/sysctl.c with the older non-const ctl_table API, since there is no kern_reboot_table in kernel/reboot.c, and adjusted context in sched.h and signal.c. ]
+Signed-off-by: Yunpeng Tian <shionthanatos@gmail.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+[ sashal: Declared in_len from get_rfc1002_length(pSMB) after smb_init() and limited the total to CIFSMaxBufSize + MAX_CIFS_HDR_SIZE - 4, because smb_init() here returns 0 and the length excludes the 4-byte header. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h        |  2 +-
- include/linux/sched/signal.h |  5 +----
- init/main.c                  |  2 +-
- kernel/reboot.c              |  5 +++--
- kernel/signal.c              | 12 ++++++++++++
- kernel/sysctl.c              | 13 +++++++++++--
- 6 files changed, 29 insertions(+), 10 deletions(-)
+ fs/smb/client/cifssmb.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 3cd897f572af0..50fd0b4e7dd9e 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -1724,7 +1724,7 @@ static inline int is_global_init(struct task_struct *tsk)
- 	return task_tgid_nr(tsk) == 1;
- }
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 95cf7e69a411d..65418d15c3a02 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -5799,8 +5799,11 @@ CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
+ 	int name_len;
+ 	int rc = 0;
+ 	int bytes_returned = 0;
+-	__u16 params, param_offset, byte_count, offset, count;
++	__u16 params, param_offset;
++	unsigned int byte_count, offset, count;
+ 	int remap = cifs_remap(cifs_sb);
++	unsigned int total_len;
++	unsigned int in_len;
  
--extern struct pid *cad_pid;
-+extern struct pid __rcu *cad_pid;
+ 	cifs_dbg(FYI, "In SetEA\n");
+ SetEARetry:
+@@ -5808,6 +5811,7 @@ CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
+ 		      (void **) &pSMBr);
+ 	if (rc)
+ 		return rc;
++	in_len = get_rfc1002_length(pSMB);
  
- /*
-  * Per process flags
-diff --git a/include/linux/sched/signal.h b/include/linux/sched/signal.h
-index 66e125dc12aaa..85f7a09fd1288 100644
---- a/include/linux/sched/signal.h
-+++ b/include/linux/sched/signal.h
-@@ -591,10 +591,7 @@ static inline sigset_t *sigmask_to_save(void)
- 	return res;
- }
- 
--static inline int kill_cad_pid(int sig, int priv)
--{
--	return kill_pid(cad_pid, sig, priv);
--}
-+int kill_cad_pid(int sig, int priv);
- 
- /* These can be the second arg to send_sig_info/send_group_sig_info.  */
- #define SEND_SIG_NOINFO ((struct kernel_siginfo *) 0)
-diff --git a/init/main.c b/init/main.c
-index 6acfd5a78bd7a..78d0e33cb6ee6 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -1575,7 +1575,7 @@ static noinline void __init kernel_init_freeable(void)
- 	 */
- 	set_mems_allowed(node_states[N_MEMORY]);
- 
--	cad_pid = get_pid(task_pid(current));
-+	rcu_assign_pointer(cad_pid, get_pid(task_pid(current)));
- 
- 	smp_prepare_cpus(setup_max_cpus);
- 
-diff --git a/kernel/reboot.c b/kernel/reboot.c
-index 6ebef11c88760..f4a2721e47724 100644
---- a/kernel/reboot.c
-+++ b/kernel/reboot.c
-@@ -13,7 +13,9 @@
- #include <linux/kexec.h>
- #include <linux/kmod.h>
- #include <linux/kmsg_dump.h>
-+#include <linux/rcupdate.h>
- #include <linux/reboot.h>
-+#include <linux/sched/signal.h>
- #include <linux/suspend.h>
- #include <linux/syscalls.h>
- #include <linux/syscore_ops.h>
-@@ -24,8 +26,7 @@
-  */
- 
- static int C_A_D = 1;
--struct pid *cad_pid;
--EXPORT_SYMBOL(cad_pid);
-+struct pid __rcu *cad_pid;
- 
- #if defined(CONFIG_ARM)
- #define DEFAULT_REBOOT_MODE		= REBOOT_HARD
-diff --git a/kernel/signal.c b/kernel/signal.c
-index 1c169fa294860..73745319f1c70 100644
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -1937,6 +1937,18 @@ int kill_pid(struct pid *pid, int sig, int priv)
- }
- EXPORT_SYMBOL(kill_pid);
- 
-+int kill_cad_pid(int sig, int priv)
-+{
-+	int ret;
-+
-+	rcu_read_lock();
-+	ret = kill_pid(rcu_dereference(cad_pid), sig, priv);
-+	rcu_read_unlock();
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL(kill_cad_pid);
-+
- /*
-  * These functions support sending signals using preallocated sigqueue
-  * structures.  This is needed "because realtime applications cannot
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index eaa2691caf492..5dd6fd4b48c81 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -1348,10 +1348,13 @@ static int proc_do_cad_pid(struct ctl_table *table, int write, void *buffer,
- 		size_t *lenp, loff_t *ppos)
- {
- 	struct pid *new_pid;
-+	struct pid *old_pid;
- 	pid_t tmp;
- 	int r;
- 
--	tmp = pid_vnr(cad_pid);
-+	rcu_read_lock();
-+	tmp = pid_vnr(rcu_dereference(cad_pid));
-+	rcu_read_unlock();
- 
- 	r = __do_proc_dointvec(&tmp, table, write, buffer,
- 			       lenp, ppos, NULL, NULL);
-@@ -1362,7 +1365,13 @@ static int proc_do_cad_pid(struct ctl_table *table, int write, void *buffer,
- 	if (!new_pid)
- 		return -ESRCH;
- 
--	put_pid(xchg(&cad_pid, new_pid));
-+	old_pid = unrcu_pointer(xchg(&cad_pid, RCU_INITIALIZER(new_pid)));
-+	/*
-+	 * Wait for cad_pid readers before put_pid().  We cannot use
-+	 * call_rcu() here because free_pid() already owns pid->rcu.
-+	 */
-+	synchronize_rcu();
-+	put_pid(old_pid);
- 	return 0;
- }
- 
+ 	if (pSMB->hdr.Flags2 & SMBFLG2_UNICODE) {
+ 		name_len =
+@@ -5851,6 +5855,13 @@ CIFSSMBSetEA(const unsigned int xid, struct cifs_tcon *tcon,
+ 	pSMB->Reserved3 = 0;
+ 	pSMB->SubCommand = cpu_to_le16(TRANS2_SET_PATH_INFORMATION);
+ 	byte_count = 3 /* pad */  + params + count;
++	if (check_add_overflow(in_len, byte_count, &total_len) ||
++	    byte_count > U16_MAX ||
++	    total_len > CIFSMaxBufSize + MAX_CIFS_HDR_SIZE - 4) {
++		cifs_dbg(VFS, "EA request too large: %u bytes\n", total_len);
++		cifs_buf_release(pSMB);
++		return -E2BIG;
++	}
+ 	pSMB->DataCount = cpu_to_le16(count);
+ 	parm_data->list_len = cpu_to_le32(count);
+ 	parm_data->list[0].EA_flags = 0;
 -- 
 2.53.0
 
