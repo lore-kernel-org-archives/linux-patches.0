@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048417;
-	b=MNB9lMhQ93yWvZwRRgR/F21+freoRd3tFYToi+XzmJOKRoYyDiHet1dn7s0TARI5XhnL
-	 AXlqTHbc9AKKhldi6gmEgLbAW2U5ZmXamlFiUZEcjxdbHyhxSFxqniH4JyGoZWL1eq1P1
-	 yGtOdnQLltOSKCV3A9el629M/tWGzDCmRf9OW2S2kR2+5pv1Ugoumb5jDAk2RApCUTexd
-	 YSnDHzJnsdAfgrFJTOL+A95ViVZpLXTh3gkJNgUGj2YVaYl/9qrMG/O2uyriJQXg5OXK6
-	 sSawkTb2v0rOZqk6dxMp9t0FiH8F7dN+i1pcdLCQgJX2y4lH+5H3FxG7ThQs+1X5UrQ==
+	t=1795048420;
+	b=ydQe0hnYTqku63MY/uVFCOeR/kN9/jpPrwP1XTZ9LTSyVqCDWIgzea70PEptN984zU2E
+	 RXAun9gWu8JIftl15pT8Vem883mGI7v227M3swMlUIHwQZIAjqLJqBWhKshoiSYM9CZBV
+	 +n6R5ZnybBc1bT2jitxIF7HXB/v52CvJ2ZJxf9YB1g2kb707tEZioukJSgUwRdzctU4Q4
+	 Eb7Ey0I7//L2GgdZJF+V9kHAORvtVB5yLyzUsNQjs43L1zV5pTHSIrPMZ1nT35rAVON5T
+	 oWBaf9SbucpTBjW8xAl+qVLvhgrnxHQ3eOm/n9ycfvIueHvYCw4vYKm8yBA7KtJd1hw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048417;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048420;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=zNVUL2fjDx3CafzM21G58M0VdteBwIbBh+T0F73Ur3Y=;
-	b=Oek6lxi6QXklodm+CqzbI/3wtXL6KuGxHDLEB199zHpc7kykUs7ZrapxUE0RZ5NZ8ML2
-	 IzNMYyTYeCFTcLZQf0PT5KQxdWATKJ1yJDBjPgwQiPctvMraCBx9dm5UZbLmb2L1TGZ0P
-	 ywsN+hr6zoRpBZhobETZ0DQYTQN4AM6wRY2YicTU/uwo6gQjmhXR+297nC0NChdwAG9Zj
-	 wZIsc+yqIjD48id84oBqLkOS/JAD+xbtdySD96gZ7amUD+67MNeuDaUIAGIUtG5C+BLYx
-	 1r+lDEUJGlycGureFuxj+sE71JQGxUJnpRYplsNbYDFVPt1T9bRBmv+VPUrWA1sTvEA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=WaRnXNvmaLk6iXEHCLqT5ryExlu/z4ViAWNtQwHPEMM=;
+	b=xtBNYYwdcp2GfF0Xx8XbxxIcoifJ+u7XhJBDxgK3Akyc0rgbD9oLNl3i4nTW+8rzAZpj
+	 oO4H2hDWv5Be8srLil/F2wuiwgyaKiolhuRkr05+iAzO4X9mwa7dVG52cQulUnMK8bAgW
+	 FB0CKv5Vv18iFoFXwrGvWLjksd1mIq3+75P9OY/Yr5BRLF3rrjirK2fYEeG23JNrF36vg
+	 cvHNkGTwt7VDMWYCVxiYJyxtYMZTnq43u+i2UEOAjggeD22YmasIOh7GYWFuZnNMxSp0w
+	 JqCNwvmXRG3Z/zMbkNm87ilJsIUGq51D/m0v1aeQR1PmHxY26eH8RuVkFdfrla+GJWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dMxWlDct;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ePaKoba8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AE8606A339;
-	Thu, 19 Nov 2026 00:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA46606A32A;
+	Thu, 19 Nov 2026 00:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dMxWlDct
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36321F000C4;
-	Thu, 19 Nov 2026 00:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ePaKoba8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9A81F000C4;
+	Thu, 19 Nov 2026 00:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048417;
-	bh=zNVUL2fjDx3CafzM21G58M0VdteBwIbBh+T0F73Ur3Y=;
+	s=korg; t=1795048420;
+	bh=WaRnXNvmaLk6iXEHCLqT5ryExlu/z4ViAWNtQwHPEMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dMxWlDct0o1EAtNaLgy28h+BJ5ArLC+hdqE3KmipdiGBqk8c8TxQ/FKZ8ruX5NmSq
-	 IFGLNitwpivxz2RrHm29i72dhxPplMXdzGgAE7hZ4p539VkaN5nrQx9bkd/pbGY98t
-	 Ud78xFvTZCGU8xEc9tokNXWWqAOb+oey3BwRCo80=
+	b=ePaKoba84ozku4v43r4evJwhKfNL65A5BoLnin8C1o6UvrKGIDjylSg+FboC4eByM
+	 tpVHXKvWP7VMO/BmLYXZRMsfdGnHgv5dwSCttv7eO/6OX7iBzZLHnrIm9NLD/EoIYE
+	 AJRJ2rSsXMs6tbsI3fTN9mwdTincHYMUxIPkyOm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1985/2857] dt-bindings: vendor-prefixes: add NewVision vendor prefix
-Date: Wed, 18 Nov 2026 15:50:19 +0100
-Message-ID: <20261118150312.851437176@linuxfoundation.org>
+Subject: [PATCH 6.1 1986/2857] dt-bindings: vendor-prefixes: sort entries alphabetically
+Date: Wed, 18 Nov 2026 15:50:20 +0100
+Message-ID: <20261118150312.885914114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,44 +62,263 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit a2f79d7f140c8e01b719d9404e4a4eaa2c849ede ]
+[ Upstream commit 5fa9f7292b17bcd66da93226fc28fe1f755af154 ]
 
-NewVision (also sometimes written as New Vision) is a company based in
-Shenzen that manufactures ICs for controlling LCD panels.
+Sort entries alphabetically.  This was a semi manual job with help of:
 
-https://www.newvisiondisplay.com/
+  cat Documentation/devicetree/bindings/vendor-prefixes.yaml | grep '":' > old
+  cat old | sort > new
+  diff -ubB old new
 
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221111203130.9615-2-macroalpha82@gmail.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221202110536.22230-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Rob Herring <robh@kernel.org>
 Stable-dep-of: cb81a22504f4 ("dt-bindings: vendor-prefixes: Add vendor prefix for Teclast")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ .../devicetree/bindings/vendor-prefixes.yaml  | 64 +++++++++----------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 655d56b06efd0..2da6ca65e722f 100644
+index 2da6ca65e722f..7fa835c6a9a50 100644
 --- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
 +++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -196,10 +196,10 @@ patternProperties:
+     description: Bosch Sensortec GmbH
+   "^boundary,.*":
+     description: Boundary Devices Inc.
+-  "^broadmobi,.*":
+-    description: Shanghai Broadmobi Communication Technology Co.,Ltd.
+   "^brcm,.*":
+     description: Broadcom Corporation
++  "^broadmobi,.*":
++    description: Shanghai Broadmobi Communication Technology Co.,Ltd.
+   "^bsh,.*":
+     description: BSH Hausgeraete GmbH
+   "^bticino,.*":
+@@ -543,6 +543,8 @@ patternProperties:
+     description: Hitex Development Tools
+   "^holt,.*":
+     description: Holt Integrated Circuits, Inc.
++  "^holtek,.*":
++    description: Holtek Semiconductor, Inc.
+   "^honestar,.*":
+     description: Honestar Technologies Co., Ltd.
+   "^honeywell,.*":
+@@ -555,8 +557,6 @@ patternProperties:
+     description: Hewlett Packard Enterprise
+   "^hsg,.*":
+     description: HannStar Display Co.
+-  "^holtek,.*":
+-    description: Holtek Semiconductor, Inc.
+   "^huawei,.*":
+     description: Huawei Technologies Co., Ltd.
+   "^hugsun,.*":
+@@ -599,12 +599,10 @@ patternProperties:
+     description: Infineon Technologies
+   "^inforce,.*":
+     description: Inforce Computing
+-  "^ingrasys,.*":
+-    description: Ingrasys Technology Inc.
+-  "^ivo,.*":
+-    description: InfoVision Optoelectronics Kunshan Co. Ltd.
+   "^ingenic,.*":
+     description: Ingenic Semiconductor
++  "^ingrasys,.*":
++    description: Ingrasys Technology Inc.
+   "^injoinic,.*":
+     description: Injoinic Technology Corp.
+   "^innolux,.*":
+@@ -639,6 +637,8 @@ patternProperties:
+     description: ITEAD Intelligent Systems Co.Ltd
+   "^itian,.*":
+     description: ITian Corporation
++  "^ivo,.*":
++    description: InfoVision Optoelectronics Kunshan Co. Ltd.
+   "^iwave,.*":
+     description: iWave Systems Technologies Pvt. Ltd.
+   "^jdi,.*":
 @@ -889,6 +889,8 @@ patternProperties:
      description: Shenzhen Netxeon Technology CO., LTD
    "^neweast,.*":
      description: Guangdong Neweast Optoelectronics CO., LTD
-+  "^newvision,.*":
-+    description: New Vision Display (Shenzhen) Co., Ltd.
++  "^newhaven,.*":
++    description: Newhaven Display International
+   "^newvision,.*":
+     description: New Vision Display (Shenzhen) Co., Ltd.
    "^nexbox,.*":
-     description: Nexbox
-   "^nexperia,.*":
+@@ -897,8 +899,6 @@ patternProperties:
+     description: Nexperia B.V.
+   "^nextthing,.*":
+     description: Next Thing Co.
+-  "^newhaven,.*":
+-    description: Newhaven Display International
+   "^ni,.*":
+     description: National Instruments
+   "^nintendo,.*":
+@@ -1045,10 +1045,10 @@ patternProperties:
+     description: QEMU, a generic and open source machine emulator and virtualizer
+   "^qi,.*":
+     description: Qi Hardware
+-  "^qihua,.*":
+-    description: Chengdu Kaixuan Information Technology Co., Ltd.
+   "^qiaodian,.*":
+     description: QiaoDian XianShi Corporation
++  "^qihua,.*":
++    description: Chengdu Kaixuan Information Technology Co., Ltd.
+   "^qishenglong,.*":
+     description: Shenzhen QiShenglong Industrialist Co., Ltd.
+   "^qnap,.*":
+@@ -1075,22 +1075,22 @@ patternProperties:
+     description: reMarkable AS
+   "^renesas,.*":
+     description: Renesas Electronics Corporation
+-  "^rex,.*":
+-    description: iMX6 Rex Project
+   "^rervision,.*":
+     description: Shenzhen Rervision Technology Co., Ltd.
+   "^revotics,.*":
+     description: Revolution Robotics, Inc. (Revotics)
++  "^rex,.*":
++    description: iMX6 Rex Project
+   "^richtek,.*":
+     description: Richtek Technology Corporation
+   "^ricoh,.*":
+     description: Ricoh Co. Ltd.
+   "^rikomagic,.*":
+     description: Rikomagic Tech Corp. Ltd
+-  "^riscv,.*":
+-    description: RISC-V Foundation
+   "^riot,.*":
+     description: Embest RIoT
++  "^riscv,.*":
++    description: RISC-V Foundation
+   "^rockchip,.*":
+     description: Fuzhou Rockchip Electronics Co., Ltd
+   "^rocktech,.*":
+@@ -1153,6 +1153,8 @@ patternProperties:
+     description: Si-En Technology Ltd.
+   "^si-linux,.*":
+     description: Silicon Linux Corporation
++  "^siemens,.*":
++    description: Siemens AG
+   "^sifive,.*":
+     description: SiFive, Inc.
+   "^sigma,.*":
+@@ -1175,8 +1177,8 @@ patternProperties:
+     description: Siliconfile Technologies lnc.
+   "^siliconmitus,.*":
+     description: Silicon Mitus, Inc.
+-  "^siemens,.*":
+-    description: Siemens AG
++  "^silvaco,.*":
++    description: Silvaco, Inc.
+   "^simtek,.*":
+     description: Cypress Semiconductor Corporation (Simtek Corporation)
+   "^sinlinx,.*":
+@@ -1262,8 +1264,6 @@ patternProperties:
+     description: Sun Microsystems, Inc
+   "^supermicro,.*":
+     description: Super Micro Computer, Inc.
+-  "^silvaco,.*":
+-    description: Silvaco, Inc.
+   "^swir,.*":
+     description: Sierra Wireless
+   "^syna,.*":
+@@ -1285,16 +1285,18 @@ patternProperties:
+     description: Shenzhen City Tang Cheng Technology Co., Ltd.
+   "^tdo,.*":
+     description: Shangai Top Display Optoelectronics Co., Ltd
++  "^team-source-display,.*":
++    description: Shenzhen Team Source Display Technology Co., Ltd. (TSD)
+   "^technexion,.*":
+     description: TechNexion
+   "^technologic,.*":
+     description: Technologic Systems
++  "^techstar,.*":
++    description: Shenzhen Techstar Electronics Co., Ltd.
+   "^teltonika,.*":
+     description: Teltonika Networks
+   "^tempo,.*":
+     description: Tempo Semiconductor
+-  "^techstar,.*":
+-    description: Shenzhen Techstar Electronics Co., Ltd.
+   "^terasic,.*":
+     description: Terasic Inc.
+   "^tesla,.*":
+@@ -1348,10 +1350,6 @@ patternProperties:
+     description: Tronsmart
+   "^truly,.*":
+     description: Truly Semiconductors Limited
+-  "^visionox,.*":
+-    description: Visionox
+-  "^team-source-display,.*":
+-    description: Shenzhen Team Source Display Technology Co., Ltd. (TSD)
+   "^tsd,.*":
+     description: Theobroma Systems Design und Consulting GmbH
+   "^tyan,.*":
+@@ -1360,10 +1358,10 @@ patternProperties:
+     description: u-blox
+   "^u-boot,.*":
+     description: U-Boot bootloader
+-  "^ucrobotics,.*":
+-    description: uCRobotics
+   "^ubnt,.*":
+     description: Ubiquiti Networks
++  "^ucrobotics,.*":
++    description: uCRobotics
+   "^udoo,.*":
+     description: Udoo
+   "^ugoos,.*":
+@@ -1402,6 +1400,8 @@ patternProperties:
+     description: Used for virtual device without specific vendor.
+   "^vishay,.*":
+     description: Vishay Intertechnology, Inc
++  "^visionox,.*":
++    description: Visionox
+   "^vitesse,.*":
+     description: Vitesse Semiconductor Corporation
+   "^vivante,.*":
+@@ -1416,6 +1416,8 @@ patternProperties:
+     description: Vision Optical Technology Co., Ltd.
+   "^vxt,.*":
+     description: VXT Ltd
++  "^wanchanglong,.*":
++    description: Wanchanglong Electronics Technology（SHENZHEN）Co.，Ltd.
+   "^wand,.*":
+     description: Wandbord (Technexion)
+   "^waveshare,.*":
+@@ -1456,8 +1458,6 @@ patternProperties:
+     description: Wondermedia Technologies, Inc.
+   "^wobo,.*":
+     description: Wobo
+-  "^wanchanglong,.*":
+-    description: Wanchanglong Electronics Technology（SHENZHEN）Co.，Ltd.
+   "^x-powers,.*":
+     description: X-Powers
+   "^xen,.*":
+@@ -1500,10 +1500,10 @@ patternProperties:
+     description: Shenzhen Yashi Changhua Intelligent Technology Co., Ltd.
+   "^ysoft,.*":
+     description: Y Soft Corporation a.s.
+-  "^zealz,.*":
+-    description: Zealz
+   "^zarlink,.*":
+     description: Zarlink Semiconductor
++  "^zealz,.*":
++    description: Zealz
+   "^zeitec,.*":
+     description: ZEITEC Semiconductor Co., LTD.
+   "^zidoo,.*":
 -- 
 2.53.0
 
