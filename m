@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062228;
-	b=f1EzkMQT78YQ2BaIp4cJw2f8WeAsHB46BL0MWhNpIaXFjeJHdUmObf9w/A7Z5jhiLY4J
-	 I7wZTZjKVjBOyen6Gwr4RN+W21KMUPe6dg6woYJ7m4cUoKxG0wieFKEHrjUyTj1jIP1wj
-	 Po7XLj9/LFOBS5jJ9Pq25NeGXsmn+8grcNgTSlwuNiiz7bjNSIZGSZwHFRm7BgYweXDMt
-	 9AVCTp2LZWBspaMnPDWawTYxHC+SCua0MkXjyKZkioGUu11wHrPz7qjn7X9QK+KSV6eYO
-	 o81UM6eZ2iCCchphqZLhss9XjZKxEicJaWqyIuh8ndVQCVaXWkt1Y1pMY1ps6rA0f2g==
+	t=1795062230;
+	b=VBNdz9SyjQL5yBN/2ykCmt+8/SogEAcuPlKGPKM143C4LCl3L0xAzoe8Z6+f3ZuO5ec9
+	 qtETugpTnR1SGnqcwlT8lWHT2Yiki8DV01NkRJSnaCN2cXC4s6zhl8pRXByH2U63Pqzmn
+	 pgw+j7KPMNcnYASjUGR/jyxpYTnFO301HiAld+3NUVdNkzZSfmxszFZs0h0XFO9IHWEHa
+	 +FPdKNzhr0JQL7YO9hxG86JyOwW1VqJPcavDENaO2QQy8Lmmlqy4nirVnK0XZRkpTQ+ys
+	 SK7pmVu/kMUtiAdmCvoZ1V2GzDupUeqwvHsxjg9EJ6yNce8A1o6qqOvjjivHE1H5bdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062228;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062230;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/zIo5HjMv4cA61p/1cFXkOZ5JgBtTwesJS8rEGQIMHs=;
-	b=mUxu6DKN/sTPfMpAoQ0QNYyvh7ivhoXfiy0HGJEcqEQTSPiUxSksDrjd8W+ycaCPjtCI
-	 HjwDqzo4CXjEGsuzKJybnK6ckHgTRvzhG26UILgoWeKid4/INBp4VyQ4sVv5JFO2fadSL
-	 6HxHXoeDUDwj2tJuomZObY2iIPsvzDLNiBzMKQWNVf2CFMDC3bKkvk9pmgs/uqeSSuAwx
-	 ziJbNxUK3gY6K4SwMfL63wu6hj/o+pvh0+sKB/qunqtDRn0X5szVZ+wmDXDd0W7B64qrk
-	 6uQNjSXndWolY9NUGl/1aBrLWJ/mqDll6B0NVKe1xq7OEE8j8zLEg/DG+JM4eaSQBcw==
+	bh=iKEaCYH3DnzST8GxsS8AWzltzQiHMzaMSJJg8cDdd+w=;
+	b=Yp2OzcsSXoAsj7n15TEtKZSidiaBb3cyFmC5ACDOlmy5H6XDWmrk4ni+qfxAz81NaHvt
+	 88fUBJxA1qPMOSYDZHxgpur/v8PGv4hSlx/tFh4gm85IeGGnHzcveLcOP45sb2Pi02Zha
+	 TCcVNOXQdaQS3HQp7QjsmnqkHepWEMffAtN0sX0KFjIvgKmu0L4yw7fzadW84Et2m0i0k
+	 cTn9zjev1mNSKY1zh7VIo1007Vh1WYx1HG2mv+0qefeLXrEnb1bRMZTH38j1Zv5rR9NNM
+	 fJb4wEyrKZQIyuins4lBneX8AlrZwL1E1J+/hWaSXi9uNt2MVql8vRCU/IjVTiuUwnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E9IEZ5R1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="sK/EzMGT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B83606A325;
-	Thu, 19 Nov 2026 04:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986F5606A320;
+	Thu, 19 Nov 2026 04:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E9IEZ5R1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B271F000C4;
-	Thu, 19 Nov 2026 04:23:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sK/EzMGT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5FF21F000C4;
+	Thu, 19 Nov 2026 04:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062227;
-	bh=/zIo5HjMv4cA61p/1cFXkOZ5JgBtTwesJS8rEGQIMHs=;
+	s=korg; t=1795062230;
+	bh=iKEaCYH3DnzST8GxsS8AWzltzQiHMzaMSJJg8cDdd+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E9IEZ5R1ZeTSSmvf8OXNRYOAQlzokSLQCuRD23Eo154WgsXBnDCaH7MuVJUlTR4+Q
-	 rdwOv1ivpKRiRcNY8k3i8JCCeJDJ6g4+vtO8k6Pl88fqRwzRbHyjNWXIccnOR3Sn0H
-	 Z/WMvgHhPeQR9zZYybT3VrOfrojgJZkrXd2T+zVU=
+	b=sK/EzMGTsXTGofRLkkGCP0LVQLgCj7dfZEZ/4YU/1TXNhM/4Vl3kKvTY1PVpHeRKc
+	 3r7Abq/r3SZo8nEBP9G53rvIZVPxtoQMnTadXaDPoWhjKhFNnqnMmRiEe33jNxW0oY
+	 61XsRezuwI01PM7ZR0qO3Rda+/QNr3e+4X5sEyww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.10 1836/1848] software node: Allow node addition to already existing device
-Date: Wed, 18 Nov 2026 16:04:34 +0100
-Message-ID: <20261118150036.472151764@linuxfoundation.org>
+	Jhonata Poma-Hansen <jhonata.poma@gmail.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 1819/1848] netlink: check sk_rcvbuf before charging the dump skb
+Date: Wed, 18 Nov 2026 16:04:17 +0100
+Message-ID: <20261118150035.707497810@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,47 +69,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Jhonata Poma-Hansen <jhonata.poma@gmail.com>
 
-commit b622b24519f5b008f6d4e20e5675eaffa8fbd87b upstream.
+[ Upstream commit b45d37740cfb4bdfccef3fbd9fd970fd3224438f ]
 
-If the node is added to an already exiting device, the node
-needs to be also linked to the device separately.
+Since commit ae8f160e7eb2 ("netlink: Fix wraparounds of
+sk->sk_rmem_alloc."), netlink_dump() charges the dump skb first and
+queues it only if sk_rmem_alloc is still below sk_rcvbuf. Commit
+a215b5723922 ("netlink: make sure we allow at least one dump skb")
+added an exception for an empty socket.
 
-This will make sure the reference count is kept in balance
-also when the node is injected to a device afterwards.
+A dump that starts while something else is still charged to a socket
+with a small receive buffer fails with ENOBUFS and stays running.
+Every recvmsg() retries it, fails again and sets sk_err, so a reader
+that peeks before reading, as libnl does, gets ENOBUFS on the read
+after each peek, never consumes the message at the head of the queue
+and spins forever.
 
-Fixes: e68d0119e328 ("software node: Introduce device_add_software_node()")
-Reported-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20210414075438.64547-1-heikki.krogerus@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+I hit this with "iw dev wlan0 scan" hanging at 100% CPU on an arm64
+board with a 6.6 based kernel (iw 5.19 sets SO_RCVBUF to 8KiB). A
+kprobe trace showed the scan dump starting while the NEW_SCAN_RESULTS
+notification iw had just read was still charged to its socket,
+because iw had preempted the sender before netlink_broadcast()
+returned.
+
+Check the limit before charging, as before ae8f160e7eb2, which also
+covers the empty socket. netlink_recvmsg() continues a dump only at
+or below half of sk_rcvbuf, so the skb is then always queued, and a
+dump goes over the limit by at most one skb. Refuse a skb that would
+take sk_rmem_alloc past INT_MAX, so the wraparound stays fixed.
+
+Reproduced on net in a KVM guest with a userspace reproducer and the
+selftest in the next patch; both pass with this fix.
+
+Fixes: ae8f160e7eb2 ("netlink: Fix wraparounds of sk->sk_rmem_alloc.")
+Signed-off-by: Jhonata Poma-Hansen <jhonata.poma@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261027-netlink-dump-livelock-v2-1-c4bb05352a33@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/swnode.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/netlink/af_netlink.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -896,6 +896,7 @@ int device_add_software_node(struct devi
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index eeb0b633a2e5f..d9d8c98440491 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2264,9 +2264,13 @@ static int netlink_dump(struct sock *sk, bool lock_taken)
+ 	if (!skb)
+ 		goto errout_skb;
+ 
++	/* Check the limit before charging the skb: netlink_recvmsg() continues
++	 * the dump at or below half of sk_rcvbuf, and the skb must be queued
++	 * then. Keep sk_rmem_alloc at or below INT_MAX.
++	 */
+ 	rcvbuf = READ_ONCE(sk->sk_rcvbuf);
+ 	rmem = atomic_add_return(skb->truesize, &sk->sk_rmem_alloc);
+-	if (rmem != skb->truesize && rmem >= rcvbuf) {
++	if (rmem - skb->truesize >= rcvbuf || rmem > INT_MAX) {
+ 		atomic_sub(skb->truesize, &sk->sk_rmem_alloc);
+ 		goto errout_skb;
  	}
- 
- 	set_secondary_fwnode(dev, &swnode->fwnode);
-+	software_node_notify(dev, KOBJ_ADD);
- 
- 	return 0;
- }
-@@ -932,8 +933,8 @@ int software_node_notify(struct device *
- 
- 	switch (action) {
- 	case KOBJ_ADD:
--		ret = sysfs_create_link(&dev->kobj, &swnode->kobj,
--					"software_node");
-+		ret = sysfs_create_link_nowarn(&dev->kobj, &swnode->kobj,
-+					       "software_node");
- 		if (ret)
- 			break;
- 
+-- 
+2.53.0
+
 
 
