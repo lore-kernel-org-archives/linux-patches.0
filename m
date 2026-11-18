@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018756;
-	b=TnjCdlZD3Dt2DQsZn4hR1xAVQ1UQbhV1aTW3LWuU0WVVNsQ90s1cmvLktKZeeCyk47RF
-	 VLPJxCw0X78yeh0R7LkQCzZvEyFuZfyWeFoy4S0n5xg+URhp+PpkF1AzHbczI99eq5hUg
-	 YleQw+SsGVv1tAP/HI5eK3NTgKI74Zauro9Mw0BUg+8m3eG6To9uNMB1SywWWcfRJSmUb
-	 Mif3kUWorY6/reBp75cRLTfFlHRznCAMA64zaDyvl6uTW8O4lqGWfTZ+LGHXVjb15TCYM
-	 GTXlgjRoQf+2r+iCJsuzHguAW0zysru9QDnWEPnsI1gN9eIndzOlvFFgyE42v0kN2Jg==
+	t=1795018759;
+	b=FBMY+/5GkylSQGrtiQCAbTDQATUCA2+TFA14wkqZ8OnmpNPxiTOXc68aA/0I2Pbkjlvg
+	 BWWiMrAA8gEzU7DS4CWATmf96PkrvIo6UdkB/UmWCqzEPVpWv/7PsnTRL6Apmt6ioGCVR
+	 aLMaSROoRRgKQ2zpQJCKJzjuJHsjkMVJUmAO+iD5mXEJLjK2Oo4QK9DzN1e+ndBekclgE
+	 bWExsVBP99FBkzLpvToLw4kh+DeK/g/t+HzTY4F0SBq+jsF5E9KRHVLyr2565b55QNevE
+	 P+SbDpqRiw+OwQFjCY9MYyLlSLPicCB+e4KE+xoSbKkhdbD0f5iWq4UHrUIHSdJaFHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018756;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018759;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AhSSj+0cjqrJyDe+iQkQgERca8um2MxzyrKW97eWM5s=;
-	b=NJwdPd5ebvHh7HfYhqRjfO3Tq2zPNN98YEwdWfbnKl2qIjkgsXtk/ok89C2jJu5eVRQO
-	 M4/SHM3VLWQE9r5I9GI7uD4GzS86TIgB+jkj8ZJ17PMutYHJBGW0XQb4sEfKYs2Kn4+s8
-	 KZB6A7HoYeV/w2EPkyWWJIIprQkxopqL3wl8H9eDwIj6pP4g3okftgDI7Jj9aMZNS1b/S
-	 w9XDY3nfQrWUgSSWFyCERjJ2ZB/RzRMQpNYaqjewdy47RmBAFPfdco3FJ4LV4F5QkqG/h
-	 qk+XMj01RrNfB0CtauExivxdAtIPMN2C8WTERv1GGaeyT43umlpHkFe5zEh54e8kbog==
+	bh=e6Dw3mmkNPkB/2ZHPaLnBw7TSSC731lfoPG3HG7xfDQ=;
+	b=dJtZ3jdN/f9oC6ffePH2h1uf9mt/pfm4POLnCu+afKT65zN1lLgNHpJgOKEGyjdY8UFP
+	 UnSjWkDTXqyQWFOl96emTU9GrUvq/j3PZCIplJ/fBN2+9ULzYtMSRiMmlzfjSl1IUWRCH
+	 9JuqDaMwOVbnZjQD0IWJz6krTmx3oWiWrZTqgZGYefNCAT7fKo7DvFKIgKEI46D1DZkFA
+	 NEAQkmSjHp0ofDhiBwPtNkS3pX50nEHCDOnUaYLnFOh+u2oaTSYVztbriolfo9HU+o/ZO
+	 6QroE6nglY49FCldtHvFDBpAWjfUWvwX9tYfF1O4ypMkERpCJ8hVPODkxqLtw+PrQmQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=udaLiwc0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpCujIsz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FAD606A339;
-	Wed, 18 Nov 2026 16:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F3E606A320;
+	Wed, 18 Nov 2026 16:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=udaLiwc0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A131F000C5;
-	Wed, 18 Nov 2026 16:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SpCujIsz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFDF1F000C4;
+	Wed, 18 Nov 2026 16:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018756;
-	bh=AhSSj+0cjqrJyDe+iQkQgERca8um2MxzyrKW97eWM5s=;
+	s=korg; t=1795018759;
+	bh=e6Dw3mmkNPkB/2ZHPaLnBw7TSSC731lfoPG3HG7xfDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=udaLiwc0EL+BsIyohoOIzaJnrMF3A6s/8l8fdNlHAX8/mh11BA1PHzM/JM1jh4QvL
-	 RuAtA5VnzI3D0kGK2Q5I3/iXyGDLS5/z/CpmHe33S6SJSVKU0SlSbT3GIQdbHp+zkH
-	 o+JWSpbMyG425Gocj/HLNKY1Yqyx7mEC+Wo9Wiyk=
+	b=SpCujIszgWbdo6hF3LgnBCtQ4pCLi2a+YyPA8aWwTRS4ov9sL6Q5shro+yoNI6f7x
+	 QkLEusg8odarGl446ghJpny/Qg6+CJVPALCphqdYtOGb44R/VZ3Sgtqaprqf/epXDB
+	 +3pmVRY5AOIUVPQgCLWO0Ik8lySicgUD3PZaSbFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aloka Dixit <aloka.dixit@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1312/2651] Revert "wifi: mac80211: do not use old MBSSID elements"
-Date: Wed, 18 Nov 2026 15:42:32 +0100
-Message-ID: <20261118150335.205712347@linuxfoundation.org>
+Subject: [PATCH 7.3 1313/2651] drm/msm/a5xx: dont read the GPMU registers on GPUs without a GPMU
+Date: Wed, 18 Nov 2026 15:42:33 +0100
+Message-ID: <20261118150335.237619061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,75 +69,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 56fb2334c86cef0b6d44099a6b21de4c8d80a7cb ]
+[ Upstream commit 77e3ffcf69065c4ce92c725540e0b4db14f43ad7 ]
 
-Commit a519be2f5d95 ("wifi: mac80211: do not use old MBSSID
-elements") fixed the incorrect inclusion of stopped/removed
-non-transmitted profiles from the Beacon frames, but it caused
-a regression for channel switch (CSA) and BSS color change (CCA)
-operations initiated from hostapd.
+Only a530/a540 have a GPMU.  On the other a5xx parts, reading the
+0xa800-0xac60 GPMU aperture during a crashdump resets the board -- on
+sda660 (a512) a GPU hang thus reboots the SoC instead of recovering.
 
-Hostapd passes two Beacon templates to kernel for CSA and CCA -
-(1) beacon_csa/beacon_color_change used during the countdown.
-(2) beacon_after/beacon_next used after the countdown completes.
-Hostapd relies on the kernel to include the old MBSSID elements
-while sending beacon_csa/beacon_color_change templates to the
-driver.
+Split the GPMU block into its own array and collect it only when a GPMU
+is present.
 
-This path is now broken and results in CSA/CCA failure.
-
-Including existing MBSSID elements explicitly makes the netlink
-buffer larger than default 4 KB depending on the number of APs
-which would need unnecessary complication to pre-calculate the
-buffer length.
-
-Revert the commit to fix the regression.
-
-Regarding the original issue fixed by the reverted commit -
-Hostapd now has a new commit which always includes at least one
-MBSSID element when the feature is enabled, hence when all
-non-transmitted profiles are removed, this empty element ensures
-that stopped profiles are not advertised.
-
-Fixes: a519be2f5d95 ("wifi: mac80211: do not use old MBSSID elements")
-Signed-off-by: Aloka Dixit <aloka.dixit@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261002-csa_cca_fix-v1-1-b83a998aeb44@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: e20c9284c8f2 ("drm/msm/adreno: Add support for Adreno 510 GPU")
+Assisted-by: LLM
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/754867/
+Message-ID: <20260920-a5xx-no-gpmu-v1-1-714200254f76@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 49 +++++++++++++++++++++++++--
+ 1 file changed, 46 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 797d654c9221b..e86255b4721d1 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1501,6 +1501,7 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 5d96b8f631564..3974aaf6fd33f 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1337,9 +1337,14 @@ static const u32 a5xx_registers[] = {
+ 	0xE800, 0xE806, 0xE810, 0xE89A, 0xE8A0, 0xE8A4, 0xE8AA, 0xE8EB,
+ 	0xE900, 0xE905, 0xEB80, 0xEB8F, 0xEBB0, 0xEBB0, 0xEC00, 0xEC05,
+ 	0xEC08, 0xECE9, 0xECF0, 0xECF0, 0xEA80, 0xEA80, 0xEA82, 0xEAA3,
+-	0xEAA5, 0xEAC2, 0xA800, 0xA800, 0xA820, 0xA828, 0xA840, 0xA87D,
+-	0XA880, 0xA88D, 0xA890, 0xA8A3, 0xA8D0, 0xA8D8, 0xA8E0, 0xA8F5,
+-	0xAC60, 0xAC60, ~0,
++	0xEAA5, 0xEAC2, ~0,
++};
++
++/* GPMU registers, only valid on parts with a GPMU (a530/a540) */
++static const u32 a5xx_gpmu_registers[] = {
++	0xA800, 0xA800, 0xA820, 0xA828, 0xA840, 0xA87D, 0xA880, 0xA88D,
++	0xA890, 0xA8A3, 0xA8D0, 0xA8D8, 0xA8E0, 0xA8F5, 0xAC60, 0xAC60,
++	~0,
+ };
  
- 	size = sizeof(*new) + new_head_len + new_tail_len;
+ static void a5xx_dump(struct msm_gpu *gpu)
+@@ -1448,6 +1453,7 @@ struct a5xx_crashdumper {
+ struct a5xx_gpu_state {
+ 	struct msm_gpu_state base;
+ 	u32 *hlsqregs;
++	u32 *gpmuregs;
+ };
  
-+	/* new or old multiple BSSID elements? */
- 	if (params->mbssid_ies) {
- 		mbssid = params->mbssid_ies;
- 		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
-@@ -1510,6 +1511,15 @@ ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
- 		}
- 		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
- 							mbssid->cnt);
-+	} else if (old && old->mbssid_ies) {
-+		mbssid = old->mbssid_ies;
-+		size += struct_size(new->mbssid_ies, elem, mbssid->cnt);
-+		if (old && old->rnr_ies) {
-+			rnr = old->rnr_ies;
-+			size += struct_size(new->rnr_ies, elem, rnr->cnt);
-+		}
-+		size += ieee80211_get_mbssid_beacon_len(mbssid, rnr,
-+							mbssid->cnt);
- 	}
+ static int a5xx_crashdumper_init(struct msm_gpu *gpu,
+@@ -1565,8 +1571,30 @@ static void a5xx_gpu_state_get_hlsq_regs(struct msm_gpu *gpu,
+ 	msm_gem_kernel_put(dumper.bo, gpu->vm);
+ }
  
- 	new = kzalloc(size, GFP_KERNEL);
++static void a5xx_gpu_state_get_gpmu_regs(struct msm_gpu *gpu,
++		struct a5xx_gpu_state *a5xx_state)
++{
++	u32 count = 0, pos = 0;
++	int i;
++
++	for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2)
++		count += a5xx_gpmu_registers[i + 1] - a5xx_gpmu_registers[i] + 1;
++
++	a5xx_state->gpmuregs = kcalloc(count, sizeof(u32), GFP_KERNEL);
++	if (!a5xx_state->gpmuregs)
++		return;
++
++	for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2) {
++		u32 addr;
++
++		for (addr = a5xx_gpmu_registers[i]; addr <= a5xx_gpmu_registers[i + 1]; addr++)
++			a5xx_state->gpmuregs[pos++] = gpu_read(gpu, addr);
++	}
++}
++
+ static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)
+ {
++	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	struct a5xx_gpu_state *a5xx_state = kzalloc_obj(*a5xx_state);
+ 	bool stalled = !!(gpu_read(gpu, REG_A5XX_RBBM_STATUS3) & BIT(24));
+ 
+@@ -1581,6 +1609,9 @@ static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)
+ 
+ 	a5xx_state->base.rbbm_status = gpu_read(gpu, REG_A5XX_RBBM_STATUS);
+ 
++	if (adreno_is_a530(adreno_gpu) || adreno_is_a540(adreno_gpu))
++		a5xx_gpu_state_get_gpmu_regs(gpu, a5xx_state);
++
+ 	/*
+ 	 * Get the HLSQ regs with the help of the crashdumper, but only if
+ 	 * we are not stalled in an iommu fault (in which case the crashdumper
+@@ -1602,6 +1633,7 @@ static void a5xx_gpu_state_destroy(struct kref *kref)
+ 		struct a5xx_gpu_state, base);
+ 
+ 	kfree(a5xx_state->hlsqregs);
++	kfree(a5xx_state->gpmuregs);
+ 
+ 	adreno_gpu_state_destroy(state);
+ 	kfree(a5xx_state);
+@@ -1630,6 +1662,17 @@ static void a5xx_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+ 
+ 	adreno_show(gpu, state, p);
+ 
++	if (a5xx_state->gpmuregs) {
++		u32 o, pos = 0;
++
++		drm_printf(p, "registers-gpmu:\n");
++
++		for (i = 0; a5xx_gpmu_registers[i] != ~0; i += 2)
++			for (o = a5xx_gpmu_registers[i]; o <= a5xx_gpmu_registers[i + 1]; o++)
++				drm_printf(p, "  - { offset: 0x%04x, value: 0x%08x }\n",
++					o << 2, a5xx_state->gpmuregs[pos++]);
++	}
++
+ 	/* Dump the additional a5xx HLSQ registers */
+ 	if (!a5xx_state->hlsqregs)
+ 		return;
 -- 
 2.53.0
 
