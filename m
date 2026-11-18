@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042322;
-	b=iNC2hWeVCdT1nVb0v7WL6HLUB+0d+oI6VNwOfZ7pFjruKYRY3Tiqeq0KQMlVkC9cN+Bj
-	 RU3RGhVMbl9G+/+TwVH8gvSMtQzD5ViHHLwpmpRD9LTDtvoRK8XCutXd52j4Vdzh1u7Oj
-	 a8UjUmdMY3PruF/fsvFvg5RHUv03v35FcRHjjc6mDoPWXU+iL64pSn22XGJft1usT4FCY
-	 BIS9VqC4+8MkMykwm5lZKTahY0MXCJyviXDyQPs+7ViDa300UamAoeyKsH4E91kbbs1fX
-	 lktTs4R5koULIFZ7a7+77Pgm5JEbcCw4VBUklk0Ghi16OHsaO+93Yeh2//FH6HCC+fg==
+	t=1795042324;
+	b=SXJJ1dBcZbAWQrQ6Po8NcN2zKCahAC1XnjEAac4BmaLB3wnkLFNVlB3KTFPvN+o/gQn2
+	 roH1WRzF7bPk17MHgYYax5g6TodclgOH+L5jldav5IQugRPu7n5T78F9EYrYNWTZuFrLh
+	 FHXkPIm9ewEaqcY5eu+dmKDPVvohI9CluZHnQWYMIWBxHA97Sfc1sk6cKmX6Diorwtofk
+	 3XBQSZYYvTFpBSa2cmBOix+cUCDux7a/nrRu20E9xApQRdK5MBGy9a5nHMyG25ygTCEDl
+	 TArmXtK0eWIWBY1ZFW0zggRsbxz/fcPLv4l/nRMfitS2/yZovoSQBmgJiezZ8gwIlEQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042322;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042324;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a3Z+GcdaxjZ2RuqJfJz/cxKFhDHKxsz60/OsKIgV9Oc=;
-	b=1h2VyjEw1Dv9lBkgAIYn0FbLfjqRbI/z7w8WfiClGrxe2TaSp2ffVhYyVqmIm51UaLnA
-	 mYwqr8KoronJrq3f/LGW8GfO9/zqSKcDm9AT6pP5pLiKILwgEZ6kqpLG9BxVVZojFM4Q+
-	 0QJYMCZA9eRxWRKTQyK4nM1/gACmM9oyzRiz5LlbasFrVZZpo1YHjkz1e1f3cGZT5DmIf
-	 yNs4PVRIcflBt0ooioDY6ZvKTw0HkXeFctZ0+b2hZIjwNgQT2J4597eZyZes/wjAadVXu
-	 7D/3Sqx2lN5zO4ahDaOjxnqSW4gQQV/pTd3TxZyxYug0pmyia2LEgsbO2u7H4GK45cA==
+	bh=pj9TgOjU2qiCi3HwW+LzyhDhlyQLx43JCJOVGPkgVwI=;
+	b=1Bw1Gt+EeV8I6SCrPnxC3f+loDAqoibrI6SMT3lgX1+ClvrL662KUZvrtylDsKPV65FT
+	 VYH4xmiNjAXtgO6OpfQLkUrYmjni10vqNgz8io5eyHl8e+2vK4flJhXgnLI4f2eGkreWz
+	 yPnSMXYIpwnWCAr8jCZRt9NKO498D8tkuEZbRA+fsufHHx0/i9POkNO9V0WbN5kihcCqK
+	 Z3cIG/owfsr1nK2qOO/UgOHZkdXhAhxWZL9ZN74gY/dxS2lTglzrcMpbTDKybZ7NP78ge
+	 jLxz81SCFG5RzMPHjcRoWXmz74wtsGra3z7cT6qAvTyh+6Os1/Ul+m7HxT053oUKwZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSFYfc54;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zYq2zLsV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A70E606A325;
-	Wed, 18 Nov 2026 22:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBBF606A325;
+	Wed, 18 Nov 2026 22:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BSFYfc54
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7088B1F000C4;
-	Wed, 18 Nov 2026 22:52:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zYq2zLsV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B681F000C4;
+	Wed, 18 Nov 2026 22:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042322;
-	bh=a3Z+GcdaxjZ2RuqJfJz/cxKFhDHKxsz60/OsKIgV9Oc=;
+	s=korg; t=1795042324;
+	bh=pj9TgOjU2qiCi3HwW+LzyhDhlyQLx43JCJOVGPkgVwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BSFYfc54k04Bqotfo0xvJlHseKqDizT3GRt/WVM06v8gC2yzXSOkjnKafQQO0PdwR
-	 J/3VX9NhaDh0mvTySmmy68Uiqin82izWVcJatG+R3FzOVLxRtfqQVN8KuTHxBCAujV
-	 dpED9iFsg2qCQu/g+FzHyiS/mD5fmkpnnu1PwZU0=
+	b=zYq2zLsVHtp/5QcHKpfURk3MNQLJm9FFGkF2h6r01Y14DUzXNnYo+dikwrzD/oOUP
+	 YLGKT2tO3dHoTO03nEr+rMyXGIzOkDx9n7QjG+vyOAKAPRiHbZtw5RuqjSAg0O6KKD
+	 EYToaDx8aEhkpA/Z/zZUQ7SavAFvF9X8VHhUxy0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rand Deeb <rand.sec96@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3130/3318] ata: libata-core: Ignore forced transfer modes the host does not support
-Date: Wed, 18 Nov 2026 16:02:32 +0100
-Message-ID: <20261118150453.808677637@linuxfoundation.org>
+Subject: [PATCH 6.6 3113/3318] ASoC: wm8994: dont lose the AIF clock ratio when staying at 32kHz SYSCLK
+Date: Wed, 18 Nov 2026 16:02:15 +0100
+Message-ID: <20261118150453.350234186@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,77 +70,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rand Deeb <rand.sec96@gmail.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit ea5a5af9159cc89e8bcb7a95336e02c8b70aa3d2 ]
+[ Upstream commit 693574504051a19383640cfb99524a6b69e4624f ]
 
-The libata.force parameter can force a transfer mode (pio0-6, mwdma0-4,
-udma0-7) for a port or device. ata_force_xfermask() applies it in
-ata_do_set_mode() right after ata_dev_xfermask() has limited the device
-masks to what the host supports. It replaces those masks with the forced
-mode without checking the host masks, so a mode the controller does not
-support is passed to the driver's ->set_piomode() or ->set_dmamode().
+When SYSCLK drops below 50kHz, the AIFnCLK rate ratio is saved and
+temporarily lowered to 128fs for accessory detection, then restored
+once SYSCLK gets fast enough again. The ratio is however saved again
+on each clock reconfiguration done while SYSCLK is still slow, which
+overwrites the original ratio with the 128fs one.
 
-Several PATA drivers rely on the host masks to keep the mode number in
-range when indexing their timing tables. ata_piix, pata_efar,
-pata_it8213, pata_oldpiix, pata_radisys and pata_rdc declare ATA_PIO4
-and ATA_MWDMA12_ONLY, index a five-entry PIO timing table with
-pio_mode - XFER_PIO_0, and index a three-entry needed_pio[] table with
-dma_mode - XFER_MW_DMA_0. Booting with libata.force=pio5, pio6, mwdma3
-or mwdma4 makes them read past those tables, use the values read as
-further indices into the timing table, and write the result to the
-controller's timing registers.
+This happens on the Exynos4412 Trats2 board, which set MCLK2 as SYSCLK
+twice during the card probe and then configure FLL1 while still running
+from MCLK2. Once SYSCLK is switched to FLL1, the 128fs ratio is
+"restored", so AIF1 is left configured for 48kHz at 128fs while being
+clocked at 256fs. If any digital path is powered up before a stream
+reconfigures the AIF, the codec raises FIFO error interrupts every
+10ms, flooding the kernel log:
 
-Make ata_force_xfermask() skip, with a warning, a forced transfer mode
-that is not in the port's PIO, MWDMA or UDMA mask, and keep looking for
-an earlier matching libata.force entry, as it already does for entries
-that do not apply to the device. With libata.force=pio4,1.0:pio5 on a
-PIO4 host, device 1.0 now gets pio4 instead of pio5. Forcing a mode the
-host supports still works as before, including a mode that
-ata_dev_xfermask() removed for the device or cable.
+ wm8994-codec wm8994-codec: FIFO error
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Save the original ratio only when entering the low SYSCLK mode. While
+at it, move the code duplicated in _wm8994_set_fll() and
+wm8994_set_dai_sysclk() to a common helper.
 
-Fixes: 332673257056 ("libata: implement libata.force module parameter")
-Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20261015194935.1497-1-rand.sec96@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: 6730049a4763 ("ASoC: wm8994: Lower AIFnCLK divisor when dropping to 32kHz")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
+Link: https://patch.msgid.link/20261021101750.3297770-3-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/soc/codecs/wm8994.c | 94 +++++++++++++++++----------------------
+ 1 file changed, 40 insertions(+), 54 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index b2c78c3adf367..e2221d4408485 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -415,6 +415,7 @@ static void ata_force_link_limits(struct ata_link *link)
-  */
- static void ata_force_xfermask(struct ata_device *dev)
- {
-+	struct ata_port *ap = dev->link->ap;
- 	int devno = dev->link->pmp + dev->devno;
- 	int alt_devno = devno;
- 	int i;
-@@ -439,6 +440,17 @@ static void ata_force_xfermask(struct ata_device *dev)
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index 7c3b29464af1f..5a40294ad3fa2 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -2210,6 +2210,44 @@ static int wm8994_get_fll_config(struct wm8994 *control, struct fll_div *fll,
+ 	return 0;
+ }
  
- 		ata_unpack_xfermask(fe->param.xfer_mask,
- 				    &pio_mask, &mwdma_mask, &udma_mask);
++/*
++ * If SYSCLK is less than 50kHz adjust AIFnCLK dividers for detection,
++ * restoring the original ones once SYSCLK is fast enough again.
++ */
++static void wm8994_update_aif_clk_rate(struct snd_soc_component *component)
++{
++	struct wm8994_priv *wm8994 = snd_soc_component_get_drvdata(component);
 +
-+		/* Make sure that the port supports the specified xfer modes. */
-+		if (!(pio_mask & ap->pio_mask) &&
-+		    !(mwdma_mask & ap->mwdma_mask) &&
-+		    !(udma_mask & ap->udma_mask)) {
-+			ata_dev_warn(dev,
-+				     "FORCE: ignoring unsupported xfer_mask %s\n",
-+				     fe->param.name);
-+			continue;
++	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
++		/* Don't overwrite the saved dividers with the 128fs ones */
++		if (!wm8994->aifdiv[0]) {
++			dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
++
++			wm8994->aifdiv[0] = snd_soc_component_read(component,
++								   WM8994_AIF1_RATE)
++				& WM8994_AIF1CLK_RATE_MASK;
++			wm8994->aifdiv[1] = snd_soc_component_read(component,
++								   WM8994_AIF2_RATE)
++				& WM8994_AIF1CLK_RATE_MASK;
 +		}
 +
- 		if (udma_mask)
- 			dev->udma_mask = udma_mask;
- 		else if (mwdma_mask) {
++		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
++				    WM8994_AIF1CLK_RATE_MASK, 0x1);
++		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
++				    WM8994_AIF2CLK_RATE_MASK, 0x1);
++	} else if (wm8994->aifdiv[0]) {
++		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
++				    WM8994_AIF1CLK_RATE_MASK,
++				    wm8994->aifdiv[0]);
++		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
++				    WM8994_AIF2CLK_RATE_MASK,
++				    wm8994->aifdiv[1]);
++
++		wm8994->aifdiv[0] = 0;
++		wm8994->aifdiv[1] = 0;
++	}
++}
++
+ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+ 			  unsigned int freq_in, unsigned int freq_out)
+ {
+@@ -2444,33 +2482,7 @@ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+ 
+ 	configure_clock(component);
+ 
+-	/*
+-	 * If SYSCLK will be less than 50kHz adjust AIFnCLK dividers
+-	 * for detection.
+-	 */
+-	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
+-		dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
+-
+-		wm8994->aifdiv[0] = snd_soc_component_read(component, WM8994_AIF1_RATE)
+-			& WM8994_AIF1CLK_RATE_MASK;
+-		wm8994->aifdiv[1] = snd_soc_component_read(component, WM8994_AIF2_RATE)
+-			& WM8994_AIF1CLK_RATE_MASK;
+-
+-		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
+-				    WM8994_AIF1CLK_RATE_MASK, 0x1);
+-		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
+-				    WM8994_AIF2CLK_RATE_MASK, 0x1);
+-	} else if (wm8994->aifdiv[0]) {
+-		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
+-				    WM8994_AIF1CLK_RATE_MASK,
+-				    wm8994->aifdiv[0]);
+-		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
+-				    WM8994_AIF2CLK_RATE_MASK,
+-				    wm8994->aifdiv[1]);
+-
+-		wm8994->aifdiv[0] = 0;
+-		wm8994->aifdiv[1] = 0;
+-	}
++	wm8994_update_aif_clk_rate(component);
+ 
+ 	return 0;
+ }
+@@ -2588,33 +2600,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
+ 
+ 	configure_clock(component);
+ 
+-	/*
+-	 * If SYSCLK will be less than 50kHz adjust AIFnCLK dividers
+-	 * for detection.
+-	 */
+-	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
+-		dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
+-
+-		wm8994->aifdiv[0] = snd_soc_component_read(component, WM8994_AIF1_RATE)
+-			& WM8994_AIF1CLK_RATE_MASK;
+-		wm8994->aifdiv[1] = snd_soc_component_read(component, WM8994_AIF2_RATE)
+-			& WM8994_AIF1CLK_RATE_MASK;
+-
+-		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
+-				    WM8994_AIF1CLK_RATE_MASK, 0x1);
+-		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
+-				    WM8994_AIF2CLK_RATE_MASK, 0x1);
+-	} else if (wm8994->aifdiv[0]) {
+-		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
+-				    WM8994_AIF1CLK_RATE_MASK,
+-				    wm8994->aifdiv[0]);
+-		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
+-				    WM8994_AIF2CLK_RATE_MASK,
+-				    wm8994->aifdiv[1]);
+-
+-		wm8994->aifdiv[0] = 0;
+-		wm8994->aifdiv[1] = 0;
+-	}
++	wm8994_update_aif_clk_rate(component);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
