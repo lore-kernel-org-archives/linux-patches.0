@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035581;
-	b=jPhVHow+jV8jkKp+QDEmhVxSzZPIlO4i7S+C0+YaCB9uDGnZ8RWCXmM8oNVSDWUFlHBo
-	 b7frxdZQQQv+dj/FmMb4YXWhH7ovoAt1emTOkmECBzTIJPQi1jSCDeGn8lTSEAmFmey6b
-	 KAU3YguZg2R2CMtqmY3b0a07yvHz2gQ8Ffu1Tu7wbwaSz44MsFQt9/i3niyvg9ouUM4DU
-	 GtF/1oZotbGf5eaVYIv2D55eRm4o0FIYUAmflv3PmXYA6CtfzBFE8HHCs0rzvFxapOAta
-	 LvI6JP5jPjPaOhlQJ2evDBOeOChXFTye9MX399kSb7+l841kSToAcizJBcxUMKeXDPA==
+	t=1795035584;
+	b=lxkzH0+iS99xwOAYTdykz/kwXIKCuGF4iBusrL8Tm2xGDWVluiJyFWmOaY4NWqyU1iEk
+	 LNr5Ksh0xaUNrG82omXm5cQDqHusQ2G4yPFxqtZDKKGBDYB5KC8E+SCkkrwKAikGLPwaR
+	 fU+S7ZXDKC1iCkCJgljnrY55mgliMvUa6UhDg2BVwnbof/4pbUisQbg6bp4uix8jD2BN3
+	 GAGvfrECT3Ux8wNw3EyypTb6XXG592h9JNrmL71OeCQoJHBlmsm6ZTA+F2XNP9+N64e0j
+	 LUwkTPNQLhj3+XD0Umctyt5qk5XlA9utpjmJaZeXyTu/HnbD1NL68TnbPwLOJDFWHGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035581;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035584;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=lYremBji8Sz8Ky5JLOS1DiEKeuH8tGUfFKLJG6kfqqg=;
-	b=ztH/gNBrS7r3Hu5OcrRDbn5muP4P9YUXfG6YsTlDu5GWZp/mzgPf/dLu5bQFOpFC/JAu
-	 xZYV8YJ/y7Ucwa9es7yT5quvXTSd9kjef3WfP8wT/0Mz+kjcJridbJniBdLX50n8qel7K
-	 9ufAM+sbBl45MqRLWO06jU8Z+HlaE9r0JOIsJ1JHgKkL+wE0iR0HJhYTdOPoLoPf8Wi+b
-	 TmvbQsUbZSLSW1nm9WiC9QM7S0B3mc04mUt2+q1MUpsQro9p+e5pTH5qEpqq0MlQ70sQn
-	 okJ4EBMExVh9ufssZMTF0DHKNliY71HqqeVx34vHtrd2wzS4Y00h4ryWSjX7tI84ZwQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=7jWPcU1WTg6gRR+4uH08cayByp34uTrq6vzhv1HFP6g=;
+	b=ghP3VjZHkSgzmoZCUVU67JZdqm47aipZGAVnW1cSB4cOMSA+LHk0bCbkCfTdXf5wCr/Z
+	 xrDIEa+MTVAA1U1sos8YcYGXeacR/vCpPp1UXYoeZZF9bd2vEfhhoo2O+jXo6OGC5Ozi9
+	 mI1n0n7mSBljMWUKlOcsD2QCSxrpwy84Eg4WySJPaXIMXiUorI0qsR2bYEaO4C2MIdsIS
+	 8JvOMVzlqvV84rabF6CBPjKqRhc2Cj2FpP1nO1j/U0kBKZ218RSNsBNrbEprj+0/V8zia
+	 C1JK10Et8D+JDSpKXbA8yCiNE1HylQPOOiNNx5L49YXmWudHRzV6TvDjNCGKBtJdVkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D52OcYfd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hPxBmsi9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6817B606A31C;
-	Wed, 18 Nov 2026 20:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EFB2606A31C;
+	Wed, 18 Nov 2026 20:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D52OcYfd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D2C1F000C4;
-	Wed, 18 Nov 2026 20:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hPxBmsi9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5609B1F000C4;
+	Wed, 18 Nov 2026 20:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035581;
-	bh=lYremBji8Sz8Ky5JLOS1DiEKeuH8tGUfFKLJG6kfqqg=;
+	s=korg; t=1795035583;
+	bh=7jWPcU1WTg6gRR+4uH08cayByp34uTrq6vzhv1HFP6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D52OcYfdC8E8YAq3MqAhhW3NoZs96J6cRuY8WNTWIU08kdReusyW2rzuVDNKIO2f3
-	 tv/h0nh3bzIjtt41QamDqMk5xNmdd6nHJo0Crj2Q3Ttl+B1+GLetc0SwPzRcPFbHxy
-	 lQJu85HnHTa9UpAylly+QWXeFdEryDl+J7qNLCTo=
+	b=hPxBmsi9dr4MV3hrUQIdOtg5HiUSSN+dwcXFzP4xCBdP55E934GvY97U6dSbnJbqH
+	 1ebYz9QA2rQBEpYPxcSJcOBcENEkobOlmCL3Z1VhsEFcWitxs0xf3uKMjmYQRqMu08
+	 V1+YIiGzkgWC1SJ5+ZoXbAJ7Bac/NawKAKLjV3HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 6.6 0756/3318] opp: fix use after free in _update_opp_table_clk()
-Date: Wed, 18 Nov 2026 15:22:58 +0100
-Message-ID: <20261118150341.353936980@linuxfoundation.org>
+	Andrew Lutomirski <luto@kernel.org>,
+	David Woodhouse <dwmw@amazon.co.uk>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0757/3318] tun: Require CAP_NET_ADMIN to attach to an ownerless device
+Date: Wed, 18 Nov 2026 15:22:59 +0100
+Message-ID: <20261118150341.391342274@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,65 +63,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Griffin <peter.griffin@linaro.org>
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-commit 1f6de65e3314519ce462bfd3a1d29e918f97e4e5 upstream.
+commit ffdf678dd16610e3f006dac904bd37c09684673c upstream.
 
-dev_pm_opp_put_opp_table() frees the opp_table which is subsquently used
-by dev_err_probe(). This causes an Oops during boot on gs101-oriole.
+Twenty years ago I made creating a tuntap device require CAP_NET_ADMIN
+in commit ca6bb5d7ab22 ("[NET]: Require CAP_NET_ADMIN to create tuntap
+devices.")
 
-cpu cpu0: error 000000006b6b6b6b: Couldn't find clock
-Unable to handle kernel paging request at virtual address 006b6b6b6b6b6cd3
-...
-Hardware name: Oriole (DT)
-pstate: 00400005 (nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : _of_add_table_indexed+0x80/0xbb0
-lr : _of_add_table_indexed+0x6c/0xbb0
-...
-Call trace:
- _of_add_table_indexed+0x80/0xbb0 (P)
- dev_pm_opp_of_cpumask_add_table+0x70/0x120
- dt_cpufreq_probe+0x23c/0x480
- platform_probe+0x64/0xb8
+The idea was to allow the permissions on /dev/net/tun to be relaxed to
+0666 and thus allow owners of tun devices assigned with TUNSETOWNER to
+actually open it and get at their devices.
 
-Fixes: 84f05af0975c9 ("opp: Use clk_get_optional() to avoid leaving opp_table->clk as an error pointer")
-Signed-off-by: Peter Griffin <peter.griffin@linaro.org>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-[ Viresh: use return value of dev_err_probe() ]
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+What we missed at the time was that persistent devices with *no* owner
+were already essentially world-consumable, and anyone who could open
+the device node could also attach to those.
+
+Even then, using persistent devices with no explicitly set owner — on
+the (false) presumption that CAP_NET_ADMIN would be required to open
+them — wasn't an egregious userspace bug. There are cases where it does
+make sense to separate the creation/configuration of the netdevice, from
+the process which shovels packets into it.
+
+Since then, TUNSETGROUP was added a year later in commit 8c644623fe7e
+("[NET]: Allow group ownership of TUN/TAP devices."). Its commit message
+noted that if both uid and gid are set, both have to match (in itself a
+bizarre choice) — but still not that with *neither* set, no permission
+at all was required.
+
+Then in 2012 commit c8d68e6be1c3 ("tuntap: multiqueue support") allowed
+new queues to be attached to a device from the moment of its creation,
+with no way for userspace to close the race between creation and a
+subsequent TUNSET{OWNER,GROUP}.
+
+In 2024, commit 3ca459eaba1bf ("tun: fix group permission check") tried
+to fix things to be saner: only require the user *or* the group to
+match, in line with standard POSIX permissions, and require
+CAP_NET_ADMIN if neither the user nor group authorised the access
+(although it put the CAP_NET_ADMIN check first, and would wrongly have
+reported the capability as having been used even when it was not).
+
+That fix was reverted in commit a70c7b3cbc06 ("tun: revert fix group
+permission check") due to allegedly causing a regression in an selinux
+test suite which *expected* the attachment to succeed when authorised
+by none of user, group, nor CAP_NET_ADMIN:
+https://lore.kernel.org/netdev/CAFqZXNtkCBT4f+PwyVRmQGoT3p1eVa01fCG_aNtpt6dakXncUg@mail.gmail.com/
+
+We should not break UAPI. But we don't have to consider an selinux test
+case which deliberately exercises a security flaw to be UAPI worth
+preserving either. To which end, I have fixed it in selinux-testsuite
+commit b2f894f0016b ("tests/tun_tap: set an owner on the device for the
+relabel tests").
+
+So: fix the lack of CAP_NET_ADMIN check on devices which *haven't* been
+assigned an owner or group, while leaving the weird tun ownership model
+as it was (user *and* group have to match, if both are set). If someone
+still wants to fix the latter (which wasn't actually the reason the
+previous attempt was reverted), they can do it under separate cover.
+
+Permit attaching to an existing device only if an owner and/or group was
+set and the caller matches all that were set, or if the caller has
+CAP_NET_ADMIN. The only behavioural change is that a device with no
+owner or group now requires CAP_NET_ADMIN to attach — precisely the
+loophole we want to close.
+
+And put the CAP_NET_ADMIN check in the right place this time.
+
+Fixes: ca6bb5d7ab22 ("[NET]: Require CAP_NET_ADMIN to create tuntap devices.")
+Reported-by: Andrew Lutomirski <luto@kernel.org>
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/3c77f88acff5b3c2617b22d64faad15f6212619c.camel@infradead.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/opp/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/tun.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/opp/core.c
-+++ b/drivers/opp/core.c
-@@ -1485,6 +1485,8 @@ static struct opp_table *_update_opp_tab
- 					       struct opp_table *opp_table,
- 					       bool getclk)
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -574,14 +574,18 @@ static u16 tun_select_queue(struct net_d
+ 	return ret;
+ }
+ 
+-static inline bool tun_not_capable(struct tun_struct *tun)
++static inline bool tun_permitted(struct tun_struct *tun)
  {
-+	int ret;
+ 	const struct cred *cred = current_cred();
+ 	struct net *net = dev_net(tun->dev);
+ 
+-	return ((uid_valid(tun->owner) && !uid_eq(cred->euid, tun->owner)) ||
+-		(gid_valid(tun->group) && !in_egroup_p(tun->group))) &&
+-		!ns_capable(net->user_ns, CAP_NET_ADMIN);
++	/* If both uid and gid are set, *both* must match */
++	if ((uid_valid(tun->owner) || gid_valid(tun->group)) &&
++	    (!uid_valid(tun->owner) || uid_eq(cred->euid, tun->owner)) &&
++	    (!gid_valid(tun->group) || in_egroup_p(tun->group)))
++		return true;
 +
- 	/*
- 	 * Return early if we don't need to get clk or we have already done it
- 	 * earlier.
-@@ -1511,9 +1513,9 @@ static struct opp_table *_update_opp_tab
- 	opp_table->clk = clk_get_optional(dev, NULL);
++	return ns_capable(net->user_ns, CAP_NET_ADMIN);
+ }
  
- 	if (IS_ERR(opp_table->clk)) {
-+		ret = dev_err_probe(dev, PTR_ERR(opp_table->clk), "Couldn't find clock\n");
- 		dev_pm_opp_put_opp_table(opp_table);
--		dev_err_probe(dev, PTR_ERR(opp_table->clk), "Couldn't find clock\n");
--		return ERR_CAST(opp_table->clk);
-+		return ERR_PTR(ret);
- 	}
+ static void tun_set_real_num_queues(struct tun_struct *tun)
+@@ -2792,7 +2796,7 @@ static int tun_set_iff(struct net *net,
+ 		    !!(tun->flags & IFF_MULTI_QUEUE))
+ 			return -EINVAL;
  
- 	if (opp_table->clk)
+-		if (tun_not_capable(tun))
++		if (!tun_permitted(tun))
+ 			return -EPERM;
+ 		err = security_tun_dev_open(tun->security);
+ 		if (err < 0)
 
 
