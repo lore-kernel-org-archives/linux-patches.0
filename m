@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053533;
-	b=UImm0edmnO2x/M5kSqsgl24RIUBRJRKmYRsfisYBLWe1iwXgXTXOYXW0/ojdbNRUnR66
-	 jVN0/RfZaDvJnusQay18VFQZWhmhGmRB237b3NVYYmBnyqOKAETXGkVwArzbonEQEu041
-	 rX/zVMSu0btVqJrNx3EGvvvvaKuVTm4tFJiN/ItSNNOIHTb1os1Ijgu5tOqlTGtCwp8Kr
-	 5EXO5oenjGlmS4MVUSEL3RDR74pWJXDR1tCVFI6KcBw92S6eta0jn74PiFMy8VpKZWcyi
-	 yYAiMskOV7le5YZeZ80++PhvLEOr0Kw3IN0qQyOG4jZaDnYm1hqos/yRJvxp3GlPqVA==
+	t=1795053536;
+	b=R/mmjRvRUvbUhFhONpzRWhXuNOsCY8tPfyfVQS9RduRUkwPFroZrysrMcCzKzJ8WdRAy
+	 DL3tXbpExzl4zwmQUuMkYvM8cliH1EZJn5ytqi/KDVMZSkerIOZGmP+BbjShw/Jp6vJlO
+	 ASKaliZ5HJdMGjdDtkIzO9BXU+LszDSUdrsrm935qvnbg9UOLFjIXe/uTkLbeWWH9K2Be
+	 mk7u/UkPllCmSc1BDaqR45R+/yHTpT9X1Po7MpniSPG9PRJ9m2zW94wfBglN1lMZCKpc0
+	 SuS/0oA+GCfAgt8VqUZFZqO5Nq8qiuJYOTbBdWxizt73zNz4F7z/MjDsF8VI8p5rU0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053533;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053536;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ps8clIOgGrPDinZtlTlAx42HR0MgPgJ3m/tfdd8/1h0=;
-	b=j3b1dj/Mm4yF/CsltjtkjwgQkT80rGY6UNhnOvS2KU2jGuTJI2A1vUgCJ1T1TSb+HGjk
-	 P8GlvT9BDD2uYUQcWHoXTvtLJc8bDtyeQKnHtM94kkgpGKDPwEwYPWpErpXooMUuvSyGL
-	 91pWt2VvYY3eL382zgWUyej5cfi0DZRLxDuHysE0GpyVqHYOhfTTCpEZzXxB8Sp3q+VwX
-	 Ka4r22XCT/pTB2UyZnNdA5ySZVAHHBftQkzzFn1sQgITU3yjWH8yyrkAmAqgvXyq4lBzK
-	 uEf2BjUplXnZbcZiHevCVmQpujlFjW0FuBYV98vK2TaZfko+A44Y17rJUsXhMu+EVyw==
+	bh=eGNKuDLNBJ3VYznzN8NbmuuShZg+8hVOQkzAFGd7//Y=;
+	b=cviaGjjxynjT3zm2qfd/oxYI2g1jwmX7FCCIFqGS/09G8/OLB25OJU4qnZdftNdCeKZF
+	 LUk65+/P2EbPzF/npgLYvyqJ6QwJLTvpM3cR67KP9q0CiVRxhPNGbK8HJ5zP4I5MaBcoV
+	 fzmnngZJuuHBFczJqRNKxKsDYgfMdKm6PlueYhOv4TaqZzsXsQx8IliFzxNDGs8kNzKap
+	 pEmynjwTJCzplhBnxUSsLb1n3gbVcZ1YPIgXh549fYLuN6J4YCITnKs/AQY+kACjai1F9
+	 DSuf33Y+1Dks0tF4faQBgq4TjQfPmFP+JNZanK5s99sfvuy6Fd+a9xW8RAYdV7k5xRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4Ki0SN9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zO4ShZXH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516DD606A320;
-	Thu, 19 Nov 2026 01:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E7A606A320;
+	Thu, 19 Nov 2026 01:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4Ki0SN9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18071F000C4;
-	Thu, 19 Nov 2026 01:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zO4ShZXH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859EC1F000C4;
+	Thu, 19 Nov 2026 01:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053533;
-	bh=ps8clIOgGrPDinZtlTlAx42HR0MgPgJ3m/tfdd8/1h0=;
+	s=korg; t=1795053536;
+	bh=eGNKuDLNBJ3VYznzN8NbmuuShZg+8hVOQkzAFGd7//Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o4Ki0SN93d47U/8cdIDOPnQpmHQfVEKeQPgqw5Lhs4FyTDWamoDZr+2PfDRnyrZJT
-	 JiIfjrEvCdJxNWUa1wuvf/1J6T+pqGWl9Ftoq/kuiw4lbUFrCOxPkPfURwUbykYZnh
-	 tWfvhhltxDmGMHeOoZ/0rXiyNtfMCjtO6GMiKHMI=
+	b=zO4ShZXHnr1T95CYSsk2FHrDE8aL0FXByJ4Q2R0GptC9oWoqMZkWE9UvqfTk/fy9+
+	 ognV6/ubNE7slY8GRmgljfLKEN3bO+N2kmrax1ii7y/7vrNweVvWQpj4awCXv8eGZD
+	 O5fWhGsAEfJKHfekAPTTkrVmL9aKT8+w7Tc90Opg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Joanne Chang <joannechien@google.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jiucheng Xu <jiucheng.xu@amlogic.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0953/2214] f2fs: force out-place update for all writes on compressed file
-Date: Wed, 18 Nov 2026 15:43:49 +0100
-Message-ID: <20261118150050.453383802@linuxfoundation.org>
+Subject: [PATCH 5.15 0954/2214] f2fs: allow pinning empty compressed files
+Date: Wed, 18 Nov 2026 15:43:50 +0100
+Message-ID: <20261118150050.487130868@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,65 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiucheng Xu <jiucheng.xu@amlogic.com>
+From: Joanne Chang <joannechien@google.com>
 
-commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4 upstream.
+commit 2eebc31ae5f53e1066bb6238c8087c23b688ad17 upstream.
 
-For compressed file, compressed write may fail and fall back to raw
-write.
+Commit a64a3fec11e7 ("f2fs: force out-place update for all writes on
+compressed file") updated f2fs_should_update_outplace() to always
+return true for compressed files. However, this function is also
+called during f2fs_ioc_set_pin_file() validation, so pinning an
+empty file with compression enabled now fails with -EINVAL before the
+compression flag can be stripped.
 
--Thread A                                         - Thread B
-  - f2fs_write_multi_pages                          - f2fs_down_write(&sbi->cp_rwsem);
-   - f2fs_write_compressed_pages                    - ...
-    - f2fs_trylock_op                               - ...
-     - f2fs_down_read_trylock(&sbi->cp_rwsem);      - ...
-   - f2fs_write_raw_pages                           - ...
-
-Thread B acquires the lock first, which causes Thread A to fail lock
-acquisition and fall back to raw-data write.
-IPU_FORCE is enabled on small-capacity storage devices (< 16GB),
-so f2fs_write_raw_pages() overwrites the original compressed data
-in-place.
-
-The in-memory node has been updated with raw-data addresses, while the
-node metadata stored on eMMC still remains in compressed state.
-If a power-cut occurs before the node is flushed to disk, on-disk
-inconsistency arises: disk data is raw, yet metadata treats it as a
-compressed cluster, leading to decompression failure.
-
-To eliminate this risk completely, force out-place update for all
-write operations on compressed file.
+Fix this by guarding the f2fs_compressed_file(inode) check with fio in
+f2fs_should_update_outplace(). This preserves forced OPU for actual
+compressed writes (fio != NULL), while allowing f2fs_ioc_set_pin_file()
+(fio == NULL) to proceed to f2fs_disable_compressed_file(inode).
 
 Cc: stable@kernel.org
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Fixes: a64a3fec11e7 ("f2fs: force out-place update for all writes on compressed file")
+Assisted-by: LLM
+Signed-off-by: Joanne Chang <joannechien@google.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-(cherry picked from commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4)
+(cherry picked from commit 2eebc31ae5f53e1066bb6238c8087c23b688ad17)
 Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/f2fs/data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 90cb8560af1d0..b8da6784e2c44 100644
+index b8da6784e2c44..4b47d7316d4c6 100644
 --- a/fs/f2fs/data.c
 +++ b/fs/f2fs/data.c
-@@ -2670,6 +2670,13 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
+@@ -2675,7 +2675,7 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
+ 	 * If IO comes from compressed write path and fallback to raw write,
+ 	 * force out-place to prevent metadata-data inconsistency.
+ 	 */
+-	if (f2fs_compressed_file(inode))
++	if (fio && f2fs_compressed_file(inode))
  		return true;
- 	if (f2fs_is_atomic_file(inode))
- 		return true;
-+	/*
-+	 * rewrite low ratio compress data w/ OPU mode to avoid fragmentation.
-+	 * If IO comes from compressed write path and fallback to raw write,
-+	 * force out-place to prevent metadata-data inconsistency.
-+	 */
-+	if (f2fs_compressed_file(inode))
-+		return true;
  
  	/* swap file is migrating in aligned write mode */
- 	if (is_inode_flag_set(inode, FI_ALIGNED_WRITE))
 -- 
 2.53.0
 
