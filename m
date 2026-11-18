@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016295;
-	b=UI55ywKsE9YoxhwImlFdXTcKebAw+GWGMoaCxMS+0dWd5PTk9kgy+CSQamIx4Jz5sOmL
-	 qkjwTUpCs406mLOH/8zH1lYTIvctM/A32BvRA64CBiCCGiW8Y7UAzndTFROUm0A25o66v
-	 WcD5K6e4W3RBnQUmrcAvVLOwRsOymE8cnt1GOwDt51u1gSiIMCoZUTL3SH0rjJlonmxQE
-	 ZLEEZGeVEtSh2wC0KTXt5E+AxcFxGRM0++hgnw/3eZGR8DlWghPYVhVMVr//2UseDvULr
-	 3Wj2UAVLRKdBWKyZ7fTsyC+YokXU/CI3f2Ghoffm0bKn80jN1cE7CTl/5L2vKS4swUA==
+	t=1795016298;
+	b=SSCkNzGcghwyevl8jHzC6dfVZ4/gWfxx4xe22gLMOwGVumqtYeNiH5/5w/L6h70JT3yR
+	 EuQYNJZbBKQgpInfQCXHrKWXM05Hg0fM0jfsQizuFmKE65mg1R2SqqFEunW60/cBOI1pf
+	 AfHildU7Q2vSnFvI8tQMUfZxgQVQYjtqiLv4wYgf+W9Z5QAdoT4/xMb5Lfh4gZ+OdbR2J
+	 0H0MxAAQ0sg3LQHaL0cfKDvjDBKCKdCbwSdt++/ieGTc+vn52LQi4aUEPB07VyqY20DMx
+	 O8NGSyJMKclXB80gmWEvBCB212pcWBMmwKwMzShFK80OVKKBwLoGus5EYge+yQt69mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016295;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016298;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=M2MeXzmBhP6Ru+C2sg03MdUelTnp5+snlHdLipy4sEQ=;
-	b=JIV3qE9DH1llMozNuy+yC3qq/hHgK7WGllok8VhOrTUV4RxWg6JBxIuNnX9sIFAhWcrR
-	 gzhyx7m0z7fs317tEUBhzrUqnV9/xv/QYWkKG2MEFolh/cVicd4E1MnaxZaB6raC2m9vK
-	 wMbk1kquxj2EEgZI0X6whIczPxf4SrBrBX0ifGfweJRUS8hlXvyqK8cp7dgGPEPhO/jna
-	 mkvMcla3wHfH+2q7PVpjxrmhb3GrUMgv1wuZ5zCfvuUy214k1cgdyzijx96ZO6MLc9GDc
-	 Sg8ajFtftWXgXh5/IVZOQQ00wyU2Jg5B63tz3a+xFDcwOKLAlUtjPUGkZDHkXUfFVEg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=io6IlTdewX0d5XYp/8RRErPo2VXk3YEnE9k+au3zDhY=;
+	b=cMDVPI3nYuGYdzRfUNvBnQ0bK5sR/ibGIXgY3Dzikt+lnrj8cfCCPnT7BlQG7o81w30c
+	 m6V9GZrjLh2nbb95cHnhM6yQ7tg6O3DIv5OEMpxy+OzlJ7KBMSMhTfY9giLgKVNV2wPj3
+	 HcM3qYZkZNi7+J6ht29MFRO98n4OIfFy7MCMxxO+ZOR7qKr1Ec35tGY5FKZsLIpvXUUuh
+	 yOVQArOgsqyAbdZzKLDaI/fvgviFfbN1PlmE8HrdOOL+NvgYkls6XCbc3UbkJERgww0O8
+	 iRlAT0pIpd8L3xuKrzTOLcagmTPqG1WO1kbUy9JWSaWhZB6PPnh2LKoEl19gtquMLMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oO4QeeKx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IlFvLN6S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF0360A3803;
-	Wed, 18 Nov 2026 15:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5215560A260F;
+	Wed, 18 Nov 2026 15:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oO4QeeKx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D7E1F000CA;
-	Wed, 18 Nov 2026 15:38:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IlFvLN6S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E02C1F000C9;
+	Wed, 18 Nov 2026 15:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016295;
-	bh=M2MeXzmBhP6Ru+C2sg03MdUelTnp5+snlHdLipy4sEQ=;
+	s=korg; t=1795016297;
+	bh=io6IlTdewX0d5XYp/8RRErPo2VXk3YEnE9k+au3zDhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oO4QeeKxkqKLU3rU9zzRTBx2DmC/HwWBJs9V0DeeKAC4gUFzvvDBmtW8wylYxZZFj
-	 GC2yBG5qap+8apMojYWmhCxC7iToMuTwTYJGl0QKte6o9ZowCkDsTX2wH2UNXsGkYA
-	 FMdYEBGNaJBB644elCLCGAN1Q4FhNUPYhjE+bGcw=
+	b=IlFvLN6SLQZXSIli8t/7rBg8HbdinDRZccjuEA4WcNZN5C44BaVUG/3s+Q2mYMmNB
+	 6sCpWDCh9vVf45Wftq541h7PgK9CoMDcRiUxxObW3KeBmfBtJgkWJI+cg6nqlQE3cT
+	 jtuPzefM0LJb87Io6ITxfE+KenfOOYsQll1eFD4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	=?UTF-8?q?Mika=20Penttil=C3=A4?= <mpenttil@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0479/2651] RDMA/hns: Fix the use of uninitialized variable
-Date: Wed, 18 Nov 2026 15:28:39 +0100
-Message-ID: <20261118150305.026811824@linuxfoundation.org>
+Subject: [PATCH 7.3 0480/2651] drm/tests: hdmi: fix infoframes tests
+Date: Wed, 18 Nov 2026 15:28:40 +0100
+Message-ID: <20261118150305.060811975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,50 +62,134 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Mika Penttilä <mpenttil@redhat.com>
 
-[ Upstream commit 653c5b4605f65355d3b3f1059784e56c77f146b3 ]
+[ Upstream commit d5c34a384305e05a2d463dd2094e0ec449643bd4 ]
 
-The variable 'i' is used without being initialized in active-backup
-mode.
+drm_atomic_commit() calls drm_atomic_check_only() internally. Calling
+drm_atomic_check_only() explicitly before the commit leaves the state
+marked as checked and triggers drm_WARN_ON(state->checked) when the
+commit checks the state again.
 
-Fixes: d9023e461b73 ("RDMA/hns: Implement bonding init/uninit process")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260914024800.132429-1-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Remove the redundant explicit checks.
+
+Fixes: 7436a87db99d ("drm/tests: hdmi: check the infoframes behaviour")
+Cc: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Mika Penttilä <mpenttil@redhat.com>
+Link: https://patch.msgid.link/20260914040723.2593700-1-mpenttil@redhat.com
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_bond.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../drm/tests/drm_hdmi_state_helper_test.c    | 54 -------------------
+ 1 file changed, 54 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_bond.c b/drivers/infiniband/hw/hns/hns_roce_bond.c
-index f2b12ae13a584..8d8272705fb72 100644
---- a/drivers/infiniband/hw/hns/hns_roce_bond.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_bond.c
-@@ -81,7 +81,7 @@ static int hns_roce_set_bond_netdev(struct hns_roce_bond_group *bond_grp,
- {
- 	struct net_device *active_dev;
- 	struct net_device *old_dev;
--	int i, ret = 0;
-+	int i = 0, ret = 0;
+diff --git a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
+index 353a261d42dac..f8ae1a0bd5c01 100644
+--- a/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
++++ b/drivers/gpu/drm/tests/drm_hdmi_state_helper_test.c
+@@ -2929,15 +2929,6 @@ static void drm_test_check_infoframes(struct kunit *test)
  
- 	if (bond_grp->tx_type == NETDEV_LAG_TX_TYPE_ACTIVEBACKUP) {
- 		rcu_read_lock();
-@@ -89,7 +89,7 @@ static int hns_roce_set_bond_netdev(struct hns_roce_bond_group *bond_grp,
- 			bond_option_active_slave_get_rcu(netdev_priv(bond_grp->upper_dev));
- 		rcu_read_unlock();
- 	} else {
--		for (i = 0; i < ROCE_BOND_FUNC_MAX; i++) {
-+		for (; i < ROCE_BOND_FUNC_MAX; i++) {
- 			active_dev = bond_grp->bond_func_info[i].net_dev;
- 			if (active_dev &&
- 			    ib_get_curr_port_state(active_dev) == IB_PORT_ACTIVE)
+ 	old_hdmi_update_failures = priv->hdmi_update_failures;
+ 
+-	ret = drm_atomic_check_only(state);
+-	if (ret == -EDEADLK) {
+-		drm_atomic_commit_clear(state);
+-		ret = drm_modeset_backoff(&ctx);
+-		if (!ret)
+-			goto retry_crtc_state;
+-	}
+-	KUNIT_ASSERT_EQ(test, ret, 0);
+-
+ 	ret = drm_atomic_commit(state);
+ 	if (ret == -EDEADLK) {
+ 		drm_atomic_commit_clear(state);
+@@ -3034,15 +3025,6 @@ static void drm_test_check_reject_avi_infoframe(struct kunit *test)
+ 
+ 	old_hdmi_update_failures = priv->hdmi_update_failures;
+ 
+-	ret = drm_atomic_check_only(state);
+-	if (ret == -EDEADLK) {
+-		drm_atomic_commit_clear(state);
+-		ret = drm_modeset_backoff(&ctx);
+-		if (!ret)
+-			goto retry_crtc_state;
+-	}
+-	KUNIT_ASSERT_EQ(test, ret, 0);
+-
+ 	ret = drm_atomic_commit(state);
+ 	if (ret == -EDEADLK) {
+ 		drm_atomic_commit_clear(state);
+@@ -3153,15 +3135,6 @@ static void drm_test_check_reject_hdr_infoframe_bpc_8(struct kunit *test)
+ 
+ 	old_hdmi_update_failures = priv->hdmi_update_failures;
+ 
+-	ret = drm_atomic_check_only(state);
+-	if (ret == -EDEADLK) {
+-		drm_atomic_commit_clear(state);
+-		ret = drm_modeset_backoff(&ctx);
+-		if (!ret)
+-			goto retry_conn_state;
+-	}
+-	KUNIT_ASSERT_EQ(test, ret, 0);
+-
+ 	ret = drm_atomic_commit(state);
+ 	if (ret == -EDEADLK) {
+ 		drm_atomic_commit_clear(state);
+@@ -3276,15 +3249,6 @@ static void drm_test_check_reject_hdr_infoframe_bpc_10(struct kunit *test)
+ 
+ 	old_hdmi_update_failures = priv->hdmi_update_failures;
+ 
+-	ret = drm_atomic_check_only(state);
+-	if (ret == -EDEADLK) {
+-		drm_atomic_commit_clear(state);
+-		ret = drm_modeset_backoff(&ctx);
+-		if (!ret)
+-			goto retry_conn_state;
+-	}
+-	KUNIT_ASSERT_EQ(test, ret, 0);
+-
+ 	ret = drm_atomic_commit(state);
+ 	if (ret == -EDEADLK) {
+ 		drm_atomic_commit_clear(state);
+@@ -3387,15 +3351,6 @@ static void drm_test_check_reject_audio_infoframe(struct kunit *test)
+ 
+ 	old_hdmi_update_failures = priv->hdmi_update_failures;
+ 
+-	ret = drm_atomic_check_only(state);
+-	if (ret == -EDEADLK) {
+-		drm_atomic_commit_clear(state);
+-		ret = drm_modeset_backoff(&ctx);
+-		if (!ret)
+-			goto retry_crtc_state;
+-	}
+-	KUNIT_ASSERT_EQ(test, ret, 0);
+-
+ 	ret = drm_atomic_commit(state);
+ 	if (ret == -EDEADLK) {
+ 		drm_atomic_commit_clear(state);
+@@ -3438,15 +3393,6 @@ static void drm_test_check_reject_audio_infoframe(struct kunit *test)
+ 
+ 	old_hdmi_update_failures = priv->hdmi_update_failures;
+ 
+-	ret = drm_atomic_check_only(state);
+-	if (ret == -EDEADLK) {
+-		drm_atomic_commit_clear(state);
+-		ret = drm_modeset_backoff(&ctx);
+-		if (!ret)
+-			goto retry_crtc_state_2;
+-	}
+-	KUNIT_ASSERT_EQ(test, ret, 0);
+-
+ 	ret = drm_atomic_commit(state);
+ 	if (ret == -EDEADLK) {
+ 		drm_atomic_commit_clear(state);
 -- 
 2.53.0
 
