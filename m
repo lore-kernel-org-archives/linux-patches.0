@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024102;
-	b=kzwUzGGzMxmHsc7m20gVQDKlXcc3BdJp/gKKJsOzdpTdqQ/DQSUm1yXx8a4qXzRMyici
-	 swEXZRLxq5u2WUMFLOpWThrIfFj+jiVeilcRouKG7C48Ws84BxpNI6dA5dmgtJ5+9irtF
-	 hReA0PVLhgRr+ptGXinTCe8o+wXQl5oqWPGMk5A6vdkYhNzz2GHjYMBu/IcB7y2a4Tlu0
-	 4hx7GjH428rSJfCTV3V8fXbr96cA4fCs4qwJ2BbgDEmm+UM/2fAOZtDJ+h8Hwuy2RJgr3
-	 EExoN0yx1F7N6VTAB35Q6aJj1M8ePl87fhT5lfW6eXhtXIMWoJzspL08Iv5t8gNr6nQ==
+	t=1795024105;
+	b=jH0eoYmGTIA2wJA+3+q9ogy4IwnwsEtZuoa6PtXBKeeo8FoEEh47bfov1cENBAD9UOGL
+	 Yn9ZlZ/L6ark6h9drWgJ57HELS2zwO2kh5onKdeqgOARReox969BlDLzO1b6ZsigDaoOJ
+	 +v/Ai51WaCO7Y0HJ5jFsj/toJfKoeI4I8d6q7bG67aDTBBaP2d76niNs/Vho6HRfx8GOz
+	 O3hnN2GriK3KnewJ1ZnS85tUjCT09k1TovgGm7B60+unk031Updeh51IflbX5rpf2eNWk
+	 BWNyVNEBSSivE+re1ILfh2XF/cTT7UNbpJG10APdZEHeE0N9PxMdckgAPuxflt3q3Dg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024102;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aMS8ZPTJMwsI+tJ5WD4WpLRUoML03/Vwb4C9etb+NhM=;
-	b=z3bl/i5t5z/GTV0wGQGWBapZvw8Ce0HmbkzPf5ESczWciCscRFvXpQQNaJPQ1O5YRILG
-	 wQxbMsA9jIUezU9PoWwUCNOGqdAuIz7fI9/eWS3urvrNMF+z9zBq/y41eiNzQYWdbqkyJ
-	 PVHvbbFLeEomEGzpQznVjjz/R23BHKAomxRW0zN+gOiH4GpcqZGzeLV6ZBN776knNTTbS
-	 00dPWlOJHbRH0jfNCbsBXizX3L7sdqs/Lx+dO6M8xdkc7umipfqowc3pEDTCdJwx0g2ud
-	 O3GFbMLs01jWDJ8eAIwn+k5whNpLe1ZQknRmdDLdAvaoQi6fgbUjyoD8H0FLNv4Vreg==
+	bh=HBDu3VzGSFsvj+8DAmagdpexNNtDz10bHyrqIidsTBE=;
+	b=JQ89oA+6Ny2h3XcL5i3z5+LbWNTdvvghwdiq+IpSY9rPLRiGgQjRTXaSN0ZbEV3LRdzw
+	 /cMRyGIUWzGYVzhKarBLK+QQ8Ux6Ep638YpAXEdgGwWlpANlCbf2QCrXmAunX5EZNHInh
+	 MMKOmV96k5AutKySsWs0oMzOOMHmsI3trsIR+vvcz/2CedX5s6PoUL7R+rJ01oPFfA6VQ
+	 NHeFxTsCL2A+Z8N2EV3EJ1SDc8azXJ0iIXWIWeF/AKgn9wPz8VB623kxbhadnk8KLiEVJ
+	 MDIFKFSxu06xQIbGxCtQS/j2Kexzu4nfGOhGnD8ihGnemTTrrB1+n9s3m1PZlZumY3g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UX8LzMcL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+ttb2NI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC28606A320;
-	Wed, 18 Nov 2026 17:48:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1BE606A325;
+	Wed, 18 Nov 2026 17:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UX8LzMcL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7521F000C4;
-	Wed, 18 Nov 2026 17:48:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o+ttb2NI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF98C1F000C4;
+	Wed, 18 Nov 2026 17:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024102;
-	bh=aMS8ZPTJMwsI+tJ5WD4WpLRUoML03/Vwb4C9etb+NhM=;
+	s=korg; t=1795024105;
+	bh=HBDu3VzGSFsvj+8DAmagdpexNNtDz10bHyrqIidsTBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UX8LzMcLlTM+fxV+eB9WSV9rwTpCqEI2t5+aedIU8zUziXSRTgp0v3PlwVdDyTgoO
-	 RQrZblJlzFCbxJJv09J5LZdtyXe1t27jQw5NFSthdz01E8tXPcSp+7WDqjnDUjiMVo
-	 0mbVhjxBWHafgnkBpCQJ51HD4m8DGIuBvikWuuw0=
+	b=o+ttb2NIcsdaSDUMsKX5/AF+NZKcpCmx2RMXlZm0tsln+u/WFgjaloJbeJbTlTvBS
+	 K8wafRuga0rUUuf+Bbm1HR824UX2ADpiXrgdKyZcL4UsdIhl+JTXyIGVtDC0mmgpXa
+	 OihfFuBzM0ePUYGMArsW4Qdx1S0T7nDg3ndQDZDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yun Lu <luyun@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Mykyta Yatsenko <yatsenko@meta.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0565/2151] selftests/bpf: Clean up child when task_work__open() fails
-Date: Wed, 18 Nov 2026 15:38:20 +0100
-Message-ID: <20261118150142.532695378@linuxfoundation.org>
+Subject: [PATCH 6.18 0566/2151] i3c: mipi-i3c-hci: Restore controller state if i3c_hci_enable_ibi() returns an error
+Date: Wed, 18 Nov 2026 15:38:21 +0100
+Message-ID: <20261118150142.566244532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,48 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 8715b13c1a800f34f9d8177837e5244ac8288f60 ]
+[ Upstream commit ad869331ac616bf192c04081ef7e206e1d106ad8 ]
 
-task_work_run() forks a child that blocks reading a pipe until the
-parent wakes it. If task_work__open() fails afterwards, the parent
-returns without closing either pipe fd or waiting for the child.
-Because the parent retains the write end, the child remains blocked in
-read() until test_progs exits.
+i3c_hci_enable_ibi() performs controller-side setup before sending the
+ENEC CCC to enable IBIs on the target.  If the ENEC CCC fails, the
+function returns an error but leaves the controller configured as if IBI
+enabling had succeeded.
 
-Route this failure through the common cleanup path. At this point
-cleanup is safe: pe_fd is -1, link is NULL, task_work__destroy() accepts
-NULL, and the pid > 0 branch closes the read end, wakes the child,
-closes the write end and waits for it.
+Fix the error path by undoing the earlier setup when the ENEC CCC fails,
+ensuring the controller state remains consistent with the failed enable
+operation.
 
-This is the last early return after a successful fork. The fork failure
-path already closes both pipe fds after commit 5730dacb3f17
-("selftests/bpf: Task_work selftest cleanup fixes").
-
-Fixes: 39fd74dfd5d2 ("selftests/bpf: BPF task work scheduling tests")
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
-Link: https://lore.kernel.org/bpf/20260918024300.18321-1-luyun_611@163.com
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260920151248.46936-7-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/test_task_work.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master/mipi-i3c-hci/core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/test_task_work.c b/tools/testing/selftests/bpf/prog_tests/test_task_work.c
-index 774b31a5f6ca1..fe0cb1702eaa0 100644
---- a/tools/testing/selftests/bpf/prog_tests/test_task_work.c
-+++ b/tools/testing/selftests/bpf/prog_tests/test_task_work.c
-@@ -85,7 +85,7 @@ static void task_work_run(const char *prog_name, const char *map_name)
+diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
+index e9fd314eb17b9..6bb33193970b2 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -522,11 +522,15 @@ static int i3c_hci_enable_ibi(struct i3c_dev_desc *dev)
+ 	struct i3c_master_controller *m = i3c_dev_get_master(dev);
+ 	struct i3c_hci *hci = to_i3c_hci(m);
+ 	struct i3c_hci_dev_data *dev_data = i3c_dev_get_master_data(dev);
++	int ret;
  
- 	skel = task_work__open();
- 	if (!ASSERT_OK_PTR(skel, "task_work__open"))
--		return;
-+		goto cleanup;
+ 	mipi_i3c_hci_dat_v1.clear_flags(hci, dev_data->dat_idx, DAT_0_SIR_REJECT, 0);
+ 	scoped_guard(spinlock_irqsave, &hci->lock)
+ 		hci->ibi_devs[dev_data->dat_idx] = dev;
+-	return i3c_master_enec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
++	ret = i3c_master_enec_locked(m, dev->info.dyn_addr, I3C_CCC_EVENT_SIR);
++	if (ret)
++		__i3c_hci_disable_ibi(hci, dev);
++	return ret;
+ }
  
- 	bpf_object__for_each_program(prog, skel->obj) {
- 		bpf_program__set_autoload(prog, false);
+ static int i3c_hci_disable_ibi(struct i3c_dev_desc *dev)
 -- 
 2.53.0
 
