@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054136;
-	b=mV0mnEzJjsjAsoLTRQHY3RCJ1bEXWnrHF564qHPzIv4fqsrGFQN5eigJxWYkO2+aDG+f
-	 wZbo1Nvxc3/Czz3KmwR9Bnp7aNX8XbAGAzGISfNFfvMtkUtuYMeBc+ILypr5hOd3vW/cB
-	 wtP/Lrk8xew3Dcu1isDpBA7NX47u4n0K93yMF6+q1IHhhjHSdsbPex1KppAKp1ZpM4ll5
-	 WBDpVkomGymP8duSAnBIIrwAFZmSUGJ8sWL6bvjUFuv79rnzrK27Uq96+SYQmiT5AuLXM
-	 bLiHoLrmCFvIqYlNLfPFdbCteDMQr8gFqO22Dd5/9w/LwUvUKlckocmZ7DVMa50GD1A==
+	t=1795054139;
+	b=Mr33sI4bycpQhdJga5CEAiSoOLJzMw8tY7aDFWfRfQtvm/soF9xXLnpLV+kyzKGMH7KQ
+	 n228pfxczYTHYg4fMBhtokPGq/Tjo1VtiPNDwSSZRo9xcvXjp5Fz9spYmN0EVvUjr08x2
+	 3I9gNVC4I10Bnp5dwbzU6XCxgPsEj52+WwUb+V90O4chg9ek9ARyhRoZZ1oMGZhbmlV0X
+	 m85WvZyb346R5F2AQexiqDhydtLWcXiyvr7s3Y83b4lxk25qGDGzzltixh7ox8mmYHLL+
+	 clouODlCHIawXFFqbu9qcq2/0/fJGtT1tFJyvdgG4ezEVKzxxkZjGOgMC2gKZHk+01A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054136;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054139;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Zy9z6Ev6TrdWB/DM9sdFtqock3pJuXLyog+M2egG+l0=;
-	b=hEAMJcacvURmY8cwheWZklWXtD4RtOyJzQznV9GBbHhwYGcksXKaUzPgYh5w58r4V3Ls
-	 8SR8tGLGVrroMbwWPDqCjGn2p6fI3LrNt7563ATc4Wc+r5yRiXeYf1TihcxrRgGCW43aD
-	 rLht7B0CyhogAC3FB6wztOvjEo0yEqnNpP1mJlo9/UE1xQX60LhSO2xhj5vul0Xm8SjUk
-	 uBhOxzPzePaXzvZ/gQPNcGfwxr6lAwn2YW3IfM0pXg+ahWrs1QQ0GCMc2uRnCytm6KbGL
-	 V8Yu5KSd51/bVQnhpkB16P94Fj6tR+jkLZ8XcQ0hsJ6VP/TMi2L0TjomZdQGWoBTxjA==
+	bh=IP8ZsZqTZB2XALUgML3QrPfquQ77pRF/aAQ0+HkUAME=;
+	b=IAC/VqzTH2fpGe0VSlyhUOWToaeOdHuZQNaXGZBMe3JlLtFnCkvbsLlawV0o3GEOw7b5
+	 XACXHMRClNQsM/ooQdpc4JoL1dswTZXv9XTCRyBYnMkFx8abAHUnF0t0YgA5hRSYDgqQ0
+	 XWX0Ujd2T5MVpYGLGK32VZJbpTz6PtEXHEHDJ3+mL4wok2DtmzFE0M8KWVSyRJxviqlCt
+	 3lGU7i5VpPLiG3ZY+Ac2eLejvZ8johigh7yjWrD+XKZm5EnUqgAYUqZP3zs3fITTxYXDB
+	 7vF3+8ifHOGl08yGhPGt7x1eoiYK2vuaELzBoOZd6xcUL1qpHf+63DAKDRv0SV5Mitw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x12m/mUk";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1IbJ4nrm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64783606A320;
-	Thu, 19 Nov 2026 02:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4321606A31C;
+	Thu, 19 Nov 2026 02:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x12m/mUk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733B31F000C4;
-	Thu, 19 Nov 2026 02:08:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1IbJ4nrm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F791F000C4;
+	Thu, 19 Nov 2026 02:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054136;
-	bh=Zy9z6Ev6TrdWB/DM9sdFtqock3pJuXLyog+M2egG+l0=;
+	s=korg; t=1795054138;
+	bh=IP8ZsZqTZB2XALUgML3QrPfquQ77pRF/aAQ0+HkUAME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x12m/mUkHUAZSqm3V7eXezBRkCYN4dqwnw1TGwnOZXx4xsIq4UA8pmGm5yUpSYYAV
-	 XZW7NyPghQvdKwHTubZtPlqAjA77Ib7G6aByivYUxJYTvFuzLwriJYfgDMfj7xlwnn
-	 6yuEFpBef3SQ+AE1Y3GIY/SrBpeH66W8gBs+UNZo=
+	b=1IbJ4nrmSnxKT48abdc+MXZ4gu4ngK1TniTekIhj9cRIerQzXD0P3qiyd5C3faB2F
+	 Svuh7XNPjzLLVILQrJ+npQW8sPE/J4+9FUERtT85/tBsk56hsYPN2LWt6XgbjKFik5
+	 X8ncEaLJR/q99xBY607A65mGf6lWd9BVoMBrUWho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1168/2214] drm/msm/hdmi_phy: Cleanup after msm_hdmi_phy_resource_enable() failure
-Date: Wed, 18 Nov 2026 15:47:24 +0100
-Message-ID: <20261118150058.735401234@linuxfoundation.org>
+Subject: [PATCH 5.15 1169/2214] f2fs: release a removed xattr node in roll-forward recovery
+Date: Wed, 18 Nov 2026 15:47:25 +0100
+Message-ID: <20261118150058.772581297@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,63 +69,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit d27f831aaf20aaf06e41ceb1b260e10672269155 ]
+[ Upstream commit f5924de8867c09206ba631b9faed63862ec00a10 ]
 
-If msm_hdmi_phy_resource_enable() fails, e.g. when enabling regulators,
-it should reverse the state of things already changed.
-msm_hdmi_phy_resource_enable() is used also in probe path, thus such
-failure, which could be simple deferred probe, would leave these
-resources permanently enabled for the rest of the runtime.
+When xattrs shrink enough to fit in the inline xattr area,
+write_all_xattrs() truncates the xattr node and clears i_xattr_nid. If
+the file is then fsynced without a checkpoint, only the inode block is
+written, with i_xattr_nid of 0.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752654/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-1-87bdb9f1987f@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Roll-forward recovery starts from the checkpointed inode, whose
+i_xattr_nid still points to the old xattr node.
+f2fs_recover_inline_xattr() copies only the inline xattr area, and
+f2fs_update_inode() writes the old i_xattr_nid back. So the inode keeps
+the stale xattr node:
+
+ - The node block is never released, and fsck reports "nonzero bytes in
+   xattr space after end of list".
+ - If the inline xattr list ends exactly at the end of the inline area,
+   its terminator is read from the stale node, and the removed xattrs
+   come back after recovery.
+
+When the fsynced inode has no xattr node but the checkpointed one has,
+release the old xattr node as truncate_node() does: check its block
+address, invalidate the block and drop its node cache, which may still
+be dirty.
+
+Fixes: 28cdce0459cc ("f2fs: recover inline xattr data in roll-forward process")
+Cc: stable@vger.kernel.org
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ sashal: adapted newer F2FS helpers to existing page-based APIs and legacy error handling ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_phy.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ fs/f2fs/node.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-index 326b43c803f09..1bdaa1f94c29b 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-@@ -62,16 +62,28 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
- 	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev, "failed to enable regulators: (%d)\n", ret);
--		return ret;
-+		goto err_pm_put;
- 	}
- 
- 	for (i = 0; i < cfg->num_clks; i++) {
- 		ret = clk_prepare_enable(phy->clks[i]);
--		if (ret)
-+		if (ret) {
- 			DRM_DEV_ERROR(dev, "failed to enable clock: %s (%d)\n",
- 				cfg->clk_names[i], ret);
-+			goto err_clk_unprepare;
+diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
+index 65f3501b939e0..cd2ffc8e1e94e 100644
+--- a/fs/f2fs/node.c
++++ b/fs/f2fs/node.c
+@@ -2725,6 +2725,44 @@ int f2fs_recover_inline_xattr(struct inode *inode, struct page *page)
+ 	f2fs_wait_on_page_writeback(ipage, NODE, true, true);
+ 	memcpy(dst_addr, src_addr, inline_size);
+ update_inode:
++	/*
++	 * The xattr node of the checkpoint was removed before fsync, e.g. the
++	 * xattrs became small enough to fit inline. Release it as well, or
++	 * the inode keeps pointing to the stale xattrs.
++	 */
++	if (!ri->i_xattr_nid && F2FS_I(inode)->i_xattr_nid) {
++		struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
++		struct node_info ni;
++		int err;
++
++		err = f2fs_get_node_info(sbi, F2FS_I(inode)->i_xattr_nid,
++								&ni, false);
++		if (err) {
++			f2fs_put_page(ipage, 1);
++			return err;
 +		}
- 	}
- 
-+	return 0;
 +
-+err_clk_unprepare:
-+	for (; i > 0; i--)
-+		clk_disable_unprepare(phy->clks[i - 1]);
-+	regulator_bulk_disable(cfg->num_regs, phy->regs);
++		if (ni.blk_addr != NEW_ADDR &&
++		    !f2fs_is_valid_blkaddr(sbi, ni.blk_addr,
++					   DATA_GENERIC_ENHANCE)) {
++			f2fs_err(sbi,
++				"nat entry is corrupted, run fsck to fix it, ino:%u, nid:%u, blkaddr:%u",
++				ni.ino, ni.nid, ni.blk_addr);
++			set_sbi_flag(sbi, SBI_NEED_FSCK);
++			f2fs_put_page(ipage, 1);
++			return -EFSCORRUPTED;
++		}
 +
-+err_pm_put:
-+	pm_runtime_put_sync(dev);
++		f2fs_invalidate_blocks(sbi, ni.blk_addr);
++		dec_valid_node_count(sbi, inode, false);
++		set_node_addr(sbi, &ni, NULL_ADDR, false);
++		/* drop the cached xattr node, which may be dirty */
++		truncate_inode_pages_range(NODE_MAPPING(sbi),
++				F2FS_BLK_TO_BYTES((loff_t)ni.nid),
++				F2FS_BLK_TO_BYTES((loff_t)ni.nid + 1) - 1);
++		f2fs_i_xnid_write(inode, 0);
++	}
 +
- 	return ret;
- }
- 
+ 	f2fs_update_inode(inode, ipage);
+ 	f2fs_put_page(ipage, 1);
+ 	return 0;
 -- 
 2.53.0
 
