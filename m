@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035925;
-	b=rZggkd+8wOYPb6yBsHeNwRyEegASxahEIRKYAxEtOaOnY/Bp3atMBb9Ob1vyXO9ak2DO
-	 xWN7MF7kNoQc2FfL46Jr8wyAAXA0rqn8k5vEzxwHW5bKY1bryB9iYw4mmhn7K1+U/Ql6i
-	 0JQidUPpplmEnkJFhmB270S36lFfmX4nJOJTAjSqrE7K8gCCTFT98b22WmVhjO1p/s0VW
-	 p15lESrnj+MW3ewPX6itc4xR4qdCMgmb+nHNao84t0NQ6x3+fnNe43PojUobz9T45R4Yr
-	 b381fOVpyE8Ju1gcbYPyds3u8khYK+CN3VhJybbrdz+IAtBy17dfnBrrqL25guXeE6w==
+	t=1795035928;
+	b=WFtt0B6CDK4FGkdWh1dTPR7EMCix3gCbLj2QDLz0b/wmFILIahwGGrY5+OJYaOY2DQ+D
+	 pGTnzXyxBp3pRLfqzF3gmnfgszuD4LP1KHU7WvJt6feWClFp2WHvfMyQUlDPSVcf6p6dx
+	 0pLjARqUmjjHM56mc47ZbooMPRXESNfedRtjKTBG2Uy/DW5I2byr5NRT0QzoLpAgVXiqE
+	 k26HJ5MkdFu8egzo+sVCVVTOmEpgEcPpvVJ+4KUODdPSGdnrkMPyzuebJ8ktR86sxILrC
+	 fOqjS3Z/E1fK9X9fQhDgK4+uRannZw6sryznwEeLdIn3BDvPRdryMkvP+hHmIkCfaow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6O8BFA1HU+8eF2v+nYLN/Mn35z1emJV7EnNeU8hitmA=;
-	b=wvKQBiOy8wg03xnmcuLqx8xduOp1RZQLRFp4DXpVzHKp+LRjJPrKQwpBQCm0+2juWlBD
-	 8cNSsLJSgkNX6ZHHLffx0oK4FvyLIOw6H5Zw6ZZF9v85QWB1DkE0G35LR1lz8dBzlTWBP
-	 rYu1wqN2o0+F0pvRbbVgDhdZAXyXOMoU2uErszyYD3/LIZ3GKEMMY603WdU5xyv81Qn3F
-	 MiNhPf4Vs7LSpf3N0S2MoiOkcTn5NnMWhJ/1SbHlgdLSvPN04Sd1dFUORNKUPIELL9YyR
-	 MOkN9Gg9d9UNQRoEaiJ6bZzhLtbIhL1gxbaIYa4Cg9CxkF4wOHp9ljKHjgJAWJnQkjw==
+	bh=7Y6Z++WXMu5K+UvR3mtAmOaZFgYYPGXDwgDstWLNAGM=;
+	b=Iqk+lR5g/p5xuzQYQB4XXe5qqpMr/pCPRyWSTphZRKvLMXVQWmBR0DHnnwNCOn2iCVEY
+	 dvoS9OPmU6dUkn4xPgOtjUKrTnDzitTwJiIms4k0EotNNhBo51138/PEcMDW+DCN+9Qlr
+	 k80dH557/sWM44Yrtug8ML8LaZ5a5kBnSruccnGrGnWnqMmmOGgC5F7OliFDCL01xZqU5
+	 nGCQUtX1nojXe+zxLpKdz+rVou4S7DzrUrUw9ZW++GizjM5f7KpXMR1FzUAk7SzU93Eca
+	 0S2nJGXroJ69K+3bYTk9F5cohOA8GtDYikJTL803IBPzqgWbt8ZtHs5rxWvUjoLFcNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HQsS8kaf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+HsCkmg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96085606A338;
-	Wed, 18 Nov 2026 21:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A401606A337;
+	Wed, 18 Nov 2026 21:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HQsS8kaf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3951F000C4;
-	Wed, 18 Nov 2026 21:05:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k+HsCkmg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE251F000C4;
+	Wed, 18 Nov 2026 21:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035925;
-	bh=6O8BFA1HU+8eF2v+nYLN/Mn35z1emJV7EnNeU8hitmA=;
+	s=korg; t=1795035928;
+	bh=7Y6Z++WXMu5K+UvR3mtAmOaZFgYYPGXDwgDstWLNAGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HQsS8kafCoKU+QvVZ40kCP7ptzFrnCoPmRxWaWcWZGuVC0jiIh10yUSgGX+S5a4pr
-	 VII4gQvGTuhvmTS78vn1cpaseSGR2WHVaSiUxa50Bc00fPDZIWo1PUG1srbDYqJPsf
-	 PqYT+W3Ot4ybrZ2aJ3vftqy7o1FH9qyGFZrGK63I=
+	b=k+HsCkmgDge1WzNEn3yYByv6evmKMVhGIKbSm6LB07LgglcpTpwirI9ljNTNSBbBh
+	 MpcgwQTQ8FL3EF3D7RTH/apPsfRmUrWlNr7oVDZASFVaV4murRXq6tEnfPaf79tKka
+	 2uoTXXV49YDL3BNWFBBANemDEjkbhOCjAZQ9f3b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Younho Choi <gdool88@mju.ac.kr>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0874/3318] ata: ahci_st: Do not ignore errors when getting the reset controls
-Date: Wed, 18 Nov 2026 15:24:56 +0100
-Message-ID: <20261118150345.522841925@linuxfoundation.org>
+Subject: [PATCH 6.6 0836/3318] media: vim2m: keep transaction buffer count stable while streaming
+Date: Wed, 18 Nov 2026 15:24:18 +0100
+Message-ID: <20261118150344.232160442@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,87 +69,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Younho Choi <gdool88@mju.ac.kr>
 
-[ Upstream commit c74ee9230a8d1d2f6fcbceff55f56f7dd9b9cccd ]
+[ Upstream commit 50f5fed44d8e24081e8feed5154746fe193f11b8 ]
 
-st_ahci_probe_resets() treats any error from devm_reset_control_get() as
-"reset control not defined" and continues with a NULL reset control:
+V4L2_CID_TRANS_NUM_BUFS controls how many buffer pairs a vim2m
+mem2mem job processes before the job is completed. The driver stores
+the value in ctx->translen and device_work() uses it later to decide
+whether the current transaction should continue.
 
-	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
-	if (IS_ERR(drv_data->pwr)) {
-		dev_info(dev, "power reset control not defined\n");
-		drv_data->pwr = NULL;
-	}
+Letting userspace change this control while streaming is active can
+make a queued job observe a different transaction length than the one
+it started with. That leaves the transaction state inconsistent with
+the buffers currently queued for the job.
 
-This also swallows -EPROBE_DEFER, which is returned when the reset
-controller providing the reset has not been probed yet. probe() then
-continues as if the device tree did not specify any reset, so the resets
-of the SATA IP are never deasserted, and st_ahci_configure_oob() and
-ahci_platform_init_host() access the MMIO of an IP which is still held in
-reset and powered down, which can result in an external abort.
+Grab the transaction buffer count control while either queue is
+streaming, and release it only after both queues have stopped
+streaming. The V4L2 control framework then rejects changes with
+-EBUSY while the value is in use, while still allowing userspace to
+configure the value before streaming starts.
 
-The resets are optional in the binding, as they are not part of its
-required properties, so use devm_reset_control_get_optional(), which
-returns NULL if the reset is not specified in the device tree, and
-propagate all other errors.
+Keep the control handler alive until after v4l2_m2m_ctx_release(),
+since releasing the mem2mem context can call stop_streaming(), which
+now ungrabs the control.
 
-Note that an absent reset is now indicated by a NULL reset control
-instead of an error, so the "reset control not defined" messages are
-dropped.
-
-Fixes: 76884cb2f7da ("ahci: st: Add support for ST's SATA IP")
+Fixes: 96d8eab5d0a1 ("V4L/DVB: [v5,2/2] v4l: Add a mem-to-mem videobuf framework test device")
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-9-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Younho Choi <gdool88@mju.ac.kr>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci_st.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ drivers/media/test-drivers/vim2m.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ata/ahci_st.c b/drivers/ata/ahci_st.c
-index d4a626f87963b..39775429c8c0c 100644
---- a/drivers/ata/ahci_st.c
-+++ b/drivers/ata/ahci_st.c
-@@ -105,23 +105,20 @@ static int st_ahci_probe_resets(struct ahci_host_priv *hpriv,
- {
- 	struct st_ahci_drv_data *drv_data = hpriv->plat_data;
+diff --git a/drivers/media/test-drivers/vim2m.c b/drivers/media/test-drivers/vim2m.c
+index 8ca6459286ba6..b686ebcfa7428 100644
+--- a/drivers/media/test-drivers/vim2m.c
++++ b/drivers/media/test-drivers/vim2m.c
+@@ -200,6 +200,7 @@ struct vim2m_ctx {
+ 	struct vim2m_dev	*dev;
  
--	drv_data->pwr = devm_reset_control_get(dev, "pwr-dwn");
--	if (IS_ERR(drv_data->pwr)) {
--		dev_info(dev, "power reset control not defined\n");
--		drv_data->pwr = NULL;
--	}
--
--	drv_data->sw_rst = devm_reset_control_get(dev, "sw-rst");
--	if (IS_ERR(drv_data->sw_rst)) {
--		dev_info(dev, "soft reset control not defined\n");
--		drv_data->sw_rst = NULL;
--	}
--
--	drv_data->pwr_rst = devm_reset_control_get(dev, "pwr-rst");
--	if (IS_ERR(drv_data->pwr_rst)) {
--		dev_dbg(dev, "power soft reset control not defined\n");
--		drv_data->pwr_rst = NULL;
--	}
-+	drv_data->pwr = devm_reset_control_get_optional(dev, "pwr-dwn");
-+	if (IS_ERR(drv_data->pwr))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->pwr),
-+				     "failed to get pwr-dwn reset\n");
-+
-+	drv_data->sw_rst = devm_reset_control_get_optional(dev, "sw-rst");
-+	if (IS_ERR(drv_data->sw_rst))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->sw_rst),
-+				     "failed to get sw-rst reset\n");
-+
-+	drv_data->pwr_rst = devm_reset_control_get_optional(dev, "pwr-rst");
-+	if (IS_ERR(drv_data->pwr_rst))
-+		return dev_err_probe(dev, PTR_ERR(drv_data->pwr_rst),
-+				     "failed to get pwr-rst reset\n");
+ 	struct v4l2_ctrl_handler hdl;
++	struct v4l2_ctrl	*trans_num_bufs_ctrl;
  
- 	return st_ahci_deassert_resets(hpriv, dev);
+ 	/* Processed buffers in this transaction */
+ 	u8			num_processed;
+@@ -1063,9 +1064,27 @@ static int vim2m_start_streaming(struct vb2_queue *q, unsigned int count)
+ 		ctx->aborting = 0;
+ 
+ 	q_data->sequence = 0;
++	v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, true);
++
+ 	return 0;
  }
+ 
++static bool vim2m_other_queue_is_streaming(struct vim2m_ctx *ctx,
++					   struct vb2_queue *q)
++{
++	struct vb2_queue *other_vq;
++
++	if (!ctx->fh.m2m_ctx)
++		return false;
++
++	if (V4L2_TYPE_IS_OUTPUT(q->type))
++		other_vq = v4l2_m2m_get_dst_vq(ctx->fh.m2m_ctx);
++	else
++		other_vq = v4l2_m2m_get_src_vq(ctx->fh.m2m_ctx);
++
++	return vb2_is_streaming(other_vq);
++}
++
+ static void vim2m_stop_streaming(struct vb2_queue *q)
+ {
+ 	struct vim2m_ctx *ctx = vb2_get_drv_priv(q);
+@@ -1079,11 +1098,14 @@ static void vim2m_stop_streaming(struct vb2_queue *q)
+ 		else
+ 			vbuf = v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
+ 		if (!vbuf)
+-			return;
++			break;
+ 		v4l2_ctrl_request_complete(vbuf->vb2_buf.req_obj.req,
+ 					   &ctx->hdl);
+ 		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_ERROR);
+ 	}
++
++	if (!vim2m_other_queue_is_streaming(ctx, q))
++		v4l2_ctrl_grab(ctx->trans_num_bufs_ctrl, false);
+ }
+ 
+ static void vim2m_buf_request_complete(struct vb2_buffer *vb)
+@@ -1186,7 +1208,8 @@ static int vim2m_open(struct file *file)
+ 
+ 	vim2m_ctrl_trans_time_msec.def = default_transtime;
+ 	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_time_msec, NULL);
+-	v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
++	ctx->trans_num_bufs_ctrl =
++		v4l2_ctrl_new_custom(hdl, &vim2m_ctrl_trans_num_bufs, NULL);
+ 	if (hdl->error) {
+ 		rc = hdl->error;
+ 		v4l2_ctrl_handler_free(hdl);
+@@ -1240,10 +1263,10 @@ static int vim2m_release(struct file *file)
+ 
+ 	v4l2_fh_del(&ctx->fh);
+ 	v4l2_fh_exit(&ctx->fh);
+-	v4l2_ctrl_handler_free(&ctx->hdl);
+ 	mutex_lock(&dev->dev_mutex);
+ 	v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
+ 	mutex_unlock(&dev->dev_mutex);
++	v4l2_ctrl_handler_free(&ctx->hdl);
+ 	kfree(ctx);
+ 
+ 	atomic_dec(&dev->num_inst);
 -- 
 2.53.0
 
