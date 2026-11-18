@@ -1,51 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035614;
-	b=NJXFtC8zY121q78gKrdYjZAbKJ2cW5tinFCloxE24ww8xhXr+0px5tjDHqPY80MIRVnR
-	 ef9tBL/PJQIYaJU9wW+2zy5Myy/uCqJZqkdgween+GO4syyls8LkJ0pflH6G2yiTLtpjI
-	 nioOBZnjt5d/DP8TCAl70YdIzgK37bqL6/RW23k7BjEXerwF5vudgWmq7dgkN0fucUGjk
-	 oD040maQ3wrzwDqsjO5S1CmYzl5A4hzEANqPudKk8QEPTcvzxXXbypFqvS5Pq74Dfy2v8
-	 Djn/nhvDrcZU05z8Ttn/A56JOiyBmGWPU46rFNvmvoOImyZzmJOma9FJxCBOiM/TQug==
+	t=1795035617;
+	b=5BVFAfRn8ZC9QxRWrZZtvi3lqZqu6ZXmF5KmOBZ5z/KWVUJnoV3prIE64pVw8kw3mC7j
+	 6vfX6cRWPURRWZl+FawgKT/SnjTfJHNlheitks7tvdID39F/KJvF5ubK9OZ8RSUkWUPch
+	 +JkH28+23ZiirYcQ94SH6IbumtqdoXlOJslffja52pHIRyBmJjMFsGcC42E7s0SMHO4d6
+	 bhFRGuZRImj01WwPrvQml4/2Nuw4+FbmYVikEloD8sl1qJXtwfqpIwFhUfjxHysIyZ0Fp
+	 8Ep6iaFTL9gykRDYTi6O++6slpVVd3toUGy7kvy3vaPLBwl/v92DeaYi7m/vOda+jIw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035614;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v9EYp8tpXAS98Al+vnvQBjC0aC0eDcg/3Zz8QvOXTnk=;
-	b=o1PzPomtgJLsrMQEb48bSLzXtJ8nGd+IBVoE95z5v0ZV4GDPhU40FBp0RtrlYKvnqUl7
-	 AfS0o4H0uoyuQqCbuZEQTjP39TEfiWXH1+Fz4VImcWUWJ3TmpT8Sl+USWYLGXU/edDS4A
-	 XZ0ORueudf4LzgkAc5YifKUc8tYnkXtOZExZmr+QdxP0jOP0F86cz2sirWHKEIHdnxm1Y
-	 TFnrtzOAYPhDmL9dEuWZ84PCdANuGZGezN7ftMHqOiv6mmKCDGfZpJQhiejJfUJPyebEy
-	 e6HydLjYnk7zoitYc0kH52IEcEJR0ZpqviMsrN01bwWfkMotLf85wWouVpE1gn/Fbuw==
+	bh=BtLV3I7H+T5vLXTXvKehmNwbKId06Q9gkOZ3Ql4O5Ko=;
+	b=wD7C1x/tgy41VOh5VaqBFlKTmxAUYa9xc/d8RR//1wT9XWPKPPFSYAD0D3bsfU0DaNtx
+	 3j/BxBGf6JhwvxdV3gmhxaL9tDL6Zsv3fuDERCVEmj9H6Eq7JZSBjXVbJMhpiYCZP5Y6G
+	 CpZMGW6nRvaHWO+h3/25DPn8uGqYFuFDUiIJ8k7/6j1fQa+nmSVv2PdaaT/uxGcN+/Ra5
+	 QFCBDk2o0myO/Epl5iZhvBYCs4UVn1fwrloiph8E+l29aWHrKMWegHMFB3uldJXNy/L3U
+	 Uoz6Ah+I28Oahf0ZgfO5Uhh++1U6gKo7SNdNJXEgw2lDSDb9CF4rUlDKrWOVHnpkjZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2J9CkqD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wmL/3NHY";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36398606A32F;
-	Wed, 18 Nov 2026 21:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB6A606A32A;
+	Wed, 18 Nov 2026 21:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O2J9CkqD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D18E1F000C6;
-	Wed, 18 Nov 2026 21:00:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmL/3NHY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9801F000C6;
+	Wed, 18 Nov 2026 21:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035614;
-	bh=v9EYp8tpXAS98Al+vnvQBjC0aC0eDcg/3Zz8QvOXTnk=;
+	s=korg; t=1795035616;
+	bh=BtLV3I7H+T5vLXTXvKehmNwbKId06Q9gkOZ3Ql4O5Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O2J9CkqDw9h73mkPI1JqLhotMDbq/5XNSqZTKtsy4o9ZLsVrUZ5AvQ8FfQlKcpjzb
-	 zU/AFOMTS0xRgkjQgLAHDSMIORXvlC7klkDr0pK/+9udUcOrMX8mJBmogIdDHgmbKQ
-	 0ibBwmLXVaTQXLmXkAkgsiSr+DQW5MIzxdlKhs0Q=
+	b=wmL/3NHY7xT1RaE2DLcSXn01K1h3qqd0G7z6zdcKtM3V+RpSKiay+2xJ4s8nWGgdR
+	 wewRebmTAuAv23+IoQf45OEE+6VTYZcyOdmprsT667blwJKue4bJb/SsULDSMXrGJK
+	 F2BGCeQdvYgrj2mJwbraHWQn49NG4x/ltH5IYyCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Liu <vincent.liu@nutanix.com>,
+	Mario Peter <mario.peter@leica-geosystems.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0766/3318] driver core: Check drivers_autoprobe for all added devices
-Date: Wed, 18 Nov 2026 15:23:08 +0100
-Message-ID: <20261118150341.715554970@linuxfoundation.org>
+Subject: [PATCH 6.6 0767/3318] driver core: take parent lock in async device attach
+Date: Wed, 18 Nov 2026 15:23:09 +0100
+Message-ID: <20261118150341.750534543@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,93 +70,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Liu <vincent.liu@nutanix.com>
+From: Mario Peter <mario.peter@leica-geosystems.com>
 
-[ Upstream commit ea34511aaf755349999a1067b2984a541bee1492 ]
+[ Upstream commit 187a62f99da29b1a55602b0d401a783d8dc86161 ]
 
-When a device is hot-plugged, the drivers_autoprobe sysfs attribute is
-not checked (at least for PCI devices). This means that
-drivers_autoprobe is not working as intended, e.g. hot-plugged PCI
-devices will still be autoprobed and bound to drivers even with
-drivers_autoprobe disabled.
+For device types with need_parent_lock set (only USB interfaces),
+probe() must run with the parent device locked. A synchronous attach
+after device_add() gets this from the caller, e.g.
+usb_set_configuration() holds the udev lock while adding interfaces.
+__device_attach_async_helper() runs the probe from an async worker
+instead, where that lock isn't held, and only takes device_lock(dev).
 
-The problem likely started when device_add() was removed from
-pci_bus_add_device() in commit 4f535093cf8f ("PCI: Put pci_dev in device
-tree as early as possible") which means that the check for
-drivers_autoprobe which used to happen in bus_probe_device() is no
-longer present (previously bus_add_device() calls bus_probe_device()).
-Conveniently, in commit 91703041697c ("PCI: Allow built-in drivers to
-use async initial probing") device_attach() was replaced with
-device_initial_probe() which faciliates this change to push the check
-for drivers_autoprobe into device_initial_probe().
+With async probing enabled for the hub driver (e.g. driver_async_probe=*
+or driver_async_probe=hub), this races when a multi-TT hub is
+configured. For multi-TT hubs, hub_probe() calls
+usb_set_interface(hdev, 0, 1) to select the TT-per-port altsetting, and
+usb_set_interface() creates the endpoint devices of the interface a
+second time:
 
-Make sure all devices check drivers_autoprobe by pushing the
-drivers_autoprobe check into device_initial_probe(). This will only
-affect devices on the PCI bus for now as device_initial_probe() is only
-called by pci_bus_add_device() and bus_probe_device(), but
-bus_probe_device() already checks for autoprobe, so callers of
-bus_probe_device() should not observe changes on autoprobing.
-Note also that pushing this check into device_initial_probe() rather
-than device_attach() makes it only affect automatic probing of
-drivers (e.g. when a device is hot-plugged), userspace can still choose
-to manually bind a driver by writing to drivers_probe sysfs attribute,
-even with autoprobe disabled.
+  usb_set_configuration()           async worker
+    [udev locked]
+    device_add(intf)
+      queues the probe  ----------> __device_attach_async_helper()
+                                      [intf locked, udev not locked]
+                                      hub_probe()
+                                        usb_set_interface(hdev, 0, 1)
+    create_intf_ep_devs(intf)             create_intf_ep_devs(intf)
 
-Any future callers of device_initial_probe() will respect the
-drivers_autoprobe sysfs attribute, which is the intended purpose of
-drivers_autoprobe.
+create_intf_ep_devs() checks and sets intf->ep_devs_created without a
+lock of its own. If usb_set_configuration() has created ep_81 but not
+yet set the flag, usb_set_interface() skips removing the endpoint
+devices of the old altsetting and creates ep_81 again. With a
+synchronous probe, hub_probe() runs inside device_add() with the udev
+lock held, and usb_set_configuration() then finds ep_devs_created
+already set.
 
-Signed-off-by: Vincent Liu <vincent.liu@nutanix.com>
-Link: https://patch.msgid.link/20251022120740.2476482-1-vincent.liu@nutanix.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Single-TT hubs don't call usb_set_interface() from hub_probe() and
+don't show this warning, but their probe runs without the udev lock as
+well.
 
-Apply the bus-side change to the existing shared probe helper, preserving
-the deferred-probe parent locking. PCI still calls device_attach(), so
-its probe behaviour is unchanged. Retain this change to prepare
-device_initial_probe() for the async-attach retry handling.
+On an i.MX8MM board with an onboard USB2514 hub this hit 11 of 100
+boots:
 
-Stable-dep-of: 187a62f99da2 ("driver core: take parent lock in async device attach")
+  sysfs: cannot create duplicate filename '.../1-1/1-1:1.0/ep_81'
+  Call trace:
+   sysfs_warn_dup
+   usb_create_ep_devs
+   create_intf_ep_devs
+   usb_set_interface
+   hub_probe
+   usb_probe_interface
+   really_probe
+   __device_attach_async_helper
+   async_run_entry_fn
+
+It also shows on v7.3-rc6 in QEMU, with dummy_hcd and a raw-gadget
+program emulating a multi-TT hub: re-authorizing the hub in a loop,
+while a SCHED_FIFO task preempts the writing task at random points for
+3 ms, hit the warning in 29 of 6000 iterations.
+
+Take the parent lock in __device_attach_async_helper() as well, like
+__driver_attach_async_helper() does, and move
+__device_driver_lock/unlock() up for that. With this the warning was
+gone in 300 boots on the board and in 6000 iterations in QEMU.
+
+Fixes: 765230b5f084 ("driver-core: add asynchronous probing support for drivers")
+Signed-off-by: Mario Peter <mario.peter@leica-geosystems.com>
+Cc: stable@vger.kernel.org	# 4.2
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[ johan: switch to async_schedule_dev_nocall() to avoid deadlock if
+         async_schedule_dev() runs synchronously when parent lock is
+	 held ]
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20261014133109.1392265-4-johan@kernel.org
+[ Fold the nested conditions into a single if statement; correct commit
+  message to mention "device types" rather than "buses" for
+  "need_parent_lock". - Danilo ]
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/bus.c |  3 +--
- drivers/base/dd.c  | 10 +++++++++-
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ drivers/base/dd.c | 83 +++++++++++++++++++++++++----------------------
+ 1 file changed, 45 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/base/bus.c b/drivers/base/bus.c
-index 65c138dc9b3fb..dccfbc5f389bb 100644
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -570,8 +570,7 @@ static void __bus_probe_device(struct device *dev)
+diff --git a/drivers/base/dd.c b/drivers/base/dd.c
+index 4accc885a9d44..eaee6121c9475 100644
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1041,6 +1041,38 @@ static int __device_attach_driver(struct device_driver *drv, void *_data)
+ 	return ret == 0;
+ }
+ 
++/*
++ * __device_driver_lock - acquire locks needed to manipulate dev->drv
++ * @dev: Device we will update driver info for
++ * @parent: Parent device. Needed if the device type requires parent lock
++ *
++ * This function will take the required locks for manipulating dev->drv.
++ * Normally this will just be the @dev lock, but when called for a USB
++ * interface, @parent lock will be held as well.
++ */
++static void __device_driver_lock(struct device *dev, struct device *parent)
++{
++	if (dev->type && dev->type->need_parent_lock && parent)
++		device_lock(parent);
++	device_lock(dev);
++}
++
++/*
++ * __device_driver_unlock - release locks needed to manipulate dev->drv
++ * @dev: Device we will update driver info for
++ * @parent: Parent device. Needed if the device type requires parent lock
++ *
++ * This function will release the required locks for manipulating dev->drv.
++ * Normally this will just be the @dev lock, but when called for a
++ * USB interface, @parent lock will be released as well.
++ */
++static void __device_driver_unlock(struct device *dev, struct device *parent)
++{
++	device_unlock(dev);
++	if (dev->type && dev->type->need_parent_lock && parent)
++		device_unlock(parent);
++}
++
+ static void __device_attach_async_helper(void *_dev, async_cookie_t cookie)
+ {
+ 	struct device *dev = _dev;
+@@ -1050,7 +1082,7 @@ static void __device_attach_async_helper(void *_dev, async_cookie_t cookie)
+ 		.want_async	= true,
+ 	};
+ 
+-	device_lock(dev);
++	__device_driver_lock(dev, dev->parent);
+ 
+ 	/*
+ 	 * Check if device has already been removed or claimed. This may
+@@ -1072,7 +1104,7 @@ static void __device_attach_async_helper(void *_dev, async_cookie_t cookie)
+ 	if (dev->parent)
+ 		pm_runtime_put(dev->parent);
+ out_unlock:
+-	device_unlock(dev);
++	__device_driver_unlock(dev, dev->parent);
+ 
+ 	put_device(dev);
+ }
+@@ -1129,8 +1161,11 @@ static int __device_attach(struct device *dev, bool allow_async)
+ 	}
+ out_unlock:
+ 	device_unlock(dev);
+-	if (async)
+-		async_schedule_dev(__device_attach_async_helper, dev);
++	if (async && !async_schedule_dev_nocall(__device_attach_async_helper, dev)) {
++		put_device(dev);
++		ret = 2;	/* retry synchronously */
++	}
++
+ 	return ret;
+ }
+ 
+@@ -1157,48 +1192,20 @@ EXPORT_SYMBOL_GPL(device_attach);
+ void device_initial_probe(struct device *dev)
+ {
+ 	struct subsys_private *sp = bus_to_subsys(dev->bus);
++	int ret;
+ 
  	if (!sp)
  		return;
  
 -	if (sp->drivers_autoprobe)
--		device_initial_probe(dev);
-+	device_initial_probe(dev);
+-		__device_attach(dev, true);
++	if (sp->drivers_autoprobe) {
++		ret = __device_attach(dev, true);
++		if (ret == 2)
++			__device_attach(dev, false);
++	}
  
- 	mutex_lock(&sp->mutex);
- 	list_for_each_entry(sif, &sp->interfaces, node)
-diff --git a/drivers/base/dd.c b/drivers/base/dd.c
-index c6ba7402bd514..4accc885a9d44 100644
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1156,7 +1156,15 @@ EXPORT_SYMBOL_GPL(device_attach);
- 
- void device_initial_probe(struct device *dev)
- {
--	__device_attach(dev, true);
-+	struct subsys_private *sp = bus_to_subsys(dev->bus);
-+
-+	if (!sp)
-+		return;
-+
-+	if (sp->drivers_autoprobe)
-+		__device_attach(dev, true);
-+
-+	subsys_put(sp);
+ 	subsys_put(sp);
  }
  
- /*
+-/*
+- * __device_driver_lock - acquire locks needed to manipulate dev->drv
+- * @dev: Device we will update driver info for
+- * @parent: Parent device. Needed if the device type requires parent lock
+- *
+- * This function will take the required locks for manipulating dev->drv.
+- * Normally this will just be the @dev lock, but when called for a USB
+- * interface, @parent lock will be held as well.
+- */
+-static void __device_driver_lock(struct device *dev, struct device *parent)
+-{
+-	if (dev->type && dev->type->need_parent_lock && parent)
+-		device_lock(parent);
+-	device_lock(dev);
+-}
+-
+-/*
+- * __device_driver_unlock - release locks needed to manipulate dev->drv
+- * @dev: Device we will update driver info for
+- * @parent: Parent device. Needed if the device type requires parent lock
+- *
+- * This function will release the required locks for manipulating dev->drv.
+- * Normally this will just be the @dev lock, but when called for a
+- * USB interface, @parent lock will be released as well.
+- */
+-static void __device_driver_unlock(struct device *dev, struct device *parent)
+-{
+-	device_unlock(dev);
+-	if (dev->type && dev->type->need_parent_lock && parent)
+-		device_unlock(parent);
+-}
+-
+ /**
+  * device_driver_attach - attach a specific driver to a specific device
+  * @drv: Driver to attach
 -- 
 2.53.0
 
