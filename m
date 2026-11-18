@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059594;
-	b=UZyAYnx0J3Vsz9K+bDHE8osCSI/Ak39GxUgdikLf1rUZL0K7IcswWaj+kBeDTee8DIBx
-	 kDE5/P6gV8U2pxhtiLsi2g9aawgYg8nTnGdIdOE4daeBdEVp+xYCRYZSvG1EMcRDWngmC
-	 qnLIKFG8QwLdaIRoZLbpjm72G/qzspGbor1C1uSdP/+nhwHB6ifK700H/LxKmPM7H8veF
-	 cdol9zX1rOOrhY2PFyMfxL4uK7C40p7WSnLssSbEMaCWzllmppr+kG4FUllP1F9HXEJic
-	 nv8xKk2IccS5QfjxRzvtHGZFzhwc3JtHIT/ipZfIhWh/MJ3oKz1VEmKRfp2b1/VRcJQ==
+	t=1795059597;
+	b=FaTM/AOWopz/p8wogndVnVcYfE7099Fclwu26F0mjOjZAJ6/lON4yuH7dvs3kxJn6ADE
+	 0dp01/pgKg45vH3P3gW++vwVkufeuo2pQMg+qJ57nGA0qfrfmD8sKhEbZKN/JupaJ82yh
+	 C0+r6gctKxEv1aCIeyytGIvU0LinxMx0MhtfWpT8LjjOiM21HaFyhLH43BFJ/NpzWY1ZL
+	 25AdgGqMyBWL1rTuxJlYfKdTt9jW0ASQOJUC/6vRnH3JTJYd/yEgD/ZS5edZ3LB+t6vBn
+	 PB4x/A1iwYyRpxYfI3H2JiCLEHeGV+ux8HvT/7KlEKGN1AI5+AFteC9CTlGBo9mQ6iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059597;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CbxSQ19NeilTwbZh5JtDP4B0td4WETsSxfdXZCoCAW4=;
-	b=vvRuJj+a1avTfqGBkrI2goj5v4ZY95CNZ/IsEkxgHBEyIgPyVH9OpOqDs6nv6zSIV6Pe
-	 R8ShVH4FUqqWJvjEVVpd8ZnewLDPIfux6LvRFTKM7+1s3WQ8SVCJ3tHutRMPiknEdLWsh
-	 wZgETJ7k6RsryftqGnqfE2uvatrJTswovH0cd1a3tYWhpFi46xZnj4vr6QyvLOixztNQt
-	 lbAnSDwQldnjozUexuiWRqbIhxVEn+uxmtwdzRIm1IGl7fwBrqt/UVUKkxtcQ0/XBW6CF
-	 jNkjkWyFuFL1bDuP2x4CvBDqxUlQ5TTz/ewmdSSHHC0YkKv927pkIizyBJV5JCLmqTQ==
+	bh=rma5d9gaGSunZycJz4WzF1FA70sF1bC9U0SR/KsNyZw=;
+	b=Hht3Ula1B0AyZDuU9Yy+qYKcPsNC+D4xnCpJrAWR1qFpAwztp9VAT6zdg6LUjhoN12rp
+	 hIDNnAxK1Ko0GLxXZdGxoLsIytPO48CZGMidMFbXx9ROO4PFgRJmLOqDucyl08R/d+caf
+	 mxo07Vsgk49P6hGtudfwxenLP55F55zskRWzCkkRQtSstXw7fbOULkCQZGoV0I7PmHvEP
+	 7Tp3lzNJP0xORCPkC+M2RdbCgHQ1o3Q9BSpygYXHmdILAw+pP9RVhT4Y+ADWcdKkhm4wP
+	 VEZxIyyRGOjYDhXvHC8A+6nKbeStw8gFQil1Shpt8QIsruHGAwGC96iYEIdPHukze8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6GTht40;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=as0a5bZB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECD460A2623;
-	Thu, 19 Nov 2026 03:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBA860A260F;
+	Thu, 19 Nov 2026 03:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e6GTht40
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C531A1F000C5;
-	Thu, 19 Nov 2026 03:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=as0a5bZB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97A681F000C6;
+	Thu, 19 Nov 2026 03:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059594;
-	bh=CbxSQ19NeilTwbZh5JtDP4B0td4WETsSxfdXZCoCAW4=;
+	s=korg; t=1795059597;
+	bh=rma5d9gaGSunZycJz4WzF1FA70sF1bC9U0SR/KsNyZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e6GTht402+2b5W8j1Oj1lSxCd6c1b5Aaoe3CX9wjFZAqjCYuIITGVSVI+zD8CHOkc
-	 Hpl3uxAwoke1RNBrUVNVRRP2ewgWv5wt1oUJjypS4RDYre3bnl0A/Lh36LuD9NfOwG
-	 Ut8Ddj6U5OJ7zqnB5wJFap/PIie61oFyRcRuvRAM=
+	b=as0a5bZBqr57DmUDAk/dO2A9LmGYul4w2pEJScgIhe+bKl7yAVYrlzjX8L7umvCUn
+	 DncyvdcOLJXkN8kIHEtNSNFA+XGZFnLAPGAvaK3JMY+BkzJrsjPCJNdmTHvhfyJ8ZT
+	 1NrV+aaujhxAkmWD28c5MaR7AFfMOgJnB0H3fEXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0898/1848] net: skbuff: dont BUG() on a bad csum_start in skb_copy_and_csum_dev()
-Date: Wed, 18 Nov 2026 15:48:56 +0100
-Message-ID: <20261118145954.323763642@linuxfoundation.org>
+Subject: [PATCH 5.10 0899/1848] fbdev: smscufx: check for fb_deferred_io_init() error
+Date: Wed, 18 Nov 2026 15:48:57 +0100
+Message-ID: <20261118145954.418986485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,63 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 56453199d28f0072a8196fba14b2d702632e2219 ]
+[ Upstream commit 8ea6c6e77ccf887f3e68c64f4c261071a345da1e ]
 
-skb_copy_and_csum_dev() copies everything up to the checksum start out
-of the linear area, and BUG()s if the checksum start is past the end of
-the linear area.  It misses the other direction: a CHECKSUM_PARTIAL skb
-that has been pulled past its csum_start gives a negative offset, which
-gets past the check and becomes a ~4GB copy.  It also trusts
-csum_offset when it stores the folded checksum.  So far
-skb_copy_and_csum_bits() BUG()ing on a short skb has covered for that,
-but once it returns instead, a bad csum_offset would write past the end
-of the caller's buffer.
+fb_deferred_io_init() allocates deferred I/O state, populating
+info->fbdefio_state, or leaving it NULL if an error occurs.
 
-The function returns void and its callers are drivers copying a frame
-into a bounce buffer just before handing it to the hardware.  There's
-nothing for them to back out of, so check both ends of csum_start and
-that the checksum field fits in the frame, and if not, copy the whole
-frame with skb_copy_bits() without filling in the checksum, with a
-DEBUG_NET_WARN_ON_ONCE() for debug kernels.  The frame
-goes out with a bad checksum and is dropped by the receiver.  If even
-that copy fails, zero the buffer so the driver doesn't send stale bytes.
+Currently ufx_ops_open() ignores its return value.
 
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Cc: stable? The trailers only have Assisted-by: and Signed-off-by:. No
-Link: https://patch.msgid.link/20261007-b4-skbuff-bug-on-v2-5-b9a5f732895b@toxicpanda.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Replaced unavailable DEBUG_NET_WARN_ON_ONCE(1) with WARN_ON_ONCE(IS_ENABLED(CONFIG_DEBUG_NET)). ]
+Therefore if an error arises in fb_deferred_io_init() (for instance, due to
+an allocation failure) info->fbdefio_state is left NULL.
+
+fb_open() will then dereference a NULL pointer (calling
+fb_deferred_io_open()) as soon as ufx_ops_open() returns.
+
+Additionally, if the allocation of info->fbdefio itself fails,
+ufx_ops_open() sets info->fbdefio to NULL and invokes
+fb_deferred_io_init() regardless, hitting BUG_ON(!fbdefio).
+
+Fix this by only invoking fb_deferred_io_init() if the allocation
+succeeded, and checking for the error.
+
+The driver already supports operating without deferred I/O, so in either
+case fall back to that by setting info->fbdefio to NULL.
+
+The ignored return value was introduced in commit 56c134f7f1b5 ("fbdev:
+Track deferred-I/O pages in pageref struct").
+
+However, the BUG_ON() issue originates from the earlier
+commit 3c8a63e22a08 ("Add support for SMSC UFX6000/7000 USB display
+adapters"), so target that for the fix.
+
+Fixes: 3c8a63e22a08 ("Add support for SMSC UFX6000/7000 USB display adapters")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+[ sashal: Omitted the fb_deferred_io_init() return-value check because the function returns void. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/smscufx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 224348001368c..394eef0c7c4a1 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3149,7 +3149,18 @@ void skb_copy_and_csum_dev(const struct sk_buff *skb, u8 *to)
- 	else
- 		csstart = skb_headlen(skb);
+diff --git a/drivers/video/fbdev/smscufx.c b/drivers/video/fbdev/smscufx.c
+index 08a4ce3dfb1d8..6d9121570f343 100644
+--- a/drivers/video/fbdev/smscufx.c
++++ b/drivers/video/fbdev/smscufx.c
+@@ -1096,10 +1096,10 @@ static int ufx_ops_open(struct fb_info *info, int user)
+ 		if (fbdefio) {
+ 			fbdefio->delay = UFX_DEFIO_WRITE_DELAY;
+ 			fbdefio->deferred_io = ufx_dpy_deferred_io;
+-		}
  
--	BUG_ON(csstart > skb_headlen(skb));
-+	if (unlikely(csstart < 0 || csstart > skb_headlen(skb) ||
-+		     (skb->ip_summed == CHECKSUM_PARTIAL &&
-+		      csstart + skb->csum_offset + sizeof(__sum16) >
-+		      skb->len))) {
-+		WARN_ON_ONCE(IS_ENABLED(CONFIG_DEBUG_NET));
-+		/* Send the frame without the checksum filled in, or send
-+		 * zeroes if we can't even copy it.
-+		 */
-+		if (skb_copy_bits(skb, 0, to, skb->len))
-+			memset(to, 0, skb->len);
-+		return;
-+	}
+-		info->fbdefio = fbdefio;
+-		fb_deferred_io_init(info);
++			info->fbdefio = fbdefio;
++			fb_deferred_io_init(info);
++		}
+ 	}
  
- 	skb_copy_from_linear_data(skb, to, csstart);
- 
+ 	pr_debug("open /dev/fb%d user=%d fb_info=%p count=%d",
 -- 
 2.53.0
 
