@@ -1,53 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059027;
-	b=c7bNDZtqzpUJ0cBN0X9BQs3n+UiNNK/Ry6Q2cr7f/mRkTDeq02teLpxJgz/ORTHrCnQ5
-	 ACShrChnA3XTP8vTQrK3XXuK17wKK+lRAI7aR5Z7CBg4F7YzozkhM9zIuM239m4w8BBhR
-	 UHeT99on01ibteNOieugmjTOtCThzepK5JIiDjMeCDz+7RR3qe6KA5Z2zuc/N1bgzbsha
-	 m8vlQIJXXuSIsX3QgyWKbwPZSSb8MhE64fw019DxSdKlCfJC4MCv07NZJdtSlWZMDipwM
-	 oi8hXFhH+qpaIV9ddpIJFuuY1OQ8A5zgF5Qqiqpo3z62cPx/JkjKwb43BVPgpshur3g==
+	t=1795059030;
+	b=UrWl4MH9Q64Oaxp9nqvtVeCSquIkt3T0IpEcI1BZXf1z4suBMVfI32Pd4ckeSLDiaC06
+	 2LyPAWR1PJeW5DoI4ZJ0C5hrZETL/9cB8rOK8BzCMO9zwA0C43f66a7PwxNlJ5Wqi0a8z
+	 SDePen+zYnrLj9Xr6YRmFY/rXsgXxneL6tgZZsaSJmBcLlOu8ZsVe76H/Qe6wdpUfH8y9
+	 9ZPoN0SnQmQFoFhB9Lo2C7LXZzQMKcQ8R8M4uYaRMwC6s9OkPGOHIaoDJQh6k/Yyodfv7
+	 +oO0aHnHT24xOlmSPm4c/j0wA/GKwY+gxgrbhEKEkUFVZUtNZuzbvcA58Yz8UpmH/FA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059027;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059030;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KZsAwdvm5rhnDS0BXOVUI5KZreC/prloO8HJnP1Cfn8=;
-	b=Orv56imMswZH5TioGyMpC+S/LKWov4rXlVaQcF1ouwmlpmWlEQVr9Raspr4WEuSSTyrn
-	 qsjtrbXwZ3Tg68YdaMyPcAgNi4IaeERiZf2Qb3ZAM3iXxh9vduksB5XaJp2mdrhkYLMA1
-	 CewW8NFfGj7yzizA679AWKtHEFe4uqv/NI/iYHWL+KNJe/f7SSwh0dkNnnAejQeOm0NIT
-	 NEdz1p2k8Apk9trBJC3S6WBDpEuxckxD8ctn1GN6d3yX00s1Tlt70EQ0HOOG6vgGp60f+
-	 GcD1E7/5XEVf7jh2Jl62naZ5O340GmluGyInd2FL+9FqVxyNiQKb2Q55okwqbWHic3A==
+	bh=jf7oDSDOAdrtDM4jC5jBdG7NSfrb/sGQZS4VkSOFyy8=;
+	b=T+Jtm/kWHG5USe/a2aen69V192jgyLFp5ifzFmD2Mh9VRLCAnLpo+8sHE8xnsnsDjY0g
+	 3g2CUjv2VLcHrbn9futcHbdOVYbDR+SGK4aKrK+VRHDJlg4Qf3cFCCfDDNpGT41jjR++6
+	 tT4A0eZ9sJzpWvTuJkoOTxfIoAiK/6GYCOhSG+D31VCUgi9d6NUZihvxgoDYgJxZ71RS/
+	 VqF0HqpqyNYMak75tOEYaN+iDuoh9VYESMIjX1JAHwMmlMaGU+2DsWDKlKKPN9IXquEeU
+	 tAkUsh1/p5l1sPIn8VQ8xvfeeU/qgqva/dNdQBlEA5mA9a/pK3DcEtSm4IQtNaSYEEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMFrJT42;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7Zl3uUR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6D3606A31C;
-	Thu, 19 Nov 2026 03:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531A2606A31C;
+	Thu, 19 Nov 2026 03:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMFrJT42
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B981F000C4;
-	Thu, 19 Nov 2026 03:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X7Zl3uUR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85021F000C5;
+	Thu, 19 Nov 2026 03:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059027;
-	bh=KZsAwdvm5rhnDS0BXOVUI5KZreC/prloO8HJnP1Cfn8=;
+	s=korg; t=1795059030;
+	bh=jf7oDSDOAdrtDM4jC5jBdG7NSfrb/sGQZS4VkSOFyy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMFrJT42tzsvfAhUfIS2eiRhI0j4z2QX7i3VTMx6jWnJ3f43tMh8xdEw5VmXgEhsK
-	 7UBEuOnGMzh2lILPoLL22274yfVsnDF9tQTt4qzBZWr2rT8qXluQj/tc695l7UI/1U
-	 KQEzfIrp4I65yThT78WMuRjc1UZW9yNFEg4HrKps=
+	b=X7Zl3uURt7NhvElNpPLRBAlCPDbfWbMX6wz7Hg5Bw5liOgIvnVe99mE8HWXmMer1h
+	 dRpnlHqUaNnRptbiUjct38ybnyld/ztqh6mbB7/cv6uyncnjKvP992uPWL3PQ4BqbU
+	 RFARzoP8T1OXZJ+yYC1nw4R6Yx79gRApBPZIuobI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Yao <yaolu@kylinos.cn>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Chris Mason <mason@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0694/1848] drm/i915/gem: Reset err for each fence entry
-Date: Wed, 18 Nov 2026 15:45:32 +0100
-Message-ID: <20261118145944.956422752@linuxfoundation.org>
+Subject: [PATCH 5.10 0695/1848] mm/mempolicy: charge shared policy nodes
+Date: Wed, 18 Nov 2026 15:45:33 +0100
+Message-ID: <20261118145944.994260532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,47 +74,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Yao <yaolu@kylinos.cn>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 31643dc89818d9b65bf42ecb1c67c99b64146fba ]
+[ Upstream commit 68b2aa37afa390f08de13bc0bac61a9ded3318bc ]
 
-If dma_fence_chain_find_seqno() failed once, 'err' will store val in
-the following loop. May causing returns '-EINVAL' even though that
-entry never called dma_fence_chain_find_seqno() at all.
+Any local user can bypass memory.max with mbind() on a tmpfs file, and
+allocate unbounded kernel memory.
 
-Fixes: 13149e8bafc4 ("drm/i915: add syncobj timeline support")
-Signed-off-by: Lu Yao <yaolu@kylinos.cn>
-Cc: <stable@vger.kernel.org> # v5.10+
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patch.msgid.link/20261027072832.726435-1-yaolu@kylinos.cn
-(cherry picked from commit 4e9db08db75f55c920986ac929cfd82a4ee99f41)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+mbind() sets a NUMA memory policy for a range of a mapping. If the
+mapping is of a shmem and friends, the kernel also stores the policy on
+the inode, in a tree with one entry per range of the file.
+
+Each mbind() on a single page of a mapping can add one shared policy node
+(struct sp_node) and one struct mempolicy to that tree. They outlive the
+mapping and stay around until the inode is destroyed. The tree is not
+bounded by the file size, so the file can be empty.
+
+Memory that user space can allocate must be charged to a memory cgroup. A
+slab cache does that for all of its objects if it is created with
+SLAB_ACCOUNT. numa_policy_init() creates the slab caches for both
+structs without SLAB_ACCOUNT, so they are not charged to any cgroup.
+
+Reproduced with mbind() on single pages of an empty tmpfs file, from a
+cgroup with memory.max=8M: the global OOM killer killed tasks owned by
+root, and the machine panicked.
+
+Fix this by creating both caches with SLAB_ACCOUNT. This change implies
+that mbind() can now fail when running into memcg limits. Further,
+the policy_cache also serves task and VMA policies, so they are
+similarly accounted now.
+
+Note that per-file limits are not really helpful, as the user could
+simply use many files; having limits per user is tricky as well.
+
+Fix generated by an LLM and submitted by Chris Mason in private.
+
+Fixes: 5d097056c9a0 ("kmemcg: account certain kmem allocations to memcg")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+[ david: smaller description tweaks ]
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-1-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mempolicy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-index 031c77fec1a08..177e3f734239d 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
-@@ -2685,7 +2685,6 @@ add_timeline_fence_array(struct i915_execbuffer *eb,
- 	u64 __user *user_values;
- 	struct eb_fence *f;
- 	u64 nfences;
--	int err = 0;
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index 6c98585f20dfe..c6c5682c334b0 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -2788,11 +2788,11 @@ void __init numa_policy_init(void)
  
- 	nfences = timeline_fences->fence_count;
- 	if (!nfences)
-@@ -2723,6 +2722,7 @@ add_timeline_fence_array(struct i915_execbuffer *eb,
- 		struct drm_syncobj *syncobj;
- 		struct dma_fence *fence = NULL;
- 		u64 point;
-+		int err = 0;
+ 	policy_cache = kmem_cache_create("numa_policy",
+ 					 sizeof(struct mempolicy),
+-					 0, SLAB_PANIC, NULL);
++					 0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
  
- 		if (__copy_from_user(&user_fence,
- 				     user_fences++,
+ 	sn_cache = kmem_cache_create("shared_policy_node",
+ 				     sizeof(struct sp_node),
+-				     0, SLAB_PANIC, NULL);
++				     0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
+ 
+ 	for_each_node(nid) {
+ 		preferred_node_policy[nid] = (struct mempolicy) {
 -- 
 2.53.0
 
