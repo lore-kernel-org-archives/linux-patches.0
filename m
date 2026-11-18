@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039835;
-	b=JiUOcIPpUPlrIksRG/01kyeQRnvNv5qpH8oZXLqEI8Akr4VnqgBt+/36ojlllJfQ+Lwa
-	 TP5jMPBbbLnrw/8VrEt3sCJsdc7C4nCGJYqv0SIWlBjDk/y18I4zuKPfqGOgQeMW3daRo
-	 P9mEdXGxzYhgYc2oPTJd1Gf1WQ2LqL5z+ABIVkbZ4qVdwRX/x5j0SgfYlC6UQ5jwsRbvX
-	 ITgiLPu9c/XX5AQB8qsd1clT+gX1dvuLPo7UC5xrnUnm/PsWFdsEJBHbfR/5yKMAcstpN
-	 d5d2+iKIz6v4izgQVaV/I4n30n5iy9DaFAFoe4KSCDOQdc6RBddAzfxwoO+CID8r8uw==
+	t=1795039837;
+	b=SIUGuapSNJO7UDLiznjQTeVFGV8m7CBq59sev3n8xzWnqxVab4gt0H6jVsuRuEPCX0WM
+	 7yJHOxBNXqb18XbmZJHU+hfDvqCoqT3FXYepAG26S0gdLAwHxmXry1PyVl53wyXQTLKlm
+	 HVi9oBiGUO788RM+oWD88pRGgUWs0RQCiXBMH4envL0eCR4bCyT/FXmpuqB3z+oY7xZpw
+	 HuRwUzUImpUjGC0IFrxUuk4A6qofSYmtU/5b4eRaJhNgNR1al4ForOzaNWH8x5hukrLW4
+	 eaomU2OP4UfypGFnuF6ER/mRH+h9+Fy7EUIDE3CAr1r2WpC9yqUUrm3Q2/HaM6Z/Ldw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039835;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039837;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mqg2cK8hNegg6nbK5PIpfggbMfvP15fPjHt/g9Bgfc4=;
-	b=sSX8TgQ3ZsMoO/3/8dR8VcjC+xXI+Yb2YqNIB2+PGtgmN0NNvxwEaEQmiQFiuOJ11Hcm
-	 TZZ5Vf0SrXu9TJi+l+3yafA8GwluEwGUWOCjbYIGQZ09B7LwyKB/npY1sf+kTLUKgqqpN
-	 +TZIwrg7/AnXgMd1YYPAEpDThjO/HpwU3DiReq38K6kTGWQ0ROuZbusf6gAFv77gsCiDY
-	 XNrmuABr3T90iq6Vq0s5p2utKvs36l2LjGsRTpJyR+0PsIqfsJY1jTxGFs2WxAJyYGR1h
-	 qjomi0IA6VMttLb3ZjL+suO4FYWt3KUIm9u1U06URcV78zIrr8o6UnbgPE//Juo+OfQ==
+	bh=JfU0z+l/C3S3U4rsNfAiwjKLo3LvL2BjygMXwj91Saw=;
+	b=kvQf4Dqa+fKAxtfjNg5+RTOgZ1JSjKV+WWF0np1U2JYvUG8WiaRiH8vWWkg3RbhUOrZE
+	 0isEURZ2KtZxBBF8rAFZNqotgOkVsj8Fs0+v9C90USuacBkUV6vFhXSHr4dXUqf7Xb0I/
+	 xFd179jO5M5Wl3QguAK24yUoNFQse7cMNRQmZmR0dTwq4d9nUouckf+Y97kRqZJJs2ld+
+	 jdPi/EqBkXoloxihPQOgVriARMp/EJr9OJ9I7Et+uf2NWHIR3zMaF0aD6niE+ulrn4xKW
+	 5WJ1FUppvm4t+/jXb2BC4OFlcicnGuqmZrNMDrp85CAiYtdTMChCpYBMjTXpFbKGpFg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipmCLPkB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WO4Slqp0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4BB606A32C;
-	Wed, 18 Nov 2026 22:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2B2606A320;
+	Wed, 18 Nov 2026 22:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ipmCLPkB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4680D1F000C4;
-	Wed, 18 Nov 2026 22:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WO4Slqp0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEEA1F000C4;
+	Wed, 18 Nov 2026 22:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039834;
-	bh=mqg2cK8hNegg6nbK5PIpfggbMfvP15fPjHt/g9Bgfc4=;
+	s=korg; t=1795039837;
+	bh=JfU0z+l/C3S3U4rsNfAiwjKLo3LvL2BjygMXwj91Saw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ipmCLPkBhjpQ3YiAxIwj1ogkvWQOfmgOHILDGOvfyrRuhwG7Ru249Vt0U9hO26N8f
-	 3QcM34kQuryJsizFIYgzapbDj3rw1TViPCefi0fOrMKcjAp3keZSGKdSArNVfYfItt
-	 R7vge1gQTEfY7NpeQ8ZuS+EyFPgD+f5mWCO1Rk6Y=
+	b=WO4Slqp06hZjYP8qWGvTYniWXEPYwzI4rYxa+Zl/2+G/31QDPi+MHq+rCrAApxzOx
+	 NmZ0mMwC3tH6s1SqWbcJIA1umuh2XCd73pelYDZPIDhAaAuc75Pu1I3hJ9fHEXWE9i
+	 YWY+RQH/VRNGCJHO4IXtCGNGPl9TspeFzEtJLImI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1f5a7de91d547763f4c8@syzkaller.appspotmail.com,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2243/3318] md/raid5: dont BUG() on an inconsistent reshape state from the superblock
-Date: Wed, 18 Nov 2026 15:47:45 +0100
-Message-ID: <20261118150429.140046782@linuxfoundation.org>
+Subject: [PATCH 6.6 2244/3318] md/raid5: setup_conf: Fix null-ptr-def in error handling path
+Date: Wed, 18 Nov 2026 15:47:46 +0100
+Message-ID: <20261118150429.167851842@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,86 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 0669c7dbd1d375f279e607a24addc2f1dae2d4f3 ]
+[ Upstream commit eba5f518701b1c7f2d883504f89c41611bd2de46 ]
 
-raid5_run() branches on mddev->reshape_position. When it is MaxSector --
-no reshape in progress -- the else branch asserts that nothing else
-describes one:
+For raid5 setup_conf, if an error(eg. bioset_init fails) happens before
+'conf->mddev = mddev', following error handling path could trigger a
+null-ptr-def problem:
 
-	BUG_ON(mddev->level != mddev->new_level);
-	BUG_ON(mddev->layout != mddev->new_layout);
-	BUG_ON(mddev->chunk_sectors != mddev->new_chunk_sectors);
-	BUG_ON(mddev->delta_disks != 0);
+ free_conf
+  log_exit
+   raid5_has_ppl
+    test_bit(MD_HAS_PPL, &conf->mddev->flags) // conf->mddev is NULL !
 
-Nothing enforces that invariant. Both superblock validators copy the
-reshape fields straight off disk without cross-checking them against
-each other: super_1_validate() takes reshape_position, delta_disks,
-new_level, new_layout and new_chunk from the superblock whenever
-MD_FEATURE_RESHAPE_ACTIVE is set, and super_90_validate() does the same
-for minor version 91. A superblock that sets the reshape feature while
-leaving reshape_position at the MaxSector sentinel therefore reaches the
-else branch with a non-zero delta_disks, and assembling the array takes
-the machine down:
+Fix it by initializing conf->mddev in advance.
 
-  kernel BUG at drivers/md/raid5.c:8117!
-  Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-  RIP: 0010:raid5_run+0x11a7/0x1670 drivers/md/raid5.c:8117
-  Call Trace:
-   md_run+0xc2f/0x2510 drivers/md/md.c:6779
-   do_md_run+0x36/0x660 drivers/md/md.c:6880
-   array_state_store+0x9c5/0xcf0 drivers/md/md.c:4765
-   md_attr_store+0x1c5/0x330 drivers/md/md.c:6158
-   sysfs_kf_write+0xf2/0x150 fs/sysfs/file.c:145
-   kernfs_fop_write_iter+0x3e0/0x5f0 fs/kernfs/file.c:345
-
-This is reachable by anyone who can present an md superblock, so BUG()
-is the wrong response. Refuse to start the array instead, the way the
-reshape_position != MaxSector branch a few lines above already refuses a
-reshape it cannot resume. Nothing has been allocated at this point --
-the journal-and-bitmap check just above returns -EINVAL the same way --
-so there is nothing to unwind.
-
-Reported-by: syzbot+1f5a7de91d547763f4c8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1f5a7de91d547763f4c8
-Fixes: 91adb56473fe ("md/raid5: refactor raid5 "run"")
-Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260910131103.988-1-yogeshgaur.83@gmail.com
+Fixes: 3418d036c81d ("raid5-ppl: Partial Parity Log write logging implementation")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Link: https://patch.msgid.link/20260915081731.122933-1-chengzhihao1@huawei.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/md/raid5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index bfe815ffba765..873dfe8d971fc 100644
+index 873dfe8d971fc..52eec38f17c3b 100644
 --- a/drivers/md/raid5.c
 +++ b/drivers/md/raid5.c
-@@ -7946,11 +7946,17 @@ static int raid5_run(struct mddev *mddev)
- 		}
- 		pr_debug("md/raid:%s: reshape will continue\n", mdname(mddev));
- 		/* OK, we should be able to continue; */
--	} else {
--		BUG_ON(mddev->level != mddev->new_level);
--		BUG_ON(mddev->layout != mddev->new_layout);
--		BUG_ON(mddev->chunk_sectors != mddev->new_chunk_sectors);
--		BUG_ON(mddev->delta_disks != 0);
-+	} else if (mddev->level != mddev->new_level ||
-+		   mddev->layout != mddev->new_layout ||
-+		   mddev->chunk_sectors != mddev->new_chunk_sectors ||
-+		   mddev->delta_disks != 0) {
-+		/* No reshape is in progress, but the array describes one.
-+		 * The superblock validators do not cross-check these against
-+		 * reshape_position, so this is reachable from disk.
-+		 */
-+		pr_warn("md/raid:%s: inconsistent reshape state - aborting.\n",
-+			mdname(mddev));
-+		return -EINVAL;
- 	}
+@@ -7576,6 +7576,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
+ 	if (conf == NULL)
+ 		goto abort;
  
- 	if (test_bit(MD_HAS_JOURNAL, &mddev->flags) &&
++	conf->mddev = mddev;
+ #if PAGE_SIZE != DEFAULT_STRIPE_SIZE
+ 	conf->stripe_size = DEFAULT_STRIPE_SIZE;
+ 	conf->stripe_shift = ilog2(DEFAULT_STRIPE_SIZE) - 9;
+@@ -7649,7 +7650,6 @@ static struct r5conf *setup_conf(struct mddev *mddev)
+ 	ret = bioset_init(&conf->bio_split, BIO_POOL_SIZE, 0, 0);
+ 	if (ret)
+ 		goto abort;
+-	conf->mddev = mddev;
+ 
+ 	ret = -ENOMEM;
+ 	conf->stripe_hashtbl = kzalloc(PAGE_SIZE, GFP_KERNEL);
 -- 
 2.53.0
 
