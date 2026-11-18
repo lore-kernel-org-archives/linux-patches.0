@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048908;
-	b=fnn84yOO2ACb+TdqYmFli+4I6HE84WHXAsAhw2umJnMSRCD6c+RJWsgHBYL1HZzo/G52
-	 Wq61K4jFyyWGHGuxi0A4HyogjkvmTXzYsxKyzxjMPLim2zL3xYjI3VWSfsCCFr4w3nqiP
-	 0gcwowy6DVsgUPPWNTMbsBz+6buIJwy6gwnA8wybmtDyWSwCh2f6ckYryoW9ddRqyBl91
-	 LB783JJqNJJXDlfrpkeD27tUFoUHiXehA5kZzW7Y+xqXDXBPg7cfqyiYyPW8b6pID902p
-	 Le6ODyTkc5D5j/TaA5735C2aEofnFED514nqfbQBZYuAboS6i63NRQ8R79aVkrOVhhg==
+	t=1795048910;
+	b=imBIiCQd1J6Ch5P2IqGEwlSNfb8MaBB+0vB7jcVcBhixGucAHhAWt9fKA9z2Le9yvPVY
+	 zRALCkUGL0UcAzi5VQ9+oO8A5LLr8KUFWpWm6oFXpOBh/cZgy1h3foTQzeDpenHsJlzxe
+	 SHb6DonAXun7YRU80p2OhqafFYMN+PKt1kyAdH/vNvXRQfdwq/ds1N0EPAytQfGh5uDXO
+	 JL2L6azC4SVX5JL7j1NQ0RQZtmPRVuxBY3Sa1A2R2IeFFgQwAYih6zwys7jIHCS40B8tK
+	 S4NJlrxDiCvKpp7jDKlZpD3t+kMpu8zcqI5o+LJZ23lRfYmw7tDBCZn67e7j0IPMKgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048908;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048910;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fjE1XQHTIabcJbKSAtr1rheEGSL9ifyTQdPnzStLdnI=;
-	b=1M1XISTpRP3qEhB5YHhXLH3o74qK6XEZ6TuuMqC9nN5aCv85c/qSWMUIYaZ2O6pWVsgi
-	 bAfHnhaNyHVp29KZ/mOM6YQW1lPUSINPWdNMqYpXrPZCe4a5l0O89kP46WiBmbwN+vwXj
-	 HgU8iB0Dr2n9eAnG9y3/x4NjgwlU8RFs6RRnEDnUODersTRrVUq8HJasfMNbYdWDKTWTq
-	 IinRwz5DroJeXf3IOi3fFtG6ROf5yw3HnOBx+aLLFhOBYMm+TN2wlM9ApXarRKWhD0jfj
-	 oZQ4j8vAhyKFg45e0HSBY9G21ILiOU+THhNPLc5JqCmVASUlvUK6KLbLz8bZMOogVGA==
+	bh=mSeWQ9h41pulX7hJGZluHBPeaItqEAw+0AJlbbFt7mM=;
+	b=FEUL8hYwKrW1Z7iKT16l4yNroUsI6CQ3NqvRsV+bO+VOKfD0gXRhV/Qd05uOv2LG3K+Z
+	 2l6Xa5/2BgkAgRx4SY6StfHLEAg/xzGJdtF/7XUwIasL/0kx1jd1u9qjMSue5VYzvLxUl
+	 ZEH4DJp+oRb1nY3TRB72hyBBd3V8pckDP1+GDXV2+Om+ODe+SS07BRDUu/1SISiA7agro
+	 Ia0Q0JPF9jddyOVh7N0iHH4MQTRHzmWZ9CmU9gLI/Hxy7IFeocQfiJVr1a7v6h31aLZ2H
+	 teVER3cfu0DQ9B/aX69sMqDtLdFLu11AKdEpdl8ZJB7l/3DC8c1Uxsiyoxh68Ips5iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DB5HtvWX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EtxByl+u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F1E606A32F;
-	Thu, 19 Nov 2026 00:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3AD606A31C;
+	Thu, 19 Nov 2026 00:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DB5HtvWX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5BD1F000C4;
-	Thu, 19 Nov 2026 00:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EtxByl+u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B601F000C4;
+	Thu, 19 Nov 2026 00:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048907;
-	bh=fjE1XQHTIabcJbKSAtr1rheEGSL9ifyTQdPnzStLdnI=;
+	s=korg; t=1795048910;
+	bh=mSeWQ9h41pulX7hJGZluHBPeaItqEAw+0AJlbbFt7mM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DB5HtvWXdxIbNtHyVFHjc1Y4QvZsga5TH3LUzXVQsJvDy9OoyXCOnLwljx2v/B+uZ
-	 JO1zblW+B3ERZ62WccDf7tn0hGzKvY1FfioDJ5o1lOJ1SQAARR0cUIT6R6jeZvDa2/
-	 GhMpIzmTTFjv68i8OKtuRoM1X/Qfff74T8Xc02kM=
+	b=EtxByl+uCJcDzitwJuLuysMdNOXJnyZmzcnBPKF4LdQ3aKtTb7NLVffJWwdvlllKT
+	 EDI3UCuAvvuo6y/GtUVajOM69OgPej1vtPZ8VrIsq84r/hthfX9O8HW2NICaxMJ5OY
+	 QYhPctUmZ+2ckixhF7YE+yYVNN7Sfz4z2NEx9HPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Dalin <liudalin@kylinsec.com.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Stan Johnson <userm57@yahoo.com>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2160/2857] rtc: ftrtc010: fix clock resource leak on probe failure
-Date: Wed, 18 Nov 2026 15:53:14 +0100
-Message-ID: <20261118150319.169503780@linuxfoundation.org>
+Subject: [PATCH 6.1 2123/2857] swim: Fix FDEJECT ioctl for exclusive open
+Date: Wed, 18 Nov 2026 15:52:37 +0100
+Message-ID: <20261118150317.841177314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,53 +69,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Dalin <liudalin@kylinsec.com.cn>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit c60478875a445dee1206aad6285c18cd8c91f7f2 ]
+[ Upstream commit c76b93df9ae61d8ddebf6aa3bc218252f85e80c6 ]
 
-When devm_rtc_register_device() fails, ftrtc010_rtc_probe() returns
-the error directly without releasing clocks obtained via
-clk_prepare_enable(). This leaks both extclk and pclk resources,
-which may prevent subsequent probe attempts or module removal.
+The eject command from the util-linux package does not work with the swim
+driver: the drive doesn't eject anything and the command fails.
+Apparently, ioctl(fd, FDEJECT) returns -EBUSY when fd is opened O_EXCL.
+Fix this by checking ref_count for either 1 or -1. Either value means that
+the caller is the sole user of the disk.
 
-Capture the return value and jump to the error handling path to
-properly release clocks via clk_disable_unprepare().
-
-Fixes smatch warnings:
-- drivers/rtc/rtc-ftrtc010.c:189 ftrtc010_rtc_probe() warn:
-  'rtc->extclk' from clk_prepare_enable() not released on lines: 183.
-- drivers/rtc/rtc-ftrtc010.c:189 ftrtc010_rtc_probe() warn:
-  'rtc->pclk' from clk_prepare_enable() not released on lines: 183.
-
-Fixes: fdcfd854333b ("rtc: rework rtc_register_device() resource management")
-Assisted-by: smatch:2.0 [static analysis]
-Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Link: https://patch.msgid.link/AC51B5F2C5FFEBB0+20260827080320.3351155-2-liudalin@kylinsec.com.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Link: https://patch.msgid.link/ae3ee8e86833a2739d7857460cbe2addf4146088.1790641175.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ftrtc010.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/block/swim.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
-index 14858d2faa2a7..c0c8f6feb79ce 100644
---- a/drivers/rtc/rtc-ftrtc010.c
-+++ b/drivers/rtc/rtc-ftrtc010.c
-@@ -181,7 +181,11 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
- 	if (unlikely(ret))
- 		goto err_disable_extclk;
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index 6b9a07d0f7c5a..7a5186d1700b5 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -696,10 +696,11 @@ static int floppy_ioctl(struct block_device *bdev, fmode_t mode,
  
--	return devm_rtc_register_device(rtc_dev);
-+	ret = devm_rtc_register_device(rtc_dev);
-+	if (ret)
-+		goto err_disable_extclk;
-+
-+	return 0;
+ 	switch (cmd) {
+ 	case FDEJECT:
+-		if (fs->ref_count != 1)
+-			return -EBUSY;
+ 		mutex_lock(&swim_mutex);
+-		err = floppy_eject(fs);
++		if (fs->ref_count == -1 || fs->ref_count == 1)
++			err = floppy_eject(fs);
++		else
++			err = -EBUSY;
+ 		mutex_unlock(&swim_mutex);
+ 		return err;
  
- err_disable_extclk:
- 	clk_disable_unprepare(rtc->extclk);
 -- 
 2.53.0
 
