@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055135;
-	b=vPzJjonyDYJxQlPTeJLXZc+B8dmq/2XZphdO+5+xNlORj4zP18JxiJy9T+mSNyz+gQc9
-	 nq4CdcCV7qY+1lRJPEOZPdzKWd8DFAgrJwbWTMNRTUMr19bywf5kyt700tB2uNOFqwvAK
-	 HfRSclfN3xkrB6p02PC0ox0M2cYlXX/261Jp1rM9fJQYsNlNf8PoA1dn/Sv8qJ4WPJdv6
-	 c961FenAOlWKAoJGOxnc38wPGGAxh3VUCuaoYL4SWPlzP7bjxESee6i7cIbZMGNxXibrx
-	 UnlceRFfywar5yKJwJnCEB+fxabzTKDbgJSL+HieksXyts/th74qOh0aC49bMOD88cg==
+	t=1795055138;
+	b=E6wi1GWFD+sLSaM90PWUkqQbia8eqByzM7SMeNhzHTVq3VdEB06aiDAvzcQqfiyiW4El
+	 iS5tkFxP5ffAmQR6E9Mmtm3F9JxZ35Chop0iHRChxNzkqQd1Y29DdFP30iX+wtt74/YNZ
+	 AP25dNmTInSCP5AGmKQWBzH/BcHmE+/VVi3v1EoRpN0P8CI+1b4V5JyEAnpbzE6/yyRWu
+	 LknWt/cNAxPKqVRjoZtMwk5sZX9UX2tLq8oV+FXXLatlhSFGHyZHtpq03zyj0BgEeYFw1
+	 AcFABawUA5VU5c0H5yq0Q94RHbI6Baeso5M8mF8CVmyL9+dlNaN+X/ZjPClRouEGdhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055138;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LOGk/ymLADFdXtIHJUM+ErReTdGBe6sQtXb327RQvqQ=;
-	b=n4G9CWpfbQptvLfR6tJB9664LmHM6lWy768P2CDfM5gVInbNLiM/3gEULaRTdCCZAv6t
-	 /udqmiR08xcthADtpZrca6UeSoByQUIp4TgvrNRv7PdkRM3cXSpZrFdoRX5M/F0c4qV0b
-	 mZAaDgURNailOXL65qrdpbs4vMmplVh2MPlbqpesYIyK+d/kZ0Ja3RVBMiQRLYgIaRm+z
-	 SPu2VDUcJOu3AGxtTRvclr7khFInq0PCM46AmfRuWx29eqFpbnjkbEmKpcu7Db10lL5pJ
-	 /sC+UgwU4ESCsAv3d/VZ0d5XnFwGo5m2qjE7m/aC/k/7eIuLfBEQ2NxT8l+ppGYdfgw==
+	bh=WEcLZO6Hvr1Asw9U9BmavuEPkoxExyQjqARsv8RMnvw=;
+	b=pjMyEa7VtQ03hQBx+5ULi+bdFuashWyz04K1YSlSd4tcC53w3zA2WrsELGrAgu1pRedw
+	 JAdGkjA2wYtMpJRYcrIoIuKoNJcNfo3mLKsOtN0W7rhKJIoPp0KS2DujA/TgatY+SXPb0
+	 WGE/h8hLr02iPZcgj6CnQbi2Oh+MirN8MAZWkZfiPsoPHxI1OvmZocsSThDK7mcGWnNIe
+	 yO7xER28DfxjqgHZw8zsI956QXRvjZS6Wz4NJgDn3beojDJwwfXkR15oY+JZdNB4miiFB
+	 kouudi46aoniLXNQ3Tc2OzFz2nWz30Rx+SH0DmmpeXkyu3wJHwdMrofEEVW3bB1w4Qw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7sE0eIB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSKm7Snq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAB2606A31C;
-	Thu, 19 Nov 2026 02:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CA7606A31C;
+	Thu, 19 Nov 2026 02:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O7sE0eIB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D646F1F000C4;
-	Thu, 19 Nov 2026 02:25:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSKm7Snq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCC71F000C5;
+	Thu, 19 Nov 2026 02:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055135;
-	bh=LOGk/ymLADFdXtIHJUM+ErReTdGBe6sQtXb327RQvqQ=;
+	s=korg; t=1795055138;
+	bh=WEcLZO6Hvr1Asw9U9BmavuEPkoxExyQjqARsv8RMnvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O7sE0eIB2aIDYCjVBBiC/yzjqh/F/u8L2Uu9qopjpLmD1/gSw2idfjoU7Twu1E0yu
-	 XAW8AdJpDaD1Xypety7knWe2uaGFAHANmuu+ploBxc/f9iif7Mxcm71iDvl7lsJ4Mc
-	 IYq2Jc+Fxn7sbBpQcPAEJiILRuMD3EaTeGNbDtbg=
+	b=QSKm7SnqYVH5P+fnguyvSoZuW+CqpLdPIbIIdFDn6K1ah2M7v3M5vFzqn51ldSX6d
+	 JzDYCID9+6KGGYbEHktZ7MaXYflpHKoOHlZFUtSZOaaDUozMxqy933Fy1dbQEXHrPV
+	 kNquaj67DtYWd9uDMeYq1zuFhCQeGg8NrXrjpvzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Yonghao Zhang <hyz3367@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1524/2214] ata: sata_dwc_460ex: Use temporary variable for struct device
-Date: Wed, 18 Nov 2026 15:53:20 +0100
-Message-ID: <20261118150113.116468966@linuxfoundation.org>
+Subject: [PATCH 5.15 1507/2214] remoteproc: core: Set trace buffer name for diagnostics
+Date: Wed, 18 Nov 2026 15:53:03 +0100
+Message-ID: <20261118150112.282691644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,151 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Yonghao Zhang <hyz3367@gmail.com>
 
-[ Upstream commit f1550f27f8a92a4d29329aeeb28b743365abceae ]
+[ Upstream commit e23eab619b0d2dd796618406ba25da62f4d539a2 ]
 
-Use temporary variable for struct device to make code neater.
+rproc_trace_read() (in remoteproc_debugfs.c) prints the name of a
+trace buffer whose device address could not be resolved, but nothing
+ever assigns trace_mem.name, so that the diagnostics always prints
+an empty string:
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Stable-dep-of: e137035fcd66 ("ata: sata_dwc_460ex: Don't enable interrupt if libATA core registration fails")
+	Trace  not available
+
+Copy the generated "trace%d" name into the memory entry, so the
+diagnostics identifies the buffer failed to translate.
+
+Fixes: a987e6b91a5a ("remoteproc: fix trace buffer va initialization")
+Assisted-by: Claude-Code:glm-5.3
+Signed-off-by: Yonghao Zhang <hyz3367@gmail.com>
+Link: https://lore.kernel.org/r/20260911081810.740028-1-hyz3367@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/sata_dwc_460ex.c | 37 ++++++++++++++++++------------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ata/sata_dwc_460ex.c b/drivers/ata/sata_dwc_460ex.c
-index 7b0b320e4e825..41a37a3dddb9e 100644
---- a/drivers/ata/sata_dwc_460ex.c
-+++ b/drivers/ata/sata_dwc_460ex.c
-@@ -219,9 +219,10 @@ static int sata_dwc_dma_get_channel_old(struct sata_dwc_device_port *hsdevp)
- {
- 	struct sata_dwc_device *hsdev = hsdevp->hsdev;
- 	struct dw_dma_slave *dws = &sata_dwc_dma_dws;
-+	struct device *dev = hsdev->dev;
- 	dma_cap_mask_t mask;
- 
--	dws->dma_dev = hsdev->dev;
-+	dws->dma_dev = dev;
- 
- 	dma_cap_zero(mask);
- 	dma_cap_set(DMA_SLAVE, mask);
-@@ -229,8 +230,7 @@ static int sata_dwc_dma_get_channel_old(struct sata_dwc_device_port *hsdevp)
- 	/* Acquire DMA channel */
- 	hsdevp->chan = dma_request_channel(mask, sata_dwc_dma_filter, hsdevp);
- 	if (!hsdevp->chan) {
--		dev_err(hsdev->dev, "%s: dma channel unavailable\n",
--			 __func__);
-+		dev_err(dev, "%s: dma channel unavailable\n", __func__);
- 		return -EAGAIN;
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 0e12d45b551f5..998eae2f87430 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -690,6 +690,9 @@ static int rproc_handle_trace(struct rproc *rproc, void *ptr,
+ 		return -EINVAL;
  	}
  
-@@ -240,19 +240,20 @@ static int sata_dwc_dma_get_channel_old(struct sata_dwc_device_port *hsdevp)
- static int sata_dwc_dma_init_old(struct platform_device *pdev,
- 				 struct sata_dwc_device *hsdev)
- {
--	struct device_node *np = pdev->dev.of_node;
-+	struct device *dev = &pdev->dev;
-+	struct device_node *np = dev->of_node;
++	/* keep the name for the diagnostic in rproc_trace_read() */
++	strscpy(trace->trace_mem.name, name, sizeof(trace->trace_mem.name));
++
+ 	list_add_tail(&trace->node, &rproc->traces);
  
--	hsdev->dma = devm_kzalloc(&pdev->dev, sizeof(*hsdev->dma), GFP_KERNEL);
-+	hsdev->dma = devm_kzalloc(dev, sizeof(*hsdev->dma), GFP_KERNEL);
- 	if (!hsdev->dma)
- 		return -ENOMEM;
- 
--	hsdev->dma->dev = &pdev->dev;
-+	hsdev->dma->dev = dev;
- 	hsdev->dma->id = pdev->id;
- 
- 	/* Get SATA DMA interrupt number */
- 	hsdev->dma->irq = irq_of_parse_and_map(np, 1);
- 	if (hsdev->dma->irq == NO_IRQ) {
--		dev_err(&pdev->dev, "no SATA DMA irq\n");
-+		dev_err(dev, "no SATA DMA irq\n");
- 		return -ENODEV;
- 	}
- 
-@@ -1201,6 +1202,8 @@ static const struct ata_port_info sata_dwc_port_info[] = {
- 
- static int sata_dwc_probe(struct platform_device *ofdev)
- {
-+	struct device *dev = &ofdev->dev;
-+	struct device_node *np = dev->of_node;
- 	struct sata_dwc_device *hsdev;
- 	u32 idr, versionr;
- 	char *ver = (char *)&versionr;
-@@ -1210,12 +1213,11 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	struct ata_host *host;
- 	struct ata_port_info pi = sata_dwc_port_info[0];
- 	const struct ata_port_info *ppi[] = { &pi, NULL };
--	struct device_node *np = ofdev->dev.of_node;
- 	struct resource *res;
- 
- 	/* Allocate DWC SATA device */
--	host = ata_host_alloc_pinfo(&ofdev->dev, ppi, SATA_DWC_MAX_PORTS);
--	hsdev = devm_kzalloc(&ofdev->dev, sizeof(*hsdev), GFP_KERNEL);
-+	host = ata_host_alloc_pinfo(dev, ppi, SATA_DWC_MAX_PORTS);
-+	hsdev = devm_kzalloc(dev, sizeof(*hsdev), GFP_KERNEL);
- 	if (!host || !hsdev)
- 		return -ENOMEM;
- 
-@@ -1225,7 +1227,7 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	base = devm_platform_get_and_ioremap_resource(ofdev, 0, &res);
- 	if (IS_ERR(base))
- 		return PTR_ERR(base);
--	dev_dbg(&ofdev->dev, "ioremap done for SATA register address\n");
-+	dev_dbg(dev, "ioremap done for SATA register address\n");
- 
- 	/* Synopsys DWC SATA specific Registers */
- 	hsdev->sata_dwc_regs = base + SATA_DWC_REG_OFFSET;
-@@ -1239,16 +1241,15 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	/* Read the ID and Version Registers */
- 	idr = sata_dwc_readl(&hsdev->sata_dwc_regs->idr);
- 	versionr = sata_dwc_readl(&hsdev->sata_dwc_regs->versionr);
--	dev_notice(&ofdev->dev, "id %d, controller version %c.%c%c\n",
--		   idr, ver[0], ver[1], ver[2]);
-+	dev_notice(dev, "id %d, controller version %c.%c%c\n", idr, ver[0], ver[1], ver[2]);
- 
- 	/* Save dev for later use in dev_xxx() routines */
--	hsdev->dev = &ofdev->dev;
-+	hsdev->dev = dev;
- 
- 	/* Get SATA interrupt number */
- 	irq = irq_of_parse_and_map(np, 0);
- 	if (irq == NO_IRQ) {
--		dev_err(&ofdev->dev, "no SATA DMA irq\n");
-+		dev_err(dev, "no SATA DMA irq\n");
- 		return -ENODEV;
- 	}
- 
-@@ -1260,7 +1261,7 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	}
- #endif
- 
--	hsdev->phy = devm_phy_optional_get(hsdev->dev, "sata-phy");
-+	hsdev->phy = devm_phy_optional_get(dev, "sata-phy");
- 	if (IS_ERR(hsdev->phy))
- 		return PTR_ERR(hsdev->phy);
- 
-@@ -1275,7 +1276,7 @@ static int sata_dwc_probe(struct platform_device *ofdev)
- 	 */
- 	err = ata_host_activate(host, irq, sata_dwc_isr, 0, &sata_dwc_sht);
- 	if (err)
--		dev_err(&ofdev->dev, "failed to activate host");
-+		dev_err(dev, "failed to activate host");
- 
- 	/* Enable SATA Interrupts */
- 	sata_dwc_enable_interrupts(hsdev);
-@@ -1301,7 +1302,7 @@ static int sata_dwc_remove(struct platform_device *ofdev)
- 	sata_dwc_dma_exit_old(hsdev);
- #endif
- 
--	dev_dbg(&ofdev->dev, "done\n");
-+	dev_dbg(dev, "done\n");
- 	return 0;
- }
- 
+ 	rproc->num_traces++;
 -- 
 2.53.0
 
