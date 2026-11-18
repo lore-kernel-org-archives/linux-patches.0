@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041436;
-	b=cY99IDq9CFzh8+L9+S67na+jFW0hU1GTd0NGXXciDLOVZf1fUp61QLI+DLQwnHomeM7x
-	 1RPxCQjzzc4R3mETQEQs1RyYuTDKpCBXlsnASbRbFyn4rNqZefZ0spOpcJjna0fjVquiz
-	 ukHjGQzc4elocYqhtPyZG5fSdhtYH7Ea6jkRTctt1a0XNY41k1qr9YcvoNksgBExwk9By
-	 tPCKT0WJeDxrgAfp19pFJz5McBUxfRCfOzufXL+8/SpO/PPVwDUVdFdEHRzCN6wppBKkv
-	 8e0sUQthRGAEzw5r6ePiHakCCnuQ9xNC8hXEDKf9L/Fb8SixSAgqOdyMnOiV7Kl9xSA==
+	t=1795041439;
+	b=bX7rj2eM6iuQjUNL34eJQBjy8AZYGM3ucVOfk5xMxZtFzWPGpdURWBFENSxvjRQ73mdT
+	 MfbFVM7/5zQt0RHSc7ErNug13Nwb/4oJfYJL7KAYMtbo7cHe+86jMCJGN16+4vkYfVVCA
+	 egHAjgv4k5WnKL2txKEk3pKKlRNan0rHGvRwtgiqzLbL3N8RXrXdOSQIbCGMTLIFMR0CU
+	 h7ViZX5h3wFDV0zRYQJngW+yIyD1Ean72FgsDnKKgzCE2X4KXp3+8j+LHFflaoT4X1nvS
+	 RyADn6+0qn1PzkStQ1RiWNLkVMNXVrYBxQDDOGXs1jJIGPPQ9snkN4OsHUJlbnHHatw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mNMR35QhlqYRyqZ1zppXNb9XX61j/10QUTy0nGTWYnc=;
-	b=M89bz2NMV18g/Z2uBQqK+LskQPqxS4kondIFAXCtU6BipSe8FwrlmRXu9m++JNdLRqzp
-	 Ts6KeDqEbmmBZXb8yvq1kG4kMjM8qizypPSiPlJNl0MwdQgBJdzkctfEGwO3th4DGFUO9
-	 MjHYhoxNKxPhlx1TdbKit8AJUoiH/7Wm1zN2TfnG2G6fRalHKCiCJ6sMS5Uf0HhLG1yw7
-	 /fo2j4iy1uIl9I4+nwVEKtcr+RSUJM58euexPa03QfdqMpuUhtb1ee53rT2vKXEUmfw3Z
-	 gz8c6F5OaVB3ebHKK75LZk/1xRvDUL7ORG2ijuKJ6l5WslVKYR4pVlf1NHU7w010QcQ==
+	bh=wwtfg7zCBQ1mMl6UlSfUMeKCZwG15C5TZ0MUwyc4us8=;
+	b=YpRQccEDyhHh27COLx9ggavFr08E+yaPmtQXNrfjITXTOZTc3f0UvmEWLrUjP2yg+NIy
+	 kT3y+LhXLPP2Pq3pegZL/n1ZzeVno5NbbY1cPPr8Rte7/qp+q91VoeKPDiqAs20/MbflX
+	 iMjYPRpvCmaxux49lLCXrORU9nvCcq91PvhJYtY4t1QjqwoJRAyPxil6t7MFqb3s6H+6Y
+	 ZN7XMZj1uRTk4MxjaXea8wIC5vIHkca/ioJHQL8YFqmZQEYv2ExO8r9UXR6yBmvN7WJm0
+	 nhe9LllSs1Kc/K4YRbdHImcY9ZjIEYwPvHnG334itNjYt9d4p80jJR5unQi8+DqUM/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01h2ptGt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8vincav;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C77C60A3824;
-	Wed, 18 Nov 2026 22:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2596660A5BCF;
+	Wed, 18 Nov 2026 22:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=01h2ptGt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92DEC1F00932;
-	Wed, 18 Nov 2026 22:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A8vincav
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749581F00927;
+	Wed, 18 Nov 2026 22:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041436;
-	bh=mNMR35QhlqYRyqZ1zppXNb9XX61j/10QUTy0nGTWYnc=;
+	s=korg; t=1795041439;
+	bh=wwtfg7zCBQ1mMl6UlSfUMeKCZwG15C5TZ0MUwyc4us8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=01h2ptGtgiMbPiOimzi5I7cwnmGo1L/96WoNNNxxsbahysZxBwvn3xydsxc0/AJ2I
-	 PhbvCKMyqzDGBzsUxIrpSt9CK3tbM8ib5P0wMjmYJ9mMTpX8/yGpWcE17oBzCqOlMR
-	 AOhiMBNkD+kW0+r6h3j1DpBuh3Lg8yZXCSEf5ESI=
+	b=A8vincavenctUT2gT8RaOiEcJ+j88LSzsu9wtZ2ttjGLss/JZHPBhJ3GueEIRhjCU
+	 DRqZhs7oGZLkhga+b3dFYUec69cuyW74gWyBESqRdbLaae1xXlX6b70SK9UJlOqiYM
+	 nk2eq3sC8snDxeJkMJ/0S4djyVKCUPaCgfVrixj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+da94a51633758d13bd63@syzkaller.appspotmail.com,
-	Daniel Wagner <dwagner@suse.de>,
 	Christoph Hellwig <hch@lst.de>,
-	Palla Raghunath <raghunathpalla.0209@gmail.com>,
+	Sung Byeongchan <tjdqudcks0424@naver.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2814/3318] nvmet-fc: dont drop the last assoc reference in nvmet_fc_delete_ctrl()
-Date: Wed, 18 Nov 2026 15:57:16 +0100
-Message-ID: <20261118150445.077220041@linuxfoundation.org>
+Subject: [PATCH 6.6 2815/3318] nvmet-auth: reject undersized AUTH_SEND payloads
+Date: Wed, 18 Nov 2026 15:57:17 +0100
+Message-ID: <20261118150445.104894581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,91 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Palla Raghunath <raghunathpalla.0209@gmail.com>
+From: Sung Byeongchan <tjdqudcks0424@naver.com>
 
-[ Upstream commit 165301b5e2fd765fa05ea1044bbca8ba79820197 ]
+[ Upstream commit c9359401036e8294c007a10e8c8d8da7030fcc76 ]
 
-syzbot hit a recursive locking report on subsys->lock when a subsystem
-is unlinked from an FC port.
+nvmet_execute_auth_send() allocates and copies the initiator-supplied
+transfer length, then reads auth_type and auth_id through a common DHCHAP
+message pointer.  The existing zero and transfer-length checks do not
+ensure that both common-header bytes are present.
 
-nvmet_port_del_ctrls() holds subsys->lock while it calls ->delete_ctrl()
-for each controller. nvmet_fc_delete_ctrl() grabs a reference on the
-association, queues del_work and then drops the reference. If del_work
-gets to run to completion before that put, ours is the last reference.
-Freeing the assoc tears down the queues, the last nvmet_cq_put() drops
-the last ctrl reference, and nvmet_ctrl_free() goes for subsys->lock
-again:
+An unauthenticated NVMe/TCP initiator can complete ICReq and admin CONNECT,
+then send AUTH_SEND with tl equal to one.  KASAN reports a one-byte slab
+out-of-bounds read when auth_id is loaded.
 
-  WARNING: possible recursive locking detected
-  ...
-   nvmet_ctrl_free+0xa6/0x8e0 drivers/nvme/target/core.c:1766
-   nvmet_cq_put+0x158/0x200 drivers/nvme/target/core.c:848
-   nvmet_fc_target_assoc_free+0x418/0x2220 drivers/nvme/target/fc.c:1173
-   nvmet_fc_delete_ctrl+0x717/0x7e0 drivers/nvme/target/fc.c:1581
-   nvmet_port_del_ctrls+0xfb/0x150 drivers/nvme/target/core.c:311
-   nvmet_port_subsys_drop_link+0x1e8/0x310 drivers/nvme/target/configfs.c:1119
+Reject payloads that do not cover the common auth_type/auth_id header
+before allocating or parsing them.  The one-byte trigger and
+header-minus-one boundary were cleanly rejected in three fixed fresh-boot
+runs.  Exact-header, valid DHCHAP, wrong-type, mismatch, and zero-length
+controls remained clean, and a following valid AUTH_SEND on the same
+connection received a response.  The touched source is unchanged at
+0c2669a9f4a1d607e7591ae50ccf3c432a0aff08, where the patch applies and
+builds cleanly.
 
-It's a real hang, not only a lockdep warning. I reproduced it with
-fcloop by putting an msleep() before the put: rm on the configfs link
-gets stuck in D state for good.
+The demonstrated impact is unauthenticated pre-authentication target-kernel
+denial of service.  No disclosure, controlled write, RCE, or LPE was
+demonstrated.  The source reproducer and complete logs are available on
+request and are not included in this public report.
 
-I don't think we need that reference at all. del_work does
-list_del_rcu() and synchronize_rcu() before it drops the initial
-reference, so an assoc we find on assoc_list can't go away before
-rcu_read_unlock(). nvmet_fc_schedule_delete_assoc() doesn't sleep, so
-just call it inside the RCU section and get rid of the get/put. If the
-assoc is already being deleted, terminating is set and the call is a
-no-op, which matches what happened before when the get failed.
+OpenAI Codex assisted source inspection, test design, patch drafting, and
+evidence organization.
 
-With the same msleep() in place the patched kernel unlinks cleanly and
-the assoc is freed from the workqueue.
-
-Fixes: 4049dc96b8de ("nvmet-fc: defer cleanup using RCU properly")
-Reported-by: syzbot+da94a51633758d13bd63@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=da94a51633758d13bd63
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Fixes: db1312dd9548 ("nvmet: implement basic In-Band Authentication")
+Assisted-by: LLM
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Palla Raghunath <raghunathpalla.0209@gmail.com>
+Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ drivers/nvme/target/fabrics-cmd-auth.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 224287ca9039c..4539e25963afc 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1575,8 +1575,14 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
- 		list_for_each_entry_rcu(assoc, &tgtport->assoc_list, a_list) {
- 			queue = assoc->queues[0];
- 			if (queue && queue->nvme_sq.ctrl == ctrl) {
--				if (nvmet_fc_tgt_a_get(assoc))
--					found_ctrl = true;
-+				/*
-+				 * No assoc reference here: we're called with
-+				 * subsys->lock held, and if del_work beat us,
-+				 * our put would free the ctrl under that lock.
-+				 * RCU keeps the assoc alive until unlock.
-+				 */
-+				nvmet_fc_schedule_delete_assoc(assoc);
-+				found_ctrl = true;
- 				break;
- 			}
- 		}
-@@ -1584,11 +1590,8 @@ nvmet_fc_delete_ctrl(struct nvmet_ctrl *ctrl)
- 
- 		nvmet_fc_tgtport_put(tgtport);
- 
--		if (found_ctrl) {
--			nvmet_fc_schedule_delete_assoc(assoc);
--			nvmet_fc_tgt_a_put(assoc);
-+		if (found_ctrl)
- 			return;
--		}
- 
- 		spin_lock_irqsave(&nvmet_fc_tgtlock, flags);
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index 24bd7b45a6d84..14379fbe42961 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -256,6 +256,12 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 		nvmet_check_transfer_len(req, tl);
+ 		return;
  	}
++	if (tl < offsetof(struct nvmf_auth_dhchap_success2_data, rsvd1)) {
++		status = NVME_SC_INVALID_FIELD | NVME_STATUS_DNR;
++		req->error_loc =
++			offsetof(struct nvmf_auth_send_command, tl);
++		goto done;
++	}
+ 
+ 	d = kmalloc(tl, GFP_KERNEL);
+ 	if (!d) {
 -- 
 2.53.0
 
