@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044092;
-	b=vRpdzjvy/8eQlT8SNAj+y+pjFQYW1NCTK406t3G9SWI11I5WkfSEApN1F/slRbrPbJKJ
-	 YgY9XLJ91NkgiROUkWCnC8f7GLGqXg4kIPorOUgK9CFpI2rFx6jmBZc2vHymQXKb/ewM7
-	 KZ5TO/k4LuKZINJ124Nfu8XgFXnsFlreqZ3hMKLdCyOWkQilMU8qHNzYltQhSpEKOF7zd
-	 fz0XuQg1EUkDmWrCoOtC+yaYR+13Yz5lXVkH0mbacJh3XiYFLtvCDryPO5hArxwmwXTDn
-	 qZRwqIBbYipRljnSdGdFkhJAsmDf8VPJuUerctFsqib+OhbS1MpXY41JA9YsT/1gaoQ==
+	t=1795044094;
+	b=zYvUnlDRqZ3PEll4KpNVE9ruwaKKlUI4HNZ3P3k4j9ZAQ48ktq915Ym24+d8UQuWD7h7
+	 bc5sQMvz11flyuge36jFBFAnO8NzhhBDNenXh40FQpoONgmzf+naCFEz1QM8P7RbE9qZm
+	 RLfPNLGXtKVVAKz89Lr52PRZftDZG9vj4220BWL6hTt6SVSvsgGcs9QpbmKeipCz32wM4
+	 SmJGHvECXcI+WOIsZjHf5bUj5rgqj0rtBiexkk6dkW9npDwuByJquz425+wnLdMqMYWDA
+	 +b3ts/s1gUigfdTOQD49X11AiUOpp8n13lyeYhZfetpA3jEjfP7pcGD6+bwrROUvipw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044092;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044094;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pAfL2xvsBnad3OULQhxCKg96Oh3mCw96CxhxSOPva9Y=;
-	b=cXUTsoS0vV17Qb6il1Kcy5ubNDx9hQsMtDGVYW7x6FufkEOW1AK8BMe+srzZ6m+bowPI
-	 5kuSk/kjXZcIRE0UC3rEXWhGYytBphUNmcMSnIWAX+8kb75hroWDir8ooI6Sgtp1NnGFh
-	 NxlbfzOptpBo0go7YeprfJeULy8u1YUWmBuIGrk3ZlLDR8UiJ2SjB9VJzbwjZSy1xjyuQ
-	 E80LrVaim9KNpzN1xt6d7WpSDLnR/8XRNuPNlrM2PpYh3BZ6BU62NqQSv9S1Ve61DXQV1
-	 oWmuRDKO9MdsImu3DDkBuOOt7MU4aWpHg7rSgB6T1DXObXbV+GlV9y/qro3r0bVxzJw==
+	bh=tIXd9oAHkhcNh+a91DOJ21j+B8xCLp+A6yMWP+lYF9o=;
+	b=avfNf82r9TsiyOQBIRBJEGZvBb+uQwacmCP/PyTlqykIQBCtcv1H6ZG74peeloelbiqn
+	 W3ozsPuDJQJsjd6voNdN9cUU0ARZZdn2EMqjON/PUFdC+OWFeP5GKRv6R01wkGPXISN1l
+	 mHczEd1ajaKGkUPqDhrNQ2QMI8RPJ4dMTN/BmNr5s0e9/jlO2jVbgbjH+LwMJ0L1lqeXk
+	 cf9VLD7HZ6coIZNOLHI5/hgDlSGXatwmaPSplpwho54JIrm2shH0H8U+Tr/JgYaFzAyMY
+	 hgjGqZUs+/CHEZaUDF8O4Ey0stFNaS4vyhjm68St2rPTCZJNfFegPg86FsWnFwiS7WQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CF38y62c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPgSdRj8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22569606A32A;
-	Wed, 18 Nov 2026 23:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E3A606A325;
+	Wed, 18 Nov 2026 23:21:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CF38y62c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2821F000C4;
-	Wed, 18 Nov 2026 23:21:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KPgSdRj8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFC51F000C4;
+	Wed, 18 Nov 2026 23:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044091;
-	bh=pAfL2xvsBnad3OULQhxCKg96Oh3mCw96CxhxSOPva9Y=;
+	s=korg; t=1795044094;
+	bh=tIXd9oAHkhcNh+a91DOJ21j+B8xCLp+A6yMWP+lYF9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CF38y62cAWP3HAba1Qpt7IG379lixDx6i/C7QKacGnuldPuq4nNqDmHPonGI6R7aS
-	 xCXfyEVXY2mEk+3/HEGc/MpG9OoiCuNS0qNs8oBwatzfPnMAhT5lXOmjE0iMQ1krDE
-	 hKyo4Q6CTabn5kAm3J4FSuCuV3nkzffP7TdHm308=
+	b=KPgSdRj8wX6GtFnZSFLbcvUj4fqkt8HLQ0VXP1yXdOuCVyyLBx46WDmJClfO9Vw6a
+	 LdG1Lw91DLluJYY6vHp0QUrIFaf0wqXJ6CpfYiIIrix6iIfHYeBMILiJRwRMvAcmu8
+	 Ei2RvwPgan3FWW+zdvkqyzdVTw3rSxlUL6ySyzvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com,
-	Adarsh Das <adarshdas950@gmail.com>,
-	Paulo Alcantara <pc@manguebit.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0443/2857] smb: client: delete compound mids on send failure before unlock
-Date: Wed, 18 Nov 2026 15:24:37 +0100
-Message-ID: <20261118150217.330601798@linuxfoundation.org>
+Subject: [PATCH 6.1 0444/2857] i2c: qcom-cci: Stop complaining about DT set clock rate
+Date: Wed, 18 Nov 2026 15:24:38 +0100
+Message-ID: <20261118150217.363776737@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,54 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adarsh Das <adarshdas950@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit 8f6f8a48399f82f4a83f7b9f25b9707e0062a4f9 ]
+[ Upstream commit 8284750a182937bf805f703311501730f02eb40e ]
 
-When sending a compound request fails, smb_send_rqst() kicks off a
-reconnect. compound_send_recv() still has those mids on pending_mid_q,
-but it unlocks the server without removing them first.
+It is common practice in the downstream and upstream CCI dt to set CCI
+clock rates to 19.2 MHz. It appears to be fairly common for initial code to
+set the CCI clock rate to 37.5 MHz.
 
-During reconnect, cifs_abort_connection() walks pending_mid_q and runs
-each mid callback. With no response yet, those callbacks return credits
-and drop in_flight. Then compound_send_recv()'s send-error path returns
-the same credits again. in_flight ends up decremented twice and
-smb2_add_credits() WARNs.
+Applying the widely used CCI clock rates from downstream ought not to cause
+warning messages in the upstream kernel where our general policy is to
+usually copy downstream hardware clock rates across the range of Qualcomm
+drivers.
 
-syzbot hits this during SMB2_negotiate when the socket send fails.
+Drop the warning it is pervasive across CAMSS users but doesn't add any
+information or warrant any changes to the DT to align the DT clock rate to
+the bootloader clock rate.
 
-cifs_call_async() already calls delete_mid() before unlock on send
-failure. Do the same for compound chains and set cancelled_mid[] so the
-out: path does not delete them again.
-
-Fixes: ee258d79159a ("CIFS: Move credit processing to mid callbacks for SMB3")
-Reported-by: syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/6a727d22.40259c87.584f4.04ce.GAE@google.com
-Tested-by: syzbot+eeb58d2197d88720a228@syzkaller.appspotmail.com
-Assisted-by: LLM
-Cc: stable@vger.kernel.org
-Signed-off-by: Adarsh Das <adarshdas950@gmail.com>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Link: https://lore.kernel.org/linux-arm-msm/20240824115900.40702-1-bryan.odonoghue@linaro.org
+Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Stable-dep-of: 7362a1553eb0 ("i2c: qcom-cci: fix device_node refcount leak in cci_probe()/cci_remove()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i2c/busses/i2c-qcom-cci.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index c5c81b4261985..e41cd9581cd43 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -1200,6 +1200,10 @@ compound_send_recv(const unsigned int xid, struct cifs_ses *ses,
- 	if (rc < 0) {
- 		revert_current_mid(server, num_rqst);
- 		server->sequence_number -= 2;
-+		for (i = 0; i < num_rqst; i++) {
-+			delete_mid(midQ[i]);
-+			cancelled_mid[i] = true;
-+		}
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index 6c7e4eb95efcc..db2283bfb3321 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -603,14 +603,6 @@ static int cci_probe(struct platform_device *pdev)
+ 		}
  	}
  
- 	cifs_server_unlock(server);
+-	if (cci_clk_rate != cci->data->cci_clk_rate) {
+-		/* cci clock set by the bootloader or via assigned clock rate
+-		 * in DT.
+-		 */
+-		dev_warn(dev, "Found %lu cci clk rate while %lu was expected\n",
+-			 cci_clk_rate, cci->data->cci_clk_rate);
+-	}
+-
+ 	ret = cci_enable_clocks(cci);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.53.0
 
