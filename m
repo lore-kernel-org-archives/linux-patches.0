@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016250;
-	b=3Rm4mF0G9uea73oyUa4FFpnpeDzbIUwnBuLMNgndcAy46IOcQ2FIyEJxrwYQ2QEAfpby
-	 wmAl/ZZh1W2peGzfnMTiuX4HcKFn6BOpRB+xlzmB3YHS0osp/rsr06BfrHGK8KYgDk2AC
-	 oJFq47+Nnb1t12vxMNK8kie+PwH3hyPMBUVWvNWjFrXs0V41qqZx6Qu5b1WH/0psfqABq
-	 U8mBBrqaqxi7blTONFjG7e72T7dJ84d/VWMI6Gymbm0G9DWBjclB+Q6f1DpaewWa1PR0z
-	 t+7mf8MWTN9jISqPrN2LkYoDHhtX4LxbihN1rB2rZ1fjQaBZT4uPEM2auDknCJO/XWQ==
+	t=1795016253;
+	b=EE6ZjJ6eg+meb8WlIbFGwTMw0HSUJlpRoWWVv3khIe2eXogsiUvnjGHd4TvRZdYJzIyg
+	 49CBFAib/0UmNTA953+odSYGKNvbr6SzLn8sZbGnCEsP9leMbLP+R+2cMDVR4VtjVr1pi
+	 C/ezooHskkLiL0q2SA6KIUuijboC7O0oSUclYS9XVvrKTHCtSB3QX4TMNQirrVxtDoKdu
+	 ov3+DgUrGoSv/TBa8qGhVCs5S8nAU5d1pVCxQo2ODm4j9yXwMMFqPvxbb1jQWQv0C5W+J
+	 OWnF8wKM/Azqm+ecS/bnia+n6gKvLV77G+0VEFPZPkiZTr/22w8JG/JXVLt+CsMdboA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016253;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=PZN2uFIYDj1AipSdGkm7uakP279+cleV71rncOd2tsU=;
-	b=4jO0lf7QIz45gpTWJ/qbTTONqldOsmKtbtxtKuwZyPaWoFhkNdOkxX6WFbk3WHq5hZJo
-	 94s0WTqKD5euzQZKUL4O+RCLDgeBSoooRprJT2801crrT8oFctLeefUSsccyEZSmH4me7
-	 5E2eUJihsNAwKxF4F8oMzxQRXgPpW5cvVRJGEmyo8GIKhWKkMHXVOtRzYPdj+dTYLaMBY
-	 qiZlAsH+IhUx3eA3a8N7/PuF2A0v58JAOTQ3+Y7RB9QWR70gjoBEjBmTSx1QH5LvBqJY+
-	 3CSD39GQ+cA9tevLts+5oJpBwJzLf7ATSiGBhGgPrukaDpwUsdo7nNc4QZdh+theE2w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=xB48FqC9Xc9bsAx4QrrD6vuujYXizHcy93ropbiHqAE=;
+	b=lqtMNl36dsBRoxBvvSMQC6wnQ5Rfa6s96ErM1W2bd4bHXZ5qhPvD06PQkiGpyOkC7NY/
+	 RfkDyt6Jt/cO9GhsMv4/jj/qOeCFgg9bWlwbO74KW1srL1iVsKJNJqlsDVTsuIrZx4Jc8
+	 Tm1K7otWcooCagNYDJsy7UKziyW52T6NcxcZDsYx5cmDbOVckDwUl+aoBeExkPytxLk6Y
+	 9WaNTuT+vRnZMOY98BYpe2miuTR5XQoTKI33PvQtkJq4ac3onPqzlAr1a0gVBTdsfQvo6
+	 wpTjbCHj79BNku6ncTAnjRsNaUF+sHEa+GUyC0RLM6iYSxKje7HaDVMri+Vrvcq5hvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S48ONHpm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJvPmthy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7439606A337;
-	Wed, 18 Nov 2026 15:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2CC606A320;
+	Wed, 18 Nov 2026 15:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S48ONHpm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0431F000CA;
-	Wed, 18 Nov 2026 15:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OJvPmthy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31B41F000C8;
+	Wed, 18 Nov 2026 15:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016250;
-	bh=PZN2uFIYDj1AipSdGkm7uakP279+cleV71rncOd2tsU=;
+	s=korg; t=1795016253;
+	bh=xB48FqC9Xc9bsAx4QrrD6vuujYXizHcy93ropbiHqAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S48ONHpmeyvBiPwqJBRMBTP5M/Fyd4yLBjO5O/btcppMvTsL+1iR/VbXtiliWAE2Z
-	 bYb7wnZrNtUaDkLOrqUpspwel2U5eamfkyQ3Mu8lXQnkhnRNghC4L7pDSOJNfHSt7O
-	 TSUanmpLjGdj598oQGIzo1GpYR2C+7IPedkeqfVg=
+	b=OJvPmthy9ASGWjqoQAr+96aI34UUKQF0C1CB+lgVvvAHV0/7PbRTVjEjcu7/GkBby
+	 LA9pt4Qjdy57R24jnxDEA95QV8xdDvPlSwToSvCbSGc/7I4sm8apg/PWQa+Bfp4DrL
+	 B4aQcwVh97O9HjpASmsm0AQ/pbr16m88pRIiZFfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julius Bairaktaris <julius@bairaktaris.de>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Takahiro Kuwano <takahiro.kuwano@infineon.com>,
+	Michael Walle <mwalle@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0461/2651] wifi: mac80211: dont reset the TXQ scheduling round number
-Date: Wed, 18 Nov 2026 15:28:21 +0100
-Message-ID: <20261118150304.399642360@linuxfoundation.org>
+Subject: [PATCH 7.3 0462/2651] mtd: spi-nor: spansion: Remove s25fs256s0
+Date: Wed, 18 Nov 2026 15:28:22 +0100
+Message-ID: <20261118150304.434112966@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,85 +62,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Julius Bairaktaris <julius@bairaktaris.de>
+From: Takahiro Kuwano <takahiro.kuwano@infineon.com>
 
-[ Upstream commit 8ea81827d3537db7cfcc82c008f052bb1bbe7567 ]
+[ Upstream commit f917d9edf54c3dd578efc231b8fbcd35744f99cd ]
 
-A round is ended when ieee80211_next_txq() meets a txq whose remembered
-round number is the current one, meaning it has gone full circle.
+The Spansion ID table lists s25fs256s0 and s25fs256s1 as variants
+distinguished by id[4] (0x00 for 256 KB sectors and 0x01 for 64 KB
+sectors), following an incorrect statement in the datasheet.
 
-When the AC exceeds the airtime limit, ieee80211_txq_schedule_start()
-sets the round number to 0 to close the round. The next open round is
-1. A txq from an earlier round 1 still remembers the "1", so the next
-round stops on it and serves nothing.
+The sector size of s25fs256s is configurable between 256 KB and 64 KB.
+The factory default is 64 KB, and id[4] is always 0x01 regardless of the
+configured sector size. Remove the invalid s25fs256s0 entry from the ID
+table.
 
-Fix: use a separate open/closed flag and let the round number keep
-counting.
-
-Testing: ~4200 skipped selections per 20s without the fix and 20
-skipped selections per 20s with the fix on ath11k (with my AQL series
-applied) at BE 500/1000.
-
-Fixes: 8e4bac067105 ("wifi: mac80211: add a per-PHY AQL limit to improve fairness")
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Julius Bairaktaris <julius@bairaktaris.de>
-Reviewed-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260908144155.756569-1-julius@bairaktaris.de
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 075fd6dff24a ("mtd: spi-nor: spansion: Differentiate between s25fl256s and s25fs256s")
+Signed-off-by: Takahiro Kuwano <takahiro.kuwano@infineon.com>
+Signed-off-by: Michael Walle <mwalle@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h | 1 +
- net/mac80211/tx.c          | 8 ++++----
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/mtd/spi-nor/spansion.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index e624e2b17415b..e53ee000c4e38 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1459,6 +1459,7 @@ struct ieee80211_local {
- 	spinlock_t active_txq_lock[IEEE80211_NUM_ACS];
- 	struct list_head active_txqs[IEEE80211_NUM_ACS];
- 	u16 schedule_round[IEEE80211_NUM_ACS];
-+	bool schedule_open[IEEE80211_NUM_ACS];
- 
- 	/* serializes ieee80211_handle_wake_tx_queue */
- 	spinlock_t handle_wake_tx_queue_lock;
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index e989772ad92b8..dcc8e84ea1a93 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -4227,7 +4227,7 @@ struct ieee80211_txq *ieee80211_next_txq(struct ieee80211_hw *hw, u8 ac)
- 
- 	spin_lock_bh(&local->active_txq_lock[ac]);
- 
--	if (!local->schedule_round[ac])
-+	if (!local->schedule_open[ac])
- 		goto out;
- 
-  begin:
-@@ -4452,12 +4452,12 @@ void ieee80211_txq_schedule_start(struct ieee80211_hw *hw, u8 ac)
- 
- 	spin_lock_bh(&local->active_txq_lock[ac]);
- 
--	if (ieee80211_txq_schedule_airtime_check(local, ac)) {
-+	local->schedule_open[ac] =
-+		ieee80211_txq_schedule_airtime_check(local, ac);
-+	if (local->schedule_open[ac]) {
- 		local->schedule_round[ac]++;
- 		if (!local->schedule_round[ac])
- 			local->schedule_round[ac]++;
--	} else {
--		local->schedule_round[ac] = 0;
- 	}
- 
- 	spin_unlock_bh(&local->active_txq_lock[ac]);
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index 65227d989de13..db9b5416fcf12 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -870,13 +870,6 @@ static const struct flash_info spansion_nor_parts[] = {
+ 		.sector_size = SZ_256K,
+ 		.no_sfdp_flags = SPI_NOR_SKIP_SFDP | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ,
+ 		.mfr_flags = USE_CLSR,
+-	}, {
+-		.id = SNOR_ID(0x01, 0x02, 0x19, 0x4d, 0x00, 0x81),
+-		.name = "s25fs256s0",
+-		.size = SZ_32M,
+-		.sector_size = SZ_256K,
+-		.no_sfdp_flags = SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ,
+-		.mfr_flags = USE_CLSR,
+ 	}, {
+ 		.id = SNOR_ID(0x01, 0x02, 0x19, 0x4d, 0x01, 0x80),
+ 		.name = "s25fl256s1",
 -- 
 2.53.0
 
