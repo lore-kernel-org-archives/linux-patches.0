@@ -1,115 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047859;
-	b=s59VwcNnMbN5MDlMcmoXniNgukQC++yZpvsEB6XL47+4CTvS+Rzu7X9oCKoOKqTUXRx4
-	 VqXeadLeV9WN41t9F5HAlx1YlX6lQT/OR7xRzZg9arTAD6E9B4d0Q46dLG8D8smcEArUW
-	 3V5tkehPwc1P3UDD+elmcQbkKpQA2HHJr8DrbnJTueEaNsLbjqsydLbFzAjTuDz86hHTl
-	 dL6aOaEu/0YvVtn6QQegx+HXM4cW1ApC6MP94e/OwfuZ0vTdL3JogTJGT3z0JWwcSE9RD
-	 ePlDZqBABjWudkLGJ4eEKBo+O2Zx/POVqQwU1FXhJDMA+6NBkNgFXDEFu1MqTlQYmww==
+	t=1795047862;
+	b=O1+BX14SBR/OFYuEZF5WnN4Sq3hczA1cCK+knoihbKW5t+EjHBaRlIBUKwjMfoL9gcc2
+	 DXDLGGVtVeQsu30S7MNtRQzI7Mc7/TydETOW96H42wcx+Lne+dqcXRKHyUOYM/swJb7S2
+	 J6tXFkD/ggm4s5Vx1aZWO9RVfahWSyVu0inqOuqt37jrpnch7ovPJn1EdocujhJzR4bhT
+	 eKbsbsl8Q8KoF7yMp8PLyQfCUSPR7q2C3D+5uhuOtjCfgLytDuyN0EpjjZFjqGmG4sInZ
+	 0FXjbK0zG66ulydYOtzDJXfkX4tODCNmU+QNcem5f3j0JNL5P+SKPtOytSiHZsHmaBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047859;
-	h=DMARC-Filter:Received:Received:DKIM-Signature:DKIM-Signature:
-	 X-DKIM2-Info:DKIM2-Signature:X-DKIM2-Info:Message-Instance:
-	 X-ME-Sender:X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:
-	 Received:Message-ID:Date:MIME-Version:User-Agent:Subject:To:Cc:
-	 References:Content-Language:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=aXOqKt2NMYYEXvjoI7GZxfHPL6l9VgfPwE+uuPiqf0M=;
-	b=GuXsssa9T5vNNNeq41Mfiwq+c+EZW4rztLroRwH6EDgKasFvVkrA62VP2B4IvY3V3dwI
-	 lzIySum8JOE0lP/e7ZJjXqrfMUcTNdwAHbqh0+8OepuYluszsklD224VteWgDO5DIOSN0
-	 w0SF9ilDQrUs6T7Bpk5sRBB7mFMngD9L6Tvm1Icrgf4CI5UUulEroGFXYKXnvnMuaHf3i
-	 3B1YJG7VVb/Rwlhix0NYqY/nGKq+aLvvQAagZ+L54EBhbs98JhGEJKhld1avi9fdTdfNR
-	 DxUedJHHBlGh5A/ZJZvaaw+onrpT1zm/JqsVxKPUf95Bg+g4g6DNcuFXUzYyPdTfaag==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047862;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=0xz5xUdA6su8MiJShqu0NJ+qpYwaMHhYep5CU5vQrjs=;
+	b=vyyJgPJhmGYojQO/g8ops54I+NDvF7WZI5taRxCMrSVAsqUpHLl7dPyVOqwRVYqG74vA
+	 5hgGdcpxbKDBZ2+gZUVAV4EMOcpjtodoCeIQO6q/7HU/C0I21/6wTV9OoMwucFBVJCshT
+	 NFP+wslC59Qhn9v4lW6JV+f49S5IwKIyDvEpWF4KQDPDcf7ZyZY4rug31EZcaCtoHDXdF
+	 q7QNTnZB4Bd1Ib0bAYQxKD8i8eZvEs9eDxouYl/7/tIPjk+TfocP+WEu8p4ieKJERFVp/
+	 RUirleBHYht4jj10XKHtm+/Fn1IEbP7B/rGyY1VGaLbki5jlAbtRsY0kFuxsYKpyMwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=pobox.com;
-	spf=pass smtp.mailfrom=pobox.com;
-	dkim=pass header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PbmRJzjy;
-	dkim=pass header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Oa0bafj6;
-	arc=none smtp.remote-ip=202.12.124.158
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fbVQMAh3;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1047606A31C
-	for <patches@lists.linux.dev>; Thu, 19 Nov 2026 00:24:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C1047606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3974B60A2600;
+	Thu, 19 Nov 2026 00:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=pobox.com header.i=@pobox.com header.a=rsa-sha256 header.s=fm2 header.b=PbmRJzjy;
-	dkim=pass (2048-bit key, unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Oa0bafj6
-Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0F2737A02E9
-	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:24:18 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 18 Nov 2026 19:24:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1795047857;
-	 x=1795134257; bh=aXOqKt2NMYYEXvjoI7GZxfHPL6l9VgfPwE+uuPiqf0M=; b=
-	PbmRJzjy/QNeWh0lmE80OqRCzYn6R1vCFQYtr824dDCeuE9I9E2Dh2aSgbZx+vab
-	bc3G6deBTBzdtTJ+7W3AnMLpbr/q2F1ysPmOnNHY1mIG0Ou4P8caOCDa78xFkK39
-	XN5dljrbu4Ab62cRLTM12W85Saau0ebqNJOw5xnRUHu+gqYF0sgfrp0cOGjmFyif
-	QMpiVtEqn7edJp5KqLRqZ2mnstEoFZNLYqEINsGfBZTrfHQa7G4mOdkodJeNLHgK
-	RL3cHebJ+rd1hwlLhKEhfb/aiGsW++T3BLahgcdYjYHEBvqsg9QIwndJL5t4hK8+
-	BMrRePU+JBCMMI+RkBQpYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1795047857; x=
-	1795134257; bh=aXOqKt2NMYYEXvjoI7GZxfHPL6l9VgfPwE+uuPiqf0M=; b=O
-	a0bafj66XkWPM26CQYjEJG2jT9Vsf/BbwPTFUKmPlQdE6iAnP1v0t5rgBjth6TPp
-	92o9am4QHp8cgEf/5th2RWcX78h+ZzZbR9z0TNHBeW2HFVDEe54tF0iGdujOnIvD
-	vx+mbmjjJahiFQZBkZOLyY2RR0P+glSmUbUK8Vbge0b+MQRY2qruSnZvRB+9+hKd
-	uZpeAeV8QYz/GJnS+gRdqZM+xIrfSxXboneu45SZNGQC9Y3GhUFgrUaFk5jSk+t2
-	VhAM81QB9Lw0LstK7fYF9y32btA7WPGBSLdCzybxyMs1dVerA8p/yuKUiEgSr7yi
-	MqgcrstWE1Nwaxy11O1Xg==
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=sign d=pobox.com a=rsa-sha256;
-DKIM2-Signature: i=1; m=1; t=1795047857; d=pobox.com;
-	mf=PGJhcnJ5bkBwb2JveC5jb20+;
-	rt=PHBhdGNoZXNAbGlzdHMubGludXguZGV2Pg==;
-	s=fm2:rsa-sha256:UNAJNU+3ZqG8IX4AzB9FNZVvtfAsiaFJtOurZN3RO3diU90
-	xRbxgfTL5AmQPZ74GYsMABF/nLLEP6QmmG4chkFCBtX6nxWflRCxtTYzmB+pu1Lx
-	r/GJp4bE45x6o1JJBZPA+X/q+lwH3OENt3Bk6Vc9zVh6wo5JRWZvEtJtK9wahJ+d
-	1W9bItvhUs1dNqR5Xl2EaOnaX+zEOARM+ikJEfMVrSUPpeO5XCRQkeddeZFCHx3D
-	qtItYey5RblzqA5zjcBKzsAeSlpBqz9ujAWdoUWQrJkRCAinG7kuvZ4hxd6sRpaD
-	JXBM8XDNMTDbMWvIXpPmkNxH6n3BoA2H1JsxuFw==;
-X-DKIM2-Info: draft=ietf-dkim-dkim2-spec-09;
-	repo=github.com/dkim2wg/interop; date=2026-11-03; sw=lmtpprox;
-	action=mi-m=1; hc=14;
-	hn=cc,content-language,content-transfer-encoding,content-type,
-	date,feedback-id,from,in-reply-to,message-id,mime-version,
-	references,subject,to,user-agent;
-Message-Instance: m=1; h=sha256:Ta2Kt6YfwEM2fVBchHi5OzhsC0qMKaCSW10HEpJ34nU=:4ujMirIt1fvKIqFyNNS5n6CZS6ifKo9vSFtOqHX+BmA=;
-X-ME-Sender: <xms:sEH-aiHHbSVW3nzJT9lgS_NCWOu0hssvJw4N35gsnIunyk670zaaiQ>
-    <xme:sEH-ajsjIIthu7VsaXBZnfpHxKpOP-3Ebs90_tVYPcvEZsjWIpAB44XbICMy7cHfq
-    0DnJBYh-WONj74HhVaK9Vz5kay9wQu59sNuSmnDjbibQzwYVJY586VL>
-X-ME-Received: <xmr:sEH-atQPdD-PP_r-9gX55M6XUjG-wTgAe4gJ9BTXsBYWuvL8sP0QQzIs_qsdnFuQQ2nhjttaCMIQtZBm3YtT9qxO9rV-xSJe>
-X-ME-Proxy-Cause: dmFkZTFziiajCBR4Sr75l9noV5zaF2WbXJaANF5ti6nw6uZ84o+FAiHFYbgyx9LMT6hjCU
-    VazHKyRi+1qn/3tDO2qt45vt9O5EX3hK65tBmLIG0ZIt3D1298ZpIfDSdvKWcnwMbOkXE7
-    LZOzXKT2F7k3d3Tkbn5q+XOTVDex6nXpC2/iE+WCXALaUmGrkvlnOFrxtZYoJ0sID4cu0t
-    XYtBR1a6FlswIzH2ZmyCdPAMxVKos+tcH0k/RPZq+UaStyjBfRUXiMkNWGJCNpJO69e8TS
-    Mv9J+CBFddxDyHAKLD5KWFipt2VtnnI5NkWrIgXtsWrMt0npGe+53HZ7rpqKa4THSQl5VM
-    /tz6El+wpW8zH5BzcQ2hnjO6dTHgJYNjsFdXAjDkHk29Lol07/LxZ5rUooPkQupq1dM28Q
-    ilh2aaL9xjYiDWtIN6xcyrxtGg94znNu4igv0wy02qwOX/Alaog5n08xQC2e0sJ7pYEjKs
-    Yrt9Rw7NwtVZM8HajICL3L5YrnxyGHVwNOlB+zK9E4U1g1F1UBOC+HFo+f9gjieU09czFT
-    yDAK+8Fw9/Ww1tac/ICCVG/1NSkQNuhaLgARt0xBcAlkcpXEMJqq49XuJryItXP+7Zoakd
-    A127ybCxieSKmxGx0wY7c9BMj02/NOXFhI64sKPFqQBtW+eciP/3ySeZZd2Q
-X-ME-Proxy: <xmx:sEH-aoHm5FcB8xywC3gvzPrUVmAULjoBkAhKU0lZuM9HJKdRL556Fg>
-    <xmx:sEH-ancPqQvcw6dEqwGgwOUh7NHv1muxOok5jdfxfdYSaWblNl9FZw>
-    <xmx:sEH-ansnUPluP79FYCe3vd3xj9KtVdDxLDvrDnErlC7Q-zZMsFVMeA>
-    <xmx:sEH-atfuIoCPVEjO6AV6AzmRbcArOWOanTIcdlY3xiQ4BiLxmcsXuw>
-    <xmx:sUH-apPisMEE8WZ7sGpk8s0zfIa1gqnmwH5J4OnoicNj2KOdeTHXPmpk>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Nov 2026 19:24:14 -0500 (EST)
-Message-ID: <4d8d08f5-d74e-4886-b9a5-8fc4dce72618@pobox.com>
-Date: Wed, 18 Nov 2026 16:24:13 -0800
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fbVQMAh3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8732B1F000C9;
+	Thu, 19 Nov 2026 00:24:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795047862;
+	bh=0xz5xUdA6su8MiJShqu0NJ+qpYwaMHhYep5CU5vQrjs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=fbVQMAh3vNWpOVnN5oelYGmuV49Odikd4kgBlWYtJKOqQV4vV8jB1XRoxQSSsjJ0z
+	 pS+dDEOJCgJiqdQfhujWma21UvcGVkjrOYVdCTraptuEyT/sQteg51Jcf1+9TR1WVX
+	 8ArNDRkutVX/WG5+BB+r9r99fxQn0P1tyWOTbZ0I=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Rosen Penev <rosenp@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1790/2857] dmaengine: fsl_raid: avoid free_q underflow in free_chan_resources
+Date: Wed, 18 Nov 2026 15:47:04 +0100
+Message-ID: <20261118150305.717599009@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
+References: <20261118150201.293410965@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -119,44 +63,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 0000/2857] 6.1.193-rc1 review
-To: Brett A C Sheffield <bacs@librecast.net>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20261118150201.293410965@linuxfoundation.org>
- <av3WYtoFXmHPM8uk@karahi.librecast.net>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <av3WYtoFXmHPM8uk@karahi.librecast.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/18/26 8:46 AM, Brett A C Sheffield wrote:
-> On 2026-11-18 15:17, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 6.1.193 release.
->> There are 2857 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Fri, 20 Nov 2026 14:55:40 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.193-rc1.gz
->> or in the git tree and branch at:
->> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
->> and the diffstat can be found below.
-> 
-> Same build failure on amd64 as reported for 5.{10,15}.y
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-For what it's worth, I'm only getting that build failure on 5.10.275-rc1,
-not 5.15.226-rc1 or 6.1.193-rc1.
+------------------
+
+From: Rosen Penev <rosenp@gmail.com>
+
+[ Upstream commit d805aa5b6088b193debabaa80cc0991bfa2bd057 ]
+
+fsl_re_free_chan_resources() loops alloc_count times calling
+list_first_entry() on free_q without checking whether the list still
+has entries. If descriptors remain un-acked or pending in submit_q /
+active_q / ack_q when the channel resources are freed, free_q becomes
+smaller than alloc_count and list_first_entry() returns the list head,
+causing list_del() to corrupt the list head and dereference a bogus
+pointer.
+
+Walk free_q with list_for_each_entry_safe() until it is empty,
+decrementing alloc_count per freed descriptor, instead of relying on
+the alloc_count count.
+
+Fixes: ad80da658bbc ("dmaengine: Driver support for FSL RaidEngine device.")
+Assisted-by: opencode:hy3-free
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260718235227.385108-1-rosenp@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/dma/fsl_raid.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/dma/fsl_raid.c b/drivers/dma/fsl_raid.c
+index 562a3a3f75f16..facd8b0f48f47 100644
+--- a/drivers/dma/fsl_raid.c
++++ b/drivers/dma/fsl_raid.c
+@@ -612,18 +612,15 @@ static int fsl_re_alloc_chan_resources(struct dma_chan *chan)
+ static void fsl_re_free_chan_resources(struct dma_chan *chan)
+ {
+ 	struct fsl_re_chan *re_chan;
+-	struct fsl_re_desc *desc;
++	struct fsl_re_desc *desc, *_desc;
+ 
+ 	re_chan = container_of(chan, struct fsl_re_chan, chan);
+-	while (re_chan->alloc_count--) {
+-		desc = list_first_entry(&re_chan->free_q,
+-					struct fsl_re_desc,
+-					node);
+-
++	list_for_each_entry_safe(desc, _desc, &re_chan->free_q, node) {
+ 		list_del(&desc->node);
+ 		dma_pool_free(re_chan->re_dev->cf_desc_pool, desc->cf_addr,
+ 			      desc->cf_paddr);
+ 		kfree(desc);
++		re_chan->alloc_count--;
+ 	}
+ 
+ 	if (!list_empty(&re_chan->free_q))
 -- 
--Barry K. Nathan  <barryn@pobox.com>
+2.53.0
+
+
+
