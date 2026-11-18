@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050069;
-	b=JA97n9jl4yeQr8ZNtO6ml/4HqyuP85xl8CzisRhZh/CaKVwH1YCs25nt6KV3Wgaswe1p
-	 F4ihBRtGrbKeg8TBKmRRfNk3LeUR+ZqmpIJwFsy8mYIXsgKxXebBzpWPVoGpQKuOYxyIB
-	 YdHswqE0JYONPFtzZJanmFOFLPWj5b8rsf/xaIYnPam8ExLTi8tPGG3Brv11sZ3DUkoeb
-	 4mt6U7tCdqo5RjCzsnbaumAISHtaYwVykMn3QmsUIxAgtiGrWbtqLDx+iDpXZKYDJ+K55
-	 aUiDyYqAb7QzEQUPZtr6Gtaxl4sspY8XsPGYfQKB11jLRNScSVBjfKughJgwjlW/6kA==
+	t=1795050072;
+	b=u3f/8+sLGo6jvDimAPK9MVOha0zcHImIfoGyBSEpE2psehK5LIvA0YEsEgPbsO80atV/
+	 v4GRiwQy388QTseVzoR8EKyzUxwhS7UhvLgyonDbpZhtUlsMjkyAWsMFGTtrr7n0YL05W
+	 UIeQBgRnBUdnWvN7G8GSuOAoAtXCU2/C0zn7dJ/FbqGiwI/N7xmmIErjDAzwVuhbH+0zs
+	 mFAkTc42T+UXfRzr93r2KCyOWiYsICORXJQ9RLAjaISSO7yKe79JfPjqofouGw2vlcrrk
+	 +vmzfNmD7/y2MU/kEaK0EXWWkJ6xr0yvzwjVP6KfWxLQFBrhMl36dn4gnEW4JyeIdfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050069;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050072;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=s+iWx9U3XHjub2amBvHseFPw58SpdLYuru7L3TXnNew=;
-	b=dhuasX3qMu0zm6EwTfM9j76LcEu5QvxCLKOKr8U6+W5bnJDHv1uu/k5wRMYH1VhHz6Co
-	 R8d44NhqOG3gE7mRG8SgXnOv/uc+FZhIJcolM4kLvC9oqVpR8+kVYg7iyqtZ6IC+f2Rec
-	 /VKnX9y3aEx/prOS2jzbLpVemwWWwam7P6qPNuW+ySoGml7zypkkhwrE27lrIXfBqXDWI
-	 gKQg0IcSGM3GSMZYIjgKlqOYUozCLQMgFb766gpjtpnY1adITnFKfIgfUsDliEv8UCRDe
-	 dRRGtfQvXaTTBYAjlpr3mmC+85TEK+I9hFMf3BNP8birBI20yEkjD6BYLzNVFqoUxqQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=0Z3Rxg6D3VXbTvOwq95hcXZKAocJ1jhYS3MyxicMHCM=;
+	b=1NG35oYKH9Vc1BH9UG9SvNbR6aW21NJhP2DZYpD9eoBNjLXJcbp591CSwYAVZ2BTzFxq
+	 INXVQ/nRoDV+/9z7azLBK+Evgu+z0I0stSYm8cyFZJS3eWg5BQ+MCJFNAe+V2JXEOBFwI
+	 ElZrfaNtrxl8bbLzVOnK2rd49CX2Q2bj6cNPOJBiDBtImm680Y5fiflSSUXN6V0ZmBeSf
+	 kcPYEcxwfhspO9ot2QF4P8TW2A5UXkOqARhppsgBoQl7tzaohfgiKazRGyMJLJFHIyY91
+	 1mEw/pVkIeGU2tJQm8jfFaU3H5fqyo/JFzpzHphT8og3q22WUobR9XmHmvz3iH/O/rQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OsN9Lv2W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1WaFAW4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AEC606A331;
-	Thu, 19 Nov 2026 01:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4F7606A337;
+	Thu, 19 Nov 2026 01:01:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OsN9Lv2W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596AF1F000C5;
-	Thu, 19 Nov 2026 01:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1WaFAW4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7321F000C9;
+	Thu, 19 Nov 2026 01:01:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050068;
-	bh=s+iWx9U3XHjub2amBvHseFPw58SpdLYuru7L3TXnNew=;
+	s=korg; t=1795050071;
+	bh=0Z3Rxg6D3VXbTvOwq95hcXZKAocJ1jhYS3MyxicMHCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OsN9Lv2W+tNEou7tI5YYBbnCOoBR9lJxreCMcfB2cWfj5z6fwXrvJ8zxXsd3Q/YCx
-	 sss9QCCLQkTqvCdhkHxGJIEzdokSTTs1nJpOZbkoJrAPvsPCzM06SD7vQR7lpXqF26
-	 ciFyMaG5FBS8JmylM0NPDfY1tlQW/edXoQSVaW+s=
+	b=T1WaFAW4D/lxrMAEgatatTvokfOc/WnUfjMb4jFPoS3AIQuxnoJDDiVfXIbvlnUXL
+	 na9oDpxDWkLFcD+QL/mcZT73JnYMeSU8RV5NKEzBa/RY6zwHqnKULIAAiQfBhyISXR
+	 QxwozFtOBPC2Aw+CjCBZrz+3uTVA3J+03GWqVd48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abraham Zukor <abe@maticrobots.com>,
-	Mark Brown <broonie@kernel.org>,
+	David Laight <david.laight.linux@gmail.com>,
+	syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com,
+	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2539/2857] spi: tegra114: initialize native chip selects inactive
-Date: Wed, 18 Nov 2026 15:59:33 +0100
-Message-ID: <20261118150332.944970448@linuxfoundation.org>
+Subject: [PATCH 6.1 2575/2857] usbnet: fix smp_processor_id() use in preemptible context
+Date: Wed, 18 Nov 2026 16:00:09 +0100
+Message-ID: <20261118150334.209476027@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,119 +64,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abraham Zukor <abe@maticrobots.com>
+From: Ömer Mete Kaya <omermetekaya0@gmail.com>
 
-[ Upstream commit f8334fdfd858c27f090ce597806794e4a08c9f4f ]
+[ Upstream commit 95a5c641fc7becab441bf244baa73b0b0f8b7dea ]
 
-tegra_spi_probe() initializes SPI_COMMAND1 with only SPI_M_S, leaving
-CS_POL_INACTIVE clear for every chip select. This drives every native
-active-low chip select low until tegra_spi_setup() runs for that device.
+tx_complete() calls this_cpu_ptr() before disabling preemption, which
+triggers a BUG when running with CONFIG_DEBUG_PREEMPT:
 
-SPI children are registered and probed one at a time. A synchronous
-probe of an earlier child can therefore transfer while a later child's
-chip select is still asserted. On a Tegra234 system with active-low
-devices on CS0 and CS1, this caused both devices to be selected when the
-CS1 device probed first. Its initialization then intermittently failed.
-A logic analyzer showed CS0 remained low throughout the CS1 transfer and
-went high only after the CS1 probe failed.
+  BUG: using smp_processor_id() in preemptible code in tx_complete
 
-Walk the controller's device tree children before SPI_COMMAND1 is
-written and set CS_POL_INACTIVE for each valid chip select without
-spi-cs-high. That way the line is already deasserted when the first
-child transfers and does not change level when setup runs.
+Fix by using get_cpu_ptr()/put_cpu_ptr() which disable preemption and
+return the per-CPU pointer atomically. The usbnet_skb_return() hunk
+is a hardening change: that path runs in softirq context so no warning
+fires there, but the same fix is applied for consistency.
 
-Disabled children are walked too. The core only registers available
-children, so tegra_spi_setup() never runs for a disabled one and probe
-is the only chance to park its chip select at the level its hardware
-needs.
-
-If an enabled child shares a chip select with disabled ones, its
-polarity takes priority. If only disabled children use a chip select
-and they disagree, warn and leave the line inactive high.
-
-Fixes: f333a331adfa ("spi/tegra114: add spi driver")
-Assisted-by: Claude:Opus-5
-Signed-off-by: Abraham Zukor <abe@maticrobots.com>
-Link: https://patch.msgid.link/20261010195503.623287-1-abe@maticrobots.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: ed194d136769 ("usb: core: remove local_irq_save() around ->complete() handler")
+Suggested-by: David Laight <david.laight.linux@gmail.com>
+Reported-by: syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=04cd90bb99c6ef81a65d
+Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
+Link: https://patch.msgid.link/20261004215937.302247-1-omermetekaya0@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra114.c | 49 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ drivers/net/usb/usbnet.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra114.c b/drivers/spi/spi-tegra114.c
-index 2489a2dbf0be3..f95453b29d315 100644
---- a/drivers/spi/spi-tegra114.c
-+++ b/drivers/spi/spi-tegra114.c
-@@ -1306,6 +1306,9 @@ static int tegra_spi_probe(struct platform_device *pdev)
- 	struct resource		*r;
- 	int ret, spi_irq;
- 	int bus_num;
-+	u32 conflicting_cs;
-+	u32 enabled_child_cs_polarity = 0, disabled_child_cs_low = 0, disabled_child_cs_high = 0;
-+	u32 enabled_cs_mask = 0;
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index f9a1b2a441d57..ba8f02b115f34 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -328,7 +328,7 @@ static void __usbnet_status_stop_force(struct usbnet *dev)
+  */
+ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
+ {
+-	struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
++	struct pcpu_sw_netstats *stats64;
+ 	unsigned long flags;
+ 	int	status;
  
- 	master = spi_alloc_master(&pdev->dev, sizeof(*tspi));
- 	if (!master) {
-@@ -1406,6 +1409,52 @@ static int tegra_spi_probe(struct platform_device *pdev)
- 	udelay(2);
- 	reset_control_deassert(tspi->rst);
- 	tspi->def_command1_reg  = SPI_M_S;
-+
-+	/*
-+	 * SPI_COMMAND1 is written before any child is registered, so a chip
-+	 * select with CS_POL_INACTIVE clear stays asserted until
-+	 * tegra_spi_setup() runs for that device. Program the level the
-+	 * device tree asks for up front instead.
-+	 *
-+	 * Disabled children are included deliberately. The core never
-+	 * registers them, so this is the only chance to park their chip
-+	 * select at the level their hardware needs. An enabled child on the
-+	 * same CS takes priority.
-+	 */
-+	for_each_child_of_node_scoped(pdev->dev.of_node, np) {
-+		u32 cs;
-+		u32 polarity_bitmask;
-+		u32 cs_polarity = 0;
-+
-+		if (of_property_read_u32(np, "reg", &cs))
-+			continue;
-+
-+		if (cs >= MAX_CHIP_SELECT)
-+			continue;
-+
-+		polarity_bitmask = SPI_CS_POL_INACTIVE(cs);
-+		if (!of_property_read_bool(np, "spi-cs-high"))
-+			cs_polarity = polarity_bitmask;
-+
-+		if (of_device_is_available(np)) {
-+			enabled_cs_mask |= polarity_bitmask;
-+			enabled_child_cs_polarity |= cs_polarity;
-+		} else {
-+			if (cs_polarity)
-+				disabled_child_cs_low |= polarity_bitmask;
-+			else
-+				disabled_child_cs_high |= polarity_bitmask;
-+		}
-+	}
-+	conflicting_cs = disabled_child_cs_low & disabled_child_cs_high & ~enabled_cs_mask;
-+	for (u32 cs = 0; cs < MAX_CHIP_SELECT; cs++) {
-+		if (SPI_CS_POL_INACTIVE(cs) & conflicting_cs)
-+			dev_warn(&pdev->dev,
-+				 "Conflicting CS polarity on disabled nodes at cs %u\n", cs);
-+	}
-+
-+	tspi->def_command1_reg |= enabled_child_cs_polarity |
-+		(disabled_child_cs_low & ~enabled_cs_mask);
- 	tegra_spi_writel(tspi, tspi->def_command1_reg, SPI_COMMAND1);
- 	tspi->spi_cs_timing1 = tegra_spi_readl(tspi, SPI_CS_TIMING1);
- 	tspi->spi_cs_timing2 = tegra_spi_readl(tspi, SPI_CS_TIMING2);
+@@ -341,10 +341,12 @@ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
+ 	if (skb->protocol == 0)
+ 		skb->protocol = eth_type_trans (skb, dev->net);
+ 
++	stats64 = get_cpu_ptr(dev->net->tstats);
+ 	flags = u64_stats_update_begin_irqsave(&stats64->syncp);
+ 	u64_stats_inc(&stats64->rx_packets);
+ 	u64_stats_add(&stats64->rx_bytes, skb->len);
+ 	u64_stats_update_end_irqrestore(&stats64->syncp, flags);
++	put_cpu_ptr(dev->net->tstats);
+ 
+ 	netif_dbg(dev, rx_status, dev->net, "< rx, len %zu, type 0x%x\n",
+ 		  skb->len + sizeof (struct ethhdr), skb->protocol);
+@@ -1279,13 +1281,15 @@ static void tx_complete (struct urb *urb)
+ 	struct usbnet		*dev = entry->dev;
+ 
+ 	if (urb->status == 0) {
+-		struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
++		struct pcpu_sw_netstats *stats64;
+ 		unsigned long flags;
+ 
++		stats64 = get_cpu_ptr(dev->net->tstats);
+ 		flags = u64_stats_update_begin_irqsave(&stats64->syncp);
+ 		u64_stats_add(&stats64->tx_packets, entry->packets);
+ 		u64_stats_add(&stats64->tx_bytes, entry->length);
+ 		u64_stats_update_end_irqrestore(&stats64->syncp, flags);
++		put_cpu_ptr(dev->net->tstats);
+ 	} else {
+ 		dev->net->stats.tx_errors++;
+ 
 -- 
 2.53.0
 
