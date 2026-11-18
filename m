@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026535;
-	b=wk6uQ23QPY5fFd8EfckBryYf0QECWaGNh/r6Ae7KCxTAQeb0XZ6Z04iOzXI0ViojSQBD
-	 d6hXFPUqEGcGg3pPcz2mA2SGbRPvibzvMfQ+9HqK6i1BZ4EJQwQTRbviX9aes/QYF8hwz
-	 05CpZUCZsUlRayfmaW6PcpvmCN2cUHMJbLujqlVmDsReHkCTt6Z6Vj73aGGI2cBXnQZQf
-	 WJwGRZryOhyhb2akR7r941DsHlr9UFHqWh1Wi6RRLI4g2bv6Nr6JPbyK8Hn56vRHVzf1o
-	 6AWF1bcuflKEUa/hvxZ8edb0f14+vuME4FizxGq7TKU9F4mQl4cjpW7aA9FcKy95bdg==
+	t=1795026538;
+	b=Ve/shROjjlFmTxRMYcjgWU81TbxZbJuiWGaT8K+QhgxzXAiUw3biUvcnVwNkaMKZiBBH
+	 FvNABMG5k8gd3JPvqKw6vuO7YQowTSb9MPKCXglGl884E6fhhyItd2ODHm13IqCCPRB5/
+	 UyPzrihlNLnU2uoLJbxIh7i8nqaR69ukVI/Nz85aJo6CUoEfLh1ZKFx55Nr99pzw6/NL6
+	 N+Ya+JjLnINNvAIfo+aUAno8crBLnBKpnAFAKFxFrTxCWfPb3afE3t/hzM98teudAsxix
+	 DukjVa5FiqxrsNgqKFs6nyCQNPevG5n/tScXJxYBjHjdDVb7brVVh7BW9du8fWBEM/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nHpQAOPSkhxsFWY1+3kKOu/7Xil87aMdwntFVEgteEA=;
-	b=lV9hKR+2P0+Mgwd7/i4PZpQ7WBOeIJT2rpuDT4DEyi16Jfiq3tJWpzp0525JvuxiKF+n
-	 GN4xLWYKbKEsUv7WV/2a4Zgy5a/D/8h+Xhhiv0Y+B5lyqUfsdp3joXJhJ36ItKRwAff/V
-	 sUTVDWwhhWuphwJRHhvukbkEHEwU3Ow3dUYJEOlf2YZhczJqvTHdLyJHQwNsP7DUmDSxT
-	 nhSeng1j4+KGkWS85IAindnM+oE/7gjHV7VH8loBz1Z7a8mzaHvdcn29ks17tBhs6dUGS
-	 Hh7VLULTO1HHGlW/FKAjdV/zaySLmSD/thlRBGjhw59hv/VERZT2CpXdth1tAxIUKTg==
+	bh=Ok5sZkbwAmyiHTo4QQThnyu9g+eSOLKWORw06NJTMNQ=;
+	b=ZCXrSnadjU2dDYjrDIx6waedJbIZUvpdoSbBG+Fw54fIusA5VGHTMXPhdk3HIOfOjkaP
+	 TDbS8HLVTuwxIqh5Hg4rZdJC8v63etMxjMPUrLGaGlXnZ/ohPNBZTpNsbe0jToG14/V2f
+	 KQX6jOWrnOLyt6UMw14tDMQZa1cQJDldpOoQZbk0W0AcMC3mYdIbOfKgCYJnOmCD8quK9
+	 fQYwKKcgR5wJdS0HH+KIzQLL029utYAWUyEiMH8smCa3+v3h2wnYTLgulcp39sZHgX5jL
+	 bO6FbJRe+CfLW/trHkHk3NmFS9eXEhdW5+9Y9pe6sVQilVoMztRF8EfVvSyBDdo0yjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nENuX6Al;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlaqaWF3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B461C606A31C;
-	Wed, 18 Nov 2026 18:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807C2606A325;
+	Wed, 18 Nov 2026 18:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nENuX6Al
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CD81F000C4;
-	Wed, 18 Nov 2026 18:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FlaqaWF3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D380C1F000C4;
+	Wed, 18 Nov 2026 18:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026535;
-	bh=nHpQAOPSkhxsFWY1+3kKOu/7Xil87aMdwntFVEgteEA=;
+	s=korg; t=1795026538;
+	bh=Ok5sZkbwAmyiHTo4QQThnyu9g+eSOLKWORw06NJTMNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nENuX6AlZbWpnTPbwXdZ5+yDpfdhELOEaYYGjpQzDPRaTeUi+dv8kjGTp+dAqr/kN
-	 qqeNE28eKG/MkO7U/S6nQdqJXH41K4SjtFro9iJ3cTu4gzacBN86MJ5Jheme+YEydV
-	 NHj0QnPDhld23uXS1dIhKIe8Bai0lEQkAHMkxOio=
+	b=FlaqaWF30b1evaY7D2pMkqnsoEhuJgA5v7iiFHCRJ2lqnzF/CxMjTtvpp05PElyBK
+	 1TBa1ovo1Xyc/QVGfhXI/xjYw+3LZCSMRpLKCy1ovM4sTIJCGFQs+DBfX2RJ2bQqOO
+	 Jdc4En4hDdm2LYJd+SWGzwK9n/wdEGLrvQPlA8GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1428/2151] clk: qcom: rpmhcc: Add LNBB clocks support for Glymur
-Date: Wed, 18 Nov 2026 15:52:43 +0100
-Message-ID: <20261118150213.963998907@linuxfoundation.org>
+Subject: [PATCH 6.18 1419/2151] comedi: pcmuio: validate the IRQs supplied by userspace
+Date: Wed, 18 Nov 2026 15:52:34 +0100
+Message-ID: <20261118150213.650523406@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,48 +67,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 1ebab545ee3acbbee22adecb858d5d1d001de0af ]
+[ Upstream commit 9c325b21bba99e597771137fc11b9427c86618d8 ]
 
-Add support for rpmh LN_BB_CLK2 and LN_BB_CLK3 clocks on Qualcomm Glymur
-platform.
+comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
+it->options[1] is a number chosen by userspace. pcmuio passes it to
+request_irq() without checking it first, which lets an interrupt owned by
+another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
+claimed for this board. When the owner of that interrupt is later
+released the descriptor is freed while this driver's handler is still
+installed on it.
 
-Fixes: ebcb9db98bda ("clk: qcom: rpmh: Add support for Glymur rpmh clocks")
-Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-glymur-ufs-clk-changes-v2-1-d0aa1c60c269@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Every interrupt this board can assert is a legacy ISA one, so the ISA
+range is the right bound; it is also sufficient, because
+mp_chip_data->isa_irq is set only by alloc_isa_irq_from_domain() and
+mp_unmap_irq() returns early when it is set.
+
+Bound the value before requesting it, as das16m1.c already does. An
+out-of-range value is ignored rather than rejected, so the board still
+attaches without interrupt support, exactly as it does today when
+request_irq() fails.
+
+This board takes two interrupts, one per ASIC, so options[1] and
+options[2] both need the check. The existing options[2] == dev->irq case
+is left alone: it covers both ASICs sharing one interrupt and neither
+having one, and by then options[1] has already been validated.
+
+Fixes: 6baef150380d ("Staging: comedi: add pcmmio and pcmuio drivers")
+Assisted-by: LLM
+Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Link: https://patch.msgid.link/20260909104848.1763-7-yogeshgaur.83@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rpmh.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/comedi/drivers/pcmuio.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index feeb288479b00..0f148bde109f0 100644
---- a/drivers/clk/qcom/clk-rpmh.c
-+++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -391,6 +391,7 @@ DEFINE_CLK_RPMH_VRM(div_clk1, _div2, "divclka1", 2);
- DEFINE_CLK_RPMH_VRM(clk3, _a1_e0, "C3A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk4, _a1_e0, "C4A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk5, _a1_e0, "C5A_E0", 1);
-+DEFINE_CLK_RPMH_VRM(clk7, _a1_e0, "C7A_E0", 1);
- DEFINE_CLK_RPMH_VRM(clk8, _a1_e0, "C8A_E0", 1);
+diff --git a/drivers/comedi/drivers/pcmuio.c b/drivers/comedi/drivers/pcmuio.c
+index 1c5fe065a91f5..84bbfdcd0953d 100644
+--- a/drivers/comedi/drivers/pcmuio.c
++++ b/drivers/comedi/drivers/pcmuio.c
+@@ -545,7 +545,8 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
  
- DEFINE_CLK_RPMH_BCM(ce, "CE0");
-@@ -888,6 +889,10 @@ static struct clk_hw *glymur_rpmh_clocks[] = {
- 	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a1_e0_ao.hw,
- 	[RPMH_RF_CLK5]		= &clk_rpmh_clk5_a1_e0.hw,
- 	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a1_e0_ao.hw,
-+	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a1_e0.hw,
-+	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a1_e0_ao.hw,
-+	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a1_e0.hw,
-+	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a1_e0_ao.hw,
- };
+ 	pcmuio_reset(dev);
  
- static const struct clk_rpmh_desc clk_rpmh_glymur = {
+-	if (it->options[1]) {
++	/* only ISA interrupts are valid on this board */
++	if (it->options[1] >= 1 && it->options[1] <= 15) {
+ 		/* request the irq for the 1st asic */
+ 		ret = request_irq(it->options[1], pcmuio_interrupt, 0,
+ 				  dev->board_name, dev);
+@@ -557,7 +558,7 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
+ 		if (it->options[2] == dev->irq) {
+ 			/* the same irq (or none) is used by both asics */
+ 			devpriv->irq2 = it->options[2];
+-		} else if (it->options[2]) {
++		} else if (it->options[2] >= 1 && it->options[2] <= 15) {
+ 			/* request the irq for the 2nd asic */
+ 			ret = request_irq(it->options[2], pcmuio_interrupt, 0,
+ 					  dev->board_name, dev);
 -- 
 2.53.0
 
