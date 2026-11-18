@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035471;
-	b=GAH0K8a8BUb5pxuIGChFm4M6JsL+sdo3YQD4sgpxBrKtNT7/KG6ZCzmodeGC9kB/6ICt
-	 +kDjY1mUmtblGNhSbb+0dhLI5k2cmYD/ddV3MwF5NGAPUm4lN4OZyGXuk/gVQ3Xsfbm9m
-	 Nmts9L9xT8rpS06VPyh6kunUB6j1p+8TJQ+ZfHMKwd8xfdfZ/AZb3m8LOaV3+Jvgg2M2h
-	 gs7NBNfidM73arV4+7zH3ThUM6GmQdjxkOgNEDjCv92Bq5mYthsIuaOa+2Kc1jKJ3JpSH
-	 HkeBqXb4viHN73rAq2pRhoQvxK7C+CTk+pUSVND8oL1kXOSERVvlptmrGlfudGTUYnw==
+	t=1795035474;
+	b=i65Jd7RbdoQAf4QvY4rYbGesGM7u03AdhpML3+OeSu+3Ccgn+Vz96zUNpwKHCdUx/+e2
+	 5zPcW1hP1fKz6tc3HtB1KLrcAZEMRmhx64U3xmw4mJIO5SJTk5vgfRb1t3LbqLkZiNEa3
+	 d4rRAblQPKkPCSGCqKC3Qd88rB3Nps/0dia9wAN228i3K8hFpE4AzjNuxEQ2IFnVskWud
+	 65J/uQM2ObsIsJvyoOGlKgYQvjz6w/GohZKtzaVrlmHDYMFT+1mZdpXjIHkSNjAnHt546
+	 U7jdVqaZBVVQPcLW7Mvg+FhWYGbE9tcVLiLeIojUYFUgjKjDpnVSlycOlYX0uhqTnTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035471;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035474;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s3WijUcUQt/nCSLYQwT6K3XU1YGVAX8rdjz9UerFC1c=;
-	b=Nq46TAuKGNpW6ecowpy/Fi1EDhKhbVyWDSGt/lCs934E5i70UAc/YAsZ8/KyUFdV631Q
-	 vGIrF7PT+I1y7r0MXmvWGvkwfalhBLhsVZpId0Af1LroPhBOcHTbEca2ZoLbZwnfkd63C
-	 JrKqQXpMJ5vs8VioIqIxQoxexOC5CpxDYkzd3xUfLakbERLzNFQSjQLFZJ6rcAu1cQNNL
-	 l+SIbh2hWRvL0WKqeRVCGvFvxEAjFUsIClijDOPclOQVZ6FpeVTIgIl+bcvgBLN4JYQ0a
-	 kfRqVFTFPF2AKJTiJBH7qqC2ubbAClW+Fi1egLWIqYFCwAwWY3jRat9FcA63Rh7chHQ==
+	bh=wKMiUrr7nR+n7ZVOeGcAaIbzdl/qfwk4YFiY8OyUMzA=;
+	b=AMCgy658u1+lKb3qy4YdXhqwDrfsA3jJNCQl7ykfMihWP6eRKiIxmq34pw4hpbChPxjc
+	 4HtYW2IDUqchAIkt9CCAs+33o3xJaIdGHI+Bz2iCGlCAWBYdd5esAVggqp8JZ2KZHRW9N
+	 HwMQLWFpUQG+EyJLf8HJL86ZOiBFavPc5BMprzaIi19QXjemuSXrKCCmvyqoIr+usEnBv
+	 KnhYymVhdzH5FZt6zRoY9sdn9wZf4aSdI8TH2N3T8hIhQCGEHOatr4hPNtvOVgchq0tFb
+	 f3WuekmTcGNeKd6Z1u/af5Qte0VbbWDoIcHyw0txW2rfFwM26ZWLHH3oO70enBkB4uw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zr1i8Al/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oAEoQS13;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4BC606A31C;
-	Wed, 18 Nov 2026 20:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9CF606A31C;
+	Wed, 18 Nov 2026 20:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zr1i8Al/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A070D1F000C4;
-	Wed, 18 Nov 2026 20:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oAEoQS13
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9341F000C4;
+	Wed, 18 Nov 2026 20:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035471;
-	bh=s3WijUcUQt/nCSLYQwT6K3XU1YGVAX8rdjz9UerFC1c=;
+	s=korg; t=1795035474;
+	bh=wKMiUrr7nR+n7ZVOeGcAaIbzdl/qfwk4YFiY8OyUMzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zr1i8Al/upG+BmA8SEor/LOWj/fbmYNir6dkYwu/FH36HoukOlxIWUIHr7qBuWLps
-	 h/Y7ijEDaNcLCjgqykYqmVC10w3WoR9G2JyQ1tken6z2ZP6XN//11Ww5Y8afh1jii6
-	 3dUwAQrKv9gnHCoaS8P7JGOW61aercv2QdMRqAlo=
+	b=oAEoQS13AOiK66LaVM9YYfZ6SHWHe2vo1WxJN6vwO85Zqzqqty/3nYH1HU4RjvX0K
+	 Uio2a33m5+Vtmmbd9vzCNWhjH0fKQ0JSF7Kn4lik05soQRfa9dW4iKEfYkM6Lgo7s+
+	 ShSUgLXsIwNOGu0UyUSFbmjyuK8bvsWHyIOIn90Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw@amazon.co.uk>,
-	Paul Durrant <paul@xen.org>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 0716/3318] KVM: x86/xen: Take kvm->srcu in __kvm_xen_has_interrupt()
-Date: Wed, 18 Nov 2026 15:22:18 +0100
-Message-ID: <20261118150339.937672744@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 0717/3318] KVM: x86: Preserve DR6.BLD (Bus Lock Detect) when delivering #DB payload
+Date: Wed, 18 Nov 2026 15:22:19 +0100
+Message-ID: <20261118150339.975869277@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,71 +66,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+From: Sean Christopherson <seanjc@google.com>
 
-commit aa8ad943f242ef14d136c5440b1178de77466c9e upstream.
+commit 719a1d58bf43edd03b271df90b67c58c1e9a7da4 upstream.
 
-kvm_gpc_check() checks the cached memslot generation against the current
-one, which dereferences kvm->memslots and therefore requires kvm->srcu to
-be held. __kvm_xen_has_interrupt() does not take it.
+Preserve Bus Lock Detect if it isn't present in the payload.  Unlike RTM,
+which is explicitly modified on every #DB,  DR6.BLD is modified if and only
+if the #DB is due to a (coincident) Bus Lock Detect.
 
-Most callers do happen to hold kvm->srcu, but not all of them:
+Per Intel's SDM:
 
- - kvm_emulate_halt() on the VM-Exit path, via kvm_vcpu_has_events() and
-   kvm_cpu_has_extint(). vcpu_enter_guest() drops the vCPU's SRCU lock
-   before entering the guest, so it is not held on the way back out.
+  Other debug exceptions do not modify this bit.
 
- - kvm_vcpu_block() -> kvm_vcpu_check_block() -> kvm_arch_vcpu_runnable(),
-   which is the case the existing comment in this function describes.
+And AMD's APM
 
-On a PROVE_RCU kernel the former produces:
+  All other #DB exceptions leave DR6[BLD] unmodified,
 
-  WARNING: suspicious RCU usage
-  include/linux/kvm_host.h:1092 suspicious rcu_dereference_check() usage!
-  ...
-   kvm_gpc_check+0x344/0x3e0 [kvm]
-   __kvm_xen_has_interrupt+0x83/0x310 [kvm]
-   kvm_cpu_has_extint+0x1ff/0x370 [kvm]
-   kvm_cpu_has_interrupt+0x16/0x100 [kvm]
-   kvm_vcpu_has_events+0x4ce/0x690 [kvm]
-   kvm_emulate_halt+0x52/0x1f0 [kvm]
-   vmx_vcpu_run+0x988/0x2630 [kvm_intel]
+Restore the explicit RTM handling that was clobbered by commit
+9a3ecd5e2aa1 ("KVM: X86: Rename DR6_INIT to DR6_ACTIVE_LOW"), as the
+semantics of any given bit are feature specific, i.e. are obviously not
+consistent for active-high versus active-low.  In other words, while the
+bug was technically introduced when support for Bus Lock Detect was added,
+it's really that attempt to genericize handling of active-low bits that set
+KVM up to fail.
 
-Use guard(srcu) so that the three existing early returns don't each need
-an explicit unlock. SRCU read sections nest, so this is harmless on the
-paths which already hold it, and srcu_read_lock() does not sleep, so it
-is also safe in the atomic case which this function already handles.
-
-Fixes: 7caf9571563e ("KVM: x86/xen: Use gfn_to_pfn_cache for vcpu_info")
+Fixes: e8ea85fb280e ("KVM: X86: Add support for the emulation of DR6_BUS_LOCK bit")
 Cc: stable@vger.kernel.org
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
-Assisted-by: Claude:claude-mythos-5
-Reviewed-by: Paul Durrant <paul@xen.org>
-Link: https://patch.msgid.link/20260831213632.81023-11-dwmw2@infradead.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://patch.msgid.link/20260930193634.3415089-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/xen.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kvm/x86.c |   52 ++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 30 insertions(+), 22 deletions(-)
 
---- a/arch/x86/kvm/xen.c
-+++ b/arch/x86/kvm/xen.c
-@@ -571,6 +571,16 @@ int __kvm_xen_has_interrupt(struct kvm_v
- 	BUILD_BUG_ON(sizeof(rc) !=
- 		     sizeof_field(struct compat_vcpu_info, evtchn_upcall_pending));
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -570,30 +570,37 @@ void kvm_deliver_exception_payload(struc
+ 	switch (ex->vector) {
+ 	case DB_VECTOR:
+ 		/*
+-		 * "Certain debug exceptions may clear bit 0-3.  The
+-		 * remaining contents of the DR6 register are never
+-		 * cleared by the processor".
+-		 */
+-		vcpu->arch.dr6 &= ~DR_TRAP_BITS;
+-		/*
+-		 * In order to reflect the #DB exception payload in guest
+-		 * dr6, three components need to be considered: active low
+-		 * bit, FIXED_1 bits and active high bits (e.g. DR6_BD,
+-		 * DR6_BS and DR6_BT)
+-		 * DR6_ACTIVE_LOW contains the FIXED_1 and active low bits.
+-		 * In the target guest dr6:
+-		 * FIXED_1 bits should always be set.
+-		 * Active low bits should be cleared if 1-setting in payload.
+-		 * Active high bits should be set if 1-setting in payload.
++		 * DR6 is a mess.  Reserved/unused bits are fixed-to-1, and so
++		 * to maintain backwards compatibility with existing software,
++		 * features that use previously-reserved bits have active-low
++		 * semantics, i.e. clear the bit when the feature is present in
++		 * the payload.
++		 *
++		 * Further complicating matters, some DR6 bits are preserved by
++		 * hardware, while others are explicitly modified on every #DB.
++		 * The trap bits are always set based on the payload, as is the
++		 * RTM flag (but it's active low).  All other bits are modified
++		 * if and only if a relevant debug exception occurs, e.g. BD,
++		 * BS, and BT are never cleared by hardware, and BLD is never
++		 * set by hardware (when supported, excepting RESET).
+ 		 *
+-		 * Note, the payload is compatible with the pending debug
+-		 * exceptions/exit qualification under VMX, that active_low bits
+-		 * are active high in payload.
+-		 * So they need to be flipped for DR6.
++		 * Lastly, the payload does NOT have active-low semantics, e.g.
++		 * so that it's compatible VMX's pending debug exceptions and
++		 * qualification fields, and to avoid bleeding the DR6 madness
++		 * into other KVM code.
++		 *
++		 * To compute DR6:
++		 *
++		 *  1. "Reset" the bits that are modified on all #DBs
++		 *  2. Clear active-low bits that are present in the payload.
++		 *  3. Set active-high bits that are present in the payload.
++		 *  4. Clear fixed-0 bits.
++		 *  5. Set fixed-1 bits.
+ 		 */
+-		vcpu->arch.dr6 |= DR6_ACTIVE_LOW;
+-		vcpu->arch.dr6 |= ex->payload;
+-		vcpu->arch.dr6 ^= ex->payload & DR6_ACTIVE_LOW;
++		vcpu->arch.dr6 &= ~DR_TRAP_BITS;
++		vcpu->arch.dr6 |= DR6_RTM;
++		vcpu->arch.dr6 &= ~(ex->payload & DR6_ACTIVE_LOW);
++		vcpu->arch.dr6 |= (ex->payload & ~DR6_ACTIVE_LOW);
  
-+	/*
-+	 * kvm_gpc_check() checks the memslot generation, so kvm->srcu must be
-+	 * held. Most callers hold it already, but this is also reached from
-+	 * kvm_emulate_halt() on the VM-Exit path and from kvm_vcpu_block(),
-+	 * where vcpu_enter_guest() has already dropped the vCPU's SRCU lock.
-+	 * Taking SRCU does not sleep, so it is safe even in the atomic case
-+	 * which is handled below.
-+	 */
-+	guard(srcu)(&v->kvm->srcu);
-+
- 	read_lock_irqsave(&gpc->lock, flags);
- 	while (!kvm_gpc_check(gpc, sizeof(struct vcpu_info))) {
- 		read_unlock_irqrestore(&gpc->lock, flags);
+ 		/*
+ 		 * The #DB payload is defined as compatible with the 'pending
+@@ -602,6 +609,7 @@ void kvm_deliver_exception_payload(struc
+ 		 * breakpoint), it is reserved and must be zero in DR6.
+ 		 */
+ 		vcpu->arch.dr6 &= ~BIT(12);
++		vcpu->arch.dr6 |= DR6_FIXED_1;
+ 		break;
+ 	case PF_VECTOR:
+ 		vcpu->arch.cr2 = ex->payload;
 
 
