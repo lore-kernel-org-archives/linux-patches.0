@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031742;
-	b=3NRk2VQPZZYeHiQIX+q7ZNWUIQN01Hj9BjVXjNV49A0u8WNcXwArwXNswFVd57k6JVW7
-	 fNwSRpozkBK6ZrlpLQEx/PBRnOtyUMsDn1mR2lYSIKeeFjg9YIrHBjrQNM5VbYFlfwtmx
-	 X4HZ0u2lal+T7ewzpZz/GxDYAJNzPskljPvboHC8E/VAMw7txqeWtw/Dkt6GwUl9ce/is
-	 tUmexXjcIe4UtZIOfw71EIcVRKy7FkAZ9K6Ww7bYKSff1RB3L9GRuQ0P1xIYbQGdsHEaF
-	 HC4L0Ia4KB8kvZFytfkscrnTyKBTAYNNVgsT5qudQUzAYvKVwDN1Y9wPrpJ8uHdBZ0A==
+	t=1795031744;
+	b=Vy31L2/Gk+3Mrm3zfhPy0QlHDTAWzexYys47WECxk8v+Jtzxh1V1T2Mt3bk4HFoP67xP
+	 WICedYyTphjtsbaWnhIYY+hdSuWakrXW//wknVWUncDhqkoXEbvzoIGSbVYukfH4DBG0T
+	 xMhOAg369IeSNVNWMQ6ZhKW4EgdEXb8QVnJja3y6jviT5nEM91DY5XdtrmdU87NiRWjtu
+	 HFSbwvlB001UPanZ3vCW7xKCg2k1cVqUgCxtm8+me68EeobpwMqZI6JKqQq3w8xG5VR/s
+	 btYcMMiy5pXC4+uwLjRCzvf61QYi1aXJfpQQhlFDSmpZYv/ycaMSZX5rzd39J55pifA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031742;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Jxr3tcLjaMfp//1z1bFRGhIeMTV+Ec0caesbNeBjN0A=;
-	b=A1nLwPDftBVPPvzmCPgMWc60Hh4CO4/VvYqng1jdPqyh/t22/Vh7mVdlwqPFTLdWk1FQ
-	 +buS03gKj9PLYd0YUxfQpFYY5MzxObo+18XICyqvrSxvoA9U4dKKBoGK2FCooXoLUpOMY
-	 61m0IdXMRsRIiSBZFJdyY1R6/MLvWXFZfIvMr7jATFu/ZggYsdoijf7ec3i7SMzT54LTA
-	 pSvfz941bAUxyiRIpvumEJTKJG+h99HmLmmQ06EMXt1VHZxzuxk7ykqHulmAtEWGlG0uz
-	 glR3zNeMvTrnoXAlFPqf3ZiaoUit++puw2LV4EOT1GLpxqUja43uN83dGhhjiWYPA2A==
+	bh=flGOHJX0ZuM1N5sfetN0YHkVK1N81BYI8eQLfwPj3Ko=;
+	b=fd7qrMN89m5womtqAdiInY6MdKlr8YYw9tkQsvDDdwnDl1wDkXgU7dQ4lZsuFErKmSTc
+	 YQ0Ok1KqzCw0Ewby5WDqMrmeT7BqvsPoPjpoQK3Vn9L8Hl06k3Ke6J+OWKsfoJNmu9+5z
+	 3YsG8J4cLmx5LFcvrq5iB27rI6XLO8f+9WDxD3HGsnI9mP10KotVKWwx8XSgJLgDhMYIM
+	 aisect9XNsF4nBxDpOlM3O48AVeeaVwHY1Gie8cYhxBLKVLltCWIAcuv7+5YgZseqXsh7
+	 ejHNxSk18UA9l4AC8LseA1+DzioluBtmgCibRshK+X9lt0i51Lp7FQ7z0jo1NdYWj8A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lx2nJVC8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F59lkdkG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAFE606A31C;
-	Wed, 18 Nov 2026 19:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3F67606A320;
+	Wed, 18 Nov 2026 19:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Lx2nJVC8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078981F000C4;
-	Wed, 18 Nov 2026 19:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F59lkdkG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1591F000C4;
+	Wed, 18 Nov 2026 19:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031741;
-	bh=Jxr3tcLjaMfp//1z1bFRGhIeMTV+Ec0caesbNeBjN0A=;
+	s=korg; t=1795031744;
+	bh=flGOHJX0ZuM1N5sfetN0YHkVK1N81BYI8eQLfwPj3Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Lx2nJVC8fq/RlkhmwxfCxn/bwiXodC7Nij2FbuuigW89V/fFE22PlBMMCYF1Gdy8s
-	 tPzEPYgzDMxKxM5tKuytMyZ1Knso8Ywmd8DB34kjT3M4WuhvSvaxK+rero7KEaFUmq
-	 vPH10oVCN5eZX66RjSVF2AFbUaO1m9WmE26gsgII=
+	b=F59lkdkGsb6s9NpkmP0xbPwylR1xq7zDwZqBI7UpVLKax3i1IW0KjnLkBOXr3SL1Y
+	 kHCkH4cgcAjh20Zxd8Pv04IAHQThLUwetuI2aOE7HXd93Gqp6XGvOESBJR+ucPWPEM
+	 VEl9cFtKkenLndAfKkYe2Q9cUMJKqVHqR4OxM7Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Priyanka Mani <priyankamani2100@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1165/1756] sh: sh7785lcr: Register the PCA9564 controller as I2C bus 0
-Date: Wed, 18 Nov 2026 15:54:52 +0100
-Message-ID: <20261118150056.363782761@linuxfoundation.org>
+Subject: [PATCH 6.12 1166/1756] ASoC: mediatek: mt8365: Fix out-of-bounds read in get_iir_coef()
+Date: Wed, 18 Nov 2026 15:54:53 +0100
+Message-ID: <20261118150056.400990076@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,49 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Priyanka Mani <priyankamani2100@gmail.com>
 
-[ Upstream commit 3b8386ffc0c33b6b5a6a8e64e1487c1adec57dc9 ]
+[ Upstream commit e913917febd31998e3d0b9e8c861e538a6185045 ]
 
-Before commit 44454baa7ca7 ("i2c: Dynamically assign adapter id if it
-wasn't explictly specified"), a negative ID was replaced by zero, and
-I2C bus zero was instantiated. Since that commit, a negative ID is passed
-verbatim, instantiating an I2C bus with a dynamic number. As SH boards
-still use i2c_register_board_info(0, ...) to register I2C devices, they
-rely on the I2C bus being bus zero.
+get_iir_coef() looks up a resampling coefficient set by reading an
+index "k" from iir_coef_tbl_matrix[][] and using it to index
+iir_coef_tbl_list[], which has 8 entries (valid indices 0..7).
 
-The SH7785LCR is the only SH board whose I2C adapter has a negative ID
-and its PCA9564 controller becomes i2c-1, causing registration of the
-R2025S/D RTC to fail and hwclock not detecting /dev/rtc0.
+Before the lookup, "k" is only rejected when it is >= IIR_NO_NEED (11),
+or equal to IIR_RATIOVER (9) or IIR_INV_COEF (10). The value 8 is
+neither a sentinel nor a valid table index, so it falls through to the
+else branch and iir_coef_tbl_list[8] is read one element past the end
+of the array. The bogus coef pointer and count are then returned to
+mt8365_dai_set_config(), which dereferences coef.
 
-Set the platform device ID to 0 so that the adapter is registered as
-bus zero again.
+The current matrix never produces 8, so this cannot be triggered today,
+but the bounds check is wrong: it relies on the matrix contents instead
+of the size of the array it guards. Bound the lookup with the actual
+array size so only valid indices reach the table.
 
-Fixes: 44454baa7ca7 ("i2c: Dynamically assign adapter id if it wasn't explictly specified")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Assisted-by: LLM
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+This was found by Smatch:
+
+  sound/soc/mediatek/mt8365/mt8365-dai-i2s.c:271 get_iir_coef()
+  error: buffer overflow 'iir_coef_tbl_list' 8 <= 8
+
+Fixes: 402bbb13a195 ("ASoC: mediatek: mt8365: Add I2S DAI support")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/67af3580-a907-403d-8bfd-76b5c304ab99@stanley.mountain/
+Signed-off-by: Priyanka Mani <priyankamani2100@gmail.com>
+Link: https://patch.msgid.link/403cc04bb103dff096edf72b99ae6868ee91f359.1791782072.git.priyankamani2100@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/boards/board-sh7785lcr.c | 2 +-
+ sound/soc/mediatek/mt8365/mt8365-dai-i2s.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/sh/boards/board-sh7785lcr.c b/arch/sh/boards/board-sh7785lcr.c
-index 25c4968f0d8b0..b93423df582f7 100644
---- a/arch/sh/boards/board-sh7785lcr.c
-+++ b/arch/sh/boards/board-sh7785lcr.c
-@@ -256,7 +256,7 @@ static struct i2c_pca9564_pf_platform_data i2c_platform_data = {
- 
- static struct platform_device i2c_device = {
- 	.name		= "i2c-pca-platform",
--	.id		= -1,
-+	.id		= 0,
- 	.dev		= {
- 		.platform_data	= &i2c_platform_data,
- 	},
+diff --git a/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c b/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
+index 89575bb8afedd..0fa3b7ed5f4dc 100644
+--- a/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
++++ b/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
+@@ -267,7 +267,7 @@ static const u32 *get_iir_coef(unsigned int input_fs,
+ 		if (k >= IIR_NO_NEED) {
+ 		} else if (k == IIR_RATIOVER) {
+ 		} else if (k == IIR_INV_COEF) {
+-		} else {
++		} else if (k < ARRAY_SIZE(iir_coef_tbl_list)) {
+ 			coef = iir_coef_tbl_list[k].coef;
+ 			cnt = iir_coef_tbl_list[k].cnt;
+ 		}
 -- 
 2.53.0
 
