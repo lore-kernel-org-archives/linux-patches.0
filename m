@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060667;
-	b=CqCOKzuxUjXn1Ukz497pxFX+S/xLkZo18a3nwdk55azSewNUQOSR7YZ2u3s7kdXOpUqu
-	 valoSF9IXfwkMCF97hZIGk4W/n7SN25WuZFJFWv1XNS+IQ11dUsjDIZFyLc5P0qEgHeFT
-	 gK7KWjDBJWeKBlUUwwoMJmlLHmXloLpuSiJnHZLAbIhmcZNB2tlHYIrIo7Mg6+oH1bjAb
-	 uxHQOFgOnEAUmVV2ypFL5U2U55Zhy/q76ha2UhGy/r1yjK5JR+dUxZWnmjUZHZRLZbV7C
-	 hCa9yJhA6EdO7ngEYqU3JNk5s45fzvJtB1GH7SegW7iXIju5DelIYnpGjpWtpDaanKg==
+	t=1795060670;
+	b=gJ+KK+QBSMWmaI2c1MhMej3H5FUn9lIC3esQSefOtnKBVsPxUdnWY2LgK0Kd1mgZ37Jv
+	 5GPfunICXeSCUGAtDs+cwuXERa2/RCHEd+fydptYCGPFv/YhVJDQHtJCqC66R6fi0TCnf
+	 Po1c/XEiRXIcYxyM6ylYcE+94qLLo1JuRIl1UY3LA6xiTcVIL6/hXF27TgVoQ6/MEDmQr
+	 w3Cucx2RZXuoQnb6cfBxp6Xldz5AvATPFAZghea9SgW3zhOP5rmJ/HMumhcnMRe+eSYFN
+	 rHNdDpPvpXJYrGSghZxPnHcAYjvEOaA/d2cTSgBKl3kc2Plp/OQCx3awN9hwGl119jQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060667;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060670;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FQx5WahsHAYAXly7ybnH3lLef3IIW/9MI9ZSPdN5Z7I=;
-	b=EcFJZ6K++7Y7nMMvDhDWUDqSmQqBORBKzcqW8/mHl8JbkoYby9lOr9IR3djTeOZ7rGeh
-	 BJw01f2QWyyYNJcZnqJ+dVMJMosA4CWF+9NOoiHmkt6RjNRrszvpqMAkD5n5gmkJSthPp
-	 TVMXHaCQ1Qa0irWHxAbWIaSYkrvUW9hRTDQNZBBugnpZAS8bU37m5HrdAKgStRC+bil8e
-	 yvCJDXPMvaPjP02Ayro/B85m54ohnGCdhuaUGsHx6WPHNwF8zcEu4J6zIuQqknRduDBOd
-	 U3HWfaZsa9xrqH7DnNABSczV/OBzLAatIZPoJuVMbOU36EEuaKL0OQzqb5XmGdhkBdA==
+	bh=X65yA50Qt5+iv05Gr5+mbKuCazw/AWhoWQSHKf5St9g=;
+	b=UHBQUNGVBhRpUtEBkwGYHtUpm8ELVXuZt7MKyMu0RcMGu+E8fXyynqmfFaqKkYmtUjv8
+	 w6r2fNlTBwKjcpwLjJSuejiCCZYDXW07s0y/mRDcM+PIlvk/DLbiXACsQY9+E6Ha4ySVm
+	 JYchk48XX8XN4g8fWlYTwHHB9FCZi0pwuRHZ6HgveFRb27tCS/cQ6BQrVpvZ9zjoidYF4
+	 LRsvfsOaX5MhXYQTznqqMNO0+zPyiPdWR6pb918NrWQs/Mws65DPxlAjDD7QxVHhrs7wL
+	 CB7K08BdUIHEZ2OxyDGjdxWX/7NBrm38wDbWmtFd85TWSE1HOaAioaJhL1oeDD5CIig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csJtFiQ0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F04klvZT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E67606A325;
-	Thu, 19 Nov 2026 03:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644AA606A335;
+	Thu, 19 Nov 2026 03:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=csJtFiQ0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CD51F000C5;
-	Thu, 19 Nov 2026 03:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F04klvZT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36141F000C4;
+	Thu, 19 Nov 2026 03:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060667;
-	bh=FQx5WahsHAYAXly7ybnH3lLef3IIW/9MI9ZSPdN5Z7I=;
+	s=korg; t=1795060670;
+	bh=X65yA50Qt5+iv05Gr5+mbKuCazw/AWhoWQSHKf5St9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=csJtFiQ0SocdUsajkNrQIflI8mY08rbt5ggPAWpGVwdnQPhgiy2l67CMBBxta9Xrl
-	 TL83dXurYtaNV4fpYykDItrikcmD8Ggh6dYbWSNPfGKwqhzdfg31u6h63f9gH4fVq4
-	 vFruLbF+BOCtfFut1o0IIZDD3GjNc/1TL9aKrL7I=
+	b=F04klvZTMQR1O/ooU3Q2biF6Q/Zao0cqcjswqJ5owMf2x9NROfE1tILEN6u7A/028
+	 j1f8nlwsW6gkp5nojBIVGRfyFzhvKxVDaw8NuZS01cvFuWIF4BgQIJDW/RbSzv3ffc
+	 KOmRbGlEbSdXm6X2kKesSPq7co9gmVdWuQHxSjr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slavin Liu <bolin.liu@seu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1279/1848] crypto: atmel-sha - reject initialization without a device
-Date: Wed, 18 Nov 2026 15:55:17 +0100
-Message-ID: <20261118150013.155520027@linuxfoundation.org>
+Subject: [PATCH 5.10 1280/1848] RDMA/uverbs: Drop restrack ref on ib_init_ucontext() failure in GET_CONTEXT
+Date: Wed, 18 Nov 2026 15:55:18 +0100
+Message-ID: <20261118150013.201143801@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,39 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slavin Liu <bolin.liu@seu.edu.cn>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit a9a2152d292fd0bc73814eb4a127278ee7dd3f6a ]
+[ Upstream commit 9dcacdc41083cccff74292851bf9fde999e0731a ]
 
-A transform may be initialized for the first time after the last
-device has been removed from the driver list. Return -ENODEV when the
-lookup is empty, before the debug message reads dd->dev.
+The UVERBS_METHOD_GET_CONTEXT handler allocates the ucontext via
+ib_alloc_ucontext(), which calls rdma_restrack_new() (initialising the
+kref to 1) and rdma_restrack_set_name(NULL), the latter attaching the
+current task and taking a task_struct reference.  When ib_init_ucontext()
+subsequently fails, the error path only does:
 
-Detected by static analysis and reviewed with AI-assisted source auditing.
+	kfree(attrs->context);
+	attrs->context = NULL;
 
-Fixes: ebc82efa1cd6 ("crypto: atmel - add Atmel SHA1/SHA256 driver")
-Assisted-by: LLM
-Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+without first calling rdma_restrack_put() on &attrs->context->res.  The
+kref therefore never reaches zero, restrack_release() is never invoked,
+and put_task_struct() is never called, so the task_struct reference taken
+during set_name is leaked permanently.
+
+A local user with access to an RDMA device can repeat this path (e.g. by
+hitting an RDMA cgroup limit or supplying invalid ucaps) and leak one
+task_struct reference per attempt, eventually preventing those processes
+from being reaped or exhausting memory.
+
+The legacy ib_uverbs_get_context() path already handles this correctly
+at its err_ucontext label, where rdma_restrack_put() precedes kfree().
+Mirror that ordering here.
+
+Fixes: a1123418ba10 ("RDMA/uverbs: Add ioctl command to get a device context")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20260916085529.1838-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/atmel-sha.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/uverbs_std_types_device.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/atmel-sha.c b/drivers/crypto/atmel-sha.c
-index 75ccf41a7cb97..df2c1a3d5bc2a 100644
---- a/drivers/crypto/atmel-sha.c
-+++ b/drivers/crypto/atmel-sha.c
-@@ -429,6 +429,9 @@ static int atmel_sha_init(struct ahash_request *req)
- 	struct atmel_sha_reqctx *ctx = ahash_request_ctx(req);
- 	struct atmel_sha_dev *dd = atmel_sha_find_dev(tctx);
- 
-+	if (!dd)
-+		return -ENODEV;
-+
- 	ctx->dd = dd;
- 
- 	ctx->flags = 0;
+diff --git a/drivers/infiniband/core/uverbs_std_types_device.c b/drivers/infiniband/core/uverbs_std_types_device.c
+index 049684880ae03..05cc541c82090 100644
+--- a/drivers/infiniband/core/uverbs_std_types_device.c
++++ b/drivers/infiniband/core/uverbs_std_types_device.c
+@@ -230,6 +230,7 @@ static int UVERBS_HANDLER(UVERBS_METHOD_GET_CONTEXT)(
+ 		return ret;
+ 	ret = ib_init_ucontext(attrs);
+ 	if (ret) {
++		rdma_restrack_put(&attrs->context->res);
+ 		kfree(attrs->context);
+ 		attrs->context = NULL;
+ 		return ret;
 -- 
 2.53.0
 
