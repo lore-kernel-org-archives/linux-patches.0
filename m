@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019657;
-	b=leSKIzcXo++W0diqhKtF0zI22m9OeYvGkluHX7U9j+69FPm2MZt5FO2ayRi7zXCXErU1
-	 zRC4ARaWoXQuv+ANlXi2uUzWurust+csVI37J9RoYQ1OWrO4h/GSoaBJ+bIFXnrtuY58W
-	 VLE95Elm86lIejY0v1BK3i0NaRq4/MmxjuS/xcL4PJL47DwFuHkigFcO4JUoyVKLaNGw4
-	 B66WxqP67GWPxkxrbNYDFvYZxEf6by6oxaf6xcx1c0EpZSFt7Oh4/kQPQajA4X43gOdWt
-	 +NXgGDsCFezov++jt+ksfQUApVPwR8vv5dh8jZ44za1w9iRKgsqZmdwuvt8cak0bZ0g==
+	t=1795019660;
+	b=c+qtAXucZ6e3IqwlczCfWHMK54b7EsGNl0bhPpjmhXa2yxSPE8V0yfX2YyYAezmshokx
+	 7RRzomj/+dY4M4He+jzBh18GnWNoRzlLq2trEUA+3YW69xya9JcQ1He36UirZjYApmCDI
+	 46h2M9KILSKSJQEvGTf29KLAF14YPwapEr3tZUzBM/jPx0uhUKzfTUD0aQVrNxLc7qjgt
+	 4CcV/Ncgd+PQB5N7IPfj4n3uAdu22/ENHu70njRVrCn1fw2BIE90G/DTNCbsZfvK3TfL0
+	 /VKbE3qABzve+sBWhdnpDEIUNPo5RRsQA9hBX439VPqB30YJNqY5Io3rCnihG/1AbIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019657;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4UELyQEVnDMxuoo3iG3OP6krz1gu69RNRpc6lJQc7c4=;
-	b=pP2PeDj/oAiSF4Htvh+adTGRwH//fnyib43cR0Qt0kxYFOb1EOcby9CClRwrEOq/yKIP
-	 /RTa/AwbOSK80sKJElplCMIejijaT5XsygvGpIxk5qNLM6HePDbsAjxzz+876IDXgUDLH
-	 CLKiOql8wV0o3MD3R/fVQYa4AeOToxnXC2fJ6ZeaLssdLrKQAuGL5rlk5T4/yOXPWW/u+
-	 Upy037V2A1EpnlQ2Z0uh+fORFx+t/fOXNUIybEFa1hlwh+OB3uPoml0JJQy4CcE4mHaAP
-	 inJ5FjHb5YIsUHxbSQbXVUn7GGLicHf8nrVLHsONLniN3cKogSMNb4xRaH+auHhKXdw==
+	bh=YTAIhhWFoGhUVV36e13K+Zi4JPetUWXEuRzs60i48F4=;
+	b=IH8N0Zk6aP4WSiGMhILUfj3ZwXQ+SuXJRN57id5FBfOybf2mNJPfhfRckMPB+WhSBRTP
+	 LNErhdKF4inXUdudujEaXtDB6yCVWSM2vwW2cjI9/wHYM7oMHsGq3DWKQuSU6ug2cu0Wy
+	 O9FwcyM2PXLNSKmoVWqGSZ3DpFCPzlgVoU5lfSM2q7nSaH4nfogXSdKD8OctqzKxlT5kS
+	 11prPommTmCrSx8O8mTFZlQguW6VuHS684Vbune/vq8Jka83cGspysXKPsSKk52OZXULx
+	 zj8T8np+JbzmA2f9L/4X6ljcRjiuaeNbcSbJh+zvzr/D7kyep5Hs+d/dDSL3bWCh5ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=siYTXx7L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sf9WEMht;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FC1606A32C;
-	Wed, 18 Nov 2026 16:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0B1606A32C;
+	Wed, 18 Nov 2026 16:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=siYTXx7L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3E01F000C5;
-	Wed, 18 Nov 2026 16:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sf9WEMht
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E611F000C5;
+	Wed, 18 Nov 2026 16:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019657;
-	bh=4UELyQEVnDMxuoo3iG3OP6krz1gu69RNRpc6lJQc7c4=;
+	s=korg; t=1795019660;
+	bh=YTAIhhWFoGhUVV36e13K+Zi4JPetUWXEuRzs60i48F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=siYTXx7LKeoxtO12TOQ7/5Iw7HUMWsQqT9cyE8gyuTjX2vrkWpmrSqjEjxSHUxDbO
-	 poCbu5Af5DKbBW+krJ1wY+zUk/s4bIuSBZYIZldQrbuukEy74EAuMPVQL8xc3Xs1NV
-	 zWjSsN5Nu1iSLsBBVJFraJj8Vb/6UWW8ig9eouUY=
+	b=sf9WEMhtZGMRzmndS7sr8GiKYp43HN0YxGXplUUhpDy2oL77E12RaOUBo8yXRAjn5
+	 SCFopG7y8yQNyU0zCzxeGijoLV8aVqofLs2RMzIGGIMMfFqTN5PH950cwhy+XlLsf4
+	 R0iUsJjk2f/FNxFpBhl5TTPGzTwyLOdrqQ+4nU/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1675/2651] wifi: ath11k: avoid IDR mutation during vif mgmt TX cleanup
-Date: Wed, 18 Nov 2026 15:48:35 +0100
-Message-ID: <20261118150347.997032179@linuxfoundation.org>
+Subject: [PATCH 7.3 1676/2651] wifi: ath12k: avoid IDR mutation during pending mgmt TX cleanup
+Date: Wed, 18 Nov 2026 15:48:36 +0100
+Message-ID: <20261118150348.032525567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -72,70 +72,88 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit dc29226dada34a6d19af77b4b51e90f8a3a8de34 ]
+[ Upstream commit 94c7b50351fd30e1dfe1b4051197a1445d8547e1 ]
 
-ath11k_mac_op_remove_interface() walks txmgmt_idr with idr_for_each(),
-and its callback removes each entry belonging to the interface. Removing
-the current entry can invalidate the radix-tree iterator retained by
-idr_for_each().
+The pending management TX cleanup walks txmgmt_idr with idr_for_each(),
+and its callback removes the current entry. This can invalidate the
+radix-tree iterator retained by idr_for_each().
 
-Move the walk into a helper that uses idr_for_each_entry(). It performs a
-fresh lookup for every iteration, so each matching entry can be removed
-through the locked removal helper without retaining iterator state across
-the removal.
+Use idr_for_each_entry() so every iteration starts with a fresh lookup.
+Continue to remove each entry under txmgmt_idr_lock before freeing its skb,
+preventing concurrent TX completion from finding a stale skb pointer.
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261003092104.520135-4-yaojiale02@163.com
+Link: https://patch.msgid.link/20261003092104.520135-5-yaojiale02@163.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/mac.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.c |  3 +--
+ drivers/net/wireless/ath/ath12k/mac.c  | 12 ++++++------
+ drivers/net/wireless/ath/ath12k/mac.h  |  2 +-
+ 3 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 1ee32c7dc4943..1a237adaa37d1 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -6176,16 +6176,18 @@ void ath11k_mac_tx_mgmt_pending_free(struct ath11k *ar)
- 		ath11k_mac_tx_mgmt_free(ar, buf_id);
+diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
+index b25202effb002..c6af10e54c3f7 100644
+--- a/drivers/net/wireless/ath/ath12k/core.c
++++ b/drivers/net/wireless/ath/ath12k/core.c
+@@ -1516,8 +1516,7 @@ static void ath12k_core_pre_reconfigure_recovery(struct ath12k_base *ab)
+ 			complete_all(&ar->thermal.wmi_sync);
+ 
+ 			wake_up(&ar->dp.tx_empty_waitq);
+-			idr_for_each(&ar->txmgmt_idr,
+-				     ath12k_mac_tx_mgmt_pending_free, ar);
++			ath12k_mac_tx_mgmt_pending_free(ar);
+ 			idr_destroy(&ar->txmgmt_idr);
+ 			wake_up(&ar->txmgmt_empty_waitq);
+ 
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 815be25b33c4a..3e4039612fb5a 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -9194,13 +9194,13 @@ static void ath12k_mac_tx_mgmt_free(struct ath12k *ar, int buf_id)
+ 	ath12k_mgmt_over_wmi_tx_drop(ar, msdu);
  }
  
--static int ath11k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
-+static void ath11k_mac_vif_txmgmt_cleanup(struct ath11k *ar,
-+					  struct ieee80211_vif *vif)
+-int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
++void ath12k_mac_tx_mgmt_pending_free(struct ath12k *ar)
  {
--	struct ieee80211_vif *vif = ctx;
--	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB((struct sk_buff *)skb);
--	struct ath11k *ar = skb_cb->ar;
+-	struct ath12k *ar = ctx;
 -
--	if (skb_cb->vif == vif)
--		ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	struct ath11k_skb_cb *skb_cb;
-+	struct sk_buff *skb;
+-	ath12k_mac_tx_mgmt_free(ar, buf_id);
++	struct sk_buff *msdu;
 +	int buf_id;
  
 -	return 0;
-+	idr_for_each_entry(&ar->txmgmt_idr, skb, buf_id) {
-+		skb_cb = ATH11K_SKB_CB(skb);
-+		if (skb_cb->vif == vif)
-+			ath11k_mac_tx_mgmt_free(ar, buf_id);
-+	}
++	idr_for_each_entry(&ar->txmgmt_idr, msdu, buf_id)
++		ath12k_mac_tx_mgmt_free(ar, buf_id);
  }
  
- static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
-@@ -7417,8 +7419,7 @@ static void ath11k_mac_op_remove_interface(struct ieee80211_hw *hw,
+ static int ath12k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
+@@ -14735,7 +14735,7 @@ static struct wiphy_iftype_ext_capab ath12k_iftypes_ext_capa[] = {
  
- 	ath11k_peer_cleanup(ar, arvif->vdev_id);
+ static void ath12k_mac_cleanup_unregister(struct ath12k *ar)
+ {
+-	idr_for_each(&ar->txmgmt_idr, ath12k_mac_tx_mgmt_pending_free, ar);
++	ath12k_mac_tx_mgmt_pending_free(ar);
+ 	idr_destroy(&ar->txmgmt_idr);
  
--	idr_for_each(&ar->txmgmt_idr,
--		     ath11k_mac_vif_txmgmt_idr_remove, vif);
-+	ath11k_mac_vif_txmgmt_cleanup(ar, vif);
- 
- 	for (i = 0; i < ab->hw_params.hal_params->num_tx_rings; i++) {
- 		spin_lock_bh(&ab->dp.tx_ring[i].tx_idr_lock);
+ 	kfree(ar->mac.sbands[NL80211_BAND_2GHZ].channels);
+diff --git a/drivers/net/wireless/ath/ath12k/mac.h b/drivers/net/wireless/ath/ath12k/mac.h
+index aba98afd4365c..ae44ebfd9bd98 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.h
++++ b/drivers/net/wireless/ath/ath12k/mac.h
+@@ -173,7 +173,7 @@ struct ath12k *ath12k_mac_get_ar_by_pdev_id(struct ath12k_base *ab, u32 pdev_id)
+ void ath12k_mac_drain_tx(struct ath12k *ar);
+ void ath12k_mac_peer_cleanup_all(struct ath12k *ar);
+ void ath12k_mac_dp_peer_cleanup(struct ath12k_hw *ah);
+-int ath12k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx);
++void ath12k_mac_tx_mgmt_pending_free(struct ath12k *ar);
+ enum rate_info_bw ath12k_mac_bw_to_mac80211_bw(enum ath12k_supported_bw bw);
+ enum ath12k_supported_bw ath12k_mac_mac80211_bw_to_ath12k_bw(enum rate_info_bw bw);
+ enum hal_encrypt_type ath12k_dp_tx_get_encrypt_type(u32 cipher);
 -- 
 2.53.0
 
