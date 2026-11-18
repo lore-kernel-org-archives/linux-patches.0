@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023167;
-	b=PHo4h3MGs0FAd0wpK1V9OCvNAoiI1v5fSwFew0bTJ0ccfrw/0PnpM4o78idSYz9E9wLe
-	 Z9t3Dva/7PkR+Y4y6hVqR83nvlao9xrJJtsmIyA2vUO0UJ0hrWsxmnTkhwYB5TxbkKiGU
-	 x74Jn/HbXZaRBKXFLmAZ8dfS5ffsovbAGOTyx2eLpgx/ZKq+FFAl5pye3I7U4DprQFdma
-	 T8ZKqij84tqhvyEB5eAynLvfu1KCD7bzH67ez8n7XkahuTPwPQCkrGY31gT+u5PjlWL6k
-	 Ikcmjysdmohe+fWZ6yjS1UdH8fVtVEAH/EF9ecN8ampTu4kau6sA8rXZ1wgXFYPojlg==
+	t=1795023170;
+	b=FLclFTrz9wRS8K0wBNT+Vy2f6rrtHC1FDD+Hknds7t/NA/6wzIKDJFeq/7GJMqMvAkPa
+	 xHsZ9/Jjw+JnDLg0DZfX98aKpB8JNKoclAc7x66fy9+kgP4bt/7z/GRHxiIUsKYfmOV3S
+	 oh39CJ1eiZ/WKEMbbd9EcNv8L4MxuGsZjJgFtBsHz0CnRMWyXhUkkqvizJyPrg7qL2n2t
+	 OV53xK2d+fMpCMaJskCFsjGvHLr18iDZil3AsWMFOzJALBPqfZGsePOn6qHSXZ0liRqV7
+	 c6UXWrttCgXzQd5FmoYnYukNL6nyp0PSTuFu0i2X9wUxDxJOjFNT9sEc4303qdhdhjw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023167;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023170;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4eshSoNtrheOiox0G0vncEyopYAEjts0EUylNMPsgMY=;
-	b=q9tMyoX9jIhlG/noo97ycxUFsmjUxMPMuSuql6a+vSw4ZGXzkeH1GQ6lx2x/7qAs+pcZ
-	 IQlHh/RQJINtSQPGmz91VO91uJSBhBPCVYD7sKSgSzDcm9pLLlWZLJWbAoDKDp+Pl3R4C
-	 jiNOaDrHhmxBoSMxqGMSX+PmU6QV0IQTl36o26w2bmOdeRBhORgS7OYHa3R0//+xcVtQC
-	 d4ZsGlNFVmSmJqv7KS6JIbwe/3aQ1xhQokZ9fwGa87tppmtQXL024IKDqKWD9DX3pjJuI
-	 cnUoPOPw3UKFfX/5ZZaD9LvIPV1EUdMn+ycJGuEEdW+GNPwyB9/K8cEc6VY1f/7dWVA==
+	bh=R3nbfC3pYnSKsdxnAiXQItPmuXAR2s+t7gvO+65BqT4=;
+	b=uBvHg9YQmYEdvNcn1Gwv2Xv0jJX5MNBgjLYC68XopFTYEx8T5B/4CkZfqMunC4QcPr16
+	 flPcejaebZRPxm+zJKtvNEmyWpraOuuAZ5IRFXzeGCzlmpMrCEXMFdbqd8JcsYvZdeXZ/
+	 DQZFW3o0WCxU3/Mq6N/6IUo4LaIwUq27tp6UZEghMdavBRDFveSKg7TQwJRNrmJioyQr3
+	 jFjcvS1mtJXLU5FTiUwkBWvGsC5/GELRK5K7LCL9ud621tM8Sz22Ja9GTTpy3nabCYjid
+	 WL9SNbajVYyUnE+hXEm48VkcVMV/Dw5KHwScHlS4YMBPT3EnL+173HBfYBTHbOAw9zw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bs5LRCkE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JXoK8Hd1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723B6606CA45;
-	Wed, 18 Nov 2026 17:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F2B606A31C;
+	Wed, 18 Nov 2026 17:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bs5LRCkE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD76F1F000C4;
-	Wed, 18 Nov 2026 17:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JXoK8Hd1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E98C1F000C4;
+	Wed, 18 Nov 2026 17:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023167;
-	bh=4eshSoNtrheOiox0G0vncEyopYAEjts0EUylNMPsgMY=;
+	s=korg; t=1795023170;
+	bh=R3nbfC3pYnSKsdxnAiXQItPmuXAR2s+t7gvO+65BqT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bs5LRCkEnG6UUksuUa8vxarjvDmTE9cDXlYgVamQ9wWulKAvBbScjHZUb9py1CY/y
-	 JwVqWKUHdyrw0SVKybcB5hnyaej3Ie0j88UOfYYrzRwv503dkvHqvP4IczuSrpUYUZ
-	 PcfiSFffNqi94XMKjUNbdICr28S1yBiQHAtqKUz4=
+	b=JXoK8Hd1hzYm01/Wm1xRj1zjChiZ6pv2Rg/lZ3u7Nvq+rESMDIVfUylA+gNK4XdDc
+	 +FXKRSRdgszWWAe1YTInNrHVjrXgFU9qqQjlUG0XY6hfMdMYHRjUvhP1VnVMLCLgTS
+	 3cSEcRYglrsI+J+NTpg6om5XK+0UqiStkfom41No=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <briannorris@chromium.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Igor Belwon <igor.belwon@mentallysanemainliners.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0272/2151] arm64: dts: mediatek: Add #{address,size}-cells to Chromium-based /firmware
-Date: Wed, 18 Nov 2026 15:33:27 +0100
-Message-ID: <20261118150131.764037775@linuxfoundation.org>
+Subject: [PATCH 6.18 0273/2151] arm64: dts: mediatek: mt6893-pinfunc: Fix pinctrl header path
+Date: Wed, 18 Nov 2026 15:33:28 +0100
+Message-ID: <20261118150131.802036287@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,160 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Norris <briannorris@chromium.org>
+From: Igor Belwon <igor.belwon@mentallysanemainliners.org>
 
-[ Upstream commit 69c1a4fd5272df1d745d6bcc3c613843ebecec61 ]
+[ Upstream commit 863d48714194bfcdb917b2ec35531e40df40cb87 ]
 
-Chromium/Depthcharge bootloaders may dynamically add a few device nodes
-to a system's DTB under a /firmware node. A typical DT looks something
-like the following:
+The header resides in the dt-bindings directory and not in the
+dts/mediatek directory. Fix it as to avoid a build failure.
 
-/ {
-        firmware {
-                ranges;
-
-                coreboot {
-                        compatible = "coreboot";
-                        reg = <...>;
-                        ...;
-                };
-        };
-};
-
-Notably, the /firmware node has an empty 'ranges', but does not have
-address/size-cells.
-
-Commit 6e5773d52f4a ("of/address: Fix WARN when attempting translating
-non-translatable addresses") started requiring #address-cells for a
-device's parent if we want to use the reg resource in a device node.
-This leads to errors like the following:
-
-[    7.763870] coreboot_table firmware:coreboot: probe with driver coreboot_table failed with error -22
-
-Add appropriate #{address,size}-cells to work around the problem.
-
-Note that Google has also patched the Depthcharge bootloader source to
-add {address,size}-cells [1], but bootloader updates are typically
-delivered only via Google OS updates. Not all users install Google
-software updates, and even if they do, Google may not produce updated
-binaries for all/older devices.
-
-[1] https://lore.kernel.org/all/20241209092809.GA3246424@google.com/
-    https://crrev.com/c/6051580 ("coreboot: Insert #address-cells and
-    #size-cells for firmware node")
-
-Closes: https://lore.kernel.org/all/aeKlYzTiL0OB1y3g@google.com/
-Fixes: 6e5773d52f4a ("of/address: Fix WARN when attempting translating non-translatable addresses")
-Signed-off-by: Brian Norris <briannorris@chromium.org>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Fixes: c0f1fd9eeb317 ("arm64: dts: mediatek: Add MT6893 pinmux macro header file")
+Signed-off-by: Igor Belwon <igor.belwon@mentallysanemainliners.org>
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi     | 5 +++++
- arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi   | 5 +++++
- arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi | 5 +++++
- arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi  | 5 +++++
- arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 5 +++++
- arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi  | 5 +++++
- 6 files changed, 30 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-index 0d995b342d463..51651b71280db 100644
---- a/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8173-elm.dtsi
-@@ -16,6 +16,11 @@ aliases {
- 		mmc2 = &mmc3;
- 	};
+diff --git a/arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h b/arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h
+index 982bc95c471cc..7cda5c73fb684 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h
++++ b/arch/arm64/boot/dts/mediatek/mt6893-pinfunc.h
+@@ -7,7 +7,7 @@
+ #ifndef __MT6893_PINFUNC_H
+ #define __MT6893_PINFUNC_H
  
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	memory@40000000 {
- 		device_type = "memory";
- 		reg = <0 0x40000000 0 0x80000000>;
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index 4b87d4940c8c7..553d2cd2b429a 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -21,6 +21,11 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
+-#include "mt65xx.h"
++#include <dt-bindings/pinctrl/mt65xx.h>
  
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	backlight_lcd0: backlight_lcd0 {
- 		compatible = "pwm-backlight";
- 		pwms = <&pwm0 0 500000>;
-diff --git a/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi b/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
-index ff20376a44d7a..2b327d9ef65ee 100644
---- a/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8186-corsola.dtsi
-@@ -26,6 +26,11 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	memory@40000000 {
- 		device_type = "memory";
- 		/* The size should be filled in by the bootloader. */
-diff --git a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
-index 7fedbacdac44c..118d6b2ebd2c6 100644
---- a/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8188-geralt.dtsi
-@@ -41,6 +41,11 @@ dmic-codec {
- 		wakeup-delay-ms = <100>;
- 	};
- 
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	memory@40000000 {
- 		device_type = "memory";
- 		/* The size will be filled in by the bootloader */
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-index ff2eb9e10f364..da60113aa03b6 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-@@ -25,6 +25,11 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	memory@40000000 {
- 		device_type = "memory";
- 		reg = <0 0x40000000 0 0x80000000>;
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-index b3761b80cac7e..9060b67c04459 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195-cherry.dtsi
-@@ -42,6 +42,11 @@ dmic-codec {
- 		wakeup-delay-ms = <50>;
- 	};
- 
-+	firmware {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+	};
-+
- 	memory@40000000 {
- 		device_type = "memory";
- 		reg = <0 0x40000000 0 0x80000000>;
+ #define PINMUX_GPIO0__FUNC_GPIO0 (MTK_PIN_NO(0) | 0)
+ #define PINMUX_GPIO0__FUNC_SPI6_CLK (MTK_PIN_NO(0) | 1)
 -- 
 2.53.0
 
