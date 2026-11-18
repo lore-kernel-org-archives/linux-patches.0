@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039167;
-	b=hIUgeSA5UcW9grHE5fNG3+aBASgb4max+k6dDiUlUBmMnexgYjmdZc7yUsSM9vmfRl0d
-	 ajmEwBMsoaCfJoCOVturE+YRaDFpEh0D5+knUy+j2g3XyJVetdjsJokAS3kS0Nu0e29Mq
-	 xb3QxU4TXjN9npApIf1H21CYL1Z9qEM8xH2WrCoRzAIfpE4/lNF2mI4IhGBM3oZ7jADGt
-	 FAXHJcpkiYYxS3XN8LJv+PJ3lpE/RBuZ0r1Gc1oLFxCg+K4/leszoXaGvxF/7wFdJbxaQ
-	 O8jjObVzTySVB1GcphkpDfdzOsc4UE3A/cj6TQMALVliJ5XCqM1Ha7CHXLDEbI6fD7Q==
+	t=1795039169;
+	b=1T4WIcFaNs2FdjchxxAqS0YLFzfPR0dRwg3svB6MCH++pMk+EsalhiQjpYIF/eEypw29
+	 NGDxOBB5jwSA4+MQk08+cMXu3iGhUwumcAJt1Mi1q/pm+N5AvN859cSX0fWlSzGiR1635
+	 x91UEJ1ASdWVEqrIAszZb3JFxPSTsePaDltQ+Cw3y+x2bzx8KCpucdSIRGJ40It1HL4Uf
+	 RKhu3lmMGG1obNgfuNDJqaDn4xLCCFmI8QFS/OeT9/E+erc8DscUaTC/E4sDrxL2fkE5a
+	 v7r6eYtEaBV4mcvWXpc3zyXdDJFvhiEE0aFp7qhNF39BVp8xf8ThnrkD54t7X3kDJ3A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039167;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=fsiCWjrI8nYyW8gcOy/vfKMy7fNkKapACl8MH50mSac=;
-	b=eIViYTK0w0RBQtJgghLLy2kftkWSa2sJAIW58Ttqr8p1wzLif3WxG9P4wOL/7KZEJWNY
-	 fazbrSq7NCW+KDfPILGUg4+PDKZ8S08dixgiFZAD1xa7iEUVHCl/lGCoT6n9TXInLRDr5
-	 rJzwKTdZaQFEZRVLyhwYBU3dzuHilqmh4JJ+BfOZkPgli/R6OpMHgO6m5O/jorkCejkOo
-	 Ret+sgKNowDsigJu4yzw8fqYduAnivNafVznXDswMgqjr1BXZVKQS6hcoebyzX0syj2CY
-	 +hzV4cm/uM9snYiRW1jR0B5txE2nKZ7znbqhfz3ZKmdAEL6xf8ZAFjxohE8L32FJbUg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4JhZPjODckV/6VSI4chlH5gQXK4+CmEBc0rjsX5FLoQ=;
+	b=IEAGK6D0w17udQCUC1BFX27ztAST89Wpu27MAUEC5EEVcB3fW9QLnxkRq4fr1EiarOFi
+	 Z6YJl0ffa+pLGGBFNZZrnbcQik4o9J+ERw4SHCthJ+WSm+lfmn632EBbVFH3rpEV2KSEn
+	 i5Q4oc6TNDYHsPhWgAOik7buSKF8fn2WQKsymdxzMO+0YHemgMPtr+iaeLBItfBwDeQu5
+	 97HeusJOa+22FQwNSgc/6hS1qDy5/GuCJ0xFEKPWVRtPcSGsFOeJRHnTVXEwFfhtm3wnd
+	 81hRCdsuMP9m59o4yB9PRJHQZkJz6OOYJ2qoQ6/Mqz8rUwFp7a5geml1b3Q6sfi3z2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrU9ZXoL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zd5oDwV2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C1C606A33B;
-	Wed, 18 Nov 2026 21:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6004606A325;
+	Wed, 18 Nov 2026 21:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FrU9ZXoL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E601F000C4;
-	Wed, 18 Nov 2026 21:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zd5oDwV2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1858A1F000C4;
+	Wed, 18 Nov 2026 21:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039166;
-	bh=fsiCWjrI8nYyW8gcOy/vfKMy7fNkKapACl8MH50mSac=;
+	s=korg; t=1795039169;
+	bh=4JhZPjODckV/6VSI4chlH5gQXK4+CmEBc0rjsX5FLoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FrU9ZXoLQLlgZu/sHvzH8/Hg4X1ODWA/z9aQLUSbdtDR5dsLPkIWe2GAp/nmoTNJm
-	 Qek1ZgFw41du34dOV1+2ndBD7BIhuekmmrQZt+s5YD6i7U3AqShrZmuW6bvyV+XvKS
-	 sGjua5u7uBdedBkUhQb30wnfis1j0kcc8F4ENMGk=
+	b=zd5oDwV2tP1OrNY+xLtq31CAdfyyXdfDdtO4DjbtoCPL0lVNTZdM8AItpzcgt/h4A
+	 +8v7Mm2UDgWLFn0bK/bgW7bbWeH8IhIaZcoBtiu5/MxEzbqAZUjOi82NUWSVAobBme
+	 9ewFo2KO/JjkIw9dybW59PVIjygD+V9hjftmOnYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Bradley Morgan <include@grrlz.net>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	sashiko-bot <sashiko-bot@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Stephane Eranian <eranian@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2001/3318] kexec_file: stop the top-down search before it underflows
-Date: Wed, 18 Nov 2026 15:43:43 +0100
-Message-ID: <20261118150422.078809290@linuxfoundation.org>
+Subject: [PATCH 6.6 2002/3318] perf jitdump: Fix extended header read that always fails
+Date: Wed, 18 Nov 2026 15:43:44 +0100
+Message-ID: <20261118150422.107874570@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,58 +65,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit c711461303af9f796b293b5ac06f49a885e46e71 ]
+[ Upstream commit 598e905931380f0714d5fd50cecfac615a1ec742 ]
 
-locate_mem_hole_top_down() walks candidates downwards by subtracting
-PAGE_SIZE whenever the window conflicts with an existing segment or with
-an architecture exclude range.
+jit_open() sets bsz = bs before the fread() that uses bs - bsz as the
+read size, making the expression always evaluate to zero.  fread() with
+size 0 returns 0, which triggers the ret != 1 error path — so extended
+jitdump headers (total_size > sizeof(header)) have been silently broken
+since the original implementation.
 
-Nothing stops that subtraction at zero, so a search that reaches the
-bottom of the address space wraps temp_start around and continues.
+Additionally, when 0 < bs <= bsz the if (bs > bsz) block is skipped
+entirely, leaving extended header bytes unread in the stream.  Subsequent
+jit_get_next_entry() calls then parse those leftover bytes as a
+jr_prefix, corrupting the record stream.
 
-The walk starts inside the range being scanned and only moves down, so
-bail out once a candidate ends up above end. That covers every step in
-the loop rather than the subtractions alone, and it matches
-locate_mem_hole_bottom_up(), which already bounds its candidate on both
-sides.
+Fix by separating the buffer growth from the read: realloc only when
+bs > bsz, then unconditionally fread bs bytes when bs > 0.
 
-This is a better check than subtracting with check_sub_overflow(), given
-that we would have 3 subtractions in this block, and this single fix
-would take care of them all (instead of three check_sub_overflow()).
-
-Fixes: cb1052581e2b ("kexec: implementation of new syscall kexec_file_load")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Bradley Morgan <include@grrlz.net>
-Link: https://patch.msgid.link/20260812-kexec_posioned-v6-1-e477887086f0@debian.org
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Fixes: 9b07e27f88b9cd78 ("perf inject: Add jitdump mmap injection support")
+Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kexec_file.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/util/jitdump.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/kexec_file.c b/kernel/kexec_file.c
-index 92a169f0b2b57..deacf6c23f798 100644
---- a/kernel/kexec_file.c
-+++ b/kernel/kexec_file.c
-@@ -432,7 +432,9 @@ static int locate_mem_hole_top_down(unsigned long start, unsigned long end,
- 		/* align down start */
- 		temp_start = temp_start & (~(kbuf->buf_align - 1));
- 
--		if (temp_start < start || temp_start < kbuf->buf_min)
-+		/* A candidate above the range means the walk wrapped around */
-+		if (temp_start < start || temp_start < kbuf->buf_min ||
-+		    temp_start > end)
- 			return 0;
- 
- 		temp_end = temp_start + kbuf->memsz - 1;
+diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
+index 6b2b96c16ccd1..7be1501c8c918 100644
+--- a/tools/perf/util/jitdump.c
++++ b/tools/perf/util/jitdump.c
+@@ -223,10 +223,12 @@ jit_open(struct jit_buf_desc *jd, const char *name)
+ 		n = realloc(buf, bs);
+ 		if (!n)
+ 			goto error;
+-		bsz = bs;
+ 		buf = n;
+-		/* read extra we do not know about */
+-		ret = fread(buf, bs - bsz, 1, jd->in);
++		bsz = bs;
++	}
++	if (bs > 0) {
++		/* consume extended header bytes from the stream */
++		ret = fread(buf, bs, 1, jd->in);
+ 		if (ret != 1)
+ 			goto error;
+ 	}
 -- 
 2.53.0
 
