@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051438;
-	b=kLcn6Hd7VCPPWMhY2Equs6D27vx+3LqZeTYNVrW+XtlPuzTQub4SJgG2tUa4sTAlNNBO
-	 XhJKhtXHeUZDrTTzG1vo0KgCV4qA58jXFz4rmIwCkuhqFvs19dLAOIE9Ctsn8xsomzksI
-	 vEjqct1wjWhrEcOMQZ6aMW9eisGJMC9i6JDvVeYMseSGlUcHI3cxpAoAXkLEVCMyCdMSm
-	 JzaH5NnZQm6favJdeypZ2SQLw45AGv5QAGf6/bxuocEGrZroMpelxdrLj/LX0/vBPariv
-	 vAh+81IUoroZx/H8RdpLjO475Nnt6rzHVp8mFH0a/O/DC6RDbnLV3Jk0jUpJ/UpY6Tw==
+	t=1795051441;
+	b=Uy+VaYmaU2W35pRLMQwYd9pN+oZgKBoRBe44pzasH//irmDVS56no9DoGZWEp5AF7IL1
+	 Tvy7Co0PIOZE+NNvCM4UjPhFUzT4yjyGqSt8DjTyExUpPwqBO/S0QpLQKKPDf8b86vI9j
+	 PM9U2suC+tM4x78+ob/NuWI5ZP3yinO0mzXylfH0BmNlNEsmNWtuvX5llQ41CRpekTLLJ
+	 MDNIi5dzETeXJKfxs0+stFkCgskH3asHcWQTTmpMOYRZTuTkd0wuGV/FtIsySTjZFO2Tc
+	 7zcYDWrv0C977fwN8We9XnnlRdsRiQ6r/5YP6ft9bGHJststBgx5YrwLkglfbUFKeLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051438;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051441;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=iH2YUdLWgKIHUYHPj0Q1u7ZtF3Nzrb0F3IwCb9XRKEg=;
-	b=Rket1SVg1IZm5wyqOxGYk2ytU1iOSXMG8xpNn2Gtwp1DO9AQAJaTGOahYxydyMNjuP6g
-	 5u5V8Asnlmdf8zZTDENr1rD7AozC0BSCfkZ9vNgCB/LURQJNnBQO3HXd26hvptibEDohS
-	 93ucxkKzuTeIOOfFgk+UZQd+fdKOM/ck9sokD30PIMrs6AM8t6FqfuCK/NRi9Zr1hiCdW
-	 uvQt1AzLmd1fKZhRoKkQ/8D6PUs/jFLVuAbIcaa3W1RvB40qPWRao9gCXiSKMGPc7S+eF
-	 X9DZTCZk9zzy6uiWMn5chZIvhh0NCIsUP26d0e5NTJ4HzrCjINPqcC4PgxNMC5PR9Ew==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Fuu5IRg7+Bvp1T9vtoWtaDmuAU4jqq6IYGQNjinEkpA=;
+	b=c2AyRx48U08CktptqxhOahdKor69/IicBF4LV7C1CLOotllLtC/RzviwUYY3ximawKfG
+	 fgGAlKNDqbwLjtE3LPTxIIPWG+Z/jPUhm5VHZSIMYfmVZQSw23Gaey6tzJdD5AkEZHrA8
+	 3QArRdAkmiRaGC0cyhZen6y765OwDDFwIIkgfNeevBIGTk2+NKVbvCFmqe3m18ZBmaGOy
+	 XldsDauohqAbbHguy6Bw4iNUOQ5q50GrDI0DH4NjyiH7UTOoSvSAjQzFWHtw+v78U6JNO
+	 bZ2LGJLY26KnphTc9MuM/tFbFRC6pWclJwd4ERQlRaoDOfG8NDcUWKmlHmcGTNJweng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HdstCck7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SUM0J+WY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A7A606A32C;
-	Thu, 19 Nov 2026 01:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174FB606A325;
+	Thu, 19 Nov 2026 01:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HdstCck7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D521F000C4;
-	Thu, 19 Nov 2026 01:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SUM0J+WY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941D11F000C4;
+	Thu, 19 Nov 2026 01:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051438;
-	bh=iH2YUdLWgKIHUYHPj0Q1u7ZtF3Nzrb0F3IwCb9XRKEg=;
+	s=korg; t=1795051441;
+	bh=Fuu5IRg7+Bvp1T9vtoWtaDmuAU4jqq6IYGQNjinEkpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HdstCck7FrEH0uO+XkuohYrGH7az0Hq/oPdPTDKwyHU4A4FvLJ7wtqSp56u/IIL2r
-	 k94DKt3KkusE5eyKJKhcd3cgdj9Hj2yRAKpiRekMGvQQ0u/THvS/+CA/Zaatw0k/dq
-	 HVO5eL6kyX5neQoA3PYC5v97VQoTpfC4/wTVJjFs=
+	b=SUM0J+WYYuiMxOkrik820a9W3W1AbHy9BwQFRpaTT2kO+SCGE3rYr3qJu8SpEVPs/
+	 c/AkL6sf8O37/j1fjqkVpIlvpjCuZGDI9LHKsgy/2FP1O3iCe84vFrDNnrwr2rPMOB
+	 +68vAiDLvo1SJ8NN/nLuH9GQQgrsDA9zNgt6UPAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20H=C3=B6ppner?= <hoeppner@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Johan Alvarado <contact@c127.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0174/2214] s390/dasd: Snapshot intrc before freeing the request block
-Date: Wed, 18 Nov 2026 15:30:50 +0100
-Message-ID: <20261118150017.028560542@linuxfoundation.org>
+Subject: [PATCH 5.15 0175/2214] net: stmmac: raise TX completion interrupt at the end of an xmit burst
+Date: Wed, 18 Nov 2026 15:30:51 +0100
+Message-ID: <20261118150017.063792952@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,64 +62,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Johan Alvarado <contact@c127.dev>
 
-[ Upstream commit dc3e3f7306cb74066f231251602b1be5aaec7bd8 ]
+[ Upstream commit d21a374995df9d7cfd193427748a19dcc87956a9 ]
 
-__dasd_cleanup_cqr() maps the completion result to a block status by
-reading cqr->intrc, but only after discipline->free_cp() has returned the
-request block to its memory pool (dasd_eckd_free_cp() ends in
-dasd_sfree_request()). On SMP another CPU can reallocate that block and
-overwrite cqr->intrc before it is read, completing the request with the
-wrong error. proc_bytes is already snapshotted before free_cp() for the
-same reason; do the same for intrc.
+The TX mitigation logic only sets the Interrupt on Completion bit once
+every tx_coal_frames descriptors (STMMAC_TX_FRAMES = 25), with the
+tx_coal_timer hrtimer (STMMAC_COAL_TX_TIMER = 5000 us) as the only
+fallback. TX skbs are freed exclusively from the TX completion path,
+so any flow that keeps fewer than 25 frames in flight has all of its
+skbs held for up to 5 ms after transmission.
 
-Reviewed-by: Jan Höppner <hoeppner@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://patch.msgid.link/20260805111612.1285190-5-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Paced flows never queue enough frames to reach the frame threshold:
+TCP Small Queues caps the amount of unfreed data at roughly two pacing
+intervals worth, which at moderate pacing rates is only a couple of
+packets. Every small burst then stalls until the coalesce timer fires,
+and throughput collapses to approximately tsq_limit / tx_coal_timer
+regardless of link capacity.
+
+This is easily reproducible with BBR, which paces its output and thus
+keeps only a few frames in flight at a time. On a YT6801
+(dwmac-motorcomm) equipped Orange Pi 5 Pro, a BBR upload over a ~23 ms
+RTT path is capped at 5.24 Mbit/s, while CUBIC reaches 207 Mbit/s on
+the same path. BBR measures the stalled send rate as the path
+bandwidth and locks its estimate near the floor, so the connection
+never recovers. Lowering the coalesce settings with ethtool -C
+(tx-usecs 100 tx-frames 1) lifts the same transfer to 447 Mbit/s,
+confirming the mechanism.
+
+Fix this by setting the IC bit on the last descriptor of every xmit
+burst, i.e. whenever netdev_xmit_more() reports that no further frames
+are pending in the current dequeue batch. Frame-based coalescing still
+applies within a burst, bulk traffic keeps batching through qdisc bulk
+dequeue and NAPI polling, and the coalesce timer becomes a pure
+fallback instead of the primary completion mechanism for lightly
+queued flows.
+
+tx-frames 0 keeps its meaning of timer-based mitigation only.
+
+Signed-off-by: Johan Alvarado <contact@c127.dev>
+Link: https://patch.msgid.link/20260731194522.55069-1-contact@c127.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/s390/block/dasd.c b/drivers/s390/block/dasd.c
-index eaa9457c1c29b..845f82215dfb3 100644
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -2745,17 +2745,23 @@ static void __dasd_cleanup_cqr(struct dasd_ccw_req *cqr)
- 	struct request *req;
- 	blk_status_t error = BLK_STS_OK;
- 	unsigned int proc_bytes;
--	int status;
-+	int status, intrc;
- 
- 	req = (struct request *) cqr->callback_data;
- 	dasd_profile_end(cqr->block, cqr, req);
- 
-+	/*
-+	 * free_cp() returns the request block to its memory pool, so snapshot
-+	 * everything still needed from cqr before calling it - another CPU can
-+	 * reallocate and overwrite the block right after.
-+	 */
- 	proc_bytes = cqr->proc_bytes;
-+	intrc = cqr->intrc;
- 	status = cqr->block->base->discipline->free_cp(cqr, req);
- 	if (status < 0)
- 		error = errno_to_blk_status(status);
- 	else if (status == 0) {
--		switch (cqr->intrc) {
-+		switch (intrc) {
- 		case -EPERM:
- 			error = BLK_STS_NEXUS;
- 			break;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 73510737196f4..ceb582ca67beb 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4188,6 +4188,8 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		set_ic = true;
+ 	else if (!priv->tx_coal_frames[queue])
+ 		set_ic = false;
++	else if (!netdev_xmit_more())
++		set_ic = true;
+ 	else if (tx_packets > priv->tx_coal_frames[queue])
+ 		set_ic = true;
+ 	else if ((tx_q->tx_count_frames %
+@@ -4408,6 +4410,8 @@ static netdev_tx_t stmmac_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		set_ic = true;
+ 	else if (!priv->tx_coal_frames[queue])
+ 		set_ic = false;
++	else if (!netdev_xmit_more())
++		set_ic = true;
+ 	else if (tx_packets > priv->tx_coal_frames[queue])
+ 		set_ic = true;
+ 	else if ((tx_q->tx_count_frames %
 -- 
 2.53.0
 
