@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017264;
-	b=HA8ngLU0f1p77byvrIJXOc2rom7IcuIzGdu0yjXRsFRg9C9PPJdNaU173SUuREyAV27n
-	 Gpygr+mHyEfnIMO2dbX21m7W1pf547bn5iH9jR1EqFnHwTlxZRXL1h5SGVCj8ZQmBoeSI
-	 LWztOq2PXO7dFWtGV661GRyMUrgRmQ5Ib5KUfnaBoujp8hFu+oAGBeiNLu5EQPvGZX1H2
-	 Bmgk3jcXn1abAmbGUswfFsEdzF3/Gy6wEif68bObFj44U53R4ADywUKkYP6XeU3eSYTy8
-	 qoy1sH40kYSZ89iyA35veUKIHzbH5LXZcW0FnFkw+aunn9O+S3hVJ3fu3U/Y3oMSexQ==
+	t=1795017267;
+	b=MtcauptjVTa9Z2QZ+1lXDcbvrrebhwrBJ+jm+nMHxAiqmr72sa8AkUiooaB6tMQoPBTE
+	 hNEk+yvwqVuz/aE5g9dXMU/DMefBYihgp66jLtj8PkKYWMp7CkgsWwEGkb0XecmGeqvfK
+	 jMLgXxnPf3iMJlTHyi30P+F5IYsSenCoVaZYNPyJr65UjrJ6Upk3GD5buhvV5GWlYaSXw
+	 xB/mZs8sHg8tR92NQX4BtKsaXGkqGVQkMi/CqUq/Jt2I5v9hcvfhTyvIfx9fHGciGZIiE
+	 5tJyYXgHgdccvrQmI+MCK8YJQoNL9+q4ITbA4uNmywZguxkC9+XSl+zqAvlNZDdVKqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017264;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017267;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6tLVyPwAC6hcZZ9AVYL96fLuY89d4HQa1ll4pXxyQfo=;
-	b=reWo/QFHl/IO+qafVCOkRXBayDnm0wUjrbCW0ehaM5ga0KqSdttU/n2wPsexNBdDN0iH
-	 JxKz1zPv5p6N10p20TrX+1s5LuyOaaz+bX08zz9kC6dDVaYApdTlVz/xq4yRRzn666DAZ
-	 sIn2qj9RXVNdmzXxQ0I3xFa/IRBTsVifV5cpmeI4KRuLYQoV/+JO8huDNg2pmgH/axCDw
-	 new3pya2fYjlcXayvtViyIC6GlzvZ83e28bqhwzqKlwcWFlyEyQZUhzai76tnrhzzXJ5y
-	 1cbNCB9Jp+Nc+fbSOm3zvLIVhYeyy5vdWQsLKKjP6SgqzliWLh0llB9QcTRBHb4xuFQ==
+	bh=/9upeZjUe6l9qfm81Q4pCAfZmhdsGlsiy+bYjMxZ1f8=;
+	b=slBgaNCpLbyNiFS+zdaNGpU4Q9fSXL3+52geV9duYvicV8Nr/SKqbOH/BKCWqJBAs8ef
+	 Iz9pCDgeOkpQg5vjGLHP72jzgYhBjCpa0AG33G3oSUyRq0LUb+1z0yFOQNKY45sWcGa9X
+	 iPDFj8RYiO4vLCVpdF0Fc0Zch8J9osOfUskoXithn8XuzVOATHHpbGr+bc7YS8u8dye9M
+	 /lutkVnN/xVCX9Kp7Q4OMmhGDRfzujeGt6yE6qWIiLyyXAqzRGm5QEwk10n4713oChvPB
+	 m9mDjxcipVW3O1p9IYfqaXJZsCLCuZkwdNmF8eMLHMK6egcSgz9GjOOLE5zLPaiLB4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qhJbrQn9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=At0nzGM0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A427606A31C;
-	Wed, 18 Nov 2026 15:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368B2606A31C;
+	Wed, 18 Nov 2026 15:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qhJbrQn9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896631F000C4;
-	Wed, 18 Nov 2026 15:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=At0nzGM0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F201F000C4;
+	Wed, 18 Nov 2026 15:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017264;
-	bh=6tLVyPwAC6hcZZ9AVYL96fLuY89d4HQa1ll4pXxyQfo=;
+	s=korg; t=1795017266;
+	bh=/9upeZjUe6l9qfm81Q4pCAfZmhdsGlsiy+bYjMxZ1f8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qhJbrQn97vCgI7g6gl37jGMhJu4KBnTgmnT4rlvywWKbYvz7lGqBUwnTfRDAcZIXN
-	 Cz4z9qxpyqSORs6A0CgWSGm9Ab8LQy+68EV24dWYT25Mml0DDneut+HCL88IVTok4u
-	 CZ889PG4PmoEyC2xqG9j09/uBasN11oDHIwUV+bQ=
+	b=At0nzGM0WpklHXgMWF7MLYiYVbC9NK9kf2NNsQc4myDZHyuIEaBIMka7zFPuUer8n
+	 44VcW9R+YLe7xV2Ja+b4DHK9kyabvT/sz9QRvIpwnsxSOFBIubLSdLb7MzY1J2FIEh
+	 1GkzzxBLrSX71IGa5mYU2t8NeWHNrj3oaz5rHbzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0820/2651] dt-bindings: arm: mediatek: Fix MT6779 audsys compatible
-Date: Wed, 18 Nov 2026 15:34:20 +0100
-Message-ID: <20261118150317.414690237@linuxfoundation.org>
+Subject: [PATCH 7.3 0821/2651] bpf: Fix uninit read for non-fetch atomics on partially spilled slots
+Date: Wed, 18 Nov 2026 15:34:21 +0100
+Message-ID: <20261118150317.449289385@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,37 +68,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Hao Sun <sunhao.th@gmail.com>
 
-[ Upstream commit 034b3b1ce25a62222920e2bb3b6a0c7ef160b108 ]
+[ Upstream commit 5a84b4424db8ae07f0ac682ab031c37a91dce50b ]
 
-The correct name for the MediaTek MT6779 audsys compatible is
-"mediatek,mt6779-audio", not "mediatek,mt6779-audsys". The original .txt
-binding was correct.
+check_stack_read_fixed_off() skips partial spill checks for non-fetch
+atomics; the following prog can be loaded:
 
-Fixes: e97c618234d9 ("dt-bindings: arm: mediatek: convert audsys and mt2701-afe-pcm to yaml")
-Assisted-by: LLM
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patch.msgid.link/20260921232819.3137721-1-robh@kernel.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+0: (b7) r1 = 1                        ; R1=1
+1: (63) *(u32 *)(r10 -8) = r1         ; R1=1 R10=fp0 fp-8=????1
+2: (db) lock *(u64 *)(r10 -8) += r1   ; R1=1 R10=fp0 fp-8=mmmmmmmm
+3: (79) r0 = *(u64 *)(r10 -8)         ; R0=scalar() R10=fp0 fp-8=mmmmmmmm
+4: (77) r0 >>= 32                     ; R0=scalar(smin=0,smax=umax=0xffffffff,var_off=(0x0; 0xffffffff))
+5: (95) exit
+
+When test run:
+	retval=4294967295
+
+Note fp-8 is ????1 at #1, yet it becomes fp-8=mmmmmmmm after the
+non-fetching atomic add at #2; hence the high 32 bits are leaked.
+
+Fix by applying the partial load check; after the patch, the
+prog is rejected:
+
+Verification failed: Memory Safety: Uninitialized stack read
+
+Reason:
+  This rejected read uses 8 bytes at stack offset -8, but byte 4 in that range is uninitialized on
+  this path. Programs loaded with CAP_PERFMON can be allowed to read uninitialized stack bytes, but
+  this program is being rejected without that allowance.
+
+At:
+  ...
+      0 | (b7) r1 = 1
+      1 | (63) *(u32 *)(r10 -8) = r1
+  >>> 2 | (db) lock *(u64 *)(r10 -8) += r1
+      3 | (79) r0 = *(u64 *)(r10 -8)
+      4 | (77) r0 >>= 32
+
+This affects CAP_BPF only.
+
+Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
+Signed-off-by: Hao Sun <sunhao.th@gmail.com>
+Link: https://lore.kernel.org/bpf/20260924131342.934290-1-sunhao.th@gmail.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/arm/mediatek/mediatek,audsys.yaml       | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/arm/mediatek/mediatek,audsys.yaml b/Documentation/devicetree/bindings/arm/mediatek/mediatek,audsys.yaml
-index 9aa39b002361d..5ede7d277488c 100644
---- a/Documentation/devicetree/bindings/arm/mediatek/mediatek,audsys.yaml
-+++ b/Documentation/devicetree/bindings/arm/mediatek/mediatek,audsys.yaml
-@@ -19,7 +19,7 @@ properties:
-           - enum:
-               - mediatek,mt2701-audsys
-               - mediatek,mt6765-audsys
--              - mediatek,mt6779-audsys
-+              - mediatek,mt6779-audio
-               - mediatek,mt7622-audsys
-               - mediatek,mt8167-audsys
-               - mediatek,mt8173-audsys
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 25cb335e008fd..04c763aa40094 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3910,11 +3910,11 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+ 				return -EACCES;
+ 			}
+ 
+-			if (dst_regno < 0)
+-				return 0;
+-
+ 			if (size <= spill_size &&
+ 			    bpf_stack_narrow_access_ok(off, size, spill_size)) {
++				if (dst_regno < 0)
++					return 0;
++
+ 				if (env->bpf_capable && size == 4 && spill_size == 4 &&
+ 				    get_reg_width(reg) <= 32)
+ 					/* Ensure stack slot has an ID to build a relation
+@@ -3956,6 +3956,9 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
+ 					return -EACCES;
+ 				}
+ 
++				if (dst_regno < 0)
++					return 0;
++
+ 				if (spill_cnt == size &&
+ 				    tnum_is_const(reg->var_off) && reg->var_off.value == 0) {
+ 					__mark_reg_const_zero(env, &state->regs[dst_regno]);
 -- 
 2.53.0
 
