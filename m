@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053134;
-	b=KLt6H8NjrFqleRnoHQMmc0QBhrj5bpUnuo2PeVpeFee8XWaDtTGgIe0Ygwmm9sDX9Fx5
-	 5lOFbcAvGJRdqy7PgdsrzVoPx3BwXZgkNIfRz+d+RND246JVSlcElmSzwoaNGF+bMHapa
-	 EpyamzvdLTZy4JYhy1xX/AzK43l79p0DPDMgBzvpA0ITyeyWoyP4VeUw56l3oc5WDNa5B
-	 gSQ1tTmlUADuz/PSVHua1arMvZ7BgwG98R4OFVrQyh5suT3EBB6B41cFsloUitGybNfDK
-	 9An1Dj8+EnS7bFIAiEpNr1xk9DqseiQQgt6v5II8T+HJf4qrRCC1B4jEZxGK49IcSmg==
+	t=1795053137;
+	b=pp0KP1ccfAl2ZIp29XUmqUTnoPqbJQIQOh6NadSNr9QxmNODjhY2NSlBe5tWJHC1uAnm
+	 VWMBmuZa2a/bwDC+t7NdXQ6Npx2ZcdgAq65PBAf0KomOaEQLytbav6oDyCQeXaiad18yc
+	 rXKnVWaB+ppG/ZYnQIVZisg1AI5gshLejsosTmNXDtT9T8tVG3UiU6ZC3ArgEHWFOesyu
+	 aeD5qOrLVK4D66OGMMUDq/2R8lKkcWKpTUuuMZeSt6sFNPhTLfwIf3Ope4iDXmBw3+Id8
+	 GcbnutjzMCFzymyhQnkm1etmrDuXmW/TEz2yoWzDru+qhhujhQ+JNmXIIFt6RMwIimg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053134;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053137;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CRLMDcVfjZcTwoLrFLAZycNPIo76j5L3IA2UxBKn4PY=;
-	b=roGTel1PMHQ5/irYSNbalK9YCVSx2uDVRL6tMtc6CiLYZ8gZa8GUMU7+E41p9PM9Skh4
-	 to7+rjSTn/Bsdep5rpfkUGjQA0oj0ezLp5SHffDhlbBfPB2COau1om53vcxoDC6uh7B/s
-	 mHL2FiDjSpMu+misiN5LmLQSDD9kNqnMj5VjDmfpqWA12hVOlfT51L5Vt3x5o6UJQNbUU
-	 SLOaNkYCXp2VAvAXuLg5lMVEriA9BKtGQHAFESk23H8mZjYmVhfsbl/c1V9WQdoqeUWC6
-	 JTRigPuF/jvwVFFHIN+3jTawrwqtPOZuabWsQvqEO9/GQkwmjdtgcBZi4bp19l9bZTA==
+	bh=mMaoT/fDQ8OsKLt8luuBgZxkFv/lxYoPdVLz2MVJPJY=;
+	b=wKjvqzmrQEr2Sv5t6rjkoVM8pyTUWDJrX39B2I+Qy674jw1CG0Ci9EgV34c0XmStQMLw
+	 5DfIZhPuVE09tJ07kJViqEiK/4BWI49FefkUxCFM6Ca96x8pGRSUEzF498cxFLtC8+d4L
+	 p/Fn5t6wP/0b8rBzwx4UO0ALAiTAFHvuvi+YS2rdBkhtpJV38gFnJSOmRIJb+G32ghJbW
+	 9KCxJNbTy74IJNueoV2I3Go8EMI/oSEDY4qDcq7rk2hSb7ZgqVpWQd96tO3sxKQ/Z5RHi
+	 eShrl5NCOKD1bskV6jYRTVkA+9Msz316s9qIIKw7RNqCE8FRWvfepl/lB5rEXWid13Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2L/smaBC";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B/g+eP7O";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D40606A31C;
-	Thu, 19 Nov 2026 01:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391A9606A32A;
+	Thu, 19 Nov 2026 01:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2L/smaBC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428D41F000C4;
-	Thu, 19 Nov 2026 01:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B/g+eP7O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A76D1F000C5;
+	Thu, 19 Nov 2026 01:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053134;
-	bh=CRLMDcVfjZcTwoLrFLAZycNPIo76j5L3IA2UxBKn4PY=;
+	s=korg; t=1795053137;
+	bh=mMaoT/fDQ8OsKLt8luuBgZxkFv/lxYoPdVLz2MVJPJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2L/smaBChQdXKwLJlxEQgSq0+RlLIw+nHdV2dSxDjJWxD2C6v+lG3jbmRroFoWTmw
-	 ZWoTwNfGxSJxVBsxMtDrKWoSOAtZGlNU/+pNLQdLNDTVMENzYn1eYwNf4eSCK+IzlC
-	 M3iYypC7+f0rFL2pOQhVDbjQuBqxmk7iIxJqg8mo=
+	b=B/g+eP7Opuw8czOKkYYXNDSVIT//qGmN9eMD9Z3ik90ZvFfFRacelyPLMo3HToItK
+	 SA6naFKARkUhpMKXBUKSozXDqw+eL2GIdkF5djbuELXrCL0/ij+LgZUej+WaJma2pe
+	 uZ5QGrzRgRON1pBMGHea9qWl77ZF8b7hbWfbDbtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Rosen Penev <rosenp@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0811/2214] mtd: rawnand: ndfc: use devm_platform_ioremap_resource()
-Date: Wed, 18 Nov 2026 15:41:27 +0100
-Message-ID: <20261118150043.901880593@linuxfoundation.org>
+Subject: [PATCH 5.15 0812/2214] net: bgmac: enable interrupts only after NAPI is ready
+Date: Wed, 18 Nov 2026 15:41:28 +0100
+Message-ID: <20261118150043.950408006@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,79 +71,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 0d66f9895f286d2fab396a71e6efeb95c4a7e5a6 ]
+[ Upstream commit ac1f6e58cb77bb66b8811f7d98703e0f076a8f65 ]
 
-Replace the open-coded of_iomap()/iounmap() with the managed
-devm_platform_ioremap_resource() helper. This fixes a mapping leak on
-driver remove (the old code never called iounmap()) and simplifies the
-error path by dropping the manual cleanup in ndfc_probe().
+bgmac_open() calls bgmac_chip_init(), which unmasks the interrupts and
+enables the MAC receiver, before request_irq() and napi_enable().
+bgmac_enet_resume() also enables NAPI only after bgmac_chip_init().
 
-There is no overlapping memory-region concern introduced by this
-change: each supported board DT describes a single ndfc node with a
-unique 0x2000 register region, and the EBC parent uses dcr-reg rather
-than a MEM reg resource, so the newly added request_mem_region() cannot
-conflict with an existing reservation. Distinct chip selects map to
-distinct 64-bit physical addresses, so CS instances do not overlap.
+When frames arrive in that window, the first RX interrupt masks all
+interrupts in bgmac_interrupt() and calls napi_schedule() on a NAPI
+instance that is still disabled, so nothing is scheduled. Nothing
+unmasks the interrupts again, the RX ring fills up and the interface
+stays deaf until it is brought down and up without traffic.
 
-Fixes: a808ad3b0d28 ("[MTD] [NAND] ndfc driver")
+On an Asus RT-N16 (BCM4716) a single "ip link set eth0 down/up" while
+a host sends UDP to the router left INT_MASK at 0, INT_STATUS with RX
+pending and the RX DMA idle on a full ring, with the RX packet and
+interrupt counters no longer moving. With this change, 10 of 10 such
+cycles recovered on their own.
+
+Request the IRQ and enable NAPI before the chip is initialized.
+
+Fixes: dd4544f05469 ("bgmac: driver for GBit MAC core on BCMA bus")
+Fixes: f3537b3494c0 ("net: ethernet: bgmac: driver power manangement")
 Cc: stable@vger.kernel.org
-Assisted-by: opencode:hy3-free
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261010070011.60403-1-rosenp@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/ndfc.c | 21 ++++++++-------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/broadcom/bgmac.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/ndfc.c b/drivers/mtd/nand/raw/ndfc.c
-index 3172ab459c9d9..23321b9e2bf15 100644
---- a/drivers/mtd/nand/raw/ndfc.c
-+++ b/drivers/mtd/nand/raw/ndfc.c
-@@ -194,10 +194,15 @@ static int ndfc_chip_init(struct ndfc_controller *ndfc,
- static int ndfc_probe(struct platform_device *ofdev)
- {
- 	struct ndfc_controller *ndfc;
-+	void __iomem *ndfcbase;
- 	const __be32 *reg;
- 	u32 ccr;
- 	u32 cs;
--	int err, len = 0;
-+	int len = 0;
-+
-+	ndfcbase = devm_platform_ioremap_resource(ofdev, 0);
-+	if (IS_ERR(ndfcbase))
-+		return PTR_ERR(ndfcbase);
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index 3b42674b9df6d..4239fbb866fd3 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -1183,9 +1183,6 @@ static int bgmac_open(struct net_device *net_dev)
+ 	if (err)
+ 		return err;
  
- 	/* Read the reg property to get the chip select */
- 	reg = of_get_property(ofdev->dev.of_node, "reg", &len);
-@@ -219,11 +224,7 @@ static int ndfc_probe(struct platform_device *ofdev)
- 	ndfc->ofdev = ofdev;
- 	dev_set_drvdata(&ofdev->dev, ndfc);
- 
--	ndfc->ndfcbase = of_iomap(ofdev->dev.of_node, 0);
--	if (!ndfc->ndfcbase) {
--		dev_err(&ofdev->dev, "failed to get memory\n");
--		return -EIO;
--	}
-+	ndfc->ndfcbase = ndfcbase;
- 
- 	ccr = NDFC_CCR_BS(ndfc->chip_select);
- 
-@@ -241,13 +242,7 @@ static int ndfc_probe(struct platform_device *ofdev)
- 		iowrite32be(be32_to_cpup(reg), ndfc->ndfcbase + offset);
- 	}
- 
--	err = ndfc_chip_init(ndfc, ofdev->dev.of_node);
--	if (err) {
--		iounmap(ndfc->ndfcbase);
--		return err;
--	}
+-	/* Specs say about reclaiming rings here, but we do that in DMA init */
+-	bgmac_chip_init(bgmac);
 -
--	return 0;
-+	return ndfc_chip_init(ndfc, ofdev->dev.of_node);
- }
+ 	err = request_irq(bgmac->irq, bgmac_interrupt, IRQF_SHARED,
+ 			  net_dev->name, net_dev);
+ 	if (err < 0) {
+@@ -1195,6 +1192,9 @@ static int bgmac_open(struct net_device *net_dev)
+ 	}
+ 	napi_enable(&bgmac->napi);
  
- static int ndfc_remove(struct platform_device *ofdev)
++	/* Specs say about reclaiming rings here, but we do that in DMA init */
++	bgmac_chip_init(bgmac);
++
+ 	phy_start(net_dev->phydev);
+ 
+ 	netif_start_queue(net_dev);
+@@ -1609,10 +1609,10 @@ int bgmac_enet_resume(struct bgmac *bgmac)
+ 	if (rc)
+ 		return rc;
+ 
+-	bgmac_chip_init(bgmac);
+-
+ 	napi_enable(&bgmac->napi);
+ 
++	bgmac_chip_init(bgmac);
++
+ 	netif_tx_lock(bgmac->net_dev);
+ 	netif_device_attach(bgmac->net_dev);
+ 	netif_tx_unlock(bgmac->net_dev);
 -- 
 2.53.0
 
