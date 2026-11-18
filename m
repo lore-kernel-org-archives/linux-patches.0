@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037617;
-	b=Bwrh68AjeGvd0trcegxIeEhRAoyWwIoiM7oddO2ZMg7LcOCacQDhHxSIAvA0nWFy2OR0
-	 4/ceMDbwXch6nj1dDUvf0wge+AVkv0P3a/yenWDu3QL6a2ndHc060ZOqz5XrV4boJRYIl
-	 SZ51xBlUj8tAjyhZJLIwlEo+gsuh42+xXHPgyGSvcnmJ9BaYKOAjxsIW8r+rbuVu4Eysi
-	 8eofwozYuvNQ09SIcf2Yq1XIYbWijw0PumX2wVrwxO8XdkJAvv/tNi1Ve++DZBaupCuW7
-	 l8vaaTu+cMUj5oU9FLFXSt6MGiKTXV5pTU9sHrcQ5125hLvwRAmnxTJF9ZpzQ/qOKnQ==
+	t=1795037620;
+	b=00mzgRqTkA/NATxQx7iC1L/zV6yKlTNIOPV9tfCOhljh3dUqlM/QNA/EZ9exH8eASo2g
+	 qAdWHgFIY/yd+5wTiaEh/rLzhV0sOPYWZmeLBKxDE60Dm86TAI64cYscBIbm589rNQ6JC
+	 39gWd54TaX4AFX1RQheWTVImdVWCyIgJaC/tgZoAQ46G4APbMyLgCnQW9ohPyHWzXHnVQ
+	 7u7srlJOon0RmPevdLEo/304sw90XRCT2F9sMyBe4ph2RUl6UX3a7VPj0L0RC1IzRBY3g
+	 uTrE38QT7JJD7R3ZyCYYsH/q+hkL0/eBYrCltPRp6zz806mEccirXeakbPKoVqQ9cSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0ieOWHz77n/ny6sYNVLw1XcqZJDuEiX0kGmRkeAoTAU=;
-	b=MvHb1qvEYQ5azbmqdEoHZtG/kHKfTZO+sjUawEXlXZ+RD/ycTJjJxhJ5VSWdU8NMSPjW
-	 ZsbPquM1wdngdxqJ8wwobNNEOzlxYbiLmvmFb/PzxNi+9ebsjbs+kjMWNoHjVNFzC3nXb
-	 NCdMNVoFfuS+PNQo/UIf9ij9tCw/vdex1nctcKrBYJzrkRPFtsUm8P/vOVDHutakk87xG
-	 Q5NjUEcmA3xdBOiQ0ckCAGOfVcA/dFSBZile9FpHXIteQ8o7d6n1X6BEJ5DPVvj1cmX2Y
-	 6tYh8mELF7YOpvO93H8JieKeImMo18E4RiIT8he23DopUEG/9sFA32uMqt7PWp4zZDw==
+	bh=fcFFWdsvw/ViKqvNnfdCSZ+o2xHsmndy/ZEVHOo1lq8=;
+	b=plK0yHjqFzS9ecCzdMCBt8FxUgzedfj5aJhbKpWkz/n8ewwhvCL2OvxicedQATuRax5b
+	 PlkMvldJqZ/9ahdv1ZXRzJf/N3so8gg1h3mNGNTwYGBFJMzoUOnShKW6m8t/lcsHp2Evf
+	 nDbBUwBHSoRkEhYqZUCi7dgum8DwqI48y/RO78kgJr1KEL4Dzn8XaTLa7sMk7iJ7pDeHo
+	 qfXCTAl8ujMR+0LYxLkqkJGhjbgyZpheidn2OnPihfhMo1bqhlxsTv+L0+eufrcpkf0Ug
+	 JX8UpdnVjGkj56LITNm1iPRdRNJ/UQks8l3f4s4jpO6EgOwAxn/SpI3Xfxe1buf6GBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbPQqzWw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qf+Qq29s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93458606A325;
-	Wed, 18 Nov 2026 21:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3BB606A320;
+	Wed, 18 Nov 2026 21:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbPQqzWw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBE21F000C4;
-	Wed, 18 Nov 2026 21:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qf+Qq29s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA5B1F000C4;
+	Wed, 18 Nov 2026 21:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037617;
-	bh=0ieOWHz77n/ny6sYNVLw1XcqZJDuEiX0kGmRkeAoTAU=;
+	s=korg; t=1795037620;
+	bh=fcFFWdsvw/ViKqvNnfdCSZ+o2xHsmndy/ZEVHOo1lq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SbPQqzWw3fmPtBd5z6EMJeHeLtB+V/L3Qtm84xyTweY6jaNcSKHdq0BjJ+GDeOXgu
-	 kdhPZ35t6zoJEWvfaFJAR9JMv8N7fM9GW0UVmAu9cQ9FucliaMuoDvu2LSfv6gy8eT
-	 6iJOHyhW+U9RNKm9lEualuWbNKZJHdaGlvKNV1UQ=
+	b=qf+Qq29s9fHIGml7sg+tiW9CC1uj6AGR42JzMDcQTgQGoyLtxLZzhJqNp6tgZV9GZ
+	 lCkzQ+9Tfp3xCNTB1pcfmelbEl8M/a+vEpi7R2HUjtxbNGqJprCESiLesPr1Ht5hT2
+	 Sbe8U8VqL3KtjagWUZs0OL903krozSHL+7wAChCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Seo <james@equiv.tech>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1459/3318] hwmon: (hp-wmi-sensors) Fix unbounded loops in scale_numeric_sensor()
-Date: Wed, 18 Nov 2026 15:34:41 +0100
-Message-ID: <20261118150404.664031046@linuxfoundation.org>
+Subject: [PATCH 6.6 1460/3318] hwmon: (lm87) Fix drvdata type confusion in vrm_show() and vrm_store()
+Date: Wed, 18 Nov 2026 15:34:42 +0100
+Message-ID: <20261118150404.692930103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,71 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 185039b1c0389b70ec52a6d3e3c1494e2d0e23da ]
+[ Upstream commit 5b51ff0887b9f88d042b92dd07fcdda4132f0ebc ]
 
-In scale_numeric_sensor() in the hp-wmi-sensors hwmon driver, an unbounded
-loop occurs if the ACPI WMI implementation provides a highly anomalous or
-malformed UnitModifier value for a numeric sensor.
-The UnitModifier property is extracted from a WMI ACPI object without
-bounds checking and cast to a signed 32-bit integer. This value directly
-controls the iteration count of two scaling loops. If the provided
-unit_modifier is extremely negative (e.g., INT_MIN), the first loop
-executes billions of times before reaching target_modifier. Conversely,
-if unit_modifier is extremely large (e.g., INT_MAX) and the current
-sensor reading (val) is exactly 0, the second loop's overflow safeguard
-(val > LONG_MAX / 10) never evaluates to true, resulting in billions of
-unnecessary iterations. This prolonged execution causes severe CPU stalls
-and thread soft lockups during driver initialization or whenever a
-user-space process reads the sensor attribute via sysfs, resulting in a
-denial of service on the affected CPU core.
+When an LM87 or ADM1024 device is probed with VID support enabled, reading
+from or writing to the vrm sysfs attribute triggers a driver data type
+confusion in vrm_show() and vrm_store() in drivers/hwmon/lm87.c.
 
-Fix the problem in the first loop by exiting it as soon as val is zero.
-Fix the problem with the second loop by only entering it if val is not
-zero. Also add a check for val < LONG_MIN / 10 and exit the loop if that
-is the case.
+In lm87_probe(), the driver stores the struct lm87_data pointer on the I2C
+client via i2c_set_clientdata() and passes the struct i2c_client pointer as
+the drvdata argument to devm_hwmon_device_register_with_groups(), which
+attaches the attribute groups to the registered hwmon device with client as
+its driver_data. Unlike the other sysfs callbacks that retrieve client via
+dev_get_drvdata() and then obtain data via i2c_get_clientdata(), vrm_show()
+and vrm_store() assign dev_get_drvdata(dev) directly to struct lm87_data *.
+Dereferencing data->vrm therefore accesses the struct i2c_client instance
+at offsetof(struct lm87_data, vrm), causing vrm_show() to leak an unrelated
+byte from struct i2c_client to userspace and vrm_store() to corrupt a byte
+within struct i2c_client while failing to update the actual VRM value.
 
-Fixes: 23902f98f8d4 ("hwmon: add HP WMI Sensors driver")
+Fix the problem by assigning the return value from dev_get_drvdata(dev) to
+struct i2c_client *client and using i2c_get_clientdata() to get the actual
+client data.
+
+Fixes: 00a0c905ab4b ("hwmon: (lm87) Use hwmon to create the sysfs groups")
 Cc: stable@vger.kernel.org
-Cc: James Seo <james@equiv.tech>
-Acked-by: James Seo <james@equiv.tech>
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/hp-wmi-sensors.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/hwmon/lm87.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/hp-wmi-sensors.c b/drivers/hwmon/hp-wmi-sensors.c
-index 8f2f7d648c99e..208a6c306a75b 100644
---- a/drivers/hwmon/hp-wmi-sensors.c
-+++ b/drivers/hwmon/hp-wmi-sensors.c
-@@ -725,15 +725,21 @@ static long scale_numeric_sensor(const struct hp_wmi_numeric_sensor *nsensor)
+diff --git a/drivers/hwmon/lm87.c b/drivers/hwmon/lm87.c
+index 2195a735d28e0..4ca2c76b12c36 100644
+--- a/drivers/hwmon/lm87.c
++++ b/drivers/hwmon/lm87.c
+@@ -600,13 +600,16 @@ static DEVICE_ATTR_RO(cpu0_vid);
+ static ssize_t vrm_show(struct device *dev, struct device_attribute *attr,
+ 			char *buf)
+ {
+-	struct lm87_data *data = dev_get_drvdata(dev);
++	struct i2c_client *client = dev_get_drvdata(dev);
++	struct lm87_data *data = i2c_get_clientdata(client);
++
+ 	return sprintf(buf, "%d\n", data->vrm);
+ }
+ static ssize_t vrm_store(struct device *dev, struct device_attribute *attr,
+ 			 const char *buf, size_t count)
+ {
+-	struct lm87_data *data = dev_get_drvdata(dev);
++	struct i2c_client *client = dev_get_drvdata(dev);
++	struct lm87_data *data = i2c_get_clientdata(client);
+ 	unsigned long val;
+ 	int err;
  
- 	val = current_reading;
- 
--	for (; unit_modifier < target_modifier; unit_modifier++)
-+	for (; val && unit_modifier < target_modifier; unit_modifier++)
- 		val = DIV_ROUND_CLOSEST(val, 10);
- 
--	for (; unit_modifier > target_modifier; unit_modifier--) {
--		if (val > LONG_MAX / 10) {
--			val = LONG_MAX;
--			break;
-+	if (val) {
-+		for (; unit_modifier > target_modifier; unit_modifier--) {
-+			if (val > LONG_MAX / 10) {
-+				val = LONG_MAX;
-+				break;
-+			}
-+			if (val < LONG_MIN / 10) {
-+				val = LONG_MIN;
-+				break;
-+			}
-+			val *= 10;
- 		}
--		val *= 10;
- 	}
- 
- 	if (sensor_type == HP_WMI_TYPE_TEMPERATURE) {
 -- 
 2.53.0
 
