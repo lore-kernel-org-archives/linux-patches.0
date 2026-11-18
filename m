@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057964;
-	b=jsWcooRWz0nndwmn5Kd3vQkjSy1T/OaT73YMkoYRcQkpuqk8E/f5nTy5NLyRnG1MyvoT
-	 P9Cf9YRggPJSGEmFN+HVpQLUTpZeSTiSxzBNW1yvkUUaW5BcM7tRFPIDOz2lHQT8ixFIj
-	 alqZO6PY/ESGm9CEDWuaP84I9Yz+n0hH8abOim9POqoYjXZenA3fBQwhlbDcfFAkzsWS+
-	 /QjYybKv2RwaiqU22tskBxjHeCJTb4J6xihh9k+0YaGqB7vZeZCf9bs5IvpKC/q8pn0gA
-	 q9pKpTM+2657TvcRduQ5bRmDiaicyKnJRJEwmFH0oapmWWf9vX216NzlI/ecpaGp0lA==
+	t=1795057967;
+	b=pO1zfOmFluFoGqv+ywYL2LqrBoQSWMsknSlwDNHhivhbriPh4CpsaoYT40xEb/8xsmnW
+	 b72nlkLWpXeo7GjOaWaT/yLvxE83l9JbQLrOjPdoc0hTGG7Zo72nqykczj1MDneUsLtZ9
+	 qoylXCJd0TEhx4DlHZeiyhV+6ZXk1JhiEatLCbujcioBEQLV48Bi0WRlsC0+lORpIr1vf
+	 JQwtg5987ysSMkrSJZJr5cL9eZV9VXAu+IjpWdzvlSFvuPqIplHV7DYrvjotTOcu+ZwO5
+	 A6MvXJmvcPkd6RWSFOKYpanijxbcATx02otWpoVLf9dssaCZzPVB81e8pzpIHCfG3oA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057964;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057967;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GTH9poCqNzXfSvibJXnlQxLKlOcS6V7VSE7xN22nlwU=;
-	b=SCltn98Ucnaeg/mMgOk86i8ZcWrMOw/izSORKnvku6vS0s+ozEsG6QYBrwajtJKKfLn4
-	 P7or00B/7b0T3ZYqKGd1w17f7jr5qHtIiqQyVd2Gv+dIHGQiNUQtCVSw/2AA9+w66r4kf
-	 53KoGptdr352ws8JqepxWhFUUM27H7Zz2kiz8HDGqvFOA8iQh+IIlfF2U1yTzhdJEa/Xs
-	 721VPYiEXaXWh+fdV0Y28gfwpgLyiZxQsS6xIeRlXoRDZFS49l/CbSQDJIDtC6qFPLAml
-	 BjZhiA+t3DLbTYHS+inRYMJ47yjh5Ae1TLUjOkhSVmsb/w6tY3mcR1kaK+8pELm8ccg==
+	bh=t5eN8agXJLrGfRU1PPlUPwRvuP9pIY7hFLdd3P4+aVM=;
+	b=XMKoCQ7VI4JWxK/1cJ2JG408/7DS+BeVDAdzWKmVBKXuToW8YSwC59gsjmSNyGB2cI5r
+	 6bFRfyXeAzX8GB00putJee1spYJuxjch+Qf7ikcDhAA22Bd09wEiDLB7rWFM5lWp8SaXh
+	 crI5ujlMVxNGLapXKyHbtqeKF6AIdaX8/nEA7xUUxFyzp4drJO4TJiuyzihqCCnUeAxxv
+	 22Rv8kLgQr6qWwcv80OYqe1femZAmgZ/+R804j5jlSPJw8d691JwttpWjOL4ryGmsKbBY
+	 Je2MflPjv3tR13EkD5Hr7eWJ0SawvwVitz2Qudoqoohw8J2Kow6XItcpiMv7USXb6AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ExXwzi+8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rFcP2p8R;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89442606A31C;
-	Thu, 19 Nov 2026 03:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C1F606A320;
+	Thu, 19 Nov 2026 03:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ExXwzi+8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C04B1F000C4;
-	Thu, 19 Nov 2026 03:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rFcP2p8R
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647841F000C4;
+	Thu, 19 Nov 2026 03:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057964;
-	bh=GTH9poCqNzXfSvibJXnlQxLKlOcS6V7VSE7xN22nlwU=;
+	s=korg; t=1795057966;
+	bh=t5eN8agXJLrGfRU1PPlUPwRvuP9pIY7hFLdd3P4+aVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ExXwzi+8KZbYQ63P8RtupnW/DF/iiT52VmO+cOUL+uh7rRBQ4cp0bcFYJN65nvy9P
-	 z2hrHns9zlxDQof/6KEmlXS6ZolT6T4J9Zt3U6M0zAa1gBElax1ydnW04z5KizlOxR
-	 lU0Zwms4v/S9Zr7K/1VfVFt2uKae6BJvG9Uhowxc=
+	b=rFcP2p8RTDAGrA045VU//BLvf0zerK2ZroW14vy9l1pYDE9o83kuqcDzc5IEI59j6
+	 7JqSPMG16BBUYHRobWGofeYDhv2+iZsy9MFHkFKKJJ+DEOyDZpAlshu12N1GcJ4YjI
+	 tqvMuZXaMNB20v2psNJEgSopo4Ea4XZCAovNrpUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiale Yao <yaojiale02@163.com>,
 	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 5.10 0318/1848] HID: roccat: pyra: reject short button reports
-Date: Wed, 18 Nov 2026 15:39:16 +0100
-Message-ID: <20261118145925.513896223@linuxfoundation.org>
+Subject: [PATCH 5.10 0319/1848] HID: roccat: ryos: reject short special reports
+Date: Wed, 18 Nov 2026 15:39:17 +0100
+Message-ID: <20261118145925.546497877@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,37 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiale Yao <yaojiale02@163.com>
 
-commit 493268f459bb6aeeecbc77f2204c11ad74d05213 upstream.
+commit 02f3607d0beb82e76481568bf631235e6a319b47 upstream.
 
 The raw event callback runs before HID core validates and zero-pads the
-report.  It passes the buffer to helpers which inspect data[0] and read a
-complete struct pyra_mouse_event_button for button reports.  A truncated
-report can therefore cause an out-of-bounds read.
+report.  It reads the report number without checking the received length
+and passes matching data to roccat_report_event(), which copies a complete
+struct ryos_report_special.  A truncated report can therefore cause an
+out-of-bounds read and expose adjacent data through the Roccat character
+device.
 
-Require enough data for the button report before calling either helper.
+Require a complete special report before inspecting or forwarding it.
 Commit 47669bec44fe ("HID: asus: refactor the two workqueues and init
 sequence") added the same kind of raw-event length validation to hid-asus.
 
-Fixes: cb7cf3da0daa ("HID: roccat: add driver for Roccat Pyra mouse")
+Fixes: 6f3a19360545 ("HID: roccat: add support for Ryos MK keyboards")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiale Yao <yaojiale02@163.com>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-roccat-pyra.c |    3 +++
+ drivers/hid/hid-roccat-ryos.c |    3 +++
  1 file changed, 3 insertions(+)
 
---- a/drivers/hid/hid-roccat-pyra.c
-+++ b/drivers/hid/hid-roccat-pyra.c
-@@ -554,6 +554,9 @@ static int pyra_raw_event(struct hid_dev
- 	if (pyra == NULL)
+--- a/drivers/hid/hid-roccat-ryos.c
++++ b/drivers/hid/hid-roccat-ryos.c
+@@ -186,6 +186,9 @@ static int ryos_raw_event(struct hid_dev
+ 			!= RYOS_USB_INTERFACE_PROTOCOL)
  		return 0;
  
-+	if (size < sizeof(struct pyra_mouse_event_button))
++	if (size < sizeof(struct ryos_report_special))
 +		return 0;
 +
- 	pyra_keep_values_up_to_date(pyra, data);
+ 	if (data[0] != RYOS_REPORT_NUMBER_SPECIAL)
+ 		return 0;
  
- 	if (pyra->roccat_claimed)
 
 
