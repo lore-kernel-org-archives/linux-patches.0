@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047358;
-	b=pPPV+SkZxFLV2oS5vA/Z5Xps0sb3JGfIIVurtNuENbBCgJlIwDNnurvEi7lNQJMn2mau
-	 EkymYc+Q2s5G43VTfey8iwyfG8adJRPI9JNip72SvRnwnRvlUFL1N913TIT+ypObLN4hF
-	 6Wqg+9jPvIVSqUbM6GupGBuOWVQ1aM+ffhQQcq11DSQSnto+wK2ZmrRdH0jveF7nUAVTA
-	 /yjMev6w5P6VPPqqct1XBfbREg6lWTnFoyoIu0uOd38cK/urLg84YD04csVr7IC8AxhDD
-	 wIxZKv2+GcgAiTdoFUjWuex7yc7e/0wrgafEFX1e3+8OuRW4Uh66z9G9xmxm5kYzIoA==
+	t=1795047361;
+	b=wNE3XH9SU6MCKK2dwds2OBtkvjuFbQlk2uK1hAYa8qGtqIcvsgnumRn+O1mwhne1aQnq
+	 MIKbvCsipyC3iR3zzMdAf8GbUGCJiTjJu2X9oL6W36HYzGZupzWkU1Yp5Gopi86heES86
+	 cM4Pw+m/MOTjmKmXSvtXruv6N7Her4jCwZmqpqkKvyARbgjNiD5O5x8OGX3KUIhsNC+fx
+	 uOz3q33UEdGb2ug6g3cxh74hs3iV2rpqcSkRNAt+WJHFMdoMZCWbV0gAnlFB13TZInTfd
+	 gDGHFxTuG/LA9jVnWgPfbbwTpdLyLE2i77Ci8+Gfh66+AqvQLbCVQSpGH8HkAxfbu4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047361;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ajZfflg/jAlC9wFxikE4Uwn9ibi/Tcr+X/vzRSWvFW0=;
-	b=2oY4Vm4UUs61Hne51uiDBo1H7ev+I6VrcGtF+zWIAT41Y7lqrz5ArShuQEFK1fU7W4uN
-	 o3pgdPD+nZNYC+6taGeElwEzzhSEtpjxMGDKVOqPAuyDZdva4QwbxBm+ezhdXgxhmAS6N
-	 9P71ggveryHTpKD27WJQbmj0uRxokFW0HiPwxNBQchWz164jSCPEFz79fZ5f/d68wIczr
-	 hpYQuT1VLx58rcJAw2DrGRFaEPsIfEoL3yZlyytJz29nBZ1p71WjicMNH+nNpqxDLpqJy
-	 zxTDYodWX/GFrrxN8Idx0rFaHXSH+G2DWmcNvzsY4C/dwSwG84231eRkLazXhZlGO0A==
+	bh=IfLheiXLtO3XdG9tXy2FYyUO13jjXFI3uspl6LLkmRY=;
+	b=EOuGdq/CKBnhcQCGNhN1Bh5tFGlIDG2Smbp443PS/80OKpDzMngDR/k5hURXlA4pSoQP
+	 hGSumH36B1r9Xc4SsUxisO5seY4/IZJfuAN86Q18ZJSvGvmH4+vxBevE0/0t5KS0B1+F5
+	 9jtSytRstvYpd5SECovACA0wM5KYyehjh5KL26KF2b/p0g+dc5NT3QuiY2r3sdbBliTfn
+	 YC7SEOJ+lm5/hVhy/dowIRr34TnR0aSN/hHvCAzOa+1rjgbTbIYf7OVawn+BW2Q6a8UQi
+	 wbETh6xACvfvxZkSqailGODs/m9ormuxvU5N3fXNG/KhpMUOovQ6lJGLCcZEjoGpdrw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpYUjTcE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRvAf80H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209E2606A320;
-	Thu, 19 Nov 2026 00:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15D4606A333;
+	Thu, 19 Nov 2026 00:16:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BpYUjTcE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A4C1F000C4;
-	Thu, 19 Nov 2026 00:15:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DRvAf80H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AB21F000C6;
+	Thu, 19 Nov 2026 00:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047358;
-	bh=ajZfflg/jAlC9wFxikE4Uwn9ibi/Tcr+X/vzRSWvFW0=;
+	s=korg; t=1795047360;
+	bh=IfLheiXLtO3XdG9tXy2FYyUO13jjXFI3uspl6LLkmRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BpYUjTcErrtUW5spX9ophzGE6gGIQ2/HNjklngDFGjkfJ7MbQ3v//PXjYznFzs6Z5
-	 Lwm6C1aFDarkO/14huy3rgHMwVl9m95LQepFhqXMEzmwkH4cghMF7iGFW/m17CnDuu
-	 Z+s3bMcmXTEvy68wxPvOGAr4Om58fRL6MT/sipOk=
+	b=DRvAf80H03FJDocZAkewtARabLhSewRB2jIfqAPCFxMdpi3KcmqzWccG2tSgBZLbU
+	 06qbwD9f4/OsjYd2+Xj1ZNtkT87q3qkT6Up7UJoajxizChZ3cgNKDib/d+UpTONWvA
+	 FwMR7zP7RMundF6Cp3/l/D7OKrnNl4aeDvDkdtkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	David Howells <dhowells@redhat.com>,
+	Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Bjoern Doebel <doebel@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1611/2857] assoc_array: keep gcs cleanup out of the live tree on allocation failure
-Date: Wed, 18 Nov 2026 15:44:05 +0100
-Message-ID: <20261118150259.360117378@linuxfoundation.org>
+Subject: [PATCH 6.1 1612/2857] net/packet: check TX_RING fragments before memory accounting
+Date: Wed, 18 Nov 2026 15:44:06 +0100
+Message-ID: <20261118150259.397305114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,85 +72,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 8afff2e4b90978b8203f9e3898995dcf86821b49 ]
+[ Upstream commit dc4dd12f80e499dc034710cd8195489abcf0b059 ]
 
-assoc_array_gc() builds a copy of the tree.  Where the copy reaches a
-shortcut, it allocates the copy of the shortcut with kmalloc_flex(),
-fills it with memcpy(), links it into the new tree, and only then
-allocates the copy of the node after it.  The memcpy() leaves the new
-shortcut's next_node pointing at the old tree's node, so if that second
-allocation fails, the cleanup, assoc_array_destroy_subtree() on the new
-tree, follows the new shortcut into the old tree, and the BUG_ON() on
-the old node's back pointer fires.
+tpacket_fill_skb() adds the full non-linear payload length to
+skb->truesize and sk_wmem_alloc before checking MAX_SKB_FRAGS. With
+PACKET_VNET_HDR, userspace can submit a ring-sized frame even when it
+greatly exceeds the device MTU.
 
-Allocate the node first, and the shortcut once the node exists, freeing
-the node again if the shortcut cannot be allocated.  A copied shortcut
-is then only linked into the new tree when the copy of its node is there
-to follow it.  Nothing else changes: with no allocation failing, the
-trees gc builds are the same as before.
+A near-INT_MAX frame can saturate sk_wmem_alloc before the fragment
+loop rejects it. A subsequent refcount_add(0x40000001) can temporarily
+turn REFCOUNT_SATURATED into 1. A concurrent TX completion can then
+drop that apparent last reference and free the still-live packet
+socket before refcount_warn_saturate() restores the counter.
 
-Found by a userspace test that makes each allocation of each operation
-fail in turn.
+Check that the remaining payload fits in MAX_SKB_FRAGS pages before
+accounting it. Include the initial page offset in the calculation,
+and move the existing -EFAULT handling out of the fragment loop.
+This preserves the accepted packet sizes and error code while
+preventing an invalid frame from injecting an oversized byte charge.
 
-Fixes: 3cb989501c26 ("Add a generic associative array implementation.")
-Assisted-by: LLM
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Tested-by: David Howells <dhowells@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
-[ sashal: used kzalloc(sizeof()) instead of kzalloc_obj() ]
+Fixes: 69e3c75f4d54 ("net: TX_RING and packet mmap")
+Cc: stable@vger.kernel.org
+Cc: Willem de Bruijn <willemdebruijn.kernel@gmail.com>
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+[edumazet: use net_warn_ratelimited() instead of pr_err(), add a Fixes: tag]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20261028181450.2221013-1-edumazet@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ 6.1: adjust for context in kernels lacking 3948b05950fd ("net:
+  introduce a config option to tweak MAX_SKB_FRAGS") ]
+Signed-off-by: Bjoern Doebel <doebel@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/assoc_array.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ net/packet/af_packet.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/lib/assoc_array.c b/lib/assoc_array.c
-index 0a210e12d18e9..4ca7381c60001 100644
---- a/lib/assoc_array.c
-+++ b/lib/assoc_array.c
-@@ -1562,17 +1562,26 @@ int assoc_array_gc(struct assoc_array *array,
- 	cursor = array->root;
- 
- descend:
--	/* If this point is a shortcut, then we need to duplicate it and
--	 * advance the target cursor.
-+	/* The node at this position is duplicated, and so is the shortcut in
-+	 * front of it if there is one.  The node is allocated first: the copy
-+	 * of the shortcut starts out pointing at the old node, and must not be
-+	 * in the new tree if the node cannot be allocated, or the cleanup
-+	 * would follow it into the old tree.
- 	 */
-+	new_n = kzalloc(sizeof(struct assoc_array_node), GFP_KERNEL);
-+	if (!new_n)
-+		goto enomem;
-+
- 	if (assoc_array_ptr_is_shortcut(cursor)) {
- 		shortcut = assoc_array_ptr_to_shortcut(cursor);
- 		keylen = round_up(shortcut->skip_to_level, ASSOC_ARRAY_KEY_CHUNK_SIZE);
- 		keylen >>= ASSOC_ARRAY_KEY_CHUNK_SHIFT;
- 		new_s = kmalloc(struct_size(new_s, index_key, keylen),
- 				GFP_KERNEL);
--		if (!new_s)
-+		if (!new_s) {
-+			kfree(new_n);
- 			goto enomem;
-+		}
- 		pr_devel("dup shortcut %p -> %p\n", shortcut, new_s);
- 		memcpy(new_s, shortcut, struct_size(new_s, index_key, keylen));
- 		new_s->back_pointer = new_parent;
-@@ -1582,11 +1591,7 @@ int assoc_array_gc(struct assoc_array *array,
- 		cursor = shortcut->next_node;
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index cc5bb8765f52e..779e316c68d08 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -2694,6 +2694,12 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
  	}
  
--	/* Duplicate the node at this position */
- 	node = assoc_array_ptr_to_node(cursor);
--	new_n = kzalloc(sizeof(struct assoc_array_node), GFP_KERNEL);
--	if (!new_n)
--		goto enomem;
- 	pr_devel("dup node %p -> %p\n", node, new_n);
- 	new_n->back_pointer = new_parent;
- 	new_n->parent_slot = node->parent_slot;
+ 	offset = offset_in_page(data);
++	if (unlikely(to_write > MAX_SKB_FRAGS * PAGE_SIZE - offset)) {
++		net_warn_ratelimited("Packet exceed the number of skb frags(%u)\n",
++				     (unsigned int)MAX_SKB_FRAGS);
++		return -EFAULT;
++	}
++
+ 	len_max = PAGE_SIZE - offset;
+ 	len = ((to_write > len_max) ? len_max : to_write);
+ 
+@@ -2705,12 +2711,6 @@ static int tpacket_fill_skb(struct packet_sock *po, struct sk_buff *skb,
+ 	while (likely(to_write)) {
+ 		nr_frags = skb_shinfo(skb)->nr_frags;
+ 
+-		if (unlikely(nr_frags >= MAX_SKB_FRAGS)) {
+-			pr_err("Packet exceed the number of skb frags(%lu)\n",
+-			       MAX_SKB_FRAGS);
+-			return -EFAULT;
+-		}
+-
+ 		page = pgv_to_page(data);
+ 		data += len;
+ 		flush_dcache_page(page);
 -- 
 2.53.0
 
