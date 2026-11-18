@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033688;
-	b=mjTYHuiLRDzgZLdUGZ95qytjzdXY5Ltvso+Ob+j4xWA4DmoiBaBYYnPc6XBMOqw5ekh1
-	 MTYE6bR5POS6M/rYBHomhinwqnpir9pQC66G6mInmUeb2bCiHqbUJ2r+du2/4CCMmo/EH
-	 HGtVfCzJg9WSl6jcdbTqnewq1p3BWprHlejJB6km92bpbYFN7IpeQTPMbkYkRh6s7c0cy
-	 DQAcfnawEWoXLC6P+SrUekKogx7GxeWFCvUxBFZrPs465L8Sozr3Jz2WI2p0tu75ulZKI
-	 HQQE3tRvKIXs7YrsxO8oGK3A/VssAez+/Ej3XHOK7+TqlBHrfPz6MU7H7mFNoMOcgmw==
+	t=1795033691;
+	b=sMPwkO1ec/YJCnxUGWhEHiyB5iKs22cWj6+OtcdDgdI6ssAvvB6Q9kAgj07xR3ZmfOSY
+	 gQNnCWB6esTMzsNuRwe96NC2LG+c0wlxvCh+5IxD86xbOhnrn9fDo5zmEZjI8pqKmUOS+
+	 bYYV+Cwxb94vlwsbmdrA4F4V5K6oa7U4/d6FBqKVRoODqYdgYmd4tISF7L5pUgKUdQ902
+	 kpUqC5j7mVK3pMVyu0yGsEmdSEwc1lPFg/eB58Ie5v+crGsP+1FLpDIzn4fBZF2fZMXan
+	 G17z2aWhZX1wMVPIMUaKUlObb8EQLfQrHvXVQrHOBQ0KuEq4zFR1wkq1kBPdan2lh1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033691;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h3RQGDPXMP8aQ0gIUjFWu67FYdvLDJ3yt00VCMzLNm0=;
-	b=rLR8fH61myyhZDx1jLTzjH14+oOP/jj+V0Slu0bzE4XWzuF9Y455K3hQsnxpCTJkj8gd
-	 DG4tiniZBilaCa4MHmZhe7AqJd3nBI9HCYVRJQ9fTf7qoNuJkWj1+i1130sLE1o22XfZw
-	 ZssJSR9aHPF3euzSBaXeId1mvMS0iwTY5wJk0PkXBricmqm1inErP3tHziy+Lx7A2npBX
-	 SGtEO8Je4dhwVIHyfmqL9fZOpqjKj0r0TpRNdLpCbYgbfSoNVs/kfwBlkkH7bXvb6JsrO
-	 oCjldiEAE4M4m7DjPVNsBJHpNiVSptw5uNhT8+sU5nYyniRPS0/GcnUI0QAhcod13bA==
+	bh=CfE51z3iEif6iLnfZuR0pM0wj8EhaXgjTgo+/Y86cr4=;
+	b=R07XGTQpRKY5hPDun1jsR+ybhClK+SwlFXTPDoySqNK0QkXwMqQxHgA7gILT+/RBF+sM
+	 FeW0ms6W0Jho/rOP3jtVXVYInjApCGcnAZFFZAUQhOWONHY6DpGzQuAqh18XgtW8kqWaw
+	 n5ZBe/0tHU5AgwgajJHE2XphsnqAanFsdaHEPtoBF9FAqNpcSMUYbrMtDUhRJqZ0lmtdV
+	 fJgnDuzHc3T8pd0sWF50XvfZTaEJIWAnwsFb6xnLhKMIHyCSUJgqak92UuqhCyhsZ/NpX
+	 Ey8zHROYKFX3C3zTSnqSNXldZ48enq+z4TWQVm4MdSFx8oj/7IfJSK+eqmG6uRYRlEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHNKzDSX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MMIcOrBE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1FA606A31C;
-	Wed, 18 Nov 2026 20:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C38606A325;
+	Wed, 18 Nov 2026 20:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHNKzDSX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A54F1F000C4;
-	Wed, 18 Nov 2026 20:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MMIcOrBE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA121F000C4;
+	Wed, 18 Nov 2026 20:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033688;
-	bh=h3RQGDPXMP8aQ0gIUjFWu67FYdvLDJ3yt00VCMzLNm0=;
+	s=korg; t=1795033690;
+	bh=CfE51z3iEif6iLnfZuR0pM0wj8EhaXgjTgo+/Y86cr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZHNKzDSXWqsxKORDUyMjosfgMeuXLe31iqKPDUjQnuZT5EXicCd3g4ZxqwzS5sOK+
-	 fhfP00Cgtq4cfd2xupju2we8bWINc8PCI+5aXQDbfrEsw7Ck3DE2KXWRt+5gaTIKXG
-	 VV0yXSKhII1qMQIKDdnW8Qla92eCjnndUA7mWZn0=
+	b=MMIcOrBEUedhlgxcBd6g49ed2B6Hy7+IkF+2GY7tzi4EMQRjae4PFQg3RryyU47IQ
+	 HbksW33mphNthtfg36TU678uBVRvsqIJOoshc40ONgnpZLsIaqLRzVfK87hF909JOF
+	 w3pbyuYDiu3p9hnrtdivwrGq1bFw5yatwMPoJems=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Hari Mishal <harimishal1@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0102/3318] nvme: bound ns descriptor header and body to identify buffer
-Date: Wed, 18 Nov 2026 15:12:04 +0100
-Message-ID: <20261118150317.288523126@linuxfoundation.org>
+Subject: [PATCH 6.6 0103/3318] iwlwifi: dvm: add missing cleaup for on error path
+Date: Wed, 18 Nov 2026 15:12:05 +0100
+Message-ID: <20261118150317.324493161@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,44 +68,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Mishal <harimishal1@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit 3c568b35a0d309acb40746552bec2af24cd550ef ]
+[ Upstream commit 94280e6e0c69a5327e377803732f494d8b5a74cd ]
 
-nvme_identify_ns_descs() allocates a buffer and gives it to the
-controller, which populates it and then iterates the buffer with
-variable byte increments that vary by type and body size.  But, there is
-no bounds check inside the iteration itself except the loop bound
-itself.  Fix this by checking and stopping iteration if the next header
-or its declared body would go past the buffer itself.
+In iwlagn_tx_agg_start(), call iwlagn_dealloc_agg_txq()
+to clear bit on error path.
 
-Assisted-by: gkh_clanker_t1000
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Hari Mishal <harimishal1@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Link: https://patch.msgid.link/20260401030555.541685-1-lihaoxiang@isrc.iscas.ac.cn
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/dvm/tx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index af71dd259c3c3..7b5410e506a4a 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1400,8 +1400,12 @@ static int nvme_identify_ns_descs(struct nvme_ctrl *ctrl,
- 	for (pos = 0; pos < NVME_IDENTIFY_DATA_SIZE; pos += len) {
- 		struct nvme_ns_id_desc *cur = data + pos;
+diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
+index ca1daec641c4f..3541193ddbf7e 100644
+--- a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
+@@ -602,8 +602,10 @@ int iwlagn_tx_agg_start(struct iwl_priv *priv, struct ieee80211_vif *vif,
+ 	}
  
-+		if (pos + sizeof(*cur) > NVME_IDENTIFY_DATA_SIZE)
-+			break;
- 		if (cur->nidl == 0)
- 			break;
-+		if (pos + sizeof(*cur) + cur->nidl > NVME_IDENTIFY_DATA_SIZE)
-+			break;
+ 	ret = iwl_sta_tx_modify_enable_tid(priv, sta_id, tid);
+-	if (ret)
++	if (ret) {
++		iwlagn_dealloc_agg_txq(priv, txq_id);
+ 		return ret;
++	}
  
- 		len = nvme_process_ns_desc(ctrl, &info->ids, cur, &csi_seen);
- 		if (len < 0)
+ 	spin_lock_bh(&priv->sta_lock);
+ 	tid_data = &priv->tid_data[sta_id][tid];
 -- 
 2.53.0
 
