@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023595;
-	b=JLVG3MAxuvMzVdx0NJegnkYZmvLp9cS7Yq4azby+47/+W2aNsh7Q7Z1COlf2V6+3ajcS
-	 2ntZ8WJISZaAXs8NNHkOJIQuanLUgniqD2eJUTbv+9yhyPAOIlaBWYSRLNEpjEJKW7afx
-	 fwwsXhbb6VEJmmZ9UkBcfedkGnvfQP+vFVcSzfi3FKtwlLvXFB8l8miPJ1gyyvFgnzc0v
-	 /dhf8E69skGt07DVRkauCYKGGGw1ZucJIHgA6VlLT1nylu/mXydx5xPr3QEl2YJtSeRYY
-	 noqQpMCfHFjXIViGrfLbp8iuLkn9hADmPlsHa0jbRk22oNZSKGzCsZ76OUR4pkYWqdQ==
+	t=1795023598;
+	b=L/lcSgh/j/ZRssLjvjkHCu7AJbfskKakqXlQUn2vTD2q2CtAzpuqTzgTYKMVsSw++TqS
+	 A6VUV+rIx7aaREKf9dvki8RhpcSiyOvo/e9NTqoQ4yItOR8oml4sEAL/3bAC45xzbQnpy
+	 F84ah4xFOuEUqjDnAs+7TOgYF8f2bTIiue/9it7uBOgjGp9WNxKxxD3GOSCftTWpN9KNC
+	 ws5IPl4fpcZy4gqfXuL9bE/yZln7+O6Olldn4qoCMwXq0EkOq9dKFZcP78+sqxxj8qyi3
+	 LY7+hfUuX9c8FwkHslRsvpMVDp+gOS40ckEp5vVjn0TvZrQbvTjxKbjVL71e3tnG3wQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023595;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023598;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FadU00Q78autfYAhq+fNJbOUosLAWvE78zlOy0xwIhE=;
-	b=EAQHe5NGFFNvbxp7ZmuGuVJZL6ODqsSf9hmLsrI5F/Fs1LcvYm2JVsFr4K6Pk/Gq0Enn
-	 bTVzzCsxHlWe8WfUkxfPPCa+58O6JzSmC9rgvCP3JkjmGqw890TfzTMHOqdJDHWw1/bgm
-	 6stuBILyveHDR2GT4oKzdyUlEEBb7vGIhxR0tqZJqGYRPYWMeTLheSnKOsYMQa7rKi9J6
-	 VeGbScsxzx/btnIyQfxkivQO8r5+BS7Gs/MK3GS1wPuejxQwYAmT17yuPTD1ZhVeiK2jx
-	 Uph5RsYKDR6z1es70wK6t6+J7deiGHJbrPHkGe+AIlirMNYZG4i5+FucHsvPhQkgZsQ==
+	bh=d5SI0x9bSg1y1wc8UG+Wy1n7R0R5ls8aupRYXRMkOZM=;
+	b=2KYf2dRWRjr9xCwHGUgGC3t1wiLW5BEiMjUeVtr0i/mP2prAg40vW9kdjqHQ3ZDRHiu0
+	 1MV0Ay2wrL/jfdm/w6qsB6mII0qK1E8zbL8E2Z8xgTW93IzF8kXEcxG+viIZETUkjEWnT
+	 RbQVk2QoyVbCHipGsM1zD/npAB8WeK9Uz9sBDJDi/OYvzpotWfKdWX9p+hX2mpqUy/+e2
+	 R1b1PZY3MAjmya35u/FRIRStqiLKrH9Az3ZjNeLRhI9WIgY9UFBOdBviljKnFHB/HvZrv
+	 CJPJp+bRNwcAMqk4GruYiRHdsftr5jAb6kCZTD6B2wOXYigm+8isXgnhqxHKi8ufVGQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YV6cuDkh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1r0mZMs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E51606A32A;
-	Wed, 18 Nov 2026 17:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0CD5606A31C;
+	Wed, 18 Nov 2026 17:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YV6cuDkh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934CA1F000C4;
-	Wed, 18 Nov 2026 17:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I1r0mZMs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 525671F000C4;
+	Wed, 18 Nov 2026 17:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023595;
-	bh=FadU00Q78autfYAhq+fNJbOUosLAWvE78zlOy0xwIhE=;
+	s=korg; t=1795023597;
+	bh=d5SI0x9bSg1y1wc8UG+Wy1n7R0R5ls8aupRYXRMkOZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YV6cuDkhQdEEoXPAt+cz752akfhlX0xezIV0w4gxFbhzc3pqLIKhx9uDSwoJ3BhhW
-	 Bn/cZJ+zdNDcJsmzYu+w5H8+FJ5SQ0MU9pFr2VkAsh+hbflw/WC9Zk1mv6vr9o8c00
-	 kdvgJ9Hpsn2VA2M3JsMJkEEV/AfGLr2SE93v8fMk=
+	b=I1r0mZMslnQSbnSI6cXqajQDYgB+5hZ0yJ83tYU+9qkxbwA31E4AFpkqx33w1H+7Z
+	 oFhhj2PJSGLnyxYdeBKPVyTq4vo0WeGwKSKmVX5ZTa+KTA3lXobbwWmW2vC+0Gkmfa
+	 YRCboM2tSDIaVIU15/0BpEg9wg+Zd4kRGP1ob7lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0423/2151] ACPI: video: Fix backlight unregistration ordering
-Date: Wed, 18 Nov 2026 15:35:58 +0100
-Message-ID: <20261118150137.465410481@linuxfoundation.org>
+Subject: [PATCH 6.18 0424/2151] cgroup/dmem: Fix eviction helper reference in dmem_cgroup_try_charge()
+Date: Wed, 18 Nov 2026 15:35:59 +0100
+Message-ID: <20261118150137.501350041@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,58 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 46577d36611953d1b99e86493289cfc824116ad2 ]
+[ Upstream commit e8f69fe59a104b4a97a3365dbb43c72996c2acde ]
 
-In acpi_video_dev_unregister_backlight(), the sysfs interface of the
-cooling class device may access the brightness object under the
-backlight device's ACPI companion, so that object cannot be freed
-before unregistering the cooling class device.
+The kernel-doc comment of dmem_cgroup_try_charge() refers to
+dmem_cgroup_evict_valuable, which does not exist. The name is
+dmem_cgroup_state_evict_valuable. Say dmem_cgroup_state_evict_valuable.
 
-Adjust the code to take that into account.
-
-Fixes: 67b662e189f4 ("ACPI / video: seperate backlight control and event interface")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-[ rjw: Fixed the Fixes: tag ]
-Link: https://patch.msgid.link/3429468.aeNJFYEL58@rafael.j.wysocki
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: b168ed458dde ("kernel/cgroup: Add "dmem" memory accounting cgroup")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_video.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/cgroup/dmem.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
-index be8e7e18abcab..1d56b42aef669 100644
---- a/drivers/acpi/acpi_video.c
-+++ b/drivers/acpi/acpi_video.c
-@@ -1841,6 +1841,12 @@ static int acpi_video_bus_register_backlight(struct acpi_video_bus *video)
- 
- static void acpi_video_dev_unregister_backlight(struct acpi_video_device *device)
- {
-+	if (device->cooling_dev) {
-+		sysfs_remove_link(&device->dev->dev.kobj, "thermal_cooling");
-+		sysfs_remove_link(&device->cooling_dev->device.kobj, "device");
-+		thermal_cooling_device_unregister(device->cooling_dev);
-+		device->cooling_dev = NULL;
-+	}
- 	if (device->backlight) {
- 		backlight_device_unregister(device->backlight);
- 		device->backlight = NULL;
-@@ -1850,12 +1856,6 @@ static void acpi_video_dev_unregister_backlight(struct acpi_video_device *device
- 		kfree(device->brightness);
- 		device->brightness = NULL;
- 	}
--	if (device->cooling_dev) {
--		sysfs_remove_link(&device->dev->dev.kobj, "thermal_cooling");
--		sysfs_remove_link(&device->cooling_dev->device.kobj, "device");
--		thermal_cooling_device_unregister(device->cooling_dev);
--		device->cooling_dev = NULL;
--	}
- }
- 
- static int acpi_video_bus_unregister_backlight(struct acpi_video_bus *video)
+diff --git a/kernel/cgroup/dmem.c b/kernel/cgroup/dmem.c
+index 250810f22525c..3d769ebd03fc8 100644
+--- a/kernel/cgroup/dmem.c
++++ b/kernel/cgroup/dmem.c
+@@ -644,8 +644,8 @@ EXPORT_SYMBOL_GPL(dmem_cgroup_uncharge);
+  *
+  * When this function fails with -EAGAIN and @ret_limit_pool is non-null, it
+  * will be set to the pool for which the limit is hit. This can be used for
+- * eviction as argument to dmem_cgroup_evict_valuable(). This reference must be freed
+- * with @dmem_cgroup_pool_state_put().
++ * eviction as argument to dmem_cgroup_state_evict_valuable(). This reference
++ * must be freed with @dmem_cgroup_pool_state_put().
+  *
+  * Return: 0 on success, -EAGAIN on hitting a limit, or a negative errno on failure.
+  */
 -- 
 2.53.0
 
