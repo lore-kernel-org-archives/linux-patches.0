@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050607;
-	b=YGsfkluoqGwJ9iVXvmsOKtioCo5y+2/yX0MnXCIqscrW4s/ZKTb/kdR3ZeZORHsvyCOo
-	 FX7h8/hdmEh2ohjk7YKS0NLnMKH/2e4VYdtJFldUXAD+M4c7XBCRn2h0MFRXfI/tqlFdG
-	 0Zu/G6EEYb7A/qV3OgoLUz048EH85UBjSOHcbCPae7kMimxxW/F54SvIR/37CgSlv4FUz
-	 9c6aXCpBHG+epzcYs/e0DsEf89UXwcwduaz2n3m3GPcDh7AkREXzAdz3emvAt04BzbKPr
-	 zsGMqYjB8liOtqEy893/SmP8q8xq+7+L9sg//9YiFVv4VxKP7afPUKcK9llBSWu9lOg==
+	t=1795050610;
+	b=JyvMsFBERUw4WF98j86sibmrshICCjpnCpzbSKIOKYDhY6hBp+RxVm+QbUu2g8t+aHSJ
+	 YJF+J5PglUuucJlwgJ89JGmIUOnXUYoz8JAUfHFHnqHNcW3Nh83u/+oxrKO7uTgJDHKMO
+	 dd2nkDsg5wCO80nlX7zzGiFDigTEEwiGy9HGFN5Ao7r1D8xtG2c4yq6M4lVy1fumCJvR6
+	 PipxvHS7DPpCBjNLgKngbrc/kFijuLmz7TMKu72GQ+RCT47nXZBLCv38iXur18JthpnlO
+	 9/2/3LCuB3ILYkuuk7o/EeQJNQVuuT+F89GCNIDAiTVgbNM2ld08h8kOgToEV84rUqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KTted/iaydlYjCBEKynLnB/hDwoUf3SkD0MZG6A+inU=;
-	b=ThWjcxkRqjtcXR3OJCpN/8C9ShlhHWp5GrBpGj6uND7RRFK9nsJdcz9j9fthXbCTXfB4
-	 YgQIWUTjnAKHqQeWkSZIEMHQ6TYKyxIzsO3VMlHfvgy9q4pzFYgA0wEUDCOwu3qb3I+U+
-	 JLyAwc1XI+Lp59LMyjFo2h6KkrkqPjtWMNuhzn2IRd7SIiTkCJBARkh/c4UMuL66OlvZL
-	 LzWL8qpyKUQiKQX0y1wa2xJkT6qDaRfCD8Vwv4BQMtQSxKlFWBk45BL+zRqRMZjt7XpqR
-	 OiAhrNMJcf70k6uozDMAz6UdPaeTME6qz6+mBgF92Ho7GT3lA3bb8j2R7kQH+yhk3VA==
+	bh=q39RnxjqH8Xcm5Tc6me87PuI+avmaUxq3b5nqotRLCM=;
+	b=oHeq2nMvL4BQOhJgLpMv8/jLMcr+2f5NN10oE0d7fFPsb6I6IwpI6kl41v0zd3Ns6Tbt
+	 0eBddPLw96t0oKzwM/uYZydTKDQg6Bm3BYI/3IJZyKqdRqLoExUXSxdciDyYrdVEIIVsj
+	 u9wTp0oB3lyoXxoN6PvqLvPrIwNME15BvAikgQZIisZUK0uI7ehHQxN9vIilkKj5cqhmH
+	 xob+qimcs644UT8Z5T4wARpqExA335NJNd+sbU0cQmCOKoR45xuhrLzH55ltBZlAdux1p
+	 Yf/QwCX9PonBSCnhe78i2EBRRe6mQvh8nf9eH56xkzwaSl9tOgQakmXHiYe19NbNpvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cM1X7YFn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="JMvMb/oO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0D5606A320;
-	Thu, 19 Nov 2026 01:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5C7606A320;
+	Thu, 19 Nov 2026 01:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cM1X7YFn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1FF1F000C4;
-	Thu, 19 Nov 2026 01:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JMvMb/oO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094221F000C4;
+	Thu, 19 Nov 2026 01:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050607;
-	bh=KTted/iaydlYjCBEKynLnB/hDwoUf3SkD0MZG6A+inU=;
+	s=korg; t=1795050610;
+	bh=q39RnxjqH8Xcm5Tc6me87PuI+avmaUxq3b5nqotRLCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cM1X7YFnROFRfJ+YV9RpVLNlpcrEFRgtbeSXe4nUYO6ukEAj1uvWB2WU2eyQ6qc76
-	 B3ZRftLZf1WUppBg0ajojJH9Y1ZxIGUv8xyJY/eVTQ9aGs88/LKie4C7Drz0x9Eya0
-	 //h4ep1r1IKGJ09w1gVxXiW3PDiLuZNwgZygHcx4=
+	b=JMvMb/oOUg2I+KWS1CI9XsWSrWvxuWfas7iCP8FKMs/3FJEfH+t1Avc9bQoXHtt+a
+	 lBvuO+BkGmSuL9qiqb8HWHuAvHeD0Bx7+Tdb5FDpFod3/hCKtDHP+SH+nsgAykNn/D
+	 PGPF52QYMzhD8g34tjZAhmMliujd8k4SKqGHA+KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c98b21427617af7f547a@syzkaller.appspotmail.com,
-	Rongzheng Wang <testwrzwrz@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
+	Daniel Thompson <daniel@riscstar.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2769/2857] nvmet: use the enabled transport when disabling a port
-Date: Wed, 18 Nov 2026 16:03:23 +0100
-Message-ID: <20261118150341.303981072@linuxfoundation.org>
+Subject: [PATCH 6.1 2770/2857] kdb: unify CMD_BUFLEN definition into kdb_private.h
+Date: Wed, 18 Nov 2026 16:03:24 +0100
+Message-ID: <20261118150341.339095178@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,98 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rongzheng Wang <testwrzwrz@gmail.com>
+From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
 
-[ Upstream commit 60385038754ed9fb05dab127b35f88c702252505 ]
+[ Upstream commit 2a052074582d976bfa81e41a0337d8ae6dd1dc65 ]
 
-nvmet_disable_port() looks up the transport from the current
-disc_addr.trtype, while nvmet_enable_port() records the transport in
-port->tr_ops.  If trtype is changed while a port is being enabled, the
-port can be removed through a different transport, passing the private
-data of the original transport to the wrong ->remove_port().
+CMD_BUFLEN was defined separately in kdb_io.c (256) and kdb_main.c
+(200), causing kdb_main.c to use the wrong size when formatting the
+prompt string into kdb_prompt_str (which is 256 bytes).
 
-The same mismatch is reachable with loop and RDMA: loop add_port()
-leaves port->priv NULL, and RDMA remove_port() dereferences it.
+Move CMD_BUFLEN (256) into kdb_private.h so all users share a single
+consistent definition, and remove the local definitions from both
+files.
 
-Use port->tr_ops for removal and serialize trtype changes with
-nvmet_config_sem in nvmet_addr_trtype_store(), so the transport that
-added the port is also the one that removes it.
-
-Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
-Reported-by: syzbot+c98b21427617af7f547a@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=c98b21427617af7f547a
-Link: https://lore.kernel.org/all/6acbc835.a150a118.27e199.003c.GAE@google.com/T/
-Signed-off-by: Rongzheng Wang <testwrzwrz@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
+Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+Link: https://lore.kernel.org/r/l6b6bomrw3bvkehlv73fyghk6loz6jpdwqk5c4nthnhl7j7kzk@4jjhfpzv5zon
+Signed-off-by: Daniel Thompson <daniel@riscstar.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 16 ++++++++++++----
- drivers/nvme/target/core.c     |  8 +++++---
- 2 files changed, 17 insertions(+), 7 deletions(-)
+ kernel/debug/kdb/kdb_io.c      | 1 -
+ kernel/debug/kdb/kdb_main.c    | 6 ++----
+ kernel/debug/kdb/kdb_private.h | 3 ++-
+ 3 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index cece01a22d153..2ccbcf2baf481 100644
---- a/drivers/nvme/target/configfs.c
-+++ b/drivers/nvme/target/configfs.c
-@@ -317,10 +317,15 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
- 		const char *page, size_t count)
- {
- 	struct nvmet_port *port = to_nvmet_port(item);
-+	ssize_t ret = count;
- 	int i;
+diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
+index 95bccbe3495cf..3be50493de7c5 100644
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -25,7 +25,6 @@
+ #include <linux/kallsyms.h>
+ #include "kdb_private.h"
  
--	if (nvmet_is_port_enabled(port, __func__))
--		return -EACCES;
-+	down_write(&nvmet_config_sem);
-+
-+	if (nvmet_is_port_enabled(port, __func__)) {
-+		ret = -EACCES;
-+		goto out;
-+	}
+-#define CMD_BUFLEN 256
+ char kdb_prompt_str[CMD_BUFLEN];
  
- 	for (i = 0; i < ARRAY_SIZE(nvmet_transport); i++) {
- 		if (sysfs_streq(page, nvmet_transport[i].name))
-@@ -328,7 +333,8 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
- 	}
+ int kdb_trap_printk;
+diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
+index 35aa2e98a92a9..bf03125fe9406 100644
+--- a/kernel/debug/kdb/kdb_main.c
++++ b/kernel/debug/kdb/kdb_main.c
+@@ -865,8 +865,6 @@ static int kdb_exec_defcmd(int argc, const char **argv)
  
- 	pr_err("Invalid value '%s' for trtype\n", page);
--	return -EINVAL;
-+	ret = -EINVAL;
-+	goto out;
+ /* Command history */
+ #define KDB_CMD_HISTORY_COUNT	32
+-#define CMD_BUFLEN		200	/* kdb_printf: max printline
+-					 * size == 256 */
+ static unsigned int cmd_head, cmd_tail;
+ static unsigned int cmdptr;
+ static char cmd_hist[KDB_CMD_HISTORY_COUNT][CMD_BUFLEN];
+@@ -1347,8 +1345,8 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
  
- found:
- 	memset(&port->disc_addr.tsas, 0, NVMF_TSAS_SIZE);
-@@ -337,7 +343,9 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
- 		nvmet_port_init_tsas_rdma(port);
- 	else if (port->disc_addr.trtype == NVMF_TRTYPE_TCP)
- 		nvmet_port_init_tsas_tcp(port, NVMF_TCP_SECTYPE_NONE);
--	return count;
-+out:
-+	up_write(&nvmet_config_sem);
-+	return ret;
- }
+ do_full_getstr:
+ 		/* PROMPT can only be set if we have MEM_READ permission. */
+-		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
+-			 raw_smp_processor_id());
++		snprintf(kdb_prompt_str, CMD_BUFLEN,
++			 kdbgetenv("PROMPT"), raw_smp_processor_id());
  
- CONFIGFS_ATTR(nvmet_, addr_trtype);
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 817127153f73d..e2367e6f566a3 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -373,11 +373,13 @@ void nvmet_disable_port(struct nvmet_port *port)
+ 		/*
+ 		 * Fetch command from keyboard
+diff --git a/kernel/debug/kdb/kdb_private.h b/kernel/debug/kdb/kdb_private.h
+index 1f8c519a5f81c..e1d712e872cb7 100644
+--- a/kernel/debug/kdb/kdb_private.h
++++ b/kernel/debug/kdb/kdb_private.h
+@@ -226,7 +226,8 @@ extern void kdb_kbd_cleanup_state(void);
+ #define kdb_kbd_cleanup_state()
+ #endif /* ! CONFIG_KDB_KEYBOARD */
  
- 	lockdep_assert_held(&nvmet_config_sem);
+-extern char kdb_prompt_str[];
++#define CMD_BUFLEN 256
++extern char kdb_prompt_str[CMD_BUFLEN];
  
--	port->enabled = false;
--	port->tr_ops = NULL;
-+	if (!port->enabled)
-+		return;
- 
--	ops = nvmet_transports[port->disc_addr.trtype];
-+	ops = port->tr_ops;
-+	port->enabled = false;
- 	ops->remove_port(port);
-+	port->tr_ops = NULL;
- 	module_put(ops->owner);
- }
+ #define	KDB_WORD_SIZE	((int)sizeof(unsigned long))
  
 -- 
 2.53.0
