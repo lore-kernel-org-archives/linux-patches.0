@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019697;
-	b=LbN5ITSFPbFEdGlZ3dqvu1Y2bxWhmPNf3fTQNCS22MzAmd5qtZL9uDOURXog4+6TGkZg
-	 /uFKDXwmgonw575zqVreoImb9q5lXujbgko6LYNLqpMumkMoYbeNZaxfPXsL9rhrIqMHV
-	 +rl1ORMQOTeD4X/np4umcSbxH8edsTuNAOoE8Qie5IcctdyPhsfbWAQPrAdfI0odn+6ad
-	 ey841wWytRh71c+nSHiz80rV8n2y3/ri8GUW1FJI+NQshJbHMM0FsAzcmHlhjnHUHQ2Pu
-	 36OaF+iXp7MOG5U7t4ZpUivoa/0AL5sEZY68vlBN31zo9THbEHd4oYU+Mqh7vEf83XA==
+	t=1795019699;
+	b=P/C6xIq/dzWzWeXiimN0E+ZLC+mHfq+qRssgYd6t/G5L40WE1maEsk6UaUwCso2GfDEP
+	 c5wO8sAqKuAYe98//RgBsRXSvibTxYvtBFs1HHvh7YL2T/NZKfr6O3kd4rZQy98T/aEJk
+	 v8FLQAXC6xLw4FqnubBMic0Q/cmJ+Ug83mzmRADbWGFU2Lv/tFuGlvqzMWvXJRPm5crRS
+	 0KEgRlrWRC0Fej3F+5G3kO83Iwzy+pZV6BzRbHR9wQE1mWBMIoBS7ImdayHf7NNciJmVH
+	 vyQvHRG8Ly6jm7JJOq+CCZj3K+pZNGw4BVQKyqeJChN3J+pw+PzrqydWVbVAbli9t6g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019699;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=LQgir0b4Vl/WbtH6lDsCdTNRhwTXP2Xd4P/ax154Kgc=;
-	b=chF8fl/5aG5IR9xwSIzC2yG7wC5//iMyOwUIKnTl0RScM2PD4PiVzJPoc7qqaRiorjWL
-	 SKSw62CVeeJxFnsqQi5c/wY/ZX5dA8/WnoLUWPtKVicVhXWxcLMKMCzbwBH0MtVkhW8is
-	 zGtv1HdjQiNGpHKi3wyHapHbNy6WCstzkyPk17bIjSYOa4gQMB+sSEKI/IaiZXxvWAXNQ
-	 265nsDKO447ZDTz4DJBKFQUZp5LH8GWi5Alo8RzQGRThjNA9pwcuOocPkmSijChqyic55
-	 JKZNGJrQyxyHwPsOHL61h0RayIoecSSXkZmWz8cEm+2vlRssvKkegcuESi1JqWBtK8A==
+	bh=/kl700NnKvc22U5qutNPHIZCT/LBPc97+fI/O3Fd1uI=;
+	b=ukpirj88e+24wkBE1G+r2L7QA6EiyLyEeNJYaVUdN+sWo0OuPZ7s+r3dYfKTcX8jvQAn
+	 UIHC+rvfpKa7ZGxyzBnDa+Qg2MkLQ4/fc7qV91lDm92J9aXzLJnUUB3xDzeQn/vPLsxvM
+	 4vDLpLoVz5uGegZ4qpqL9AdXfovp1bAgzd/RML4xiZZHwiqZAgXqBH37DdBrUHU7PGI5P
+	 zJF1bi6ut0md+eGB8bapph+3GXh7W/b3zD3fPeV1NpLkV2lRO/ykxlgVL7ykbTKsGxDjy
+	 /HeyDmsztJzxqTUGGQo1nmTLB14ZR97unr6+36WQFcpNdrJRw2OgsVgwAarup5Tf2RQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVpwOc9b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oxavsQ/V";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F55F606A335;
-	Wed, 18 Nov 2026 16:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F2C606A331;
+	Wed, 18 Nov 2026 16:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVpwOc9b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6851E1F000C4;
-	Wed, 18 Nov 2026 16:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxavsQ/V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297571F000C4;
+	Wed, 18 Nov 2026 16:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019696;
-	bh=LQgir0b4Vl/WbtH6lDsCdTNRhwTXP2Xd4P/ax154Kgc=;
+	s=korg; t=1795019699;
+	bh=/kl700NnKvc22U5qutNPHIZCT/LBPc97+fI/O3Fd1uI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yVpwOc9bCYexjsh0Lob+xV/79R9/hIPlItGbxjsDY50Dii+as83MO/ytCmOj+lE/I
-	 zb87okw858ZXMrxWLJCaVc07P9Nk7eLVdeFCrW6fFq2Em3k28uJGb320gH2+Fi7+F+
-	 xruY6NRKRe/sjh5XWYJncEurFH6hLkejPSnRJCsA=
+	b=oxavsQ/V6AN0yQR3CCF0zfaXpJ1tZ1kC4nMJGNhnZlMfEHcpOGXutR526g9m69CBO
+	 oU2PbzJbxqGWuh+dHiG4BNugY32ycIBAUb7S7p/ygWvd7JrL3KVm8HdFvJ+iLddgwY
+	 PufUfB+SxrV1JP8MU+flhagniSSTqS2jzw59DABk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nir Yehoshua <nir@ciphersecuritylabs.com>,
-	Ahmed Yaseen <yaseen@ghoul.dev>,
+	Daasaradhi Mannava <daasaradhimannava@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1687/2651] platform/x86: asus-wmi: validate custom fan curves on enable
-Date: Wed, 18 Nov 2026 15:48:47 +0100
-Message-ID: <20261118150348.412827846@linuxfoundation.org>
+Subject: [PATCH 7.3 1688/2651] platform/x86: msi-ec: Report valid charge thresholds when unset
+Date: Wed, 18 Nov 2026 15:48:48 +0100
+Message-ID: <20261118150348.447131467@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,82 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Yaseen <yaseen@ghoul.dev>
+From: Daasaradhi Mannava <daasaradhimannava@gmail.com>
 
-[ Upstream commit bcbdfe03566ad0d01c6af3b5476e8cadffe4d3df ]
+[ Upstream commit a102207eaf4a18c60c2ffbdc421ad3d30bfed591 ]
 
-Custom fan curves reach firmware unchecked, so a curve whose temperature
-or PWM decreases from one point to the next is accepted. The firmware
-does not respect such a curve: a first point of 100% followed by 50%
-leaves every point running at 100%. The kernel keeps reporting the
-points that were written, so sysfs stops describing what the fans are
-actually doing.
+The charge thresholds are computed by subtracting a fixed offset from
+the raw EC value. When no charge limit has been set, the EC can hold a
+value below range_min (0x80 on an MSI GL65 Leopard 9SCXK), and reading
+the sysfs attributes returns nonsense:
 
-Check the curve when enabling and reject it if it is invalid. Validation
-is done on enable rather than on write because fan curves are written
-one point at a time and are inconsistent mid-write.
+  charge_control_start_threshold: -10
+  charge_control_end_threshold:   0
 
-Fixes: 0f0ac158d28f ("platform/x86: asus-wmi: Add support for custom fan curves")
-Reported-by: Nir Yehoshua <nir@ciphersecuritylabs.com>
-Signed-off-by: Ahmed Yaseen <yaseen@ghoul.dev>
-Link: https://patch.msgid.link/20260831-fan-curve-validation-v2-1-7274ca16c8fe@ghoul.dev
+Both attributes are documented to be within 0 - 100, and an end
+threshold of 0 wrongly suggests that charging is disabled.
+
+The store path already rejects values outside range_min..range_max.
+Apply the same range to the show path and report the maximum threshold
+for any value outside of it.
+
+Tested on an MSI GL65 Leopard 9SCXK (EC firmware 16U8EMS2.100) with
+the EC holding 0x80: the attributes now read 90 and 100.
+
+Fixes: 392cacf2aa10 ("platform/x86: Add new msi-ec driver")
+Assisted-by: LLM
+Signed-off-by: Daasaradhi Mannava <daasaradhimannava@gmail.com>
+Link: https://patch.msgid.link/20260916174812.11496-1-daasaradhimannava@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/asus-wmi.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/platform/x86/msi-ec.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index e4f8636f64623..53d694bffc618 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -3739,6 +3739,33 @@ static int fan_curve_write(struct asus_wmi *asus,
- 					 arg1, arg2, arg3, arg4, &ret);
+diff --git a/drivers/platform/x86/msi-ec.c b/drivers/platform/x86/msi-ec.c
+index 566dfc73cb67e..1762551e072ad 100644
+--- a/drivers/platform/x86/msi-ec.c
++++ b/drivers/platform/x86/msi-ec.c
+@@ -1279,6 +1279,15 @@ static ssize_t charge_control_threshold_show(u8 offset,
+ 	if (result < 0)
+ 		return result;
+ 
++	/*
++	 * The EC may hold an out-of-range value (e.g. 0x80) when no charge
++	 * limit has been set. Report the maximum threshold instead of a
++	 * meaningless (possibly negative) percentage.
++	 */
++	if (rdata < conf.charge_control.range_min ||
++	    rdata > conf.charge_control.range_max)
++		rdata = conf.charge_control.range_max;
++
+ 	return sysfs_emit(buf, "%i\n", rdata - offset);
  }
  
-+/*
-+ * A fan curve is a set of points the firmware interpolates between, so it
-+ * only makes sense if neither temperature nor PWM ever decreases along it.
-+ */
-+static int fan_curve_validate(struct device *dev, struct fan_curve_data *data)
-+{
-+	u8 *percents = data->percents;
-+	u8 *temps = data->temps;
-+	int i;
-+
-+	for (i = 1; i < FAN_CURVE_POINTS; i++) {
-+		if (temps[i] < temps[i - 1]) {
-+			dev_warn(dev, "fan curve: temperature decreases at point %d (%u < %u)\n",
-+				 i, temps[i], temps[i - 1]);
-+			return -EINVAL;
-+		}
-+
-+		if (percents[i] < percents[i - 1]) {
-+			dev_warn(dev, "fan curve: pwm decreases at point %d (%u < %u)\n",
-+				 i, percents[i], percents[i - 1]);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static ssize_t fan_curve_store(struct device *dev,
- 			       struct device_attribute *attr, const char *buf,
- 			       size_t count)
-@@ -3823,6 +3850,11 @@ static ssize_t fan_curve_enable_store(struct device *dev,
- 	}
- 
- 	if (data->enabled) {
-+		err = fan_curve_validate(dev, data);
-+		if (err) {
-+			data->enabled = false;
-+			return err;
-+		}
- 		err = fan_curve_write(asus, data);
- 		if (err)
- 			return err;
 -- 
 2.53.0
 
