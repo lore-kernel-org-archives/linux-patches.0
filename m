@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036275;
-	b=R+fcFkhzIZiW+bzE3cyGGHwiTGweB9M9Vo7FPvGcpl4vu54JdmekzK4B5tqSv9LbkRBs
-	 whpIuTzyMh3b96po9wKGshpHSKzI7Jt3kTOvCp32KBiIcskD5SGn6jDc1h6XrtHpLz8F8
-	 R38ZNo+nkP7V/cSNLd08O0Agl6SYmOm6rcC59FbXL401r79CfE+X79CiZ4O5XqgDKTWX2
-	 dLCOCVjMRhjwcXUGYAQ5pLm7RZJ1V0Tbx5ppuqpB8STEFuQr9CAp/5CiC0x/P8XIVDRqn
-	 RsZJ0b5+Doeuq9lniUrrQzYqfdw+D9A2eFupLRbKbUimRB/DcGWIkgipbnbgMn4SiLQ==
+	t=1795036278;
+	b=5ioEWMSW0gYnojUMbTW0tPM5zwTtgLQgKX9gDFkFBE0NSe5IIiJl6KdghYEymugBf+47
+	 jLQMSvcKxVizvCXRctD0qpNReQRcmDuYiEdgazQ4afh1hRM2y4Vv8+moMmQFO86kVx2jK
+	 UZCkdsigiabGnWyzeGvk5bUwu+ezoq0j2c/C5KgMwYaXpoSxfUHkKxZROzbSejDCbiN1u
+	 DHiQwr5wUMh3uZ5+yUYBskYX46VVyOrmoKV4fO9Uw0/oDvrdcpxFlZN6yWd+jCF+cDUy8
+	 8Ux+nqUHS4Xn4Wkrdle9ope6/wax8Rq1bzSVvczJhL7aaAW/A7TgyWcUV/oNm/hioyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LtURPgn5lytlD9DGtWG62IBSuPWVIZ60sZYR24s9iBs=;
-	b=momjhJG9z+nqxc/V+6Ijak0CojlS0zGJ6w0vG17ynuOxyvyssSPAiKKBZXOZ2RaHyKWR
-	 MMRHxbOK38B4RgzqG+y1Rz/wOEbreRWb0WwF9twBPq26STqaC3rXRYfaRIT/RU3aSDSGF
-	 tbmx2tk7i9IU6lPUP7Je1QLs5DO/NAFU05/MJ5pmw/t+bju3lzGIzV6laQrCoNt/RPgiU
-	 +Y5/P2SmfMhEV+Fs7VW2XG8D+KQ+VDBLmuqV29AAKGUaQg5q1h0PcwA/UkBWzxeBYLnK/
-	 Ny0S4bUANxQMHkMYQuV7Yk7+LqHul1a8Xi4+Xjb3fxCUNFt05olxrkuT3BviBAownbA==
+	bh=3tyUPK/uGzLulvM2u2tAhKyPXWU6n3L54H81H8j08L8=;
+	b=2g66kdctm/9J7/qIOW0xQh/Dd4uaPiZJzs4JxDrsBiwHlkr5QGmqbcVPnAsuPsaKb19n
+	 al6+w5Cowp/8DXZCeqLr4zSMsWOtIcqbK8wQ4uhGQLmyNyAKyfRn7Q54xD+OjmhMWq+mV
+	 G+fEHghJLjJISPDaTiKGcytAyABC3uBZGX2EWAjkVy5TEAA1WUamDlYaUDlX3yHc+Zj0S
+	 8KKgXvU/82pDenhdK7luJigy/4zzRUW5+IuU8CwECF/Tcl42xEkVi1ILK2HwdpKu06bev
+	 er955yx53GTvdlNiBebTmNu/fAmNHvJrCj9fXi2zbmf9EvLWRI2PrF2EAoDSi0+ghVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A44ygU1W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IvV3NkH0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B834606A339;
-	Wed, 18 Nov 2026 21:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8C760A2609;
+	Wed, 18 Nov 2026 21:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A44ygU1W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C315B1F000C5;
-	Wed, 18 Nov 2026 21:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IvV3NkH0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5E41F000C5;
+	Wed, 18 Nov 2026 21:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036275;
-	bh=LtURPgn5lytlD9DGtWG62IBSuPWVIZ60sZYR24s9iBs=;
+	s=korg; t=1795036278;
+	bh=3tyUPK/uGzLulvM2u2tAhKyPXWU6n3L54H81H8j08L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A44ygU1W8+9uW1R+RTr6ufiL6nQS4aOSFC2DdQDtx39O4jKJWhFGXfiNcPtNRltZb
-	 edf0gpn8xi9f5jTMxaMcD4XhTb6Z4koyaGtUJeE8ADVHGBBFE/Mg0AWo832ENU6GBO
-	 eAukuzpCdRBmyxk2K/NGcSUsbwZmiyF155/QAN9E=
+	b=IvV3NkH0mNVTnyPmFzn3KL5nZlIKyo33fa8cZpQLdbMhhnCmH+iwBe9+5hirQ+ODZ
+	 ticSATL63XxtaTXbzHx6a/BntpQRxvvqt3d72yDcgm0hqp32O+4/PvCirOyq7RMrAa
+	 hNOKKeU6m2A6RHtXQmuxz396yazI1iF1bXvz0sq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1000/3318] media: mtk-jpeg: Fix runtime PM leak in mtk_jpegenc_worker()
-Date: Wed, 18 Nov 2026 15:27:02 +0100
-Message-ID: <20261118150349.858134806@linuxfoundation.org>
+Subject: [PATCH 6.6 1001/3318] media: mediatek: vcodec: destroy core workqueue on remove
+Date: Wed, 18 Nov 2026 15:27:03 +0100
+Message-ID: <20261118150349.893384687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,52 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 7ec8fd17f3a8059dcf94101065a35d0136031794 ]
+[ Upstream commit ceb6e96122e1013550f378c738e621a6e82d246b ]
 
-pm_runtime_get_sync() leaves the device's runtime PM usage count
-incremented even when it fails, and a failed clk_prepare_enable()
-drops the reference as well.  mtk_jpegenc_worker() jumps to enc_end
-in both cases, which does not call pm_runtime_put(), so the
-reference taken by the successful resume is leaked.
+The decoder probe allocates core_workqueue for architectures with a
+LAT processor. The probe failure paths destroy the workqueues, but the
+remove() function only destroys decode_workqueue.
 
-Use pm_runtime_resume_and_get() for the resume failure and release
-the reference explicitly when the clock cannot be enabled, as
-mtk_jpegdec_worker() already does.
+As a result, removing a decoder on LAT architectures leaves core_workqueue
+allocated after the device lifetime has ended.
 
-Fixes: 5fb1c2361e56 ("mtk-jpegenc: add jpeg encode worker interface")
+Destroy core_workqueue during remove for latency-based decoder
+architectures, matching the cleanup performed by the probe failure
+paths.
+
+This issue was found by manual code inspection.
+
+Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index ddc74a0da6522..5a1ae5cd44b95 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1634,7 +1634,7 @@ static void mtk_jpegenc_worker(struct work_struct *work)
- 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf, true);
+diff --git a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
+index 69bd978e68a5e..578b2e16e8510 100644
+--- a/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/mtk_vcodec_dec_drv.c
+@@ -545,6 +545,8 @@ static void mtk_vcodec_dec_remove(struct platform_device *pdev)
+ 	struct mtk_vcodec_dec_dev *dev = platform_get_drvdata(pdev);
  
- 	mtk_jpegenc_set_hw_param(ctx, hw_id, src_buf, dst_buf);
--	ret = pm_runtime_get_sync(comp_jpeg[hw_id]->dev);
-+	ret = pm_runtime_resume_and_get(comp_jpeg[hw_id]->dev);
- 	if (ret < 0) {
- 		dev_err(jpeg->dev, "%s : %d, pm_runtime_get_sync fail !!!\n",
- 			__func__, __LINE__);
-@@ -1645,6 +1645,7 @@ static void mtk_jpegenc_worker(struct work_struct *work)
- 	if (ret) {
- 		dev_err(jpeg->dev, "%s : %d, jpegenc clk_prepare_enable fail\n",
- 			__func__, __LINE__);
-+		pm_runtime_put(comp_jpeg[hw_id]->dev);
- 		goto enc_end;
- 	}
+ 	destroy_workqueue(dev->decode_workqueue);
++	if (IS_VDEC_LAT_ARCH(dev->vdec_pdata->hw_arch))
++		destroy_workqueue(dev->core_workqueue);
  
+ 	if (media_devnode_is_registered(dev->mdev_dec.devnode)) {
+ 		media_device_unregister(&dev->mdev_dec);
 -- 
 2.53.0
 
