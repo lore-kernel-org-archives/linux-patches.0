@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028331;
-	b=dwWjcZNuiDNIc/yYXvB5QmM/1BF8Y5iiENzCDEUhJB2uy+To4qW2dngEXMh43TgReLl5
-	 lt3uH5K7wgdX51J7d7wh+WJpMp26GdLAQcuqyisF7W/QDnVJbfXWd3e22r582lafh5fE7
-	 GajMUJbnE9owI0BMgmki9c+H+CnNJdnrnyVlia5/pAez+50JUQRFmIgGQpHewrnvEkN1Z
-	 3gkghcR3QgBT71Z4x8Eq+WINkCwo+ExwdNrdlYUooEwP//o6xMQvUrmDTLdQHeYM8anAZ
-	 b64fIhv4h8gvu059l2fD6N1gP033rjJv6XG+OyM1RZor3/j5MGOcFWUz+LWPa3n+Lpw==
+	t=1795028334;
+	b=vnEfzL7rOFANDWQ+msT8kIyk0B74URQ1FixRT+n1eGwBAhmGRjhnS2kNdGBOpU6V3kjd
+	 SxnjCKdYI3uRnADjM3J+OecDbgZmB2f8NG/1CmVE6fS260nTKs8CgLYZG9Y1hAHj01B1s
+	 8NlmPsBDXC+eeyMFe7hhwc03nh740nzlTKdNcp8psN0D0fCbLP7qJon4vGv2ADi5yCD62
+	 y+U4F84gxhedVV1VFDC+Cz0eHWdj1mNt3+/yynU2Zk1Hn/kGSujsAG+wrg5coWITdwB/V
+	 JpfkP4vKkmt51jXYI42RNzBHdGK9/lL6yglsNSZCZB6XvQ7xZ5fPLdviK+e4wQ3Ln/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028331;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MNLZ1M47blvCQzdGzKr70uLAds1QBszEt3KUMzubcbA=;
-	b=2Yx7Rp73QefM6JpXdNa7YeN4QW6/znnOwM+XIfvg75F2r6oZauJCcrFsaZJY9vtKslGq
-	 Zc6+yxyHvVdlh6UAWcrzSLFM1XKRZDQzC7UYyXjYKw5AAQ06nEJcVCWahnk3756CoranH
-	 LP2rJONguuULylXfSn0EvnGzTuk3Kc/d9yomSsyh58oChhtTgkwboB4Moow3Bl4cZPj9J
-	 wtthClOgdfGxlT3fLHLdnAiCiqdlHO1nj/KpkfEfHmNAHwXyF4WHs5qjTW+1kN1mQojWB
-	 1rkrkp/oS64KsgGggxLPfqNAZLjRQabDXg93af6MEWf5Mb1a58re7LD1adkOSPMHEFA==
+	bh=t2TLniMdg9aDzFl3GrdO0qCoSRpG8MGZGoAwjK/aRNU=;
+	b=azBCI6x4B7hbr2Cntqbnr9kE7h2+LBSuOd70Jl61JZUyK6DFc7iqo1eUDmP3ePsjoBMQ
+	 MYUHIyJNzXtuYBr24rx893rRv1MjSZASSMF+8NIPaWYzm/9T9pVVJSG6JO422I2ikunVq
+	 HJuTQFkqx49o2xCJh6Rw9s4NzjHMrtMyRt4JxT2shYtbjVYM3s/rHs5XWV0UvUW9AoYKo
+	 JUcxF20d0w5COJMhBZcAD+Juc3GNuoLEBw+lApbSVSkxX4aMgF5/1MS6Vend9V66NKxqD
+	 8CMLdUFz4WbfdsPO0B2DlZi8IzYhftbFP+nbEZ+KDozJRebfcxPSbzDhpBSB8sc3tjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OlvKjSIX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EU6HFba0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D3060A2606;
-	Wed, 18 Nov 2026 18:58:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35C77606A33D;
+	Wed, 18 Nov 2026 18:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OlvKjSIX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED0F1F000C7;
-	Wed, 18 Nov 2026 18:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EU6HFba0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483381F000C4;
+	Wed, 18 Nov 2026 18:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028331;
-	bh=MNLZ1M47blvCQzdGzKr70uLAds1QBszEt3KUMzubcbA=;
+	s=korg; t=1795028333;
+	bh=t2TLniMdg9aDzFl3GrdO0qCoSRpG8MGZGoAwjK/aRNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OlvKjSIX4r2EkSSUSgxA6Y3roUykRnQ3lio56G64Z/TqkVPv9ZkE1QrXow6+3D10n
-	 Bmqnm7HJFLHKGCWaYpVeJyBjf3koCqs8mMXq0aKOQdeSncKtsE+X56cwG/m/3uUVvC
-	 hCRKyiY+pitnoAzfFt0ZxvqNH5sl83gWRR5CkfB0=
+	b=EU6HFba0S6oVXRbKP4IHPCfcKqPZhGxNV3Xd3kW15skon/55qk/Dogkd21pmk1XH0
+	 iKKSPj9fCa9aYH3Ep5/yXnhl0D0xAffVokHuYUOLu3g5QiTNdtLYEh8iI9GcSOC+So
+	 Ce7tZ62wcFDt2dJgPYyYjXu2DhI+jKbRWw+AZKcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2107/2151] gro: do not GRO GSO packets with inconsistent payload
-Date: Wed, 18 Nov 2026 16:04:02 +0100
-Message-ID: <20261118150238.450185261@linuxfoundation.org>
+Subject: [PATCH 6.18 2108/2151] net: bgmac: fix TX DMA unmapping and slot cleanup
+Date: Wed, 18 Nov 2026 16:04:03 +0100
+Message-ID: <20261118150238.484420946@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,88 +69,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit de788d8a7032475f900c16e9cc0c1417f4f719eb ]
+[ Upstream commit 4f45e97b3aac2282f2b436d97338c9c2c484d093 ]
 
-tcp_gro_receive() excludes empty non-GSO packets with the unsigned
-len - 1 check, but its GSO branch only checks that gso_size matches
-the held packet's MSS. A trusted TCP GSO skb can reach GRO again with
-no payload after TC pedit increases its TCP data offset.
+When mapping a fragment fails, bgmac_dma_tx_add() unwinds with the
+wrong slots. It passes the failed fragment's slot->dma_addr, which
+holds the mapping error, to dma_unmap_single() for the head. The
+fragment loop indexes from ring->end instead of ring->end + 1, so it
+unmaps the head a second time as a page and leaves the last mapped
+fragment mapped. None of the affected slots get their dma_addr cleared
+either, which includes the head slot when mapping the head fails.
 
-If the skb is fully linear, skb_gro_receive() then enters its fragment
-transfer path with nr_frags == 0. The do-while loop copies skb_frag_t
-entries backwards beyond both fragment arrays. An unprivileged process
-using its own user and network namespaces can trigger a KASAN
-slab-out-of-bounds write and panic through veth, pedit and GRE.
+bgmac_dma_tx_ring_free() unmaps every slot with a non-zero dma_addr,
+so tearing down the ring unmaps these addresses again. It also frees
+the skbs of pending TX slots but leaves slot->skb and slot->dma_addr
+set. The slots survive a down/up cycle, and bgmac_dma_tx_add() only
+sets slot->skb on the last slot of a packet. If a slot with a stale
+pointer is later used for the head or a fragment of a scatter/gather
+packet, bgmac_dma_tx_free() frees the old skb a second time when that
+slot completes.
 
-More generally, the payload of such a packet can be shrunk to any
-value, making it inconsistent with its gso_segs, and a GSO packet
-with gso_segs == 0 contributes no segment to the GRO packet.
+bgmac_dma_tx_ring_free() also picks dma_unmap_single() or
+dma_unmap_page() by looking at slot->skb, which is set on the last slot
+of a packet, while the head was mapped with dma_map_single() and the
+fragments with skb_frag_dma_map().
 
-Do not aggregate GSO packets with gso_segs == 0, and require the
-payload of GSO packets to be consistent with gso_segs and gso_size,
-the last segment being allowed to be short. This rejects the empty
-skb before either TCP merge helper, and covers both IPv4 and IPv6.
+In the error path, unmap the head and each mapped fragment from their
+own slots, and clear dma_addr on every slot the failed packet touched.
+In bgmac_dma_tx_ring_free(), choose the unmap function by the SOF flag
+of the descriptor like bgmac_dma_tx_free() does, unmap every slot
+before freeing any skb, since a packet can wrap around the end of the
+ring with its skb on the last slot, and clear both fields.
 
-Fixes: 5eddb24901ee ("gro: add support of (hw)gro packets to gro stack")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-[edumazet: check payload against gso_segs, refuse gso_segs == 0]
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028171350.2205175-1-edumazet@kernel.org
+This was found through code inspection by an LLM while hitting other
+bugs on an Asus RT-N16. It did not hit these ones specifically.
+
+Fixes: 9cde94506eac ("bgmac: implement scatter/gather support")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261028164839.28605-1-rosenp@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c         |  5 +++--
- net/ipv4/tcp_offload.c | 12 +++++++++---
- 2 files changed, 12 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/bgmac.c | 47 +++++++++++++++++----------
+ 1 file changed, 30 insertions(+), 17 deletions(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index f96e5024758e2..a7b3fdc1f7bae 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -518,9 +518,10 @@ static enum gro_result dev_gro_receive(struct gro_node *gro,
- 	NAPI_GRO_CB(skb)->count = 1;
- 	if (unlikely(skb_is_gso(skb))) {
- 		NAPI_GRO_CB(skb)->count = skb_shinfo(skb)->gso_segs;
--		/* Only support TCP and non DODGY users. */
-+		/* Only support TCP and non DODGY users, with a sane gso_segs. */
- 		if (!skb_is_gso_tcp(skb) ||
--		    (skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
-+		    (skb_shinfo(skb)->gso_type & SKB_GSO_DODGY) ||
-+		    !NAPI_GRO_CB(skb)->count)
- 			NAPI_GRO_CB(skb)->flush = 1;
+diff --git a/drivers/net/ethernet/broadcom/bgmac.c b/drivers/net/ethernet/broadcom/bgmac.c
+index 1835266fdd09f..b3f0ecc583fd5 100644
+--- a/drivers/net/ethernet/broadcom/bgmac.c
++++ b/drivers/net/ethernet/broadcom/bgmac.c
+@@ -208,19 +208,24 @@ static netdev_tx_t bgmac_dma_tx_add(struct bgmac *bgmac,
+ 	return NETDEV_TX_OK;
+ 
+ err_dma:
+-	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
+-			 DMA_TO_DEVICE);
++	slot->dma_addr = 0;
+ 
+ 	while (i-- > 0) {
+-		int index = (ring->end + i) % BGMAC_TX_RING_SLOTS;
+-		struct bgmac_slot_info *slot = &ring->slots[index];
+-		u32 ctl1 = le32_to_cpu(ring->cpu_base[index].ctl1);
+-		int len = ctl1 & BGMAC_DESC_CTL1_LEN;
+-
+-		dma_unmap_page(dma_dev, slot->dma_addr, len, DMA_TO_DEVICE);
++		index = (ring->end + 1 + i) % BGMAC_TX_RING_SLOTS;
++		slot = &ring->slots[index];
++		dma_unmap_page(dma_dev, slot->dma_addr,
++			       skb_frag_size(&skb_shinfo(skb)->frags[i]),
++			       DMA_TO_DEVICE);
++		slot->dma_addr = 0;
  	}
  
-diff --git a/net/ipv4/tcp_offload.c b/net/ipv4/tcp_offload.c
-index 3ae6b4e0763c0..d405159967125 100644
---- a/net/ipv4/tcp_offload.c
-+++ b/net/ipv4/tcp_offload.c
-@@ -343,14 +343,20 @@ struct sk_buff *tcp_gro_receive(struct list_head *head, struct sk_buff *skb,
- 
- 	mss = skb_shinfo(p)->gso_size;
- 
--	/* If skb is a GRO packet, make sure its gso_size matches prior packet mss.
-+	/* If skb is a GRO packet, make sure its gso_size matches prior packet
-+	 * mss, and that its payload is consistent with its gso_segs
-+	 * (the last segment can be short).
- 	 * If it is a single frame, do not aggregate it if its length
- 	 * is bigger than our mss.
- 	 */
--	if (unlikely(skb_is_gso(skb)))
-+	if (unlikely(skb_is_gso(skb))) {
-+		unsigned int segs = NAPI_GRO_CB(skb)->count;
++	slot = &ring->slots[ring->end % BGMAC_TX_RING_SLOTS];
++	dma_unmap_single(dma_dev, slot->dma_addr, skb_headlen(skb),
++			 DMA_TO_DEVICE);
 +
- 		flush |= (mss != skb_shinfo(skb)->gso_size);
--	else
-+		flush |= len <= (segs - 1) * mss || len > segs * mss;
-+	} else {
- 		flush |= (len - 1) >= mss;
+ err_dma_head:
++	slot->dma_addr = 0;
++
+ 	netdev_err(bgmac->net_dev, "Mapping error of skb on ring 0x%X\n",
+ 		   ring->mmio_base);
+ 
+@@ -535,17 +540,25 @@ static void bgmac_dma_tx_ring_free(struct bgmac *bgmac,
+ 		unsigned int len = ctl1 & BGMAC_DESC_CTL1_LEN;
+ 
+ 		slot = &ring->slots[i];
+-		dev_kfree_skb(slot->skb);
+ 
+-		if (!slot->dma_addr)
+-			continue;
++		if (slot->dma_addr) {
++			if (le32_to_cpu(dma_desc[i].ctl0) & BGMAC_DESC_CTL0_SOF)
++				dma_unmap_single(dma_dev, slot->dma_addr,
++						 len, DMA_TO_DEVICE);
++			else
++				dma_unmap_page(dma_dev, slot->dma_addr,
++					       len, DMA_TO_DEVICE);
++			slot->dma_addr = 0;
++		}
 +	}
  
- 	flush |= (ntohl(th2->seq) + skb_gro_len(p)) ^ ntohl(th->seq);
- 	flush |= skb_cmp_decrypted(p, skb);
+-		if (slot->skb)
+-			dma_unmap_single(dma_dev, slot->dma_addr,
+-					 len, DMA_TO_DEVICE);
+-		else
+-			dma_unmap_page(dma_dev, slot->dma_addr,
+-				       len, DMA_TO_DEVICE);
++	/* A packet can wrap around the end of the ring with its skb on the
++	 * last slot, so free the skbs only once every slot is unmapped.
++	 */
++	for (i = 0; i < BGMAC_TX_RING_SLOTS; i++) {
++		slot = &ring->slots[i];
++		dev_kfree_skb(slot->skb);
++		slot->skb = NULL;
+ 	}
+ }
+ 
 -- 
 2.53.0
 
