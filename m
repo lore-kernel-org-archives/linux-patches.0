@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029345;
-	b=lCdH/cdppMg9eZ0fWwusUJmgbnEnk7bgwUvXdwDsEQ32sZ+OLBK9HivELlzMJfgc2o17
-	 rnG6TACL1PZ0T4vbBfldCMHcpnBjqrxRG3LhjKVlezBfHX44IMEh3c3AVgdMLOvmu2Z1R
-	 l75gG3LSsWYPdjVdq/34gw/Trnq2xzdmH1/pnrYNZ2VtyC+eV7+qGAkBFmhQCJb3TlOFv
-	 dfb0rfRm72VPOL9gXg+vKQgaYnDA7fYybVT7DdMOGouJNVawOYpsYFPQ6yd334sJ4bqO6
-	 s8fozK12bwXHP+LUdFAQ8wZgVkXRf3It12S3SBMKSCmKgYbYJVSVXLgEealB1fXUYkg==
+	t=1795029347;
+	b=mCvQEIpWd9VIM1s0fxbzWpkcX54a9idQD/wQUt4fpv5qvPJmxNOOk2sTdtqzLssf7s45
+	 wlQINjmDV61LTMjKTlZiIgOmZn8uvp+HvCsB3oFHObga/RQtyI2VsdiUn/SU9j8U/Z1ef
+	 bcLex3M8S4mttmE9VhxuX6jUCg5U7GV+0sVA3gaWtDNNor/LvVawGpUhJb3zPm3M9zjd/
+	 ZBPCkqVkN1cwe1FGq16K/01OeVhnjhzGQbxpDgsy1KNSkYStCmQSN4MgFdSNyF6WMDwss
+	 3zGnpALTbtdpKf4MyJV8nGpE9HseX7NMGuML06ZKjyRsSY9eEWIM6pUx21odW4sQzSQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8md8+cs+kHE5VJxFNHGZoW3IOUFtLrytId63oVqg2/Q=;
-	b=fH5+SIPCgqnAIHm1R4oKz4DjT9uLhMph/O4HBvPA4eHKLvZuMGczFbr84ldJx1M5xCAo
-	 BtlmavCsRDZO9HDm/ZeCSUJ8u5U44huEJHKVu9ugrs/E7TqPVVdEbrfjLyW7ZC1kgVEIj
-	 z1Vfy6YFdKC8DbIIqYtMsCuCtX3DEDztTkGp/bFfoGVRkq3zRiLo1RGEiWGR89mifYgVL
-	 XfT7+GM11gqfNxZsvFzyeakFQwORjBLaf5CY2HfyVTHC9cEYHiUzMNcMW1BGesYXU7dfa
-	 jueZPJeUQJ0f0LNUsgw1Iq6mt0JpujWIDzG/JRQqs6LnYAHMaNElbk+E81KvV6kqMPg==
+	bh=EqBPOs1gO9nW2RBoJIgVAe2LJilj+NJopE+SHEiOKLA=;
+	b=JSErFRerc5JiaV3VCHgQqSLaktT0nGDbTpUSNSs6hl1LTQLKu6OibZQKeuxvUyxhUuz3
+	 +WzKhq638JCqAXVOUUaO7Zcx2znNilRR6/xu90zltQUj7p7/cU2Bh/SuS0TXUtnFo9PjD
+	 gyOojzCrMguwmI4JtmVc7nCcMk3pNnPksKbrVBYSf9lbsxD62af5Op46PIyHK8clnI/QH
+	 Sryu/IcwGLXb9xt4Uy9Ir/BEhGMk8+qLZPOTi2ka5ApwKZJUjVRqC0+hCXVwaOxq3IHMd
+	 B5cEVTsOtd5a+JkhdDAMTkpDNdLEpiXHXLep+OCXtVVec8Hw6I4BZo5SY0eIpunS0EQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NRqaPQhj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x+EiwEgY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE17606A338;
-	Wed, 18 Nov 2026 19:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3070606A33B;
+	Wed, 18 Nov 2026 19:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NRqaPQhj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F0621F000C5;
-	Wed, 18 Nov 2026 19:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x+EiwEgY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202991F000CC;
+	Wed, 18 Nov 2026 19:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029344;
-	bh=8md8+cs+kHE5VJxFNHGZoW3IOUFtLrytId63oVqg2/Q=;
+	s=korg; t=1795029347;
+	bh=EqBPOs1gO9nW2RBoJIgVAe2LJilj+NJopE+SHEiOKLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NRqaPQhj+2iyoE20fu6902I781ObiInCYO6B8Wo+LRNQOeL+E10R7MZ1iU+G24pPT
-	 iInmWchhxJcZHhr8I20qYTqZjEMZ2cMNYtQKgZiNF+0/W1wLl77PBHqDLwdVlwwOSo
-	 MazjCNPMby2C6dDqEvLgVq5BnU7qDs207w9WyJhg=
+	b=x+EiwEgYvLiqDiOAtrjnkFNULzyBYN4AABpvYHpsvaOatPtSnfPly2naq8B9uIGYm
+	 hPEOaadU9yfyD9G0ag6o8OwQxC19uszQG7tjZhQrW2qJyCE/wpTfoTtmIsB920v6PP
+	 Ym6aJP9spCEfNesCwCwr/YtqDJInvpVJxTn+1zZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0315/1756] scsi: mpi3mr: zero out diagnostic buffer status memory
-Date: Wed, 18 Nov 2026 15:40:42 +0100
-Message-ID: <20261118150020.854994108@linuxfoundation.org>
+Subject: [PATCH 6.12 0271/1756] mtd: spinand: Fix spinand_manufacturer_ops kernel-doc
+Date: Wed, 18 Nov 2026 15:39:58 +0100
+Message-ID: <20261118150019.202849545@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,37 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 052aea807cfbcefaf5b6ed8202f65da1fc65f4a0 ]
+[ Upstream commit 7e874b1750a40f3dc9a629aeb72eba09c77f77e9 ]
 
-Memory allocated for the BSG diagnostic buffer status is not zeroed before
-it is copied back to user space. Several fields in this structure are
-reserved and never written by the driver. Use kzalloc() instead of
-kmalloc() to zero out the allocated memory.
+The kernel-doc heading for struct spinand_manufacturer_ops misspells
+and truncates its name as manufacurer_ops. As a result, kernel-doc cannot
+match the comment to the structure declaration.
 
-Fixes: 78b506984ebe ("scsi: mpi3mr: Add ioctl support for HDB")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-16-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Use the structure's actual name.
+
+Fixes: 7529df465248 ("mtd: nand: Add core infrastructure to support SPI NANDs")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_app.c | 2 +-
+ include/linux/mtd/spinand.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index a0c181049cf04..e75badb31aa04 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -1160,7 +1160,7 @@ static long mpi3mr_bsg_query_hdb(struct mpi3mr_ioc *mrioc,
+diff --git a/include/linux/mtd/spinand.h b/include/linux/mtd/spinand.h
+index 4bf33cefbae5f..66f8d52522350 100644
+--- a/include/linux/mtd/spinand.h
++++ b/include/linux/mtd/spinand.h
+@@ -230,7 +230,7 @@ struct spinand_devid {
+ };
  
- 	length = (sizeof(*hbd_status) + ((MPI3MR_MAX_NUM_HDB - 1) *
- 		    sizeof(*hbd_status_entry)));
--	hbd_status = kmalloc(length, GFP_KERNEL);
-+	hbd_status = kzalloc(length, GFP_KERNEL);
- 	if (!hbd_status)
- 		return -ENOMEM;
- 	hbd_status_entry = &hbd_status->entry[0];
+ /**
+- * struct manufacurer_ops - SPI NAND manufacturer specific operations
++ * struct spinand_manufacturer_ops - SPI NAND manufacturer specific operations
+  * @init: initialize a SPI NAND device
+  * @cleanup: cleanup a SPI NAND device
+  *
 -- 
 2.53.0
 
