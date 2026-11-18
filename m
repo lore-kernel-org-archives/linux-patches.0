@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022998;
-	b=iWFayjj94Jb+VxlfV7IJA7PAnLEBj5bm4kArEcfcALCt5m8uJjjlRhsGlURvFw/6a8+c
-	 oCiQZvVZCyJrP6BWZN4ReLQTDzTE7pOzeyvR6W6MSvcW6SX89yWiLIm7pfpKet5WliONy
-	 s8cZc1wCI044APhGolwO6fbOYh+ah6Wr3CLQyMv0ogKH9irGWUCFyTd/CtWdVjTeDqr0g
-	 urvL7fHXHuc2sm5LD8sDEfv53hjII7MIYk9zthw+UYH+Ny+rhPXDVHIZaIFw2DgpQ63xu
-	 7pz/H2vbsSgeXYyzKALBLjFXbkAz1gsZs7et1iTC8jv8jkfe/9hEqcAqAJ8S3m8F8RQ==
+	t=1795023001;
+	b=gu4/xbL1fBcB4NzqkX1yhTrEq1J/sTLIQywarTQOeITn/cT/7yzDLCW1EZstgT/1I9B3
+	 A/pDS237BJfSObPwccVxquMyVunqQBYKZuVreAbMT8/zUDLkmRIoUTwZMzun7zFUzgOkz
+	 MvUsO4ivrVJ9MRenXxR5BmliDExG8NSG5Di6j2ITTY+Xj40xo+WQBhRZNRUpgtlJy7LH6
+	 djvRTcjhZRUIhW6wFsyqwDTEVkZKExivHSObo3wMI0AbRvlLVaE2Zay328xnrMhEkwd5n
+	 YhU8S00y1jRALFsLwNd1R6opbWw7dxhN0xguV6yaZnpSOmw8GD45fcouR7Oo2uHpMlg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022998;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023001;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fuUeSoWZZDyBjAlUtwz7l+RJS6EVy77jeNh7M6VNLwM=;
-	b=x73UMN+cgMFoCVlaSA2r+XD5BIuW3YTWbrXqBRoGJmQyJZCz9VUHxoPRrNzW1gsStdjE
-	 SBIj5xQtI4IyJgoOxXgDQPtq+HzPCNZfOayovSfxV0UI2bQZRcV4r4+udKTgU1LB+cul7
-	 MPm70cSzoTtH50lI7hdTRJGMCM3XtyYcv2TTOw3HlleldtZTwy8fcppZ2kuHu+tIrSAs6
-	 LyinmyCmn4QhvYkRrqELKceHMvvLEK+vsxHhOLRewRUGZVlneJwnLv+0xhu0Hph36gHFX
-	 4V8Tu9LqhoQ4ns9UFbhHGTq8dElxAv+umZApqz+IFXc18zWPiEp5/7LUSvYf9hXh02w==
+	bh=NczEokDZEu5VaG8O0/qR3bMKj0m7/0Et4rW469wX81Y=;
+	b=tn6UMtux+r9TOJkqOWsjwv/e0Z/CrRo5LvnyvXpV8s+ay9pdubb9LAzLDm2+JeKbxN3K
+	 DEjqDwK9DopzOexdje/Y3T0CLe9qDsY7eFB16O54BCQWGSTS7ZHGzUSri4yPWtfpETspO
+	 IwOiDq4rjGIuL9sm4uLC2AU9+Dd4pn6einxViCH2Gy9MxuAysxA0djAGqNyzHaVAIasdh
+	 j2kwyzL0ootQ5bnPfLfsemIRCiVzhfQZuQsSb6Sq1KP53pUs5PRxlzXT6wENeJxOLIvoH
+	 bYxx9WYUilJJpqTsEZmq0Dt4VS6g84j8WxupwisglTNSN9r/wTvcPobqXIQxOJ83qnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O1fE86Nu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kCTZbvej;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF1A606A740;
-	Wed, 18 Nov 2026 17:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A75606A754;
+	Wed, 18 Nov 2026 17:30:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O1fE86Nu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B241F000C4;
-	Wed, 18 Nov 2026 17:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kCTZbvej
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3976A1F000C4;
+	Wed, 18 Nov 2026 17:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022998;
-	bh=fuUeSoWZZDyBjAlUtwz7l+RJS6EVy77jeNh7M6VNLwM=;
+	s=korg; t=1795023000;
+	bh=NczEokDZEu5VaG8O0/qR3bMKj0m7/0Et4rW469wX81Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O1fE86NuqIcZNXThE56slhBloO2zuAm6EdAKBNPxTISeSNeeVRnqB5t30Wi+fGT19
-	 mn1d31v0aeAJFbNLdVIHrxCGV70IYGNVCen4mxHCIplaKAYymCnoRrygPaIVXgaovm
-	 wvQ1JA9O6msjE0yBwQ33NsAIH8anU9huDyUdtbt4=
+	b=kCTZbvejEuIpA+SAgDrHgCpkr980GwTeyF2zL2iJlsudJRbTw1vgHoPTYRh47lVsj
+	 v26PD7+hhDGBVRM0mrNx6eubHoFFYoOTtWG2qEWLIgqXy+gZTClElaP4iMInDuFIeN
+	 8kk1psJt+HiSwZziw72GdPbmQrJ+fVa0UsI6ZvHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0212/2151] clk: Use the generic OF phandle parsing in only one place
-Date: Wed, 18 Nov 2026 15:32:27 +0100
-Message-ID: <20261118150129.504630878@linuxfoundation.org>
+Subject: [PATCH 6.18 0213/2151] wifi: ath12k: signal regd update completion when reg event is dropped
+Date: Wed, 18 Nov 2026 15:32:28 +0100
+Message-ID: <20261118150129.538563103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,57 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 57d728b4ab15a8af890013bb0f302e7733f7c1c6 ]
+[ Upstream commit f2576dc0f894ef33045ba7ed057ec417988bba8a ]
 
-Ideally, there should be one single entry in the OF world. This way, the
-DT parsing logic is always identical. At this stage, we call
-of_parse_phandle_with_args() in:
-- of_parse_clkspec()
-- of_clk_get_parent_name()
-which kinds of defeats the above statement. Furthermore, when this call
-is done from of_clk_get_parent_name(), we fail to parse the
-'clock-ranges' property.
+During driver bring-up, ath12k_mac_hw_register() reinitializes
+ar->regd_update_completed and sends a set current country command to
+firmware. It then relies on the regulatory event from firmware to signal
+that completion via ath12k_reg_chan_list_event().
 
-Make sure DT world is entered only once by calling of_parse_clkspec()
-from of_clk_get_parent_name(). Doing so implies that we do not try the
-"clock-ranges" path if we already found a "clocks" property.
+However, when the country being set is identical to the one already
+applied at boot time, ath12k_reg_validate_reg_info() returns
+ATH12K_REG_STATUS_DROP through the "Avoid multiple overwrites to default
+regd" path. In that case ath12k_reg_chan_list_event() jumps to mem_free
+before assigning pdev_idx, so pdev_idx stays at its initial value of 255,
+'ar' remains NULL and complete_all() is never called.
 
-Suggested-by: Stephen Boyd <sboyd@kernel.org>
-Fixes: 4472287a3b2f5 ("clk: Introduce of_clk_get_hw_from_clkspec()")
-Signed-off-by: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+As a result the reinitialized completion is left unsignalled and the next
+ath12k_regd_update() waits the full timeout, printing:
+
+  Timeout while waiting for regulatory update
+
+Fix this by assigning pdev_idx from the event's phy_id right after it is
+extracted, before validation, so that the drop and fallback paths still
+reach complete_all(). Change the guard at the end to check the index
+against ab->num_radios so that an out-of-range phy_id does not lead to an
+invalid pdevs[] access.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c7-00108-QCAHMTSWPL_V1.0_V2.0_SILICONZ_UPSTREAM-3
+
+Fixes: 906619a00967 ("wifi: ath12k: handle regulatory hints during mac registration")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260729-ath12k-regd-wait-timeout-v1-1-504aa6e7e93c@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/wmi.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index e00b36f5a6cfd..d67bd3a4b47c1 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -5236,6 +5236,8 @@ static int of_parse_clkspec(const struct device_node *np, int index,
- 		 * has a "clock-ranges" property, then we can try one of its
- 		 * clocks.
- 		 */
-+		if (of_property_present(np, "clocks"))
-+			break;
- 		np = np->parent;
- 		if (np && !of_property_present(np, "clock-ranges"))
- 			break;
-@@ -5380,8 +5382,7 @@ const char *of_clk_get_parent_name(const struct device_node *np, int index)
- 	int count;
- 	struct clk *clk;
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index 67c9174a30aab..026afd352e2ce 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -6821,6 +6821,14 @@ static int ath12k_reg_chan_list_event(struct ath12k_base *ab, struct sk_buff *sk
+ 		goto mem_free;
+ 	}
  
--	rc = of_parse_phandle_with_args(np, "clocks", "#clock-cells", index,
--					&clkspec);
-+	rc = of_parse_clkspec(np, index, NULL, &clkspec);
- 	if (rc)
- 		return NULL;
++	/*
++	 * Set the valid pdev_idx before validating so that, even when the
++	 * event is dropped or falls back, the completion the caller in
++	 * ath12k_mac_hw_register() may be waiting on is still signalled at
++	 * the end and it does not time out.
++	 */
++	pdev_idx = reg_info->phy_id;
++
+ 	ret = ath12k_reg_validate_reg_info(ab, reg_info);
+ 	if (ret == ATH12K_REG_STATUS_FALLBACK) {
+ 		ath12k_warn(ab, "failed to validate reg info %d\n", ret);
+@@ -6837,7 +6845,6 @@ static int ath12k_reg_chan_list_event(struct ath12k_base *ab, struct sk_buff *sk
+ 	}
  
+ 	/* free old reg_info if it exist */
+-	pdev_idx = reg_info->phy_id;
+ 	if (ab->reg_info[pdev_idx]) {
+ 		ath12k_reg_reset_reg_info(ab->reg_info[pdev_idx]);
+ 		kfree(ab->reg_info[pdev_idx]);
+@@ -6876,7 +6883,7 @@ static int ath12k_reg_chan_list_event(struct ath12k_base *ab, struct sk_buff *sk
+ 
+ out:
+ 	/* In some error cases, even a valid pdev_idx might not be available */
+-	if (pdev_idx != 255)
++	if (pdev_idx < ab->num_radios)
+ 		ar = ab->pdevs[pdev_idx].ar;
+ 
+ 	/* During the boot-time update, 'ar' might not be allocated,
 -- 
 2.53.0
 
