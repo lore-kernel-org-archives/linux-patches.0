@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060346;
-	b=tR3ggb7iw6RtiWtQ+ILOt02Ian/zDVw/HeJl/LXmlVWdWCl97uUn/wq44+yVFUXeY3wR
-	 Omgr8NwJ7NY+t8iHpXy8SzMkLTp9aqoXdva9HGfNgg4ch8gWCK60VilYzeD9klX3wmsaj
-	 DajR7bs6nzlAlLqk+ZZbGKGS+VzDRMxRJf8kcbHGHhSrCX8Fp1JWI4lwZeGT5YvqIp8+V
-	 xP3KGXwbJvYdFwHc0nkLYMpR+EeYAYVwXvBmsebtgmY6QPVWv7ajTvJA53GlIU/A47dzm
-	 u/+MFoNV8JBdt28xN1SmxL3uWz/ROMtXibuxtQxBgqzhy4nRenJYuDuYKNktyx6QlaQ==
+	t=1795060349;
+	b=piwvxKnEk/JYkgFGKiFsyuwaX3f0PO2PTXnqbaPrPwUWQHu7GZdPy0iqgl/owUfXn9YD
+	 55NXtLL07vEq2E/O1Pj4oPr66gW4/9szEzNUd/cRyA0Hj/8KKGfdhXEhsqZN9dsOcwdYD
+	 HIwMmk3u4DUYu3Y3SjOSek8ieeo5CGqvpMtFnPTlbwMJ82YK5T1tCNe8tr2KQ769xhb/r
+	 fKLNVXCAJaMmtJuNLDjgOq4cdf+fcydQ3sTFGnAwyg9KJGttYYlF0bbF2HE6j1TMfLHyO
+	 7eZrOl+6NjdIdTTzfqAQ5s1ZVifqg31A0B2AE76aLVaq0xYpRhM1DJquyfUnS9O7Abw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060346;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060349;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=esYl2w9uwvJAW5weFeO21rjqb1o9EEMP0MKgrKR1348=;
-	b=xPBxL+aBf8nIL0x1eQcqT3074K/UVeiuTobSR2bBD3qCRMhstZgMDa+bkKVP3WBHzAqZ
-	 2JjJ7vBWwLIjCtGfq907Kwi4u2qHfaUGPGsxC3xBWbzb2Qn3ZzMpGvbT5kStdKcLl8Wmi
-	 SKrrWPRfj0m8QDoI09Xby0qNOeziKu4ebn5Hs0n/Wxb5OJbdf1msk8MJej0BtME1mUTGO
-	 85PFLqppxPJgLoVvqHyd9cwKbSH03I2w35q0uFjVUe61T/SiJDQ/Qk+khA6io+R9q/sur
-	 6uax8KAihObu6COS+Op648tRFqzXhY47z5MEyp4YMeRkV+Vp4V3pp3KfCoXSIjyWl9g==
+	bh=OQNGVLx8z7vLugjtX+hGA+T5ORGLsjsEnsjRJxsRmO0=;
+	b=NSuLYb1OFu1K8QIpKswA3FtHuX+Vw8Wmng1WtdPLrs7TaMLrX+20t7OE2F9GGibp4a0U
+	 oGYRRwqZy8ZGMJvY3jCU+P8x+rh51RSxWC3zOdcqI6TMSIegUN+9Dt8ETUABpyGYHYMQe
+	 BVH1puhDk38wvA/670syL2EsibsYbcJJZ7ssufpxqqdma9Hzs7J/si/8u/QIKsyqnsWe9
+	 PuSVbk3zF8fabWs1Sl5hF1OusUf02PGmHkKRFFJMB+DJCZdYvLI1vCS5uftDw3XqRY3uJ
+	 TcfGvHVTLVqtjiL3mDXCv3mrXbH04CLRN3FOSb3Ae/7A1+5GOYSSmB0x0BeTSORMEMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjkWO2ca;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mqsj8cXM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9BE606A320;
-	Thu, 19 Nov 2026 03:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00759606A326;
+	Thu, 19 Nov 2026 03:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hjkWO2ca
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F931F000C4;
-	Thu, 19 Nov 2026 03:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mqsj8cXM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559E71F000C4;
+	Thu, 19 Nov 2026 03:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060346;
-	bh=esYl2w9uwvJAW5weFeO21rjqb1o9EEMP0MKgrKR1348=;
+	s=korg; t=1795060348;
+	bh=OQNGVLx8z7vLugjtX+hGA+T5ORGLsjsEnsjRJxsRmO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hjkWO2caFxNJ9tQKLehNtdslIuQ1idPMeDaILOw/pKDgJeFp1FA+gYgBqcS/YttVG
-	 ZQNYkgPKVw1CRxTPbSNfYWASB+/0+PXgCBzKRXH9+y77NgsPEN0jGeJENd0TxBXID6
-	 Q7WOGUvjzzl5DjhvLG0RlT9TxulKibFIunHEC+uA=
+	b=mqsj8cXM2pzJM4GfG5V1oPEnwai1NxR1Yx4/2H/6EMv69MmwBxIIkoY979+SJyshT
+	 L2F6wum4V/ezyx/JfFfay/sp1QZBtwJVGeOYruKiWbEul7y4Fv2zwfXIvEf7maQyfu
+	 8kTkQcG9+FC6KOXIh7Pud+dg3BRuhh3PFgjj8m/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1167/1848] regulator: mp886x: fix vsel_mask
-Date: Wed, 18 Nov 2026 15:53:25 +0100
-Message-ID: <20261118150008.504073592@linuxfoundation.org>
+Subject: [PATCH 5.10 1168/1848] efi: cper: check section header more appropriately
+Date: Wed, 18 Nov 2026 15:53:26 +0100
+Message-ID: <20261118150008.543629895@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,34 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Shuai Xue <xueshuai@linux.alibaba.com>
 
-[ Upstream commit 24fa0eadc2e3c7e9397924197dca7777ec08b8d7 ]
+[ Upstream commit 1be72c8e0786727df375f11c8178ce7e65eea20e ]
 
-The MP886X vsel is 7bits, fix the vsel_mask.
+When checking a generic status block, we iterate over all the generic data
+blocks. The loop condition checks that the generic data block is valid.
+Because the size of data blocks (excluding error data) may vary depending
+on the revision and the revision is contained within the data block, we
+should ensure that enough of the current data block is valid appropriately
+for different revision.
 
-Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Link: https://patch.msgid.link/20260901043123.5401-2-jszhang@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Stable-dep-of: a5a612cd3eec ("efi/cper: Reject CPER records with an out-of-range error_data_length")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mp886x.c | 2 +-
+ drivers/firmware/efi/cper.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
-index 8ad4722eca4b3..7910896df51a5 100644
---- a/drivers/regulator/mp886x.c
-+++ b/drivers/regulator/mp886x.c
-@@ -267,7 +267,7 @@ static int mp886x_regulator_register(struct mp886x_device_info *di,
- 	rdesc->min_uV = 600000;
- 	rdesc->uV_step = 10000;
- 	rdesc->vsel_reg = MP886X_VSEL;
--	rdesc->vsel_mask = 0x3f;
-+	rdesc->vsel_mask = 0x7f;
- 	rdesc->ramp_reg = MP886X_SYSCNTLREG1;
- 	rdesc->ramp_mask = MP886X_SLEW_MASK;
- 	rdesc->ramp_delay_table = di->ci->slew_rates;
+diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
+index 2a51a072e6700..1de746fff20fa 100644
+--- a/drivers/firmware/efi/cper.c
++++ b/drivers/firmware/efi/cper.c
+@@ -699,7 +699,7 @@ int cper_estatus_check(const struct acpi_hest_generic_status *estatus)
+ 	data_len = estatus->data_length;
+ 
+ 	apei_estatus_for_each_section(estatus, gdata) {
+-		if (sizeof(struct acpi_hest_generic_data) > data_len)
++		if (acpi_hest_get_size(gdata) > data_len)
+ 			return -EINVAL;
+ 
+ 		record_size = acpi_hest_get_record_size(gdata);
 -- 
 2.53.0
 
