@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053542;
-	b=FqI3QnIxxI69GdZFOS7qnmETirGIhkwKeZ+VV8yrJX1HX4iNQsnzIE7pFFhu/p+YPUaA
-	 cDojbOftZvlXAaxVQJ9ZX56CHuEKa97WzqXF9yzCifDGa2xaI5NMwSzDeBq0DN3W9CilA
-	 JEZvBdnPz5AV2YOeMOtKRIaddbSmIhCQ/3VEk+T48hYsGakMIcw22MzQpm0nKnmG1YrPp
-	 lLMKQ5fezEg/nF+d6LM9KQlx9POIpjCFo9BHO0JiZA7FXet3q/5mNXRgr3aCq0767ZWwa
-	 w3LojxIEYrTaItIOZwhEeNLZEvMaYdF3qcYrJvwe1wuMDalm/7O9sk23VYd1njEkXxw==
+	t=1795053544;
+	b=F4qxR0vYCC5+0WkhUzvzytpj6qqeMep/wzE4MoLxw5UrY/KSoHV8xe9Bo4NDx1ialZw2
+	 rkMIArqmnY+Ni7J01r988+ebKhPK7e2faWRSeS5Yixw2v3jSiVHZKpQqKbUcm1h1zj0Hc
+	 bphoNW2DkLhayR5UGPi4IexGGNXB2OQIlZv1W1VmEF8euWsSUjwUFeRh/OU6n9wk7PcJv
+	 Cvh/21iKpEdKjECVtmJEAq5Ppa8zkqeWPNn0YFyOGSACZzqOEHVS+0/pn2L2Kjm5GEKu8
+	 QvtFCYFiq/GAyrSisS5IRTzzajiMPZLgNBZkj+2F3tGdPJheryZQA5OoWrmCueSAVIg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053542;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053544;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mhdzjRW3EKWzOxqBp4E0pG65Rv3KhW73NbpUmQLxM5c=;
-	b=il82oR20zEAmIX+sgFOW1fLYFq3O/msR69AU8bv9qLCdPs9J5aD+Fg8HETF453UJjXdM
-	 wZP9oBiUw9oaaF9zkUAGx/GFI/uDbxDIqneVIRKkJC/C9orZyzGTVKndi/M6rYWu6VEtn
-	 YpH2fbaLOWU1M1bgo+ak7sK7AEENdZOOOCEZ2QgDt5aUT1pYtAgPbVhwkzExI+A4dIoKE
-	 UppuRmEB/d2xF13ftxLQBjtHbz3XyqtIKneDRqHhRsATergBD8yTLIJg8Ciq7eah3JfdK
-	 8TApGxCj3vfD/U5tqYQuKQLj797fkWx2u5L3c0nCoPffmx83DIje1CPCxBrpUKz2xrg==
+	bh=ua8OnEERqJyFjL/QGGd+Q4CQw+al6yREzMcgO+v67d0=;
+	b=jex2PgEqLOTGw4hqWpU2LsDwagMNz9V97aB+z8dSxFqvScNLPOYwCYBxWGoXm/MkEtHq
+	 5cROsSyDOeamBVckLZZBMdgXPb7q/6Q32kgIa3x5lRwgdeWvlFXxW8eo1YiHJcz/wpcv6
+	 d3fOCn/nQCEWZF3TkQa3ikCTAIqNjk3AGP0WlS0aQt6Isu+e0CaK+VNp9W4X5sHQ5OmN0
+	 z+rADhyiFAF/lNr7X+oo005zCsSyK7D6pcyDWRVViYJjZwQN/HRabYHfI/krFUm9po9WJ
+	 GfJePeaqslP0VrV0SuX1FSmkNkKP/LNwUfR7Cvw3AI+R/SPC2ORciVIQFUhwkEWreBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFWU5bOV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hwpfle/N";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0221606A325;
-	Thu, 19 Nov 2026 01:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8146606A320;
+	Thu, 19 Nov 2026 01:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFWU5bOV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345351F000C5;
-	Thu, 19 Nov 2026 01:59:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hwpfle/N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E4B1F000C4;
+	Thu, 19 Nov 2026 01:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053541;
-	bh=mhdzjRW3EKWzOxqBp4E0pG65Rv3KhW73NbpUmQLxM5c=;
+	s=korg; t=1795053544;
+	bh=ua8OnEERqJyFjL/QGGd+Q4CQw+al6yREzMcgO+v67d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XFWU5bOVcFjTz6yk4eEY3kcyW7BqG9AkMrHLCR0hwbEMo3BPM+cxpCFToLlr764fd
-	 nnRGrxbxWFE9Pazbb2nahlQlM6916fKkbUOefpRx3IZl2FoBgchGNQx7YufEAnSM6W
-	 9EqA1Z67LsiX3WislyM4DO8tX989z9Ls71YQFrBY=
+	b=hwpfle/NadP1JDEoWm8PIpbTo/3UjjsEEPbWJ4K9lMbJJGesT2jFQsuCqI/UtioFq
+	 I7ixpfw4SQeYvRuL3Z3RA2WHCrt0AWHx7Emm2rmtMEHS09YlfCnl7v5duuY22JX5qs
+	 GpD8RUa5IuvvMLnsv5W2nqQPhg5K1KW0vIwZc/2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Zhenhao Wan <whi4ed0g@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
+	Robert Morris <rtm@csail.mit.edu>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0956/2214] drm/nouveau/svm: drain fault handler before freeing svmm
-Date: Wed, 18 Nov 2026 15:43:52 +0100
-Message-ID: <20261118150050.559358103@linuxfoundation.org>
+Subject: [PATCH 5.15 0957/2214] udf: Avoid invalid LVID used on mount
+Date: Wed, 18 Nov 2026 15:43:53 +0100
+Message-ID: <20261118150050.592205518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,67 +68,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhenhao Wan <whi4ed0g@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit b46ddaf0823405f81e681eb26ec98508f3eb9a07 ]
+[ Upstream commit c8f1140cb82dc843e72697dc6f8c7ee1acce5d28 ]
 
-The SVM fault handler nouveau_svm_fault() looks up each fault's
-nouveau_svmm under svm->mutex, caches it in the fault array, then drops
-svm->mutex and dereferences the svmm across blocking faults
-(mmu_interval_notifier_insert(), hmm_range_fault()).
+udf_load_logicalvolint() loads logical volume integrity descriptors.
+Since there can be multiple blocks with LVIDs, we verify the contents of
+only the last (prevailing) LVID found. However if we fail to load the
+last LVID (either due to IO error or because it's checksum fails to
+match), we never perform the verification of validity of the LVID we are
+going to use. If such LVID contains invalid data, we can hit
+out-of-bounds access or similar issues. Fix the problem by verifying
+each LVID we are potentially going to accept.
 
-nouveau_svmm is not refcounted. On DRM file close nouveau_svmm_fini() ->
-mmu_notifier_put() frees it asynchronously via call_srcu() without
-waiting for the handler, and mmget_not_zero() pins the mm, not the svmm.
-flush_work() on the fault buffer otherwise runs only at device removal
-and suspend, never on close, so a fault handled concurrently with a close
-can dereference a freed svmm.
-
-The instance is already unlinked by nouveau_svmm_part() earlier in the
-same close, so no new fault can resolve to it. Drain the handler in
-nouveau_svmm_fini() before the free, guarding the flush with a NULL check
-on drm->svm: on device teardown nouveau_svm_fini() runs first and frees
-drm->svm (NULL) after blocking the notify and flushing the buffer, so the
-handler is already drained; on per-client close drm->svm is alive and the
-flush runs.
-
-Fixes: eeaf06ac1a55 ("drm/nouveau/svm: initial support for shared virtual memory")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Assisted-by: Claude:claude-opus-5
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhenhao Wan <whi4ed0g@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20260814-nouveau-svm-svmm-uaf-v2-1-8e6590519f07@gmail.com
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Stable-dep-of: a61fb39759d7 ("udf: Make sure there's enough space for LVID implementation use field")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_svm.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/udf/super.c | 42 +++++++++++++++++++++++++-----------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_svm.c b/drivers/gpu/drm/nouveau/nouveau_svm.c
-index 9985bfde015a6..4cbd5c4ce8267 100644
---- a/drivers/gpu/drm/nouveau/nouveau_svm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_svm.c
-@@ -305,6 +305,19 @@ nouveau_svmm_fini(struct nouveau_svmm **psvmm)
- {
- 	struct nouveau_svmm *svmm = *psvmm;
- 	if (svmm) {
-+		struct nouveau_svm *svm = svmm->vmm->cli->drm->svm;
+diff --git a/fs/udf/super.c b/fs/udf/super.c
+index afdc0f50a5f00..f9fe3f950de85 100644
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -1575,6 +1575,20 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
+ 	return ret;
+ }
+ 
++static bool udf_lvid_valid(struct super_block *sb,
++			   struct logicalVolIntegrityDesc *lvid)
++{
++	u32 parts, impuselen;
 +
-+		/* The fault handler caches svmm pointers under svm->mutex and
-+		 * dereferences them after dropping it, across blocking faults.
-+		 * The instance is already unlinked (nouveau_svmm_part), so drain
-+		 * the handler before the free to release any in-flight reference.
-+		 *
-+		 * On device teardown nouveau_svm_fini() ran first and freed
-+		 * drm->svm (NULL) after draining the buffer; nothing to flush.
-+		 */
-+		if (svm)
-+			flush_work(&svm->buffer[0].notify.work);
++	parts = le32_to_cpu(lvid->numOfPartitions);
++	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
++	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
++	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
++	    2 * parts * sizeof(u32) > sb->s_blocksize)
++		return false;
++	return true;
++}
 +
- 		mutex_lock(&svmm->mutex);
- 		svmm->vmm = NULL;
- 		mutex_unlock(&svmm->mutex);
+ /*
+  * Find the prevailing Logical Volume Integrity Descriptor.
+  */
+@@ -1585,7 +1599,6 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
+ 	struct udf_sb_info *sbi = UDF_SB(sb);
+ 	struct logicalVolIntegrityDesc *lvid;
+ 	int indirections = 0;
+-	u32 parts, impuselen;
+ 
+ 	while (++indirections <= UDF_MAX_LVID_NESTING) {
+ 		final_bh = NULL;
+@@ -1607,32 +1620,27 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
+ 		if (!final_bh)
+ 			return;
+ 
+-		brelse(sbi->s_lvid_bh);
+-		sbi->s_lvid_bh = final_bh;
+-
+ 		lvid = (struct logicalVolIntegrityDesc *)final_bh->b_data;
++		if (udf_lvid_valid(sb, lvid)) {
++			brelse(sbi->s_lvid_bh);
++			sbi->s_lvid_bh = final_bh;
++		} else {
++			udf_warn(sb, "Corrupted LVID (parts=%u, impuselen=%u), "
++				 "ignoring.\n",
++				 le32_to_cpu(lvid->numOfPartitions),
++				 le32_to_cpu(lvid->lengthOfImpUse));
++		}
++
+ 		if (lvid->nextIntegrityExt.extLength == 0)
+-			goto check;
++			return;
+ 
+ 		loc = leea_to_cpu(lvid->nextIntegrityExt);
+ 	}
+ 
+ 	udf_warn(sb, "Too many LVID indirections (max %u), ignoring.\n",
+ 		UDF_MAX_LVID_NESTING);
+-out_err:
+ 	brelse(sbi->s_lvid_bh);
+ 	sbi->s_lvid_bh = NULL;
+-	return;
+-check:
+-	parts = le32_to_cpu(lvid->numOfPartitions);
+-	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
+-	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
+-	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
+-	    2 * parts * sizeof(u32) > sb->s_blocksize) {
+-		udf_warn(sb, "Corrupted LVID (parts=%u, impuselen=%u), "
+-			 "ignoring.\n", parts, impuselen);
+-		goto out_err;
+-	}
+ }
+ 
+ /*
 -- 
 2.53.0
 
