@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027121;
-	b=xaWQzSWt637sl8LkaeaqHppEc8xBGMAy4K6lTja7k5wIHfAl5FSmewiTeaJ4xJCUfNXP
-	 I7hOfAVysG6ci3dXITDkBAno5iKIZ6fx29AORq1jdSuZRS4FZGT6Spo4sMdpWhC7jabvf
-	 k6I2ZrxKXjWcm/7oEHuH75yNLqjNz7UaaZpkVsUtO3zAKGmFdAKsY7X4Ks7iGWq3Q8OeG
-	 4cunx9EZTZX7yVxBE8P73wABX7e3foK6xV3Qa0fvkskBPuf3K98DHW3cvm7zrrjsEoMd4
-	 wP9C9DLb+jAb7Bm2iyc1FePlr6Bkuu9Jgz/9pNb0qLej/I5vWcr9wXbvjDpPM3twdMA==
+	t=1795027123;
+	b=hS0xjBpB7bhXbLZQsF2TTxBBwJjMvfaByBGjucuwgAO3VZG81PTG7zcefAcTJDNUpFOg
+	 VYgqaX3VDdmIqN6+Yky13lbHH2ZXVtPxvF0BVLFspFCJKfyedUwrEgAvAco/ubuhogtk7
+	 Satf63qtAVx/cJYl41KJO/FKouh5cDbw+CgT7HmOse1977eC7wa9ahOq/s8KlFc1DSRHD
+	 c7Uy6hpg2HEj5LuBS7JXlaggSmVwIJPNPi8YAq20N4RWZ66BKvX8ywFHdWtX8F2ObcmfX
+	 5uf2nxMbEE10N74rCWdqdR4V3SdyY7fePuPIKSNg2TITgzn8A/BMb6CAXpLXYmAT1TA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027121;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027123;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Apm19X21fYOJP6HMvvWZ5xJZkUvvHCzhwWqAzbd8Xg0=;
-	b=hfK7OFHCwSDnhzhKNX7fpm6PjRWVto+crEAMjydutOhDIDoHNuPI02GW1+tQWt8peDeq
-	 xHXB8KMrobrwYuqh71YKzb98MQwqjnAfbc4oiNBRabWBWFLRsCKcUKARkFKCdIsvpcMBw
-	 J6MZDkMMBWi3Rda+GgKpddiBpUgkwP1Es4P7q7o4+VCkMke4AQcbzh5PdqHy2oaV6PJCX
-	 Wy7UsVdzEofuwW0N0VwLFxqP737W2hvUWqyWiEShzJ1LWeOcc4dASSNQj2QN8ga7Loevt
-	 mK3ci8htvoA8K/xVpGleDffQOxSa4fsqmms54XPC2HCF0Vj7hI6orHXAr3AyJU1g6Ag==
+	bh=F8aaTPuWScQsHH/C4WqQYgdkkAeKoCA+nI5VVjlitOk=;
+	b=DjYCKMvatIHE1Nuj7c2Q0B3ZpkRShy4WTaZATbiSpy++tHWTQYzmpT86ky7M/wsfChjr
+	 AXRaE+aM/g7Izi4vqYz+I6OBVeszI97zqGE9nVnEhPw7lbIw3taCPiLMamB7w7irF4Hi1
+	 N+WwM6c4u1ef2E7SaMhooQu234RGTRVdLOARsx4ipdcyqjnt72B6nxVwmj5zFi+1u871l
+	 +gHSv0yFwS7gbGnC+sl0KxhEBJ6Kd4fjPCMOfH39KvlfdDCUo5fwJOHk2mgmUdpNbEyEF
+	 qkqsA2z+L5qHYOVl7laBaXNfr+u0oeB0ILxt7J5Lb+AlJ8VzGH1LW2H9N43RAiI47AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0fHc+q4m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hXKwsUC/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CBF606A31C;
-	Wed, 18 Nov 2026 18:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B951F606A320;
+	Wed, 18 Nov 2026 18:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0fHc+q4m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 447481F000C4;
-	Wed, 18 Nov 2026 18:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hXKwsUC/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161FE1F000C4;
+	Wed, 18 Nov 2026 18:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027120;
-	bh=Apm19X21fYOJP6HMvvWZ5xJZkUvvHCzhwWqAzbd8Xg0=;
+	s=korg; t=1795027123;
+	bh=F8aaTPuWScQsHH/C4WqQYgdkkAeKoCA+nI5VVjlitOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0fHc+q4m4AkBPCNtDvri+g0oGg9dV9kBFalKfxAtSgBqNsm9bolFs+B1XguxDlqo3
-	 Z0+G8nvzRcJSW895xw8eGEvdT0MQBWiao5KjYWI9ENFwIcWkZD6usVhakPWncXjBQM
-	 cWIWtUJqQ+Dnb9Zkcsv4LXyY926d2XIPN1qi+K3c=
+	b=hXKwsUC/DGIUqj3O3t/x+FC+47vvrNFexsz+VRTmV6imxCMyksSgx8PVY+sELAuco
+	 uBHH+xaK/7rM9DvTSv1HLL/Fm9CbSk1hiTdIIDJWRSIowWHt7xO0/XRcbGTHdG9zxM
+	 ioKJKw3g9mVE21y5u6SKUPU3FJD5aqrmA+qChjIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Azuddin <azuddinadam@gmail.com>,
-	Lukas Wunner <lukas@wunner.de>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1676/2151] drm/appletbdrm: Fix incorrect error message on encoder attach failure
-Date: Wed, 18 Nov 2026 15:56:51 +0100
-Message-ID: <20261118150222.881480292@linuxfoundation.org>
+Subject: [PATCH 6.18 1677/2151] selftests/bpf: Expect at least one kprobe miss in missed/perf_kprobe
+Date: Wed, 18 Nov 2026 15:56:52 +0100
+Message-ID: <20261118150222.918709046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,37 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adam Azuddin <azuddinadam@gmail.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit fa6d4c16f7a0da6dce3eb36a3139bfe01d071f18 ]
+[ Upstream commit 34d527e513c9a3f3a00f1ddf03fe06f493da14d0 ]
 
-drm_connector_attach_encoder() replaced an earlier call to
-drm_simple_display_pipe_init() during review, but the error message
-logged on failure was not updated to match and still refers to the
-old call.
+missed_kprobe attaches test1 to bpf_fentry_test1 and test2 to
+bpf_kfunc_common_test, which test1 calls. test_missed_perf_kprobe()
+expects the kprobe of test2 to miss exactly one run, the one test1
+triggers, since kprobes don't nest.
 
-Fixes: 0670c2f56e45 ("drm/tiny: add driver for Apple Touch Bars in x86 Macs")
-Signed-off-by: Adam Azuddin <azuddinadam@gmail.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20260926-fix-err-msg-appletbdrm-v1-1-bb578a7dbdda@gmail.com
+The test is not serial, and the kprobe on bpf_fentry_test1 is global.
+Any other test that does bpf_prog_test_run() on a fentry/fexit program
+calls bpf_fentry_test1() and thereby fires test1, which calls
+bpf_kfunc_common_test() from kprobe context. The kprobe of test2 then
+counts an extra miss, and the test reads 2 instead of 1.
+
+Expect at least one miss, as missed_kprobe_recursion does since commit
+08a7078feacf ("selftests/bpf: Improve missed_kprobe_recursion test
+robustness").
+
+Fixes: 01e4ae474e39 ("selftests/bpf: Add test for missed counts of perf event link kprobe")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-missed-perf-kprobe-v1-1-c9d0f75f6f99@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/appletbdrm.c | 2 +-
+ tools/testing/selftests/bpf/prog_tests/missed.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/tiny/appletbdrm.c b/drivers/gpu/drm/tiny/appletbdrm.c
-index 9ad1a9b895224..7516187d3145c 100644
---- a/drivers/gpu/drm/tiny/appletbdrm.c
-+++ b/drivers/gpu/drm/tiny/appletbdrm.c
-@@ -718,7 +718,7 @@ static int appletbdrm_setup_mode_config(struct appletbdrm_device *adev)
- 	ret = drm_connector_attach_encoder(connector, encoder);
+diff --git a/tools/testing/selftests/bpf/prog_tests/missed.c b/tools/testing/selftests/bpf/prog_tests/missed.c
+index 0b8f1aa5a3e74..b5fb0267e944a 100644
+--- a/tools/testing/selftests/bpf/prog_tests/missed.c
++++ b/tools/testing/selftests/bpf/prog_tests/missed.c
+@@ -36,7 +36,7 @@ static void test_missed_perf_kprobe(void)
  
- 	if (ret) {
--		drm_err(drm, "Failed to initialize simple display pipe\n");
-+		drm_err(drm, "Failed to attach connector to encoder\n");
- 		return ret;
- 	}
+ 	ASSERT_EQ(info.type, BPF_LINK_TYPE_PERF_EVENT, "info.type");
+ 	ASSERT_EQ(info.perf_event.type, BPF_PERF_EVENT_KPROBE, "info.perf_event.type");
+-	ASSERT_EQ(info.perf_event.kprobe.missed, 1, "info.perf_event.kprobe.missed");
++	ASSERT_GE(info.perf_event.kprobe.missed, 1, "info.perf_event.kprobe.missed");
  
+ cleanup:
+ 	missed_kprobe__destroy(skel);
 -- 
 2.53.0
 
