@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031107;
-	b=MBkV8VxTwo5K9r+GQTzdULKpgem3xpzsLyuB/Ywyk00Ui0R41h70zU8ycklBJ3N+7ZjD
-	 ucrL1T4G6pe/jYDkvx9Xn/kytxbFUTO/mwZ0bUbCkM+Jm2Ufq2bs4ZE6iJMMk7e2KvGEc
-	 fnaBtiu+Z5/S3i3ZbzqH/3m9vU7yRTVF1w0LkzibI813moGHC8fcyjfXl0rl5G6zp0CYA
-	 iN4puEzTXPH4vHHGwC6wqHcbN91G/n/xR657f93QGxtUmekBGn2BVFtEGbJEgwScMkJW3
-	 sa9VK7PAvQgvh2lixTJ8nlfyETKdLClJjGjgOdMcM+GBwFid984OFjW2xJUJ4JQO84w==
+	t=1795031110;
+	b=VfQcrX0/MeQlJYQ3iE53UneZlzsltqsYwLR+w2sfUgsqMhEbTMz5CQnRPVbRnlnDc8SX
+	 1IuA6HAWT+NCzUtHeq6jTMh96XHhh1sjl3JGt0V6lLNV4ZhfTF7rmNZMDDJ0iCYxjDgYH
+	 +WhZtqyfUJsyTH0keVhek8kl9ViMrHhag3DFbZatRptxiGs9LHm1tBQLfQWIPAk3sUdVy
+	 uoE55RezdY1mhTT/7hHBafZhH19mS4GFtFcjarEIxmQKcPtAQN5+qYcTnUjzvw8GLzSaZ
+	 V7n1r419+J32VjU0qQ5BQ+p++UoSd8dQmI5UsT1EK0uxFyQUY472lMgqYgibzIHhy8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031110;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YW6MqhmaVvONGBTnTejuLF/4BrtC6ZmViNE75UZ38f4=;
-	b=lpvsQ0Mw4463tpTSuYFyH/YpHfYD6acrraD9WCMHmfk6KxmOkHrtiN4X1h4ul8nSxSiF
-	 Zjh47jhbbhYgMigqir5CdPbOhfn8YvgbxK5EFVTVKqIje+p0wqb/XKqyR5NROIZflXMGv
-	 S8uPPnEIo67s9mzzY+zYKEnH/+4ZiHMLnHD5KMiQGbu59I06YhRz7ZsjAj7V5bM89ZwUl
-	 dJNSTjv/TCOmiTtjq3wP9rGVdX2j6vG/tqI6VsGusmlDT8Ufp7JRi3BpeI90i1KnIheDl
-	 dEfYkDYCtnXxGge9kSZ10rpzmQGBdxP7A3OUVcBwBJmmo5FtMUdGhmPUqZNnQteevJA==
+	bh=3dXpMyeR7r4U3Z37WFz8UeX3NBqUG4xLZQXm1kijWBA=;
+	b=G67NxbtbVOMhviA4uz/FrCLtzgZ1/LwlbJ3vx0QQdFvP82mQEYphW3+KexNApg9h9YpU
+	 GN6skYkGxwKPGXdnmQp8+kWC/BPrd/LMnz/WOEUaqn+209p6TWCb0bVQ5fbOveZp6K5wP
+	 zkHLfDXNbGWlWKbvgjUs3kmPSChUyZ6xljF/WFnzbSF2uC44GfWsvQp3St2i6SpHVmsxJ
+	 ZeAT2kpsuXePp5mI9SFqnkb8LwcT/0rq5sRGwolAPhjWZrRTo7kGgAvaUfwFpQg932AXV
+	 bWJJFnkWsRn3S7IILDTKf35B2lh/ngAw2n4Wka4KwiQZjFmp7wGlXHOWHc0Xa32orIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IIMBb7CN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oee7OKwB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF92606A325;
-	Wed, 18 Nov 2026 19:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30742606A331;
+	Wed, 18 Nov 2026 19:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IIMBb7CN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09A21F000C4;
-	Wed, 18 Nov 2026 19:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oee7OKwB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86DD91F000C4;
+	Wed, 18 Nov 2026 19:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031107;
-	bh=YW6MqhmaVvONGBTnTejuLF/4BrtC6ZmViNE75UZ38f4=;
+	s=korg; t=1795031110;
+	bh=3dXpMyeR7r4U3Z37WFz8UeX3NBqUG4xLZQXm1kijWBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IIMBb7CN0lgLmncJOA8j+I//qsWPK6EvtayxeRGTNzjez2mD010dkdM4WGq2Zw9Cn
-	 zN6L8EkPWBobeJY++DSiz8TauaLrx4KraRGF7rT1QKXfWo5c4PgIIpWeG0ptqtPzSL
-	 7+em+NLJ+agxY8q/8I/ICE6/iI+GeYS1NEtVkWYY=
+	b=Oee7OKwBdQl9fh/pfndz4/EtCglgoyUE8D7ethBPjl9Uz56rc5lXqu8OrroJpoC71
+	 +UW6xVIsLdtTZJ9Xc2r+MvW4NWkP6oOLWgVrzc7YfFncSooqrB1Acky+KHZjQ69EjW
+	 +FoEihIkjMbsabMNMyFye+taG1LiS31OavEiSB6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilson Felipe Pereira <wfelipe@google.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0941/1756] init/main: fix false-positive kernel panic on environment variable overwrite
-Date: Wed, 18 Nov 2026 15:51:08 +0100
-Message-ID: <20261118150047.483846072@linuxfoundation.org>
+Subject: [PATCH 6.12 0942/1756] ocfs2: allow xattr bucket entries to span multiple blocks
+Date: Wed, 18 Nov 2026 15:51:09 +0100
+Message-ID: <20261118150047.520786104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,60 +74,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wilson Felipe Pereira <wfelipe@google.com>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 51e766bcd35e706d8df29dd0fac98871fdced261 ]
+[ Upstream commit 78cce2082d22d3c56bd3a6146ef0dcf7cd661a33 ]
 
-In unknown_bootoption(), the limit checking for environment variables sets
-panic_later *before* checking if the variable already exists in envp_init.
+Patch series "ocfs2: xattr bucket validation fixes", v2.
 
-If a user passes exactly MAX_INIT_ENVS custom variables and then
-overwrites the final variable by matching its key, it causes a
-false-positive hard panic on boot despite not actually exceeding the array
-bounds or increasing the total variable count.
+This series fixes two problems around xattr bucket validation.
 
-Swapping the order of these checks allows the duplicate check to break out
-of the loop before the panic flag is erroneously latched.
+Patch 1 fixes a false-corruption failure on blocksize-512 volumes: the
+bucket validator limited the entry array to the first bucket block while
+the write path stores entries across the whole 4096-byte bucket region, so
+a legitimately written, fsck-clean bucket could be rejected and force the
+filesystem read-only.  It also adds an alignment check on the bucket block
+number, since the entry array is accessed as one contiguous region and a
+corrupted xattr tree could otherwise point a bucket at blocks straddling a
+page boundary.
 
-To verify, boot a VM with 31 custom variables (filling the array up to its
-limit of 32) and then overwrite the very last variable:
+Patch 2 converts two mlog_bug_on_msg() checks in the bucket defrag path to
+ocfs2_error() returns, so that a corrupt bucket holding overlapping
+entries or an inflated xh_free_start marks the filesystem read-only and
+fails the setxattr instead of panicking the kernel.
 
-  ENV_VARS=$(for i in {1..31}; do echo -n "var$i=$i "; done)
-  qemu-system-x86_64 -kernel bzImage -append "$ENV_VARS var31=overwrite"
+Both patches have been tested in QEMU: the blocksize-512 reproducer (40
+xattrs with 100-byte values, previously failing with "entry count 32
+exceeds maximum 31") now passes with a clean fsck.ocfs2 result, and the
+ocfs2 testsuite xattr tests pass 48/48 across blocksize combinations.
 
-Without this patch, the kernel crashes instantly with:
-  Kernel panic - not syncing: Too many boot env vars at 'var31=overwrite'
+This patch (of 2):
 
-With this patch, the kernel safely overwrites the variable and boots.
+ocfs2_validate_xattr_bucket() limits the entry array to the first bucket
+block, but the write path stores entries across the whole
+OCFS2_XATTR_BUCKET_SIZE region.  With 512-byte blocks a bucket spans eight
+blocks, and a bucket filled with small xattrs places its last entries past
+offset 512.  Reading such a bucket back errors out:
 
-Link: https://lore.kernel.org/20260818045357.4123784-3-wfelipe@google.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Wilson Felipe Pereira <wfelipe@google.com>
+  OCFS2: ERROR (device loop0): ocfs2_validate_xattr_bucket: Invalid xattr bucket 86072: entry count 32 exceeds maximum 31
+  On-disk corruption discovered. Please run fsck.ocfs2 once the filesystem is unmounted.
+  OCFS2: File system is now read-only.
+
+This is reproducible by setting ~33 xattrs with 100-byte values on a file
+on a blocksize-512 volume; fsck.ocfs2 reports the resulting image clean.
+
+Check the entry count against the full bucket region instead.  The
+per-block bounds checks for names and values stay as they are, since
+ocfs2_bucket_align_free_start() keeps each name+value pair within a single
+block.
+
+The entry array is one contiguous region, so a bucket from a corrupted
+xattr tree whose first block is not aligned to OCFS2_XATTR_BUCKET_SIZE
+could straddle a page and make the validation loop read out of bounds.
+Buckets allocated within clusters are always aligned, so reject any other
+block number while validating.
+
+Link: https://lore.kernel.org/20260903131313.2396208-1-joseph.qi@linux.alibaba.com
+Link: https://lore.kernel.org/20260903131313.2396208-2-joseph.qi@linux.alibaba.com
+Fixes: 2cf82b46d5e4 ("ocfs2: validate external xattr entries when reading metadata")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- init/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ocfs2/xattr.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/init/main.c b/init/main.c
-index 92397b5a3a6e3..79ca15273730f 100644
---- a/init/main.c
-+++ b/init/main.c
-@@ -537,12 +537,12 @@ static int __init unknown_bootoption(char *param, char *val,
- 		/* Environment option */
- 		unsigned int i;
- 		for (i = 0; envp_init[i]; i++) {
-+			if (!strncmp(param, envp_init[i], len+1))
-+				break;
- 			if (i == MAX_INIT_ENVS) {
- 				panic_later = "env";
- 				panic_param = param;
- 			}
--			if (!strncmp(param, envp_init[i], len+1))
--				break;
- 		}
- 		envp_init[i] = param;
- 	} else {
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 58bc60babf4c4..391998626cf0b 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -1121,11 +1121,30 @@ static int ocfs2_validate_xattr_bucket(struct ocfs2_xattr_bucket *bucket,
+ 	struct ocfs2_xattr_header *xh = bucket_xh(bucket);
+ 	u16 xattr_count = le16_to_cpu(xh->xh_count);
+ 	size_t region_size = (size_t)sb->s_blocksize * bucket->bu_blocks;
+-	size_t entries_limit = sb->s_blocksize;
++	/*
++	 * The entry array grows up from the header across the whole
++	 * bucket region, so it may extend beyond the first bucket block
++	 * when the blocksize is smaller than OCFS2_XATTR_BUCKET_SIZE.
++	 * Name/value pairs, however, always live within a single block.
++	 */
++	size_t entries_limit = region_size;
+ 	size_t nv_limit = sb->s_blocksize;
+ 	size_t max_entries;
+ 	int i;
+ 
++	/*
++	 * The entry array is one contiguous region that may span the
++	 * bucket's buffer_heads.  Buckets are allocated within clusters,
++	 * so their first block is always aligned to
++	 * OCFS2_XATTR_BUCKET_SIZE and the whole bucket fits in one page.
++	 * A corrupted xattr tree can point a bucket at blocks straddling
++	 * a page, so reject it before touching the entry array.
++	 */
++	if (blkno & (bucket->bu_blocks - 1))
++		return ocfs2_error(sb,
++				   "Invalid xattr bucket %llu: unaligned block number\n",
++				   (unsigned long long)blkno);
++
+ 	if (region_size < sizeof(*xh))
+ 		return ocfs2_error(sb,
+ 				   "Invalid xattr bucket %llu: region size %zu is too small\n",
 -- 
 2.53.0
 
