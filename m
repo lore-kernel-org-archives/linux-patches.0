@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032086;
-	b=tgrU7r5NtF5UxVk1AJDznaHZqPBC/0ogsL2PcGAvKoDUU3gV2WAO51b7LMzDvjYz0fDi
-	 ogMpvBNpjVxy3SNX+xWENIQ/UXX0Q0cNh1gJ9VjX238cK3u73/0mH+EjfVqY5Gupb/nG9
-	 YylFC1W1Kv3H/LNzouz2hyhWSSMUaj8yWvjzf4+ApdVuv3Z/S7MniBpjVnAKZIgNrRZsk
-	 udgUZrY1VBw54eHYuAZVNOWQUQOG6Azv9KI3DOm8HFUlre2gc07mQHTn7s6eNuc4ie9LH
-	 lY1cGFSMd1HNQK1u2qCCfg+40vjkiWP7JYfPMSiy8H2CzpxpigJx6UKexVluIDQr3GA==
+	t=1795032088;
+	b=27CWSuXUVJ76gPqeo3VBczi/n6hkP5kSkFB8ARs6OVy6+HQQ5Kq71dy6pa3KQWlRM0Hp
+	 Tomdq1YWo3dqWmo3UlBwt5zJiaZQVvNIzGeJZMm/UPGOWAH9dowF37G5lw/9/44vgDkg/
+	 2/J8c86mGOaD/3LwUM3J9nk/f8T9OfUlA7dssOba4RsF6x2jol5bW15/FBMYnX4++pqBN
+	 T6CltxPqZj/HXiHizHFrVJmmhwAQ+0mg33k1Fese8soHz4DyjLjATwbNMAp8C/rueNYvZ
+	 jFqoaaDWCfa9ILiGW92Pm5cP6bhgBPYjOfjduSTQH3XY0u8HVW/wPJivZohteuVeu7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032088;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Uv+fisUqKw2BkgjY+jIQuMQbAalyH5UEZXjCZxSsmJE=;
-	b=nunvwOezbWX8bgICqIeHzfxymhXQGF2bt5Lb2LWlPDBK3CKCnWP8X18IncqfnrJy6iGp
-	 d3gwXPXA1piPNPOD6vXLJN+XL6sB7JwAbClV+HQsvGb5CN26TpX6rm7OrqUGPXoYe2FLM
-	 cZa1RnE6QopuLTKzzoqT9vKunN74kKXLfdFs8rliVP3h5QhrzuuALcXN+jCMl4tTyGCSU
-	 mj9OLR6LkL19Ak29myYBlLOEPXM5IvXtqXOGR10MoTDEpc9HzJPXVIHit3IRwTLWHvmSb
-	 TziKB1vacbOrO+WOlQ2KeNtYkbqOudW+v/b9YHUiL/x/mlmT63nrLwy5elH185iZCsg==
+	bh=0Yr/rVf3SomyNtnucI4XJMOQJft39lINQCrWtSP4vpk=;
+	b=tN7R5zBh0NIcReX426AKepZNqbKNdHWgD6mX5z/ieAgWiVZSOurQuT5P5yL5oOSXQZt0
+	 Sj23X/utNteEWSgSmP9ZccxbKjdU3McTou9WPCScV8RxmcxLrrEAEQ4JCEJE6A2grBgi9
+	 lOvsKcuQKjMs7AeOlbfOefzSqorJKpo+q09WF4Lp/eE5ar/Y2vUp9nkXw3i9DG86XCQvb
+	 Q7PngNXe4RKlfWxBFKwt+NGu8zMT9cMfYgBH5FZEMYrsDDLlslviSvmcS8Z39b6OyvtMt
+	 71avi2tte9cYj4xzlpVu8y98rdVO3lxQfNaD5dyqtUYtfwM39yJHHngYLyYJPVr4rQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DusNePWV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPmqTINF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBCE606A320;
-	Wed, 18 Nov 2026 20:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687F6606A320;
+	Wed, 18 Nov 2026 20:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DusNePWV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9A71F000C4;
-	Wed, 18 Nov 2026 20:01:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TPmqTINF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C204F1F000C4;
+	Wed, 18 Nov 2026 20:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032085;
-	bh=Uv+fisUqKw2BkgjY+jIQuMQbAalyH5UEZXjCZxSsmJE=;
+	s=korg; t=1795032088;
+	bh=0Yr/rVf3SomyNtnucI4XJMOQJft39lINQCrWtSP4vpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DusNePWVhipVxbjJoj8uYpYwAjNb3jZROgTeAWYVBljszVEm8nSxW6tto76Otn54P
-	 i/RoZUWi5Wr8e/ENQzzkMY4LaaqoU7ODGUrM1Hpu5m5S4/TxKqYePsLL6254foOMLo
-	 LOrQc6KUHyq/mTcxZNwWUV60ZF6mqvR8CgkW859A=
+	b=TPmqTINFH0+3Ew09IAciVlskyCksuXLkljFwOjMShmqU3kBxvlH6GHTj5AuKDNDAJ
+	 W2QZUjEiQDSbDVaRE4KgCymmVRGQ4n6/mmiLnyOvW9Z7Y9cIFCreWcqavC0uAuCJTi
+	 gMCwTj/m4U4Fah4VJ2MzBl+yn83e2Elu5ulH7keQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1235/1756] Bluetooth: msft: Lock failed probe cleanup against feature readers
-Date: Wed, 18 Nov 2026 15:56:02 +0100
-Message-ID: <20261118150058.943153093@linuxfoundation.org>
+Subject: [PATCH 6.12 1281/1756] ALSA: core: Serialize snd_refcount put and sync
+Date: Wed, 18 Nov 2026 15:56:48 +0100
+Message-ID: <20261118150100.569042506@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,189 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 21895f20fedc4504474bcb1022850b532ea4358e ]
+[ Upstream commit 6904743ab77e0684dff319f3806ef982e5eea6cf ]
 
-The MSFT data must remain allocated while msft_get_features() reads
-its features. read_adv_mon_features() protects that access with
-hdev->lock, but msft_do_open() clears hdev->msft_data and frees the
-object without that lock when read_supported_features() fails.
+When a thread tries to sync-and-destroy the resource with
+snd_refcount_sync(), it might lead to a UAF in a very slight time
+window.  Namely, snd_refount_put() calls wake_up() after
+atomic_dec_and_test(), but wait_event() in snd_refcount_sync() checks
+the condition via atomic_test() without serialization, hence the
+thread that called snd_refcount_sync() can continue immediately to
+release the resource before another thread calls wake_up().
 
-After a successful probe, the data survives a normal close. A later
-open can fail the probe while a management feature request is running.
-hci_mgmt_cmd() permits requests during HCI_INIT, and the opener's
-hdev->req_lock does not serialize the management reader:
+For avoiding the race above, introduce the spinlock and take it at
+snd_refcount_put() and snd_refcount_sync() in order to serialize the
+operations.
 
-  Management feature request            HCI open
-                                        hold hdev->req_lock
-                                        msft_do_open()
-  hold hdev->lock
-  msft_get_features(): save msft
-                                        read_supported_features() fails
-                                        hdev->msft_data = NULL
-                                        kfree(msft)
-  read msft->features
-  release hdev->lock                     release hdev->req_lock
-
-The saved pointer then refers to freed memory, causing a use-after-free
-read. Advertisement reporting through mgmt_device_found() also reads
-the features with hdev->lock held.
-
-Take hdev->lock around clearing and freeing msft_data in the failure
-branch. An existing feature reader finishes before the free, while a
-reader starting after cleanup sees NULL. Keep the synchronous probe
-outside this critical section, following the existing req_lock to
-hdev->lock ordering.
-
-KASAN report as below:
-
-    ==================================================================
-    BUG: KASAN: slab-use-after-free in msft_monitor_supported+0xa9/0xb0
-    Read of size 8 at addr ffff88811573ee00 by task mgmt-read-adv-m/532
-
-        CPU: 2 UID: 0 PID: 532 Comm: mgmt-read-adv-m Not tainted
-    7.2.0-rc6-pmb-bt-functional-v1+ #1 PREEMPT(lazy)
-        Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps
-    fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? msft_monitor_supported+0xa9/0xb0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? msft_monitor_supported+0xa9/0xb0
-     kasan_report+0xe0/0x110
-     ? msft_monitor_supported+0xa9/0xb0
-     msft_monitor_supported+0xa9/0xb0
-     read_adv_mon_features+0xdf/0x640
-     ? trace_hardirqs_on+0x18/0x160
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_read_adv_mon_features+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_raw_read_unlock+0x49/0xe0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? _raw_read_unlock+0x23/0x40
-     hci_sock_sendmsg+0x12b5/0x2270
-     ? __pfx_hci_sock_sendmsg+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? selinux_socket_sendmsg+0x160/0x280
-     __sys_sendto+0x425/0x470
-     ? __pfx_hci_sock_sendmsg+0x10/0x10
-     ? __pfx___sys_sendto+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __sys_setsockopt+0x119/0x180
-     __x64_sys_sendto+0xe5/0x1c0
-     ? lockdep_hardirqs_on_prepare+0xea/0x1a0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? trace_hardirqs_on+0x18/0x160
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f9ceb04a687
-        Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48
-    83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b>
-    c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
-    RSP: 002b:00007ffe6ab96a70 EFLAGS: 00000202 ORIG_RAX: 000000000000002c
-    RAX: ffffffffffffffda RBX: 00007f9ceafb8780 RCX: 00007f9ceb04a687
-    RDX: 0000000000000006 RSI: 00007ffe6ab96aea RDI: 0000000000000003
-    RBP: 0000000000000002 R08: 0000000000000000 R09: 0000000000000000
-    R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000003
-    R13: 00007ffe6ab96d50 R14: 00007f9ceb1f6000 R15: 00005625e427dd68
-     </TASK>
-
-    Allocated by task 506:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     msft_register+0x54/0x260
-     hci_register_dev+0x6b7/0xc80
-     __vhci_create_device+0x330/0x840
-     vhci_write+0x287/0x440
-     vfs_write+0x637/0x1010
-     ksys_write+0x111/0x200
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 529:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     msft_do_open+0x604/0x9e0
-     hci_dev_open_sync+0x94a/0x2110
-     hci_dev_do_open+0x2f/0xb0
-     hci_dev_open+0x17d/0x300
-     hci_sock_ioctl+0x3c6/0x710
-     sock_do_ioctl+0x120/0x2b0
-     sock_ioctl+0x41b/0x670
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff88811573ee00
-     which belongs to the cache kmalloc-256 of size 256
-    The buggy address is located 0 bytes inside of
-     freed 256-byte region [ffff88811573ee00, ffff88811573ef00)
-
-    The buggy address belongs to the physical page:
-        page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
-    pfn:0x11573e
-    head: order:1 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-    flags: 0x200000000000040(head|node=0|zone=2)
-    page_type: f5(slab)
-        raw: 0200000000000040 ffff888100042b40 dead000000000100
-    dead000000000122
-        raw: 0000000000000000 0000000000100010 00000000f5000000
-    0000000000000000
-        head: 0200000000000040 ffff888100042b40 dead000000000100
-    dead000000000122
-        head: 0000000000000000 0000000000100010 00000000f5000000
-    0000000000000000
-        head: 0200000000000001 ffffffffffffff81 00000000ffffffff
-    00000000ffffffff
-        head: 0000000000000000 0000000000000000 00000000ffffffff
-    0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff88811573ed00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-     ffff88811573ed80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-    >ffff88811573ee00: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                       ^
-     ffff88811573ee80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-     ffff88811573ef00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-    ==================================================================
-
-Fixes: 5031ffcc79b8 ("Bluetooth: Keep MSFT ext info throughout a hci_dev's life cycle")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: dcca9b6064c3 ("ALSA: Add simple refcount helper functions")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20261015071838.31082-1-tiwai%40suse.de
+Reviewed-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20261015112256.3902-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/msft.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/sound/core.h | 1 +
+ sound/core/misc.c    | 5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/msft.c b/net/bluetooth/msft.c
-index 26f0ef9dc394f..3cdb883431cca 100644
---- a/net/bluetooth/msft.c
-+++ b/net/bluetooth/msft.c
-@@ -654,8 +654,10 @@ void msft_do_open(struct hci_dev *hdev)
- 	msft->features = 0;
+diff --git a/include/sound/core.h b/include/sound/core.h
+index 9c56a7b0ae78f..e215dc1e25bde 100644
+--- a/include/sound/core.h
++++ b/include/sound/core.h
+@@ -84,6 +84,7 @@ struct snd_device {
+ struct snd_refcount {
+ 	atomic_t count;
+ 	wait_queue_head_t waiter;
++	spinlock_t lock;
+ };
  
- 	if (!read_supported_features(hdev, msft)) {
-+		hci_dev_lock(hdev);
- 		hdev->msft_data = NULL;
- 		kfree(msft);
-+		hci_dev_unlock(hdev);
- 		return;
- 	}
+ void snd_refcount_init(struct snd_refcount *ref);
+diff --git a/sound/core/misc.c b/sound/core/misc.c
+index 4772b2a3b808d..9d59e95222ae1 100644
+--- a/sound/core/misc.c
++++ b/sound/core/misc.c
+@@ -183,11 +183,13 @@ void snd_refcount_init(struct snd_refcount *ref)
+ {
+ 	atomic_set(&ref->count, 0);
+ 	init_waitqueue_head(&ref->waiter);
++	spin_lock_init(&ref->lock);
+ }
+ EXPORT_SYMBOL_GPL(snd_refcount_init);
  
+ void snd_refcount_put(struct snd_refcount *ref)
+ {
++	guard(spinlock_irqsave)(&ref->lock);
+ 	if (atomic_dec_and_test(&ref->count))
+ 		wake_up(&ref->waiter);
+ }
+@@ -195,6 +197,7 @@ EXPORT_SYMBOL_GPL(snd_refcount_put);
+ 
+ void snd_refcount_sync(struct snd_refcount *ref)
+ {
+-	wait_event(ref->waiter, !atomic_read(&ref->count));
++	guard(spinlock_irq)(&ref->lock);
++	wait_event_lock_irq(ref->waiter, !atomic_read(&ref->count), ref->lock);
+ }
+ EXPORT_SYMBOL_GPL(snd_refcount_sync);
 -- 
 2.53.0
 
