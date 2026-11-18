@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029330;
-	b=qczGsNMm6WPPnGrgVXaR9FxBnUYfiNUk3BgcpWgYZmDdEI4VBXB2inW+nb5knLVPBgBL
-	 eHjk8V8pKZ/8mscB0ypAX1d0HSVlr6E8sIMXbYvEW0YeYs5lI4IbE7qamoFIWdugRAuZD
-	 3iJGxAx9/nYj7wc+WB/J0vW1NwtsRomCZcQuybUpZ5+30+KWZhAEtp54mI5KqOgIsNc9+
-	 boRtBI/sgAvgiPdYF2u9Do5imTJ/0t89aHyEHFp8+TE0mFdFLA/t8l78HfBq7idNdwI96
-	 kZdp26sRBifsDSxDkLMy5H6gU4+SjU+7CLTdxa6ZuaEnkto0IVlDYlRkZH+awiD06NQ==
+	t=1795029333;
+	b=uUHkMvUweHIFf6kdFSscf8knfwHicV4q7xBvykOWN+Weg5u549WiPlvkzIg5SPxFgyno
+	 zoEFEPg4B38M4oARv8gASJgVUnt6ue14XsS8c6THMFFMxIv+h3fmpSerbbzvZfuhJPy+/
+	 Bkt43WN+S9P+JuGS6vJb/eXIXnYogW3yPJLcaJAKmn0Mtw5FZRsHLE7v6LEG28t9IZ8Vz
+	 Eb5Kf+AFvxYsm13jEbnCdalLoGfah5jBKToAeYvXRoHmm+6IMg7hhlcF8AYqKm1+lVgC5
+	 IdXgJfg4pyzkLTlFxZu6WXCNHQAUS5QO4QsKyLj/p/i0yF2AVITJsVdLtFeTPMOb8gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029333;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nFTtapwaStabpfXytGKHJ+B42Ev473FWWVhOiDa2fUQ=;
-	b=iX6xXsln6yBj2Ijmu+nxzjqkvAxLM1m0WxpRXrBP0GxUF5p6tTVqTjKvlq8hdQIZ6Ti0
-	 jd3Q9wohq5bfbF2Ot9vLYJXXwcGj6ceM2aRyo6S/7V5YFA4QeH+gbcJC8ql5QEvL9SWQ8
-	 L70Sk3bfyRiVEfJElmtDpOG0xkIsnaR+MX0DnGfpu5PXcCdRRhEwn/Gd6L+s6KQEpPU9s
-	 NhPCW4gSdo5SkPrGlrZ209KZ2GTc9DLytwClU8MFK7IX5Vo7TKOwfbMfj0eSH5+p1VviP
-	 9XLS+1DHH3BiRNZSC4GQHkMUh6IUMyRS39E6kKZl726gJe0i5UxY/YDR+hxyzH4hNYA==
+	bh=hXBaFJB4gInUWIMtYHbezP8khnfXXrR39Q70wT6xpSg=;
+	b=06UzFc+IbemXiO27fR8EIyEJ3SYGYNXiw4ooLRsGz0LVQGm3SPXxU+H4eJZ8BeeWdU1Z
+	 XrXAl7PiFd2NITLxNoaFQNiD68P+DvqE91cacNm+tvlibmVVNHPoqeD3ZS85lEjUetJFq
+	 8jq/j+l6iNwC3XJ7a5b1JV8LGFSU8e0Amos97tMogUtwEA7yLbD5f0Jw44dofxoHft3pE
+	 fsHqTMWx9h38O808nFgPlUHglLtHbJQddxIIsFFeNv5LZAymhd1vXj9ffU92oHjVcS4aN
+	 pn5sZf6zC8J/03pdKfDNCtRofAZSTV1wnOFLx7CdQ/MXMRvsvTw5goy8bXUfJlYJZlg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xeLpalLU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OM1jK9uE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3597606A331;
-	Wed, 18 Nov 2026 19:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BFE606A31C;
+	Wed, 18 Nov 2026 19:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xeLpalLU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2253D1F000C5;
-	Wed, 18 Nov 2026 19:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OM1jK9uE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0D41F000C6;
+	Wed, 18 Nov 2026 19:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029330;
-	bh=nFTtapwaStabpfXytGKHJ+B42Ev473FWWVhOiDa2fUQ=;
+	s=korg; t=1795029333;
+	bh=hXBaFJB4gInUWIMtYHbezP8khnfXXrR39Q70wT6xpSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xeLpalLUVgJiR937wAs4Hr3PMv7tXU4vmstEjIEhUvBdgA052AMzOo/oLDWSVa0DZ
-	 U/reyVFJjOwl3ggbUVLoyyOL8NwA4gXiDRTaDHDat5yDRz9gpJbBvsFqJEG56tqPkB
-	 TyR6vhQtZnM+WkxkVZicvCtGsGMLZdv8YYSjlV/k=
+	b=OM1jK9uEAOHaa7onAAzuTbZTKSaybL+Dr2w+qWukcTVAXDOD22KcxRmSc47GlbnFa
+	 R+IrROcUqqAYd+bnCYlRTQ+wAMxanUbJaMwCUNLDFYLKlnzC2vzjmfyNft24fBTsiP
+	 NaSC4xNLjTa2JAGXjtlWu3hbwPTHkGtCMkpAXtOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0310/1756] scsi: mpi3mr: Rename log data save helper to reflect threaded/BH context
-Date: Wed, 18 Nov 2026 15:40:37 +0100
-Message-ID: <20261118150020.671964571@linuxfoundation.org>
+Subject: [PATCH 6.12 0311/1756] scsi: mpi3mr: Fix out-of-bounds read of event data
+Date: Wed, 18 Nov 2026 15:40:38 +0100
+Message-ID: <20261118150020.710633514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,85 +68,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit d0d19250ed81907eac707be8221eb31e5b96b647 ]
+[ Upstream commit 77554f01187d91c20f04d2a8e28270943ed64cca ]
 
-Log data events can be processed from BH and threaded contexts.  Rename
-the save helper to document its intended usage and improve readability
-of the event handling flow.
+The event data length from the reply is used as is, both when caching log
+data and when sizing the buffer handed to the bottom half. A length larger
+than the frame makes both of them read past the end of it.
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://patch.msgid.link/20260116060719.32937-3-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 77554f01187d ("scsi: mpi3mr: Fix out-of-bounds read of event data")
+Clamp the length to what the frame can hold.
+
+Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
+Fixes: d0d19250ed81 ("scsi: mpi3mr: Rename log data save helper to reflect threaded/BH context")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-12-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr.h     | 2 +-
- drivers/scsi/mpi3mr/mpi3mr_app.c | 4 ++--
- drivers/scsi/mpi3mr/mpi3mr_os.c  | 7 ++++++-
- 3 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr.h b/drivers/scsi/mpi3mr/mpi3mr.h
-index 840195373084e..07e8ffb4d0565 100644
---- a/drivers/scsi/mpi3mr/mpi3mr.h
-+++ b/drivers/scsi/mpi3mr/mpi3mr.h
-@@ -1488,7 +1488,7 @@ void mpi3mr_pel_get_seqnum_complete(struct mpi3mr_ioc *mrioc,
- 	struct mpi3mr_drv_cmd *drv_cmd);
- int mpi3mr_pel_get_seqnum_post(struct mpi3mr_ioc *mrioc,
- 	struct mpi3mr_drv_cmd *drv_cmd);
--void mpi3mr_app_save_logdata(struct mpi3mr_ioc *mrioc, char *event_data,
-+void mpi3mr_app_save_logdata_th(struct mpi3mr_ioc *mrioc, char *event_data,
- 	u16 event_data_size);
- struct mpi3mr_enclosure_node *mpi3mr_enclosure_find_by_handle(
- 	struct mpi3mr_ioc *mrioc, u16 handle);
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_app.c b/drivers/scsi/mpi3mr/mpi3mr_app.c
-index 3c409b3fdd925..337b6ebda49c0 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_app.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_app.c
-@@ -2847,7 +2847,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job)
- }
- 
- /**
-- * mpi3mr_app_save_logdata - Save Log Data events
-+ * mpi3mr_app_save_logdata_th - Save Log Data events
-  * @mrioc: Adapter instance reference
-  * @event_data: event data associated with log data event
-  * @event_data_size: event data size to copy
-@@ -2859,7 +2859,7 @@ static long mpi3mr_bsg_process_mpt_cmds(struct bsg_job *job)
-  *
-  * Return:Nothing
-  */
--void mpi3mr_app_save_logdata(struct mpi3mr_ioc *mrioc, char *event_data,
-+void mpi3mr_app_save_logdata_th(struct mpi3mr_ioc *mrioc, char *event_data,
- 	u16 event_data_size)
- {
- 	u32 index = mrioc->logdata_buf_idx;
 diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 53408fb9fc407..18d3ebdb62e3c 100644
+index 18d3ebdb62e3c..0ce10b4bf0ffe 100644
 --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
 +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -1954,7 +1954,7 @@ static void mpi3mr_pcietopochg_evt_bh(struct mpi3mr_ioc *mrioc,
- static void mpi3mr_logdata_evt_bh(struct mpi3mr_ioc *mrioc,
- 	struct mpi3mr_fwevt *fwevt)
+@@ -3024,7 +3024,7 @@ void mpi3mr_add_event_wait_for_device_refresh(struct mpi3mr_ioc *mrioc)
+ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
+ 	struct mpi3_event_notification_reply *event_reply)
  {
--	mpi3mr_app_save_logdata(mrioc, fwevt->event_data,
-+	mpi3mr_app_save_logdata_th(mrioc, fwevt->event_data,
- 	    fwevt->event_data_size);
- }
+-	u16 evt_type, sz;
++	u16 evt_type, sz, avail_reply_room;
+ 	struct mpi3mr_fwevt *fwevt = NULL;
+ 	bool ack_req = 0, process_evt_bh = 0;
  
-@@ -3084,6 +3084,11 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
- 	}
+@@ -3085,7 +3085,12 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
  	case MPI3_EVENT_DEVICE_INFO_CHANGED:
  	case MPI3_EVENT_LOG_DATA:
-+
-+		sz = event_reply->event_data_length * 4;
-+		mpi3mr_app_save_logdata_th(mrioc,
-+			(char *)event_reply->event_data, sz);
-+		break;
- 	case MPI3_EVENT_ENCL_DEVICE_STATUS_CHANGE:
- 	case MPI3_EVENT_ENCL_DEVICE_ADDED:
- 	{
+ 
+-		sz = event_reply->event_data_length * 4;
++		if (mrioc->reply_sz > offsetof(struct mpi3_event_notification_reply, event_data))
++			avail_reply_room = mrioc->reply_sz -
++			    offsetof(struct mpi3_event_notification_reply, event_data);
++		else
++			avail_reply_room = 0;
++		sz = min_t(u16, event_reply->event_data_length * 4, avail_reply_room);
+ 		mpi3mr_app_save_logdata_th(mrioc,
+ 			(char *)event_reply->event_data, sz);
+ 		break;
+@@ -3119,7 +3124,12 @@ void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
+ 		dprint_event_th(mrioc,
+ 		    "scheduling bottom half handler for event(0x%02x) - (0x%08x), ack_required=%d\n",
+ 		    evt_type, le32_to_cpu(event_reply->event_context), ack_req);
+-		sz = event_reply->event_data_length * 4;
++		if (mrioc->reply_sz > offsetof(struct mpi3_event_notification_reply, event_data))
++			avail_reply_room = mrioc->reply_sz -
++			    offsetof(struct mpi3_event_notification_reply, event_data);
++		else
++			avail_reply_room = 0;
++		sz = min_t(u16, event_reply->event_data_length * 4, avail_reply_room);
+ 		fwevt = mpi3mr_alloc_fwevt(sz);
+ 		if (!fwevt) {
+ 			dprint_event_th(mrioc,
 -- 
 2.53.0
 
