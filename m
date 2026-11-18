@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045940;
-	b=wuZBMQhy7kfo5W+lx7vRoi+j+tU1uRV6eN/fHuEIftZYQVGbbapGzzpEVy0OrbWAjFN8
-	 E9ni2mVZeAyp9WWWn9unDGA32qKVs6e3vGm+k0dD2G7673vAsfqW8eNpq4iLUIU3/P90g
-	 7Sql8yuCTWqGX3y23cYvFzPENwQB5UYWotEmRRGAN3uLM7Y+ANDP6TOGwgkjwbSLDxuXk
-	 x6YtM7wl0EiCJn0Y4k5Fl3KGd1mrPQ5Woe8ekg5rR9EpRIEJRsAZlXPFwgePp1Sk2fMn4
-	 WcMarxF/rRbExUWUyvq4sGmV2HZDBwTJcM7ky/xZ53Xbeekl0hwy6NjFLUnB1QeruSg==
+	t=1795045943;
+	b=r7wUfK/Ji82rlbq6OvbGskOKVbkcLymSATLql5De5RgpSPcFmFb8+3Uuz6ZCeZ6I9NVC
+	 tO4Hyy649youZKIUxQTR0bwGh565QS6wu8oKE8XDP63J9hPg08DcpyAwGlI1KyRWrKdbw
+	 IlEhn+JjaO+JX7it355N5JncLX+fUH/CGPdaZHkzmRWEFDjCIsnkRgMwfFIyaSbR6umZi
+	 mIEZ7IwvqIeyk0h+gWl/YNqSJXCE5jyVuPf9GBVQMZC2zkhRR7nGLTkHtklfdzYD94JTh
+	 lBW5zWUnG8MXuM1QHkcZjwRPxb8SSRRefq6cnIcO97PWIkgGRmx3gvHxfnHvr9cwewA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045943;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kddUqYKXn7kVrSo0pZgHVhYR4Vlx8rKxYETTbdC+Tlc=;
-	b=l7VjDqG/v/kzeVnCO+IpYU0HOJN0ZO1+DggkHoeHPHKcrg4JT71FCD0Cs+GxjK+3fu7O
-	 bAJvRvqAMpAOYWQ5fKX78TQZnXq+U55B/BJoNbLecBlKl6NRLxTToRRtuM5D3JLErRt7B
-	 aOXPXEhndcaRpTCqQ9/RSIc+X6detSyzz18UCpebDZR/nD7/bF+vFJNGvsSE2NlucUqRN
-	 /gIJ0bd10VlwjPYr6FKH6RnAtLPwr1pEdIC3zw0nXVwX9Vz3koT84xpS/YeOIBmlCEKTF
-	 OCHIArkeDiDhrgiCSblAzRs6ju1pCpA4MkHPkrXVe9sV454gqj4H0hUxuI+n79LLd3g==
+	bh=L4uz1mS9SelKE1PryoHPPH91pmRf/O6n5cbCvPJc55M=;
+	b=pxW1/TCW3MOHo8rS9VPhanNCAdZRYpzBkOBTTBdTfbNyB3lhB1xlYlYgYN+QNJr9IQk3
+	 d9e2r4pHCtkPIY4CcQpJQzJ8BzJwxE/7Gxwwwz/MIrbZ8sJpSrzqRFreFTotXC6FYaZM6
+	 ZYQHNe1ZRU+xujrZkOW2BjOAt7DXnttTC6sJZLYt8e0ZoveI9ln8W1fzayVwP3t6dn3GK
+	 2HVGg73fdmA1AT/OUKvKF2V0ol6Lc7slqsDIKPTytzcrEKlAel5spU5iyb4LghqPcNh4Q
+	 Y3EK/NlqqvgJef/VDGmzSM4b+wDqRBhdwp8V5g//NXZx+y18Q6Lg8keHQiNgspxLKlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtN31nA5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKl6GpR1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF4E606A320;
-	Wed, 18 Nov 2026 23:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED344606A31C;
+	Wed, 18 Nov 2026 23:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LtN31nA5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F14F1F000C4;
-	Wed, 18 Nov 2026 23:52:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKl6GpR1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 462021F000C4;
+	Wed, 18 Nov 2026 23:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045940;
-	bh=kddUqYKXn7kVrSo0pZgHVhYR4Vlx8rKxYETTbdC+Tlc=;
+	s=korg; t=1795045942;
+	bh=L4uz1mS9SelKE1PryoHPPH91pmRf/O6n5cbCvPJc55M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LtN31nA5P7GKbaC94SQqAfXNF9ELPoklZqkGbo83Yvbbz/k2L3WpLnfpi3i3xEQst
-	 qnVVaGLNEoIHHjnksCunKvBF8j3AtltGUizJt6/1+KqY2EBatQqXj6dSDH21tP1wtq
-	 N7rZcRmkLlc178ytcaAA4GQ8RZyGK54kctvhhuLo=
+	b=UKl6GpR1H9l0C2cyDDOCs5wi+BQ9U4W2aklVi+nNlBv+z0NqGP+aH8b8/NdEums/C
+	 uRUxWNO41vTaoqhhZuJFFBifyXmDLPK7xXyrWKBGEQIuD22IdHGbRZG2EK0r7+qyI1
+	 GdxYbrg8bhyXgL0pnnh7c7q6lw8sEtWu8ArSVMyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Gauche <scott-dev@scottgauche.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Miquel Raynal (DAVE)" <miquel.raynal@bootlin.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1102/2857] ALSA: hda/realtek: Fix audio after Windows reboot on ASUS Q423SA
-Date: Wed, 18 Nov 2026 15:35:36 +0100
-Message-ID: <20261118150241.312156758@linuxfoundation.org>
+Subject: [PATCH 6.1 1103/2857] mtd: rawnand: pl353: Fix debug prints
+Date: Wed, 18 Nov 2026 15:35:37 +0100
+Message-ID: <20261118150241.349104433@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,80 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Gauche <scott-dev@scottgauche.com>
+From: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
 
-[ Upstream commit 8acd6469f42784f38872ad83b14c41152d986b63 ]
+[ Upstream commit 2b7baaddf1bc3e39206a0354449fdc349945b86b ]
 
-The ASUS Vivobook S 14 Q423SA-U5512 (DMI family S5406SA) with the
-ALC294 codec has working analog audio when booted directly after a full
-shutdown. After a warm reboot from Windows 11, audio works briefly during
-Linux startup, then both the internal speakers and headphones become
-silent. PCM playback continues without errors.
+They are partially incorrect since "software" engine does not mean
+hamming, the "none" cae is also falling into this print, and on-die
+means there is some kind of hardware support; we prefer to use the
+wording on-host vs. on-die.
 
-Coefficient 0x1b is 0x4e4b on a direct cold boot, but 0x4a4b after the
-Windows warm reboot. Restoring bit 10 changes it back to 0x4e4b and
-immediately enables both analog outputs. Speaker playback, headphone
-playback, jack switching, cold boot, and suspend/resume were tested
-successfully. The same 0x4a4b state and immediate recovery with 0x4e4b
-were independently confirmed on another S5406SA with subsystem 1043:10c4.
+Fix all those prints.
 
-The same coefficient write is already used by
-ALC294_FIXUP_ASUS_COEF_1B for the ASUS UX431DA. That fixup cannot be
-reused here because it chains to ALC289_FIXUP_ASUS_GA401 and applies
-unrelated DAC routing and microphone pin configuration.
-
-Add a model-specific fixup for subsystem 1043:10c4 and chain it to the
-existing ALC2XX_FIXUP_HEADSET_MIC fixup instead.
-
-Link: https://github.com/thesofproject/sof/issues/11051
-Fixes: f2d08f3651fb ("ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA")
-Signed-off-by: Scott Gauche <scott-dev@scottgauche.com>
-Link: https://patch.msgid.link/20261005154017.1164657-1-scott-dev@scottgauche.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 1e06dbfdfb85 ("mtd: rawnand: pl353: Add message about ECC mode")
+Signed-off-by: Miquel Raynal (DAVE) <miquel.raynal@bootlin.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/pl35x-nand-controller.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index a221568c08f25..db583e3de2d04 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -7438,6 +7438,7 @@ enum {
- 	ALC294_FIXUP_ASUS_MIC,
- 	ALC294_FIXUP_ASUS_HEADSET_MIC,
- 	ALC294_FIXUP_ASUS_SPK,
-+	ALC294_FIXUP_ASUS_Q423SA,
- 	ALC293_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
- 	ALC285_FIXUP_LENOVO_PC_BEEP_IN_NOISE,
- 	ALC255_FIXUP_ACER_HEADSET_MIC,
-@@ -8723,6 +8724,17 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC294_FIXUP_ASUS_HEADSET_MIC
- 	},
-+	[ALC294_FIXUP_ASUS_Q423SA] = {
-+		.type = HDA_FIXUP_VERBS,
-+		.v.verbs = (const struct hda_verb[]) {
-+			/* Restore bit 10 lost after reboot from Windows */
-+			{ 0x20, AC_VERB_SET_COEF_INDEX, 0x1b },
-+			{ 0x20, AC_VERB_SET_PROC_COEF, 0x4e4b },
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC2XX_FIXUP_HEADSET_MIC,
-+	},
- 	[ALC295_FIXUP_CHROME_BOOK] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc295_fixup_chromebook,
-@@ -10148,7 +10160,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1074, "ASUS G614PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
--	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS S5406SA/Q423SA", ALC294_FIXUP_ASUS_Q423SA),
- 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x115d, "Asus 1015E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+diff --git a/drivers/mtd/nand/raw/pl35x-nand-controller.c b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+index 1c23ad74b225c..48886a89ea28c 100644
+--- a/drivers/mtd/nand/raw/pl35x-nand-controller.c
++++ b/drivers/mtd/nand/raw/pl35x-nand-controller.c
+@@ -974,17 +974,19 @@ static int pl35x_nand_attach_chip(struct nand_chip *chip)
+ 
+ 	switch (chip->ecc.engine_type) {
+ 	case NAND_ECC_ENGINE_TYPE_ON_DIE:
+-		dev_dbg(nfc->dev, "Using on-die ECC\n");
++		dev_dbg(nfc->dev, "Using on-die hardware ECC\n");
+ 		/* Keep these legacy BBT descriptors for ON_DIE situations */
+ 		chip->bbt_td = &bbt_main_descr;
+ 		chip->bbt_md = &bbt_mirror_descr;
+ 		fallthrough;
+ 	case NAND_ECC_ENGINE_TYPE_NONE:
++		dev_dbg(nfc->dev, "Using no ECC engine\n");
++		break;
+ 	case NAND_ECC_ENGINE_TYPE_SOFT:
+-		dev_dbg(nfc->dev, "Using software ECC (Hamming 1-bit/512B)\n");
++		dev_dbg(nfc->dev, "Using software ECC\n");
+ 		break;
+ 	case NAND_ECC_ENGINE_TYPE_ON_HOST:
+-		dev_dbg(nfc->dev, "Using hardware ECC\n");
++		dev_dbg(nfc->dev, "Using on-host hardware ECC\n");
+ 		ret = pl35x_nand_init_hw_ecc_controller(nfc, chip);
+ 		if (ret)
+ 			return ret;
 -- 
 2.53.0
 
