@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032052;
-	b=O6QcZ/uAlliuNsG8uTiSpCyqGEKutA0529DyOzzrwhWs6OD8gWta8dRwFNu62RxO9m5W
-	 uZ0vVgIi/mz27SztVwBEdRWyt+GrH7pVBehcFeLA3q2VWV26UQDuiKwyK/qq/dmHjbae/
-	 BOcK5amwfiBObigA4eFlykswV+QGiUaYDps+X48XihavXt95tk+1LP3DrJV07YsRMNeU1
-	 IoGHNdCpTeTH4wfqFviM3bAb+a8ibbtQ0uFUnF6MnCyl8RCdkie0F1bQqjeOES+R1XntC
-	 3fB0jGgeawUA/xblc4fTSFR6WfIO/CgeQL/tvzHohGrqYJMcc/KAmMVtwURVi6tci2g==
+	t=1795032055;
+	b=InFSSDecpxpQoTuEJvObAZKzdBMn3V8NfF8uPLfKkq7pcbkTV4QORL5Nz5yV6PQQ+c1F
+	 9y5w1PI9ebX4U1CKSXtyoCXyh7QUtJ8Wbgdr6X3b/sqzzGqcYiSo3Khxuu6WUHSLjDW8O
+	 +emGJERGNHDaoHwT2oR0lpX47f6S4si9Dyxfz3V5pFdESQPcdnQ0Jb2ni6W11aFK/qlfR
+	 O+eqEVP7d05yjgsQCNmPEN9oJpQQmsxEvcwTgnBeEdPFmsQQXf27aDADtKkq91qlDpFYB
+	 H/ip0trN07JSPXxjHI67BVkGzp7j2Mi9ZkpzKJmB/WOe7HSanFnEReP4C4Gmps2Dnww==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032052;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032055;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AYI/QiYeyxFSfxvo0qhFTitHAEjMzmLehT4g2nCTZBM=;
-	b=sdHfkjUT/FQ+wNfaLPIZd6AkuuIrA5kPRNmIS3ebQheInaEKJaqvKMqvy2A+Tky/DAm7
-	 IRrlaZKeq47Ywqy8kJNDPJvPO4SM7/3gAiNe8pCQ/dvSl2+UyE1/BnjT4h4bF7md3t/zv
-	 AA3/7yICZ4xVXqYCY3A9C5q2OcwCA+irht71T0k7QTg5Drs+A7Lrgz3OhjsT86J1w3cdf
-	 WFh9yXpYklIRa7YFcmDI184DXr0md02VjmxgNyWl2V9l7EU209lktW4aRKjvLNeEKW+Dh
-	 1WAfwXUHejgOzG6p8XZ3yOoXzvT65Fj7C7WaXL89jdV4xNKMD8fQ4hE9A1MCLceGsGw==
+	bh=YEUErghi2sfLTl/ZgdXqVy9lPISd6JK/wScb7Pr0qPo=;
+	b=qPDrwUBy3Cu5PEcRPsNiiwWtMns+bUzZYGiPQgw5jFjKW8rIRyvNhNX6NZx2Y43RaTAl
+	 EPm3tLQcMXD3po5vrrLtOvDTHtrgE9VSTOGdLcjgKisTWOowaQHbGMHwSLCUc/QrMjgk1
+	 oQd901mFnq5AZvsx5KrbD6IFQ6SAEMoFmO3lhtYLYR0V9hOT5pqhiZTNh+VOJceaw7K20
+	 phq+c/ho9h8A4v1Q6AGmdtrCm62L9Qe8D+IjxFuipQZ7r7pyDE7Se4Gf2uSgwiFAAcn/q
+	 GqWFjVLuiAl2/K9F3sNhisQbTlzgzDYbZxfDm9TCrgQGtBKAdOyZ9wen+qzWUbwGPHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4d3CbdW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dLa207Gh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6B160A260A;
-	Wed, 18 Nov 2026 20:00:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E77F606A31C;
+	Wed, 18 Nov 2026 20:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I4d3CbdW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69131F000C4;
-	Wed, 18 Nov 2026 20:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dLa207Gh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73C0C1F000C4;
+	Wed, 18 Nov 2026 20:00:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032052;
-	bh=AYI/QiYeyxFSfxvo0qhFTitHAEjMzmLehT4g2nCTZBM=;
+	s=korg; t=1795032055;
+	bh=YEUErghi2sfLTl/ZgdXqVy9lPISd6JK/wScb7Pr0qPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I4d3CbdW9xhssG3fUhUftbLboy8gd8Jbv/zINpvJqW2nTNR+qvv2g9iBCWgVK1pqH
-	 SfaG7FypEf5jw4V7Ga+BIlbf24eMHNOjZZtutyTBGUlo12LPQCJI8770g5UQo8ns5f
-	 8yu+OtlxqMBTIITCry6jH7Syi6Iy7jLPvfuV0vIQ=
+	b=dLa207GhUuf1f+mXoI2Fu45GHgR67OgzTEIAaP9dLRJqh43mfSDsEFP+7q0ZupEuI
+	 xCs6GhOKOTP4sxhoM4KSqfFnPWWfqowpuDRFgOUENGrWP+eLmVesQAQWrtXvexRMO7
+	 cc035X6+LkHtgYURlsV0MJgVjnWBd1u356/bGQEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngsung Ahn <ays511.kr@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Laxman Acharya Padhya <acharyalaxman8848@gmail.com>,
+	Ali Ahmet Memis <ali@iusegentoo.com>,
+	Kiran K <kiran.k@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1274/1756] RDMA/rxe: reject IB_WR_REG_MR from user QPs in rxe_reg_fast_mr()
-Date: Wed, 18 Nov 2026 15:56:41 +0100
-Message-ID: <20261118150100.329717088@linuxfoundation.org>
+Subject: [PATCH 6.12 1239/1756] Bluetooth: btintel: propagate version TLV parsing errors
+Date: Wed, 18 Nov 2026 15:56:06 +0100
+Message-ID: <20261118150059.082834625@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,56 +70,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngsung Ahn <ays511.kr@gmail.com>
+From: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
 
-[ Upstream commit 33afe9909f213d8bb8e80f0b93382dde0f56e2c7 ]
+[ Upstream commit 3a74624b5deae7f5e2b98e638687fbf9594a9781 ]
 
-IB_WR_REG_MR is documented as kernel-only ("can not be issued by
-userspace"), but nothing enforces it.
-rxe_wr_opcode_info[IB_WR_REG_MR] sets WR_LOCAL_OP_MASK for IB_QPT_RC,
-a QP type userspace can create, so a user QP that writes
-opcode = IB_WR_REG_MR into its mmap'd SQ ring reaches
-rxe_do_local_ops() -> rxe_reg_fast_mr(). That function then trusts
-the ring-supplied fields:
+btintel_read_version_tlv() ignores the parser return value, so setup
+continues with partially initialized version data after a malformed TLV
+causes parsing to stop.
 
-	struct rxe_mr *mr = to_rmr(wqe->wr.wr.reg.mr);
-	...
-	if (unlikely(mr->state != RXE_MR_STATE_FREE))    /* deref */
-	...
-	mr->access = access;                             /* write */
+Return the parser error to the caller so an invalid response fails setup
+instead of being treated as successful. Keep this behavioral change
+separate from the bounds checks so it can be reverted independently if
+an existing controller sends malformed data.
 
-For a user QP wqe->wr.wr.reg.mr is a fully attacker-chosen pointer,
-so this is an arbitrary-kernel-address dereference (arbitrary read
-confirmed, oops). No existing check distinguishes a user QP on this
-path.
-
-Reject IB_WR_REG_MR for user QPs before dereferencing the supplied
-pointer.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261001152426.3259522-1-ays511.kr@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Laxman Acharya Padhya <acharyalaxman8848@gmail.com>
+Reviewed-by: Ali Ahmet Memis <ali@iusegentoo.com>
+Tested-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: cf87709d7ff8 ("Bluetooth: btintel: Zero version data before parsing TLVs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mr.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/btintel.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index 818f1693bdec7..fbb6fb31e2760 100644
---- a/drivers/infiniband/sw/rxe/rxe_mr.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -781,6 +781,10 @@ int rxe_reg_fast_mr(struct rxe_qp *qp, struct rxe_send_wqe *wqe)
- 	u32 key = wqe->wr.wr.reg.key;
- 	u32 access = wqe->wr.wr.reg.access;
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index 5a0b30006d2b6..b2aff2bb09114 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -705,6 +705,7 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
+ {
+ 	struct sk_buff *skb;
+ 	const u8 param[1] = { 0xFF };
++	int err;
  
-+	/* IB_WR_REG_MR is a kernel-only op; a user QP must not reach here. */
-+	if (qp->is_user)
-+		return -EOPNOTSUPP;
-+
- 	/* user can only register MR in free state */
- 	if (unlikely(mr->state != RXE_MR_STATE_FREE)) {
- 		rxe_dbg_mr(mr, "mr->lkey = 0x%x not free\n", mr->lkey);
+ 	if (!version)
+ 		return -EINVAL;
+@@ -723,10 +724,10 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
+ 		return -EIO;
+ 	}
+ 
+-	btintel_parse_version_tlv(hdev, version, skb);
++	err = btintel_parse_version_tlv(hdev, version, skb);
+ 
+ 	kfree_skb(skb);
+-	return 0;
++	return err;
+ }
+ 
+ /* ------- REGMAP IBT SUPPORT ------- */
 -- 
 2.53.0
 
