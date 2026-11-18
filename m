@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048048;
-	b=tjB3L2Syl9lNFs0A2tcQNuSqkGs/CajORGPRCVWiLu5ImrjwuaKk3GQd6if5caHJRZoG
-	 ff1Haha2lFQz4cpBn0V2vOm3ah/7kBi95KtNse6CXui/e2xQJCJnwQEP2o4qIim4twldE
-	 G4aMIJaJo8vcP1jPehmPMyc6l9H2K7qZFukeUQnnkGUR8ZOYZwHALn+DrZiZ3F9LKL2Mg
-	 9P0TqebD6LzDRzAp4NiAM76wWtJM6UdCEqaMMyqa2W2Li+07MtPoGtkFD3rX3epKXxI+u
-	 bQBML0ZQarCp66H5X04PpXNDR+LRf+PNO/oO/IPbBnnqalkJi/NMVCAb8oKqJWWqftA==
+	t=1795048051;
+	b=tdSIE4WvWXf8Zi8NPTlX181oL17BNMpPvMfO0HkOmbPKUk6lkqMChS7KSWJ2IMOizuIO
+	 +j3ZzEaoTfFe25N8WLe3kv3tbB4JWX6+sP7Ce03m/ULY2wJYr/GbfMgnwFKnhkonqb2Op
+	 0R4Kyw2QyJbbpd6jt/iOJKBmXruxxzpKcJuHDq5Pt+PHHbT/+1A7mJlJgipzlLZ0Y5F8U
+	 0CFb+pDB7cxkoETfixB6wQX9aNyhLlXi3Kg5yZIaBdQboA6wFjIv5K2AyvoyrtP18kv0W
+	 4DJm3CtXUU0WLe+kI4lqstRaKk6gwvS+z66UReUl6nFrt+FpzpPu1s13VmHI7ktuvUA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LB4bKOGs7OmZQLnDWJEWJvr9Aqs3IE141Yv5RjJJ5fo=;
-	b=Isden3l/42GZV6EpdzZYVDIdzOs6hOVUqOFK7dGHXiQoKBrr5ZHPjVmo5ZUHlr+rD3zM
-	 zi0H2v3VBDrz7rtHrASPNUeBEBTQjaFJMAOkFkbvn8Vpt/tEPn2L6R79gPGNG4f6y6SdI
-	 kw+4G8QPp8vh6uyItFVHBAWdXWwBiN1pYZpGxt5ljPOH2KhQPK9IkfO+d3uJyL64bTzjb
-	 FPPbhz1iz7gmdxn7VBRLKj9vGJsFA6v1x/JkCKdUyLuBE3NFx6e2opqxjn+d7B5bQdrur
-	 Tk2qk18CbJqPqHohbd82TWhJnZZlrlHPZgobvuE4t2NshAWA9Kwr9rgD/eluBbO9Xug==
+	bh=gaWJuLQvPmlluz2jiYSU+/NQBgrLPJ6iVufbdDMpgSM=;
+	b=XXJk2tMRpy9Ovwv5ryBDcqmSp9hh2ex/DSCIYyHE1KysAlrCGERG7ji5pFWdHG4LhPF3
+	 A40ShJwl1+J+qurWqijUYgc9bL3c9EKpcw+dwkXXKX3tNTcamcrGiCnrqmOpSjRUubBmp
+	 gKmp9M81wB2tT3j08szsqMltDrW+TDTLVgz3xbDJnayTmur4ridHTUSeefRZyzP2UQqwu
+	 juUJqMaSDG5bPN3UJywP7zBhX17RIDFXbu2LvOcVxrRVB+JsIR+qyEePmts/kCaRwI8o6
+	 7XrHbtc2x4/eLtGcUsAlwiZPbzQkvJhxvQIFUfqznFyXRy1g32pL5MWQdiyJwjDHUEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIs0HsFE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvs7LJMP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD853606A320;
-	Thu, 19 Nov 2026 00:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D59D606A320;
+	Thu, 19 Nov 2026 00:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gIs0HsFE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0D71F000C4;
-	Thu, 19 Nov 2026 00:27:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yvs7LJMP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28E41F000C4;
+	Thu, 19 Nov 2026 00:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048048;
-	bh=LB4bKOGs7OmZQLnDWJEWJvr9Aqs3IE141Yv5RjJJ5fo=;
+	s=korg; t=1795048051;
+	bh=gaWJuLQvPmlluz2jiYSU+/NQBgrLPJ6iVufbdDMpgSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gIs0HsFEExF2hLhyZ02aNEiH6hawtnoEnBifKQFjDNpOpGO7O32vIhIyGjYv/f/cs
-	 rhETUXbSZf8SV5eXqI0lKO5HRNOGniEznxJFaWm1NQZuM4LUS1xWBdPIsDkYAmh9Od
-	 1jL+Jx8FVKK+lDUnNlyWK/Ya0eYYRBctIwQgG5oY=
+	b=yvs7LJMPfz64oOPt8GP6HbOcBPE2lEAJwh6t30Xea5xahDaVu8xl0TRLTyq17ImKU
+	 ar42EH/ENwy1c9RROS1GAsZ9GYp37UDVWU3b7ijmWlkvjcARpOrNLdgGTwS0HW4jLD
+	 s7Oc0oMDt4B9d1G8Z6KDvCaxfYH+jHunF52ox8yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1854/2857] scsi: mpi3mr: Fix out-of-bounds bitmap access during device removal
-Date: Wed, 18 Nov 2026 15:48:08 +0100
-Message-ID: <20261118150307.996299827@linuxfoundation.org>
+Subject: [PATCH 6.1 1855/2857] scsi: mpi3mr: Fix target device reference leak in device removal handshake
+Date: Wed, 18 Nov 2026 15:48:09 +0100
+Message-ID: <20261118150308.031757560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,58 +70,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 5dade59551d344d0308256edfef6bc3fb4202eb3 ]
+[ Upstream commit a04b0f3a17e32aa449fd896163a7b40efc29c4f5 ]
 
-Device handles reported by the controller are used to index the remove
-pending bitmap and to build a task management request without being
-compared against the maximum handle the controller reported.
+The device removal handshake looks up the target device to update its state
+but never drops the reference that the lookup takes.
 
-Check the handle before using it.
+Drop it once the state has been updated.
 
 Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
 Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-9-chandrakanth.patil@broadcom.com
+Link: https://patch.msgid.link/20260825210411.301535-10-chandrakanth.patil@broadcom.com
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index 8b2ecc7383b13..6efedf26ade18 100644
+index 6efedf26ade18..6a19af5e66495 100644
 --- a/drivers/scsi/mpi3mr/mpi3mr_os.c
 +++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2133,7 +2133,8 @@ static void mpi3mr_dev_rmhs_complete_iou(struct mpi3mr_ioc *mrioc,
- 		ioc_info(mrioc,
- 		    "%s :dev removal handshake completed successfully: handle(0x%04x)\n",
- 		    __func__, drv_cmd->dev_handle);
--		clear_bit(drv_cmd->dev_handle, mrioc->removepend_bitmap);
-+		if (drv_cmd->dev_handle < mrioc->facts.max_devhandle)
-+			clear_bit(drv_cmd->dev_handle, mrioc->removepend_bitmap);
- 	}
+@@ -2268,6 +2268,9 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3mr_ioc *mrioc, u16 handle,
+ 		tgtdev->state = MPI3MR_DEV_REMOVE_HS_STARTED;
+ 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
  
- 	if (!list_empty(&mrioc->delayed_rmhs_list)) {
-@@ -2247,6 +2248,20 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3mr_ioc *mrioc, u16 handle,
- 	struct mpi3mr_tgt_dev *tgtdev = NULL;
- 	unsigned long flags;
- 
-+	if (handle >= mrioc->facts.max_devhandle) {
-+		ioc_err(mrioc, "dev_remove_hs: handle(0x%04x) >= max_devhandle(0x%04x)\n",
-+			handle, mrioc->facts.max_devhandle);
-+		if (drv_cmd) {
-+			cmd_idx = drv_cmd->host_tag - MPI3MR_HOSTTAG_DEVRMCMD_MIN;
-+			drv_cmd->state = MPI3MR_CMD_NOTUSED;
-+			drv_cmd->callback = NULL;
-+			drv_cmd->dev_handle = MPI3MR_INVALID_DEV_HANDLE;
-+			drv_cmd->retry_count = 0;
-+			clear_bit(cmd_idx, mrioc->devrem_bitmap);
-+		}
-+		return;
-+	}
++	if (tgtdev)
++		mpi3mr_tgtdev_put(tgtdev);
 +
- 	spin_lock_irqsave(&mrioc->tgtdev_lock, flags);
- 	tgtdev = __mpi3mr_get_tgtdev_by_handle(mrioc, handle);
- 	if (tgtdev && (iou_rc == MPI3_CTRL_OP_REMOVE_DEVICE))
+ 	if (drv_cmd)
+ 		goto issue_cmd;
+ 	do {
 -- 
 2.53.0
 
