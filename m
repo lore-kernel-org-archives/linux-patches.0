@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061766;
-	b=h3ArKUCkEtQ8Vv5i8DZVvyhm8L+Gh+AJeCKoEMQvOf6L+vui1mu9hgZpQ7J9fgzlPq5t
-	 6WvroUe9DselJ7oVjprPnFWrAWFXoC6d3r0XxGgm7YTh3YwvmYwnnudVdRhDznXF4hmDZ
-	 4dWxLMeG+SReyOrH3G6WtmGIW+7doSAEPXBTTPWg27gKe0N7zgY8Ueg/nFvYQr9TYhz0b
-	 GmKTwOmoLH/tAiGdjLgdbADgZf8KWwH72mSjP1RUOui3Y8JwtX7Dz4dFFAu0TT6Cj6gbQ
-	 TxfbqI+spAUrEO5eaiM0iGNIoyB4TMJBXvRBgGEuTaf3sm9b1SDlwSMQQtkSgc6T7rA==
+	t=1795061769;
+	b=tLh3P+9DtpGwiq8Jm1XLYpngHsC60A/HcviUbdgOWQGUAPgjJKIUrig/pZzV20GNpQ6V
+	 kJFCNT6lAQaqxtjC3FxmKOTTG1MWE2i/hCFEQDxJYl0GhefX7WopZMDx/plJgIZhSvSX1
+	 F9lgVMj3IPg8h67QigQ+hHD1zcI/fjifAnuDUTMekrt14pJi7BuDx542O61VFTVJFGFtV
+	 1F88X/D8UEPFRtidHSXCO1gW6AkgC5xK+f4LD15G+aAiJemz9sX8jdbjN0wUgkUdtiIwd
+	 VpsVvOlRFR5UMvAxfPFJn1gEjatkyfWd7Qtk4oCNPahIhRdGHAf/IEJdGbVyW0aJ3oQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061766;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061769;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qCWIRHERQxXC2vQrXbKciLaHtWmh6H4we2+kC27OPIY=;
-	b=z5IeyUyujujDJ+Mr9XpPC/s2QjKgo11EI4j8NfdQx+C9HXa+ynNJZGng64TOExbCRpv6
-	 bQp1D/Sjo1oCBKtUt0I7aLib3A76uxRh8SILbQxikEpiTIt26wwpq+/6vp8iq7BxB99Vb
-	 Ox/pmsB0Beg2bjb+2xR7J+Tp5n4bS3wXmeJaW8tlwrw7vqiRCRm84T7YRIvtHiQbgej00
-	 rqtjQkv8R2VQyp2xnjLCCQ56D231kOU7rR/DVSWNeWIlVLgdo9VmGkIyWTsOJ1mN8HV4Y
-	 SWC/4gkCqlR1jSRP4JVMMDwicyJYZAZ0Tu/n4CQnu2OFWF7dAGbOmSiZ9jtXrHDvZlg==
+	bh=+0SKswKHh+nYRMNBykFens3fn2AsWnFIgL8TZqaoBe8=;
+	b=eQ9jKjTRioU1QrjrauXU3R8yQ24aZ6RgufyeE+QD9HJGhrueyLN118AqG9+z91vgm7IR
+	 JgyHoSBIyOzWw7TNndVqSuq3UTQkoF1jB0o2kb/uGlElRjDe4nnMHtME5lu+8pU+EQCoi
+	 +0jtYj2Q5zcrKby75RDIK/JVnWdrnNOkek6dnVP7uMxOBSckNGwYGmuD/LJI2VuHBUGzl
+	 hubcMGnaiFB/+vTGyhYdOlCAw58nrqAfLJf2YVxZl/eCwr7Tb4scw+tpxFXAbrZrFae5G
+	 /LWwKfPRmKL/BaOBYuSEQEMepz+tOBWzz6JR8crChzBO6jJWX/zSGrFSr/cIP3NgUBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D+Lq+rtk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljA8f76A;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D574606A330;
-	Thu, 19 Nov 2026 04:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BF1606A337;
+	Thu, 19 Nov 2026 04:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D+Lq+rtk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D191F000C4;
-	Thu, 19 Nov 2026 04:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ljA8f76A
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F581F000C4;
+	Thu, 19 Nov 2026 04:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061766;
-	bh=qCWIRHERQxXC2vQrXbKciLaHtWmh6H4we2+kC27OPIY=;
+	s=korg; t=1795061769;
+	bh=+0SKswKHh+nYRMNBykFens3fn2AsWnFIgL8TZqaoBe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D+Lq+rtkNEklYIW3YIyCCi5h5p2Hm8JNxo2KxHXY/vev6x09kHw0Bdc2eLlo52ENv
-	 V1439J6HxmIOPuMrIB2TK4C8m7jp7Acd4DO6Nu/N2G3qjWYs+GQu+saTvnrn4GxVF4
-	 LNgGJC1ynuOTmjRDF/+ySRsuUDl5cQnz7EaVz8NY=
+	b=ljA8f76A74txn2fiSLto9dkVJ2dUzAaiox1pTHKzz17CUhIaOeRQHRGGiY0yrRHjE
+	 D+IpSo6A3n19E/WfhtnoT6D8H2a5ow1Pq70iDyvEwI0ImfxyxC2xMEUkXdCoP89Mjk
+	 KiBx85N4mJKwG1kmXD72FN4cMtKxDXKWKIaV5KWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Youngsung Ahn <ays511.kr@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1669/1848] irqchip/gic-v3-its: Dont free the tables of an enabled ITS
-Date: Wed, 18 Nov 2026 16:01:47 +0100
-Message-ID: <20261118150029.702717759@linuxfoundation.org>
+Subject: [PATCH 5.10 1670/1848] RDMA/rxe: bound the WQE opcode before indexing rxe_wr_opcode_info[]
+Date: Wed, 18 Nov 2026 16:01:48 +0100
+Message-ID: <20261118150029.744580709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,55 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Youngsung Ahn <ays511.kr@gmail.com>
 
-[ Upstream commit d09b36d8e0e60f35bd1cd7d63aadc6dfad61700c ]
+[ Upstream commit c887e53e1c852b88bd5442d1bf4717ee3e7aadda ]
 
-its_probe_one() enables the ITS before its_init_domain(), the last step
-that can fail, and the unwind from there frees the tables and the
-command queue without disabling it. The kernel comes up with an enabled
-ITS pointing at freed pages.
+wr_opcode_mask() indexes the global rxe_wr_opcode_info[] array with
+a caller-supplied opcode and no bounds check. For a user QP the WQE
+comes from an mmap'd SQ ring, so wqe->wr.opcode is an
+attacker-controlled __u32 read back by the requester
+(req_next_wqe() -> rxe_requester()); rxe_post_send() takes the
+qp->is_user branch and never runs validate_send_wr(), whose only
+opcode check is itself !wr_opcode_mask() (it indexes before it
+checks). rxe_wr_opcode_info[] has entries only up to IB_WR_REG_MR,
+so an out-of-range opcode reads out of bounds and the result is used
+as a mask and dereferenced; observed as a KASAN global-out-of-bounds
+"Read of size 4" and a wild-pointer oops.
 
-Enable the ITS last. Nothing reaches the new domain before then: this
-runs from init_IRQ(), and the ITS joins its_nodes only after the enable.
+Return a zero mask for an out-of-range opcode, matching how
+validate_send_wr() already treats a zero mask (an invalid WR), so no
+path indexes the array out of bounds.
 
-Fixes: 4c21f3c26ecc2 ("irqchip: GICv3: ITS: DT probing and initialization")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260925085000.753400-3-fuad.tabba@linux.dev
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
+Link: https://patch.msgid.link/20261002164552.294749-1-ays511.kr@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_loc.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 8db6d5462de79..830bfbf1b14be 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -5186,16 +5186,18 @@ static int __init its_probe_one(struct its_node *its)
- 	}
+diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
+index 0d758760b9ae7..3c70e054fbe4b 100644
+--- a/drivers/infiniband/sw/rxe/rxe_loc.h
++++ b/drivers/infiniband/sw/rxe/rxe_loc.h
+@@ -213,6 +213,9 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb);
  
- 	gits_write_cwriter(0, its->base + GITS_CWRITER);
+ static inline unsigned int wr_opcode_mask(int opcode, struct rxe_qp *qp)
+ {
++	if (unlikely(opcode < 0 || opcode > IB_WR_REG_MR))
++		return 0;
 +
-+	err = its_init_domain(its);
-+	if (err)
-+		goto out_free_collection;
-+
-+	/* Enable last: the unwind frees memory an enabled ITS may access */
- 	ctlr = readl_relaxed(its->base + GITS_CTLR);
- 	ctlr |= GITS_CTLR_ENABLE;
- 	if (is_v4(its))
- 		ctlr |= GITS_CTLR_ImDe;
- 	writel_relaxed(ctlr, its->base + GITS_CTLR);
+ 	return rxe_wr_opcode_info[opcode].mask[qp->ibqp.qp_type];
+ }
  
--	err = its_init_domain(its);
--	if (err)
--		goto out_free_collection;
--
- 	raw_spin_lock(&its_lock);
- 	list_add(&its->entry, &its_nodes);
- 	raw_spin_unlock(&its_lock);
 -- 
 2.53.0
 
