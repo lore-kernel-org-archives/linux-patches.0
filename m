@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049563;
-	b=4K2unRBM4st7LiOx/foB2nMR4yS5vI5mKT1nxo/nNbiuoROgyDLmNNXSEhdn8FITkJUQ
-	 Ra26TiknEh64pJHLh8KrgRqNqkeA8Oz4QUdbIS2E0Cph0PPujhHlKamnYLzxSDjDGT/kZ
-	 b/kSuUKbusa/79kLjzNhPpTmPVHrc7MrR+7q7mGHx60mCdxUPgG7PvwAQ6XDY3HOe3IiM
-	 sGlDhYUgYRzC2bIym6PAKd7oYIFIFXJtojT1ow30vCc+y+/pCdShLzwHRB7gH4afzROv6
-	 ttAPjUTamrzdEwvbWkXMpCfXw9pd2RZoeJf079Kjn2VSvqcSslcAkM96usuUy91/e5g==
+	t=1795049566;
+	b=WX5OsHaeDwZHawLfV3tArQzeFwsFTWYhDC6EdB1U6iYR3igfa6S1vI+WAEI9tIGxQz+Z
+	 MaObGVdPEuxHZbwvZcGTZMk3t6ltmDEnpnVX3izv50ua4BvY2aVnJAGhKiVAi/zTJnBEI
+	 2URCQw265PpL7pjFzECjisFAwfmy2BuTNTKnEUGU6lqxH72C/bKzEY5PcgWPEwbyGZB4G
+	 Y7ndT22YE7Xv7oCY89eFgdbPFFO8yewzuo5RTUmSYQB4XeWCgootdMBpqcHohhQM+55i5
+	 ngT8acSwVTbw2pF3j1/RhTfsMoLxMS44ub5pHmjjN41IQFs9Btoo/vcxQ1OuzKNXZOw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049563;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049566;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zM/uGEDAEExYXiHVWaQR/lqbvLef97XpJPidMdFYeLk=;
-	b=vIxTlhhvv01ptdnlM4Dq8gCwDBZ02BWEFnVkF/wdcRNSjrB4PY0zN1NZRZTPy5CBIvE4
-	 l//YKkBw5jzt7Ap8VyO0VPIMqnbUR3y1aEkVei0CnUrljtrkgfqGfxkdbwf5WfXkmrHiW
-	 dwNMkP+cwWkV58atn89p+YmVtxwe98D0DAlzyGLSmLbvGgwW+7befkn8sqe+6K/YDxJgV
-	 4ro7ti+4v4ohsywLLZcKB6daPo78+yb883Pe/ZeE8pRnIGHq9N3ea4LfBqey4/qaDwWlw
-	 UcQU8ERvkXQTX8jzuLlgtabNYaEJcjNcQlbYaLqV10G7Pn4KM/UtYlOwehIJOnHqCng==
+	bh=TcFX9C679+DPQXiYu+kBgFh7A74M25Mq/zhEn3jppyk=;
+	b=TYkoVMBdiQH/TEOC/E+efUaf7FFrdRHCaO2PoFMoCHrGmc+idQpg01uSjgMv+CONjJHJ
+	 Lcvv52qFpGWJ2kYYCe9OcQ5i62ckr/MtkMcNCWk3ZuDgfBunWCw41Ez1bGugN4tnd2laj
+	 HGGh/f1HcfbkvLQgaSsJ4fmY6MRGDcT2ZIlsBrTnbmCzgwLYNSwrfk6phFlnhArcvU3Lb
+	 9ZEDRVrtNpUdEHLZZPswD7ZTbRE3jDcZJnjGPyzFlqCFn8gQM46pXr16CdvgycvQsik0I
+	 SqShkGvMUrLtbsck72iYT3c+yKfMCDF59cWeqhsXK10asAPqyrKfySl8O25F69CHi4g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9AOE8xH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Eq/ONQkT";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AD1606A320;
-	Thu, 19 Nov 2026 00:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412C8606A32A;
+	Thu, 19 Nov 2026 00:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R9AOE8xH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EADBA1F000C4;
-	Thu, 19 Nov 2026 00:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eq/ONQkT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1B71F000C4;
+	Thu, 19 Nov 2026 00:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049563;
-	bh=zM/uGEDAEExYXiHVWaQR/lqbvLef97XpJPidMdFYeLk=;
+	s=korg; t=1795049566;
+	bh=TcFX9C679+DPQXiYu+kBgFh7A74M25Mq/zhEn3jppyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R9AOE8xHVA7LS87cbZ/ktSNjynkipiOJClIqPAjYit7oklW48qp1Jjvi5E4wNp/O2
-	 i+FgZrOnI/dfpspkZ2ovJEk9YDlhX3ayQUl0DffVpOi88bo2P7t+AT5uJ6wmoY+E2T
-	 MhP2h6dlWVBjG08rX+BAFTj0fQwP2JwF0CEG3Noo=
+	b=Eq/ONQkTinuqcErqAWb8rDzHP+7M6o4ebqZheqUKlcg1DezKdfTgNL5h1eA5k9cIG
+	 QX6bBjwRtu22rno5NbVWYbVcUDzzE42PpcL/y+OiXP+qa5w2vnNhNbVXsEOs2RLXy4
+	 GlhE3lO71GByIPLi3MNxanxL5dBAA7WSGqfhO9hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Leonardo Scorcia <l.scorcia@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Haitam Lazaar <haitam@lazaarsec.com>,
+	Bernard Metzler <bernard.metzler@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2395/2857] clocksource/drivers/timer-mediatek: Fix random crash at boot
-Date: Wed, 18 Nov 2026 15:57:09 +0100
-Message-ID: <20261118150327.756446073@linuxfoundation.org>
+Subject: [PATCH 6.1 2396/2857] RDMA/siw: Enforce IB_ACCESS_REMOTE_READ for read responses
+Date: Wed, 18 Nov 2026 15:57:10 +0100
+Message-ID: <20261118150327.790675436@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,59 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Leonardo Scorcia <l.scorcia@gmail.com>
+From: Haitam Lazaar <haitam@lazaarsec.com>
 
-[ Upstream commit 8496a1d234e8cf9cb15c4282cb3a11c6550bd242 ]
+[ Upstream commit f74eac4fc6c56274fb96c2c44ffad8f01c325f17 ]
 
-MediaTek bootloaders generally enable APXGPT timers at boot. This means
-that a timer IRQ can sometimes happen between the IRQ line request and the
-configuration of the clock event handler. This leads to a hard crash with
-an instruction abort, branch to pc 0x0 in mtk_gpt_interrupt handler as
-clkevt is null.
+When generating an RDMA READ response (SIW_OP_READ_RESPONSE),
+siw_check_sgl_tx() unconditionally passes 0 as the required permission
+mask:
 
-To avoid this issue request the IRQ with IRQF_NO_AUTOEN and enable it
-explicitly after the clock event is configured.
+    /* Reference memory to be tx'd w/o checking access for LOCAL_READ */
+    rv = siw_check_sgl_tx(qp->pd, wqe, 0);
 
-Issue was reported and fix tested on the Lenovo Tab E7 (TB-7104F, mt8167).
+Because perms is 0, siw_check_mem()'s authorization test:
+    if ((mem->perms & perms) < perms)
+evaluates to (mem->perms & 0) < 0, which is always false. Consequently,
+an untrusted remote peer can issue an RDMA Read targeting any valid
+STag in the Protection Domain, even if the memory was registered strictly
+as write-only (IB_ACCESS_REMOTE_WRITE) without IB_ACCESS_REMOTE_READ.
 
-Fixes: a0858f937960 ("clocksource/drivers/timer-mediatek: Convert the driver to timer-of")
-Signed-off-by: Luca Leonardo Scorcia <l.scorcia@gmail.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
-Link: https://patch.msgid.link/20261002072115.169250-2-l.scorcia@gmail.com
+Enforce that the target memory region was granted IB_ACCESS_REMOTE_READ
+when answering SIW_OP_READ_RESPONSE work queue entries, while preserving
+perms = 0 for standard local sends.
+
+Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
+Signed-off-by: Haitam Lazaar <haitam@lazaarsec.com>
+Link: https://patch.msgid.link/1a12ad1d83f.19cd98924357428.7073029566232810804@lazaarsec.com
+Acked-by: Bernard Metzler <bernard.metzler@linux.dev>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-mediatek.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clocksource/timer-mediatek.c b/drivers/clocksource/timer-mediatek.c
-index d5b29fd03ca2a..43c63c131b061 100644
---- a/drivers/clocksource/timer-mediatek.c
-+++ b/drivers/clocksource/timer-mediatek.c
-@@ -336,7 +336,7 @@ static struct timer_of to = {
- 	},
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index bb81558246ae6..701d730c19629 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -820,17 +820,21 @@ static int siw_qp_sq_proc_tx(struct siw_qp *qp, struct siw_wqe *wqe)
  
- 	.of_irq = {
--		.flags = IRQF_TIMER | IRQF_IRQPOLL,
-+		.flags = IRQF_TIMER | IRQF_IRQPOLL | IRQF_NO_AUTOEN,
- 	},
- };
- 
-@@ -411,6 +411,7 @@ static int __init mtk_syst_init(struct device_node *node)
- 
- 	clockevents_config_and_register(&to.clkevt, timer_of_rate(&to),
- 					TIMER_SYNC_TICKS, 0xffffffff);
-+	enable_irq(timer_of_irq(&to));
- 
- 	return 0;
- }
-@@ -447,6 +448,7 @@ static int __init mtk_gpt_init(struct device_node *node)
- 					TIMER_SYNC_TICKS, 0xffffffff);
- 
- 	mtk_gpt_enable_irq(&to, TIMER_CLK_EVT);
-+	enable_irq(timer_of_irq(&to));
- 
- 	return 0;
- }
+ 	if (wqe->wr_status == SIW_WR_QUEUED) {
+ 		if (!(wqe->sqe.flags & SIW_WQE_INLINE)) {
+-			if (tx_type(wqe) == SIW_OP_READ_RESPONSE)
+-				wqe->sqe.num_sge = 1;
+-
+ 			if (tx_type(wqe) != SIW_OP_READ &&
+ 			    tx_type(wqe) != SIW_OP_READ_LOCAL_INV) {
++				enum ib_access_flags perms = 0;
++
+ 				/*
+-				 * Reference memory to be tx'd w/o checking
+-				 * access for LOCAL_READ permission, since
+-				 * not defined in RDMA core.
++				 * Local READ permission doesn't exist in RDMA core.
++				 * A READ RESPONSE source is read by the remote peer,
++				 * so it must be checked for REMOTE_READ permission.
+ 				 */
+-				rv = siw_check_sgl_tx(qp->pd, wqe, 0);
++				if (tx_type(wqe) == SIW_OP_READ_RESPONSE) {
++					perms = IB_ACCESS_REMOTE_READ;
++					wqe->sqe.num_sge = 1;
++				}
++
++				rv = siw_check_sgl_tx(qp->pd, wqe, perms);
+ 				if (rv < 0) {
+ 					if (tx_type(wqe) ==
+ 					    SIW_OP_READ_RESPONSE)
 -- 
 2.53.0
 
