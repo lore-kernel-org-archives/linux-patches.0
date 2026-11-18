@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036982;
-	b=PZ1QLNam1HpdcCRsq3J2+OW/qz1Dd7XN4Yfa21TrDoEZSzNmYhQCjlQQyhEPDPbDRIzy
-	 81An6gc69wAxDasZLluyszO5XCtUOBWc0Rby8tn608LQsQTE/U1fhXo9gelPGQF3J/Bcb
-	 uxpVFLeZAIB95BIDqbOhhdST+lfLis+fSLKt91UZHSiGbL0G5CW71+2rcy/UKSirsvd1y
-	 GyxtTxggB0vHzhNKXihuARRsEAteprse8gCPyoCHu72wPrbCwlO6To/qMe1yqWEnJDCko
-	 CCJg1zwi9ObvSaUMefZKOvaLFC252EresrXh1C5mwcH3vYWUGO3duUar/MyCul32E7Q==
+	t=1795036985;
+	b=j+6ZeXkPRr5g8RugbfmIbnAZAG28hrRiwqugHnSUKF4BDguN4q4TWUxEo/IsqyvPYCKG
+	 RgkVCH1ZL8SpN3WPk7wmBu+3QlXf+oGXyYA6wsAZkuMpJ4iIyIjmQGMFFAi6dEYDVUzFr
+	 VYjbe5N7qw7iSC9+CoAg3t6WfkHkJ4uHNeJU3/cNu9W5kwogWq11ds4jGKJYlOmW8wFuK
+	 nT7WQx9JqvYXh1+4e8REzb6pjzEeHqTibvYVHSEnNbqBxxiJjO1hc5MPEoR9+sBnJcQhh
+	 56nP70UcL1jNE11Q+CISod/ujzYr32b+q57d+kd580Vtp/kF3whQMe6gFQapue6A9nA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036982;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036985;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WZKVb5b+JzEbY0m+SUs1Xn/J/JEBbXPDFdod8eLEsQE=;
-	b=EHGu2/paghXWfL73iNmvQ10QU4Pz1HFL7tKZTQzk+HsOPnQnu+pt+4TnkYAHKeIoWslc
-	 wgWuBiD5G5xy+9NfNY/saza59x+3lTGHuH+1K3pZWM7PmfNRGthk0g4fTRXi/w6dPkIit
-	 uDOCm3CUBCK79lHJ8gmjAuX1ws6rHUr9mN6efZou3BKwOfhh7Eb4hjartsfzgX8Gl5xrw
-	 nG+spRjnjuba3VcNSKlVdITEOuvCduM3LAYTBdUgba/MAfUi7FR1JEcdkuSPvEc98034Z
-	 0I2+aYNkR2cqPR+WRwxSfu7Hc+4lrFmhTxjpqTYl7pmrDTPrlLriR9ZJnVJBusPGfbQ==
+	bh=8XcFNh/TYK1T9S04rXZdKnjVukCO2UPvdNGhZCA7Zns=;
+	b=RHiS9lQCedYkn+6XeOQK21Ks4Fow7WOzbcIn/HE2D0ch62QJcBj3oBRJrrC88PQEYByG
+	 Ap2Oja6LBPU3NskaDAvUjua5kqyMNuzfZhU0KlOHnYWYP81pj6n64LKNBGd7m3x4VicYw
+	 kp0Kl9Fvk1p50PsWPIM8hF6w0ePJ4IH0l9mJf/cEHvMFDkwqxXl9Jhiau+esPCwBBmyLG
+	 RN6HkeE1drjOR1fAtg2DhVNh4tIf3CMiHzr6wUX+zgc998nwGhjEtq4sHXgScDt1qHlzh
+	 QngjtjINwBSqEjFcCuhBQt1a5j3aH41z4NDF9YpZpUWd38GT/QaB2TrxFm0RQrDo2qQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+SZVoeW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQv1IaO0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C6F606A31C;
-	Wed, 18 Nov 2026 21:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BFA606A31C;
+	Wed, 18 Nov 2026 21:23:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L+SZVoeW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2B01F000C6;
-	Wed, 18 Nov 2026 21:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JQv1IaO0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39071F000C4;
+	Wed, 18 Nov 2026 21:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036982;
-	bh=WZKVb5b+JzEbY0m+SUs1Xn/J/JEBbXPDFdod8eLEsQE=;
+	s=korg; t=1795036985;
+	bh=8XcFNh/TYK1T9S04rXZdKnjVukCO2UPvdNGhZCA7Zns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=L+SZVoeWtJ03gyOXqkKUkI9HTz02G4h7Qn+NhxkcXOkimqbccgrsIR2N9DOb1HPbc
-	 fyEzUbqKeg+18ye+f5n+YDCNzAP7p03P6LvHoOw9S3DgsvLCCNyWY2KCeUoWqCavmo
-	 3HK6oqLB79ZfROl6/RzILdKla6ALyTuF9u09QVls=
+	b=JQv1IaO0fHZZvQkCionLWLMnjk4tdKCwMcgrQKTvC3akNMBkaAfDUGv9itgXSPStN
+	 5mXbsNH9yXRH/r3YZI6VKz28RoSwLNr8o2uREdJonkDZaCH6/YllsQJrm6QflV040b
+	 m4utyeYUmqQHB2jwIF5K56bxtKJcvhdJsra9bhXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1253/3318] ALSA: hda: Reject codec reset on ASoC (ext_ops) buses
-Date: Wed, 18 Nov 2026 15:31:15 +0100
-Message-ID: <20261118150357.791324997@linuxfoundation.org>
+Subject: [PATCH 6.6 1254/3318] ixgbe: reserve TX timestamp after skb preparation
+Date: Wed, 18 Nov 2026 15:31:16 +0100
+Message-ID: <20261118150357.820287293@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,79 +69,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit a4311e9447bbb219044db38897f95be112f46a8a ]
+[ Upstream commit f75062536e2d45ee182828f0e47e0124be2fdc8d ]
 
-Writing to the reconfig or clear sysfs nodes of a codec handled by ASoC
-(SOF via hdac_hda, AVS via codecs/hda) hangs the writer.
+ixgbe_xmit_frame_ring() takes an extra skb reference with skb_get()
+for the pending TX timestamp before preparing the skb for transmit.
+Several of the following steps may need to reallocate the skb head:
 
-snd_hda_codec_reset() sets card->shutdown and calls
-device_release_driver(). With ext_ops the driver unbind unregisters the
-ASoC component, which unbinds and frees the whole ASoC card:
-- snd_card_disconnect() returns early as card->shutdown is already set,
-  so the card's child devices are not removed and snd_card_free() waits
-  for the card release forever.
-- Even without that, freeing the card removes the codec's hwdep device,
-  which owns the sysfs node the reset was issued from, deadlocking in
-  kernfs while waiting for the active write to finish.
+- ixgbe_tso() calls skb_cow_head(), which reaches pskb_expand_head()
+  when the header is cloned (e.g. a packet tap holds a clone).
+- ixgbe_tx_csum() falls back to skb_checksum_help() for unsupported
+  checksum offsets, which can call pskb_expand_head() through
+  skb_ensure_writable().
+- With DCB and a software VLAN tag, skb_cow_head() is called to
+  rewrite the VLAN priority.
 
-The legacy HDA driver keeps the card across a driver rebind, ASoC does
-not, so the reset cannot be supported there. Return -EOPNOTSUPP and skip
-the misleading "codec is being used" messages in the callers.
+pskb_expand_head() used to BUG() on shared skbs. Since commit
+c7d8bc3dd511 ("net: skbuff: don't BUG() on bad arguments to
+pskb_expand_head()") it returns -EINVAL instead, so these packets
+are dropped (TSO, DCB) or sent with an unfinished checksum
+(skb_checksum_help() errors are ignored by ixgbe_tx_csum()).
 
-Fixes: 6bae5ea94989 ("ASoC: hdac_hda: add asoc extension for legacy HDA codec drivers")
+Reserve the TX timestamp right before ixgbe_tx_map(), after all skb
+preparation, as i40e and ice already do. The timestamp request
+remains covered on the FCoE path, and the cleanup on ixgbe_tx_map()
+failure is unchanged.
+
+Fixes: 891dc0821d20 ("ixgbe: Add ptp work item to poll for the Tx timestamp")
 Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=222182
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://patch.msgid.link/20261027072835.4796-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://patch.msgid.link/20261026082035.335770-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_codec.c | 6 ++++++
- sound/pci/hda/hda_sysfs.c | 4 ++++
- 2 files changed, 10 insertions(+)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 40 +++++++++++--------
+ 1 file changed, 23 insertions(+), 17 deletions(-)
 
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index c6630dd0ced3b..70bbcdcf0f5c5 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -1847,6 +1847,12 @@ int snd_hda_codec_reset(struct hda_codec *codec)
- {
- 	struct hda_bus *bus = codec->bus;
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+index 3f990136d05c1..8676c56b94c4d 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -8761,23 +8761,6 @@ netdev_tx_t ixgbe_xmit_frame_ring(struct sk_buff *skb,
+ 	}
+ 	protocol = vlan_get_protocol(skb);
  
-+	/* ASoC: driver unbind frees the card, incl. the hwdep issuing the reset */
-+	if (bus->core.ext_ops) {
-+		codec_err(codec, "Codec reset is not supported with ASoC\n");
-+		return -EOPNOTSUPP;
+-	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
+-	    adapter->ptp_clock) {
+-		if (adapter->tstamp_config.tx_type == HWTSTAMP_TX_ON &&
+-		    !test_and_set_bit_lock(__IXGBE_PTP_TX_IN_PROGRESS,
+-					   &adapter->state)) {
+-			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
+-			tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
+-
+-			/* schedule check for Tx timestamp */
+-			adapter->ptp_tx_skb = skb_get(skb);
+-			adapter->ptp_tx_start = jiffies;
+-			schedule_work(&adapter->ptp_tx_work);
+-		} else {
+-			adapter->tx_hwtstamp_skipped++;
+-		}
+-	}
+-
+ #ifdef CONFIG_PCI_IOV
+ 	/*
+ 	 * Use the l2switch_enable flag - would be false if the DMA
+@@ -8842,6 +8825,29 @@ netdev_tx_t ixgbe_xmit_frame_ring(struct sk_buff *skb,
+ #ifdef IXGBE_FCOE
+ xmit_fcoe:
+ #endif /* IXGBE_FCOE */
++	/* Reserve the Tx timestamp only after all skb preparation:
++	 * skb_get() makes the skb shared, and pskb_expand_head()
++	 * (reached from skb_cow_head() or skb_checksum_help())
++	 * refuses shared skbs.
++	 */
++	if (unlikely(skb_shinfo(skb)->tx_flags & SKBTX_HW_TSTAMP) &&
++	    adapter->ptp_clock) {
++		if (adapter->tstamp_config.tx_type == HWTSTAMP_TX_ON &&
++		    !test_and_set_bit_lock(__IXGBE_PTP_TX_IN_PROGRESS,
++					   &adapter->state)) {
++			skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS;
++			tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
++			first->tx_flags |= IXGBE_TX_FLAGS_TSTAMP;
++
++			/* schedule check for Tx timestamp */
++			adapter->ptp_tx_skb = skb_get(skb);
++			adapter->ptp_tx_start = jiffies;
++			schedule_work(&adapter->ptp_tx_work);
++		} else {
++			adapter->tx_hwtstamp_skipped++;
++		}
 +	}
 +
- 	if (snd_hda_lock_devices(bus) < 0)
- 		return -EBUSY;
+ 	if (ixgbe_tx_map(tx_ring, first, hdr_len))
+ 		goto cleanup_tx_timestamp;
  
-diff --git a/sound/pci/hda/hda_sysfs.c b/sound/pci/hda/hda_sysfs.c
-index 5d95f24135dc1..bd3686d60555e 100644
---- a/sound/pci/hda/hda_sysfs.c
-+++ b/sound/pci/hda/hda_sysfs.c
-@@ -119,6 +119,8 @@ static int clear_codec(struct hda_codec *codec)
- 	int err;
- 
- 	err = snd_hda_codec_reset(codec);
-+	if (err == -EOPNOTSUPP)
-+		return err;
- 	if (err < 0) {
- 		codec_err(codec, "The codec is being used, can't free.\n");
- 		return err;
-@@ -134,6 +136,8 @@ static int reconfig_codec(struct hda_codec *codec)
- 	CLASS(snd_hda_power, pm)(codec);
- 	codec_info(codec, "hda-codec: reconfiguring\n");
- 	err = snd_hda_codec_reset(codec);
-+	if (err == -EOPNOTSUPP)
-+		return err;
- 	if (err < 0) {
- 		codec_err(codec,
- 			   "The codec is being used, can't reconfigure.\n");
 -- 
 2.53.0
 
