@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049414;
-	b=pJlRBSPKE9qYbmQHfzKB+RdyVZ21g9/kXTcScDuDQUE3iMU7ObL83MVT/WJ0F0KjNBeQ
-	 K/ZMZltiA8mYnZw6HCZqSETKAzkg37d+fXf2Bn2qZVXzmQj9KKMN0HjoBjYDDmmW9LICH
-	 WG0UL8kciuekbGfvTlf2+n1Q4zY7QdNUdi5Hb0/oQUP/MyalK1yOdFdBXtE64r5XYz0//
-	 ZVh1EDfLfZxLkaySBdAWeFkA7NKGL7nghzb+ikQo4d/HXyC1nKqHGtAw4navoYgbVTnmA
-	 I4V5ZwboEeLPQ/XVkUlcbRUBT58wpnZBgHtNESqYpwxZipAO9oN8o4NzG+e6uMgZkMQ==
+	t=1795049417;
+	b=eSEuj/weOsOE0Y7IerCzE6Trpc8aT0eKLP4K3qlPbAW+bJvcBzpRYJWgCgVHeQIATIq+
+	 ijT4BcWxSVCrC9mL+FO6dcknQc+wv5CitFlG8RH57wGUOiHJzqtQUnNTZ6QO6RU+vjYBK
+	 CId+elGtpxlM9RR7haAE60qBvgun2yVdDEG4/LbjRaj814M3Xxw75Lr0b3fin2NZ/Xf4+
+	 tLvHc9c+72Hvy1kI0eh7cmauGNey+QMtWguKMAs55r8U50A3+80z/BvvImvmlZUxu3J+u
+	 eEdwCvOViDNvx6U3OAAmS5Crt3iTy4zeaFt+MOkVXEy76ZQ7ngCZHERuJFPGw/TY0Yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ggm0OsopoZxEKheppJKL6GH50wkFvNN55lG+NtgIddA=;
-	b=wnv1w+BmoQ17RdOiq9o0E61XzPmz8JsmtBaazgw2wswtBJ4mHXJtO8wvupux2mYEK6xc
-	 SB0WtRsLd3NmQX71Yf2n/IFJYfj1AwO9/R8xHuCi2v7M+qrKFa+ArmiZjUkzLb0tu5r6F
-	 DJLldyYaR/D/zvV9J5eIXxugRXZYa/uFxmDlVfGx6gbkfWIwtZu/y0QKrvN7AJO1rACq+
-	 lj0BC+aZNNKIEXXL5Gj6ozUCjTUVIrE3rxak6WOLE+qtf2CLfV4fDGohbkRmZhJc4sEz7
-	 ciTpuMe8uz4gHkjuN8sEQOdXw6oF5tzVLkhZMvvbQA8tX8S71+xD7ki8/eYAihZe62A==
+	bh=vjCDNicRnDchwBLt3jI0x1mepXUkIvGAJogcY00ENLQ=;
+	b=iGE22lXjYuAI+b6locrMRXtLpTnrzbWCXYY9ARvgcv6MXQiXoK8Eruqx8i5jZdsAIqji
+	 ErI+b6XDA8mj2dTuibptltEPPrrPikYm7eo6TWwCB8+h05wDQPkSBYl1gMoflMjklq/2D
+	 N2PUNxLn6ld8vQQy94bzuUUiMrbyaBih1sw8RwsJ/L153Kl2Lh23esSq9mGvxZIOvFFRO
+	 XJ/e1tVxej/4HabH1APlTNtUZpszWQki7T1GpSIKg4wH1svpMgAT8ItYXk3ax+70D7Lbc
+	 fCVGlltsXAaD/lnwUGp6PvSaWjYjyDK9sNxaM4b923CHuqDuOPl49CoMbry9tTeqo6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1LXkq8M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2qrqqla;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC3E606A325;
-	Thu, 19 Nov 2026 00:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C40606A32C;
+	Thu, 19 Nov 2026 00:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1LXkq8M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D31D41F000C4;
-	Thu, 19 Nov 2026 00:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q2qrqqla
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966E41F000C5;
+	Thu, 19 Nov 2026 00:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049414;
-	bh=Ggm0OsopoZxEKheppJKL6GH50wkFvNN55lG+NtgIddA=;
+	s=korg; t=1795049417;
+	bh=vjCDNicRnDchwBLt3jI0x1mepXUkIvGAJogcY00ENLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v1LXkq8MX/0qK1YW6HbZJjyIsZQJWNGQNkK97X/eAJK8A5gfC8fh28h4BnYG7S/XQ
-	 TTey1QJEVBifE4jYFJgvENEG9z234kWIgNWurUaC6R4O582kKrxpyT+lJhqdA2iAl7
-	 G0w3D7i3SNuwhD7ScyDK7040INSWkCu+yMVSGNnc=
+	b=Q2qrqqlaVdTa3FHfi+wB5Yx+2mf76ps25PldrvFTAWwuh0/GHcKqu0PJPfTdMlVKf
+	 lAi/dMB8+cORyyiCNHbq7J0cihb6ulRTpVhPyJU8PAFnJ4DD14S7GZcFjgRvHojTjx
+	 VUvI5aXNvrt6+gcMkjWIgn8WfV/Q6KQT9Qv5QKno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2343/2857] wifi: mac80211: kill wake_txqs_tasklet on unregistration
-Date: Wed, 18 Nov 2026 15:56:17 +0100
-Message-ID: <20261118150325.890403175@linuxfoundation.org>
+Subject: [PATCH 6.1 2344/2857] wifi: mac80211: init radiotap iter after length checks
+Date: Wed, 18 Nov 2026 15:56:18 +0100
+Message-ID: <20261118150325.926324680@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,33 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 8ea4f50c3426aaaf3f4c118ee2c2876326ca5db5 ]
+[ Upstream commit e3cf8da7e0c560db67ac5ee8c9197514bb298ea7 ]
 
-We never kill the wake_txqs_tasklet so it could be running
-while the hardware is being freed. Kill it, late enough to
-never be able to restart afterwards.
+The radiotap iterator initialization will already parse
+the presence bitmaps, so it accesses a good part of the
+header. This might not be present in the linear part of
+the SKB, we haven't checked it at this point. Check the
+lengths first.
 
 Assisted-by: LLM
-Fixes: 21a5d4c3a45c ("mac80211: add stop/start logic for software TXQs")
-Link: https://patch.msgid.link/20261005224950.3fdb8d0ff377.I851e79ac625c4926e211642ee7a7e458728b0ad3@changeid
+Fixes: cb17ed29a7a5 ("mac80211: parse radiotap header when selecting Tx queue")
+Link: https://patch.msgid.link/20261005224950.b5c2c31790d2.I091422db411b595bde4dba2de69334cd2aeb33b0@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/tx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index b695c0b6728ed..e3e59fd64650c 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -1497,6 +1497,8 @@ void ieee80211_unregister_hw(struct ieee80211_hw *hw)
- 	cancel_work_sync(&local->restart_work);
- 	cancel_work_sync(&local->reconfig_filter);
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 3ad7a6ed5e66a..402a57a627eca 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2139,8 +2139,6 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+ 	struct ieee80211_radiotap_header *rthdr =
+ 		(struct ieee80211_radiotap_header *) skb->data;
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+-	int ret = ieee80211_radiotap_iterator_init(&iterator, rthdr, skb->len,
+-						   NULL);
+ 	u16 txflags;
+ 	u16 rate = 0;
+ 	bool rate_found = false;
+@@ -2149,11 +2147,14 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
+ 	u8 mcs_known, mcs_flags, mcs_bw;
+ 	u16 vht_known;
+ 	u8 vht_mcs = 0, vht_nss = 0;
+-	int i;
++	int ret, i;
  
-+	tasklet_kill(&local->wake_txqs_tasklet);
+ 	if (!ieee80211_validate_radiotap_len(skb))
+ 		return false;
+ 
++	ret = ieee80211_radiotap_iterator_init(&iterator, rthdr, skb->len,
++					       NULL);
 +
- 	ieee80211_clear_tx_pending(local);
- 	rate_control_deinitialize(local);
+ 	info->flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT |
+ 		       IEEE80211_TX_CTL_DONTFRAG;
  
 -- 
 2.53.0
