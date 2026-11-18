@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026793;
-	b=2d3/uA4/i4i2fMuk6IB/1aAf6rbnjFB1jYZMbLlkhXNj+YsPB/GuX20T4WXvGQKuxScV
-	 kqSxkBeqxbhjtJ3XjzTpnZq2KddfZIeWA/Pi/JcBZzBwf9ZFZimbD5Ere7wMsO9XL2aZh
-	 +HVXhQnH5f8xoVA3BsI0mko1t6xUdPd8+5n/RaQCQkSYpowiz/wwwet6bhZkMaiFufZ+T
-	 ATzrCzISBt7B3ohbjELlUwXyEZwSgqCLZMp7HKxoP1oWWOS/f72gNKKsz0wwypjJEFTdX
-	 FXqndkaF9hwa+kvDSxmV9yxAuPJT3uUs29CR1HgZjVaWuRJLDSzRVOlNOyd/16z3K6A==
+	t=1795026796;
+	b=ssnJULiAeKHgr317Cl2aGUihaYgXPTWM/O1jzasJOj7X/1HnyJzfQ0EgxYl1x72hdX6x
+	 vFXLztjPPoDmtGDDRxwYFC+wGlocRZUoZttDctgbKSCiAE56cELFebsnFlES8yWGeXVR9
+	 s80/PscmiDjwmU2sU6+sYmdbwE7LBFKB51uqZheX9N/HP7SSsGciMAvRakYKgZMUR1UYx
+	 gLgb9OKjwoymGGOvWe5DAIorD27jIrjmoVNF5/cyyaqqxmqsI7giEKf77552CNulkCRFs
+	 wIpPQ5z+p9/kZW7CAVDgS1/C8pwZP01K8B0xjY7fIR3x+mCPSJenuDMGcbQqbkOzASw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026796;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KDRNLjUdztS2Lp7p5oL4Y6u8ivgYC9yB7u2idvKS9ow=;
-	b=RmUft8FTHlNwvREGzIX3C6Tt6BXHHg35uf8uHWemBltOg8uCbcVqkyanHHQnx1Z3L/q1
-	 vRKDyySf+LW0+wbfaeqpDXEqoBe86x1S6QsU2VT+gCpP+k0hFUgq++qnZrSOzvAfvjlVy
-	 JyNXjT5pMCyUg6Dv2++gnvjfNEQQkYMhIk+NdJ6HA+nHRyIyh1YlYSJjfl/IIwfR6gzxC
-	 uX84jaTt8XsiUtu2G9ZFbygMLu7nDYd2C1zgReGnBT3kchynPFyiwIz+Qe/P0UD9Hf/O3
-	 QWFWVcM6XBI9f2/xXqP7foEu2+KAxZp3d2f2c6jRYjwYb+Uxx4IVxxu3/Fq7uOWyhOg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=4FD4rbvZNpyDs6V72x7g2fU5/z1nmqDeobl7+UdpGRE=;
+	b=sANRHqPyaVdkUAZNAlyVJyx1+lk14/wzGiflkY64hc+FXp/NdAoD6D4eLjNeeYVd2dMc
+	 +FS3g/0w/4qBqmnDT/jvx3BlWDpKwNl6QL0VaboDwiVeUM3LKbE5/h5JFS5wTCYA1y259
+	 FM/egvKCTNZqX2g0lZmh3E56MFsIdUtOyehoCrQNZSSFiC+pPKVfvSk9hDVgAAsaWsvj8
+	 37RPC0X2EfEA2LjYjBeQ0I30flBZsLxjmLv9m9qaMPnMaCLjjV6Cqx0sZMjXtLqbset2F
+	 wf4EFHmjeSTvWF+gKr6r6ungvSNzdTMF/3SdlszMtK05x32xuc7uKiii74Ue4IzshYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+fNSeiZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAZFlSqP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602E1606A325;
-	Wed, 18 Nov 2026 18:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145CE606A31C;
+	Wed, 18 Nov 2026 18:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s+fNSeiZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6CF01F000C4;
-	Wed, 18 Nov 2026 18:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GAZFlSqP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D56C1F000C4;
+	Wed, 18 Nov 2026 18:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026793;
-	bh=KDRNLjUdztS2Lp7p5oL4Y6u8ivgYC9yB7u2idvKS9ow=;
+	s=korg; t=1795026795;
+	bh=4FD4rbvZNpyDs6V72x7g2fU5/z1nmqDeobl7+UdpGRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s+fNSeiZfBjsGGJhgqGKVaEEykQLeExjF/CxKJbnxhKMN98l9Gu4CxrXe3CRaUSlu
-	 6N1d+SucEZ3EUCfAcYv7zfwDxmgdpDSZ3ukK/heyADT/Ozr77H9z6dY3Fev64WhNeI
-	 Izw1ckY1e9z/HH5xVn3mJJs4tAsIPTfFM/ppfR9Q=
+	b=GAZFlSqPJ8oT32twCkI5q8cIvOLzf6SLcmbXU2jWLtAssFNBZ6ZM272NjD83duhQw
+	 hXeviY1xgLyS1DKi/zv+dhJcktUO8rqnmvzgQvwt456HGhNm4wH1TqPS5ApICkY0rR
+	 PGp26MqrFGMiyqd5N3uGGrMUjxrjd0HIRpNUIQuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Willy Tarreau <w@1wt.eu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1509/2151] ASoC: codecs: wm8994: Fix definition of WM8958 noise gate hold time controls
-Date: Wed, 18 Nov 2026 15:54:04 +0100
-Message-ID: <20261118150216.828240172@linuxfoundation.org>
+Subject: [PATCH 6.18 1555/2151] selftests/nolibc: scope custom flags to the nolibc-test target
+Date: Wed, 18 Nov 2026 15:54:50 +0100
+Message-ID: <20261118150218.539524612@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,56 +62,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 291d81d628f3453026b029507a26b856056e4fdc ]
+[ Upstream commit 20c72de1f8a9e338531579bd784371aba4b7dd2c ]
 
-The noise gate hold time (NG_HLD) is at bits 6:5 of each WM8958 DAC
-noise gate register, not at bits 3:1, which hold the threshold
-(NG_THR).
+A new target for 'libc-test' is going to be added which should not be
+affected by these options.
 
-Fixes: 1ddc07d0f13a ("ASoC: Add WM8958 noise gate support")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/8acff0f7314eef9eb3d290ca7855a87052d7e706.1791959026.git.sammiee5311@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Acked-by: Willy Tarreau <w@1wt.eu>
+Link: https://patch.msgid.link/20260106-nolibc-selftests-v1-2-f82101c2c505@weissschuh.net
+Stable-dep-of: f9532b372e41 ("selftests/nolibc: use the configured kernel header directory")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/nolibc/Makefile | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 80b1bb7e17749..13ef3d0c5053d 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -700,17 +700,17 @@ static const char *wm8958_ng_text[] = {
+diff --git a/tools/testing/selftests/nolibc/Makefile b/tools/testing/selftests/nolibc/Makefile
+index 40f5c2908ddae..43f0b608c7960 100644
+--- a/tools/testing/selftests/nolibc/Makefile
++++ b/tools/testing/selftests/nolibc/Makefile
+@@ -9,14 +9,10 @@ cc-option = $(call __cc-option, $(CC),,$(1),$(2))
  
- static SOC_ENUM_SINGLE_DECL(wm8958_aif1dac1_ng_hold,
- 			    WM8958_AIF1_DAC1_NOISE_GATE,
--			    WM8958_AIF1DAC1_NG_THR_SHIFT,
-+			    WM8958_AIF1DAC1_NG_HLD_SHIFT,
- 			    wm8958_ng_text);
+ include Makefile.include
  
- static SOC_ENUM_SINGLE_DECL(wm8958_aif1dac2_ng_hold,
- 			    WM8958_AIF1_DAC2_NOISE_GATE,
--			    WM8958_AIF1DAC2_NG_THR_SHIFT,
-+			    WM8958_AIF1DAC2_NG_HLD_SHIFT,
- 			    wm8958_ng_text);
+-CFLAGS = -nostdlib -nostdinc -static \
++$(OUTPUT)/nolibc-test: CFLAGS = -nostdlib -nostdinc -static \
+ 	 -isystem $(top_srcdir)/tools/include/nolibc -isystem $(top_srcdir)/usr/include \
+ 	 $(CFLAGS_NOLIBC_TEST)
+-
+-ifeq ($(LLVM),)
+-LDLIBS := -lgcc
+-endif
+-
++$(OUTPUT)/nolibc-test: LDLIBS = $(if $(LLVM),,-lgcc)
+ $(OUTPUT)/nolibc-test: nolibc-test.c nolibc-test-linkage.c | headers
  
- static SOC_ENUM_SINGLE_DECL(wm8958_aif2dac_ng_hold,
- 			    WM8958_AIF2_DAC_NOISE_GATE,
--			    WM8958_AIF2DAC_NG_THR_SHIFT,
-+			    WM8958_AIF2DAC_NG_HLD_SHIFT,
- 			    wm8958_ng_text);
- 
- static const struct snd_kcontrol_new wm8958_snd_controls[] = {
+ help:
 -- 
 2.53.0
 
