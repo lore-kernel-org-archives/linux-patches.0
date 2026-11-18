@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031450;
-	b=KQXoSUZK6xTjHIWApobk2HpJWyZQlZFxT2eX5ZpNzzmLMpJlneE2WJGNq3D/IIcnvl04
-	 LTD5gzLHGB/8koXsZ1TmvACl9VoWnJ5tNmq2O3ngXckVX3vzBMFN6BRMNHfgS6xnHxZlO
-	 MGq25zexVtz7YgWyVqqyLE9c4cQvlWNYI1k/TrHAwmNoxsyAq06qi0OjGl2hPZX8TvzVj
-	 +WSCXG0W73uIHZYN734OexE+fB8/mSDzt9Zutuo9UV+1Oxi9cNh5Ke49YzWddpJrl7/zI
-	 yMtMqoKa41rzhyFO/JvtYUNz5GpuzwVAivDk21/HiBVwm2b/AAAC04NZ1fHiAZiV52Q==
+	t=1795031453;
+	b=MYxc3FFE+To5usCXr+Gh8TiRhaos319D4V0fDeaiSqwqAnC2QocZ9I8+LrJKLNTSWjY5
+	 f3zFP3iVI48WAuWB6n83rkFJmg7IsP+Sqp1QO8GD+xC32bxIN3KA4x3JfsDdqHOvnf+wO
+	 Rh+0SqMOLGlK8PIpqxeomp1nOmvNirpYGG4jIxblV3Q0nJtByYjUYDDT08EC2OYfdoa+0
+	 1REW1AngFQnmtgDsyg2LjaNO76+WT48HtxVgZ5HrJ0QMKlGl4+fj3juAy555r0FwM/Kmu
+	 H8SvnZ9dMUSGL6NzB0gTODh48JJgCYiex2pgEsMnHStCgiOc5uChq6eFybiW1e1/zgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031450;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031453;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Gq+E1WJxp3NEqFPMFT8VrnJeIMJgtgEhG2UzNyIFMpA=;
-	b=WBQRXZyA7Kh1QTWcnYxe904pDD5AA87yVhtwhBgxP5wPa01JgAM+tKghzt8aur5H8SBj
-	 me02+BUGHRY6zd4n6+23ChIHIYBucblgX434QkZPFc8gaqSbPb3IoHGqXPxgh8zfoiHGD
-	 OEXMS2ipygR8Hl2RDYcOV6h2qqj3rg/uwJndf+fibWTBt6n8AauSNr4kDKZ0julGdRrcq
-	 2c8OkFLB81oVX2hWI4XCbFiloWLqhgFFfWLB72Jpzzv3J2QYsY7BC42ADHvv/gmwP3pyC
-	 mzrjo71YVo1rfneMLcdwZ7uW8u/DuYwjbLBXqYhIh5z0P7rwTDm3xR3xh5bd2eSINhA==
+	bh=jhD6fRjDESjv7jytxHioWw5Qf7NUD4W7xFBAnSlo1fQ=;
+	b=JGf3L2DlWGbrBV3KLS3MsY3Wtxss2Yr7I5OGTTgkMlo/ozBlsNn9Q5cCNz+67wxuDOBU
+	 0BFV4PFWXLjcdB/PWFEack3hmkFdHEZ9ti7zRHvHExeGlSif0vNVAQOgbhXk8tZPrfE9o
+	 yIKwV09vnR2Fbka69JyaNp1B17cviq+XqIjw7KAnz4LDb3L5mBdhRM2qBGJ75L07fMBDn
+	 6LuAESGPVYFJ2R9nQJd9d6ND/zuWfg1XCdmCg6oSTYaSiDZEv/fKFo4ZjZPlGnbGpmuXP
+	 iVqeBhHwMgzpHm1NEmws29Rhc6XwAEnUaZvfaut1PGmOxeyw9IjvnsG5fS6ofgJXpvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QoZu20Jf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eub6iEe+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D489606A320;
-	Wed, 18 Nov 2026 19:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309D2606A325;
+	Wed, 18 Nov 2026 19:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QoZu20Jf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1621F000C4;
-	Wed, 18 Nov 2026 19:50:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eub6iEe+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B591F000C4;
+	Wed, 18 Nov 2026 19:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031450;
-	bh=Gq+E1WJxp3NEqFPMFT8VrnJeIMJgtgEhG2UzNyIFMpA=;
+	s=korg; t=1795031453;
+	bh=jhD6fRjDESjv7jytxHioWw5Qf7NUD4W7xFBAnSlo1fQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QoZu20Jfha0iFZwJW//1vLXpWa7D+nhU6ZyMRAXFEUaJEqtyDQdQDsbODzliuKdIG
-	 pj7C3y2Yt/ixy/l6Tj+Lwwj08ynpRiG0csmTJPRlL7mSFDdwKs0reXFAQwt7mQJbij
-	 Rr3rLlnbsqMSoSzpw40+afsJaKnGWyzCJnZOF/nU=
+	b=Eub6iEe+wYiQ49SW4JcrV2FNIt/ZSC7wO1Ne/rqKoNoSwwW4m+eEd+Ra0D06ng3Zg
+	 cTnAinzAUtsY9D07ePjau/jtsf8N0QbRnvqpYpcjX0Ez8iHnl+9GnRQjlppPCtq8Gr
+	 Um7LBXA0+5BkA0uvm+SVvhbb7bXdyZ/gUv+vzwc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Lukas Wunner <lukas@wunner.de>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1020/1756] ALSA: line6: Fix potential OOB write in line6_capture_copy()
-Date: Wed, 18 Nov 2026 15:52:27 +0100
-Message-ID: <20261118150050.719996949@linuxfoundation.org>
+Subject: [PATCH 6.12 1011/1756] xen/pcifront: Fix PCI device reference leak in AER handling
+Date: Wed, 18 Nov 2026 15:52:18 +0100
+Message-ID: <20261118150050.390272892@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,41 +69,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit d69798357b5d562bcda1af488cda3ead4d039f8f ]
+[ Upstream commit 5d12c51bd98cdb5a32cbfb606963b05740ec42f2 ]
 
-line6_capture_copy() copies the data for the original byte size, but
-the buffer overwrap is checked against the frame size.  Because of it,
-when the data size isn't aligned in frames, the remaining bytes might
-be still copied above the buffer size.
+pci_get_domain_bus_and_slot() increments the reference count of the
+returned PCI device. pcifront_common_process() drops that reference only
+when the device or its driver is missing. All paths for a bound device
+either return directly after invoking an error recovery callback or fall
+through without calling pci_dev_put(). Consequently, each AER request for
+a bound device leaks a reference and can keep the device allocated after
+removal.
 
-For avoiding the potential OOB write, correct the copied data size in
-line6_capture_copy() to be aligned with frames.
+Declare the looked-up device with __free(pci_dev_put), so every return
+path releases the reference after callback dispatch. This keeps the
+device alive while its callback runs and balances the lookup without
+restructuring the callback returns.
 
-Fixes: 1027f476f507 ("staging: line6: sync with upstream")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261008192553.300025-11-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This issue was found by a static analysis checker and confirmed by manual
+source review.
+
+Fixes: 956a9202cd12 ("xen-pcifront: Xen PCI frontend driver.")
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://lore.kernel.org/r/20260813153138.3953222-1-ruoyuw560@gmail.com/
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260820135603.3901798-1-ruoyuw560@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/capture.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pci/xen-pcifront.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
-index f59ec9c4a1a52..ad0588973cbc4 100644
---- a/sound/usb/line6/capture.c
-+++ b/sound/usb/line6/capture.c
-@@ -129,7 +129,8 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
- 	} else {
- 		/* copy single chunk */
- 		memcpy(runtime->dma_area +
--		       line6pcm->in.pos_done * bytes_per_frame, fbuf, fsize);
-+		       line6pcm->in.pos_done * bytes_per_frame, fbuf,
-+		       frames * bytes_per_frame);
- 	}
+diff --git a/drivers/pci/xen-pcifront.c b/drivers/pci/xen-pcifront.c
+index 451476ce10ae9..c15f33dc9ce55 100644
+--- a/drivers/pci/xen-pcifront.c
++++ b/drivers/pci/xen-pcifront.c
+@@ -579,16 +579,15 @@ static pci_ers_result_t pcifront_common_process(int cmd,
+ 	int bus = pdev->sh_info->aer_op.bus;
+ 	int devfn = pdev->sh_info->aer_op.devfn;
+ 	int domain = pdev->sh_info->aer_op.domain;
+-	struct pci_dev *pcidev;
++	struct pci_dev *pcidev __free(pci_dev_put) =
++		pci_get_domain_bus_and_slot(domain, bus, devfn);
  
- 	line6pcm->in.pos_done += frames;
+ 	dev_dbg(&pdev->xdev->dev,
+ 		"pcifront AER process: cmd %x (bus:%x, devfn%x)",
+ 		cmd, bus, devfn);
+ 
+-	pcidev = pci_get_domain_bus_and_slot(domain, bus, devfn);
+ 	if (!pcidev || !pcidev->dev.driver) {
+ 		dev_err(&pdev->xdev->dev, "device or AER driver is NULL\n");
+-		pci_dev_put(pcidev);
+ 		return PCI_ERS_RESULT_NONE;
+ 	}
+ 	pdrv = to_pci_driver(pcidev->dev.driver);
 -- 
 2.53.0
 
