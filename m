@@ -1,61 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044161;
-	b=YDnFKF5/+GmgCfEUWe0IrLuD6V+h5QM1feeoqYL/OCI2KPh9EIwRgYXJvXTLDcD9f1OY
-	 1rRSqxxtAHvgjQ0MnFVUuS2m/OB3Y1ACFhHKMWfQSKl0AZ4Ukji8jB3WXCYSwHVVy2vHQ
-	 C02zfuYjO4COQR/YwK82VU9NQQtuqoRyR9yMydm+tiH4C7pqQLggbeR634nvAQq1RPKVF
-	 y4CuAxPHe43j+WIOtiLA43v6Y5HuydTfhrXab9j2zhe3Z+7tIQovGPCANsTg6zGfmdSEH
-	 0WyDrRJM89NgmeOfAOfYP5ztBndR1dsKGc5fkxGYn3qNKT7VSDLPX6S8ra7NxlpFlug==
+	t=1795044164;
+	b=mTRuZLDMgQD14FaPfeEXeFT6M8E8NMzeiIZdblH0G1FvNnNey2IvcKQ9JrNYiM8XuZOM
+	 mxtNbrpYaFF5BreRKxisVgdk77WnrLL74U+LWvl8sY+vwKs+soxMh6aarSj0fMLUiOiY7
+	 CinioiCrE4jYmiF1e/KN9P+WXCh5xS1JEIhhAOXSzzc14gyGnDElP8kGlpXb2yDnfps0u
+	 t6JkBpBazXodeqrRjG1DAu+p7mdHeqnl6CeacDGm0dFaqSpl6eKykI++1LSUagq9bWBEb
+	 zVDl66F13Dn+qCrkw0IAy21obNYeUFbf9UMwjo6FOPd+6T4IqZdYGKb/qQFpmwiSZSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044161;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044164;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=283f+IkWzx50DsbQWWBYK8mEjmO69QiLGTTnyoIYHAE=;
-	b=lxbNv1A2z7FKwBhdyOmwVXyGUR6lClsBADBQ1QdeMm7p95tYWMKz3eYcI4TrqjskTxkM
-	 AODbRvXb69JqgoF483/AJ6GwBHLOOchTqB/syH5pasQSKB7xXgAoY56/EAirXXZ8NOPbB
-	 2iZXAnZXaGO5nMrPvUPooyA+SSKOEEYxkJH6nluqlNIJZqkHYTtqrL79XnQIiMx4EAAcy
-	 BjwqILHXk388TnViQf7lGFkml7tTXM0v4+oktFHNkQCgdXh3b35bC8ESlp8iDgtWEk14d
-	 gStekRiMkO+Xap11qKT9bgQTijdNsOY41/bbWAp/mpW7t+RjLSqjJ5+LBlr31nvyLPw==
+	bh=tH6ZX1cR2xz9L2zw8Y/gU11H0yewGZYj46maagK2Ci8=;
+	b=aT7hU940rO84mpu4UeMV3UqsuWblFNvs70nr/VcY8+1jpa6YIJKRht9wf3JUzcEx4GSd
+	 +eulF7WJP1n80H0d/2NBWcU632vgyENn2SrWyOmSEydxf5cDXJ2lS54ZSUetYOvaG707j
+	 hQu2h4M4VLqxCLgnG4qwLBCLbmEthVn4qWPSm6CiB6mjImph4+9RqFKdn+rWm6hHT/SJy
+	 n0aGPE4m1CZpdlY6XVPLmuYpWtjmblFxVEoww0rNYJYhV09W4NeyNgluLQSpojlPsvU0m
+	 tbP6jIc9AgWawCRVV6YsU6LWcp+RImsGCs6V3hQAJa8+HXyrmTOSp6oXE2LMmimQ4QQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XDuSSARh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EH39nXr0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709FC606A320;
-	Wed, 18 Nov 2026 23:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2F4606A31C;
+	Wed, 18 Nov 2026 23:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XDuSSARh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C995C1F000C4;
-	Wed, 18 Nov 2026 23:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EH39nXr0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E86F1F000C4;
+	Wed, 18 Nov 2026 23:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044161;
-	bh=283f+IkWzx50DsbQWWBYK8mEjmO69QiLGTTnyoIYHAE=;
+	s=korg; t=1795044164;
+	bh=tH6ZX1cR2xz9L2zw8Y/gU11H0yewGZYj46maagK2Ci8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XDuSSARhUBhXQ5HANclcYk8/Jdb/W/vPNpuwitvZN93aGd89u2mova6ctIwlZsBdg
-	 kHMT54Luoy4gYf6Z+F1hUwQZErifB5oRHdli2IDTn47NZHT8+LoXVejXHa4e99CCFP
-	 p6H4MxI3jRkW+xxe2FSw0Bx4dmkj2hXJQAQZ/dt8=
+	b=EH39nXr0fzlHwyIQodvA/1jUj2ptFhOKRhRUorInup4kKlBQKQGRL/wqFR2cOXyQR
+	 XT1R965TkeXz4hjrOh6VUngF6TMpoTucI49BJGP4qJKWME8q+DqQ7um5DjQ29RtuKw
+	 h1KsJLupDa2iPbZkHvk7AqUos8R9lCetlvjWueio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Ada Couprie Diaz <ada.coupriediaz@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Marc Zyngier <maz@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Vladimir Murzin <vladimir.murzin@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Yang Shi <yang@os.amperecomputing.com>,
+	syzbot+2eb3d983669d3e49d4fa@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0420/2857] arm64: percpu: Fix LSE operations on {8,16}-bit types
-Date: Wed, 18 Nov 2026 15:24:14 +0100
-Message-ID: <20261118150216.505359844@linuxfoundation.org>
+Subject: [PATCH 6.1 0411/2857] io_uring/rw: end write accounting from ->ki_complete
+Date: Wed, 18 Nov 2026 15:24:05 +0100
+Message-ID: <20261118150216.186665388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -77,64 +68,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 8cf2093f5372952a9ebc805c418d45df7112cd14 ]
+[ Upstream commit 796aa0547557e63338657ed1c487906f9fac4c73 ]
 
-The assembly for __percpu_##name##_case_##sz() and
-__percpu_##name##_return_case_##sz() doesn't use the 'sfx' macro
-argument to form the LSE instruction. Without 'sfx', a W register
-argument will imply a 32-bit memory location, and consequently
-{8,16}-bit ops will erroneously read and write 32 bits of memory when
-the LSE instruction is used.
+Commit b000145e9907 moved both the fsnotify calls and the write
+accounting out of the kiocb completion handler and into the
+io_req_rw_complete() task_work. However, only the fsnotify part actually
+needed to move as it may sleep. Ending the write accounting is just a
+percpu_up_read() on the superblock writers sem.
 
-Fix this by appending 'sfx' to 'op_lse' to LSE instruction. It is not
-necessary (and not valid) to append 'sfx' to 'op_llsc', as 'op_llsc' is
-a register-register operation which does not access memory (and does not
-take a size suffix).
+Deferring it is a problem, because it makes dropping SB_FREEZE_WRITE
+protection depend on the ring owner getting to running task_work. But
+the task may be blocked in freeze_super(), causing it to never get to
+that:
 
-Fixes: 959bf2fd03b5 ("arm64: percpu: Rewrite per-cpu ops to allow use of LSE atomics")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: Ada Couprie Diaz <ada.coupriediaz@arm.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Marc Zyngier <maz@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Vladimir Murzin <vladimir.murzin@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Yang Shi <yang@os.amperecomputing.com>
+  task                             io-wq worker
+  --------------------------------------------------------------
+  io_write()
+    io_kiocb_start_write()         (takes sb_writers, hidden from
+                                    lockdep by __sb_writers_release)
+    write_iter() -> -EIOCBQUEUED
+  ioctl(FS_IOC_SHUTDOWN)
+    bdev_freeze()
+      freeze_super()
+        percpu_down_write()        <- waits for the reader above
+                                   io_write()
+                                     kiocb_start_write()
+                                       percpu_down_read()  <- queued
+                                                              behind the
+                                                              writer
+  <bio completes>
+    io_complete_rw()
+      queues io_req_rw_complete()  <- never runs, task is in D state
+
+End the write from io_complete_rw() instead, and leave only the fsnotify
+calls in task_work.
+
+Reported-by: syzbot+2eb3d983669d3e49d4fa@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reviewed-by: Vladimir Murzin <vladimir.murzin@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: b000145e9907 ("io_uring/rw: defer fsnotify calls to task context")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ sashal: adapted context for the older io_rw helpers and placed io_req_end_write() after the __io_complete_rw_common() early return to avoid a double write-end on the reissue path. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/percpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ io_uring/rw.c | 30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/include/asm/percpu.h b/arch/arm64/include/asm/percpu.h
-index f4b57b911139d..3e7ca9c683f10 100644
---- a/arch/arm64/include/asm/percpu.h
-+++ b/arch/arm64/include/asm/percpu.h
-@@ -77,7 +77,7 @@ __percpu_##name##_case_##sz(void *ptr, unsigned long val)		\
- 	"	stxr" #sfx "\t%w[loop], %" #w "[tmp], %[ptr]\n"		\
- 	"	cbnz	%w[loop], 1b",					\
- 	/* LSE atomics */						\
--		#op_lse "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
-+		#op_lse #sfx "\t%" #w "[val], %" #w "[tmp], %[ptr]\n"	\
- 		__nops(3))						\
- 	: [loop] "=&r" (loop), [tmp] "=&r" (tmp),			\
- 	  [ptr] "+Q"(*(u##sz *)ptr)					\
-@@ -98,7 +98,7 @@ __percpu_##name##_return_case_##sz(void *ptr, unsigned long val)	\
- 	"	stxr" #sfx "\t%w[loop], %" #w "[ret], %[ptr]\n"		\
- 	"	cbnz	%w[loop], 1b",					\
- 	/* LSE atomics */						\
--		#op_lse "\t%" #w "[val], %" #w "[ret], %[ptr]\n"	\
-+		#op_lse #sfx "\t%" #w "[val], %" #w "[ret], %[ptr]\n"	\
- 		#op_llsc "\t%" #w "[ret], %" #w "[ret], %" #w "[val]\n"	\
- 		__nops(2))						\
- 	: [loop] "=&r" (loop), [ret] "=&r" (ret),			\
+diff --git a/io_uring/rw.c b/io_uring/rw.c
+index 8be0d4fd33eae..8c38449dd7da0 100644
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -215,20 +215,25 @@ static void io_req_end_write(struct io_kiocb *req)
+ 	}
+ }
+ 
+-/*
+- * Trigger the notifications after having done some IO, and finish the write
+- * accounting, if any.
+- */
+-static void io_req_io_end(struct io_kiocb *req)
++/* Trigger the notifications after having done some IO. */
++static void io_req_io_notify(struct io_kiocb *req)
+ {
+ 	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
+ 
+-	if (rw->kiocb.ki_flags & IOCB_WRITE) {
+-		io_req_end_write(req);
++	if (rw->kiocb.ki_flags & IOCB_WRITE)
+ 		fsnotify_modify(req->file);
+-	} else {
++	else
+ 		fsnotify_access(req->file);
+-	}
++}
++
++/* Finish write accounting and notify, for inline completions only. */
++static void io_req_io_end(struct io_kiocb *req)
++{
++	struct io_rw *rw = io_kiocb_to_cmd(req, struct io_rw);
++
++	if (rw->kiocb.ki_flags & IOCB_WRITE)
++		io_req_end_write(req);
++	io_req_io_notify(req);
+ }
+ 
+ static bool __io_complete_rw_common(struct io_kiocb *req, long res)
+@@ -266,7 +271,7 @@ static inline int io_fixup_rw_res(struct io_kiocb *req, long res)
+ 
+ static void io_req_rw_complete(struct io_kiocb *req, bool *locked)
+ {
+-	io_req_io_end(req);
++	io_req_io_notify(req);
+ 	io_req_task_complete(req, locked);
+ }
+ 
+@@ -277,6 +282,11 @@ static void io_complete_rw(struct kiocb *kiocb, long res)
+ 
+ 	if (__io_complete_rw_common(req, res))
+ 		return;
++
++	/* ring owner may block in freeze_super() before task_work runs */
++	if (kiocb->ki_flags & IOCB_WRITE)
++		io_req_end_write(req);
++
+ 	io_req_set_res(req, io_fixup_rw_res(req, res), 0);
+ 	req->io_task_work.func = io_req_rw_complete;
+ 	io_req_task_work_add(req);
 -- 
 2.53.0
 
