@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060540;
-	b=vwVpOloWlRT3LmH1fx3RLcTUz8W++1qMRkc0usE0L8YmW/5HXtaGbuRrD0kS90fY9nc+
-	 +zyNX4mRmJJC5OdrGhC2GofTp8X6i5KDrj/UnG8JgCn9WdmdRhQAx3q/IJ5e53/pCXVA7
-	 7WaQ+VlV4X2D2MwIcz+gxwb10BfY+DywSkIZr5w4zOxpBvY5omZfwgJ/Q6sZRc8B/Y/hO
-	 CsYOYc4Qmmt/rslG4kwQ2ZZwDb1zR/gjMOlZ4wex2+JuArEOBppq9IBkaMAPDT/cwVEtN
-	 Oa3/R0irqa9RUKo8fsly7W0iQvw8WhWbHF2ijNPwtKfAaUaylTsJ66xA1a53QlhFJIA==
+	t=1795060542;
+	b=i/RTbWGtaNuiI15DswyDkS0NRg/LRs6rjtm5jJAFBt0lLA+vQfIoa2lgBXJ3TxEXDG9X
+	 K5TTpecg/bViqQSzcrP8Zw/k9mfvFgStiweKFASLYcLez8pKCbi0miPEIHHHMuJgQRKe6
+	 +c4GrI3/hnlQjy0n8ecQLE10oFgkf9zIqF8LkQp2Kfk6LBVFadLl02xqosd1mgLlP4K28
+	 M4PxwbPyMD9xQQHdbNXol4YcbyUzlv7SC72nvel28hNtQdmjVsAq2/xtDUFwhAbboZJOJ
+	 t9CcplTbEN6GlhSK3iZrcJ3+IgE013///VKJIetQWl9cQVS0mPXIJNaC0Zka7UntKQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060540;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060542;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=el05cLeIHJJR3tSAutCW6sxC+DmpV/qeAzzYBg+XzhI=;
-	b=TfxOrChw/wxZauxYCsOQF7uIehHmv4BWbO1WuxZk55pMgZ3gMHlewSkJ/6gP9yGfJPio
-	 7LUeCmNwHIkibKvLZQ4sM4co46Z1XqM7HRFak1qmcKUBxZyh6WiBAVHo4lGllENCsNuVK
-	 KUA1muRQP0fhoe+Hns7VlAjvDQF2b8aZKeaBEwVF7FQzq75YFBu0pKZA3qe1EWhZMsa9y
-	 kFZ5DMOLR0DM6sw5C7MoHp88B6XGENk88ZvyXTvIfzECw6R+92fMQBiL9s+UXuNPBvbH+
-	 0PN084dw6gcO1b4BxYgAFYCGNpWfQ6vh3E8P+BS06Obi3WWzHqtWa476awkZzJ7zXuA==
+	bh=VxpjLbHzkfdGKRgiK3ckQjlRMAQE6yALYGtUdflmP1s=;
+	b=bBqm3amfrSAGvP/K0wbJtX7qk6Mz1VWARno5pqkKFZZVubbj+cYCQYNFBShhVnWTxgSK
+	 Ie2xlI9JWyKO78I8CHXYaGJ9CucwItm7REckjddSs0Yi+KCwEBZH/PTB8QqN16/ODwqBJ
+	 cOw4AgYi70/MnIsftMu+PSllNpwdAN4E3FlbL/kTSblvmrdWxrpA5+39A9ZLXM4P52K0w
+	 d89LK+7cLQW/OAz1ghQjC+p/HwMq+Ih0wPFXLjVIdnLhDlYLZA8JMxmp85e41V0DufuJF
+	 cqqyeH/6MmdaH7jMam9PJQbc/bBH1ctpgLgkfnxEC8+QsCWxbP8wvyuIB3bqRzF02Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m8SNfgJB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u2TiB/5o";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FC6606A320;
-	Thu, 19 Nov 2026 03:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABED606A32A;
+	Thu, 19 Nov 2026 03:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m8SNfgJB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 326141F000C4;
-	Thu, 19 Nov 2026 03:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u2TiB/5o
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F401F000C5;
+	Thu, 19 Nov 2026 03:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060539;
-	bh=el05cLeIHJJR3tSAutCW6sxC+DmpV/qeAzzYBg+XzhI=;
+	s=korg; t=1795060542;
+	bh=VxpjLbHzkfdGKRgiK3ckQjlRMAQE6yALYGtUdflmP1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m8SNfgJBtCABkzv6tV6tdAeIjSa6dzEyPhIIZSnmzdQcSMzjj4MnoyJNoaNgo1x0J
-	 NA47hU1cYnZH3Mni/X2rXQRyXt+VqEBNdITr2Dkxi51UTnNcYLpSAU/9jKOwc8ew4H
-	 ROpxfpV6soY77K10dcgz+5S88Qb/wsbz3b7QzA40=
+	b=u2TiB/5o016K64XIZF94tT/d9r+UNNNt1nWAo/bRryp7+9sfCSSaaLR4YMd8gAFh3
+	 cf+K3pv17ifmKRpyhxbtFFm1dDNfGRxP9dm+c5HV8m3oKWWSfAu7g+6lMmmOpPMcDD
+	 a7FbP+iMKJHggYGGVDh4D53x6UgarD1CqoqJPaOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1198/1848] PM: wakeup: Unify device_init_wakeup() for PM_SLEEP and !PM_SLEEP
-Date: Wed, 18 Nov 2026 15:53:56 +0100
-Message-ID: <20261118150009.837892927@linuxfoundation.org>
+Subject: [PATCH 5.10 1234/1848] firewire: cdev: Fix FW_CDEV_IOC_CREATE_ISO_CONTEXT references in kernel-doc
+Date: Wed, 18 Nov 2026 15:54:32 +0100
+Message-ID: <20261118150011.531057320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,128 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 09d3154a6f0f0bb5b604832095804780f3684b96 ]
+[ Upstream commit 0a6cf2b7adcbd362039e9d282f73aff3f24022ca ]
 
-Previously the CONFIG_PM_SLEEP and !CONFIG_PM_SLEEP device_init_wakeup()
-implementations differed in confusing ways:
+The fw_cdev_event_iso_interrupt and fw_cdev_event_iso_interrupt_mc
+comments refer to FW_CDEV_CREATE_ISO_CONTEXT, but the ioctl is named
+FW_CDEV_IOC_CREATE_ISO_CONTEXT.
 
-  - The PM_SLEEP version checked for a NULL device pointer and returned
-    -EINVAL, while the !PM_SLEEP version did not and would simply
-    dereference a NULL pointer.
+Correct both references. The misspellings were introduced separately
+with the userspace interface documentation and multichannel reception
+support.
 
-  - When called with "false", the !PM_SLEEP version cleared "capable" and
-    "enable" in the opposite order of the PM_SLEEP version.  That was
-    harmless because for !PM_SLEEP they're simple assignments, but it's
-    unnecessary confusion.
-
-Use a simplified version of the PM_SLEEP implementation for both cases.
-
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: ece9baab2a6e ("power: supply: bq24190_charger: use the wake irq API")
+Fixes: 7ada60e36764 ("firewire: Document userspace ioctl interface.")
+Fixes: 872e330e3880 ("firewire: add isochronous multichannel reception")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/r/20260911222807.7673-1-kmehltretter@gmail.com
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/wakeup.c | 30 ------------------------------
- include/linux/pm_wakeup.h   | 31 +++++++++++++++++++++++--------
- 2 files changed, 23 insertions(+), 38 deletions(-)
+ include/uapi/linux/firewire-cdev.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/wakeup.c b/drivers/base/power/wakeup.c
-index e3b0a2db32e9b..61b9150e9db77 100644
---- a/drivers/base/power/wakeup.c
-+++ b/drivers/base/power/wakeup.c
-@@ -498,36 +498,6 @@ void device_set_wakeup_capable(struct device *dev, bool capable)
- }
- EXPORT_SYMBOL_GPL(device_set_wakeup_capable);
- 
--/**
-- * device_init_wakeup - Device wakeup initialization.
-- * @dev: Device to handle.
-- * @enable: Whether or not to enable @dev as a wakeup device.
-- *
-- * By default, most devices should leave wakeup disabled.  The exceptions are
-- * devices that everyone expects to be wakeup sources: keyboards, power buttons,
-- * possibly network interfaces, etc.  Also, devices that don't generate their
-- * own wakeup requests but merely forward requests from one bus to another
-- * (like PCI bridges) should have wakeup enabled by default.
-- */
--int device_init_wakeup(struct device *dev, bool enable)
--{
--	int ret = 0;
--
--	if (!dev)
--		return -EINVAL;
--
--	if (enable) {
--		device_set_wakeup_capable(dev, true);
--		ret = device_wakeup_enable(dev);
--	} else {
--		device_wakeup_disable(dev);
--		device_set_wakeup_capable(dev, false);
--	}
--
--	return ret;
--}
--EXPORT_SYMBOL_GPL(device_init_wakeup);
--
+diff --git a/include/uapi/linux/firewire-cdev.h b/include/uapi/linux/firewire-cdev.h
+index 7e5b5c10a49c9..6eb666be0f916 100644
+--- a/include/uapi/linux/firewire-cdev.h
++++ b/include/uapi/linux/firewire-cdev.h
+@@ -211,7 +211,7 @@ struct fw_cdev_event_request2 {
  /**
-  * device_set_wakeup_enable - Enable or disable a device to wake up the system.
-  * @dev: Device to handle.
-diff --git a/include/linux/pm_wakeup.h b/include/linux/pm_wakeup.h
-index aa3da66115335..6fb698ed6deb7 100644
---- a/include/linux/pm_wakeup.h
-+++ b/include/linux/pm_wakeup.h
-@@ -104,7 +104,6 @@ extern struct wakeup_source *wakeup_sources_walk_next(struct wakeup_source *ws);
- extern int device_wakeup_enable(struct device *dev);
- extern int device_wakeup_disable(struct device *dev);
- extern void device_set_wakeup_capable(struct device *dev, bool capable);
--extern int device_init_wakeup(struct device *dev, bool val);
- extern int device_set_wakeup_enable(struct device *dev, bool enable);
- extern void __pm_stay_awake(struct wakeup_source *ws);
- extern void pm_stay_awake(struct device *dev);
-@@ -162,13 +161,6 @@ static inline int device_set_wakeup_enable(struct device *dev, bool enable)
- 	return 0;
- }
- 
--static inline int device_init_wakeup(struct device *dev, bool val)
--{
--	device_set_wakeup_capable(dev, val);
--	device_set_wakeup_enable(dev, val);
--	return 0;
--}
--
- static inline bool device_may_wakeup(struct device *dev)
- {
- 	return dev->power.can_wakeup && dev->power.should_wakeup;
-@@ -207,4 +199,27 @@ static inline void pm_wakeup_hard_event(struct device *dev)
- 	return pm_wakeup_dev_event(dev, 0, true);
- }
- 
-+/**
-+ * device_init_wakeup - Device wakeup initialization.
-+ * @dev: Device to handle.
-+ * @enable: Whether or not to enable @dev as a wakeup device.
-+ *
-+ * By default, most devices should leave wakeup disabled.  The exceptions are
-+ * devices that everyone expects to be wakeup sources: keyboards, power buttons,
-+ * possibly network interfaces, etc.  Also, devices that don't generate their
-+ * own wakeup requests but merely forward requests from one bus to another
-+ * (like PCI bridges) should have wakeup enabled by default.
-+ */
-+static inline int device_init_wakeup(struct device *dev, bool enable)
-+{
-+	if (enable) {
-+		device_set_wakeup_capable(dev, true);
-+		return device_wakeup_enable(dev);
-+	} else {
-+		device_wakeup_disable(dev);
-+		device_set_wakeup_capable(dev, false);
-+		return 0;
-+	}
-+}
-+
- #endif /* _LINUX_PM_WAKEUP_H */
+  * struct fw_cdev_event_iso_interrupt - Sent when an iso packet was completed
+  * @closure:	See &fw_cdev_event_common;
+- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
++ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
+  * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_ISO_INTERRUPT
+  * @cycle:	Cycle counter of the last completed packet
+  * @header_length: Total length of following headers, in bytes
+@@ -271,7 +271,7 @@ struct fw_cdev_event_iso_interrupt {
+ /**
+  * struct fw_cdev_event_iso_interrupt_mc - An iso buffer chunk was completed
+  * @closure:	See &fw_cdev_event_common;
+- *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
++ *		set by %FW_CDEV_IOC_CREATE_ISO_CONTEXT ioctl
+  * @type:	%FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
+  * @completed:	Offset into the receive buffer; data before this offset is valid
+  *
 -- 
 2.53.0
 
