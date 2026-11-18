@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058208;
-	b=g9jjij3MeahtwNBvujjXBiNPHV27EE2JDzEHqKetKVDErTgjJr8E1ewuGJIx+RQjz3vM
-	 8d129dkg6wv8ZsnnpuTuoZafMdliBhuQy1hVSSW1xjGs29hMAGt1p7JyuvBdLZWIEgNeM
-	 IwFrFyoBtTdZoLsPsd/22ZRSS0whaU5iQm0qtSK+vBkTgnz7FCoLZ9nIklZXkacou9IY9
-	 Oz41JIu/77UV16+B0Xq6KMXMOtd2GiKDYx3L0TaIRZUqc2wldLIb02gpBXo1F73Qqjpm0
-	 VUjsOVVA04blsHjOVUs5NgW4LCxSVF7EBncb6YJY3qb/YCKiR8Yuj7gNvmG0xKP71XA==
+	t=1795058211;
+	b=UDK+9Tc353qW0+gH1Q78zUUpLtejlC7fYcQVParWh/9mCDD+Qes8nd15PqpLSOIi6Gzi
+	 wkebA/CPkLQQHt5P2ALDiVEWB2+yGjrIQAj9PwlI/ctbBDOnDiSsAODAeeMVeXasLgzal
+	 XNrZcyWu3OgyNZ4figH2Yj9rc7zUAeNaKFRSfnSiLzIYOvuPXkJPFBtFpMYa8G1fLvDxQ
+	 hnDSZpWW5WobMnV81iCOvRrTw/ATba3O2xquokYRgyuOntuyZCB7p1SjK7ps3HW3aWoVL
+	 CoKhl0HUa7IezNNZ8yychupqRnw058hhsXZdgTPM9oIgr6HlDXC7V235AcbT6eQbktA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058208;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058211;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wIMM5O5iXWJFFC6zVRZuFO8Ne4ysxUR8jVnBANXHYvs=;
-	b=Ucd8WNu764AjbAAvsqpYzunU6C5Bp8K7tsaSFhhaG78dYyzlCrcs0qxTWFQuhZlLJlXD
-	 TC52kUDH2isoewUa6I+PkgpuyiLC9hXSGz4dDC+9jMQeCFNOWWiU8lajuYMKxb8hL4Eff
-	 p44yj+0I0HHXf0ESiUbmCE8VQsFHDWooZZXZxUmOgbJeM8mTaY/nR0RUZuUljDncLY9zT
-	 j8bb/Ib/h147JhG7nPFSScAsX2qdzpOK9gIjycXqKQFT+l0SXefvH34y3pQkaM1RTXBpc
-	 gLYZRLHboPjTxd93Tprx6xt9wzqtdmye8y/nWVQASxFbrw2PXHOFmUGUCXiIPxpvYZw==
+	bh=2w6oSlklnmQarxzebeoDjZxHvKjdB0SqdWuxQiBzt+0=;
+	b=Phw2ZuiFnSxKBnwWQIeCWQu20nW+LZDnTFI9gNrRR5q+e1AzFP670ig3OiRdUdfALS2G
+	 X0Q9WKGy3zjZ9c9kPni9fxLEBUtOktwMBJ+7FEQ2jK2k89PcFsCX1ujQeb0Vh2eUR4Yed
+	 6iTNWzgy+c/752s3ZHcMiA5gbcl2BjDfbzdRLfTcD/QeocU5qST/hBQhh8U48e6unZMaU
+	 8FbZjzd/mEMA6/Yejet60qUtHzRN08BBY9a9ZNWntjOjHuwmbIhB5DpbP0FcYGrRGzQ6v
+	 vXsQgyJ8M16Nepp9vKruPWXsYG1PipaNhC8Q0MW3SOuJ++huigBUItN5L9OJIKumObw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQkzI1O+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S3nw4NQn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8793606A320;
-	Thu, 19 Nov 2026 03:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69796606A31C;
+	Thu, 19 Nov 2026 03:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iQkzI1O+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A191F000C4;
-	Thu, 19 Nov 2026 03:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S3nw4NQn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A791F000C4;
+	Thu, 19 Nov 2026 03:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058208;
-	bh=wIMM5O5iXWJFFC6zVRZuFO8Ne4ysxUR8jVnBANXHYvs=;
+	s=korg; t=1795058211;
+	bh=2w6oSlklnmQarxzebeoDjZxHvKjdB0SqdWuxQiBzt+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iQkzI1O+k83F+NBaNZ56DbZGDwbx+dkt7B1dXy+x3THBx8crVU3WExr8ttaFN/qEn
-	 L7e5Ftnj+LnQ9S6810TGfhzbDp5qhOpSCHn72CX6nLOawn2LmhCtYkzUKpEiXcksjF
-	 k9PPwpmgrhPR/LzgEi6X0nS7DKraeGwXZXWAvcL4=
+	b=S3nw4NQn7Erdk9tfsMM8MVvRMezGJyNJ5JB8TFr211fln8Es/1lRsdAq9BnyALmjf
+	 Vdpqww6tMksAux5XR97y5heeePsiLMzKaJ8XLt/Cwv5k5+Q10a75RFu2X34Dqamgqv
+	 AuQ+ftLNa86uUUacwbCE7dDIcRKVc7vkpVpThcTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cao Guanghui <caoguanghui@kylinos.cn>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Martin Wilck <mwilck@suse.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0405/1848] md/raid5: fix NULL pointer dereference in raid5_free_percpu
-Date: Wed, 18 Nov 2026 15:40:43 +0100
-Message-ID: <20261118145930.813892313@linuxfoundation.org>
+Subject: [PATCH 5.10 0406/1848] md/raid5: validate payload size before calculating payload_len
+Date: Wed, 18 Nov 2026 15:40:44 +0100
+Message-ID: <20261118145930.845151602@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,51 +69,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cao Guanghui <caoguanghui@kylinos.cn>
+From: Martin Wilck <martin.wilck@suse.com>
 
-[ Upstream commit 41742e35268d6a45161b187f51f42bc2ade14d0d ]
+[ Upstream commit 38c795105992bbaa3418dd39cbff7348ad17537c ]
 
-If cpuhp_state_add_instance() fails in raid5_alloc_percpu() (e.g., the
-startup callback raid456_cpu_up_prepare fails due to an allocation
-failure), conf->node is never added to the cpuhp instance list and
-its pprev remains NULL (from kzalloc initialization).
+Commit b0cc3ae97e89 ("md/raid5: validate payload size before accessing
+journal metadata") introduced a bounds check to verify that a given payload
+fits into the current metadata block. In order to calculate the payload
+size, it has to access the members payload->header.type and payload->size,
+the offset of which may already be past the end of the metadata block,
+because the loop condition only checks that the first byte of the payload
+is inside, and the payload entries have variable sizes. Later on,
+payload->checksum[0] and payload->checksum[1] are accessed without
+verifying that payload->size is large enough.
 
-When setup_conf() then jumps to abort, free_conf() calls
-raid5_free_percpu(), which checks conf->percpu (non-NULL, since it was
-allocated before the cpuhp failure) and proceeds to call
-cpuhp_state_remove_instance().  This calls hlist_del() on the unhashed
-node, which dereferences node->pprev (NULL), causing a kernel panic.
+Add another check to make sure that payload->size can be safely
+accessed, and make sure that the checksum fields are accessible.
 
-Guard the removal with hlist_unhashed_lockless() so that the cpuhp
-instance is only removed if it was actually added.  The lockless variant
-uses READ_ONCE() for the pprev read, which is safe here because the
-actual removal is synchronized by cpuhp_state_mutex inside
-cpuhp_state_remove_instance().
+This issue has been found by AI (gemma4, Gemini) during a backport
+review.
 
-Fixes: 29c6d1bbd7a2 ("md/raid5: Convert to hotplug state machine")
+Cc: Junrui Luo <moonafterrain@outlook.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
-Link: https://patch.msgid.link/20260827080341.112296-2-ghuicao@163.com
+Fixes: b0cc3ae97e89 ("md/raid5: validate payload size before accessing journal metadata")
+Signed-off-by: Martin Wilck <mwilck@suse.com>
+Link: https://patch.msgid.link/20260907155103.2325511-1-mwilck@suse.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/raid5-cache.c | 34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 82b94abc5df3e..b862f91f128fc 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -7078,7 +7078,8 @@ static void raid5_free_percpu(struct r5conf *conf)
- 	if (!conf->percpu)
- 		return;
+diff --git a/drivers/md/raid5-cache.c b/drivers/md/raid5-cache.c
+index eb12155b6cb5e..a67984c3d2f4e 100644
+--- a/drivers/md/raid5-cache.c
++++ b/drivers/md/raid5-cache.c
+@@ -2016,27 +2016,36 @@ r5l_recovery_verify_data_checksum_for_mb(struct r5l_log *log,
+ 	if (!page)
+ 		return -ENOMEM;
  
--	cpuhp_state_remove_instance(CPUHP_MD_RAID5_PREPARE, &conf->node);
-+	if (!hlist_unhashed_lockless(&conf->node))
-+		cpuhp_state_remove_instance(CPUHP_MD_RAID5_PREPARE, &conf->node);
- 	free_percpu(conf->percpu);
- }
+-	while (mb_offset < le32_to_cpu(mb->meta_size)) {
++	while (mb_offset + sizeof(struct r5l_payload_header) <= le32_to_cpu(mb->meta_size)) {
++		u32 payload_size;
+ 		sector_t payload_len;
  
+ 		payload = (void *)mb + mb_offset;
+ 		payload_flush = (void *)mb + mb_offset;
+ 
+ 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_DATA) {
++			if (mb_offset + sizeof(struct r5l_payload_data_parity)
++			    > le32_to_cpu(mb->meta_size))
++				goto mismatch;
++			payload_size = le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9);
+ 			payload_len = sizeof(struct r5l_payload_data_parity) +
+-				(sector_t)sizeof(__le32) *
+-				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
+-			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++					(sector_t)sizeof(__le32) * payload_size;
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size) ||
++			    payload_size < 1)
+ 				goto mismatch;
+ 			if (r5l_recovery_verify_data_checksum(
+ 				    log, ctx, page, log_offset,
+ 				    payload->checksum[0]) < 0)
+ 				goto mismatch;
+ 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_PARITY) {
++			if (mb_offset + sizeof(struct r5l_payload_data_parity)
++			    > le32_to_cpu(mb->meta_size))
++				goto mismatch;
++			payload_size = le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9);
+ 			payload_len = sizeof(struct r5l_payload_data_parity) +
+-				(sector_t)sizeof(__le32) *
+-				(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
+-			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
++					(sector_t)sizeof(__le32) * payload_size;
++			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size) ||
++			    payload_size < conf->max_degraded)
+ 				goto mismatch;
+ 			if (r5l_recovery_verify_data_checksum(
+ 				    log, ctx, page, log_offset,
+@@ -2050,6 +2059,9 @@ r5l_recovery_verify_data_checksum_for_mb(struct r5l_log *log,
+ 				    payload->checksum[1]) < 0)
+ 				goto mismatch;
+ 		} else if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
++			if (mb_offset + sizeof(struct r5l_payload_flush)
++			    > le32_to_cpu(mb->meta_size))
++				goto mismatch;
+ 			payload_len = sizeof(struct r5l_payload_flush) +
+ 				(sector_t)le32_to_cpu(payload_flush->size);
+ 			if (mb_offset + payload_len > le32_to_cpu(mb->meta_size))
+@@ -2111,7 +2123,7 @@ r5c_recovery_analyze_meta_block(struct r5l_log *log,
+ 	mb_offset = sizeof(struct r5l_meta_block);
+ 	log_offset = r5l_ring_add(log, ctx->pos, BLOCK_SECTORS);
+ 
+-	while (mb_offset < le32_to_cpu(mb->meta_size)) {
++	while (mb_offset + sizeof(struct r5l_payload_header) < le32_to_cpu(mb->meta_size)) {
+ 		sector_t payload_len;
+ 		int dd;
+ 
+@@ -2121,6 +2133,9 @@ r5c_recovery_analyze_meta_block(struct r5l_log *log,
+ 		if (le16_to_cpu(payload->header.type) == R5LOG_PAYLOAD_FLUSH) {
+ 			int i, count;
+ 
++			if (mb_offset + sizeof(struct r5l_payload_flush) >
++			    le32_to_cpu(mb->meta_size))
++				return -EINVAL;
+ 			payload_len = sizeof(struct r5l_payload_flush) +
+ 				(sector_t)le32_to_cpu(payload_flush->size);
+ 			if (mb_offset + payload_len >
+@@ -2145,6 +2160,9 @@ r5c_recovery_analyze_meta_block(struct r5l_log *log,
+ 		}
+ 
+ 		/* DATA or PARITY payload */
++		if (mb_offset + sizeof(struct r5l_payload_data_parity) >
++		    le32_to_cpu(mb->meta_size))
++			return -EINVAL;
+ 		payload_len = sizeof(struct r5l_payload_data_parity) +
+ 			(sector_t)sizeof(__le32) *
+ 			(le32_to_cpu(payload->size) >> (PAGE_SHIFT - 9));
 -- 
 2.53.0
 
