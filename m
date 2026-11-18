@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047118;
-	b=qq7UJ0+I0Mdvm7U19d75dT+T3zaZMPeQJETHqYEpiuthmDESzRHN6Bc9SkAj59B20zL/
-	 ZvHEwW77BUKUW6AuOkB22pszJ35i5K6iO52xjDpIS79gtlx+3Ios4GpmrzFrdFjm1QAtI
-	 JL+ugEfpR6TKvPP+gaKAXmR8hFIc5wkZkOmTQd3qBkFZsfvDL2siLjbOLprxJ2mm35PVz
-	 KFPJ1GVJ8HlR/4N8lq+FLsVYUdiyDo+iVcKl7q8jI8VZTO3+uvWrQsI27hTShHa1zH29r
-	 LBfVF/k1KY9Ng+/3Tp+IohJ5aFvjB4B5m8L2OVFR3AwXCqBEJ37F445QKD26L0QvYDQ==
+	t=1795047120;
+	b=PEA8rZp9nFiE2WLelGBJ1baIqFLivA/sI+Y0gXNtlijC7NCD18kZH8XwfT9vdUIXRbPa
+	 RdZu1neXkGMg6nyY7Sg+EWzetQ8o8vX+KeTzgJDid0kOniT3H7J7uMhtjuUG1x9sldtK2
+	 Q4JTqIc9hpS5wMSKEsE7uiAdgFkTzXH+z8UnJgC2Jnls9hxAXBOyy/aVT4e16MIAP80vX
+	 9bfVlhQMf7jK+923+C8NwzA04+dO2YBH3l4GOhM/adhncAs9Tt8Y/a2TiaFYK5xyegLny
+	 hIx5/gifA9bHZt/dtzbdJd/kghzhjWSQGK3vSi8w+2Ubb79EMpzTG7JmEywJ5XL6MGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047118;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047120;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7L3rAHDu7+gOTU8TrlFYL8r8o9R1OsWFQiBlfeWD13M=;
-	b=g6rZ5RgpEFVzSpYi8tRsXvdvBgjBWqqc1j4o3KK9ptmtf5qbQfmcTqCfOfuwbZqE5XCk
-	 siCTQ7stDmhG9MpHDfclfe2pPqbGiPNdkg/otoY47uZwi/kFL2t8lzU16AyTZLvqAWE6r
-	 BOMnkXFmNcEzrz+OkALr5uBCgMauCtFEjw/XcrgnJduvXgPWPBupOTYzdO/1mW+7+d4fi
-	 NbIpJOr80vvRsGa4UupdSyp4a9XB2ggU30+91KFOmyXb1FfWPkTpeJ3YpSb+Yil76/tna
-	 JjUmbqVGo79dRoffI8CEYj54vFv7W1oeTdxEgGzbavBgXl8H3yWS4K+xJBMGc+cDvnw==
+	bh=0iEMdLqvoTynqELvFzJ5dNfxmdAj0ouB1XSBxh5FXUE=;
+	b=xeCuDNLhw6Qq04MeojUt5E/LXKA/Zwb4esJwQjc7/GFt+G9Au0LARfV2Hbs7Mr4fLIPt
+	 17ZlvkS/vybATRZsMSdwLl6ZEejNqRXhvwSY4nlGvKKHOG1xn4w6JIoLWNuQTGLKtdN6t
+	 SfWoXnPYy6/CPKgMXsDk+OQExCOKkY4oTGPDkYLIHYYZNBmPNjXcZ/STAXprpRToivKJm
+	 jdt8AzzdhKtjrJIBgAVVOLo59KAv3R3jSoiv+xwKUpVY12r23zPloBvRjO8VP/E9ibFxm
+	 g4YZLgbEttsDqcTtf5uNlv7OpR+7KauGRThsL8SBl/CTUo6OnaqDUXNvVvZZNReCmeg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzIkUcix;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JtHNCtqm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E9F606A320;
-	Thu, 19 Nov 2026 00:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86A6A606A320;
+	Thu, 19 Nov 2026 00:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZzIkUcix
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2795D1F000C4;
-	Thu, 19 Nov 2026 00:11:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JtHNCtqm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9051F000C4;
+	Thu, 19 Nov 2026 00:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047117;
-	bh=7L3rAHDu7+gOTU8TrlFYL8r8o9R1OsWFQiBlfeWD13M=;
+	s=korg; t=1795047120;
+	bh=0iEMdLqvoTynqELvFzJ5dNfxmdAj0ouB1XSBxh5FXUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZzIkUcixWcWGhfaXah/eSVvQBkbReGPwHWU6Gadzq2HhxzcAaIqMHHGncruovu3/T
-	 mvB98QdrQKSvt+LrSi95VAX6KrpndodXmk+5DP3nTlTeihlE1xpehO/Sp/Mgf+Of6/
-	 JYqigSOlp5tRgBfe6SdU1nwVRhYfux0e5MVxO0+4=
+	b=JtHNCtqmuOP7QmgcI5OpuwF1sBMFiCqexfxndN9UIpbDkCsevRRUFKh2OmP5JkUQS
+	 X5Y5TrTkTtquDplW+GDGaPBZ7QwECm+7lX7cNxWgjKEpRhTty1iS6NkFX+1NuWNIMi
+	 H5b6xKNXrMDSk+tjMorTJFtrJ1fUIpv1BJfX2+zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1525/2857] media: qcom: camss: Move vfe_disable into a common routine where applicable
-Date: Wed, 18 Nov 2026 15:42:39 +0100
-Message-ID: <20261118150256.233765007@linuxfoundation.org>
+Subject: [PATCH 6.1 1508/2857] ALSA: emu10k1: prune vestiges of SNDRV_SFNT_SAMPLE_{BIDIR,REVERSE}_LOOP support
+Date: Wed, 18 Nov 2026 15:42:22 +0100
+Message-ID: <20261118150255.631996480@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,231 +68,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
 
-[ Upstream commit 90cc4555730bfd0fc6af5c8a5a81d80bfce4cff7 ]
+[ Upstream commit 1edeac6555e9df008b1729ca445868c1177baa8b ]
 
-We can move vfe_disable() into a common routine in the core VFE file
-provided we make wm_stop() a VFE specific callback.
+This is required only to implement WAVE_BIDIR_LOOP and WAVE_LOOP_BACK in
+the GUS patch loader. It has not worked on emu10k1 since before ALSA hit
+mainline, yet nobody appears to have complained. And as it isn't super
+easy to implement, just admit defeat and clean up the code.
 
-The callback is required to capture the case where VFE 17x currently isn't
-VC enabled where as VFE 480 is.
+If somebody wanted to resurrect the feature, the emu8k driver could
+serve as a template, but the code would be quite different. But
+arguably, this should be done in user space in the first place, as this
+doesn't represent a hardware feature (somewhat ironically, the actual
+GUS driver has no synth support, and therefore no GUS patch loader).
 
-Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Stable-dep-of: e5d4b0e69a40 ("media: qcom: camss: vfe: Fix VFE reset while another line is streaming")
+Note that instead of properly rejecting affected samples, we continue to
+just pretend that the feature wasn't requested. This is extremely
+questionable behavior, but avoids that possibly unused instruments
+suddenly prevent loading the entire file, which would break backwards
+compatibility. But at least we log a warning now.
+
+Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Message-ID: <20240406064830.1029573-6-oswald.buddenhagen@gmx.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 8a5d87c2ba30 ("ALSA: emux: Stop voices before freeing zones in all cases")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/qcom/camss/camss-vfe-170.c | 40 +------------------
- .../media/platform/qcom/camss/camss-vfe-480.c | 40 +------------------
- drivers/media/platform/qcom/camss/camss-vfe.c | 39 ++++++++++++++++++
- drivers/media/platform/qcom/camss/camss-vfe.h |  9 +++++
- 4 files changed, 50 insertions(+), 78 deletions(-)
+ sound/pci/emu10k1/emu10k1_patch.c | 73 ++++---------------------------
+ 1 file changed, 8 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-index a6625aa050b66..47049a1fe5787 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -492,22 +492,6 @@ static int vfe_enable_output(struct vfe_line *line)
- 	return 0;
- }
+diff --git a/sound/pci/emu10k1/emu10k1_patch.c b/sound/pci/emu10k1/emu10k1_patch.c
+index 89890f24509f0..49214c2268084 100644
+--- a/sound/pci/emu10k1/emu10k1_patch.c
++++ b/sound/pci/emu10k1/emu10k1_patch.c
+@@ -28,8 +28,6 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
+ {
+ 	int offset;
+ 	int truesize, size, blocksize;
+-	__maybe_unused int loopsize;
+-	int loopend, sampleend;
+ 	unsigned int start_addr;
+ 	struct snd_emu10k1 *emu;
  
--static void vfe_disable_output(struct vfe_line *line)
--{
--	struct vfe_device *vfe = to_vfe(line);
--	struct vfe_output *output = &line->output;
--	unsigned long flags;
--	unsigned int i;
--
--	spin_lock_irqsave(&vfe->output_lock, flags);
--	for (i = 0; i < output->wm_num; i++)
--		vfe_wm_stop(vfe, output->wm_idx[i]);
--	output->gen2.active_num = 0;
--	spin_unlock_irqrestore(&vfe->output_lock, flags);
--
--	vfe_reset(vfe);
--}
--
- /*
-  * vfe_enable - Enable streaming on VFE line
-  * @line: VFE line
-@@ -553,29 +537,6 @@ static int vfe_enable(struct vfe_line *line)
- 	return ret;
- }
+@@ -43,32 +41,24 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
+ 		return 0;
+ 	}
  
--/*
-- * vfe_disable - Disable streaming on VFE line
-- * @line: VFE line
-- *
-- * Return 0 on success or a negative error code otherwise
-- */
--static int vfe_disable(struct vfe_line *line)
--{
--	struct vfe_device *vfe = to_vfe(line);
--
--	vfe_disable_output(line);
--
--	vfe_put_output(line);
--
--	mutex_lock(&vfe->stream_lock);
--
--	vfe->stream_count--;
--
--	mutex_unlock(&vfe->stream_lock);
--
--	return 0;
--}
--
- /*
-  * vfe_isr_sof - Process start of frame interrupt
-  * @vfe: VFE Device
-@@ -770,4 +731,5 @@ const struct vfe_hw_ops vfe_ops_170 = {
- 	.vfe_enable = vfe_enable,
- 	.vfe_halt = vfe_halt,
- 	.violation_read = vfe_violation_read,
-+	.vfe_wm_stop = vfe_wm_stop,
- };
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
-index fa818517ab0da..784013a4e035d 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
-@@ -329,22 +329,6 @@ static int vfe_enable_output(struct vfe_line *line)
- 	return 0;
- }
++	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP | SNDRV_SFNT_SAMPLE_REVERSE_LOOP)) {
++		/* should instead return -ENOTSUPP; but compatibility */
++		printk(KERN_WARNING "Emu10k1 wavetable patch %d with unsupported loop feature\n",
++		       sp->v.sample);
++	}
++
+ 	/* recalculate address offset */
+ 	sp->v.end -= sp->v.start;
+ 	sp->v.loopstart -= sp->v.start;
+ 	sp->v.loopend -= sp->v.start;
+ 	sp->v.start = 0;
  
--static void vfe_disable_output(struct vfe_line *line)
--{
--	struct vfe_device *vfe = to_vfe(line);
--	struct vfe_output *output = &line->output;
--	unsigned long flags;
--	unsigned int i;
+-	/* some samples have invalid data.  the addresses are corrected in voice info */
+-	sampleend = sp->v.end;
+-	if (sampleend > sp->v.size)
+-		sampleend = sp->v.size;
+-	loopend = sp->v.loopend;
+-	if (loopend > sampleend)
+-		loopend = sampleend;
 -
--	spin_lock_irqsave(&vfe->output_lock, flags);
--	for (i = 0; i < output->wm_num; i++)
--		vfe_wm_stop(vfe, output->wm_idx[i]);
--	output->gen2.active_num = 0;
--	spin_unlock_irqrestore(&vfe->output_lock, flags);
--
--	vfe_reset(vfe);
--}
--
- /*
-  * vfe_enable - Enable streaming on VFE line
-  * @line: VFE line
-@@ -392,29 +376,6 @@ static int vfe_enable(struct vfe_line *line)
- 	return ret;
- }
+ 	/* be sure loop points start < end */
+ 	if (sp->v.loopstart >= sp->v.loopend)
+ 		swap(sp->v.loopstart, sp->v.loopend);
  
--/*
-- * vfe_disable - Disable streaming on VFE line
-- * @line: VFE line
-- *
-- * Return 0 on success or a negative error code otherwise
-- */
--static int vfe_disable(struct vfe_line *line)
--{
--	struct vfe_device *vfe = to_vfe(line);
--
--	vfe_disable_output(line);
--
--	vfe_put_output(line);
--
--	mutex_lock(&vfe->stream_lock);
--
--	vfe->stream_count--;
--
--	mutex_unlock(&vfe->stream_lock);
--
--	return 0;
--}
--
- /*
-  * vfe_isr_reg_update - Process reg update interrupt
-  * @vfe: VFE Device
-@@ -584,4 +545,5 @@ const struct vfe_hw_ops vfe_ops_480 = {
- 	.vfe_disable = vfe_disable,
- 	.vfe_enable = vfe_enable,
- 	.vfe_halt = vfe_halt,
-+	.vfe_wm_stop = vfe_wm_stop,
- };
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index ee4d7dccefe16..3597788cc02fd 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -407,6 +407,45 @@ int vfe_put_output(struct vfe_line *line)
- 	return 0;
- }
+ 	/* compute true data size to be loaded */
+ 	truesize = sp->v.size + BLANK_HEAD_SIZE;
+-	loopsize = 0;
+-#if 0 /* not supported */
+-	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP|SNDRV_SFNT_SAMPLE_REVERSE_LOOP))
+-		loopsize = sp->v.loopend - sp->v.loopstart;
+-	truesize += loopsize;
+-#endif
+ 	if (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_NO_BLANK)
+ 		truesize += BLANK_LOOP_SIZE;
  
-+static int vfe_disable_output(struct vfe_line *line)
-+{
-+	struct vfe_device *vfe = to_vfe(line);
-+	struct vfe_output *output = &line->output;
-+	unsigned long flags;
-+	unsigned int i;
-+
-+	spin_lock_irqsave(&vfe->output_lock, flags);
-+	for (i = 0; i < output->wm_num; i++)
-+		vfe->ops->vfe_wm_stop(vfe, output->wm_idx[i]);
-+	output->gen2.active_num = 0;
-+	spin_unlock_irqrestore(&vfe->output_lock, flags);
-+
-+	return vfe_reset(vfe);
-+}
-+
-+/*
-+ * vfe_disable - Disable streaming on VFE line
-+ * @line: VFE line
-+ *
-+ * Return 0 on success or a negative error code otherwise
-+ */
-+int vfe_disable(struct vfe_line *line)
-+{
-+	struct vfe_device *vfe = to_vfe(line);
-+
-+	vfe_disable_output(line);
-+
-+	vfe_put_output(line);
-+
-+	mutex_lock(&vfe->stream_lock);
-+
-+	vfe->stream_count--;
-+
-+	mutex_unlock(&vfe->stream_lock);
-+
-+	return 0;
-+}
-+
- /**
-  * vfe_isr_comp_done() - Process composite image done interrupt
-  * @vfe: VFE Device
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-index cbc314c4e244b..e8dad209207f1 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.h
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-@@ -116,6 +116,7 @@ struct vfe_hw_ops {
- 	int (*vfe_enable)(struct vfe_line *line);
- 	int (*vfe_halt)(struct vfe_device *vfe);
- 	void (*violation_read)(struct vfe_device *vfe);
-+	void (*vfe_wm_stop)(struct vfe_device *vfe, u8 wm);
- };
+@@ -96,8 +86,8 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
+ 	snd_emu10k1_synth_bzero(emu, sp->block, offset, size);
+ 	offset += size;
  
- struct vfe_isr_ops {
-@@ -194,6 +195,14 @@ int vfe_reserve_wm(struct vfe_device *vfe, enum vfe_line_id line_id);
-  */
- int vfe_reset(struct vfe_device *vfe);
+-	/* copy start->loopend */
+-	size = loopend;
++	/* copy provided samples */
++	size = sp->v.size;
+ 	if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS))
+ 		size *= 2;
+ 	if (offset + size > blocksize)
+@@ -108,53 +98,6 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
+ 		return -EFAULT;
+ 	}
+ 	offset += size;
+-	data += size;
+-
+-#if 0 /* not supported yet */
+-	/* handle reverse (or bidirectional) loop */
+-	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP|SNDRV_SFNT_SAMPLE_REVERSE_LOOP)) {
+-		/* copy loop in reverse */
+-		if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS)) {
+-			int woffset;
+-			unsigned short *wblock = (unsigned short*)block;
+-			woffset = offset / 2;
+-			if (offset + loopsize * 2 > blocksize)
+-				return -EINVAL;
+-			for (i = 0; i < loopsize; i++)
+-				wblock[woffset + i] = wblock[woffset - i -1];
+-			offset += loopsize * 2;
+-		} else {
+-			if (offset + loopsize > blocksize)
+-				return -EINVAL;
+-			for (i = 0; i < loopsize; i++)
+-				block[offset + i] = block[offset - i -1];
+-			offset += loopsize;
+-		}
+-
+-		/* modify loop pointers */
+-		if (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_BIDIR_LOOP) {
+-			sp->v.loopend += loopsize;
+-		} else {
+-			sp->v.loopstart += loopsize;
+-			sp->v.loopend += loopsize;
+-		}
+-		/* add sample pointer */
+-		sp->v.end += loopsize;
+-	}
+-#endif
+-
+-	/* loopend -> sample end */
+-	size = sp->v.size - loopend;
+-	if (size < 0)
+-		return -EINVAL;
+-	if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS))
+-		size *= 2;
+-	if (snd_emu10k1_synth_copy_from_user(emu, sp->block, offset, data, size)) {
+-		snd_emu10k1_synth_free(emu, sp->block);
+-		sp->block = NULL;
+-		return -EFAULT;
+-	}
+-	offset += size;
  
-+/*
-+ * vfe_disable - Disable streaming on VFE line
-+ * @line: VFE line
-+ *
-+ * Return 0 on success or a negative error code otherwise
-+ */
-+int vfe_disable(struct vfe_line *line);
-+
- extern const struct vfe_hw_ops vfe_ops_4_1;
- extern const struct vfe_hw_ops vfe_ops_4_7;
- extern const struct vfe_hw_ops vfe_ops_4_8;
+ 	/* clear rest of samples (if any) */
+ 	if (offset < blocksize)
 -- 
 2.53.0
 
