@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022338;
-	b=vgwr8xli75S8oHEQz1ZCgbWbuANi636ZjndMLMy31z6beOZz+SEIszIYXaMEwuAiDPJw
-	 SVYKrPLm9u7Xj7l84bN7overFZLzByNhTFBdLpadKJpWV8zguKYC0klbjbpIM1oFFWYTW
-	 ZZQphqFqiy7Hsf0+rpvkROzvPO+rAp6BmSofgym86pxahyNFBw5FsfSUpLTUPlHK4URp0
-	 KPuE0ZzhiQA1iEumPGechLK8Od57XDzHMzRKhHrZtVQMQ7NLXEIv/CCVSVw+88aMQDy9b
-	 VQyADrfS7tpCUjw99ecGEut33C8BUTYqFnnsO8gekzAOk6ttzknnUN4oRbaz8ezpnWw==
+	t=1795022341;
+	b=5LJmxRYy+5Cqi0K/40v92YBiaExGXWopMra/OVVA9pIhYVhGKI7ay1v49Vooibw54/h1
+	 A04GZse9UHF95tGOMeK2VOPq4t765l7iEUJSjtzLMf29EnunNkLVJuSh4u2wPY8wHdSXg
+	 1sn8/EVYfBFuIgDBsXIZNEFyw6sWA2JExpo0bTwoBsy1XVoxi6xW38nyzt8rSj9Y8dTdN
+	 n146jIUQopUHZ7ikC5hVGRDR+bfPWrQcl4WJuACfa4p+NikN5cP53btHEOTbClvjv9PHO
+	 uVTZeI+K3EEKozaLT/HeTbP+cPMXkHWgWUMFsM20WJAZE98Oh3HfglIIKxzhYbqhb0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022338;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022341;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UNBhWPuWQaVa3FsUW/asQD3mqGHAICVEo5Ep3rIsMGU=;
-	b=FVA/7csjqcmjTccQ3rIjZsT5M5QewQj1TZV9qmdvX2MPJFk5yo7G3S+ThNYY0I+VyNPP
-	 3DsXOhZwifhPlrxplCm12HLrgTVh2rtg7FnT8Z5gcoj+WkspzoJOzv7LYAGuuHeRZiToo
-	 cli/TPeZfCO8qOoLkmBDvzA9q/IpNHropr6AADHzoVn/u9VsE/nTwQnyTC5XPk1Y7JhL1
-	 7fYTyCDLN6kM875Ket9QIqQgkIWg3HCLS4YieAyeHU53KHXfUXPH/AfcfcMLXB0ujVbkh
-	 xZGPlribDyysBIVnJvamMsoNNgDfOT/Rs9xpAj2LkTiTCDxJieTJ4N1e/dhCvT/KVaw==
+	bh=7iHz45AofdMUq9C+acf8OQtIXwUf+KqfcH/a0Z7fCSA=;
+	b=kctEN38OQ37SbSlXQlWCLSIuc6ZulMxKjwlijLcaATId8VRv37cCGL8DZVtgMYoexN/I
+	 eyJlQ/JG5IZQK9gYMA6WNCrl86P1N8xFOqs16juMqP/zAZ9keZcxDVbwUCku49J397II3
+	 6ZZt6b7cpDsPFbvVKgQwy4+w2Tnm0pKamhGeC3OItRt54OIUc8nTQf9pxZDQXz68OqzPM
+	 pc5lZwldjC6EkmSFpI5qEXJB8g/xA6B8b32uMPe8OVxENk8kOZc/Mkn6N8VrdTpdNn5Bj
+	 kz0VHWH6Y6n6/4dEzRLMkdLV+gNglyOzgvNDmXssh9wq76CusrUB3vbAi8Qnc3p8gBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E3nzpodp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WvbfRtGG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA88606A31C;
-	Wed, 18 Nov 2026 17:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895E2606A325;
+	Wed, 18 Nov 2026 17:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E3nzpodp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F471F000C4;
-	Wed, 18 Nov 2026 17:18:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WvbfRtGG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79531F000C4;
+	Wed, 18 Nov 2026 17:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022338;
-	bh=UNBhWPuWQaVa3FsUW/asQD3mqGHAICVEo5Ep3rIsMGU=;
+	s=korg; t=1795022341;
+	bh=7iHz45AofdMUq9C+acf8OQtIXwUf+KqfcH/a0Z7fCSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E3nzpodpPqpnlFwyEsP1RcZcGeBavwXuJtB08dQhT/xKFxEQo+nwWe6R0eXoKHaQB
-	 rkesEEiwr9AskSQqcoFL2JnCbkpIWDqyr4aFYThLpcNaDym3GKHkz020NkfMmg2HaR
-	 ZuPMb39o/nAxheXPSZacIIVqFE6lqi7exoqv9Khg=
+	b=WvbfRtGGyNH2pn0kEl8j6fI4UO4N2E721WKNlBh1UcG+18OQmCeMnvsMeBef5wqD5
+	 8hwXI7b9ChlIrY4KFKEa3jN6rfnFTnh4zpzxyM6hpee+E87WbaAASpwxZyxdK/aY2A
+	 Vpsan6O1sc/0RMHtwZ+I1QBZXkiqEx5FmNT0lJ9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2586/2651] blk-mq: quiesce a queue that joins a quiesced tag set
-Date: Wed, 18 Nov 2026 16:03:46 +0100
-Message-ID: <20261118150417.400295872@linuxfoundation.org>
+Subject: [PATCH 7.3 2587/2651] blk-mq: exit the hctxs of a queue under tag_list_lock
+Date: Wed, 18 Nov 2026 16:03:47 +0100
+Message-ID: <20261118150417.428821517@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,127 +70,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 71ec3c7d6db80737b781d2739d1325b7e39758e1 ]
+[ Upstream commit 89a2381482d8ff8e4fe0b7d32797bb4f77503b89 ]
 
-blk_mq_quiesce_tagset() only quiesces the queues on the list at that
-moment. A queue added before blk_mq_unquiesce_tagset() runs unquiesced,
-and then gets unquiesced without ever having been quiesced, which trips
-the warning in blk_mq_unquiesce_queue(). NVMe gets there when a
-controller fails while its namespaces are being scanned.
+blk_mq_update_nr_hw_queues() exits and replaces the hctxs of every queue
+on set->tag_list under tag_list_lock. blk_mq_exit_queue() exits its
+hctxs without the lock and only then takes the queue off the list, so an
+update running at the same time exits them again and sets up new ones
+that nobody exits. del_gendisk() is kept away by update_nr_hwq_lock,
+disk_release() of a never added disk and blk_mq_destroy_queue() are not,
+and nvme_alloc_ns() drops such a disk when it finds the queues frozen by
+a reset.
 
-Count the quiesce calls in the tag set and quiesce a joining queue that
-many times, under a spinlock that also serializes the two functions. It
-can't be tag_list_lock, see commit 59e25ef2b413.
+Hold tag_list_lock for both steps.
 
-Fixes: 414dd48e882c ("blk-mq: add tagset quiesce interface")
+Fixes: 630ef623ed26 ("blk-mq: Swap two calls in blk_mq_exit_queue()")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-37-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-38-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c         | 22 ++++++++++++++++++++++
- include/linux/blk-mq.h |  6 ++++++
- 2 files changed, 28 insertions(+)
+ block/blk-mq.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index bff51cb759fce..8daaec930b076 100644
+index 8daaec930b076..01008b7e4401e 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -336,12 +336,15 @@ void blk_mq_quiesce_tagset(struct blk_mq_tag_set *set)
+@@ -4339,7 +4339,8 @@ static void blk_mq_del_queue_tag_set(struct request_queue *q)
  {
- 	struct request_queue *q;
+ 	struct blk_mq_tag_set *set = q->tag_set;
  
-+	spin_lock(&set->quiesce_lock);
-+	set->quiesce_depth++;
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(q, &set->tag_list, tag_set_list) {
- 		if (!blk_queue_skip_tagset_quiesce(q))
- 			blk_mq_quiesce_queue_nowait(q);
+-	mutex_lock(&set->tag_list_lock);
++	lockdep_assert_held(&set->tag_list_lock);
++
+ 	list_del_rcu(&q->tag_set_list);
+ 	if (list_is_singular(&set->tag_list)) {
+ 		/* just transitioned to unshared */
+@@ -4347,7 +4348,6 @@ static void blk_mq_del_queue_tag_set(struct request_queue *q)
+ 		/* update existing queue */
+ 		blk_mq_update_tag_set_shared(set, false);
  	}
- 	rcu_read_unlock();
-+	spin_unlock(&set->quiesce_lock);
- 
- 	blk_mq_wait_quiesce_done(set);
+-	mutex_unlock(&set->tag_list_lock);
  }
-@@ -351,12 +354,16 @@ void blk_mq_unquiesce_tagset(struct blk_mq_tag_set *set)
- {
- 	struct request_queue *q;
  
-+	spin_lock(&set->quiesce_lock);
-+	if (set->quiesce_depth)
-+		set->quiesce_depth--;
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(q, &set->tag_list, tag_set_list) {
- 		if (!blk_queue_skip_tagset_quiesce(q))
- 			blk_mq_unquiesce_queue(q);
- 	}
- 	rcu_read_unlock();
-+	spin_unlock(&set->quiesce_lock);
- }
- EXPORT_SYMBOL_GPL(blk_mq_unquiesce_tagset);
- 
-@@ -4346,6 +4353,8 @@ static void blk_mq_del_queue_tag_set(struct request_queue *q)
  static void blk_mq_add_queue_tag_set(struct blk_mq_tag_set *set,
- 				     struct request_queue *q)
+@@ -4711,10 +4711,16 @@ void blk_mq_exit_queue(struct request_queue *q)
  {
-+	unsigned int i;
-+
- 	mutex_lock(&set->tag_list_lock);
+ 	struct blk_mq_tag_set *set = q->tag_set;
  
- 	/*
-@@ -4359,7 +4368,18 @@ static void blk_mq_add_queue_tag_set(struct blk_mq_tag_set *set,
- 	}
- 	if (set->flags & BLK_MQ_F_TAG_QUEUE_SHARED)
- 		queue_set_hctx_shared(q, true);
-+
 +	/*
-+	 * A queue that joins a quiesced tag set is quiesced like the others,
-+	 * and blk_mq_unquiesce_tagset() finds what it is going to undo.
++	 * As long as the queue is on set->tag_list, its hctxs belong to
++	 * blk_mq_update_nr_hw_queues() as well, which exits and replaces them.
 +	 */
-+	spin_lock(&set->quiesce_lock);
- 	list_add_tail_rcu(&q->tag_set_list, &set->tag_list);
-+	if (!blk_queue_skip_tagset_quiesce(q)) {
-+		for (i = 0; i < set->quiesce_depth; i++)
-+			blk_mq_quiesce_queue_nowait(q);
-+	}
-+	spin_unlock(&set->quiesce_lock);
- 
- 	mutex_unlock(&set->tag_list_lock);
++	mutex_lock(&set->tag_list_lock);
+ 	/* Checks hctx->flags & BLK_MQ_F_TAG_QUEUE_SHARED. */
+ 	blk_mq_exit_hw_queues(q, set, set->nr_hw_queues);
+ 	/* May clear BLK_MQ_F_TAG_QUEUE_SHARED in hctx->flags. */
+ 	blk_mq_del_queue_tag_set(q);
++	mutex_unlock(&set->tag_list_lock);
  }
-@@ -4928,6 +4948,8 @@ int blk_mq_alloc_tag_set(struct blk_mq_tag_set *set)
  
- 	mutex_init(&set->tag_list_lock);
- 	INIT_LIST_HEAD(&set->tag_list);
-+	spin_lock_init(&set->quiesce_lock);
-+	set->quiesce_depth = 0;
- 
- 	return 0;
- 
-diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
-index 5e130b282b42f..aa3b35405edc2 100644
---- a/include/linux/blk-mq.h
-+++ b/include/linux/blk-mq.h
-@@ -523,6 +523,10 @@ enum hctx_type {
-  * @tag_list_lock: Serializes tag_list accesses.
-  * @tag_list:	   List of the request queues that use this tag set. See also
-  *		   request_queue.tag_set_list.
-+ * @quiesce_lock:  Serializes blk_mq_[un]quiesce_tagset() against each other
-+ *		   and against a request queue being added to @tag_list.
-+ * @quiesce_depth: How often blk_mq_quiesce_tagset() has been called without
-+ *		   blk_mq_unquiesce_tagset().
-  * @srcu:	   Use as lock when type of the request queue is blocking
-  *		   (BLK_MQ_F_BLOCKING).
-  * @update_nr_hwq_lock:
-@@ -548,6 +552,8 @@ struct blk_mq_tag_set {
- 
- 	struct mutex		tag_list_lock;
- 	struct list_head	tag_list;
-+	spinlock_t		quiesce_lock;
-+	unsigned int		quiesce_depth;
- 	struct srcu_struct	*srcu;
- 
- 	struct rw_semaphore	update_nr_hwq_lock;
+ static int __blk_mq_alloc_rq_maps(struct blk_mq_tag_set *set)
 -- 
 2.53.0
 
