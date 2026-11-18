@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015950;
-	b=a5R7h6rQyyJFuueg4gWZ66t8bPhsaLKWFl+YKFLusdAraSoRKbK5igg+6DakV63DxUDr
-	 vBFVnScGW5FOAZYu3Oq3qSNT3JvQupeeHY+JFu+KTW5gwARMyD1B5Bd7fBv+a4+Jrrp3Y
-	 ObgQumrO1KdfWd+R44WbNjzOqItyHGDH1s8k/ahINDw8lkdnt6VR/06SUVZ/qjtVSt+3q
-	 448d+0LJ4tpB4bvJI1FEOl4BiNs+2ckWr6QKGPkK5B0m29GL20KLzimFf+3+wfX6NjB2t
-	 Ev1SokezwTQFqKNY6Lq3ID58y61t2qi7ddkrDrhn412Liu4koHxHrAjVjsBOc71FyYA==
+	t=1795015952;
+	b=HtLCSI5oGs1XCNoWQTg4t8D8bmH1lwJUFEPyMdGlhD+yzx9Cv/EuWAnpfVXhxv34puiE
+	 LprSXAB7ENx4dbHMGbRfV2QpC3MBRx1DuBOstWQWuYC9oROk+Xhr2+p3KcBCnesjRsHUs
+	 0b00rK3T2U3KrmE1F8adatxsmJwxyrdEUUjITixsRZDRslnWgoKQvkIPMvDt6Irmh17B7
+	 ZVM9BvWLVOW1HV9+smMaDfOt31mNiZ0fyKOLNfvC0vWLvXyxkNNLyIBdfJ+qdvFU+CyZP
+	 I4pGVlc0A0UM0pfJ2ITSYusGu1IewiuzxFkdE7CfhGeTokju1NjkkDPD/xa1JcwhPxQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015950;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015952;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YoJQdLYMQZjx98X8+P1ETRHqOtKdYCF7nOrC6EjxpBM=;
-	b=QSnJLDuID+hOhrcLtJRQRdwIievYPWRl5fZJ/VxnrsVRva5gsuLejreAv0G92lFHZvm0
-	 CnzwvPVK8a6LKOghb3sXXEJtyOqaq/ProFi5HPSUfhivSFcDNrwxPfHed8a/UxSpPvJbs
-	 62GJ6nwqf2x6RB750GMo7i22pgpvgd2yPkX9ZlX3SMmGCA98WyEw46XXDV3czRygriMAi
-	 cZvFaWiTqtds+WFYsriG19AY8pOG7BAbfnRddRZB8fA/z0eMovVHr5DDWpX5FOfV4YnVj
-	 HZbZKciWYBoykojbMJ6b8iPqonsJIWq6GSw5LvZmZZJ0B21OG15WPiwy2I7L9q4V6Nw==
+	bh=ajGODVy4P8ZnMxB70JZfbVhoKTVEn+tWoVA6VeBVUxg=;
+	b=Fm3HBmeEBPBKm+scQKMtNTh87Nc17Zm4fu9EHPQS6zv1l5OtNZrKoC6ZMNPLmd6uYexr
+	 uX/hZ2A6bsWNTNUtMs18QWjVSac8Z3lWu9xN1uwHXpMJvZ2aWexDkqGHWC+hRxeqc4DjB
+	 YFUPDuXrBaXdaQZH1mraprTbA5LVWdBiDip3zNHAiIlidGCxYmBetVcX5mFfjQ9vAz0F6
+	 JIk44sfIMjmhooKQ/nqGW3zrG18uzVjJXQdFVgrpBHn2avb6jQjzB5Fchj0k6xrA+DBI0
+	 tnBrf7gOJWLbdfe+k0vTZMxH502T6oM6uFE4wU7Dzsj+tpho4zTMxZLGh//Mqe7yPdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UV07UQao;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBRhWhv3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CDA606A330;
-	Wed, 18 Nov 2026 15:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD88606A32F;
+	Wed, 18 Nov 2026 15:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UV07UQao
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4464F1F000C4;
-	Wed, 18 Nov 2026 15:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBRhWhv3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116EF1F000C5;
+	Wed, 18 Nov 2026 15:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015949;
-	bh=YoJQdLYMQZjx98X8+P1ETRHqOtKdYCF7nOrC6EjxpBM=;
+	s=korg; t=1795015952;
+	bh=ajGODVy4P8ZnMxB70JZfbVhoKTVEn+tWoVA6VeBVUxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UV07UQao0LOXjVyWb4XCmqxlpL2a7J/hXYQ+x1qxxcvOFGUp+zPgvH3G3gp3W/6ae
-	 KRnQ/joQ3jWa/RDRPgjhEamE7hOIrLv+QlhPC271C8giowaNm3gdT66AFCRu0pDTG+
-	 cQROd2gZspfvrtBR6pG+9nf/j1zAE/y7VYnLrWkI=
+	b=HBRhWhv37T+4i5eZfnPS0gXkWlB8rdWCkgRK6YdNQwGqZIq5urfvpRfh/LpC1zqd9
+	 VWcwxIeV9mfnGg1z4GgbivOKmUZK96FBDzyf3/Eb2ua0ZjfBAaPeLDwkp+baFagP1L
+	 NZ8jr3YEzDcjEoL2BMZaZguuZ7p29RMRpDbAO6QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	syzbot+5f4b29d9fe710a964482@syzkaller.appspotmail.com,
+	"Jiangong.Han" <jiangong.han@windriver.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0338/2651] scsi: mpi3mr: Fix target device reference leak in device removal handshake
-Date: Wed, 18 Nov 2026 15:26:18 +0100
-Message-ID: <20261118150300.020241058@linuxfoundation.org>
+Subject: [PATCH 7.3 0356/2651] USB: usbmon: fix null-ptr-deref in mon_bus_remove() when mon_bus_init() fails
+Date: Wed, 18 Nov 2026 15:26:36 +0100
+Message-ID: <20261118150300.653290280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,38 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Jiangong.Han <jiangong.han@windriver.com>
 
-[ Upstream commit a04b0f3a17e32aa449fd896163a7b40efc29c4f5 ]
+[ Upstream commit 0c6cae0f56239e3274b30dbe5b362cd297ccacc7 ]
 
-The device removal handshake looks up the target device to update its state
-but never drops the reference that the lookup takes.
+When mon_bus_init() fails to allocate the mon_bus struct, it returns
+without setting ubus->mon_bus, so mbus->mon_bus remains NULL.
+mon_bus_add() intentionally ignores this failure because the USB core
+does not require monitoring to be established for normal operation.
+However, when the HCD is later removed, usb_remove_hcd() fires the
+USB_BUS_REMOVE notifier which calls mon_bus_remove(), it dereferences
+ubus->mon_bus without checking for NULL, causing a null-ptr deference.
 
-Drop it once the state has been updated.
+Fix this by adding a NULL check for mbus at the top of mon_bus_remove().
+If mon_bus_init() failed, ubus->mon_bus is NULL, meaning the bus was
+never tracked by the monitor, so there is nothing to clean up and
+returning early is correct.
 
-Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://patch.msgid.link/20260825210411.301535-10-chandrakanth.patil@broadcom.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Reported-by: syzbot+5f4b29d9fe710a964482@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5f4b29d9fe710a964482
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jiangong.Han <jiangong.han@windriver.com>
+Link: https://patch.msgid.link/20260801095128.46322-1-jiangong.han@windriver.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c | 3 +++
+ drivers/usb/mon/mon_main.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
-index f146c1b7bf8d5..6cfec6ae82f22 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2561,6 +2561,9 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3mr_ioc *mrioc, u16 handle,
- 		tgtdev->state = MPI3MR_DEV_REMOVE_HS_STARTED;
- 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
+diff --git a/drivers/usb/mon/mon_main.c b/drivers/usb/mon/mon_main.c
+index e4fff194fea05..600c9de84c7e1 100644
+--- a/drivers/usb/mon/mon_main.c
++++ b/drivers/usb/mon/mon_main.c
+@@ -199,6 +199,9 @@ static void mon_bus_remove(struct usb_bus *ubus)
+ {
+ 	struct mon_bus *mbus = ubus->mon_bus;
  
-+	if (tgtdev)
-+		mpi3mr_tgtdev_put(tgtdev);
++	if (mbus == NULL)
++		return;
 +
- 	if (drv_cmd)
- 		goto issue_cmd;
- 	do {
+ 	mutex_lock(&mon_lock);
+ 	list_del(&mbus->bus_link);
+ 	if (mbus->text_inited)
 -- 
 2.53.0
 
