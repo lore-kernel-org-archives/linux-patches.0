@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034576;
-	b=hKOOvQExpaFQK65IxG4nS2EoGCRcadqzg199PG/5KTK6Zu2XzskQi4rWbtR63HLAuzf8
-	 Vo5LYGqvzh4JugVR5tM9V/W6Eqk6LjR0vCDklIUC4WZFugJ4Kk/CPQAR5jNnP0cbezV/i
-	 SbZ/fxiqA5jDo3t7vxsLtGC+tPvE6dgsjpupK/+5kWPDEycj5FzWWd6RqE8CmCs3560+D
-	 QYFnmjhgm6vXVyS5VFUiuhKcHwV4B8LrpObKHTtCmQrc8koQkKHvUab4hl41cQ2lmcQPP
-	 btUsAxu+aSjHCyZQPsVxNeUjs0IMMe94saedsCP9nxJ9ASG4FtVruMakrq9PW94i0yQ==
+	t=1795034580;
+	b=Thju9PoQ3bAuBWKZHag8aAe0GbpQ974ac5N+pGqoVLyANveaz1vpmVVM1scd2bu0Xhs+
+	 EcaaakDtZ17aRPaxBt6se0zvgRFYGWqB0YS+V17Tl6xnEpOHe6OfMdMutUzYMPp2T21Bw
+	 w+toA82zc45jmIpuOaY2tDna9YDROSUwDA6rSMbBNXjag+hqa7NAGyU4AiJBtyvMOkhvA
+	 kPN9Eyoba8P9NgoZfPGODvPFsSfKcpuv0TtVQ73tDLYVyHtaa/FPSnLCcLPmGwLhCbpEl
+	 pcMVogIRggR+FpQ41dkyRX1yPX2qUhGctdOZTCmyjIb2QqOzUhnis5YU6uLGv/uVBKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034576;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=3sTd2gyxANcj01ExN+ccoS8kHeF/MdtvcDDOSB5i9kY=;
-	b=xAiBA5B9ae4g+x8O0afEPMfAGDlNvMNCsad/wd5PlCavlpWvKw8k+XBjar6wIu7tkyG8
-	 3McW7hJROr203TPOfdXDBM67x55TLL7uJI6iKLnbzoT51NGzsGbLP7GToZFiMEDSLFtn8
-	 MlEqPjn41oxyf8Ys9ky2CwQYHYr0dXDHmHV/N0902qHByvglj6wc5t7RZUMH8TdyeCaBP
-	 NAaoY1W88EkCewHy4T/VW+ZE5w6ETd8zoYJIe8LPb78kZrFz85oycQ7ctVpygYdB3b33f
-	 SGUPidvOkSc03IHShgF5JMXvjeFftJ5pXT2IaILuFYqoEXR2ltXhKdggOKm3T+4K9iQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=kINscQXQa/q5JVUNrUF71rpJGfQVP8biHu74uWLy2fA=;
+	b=AjPwr+q4li10IQHU8upo7Fal2a8pjV4F8h/ElLWcv5OWWFkhmnsNT/GYPfSuWZri3tLZ
+	 cG9hJPPfCl0b+NNFGMoEoyuJn4+VqTbX/wXlq6GOKLKzpLD7AWd50Xha59NwP/9QUEoFh
+	 efiKiswp0UVtgk3uwwkqq414Pv6Cmxt00PWgXCjkhKlO7YkHCyB7mfKtxrbsjUwi7hyVx
+	 tN9iS4cF868RtCV5IhjoIzVS++BlgvR5SpczitD5ZBDmZ4q3JzQmu/Nqa7qylMj+7uhx/
+	 AzeIoCgm8IMTtaEmK/XrRXGLGWm4MED8OHsrRo2n8yBOdKJLFsFFGQ2jtbJf7R50wnw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pwxZS/xb";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SwjE6f9g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB185606A320;
-	Wed, 18 Nov 2026 20:42:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7AE606A31C;
+	Wed, 18 Nov 2026 20:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pwxZS/xb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B4B1F000C4;
-	Wed, 18 Nov 2026 20:42:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SwjE6f9g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E082B1F000C4;
+	Wed, 18 Nov 2026 20:42:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034576;
-	bh=3sTd2gyxANcj01ExN+ccoS8kHeF/MdtvcDDOSB5i9kY=;
+	s=korg; t=1795034579;
+	bh=kINscQXQa/q5JVUNrUF71rpJGfQVP8biHu74uWLy2fA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pwxZS/xby6yJySgR8YcZ09/0bl4GLgDT6PHIhnWE6BusIHlZDoApd0q21KSkY6jI8
-	 r0lpexGwU5OADyq+gmPWkKiwTKr1dQVYZPX2mu8pWGcBCky7c2USqoeYaCfDb9CWO8
-	 PQw7ZvDgQZcvw3z0su89n4bCLhM5WF6Ro5d50SMM=
+	b=SwjE6f9g2cU4ucFoRBbi7x58dLPfZ47mQ47URl0OenSFWocqt55/l3RF6U2LipTJn
+	 66EVgxHzF1+XPqgyhJmiScJPaxsSGDW5c3pnr0x5kxL63iVl0XWocN+jnYb+BRV54G
+	 j4QmwkJ/WeG/X20mY3zxmJ+Qx3EhS9ZpjpcI5eig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Pankaj Gupta <pankaj.gupta@amd.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0382/3318] KVM: SEV: Drop FOLL_WRITE for encrypted region registration
-Date: Wed, 18 Nov 2026 15:16:44 +0100
-Message-ID: <20261118150327.729105426@linuxfoundation.org>
+Subject: [PATCH 6.6 0418/3318] platform/x86: think-lmi: Fix certificate thumbprint sysfs output
+Date: Wed, 18 Nov 2026 15:17:20 +0100
+Message-ID: <20261118150329.087299308@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -64,72 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pankaj Gupta <pankaj.gupta@amd.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit ee1a586dd1fa2f245b3b753a3e44d9263a49240b ]
+[ Upstream commit 4f3183f5ae9b8ddfe338d79a96146a05342bbe50 ]
 
-When pinning SEV guest memory, drop FOLL_WRITE and rely on FOLL_LONGTERM
-to break CoW, as *KVM* doesn't actually to the memory using the GUP'd
-pages.  Omitting FOLL_WRITE fixes a regression when using file-backed guest
-memory that was introduced when KVM (correctly) added FOLL_LONG (e.g. to
-ensure anonymous memory is migrated out of MIGRATE_CMA/ZONE_MOVABLE before
-a long term pin).
+cert_thumbprint() already returns the accumulated output length, but
+certificate_thumbprint_show() adds that value to count again, making the
+next line use the wrong offset. Errors returned by cert_thumbprint() are
+also ignored and their negative values added to count.
 
-Unfortunately, as of commits:
+Assign the total length to count instead and propagate errors correctly.
 
-  8ac268436e6d ("mm/gup: disallow FOLL_LONGTERM GUP-nonfast writing to file-backed mappings")
-  a6e79df92e4a ("mm/gup: disallow FOLL_LONGTERM GUP-fast writing to file-backed mappings")
-
-GUP uses FOLL_LONGTERM as a canary of sorts to detect pins that are likely
-to be problematic, and disallows WRITE+LONGTERM pins for file-backed memory.
-As a result, backing SEV+ guests with file-backed memory, e.g. virtio-pmem,
-fails due to the disallowed FOLL_LONGTERM+FOLL_WRITE combination.
-
-Note, in the past, FOLL_WRITE was required to trigger CoW unsharing, to
-prevent replacing the page in the (primary MMU's) page tables during a
-later write fault after already having pinned a (shared) page in
-MAP_PRIVATE mappings.  FOLL_LONGTERM does that nowadays, even without
-FOLL_WRITE (see gup_must_unshare()).
-
-Fixes: 7e066cb9b71a ("KVM: SEV: Use long-term pin when registering encrypted memory regions")
+Fixes: b49f72e7f96d ("platform/x86: think-lmi: Certificate authentication support")
 Cc: stable@vger.kernel.org
-Suggested-by: "David Hildenbrand (Arm)" <david@kernel.org>
-Link: https://lore.kernel.org/all/ad784f05-b36c-4e91-9f17-4c5b826735d0@kernel.org/
-Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Link: https://patch.msgid.link/20260715063626.65899-1-pankaj.gupta@amd.com
-[sean: massage changelog, add comment about CoW unsharing]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://patch.msgid.link/20260810120556.149416-2-thorsten.blum@linux.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/sev.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/platform/x86/think-lmi.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/sev.c b/arch/x86/kvm/svm/sev.c
-index 75bd73f205ab6..a0f3309c28fa6 100644
---- a/arch/x86/kvm/svm/sev.c
-+++ b/arch/x86/kvm/svm/sev.c
-@@ -2000,8 +2000,12 @@ int sev_mem_enc_register_region(struct kvm *kvm,
- 	if (!region)
- 		return -ENOMEM;
+diff --git a/drivers/platform/x86/think-lmi.c b/drivers/platform/x86/think-lmi.c
+index d5319b4637e18..866c09f415e2a 100644
+--- a/drivers/platform/x86/think-lmi.c
++++ b/drivers/platform/x86/think-lmi.c
+@@ -680,9 +680,15 @@ static ssize_t certificate_thumbprint_show(struct kobject *kobj, struct kobj_att
+ 	if (!tlmi_priv.certificate_support || !setting->cert_installed)
+ 		return -EOPNOTSUPP;
  
-+	/*
-+	 * Do NOT specify FOLL_WRITE, as KVM isn't using the pinned pages to
-+	 * write memory, and FOLL_LONGTERM itself triggers CoW unshare.
-+	 */
- 	region->pages = sev_pin_memory(kvm, range->addr, range->size, &region->npages,
--				       FOLL_WRITE | FOLL_LONGTERM);
-+				       FOLL_LONGTERM);
- 	if (IS_ERR(region->pages)) {
- 		ret = PTR_ERR(region->pages);
- 		goto e_free;
+-	count += cert_thumbprint(buf, "Md5", count);
+-	count += cert_thumbprint(buf, "Sha1", count);
+-	count += cert_thumbprint(buf, "Sha256", count);
++	count = cert_thumbprint(buf, "Md5", count);
++	if (count < 0)
++		return count;
++	count = cert_thumbprint(buf, "Sha1", count);
++	if (count < 0)
++		return count;
++	count = cert_thumbprint(buf, "Sha256", count);
++	if (count < 0)
++		return count;
+ 	return count;
+ }
+ 
 -- 
 2.53.0
 
