@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056491;
-	b=FdHLYN/YjpuNEx3aG6Nhohnmg2ohMbeWxq1SYzfjhVqQ1F8IQII3BTaxpLW81vWsjHGv
-	 SlteZFDZQ20JXiN9mDLGY0BLcYsCDOyyfCi79Cz5pH6srY5MYUV/m9IQhSybnTvDEwv1/
-	 So/iamjKu2FzuzgNMSlx1DiGlrVD5nfUFrzzMKrH6Ajruesi8//5ATMMUUZUiMxf3PT3a
-	 3goDajECCF4EeKLfVHXlilhv4vXrx+6Yw8xpSKNJMjRYIcKSr0Iljf58K8IZytVqXGD3d
-	 MoVX/RBa8GOjFZdTEBLY2XfD2czaa5s34IWTHCNhIdby3bkfyHl/McWDDcVLDLXh/9A==
+	t=1795056493;
+	b=i3T60pTGlUWsAyiAR7ZVFTexXTeogNqrM9lMkxwilzhLzQnTN0XBv8c33xktOUtd6SdD
+	 s7UQGTYyts1r7Ibw34UM1/Hr9SXsCmddEhpmfi52WIionFjg0bvaZZIH2tnbIzU9ya6Xe
+	 gK3KX09Qcxr9BC2dBaiRiRu7JhzQo9LAcHY9jlTiUGrrJYkX0Won03teiTzzkmkZPeKls
+	 QFJPIpi3sJjgmxnubcPacXWxsJ2tl0xEOQ6U5gqY6Z16nbnLFXoQGkLtlXwDCyKrEDHP3
+	 QRhOt4Mc8Og9HDzdxQx5E+1xpodQeBtUpn7lQQ1nDFKW54K76LQGSP1jrMx/n3CRpGw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056491;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wZOFFerVDKjJRlvZx8HR3J6CSSzHiPp4ifIykKV9K28=;
-	b=ewD4TaOc/AaKRy3KtPEuACoyKl0bo1xplWFDE6DNKLIzyS8iNhd6OmD9GobhrGWIxd4/
-	 OAEgIIS0DebK4x5TjCetUlSfaaDj4CFWGS09v80r83nnmVrHmcH1PGbYoPOAOkPZyPdM+
-	 3Vrw5E6cimbcfSAQkU1Y8Y1PLfQLPl4B+nPOs0Y3Jthh1jFeLlbxv1TMbKnGjwDE4U8hQ
-	 mK6Ks96mElQrUw/aH8XXO4dx+dpg94/ba57JWpxP848vBxu1oIHh66hek09xNQTdMcJq0
-	 ztNJT7Axzc3Nci8y9ryfWILcqNzpjCsD0B+gs+AJjeEzd1thm/8JSTe4XEBffm5RCPw==
+	bh=3Bc+2AGFa8e+nd8MG2dKQIlj8Ek+hbAur1VOk4bTmak=;
+	b=VlSgIciN7IogHdFnZ+mw+uyoAiqxSx2huhtu5LV/V01mX6gW2OXEf2cNoOk06FkvU8Uk
+	 bx1jPUcv5Jtz4hOCeF6hQFSit3d3qxInrjNIYBJXWdSjBis4q14Plhyx6v7bsxP12Dki0
+	 bPz2xUQPxgGH9225rcSrq33upYxCG1byaNr/o3wDKE6mT6f1YVmQD8JNSEepaxT8rWQke
+	 2uRthVKjrSgZXpRNsTks+fvoHGKDjAwQH+MAXH1jMsf2/KftgVpo28uWtY3EBR7fEtNrv
+	 iLKCSgzZcjanbBGJlifWT05+R4OvJEgYoo7M40JGaC3jsYrzYVT6vvU3mh3ahWzVHAw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SgoCXJb6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJ6ujd3t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12954606A32C;
-	Thu, 19 Nov 2026 02:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D35B60A2609;
+	Thu, 19 Nov 2026 02:48:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SgoCXJb6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1CA1F000C6;
-	Thu, 19 Nov 2026 02:48:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJ6ujd3t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68E11F000C5;
+	Thu, 19 Nov 2026 02:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056490;
-	bh=wZOFFerVDKjJRlvZx8HR3J6CSSzHiPp4ifIykKV9K28=;
+	s=korg; t=1795056493;
+	bh=3Bc+2AGFa8e+nd8MG2dKQIlj8Ek+hbAur1VOk4bTmak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SgoCXJb6SuGYODXOg/VPVjkN61cMJS46BJDZCozM26tPkClHRVE9t9g++0zc+RzOc
-	 NugHYBY/QpAEKI8AWfTTtiB+8jFyRSm+E9iYlQzgUOnlbw9AJkzppROzcBLt3Y6wIJ
-	 9UQ6a4zosXqDNe/3Jun+rYlT+dThdFYs6r7uzQh0=
+	b=eJ6ujd3tiIZq1eOyRaNt8TBO0YOXF9VhQ518mFMSTiB+oVpwTkbWnFlxy68yD9xJD
+	 5GuWpzXbOBH/Ec9CgycNEcnY1FGWzr2XrFw4xddKCfqd2oS70ePwLYEO//w+Ubnhj8
+	 YlTiSeaSWCocb28cRrXs0DBWwS1VkpBpOCFE+zyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tao Cui <cuitao@kylinos.cn>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Yang Li <yang.lee@linux.alibaba.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2008/2214] blk-iocost: charge zone appends as writes
-Date: Wed, 18 Nov 2026 16:01:24 +0100
-Message-ID: <20261118150131.080026585@linuxfoundation.org>
+Subject: [PATCH 5.15 1991/2214] ASoC: mediatek: mt8195: Remove unnecessary print function dev_err()
+Date: Wed, 18 Nov 2026 16:01:07 +0100
+Message-ID: <20261118150130.475473647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,40 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tao Cui <cuitao@kylinos.cn>
+From: Yang Li <yang.lee@linux.alibaba.com>
 
-[ Upstream commit febdbf5682fa7e8f325b07a2c115e7632c4252bd ]
+[ Upstream commit 7d642c9c14b6fae0c05b91a92a86fae6674a2126 ]
 
-Zone append is a primary write operation for zoned devices; zoned xfs
-and btrfs use it for data writes.  It is priced at zero, so the zone
-append portion of zoned workloads runs outside the controller: a
-1%-weight cgroup issued 16000 appends at zero cost on a zoned null_blk.
+The print function dev_err() is redundant because platform_get_irq()
+already prints an error.
 
-Treat REQ_OP_ZONE_APPEND the same as REQ_OP_WRITE so it goes through
-the existing seq/rand classification and charging.
+Eliminate the follow coccicheck warning:
+./sound/soc/mediatek/mt8195/mt8195-afe-pcm.c:3126:2-9: line 3126 is
+redundant because platform_get_irq() already prints an error
 
-Fixes: 0512a75b98f8 ("block: Introduce REQ_OP_ZONE_APPEND")
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20260922043856.2020116-3-cui.tao@linux.dev
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20220224011046.76904-1-yang.lee@linux.alibaba.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 9d5dedb285fb ("ASoC: mediatek: mt8195: Propagate IRQ lookup errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index eb19e92e8e5bc..0206fc577e84a 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -2537,6 +2537,7 @@ static void calc_vtime_cost_builtin(struct bio *bio, struct ioc_gq *iocg,
- 		coef_randio	= ioc->params.lcoefs[LCOEF_RRANDIO];
- 		coef_page	= ioc->params.lcoefs[LCOEF_RPAGE];
- 		break;
-+	case REQ_OP_ZONE_APPEND:
- 	case REQ_OP_WRITE:
- 		coef_seqio	= ioc->params.lcoefs[LCOEF_WSEQIO];
- 		coef_randio	= ioc->params.lcoefs[LCOEF_WRANDIO];
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+index 4558c1059433c..f894e74317756 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+@@ -3167,10 +3167,8 @@ static int mt8195_afe_pcm_dev_probe(struct platform_device *pdev)
+ 
+ 	/* request irq */
+ 	irq_id = platform_get_irq(pdev, 0);
+-	if (irq_id < 0) {
+-		dev_err(dev, "%s no irq found\n", dev->of_node->name);
++	if (irq_id < 0)
+ 		return -ENXIO;
+-	}
+ 
+ 	ret = devm_request_irq(dev, irq_id, mt8195_afe_irq_handler,
+ 			       IRQF_TRIGGER_NONE, "asys-isr", (void *)afe);
 -- 
 2.53.0
 
