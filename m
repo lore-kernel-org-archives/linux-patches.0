@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058601;
-	b=NMDub8I+5+Uu6+hIBDeWWmRy5xXnxLcblzys1VtDxSX5VZzSFZ4rxayoEhJQ2KGpqaIT
-	 WLWZcmDBE4AX+3FKNsO51+vDA2Vcj4wPw+RBjSvlESO/gGbQK7vivUJ41ydb3G5FyOfJp
-	 wdsI7si0yiIENwjB2dW6AQopn3gDR4cRnvPxS6JLikeqJtdgVZTz9NXJUnYDeroX21yDh
-	 AscyUA8/50zYCIrR6mqBtfiTpp7YeRDPNu84BezRLR9asyar75qD5Bid5rzgUNLxVrD68
-	 1oafK5RyqC3RDD0nGI67osP8BZlfS8GSI5U9ivSsWiw+B8Avwg/dxbCfqorllP73slw==
+	t=1795058604;
+	b=xVCCbReu1OBu/xmcoX9Ze5K3GJIfSbfiAjoeQrvKJMLhuIQN3E6DKcQZ2oAWmDFccDlu
+	 F3SUQqHmyWvATS39R0NeXdft69eobCJkjg71cFj3CXYRSFapv//VXeo52NVTliW/vkFgI
+	 4TCqYQWQa0xwKju8gNmc15u9ZAsyBaNwJQyk2OJl724lV+YroUQOqdVS7tD/gVbLKQwUp
+	 y43bHTgxoB71TAY7yfBLKUiORxq8ADgICMUsMBgs0IyyxfDCyMInTHyVpPHJUy9lRebDG
+	 z51LyPpFPX+gl0mSF2B7pzlVbCs673OJjMkZtUcj2ivLF2gA57BmsdN8Nde6fIS8XqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058601;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058604;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=z0F0qABmGVGxokFcyXpDdwOzqL7+/caoYeXkFPC9/GU=;
-	b=ytoWiuWWuCyAC/BJ2PtsnCd3OyGDJAG34RVxv1HAVipfqfm1UU8GC2oDUVOBrKpHikR9
-	 79X8QHHgSMqVC1lhGGq0nWYXMSvjhkuQrufGGrZ2kRrfiA/87YvarErDEJu/4YRozIDSK
-	 /MUJ2dInGe1u6kd5Orj90SEbuJykQk2JU2J5TCOW0GxJZIb+KfRr6Fbb5BeJyWqlPdwEN
-	 qOXQWmZ9AXSA4c1wD50mLCYNweJ+ZlWtQMn+mmznhMx7TsXxhaIBH93wknR/3CgdrmXqz
-	 tNjIzmKxOJbYpgyyouojB+4KYP1scGcORK5Yr2nSgwuD3hx8NGJjPeXpcSfyUxwXm6g==
+	bh=+Lsn37DMEhm9NiG7FF+3iAe+784/8xcYiCp2ZaIflQw=;
+	b=wmMgeZAl/GAeOr/jo6Uf3sib5U4sXnN8okbvT/4xlOQxk7Mv3/R+nubxvEdsxsjFPpxq
+	 XL0HJ9FC+Spu33PH6l205tunuWvXeLajC0zqVY0FBXPeN612zT6vGlVsB7TZB8JV8ZMZ7
+	 YvXmlv0ZpypLpVz6Jf1jA3T2x17qPgxX/0+qJNgbFQRuSFHuj0ryIV4GYv/5a5gKXoYUR
+	 Id/tavLmn+blXaM4tOigfDdfXKJg+X9XakxNpe1A/TJTFn2Mc80fZI0ZJB3zeH9DvIp1Y
+	 GeyW3LOCmwJ5cxb05N42L85JiCOJUFJas33v/LngzjkYlw/EyIorYUy9BbiQnHmgYwQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvI9kH90;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCA2Pz7U;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A28606A325;
-	Thu, 19 Nov 2026 03:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98249606A32C;
+	Thu, 19 Nov 2026 03:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NvI9kH90
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5071F000C4;
-	Thu, 19 Nov 2026 03:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iCA2Pz7U
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97CC1F000C4;
+	Thu, 19 Nov 2026 03:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058601;
-	bh=z0F0qABmGVGxokFcyXpDdwOzqL7+/caoYeXkFPC9/GU=;
+	s=korg; t=1795058604;
+	bh=+Lsn37DMEhm9NiG7FF+3iAe+784/8xcYiCp2ZaIflQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NvI9kH90SJPABR2Ce7CVD1wHPN+HKG/w0MWXQqVpy8Ln+XeKr+Rd00/hdF1p8zejX
-	 ssHplebOOY+pRPGNtYwPsCUF43s/yUB4LJGVTBWW6C71eRoBYiAuabe3UCh4Sr/JLu
-	 o1W1RfqHLB/WESIBRyO3oTW031Rt+RVsX0tkCrX8=
+	b=iCA2Pz7UIHZPE7dhufgxncQ6mP9JET3PJfOZzRHpH26fmfOz6KiveXkKv0f9Hl/nu
+	 uVrDETcuDG/fyizlpAh5zUu5RESlc3a/kkxeawEG1bluoZELWOv1b7+lkDpaqBvnlH
+	 jUBEHVetW66ue0hVz38zYxmK7CnGVyfmtcyC3+qU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (nipa)" <sashiko-bot@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0545/1848] netdevsim: reject cls_bpf programs bound to another device
-Date: Wed, 18 Nov 2026 15:43:03 +0100
-Message-ID: <20261118145937.784029768@linuxfoundation.org>
+Subject: [PATCH 5.10 0546/1848] ALSA: compress: add missing OPEN-state gate to SET_METADATA
+Date: Wed, 18 Nov 2026 15:43:04 +0100
+Message-ID: <20261118145937.826203984@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,82 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 5820ca58b409402505b9e904d1ded4908e0b6b81 ]
+[ Upstream commit 931f5714b7921290cd1a4742e185aeeae7270ee6 ]
 
-The issue:
-nsim_bpf_setup_tc_block_cb() installs any device-bound SCHED_CLS program
-without checking that its offload device matches the target netdev.  The
-core cls_bpf attach path rejects a mismatching program, but a netdev that
-joins a shared block later is replayed the stored filter by
-cls_bpf_reoffload() before it is inserted into block->ports, so the
-attach-time check cannot see it.  The driver callback is the
-authoritative per-device acceptance boundary and must enforce the match
-itself, as nfp already does in nfp_net_bpf_offload().
+snd_compr_set_metadata() calls stream->ops->set_metadata() straight
+after copy_from_user(), without ever checking runtime->state, even
+though the function's own comment says a parameter change should only
+be allowed once the stream has left the OPEN state. Every other
+metadata/param entry point in this file (SET_PARAMS, WRITE, ...)
+enforces that gate.
 
-Without the check, replaying a device-bound program onto a different
-bpf_offload_dev installs it into that device's netdevsim state, which
-trips the WARN in nsim_bpf_uninit() (ns->bpf_offloaded set on a foreign
-device) and can dereference a NULL prog->aux->offload in
-nsim_prog_set_loaded().
+A codec driver's set_metadata callback can assume SET_PARAMS has
+already run and initialised its private state; calling it while the
+stream is still OPEN can operate on that uninitialised state.
 
-The Fix:
-Reject a device-bound program whose offload device does not match the
-target netdev, with -EINVAL and an extack so the rejected replay is not
-silent.  The check is intentionally narrower than nfp's: it fires only
-for a dev-bound program, so nsim's bpf_tc_non_bound_accept mode (which
-admits an unbound program onto the device) is unaffected.  Teardown is
-never blocked: the guard is on the program being installed and an unbind
-passes cls_bpf.prog = NULL.
+Add the OPEN-state check the existing comment already documents.
 
-Conditions to recreate the bug:
-  - CONFIG_NETDEVSIM=y, CONFIG_NET_CLS_BPF=y
-  - load and pin a dev-bound SCHED_CLS program for netdevsim device B
-  - install the program on a shared block owned by B
-  - add an independently backed netdevsim device C to that block; the
-    bind replays the filter to C's callback, and C's
-    ports/0/bpf_offloaded_id takes the B-bound program id.
-
-The reported Sashiko review is at
-https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260809094418.901607-1-jhs@mojatatu.com
-
-Fixes: 31d3ad832948 ("netdevsim: add bpf offload support")
-Reported-by: Sashiko (nipa) <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/netdev/20260809094418.901607-1-jhs@mojatatu.com/
-Link: https://lore.kernel.org/netdev/QDISC-PYC7.v1.20261003103747@mojatatu.com/
+Fixes: 9727b490e543 ("ALSA: compress: add support for gapless playback")
 Cc: stable@vger.kernel.org
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-PYC7.v2.20261010165947-2@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Acked-by: Vinod Koul <vkoul@kernel.org>
+Link: https://patch.msgid.link/20261019144533.30665-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/bpf.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ sound/core/compress_offload.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/netdevsim/bpf.c b/drivers/net/netdevsim/bpf.c
-index 50854265864d1..879ac48027af3 100644
---- a/drivers/net/netdevsim/bpf.c
-+++ b/drivers/net/netdevsim/bpf.c
-@@ -150,6 +150,17 @@ int nsim_bpf_setup_tc_block_cb(enum tc_setup_type type,
- 		return -EOPNOTSUPP;
- 	}
- 
-+	/* A dev-bound program can be replayed here when a netdev joins
-+	 * a shared block, after the core attach-time check has run;
-+	 * enforce the device match as nfp does.
-+	 */
-+	if (prog && bpf_prog_is_dev_bound(prog->aux) &&
-+	    !bpf_offload_dev_match(prog, ns->netdev)) {
-+		NSIM_EA(cls_bpf->common.extack,
-+			"program bound to a different device");
-+		return -EINVAL;
-+	}
+diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
+index 222ea652edf37..d43bfe5623e99 100644
+--- a/sound/core/compress_offload.c
++++ b/sound/core/compress_offload.c
+@@ -674,6 +674,9 @@ snd_compr_set_metadata(struct snd_compr_stream *stream, unsigned long arg)
+ 	* we should allow parameter change only when stream has been
+ 	* opened not in other cases
+ 	*/
++	if (stream->runtime->state == SNDRV_PCM_STATE_OPEN)
++		return -EBADFD;
 +
- 	if (cls_bpf->command != TC_CLSBPF_OFFLOAD)
- 		return -EOPNOTSUPP;
+ 	if (copy_from_user(&metadata, (void __user *)arg, sizeof(metadata)))
+ 		return -EFAULT;
  
 -- 
 2.53.0
