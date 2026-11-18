@@ -1,53 +1,60 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055368;
-	b=cBz2opJB05ij/Ido9vlyZ4DOU3mVmGcgRhaGuVsxI9TGjjPM9AHvTX7wDxujCd9/LS34
-	 W9lPEpvjfok60q7xzc9QP9qkNWosiJDFC1SEZihfx94HDOIAZ10WOD/+HWsXO0/F8kxjj
-	 1kgHe4Vuy5+QijGLTN/tKDU3HO3qEB+6WXOSxaiBaHhKDGMbcSEKkSCiIazZTWcghwPfa
-	 6GoGs8OPIZbxkFtGFgASrajcj2MaCTzsej9AYF1Bu1ulLBs3flJA4Ic7BSyyxHCivY9v4
-	 7xkXqi1k52ZmvYMZEAfIC/anGB8TmLqjZutD2XJhEn9F1ST9E3JLw0qpR/lLPBLWjAQ==
+	t=1795055371;
+	b=NHtHLdTyhxYo7e+69RgI5zDmvV5Bxy094t6DU2dXIBQHp5oqRGbVbHZLFjBwX4gOyf7O
+	 9ckPtjY2epBRhCHVPfAPaINmIUy6lbzfQI0RTsrJ8MvuwAIYkBox03wz6OVqAsZVwga/I
+	 7klKLSqggfchMHXDtuEfWfrwKScwd1jL9RDzbOvzBsWhlvU0ByJzoS/qCClsWr34fEyLb
+	 kPx36XNBZdIsedEuKP0y8vwQBSw8KKKlk922XGnC4x4CrNAuyiP0PaM0ecj68Hj6S7Hm5
+	 0Abj2fb5Mvg5t++Ffl7tRIBC/dSXgcRkzte7iaVbTdhpb0ji3Q0RwjHEayXkOMt34Xg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055368;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055371;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bIGVyF73HEA0QkC3vjqpUM4lKOrA4T4og1/hN1cnS1E=;
-	b=TEdbTw/Mfxf8Q/Tcgn8F2lWMKKuRJwa4NugpGJMGGrwIHFDA+Tz648IuDHRAysAJi5fv
-	 WajrQCRsq1is69iNA/Is1dGDF/xv6QR7kVMhboT8LWMe5Nivgwx9MgV0zw/zbfRen/7Vs
-	 t3bDj3/nmG57wXhLY01I8wV/QKyOR3rrEktu4A0nypFzN6JcYWHRs3P0aj548/bTaRiU/
-	 nhUX6miHrHWf7yOPoL8vymtcylj3dzKRvUphznX5BGzkx2kRFAqvb5I5pwPcJm2ou3A+H
-	 VwycnRufbrg5D40qrwZF8E/R0AQ9uWYbewjsOMzv37EKQhy1PPl22pepVyBjR9v/3ug==
+	bh=qMq/smmi/DX2ga2/vTDA7sG/jaXfyQWkXdXdJlSdReM=;
+	b=Ntin0TJa/mvs7CxL1ngqQJS8oOzVh/reywAmK59je2pH9Ca3ErG35mQxnb1LuCl04q1U
+	 IVkvRCHQrXiT7Po9jLSQjLqEsgFXnC4VNS60H5dIYwweH7gQf4vqnWcC11srH9lvzWhGg
+	 kQ1G3ILgnBEAowqj6US98evoKmoXp5clvHGCN0hCphL5Pc4L8/FGWExCLKtR+y9ndHb1U
+	 zdg285PqRDpDqQw/dKCSw7Gd9Ph2iSYS+ufLcfnpZFKXDQUKPhYpQhD72Mcebmsxep2su
+	 NNNnUGwDWpzkzxXePRqcQSpwsXwLF5q3DssRfdRq2BoQEIn1KK/3DUIZkKmGxVbm84A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhnuTtOt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQr6ahND;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CCD606A33F;
-	Thu, 19 Nov 2026 02:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA45606A33D;
+	Thu, 19 Nov 2026 02:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PhnuTtOt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BDA1F000C4;
-	Thu, 19 Nov 2026 02:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hQr6ahND
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871D61F000C6;
+	Thu, 19 Nov 2026 02:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055368;
-	bh=bIGVyF73HEA0QkC3vjqpUM4lKOrA4T4og1/hN1cnS1E=;
+	s=korg; t=1795055371;
+	bh=qMq/smmi/DX2ga2/vTDA7sG/jaXfyQWkXdXdJlSdReM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PhnuTtOtRzFEkgy+r+9mtaTfAt/FeXKi14w9YOdVjQ4HNxtNddTaqYEqOuasZc4fs
-	 5JMZlzTiYaZ9nzoQLCsOAkztc3e957SphNIzWTosYnyd4qCygA818yVSkqb/uXebnF
-	 aE6/B2jMM5hQkIdQY4atXk/rspZjd0IY1NKOTLOg=
+	b=hQr6ahNDRsJVkAZQXU1EqV/RAQTxsbbU/I7S2Zt3dOHuuXaXWi+gAzMlDUARze6fc
+	 r2Y8rDTN1kv7MyEBqls+Qk5VSfXDVinO73NIjKDqlFw25Bh3oOyFsVH1Bwd/9wWSB6
+	 +5fJOPphiAEoCuk0Wm1F+0/wFUq6QWHUvbmRXGqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Muzaffer Kadir <muzafferkadir@mainlining.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Tianyou Li <tianyou.li@intel.com>,
+	Wangyang Guo <wangyang.guo@intel.com>,
+	Jiebin Sun <jiebin.sun@intel.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Thomas Falcon <thomas.falcon@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1607/2214] dt-bindings: vendor-prefixes: Add General Mobile
-Date: Wed, 18 Nov 2026 15:54:43 +0100
-Message-ID: <20261118150116.229827767@linuxfoundation.org>
+Subject: [PATCH 5.15 1608/2214] perf c2c: Fix documented default coalesce fields
+Date: Wed, 18 Nov 2026 15:54:44 +0100
+Message-ID: <20261118150116.266570908@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,35 +76,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muzaffer Kadir <muzafferkadir@mainlining.org>
+From: Jiebin Sun <jiebin.sun@intel.com>
 
-[ Upstream commit 7034bec693b752bcd7ebb4fa00dc3b429b4dc4f7 ]
+[ Upstream commit b36a6f180baad35a962677ae181681ca60dda35b ]
 
-Add vendor prefix for General Mobile.
-Link: https://www.generalmobile.com
+The default coalesce fields dropped pid in favor of iaddr, but the man
+page still documents the old pid,iaddr default. Update it to match the
+command.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Muzaffer Kadir <muzafferkadir@mainlining.org>
-Link: https://patch.msgid.link/20260921-msm8952-initial-support-v3-6-b96fd3fe298b@mainlining.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Fixes: 423701a0c8d754d9 ("perf c2c: Change the default coalesce setup")
+Reviewed-by: Tianyou Li <tianyou.li@intel.com>
+Reviewed-by: Wangyang Guo <wangyang.guo@intel.com>
+Signed-off-by: Jiebin Sun <jiebin.sun@intel.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Thomas Falcon <thomas.falcon@intel.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/Documentation/perf-c2c.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 9de9c419f043f..c5fabb4692902 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -457,6 +457,8 @@ patternProperties:
-     description: Gemei Digital Technology Co., Ltd.
-   "^gemtek,.*":
-     description: Gemtek Technology Co., Ltd.
-+  "^generalmobile,.*":
-+    description: General Mobile Fzc.
-   "^genesys,.*":
-     description: Genesys Logic, Inc.
-   "^geniatech,.*":
+diff --git a/tools/perf/Documentation/perf-c2c.txt b/tools/perf/Documentation/perf-c2c.txt
+index 3b6a2c84ea027..4db7ed63f06b8 100644
+--- a/tools/perf/Documentation/perf-c2c.txt
++++ b/tools/perf/Documentation/perf-c2c.txt
+@@ -269,7 +269,7 @@ output fields set for cacheline offsets output:
+              Code address, Code symbol, Shared Object, Source line
+   dso   - coalesced by shared object
+ 
+-By default the coalescing is setup with 'pid,iaddr'.
++By default, coalescing uses `iaddr`.
+ 
+ STDIO OUTPUT
+ ------------
 -- 
 2.53.0
 
