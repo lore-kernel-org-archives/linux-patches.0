@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035907;
-	b=grguXKmgLOTe7NN6A6HqmnAqtwzaRjVYYqIoN9Cfi9E4yIOqacZsdLT4tT788eyVQA3D
-	 CHRQk1pOzCyznIs0APfGUexmCkWtHXKfVkxvh/8cVRVri/tncXPUnyCm8qrevsAPdZsw0
-	 wc6dZ77VDcx8k9gyld7ody8UHGLpj7+QEM5/vDglcwR7lFaMWAoSN7LCMkHAy76/vjt/W
-	 31ms8iT1CckmhGCMLBbIHE1OJTTcYE1NSwJG+9AGfkTVmWX4Bo0HNsD/5TYZaQC2+8Cbq
-	 fZGlges1clwSqlQmGHPQcUUhWgD92h31DYPFEbdOP6aPXlWHMBlVU0YQ9MSGa0ThgEg==
+	t=1795035911;
+	b=az41HBPFTyuKok79SlFlJlmH6tNlv0crc2E4SPNquXUztpfVu7li0r5tJ0Qpzwnr+zpp
+	 R08ooe0HglHu69OBhyO8kIDVdduG9cS5UFNI3Er/u7gTj7jYrP7n2iTd2Q5nQq16pOYJu
+	 /OCNKbAoIpkzg9IVUchFcLVCLMAGHIyWxIUqGFLwVYUt8rDVAFhJkPb8/6NYaKwbygpc6
+	 bgdNni1j/6aWbF9yCVdMx/DPI8Iteu1LaBRW7Wxd4S0gDdTJqfZdvbausSNtmuAGgG5PA
+	 O2bsXL4MwICUROg/KOjrV8be6rdOdA7K7/jjYhvX/LDtn0Yf1xZUeSqKISOT/9ibsAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035907;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035911;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=s6MQoj0ThX4U3pz/Eb4HLKqdYxckfbEXwoFAnUgs/fA=;
-	b=5Z0is+Q6Yb0dBhc078wfXsnAe58aWUYVk5rPQjWDp37EKT1QQm0mSr1Hu862XcZL47TJ
-	 a3VCOUZFbjhYCLM5XYO6W+1dxlFBMr2jjAgQuzbayuZTwOSsqlNM+CiSIOtGQW45v9I3K
-	 SjK1aN4B5IJNa+kjTFPRcCujjWRISF9ry+e3+WwfurxPE0JSlD4vcFm5VY17fIAXG56j3
-	 FI6P+54G+UfMXVGmC8EoQQSAN8z2BtRBuiXzTHNFSKu17gX41/BHoS0CqdROHnXYzny7x
-	 XpOZzyT08JycmkLlByslBfZ9lN/A+B/pW5Vtzg4+Mmaov3xbVBNYIOqxkm1fz9fF+iQ==
+	bh=XumF2Rn+ZYiZcVX0lr6Hgfe2M+bY3teyDI5d8bknJfQ=;
+	b=tMXNg0CkzFxxR8oSnKzWE/O0g2x1OB32f2sVwNzs5Qah6QymLEEFUBkMiOqz1YHUeCMZ
+	 pQn8TTG9fLWhbEPMQYyK8/SRM75bWUqfosFincBjxUnZOPpuuQ/Xg7Utw595Xd06VClVh
+	 +gSFXdNg6GeCJtWK2pZXKE3VsiejQh8fpM7iK6CKG/gz/Vkp6JY1ayuElpkPACd5tT31Q
+	 bQMVqC8LgzOL5jxzt/ChG5+UKhc4cXHR1itPD0WqVjGIacc2vvdi1yr0lTyh6XbvJbVZI
+	 2TVVdzuEfGjRn5MksfxvwYwPnnBy6sDKp+iTH5Wwzf4ox204mAEJyRRpcmhqafiskeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qt7gEANr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="keu40u/F";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3096F606A33A;
-	Wed, 18 Nov 2026 21:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DC6606A900;
+	Wed, 18 Nov 2026 21:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qt7gEANr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AC91F000C5;
-	Wed, 18 Nov 2026 21:05:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keu40u/F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A251F000C4;
+	Wed, 18 Nov 2026 21:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035907;
-	bh=s6MQoj0ThX4U3pz/Eb4HLKqdYxckfbEXwoFAnUgs/fA=;
+	s=korg; t=1795035910;
+	bh=XumF2Rn+ZYiZcVX0lr6Hgfe2M+bY3teyDI5d8bknJfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qt7gEANrsJM4m5U1dLGNE42xnOoTQLD7SJiqolQftmuDhTAFcQw7xoYAghljqtAG8
-	 RqM3cCNJheuTnCEXXHO60bfBSPzgkmEF1azNW2D8escG/MqZUZglLn9s/lXXxd9TJz
-	 u4pWtXFEiE07yMk2spntmfKmHgT5TOXD3F/nqKW0=
+	b=keu40u/F9c10lfvzL1/56UzKJRPc7746lOzdGHa7CysQQQ1CUoMGYuHyArfrE0sT3
+	 BFUOjAnARjozhXluHpdO9dktQRbQa3Q0qeka7vqKlSm2AtYzc+CItwD+VN3MkzKpWw
+	 CRQEMTAJ/RgX0Qg9qamFja0zdjEYF3EMfg+UGilQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0869/3318] lib/842: require a complete history block for repeat templates
-Date: Wed, 18 Nov 2026 15:24:51 +0100
-Message-ID: <20261118150345.372077276@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>
+Subject: [PATCH 6.6 0870/3318] crypto: ccp - Initialize DBC ioctl mutex before registering device
+Date: Wed, 18 Nov 2026 15:24:52 +0100
+Message-ID: <20261118150345.401765798@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,49 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit deb631649882bbf43f7c2fc79b5990139fd744ba ]
+[ Upstream commit e9b1d168f2a70c0764d5748893fdf631c504c171 ]
 
-An 842 repeat template copies the preceding eight-byte output block. The
-decoder rejects a repeat only when no output has been produced. A
-short-data operation can produce between one and seven bytes before a
-repeat.
+dbc_dev_init() registers the DBC misc device before initializing
+ioctl_mutex. Once misc_register() publishes the device, userspace can
+open it and invoke dbc_ioctl() while the mutex is still uninitialized.
 
-Such a stream makes the repeat copy read before the start of the output
-buffer. Depending on the surrounding mapping, this can fault or bring
-preceding memory into the decompressed data.
+Initialize ioctl_mutex before calling misc_register() so the published
+ioctl callback always sees an initialized mutex.
 
-This is also reachable through zram's compressed writeback path. With 842
-selected, targeted corruption of the compressed data on its backing device
-to a short-data-then-repeat stream made a KASAN kernel report a
-vmalloc-out-of-bounds read when zram read the page back.
-
-Require at least one complete output block before accepting a repeat.
-
-Fixes: 2da572c959dd ("lib: add software 842 compression/decompression")
+Fixes: c04cf9e14f10 ("crypto: ccp - Add support for fetching a nonce for dynamic boost control")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://lore.kernel.org/all/20260829133410.1708684-1-runyu.xiao@seu.edu.cn/
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Assisted-by: Codex:GPT-5
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>> ---
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/842/842_decompress.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccp/dbc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/lib/842/842_decompress.c b/lib/842/842_decompress.c
-index 87d1e0f8a4926..45a9815abd637 100644
---- a/lib/842/842_decompress.c
-+++ b/lib/842/842_decompress.c
-@@ -309,7 +309,7 @@ int sw842_decompress(const u8 *in, unsigned int ilen,
- 			if (ret)
- 				return ret;
+diff --git a/drivers/crypto/ccp/dbc.c b/drivers/crypto/ccp/dbc.c
+index 6f33149ef80df..11c8590df138a 100644
+--- a/drivers/crypto/ccp/dbc.c
++++ b/drivers/crypto/ccp/dbc.c
+@@ -227,6 +227,8 @@ int dbc_dev_init(struct psp_device *psp)
+ 		goto cleanup_mbox;
+ 	}
  
--			if (p.out == out) /* no previous bytes */
-+			if (p.out - p.ostart < 8) /* no complete previous block */
- 				return -EINVAL;
++	mutex_init(&dbc_dev->ioctl_mutex);
++
+ 	dbc_dev->char_dev.minor = MISC_DYNAMIC_MINOR;
+ 	dbc_dev->char_dev.name = "dbc";
+ 	dbc_dev->char_dev.fops = &dbc_fops;
+@@ -235,8 +237,6 @@ int dbc_dev_init(struct psp_device *psp)
+ 	if (ret)
+ 		goto cleanup_mbox;
  
- 			/* copy rep + 1 */
+-	mutex_init(&dbc_dev->ioctl_mutex);
+-
+ 	return 0;
+ 
+ cleanup_mbox:
 -- 
 2.53.0
 
