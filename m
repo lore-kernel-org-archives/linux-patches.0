@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025874;
-	b=cQYNh7PHRahfv1OgFIUg5CTH9zyPHaQ0lLX/mR8nZNpB/5b084e0DGFN+DzJ+pAdU+F5
-	 0vmsrT3fm++cc/j3W571r1n3dGz13ifpERbNYK5iAEmxNT1PiiXEqHL262KR9y4CG/sqv
-	 nr4LM/Cp7XjY0kwEQOeW+xPLeD6E9ekN2/Ppvn/5obt/LWEb4yaQzpCSjJHkCukSfDZcZ
-	 MVSDFnMJVqc+98LxPQcGuxZQJKGySp/ip9CC0aIJmJU3wb1zjRoIFBUhI7LLB0ZvqyWC5
-	 vcIroTnxh5jy2bX3bPXozGlVoOpBwCHaGMGxcXWZ4HH+F+Y8Pc+vgzPyPB05+imwuKQ==
+	t=1795025877;
+	b=5qGys8Ux7ck/vSYsPDXZsTlGU88n1oauqQnA2bQ7e7kQRtGpMLf4jIczmrAfaMk1JALS
+	 R20/mA6gpXo8ihXLfhFBzC2qPwKio48k4WkRpwjUaBDN7C5KyET6AraiI5bmdw/dbWTCU
+	 UVCGqhPma7gMUCz03U38RaALyYIF4acJlh8+JFB7RYZv0Uz8Fn5JWOfjzwxfBAB1JxQDO
+	 4xZYrWdN7M6Vx36Y81nz15BQc3ZivdlltdteJwX648vtrPupVZHlwfZXgni4sbhZL0i0n
+	 wnf6Z+9Cde/LdAmA39BgOneXrW0+2CJKN72bII+oy8AMHt59PVf42eWgF+B+Hz+jhOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025874;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025877;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HI8D7bFvqhP6dI1pmCTq/8j3nmEud5D1ixPoepdhW2U=;
-	b=n+98S2ozwi3/gmrB164JwlpTAptplyn4eTJwM6NxKeFvJD2ezhLotR/IUws30kxOpqrX
-	 fmKGm0IT0/D+1HGr+0RC+Jv7FqzIQL8SA+TSq3pIiK0owhNg+yPx4i7DIu3vTqtN2ad78
-	 NCDUv5u4D334Ei7m78z4s4igbJHtDQ5TDPEWqDlbXCkgyjcc1Zy9+IAe+QoA91yrJkCDi
-	 V06Ru9JQ5B6VYw7mCpOijcbMqNAWoPu1kpgL9bpy+PEbnZ7M63fJf5QeSkRfU5Q/R64WF
-	 wfxuHhE+/fNvTio1yU20sRIzXEh2e9mGwQfDRwXLmTjTWwcgdmLATMYhUNOq8U19knQ==
+	bh=JZNOYhkEMFZh6oPAwFs5dgEKA5pulZpMH/hHD87lgis=;
+	b=cvnHQLA77cvKOjptBFXylAUDDh/PeB7O4y+eVxU3hi/0Y2+7avCIMdYtYtFbDDM4nWzG
+	 kpKk4447V30Io4Wl1fS7QDEIj9kEuHlPfQiUramlB9QyeHq1d73BEUngQpgZ0b5BBqBsX
+	 xH85h7P6B+ID/ahxiBaqq+sa8oGECjwovkCJdPR+UPJjBARvb2CMCA9yjmrPYwKWkzYnZ
+	 SePi1ePhG3R6wNhY5gP2pVy6doDP4QU7WRBbhbW/eVJuWQmvDgm30MaCBTTIkYey68+MH
+	 7gaZuG+9k9K3QxH1jJzWTapq/Az19juAPv7H8cvSKoVqbh67oTHvLAiDICdnA0UxipA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HMBm59Yj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7Fisymg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6426660A2601;
-	Wed, 18 Nov 2026 18:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209B6606A32A;
+	Wed, 18 Nov 2026 18:17:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HMBm59Yj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898B11F000C4;
-	Wed, 18 Nov 2026 18:17:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7Fisymg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5E1F000C4;
+	Wed, 18 Nov 2026 18:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025874;
-	bh=HI8D7bFvqhP6dI1pmCTq/8j3nmEud5D1ixPoepdhW2U=;
+	s=korg; t=1795025877;
+	bh=JZNOYhkEMFZh6oPAwFs5dgEKA5pulZpMH/hHD87lgis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HMBm59YjEuSE6/kWeQLWqTb5t8AHVHz0mkK8UV52/bMtGHwY+7C0F3bt966hZERRO
-	 Q/OFkFyJeb4PGPIEyFg/RFBz8n/JWf9SeEmqmo2/MKznQ2itqyK6JxqsY9aUbNI7iR
-	 CMm6kcHVUkUscFY29RObWWMktxQQ5z2nJYzKIZH0=
+	b=x7FisymggGQFQl9S61pK9xkBibXUPQTdOtQ0HH7r787GW4QTTFiz93SK3qIM6XHy0
+	 mg8bKi1lv8m209ySwFU4d3Ka0J/+mxD/LxtJqmipF2F6gG22WTfFcUx2Tre1+zcNRD
+	 IJasZMZXmNPlfDYQrihZkRZGWvPHihKZXyn6GhMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	John Crispin <john@phrozen.org>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1233/2151] wifi: mt76: mt7996: fix the hw-queues debugfs queue requests
-Date: Wed, 18 Nov 2026 15:49:28 +0100
-Message-ID: <20261118150207.096980073@linuxfoundation.org>
+Subject: [PATCH 6.18 1234/2151] wifi: mt76: mt7996: disable the RX NAPIs before the DMA cleanup
+Date: Wed, 18 Nov 2026 15:49:29 +0100
+Message-ID: <20261118150207.132496827@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,486 +68,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: John Crispin <john@phrozen.org>
 
-[ Upstream commit ef28298ab88bd7ba8d805fb8dfaaacd9246d5fbf ]
+[ Upstream commit 7a5a3843178c61d99d939b231318692d08fff79b ]
 
-The hw-queues debugfs file builds its own queue requests, and these do
-not match the register map of the MediaTek vendor driver:
+mt7996_unregister_device() leaves the RX NAPIs enabled, so
+mt76_dma_cleanup() deletes enabled NAPIs and destroys page pools that
+are still bound to them. On rmmod, the kernel warns in
+__netif_napi_del_locked() for every RX queue and in
+page_pool_disable_direct_recycling(). Until the IRQ tasklet is disabled,
+an interrupt can still schedule a NAPI that was already deleted.
 
-- The port ID goes to bits 11:10 of the PLE queue control register, but
-  the field is at bits 17:16. Bits 11:10 are part of the WLAN index, so
-  each request reads port 0 and, for a station, the WLAN index with
-  bit 11 set.
-- The head and tail frame IDs, the packet count and the page counters
-  are read as 12-bit fields, but they have 13 bits.
-- The PSE queues are read from the PLE empty and queue control
-  registers, with bit positions that do not match the PSE queue map.
-- The station queues of MT7992 and MT7990 with a WLAN index from 512 to
-  543 are read from register 16, but these chips keep that group in the
-  extension register at index 32.
-- The file iterates the stations of the same ieee80211_hw once for each
-  band, so it shows each station queue up to three times.
-- mt7996_hw_queue_read() takes the private data of the file as a
-  struct mt7996_phy, but it is a struct mt7996_dev. The dev member
-  of the phy then aliases mt76.phy.dev of the device, which points back
-  to the device, so the file works by chance.
-
-A queue request also writes the queue control register 0 and then reads
-the result from the queue control registers 2 and 3, without a lock.
-When the global and a per-station hw-queues file are read at the same
-time, one reader can get the result of the request of the other.
-
-Describe the PLE and PSE queues in tables with the field layout of the
-vendor register map, and send all queue requests through one helper,
-which holds a spinlock from the write of the request to the read of its
-result. A spinlock is needed because the station requests are sent from
-ieee80211_iterate_stations_atomic(). Iterate the stations once.
+Disable every RX NAPI that was added before the MCU exit and the DMA
+cleanup. This includes the host RRO queues: mt76_dma_init() skips them,
+but mt7996_dma_rro_start() adds their NAPIs later when WED is not
+active, so a check for mt76_queue_is_wed_rro() would miss them.
 
 Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Link: https://patch.msgid.link/20261006205936.669125-26-nbd@nbd.name
+Signed-off-by: John Crispin <john@phrozen.org>
+Link: https://patch.msgid.link/20261006205936.669125-27-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt7996/debugfs.c   | 323 +++++++++++-------
- .../net/wireless/mediatek/mt76/mt7996/regs.h  |  28 ++
- 2 files changed, 232 insertions(+), 119 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/init.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c b/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
-index 26b90b4b983ea..0a08046d925fb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/debugfs.c
-@@ -13,13 +13,6 @@
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/init.c b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+index 778a9ca8d5fa0..18d30c1790bd8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/init.c
+@@ -1734,6 +1734,8 @@ int mt7996_register_device(struct mt7996_dev *dev)
  
- /** global debugfs **/
- 
--struct hw_queue_map {
--	const char *name;
--	u8 index;
--	u8 pid;
--	u8 qid;
--};
--
- static int
- mt7996_implicit_txbf_set(void *data, u64 val)
+ void mt7996_unregister_device(struct mt7996_dev *dev)
  {
-@@ -590,35 +583,176 @@ mt7996_tx_stats_show(struct seq_file *file, void *data)
- 
- DEFINE_SHOW_ATTRIBUTE(mt7996_tx_stats);
- 
-+enum {
-+	MT_QUEUE_PORT_HIF,
-+	MT_QUEUE_PORT_CPU,
-+	MT_QUEUE_PORT_LMAC,
-+	MT_QUEUE_PORT_PLE_CTRL,
-+};
++	int i;
 +
-+struct mt7996_hw_queue {
-+	const char *name;
-+	u8 pid;
-+	u8 qid;
-+	u8 tgid;
-+};
-+
-+#define MT7996_HW_QUEUE(_name, _pid, _qid, _tgid)	\
-+	{ .name = _name, .pid = MT_QUEUE_PORT_##_pid, .qid = _qid, .tgid = _tgid }
-+
-+static const struct mt7996_hw_queue mt7996_ple_queues[32] = {
-+	[0] = MT7996_HW_QUEUE("CPU Q0", CPU, 0, 0),
-+	[1] = MT7996_HW_QUEUE("CPU Q1", CPU, 1, 0),
-+	[2] = MT7996_HW_QUEUE("CPU Q2", CPU, 2, 0),
-+	[3] = MT7996_HW_QUEUE("CPU Q3", CPU, 3, 0),
-+	[4] = MT7996_HW_QUEUE("ALTX Q0", LMAC, 0x10, 0),
-+	[5] = MT7996_HW_QUEUE("BMC Q0", LMAC, 0x11, 0),
-+	[6] = MT7996_HW_QUEUE("BCN Q0", LMAC, 0x12, 0),
-+	[7] = MT7996_HW_QUEUE("PSMP Q0", LMAC, 0x13, 0),
-+	[8] = MT7996_HW_QUEUE("ALTX Q1", LMAC, 0x10, 1),
-+	[9] = MT7996_HW_QUEUE("BMC Q1", LMAC, 0x11, 1),
-+	[10] = MT7996_HW_QUEUE("BCN Q1", LMAC, 0x12, 1),
-+	[11] = MT7996_HW_QUEUE("PSMP Q1", LMAC, 0x13, 1),
-+	[12] = MT7996_HW_QUEUE("ALTX Q2", LMAC, 0x1c, 2),
-+	[13] = MT7996_HW_QUEUE("BMC Q2", LMAC, 0x1d, 2),
-+	[14] = MT7996_HW_QUEUE("BCN Q2", LMAC, 0x1e, 2),
-+	[15] = MT7996_HW_QUEUE("PSMP Q2", LMAC, 0x1f, 2),
-+	[16] = MT7996_HW_QUEUE("NAF Q", LMAC, 0x18, 0),
-+	[17] = MT7996_HW_QUEUE("NBCN Q", LMAC, 0x19, 0),
-+	[20] = MT7996_HW_QUEUE("FIXFID Q", LMAC, 0x1a, 0),
-+	[28] = MT7996_HW_QUEUE("RLS4 Q", PLE_CTRL, 0x7c, 0),
-+	[29] = MT7996_HW_QUEUE("RLS3 Q", PLE_CTRL, 0x7d, 0),
-+	[30] = MT7996_HW_QUEUE("RLS2 Q", PLE_CTRL, 0x7e, 0),
-+	[31] = MT7996_HW_QUEUE("RLS Q", PLE_CTRL, 0x7f, 0),
-+};
-+
-+static const struct mt7996_hw_queue mt7996_pse_queues[32] = {
-+	[0] = MT7996_HW_QUEUE("CPU Q0", CPU, 0, 0),
-+	[1] = MT7996_HW_QUEUE("CPU Q1", CPU, 1, 0),
-+	[2] = MT7996_HW_QUEUE("CPU Q2", CPU, 2, 0),
-+	[3] = MT7996_HW_QUEUE("CPU Q3", CPU, 3, 0),
-+	[16] = MT7996_HW_QUEUE("LMAC Q", LMAC, 0, 0),
-+	[17] = MT7996_HW_QUEUE("MDP TX Q0", LMAC, 1, 0),
-+	[18] = MT7996_HW_QUEUE("MDP RX Q", LMAC, 2, 0),
-+	[19] = MT7996_HW_QUEUE("SEC TX Q0", LMAC, 3, 0),
-+	[20] = MT7996_HW_QUEUE("SEC RX Q", LMAC, 4, 0),
-+	[21] = MT7996_HW_QUEUE("SFD PARK Q", LMAC, 5, 0),
-+	[22] = MT7996_HW_QUEUE("MDP TXIOC Q0", LMAC, 6, 0),
-+	[23] = MT7996_HW_QUEUE("MDP RXIOC Q0", LMAC, 7, 0),
-+	[24] = MT7996_HW_QUEUE("MDP TX Q1", LMAC, 0x11, 0),
-+	[25] = MT7996_HW_QUEUE("SEC TX Q1", LMAC, 0x13, 0),
-+	[26] = MT7996_HW_QUEUE("MDP TXIOC Q1", LMAC, 0x16, 0),
-+	[27] = MT7996_HW_QUEUE("MDP RXIOC Q1", LMAC, 0x17, 0),
-+	[28] = MT7996_HW_QUEUE("CPU Q4", CPU, 4, 0),
-+	[31] = MT7996_HW_QUEUE("RLS Q", PLE_CTRL, 0x1f, 0),
-+};
-+
-+static const struct mt7996_hw_queue mt7996_pse_queues_1[32] = {
-+	[0] = MT7996_HW_QUEUE("MDP TDPIOC Q0", LMAC, 0x08, 0),
-+	[1] = MT7996_HW_QUEUE("MDP RDPIOC Q0", LMAC, 0x09, 0),
-+	[2] = MT7996_HW_QUEUE("MDP TDPIOC Q1", LMAC, 0x18, 0),
-+	[3] = MT7996_HW_QUEUE("MDP RDPIOC Q1", LMAC, 0x19, 0),
-+	[4] = MT7996_HW_QUEUE("MDP TDPIOC Q2", LMAC, 0x28, 0),
-+	[5] = MT7996_HW_QUEUE("MDP RDPIOC Q2", LMAC, 0x29, 0),
-+	[7] = MT7996_HW_QUEUE("MDP RDPIOC Q3", LMAC, 0x39, 0),
-+	[8] = MT7996_HW_QUEUE("MDP TX Q2", LMAC, 0x21, 0),
-+	[9] = MT7996_HW_QUEUE("SEC TX Q2", LMAC, 0x23, 0),
-+	[10] = MT7996_HW_QUEUE("MDP TXIOC Q2", LMAC, 0x26, 0),
-+	[11] = MT7996_HW_QUEUE("MDP RXIOC Q2", LMAC, 0x27, 0),
-+	[15] = MT7996_HW_QUEUE("MDP RXIOC Q3", LMAC, 0x37, 0),
-+	[16] = MT7996_HW_QUEUE("HIF Q0", HIF, 0, 0),
-+	[17] = MT7996_HW_QUEUE("HIF Q1", HIF, 1, 0),
-+	[18] = MT7996_HW_QUEUE("HIF Q2", HIF, 2, 0),
-+	[19] = MT7996_HW_QUEUE("HIF Q3", HIF, 3, 0),
-+	[20] = MT7996_HW_QUEUE("HIF Q4", HIF, 4, 0),
-+	[21] = MT7996_HW_QUEUE("HIF Q5", HIF, 5, 0),
-+	[22] = MT7996_HW_QUEUE("HIF Q6", HIF, 6, 0),
-+	[23] = MT7996_HW_QUEUE("HIF Q7", HIF, 7, 0),
-+	[24] = MT7996_HW_QUEUE("HIF Q8", HIF, 8, 0),
-+	[25] = MT7996_HW_QUEUE("HIF Q9", HIF, 9, 0),
-+	[26] = MT7996_HW_QUEUE("HIF Q10", HIF, 10, 0),
-+	[27] = MT7996_HW_QUEUE("HIF Q11", HIF, 11, 0),
-+	[28] = MT7996_HW_QUEUE("HIF Q12", HIF, 12, 0),
-+	[29] = MT7996_HW_QUEUE("HIF Q13", HIF, 13, 0),
-+};
-+
- static void
--mt7996_hw_queue_read(struct seq_file *s, u32 size,
--		     const struct hw_queue_map *map)
-+mt7996_fl_queue_show(struct seq_file *s, struct mt7996_dev *dev, bool pse,
-+		     const struct mt7996_hw_queue *q, u16 wlan_idx)
- {
--	struct mt7996_phy *phy = s->private;
--	struct mt7996_dev *dev = phy->dev;
--	u32 i, val;
-+	static DEFINE_SPINLOCK(lock);
-+	u32 val, fid, num;
-+
-+	val = MT_FL_Q0_CTRL_EXECUTE |
-+	      u32_encode_bits(q->qid, MT_FL_Q0_CTRL_QID) |
-+	      u32_encode_bits(q->tgid, MT_FL_Q0_CTRL_TGID) |
-+	      u32_encode_bits(q->pid, MT_FL_Q0_CTRL_PID) |
-+	      u32_encode_bits(wlan_idx, MT_FL_Q0_CTRL_WLAN_IDX);
-+
-+	spin_lock(&lock);
-+	mt76_wr(dev, pse ? MT_PSE_FL_Q0_CTRL : MT_FL_Q0_CTRL, val);
-+	fid = mt76_rr(dev, pse ? MT_PSE_FL_Q2_CTRL : MT_FL_Q2_CTRL);
-+	num = mt76_rr(dev, pse ? MT_PSE_FL_Q3_CTRL : MT_FL_Q3_CTRL);
-+	spin_unlock(&lock);
-+
-+	seq_printf(s, "tail/head fid 0x%04x/0x%04x, packets %u",
-+		   u32_get_bits(fid, MT_FL_Q2_CTRL_TAIL_FID),
-+		   u32_get_bits(fid, MT_FL_Q2_CTRL_HEAD_FID),
-+		   u32_get_bits(num, MT_FL_Q3_CTRL_PKT_NUM));
-+}
- 
--	val = mt76_rr(dev, MT_FL_Q_EMPTY);
--	for (i = 0; i < size; i++) {
--		u32 ctrl, head, tail, queued;
-+static void
-+mt7996_fl_queues_show(struct seq_file *s, struct mt7996_dev *dev, bool pse,
-+		      const struct mt7996_hw_queue *queues, unsigned long empty)
-+{
-+	unsigned int i;
- 
--		if (val & BIT(map[i].index))
-+	for_each_clear_bit(i, &empty, 32) {
-+		if (!queues[i].name)
- 			continue;
- 
--		ctrl = BIT(31) | (map[i].pid << 10) | ((u32)map[i].qid << 24);
--		mt76_wr(dev, MT_FL_Q0_CTRL, ctrl);
-+		seq_printf(s, "\t%s: ", queues[i].name);
-+		mt7996_fl_queue_show(s, dev, pse, &queues[i], 0);
-+		seq_puts(s, "\n");
+ 	cancel_work_sync(&dev->dump_work);
+ 	cancel_work_sync(&dev->wed_rro.work);
+ 	cancel_work_sync(&dev->reset_work);
+@@ -1744,6 +1746,10 @@ void mt7996_unregister_device(struct mt7996_dev *dev)
+ 	mt7996_coredump_unregister(dev);
+ 	mt76_unregister_device(&dev->mt76);
+ 	mt7996_wed_rro_free(dev);
++	for (i = 0; i < ARRAY_SIZE(dev->mt76.napi); i++) {
++		if (dev->mt76.napi[i].dev)
++			napi_disable(&dev->mt76.napi[i]);
 +	}
-+}
-+
-+static void
-+mt7996_freepg_show(struct seq_file *s, u32 cnt, u32 head_tail)
-+{
-+	seq_printf(s, "\tfree pages 0x%04x, free for all 0x%04x, head/tail 0x%04x/0x%04x\n",
-+		   u32_get_bits(cnt, MT_FREEPG_CNT_FREE),
-+		   u32_get_bits(cnt, MT_FREEPG_CNT_FFA),
-+		   u32_get_bits(head_tail, MT_FREEPG_HEAD_TAIL_HEAD),
-+		   u32_get_bits(head_tail, MT_FREEPG_HEAD_TAIL_TAIL));
-+}
-+
-+static void
-+mt7996_pg_group_show(struct seq_file *s, const char *name, u32 group, u32 info)
-+{
-+	seq_printf(s, "\t%s group: max/min quota 0x%04x/0x%04x, used/reserved 0x%04x/0x%04x\n",
-+		   name, u32_get_bits(group, MT_PG_GROUP_MAX_QUOTA),
-+		   u32_get_bits(group, MT_PG_GROUP_MIN_QUOTA),
-+		   u32_get_bits(info, MT_PG_INFO_SRC_CNT),
-+		   u32_get_bits(info, MT_PG_INFO_RSV_CNT));
-+}
-+
-+static unsigned int
-+mt7996_ple_sta_cr_num(struct mt7996_dev *dev)
-+{
-+	return is_mt7996(&dev->mt76) ? 34 : 17;
-+}
- 
--		head = mt76_get_field(dev, MT_FL_Q2_CTRL,
--				      GENMASK(11, 0));
--		tail = mt76_get_field(dev, MT_FL_Q2_CTRL,
--				      GENMASK(27, 16));
--		queued = mt76_get_field(dev, MT_FL_Q3_CTRL,
--					GENMASK(11, 0));
-+static unsigned int
-+mt7996_ple_sta_cr(struct mt7996_dev *dev, unsigned int n)
-+{
-+	/* MT7992 and MT7990 keep the last station group in the
-+	 * extension register that follows the first 32 groups
-+	 */
-+	if (!is_mt7996(&dev->mt76) && n == mt7996_ple_sta_cr_num(dev) - 1)
-+		return 32;
- 
--		seq_printf(s, "\t%s: ", map[i].name);
--		seq_printf(s, "queued:0x%03x head:0x%03x tail:0x%03x\n",
--			   queued, head, tail);
--	}
-+	return n;
- }
- 
- static void
-@@ -626,51 +760,53 @@ mt7996_sta_hw_queue_read(void *data, struct ieee80211_sta *sta)
- {
- 	struct mt7996_sta *msta = (struct mt7996_sta *)sta->drv_priv;
- 	struct mt7996_vif *mvif = msta->vif;
--	struct mt7996_phy *phy = mt7996_vif_link_phy(&mvif->deflink);
- 	struct ieee80211_link_sta *link_sta;
- 	struct seq_file *s = data;
- 	struct ieee80211_vif *vif;
--	struct mt7996_dev *dev;
- 	unsigned int link_id;
- 
--	if (!phy)
--		return;
--
- 	vif = container_of((void *)mvif, struct ieee80211_vif, drv_priv);
--	dev = phy->dev;
- 
- 	rcu_read_lock();
- 
- 	for_each_sta_active_link(vif, sta, link_sta, link_id) {
- 		struct mt7996_sta_link *msta_link;
- 		struct mt76_vif_link *mlink;
-+		struct mt7996_phy *phy;
-+		unsigned int cr;
-+		u16 wlan_idx;
- 		u8 ac;
- 
- 		mlink = rcu_dereference(mvif->mt76.link[link_id]);
- 		if (!mlink)
- 			continue;
- 
-+		phy = mt7996_vif_link_phy(container_of(mlink,
-+						       struct mt7996_vif_link,
-+						       mt76));
-+		if (!phy)
-+			continue;
-+
- 		msta_link = mt7996_sta_link(msta, link_id);
- 		if (!msta_link)
- 			continue;
- 
--		for (ac = 0; ac < 4; ac++) {
--			u32 idx = msta_link->wcid.idx >> 5, qlen, ctrl, val;
--			u8 offs = msta_link->wcid.idx & GENMASK(4, 0);
--
--			ctrl = BIT(31) | BIT(11) | (ac << 24);
--			val = mt76_rr(dev, MT_PLE_AC_QEMPTY(ac, idx));
-+		wlan_idx = msta_link->wcid.idx;
-+		cr = mt7996_ple_sta_cr(phy->dev, wlan_idx / 32);
-+		for (ac = 0; ac < IEEE80211_NUM_ACS; ac++) {
-+			struct mt7996_hw_queue q = {
-+				.pid = MT_QUEUE_PORT_LMAC,
-+				.qid = ac,
-+			};
- 
--			if (val & BIT(offs))
-+			if (mt76_rr(phy->dev, MT_PLE_AC_QEMPTY(ac, cr)) &
-+			    BIT(wlan_idx % 32))
- 				continue;
- 
--			mt76_wr(dev,
--				MT_FL_Q0_CTRL, ctrl | msta_link->wcid.idx);
--			qlen = mt76_get_field(dev, MT_FL_Q3_CTRL,
--					      GENMASK(11, 0));
--			seq_printf(s, "\tSTA %pM wcid %d: AC%d%d queued:%d\n",
--				   sta->addr, msta_link->wcid.idx,
--				   mlink->wmm_idx, ac, qlen);
-+			seq_printf(s, "\tSTA %pM wcid %u AC%u%u: ", sta->addr,
-+				   wlan_idx, mlink->wmm_idx, ac);
-+			mt7996_fl_queue_show(s, phy->dev, false, &q, wlan_idx);
-+			seq_puts(s, "\n");
- 		}
- 	}
- 
-@@ -678,78 +814,27 @@ mt7996_sta_hw_queue_read(void *data, struct ieee80211_sta *sta)
- }
- 
- static int
--mt7996_hw_queues_show(struct seq_file *file, void *data)
-+mt7996_hw_queues_show(struct seq_file *s, void *data)
- {
--	struct mt7996_dev *dev = file->private;
--	struct mt7996_phy *phy = &dev->phy;
--	static const struct hw_queue_map ple_queue_map[] = {
--		{ "CPU_Q0",  0,  1, MT_CTX0	      },
--		{ "CPU_Q1",  1,  1, MT_CTX0 + 1	      },
--		{ "CPU_Q2",  2,  1, MT_CTX0 + 2	      },
--		{ "CPU_Q3",  3,  1, MT_CTX0 + 3	      },
--		{ "ALTX_Q0", 8,  2, MT_LMAC_ALTX0     },
--		{ "BMC_Q0",  9,  2, MT_LMAC_BMC0      },
--		{ "BCN_Q0",  10, 2, MT_LMAC_BCN0      },
--		{ "PSMP_Q0", 11, 2, MT_LMAC_PSMP0     },
--		{ "ALTX_Q1", 12, 2, MT_LMAC_ALTX0 + 4 },
--		{ "BMC_Q1",  13, 2, MT_LMAC_BMC0  + 4 },
--		{ "BCN_Q1",  14, 2, MT_LMAC_BCN0  + 4 },
--		{ "PSMP_Q1", 15, 2, MT_LMAC_PSMP0 + 4 },
--	};
--	static const struct hw_queue_map pse_queue_map[] = {
--		{ "CPU Q0",  0,  1, MT_CTX0	      },
--		{ "CPU Q1",  1,  1, MT_CTX0 + 1	      },
--		{ "CPU Q2",  2,  1, MT_CTX0 + 2	      },
--		{ "CPU Q3",  3,  1, MT_CTX0 + 3	      },
--		{ "HIF_Q0",  8,  0, MT_HIF0	      },
--		{ "HIF_Q1",  9,  0, MT_HIF0 + 1	      },
--		{ "HIF_Q2",  10, 0, MT_HIF0 + 2	      },
--		{ "HIF_Q3",  11, 0, MT_HIF0 + 3	      },
--		{ "HIF_Q4",  12, 0, MT_HIF0 + 4	      },
--		{ "HIF_Q5",  13, 0, MT_HIF0 + 5	      },
--		{ "LMAC_Q",  16, 2, 0		      },
--		{ "MDP_TXQ", 17, 2, 1		      },
--		{ "MDP_RXQ", 18, 2, 2		      },
--		{ "SEC_TXQ", 19, 2, 3		      },
--		{ "SEC_RXQ", 20, 2, 4		      },
--	};
--	u32 val, head, tail;
--
--	/* ple queue */
--	val = mt76_rr(dev, MT_PLE_FREEPG_CNT);
--	head = mt76_get_field(dev, MT_PLE_FREEPG_HEAD_TAIL, GENMASK(11, 0));
--	tail = mt76_get_field(dev, MT_PLE_FREEPG_HEAD_TAIL, GENMASK(27, 16));
--	seq_puts(file, "PLE page info:\n");
--	seq_printf(file,
--		   "\tTotal free page: 0x%08x head: 0x%03x tail: 0x%03x\n",
--		   val, head, tail);
--
--	val = mt76_rr(dev, MT_PLE_PG_HIF_GROUP);
--	head = mt76_get_field(dev, MT_PLE_HIF_PG_INFO, GENMASK(11, 0));
--	tail = mt76_get_field(dev, MT_PLE_HIF_PG_INFO, GENMASK(27, 16));
--	seq_printf(file, "\tHIF free page: 0x%03x res: 0x%03x used: 0x%03x\n",
--		   val, head, tail);
--
--	seq_puts(file, "PLE non-empty queue info:\n");
--	mt7996_hw_queue_read(file, ARRAY_SIZE(ple_queue_map),
--			     &ple_queue_map[0]);
--
--	/* iterate per-sta ple queue */
--	ieee80211_iterate_stations_atomic(phy->mt76->hw,
--					  mt7996_sta_hw_queue_read, file);
--	phy = mt7996_phy2(dev);
--	if (phy)
--		ieee80211_iterate_stations_atomic(phy->mt76->hw,
--						  mt7996_sta_hw_queue_read, file);
--	phy = mt7996_phy3(dev);
--	if (phy)
--		ieee80211_iterate_stations_atomic(phy->mt76->hw,
--						  mt7996_sta_hw_queue_read, file);
--
--	/* pse queue */
--	seq_puts(file, "PSE non-empty queue info:\n");
--	mt7996_hw_queue_read(file, ARRAY_SIZE(pse_queue_map),
--			     &pse_queue_map[0]);
-+	struct mt7996_dev *dev = s->private;
-+
-+	seq_puts(s, "PLE page info:\n");
-+	mt7996_freepg_show(s, mt76_rr(dev, MT_PLE_FREEPG_CNT),
-+			   mt76_rr(dev, MT_PLE_FREEPG_HEAD_TAIL));
-+	mt7996_pg_group_show(s, "HIF", mt76_rr(dev, MT_PLE_PG_HIF_GROUP),
-+			     mt76_rr(dev, MT_PLE_HIF_PG_INFO));
-+
-+	seq_puts(s, "PLE non-empty queue info:\n");
-+	mt7996_fl_queues_show(s, dev, false, mt7996_ple_queues,
-+			      mt76_rr(dev, MT_FL_Q_EMPTY));
-+	ieee80211_iterate_stations_atomic(dev->mphy.hw,
-+					  mt7996_sta_hw_queue_read, s);
-+
-+	seq_puts(s, "PSE non-empty queue info:\n");
-+	mt7996_fl_queues_show(s, dev, true, mt7996_pse_queues,
-+			      mt76_rr(dev, MT_PSE_QUEUE_EMPTY));
-+	mt7996_fl_queues_show(s, dev, true, mt7996_pse_queues_1,
-+			      mt76_rr(dev, MT_PSE_QUEUE_EMPTY_1));
- 
- 	return 0;
- }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-index 3ad233e255dcd..976bfc435b814 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/regs.h
-@@ -155,6 +155,15 @@ enum offs_rev {
- #define MT_FL_Q2_CTRL				MT_PLE(0x3e8)
- #define MT_FL_Q3_CTRL				MT_PLE(0x3ec)
- 
-+#define MT_FL_Q0_CTRL_EXECUTE			BIT(31)
-+#define MT_FL_Q0_CTRL_QID			GENMASK(30, 24)
-+#define MT_FL_Q0_CTRL_TGID			GENMASK(21, 20)
-+#define MT_FL_Q0_CTRL_PID			GENMASK(17, 16)
-+#define MT_FL_Q0_CTRL_WLAN_IDX			GENMASK(11, 0)
-+#define MT_FL_Q2_CTRL_TAIL_FID			GENMASK(28, 16)
-+#define MT_FL_Q2_CTRL_HEAD_FID			GENMASK(12, 0)
-+#define MT_FL_Q3_CTRL_PKT_NUM			GENMASK(12, 0)
-+
- #define MT_PLE_FREEPG_CNT			MT_PLE(0x3a0)
- #define MT_PLE_FREEPG_HEAD_TAIL			MT_PLE(0x3a4)
- #define MT_PLE_PG_HIF_GROUP			MT_PLE(0x00c)
-@@ -163,6 +172,25 @@ enum offs_rev {
- #define MT_PLE_AC_QEMPTY(ac, n)			MT_PLE(0x600 + 0x100 * (ac) + ((n) << 2))
- #define MT_PLE_AMSDU_PACK_MSDU_CNT(n)		MT_PLE(0x10e0 + ((n) << 2))
- 
-+#define MT_FREEPG_CNT_FFA			GENMASK(28, 16)
-+#define MT_FREEPG_CNT_FREE			GENMASK(12, 0)
-+#define MT_FREEPG_HEAD_TAIL_TAIL		GENMASK(28, 16)
-+#define MT_FREEPG_HEAD_TAIL_HEAD		GENMASK(12, 0)
-+#define MT_PG_GROUP_MAX_QUOTA			GENMASK(28, 16)
-+#define MT_PG_GROUP_MIN_QUOTA			GENMASK(12, 0)
-+#define MT_PG_INFO_SRC_CNT			GENMASK(28, 16)
-+#define MT_PG_INFO_RSV_CNT			GENMASK(12, 0)
-+
-+/* PSE */
-+#define MT_PSE_BASE				0x820c8000
-+#define MT_PSE(ofs)				(MT_PSE_BASE + (ofs))
-+
-+#define MT_PSE_QUEUE_EMPTY			MT_PSE(0x0b0)
-+#define MT_PSE_QUEUE_EMPTY_1			MT_PSE(0x0bc)
-+#define MT_PSE_FL_Q0_CTRL			MT_PSE(0x1b0)
-+#define MT_PSE_FL_Q2_CTRL			MT_PSE(0x1b8)
-+#define MT_PSE_FL_Q3_CTRL			MT_PSE(0x1bc)
-+
- /* WF MDP TOP */
- #define MT_MDP_BASE				0x820cc000
- #define MT_MDP(ofs)				(MT_MDP_BASE + (ofs))
+ 	mt7996_mcu_exit(dev);
+ 	mt7996_tx_token_put(dev);
+ 	mt7996_dma_cleanup(dev);
 -- 
 2.53.0
 
