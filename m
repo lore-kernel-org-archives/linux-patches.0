@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020149;
-	b=Ai46vq/CbBOnfxHmOFGQHrvGAuNFhU2OoKIt76tV7tNQGke7E3ktXfBhb/npnfmfbJBJ
-	 7FoPWMlACfEcWtwEd1luIFo5S7jbwEtLaOJBlQPEuOF1ZMEFlXC/wnOMDmOacMjE2eohi
-	 N6VwSHG4yMON+bURE1WgWF90l3o04adI+VeUXYQiXeYwPCezc7/3bdmebtloGaBXWlGx9
-	 nzoeWpfyNaNMr7eC1dgDcUNt2CpT93gYxG+Za0TK8RKr6rVqxURu24iUip1UtvnIECO9L
-	 bWs5HKAn+UYFFpkbdWtdtxcBDr9DXjPTms9hEjIUpm3RBx4fMEHqWRj+rsaEpjpRUPQ==
+	t=1795020152;
+	b=W37aOKtq1dNBO6W7AfbMAGHXi2OG5erlpRosG0C2zXs5RV1o9vXduDUUuaTQtMrF/N9M
+	 4jgraIVJn23CyUMneVxPqkc3vh49xlc5vijkzIFJfuJuHro+yChzKSZLCPbgJFQehNomy
+	 nenGrBhL3lcTJ2i2Q7TRUo6+H99W9TzZhxguD/AtgZDrOlRdDQQCsmEndM8SyZ/0HSV/X
+	 adwrI6IRcJRWEX3zUY26/JGJiquiKPXrKpyh8b8Wn+rQ8r+0LdMW2sm2gr80eFi2cxcDO
+	 6dJ+VRzruKyLcFL2rkRO/nSo7FCnR7UZC0reVg87TcaaWyBC8U2yC+ppMqEuHJaCqzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020149;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020152;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I8HckYhBehi2O2yuAWsW69VBKnqACDgE33Ie/oRfsbc=;
-	b=xbGf1piMfbkglQsg95BWTdkKo5gnNmV/8pi0oFzq/rxCh+XXCU5fiNm410yWmFUkdWxo
-	 egatNQUlaX7aC2ayL4hvPZOPqwhTnEq8jsRrkHT1FARIDrJqIiXKXMTOeja6TlcTLZ5OU
-	 g4EFp5awE43pWXKIiw2ZEtAde4EwlUjeAmfW1EUNC9EWKrWK/t4qw/sFeXZKh01l65JYv
-	 yXyCAEfLjMkGlfWsRxPBxvOjG8AEXF7TVDDjsvaV988xhOCoTOEHymQubdaMOEKdW+yPx
-	 9ycZRcCA9QE7+a3SQKMfxuDZrp5mGracQ8CyveMvl+En4I76qcsgwH7GxG+zgVEEFkQ==
+	bh=pJGFQM4VdexPZ4VxV69gR1nBTQgnrRigy+xuOupUcyI=;
+	b=0SjzzZ7V61IBfhIRQRd2OGdkdIbCvNqiwhcB58Q+H/b6MVy2R4cTKADivdEyUhUaapO8
+	 PspG2LPlYJVYYuH7R8ZQY7jE4NFs8Xfh1mBSPa68j++r8apZf1RNmKHW1biO81Tn9aVdX
+	 N2pGqmul6e4xG9mkwso/ONjHHNltVzrNSZywqjuwHTN9+E3rWPiDDaM2Qezx6henybqxA
+	 5u32g08qmtvALqoa3NVJZdro56lrb//C2n/IX1LEvpL+y9Faq8DsyqFSOX9Z5Wd0H0CRE
+	 uGswoA4nSYU8cCchZNFoVGVrL8FvO4JT8+IfXf60/lpBHlpUiMy91V10H1t7V7G17kQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ea6tFW3D;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuN8i6BE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CFE606A32C;
-	Wed, 18 Nov 2026 16:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1680260A261B;
+	Wed, 18 Nov 2026 16:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ea6tFW3D
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8796B1F000C5;
-	Wed, 18 Nov 2026 16:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kuN8i6BE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675361F000CC;
+	Wed, 18 Nov 2026 16:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020149;
-	bh=I8HckYhBehi2O2yuAWsW69VBKnqACDgE33Ie/oRfsbc=;
+	s=korg; t=1795020151;
+	bh=pJGFQM4VdexPZ4VxV69gR1nBTQgnrRigy+xuOupUcyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ea6tFW3D43MdpfGH7wqHa3xbEYfl5TUSLl15pz9OJbALzg6S6gphHgHwCY4gkSZhY
-	 PawidyimHIxsPSLxbdEsMOX4UulJpWfrIN/7hBuvqy17bl31nLVSUgNfcnPJoL1hhR
-	 mfdmGTx9SHaxtKkc6A+54e9LyWwY/jPx6wscXRYo=
+	b=kuN8i6BEcyl79Rt1mUgbYvIDjHVUT2WgBhIP2RGqni9Rk1FqJDzSxGK+c58b1Viob
+	 67+xzlDRbDvniltkmgMBrcWncz++BvO55J/o0kXhibJe+MqCG6JZk3c/8CuI7ArQTg
+	 EwEJRQyLvkAcSzrZK9R8bXkgsBAK0EhdxCJNwWzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1850/2651] ASoC: codecs: wm8991: Fix definition of right input PGA controls
-Date: Wed, 18 Nov 2026 15:51:30 +0100
-Message-ID: <20261118150353.649068759@linuxfoundation.org>
+Subject: [PATCH 7.3 1851/2651] ASoC: codecs: wm8991: Fix definition of LOMIX AINLMUX Bypass Volume control
+Date: Wed, 18 Nov 2026 15:51:31 +0100
+Message-ID: <20261118150353.678687110@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,50 +71,36 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 2dfecdc25d4937a36675c0c36ee0addc99e1e7f9 ]
+[ Upstream commit fee722db39c2a1f18c944f747271fd1e131910a6 ]
 
-The right input PGA boost (R12MNBST, R34MNBST) and routing (R12MNB,
-R34MNB) bits are in Input Mixer4 (R42), not in Input Mixer3 (R41),
-where these controls write the left channel bits.
+The LOMIX AINLMUX bypass volume (LLBLOVOL) is at bits 2:0 of Output
+Mixer5, not at bits 5:3, which hold the AINRMUX bypass volume
+(LRBLOVOL).
 
 Fixes: 203db220718c ("ASoC: WM8991: Add initial WM8991 driver")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/5c0196e45dff1769682d885fc26e613648e05436.1791959026.git.sammiee5311@gmail.com
+Link: https://patch.msgid.link/c6e230b0e7d7e3db2136cc751e0b563030dbc16d.1791959026.git.sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8991.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/soc/codecs/wm8991.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/sound/soc/codecs/wm8991.c b/sound/soc/codecs/wm8991.c
-index 225c235d3d895..157b48f02451a 100644
+index 157b48f02451a..471310257123b 100644
 --- a/sound/soc/codecs/wm8991.c
 +++ b/sound/soc/codecs/wm8991.c
-@@ -169,8 +169,8 @@ static const struct snd_kcontrol_new wm8991_snd_controls[] = {
- 	SOC_SINGLE("LIN12 PGA Boost", WM8991_INPUT_MIXER3, WM8991_L12MNBST_BIT, 1, 0),
- 	SOC_SINGLE("LIN34 PGA Boost", WM8991_INPUT_MIXER3, WM8991_L34MNBST_BIT, 1, 0),
- 	/* INMIXR */
--	SOC_SINGLE("RIN12 PGA Boost", WM8991_INPUT_MIXER3, WM8991_R12MNBST_BIT, 1, 0),
--	SOC_SINGLE("RIN34 PGA Boost", WM8991_INPUT_MIXER3, WM8991_R34MNBST_BIT, 1, 0),
-+	SOC_SINGLE("RIN12 PGA Boost", WM8991_INPUT_MIXER4, WM8991_R12MNBST_BIT, 1, 0),
-+	SOC_SINGLE("RIN34 PGA Boost", WM8991_INPUT_MIXER4, WM8991_R34MNBST_BIT, 1, 0),
+@@ -184,7 +184,7 @@ static const struct snd_kcontrol_new wm8991_snd_controls[] = {
+ 	SOC_SINGLE_TLV("LOMIX AINRMUX Bypass Volume", WM8991_OUTPUT_MIXER5,
+ 		WM8991_LRBLOVOL_SHIFT, WM8991_LRBLOVOL_MASK, 1, out_mix_tlv),
+ 	SOC_SINGLE_TLV("LOMIX AINLMUX Bypass Volume", WM8991_OUTPUT_MIXER5,
+-		WM8991_LRBLOVOL_SHIFT, WM8991_LRBLOVOL_MASK, 1, out_mix_tlv),
++		WM8991_LLBLOVOL_SHIFT, WM8991_LLBLOVOL_MASK, 1, out_mix_tlv),
  
- 	/* LOMIX */
- 	SOC_SINGLE_TLV("LOMIX LIN3 Bypass Volume", WM8991_OUTPUT_MIXER3,
-@@ -446,9 +446,9 @@ static const struct snd_kcontrol_new wm8991_dapm_inmixr_controls[] = {
- 		WM8991_RDBVOL_SHIFT, WM8991_RDBVOL_MASK, 0, in_mix_tlv),
- 	SOC_DAPM_SINGLE_TLV("RIN2 Volume", WM8991_INPUT_MIXER6, WM8991_RI2BVOL_SHIFT,
- 		7, 0, in_mix_tlv),
--	SOC_DAPM_SINGLE("RINPGA12 Switch", WM8991_INPUT_MIXER3, WM8991_L12MNB_BIT,
-+	SOC_DAPM_SINGLE("RINPGA12 Switch", WM8991_INPUT_MIXER4, WM8991_R12MNB_BIT,
- 		1, 0),
--	SOC_DAPM_SINGLE("RINPGA34 Switch", WM8991_INPUT_MIXER3, WM8991_L34MNB_BIT,
-+	SOC_DAPM_SINGLE("RINPGA34 Switch", WM8991_INPUT_MIXER4, WM8991_R34MNB_BIT,
- 		1, 0),
- };
- 
+ 	/* ROMIX */
+ 	SOC_SINGLE_TLV("ROMIX RIN3 Bypass Volume", WM8991_OUTPUT_MIXER4,
 -- 
 2.53.0
 
