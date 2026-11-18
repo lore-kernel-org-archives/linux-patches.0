@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043172;
-	b=4zBsWoHXSti9iwY9RDrXMGUpE7rJOnddzKA753eEArbxmTXy1Ud7W8xGebXjTHvrEs25
-	 big4PTKzUAs7tPgUQ9hDNUvzcB/LvxMtMigdYHcUhE/eV2+XxU9jnyw1dEEn5V+vrHlXp
-	 7/dTfKIwmQabsvvcwbURMRcypsAECMLUEAPd7sj7uMsW+vsOWJB80grYD2ik6j7kgfzAs
-	 XbUw76HtipDk3mzq8LK9oLd2SquOmDF6bxgXdHq8QZrJPBtY4erk5FHtTXg95sPZiuWlH
-	 lXn5uqufs2whofJJ0NRj902Kapvgb1gg6okuV6GWbAbEZSxpRivPIqoBil9wH603sVQ==
+	t=1795043175;
+	b=Gxz2OnPGggdL89YSsd6qIeMbz+2G24P/PCJ7ReeNFcSwENgTOZ0Rwo/nb/drKhMuWbCi
+	 xEqE7I+hppGiG781kbLg6tYZCKNr8ssQS2CtLiYxLhvhQXAQXirrrMn4eMV83HZGOtT9F
+	 xdvejNnokFsp2a9pZFmZ6Lcoq3Y5bTHs7p3X9NnIhfUmb9/HAOt8/pdWWjO5fGnWfkJ0n
+	 SmWxr0PP2Tezr1XVF5lSRVFmazWMzcCsRw3nC2ylOQJMivv7rAPBlQ6VHT+N6k4w/6Lg7
+	 LfXkrj2UIJxI98UbQEWmeHjiM3pGAfvEJExMFC+vSN6C3LvxGl2wVe2WeQkhTbzMx6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2aQjos85i+PfAM9x78/nparFfmIBSMG8bHw/xqEwjBA=;
-	b=OZvrNhzvqoy97pWdkTmj/zwSRMWK7XvL8+RoHBv2obaj2Ku7Pchu0x/6X0UYFL6ujNrZ
-	 RDNJG876s5ZU0Np46Ldy7Y8gEJYE2kT1QnNVv0JkFBrVJp37t2a21j/R0g7Qj7OHt+UXk
-	 CqS3yVuHLu6zMPsTrHyp1w59O6UKWwAyhpjbuHNLDMLmCrhIi1IDEWGKBiBAeyli4vdI5
-	 Mi+im7m+aijYoM69IbSkyQuI3v0NVUBx5Fufwow2SOF07jz9a7d4UsCJn7saDmY7F/e9e
-	 YhlZIV5JDbJPQL8MHEdn7raoxbO+9ycNcg9R9uU7yecq7i/M5z9cVU9JhMbh8eCsfJg==
+	bh=HSxS6YdRLX6Ftr8vLI1Rev0EU3gj+tuyJGkG0olA4VA=;
+	b=El15sViLPvh/m4SYFbUML4lFG7M8/Ng9BRCIGCzp4LOPYLoztPmhe32IYvbalIRQgNgC
+	 QJ3m/JLG3EoDroEa53gvAPwYp57rBGA1Kmrg7KQEGTr6Oylx6u1L5ZkWXVugzboNI1tF4
+	 JN2OMhUjTFiMQogeERtb9gnLNu9s7M+3v8ov/+xBSpPDLkQO4C5oHmO8c5OuyleScuO2J
+	 we4VTEpZHMBdGGVAwvSLbo3nMbEmTcl7jnYR1dTM6gXcOVgKflEaCfVEBhWSjooRo4RpI
+	 fAtPEnUiH2rEyJjmhpLUty8zfHnCJm6/brDp+HqpdXt3qZTq3+Qgj34yTIzWtM6RHog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nUKi9kdd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oj6eQNvQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96F5606A32A;
-	Wed, 18 Nov 2026 23:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9695606A31C;
+	Wed, 18 Nov 2026 23:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nUKi9kdd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AD41F000C4;
-	Wed, 18 Nov 2026 23:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oj6eQNvQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FD61F000C4;
+	Wed, 18 Nov 2026 23:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043172;
-	bh=2aQjos85i+PfAM9x78/nparFfmIBSMG8bHw/xqEwjBA=;
+	s=korg; t=1795043175;
+	bh=HSxS6YdRLX6Ftr8vLI1Rev0EU3gj+tuyJGkG0olA4VA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nUKi9kddCwCSNnCcJfhOUh6neUcCudpOTo0O1PcEXKq1qAXef2bWw23IJB3s3lGGx
-	 SuH+OOaPoCnAbSWVyha9XtjBsVrOWdPLs8gLPrKVNttUBn4dl6TOeVI7gufplxYrYM
-	 znFtgNissE373sL44wBOZlj3xWVNOscjV6DyJtqc=
+	b=oj6eQNvQljWvJtUeC1fgqDy2s3luDjWdOll9LPmRSq0BndDB6RZV/w1L2Q/E4Q7N5
+	 +vY8hH4YHvvAON3TXx+JYyYpLNDA+kbZjvVcXC4H2+FzwH+zzNjJf+MnwVbPb7fSnW
+	 CeDC6EzEDzGXcVn8jz1mdmamkZLCUSt9f3ZSRNRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0117/2857] misc: hpilo: validate device queue entries before use
-Date: Wed, 18 Nov 2026 15:19:11 +0100
-Message-ID: <20261118150205.569133988@linuxfoundation.org>
+Subject: [PATCH 6.1 0118/2857] greybus: manifest: validate string descriptor header
+Date: Wed, 18 Nov 2026 15:19:12 +0100
+Message-ID: <20261118150205.606452450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,48 +67,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 7bf6940d7cf41f1f0330a9bae4b7a886e18fd8e3 ]
+[ Upstream commit 18b6510f642dbcb856c3af8be974d1600f3ba2d3 ]
 
-ilo_pkt_dequeue() trusts descriptor IDs and lengths read from the shared
-FIFO entry. A bad entry can select a descriptor outside the allocated
-queue memory or report a packet length larger than one descriptor.
+identify_descriptor() computes a string descriptor size from
+desc->string.length.
 
-Reject entries whose descriptor index or packet length exceeds the queue
-layout before deriving the packet pointer returned to read and write
-paths.
+Require the descriptor to contain the fixed string descriptor header
+before reading the variable string length. The existing descriptor-size
+check then reports the short descriptor.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260624190919.3432-1-alhouseenyousef@gmail.com
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260706091935.78020-1-pengpeng@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/hpilo.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/greybus/manifest.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/misc/hpilo.c b/drivers/misc/hpilo.c
-index 8d00df9243c43..64795066e196f 100644
---- a/drivers/misc/hpilo.c
-+++ b/drivers/misc/hpilo.c
-@@ -158,11 +158,16 @@ static int ilo_pkt_dequeue(struct ilo_hwinfo *hw, struct ccb *ccb,
+diff --git a/drivers/greybus/manifest.c b/drivers/greybus/manifest.c
+index dd7040697bde9..469da3f39afb4 100644
+--- a/drivers/greybus/manifest.c
++++ b/drivers/greybus/manifest.c
+@@ -122,6 +122,8 @@ static int identify_descriptor(struct gb_interface *intf,
+ 	switch (desc_header->type) {
+ 	case GREYBUS_TYPE_STRING:
+ 		expected_size += sizeof(struct greybus_descriptor_string);
++		if (desc_size < expected_size)
++			break;
+ 		expected_size += desc->string.length;
  
- 	ret = fifo_dequeue(hw, fifobar, &entry);
- 	if (ret) {
-+		int pkt_len;
-+
- 		pkt_id = get_entry_id(entry);
-+		pkt_len = get_entry_len(entry);
-+		if (pkt_id >= NR_QENTRY || pkt_len > desc_mem_sz(1))
-+			return 0;
- 		if (id)
- 			*id = pkt_id;
- 		if (len)
--			*len = get_entry_len(entry);
-+			*len = pkt_len;
- 		if (pkt)
- 			*pkt = (void *)(desc + desc_mem_sz(pkt_id));
- 	}
+ 		/* String descriptors are padded to 4 byte boundaries */
 -- 
 2.53.0
 
