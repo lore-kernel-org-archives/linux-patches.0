@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040513;
-	b=CPZvCWm+LItMBG0GF5YO2viJfH/lEtAEjuSDOtCcKoT10zscx5h0WvVFwnrSLgL7vSNp
-	 rLxFKydsCLh0t8x1crbgToRGrJTPb/T8hcGSaj8XfT+b/AlZXs3sG9mECYtQ5Z+IJPnvn
-	 OcBg3JLKgkelckoBaZ3+1tpjtAPDGTiR/+NNLuCHf4xYcmjZkkt90/+ljANI1UCOMDDiQ
-	 +znoiaX/fbEI6ThKkyUIk3I+Sc/fwrsjWPXuWNrW7XFmY3IPRl+j0Ym+hSU5N9fHEGFsT
-	 nCK3H2RyNvuF4lZNlHebqlNvFB7OFBPsa1gqZtzqdv1OKiL9HHkVNEv6Avukaur7ifg==
+	t=1795040516;
+	b=a885LF3NmhkdUcAFlNfdtHtLmPgVTXwAWzDql29CCDSoAuGlYjPFLGcbkU6rQdf4YVAy
+	 vxF3zUrN3rmf0uVsVsu6+ptELcP0UN8NLJWUhCq2YFanefPuGwzpNwfoyOBXBKvVMbDad
+	 BkoZb5i5eIAB/KfUIINeheVnUj5LF+Sy5Nc6gXHT/AAWzPyhIrMadXtQR1JOwQReIOF6R
+	 JFORwS0I07XZffuR8H2BYBH0h0WNr7U5ktVGcnvBe/ejj1ViA0ww20eABQayXXNVm6VDH
+	 kD3oYEBU+PRU2zcq/AaJaP4VIJL4w3QmyUjCbRiUgwgxmp0drO1Mh3L5zHWx5ZEzySg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040513;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040516;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dsU7ZN7QAV2eJlfZTVItBYcf4lahM3DnYtQej+npT8I=;
-	b=1Czgnw8R26EKrlttGnURhtlxyPOMPwdACyYjNlYOiqYoDPqhE0eTTiuOxshfHIhdFxcF
-	 oepLYkyWVwhT7SGKOSNlbT0iEV0B3UOgQqDIeHvJM9+2b3GAaARQdo5ezTActpH9+rAmN
-	 Q168H7016A65T/G9HrK1yfYemFOJqPsGsMGeelIOTH+dILYbC6wgjAn5T4eRpav2dyx38
-	 IGTFjdwr2UYZPExlNyHtMF9KSSp7kq052xvXst6KCr3Is9So1GtKaPHZU+juq2pyDf5gD
-	 Zv0klMivsD6wfG8ESxg8nsC13Tgo3SKBf/q2nTckOsGqp3cj/UWYs+JoR2aGEYrxhNQ==
+	bh=LzkIiePmclYwd/VcMy6pqlCqJKixxNsbuZKDPSkaH6U=;
+	b=n64brl70N8Erw0eIV7ldu6xkn6jVv6q8TE+bi1YIF+vMDaUNTxLsWyyKDpzfXCnbClmh
+	 G96iSbKPfx4adUaMUNufxbirJywOd540JRGRhidmar9anelyMaYKqzly9hlNSnQd97UYj
+	 E9bNF7LzT1/dJoDPUmifJKpcGP2ZZK9PD5UuBx4hByke0f1cbcCMarq1KQPImUWlZGxGT
+	 cUZB+8+2j/G8WPqiUtZ98W06WMfwMTl0jznzJKbMmR6UGH9xh9ZvVaeB+nU4AP/bUA1PC
+	 qx2UwmvjN41t5AjLSzflhP6VqS1Zc7qlXSXYsb62nsi3pW8VvEqkP2xIZiLX67vXiqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kx7bimlm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0YJDy3Y4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F047606A320;
-	Wed, 18 Nov 2026 22:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCE5606A320;
+	Wed, 18 Nov 2026 22:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kx7bimlm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECFE1F000C4;
-	Wed, 18 Nov 2026 22:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0YJDy3Y4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18C11F000C4;
+	Wed, 18 Nov 2026 22:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040513;
-	bh=dsU7ZN7QAV2eJlfZTVItBYcf4lahM3DnYtQej+npT8I=;
+	s=korg; t=1795040516;
+	bh=LzkIiePmclYwd/VcMy6pqlCqJKixxNsbuZKDPSkaH6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kx7bimlme9+poGO2B+I4Lubv6yqsU7VKwWv/uigrptHWjaToYSx6M1DF28VnUOqn/
-	 E1KqURcyQsE7/vUchfdu/PFTXOHYDC6qQ1IDZWLxbRllVkW0scP1du1bJFF2jJw7Qe
-	 nDj8oRfmrWadONMDkrgbfm0qtn++tBDkcL8cQPhM=
+	b=0YJDy3Y4u274186QlTsNvvC6igboQMVnKuK0t0JR5btWRoO0Bx7ZPkF4u3DfVPePB
+	 V3z1qIpXN661lvu8wS/uHsk1iDtid7KPE6gPmCzZL2QeY2LLp8JtPiMJg0JUfIJZFj
+	 d8st8M1bzmubJJUd79PSrouVwjIoSkDmFoq1o+yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2483/3318] drm/msm: Properly handle msm_ioremap() without name
-Date: Wed, 18 Nov 2026 15:51:45 +0100
-Message-ID: <20261118150435.897061213@linuxfoundation.org>
+Subject: [PATCH 6.6 2484/3318] dt-bindings: display/msm: hdmi: Correct name of disallowed supplies
+Date: Wed, 18 Nov 2026 15:51:46 +0100
+Message-ID: <20261118150435.924715580@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,48 +71,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 14fe0ea79e0e25efc603f6f4bc81cb5b813f0e69 ]
+[ Upstream commit 3309f5c888602c647f50c1921c9b60759fa86c21 ]
 
-msm_ioremap() accepts being called without name of the region to map and
-in such case maps by index 0.  However error paths still use the name in
-error message.
+There are no properties in DTS or Linux drivers called
+"core-vcc-supplies" or "hdmi-mux-supplies", so the binding probably
+wanted "-supply" properties instead (which are defined in the top-level
+properties of the binding).
 
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
+Fixes: 2f14bc38d88a ("dt-bindings: display/msm: hdmi: split and convert to yaml")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/752660/
-Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-5-87bdb9f1987f@oss.qualcomm.com
+Patchwork: https://patchwork.freedesktop.org/patch/752661/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-7-87bdb9f1987f@oss.qualcomm.com
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_io_utils.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/display/msm/hdmi.yaml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_io_utils.c b/drivers/gpu/drm/msm/msm_io_utils.c
-index 59d2788c45104..aa8b6971cb801 100644
---- a/drivers/gpu/drm/msm/msm_io_utils.c
-+++ b/drivers/gpu/drm/msm/msm_io_utils.c
-@@ -64,7 +64,8 @@ static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name
+diff --git a/Documentation/devicetree/bindings/display/msm/hdmi.yaml b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+index 47e97669821c3..80c642e05cf91 100644
+--- a/Documentation/devicetree/bindings/display/msm/hdmi.yaml
++++ b/Documentation/devicetree/bindings/display/msm/hdmi.yaml
+@@ -127,7 +127,7 @@ allOf:
+             - const: core
+             - const: master_iface
+             - const: slave_iface
+-        core-vcc-supplies: false
++        core-vcc-supply: false
  
- 	if (!res) {
- 		if (!quiet)
--			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n", name);
-+			DRM_DEV_ERROR(&pdev->dev, "failed to get memory resource: %s\n",
-+				      (name ?: "#0"));
- 		return ERR_PTR(-EINVAL);
- 	}
+   - if:
+       properties:
+@@ -149,7 +149,7 @@ allOf:
+             - const: core
+             - const: alt_iface
+             - const: extp
+-        hdmi-mux-supplies: false
++        hdmi-mux-supply: false
  
-@@ -73,7 +74,8 @@ static void __iomem *_msm_ioremap(struct platform_device *pdev, const char *name
- 	ptr = devm_ioremap(&pdev->dev, res->start, size);
- 	if (!ptr) {
- 		if (!quiet)
--			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n", name);
-+			DRM_DEV_ERROR(&pdev->dev, "failed to ioremap: %s\n",
-+				      (name ?: "#0"));
- 		return ERR_PTR(-ENOMEM);
- 	}
+ additionalProperties: false
  
 -- 
 2.53.0
