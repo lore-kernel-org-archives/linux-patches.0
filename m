@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039626;
-	b=ciBDVla5UpubOvvoNGTHSfePg4tjJ5pNNb+SWEEZZ2iM70XYYSjHgxEZajYRgAYnvfUi
-	 FsG2lHflKuhmgXtgGMMnFIuXXuCN48lTfgHLwPVRPNub09EJmiWNEYdRWz8IQWPo/+eA9
-	 5SYzAsLT2PtbUaj1NAap6qv8ZnYY96pDM1vk5z7UKQ3eW4FruGt4qv7yoT8z275Dt6xzP
-	 XemHmekTQ6t4Dactr2nz9UqawfVpp2Ro6uuZDCmITf3GljgL9KpG2ikvD+7gwENkVqWlL
-	 L0QDaudWXsJFBRmdvGAoSzyncReAGod/JPk8iSwdGlOr3TuqopqaN5I9YA3YDu3fZRQ==
+	t=1795039629;
+	b=pcARChx7U9pMrVWfXTlyQS/raASsw7hmVH29bbMgiz+BSOn7rc6Q8U+UZ1Lhq1+1vQsN
+	 H1mhWwQilNNdDBGPWcdSWUxRG/biFhTGI6gjlszo2fdyq1t3aXjXqxxonhUSdGxLUx+H3
+	 i3yLxRVqYZAi+Qyvd+360whgfROUdHmqKysZNyEMZQIyLaTPAQ0PGkj/DiwbckURp3W3G
+	 VE4Lp6kUlvMVAAK9DwI23XC8X0wUJ7KMXDTN2gjSx7v78Du6uABXrVqU0i+dNHgEbk3pu
+	 Z0d2Uh+Dxo9m9wGDKYkAaKc7fplXg8C7uzbuSF/p/ka9DftGKde1s8421P6Sm8QeFzg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039626;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039629;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5CrWsaE//F1lT+QyFDZKP11/kyrtx2Nf/xwnaSW7T9w=;
-	b=c2x95XsNr/HCHJGEd4L/GDTyr+JI5Un6bsjB9yxbXms/6YLDaomayp8UJLX2nGPrY2bj
-	 04o1GEEqLJF4Bvfcr390TsuJ3jKjuEEPTww9bQ/0Njpt1NMkvAFyS+0SrWhCLy39CUHEu
-	 YKwT6FlNBk3cXN3SI2CQRfSWSTtlXuAy9IdvLZZNFYqlT2qS4iVGFrr6TNZ2T+9Akb3mF
-	 JCZvOTC/NaDbtXb1WCDZr7MxPEeU3otvvNBkTtISEienl5VCh6OtOqfKP4ONoVL4Y3au/
-	 9zYYtq0KA2yWopaTzxyVyDlac0gC2OCtr8ywiGHCIw7MJKzmMSIUnKhXo7ga0q9frLw==
+	bh=cTKP+e6Y3qdQJvc48HES1j4Xk9zTlb3FT1z/CRGFC9g=;
+	b=X3DJ7slEXxWCOfr+RW9S9el8uFD/2j9L9PhH5/x66GW0TaG72LqlwugjuCeVzBwQAXM8
+	 LHq0RcRHP21SZ+oBqNx3BiZxbSD/D2CF7KHbLj/0hviFZ0yhJ6rHZUoC75MTWPQuNU6ik
+	 8U/X1h5GZIgWuvMAPSuNenYuKSeHnnbBYBSgN8HGmAkG0oq0mH+skv3UEzj/ZwaBrWn3t
+	 YYxMYxLAI/niMezLfxNDLMkfSfRapBxAeQWlGFxp9BYf/kkJvkZlTh9/yukBUfAacauC3
+	 OVuwgfJTjkBa0QKfIY3EWNllTpnoCzHECBIsfR5QKIlfMemhcYYAcS/iZ2xmUt/H7Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CmYaUL+w;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdgXLhIU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C0C606A320;
-	Wed, 18 Nov 2026 22:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0BA606A320;
+	Wed, 18 Nov 2026 22:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CmYaUL+w
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388EA1F000C4;
-	Wed, 18 Nov 2026 22:07:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pdgXLhIU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFD21F000C4;
+	Wed, 18 Nov 2026 22:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039626;
-	bh=5CrWsaE//F1lT+QyFDZKP11/kyrtx2Nf/xwnaSW7T9w=;
+	s=korg; t=1795039629;
+	bh=cTKP+e6Y3qdQJvc48HES1j4Xk9zTlb3FT1z/CRGFC9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CmYaUL+wALhnejyIAlFZah16yEiSbCXZO8wEqx+GhqGu7XqeR0kHhFXZeTy6CkCEI
-	 78wqdGpnzJUAa515KX4WdRsIeCXIBU7Uc0MLzw3mIwFhRehnS7MjxBhhyjqcom1hG5
-	 mQGMmnCLWBrnwBZzILJ3aSGg1MKACWEGFFw2Yz90=
+	b=pdgXLhIUpTHMKGNGgAYciZflrC+9kv7g0ZNUccc3+zpkAhGVTzlgpfs52Yo9v/CMB
+	 bjMRrRHVpOBAsJlVeh/67RjRuE1Q2tnNddg7WI+DQqpmowK+D4lPzgHx08OVHKzVv/
+	 14oeZ/HTd35ivTXGc9Bp4L6mh+uLFYQpgmHwJmto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2141/3318] RDMA/hns: Fix GID capacity loss in 64K system
-Date: Wed, 18 Nov 2026 15:46:03 +0100
-Message-ID: <20261118150426.287975391@linuxfoundation.org>
+Subject: [PATCH 6.6 2168/3318] ip_tunnel: use WRITE_ONCE in ip_tunnel_encap_setup
+Date: Wed, 18 Nov 2026 15:46:30 +0100
+Message-ID: <20261118150427.035579020@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,79 +69,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 95761b8736c938759032e8d4eb42074d39d13007 ]
+[ Upstream commit 88b84cae6b94087d3a9679845fe28ad19c7bef8b ]
 
-Our HW always handles GMV BT pages with a fixed 4K size, but the driver
-calculates the needed GMV BT pages number with PAGE_SIZE, which is 64K
-in 64K system. Only the first 4K (GMV index 0-127) can be reached by HW,
-causing GID capacity loss and memory waste.
+Update ip_tunnel_encap_setup() to use WRITE_ONCE() when writing
+to encap fields (type, sport, dport, flags) and hlen fields.
+This ensures that concurrent lockless readers (like fill_info)
+do not see torn writes.
 
-Split a single 64K BT page into multiple 4K pages and register them to
-HW per 4K block so that HW can correctly reach all GMV entries.
+Also remove the unsafe memset() on t->encap which could cause
+concurrent readers to transiently see zeroed fields.
+Removing it also fixes a bug where t->encap was left cleared
+even if ip_encap_hlen() failed, resulting in partial configuration.
 
-Fixes: 32053e584e4a ("RDMA/hns: Add support for filling GMV table")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20260907084901.2420703-4-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 56328486539d ("net: Changes to ip_tunnel to support foo-over-udp encapsulation")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260907075846.2913645-4-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 37 +++++++++++++++++-----
- 1 file changed, 29 insertions(+), 8 deletions(-)
+ net/ipv4/ip_tunnel.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index ef702fd9854b7..2b8afc6fbe87a 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -4049,18 +4049,39 @@ static int get_op_for_set_hem(struct hns_roce_dev *hr_dev, u32 type,
- static int config_gmv_ba_to_hw(struct hns_roce_dev *hr_dev, unsigned long obj,
- 			       dma_addr_t base_addr)
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index d250ed84f32b4..77376d0241232 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -490,19 +490,17 @@ int ip_tunnel_encap_setup(struct ip_tunnel *t,
  {
-+	u32 obj_num_per_bt = HNS_HW_PAGE_SIZE / hr_dev->caps.gmv_entry_sz;
-+	u32 chunk_size = 1 << (hr_dev->caps.gmv_buf_pg_sz + PAGE_SHIFT);
-+	u32 bt_num_per_chunk = chunk_size / HNS_HW_PAGE_SIZE;
-+	u32 first = obj / obj_num_per_bt;
-+	u32 last = min(first + bt_num_per_chunk, hr_dev->caps.gmv_bt_num);
- 	struct hns_roce_cmq_desc desc;
--	struct hns_roce_cmq_req *req = (struct hns_roce_cmq_req *)desc.data;
--	u32 idx = obj / (HNS_HW_PAGE_SIZE / hr_dev->caps.gmv_entry_sz);
--	u64 addr = to_hr_hw_page_addr(base_addr);
-+	struct hns_roce_cmq_req *req;
-+	u64 addr;
-+	int ret;
-+	u32 i;
+ 	int hlen;
  
--	hns_roce_cmq_setup_basic_desc(&desc, HNS_ROCE_OPC_CFG_GMV_BT, false);
-+	/* The GMV BT entry of hardware covers a fixed 4K region, so a buffer
-+	 * chunk larger than 4K must be registered to hardware with one BT
-+	 * entry per 4K block, otherwise the GMV entries beyond the first
-+	 * 4K of the chunk are unreachable.
-+	 */
-+	for (i = first; i < last; i++) {
-+		hns_roce_cmq_setup_basic_desc(&desc, HNS_ROCE_OPC_CFG_GMV_BT,
-+					      false);
-+		req = (struct hns_roce_cmq_req *)desc.data;
+-	memset(&t->encap, 0, sizeof(t->encap));
+-
+ 	hlen = ip_encap_hlen(ipencap);
+ 	if (hlen < 0)
+ 		return hlen;
  
--	hr_reg_write(req, CFG_GMV_BT_BA_L, lower_32_bits(addr));
--	hr_reg_write(req, CFG_GMV_BT_BA_H, upper_32_bits(addr));
--	hr_reg_write(req, CFG_GMV_BT_IDX, idx);
-+		addr = to_hr_hw_page_addr(base_addr +
-+					  (u64)(i - first) * HNS_HW_PAGE_SIZE);
-+		hr_reg_write(req, CFG_GMV_BT_BA_L, lower_32_bits(addr));
-+		hr_reg_write(req, CFG_GMV_BT_BA_H, upper_32_bits(addr));
-+		hr_reg_write(req, CFG_GMV_BT_IDX, i);
+-	t->encap.type = ipencap->type;
+-	t->encap.sport = ipencap->sport;
+-	t->encap.dport = ipencap->dport;
+-	t->encap.flags = ipencap->flags;
++	WRITE_ONCE(t->encap.type, ipencap->type);
++	WRITE_ONCE(t->encap.sport, ipencap->sport);
++	WRITE_ONCE(t->encap.dport, ipencap->dport);
++	WRITE_ONCE(t->encap.flags, ipencap->flags);
  
--	return hns_roce_cmq_send(hr_dev, &desc, 1);
-+		ret = hns_roce_cmq_send(hr_dev, &desc, 1);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return 0;
+-	t->encap_hlen = hlen;
+-	t->hlen = t->encap_hlen + t->tun_hlen;
++	WRITE_ONCE(t->encap_hlen, hlen);
++	WRITE_ONCE(t->hlen, hlen + t->tun_hlen);
+ 
+ 	return 0;
  }
- 
- static int set_hem_to_hw(struct hns_roce_dev *hr_dev, int obj,
 -- 
 2.53.0
 
