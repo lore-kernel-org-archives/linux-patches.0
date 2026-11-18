@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022956;
-	b=TPLxHqCvd0jpap3mTf6P2FvkHyJFpzWZe8ZppCafXqa2jxCHhzDUVeDPH1phLT1d4e9V
-	 8I374ICnhnCraBrTPT7WC4fvGAtH2YSyyfSYgO/SvXJCrdpmkMxLXvUBRslTQkRahoG/C
-	 s5ks5rr6+yeAxXPX5CH25vkajYy5KP5clmkRLAS/yVxLxLLBDNZsgXd2w4dJ62/y+emw1
-	 XsjntjPdCegP1emGgOj4iRYE8UtfdoPs3h+BftCk9smcz7NH8OtCNPJQASDLDj4lV84kZ
-	 GfInd6i2RT+7/S6pk0KmtguEiB85dzLOciaqk9l5Wtm8eb1mwBkRepVeH9ioj/lrMPg==
+	t=1795022958;
+	b=a/fIfpJtH8hopdte/cFcsgXOKAuU6wBG57IytXPV+0r8UoIZ+2WK49iy7oNNhLyasUO5
+	 srBQyPgZjr3n4PRd/4rdGi+hUqQ3dx5bl2BRvkR9cCyS4by6GPOi1spBWdbW4VdPx9Uu5
+	 AM98S+RgozNNFn7LYX45xQG3iU4DW7MFuQgPD9uHSGdY/PX8c6fNM6R/i3Y5RTzfDfvjJ
+	 CDdtFMkQ8FC+vrMz1xKgi2sbwYRGIPvIe/PGjRoxvWGmYj9NiaR8PKyWU5OYOyCh3/CA9
+	 qvfp9e0s5xtGz6DtZoISVSZNA8K42WWaJkGrUiBKjD2tkRuz/wSTfHaYrGqw7LEeRWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022958;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=T3VLoKkp4VLl7Di+Beux93VttZ+ZyddUnIHB3Rb6aYw=;
-	b=p8nkVOuH8k5iIHzHRBImu+9DBCcVGggj0NhRXuj7rGnW+ZVN/GnOp3qwAgKnEE55Aqg6
-	 oqBU7WvEYhW2FK0Fh+dZcXa4Tzi1mMtinNoQc6G1n4OxWawdAvPsnYGAtQ0OWPeb0M9ty
-	 z0HJ7qh26eOqh9o0EP7g3okj3pb+6KnOlSoBcAwj6R/go7mXW9UjdV8K0vKFDDK8gAhhM
-	 8Q4hvBX3lF63KXS8S1XE5T9aHke4mCtUO53DcnKSAgFSk0QuvOU2y4WRvrhUTAlvbz/fu
-	 2GnsUXgDVZGrth7BuprgQf7qCL0SX6jbABxvxRu/bUU9J1OEAhmiBP9qD6t/2kLSXkQ==
+	bh=JEgbPbWIvVZe/KeQ/oC0LWITxbHEoh+HK5ATcbyozds=;
+	b=O14QgsbeSeTT3+0aNd+44xWAnSQZCOxbC4GpnUSZm3vg1JCMmwGEzgu8ws6abnG+DFiA
+	 DnhZUGq8Kx/YGEEFHp8ozpZqCO46rLiYONHEmiBxcuDt6aM7DE3of9qDBXwS8hGTHFDyA
+	 JDLWB5vsUgUSdHd/JjkJR4Pc8cwNXMV060GMRqf2AlhUaJQUCKrpJpf1+lMmt0d8QZnVD
+	 TW3+Oj5UeLcqJAEDVbd9y4SchmY4b7ynj2sDzNRnKEnKJkPoPiq1IpCz1qIw2F06yom11
+	 u0xCjqKjOfLv9ba4WyfOOWdStoHSR9caGPRH4oYH3OnGwhBW5Hk/UbcXehxJgrxeq8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WyOugrr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+TF8IQP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B63606A32C;
-	Wed, 18 Nov 2026 17:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF7F606A74A;
+	Wed, 18 Nov 2026 17:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2WyOugrr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596AD1F000C5;
-	Wed, 18 Nov 2026 17:29:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H+TF8IQP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2F91F000C4;
+	Wed, 18 Nov 2026 17:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022955;
-	bh=T3VLoKkp4VLl7Di+Beux93VttZ+ZyddUnIHB3Rb6aYw=;
+	s=korg; t=1795022958;
+	bh=JEgbPbWIvVZe/KeQ/oC0LWITxbHEoh+HK5ATcbyozds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2WyOugrrTE28Zkbyh2QKIidWJJV4xra8LZoP84b2IVRtnS/tUUXssXALH7B3IdYdl
-	 ynp6eiESugUo4JRBqqBQMVFxaWNQQpsHOhN0dOMzo69V8VwssczJk/mR9t7O+HenVT
-	 dbnOHhJvgKFldT2cnxs3Fao1mCCfKGvyVZx3cuGQ=
+	b=H+TF8IQPcrLqQ+cRoc70C438hZZYIMzByvLZNKy6X+AoeWl9IfogYGCqWsOXPmd51
+	 k2UvQquug0sjungRlVJMP7N0wXtMB9yII7s/bBhLTV5Sc+pdRWLDbPataAyP+Ikh/q
+	 DHkIoUgtcoOtJ6LUc+FBi1Rn/Z3zGFmkaW9ry8CE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	John Stultz <jstultz@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Alexander Aring <aahringo@redhat.com>,
+	Danila Chernetsov <listdansp@mail.ru>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0198/2151] sched/core: Dont steal a proxy-exec donor
-Date: Wed, 18 Nov 2026 15:32:13 +0100
-Message-ID: <20261118150128.996542796@linuxfoundation.org>
+Subject: [PATCH 6.18 0199/2151] dlm: validate lock modes in recovery messages
+Date: Wed, 18 Nov 2026 15:32:14 +0100
+Message-ID: <20261118150129.033302037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,48 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 3dd95f077371f5def65a91c4bb13bd574a62bc3a ]
+[ Upstream commit 7bf1aca6d626944091a5cb218b4e487547edff0a ]
 
-try_steal_cookie() avoids stealing src->core_pick and src->curr before
-moving a task with the same cookie via move_queued_task_locked().
+The DLM recovery path restores lock state from rcom_lock messages
+received from remote nodes. The lock modes in these messages are
+copied directly into the local lkb state without validating that they
+are within the valid DLM lock mode range.
 
-With proxy-exec, src->donor is the current scheduling context and may
-differ from src->curr. Stealing it migrates a task that the source rq
-still treats as current, leaving src's scheduler state for that task
-stale. For CFS this means cfs_rq->curr points at the stolen entity,
-and the next pick on the source rq hits the WARN_ON_ONCE in
-put_prev_entity().
+The rest of the DLM code assumes that lkb_rqmode and lkb_grmode
+contain valid lock modes. In particular, LVB callback handling in
+dlm_may_skip_callback() uses lock modes as indexes into the
+dlm_lvb_operations array:
 
-Commit 7de9d4f94638 ("sched: Start blocked_on chain processing in
-find_proxy_task()") tweaked the fair class logic so that the donor task
-isn't migrated away while we're running the proxy. Do it similarly for
-try_steal_cookie() and skip src->donor as well.
+    dlm_lvb_operations[prev_mode + 1][mode + 1]
 
-Fixes: 7de9d4f94638 ("sched: Start blocked_on chain processing in find_proxy_task()")
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260807035232.1881495-3-jstultz@google.com
+An invalid lock mode received during recovery could therefore result in
+an out-of-bounds read during subsequent LVB callback processing.
+
+Validate rl_rqmode and rl_grmode before storing them into the local LKB
+state. This preserves the lock mode invariant required by the rest of
+the DLM code.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e7fd41792fc0 ("[DLM] The core of the DLM for GFS2/CLVM")
+Acked-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dlm/lock.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index 57ba5fcff1339..824888693c414 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -6292,7 +6292,7 @@ static bool try_steal_cookie(int this, int that)
- 		return false;
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index a393ecaf3442a..9be5b26f75314 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -5529,6 +5529,10 @@ static int receive_rcom_lock_args(struct dlm_ls *ls, struct dlm_lkb *lkb,
+ {
+ 	struct rcom_lock *rl = (struct rcom_lock *) rc->rc_buf;
  
- 	do {
--		if (p == src->core_pick || p == src->curr)
-+		if (p == src->core_pick || p == src->curr || p == src->donor)
- 			goto next;
- 
- 		if (!is_cpu_allowed(p, this))
++	if (rl->rl_rqmode < DLM_LOCK_IV || rl->rl_rqmode > DLM_LOCK_EX ||
++	    rl->rl_grmode < DLM_LOCK_IV || rl->rl_grmode > DLM_LOCK_EX)
++		return -EINVAL;
++
+ 	lkb->lkb_nodeid = le32_to_cpu(rc->rc_header.h_nodeid);
+ 	lkb->lkb_ownpid = le32_to_cpu(rl->rl_ownpid);
+ 	lkb->lkb_remid = le32_to_cpu(rl->rl_lkid);
 -- 
 2.53.0
 
