@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049047;
-	b=WPXzhUTeCB8gqWZBGqFd9ZhcJeij+Pp1lM/3tlRlvtj632Ule5EkvlnAS1EVdDncshET
-	 AHozofKWtC3dy35+j6p62mO0BlMsiG16W1r3CQxF2ZjqGC6tJXmfz6M5/g86C6kGqR7fI
-	 +NeVg+3gstoA1hzZRIah5wia+uHTkcpxlE9Z6l+w3BMVzKZ0hEnoSV408FtymvJMVh1QY
-	 CAz7+Fw5BpXK+K2+k7SQaeK8dZxBX7KG1p55tkJpI+PfVusWrtakS7RY2V1m6GLaVkyfd
-	 gy+fL2tdZ/FqmBv90QCeCmQkWFp48meLjZSWYSgFW1ety/CCnhncxyTAbOqPdLEwTWw==
+	t=1795049050;
+	b=4DwAz6jn92rD2s2RBioRr+e0htGsW7ZrQ3oFHCD9Xk56S1UL1mBsMvnpMug+D8DU+P8x
+	 13ccAtlzB6V/9X0FpYlaKO3Cwm9AIPna2yLM7B8VxwtKIhvi5XpEl0RvHxPAB2WNdx6wI
+	 EaEkQoSu7f7XPM9tby0cS3eoJAYhS4/MF3dR8FEkOKNpAt+MIY3A1dBs1ALRiol1m4G+7
+	 cXl9khz1Mk9cSjy8UXkGa2iYXiNQy+uZq+2oOZmNKQWRMVQ2MQ/hPREVkTirJpSNcsb2b
+	 /jw4z6mrmM2CqNdsQMO3L37zBUflf+lrqwftxd3aOW/GfQqkTQVylvyx67mgn0X6WNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049047;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049050;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6Q7fCmwqqxOfoqM2Ub7Ag2wJwP7ysiHunRyWwGk869w=;
-	b=cigNgo/l6RUwmWwGaOS2B7xJHZd0ysth1exBlrUduFNz2o7ZCtv6WZaKlnjBrOg2ygUs
-	 D1N0BJIbXMuDLxL/zzYNs1eblSzgIsZ/TPlFqvyTirZ1VgBq3JGvACjYIDImPAOUBiSHk
-	 1ovXV6M6LC/aCkNxYJkDsTd/nMuqgI+9RhmTutAXjs3sls+VRNlTWe/seGbMeJZCIUeCn
-	 gsF/ZP8hKCxhDbkM851rkfbe0VRFSTLZfZm+dhyxRkck3rBhNPDqVqBCCntYJyqNfpnOT
-	 fGS5ds/XF8eaQXfSkFDTBGzsf5oNUzDXTwx2O3ZZoiBazYgKa+pZQePCN7Uaibg3jwg==
+	bh=oFhH9d5SD4Vk8E157QB/1Ayj8Y3UEddkqLE7cwxk+vA=;
+	b=ekxGUgVNLL/ImLdOyqRfIGPjVOamMCnYmaOuf0RyTb6UJsYpyFVSCYtw8DkrYaJ37+ZC
+	 7GkJa1fuH9Fw4vvX1FzPFm+miuY3O2L4/gjabja6BkTvMn5qzPaIbzPOXkdyPuyw+Gjxy
+	 diemFyfoS2BdTiODgtOzlPTeU50sNRwgwoZ0Gz2OwvvUkfR6rCenTuyvmB/+AjBbcPdBn
+	 KWIKFMk+XlsRGTG7++NBd1ALYWDL41zkvH/iYs0rnTV57xMK+rEM/j1D9QBJHG2x6nwDp
+	 MRlaU8sfoLubfVNxQHJHSQ5TVNWiHKc+6la2maLZfIEFKSysZ3kO/TfoWJ5hTikjA4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PRCuQXxf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0JiwJmw1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28481606A31C;
-	Thu, 19 Nov 2026 00:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EBC606A320;
+	Thu, 19 Nov 2026 00:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PRCuQXxf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC8C1F000C4;
-	Thu, 19 Nov 2026 00:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0JiwJmw1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5172A1F000C4;
+	Thu, 19 Nov 2026 00:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049047;
-	bh=6Q7fCmwqqxOfoqM2Ub7Ag2wJwP7ysiHunRyWwGk869w=;
+	s=korg; t=1795049049;
+	bh=oFhH9d5SD4Vk8E157QB/1Ayj8Y3UEddkqLE7cwxk+vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PRCuQXxfumvBtZfD63E+mYxFN8vGymvWG0DGdiI44N+hojBX7GCvbqN8FHNUvYJrl
-	 NrYRM7JrGyMN5zFnbadQe9TBMY49ubYnQ6xYahMlWSps5bWHW1O82Tbm6gpqjB3sv8
-	 xYms8B5F9FIedx3ohUjKEqEm7oqfNGQEspRTvIoQ=
+	b=0JiwJmw1wW5cDOcxVqc/ZjE5mBOfF3Ny22eJ7eiw3aN728tu3pr9fiLgyj+XfelY5
+	 EaxvIbLHVQ4r5QJFuJMuMOSREkftWUZYm75eK9iStJ053eRXYFeQnwEmQ2xOTnPhK4
+	 gm9yQLPjjluvNRd9fvuBefIFj1N9vTVcXnVfLx3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2212/2857] power: supply: ab8500_charger: Skip absent AB8505 main charger
-Date: Wed, 18 Nov 2026 15:54:06 +0100
-Message-ID: <20261118150321.064324612@linuxfoundation.org>
+Subject: [PATCH 6.1 2186/2857] drm/msm/dpu: bail from _dpu_core_perf_crtc_update_bus if there are no ICC paths
+Date: Wed, 18 Nov 2026 15:53:40 +0100
+Message-ID: <20261118150320.116262175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,85 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 52c8cdcc1146d86fae524a589d4512c8d59ea8b4 ]
+[ Upstream commit 808c92df654a55251da7d85734f8a8842b1e465d ]
 
-AB8505 contains only the USB charger. It has no integrated main
-charger, main-charger status register, or main-charger interrupts.
+Skip bandwidth aggregation and return early if there are no interconnect
+paths defined for the DPU device.
 
-Avoid reading the missing status register, requesting the five missing
-interrupts, or disabling an AC charger which was never enabled. This
-lets the driver bind using only the AB8505 USB charger resources.
-
-Fixes: d4337660d069 ("ab8500-charger: Add AB8505_USB_LINK_STATUS")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-11-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/550195/
+Link: https://lore.kernel.org/r/20230730010102.350713-3-dmitry.baryshkov@linaro.org
+Stable-dep-of: 480ba24aa340 ("drm/msm/dpu: compute the CRTC bandwidth from the state being checked")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 32 ++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 0b83dea6393a9..d9543bb074083 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -680,16 +680,19 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
- 	int ret;
- 	u8 val;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+index 7f7557e17fafb..8d1529335a5b9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c
+@@ -217,6 +217,9 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+ 	int i, ret = 0;
+ 	u64 avg_bw;
  
--	/* Check for AC charger */
--	ret = abx500_get_register_interruptible(di->dev, AB8500_CHARGER,
--		AB8500_CH_STATUS1_REG, &val);
--	if (ret < 0) {
--		dev_err(di->dev, "%s ab8500 read failed\n", __func__);
--		return ret;
--	}
-+	/* AB8505 has no integrated main charger. */
-+	if (!is_ab8505(di->parent)) {
-+		ret = abx500_get_register_interruptible(di->dev,
-+							AB8500_CHARGER,
-+							AB8500_CH_STATUS1_REG, &val);
-+		if (ret < 0) {
-+			dev_err(di->dev, "%s ab8500 read failed\n", __func__);
-+			return ret;
-+		}
- 
--	if (val & MAIN_CH_DET)
--		result = AC_PW_CONN;
-+		if (val & MAIN_CH_DET)
-+			result = AC_PW_CONN;
-+	}
- 
- 	/* Check for USB charger */
- 
-@@ -3490,7 +3493,8 @@ static void ab8500_charger_unbind(struct device *dev)
- 	int ret;
- 
- 	/* Disable AC charging */
--	ab8500_charger_ac_en(&di->ac_chg, false, 0, 0);
-+	if (di->ac_chg.enabled)
-+		ab8500_charger_ac_en(&di->ac_chg, false, 0, 0);
- 
- 	/* Disable USB charging */
- 	ab8500_charger_usb_en(&di->usb_chg, false, 0, 0);
-@@ -3714,7 +3718,13 @@ static int ab8500_charger_probe(struct platform_device *pdev)
++	if (!kms->num_paths)
++		return 0;
++
+ 	drm_for_each_crtc(tmp_crtc, crtc->dev) {
+ 		if (tmp_crtc->enabled &&
+ 			curr_client_type ==
+@@ -234,9 +237,6 @@ static int _dpu_core_perf_crtc_update_bus(struct dpu_kms *kms,
+ 		}
  	}
  
- 	/* Request interrupts */
--	for (i = 0; i < ARRAY_SIZE(ab8500_charger_irq); i++) {
-+	/* The first five interrupts belong to the AB8500 main charger. */
-+	if (is_ab8505(di->parent))
-+		i = 5;
-+	else
-+		i = 0;
-+
-+	for (; i < ARRAY_SIZE(ab8500_charger_irq); i++) {
- 		irq = platform_get_irq_byname(pdev, ab8500_charger_irq[i].name);
- 		if (irq < 0)
- 			return irq;
+-	if (!kms->num_paths)
+-		return 0;
+-
+ 	avg_bw = perf.bw_ctl;
+ 	do_div(avg_bw, (kms->num_paths * 1000)); /*Bps_to_icc*/
+ 
 -- 
 2.53.0
 
