@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022391;
-	b=D8aqvxu/HtpdXYsJnp/K9XXWnvGMFWtCNQsJzWqwwxr7t0zyf/RN5qBDK3SOGNucdD+T
-	 o+LsH3wpRpROGOVsOSyZDq2uujWxz2LtEMlZdP1/gxn0ObWVmJX/p26vu8s2iGLrKRshr
-	 P1JD9LeK5+9kIZABrmstJsyjQRaJc16HkZS4sBrhvk4w902YY9icRzPqOfy634bUK61Vn
-	 g3pkj4a5PAh+bYdJojkkce0TplRcZAubiO/BjA6HFh7rwbEIKD54Pa9szCdJys0UHJ1t4
-	 bqnFQS5UcN/73CTTke9No/ig7yncgG5pNMJilR3DuLl21A06ICP8ROs5XuXMKJWOywA==
+	t=1795022394;
+	b=o18xOjaN1aVqRWIShjq1VJQsdXHcaXjhAt/aT1qg8tThBNuhCnOnqoCMXVHSAuT3FoYc
+	 zyZsg1wkCUf2KnkOow3MdEqR18cbUREAQsv512FOyEWBfHOS7JHIOa1RwH69or+F1ASvn
+	 Sw/pQ+n9HqzAwDImdrVQ5f8wWpwQ6wCnmQAKIB0aZsExLXrHn/nerrN0yyYVpIQxZg6Nm
+	 sBH/oZ9kBqN7I1Rgs3/FQxgQ9OlPqEQQVTHuWxHm2ehykBknkdaDEPVMGcm6RivsigPya
+	 s2IDCz8zr3XQN0rd2mobVxnarufuOZlis9HaZVDtNcbYWHrAbxxE023I+fMpStQpAwQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022394;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t5WVX8j0eMrP1wrSmKoHuZPrwSVwtB2ZlepYZyKwgCM=;
-	b=gNXaCAvVtzBv+yUfm0+CM7SGfz0QUQVwUMUNCjjvKNzd0hm0Cn7pwuAXhG7NNVW+43mV
-	 vfpxoKblv4YDRy59w6As4N8tshD9+V7JAdWVHOpLAR8NiUPrbL+Nm13UEEpRShET/F9om
-	 0bPG6M0eRyMXb/4ErY+V9aqVMtOkMBNmBXdoAX/2kFDUrV3O2W+9GRwi0o0xV99fmi3ex
-	 HTkJuqSbY6jU95lAHVhhPe5QeY3tcz8QHWI/xPcIZIAPuxpIH/CsluUMqLZDEWhXlYYJb
-	 VMkhRcjSIP0jrqT2EFU4UBEkhUxRTprISNjPe8QC66q8FpjJJ/JtTuSDQXMs7tyMAng==
+	bh=stg9YkpjzsV9rnO+ia0D8yUGGJeIkpOJunkXdvbSwBs=;
+	b=0Ax0TMZbBrlDcnIetE2b5HepnouKy9AQxhDX9zpNPqKtxuACkSCOaj+hHcVOLH4mjtIM
+	 Y+HGjK/keaGecgxxCmd86Rc3vB9FxTR8Wu65J1BeghtYOy5izPIb78Y8PmGRZS9VCcJTP
+	 ZcCn4npI7Y7zydZcFgYvldcFYjZzaMXO98FXRFM6Cwek3bFMLKG47B2V+px9Yt4e5nMs6
+	 2A8yn/0sAY7Hvy7iAxZHkiwTyuZMsvIleoIfgCkXu+fcxLJRb32dTW2ORD8DuigNwvW23
+	 gk4Djem13Z6FOdUWnwq9u3vW0vJ5PVgIpyOri+aP/agFmj9or6qRdlDRQ7pVjr0CcdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KYZzyy7x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WMpxubQs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D281F606A31C;
-	Wed, 18 Nov 2026 17:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE509606A325;
+	Wed, 18 Nov 2026 17:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KYZzyy7x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC111F000C4;
-	Wed, 18 Nov 2026 17:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WMpxubQs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC961F000C4;
+	Wed, 18 Nov 2026 17:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022391;
-	bh=t5WVX8j0eMrP1wrSmKoHuZPrwSVwtB2ZlepYZyKwgCM=;
+	s=korg; t=1795022394;
+	bh=stg9YkpjzsV9rnO+ia0D8yUGGJeIkpOJunkXdvbSwBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KYZzyy7xjGTJ/naGyLr+LI/vpJO1jGf7oDaSAESiCWq4FAX+VFQmqzg/ubGECYfr/
-	 Qh11ste0kp5KrkmcOBCATa6hanACPIf3lji/4vwi42N12Jc4k08pzC159dlsG+/aS9
-	 JmJ4QPXNKRaQWO8fBWfR0rBUFyaFygh8x86/6Z2A=
+	b=WMpxubQsLdTQZcKL+TF/aACA0ACcO4zTUg9GRSBf39hyr7S8ZNH5L12OycdpXblZQ
+	 DYz5CAaY8MlpH1kM18zhMmd1iJX9+QOI5X73xYfTXwp9w+ipfbw3c3Jx2ccZ22mmCI
+	 7lu3LTf8JMz+IhRToqg4UHcePbVFw5Okv8Ur9U/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Gao Xiang <xiang@kernel.org>
-Subject: [PATCH 7.3 2645/2651] erofs: fix disallowing superblock_share if device= is set
-Date: Wed, 18 Nov 2026 16:04:45 +0100
-Message-ID: <20261118150419.306490046@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 7.3 2646/2651] kernfs: avoid READ_ONCE() on a kgid_t in kernfs_new_node()
+Date: Wed, 18 Nov 2026 16:04:46 +0100
+Message-ID: <20261118150419.336436282@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,55 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng@xiaomi.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-commit aafea970fb04633e22c7ad74cba4caf563c6d6a9 upstream.
+commit ef179363b04306dbc645c53207b9ad3516ebc75f upstream.
 
-superblock_share together with device= is rejected in
-erofs_fc_fill_super():
+kernfs_new_node() reads the parent's gid with READ_ONCE(attrs->ia_gid).
+That gid is a kgid_t, which is a struct.
 
-	if (test_opt(&sbi->opt, SUPERBLOCK_SHARE) &&
-	    sbi->devs->extra_devices)
-		return -EINVAL;
+On SMP alpha, READ_ONCE() ends by casting the value it loaded back to
+the type of its argument. Here that is a cast from a struct to the same
+struct. GCC accepts that as an extension, but ISO C does not allow a
+cast to or from a struct type, so sparse warns:
 
-but extra_devices is kept in sbi->devs, not in sbi->opt, and
-erofs_sb_share_test_super() compares only the backing inode, the
-fsoffset and sbi->opt.  So once the image is mounted with
-superblock_share, a second mount with superblock_share,device= matches
-that superblock and get_tree_super() reuses it without calling
-fill_super() at all.
+  fs/kernfs/dir.c:751:31: sparse: sparse: cast to non-scalar
+  fs/kernfs/dir.c:751:31: sparse: sparse: cast from non-scalar
 
-The same command line therefore either fails with -EINVAL or succeeds
-with device= quietly dropped, depending on whether a compatible mount
-already exists.
+Read the gid_t inside the kgid_t instead, and wrap it back up with
+KGIDT_INIT(). This is still a single marked load of the same four bytes.
 
-Refuse to match a context that brought device= options, so that it gets
-a superblock of its own and fill_super() decides as it does today.
+There is no functional change. With GCC 12 for alpha (the config from
+the report) and GCC 14 for x86-64 (with and without KCSAN),
+fs/kernfs/dir.o has the same object code before and after this change.
 
-Only the incoming context can be tested: a shared superblock may have
-extra_devices set itself, because erofs_scan_devices() fills the device
-table from the image when no device= was given.
-
-Fixes: cd4108319bb3 ("erofs: reuse superblock for file-backed mounts")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang (Docker) <xiang@kernel.org>
+Fixes: 81bdc85b4c08 ("kernfs: fix up the unlocked attribute reads on the creation paths")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610261608.vItiXCGW-lkp@intel.com/
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261027143247.3537239-1-shakeel.butt@linux.dev
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/super.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/kernfs/dir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -827,7 +827,8 @@ static int erofs_sb_share_test_super(str
- 		return 0;
- 	return file_inode(sbi->dif0.file) == file_inode(new_sbi->dif0.file) &&
- 	       sbi->dif0.fsoff == new_sbi->dif0.fsoff &&
--	       !memcmp(&sbi->opt, &new_sbi->opt, sizeof(sbi->opt));
-+	       !memcmp(&sbi->opt, &new_sbi->opt, sizeof(sbi->opt)) &&
-+	       !new_sbi->devs->extra_devices;
- }
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -748,7 +748,7 @@ struct kernfs_node *kernfs_new_node(stru
+ 		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
  
- static int erofs_file_get_tree(struct fs_context *fc)
+ 		if (attrs)
+-			gid = READ_ONCE(attrs->ia_gid);
++			gid = KGIDT_INIT(READ_ONCE(attrs->ia_gid.val));
+ 
+ 		if (flags & KERNFS_DIR)
+ 			mode |= S_ISGID;
 
 
