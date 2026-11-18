@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061925;
-	b=XtF1KpUgr3qrkr1WFyjr6QWc/naJRczIoYA2GSwXff8hSZR1A5A0GGTsQ0pXnilBAY1w
-	 6ZiOVp3bhn32NH1ZKtgxFBvpdDdmamuaUuBDhGEtgs7N8mGStidTWK1QgqJEEFcFFLh+0
-	 trGXNMLncWA+Gri53z1MFw0+2gO6yQ11Zx5+y/wqtc4nA7Qf+LupZJo/GNP5JrJbTA4Q8
-	 nzEXV1sO6lB2i38m0JQ2xSJ96hjKFEEOk6tVINFexPqBhN+k2pUsTLsmeoKjqeXiCHGKT
-	 rUjGc1q8n4Gc2ia0M+q/sXWwDHFvfY56YdNJsR5PxUaUbZTaRRU2HOQ/6c3BMQIjSlw==
+	t=1795061928;
+	b=a1OUGLSXXT06KNsEwEJWEmGM7AT3C8hDCOywrRwatjiQJBWhpbBj5SfNFgjyEHEOVB0C
+	 2l/v4M5VOrXDE+DEXOVkqjK82uiBSbguOyPRB5OBqWCnrPjN01ReJ4Y6DZHfYu4eft5ib
+	 b1OFnHo2An7YFBjmJc7BjRDuamrKUJ5js7Godg+H0tspZl2VAHAG+5H8Uqv2CNBRc7srN
+	 mMCzq5t7s/x7IIzuf3yuqxEYwlxBCCGH/Ec9D813Izm+BCx6G3EWEb0Slk2lLRON/2r1h
+	 PObq/lQ9gvl0N8gA7qLUDj7q/Ss8kaondz3bA3RoFbMS3mjOY0wj5kJhXmU1Dbie9jQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=sJTbckUUAR+8o72o0qWDIux2LsFm3/XYirnXiwUewuI=;
-	b=oi04km3nxSte76kyW88aF55Ohsq6r6FrDf3DKu2P3gVZqkZ/1xxOwtylV8z3IrsY2gr5
-	 4u/cf7Z1h0LTE2lKWxT/iZzngknH3xfs0zlSl4qDUI/4W/T4WNLWSvHKh9r6JQ/gql44O
-	 p0Is7qp5JfLY3ajJH0wXCbisflnwsTtPvfB5LWxzyMrbyDUy+Ust2W85B53iyumGTRbYg
-	 IqMVPotExdJVwxQbh5XGcTF4a4gAp3rlYeteY/k59gajpP9kSnif8/lbMU34K0th8IKRw
-	 t8YDkcT6V9HByCGSrcErm1ZYyAr+Ayx089TwHefC+mDIZR8z3u0IWX3g1otdQ31Yc9g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=5nstCvd4yIbgobtg144MG1qMjkFTeY6BcfUdCy7wXNc=;
+	b=isPTj2W477YP2OAZuJW9cXw2BdzP3klZ8TuToTO8s9piYkBvVQOyjmSjTrLhN9Lsebwq
+	 x5uywNvUgZb7gRJb7MCoZBG9rg78JPmhp8ZM5h6H7fxQWVo6UTD5vK5rR7AkehVdHuat9
+	 b6tYvRB+zUko0ZpKXx9npwyFanrlFqh2zZKL6upMyGF/kil/Wb72juELbmqbYcN3D9jW3
+	 vn7SAO9kGuUAdldnwDkppYDJ/xej6AqrCl6kdrDDg5YjmRpGTtqgw23ewLW+FdhY01k2M
+	 Gp6rnVxbgjliBFPXeFQUhl6kBkCJ0AGjb4XLOmeDcL8sSt8kVrR90GvjWKOsNkJEpZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XczvQ7Qn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6SRE+vJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A615E606A320;
-	Thu, 19 Nov 2026 04:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79871606A326;
+	Thu, 19 Nov 2026 04:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XczvQ7Qn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01B551F000C4;
-	Thu, 19 Nov 2026 04:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h6SRE+vJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF211F000C4;
+	Thu, 19 Nov 2026 04:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061925;
-	bh=sJTbckUUAR+8o72o0qWDIux2LsFm3/XYirnXiwUewuI=;
+	s=korg; t=1795061928;
+	bh=5nstCvd4yIbgobtg144MG1qMjkFTeY6BcfUdCy7wXNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XczvQ7QnTEG8mnI61zHvsTKvkVodnl9YJZn/T0i6XjnYrmTc3toxIsbCsGcVPjtS2
-	 WbKHAhBQssMgcnmMKyFpR0+YljLU7NpcdDJlzQUNYMi7GwgEtx6fpx2hRV2cyeMUy0
-	 KOjmtb09StnHIBXx1oMPF1Y8Yo+T7/HK+IDOmc4A=
+	b=h6SRE+vJ6iaHNCiPnetNuGxzbkieHm2Iuo3Vum020tDkgruwbfto/fMbDg11qTy26
+	 DRBxvn21yYXQvEq7sSgskDtaQvYVtHB4D5f2lwBKY/VNhCG2g3IBpwMgVjcoYuwwRF
+	 D1LgDLqhYG+4pQKpexaFKVOJ5pMxFbM1WVoEXgMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1725/1848] nios2: ksyms: Declare __mulsi3 export
-Date: Wed, 18 Nov 2026 16:02:43 +0100
-Message-ID: <20261118150031.830711126@linuxfoundation.org>
+Subject: [PATCH 5.10 1726/1848] ALSA: pcm: Remove channel-map controls before freeing substreams
+Date: Wed, 18 Nov 2026 16:02:44 +0100
+Message-ID: <20261118150031.868628576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -64,51 +62,94 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 2180d11e06fb56fd13643ae59964f144896870be ]
+[ Upstream commit d5dd05c1f72a95d8ab06828d7272a185ad2b9185 ]
 
-GCC may emit libcalls to __mulsi3(). As modpost is not aware that this
-function is provided through the linked in libgcc, it fails:
+A late HDA codec bind on an already registered card builds new PCMs
+before registering them. add_std_chmaps() publishes generic channel-map
+controls during this BUILD stage. If an earlier chmap succeeds and a
+later allocation fails, probe cleanup frees the BUILD PCM while the
+card's control device remains accessible.
 
-ERROR: modpost: kernel/locking/test-ww_mutex.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: kernel/time/test_udelay.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: kernel/resource_kunit.ko: symbol '__mulsi3' undefined!
-ERROR: modpost: fs/fuse/virtiofs.ko: symbol '__mulsi3' undefined!
-etc.
+These generic controls are added directly by snd_pcm_add_chmap_ctls();
+snd_hda_ctls_clear() only removes codec-tracked mixer controls. BUILD
+devices also skip dev_disconnect. snd_pcm_free_stream() then frees the
+substreams before free_chmap() withdraws their generic control:
 
-Make sure modpost can see the symbol from libgcc.
+  Late HDA codec bind / rollback        Control GET on the live card
+  ------------------------------       ----------------------------
+  hda_codec_driver_probe()
+    snd_hda_codec_build_pcms()
+      PCM is BUILD
+    snd_hda_codec_build_controls()
+      add_std_chmaps()
+        publish an earlier chmap
+        later allocation: -ENOMEM
+    snd_hda_codec_cleanup_for_unbind()
+      snd_hda_ctls_clear()
+        generic chmap remains
+      codec_release_pcms()
+        snd_device_free()
+          BUILD: skip dev_disconnect
+          snd_pcm_free_stream()
+            kfree(substream)
+                                       snd_ctl_elem_read()
+                                         down_read(controls_rwsem)
+                                         pcm_chmap_ctl_get()
+                                           walk freed substream
+            free_chmap()
+              snd_ctl_remove()
+                wait for GET
+                                         up_read(controls_rwsem)
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610171933.J4bFOfL8-lkp@intel.com/
-Fixes: 2fc8483fdcde ("nios2: Build infrastructure")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+The control read lock cannot protect a substream already freed before
+control removal starts. The failure above occurs before
+snd_card_register(), so the PCM has not transitioned out of BUILD.
+
+Move free_chmap() before the substream free loop. Its snd_ctl_remove()
+withdraws the control and drains readers under controls_rwsem before any
+substream is released. Normal registered-device disconnect already
+removes the control, so the later call remains harmless on that path.
+
+Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-4a207d9ef3a3597a74a4-v4-80b0113669b1a62fbbe9@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/nios2/kernel/nios2_ksyms.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/core/pcm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/nios2/kernel/nios2_ksyms.c b/arch/nios2/kernel/nios2_ksyms.c
-index 54f7b23df1bf5..33aa76f2eca10 100644
---- a/arch/nios2/kernel/nios2_ksyms.c
-+++ b/arch/nios2/kernel/nios2_ksyms.c
-@@ -39,6 +39,7 @@ DECLARE_EXPORT(__udivsi3);
- DECLARE_EXPORT(__umoddi3);
- DECLARE_EXPORT(__umodsi3);
- DECLARE_EXPORT(__muldi3);
-+DECLARE_EXPORT(__mulsi3);
- DECLARE_EXPORT(__ucmpdi2);
- DECLARE_EXPORT(__lshrdi3);
- DECLARE_EXPORT(__ashldi3);
+diff --git a/sound/core/pcm.c b/sound/core/pcm.c
+index d4eb842784143..756857ea80d0b 100644
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -830,6 +830,9 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
+ 	/* free all proc files under the stream */
+ 	snd_pcm_stream_proc_done(pstr);
+ 
++	/* Drain channel-map callbacks before freeing the substreams. */
++	free_chmap(pstr);
++
+ 	substream = pstr->substream;
+ 	while (substream) {
+ 		substream_next = substream->next;
+@@ -844,7 +847,6 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
+ 		kfree(setup);
+ 	}
+ #endif
+-	free_chmap(pstr);
+ 	if (pstr->substream_count)
+ 		put_device(&pstr->dev);
+ }
 -- 
 2.53.0
 
