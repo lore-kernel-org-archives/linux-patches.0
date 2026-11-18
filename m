@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058912;
-	b=Sq84zucE3wpqAGk6ZeKqYhbNTHhgx5mC3Km/2aUGvofciaZZpqAjdtcT5yQeZmWcdo8h
-	 icIEVjhZqal4y3IL4y9El8OK0Bzq7w7ma+jVvlm9FFG4F1Zpoin+20R24O+j3Ce3qPIbw
-	 jUi5G5y3cW7CNVtcbw2sUBq6Lgb+y6A0ngUeACWmMLWWguzuoJCFcrKAZiVamdeo7oY7y
-	 5ZxvbZr40E94HGwZPFrRkCcR35E1+1/qT37sZQ9pP7pjHP2XDqkQ9LKLWhLOzfbiRkrFQ
-	 58rQ82dGjv/EGf0E1X8HgPndRFl4weXMsTgdaRiJLdTtl0SZymEtLjS+iBvqrEJLx+Q==
+	t=1795058914;
+	b=qPJ8a83hKq3qIO5A+xkdI2GyNZBW/9xtGhGtOEecJ0nlMO4G/HPfCclimKUCSUxzUYTN
+	 RdAUulgbxkMwT8oy4z0Eo6BDng3blF9qoP7epAUxhomE+bMw4Iul6ifNVC5kl2cTqLjfx
+	 Zo99fVrVHHpaXaLd+OTmTUecLvNTdVV8c8URaWzG23ZR50BrsUuLYQ1YFHa9+JTRnhlau
+	 aJSPvwgb+IwFQYBiGigiyWW5tCJXcElAtahqRz3Zd8DyOo4MCw5rwi5yzAE42UXRMeYrH
+	 hJ/xXuTYPbZvAFA2efGoPfW4dBxqlJElb2MI4+s+rd1f76tNY0EEVSQe3yPgB6vPfHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058914;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v8QOcGb0VbBeiuKaHqFrPFHds6Oq5YDlkFDaLq4aa1M=;
-	b=QBGwd27Q0SCy2oIQ5bRo2iCaPDg6gZTSJoNWyuZukqiX0uJbBnVLk5hwCnG0sR17ID6H
-	 AYrGFORFhBLtsOIuYVA6YQi1dFx6pbUQQczuYLvftn0yofe/2zjpmx5NuindKN8kTRG8h
-	 HQfWiCmH2EVG2nS8mkgexdgksbzndkbta5PhBPNq0enjmepVmBdSbSKZv1uhV2V+kWSVR
-	 64HScM5qWb0k+QgBhPx6VTxcEtnILKttI0kfXiO47NtRXMJrjFQVCWh5cMJDLDqurVq6U
-	 IzbRTXBElvg7onjJmGeLeE5nAjlz7eJkfChsYcLNLVU2wxFaw4A7US6D2JYgX2DOhnw==
+	bh=bcHckDbbvKG56T8Q10gQhz6C8pKWXrOyab/xAnc619U=;
+	b=u1Cu2lfnF4LeGivJK6gl7iQ8I0QVC9144csU7Z7K0j1/EhYL1SfsYvhFHV0BPN3pVeNK
+	 4+mhLptaJ4ufBQBE4b6Lwezm9RYfAzS2NLU8OJy6MlOLYAOos0UF42XOhElD5QyLzdjuo
+	 q1DG61mgoq9Mc1BF6ItILatn02uNwmB/sc7CQQ0KlLuGjkw8zZPDh3idQm6PwEZH0cx2U
+	 LFnmWhh+PxMoveYXpJ2UpvP+zbmUysg0Jfkxdw9NN3V7IAeVIK1YoGD2rL6x9ZAJCXEq+
+	 p3v/CX93MBnPPUAQ3yD9JsilfJRqe4cI5fJxZuDH3IYWK588UijN4FSEBqU979VLVSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="XvynweK/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2cWaEbE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7B4606A32F;
-	Thu, 19 Nov 2026 03:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C901D606A325;
+	Thu, 19 Nov 2026 03:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XvynweK/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E1321F000C5;
-	Thu, 19 Nov 2026 03:28:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b2cWaEbE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9EF1F000C4;
+	Thu, 19 Nov 2026 03:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058911;
-	bh=v8QOcGb0VbBeiuKaHqFrPFHds6Oq5YDlkFDaLq4aa1M=;
+	s=korg; t=1795058914;
+	bh=bcHckDbbvKG56T8Q10gQhz6C8pKWXrOyab/xAnc619U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XvynweK/APX2CjiuHJq37K+fCLx6W4ubWqlpwZEh3Fa4LB1jPDHtI00FUHYjvtVzm
-	 XVWBis8E74CUHMQ7WR/s5qzs7M3Nt+AeqzGO7Hu0+poghXWJtQRaFMLYmdzCzrNgLk
-	 XDUunbWDNgxDv8gwY2hAd9DzBIX+RZlowvBfBxyY=
+	b=b2cWaEbEnCt7GOPMgJq2QI5PmtkGWOTXWqI/iqS+bef5LDJMZNOLonv7gL1FLySCM
+	 kA185WJ2O6Twsn3r6IQO1WoO9hUz7KZLD9QH+tWYA9YV3BamTREQMhs73sWiZVrGoq
+	 3778oII617Hs/2tT+zu3WMWmTo0WD3taMrXm4IzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0654/1848] xfs: jump out of xchk_bmap_check_rmap if fatal signals
-Date: Wed, 18 Nov 2026 15:44:52 +0100
-Message-ID: <20261118145943.171464516@linuxfoundation.org>
+Subject: [PATCH 5.10 0655/1848] xfs: always report scrub errors in tracepoints
+Date: Wed, 18 Nov 2026 15:44:53 +0100
+Message-ID: <20261118145943.209174577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,49 +71,91 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 49d300a51442bd64b627645b7b0b1cd66e492905 ]
+[ Upstream commit 1ccc8f553d885d49c1bfe141ea1f331511940b3a ]
 
-LOLLM observes that we never check for fatal signals inside the loop
-that checks file fork mappings against the rmapbt.  This can lead to
-lengthy delays in responding to a ^C, so add some bailout checks.
+LOLLM complains that the error processing functions in scrub will
+sometimes zero out *error before recording a tracepoint.  This makes
+diagnosing problems harder, so let's fix that.
 
-Cc: stable@vger.kernel.org # v4.17
-Fixes: 5e777b62b0bcb6 ("xfs: bmap scrubber should do rmap xref with bmap for sparse files")
+Cc: stable@vger.kernel.org # v4.15
+Fixes: 4700d22980d459 ("xfs: create helpers to record and deal with scrub problems")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: Adjusted loop context to preserve direct updates to rec instead of using a check_rec copy. ]
+[ sashal: Replaced cur->bc_ops->type == XFS_BTREE_TYPE_INODE with cur->bc_flags & XFS_BTREE_ROOT_IN_INODE for btree classification. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/bmap.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/xfs/scrub/btree.c   | 8 +++++++-
+ fs/xfs/scrub/common.c  | 7 +++++--
+ fs/xfs/scrub/dabtree.c | 6 +++++-
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/fs/xfs/scrub/bmap.c b/fs/xfs/scrub/bmap.c
-index fed56d213a3f9..5748545afb5be 100644
---- a/fs/xfs/scrub/bmap.c
-+++ b/fs/xfs/scrub/bmap.c
-@@ -487,6 +487,10 @@ xchk_bmap_check_rmap(
- 	struct xfs_ifork		*ifp;
- 	struct xfs_scrub		*sc = sbcri->sc;
- 	bool				have_map;
-+	int				error = 0;
-+
-+	if (xchk_should_terminate(sc, &error))
-+		return error;
- 
- 	/* Is this even the right fork? */
- 	if (rec->rm_owner != sc->ip->i_ino)
-@@ -517,6 +521,9 @@ xchk_bmap_check_rmap(
- 	 * entire rmap is covered by bmbt records.
- 	 */
- 	while (have_map) {
-+		if (xchk_should_terminate(sc, &error))
-+			return error;
-+
- 		if (irec.br_startoff != rec->rm_offset)
- 			xchk_fblock_set_corrupt(sc, sbcri->whichfork,
- 					rec->rm_offset);
+diff --git a/fs/xfs/scrub/btree.c b/fs/xfs/scrub/btree.c
+index 0175c0b33efac..56fb120baff68 100644
+--- a/fs/xfs/scrub/btree.c
++++ b/fs/xfs/scrub/btree.c
+@@ -44,8 +44,14 @@ __xchk_btree_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		if (cur->bc_flags & XFS_BTREE_ROOT_IN_INODE)
++			trace_xchk_ifork_btree_op_error(sc, cur, level,
++					*error, ret_ip);
++		else
++			trace_xchk_btree_op_error(sc, cur, level,
++					*error, ret_ip);
+ 		*error = 0;
+-		/* fall through */
++		break;
+ 	default:
+ 		if (cur->bc_flags & XFS_BTREE_ROOT_IN_INODE)
+ 			trace_xchk_ifork_btree_op_error(sc, cur, level,
+diff --git a/fs/xfs/scrub/common.c b/fs/xfs/scrub/common.c
+index 1fd24e68e13d8..502adf169ce43 100644
+--- a/fs/xfs/scrub/common.c
++++ b/fs/xfs/scrub/common.c
+@@ -82,8 +82,9 @@ __xchk_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		trace_xchk_op_error(sc, agno, bno, *error, ret_ip);
+ 		*error = 0;
+-		/* fall through */
++		break;
+ 	default:
+ 		trace_xchk_op_error(sc, agno, bno, *error,
+ 				ret_ip);
+@@ -137,8 +138,10 @@ __xchk_fblock_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= errflag;
++		trace_xchk_file_op_error(sc, whichfork, offset, *error,
++				ret_ip);
+ 		*error = 0;
+-		/* fall through */
++		break;
+ 	default:
+ 		trace_xchk_file_op_error(sc, whichfork, offset, *error,
+ 				ret_ip);
+diff --git a/fs/xfs/scrub/dabtree.c b/fs/xfs/scrub/dabtree.c
+index 74941bad930e9..24ac38014a784 100644
+--- a/fs/xfs/scrub/dabtree.c
++++ b/fs/xfs/scrub/dabtree.c
+@@ -48,8 +48,12 @@ xchk_da_process_error(
+ 	case -ENODATA:
+ 		/* Note the badness but don't abort. */
+ 		sc->sm->sm_flags |= XFS_SCRUB_OFLAG_CORRUPT;
++		trace_xchk_file_op_error(sc, ds->dargs.whichfork,
++				xfs_dir2_da_to_db(ds->dargs.geo,
++					ds->state->path.blk[level].blkno),
++				*error, __return_address);
+ 		*error = 0;
+-		/* fall through */
++		break;
+ 	default:
+ 		trace_xchk_file_op_error(sc, ds->dargs.whichfork,
+ 				xfs_dir2_da_to_db(ds->dargs.geo,
 -- 
 2.53.0
 
