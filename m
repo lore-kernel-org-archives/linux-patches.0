@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032737;
-	b=SNlTuWY8p8lNEa7zXHtWQssosZ3qBt1CXnrljYD5WWOSqkp+Kczp1z9FQGXFD6gsD9Yy
-	 61Ku/TQxCTF8qJmA8cfWkOHbHV7tG5GtKB2+ARBiiMWbXSK+HOM/0rerY7bHsL0Wtcg8E
-	 LCF+JxeXvhSiOsFSmPr6i4idiRKjjT9/WXUSdTCxIAnA+Xr6KrILVCBkPPHpguIxYrrPx
-	 46BxfmEjZ73FwctRF04RNCat+WxFN/Pz4OmwC86zxEt5PdqXHFLCMiUaasrWTln7fY60x
-	 wuiMPtIJCarc6ydGilOIlrX4qh9yzF3vT46zE5MXe6ysiRxg9e4GMIgEUYR5HeWr6Ww==
+	t=1795032740;
+	b=I1hE3PlxPZzpdSLzCkNsUCNlZlk1y06MI0gMRffJdrOv5gVs9meqmSrj7BTmbGoG45b/
+	 L3Ke9klzRxBi+3hPrP98QWYull70f9mOlqm87HyBd+1fnMAE7A/aA4vMOhTb0sz19Jfwu
+	 W76z7yXiipj8Pw3W0t6Ur19U1b28cgUi21+Rg3EGep6/cg5Db5sgnvtZRgd0BqvRN8Na5
+	 UbdItRyC1Dlw7j2/TzOtNQhyuezSLX9YpGuCr+yc74DKLy62yxHjVvmq/yJZaUzlATIaU
+	 +pt7n5POhR/7rAro8VrHebHXBuWRGzLrmkezlfaXMafCTDV+vWPRJ+792sgOdmSfO4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032737;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032740;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2NNjloxDzIxAK1TGwtj+GOLqRr/zRBnF6qujzDnUwwM=;
-	b=2l0uq1oJhmAi88RzdE2yx9QRqoWha4uu+M5cRS/Aj4JaeWNsDw2klJ9jdwtL75p9XSr2
-	 RVimM2zy7UxPzWOMXTNXl6c94V/VizkCrgAFv9r2Z+xVLneUZ2wTaaKRVmWLefxgTAI+I
-	 XCBs7ZvAYUkTJX/BBBYctFBmOUe9k0Q78Z5s28BZ1vphvmn98oBTzh/4txahVKvTajyTr
-	 T6Xm21RyIaZ2X8dTzLVYcRzW4XEIbXP0Y5r51gANg+Os7kpuikzHqqX1lS29oq8OGUcgm
-	 OSyQIg7N6w9rDzod7bR5KvOhzYhyA3CzdbFVRzncseYMC5RSFQgHSQKx9eVV+Oi01kA==
+	bh=2t0LeqeMl4uKYKxxp+Pf7VxvAcFHFO8ap/mGRG2Qgaw=;
+	b=X2JQ3sM6t7P6AVoY+3oj4uJFXqvlEvSgSI0bBD4L/RYN4CITfjZkn59pjbEFbeA9IvYh
+	 aWzDeIaKRTiuciUy5AgxRF+pYA81hTxzxaKt5J7mA0j5Ii6y/NCwN+AI3Z9/V7PYGuUgb
+	 bGKMMSmBqwUk6iizOp7Y+5A4AgqR+AsEcWuh8aQaKTTgrTutAhz2fiQLR8xmrWNjEen1/
+	 gFnPSm0QvnaKoV044J6e7AVtYBSOO8g5HOcalFnj/4pmXqxTngXIjPs99pqg1llefTrcT
+	 mX2XwE/rZ78/8P0JL6Wf2vkuUdvXmo4XRv60RgBG38tf3yl/u4A7NmEtJv0I8RgTLdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujLtwCPI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hc+hEI9S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80E1606A31C;
-	Wed, 18 Nov 2026 20:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60130606A320;
+	Wed, 18 Nov 2026 20:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ujLtwCPI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DDA1F000C4;
-	Wed, 18 Nov 2026 20:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hc+hEI9S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B870F1F000C4;
+	Wed, 18 Nov 2026 20:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032737;
-	bh=2NNjloxDzIxAK1TGwtj+GOLqRr/zRBnF6qujzDnUwwM=;
+	s=korg; t=1795032740;
+	bh=2t0LeqeMl4uKYKxxp+Pf7VxvAcFHFO8ap/mGRG2Qgaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ujLtwCPIYdygQt7q1tLINC5qOPdcdSVBZ+MID0clwSjnenJ5rdtK5MGeuiA9VXhsX
-	 ifbNoXs9i9HKp3tXf5qgjr/5Yk4xeKdmPUaDgo6V1tk+JEkBUhoJa5rqVFnkptLEhH
-	 wJBR++lr2YD2ZyqmFHK3Wqbjx8yIO52UgARpHtBM=
+	b=hc+hEI9S8672+ec8pDk3Dml6yC8ntHcBygf1k+udZQ4ODpbmd9dPQBKKs7/mVdOT4
+	 FrQ2b3CclJlh3/qH7CX6jyLJGCysdaWyvTvszUwziaSCLZqEbOmODX4h+gUqQFeHsU
+	 doHU785/5I8+EaKP8WfyhhIbAGrSESwjLlgFG8I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Omar Sandoval <osandov@osandov.com>,
+	Tianyi Chen <hi@tychen.cc>,
 	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1519/1756] proc/kcore: advance the vmalloc retry by the last copy, not the total
-Date: Wed, 18 Nov 2026 16:00:46 +0100
-Message-ID: <20261118150109.328876595@linuxfoundation.org>
+Subject: [PATCH 6.12 1520/1756] eventpoll: propagate wakeup source creation failure in ep_modify()
+Date: Wed, 18 Nov 2026 16:00:47 +0100
+Message-ID: <20261118150109.365284446@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,86 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Tianyi Chen <hi@tychen.cc>
 
-[ Upstream commit 88c3f9d6145204cfd88e5d9cbc9463ffd892e10a ]
+[ Upstream commit 9f2b8f4a452db79741c06e6ea91448347f4a975c ]
 
-A readv() or preadv() of /proc/kcore fails with EFAULT, although every
-byte of the destination is writable, when the page of a later iovec is
-not present at the moment the copy of a KCORE_VMALLOC chunk is retried:
-swapped out, migrated by compaction or NUMA balancing, write-protected
-by KSM, or unmapped by MADV_DONTNEED from another thread. Only root can
-read /proc/kcore, and the read must use more than one iovec. On an
-x86_64 defconfig kernel (v7.3-rc7) a preadv() of one vmalloc page into
-two 2 KiB iovecs on separate pages, with a second thread repeatedly
-unmapping the second page, failed 77701 of 200000 calls with EFAULT;
-with the fix all 200000 succeed. Affected since v6.4.
+When EPOLL_CTL_MOD adds EPOLLWAKEUP, ep_modify() ignores the return
+value of ep_create_wakeup_source(). If allocation fails, it returns
+success with EPOLLWAKEUP set but no per-item wakeup source, so the
+requested suspend protection is missing.
 
-read_kcore_iter() copies a KCORE_VMALLOC chunk with vread_iter(), which
-writes to the user buffer with page faults disabled and stops at the
-first iovec whose page is absent, after the earlier iovecs were
-written; the loop then faults the rest of the buffer in and calls
-vread_iter() again for what is left. It keeps the running total in
-`read` and advances the source address and the remaining length by that
-total:
+This can happen without fault injection on SELinux systems: creating
+the wakeup source's sysfs nodes can require GFP_KERNEL_ACCOUNT
+allocations for security.selinux xattrs, which can fail when the
+caller's memory cgroup is over its limit.
 
-	read += vread_iter(iter, src, left);
-	if (read == tsz)
-		break;
-	src += read;
-	left -= read;
+Create the wakeup source before updating the event mask and data, and
+return the error if creation fails. Leave any newly created per-epoll
+source in place until ep_free(), as ep_insert() does on failure.
 
-In the reproducer the first call copies the 2048 bytes of the first
-iovec and stops at the second: read is 2048, and src and left move by
-2048, which is right. The page that fault_in_iov_iter_writeable() then
-faults in is unmapped again before the second call, which copies 0
-bytes: read is still 2048, but src moves by another 2048 to the end of
-the chunk and left drops to 0. The third call has nothing to copy, src
-moves by 2048 once more, left wraps around, and
-fault_in_iov_iter_writeable() fails on that length, so the read returns
--EFAULT. When both short copies are non-zero (three or more iovecs) the
-extra call also copies bytes from the wrong offset of the page into the
-buffer before the failure. A single iovec is not affected: its nofault
-copy is all or nothing, so a short copy is always empty and the advance
-by the total is still the advance by the last copy.
-
-Keep the return value of each vread_iter() call and advance src and
-left by that; `read` stays the running total compared with tsz.
-
-Found while formally verifying vread_iter() against the kernel binary.
-
-Fixes: 4c91c07c93bb ("mm: vmalloc: convert vread() to vread_iter()")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261017034739.793431-1-nickolai@csail.mit.edu
-Reviewed-by: Omar Sandoval <osandov@osandov.com>
+Fixes: 4d7e30d98939 ("epoll: Add a flag, EPOLLWAKEUP, to prevent suspend while epoll events are ready")
+Signed-off-by: Tianyi Chen <hi@tychen.cc>
+Link: https://patch.msgid.link/179240281988.1700986.8309527041821666235@tychen.cc
 Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/kcore.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/eventpoll.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/fs/proc/kcore.c b/fs/proc/kcore.c
-index e376f48c4b8bf..2d55e274418c6 100644
---- a/fs/proc/kcore.c
-+++ b/fs/proc/kcore.c
-@@ -531,12 +531,14 @@ static ssize_t read_kcore_iter(struct kiocb *iocb, struct iov_iter *iter)
- 			 * again until we are done.
- 			 */
- 			while (true) {
--				read += vread_iter(iter, src, left);
-+				size_t n = vread_iter(iter, src, left);
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 665a1528ab579..538c57469395e 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1912,11 +1912,22 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
+ {
+ 	int pwake = 0;
+ 	poll_table pt;
++	int error;
+ 
+ 	lockdep_assert_irqs_enabled();
+ 
+ 	init_poll_funcptr(&pt, NULL);
+ 
++	/*
++	 * Create the wakeup source before committing the new event mask.
++	 * Leave the old mask and data unchanged if allocation fails.
++	 */
++	if ((event->events & EPOLLWAKEUP) && !ep_has_wakeup_source(epi)) {
++		error = ep_create_wakeup_source(epi);
++		if (error)
++			return error;
++	}
 +
-+				read += n;
- 				if (read == tsz)
- 					break;
+ 	/*
+ 	 * Set the new event interest mask before calling f_op->poll();
+ 	 * otherwise we might miss an event that happens between the
+@@ -1924,12 +1935,9 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
+ 	 */
+ 	epi->event.events = event->events; /* need barrier below */
+ 	epi->event.data = event->data; /* protected by mtx */
+-	if (epi->event.events & EPOLLWAKEUP) {
+-		if (!ep_has_wakeup_source(epi))
+-			ep_create_wakeup_source(epi);
+-	} else if (ep_has_wakeup_source(epi)) {
++	if (!(epi->event.events & EPOLLWAKEUP) &&
++	    ep_has_wakeup_source(epi))
+ 		ep_destroy_wakeup_source(epi);
+-	}
  
--				src += read;
--				left -= read;
-+				src += n;
-+				left -= n;
- 
- 				if (fault_in_iov_iter_writeable(iter, left)) {
- 					ret = -EFAULT;
+ 	/*
+ 	 * The following barrier has two effects:
 -- 
 2.53.0
 
