@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026613;
-	b=raKWgaozXOtDjgehImzDDaFv1UU8cpZslvLklvK4oGcu6NiPiGSzJ1aIjZXqqmvMKD3H
-	 iE0Q+ZP/qTfIMxYYdtohFjH+OXTZCSd4vAzzO/PySEPwXaG8JF6FONfE40VyO0zy7IAMd
-	 iBm2WLGG4NMks6VX9akYBGk337my1lLKV9HUOmdw7/squZVk7i9oKs3bC14kBsqvECDmW
-	 CUccJfmBeGT8BBctl/WAiKl32BCQHHtFhi0hb8S0OagheqN1Yr3Dj7rkt0HRGbSDvpttn
-	 ULm87L7W1I4Q4GTMX+SnCJQh6YJIgAbWzL1kZkmALhFtYsg9/XA3zhayMd+XuCzT4VQ==
+	t=1795026615;
+	b=HB/sC1EVvIjxyb2CJsid29ZsYzBKIXrmFrkjv6PIfaVPiG7e2Lxx5QD3ydBOtLDMGxCu
+	 0ErZEmUkWtnoxtpwLxz7aFBl2/OdrFy3HM4qb8BgAh97w79xRa3mCTifmExkK8zMx1me+
+	 QHQbEAhdsuTcag9VQHxQOukHPfFXsozG8LuB6dtLHJsfHTz+3nEeP0dH8BHVyTD4DXEBR
+	 77mHZcFryU0swnKOs486EMEkQRo82P7LgkPCS9ocNjeqcBGHvvx3CMUPpXaKi2KL6cV0q
+	 p3tDQofKbUUU98hpakqQwH0SGzZQvNIrRiXnPK5T6do0yahJ7hOvwnrM08hvsYrhYhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026613;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026615;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+9uHwEUFX/fZyThO/yVFMYA5HYei8PkALco5ZxjEiA0=;
-	b=bZ0TAsRFvkSggvFLsJoqoToOGG9zLJR4hObhfvUe/60ieNn32FOv/5jnv+8/sOHJTMqZ
-	 ExPv+wBTi9IRnZj0pXeSAlLs3+1MQAJI4sHyng//MRwteTu96yKipJMvtF4yFWOB9uft4
-	 2j2AbyPAUqI7u5GCkmMcTaLFuJ5R8IkA0/v9G7UWZ1kiN9tTeRnZyKGkp9eHE4zbDdE+t
-	 ehdOwxs5jBo9BY9M5ad0EPKWs2Qsqjac9vCCegS4t15nBX4bcwBVGCh/e84b30fo3Bnwm
-	 gndqXj6CQ4UixpcamZFvv2nkI1sV4a9430Y7lrIKr9axVnom2wntFUb5x17cmWs9t5Q==
+	bh=ylDhx2fKFbZWytdywbuJ7j6OMIQRWsP+PveFycq1ofo=;
+	b=uD58OZs/hUrjOgSLupF1/gbmV4JEoyvLXazyq8V+8escI/VseC7teB2jenCRQknPodMb
+	 hAEnYgvFxTNierYiG/Fp9gA3IkwFJmL3OT9lJqhiY/uZmLv6XO/OwAW6mjqlUpZJoXibL
+	 D3MeFnLqV6W8oI69+tec1DR5KIkvV3AnocbDAzMbvCYad/MtY+N1dB+x1guzbkVMoIEvr
+	 8RTKDzlOPSe3l1YzMdf2FE7bAZKniBDt/TIoKppM11mcr2IaWNeNr8ze/fXZ7wOnveKvC
+	 /5IHLt4ehm65wyXPjfrMN8lOAjhlY5iscJvMC+1aSHUVc8lSIiWi9oHFX+MLWnKFDzg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OW4Z1W8f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGWyUTJl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545F0606A331;
-	Wed, 18 Nov 2026 18:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BD6606A32C;
+	Wed, 18 Nov 2026 18:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OW4Z1W8f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B91B1F000C4;
-	Wed, 18 Nov 2026 18:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGWyUTJl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAAB1F000C4;
+	Wed, 18 Nov 2026 18:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026612;
-	bh=+9uHwEUFX/fZyThO/yVFMYA5HYei8PkALco5ZxjEiA0=;
+	s=korg; t=1795026615;
+	bh=ylDhx2fKFbZWytdywbuJ7j6OMIQRWsP+PveFycq1ofo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OW4Z1W8fbedE89s8CFyjXSfdXtsb/xTa0d2N3LISgf0wdHCOm7Ls7hU3YOVHEtPIW
-	 Ejf8XstRK/G+QNYFfyj8UjDd4b2roSCZ4UP6RbQ0vM2Dau+I1GFEop5XIz7bFOLLrz
-	 95uSzAKxaPKUsLMgs833UK2ggbYEqhgqGoyedIUs=
+	b=IGWyUTJlzAcW6ss/jzqv7MWe+fzQlnwYXYzpIM9AVskwNovDNyUNYg4/bKl6tqVyh
+	 NZnwieHrdmDWOsJAHD3Ve992KZNcvMc4zkAiWSftbSRlWoiYV7UI0kiGji0L+5cKiT
+	 OJy/6AWjvu0NDjQIMD2dYitc/02/GNaikkR7Ok88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <enju.kohei@fujitsu.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1496/2151] arm64: rsi: Correct type of realm_config::hash_algo
-Date: Wed, 18 Nov 2026 15:53:51 +0100
-Message-ID: <20261118150216.368561316@linuxfoundation.org>
+Subject: [PATCH 6.18 1497/2151] ALSA: pcm: Unlink substreams before releasing them
+Date: Wed, 18 Nov 2026 15:53:52 +0100
+Message-ID: <20261118150216.403580374@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,49 +68,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <enju.kohei@fujitsu.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit c83237edf0adb8f8cbd9859841bbca5acc00fc11 ]
+[ Upstream commit d1e57f8fb7a6b6d32a4aaa31fd6fc4c77339608f ]
 
-The RMM specification (DEN0137, B5.5.10 and B5.5.19) defines
-RsiHashAlgorithm as an 8-bit enumeration, stored at offset 0x8 of
-RsiRealmConfig, with the unused bits of the structure being MBZ.
-However, realm_config::hash_algo is declared as unsigned long.
+A closing PCM substream can remain in its linked group after the
+driver close callback has freed its private data. With two configured
+dummy capture substreams on the same PCM device, linked with LINK,
+PREPARE on the surviving substream can still visit the closing member:
 
-For an RMM that zeroes the unused bits, the wider type gives the same
-value. An RMM that only writes the low byte (as TF-RMM currently does)
-leaves bytes 1-7 with whatever the guest buffer contained, so a
-comparison of the 64-bit field against RSI_HASH_SHA_* can fail. Nothing
-in mainline reads the field yet, but the proposed Realm measurement
-register support does.
+  Final close of A                   PREPARE on linked B
+  ----------------                   -------------------
+  snd_pcm_drop(): group -> SETUP
+  do_hw_free(A)
+  dummy_pcm_close(A): free dpcm
+                                     Take snd_pcm_link_rwsem for reading
+                                     Walk the group, including A
+                                     dummy_pcm_prepare(A)
+                                       Read freed timer_ops
+  pcm_release_private(A)
+    snd_pcm_unlink(A)
 
-Declare the field as u8 so the guest only depends on the byte the
-specification defines. The struct size and the offsets of the other
-fields do not change.
+Unlink at the start of final substream release, before dropping the
+stream or releasing driver resources. The link write lock waits for
+an existing group PREPARE, and unlink removes the closing member from
+later group actions. Keep the existing stop synchronization in
+do_hw_free() before the driver resources are freed.
 
-Link: https://lore.kernel.org/all/20260413084957.327661-4-sami.mujawar@arm.com/
-Fixes: b880a80011f5 ("arm64: rsi: Add RSI definitions")
-Signed-off-by: Kohei Enju <enju.kohei@fujitsu.com>
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Make unlink independent of the pcm_release callback so OSS substreams
+are covered too. Remove the native-only unlink callback and its
+registration, while retaining the callback hook for OSS cleanup.
+
+The existing KASAN report below records the freed timer_ops read in
+dummy_pcm_prepare().
+
+KASAN report as below:
+
+    BUG: KASAN: slab-use-after-free in dummy_pcm_prepare+0xb7/0xc0
+    Read of size 8 at addr ffff888106b35f00 by task alsa_pcm_fixtur/491
+
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? dummy_pcm_prepare+0xb7/0xc0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? dummy_pcm_prepare+0xb7/0xc0
+     kasan_report+0xe0/0x110
+     ? dummy_pcm_prepare+0xb7/0xc0
+     dummy_pcm_prepare+0xb7/0xc0
+     snd_pcm_do_prepare+0x71/0xb0
+     snd_pcm_action_group+0x505/0xb30
+     snd_pcm_action_nonatomic+0xab/0x150
+     snd_pcm_common_ioctl+0x1bf5/0x3a50
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? do_vfs_ioctl+0x1f5/0x1280
+     ? __pfx_do_vfs_ioctl+0x10/0x10
+     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
+     ? __pfx_snd_pcm_common_ioctl+0x10/0x10
+     ? __fput+0x5ba/0xa60
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     snd_pcm_ioctl+0x76/0xb0
+     ? __pfx_snd_pcm_ioctl+0x10/0x10
+     __x64_sys_ioctl+0x163/0x1d0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    RIP: 0033:0x41ee8d
+    Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
+    RSP: 002b:00007ffcfa72fb60 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 000000000041ee8d
+    RDX: 0000000000000000 RSI: 0000000000004140 RDI: 0000000000000004
+    RBP: 00007ffcfa72fbb0 R08: 00007ffcfa72fb98 R09: 0000000000000110
+    R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffcfa72fcd8
+    R13: 00007ffcfa72fcf0 R14: 00000000004a8f28 R15: 0000000000000001
+     </TASK>
+
+    Allocated by task 488:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x251/0x610
+     dummy_hrtimer_create+0x4a/0x170
+     dummy_pcm_open+0xe7/0x730
+     snd_pcm_open_substream+0x926/0x1580
+     snd_pcm_open+0x28d/0x6d0
+     snd_pcm_capture_open+0x82/0xe0
+     snd_open+0x1ec/0x3e0
+     chrdev_open+0x21f/0x660
+     do_dentry_open+0x5c8/0x1300
+     vfs_open+0x87/0x390
+     path_openat+0x2460/0x3cd0
+     do_file_open+0x21e/0x470
+     do_sys_openat2+0xf4/0x1b0
+     __x64_sys_openat+0x136/0x1e0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 490:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     dummy_hrtimer_free+0x72/0xe0
+     dummy_pcm_close+0x9f/0xd0
+     snd_pcm_release_substream.part.0+0x104/0x310
+     snd_pcm_release+0x106/0x240
+     __fput+0x39f/0xa60
+     fput_close_sync+0xff/0x200
+     __x64_sys_close+0x8c/0xf0
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    ==================================================================
+
+Fixes: 1576274d3028 ("[ALSA] Fix Oops of PCM OSS emulation")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-9c80f858ccc13b3de84d-v7-fcd8c7aa0e837bf0b036@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/rsi_smc.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/core/pcm_native.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/include/asm/rsi_smc.h b/arch/arm64/include/asm/rsi_smc.h
-index 6cb070eca9e9b..c2359ec01da7b 100644
---- a/arch/arm64/include/asm/rsi_smc.h
-+++ b/arch/arm64/include/asm/rsi_smc.h
-@@ -128,7 +128,7 @@ struct realm_config {
- 	union {
- 		struct {
- 			unsigned long ipa_bits; /* Width of IPA in bits */
--			unsigned long hash_algo; /* Hash algorithm */
-+			u8 hash_algo; /* Hash algorithm */
- 		};
- 		u8 pad[0x200];
- 	};
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 2c038cdda6873..72de45053baef 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2753,18 +2753,14 @@ static int snd_pcm_hw_constraints_complete(struct snd_pcm_substream *substream)
+ 	return 0;
+ }
+ 
+-static void pcm_release_private(struct snd_pcm_substream *substream)
+-{
+-	if (snd_pcm_stream_linked(substream))
+-		snd_pcm_unlink(substream);
+-}
+-
+ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
+ {
+ 	substream->ref_count--;
+ 	if (substream->ref_count > 0)
+ 		return;
+ 
++	snd_pcm_unlink(substream);
++
+ 	snd_pcm_drop(substream);
+ 	if (substream->hw_opened) {
+ 		if (substream->runtime->state != SNDRV_PCM_STATE_OPEN)
+@@ -2848,8 +2844,6 @@ static int snd_pcm_open_file(struct file *file,
+ 		return -ENOMEM;
+ 	}
+ 	pcm_file->substream = substream;
+-	if (substream->ref_count == 1)
+-		substream->pcm_release = pcm_release_private;
+ 	file->private_data = pcm_file;
+ 
+ 	return 0;
 -- 
 2.53.0
 
