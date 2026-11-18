@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031358;
-	b=rOotKZ7JK+0j9aPxwtKwSWvvIWHdWd4SNjqmsJUSnHj+TqeDPUFdCmIyCMEYeX1mdzia
-	 cRmDx6NReovvx5yRcDwxwoshEYFD37mX0y5hhJ6A0Y/GcXRKPln8RrqaDtu9aM0KHZZb1
-	 nJr6r3m22Ta61x8JZvXk83sql1WsFWVlwYglnk3gwoMUwb/HhK29Ytd08RKLF5079z1uI
-	 ja3mnvGPpbtVL5ttzXkCz83b5Emq7Ps0HMX4+DxKVvYQAS9Nj79U+vIOb02ONMEr/9UU2
-	 QlWNVpe9hUA8tmwx6Rjt81Dtwqe3DZvK+dUpuZBjoAF/cOC+PTjgTPnQFjbzNgcj5VQ==
+	t=1795031360;
+	b=JEaatI6gPwaBOohWolaJpoFNaZmFV1+SqyGVLga/9MMG98YSTAEMdg2Kg9MmICbJ0nKO
+	 Q3J4s07x9Id+K69m36rd4ezkFCO1cBtB6OgXV3A28G1LX9+Nc4bYGtbXYIfOqO7uX59aq
+	 9Dbhn6B+kvGONUGGHmyzCv+EjUi7jplkA2N7nkIFRtvpn1lPHck4jff2GLYHRKHMzKDq7
+	 R0D66UGVZTcbypGWhvXOjEoQvhiN4Vy7D70jb9ZTKbTB7Hm0z8xtLE8abcIv7HI1y4c1m
+	 Wu5usM1oqWOKwM7NAFSKyX26RT2Lp/grCc1ljJefaNL9NEG6supnMU2Ct0oS29yZnZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lnwUSI3UqLQmbC2JlIhFFJMryGkKvY1vmZ4RzgVAK8M=;
-	b=p7LOBnm44zGIz3nBiecJlVSuKoEvd5fT16mO74eqG7ScqchAtqcsfw93KAa1TXyvIn8k
-	 yqN80x/ruvupbThH77jT5CL4N/8EYpXI/OyIr393WKwA/E8KFCruk+yXlfOHbqr1Pin3q
-	 XWYZdF5zS7kuHcO04B9YkaInwefyP85PnROpAf3lpGU6AFq33lDeqDliCmz2x/PJthV4e
-	 ByYkmw9anmpGGczFq+j7oVn39m38q9fKQQ9fXoVcnU8Cd/1nqLMrpzMwgIaWgq0mWFL3O
-	 qmigFek+0fiRyLyh2+Zi/otWBPtcaLQ4coSBBdV4AbMjBXM4kamFXUQhoGMHoAnnT0A==
+	bh=2crNe3WSMJiTej3OVITPbGEzoUp9oGf/H65cocpvCWM=;
+	b=lssrAeHiyucaxYsfOIii8JRoafJM2HZ+3YqT/WQ4s1fqALbwe8VWt5AwzVJrHRkt4Z3G
+	 yne0qf4oNT/O/vo4Q9PJCWJCUyDXGxE02lvqOXWQpXbczEHDloGU6yyxsr5AbeVjI6/LA
+	 tPtez+Fz/VvrTC9P+E1uNxykAipXB8fxsIw1xM4R0XFlH1HKgpuh0qls99UaB7E7VixCW
+	 FwIu9AgGbXMA8ZP14NRmvSh7y6hzCRdxGbZz0K18jDpSUk1v8LGJ74Uk7mIDJmMHLBZ8+
+	 cwrXICb2l3fsEi02Qlpz0OYvFGfRB3sMZpCPl/Moyo7OC8MO1Bw994XRyIpIUvavUGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILyQgTkz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=id466ka6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3333606A320;
-	Wed, 18 Nov 2026 19:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55D4606A31C;
+	Wed, 18 Nov 2026 19:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ILyQgTkz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DB31F000C4;
-	Wed, 18 Nov 2026 19:49:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=id466ka6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0601B1F000C4;
+	Wed, 18 Nov 2026 19:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031357;
-	bh=lnwUSI3UqLQmbC2JlIhFFJMryGkKvY1vmZ4RzgVAK8M=;
+	s=korg; t=1795031360;
+	bh=2crNe3WSMJiTej3OVITPbGEzoUp9oGf/H65cocpvCWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ILyQgTkzv8pqa66vnjPgrjGQRcN7NL9dWWZIp239mh6MLb+vBPfq6+UhQQ7T4k6E+
-	 bF7NEiYQlH3cQ6AaokgOdn626lwP2eazAgf4Hmcs8QQwSritE91ySganm+u3WEBHtp
-	 E03yME8td3LnQUvRz6oPXNnUXcsRNhuxOC+tdG54=
+	b=id466ka65Bos4LHvEenJ+J+oaKvnxQod3o0P+vUf3Ix7n2FQ6vNTcVboNDR7vN4UU
+	 Q557wiDog3Jz0sdTxAZGdT1AJxijqrb8Xcbpazc+yFRnLPfE/VBjq4nTzoOXArEhOQ
+	 KR/djzYEFDKDOEqG5EKAJbRw3Z0jbVLHhRtdoGwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Beulich <jbeulich@suse.com>,
-	Jason Andryuk <jason.andryuk@amd.com>,
-	Juergen Gross <jgross@suse.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1013/1756] x86/PVH: dont truncate initrd address/size
-Date: Wed, 18 Nov 2026 15:52:20 +0100
-Message-ID: <20261118150050.471273587@linuxfoundation.org>
+Subject: [PATCH 6.12 1031/1756] wifi: mac80211: use link address as TA for non-MLO 4-addr station on MLD AP
+Date: Wed, 18 Nov 2026 15:52:38 +0100
+Message-ID: <20261118150051.118987323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,40 +68,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Beulich <jbeulich@suse.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit fcc43d1d6bf5fbd41e1e308b17187f9b759df56a ]
+[ Upstream commit 07b3eb8b9048976b585d29f1a1df9a435423c473 ]
 
-Consuming merely the lower halves of the provided values isn't very
-useful. (While generally loaders try to place it below 4G, especially
-when it's huge it may not fit there.)
+A 4-address AP_VLAN always sets A2 to sdata->vif.addr, which on an MLD
+AP is the AP MLD address. For a non-MLO station, A2 must be the link
+address it associated to.
 
-Fixes: 7243b93345f7 ("xen/pvh: Bootstrap PVH guest")
-Signed-off-by: Jan Beulich <jbeulich@suse.com>
-Reviewed-by: Jason Andryuk <jason.andryuk@amd.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Use the link address for a non-MLO station in the 4-address case as
+well, like the AP case already does in ieee80211_build_hdr() and
+ieee80211_check_fast_xmit(). Share the address selection between both
+cases and both TX paths.
 
-Message-ID: <9698d810-6664-4a9d-a847-18ad124261e0@suse.com>
+Fixes: 3e0278b717b0 ("wifi: mac80211: select link when transmitting to non-MLO stations")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20261007105249.1234601-1-nbd@nbd.name
+[use guard]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/pvh/enlighten.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/tx.c | 65 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 37 insertions(+), 28 deletions(-)
 
-diff --git a/arch/x86/platform/pvh/enlighten.c b/arch/x86/platform/pvh/enlighten.c
-index 2263885d16bad..5ae3ea60d934f 100644
---- a/arch/x86/platform/pvh/enlighten.c
-+++ b/arch/x86/platform/pvh/enlighten.c
-@@ -83,7 +83,9 @@ static void __init init_pvh_bootparams(bool xen_guest)
- 		struct hvm_modlist_entry *modaddr =
- 			__va(pvh_start_info.modlist_paddr);
- 		pvh_bootparams.hdr.ramdisk_image = modaddr->paddr;
-+		pvh_bootparams.ext_ramdisk_image = modaddr->paddr >> 32;
- 		pvh_bootparams.hdr.ramdisk_size = modaddr->size;
-+		pvh_bootparams.ext_ramdisk_size = modaddr->size >> 32;
- 	}
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index c6cc390f2fa00..88312d0a5372e 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2692,6 +2692,29 @@ static void ieee80211_remove_ack_skb(struct ieee80211_local *local, u16 info_id)
+ 	kfree_skb(ack_skb);
+ }
  
- 	/*
++static int ieee80211_ap_tx_addr_get(struct ieee80211_sub_if_data *sdata,
++				    struct sta_info *sta, u8 *addr, u8 *link_id)
++{
++	struct ieee80211_link_data *link;
++
++	if (!ieee80211_vif_is_mld(&sdata->vif) || sta->sta.mlo) {
++		memcpy(addr, sdata->vif.addr, ETH_ALEN);
++		return 0;
++	}
++
++	guard(rcu)();
++
++	link = rcu_dereference(sdata->link[sta->deflink.link_id]);
++	if (WARN_ON(!link))
++		return -ENOLINK;
++
++	memcpy(addr, link->conf->addr, ETH_ALEN);
++	if (link_id)
++		*link_id = sta->deflink.link_id;
++
++	return 0;
++}
++
+ /**
+  * ieee80211_build_hdr - build 802.11 header in the given frame
+  * @sdata: virtual interface to build the header for
+@@ -2760,7 +2783,10 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 			fc |= cpu_to_le16(IEEE80211_FCTL_FROMDS | IEEE80211_FCTL_TODS);
+ 			/* RA TA DA SA */
+ 			memcpy(hdr.addr1, sta->sta.addr, ETH_ALEN);
+-			memcpy(hdr.addr2, sdata->vif.addr, ETH_ALEN);
++			ret = ieee80211_ap_tx_addr_get(sdata, sta, hdr.addr2,
++						       &link_id);
++			if (ret)
++				goto free;
+ 			memcpy(hdr.addr3, skb->data, ETH_ALEN);
+ 			memcpy(hdr.addr4, skb->data + ETH_ALEN, ETH_ALEN);
+ 			hdrlen = 30;
+@@ -2785,18 +2811,12 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 		/* DA BSSID SA */
+ 		memcpy(hdr.addr1, skb->data, ETH_ALEN);
+ 
+-		if (ieee80211_vif_is_mld(&sdata->vif) && sta && !sta->sta.mlo) {
+-			struct ieee80211_link_data *link;
+-
+-			link_id = sta->deflink.link_id;
+-			link = rcu_dereference(sdata->link[link_id]);
+-			if (WARN_ON(!link)) {
+-				ret = -ENOLINK;
++		if (sta) {
++			ret = ieee80211_ap_tx_addr_get(sdata, sta, hdr.addr2,
++						       &link_id);
++			if (ret)
+ 				goto free;
+-			}
+-			memcpy(hdr.addr2, link->conf->addr, ETH_ALEN);
+-		} else if (link_id == IEEE80211_LINK_UNSPECIFIED ||
+-			   (sta && sta->sta.mlo)) {
++		} else if (link_id == IEEE80211_LINK_UNSPECIFIED) {
+ 			memcpy(hdr.addr2, sdata->vif.addr, ETH_ALEN);
+ 		} else {
+ 			struct ieee80211_bss_conf *conf;
+@@ -3263,7 +3283,9 @@ void ieee80211_check_fast_xmit(struct sta_info *sta)
+ 					  IEEE80211_FCTL_TODS);
+ 			/* RA TA DA SA */
+ 			memcpy(hdr->addr1, sta->sta.addr, ETH_ALEN);
+-			memcpy(hdr->addr2, sdata->vif.addr, ETH_ALEN);
++			if (ieee80211_ap_tx_addr_get(sdata, sta, hdr->addr2,
++						     NULL))
++				goto out;
+ 			build.da_offs = offsetof(struct ieee80211_hdr, addr3);
+ 			build.sa_offs = offsetof(struct ieee80211_hdr, addr4);
+ 			build.hdr_len = 30;
+@@ -3274,21 +3296,8 @@ void ieee80211_check_fast_xmit(struct sta_info *sta)
+ 		fc |= cpu_to_le16(IEEE80211_FCTL_FROMDS);
+ 		/* DA BSSID SA */
+ 		build.da_offs = offsetof(struct ieee80211_hdr, addr1);
+-		if (sta->sta.mlo || !ieee80211_vif_is_mld(&sdata->vif)) {
+-			memcpy(hdr->addr2, sdata->vif.addr, ETH_ALEN);
+-		} else {
+-			unsigned int link_id = sta->deflink.link_id;
+-			struct ieee80211_link_data *link;
+-
+-			rcu_read_lock();
+-			link = rcu_dereference(sdata->link[link_id]);
+-			if (WARN_ON(!link)) {
+-				rcu_read_unlock();
+-				goto out;
+-			}
+-			memcpy(hdr->addr2, link->conf->addr, ETH_ALEN);
+-			rcu_read_unlock();
+-		}
++		if (ieee80211_ap_tx_addr_get(sdata, sta, hdr->addr2, NULL))
++			goto out;
+ 		build.sa_offs = offsetof(struct ieee80211_hdr, addr3);
+ 		build.hdr_len = 24;
+ 		break;
 -- 
 2.53.0
 
