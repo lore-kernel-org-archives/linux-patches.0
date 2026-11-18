@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024794;
-	b=EOpjfWASVFlE1pWdlMclzWkxufLlXjE3mluXBxeciREAYJjSq0JWnAK4YaiCHiahphRZ
-	 4iAMOCBWelZ0AZvWqFCwJdKG75k3U//TCdVbNsPA5+6Ed5zZIHF0P6/qYtCWG1OJ7dR3I
-	 O0elUX+Umjk0kRRUqhX3BXt9C5oEwrm1upBA4R8KQg1b08jrjoDyMlgBdk82ObyDzTAEl
-	 xqviqXSLIrd13xmpo9mXVSm81iemel6PTBkssQuJD/glaZpuKkcpi1WcGMKDalriGFHZ0
-	 d8BIyQKr2jFjB5uGzAUCGmlcaIP/t79MO1WwIKbfspWHa40w/Hbeaqlxc8i300XFWxA==
+	t=1795024797;
+	b=iQQsLGMkXa3cuLVxwvNatFLUOqVeds7/3CPir9aO/cuKXVbD5Jy+iOS6A6L0iP7i52aj
+	 DNqZk8ui0podP6n8abzBbaYmgS5Y/MDEh1CWW0g6PQSNR5IaAnRiTg9sFWs5RAX9rvt0d
+	 0T5tgQ6ngtqlGmtZEONWrsExQtMYWRZjcJMQ0lGmgPG1YWaXkX9dRfPJOrOLaOTVvUKkX
+	 cddZb9yydnjU5WGEcdZf4Sjw+13hmYF3LhMP/BcE6k4eIZ2P3FYujihhKhLaTJijJRVHR
+	 k/ztbRkSG6y6i5sEogiEj6+ZG6eQppoii9tCRMA3kUVereWZps79Ojvzuw2oXB8gxvA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024797;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9TRfd9XPyas9Sl0Xu3X1u/xa65eO1IqcK+R23DpGrSU=;
-	b=GVtgwcbx4R1Fc5yo3uFOyty3o5PbQW4owdAT/k4ynHU98IrRTSHFKG99FvyrnNQkvDGO
-	 /rYHrOa8J8qdTlOZD08uJTdX2lZu2XUb9IK9ZumT5mZit6kWBx9g6LBGfSz0CCoOsbotZ
-	 wZ0BxmUlS/WGfReUdjcHzRHMJi3znR7zzQxcQpYMBNEFVstFXgMJrzSZJKGRYabo41HW6
-	 4dcX++8gBRYi4KCwSdEcAAt5TmywiFgrZ9a4bcyfh/xDVho7mfWaeJZ3vOzJ/ZgQw/var
-	 Mr5MAn7xMlAKijBHYd7grjnnLggQnfTYShPUiN8TZB5e/F31Big4xwch/kwn7RBfL9w==
+	bh=Cf3odIjApMf/3bVmbpbKa/UZbsx37+9iUUVeRFyk218=;
+	b=rwdOYo9hVVe4VCYiRh5WGp8Hk8fPPhJADA3CxwYwLhX+nxcKgm81Xvbdo+q/soDQRKTJ
+	 cE78aNVAmhQNa5AZUXj46qfgd3dqTmnvj9LZcjaG0nF1aTbMqtA5WAnuUoVE9DWRAsj7A
+	 THuYY1MCShglDhlOJTWrfFXAh/Xc7s7vdOA/OaTHhgCzeuJNTGKEYSpu8K+nUMnyyJv3C
+	 qyZ9Rv4w2pw8wiy/upidFzZlFfgLr/filSnQ3YILNWopdAenZLPWScagIfnw4bNGInLB5
+	 99fcMFQd2QOfp6WzrDBkXHWd4YpJR6vaYEprMX2pnSTIGlBxvlX3vqqyszZbYS9GlOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d036iEkf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ZCaiQmo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2737F606A31C;
-	Wed, 18 Nov 2026 17:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1315606A31C;
+	Wed, 18 Nov 2026 17:59:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d036iEkf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD341F000C4;
-	Wed, 18 Nov 2026 17:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ZCaiQmo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0881F000C4;
+	Wed, 18 Nov 2026 17:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024794;
-	bh=9TRfd9XPyas9Sl0Xu3X1u/xa65eO1IqcK+R23DpGrSU=;
+	s=korg; t=1795024796;
+	bh=Cf3odIjApMf/3bVmbpbKa/UZbsx37+9iUUVeRFyk218=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d036iEkfH9xa11Rxf4jwLXUfsYdYedlw+dgZxDHh8M9s8n/fFK6DDSWZfCNOobiZm
-	 fWwcAoa20O0lRRCcYC1s8E/F4JkxCdS7itmd5KHrrX1PwPKEnRcKQvDD6hxBJwPtiX
-	 RkzC+oW/vmmVaL9II3wtFbkgwNymdL/eZ/S8MLb4=
+	b=1ZCaiQmo9egJHqYw5wFTLZQpy72QIiJg5LyOic4y7/W5CYGAUxyUk/nfFCzZrrcpP
+	 mI1uETPVZ+oXhWuVfvmi4yFm/4VC4FhqHwNIvVg6zKwUWF+y49uGRAJ1mkB15HHtyH
+	 KpENoDSQPlo0BW2khF/s89WHmZvaTlkXAl/F0Gds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0824/2151] ASoC: mediatek: mt8192: mt8192-afe-gpio: Use guard() for mutex locks
-Date: Wed, 18 Nov 2026 15:42:39 +0100
-Message-ID: <20261118150152.146292497@linuxfoundation.org>
+Subject: [PATCH 6.18 0851/2151] arm64: dts: imx93-14x14-evk: fix reserved memory node names for remoteproc
+Date: Wed, 18 Nov 2026 15:43:06 +0100
+Message-ID: <20261118150153.246107659@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,52 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 14edf39daefbf7aa689ea2bb8811a85c498e0ff6 ]
+[ Upstream commit e62f7ef5320d05361ee7f665568d05361b0c59d9 ]
 
-Convert the explicit mutex_lock()/mutex_unlock() pair to guard(mutex)
-to simplify the locking logic and automatically release the mutex on
-all exit paths.
+The imx_rproc driver checks for the name "vdev0buffer" to skip mapping
+the vdev buffer region, as it is handled by rproc_add_virtio_dev.
+With the node named "vdevbuffer", the check fails and the region gets
+unnecessarily mapped. Rename it to "vdev0buffer" to match what the
+driver expects.
 
-This changes the mutex release point from immediately before dev_warn()
-to automatic cleanup at scope exit. However, the affected path only emits
-a warning and immediately returns -EINVAL, without any further processing.
-
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260610102021.83273-6-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 411be3902fa8 ("ASoC: mediatek: mt8192: Propagate errors in mt8192_afe_gpio_request()")
+Fixes: 0481dadbc5e5 ("arm64: dts: imx93: support i.MX93-14x14-EVK board")
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-gpio.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c b/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
-index de5e1deaa167d..b993ca2dbd7c8 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-gpio.c
-@@ -208,7 +208,7 @@ static int mt8192_afe_gpio_adda_ch34_ul(struct device *dev, bool enable)
- int mt8192_afe_gpio_request(struct device *dev, bool enable,
- 			    int dai, int uplink)
- {
--	mutex_lock(&gpio_request_mutex);
-+	guard(mutex)(&gpio_request_mutex);
- 	switch (dai) {
- 	case MT8192_DAI_ADDA:
- 		if (uplink)
-@@ -296,11 +296,9 @@ int mt8192_afe_gpio_request(struct device *dev, bool enable,
- 		}
- 		break;
- 	default:
--		mutex_unlock(&gpio_request_mutex);
- 		dev_warn(dev, "%s(), invalid dai %d\n", __func__, dai);
- 		return -EINVAL;
- 	}
--	mutex_unlock(&gpio_request_mutex);
+diff --git a/arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts b/arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts
+index f9eebd27d640c..35693b2f28d0d 100644
+--- a/arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts
++++ b/arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts
+@@ -69,7 +69,7 @@ rsc_table: rsc-table@2021e000 {
+ 			no-map;
+ 		};
  
- 	return 0;
- }
+-		vdevbuffer: vdevbuffer@a4020000 {
++		vdev0buffer: vdev0buffer@a4020000 {
+ 			compatible = "shared-dma-pool";
+ 			reg = <0 0xa4020000 0 0x100000>;
+ 			no-map;
+@@ -184,7 +184,7 @@ &cm33 {
+ 	mboxes = <&mu1 0 1>,
+ 		 <&mu1 1 1>,
+ 		 <&mu1 3 1>;
+-	memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>,
++	memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
+ 			<&vdev1vring0>, <&vdev1vring1>, <&rsc_table>;
+ 	status = "okay";
+ };
 -- 
 2.53.0
 
