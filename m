@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059297;
-	b=n5MTqihqJQdShvwl0l2c0VW0A+rP2AX9HbvCumYxg2Qd1R0MkxHablzC3qW9xrygW67c
-	 22YRHPXhpJIi/f7fPfzBQi4efXUqHjH2QTrp8jOpvEE8FuSrFhH9PiUcsNwQ1I0cbhzbQ
-	 FlJL43RgE1XGbBre22k2fu1+3Digivnvyh8BZrIj424roJHlf54qT+SGG0oWmUrWWOo0E
-	 YM6a63BIXLOE1RDwxdLS894Gc3lpiTKWNIqgrhgiJzj+N0Cn7HOK/eiyujYWGOfP8c1yY
-	 V/GTyqiujN4LX7nN3z/MiFw8t6ERAi1YgSTyCrNkwxyduvYBcJxmg23cC9a5G1jOHdQ==
+	t=1795059300;
+	b=pfnxYHpGRVOW67tPQOi26AW/vmbl9D0/+R5sgo8jk8tO1UC3ARhKia75NGRN0aDdlgVZ
+	 /FLZwsylKIqJ9H/JRzntGM3NwuqTgW+4ICZod6uZL2Ng4IQesmHdQGKcY/RTX9ncvNeLq
+	 Z1QQTXwaUuclGN8mKCIoNcFwVQAgP/aadKjwFgQ4By4AwuTOu0ImnV5oONASKFqIiFDg+
+	 42uxO98vSEmpXHdMoHooGJyEpj9fDM/JrH5q9H6B6+reQ1ShwJFD/f88XoUpFEqpojF2L
+	 qSSBia6h4gIpQ0VYiwaIK59O/7OwZFFkKWcsrNiMxzWrflrtwRJLThZns6+ve2dy8pw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059297;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=paU7D3y/4NUa5H+fSpo9OvygzThpuXpL5MfTHKcf2gA=;
-	b=3DnNNYL6qLBoKHLNXTwHVYwxr5L4jJGLndg85tBrFoL4v9iMl73XBuBwjx6t3vWfjFUx
-	 L7+8qmEZnAuJMvxbdsU6cNxTdWpEuH/sdy+9WTWhT7fk/ldTQ34beSAvx+ARck/L/fC8H
-	 Gupfv5H/l9cA3GUM13srP7M6oJkFqZ80Z9k4S3WDML4O9bXOBewI4N77wD2q+ZhjdgJ7q
-	 2OAXS8wZfRgrHulnQ7RKSI2rVfiQa+MYxYJanIfly5jPAQPRU4IpkD1kURsnMx499RMYD
-	 vTKGCZ0rwZRwant0G7xAC979xGNqPRw8Hlju868/FtPukfzUYJMxbjQp6S97YX/1CVg==
+	bh=s0KR7lAIiOvaScML4fxlJFNUOKV0EsVk0uYoIgezVK4=;
+	b=ZZP+2xGKb5xyH8YwYHJqsmFzfifY3R9LEskNVPrS+GM5gf4G7ECkC0GOvyrqRKRh/rug
+	 UXmvgamP3A69bWYaPNtXGzGPbpqc0o6mwX8vzMC4JRLKtalHB9Jn1/nvgSymlqhjAEOhC
+	 3UBXRxnTj2snrbbs4R602W0gZCKnzIiilJf6zIXNTTwRGjWVO/UY1kns2jD9updks9B+3
+	 6lFWxGzMCe+RlMd4i7KtRdzbGydTQiC+QwHb9JiSjMJfmATweB0bHfxdFssbSpHLvIvym
+	 EfYwaF8pu7Ogo/qIBL6rUbZxYw27QRzPWiZyjCC0OBJXEExPHEEzyGLcx98HYmr+Izw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gH5X474L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gq2MjsEA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73D4606A31C;
-	Thu, 19 Nov 2026 03:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FB2606A326;
+	Thu, 19 Nov 2026 03:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gH5X474L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23411F000C5;
-	Thu, 19 Nov 2026 03:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gq2MjsEA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26111F000C5;
+	Thu, 19 Nov 2026 03:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059297;
-	bh=paU7D3y/4NUa5H+fSpo9OvygzThpuXpL5MfTHKcf2gA=;
+	s=korg; t=1795059300;
+	bh=s0KR7lAIiOvaScML4fxlJFNUOKV0EsVk0uYoIgezVK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gH5X474Ld1FOc7ISSVyGnpJALfLphvhhCjgXP3dZIHTl9Et5Li/5SNcKr9HYbgijW
-	 oT2xX4qCnyYn4NaZ2Xfh+ZPVZDgde4o5/PIMULTv6vfcc3B6nn/plZklRsuuIYFhg9
-	 sWWigTZiIQq8sRcUDyAzqZhYXm/aWtKTp/MPJXvU=
+	b=Gq2MjsEA1k0I5gfmtd8GSvFa1PpC1bF3TE1z7b2XqNjgSvjvuOqR6KlHcZIH4Ff/D
+	 JODAhvDn/RT3OkaNkbTYFrjsyItAmHQAs2HshPx+uNON0ZNSROVJknBrcWOm2dwLBi
+	 hc6G+S/otBLD2lbrYvuIG/3opzjBinziQh31hjx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	Jan Kara <jack@suse.cz>,
+	Thorsten Blum <blum@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0790/1848] udf: Avoid invalid LVID used on mount
-Date: Wed, 18 Nov 2026 15:47:08 +0100
-Message-ID: <20261118145949.502166765@linuxfoundation.org>
+Subject: [PATCH 5.10 0755/1848] x86/boot: Fix off-by-one error in sme_clear_pgd()
+Date: Wed, 18 Nov 2026 15:46:33 +0100
+Message-ID: <20261118145948.099469213@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,104 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Thorsten Blum <blum@kernel.org>
 
-[ Upstream commit c8f1140cb82dc843e72697dc6f8c7ee1acce5d28 ]
+[ Upstream commit cb319926808b1cca522d2087a13205e840beb45b ]
 
-udf_load_logicalvolint() loads logical volume integrity descriptors.
-Since there can be multiple blocks with LVIDs, we verify the contents of
-only the last (prevailing) LVID found. However if we fail to load the
-last LVID (either due to IO error or because it's checksum fails to
-match), we never perform the verification of validity of the LVID we are
-going to use. If such LVID contains invalid data, we can hit
-out-of-bounds access or similar issues. Fix the problem by verifying
-each LVID we are potentially going to accept.
+The mapping helpers __sme_map_range_pmd() and __sme_map_range_pte(), and
+therefore sme_encrypt_kernel(), use exclusive end addresses and stop
+before vaddr reaches vaddr_end.
 
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Stable-dep-of: a61fb39759d7 ("udf: Make sure there's enough space for LVID implementation use field")
+However, sme_clear_pgd() treats vaddr_end as inclusive when calculating
+the last PGD entry to clear. If vaddr_end is PGD-aligned, the first PGD
+entry outside the range is cleared too.
+
+Use vaddr_end - 1 to calculate the last PGD entry within the range.
+
+Fixes: 6ebcb060713f ("x86/mm: Add support to encrypt the kernel in-place")
+Signed-off-by: Thorsten Blum <blum@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/20260918142714.242711-2-blum@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/super.c | 42 +++++++++++++++++++++++++-----------------
- 1 file changed, 25 insertions(+), 17 deletions(-)
+ arch/x86/mm/mem_encrypt_identity.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/udf/super.c b/fs/udf/super.c
-index 467e760863486..58bc19b82afa4 100644
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -1574,6 +1574,20 @@ static int udf_load_logicalvol(struct super_block *sb, sector_t block,
- 	return ret;
- }
+diff --git a/arch/x86/mm/mem_encrypt_identity.c b/arch/x86/mm/mem_encrypt_identity.c
+index 5ec47af786ddb..7899448d46fe2 100644
+--- a/arch/x86/mm/mem_encrypt_identity.c
++++ b/arch/x86/mm/mem_encrypt_identity.c
+@@ -102,7 +102,7 @@ static void __init sme_clear_pgd(struct sme_populate_pgd_data *ppd)
+ 	pgd_t *pgd_p;
  
-+static bool udf_lvid_valid(struct super_block *sb,
-+			   struct logicalVolIntegrityDesc *lvid)
-+{
-+	u32 parts, impuselen;
-+
-+	parts = le32_to_cpu(lvid->numOfPartitions);
-+	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
-+	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
-+	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
-+	    2 * parts * sizeof(u32) > sb->s_blocksize)
-+		return false;
-+	return true;
-+}
-+
- /*
-  * Find the prevailing Logical Volume Integrity Descriptor.
-  */
-@@ -1584,7 +1598,6 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
- 	struct udf_sb_info *sbi = UDF_SB(sb);
- 	struct logicalVolIntegrityDesc *lvid;
- 	int indirections = 0;
--	u32 parts, impuselen;
+ 	pgd_start = ppd->vaddr & PGDIR_MASK;
+-	pgd_end = ppd->vaddr_end & PGDIR_MASK;
++	pgd_end = (ppd->vaddr_end - 1) & PGDIR_MASK;
  
- 	while (++indirections <= UDF_MAX_LVID_NESTING) {
- 		final_bh = NULL;
-@@ -1606,32 +1619,27 @@ static void udf_load_logicalvolint(struct super_block *sb, struct kernel_extent_
- 		if (!final_bh)
- 			return;
+ 	pgd_size = (((pgd_end - pgd_start) / PGDIR_SIZE) + 1) * sizeof(pgd_t);
  
--		brelse(sbi->s_lvid_bh);
--		sbi->s_lvid_bh = final_bh;
--
- 		lvid = (struct logicalVolIntegrityDesc *)final_bh->b_data;
-+		if (udf_lvid_valid(sb, lvid)) {
-+			brelse(sbi->s_lvid_bh);
-+			sbi->s_lvid_bh = final_bh;
-+		} else {
-+			udf_warn(sb, "Corrupted LVID (parts=%u, impuselen=%u), "
-+				 "ignoring.\n",
-+				 le32_to_cpu(lvid->numOfPartitions),
-+				 le32_to_cpu(lvid->lengthOfImpUse));
-+		}
-+
- 		if (lvid->nextIntegrityExt.extLength == 0)
--			goto check;
-+			return;
- 
- 		loc = leea_to_cpu(lvid->nextIntegrityExt);
- 	}
- 
- 	udf_warn(sb, "Too many LVID indirections (max %u), ignoring.\n",
- 		UDF_MAX_LVID_NESTING);
--out_err:
- 	brelse(sbi->s_lvid_bh);
- 	sbi->s_lvid_bh = NULL;
--	return;
--check:
--	parts = le32_to_cpu(lvid->numOfPartitions);
--	impuselen = le32_to_cpu(lvid->lengthOfImpUse);
--	if (parts >= sb->s_blocksize || impuselen >= sb->s_blocksize ||
--	    sizeof(struct logicalVolIntegrityDesc) + impuselen +
--	    2 * parts * sizeof(u32) > sb->s_blocksize) {
--		udf_warn(sb, "Corrupted LVID (parts=%u, impuselen=%u), "
--			 "ignoring.\n", parts, impuselen);
--		goto out_err;
--	}
- }
- 
- /*
 -- 
 2.53.0
 
