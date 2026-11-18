@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038716;
-	b=Q9HKCsodWfJKxap78sPNypGtqsMlEwFAfOMitxgJ4FH0Xl+HiA6wT2UhARIP3AQ4GN8I
-	 bKtQBUzz/QgUyqw0tifBgT2quaA2Wix1D5RfgVUpYVrZwIdtxsiKI0ASjXtbMNFRznOS1
-	 aHZlPXcngHZyXen3M6nTWp7Hsf0gWwi4ErHUuXRKVo4IGpUiqflZiUDKq6PueD80KLQRQ
-	 K24h11/SBKBEb8LVTOxRLB8ofwanAieqVE5yLGhntpzVI2nxruq/A7yWMvVTc9VQ8klGD
-	 SjwCR+OblOyV7UVjvL7IQfBgyoWXtD9ig6OmpQJ+kNXxfuoPFQMa+2uGJjC6G96idOQ==
+	t=1795038720;
+	b=RLSZAU/prS9u0XHkVoK0A6QUztFtd1PKhVu3QHDCxBAb5BOIKOhefVAYIdiBzX4oTT82
+	 Sn8StIpapjRgk3WfZHuhdeTU94HYimzv3K6dpBFV1nq4DF2Bd80MYIUuNz+1RRmy9DiXO
+	 0dAME5g/lWJWvCrg17PvExoApAxfaFhXjFH578lXZl6NgljKTSGk2eGkOcUaiPnQ9C+lz
+	 n5RQAXIjOza55SNBe7zC6/hssr8mdrYmzu7C6tJ0vXxhpUZaGfEO8QTtwk0Wo2EeXIIe3
+	 eIDzTL2NglfedBwBHyjG3p7SWrV5IitzV/y2WXrcE0RJwwKudF77oG8fJlpBMCd9DUQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038720;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vJFbb0l7zAGGwO/6lSBUxpE9Y9vE++t59f0CUruUXtw=;
-	b=y4X/jPJpkgCfvzaVMjnyObJlEuDGdV8/IxjxiL1qIxHoGu8tlS4hLX+5E/IGIWSHABna
-	 qYJMzA5zUEh232nadJ+0vahnKLRhcZoNBDuqdz+PrcRTFlZYY8JRL7bfXV7xhjhFSmOCG
-	 fWZTPoU4lLeGJJnuVXerf0x/3gPwL5lMrnx6FAT7TactYkjTAfQ/qzrG6S0SHWT674Qe0
-	 DxhZw+HkZaXU6Wjr0Dxn3suNyb8VEAzmcZeWWUlMEFccTV18oOhoX+SaK+m+6WKZaxgTP
-	 FWVx9ANdUAGtmuueyLOmFcOL012MHZrLXKet5EuUsRFC+ryxZ/ZNp0FbtjoHA1aETVw==
+	bh=5lCUO8syeHahvc2QTTmQWSKsNjN/uiy1+6y25ZOJ7Xs=;
+	b=2BfQ5xf9hvQuSchRRhsy5lOo1e8hsELL2OICpCb/bB8t2Xvdtun+tfDj/qqHWYygs/n/
+	 v1TeFGLc86qS/kLwsMecdZelQgINxWl0X04OW42WhFUViIGtNH5et1KFhhfHH6Y98yvVE
+	 Nw9ttY7ok+UHpMZg3B1Hc0KvgBSjSCPGI0+6tIT44Hxprc9SHEuzH64ixK61ykOhsfN2K
+	 bfxaFX9wLZa8a2SGKs/eG9qZgnZYKYlpeZ3DuMrZ4ER+yL8vZZ9chNTMjcdTckx0t+1s1
+	 4PfO78h0DuEhmSVBSyZ0Kw0ocD/xCyE66lrUNH9cr/M3/jYdosKxdQg16grmQOSHhrQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBg1bEr7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJV4byZK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DC0606A325;
-	Wed, 18 Nov 2026 21:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C089606A334;
+	Wed, 18 Nov 2026 21:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBg1bEr7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCAB1F000C4;
-	Wed, 18 Nov 2026 21:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CJV4byZK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A54F1F000CD;
+	Wed, 18 Nov 2026 21:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038716;
-	bh=vJFbb0l7zAGGwO/6lSBUxpE9Y9vE++t59f0CUruUXtw=;
+	s=korg; t=1795038720;
+	bh=5lCUO8syeHahvc2QTTmQWSKsNjN/uiy1+6y25ZOJ7Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HBg1bEr7/vvoskBXhtKpi7v/cM4nP4+P6brUFQvQ0LWz9UHe49uWPISXFJOwJhd+R
-	 ImLyOnavFFr0tJjXU46rWu/HUCgYFdnEfmUbvKmtcOMTHMcTnzDz6XTZpV/5pGZ3nu
-	 bN/8ijtIQK4K6l/BZWRkbYjzWyfcb4Jp6j21W2mI=
+	b=CJV4byZKDdVzWcB1mD/MNr9EkdQm34Y8YdQnATjUjy86JZiQ3bn56+3kPU2oOmx+S
+	 j4czOQ9mwIWBU8cwwwChFrAg2rGTdXKdOX2/BWbyaeQMPCNNqmCBgQpEmbiuc7S6b/
+	 5ANAReDoA0twBcqjECzUdJibAW5eYg4QULj7IJ+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaogang Chen <xiaogang.chen@amd.com>,
-	Olivier Kaloudoff <olivier.kaloudoff@gmail.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Neel Natu <neelnatu@google.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1843/3318] drm/amdkfd: stop restore retries on device unplug
-Date: Wed, 18 Nov 2026 15:41:05 +0100
-Message-ID: <20261118150417.146790791@linuxfoundation.org>
+Subject: [PATCH 6.6 1844/3318] lib/tests: extend cmdline KUnit with next_arg() tests
+Date: Wed, 18 Nov 2026 15:41:06 +0100
+Message-ID: <20261118150417.175831475@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,119 +73,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-[ Upstream commit 3254ed0b15f2fe656c9cb36ccb59b92422440bf8 ]
+[ Upstream commit dcc8a57815534e3844f342b28ecfb6e626a816a0 ]
 
-amdgpu_amdkfd_restore_userptr_worker() and svm_range_restore_work()
-reschedule themselves when validation fails with evicted objects
-pending. After a surprise removal the restore paths fail with -ENODEV
-permanently, so rescheduling just spins the worker uselessly until
-cancel_delayed_work_sync() in fini finally stops it - which can take
-a while, since process teardown itself is delayed by the dead device.
+The cmdline KUnit suite covers get_option() and get_options(), but it
+does not exercise next_arg().
 
-Treat -ENODEV as terminal in both workers.
+Extend the suite with one test for a quoted value containing spaces and
+one regression test for a bare quote token after a normal parameter.
 
-Cc: Xiaogang Chen <xiaogang.chen@amd.com>
-Signed-off-by: Olivier Kaloudoff <olivier.kaloudoff@gmail.com>
-Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 266fab83139600e58db7e900e930c722e619b78c)
-Cc: stable@vger.kernel.org
-[ sashal: adjusted context for schedule_delayed_work() ]
+The regression test covers the bare quote token path fixed by commit
+9847f21225c4 ("lib/cmdline: avoid page fault in next_arg").
+
+[shuvampandey1@gmail.com: extend cmdline next_arg() coverage with mixed tokens]
+  Link: https://lore.kernel.org/20260316211249.88601-1-shuvampandey1@gmail.com
+Link: https://lore.kernel.org/20260316101227.15807-1-shuvampandey1@gmail.com
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Neel Natu <neelnatu@google.com>
+Cc: Dmitry Antipov <dmantipov@yandex.ru>
+Cc: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 5d72266218b1 ("lib/cmdline: fix get_options() count and overflow with large ranges")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c   | 18 +++++++++++++-----
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c           |  8 +++++---
- 2 files changed, 18 insertions(+), 8 deletions(-)
+ lib/cmdline_kunit.c | 62 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 8237772ca9426..05426ac8d9e14 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -2700,6 +2700,7 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
- 	struct task_struct *usertask;
- 	struct mm_struct *mm;
- 	uint32_t evicted_bos;
-+	int ret;
+diff --git a/lib/cmdline_kunit.c b/lib/cmdline_kunit.c
+index 705b82736be08..20d525aa23eda 100644
+--- a/lib/cmdline_kunit.c
++++ b/lib/cmdline_kunit.c
+@@ -139,11 +139,73 @@ static void cmdline_test_range(struct kunit *test)
+ 	} while (++i < ARRAY_SIZE(cmdline_test_range_strings));
+ }
  
- 	mutex_lock(&process_info->notifier_lock);
- 	evicted_bos = process_info->evicted_bos;
-@@ -2719,14 +2720,16 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
++static void cmdline_test_next_arg_quoted_value(struct kunit *test)
++{
++	char in[] = "foo=\"bar baz\" qux=1";
++	char *next, *param, *val;
++
++	next = next_arg(in, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "foo");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "bar baz");
++	KUNIT_EXPECT_STREQ(test, next, "qux=1");
++
++	next = next_arg(next, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "qux");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "1");
++	KUNIT_EXPECT_STREQ(test, next, "");
++}
++
++static void cmdline_test_next_arg_bare_quote_regression(struct kunit *test)
++{
++	char in[] = "foo=bar \"";
++	char *next, *param, *val;
++
++	next = next_arg(in, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "foo");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "bar");
++	KUNIT_EXPECT_STREQ(test, next, "\"");
++
++	/* This hits the i == 0 quoted-token case fixed by 9847f21225c4. */
++	next = next_arg(next, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "");
++	KUNIT_EXPECT_PTR_EQ(test, val, NULL);
++	KUNIT_EXPECT_STREQ(test, next, "");
++}
++
++static void cmdline_test_next_arg_mixed_tokens(struct kunit *test)
++{
++	char in[] = "bbb= jjj kkk=\"a=b\"";
++	char *next, *param, *val;
++
++	next = next_arg(in, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "bbb");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "");
++	KUNIT_EXPECT_STREQ(test, next, "jjj kkk=\"a=b\"");
++
++	next = next_arg(next, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "jjj");
++	KUNIT_EXPECT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, next, "kkk=\"a=b\"");
++
++	next = next_arg(next, &param, &val);
++	KUNIT_EXPECT_STREQ(test, param, "kkk");
++	KUNIT_ASSERT_NOT_NULL(test, val);
++	KUNIT_EXPECT_STREQ(test, val, "a=b");
++	KUNIT_EXPECT_STREQ(test, next, "");
++}
++
+ static struct kunit_case cmdline_test_cases[] = {
+ 	KUNIT_CASE(cmdline_test_noint),
+ 	KUNIT_CASE(cmdline_test_lead_int),
+ 	KUNIT_CASE(cmdline_test_tail_int),
+ 	KUNIT_CASE(cmdline_test_range),
++	KUNIT_CASE(cmdline_test_next_arg_quoted_value),
++	KUNIT_CASE(cmdline_test_next_arg_bare_quote_regression),
++	KUNIT_CASE(cmdline_test_next_arg_mixed_tokens),
+ 	{}
+ };
  
- 	mutex_lock(&process_info->lock);
- 
--	if (update_invalid_user_pages(process_info, mm))
-+	ret = update_invalid_user_pages(process_info, mm);
-+	if (ret)
- 		goto unlock_out;
- 	/* userptr_inval_list can be empty if all evicted userptr BOs
- 	 * have been freed. In that case there is nothing to validate
- 	 * and we can just restart the queues.
- 	 */
- 	if (!list_empty(&process_info->userptr_inval_list)) {
--		if (validate_invalid_user_pages(process_info))
-+		ret = validate_invalid_user_pages(process_info);
-+		if (ret)
- 			goto unlock_out;
- 	}
- 	/* Final check for concurrent evicton and atomic update. If
-@@ -2735,11 +2738,14 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
- 	 * reference counting inside KFD will handle this case.
- 	 */
- 	mutex_lock(&process_info->notifier_lock);
--	if (process_info->evicted_bos != evicted_bos)
-+	if (process_info->evicted_bos != evicted_bos) {
-+		ret = -EAGAIN;
- 		goto unlock_notifier_out;
-+	}
- 
- 	if (confirm_valid_user_pages_locked(process_info)) {
- 		WARN(1, "User pages unexpectedly invalid");
-+		ret = -EINVAL;
- 		goto unlock_notifier_out;
- 	}
- 
-@@ -2757,8 +2763,10 @@ static void amdgpu_amdkfd_restore_userptr_worker(struct work_struct *work)
- unlock_out:
- 	mutex_unlock(&process_info->lock);
- 
--	/* If validation failed, reschedule another attempt */
--	if (evicted_bos) {
-+	/* If validation failed, reschedule another attempt, unless the
-+	 * device is gone for good
-+	 */
-+	if (evicted_bos && ret != -ENODEV) {
- 		schedule_delayed_work(&process_info->restore_userptr_work,
- 			msecs_to_jiffies(AMDGPU_USERPTR_RESTORE_DELAY_MS));
- 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 006ba258e683f..9e073c74d0d15 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -1821,7 +1821,7 @@ static void svm_range_restore_work(struct work_struct *work)
- 	struct mm_struct *mm;
- 	int evicted_ranges;
- 	int invalid;
--	int r;
-+	int r = 0;
- 
- 	svms = container_of(dwork, struct svm_range_list, restore_work);
- 	evicted_ranges = atomic_read(&svms->evicted_ranges);
-@@ -1895,8 +1895,10 @@ static void svm_range_restore_work(struct work_struct *work)
- 	mmap_write_unlock(mm);
- 	mutex_unlock(&process_info->lock);
- 
--	/* If validation failed, reschedule another attempt */
--	if (evicted_ranges) {
-+	/* If validation failed, reschedule another attempt, unless the
-+	 * device is gone for good
-+	 */
-+	if (evicted_ranges && r != -ENODEV) {
- 		pr_debug("reschedule to restore svm range\n");
- 		schedule_delayed_work(&svms->restore_work,
- 			msecs_to_jiffies(AMDGPU_SVM_RANGE_RESTORE_DELAY_MS));
 -- 
 2.53.0
 
