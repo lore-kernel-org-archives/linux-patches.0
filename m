@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051867;
-	b=I6oNTluYHSddg2tgWpRXdsbmST+OazSOVtRqBjinGeVv7bSLCpjaaJ64j3UAi4PsyeuZ
-	 aoYBmmQu/wbsLp8Y6ziil3om2AB4t+rnYrcVGGLszFFoZCgDCYLzxle+lfICIOstxA8C0
-	 3viqDBbUJG6N841YaBPyBuZnQuTATVrMWLBr7pL78lRHwa1DkPh/HYpV7QIJD2h6sfdnR
-	 zlEYzJ3ewnxVhCIzG3HKq73Y3P6jY4fnk3ZwFFuE5Ea0Hy59Lfc94inr0l5orXSPMUxsG
-	 8mkH6Qs/fuuH9SPlrYiEoKPBlu6BI4YA1rl8if9ilTj0c1ENolqHGNgsPDIL701m7aw==
+	t=1795051869;
+	b=Y/h5l/rp1sevmkxYQd2C0w1wf2mordaBozRPhQ/h8flq2606upXA0L1OvHvSpKzIh4D0
+	 qbPHfh56xmJm2Gz04Yv9RNSMEAmAchc0z+S2F7JJ1Unv3y//F4B4PGnlOni6oz4edBbbP
+	 stviv4Muu2O0MNmZT7WFKgO5xVk55Z63trRHtk5WPx3qBtgST/n7kAb29WPiPCqII5and
+	 H9Ef+a0AEI8i63V42rZ01Vh10GxYEV2qpDx/eAG8t8kVlR/I9gDzTeKVQumOzaNwQ0fck
+	 txaxALfmA6gauGQGTsIgkRgCe01iZj8cm8Mj0ugO8B+cjrdPjtTQ+Jz571bpmzmgbWQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051867;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=lDFs/YSXgaGzykj21uy6SJWo1pXlJ2KfRfbTCa5hLss=;
-	b=J3CNqTkbsn5ChKJQmwgOh6vKNDmX4RgMh0RN8tW2rf2eI+qg5Qg9YiFtt+uS1Udbizct
-	 FTnywBphgIEoSs4tAfYn4O1g0zVETYAQAh436w/kYhgqvtxpt8OevcKLCp+SeCAWgCv40
-	 IxCfHtgu6tXkPCV5tX4PfeguCr8WlgVqOOUHUNNwg1A6UyRIEitlvyr8kIwJKQ70alpSk
-	 6RNrAvhIG4+9rB+JtQDsH4V+5J7ONTJEnbgeoXm1wKFrexBMdAAUxi2nJZj9gkRTpQg5O
-	 R7fIpBHQvjNSywo7FaV9biNJh8Gzk7WDuoLavUeVzgR0KsKfH0hPV1ISXKVgefSyUNg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=JfwucbSp6sjsiRMiPlpbNWrLMYl3KHoKGJEeHsHzxeI=;
+	b=XNnMYVWxhyFq6r68LB9/vmtEEHJVxtJPQLaEKnsiVdATZP8+gKNOeJBDyGOeT9t9THj7
+	 F3I6iv8xgsDcnPuagmNoS5L+cXF1Z9XR0sqFQGL/I7sqBoXor5J+85pTNx8ysrYeWgC0g
+	 P260CEj3kh6MsDs1hFqDbbCeI3xlJ1vBsyJXfr1Fktst23QU+zN/GL8c5BpnPJNkOMxp0
+	 JL3v8qGtxVJ4SWSP3oP6HE+fOqkuYKyzxOyVn/SvQx0croDyylOfzu4tN2CLp5Cm2rzqF
+	 +U+uCe9Do+MMYFsRg3/TveipRARBL3Hk4wYwQfm+W/GAfVJOhlakR7JEWWTwxOO8zig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gs5l7qtM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AchXCQ1E;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E73A8606A325;
-	Thu, 19 Nov 2026 01:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF13C606A325;
+	Thu, 19 Nov 2026 01:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gs5l7qtM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B8E1F000C4;
-	Thu, 19 Nov 2026 01:31:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AchXCQ1E
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2251F000C4;
+	Thu, 19 Nov 2026 01:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051866;
-	bh=lDFs/YSXgaGzykj21uy6SJWo1pXlJ2KfRfbTCa5hLss=;
+	s=korg; t=1795051869;
+	bh=JfwucbSp6sjsiRMiPlpbNWrLMYl3KHoKGJEeHsHzxeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gs5l7qtM6NFYquhnpYLjf8VC/t4pFI09PV99Kvw9VGIjTF2qn1ZLTUiyLqko1Aysx
-	 A0g/9jOjZxxp5hqyVw1N0es+TZfZm0v4UxukWLIdr6ZVj/d6iktMDp/d721A9dBm1u
-	 PMc+w3j1J+rOLIAziboIAiscqhIgrSc7vMOh2/J8=
+	b=AchXCQ1EAJ+2+Mo07qtsdUU84slresYXxqjRswaoSZcKYoYipu+Cc3796CgYEBZGu
+	 OAOnSNh7Qnq4Ha2bPI8oEM+Jnx0N/Da2VqjXxlvqMDE+RYm9ONkDLIyaHJx+54qxxu
+	 VKDwDRJHKhLMRCvorGlGhXU70RrqSwRKlOT9uAfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 5.15 0314/2214] wifi: ath9k: delete channel-context timers on deinit
-Date: Wed, 18 Nov 2026 15:33:10 +0100
-Message-ID: <20261118150022.704143450@linuxfoundation.org>
+	Aldo Ariel Panzardo <qwe.aldo@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 5.15 0359/2214] nfsd: zero NFSv4 COMPOUND tag padding
+Date: Wed, 18 Nov 2026 15:33:55 +0100
+Message-ID: <20261118150025.050352123@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,48 +62,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
 
-commit 81394dfb9a7905472957628b560ae894eae3a30f upstream.
+commit 3f1181cb09c85499286c7f462d93530b0ebcafcc upstream.
 
-ath9k_deinit_channel_context() cancels chanctx_work but does not delete
-the offchannel and sched timers set up by ath9k_init_channel_context().
-If either timer fires after deinit (e.g. during driver unload or
-suspend), it accesses sc->sc_ah which may already be freed by
-ath9k_hw_deinit(), causing a use-after-free.
+nfs4svc_encode_compoundres() copies the tag bytes into reserved XDR space
+and skips directly to the aligned end of the field. xdr_reserve_space()
+rounds the reservation up but does not initialize the padding bytes.
 
-Delete both timers with timer_shutdown_sync() before cancelling the work
-item.
+A remote client can choose a tag length that is not a multiple of four,
+causing one to three stale bytes from the response page to be returned in
+the COMPOUND reply.
 
-Assisted-by: LLM
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Cc: stable@vger.kernel.org # v6.2+
-Fixes: 705d0bf83dbe ("ath9k: Add a routine for initializing channel contexts")
-Link: https://patch.msgid.link/20260911213144.130192-1-rosenp@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Use xdr_encode_opaque_fixed() to copy the tag and clear its XDR padding.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Aldo Ariel Panzardo <qwe.aldo@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://patch.msgid.link/20260915160049.3105481-1-qwe.aldo@gmail.com
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath9k/channel.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/nfsd/nfs4xdr.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath9k/channel.c
-+++ b/drivers/net/wireless/ath/ath9k/channel.c
-@@ -1368,6 +1368,8 @@ void ath9k_init_channel_context(struct a
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -5546,8 +5546,7 @@ nfs4svc_encode_compoundres(struct svc_rq
+ 	rqstp->rq_next_page = xdr->page_ptr + 1;
  
- void ath9k_deinit_channel_context(struct ath_softc *sc)
- {
-+	timer_shutdown_sync(&sc->sched.timer);
-+	timer_shutdown_sync(&sc->offchannel.timer);
- 	cancel_work_sync(&sc->chanctx_work);
- }
+ 	*p++ = htonl(resp->taglen);
+-	memcpy(p, resp->tag, resp->taglen);
+-	p += XDR_QUADLEN(resp->taglen);
++	p = xdr_encode_opaque_fixed(p, resp->tag, resp->taglen);
+ 	*p++ = htonl(resp->opcnt);
  
+ 	nfsd4_sequence_done(resp);
 
 
