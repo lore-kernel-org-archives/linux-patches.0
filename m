@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026224;
-	b=tpbiyg6OH2qT8yeH0SrO2u5XG805yRvrdryP6mi3Xd6uiHhnDsVILm2bYRxSeRsam24S
-	 Z+7+4+yOTeuvQqLo/9Bn8cvRKqRBBiFB9WQAnCbnxtCdNdPIY+DGfq+/r17XHzGBQ45cx
-	 Czo5Db1gEoNqlCopfkr5elwHvl5hpLwCileAOfEBgUnfLL6wu9OBI7QdTreae4AaxcdH1
-	 IDRnGuy7LC7kLNL4Kgn6xj8qokAd4msfWmxXvspXXUShtUytGAkIzh7/VOxtZNKlx0jOq
-	 J69oy5wyypIe3XXFvPpLp1PQY0kdv2v1vYL+ahXQs8hi7rvQ8QJSevs7ItM9OM9tHng==
+	t=1795026227;
+	b=JYwl4rgpmwHSSgRiYzPv0elRueKjBKz9HgJsnCZs5aWZ2CygvTL3gPqjS/RdFob8W5Od
+	 RMop/nrSPCCivPPP63TpQ/CYwNbC/yiUpTjTXpPPxIXplLfL7x4oRVHqkNIsm39evSj2n
+	 tAwe2CIpQaRHRkF9A9aWcFt9qF8yN8O/N72DZlzCrFvGBJdH1jtNXSevJ90lFx8uXDtpC
+	 TCN80xcwvZkWPj+3hBYuMJtJBi1de+MoPyamSpf6qa852/lVkr93icHX90WMlmfQ9/MuR
+	 R4d8XGOohPzJ85lEWHhbwaBprnPxHrJ1lNVdpUb0N9W6qNbvgKpwORCNpvCrl690Nng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZBM7B5J5CC/z0ite4aDxxQoDHOsP4xO/f/XY7BYkT1Y=;
-	b=ZeRIJ8WUMbDH01dVQ2VC6Xi1Ya2tJPq3PP7dz1qwh88ZOLC0iypEPmxJy9tLiSRua826
-	 vdFUaU+mSrGcfjOUdsdCfAuSBdjTCPJoQHiudSh9nGUdScj5LybrzRMJ0JZQHKGMMJttV
-	 nk0KBjmhED3Sn0I2DPTChjPD7AbH0YAOouqddNobSZo6wYFsM1yObIIgHwpcgZod9Vhm3
-	 Di7/RS74Ua03z18aof4NBW2YrWWzgx0n+/ADymvaVdFmXVQ0iu1cDP8SeLWccs+9IY1TS
-	 2jhlyYeKoNqy+FECXcynRXc6Rws/iTxD4H6OQeT2mBTLjftIQ0/7p527HM/9uA/Pntw==
+	bh=wDBcKX9vpFQVWmWx3y4xmERMch3gdoZSZ2iC1WIjqfM=;
+	b=E5PAAasjmo9Iq5hBSOJj9ukjUNMTgtlT4NDt5lpKs6tuvo4ODszL/4Y91BJdV/POAQjZ
+	 2M7snw+3PGatHYQzrglMqDdVq4ucL2Mq3hmRPmzberFJatEVXJ7lcbe1QlstNl+KSclXV
+	 R3qlnWFH1FC0Y5YjKMmsaSjz+GAo6X+BbJoHmirCcT1O29LpDJfBAr6sTddahi49gH8Pf
+	 SLQGjyDKya4hkDiBQ9mea2Qm+QSPxqb9WIVeTDH2A26fOtUAFQItqeqEbqHMcSh/HNq/U
+	 7eb8pH6uuF16SD1gNA0Tph/B4WwT7iaUE3BKsNaD3GHHVMhViwIMWlqAUT5+BFKtL9Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8l3bnXy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5aAHMPI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BB7606A332;
-	Wed, 18 Nov 2026 18:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABED60A261A;
+	Wed, 18 Nov 2026 18:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I8l3bnXy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49E41F000C4;
-	Wed, 18 Nov 2026 18:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u5aAHMPI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DAC81F000C4;
+	Wed, 18 Nov 2026 18:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026224;
-	bh=ZBM7B5J5CC/z0ite4aDxxQoDHOsP4xO/f/XY7BYkT1Y=;
+	s=korg; t=1795026227;
+	bh=wDBcKX9vpFQVWmWx3y4xmERMch3gdoZSZ2iC1WIjqfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I8l3bnXyZ3PPUHfsaTqC4QgElwXJ0HCOQk0LW3yIGGzHfiTvxp3+NCsZct5pqcWEw
-	 F3BLPfpkyUo9C4xCy4Ac4JVOFvihf+SgVpQcHqrLKUTakV5LKoiNKv2jwOHZXUqk4q
-	 On0x+e3cRby3qxZe+RttnwBP1Gmv3EvCgvbSSPjU=
+	b=u5aAHMPIGTnQE1Bi4miiRPk8l5ne7ldTL0G0Of+iMs8yAc8w5Mp3dZPoFgKfJYzJX
+	 1B25JN0tXaOKqU9iagvR4g08PGnZiMOC9rdKIERTF3k2TyPthKJ905elrgG1RiNCfT
+	 JXA52xoWrvR4f5iUzbeGX8+kGxQUgC3p8xLAsSqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
+	Chenguang Zhao <zhaochenguang@kylinos.cn>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1359/2151] btrfs: fix incomplete iteration over fs state when logging messages
-Date: Wed, 18 Nov 2026 15:51:34 +0100
-Message-ID: <20261118150211.533181580@linuxfoundation.org>
+Subject: [PATCH 6.18 1333/2151] RDMA/mlx5: Cancel deferred page-fault EQ work before teardown
+Date: Wed, 18 Nov 2026 15:51:08 +0100
+Message-ID: <20261118150210.623642233@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,50 +69,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
 
-[ Upstream commit d1d74665ab9a8971d42177ca865cfbe2897c1fc7 ]
+[ Upstream commit aea64024ac37d29e99b82b315a56a9145dc0bc23 ]
 
-In btrfs_state_to_string() we iterate over all the bits set in
-fs_info->fs_state using for_each_set_bit(), which requires its third
-argument to match the number of bits, but we pass it the number of bytes
-of the type used by fs_info->fs_state, an unsigned long, which is 8 on
-64 bits platforms and 4 on 32 bits platforms. This means we are not
-iterating over bits in the ranges [8, 63] or [4, 31].
+Page-fault EQ work can remain queued after the notifier is disabled.
+Destroying the EQ before cancelling that work can let the worker access
+freed EQ memory.
 
-Fix this by passing BTRFS_FS_STATE_COUNT instead of sizeof(fs_state).
-Note that we could pass BITS_PER_TYPE(fs_state), but since
-BTRFS_FS_STATE_COUNT is 11 and we have no bits beyond that, it would
-cause pointless iterations over fs_state.
+Cancel the deferred work before destroying the EQ.
 
-This also makes pointless the checks for the bit being inside the limit
-of BTRFS_FS_STATE_COUNT inside the loop.
-
-Fixes: c067da878156 ("btrfs: add filesystems state details to error messages")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: d5d284b829a6 ("{net,IB}/mlx5: Move Page fault EQ and ODP logic to RDMA")
+Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+Link: https://patch.msgid.link/20261007234216.2765-1-prathameshdeshpande7@gmail.com
+Reviewed-by: Chenguang Zhao <zhaochenguang@kylinos.cn>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/messages.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx5/odp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/messages.c b/fs/btrfs/messages.c
-index a0cf8effe008e..c218b2ea8566c 100644
---- a/fs/btrfs/messages.c
-+++ b/fs/btrfs/messages.c
-@@ -41,9 +41,8 @@ static void btrfs_state_to_string(const struct btrfs_fs_info *info, char *buf)
- 		states_printed = true;
- 	}
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 5cd1968a33d0d..796378cbf2a25 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -1879,8 +1879,8 @@ mlx5_ib_odp_destroy_eq(struct mlx5_ib_dev *dev, struct mlx5_ib_pf_eq *eq)
+ 	if (!eq->core)
+ 		return 0;
+ 	mlx5_eq_disable(dev->mdev, eq->core, &eq->irq_nb);
+-	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
+ 	cancel_work_sync(&eq->work);
++	err = mlx5_eq_destroy_generic(dev->mdev, eq->core);
+ 	destroy_workqueue(eq->wq);
+ 	mempool_destroy(eq->pool);
  
--	for_each_set_bit(bit, &fs_state, sizeof(fs_state)) {
--		WARN_ON_ONCE(bit >= BTRFS_FS_STATE_COUNT);
--		if ((bit < BTRFS_FS_STATE_COUNT) && fs_state_chars[bit]) {
-+	for_each_set_bit(bit, &fs_state, BTRFS_FS_STATE_COUNT) {
-+		if (fs_state_chars[bit]) {
- 			*curr++ = fs_state_chars[bit];
- 			states_printed = true;
- 		}
 -- 
 2.53.0
 
