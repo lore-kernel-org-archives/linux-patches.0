@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031927;
-	b=s6u6ITcM9/K349sf6lzrn1JxZfGoJsbdzT5SGmrW6mzUwAS3FOO6NxEo2z32kkkZQEBU
-	 v/mYY7iqS4QgXaub4AUWXJlWHie9idV0swzZOrXCl+R0HjpC7a1F9NMmShqWF+2ojL3J6
-	 ju34/9jV8BGC258/osdfdEeofsG6W1BH1TMe4ZRLscQxJLEoLntftXW8vEvEBMZPOKTv/
-	 RcXPvPs5+oW9NAbQsRrn3OE/Qv8JkPinFrSj2FbkQuzJ9US2U7z9JuYC6pXBMetrdRW7v
-	 G/5lExmXaQ4J1LAB/X4PPkhDjR1nXEW94LgHiiRCNka5kmeC44jUl8FEkbaLKwHFqgg==
+	t=1795031930;
+	b=cZTfOvi5SZyuA3I92ArMFW9rx6iq9yKuwvhOQB03L7kxYUgMu9yXGxjO9QrmbQjmtdgi
+	 FdqbVFoxnYMswF/WiR9CtLU4vijWmzTWZvzkXQIhjEjH/joy9lDqMEIN0wNJ+sBjCU+jI
+	 vR7kuv6ZAQs8XnihXMfZIEutRVhLNVptfWYZp74072eJbjSZPt1EhbS9Gteu58bBV9COE
+	 mAt+7fGzOVqR8GtOVrYnN5r8596+vPfXCJQOo8h4j3YS7hCZvBEuIjfrm9cA6+olPf2Rf
+	 qZi65UJ4VnpK3bwenHHwepy17q/cTzlz1hvn5ExFJipQl/z5SxOxi5Gbs83Er2WOuaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031927;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031930;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vqOxvwN56tciwSLWYdGsdkBcAGwVHJU9ZLJVnd6C7DQ=;
-	b=hkqQ5D3SqOORbcPa+HhieAU2ccMQ86MkOe8+mtcm/wETIbyU/RgHOP7ffdoEnm8LYAHF
-	 i5u0x3xa7w327NtI0y/We9YVvY3fqDDXpSOtQSU1p/QsRmODGBr+MqoBfeYY9RbH7dTER
-	 0cS75SDjiJYDecAzJar+x3Q4Rym6zEXJEzPaMlfxUzPlnyUt3u8vYP4FtzW02eM/Y2PjZ
-	 12TvCcvZjVNDnhjCmDaGSSSTIbzsnLN1nc6wLTTzywYLIBue99Ol3AfehcNBgDomIOtMr
-	 /eO/4sXIirqlcLDRXc9NtX9hG5cwAAeCgTV3U2mc1stZs7ACBPO4wRVwRNet/9ZXUQw==
+	bh=8cNlICScQQ2DWH7jWL42XE/kr6Gc30BBKiZkvHHqjNM=;
+	b=Xw22Nck+35lyOzFO+91Yx2i07yYEtvQ99+wISj8TKleumtKsDrx/T/Muufqf5xFWOOs9
+	 9XPHTGL8KzbgkBZLOgVD6axRk/KqSRIsYMgm5GljBecsEtgzmGPnOxv5frIl/LRkdCRXF
+	 9agDEr6WwATT3tExI3cB01uWjdMicFywX/SLBBRIFjZQJhf24o0tHWRiONarTVkGSF+gc
+	 1+Uw7n8yVROCl0l7KAvapV/iFAVlCLyBTv/4hrivShIPTYQOLtpOmEQ+muBbkIgOmJbjc
+	 NgZF+/SSdL4lptqu8Xz4s+YTUUhPCFKzLc7cIZD6o8wuvg+CNJ4Yacbm9FdpyCMATJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8h01oNP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shuQDDr5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40FF606A31C;
-	Wed, 18 Nov 2026 19:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74BA606A33A;
+	Wed, 18 Nov 2026 19:58:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8h01oNP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3659C1F000C5;
-	Wed, 18 Nov 2026 19:58:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=shuQDDr5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 123381F000C4;
+	Wed, 18 Nov 2026 19:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031927;
-	bh=vqOxvwN56tciwSLWYdGsdkBcAGwVHJU9ZLJVnd6C7DQ=;
+	s=korg; t=1795031930;
+	bh=8cNlICScQQ2DWH7jWL42XE/kr6Gc30BBKiZkvHHqjNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G8h01oNPnQ4Am1KdhJCIkPzwOl+h9LSlsSA+p+i30Fv1m5MyvYrNXwafHfxHUtcU2
-	 W5SfFoz+gjbs1m6CTuGKgRR1Ez3yz/RU+qVAPRtEUuRKNKN4g/D5OQB+CeDTkMdows
-	 FEU4GfmVtxb2VKzGvFxp7+/SLUPUY5KA3bDyru60=
+	b=shuQDDr5Pfrq/pWvng4gM+R7RRDWf0Km6XGTiUpqgLa2BfrdXsbG4ueLvYXTVbPP2
+	 OBro0hHEAZ2j8K3nDPinew7eYm8AH/VZy8FBYdIK7n0yMaiGSSl8Ms1trtthhdHUxn
+	 4iHaGUD7hNXSbeA1FPjXS3cwdr8mTPBWGW7JgeIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Douglas <me@timdoug.com>,
+	Hitalo Souza <enghitalo@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1194/1756] serial: pmac_zilog: report received breaks
-Date: Wed, 18 Nov 2026 15:55:21 +0100
-Message-ID: <20261118150057.398203018@linuxfoundation.org>
+Subject: [PATCH 6.12 1230/1756] Bluetooth: Add missing newline to bt_dev_{err,warn}_ratelimited()
+Date: Wed, 18 Nov 2026 15:55:57 +0100
+Message-ID: <20261118150058.765671842@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,41 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Douglas <me@timdoug.com>
+From: Hitalo Souza <enghitalo@gmail.com>
 
-[ Upstream commit 8db79ea07a67b126c773da6efdc00066000daeb8 ]
+[ Upstream commit f51ee3bb5fbe9c2019c31befe330bddd3aee39c2 ]
 
-pmz_status_handle() sets PMACZILOG_FLAG_BREAK from RR0, and
-pmz_receive_chars() clears it on the null character that ends the
-break without marking that character, then tests BRK_ABRT in RR1,
-where the SCC does not set it in asynchronous mode. Breaks therefore
-arrive as plain NULs: brk is never counted and BRKINT, PARMRK and SysRq
-never see them.
+bt_dev_err_ratelimited() and bt_dev_warn_ratelimited() pass the format
+string to bt_err_ratelimited()/bt_warn_ratelimited() without appending
+a newline, unlike bt_dev_err() and bt_dev_warn(), which go through
+BT_ERR()/BT_WARN() and add one. Only 2 of the 22 in-tree callers (both
+in virtio_bt) put the newline in their own format string.
 
-Set BRK_ABRT in r1 for that character, as sunzilog does.
+A printk record without a trailing newline is stored with prb_commit()
+instead of prb_final_commit(), and readers of the log buffer (/dev/kmsg,
+syslog) do not see it until it is finalized, which only happens when the
+next record is reserved. These messages therefore stay invisible until
+some unrelated message is printed, and journald, which timestamps a
+record when it reads it, logs them with the time of that later message.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Assisted-by: LLM
-Signed-off-by: Tim Douglas <me@timdoug.com>
-Link: https://patch.msgid.link/20261013013541.4535-3-me@timdoug.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This was observed with a MediaTek MT7921 controller (USB 04ca:3802):
+when an eSCO link is closed, the host still receives a few SCO packets
+for the handle after Disconnection Complete, so hci_scodata_packet()
+logs "SCO packet for unknown connection handle". Comparing the record's
+kernel timestamp (_SOURCE_MONOTONIC_TIMESTAMP) with the time journald
+received it, over one capture:
+
+  emitted       logged        delay
+  15:36:52.896  15:37:00.214    7.3 s
+  15:37:03.410  15:39:05.574  122.2 s
+  15:39:05.574  15:39:12.506    6.9 s
+  15:39:19.791  15:40:54.109   94.3 s
+  15:41:22.021  15:41:24.647    2.6 s
+
+Each message showed up together with the next kernel message; the 94 s
+one looked as if it had been logged in the middle of a later, healthy
+eSCO connection.
+
+bt_dev_err_ratelimited() lost its newline in commit 657cc646475b
+("Bluetooth: Remove usage of BT_ERR_RATELIMITED macro"), which replaced
+BT_ERR_RATELIMITED(), the variant that appended "\n", with a direct call
+to bt_err_ratelimited(). bt_dev_warn_ratelimited() never had one.
+
+Append the newline in both macros, as BT_ERR() and BT_WARN() do, and
+drop it from the two virtio_bt format strings so that their messages do
+not gain an empty line.
+
+Fixes: 36278a5d4d35 ("Bluetooth: Adding a bt_dev_warn_ratelimited macro.")
+Fixes: 657cc646475b ("Bluetooth: Remove usage of BT_ERR_RATELIMITED macro")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Hitalo Souza <enghitalo@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pmac_zilog.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/virtio_bt.c     | 4 ++--
+ include/net/bluetooth/bluetooth.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/pmac_zilog.c b/drivers/tty/serial/pmac_zilog.c
-index f49d6052d11be..a612f1db9f189 100644
---- a/drivers/tty/serial/pmac_zilog.c
-+++ b/drivers/tty/serial/pmac_zilog.c
-@@ -233,6 +233,7 @@ static bool pmz_receive_chars(struct uart_pmac_port *uap)
- 		ch &= uap->parity_mask;
- 		if (ch == 0 && uap->flags & PMACZILOG_FLAG_BREAK) {
- 			uap->flags &= ~PMACZILOG_FLAG_BREAK;
-+			r1 |= BRK_ABRT;
- 		}
+diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
+index f9b124fe109ba..179a2de43f5f7 100644
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -228,7 +228,7 @@ static void virtbt_rx_handle(struct virtio_bluetooth *vbt, struct sk_buff *skb)
  
- #if defined(CONFIG_MAGIC_SYSRQ) && defined(CONFIG_SERIAL_CORE_CONSOLE)
+ 	if (skb->len < min_hdr) {
+ 		bt_dev_err_ratelimited(vbt->hdev,
+-				       "rx pkt_type 0x%02x payload %u < hdr %zu\n",
++				       "rx pkt_type 0x%02x payload %u < hdr %zu",
+ 				       pkt_type, skb->len, min_hdr);
+ 		kfree_skb(skb);
+ 		return;
+@@ -251,7 +251,7 @@ static void virtbt_rx_work(struct work_struct *work)
+ 
+ 	if (!len || len > VIRTBT_RX_BUF_SIZE) {
+ 		bt_dev_err_ratelimited(vbt->hdev,
+-				       "rx reply len %u outside [1, %u]\n",
++				       "rx reply len %u outside [1, %u]",
+ 				       len, VIRTBT_RX_BUF_SIZE);
+ 		kfree_skb(skb);
+ 	} else {
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index 32701b5fedafc..2c9024c6b130d 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -281,9 +281,9 @@ void bt_err_ratelimited(const char *fmt, ...);
+ 	BT_DBG("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
+ 
+ #define bt_dev_warn_ratelimited(hdev, fmt, ...)			\
+-	bt_warn_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
++	bt_warn_ratelimited("%s: " fmt "\n", bt_dev_name(hdev), ##__VA_ARGS__)
+ #define bt_dev_err_ratelimited(hdev, fmt, ...)			\
+-	bt_err_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
++	bt_err_ratelimited("%s: " fmt "\n", bt_dev_name(hdev), ##__VA_ARGS__)
+ 
+ /* Connection and socket states */
+ enum bt_sock_state {
 -- 
 2.53.0
 
