@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016154;
-	b=14iIhdR+6jbloi22s4vr9aTfM8XXUkDs0RI8ZTommAo5vylbhvAikjugvT5jvVtswz20
-	 ESFQ9tRQ5JBIcLpi/q7pnDCXShKRWA0YPyA8SPCh7L6y6E44loZoAopCYk+DuRXFC0fD9
-	 iLPZz/cJ1erK5mlHy/X0DDqnC1VyFc4KPyoMeWypDSEH9f5a8ar0/lBUDzkavledXRjTq
-	 qu7NYW2rXET+uxJaSgndL0hl97oLlWTRh4h78v+39Dt+DJxpUJw720wDENri5attwmxcj
-	 SenTZWHZJqJe7kmeiAc+R1xTwnHQqXSzQBzH6o/oPtGx4dv6ChrtDkAYza+xTgoDNIA==
+	t=1795016157;
+	b=M4cBPo1uYXWnzu7avJc0GmvPrHEgtHMewxnF1F3C5qgKUQabLVW934PLimi0SkrjTUjI
+	 YfxQOskKPASxSgtpVYoN8MiUf3F+EfzLMpGeV+zbN9urMIGTipMKU29LG/LY8aQy41Wgb
+	 ip7s7o4Jrl9Ea9W98HbTPJ/mSCg+oUFhxPedY+AgjzjfiUq3tPPbI4psWRH6ZZyWpYI28
+	 GgmYEPo9vL1wZByfJzbgC6HF7tKEBaSn7nK+fylsVAZilRgglof8vDN/f8mLPGreS4ZAm
+	 ilNjtT2OAab8ruIRWMXRfCIYfNv7OKOg+nm8grpQMrJQDH8EZS2U/Y57UH+sQpCo+Cw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016154;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016157;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=62u8s5qu5bzO54uwlNJu9ihuOqrMLPcafHjykXA1cks=;
-	b=HN9hu76Z1+WliwGy+ZNoeZA5aJyQjPcGnQACVz62DyodKjHwsDi9Pr9Z4zZafyuNqv0h
-	 sSgpYX5HYxfogZnBFWVRRgKkffjvuNeZOekHAhQU2r1JYw38T2Gp+z6b+rCAAsz7opf2J
-	 qxweRwX2V9CG0q73srYHRVPB6E64jVwghWMQghYxi+YztgRLZoUqJKP1zL5nVUdNW9mW0
-	 LLUbgvJhkwBbkd5BZ0tJi0fbldB8eOn1J2VP6SDxc9COEcTO5qkk9Hc+q8N0faPLN+D/b
-	 UAZ1Ct0l71uCIS5fg0p6s6z/zFVr+rXjjDxog1FmV/mzNmQgxKv0bbGiX1KeB0NrLEg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=oPzg1KNA8XLxosS+hBTzj+SQPvlZAxOxpE05wdroCNk=;
+	b=TVByJATfxjLIo0Y8clXL+cwDbIz8pLG29eQrNyo0NmOF9Tljmhy8fGrASkwi8FUn5VQc
+	 TxwGOnDhLfyuSj3iXS1D2V2xdSF78H/WQ+IMGJ0hG5ng+K6OqN6B495HzVCd5XRJj8xSo
+	 9INcsdJ+Gu0qemulkgHW9IgXZdkRP1mtV87KpbLNax4dyrybBV+/Ar0TdAX57f1X2jmnS
+	 y/aiOh5UKXbXLjRDiFf3p+qUUQElie9GY2+WU92H6eAuYLrzEGvlp0z9ytZx4/tv9tQJG
+	 zStUpymq97lPvotduWbVzOWnGTTvQjdFjNmc4IoVjIr/4Aexn5XCd/u4vOiVyLh0oVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FIvYbtNZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lDC/msTK";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C684606A330;
-	Wed, 18 Nov 2026 15:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2316606A335;
+	Wed, 18 Nov 2026 15:35:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FIvYbtNZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506F51F000CB;
-	Wed, 18 Nov 2026 15:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lDC/msTK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A971F000C9;
+	Wed, 18 Nov 2026 15:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016153;
-	bh=62u8s5qu5bzO54uwlNJu9ihuOqrMLPcafHjykXA1cks=;
+	s=korg; t=1795016156;
+	bh=oPzg1KNA8XLxosS+hBTzj+SQPvlZAxOxpE05wdroCNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FIvYbtNZKMOqw6iicX+vJZQNlBAovY6i0HhgwIZoPaVBAYllKMd+3YlOV5qw2A3Py
-	 Q+p3HXav3bBfI2NFNEzPOf9mZeLreGUwZobzcGW7FfJTv0UAlzVQt21iiTWnCKBEpR
-	 Iel09QY33lW57zSpDPKrUIGrm4oMSKYhlttz6rww=
+	b=lDC/msTK9hn5U34393PFB8MtyK6+ItXIlxFt+UAVdqtEFJysTIE9ERaiyqAlQChwj
+	 yMvdZffg1FDI4XAeFms4864Xc/wsovbEFpqOoREMNV1LC2uznKA0lHn4CIDxTZ8Qtg
+	 it388KF0oW4yiD4R29HsoQhxXQvwP2qAqZcZeh7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0386/2651] wifi: ath9k: use rcu_dereference_bh() for sta->rates in ath_merge_ratetbl()
-Date: Wed, 18 Nov 2026 15:27:06 +0100
-Message-ID: <20261118150301.728466314@linuxfoundation.org>
+Subject: [PATCH 7.3 0387/2651] sit: fix UAF in ipip6_tunnel_del_prl()
+Date: Wed, 18 Nov 2026 15:27:07 +0100
+Message-ID: <20261118150301.765388581@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,63 +62,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 93de43318ecdf0ff5f0e6125fe33a8b30fd10c66 ]
+[ Upstream commit 5145bb6a2c2683d541828f86d5321e0565f2e30c ]
 
-Commit c4f518736472 ("wifi: ath9k: Remove redundant rcu_read_lock/unlock()
-in spin_lock") removed the explicit rcu_read_lock()/rcu_read_unlock() pair
-from ath_txq_schedule(), relying on spin_lock_bh() to provide an implicit
-RCU read-side critical section.
+When flushing all potential router list (PRL) entries,
+ipip6_tunnel_del_prl() called call_rcu(&x->rcu_head, prl_list_destroy_rcu)
+before clearing t->prl.
 
-That is correct on kernels without CONFIG_DEBUG_LOCK_ALLOC, where
-rcu_read_lock_any_held() falls back to !preemptible() as a proxy, and
-spin_lock_bh() disables preemption.
+A concurrent reader in isatap_chksrc() could enter an RCU read-side
+critical section after call_rcu() but before t->prl is set to NULL,
+allowing prl_list_destroy_rcu() to free nodes while the reader traverses
+them.
 
-However, rcu_dereference() in ath_merge_ratetbl() checks
-rcu_read_lock_held(), which under CONFIG_DEBUG_LOCK_ALLOC only returns
-true when lock_is_held(&rcu_lock_map) — set exclusively by an explicit
-rcu_read_lock().  A spin_lock_bh() does not set rcu_lock_map, so on a
-CONFIG_DEBUG_LOCK_ALLOC + CONFIG_PROVE_RCU kernel, any call path that
-reaches ath_merge_ratetbl() with a non-NULL sta will produce a lockdep
-splat.
+Clear t->prl using RCU_INIT_POINTER() before invoking call_rcu().
+Also use rcu_assign_pointer() when unlinking individual entries.
 
-The correct fix is to use rcu_dereference_bh(), whose validity check
-calls rcu_read_lock_bh_held(), which returns true whenever BH is disabled
-(in_softirq() || irqs_disabled()).  This matches the actual protection
-at all callers of ath_set_rates() that pass a non-NULL sta: they all hold
-a spin_lock_bh() (either sc->chan_lock or txq->axq_lock).
-
-Fixes: c4f518736472 ("wifi: ath9k: Remove redundant rcu_read_lock/unlock() in spin_lock")
-Assisted-by: LLM
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Link: https://patch.msgid.link/20260813-ath9k-rcu-fix-v1-1-424665a1ce60@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: ef9a9d1183b3 ("ipv6 sit: RCU conversion phase I")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260907075846.2913645-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/xmit.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/sit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/xmit.c b/drivers/net/wireless/ath/ath9k/xmit.c
-index 89d8b31787846..3413bb4906d4d 100644
---- a/drivers/net/wireless/ath/ath9k/xmit.c
-+++ b/drivers/net/wireless/ath/ath9k/xmit.c
-@@ -168,7 +168,7 @@ static bool ath_merge_ratetbl(struct ieee80211_sta *sta, struct ath_buf *bf,
- 	if (!sta)
- 		return false;
- 
--	ratetbl = rcu_dereference(sta->rates);
-+	ratetbl = rcu_dereference_bh(sta->rates);
- 	if (!ratetbl)
- 		return false;
- 
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 19b7fa8d1a2a0..4438b2472b287 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -436,7 +436,7 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
+ 		     (x = rtnl_dereference(*p)) != NULL;
+ 		     p = &x->next) {
+ 			if (x->addr == a->addr) {
+-				*p = x->next;
++				rcu_assign_pointer(*p, rtnl_dereference(x->next));
+ 				kfree_rcu(x, rcu_head);
+ 				t->prl_count--;
+ 				goto out;
+@@ -447,8 +447,8 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
+ 		x = rtnl_dereference(t->prl);
+ 		if (x) {
+ 			t->prl_count = 0;
++			RCU_INIT_POINTER(t->prl, NULL);
+ 			call_rcu(&x->rcu_head, prl_list_destroy_rcu);
+-			t->prl = NULL;
+ 		}
+ 	}
+ out:
 -- 
 2.53.0
 
