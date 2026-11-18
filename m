@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020132;
-	b=IGj01WVYO87opVRJ2Ph7C4uMWUDQjDYFgh+QqMdYB/Er4iIEgV9kmzX13FxGG4+O8829
-	 GkXlp3UDJkutGAOkw431fONCcxjX3Y4iojiVNUEFJHHrPBYI9MBT04/+UtuIwjBEFfpXZ
-	 gtqOW/Yvg0yjQ/0w00Qwz8F9euYgCqg6UsqAFuH0P/iPW0U9qDlNupNkigS4i4lXz/2D2
-	 1RKlNcBrv6CKDN+TYgEQVWf5tPQAuLtzge1aGYTMxHi5YlYkWOdUhKdOwrj9kuxUr0V9V
-	 VrJN36rq71XEG5MiKf/kyIQKSiRFQQNwxxl4sDpOaW2/iNI3kOVQ20Jg0Me2LweMqxw==
+	t=1795020135;
+	b=3a49fyn0BU2cKxtu8un/4sMkmcl19K86QadoIYH4Fveg76C6TdRsyCwpAMWXBcBQsplC
+	 Or5pJPwFJTcOIqNAVEr/56fWkdMrPGL6RtmC1bpPDeR8xgOWs2s0iZmF074qJtxvW4/+q
+	 BNNRLHjxOxz8utTPlU46TkuM0OdLUFSiMumNJ29vdI0Wsdi/zbX3+bABE9Kpbf93L5epp
+	 5SMlz4PtBLSDBeLOiwsi/6clNvQgssGgmJA9LSC20FMl9vueWoCL9rEJUDlzSDOLUvXa6
+	 tceIns3tkZXzC1DIkjBRH+O1oS2k51ywXZ/30pMIgAeodxTMLsUow9t3D/MYZTXUvfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020132;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020135;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=fV4FtFhae6u74ZwqtZ/CKUGYdpKsb0LaNg1GcBmlUFA=;
-	b=ebtbL1Fj+vTJ1PbpoIvcyx4AAqrjNyNwhc0+6QZMdHj+glglUBGUFkgDk0Rf/f8ROinj
-	 KZqpKRWZN+c7mNgbcP5YuP1DEP2dbI/zqNHe6J1NxDok0ml4klvSdIMAlpChn+6zkRWc6
-	 1jT/PxCyra1WFb03QqTARaQQyiU10Zh7j4faDXq6jnSpvdhmw2+5DJ5zb+8fFt4XuUTZX
-	 +lQndTBOIkf5mTk7HdWaam3EgluS/1EBzeKJAmgO5j/E8x9iQxYBL7jG2oAFcioGapcOe
-	 xhtss3Gc1s3ArMTuufxjsHyrniyUiTwRNQima6UYj2OB5Frd+7qZ8ioyrXRUbkq4DPQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=A/lCUMbxq8+zmvOxJBaCjRivq3dq2NuAzD0iL4B6uXc=;
+	b=J+TWfk5CJyTJbqfL+5ysIeDFZ8ohkr92p10JUY9shJ7/NZomNnRo4OUIjTxqmPHdPf8C
+	 MTl+pYX/kz1ZzBrIEj97g+1mAYn07llQlzcO/rS+vh1qEaRYGRtgpnkl4fzUuSjEOyajz
+	 0PgL8IrDxHk+lDLYsDLCZavqcirK/q+jbYOa6+g3coudnDFtszNBsnApkIUqYFedU52mA
+	 cRCZ51l3wlQ9vOv9Lqz7WngbgEaIGWdPOZcZxk+4UtHcJMGxsZjbCDPgQSYhpUWiCg5Rw
+	 ZH60pwbdSCcFc/D89u5SAX57JtGTYlrzjC3U8tsM/izKnt8Vi0EGoY+leFdN1jMr3aw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TeFi3BTI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cf42pUK5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0A3606A325;
-	Wed, 18 Nov 2026 16:42:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760ED606A320;
+	Wed, 18 Nov 2026 16:42:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TeFi3BTI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3DF1F000CC;
-	Wed, 18 Nov 2026 16:42:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Cf42pUK5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7C21F000C5;
+	Wed, 18 Nov 2026 16:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020132;
-	bh=fV4FtFhae6u74ZwqtZ/CKUGYdpKsb0LaNg1GcBmlUFA=;
+	s=korg; t=1795020135;
+	bh=A/lCUMbxq8+zmvOxJBaCjRivq3dq2NuAzD0iL4B6uXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TeFi3BTIFfhbRWAuVj1Ij4t8qyKO7OzDfkMcWAIap3NCcHVg2iQbS1la2jTEkCnp3
-	 jBa9muG7L9qBfsbA2dihl2BTgaNXWMkbQvmZD85pc8N+CEe44W0BpbB7tz4Iz0YhJw
-	 zs1irxRSz2bG4F0fN6MznY/39YKAKqlCsM6lC2ZA=
+	b=Cf42pUK5tUG0sFT7RAz5RVIMHuT/rDzDiR6V2imjrw5TpveV2vIZsJEs67CnsCYT0
+	 DDYRFDg7B29xrcV1YD4KcFbjzaytejPl8qTUOiZDzd3zRYgZAxezJAkyYsa2YjMYzb
+	 hL/Bj9L3Y+89RlJ+RDQ7ZmyqlbpyrFatoM+PFxNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1844/2651] platform/x86: hp-bioscfg: fix oops on short integer attribute buffer
-Date: Wed, 18 Nov 2026 15:51:24 +0100
-Message-ID: <20261118150353.450608635@linuxfoundation.org>
+Subject: [PATCH 7.3 1845/2651] serial: ma35d1: Do not force-enable an unselected console
+Date: Wed, 18 Nov 2026 15:51:25 +0100
+Message-ID: <20261118150353.480583575@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,56 +61,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit fd7545cd398adc09ec2f9b603d72671560ee6bf9 ]
+[ Upstream commit 171bb8a67cc1af7c88a65961adfb028430e0b783 ]
 
-hp_populate_integer_elements_from_buffer() ignores the return value of
-hp_get_string_from_buffer(). When fewer than 2 bytes are left in the
-buffer, dst_size is 0, kcalloc() returns ZERO_SIZE_PTR and
-hp_get_string_from_buffer() fails without writing to it, so
-kstrtoint() faults on address 0x10.
+When another console is selected and there is no matching ttyNVT console
+argument, the core accepts the MA35D1 console without calling its setup
+function because it has CON_ENABLED set before registration.  Its index
+remains -1 and printk repeatedly reports an invalid port, flooding the
+console and preventing boot.
 
-Return the error instead.
+Let the console core enable it after successful setup.
 
-Compile tested only.
-
-Fixes: 6f2c06d5a467 ("platform/x86: hp-bioscfg: int-attributes")
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
-Link: https://patch.msgid.link/20261007134711.473857-10-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
+Assisted-by: LLM
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Link: https://patch.msgid.link/20261012055340.16719-1-kmehltretter@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/int-attributes.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/tty/serial/ma35d1_serial.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-index a279070664480..14317b7fd479a 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/int-attributes.c
-@@ -331,7 +331,12 @@ static int hp_populate_integer_elements_from_buffer(u8 *buffer_ptr, u32 *buffer_
- 	// VALUE:
- 	integer_data->current_value = 0;
- 
--	hp_get_string_from_buffer(&buffer_ptr, buffer_size, dst, dst_size);
-+	ret = hp_get_string_from_buffer(&buffer_ptr, buffer_size, dst, dst_size);
-+	if (ret < 0) {
-+		kfree(dst);
-+		return ret;
-+	}
-+
- 	ret = kstrtoint(dst, 10, &integer_data->current_value);
- 	if (ret)
- 		pr_warn("Unable to convert string to integer: %s\n", dst);
+diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
+index 0809655f43959..3be30fb055131 100644
+--- a/drivers/tty/serial/ma35d1_serial.c
++++ b/drivers/tty/serial/ma35d1_serial.c
+@@ -639,7 +639,7 @@ static struct console ma35d1serial_console = {
+ 	.write   = ma35d1serial_console_write,
+ 	.device  = uart_console_device,
+ 	.setup   = ma35d1serial_console_setup,
+-	.flags   = CON_PRINTBUFFER | CON_ENABLED,
++	.flags   = CON_PRINTBUFFER,
+ 	.index   = -1,
+ 	.data    = &ma35d1serial_reg,
+ };
 -- 
 2.53.0
 
