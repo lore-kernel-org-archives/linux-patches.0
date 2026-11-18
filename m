@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030912;
-	b=2obPGCcLaoAjJcEa1xuo1bkZyF3cm97ahr5XRNyP2bq+SNHT7WdvEyKxl7n3wJfKYMRr
-	 HUwlAog+X+30EMZnRHyrp1aLCCMqFOzqg3SvyebbQvdPeUrabSJc9sBDRxPUD319mO6Lj
-	 GUtpemEVXyXOvTMrMUVC50m9WpY85IBjRfcCnoNbSlGRxleztrs6qa4hyuhXRkoFm64co
-	 WMuZBPFTilnJY27inurpOVAkeP7I4f19IV+0gBj1eI0dbmfHeoDsQhZSRSOKybR7r1fKl
-	 hW/v78Y2NaKK5Jauen5/0eyldnOXWgQzhbfR4O/Gh6lpAd5KWKkojnva3Bac1mfEmkA==
+	t=1795030915;
+	b=zYvQGK4Ra9mXIwpAyc/YyrM9OHxpKQ2r9HRbLPxBBp9bo6Q96Hm0aC1rxuvJM/ql1Im1
+	 YnKe7sgyMAwfCV2ClZx/Xk+aJO0hDUmnfdwNaUIluns3CVs86uffrqkCm/R2BOZecDMLz
+	 gHYgNqs26JtA0kE+uCK8nDLMEi9yosFwQuHQ3lNMooD48/ZC4gozdINr5df8vPqwMWnKe
+	 80q/sN9agOsu2TkLTgvB4LbXrb5Dz0NOMbwo20T4zb29znxxB9gTj7sx+ZCMoIVRms223
+	 0FeufGmarixLfCfpQXkYOZrt4pWxjGS0WaJF5Wiw4W4rb7JqAWhhQR2xfM8C6FZzLfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030912;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030915;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n1TCpDq9KCdFS616w5Zyj6bD+JfusF1HcWym35oBJws=;
-	b=xHdoEmX02vSvTsjwXy27ysfFNTKsVACjiYLBHAmsud5QSC/VbB96CpmATxZKhrSfqZd9
-	 ESTAeLQ453+nhUnbI+B1viWNpRPNuvQZm7D5DI/oZGGQZEO8R08rs2tGruSMCpgFugE18
-	 wrse4Vdpea1oaViyQdQztGC4Gmz6OW8xVNgIjg134M0FognOVBSAepAl7LshqxswQo/yX
-	 frIQVsrOKFsePctmSn2c5ig9D/b/e3RfQ6kxvLcy0Jh5AGi8wIHCKfIITttoQtiwXggb0
-	 MW1du5awD0tUiKFjkK5dMK9pLf9e8F7SHp5gDAqHeV5s6WT8aHV/x1hhUFBSp3f5wPg==
+	bh=A41BUfFEuJ9ksnajwPho5/IxysXO2e/vrGjT5YFWG74=;
+	b=lYh83C16eO66VpwXcB+IGmrex0VSMds+9eQVXpGPdxYYIuQqn5AvATCH00Vbfi3aJEKQ
+	 xa2GZdIGb6hweASLJPCaZ5WqUxv++tjE0olOH24OyVeNf9Ikp4SzBvzKNxN0nx0ZFJ2tz
+	 bhK8U0tlv/Kah045hGX1h/CteRehd3MXuFP1WsO1mYiq7BbDrZfDe4kAJ3CBr2zdKacP/
+	 oT4ee3XAUgrzQBGonxxS/GSGEiw6EtKETAdlpvTWun8JAwoJRQFRttF3aGNsqXTpwDddV
+	 CbLq8WQQv+y094DnvmnXZ5be0apmE1WyUmrRTSqm3QcwiLeMBsuu0k28/kpTV9NCy3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDqCOJ6R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0CJNR9cQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177F9606A331;
-	Wed, 18 Nov 2026 19:41:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCD7606A331;
+	Wed, 18 Nov 2026 19:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BDqCOJ6R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6201B1F000C6;
-	Wed, 18 Nov 2026 19:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0CJNR9cQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF201F000C7;
+	Wed, 18 Nov 2026 19:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030911;
-	bh=n1TCpDq9KCdFS616w5Zyj6bD+JfusF1HcWym35oBJws=;
+	s=korg; t=1795030915;
+	bh=A41BUfFEuJ9ksnajwPho5/IxysXO2e/vrGjT5YFWG74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BDqCOJ6RCMXWNyE8FlbszJpLxVyNnLFM7KwP5pGstA6O02rp7gwOdS1QsV8IqMUIP
-	 eGEG6yVa6FHdXSFYy0hDkCfZ1sy6eoA7mmRfKaPwGZhmwDPKRKFc9U90oJbwOJ12tI
-	 Pmaf3GDofugyTWXYWMCLw60ndf5AoeQo4xvC9QWE=
+	b=0CJNR9cQvy99uI7tGE1pzy45e49L6nqZ8fvg7vsyPU/NjzpWP4xFOuEMNaSrkdpve
+	 jJOCu8+W7w5g8MBhZiVO1xvk3UNcWQIpXpiNbFKqmAEcXACaoPhVhfSiXMXJvmC1fn
+	 mn9COxGwa+c8+79IM4BrKCkyafvTyX1vpToADeMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Chuck Lever <cel@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0835/1756] power: supply: ab8500_charger: Skip absent AB8505 main charger
-Date: Wed, 18 Nov 2026 15:49:22 +0100
-Message-ID: <20261118150042.718700135@linuxfoundation.org>
+Subject: [PATCH 6.12 0871/1756] SUNRPC: treat every client-side TLS error alert as fatal
+Date: Wed, 18 Nov 2026 15:49:58 +0100
+Message-ID: <20261118150044.030108425@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,85 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 52c8cdcc1146d86fae524a589d4512c8d59ea8b4 ]
+[ Upstream commit 9b7b1f89b93a3ec1ed121e1ab28450acde815bff ]
 
-AB8505 contains only the USB charger. It has no integrated main
-charger, main-charger status register, or main-charger interrupts.
+xs_sock_process_cmsg() decides whether an alert ends the session by
+reading the alert's level octet. RFC 8446 Section 6 retired that
+field. The severity is implicit in the description, and a receiver
+treats every alert listed in Section 6.2 as an error alert
+"regardless of the AlertLevel in the message". A peer that aborts
+with unexpected_message but leaves the legacy octet set to warning
+makes the client return -EAGAIN. xs_stream_data_receive() wakes no
+pending task for that error, so RPC Calls queued on a dead TLS
+session wait for their timeouts to expire.
 
-Avoid reading the missing status register, requesting the five missing
-interrupts, or disabling an AC charger which was never enabled. This
-lets the driver bind using only the AB8505 USB charger resources.
+Decide from the alert description instead. close_notify and
+user_canceled are the closure alerts (RFC 8446 Section 6.1). Every
+other description ends the session, including one this kernel does
+not recognize.
 
-Fixes: d4337660d069 ("ab8500-charger: Add AB8505_USB_LINK_STATUS")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-11-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 39067dda1d86 ("SUNRPC: Use new helpers to handle TLS Alerts")
+Signed-off-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 32 ++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ net/sunrpc/xprtsock.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index f530682bfd1e8..d384004dd42a8 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -692,16 +692,19 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
- 	int ret;
- 	u8 val;
- 
--	/* Check for AC charger */
--	ret = abx500_get_register_interruptible(di->dev, AB8500_CHARGER,
--		AB8500_CH_STATUS1_REG, &val);
--	if (ret < 0) {
--		dev_err(di->dev, "%s ab8500 read failed\n", __func__);
--		return ret;
--	}
-+	/* AB8505 has no integrated main charger. */
-+	if (!is_ab8505(di->parent)) {
-+		ret = abx500_get_register_interruptible(di->dev,
-+							AB8500_CHARGER,
-+							AB8500_CH_STATUS1_REG, &val);
-+		if (ret < 0) {
-+			dev_err(di->dev, "%s ab8500 read failed\n", __func__);
-+			return ret;
+diff --git a/net/sunrpc/xprtsock.c b/net/sunrpc/xprtsock.c
+index ec7b29780eb94..a1f4fd26029e5 100644
+--- a/net/sunrpc/xprtsock.c
++++ b/net/sunrpc/xprtsock.c
+@@ -375,8 +375,18 @@ xs_sock_process_cmsg(struct socket *sock, struct msghdr *msg,
+ 		break;
+ 	case TLS_RECORD_TYPE_ALERT:
+ 		tls_alert_recv(sock->sk, msg, &level, &description);
+-		ret = (level == TLS_ALERT_LEVEL_FATAL) ?
+-			-EACCES : -EAGAIN;
++		/* RFC 8446 Section 6: every alert but a closure alert is
++		 * an error alert, whatever the legacy AlertLevel octet
++		 * says.
++		 */
++		switch (description) {
++		case TLS_ALERT_DESC_CLOSE_NOTIFY:
++		case TLS_ALERT_DESC_USER_CANCELED:
++			ret = -EAGAIN;
++			break;
++		default:
++			ret = -EACCES;
 +		}
- 
--	if (val & MAIN_CH_DET)
--		result = AC_PW_CONN;
-+		if (val & MAIN_CH_DET)
-+			result = AC_PW_CONN;
-+	}
- 
- 	/* Check for USB charger */
- 
-@@ -3501,7 +3504,8 @@ static void ab8500_charger_unbind(struct device *dev)
- 	int ret;
- 
- 	/* Disable AC charging */
--	ab8500_charger_ac_en(&di->ac_chg, false, 0, 0);
-+	if (di->ac_chg.enabled)
-+		ab8500_charger_ac_en(&di->ac_chg, false, 0, 0);
- 
- 	/* Disable USB charging */
- 	ab8500_charger_usb_en(&di->usb_chg, false, 0, 0);
-@@ -3725,7 +3729,13 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 	}
- 
- 	/* Request interrupts */
--	for (i = 0; i < ARRAY_SIZE(ab8500_charger_irq); i++) {
-+	/* The first five interrupts belong to the AB8500 main charger. */
-+	if (is_ab8505(di->parent))
-+		i = 5;
-+	else
-+		i = 0;
-+
-+	for (; i < ARRAY_SIZE(ab8500_charger_irq); i++) {
- 		irq = platform_get_irq_byname(pdev, ab8500_charger_irq[i].name);
- 		if (irq < 0)
- 			return irq;
+ 		break;
+ 	default:
+ 		/* discard this record type */
 -- 
 2.53.0
 
