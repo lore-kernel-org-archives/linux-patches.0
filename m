@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015485;
-	b=4Qh4uWK4UirSAuGllfIOzX4q/x0cs1uiLDRpKHax0fQiJ4zb3bkxMznsBg2kfqw58/oH
-	 3LEed9tAwbTgq47C7yY6gnGcu7mw7pRlcTszoRvmfCIetkwl1m6N9y6YKqFFHJNzhif20
-	 ruxg2v8d4eobJE749ynP0LRXWlsrr0uH56sa3W112rxdF0KKRb5u8jW/IFVBS2QNNHM0O
-	 bnr1RKW2N232vGoS/qZl6JIqB/XLEISmAayKiz+lD7+DNg3dLdvoG8KnL5i2OPUNbgPiy
-	 ++FcFW2vklfU66tUyv8bd/AzVbh4I4D7pRkBk5Y8UCOLBCn588xCTNY9z9YgDQle2uw==
+	t=1795015488;
+	b=VvQ44LecipAyZsmwpK+FXuiAjceJ/Yms9gsqSM4F1g8BCqCk2crjnrlbO9RkqMMWbb0V
+	 egksTquaTUizczupkaGQmJTwfwmljQ1KrYuvQP97RHsOos9WMeugFVDs+wE5OU1n8XDRE
+	 8hUwPuU+syIXFd/LxDyeu51wQreo5fF8NWPiUQUDb9TgI/7Sm8u/CULFjgSwJtgA/lg5g
+	 nOVkKpiUA6IdJOaC2vtuWURVDNWmycAs3z7UnOC5qcImD0wFWTauLp9sthCucgUsgQba7
+	 ibbnVptKVLyrrMooi60d79RzMola+yO26hc1CONsGhXg1RVM5/TSSHAgJCdEGUsBQ4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015485;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015488;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xo72IEgBRPVDaafNN0cr3cwGfAZm4pSXlTvCJCpPKmU=;
-	b=k8bxnnJDv+LAkcekSENifUwtfO464J7YKavYaiwwxS6jRxATZUMctKeKzFfKb0S82GuK
-	 CPp370n1mwDkM5xgjNagGuGQLmaZZwh19I7UHt5PYHQrmDPIBx06idkjdmKimsIRAnP+/
-	 ixDrBBQYpE3oK5qfo1IaSB2zLKNAsOiXMVsave5kGOrxD6CTiDWZvqklMCq1Suf963mQ2
-	 9Puut5VV2LbMQFCYMd0abnW/1RhYxYrwjDrmYz2Gy/talwoCZAZ47aBgB8+mLXhLFqvCf
-	 Tbx8aSs/Xoab7a7wPGVx0rSvZidogfFFT2miP8iSSHMIA0A3mXa0IMQnIwLTKlR664A==
+	bh=hXJZL/wmjen/jAXQVAGnUMOU7VPlNIth/PPZTm+rEH4=;
+	b=tAemz1z0QLT9luIPLbrb6df3IkFA1toEIXe9WVdM+ySnYO0o/JTTCWzYilUXeMoLk4tx
+	 LF8eo6Zb6w15vwQGfrxZGMqHKPQpwuUNx/TqRp3CVOvH4o22ylHHEyXwe0kO7oQHJQr91
+	 7TyluG0eprNU2wgWTA8Q8dN3Umri3Vxdf6k8RjSllFjVCVY6VI/A2qbanr0SMybb1CCc4
+	 13lc7lGMlZqnzreFpJdi2QNjvN9AWfINARLWwg4V4fhe0o3K7OR/cJ2a7AqMsf0/ir4d+
+	 8xktsioK2KEtyCyNjwAeBQifiOJh/XqSAQFDi/S7KBpA6WNoleRvP22LTVmMc00UiEQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmg5jwjE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJnlEt7u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB738606A31C;
-	Wed, 18 Nov 2026 15:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE60606A31C;
+	Wed, 18 Nov 2026 15:24:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wmg5jwjE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1451F000C8;
-	Wed, 18 Nov 2026 15:24:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJnlEt7u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3646B1F000C4;
+	Wed, 18 Nov 2026 15:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015484;
-	bh=xo72IEgBRPVDaafNN0cr3cwGfAZm4pSXlTvCJCpPKmU=;
+	s=korg; t=1795015487;
+	bh=hXJZL/wmjen/jAXQVAGnUMOU7VPlNIth/PPZTm+rEH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wmg5jwjERcso5K79NduOzjix0g9RnDSr9vzhR6CyID3GmdAjVSdFGVwy6p9XEbcTm
-	 XKmKyhpQftc4OabN9Xfegl7eQ9MJTGC524lwVBZ/TrZklDrM8oBEi5gnqUHyDGBNP4
-	 appddmaRlLjFqJLPhR7oteAAQRmjBdKPwF+BWbCw=
+	b=eJnlEt7uGZVD+vVcSJaVbh9doaXcZpCb+mxkLDxGD0eysxbZ5yqZVSk3lCXl41TlJ
+	 XHEoSgQxS1HwacVwGZLF8VbcoTUNH9zvB5iMGxrQcMCDhgpYguvzdNWH0g7JfwkHWO
+	 dT/m5XcrfCZrhVOW/OMcfeZK0tCUdBy3nyUfbqCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Elder <elder@riscstar.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0189/2651] arm64: dts: qcom: monaco-evk-ifp-mezzanine: clean up PCI function nodes
-Date: Wed, 18 Nov 2026 15:23:49 +0100
-Message-ID: <20261118150254.671884646@linuxfoundation.org>
+Subject: [PATCH 7.3 0190/2651] arm64: dts: qcom: qcs6490-thundercomm-minipc-g1iot: clean up PCI function nodes
+Date: Wed, 18 Nov 2026 15:23:50 +0100
+Message-ID: <20261118150254.705006035@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,11 +73,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Elder <elder@riscstar.com>
 
-[ Upstream commit 0f8cbe572057b0ef98c651fbd6da1877983c7165 ]
+[ Upstream commit 55580d234cec123e9b2964cab30fbfad10774b26 ]
 
-The monaco-evk-ifp-mezzanine overlay defines a node representing a
-TC956x chip which contains a PCIe switch and an embedded endpoint
-that implements two PCIe functions.
+The Thundercomm AI Mini PC G1 IoT devicetree source file defines a node
+representing a TC956x chip which contains a PCIe switch and an embedded
+endpoint that implements two PCIe functions.
 
 The devicetree nodes erroneously include a "pci" device_type property
 for the two PCIe functions.  That property should only be used for a
@@ -100,20 +100,20 @@ needed/used.
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Fixes: 5a67924d2fc57 ("arm64: dts: qcom: monaco-evk: Add IFP Mezzanine")
+Fixes: 1cde54c54b83b ("arm64: dts: qcom: qcs6490: Add Thundercomm AI Mini PC G1 IoT")
 Signed-off-by: Alex Elder <elder@riscstar.com>
-Link: https://lore.kernel.org/r/20260902214321.1721477-5-elder@riscstar.com
+Link: https://lore.kernel.org/r/20260902214321.1721477-6-elder@riscstar.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso      | 12 ++----------
+ .../dts/qcom/qcs6490-thundercomm-minipc-g1iot.dts    | 12 ++----------
  1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso b/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
-index ca5bf0fe5ec6e..4f727ff6ecb61 100644
---- a/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
-@@ -117,20 +117,12 @@ pcie@3,0 {
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-minipc-g1iot.dts b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-minipc-g1iot.dts
+index 31bafa2cf51db..51b59a75c1e03 100644
+--- a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-minipc-g1iot.dts
++++ b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-minipc-g1iot.dts
+@@ -790,20 +790,12 @@ pcie@3,0 {
  			ranges;
  			bus-range = <0x5 0xff>;
  
