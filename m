@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031610;
-	b=GC3PDjf7rDSYtWDhYcJmGtCl1X3USST7u7dIJCMw+eTHu4BTqf2Hd5LH588ln4rzvkXD
-	 yf/KmsWkNX7nZVLMQyTVdZNBc5OQ7ebySXCApXVwU3F0/o+v+IWv3JDYs/LOxFcvkJgHB
-	 Pu9hAvsWwIrI7AsQPFcvw1PyEC67f2mVT1Q04NpcYg66AEcSbIfj8S23HEh3ID4kcQQ/R
-	 aU+T78h8qHUfRn92OJQfuy6XFtic4iwvSNxctb/bAOZWQovVwrR4S+BYJQOrVXYcSSL3L
-	 feSC0Ly5DI/fuC1PE6KrZgHKbDNerlkuo9jgrRhKZejYyCanmfv+g22LYHlZdq1uzXg==
+	t=1795031613;
+	b=r88E0jQzpJ3d2MBKLcOXHghrwsLNYp6v8/IvHDjTEbNeTak/ESmOtO8yI1KCEs+hTlxM
+	 pPvsosjNjdlIkchHDXJxk8tz/jorMcqw1HhqHbWWVSZDqhBTLlyg1DoSNPkjWxrBU/fvt
+	 1K7gDPjqpFiDwLWcbIB+jXv4/wiinXlX6tgD5Dlv1a6hsaats8ZLX1Sk6jC4pcTPHT8GB
+	 xrOimfv70bXqpmc1gW6dbmdnUuh3FwwnBL43OjUcMKQ9FVPA3wXbKV6jP1hvhcP7dlMEJ
+	 8BrxSBTLf7mbkVIetWdBaXEk97VKR6LZoQOeyV6xi8xb4IttfilHZl8U1Cu+uSPZRzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031610;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031613;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OY6EL2cGEQFnTiBP7BUe1Iv7ybXptmCUoHw+C+SO8pg=;
-	b=Ik+yXFglwrKUW0oDU6bmYbde8PNrWXuW8WdMV2eg5Ka3pB2mdgKoFM9KDd+1JFSuYyrv
-	 dGxZNBqdzNuq5seMKJ4N0JSiPMqb+MC1HV7sWGJo34aPOArJT/UAt00PDssglIE7ugAZn
-	 HUyi7BcNgYOTw/6ofo75TM23Uw8MFjh+H22mjng76fIgHK/iTaVLZi6xFtKIrwhjU4g/m
-	 VUmQWKLpUvwB0AfsK7nH/ypIxjI/idmKZ1Bm3wPsbiSIN0xMTU80/RJGw8qeujzEond6p
-	 7JWILrCiP455w8yYvDCP8mWTe0XRGKiETu2pIeGnPGE9u3kVAlWVypTRl8NJXFITRew==
+	bh=kspranxBicNpbA+7pwX2jqP808DvxY7irxJA7eS5Ap8=;
+	b=HzdP6ZQvHQdpQZ/pt9Oow4weBFTbgB8sq3SfUx83fqkXmjVGvQkrr7t9ql6XorLJVHv0
+	 v1rj+W7uY9uo0OzprLTVDIUsIolvzKxBV23sa95+w7NsgbfcBr4/LJ/8SWb8R+e8/tQUG
+	 LRtMZjqqDrefCCHZNvhN3Ffz8n2ARKn/92NUZA2QLX5Ar1yV3ibrxk39vV/O7EOADKKAZ
+	 ah9BWJjncRPQj41gRiQ3y/Gs7ZYHbXX19LZJbqLRQkjXdzfvKdA0U2j9q9oxVmiZW7PpT
+	 Sj//yk0l7hL7r1sDSryDu4OU79tqO/k5SEJyDyrfeQc7jV5es5wDEzmqYNXyzxRV0MQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZh40wAi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBILdD0j;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E34606A330;
-	Wed, 18 Nov 2026 19:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFEE606A335;
+	Wed, 18 Nov 2026 19:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MZh40wAi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE371F000C6;
-	Wed, 18 Nov 2026 19:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HBILdD0j
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7E61F000C6;
+	Wed, 18 Nov 2026 19:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031610;
-	bh=OY6EL2cGEQFnTiBP7BUe1Iv7ybXptmCUoHw+C+SO8pg=;
+	s=korg; t=1795031612;
+	bh=kspranxBicNpbA+7pwX2jqP808DvxY7irxJA7eS5Ap8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MZh40wAi57fCEnWqQA3h2XkQm6k14tuA5Teb+pf6ldM5AnODRJ4Jez6DDhGM8DNWv
-	 g9ZfwUXv7u5Wcklsf0fc/oFQUoCrguiJk+rOYIZ3MzI5UdBzmqDdEjeetQkoSyz3Fw
-	 kGoWEUcbD3MHoncspEwen/RVJGEFZlEmQTrzw/q4=
+	b=HBILdD0jZykuB9aPk0O6NWS9ycBV/plg6KTytmiFqJfCxqXQsaFnqmjvfX5F1zBTO
+	 JJS4lI1x4oDMZnb6Gidx5iDC0ZhNJc/FC0I1W4M0NNPg8qS9QdgpqbS3+s+B4PqPhh
+	 u9FsiHxBX2Nn3smyjwu8BmfVvff7mqJEGQww9NVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Ferguson <ethan.ferguson@zetier.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1119/1756] ntfs3: add FS_IOC_SETFSLABEL ioctl
-Date: Wed, 18 Nov 2026 15:54:06 +0100
-Message-ID: <20261118150054.670363536@linuxfoundation.org>
+Subject: [PATCH 6.12 1120/1756] ntfs: Do not kmap pages used for reading from disk
+Date: Wed, 18 Nov 2026 15:54:07 +0100
+Message-ID: <20261118150054.706432700@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,56 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Ferguson <ethan.ferguson@zetier.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-[ Upstream commit 21dc07ac9c25f01ab2023e3e8605861d8fd6e00c ]
+[ Upstream commit 14656154d26cf244d063477a03606775eec19780 ]
 
-Add support for the FS_IOC_SETFSLABEL ioctl.
+These pages are accessed through DMA and vmap; they are not accessed
+by calling page_address(), so they do not need to be kmapped.
 
-Signed-off-by: Ethan Ferguson <ethan.ferguson@zetier.com>
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Stable-dep-of: 80218408836f ("fs/ntfs3: do not mark frame pages uptodate on read error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ fs/ntfs3/frecord.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index fd46160f48484..b33648f109781 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -57,6 +57,22 @@ static int ntfs_ioctl_get_volume_label(struct ntfs_sb_info *sbi, u8 __user *buf)
- 	return 0;
- }
- 
-+static int ntfs_ioctl_set_volume_label(struct ntfs_sb_info *sbi, u8 __user *buf)
-+{
-+	u8 user[FSLABEL_MAX] = {0};
-+	int len;
-+
-+	if (!capable(CAP_SYS_ADMIN))
-+		return -EPERM;
-+
-+	if (copy_from_user(user, buf, FSLABEL_MAX))
-+		return -EFAULT;
-+
-+	len = strnlen(user, FSLABEL_MAX);
-+
-+	return ntfs_set_label(sbi, user, len);
-+}
-+
- /*
-  * ntfs_fileattr_get - inode_operations::fileattr_get
-  */
-@@ -154,6 +170,8 @@ long ntfs_ioctl(struct file *filp, u32 cmd, unsigned long arg)
- 		return ntfs_ioctl_fitrim(sbi, arg);
- 	case FS_IOC_GETFSLABEL:
- 		return ntfs_ioctl_get_volume_label(sbi, (u8 __user *)arg);
-+	case FS_IOC_SETFSLABEL:
-+		return ntfs_ioctl_set_volume_label(sbi, (u8 __user *)arg);
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 014dcf2e50422..38d352b70e147 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -2684,7 +2684,6 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
+ 		}
+ 		pages_disk[i] = pg;
+ 		lock_page(pg);
+-		kmap(pg);
  	}
- 	return -ENOTTY; /* Inappropriate ioctl for device. */
- }
+ 
+ 	/* Read 'ondisk_size' bytes from disk. */
+@@ -2743,7 +2742,6 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
+ 	for (i = 0; i < npages_disk; i++) {
+ 		pg = pages_disk[i];
+ 		if (pg) {
+-			kunmap(pg);
+ 			unlock_page(pg);
+ 			put_page(pg);
+ 		}
+@@ -2838,7 +2836,6 @@ int ni_write_frame(struct ntfs_inode *ni, struct page **pages,
+ 		}
+ 		pages_disk[i] = pg;
+ 		lock_page(pg);
+-		kmap(pg);
+ 	}
+ 
+ 	/* To simplify compress algorithm do vmap for source and target pages. */
+@@ -2919,7 +2916,6 @@ int ni_write_frame(struct ntfs_inode *ni, struct page **pages,
+ 	for (i = 0; i < pages_per_frame; i++) {
+ 		pg = pages_disk[i];
+ 		if (pg) {
+-			kunmap(pg);
+ 			unlock_page(pg);
+ 			put_page(pg);
+ 		}
 -- 
 2.53.0
 
