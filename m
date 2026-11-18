@@ -1,52 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028685;
-	b=oMmVmhQz1HmAjOiN0b9i1eNx51s0m7WpGzlXRSykUUW7HE0lXmH/XYeZX6WHIkuce1k+
-	 FtWp7pdt3DRgdnzqRXogru7Hh1VsMn9z0ag56SIZDEXzafrFD2ik4lqIS3uErYCs6PC8y
-	 9VukKO0+oiCqfibfFAl5aJsYfwyUZPCOMD4OFTdvhhq2qePZ5l74xMfu+VO+XxAP00a5j
-	 JuIn7FX+WItmbOanlTfWoJNhye6jmvgpNWyI3nYO9ZDeSZZDML3Vc73S4+sxfN/umQnbv
-	 kJ5XRbRMulkoOwMNFMWycya+OZTSaCgSZZHvgS0uQP+2IIkkAnIVOBxaKH9zWC82Jtw==
+	t=1795028688;
+	b=ERIWUECpp9TfwM3uUaGSDo297h3/BcImHgU0briIYM8ay/b2R2LSW4Tq//SdGZSqJ1rG
+	 UD5FXFTRkpwkBSFvm7CGhYVCGzc+1792TrT2/PgwXUuSV/NZruvMixP976h+5Slrd5uUf
+	 V71Gh0TqyUEUhSfDa6PNeoVVF7ZiLswEp8BEBqm96tlx3JuPtd2pLs+41npY3CsvwJD8T
+	 6inDEvBqg1EBvACNQuyHbBlkQvUosVs2AHwj7bQSRyT49zW0uLZqNM2g5FHIl9d9aM3EV
+	 tiKQJCEpHcjd1KtQoPRs+BN2B0c0Xot597ElLD3nIrUvHjWsMV1d4GP2e/7/ZJKERMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028685;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028688;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=m1dw0TmBuclfm3feVIEEt1CsLs11pzXFuFi558kqF04=;
-	b=KBu5gnVFdIpazLGon3al6LIahhuW1RgqqH6ttWRWBvX6uqHhMKPJI0sHvy8zJ4hR9XFi
-	 2QcfHNWrXI1KyRMxW9mNBFAkH/HjWqrB3Y8gk16afmkNjsLfq3SsFkJtqfFBULErFs4cJ
-	 DliGY4y5KVw0h76moCe+2qVNCOAuYTtAYP8t+TOrpzuCgWov11E+Jln8t4IEIy/24xZJ6
-	 YH4a8u9NTcZcf4/yWYrPKfWR75rD2o+WrorCXpKEt3NC2NBSd3c/Kayrwd1GirF1crD37
-	 rJ1aLXzzTkaZL55jvy/BBZXBjZQqJ3ogy3SclqVF2cvSrSR6SAw8rG1AyPH152nnU3Q==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=nrHawzwic7e4QyZHyeEjoc/ISfoPAMafIvU41pFoamg=;
+	b=pzG44RyO+77XLZqJTcoku4Xw8uzKrsqOwuybesw11UMuZgGlME3ZNywMRL5iKW40jNfB
+	 n5evnhhwdyLz/cxvOc3viq4WviCR7+YCAER6sKrr+midpA3tkbWUX9pOWTHSZYsSPS+Lt
+	 Er7LFtrVLF9uvBeGzeaifD2N5rgDZJSjTt58jWfveBeEkESxGfBWTl5BArDF/tBDNw9gI
+	 XKf7WnAwBtc7rALPyUnEVADHRG4zCihpnIp7BtB3SFd4AU4x8C8XY/CUlv3CVg1rXEgE2
+	 Rlh/agRxwxnpbT/zh+Fa13Gmu0ldipuAqefEuqRoHNPskagD3liGhR7AX2yZSNfT7dg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="2J/RU8ZV";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YpiKoJPf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749C7606A31C;
-	Wed, 18 Nov 2026 19:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551C5606A31C;
+	Wed, 18 Nov 2026 19:04:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2J/RU8ZV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5F111F000C4;
-	Wed, 18 Nov 2026 19:04:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YpiKoJPf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28341F000C4;
+	Wed, 18 Nov 2026 19:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028685;
-	bh=m1dw0TmBuclfm3feVIEEt1CsLs11pzXFuFi558kqF04=;
+	s=korg; t=1795028688;
+	bh=nrHawzwic7e4QyZHyeEjoc/ISfoPAMafIvU41pFoamg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2J/RU8ZVXkEgesokVRguvL4MYQCr5lA2cF9Uaa8idNrywoJMkpJAYBMbvpzEMd4nI
-	 GhAt8KXZy+UMwSUHM+gQYzXaAg60tFAkPBt94ifKQ//nffiagRioof2/v8ZyoYyQoe
-	 /ucIt4SZtGHVH/XcSRMuMhIYaZnziuXXTvNhTVAw=
+	b=YpiKoJPfzRh5cQz9q0idbgJ8MEe+6+seMjVlCirpAoxNFSjhubxnuqnIGK67nhLvU
+	 VUDXBzQmtsVzq/l3A9xAEdGNZLFfdUCf2zTTUMA7lGZHOVJ9zNFxglfXlI4KGHtnjM
+	 r9pK6+jXOsp8pimCGQdRMpOBpQ0QKbHajho0l4zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0084/1756] hwmon: (tmp108) Fix initial conversion delay and wait until ready
-Date: Wed, 18 Nov 2026 15:36:51 +0100
-Message-ID: <20261118150011.614954173@linuxfoundation.org>
+Subject: [PATCH 6.12 0067/1756] Revert "x86/mm/pat: Fix effective RW computation in lookup_address_in_pgd_attr()"
+Date: Wed, 18 Nov 2026 15:36:34 +0100
+Message-ID: <20261118150011.003658127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,119 +60,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+This reverts commit 11d1ba991c0754b2c3c1e31aa63b0818afc6e4f7.
 
-[ Upstream commit 7cd60538073e465310c94b2a2f0ea8d2f03768ef ]
-
-In tmp108_common_probe(), the driver only adds the 30 ms conversion delay
-(TMP108_CONVERSION_TIME_MS) to ready_time if the sensor was previously in
-TMP108_MODE_SHUTDOWN. However, the TMP108 hardware defaults to continuous
-conversion mode (TMP108_MODE_CONTINUOUS) upon power-on reset, including
-immediately after enabling the vcc supply regulator during probe, while
-the temperature register retains its power-on reset value of 0x0000 (0°C)
-until the first conversion completes. Because the initial mode is not
-shutdown, the delay is bypassed and early reads via thermal zone
-registration or sysfs before the first conversion finishes return an
-uninitialized 0°C reading.
-
-In addition, returning -EAGAIN from tmp108_read() while waiting for a
-conversion to complete after probe or resume can trigger an unnecessary
-tight retry loop in callers or fail initial reads.
-
-Unconditionally set ready_time to TMP108_CONVERSION_TIME_MS ahead in
-tmp108_common_probe(), track ready_time as ktime_t, and wait for the
-remaining conversion time in tmp108_read() using usleep_range() instead
-of returning -EAGAIN.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Fixes: 66e1c9171339 ("hwmon: Add Texas Instruments TMP108 temperature sensor driver.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[ sashal: Adjusted structure context to account for the missing tmp108_params structure and params member. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/tmp108.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ arch/x86/mm/pat/set_memory.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/tmp108.c b/drivers/hwmon/tmp108.c
-index d95957d808e1b..310f8cae1fd84 100644
---- a/drivers/hwmon/tmp108.c
-+++ b/drivers/hwmon/tmp108.c
-@@ -14,7 +14,7 @@
- #include <linux/of.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
--#include <linux/jiffies.h>
-+#include <linux/ktime.h>
- #include <linux/regmap.h>
- #include <linux/slab.h>
+diff --git a/arch/x86/mm/pat/set_memory.c b/arch/x86/mm/pat/set_memory.c
+index e3a20be305bdf..69ceb967d73e9 100644
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -682,7 +682,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t *pgd, unsigned long address,
  
-@@ -73,7 +73,7 @@
- struct tmp108 {
- 	struct regmap *regmap;
- 	u16 orig_config;
--	u64 ready_time;
-+	ktime_t ready_time;
- };
+ 	*level = PG_LEVEL_512G;
+ 	*nx |= pgd_flags(*pgd) & _PAGE_NX;
+-	*rw &= !!(pgd_flags(*pgd) & _PAGE_RW);
++	*rw &= pgd_flags(*pgd) & _PAGE_RW;
  
- /* convert 12-bit TMP108 register value to milliCelsius */
-@@ -94,6 +94,7 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
- 	struct tmp108 *tmp108 = dev_get_drvdata(dev);
- 	unsigned int regval;
- 	int err, hyst;
-+	s64 delay;
+ 	p4d = p4d_offset(pgd, address);
+ 	if (p4d_none(*p4d))
+@@ -693,7 +693,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t *pgd, unsigned long address,
  
- 	if (type == hwmon_chip) {
- 		if (attr == hwmon_chip_update_interval) {
-@@ -123,12 +124,10 @@ static int tmp108_read(struct device *dev, enum hwmon_sensor_types type,
+ 	*level = PG_LEVEL_1G;
+ 	*nx |= p4d_flags(*p4d) & _PAGE_NX;
+-	*rw &= !!(p4d_flags(*p4d) & _PAGE_RW);
++	*rw &= p4d_flags(*p4d) & _PAGE_RW;
  
- 	switch (attr) {
- 	case hwmon_temp_input:
--		/* Is it too early to return a conversion ? */
--		if (time_before64(get_jiffies_64(), tmp108->ready_time)) {
--			dev_dbg(dev, "%s: Conversion not ready yet..\n",
--				__func__);
--			return -EAGAIN;
--		}
-+		/* Wait if it is too early to return a conversion */
-+		delay = ktime_us_delta(tmp108->ready_time, ktime_get());
-+		if (delay > 0)
-+			usleep_range(delay, delay + 1000);
- 		err = regmap_read(tmp108->regmap, TMP108_REG_TEMP, &regval);
- 		if (err < 0)
- 			return err;
-@@ -357,11 +356,8 @@ static int tmp108_common_probe(struct device *dev, struct regmap *regmap, char *
- 		return err;
- 	}
+ 	pud = pud_offset(p4d, address);
+ 	if (pud_none(*pud))
+@@ -704,7 +704,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t *pgd, unsigned long address,
  
--	tmp108->ready_time = get_jiffies_64();
--	if ((tmp108->orig_config & TMP108_CONF_MODE_MASK) ==
--	    TMP108_MODE_SHUTDOWN)
--		tmp108->ready_time +=
--			msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
-+	tmp108->ready_time = ktime_add_ms(ktime_get(),
-+					  TMP108_CONVERSION_TIME_MS);
+ 	*level = PG_LEVEL_2M;
+ 	*nx |= pud_flags(*pud) & _PAGE_NX;
+-	*rw &= !!(pud_flags(*pud) & _PAGE_RW);
++	*rw &= pud_flags(*pud) & _PAGE_RW;
  
- 	err = devm_add_action_or_reset(dev, tmp108_restore_config, tmp108);
- 	if (err) {
-@@ -408,8 +404,8 @@ static int tmp108_resume(struct device *dev)
+ 	pmd = pmd_offset(pud, address);
+ 	if (pmd_none(*pmd))
+@@ -715,7 +715,7 @@ pte_t *lookup_address_in_pgd_attr(pgd_t *pgd, unsigned long address,
  
- 	err = regmap_update_bits(tmp108->regmap, TMP108_REG_CONF,
- 				 TMP108_CONF_MODE_MASK, TMP108_MODE_CONTINUOUS);
--	tmp108->ready_time = get_jiffies_64() +
--			     msecs_to_jiffies(TMP108_CONVERSION_TIME_MS);
-+	tmp108->ready_time = ktime_add_ms(ktime_get(),
-+					  TMP108_CONVERSION_TIME_MS);
- 	return err;
+ 	*level = PG_LEVEL_4K;
+ 	*nx |= pmd_flags(*pmd) & _PAGE_NX;
+-	*rw &= !!(pmd_flags(*pmd) & _PAGE_RW);
++	*rw &= pmd_flags(*pmd) & _PAGE_RW;
+ 
+ 	return pte_offset_kernel(pmd, address);
  }
- 
 -- 
 2.53.0
 
