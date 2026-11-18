@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061742;
-	b=KlEnZT+z5KvQVYwLxoOosbNJqpGk6if03J4JWeflougtVXVeNZURTpYdjHlQN83Vd5pc
-	 9WvJ57l9dO7vGbn38ef88wpjFpGo3da/xsGv3GYb4tZCQHF0AL7qf/cWMk/IVcM/xRvK8
-	 XzMQJsKxrR5UluXonxPJlB2OQUSF/VzTl1BCQRylIUxRaKypYEiTRewJI7HAAXvevG0HD
-	 0sjpLCQ1afzFEH7K7c2PpiCZjs28Djmn0/ya2o2+GFMutrSjuQTK//B7kosELlgarqhFq
-	 ymvGl3ijrPKdSJYBFFsmVjn1FKadSLvbiFMYBRPf7WXIA4Xj9bOZOcPwMlB8of5Ue7w==
+	t=1795061744;
+	b=UHKFccHdyUe2MCf53/VmcWQkdGCGr//tKDbtdy18gZnFBcnYs6bFM6enNp1tnYSUtdXG
+	 NtLNSvP2HajXqwDg7wWW+WS4t7EoZMsUYy2DFGRwr5LhYs1uZtwwo4M882h1BWslZaYV2
+	 0TffB3HPoDm7mYXIJybr0LoarhRbgECvSE4DU5JHCq1DRYRD7JcxY1/bU9Zf6lr1jG4RO
+	 xkVGv5UvHG3lHNvNzvm/XeLouXEEl2gSUON3/2aR3UUieodOVo5YzbignvkwGkBccY1qc
+	 Fo8ANdyM/AxqyxE0AfQJjJfYVw9tGJMSmmIUhlkTbnCmuH8p/A2vFf0h3gn3Xs5yWCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061742;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061744;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7U8qz+5P1O+0c2z+glDhnOj0gOu1ur/nfzCi1vK7SkU=;
-	b=kqz9MeMvzyzEfh0vfVo3Zz10C8ts8nvQlcO1ikMv9WhqA/KkEuhmn4vaqaUeu/uhHWp/
-	 ebX8DSaeDoDwOG6UEn7uQQFIzP+PjwVtBg/+jXYQLPoaV7wRKzGTy1/xIhXHgAVZWOr4S
-	 hfZYsUTTdQuM3U8K/hMHiYCGpMNPx6sohGiwLg9d8BC0aaC8p7R87kc1Y1cQhdo1aVC/x
-	 maLX57lX9SCa9WoqZ4KLQZfXDOtzPwoIPUj+Rx/OvkMIdwRbJnGWzEAsGvx8dCsRVSYcQ
-	 j/IxJqMX9tjF9u6BWHXjXGakTXWVH1HZm7l4P5W72AGurveBhVFxcnQj/Kb9A2n4Dyw==
+	bh=W0GbtVOsOXMP6tqpcqk8s5Ae/zNEvUAaSDZsUrETR/I=;
+	b=n953Il3B1hzh75FWgzXbNHn1jwNro5Nb+WcExHKATKkB8aqTSf+E3mTznlkwj9u0XKVZ
+	 oQFIBAT4VzSC1k2XqBFhQxbIGziFsOlE2Znc7P1/1b4ZMtvE9dwx+yPlmEZ+xC/phUYog
+	 bbFG2lvatyp/CpTJ7pfz/2krpkeIQhgGI+LbFIRmqjBRQDj1Oq3+3xz68Cw32RE7eEKTH
+	 acumRMPRN2eRaIYKRiHg7umsyENHurh3VA9kYQvIIO1mNWoXbgGe1aUJRtYtnWxqDdLpl
+	 YNcddU1k6uLFqwKRY6QDiH/94Pmj8RdnHmbfIIRlolD+6J+XXzzl1TGe/Czw8QQIsSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqap1L8f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJ4OiEiU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B02606A326;
-	Thu, 19 Nov 2026 04:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BC4606A332;
+	Thu, 19 Nov 2026 04:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dqap1L8f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7441F000C4;
-	Thu, 19 Nov 2026 04:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VJ4OiEiU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E991F000C4;
+	Thu, 19 Nov 2026 04:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061741;
-	bh=7U8qz+5P1O+0c2z+glDhnOj0gOu1ur/nfzCi1vK7SkU=;
+	s=korg; t=1795061744;
+	bh=W0GbtVOsOXMP6tqpcqk8s5Ae/zNEvUAaSDZsUrETR/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dqap1L8fIYEYX2jgtEcqJRaD2Q9kvJqbdiHnSounnlS7qqlEtzQ5dntBf6IsobMPn
-	 Cg2+Fau5d8rPtgSEFvgur+WVNsWn8XF1rjV2rOD+a/8Fmyz8/tJTn4OgUuliLLxjNC
-	 AnZLfbkpZ4fDCnigNSCzvPu7ExVxBijTjzAUkZZo=
+	b=VJ4OiEiUPjZKXkqJv7SYr+tIloi9P3RrbeqOjsP35dENuFak0mmZWOvZ/yl3NkduB
+	 KG6dnwfJqcyDu6HTGGclYozBuenBziJAOIN3KZD/0xIpsOOXXYut1io1VwSOq7u0u/
+	 ten8MpwLMjo7Z3LsGY93OuY7LlJ2Zgpf8pXBLICg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Valentin Schneider <valentin.schneider@arm.com>,
 	Marc Zyngier <maz@kernel.org>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Radu Rendec <radu@rendec.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1661/1848] irqchip/gic-v3-its: Clear vpt_page after freeing the pending table
-Date: Wed, 18 Nov 2026 16:01:39 +0100
-Message-ID: <20261118150029.346636650@linuxfoundation.org>
+Subject: [PATCH 5.10 1662/1848] irqchip/gic-v3-its: Give the percpu rdist struct its own flags field
+Date: Wed, 18 Nov 2026 16:01:40 +0100
+Message-ID: <20261118150029.379953508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,39 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Valentin Schneider <valentin.schneider@arm.com>
 
-[ Upstream commit 0d604b1e4617d18dbb5573290ba447d7369251d1 ]
+[ Upstream commit c0cdc89072a3e1ae3981437f385de14b7bba8fd8 ]
 
-its_vpe_teardown() frees vpt_page without clearing it, so its
-vpt_page == NULL guard only holds the first time it runs on a vPE.
-struct its_vpe outlives a failed KVM_DEV_ARM_VGIC_CTRL_INIT, so a retry
-that fails again frees the pending table and the vPE ID a second time.
+Later patches will require tracking some per-rdist status. Reuse the bytes
+"lost" to padding within the __percpu rdist struct as a flags field, and
+re-encode ->lpi_enabled within said flags.
 
-Fixes: 325ff3e78c64c ("irqchip/gic-v3-its: Prevent leak in its_vpe_irq_domain_alloc()")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Link: https://patch.msgid.link/20260908142632.2795308-4-fuad.tabba@linux.dev
+No change in functionality intended.
+
+Signed-off-by: Valentin Schneider <valentin.schneider@arm.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20211027151506.2085066-2-valentin.schneider@arm.com
+Stable-dep-of: 32e056cc1d15 ("irqchip/gic-v3-its: Don't free a vPE table shared with another ITS")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/irq-gic-v3-its.c   | 8 +++++---
+ include/linux/irqchip/arm-gic-v3.h | 2 +-
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 8b11d5f5f4058..7740ad6af91bd 100644
+index 7740ad6af91bd..805e023a66e4c 100644
 --- a/drivers/irqchip/irq-gic-v3-its.c
 +++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -4455,6 +4455,7 @@ static void its_vpe_teardown(struct its_vpe *vpe)
- 	its_vpe_db_proxy_unmap(vpe);
- 	its_vpe_id_free(vpe->vpe_id);
- 	its_free_pending_table(vpe->vpt_page);
-+	vpe->vpt_page = NULL;
- }
+@@ -46,6 +46,8 @@
+ #define RDIST_FLAGS_PROPBASE_NEEDS_FLUSHING	(1 << 0)
+ #define RDIST_FLAGS_RD_TABLES_PREALLOCATED	(1 << 1)
  
- static void its_vpe_irq_domain_free(struct irq_domain *domain,
++#define RD_LOCAL_LPI_ENABLED                    BIT(0)
++
+ static u32 lpi_id_bits;
+ 
+ /*
+@@ -3071,7 +3073,7 @@ static void its_cpu_init_lpis(void)
+ 	phys_addr_t paddr;
+ 	u64 val, tmp;
+ 
+-	if (gic_data_rdist()->lpi_enabled)
++	if (gic_data_rdist()->flags & RD_LOCAL_LPI_ENABLED)
+ 		return;
+ 
+ 	val = readl_relaxed(rbase + GICR_CTLR);
+@@ -3185,7 +3187,7 @@ static void its_cpu_init_lpis(void)
+ 	/* Make sure the GIC has seen the above */
+ 	dsb(sy);
+ out:
+-	gic_data_rdist()->lpi_enabled = true;
++	gic_data_rdist()->flags |= RD_LOCAL_LPI_ENABLED;
+ 	pr_info("GICv3: CPU%d: using %s LPI pending table @%pa\n",
+ 		smp_processor_id(),
+ 		gic_data_rdist()->pend_page ? "allocated" : "reserved",
+@@ -5162,7 +5164,7 @@ static int redist_disable_lpis(void)
+ 	 *
+ 	 * If running with preallocated tables, there is nothing to do.
+ 	 */
+-	if (gic_data_rdist()->lpi_enabled ||
++	if ((gic_data_rdist()->flags & RD_LOCAL_LPI_ENABLED) ||
+ 	    (gic_rdists->flags & RDIST_FLAGS_RD_TABLES_PREALLOCATED))
+ 		return 0;
+ 
+diff --git a/include/linux/irqchip/arm-gic-v3.h b/include/linux/irqchip/arm-gic-v3.h
+index 4172b0cce6844..6c68836f486a2 100644
+--- a/include/linux/irqchip/arm-gic-v3.h
++++ b/include/linux/irqchip/arm-gic-v3.h
+@@ -672,7 +672,7 @@ struct rdists {
+ 		void __iomem	*rd_base;
+ 		struct page	*pend_page;
+ 		phys_addr_t	phys_base;
+-		bool		lpi_enabled;
++		u64             flags;
+ 		cpumask_t	*vpe_table_mask;
+ 		void		*vpe_l1_base;
+ 	} __percpu		*rdist;
 -- 
 2.53.0
 
