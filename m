@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034877;
-	b=nZx+qye49EAhupN9GYKCYuJCvCj1D9Mzz0aQFA4cC8dKX7ZRxMAZC5yg5/74ThDP6Mo2
-	 DQdSL9EtZnZy27m/tTMRLH7ZilCpEw4NfyATKAhcf8ZIvRk8/7wg4YEslzKinHSgUc2V+
-	 rgyETKQCo96OfNb+3upwVs6IJWc4OppTSbiPe346fr86fOG6KNC3uUA1UDjtMXBtqR8GN
-	 2RgN2KhvUGwIfysb8IBD8Jk8isiCTccWMYuG9+jeO7J+UqkiaRo1Y46bS9ASLspSNGCdO
-	 mRmYeizSJeBM/StlcVCuLmRIEk3uBd4JV/knAya7oA8X7mCLbcF9dPX0r4R30DNE4jg==
+	t=1795034880;
+	b=UEMZXXzFa8fWAwXrIiYfKE7xMhThLQW1K0W8D1oWorx/p88imDj+Bzin5fzD26RZM8gB
+	 zEb3VVG6osj0Gjc/rn03cILdkB38XViGYlVB2zpq94RJDZcI4HZxOkNhFG5wtCWmZgYF1
+	 A4DlZQOGxWabZ9ddnBHA1EAOJ2juMQ52KHlvWMe6WZrhvy57awYtCla2kZLTOmeQznmLp
+	 hS3WxZnqAfjHsTtkg0hDErRn+2ya7QyQCAgtZ/dKmgFGPXo11FISb4HxQw2ClWBlZX/KD
+	 +80WiVmiTkN9vtFwLfGqtDxjR9PdX4l9JOSyE2NDWk4TdF0OMEtqPGK//h84DEKsAYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034880;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dqnc1Je3/tGu2JWsat7Zd4ENXxjPGKQ5P4Ca/F7eN58=;
-	b=gLM8rsXaREBUWwhAAULxsZIYkjk33+bGBxMl+neDRfq6RKtcwTGPket3WPZ76zXlwwlh
-	 eAYpe2Ho8BcE/5hpN+9BVUDvMtjxgt0PTlV4ee/CDDiUPgEdluWoBz2Is75CAq0QPkXlV
-	 9glrJEYI2QAg00Cc3onOpoImxdZog5IeiazNAQ4GyuzYCGKxY5cmE1FKJF9Zz6TAOZb32
-	 +xBoGU5WzDYm3VE6m/J4xjRD296aXWkoAShBFoS/eZXBtD10ABRT0kyD9OawP15+Ontb0
-	 Jrr/GVi6f4T3Alp7lv4RLoAhM8FdabHr3o6/kjDAp4PPCec892gMJNhKoQ2p9lUgrEA==
+	bh=iA/CPga8Qx8VGse9AI1gF/Lua/D5IOnoW4DM7R2qBzo=;
+	b=mNieLdC4SI/utFEBAWmf7fQRiBdjJbo8mxSqJUD6T6+I/UX/19Fb+TJp3oJDpMuPW7W9
+	 Hw0NA8qrSz9qMiKgEBHzL2h26yJUE/iAX1JdbtHMmk7D8jDjhj7cwaQR80JarRNySTQED
+	 /a1C3no2KMqONrPqVEdbohFDq0StWS8dsWaDT/pSShiCbUHKMUPF4zTSxBRw2khHmeqQD
+	 bozweXgoJJgfy6TlabbOnV/5W+jBUgC5AsNbCpo0jegPmfDWtHtddomCbR09AJ9GJovzl
+	 4B3zIN3R6ranIJn+86D6GBkTNvmJeIkWZ7qfWqXkClBeNwCL/+huJnbg/IULT7KjfJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MaOj9eTl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CYT8t0m0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7AA606A320;
-	Wed, 18 Nov 2026 20:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C6B606A31C;
+	Wed, 18 Nov 2026 20:47:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MaOj9eTl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B961F000C4;
-	Wed, 18 Nov 2026 20:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CYT8t0m0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEFC1F000C4;
+	Wed, 18 Nov 2026 20:47:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034877;
-	bh=dqnc1Je3/tGu2JWsat7Zd4ENXxjPGKQ5P4Ca/F7eN58=;
+	s=korg; t=1795034879;
+	bh=iA/CPga8Qx8VGse9AI1gF/Lua/D5IOnoW4DM7R2qBzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MaOj9eTlrjPS1R6b3i04VBKf6fI5szOcvu2sOvC4sASOlbiF6OGxu0rU70igINfPY
-	 BlIjatCYN1Jh0cdQvrJL3Vdg9tc6EvO/de01PPL3kUCI/0Ly5MIEliaQxmurip5wTj
-	 cA26uxbUzngkQSIp1cshNT/Rs/E2a0b30j6e2JWU=
+	b=CYT8t0m0TDMwqc9Ed04MLAzOw3aONfRrwXjPY2AwzMwGASvbsvGwcO+SLhdsDKjok
+	 U2ddtdpSIGgwkVyvCWVfn9kqwI0oWwrLb8KN7aus5czeiVbqycyAygcA+4PVWoDIuY
+	 8VX57hNLixD3sel3iQOwIpbeOq+jnQrBoYCdvDgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -51,9 +51,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tom Talpey <tom@talpey.com>,
 	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0524/3318] smb: client: drain and invalidate before server-side copy/clone
-Date: Wed, 18 Nov 2026 15:19:06 +0100
-Message-ID: <20261118150332.915129609@linuxfoundation.org>
+Subject: [PATCH 6.6 0525/3318] smb: client: only require read lease for size-extending zero range
+Date: Wed, 18 Nov 2026 15:19:07 +0100
+Message-ID: <20261118150332.947757249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -77,43 +77,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit c9b1194e8ec99d95db25db45edd2fbf690f043ab ]
+[ Upstream commit fafc68cccf8a00ed0a1f47c1413a3f16ce4dcdfa ]
 
-cifs_file_copychunk_range() and the clone (FICLONE) path of
-cifs_remap_file_range() do not serialise the destination page cache
-against the server-side copy the way the other server-side range
-operations (smb3_zero_range(), smb3_punch_hole(), smb3_collapse_range()
-and smb3_insert_range()) do.
+smb3_zero_range() refuses any FALLOC_FL_ZERO_RANGE that clears
+FALLOC_FL_KEEP_SIZE with -EOPNOTSUPP whenever the inode is not read
+caching:
 
-cifs_file_copychunk_range() invalidates the destination range with
-filemap_invalidate_inode(), which takes and drops the mapping's
-invalidate_lock internally, so the lock is no longer held when the
-copychunk ioctl is issued.  It also never drains in-flight netfs I/O on
-the target.  The clone path never takes the invalidate_lock at all (only
-i_rwsem), uses a bare truncate_inode_pages_range() and likewise does not
-drain outstanding I/O.
+	/* if file not oplocked can't be sure whether asking to extend size */
+	rc = -EOPNOTSUPP;
+	if (keep_size == false && !CIFS_CACHE_READ(cifsi))
+		goto zero_range_exit;
 
-As a result an asynchronous destination writeback can complete after the
-server-side copy/clone has run and reinstate stale data over the region
-just written by the server, corrupting the file.  This is the same class
-of corruption as commit d7d2adcd022b ("smb/client: flush dirty data
-before punching a hole") and has been seen randomly in generic/363
-against Windows Server.
+The read lease is only needed to trust the cached i_size when deciding
+whether the range extends the file. When it is not held, the size can
+instead be fetched from the server, which is authoritative, rather than
+refusing the request outright: query the server's end of file and take
+the larger of it and the cached size for the interior-vs-extend
+decision. The larger of the two is used because the server's end of
+file reflects another client's growth while the cached size reflects
+this client's own writes that may not have reached the server yet;
+using the server size alone would wrongly shrink the file when the
+range flush above left an extending write unwritten.
 
-Fix both paths to follow the established ordering: hold the target
-mapping's invalidate_lock across the flush and invalidation of the
-destination and the server ioctl, and call netfs_wait_for_outstanding_io()
-on the target to drain in-flight writes before the ioctl is issued.  Only
-the target inode's invalidate_lock is required, as the source is merely
-flushed and not invalidated; i_rwsem (already held via
-lock_two_nondirectories()) is acquired before the invalidate_lock,
-matching the VFS lock ordering.  Since filemap_invalidate_inode() takes
-that same lock internally, replace it with its own unmap/flush/invalidate
-steps instead of calling it, and return early on a zero-length copy to
-avoid a range underflow.
+The query isn't lease-protected either, so its result is only trusted to
+confirm the range is interior, never to justify extending: if it still
+shows the range going past EOF, refuse with -EOPNOTSUPP instead of
+calling SMB2_set_eof(), which could otherwise shrink the file if another
+client extended it further between the query and the call.  For the same
+reason, take the larger of the already-computed i_size and a fresh
+i_size_read(inode) right before that call, instead of relying on either
+alone: the local variable carries the query's result, which is never
+written back to the inode, while a concurrent write on this client can
+still extend the cached i_size during the flush, the query, or the
+zero-data round trip that happen in between.
 
-Fixes: 8101d6e112e2 ("cifs: Fix copy offload to flush destination region")
-Fixes: c54fc3a4f375 ("cifs: Fix flushing, invalidation and file size with FICLONE")
+Rejecting interior ranges is observed as generic/363 randomly failing
+against Windows Server with
+
+	do_zero_range: fallocate: Operation not supported
+
+fsx issues an interior, non-KEEP_SIZE zero range while the inode is
+transiently not read caching: the server had just downgraded the file's
+lease from RWH to RH after breaking the write caching, and the ensuing
+handle reopen/revalidation left CIFS_CACHE_READ momentarily clear. The
+range sat well within the server's end of file, so no extend was
+needed, yet the range was refused and fsx aborted. This keeps the
+emulation correct even when a genuine lease break from another client
+leaves the inode without read caching -- the case the -EOPNOTSUPP guard
+turned into a hard failure. The extra round trip only happens on the
+no-lease path; the common cached case is unchanged.
+
+Fixes: 30175628bf7f ("[SMB3] Enable fallocate -z support for SMB3 mounts")
 Reviewed-by: David Howells <dhowells@redhat.com>
 Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
@@ -124,58 +138,77 @@ Cc: Shyam Prasad N <sprasad@microsoft.com>
 Cc: Tom Talpey <tom@talpey.com>
 Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-[ sashal: Kept the existing cifs_flush_folio()/truncate_inode_pages_range() flush path and dropped the netfs_wait_for_outstanding_io() call and open-coded invalidate block, since neither exists in this tree. ]
+[ sashal: Added the missing remote_i_size local declaration in smb3_zero_range() since the surrounding context lacked it. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/client/smb2ops.c | 33 +++++++++++++++++++++++++++------
+ 1 file changed, 27 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index bb02e6ecd3c94..3154b21bfe8a2 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -1323,6 +1323,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	 * server could even support copy of range where source = target
- 	 */
- 	lock_two_nondirectories(target_inode, src_inode);
-+	filemap_invalidate_lock(target_inode->i_mapping);
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index 256b8ddbc2b2f..f657d9696d1da 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -3254,6 +3254,21 @@ static long smb3_zero_data(struct file *file, struct cifs_tcon *tcon,
+ 			  0, NULL, NULL);
+ }
  
- 	if (len == 0) {
- 		loff_t src_size = i_size_read(src_inode);
-@@ -1415,6 +1416,7 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
- 	   that target is updated on the server */
- 	CIFS_I(target_inode)->time = 0;
- unlock:
-+	filemap_invalidate_unlock(target_inode->i_mapping);
- 	/* although unlocking in the reverse order from locking is not
- 	   strictly necessary here it is a little cleaner to be consistent */
- 	unlock_two_nondirectories(src_inode, target_inode);
-@@ -1438,6 +1440,9 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
- 	unsigned long long destend, fstart, fend;
- 	ssize_t rc;
- 
-+	if (len == 0)
-+		return 0;
++static long query_server_eof(const unsigned int xid,
++			     struct cifs_tcon *tcon,
++			     struct cifsFileInfo *cfile,
++			     unsigned long long *eof)
++{
++	struct smb2_file_all_info file_inf = {};
++	long rc;
 +
- 	cifs_dbg(FYI, "copychunk range\n");
++	rc = SMB2_query_info(xid, tcon, cfile->fid.persistent_fid,
++			     cfile->fid.volatile_fid, &file_inf);
++	if (!rc)
++		*eof = le64_to_cpu(file_inf.EndOfFile);
++	return rc;
++}
++
+ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 			    unsigned long long offset, unsigned long long len,
+ 			    bool keep_size)
+@@ -3262,7 +3277,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	struct inode *inode = file_inode(file);
+ 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
+ 	struct cifsFileInfo *cfile = file->private_data;
+-	unsigned long long i_size, new_size;
++	unsigned long long i_size, remote_i_size, new_size;
+ 	long rc;
+ 	unsigned int xid;
  
- 	if (!src_file->private_data || !dst_file->private_data) {
-@@ -1467,6 +1472,7 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
- 	 * server could even support copy of range where source = target
+@@ -3298,10 +3313,16 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
  	 */
- 	lock_two_nondirectories(target_inode, src_inode);
-+	filemap_invalidate_lock(target_inode->i_mapping);
+ 	truncate_pagecache_range(inode, min(offset, i_size), offset + len - 1);
  
- 	cifs_dbg(FYI, "about to flush pages\n");
+-	/* if file not oplocked can't be sure whether asking to extend size */
+-	rc = -EOPNOTSUPP;
+-	if (keep_size == false && !CIFS_CACHE_READ(cifsi))
+-		goto zero_range_exit;
++	if (!keep_size && !CIFS_CACHE_READ(cifsi)) {
++		rc = query_server_eof(xid, tcon, cfile, &remote_i_size);
++		if (rc)
++			goto zero_range_exit;
++		i_size = max(i_size, remote_i_size);
++		if (i_size < new_size) {
++			rc = -EOPNOTSUPP;
++			goto zero_range_exit;
++		}
++	}
  
-@@ -1519,6 +1525,7 @@ ssize_t cifs_file_copychunk_range(unsigned int xid,
- 	CIFS_I(target_inode)->time = 0;
- 
- unlock:
-+	filemap_invalidate_unlock(target_inode->i_mapping);
- 	/* although unlocking in the reverse order from locking is not
- 	 * strictly necessary here it is a little cleaner to be consistent
+ 	fscache_invalidate(cifs_inode_cookie(inode), NULL,
+ 			   i_size_read(inode), 0);
+@@ -3313,7 +3334,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
+ 	/*
+ 	 * do we also need to change the size of the file?
  	 */
+-	if (keep_size == false && (unsigned long long)i_size_read(inode) < new_size) {
++	if (!keep_size && umax(i_size, i_size_read(inode)) < new_size) {
+ 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
+ 				  cfile->fid.volatile_fid, cfile->pid, new_size);
+ 		if (rc >= 0) {
 -- 
 2.53.0
 
