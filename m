@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016673;
-	b=tr9dWVwAOQNbnTV+CTw4r65zvMRePzaA9TiZtGI5Rfn1M1GXMwQqft12jrclhFvwHyCz
-	 KVkW2JU/DwbB+TUbEFU7bKTLjf4qYTI1zFH2rha3f8VipcLrRD101Zqx+m468AsvEvUNd
-	 NM1H8KHt26PVGB7zE7JCbQZQE/vUqyQ4LRNLYwwtjn4hp84Ph6njI7hjhKwV3G/Ds15FQ
-	 uE+IO87m5uhsvjDa2w4tGXg3RscA5rcuon4Af8jhB77+CRHIRvB8nxfFGHkFwxq9jJP3Q
-	 ZQPOl9hJasWKzWznrRs2X36Sq6fuWyhC6LmJaINFoCYWkmVdUFkzSnVPuf1hr3ibCqg==
+	t=1795016676;
+	b=OaVG2pq7eK8uasU1adFmE5wqgu2uJbdti2kgh0RnYiqy6HFwsNsTAVbP7lZX0LMPV1QJ
+	 XIpjSm/UG8Sl3TX9MP19Xrgh9JHkCEcEm5fTByQFeO76nEQjCbXgHf6FJ/D4wf2P50CaG
+	 aFyA62xKCAW4It4A8l9LCLRMjgxnpH97w2eRjpRFpwS+TeVqgp0PewjATS3xzpTMmAAjI
+	 vBSAVDnwzeNKk02C8FFHrh6NxCPUPhIVvnqvIFTnCM1MUyx9ze3v0VOGxC5KNHwD4MYv0
+	 6BH6BiiTRPFYKCX3cBGI9MQo3cRWTFM7uG9rLSReKK6+GfhmsLDTo3kKzfO8fRAIb/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016673;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016676;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ihvRa6cYmnmzVBu+Ye87nTIcSNv/z1WwxwaqbbljwrE=;
-	b=v6exffqFxY585j+fwrmAA0UJfhNP0Mth1z54y3FAuftQ6WPq/nvwMQLs5ZUd67M1vf+w
-	 HO/QSvvUr5J0jB91CGALu7D7oT+Hi/GifcQtL8qO5Yj62borRhA2r3lTJ92CpXsKnk83z
-	 2YHVNtX5OD25eV72vCQIsypYM83HbnSxedGjlHIAfnYHBkiJoF/5O2VJT/5AKLW0UWzZj
-	 jdfP7oGZFBiAYBRii/aQ0tl51NRIMGabQr4R546rsIp9ZGCrg/77Gs9/gJz3SM3EbSsU0
-	 W0TQDumSsw5J5sr++hdLtezVtIqn/2Z58za9fyG/4/mFb/QBc39bGXwZ9zopIE2+PyA==
+	bh=0t17yJJMG0zYNWvRbMvvV2cVfSen19Ar7QgK9bD8cgI=;
+	b=wz+1ZPvragOzgrJaWoeUv8/t+bDPiwiMG+oL44D9Gse/p1rSga+kjpHOZXZs/+I38TBd
+	 x9EAODfQSfK0UjsggVvi7QHYqa919WgCwYNkUHZqTQBpSIOCDBvZoKWJKr5IezE5kmyOG
+	 XyQdFq4nnNz1x5YxwA9zDN3REHz9J46znoKCgOzDoNnJoGSq9W3rWkBJK7K92jYMjh34c
+	 Vu4EYo93U2Ox+5+YgsZygxVc08Olk2w0wNBsu5QRROWIm9Wyi6yjSIReeqOuNxJHJIL/Y
+	 dkvZe8eI88gRes246i/5rxg+cCyvBefLnn985qF+ypRj7hTtqa74xmcb7rTFajW5fhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C2g6Wora;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psLbSwXd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFFC606A31C;
-	Wed, 18 Nov 2026 15:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7743C606A31C;
+	Wed, 18 Nov 2026 15:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C2g6Wora
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096481F000C5;
-	Wed, 18 Nov 2026 15:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=psLbSwXd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5A31F000C4;
+	Wed, 18 Nov 2026 15:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016673;
-	bh=ihvRa6cYmnmzVBu+Ye87nTIcSNv/z1WwxwaqbbljwrE=;
+	s=korg; t=1795016676;
+	bh=0t17yJJMG0zYNWvRbMvvV2cVfSen19Ar7QgK9bD8cgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C2g6WoraMy/utPLXZ40yxzdykd85hstdZbqAnnb9ys8ZRiOlGwTkUFWpIPtpo/r9M
-	 r+9GAyo+AI7hRKI3mvsJPeDEB6u3g3JP/jTmaNEPjcVmHO275P9TvpHHDiuMFKPsJ6
-	 PmuvJc12eNL+DLNpfroxPswNRYYnHvJXhrkyilB8=
+	b=psLbSwXd0wsBeaiw+DXUZkFUI5SQzdb3SE4EsEcfChV61Bpj/zqjc0KnWWXDFxeNv
+	 PUXk/YZuV24hFsldT9CSrkS8weQInG4FZNIS4TS62Bk1CmLeMzdT9WGBBRiHpUOxXU
+	 lfiL1VMnu0IG2sT4Rze3KydNa/mFdbeZnJG1tyHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0613/2651] dt-bindings: vendor-prefixes: add vendor prefix for Nexperia B.V.
-Date: Wed, 18 Nov 2026 15:30:53 +0100
-Message-ID: <20261118150309.780988388@linuxfoundation.org>
+Subject: [PATCH 7.3 0614/2651] drivers/thermal/renesas/rzg3e: Fix signed integer overflow in temp_to_code()
+Date: Wed, 18 Nov 2026 15:30:54 +0100
+Message-ID: <20261118150309.816530980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,35 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit 819a3e62d37a2fe73c1e7f241f2ac086042e7757 ]
+[ Upstream commit 84f0e14e6261ef718e6a8583073097ad9ea70e14 ]
 
-Document the vendor prefix for the semiconductor company Nexperia B.V.
+The thermal core passes -INT_MAX/INT_MAX as low/high trip points, which
+the driver then converts to code values for programming the registers:
 
-The company website is https://www.nexperia.com/
+numerator = (temp_mc - info->temp_d_mc) * (priv->trmval1 - priv->trmval0);
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20260921-topic-sm8x50-nex10000ub-v2-1-eeeaf9b0c913@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Although 'numerator' is defined as s64, the arithmetic is performed as int.
+Because of this, the multiplication overflows for -INT_MAX and, because
+temp_d_mc is negative, the subtraction overflows for INT_MAX.
+
+To fix this, cast the temperature to s64, so that the arithmetic is
+performed as s64.
+
+Fixes: dc67521c20b7 ("thermal/drivers/renesas/rzg3e: Fix add thermal driver for the Renesas RZ/G3E SoC")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260916120003.87018-2-ovidiu.panait.rb@renesas.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thermal/renesas/rzg3e_thermal.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index ff4a85f4cbd4e..c522112b41e77 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -1194,6 +1194,8 @@ patternProperties:
-     description: New Vision Display (Shenzhen) Co., Ltd.
-   "^nexbox,.*":
-     description: Nexbox
-+  "^nexperia,.*":
-+    description: Nexperia B.V.
-   "^nextthing,.*":
-     description: Next Thing Co.
-   "^ni,.*":
+diff --git a/drivers/thermal/renesas/rzg3e_thermal.c b/drivers/thermal/renesas/rzg3e_thermal.c
+index c44f5b8858d02..4acee4eaff05d 100644
+--- a/drivers/thermal/renesas/rzg3e_thermal.c
++++ b/drivers/thermal/renesas/rzg3e_thermal.c
+@@ -194,7 +194,12 @@ static u16 rzg3e_thermal_temp_to_code(struct rzg3e_thermal_priv *priv, int temp_
+ 	s64 numerator, denominator;
+ 	s64 code;
+ 
+-	numerator = (temp_mc - info->temp_d_mc) * (priv->trmval1 - priv->trmval0);
++	/*
++	 * Perform the arithmetic in 64 bits so that it cannot overflow for
++	 * -INT_MAX/INT_MAX values passed from the thermal core or when
++	 * userspace writes arbitrary trip point temperatures.
++	 */
++	numerator = ((s64)temp_mc - info->temp_d_mc) * (priv->trmval1 - priv->trmval0);
+ 	denominator = info->temp_e_mc - info->temp_d_mc;
+ 
+ 	code = div64_s64(numerator, denominator) + priv->trmval0;
 -- 
 2.53.0
 
