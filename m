@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027451;
-	b=gLs0fn6rXZRq8/9BhrPuCPiZw6XNGd2L6Qn9rywD/wFcJ4grxwEO1Gih04eePQkJ1UyG
-	 Ul+PXgi58GwhVt1Nz30NQcsml4Yvwq4w1qDHW07uocv6GT/v2QlZGUutR3bgi7tb0K5qI
-	 XS52xYaL2CkKmwa0tDMYjjQOx+/jN8j+6eJR1UyxEGceOmGNi7S0zIxHlSIRgYGdl+jG0
-	 cr0ta4C3xYTV95AVeHx5mid4RTuNAkh9tZGNe/3M4aYgfTh5ZHJqjD3WzRbNtH9FXqzrv
-	 BCS9tJ+e60j4WuwqODgeSFluD+hltuM8z7rXl4HPemoKrK7kC0jGFif3mynWw2lBg9w==
+	t=1795027453;
+	b=mrvie8czhmuW032uJFIBBvM5Yqdp8l1xbia7gnX/NxfKMUUPZkhuWFXEh2Axp1jfcezs
+	 s8h9PACYmw4u+BNs5wJuFlBUxqJ6PPAU/XabtCP62Mlp3sw+ql4fZ91m9o04KROFAxB8/
+	 /MS8IZyEXopBPmvoxVhsau2qAjVQxfDfBGTsUJm4PjkUOsF2xQ1jY2DfHUBN4DVtFwd8U
+	 /0qIAvOu5JX171BpOiJDA5hVMknGMpMJce/4gO7Yg2s1r0j6X5cLb63tQXHVAFTJO55Ct
+	 SHfUzdljhGjmwr6kRO5AnvlZoKToZT57kgL/vmPy2kzqAikcIIbWrIEE0CDeh6J9SBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027453;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ty5V2cMH3RFb5sj3/z9MnKm6E15xcZ+FKx0IsNvKCbg=;
-	b=0a55mpUffPFCM4N0ntqQEPPGUIUhG6Mn660t+TgJxYBqBxRmFgUIwn/LSXnVCOdjPcqa
-	 s2aHIS7tJfytCiqTulEKOSWqCJpHhiQoccjZaBIOKOYJ5baJ7pfad6wu39CB6MkcIlHn1
-	 6DO3dNsp4saSX6CX+2DVXBmZQ2lMQ/uy1zR8QaZQhfiUs0scQFRqFuquxD6uQWSP9umCr
-	 9NIo8XqyVn0dRLqGOBtfbwpx2dBFtqZ5YEgYRIWscssGb09G418mvTpQBIL/FL5CeAxGX
-	 5bIJTHIk7sWQe45wNeooCpR20+JTJx7s1BQxpVAa37i8/wARrj943hyd6cUjQ9H1nRQ==
+	bh=b5MoMLqJ51l3Tn6rqL0Fa5C9fXy7bm0E+BaycOObaR0=;
+	b=0pD7pMEbYgbBqspvWi5lrmUfu3wbfj2yNIFivxXvbDMfq1rXS3mIfva1y2NgspYcPlhO
+	 J6DGdi/ZLg707JuE8CaMTtCkE/QeZWTQMj7Vyv1bj6C7ZWZW7N5LQRsGvdm4Wtk1wzvdH
+	 YIJBP4ilI/hP6eAg5cXg+0gkB5Svmk4xulRZv12O7WtqZkxjEoYzKCgOZD3KC9uLIY5iF
+	 NLBNC9tuG1UM45P49E/E+Qj86klmscUhgfWSgPhL6U7TOktjfpoQKHhcZF/eUm0Wt/ARC
+	 ATsR7q0+euM469CA5+IcTP+DIUieZC6+T8hKhR3oTJaa7IqWTa80qTX6wEZ/Uq6/fpg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="P/9naGgz";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1X4pAoKM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FB960A2612;
-	Wed, 18 Nov 2026 18:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CADE860A2617;
+	Wed, 18 Nov 2026 18:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P/9naGgz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 526501F000C4;
-	Wed, 18 Nov 2026 18:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1X4pAoKM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2730D1F000C4;
+	Wed, 18 Nov 2026 18:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027450;
-	bh=ty5V2cMH3RFb5sj3/z9MnKm6E15xcZ+FKx0IsNvKCbg=;
+	s=korg; t=1795027453;
+	bh=b5MoMLqJ51l3Tn6rqL0Fa5C9fXy7bm0E+BaycOObaR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P/9naGgz06SqS2eUxeHEBOq+QrKbdLoAKJbI/VEJjD0RnTLgG+v+TeErHNeERt/A9
-	 YbScNQPekta6hoaCUZq2XXDLaDx/wXoCHFwNVyQz+gTW7RuDoI6lupMyW1cCiyExtE
-	 ffHselSMTnLmyysjcFsfnuvcwlN2MPi7CWM03L4Q=
+	b=1X4pAoKM2nWon7ZyKVDUzAMi+MjXohY0n93j79jbHG+aSq5k/pmSSg4zkJvZKinZm
+	 g7N0H/mc/N3ceP4ERg/r8k3VIj6GfTVjvy7Kk14JoKz3peQ9AU1DBdaFLHBcbqDk01
+	 /et5+pqxlGrO7VF1pfOCLWfuCKHOdW/VbLglSvNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1795/2151] mptcp: options: mpc: avoid printing uninit data
-Date: Wed, 18 Nov 2026 15:58:50 +0100
-Message-ID: <20261118150227.199110180@linuxfoundation.org>
+Subject: [PATCH 6.18 1796/2151] mptcp: options: dss: avoid printing uninit csum
+Date: Wed, 18 Nov 2026 15:58:51 +0100
+Message-ID: <20261118150227.234865022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,48 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit a234ee8eb9a20d1a272f0d2ceabdb35165071778 ]
+[ Upstream commit 00e2690c9dad0e09cd2a4435b98de6d8efd5fbc2 ]
 
-When parsing the MP_CAPABLE suboption, this pr_debug() might read and
-print uninitialised values.
+When parsing the DSS suboption, this pr_debug() might read and print
+uninitialised checksum value.
 
 That's mostly harmless, but that's also confusing. Fixing that also
 avoids some tools to complain about accessing uninit data.
 
-So read these fields only if they have been set.
+So read this csum field only if it has been set.
 
 Note: this was initially reported by Clashiko as an existing issue. The
 code has been analysed by a human and confirmed. This is a non-urgent
 fix.
 
-Fixes: cc7972ea1932 ("mptcp: parse and emit MP_CAPABLE option according to v1 spec")
+Fixes: 390b95a5fb84 ("mptcp: receive checksum for DSS")
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-next-mptcp-misc-feat-7-4-part2-v1-1-1181e5d2fda4@kernel.org
+Link: https://patch.msgid.link/20261013-net-next-mptcp-misc-feat-7-4-part2-v1-2-1181e5d2fda4@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/options.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/mptcp/options.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/mptcp/options.c b/net/mptcp/options.c
-index a7f048afc8440..c53d212156303 100644
+index c53d212156303..69c2906bf3147 100644
 --- a/net/mptcp/options.c
 +++ b/net/mptcp/options.c
-@@ -126,8 +126,11 @@ static void mptcp_parse_option(const struct sk_buff *skb,
- 			ptr += 2;
+@@ -259,7 +259,7 @@ static void mptcp_parse_option(const struct sk_buff *skb,
+ 			pr_debug("data_seq=%llu subflow_seq=%u data_len=%u csum=%d:%u\n",
+ 				 mp_opt->data_seq, mp_opt->subflow_seq,
+ 				 mp_opt->data_len, !!(mp_opt->suboptions & OPTION_MPTCP_CSUMREQD),
+-				 mp_opt->csum);
++				 (mp_opt->suboptions & OPTION_MPTCP_CSUMREQD) ? mp_opt->csum : 0);
  		}
- 		pr_debug("MP_CAPABLE version=%x, flags=%x, optlen=%d sndr=%llu, rcvr=%llu len=%d csum=%u\n",
--			 version, flags, opsize, mp_opt->sndr_key,
--			 mp_opt->rcvr_key, mp_opt->data_len, mp_opt->csum);
-+			 version, flags, opsize,
-+			 opsize >= TCPOLEN_MPTCP_MPC_SYNACK ? mp_opt->sndr_key : 0,
-+			 opsize >= TCPOLEN_MPTCP_MPC_ACK ? mp_opt->rcvr_key : 0,
-+			 opsize >= TCPOLEN_MPTCP_MPC_ACK_DATA ? mp_opt->data_len : 0,
-+			 opsize == TCPOLEN_MPTCP_MPC_ACK_DATA_CSUM ? mp_opt->csum : 0);
- 		break;
  
- 	case MPTCPOPT_MP_JOIN:
+ 		break;
 -- 
 2.53.0
 
