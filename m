@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034339;
-	b=J9ULuHHPXOqBopQZlLixJ3V6jIl0pQc1jNSurFFD+lCDp23vMW33MIZa8Rbf/x2dc81A
-	 9ayjXioSa1kyPaXsHKWAHMZWQ1eI51Ha6GtoIVmn0tSqQZ0nSCl7BT0TOSBciQMe9ULoz
-	 NmPanAcQU+b4JEqh7uh+mTqpKPvA6j4b8X3kKPXhxUdBWL0E8FeCcXJ5HT1g7ZRkQPuP8
-	 gHWM4fPU+XdGTmdmzIgGFl3Hu+eWvxRUWvYwfZVpdNhyG8IcTXUhMQnQrhNKP6DtSDYMn
-	 yTKJIHx5vHPLFbart5+/aQCEbtcvbBOA36201WSkdBewKZCt1m8ymTns49vMcUH9zdw==
+	t=1795034342;
+	b=hCUFegtsie2jA3wB4DdDQtrWJcUCrZy4KgNcKbgiL76r1Yx60D7SsOSjEvMGbFeKsbkz
+	 m/vw1q8ngy2PUeAGbUMjoYoRhY7ak7nQQrHOAE+9ueqL52412uP/SFELGHed/m4VAfUht
+	 2s78bJb5tbK03WskCu98wbhkwMX74cJ5nSzNptY9j8i6c0Hjml6amA4PlwBlZaqHjcDjJ
+	 l75RTvN3RlD4gGaTrj8czs48VCxz81ggcQvSKC2XXJNBcv14EfdX8fmziWBmSHhe6HYRB
+	 yQ7GtVkf26TzyjstJekUJNhH7lUbQFmDykG7KzY9Z7wDK3R2I15RUi54VJj+vArlijg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034339;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034342;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BzlKmj7GZSuUAPDvq5NgQzPxnM0v3PaaXFp1QX09Dag=;
-	b=zZAhdOn+xQZYFiI570zobRwPC2uho6xUWkoZJ7u6zz3+yHWhEV+8DSNjmbxRxsZyLnBm
-	 WlMm1sWNgIcIyFFLNYn9315SQfpnLwPdYYzO5bSEiflKPrfgXmEL5cGawE2K7z/qFrG9l
-	 8B2ZiyJEZ5d2GHYsyPo73XR1D4Ii4w12b7cNr5vHwN+VajpbnuwNM82nglWEZDQEMJ0Wr
-	 8t2Nu0VEOeUd8jQ0JDHb43RXr2d7PB8K0JlURaTxhpONY/xLZ+DGFjtV9JXqnMvMKLKZg
-	 otVIEnobAPhyIe6xkKP0AcD28yiRD+3zFn50Shg71VMSMDw8sXynbJyjpeJt4AxMM5A==
+	bh=kQdGLpjU15tw/JoaHxEsOtyKdS1Fcvfc1MkcrUay2QU=;
+	b=w66SFSXQsfuzx8y/8QAxxuAJoscaOxk2X/wY/58OGlhruDWC6KFpYlDl3iKQ1GA8mGFE
+	 MftVv084d2plZGqJm6pb6+r6tKPnypOZT2G3z4LmfmfbmMw8Uj0WoT5vvQXBPQcvTGvs8
+	 7oBqfogCQeBpp8RpbsgTGR7IfnMJb0jUzAIkNhLSgi3y/dPvmIcioC9gCWMqrG9LgB/9i
+	 TY4z3+fqf4SQn8kawpYO8JBrf3uN5hq9OZaTPVVtA0slN0yWhMiG7YoSQv6uEXmmuVbCj
+	 duZa5diTLmKEsKpYNWtbwfFOIUx4/WoiBp5OMGjFakerd+qqOM2ioVlktoJFc9T+6+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l6X6Y206;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gU2J5cRH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845A4606A320;
-	Wed, 18 Nov 2026 20:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E062606A320;
+	Wed, 18 Nov 2026 20:39:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l6X6Y206
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CC61F000C4;
-	Wed, 18 Nov 2026 20:38:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gU2J5cRH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3381F000C4;
+	Wed, 18 Nov 2026 20:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034339;
-	bh=BzlKmj7GZSuUAPDvq5NgQzPxnM0v3PaaXFp1QX09Dag=;
+	s=korg; t=1795034342;
+	bh=kQdGLpjU15tw/JoaHxEsOtyKdS1Fcvfc1MkcrUay2QU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l6X6Y206IKGOj0GSh6W+7NwtQ9UhfOIsHSYQBDxsIddnJqC0zPrle75pIGOdD/DtM
-	 hEmTZWcECi6yp5M+KY/2OvCXrjkLeU4O+6FgSmWgIWY4Gk2E8dGSESfoOoVWzOQf6K
-	 c80l/KY+s7LkZ3QFjow2Y+90ve+U5L43EnLXwfIU=
+	b=gU2J5cRHv7QEc2e6yJyUQX3DpSCm/kZcwoOAt+C59RSwwkROdN4t9scOcw0WeyU6G
+	 pnAJm7W9IDGFEK81r7mEk7ZN2vsXTbhYW4pC/g1cTxiFRl/b5046ioK4IklScsLiTI
+	 ow5nWKA4lKi/XBcUEm+/RLCiB4N3Mgu34uT4Ja10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gael Blivet <gael.blivet@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	"David C.C.M. Gall" <david.ccm.gall@googlemail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0293/3318] ksmbd: skip fallocate for SMB2_CREATE_ALLOCATION_SIZE on a stream handle
-Date: Wed, 18 Nov 2026 15:15:15 +0100
-Message-ID: <20261118150324.418596501@linuxfoundation.org>
+Subject: [PATCH 6.6 0284/3318] crypto: keembay - use crypto_memneq() to compare CCM AEAD tags
+Date: Wed, 18 Nov 2026 15:15:06 +0100
+Message-ID: <20261118150324.068251829@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,62 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gael Blivet <gael.blivet@gmail.com>
+From: David C.C.M. Gall <david.ccm.gall@googlemail.com>
 
-[ Upstream commit bfdf81c62f4f52a3626ea62db0744def6778e83f ]
+[ Upstream commit ff2ac77a034e03b64e2ba34f775097427dfa5547 ]
 
-smb2_open() calls vfs_fallocate(fp->filp, ...) unconditionally when a
-client's CREATE request includes an AllocationSize create context.
-For a stream handle, fp->filp refers to the base file's data fork
-(streams are xattr-backed on the same underlying file, not separate
-files), so this pre-allocates storage on the base file's actual data
-instead of doing anything meaningful for the stream -- fallocate has
-no applicability to an xattr-backed stream at all.
+Use crypto_memneq() for constant-time comparison.
 
-Skip the fallocate call for stream handles.
+The CCM path in ocs-aes.c verifes the received authentication tag with
+memcmp(), which returns early on the first mismatched byte. This leaks
+valid-prefix length and allows for valid tag forgery which violates the
+INT-CTXT guarantee of AEAD.
 
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Assisted-by: gregkh_clanker_t1000
+Signed-off-by: David C.C.M. Gall <david.ccm.gall@googlemail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ drivers/crypto/intel/keembay/ocs-aes.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 60d13595025d1..58d2113cd44b2 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3606,13 +3606,22 @@ int smb2_open(struct ksmbd_work *work)
- 			ksmbd_debug(SMB,
- 				    "request smb2 create allocate size : %llu\n",
- 				    alloc_size);
--			smb_break_all_levII_oplock(work, fp, 1);
--			err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
--					    alloc_size);
--			if (err < 0)
--				ksmbd_debug(SMB,
--					    "vfs_fallocate is failed : %d\n",
--					    err);
-+			/*
-+			 * fp->filp is the base file's data fork for a stream
-+			 * handle (streams are xattr-backed on the same
-+			 * underlying file) -- fallocate has no meaning for a
-+			 * stream and would otherwise pre-allocate storage on
-+			 * the base file's data instead.
-+			 */
-+			if (!ksmbd_stream_fd(fp)) {
-+				smb_break_all_levII_oplock(work, fp, 1);
-+				err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
-+						    alloc_size);
-+				if (err < 0)
-+					ksmbd_debug(SMB,
-+						    "vfs_fallocate is failed : %d\n",
-+						    err);
-+			}
- 		}
+diff --git a/drivers/crypto/intel/keembay/ocs-aes.c b/drivers/crypto/intel/keembay/ocs-aes.c
+index be9f32fc8f42a..b159d949d6246 100644
+--- a/drivers/crypto/intel/keembay/ocs-aes.c
++++ b/drivers/crypto/intel/keembay/ocs-aes.c
+@@ -16,6 +16,7 @@
  
- 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
+ #include <crypto/aes.h>
+ #include <crypto/gcm.h>
++#include <crypto/utils.h>
+ 
+ #include "ocs-aes.h"
+ 
+@@ -1282,7 +1283,7 @@ static inline int ccm_compare_tag_to_yr(struct ocs_aes_dev *aes_dev,
+ 				 (i * sizeof(u32)));
+ 	}
+ 
+-	return memcmp(tag, yr, tag_size_bytes) ? -EBADMSG : 0;
++	return crypto_memneq(tag, yr, tag_size_bytes) ? -EBADMSG : 0;
+ }
+ 
+ /**
 -- 
 2.53.0
 
