@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018286;
-	b=gC/7F23bUp19vQvFGd2sZImI3Af25OZAIN9MgMdduok8th8hSuaCIF5eM9NRDOxgA/wH
-	 afrjWyXrdRJJsWbOaaeqWSZBFb1V4gQRjk5xlDT76a7dL558vNaTqFykFu8sDexnS2thY
-	 VDiB9ZlNlwpXKBaGdn9nBCGA5nzpoXYLpHn8gkMIsuczNLUlNsyTpHvkS5EAYu1oken0h
-	 SuSoLeEshyI1suNDZlT24ZPuqCKs93KcEm8/QJ1MjoxWl6JFSLFwnB04M0BsFCxRoEQaR
-	 EPY2ERffbYZbG5t6D6QTOx9RWIgoAMhl73xhL9+/nIY8q1NP2YOfYzwA4+2urnk+Pog==
+	t=1795018289;
+	b=jc9++Wo0hgGTBPTOWKaSeRJIuobPw0gpd1XCQyaYWuKPoEn8Cm1uHraqENCshS1Y5QdE
+	 TIShz4lMFEjfWWtOWFep9bOJO6gpy3oyxz6DC8HIWvG0fBLYNOuFMFAGL2OLqfNOWt0H2
+	 ZzbwceRwo06CT8E1Xpvnq7YomgaLJys9p+ukUeEE3sZWaxBqSJzYl3/WS0YKmr1tjr3GS
+	 i33QKulACfSk8bFa0utAnCd43WuBzroCFt1Lyx3W+zYEkk4T92d/dwb3SwMopeVRku+P7
+	 GFbei3M7Cmj0QYYb7P6LG0ytl601R8vfZBacdOVAgG+H99slnwCd6zUXc4xQjW2Hy6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018286;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018289;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0T2nB55Dz8e2aJwEcNtAhkTPy0lIF9LBv5XEj7qT87w=;
-	b=5cQudatHH5PR1jIzrV+AGfuo/TR6LHndDu/jjd8kmnB2DsHJJXbG0eOT4FZpzMi30g/l
-	 IrcqYG3kmwAqfx1apQ071Nusl8MQRd69+UFda+owjnYuVPnVussy98rqqfdroJXRMXt9A
-	 HYBRQGo69pGluzBIBjTVf/Nd5V+Vwnenqig/s3zAt6kZwg2asC6Cxl/sz5GMYPQOpDYlo
-	 c8jNFZ7FmsifUSpx+80LyMnoQy4TV6j4EKUxmWRJc9jRmWyhN06JMnMm0ymef/jPgTss9
-	 8CW2wIPtgWumwX3GoiJCZS60/p4rgUPXYZhz7RJUq3pFdGPmM/PrYYSCJOo6ZCxtQLg==
+	bh=8V93jP5UD6oIXNla101i4jQlRmOI+e0ssiDCQj+9+rA=;
+	b=fGNUJ89AXEcrYab3Ko2uq6J/n6teVZ5vJrsdrbANS1gT3glPXkfyJ/5tWzhicHcjym/w
+	 cEoc/J+rPP5pVt0ScT8VSlYhl5feeb08Fhj7JvOX6a0lMqI+fYaYooTQhvwPKwXqTJdMk
+	 8yxM4DD66lpS3Iqr56jmJblFVT+81L9XFBm1cGbB28DRY4Ag0D5jqNWk6Ks/6h8ZgmJPO
+	 M6ueiDeFpQuSEYz4ypSZDQBlIp9AzQhV3TvJGDMdIP2ajAf0TYPbosTFEIyP8RvdySj5c
+	 7O3n3ccT3r8d1MBSwl6CT06f3B++eqr3BKsay+0BOLoUW54WjNcE7w4gjk+fWaX5U7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="J1lodst/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMC21sYb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F03606A333;
-	Wed, 18 Nov 2026 16:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2EF4606A320;
+	Wed, 18 Nov 2026 16:11:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J1lodst/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB7B1F000CA;
-	Wed, 18 Nov 2026 16:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KMC21sYb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F7631F000C7;
+	Wed, 18 Nov 2026 16:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018285;
-	bh=0T2nB55Dz8e2aJwEcNtAhkTPy0lIF9LBv5XEj7qT87w=;
+	s=korg; t=1795018288;
+	bh=8V93jP5UD6oIXNla101i4jQlRmOI+e0ssiDCQj+9+rA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=J1lodst/M2H/Yg1LCh/mtLHIZ5rq8eY429EGYmi4SMHAT0jXv5pRIEmW+MF0hyUlV
-	 yqOh35xIL2Twjuy46tHCDW8hyjz8aFmuOgAkfOC2Ab3tBX3yUdq5IsnvOlt4BDIkUZ
-	 DKf866zbEsVW2T7qiyzM01IAYeA9vvCDoXa0vdeQ=
+	b=KMC21sYb/jaloz4wDVVvK3xH2PMc3T5zvRHjsnPIK+XPxLvA1pE9p/vLUlyYSy6Dv
+	 kp3OZ/2YhBl0tW3alRcU3OfqnXAq3NMjfbafBx1A8DDoXeouJBxtsFGXfkBSf3zjKR
+	 yBeywRButS1lw+Eduomm6sjJe2HiD8RUSMi4C5VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Ben Horgan <ben.horgan@arm.com>,
 	Gavin Shan <gshan@redhat.com>,
 	James Morse <james.morse@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1187/2651] arm_mpam: Switch to kvzmalloc_objs() for allocation of component cfg
-Date: Wed, 18 Nov 2026 15:40:27 +0100
-Message-ID: <20261118150330.734708781@linuxfoundation.org>
+Subject: [PATCH 7.3 1188/2651] arm_mpam: resctrl: Dont stop early when tearing down a class
+Date: Wed, 18 Nov 2026 15:40:28 +0100
+Message-ID: <20261118150330.770682033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,47 +72,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Ben Horgan <ben.horgan@arm.com>
 
-[ Upstream commit 046384f02b57da84a697d32aff7d7d46e881ae84 ]
+[ Upstream commit 1c39415492323b9c5fd4a59179b390d45c26778a ]
 
-Each component cfg is sized by the size of a per-PARTID multiplied by the
-number of PARTIDs. On a platform sized to push the limits of the
-specification, the allocation using kzalloc_objs() will consistently
-fail. Change to use kvzmalloc_objs() so that large allocations fall back to
-vmalloc() based allocations.
+An MPAM class can back more than one control and more than one
+monitor. mpam_resctrl_teardown_class() iterates through all the controls
+but stops if it finds a match which means classes backing more than one
+class aren't torn down. The same for monitors, in which case the mbwu
+counters will be leaked.
 
-Fixes: 09b89d2a72f3 ("arm_mpam: Allow configuration to be applied and restored during cpu online")
+Stop terminating the loops early.
+
+As we are already changing mpam_resctrl_teardown_class() remove the
+misleading comment. It doesn't call resctrl_exit() and isn't required to do
+so as the only caller does it first.
+
+Fixes: fb481ec08699 ("arm_mpam: resctrl: Call resctrl_init() on platforms that can support resctrl")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
 Signed-off-by: Ben Horgan <ben.horgan@arm.com>
-Tested-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: Gavin Shan <gshan@redhat.com>
 Reviewed-by: James Morse <james.morse@arm.com>
 Signed-off-by: James Morse <james.morse@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/resctrl/mpam_devices.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/resctrl/mpam_resctrl.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/resctrl/mpam_devices.c b/drivers/resctrl/mpam_devices.c
-index e859e877ca839..30d08d1634a2b 100644
---- a/drivers/resctrl/mpam_devices.c
-+++ b/drivers/resctrl/mpam_devices.c
-@@ -157,7 +157,7 @@ static void mpam_free_garbage(void)
- 		if (iter->pdev)
- 			devm_kfree(&iter->pdev->dev, iter->to_free);
- 		else
--			kfree(iter->to_free);
-+			kvfree(iter->to_free);
- 	}
+diff --git a/drivers/resctrl/mpam_resctrl.c b/drivers/resctrl/mpam_resctrl.c
+index 321741a702fea..9cec5843e8fa2 100644
+--- a/drivers/resctrl/mpam_resctrl.c
++++ b/drivers/resctrl/mpam_resctrl.c
+@@ -1943,10 +1943,6 @@ static void mpam_resctrl_teardown_mon(struct mpam_resctrl_mon *mon, struct mpam_
+ 	mon->mbwu_idx_to_mon = NULL;
  }
  
-@@ -2692,7 +2692,7 @@ static int __allocate_component_cfg(struct mpam_component *comp)
- 	if (comp->cfg)
- 		return 0;
+-/*
+- * The driver is detaching an MSC from this class, if resctrl was using it,
+- * pull on resctrl_exit().
+- */
+ void mpam_resctrl_teardown_class(struct mpam_class *class)
+ {
+ 	struct mpam_resctrl_res *res;
+@@ -1957,17 +1953,14 @@ void mpam_resctrl_teardown_class(struct mpam_class *class)
+ 	might_sleep();
  
--	comp->cfg = kzalloc_objs(*comp->cfg, mpam_partid_max + 1);
-+	comp->cfg = kvzalloc_objs(*comp->cfg, mpam_partid_max + 1);
- 	if (!comp->cfg)
- 		return -ENOMEM;
+ 	for_each_mpam_resctrl_control(res, rid) {
+-		if (res->class == class) {
++		if (res->class == class)
+ 			res->class = NULL;
+-			break;
+-		}
+ 	}
+ 	for_each_mpam_resctrl_mon(mon, eventid) {
+ 		if (mon->class == class) {
+ 			mon->class = NULL;
  
+ 			mpam_resctrl_teardown_mon(mon, class);
+-			break;
+ 		}
+ 	}
+ }
 -- 
 2.53.0
 
