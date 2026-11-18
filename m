@@ -1,54 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042748;
-	b=STDMcA7/Rg/8PD66qkpG1m4AcaiyNnp3qTCxeHy6Dx/wFH5IsqTOvgeBNkMNnC8OElit
-	 qqdPWTqx2QxU4jVq91G5Ym+3En3hCxxzRNALXr4kOeDcSBWQLp0bB/jBanCO1djZBFaGx
-	 XRp/J4mSB6sw78R3LLy84t24pB6j0SUpNEiQGwVh+TRSxkaXyxLDw4iGMKnrt6EbIvhi+
-	 2yBDP1hdw+QW2Raaa7XbhxhqiCT6ofou+7HSwbM9DMekhHavSJ6keaf4EU6lXadF0FAg4
-	 EL9ad9f13RJ8gMILPNNCM4dDP+AlAC9R8JQSS9mM036AbeBBq1dxAB5B7ew+0MIB60w==
+	t=1795042751;
+	b=MErz5HgM8OFcZN7+zvPDtpbx4HgKoiEJ2k9RDqKfNlOtVG1vRp3l17uIWA6Mw3GlNy5F
+	 SEU5aNWlcZ3AbMUR4G5oSr7Vm/xt/GAC++AQVWV35Gh1m9VOe7t6/sJuO5h1a4rzv7N1b
+	 YFFStWVNEgGxG7aZWlBGUKhgckdgXyZ63KgtmHWwoGmDXb/0VXiwlUWZ+1hIVLDgJxfLy
+	 WgIWd+cRHOEiaTqIINDnaq6WQ7RRKg1qRJWMJd19yIQcxoa5S7I39uKF0hplOUxJCArhT
+	 zEDMbNs+UFwrdZqvScwoA+VBryEBeSW0xCDNHT7P9eRKoh/WLLh1I1Y8eLA9icfSg5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042748;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042751;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n16tlRV9i3kcR95h/3Vvl3LfOYRQZeK47dCeqfcSyls=;
-	b=tk+uu+AZ0Kqb/gqirbLC3HCvsgVglXFtSQye91OtKlVtlgUSbiJhYH1HaFPUpAHoAsRy
-	 L4Ti3dLeoasChQ0QaEKANhwt/HZld1VA6lc2wh/moh6EkFNZ+lOsUTqZ/GoNY81iggLWp
-	 iTMTFmXKBXEX0cPNHhxR7ZM7wiixfc+wO/zoVh2zjJ9h+Lr9afWpcu+UDO2NI6Ipcvqpu
-	 TDTe+CCk5osDNvXk/GIt0hLzMg2JTCtnqflZLInALS/m63NCHizw7+20BugeOPQqAgjGn
-	 Pq5M4FNJa7xLqe9TXSeT2aWk7+isZKb/Fp/rJT8s1jJpT8k1guv+LOLLl4lKAhPHZvQ==
+	bh=Q1PoxJ1JxLoUdVCLzaG2otdmPaY/XGDIj32MWvqVxPU=;
+	b=hGuRm5I53U+ojoRf58FyRsNbycPbi61aGa92GBF+w0CDXbvhckzjfdOrmHHJv51AST1/
+	 ahBfnMAmP2yqqYEblTflUjvAYo/ZFoN68qhgfcAHl4+1FpiYiZLcGBYi/utIrM3vS9ASz
+	 C4bfVq3bnRmhxMrSy5Atco9qrMFihaQNFy+Y7hFnPUb1OojPYJBz0Ak5qnHrziQM21c/Z
+	 +8e6JtXG5qfX4dy7pYmo3K9VOBquy+AX4xt4WU/hwQYSMYWzgoP7hsGDtP1ZACTEC48xk
+	 INCkJGT/TfTdGnOA5mvf+xOy+XuVak6ByoYzxRM9zRlf3bZ+SHCh24lvW8gUnWAozzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1u2aWKGx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V22KdO0u;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD342606A320;
-	Wed, 18 Nov 2026 22:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4182606A320;
+	Wed, 18 Nov 2026 22:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1u2aWKGx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD371F000C4;
-	Wed, 18 Nov 2026 22:59:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V22KdO0u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081AC1F000C4;
+	Wed, 18 Nov 2026 22:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042748;
-	bh=n16tlRV9i3kcR95h/3Vvl3LfOYRQZeK47dCeqfcSyls=;
+	s=korg; t=1795042751;
+	bh=Q1PoxJ1JxLoUdVCLzaG2otdmPaY/XGDIj32MWvqVxPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1u2aWKGx1j4ydbn07MnHgHeFpvhQmLVl2tylEA+wM8nWPQeH6oif9QWUi4MleBeH6
-	 qcegqa3mG3NYDWd2APUowIm1k4MlfeoSX4RNkTPi00kKjAr0dJuSVGb51zOPT4Uoni
-	 axoU2TEEEMqNs3eLyMwd8qiqKOLEWJ1T35VaSimM=
+	b=V22KdO0udG5hzewaE+6ppg0CDMU6CS43sEDNSytrj0h8WO7+AaPIH+M78YwZx9uIq
+	 umeniCS7510JNUP3RtDR6GPvonwmqQrKucR3OdSGjEIi+7q0BYeDbuUzoEjBhlrGjH
+	 8vXa6ojbCHU1plpm78kLuBMoZi5MJr+FtIvRRSV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
 	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Aaron Conole <aconole@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3280/3318] tcp: avoid double destroy in tcp_abort() of an unaccepted child
-Date: Wed, 18 Nov 2026 16:05:02 +0100
-Message-ID: <20261118150458.012674779@linuxfoundation.org>
+Subject: [PATCH 6.6 3281/3318] net: add eth_type_trans_careful()
+Date: Wed, 18 Nov 2026 16:05:03 +0100
+Message-ID: <20261118150458.041526119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,87 +72,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Zeng <kylebot@openai.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit dbd62ad55a4c898f5a4c9edb20c0c062afb799df ]
+[ Upstream commit 2519a6fe7a8bba57a961eb804e43e7df35ac40fe ]
 
-tcp_abort() checks for TCP_CLOSE while only owning the socket lock,
-then grabs the BH lock before calling tcp_done_with_error().
+eth_type_trans() assumes ETH_HLEN bytes are present in skb->head.
+NIC drivers always provide this, and they should keep using the fast
+version.
 
-For a child still sitting in a listener accept queue (which can be
-reached via SOCK_DESTROY or bpf_sock_destroy()), inet_csk_listen_stop()
-can run in this window: it only holds the child BH lock, and calls
-inet_child_forget(), which disconnects, orphans and destroys the child.
+Devices looping skbs from their transmit path back to their receive
+path get skbs built by the stack instead. Their link-layer header
+might have been popped by tc actions (act_vlan pop_eth, act_ife decode)
+or OVS actions (pop_eth + pop_mpls / pop_nsh), leaving fewer than
+ETH_HLEN bytes in the linear part. eth_type_trans() then hits
+the BUG() in __skb_pull().
 
-tcp_abort() then calls tcp_done_with_error() -> tcp_done(), which sees
-SOCK_DEAD and calls inet_csk_destroy_sock() a second time, leading to
-a double sock_put() and a use-after-free.
+Add eth_type_trans_careful(), which first pulls the Ethernet header,
+and returns a drop reason on failure, so that the few devices exposed
+to this can drop such packets.
 
-Recheck TCP_CLOSE after acquiring the BH lock, unless we just closed
-a listener ourselves, in which case tcp_done_with_error() must still
-run to report the error.
-
-Note that the WARN_ON(sock_owned_by_user(child)) in
-inet_csk_listen_stop() can still trigger in this window.
-
-Fixes: bac76cf89816 ("tcp: fix forever orphan socket caused by tcp_abort")
-Signed-off-by: Kyle Zeng <kylebot@openai.com>
-[edumazet: recheck TCP_CLOSE under the BH lock instead of moving the test, smaller diff]
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20261028160847.2170959-1-edumazet@kernel.org
+Reviewed-by: Aaron Conole <aconole@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261028122703.2093730-2-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 093a28998374 ("loopback: use eth_type_trans_careful()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ include/linux/etherdevice.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index a5dbbc65a61ca..a427a6ceec136 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4532,6 +4532,8 @@ EXPORT_SYMBOL_GPL(tcp_done);
- int tcp_abort(struct sock *sk, int err)
- {
- 	int state = inet_sk_state_load(sk);
-+	bool listener = false;
-+	int ret = 0;
+diff --git a/include/linux/etherdevice.h b/include/linux/etherdevice.h
+index 6f96d1c6d10fd..d5318c982b9c4 100644
+--- a/include/linux/etherdevice.h
++++ b/include/linux/etherdevice.h
+@@ -38,6 +38,34 @@ int fwnode_get_mac_address(struct fwnode_handle *fwnode, char *addr);
  
- 	if (state == TCP_NEW_SYN_RECV) {
- 		struct request_sock *req = inet_reqsk(sk);
-@@ -4566,21 +4568,31 @@ int tcp_abort(struct sock *sk, int err)
- 	if (sk->sk_state == TCP_LISTEN) {
- 		tcp_set_state(sk, TCP_CLOSE);
- 		inet_csk_listen_stop(sk);
-+		listener = true;
- 	}
- 
- 	/* Don't race with BH socket closes such as inet_csk_listen_stop. */
- 	local_bh_disable();
- 	bh_lock_sock(sk);
- 
-+	/* An unaccepted child might have been closed by
-+	 * inet_csk_listen_stop() while we were not holding its BH lock.
-+	 */
-+	if (!listener && sk->sk_state == TCP_CLOSE) {
-+		ret = -ENOENT;
-+		goto out;
-+	}
+ u32 eth_get_headlen(const struct net_device *dev, const void *data, u32 len);
+ __be16 eth_type_trans(struct sk_buff *skb, struct net_device *dev);
 +
- 	if (tcp_need_reset(sk->sk_state))
- 		tcp_send_active_reset(sk, GFP_ATOMIC);
- 	tcp_done_with_error(sk, err);
++/**
++ * eth_type_trans_careful - eth_type_trans() for skbs coming from the stack
++ * @skb: buffer, possibly with less than ETH_HLEN bytes in its linear area
++ * @dev: receiving network device
++ *
++ * eth_type_trans() expects ETH_HLEN bytes in skb->head, which NIC drivers
++ * provide. Devices looping skbs from their transmit path back to the
++ * receive path (loopback, OVS internal ports) get skbs built by the stack,
++ * whose link-layer header might have been popped by tc or OVS actions.
++ *
++ * Sets skb->protocol on success.
++ *
++ * Return: SKB_NOT_DROPPED_YET on success, or a drop reason. In the latter
++ * case, the caller must free @skb.
++ */
++static inline enum skb_drop_reason
++eth_type_trans_careful(struct sk_buff *skb, struct net_device *dev)
++{
++	enum skb_drop_reason reason = pskb_may_pull_reason(skb, ETH_HLEN);
++
++	if (unlikely(reason))
++		return reason;
++
++	skb->protocol = eth_type_trans(skb, dev);
++	return SKB_NOT_DROPPED_YET;
++}
++
+ extern const struct header_ops eth_header_ops;
  
-+out:
- 	bh_unlock_sock(sk);
- 	local_bh_enable();
- 	if (!has_current_bpf_ctx())
- 		release_sock(sk);
--	return 0;
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(tcp_abort);
- 
+ int eth_header(struct sk_buff *skb, struct net_device *dev, unsigned short type,
 -- 
 2.53.0
 
