@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041360;
-	b=AHzoz/zZlu0n/EGR+jrPuEjbrDI7pHMMqzhDmprwqQwj9axenjwRMitne4HPY1EDLsLi
-	 4CmXYQTJkwP08S3RTnZbaXzaRYeJF4BIldHkTVIz7uI7Q7VLHIO2+G4PMhizfhZ+NQLmL
-	 39sZSs4P8m92DdjU/KnbzNFm/4/FQy8ubMX2gEdKGHhMYj4W4vRNlbfPWeoo0GzRm37ve
-	 wu9AF2obOzeUz/HFldBpR9StbchZ8N42u//sK8x7QDAjyp7ZLlH3kMLHaQU/kBp0x5rnq
-	 ZocM+9ao4RXZuKEo76IzKxp+nXcA9iAREWNJEXHQJSn6PPNh1qp8dByy8rmdjzB0gGQ==
+	t=1795041363;
+	b=QY04U+Ja6sLU9mBvrteHIzGoAaHNE1xmUYFmcV6CMsdqi4a6tsmqgkvCQZklKGfMhGRD
+	 9+0yFxoEYQuvzBJHcL7xhAzgF+mrkC/XrvzrgbM5Q5OHZbHUikxASPPTraPKFY9NFlsAG
+	 As4hbZDJk0o67BiPpwsJNaInLMT8pFmIz+K5O7l1L/dkv+kmaJuJwjfaYVe/MEC/x//dJ
+	 o46N0wNBP+tTb1nqV8MKmc4rJimfI3w4FG9k0g0q3c//fLpqctiioZsydwpC0uuoCcSTT
+	 MUYzn3IK2k+ygTsy0ak7F9NNFlR4nCiI2ZHgVfRzu/QzBIPu77yIKstsnYuoyNxriLQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041360;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041363;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VknljSh2IZG/0fbVYHqTrOZr7z0a/TGUjeLiehqUIVk=;
-	b=tutyy0ns3w5yAIOByBjgGJDgQWgUlQQHPAaL9ZsbUv4bjYHA9km46HaMQSoZ7VflWilE
-	 xb8tLjdjDlgHgRUVnWd0EsT0Kg1GJtmg494k9vq+2DmQVEQOeJvJ6qbNuU5JXvwjpY+he
-	 uGgpshkV04Y8rWWzoYfYQU/3TszJmp94dPnMGY9yPSM5boHdXTK77ThkuGGUhL3TShh22
-	 vCjusZPN6Y6emiSr+CToE4AwnHJDeQxhRx5KqktZS8Vtgbfagj3cgDn4urtMxQd5ty2P9
-	 H4v9E9Kw+WF646pOQXcVDEouEODYFDfJo0QPrkHjnfBDNa5x0TBrbveKUAQTQ0MF8gw==
+	bh=1QJSMPyQeVZ80+OIC5bSqhO3Y2Itfvo7KCtHI7HgDiA=;
+	b=iVmHhdpRGhRz/CLaR4dRmBUU785eLDY5LrwStuARgNshVtVlZIx1eD1efvco0EXRKbr5
+	 nFaVb5/zBOU4q/gOB2b/ys0FfYAy0DX+Ac8flil0vsidhxxSC6wLRpn6dYQ9Brk7uVNax
+	 nuoJ9TReGX7nFoqSsfD+3zAwPCSZ7yOCSHytTSlYc/gy9R3l4CoRtbyrKfp5IFRe3CRjc
+	 TyJk83PfP2fM1LnXXPCEMV0d1JpkQZFG7SZcVM0w0EuARYyHRdqc/NJFGhElMl72nyEJ9
+	 9v7s73moY3yuS0tcgDik3JQAA12ENZQUg5pV2XjP2n0JAZY5i6MLyEzlNZ/1QkhDUsg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rp2kBBX5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M6h4tXWB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E59606A31C;
-	Wed, 18 Nov 2026 22:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F91A606A32C;
+	Wed, 18 Nov 2026 22:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rp2kBBX5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3775D1F000C4;
-	Wed, 18 Nov 2026 22:36:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M6h4tXWB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66321F000C4;
+	Wed, 18 Nov 2026 22:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041360;
-	bh=VknljSh2IZG/0fbVYHqTrOZr7z0a/TGUjeLiehqUIVk=;
+	s=korg; t=1795041363;
+	bh=1QJSMPyQeVZ80+OIC5bSqhO3Y2Itfvo7KCtHI7HgDiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rp2kBBX5nMaBRnKlwRcj9tVz6QrQ2pI82s933ZOGAwMvbk9CW62XzHkFhm2Vg+Dk4
-	 Sb8Ra5Jh4tOigp4O5jmoLMtUqS//+1SgBohS8uVLdx0xOFC7SnI0b1GcxIJdZmBKGU
-	 OpGCFtj/QHF0UOHeBMt4JJV+FJRYYfwJXKeRheFk=
+	b=M6h4tXWBaoqZBHZDbC75Lyj4HnCp2eQMlAp02zZHG0uwgy7acghDMCSQSl8os/RKl
+	 d9Ryq/vXeG7QXC9ELxwJ8RvbIxN/UR/0keHHsp1kgP2cCEEm6CtLLbLOlAgtwsoknt
+	 nvck6b4AHlFz+tuF9382r2ntSuIGk//QI8sCmizQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2786/3318] serial: max310x: use common detect function for all variants
-Date: Wed, 18 Nov 2026 15:56:48 +0100
-Message-ID: <20261118150444.272173103@linuxfoundation.org>
+Subject: [PATCH 6.6 2760/3318] wifi: ath11k: avoid IDR mutation during pending mgmt TX cleanup
+Date: Wed, 18 Nov 2026 15:56:22 +0100
+Message-ID: <20261118150443.529506896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,273 +70,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 74fe93eae5389c96d4cfd4bc0cc5a547373ab96a ]
+[ Upstream commit 3e7f5d362b2b3a21b3adb4b860aad14b69a896ad ]
 
-Simplify driver by defining a common function to handle the detection
-of all variants.
+The pending management TX cleanup walks txmgmt_idr with idr_for_each(),
+and its callback removes the current entry. This can invalidate the
+radix-tree iterator retained by idr_for_each().
 
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240118152213.2644269-14-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 4efacb600bf9 ("serial: max310x: fix breaks not reaching the wire in RS485 mode")
+Use idr_for_each_entry() so every iteration starts with a fresh lookup.
+Continue to remove each entry under txmgmt_idr_lock before freeing its skb,
+preventing concurrent TX completion from finding a stale skb pointer.
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261003092104.520135-3-yaojiale02@163.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 134 ++++++++++++++---------------------
- 1 file changed, 54 insertions(+), 80 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c |  3 +--
+ drivers/net/wireless/ath/ath11k/mac.c  | 12 ++++++------
+ drivers/net/wireless/ath/ath11k/mac.h  |  2 +-
+ 3 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index ee754f23d91c2..cf68a7a24f4b7 100644
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -66,6 +66,7 @@
- #define MAX310X_BRGDIVMSB_REG		(0x1d) /* Baud rate divisor MSB */
- #define MAX310X_CLKSRC_REG		(0x1e) /* Clock source */
- #define MAX310X_REG_1F			(0x1f)
-+#define MAX310X_EXTREG_START		(0x20) /* Only relevant in SPI mode. */
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index 1a87e71625f43..e2e7ad65b49e9 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -1942,8 +1942,7 @@ void ath11k_core_pre_reconfigure_recovery(struct ath11k_base *ab)
+ 		complete(&ar->thermal.wmi_sync);
  
- #define MAX310X_REVID_REG		MAX310X_REG_1F /* Revision ID */
+ 		wake_up(&ar->dp.tx_empty_waitq);
+-		idr_for_each(&ar->txmgmt_idr,
+-			     ath11k_mac_tx_mgmt_pending_free, ar);
++		ath11k_mac_tx_mgmt_pending_free(ar);
+ 		idr_destroy(&ar->txmgmt_idr);
+ 		wake_up(&ar->txmgmt_empty_waitq);
  
-@@ -73,9 +74,9 @@
- #define MAX310X_GLOBALCMD_REG		MAX310X_REG_1F /* Global Command (WO) */
- 
- /* Extended registers */
--#define MAX310X_SPI_REVID_EXTREG	MAX310X_REG_05 /* Revision ID */
--#define MAX310X_I2C_REVID_EXTREG	(0x25) /* Revision ID */
--
-+#define MAX310X_REVID_EXTREG		(0x25) /* Revision ID
-+						* (extended addressing space)
-+						*/
- /* IRQ register bits */
- #define MAX310X_IRQ_LSR_BIT		(1 << 0) /* LSR interrupt */
- #define MAX310X_IRQ_SPCHR_BIT		(1 << 1) /* Special char interrupt */
-@@ -259,8 +260,7 @@
- 
- struct max310x_if_cfg {
- 	int (*extended_reg_enable)(struct device *dev, bool enable);
--
--	unsigned int rev_id_reg;
-+	u8 rev_id_offset;
- };
- 
- struct max310x_devtype {
-@@ -269,10 +269,11 @@ struct max310x_devtype {
- 		unsigned short max;
- 	} slave_addr;
- 	int	nr;
--	int	(*detect)(struct device *);
- 	void	(*power)(struct uart_port *, int);
- 	char	name[9];
- 	u8	mode1;
-+	u8	rev_id_val;
-+	u8	rev_id_reg; /* Relevant only if rev_id_val is defined. */
- };
- 
- struct max310x_one {
-@@ -333,62 +334,52 @@ static void max310x_port_update(struct uart_port *port, u8 reg, u8 mask, u8 val)
- 	regmap_update_bits(one->regmap, reg, mask, val);
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index fade0b8d87782..5b0be210f98ba 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -5846,13 +5846,13 @@ static void ath11k_mac_tx_mgmt_free(struct ath11k *ar, int buf_id)
+ 	ath11k_mgmt_over_wmi_tx_drop(ar, msdu);
  }
  
--static int max3107_detect(struct device *dev)
-+static int max310x_detect(struct device *dev)
+-int ath11k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx)
++void ath11k_mac_tx_mgmt_pending_free(struct ath11k *ar)
  {
- 	struct max310x_port *s = dev_get_drvdata(dev);
- 	unsigned int val = 0;
- 	int ret;
- 
--	ret = regmap_read(s->regmap, MAX310X_REVID_REG, &val);
--	if (ret)
--		return ret;
+-	struct ath11k *ar = ctx;
 -
--	if (((val & MAX310x_REV_MASK) != MAX3107_REV_ID)) {
--		dev_err(dev,
--			"%s ID 0x%02x does not match\n", s->devtype->name, val);
--		return -ENODEV;
--	}
-+	/* Check if variant supports REV ID register: */
-+	if (s->devtype->rev_id_val) {
-+		u8 rev_id_reg = s->devtype->rev_id_reg;
+-	ath11k_mac_tx_mgmt_free(ar, buf_id);
++	struct sk_buff *msdu;
++	int buf_id;
  
 -	return 0;
--}
-+		/* Check if REV ID is in extended addressing space: */
-+		if (s->devtype->rev_id_reg >= MAX310X_EXTREG_START) {
-+			ret = s->if_cfg->extended_reg_enable(dev, true);
-+			if (ret)
-+				return ret;
- 
--static int max3108_detect(struct device *dev)
--{
--	struct max310x_port *s = dev_get_drvdata(dev);
--	unsigned int val = 0;
--	int ret;
--
--	/* MAX3108 have not REV ID register, we just check default value
--	 * from clocksource register to make sure everything works.
--	 */
--	ret = regmap_read(s->regmap, MAX310X_CLKSRC_REG, &val);
--	if (ret)
--		return ret;
--
--	if (val != (MAX310X_CLKSRC_EXTCLK_BIT | MAX310X_CLKSRC_PLLBYP_BIT)) {
--		dev_err(dev, "%s not present\n", s->devtype->name);
--		return -ENODEV;
--	}
-+			/* Adjust REV ID extended addressing space address: */
-+			if (s->if_cfg->rev_id_offset)
-+				rev_id_reg -= s->if_cfg->rev_id_offset;
-+		}
- 
--	return 0;
--}
-+		regmap_read(s->regmap, rev_id_reg, &val);
- 
--static int max3109_detect(struct device *dev)
--{
--	struct max310x_port *s = dev_get_drvdata(dev);
--	unsigned int val = 0;
--	int ret;
-+		if (s->devtype->rev_id_reg >= MAX310X_EXTREG_START) {
-+			ret = s->if_cfg->extended_reg_enable(dev, false);
-+			if (ret)
-+				return ret;
-+		}
- 
--	ret = s->if_cfg->extended_reg_enable(dev, true);
--	if (ret)
--		return ret;
-+		if (((val & MAX310x_REV_MASK) != s->devtype->rev_id_val))
-+			return dev_err_probe(dev, -ENODEV,
-+					     "%s ID 0x%02x does not match\n",
-+					     s->devtype->name, val);
-+	} else {
-+		/*
-+		 * For variant without REV ID register, just check default value
-+		 * from clocksource register to make sure everything works.
-+		 */
-+		ret = regmap_read(s->regmap, MAX310X_CLKSRC_REG, &val);
-+		if (ret)
-+			return ret;
- 
--	regmap_read(s->regmap, s->if_cfg->rev_id_reg, &val);
--	s->if_cfg->extended_reg_enable(dev, false);
--	if (((val & MAX310x_REV_MASK) != MAX3109_REV_ID)) {
--		dev_err(dev,
--			"%s ID 0x%02x does not match\n", s->devtype->name, val);
--		return -ENODEV;
-+		if (val != (MAX310X_CLKSRC_EXTCLK_BIT | MAX310X_CLKSRC_PLLBYP_BIT))
-+			return dev_err_probe(dev, -ENODEV,
-+					     "%s not present\n",
-+					     s->devtype->name);
- 	}
- 
- 	return 0;
-@@ -403,27 +394,6 @@ static void max310x_power(struct uart_port *port, int on)
- 		msleep(50);
++	idr_for_each_entry(&ar->txmgmt_idr, msdu, buf_id)
++		ath11k_mac_tx_mgmt_free(ar, buf_id);
  }
  
--static int max14830_detect(struct device *dev)
--{
--	struct max310x_port *s = dev_get_drvdata(dev);
--	unsigned int val = 0;
--	int ret;
--
--	ret = s->if_cfg->extended_reg_enable(dev, true);
--	if (ret)
--		return ret;
--
--	regmap_read(s->regmap, s->if_cfg->rev_id_reg, &val);
--	s->if_cfg->extended_reg_enable(dev, false);
--	if (((val & MAX310x_REV_MASK) != MAX14830_REV_ID)) {
--		dev_err(dev,
--			"%s ID 0x%02x does not match\n", s->devtype->name, val);
--		return -ENODEV;
--	}
--
--	return 0;
--}
--
- static void max14830_power(struct uart_port *port, int on)
- {
- 	max310x_port_update(port, MAX310X_BRGCFG_REG,
-@@ -437,7 +407,8 @@ static const struct max310x_devtype max3107_devtype = {
- 	.name	= "MAX3107",
- 	.nr	= 1,
- 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT | MAX310X_MODE1_IRQSEL_BIT,
--	.detect	= max3107_detect,
-+	.rev_id_val = MAX3107_REV_ID,
-+	.rev_id_reg = MAX310X_REVID_REG,
- 	.power	= max310x_power,
- 	.slave_addr	= {
- 		.min = 0x2c,
-@@ -449,7 +420,8 @@ static const struct max310x_devtype max3108_devtype = {
- 	.name	= "MAX3108",
- 	.nr	= 1,
- 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT,
--	.detect	= max3108_detect,
-+	.rev_id_val = 0, /* Unsupported. */
-+	.rev_id_reg = 0, /* Irrelevant when rev_id_val is not defined. */
- 	.power	= max310x_power,
- 	.slave_addr	= {
- 		.min = 0x60,
-@@ -461,7 +433,8 @@ static const struct max310x_devtype max3109_devtype = {
- 	.name	= "MAX3109",
- 	.nr	= 2,
- 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT,
--	.detect	= max3109_detect,
-+	.rev_id_val = MAX3109_REV_ID,
-+	.rev_id_reg = MAX310X_REVID_EXTREG,
- 	.power	= max310x_power,
- 	.slave_addr	= {
- 		.min = 0x60,
-@@ -473,7 +446,8 @@ static const struct max310x_devtype max14830_devtype = {
- 	.name	= "MAX14830",
- 	.nr	= 4,
- 	.mode1	= MAX310X_MODE1_IRQSEL_BIT,
--	.detect	= max14830_detect,
-+	.rev_id_val = MAX14830_REV_ID,
-+	.rev_id_reg = MAX310X_REVID_EXTREG,
- 	.power	= max14830_power,
- 	.slave_addr	= {
- 		.min = 0x60,
-@@ -1369,7 +1343,7 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
- 	dev_set_drvdata(dev, s);
+ static int ath11k_mac_vif_txmgmt_idr_remove(int buf_id, void *skb, void *ctx)
+@@ -9484,7 +9484,7 @@ static void __ath11k_mac_unregister(struct ath11k *ar)
  
- 	/* Check device to ensure we are talking to what we expect */
--	ret = devtype->detect(dev);
-+	ret = max310x_detect(dev);
- 	if (ret)
- 		goto out_clk;
+ 	ieee80211_unregister_hw(ar->hw);
  
-@@ -1553,7 +1527,7 @@ static int max310x_spi_extended_reg_enable(struct device *dev, bool enable)
+-	idr_for_each(&ar->txmgmt_idr, ath11k_mac_tx_mgmt_pending_free, ar);
++	ath11k_mac_tx_mgmt_pending_free(ar);
+ 	idr_destroy(&ar->txmgmt_idr);
  
- static const struct max310x_if_cfg __maybe_unused max310x_spi_if_cfg = {
- 	.extended_reg_enable = max310x_spi_extended_reg_enable,
--	.rev_id_reg = MAX310X_SPI_REVID_EXTREG,
-+	.rev_id_offset = MAX310X_EXTREG_START,
- };
+ 	kfree(ar->mac.sbands[NL80211_BAND_2GHZ].channels);
+diff --git a/drivers/net/wireless/ath/ath11k/mac.h b/drivers/net/wireless/ath/ath11k/mac.h
+index 0dfdeed5177b8..8f979a64cb805 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.h
++++ b/drivers/net/wireless/ath/ath11k/mac.h
+@@ -162,7 +162,7 @@ struct ath11k *ath11k_mac_get_ar_by_pdev_id(struct ath11k_base *ab, u32 pdev_id)
  
- static int max310x_spi_probe(struct spi_device *spi)
-@@ -1624,7 +1598,7 @@ static struct regmap_config regcfg_i2c = {
- 	.writeable_reg = max310x_reg_writeable,
- 	.volatile_reg = max310x_reg_volatile,
- 	.precious_reg = max310x_reg_precious,
--	.max_register = MAX310X_I2C_REVID_EXTREG,
-+	.max_register = MAX310X_REVID_EXTREG,
- 	.writeable_noinc_reg = max310x_reg_noinc,
- 	.readable_noinc_reg = max310x_reg_noinc,
- 	.max_raw_read = MAX310X_FIFO_SIZE,
-@@ -1633,7 +1607,7 @@ static struct regmap_config regcfg_i2c = {
- 
- static const struct max310x_if_cfg max310x_i2c_if_cfg = {
- 	.extended_reg_enable = max310x_i2c_extended_reg_enable,
--	.rev_id_reg = MAX310X_I2C_REVID_EXTREG,
-+	.rev_id_offset = 0, /* No offset in I2C mode. */
- };
- 
- static unsigned short max310x_i2c_slave_addr(unsigned short addr,
+ void ath11k_mac_drain_tx(struct ath11k *ar);
+ void ath11k_mac_peer_cleanup_all(struct ath11k *ar);
+-int ath11k_mac_tx_mgmt_pending_free(int buf_id, void *skb, void *ctx);
++void ath11k_mac_tx_mgmt_pending_free(struct ath11k *ar);
+ u8 ath11k_mac_bw_to_mac80211_bw(u8 bw);
+ enum nl80211_he_gi ath11k_mac_he_gi_to_nl80211_he_gi(u8 sgi);
+ enum nl80211_he_ru_alloc ath11k_mac_phy_he_ru_to_nl80211_he_ru_alloc(u16 ru_phy);
 -- 
 2.53.0
 
