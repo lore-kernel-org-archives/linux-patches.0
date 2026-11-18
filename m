@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027462;
-	b=SJ6PdRhyCPOuGCY6iaE+vidX9Te4aK+XoVMG0i2YuqaVKSwmOsRBSZCs5l1yBLp7jwPg
-	 zC8H4iyG6IGWZMIBzNKxk7H6jlMqmnaH8O+98rt4UZvs1AWwR6iDMFDbRBj3YBuWo+66k
-	 8gnWnYex7hLJMGrLmeDYKU9uSPE0UTPvtQkLeW0XhC4hrBrfCHUFZRHwexWO2/TKe/zJz
-	 joBbjP2FZs+7PcCze43qVXxgRfZdMClSsD/BH3sLIXEqC4ngCOG0IYK1jtBe5+O/+vyOf
-	 LC40s1JqmW0rowKvH31uH5TeLah/SCwXulIx9PrXmhmvloPtLj4oopJJaKLm1jD0pbw==
+	t=1795027465;
+	b=ZWbG0SIZ3wnnSxCldIZASjtTgWTZP1YsWBO+x2rDKnYsofSQUasxolUXb72Ia4fs+vCW
+	 mYQQxsGMKJiQ7rNwQ8O7KFTbMl6HswTAl5QkEWm1SRO8mgjvF4GrTm9BqfZmtBY2WPyWo
+	 AWSPBhApGqoeLTcxapM4nTYmRWlqHcFix1dMeBidFPq+iN9k5heLFtLaf4XQQkWl5oBHv
+	 ReaSeQc3F8hz+e6DuRrM5Fou7hMA0USyPXB67JUeZ/fneSddNss2UcxWqLhOpQ/1w4sZ4
+	 h5bxTgLg8xWCRCzgqvq9k17bk2nokfODCwgoLdwYF2vw+NACnUjp0BnjBfo9GGH5elQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027465;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9889g8u8DkD5CDN27Bv3Vk1cd49iJpNMODz560dlKwU=;
-	b=aR0QY97itHxACvXOG/KnFZg3AvD/6uXS5SRhoOiMBo/EW7y1yzyzsKiMCYaTiF6eM/Xx
-	 t8ZmPOCJ1gG8g/28ikUa3t3H27h+sa9/FcfPPt+ltHHq3WA0rlrBWjRVPLbgJRKuhu8eq
-	 9hpe20RdS3BVyrkGpVIEEVEtgn5XV3aVxjgtDTx3eI4y8GaNOFULaJs7I4gynXwZkEILU
-	 RHo3obakomEl9M5wZFZODRIZd5fwSGxtBR95wXSZyDJaYHFsV3Ctu28xTl7pn4vtWMLKD
-	 l/q1topdcTcYc9VTYRrFh5Oanmi/noG4RQs3PIeODtYF7wglImtEk2JCGwUYkD+gJXQ==
+	bh=2efgTIcl3evpZPnVRSAUvxUyATT6Q+jabri7p986Psk=;
+	b=qdvLe3A9R2zHOOdsfBIlAVN/V+On82eqWrnPF7a0728IaTsTy4CaOu8OD+Mu0SH0JhzX
+	 iTjnkkE1VaAXs4GwNQrmVVU7UfPB7CXpSJWP3+wAHEfoII9hCboP114zIPrsjx/lOTfL/
+	 7aTHYwdd61sdqmX5IJpmAR91wVLQTIWDFRy1ddNUpz5rUyDMjAD3dB2ZvQw056YSR38Cl
+	 7cAQ+T3y3ntTn7e+/Ijq7zwgBeKCsNTdyjuF0ipSjqrHh3J97tz8RZuYEtUsp9XzBrT5D
+	 NBA/ZLX9Bdk9U2v+ymZLSO1KpRVRhXCxS7MmR81eSZOMx0mf4ZyxSCtn3JDk492VsCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Soo1NBPC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d0vDZ7r3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209E860A2611;
-	Wed, 18 Nov 2026 18:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E400D60A2603;
+	Wed, 18 Nov 2026 18:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Soo1NBPC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AA11F000C9;
-	Wed, 18 Nov 2026 18:44:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d0vDZ7r3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A21A1F000C4;
+	Wed, 18 Nov 2026 18:44:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027462;
-	bh=9889g8u8DkD5CDN27Bv3Vk1cd49iJpNMODz560dlKwU=;
+	s=korg; t=1795027464;
+	bh=2efgTIcl3evpZPnVRSAUvxUyATT6Q+jabri7p986Psk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Soo1NBPCuIqHkwvQBczUL7uVCFjqDeOm/4rf3xbVbhvZNW6DnY29QdgecDowrfdU+
-	 vgjcEP0UR3Fo6LeljGC8gz8gdtXg08fvQa++9jW8PYZEts4CYcCd5ql8EgeNQMnKpa
-	 Onpjr17dyadetDHCQWLJ7T3KtwTHb3Geo+WvoO80=
+	b=d0vDZ7r361dAfQ8GIcXyxmSCzYFk5PAVKnWbmhvS0T++ZAaJojD8FrTAw0sxY/JJE
+	 IiP7b2xT5tEJ2fmvO5K4jMd8V5hVrHQUpIdgKNfJbR34FvCgjDVB5XSIOFmS4Cngtr
+	 hi8fbCRIJCNTDuY/h8WV20+vv4YxUKUx4GDlwj3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunny Tiwari <sunnytiwari@google.com>,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Alexandre Cassen <acassen@corp.free.fr>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1798/2151] RDMA/irdma: Bound in-flight CQP ops across deferred completions
-Date: Wed, 18 Nov 2026 15:58:53 +0100
-Message-ID: <20261118150227.307555225@linuxfoundation.org>
+Subject: [PATCH 6.18 1799/2151] net/mlx5: HWS, fix reformat pool creation race
+Date: Wed, 18 Nov 2026 15:58:54 +0100
+Message-ID: <20261118150227.343840284@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,74 +71,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sunny Tiwari <sunnytiwari@google.com>
+From: Alexandre Cassen <acassen@corp.free.fr>
 
-[ Upstream commit c3e8e9451e6f1b69f685b75e0fbf14f3d0fb2539 ]
+[ Upstream commit d730ca15cf3e4806e38fa8fc6f2af8d7405ef2a4 ]
 
-On IRDMA_GEN_3+ devices, CQP operations can complete in two stages:
-Stage-1 on the CCQ acknowledges receipt and moves an entry from
-cqp->ooo_avail to cqp->ooo_pnd, while Stage-2 signals final completion
-via an AEQ event or a subsequent CCQ CQE.
+mlx5_fs_get_pr_encap_pool() inserts a new pool when the lookup misses.
+Two callers allocating the first reformat of a size at once both
+create one and the second fails with -EBUSY. TC serializes these
+allocations under encap_tbl_lock while RDMA flow actions on the FDB
+don't.
 
-In irdma_sc_ccq_get_cqe_info(), Stage-1 processing advances
-cqp->sq_ring.tail so the SQ descriptor slot can be reused once consumed
-by hardware, whereas cqp->completed_ops is only incremented on Stage-2.
-Because irdma_cqp_ring_full() only checks cqp->sq_ring, a burst of
-backlogged commands in dev->cqp_cmd_head allows irdma_process_bh() to
-submit more concurrent in-flight CQP commands than the maximum supported
-limit (cqp->sq_size - 1) while earlier commands await Stage-2. This
-causes CQP completions to be lost and synchronous waiters to time out
-with -ETIMEDOUT (-110).
+Sashiko AI review of an earlier series spotted this issue.
 
-Fix this by:
-  - Updating irdma_cqp_ring_full() to bound total in-flight CQP
-    operations (cqp->requested_ops - cqp->completed_ops) to
-    (cqp->sq_size - 1).
-  - Calling irdma_process_bh() at the end of irdma_process_ae_def_cmpl()
-    so backlogged commands are drained after Stage-2 AEQ completions
-    increment cqp->completed_ops and free in-flight capacity.
+Tested for regressions on ConnectX-7 with firmware 28.48.1000.
 
-Fixes: c7db0abe5f2b ("RDMA/irdma: Add GEN3 CQP support with deferred completions")
-Assisted-by: Gemini
-Signed-off-by: Sunny Tiwari <sunnytiwari@google.com>
-Link: https://patch.msgid.link/20261017052856.3570063-1-sunnytiwari@google.com
-Reviewed-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: aecd9d1020e3 ("net/mlx5: fs, add HWS packet reformat API function")
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Alexandre Cassen <acassen@corp.free.fr>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20261012100555.1317878-2-acassen@corp.free.fr
+Acked-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/ctrl.c | 6 +++++-
- drivers/infiniband/hw/irdma/hw.c   | 1 +
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ .../mellanox/mlx5/core/steering/hws/fs_hws.c        | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
-index 7e56d5e618962..a7c574c907ad9 100644
---- a/drivers/infiniband/hw/irdma/ctrl.c
-+++ b/drivers/infiniband/hw/irdma/ctrl.c
-@@ -5406,7 +5406,11 @@ int irdma_sc_static_hmc_pages_allocated(struct irdma_sc_cqp *cqp, u64 scratch,
-  */
- static bool irdma_cqp_ring_full(struct irdma_sc_cqp *cqp)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+index 5745ba84c3a0f..8267df307c8bf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/hws/fs_hws.c
+@@ -1232,7 +1232,7 @@ static struct mlx5_fs_pool *
+ mlx5_fs_get_pr_encap_pool(struct mlx5_core_dev *dev, struct xarray *pr_pools,
+ 			  enum mlx5hws_action_type reformat_type, size_t size)
  {
--	return IRDMA_RING_FULL_ERR(cqp->sq_ring);
-+	u64 in_flight = cqp->requested_ops -
-+			atomic64_read(&cqp->completed_ops);
+-	struct mlx5_fs_pool *pr_pool;
++	struct mlx5_fs_pool *pr_pool, *old;
+ 	unsigned long index = size;
+ 	int err;
+ 
+@@ -1246,13 +1246,14 @@ mlx5_fs_get_pr_encap_pool(struct mlx5_core_dev *dev, struct xarray *pr_pools,
+ 	err = mlx5_fs_hws_pr_pool_init(pr_pool, dev, size, reformat_type);
+ 	if (err)
+ 		goto free_pr_pool;
+-	err = xa_insert(pr_pools, index, pr_pool, GFP_KERNEL);
+-	if (err)
+-		goto cleanup_pr_pool;
+-	return pr_pool;
++	old = xa_cmpxchg(pr_pools, index, NULL, pr_pool, GFP_KERNEL);
++	if (!old)
++		return pr_pool;
+ 
+-cleanup_pr_pool:
+ 	mlx5_fs_hws_pr_pool_cleanup(pr_pool);
++	kfree(pr_pool);
++	return xa_is_err(old) ? ERR_PTR(xa_err(old)) : old;
 +
-+	return IRDMA_RING_FULL_ERR(cqp->sq_ring) ||
-+	       in_flight >= (cqp->sq_size - 1);
- }
- 
- /**
-diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
-index 1baffb595898c..7d01f68bdf4f5 100644
---- a/drivers/infiniband/hw/irdma/hw.c
-+++ b/drivers/infiniband/hw/irdma/hw.c
-@@ -197,6 +197,7 @@ static void irdma_process_ae_def_cmpl(struct irdma_pci_f *rf,
- 		irdma_sc_cqp_def_cmpl_ae_handler(&rf->sc_dev, info, false,
- 						 &scratch, &sw_def_info);
- 	}
-+	irdma_process_bh(&rf->sc_dev);
- }
- 
- /**
+ free_pr_pool:
+ 	kfree(pr_pool);
+ 	return ERR_PTR(err);
 -- 
 2.53.0
 
