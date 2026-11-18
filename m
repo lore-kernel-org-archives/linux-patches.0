@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027739;
-	b=gVyaX1+KN71XTLLTxgegN6zAvGT5ZXeDLh8it8mQSSqJhsQYyI+YLXh/4DOPfRtl1Y/7
-	 sdfxTzozxa98o7OuNCTYZf8XCdFP3ie160s9UhEgg+OAbVIxiBnBBjtRINwKyEyHGFPbb
-	 XMWkbNseE8zeUAHDmhOf6EDS8n63Khfh+DvFQYQsSeK+B9j5WgwX9NYAujg6d1jqjiabW
-	 40pjAtSE4pX5GCxHCFz+DamXb8nxmQX2eHbQSOiOGoLPSewzMkPjryFKjP+ruSbCR/u4G
-	 9+VyRjeBgNgck/aBMu3K9orK7Nro+wWctqxgF0D03eAoqvZ5BKSE2yhIrHLbeFY2Ipw==
+	t=1795027742;
+	b=rUAR4wAGnN9PYWhEZpH8QoWzF7rbiYMECKa1ZWSrzqstSRo6BBFyFoc/S9oc6IxmXohn
+	 5sNggsN8v7AKI/ylN0UoyBIBsZDNLuC5im9wZhVtagsFcbz7cuwH5MV9zlVULBoRl/Xti
+	 fS//P0LpIcLkBX33+r0jHGKRY88CW+cMY1s5kZE/LzSiexuH4Jrw6eirLpiMg545NUAK9
+	 ToQ9tBzrWSxT6fGbopHybfzJliuTV8ZSrtvqtiIBVtr2uYwkG1Scqn/MIEgijJb6IR6HM
+	 +6xx0EiBWPkxdGZfOxdHsZko3XAZiX3swr49W7AceLOz6Fo5+UhIREZZXzRfDlBU3mQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=roorL8QSchoeuLk2uM3E5Z4zUQp2wPd3io/WR4WpTe4=;
-	b=am8SawziGFbGHPxo7J+YgiQF/s20Fsq91v88w3Q5XlJVy2BfPWpvllebGBhkX4FjbTIs
-	 CGqM8FwCT/BBJ/scbB29RuwLH65+k+cbn7ThrDXNaz5ig4Fv0rQUAm+9GwMcJ0FIDwwPL
-	 C7fuIWI2rszuYb79BHl1xe+MxTRd9GuaLWzxber4XO5WErQVIrDv99/rNT3kJKglA2ZHS
-	 Nbdl7sO2PNTmVm+yvz/ZIiG6rbprsxG1EBypQjgQYWPqXWREYASJsdKKq84dio484wGRm
-	 W3oopXJEhvqgRGtIcQeB5/IhvjYfjxGmdFRcepv+MechampKoXHIibAW8X6tHUtCvhQ==
+	bh=u9hMf8F2FUGxMd4oDfntc3zx8CIfjJT+aaRGjfbtI5g=;
+	b=ZQcK3hhx7DYX+q7iFiGkPnRVu3A3nnq+WdNSJ4q5HWWykAv/kgQexaWLZ0E4EoY5hN47
+	 Aid6qert1kZvEx1XohhElt+zJDZHG/p+X9Xn4vfxz/y6rGywwuyPc8w3wBvapO8TD6jvD
+	 5lvEOQSphTK6Au/1U9yuuAq5VueK+PRPvvmDYdS1/36nQn6eMxwJgNJI1+RfHr+Yf8QXN
+	 o/jKCpym1V/Qmwa01Jn+lIiX7ixipttji8rirp16Z6GMy2jAoYXAoaR4dwBaRNe3NP55c
+	 GZnFvRTvxsEHpiM5ikhA+pFV6zXYPcZmg3ikvvLpEfK2AAaJIOMknYWBS77Mf+z7vDw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="UKwuM5/a";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1XdSdC+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4433C606A32F;
-	Wed, 18 Nov 2026 18:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A94C60A2603;
+	Wed, 18 Nov 2026 18:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UKwuM5/a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA2D1F000C6;
-	Wed, 18 Nov 2026 18:48:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H1XdSdC+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614ED1F000C6;
+	Wed, 18 Nov 2026 18:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027739;
-	bh=roorL8QSchoeuLk2uM3E5Z4zUQp2wPd3io/WR4WpTe4=;
+	s=korg; t=1795027741;
+	bh=u9hMf8F2FUGxMd4oDfntc3zx8CIfjJT+aaRGjfbtI5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UKwuM5/ak7+7Kc1xvM6fszsHhEgxThx4lTnAwZs1wSQJxLOzClDFZTr+5Qs45PAx6
-	 ePp2AqNHdIlcMuSGvWuBMSA52ZxitbxAnyVw2Ir8csIsEH1BLb7chNRpyn1BNrrRQw
-	 kI8LgewnssjwseN+Ddh7XtSSiQQFAO0aAumMkDG0=
+	b=H1XdSdC+fT7Mtl6aOrvxR0DBmRFRfNYrpYeyptlhtvoyf1WID9F8apB1Mw3tDTf3s
+	 nffnQQZIPT76Y7gqcRJAEa1kXSzTaQYhYqUMLaVV68QTuPC90YoPI7+FnWn+YkvFzD
+	 XH4GTkULWnco8BdHCuSpoPR8iq2QCXtVLgX4hrKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Travis Howard <thoward@lafayetteinstrument.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1895/2151] net/mlx5e: Stop asserting for RTNL when closing channels
-Date: Wed, 18 Nov 2026 16:00:30 +0100
-Message-ID: <20261118150230.824472397@linuxfoundation.org>
+Subject: [PATCH 6.18 1896/2151] tg3: Add Datto SIRIS 5 1U Server to restart AER quirk table
+Date: Wed, 18 Nov 2026 16:00:31 +0100
+Message-ID: <20261118150230.858983099@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,53 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Travis Howard <thoward@lafayetteinstrument.com>
 
-[ Upstream commit e0a958ddfc89f2e1c43448cdaeb5b30e54e19448 ]
+[ Upstream commit a55eb6a622141352131aa6156bbd6ce5da79d9b5 ]
 
-mlx5e_close_channels() has an ASSERT_RTNL() from the time when RTNL was
-required for closing channels.
-But the driver has been switched to using the netdev lock a while back,
-and this fired from a flow which was forgotten during the conversion:
+The Datto SIRIS 5 1U Server is a Dell OEMR XL R640 (Dell's OEM-ready
+variant of the PowerEdge R640) sold under Datto's identity. Its DMI
+strings report sys_vendor "datto" and product_name "SIRIS 5 1U Server",
+so it does not match the existing "PowerEdge R640" entry in
+tg3_restart_aer_quirk_table.
 
-mlx5e_tx_timeout_work()
-  -> mlx5e_reporter_tx_timeout()
-  -> mlx5e_health_report()
-  -> mlx5e_tx_reporter_timeout_recover()
-  -> mlx5e_safe_reopen_channels()
-  -> mlx5e_safe_switch_params()
-  -> mlx5e_close_channels()
+As on the PowerEdge R640, a system restart triggers a fatal PCIe AER
+on the BCM5720 during ACPI _PTS for S5, which the iDRAC logs as
+PCI1318 and which hangs the reboot. Power off is unaffected.
 
-The RTNL is not acquired here, but the netdev lock is, and it is enough.
+Clearing the same PCI_EXP_DEVCTL error-reporting bits on both BCM5720
+functions from userspace immediately before restart allows the system
+to reboot normally, confirming the quirk applies to this platform.
 
-Rather than switching to netdev_assert_locked(), simply drop the assert.
-Upper layers (networking core, ethtool core) provide locking and lower
-layers (NAPI helpers) assert that the netdev lock is held.
-
-Fixes: 8f7b00307bf1 ("net/mlx5e: Convert mlx5 netdevs to instance locking")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20261020153659.3440902-1-tariqt@nvidia.com
+Fixes: e0efe83ed325 ("tg3: Disable tg3 PCIe AER on system reboot")
+Signed-off-by: Travis Howard <thoward@lafayetteinstrument.com>
+Link: https://patch.msgid.link/20261019-tg3-datto-aer-quirk-v1-1-f0eccfb2ab5d@lafayetteinstrument.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index fa87f36f0b887..3bbb19712a586 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -2997,7 +2997,6 @@ void mlx5e_close_channels(struct mlx5e_channels *chs)
- {
- 	int i;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 897bb86bedb13..f0b9392820277 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18218,6 +18218,12 @@ static const struct dmi_system_id tg3_restart_snp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R750"),
+ 		},
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "datto"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "SIRIS 5 1U Server"),
++		},
++	},
+ 	{}
+ };
  
--	ASSERT_RTNL();
- 	if (chs->ptp) {
- 		mlx5e_ptp_close(chs->ptp);
- 		chs->ptp = NULL;
 -- 
 2.53.0
 
