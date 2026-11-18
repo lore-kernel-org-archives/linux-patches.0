@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036300;
-	b=kvcihNR+owCVg2z56+HdfSsZdbo0b6VYal1C2VCvo7id7pUIqEf0bRK+RwlJrcqoafTR
-	 mn3WOoHNAUHkJVU4h5acOd+FjOiv2156zdX8mpIKuaamzxLjzyCdY2QsShgTLhUuJnuYv
-	 O06My+aXrG9GFhM3GlVxgLpD7ArDvDGrF78uFFRfWGY6EgMUpQQXA048Zo0hTxQd73qXO
-	 f7nFoGkENFt5xj7wYmj1tZzt8w1/YJJi9xAMQHAgdKmMOGlhNyQeYS5B080oInNMIU32M
-	 +JeOsbBU7B+Ac4JfDuXsVxUqK3YX6Dcrl/5Z2+O8ueWIPScqBOk9MkgpBWE3c2vbY+g==
+	t=1795036303;
+	b=SAmZQh+hd17H4YmkY6w0eo6D91LTfDoPFArFOaEv1ClhEEUAqN6Xq2lTPGauglddrLPX
+	 sS/KffIpsMNsvDYuvc/rnpUpbgzLo057/QU9tVT67jLTorvPmT/tlVf6t9F7opEPGo4ww
+	 HKWzjz+yOK6C2Qhf9KIyiwl4EK3z5onv+6GTzl9E8W9Hi1XMSaAIoXiDAuB48gjhgrJPC
+	 IbzRjUcrQmLC+N1R/dagEuxZkuMkdwbHKao3GCxViJn91CfXAOoZNJlV/qvFWm0JQLVTs
+	 ZClIMUi+KfsKKR1ySlvS7FUKfo+LAuOwscNAwvSl4larJPW+p7UfaaJZThxZMOyfFRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036300;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wLOEj7DMUWiNJ03NvhOv31PIx9/SEX3WBuNqPzpuLEA=;
-	b=BrpqqmQOCjt3nms0nesytKqGgTHlQQaXCoHzJTSmFANEHgSUFIuRUyrMiXJVwzCkCWtI
-	 3yHl6apNxSE78GPAqmaV3an/hIh6MTkrtIo13B/mtI9JHJzZ7xl7auE8M7HhanDJXDSBn
-	 k6+c4Goq1bJbh19bwB8SI0hCKwbnX8nm39/d/VSFCX2x6bM7D/Jc1jX5y0S0c1aeMI+J7
-	 265vIheaA9sFqtNaBqpqwnBfDnsUUKQ/2oKTe5VKQmuXdzrOaaWJ3ScD1CikMcHRjBNzg
-	 ltp3WNuVRnptwyxahB+HQvq1KyIEy7ewIfJqZZOa61hLQ7Xho6wbqT7bCccfger3I6Q==
+	bh=eECJAqHY46LSBUYHvn+xT8hqM8Fbt91PhIe6KURR49A=;
+	b=iXoNU3o/ufpVDMA/6rjB+gGW5FxMRUGz3RvHvtJyiM4EC6kKIYKG1mgTTk5RdjSkE4f7
+	 EKc3uzlR1es7oydGGdpNxcLeODVOcIS35E2Su2B/Z1ICxRHwA9543FQNWsVKuJsFJy+fl
+	 A5IZSrsV5EO/MoNWMQHEKLnkuAlw47015S/AssxzLVpffTEir/WuIGgLGwHL53AhGj6lS
+	 4MEGK01oz6LO+wKz2nz+p8gjbHqYiazJ+g/uOEcOa1H1OQIwkcDQvmMeJrnJDmhT/h8q5
+	 8v03wWI8BGMal5gZVoMEYpav9eklJU7BbLfVkJ9KYTExGDqaWPHL4LGFOT/UDc2P/yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ANaRXMpD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AbMlhgky;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9857D606A31C;
-	Wed, 18 Nov 2026 21:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67610606A330;
+	Wed, 18 Nov 2026 21:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ANaRXMpD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B11B1F000C4;
-	Wed, 18 Nov 2026 21:11:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AbMlhgky
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7757B1F000C6;
+	Wed, 18 Nov 2026 21:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036300;
-	bh=wLOEj7DMUWiNJ03NvhOv31PIx9/SEX3WBuNqPzpuLEA=;
+	s=korg; t=1795036303;
+	bh=eECJAqHY46LSBUYHvn+xT8hqM8Fbt91PhIe6KURR49A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ANaRXMpDdfspIpLWpPH0z9O7O/5UkvNdKz+Vyae2EQ9z7/rjk+r2tsMMDH9aLAObC
-	 5ezUwMy0ka5qCMo4Wfhyb2m3KbRMZvPymYuA1bC43wfyws1Ys7mj7QSUAvs5kKjJdq
-	 eX16O23F2QNGcLGgWYN4hcGxk/joqis1FxyAmgHk=
+	b=AbMlhgkyuA7t167ulUwKu8qwaCmqD8lhPMrVfKYmihi21J5sb+ZabXmXroMTJEA2o
+	 18VV0urwOL5DScjTpGxrKulXvDHXRUH0JLog/a5Oe+deZxo5fxKme4ZUvTX0/quMjO
+	 +R6eD+3gh8Vl54kFQz3/tPvYu76TDab+d1iWQXCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Andrey Albershteyn <aalbersh@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1008/3318] media: hantro: disable runtime PM before hardware teardown
-Date: Wed, 18 Nov 2026 15:27:10 +0100
-Message-ID: <20261118150350.119325222@linuxfoundation.org>
+Subject: [PATCH 6.6 1009/3318] fsverity: hoist statx reporting of fs-verity flag
+Date: Wed, 18 Nov 2026 15:27:11 +0100
+Message-ID: <20261118150350.150042579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,96 +70,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+From: Andrey Albershteyn <aalbersh@kernel.org>
 
-[ Upstream commit 8e26d4c20ed218db6c3123480a4a4e2545680566 ]
+[ Upstream commit f9e450420da2624c93ce9585deebfabb87932774 ]
 
-Removing the Hantro driver may trigger an SError on RK3588:
-	SError Interrupt on CPU6, code 0x00000000be000011 -- SError
-	...
-	do_serror+0x5c/0x74
-	el1h_64_error_handler+0x34/0x50
-	el1h_64_error+0x6c/0x70
-	regmap_mmio_read32le+0x10/0x20 (P)
-	_regmap_bus_reg_read+0x6c/0xb4
-	_regmap_read+0x60/0xdc
-	regmap_read+0x4c/0x80
-	rockchip_pd_power+0xe4/0x600
-	rockchip_pd_power_off+0x1c/0x60
-	_genpd_power_off+0x98/0x198
-	genpd_power_off.part.0+0x178/0x288
-	genpd_runtime_suspend+0x210/0x300
-	__rpm_callback+0x48/0x1e0
-	rpm_callback+0x74/0x80
-	rpm_suspend+0x10c/0x580
-	rpm_idle+0x134/0x1b8
-	update_autosuspend+0x30/0xc4
-	__pm_runtime_use_autosuspend+0x48/0x64
-	hantro_remove+0x8c/0xa8 [hantro_vpu]
-	...
+All filesystems, supporting fsverity, report this status by checking
+inode flag. Also, BTRFS was missing stat->attributes_mask, which is
+fixed now.
 
-hantro_remove() currently asserts the device resets before disabling
-runtime PM.
-
-Calling pm_runtime_dont_use_autosuspend() causes an idle device to be
-runtime-suspended immediately. At that point the Hantro hardware has
-already been torn down, while the generic power-domain genpd code
-still performs the power-off sequence. genpd regmap_mmio_read causes panic
-subsequently because the reset lines were asserted.
-
-Disable runtime PM before asserting the reset lines so that no runtime-PM
-transition can race with hardware teardown.
-
-Apply the same ordering to the probe error paths as well.
-
-Fixes: ea71631b7129 ("media: hantro: add support for reset lines")
+Fixes: 146054090b08 ("btrfs: initial fsverity support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
+Acked-by: Eric Biggers <ebiggers@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Link: https://patch.msgid.link/20261002223705.2175542-7-aalbersh@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_drv.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/btrfs/inode.c | 3 ---
+ fs/ext4/inode.c  | 5 +----
+ fs/f2fs/file.c   | 5 +----
+ fs/stat.c        | 6 +++++-
+ 4 files changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index 6ebab13712af3..d30a3e37e9861 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -1207,7 +1207,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	ret = clk_bulk_prepare(vpu->variant->num_clocks, vpu->clocks);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to prepare clocks\n");
--		goto err_rst_assert;
-+		goto err_pm_disable_assert_reset;
- 	}
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index c8034d86f844f..b6d40f0f0fb28 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -8918,7 +8918,6 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
+ 	struct inode *inode = d_inode(path->dentry);
+ 	u32 blocksize = btrfs_sb(inode->i_sb)->sectorsize;
+ 	u32 bi_flags = BTRFS_I(inode)->flags;
+-	u32 bi_ro_flags = BTRFS_I(inode)->ro_flags;
  
- 	ret = v4l2_device_register(&pdev->dev, &vpu->v4l2_dev);
-@@ -1261,8 +1261,11 @@ static int hantro_probe(struct platform_device *pdev)
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- err_clk_unprepare:
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
--err_rst_assert:
-+err_pm_disable_assert_reset:
-+	pm_runtime_dont_use_autosuspend(vpu->dev);
-+	pm_runtime_disable(vpu->dev);
- 	reset_control_assert(vpu->resets);
-+	return ret;
- err_pm_disable:
- 	pm_runtime_dont_use_autosuspend(vpu->dev);
- 	pm_runtime_disable(vpu->dev);
-@@ -1282,9 +1285,9 @@ static void hantro_remove(struct platform_device *pdev)
- 	v4l2_m2m_put(vpu->m2m_dev);
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
--	reset_control_assert(vpu->resets);
- 	pm_runtime_dont_use_autosuspend(vpu->dev);
- 	pm_runtime_disable(vpu->dev);
-+	reset_control_assert(vpu->resets);
- }
+ 	stat->result_mask |= STATX_BTIME;
+ 	stat->btime.tv_sec = BTRFS_I(inode)->i_otime_sec;
+@@ -8931,8 +8930,6 @@ static int btrfs_getattr(struct mnt_idmap *idmap,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (bi_flags & BTRFS_INODE_NODUMP)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (bi_ro_flags & BTRFS_INODE_RO_VERITY)
+-		stat->attributes |= STATX_ATTR_VERITY;
  
- #ifdef CONFIG_PM
+ 	stat->attributes_mask |= (STATX_ATTR_APPEND |
+ 				  STATX_ATTR_COMPRESSED |
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 7f9358612f453..b59857780c8fe 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5786,15 +5786,12 @@ int ext4_getattr(struct mnt_idmap *idmap, const struct path *path,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (flags & EXT4_NODUMP_FL)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (flags & EXT4_VERITY_FL)
+-		stat->attributes |= STATX_ATTR_VERITY;
+ 
+ 	stat->attributes_mask |= (STATX_ATTR_APPEND |
+ 				  STATX_ATTR_COMPRESSED |
+ 				  STATX_ATTR_ENCRYPTED |
+ 				  STATX_ATTR_IMMUTABLE |
+-				  STATX_ATTR_NODUMP |
+-				  STATX_ATTR_VERITY);
++				  STATX_ATTR_NODUMP);
+ 
+ 	generic_fillattr(idmap, request_mask, inode, stat);
+ 	return 0;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 793b4c89a9df5..b0b2dc7304687 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1000,15 +1000,12 @@ int f2fs_getattr(struct mnt_idmap *idmap, const struct path *path,
+ 		stat->attributes |= STATX_ATTR_IMMUTABLE;
+ 	if (flags & F2FS_NODUMP_FL)
+ 		stat->attributes |= STATX_ATTR_NODUMP;
+-	if (IS_VERITY(inode))
+-		stat->attributes |= STATX_ATTR_VERITY;
+ 
+ 	stat->attributes_mask |= (STATX_ATTR_COMPRESSED |
+ 				  STATX_ATTR_APPEND |
+ 				  STATX_ATTR_ENCRYPTED |
+ 				  STATX_ATTR_IMMUTABLE |
+-				  STATX_ATTR_NODUMP |
+-				  STATX_ATTR_VERITY);
++				  STATX_ATTR_NODUMP);
+ 
+ 	generic_fillattr(idmap, request_mask, inode, stat);
+ 
+diff --git a/fs/stat.c b/fs/stat.c
+index 5375be5f97ccf..7c20f34207d20 100644
+--- a/fs/stat.c
++++ b/fs/stat.c
+@@ -127,8 +127,12 @@ int vfs_getattr_nosec(const struct path *path, struct kstat *stat,
+ 	if (IS_DAX(inode))
+ 		stat->attributes |= STATX_ATTR_DAX;
+ 
++	if (IS_VERITY(inode))
++		stat->attributes |= STATX_ATTR_VERITY;
++
+ 	stat->attributes_mask |= (STATX_ATTR_AUTOMOUNT |
+-				  STATX_ATTR_DAX);
++				  STATX_ATTR_DAX |
++				  STATX_ATTR_VERITY);
+ 
+ 	idmap = mnt_idmap(path->mnt);
+ 	if (inode->i_op->getattr)
 -- 
 2.53.0
 
