@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061131;
-	b=hSTpgPt80OgVJ6AHrBz5wW9oxdQzKO6G7BJ18XGp1DcxjKFcKtwxzFbcA9970e+98O0E
-	 z7Kmwo5CyE3SERRn8zUOlD2lKwkkzgWu2gBp2OJ54LJjiYQtl51BS4bcYpxNbXl2jsDNn
-	 LgiU5bVkl6598kAAtYsM7/nI5dsroEf8BtVN2DA7QoVtSycm2XlHoJ7u0McV3CWk2pU+5
-	 6dfnJLZcSmMkgeAXqVMwndNwkcRU9M/bWqjy4kTGdbibSfjPqdpKk+xqyTbECcIkl1O1d
-	 Os/N0XTnZkevMK9PjnXly2G6PR6eRwwRLn0lEmbGkzY51CBF029KdNi+b8VNftMdieQ==
+	t=1795061134;
+	b=u0XCR/YtQ9Hmmxga41IPeQ86rIvuZakmXNIdTk9wuA/WtGQvvEflMAEn5yVQ27z2zIuv
+	 /20PlXEAfryR9aXRz0b6P+UCsgCv+0Bxwzp3EiwyW+nzjaZpAl+2Ib+PJjwW/PaXYo8m/
+	 KAUnUEX5sQ7XOi3WUcWkm1H0AU9yUtQ7yssvx3QBZWQuVlSl8OGcfP40NrEWS5JpNoMaW
+	 vM5Aqg/nkS+wdBxKP5jv7GOMc1ggI8G/w/sWonmFLW5QCHvtKf+aSdnI1W1M/rF84gYjB
+	 rUBMlTHxDuW8ZYqd8P/DRIitwofJ5AFf+HQjQ58nev5U6K+Wq9bxdqqnQsCjQgA/fpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061131;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061134;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lGCgaRofYiIbUACJPpdB4HRPTrZ61qlXiLJypZ16g3s=;
-	b=F868HOu9EFM+wdBaCCIpudke2Z+wsVu99woGFGowTDZKBSlLqOvpov2SexDtpp4Dwpph
-	 4r08s6gqN90EyKHXmlLWo98UyRXjgapTKPZnAF/XKFmhtmeCQXHFaJ+ojmALksWWAEJ1x
-	 7+FnyTW9NRhSow1M9PS8Qpma2KlVPx45A5J2Mpdqxb0sRmqkzMXb3p0tvAILuHSGp85Eb
-	 4BoYZ0OFHRjTaXo9uEtW1lZPf8R1yfy5syx2DPexTTMP8UJw1MCn9gVHvN8mQi+aeDLi3
-	 h29QVYq2O4q8DG9xD+iRCXo9Odw4kFdsuOUqSknX3OSC+hjh4ifOaV+HMB7VnqD8L3g==
+	bh=4ci05772Kp1Zm6gbuDrdCRYbuptqShnNwIF8IMixlfI=;
+	b=vNCj5++sWrvPFAUjLBE76RkWWGgGG4xh5DKJNIt1zoPVUq1RBEbBBZ/5KdBQqP/BodN6
+	 26IdTdG3T67uDSSMR3UZ+Z1i1bAjd/ZslP7Vs5alzOpvT+9axDz+cf1WH6V1081rVKsUU
+	 17qH2+2M9AmG26JeyfPBJo8s0LfCy6akCG93+RNTpx2J/vezu+50INO7MZo4OHR4rYBeF
+	 kHRaEha7yC1rtBtqZtTKcALiKaFoJvob273mXyK0yrdhG16VJq4EvJqZdoJC5bOv+VjrO
+	 ry6yxADyr31UuBxv3rk4ShtDYX8w4xWV0Oh66/KC8RtZGRn6092gkOiyGA59f+EFJTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+Ufo76C;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WpHyn6o0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237F5606A325;
-	Thu, 19 Nov 2026 04:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E24606A325;
+	Thu, 19 Nov 2026 04:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+Ufo76C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DED51F000C4;
-	Thu, 19 Nov 2026 04:05:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WpHyn6o0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B781F000C5;
+	Thu, 19 Nov 2026 04:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061131;
-	bh=lGCgaRofYiIbUACJPpdB4HRPTrZ61qlXiLJypZ16g3s=;
+	s=korg; t=1795061133;
+	bh=4ci05772Kp1Zm6gbuDrdCRYbuptqShnNwIF8IMixlfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0+Ufo76Cju2znaOzIvKkFfdv0/smr6WGdHn2sw8Gqi4+tcdU/wt9TZMToVld0QIMz
-	 4JjFaegsgVAtowKnuuXEKVYsMP5mDl/0Xu3ACmKTQOPAzfFxrBelOEQg7GrMoI9KZl
-	 +7+RsFzrQa82bVBad/6cihuz6uCAsw3zbsEAxIus=
+	b=WpHyn6o0xAh5ULc9XKR4403TEM8mJIXvPdD3tWdf9LJC7uC6yxk4z+y8QlIKt3DfV
+	 G06zwWPR1ZAozRrEymM0VRQSspm14EGbsU9evK/P9qmtsfNF1HlP+T2mB79astrR4p
+	 ikCa/+zovNXGaGjkaZnkdG8BZdM0ZOt6ThV43PjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuogee Hsieh <khsieh@codeaurora.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Rob Clark <robdclark@chromium.org>,
+	Oleg Keri <okerixx@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1443/1848] drm/msm/dp: do not end dp link training until video is ready
-Date: Wed, 18 Nov 2026 15:58:01 +0100
-Message-ID: <20261118150019.868730125@linuxfoundation.org>
+Subject: [PATCH 5.10 1444/1848] drm/msm/dp: dont report link training success after a reinit
+Date: Wed, 18 Nov 2026 15:58:02 +0100
+Message-ID: <20261118150019.908330831@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,147 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuogee Hsieh <khsieh@codeaurora.org>
+From: Oleg Keri <okerixx@gmail.com>
 
-[ Upstream commit 2e0adc765d884cc080baa501e250bfad97035b09 ]
+[ Upstream commit a47987366e7fc2c05aeffc97f8e1f776e583f792 ]
 
-Initialize both pre-emphasis and voltage swing level to 0 before
-start link training and do not end link training until video is
-ready to reduce the period between end of link training and video
-start to meet Link Layer CTS requirement.  Some dongle main link
-symbol may become unlocked again if host did not end link training
-soon enough after completion of link training 2. Host have to re
-train main link if loss of symbol locked detected before end link
-training so that the coming video stream can be transmitted to sink
-properly. This fixes Link Layer CTS cases 4.3.2.1, 4.3.2.2, 4.3.2.3
-and 4.3.2.4.
+When every training attempt fails, the retry loop in
+msm_dp_ctrl_on_link() ends on a successful
+msm_dp_ctrl_reinitialize_mainlink(), leaving rc at 0. The caller then
+enables the stream on an untrained link and the display stays dark.
 
-Changes in v3:
--- merge retrain link if loss of symbol locked happen into this patch
--- replace dp_ctrl_loss_symbol_lock() with dp_ctrl_channel_eq_ok()
+The retry counter only reaches zero in that case, so treat it as a
+training failure.
 
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/1628196295-7382-7-git-send-email-khsieh@codeaurora.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Stable-dep-of: a47987366e7f ("drm/msm/dp: don't report link training success after a reinit")
+Fixes: 8ede2ecc3e5e ("drm/msm/dp: Add DP compliance tests on Snapdragon Chipsets")
+Signed-off-by: Oleg Keri <okerixx@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/756528/
+Link: https://lore.kernel.org/r/20260925125314.16563-1-okerixx@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 56 +++++++++++++++++++++++---------
- 1 file changed, 41 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_ctrl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 7043e432997c6..76a4da82c24ca 100644
+index 76a4da82c24ca..bc1bd7cf818d1 100644
 --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
 +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1478,6 +1478,9 @@ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
- 	dp_ctrl_push_idle(&ctrl->dp_ctrl);
- 	dp_catalog_ctrl_reset(ctrl->catalog);
- 
-+	ctrl->link->phy_params.p_level = 0;
-+	ctrl->link->phy_params.v_level = 0;
-+
- 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 
- 	ret = dp_ctrl_setup_main_link(ctrl, &training_step);
-@@ -1630,6 +1633,16 @@ static bool dp_ctrl_clock_recovery_any_ok(
- 	return drm_dp_clock_recovery_ok(link_status, reduced_cnt);
- }
- 
-+static bool dp_ctrl_channel_eq_ok(struct dp_ctrl_private *ctrl)
-+{
-+	u8 link_status[DP_LINK_STATUS_SIZE];
-+	int num_lanes = ctrl->link->link_params.num_lanes;
-+
-+	dp_ctrl_read_link_status(ctrl, link_status);
-+
-+	return drm_dp_channel_eq_ok(link_status, num_lanes);
-+}
-+
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- {
- 	int rc = 0;
-@@ -1664,6 +1677,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 		ctrl->link->link_params.rate,
- 		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
- 
-+	ctrl->link->phy_params.p_level = 0;
-+	ctrl->link->phy_params.v_level = 0;
-+
- 	rc = dp_ctrl_enable_mainlink_clocks(ctrl);
- 	if (rc)
- 		return rc;
-@@ -1728,17 +1744,19 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+@@ -1744,6 +1744,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
  	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
  		return rc;
  
--	/* stop txing train pattern */
--	dp_ctrl_clear_training_pattern(ctrl);
-+	if (rc == 0) {  /* link train successfully */
-+		/*
-+		 * do not stop train pattern here
-+		 * stop link training at on_stream
-+		 * to pass compliance test
-+		 */
-+	} else  {
-+		/*
-+		 * link training failed
-+		 * end txing train pattern here
-+		 */
-+		dp_ctrl_clear_training_pattern(ctrl);
- 
--	/*
--	 * keep transmitting idle pattern until video ready
--	 * to avoid main link from loss of sync
--	 */
--	if (rc == 0)  /* link train successfully */
--		dp_ctrl_push_idle(dp_ctrl);
--	else  {
--		/* link training failed */
- 		dp_ctrl_deinitialize_mainlink(ctrl);
- 		rc = -ECONNRESET;
- 	}
-@@ -1746,9 +1764,15 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 	return rc;
- }
- 
-+static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
-+{
-+	int training_step = DP_TRAINING_NONE;
++	if (!link_train_max_retries)
++		rc = -ETIMEDOUT;
 +
-+	return dp_ctrl_setup_main_link(ctrl, &training_step);
-+}
-+
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- {
--	u32 rate = 0;
- 	int ret = 0;
- 	bool mainlink_ready = false;
- 	struct dp_ctrl_private *ctrl;
-@@ -1758,10 +1782,6 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 
--	rate = ctrl->panel->link_info.rate;
--
--	ctrl->link->link_params.rate = rate;
--	ctrl->link->link_params.num_lanes = ctrl->panel->link_info.num_lanes;
- 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 
- 	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
-@@ -1776,6 +1796,12 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 		}
- 	}
- 
-+	if (!dp_ctrl_channel_eq_ok(ctrl))
-+		dp_ctrl_link_retrain(ctrl);
-+
-+	/* stop txing train pattern to end link training */
-+	dp_ctrl_clear_training_pattern(ctrl);
-+
- 	ret = dp_ctrl_enable_stream_clocks(ctrl);
- 	if (ret) {
- 		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
+ 	if (rc == 0) {  /* link train successfully */
+ 		/*
+ 		 * do not stop train pattern here
 -- 
 2.53.0
 
