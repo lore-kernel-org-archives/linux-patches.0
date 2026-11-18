@@ -1,52 +1,65 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046963;
-	b=XtvkfGvv5wVHPyGnmJqhHyahIpCJzv5VbvgZT9brahV9XmVk/3d/Ps3I+MvYWPQ/XXhE
-	 FG+dNy1TUXr+Ssmg6jKV/nXMW53s1ln1ASsnKwcd2KDAGVPOliyS2QkCCLm1r8w/iyQjI
-	 o5hjeca7NuwZ3NQhffEi59c0/VeS6Lf4mM+9/+RIwDoGbk1eJUQrZw3TT7ZjP50tkjRTj
-	 CYDS+D8F92387AjvhpwvwHHon6uQmSLhy45wENZxKTKKDce0pJtNSLKvYeCXymaZhO3eu
-	 sNDPfcyIBmRI4I67wQ1G8zQUb5A1AKRdyK5UFlEXHexE0DdljK/F7lNH1LeTBhCBpzQ==
+	t=1795046966;
+	b=clYUwdlac8UKQCdmxY7XVeUBlAUk5YIpxryflJ/XVLyt48c7imQH15R0vKsxA0CoSaQZ
+	 LFLYM3sYAVJKj/mEwNM9JL0JJ6FOJzv8WUTJy5313Alp5WOlKSFyu7I6XxKTuZEaiDEwl
+	 +335r1C1m46wuxxMSZ5x9QXLRz01lzRWr154sJiWsz0r9br+EQEu4Cb9KbUamwqSUEujL
+	 OfySZzbxHJcAn+H1Yl5hycfcweCyjajzYLI1XADZao+Ru/kQ8jrNaCUKb7Xj/4YNdI8lW
+	 kbJDRZw2CdH/ah2qj1csVjESVl2CkLj+f+/KgYjUVY63BrSFycoYa4MX1XC5K4Batag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046963;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046966;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/WCvFodSKPN3xq/AocNFqEVcCpTybshJWQBi4kxq/lI=;
-	b=k9sc3sopGVWI4FPluLqEA7/9g7LSnkzJl5Se4QciO4dST+rx9D+/IsuxoTAyUMU/6Pi5
-	 oSYyzfylQq8pa3f2HusfttJ+qZefQYNXcOH7AMHQcc57zOCs7RnJ6V2T/NsDY5FVzNiaM
-	 F6bJqnL57JmG1TIpsghMlYSYov2f1OEVDdbU8Ubz7IFse+8KqanePkwjmo7m4HzBlDxMe
-	 vLr+u/H/kRpGW526GRAw90Op8V63yJSXyQGUR/b0Bclppcaof7ce5771oVEc4Tsvk2rV1
-	 Ae8eMbhLVxkZgP6Yr41cmL1NB+OjRIoOod00BJCfwhgW6r0dRCHz1LDVN95OhStmhCQ==
+	bh=bzI7Ic6G8uW3IRP6gV3DAdT2aJUv9Xd9PywTqo7WT4g=;
+	b=lJoEzHsLqkxEhg3vPLQpf112PYk2kYZgbamdlXPLNxfWIjmywxy5daEnOTgu/dXhIV7D
+	 oh5XDXG03ut2xia2AhOt3MQoF/mrphsBwVBvgoTK1L3s3AO8x0XIsAZ1Uh1GiIOvHZGoo
+	 iL4TZxZ3idj9SuIvYL5mXMlx20KGiVdMqr2Lv8HntRUXxyrFZTK1h/7zAlGzEEGI9n7TH
+	 +XUbhxRpw7py5d2Fyq/u1Y0GiGWyxqjImMh1CyPIUyg6nKKdYZ6TkhVfDFzpUiR0SK2PT
+	 AQod7qg60RmrtrWm6t/gtrEyhExQQAZDmYPGkWJxxrEQkFx47PGa78pG4ivGQ1AXMtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1u+rtczB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r3NCF4gr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951F2606A32C;
-	Thu, 19 Nov 2026 00:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46567606A325;
+	Thu, 19 Nov 2026 00:09:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1u+rtczB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5541F000C5;
-	Thu, 19 Nov 2026 00:09:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=r3NCF4gr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7696F1F000CE;
+	Thu, 19 Nov 2026 00:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046963;
-	bh=/WCvFodSKPN3xq/AocNFqEVcCpTybshJWQBi4kxq/lI=;
+	s=korg; t=1795046966;
+	bh=bzI7Ic6G8uW3IRP6gV3DAdT2aJUv9Xd9PywTqo7WT4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1u+rtczBPvFQjDN3yzScdIH6Mj1x406P7QO+8+/qEM4q7IdWHDIatZ078ST+bqRJk
-	 wbXNRkk56Q0l4gzJFZb/KG8Zx/uo2gCjwtPRfaYA3uRYHWt8bbQDoI6sf/uc8qRCYr
-	 NYEXeLThBYF0Nz8DMZqNIRhMbniu7tvm6gGXXE1M=
+	b=r3NCF4gr2BdZX6s++uenFMyzGGEGgh4vdX7dRSCTGr8SHhvuidonGPll21YB0Afky
+	 TVSOUZgrbpA0c7ERGqT3CazE20V/Kd143h9xUoiVs/Jh4QCu55H1xl132hsHt9n2dW
+	 UMJA8ZVxI5RU3ktMW9cdJPSW0LEO1VcCWHeMOAwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Gregory Price <gourry@gourry.net>,
+	Ying Huang <ying.huang@linux.alibaba.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	odys.yuan@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1428/2857] ASoC: stm: stm32_i2s: Drop redundant error messages
-Date: Wed, 18 Nov 2026 15:41:02 +0100
-Message-ID: <20261118150252.732636421@linuxfoundation.org>
+Subject: [PATCH 6.1 1419/2857] mm/migrate: untag addresses when querying page nodes
+Date: Wed, 18 Nov 2026 15:40:53 +0100
+Message-ID: <20261118150252.416742986@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,48 +81,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit a6cdfb6230944082e7be64f9166eed64656b1162 ]
+[ Upstream commit 7d8746d7dc9cc4003661011424e5880ea7ae364b ]
 
-Both devm_request_irq() and snd_dmaengine_pcm_register() already log
-failures internally. Drop the redundant error messages and return the
-original errors directly.
+When move_pages() is used with nodes == NULL, do_pages_stat_array()
+uses each page address as-is for its VMA lookup. A valid tagged address
+therefore gets -EFAULT in its status entry instead of the NUMA node
+reported for the corresponding untagged address.
 
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260720074044.87528-3-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 1b207c85551f ("ASoC: stm: stm32_i2s: request IRQ after regmap initialization")
+Strip the tag before the VMA lookup while holding the mmap read lock.
+Use untagged_addr(), the helper available in 6.1 and already used by
+the migration path.
+
+Link: https://lore.kernel.org/20261026195330.46757-1-dennylin0707@gmail.com
+Fixes: 057d3389108e ("mm: untag user pointers passed to memory syscalls")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/r/20260721183257.706661F000E9@smtp.kernel.org
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <odys.yuan@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/stm/stm32_i2s.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ mm/migrate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/stm/stm32_i2s.c b/sound/soc/stm/stm32_i2s.c
-index f3dd9f8e621cc..c52613365d679 100644
---- a/sound/soc/stm/stm32_i2s.c
-+++ b/sound/soc/stm/stm32_i2s.c
-@@ -1079,10 +1079,8 @@ static int stm32_i2s_parse_dt(struct platform_device *pdev,
+diff --git a/mm/migrate.c b/mm/migrate.c
+index 72ee6896a2cb2..09acee0c43569 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -2168,7 +2168,7 @@ static void do_pages_stat_array(struct mm_struct *mm, unsigned long nr_pages,
+ 	mmap_read_lock(mm);
  
- 	ret = devm_request_irq(&pdev->dev, irq, stm32_i2s_isr, 0,
- 			       dev_name(&pdev->dev), i2s);
--	if (ret) {
--		dev_err(&pdev->dev, "irq request returned %d\n", ret);
-+	if (ret)
- 		return ret;
--	}
- 
- 	/* Reset */
- 	rst = devm_reset_control_get_optional_exclusive(&pdev->dev, NULL);
-@@ -1138,7 +1136,7 @@ static int stm32_i2s_probe(struct platform_device *pdev)
- 
- 	ret = snd_dmaengine_pcm_register(&pdev->dev, &stm32_i2s_pcm_config, 0);
- 	if (ret)
--		return dev_err_probe(&pdev->dev, ret, "PCM DMA register error\n");
-+		return ret;
- 
- 	ret = snd_soc_register_component(&pdev->dev, &stm32_i2s_component,
- 					 i2s->dai_drv, 1);
+ 	for (i = 0; i < nr_pages; i++) {
+-		unsigned long addr = (unsigned long)(*pages);
++		unsigned long addr = (unsigned long)untagged_addr(*pages);
+ 		unsigned int foll_flags = FOLL_DUMP;
+ 		struct vm_area_struct *vma;
+ 		struct page *page;
 -- 
 2.53.0
 
