@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019161;
-	b=tDWGBVOawo42vHvwAhCmxELz6InPUdsV8du1/V5JCl0DkVgyq+vauzjGyLQIz2FRmHen
-	 8fv40aF4jUIjtqp/dkQEmOXTnvr7HC11Pf9qbtr46JL9nsaUimjnYBXdNz18IJhYFZyhj
-	 +b5G3GrNBFSD/Eu7PDvfYh24gPt+e03HREMHc+GqlsFpXYbDTqQ17/ixmIOOtcFuyR+Kd
-	 j05EwdPxLnnjhOGHpyMyve426imdxvz+/gyATo/7ceo1wQq/fr+JNF+qR3f3W3NUdLDHI
-	 HHPihqRWFf2421fqIbGhNm8pZAthJDX66rt99BF+RIA+3Zq0liNaEqsr+fn6l3qi9ow==
+	t=1795019163;
+	b=LmJ9JC6BvnUxonCxCmitETPUWVusvC0FqMp9NnBoVKh1Vy6328s8eJu/P/dk+yNQMq9P
+	 EV9dyALV55pDk3ZnPAZ9dd/drOv+7WB10GhtgNu9bSCb9d1cPFe2Em3kM/4Y3h3RY4g42
+	 ZN/vTwoV5Nk72vaKGxupNzn1pDNghWIvckBXWrvQtUyhd8aJYBGGmx9P8SKqO2M68P5pG
+	 +Ye/FlhyxavTzrY3qT9qATAsxxQ703C2LDk0IJyI7HbQQ5AoxMY5xmKNNuTzOK0dxOSMM
+	 zzhaQFJMqndczXIxY8SjVMlX7OsxbqD511VHWbsgGNE8an6NzETLKIF2AKu+pk/ED2Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019161;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019163;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qhUHpP3cszy8VVyUqrEfcqta07lrbrW40vUoIhW+Pfg=;
-	b=EfmdwjyG/oiB8p2b2RWAFhWwSGjeCNT/wJJkSRTEjEUxB4gpEaYvUnbRPpJD/O0n7hii
-	 iEY1MjliW8gTx3e/Drxb1aBk1pLS9H7mM8kQ+3TZtbbnsTihCPHG6BVR8znxdHyjLPg0s
-	 DMt3aTARCyES3ZkXx4rIrI2g1IQGxTOf3u5MeS9+zzcP3Va1QoOUjeE1j0wnbLjivCjCh
-	 TsLolsEENNpFfJP3Ea+9SL+iCrvGS26WDz7agZOLvBrhO1JwskyvusoZT7iHKUgKgEFwZ
-	 MMZtvhbOEnTsYi9vqi+69Lb0TpMwRMmHl205S9yFezFP0BMgTp+EuZTghnuE2bmhb6Q==
+	bh=rriWlAX7jy/HxzkbfnMAVzR6bK+b0gubFr1pUSioVGU=;
+	b=y9FajrIiwNoBH65eiIEHz9Rz0XZ2tEgQo1oUnrVOnOTslky8ecqOfwXbFejAALPQ9DoD
+	 wROf0QesKl+5JUwjQhwDna2c/zk9U8FXz2x/+aL2mmmKYUa0E7OWYNcoH+6sfhLnPMscn
+	 8+ezfBC/5Vn1Gm+V+eSdj7qpcL14jxRZNlaWI33JtTribhYLgFlqSdeUNM5ffDk5r7d5m
+	 PSM2qzV8Lu9mXpP/9W7TRwgwG3FQNgt6spIv2NpZOZvjtYedykVPj+74HbLtGJEv9X0nV
+	 wJRXQMC/gcIP+9n4ES5Lb1KXI+rpLEBGbDMRn3gx3n0we6OpjaQstGQTYx233jI2xdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bE5YlUgg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0GKMSMbd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0DE606A325;
-	Wed, 18 Nov 2026 16:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA34606A31C;
+	Wed, 18 Nov 2026 16:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bE5YlUgg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092B51F000C6;
-	Wed, 18 Nov 2026 16:25:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0GKMSMbd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0545E1F000C4;
+	Wed, 18 Nov 2026 16:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019160;
-	bh=qhUHpP3cszy8VVyUqrEfcqta07lrbrW40vUoIhW+Pfg=;
+	s=korg; t=1795019163;
+	bh=rriWlAX7jy/HxzkbfnMAVzR6bK+b0gubFr1pUSioVGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bE5YlUggFe202pL+gnPkqPBws47b8fxEh7lh19LaEsTGZRInX86IaDXbWd09A2253
-	 apoYs60LiSQqudwkm9/3Y8LWLijMQLa6Lr2zcsgb6vBVJU04X8uVBHo1aXX/y3jL4k
-	 7/90W7Ng29NmEfPLCnIwJVbmIKfzTMHSR8f5Gu/0=
+	b=0GKMSMbdlYd6U1v6Y8yaXOUb1JQ340l1OZfZDFnfh6PgkbGQKvIjV1ZStcpMm/AVt
+	 ApXBo4cZcSHKHWnSZfR+XrvikHvB4HyeDvGdczioFfZfKNG1GCNSMpf4N85VH7Y0oF
+	 GeApDluZbQ8mXyBjeU63e/81uRwm0czRx8IQkHVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Roman Li <roman.li@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1498/2651] drm/amd/display: assign missing trace entry in amdgpu_dm_dc_clocks_state
-Date: Wed, 18 Nov 2026 15:45:38 +0100
-Message-ID: <20261118150341.949389491@linuxfoundation.org>
+Subject: [PATCH 7.3 1499/2651] drm/amd/display: remove duplicated prev_p_state_change_support assignment
+Date: Wed, 18 Nov 2026 15:45:39 +0100
+Message-ID: <20261118150341.983281218@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,12 +73,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit ec167063dbf9fc66dc1364b6f9dd220c6742edeb ]
+[ Upstream commit 11e8f72b09a6a3c0950b9558abd37559dd098698 ]
 
-disp_dpp_voltage_level_khz is declared and printed, but never assigned.
-So when using clock tracepoint the value of this clock is just garbage.
-Assign clk->disp_dpp_voltage_level_khz since this is stored in dc_clocks
-as other entries.
+The prev_p_state_change_support trace entry is assigned and printed
+twice, remove the unnecessary duplicates.
 
 Fixes: 13b5ca42ca9c ("drm/amd/display: Add tracepoint for capturing clocks state")
 Signed-off-by: Melissa Wen <mwen@igalia.com>
@@ -88,21 +86,40 @@ Reviewed-by: Roman Li <roman.li@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-index f33a2c1e0da5f..cc70aeb757980 100644
+index cc70aeb757980..887ebac8c97ed 100644
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
-@@ -513,6 +513,7 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
- 	    TP_fast_assign(
- 			   __entry->dispclk_khz = clk->dispclk_khz;
- 			   __entry->dppclk_khz = clk->dppclk_khz;
-+			   __entry->disp_dpp_voltage_level_khz = clk->disp_dpp_voltage_level_khz;
- 			   __entry->dcfclk_khz = clk->dcfclk_khz;
- 			   __entry->socclk_khz = clk->socclk_khz;
- 			   __entry->dcfclk_deep_sleep_khz = clk->dcfclk_deep_sleep_khz;
+@@ -523,7 +523,6 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 			   __entry->p_state_change_support = clk->p_state_change_support;
+ 			   __entry->prev_p_state_change_support = clk->prev_p_state_change_support;
+ 			   __entry->pwr_state = clk->pwr_state;
+-			   __entry->prev_p_state_change_support = clk->prev_p_state_change_support;
+ 			   __entry->dtm_level = clk->dtm_level;
+ 			   __entry->max_supported_dppclk_khz = clk->max_supported_dppclk_khz;
+ 			   __entry->max_supported_dispclk_khz = clk->max_supported_dispclk_khz;
+@@ -533,8 +532,8 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 	    TP_printk("dispclk_khz=%d dppclk_khz=%d disp_dpp_voltage_level_khz=%d dcfclk_khz=%d socclk_khz=%d "
+ 		      "dcfclk_deep_sleep_khz=%d fclk_khz=%d phyclk_khz=%d "
+ 		      "dramclk_khz=%d p_state_change_support=%d "
+-		      "prev_p_state_change_support=%d pwr_state=%d prev_p_state_change_support=%d "
+-		      "dtm_level=%d max_supported_dppclk_khz=%d max_supported_dispclk_khz=%d "
++		      "prev_p_state_change_support=%d pwr_state=%d dtm_level=%d "
++		      "max_supported_dppclk_khz=%d max_supported_dispclk_khz=%d "
+ 		      "bw_dppclk_khz=%d bw_dispclk_khz=%d ",
+ 		      __entry->dispclk_khz,
+ 		      __entry->dppclk_khz,
+@@ -548,7 +547,6 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 		      __entry->p_state_change_support,
+ 		      __entry->prev_p_state_change_support,
+ 		      __entry->pwr_state,
+-		      __entry->prev_p_state_change_support,
+ 		      __entry->dtm_level,
+ 		      __entry->max_supported_dppclk_khz,
+ 		      __entry->max_supported_dispclk_khz,
 -- 
 2.53.0
 
