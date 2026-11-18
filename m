@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056065;
-	b=41wOR4B3dGg5qm6WDtA2J8K54zBLjqCarqoCYYxIBY/ySbuo/sX8Ey+QsEo3N4S9dP80
-	 3GvykMGNSbFDl0orvdxUtVIUBqG2rkufqJyDlIvhFKUnIJW55xArjc/ro6a/yGYZSFLPm
-	 9G5imUQztkoiZNfqjLXT7uirkzFwG31WJfdesxsvDZCqzXCY4CbbWKkD6wVvwFkMLNmmg
-	 q0Ey5y1HTW+tGnbpNEB83GtUpiahBkUogHqhOsSsSmcv3J4aQ+lKOKyd5hEg8+tyVH1Y4
-	 3sKzDGdsO7iZY7XRqN2pmRu6VYfWBmx3Iv/vS4MK0IOU/zXM21c7x4bA5bgrNy85E4g==
+	t=1795056068;
+	b=ZpX+L/WLJiUVzvVbWF3nIU0y0V8SVir5iLXUM9IpfkyEoacl1QiHlOZC3NTwbFN3ALba
+	 PFxCCurjwx+iQ4SSpZd/oLGBVC6C13yYoHk5N89yoP90h5+Q4McjIa/L+0Vr93pZNDMAU
+	 Vo9C/blP1Jbt7vqKWS7PhspSNLAKu5AZfqkB7cnYbLdAQGfXpUFur0odSMR399Q7wEp9Y
+	 ntEK027PyiNUcA4c3x5NNlVimECtXDe5+/1RJEmW8Yh1Aon/aFxCj915x0RDL2s8nGl31
+	 tb/s9JPXQ2kx5HyGs9WXSaiOG+1obKxlprv69yO2j+/oQ43XGj/fPdwCqu7jYTuavAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056065;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056068;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=avARsu8+X+xCp+UInXTu8OBuN1kuvMDpYhS2hxGRw4k=;
-	b=2BQdU6wNi8i6z062nCW67dZsEqnC4+TvOzBXyxENoJ6LoEPBgbvpx/TOuD0L6G6PKMBq
-	 fdF8iPQEiyngiLViLoDij/ATxjIIIj6oG9Vkj1csm1rL3AkpTvNQ1O+3HSstxsex5Ag+I
-	 iJ0nVa1Cd7vqRXpkrjRZLlsOIgscYi/WYkBLVzKuPajhCXAC/yMQZpr8dj2CqPW8XvOAc
-	 SRGe3c+rTuNEYkcqgCRS0oVVcup3tlHgfuKt82nSZTSRHnZhQGl/iezaKWIllaiMAaX87
-	 /POrWWLxqd6Q4isdAxYn8BRnPxUIYzdJgTYjLP57UUAU0eBQgEY7NLbNK5ie9XGHnwQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=NDFAvwD3aZH0aHwuU8MXbvecj0vmzH+UHqFJdiynxWY=;
+	b=oztSdvIB9KLI8mYafaOhNto5eqPvmlNcQfibCepErrMxqmdrPxLM7xrJw94jynhQ0Agn
+	 Xp8k8/OnHaDXuzoHSHmy2p0vBUAo7HjVPZ8AyCwIvUO21w2rJ5F+IXafpfZBRYvHJD2Kb
+	 iWugIuo9zvyBRUWp0xeCWUno3KNfbPLj5oNAwnfs1TkaprejDOon3p0gXfdVajTIeY4bH
+	 fTnGbuDEb0pwm5BGfbla/CSboID94m0NjPOSgV57KaT3gaiVfW1rRwXP+8wge+ByMoxtc
+	 iJhF+2aN58N47iTGaRcgbByqWnSnVosJQSphnCeBfO6JAUPyx/yrIjbWT7UUOTu8+HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hNuPtLpa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DMRBpEyk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FFDD606A31C;
-	Thu, 19 Nov 2026 02:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB41606A325;
+	Thu, 19 Nov 2026 02:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hNuPtLpa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8C6E1F000C4;
-	Thu, 19 Nov 2026 02:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DMRBpEyk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CED71F000C4;
+	Thu, 19 Nov 2026 02:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056065;
-	bh=avARsu8+X+xCp+UInXTu8OBuN1kuvMDpYhS2hxGRw4k=;
+	s=korg; t=1795056068;
+	bh=NDFAvwD3aZH0aHwuU8MXbvecj0vmzH+UHqFJdiynxWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hNuPtLpaqtbXcGe1chnoLYPNA4TPB+9GZNKPk4MGycRMweHbDM0stbPQmGNWwXHWD
-	 BnKwxM+WXiNqCUhfgtw8jU6TLFPJqooe1k/RNbCMrT4AydWhvDGGbN+MpBfGyHzoFT
-	 YOdJ3sBjheLLYYynpserE7CL3Hw0vbiOrgzkuV7U=
+	b=DMRBpEykFCe6npYJi5OtWQKLVTYukfOnrBywW0EUYYqzBmRtVi1fbFvAqqFWCrDGy
+	 lnENSo463qmgGAuOkpyre4/yodDI6Kj/mCoASeM8gw6KD2ljP6h4av8VxQBWW/ldWu
+	 utIv4R6ePISpxu65KZf15zI7Yrel5/yFaKdzpj/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alvin.sipraga@analog.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kunwu Chan <kunwu.chan@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1853/2214] ASoC: codecs: rt5659: propagate GPIO errors
-Date: Wed, 18 Nov 2026 15:58:49 +0100
-Message-ID: <20261118150125.499640539@linuxfoundation.org>
+Subject: [PATCH 5.15 1854/2214] rcutorture: Fix divide-by-zero with fwd_progress_div=1
+Date: Wed, 18 Nov 2026 15:58:50 +0100
+Message-ID: <20261118150125.534306744@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,53 +62,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Kunwu Chan <kunwu.chan@gmail.com>
 
-[ Upstream commit c1e321bd5ce6ae3702db65837cfe0c792634d603 ]
+[ Upstream commit 5b748d8aa6833f2dec3f545311be69a2064bc6d1 ]
 
-devm_gpiod_get_optional() may return an error pointer, including
--EPROBE_DEFER, but rt5659_i2c_probe() does not handle these errors
-for the ldo1-en GPIO and does not check for errors for the reset GPIO.
+When fwd_progress_div=1, the forward-progress test computes:
+  sd4 = (sd + div - 1) / div = sd
+  dur = sd4 + torture_random(&trs) % (sd - sd4) = sd4 + % 0
 
-Check the return values and propagate GPIO lookup errors.
+The modulo operation with a zero divisor triggers an integer
+division by zero (undefined behavior at the C level, #DE trap on x86),
+causing a kernel Oops and panic. On x86_64, this manifests as:
 
-Fixes: d3cb2de2479b ("ASoC: rt5659: add rt5659 codec driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Reviewed-by: Alvin Šipraga <alvin.sipraga@analog.com>
-Link: https://patch.msgid.link/20261009112204.33199-2-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  rcu_torture_fwd_prog_nr: Starting forward-progress test 0
+  Oops: divide error: 0000 [#1] SMP PTI
+  RIP: 0010:rcu_torture_fwd_prog+0x90b/0x1160
+  R12: 0000000000000000
+
+The existing guard only handles non-positive values. However,
+fwd_progress_div=1 also makes the random range empty because
+sd4 == sd.
+
+Change the guard to reject values below 2. The forward-progress test
+only reaches this calculation when stall_dur() is positive, so
+sd = stall_dur() + 1 >= 2. For fwd_progress_div >= 2, sd4 < sd,
+ensuring that sd - sd4 is at least 1.
+
+Keep the existing fallback to the default value of 4 for invalid
+values.
+
+Verified with QEMU/KVM: a 138-second run with fwd_progress_div=1
+completed 81 forward-progress test cycles without a crash.
+
+Fixes: 1b27291b1ea4f ("rcutorture: Add forward-progress tests for RCU grace periods")
+Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5659.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/rcu/rcutorture.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5659.c b/sound/soc/codecs/rt5659.c
-index 6a85157456d70..21a3e17a19d01 100644
---- a/sound/soc/codecs/rt5659.c
-+++ b/sound/soc/codecs/rt5659.c
-@@ -4115,10 +4115,14 @@ static int rt5659_i2c_probe(struct i2c_client *i2c,
- 	rt5659->gpiod_ldo1_en = devm_gpiod_get_optional(&i2c->dev, "ldo1-en",
- 							GPIOD_OUT_HIGH);
- 	if (IS_ERR(rt5659->gpiod_ldo1_en))
--		dev_warn(&i2c->dev, "Request ldo1-en GPIO failed\n");
-+		return dev_err_probe(&i2c->dev, PTR_ERR(rt5659->gpiod_ldo1_en),
-+				     "failed to get ldo1-en GPIO\n");
- 
- 	rt5659->gpiod_reset = devm_gpiod_get_optional(&i2c->dev, "reset",
- 							GPIOD_OUT_HIGH);
-+	if (IS_ERR(rt5659->gpiod_reset))
-+		return dev_err_probe(&i2c->dev, PTR_ERR(rt5659->gpiod_reset),
-+				     "failed to get reset GPIO\n");
- 
- 	/* Sleep for 300 ms miniumum */
- 	msleep(300);
+diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
+index a3bab6af4028f..513caff2f7db3 100644
+--- a/kernel/rcu/rcutorture.c
++++ b/kernel/rcu/rcutorture.c
+@@ -2499,7 +2499,7 @@ static int __init rcu_torture_fwd_prog_init(void)
+ 	}
+ 	if (fwd_progress_holdoff <= 0)
+ 		fwd_progress_holdoff = 1;
+-	if (fwd_progress_div <= 0)
++	if (fwd_progress_div < 2)
+ 		fwd_progress_div = 4;
+ 	rfp = kzalloc(sizeof(*rfp), GFP_KERNEL);
+ 	if (!rfp)
 -- 
 2.53.0
 
