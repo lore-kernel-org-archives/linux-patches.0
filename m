@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015035;
-	b=C/UyB6m5hDyUV5E81+C8gj4RfnJjGjt8HDL5Q+k2IWaX+Jgw9IyuZb5Zts5XJnSlnXPm
-	 CsZm+UnPp6JM0TlHRr7hIBYUPqkU+dODMTWV6IeCxDCPyqVEf3WdeYqxQb/Nh1RvYZLIw
-	 a3frSeEvakg71dbxvD8iEMrUXNSg++4c1PKh1QwbdM6EOq+S3ZJAD1avDNyG1K5CM5aSX
-	 fJnlgtUl5hkMEJLaYrYk98kfMR/i2gsZau5w++0vOy6DwaJIgBhYlsjw9phG5WUIRUKUv
-	 l+mKKD1vQsz8fZMIQpSAyMMlM31PBbQeP+VKM6u6EcBToyVwm1y8oLcmVV4RFjmIklg==
+	t=1795015038;
+	b=mSw+Nlum7bumuKONWjasGmlzifTQdRTtY2Qujv0+QIL4eixLdgDy6p+/NF34zXFYFEG8
+	 OKLebG6CVLi/914gbuf/+pB6jXJ0TJi4/xMgYD4G7UzhMGRRq1qpIeBd/svTqAvi5FeCo
+	 GeqX+7IbjdScVswHk+E1RfppHsGsPyBM7mvFWVd1ivA0CVrM8/HN321zYbut/a9MjFftt
+	 BLJCN8PRMj2iUcAGbGDUfN/E1oEebNIew8WmIXPEEFPdMTz6lEXch/JAnblwl38PjjMft
+	 vqXP0UHicQao+HjoS2gcZTZAknzWToYHTXf2zIKdLw5uh0Dig6+RK2PAMSks1EKuPrw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015035;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015038;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OtbHbm7ADFd2NoHsy67O2GQauYUr/N2QYrXDESsilYM=;
-	b=Ljb1YHLA39Xeiy4nZThnN0O+utNDwVV4uepDPIzU747shEDUKwAf8tvtheXY7HWaKESa
-	 rxBVVU7LSl3cRs7/8G0pcXzRt/XrcTYlUIn4DTyL7vJtbxA92AEV+tInDqTLu+giBVqrd
-	 rGKonfV9tpmfsdk01bqzCUxL+UFTmFiP4IEIFoFQxc0HE0C1CPxdZIIf5lSOglGQxpT0B
-	 UmiIiBJJyRrXN1GYOThHAbsQEZoT+SNgoEAIL64rHeFP6KmuSGr+kW0wqNL1xJkB8r1xV
-	 iYMbFTWjazphrywuSLYD4RZweYOliyAUwDb2ShPlPWwOTq5vApsw7pRYhxLO0K8hoYA==
+	bh=lGL+qReOUcRIbbhDuOUL331WgUKbTwe7npLYa4KDwfo=;
+	b=O2Tke114Z5BfNsAEe/5z4S9SlWiGILm8ycclDq7nsPxm5ddikHizoLAqKqMLO4MeN0DV
+	 aBohb5Pwo/11BtOgaw13Bs/nN9pyWRASt/G9LJlacPQUrOrliHxdKfP1T71P0ezQWKUf+
+	 HR6V/mCRAgpLCvWxEt8BHhMCnBSAyKS5GyNEGcqX6hZlYOiodYOUO1uVU7ss7GP3Ymo6O
+	 YRpHEDM7h1SLaooCvYU5cIGTTBvduSULPhebqkgolNiUcrsY+BoNrEiNmkfe6ijE/U4hs
+	 +oP+QPCiyBYWmhabxmuzKCTvvUsLfd8pZtLrde9/92XtFlVxuVVhOAyNKVUCCo6ACzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09Iz4rmV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u4lAcTt/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B6D606A325;
-	Wed, 18 Nov 2026 15:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482D9606A320;
+	Wed, 18 Nov 2026 15:17:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09Iz4rmV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19971F000C4;
-	Wed, 18 Nov 2026 15:17:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u4lAcTt/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3B0C1F000C4;
+	Wed, 18 Nov 2026 15:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015035;
-	bh=OtbHbm7ADFd2NoHsy67O2GQauYUr/N2QYrXDESsilYM=;
+	s=korg; t=1795015038;
+	bh=lGL+qReOUcRIbbhDuOUL331WgUKbTwe7npLYa4KDwfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=09Iz4rmVvhZCpZ6D9fUtOMlaXDf1yonYHbbqxqxDub+Rg4UMrY4MLYGZPb50s08Ci
-	 4dxfNPuJNeAn9voTvCPP06yZxO1S31ExjnB7PKXuHBNakMsCTgDk/UQ+Ey5Wf/4fle
-	 sngxsY17oOsDLQTDVKEsp6rcM7d407nxDVuVN7bo=
+	b=u4lAcTt/qM6Mza1tZpeU7utPuW8T529O5uifHPLg4gf4KZgls90MgQfqz+o0dCh8O
+	 qqt/i2CxK1TM3Nk8H1ZrgeCHgjAWppnuV5nsaWWhedRF5A7xkpzNBvDCiSaFPTemVW
+	 1oN4W5Nkj5sRr0+sxMjhSE241iFUEcNYxa+rt75A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	HOYOUNG SEO <hy50.seo@samsung.com>,
+	Stanley Jhu <stanleyjhu@google.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0010/2651] mm/userfaultfd: wake waiters when registration modes are removed
-Date: Wed, 18 Nov 2026 15:20:50 +0100
-Message-ID: <20261118150248.370977041@linuxfoundation.org>
+Subject: [PATCH 7.3 0011/2651] scsi: ufs: core: Change the error check sequence for auto hibern8
+Date: Wed, 18 Nov 2026 15:20:51 +0100
+Message-ID: <20261118150248.406346187@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,89 +71,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: HOYOUNG SEO <hy50.seo@samsung.com>
 
-[ Upstream commit 4eee9c389b072e161549d46dcb1ae10b0222717e ]
+[ Upstream commit 6b2ff2b3eafa381db9b4c8a6ed98b353b2a09f39 ]
 
-UFFDIO_REGISTER can replace MISSING or MINOR tracking without waking
-faults that are already queued. For example, switching an anonymous
-range from MISSING to WP leaves a missing-fault waiter asleep until
-userspace explicitly wakes it.
+Auto-hibern8 enter and exit are performed by the host controller without a
+UIC command, and the auto-hibern8 idle timer only runs while no UIC command
+is outstanding. An auto-hibern8 error (IS.UHES or IS.UHXS) is therefore
+usually reported while hba->active_uic_cmd is NULL.
 
-When a registration change removes a UFFD mode, wake waiters in the
-affected interval after updating the VMA. The VMA is write-locked at
-this point, so no new faults can queue under the old modes and woken
-threads cannot retry until mmap_write_unlock(). Waiters for retained
-modes in the same interval may also wake and refault.
+Since commit fcd8b0450a9a ("scsi: ufs: core: Make ufshcd_uic_cmd_compl()
+easier to analyze"), ufshcd_uic_cmd_compl() returns early when
+hba->active_uic_cmd is NULL, before ufshcd_is_auto_hibern8_error() is
+called. Such auto-hibern8 errors are no longer recorded in hba->errors, so
+ufshcd_check_errors() is not called for them and the error handler is not
+scheduled.
 
-The hang reproduces for MISSING-to-WP and MINOR-to-MISSING transitions,
-with both read and unread fault events.
+Check for auto-hibern8 errors before checking for an active UIC command, as
+was done before that commit, but keep returning early when there is no
+active UIC command so that a NULL cmd is never dereferenced. Only report
+the missing UIC command if no auto-hibern8 error was found.
 
-Fixes: 63b2d4174c4a ("userfaultfd: wp: add the writeprotect API to userfaultfd ioctl")
-Cc: stable@vger.kernel.org
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Tested-by: Gregory Price (Meta) <gourry@gourry.net>
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-25-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: Adjusted context to retain is_vm_hugetlb_page() instead of vma_is_hugetlb(). ]
+Fixes: fcd8b0450a9a ("scsi: ufs: core: Make ufshcd_uic_cmd_compl() easier to analyze")
+Cc: stable@vger.kernel.org # v6.13+
+Signed-off-by: HOYOUNG SEO <hy50.seo@samsung.com>
+Reviewed-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261027110357.3649301-1-hy50.seo@samsung.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ sashal: Retained hba->host->host_lock without the address-of operator because host_lock is a pointer. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/userfaultfd.c |   20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/ufs/core/ufshcd.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/mm/userfaultfd.c
-+++ b/mm/userfaultfd.c
-@@ -2286,6 +2286,9 @@ static struct vm_area_struct *userfaultf
- 	return ret;
- }
- 
-+static void wake_userfault_range(struct userfaultfd_ctx *ctx,
-+		unsigned long start, unsigned long end);
-+
- /* Assumes mmap write lock taken, and mm_struct pinned. */
- static int userfaultfd_register_range(struct userfaultfd_ctx *ctx,
- 			       struct vm_area_struct *vma,
-@@ -2303,6 +2306,8 @@ static int userfaultfd_register_range(st
- 		prev = vma;
- 
- 	for_each_vma_range(vmi, vma, end) {
-+		const bool any_mode_removed = vma->vm_flags & __VM_UFFD_FLAGS & ~vm_flags;
-+
- 		cond_resched();
- 
- 		VM_WARN_ON_ONCE(!vma_can_userfault(vma, vm_flags, wp_async));
-@@ -2348,6 +2353,10 @@ static int userfaultfd_register_range(st
- 		 */
- 		userfaultfd_set_ctx(vma, ctx, vm_flags);
- 
-+		/* Retry faults for removed modes while the VMA is write-locked. */
-+		if (any_mode_removed)
-+			wake_userfault_range(ctx, start, vma_end);
-+
- 		if (is_vm_hugetlb_page(vma) && uffd_disable_huge_pmd_share(vma))
- 			hugetlb_unshare_all_pmds(vma);
- 
-@@ -3664,6 +3673,17 @@ static __always_inline void wake_userfau
- 		__wake_userfault(ctx, range);
- }
- 
-+static void wake_userfault_range(struct userfaultfd_ctx *ctx,
-+		unsigned long start, unsigned long end)
-+{
-+	struct userfaultfd_wake_range range = {
-+		.start = start,
-+		.len = end - start,
-+	};
-+
-+	wake_userfault(ctx, &range);
-+}
-+
- static __always_inline int validate_unaligned_range(
- 	struct mm_struct *mm, __u64 start, __u64 len)
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index dfbcf036d356c..490feaeee10b2 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5876,18 +5876,26 @@ static irqreturn_t ufshcd_uic_cmd_compl(struct ufs_hba *hba, u32 intr_status)
  {
+ 	irqreturn_t retval = IRQ_NONE;
+ 	struct uic_command *cmd;
++	bool ah8_err;
+ 
+ 	guard(spinlock_irqsave)(hba->host->host_lock);
++
++	/*
++	 * Auto-hibern8 is performed without a UIC command, so check for
++	 * auto-hibern8 errors before checking for an active UIC command.
++	 */
++	ah8_err = ufshcd_is_auto_hibern8_error(hba, intr_status);
++	if (ah8_err)
++		hba->errors |= (UFSHCD_UIC_HIBERN8_MASK & intr_status);
++
+ 	cmd = hba->active_uic_cmd;
+ 	if (!cmd) {
+-		dev_err(hba->dev,
+-			"No active UIC command. Maybe a timeout occurred?\n");
++		if (!ah8_err)
++			dev_err(hba->dev,
++				"No active UIC command. Maybe a timeout occurred?\n");
+ 		return retval;
+ 	}
+ 
+-	if (ufshcd_is_auto_hibern8_error(hba, intr_status))
+-		hba->errors |= (UFSHCD_UIC_HIBERN8_MASK & intr_status);
+-
+ 	if (intr_status & UIC_COMMAND_COMPL) {
+ 		/*
+ 		 * Store the UIC command result in the lowest byte of
+-- 
+2.53.0
+
 
 
