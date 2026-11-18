@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059705;
-	b=th1JGGbRc3PIrpCA/uhSjy1/OAO+NBLopf6/msu9HZYxh2IRRghgcqqffBFmi6hHU++9
-	 XVlqMB/U03m4tZE2tRly12XlvugGsvMmoAyUrgxydvJuXUN2ymbZcu/+SjpAxHDfqJJde
-	 7vf1XOvDxtqgDeZYxZPGT8iVrpF/zLm+H8dye35kXnr8JYVsRrPTN3qXEma10i/P47D17
-	 9EuO6sx5RZ6frdR5I9eHYCa51O8o8Xnq9v+zBVqBPq4PlkCSjUWlKX4r2bqrytLA+YeNL
-	 xylWFi/6EFvo8JOA+uriwlJ7B2rVSm8S9VrCuUWpn/+leLnORTnvggl0eYUXOxqyQXA==
+	t=1795059708;
+	b=htbXoKCBh0KEWxWotWlnWXa9heHYAQH+gFpb/nZaaxRI4PHtLRb0y+kfDQhsi0ORw1x9
+	 WZndl94vIgF07nHJ4jEfNdOWodcNfp9HGiA+kJeguW8jKqpmsPUXs8fgAgO0V7pCpRGQn
+	 UTuBT4NBq9ye7XNC8FCmirt9h4tjlte6VC6YLwM/+gj6p6XVSQT2ir+bmRRG/K3LZF9lU
+	 cDQTGB/kMSCwDMw00ffL/LZBRjcT3lMVgtGRp/E9Ivq7yiqijWS0jmCvk8D04uFDVQboY
+	 PYwr/d2anrUcfJYEUxq9Varpol/HpFwF5HbnXWdTrZms1Tvy52v9ZFVUfpFYctTEDtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059705;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059708;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BBQNYwK3U/v/Hwmtuzi8ndiF5fSdK5BoSb7ZJofz6Bg=;
-	b=5nUlBd4hv2itx3D7Dxw6UyC3CtUD8e1eYKQ50OYbuVrWEtVFQ9VQGuYqbBjkgjuthO3u
-	 1dphchBf50nG4mV2EZI7xQTOTfzv8PPqJLMtY//D1MISK9L3rN/4iF0GB51EEOFXjnxAj
-	 7tFcPKy+P3BAgtxLfnM1HcCGHFxSmZUo6Pm2O0YKNFY1iBT2pgPY6wM/ybCugJhDxNPIF
-	 CEU0RFAeqiCiJQu9vdev3/chE3Qbih61VW4em8iOIf+KyeadEg+wacXyJjCIJHRyI9FZV
-	 VB9mGQsVmvNwqpG71pD1zOQL53PetlQZbfa4x8u6FM3Ot3LanCP1g7L2aCULQOE7nOg==
+	bh=H3H10TqYEq2F8vNGzF6BcijB8PiOt7LFkzFClZM9ybI=;
+	b=ECqFNss0O6Oq8jhQ2N+JrkNXcyURa2mosvwx60dTn0HkytL/Pt+cQEvsQW8rbtzNVKsz
+	 RkNsfNCUfalo73Rpx8t1uCS3oT15RZ6mBAJVYJHVdv8Vy/XNW7/NHoZy8eD3j+lALm7ui
+	 Hcrh0ihvMZvpifv/yWOckQbhl+PsA5Cz1tvaiUs5Ry7aPTxyniq925KuXpmkWGczfSjDZ
+	 5zwv2ww47a8Y+DVv7aYJks3GwbvCjN/K+a/FnG28kb+WXWY63KJnPbMyzbgpXRRcXtpVP
+	 W8rMjIlgrFTgSnPqPcXTp2wB8Vn9ZwRXSxQ4jsEaORAFF5nubuHYBtL2m8FNImKG5Eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zrc+1fbR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeO3sP78;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9547606A32C;
-	Thu, 19 Nov 2026 03:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7958B606A320;
+	Thu, 19 Nov 2026 03:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zrc+1fbR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDC21F000C4;
-	Thu, 19 Nov 2026 03:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeO3sP78
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE771F000C4;
+	Thu, 19 Nov 2026 03:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059705;
-	bh=BBQNYwK3U/v/Hwmtuzi8ndiF5fSdK5BoSb7ZJofz6Bg=;
+	s=korg; t=1795059708;
+	bh=H3H10TqYEq2F8vNGzF6BcijB8PiOt7LFkzFClZM9ybI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zrc+1fbR7iXMK7br8c6/sATiJVoDTkHSw7PZ3KpzSb+BpPwe+UAvZYCjsLFNS3M+E
-	 +DAUO700gIeIgl0B4J5vxcCJWYyW7WND7b1NkCmw68qxJlLVHAUaWR6qnYYU/slfbi
-	 /Izkj8KsWrsnZ32pfXNW+TCRD5XZw0f76RI0E8cQ=
+	b=YeO3sP78iQPydPQS00v+VX1lQmGKUlozr1oLV+YeJA702vwhQkbNm3+sJDL3rN0jU
+	 6MDP3sU9E3k9FpaydtIvjic6TR/dF93LK1++N9wEuKcbMno0c7tx4+XPtfEZSW5Iqs
+	 uz89ofjU7+cPqJhSRAndcdKDgO7iL+ypbgskNda8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0930/1848] ALSA: emux: simplify snd_sf_list.callback handling
-Date: Wed, 18 Nov 2026 15:49:28 +0100
-Message-ID: <20261118145955.696050348@linuxfoundation.org>
+Subject: [PATCH 5.10 0939/1848] gpio: pca953x: Handle direction register read errors in IRQ paths
+Date: Wed, 18 Nov 2026 15:49:37 +0100
+Message-ID: <20261118145956.202313365@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,81 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
 
-[ Upstream commit 4c4cbe66828f185903d2127aed6ac9b7302e9d3a ]
+[ Upstream commit a0fe269293509acdd93b9cfb3f46636f7b91b33a ]
 
-Both drivers provide both sample_new and sample_free, and it makes no
-sense to pretend that they could not. In fact, load_data() would already
-crash if sample_new was null. So remove the remaining null checks.
+Three IRQ paths ignore the result of reading the direction registers
+and then use the destination bitmap. pca953x_read_regs() does not populate
+that bitmap when regmap_bulk_read() fails, leaving the callers to use
+uninitialized stack data.
 
-Contrary to that, the emu10k1 driver actually has a null sample_reset,
-though I'm not convinced that this inconsistency is justified.
+This can select incorrect GPIOs for direction changes during IRQ bus
+synchronization, corrupt the saved input state during IRQ setup, or
+produce incorrect pending interrupt decisions.
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Message-ID: <20240406064830.1029573-18-oswald.buddenhagen@gmx.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 8a5d87c2ba30 ("ALSA: emux: Stop voices before freeing zones in all cases")
+Check the read result at all three sites. Release irq_lock without
+changing GPIO directions on failure, leave the IRQ history untouched
+when pending detection fails, and propagate the error from IRQ setup.
+The read helper already logs the error.
+
+Fixes: 0f25fda840a9 ("gpio: pca953x: Zap ad-hoc reg_direction cache")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+Link: https://patch.msgid.link/20261018165003.3372368-1-sahaj123.sc@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/synth/emux/emux.c      |  6 ++----
- sound/synth/emux/soundfont.c | 12 +++++-------
- 2 files changed, 7 insertions(+), 11 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/sound/synth/emux/emux.c b/sound/synth/emux/emux.c
-index c60ff81390a44..8e080a4bcd16f 100644
---- a/sound/synth/emux/emux.c
-+++ b/sound/synth/emux/emux.c
-@@ -94,10 +94,8 @@ int snd_emux_register(struct snd_emux *emu, struct snd_card *card, int index, ch
- 	/* create soundfont list */
- 	memset(&sf_cb, 0, sizeof(sf_cb));
- 	sf_cb.private_data = emu;
--	if (emu->ops.sample_new)
--		sf_cb.sample_new = sf_sample_new;
--	if (emu->ops.sample_free)
--		sf_cb.sample_free = sf_sample_free;
-+	sf_cb.sample_new = sf_sample_new;
-+	sf_cb.sample_free = sf_sample_free;
- 	if (emu->ops.sample_reset)
- 		sf_cb.sample_reset = sf_sample_reset;
- 	emu->sflist = snd_sf_new(&sf_cb, emu->memhdr);
-diff --git a/sound/synth/emux/soundfont.c b/sound/synth/emux/soundfont.c
-index f76c3b21401d6..1266604cf33be 100644
---- a/sound/synth/emux/soundfont.c
-+++ b/sound/synth/emux/soundfont.c
-@@ -1044,7 +1044,7 @@ load_guspatch(struct snd_sf_list *sflist, const char __user *data,
- 	/*
- 	 * load wave data
- 	 */
--	if (smp->v.size > 0 && sflist->callback.sample_new) {
-+	if (smp->v.size > 0) {
- 		rc = sflist->callback.sample_new
- 			(sflist->callback.private_data, smp, sflist->memhdr,
- 			 data, count);
-@@ -1405,9 +1405,8 @@ snd_sf_clear(struct snd_sf_list *sflist)
- 		}
- 		for (sp = sf->samples; sp; sp = nextsp) {
- 			nextsp = sp->next;
--			if (sflist->callback.sample_free)
--				sflist->callback.sample_free(sflist->callback.private_data,
--							     sp, sflist->memhdr);
-+			sflist->callback.sample_free(sflist->callback.private_data,
-+						     sp, sflist->memhdr);
- 			kfree(sp);
- 		}
- 		kfree(sf);
-@@ -1508,9 +1507,8 @@ snd_soundfont_remove_unlocked(struct snd_sf_list *sflist)
- 			nextsp = sp->next;
- 			sf->samples = nextsp;
- 			sflist->mem_used -= sp->v.truesize;
--			if (sflist->callback.sample_free)
--				sflist->callback.sample_free(sflist->callback.private_data,
--							     sp, sflist->memhdr);
-+			sflist->callback.sample_free(sflist->callback.private_data,
-+						     sp, sflist->memhdr);
- 			kfree(sp);
- 		}
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index 5d71e453dc1c2..7d0c6d7303aa0 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -672,6 +672,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	DECLARE_BITMAP(irq_mask, MAX_LINE);
+ 	DECLARE_BITMAP(reg_direction, MAX_LINE);
+ 	int level;
++	int ret;
+ 
+ 	if (chip->driver_data & PCA_PCAL) {
+ 		/* Enable latch on interrupt-enabled inputs */
+@@ -684,7 +685,9 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
  	}
+ 
+ 	/* Switch direction to input if needed */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		goto out;
+ 
+ 	bitmap_or(irq_mask, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
+ 	bitmap_complement(reg_direction, reg_direction, gc->ngpio);
+@@ -694,6 +697,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	for_each_set_bit(level, irq_mask, gc->ngpio)
+ 		pca953x_gpio_direction_input(&chip->gpio_chip, level);
+ 
++out:
+ 	mutex_unlock(&chip->irq_lock);
+ }
+ 
+@@ -740,7 +744,9 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 		return false;
+ 
+ 	/* Remove output pins from the equation */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		return false;
+ 
+ 	bitmap_copy(old_stat, chip->irq_stat, gc->ngpio);
+ 
+@@ -828,7 +834,9 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
+ 	 * interrupt.  We have to rely on the previous read for
+ 	 * this purpose.
+ 	 */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		return ret;
+ 	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
+ 	mutex_init(&chip->irq_lock);
+ 
 -- 
 2.53.0
 
