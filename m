@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056644;
-	b=E5zQ4rmWdDMD4Nx4NnRbpqShi3/VX2niOn0wEVjdyUPzq93Ojq9vZjqVnT69QAurgA46
-	 6hJ8JFu2g0A1CePLwcq84zaH08Ft+rGQgGa2Nxl/3jTBF1m16cWD/afdD2Jx+xlZhPwz7
-	 ZA9dPaX7fPbRjBVR9T6AzwrliN1Gg0QnMlp0Op6PlCkPpYFd+lJBxVvOBwN0XzKUF57eB
-	 RaL9vJAkH6U4wcNcVDW1UgcsJDLWjNtJJjGlsUBqDPbWHkocsA5LmIVDiLhB6jno5Uj34
-	 XkTMkV3VS1CnVYYUE3kbL/GgaBO59DULot4WUsButK7sB7Vcdv40WehLHbBZ26jbnJA==
+	t=1795056647;
+	b=X2F2sK2g6YzOGTKPKn7bGn22/cH55nXl8tPEJrFAMMpk1BbLbYRIls1N3lafLBCjCRPB
+	 DFD5/sKJVRh0CCRNp736tPJ9ahfVjd7JX7lTJuQGrGgYq5ipEH8mY9O6kthNvHK08L+b8
+	 FkFyivZphPgSk5pkFDjNlN2p1XpxXDxdlnz79ABVnfOt74nRibs+MkhxLabQq9LTM/46m
+	 QDPccAg9JwL0WBGN6o1D35lgUnfbg+k/N1sYUkkcwkIyVw1Kwe778Dl0d+r105TV7dbZZ
+	 BGyujHao3n/tfXt4k/j8f3NOtf5ifU0ZAWuKTsleASCxz03dF4DW0C2BkzGyjRm6S8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056644;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056647;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=uhGTHYlXNinYJUufyKTzJK2p11x3ompcqCL+bhha2ng=;
-	b=Lp9zJfAjilhDkWPiw6kWLPy6hE+3FxdWCaARZhPNSo6sexhrpr1b6559pqsIf8jIf6sP
-	 2mhXX8ix4/cOpXWH7O96Pjq4aa/AtvtlH+bTTJfmShAWrIdLWnuCvLdufG6eQmpYuIVjY
-	 A8NZ7JAHuY6a/R/Sgbtk+WsvBpAUYSdiYd4G3gDlSk4BfpyHeBtv0mgM1CEAISObAaOCW
-	 RD1UNvbWRDVvtzcW2FTRz5JLzYfZnEmfJekr/94Xn9hrB29H322GACPRVOdMcWMP4C8mV
-	 Fj4QKib0tyiOmF4v44mtRgwLKhAx0lQiSEP14S7S96k1q9Xc/L5/EJUTK2x/q1OehWg==
+	bh=B0d+mt6OBLLapUumHSfBIoohBqvImx2ob0b8CM1nWCo=;
+	b=ysQL3NKSn5zYWwCLC85qUIdIuTYueOsD/l3844DEOkDeTMqu4v/18YumtkcWjpz9ke1I
+	 ySOiE8KuirPs2lbvG5JMN63QFBxDMHmJx8EOQw2ZdwdQLgv1AyVnM/1MZC3lhBC/WNAea
+	 4tcRY++ZZtnRlZpXhW4YEk9JvlRrwyOouS7eF/TBqvSBpxFbbZd/BnHvsTUc0u+IFu280
+	 iS95417RGXtJu0kovZBHxNFjSxPTZXdbzfJptptrv8Yi0TZzD1lkHoF3ZX4c/X3J/I/vl
+	 /JO6mpNsJAV5NF1X56Q0EqHDeqcsS+g+RV+AFhCUG+/Y+702JkZ/pmx54aoZyqvYcYg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbPesfbJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eI3pvQVS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5832D606A320;
-	Thu, 19 Nov 2026 02:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184F6606A320;
+	Thu, 19 Nov 2026 02:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbPesfbJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24811F000C4;
-	Thu, 19 Nov 2026 02:50:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eI3pvQVS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0A81F000C5;
+	Thu, 19 Nov 2026 02:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056644;
-	bh=uhGTHYlXNinYJUufyKTzJK2p11x3ompcqCL+bhha2ng=;
+	s=korg; t=1795056647;
+	bh=B0d+mt6OBLLapUumHSfBIoohBqvImx2ob0b8CM1nWCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SbPesfbJDvwUr+kj9wNAb4orZlQybn4fX2iFeznkUL8QFznGxKPp0hVwCZp8L1gBZ
-	 9uxDKIijNLSmJ+HlUQVWLGJqW6SK+AjR0+VUeB6ANokKKnEt6RbL4g1673XUmJ99kP
-	 3iqzNx2qe6buAtZS5me74GTKMA+CFIdwi/ChZqvk=
+	b=eI3pvQVStCoWmDu7zvS/6XUZXj6i9iXrWNvvzmqiCs/CqsZitw5g3yF6Co7oaTsfI
+	 heSule2tvK4k7zlq0Hc0TWXkF81xH79Uwzy1FSTdMklYGMC0fXuqWw4Nfd8uBfUr2L
+	 JqvnXNyP39YjvXv9E702i2lNZKgXnLNkmdy+OjIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	tangmeng <tangmeng@uniontech.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2061/2214] rtc: class: Make the time32 hctosys limit configurable
-Date: Wed, 18 Nov 2026 16:02:17 +0100
-Message-ID: <20261118150133.114853696@linuxfoundation.org>
+Subject: [PATCH 5.15 2062/2214] timers: Move timer sysctl into the timer code
+Date: Wed, 18 Nov 2026 16:02:18 +0100
+Message-ID: <20261118150133.150169833@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,114 +68,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: tangmeng <tangmeng@uniontech.com>
 
-[ Upstream commit b253c2e96a80aac8e2bc67b425bf007ed78d4d8c ]
+[ Upstream commit efaa0227f6c6a5073951b20cf2f8c63c4155306c ]
 
-The RTC_HCTOSYS feature faces an impossible dilemma on 32-bit systems:
+This is part of the effort to reduce kernel/sysctl.c to only contain the
+core logic.
 
- a) systemd requires RTC_HCTOSYS=y with the correct timestamp
-    for its intended operation
-
- b) broken RTC hardware can produce random future timestamps
-    beyond 2038 at boot time
-
- c) time32 userspace immediately hangs if the time is set to a
-    date beyond 2038 and requires timestamps to be clamped
-
- d) time64 userspace is intended to survive the actual 2038
-    date and requires timestamps to not be clamped
-
-Commit b3a5ac42ab18 ("rtc: hctosys: Ensure system time doesn't overflow
-time_t") introduced this limit to protect time32 userspace from future
-RTC dates that can break boot and address constraints a), b) and c),
-but broke d) in the process by limiting RTC_HCTOSYS to the time32 range
-and falling back to RTC_HCTOSYS=n behavior when the RTC time overflows
-that.
-
-Make the behavior configurable with a new RTC_HCTOSYS_TIME32_LIMIT
-option that chooses between breaking c) or d). On systems with
-COMPAT_32BIT_TIME=n, only RTC_HCTOSYS_TIME32_LIMIT=n is allowed since
-userspace can be assumed to be fully built for time64. 64-bit kernels
-running 32-bit userland never had the cutoff and continue to not offer
-the option.
-
-Warn on rejection with the RTC date and option name so users can
-identify the cause and find the setting.
-
-[arnd: reword Kconfig text and patch description,
-       add COMPAT_32BIT_TIME dependency]
-----
-I ended up rewriting most of the text but kept Karl's ownership
-as he did the original patch.
-
-Fixes: b3a5ac42ab18 ("rtc: hctosys: Ensure system time doesn't overflow time_t")
-Link: https://lore.kernel.org/all/20220908115337.1604277-1-arnd@kernel.org/
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20261020080026.2461578-1-arnd@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: tangmeng <tangmeng@uniontech.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20220215065019.7520-1-tangmeng@uniontech.com
+Stable-dep-of: e7cad586d732 ("timers: Clear pending_map on CPU hotplug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/Kconfig | 21 +++++++++++++++++++++
- drivers/rtc/class.c |  8 +++++---
- 2 files changed, 26 insertions(+), 3 deletions(-)
+ include/linux/timer.h |  8 -------
+ kernel/sysctl.c       | 11 ---------
+ kernel/time/timer.c   | 53 +++++++++++++++++++++++++++++++------------
+ 3 files changed, 38 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
-index ee59c82f9df18..b84e184b3ee98 100644
---- a/drivers/rtc/Kconfig
-+++ b/drivers/rtc/Kconfig
-@@ -30,6 +30,27 @@ config RTC_HCTOSYS
- 	  the value read from a specified RTC device. This is useful to avoid
- 	  unnecessary fsck runs at boot time, and to network better.
+diff --git a/include/linux/timer.h b/include/linux/timer.h
+index 00ee960be028b..9162f275819a7 100644
+--- a/include/linux/timer.h
++++ b/include/linux/timer.h
+@@ -217,14 +217,6 @@ extern void init_timers(void);
+ struct hrtimer;
+ extern enum hrtimer_restart it_real_fn(struct hrtimer *);
  
-+config RTC_HCTOSYS_TIME32_LIMIT
-+	bool "Reject RTC dates after the 2038 cutoff"
-+	depends on RTC_HCTOSYS && COMPAT_32BIT_TIME && !64BIT
-+	default y
-+	help
-+	  Reject RTC dates after 03:14:07 UTC on 19 January 2038 when
-+	  initializing the system clock in order to work around broken
-+	  RTC implementations that produce nondeterministic timestamps
-+	  without a working backup battery.
-+
-+	  A rejected date leaves system time unchanged, normally near
-+	  the Unix epoch, and the RTC's hctosys sysfs attribute reads
-+	  0. Userspace must supply the time if no other source has
-+	  initialized it.
-+
-+	  Say Y here if the kernel may have to run old time32 userspace on
-+	  hardware that can produce unpredictable RTC timestamps.  If the
-+	  kernel is intended to only run time64 compatible userspace and
-+	  continue working past 2038, you must pick N here in order to
-+	  have a working RTC_HCTOSYS functionality.
-+
- config RTC_HCTOSYS_DEVICE
- 	string "RTC used to set the system time"
- 	depends on RTC_HCTOSYS
-diff --git a/drivers/rtc/class.c b/drivers/rtc/class.c
-index 31fa315bbb9f3..22c2b31929f41 100644
---- a/drivers/rtc/class.c
-+++ b/drivers/rtc/class.c
-@@ -73,12 +73,14 @@ static void rtc_hctosys(struct rtc_device *rtc)
- 
- 	tv64.tv_sec = rtc_tm_to_time64(&tm);
- 
--#if BITS_PER_LONG == 32
--	if (tv64.tv_sec > INT_MAX) {
-+	if (IS_ENABLED(CONFIG_RTC_HCTOSYS_TIME32_LIMIT) &&
-+	    tv64.tv_sec > INT_MAX) {
-+		dev_warn(rtc->dev.parent,
-+			 "hctosys: rejecting %ptR UTC due to CONFIG_RTC_HCTOSYS_TIME32_LIMIT=y\n",
-+			 &tm);
- 		err = -ERANGE;
- 		goto err_read;
- 	}
+-#if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
+-struct ctl_table;
+-
+-extern unsigned int sysctl_timer_migration;
+-int timer_migration_handler(struct ctl_table *table, int write,
+-			    void *buffer, size_t *lenp, loff_t *ppos);
 -#endif
+-
+ unsigned long __round_jiffies(unsigned long j, int cpu);
+ unsigned long __round_jiffies_relative(unsigned long j, int cpu);
+ unsigned long round_jiffies(unsigned long j);
+diff --git a/kernel/sysctl.c b/kernel/sysctl.c
+index ac16c3084c96c..869f05d418ccf 100644
+--- a/kernel/sysctl.c
++++ b/kernel/sysctl.c
+@@ -2588,17 +2588,6 @@ static struct ctl_table kern_table[] = {
+ 		.extra1		= SYSCTL_ZERO,
+ 		.extra2		= SYSCTL_ONE,
+ 	},
+-#if defined(CONFIG_SMP) && defined(CONFIG_NO_HZ_COMMON)
+-	{
+-		.procname	= "timer_migration",
+-		.data		= &sysctl_timer_migration,
+-		.maxlen		= sizeof(unsigned int),
+-		.mode		= 0644,
+-		.proc_handler	= timer_migration_handler,
+-		.extra1		= SYSCTL_ZERO,
+-		.extra2		= SYSCTL_ONE,
+-	},
+-#endif
+ #ifdef CONFIG_BPF_SYSCALL
+ 	{
+ 		.procname	= "unprivileged_bpf_disabled",
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index fdf178204775d..c943f0c123aa7 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -44,6 +44,7 @@
+ #include <linux/slab.h>
+ #include <linux/compat.h>
+ #include <linux/random.h>
++#include <linux/sysctl.h>
  
- 	err = do_settimeofday64(&tv64);
+ #include <linux/uaccess.h>
+ #include <asm/unistd.h>
+@@ -223,7 +224,7 @@ static void timer_update_keys(struct work_struct *work);
+ static DECLARE_WORK(timer_update_work, timer_update_keys);
  
+ #ifdef CONFIG_SMP
+-unsigned int sysctl_timer_migration = 1;
++static unsigned int sysctl_timer_migration = 1;
+ 
+ DEFINE_STATIC_KEY_FALSE(timers_migration_enabled);
+ 
+@@ -234,7 +235,42 @@ static void timers_update_migration(void)
+ 	else
+ 		static_branch_disable(&timers_migration_enabled);
+ }
+-#else
++
++#ifdef CONFIG_SYSCTL
++static int timer_migration_handler(struct ctl_table *table, int write,
++			    void *buffer, size_t *lenp, loff_t *ppos)
++{
++	int ret;
++
++	mutex_lock(&timer_keys_mutex);
++	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
++	if (!ret && write)
++		timers_update_migration();
++	mutex_unlock(&timer_keys_mutex);
++	return ret;
++}
++
++static struct ctl_table timer_sysctl[] = {
++	{
++		.procname	= "timer_migration",
++		.data		= &sysctl_timer_migration,
++		.maxlen		= sizeof(unsigned int),
++		.mode		= 0644,
++		.proc_handler	= timer_migration_handler,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= SYSCTL_ONE,
++	},
++	{}
++};
++
++static int __init timer_sysctl_init(void)
++{
++	register_sysctl("kernel", timer_sysctl);
++	return 0;
++}
++device_initcall(timer_sysctl_init);
++#endif /* CONFIG_SYSCTL */
++#else /* CONFIG_SMP */
+ static inline void timers_update_migration(void) { }
+ #endif /* !CONFIG_SMP */
+ 
+@@ -251,19 +287,6 @@ void timers_update_nohz(void)
+ 	schedule_work(&timer_update_work);
+ }
+ 
+-int timer_migration_handler(struct ctl_table *table, int write,
+-			    void *buffer, size_t *lenp, loff_t *ppos)
+-{
+-	int ret;
+-
+-	mutex_lock(&timer_keys_mutex);
+-	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
+-	if (!ret && write)
+-		timers_update_migration();
+-	mutex_unlock(&timer_keys_mutex);
+-	return ret;
+-}
+-
+ static inline bool is_timers_nohz_active(void)
+ {
+ 	return static_branch_unlikely(&timers_nohz_active);
 -- 
 2.53.0
 
