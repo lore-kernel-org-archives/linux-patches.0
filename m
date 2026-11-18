@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051814;
-	b=g71XpybVdU0TLsM0m1NbypXjJ4CbjOOQsg2Z3RqlHJiaoD3eTwkQcK8XyUUV+7glbgwt
-	 eXKuEkwYseT8EJ4tjjQ5ynq3Y2Ytmeza6FHD2bQRjtInG06yqTEF18ZcX9ODD16lT6ulp
-	 aMYi4qKItJ2JLO1p3rxZHQgPNj+GazuhQL56VjAqwZkXY8i+U0cm5Vdwbnlo5vHYCHOcQ
-	 YgzEaCnI4k2lNrcT6BTbYv+PDbyYf7Xu1XqBNfp30R3lqp/x/y2BmaZ5kRS4Xpczljsfh
-	 PwS34qCkPBG+wJnHaMMVM45audbZM9R7VqyGl6TvwworimRWLLif4VEqNJcZ8lDB6hw==
+	t=1795051817;
+	b=GBZmrmaR6i3IVYrCpse9CRB7cAUYE8xAAlzszoMfaWLjq3Dx1WbucubyifXSlI8CZtdd
+	 sPPFMFA5d6bYQCQwLXzct9KfzepXCtaxYp4gtfLn92Gmv3qvcBE9aMHfggsyxwYvBIZqB
+	 dn28CJUvLalHdFwlixQ7n0nxG4o/TONf5sDR6MSo1sQRhr0mNFDprSCQmSYGOQ1OgdHbi
+	 +ThmUYiHbeRMJQLdQGBySMgcqep2bxfSM8X3nKOZI5EBDTX47VHuRftyjQ/EKVQrn0Z/A
+	 GCTofUfhHCKfU8UAXV4yoYKZgYKA7xKg0iGik5NBlRkudyE1EPc/7SOsoPPfLZ4Cy0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051814;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051817;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Quc+hMPeNkuP7Jrzu/FBDKufMUfxbbVaz2Sld2xWQx8=;
-	b=FacqHmBB2Uvj4W7eRkNuydh3C8zdfTeReJaj1esz8Oy1GWFYY0f6mQHUfWNOAyCInyxG
-	 YkoZr1xg7B8Uv769wYw5+3eD3gSBtlf6o5VVIi225HhHzbq6Xf/VuuEsH0+dobWKkDOKB
-	 Cku7RccVfDRl6EBUvBv3HIyr+jpRJ1qGAPxWqqFR9jJej+5w6R/e+3bmQzxcYhJdsUJbh
-	 4twYwVcGuipwvcwdi7dolBPg8YH0zhmGzlzMqSmTUvZaFpNy0VFJAsR91baWyaIGiK04x
-	 nrgnQw5IWB2H/p59Kn9WfALgpjw8GqeAZm5S1kRjf2vnU6Yv3AQ+Stdk3rmlSklmqIg==
+	bh=V6Xwf8QM6PNaMlgM+EQc48g5sLpO++DAHAYBDc6GbwQ=;
+	b=hOXNu3qyMDr2884ySHXHoBcR98COhvDmG0MAFPWJ9dd2/PRFFKor8VmBFi6wzg6rrJx7
+	 e7WB3qrzYWEcFN1QE6LEOp1FORhKiMEzrYDmxKHxkGHJK2OXAMrdtvavNBh8bnnat1xVn
+	 oLn2hYpcNyKZgnnCa9noXpaUw4vGZRZsh4qUl6PZCbX07SM/lvuaWrX1FncoUGGoW///t
+	 2xyTW/UJmxKdB2/QwtY8rHiFjsJnlyuihTIuI1mwAVnaWX61K7SLI3u4BssraxIoE0uE1
+	 y9LkFvxRdBpxezcsTWzfiM2p3xKcjSIS/ThmO8/W0tGEYZz7XwkpiPuONzgxsh3W3gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jmH4K+V2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEi+mkSq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FE7606A31C;
-	Thu, 19 Nov 2026 01:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1785F606A335;
+	Thu, 19 Nov 2026 01:30:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jmH4K+V2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7031F000C4;
-	Thu, 19 Nov 2026 01:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QEi+mkSq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8501F000C4;
+	Thu, 19 Nov 2026 01:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051813;
-	bh=Quc+hMPeNkuP7Jrzu/FBDKufMUfxbbVaz2Sld2xWQx8=;
+	s=korg; t=1795051816;
+	bh=V6Xwf8QM6PNaMlgM+EQc48g5sLpO++DAHAYBDc6GbwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jmH4K+V2TNhpHd0jfy03TdkqjBb6PvV1hcawLi3QE2neq48jJN9J44pt/anJK3/A8
-	 aqtv58eHQfCG4OmxbxwtFCZBVzL7XFIdJi4ro48Ym8ET1JXRF3gusRxAKZWXTlXYn3
-	 m7NiXbTbiLsmXBBikCmKEz0ffn6eEqWj3vLjcveg=
+	b=QEi+mkSquX3NeRuYKijT6bCBmK0vVyHHFM+2TAAQvQ8kPf14Z0F2ae7+mev7PLq4x
+	 4RUOShI5rl7cq+Pe2IMDnCfgoR5zz7gpEmX6sEtGDGtFYKUG0nNuhtJAWgAxIjeHf3
+	 KNRndTCgR0Tnv8h69NhgCTYy6jrEsietJ+fTGER4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 5.15 0341/2214] xfs: propagate errors while checking null siblings
-Date: Wed, 18 Nov 2026 15:33:37 +0100
-Message-ID: <20261118150024.285150185@linuxfoundation.org>
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>
+Subject: [PATCH 5.15 0342/2214] pNFS: Fix CB_NOTIFY_DEVICEID CHANGE to consume ndc_immediate
+Date: Wed, 18 Nov 2026 15:33:38 +0100
+Message-ID: <20261118150024.360923489@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,41 +67,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Benjamin Coddington <ben.coddington@hammerspace.com>
 
-commit e5bde75a816b3549942f4b09a8bf09006b7ea9de upstream.
+commit a0cb76dc3b2919af8257fc08b4f9a79a35442483 upstream.
 
-LOLLM observes that if xfs_da3_path_shift returns an error here, scrub
-doesn't handle it the way that it handles most runtime errors.  Instead,
-it drops the error and keeps going, even though that's not how that's
-supposed to work.  Fix that by calling xchk_da_process_error to set
-corruption flags and then jump out of the flow of execution.
+decode_devicenotify_args() gated the trailing ndc_immediate on
+cbd_layout_type rather than cbd_notify_type, so the flag was never
+consumed and a multi-item cnda_changes<> misaligned after the first
+entry.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: 7c4a07a424c18d ("xfs: scrub directory/attribute btrees")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Assisted-by: LOLLM # finding obvious bugs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: 1be5683b03a7 ("pnfs: CB_NOTIFY_DEVICEID")
+Cc: stable@vger.kernel.org
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Benjamin Coddington <bcodding@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/dabtree.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nfs/callback_xdr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/scrub/dabtree.c
-+++ b/fs/xfs/scrub/dabtree.c
-@@ -236,9 +236,10 @@ xchk_da_btree_block_check_sibling(
- 	if (sibling == 0) {
- 		error = xfs_da3_path_shift(ds->state, altpath, direction,
- 				false, &retval);
--		if (error == 0 && retval == 0)
-+		if (!xchk_da_process_error(ds, level, &error))
-+			goto out;
-+		if (retval == 0)
- 			xchk_da_set_corrupt(ds, level);
--		error = 0;
- 		goto out;
- 	}
+--- a/fs/nfs/callback_xdr.c
++++ b/fs/nfs/callback_xdr.c
+@@ -313,7 +313,7 @@ __be32 decode_devicenotify_args(struct s
+ 		memcpy(dev->cbd_dev_id.data, p, NFS4_DEVICEID4_SIZE);
+ 		p += XDR_QUADLEN(NFS4_DEVICEID4_SIZE);
  
+-		if (dev->cbd_layout_type == NOTIFY_DEVICEID4_CHANGE) {
++		if (dev->cbd_notify_type == NOTIFY_DEVICEID4_CHANGE) {
+ 			p = xdr_inline_decode(xdr, sizeof(uint32_t));
+ 			if (unlikely(p == NULL)) {
+ 				status = htonl(NFS4ERR_BADXDR);
 
 
