@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033789;
-	b=DdOLVeaseGtp5DQOXNAX8WhjVoB4Q4ptpyBl36BdSOHFM5U7B8TRcJenGZZVmHU/1tnM
-	 QJn/LUmvXNTR2FqV3VYXYYboe6UZQmbZ/uXIgOwXwrmOS2DkLrSG4Me7aVBdJaM2bQeDZ
-	 9rAGJx8E7Gwn8TgffhUGlWrhygQGnqmnES6Ko8ew6YKD0IhSKbUgxbjxqv81zspalCmdE
-	 W4g6x35U5fU6qPf0hlWV1MXtmXIUdRlkL+vWDj92OumXBkDid7AFgWh3oLKbHkE5hUfAe
-	 HL04kceMoudy/pmbhsmK+HDz8BauJ82QBci3flSqnKTk2LibljYiWGiAIGhHnfo8i1g==
+	t=1795033791;
+	b=vAvKsucxf9ZgLeWJ/EKEtNHS7MTIMFoNNQpDX1UGoDEy7RYTs4sK3NRaOA0U4UhXmihi
+	 6zywdi1GhVgrLtZ6Qkmn+hCIxOUIPBciDdN6BnC4Nss3tDuXzN1hzK7ubTIzImtGtA889
+	 2QupyvymH0JB5JaE+Xt2mM5zyRoa2TTWjFxU1aUxt+7cqX3X4Ixvmn8BHWPp2KluNSdCk
+	 duOd6l0OZNQ+YUbu9bvR6+jTpy8URPLEQrqr5QX0A/kGCqt9SW6n4EVoJLi0ocHzZOje+
+	 Kk7i299M43sD5t2B8XkzDocmoGaOKYosg4AWfZz8+rbxLnsJPA7MMG3CjnIUUWEM7Kw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YEY4eZ07lDnVjDjxjAaJ8xLoRKyfnponPUWbaaADLfQ=;
-	b=HZOqr7KsCbC+AiP2hHdVK1ksp3zgoz7NyVr+0UQgY+fPL8N8+yZSVkbBu4LOScOXN8KE
-	 LlX/Lyy84yJFOHEGAZGa3sMk/TpOwGmqfDoRZqUmqQB/mc9ocZB4hq++5pzsMgtPYAnWD
-	 KhgMsqpq9sYlJ7KRXz/xiWB9H7fepTDnFbjPfSVreTkAcXBCZd4JUxOQ95S6SSa30nPMK
-	 zw9sK5/1wTb2pP0EaGaxLDJNdj4C6NHck9FA8+hcOWUrDaoGqVWGb94TCEIHY7J5u2Wc2
-	 GxPY2gWzTDP82Oy77bq5gylbmAGpFFCahUGjDiyi9pEb57kJO72PQbv+Q/qdflWDTzQ==
+	bh=Nqkz/Q1XsIp+gB4XK6u8r7t/GU8bNIgSQxbhCO1mh4E=;
+	b=GQl589LUD7VRHMuaf2PMcAvn2Zh8NQNigVbmDoLr1QR7WSXqheExc8bRbSNRr1heclfQ
+	 FvgkL4NwwF+/Co+5TaOak94pXkCNTUabL01PnOXfdCeb0DrsTaKblyOzybfITKgS+dTLx
+	 1dA0yISNWhdBMWSKvPS00KP4jzOT5tRrlpxbVNjn2M6Ur+duQxV+9DXFfw4uG+eE6mvBf
+	 Qx+OkCRsaXlQDefnyP9YuAOQpeGqrrnU1THFjqMxYgbSrIKFQHW0F4+DsQcaiW48nFECs
+	 WjT0UZR5k/QLSdXLmIRvPGHyNREwbwCY69TYc2oyaKwfNZOjCQiSL0qm8KjKwDp4ioA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVhg2RLa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=em3FVeAP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F055606A31C;
-	Wed, 18 Nov 2026 20:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23F8606A320;
+	Wed, 18 Nov 2026 20:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wVhg2RLa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F551F000C4;
-	Wed, 18 Nov 2026 20:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=em3FVeAP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE251F000C4;
+	Wed, 18 Nov 2026 20:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033788;
-	bh=YEY4eZ07lDnVjDjxjAaJ8xLoRKyfnponPUWbaaADLfQ=;
+	s=korg; t=1795033791;
+	bh=Nqkz/Q1XsIp+gB4XK6u8r7t/GU8bNIgSQxbhCO1mh4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wVhg2RLahXidpUfRakVsQQc4NBv0x06WVk0H6TWhY7RNpgZS4zg0vbfknt0Us/LOj
-	 xoyAg7AHW0cMvBEQyvRxZxis9cSSoesKoZ7e7DV2ol2Fctyhmx9gbpvovQXglTV38E
-	 v6FEGOVoYTwvr7bkVjritR7DOHJfrkuOXwlmKDdc=
+	b=em3FVeAPmBn9+gT/oLAL+HlDlRPTMsPMRVFGDc5hfgNWiUB5o4vlumxKsfmETehs+
+	 Alo7qfQyf1n4hZrBezbDdLH5Dgy2sZfhMiD6bZFwjt5B5zmACUL62+6mzbeC5/PnNU
+	 GscX3rvzOvmFID+aGfJSNbgKJiHb08rxKC92mlYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0139/3318] misc: ibmvmc: reject oversized inbound messages
-Date: Wed, 18 Nov 2026 15:12:41 +0100
-Message-ID: <20261118150318.615764612@linuxfoundation.org>
+Subject: [PATCH 6.6 0140/3318] PCI: switchtec: Add Microchip PCI1008 device ID
+Date: Wed, 18 Nov 2026 15:12:42 +0100
+Message-ID: <20261118150318.654183032@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,46 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Logan Gunthorpe <logang@deltatee.com>
 
-[ Upstream commit 18189e5d84aa0b3bc89189cba13b9105634cb6fb ]
+[ Upstream commit 0d8a6306c680ee534be131e360f0cafa2bada7be ]
 
-ibmvmc_recv_msg() trusts the message length from the CRQ.
+Add the Microchip PCI1008 device ID to the core switchtec management
+driver's PCI ID table. Without it, the management endpoint on a PCI1008
+switch is not bound by this driver, preventing userspace tools from
+configuring or monitoring the switch and leaving NTB functionality
+unavailable.
 
-It passes that length directly to h_copy_rdma().
-
-The destination buffer is only max_mtu bytes.
-
-A larger length can overrun it before userspace reads the message.
-
-Validate the CRQ length before issuing the RDMA copy.
-
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Link: https://patch.msgid.link/20260624175139.7981-1-alhouseenyousef@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260714212010.230606-3-logang@deltatee.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ibmvmc.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/pci/switch/switchtec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/misc/ibmvmc.c b/drivers/misc/ibmvmc.c
-index 06eae39bfafe5..e881f326b1025 100644
---- a/drivers/misc/ibmvmc.c
-+++ b/drivers/misc/ibmvmc.c
-@@ -1661,6 +1661,13 @@ static int ibmvmc_recv_msg(struct crq_server_adapter *adapter,
- 		return -1;
- 	}
- 
-+	if (msg_len > buffer->size) {
-+		dev_err(adapter->dev, "Recv_msg: msg_len 0x%lx exceeds buffer size 0x%x\n",
-+			msg_len, buffer->size);
-+		spin_unlock_irqrestore(&hmc->lock, flags);
-+		return -1;
-+	}
-+
- 	/* RDMA the data into the partition. */
- 	rc = h_copy_rdma(msg_len,
- 			 adapter->riobn,
+diff --git a/drivers/pci/switch/switchtec.c b/drivers/pci/switch/switchtec.c
+index 89e7bcbdece1c..40eda5231d2c3 100644
+--- a/drivers/pci/switch/switchtec.c
++++ b/drivers/pci/switch/switchtec.c
+@@ -1873,6 +1873,7 @@ static const struct pci_device_id switchtec_pci_tbl[] = {
+ 	SWITCHTEC_PCI100X_DEVICE(0x1004, SWITCHTEC_GEN4),  /* PCI1004 16XG4 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1005, SWITCHTEC_GEN4),  /* PCI1005 16XG4 */
+ 	SWITCHTEC_PCI100X_DEVICE(0x1006, SWITCHTEC_GEN4),  /* PCI1006 16XG4 */
++	SWITCHTEC_PCI100X_DEVICE(0x1008, SWITCHTEC_GEN4),  /* PCI1008 16XG4 */
+ 	{0}
+ };
+ MODULE_DEVICE_TABLE(pci, switchtec_pci_tbl);
 -- 
 2.53.0
 
