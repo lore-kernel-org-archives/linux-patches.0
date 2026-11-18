@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024531;
-	b=3DHdOqM7FMapm3m5jTThgvttlqo5AfSDu84C63rz0fpSn96rGdBi9/5QQB/zR603o/zN
-	 iDb8Em6SdsZjZEv+0CGbCOOBwWVkWHrEcgXAsEb0ICpBUC55tZ6VMSr2XEwxXOV6LyCPH
-	 IixPNDI5+YgB45hE9TpN1r3BMOim5xGv4B2XBPTc09rpUa226zLhRIAYjOkvKouUjhPI7
-	 hmtfqKq2SOaVfSEuFnz/RcHKTD4uz1I9WFJ2z6rKmbn9u84r3AlvKD+PnUO9vhFNCsF9r
-	 UL+soFTTcPtiTOJ7JOgO/0izRb8Hcoy7yxz3OF4CDEODqglYK0XTa/TuEEskXm4JWIA==
+	t=1795024533;
+	b=c1gT7eqjRCnnwSTQQJDB6/pKoS3VLgbv65FnIM8jnlphzQvyoO90wZ5K8AS05Swdka73
+	 yKrBspaH6pbCa55n/hYMJnfa+GjKJ1n4qqGOzys04uZw6tg2C6r1Q4DXJp7V10KDPoGcq
+	 I2fu2/4IuVhuehQUFR5hmGx73hOmcgZI0r8P1eUbSRHxkoe3jEsb80QKdPnP7Gw+4dLLB
+	 YBHiRzM5CswLUJvbUOrjg2DOPBb77tfI+lMZ+ASYFGSTiDxLTjsaWPnNYTQWYneXZ/GCr
+	 DKgp3lC9j8E3DmQhMDT3YO3vAFOECMFbJ6DN96EjSooMenJHQyo98Ao+AMH5RHELq7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024531;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024533;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6Tuvdrw17ak2K/srn5ei8/DxTO7MA0FJkBfnIRpbuNA=;
-	b=jFe6We1CEqsHuePNDnM375G4UJTliQMsl6sEdUoAY+cYeujfDQezGxzVKTJ3ok8sXnzb
-	 4Y0Znykh+tkW/hV9uzNPy/kF+f7TNYRhS4kDdJFOs8RzpiVGmcsp1GeSozxzz0hILiGEO
-	 J+qksAbbf5n4/fUAfbrkxOJ3QtFWhEGBXm8kMRMARJARlk5tZa2kLne4IMn8yhTQ9DfGB
-	 91dkNMRlkTPQAdAEGTh5dPv+zLf9lagTaLZE8Gq6NgtRNtOxgNgsOh2/+SCIduj2sel/J
-	 5QqQDmLqQ2ZTVoACnsl+5z3ZaMvxLO5Ltj1ghBc5s01VNBUYG6Cr2lGx2gYAarFhjKw==
+	bh=ac2cZwVTw/n5WigJ518bLbnQHzokIaJ5XCzQMsK8uIY=;
+	b=BL5Ibua9umUy2f5HBXxP9f+Ipyx55YuSlmOGRbVevosdt+/r1Ukzvu8FrXO0leoXcNK6
+	 o1FctHV+Jq6qJM9HjhYd93lKhph6Az3gDdIrV0yhu3tqUMvT11kNuulpZBAHP2Gg7VPTd
+	 j9+opBWcQr/vWDB0s3fBi/oKEUOTdvIms98j1LmJZ7K8AWratUyueMxOjTzhkWjk8cB2N
+	 F4ItYpsR+eDG13Miyaoh8v9aE0nfBjzHY/4F4LNturUdham4E8wxcja68dWP0PrjuzDq6
+	 eWt9t293nMQwgPLLvx2oIvYIjt8Fd6AysRFWhMhss5g1OeaSNKs4SKTBJYfzOz154BQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eDPqqgfL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZLkY8U4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30AF606A333;
-	Wed, 18 Nov 2026 17:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6DB606A320;
+	Wed, 18 Nov 2026 17:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eDPqqgfL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672681F000C6;
-	Wed, 18 Nov 2026 17:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZLkY8U4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11B6F1F000C5;
+	Wed, 18 Nov 2026 17:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024530;
-	bh=6Tuvdrw17ak2K/srn5ei8/DxTO7MA0FJkBfnIRpbuNA=;
+	s=korg; t=1795024533;
+	bh=ac2cZwVTw/n5WigJ518bLbnQHzokIaJ5XCzQMsK8uIY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eDPqqgfLi1J4yi3akzrVAwuu5TU1vvWT6VTecAJkZuai9YY7+HBn6MghlWfkoaE/M
-	 O91qEno/OyHpccwhi73QsHJdO59Ksvz8q1QRq4RH8eD0eFAx8CLNmADSjjutGAPNnY
-	 ZWxDsga7GoPrPUcj0e57zBnMraLeo4ICmUXNQy2Y=
+	b=RZLkY8U4tXQg49EG8xrWlO3MfBCab/Xip8dr2pEW7Pa6TCSIN0AzlSEXNW97+BGiK
+	 HchK/oLRb+rxpTK7uMpm3TEKNeM//oziPHLou81Lbv6wcpkVtKIBOK9b3e6GhjvwH3
+	 tV6p17Hbx85wOzx2kJwWv15VY2rsQ9D5VI8tafEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0758/2151] ARM: dts: qcom: msm8974: add MDSS reset
-Date: Wed, 18 Nov 2026 15:41:33 +0100
-Message-ID: <20261118150149.656619678@linuxfoundation.org>
+Subject: [PATCH 6.18 0759/2151] dt-bindings: vendor-prefixes: Add LeEco
+Date: Wed, 18 Nov 2026 15:41:34 +0100
+Message-ID: <20261118150149.687460889@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,48 +69,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Adam Skladowski <a39.skl@gmail.com>
 
-[ Upstream commit 542991a1d77e5fea5263c2406773a0cd09a8ec48 ]
+[ Upstream commit 1658af4d25bd3133d1b3403ccdda6214d40c0ebb ]
 
-Commit 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on until
-late_initcall_sync") kept power-domains on longer during boot which is
-causing DSI clock to get stuck and fail to acquire its configuration on
-DSI bringup. Follow the example of other platforms and add MDSS reset to
-the display subsystem node, fixing DSI issues.
+Add vendor prefix for now dead ecosystem company LeEco
 
-Fixes: 5a9fc531f6ec ("ARM: dts: msm8974: add display support")
-Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260810-msm8974-mmcc-fix-v2-1-5c787d79c0fa@oss.qualcomm.com
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260821-next-patches-v5-1-ec81cee63e09@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom/qcom-msm8974.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-index 8459a840d9ffe..8212eb0513e61 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974.dtsi
-@@ -9,6 +9,7 @@
- #include <dt-bindings/interconnect/qcom,msm8974.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/reset/qcom,gcc-msm8974.h>
-+#include <dt-bindings/reset/qcom,mmcc-msm8974.h>
- 
- / {
- 	#address-cells = <1>;
-@@ -1910,6 +1911,8 @@ mdss: display-subsystem@fd900000 {
- 			interrupt-controller;
- 			#interrupt-cells = <1>;
- 
-+			resets = <&mmcc MDSS_RESET>;
-+
- 			status = "disabled";
- 
- 			#address-cells = <1>;
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 5e80440a22395..a2a3fce5ba004 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -895,6 +895,8 @@ patternProperties:
+     description: Shenzen LC Technology Co., Ltd.
+   "^leadtek,.*":
+     description: Shenzhen Leadtek Technology Co., Ltd.
++  "^leeco,.*":
++    description: Leshi Holding Beijing.
+   "^leez,.*":
+     description: Leez
+   "^lego,.*":
 -- 
 2.53.0
 
