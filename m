@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057061;
-	b=p/v+LlFIARlOBulxA99E97v1XNsQ/x9oEWvTz9xdxsCbgPuvLbTIlK+30yGkJSQEq5/C
-	 lzNmR/3s8ATFloQZEDgMKdff53RbfDZ7XsL6IQ4hF0aRITZgiv6ZEzELXCOJS9CAqhgC3
-	 Dwoldn4B9+Zvftr24+n4XgoOBOF8zbaoiusCr6jWWlj6GM+4E2CC6ILTJvxq4C7G2Uvkq
-	 wZRALSRoa0SIUMYXD2rehxfxQVMgziOKTNYyQLUGM5KzJhTlc5TBogk/Yyhgx8FEyK4l/
-	 t+UZO1ynWWkkVbNnK5KkyA+ViZI6Hgfl8QeExsq6x1aHjnGjNQmjmWfKzix3H8mtSJw==
+	t=1795057064;
+	b=H9sGch/M8K4Q4ny/wf297p9lhH3mTRSSLM1ZAik2kAox7CXz5FonU6nYk2q+oRpxE4/m
+	 BCYl5XJl4bk0thTD6qhYXMHe2F3h0xgFOQ8ERzKpkr7e+oz23EzFFQhV97amDPDRshYiB
+	 9AxHvfXFOh6sNlB9RYj6VgUuUeoBzY5MIX92wvfSOc+2WZ70JOyo9idnSrQapEz/naa01
+	 ONjFkK8xOc1FSi9mf/BKm/wKbQXWFF49dFwlbVwGPY3VFvqJlFhZahoif1XqDjaSaUudQ
+	 FTwbMgy93dOR38ZnaD7FGARLJToa7r5LkU4S5I4tutOTydwPKdCT95z4QKUliS7EdQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057061;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057064;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=LRLEkaXAYW7F9W7r92ivyf8i4I3A6oPoiZnFDr52Akg=;
-	b=0XSyjejDWa30BXISwA2iki/Pdij9iDqCCwgCcdCgCiboIs7hFgpPP7Fl1dKFn7mLl9RJ
-	 NNGs9w4SN8unon7o8e8SOKXJvwT9fPZHx0vpuZjyBWj+OP7jj6VShptf9D85uHvrWU34y
-	 a/FN7ut07OFWIBzNALZciuWwoulQtRJrMOooag+VOuvmdF6DkcZqA7iDZfXV9PDfuRaaU
-	 80dkzyskXo+73va8nv6ZPPLUFw0N0gP5u5EcJtiF4U+NjoyGZ/viRhSC3G75ddkAmPoKt
-	 mqC5pzx+nGDqvJGlyTTKFXoNkGZg7dn0RoALtM9TievnhpkNzqf8+bYhQYzv6vjK9hg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=SlRhvRKQ7+KQt+XafHcMrV5YkH4UD3SxWxB6Piig3T0=;
+	b=AxxFWwkYx+Pk+16Lbd2Sn8PagaojlGfC+8HkkiaYPG3Ha46Vzkg/2nu8OsaNgRZg+mKS
+	 BXsDcuDMKZxQfLfNy9xFamjnoJx3ZDIQPbzXYYQHMFkVYJJRyLfgYxaTWbzYLXOISfndF
+	 PV1dRgRUCb80H5FzMSIQje9idgZDGTecZWzKQVgRz9Se6Dm3/6nGkZU9bXbVpZH0428Uj
+	 i+pECELl0XRmWWTvoIV5IfE2O+HF5dbQyg5fPYszUtAHnDVbODq8i094Q74z+kpUKW4WG
+	 19Zdv/TrsDcCkx4pxIHbjf2ZJiJ6RO/cgSQuv0EXPDjLzlEb2QEO4VUcCDaLJ39p2AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmfQpdwa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yA6mNCqR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAB9606A325;
-	Thu, 19 Nov 2026 02:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F74606A332;
+	Thu, 19 Nov 2026 02:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmfQpdwa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33B171F000C4;
-	Thu, 19 Nov 2026 02:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yA6mNCqR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5A21F000C4;
+	Thu, 19 Nov 2026 02:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057061;
-	bh=LRLEkaXAYW7F9W7r92ivyf8i4I3A6oPoiZnFDr52Akg=;
+	s=korg; t=1795057064;
+	bh=SlRhvRKQ7+KQt+XafHcMrV5YkH4UD3SxWxB6Piig3T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WmfQpdwajrb7cIpktFRLoYDN2plAW4xC+c2F0pLz4LheuSdSDk8apijkHW1i9LZrR
-	 8Mbw27Fl4X/Yrx2TskevoaZctMrOSkIY9QI6peZdeKiJq+I+MHO9h/KJxoQ6Dn0VOQ
-	 WvxR4uVXlBDYdv/58RfaoM0TW/s1OG2xYogwScR0=
+	b=yA6mNCqRhD5mpXSOEsw6IdIJ1EHHKLhjBSKJ67/rthHjqCaaApu9tevtCYNe7M3s7
+	 1W3kHYGjafh7KirJRUYTyz0tarIBN9E7Ur1ekYwAkBj2yV5oeiSuC084aYxydNoGM0
+	 Wmdpzl+TMTXavFgvLcg6lS8ITNsTY2nKRhsjsfGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	dmaengine@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Tim Gardner <tim.gardner@canonical.com>
-Subject: [PATCH 5.15 2208/2214] dmaengine: dw-axi-dmac: Fix uninitialized variable in axi_chan_block_xfer_start()
-Date: Wed, 18 Nov 2026 16:04:44 +0100
-Message-ID: <20261118150138.586054740@linuxfoundation.org>
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 2170/2214] rtc: s35390a: drop needless struct s35390a::rtc member
+Date: Wed, 18 Nov 2026 16:04:06 +0100
+Message-ID: <20261118150137.219746616@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -64,59 +62,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tim Gardner <tim.gardner@canonical.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-commit 885633075847f475f26a29249d772cc0da85d8cd upstream.
+[ Upstream commit cd2a7052482e8a34348e30e6a6525ecb23f0d383 ]
 
-Coverity complains of an uninitialized variable:
+The memory pointed to by the ::rtc member is managed via devres, and
+no code in this driver uses it past _probe().
 
-5. uninit_use_in_call: Using uninitialized value config.dst_per when calling axi_chan_config_write. [show details]
-6. uninit_use_in_call: Using uninitialized value config.hs_sel_src when calling axi_chan_config_write. [show details]
-CID 121164 (#1-3 of 3): Uninitialized scalar variable (UNINIT)
-7. uninit_use_in_call: Using uninitialized value config.src_per when calling axi_chan_config_write. [show details]
-418        axi_chan_config_write(chan, &config);
+We can drop it from the structure and just use a local temporary
+variable, reducing runtime memory consumption by a few bytes.
 
-Fix this by initializing the structure to 0 which should at least be benign in axi_chan_config_write(). Also fix
-what looks like a cut-n-paste error when initializing config.hs_sel_dst.
-
-Fixes: 824351668a413 ("dmaengine: dw-axi-dmac: support DMAX_NUM_CHANNELS > 8")
-Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: dmaengine@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
-Link: https://lore.kernel.org/r/20211025181656.31658-1-tim.gardner@canonical.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/20250304-rtc-cleanups-v2-12-d4689a71668c@linaro.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 6199051016cd ("rtc: s35390a: Read 24-hour mode on access")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-s35390a.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -375,7 +375,7 @@ static void axi_chan_block_xfer_start(st
- 				      struct axi_dma_desc *first)
- {
- 	u32 priority = chan->chip->dw->hdata->priority[chan->id];
--	struct axi_dma_chan_config config;
-+	struct axi_dma_chan_config config = {};
- 	u32 irq_mask;
- 	u8 lms = 0; /* Select AXI0 master for LLI fetching */
+diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
+index 5247d48190e4c..782beb03a638c 100644
+--- a/drivers/rtc/rtc-s35390a.c
++++ b/drivers/rtc/rtc-s35390a.c
+@@ -64,7 +64,6 @@ MODULE_DEVICE_TABLE(of, s35390a_of_match);
  
-@@ -393,7 +393,7 @@ static void axi_chan_block_xfer_start(st
- 	config.tt_fc = DWAXIDMAC_TT_FC_MEM_TO_MEM_DMAC;
- 	config.prior = priority;
- 	config.hs_sel_dst = DWAXIDMAC_HS_SEL_HW;
--	config.hs_sel_dst = DWAXIDMAC_HS_SEL_HW;
-+	config.hs_sel_src = DWAXIDMAC_HS_SEL_HW;
- 	switch (chan->direction) {
- 	case DMA_MEM_TO_DEV:
- 		dw_axi_dma_set_byte_halfword(chan, true);
+ struct s35390a {
+ 	struct i2c_client *client[8];
+-	struct rtc_device *rtc;
+ 	int twentyfourhour;
+ };
+ 
+@@ -443,6 +442,7 @@ static int s35390a_probe(struct i2c_client *client,
+ 	int err, err_read;
+ 	unsigned int i;
+ 	struct s35390a *s35390a;
++	struct rtc_device *rtc;
+ 	char buf, status1;
+ 	struct device *dev = &client->dev;
+ 
+@@ -468,9 +468,9 @@ static int s35390a_probe(struct i2c_client *client,
+ 		}
+ 	}
+ 
+-	s35390a->rtc = devm_rtc_allocate_device(dev);
+-	if (IS_ERR(s35390a->rtc))
+-		return PTR_ERR(s35390a->rtc);
++	rtc = devm_rtc_allocate_device(dev);
++	if (IS_ERR(rtc))
++		return PTR_ERR(rtc);
+ 
+ 	err_read = s35390a_read_status(s35390a, &status1);
+ 	if (err_read < 0) {
+@@ -501,17 +501,17 @@ static int s35390a_probe(struct i2c_client *client,
+ 
+ 	device_set_wakeup_capable(dev, 1);
+ 
+-	s35390a->rtc->ops = &s35390a_rtc_ops;
+-	s35390a->rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
+-	s35390a->rtc->range_max = RTC_TIMESTAMP_END_2099;
++	rtc->ops = &s35390a_rtc_ops;
++	rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
++	rtc->range_max = RTC_TIMESTAMP_END_2099;
+ 
+-	set_bit(RTC_FEATURE_ALARM_RES_MINUTE, s35390a->rtc->features);
+-	clear_bit(RTC_FEATURE_UPDATE_INTERRUPT, s35390a->rtc->features );
++	set_bit(RTC_FEATURE_ALARM_RES_MINUTE, rtc->features);
++	clear_bit(RTC_FEATURE_UPDATE_INTERRUPT, rtc->features);
+ 
+ 	if (status1 & S35390A_FLAG_INT2)
+-		rtc_update_irq(s35390a->rtc, 1, RTC_AF);
++		rtc_update_irq(rtc, 1, RTC_AF);
+ 
+-	return devm_rtc_register_device(s35390a->rtc);
++	return devm_rtc_register_device(rtc);
+ }
+ 
+ static struct i2c_driver s35390a_driver = {
+-- 
+2.53.0
+
 
 
