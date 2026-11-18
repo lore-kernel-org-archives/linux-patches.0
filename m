@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041585;
-	b=sB9u18m0LlqdiQz4Yb4fBkeD5eqtrTktFbaBSzLj702GIAQgp6zS3QKpJjrvgm2ed+xi
-	 r93lC0kilGAzZDbg67jKVfK+FQ8nrFNB4/XQ/O/Xjry8fIKNhFRsw36EPTo6ymWSXDNcv
-	 6DECJKO/Fh70NfLLvI1DO9EGFhO8gsjldFodySn8gqZ+wPiuKpItFPaqHBvs3MoP1ryZB
-	 iqmmmEh02be3Ru/8ziFtwInH2Qe7smjDgaQlaKp/WdUJVKkW+Yo5PLYcdR53lhtLWm2gN
-	 uU2nuqQn+GCBy8rd2DqZNWEwav94vpi8QTTTpOFNpa5DFhJOSwAFILsT5V1YqMgtmKA==
+	t=1795041588;
+	b=Gl6RNqodwNRY91jm2iPXJVq62YqITvCJS/pRU2y1oMnVsYzEWzub1neCvJ0k9WGKQrhN
+	 JDpEh2/lGNlnkwx4kEH3WGFm1BkFxgBmrfojSl2ST8ZnGdfotrgDxUUBB6oofI9DcDkQN
+	 FUd8DAUa3fOeoWhcHiVoBrYRVbozBDa4HHNAb2ORwxSRS1fVZlARLuAWawC91R9r+Skko
+	 q8Ryn9cDfJiBcZvVVnU2bZU+Jmvx22nEGU03AtocON8tPgh25c8QH6GrPMfVEi2sOnzD+
+	 vGYthyhikLtTK1Mufh8OLhzyJVwpCPC0jj5VvE03vVLcQXhkZLA9PBEZyLvLuP0t0tg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041585;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041588;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R9fTLJOoW03fhgaVHK4af/n4zW5YPld0bEqCk70t6TQ=;
-	b=Q52YXvTJCMyo3Q4YkeeDNRmGgbiXfHN65a2icGtxddSNijBhkLCvSE2Fxs0ZrIS96qCs
-	 57dsxoL3xukRwVRYGXJGmRt0/8DBNNzClgljvsoXwxx51IZOTdoxvMThmffkWK3Ck8LS4
-	 1H1WB1jAj4OkCBf+I4x69+m1RJVv7xCaajE1+e3KlAZuhNIvFUEQdefg0LmRlGv+cWqo4
-	 s8jKU20msuKVY1k7ySyvQ7kad/w6vySSnQVtu3wqrJgg5DQnLyABtZSciJDB2xBYpbGvK
-	 5DqUmzdrFocYBGCEr8jhDRKNf6pxLpxE2fMLthaKeGe9gNRiU/4F0/qHgysH8LZFGMA==
+	bh=9DUmdDnUy5BQkcqegwNFjQEQT8LYpk+O/LtRdb4Z0Qw=;
+	b=D196za/VeVc0HrH051QvkvDgWy3KO0/OxNpl1Hg0dUelSJQ6ebGeL1BV8yBTXVMUuuOq
+	 gNohdwlIok+ebEGqvllRKLl9FRcjJTKTlgN+/UWKCsqZjwy9nsK94OHm/a5xHN3oQ07Ej
+	 gVL7PSD5dNf1FdhFt0baVX92UKU05A1NlCE7mleXfn2c78Tr5ooj+uRG+Pr8v+DRbX7mj
+	 By78sXMDyIHNPl1z6EMRC8ehvoo5gW0yhm9EMIHSRIrb69yCZehJO8DRiwAtjKHeByiRD
+	 JZ0Sk/9ECQCgec4Sa2pW9BFxyxUPTpyXYs96KpPI8/N440/cGtA5bcordCdpd4D4Ssw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tTLoASuC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uGzAnymS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B396C606A6D7;
-	Wed, 18 Nov 2026 22:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886B8606A332;
+	Wed, 18 Nov 2026 22:39:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tTLoASuC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137AD1F000C4;
-	Wed, 18 Nov 2026 22:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uGzAnymS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAAD41F000C4;
+	Wed, 18 Nov 2026 22:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041585;
-	bh=R9fTLJOoW03fhgaVHK4af/n4zW5YPld0bEqCk70t6TQ=;
+	s=korg; t=1795041588;
+	bh=9DUmdDnUy5BQkcqegwNFjQEQT8LYpk+O/LtRdb4Z0Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tTLoASuCSOO36OdVopJwF/LzQobLKohBL4vZk1+JMjRMb41wqcRm6HweakWHhmGPZ
-	 DyLjsevoFq6WUns4AOTHWP0ivkdvNsIUjXIYQpru3Lj3b0rjudhoEwl309GXVdtxTc
-	 WUxL1Iu2SVGr98nD2R4EhoCdAWahjDYrrboxisAM=
+	b=uGzAnymSMAS6m7OACd99j0sJ3yeFQ+IBrAuc5eXnSywNSd4nwK4/TmHTZnR6xJkur
+	 F9eSE6N8tbgFi6+/xXc8ADX0LTQBaUqMNyUAAP7Q/2qSNDtViV4PrVfddepJHu8OiY
+	 v4zoOowURgtcXmIz8HlYVAFM29vY1zdTSAQIyHBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2866/3318] ASoC: codecs: wm8750: Fix definition of ALC Capture NG Type control
-Date: Wed, 18 Nov 2026 15:58:08 +0100
-Message-ID: <20261118150446.551382316@linuxfoundation.org>
+Subject: [PATCH 6.6 2867/3318] ASoC: codecs: wm8510: Fix definition of ADC Inversion Switch control
+Date: Wed, 18 Nov 2026 15:58:09 +0100
+Message-ID: <20261118150446.578023553@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,35 +71,36 @@ Content-Transfer-Encoding: 8bit
 
 From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 8c299077c787c151c5c88928467d8e8d85cebdb7 ]
+[ Upstream commit 22d50113078dfbeff0d005d64fd9cc680249831c ]
 
-The noise gate type is wm8750_enum[7], bit 1 of WM8750_NGATE, not
-wm8750_enum[4], which is the 3D upper cut-off.
+ADC polarity is bit 0 of WM8510_ADC, not bit 0 of WM8510_COMP, which
+is the loopback enable. wm8974, which has the same register layout,
+already uses WM8974_ADC for this control.
 
-Fixes: abadfc928a27 ("[ALSA] ASoC codecs: WM8750 support")
+Fixes: 5d421516670e ("[ALSA] ASoC: Add WM8510 driver")
 Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/ce530dfb932d9e8def75059ab9d669360adc76e8.1791959026.git.sammiee5311@gmail.com
+Link: https://patch.msgid.link/6ada61df8c8fc97ffb1623e74f6742ca498032fa.1791959026.git.sammiee5311@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8750.c | 2 +-
+ sound/soc/codecs/wm8510.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wm8750.c b/sound/soc/codecs/wm8750.c
-index 2d2feaf95e495..a9e55439a8224 100644
---- a/sound/soc/codecs/wm8750.c
-+++ b/sound/soc/codecs/wm8750.c
-@@ -171,7 +171,7 @@ SOC_SINGLE("ALC Capture Hold Time", WM8750_ALC2, 0, 15, 0),
- SOC_SINGLE("ALC Capture Decay Time", WM8750_ALC3, 4, 15, 0),
- SOC_SINGLE("ALC Capture Attack Time", WM8750_ALC3, 0, 15, 0),
- SOC_SINGLE("ALC Capture NG Threshold", WM8750_NGATE, 3, 31, 0),
--SOC_ENUM("ALC Capture NG Type", wm8750_enum[4]),
-+SOC_ENUM("ALC Capture NG Type", wm8750_enum[7]),
- SOC_SINGLE("ALC Capture NG Switch", WM8750_NGATE, 0, 1, 0),
+diff --git a/sound/soc/codecs/wm8510.c b/sound/soc/codecs/wm8510.c
+index 6636a70f3895c..9db4b8caa9a2d 100644
+--- a/sound/soc/codecs/wm8510.c
++++ b/sound/soc/codecs/wm8510.c
+@@ -135,7 +135,7 @@ SOC_SINGLE("Master Playback Volume", WM8510_DACVOL, 0, 127, 0),
  
- SOC_SINGLE("Left ADC Capture Volume", WM8750_LADC, 0, 255, 0),
+ SOC_SINGLE("High Pass Filter Switch", WM8510_ADC, 8, 1, 0),
+ SOC_SINGLE("High Pass Cut Off", WM8510_ADC, 4, 7, 0),
+-SOC_SINGLE("ADC Inversion Switch", WM8510_COMP, 0, 1, 0),
++SOC_SINGLE("ADC Inversion Switch", WM8510_ADC, 0, 1, 0),
+ 
+ SOC_SINGLE("Capture Volume", WM8510_ADCVOL,  0, 127, 0),
+ 
 -- 
 2.53.0
 
