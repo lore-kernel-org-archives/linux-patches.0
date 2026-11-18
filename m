@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030308;
-	b=leE8q1mfmglJiugHt3LtBlkV6DrDD3TghslY8vjXkRgOXqbVI5wOMdVSy55/pa6VzZj7
-	 a7igmJ0JKmSwclK17FBtd38frJbJLcx7roo9lC4XGN+a/RjjNZIr0d+1LI9o61RjcR1Up
-	 VzRuphl2ojztDSzl6YXxWVL9R960QETlfE9EC9IGq44RpLa8ikiUa27cdoteznCdzC8kT
-	 CAaSKZ0MLKAQnQoX2tKUlDkTYDers2cK2jEwdLUIYf75xR8Le63dulh3Shq0+W11X+Fo0
-	 KPhmDfjk73rTzuvc2Mb8lOekr5tMXCicClV4VBYva8Rxb+Jdy2Tc3mt+Js0lWq1Jidg==
+	t=1795030311;
+	b=Nj2l0vVt7OsJovufizKV9m5AIa16E8dadC4SLcV1t9hgo2MPFPCcbtCJbu8DkyB0rkpZ
+	 w1MJHsuOJAfWgkg7j+GsEK9wo4dFT86hBrKiruwnMfUvQktgFxapVIGjqUarywXK2Se78
+	 nCWGoNcxbYInupNTBAyEu6CGfiL1GabyKcPhQNbaCiH4oQGcSyiF5pp6Yj/BAC70oRF57
+	 K6XSANQcIjBI7lJpe9sI4hJ8I6I3gSHAUMaxbKP/GzjCH/RwbRaf/CoNmqNajQlsAWLHH
+	 Uq1A6XShMg1Q4TDSNGAvXy8oA5temELhUbi66Grxlc7xf4e1lbTkSnxWV3f2JRrGLZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030308;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030311;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q8j5Xkx21kXMPKaww9p/jJDKH0y+sUAM25w7ZYnABec=;
-	b=gMe7pvnqjndv172N/RxBsx/LDi//deNsXA/AxxDume31L88IHlHbahHRs4z+1rMFnIoM
-	 TLBGvYaqUcXIGQb7k1qzzlSC8FatgqfrMo55EFiCvdoKTdG+36yE7Sz3i83V9ri9nriOA
-	 uHiSmlyiS/v9++vCbjeHJcGkLba6A2pR7U7NQFkqCngWfNExIQH0aChOInwlCr/m6ADGd
-	 hhptkT1QLP8obh2ELexZ2xa4KD1HDLDx9juSfVv6D3/VnMk5bUvABUJ1b2/bcGNeFQc3D
-	 /VIX/m7Yk0wWIOOE1qXf9OV423jDSMjjc9Ch+hD4KGu0KuJS5hMGSZwVtQgNqszgwiA==
+	bh=iQbwBUmaUNGIjWVN8wzzXjGn3SaKPdRhetZpjlIAVxk=;
+	b=YNtBZ6+Vsz2q+NLokzh/NPPJ+uJJudTRpi9pTUA9mSc6QG0ImE1euko+y1wECxomvdqN
+	 HsrfZ+5os93jyXtUooQKGsdPUtHtKnvGypv3sjwhvF1aLinvg0/5ikatbrTAc13Abk0JR
+	 0buzewMm3CYG2W7chskH0NNruotx+zdU6uwlkCOOVJzn2xuI8N91Vxox3seWV61YU8VR5
+	 Gt2Fr28CIjmnU9NzQU0g+h03VbS17zXSkjrpKLwG2dGWjXMWRAzUPVFSvmfFJ9IyuJzhB
+	 iyXvQbWmnWuKK8MBI7PLF2J+c4DHFt70DbWyqXX7XHwLKpZ957e5b195YgQmCbYFu7g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V0Xx7RkE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4wUxa3n;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422B8606A7CA;
-	Wed, 18 Nov 2026 19:31:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3F9606A7CA;
+	Wed, 18 Nov 2026 19:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V0Xx7RkE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BE11F000C4;
-	Wed, 18 Nov 2026 19:31:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4wUxa3n
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3B31F000C4;
+	Wed, 18 Nov 2026 19:31:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030308;
-	bh=Q8j5Xkx21kXMPKaww9p/jJDKH0y+sUAM25w7ZYnABec=;
+	s=korg; t=1795030311;
+	bh=iQbwBUmaUNGIjWVN8wzzXjGn3SaKPdRhetZpjlIAVxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V0Xx7RkEaPbnWj/ufQYaX8BwP7tHqAss3iN381Fdg6aplZTOvViQXv8/9PuAqiASD
-	 jk8vDm4qkTClt/Dcyv4J7UgbkY6l+Gr2JnX4axMJdfFKXzi0/v9IXlX2w6GMwLSiIi
-	 jScqSK69skM5sXD9e0yYYEO6xcVO0rzI2TkN/jNs=
+	b=h4wUxa3nb6loteC4UCGOyL51aFuKTMayOUF/y/lKARjgkoHqLgEIhkkhUPe76KkbC
+	 vnD6BViBRmdFQj2T2AGsW3+QFXcLsamWtdquXEEF16mYZOVa9tKsh4L6/CW5hOXnqU
+	 uQSdeToWG7XAo9QV7EzfNlKJQ7G8B0V/EnLF8Pls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0659/1756] perf debug: Add function symbols to dump_stack
-Date: Wed, 18 Nov 2026 15:46:26 +0100
-Message-ID: <20261118150035.216239660@linuxfoundation.org>
+Subject: [PATCH 6.12 0660/1756] perf test: Avoid use perf_env
+Date: Wed, 18 Nov 2026 15:46:27 +0100
+Message-ID: <20261118150035.280612934@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,242 +70,146 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 9c9f4a27eb1096beb650f312a1ce996a9960b56c ]
+[ Upstream commit 5a156353e55e994627ac584e90b3b802e51e1ee2 ]
 
-Symbolize stack traces by creating a live machine. Add this
-functionality to dump_stack and switch dump_stack users to use
-it. Switch TUI to use it. Add stack traces to the child test function
-which can be useful to diagnose blocked code.
-
-Example output:
-```
-$ perf test -vv PERF_RECORD_
-...
-  7: PERF_RECORD_* events & perf_sample fields:
-  7: PERF_RECORD_* events & perf_sample fields                       : Running (1 active)
-^C
-Signal (2) while running tests.
-Terminating tests with the same signal
-Internal test harness failure. Completing any started tests:
-:  7: PERF_RECORD_* events & perf_sample fields:
-
----- unexpected signal (2) ----
-    #0 0x55788c6210a3 in child_test_sig_handler builtin-test.c:0
-    #1 0x7fc12fe49df0 in __restore_rt libc_sigaction.c:0
-    #2 0x7fc12fe99687 in __internal_syscall_cancel cancellation.c:64
-    #3 0x7fc12fee5f7a in clock_nanosleep@GLIBC_2.2.5 clock_nanosleep.c:72
-    #4 0x7fc12fef1393 in __nanosleep nanosleep.c:26
-    #5 0x7fc12ff02d68 in __sleep sleep.c:55
-    #6 0x55788c63196b in test__PERF_RECORD perf-record.c:0
-    #7 0x55788c620fb0 in run_test_child builtin-test.c:0
-    #8 0x55788c5bd18d in start_command run-command.c:127
-    #9 0x55788c621ef3 in __cmd_test builtin-test.c:0
-    #10 0x55788c6225bf in cmd_test ??:0
-    #11 0x55788c5afbd0 in run_builtin perf.c:0
-    #12 0x55788c5afeeb in handle_internal_command perf.c:0
-    #13 0x55788c52b383 in main ??:0
-    #14 0x7fc12fe33ca8 in __libc_start_call_main libc_start_call_main.h:74
-    #15 0x7fc12fe33d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
-    #16 0x55788c52b9d1 in _start ??:0
-
----- unexpected signal (2) ----
-    #0 0x55788c6210a3 in child_test_sig_handler builtin-test.c:0
-    #1 0x7fc12fe49df0 in __restore_rt libc_sigaction.c:0
-    #2 0x7fc12fea3a14 in pthread_sigmask@GLIBC_2.2.5 pthread_sigmask.c:45
-    #3 0x7fc12fe49fd9 in __GI___sigprocmask sigprocmask.c:26
-    #4 0x7fc12ff2601b in __longjmp_chk longjmp.c:36
-    #5 0x55788c6210c0 in print_test_result.isra.0 builtin-test.c:0
-    #6 0x7fc12fe49df0 in __restore_rt libc_sigaction.c:0
-    #7 0x7fc12fe99687 in __internal_syscall_cancel cancellation.c:64
-    #8 0x7fc12fee5f7a in clock_nanosleep@GLIBC_2.2.5 clock_nanosleep.c:72
-    #9 0x7fc12fef1393 in __nanosleep nanosleep.c:26
-    #10 0x7fc12ff02d68 in __sleep sleep.c:55
-    #11 0x55788c63196b in test__PERF_RECORD perf-record.c:0
-    #12 0x55788c620fb0 in run_test_child builtin-test.c:0
-    #13 0x55788c5bd18d in start_command run-command.c:127
-    #14 0x55788c621ef3 in __cmd_test builtin-test.c:0
-    #15 0x55788c6225bf in cmd_test ??:0
-    #16 0x55788c5afbd0 in run_builtin perf.c:0
-    #17 0x55788c5afeeb in handle_internal_command perf.c:0
-    #18 0x55788c52b383 in main ??:0
-    #19 0x7fc12fe33ca8 in __libc_start_call_main libc_start_call_main.h:74
-    #20 0x7fc12fe33d65 in __libc_start_main@@GLIBC_2.34 libc-start.c:128
-    #21 0x55788c52b9d1 in _start ??:0
-  7: PERF_RECORD_* events & perf_sample fields                       : Skip (permissions)
-```
+The perf_env global variable holds the host perf_env data but its use
+is hit and miss. Switch to using local perf_env variables and ensure
+scoped perf_env__init and perf_env__exit. This loses command line
+setting of the perf_env, but this doesn't matter for tests. So the
+perf_env is fully initialized, clear it with memset in perf_env__init.
 
 Signed-off-by: Ian Rogers <irogers@google.com>
-Link: https://lore.kernel.org/r/20250624210500.2121303-1-irogers@google.com
+Link: https://lore.kernel.org/r/20250724163302.596743-13-irogers@google.com
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Stable-dep-of: 58bf7b7af359 ("perf test code-reading: Fix duplicate kernel maps and machine leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/builtin-test.c | 15 +++++++-
- tools/perf/ui/tui/setup.c       |  2 +-
- tools/perf/util/debug.c         | 68 +++++++++++++++++++++++++++------
- tools/perf/util/debug.h         |  1 +
- 4 files changed, 73 insertions(+), 13 deletions(-)
+ tools/perf/tests/code-reading.c  |  5 +++-
+ tools/perf/tests/dlfilter-test.c | 50 ++++++++++++++++++--------------
+ tools/perf/util/env.c            |  1 +
+ 3 files changed, 33 insertions(+), 23 deletions(-)
 
-diff --git a/tools/perf/tests/builtin-test.c b/tools/perf/tests/builtin-test.c
-index e35b138f4bd0e..4698b48d15a5c 100644
---- a/tools/perf/tests/builtin-test.c
-+++ b/tools/perf/tests/builtin-test.c
-@@ -6,6 +6,9 @@
-  */
- #include <fcntl.h>
- #include <errno.h>
-+#ifdef HAVE_BACKTRACE_SUPPORT
-+#include <execinfo.h>
-+#endif
- #include <poll.h>
- #include <unistd.h>
- #include <setjmp.h>
-@@ -233,6 +236,16 @@ static jmp_buf run_test_jmp_buf;
+diff --git a/tools/perf/tests/code-reading.c b/tools/perf/tests/code-reading.c
+index 638816544c3f6..8d40541abf681 100644
+--- a/tools/perf/tests/code-reading.c
++++ b/tools/perf/tests/code-reading.c
+@@ -561,11 +561,13 @@ static int do_test_code_reading(bool try_kcore)
+ 	struct dso *dso;
+ 	const char *events[] = { "cycles", "cycles:u", "cpu-clock", "cpu-clock:u", NULL };
+ 	int evidx = 0;
++	struct perf_env host_env;
  
- static void child_test_sig_handler(int sig)
+ 	pid = getpid();
+ 
+ 	machine = machine__new_host();
+-	machine->env = &perf_env;
++	perf_env__init(&host_env);
++	machine->env = &host_env;
+ 
+ 	ret = machine__create_kernel_maps(machine);
+ 	if (ret < 0) {
+@@ -708,6 +710,7 @@ static int do_test_code_reading(bool try_kcore)
+ 	perf_cpu_map__put(cpus);
+ 	perf_thread_map__put(threads);
+ 	machine__delete(machine);
++	perf_env__exit(&host_env);
+ 
+ 	return err;
+ }
+diff --git a/tools/perf/tests/dlfilter-test.c b/tools/perf/tests/dlfilter-test.c
+index 54f59d1246bc5..6427e3382711f 100644
+--- a/tools/perf/tests/dlfilter-test.c
++++ b/tools/perf/tests/dlfilter-test.c
+@@ -319,11 +319,12 @@ static int run_perf_script(struct test_data *td)
+ 
+ static int test__dlfilter_test(struct test_data *td)
  {
-+#ifdef HAVE_BACKTRACE_SUPPORT
-+	void *stackdump[32];
-+	size_t stackdump_size;
-+#endif
-+
-+	fprintf(stderr, "\n---- unexpected signal (%d) ----\n", sig);
-+#ifdef HAVE_BACKTRACE_SUPPORT
-+	stackdump_size = backtrace(stackdump, ARRAY_SIZE(stackdump));
-+	__dump_stack(stderr, stackdump, stackdump_size);
-+#endif
- 	siglongjmp(run_test_jmp_buf, sig);
- }
++	struct perf_env host_env;
+ 	u64 sample_type = TEST_SAMPLE_TYPE;
+ 	pid_t pid = 12345;
+ 	pid_t tid = 12346;
+ 	u64 id = 99;
+-	int err;
++	int err = TEST_OK;
  
-@@ -246,7 +259,7 @@ static int run_test_child(struct child_process *process)
+ 	if (get_dlfilters_path(td->name, td->dlfilters, PATH_MAX))
+ 		return test_result("dlfilters not found", TEST_SKIP);
+@@ -353,37 +354,42 @@ static int test__dlfilter_test(struct test_data *td)
  
- 	err = sigsetjmp(run_test_jmp_buf, 1);
- 	if (err) {
--		fprintf(stderr, "\n---- unexpected signal (%d) ----\n", err);
-+		/* Received signal. */
- 		err = err > 0 ? -err : -1;
- 		goto err_out;
- 	}
-diff --git a/tools/perf/ui/tui/setup.c b/tools/perf/ui/tui/setup.c
-index 16c6eff4d2411..022534eed68cc 100644
---- a/tools/perf/ui/tui/setup.c
-+++ b/tools/perf/ui/tui/setup.c
-@@ -108,7 +108,7 @@ static void ui__signal_backtrace(int sig)
+ 	pr_debug("Creating new host machine structure\n");
+ 	td->machine = machine__new_host();
+-	td->machine->env = &perf_env;
++	perf_env__init(&host_env);
++	td->machine->env = &host_env;
  
- 	printf("-------- backtrace --------\n");
- 	size = backtrace(stackdump, ARRAY_SIZE(stackdump));
--	backtrace_symbols_fd(stackdump, size, STDOUT_FILENO);
-+	__dump_stack(stdout, stackdump, size);
+ 	td->fd = creat(td->perf_data_file_name, 0644);
+ 	if (td->fd < 0)
+ 		return test_result("Failed to create test perf.data file", TEST_FAIL);
  
- 	exit(0);
- }
-diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
-index e56330c85fe7e..a561eb97a9a86 100644
---- a/tools/perf/util/debug.c
-+++ b/tools/perf/util/debug.c
-@@ -14,11 +14,18 @@
- #ifdef HAVE_BACKTRACE_SUPPORT
- #include <execinfo.h>
- #endif
-+#include "addr_location.h"
- #include "color.h"
--#include "event.h"
- #include "debug.h"
-+#include "event.h"
-+#include "machine.h"
-+#include "map.h"
- #include "print_binary.h"
-+#include "srcline.h"
-+#include "symbol.h"
-+#include "synthetic-events.h"
- #include "target.h"
-+#include "thread.h"
- #include "trace-event.h"
- #include "ui/helpline.h"
- #include "ui/ui.h"
-@@ -298,21 +305,60 @@ void perf_debug_setup(void)
- 	libapi_set_print(pr_warning_wrapper, pr_warning_wrapper, pr_debug_wrapper);
- }
- 
-+void __dump_stack(FILE *file, void **stackdump, size_t stackdump_size)
-+{
-+	/* TODO: async safety. printf, malloc, etc. aren't safe inside a signal handler. */
-+	pid_t pid = getpid();
-+	struct machine *machine = machine__new_live(/*kernel_maps=*/false, pid);
-+	struct thread *thread = NULL;
-+
-+	if (machine)
-+		thread = machine__find_thread(machine, pid, pid);
-+
-+#ifdef HAVE_BACKTRACE_SUPPORT
-+	if (!machine || !thread) {
-+		/*
-+		 * Backtrace functions are async signal safe. Fall back on them
-+		 * if machine/thread creation fails.
-+		 */
-+		backtrace_symbols_fd(stackdump, stackdump_size, fileno(file));
-+		machine__delete(machine);
-+		return;
+ 	err = perf_header__write_pipe(td->fd);
+-	if (err < 0)
+-		return test_result("perf_header__write_pipe() failed", TEST_FAIL);
+-
++	if (err < 0) {
++		err = test_result("perf_header__write_pipe() failed", TEST_FAIL);
++		goto out;
 +	}
-+#endif
-+
-+	for (size_t i = 0; i < stackdump_size; i++) {
-+		struct addr_location al;
-+		u64 addr = (u64)(uintptr_t)stackdump[i];
-+		bool printed = false;
-+
-+		addr_location__init(&al);
-+		if (thread && thread__find_map(thread, PERF_RECORD_MISC_USER, addr, &al)) {
-+			al.sym = map__find_symbol(al.map, al.addr);
-+			if (al.sym) {
-+				fprintf(file, "    #%zd %p in %s ", i, stackdump[i], al.sym->name);
-+				printed = true;
-+			}
-+		}
-+		if (!printed)
-+			fprintf(file, "    #%zd %p ", i, stackdump[i]);
-+
-+		map__fprintf_srcline(al.map, al.addr, "", file);
-+		fprintf(file, "\n");
-+		addr_location__exit(&al);
+ 	err = write_attr(td, sample_type, &id);
+-	if (err)
+-		return test_result("perf_event__synthesize_attr() failed", TEST_FAIL);
+-
+-	if (write_comm(td->fd, pid, tid, "test-prog"))
+-		return TEST_FAIL;
+-
+-	if (write_mmap(td->fd, pid, tid, MAP_START, 0x10000, 0, td->prog_file_name))
+-		return TEST_FAIL;
+-
+-	if (write_sample(td, sample_type, id, pid, tid) != TEST_OK)
+-		return TEST_FAIL;
+-
++	if (err) {
++		err = test_result("perf_event__synthesize_attr() failed", TEST_FAIL);
++		goto out;
 +	}
-+	thread__put(thread);
-+	machine__delete(machine);
-+}
-+
- /* Obtain a backtrace and print it to stdout. */
- #ifdef HAVE_BACKTRACE_SUPPORT
- void dump_stack(void)
++	if (write_comm(td->fd, pid, tid, "test-prog")) {
++		err = TEST_FAIL;
++		goto out;
++	}
++	if (write_mmap(td->fd, pid, tid, MAP_START, 0x10000, 0, td->prog_file_name)) {
++		err = TEST_FAIL;
++		goto out;
++	}
++	if (write_sample(td, sample_type, id, pid, tid) != TEST_OK) {
++		err = TEST_FAIL;
++		goto out;
++	}
+ 	if (verbose > 1)
+ 		system_cmd("%s script -i %s -D", td->perf, td->perf_data_file_name);
+ 
+-	err = run_perf_script(td);
+-	if (err)
+-		return TEST_FAIL;
+-
+-	return TEST_OK;
++	err = run_perf_script(td) ? TEST_FAIL : TEST_OK;
++out:
++	perf_env__exit(&host_env);
++	return err;
+ }
+ 
+ static void unlink_path(const char *path)
+diff --git a/tools/perf/util/env.c b/tools/perf/util/env.c
+index d981b6f4bc5ea..47d6110da4658 100644
+--- a/tools/perf/util/env.c
++++ b/tools/perf/util/env.c
+@@ -252,6 +252,7 @@ void perf_env__exit(struct perf_env *env)
+ 
+ void perf_env__init(struct perf_env *env)
  {
--	void *array[16];
--	size_t size = backtrace(array, ARRAY_SIZE(array));
--	char **strings = backtrace_symbols(array, size);
--	size_t i;
--
--	printf("Obtained %zd stack frames.\n", size);
--
--	for (i = 0; i < size; i++)
--		printf("%s\n", strings[i]);
-+	void *stackdump[32];
-+	size_t size = backtrace(stackdump, ARRAY_SIZE(stackdump));
- 
--	free(strings);
-+	__dump_stack(stdout, stackdump, size);
- }
- #else
- void dump_stack(void) {}
-diff --git a/tools/perf/util/debug.h b/tools/perf/util/debug.h
-index a4026d1fd6a31..6b737e195ce1b 100644
---- a/tools/perf/util/debug.h
-+++ b/tools/perf/util/debug.h
-@@ -85,6 +85,7 @@ void debug_set_display_time(bool set);
- void perf_debug_setup(void);
- int perf_quiet_option(void);
- 
-+void __dump_stack(FILE *file, void **stackdump, size_t stackdump_size);
- void dump_stack(void);
- void sighandler_dump_stack(int sig);
- 
++	memset(env, 0, sizeof(*env));
+ #ifdef HAVE_LIBBPF_SUPPORT
+ 	env->bpf_progs.infos = RB_ROOT;
+ 	env->bpf_progs.btfs = RB_ROOT;
 -- 
 2.53.0
 
