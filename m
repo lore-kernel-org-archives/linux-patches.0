@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048442;
-	b=xWUfWG7TzO43Dt96P/9cqrRFA3PUcxeYrVTctEAfj65k2FOMFkxWCNHP7+nFvBZiF1Yc
-	 4E+fXOcT8p0FYa8G5VUCXkWXnmXz1anJaTfYPpJRtuANS9+1b4cJk98odE8fGe6MYKMeb
-	 Rn9L06ZNQII+OkcLXcAyR0/b8IUiBF2FYWaDiP40oYQdaFvAatMdMXVj/LeC3DvgBtRyb
-	 sNTSA+FxuZaHLj7sZBrJU4wL3nLV53iZr2i0TnvQ+zHWmuA51hfH1Dd/1MyiQxwqnod3S
-	 lQSD6hdBStwEBdme1mqyGTb42+P/EjqhwydXzKmXRnSEnX1lor///t9z5M4xHD1oxNw==
+	t=1795048445;
+	b=Oo4foFqFBQS0ZSpq/YdaIO4DyE1KV1bGdPlun4C3AZSByTIm6X1Q/9STJClfHbRkt9K3
+	 ciIAcPh6dfhMeXrDVPyDH/Sb6m1IzDmHX53paZHbwDcQXuBb2G06Dj/F8esNNbxMYdVEV
+	 j+444rqfcXcXpdkPhnTvFdcVCFaA3U+SI2dXQ2hy7r7NFK3onjRE3QBtaWMQA8Y2y8Poi
+	 csgNmc9CMBjWHIqwfVOhNsdfBlGkeEUwthDUon9hKYnpBuizypqozAWkizeylkuWha+GE
+	 X3w74T8/D+QCXPE8AMedfZS9ryREm6u2WxCNf8XmIx2sUuGbLeBXMpo4ThRQu88AHng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048442;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LBwPGkZPiOu/usOtW3wFDSvg0VGDkaMNvfrsnlbPmQ4=;
-	b=IHlhLpmlxsYoAmK8awS6/ap43mW6c2irPsYJBzBDqHpSmLk8qzeVcvuo7H9YqoHgZTyD
-	 kmVEDuxmFA/L+TO90vMsaHUMpZIXJX9Rao/Ns9DyLI/L8n30oEcWsVWC5Gi4e/zHU/04a
-	 hXgUnct9H1fru4RoSEtovZ/kQtYbVhBNSK9VDhIy7qBn/zpZ/a/EDaNAa0Q46PpAHMaQP
-	 qVo4xgaej72mikuonFQ3aN637dBqW8ZiOhIm3iPUSNdlZq0PLZi3VwdU2632VKSNCGbyb
-	 ADQlhD07w/AYm7jwF2gg1whTkB09YeyeQaYXbxXN/CKTrfhKqWZbOpnlFuy5to2CqpA==
+	bh=qMBxmnbBI7YTzEmtpPbodbTtrvCd7hSC6mpAedatCIc=;
+	b=Jc2KrjFMHr5bwpZkFM9w2ZU2zngmCDtcaWX5/7fPYGHFg6L9BwY0rXqY4EGNe3TiIl44
+	 /6cMScSfobDREheiOwp9ggjOeV7Ix/dfgC28WOxfWUIJkEnjY1dZaloD9Y+aQfhACK8y6
+	 SpSHkQVNLYr37TuHIvocUlVINYhBTR4VSvW/9j23DGs8kHjx4fEwbU0y6GeS/APHNyrrT
+	 EDZiV8TbU0G3N5PTvPM1EP5TJNmNTwanszwjAwkxLDnWEhQazY35GXuY4fS05noqXO6qS
+	 VMx9a8e7UVC49GglXT402raaNIJsWIhs0VHLpFM/qLCFC0Q584yuX15hxVQQgUp6cyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DS+YUmkA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oajr4KFS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFF060A2625;
-	Thu, 19 Nov 2026 00:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B030660A2616;
+	Thu, 19 Nov 2026 00:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DS+YUmkA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF021F000C5;
-	Thu, 19 Nov 2026 00:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Oajr4KFS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E58F1F000C7;
+	Thu, 19 Nov 2026 00:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048442;
-	bh=LBwPGkZPiOu/usOtW3wFDSvg0VGDkaMNvfrsnlbPmQ4=;
+	s=korg; t=1795048445;
+	bh=qMBxmnbBI7YTzEmtpPbodbTtrvCd7hSC6mpAedatCIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DS+YUmkAnKy29Qm1OaG9fri31usV0QCMWvexB5Shp6DrkgkZqG7HJC5jqka+15/Oz
-	 ErOiPsKCov/AMKEHjafB/+UNibtl6/pLh57odPcqN7CGLJC+FsH+HWEQiATQzI+opJ
-	 5b2MnSOsZAEoeyZOhiQJYHTjXKmolDiiPB3L/RuQ=
+	b=Oajr4KFS5X9DZ6JeyRmQrJwIpTYVbZrLozqClODFEpl8LdQjg4CuDifOMh/GDIdmq
+	 XSdW5YSYCw+O69pEduJ8VSDTHAGMGqRJjRqH56+048dXfLvxL4pB2LjnaT9hmQbomC
+	 9MNnQVyK63h4nysrsGPVg6UJC4FdnBEkDgepu+Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Jeremy Bongio <jbongio@google.com>,
+	Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1997/2857] regulator: mp886x: fix pontential division by zero
-Date: Wed, 18 Nov 2026 15:50:31 +0100
-Message-ID: <20261118150313.274255734@linuxfoundation.org>
+Subject: [PATCH 6.1 1998/2857] RDMA/irdma: Use kvzalloc for lvl2 leafmem allocation
+Date: Wed, 18 Nov 2026 15:50:32 +0100
+Message-ID: <20261118150313.308063894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,37 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Jeremy Bongio <jbongio@google.com>
 
-[ Upstream commit d16ef5debccc4289c1f25309a2cccfbbe879601a ]
+[ Upstream commit 9c40f13a63a4b87177de3e8c318af25068fc6ab4 ]
 
-If the "mps,fb-voltage-divider" 2nd var is 0, there will be division
-by zero bug.
+During VM live migration or when registering large memory regions
+(e.g., guest memory >= 256 GB backed by 4 KiB pages), get_lvl2_pble()
+calculates total leaves exceeding ~131,072. The memory required for
+lvl2->leafmem.va exceeds 4 MiB (sizeof(*leaf) * total > 5.24 MiB).
 
-Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260901043123.5401-1-jszhang@kernel.org?part=1
-Link: https://patch.msgid.link/20260909143957.9284-3-jszhang@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Because kzalloc() requires physically contiguous pages, requests larger
+than MAX_PAGE_ORDER (4 MiB on x86_64) fail and trigger a warning:
+
+  WARNING: CPU: 123 PID: 119906 at mm/page_alloc.c:5997 __alloc_frozen_pages_noprof+0x50c/0x1050
+  Call Trace:
+   <TASK>
+   alloc_frozen_pages_noprof+0xc0/0x240
+   ___kmalloc_large_node+0x3d/0xd0
+   __kmalloc_large_node_noprof+0x1b/0x90
+   __kmalloc_noprof+0x254/0x660
+   get_lvl1_lvl2_pble+0xbc/0x270 [irdma]
+   irdma_get_pble+0x44/0xc0 [irdma]
+   irdma_setup_pbles+0x46/0x1d0 [irdma]
+   irdma_reg_user_mr_type_mem+0x41/0x230 [irdma]
+   irdma_reg_user_mr+0x194/0x1c0 [irdma]
+   ib_uverbs_reg_mr+0x1b0/0x2c0 [ib_uverbs]
+
+The leafmem array is purely host software tracking structures (struct
+irdma_pble_info) and does not require physically contiguous memory.
+
+Switch the allocation from kzalloc() to kvzalloc() and free it with
+kvfree() so that requests exceeding MAX_PAGE_ORDER fall back to
+virtually contiguous memory via vmalloc.
+
+Fixes: e8c4dbc2fcac ("RDMA/irdma: Add PBLE resource manager")
+Assisted-by: LLM
+Signed-off-by: Jeremy Bongio <jbongio@google.com>
+Link: https://patch.msgid.link/20260916173203.2555458-1-jbongio@google.com
+Tested-by: Jacob Moroni <jmoroni@google.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mp886x.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/irdma/pble.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
-index f42572d0f94e5..ae45a8dbdb27b 100644
---- a/drivers/regulator/mp886x.c
-+++ b/drivers/regulator/mp886x.c
-@@ -317,6 +317,9 @@ static int mp886x_i2c_probe(struct i2c_client *client)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/infiniband/hw/irdma/pble.c b/drivers/infiniband/hw/irdma/pble.c
+index d69ebab5c2111..7c9b96c1178b4 100644
+--- a/drivers/infiniband/hw/irdma/pble.c
++++ b/drivers/infiniband/hw/irdma/pble.c
+@@ -322,7 +322,7 @@ static void free_lvl2(struct irdma_hmc_pble_rsrc *pble_rsrc,
+ 	if (root->addr)
+ 		irdma_prm_return_pbles(&pble_rsrc->pinfo, &root->chunkinfo);
  
-+	if (di->r[1] == 0)
-+		return -EINVAL;
-+
- 	di->en_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_HIGH);
- 	if (IS_ERR(di->en_gpio))
- 		return PTR_ERR(di->en_gpio);
+-	kfree(lvl2->leafmem.va);
++	kvfree(lvl2->leafmem.va);
+ 	lvl2->leaf = NULL;
+ }
+ 
+@@ -350,7 +350,7 @@ static int get_lvl2_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
+ 	lvl2->leaf_cnt = total;
+ 
+ 	lvl2->leafmem.size = (sizeof(*leaf) * total);
+-	lvl2->leafmem.va = kzalloc(lvl2->leafmem.size, GFP_KERNEL);
++	lvl2->leafmem.va = kvzalloc(lvl2->leafmem.size, GFP_KERNEL);
+ 	if (!lvl2->leafmem.va)
+ 		return -ENOMEM;
+ 
+@@ -359,7 +359,7 @@ static int get_lvl2_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
+ 	ret_code = irdma_prm_get_pbles(&pble_rsrc->pinfo, &root->chunkinfo,
+ 				       total << 3, &root->addr, &fpm_addr);
+ 	if (ret_code) {
+-		kfree(lvl2->leafmem.va);
++		kvfree(lvl2->leafmem.va);
+ 		lvl2->leaf = NULL;
+ 		return -ENOMEM;
+ 	}
 -- 
 2.53.0
 
