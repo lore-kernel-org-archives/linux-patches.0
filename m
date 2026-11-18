@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034680;
-	b=Q+PqQvxxOjV/3ifOVWJoauxAZKXLfwTcjCwL/TmMbN0T+KUr/fIbL2oKLgwgmwxK3cJx
-	 RUUXG3kbvaNZsYT6f/rp07tAP+jOiw9891ldbqItX0vzF2841BxNF/Dcyz914Y9Bou5tO
-	 X/qnkq/yLQ1TsHWWWi5L3NlyCjxgPn8O9JXRdGDyJI+Zj4Fov6MnN/oew+P33wJ9EDyyW
-	 srcH5xfiG1mzdOUusXl3dYtlAvCxX8Sug7e5EIdK7m/oJh3zhNFukK4H07dr1rR0nzxX4
-	 4wcjgvVcOwAQ18YPX8Ay8OkXGWofgLERP1DyHDLdD5GEPRsiTjGwXUPzjjYU+k1gebA==
+	t=1795034683;
+	b=HOngVnf7OZlGDRo1Odz6ZIlDFWw3TU5m7O4NNjQ18hTHeQYxiHLjILcfLQYu5K/Mvnvy
+	 +bwSbXXX97K3HKB1pAbrIgbjFQ4Mh+RMbO2HbtW5rBlR7u1tfBLF2sl1YtyXqKVdBzwGe
+	 AS4bUHAxev/pudf5ye9NgxQDxttiAI181Of+s6KcpLd8i+RQU0bo5hh2lQBxbbed2h/hW
+	 VfE8o4XrOkcDMFvNDBXREVG/I8rSJ+KljO6zm6spve9sIFVXqiyPKYs5pCcSHgQCIMZQ+
+	 Fv8tCPyU9kzA2/1m+Wge3oEfw9QB4l8DxNN+HLMWo4BcT33wu49cdSYF6x0Hb/mAR4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=edXj/8fakJKFqcr7FGq/w25d7Kszx19o1g0/oIXnPBQ=;
-	b=G5001HrFxf3Wmm0Roei87AKseQIG8RasZ50iFuq6v+EWMJH11rvFWycpD9SEtR3FEewg
-	 oXMzcEjMP+lRHQ8JVaPJLAk5z5VYW9zm3w27rTIdhNsPEYGIC3YptV05tjd8i9QQB8ul2
-	 E32L4+PVG3AIcje/uQfAv0+k//sA3r2GQwt488qdenjc6IdHYinbkwh5iZ/r7WDv8x/rM
-	 BqLmcmu0THYFV/Hxv9JRLy+MmC92gh4fCEzjDgbG4kUd4qHoQ80Zj4p0ubu+r+uPDacdU
-	 0i53OMoizDzHRe9RinFM/6zG7d/AVqr/MDFxRgVoUXSIDmiB+5qbbyD/nCZrVY4hlrQ==
+	bh=lusGIjVRehRwygz/tRMUZifyQBLGl9L+OcsFRGWzHT0=;
+	b=dyCDaysfJmvZImaNDFcetYdrO6kUrFiMsxrIMjDL5sf+rBCNVfL9ZdahVswWJigBHRol
+	 35T2DDqGl5Kl5bANTRo4l87UGUj0VdlbqWadlkj+XekjS1YLrUZgBm7s8owFd1bNQ9t6s
+	 r0banJsZqM4ofHODan71YPDsKD4+VDZXVA58qt8L0blhRKlshtxHof/wOESYm6JaG4QkO
+	 kPWWO8BMGjTRW6shWjcTJxgfVQ3+SEuDtHZvCY8nghWTofm5NEcPGlRIdNL+mO/c5zHpD
+	 89s+E20vMt0rjylE3U2bsshcFhu468ChsSSVZOyM9srdtyLUMkdK8lHgTpti6yT30JQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="IDGQ6/zQ";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wi8VXzi7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297A5606A325;
-	Wed, 18 Nov 2026 20:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136D6606A31C;
+	Wed, 18 Nov 2026 20:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IDGQ6/zQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FAD1F000C4;
-	Wed, 18 Nov 2026 20:44:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wi8VXzi7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF681F000C4;
+	Wed, 18 Nov 2026 20:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034680;
-	bh=edXj/8fakJKFqcr7FGq/w25d7Kszx19o1g0/oIXnPBQ=;
+	s=korg; t=1795034682;
+	bh=lusGIjVRehRwygz/tRMUZifyQBLGl9L+OcsFRGWzHT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IDGQ6/zQiuikcWdIGrexdo+JgCkSa/zxn6Df/k9K9ws82GjlTBeKH4ZXteHxcnE+v
-	 1qddqXLlZH355XUstGcP9wIP+WKR96XIbjHyIfygS3/nXxMjE015DMWa7WkBN14+aS
-	 7YVfsUjldysz0CKARCg2evlNMbPEQua/LjiyNbEk=
+	b=Wi8VXzi7oPC6dlMSgqfFtIx10T5HcLOMaBN2OTzHoJLIKmfjZrB/Z0Z30E7Fbhl8M
+	 OBJgHpia/AfWXVWK01Bl4+n1dQ5rXGnt/sJeDbAZVkCnTiK+C2HCd0FUxUA4etxz4R
+	 d7iVM8rurH25Xkvv+gB/YkNzuSSDcqwQpzwCWOsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Harald Freudenberger <freude@linux.ibm.com>,
 	Holger Dengler <dengler@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0455/3318] s390/crypto: Fix skcipher_walk return code handling in aes_s390
-Date: Wed, 18 Nov 2026 15:17:57 +0100
-Message-ID: <20261118150330.446616452@linuxfoundation.org>
+Subject: [PATCH 6.6 0456/3318] s390/crypto: Fix use of mutex in atomic context
+Date: Wed, 18 Nov 2026 15:17:58 +0100
+Message-ID: <20261118150330.481767087@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,79 +72,135 @@ Content-Transfer-Encoding: 8bit
 
 From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 15fa028589c3a2545f0bff355eff06d5844196bf ]
+[ Upstream commit d1c44a7d085473173bb360b7218a43699c3f56c7 ]
 
-The return codes from skcipher_walk_virt() were not properly checked
-before entering the processing loops in ecb_aes_crypt() and ctr_aes_crypt().
-If skcipher_walk_virt() fails, the walk structure may be in an undefined
-state, and attempting to process data could lead to incorrect behavior
-or accessing uninitialized memory.
+The AES CTR implementation used a mutex to lock one page of exclusive
+memory for fast CTR processing. Unfortunately a mutex is not save to
+use in atomic or interrupt context. So use a binary semaphore instead
+which is save to use in such environments.
 
-Add proper return code checking to ensure correct handling of the walk
-initialization and walk advance and eventually return to the caller
-with that return code.
+Furthermore rework the code to get rid of conditional locking. So
+restructure the AES CRT code by extracting the main loop into a
+separate function and just give in information about the (locked) page
+can be used or not (is not locked).
 
 Fixes: 7988fb2c03c8 ("crypto: s390/aes - convert to skcipher API")
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
 Cc: stable@vger.kernel.org # 5.5+
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-[ sashal: Dropped the upstream hunk for fullxts_aes_crypt() since that function doesn't exist here, and applied the five remaining skcipher_walk loop guards unchanged. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/crypto/aes_s390.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/s390/crypto/aes_s390.c | 63 +++++++++++++++++++++++--------------
+ 1 file changed, 39 insertions(+), 24 deletions(-)
 
 diff --git a/arch/s390/crypto/aes_s390.c b/arch/s390/crypto/aes_s390.c
-index 8a30cf504099a..aaf0afff80900 100644
+index aaf0afff80900..07b35da7943f3 100644
 --- a/arch/s390/crypto/aes_s390.c
 +++ b/arch/s390/crypto/aes_s390.c
-@@ -231,7 +231,7 @@ static int ecb_aes_crypt(struct skcipher_request *req, unsigned long modifier)
- 		return fallback_skcipher_crypt(sctx, req, modifier);
+@@ -28,14 +28,14 @@
+ #include <linux/module.h>
+ #include <linux/cpufeature.h>
+ #include <linux/init.h>
+-#include <linux/mutex.h>
+ #include <linux/fips.h>
++#include <linux/semaphore.h>
+ #include <linux/string.h>
+ #include <crypto/xts.h>
+ #include <asm/cpacf.h>
  
+ static u8 *ctrblk;
+-static DEFINE_MUTEX(ctrblk_lock);
++static DEFINE_SEMAPHORE(ctrblk_sem, 1);
+ 
+ static cpacf_mask_t km_functions, kmc_functions, kmctr_functions,
+ 		    kma_functions;
+@@ -562,46 +562,61 @@ static unsigned int __ctrblk_init(u8 *ctrptr, u8 *iv, unsigned int nbytes)
+ 	return n;
+ }
+ 
++static int __ctr_aes_crypt(struct s390_aes_ctx *sctx,
++			   struct skcipher_walk *walk, bool locked)
++{
++	unsigned int n, nbytes;
++	int ret = 0;
++	u8 *ctrptr;
++
++	while (!ret && ((nbytes = walk->nbytes) >= AES_BLOCK_SIZE)) {
++		n = AES_BLOCK_SIZE;
++		if (nbytes >= 2 * AES_BLOCK_SIZE && locked)
++			n = __ctrblk_init(ctrblk, walk->iv, nbytes);
++		ctrptr = (n > AES_BLOCK_SIZE) ? ctrblk : walk->iv;
++		cpacf_kmctr(sctx->fc, sctx->key, walk->dst.virt.addr,
++			    walk->src.virt.addr, n, ctrptr);
++		if (ctrptr == ctrblk)
++			memcpy(walk->iv, ctrptr + n - AES_BLOCK_SIZE,
++			       AES_BLOCK_SIZE);
++		crypto_inc(walk->iv, AES_BLOCK_SIZE);
++		ret = skcipher_walk_done(walk, nbytes - n);
++	}
++
++	return ret;
++}
++
+ static int ctr_aes_crypt(struct skcipher_request *req)
+ {
+ 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
+ 	struct s390_aes_ctx *sctx = crypto_skcipher_ctx(tfm);
+-	u8 buf[AES_BLOCK_SIZE], *ctrptr;
+ 	struct skcipher_walk walk;
+-	unsigned int n, nbytes;
+-	int ret, locked;
++	u8 buf[AES_BLOCK_SIZE];
++	int ret;
+ 
+ 	if (unlikely(!sctx->fc))
+ 		return fallback_skcipher_crypt(sctx, req, 0);
+ 
+-	locked = mutex_trylock(&ctrblk_lock);
+-
  	ret = skcipher_walk_virt(&walk, req, false);
--	while ((nbytes = walk.nbytes) != 0) {
-+	while (!ret && ((nbytes = walk.nbytes) != 0)) {
- 		/* only use complete blocks */
- 		n = nbytes & ~(AES_BLOCK_SIZE - 1);
- 		cpacf_km(sctx->fc | modifier, sctx->key,
-@@ -335,7 +335,7 @@ static int cbc_aes_crypt(struct skcipher_request *req, unsigned long modifier)
- 		return ret;
- 	memcpy(param.iv, walk.iv, AES_BLOCK_SIZE);
- 	memcpy(param.key, sctx->key, sctx->key_len);
--	while ((nbytes = walk.nbytes) != 0) {
-+	while (!ret && ((nbytes = walk.nbytes) != 0)) {
- 		/* only use complete blocks */
- 		n = nbytes & ~(AES_BLOCK_SIZE - 1);
- 		cpacf_kmc(sctx->fc | modifier, &param,
-@@ -461,7 +461,7 @@ static int xts_aes_crypt(struct skcipher_request *req, unsigned long modifier)
- 	memcpy(xts_param.key + offset, xts_ctx->key, xts_ctx->key_len);
- 	memcpy(xts_param.init, pcc_param.xts, 16);
+-	while (!ret && ((nbytes = walk.nbytes) >= AES_BLOCK_SIZE)) {
+-		n = AES_BLOCK_SIZE;
++	if (ret)
++		return ret;
  
--	while ((nbytes = walk.nbytes) != 0) {
-+	while (!ret && ((nbytes = walk.nbytes) != 0)) {
- 		/* only use complete blocks */
- 		n = nbytes & ~(AES_BLOCK_SIZE - 1);
- 		cpacf_km(xts_ctx->fc | modifier, xts_param.key + offset,
-@@ -577,7 +577,7 @@ static int ctr_aes_crypt(struct skcipher_request *req)
- 	locked = mutex_trylock(&ctrblk_lock);
- 
- 	ret = skcipher_walk_virt(&walk, req, false);
--	while ((nbytes = walk.nbytes) >= AES_BLOCK_SIZE) {
-+	while (!ret && ((nbytes = walk.nbytes) >= AES_BLOCK_SIZE)) {
- 		n = AES_BLOCK_SIZE;
- 
- 		if (nbytes >= 2*AES_BLOCK_SIZE && locked)
-@@ -596,7 +596,7 @@ static int ctr_aes_crypt(struct skcipher_request *req)
+-		if (nbytes >= 2*AES_BLOCK_SIZE && locked)
+-			n = __ctrblk_init(ctrblk, walk.iv, nbytes);
+-		ctrptr = (n > AES_BLOCK_SIZE) ? ctrblk : walk.iv;
+-		cpacf_kmctr(sctx->fc, sctx->key, walk.dst.virt.addr,
+-			    walk.src.virt.addr, n, ctrptr);
+-		if (ctrptr == ctrblk)
+-			memcpy(walk.iv, ctrptr + n - AES_BLOCK_SIZE,
+-			       AES_BLOCK_SIZE);
+-		crypto_inc(walk.iv, AES_BLOCK_SIZE);
+-		ret = skcipher_walk_done(&walk, nbytes - n);
++	if (down_trylock(&ctrblk_sem) == 0) {
++		ret = __ctr_aes_crypt(sctx, &walk, true);
++		up(&ctrblk_sem);
++	} else {
++		ret = __ctr_aes_crypt(sctx, &walk, false);
+ 	}
+-	if (locked)
+-		mutex_unlock(&ctrblk_lock);
++
  	/*
  	 * final block may be < AES_BLOCK_SIZE, copy only nbytes
  	 */
--	if (nbytes) {
-+	if (!ret && nbytes) {
+-	if (!ret && nbytes) {
++	if (!ret && walk.nbytes > 0) {
  		memset(buf, 0, AES_BLOCK_SIZE);
- 		memcpy(buf, walk.src.virt.addr, nbytes);
+-		memcpy(buf, walk.src.virt.addr, nbytes);
++		memcpy(buf, walk.src.virt.addr, walk.nbytes);
  		cpacf_kmctr(sctx->fc, sctx->key, buf, buf,
+ 			    AES_BLOCK_SIZE, walk.iv);
+-		memcpy(walk.dst.virt.addr, buf, nbytes);
++		memcpy(walk.dst.virt.addr, buf, walk.nbytes);
+ 		crypto_inc(walk.iv, AES_BLOCK_SIZE);
+ 		ret = skcipher_walk_done(&walk, 0);
+ 		memzero_explicit(buf, sizeof(buf));
 -- 
 2.53.0
 
