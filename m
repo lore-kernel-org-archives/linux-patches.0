@@ -1,59 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060083;
-	b=TqxHmxN/vzOfqRTfBJ2Inh1ifc5fht/Gq6/1iFIUbh9/ms5GlYScZ56zaAdxUCZtJC2B
-	 yiUP744Vbhc4l1/OwEDHfXP+bcgd/AaC8ZveGyJctBeBAVLlvxrMvl8ta5Wbr3UZqYplT
-	 HA2yk6QJBDPjUpha5newuHjKV8gb0k34wYM3L0leQpo5XR3Cwp0XMBYQCFnavaWMnSayx
-	 52tSRYgAEJqEKKHEZcrNtueXdbgMZUl8NTD1ONT9TKbf0MhZqKGzNaLekk/UsOSyXk9Sp
-	 hW2bI7iCGy+c90UYGopewOzLcrSeSdVP3t9t8Ct1QM8CWMhBQCyA95LjgsLgSe33K7Q==
+	t=1795060086;
+	b=BDltesghs/4n6k2H5sq/ApC8akPSYm3TnVTUAYOoZJ81/iTQ+PNsxnds1gtfvHfef5hh
+	 0FSm/BwZ2STaV1GXMpYirNpdjoEdFkWYNaU0evhbI0lzfP+bzKAnynxB9TFI2JMZoY6KC
+	 0Zz+nQxY0UqJ1FtsjW9B7HAIGHYXRNGdKmAMyHownw8ZzkMBWzZcFg+0t1aEl+EYkexEp
+	 NnNAqYl3WQfjgv+wvhAoO/yWseDOfxX3KpYWREWoWulUUwTuwF556uJTRv/zWMhTbVgup
+	 hE7cr5LKPLYHBmNRfqP9Mbdj6S30YeZ/D2j2imVucq8VWKbozAVc/Gw791k95PgsQ4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060083;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060086;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5NlbaeiR3kOuOHVcMvDRCxI+sTVrJPqcVHYaMdGBo+g=;
-	b=nJJMpkz1ZzKea4nv1kIK7LD3p64VaDHlGrjSnT+ioo3fqEvill7+zWTYYmgt40zXB4r4
-	 NFqEyuKJrp8oAlYXAA7yXl7Qp6ZEBvb5TyAhAp4BJdXCKlpjYaoEa2E0u62O566zHbtuq
-	 3y4+ZQfGHbKkPPbdA2OGtAszBybw+SxWmZQpa8PIC325RPdCV5xRvRvmlnMV1DjMSuUZo
-	 MV3RDmWxPTE9ByfOXLUTD+AKE/iTyyYPb4ZGM9PIVJ/j5k2EAXFHFdkoiSxcVahNevsos
-	 BWEM5hD98k9PIsC1XB8tsD81PguxyeenyMFgDS76QrZ8Ui1RcsCHZEXli5J2ytrPTyQ==
+	bh=qkKq4m3B8m6D1dIQSCJxR0/Wkb25gm8H6BFV1a4Av5s=;
+	b=u2UpQpyYkIvvClGjzZpHLopoITJAXlpQC7A1ORKmXPqMa78H43xKh4H7L+qi/zJHQT9Z
+	 Ls5GIqUV9BzXgaoqIdQtMmu96EX0uDe0HkFOdTjfFrYV563ndK6xO7S0bgz2KjjS0bgNX
+	 /hyBdfhFn2m1ywWY9p4aM0oQJiNlDB4UhXqJD0oWsFix2+aZEp5jZMmkMZLx3y2e1s5oG
+	 CCz3OHGr/dlP0aaitQCodFp0eNnrKzv+js5qMmZrjC7pUZdcL0y6CNdbSWGew/T+DW0Um
+	 L4MXJhlB406YMvJ/jvmnb+DE9uIpvTmHYlFi87/B0E6Q/v2tBGsoxMTiAr+ds6rT5jA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XCc5f7Gr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VDecP6jO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A39C606A320;
-	Thu, 19 Nov 2026 03:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A66606A326;
+	Thu, 19 Nov 2026 03:48:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XCc5f7Gr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDE41F000C4;
-	Thu, 19 Nov 2026 03:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VDecP6jO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85FFC1F000C4;
+	Thu, 19 Nov 2026 03:48:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060083;
-	bh=5NlbaeiR3kOuOHVcMvDRCxI+sTVrJPqcVHYaMdGBo+g=;
+	s=korg; t=1795060086;
+	bh=qkKq4m3B8m6D1dIQSCJxR0/Wkb25gm8H6BFV1a4Av5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XCc5f7GrmPSKqCDobWRfkPoAqzk2o+PBw5Cu9Ke6H2CYdrXYmy90VlWgXyYjwHQlF
-	 TawUdd9PSAIn17bj8hdXAZXKkZgBxWP14piosEjLHWEifvt6N1icKwOFzpz2ix7+sZ
-	 9C4d03j1AksO6hsFks3UuWd9yZ1+L7xGnylgZtBo=
+	b=VDecP6jOdqvYjvI2tLBKR03jebj35ICpsUg/BCzTtscSkjwSrazboPx2DsTxVGMKb
+	 Fq5Qg2BDdDKf+BjHWYy8BbzcQhCrDdZSXejMwHoUYz1T0AbdnVXPj7zWQZfopVu/B8
+	 VZ3j7Kp0lo1zAiRs6CstTM6osivB2VI8Z3AH5b6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eklavya Singh <eklavyasingh2106@gmail.com>,
+	Chris Down <chris@chrisdown.name>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+5d4e96acd0febccb5e87@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Cen Zhang <zzzccc427@gmail.com>,
+	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Kairui Song <kasong@tencent.com>,
+	Hugh Dickins <hughd@google.com>,
+	Chris Li <chrisl@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Baoquan He <baoquan.he@linux.dev>,
+	Barry Song <baohua@kernel.org>,
+	Youngjun Park <youngjun.park@lge.com>,
+	Ying Huang <huang.ying.caritas@gmail.com>,
+	Kelley Nielsen <kelleynnn@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1073/1848] ocfs2/heartbeat: serialize concurrent writes to a regions dev attribute
-Date: Wed, 18 Nov 2026 15:51:51 +0100
-Message-ID: <20261118150002.933992168@linuxfoundation.org>
+Subject: [PATCH 5.10 1074/1848] mm: make swapoff interruptible when unusing mms/shmem
+Date: Wed, 18 Nov 2026 15:51:52 +0100
+Message-ID: <20261118150003.006838077@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -75,156 +80,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eklavya Singh <eklavyasingh2106@gmail.com>
+From: Chris Down <chris@chrisdown.name>
 
-[ Upstream commit 0a8f258c0f012314c36b9e4818cdc0178c68f891 ]
+[ Upstream commit 740128dd1a3f2bd81a80314d079b6b03c39ba3af ]
 
-o2hb_region_dev_store() checks reg->hr_bdev_file to see if the region
-is already started, but nothing stops two writers from doing that at
-the same time. configfs only serializes writes through the same open
-file, so two processes that each open the dev attribute can both get
-past the check:
+try_to_unuse() only checks for a pending signal between mms, and
+shmem_unuse() doesn't check at all.  That means that once swapoff gets to
+a process or a shmem file with a lot swapped out, nothing can interrupt it
+until every last page of it has been read back in.
 
-  A: hr_bdev_file is NULL, opens file A, sets hr_bdev_file = A
-  B: hr_bdev_file is NULL, opens file B, sets hr_bdev_file = B
-  A: start fails, fput(hr_bdev_file) drops B, sets it to NULL
-  B: start fails, fput(NULL)
+Just as one example of where this can concretely show up, freezing tasks
+for suspend or hibernation has to wait for swapoff to notice the freezer's
+fake signal, and gives up after freeze_timeout_msecs (20 seconds by
+default).
 
-Both calls also use the same hr_slots, hr_slot_data and hr_tmp_block,
-so the error paths can free the slot data twice.
+Here's a facetious example where one swaps out 2GiB of one process to a
+swap file on ext4, starts swapoff, and half a second later tries to freeze
+with pm_test=freezer.  Writing to /sys/power/state then fails with EBUSY
+and this in dmesg:
 
-syzbot hit the fput(NULL) with an unbound loop device, where every
-start fails with -EIO. With four threads doing the same thing on a
-KASAN kernel I get both crashes within a second:
+    Freezing user space processes failed after 20.003 seconds (1 tasks refusing to freeze, wq_busy=0):
+    task:swapoff         state:D stack:0     pid:3175  tgid:3175  ppid:2955   task_flags:0x400100 flags:0x00000419
+    Call trace:
+     [...]
+     io_schedule+0x44/0x70
+     folio_wait_bit_common+0x1ec/0x3d0
+     __folio_lock+0x24/0x40
+     unuse_pte_range+0x2d0/0x348
+     unuse_vma+0x158/0x248
+     unuse_mm+0xfc/0x150
+     try_to_unuse+0x104/0x3f8
+     __do_sys_swapoff+0x220/0x5d8
+     [...]
 
-  BUG: KASAN: double-free in o2hb_unmap_slot_data+0x14d/0x2f0
-  BUG: kernel NULL pointer dereference, address: 0000000000000158
+The same goes for anything else that wants swapoff to stop, like an admin
+hitting ^C in a panic, of course.
 
-Add a mutex to the region and hold it in dev_store(), in the
-block_bytes, start_block and blocks stores, and in dev_show(), since
-they all look at hr_bdev_file. dev_store() cleans up with goto, so it
-takes the mutex in a small wrapper rather than with guard(). The mutex
-is dropped while dev_store() waits for the heartbeat to become steady,
-which takes seconds, so a read of dev doesn't stall behind a start.
-hr_bdev_file is already set at that point, so other writers still get
--EINVAL, and the cleanup after the wait retakes the mutex.
+Prior to commit b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+try_to_unuse() was driven by find_next_to_unuse() which checks for a
+signal before every entry, so let's restore that behaviour.
 
-With the patch the same test ran for 10 minutes with lockdep on and
-nothing was reported. So did a second one, with a working loop device,
-that interrupts starts during the wait while other threads read and
-write the attributes.
+Just as an example of the improvements, here's how long freezing takes
+in the same test while swapoff is happening on my computer:
 
-Link: https://lore.kernel.org/20261020212339.46591-1-eklavyasingh2106@gmail.com
-Fixes: a7f6a5fb4bde ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Eklavya Singh <eklavyasingh2106@gmail.com>
+                      before                  after
+    400MiB anon       8.925s                  0.028s
+    400MiB shmem      1.639s                  0.003s
+    2GiB anon         failed after 20.003s    0.011s
+
+Link: https://lore.kernel.org/at9kJwdGkHPsWwgG@chrisdown.name
+Fixes: b56a2d8af914 ("mm: rid swapoff of quadratic complexity")
+Signed-off-by: Chris Down <chris@chrisdown.name>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+5d4e96acd0febccb5e87@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=5d4e96acd0febccb5e87
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>
-Cc: Cen Zhang <zzzccc427@gmail.com>
+Acked-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: Baoquan He <baoquan.he@linux.dev>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Youngjun Park <youngjun.park@lge.com>
+Cc: Ying Huang <huang.ying.caritas@gmail.com>
+Cc: Kelley Nielsen <kelleynnn@gmail.com>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Cc: <stable@vger.kernel.org>
-[ sashal: replaced the wrapper/helper split with direct mutex locking in dev_store() and unlocking at its common exit ]
+[ sashal: Adapted folio-batch context to page vectors while preserving frontswap accounting and the shared retval return path. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ mm/shmem.c    | 4 ++++
+ mm/swapfile.c | 4 +++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index 938425dce6e9a..9182b9a0dbe8d 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -268,6 +268,8 @@ struct o2hb_region {
- 	/* Message key for negotiate timeout message. */
- 	unsigned int		hr_key;
- 	struct list_head	hr_handler_list;
-+	/* Serializes the dev, block_bytes, start_block and blocks attributes. */
-+	struct mutex		hr_dev_mutex;
+diff --git a/mm/shmem.c b/mm/shmem.c
+index 6f2e267aa092f..8858db132090c 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1305,6 +1305,10 @@ static int shmem_unuse_inode(struct inode *inode, unsigned int type,
+ 			}
+ 		}
  
- 	/* last hb status, 0 for success, other value for error. */
- 	int			hr_last_hb_status;
-@@ -1607,6 +1609,7 @@ static ssize_t o2hb_region_block_bytes_store(struct config_item *item,
- 	unsigned long block_bytes;
- 	unsigned int block_bits;
++		if (signal_pending(current)) {
++			ret = -ERESTARTSYS;
++			break;
++		}
+ 		start = indices[pvec.nr - 1];
+ 	} while (true);
  
-+	guard(mutex)(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev)
- 		return -EINVAL;
- 
-@@ -1635,6 +1638,7 @@ static ssize_t o2hb_region_start_block_store(struct config_item *item,
- 	unsigned long long tmp;
- 	char *p = (char *)page;
- 
-+	guard(mutex)(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev)
- 		return -EINVAL;
- 
-@@ -1660,6 +1664,7 @@ static ssize_t o2hb_region_blocks_store(struct config_item *item,
- 	unsigned long tmp;
- 	char *p = (char *)page;
- 
-+	guard(mutex)(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev)
- 		return -EINVAL;
- 
-@@ -1677,10 +1682,12 @@ static ssize_t o2hb_region_blocks_store(struct config_item *item,
- 
- static ssize_t o2hb_region_dev_show(struct config_item *item, char *page)
- {
-+	struct o2hb_region *reg = to_o2hb_region(item);
- 	unsigned int ret = 0;
- 
--	if (to_o2hb_region(item)->hr_bdev)
--		ret = sprintf(page, "%s\n", to_o2hb_region(item)->hr_dev_name);
-+	guard(mutex)(&reg->hr_dev_mutex);
-+	if (reg->hr_bdev)
-+		ret = sprintf(page, "%s\n", reg->hr_dev_name);
- 
- 	return ret;
- }
-@@ -1803,6 +1810,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	ssize_t ret = -EINVAL;
- 	int live_threshold;
- 
-+	mutex_lock(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev)
- 		goto out;
- 
-@@ -1903,9 +1911,15 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	reg->hr_task = hb_task;
- 	spin_unlock(&o2hb_live_lock);
- 
-+	/*
-+	 * Don't hold hr_dev_mutex across the wait, which can take seconds.
-+	 * hr_bdev is already set, so other writers still get -EINVAL.
-+	 */
-+	mutex_unlock(&reg->hr_dev_mutex);
- 	ret = wait_event_interruptible(o2hb_steady_queue,
- 				atomic_read(&reg->hr_steady_iterations) == 0 ||
- 				reg->hr_node_deleted);
-+	mutex_lock(&reg->hr_dev_mutex);
- 	if (ret) {
- 		atomic_set(&reg->hr_steady_iterations, 0);
- 		reg->hr_aborted_start = 1;
-@@ -1945,6 +1959,7 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- out2:
- 	fdput(f);
- out:
-+	mutex_unlock(&reg->hr_dev_mutex);
- 	return ret;
- }
- 
-@@ -2048,6 +2063,7 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
+diff --git a/mm/swapfile.c b/mm/swapfile.c
+index 9c32c0055cbb1..79b3f0d034a42 100644
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -2048,6 +2048,8 @@ static inline int unuse_pmd_range(struct vm_area_struct *vma, pud_t *pud,
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+ 		cond_resched();
++		if (signal_pending(current))
++			return -ERESTARTSYS;
+ 		next = pmd_addr_end(addr, end);
+ 		if (pmd_none_or_trans_huge_or_clear_bad(pmd))
+ 			continue;
+@@ -2284,7 +2286,7 @@ int try_to_unuse(unsigned int type, bool frontswap,
+ 	if (READ_ONCE(si->inuse_pages)) {
+ 		if (!signal_pending(current))
+ 			goto retry;
+-		retval = -EINTR;
++		retval = -ERESTARTSYS;
  	}
- 
- 	INIT_LIST_HEAD(&reg->hr_all_item);
-+	mutex_init(&reg->hr_dev_mutex);
- 	INIT_LIST_HEAD(&reg->hr_handler_list);
- 	config_item_init_type_name(&reg->hr_item, name, &o2hb_region_type);
- 	if (!config_item_name(&reg->hr_item)) {
+ out:
+ 	return (retval == FRONTSWAP_PAGES_UNUSED) ? 0 : retval;
 -- 
 2.53.0
 
