@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047259;
-	b=wD1xzk49O8ci9Gn+13G6BC4Z88yIESSW4dFXy9MnOEKJVdLdS9/R58PeB8ig1aGrymD5
-	 TOWCbgX1T5bxaAVANJXZtAULeQBa0frLMriFgr0y+vEbPmV8ueg1eWMFmBJ/WLbfFdEZk
-	 1BdByBveoZC4aW64885R0UgAiTouQR8jyx7s2YsZM0PFpSGpQYrwDLZzvBOmgXhbEnkx1
-	 4ifIP3J85Pt005EM1zq5Uenm5R+XArnfbNfKQ/YYorAAIdsRnN1m0dG2y0oP6zSex6p+Q
-	 BE3DEAu3ELkHqwiTK4BDCpNLOX3G3+nNxdEJ7NSNfWSN0/as5JPuOrlfqcLT/CLYKWA==
+	t=1795047261;
+	b=cEKLlS7EmStL8HqnczAVjlKlJdwWgAx4mn3/d1NKiHHAsd9zl8G4HkEJyQeYa+enK4x7
+	 tNDWmeqRx6dam1JEsoSi68RKqAPR+y0gpeAiFQE/Zst3ShjdoApZHCVrjLbbwIxuGYOzD
+	 dS0zaK5PKmmh0BotVxmJOwnSPt0po+BCpx/msjTS5jA3wljHgjJC7kTSFIBXkrl2kEOZL
+	 5hpavm8Hbf+k45F7S5AHO7LTj5TK8uzlBRTzwxX4hLLU4amA4noy06oepcY2Ca97jgz5i
+	 m8+srNvqfl+/seUK/w1WtiDOlcBvqe/o1fHuPMfaUX1XGHDtaNiESaywt2ULQuPEEJA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047259;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047261;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LDpKSie6bQzSqmy7FrF/xd9/1ISTxATCAhjDT8gkU2g=;
-	b=jW6dJsdatvBQpjuoKWn7ox6cHkPTQMl89kMBjzSDXPamteHdlY8rYkVFEtLCUQGbIdFg
-	 nTi+LLO6p6fEXpjGgtO4EXjdsThdprUEzoPGSCj3Io1caTAkEGW9VoPdXdbiMdAih+AXw
-	 NDKqKSYMu7wCnkSK723csTs5yBUOak1f8Khudkd4tSG2sAwozaFEGtnqscMwf1MX01e4l
-	 0GAqXO55rS4kZOwczPop5867YQOC3Mj9yYMx1QzZzWxnoS/KxGjHvHAq7qEV2xvGF533p
-	 aR8pBSK/stt7dn6MTNAWHuthpJ+0BAXTFY6gl7db5pR5an2oL05a5utYzaaFC3woKJA==
+	bh=Y/LsYzKtkdTTczwO93v5trugpVYpja62rJIXoTGqALE=;
+	b=HOhS6W0rA4MvFEDWbqMJIigE9vnzv2ueaRgZZMhdm9lLk32l9gDoFxd7CCpZgc9uyCas
+	 ZHIEaw4A70vz83rJ8Ofr8zJNBmr+AWxi1rOFr/zVBGPyyJVoYKy0bP3OBf392mU26ktnX
+	 AOp2pXixsYxCdr6EMruZHfIGz1l8np7CPRnodCFO2nSoFDXKqhRst8Ovf9J6IjgTXsjKU
+	 7Q5u2Ou7Z2gBNuxJDUtYe0OfLSmLf0TiJREYNWk1AcAFX0V4yOESFcGO0Zed2N1leNDWd
+	 PAq+ykSm8edXB9RPnLGAkssWxBWMvCkW401PC32AxgOsx8RMjulk62Wvdxc4D/89SVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svCoiKgQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FYcGlV+9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D522606A31C;
-	Thu, 19 Nov 2026 00:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA3A606A325;
+	Thu, 19 Nov 2026 00:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=svCoiKgQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565BB1F000C4;
-	Thu, 19 Nov 2026 00:14:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FYcGlV+9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6421F000C4;
+	Thu, 19 Nov 2026 00:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047258;
-	bh=LDpKSie6bQzSqmy7FrF/xd9/1ISTxATCAhjDT8gkU2g=;
+	s=korg; t=1795047261;
+	bh=Y/LsYzKtkdTTczwO93v5trugpVYpja62rJIXoTGqALE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=svCoiKgQKaHaiu5tU3X+dN4g2k/b09QMULlU36VL4/8pPKJmhw9NsxDULJknmlfky
-	 bWrdjYuAl96Gp4jeiI2WgVK5jDUCjkJWdHr2GDmRkt1YZXIgFIBboCTnJOeLF1lqep
-	 44kRzhSwaLn7G/x2H+D+i/QmAadwBut08TsBaYHk=
+	b=FYcGlV+9zfHpLNczP/ELT6hEeHY+hWJ3phfmtciI7dl7i12rL6Jt6lEnLe/P5VIzD
+	 wmG2KuJh6JKjrAcLH1ujvqJpzhm8YnKmtCFVOqFG+NV+23Ix1BB4KYSrzWvoTkLf2K
+	 XLNKtdpq8m+rHQXVrzuz5VciAwzQskpTG9mOVYAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yanxia <yanxia@cmss.chinamobile.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Song Li <songl@zju.edu.cn>,
+	Fan Wu <fanwu01@zju.edu.cn>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1575/2857] veth: fix stale peer max_mtu on XDP program replacement
-Date: Wed, 18 Nov 2026 15:43:29 +0100
-Message-ID: <20261118150258.090645358@linuxfoundation.org>
+Subject: [PATCH 6.1 1576/2857] virtio_fs: read the vring size under virtio_fs_mutex in ->get_tree
+Date: Wed, 18 Nov 2026 15:43:30 +0100
+Message-ID: <20261118150258.125100635@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,63 +69,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: yanxia <yanxia@cmss.chinamobile.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-[ Upstream commit c955325db639e9503941227e14e1f1ccc99442a1 ]
+[ Upstream commit e7ccc777a040343b80f95f4cc5c12ce1df3187f4 ]
 
-veth_xdp_set() calculates the peer MTU limit from the incoming program's
-XDP fragment capability, but only stores it when no program was attached.
-Replacing a program with one having a different fragment capability
-therefore leaves the peer's max_mtu stale.
+The vring size was read after virtio_fs_find_instance() had dropped
+virtio_fs_mutex, so a concurrent virtio_fs_remove() could free the
+virtqueue first. The reference from the lookup keeps the virtio_fs
+alive, but not its virtqueues.
 
-Replacing a regular program with an xdp.frags program keeps rejecting
-otherwise valid jumbo MTUs. The opposite replacement leaves a larger
-limit in place and permits MTUs which a fresh attachment of the regular
-program would reject.
+Hold the mutex across the lookup and the read.
 
-Update peer->max_mtu after every successful attachment or replacement.
-Keep the GSO feature update conditional on the first attachment.
+This issue was found by an in-house static analysis tool.
 
-Found during review of the XDP replacement path and confirmed with
-native XDP on an isolated veth pair. Before the fix, direct replacement
-rejects MTU 9000 after switching to xdp.frags, and accepts it after
-switching back to a regular program. Detaching and attaching instead
-produces the expected results in both directions.
-
-UML tests on net reproduce the problem before this change and match the
-detach/attach controls afterwards, with both devices up or down and
-with either endpoint receiving XDP. Failed replacements preserve the
-previous state; same-type replacements and detach also behave as
-expected. Small-frame traffic passes in the devices-up cases.
-
-Fixes: 7cda76d858a4 ("veth: Allow jumbo frames in xdp mode")
+Fixes: a7f0d7aab0b4 ("virtiofs: split requests that exceed virtqueue size")
 Cc: stable@vger.kernel.org
-Signed-off-by: yanxia <yanxia@cmss.chinamobile.com>
-Link: https://patch.msgid.link/20261020020147.790274-1-yanxia@cmss.chinamobile.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: adjusted context for the missing xdp_features_set_redirect_target(peer, true) call ]
+Assisted-by: Codex:gpt-5.6
+Co-developed-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Song Li <songl@zju.edu.cn>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+[ sashal: Retained kref_get(&fs->refcount) instead of upstream's kobject_get(&fs->kobj). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/fuse/virtio_fs.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index e8064b9253720..b8a2b3be2767e 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -1536,10 +1536,9 @@ static int veth_xdp_set(struct net_device *dev, struct bpf_prog *prog,
- 			}
- 		}
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index 2a51d7b4d216c..8c7f472234785 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -265,26 +265,23 @@ static int virtio_fs_add_instance(struct virtio_fs *fs)
+ 	return 0;
+ }
  
--		if (!old_prog) {
-+		if (!old_prog)
- 			peer->hw_features &= ~NETIF_F_GSO_SOFTWARE;
--			peer->max_mtu = max_mtu;
--		}
-+		peer->max_mtu = max_mtu;
+-/* Return the virtio_fs with a given tag, or NULL */
++/* Return the virtio_fs with a given tag, or NULL.
++ * Callers hold virtio_fs_mutex, which also keeps the virtqueues alive.
++ */
+ static struct virtio_fs *virtio_fs_find_instance(const char *tag)
+ {
+ 	struct virtio_fs *fs;
+ 
+-	mutex_lock(&virtio_fs_mutex);
++	lockdep_assert_held(&virtio_fs_mutex);
+ 
+ 	list_for_each_entry(fs, &virtio_fs_instances, list) {
+ 		if (strcmp(fs->tag, tag) == 0) {
+ 			kref_get(&fs->refcount);
+-			goto found;
++			return fs;
+ 		}
  	}
  
- 	if (old_prog) {
+-	fs = NULL; /* not found */
+-
+-found:
+-	mutex_unlock(&virtio_fs_mutex);
+-
+-	return fs;
++	return NULL; /* not found */
+ }
+ 
+ static void virtio_fs_free_devs(struct virtio_fs *fs)
+@@ -1487,13 +1484,17 @@ static int virtio_fs_get_tree(struct fs_context *fsc)
+ 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
+ 	 * to drop the reference to this object.
+ 	 */
++	mutex_lock(&virtio_fs_mutex);
+ 	fs = virtio_fs_find_instance(fsc->source);
++	if (fs)
++		virtqueue_size = virtqueue_get_vring_size(fs->vqs[VQ_REQUEST].vq);
++	mutex_unlock(&virtio_fs_mutex);
++
+ 	if (!fs) {
+ 		pr_info("virtio-fs: tag <%s> not found\n", fsc->source);
+ 		return -EINVAL;
+ 	}
+ 
+-	virtqueue_size = virtqueue_get_vring_size(fs->vqs[VQ_REQUEST].vq);
+ 	if (WARN_ON(virtqueue_size <= FUSE_HEADER_OVERHEAD))
+ 		goto out_err;
+ 
 -- 
 2.53.0
 
