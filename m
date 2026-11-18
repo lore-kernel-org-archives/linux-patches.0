@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019558;
-	b=bJxlJ8kjWWchwOMEA+nwsH6fqoxcCXjph2JntiVJ2UkkZu9Xljb34XCPTgri8NVyd6hw
-	 9XhgW7qtGkXY6BggdTacOj3/VIXAV1oxFzItRdMAqgp3u9DGAwd5Y9w38r62Lx83vHDhm
-	 jxL5UWRV8jEznZn18FtSVh2W4h2pVzqpHWRzMAWy9MGulbvwVMHtv2o0cDof1G7P9sRFy
-	 6OMEISPbiD8XFzidwxmBnDxxw08D6dYFmqfF+J4xiVtidknLgAHbQ8eZef3B3lzjImjkZ
-	 fpShj73PmMKGrEXLCpPCeM2yVGM279sSlvYE3IccaR2apUzVX14GmhLiVPx0R5bpQkA==
+	t=1795019561;
+	b=ZkTirIK2rlGF0BD+w+mYzQsCsKHvNrFa+8lmWzkecte2qE1rf3FnmeycKDYB9+yWc0rx
+	 I+ERZStLB8+89tb8CoYkUbX+nbvhGgGhouSEg9QhC1fXjvNqMoVllrIp0v2oP2Ny6wlHw
+	 zP19LsPwpGRkg4q192Kb5q1fDBvatEl6CnTFobSML0PkSAddgri0j0ag8NO/69sQttY3T
+	 zikBz8LdFROQwJ8DZuxOqzGECRqRidR4WOzMYVY631VUK+0DAoktOJnUJbgg8HbcX5bzt
+	 TiaqDz4X5QTt6HEGPckEVH+wlfO+dAtS8CQKKW+Wc0i+Jc40+8E98gHEvh55F6XROBA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019558;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019561;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=DRhbTeDJVvi8/N9R3RjKFtQcB8bwZINXv7ePJJzuKW0=;
-	b=G9cBXydF1VWoJVHgNvcswz4GGDS6V/ejpzHgWdm6DJNaDaT1MBJE4cFQuleGj8wefGDe
-	 Al/39QUZURvwd1iDgfyJnY8Qvc+9ymjA5twxj9Z1tpiTTzj8aKTagVNLUC1qflEp/4NSf
-	 mXeFH4HHDWzImtxmgZ2//gfZIET7c7k/v8/wiFocOVP8oRqS/GV1iXalTwbZrkXTscEWu
-	 WgzFjxsth0syDr+/b+oYScuu7naVUwN1RV9TkpajpNBSz8DcuRLQqn1/sX29RSwf0ebdJ
-	 Sckf0RQVapsUcqdaCpKv6ZXQTAi7pqPa2xjIdD4Vj1pKBINqZeMZsWu5A9BxoyMdcmw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=6yZDvst1hdQ8s+LfTru4kd1Kfhri2zqndjcs+1J06Ic=;
+	b=lILEo6kUDj1MN5v+kNwkIP37/zXvw+7HSQmIhptZplQRIeBG6IXi2+Zrq4v8fBMi32em
+	 by3Hc4bLcnMDq38LXIeZP7X4Ab/FE1rLp/Lvg+HBb/gprMy6pGn3HhW1DaHqis7SCUASY
+	 DeZCGEONnlFPqE1PQpcP5rtttO2vdjeADFtKPhZwS4xd1OlICSvVgy1qfAWGNzxoK7TYy
+	 W8YwZiL2YALzz35cWvx75xSU20m1nPwH8qlkFN9PhS0fnOUJ2FvJ3AFUuMja9y2HZftyr
+	 sfOU0YufJmeVpmWBFcc9k620qfFRsLcqpI2vlk69LgQdHru/YqGGPMVwTuqmb+Cpprg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfV0NqCQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NbB9n4xD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B9606A7DB;
-	Wed, 18 Nov 2026 16:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B967606A7CC;
+	Wed, 18 Nov 2026 16:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HfV0NqCQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33351F00925;
-	Wed, 18 Nov 2026 16:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NbB9n4xD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839CB1F000C9;
+	Wed, 18 Nov 2026 16:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019558;
-	bh=DRhbTeDJVvi8/N9R3RjKFtQcB8bwZINXv7ePJJzuKW0=;
+	s=korg; t=1795019561;
+	bh=6yZDvst1hdQ8s+LfTru4kd1Kfhri2zqndjcs+1J06Ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HfV0NqCQ+X/xTC8anixXdO0umf/nMAnN0ilzbslGjzmdxG+33gVYTTY+WCnZl1JcG
-	 Toj8Bcszyds2SAdRnbt+3SHngh6frU68r6LY8DZrXwzIJrdgpYXRIkC4s8lLwHWA8e
-	 6mCMiqFiY9MgbbGWB7kuJufI1W8kVT1ufHNRvA94=
+	b=NbB9n4xDAJ/CE82e0PiVUCAqGew8LN4Op56MLpSzbFiJtRUrgHv83Iu+XqeQKozfK
+	 y3nrNk/QSyckP58abiF6akZNXiF86Ya0Smdpgll6idkCC+FHiEduWTF2aeTpqtLqxS
+	 AIGlPkS5xsTnzyaRYHYCPraqxE9T/wLoHlmBFOlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maud Spierings <maud_spierings@hotmail.com>,
-	=?UTF-8?q?Robin=20R=C3=A4ber?= <robin.raebi@gmail.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>,
-	Diederik de Haas <diederik@cknow-tech.com>,
-	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 7.3 1639/2651] drm/rockchip: dw_hdmi_qp: Add missing newlines in dev_err_probe() messages
-Date: Wed, 18 Nov 2026 15:47:59 +0100
-Message-ID: <20261118150346.832437797@linuxfoundation.org>
+	Sashiko <sashiko-bot@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@kernel.org>,
+	Tal Zussman <tz2294@columbia.edu>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 1640/2651] block: use iomap_dirty_folio for block devices
+Date: Wed, 18 Nov 2026 15:48:00 +0100
+Message-ID: <20261118150346.866159414@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -66,53 +65,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Tal Zussman <tz2294@columbia.edu>
 
-[ Upstream commit 7554a1cb23148a3ab0b74c7edd47356c26b40ead ]
+[ Upstream commit be1e33eda3e6699e57ed3fe6e34078f115b4a1ec ]
 
-Add the missing trailing newlines to a couple of dev_err_probe() calls
-in dw_hdmi_qp_rockchip_bind().
+With CONFIG_BUFFER_HEAD=n, block devices are written back through iomap,
+but def_blk_aops uses filemap_dirty_folio, which only sets PG_dirty. It
+does not set the per-block dirty bits in the folio's iomap_folio_state,
+so iomap_writeback_folio() finds no dirty range, submits no I/O and
+clears PG_dirty, resulting in data loss.
 
-Fixes: b6736a4ea3fa ("drm/rockchip: dw_hdmi_qp: Improve error handling with dev_err_probe()")
-Fixes: e1f7b7cbd74c ("drm/rockchip: dw_hdmi_qp: Switch to drmm_encoder_init()")
-Tested-by: Maud Spierings <maud_spierings@hotmail.com>
-Tested-by: Diederik de Haas <diederik@cknow-tech.com>  # NanoPC-T6 LTS, Rock 5B
-Tested-by: Robin Räber <robin.raebi@gmail.com>
-Tested-by: Igor Paunovic <royalnet026@gmail.com> # RK3588 Orange Pi 5 Plus, dual HDMI
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20261005-dw-hdmi-qp-scramb-v12-8-195157ba0b40@collabora.com
+Other iomap users set .dirty_folio to iomap_dirty_folio, which marks the
+folio's blocks dirty before calling filemap_dirty_folio().
+
+This is only observable with block size < folio size. With a single
+block there is no iomap_folio_state to get out of sync and
+iomap_writeback_folio() marks the whole folio dirty itself. For a
+page-aligned device, this may require using the BLKBSZSET ioctl to set
+the block size, which requires CAP_SYS_ADMIN. A device whose size is not
+page aligned already gets a sub-page block size from
+set_init_blocksize(), so no ioctl and no privilege is needed.
+
+To reproduce, on a device with a sub-page block size, write a known
+pattern with O_DIRECT, mmap the same range, store to it, msync() and
+fsync(), then read it back with O_DIRECT. A reproducer is available at
+[1].
+
+[1] https://gist.github.com/tzussman/18ab05cba4b3fdc79cce0a69d1fd05b4
+
+Fixes: 925c86a19bac ("fs: add CONFIG_BUFFER_HEAD")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260730-blk-dontcache-v7-0-3e8e6850068d%40columbia.edu?part=5
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Tal Zussman <tz2294@columbia.edu>
+Link: https://patch.msgid.link/20261009-blkdev-fixes-v6-1-307939c387df@columbia.edu
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/fops.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-index 42f2627e1a052..df0e2bb1eedc6 100644
---- a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-@@ -681,12 +681,12 @@ static int dw_hdmi_qp_rockchip_bind(struct device *dev, struct device *master,
- 	drm_encoder_helper_add(encoder, &dw_hdmi_qp_rockchip_encoder_helper_funcs);
- 	ret = drmm_encoder_init(drm, encoder, NULL, DRM_MODE_ENCODER_TMDS, NULL);
- 	if (ret)
--		return dev_err_probe(hdmi->dev, ret, "Failed to init encoder");
-+		return dev_err_probe(hdmi->dev, ret, "Failed to init encoder\n");
+diff --git a/block/fops.c b/block/fops.c
+index c915ec0126d7f..8d74d0e57f43f 100644
+--- a/block/fops.c
++++ b/block/fops.c
+@@ -565,7 +565,7 @@ static int blkdev_writepages(struct address_space *mapping,
+ }
  
- 	hdmi->hdmi = dw_hdmi_qp_bind(pdev, encoder, &plat_data);
- 	if (IS_ERR(hdmi->hdmi))
- 		return dev_err_probe(hdmi->dev, PTR_ERR(hdmi->hdmi),
--				     "Failed to bind dw-hdmi-qp");
-+				     "Failed to bind dw-hdmi-qp\n");
- 
- 	connector = drm_bridge_connector_init(drm, encoder);
- 	if (IS_ERR(connector))
+ const struct address_space_operations def_blk_aops = {
+-	.dirty_folio	= filemap_dirty_folio,
++	.dirty_folio		= iomap_dirty_folio,
+ 	.release_folio		= iomap_release_folio,
+ 	.invalidate_folio	= iomap_invalidate_folio,
+ 	.read_folio		= blkdev_read_folio,
 -- 
 2.53.0
 
