@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028415;
-	b=Rs64gIwD5CxlBAoz1H8kQcbdO9VrFulXHy0YCCD6JDEfLb/dzRM1mWDjR8DZeTeh6en3
-	 qR6YXHyr/bfHogahOL+oo+QpY8RY9prdd9DqzsBT0IA4PFWqVVLQPADzF6ro97+UlVCG9
-	 CqGfbNF4ULSXx19H7nWXLFxNj53laLtRZw6iXmpSliNqjZ/f940aiuBe7gWnrfgslGglc
-	 fTm0bey/SoJXPq45Wr+PhMk5HOajvTnF55hCOlMEd0mEroBzrwTcvASAmSbUCMSRVcqOc
-	 KypobchiHyEFXdN+TqHsTvT8Q9aI0sOqsFmE/kXaoLt1sCZbMzkU3GmHf6yKauy8aKQ==
+	t=1795028417;
+	b=WeWxC+fjUGkPmcde22lLEtMmXa+CLWQNo9lP3+U78FeBExFsJBtRfi+UVtoNRyPaVN5Q
+	 yfuj7oWcq6kylnLxzI4Ltah0k+WdQfQHOoz8qxul08nYZ3hKCBfnFqTNQ4xiq5Kb/cfaH
+	 Nk3VirvE7N2p+yCtP8CNmXt6vq7QS0QNQSx2kkDNZXM+4bqYUFEgaOKhXdgI5En+YAzYD
+	 oTgBU5bHwWqA+4ymC/b3dURq6nts9L/IQU3U6HBY9SGzAGJ+KCL/0FK7SRYXqOvBgNVnw
+	 I0XV4JbWbu62FNohCgM1glipLTVHf8z7NyCp6u4+E8Z29QUqrQo1LLVd7wY73zsp18w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028415;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Hx6ip4BPAd6qjYaDy3MS/LYbGrYcMJocVNjrTz3bNUo=;
-	b=jeXwc3LIyjE+7RS+tLdgmyimUIsxId4nbMmh3nF+HoF3cyjn5FGVnHdmko4eTSlHFr2z
-	 gPaN7u8Z+ItspODbr/YF9/JufsCRwTTpQPwuLCfPZph3o8ALxknixIu3hmKTTjyZtlem2
-	 vGXqrtyqtmbIURD0PK8Ae+D09HjMJuYhuk1LeGzdGrBgPLYREcsOT1vIqNwFsDv/n6+UV
-	 zalcr57LxqNfIERTr8QG13mlpP3KsHFLZd3bvcbFBSnw/eU9zjMw0OLxl/di4lt1USq/7
-	 f3lQeh853VejuMx2GpEEp4Dn+Xw1o5gFZpayDQ0N5eKqNYUFv1w1ICRjLka4wLXiN/w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=DtJcVwevFolgraxVPJq/NO8isPP0i6qxEgspSXu0Zm4=;
+	b=w2CCXsu/XDpNtYqFA+2A6eL4ha36e3qnTqe5scTmb8uWdgqwmeAVO6MAuSWVFPJ29+ug
+	 gBRxg/jLK5uxBmGTNTR3GkfJRqkWxehUSUDvvUf5pB39gg4iariRn2cIQQL+miPxmKbXn
+	 a+1n/+xW0EuXOyEKOZLDpHzDCfJeNlhbrChuJvbMU+OMknwDsNNVoCUhjzTCJZ5/vI4yG
+	 F1AGccICSy2FXeLbtH6ht01+b6UiwSYHsr0C/hYWROov+/Gmpo/U+QkZSpkrmAzIwUEsc
+	 Mj++mEH1CA26GD3PUKMMv443Bdex1yisoSWjiHneasRzVBO7ZgmhRX7LFtGclp1jmew==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnsSxD5z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxNQqFhz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05178606A31C;
-	Wed, 18 Nov 2026 19:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA9E606A330;
+	Wed, 18 Nov 2026 19:00:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qnsSxD5z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537EF1F000C4;
-	Wed, 18 Nov 2026 19:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxNQqFhz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9451F000C4;
+	Wed, 18 Nov 2026 19:00:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028414;
-	bh=Hx6ip4BPAd6qjYaDy3MS/LYbGrYcMJocVNjrTz3bNUo=;
+	s=korg; t=1795028417;
+	bh=DtJcVwevFolgraxVPJq/NO8isPP0i6qxEgspSXu0Zm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qnsSxD5z62GrpLbOOQGep7Ta2Oc7aNbaLHYM6M8dgt3hkVGg2a7lm20FBnnnXts/G
-	 oB7Cg7zUnDVMJ0efhhWpgkeuVlWcvMkQ1AUkWx8qtFJoQeJU5/uL7fvBTFOp1R3tz2
-	 zNYqO9NNtUvxpyqihwU9xh8agB7dGcKhBoGwxNsI=
+	b=AxNQqFhzVHpFbrKtShwZWcplhdysMFZfT8+tm53JyHRHV20rgqxhEpYBKurhysyAt
+	 nMa71ggMmL6QJhuAuF/OiIfSvSAMKWyDjrsI4jotpiClTA4sDefK8Q3HWvWug8WudE
+	 7hlhaL2GZQnFk2utxILemkYDDO9jNNrDGk9sAwTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2095/2151] zloop: check that the zone backing file support ->{read,write}_iter
-Date: Wed, 18 Nov 2026 16:03:50 +0100
-Message-ID: <20261118150238.013680711@linuxfoundation.org>
+Subject: [PATCH 6.18 2096/2151] apparmor: fix table_size() integer overflow on 32 bit
+Date: Wed, 18 Nov 2026 16:03:51 +0100
+Message-ID: <20261118150238.049021864@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,45 +62,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Maxime Bélair <maxime.belair@canonical.com>
 
-[ Upstream commit 0c10f8a1a7ae1502ea4ea7e13f222df89c28adf4 ]
+[ Upstream commit 449195a4bb7d9c456c02b871eec6905edb449bd2 ]
 
-I/O to backing files requires support for iter based read/write, so check
-for that upfront instead of dereferencing a NULL pointer later.
+table_size() checks ALIGN(sizeof(struct table_header) + len * el_size, 8)
+in size_t, where @len is td_lolen, a u32 user-provided value from the
+policy blob. On 32 bit kernels both operations can overflow.
 
-Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
-Reported-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261029150353.2503201-5-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Triggering this bug allows to:
+ - overflow a 16 byte allocation with up to 4GiB of policy data
+ - store the table header at address ZERO_SIZE_PTR (kvzalloc(0))
+
+However, this bug requires CAP_MAC_ADMIN, only affects 32 bit kernels,
+and the copy runs until the machine is destroyed, so it gives no
+controllable primitive and is therefore not a security issue.
+
+Compute the size with the checked helpers and return 0 when the result is
+not representable, so the callers can reject the table. A valid table is
+never 0 bytes, the header alone is 12.
+
+64 bit kernels cannot overflow (these structs are 32 bit), and are hence
+not affected.
+
+Fixes: e06f75a6a2b4 ("AppArmor: dfa match engine")
+Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/zloop.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ security/apparmor/include/match.h | 11 ++++++++++-
+ security/apparmor/match.c         |  6 +++++-
+ security/apparmor/policy_unpack.c |  5 +++++
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
-index a485eeb97b379..3f16e10a6bbfe 100644
---- a/drivers/block/zloop.c
-+++ b/drivers/block/zloop.c
-@@ -836,6 +836,11 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
- 		return PTR_ERR(zone->file);
- 	}
+diff --git a/security/apparmor/include/match.h b/security/apparmor/include/match.h
+index 7accb1c39849a..ade3fc8c69740 100644
+--- a/security/apparmor/include/match.h
++++ b/security/apparmor/include/match.h
+@@ -12,6 +12,7 @@
+ #define __AA_MATCH_H
  
-+	if (!zone->file->f_op->read_iter || !zone->file->f_op->write_iter) {
-+		ret = -EINVAL;
-+		goto out_fput;
-+	}
+ #include <linux/kref.h>
++#include <linux/overflow.h>
+ 
+ #define DFA_NOMATCH			0
+ #define DFA_START			1
+@@ -120,7 +121,15 @@ struct aa_dfa {
+ 
+ static inline size_t table_size(size_t len, size_t el_size)
+ {
+-	return ALIGN(sizeof(struct table_header) + len * el_size, 8);
++	size_t size;
 +
- 	if (zlo->block_size) {
- 		ret = zloop_get_block_size(zlo, zone);
- 		if (ret)
++	/* Need check_*_overflow for 32 bit machines */
++	if (check_mul_overflow(len, el_size, &size) ||
++	    check_add_overflow(size, sizeof(struct table_header), &size) ||
++	    size > SIZE_MAX - 7)
++		return 0;
++
++	return ALIGN(size, 8);
+ }
+ 
+ #define aa_state_t unsigned int
+diff --git a/security/apparmor/match.c b/security/apparmor/match.c
+index e4ef1057e2c06..1e79f269a9bb6 100644
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -58,7 +58,7 @@ static struct table_header *unpack_table(char *blob, size_t bsize)
+ 	if (th.td_lolen == 0)
+ 		goto out;
+ 	tsize = table_size(th.td_lolen, th.td_flags);
+-	if (bsize < tsize)
++	if (!tsize || bsize < tsize)
+ 		goto out;
+ 
+ 	table = kvzalloc(tsize, GFP_KERNEL);
+@@ -281,6 +281,10 @@ static struct table_header *remap_data16_to_data32(struct table_header *old)
+ 	u32 i;
+ 
+ 	tsize = table_size(old->td_lolen, YYTD_DATA32);
++	if (!tsize) {
++		kvfree(old);
++		return NULL;
++	}
+ 	new = kvzalloc(tsize, GFP_KERNEL);
+ 	if (!new) {
+ 		kvfree(old);
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 3e16612d2284e..b815c919a9915 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -810,6 +810,11 @@ static int unpack_pdb(struct aa_ext *e, struct aa_policydb **policy,
+ 		u16 tdflags = pdb->dfa->tables[YYTD_ID_ACCEPT]->td_flags;
+ 		size_t tsize = table_size(noents, tdflags);
+ 
++		if (!tsize) {
++			*info = "invalid dfa flags table size";
++			error = -EPROTO;
++			goto fail;
++		}
+ 		pdb->dfa->tables[YYTD_ID_ACCEPT2] = kvzalloc(tsize, GFP_KERNEL);
+ 		if (!pdb->dfa->tables[YYTD_ID_ACCEPT2]) {
+ 			*info = "failed to alloc dfa flags table";
 -- 
 2.53.0
 
