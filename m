@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032974;
-	b=ibpNDEtq/2O9cVcao+fucaMMq7+4fHCPMwQf5ZT4yM8+FqZRAgGtTrRtcsCm4LrfOdsz
-	 oywtEVufu+EjFpMdxABubbYfNuokJ5p55M1JyAM33VVW7gN2Dtf+qgMLFmql5xairge89
-	 jim+mJ6ZbGbHiXx4cvG47hHDeIGwYEtVS76H0wX+Awig7oaQRoFU/V8OR6FSDFLOQ2gyz
-	 9Y7WcMIPZG+ARcLyiI9umQMPiZDdllStbpuzP/T7ZXap89n54NoNTnhyEJXF/jWU07sy0
-	 wdnfkm55vC/Awx4gWGR+BDgds+8iz5NxrauSgC89aN6yGNH+D5USoFEBtTMN/UOstoA==
+	t=1795032976;
+	b=d+PfyAc3C8AAKX1QyxO+vUr+GzvpJklFCxF9KBWA9dxCuDYaMJBF3Ix4QQQ0vqOZBEis
+	 Pp47CgwcI6TwOx2obJWUUePdoL+Qw1OwYI6gubpMfvaLbAJzGre8IGxwpvO0ATS4bmTGq
+	 jCbq9dYsWcKryJe+U8I0hHQol0+qXfgRcRw2JmSmBW0MR9761YqdvpjVzCZa5+ULrUX/n
+	 IWRX/sqwqfpO0m3tptoL60Wx877+tn2+VrAzyOQtEtzfgba4WfOO+zIC4yMN/JeeqJtmD
+	 C3y1rSx57rdYIo9tzD4sVnT0N0UmNMXL4CcdHBhTcOSthRWANKpAtO1sq4Jq7fxuN7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032976;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bZakuzSZyHndi6u+igk1p6+iRad8l3kdcyE7mP2cpOs=;
-	b=bVRXaO34hzakN0MONzYphbcoQp3UOYkxyiJdFNUzaIWSERZg1bTwqWFoQTwQH9Fvfi7H
-	 jA01IofKRi6dnL3ta36BMPxpRQDSWeM129bD6ZogW81RFdv1vR+d77fOISqaoKumY8wVM
-	 9tX4DKbB/gGDfgoGvO4J8mEvFYSRcrY1I7qOYRcSYniKdS/I1m+8zdXkvVVsUH01om/Nl
-	 H6JbXsvRrLLOAR9xz9QDCB5Ti+CWPc74+rNHFvgKNypnAZ3HCUzoT+qxwLJ9RGBuVVBAb
-	 132qNtLMs9fiqja/9cR2g2RAD3nQK+Ng/Mpl5XunfZySnkmKsPgCyzjKD9l1htKv2Gg==
+	bh=paq3caMLswffa2KVtRgwd/TUzY+wy7fQU1j6iSu6ja4=;
+	b=0Su8Qn/eoTFw35tmu0eo4T8JssBgSNXO1jeLAkdG+5BPeY5YEqqNepVpYQAfZeWW02rA
+	 d2Jy97QugVq/Ar0Vi4wq9mgeJCPkCMjjwqlbE4ryps1iD6kGL4sU6y8I9uGaMUdyQ0ZLg
+	 Fm4VWCc14IdYoTSXNIWSndsyQtfO7YtJrox1F0aPugsDJ11e2+lwknCReI9BGLuzntssX
+	 bwrTX2KJRZLeGNHiWyQC9wqFP1mC23CfR51qM5+ia2qu8tG8ynsnxdGkJlBEdNxmI6A30
+	 ZqfbaNILNxDnzfp+RySJi0VKwU3SdIX1E5HZhD5xlH8FKkBua52bYAJu+rGLBDux+6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RcSw5up;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivIpAC79;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E337A606A320;
-	Wed, 18 Nov 2026 20:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743E0606A31C;
+	Wed, 18 Nov 2026 20:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2RcSw5up
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187821F000C4;
-	Wed, 18 Nov 2026 20:16:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ivIpAC79
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9881F000C4;
+	Wed, 18 Nov 2026 20:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032973;
-	bh=bZakuzSZyHndi6u+igk1p6+iRad8l3kdcyE7mP2cpOs=;
+	s=korg; t=1795032976;
+	bh=paq3caMLswffa2KVtRgwd/TUzY+wy7fQU1j6iSu6ja4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2RcSw5uphFawbJV2jwFTA1mDWrA/1nQ9OMQhN3BLbR/A3twkJtxu4fi1zQAUOj8Kp
-	 fXGW3uUhtfweM2hUBQ1cA5LAJ9PwMj9rrHN9qWtBoVx+Lbk7f0Eog457dxyTq8nS/s
-	 N0KDtw3gY0l5Qoj1rQr75r/k+/AcDenceA261ud8=
+	b=ivIpAC79Xt2AMdEw8uwMUSJLa2J7PZ6YhX3Cf5z7WWI4jqZqksXIhwJAz08guh1hl
+	 Y4jVONEV3ZwKlHf6eRzuVYNC8GFDPfWvfV/XEFwPpeb2PJnK7PlL4cxSjxabhob+R4
+	 H6ul27tRwGRohJXtyCXtLWOzb2DVEPT5cLDbpHQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1561/1756] ALSA: pcmtest: Reject invalid fill_mode values
-Date: Wed, 18 Nov 2026 16:01:28 +0100
-Message-ID: <20261118150111.598730674@linuxfoundation.org>
+Subject: [PATCH 6.12 1562/1756] netlink: fix out-of-bounds bitmap access clearing stale mc groups
+Date: Wed, 18 Nov 2026 16:01:29 +0100
+Message-ID: <20261118150111.650615221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,66 +68,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 5deb9c57ba93d28a52871a96f3d8794d2cbed035 ]
+[ Upstream commit 6430fb7f1cc4e329e386521b7b208df443de92f2 ]
 
-The fill_block() function handles only fill_mode 0 (random) and 1
-(pattern). With any other value it writes nothing and does not move the
-buffer position. A capture stream then gets no data, and a read fails
-with -EIO after the timeout. Nothing in the kernel log says why.
+netlink_realloc_groups() sizes nlk->groups to the number of groups
+that exist at bind/ADD_MEMBERSHIP time.  When more multicast groups
+are registered later (e.g. a new genl family), existing sockets keep
+their smaller bitmap.
 
-Check the value in a set callback, so a bad value is rejected both when
-the module is loaded and when the parameter is written.
+When clearing a multicast group of a departing family,
+__netlink_clear_multicast_users() runs netlink_update_socket_mc() on
+each socket on mc_list, which does test_bit()/__assign_bit() on
+group - 1 with no regard to nlk->ngroups.  Skip sockets whose bitmap
+predates the group: such a socket can never have joined it.
 
-Fixes: 315a3d57c64c ("ALSA: Implement the new Virtual PCM Test Driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261026031655.2699561-1-sammiee5311@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The overflow windows differ per architecture, both needing privileged
+module (un)loading.  On 32-bit kernels the ~54 dynamically allocated
+genl groups already exceed the initial 32-bit bitmap, so the table
+can grow there directly.  On 64-bit kernels the same in-tree set fits
+the initial 64-bit bitmap only while allocation stays contiguous:
+genl_allocate_reserve_groups() takes the first free contiguous range
+and unregister does not compact, so an unload/reload sequence can
+fragment the ~59 free IDs until no fitting range remains, forcing
+the table past 64 bits and reaching the same stale-bitmap overflow on
+the next family teardown.
+
+This issue was discovered by Tencent CodeBuddy Security.
+
+Fixes: 84659eb529b3 ("[NETLIKN]: Allow removing multicast groups.")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/drivers/pcmtest.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ net/netlink/af_netlink.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/drivers/pcmtest.c b/sound/drivers/pcmtest.c
-index 25f21255b0651..3c85f90c0cc1e 100644
---- a/sound/drivers/pcmtest.c
-+++ b/sound/drivers/pcmtest.c
-@@ -71,13 +71,32 @@ static u8 playback_capture_test;
- static u8 ioctl_reset_test;
- static struct dentry *driver_debug_dir;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 7e1c087a98647..fb84eaa63d0ac 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2135,8 +2135,12 @@ void __netlink_clear_multicast_users(struct sock *ksk, unsigned int group)
+ 	struct netlink_table *tbl = &nl_table[ksk->sk_protocol];
+ 	struct hlist_node *tmp;
  
-+static int fill_mode_set(const char *val, const struct kernel_param *kp)
-+{
-+	short mode;
-+	int err;
-+
-+	err = kstrtos16(val, 0, &mode);
-+	if (err)
-+		return err;
-+	if (mode != FILL_MODE_RAND && mode != FILL_MODE_PAT)
-+		return -EINVAL;
-+	fill_mode = mode;
-+	return 0;
-+}
-+
-+static const struct kernel_param_ops fill_mode_ops = {
-+	.set = fill_mode_set,
-+	.get = param_get_short,
-+};
-+
- module_param(index, int, 0444);
- MODULE_PARM_DESC(index, "Index value for pcmtest soundcard");
- module_param(id, charp, 0444);
- MODULE_PARM_DESC(id, "ID string for pcmtest soundcard");
- module_param(enable, bool, 0444);
- MODULE_PARM_DESC(enable, "Enable pcmtest soundcard.");
--module_param(fill_mode, short, 0600);
-+module_param_cb(fill_mode, &fill_mode_ops, &fill_mode, 0600);
- MODULE_PARM_DESC(fill_mode, "Buffer fill mode: rand(0) or pattern(1)");
- module_param(inject_delay, int, 0600);
- MODULE_PARM_DESC(inject_delay, "Inject delays during playback/capture (in jiffies)");
+-	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list)
++	sk_for_each_bound_safe(sk, tmp, &tbl->mc_list) {
++		/* bitmap predates the group, can't be a member */
++		if (group - 1 >= nlk_sk(sk)->ngroups)
++			continue;
+ 		netlink_update_socket_mc(nlk_sk(sk), group, 0);
++	}
+ }
+ 
+ struct nlmsghdr *
 -- 
 2.53.0
 
