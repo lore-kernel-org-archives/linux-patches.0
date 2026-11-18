@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047639;
-	b=Kn/d4ryMNsWwGtj+qKAA0Ti7YXUxA22RWQ/Io9MN4z5qIpJKM3gr98J/wte5uMuV220J
-	 GQe1kBv9zpMZrPcjmCXVyoNsKShAExLBRMBRGSImYe9xYLt1onr4j+8D8PxWR4n407q7l
-	 3AQ+8iYfB/y2FT1/W1Grfe5HUwQ5oWaD0QNh+nuE8IzJopDoUBOcFhBHvdjfzJAUelNKg
-	 9TYjYTWjASkYqin0FOPZNNl0jZl3nKAHQMzAEnfpeQ+0OO4rSEJcyi/yjL5vFERg3camv
-	 6b+URyyljMYqpErkSvu4WKY4punfknz+TMIGNQMws0P9PEuGx+33ciBIfwzL6ml7ecA==
+	t=1795047642;
+	b=XYWRI1Uq3+oHdkooY9CNgLKsPRAJWqo5f5P3hqa5hu11Q/Pqw9JPwlpJrAGu3e8WqHNn
+	 MjyZUu0sN11HXSeEjI+QiQ0OMb56mnNz6yM3Bx6tQdiR2fVHBGPp1fEfF1/nNpypbPRfR
+	 i96DOWGJShNXzVwvEVG8dPePMv6AkR1K4hJspJSJ0CdErhjfGf9JlIY0C0Vz6KybBm87B
+	 WSbLVRw226hiIMX1ZWYYf8HKcFk3VQV6rcoGbBEBC4AZ3T0uMV1zAc2BvmcS7gPQkbQy7
+	 2GaQs8+B9r6B0kjiDj/3xy+SLv1eMM62tT+aCjX7dm3bN1e+miALialPgjkVHTj1Olw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047639;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047642;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lOizx/SqvbTF0n+/yGTa3TUJTWO7zqOk+nbGtXZfS98=;
-	b=a5fC4YCh4IdOMH/U9qzzMvYT33aKY1rqPYNqw3Tu/kq4Ig4atTDjTrEcNdD9YlQ/oMkp
-	 EJPAwRCKmMddQfBJZBXoOkgVlgjf/4OEIgz1Kz2U6ajeIgqkd0M0oQ0D0PZbeq4dfDecf
-	 EAbVnMQyzNVRIE3reO00IRZCVrHah2qQw31LN6Ib3ZMUIXU5gKvALYz0oTMTBjGGyMxcN
-	 fgbPS0EIGQCu0UvwUlsBroT/cX+/u4bP0dzJB2Ld7RwGU6pKeirxTOHSOvKeeJHXbEGL8
-	 H3a2Nn24/Iz0rVxlngWoZmkllzj7CExrV0hcfwKOHPdZZcO5YRfKynfbYcaXaRx9C9w==
+	bh=GZd8tVTFayU/q0PIUCIK54NzKDkelz/2mQrID+wFkFk=;
+	b=lAlgMQ9y/oWlH92r9yUfgBMHGEcE61bDETC0o/q/69DGFKnLdSsThXuJsLhnfnwLQQIl
+	 uP0kXHikeV7uqsbB8HhmaJdDTS0UAzmwDFZx8AcXG9DRPzjGE49HhwZ7r8+jIgsasykAM
+	 36pG1VBqViffHDeUkS1mm1Ml0ACEMNIFU7wOa0YiD63mn/1r9yiqcKb9J3aaudQ3wUGIp
+	 UxP0+A54mzkj0GPGOMO8Ee7lTKOfuT9b4m/pYEokoq1yz3NsYFHblUX7FDk1r9oi/dnPO
+	 E6EbGcQuqnXJrvdbOcFvpvDQgZmmxohv/BVuaRSH8v6MP7rAtADHIY95YJmHLzgmE0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7jMipgu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UU3bhtex;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6483A606A320;
-	Thu, 19 Nov 2026 00:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A86606A325;
+	Thu, 19 Nov 2026 00:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l7jMipgu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D5B1F000C5;
-	Thu, 19 Nov 2026 00:20:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UU3bhtex
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC231F000C4;
+	Thu, 19 Nov 2026 00:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047639;
-	bh=lOizx/SqvbTF0n+/yGTa3TUJTWO7zqOk+nbGtXZfS98=;
+	s=korg; t=1795047641;
+	bh=GZd8tVTFayU/q0PIUCIK54NzKDkelz/2mQrID+wFkFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l7jMipgumR6VAaZyA9kD9bBkbdQwDrWBYHr+5mmkEPfOH1tS+sJSqiNwOEK5o08iQ
-	 mnd9ntlhJJfnr3v/1D7j+vsoF3ODs7fGVWlmzNak+p2KIj2dtTLE8LccadqYMxuvD9
-	 o2s55ASU2fsjMJRPdvGq1XPBNo4vXpC09SAKWeTM=
+	b=UU3bhtex6l+Q5jZVkNstP6BmbtMCfoMDUHc1rZpHinL0DkuBwd+GwoYgFppr6iwHY
+	 YhbLa/fposS3XCMH3EVN0S4NStVmysQSUSmUHILIMdoVfEp0X+NkIt2kjgjkfVEOrz
+	 eqEEReI4lMlpzQJ6qb7vGHvFu67Srnein/fm/VT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Muhammad Usama Anjum <usama.anjum@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Misha Nasledov <misha@nasledov.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1710/2857] mm/mmu_notifier: finish non-blocking interval invalidation on error
-Date: Wed, 18 Nov 2026 15:45:44 +0100
-Message-ID: <20261118150302.899537349@linuxfoundation.org>
+Subject: [PATCH 6.1 1684/2857] drm/amd/display: Drop clock requirements on DCN32 when no displays are active
+Date: Wed, 18 Nov 2026 15:45:18 +0100
+Message-ID: <20261118150301.968171959@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,90 +69,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Misha Nasledov <misha@nasledov.com>
 
-[ Upstream commit 6d65925777ecae9d7a571a327e41c63f3940a0c7 ]
+[ Upstream commit bba4dc3306483335ddbe065c05b2d8359ec387a4 ]
 
-When an ordinary MMU notifier rejects a non-blocking invalidation, the
-interval invalidation started beforehand is left unfinished: the caller
-skips mmu_notifier_invalidate_range_end(). Subsequent interval notifier
-operations can then wait forever.
+amdgpu_dm builds the new dc_state as a copy of the old one. When the last
+stream is removed, dml1_validate() returns early on pipe_cnt == 0 and
+never reaches dcn32_calculate_dlg_params(), so bw.dcn.clk keeps the
+dramclk/dcfclk/fclk requirements of the display that was just turned off.
+dcn32_update_clocks() then keeps those hard minimums applied.
 
-The only in-tree trigger is nouveau SVM, which uses both notifier types
-and rejects non-blocking invalidations. Reaping via the OOM reaper or
-process_mrelease() can therefore leave the GPU fault worker stuck,
-holding a reference that prevents the dying process's address space
-and memory from being freed.
+On an RX 7900 XTX this leaves UCLK at 456 MHz and DCFCLK at 637 MHz with
+the monitor off, and the board idles at 28.4 W. With this change they
+drop to 96 MHz and 145 MHz and board power falls to 15.3 W.
 
-End the interval invalidation when an ordinary notifier fails a
-non-blocking invalidation, like mn_itree_invalidate() already does when
-an interval notifier fails. Make that handling clearer in the
-documentation of mmu_notifier_invalidate_range_start_nonblock().
+Reset the clock requirements in that case, as calculate_dlg_params()
+already does when no HUBP is active and as the DML2 path does for
+stream_count == 0.
 
-Fix generated by an LLM and sent by Josef Bacik in private.
-
-Fixes: 99cb252f5e68 ("mm/mmu_notifier: add an interval tree notifier")
+Signed-off-by: Misha Nasledov <misha@nasledov.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 0261a0ef89f37ef962fbc9dbc724ebf65fe681cf)
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[ david: simplify description, update function doc ]
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-28-d6437171ecc3@kernel.org
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+[ sashal: applied the change in dcn32_validate_bandwidth() instead of dml1_validate() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mmu_notifier.h |  3 ++-
- mm/mmu_notifier.c            | 17 +++++++++++++----
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ .../gpu/drm/amd/display/dc/dcn32/dcn32_resource.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/mmu_notifier.h b/include/linux/mmu_notifier.h
-index 7c81de8e381e2..e4ca5dd63bdd0 100644
---- a/include/linux/mmu_notifier.h
-+++ b/include/linux/mmu_notifier.h
-@@ -464,7 +464,8 @@ mmu_notifier_invalidate_range_start(struct mmu_notifier_range *range)
- /*
-  * This version of mmu_notifier_invalidate_range_start() avoids blocking, but it
-  * can return an error if a notifier can't proceed without blocking, in which
-- * case you're not allowed to modify PTEs in the specified range.
-+ * case you're not allowed to modify PTEs in the specified range or call
-+ * mmu_notifier_invalidate_range_end().
-  *
-  * This is mainly intended for OOM handling.
-  */
-diff --git a/mm/mmu_notifier.c b/mm/mmu_notifier.c
-index fa5b60f51e463..6deeb5d0ed25a 100644
---- a/mm/mmu_notifier.c
-+++ b/mm/mmu_notifier.c
-@@ -537,16 +537,25 @@ int __mmu_notifier_invalidate_range_start(struct mmu_notifier_range *range)
- {
- 	struct mmu_notifier_subscriptions *subscriptions =
- 		range->mm->notifier_subscriptions;
--	int ret;
-+	const bool has_itree = subscriptions->has_itree;
-+	int ret = 0;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+index 9f5425e6474fb..3195fe12fc1b9 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1870,8 +1870,21 @@ bool dcn32_validate_bandwidth(struct dc *dc,
+ 	if (fast_validate)
+ 		dcn32_restore_mall_state(dc, context, &mall_temp_config);
  
--	if (subscriptions->has_itree) {
-+	if (has_itree) {
- 		ret = mn_itree_invalidate(subscriptions, range);
- 		if (ret)
- 			return ret;
- 	}
- 	if (!hlist_empty(&subscriptions->list))
--		return mn_hlist_invalidate_range_start(subscriptions, range);
--	return 0;
-+		ret = mn_hlist_invalidate_range_start(subscriptions, range);
-+
-+	/*
-+	 * On error, the non-blocking caller is not allowed to call
-+	 * invalidate_range_end(), as in mn_itree_invalidate().
-+	 */
-+	if (ret && has_itree && !mmu_notifier_range_blockable(range))
-+		mn_itree_inv_end(subscriptions);
-+
-+	return ret;
- }
+-	if (pipe_cnt == 0)
++	if (pipe_cnt == 0) {
++		/* The context is a copy of the previous state, so without this the
++		 * clocks the last display needed stay applied with all displays off.
++		 */
++		context->bw_ctx.bw.dcn.clk.socclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dppclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dcfclk_deep_sleep_khz = 0;
++		context->bw_ctx.bw.dcn.clk.dramclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.fclk_khz = 0;
++		context->bw_ctx.bw.dcn.clk.p_state_change_support = true;
++		context->bw_ctx.bw.dcn.clk.fclk_p_state_change_support = true;
++		context->bw_ctx.bw.dcn.clk.num_ways = 0;
+ 		goto validate_out;
++	}
  
- static void
+ 	if (!out)
+ 		goto validate_fail;
 -- 
 2.53.0
 
