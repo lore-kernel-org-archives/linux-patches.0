@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017103;
-	b=1rzGqkfFmU2wyW/yOPQEM5XnqgAP588qDBOPFAlxD1RjD2uayJEt0IgM1+W7GWCwZ/ZB
-	 6FwZgNR2fHVG/Z5WlXocpsYNnfE2tdXlBmumT6OpEK7UKibWsTut2z3L16BTMsEpOb9Pn
-	 3QEh0nPF8cY/UBf/+9XaEcNOLhbP/8Rg97fiqyOKjLuVR3u3LzO0unhsEjhuQNiC0v4TN
-	 cKqrgTIBTXxPqpDMt2slU01mIKF1opAe3mDlHOTkiprw1qJtHvT4JVARBdGaIdFmhxtM7
-	 90tZ3aW5CEWaXdtsynEygn64Z4L4uFgxJ2u5YogrnnwqZLYCQNG2LyfvUWjwUzNVBgw==
+	t=1795017105;
+	b=V/lALhRJhUMBOlN6b2DWM/XLfCvz1/DlhlZ7HzT7e5QfS/PgDLm30v//bAIsA1Ij+0Qm
+	 ukBFWG5hKaHOLeQDQCV/pGjoqMuGvLNQfliu4rVB+ulkLFa4eWHQohC/uNagU1GFJzkq9
+	 FuMYnemnm89VzwNb4HV2s+i7/WrpY+wkukCcKXn921AzOLvpa/RuGe2GSxSXdF83KXQog
+	 B4Vd+oqimADIIw0FxTRHiYSP1PmIVAKFEtpC1wMsG3BPD14YptnPzU+8rOPwvSOVysOd4
+	 4bVv8Wl8z+xDSjPubDxSX7bcZw+r11YEyjahlmbeKa4ehWrY8jigKlql+u/EF04u6ng==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017103;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017105;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=KMvzwFfnBWaIIMc/FHoC1XOPg7Q5Yu7rnm8jr2uPsmM=;
-	b=x+YpebNfZwY1wCoGVeIbGRwRNEOSXOAKp6Qff7J20dP8JRE40uKtYaXGC663AyHbL61G
-	 qRtX9LniEkPDTH/5RUB1GP4qlsSR7Ama1fckpLJ3W6Kvrbtu1yGG4ZCv1nu8lfnOlVw2C
-	 TjZJOdajSCmZ2n1ra6vzMPKQ6n1AbZf9YchIOoEkLtDnn78BmzghS1FyN69xOiqBOmFzb
-	 S+9jJmyMRD1lVEpeXd+MzQlJF1oKgHU8fssXvwfvS9Nq2I7cQloQhOsOmycCmaNDeeWrM
-	 J3g15fc//ZCs9o4Px6a+MD+jQzI85uqdixvexem4onEQVziUyPvor48Sv12iEvrt8mg==
+	bh=Wy3Tism909LM6JPeo3fQJwwWv6j38XRwXNrhOuGolVo=;
+	b=sr6OxSV2aXofVfh1aNkhGk+PJEUkThylEZI6q9GyNrJNMtfTtKc3T6t5yrOvDzwn/nxP
+	 5GDYSKMC4gVeBi2b3fN1mKFUYDzJ1kULNYZ5GAg1dy2kcHWQ3iRzVt2+tk3dnlTLiz08a
+	 wOwWvHJgz4yl474/wM9u2pYh9BENa6M0+ijE1Xv11dUutGHUoDn+VLE6+jmK6cqvp39Uc
+	 aDL1roCiBgwrn+1U42HffTuHcyPfsTOxD95iTuFY3WCTCt3Jf75M0Ty84pWBwkNx18j84
+	 zo3UnKMREvGUwZf78p1YYLpM9cHUDbGl2MM6lgjGJzAUndwbfdn/F5dUNIJucmTlh8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b+YFDaTq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfd68Q8L;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18944606A325;
-	Wed, 18 Nov 2026 15:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAD43606A325;
+	Wed, 18 Nov 2026 15:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b+YFDaTq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A421F000C4;
-	Wed, 18 Nov 2026 15:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qfd68Q8L
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC381F000C4;
+	Wed, 18 Nov 2026 15:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017102;
-	bh=KMvzwFfnBWaIIMc/FHoC1XOPg7Q5Yu7rnm8jr2uPsmM=;
+	s=korg; t=1795017105;
+	bh=Wy3Tism909LM6JPeo3fQJwwWv6j38XRwXNrhOuGolVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b+YFDaTqaS431nNfdcAkRu3amLocRBcgrBxcUq9sT29F4nt4LRBi4ez/ACY6WFhVs
-	 CUElOkRrhsVvUT6nNFm2bJWCYoS19HIlrUBiEhZxYGz+wWQmUGmhShvOLKNCL+9qV6
-	 Wl6PHPFHmbMXBHUgEzQaBkSqrYWZ2jTAW6eqdqzM=
+	b=qfd68Q8L5LyXDMWATtNt0tkO2bVVoPQoi9/HDVaWsicVJu/e+WkmS8QxKLbG9CDKv
+	 /ZeE/bCgKpW0eMTNyqfF2Fe5sF5332Z0MnddxGRDePUKDBok4KePUHDssT5qX866n6
+	 hYmhoFmfh+iCzeXA2vStAXDEk9mGxuDKEJ8VmIcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ike Panhc <ikepanhc@gmail.com>,
 	Rong Zhang <i@rong.moe>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0764/2651] leds: class: Always protect brightness_show() with led_access
-Date: Wed, 18 Nov 2026 15:33:24 +0100
-Message-ID: <20261118150315.387929917@linuxfoundation.org>
+Subject: [PATCH 7.3 0765/2651] leds: trigger: Move led_trigger_is_hw_controlled() to the right place
+Date: Wed, 18 Nov 2026 15:33:25 +0100
+Message-ID: <20261118150315.422875727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,50 +71,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Rong Zhang <i@rong.moe>
 
-[ Upstream commit 6887f40dadb5a263de1d9e4b5517400c08089d35 ]
+[ Upstream commit 7879d6277485697cf37eb3c1b89ce260d8c67e4f ]
 
-The led_classdev_register_ext() protects transient states when
-registering with the led_access mutex and relies on all sensitive sysfs
-attribute callbacks holding the mutex to prevent exposing transient
-states.
+Currently led_trigger_is_hw_controlled() is placed at led-class.c, which
+is not an right place as it falls into the triggers namespace and does
+triggers stuff.
 
-The Fixes: commit broke this as it accessed trigger_lock without holding
-led_access. Fix it by protecting brightness_show() with led_access in
-all code paths.
+Move it into led-triggers.c, and split it into locked and unlocked
+variant for convenience.
 
 Fixes: b819dc7d8fb2 ("leds: core: Report ENODATA for brightness of hardware controlled LED")
+Acked-by: Ike Panhc <ikepanhc@gmail.com>
 Signed-off-by: Rong Zhang <i@rong.moe>
-Link: https://patch.msgid.link/20260921-leds-trigger-hw-changed-v7-1-fe3cdb6dec51@rong.moe
+Link: https://patch.msgid.link/20260921-leds-trigger-hw-changed-v7-2-fe3cdb6dec51@rong.moe
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-class.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/leds/led-class.c    | 10 ----------
+ drivers/leds/led-triggers.c | 19 +++++++++++++++++++
+ include/linux/leds.h        |  8 ++++++++
+ 3 files changed, 27 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
-index a51b0ed538864..4259533dafa19 100644
+index 4259533dafa19..7110bfbe3b837 100644
 --- a/drivers/leds/led-class.c
 +++ b/drivers/leds/led-class.c
-@@ -43,13 +43,13 @@ static ssize_t brightness_show(struct device *dev,
- 	struct led_classdev *led_cdev = dev_get_drvdata(dev);
- 	unsigned int brightness;
+@@ -27,16 +27,6 @@ static LIST_HEAD(leds_lookup_list);
  
--	if (led_trigger_is_hw_controlled(led_cdev))
--		return -ENODATA;
-+	scoped_guard(mutex, &led_cdev->led_access) {
-+		if (led_trigger_is_hw_controlled(led_cdev))
-+			return -ENODATA;
+ static struct workqueue_struct *leds_wq;
  
--	mutex_lock(&led_cdev->led_access);
--	led_update_brightness(led_cdev);
--	brightness = led_cdev->brightness;
--	mutex_unlock(&led_cdev->led_access);
-+		led_update_brightness(led_cdev);
-+		brightness = led_cdev->brightness;
-+	}
+-static bool led_trigger_is_hw_controlled(struct led_classdev *led_cdev)
+-{
+-#ifdef CONFIG_LEDS_TRIGGERS
+-	guard(rwsem_read)(&led_cdev->trigger_lock);
+-	return led_cdev->trigger && led_cdev->trigger->trigger_type;
+-#else
+-	return false;
+-#endif
+-}
+-
+ static ssize_t brightness_show(struct device *dev,
+ 		struct device_attribute *attr, char *buf)
+ {
+diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
+index b1223218bda11..bf2543538ed08 100644
+--- a/drivers/leds/led-triggers.c
++++ b/drivers/leds/led-triggers.c
+@@ -7,9 +7,11 @@
+  * Author: Richard Purdie <rpurdie@openedhand.com>
+  */
  
- 	return sysfs_emit(buf, "%u\n", brightness);
++#include <linux/cleanup.h>
+ #include <linux/export.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
++#include <linux/lockdep.h>
+ #include <linux/spinlock.h>
+ #include <linux/device.h>
+ #include <linux/timer.h>
+@@ -33,6 +35,23 @@ trigger_relevant(struct led_classdev *led_cdev, struct led_trigger *trig)
+ 	return !trig->trigger_type || trig->trigger_type == led_cdev->trigger_type;
  }
+ 
++static bool __led_trigger_is_hw_controlled(struct led_classdev *led_cdev)
++{
++	lockdep_assert_held(&led_cdev->trigger_lock);
++
++	if (!led_cdev->trigger)
++		return false;
++
++	return led_cdev->trigger->trigger_type;
++}
++
++bool led_trigger_is_hw_controlled(struct led_classdev *led_cdev)
++{
++	guard(rwsem_read)(&led_cdev->trigger_lock);
++	return __led_trigger_is_hw_controlled(led_cdev);
++}
++EXPORT_SYMBOL_GPL(led_trigger_is_hw_controlled);
++
+ ssize_t led_trigger_write(struct file *filp, struct kobject *kobj,
+ 			  const struct bin_attribute *bin_attr, char *buf,
+ 			  loff_t pos, size_t count)
+diff --git a/include/linux/leds.h b/include/linux/leds.h
+index a515f075c29a1..46ad2e03e1c65 100644
+--- a/include/linux/leds.h
++++ b/include/linux/leds.h
+@@ -534,6 +534,8 @@ void led_trigger_set_default(struct led_classdev *led_cdev);
+ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trigger);
+ void led_trigger_remove(struct led_classdev *led_cdev);
+ 
++bool led_trigger_is_hw_controlled(struct led_classdev *led_cdev);
++
+ static inline void led_set_trigger_data(struct led_classdev *led_cdev,
+ 					void *trigger_data)
+ {
+@@ -584,6 +586,12 @@ static inline int led_trigger_set(struct led_classdev *led_cdev,
+ }
+ 
+ static inline void led_trigger_remove(struct led_classdev *led_cdev) {}
++
++static inline bool led_trigger_is_hw_controlled(struct led_classdev *led_cdev)
++{
++	return false;
++}
++
+ static inline void led_set_trigger_data(struct led_classdev *led_cdev) {}
+ static inline void *led_get_trigger_data(struct led_classdev *led_cdev)
+ {
 -- 
 2.53.0
 
