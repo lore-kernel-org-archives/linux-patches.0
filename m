@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059250;
-	b=l22Af6kDkMkH+8GHJeJjc7Z26pRH41kVidfrC/1GjDs442bD0T7amSC377tsmcL0TU8W
-	 Gb6nHlUK9EhdPEHeCaffBnKY4ycgwNCLwf7ii1bgrNd4TzCMOIeANd/i4t/0hZs1mE/CE
-	 kC+N9RT7EZEhQxn1HA8Fbef4ThD7BTRQ+U4nAK1MnZJo4ow6cDW1GJVEhg1+QFv7CCJ0u
-	 sL6nslvyCwJrQBIsGKrcUN3m9XsR+aLVEJwSSvlNZgvPkdlbEK8GqnysLoF/OGA8tPl6q
-	 BUY/p4xgBOoBMJ02G5AhkKodCVtvkezIbgh42xUOzzp2IjbincXQMZUkFzEpn6cIMEw==
+	t=1795059253;
+	b=NbZfROZDPU8rhBqwD+NfyWkSwvR1zfi2bfKAtw9eVXGnd/059rjwivvV3EDMQnK3FYNp
+	 fxxROMm1HVop2srVYQtwCTDE5nRQblCcygxGbjtZgbSyjBEjnAjeI6CJNrz/BoDNuWrBD
+	 C062Pwwq0QLBINti60tsQZBzJkLb495MvqVFrscA7uNKUe3Dly3kGg1+xj4dKv9TCKl19
+	 PDcmCdIoBB8+LeH4/Cy7puTeFTwf4qBv4zH27AIsKuAhV47JwI8F490dIu+Pssbid4tLN
+	 whG5R5/PPYziQBkHA/wA3t7lQqW+4/dMUqKALGq50/FDmJzRMaW31YrEk72QShPnj/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059253;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TjAhbxJI4i00fguW8ZNs4ANv5ITXmHJs638VH8FWu1o=;
-	b=4Vq7UeoPr35ira40mdOKpi0VoR2b/PFRGwtNT2ZZ61pd221zIadTe++KTJ1i/6Hwh/v9
-	 8bIJMISd9phBtRqeqP2k5zYtqGd+Yanvyd9FhxPP/4mkDD3t1eHrU5Ofkj//PYrJo7c0M
-	 P/OKxpll+37YL/B8l4t3dYr2inwkdnwzyU4dfHts4sFASIcT+rYZ9h5FIHMNbMFQsXVU9
-	 +6HxyQEd5oKESK9qKFwVDr4Pv+GNCmTB1kIh7xO1DFLI7BkVQXkJVNffPnvKLk6gWbUu/
-	 ixq8nSMU+q/XceL/WxoEcehlS3N1yojrQEBWL0Q9dogK0Ac1cWBKesnchvgvc/1vMUg==
+	bh=4OR45uf6/Q/+hitHit10bKTClGOyNdAUKb/xYg+sqS8=;
+	b=szhxKLFRODQiktHGL7wFxmhBgJMOS2V/2BC0G5g6lD42jKx+HbNZo6vTL4WW4+DZS3NP
+	 ja73kJ8HmKAj64BEyHK+F8AteH4mh/9EHBj6F0ux8rJOTnrA8lN5nVVFOqUFUbAJcKnXu
+	 HZyO/0QO+9L3WmswH8eLDE3OTqt4nCTx0IaU0g4qvz0bstpwpz497puixir7gz/EKOwN1
+	 JwqQV0eLaKrgu6l5WC6V0LQfril/3v2yzs6Mc0487f9CICMxMzWys/WdLnmzis+kG5ssq
+	 ewl7cafl7K+bbwAVwkmMrVEyO/VqHbmEQke0lZuLqxcT1KLWcfNyGO4cyCAFCvKvCQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDBvRn9s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LveoRgDO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A617F606A31C;
-	Thu, 19 Nov 2026 03:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BC8606A325;
+	Thu, 19 Nov 2026 03:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDBvRn9s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025FA1F000C4;
-	Thu, 19 Nov 2026 03:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LveoRgDO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0FB81F000C4;
+	Thu, 19 Nov 2026 03:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059250;
-	bh=TjAhbxJI4i00fguW8ZNs4ANv5ITXmHJs638VH8FWu1o=;
+	s=korg; t=1795059253;
+	bh=4OR45uf6/Q/+hitHit10bKTClGOyNdAUKb/xYg+sqS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fDBvRn9sTRpInkVNLOHwdAIoZEe+qy733ToDkED5ynhQBSEsIdxMKNITrCOcIvpP4
-	 G3KlRDpovb0Xpky/IisbadVUncyUCfTHTpoTEd8+Dx6pYnlW1lR2gmYpb0JaDt0Vpl
-	 uLgXk7ytf5A0DlGtBSj7RS4e0XrehJ/qtXL6TSDo=
+	b=LveoRgDOcpVJ9rgsicyX4YVKpltSonBr07TCdoYWNBPL8eicHTRYiB7icZseLKWx0
+	 neaGF8Cx1f5xcIIbJ06nR17WECzh/LcWqWRUuaU2zeZ/bH+6U9lK/clJf8r8NCflZu
+	 SlAjEFuniAAKq5xXj6xJHTSDeMvhpaWyNxDgT37I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@bytedance.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0775/1848] ata: libata-scsi: reject data-in commands with a data-out buffer
-Date: Wed, 18 Nov 2026 15:46:53 +0100
-Message-ID: <20261118145948.872628838@linuxfoundation.org>
+Subject: [PATCH 5.10 0776/1848] can: dev: can_fill_info(): dont wake up controller if interface is down
+Date: Wed, 18 Nov 2026 15:46:54 +0100
+Message-ID: <20261118145948.972879837@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,94 +69,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhao Gongyi <zhaogongyi@bytedance.com>
+From: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
 
-[ Upstream commit a4845f077415ef32fe672c841e2fc58ae9e28273 ]
+commit 75332c410c8190d61499001c5516af977ca426c3 upstream.
 
-SG_IO can submit a data-in SCSI command with DMA_TO_DEVICE. The
-scatterlist can then contain pages pinned without write access.
-ata_scsi_rbuf_fill() writes simulated replies to that scatterlist;
-in the reported case, the copy tried to write the shared zero page
-and faulted in the kernel.
+If the interface is down, the CAN controller might be powered down and
+its clocks gated. Don't call do_get_berr_counter() to read the bus error
+counters if the interface is down, and adjust can_get_size() to match.
 
-The same mismatch can affect SG_IO commands translated by libata.
-ZBC IN and GET PHYSICAL ELEMENT STATUS completion handlers can modify
-the receive buffer even if the drive aborts the command. For ATAPI,
-the successful INQUIRY completion also rewrites the buffer in
-atapi_fixup_inquiry().
+This removes one trigger for a synchronous external abort seen on
+i.MX8QXP when "ip link show" is run on a flexcan interface that was
+never brought up. The underlying cause is platform-specific: on i.MX8QXP
+the CAN clocks are gated through the SCU LPCG and the subsystem shares
+the IMX_SC_R_CAN_0 power domain, and there is a window after
+pm_runtime_resume_and_get() returns where the clock has not reached the
+module yet. This patch avoids the netlink query path while the interface
+is down, but does not root-cause the LPCG window itself.
 
-Reject these mismatched commands before the buffer is written or the
-command is issued. Report ABORTED COMMAND / DATA IN BUFFER ERROR because
-the CDB itself can be valid; the supplied transfer direction is wrong.
+As a result, IFLA_CAN_BERR_COUNTER is no longer reported for down
+interfaces. Userspace must treat the attribute as optional.
 
-Backport notes: Use the older five-argument ata_scsi_set_sense()
-interface and spell DATA IN BUFFER ERROR as ASC/ASCQ 0x4b/0x0a.
-The older ata_scsi_rbuf_fill() takes struct ata_scsi_args;
-get the device and command from args, and reject before copying.
-In 5.10, reject before ata_scsi_rbuf_get(), since its matching
-ata_scsi_rbuf_put() copies the simulated reply to the buffer.
+The issue was triggered on an i.MX8QXP board by running "ip link show"
+without ever bringing the interface up:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Link: https://lore.kernel.org/r/20261104130638.37882-1-zhaogongyi@bytedance.com
+    Internal error: synchronous external abort: 0000000096000210
+
+    pc : flexcan_read_le+0x0/0x18
+    lr : flexcan_get_berr_counter+0x4c/0x8c
+    Call trace:
+     flexcan_read_le+0x0/0x18
+     flexcan_get_berr_counter+0x4c/0x8c
+     can_fill_info+0x1f8/0x434
+     rtnl_fill_ifinfo+0x8fc/0xbb4
+     rtnl_dump_ifinfo+0x364/0x448
+
+This is the same class of problem fixed for m_can in
+commit 91a55c72a821 ("can: m_can: m_can_get_berr_counter(): don't
+wake up controller if interface is down").
+
+Note: in 5.10 the netlink code still lives in drivers/net/can/dev/dev.c,
+so this is a manual backport, not a cherry-pick.
+
+Fixes: ec56acfef2af1 ("can: flexcan: flexcan_get_berr_counter(): switch on clocks before accessing ecr register")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhao Gongyi <zhaogongyi@bytedance.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20261027065012.191348-1-chunyuzhiqiang@yinhe.ht
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/net/can/dev/dev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 77f121266b636..d3791425b9335 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -1764,6 +1764,18 @@ static int ata_scsi_translate(struct ata_device *dev, struct scsi_cmnd *cmd,
- 	if (xlat_func(qc))
- 		goto done;
+diff --git a/drivers/net/can/dev/dev.c b/drivers/net/can/dev/dev.c
+index b5e79d63d59b5..30d45805f29df 100644
+--- a/drivers/net/can/dev/dev.c
++++ b/drivers/net/can/dev/dev.c
+@@ -1141,7 +1141,7 @@ static size_t can_get_size(const struct net_device *dev)
+ 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_STATE */
+ 	size += nla_total_size(sizeof(struct can_ctrlmode));	/* IFLA_CAN_CTRLMODE */
+ 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_RESTART_MS */
+-	if (priv->do_get_berr_counter)				/* IFLA_CAN_BERR_COUNTER */
++	if (priv->do_get_berr_counter && netif_running(dev))	/* IFLA_CAN_BERR_COUNTER */
+ 		size += nla_total_size(sizeof(struct can_berr_counter));
+ 	if (priv->data_bittiming.bitrate)			/* IFLA_CAN_DATA_BITTIMING */
+ 		size += nla_total_size(sizeof(struct can_bittiming));
+@@ -1186,7 +1186,7 @@ static int can_fill_info(struct sk_buff *skb, const struct net_device *dev)
+ 	    nla_put(skb, IFLA_CAN_CTRLMODE, sizeof(cm), &cm) ||
+ 	    nla_put_u32(skb, IFLA_CAN_RESTART_MS, priv->restart_ms) ||
  
-+	/*
-+	 * A data-out request may contain pages pinned without write access.
-+	 * Reject a translated data-in command before issuing it, since its
-+	 * completion handler may write to the buffer even if the device fails.
-+	 */
-+	if (unlikely(cmd->sc_data_direction == DMA_TO_DEVICE &&
-+		     ata_is_data(qc->tf.protocol) &&
-+		     !(qc->tf.flags & ATA_TFLAG_WRITE))) {
-+		ata_scsi_set_sense(dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		goto done;
-+	}
-+
- 	return ata_scsi_qc_issue(ap, qc);
+-	    (priv->do_get_berr_counter &&
++	    (priv->do_get_berr_counter && netif_running(dev) &&
+ 	     !priv->do_get_berr_counter(dev, &bec) &&
+ 	     nla_put(skb, IFLA_CAN_BERR_COUNTER, sizeof(bec), &bec)) ||
  
- done:
-@@ -1849,6 +1861,12 @@ static void ata_scsi_rbuf_fill(struct ata_scsi_args *args,
- 	struct scsi_cmnd *cmd = args->cmd;
- 	unsigned long flags;
- 
-+	/* A data-out request may contain pages pinned without write access. */
-+	if (cmd->sc_data_direction == DMA_TO_DEVICE) {
-+		ata_scsi_set_sense(args->dev, cmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return;
-+	}
-+
- 	rbuf = ata_scsi_rbuf_get(cmd, false, &flags);
- 	rc = actor(args, rbuf);
- 	ata_scsi_rbuf_put(cmd, rc == 0, &flags);
-@@ -2674,6 +2692,13 @@ static unsigned int atapi_xlat(struct ata_queued_cmd *qc)
- 
- 	qc->complete_fn = atapi_qc_complete;
- 
-+	/* atapi_fixup_inquiry() writes to the buffer on successful completion. */
-+	if (scmd->sc_data_direction == DMA_TO_DEVICE &&
-+	    scmd->cmnd[0] == INQUIRY) {
-+		ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0x4b, 0x0a);
-+		return 1;
-+	}
-+
- 	qc->tf.flags |= ATA_TFLAG_ISADDR | ATA_TFLAG_DEVICE;
- 	if (scmd->sc_data_direction == DMA_TO_DEVICE) {
- 		qc->tf.flags |= ATA_TFLAG_WRITE;
 -- 
 2.53.0
 
