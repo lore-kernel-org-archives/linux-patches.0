@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015837;
-	b=5Bd+cHjLiZ3n/L75p/Jzqrz5j2zXa7h1ncXeTXaMhs0kv38zyr+5JtBoEMdmfeAzXdIb
-	 e3HrP6QkDugifXvgGcUmVg7m1nWTj0Lyi2xHNFn0uXU+RGfDcur2ZFCGUbbc68quy1sMH
-	 wYow6jJTXI5RK+BcWI2H3SzDv/7ieZDwry77r7472ZM+L7TfwPt9brcJuPtRerx5nIej+
-	 HF2+bcgAWp5xljp3GEgeHAgWJ3XmFUcs1hweGCdbLnqqIqtNLX+R8V9lBpRshlete4LRo
-	 po6ljEng9cddL//lCRX0ZwELw7pgtR8+opSsrvbwpKgBbQ+hb2UOOW5QZe0bkMyXwkA==
+	t=1795015839;
+	b=YSUQdpWk1Vm9cMlQrOsYMCF91Hrhn4RUOyWZkErYjyMheAGXS00YllSbxmbXYeOzMN/G
+	 E6mZ9SYk+H2Wzzn2FqrrSNBwhTbLtC0r5AFweHHj+FwIzXl4fjXuRMRp6dKdVEBiTD5sf
+	 akrOJm96Wa4uACp5D8IxhTP9Qrcn8PFYN5KeK17QK1RBPiL4R8OUnNz4JK2g5Er94eFiq
+	 B6teAc5Sv8c6EOH1cfDEq9Z1zimu73BcqUnDIJG4a3sOds7hjNObzgFNBDcFdRn3rG1el
+	 pGQLREkt7r3wgch/ebIbBGOCUiczzOt3G7ILuejZb1y2oGXV7IhJHsJZyc2NhOBix4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015837;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015839;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4TaXxKweLsnbx+xHy/WoLb24+PDzdqST68n6n1hqe0Y=;
-	b=HzAGOJl2lqsCwkOtA9miePbvrtCONfLhkzh+Pv+LfvAjM4M1hDtuI5kUga3CSNd+dKE8
-	 rRy6pWNeVkqJIPnKI7WPuWjnaW7uO+pOsdxPqieIwk0XehdMZ1z/d9BUI70+t1RiAnfGQ
-	 phzz8uHbjPk7aGgts2WY7oQt+mxugeY5oDvFseVR8az9xaT9uFPJXd8kaexUMDGi5vfL8
-	 oqj7XmOx4CarO6ACorsYpU7w/giZ9of9kzk9ocZ/LTj2LGioYixiGPS8iRFgImGnYrBNr
-	 tdv5cIOnMBaI52ml5LQSqswnZtM39TLt1e519VflWqd7Uye7Xdq6JY0ezeeHWFelfbA==
+	bh=uvGunDlNBJfY2bk2msPwVaOKTlydnGDzSUUjb967U4Y=;
+	b=rQ4P8Wt0zKqZGep+CRiLKRduSk7rzl+flphVm8wKzefmfNc3ElR3HvIZy8Zc3CZW9xLD
+	 DT183UfB+UvOcHB6SAXzhs9nF+SEum10BJWsI3FrwxgSm0IQG/Z8f6/tI8yCEGo1PoHs7
+	 Km+U3WIdkjIfyRq+QUkuHALyVxyWW2zDAnGBrGPtbewASXDmM/nH4OQRAtm5fTlWcXvho
+	 xr/L7OYMu24xqMEHmEEZHP7nhJg/5XuI7s0Qad1BGUJ+jIo4lIvXWSM21JhVasg7hWQTl
+	 Hl7du0Z1neD8SvD/PECnR+MU5dwjJfM7eQwlp8bRAwoG+1nRbmf33i7NRsDcjZcHGWA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPi09b34;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="pykia/EF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A94960A260A;
-	Wed, 18 Nov 2026 15:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3473606A332;
+	Wed, 18 Nov 2026 15:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPi09b34
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B591F000C4;
-	Wed, 18 Nov 2026 15:30:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pykia/EF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F6D1F000C5;
+	Wed, 18 Nov 2026 15:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015836;
-	bh=4TaXxKweLsnbx+xHy/WoLb24+PDzdqST68n6n1hqe0Y=;
+	s=korg; t=1795015839;
+	bh=uvGunDlNBJfY2bk2msPwVaOKTlydnGDzSUUjb967U4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPi09b34mGY/pZlflYFyjy3uTCfZS6jBYroLTB+V0IV7AckRoAgGOtO/GrC3z3JZ3
-	 l5PxPCk33osGe1Gdz7HKLLjgGq0N4sQzfZkrlD9JWbr8EfAJ+mKrPVD5/Tw7MlSFyj
-	 q64247uHExJpkROyyL8ylIXmKQJCUzJZ9RWuGHV4=
+	b=pykia/EFy2/Una6qMfamNPh/k5b5v04DVWIuR/Vq0t2lXGQcQBMGrDkCCr5lbJQkC
+	 qCEXEeXl7tVwrZw6PlE//0dpn6lu4/Ea0zZ2oKX/g0BKF5kJadRdhkXwkqoxcXpGvh
+	 wsYMAJZmlb25cqvWJLiL1AMrVTTMdiaUFoMgeHZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Nicolas Escande <nico.escande@gmail.com>,
 	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0315/2651] wifi: ath11k: fix locking problem in ath11k_dp_rx_tid_del_func()
-Date: Wed, 18 Nov 2026 15:25:55 +0100
-Message-ID: <20261118150259.222952454@linuxfoundation.org>
+Subject: [PATCH 7.3 0316/2651] wifi: ath12k: fix DMA unwind for ext MSDU descriptor retry
+Date: Wed, 18 Nov 2026 15:25:56 +0100
+Message-ID: <20261118150259.257093560@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,98 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 
-[ Upstream commit c7555d47b1d051e0406474349deccf74b491ae01 ]
+[ Upstream commit 4de5a8a0edddc453f1a4c93b6d9f09013a23b72e ]
 
-In this function, we iterate over dp->reo_cmd_cache_flush_list using
-list_for_each_entry_safe(), under dp->reo_cmd_lock for concurrent access,
-and for each expired entries we :
-  - drop the lock
-  - call ath11k_dp_reo_cache_flush()
-  - kfree() the entry
-  - retake the lock to keep on iterating
+ath12k_wifi7_dp_tx() maps the original MSDU into ti.paddr and
+stores the address in skb_cb->paddr. When an extended MSDU descriptor
+is used, the function later maps the ext descriptor and overwrites
+ti.paddr and ti.data_len with the ext-desc DMA address and length.
 
-list_for_each_entry_safe() protects us from deleting the entry during
-iteration but doesn't protect for concurrent access. So another thread can
-take the lock and modify the list in between and crash like below.
+If TCL ring allocation then fails, the error path first unmaps the
+ext-desc DMA address from skb_cb->paddr_ext_desc. It then falls through
+to fail_unmap_dma, which uses ti.paddr/ti.data_len for the original
+MSDU unmap. At that point ti.paddr still refers to the ext-desc
+mapping, so the ext descriptor is unmapped twice and the original MSDU
+mapping is left mapped.
 
-To fix the issue, move all entries that needs to be freed to a local list
-while under the lock and then iterate over the list to free the entries
-without holding the lock.
+Fix the original MSDU unwind to use skb_cb->paddr and skb->len instead
+of ti.paddr/ti.data_len. The ti fields cannot be used after the ext
+descriptor is mapped because they are intentionally reused for the
+buffer submitted to TCL. Also clear skb_cb->paddr_ext_desc after the
+ext-desc unmap so a TCL ring retry cannot observe stale ext-desc DMA
+state from the previous attempt.
 
-	BUG: Unable to handle kernel paging request at virtual address 00000010ddbeef8c
-	Call trace:
-	ath11k_dp_rx_tid_del_func+0x164/0x3c8
-	ath11k_dp_process_reo_status+0x1d4/0x2fc
-	ath11k_dp_service_srng+0x334/0x338
-	ath11k_pcic_ext_grp_napi_poll+0x30/0xc0
-	__napi_poll+0x34/0x184
-	napi_threaded_poll+0xb4/0x1d8
-	kthread+0xdc/0xe0
-	ret_from_fork+0x10/0x20
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.6-01243-QCAHKSWPL_SILICONZ-1
 
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Suggested-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Fixes: 37a068fc9dc4 ("wifi: ath12k: Handle error cases during extended skb allocation")
+Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260813-ath11k-locking-v2-1-f4113a0bd0f4@gmail.com
+Link: https://patch.msgid.link/20260813-ext-msdu-fix-v1-1-c5e80ccd061a@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 33425707c0842..5b717b731197a 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -762,6 +762,9 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
- 	struct ath11k_base *ab = dp->ab;
- 	struct dp_rx_tid *rx_tid = ctx;
- 	struct dp_reo_cache_flush_elem *elem, *tmp;
-+	struct list_head flush_list;
-+
-+	INIT_LIST_HEAD(&flush_list);
+diff --git a/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c b/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c
+index e14f1d190ba8d..adeac4043b99b 100644
+--- a/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c
++++ b/drivers/net/wireless/ath/ath12k/wifi7/dp_tx.c
+@@ -449,15 +449,17 @@ int ath12k_wifi7_dp_tx(struct ath12k_pdev_dp *dp_pdev, struct ath12k_link_vif *a
+ 	return 0;
  
- 	if (status == HAL_REO_CMD_DRAIN) {
- 		goto free_desc;
-@@ -783,23 +786,25 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
- 	list_add_tail(&elem->list, &dp->reo_cmd_cache_flush_list);
- 	dp->reo_cmd_cache_flush_count++;
- 
--	/* Flush and invalidate aged REO desc from HW cache */
-+	/* identify aged REO desc that needs removal */
- 	list_for_each_entry_safe(elem, tmp, &dp->reo_cmd_cache_flush_list,
- 				 list) {
- 		if (dp->reo_cmd_cache_flush_count > DP_REO_DESC_FREE_THRESHOLD ||
- 		    time_after(jiffies, elem->ts +
- 			       msecs_to_jiffies(DP_REO_DESC_FREE_TIMEOUT_MS))) {
--			list_del(&elem->list);
-+			list_move_tail(&elem->list, &flush_list);
- 			dp->reo_cmd_cache_flush_count--;
--			spin_unlock_bh(&dp->reo_cmd_lock);
--
--			ath11k_dp_reo_cache_flush(ab, &elem->data);
--			kfree(elem);
--			spin_lock_bh(&dp->reo_cmd_lock);
- 		}
- 	}
- 	spin_unlock_bh(&dp->reo_cmd_lock);
- 
-+	/* remove aged REO desc from HW */
-+	list_for_each_entry_safe(elem, tmp, &flush_list, list) {
-+		ath11k_dp_reo_cache_flush(ab, &elem->data);
-+		list_del(&elem->list);
-+		kfree(elem);
+ fail_unmap_dma_ext:
+-	if (skb_cb->paddr_ext_desc)
++	if (skb_cb->paddr_ext_desc) {
+ 		dma_unmap_single(dp->dev, skb_cb->paddr_ext_desc,
+ 				 skb_ext_desc->len,
+ 				 DMA_TO_DEVICE);
++		skb_cb->paddr_ext_desc = 0;
 +	}
-+
- 	return;
- free_desc:
- 	dma_free_noncoherent(ab->dev, rx_tid->unaligned_size,
+ fail_free_ext_skb:
+ 	kfree_skb(skb_ext_desc);
+ 
+ fail_unmap_dma:
+-	dma_unmap_single(dp->dev, ti.paddr, ti.data_len, DMA_TO_DEVICE);
++	dma_unmap_single(dp->dev, skb_cb->paddr, skb->len, DMA_TO_DEVICE);
+ 
+ fail_remove_tx_buf:
+ 	ath12k_dp_tx_release_txbuf(dp, tx_desc, pool_id);
 -- 
 2.53.0
 
