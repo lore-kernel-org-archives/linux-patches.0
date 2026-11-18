@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023087;
-	b=09ru8Vsv/bKEB4TPy4PH/+61nfDywNBKPXCwp2A2wfO2G+FOkR7gcuJvhBYazxCZz0Zo
-	 miV1rDyh2/vy+Hi+v85HMkBAgFCA+sSK1DZaFLl9UTi06aZqqsX6+fpSHc4wwOqNARbmf
-	 7k6SbzZnUaNPVVcZfHDhvs/pbsrdQhsKRyZamwUuReks8aO1quWmt7iS8e45FlxHPmcSI
-	 CRwl61Si2J88fmXHZTnO1k1nR5sOmKBbqsYDZoyxD9Kf/HPAzRksjsbMl9UWm46q08sz9
-	 c+wi5m7U+p1GKjUq21GFjWhchcQdABGN1vjoOpKSj/TotjcCuBYMsqPCH5QqzbaEfPQ==
+	t=1795023090;
+	b=LlrsMBeDaDDBJdZDFqFVAToo2UIs4Aj+FY3dlfxImN2IjU1vMwj1XADd7bMT9axp5M0p
+	 lby5a+lV11ZPbP6yQSUpjFMkpK6SGD8Pq2ulQrdkoGIV9rWAW7UYaxb9YB73ldqfwSMYb
+	 N52hfqopztmyQ5X6DSLW8UZXx03o3jcQNhGqEgj9d+nD4e4+HyW8vl4musvOdadwOXfcR
+	 z6+MpiVFsRdtuK+MuCZWcLPFtTKE3zIa+QXG+3O8aJARb2af7hEOF0/hIUqndWN//uKx0
+	 BpBv5WjjvGGUlU2MP2WBPZl/0JaoKSj+lNqdrsDeUis8kXvm984pBYuaLAkJzLZ5q8g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023087;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023090;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Md2IEg0LNCO6dUqhy3Q0b6yqFOcWQYmCaLpRMM1xKDc=;
-	b=tzWYQqOB1iaMyhWQooZr+g6byS/IBLHt1h9ltsng0Xw1HFk16V7Zv6peIH5C625bc1Cm
-	 lP225pfno0BlxUk7NBGo/ARU2livMnKuLmeX2zmY3bf33C06aIB5Bu7Gpz6a2CH8PRuZ2
-	 7LqTmAwrQuzcLe2Kk1lKuunIhkkjk71BrkChDVm4h0NMmCMU2m9bcgWez5fkt+cvF9Fnl
-	 pYnMb3QKtzPKPj1WAzLLMiodDe9Yf2Oj/uGZ4CufofDavshlXQ+gEldRR2HUUKULBt5OV
-	 tnbxD2F9MuYEy+jcAbPUFI2YnHJVOigUMYP2DifRkuGBGNHINhTnNqrzUeB0wzmfN9Q==
+	bh=pdNsGcT4+F/rKYep04Q8WnZBWs7lw/zY9PwjyROHWTQ=;
+	b=sFLRaFg8rifvhYiYEj2Rb7biTavCmJAyKKTSsiX4l2mPEYY0c4yzICBpCm5U1eum1nXp
+	 SXjzfkQPaPMCIFXKZ7ivmW/Dp5o7votLRKlOvTCBYLPWOJL9aCH6Xp+xCESC+ueeZC4Rk
+	 pY5cjJVUUZGc2x/29s5Vz71GG5L3LaNy3c990PCQeweM6rCBbOoA6xbrmx4+e2KLrloB5
+	 6tkhFmi3ZCE4XYoCEnv7YV+y3jJoz8+GGkB6gn1FccS5mGdPZYdk6Gm1xzG6JHWOFwREd
+	 SYrpFLq4QPMSs9Yq3ebl04qysTcqrvnYNNfWliqW8Y6JkW38WxKCaohGiXik9oPuGHg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TNdoDTxe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxDLN2IC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7251B606A31C;
-	Wed, 18 Nov 2026 17:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B2A606A31C;
+	Wed, 18 Nov 2026 17:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TNdoDTxe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52881F000C4;
-	Wed, 18 Nov 2026 17:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oxDLN2IC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5BC1F000C4;
+	Wed, 18 Nov 2026 17:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023087;
-	bh=Md2IEg0LNCO6dUqhy3Q0b6yqFOcWQYmCaLpRMM1xKDc=;
+	s=korg; t=1795023090;
+	bh=pdNsGcT4+F/rKYep04Q8WnZBWs7lw/zY9PwjyROHWTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TNdoDTxeZ6a2v6xHbj0xN/oVnd2JFcm7/uqDkPkcVgka6u+3UjJmh45b2EzaKCvls
-	 oXxSIA9pg0cMuZepLmc83Rl1e4eJh73gbTG55DGeSJjimLEQ2dlpa5QCpoDh7pxjmq
-	 OTcoCZiqMuj7SA1fyZjk+InGabsVuluPjLnEZfNg=
+	b=oxDLN2IC8C+BYWPkY2L4vhqct3LjoCtgtz9amhTs0JoTYUCP7zGdsv4s7+n3Rdof2
+	 4Qw5N6OYNts5xD3EzVZKiOHiX+MqbH9vDI8z6Gben6moNBWq2QzWvP0B0lGz4vJczx
+	 y2VwlPWPNX8BjDn3o7h1wgR2OYATl+u70z1oo0Hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Terry Bowman <terry.bowman@amd.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0193/2151] arm64: dts: rockchip: Correct Device Orientation on Gameforce Ace
-Date: Wed, 18 Nov 2026 15:32:08 +0100
-Message-ID: <20261118150128.809414485@linuxfoundation.org>
+Subject: [PATCH 6.18 0194/2151] cxl/ras: Pass the PCI devices struct device to match_memdev_by_parent()
+Date: Wed, 18 Nov 2026 15:32:09 +0100
+Message-ID: <20261118150128.842272529@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,66 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 0d170ee38e7a943248082cdb4b3e40b45a96e2f6 ]
+[ Upstream commit 977eaad352bad4c4aac7cd15683800196c2ead57 ]
 
-The display, touchscreen, and IMU are currently not oriented
-consistently. The touchscreen is 90 degrees offset and the IMU is using
-the default mount matrix which is 180 degrees offset.
+cxl_cper_handle_prot_err() hands bus_find_device() the 'struct pci_dev'
+where match_memdev_by_parent() expects the embedded 'struct device'. The
+comparison never matches. The lookup always fails and CXL endpoint
+protocol errors reported via CPER are dropped without a trace event,
+leaving only the root port, downstream and upstream cases reporting.
 
-Fix the touchscreen alignment and add a mount matrix for the IMU. When
-the device is held vertically relative to the display hardware, the
-touchscreen 0,0 position is in the top left corner of the display
-(next to the home button), and the IMU reads the correct orientation.
+Pass &pdev->dev, and rename the callback parameter to match what it is.
 
-Fixes: 4e946c447a04 ("arm64: dts: rockchip: Add GameForce Ace")
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://patch.msgid.link/20260828205331.78185-1-macroalpha82@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 3c70ec71abda ("cxl/ras: Fix CPER handler device confusion")
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Terry Bowman <terry.bowman@amd.com>
+Link: https://patch.msgid.link/20260828215726.1077498-1-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/cxl/core/ras.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-index afac54ba58318..8628d941d80dd 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-@@ -556,6 +556,7 @@ regulator-state-mem {
- &i2c3 {
- 	status = "okay";
+diff --git a/drivers/cxl/core/ras.c b/drivers/cxl/core/ras.c
+index f2d99865c6df5..1f8195fb51a93 100644
+--- a/drivers/cxl/core/ras.c
++++ b/drivers/cxl/core/ras.c
+@@ -70,9 +70,9 @@ cxl_cper_trace_uncorr_prot_err(struct cxl_memdev *cxlmd,
+ 	trace_cxl_aer_uncorrectable_error(cxlmd, status, fe, hl);
+ }
  
-+	/* Touchscreen is rotated 90 degrees with 0,0 position near home button. */
- 	touchscreen@14 {
- 		compatible = "goodix,gt911";
- 		reg = <0x14>;
-@@ -565,10 +566,8 @@ touchscreen@14 {
- 		pinctrl-0 = <&touch_int>, <&touch_rst>;
- 		pinctrl-names = "default";
- 		reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
--		touchscreen-inverted-x;
- 		touchscreen-size-x = <1080>;
- 		touchscreen-size-y = <1920>;
--		touchscreen-swapped-x-y;
- 	};
- };
+-static int match_memdev_by_parent(struct device *dev, const void *uport)
++static int match_memdev_by_parent(struct device *dev, const void *parent)
+ {
+-	if (is_cxl_memdev(dev) && dev->parent == uport)
++	if (is_cxl_memdev(dev) && dev->parent == parent)
+ 		return 1;
+ 	return 0;
+ }
+@@ -108,7 +108,7 @@ static void cxl_cper_handle_prot_err(struct cxl_cper_prot_err_work_data *data)
+ 		return;
  
-@@ -600,11 +599,15 @@ channel@7 {
- 		};
- 	};
- 
-+	/* IMU oriented relative to panel, which is rotated 90 degrees. */
- 	imu@68 {
- 		compatible = "invensense,mpu6880";
- 		reg = <0x68>;
- 		interrupt-parent = <&gpio0>;
- 		interrupts = <RK_PD3 IRQ_TYPE_EDGE_RISING>;
-+		mount-matrix = "-1", "0", "0",
-+			       "0", "-1", "0",
-+			       "0", "0", "1";
- 	};
- };
+ 	struct device *mem_dev __free(put_device) = bus_find_device(
+-		&cxl_bus_type, NULL, pdev, match_memdev_by_parent);
++		&cxl_bus_type, NULL, &pdev->dev, match_memdev_by_parent);
+ 	if (!mem_dev)
+ 		return;
  
 -- 
 2.53.0
