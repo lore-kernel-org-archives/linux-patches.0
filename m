@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024392;
-	b=agMEQv3fiUwwBocNM4ZcYzDcfU7+WtLlo2e1FAYdyAeXm7Sv5+g+3CNBFfBCYqahMhiJ
-	 l7ZnlrC6TRHFrSTderNVLuKktkA56IAM1OgnISUH2JJGpMC/hcVN16Grr6068daswbQ9r
-	 Vm6MNvaQyQPnsWJaVbI38NV/Dub8syDDSflI2NOOQVG9djMi4JzrHhi3rtFGop3YRS8PS
-	 YqaYNCDWwc9Ny8bdElWxIcM3fhHWS56mc44qF4ElFPA1mW3A45E1Oi9asnApePChpXl31
-	 +x9P2TxTsKi2wkLRjgsf1JNi6VedD6Bp76eeDbwzh0OaA1GYOmOtbRblG1aTzxEKArw==
+	t=1795024395;
+	b=EMifdJFMk7EhO+7y+4QSkYTMNYrfyMPGtEjUKoQS0xTbEjVAledp7Vsx1lVKLh2kj948
+	 OFfhnwWvgMJvCiQDgeHSTBNY6A6tiUNmsqAcUidpTC17Z0PcJM9C5eHenQyTAZexwGjuu
+	 2cesaT0kPp6XZAFyuOASle3D082sDVurmDt0i/F56ZcRQKf6E5xV9BxYE2pe/PyUp8syw
+	 KelqPPzJOiRbrshz6ijXynTpas+naVdw/V0Fd/e+alJl2MCNzcWoEkAAHqEl/scuxDei2
+	 8qItxLCfZ5yckfeTVYWPcJ0+tLC7eU79qBpcbOPeQhQbn6q3kkN4jI5uJCzOb6cx7ig==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024392;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024395;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x/WF93oY3bpKux8NWyOABIjDkgo7RroxjhihKYPNDks=;
-	b=bO9YL9E2v6fS/fnMJy1WRd11hTfoGhgYPMkE+iwXHLxmpQSMeU2W537k0zfkwuRtVTXj
-	 3E8WMRGLUrkjAiFeiiHGXp16ekQAa4YJBhvBSalOjXXSXlIXcVUa2ooh65C19uP+9um9V
-	 PJWI4cpbbUIadXkeEIG9Ym7vRIzvpX4JgR9O1sDjwRq7HjQaq2JLSuvOr3hTLE1El3oko
-	 pGGXIogkoV/ir1DBV4Kv6RejvNvt5XtK6p50e/qgSzbwNOcgZk7F8nvrH6grDidrsoO2s
-	 S38Wqy7g3c3a/BoY9HyolS657uDfE5g1H6IVnQM6ZXF5qeMVXLHrUphnMlim9fLqnng==
+	bh=/iFYlVR4Ynaa1o/k1MVtQg/cHS+0DJKMZRBSZ8qjUGs=;
+	b=Y9qamFu+kG+W98zKjykGUlOLzOb5exs6vvDS6/Qm0B6zJlaOZzJnTmpyHRCuBKgEavYb
+	 gji+AC7gQ6Y1roFJz+Ax2n2YPQm0T06/IXmaHh1KjdrOjpq4HPn+QFCRBic6n3WYZyXIF
+	 ykyxN0HET8UZsPQHR+59+Hx0DkSOooYI8Zv54A9t3w0ifU/1ZPnMesh9n98RpgTHf5Pxn
+	 6b568Byiu/BifPIbdVp0WjobvohLjzzxdCiNnaoborytfSVIMcTEHd5RDJMkJB3eoo0WU
+	 FSEpoe58tFTcpO9nrAW0ttWjrwXzJkOd14mH0dL8s+jUVfB7gDRcrxLfLiywVX+z2Og==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2YGeMKz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1LwnLeEB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CF7606A32A;
-	Wed, 18 Nov 2026 17:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DC6606A325;
+	Wed, 18 Nov 2026 17:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2YGeMKz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FAE51F000C4;
-	Wed, 18 Nov 2026 17:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1LwnLeEB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB001F000C4;
+	Wed, 18 Nov 2026 17:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024392;
-	bh=x/WF93oY3bpKux8NWyOABIjDkgo7RroxjhihKYPNDks=;
+	s=korg; t=1795024395;
+	bh=/iFYlVR4Ynaa1o/k1MVtQg/cHS+0DJKMZRBSZ8qjUGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h2YGeMKzNklkwhrV7E9tMbcmWiJkEo261D/IN697u8e1DXy0iFnqMgwo+YSHINFSy
-	 r6OUCSIHVr/24Ho2J2rB7UaSTtgAWgS7kKShQSJRBv/PBop5Z4UDD0nJhApGE/ZvTh
-	 /TeL0JAd8V9sItZAKzUONzxdqwn/Ii9ARq4VM718=
+	b=1LwnLeEBRzMQ4tiaDrqct+Xbiwhr4RcrfiX4aOcdcqwFS11rhyeiF02JL0vr2gk/h
+	 hGMvYdAZMpc+Zv+J1qiTNys90ZPx007LvoDSlIct69HdVwd7lJKoSy8i5EU9uqWL6+
+	 PlL2SVkRqyTAP2xpgdxXTykTbVxuWoaX3dhlrNMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Huang <wei.huang2@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0692/2151] PCI/TPH: Validate the firmware Steering Tag response
-Date: Wed, 18 Nov 2026 15:40:27 +0100
-Message-ID: <20261118150146.996720704@linuxfoundation.org>
+Subject: [PATCH 6.18 0710/2151] ASoC: mediatek: mt8188: mt8188-afe-clk: Propagate regmap update errors
+Date: Wed, 18 Nov 2026 15:40:45 +0100
+Message-ID: <20261118150147.749516420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,48 +70,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Huang <wei.huang2@amd.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 5c382ef425c875bf854d411fb0a45909878a233a ]
+[ Upstream commit 60a8112a088aee38d728457a14fa8bfb50f4c87e ]
 
-TPH _DSM returns an eight-byte Steering Tag information buffer.  Checking
-only the ACPI object type allows a short firmware response to be read
-beyond the end of its buffer.
+The return values from regmap_update_bits() are currently ignored
+by the clock and AFE control functions.
+Propagate the errors to allow callers to handle regmap update
+failures.
 
-For safety, require a non-NULL buffer containing the complete value before
-copying it. Use memcpy() so that reading the response does not depend on
-the alignment of the firmware buffer.
-
-Fixes: d2e8a34876ce ("PCI/TPH: Add Steering Tag support")
-Signed-off-by: Wei Huang <wei.huang2@amd.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260924190543.3424792-1-wei.huang2@amd.com
+Fixes: f6b026479b13 ("ASoC: mediatek: mt8188: support audio clock control")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://patch.msgid.link/20260907120310.135693-4-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/tph.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8188/mt8188-afe-clk.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/pci/tph.c b/drivers/pci/tph.c
-index c61456d24f61b..bfcd06675dbae 100644
---- a/drivers/pci/tph.c
-+++ b/drivers/pci/tph.c
-@@ -119,12 +119,14 @@ static acpi_status tph_invoke_dsm(acpi_handle handle, u32 cpu_uid,
- 	if (!out_obj)
- 		return AE_ERROR;
+diff --git a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
+index b41069b752a94..516b9b4ee0339 100644
+--- a/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
++++ b/sound/soc/mediatek/mt8188/mt8188-afe-clk.c
+@@ -574,9 +574,7 @@ static int mt8188_afe_enable_top_cg(struct mtk_base_afe *afe, unsigned int cg_ty
+ 	unsigned int mask = get_top_cg_mask(cg_type);
+ 	unsigned int val = get_top_cg_on_val(cg_type);
  
--	if (out_obj->type != ACPI_TYPE_BUFFER) {
-+	if (out_obj->type != ACPI_TYPE_BUFFER ||
-+	    out_obj->buffer.length < sizeof(st_out->value) ||
-+	    !out_obj->buffer.pointer) {
- 		ACPI_FREE(out_obj);
- 		return AE_ERROR;
- 	}
+-	regmap_update_bits(afe->regmap, reg, mask, val);
+-
+-	return 0;
++	return regmap_update_bits(afe->regmap, reg, mask, val);
+ }
  
--	st_out->value = *((u64 *)(out_obj->buffer.pointer));
-+	memcpy(&st_out->value, out_obj->buffer.pointer, sizeof(st_out->value));
+ static int mt8188_afe_disable_top_cg(struct mtk_base_afe *afe, unsigned int cg_type)
+@@ -585,9 +583,7 @@ static int mt8188_afe_disable_top_cg(struct mtk_base_afe *afe, unsigned int cg_t
+ 	unsigned int mask = get_top_cg_mask(cg_type);
+ 	unsigned int val = get_top_cg_off_val(cg_type);
  
- 	ACPI_FREE(out_obj);
+-	regmap_update_bits(afe->regmap, reg, mask, val);
+-
+-	return 0;
++	return regmap_update_bits(afe->regmap, reg, mask, val);
+ }
  
+ int mt8188_afe_enable_reg_rw_clk(struct mtk_base_afe *afe)
+@@ -627,14 +623,12 @@ int mt8188_afe_disable_reg_rw_clk(struct mtk_base_afe *afe)
+ 
+ static int mt8188_afe_enable_afe_on(struct mtk_base_afe *afe)
+ {
+-	regmap_update_bits(afe->regmap, AFE_DAC_CON0, 0x1, 0x1);
+-	return 0;
++	return regmap_update_bits(afe->regmap, AFE_DAC_CON0, 0x1, 0x1);
+ }
+ 
+ static int mt8188_afe_disable_afe_on(struct mtk_base_afe *afe)
+ {
+-	regmap_update_bits(afe->regmap, AFE_DAC_CON0, 0x1, 0x0);
+-	return 0;
++	return regmap_update_bits(afe->regmap, AFE_DAC_CON0, 0x1, 0x0);
+ }
+ 
+ static int mt8188_afe_enable_a1sys(struct mtk_base_afe *afe)
 -- 
 2.53.0
 
