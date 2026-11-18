@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017619;
-	b=Yaw3RcKcC4/6zreqx2HYGCeyVsWQ9Kph58G5xFZVHlt3KnfJGzMQnrqYfZtTU8KpbSsP
-	 iS4hKuPvZGg6ymulER61hUSI6v06XBd/tKyYXXkCu5P4IpdVfOVy3e3ICkTKceFLyKHpv
-	 kcdb7ugs6lFspNwZGTG/PG/oG7cCk2GYIS3WIcekNKOmKNRdGr3DyiO2ODUi2XRbdNX9L
-	 79wB2hBJJDWziyKM7SMja0065P2lrMM7S/LQu5BgmJbO6GhvCJ/5M0vPvJUxuZt94pBDd
-	 AS6ajgIIGdh9x5AeWL/RX9WU9UD58g5ZeKGfDp3F3EgH88ib5hMhFJkGf/JaQMqm2cg==
+	t=1795017622;
+	b=0ZqirEAH7c6ihHlVQtne1rVJsmgMuEVZbSYMjFUdRqEiLK3pOj6PLdySTlXmBXZL47m6
+	 zRr27G5N3v+cetu6jt3HFjNz7uNEB4fpNHBtMYvZ3oUvQjEcK63fHDxD0lTwWBvllsZCQ
+	 8QOCcqCRRwzvfOXW/JAG6HfhhT/NJ+BT+GOBnL5MNKLiBFHIPMdqi0SninS7n4mcQWqdD
+	 cfjtcXu6feHQGtMO8CfKM6F3wDCGKTohmtczFYZCGz4G0FxTw5tFQ/B8K8zgKLOE24pMG
+	 n0XuaBU38cP0zByHXtQu8IkTwhuz2E+yYdwAEmZYbMkc+6U2kr1XZZKNXPUp+SevY7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017619;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DVv0YOd1JPO8Wljyxcp16PC361uORHieNHDmuam95Ik=;
-	b=0Jm2Opjes/n8tC6+Qf7rqhEe3o+aXhMnE1d6G4ns2Jw11vH9XM5rlcocoGfLtCMx5uUc
-	 OPl+29VRx2bmWbe9dJJR2A6G+GCYVjEAOnqSH7A7yIvkNHzSbTbHvBy3TW59OHCV4iHDO
-	 E1pYsqY3GD976/G3xFw2xb0yorDeU4dwTXJFYfU2zWCygZiGD3JMHEwtx3jzqQK635+XR
-	 fiLd3Gu4BAXM1DMY/u0kk3DTEQx5gvZ6dkJ8rZ+rc7N6cRYbqoRZzxJKs1aGZhiVdZ8I/
-	 B4uc+U5vRGHd9yi1pXZscTkIW3RgmvXsc/CB0ex+jk4S0QgpaBVmk60fjmD9FYeqxAw==
+	bh=NkMYJxPzh66kRa/c++lezkWSqE6kd3yfcNnELNvEgVs=;
+	b=AleFou30yR4legK5F/YnG4NOlDcNbcaJUMW2p6R1B2wnVJAKOY6xmsdkjWVer6UfbhCl
+	 bd32G20OTgkjUzCfdUMhtNRtDMnNodU64iwkXyiF1KSdQk4GFOvPmUC2RdVjXM5TCM7pP
+	 cuzI9sBI/b8vAIsKKNsJJtZB6kmVBqeQfic6HRQt8ozD5T6qPktQEtH5XpqOxIDnhQ9j7
+	 eUabdyLpYM+J+9ywDsG2QL92XxzN613grJQA3YqFzF8P+t84JooePXWGdbX8UvPwaBhuI
+	 tHfy8YkD2Kve+IAP5Bcm912skzLJEEZ0F++X/jKNV1ve7rNzspiRoR1QPKL8fVS+tiA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qsOGxPIw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pkt8Elmp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F95606A31C;
-	Wed, 18 Nov 2026 16:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66864606A320;
+	Wed, 18 Nov 2026 16:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qsOGxPIw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7FF11F000C7;
-	Wed, 18 Nov 2026 16:00:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pkt8Elmp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B111F000C4;
+	Wed, 18 Nov 2026 16:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017619;
-	bh=DVv0YOd1JPO8Wljyxcp16PC361uORHieNHDmuam95Ik=;
+	s=korg; t=1795017622;
+	bh=NkMYJxPzh66kRa/c++lezkWSqE6kd3yfcNnELNvEgVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qsOGxPIwEn0rh6ZzkxGSoWXphFrkeqHVMk1Bbt8NYSbau6uhKjleHEAyhCEZAvKxy
-	 GURa1NVjcXFdPCi/qgpKXT+hvi+1joEMI2RF7Q6wLlrGm2OaDgejlJ7U5CNl/GI40o
-	 7ED3JJR9xKs++O4DN+sUdbBv42dYUskbCFYeUt00=
+	b=pkt8Elmpld2kLXvbVff/u8Up3AWRU6PnAewSn+DUc+uwnaDS2X3WlqjTwAg/Ytzvj
+	 RRGutZvy1iPw94umXzZHM6dV86OMlAsU3bCdfgjw5SQ7QY3IsV4H3DDc6Vpf28mCoT
+	 TLyrZPT7yE8Y2urMS/wMU0x8E66xoZ0dZJmWjD4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Yilin Chen <1479826151@qq.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0948/2651] of/irq: Fix device node refcount leak in of_check_msi_parent()
-Date: Wed, 18 Nov 2026 15:36:28 +0100
-Message-ID: <20261118150322.033210289@linuxfoundation.org>
+Subject: [PATCH 7.3 0949/2651] rust: configfs: require thread-safe callback data
+Date: Wed, 18 Nov 2026 15:36:29 +0100
+Message-ID: <20261118150322.070825488@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,44 +68,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Yilin Chen <1479826151@qq.com>
 
-[ Upstream commit cbe0f79dcab1c121d767927b53a61eadf2c5b518 ]
+[ Upstream commit ec27f3b700010d2ebae1cde2df0246197689d159 ]
 
-of_msi_xlate() documents @msi_np as a filter when it points at a node on
-entry, handing back a reference only when it points at NULL. The msi-map
-branch does that. of_check_msi_parent() keeps the reference from the 1:1
-msi-parent match either way.
+The Rust configfs abstractions do not fully constrain callback data for
+cross-thread use. Add the missing `Send` and `Sync` requirements.
 
-pci_msi_domain_get_msi_rid() is the only caller that passes a node in,
-from irq_domain_get_of_node(), and it puts nothing, so a 1:1 match there
-leaks the MSI controller node.
+Specifically, make the following changes:
 
-Fixes: 119aaeed0b67 ("of/irq: Add msi-parent check to of_msi_xlate()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/20260826113604.010C01F000E9@smtp.kernel.org/
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://lore.kernel.org/all/20260826113604.010C01F000E9@smtp.kernel.org/
-Link: https://patch.msgid.link/20260907112944.313618-2-fuad.tabba@linux.dev
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+1. Require `Data: Send` when implementing `Send` for `Subsystem<Data>`,
+   since the subsystem stores its data by value.
+2. Make `GroupOperations` a `Sync` supertrait because `make_group` and
+   `drop_item` receive `&self` from foreign threads. Require `Child: Send`
+   because configfs may release child groups on an arbitrary thread.
+3. Require `AttributeOperations::Data: Sync` because its callbacks receive
+   `&Data` from foreign threads.
+4. Update the safety comments in FFI callbacks that call `get_group_data`
+   to cite these bounds as justification for sharing the returned
+   references with the callback thread.
+5. Remove redundant `Child: 'static` bounds from `GroupOperationsVTable`
+   and `new_with_child_ctor`.
+
+Fixes: 446cafc295bf ("rust: configfs: introduce rust support for configfs")
+Link: https://rust-for-linux.zulipchat.com/#narrow/channel/288089-General/topic/Should.20add.20Data.3A.20Send.2FSync.20bounds.20in.20configfs.3A.3ASubsystem.3F/with/623719979
+Assisted-by: Gpt-5.6 Sol
+Signed-off-by: Yilin Chen <1479826151@qq.com>
+Link: https://msgid.link/tencent_5449081195EDDF5726C709CF648DD4044A08@qq.com
+[ Andreas: Add Send/Sync bounds for `Group<Data>`, add `Send` bounds to
+`GroupOperationsVTable`, `ItemOperationsVTable` and `ItemType` macro
+implementation. ]
+Signed-off-by: Andreas Hindborg <a.hindborg@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/irq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/kernel/configfs.rs | 63 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 44 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-index ef1ed9743907b..d10ec6e8bea0b 100644
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -787,7 +787,7 @@ static int of_check_msi_parent(struct device_node *dev_node, struct device_node
- 	if ((*msi_node && *msi_node != msi_spec.np) || msi_spec.args_count != 0)
- 		ret = -EINVAL;
+diff --git a/rust/kernel/configfs.rs b/rust/kernel/configfs.rs
+index 2b3325cd9e1f0..ff53b3fb31c2d 100644
+--- a/rust/kernel/configfs.rs
++++ b/rust/kernel/configfs.rs
+@@ -135,8 +135,9 @@ pub struct Subsystem<Data> {
+ // SAFETY: We do not provide any operations on `Subsystem`.
+ unsafe impl<Data> Sync for Subsystem<Data> {}
  
--	if (!ret) {
-+	if (!ret && !*msi_node) {
- 		/* Return with a node reference held */
- 		*msi_node = msi_spec.np;
- 		return 0;
+-// SAFETY: Ownership of `Subsystem` can safely be transferred to other threads.
+-unsafe impl<Data> Send for Subsystem<Data> {}
++// SAFETY: Ownership of `Subsystem` can safely be transferred to other threads
++// if its data can be transferred as well.
++unsafe impl<Data: Send> Send for Subsystem<Data> {}
+ 
+ impl<Data> Subsystem<Data> {
+     /// Create an initializer for a [`Subsystem`].
+@@ -249,6 +250,13 @@ pub struct Group<Data> {
+     data: Data,
+ }
+ 
++// SAFETY: We do not provide any operations on `Group`.
++unsafe impl<Data> Sync for Group<Data> {}
++
++// SAFETY: Ownership of `Group` can safely be transferred to other threads if
++// its data can be transferred as well.
++unsafe impl<Data: Send> Send for Group<Data> {}
++
+ impl<Data> Group<Data> {
+     /// Create an initializer for a new group.
+     ///
+@@ -338,7 +346,9 @@ unsafe fn get_group_data<'a, Parent>(this: *mut bindings::config_group) -> &'a P
+ impl<Parent, Child> GroupOperationsVTable<Parent, Child>
+ where
+     Parent: GroupOperations<Child = Child>,
+-    Child: 'static,
++    // We transfer `Arc<Group<Data>>` across a thread boundary in `make_group`
++    // and `drop_item`.
++    Arc<Group<Child>>: Send,
+ {
+     /// # Safety
+     ///
+@@ -357,8 +367,9 @@ impl<Parent, Child> GroupOperationsVTable<Parent, Child>
+         this: *mut bindings::config_group,
+         name: *const kernel::ffi::c_char,
+     ) -> *mut bindings::config_group {
+-        // SAFETY: By function safety requirements of this function, this call
+-        // is safe.
++        // SAFETY: By function safety requirements, `this` points to a configfs
++        // group containing `Parent`. The `GroupOperations` bound guarantees
++        // that `Parent: Sync`, so it is safe to share it with this thread.
+         let parent_data = unsafe { get_group_data(this) };
+ 
+         let group_init = match Parent::make_group(
+@@ -403,8 +414,9 @@ impl<Parent, Child> GroupOperationsVTable<Parent, Child>
+         this: *mut bindings::config_group,
+         item: *mut bindings::config_item,
+     ) {
+-        // SAFETY: By function safety requirements of this function, this call
+-        // is safe.
++        // SAFETY: By function safety requirements, `this` points to a configfs
++        // group containing `Parent`. The `GroupOperations` bound guarantees
++        // that `Parent: Sync`, so it is safe to share it with this thread.
+         let parent_data = unsafe { get_group_data(this) };
+ 
+         // SAFETY: By function safety requirements, `item` is embedded in a
+@@ -416,7 +428,9 @@ impl<Parent, Child> GroupOperationsVTable<Parent, Child>
+ 
+         if Parent::HAS_DROP_ITEM {
+             // SAFETY: We called `into_raw` to produce `r_child_group_ptr` in
+-            // `make_group`.
++            // `make_group`. This function may be executing on a different
++            // thread than `into_raw`. As `Arc<Group<Child>>: Send` this
++            // ownership transfer is safe.
+             let arc: Arc<Group<Child>> = unsafe { Arc::from_raw(r_child_group_ptr.cast_mut()) };
+ 
+             Parent::drop_item(parent_data, arc.as_arc_borrow());
+@@ -447,6 +461,8 @@ const fn vtable_ptr() -> *const bindings::configfs_group_operations {
+ impl<Data> ItemOperationsVTable<Group<Data>, Data>
+ where
+     Data: 'static,
++    // We transfer `Arc<Group<Data>>` across a thread boundary in `release`.
++    Arc<Group<Data>>: Send,
+ {
+     /// # Safety
+     ///
+@@ -463,8 +479,9 @@ impl<Data> ItemOperationsVTable<Group<Data>, Data>
+         // embedded within a `Group<Data>`.
+         let r_group_ptr = unsafe { Group::<Data>::container_of(c_group_ptr) };
+ 
+-        // SAFETY: We called `into_raw` on `r_group_ptr` in
+-        // `make_group`.
++        // SAFETY: We called `into_raw` on `r_group_ptr` in `make_group`. This
++        // function may be running on a different thread than the thread that
++        // called `into_raw`. As `Arc<Group<Data>>: Send`, this is safe.
+         let pin_self: Arc<Group<Data>> = unsafe { Arc::from_raw(r_group_ptr.cast_mut()) };
+         drop(pin_self);
+     }
+@@ -496,12 +513,12 @@ const fn vtable_ptr() -> *const bindings::configfs_item_operations {
+ ///
+ /// Implement this trait on structs that embed a [`Subsystem`] or a [`Group`].
+ #[vtable]
+-pub trait GroupOperations {
++pub trait GroupOperations: Sync {
+     /// The child data object type.
+     ///
+     /// This group will create subgroups (subdirectories) backed by this kind of
+     /// object.
+-    type Child: 'static;
++    type Child: 'static + Send;
+ 
+     /// Creates a new subgroup.
+     ///
+@@ -568,8 +585,10 @@ impl<const ID: u64, O, Data> Attribute<ID, O, Data>
+             // `config_group`.
+             unsafe { container_of!(item, bindings::config_group, cg_item) };
+ 
+-        // SAFETY: The function safety requirements for this function satisfy
+-        // the conditions for this call.
++        // SAFETY: By function safety requirements, `c_group` points to a
++        // configfs group containing `Data`. The `AttributeOperations` bound
++        // guarantees that `Data: Sync`, so it is safe to share it with this
++        // thread.
+         let data: &Data = unsafe { get_group_data(c_group) };
+ 
+         // SAFETY: By function safety requirements, `page` is writable for `PAGE_SIZE`.
+@@ -602,8 +621,10 @@ impl<const ID: u64, O, Data> Attribute<ID, O, Data>
+         // `config_group`.
+             unsafe { container_of!(item, bindings::config_group, cg_item) };
+ 
+-        // SAFETY: The function safety requirements for this function satisfy
+-        // the conditions for this call.
++        // SAFETY: By function safety requirements, `c_group` points to a
++        // configfs group containing `Data`. The `AttributeOperations` bound
++        // guarantees that `Data: Sync`, so it is safe to share it with this
++        // thread.
+         let data: &Data = unsafe { get_group_data(c_group) };
+ 
+         let ret = O::store(
+@@ -656,7 +677,7 @@ pub const fn new(name: &'static CStr) -> Self {
+ pub trait AttributeOperations<const ID: u64 = 0> {
+     /// The type of the object that contains the field that is backing the
+     /// attribute for this operation.
+-    type Data;
++    type Data: Sync;
+ 
+     /// Renders the value of an attribute.
+     ///
+@@ -762,7 +783,8 @@ pub const fn new_with_child_ctor<const N: usize, Child>(
+             ) -> Self
+             where
+                 Data: GroupOperations<Child = Child>,
+-                Child: 'static,
++                Arc<Group<Child>>: Send,
++                Arc<Group<Data>>: Send,
+             {
+                 Self {
+                     item_type: Opaque::new(bindings::config_item_type {
+@@ -780,7 +802,10 @@ pub const fn new_with_child_ctor<const N: usize, Child>(
+             pub const fn new<const N: usize>(
+                 owner: &'static ThisModule,
+                 attributes: &'static AttributeList<N, Data>,
+-            ) -> Self {
++            ) -> Self
++            where
++                Arc<Group<Data>>: Send,
++            {
+                 Self {
+                     item_type: Opaque::new(bindings::config_item_type {
+                         ct_owner: owner.as_ptr(),
 -- 
 2.53.0
 
