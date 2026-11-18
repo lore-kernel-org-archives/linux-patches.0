@@ -1,59 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034880;
-	b=UEMZXXzFa8fWAwXrIiYfKE7xMhThLQW1K0W8D1oWorx/p88imDj+Bzin5fzD26RZM8gB
-	 zEb3VVG6osj0Gjc/rn03cILdkB38XViGYlVB2zpq94RJDZcI4HZxOkNhFG5wtCWmZgYF1
-	 A4DlZQOGxWabZ9ddnBHA1EAOJ2juMQ52KHlvWMe6WZrhvy57awYtCla2kZLTOmeQznmLp
-	 hS3WxZnqAfjHsTtkg0hDErRn+2ya7QyQCAgtZ/dKmgFGPXo11FISb4HxQw2ClWBlZX/KD
-	 +80WiVmiTkN9vtFwLfGqtDxjR9PdX4l9JOSyE2NDWk4TdF0OMEtqPGK//h84DEKsAYQ==
+	t=1795034882;
+	b=SdvUQHP9Cqu1ozbzA1IppTOoi3GQIXBjoByZewgpvxyJLkR1wT4qVdcXFJKLLNwjQlcH
+	 q3BaL01+49QqjqL+7MTpt+t/gT4P/hiEv+qQZvjI/ORc8KXVNEsOnix498sWJCrt4+H/o
+	 BFcrH8O+hTGdGfczTgEfZX1c4t5yXRrtRogpU6ZZdXMqjWssdKNXaVanVpjMyY08gAfBk
+	 i6aoUAIknElaXojoGPrXfmDczNq2R1PpczQb8eWZsjrZOe6WM5NhCLHmz5/cSGK784b2R
+	 ANGjK8ZG7P3lOLvnd9EfkLTMh27eNRhKGVYiVJHl3a/NmsXC7n4yg/6Zsyz4rBrBAhA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034880;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034882;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iA/CPga8Qx8VGse9AI1gF/Lua/D5IOnoW4DM7R2qBzo=;
-	b=mNieLdC4SI/utFEBAWmf7fQRiBdjJbo8mxSqJUD6T6+I/UX/19Fb+TJp3oJDpMuPW7W9
-	 Hw0NA8qrSz9qMiKgEBHzL2h26yJUE/iAX1JdbtHMmk7D8jDjhj7cwaQR80JarRNySTQED
-	 /a1C3no2KMqONrPqVEdbohFDq0StWS8dsWaDT/pSShiCbUHKMUPF4zTSxBRw2khHmeqQD
-	 bozweXgoJJgfy6TlabbOnV/5W+jBUgC5AsNbCpo0jegPmfDWtHtddomCbR09AJ9GJovzl
-	 4B3zIN3R6ranIJn+86D6GBkTNvmJeIkWZ7qfWqXkClBeNwCL/+huJnbg/IULT7KjfJg==
+	bh=lzFvR4NOqjBQg2FKRDC7lTQE7cNLQMFo1oqg0EXXcKs=;
+	b=kxCOJQFmazmzP/tTlcn7yrrqD0g+wxQ/Y0q01HqiEhrqoJQsnjipxTMEaxhfwLqniq0M
+	 X80gTnHuxkVCJYFkNqYANthF3yh29LGPB6UIm31UZM/YOLRM6HdylDYUgDRM7NFK5C8tq
+	 3F/JrPHargLxm/5EjOcL3QIFyFYIqs6euOiQ67LJOEOArFLwOb6wNalqW3leMi5rR7LdB
+	 gr+xMtVP9vwvq0SgSAfP7DMqW05VYNyuwbNZQI7PClokAUOJ1TJJyrZ3pJUQ80aEwv+E7
+	 lVDPwbfkGqF9opk2Dko2xKvcNO1aC2IRNlU01vNi9ZigmDLLF7e+0zPZXKo1IgH2OCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CYT8t0m0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l3JjSZAL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C6B606A31C;
-	Wed, 18 Nov 2026 20:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FF7606A31C;
+	Wed, 18 Nov 2026 20:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CYT8t0m0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AEFC1F000C4;
-	Wed, 18 Nov 2026 20:47:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l3JjSZAL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFC71F000C4;
+	Wed, 18 Nov 2026 20:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034879;
-	bh=iA/CPga8Qx8VGse9AI1gF/Lua/D5IOnoW4DM7R2qBzo=;
+	s=korg; t=1795034882;
+	bh=lzFvR4NOqjBQg2FKRDC7lTQE7cNLQMFo1oqg0EXXcKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CYT8t0m0TDMwqc9Ed04MLAzOw3aONfRrwXjPY2AwzMwGASvbsvGwcO+SLhdsDKjok
-	 U2ddtdpSIGgwkVyvCWVfn9kqwI0oWwrLb8KN7aus5czeiVbqycyAygcA+4PVWoDIuY
-	 8VX57hNLixD3sel3iQOwIpbeOq+jnQrBoYCdvDgQ=
+	b=l3JjSZAL2s3AtLA3JFz2Eh5WzqDPTMoKxMa66kRFrr9k3iM4p9ePwn1Rg7WCVfIq4
+	 Nqlm9pStdyikzzRpSXQOUvQzJW6g53BTupJpwWTE5IlJ9Co2wggabhD6mplgymGUGS
+	 Pa0mmoyMNCE0/w+IGbmulFFES7F7nC0akouNGZHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	stable@kernel.org,
+	Tobias Gannert <tobias.gannert@ziehl-abegg.de>,
+	Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>,
+	David Laight <david.laight.linux@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0525/3318] smb: client: only require read lease for size-extending zero range
-Date: Wed, 18 Nov 2026 15:19:07 +0100
-Message-ID: <20261118150332.947757249@linuxfoundation.org>
+Subject: [PATCH 6.6 0526/3318] serial: sc16is7xx: refill TX FIFO below trigger using fresh TXLVL
+Date: Wed, 18 Nov 2026 15:19:08 +0100
+Message-ID: <20261118150332.980385450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,140 +70,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
 
-[ Upstream commit fafc68cccf8a00ed0a1f47c1413a3f16ce4dcdfa ]
+[ Upstream commit 527484911a40f6e84cf47e8bc490f7da61ab4151 ]
 
-smb3_zero_range() refuses any FALLOC_FL_ZERO_RANGE that clears
-FALLOC_FL_KEEP_SIZE with -EOPNOTSUPP whenever the inode is not read
-caching:
+sc16is7xx_handle_tx() reads TXLVL once and sizes the hardware TX FIFO
+write from that value. TXLVL reports free space in the hardware TX FIFO.
 
-	/* if file not oplocked can't be sure whether asking to extend size */
-	rc = -EOPNOTSUPP;
-	if (keep_size == false && !CIFS_CACHE_READ(cifsi))
-		goto zero_range_exit;
+On this SPI-backed path, hardirq/softirq activity, RT scheduling, and
+waiting for synchronous SPI transfers can delay the refill while the UART
+continues draining. The TXLVL value can therefore become stale before the
+hardware TX FIFO write completes.
 
-The read lease is only needed to trust the cached i_size when deciding
-whether the range extends the file. When it is not held, the size can
-instead be fetched from the server, which is authoritative, rather than
-refusing the request outright: query the server's end of file and take
-the larger of it and the cached size for the interior-vs-extend
-decision. The larger of the two is used because the server's end of
-file reflects another client's growth while the cached size reflects
-this client's own writes that may not have reached the server yet;
-using the server size alone would wrongly shrink the file when the
-range flush above left an extending write unwritten.
+One failing ftrace with the default 8-free-space trigger showed:
 
-The query isn't lease-protected either, so its result is only trusted to
-confirm the range is interior, never to justify extending: if it still
-shows the range going past EOF, refuse with -EOPNOTSUPP instead of
-calling SMB2_set_eof(), which could otherwise shrink the file if another
-client extended it further between the query and the call.  For the same
-reason, take the larger of the already-computed i_size and a fresh
-i_size_read(inode) right before that call, instead of relying on either
-alone: the local variable carries the query's result, which is never
-written back to the inode, while a concurrent write on this client can
-still extend the cached i_size during the flush, the query, or the
-zero-data round trip that happen in between.
+  tx_start       txlvl=9  txlvl_read_us=580
+  tx_pre_write   sent=9   pre_write_us=16
+  tx_segment     sent=9   seg_us=364
+  tx_post_write  txlvl_before=9 sent=9 txlvl_after=12 pending_after=29
+                 post_gap_us=12 post_txlvl_us=130
 
-Rejecting interior ranges is observed as generic/363 randomly failing
-against Windows Server with
+The driver read 9 free spaces and wrote 9 bytes to the hardware TX FIFO,
+but the post-write TXLVL read still reported 12 free spaces while 29 bytes
+remained queued in the xmit kfifo. Even allowing for the post-write read
+window, the hardware TX FIFO had not been filled below the 8-free-space
+trigger, so no new threshold crossing was expected.
 
-	do_zero_range: fallocate: Operation not supported
+The captured failing samples had the same pattern: data remained queued
+in the xmit kfifo while post-write TXLVL remained above the hardware
+trigger. The hardware TX FIFO then drained empty before another refill
+was requested, producing an unintended gap on the wire.
 
-fsx issues an interior, non-KEEP_SIZE zero range while the inode is
-transiently not read caching: the server had just downgraded the file's
-lease from RWH to RH after breaking the write caching, and the ensuing
-handle reopen/revalidation left CIFS_CACHE_READ momentarily clear. The
-range sat well within the server's end of file, so no extend was
-needed, yet the range was refused and fsx aborted. This keeps the
-emulation correct even when a genuine lease break from another client
-leaves the inode without read caching -- the case the -EOPNOTSUPP guard
-turned into a hard failure. The extra round trip only happens on the
-no-lease path; the common cached case is unchanged.
+Fix this by re-reading TXLVL after each hardware TX FIFO write while data
+remains queued in the xmit kfifo. If TXLVL is still at or above the
+trigger, top up the hardware TX FIFO again. Stop when the xmit kfifo is
+empty or a TXLVL read confirms that hardware TX FIFO free space is
+strictly below the trigger.
 
-Fixes: 30175628bf7f ("[SMB3] Enable fallocate -z support for SMB3 mounts")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: stable@vger.kernel.org
-[ sashal: Added the missing remote_i_size local declaration in smb3_zero_range() since the surrounding context lacked it. ]
+Stopping when TXLVL was equal to the trigger still allowed TX gaps in the
+tested workload. Continuing until TXLVL was strictly below the trigger
+eliminated the observed gaps caused by stale-TXLVL under-fill.
+
+Program the hardware TX trigger explicitly through TLR using the same
+constant as the refill-loop threshold. This prevents the software refill
+condition from diverging from the programmed hardware trigger.
+
+Tested on SC16IS752 over 1 MHz SPI on an i.MX6ULL single-core
+PREEMPT_RT system, transmitting RS-485 at 115200 baud 8N1 under
+continuous Modbus RTU load.
+
+Fixes: dfeae619d781 ("serial: sc16is7xx")
+Cc: stable@kernel.org
+Reported-by: Tobias Gannert <tobias.gannert@ziehl-abegg.de>
+Link: https://lore.kernel.org/linux-serial/20260623112225.82386-3-paultyson.mbewe@ziehl-abegg.de/
+Signed-off-by: Paul Mbewe <paultyson.mbewe@ziehl-abegg.de>
+Reviewed-by: David Laight <david.laight.linux@gmail.com>
+Link: https://patch.msgid.link/20260930145628.566535-2-paultyson.mbewe@ziehl-abegg.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ sashal: Adapted the TX loop to use circ_buf helpers (uart_circ_empty, CIRC_CNT_TO_END) instead of kfifo calls, and kept the older comment text in the defines. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2ops.c | 33 +++++++++++++++++++++++++++------
- 1 file changed, 27 insertions(+), 6 deletions(-)
+ drivers/tty/serial/sc16is7xx.c | 46 +++++++++++++++++++++++++---------
+ 1 file changed, 34 insertions(+), 12 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index 256b8ddbc2b2f..f657d9696d1da 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -3254,6 +3254,21 @@ static long smb3_zero_data(struct file *file, struct cifs_tcon *tcon,
- 			  0, NULL, NULL);
+diff --git a/drivers/tty/serial/sc16is7xx.c b/drivers/tty/serial/sc16is7xx.c
+index ac2380978ae70..b208181de2455 100644
+--- a/drivers/tty/serial/sc16is7xx.c
++++ b/drivers/tty/serial/sc16is7xx.c
+@@ -242,6 +242,8 @@
+ #define SC16IS7XX_TLR_TX_TRIGGER(words)	((((words) / 4) & 0x0f) << 0)
+ #define SC16IS7XX_TLR_RX_TRIGGER(words)	((((words) / 4) & 0x0f) << 4)
+ 
++#define SC16IS7XX_TX_TRIGGER_LEVEL	8
++
+ /* IOControl register bits (Only 750/760) */
+ #define SC16IS7XX_IOCONTROL_LATCH_BIT	BIT(0)   /* Enable input latching */
+ #define SC16IS7XX_IOCONTROL_MODEM_A_BIT	BIT(1)   /* Enable GPIO[7:4] as modem A pins */
+@@ -692,6 +694,21 @@ static void sc16is7xx_handle_rx(struct uart_port *port, unsigned int rxlen,
+ 	tty_flip_buffer_push(&port->state->port);
  }
  
-+static long query_server_eof(const unsigned int xid,
-+			     struct cifs_tcon *tcon,
-+			     struct cifsFileInfo *cfile,
-+			     unsigned long long *eof)
++static unsigned int sc16is7xx_txlvl(struct uart_port *port)
 +{
-+	struct smb2_file_all_info file_inf = {};
-+	long rc;
++	unsigned int txlvl;
 +
-+	rc = SMB2_query_info(xid, tcon, cfile->fid.persistent_fid,
-+			     cfile->fid.volatile_fid, &file_inf);
-+	if (!rc)
-+		*eof = le64_to_cpu(file_inf.EndOfFile);
-+	return rc;
++	txlvl = sc16is7xx_port_read(port, SC16IS7XX_TXLVL_REG);
++	if (txlvl > SC16IS7XX_FIFO_SIZE) {
++		dev_err_ratelimited(port->dev,
++				    "chip reports %u free bytes in TX FIFO, but it only has %u\n",
++				    txlvl, SC16IS7XX_FIFO_SIZE);
++		return 0;
++	}
++
++	return txlvl;
 +}
 +
- static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 			    unsigned long long offset, unsigned long long len,
- 			    bool keep_size)
-@@ -3262,7 +3277,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	struct inode *inode = file_inode(file);
- 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
- 	struct cifsFileInfo *cfile = file->private_data;
--	unsigned long long i_size, new_size;
-+	unsigned long long i_size, remote_i_size, new_size;
- 	long rc;
- 	unsigned int xid;
+ static void sc16is7xx_handle_tx(struct uart_port *port)
+ {
+ 	struct circ_buf *xmit = &port->state->xmit;
+@@ -712,24 +729,25 @@ static void sc16is7xx_handle_tx(struct uart_port *port)
+ 		return;
+ 	}
  
-@@ -3298,10 +3313,16 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	 */
- 	truncate_pagecache_range(inode, min(offset, i_size), offset + len - 1);
+-	/* Get length of data pending in circular buffer */
+-	to_send = uart_circ_chars_pending(xmit);
+-	if (likely(to_send)) {
+-		/* Limit to size of TX FIFO */
+-		txlen = sc16is7xx_port_read(port, SC16IS7XX_TXLVL_REG);
+-		if (txlen > SC16IS7XX_FIFO_SIZE) {
+-			dev_err_ratelimited(port->dev,
+-				"chip reports %d free bytes in TX fifo, but it only has %d",
+-				txlen, SC16IS7XX_FIFO_SIZE);
+-			txlen = 0;
+-		}
+-		to_send = (to_send > txlen) ? txlen : to_send;
++	txlen = sc16is7xx_txlvl(port);
  
--	/* if file not oplocked can't be sure whether asking to extend size */
--	rc = -EOPNOTSUPP;
--	if (keep_size == false && !CIFS_CACHE_READ(cifsi))
--		goto zero_range_exit;
-+	if (!keep_size && !CIFS_CACHE_READ(cifsi)) {
-+		rc = query_server_eof(xid, tcon, cfile, &remote_i_size);
-+		if (rc)
-+			goto zero_range_exit;
-+		i_size = max(i_size, remote_i_size);
-+		if (i_size < new_size) {
-+			rc = -EOPNOTSUPP;
-+			goto zero_range_exit;
-+		}
-+	}
++	/* Handle circular buffer wrap-around by sending multiple segments */
++	while (txlen > 0 && !uart_circ_empty(xmit)) {
++		to_send = uart_circ_chars_pending(xmit);
++		to_send = min(to_send, txlen);
+ 		to_send = min_t(unsigned int, to_send,
+ 				CIRC_CNT_TO_END(xmit->head, xmit->tail, UART_XMIT_SIZE));
  
- 	fscache_invalidate(cifs_inode_cookie(inode), NULL,
- 			   i_size_read(inode), 0);
-@@ -3313,7 +3334,7 @@ static long smb3_zero_range(struct file *file, struct cifs_tcon *tcon,
- 	/*
- 	 * do we also need to change the size of the file?
- 	 */
--	if (keep_size == false && (unsigned long long)i_size_read(inode) < new_size) {
-+	if (!keep_size && umax(i_size, i_size_read(inode)) < new_size) {
- 		rc = SMB2_set_eof(xid, tcon, cfile->fid.persistent_fid,
- 				  cfile->fid.volatile_fid, cfile->pid, new_size);
- 		if (rc >= 0) {
+ 		sc16is7xx_fifo_write(port, &xmit->buf[xmit->tail], to_send);
+ 		uart_xmit_advance(port, to_send);
++
++		if (uart_circ_empty(xmit))
++			break;
++
++		/* Refill below the trigger to enable the next THRI crossing. */
++		txlen = sc16is7xx_txlvl(port);
++		if (txlen < SC16IS7XX_TX_TRIGGER_LEVEL)
++			break;
+ 	}
+ 
+ 	uart_port_lock_irqsave(port, &flags);
+@@ -1168,6 +1186,10 @@ static int sc16is7xx_startup(struct uart_port *port)
+ 			     SC16IS7XX_TCR_RX_RESUME(24) |
+ 			     SC16IS7XX_TCR_RX_HALT(48));
+ 
++	/* Sync hardware and software TX trigger levels */
++	sc16is7xx_port_write(port, SC16IS7XX_TLR_REG,
++			     SC16IS7XX_TLR_TX_TRIGGER(SC16IS7XX_TX_TRIGGER_LEVEL));
++
+ 	/* Disable TCR/TLR access */
+ 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG, SC16IS7XX_MCR_TCRTLR_BIT, 0);
+ 
 -- 
 2.53.0
 
