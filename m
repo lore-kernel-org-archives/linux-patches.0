@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052433;
-	b=apJiYjZOMvE/kd16e18KsAjXwyJTaR0assQdX6BuxmExIXPccvCLXesulM3e8KduuQN4
-	 +scq1hBZFz3NSMZXUuAIu0+v+7C+/ZyRkwwHhguThFw84/Db/3K2UDXUFFdTTuV7dM+va
-	 hWxYgv32H1RFnqUOw8lKcKULlLpzY7JRsSvG0CATIHjooQggdyKQLUljWwKLguwvwlurg
-	 KDL1piUhbZxUe/KDpa/xgq3Dgebei3nuUoMxFGZrEp00X28gX7P1DuqV3eyPFbbBbVhwA
-	 sfxEZTg2LCzSaVD+OOU2l8KSObitLPoFjPdALa2NSZiQh38jFw775O/5dETS93pQlOQ==
+	t=1795052436;
+	b=TGSaZ8Cr8EVzHyOCLZNZuxCsuiUHvZhCRxmN1C1k3py+aXXNP0QlvKT9eaDgSJEj1cA0
+	 NN2Gz0bqDWS2qGYG9wyroSr7ZE9wVb9F3+3lPvUqEd8egth5KCkao+AFbztB22h/7jUhb
+	 nh0G/e75qa9NmGkM1p54Vbtl7wp61+Gh2fKZsM/CNHuEa42z2Quix1BGKfLux5EqPhfqV
+	 Xkln7OkPACbaAUtIkHDdWhHSoXjUt37bDN/2pAVS0wSewah49Jy4QxM4UWhJhdUym1feu
+	 jdvEjBO2zbtH3zQ6dOf1Vta6Frycw9O11w/frBVpfuNUM+EY+MDiyIdnlwbt4e4TU8A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052433;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052436;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yFYoAGRZGSs7Lp+Mno/SjSFKTqKvkw5dMOzdCBLMM/w=;
-	b=JT55Xmxqm2eNkNhSFjCGqyMPzDgyNtiJJhwKF/uTHcWTjf5EZqyqRqveBZEe/4bDJhH0
-	 oeHBz+m7lyOOm+PTGzxVpB6UhQyOU0bmQTzlv2k2ma2On7HgrgEjyPnOqrcaQxZL14rL4
-	 pdbmK0+BADWMD+t5skRuwzw/dS8uyl94dGwumpuZfaIkTkOSWxz06/4BNNzttSMdhgNBf
-	 /Ck+EGiUO8cOpYIXK+E+xJKPLOtATmNqMhvR/tjNuTK+8NrcyqM3ToRQmJKAdGSmSjBpH
-	 AKP7vrefoALZLT3mUYYCBd9KrVgAnRWg0rfVIoHwfYS99Mb13GODwbYDARioUcu1cnw==
+	bh=zTIlzMa6Pg2pIA+/dvIWP0ZGOJfQ7XLZYT8qOoPaH+k=;
+	b=4DQX6dLW7aTImB4JE/5TEtiJqgs9JZaV3qa0mKEc05dbNNJifwNWABQHYmjQoAe8f/OQ
+	 ktq5/7S2ogKx5jtxlVYpoJ1aZ1wr9aFOiN/GSKe9mKAP/2HAd+pljLOGJ+czdH3WZjj5d
+	 0IgoGNgu3ftEuiooLDrryhw2b4hF1/WM4CLylCwUEtJzjcDgOVAR9QkorFg1CE684zztl
+	 1dIiQHDqQBcSYDDDnc6LsfxId5AoA5/oKLNSMa2fuWY7JVzvyvmVb35TSGLa1yRX56f2o
+	 XVUZhLtasoYg2C2rjb7bXQeQVZ54MztKDKT1HVSWDh7ioguaZkh9cQQQ8jGkBZDw5Ng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mONbwsgM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ip8BOyUP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6AC606A31C;
-	Thu, 19 Nov 2026 01:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B272606A31C;
+	Thu, 19 Nov 2026 01:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mONbwsgM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78381F000C4;
-	Thu, 19 Nov 2026 01:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ip8BOyUP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70AE31F000C4;
+	Thu, 19 Nov 2026 01:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052433;
-	bh=yFYoAGRZGSs7Lp+Mno/SjSFKTqKvkw5dMOzdCBLMM/w=;
+	s=korg; t=1795052436;
+	bh=zTIlzMa6Pg2pIA+/dvIWP0ZGOJfQ7XLZYT8qOoPaH+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mONbwsgM/s9D5QbIXgLs8YTnJpf09zthLUvhZv8GBugdPxoXvCfZLXw+LW5JYGQtW
-	 7TI1OTWs+OldeHchvHe5xcprFk7RbfDoR2KB+7ojQYgXe6AdZ3TC0lgaYnheUSZDVS
-	 jVBl3mwVyWMd106TWcg/aNQJAkPzPA9fcjERThzs=
+	b=Ip8BOyUPD1qLDC4/f49OHpteD290XmcL2C90l11d5800DsnDHp6fyqi7safYvncKq
+	 bnnpO1ndB7e9EhdUmManOBdcIzTeLB0SoNRz1zAAGD+l2ea8lQb6SKHidnu5boE3Qr
+	 1X++Rk9F+5awXSzc7FvJL5f8raEFG/HItXNJholM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0525/2214] media: cx18: Disable PCI device on probe failure
-Date: Wed, 18 Nov 2026 15:36:41 +0100
-Message-ID: <20261118150032.083486421@linuxfoundation.org>
+Subject: [PATCH 5.15 0561/2214] dm-writecache: fix a crash if we attempt to use non-dax device
+Date: Wed, 18 Nov 2026 15:37:17 +0100
+Message-ID: <20261118150033.443915328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,74 +67,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 2aefbc29765641e1e1a26b96cee194ac7d34ff49 ]
+[ Upstream commit b15dc73f60ebf02410bc7014ce34fb7fd1040045 ]
 
-cx18_setup_pci() enables the PCI device but does not disable it when
-DMA mask setup or the memory-region reservation fails. Later probe
-failure paths release the region without balancing the enable either.
+If we specify a non-DAX device as a cache device in the 'P' mode,
+dm-writecache crashes on NULL pointer dereference inside dax_synchronous.
 
-Unwind the enable inside cx18_setup_pci() when that helper fails after
-enabling the device. Once setup succeeds, disable it in the probe
-cleanup after releasing the memory region. Setup failures skip that
-cleanup, so each successful enable is balanced exactly once.
+Note that this is not a security bug because only root can trigger it.
 
-Keep the existing error codes and normal removal path unchanged.
-
-This issue was identified during our ongoing static-analysis research
-while reviewing kernel code.
-
-Fixes: 1c1e45d17b66 ("V4L/DVB (7786): cx18: new driver for the Conexant CX23418 MPEG encoder chip")
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: a46624580376 ("dm writecache: reject asynchronous pmem devices")
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Assisted-by: OpenAI:GPT-5.6
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Assisted-by: Claude:claude-opus-5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx18/cx18-driver.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/md/dm-writecache.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/pci/cx18/cx18-driver.c b/drivers/media/pci/cx18/cx18-driver.c
-index 59497ba6bf1f1..ec2e19fdf1399 100644
---- a/drivers/media/pci/cx18/cx18-driver.c
-+++ b/drivers/media/pci/cx18/cx18-driver.c
-@@ -806,12 +806,12 @@ static int cx18_setup_pci(struct cx18 *cx, struct pci_dev *pci_dev,
- 	}
- 	if (dma_set_mask(&pci_dev->dev, DMA_BIT_MASK(32))) {
- 		CX18_ERR("No suitable DMA available, card %d\n", cx->instance);
--		return -EIO;
-+		goto err_disable_device;
- 	}
- 	if (!request_mem_region(cx->base_addr, CX18_MEM_SIZE, "cx18 encoder")) {
- 		CX18_ERR("Cannot request encoder memory region, card %d\n",
- 			 cx->instance);
--		return -EIO;
-+		goto err_disable_device;
+diff --git a/drivers/md/dm-writecache.c b/drivers/md/dm-writecache.c
+index ee61879ac0910..9be9ff6f7e3de 100644
+--- a/drivers/md/dm-writecache.c
++++ b/drivers/md/dm-writecache.c
+@@ -2486,6 +2486,11 @@ static int writecache_ctr(struct dm_target *ti, unsigned argc, char **argv)
  	}
  
- 	/* Enable bus mastering and memory mapped IO for the CX23418 */
-@@ -835,6 +835,10 @@ static int cx18_setup_pci(struct cx18 *cx, struct pci_dev *pci_dev,
- 		   cx->pci_dev->irq, pci_latency, (u64)cx->base_addr);
- 
- 	return 0;
-+
-+err_disable_device:
-+	pci_disable_device(pci_dev);
-+	return -EIO;
- }
- 
- static void cx18_init_subdevs(struct cx18 *cx)
-@@ -1121,6 +1125,7 @@ static int cx18_probe(struct pci_dev *pci_dev,
- 	cx18_iounmap(cx);
- free_mem:
- 	release_mem_region(cx->base_addr, CX18_MEM_SIZE);
-+	pci_disable_device(pci_dev);
- free_workqueues:
- 	destroy_workqueue(cx->in_work_queue);
- err:
+ 	if (WC_MODE_PMEM(wc)) {
++		if (!wc->ssd_dev->dax_dev) {
++			r = -EOPNOTSUPP;
++			ti->error = "Cache device is not a DAX device";
++			goto bad;
++		}
+ 		if (!dax_synchronous(wc->ssd_dev->dax_dev)) {
+ 			r = -EOPNOTSUPP;
+ 			ti->error = "Asynchronous persistent memory not supported as pmem cache";
 -- 
 2.53.0
 
