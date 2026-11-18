@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037463;
-	b=FYTjkm4SSH1ea2U8jywuSZHn41Tpdmbw7fVtNoEe9VUGnY50ZdeA1fayrot5PHvZ0ZbA
-	 ZT3Eleca0BAl2UnPM+FqjwO+Zrp2BXMY7HAhcVFZIZZqOKADkw5ZS+HQz1/WTlBe7hNgf
-	 us+8x7A1kngfJIK0dQFfrxHDsgutjAw6ni55vRvsE418VzGxxPLFl9QD1BmFgR8U49NXn
-	 dTmwlA6Zq+rJXcIEdYfiiyFgYbptMF6A4afUKR0MD4bQ+4D75OBe3tr+JysCcx5Cwpcah
-	 t/aJeogzC1KSo///csl/YoWeRomjMhbKeo1S6Xl0/W+BGm6YHqMbrt2d5UGtNytkijw==
+	t=1795037466;
+	b=pQKvXSUV83iMe8P/ENdcCcW5jCCEcR6l+218LW3wU2OqeisYT4WJclJrsRni8a+bQgse
+	 6uEhN+9Jk762ij7GZF0lSy0unRHIQ/plpgvLV3OUc5d1cWEKQMY6YO+ZtbN2IQDyYscsr
+	 8xfK68EyRrkucXv/H+6Bno16HlypdndXqEMXy8hJTvSmiFrEjjJ492AVXOq8GLAu8E/vi
+	 m2BveFN5NpcL5VtkK8biKge9tBgiOP3n0LnEbXptsWFDNyRcLS1L4yj0ilQgI4isg3Ybf
+	 ZMV9ucYpV8BjMAdhzkGU/s5HqZ3WwFYKE3m9VVGOP6sIL9PhRhD8bkfIfrEyLzrfDRQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037463;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037466;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=xzaL7i9nL/ctIndmjpvmHHO+aJavcjSdsEtuQKceFWs=;
-	b=3xBMt9fGvP9dzGWfyi6OUOeRQXzrYBpf3C/LdRrvBrKa2rc6tVNuy79qzIthiYKPUoHO
-	 g4h32HKQwvIWFTpWReVequIXOunut5Ac/FenDPEJj86K+y/u3l/2EI5/gIWoOvCDySdXf
-	 6BpcIze328cVaHfyGFSkxZqYO6z9apSv5C7zyBu302q7pyrHvbeCAOi91EFOaURgvYkbn
-	 l/hK73e4Eatn5K4mIJuvMn6muQRgHDRUvgaIUOFN3LDVUXDw95GQPARjZffRxbMISaPeZ
-	 xfMdsTyMIO7bA4A+/YUUtNLn3ileK2hfxmUr7jRsoPahRgcEFF79vbcx3orGUj71Hjw==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=NpH+VMmTl6GtShOMAl9CF0f1tuUxYEAYuFptRMSF8nk=;
+	b=v0tm6W0byL/BO2wDNKEVivC30cwfgwOFBzkYAXVoBXUmIdX1eW1xJ12w6NBHrGK+qBCJ
+	 R9uAMf4uuoY4UWg3gj1Qulcav6d9kV0iXOunrkwgQLPNICoq5a+iBZoRGxTgZboBPTonD
+	 EMM7+W1H1GzzEYjSVEorL1MJvnkRNrwvIKZ/XhDp6aSy6mwKGOkG/ez7noiDfDGqXU4RL
+	 wgWe3IBmC1CN2/5u62SSIp83Bzi9g3m9s+F/fTduvyDSsk0VUlD3YPVWNVyZmWxshBZ9Y
+	 jjZ95guoj8qrzcyV2Quv6J0+O1HUGsHTk6/350q/bJCkHZnFhJUghJG1sf9dTUEwq5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZbSn6MQu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oNAB1X6D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F1B606A320;
-	Wed, 18 Nov 2026 21:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F8A606A31C;
+	Wed, 18 Nov 2026 21:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZbSn6MQu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F461F000C4;
-	Wed, 18 Nov 2026 21:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oNAB1X6D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD22A1F000C4;
+	Wed, 18 Nov 2026 21:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037463;
-	bh=xzaL7i9nL/ctIndmjpvmHHO+aJavcjSdsEtuQKceFWs=;
+	s=korg; t=1795037466;
+	bh=NpH+VMmTl6GtShOMAl9CF0f1tuUxYEAYuFptRMSF8nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZbSn6MQu/o4GCn7fI/rJPB5RKmVG80NMqlFOTvxVMSad71t9vTvQJaYdsG5rWO+xW
-	 Ym4P8EA1xE0+yXdfLgSxxS2CIph6elIAxM0FS2lYLizMDhFvEZx27IgWysRzhr3bMx
-	 opUNNAKGx1EaJDiohQRoOo93qv2BfA0jv9lhrJvA=
+	b=oNAB1X6Dy6tz+T+JczhRyK/CSBSaXhU1djhdzyWcZB+SoWoL3edVDnyr+P6Y0t1zr
+	 Sbcgs1W5VXQasEURjcm0YQxzydiKX7bvmB1jbKkXYG23Lrzc+O3cYp05sf/KFX0Taq
+	 UHo5XVddRJ3mZZiGDOIbow2B5kbttLjwzBxrikt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
-	Philipp Stanner <phasta@kernel.org>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	stable@kernel.org,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1407/3318] drm/drm_crtc: ensure dma_fence_ops remain valid during device unbind
-Date: Wed, 18 Nov 2026 15:33:49 +0100
-Message-ID: <20261118150402.848033330@linuxfoundation.org>
+Subject: [PATCH 6.6 1381/3318] media: require two-byte Cypress type 04 records
+Date: Wed, 18 Nov 2026 15:33:23 +0100
+Message-ID: <20261118150401.965643987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,106 +63,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: André Draszik <andre.draszik@linaro.org>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 3be436cbd3d265fe4fcfbb5b650edad7b2108443 ]
+[ Upstream commit e22872703386c3885d8c6bd595124587bc4e5081 ]
 
-In [1], sashiko reported the following issue:
+Both Cypress Intel HEX parsers read two address bytes from type 04
+records. Generic record framing permits any record length, so a short
+record can make the parser consume the checksum or bytes beyond the
+firmware record. A longer record also violates the Intel HEX type 04
+layout.
 
-=== snip ===
-Looking at how these fences are managed, drm_crtc_create_fence()
-creates a dma_fence without taking a reference to the drm_device or
-drm_crtc. Because the sync_file framework exposes this fence to
-userspace, the fence can outlive the CRTC.
+Require the type 04 payload length to be exactly two bytes in both
+implementations.
 
-The dma_fence contract requires that data accessed by dma_fence_ops
-(like get_driver_name) must remain valid for an RCU grace period after
-the fence is signaled. However, drm_crtc_cleanup() and the subsequent
-freeing of the device do not wait for an RCU grace period via
-synchronize_rcu().
-
-If userspace calls ioctl(SYNC_IOC_FILE_INFO) concurrently with a device
-hot-unplug:
-
-CPU1 (Userspace)
-sync_file_get_name()
-  ops = rcu_dereference(fence->ops);
-  if (!dma_fence_test_signaled_flag())
-    // Preempted or delayed here
-
-CPU2 (Driver Teardown)
-Signals the fence (setting fence->ops = NULL)
-Destroys and frees the CRTC without waiting for an RCU grace period
-
-CPU1 (Resumes)
-  ops->get_driver_name(fence) -> drm_crtc_fence_get_driver_name()
-  crtc = fence_to_crtc(fence); // Casts to the freed CRTC
-  return crtc->dev->driver->name; // Use-after-free
-
-...
-
-Does the CRTC or DRM device need to be kept alive for the RCU grace
-period, or should the fence hold a proper reference to prevent the
-use-after-free when get_driver_name() and get_timeline_name() access
-the freed CRTC structure?
-=== snap ===
-
-I believe this to be a correct observation and this patch implements
-the suggestion of waiting for an RCU grace period before proceeding
-with destruction of the drm_crtc, so that get_driver_name() and
-get_timeline_name() can still work.
-
-Link: https://sashiko.dev/#/patchset/20260618-linux-drm_crtc_fix2-v1-1-c03e77b36f34@linaro.org?part=1
-Fixes: 6d6003c4b613 ("drm/fence: add fence timeline to drm_crtc")
-Cc: stable@vger.kernel.org
-Signed-off-by: André Draszik <andre.draszik@linaro.org>
-Reviewed-by: Philipp Stanner <phasta@kernel.org>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260721-linux-drm_crtc_fix2-v3-1-afa8c71506e6@linaro.org
-Signed-off-by: Christian König <christian.koenig@amd.com>
+Fixes: 79a63c60a6a2 ("[media] media: move dvb-usb-v2/cypress_firmware.c to media/common")
+Fixes: 776338e121b9 ("[PATCH] dvb: Add generalized dvb-usb driver")
+Cc: stable@kernel.org
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_crtc.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/media/common/cypress_firmware.c      | 2 ++
+ drivers/media/usb/dvb-usb/dvb-usb-firmware.c | 2 ++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_crtc.c b/drivers/gpu/drm/drm_crtc.c
-index 65f9f66933bba..6b210bfd6ac0d 100644
---- a/drivers/gpu/drm/drm_crtc.c
-+++ b/drivers/gpu/drm/drm_crtc.c
-@@ -489,14 +489,23 @@ EXPORT_SYMBOL(__drmm_crtc_alloc_with_planes);
-  * drm_crtc_cleanup - Clean up the core crtc usage
-  * @crtc: CRTC to cleanup
-  *
-- * This function cleans up @crtc and removes it from the DRM mode setting
-- * core. Note that the function does *not* free the crtc structure itself,
-- * this is the responsibility of the caller.
-+ * This function cleans up @crtc and removes it from the DRM mode setting core,
-+ * after first waiting an RCU grace period to ensure @crtc->dev can safely be
-+ * dereferenced by our dma_fence_ops.
-+ *
-+ * Note that the function does *not* free the crtc structure itself, this is the
-+ * responsibility of the caller.
-  */
- void drm_crtc_cleanup(struct drm_crtc *crtc)
- {
- 	struct drm_device *dev = crtc->dev;
+diff --git a/drivers/media/common/cypress_firmware.c b/drivers/media/common/cypress_firmware.c
+index cdc7050ed3ac8..3468eff508b02 100644
+--- a/drivers/media/common/cypress_firmware.c
++++ b/drivers/media/common/cypress_firmware.c
+@@ -59,6 +59,8 @@ static int cypress_get_hexline(const struct firmware *fw,
+ 	if (hx->type == 0x04) {
+ 		/* b[4] and b[5] are the Extended linear address record data
+ 		 * field */
++		if (hx->len != 2)
++			return -EINVAL;
+ 		hx->addr |= (b[4] << 24) | (b[5] << 16);
+ 	}
  
-+	/* Ensure our dma_fence_ops remain valid for an RCU grace period after
-+	 * the fence is signaled. This is necessary because our dma_fence_ops
-+	 * dereference crtc->dev.
-+	 */
-+	synchronize_rcu();
-+
- 	/* Note that the crtc_list is considered to be static; should we
- 	 * remove the drm_crtc at runtime we would have to decrement all
- 	 * the indices on the drm_crtc after us in the crtc_list.
+diff --git a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
+index 0fb3fa6100e4a..675d9d1d4f472 100644
+--- a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
++++ b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
+@@ -141,6 +141,8 @@ int dvb_usb_get_hexline(const struct firmware *fw, struct hexline *hx,
+ 
+ 	if (hx->type == 0x04) {
+ 		/* b[4] and b[5] are the Extended linear address record data field */
++		if (hx->len != 2)
++			return -EINVAL;
+ 		hx->addr |= (b[4] << 24) | (b[5] << 16);
+ /*		hx->len -= 2;
+ 		data_offs += 2; */
 -- 
 2.53.0
 
