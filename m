@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034838;
-	b=iNRLlPOTQMqPuRuncyXNq+FwjD7Gdc/9mrBppLSd1X0PzEWAAtpjSwn94kqOaQAQ4uQk
-	 4RBGbzoufYLvnGPE1yOQ76VVQyPZLrRlCn37mt5Xpys1DgapBmoeQuqNQEiRKUy//8dOu
-	 O1pqWSSCzghiQa4doJM09vizRmSHfs+hvIDNJkYmKgcLtZYSrnHyyUosO5tA1hCIBrf1a
-	 /pd7wNEO+xzw/Jx1O6cdQ+WINYc4bBM8UZnLVr/zl2WPrYmp+xwn3NQvRyAYBXHt/AvGo
-	 I9txf3NdrDxglfHiKEmQ3vYzkqJ9wipTfnfvZnHcPfjXAYQbqDyCLXiCoyEDbSlB3aQ==
+	t=1795034841;
+	b=G6sK+4kME9f5ESpIb4Ju916KnMPj27Q5ZZ8QPkd9wFGr58EEwE6Vr0YK3YaaSnimneAc
+	 UGdKEtWnAlbt5FGaP4BoJUayV1s2hiaFUIVt4oYxH5srPMWUfYGKwk600UaX/VJm2TLoy
+	 KYybgR877q83CnAATwrAk/kWJN+mZG0BmUfNRBojKItb+vhh4wu1YjCj/z8LrgBY5yq43
+	 7JHWgaA/pw1h9SL7oXBf7pwxReFMBQGrU7GrlDglDilyxG0YrtkwBbHUZqHBXvaNgh8IG
+	 axilzBIfKWAOW6DpIg67+8LewLWRlGVuxhMn+WyvUPdA0Ol+2IivwnvHPPkQsi0ULHg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034838;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034841;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jnmaj7aoLc36ijG4OQ58wfCrlQjUgszUoIPBdfV1aww=;
-	b=Xy7/Hk32xWcLST3Trd8NQue6WLlPYIiaWyigA+TOWaVrCs9pKhw3fxZBEbPvC0Lg9PtB
-	 xumfjYAK2M10K1PhfNoLUihFsf4fAEL8wcFGCYDjcf4OBHms4giUIqgsyZIwEzLfB6/C+
-	 Y9JlJzE9dhLLJd0z0LoIxGTlOlSGU0Ptwci+Ch7ayNQcVZX9kqBIZAJX8KZb5tug2wb22
-	 LjxISbhUZtuRON/1XSchX2DUHT6QrbNuAKuWwZz/Ug8yLaHbevY+XnCV4pvz3pMz0YENt
-	 58xFVcSSPSf+IpLbD9BJj2BH0xp0mn8+KCpYxjuDggVm7h1sUqA0AQsN+dpkpqYhpzA==
+	bh=6ozOOXy5D2hiFSq+umZDK7ixAmOj73NqCdFWIv0ivMg=;
+	b=cblnpe7MPEF/SgKNW3TaRRHjknmBJmvQkGLNAdkoj7LUJe4JaE7Tt7nvnpDNqU04+W1v
+	 9sGvtUHDK6sQB0QIOiGRbvK6eLDP2Udcb3RHkkKtsDtM4zK93IKLjbHpWr9Svln7LTveJ
+	 gGAaeST3FFBnVau5evR078ETG3iFtp7bTI02YHTRcWsxO33shGII31jMESSWmrmIfffvG
+	 m6pqybD/7XthtkdyaWGs4gKOgzJSPOnQpWYn9wUMqkYoYxo7EsporV7mhleOneFopaz5t
+	 4vDDhmEos7Iai9ys5pfiu5pkcNWxJQ2elSCmB+G+fG4ZsKM/A/poPODc6qpIcKGUySA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="KTSsA/oj";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YCcyCRcf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1AC606A31C;
-	Wed, 18 Nov 2026 20:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2223B606A325;
+	Wed, 18 Nov 2026 20:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KTSsA/oj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9000E1F000C4;
-	Wed, 18 Nov 2026 20:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YCcyCRcf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7112A1F000C4;
+	Wed, 18 Nov 2026 20:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034838;
-	bh=jnmaj7aoLc36ijG4OQ58wfCrlQjUgszUoIPBdfV1aww=;
+	s=korg; t=1795034841;
+	bh=6ozOOXy5D2hiFSq+umZDK7ixAmOj73NqCdFWIv0ivMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KTSsA/ojV40VfgfVX6a2mYfkznQ618qBIpxIChjOpivyLkCklLH+zpYcV+QKlIbqB
-	 AfDfeEYyRCDBaAY3j3YDrGc590KvVNbOgKQg3eYgf55ptoaBaEWagF0USJE8aN2qQJ
-	 0GveSbgD+cmI8aBVc9n6uQHGmS9KY2gqFXy859as=
+	b=YCcyCRcfBCM6I78uayjWsjneaxuYCofJ0tiKgOdi/zN1eFLgr+6q+NViKquEHq3Wm
+	 bY3lRCUCs5eSTZlMbzpVeEUlhD3lFRk1DK2TaEvp5Qg+2jWo0mw5zN0rI2pI6iOoBe
+	 Qjm+EAqVqq9MZDwLECnsxhK9eH4wWwXmKmXWCc4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0512/3318] KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded
-Date: Wed, 18 Nov 2026 15:18:54 +0100
-Message-ID: <20261118150332.483497157@linuxfoundation.org>
+Subject: [PATCH 6.6 0486/3318] xfs: dont cross reference rmapbt with bitmaps if theyre incomplete
+Date: Wed, 18 Nov 2026 15:18:28 +0100
+Message-ID: <20261118150331.557897567@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,44 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit e27fc915c8f575ab5630e27d97465c2077d4b9d1 ]
+[ Upstream commit d7b92cbe566f6fe54368f62e4b515d9f80c43a18 ]
 
-Leave control.erap_ctl and control.clean as-is in the VMCS if VMRUN fails,
-because as per AMD:
+LOLLM points out that runtime errors (e.g. ENOMEM) when we're trying to
+compute space usag bitmaps are silently dropped by the rmapbt scrubber.
+We ought to flag that as an incomplete scrub instead of reporting
+cross-referencing errors based on faulty data.
 
-  there's no explicit architectural guarantee about the behavior in the
-  presence of VMRUN failures. So the best thing to do would be to assume
-  that if VMRUN fails, the actions requested in the control fields may not
-  have been performed.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20260904170642.3291466-3-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ sashal: Dropped the ERAP_CONTROL_CLEAR_RAP/erap_ctl masking since ERAPS isn't supported here, and kept the existing exit_code != SVM_EXIT_ERR check instead of svm_is_vmrun_failure(). ]
+Cc: stable@vger.kernel.org # v6.4
+Fixes: fed050f3452da0 ("xfs: cross-reference rmap records with ag btrees")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/svm/svm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/rmap.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 43da35eafaa77..ac50f6c4c8760 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -4369,9 +4369,9 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
- 	if (svm->vmcb->control.exit_code != SVM_EXIT_ERR) {
- 		this_cpu_ptr(&svm_data)->flush_all_asids = false;
- 		svm->vmcb->control.tlb_ctl = TLB_CONTROL_DO_NOTHING;
--	}
- 
--	vmcb_mark_all_clean(svm->vmcb);
-+		vmcb_mark_all_clean(svm->vmcb);
+diff --git a/fs/xfs/scrub/rmap.c b/fs/xfs/scrub/rmap.c
+index d29a26ecddd60..19c21aa7296b6 100644
+--- a/fs/xfs/scrub/rmap.c
++++ b/fs/xfs/scrub/rmap.c
+@@ -484,11 +484,18 @@ xchk_rmapbt_walk_ag_metadata(
+ 	 * If there's an error, set XFAIL and disable the bitmap
+ 	 * cross-referencing checks, but proceed with the scrub anyway.
+ 	 */
+-	if (error)
+-		xchk_btree_xref_process_error(sc, sc->sa.rmap_cur,
+-				sc->sa.rmap_cur->bc_nlevels - 1, &error);
+-	else
+-		cr->bitmaps_complete = true;
++	if (error) {
++		if (!xchk_btree_xref_process_error(sc, sc->sa.rmap_cur,
++				sc->sa.rmap_cur->bc_nlevels - 1, &error)) {
++			/* only set incomplete if we didn't set xfail */
++			if (error)
++				xchk_set_incomplete(sc);
++		}
++
++		return 0;
 +	}
++
++	cr->bitmaps_complete = true;
+ 	return 0;
+ }
  
- 	/* if exit due to PF check for async PF */
- 	if (svm->vmcb->control.exit_code == SVM_EXIT_EXCP_BASE + PF_VECTOR)
+@@ -558,7 +565,8 @@ xchk_rmapbt(
+ 	if (error)
+ 		goto out;
+ 
+-	xchk_rmapbt_check_bitmaps(sc, cr);
++	if (cr->bitmaps_complete)
++		xchk_rmapbt_check_bitmaps(sc, cr);
+ 
+ out:
+ 	xagb_bitmap_destroy(&cr->refcbt_owned);
 -- 
 2.53.0
 
