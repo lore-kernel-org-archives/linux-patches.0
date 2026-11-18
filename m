@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018511;
-	b=WI+JWWqaqpaHrVvHzlB6xscdDcpw5JcIhDT+oYahO407YE6fMAlVQMEMGd8Bh35V7/p4
-	 QVQtKfHwSfQnmqIiKfmUhmTfzl9jllPzHUtVahaoTknYWIq37AUY0S5kmdfTrErSUOtIk
-	 WCd0fAPbad9sXzcN4aCLBUVedjAtwJr6paRS1vSp0XpDmbMsZAbr7hI1Clp+TLy5P44JO
-	 1DUtolDZ7x3G7sdErJmbkAQcwZq8L6IY7bdWhPwiGEcxFGlknkDQvPRA5smQNZn1J+egE
-	 dSGQe/HevaQ05aqMn7WfbsfHHQdjyNzLryELHtLYvXTwnxWD6wJ5eCaQKZfc+4MUZHA==
+	t=1795018514;
+	b=BAoz3yfSMJL17sZanojlw52zsCQ/GM2BhsbCSltrXD5hAu6eja2MWei+ZkqVgoc3SNno
+	 ZrVS+6X8ZSI1lpv2xiEEV1qCQ1xdgNO2SMmqi+sS/L0otX2iGvDOQVZTV0Rqn73bPIrxh
+	 fyzZQ8tWLmSk19fw+oHQCVUwZUyGvxXDCNN+iYanzwjJQzSLLoIwmRKuHjTdlBpaPrUOQ
+	 KV0MYioEeLq3E8gdx5yG1XkMVhzjTYNK8df6PSl7aGT6ShGYJOxPtCb0NWaTSFoI3mYXs
+	 l2ozwToWzNWUD5i+ua/7xZm3tz9Rlbi20XL7RmKO1pwrlBPVkZKWN1n0HK0Le5z/b+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018511;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018514;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=et/yqhW3yAI3wSxNmS6avQAPZ0K6KQcIS271sGMm3nQ=;
-	b=cQeCrWNgmExRM+pFVCVaTawDVAtVRi7fS834X8+QlV/A2NAe3VS7JD89ACedg0DyAxNf
-	 ELHi621xpANMl8y/L4e9atlN7ELUOA/mo+wurWRFwvIi8+fPLG0aNCTEEzbkcMGLD3jIU
-	 mvhcOpBogtwJdJdxxXAofI7mbmlV3Ttju+KpKk3/Q724JfZP/PqNAHHLW4QC8uk81adt9
-	 3rY5vZVGaKY8ALcwSQO3HYuMsjDdtlt4nxswfeKgzE4GAGEIAF2IyAWzMR+tdqKICYKdF
-	 +/EmqhmSyyzvbaWV4cQ6I7a9d4rp6+07vxFZF1u3Z8gMGg+tjCAwvLYkIq/7RCboY8Q==
+	bh=0kH2NM0Ejm1J24NYmVV125Ytx0CJKBzJVCWZt3j+lws=;
+	b=uCFO4dYH6zTZkKVJb4LjMS1QpyqG/y6bOXTk2Mn1LimvPdJvWkBgxZcCQJVvd30dVZo7
+	 +GQTPUJbaNxmJk7qRvkMBfEspD0a4eVxK3aFu7QMqJnrIG5Xkq53Y7dfOthbt9gM369nO
+	 i4zchIavP09jCH5RgcWpmDU7B+5xvw7xjSUy/YFwSfh89DuGQvGn5dV9lS5IugkspCpOR
+	 hlZOii6nKg8g8/OV39MUjP4h0YG5C0UGmx+Ftptrsg5k11ruvrG2Kcp1AofQ5QIwMh/C+
+	 Qp0Qgt9E/P5F5HsxJ7wHExwcLdK13Tlb5Fns0IxzgcKVmuN4vmTYHkwVAqbyAHI2/6Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pp1VbVbg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDy+4MTK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D99A606A330;
-	Wed, 18 Nov 2026 16:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F17606A339;
+	Wed, 18 Nov 2026 16:15:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pp1VbVbg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956FB1F000C5;
-	Wed, 18 Nov 2026 16:15:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDy+4MTK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752341F000C4;
+	Wed, 18 Nov 2026 16:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018511;
-	bh=et/yqhW3yAI3wSxNmS6avQAPZ0K6KQcIS271sGMm3nQ=;
+	s=korg; t=1795018514;
+	bh=0kH2NM0Ejm1J24NYmVV125Ytx0CJKBzJVCWZt3j+lws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pp1VbVbgysIV7DTQ7o1xJaBs6p6klGogQz7KCbnnFYo3U99P1UKZKew+Nz8WmdsYl
-	 zosbPZYrGLLLsudNb41wapdTFqraQjutzp6qUZIr+BXd9lIgQK1cv/dQSL/phPlIVp
-	 dJqURSBs3DCbymIF8b0Ji8cd8evxh/MluJLnc/lc=
+	b=PDy+4MTKmEqTd0/ypwmAkEEWRN1AyJcW62eYcZrGWUXM2wuXGn/BqxZYQSrYRV2eV
+	 IbKjfzBV7IOklhCbQ42oDdam2ujc//794iEmvGk46Gv2xT27JguJ+elXzwG0nJ1Z0T
+	 +onczgLX3GkS48dUA7AE/vrF1Sgmci/Mq1Jv7ukI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Igor Paunovic <royalnet026@gmail.com>
-Subject: [PATCH 7.3 1216/2651] phy: rockchip: usbdp: Handle rk_udphy_reset_deassert errors
-Date: Wed, 18 Nov 2026 15:40:56 +0100
-Message-ID: <20261118150331.777457664@linuxfoundation.org>
+	Richard Cheng <icheng@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 1260/2651] perf/cxl: Clear stale overflow status before using a counter
+Date: Wed, 18 Nov 2026 15:41:40 +0100
+Message-ID: <20261118150333.338705609@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,76 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 35101e2f49c04bf1cfc69b8a0d3f85c742369ccc ]
+[ Upstream commit 05d82cf377f706d0b566b572bc66e3a2057bd68e ]
 
-Handle rk_udphy_reset_deassert returning errors to avoid theoretical
-(Rockchip reset controller driver does not return errors) SError.
+cxl_pmu_event_stop() leaves the counter's bit set in the overflow status
+register and only cxl_pmu_irq() ever clears it, so a counter handed from
+one event to the next starts with the previous owner's overflow pending.
+The perf core stops and starts back to back with interrupts off, so an
+interrupt latched over the handover lands on the new event. prev_count is 0
+by then, so the read path adds a full period: 2^counter_width phantom
+counts.
 
-Fixes: 2f70bbddeb45 ("phy: rockchip: add usbdp combo phy driver")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/message/20260626211151.2332F1F000E9%40smtp.kernel.org
-Tested-by: Igor Paunovic <royalnet026@gmail.com> # Orange Pi 5 Plus
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260915-rockchip-usbdp-cleanup-part2-v15-10-8d507cb1174f@collabora.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Clear the bit in cxl_pmu_event_start(), before the config write arms
+Interrupt on Overflow. Clear the whole register at probe too, for counters
+no event ever owns - the driver never touched it, so firmware or a previous
+kernel can leave a bit set there.
+
+Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
+Reported-by: Richard Cheng <icheng@nvidia.com>
+Closes: https://lore.kernel.org/linux-cxl/anAVpO--i5heVfz9@MWDK4CY14F/
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-usbdp.c | 25 +++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/perf/cxl_pmu.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-usbdp.c b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-index b4739ab6a015f..80a2ea46c650a 100644
---- a/drivers/phy/rockchip/phy-rockchip-usbdp.c
-+++ b/drivers/phy/rockchip/phy-rockchip-usbdp.c
-@@ -770,8 +770,12 @@ static int rk_udphy_init(struct rk_udphy *udphy)
- 	/* Step 1: power on pma and deassert apb rstn */
- 	rk_udphy_grfreg_write(udphy->udphygrf, &cfg->grfcfg.low_pwrn, true);
- 
--	rk_udphy_reset_deassert(udphy, "pma_apb");
--	rk_udphy_reset_deassert(udphy, "pcs_apb");
-+	ret = rk_udphy_reset_deassert(udphy, "pma_apb");
-+	if (ret)
-+		goto assert_resets;
-+	ret = rk_udphy_reset_deassert(udphy, "pcs_apb");
-+	if (ret)
-+		goto assert_resets;
- 
- 	/* Step 2: set init sequence and phy refclk */
- 	ret = regmap_multi_reg_write(udphy->pma_regmap, rk_udphy_init_sequence,
-@@ -797,8 +801,11 @@ static int rk_udphy_init(struct rk_udphy *udphy)
- 			   FIELD_PREP(CMN_DP_LANE_EN_ALL, 0));
- 
- 	/* Step 4: deassert init rstn and wait for 200ns from datasheet */
--	if (udphy->mode & UDPHY_MODE_USB)
--		rk_udphy_reset_deassert(udphy, "init");
-+	if (udphy->mode & UDPHY_MODE_USB) {
-+		ret = rk_udphy_reset_deassert(udphy, "init");
-+		if (ret)
-+			goto assert_resets;
-+	}
- 
- 	if (udphy->mode & UDPHY_MODE_DP) {
- 		regmap_update_bits(udphy->pma_regmap, CMN_DP_RSTN_OFFSET,
-@@ -810,8 +817,14 @@ static int rk_udphy_init(struct rk_udphy *udphy)
- 
- 	/*  Step 5: deassert cmn/lane rstn */
- 	if (udphy->mode & UDPHY_MODE_USB) {
--		rk_udphy_reset_deassert(udphy, "cmn");
--		rk_udphy_reset_deassert(udphy, "lane");
-+		ret = rk_udphy_reset_deassert(udphy, "cmn");
-+		if (ret)
-+			goto assert_resets;
+diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
+index c1c1f71c8d0a8..b22ef68b4a75a 100644
+--- a/drivers/perf/cxl_pmu.c
++++ b/drivers/perf/cxl_pmu.c
+@@ -795,6 +795,15 @@ static void cxl_pmu_event_start(struct perf_event *event, int flags)
+ 	 */
+ 	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_THRESHOLD_MSK,
+ 			  cxl_pmu_config1_get_threshold(event));
 +
-+		ret = rk_udphy_reset_deassert(udphy, "lane");
-+		if (ret)
-+			goto assert_resets;
++	/*
++	 * Drop any overflow the previous owner of this counter left pending;
++	 * cxl_pmu_event_stop() does not. Otherwise an interrupt latched over
++	 * the handover gets charged to this event. Do it before arming Interrupt
++	 * on Overflow below, and note RW1C leaves the other counters alone.
++	 */
++	writeq(BIT_ULL(hwc->idx), base + CXL_PMU_OVERFLOW_REG);
 +
- 	}
+ 	writeq(cfg, base + CXL_PMU_COUNTER_CFG_REG(hwc->idx));
  
- 	/*  Step 6: wait for lock done of pll */
+ 	local64_set(&hwc->prev_count, 0);
+@@ -1026,6 +1035,14 @@ static int cxl_pmu_probe(struct device *dev)
+ 	if (!irq_name)
+ 		return -ENOMEM;
+ 
++	/*
++	 * Same for counters no event owns yet: clear whatever firmware or a
++	 * previous kernel left set before the handler goes live. Bits above the
++	 * implemented counters are reserved, so only write those.
++	 */
++	writeq(GENMASK_ULL(info->num_counters - 1, 0),
++	       info->base + CXL_PMU_OVERFLOW_REG);
++
+ 	/*
+ 	 * The handler must run on info->on_cpu, so the interrupt cannot be
+ 	 * shared - IRQF_NOBALANCING is only honoured for the first action on a
 -- 
 2.53.0
 
