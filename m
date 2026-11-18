@@ -1,54 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031753;
-	b=uaKz3nhKJVHZeoZVL/WxlGVaR/1/1d2owxx1gHVmPM3zWVZDcQLFbVKrxW4Lvo/8bvdi
-	 fhaJFc7dJB1b6Y6arPuLviRuFyvnt1hdtiHLkPTI4wy06uvRU09noH6a8qvRh33K/lRCd
-	 +KpN4v/qRRVMb5A8tXNbKKE+BAorhw0JXS7wH3Z4D7lX9qFsa8DgdvWeSlgfB+kL0QX5a
-	 pGVFnuFtrbk538kF8aJGh18gHaWz6GH498YXtNHPVSjeUv7bb3TRs51oy7JWxSFFHKx0z
-	 x8jAUDzwWmQnfmELbiiCE2mEcNEFc/fb+TlIrNBu16U7o/m/8O+H51A3zCJd17o7EiQ==
+	t=1795031755;
+	b=AA/bHnSM9KRAIuMampNjnOXhnhPduGvncnW+Jkv1ymmSL41ao0bk2XZ3nA0K5J+vvUfG
+	 rgJVdfjO6l9T9afuve1qSzAJ9hBQoCp6iszwM4gCeucnDcQfG/9XCyXWIulOFFGbWN1IP
+	 NQl3UcW3Qt+Cyu6cv+qzgkuOGOee7XWHZjXYoRRhLwn8MC/rMdcCCrvDCse/wj6ADRzFy
+	 SDrv1tuEpT2XbTgPf7JRKcnyNmqPXuUfKKwET0rhRt56cOK9OXQ4FLYCYMY/JIe6uiGdZ
+	 TIFo204p+vOHUVdWkrpzFtcjC9RJr6nqxQvnzUoLXGJrFIE7m1+oKX7pIhN3OwjmIuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x1T1Q7fzsLc6YGy+VlX7ncATRJG9rkTc9tyYyeO2NBQ=;
-	b=ABaJtTBuw3SfBYpJQ97BOhQrxATfEaNP6yNdTxb0xo5Sd7pmMvF+veOdhPstwa+OK1Ki
-	 k1oybum8kbMz7G7KMyrh4P2Ns4QIpXuogpy5Lf3I+g9I5aCiSeWIsfoEb2/Ze5yBCKAaU
-	 kvH4Et5YZ6cknm04a7xSjlQpJAyj4wD7jTMruNJrkhld+6AFNvK35oOa6/wsxwX6ivIEG
-	 DeAdje8plDieBFVT1+Ut0c98RsQe+g0iy8FgZXxb1T/s5UxgWdysYBMZHz0kSuFmAKt66
-	 51rUBf+hvK4wkWWaj7Hdz2imiVwZw4/M7ISfiOO4t8YvlShwqCop3Z9Dm5KndUgZF8w==
+	bh=buDzJKTI4xXVAAm8eOfQFCDON5TyisiroDbWm5hVNaE=;
+	b=lUIA1fCRin1gTZFottyDGK0O5Nx7UzD5YPAi7x7btjxctA9K3OBmautVhMzFAG1MXhrg
+	 ne8/YX2CkWEx2HkDrnEiCBjY4+AWAOeCJhe6NG25WdROiWSjHydlv77e/JkbhEFXdlCbc
+	 w2+LCoUs3+TBRDQlXoQFpHlRXHi5SGvR7U3b13YPUIZVFdwBHdln02Y30y3PSPc8RFo6d
+	 ZxKySg9H714X0JsAlyDgqLZLchkwKWEqyUs1pfNw7/9fejv4kblKh717GXLWHn/QmWLZy
+	 cIX2guV3c9cW8u7/LDapW6vTupgCEkHv5Tq+DDfslrVtNpjrH8xkfLy9EmFjqwY3tRg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLqrDZTU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fAvSl4qt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52164606A31C;
-	Wed, 18 Nov 2026 19:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FB2606A320;
+	Wed, 18 Nov 2026 19:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OLqrDZTU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2601D1F000C4;
-	Wed, 18 Nov 2026 19:55:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fAvSl4qt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA591F000C4;
+	Wed, 18 Nov 2026 19:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031752;
-	bh=x1T1Q7fzsLc6YGy+VlX7ncATRJG9rkTc9tyYyeO2NBQ=;
+	s=korg; t=1795031755;
+	bh=buDzJKTI4xXVAAm8eOfQFCDON5TyisiroDbWm5hVNaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OLqrDZTUFMLPkLYiwXJKeMauxf4bb0hkGmCxl/pvgouKr9vcBBiKU4IvQLzEAaTlV
-	 NTjB1qtsVq5iOKvksaAXpuCSw4/+hKDP5fs81TbgkmuAF2M+SVqU2q+kx+X/cpvciw
-	 U36+lkhbzMUwcg3TmLhR1T1o4ASZrPzSt4hu5spE=
+	b=fAvSl4qt6MslsFrebY7AdoI5RyX6+ewV3Sln3fD+qocAqP9gtBjArdRYsR4lJfjIj
+	 ZSET0pxxnJloGmbvS+erBVJTUJHcVF6RJT8NJcP70QC4kh2SFxeqbs+8WQtVcbMwKl
+	 qmXnCzJXBvwjIr/rI7PHiuoJz6wHNj0FXZZ3M93M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <zhilinz@nebusec.ai>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	VEGA <vega@nebusec.ai>,
-	Kyungsik Lee <kyungsik.lee@lge.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Heming Zhao <heming.zhao@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1169/1756] lib: validate in-memory LZ4 chunk length
-Date: Wed, 18 Nov 2026 15:54:56 +0100
-Message-ID: <20261118150056.507505935@linuxfoundation.org>
+Subject: [PATCH 6.12 1170/1756] ocfs2: retain all security xattrs during inode creation
+Date: Wed, 18 Nov 2026 15:54:57 +0100
+Message-ID: <20261118150056.542821291@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,49 +75,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 138a84817df01eda67bb23032ab49c23fe2ffc16 ]
+[ Upstream commit d637475617d8468c2740a3436428681bcc8d3572 ]
 
-We found and validated an issue in lib/decompress_unlz4.c.  The bug is
-reachable by a root user through kexec_file_load() with a crafted external
-initrd.
+When creating a new inode, ocfs2_init_security_get() stores the security
+xattr returned by the LSM framework in ocfs2_security_xattr_info so that
+it can be written later within the same transaction.  But
+ocfs2_initxattrs() only ever looks at the first element of the xattr
+array, and it keeps the name as a bare pointer into memory owned by the
+security layer instead of copying it.  The value, by contrast, is already
+duplicated with kmemdup().
 
-unlz4() reads the compressed chunk length from an in-memory initrd and
-passes it to LZ4_decompress_safe().  It only checks the chunk length
-against the allocation size when the input is filled by a callback.
+With stacked LSMs, security_inode_init_security() provides one xattr per
+LSM, so all labels but the first are silently dropped and never written to
+disk, leaving newly created files without the security xattrs the other
+LSMs rely on.
 
-Reject an in-memory chunk that extends past the remaining input before
-calling the LZ4 decoder.  This prevents malformed initrds from making
-the decoder read past the mapped archive.
+The borrowed name is not an outright bug with the LSMs in tree today:
+security_inode_init_security() frees only ->value once the callback
+returns, and documents ->name as the attribute name suffix, so the pointer
+stays valid for as long as ocfs2 uses it.  It is fragile though, as an LSM
+that allocates the name together with the value would turn it into a
+use-after-free, so the rework below copies the names as well.
 
-Link: https://lore.kernel.org/59c6555c27aa7ba18ee227f9f02c78d15a37605f.1789219453.git.zhilinz@nebusec.ai
-Fixes: e76e1fdfa8f8 ("lib: add support for LZ4-compressed kernel")
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Fix this by storing copies of all the security xattrs: allocate an array
+in ocfs2_initxattrs(), copy the names and values, account for all of them
+in the credit calculations, and write each one in
+ocfs2_init_security_set().
+
+While at it, switch the allocations from GFP_KERNEL to GFP_NOFS.  The
+callback runs in the inode creation path with the parent directory locked,
+and the security layer allocates the very same xattr array with GFP_NOFS,
+so direct reclaim must not be allowed to recurse into the filesystem from
+here.
+
+Link: https://lore.kernel.org/20260917014825.678947-1-joseph.qi@linux.alibaba.com
+Fixes: de3004c874e7 ("ocfs2: Switch to security_inode_init_security()")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: VEGA <vega@nebusec.ai>
-Assisted-by: LLM
-Cc: Kyungsik Lee <kyungsik.lee@lge.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_unlz4.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ocfs2/namei.c |   6 +--
+ fs/ocfs2/xattr.c | 133 +++++++++++++++++++++++++++++++++++++----------
+ fs/ocfs2/xattr.h |  12 +++--
+ 3 files changed, 116 insertions(+), 35 deletions(-)
 
-diff --git a/lib/decompress_unlz4.c b/lib/decompress_unlz4.c
-index c0dbb3cea915e..86e9aaec04f6d 100644
---- a/lib/decompress_unlz4.c
-+++ b/lib/decompress_unlz4.c
-@@ -139,6 +139,10 @@ STATIC inline int INIT unlz4(u8 *input, long in_len,
- 		if (!fill) {
- 			inp += 4;
- 			size -= 4;
-+			if (chunksize > size) {
-+				error("data corrupted");
-+				goto exit_2;
+diff --git a/fs/ocfs2/namei.c b/fs/ocfs2/namei.c
+index 5ce71207bc9dd..93c3fc67c54e4 100644
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -244,7 +244,6 @@ static int ocfs2_mknod(struct mnt_idmap *idmap,
+ 	int want_meta = 0;
+ 	int xattr_credits = 0;
+ 	struct ocfs2_security_xattr_info si = {
+-		.name = NULL,
+ 		.enable = 1,
+ 	};
+ 	int did_quota_inode = 0;
+@@ -471,7 +470,7 @@ static int ocfs2_mknod(struct mnt_idmap *idmap,
+ 
+ 	brelse(new_fe_bh);
+ 	brelse(parent_fe_bh);
+-	kfree(si.value);
++	ocfs2_free_security_xattrs(&si);
+ 
+ 	ocfs2_acl_init_release(&acl_state);
+ 
+@@ -1827,7 +1826,6 @@ static int ocfs2_symlink(struct mnt_idmap *idmap,
+ 	int want_clusters = 0;
+ 	int xattr_credits = 0;
+ 	struct ocfs2_security_xattr_info si = {
+-		.name = NULL,
+ 		.enable = 1,
+ 	};
+ 	int did_quota = 0, did_quota_inode = 0;
+@@ -2059,7 +2057,7 @@ static int ocfs2_symlink(struct mnt_idmap *idmap,
+ 
+ 	brelse(new_fe_bh);
+ 	brelse(parent_fe_bh);
+-	kfree(si.value);
++	ocfs2_free_security_xattrs(&si);
+ 	ocfs2_free_dir_lookup_result(&lookup);
+ 	if (inode_ac)
+ 		ocfs2_free_alloc_context(inode_ac);
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index f9f07d9115a66..ab083924322d6 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -618,10 +618,15 @@ int ocfs2_calc_security_init(struct inode *dir,
+ 			     int *xattr_credits,
+ 			     struct ocfs2_alloc_context **xattr_ac)
+ {
++	int i;
+ 	int ret = 0;
+ 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
+-	int s_size = ocfs2_xattr_entry_real_size(strlen(si->name),
+-						 si->value_len);
++	int s_size = 0;
++
++	for (i = 0; i < si->count; i++)
++		s_size += ocfs2_xattr_entry_real_size(
++				strlen(si->xattrs[i].name),
++				si->xattrs[i].value_len);
+ 
+ 	/*
+ 	 * The max space of security xattr taken inline is
+@@ -638,14 +643,27 @@ int ocfs2_calc_security_init(struct inode *dir,
+ 		*xattr_credits += OCFS2_XATTR_BLOCK_CREATE_CREDITS;
+ 	}
+ 
+-	/* reserve clusters for xattr value which will be set in B tree*/
+-	if (si->value_len > OCFS2_XATTR_INLINE_SIZE) {
+-		int new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
+-							    si->value_len);
++	/*
++	 * when blocksize = 512, the security xattrs may not fit in the
++	 * single block reserved above and a bucket has to be allocated
++	 * for them, so reserve the cluster it needs as well.
++	 */
++	if (dir->i_sb->s_blocksize == OCFS2_MIN_BLOCKSIZE &&
++	    s_size > OCFS2_XATTR_FREE_IN_BLOCK(dir)) {
++		*want_clusters += 1;
++		*xattr_credits += ocfs2_blocks_per_xattr_bucket(dir->i_sb);
++	}
+ 
+-		*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
+-							   new_clusters);
+-		*want_clusters += new_clusters;
++	/* reserve clusters for xattr value which will be set in B tree*/
++	for (i = 0; i < si->count; i++) {
++		if (si->xattrs[i].value_len > OCFS2_XATTR_INLINE_SIZE) {
++			int new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
++						si->xattrs[i].value_len);
++
++			*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
++								   new_clusters);
++			*want_clusters += new_clusters;
++		}
+ 	}
+ 	return ret;
+ }
+@@ -655,12 +673,16 @@ void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+ 			   int *want_clusters, int *xattr_credits,
+ 			   int *want_meta, struct ocfs2_acl_state *acl_state)
+ {
++	int i;
+ 	struct ocfs2_super *osb = OCFS2_SB(dir->i_sb);
+ 	int s_size = 0, a_size = 0, acl_len = 0, new_clusters;
+ 
+-	if (si->enable)
+-		s_size = ocfs2_xattr_entry_real_size(strlen(si->name),
+-						     si->value_len);
++	if (si->enable) {
++		for (i = 0; i < si->count; i++)
++			s_size += ocfs2_xattr_entry_real_size(
++					strlen(si->xattrs[i].name),
++					si->xattrs[i].value_len);
++	}
+ 
+ 	if (osb->s_mount_opt & OCFS2_MOUNT_POSIX_ACL) {
+ 		if (acl_state->default_acl && S_ISDIR(mode)) {
+@@ -707,12 +729,14 @@ void ocfs2_calc_xattr_init(struct inode *dir, umode_t mode,
+ 	 * reserve credits and clusters for xattrs which has large value
+ 	 * and have to be set outside
+ 	 */
+-	if (si->enable && si->value_len > OCFS2_XATTR_INLINE_SIZE) {
+-		new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
+-							si->value_len);
+-		*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
+-							   new_clusters);
+-		*want_clusters += new_clusters;
++	for (i = 0; si->enable && i < si->count; i++) {
++		if (si->xattrs[i].value_len > OCFS2_XATTR_INLINE_SIZE) {
++			new_clusters = ocfs2_clusters_for_bytes(dir->i_sb,
++						si->xattrs[i].value_len);
++			*xattr_credits += ocfs2_clusters_to_blocks(dir->i_sb,
++								   new_clusters);
++			*want_clusters += new_clusters;
++		}
+ 	}
+ 	if (osb->s_mount_opt & OCFS2_MOUNT_POSIX_ACL) {
+ 		if (acl_state->default_acl && S_ISDIR(mode)) {
+@@ -7730,17 +7754,46 @@ static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array
+ {
+ 	struct ocfs2_security_xattr_info *si = fs_info;
+ 	const struct xattr *xattr;
++	struct ocfs2_security_xattr *xattrs;
++	int count = 0, i;
+ 	int err = 0;
+ 
+ 	if (si) {
+-		si->value = kmemdup(xattr_array->value, xattr_array->value_len,
+-				    GFP_KERNEL);
+-		if (!si->value)
++		for (xattr = xattr_array; xattr->name != NULL; xattr++)
++			count++;
++
++		xattrs = kcalloc(count, sizeof(*xattrs), GFP_NOFS);
++		if (!xattrs)
+ 			return -ENOMEM;
+ 
+-		si->name = xattr_array->name;
+-		si->value_len = xattr_array->value_len;
++		for (i = 0; i < count; i++) {
++			xattrs[i].name = kstrdup(xattr_array[i].name, GFP_NOFS);
++			if (!xattrs[i].name) {
++				err = -ENOMEM;
++				goto out_err;
 +			}
- 		} else {
- 			if (chunksize > LZ4_compressBound(uncomp_chunksize)) {
- 				error("chunk length is longer than allocated");
++
++			xattrs[i].value = kmemdup(xattr_array[i].value,
++						  xattr_array[i].value_len,
++						  GFP_NOFS);
++			if (!xattrs[i].value) {
++				err = -ENOMEM;
++				goto out_err;
++			}
++			xattrs[i].value_len = xattr_array[i].value_len;
++		}
++
++		si->xattrs = xattrs;
++		si->count = count;
+ 		return 0;
++
++out_err:
++		for (; i >= 0; i--) {
++			kfree(xattrs[i].name);
++			kfree(xattrs[i].value);
++		}
++		kfree(xattrs);
++		return err;
+ 	}
+ 
+ 	for (xattr = xattr_array; xattr->name != NULL; xattr++) {
+@@ -7753,6 +7806,19 @@ static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array
+ 	return err;
+ }
+ 
++void ocfs2_free_security_xattrs(struct ocfs2_security_xattr_info *si)
++{
++	int i;
++
++	for (i = 0; i < si->count; i++) {
++		kfree(si->xattrs[i].name);
++		kfree(si->xattrs[i].value);
++	}
++	kfree(si->xattrs);
++	si->xattrs = NULL;
++	si->count = 0;
++}
++
+ int ocfs2_init_security_get(struct inode *inode,
+ 			    struct inode *dir,
+ 			    const struct qstr *qstr,
+@@ -7770,7 +7836,7 @@ int ocfs2_init_security_get(struct inode *inode,
+ 		 * security_inode_init_security() does not return -EOPNOTSUPP,
+ 		 * we have to check the xattr ourselves.
+ 		 */
+-		if (!ret && !si->name)
++		if (!ret && !si->count)
+ 			si->enable = 0;
+ 
+ 		return ret;
+@@ -7787,10 +7853,21 @@ int ocfs2_init_security_set(handle_t *handle,
+ 			    struct ocfs2_alloc_context *xattr_ac,
+ 			    struct ocfs2_alloc_context *data_ac)
+ {
+-	return ocfs2_xattr_set_handle(handle, inode, di_bh,
+-				     OCFS2_XATTR_INDEX_SECURITY,
+-				     si->name, si->value, si->value_len, 0,
+-				     xattr_ac, data_ac);
++	int i;
++	int ret = 0;
++
++	for (i = 0; i < si->count; i++) {
++		ret = ocfs2_xattr_set_handle(handle, inode, di_bh,
++					     OCFS2_XATTR_INDEX_SECURITY,
++					     si->xattrs[i].name,
++					     si->xattrs[i].value,
++					     si->xattrs[i].value_len, 0,
++					     xattr_ac, data_ac);
++		if (ret)
++			break;
++	}
++
++	return ret;
+ }
+ 
+ const struct xattr_handler ocfs2_xattr_security_handler = {
+diff --git a/fs/ocfs2/xattr.h b/fs/ocfs2/xattr.h
+index 887cc1a18b1af..1dd08f979e3c2 100644
+--- a/fs/ocfs2/xattr.h
++++ b/fs/ocfs2/xattr.h
+@@ -20,13 +20,18 @@ enum ocfs2_xattr_type {
+ 	OCFS2_XATTR_MAX
+ };
+ 
+-struct ocfs2_security_xattr_info {
+-	int enable;
+-	const char *name;
++struct ocfs2_security_xattr {
++	char *name;
+ 	void *value;
+ 	size_t value_len;
+ };
+ 
++struct ocfs2_security_xattr_info {
++	int enable;
++	struct ocfs2_security_xattr *xattrs;
++	int count;
++};
++
+ extern const struct xattr_handler ocfs2_xattr_user_handler;
+ extern const struct xattr_handler ocfs2_xattr_trusted_handler;
+ extern const struct xattr_handler ocfs2_xattr_security_handler;
+@@ -49,6 +54,7 @@ int ocfs2_xattr_remove(struct inode *, struct buffer_head *);
+ int ocfs2_init_security_get(struct inode *, struct inode *,
+ 			    const struct qstr *,
+ 			    struct ocfs2_security_xattr_info *);
++void ocfs2_free_security_xattrs(struct ocfs2_security_xattr_info *);
+ int ocfs2_init_security_set(handle_t *, struct inode *,
+ 			    struct buffer_head *,
+ 			    struct ocfs2_security_xattr_info *,
 -- 
 2.53.0
 
