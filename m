@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027248;
-	b=UXSyBGt5A8eZfq3/a4Ak8G4ZOSH9RIFduEWsvfnozg4BVCCXkogaQhI5tc3xFQFMTblJ
-	 gA1i5/Wb+Nr6n8mg3jkLNTL23gRuVgpabyP4Mdz+yzFRdQ4ETnMZAM9Ss0rNFpcy5O2Lx
-	 G741/RJ55+8b3UT9if5+wuL4LuyhhTnYwxSHv278+1n0dVF6zd0WwmhIBP/Uzy9aDFXej
-	 AhFWNFewzqAiC1DZ9MRLxWFnIoSDb4qcmHq5OqwYoj51PQ9iv70BPdKfOlOP9ncSTewLu
-	 KoltVtakH2Hdi8OnTj4aZ5O+1XsCuGP6SW/18+cI712tqg6NgVNyaZwsDPQcQ1qol3w==
+	t=1795027251;
+	b=oMGZIPybnC6uSztC4rDe4fxECUqaYa23smIrY0Is6Ncy1ZRvxuBjV2yeSG31Gy1AE6V9
+	 8YygDNedAQbvbY01UUL9r6HqkUzzcVD+I2qzHFsALce4ilB/KdWMarvm4Ib5OMktmzgK7
+	 VTStRHyiZa9+z2kRsBoDv3BhaAol8HrpMHTxxMEDhmLAjF+ZAqVr2CuuDYC1YMfqU1wEi
+	 FyhVWX33k8qzGvbPh+gy2XJ2zVtGMZ39tFI0dWE3aI6LSh/8IX7wA1xV2bTtMAnIfZh+E
+	 Ku0U1egTEkclq2Zi2JlckXgtzOtajp45/QT+aYt4ByBy7psANsllGmmUjcHChGNhPfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027248;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027251;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oLZFiWDp/iFyfLDd9CNDSmRAPurDZoux4pEL4vBMX2o=;
-	b=yXZB47Aq7YgCiOuVhs9NjwbI85bmnb9vURqpvYhrwqlrXrXTE3sqI0IIWZZk1XEdTjd5
-	 As/1pUMXl3TgpmTegS7hVB7GZgc7pAJTbHhL3JSUNyU1F3kLu7pR++BTGM3PUgIDtWU1W
-	 NHtprAWWUb5g74PPKQkYOeU3/CM8jtcXcGNPFAZoU6yliFkNsZwOXUkIucOy0/29QqZGP
-	 J/M/6kJXC5uIUJInG2OZvjxOhf/o1rTFwkj3lSFJ9wFEgXacMqLwlT70+namF8vZR3cr1
-	 jPQKfi8q/NiXMW+I3N+amVOt7cu5GozRLserAUNTqESeAxyaRihRHg/HmbGEWCInWdg==
+	bh=MenXhuYC35g2+M/ZExMHtxS15xchJi3cNjl2Vu5DgWA=;
+	b=n1LuTkG3kzDB3Dak9cuL5kewMZ9q5TmHV162nP9k6EiNQG5GjBDVZ86wz4G+4vqmMy4M
+	 Up8cMWusAXbCXIrXG6QOFtwrKBJ3I/H6oBfT6QdjnZAXBxZYqZspnsNUzFhSPLTfs9jUD
+	 eYYzOL2Gym80/rVBFomXugxA85+pVKB4lvXPIkQh2L+o2WIxANOPS60oD8osWW5F6SS3g
+	 aCF9ltRyAN49U0bqLpIuS9Z2zfqUUxio4FFmgcQTB/5yTaR168e2z5WjXS2C/C0NZk5Jq
+	 yAIdHDyGtkAFMoq9b+gTqKiSNKQlIjM//J2H5DHEMBvUrm0NTwhekmnsEtv6aqR/PMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S23jUHMu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iwwAo5lB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C1F606DACA;
-	Wed, 18 Nov 2026 18:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8A6606A33D;
+	Wed, 18 Nov 2026 18:40:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S23jUHMu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7641F000C4;
-	Wed, 18 Nov 2026 18:40:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iwwAo5lB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15D81F000C4;
+	Wed, 18 Nov 2026 18:40:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027248;
-	bh=oLZFiWDp/iFyfLDd9CNDSmRAPurDZoux4pEL4vBMX2o=;
+	s=korg; t=1795027251;
+	bh=MenXhuYC35g2+M/ZExMHtxS15xchJi3cNjl2Vu5DgWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=S23jUHMu1dqHh31oC3TDxAyL1fJhlaTPCSHG0HqW+QX6yvVKg7mT8ws5UJFd+p6pR
-	 go2vZm/vO67CfiP7oTawWlPC+AXwfAxa7ylekEHrugPWbfaj4GF7H5iWG+CFnOL5r9
-	 ld+wKSNN077QYitTT1DbNvo1ePmPZfR3pht7qetQ=
+	b=iwwAo5lBII2XapegjCmnPRzKpylo568VIBIlVn7qJjqlN8tiDL29//KIjsA8dmSda
+	 rVUlII9CZrrw23Y8CTV++6q4+egBkMXY7r5QXuEGUGu+29OYn058pr12FizyWQ0ncO
+	 +Rrt+4zCHbwUqpBCpk6uN2ywUkScHsDgfjCHJR44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1721/2151] bpf: Dont let bpf_skb_adjust_room() use up the MSS
-Date: Wed, 18 Nov 2026 15:57:36 +0100
-Message-ID: <20261118150224.530447494@linuxfoundation.org>
+Subject: [PATCH 6.18 1722/2151] bpf: Read the probe of a perf event under event_mutex
+Date: Wed, 18 Nov 2026 15:57:37 +0100
+Message-ID: <20261118150224.565097498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,65 +70,145 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 12d07c38e1b0f79e48a37abd7103194212f2da8c ]
+[ Upstream commit 3ccd700543f16a2b2ab656f35dcaeb6bd7c45e22 ]
 
-When bpf_skb_adjust_room() grows a TCP GSO packet without
-BPF_F_ADJ_ROOM_FIXED_GSO, gso_size is lowered by the number of bytes
-added. Nothing looks at how large it is.
+For a perf event on a kprobe or uprobe event which was made in tracefs,
+bpf_get_kprobe_info() and bpf_get_uprobe_info() look the probe up by
+name in the list of dynamic events, and hand a pointer to its symbol or
+file name back to the caller. None of the callers holds event_mutex.
 
-gso_size is the size of the segments the peer has sent if the packet
-comes out of GRO, and what the sender has written into the virtio header
-if it comes from a tun device or a packet socket. If it equals len_diff
-the result is 0, and a packet of up to 64 KB is no GSO packet any more. If
-it is smaller, the 16 bit value wraps around.
+The perf event keeps its trace event alive, nothing else. Other dynamic
+events are removed from the list and freed during the walk. And a probe
+which shares its event with other probes can be deleted while the event
+is in use, so even the probe which is found can be freed, together with
+the string, before the caller has measured and copied it. The result is
+a use-after-free in the walk, in strlen() and in the copy to user space,
+or a NULL pointer dereference.
 
-One less than len_diff gives GSO_BY_FRAGS. skb_segment() then takes the
-length of each segment from the frag_list. A packet with more than 64 KB
-of payload gets that far, and one from a tun device has no frag_list:
+The readers are BPF_OBJ_GET_INFO_BY_FD and fdinfo of a perf link, for
+whoever holds a descriptor of the link, and BPF_TASK_FD_QUERY. The other
+side is anybody who may write to dynamic_events, kprobe_events or
+uprobe_events.
 
-  BUG: KASAN: null-ptr-deref in skb_segment+0xcf1/0x1a90
-  BUG: kernel NULL pointer dereference, address: 0000000000000070
-   tcp_gso_segment+0x1be/0x9f0
-   inet_gso_segment+0x288/0x740
-   inet_gso_segment+0x288/0x740
-   skb_mac_gso_segment+0x179/0x2e0
+Take event_mutex in bpf_get_perf_event_info() and give the caller a copy
+of the name, which it has to free.
 
-What is left must not be less than TCP_MIN_GSO_SIZE either. The stack
-relies on that for the number of segments to fit into gso_segs, see
-commit c27c449d455a ("virtio-net: Ensure that TCP packets don't overflow
-gso_segs").
-
-Refuse to grow a packet that would end up with less, with the error that
-other packets which cannot be adjusted get.
-
-Fixes: 2be7e212d541 ("bpf: add bpf_skb_adjust_room helper")
+Fixes: 41bdc4b40ed6 ("bpf: introduce bpf subcommand BPF_TASK_FD_QUERY")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-9-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-10-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/bpf/syscall.c     | 17 +++++++++++------
+ kernel/trace/bpf_trace.c | 13 +++++++++++++
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index ce126500a52cc..ebb502a8469e3 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3560,6 +3560,14 @@ static int bpf_skb_net_grow(struct sk_buff *skb, u32 off, u32 len_diff,
- 			return -ENOTSUPP;
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 8e4689034b422..d2f4cd5eaaa0d 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3909,19 +3909,19 @@ static int bpf_perf_link_fill_common(const struct perf_event *event,
+ 		*ulenp = 1;
+ 	}
+ 	if (!uname)
+-		return 0;
++		goto out;
+ 
+ 	if (buf) {
+ 		err = bpf_copy_to_user(uname, buf, ulen, len);
+-		if (err)
+-			return err;
+ 	} else {
+ 		char zero = '\0';
+ 
+ 		if (put_user(zero, uname))
+-			return -EFAULT;
++			err = -EFAULT;
+ 	}
+-	return 0;
++out:
++	kfree_const(buf);
++	return err;
+ }
+ 
+ #ifdef CONFIG_KPROBE_EVENTS
+@@ -3978,6 +3978,7 @@ static void bpf_perf_link_fdinfo_kprobe(const struct perf_event *event,
+ 		   name, offset, missed, addr,
+ 		   type == BPF_FD_TYPE_KRETPROBE ?  "kretprobe" : "kprobe",
+ 		   event->bpf_cookie);
++	kfree_const(name);
+ }
+ #endif
+ 
+@@ -4031,6 +4032,7 @@ static void bpf_perf_link_fdinfo_uprobe(const struct perf_event *event,
+ 		   name, offset, ref_ctr_offset,
+ 		   type == BPF_FD_TYPE_URETPROBE ?  "uretprobe" : "uprobe",
+ 		   event->bpf_cookie);
++	kfree_const(name);
+ }
+ #endif
+ 
+@@ -4129,6 +4131,7 @@ static void bpf_tracepoint_link_show_fdinfo(const struct perf_event *event,
+ 		   "event_type:\t%s\n"
+ 		   "cookie:\t%llu\n",
+ 		   name, "tracepoint", event->bpf_cookie);
++	kfree_const(name);
+ }
+ 
+ static void bpf_probe_link_show_fdinfo(const struct perf_event *event,
+@@ -5623,11 +5626,13 @@ static int bpf_task_fd_query(const union bpf_attr *attr,
+ 		err = bpf_get_perf_event_info(event, &prog_id, &fd_type,
+ 					      &buf, &probe_offset,
+ 					      &probe_addr, NULL);
+-		if (!err)
++		if (!err) {
+ 			err = bpf_task_fd_query_copy(attr, uattr, prog_id,
+ 						     fd_type, buf,
+ 						     probe_offset,
+ 						     probe_addr);
++			kfree_const(buf);
++		}
+ 		goto put_file;
  	}
  
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index af5ab3b2e3d59..1d30f154078f2 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2151,6 +2151,7 @@ int bpf_probe_unregister(struct bpf_raw_event_map *btp, struct bpf_raw_tp_link *
+ 	return tracepoint_probe_unregister(btp->tp, (void *)btp->bpf_func, link);
+ }
+ 
++/* On success the caller releases *buf with kfree_const() */
+ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ 			    u32 *fd_type, const char **buf,
+ 			    u64 *probe_offset, u64 *probe_addr,
+@@ -2160,6 +2161,12 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ 	struct bpf_prog *prog;
+ 	int flags, err = 0;
+ 
 +	/*
-+	 * The MSS is lowered by len_diff. Leave the least that the stack lets a
-+	 * TCP GSO packet have, or gso_segs can overflow.
++	 * The list of dynamic events is walked, and a probe which has siblings
++	 * can be deleted, with its strings, while its event is in use.
 +	 */
-+	if (skb_is_gso(skb) && !(flags & BPF_F_ADJ_ROOM_FIXED_GSO) &&
-+	    skb_shinfo(skb)->gso_size < len_diff + TCP_MIN_GSO_SIZE)
-+		return -ENOTSUPP;
++	guard(mutex)(&event_mutex);
 +
- 	ret = skb_cow_head(skb, meta_len + len_diff);
- 	if (unlikely(ret < 0))
- 		return ret;
+ 	prog = event->prog;
+ 	if (!prog)
+ 		return -ENOENT;
+@@ -2200,6 +2207,12 @@ int bpf_get_perf_event_info(const struct perf_event *event, u32 *prog_id,
+ #endif
+ 	}
+ 
++	if (!err && *buf) {
++		*buf = kstrdup_const(*buf, GFP_KERNEL);
++		if (!*buf)
++			err = -ENOMEM;
++	}
++
+ 	return err;
+ }
+ 
 -- 
 2.53.0
 
