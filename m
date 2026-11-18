@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017772;
-	b=pXDfy22A01FYJojQjXY3Uo2inUSAtZAGWTQD9nDlETvNbxwMr8wFHF0smvaYvrslEW+c
-	 CAXWifzfkE3q3dHrQxqJA/zipw7WFJtKKYjnLNKkyxx5EAgQI0KCRHhxJlHXHgOAZyGSE
-	 2NZTSWDXNyiORJPPybaBi/Ob/IlCHtwIkletauG9O7ZfMBBIZQIxZ1ijCdgYgtiOo2jxb
-	 aRR97wyS6gG8lUlAgLMNjw3hbE9olx0E90m5EQMYq9luMdkZ4KVXKKJmtn+Qd4ojdfcDH
-	 n2JU4wntYByjRPKHk6XOymxKNepeAmpIh3gyjbRF5PPCtDMhlS4ucR78PMA72M+TD0w==
+	t=1795017775;
+	b=nvKJrSG0VKohnER7HdFTxVifCFZB5/mKBvuZ4U3Yh9rlcsrJwSulTAimFYi2yud3LLW8
+	 Ew6UPhoZpu9L191EW70IgCypIDHbzr7z1/5ea0dzb3jJOWIjVGcSxT+TVTQI/YSyadOOS
+	 +dTV4rqZHPxgLkdkksWmJ2g7fga6VurMPRI/BGnurA26OoUy0X8kdRR0yFhvLAr/38Xzd
+	 wXpIDAoBclkUYPo2c5xP0ikdHGSJFA/EJUcQzi+p8Ys1CiKo2L7iFmK8yTC2azEyA7HoX
+	 vmdpsXHEbdeGFPnBNtlyfKLRBz12+PHl3LznGJIGioao2+B/WLHWawKg674FKcWR0Gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9bYHv5lNNUq2eUvTjmap5bZm9H1L6U0DImwS0RvipRY=;
-	b=lw0IIYP3jQ4w0n+XFkB0L8lpv6u+MzPtuQ8d4nl1FDLJo/ndVUqdinV45X5eoxM+HcRS
-	 ujRXU23baikdi2xmtuaPbQFTeuzarhG2Hk7fpMDyCpv7yr1dhz1fD2bre5NujKM18qbtz
-	 dUZyuXrtBYPoYl76K832RoGQT32Ml5431vp/AAKcdMZ90v8SqqKtPw1mi/rDGJL4gV/3u
-	 qnaP8I97T5Qc3ToOTCinw5GirGBVrDapOJ7LeZXvkwT9s+KK9wlQKGm/6w6LCREEsWaPd
-	 bmQbqejib2FE6RkNiihe0+XBARiEJkQcRvi2wblY+9o8GL1AVb6LktfrDSmFtg4Bw+g==
+	bh=RtFI9cPWdOJCrTqiCRA55lxo+vd4gdOa1oESYcaTG9s=;
+	b=hwjHnwm0Yll/8uqnm0pkWhtvfudnCLwGxdl/PWzAUHIwGY/Gef4zu2XdLwETzRnIsE/2
+	 54lWVJgWXhiD/hYF6ZhmWaMr7RtFFW2RG0gN3Mze7ajP0idalO4x0DfmU5Ic1yA9eTv7/
+	 zdvwn53q9jNe0T1B2RhNlTy9Lzs0BT5dCa/nWoJRaEr+1unS5+ClzNg3HXre8DqtaZ5Sp
+	 Wv3Q91u6F7tHQY32Am0SsDyfDiJ5c4vuvhP+bgCDzVEApLf0lJGx1p2Kzu0qxzbOFp90k
+	 nKVlfjDCmHXRJL7X/WafHL21dNGLeLG0Dr1pZqIZoIFofpSXkeRRVcqezf3wE5htdHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gdczMO37;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ibysF+XR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED7360A2601;
-	Wed, 18 Nov 2026 16:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35CDA606A33A;
+	Wed, 18 Nov 2026 16:02:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gdczMO37
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779A21F000C6;
-	Wed, 18 Nov 2026 16:02:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ibysF+XR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4B11F000C9;
+	Wed, 18 Nov 2026 16:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017772;
-	bh=9bYHv5lNNUq2eUvTjmap5bZm9H1L6U0DImwS0RvipRY=;
+	s=korg; t=1795017774;
+	bh=RtFI9cPWdOJCrTqiCRA55lxo+vd4gdOa1oESYcaTG9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gdczMO37zuV0RN7CUopZUuzlmiPco20rp1vZLb/razncDDfTITvwi1qe1vhYHW0wJ
-	 AR8dGnApZT2w3U+9how/khLFvgaFAOMRGueq77Q67t51gQUh7RHWRChutlYFebPbZF
-	 LgTRurWOe8tnw851wZUBRGfpiyZw9G4FlE51hshs=
+	b=ibysF+XRe4Qr27Yt3lnKicd7KR5NwVBJ64lEgof3LSrLHJTPFwNhY2sXaHKB8c8iV
+	 Vqrhk0AybbnEH2dr9gV9eEbL0zUk/W8cfeceKJpDwWDAtLDL249y4WShMW/nXBU7R5
+	 OdZ9zpKVS2NKC2iakkDG1O60ctx4fJGCyOio6GIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Joshua Crofts <joshua.crofts1@gmail.com>,
+	Abdelnasser Hussein <abdelnasserhussein11@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0963/2651] ASoC: mediatek: mt8192: fix AFE clock error handling
-Date: Wed, 18 Nov 2026 15:36:43 +0100
-Message-ID: <20261118150322.574953096@linuxfoundation.org>
+Subject: [PATCH 7.3 0954/2651] staging: iio: adc: ad7816: Protect sysfs attributes with mutex
+Date: Wed, 18 Nov 2026 15:36:34 +0100
+Message-ID: <20261118150322.246281392@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,113 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
 
-[ Upstream commit 7c54781e6e60681af8d0858148d613becb582328 ]
+[ Upstream commit b96187644664d10b641dddeb7ca2eeef97a77c41 ]
 
-If a clock operation fails in mt8192_afe_enable_clock(), the function
-returns immediately via the EXIT label without disabling the clocks
-that were successfully enabled earlier in the sequence. This leaves
-unneeded clocks running and causes a resource leak.
+The sysfs store functions modify driver state that is critical during
+SPI transactions. ad7816_store_mode toggles hardware GPIO pins, while
+ad7816_store_channel updates the internal software state
+(chip->channel_id).
 
-Properly unwind clocks enabled before an error by jumping to appropriate
-cleanup labels on failure.
+If these are modified concurrently by userspace while an SPI transfer
+is in progress, it could corrupt the hardware transaction or cause the
+driver to communicate with the wrong channel.
 
-Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-3-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Add the existing chip->lock guard to these functions to serialize
+access and prevent these race conditions.
+
+Fixes: 7924425db04a ("staging: iio: adc: new driver for AD7816 devices")
+Suggested-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
+Signed-off-by: Abdelnasser Hussein <abdelnasserhussein11@gmail.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 28 +++++++++++++++-------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/staging/iio/adc/ad7816.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-index bd778e5663b56..7647bdd463d9c 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-@@ -220,21 +220,21 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_INFRA_SYS_AUDIO], ret);
--		goto EXIT;
-+		return ret;
- 	}
+diff --git a/drivers/staging/iio/adc/ad7816.c b/drivers/staging/iio/adc/ad7816.c
+index f76f0215119ae..2a15d7598abb7 100644
+--- a/drivers/staging/iio/adc/ad7816.c
++++ b/drivers/staging/iio/adc/ad7816.c
+@@ -143,6 +143,8 @@ static ssize_t ad7816_store_mode(struct device *dev,
+ 	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
+ 	struct ad7816_chip_info *chip = iio_priv(indio_dev);
  
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_INFRA_AUDIO_26M]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_INFRA_AUDIO_26M], ret);
--		goto EXIT;
-+		goto err_disable_infra_sys_audio;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIO]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIO], ret);
--		goto EXIT;
-+		goto err_disable_infra_audio_26m;
- 	}
- 	ret = clk_set_parent(afe_priv->clk[CLK_MUX_AUDIO],
- 			     afe_priv->clk[CLK_CLK26M]);
-@@ -242,14 +242,14 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIO],
- 			aud_clks[CLK_CLK26M], ret);
--		goto EXIT;
-+		goto err_disable_mux_audio;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS], ret);
--		goto EXIT;
-+		goto err_disable_mux_audio;
- 	}
- 
- 	ret = mt8192_set_audio_int_bus_parent(afe, CLK_CLK26M);
-@@ -257,7 +257,7 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS],
- 			aud_clks[CLK_CLK26M], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
- 	ret = clk_set_parent(afe_priv->clk[CLK_TOP_MUX_AUDIO_H],
-@@ -266,17 +266,27 @@ int mt8192_afe_enable_clock(struct mtk_base_afe *afe)
- 		dev_err(afe->dev, "%s clk_set_parent %s-%s fail %d\n",
- 			__func__, aud_clks[CLK_TOP_MUX_AUDIO_H],
- 			aud_clks[CLK_TOP_APLL2_CK], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
- 	ret = clk_prepare_enable(afe_priv->clk[CLK_AFE]);
- 	if (ret) {
- 		dev_err(afe->dev, "%s clk_prepare_enable %s fail %d\n",
- 			__func__, aud_clks[CLK_AFE], ret);
--		goto EXIT;
-+		goto err_disable_mux_audiointbus;
- 	}
- 
--EXIT:
-+	return 0;
++	guard(mutex)(&chip->lock);
 +
-+err_disable_mux_audiointbus:
-+	clk_disable_unprepare(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
-+err_disable_mux_audio:
-+	clk_disable_unprepare(afe_priv->clk[CLK_MUX_AUDIO]);
-+err_disable_infra_audio_26m:
-+	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_AUDIO_26M]);
-+err_disable_infra_sys_audio:
-+	clk_disable_unprepare(afe_priv->clk[CLK_INFRA_SYS_AUDIO]);
-+
- 	return ret;
- }
+ 	if (strcmp(buf, "full") == 0) {
+ 		gpiod_set_value(chip->rdwr_pin, 1);
+ 		chip->mode = AD7816_FULL;
+@@ -207,6 +209,8 @@ static ssize_t ad7816_store_channel(struct device *dev,
+ 		return -EINVAL;
+ 	}
  
++	guard(mutex)(&chip->lock);
++
+ 	chip->channel_id = data;
+ 
+ 	return len;
 -- 
 2.53.0
 
