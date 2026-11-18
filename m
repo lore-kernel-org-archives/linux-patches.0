@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037152;
-	b=1T/D53qVIxqr5PvFDFWlVoJifjPK42Yd7rLwHkbT25UwM6MhX/9h0+F12tSasFBhIA5F
-	 uZGPqCNvRLhPKbzDyrbYkFwGbAIvAoi9Ox8vEyHAlKhQN292tF442drCZntXzJ+X3T+Yd
-	 pWK7A1AJ+BnXfhPOCC/GGZGKXGwXOMsQqylVvRH47b16TsR5BwA/7mUmOzduEIpBWFKfK
-	 gUMfKcQK7g8l6chK25vnaDFZVeiKBTs+NTcCOEsZ2sOQk+HhHWh9Ljp4uH3vY4iQ0rN+C
-	 u7n1BrlORdOl/9952R68GKjSnFfBpiHgCLLJtFVIa9gdkn/tGXrwrTNfRfmJKKl/LTQ==
+	t=1795037155;
+	b=AB6AOTkWHAFJWWhIK1aAXKTbt2Jkxt1j6dH5Js/EG9+Dr9mbXyJ6tgJCwnkBW8bJ4k65
+	 7lRV8FAWwAmSsZvoprf6RHCDpFq1608u054VMWtiBs630HoAArmqflGenrLRkN5PUotTt
+	 5x3yN7fKI+1f46XkQM8gnR+F1JRNn2f6OcVMP4C+iuOzIoCKzdfl2Jb5B5Ao7S3Op2/HY
+	 Bk4V50XsFYhxUiQWjenT78I5mzRAI80LteYChsWsIgk2qHEvfwDzQSnKxhSrJtnMxUMn/
+	 l1+slUBzA0CtNLJu4XWdNJ2TGuw2FGiwWPiXlvjZxuI6u3NjpFMA05BllzRbBS4gThA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037152;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037155;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N5ffJysyPLWxej8qZbzlzdtvqXBbdumDwEM2ZSvNFsI=;
-	b=KuXoyp5Yo3flX9WpH1cuFIMmHz2/54SDpcROTAeyjl441K4NfyMrAmoYq+VjF+VQKnR0
-	 JbW+AEkQGsQpW71m+Sk3YfzUSUA2Fp1Z8t3rYGaAmQCHd2T5r6c7wuN6hXWyV/wB7z0GY
-	 d18FML8t14wsYL4rSm4xESbHHSXv+pjIMensZPCDVg2Kg/Eh1Zv1NXzqaZ3BWT7W5eQyD
-	 iEPk+RBe8s6wiHB1xD2L/5WbcoQLqL9tnvSDuBIPznuPG8hniyu+yEZTPVQZZp66GF99F
-	 N/UwBqaGgqs/3Ay7T9XJn38tR8aAJ1/sjpiYfJ8swjg48zft4Gmp+/VJp6/BxTLDplA==
+	bh=UKDuU5WkAXMPaJwegStlz1P60J+Sca1NuSrTYikQfWU=;
+	b=lPcdbNu0lPCVlNLIy1VPYog3BAk7EumAk5P9sz9nA7NwUpdpkHSECh1rYutqTQdE7pma
+	 kY7iYEGWb/jNDVJ865hq3reADlgZfAZFEPba5m9Sru7XT6ivWiYqNBlfUVoZnS2+suR+a
+	 bzX0hiuq9u65ujVkQI/p0QE80wK7K1uyGM8np3RqAXBc1/IYDyevy6lnbaxFzZyv76en9
+	 8sSggblBlkFo37DZJbi1523uW4pcqMdfLVGbdpJjpVCs3YU0D1HcduyTFtHTr5p1m+En2
+	 W29z+1eOAzBO32jbXAtkn8ZkF94woNoK9nWSD8OuepXGzpvw+cB44ZP4bzoZCs9djaQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT76V25x;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d2xsTGUv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C178606BE45;
-	Wed, 18 Nov 2026 21:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155A4606A33A;
+	Wed, 18 Nov 2026 21:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qT76V25x
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A6F1F000C4;
-	Wed, 18 Nov 2026 21:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d2xsTGUv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE231F000C4;
+	Wed, 18 Nov 2026 21:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037152;
-	bh=N5ffJysyPLWxej8qZbzlzdtvqXBbdumDwEM2ZSvNFsI=;
+	s=korg; t=1795037154;
+	bh=UKDuU5WkAXMPaJwegStlz1P60J+Sca1NuSrTYikQfWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qT76V25xkZZ8dcyg5r0jgYkwa+y/L+hlxSduhCOk0kDk9nuoh1QZNtBJ8X4YlEHCp
-	 SzSdzbmXVyUCxjmys0yMqFaOlpBQnVqUORd+1e/np3Wwu/TmT+WXSGhYoyJrMzPyEQ
-	 +UC6yM9xcAssBegRJuXm36jxzUfEuyrQuLWb0c/w=
+	b=d2xsTGUviQwmH/QkEY4OzV2iPx+QzwAS+cje1COL87nCQPdUW6lEwklfCA0BrsojG
+	 ZRJ3APAo4P12cm90RZFxs9oFZqR0yPTvkYKchB+2OVs6LWmfnSknXZ0/8warm9+oWM
+	 8h677jajFeqgVu11bK9KCxMCcMU1X+G/5atCZFxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diego Oliva <diego@bynar.io>,
-	David Howells <dhowells@redhat.com>,
+	Ratnaker Gautam <ratnaker.gautam@kuleuven.be>,
 	Paulo Alcantara <pc@manguebit.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1312/3318] smb: client: fix OOB read of the resume name sent in TRANS2_FIND_NEXT2
-Date: Wed, 18 Nov 2026 15:32:14 +0100
-Message-ID: <20261118150359.649048394@linuxfoundation.org>
+Subject: [PATCH 6.6 1313/3318] smb: client: validate SMB1 EA list bounds before parsing
+Date: Wed, 18 Nov 2026 15:32:15 +0100
+Message-ID: <20261118150359.684344252@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,215 +68,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diego Oliva <diego@bynar.io>
+From: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 
-[ Upstream commit f8171804a39ee89a11cd462f67862899de9c6b10 ]
+[ Upstream commit ddc7a7e1eeb116ccaf010a6f1fb6ab927f3f888d ]
 
-cifs_fill_dirent() reads the fixed part of a directory entry and the
-name length it holds, or for SMB_FIND_FILE_UNIX scans the name for its
-terminating NUL, without knowing where the response ends.
-cifs_save_resume_key() calls it for the entry at the LastNameOffset the
-server chose, after every FindNext and after the FindFirst of a search
-rewind, and records the name it returns as the resume name of the
-search without bounding it; the next CIFSFindNext() copies up to
-PATH_MAX - 1 bytes from that name into its request and sends them to
-the server. cifs_filldir() bounds
-the name against the end of the response since
-commit f8cf09a53a0d ("smb: client: bound dirent name against end of
-SMB response in cifs_filldir"), but only after cifs_fill_dirent() has
-read the entry, and nxt_dir_entry() checks the entries it walks only
-against sizeof(FILE_DIRECTORY_INFO), for every level but
-SMB_FIND_FILE_INFO_STANDARD, and never sees the first entry of a
-response.
+CIFSSMBQAllEAs() checks the server-provided EA list length by adding it
+to the response pointer. On 32-bit systems, a positive length can wrap
+the pointer and pass the comparison. The parser then walks outside the
+received response while reading the next FEA header.
 
-Bounding where last_entry starts, as the preceding patch does, does
-not bound the read. A last entry that starts within the final bytes of
-the response still has its fixed part read past the end of the
-received data, and the name length it declares, a __le32 for every
-level but SMB_FIND_FILE_INFO_STANDARD and SMB_FIND_FILE_UNIX, is
-recorded without being checked against anything. CIFSFindNext()
-rejects only a length of PATH_MAX or more, then copies the name, up to
-4095 bytes, into its request and sends it, and as the report below
-shows that copy can run past the end of the cifs_request allocation
-that holds the response. For SMB_FIND_FILE_UNIX the name is in
-addition scanned for its terminating NUL over up to PATH_MAX + 1
-UTF-16 units, or PATH_MAX bytes, before any check. The FindNext that
-carries the name is only sent by the SMB1 dialect, which is not
-negotiated by default; reaching it requires an explicit vers=1.0
+A response with a list length of 0x40000000 reproduces this as a native
+i386 page fault and kernel panic from listxattr() against an SMB1
+server.
+
+Check that the EA list starts within the SMB byte area before reading
+its header. Keep its length unsigned and compare it with the bytes left
+in the response without pointer addition.
+
+SMB1 is not negotiated by default and requires an explicit vers=1.0
 mount.
 
-With KASAN enabled, a response whose last entry declares a name
-longer than the bytes that follow it gives:
-
- ==================================================================
- BUG: KASAN: slab-out-of-bounds in CIFSFindNext+0x8ca/0x14c0
- Read of size 4080 at addr ffff88807c823f98 by task ls/83
-
- CPU: 0 UID: 0 PID: 83 Comm: ls Not tainted 7.3.0-rc4-00457-gf14572c203d5 #69 PREEMPT(lazy)
- Call Trace:
-  <TASK>
-  kasan_report+0xdf/0x1a0
-  kasan_check_range+0x10f/0x1e0
-  __asan_memcpy+0x23/0x60
-  CIFSFindNext+0x8ca/0x14c0
-  cifs_readdir+0xf51/0x29c0
-  iterate_dir+0x1c0/0x570
-  __x64_sys_getdents64+0x133/0x270
-  do_syscall_64+0x109/0x5d0
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
-
- Allocated by task 83 on cpu 1 at 13.497119s:
-  cifs_buf_get+0x36/0x90
-  smb_init+0x4f/0x110
-  CIFSFindNext+0xf7/0x14c0
-  cifs_readdir+0xf51/0x29c0
-
- The buggy address belongs to the object at ffff88807c820000
-  which belongs to the cache cifs_request of size 16588
- The buggy address is located 16280 bytes inside of
-  allocated 16588-byte region [ffff88807c820000, ffff88807c8240cc)
- ==================================================================
-
-The read is the memcpy() that copies the recorded name into the next
-request, so those bytes go to the server.
-
-Pass the end of the response to cifs_fill_dirent() and have it reject
-an entry whose fixed part does not fit or whose name extends past the
-end, before either is used, so that both callers are covered;
-cifs_save_resume_key() computes the end the same way cifs_readdir()
-does. The name bound compares the bytes left between the name and the
-end with the name length rather than adding the length to the name
-pointer, since the length is a 32-bit value taken from the entry and
-the sum could wrap on 32-bit systems. cifs_fill_dirent() is also used
-on the SMB2 readdir path; there smb2_parse_query_directory() has
-already checked every entry against the end of the response, so a
-valid SMB2 response is not rejected by the new checks. The check
-cifs_filldir() applies after the parse is left in place. The NUL scan
-for SMB_FIND_FILE_UNIX names is capped by a separate patch.
-
-An entry and its name lie inside the data area of the response, so a
-server that points LastNameOffset at the entry is not affected. One
-that points it at the file name, as MS-CIFS 2.2.6.2.2 describes, has
-its last entry rejected here; the listing is unaffected, because
-cifs_readdir() records the resume name from an entry it emitted, and
-before this series such a response could instead end the listing early,
-since a name length read from the wrong place is usually PATH_MAX or
-more, which CIFSFindNext() rejects with -EINVAL.
-
-On trees before v6.19 the type for the level 0x105 fixed part is
-spelled SEARCH_ID_FULL_DIR_INFO; adjust when backporting.
-
-Fixes: 0752f1522a91 ("[CIFS] make sure we have the right resume info before calling CIFSFindNext")
-Cc: stable@vger.kernel.org # 6.1.x: f8cf09a53a0d: smb: client: bound dirent name against end of SMB response in cifs_filldir
-Assisted-by: Bynario AI
-Signed-off-by: Diego Oliva <diego@bynar.io>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ratnaker Gautam <ratnaker.gautam@kuleuven.be>
 Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-[ sashal: Replaced FILE_ID_FULL_DIR_INFO with SEARCH_ID_FULL_DIR_INFO in the offsetof() check to match the existing type name. ]
+[ sashal: Replaced unavailable smb_EIO2() tracing calls with direct -EIO assignments. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/readdir.c | 39 ++++++++++++++++++++++++++++++++++++---
- 1 file changed, 36 insertions(+), 3 deletions(-)
+ fs/smb/client/cifssmb.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/client/readdir.c b/fs/smb/client/readdir.c
-index 458569bbfe9e1..135cbd833e47b 100644
---- a/fs/smb/client/readdir.c
-+++ b/fs/smb/client/readdir.c
-@@ -584,30 +584,46 @@ static void cifs_fill_dirent_std(struct cifs_dirent *de,
- }
+diff --git a/fs/smb/client/cifssmb.c b/fs/smb/client/cifssmb.c
+index 3babce8acfda5..e38d1489bb135 100644
+--- a/fs/smb/client/cifssmb.c
++++ b/fs/smb/client/cifssmb.c
+@@ -5727,9 +5727,11 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
+ 	int rc = 0;
+ 	int bytes_returned;
+ 	int list_len;
++	u32 ea_list_len;
+ 	struct fealist *ea_response_data;
+ 	struct fea *temp_fea;
+ 	char *temp_ptr;
++	char *byte_area;
+ 	char *end_of_smb;
+ 	__u16 params, byte_count, data_offset;
+ 	unsigned int ea_name_len = ea_name ? strlen(ea_name) : 0;
+@@ -5806,9 +5808,18 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
+ 	ea_response_data = (struct fealist *)
+ 				(((char *) &pSMBr->hdr.Protocol) + data_offset);
  
- static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
--		u16 level, bool is_unicode)
-+			    const char *end, u16 level, bool is_unicode)
- {
-+	size_t len = end > (const char *)info ? end - (const char *)info : 0;
-+
- 	memset(de, 0, sizeof(*de));
- 
- 	switch (level) {
- 	case SMB_FIND_FILE_POSIX_INFO:
-+		if (len < sizeof(struct smb2_posix_info))
-+			goto too_short;
- 		cifs_fill_dirent_posix(de, info);
- 		break;
- 	case SMB_FIND_FILE_UNIX:
-+		if (len < offsetof(FILE_UNIX_INFO, FileName))
-+			goto too_short;
- 		cifs_fill_dirent_unix(de, info, is_unicode);
- 		break;
- 	case SMB_FIND_FILE_DIRECTORY_INFO:
-+		if (len < offsetof(FILE_DIRECTORY_INFO, FileName))
-+			goto too_short;
- 		cifs_fill_dirent_dir(de, info);
- 		break;
- 	case SMB_FIND_FILE_FULL_DIRECTORY_INFO:
-+		if (len < offsetof(FILE_FULL_DIRECTORY_INFO, FileName))
-+			goto too_short;
- 		cifs_fill_dirent_full(de, info);
- 		break;
- 	case SMB_FIND_FILE_ID_FULL_DIR_INFO:
-+		if (len < offsetof(SEARCH_ID_FULL_DIR_INFO, FileName))
-+			goto too_short;
- 		cifs_fill_dirent_search(de, info);
- 		break;
- 	case SMB_FIND_FILE_BOTH_DIRECTORY_INFO:
-+		if (len < offsetof(FILE_BOTH_DIRECTORY_INFO, FileName))
-+			goto too_short;
- 		cifs_fill_dirent_both(de, info);
- 		break;
- 	case SMB_FIND_FILE_INFO_STANDARD:
-+		if (len < offsetof(FIND_FILE_STANDARD_INFO, FileName))
-+			goto too_short;
- 		cifs_fill_dirent_std(de, info);
- 		break;
- 	default:
-@@ -615,7 +631,19 @@ static int cifs_fill_dirent(struct cifs_dirent *de, const void *info,
- 		return -EINVAL;
- 	}
- 
-+	if (de->name &&
-+	    (end < de->name || (size_t)(end - de->name) < de->namelen)) {
-+		cifs_dbg(VFS, "%s: search entry name extends past end of SMB\n",
-+			 __func__);
-+		return -EINVAL;
+-	list_len = le32_to_cpu(ea_response_data->list_len);
+-	cifs_dbg(FYI, "ea length %d\n", list_len);
+-	if (list_len <= 8) {
++	byte_area = pByteArea(&pSMBr->hdr);
++	end_of_smb = byte_area + get_bcc(&pSMBr->hdr);
++	if ((char *)ea_response_data < byte_area ||
++	    (char *)ea_response_data >
++	    end_of_smb - sizeof(ea_response_data->list_len)) {
++		rc = -EIO;
++		goto QAllEAsOut;
 +	}
 +
- 	return 0;
-+
-+too_short:
-+	cifs_dbg(VFS, "%s: search entry extends past end of SMB\n",
-+		 __func__);
-+	return -EINVAL;
- }
++	ea_list_len = le32_to_cpu(ea_response_data->list_len);
++	cifs_dbg(FYI, "%s: ea length: %u\n", __func__, ea_list_len);
++	if (ea_list_len <= 8) {
+ 		cifs_dbg(FYI, "empty EA list returned from server\n");
+ 		/* didn't find the named attribute */
+ 		if (ea_name)
+@@ -5817,12 +5828,12 @@ CIFSSMBQAllEAs(const unsigned int xid, struct cifs_tcon *tcon,
+ 	}
  
- #define UNICODE_DOT cpu_to_le16(0x2e)
-@@ -670,10 +698,14 @@ static int is_dir_changed(struct file *file)
- static int cifs_save_resume_key(const char *current_entry,
- 	struct cifsFileInfo *file_info)
- {
-+	struct TCP_Server_Info *server = tlink_tcon(file_info->tlink)->ses->server;
-+	char *buf = file_info->srch_inf.ntwrk_buf_start;
-+	const char *end = buf + server->ops->calc_smb_size(buf);
- 	struct cifs_dirent de;
- 	int rc;
+ 	/* make sure list_len doesn't go past end of SMB */
+-	end_of_smb = (char *)pByteArea(&pSMBr->hdr) + get_bcc(&pSMBr->hdr);
+-	if ((char *)ea_response_data + list_len > end_of_smb) {
++	if (ea_list_len > end_of_smb - (char *)ea_response_data) {
+ 		cifs_dbg(FYI, "EA list appears to go beyond SMB\n");
+ 		rc = -EIO;
+ 		goto QAllEAsOut;
+ 	}
++	list_len = ea_list_len;
  
--	rc = cifs_fill_dirent(&de, current_entry, file_info->srch_inf.info_level,
-+	rc = cifs_fill_dirent(&de, current_entry, end,
-+			      file_info->srch_inf.info_level,
- 			      file_info->srch_inf.unicode);
- 	if (!rc) {
- 		file_info->srch_inf.presume_name = de.name;
-@@ -958,7 +990,8 @@ static int cifs_filldir(char *find_entry, struct file *file,
- 	struct qstr name;
- 	int rc = 0;
- 
--	rc = cifs_fill_dirent(&de, find_entry, file_info->srch_inf.info_level,
-+	rc = cifs_fill_dirent(&de, find_entry, end_of_smb,
-+			      file_info->srch_inf.info_level,
- 			      file_info->srch_inf.unicode);
- 	if (rc)
- 		return rc;
+ 	/* account for ea list len */
+ 	list_len -= 4;
 -- 
 2.53.0
 
