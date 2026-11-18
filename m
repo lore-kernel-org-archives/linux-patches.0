@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028148;
-	b=H7VNkPo6F00p5+SQ0iEWleFQioZWfc1M1XwAM1HR2JGfgHd1FLmLfOtywlt3cw0L3/7c
-	 4QpVwwG7myLCwCppRp+LofzFjEXW8O8oyGhpBjIVCYgJEUPhfh9yHuwuLpQfQ8XnKm7Yk
-	 7l86zOWBUjz+N6X4XJ0DsPggNKKHHCl7HcO/VD1y/Nww3XPP2gh5zZfN+K2crcO3ckaLK
-	 0tJARTdAfAiKne9Uv5h9uUqywm72m1LKEhFPrzeeH12apeZCfp/UF6CXFuONRbhzSihby
-	 anbxvCAbmxNMdR1j0Qa2onnH99In2JY9epjWcX9Su4X/3GMu7rc2TgFA+M8R9Q8XxNg==
+	t=1795028150;
+	b=zuhyDCCyqK2GX54SyEuBlq3M1KL2d7QMlCLdNpmmcdJkzB91kOzuzJpaGQ0CubMfI4ax
+	 bjm3ftLhB7QhTNboxqrx93XQRnG1dTVJQPhaURym8Y8+QR/QFL3wKs47cJd+7zsNt+0vu
+	 oq5IYCgSWJYaZtromTf5SKHmJLBQ8pBN3mPnVwKUbXXkXS9IGooSK6aq5tUgriqztf5IU
+	 l1UCFkzufeTaGMuQiuOLHl5o5vNUpK+SPQEHXCcCATNZLeKK5lflwCiGWmEhAgGJ18nNs
+	 51BIYg237AlsfvNo9qiMkY6S7Pm4NiO2LZzjL4Ql3nhr2A5EVh3WntCIdXUyZy5c0vA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028150;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wzBOV1koh9hDe7Cqj8j29NWQ1LkrvjUG9UWOoWaqRuY=;
-	b=bpPfwTRgKKUMH4GPflMlX276Dy4+t0v+FMSuOf14L09oVlXnjPTMyM2CA+MSG35lBxCG
-	 z/3rbMjd+ukHjGh5PVykw05XUI+YTd2U79DyMeXovVr+NsewMnH/Y3LK+5rIgQ0MpXEUf
-	 kioDD4Ge2uM15XX1+EhIaHbQAoVJ6kVC97TBKCJRb1Pe2eJxcqaCuXS/VA2PMWr4YcEHf
-	 1wPTj+qPHp5lfIQ7xJj9BOLhmWe4kLEKRxETQVgEP//w2vZ7cyvcwzBqtgb++igFS2Y61
-	 62gqVqQLcDxbTYl+/rJUO6tZ0fm67IxxuMrXvOn5xklPA5qTRJjdF+CMPg4zwLZplTQ==
+	bh=6UFWD74jldaNt/5Ss8i+/STu8nY/gnwTDcgkYDmRchQ=;
+	b=RCiueEvqb3N04rnhx5a3JIO/rts2Ey51FU1VxXXzHvFeKL2oY6uBBGuEvRBMhzfyYVdo
+	 YTiGRndPNLPYmjEsOL9YRrFmMeTNMm13GepVFs1t8/L0mPjbGZX6q3rp/39HUyf83CgV6
+	 2EveJnol8Qgm+bgKQOT+e3q3mY3e2NNE1/OwD9WqoC4k7DeScXg7/jypRAT3fzZs7WZ/O
+	 QNiZ+PE4FSPNAFnaEMPMGzSDcXF6HFS3ejOirINsi5quASF34tM389Ci0Zku5R1vsLVZS
+	 waW9zKZU2VJAhJ7+vCe1PpLDO27uNi2tTxN7+M4WcJTM/g7UD5xZ3GIGFZSdJZPoTTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixEKPLVy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISd7QDmg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A0A606A31C;
-	Wed, 18 Nov 2026 18:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB47606A31C;
+	Wed, 18 Nov 2026 18:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ixEKPLVy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4025D1F000C4;
-	Wed, 18 Nov 2026 18:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ISd7QDmg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0011C1F000C4;
+	Wed, 18 Nov 2026 18:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028147;
-	bh=wzBOV1koh9hDe7Cqj8j29NWQ1LkrvjUG9UWOoWaqRuY=;
+	s=korg; t=1795028150;
+	bh=6UFWD74jldaNt/5Ss8i+/STu8nY/gnwTDcgkYDmRchQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ixEKPLVyuxSiUvkPbXofqyFo/tvqKZd6B6snM2F6SJwbYSz+AYYoTSgAJKvPU0Du3
-	 23XpQBG2o9hTCjExicUBL+u3N9cGlCVr1ZRMSZnH6y9V5hQPdBTprMbRWrPCkOy/OH
-	 MuxvDEpoXXuh8cwwefT0lkp9wzZhdpw64ESf9ws4=
+	b=ISd7QDmgLvuiI5zqfmkwmycjVda2Q8kbzVjoVrUKgytwuPYLEiybWOLtW4gbu0zFU
+	 YvsbxPR1tuHkYuy67WpYZM4+VSQkLPXPxzIxasBJ0MNRJENuvlkcv4XJBNTDOC6dBL
+	 weRwrSaUeoER+XFMhWZgswhmmbvtUCR79dwffJWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2040/2151] blk-cgroup: dont free a blkg with its punt work queued
-Date: Wed, 18 Nov 2026 16:02:55 +0100
-Message-ID: <20261118150236.041795168@linuxfoundation.org>
+Subject: [PATCH 6.18 2041/2151] blk-iolatency: flush enable_work after going offline
+Date: Wed, 18 Nov 2026 16:02:56 +0100
+Message-ID: <20261118150236.077247701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,89 +71,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 4def096314cf29fb6940b74c087a0b923185580e ]
+[ Upstream commit 020f61242d6ebeba5f8f2ef6e429aeffdd63f1c1 ]
 
-blkg_async_bio_workfn() relies on the bios on the list pinning the blkg.
-But blkcg_punt_bio_submit() can call queue_work() after a running
-instance already took and completed the bio, and queue_work() succeeds
-on an empty list for the same reason. Nothing holds the blkg then, and
-free_work shares its memory with async_bio_work on top of that.
+blkcg_iolatency_exit() flushes enable_work before it deactivates the
+policy, but iolatency_pd_offline() schedules it again for the last group
+with a target, so the blk_iolatency is freed with the work queued. Flush
+it after the deactivation.
 
-Hold a reference across blkcg_punt_bio_submit(), give the two works
-memory of their own, and cancel async_bio_work in blkg_free_workfn().
-
-Fixes: d3f77dfdc718 ("blkcg: implement REQ_CGROUP_PUNT")
+Fixes: 8a177a36da6c ("blk-iolatency: Fix inflight count imbalances and IO hangs on offline")
 Cc: Tejun Heo <tj@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-20-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-24-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 13 ++++++++++++-
- block/blk-cgroup.h |  6 ++----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ block/blk-iolatency.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index ec52f9eff4069..610ea63ad3861 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -118,6 +118,11 @@ static void blkg_free_workfn(struct work_struct *work)
- 	struct request_queue *q = blkg->q;
- 	int i;
+diff --git a/block/blk-iolatency.c b/block/blk-iolatency.c
+index 17e530b93c48c..741c804c217bf 100644
+--- a/block/blk-iolatency.c
++++ b/block/blk-iolatency.c
+@@ -637,8 +637,9 @@ static void blkcg_iolatency_exit(struct rq_qos *rqos)
+ 	struct blk_iolatency *blkiolat = BLKIOLATENCY(rqos);
  
-+#ifdef CONFIG_BLK_CGROUP_PUNT_BIO
-+	/* It may have been queued for bios which an earlier run has taken */
-+	cancel_work_sync(&blkg->async_bio_work);
-+#endif
-+
- 	/*
- 	 * pd_free_fn() can also be called from blkcg_deactivate_policy(),
- 	 * in order to make sure pd_free_fn() is called in order, the deletion
-@@ -212,7 +217,7 @@ static void blkg_async_bio_workfn(struct work_struct *work)
- 	struct blk_plug plug;
- 	bool need_plug = false;
+ 	timer_shutdown_sync(&blkiolat->timer);
+-	flush_work(&blkiolat->enable_work);
+ 	blkcg_deactivate_policy(rqos->disk, &blkcg_policy_iolatency);
++	/* iolatency_pd_offline() schedules it for the last group with a target */
++	flush_work(&blkiolat->enable_work);
+ 	kfree(blkiolat);
+ }
  
--	/* as long as there are pending bios, @blkg can't go away */
-+	/* blkg_free_workfn() waits for us */
- 	spin_lock(&blkg->async_bio_lock);
- 	bio_list_merge_init(&bios, &blkg->async_bios);
- 	spin_unlock(&blkg->async_bio_lock);
-@@ -239,10 +244,16 @@ void blkcg_punt_bio_submit(struct bio *bio)
- 	struct blkcg_gq *blkg = bio->bi_blkg;
- 
- 	if (blkg->parent) {
-+		/*
-+		 * Once it is on the list, a run which is under way can submit
-+		 * @bio, and its reference goes when it completes.
-+		 */
-+		blkg_get(blkg);
- 		spin_lock(&blkg->async_bio_lock);
- 		bio_list_add(&blkg->async_bios, bio);
- 		spin_unlock(&blkg->async_bio_lock);
- 		queue_work(blkcg_punt_bio_wq, &blkg->async_bio_work);
-+		blkg_put(blkg);
- 	} else {
- 		/* never bounce for the root cgroup */
- 		submit_bio(bio);
-diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
-index fd206d1fa3c98..931450d72d892 100644
---- a/block/blk-cgroup.h
-+++ b/block/blk-cgroup.h
-@@ -76,11 +76,9 @@ struct blkcg_gq {
- #ifdef CONFIG_BLK_CGROUP_PUNT_BIO
- 	spinlock_t			async_bio_lock;
- 	struct bio_list			async_bios;
-+	struct work_struct		async_bio_work;
- #endif
--	union {
--		struct work_struct	async_bio_work;
--		struct work_struct	free_work;
--	};
-+	struct work_struct		free_work;
- 
- 	atomic_t			use_delay;
- 	atomic64_t			delay_nsec;
 -- 
 2.53.0
 
