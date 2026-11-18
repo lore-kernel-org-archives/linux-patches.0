@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055809;
-	b=NtZhWh80ZpcbjGLMq0FpyHABc6t3uXSRut2WptPTdfH3qUzjjmq8k8rOExvLCHEaEmni
-	 4zT7V4S/P0Z3bCtf/kK9YA9dZKZR2mwxGRsTKjGs1Ex13rcvDqXQhsdO4ma9M2dV1ONCv
-	 k3bOdpE31ninC+PhYkeAfDZzE+6qMJgxgn962Mb7ceMkIdeGE2t9A4f41Wac/UgCdEN6K
-	 tAJJJyMuZuIp0BsLxSa/rEUxWy8aAlrCmrPHCxhukjj3LcQUlp0UeEPtNB2Ins3tgdtBF
-	 zZOKw4BKk9NG+gFBgLO6QSdIyKcRWuVtNxUoBb95n45B3PpiDShLsLRnNLjBe8rihrA==
+	t=1795055812;
+	b=ktZzxubfxudX12BTLw+LB6JHGtqPswi9MKEQvkOg/37D3WwhXDjVt3nUeaaAjzcs+eiE
+	 wQfLMgeJBc9K12VWa8OheQ5fx/fsv8Wc0Y8c0sLDzBWCAO3zsgX2fH50mYoKIo5qoaiWa
+	 XDV53gw2ahZIYGIMnsCuXXZ5VUDfk8tVDwBP2Mh4hhQulvewMOexjsnD05zKRngJGZmta
+	 hXXuvREbx/Z18z8lp8zpritP/OSKxLjJuuNXBFEqzTidVUHVDvEHMRbj4mafkW+C59YOk
+	 UXCpNfGOmNL6CMthSTSqNeDVcBNRACt98Nt0msrWp0lwWuUD6PUz7aM+hlTLlqKjoiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055809;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055812;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/lAiZDSQ8yLqtpaebQiWNnY7/Bu+xSb22WAXMHS8CZI=;
-	b=z9BtrNHYCh2jPpswkFU0H+FcROJ0RMYJoIvKZB2QiHj+7BMWqjce4FYnZAfmqztxodJ+
-	 MAmIIgar0ZRss4pTa2HNy6KVHO2tUrOSy4FZ6oGbHNdm7C6HcKNmy+E8Uac1duW+z9AOS
-	 qy3tjLK52M8HzGYPeNaoJEgCvB5Onm4xFlOEU7QXDdf0F0zKpbieL774Z8zLi9KytMJRU
-	 KNwvS8z5HVVao/XsIW4N5QFszJHktYRCZvHSmDQ3Ma/qxUxt1+4e4o390nVb7DsY57tfe
-	 jEElnD3OsqxPPezhEfLURU9urcsasrTqvF08RwsrUvwJaze/fLhs+3XFhTvz9t3H7zA==
+	bh=ewr20IEUr8CkpCvoIaE2mS5WBenHSq0M3gBN4JlViog=;
+	b=BnmrhyEO3uAz40JLO3+QtJLbMIiwlNx+LYsW/dH2GP4yvprRSyGBQTV32nIDPwBZ2rmJ
+	 Uyf2NIxF40e96bfTGpTF4a65APrl9BCBodZvsFtByYC+701/PvXKKf42jE5v6RVCioM2n
+	 Y+6XY4tpScrfuW4LVAAT6Pg9EJ8Pzeh48nXc4VpCQnH4ozni/kDKIGqBVe/ietndiklWr
+	 I3GLPkow2/WlCSzaxOmRh2TK0fwnuxHKXixGco6S2H4Dwpt9eFVfoOeLAUbzXi34911jj
+	 Tgg8CYbPuRh6z/g6/VG6VC8qPP5xRPSbGB6uK8su/JWNO2O9ya9WyVrmnkLXdRjyEjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ByIcfxGA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9tu2f74;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F8D60A2606;
-	Thu, 19 Nov 2026 02:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD78606A335;
+	Thu, 19 Nov 2026 02:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ByIcfxGA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C97F1F000C7;
-	Thu, 19 Nov 2026 02:36:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9tu2f74
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00411F000C5;
+	Thu, 19 Nov 2026 02:36:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055809;
-	bh=/lAiZDSQ8yLqtpaebQiWNnY7/Bu+xSb22WAXMHS8CZI=;
+	s=korg; t=1795055812;
+	bh=ewr20IEUr8CkpCvoIaE2mS5WBenHSq0M3gBN4JlViog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ByIcfxGA4wsnjk+sTA8lwUvJLILwu/6y52qCYOje6PH4CNsmpOSIPUklsDflIfA4h
-	 o+Lif2N9SuOObZaeiOwjtHprBjQe8iZjIqIeBnF0xvVtOd77VaH8j5XipJURmd7a0U
-	 /rJbMDT1QiUEQGw0oEYDqGqaE5dU0MT7txpBUdn0=
+	b=i9tu2f74ajj/vBWf0vtilomvsEl3sAej9O9JYqoNrBguY+O+RzQJdzHWxdQaZh6Q6
+	 w1zyFZckCE+3smep0/s9uJdH8ze+fo98rh6T6KrG5fH5Mvtbp1DOeFx1ttN/zE/qv4
+	 nbfhaBXa69P3Trxe7eyukUU7n50l8f1lazYUE9wA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1763/2214] dmaengine: ste_dma40: Fix probe LCLA free
-Date: Wed, 18 Nov 2026 15:57:19 +0100
-Message-ID: <20261118150122.066189538@linuxfoundation.org>
+Subject: [PATCH 5.15 1728/2214] power: supply: ab8500_charger: Handle detection errors
+Date: Wed, 18 Nov 2026 15:56:44 +0100
+Message-ID: <20261118150120.827435681@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,43 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 750dfcdb7a406bdd52d604099a631bbe96ddda91 ]
+[ Upstream commit 1098c619ce7595a77a8c2e366a703e9fc5f29bf7 ]
 
-When LCLA is placed in ESRAM, d40_probe() stores a devm_ioremap()
-address in lcla_pool.base and leaves base_unaligned unset. The
-destroy_cache error path can then pass the ioremap address to
-free_pages().
+ab8500_charger_detect_chargers() returns either a charger bitmask or
+a negative register-access error. The probe and component-bind paths
+use a negative return value as a bitmask, making failed reads appear
+as both AC and USB connections.
 
-Only free lcla_pool.base with free_pages() when the driver allocated the
-LCLA pool from normal memory. The ESRAM mapping is devm-managed.
+Propagate detection errors and release the bind-time workqueue on
+failure.
 
-Fixes: 339f5041089a ("dmaengine: ste_dma40: Use managed resources")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225114.AE1511F000E9@smtp.kernel.org/
+Fixes: 84edbeeab67c ("ab8500-charger: AB8500 charger driver")
+Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
 Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-13-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-10-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/power/supply/ab8500_charger.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 13c632d292dbe..e017298156f9c 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -3684,7 +3684,8 @@ static int __init d40_probe(struct platform_device *pdev)
- 				 SZ_1K * base->num_phy_chans,
- 				 DMA_TO_DEVICE);
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index ae9e938188829..7f35863717c7c 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -3335,6 +3335,10 @@ static int ab8500_charger_bind(struct device *dev)
+ 	}
  
--	if (!base->lcla_pool.base_unaligned && base->lcla_pool.base)
-+	if (!base->plat_data->use_esram_lcla &&
-+	    !base->lcla_pool.base_unaligned && base->lcla_pool.base)
- 		free_pages((unsigned long)base->lcla_pool.base,
- 			   base->lcla_pool.alloc_order);
+ 	ch_stat = ab8500_charger_detect_chargers(di, false);
++	if (ch_stat < 0) {
++		destroy_workqueue(di->charger_wq);
++		return ch_stat;
++	}
  
+ 	if (ch_stat & AC_PW_CONN) {
+ 		if (is_ab8500(di->parent))
+@@ -3629,6 +3633,10 @@ static int ab8500_charger_probe(struct platform_device *pdev)
+ 
+ 	/* Identify the connected charger types during startup */
+ 	charger_status = ab8500_charger_detect_chargers(di, true);
++	if (charger_status < 0) {
++		ret = charger_status;
++		goto remove_ab8500_bm;
++	}
+ 	if (charger_status & AC_PW_CONN) {
+ 		di->ac.charger_connected = 1;
+ 		di->ac_conn = true;
 -- 
 2.53.0
 
