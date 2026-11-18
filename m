@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041344;
-	b=2StoFVgMdAsZCOkIz4Lml9C6rhW/owpmWJP5ukn5mRdZc9IQK2o7XpXT1fd8UHBfQXXm
-	 +ePlk1QlVhJDByvYKwJfkcdXwKNrZUwXRFRcJDPULGANQkuWXIE3k98nTvg7u8vgl14JT
-	 KJ5sHA853tGWpHn3f1qABH9EWOCSOkFpXXRgcVXdKonH1Swd642po58Szb4qKLdgWGy6k
-	 RZTyjMDWOhlETlfszYjUPyR2k4eBsVaT4/RaP5OiWft8uakrsyykMcro98uISuzlBA7zP
-	 IglAAJ6SK15w4O226LUxdAkqNOaGdfkiC/OnL49RNGzoqxzOrF5KHPGB64fu4vzqEtg==
+	t=1795041347;
+	b=wXry3HOB29bGT147QVxezqGLLCqxZqiJVrWTSOgQ7pyejw4yU77RRwq4KouJQOyhecIL
+	 heh5mbFAnE/AY9GE8JDzjUfGKSn6D5XAJsrxgqRjBTyCr59aV9Of9D621Fp+BqvX32an6
+	 vDJ3ghFo1YijMz0zy41JdRPMZRrqFFbXo8RrLiLVZ9hXupU71Fd4jDHniBy8DpaKr7Pnl
+	 zNSQbrneOk84/pgxFcMgX4M9HHhQxcXkioFKQbkygNoZ1FZ9MbTOHc2warZiVRvkXslCN
+	 9udVSTV9nor9PZIlz+7hkF9Ls4mDISgENH5YQTVHcokBo9le3zcfwHboMPkNFqN1Bug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wl62dgSybgJvgzYA5MB6stGhoTtkOiLDRJ4K/OV9Hr0=;
-	b=jaKcoslKO54DLeibbhnKKjsP1gyRGdr41RK9w9TF56WK/C2ii/7oJ70GutDvJdDfTKjU
-	 uLqpakMwCrKr700lARiVZOYgkrJM2wprQJnJz7X0WWfw+gcsRLxKgqDoZrmTrI0o6n6zU
-	 /tkT3wexD3vzgPqmG5C/mh7ujGZJU5WT2TZFFDfPz7icNkEBbBAIhMJsSyrHHrdOTFozO
-	 IM8VAQwCUwpGPVABmk+Qpq3S/okdlEsFWKVljT5GNOfKMyHGMhGGcVkPCRAljP+VKTep/
-	 R+SOhohwzjU2CoTfjkDcfqUiHJmBMZk+qWp52i7RFMcvxpErtF0GNd5a99T0mV3/K6Q==
+	bh=nQKGzf4u+ZcxIkOjlaHS5XocWfiQStzwR6GYRjRbcs4=;
+	b=EphjOlHdBpNuQJ8WoRbby1FAQ49k4bE6QmLa/KPIwth9Y9v1gjxAU6MZAC4CgSBK8xFP
+	 N50L4DzudD/PBIGN+ddYJb1Smn+SdkQXdmyFseSjrTArIyCZBV2QkO1pt9ZH7aQboLQRa
+	 wG+derPMQxYP6fBxQr1Epn2D28fInOoiHXMTJ+/nsbR045VcnadXA1HCWhTwDrS+BkYbf
+	 12B5dv6Bqg6OmzAFqwmz0z2zYF8PVGiZcR63fBhNpxk8O/j3P3gfVFl2edKsBEKaHlzBV
+	 MNDFR/XWquPNWKJ+i8FXo1ecUecyXvaVNDDetWytN2sEQUE+ZjePvUJwx5PJTH8tqyw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dz4vzuQF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="F92L/wsO";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D830606A32A;
-	Wed, 18 Nov 2026 22:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49217606A325;
+	Wed, 18 Nov 2026 22:35:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Dz4vzuQF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34BB1F000C4;
-	Wed, 18 Nov 2026 22:35:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F92L/wsO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08BF1F000C4;
+	Wed, 18 Nov 2026 22:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041344;
-	bh=wl62dgSybgJvgzYA5MB6stGhoTtkOiLDRJ4K/OV9Hr0=;
+	s=korg; t=1795041347;
+	bh=nQKGzf4u+ZcxIkOjlaHS5XocWfiQStzwR6GYRjRbcs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Dz4vzuQFRRXUFE/bwx/NnraFc/rZ9B9WInC+DtfESgDYS3A8XJN4u/kg0SXYBs+8H
-	 lENZfnDcT04yT+PrMxPdmsSBPtT1Du6wwEKjPWwS+5shT4OZI3AfxbIVDZmhrjhR8s
-	 dRHTY6xv4QIJyae40NKAmAGKr6mtN6qAuYwRioZs=
+	b=F92L/wsOEOXQJcHO7E5g+Brj0fCD2sAtyAsb2VD4gXH5FeVgwjiGRaBio/2KHUjn3
+	 SDQ5u7OVwspB9yFVJquI0I7VZZy/mIcVdbpduio7TQd42l8z7Lc7tSpd0FtiSzjPbI
+	 IjEc3gbXnSro3swZXO+QRtwuXZXpOV73Y0XkY0bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	VEGA <vega@nebusec.ai>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Eric Dumazet <edumazet@kernel.org>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2780/3318] tcp_hybla: fix divide by zero on rtt0 == 0
-Date: Wed, 18 Nov 2026 15:56:42 +0100
-Message-ID: <20261118150444.102709300@linuxfoundation.org>
+Subject: [PATCH 6.6 2781/3318] tcp_cubic: fix divide by zero and endless loop on bad module params
+Date: Wed, 18 Nov 2026 15:56:43 +0100
+Message-ID: <20261118150444.131379029@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,54 +71,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit f09eb97322b16a6f709a47599c95b62f786905f9 ]
+[ Upstream commit 7d52b5d16afc1cf8484ae321658e217a80e3ff4d ]
 
-rtt0 is the reference RTT in ms, so 0 makes no sense, and
-hybla_recalc_param() divides by it right from hybla_init().
+beta_scale and cube_factor are computed once at module init, and
+beta == 1024 or bic_scale == 0 is a divide by zero right there. Other
+out of range values give garbage: negative beta can make beta_scale 0,
+and bic_scale * 10 can overflow. Reject them. Read beta once, as it
+can be written through sysfs before the init function runs.
 
-Reject values below 1 when the parameter is written. Also cap it at
-U32_MAX / USEC_PER_MSEC, since rtt0 * USEC_PER_MSEC can wrap to 0 on
-32-bit. An rtt0 above that (about 71 minutes) makes no sense anyway.
+A small beta also gives a small beta_scale, and (cwnd * beta_scale) >> 3
+truncates to 0 for a tiny cwnd, so the TCP friendliness loop never
+ends. Rather than testing delta on every ACK, make sure beta_scale is
+at least 8 at init, so delta is >= 1 within the cwnd < 1 million
+packets limit this code is designed for. This slows the TCP friendly
+estimate for beta < 512, a backoff harder than Reno's 0.5, which is
+not a setting anyone should use.
 
-Fixes: 835b3f0c0d7e ("[TCP]: Add TCP Hybla congestion control module.")
-Fixes: 740b0f1841f6 ("tcp: switch rtt estimations to usec resolution")
-Reported-by: VEGA <vega@nebusec.ai>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Fixes: df3271f3361b ("[TCP] BIC: CUBIC window growth (2.0)")
+Suggested-by: Eric Dumazet <edumazet@kernel.org>
 Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Link: https://patch.msgid.link/20261008092641.140777-3-jiayuan.chen@linux.dev
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20261008092641.140777-4-jiayuan.chen@linux.dev
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_hybla.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_cubic.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/tcp_hybla.c b/net/ipv4/tcp_hybla.c
-index abd7d91807e54..b9b482180d30b 100644
---- a/net/ipv4/tcp_hybla.c
-+++ b/net/ipv4/tcp_hybla.c
-@@ -26,8 +26,20 @@ struct hybla {
- };
+diff --git a/net/ipv4/tcp_cubic.c b/net/ipv4/tcp_cubic.c
+index 5ff7be13deb6b..64910dd2ba9bf 100644
+--- a/net/ipv4/tcp_cubic.c
++++ b/net/ipv4/tcp_cubic.c
+@@ -507,16 +507,26 @@ static const struct btf_kfunc_id_set tcp_cubic_kfunc_set = {
  
- /* Hybla reference round trip time (default= 1/40 sec = 25 ms), in ms */
--static int rtt0 = 25;
--module_param(rtt0, int, 0644);
-+static unsigned int rtt0 = 25;
-+
-+static int rtt0_set(const char *val, const struct kernel_param *kp)
-+{
-+	/* avoid rtt0 * USEC_PER_MSEC overflow */
-+	return param_set_uint_minmax(val, kp, 1, U32_MAX / USEC_PER_MSEC);
-+}
-+
-+static const struct kernel_param_ops rtt0_ops = {
-+	.set = rtt0_set,
-+	.get = param_get_uint,
-+};
-+
-+module_param_cb(rtt0, &rtt0_ops, &rtt0, 0644);
- MODULE_PARM_DESC(rtt0, "reference rout trip time (ms)");
+ static int __init cubictcp_register(void)
+ {
++	int b = READ_ONCE(beta);
+ 	int ret;
  
- /* This is called to refresh values for hybla parameters */
+ 	BUILD_BUG_ON(sizeof(struct bictcp) > ICSK_CA_PRIV_SIZE);
+ 
++	if (b < 0 || b >= BICTCP_BETA_SCALE ||
++	    bic_scale <= 0 || bic_scale > INT_MAX / 10) {
++		pr_err("tcp_cubic: invalid beta %d or bic_scale %d\n",
++		       b, bic_scale);
++		return -EINVAL;
++	}
++
+ 	/* Precompute a bunch of the scaling factors that are used per-packet
+ 	 * based on SRTT of 100ms
+ 	 */
+ 
+-	beta_scale = 8*(BICTCP_BETA_SCALE+beta) / 3
+-		/ (BICTCP_BETA_SCALE - beta);
++	beta_scale = 8 * (BICTCP_BETA_SCALE + b) / 3
++		/ (BICTCP_BETA_SCALE - b);
++	/* bictcp_update() needs (cwnd * beta_scale) >> 3 to be >= 1 */
++	beta_scale = max(beta_scale, 8U);
+ 
+ 	cube_rtt_scale = (bic_scale * 10);	/* 1024*c/rtt */
+ 
 -- 
 2.53.0
 
