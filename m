@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061992;
-	b=lnxm+/Hv6TOJbGhmCTqIjm5dv3OmT6AOB706dT4ddZgmBP+Kf1rKaz5FGEx8oXT+oZJB
-	 KWhXcv2jxbDegNG4fBkxrbIMengUCokVKHDojzYOsGuH5/Q53mO/eT09CIM7tYBWaQ0ru
-	 G0XvLjNWlIw2iWYq/l+Jtm3WPN8hdSrxrNevE3q0L/AiNsUpvvZfvwWaAq3uWiknOQRHP
-	 KXKLrYrGhs6H7SLEbLbPPyKUot7GxoejYvYz/Jc/w+36ESd2yRGNZsZusE+RPj+8LSLIF
-	 N7m5hNaoIZBGUDr4k9//0qayO6gGK5lKizU3MaQitlNZXJ9/3021XzOfRG1Fhz/vNJw==
+	t=1795061995;
+	b=Nce0hIavtSSjAo3o9rXJgr4XrRvn9RsSixM2lfCyifX9LEgL+/j9LuaLddOszVnspEnw
+	 cUYGw+lvxHgCArfwdDavNHvGn7sZ7dhtvNUSgoPcBZ1QSshoAyLvoBRPfLwxuwo/iD/rR
+	 201uxmH8uyyL/KiW4FQo5mzs+GHoTaMHHqWW5v0xcLH3RnBwogsE9iWv29pHQEML9XqeQ
+	 zTjRr/VDHTuZFcVdycdq571XSzT6xsmF7zR9x272Ggq/UzvzW0kQlzU8ZeX96KB5kpyav
+	 cS5pNVWuV+Inoc0c8O58Ej4POI8zGwTspSh1cyb0E7ySUuIquzYwBq++gOXm/48jxmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061992;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061995;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yQ4Gjzx+C7itv6H1FV/B19vqxxhJUyXgeNLbFE/ALTM=;
-	b=GsROtHHGUch8qCHghCWeY9Zji/OL9KK5LCNz5gaMvPMHPof3ZWRmuu8NYHwwkllRDfzQ
-	 6NL0q/1Za4W6Fv0qhB7nlwQrGGsqsY4NL00BTYvfgZDraaCBaTG3+PTiz5wVcizsCowYn
-	 3sDqe7NrZk97SY4OXAPAVDG1eQ6g6mEdjEvWkGuKcZLn+m/zv4F9EicHxtY3b+BwA+vsb
-	 +xtvK0Nzggz8algCK0lFsWntQyIAzw+w8xx8XNEpWn8tJT9Gro4a+NXYOxF9shvXEYCoB
-	 AJ5kQXlAbFToyzwR7byiYttPdx04qCFoPRJOTCcyxfursc9VeZvq2fI4Hr2PJzOgP1Q==
+	bh=TrIXWND52O0fWsYndlg0NGq5ZbHhzVC1QbBdPPySyAM=;
+	b=I45aci8o8BAcQwB1t9B+8LWQpOxatpoF/QE8PEQfhdF029F0JStd+gshHgHBtmgur7cO
+	 pDIdU2lezb7zUa4Q+8X1x22ilKiyVJlIOqTUXJv85KvwGfSNLyS0RrhpAQDJZ7TyQVuvd
+	 fifWYpcpusXb1NkmUpiQDxK+vNldRLqgtgh9HPFfxWalBRDyLegwlIbESTveIKGHu9BFM
+	 t3z2r9I03rFg6SSBT6P6vVXL+VaDcziOIf3zFRBMwmeFwSfTG5eQwi1y1b1v5GTckB0W9
+	 BZP0FkIsKtKm6CMSEv3jfpWypigJNJHTKUUj8eQiO49Gt91zfUnK/kXWeVFgxcYsu8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=THGstUD0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vsrv7R3l;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0A6606A32F;
-	Thu, 19 Nov 2026 04:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CA6606A325;
+	Thu, 19 Nov 2026 04:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=THGstUD0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A613B1F000C4;
-	Thu, 19 Nov 2026 04:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Vsrv7R3l
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545AB1F000C4;
+	Thu, 19 Nov 2026 04:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061992;
-	bh=yQ4Gjzx+C7itv6H1FV/B19vqxxhJUyXgeNLbFE/ALTM=;
+	s=korg; t=1795061994;
+	bh=TrIXWND52O0fWsYndlg0NGq5ZbHhzVC1QbBdPPySyAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=THGstUD0Lh3VTTQngl0wcl69UvcbBeztSDzb7LY9i2hJ1yQ4xNZrDkNz9fdltuESl
-	 RWW7MK2u2aq7/lZsivjbModUyv2+3MBTkXJVUbKCLPmWPcFDDNYr4iljSPh8HGyOnA
-	 dyHMhfjE/dly1+sXdcNCMqoODk8wOrTl2UZ4ijSM=
+	b=Vsrv7R3la8oh8+/BoJ6yYADCastzw18Ju/VYBtzo3adSfJ9MiAxAHCOTZd6uqEI0N
+	 1ODWybNXrJGlQo8VR7BpAuPiegP6VQ7FR52yhZEOEo2igaDKNdZ4s3H6VtcIMayyZv
+	 M3o0Er8SFDjP4sQfutSHPiMXlCvSvJ2qDF3u/WpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <snelson@pensando.io>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Eric Joyner <eric.joyner@amd.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1751/1848] ionic: remove some unnecessary oom messages
-Date: Wed, 18 Nov 2026 16:03:09 +0100
-Message-ID: <20261118150032.775990898@linuxfoundation.org>
+Subject: [PATCH 5.10 1752/1848] ionic: fix port_info use-after-free on firmware recovery
+Date: Wed, 18 Nov 2026 16:03:10 +0100
+Message-ID: <20261118150032.812395473@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,86 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shannon Nelson <snelson@pensando.io>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit c0c682eeb8ccb11c05c29c34820224b7556cdf19 ]
+[ Upstream commit d90d1a768b3b022c52beafb3a4701ee2ee3d2b5e ]
 
-Remove memory allocation fail messages where the OOM stack
-trace will make it obvious which allocation request failed.
+ionic_port_init() allocates port_info when the pointer is NULL, but its
+error path frees it without checking whether this call allocated it.
+Before commit ddc5911b9bd2 ("ionic: call ionic_port_init after
+fw-upgrade") the function returned early when the buffer already
+existed, so the two were symmetric.
 
-Signed-off-by: Shannon Nelson <snelson@pensando.io>
+Since then a failed PORT_INIT on either recovery path - fw_up or
+reset_done - frees a buffer an earlier init owns, while the netdev is
+registered and the ethtool ops are reading it.
+
+Free only what this call allocated.
+
+Fixes: ddc5911b9bd2 ("ionic: call ionic_port_init after fw-upgrade")
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Signed-off-by: Eric Joyner <eric.joyner@amd.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-1-57232013fd79@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: d90d1a768b3b ("ionic: fix port_info use-after-free on firmware recovery")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_dev.c  | 2 +-
- drivers/net/ethernet/pensando/ionic/ionic_lif.c  | 8 +++-----
- drivers/net/ethernet/pensando/ionic/ionic_main.c | 4 +---
- 3 files changed, 5 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/pensando/ionic/ionic_main.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_dev.c b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-index b5f681918f6ee..4fc7af836a061 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_dev.c
-@@ -142,7 +142,7 @@ int ionic_heartbeat_check(struct ionic *ionic)
- 
- 			work = kzalloc(sizeof(*work), GFP_ATOMIC);
- 			if (!work) {
--				dev_err(ionic->dev, "%s OOM\n", __func__);
-+				dev_err(ionic->dev, "LIF reset trigger dropped\n");
- 			} else {
- 				work->type = IONIC_DW_TYPE_LIF_RESET;
- 				if (fw_status & IONIC_FW_STS_F_RUNNING &&
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index f0c48f20d086d..ea6e7a7ddf822 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -855,7 +855,7 @@ static bool ionic_notifyq_service(struct ionic_cq *cq,
- 	case IONIC_EVENT_RESET:
- 		work = kzalloc(sizeof(*work), GFP_ATOMIC);
- 		if (!work) {
--			netdev_err(lif->netdev, "%s OOM\n", __func__);
-+			netdev_err(lif->netdev, "Reset event dropped\n");
- 		} else {
- 			work->type = IONIC_DW_TYPE_LIF_RESET;
- 			ionic_lif_deferred_enqueue(&lif->deferred, work);
-@@ -1064,10 +1064,8 @@ static int ionic_lif_addr(struct ionic_lif *lif, const u8 *addr, bool add,
- 
- 	if (!can_sleep) {
- 		work = kzalloc(sizeof(*work), GFP_ATOMIC);
--		if (!work) {
--			netdev_err(lif->netdev, "%s OOM\n", __func__);
-+		if (!work)
- 			return -ENOMEM;
--		}
- 		work->type = add ? IONIC_DW_TYPE_RX_ADDR_ADD :
- 				   IONIC_DW_TYPE_RX_ADDR_DEL;
- 		memcpy(work->addr, addr, ETH_ALEN);
-@@ -1200,7 +1198,7 @@ static void ionic_set_rx_mode(struct net_device *netdev, bool can_sleep)
- 		if (!can_sleep) {
- 			work = kzalloc(sizeof(*work), GFP_ATOMIC);
- 			if (!work) {
--				netdev_err(lif->netdev, "%s OOM\n", __func__);
-+				netdev_err(lif->netdev, "rxmode change dropped\n");
- 				return;
- 			}
- 			work->type = IONIC_DW_TYPE_RX_MODE;
 diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-index 694e710244e69..28617afecf287 100644
+index 28617afecf287..b21ccc54c0b7c 100644
 --- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
 +++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
-@@ -513,10 +513,8 @@ int ionic_port_init(struct ionic *ionic)
- 						     idev->port_info_sz,
- 						     &idev->port_info_pa,
+@@ -504,6 +504,7 @@ int ionic_port_init(struct ionic *ionic)
+ {
+ 	struct ionic_identity *ident = &ionic->ident;
+ 	struct ionic_dev *idev = &ionic->idev;
++	bool allocated = false;
+ 	size_t sz;
+ 	int err;
+ 
+@@ -515,6 +516,8 @@ int ionic_port_init(struct ionic *ionic)
  						     GFP_KERNEL);
--		if (!idev->port_info) {
--			dev_err(ionic->dev, "Failed to allocate port info\n");
-+		if (!idev->port_info)
+ 		if (!idev->port_info)
  			return -ENOMEM;
--		}
++
++		allocated = true;
  	}
  
  	sz = min(sizeof(ident->port.config), sizeof(idev->dev_cmd_regs->data));
+@@ -531,10 +534,12 @@ int ionic_port_init(struct ionic *ionic)
+ 	mutex_unlock(&ionic->dev_cmd_lock);
+ 	if (err) {
+ 		dev_err(ionic->dev, "Failed to init port\n");
+-		dma_free_coherent(ionic->dev, idev->port_info_sz,
+-				  idev->port_info, idev->port_info_pa);
+-		idev->port_info = NULL;
+-		idev->port_info_pa = 0;
++		if (allocated) {
++			dma_free_coherent(ionic->dev, idev->port_info_sz,
++					  idev->port_info, idev->port_info_pa);
++			idev->port_info = NULL;
++			idev->port_info_pa = 0;
++		}
+ 	}
+ 
+ 	return err;
 -- 
 2.53.0
 
