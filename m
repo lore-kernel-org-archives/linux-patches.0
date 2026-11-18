@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015659;
-	b=jV/xl/3gMf12JIezKerMV63mMlXVFmEyUYLcdeBRaveBZqE3eDRYWy4+hRUcVeW/3a7F
-	 0bidzmeqd5fVNKIwRWYcqqsHsArr2WEym4dqrfK+7HP8I4zTxvS7CKTZfOMDtgYESPP43
-	 bwpaZ4dojgNqoatad4SXUnVXCEd+voXuEY8dpBPd9amT19oNhvnbUB/mDQiKw5KgrPnD3
-	 lQ7GN3A2SIi5TzPxmwtNwfPZeT0xQF1vOS3J/g1yBXxtIjQmY0Mjpp2SAac/giytd3h2t
-	 yOTJs9UCrrXmEvvBHBcpXqJ4ZW1J8taT2MDCk7TicF2w0jt/6VlldBre8L9gDjdIqew==
+	t=1795015662;
+	b=3mBuzNQ2LvtZe4TPGkT5/hJri0o2XLdAXta2SzIk06VV51yHDClKdrsNfWWgWAnMSbRr
+	 ZT3nJaqPyApKyZnk449j2tZQ7F2K6CKT4FD7jJneMisSR7t4KpbQlEfjVM/aGDTo7Jn+d
+	 GHoIQwJOQ2/tpzDvRRUCK/AvU5gx+fhgM1oRtt9NpG4sEjH2hk2qGjTtaLkTcBowwnyhJ
+	 gTt61/N0RpJbIZdLp989O5LhZjid2qC9pn/miLjDeTUvX1ZmADC9ZaoklbTN0Hm0E0vCd
+	 fppXtW5CveAGW0VdrRfkZiNQrUdzl1PzFdDrOfvjM6Itz8H7WPYnwO+CcqldMRi+ATA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015659;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015662;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sQHPxJ0uzhHtdX8+Z4yB8QJDYV7c3gcUV7/mdFZC+GU=;
-	b=1jdVDKmBY9zqnTuJTEfaodBOeF3E3P9uicNwJQvD8h4JLWjVYqEJlCryE1jI+pIdQDzq
-	 MirVRf6oURCs1tDCYO9THdWYZOV+cJqIsZtnGOTvMHk1UnhFS+LJuPt3JdVrgd6m37nuv
-	 SicM0KkjIRm88lB9pq2Ql4bUdWsYzkX1dZykOJm2tCSMibVCR0olmmCgiCUW52Op8SLYt
-	 xSPA3KKGjXHTkVbWTel4MjCxHYK1nRxq4yZMBpRRuclsoe2KmcVq+Q2bkxmqVdRjhmLUZ
-	 KpvLDjPtkeusgo+dEIqCWpdSwrRXzJQFeRcGQ/RptUHgpCkJWFGwXJC3wysiNftkjbg==
+	bh=RpWFVbAM7nkgTbgYUlyY7Lkgv5WnGwSO3bLCM/IGt1c=;
+	b=5kydUDyp/BpibjBD2NugvonTvU8yNCvYwobnuxmZdQupAqjdSoqwyDU3jPn32f8+Ali+
+	 tCKo+AG+3n0sXo3kynnzgifP0TNkMqsjTZ1p8rSctG/lFc8tQbtqUNIpu+vjTlDn5mYdB
+	 3xsuatoU2eKfPwKkNIjyysLopYCq7rdRrQv7bdqbde24Ya8RYVQPltR/r99l67cXrKOj7
+	 zTn4fS0K5LMz997hKdt1MyF/bqQBviWn5//rDMaFWXJx6oO3XELYSto0nJy9QcsVXEbBs
+	 /VxanT+6uZWOJzbqnjVQZB5+ueFCEyvamijzJAu3RnwYDlCxkYvu9hSUhQcD7zd/ABg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W5JY3ifJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWx5yhg4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535DB606A335;
-	Wed, 18 Nov 2026 15:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286E060A2612;
+	Wed, 18 Nov 2026 15:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W5JY3ifJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2E31F000C4;
-	Wed, 18 Nov 2026 15:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uWx5yhg4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3EF1F000C6;
+	Wed, 18 Nov 2026 15:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015659;
-	bh=sQHPxJ0uzhHtdX8+Z4yB8QJDYV7c3gcUV7/mdFZC+GU=;
+	s=korg; t=1795015661;
+	bh=RpWFVbAM7nkgTbgYUlyY7Lkgv5WnGwSO3bLCM/IGt1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W5JY3ifJ41xdDizOu8b+3HqdVsrECYuNRDTeBx1u166zVQ5c8G5WDajWSvltyoXCh
-	 BZ16jaTJ8R3p9q8eb0eY06VFiBMzWCcz3qhst264wlsdmw+JOVqct/N5B00w0XjVJs
-	 yaIC6O1+uZzpPfp9vjJ8oMhDwcBvrIvciCsYOeyY=
+	b=uWx5yhg4fvbdubxCS35sXDPdl1VgiPY2Mq4ZGAXWESqWofQej457/GXwMP6JWTdsE
+	 DNggiQI4y02Se7AAoGSdav8cPbakWrGnzXQ8zJar/UjHB5jCsgJhNuFSEmim5xL4o6
+	 bBR1oVHh467OMFIUODdvyXx9UH9n7ia1M31AMyiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0211/2651] wifi: mac80211: drop encap offload frames with a tainted key
-Date: Wed, 18 Nov 2026 15:24:11 +0100
-Message-ID: <20261118150255.473526859@linuxfoundation.org>
+Subject: [PATCH 7.3 0212/2651] wifi: mac80211: fix IEEE80211_TX_CTL_REQ_TX_STATUS mixup
+Date: Wed, 18 Nov 2026 15:24:12 +0100
+Message-ID: <20261118150255.507790236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,39 +69,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit c8ddbe1e8c43f6d008591c50f8be8de39cdce267 ]
+[ Upstream commit e035900ffe9e8978f7c0d7b61811b6b578751697 ]
 
-When a key is tainted, which happens in some WoWLAN and extended
-key ID scenarios, frames that would use it should be dropped.
-Fix that for encapsulation offload frames.
+In ieee80211_build_hdr(), IEEE80211_TX_CTL_REQ_TX_STATUS is checked
+in ctrl_flags, which is wrong - IEEE80211_TX_CTL_REQ_TX_STATUS is in
+info->flags, so the check is for IEEE80211_TX_CTRL_PORT_CTRL_PROTO
+instead. This works out OK because the only place setting _that_ at
+a point before this gets called is in fact ieee80211_tx_control_port()
+which was intended here. This is actually needed for correctness, if
+jt were checking info->flags instead, TDLS would fill/leak the status
+frames created here.
 
-Fixes: 50ff477a8639 ("mac80211: add 802.11 encapsulation offloading support")
-Link: https://patch.msgid.link/20260802105818.870b6ef31374.Ib87175b55b9fd94c16ba6d9cd816b7a09248df87@changeid
+However, we can just fix it by using the cookie instead, that'll be
+set for PREAUTH frames via ieee80211_tx_control_port() as well, and
+no other frames.
+
+Additionally, the code also erroneously set it, but that just caused
+preauth frames to get it set, since storing the ACK SKB will also set
+the correct flag. Drop this assignment entirely.
+
+Fixes: a7528198add8 ("mac80211: support control port TX status reporting")
+Link: https://patch.msgid.link/20260803141309.292711-10-johannes@sipsolutions.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 884bf96547113..45167a2592615 100644
+index 45167a2592615..951e2c678fc5f 100644
 --- a/net/mac80211/tx.c
 +++ b/net/mac80211/tx.c
-@@ -599,7 +599,13 @@ ieee80211_select_key_8023(struct ieee80211_tx_data *tx)
- 		tx->key = rcu_dereference(tx->sdata->deflink.default_multicast_key);
+@@ -3023,8 +3023,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
  	}
  
--	if (tx->key && tx->key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE)
-+	if (!tx->key)
-+		return TX_CONTINUE;
-+
-+	if (unlikely(tx->key->flags & KEY_FLAG_TAINTED))
-+		return TX_DROP;
-+
-+	if (tx->key->flags & KEY_FLAG_UPLOADED_TO_HARDWARE)
- 		info->control.hw_key = &tx->key->conf;
+ 	if (unlikely(!multicast &&
+-		     (sk_requests_wifi_status(skb->sk) ||
+-		      ctrl_flags & IEEE80211_TX_CTL_REQ_TX_STATUS)))
++		     (sk_requests_wifi_status(skb->sk) || cookie)))
+ 		info_id = ieee80211_store_ack_skb(local, skb, &info_flags,
+ 						  cookie);
  
- 	return TX_CONTINUE;
+@@ -6662,9 +6661,6 @@ int ieee80211_tx_control_port(struct wiphy *wiphy, struct net_device *dev,
+ 	if (unencrypted)
+ 		flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
+ 
+-	if (cookie)
+-		ctrl_flags |= IEEE80211_TX_CTL_REQ_TX_STATUS;
+-
+ 	flags |= IEEE80211_TX_INTFL_NL80211_FRAME_TX;
+ 
+ 	skb = dev_alloc_skb(local->hw.extra_tx_headroom +
 -- 
 2.53.0
 
