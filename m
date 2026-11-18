@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060022;
-	b=JiNbt+dulunGbzm32Qitxur8T1QQuPEUINR6ToD9OSHtnIKSTNPy2BsakbdlvjPoFwSv
-	 jOZV6MTJI4G9Mkj0fTeDlvyecbzNkIlKz2yLsrbCkSzQdBxRWuLYOjDSwXB7dW5cmkSZV
-	 AbXxzi/jDrsaJGsNlTZUQbIYbpjqPc3puYb2Cuw86pHiRNh3S5BxvIihzpAY+WphVK6RD
-	 mFbX3EwG+Zq0dbC5HDjSSX5VQ7PRW6L3T0mH6ZLeryJxy3qqh46SY3c1GXp/PfkM+EMEE
-	 Kc3XAYn44e9oq3MD/UHxHnytQPDxY3gIarqgyYfNbZeQQJaDcGY3eGrTAxBWzJHuWMA==
+	t=1795060025;
+	b=kUNKvBbxH18tP/Wd2gL4hiTAhXujG70OR+D/tHLHny521HcQn+/k3Kxx0az+uw9KzI9W
+	 e5VR36iBUMC2S0Ncl/tohSL3TK+dAVSdRqBai06oDBNVCK7kXRR0DuUMtpT7ndWZj0E4l
+	 1/e6FLJej5R6pBIa47qw3I5vjD3muDiag0vCjr/jQAL6QZIc8fRwVV/WkYT3Va8iMpXAo
+	 T3TSouDxLPc7WGbHVJynyiv2H7okSbQuEgUyRs2nhv5a99mCEnvhoZ5T2j7bMc/N1Yqis
+	 iLnZAXm7SixlGskLCZp0CpB2isNlU3YyUKmgOVt06VbUqOZb4zYd3okwn7MNn/M7gnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060022;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060025;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tq13sSth/GJpnSGAOdPkBh8Dchd9muBluIDRAiEAYQ0=;
-	b=E+vJpEbT3CSu0hofKGhxCR8HQ8vIriDAVeidAb9afuSX6uhPhdqN7miyQI2XWspzHD9+
-	 Hg/4HKs+nsHNCqEOhGgsmJI1yS9LatZcoDKSqfyz/kDThsdmGI4q1wn1u/76x8NiGjgLk
-	 VcGK4lmZGV2kOJge959U/v2vlS4ZQL4vE5i4ci5p/jnUl23QKaVE5go4hHhVf/cOyWttL
-	 k+1S6coTtrcer/YTsR+kHujU/cWr9L/wI9uJUYWKq3J7K/Q3Btl7gMMy3qyUjMrzaxC2H
-	 4CiEeCOGVjVjLvctv2ocuRDKLHfZp0t+Ek+30NxJiW2Ea1pUnQyNH+8Pzi6jHDIpnJQ==
+	bh=+V4gYMgnhCDzW/a5jpAG7R18DD+AvXV5R0B6zUCx7wA=;
+	b=j5zThs8M7vpimYq2tQicpkf3mgMtr48PNXYS611lZfkiy7vPTqH9j+Pn2W75JF6TJ0Io
+	 VYoO2DDI3l2XWFcSQAcFYwgGK+rz8UPDAIY3WcVrYJRRyuSlLp0f8CEZ5QQizoTqj2iJl
+	 aXfgE6twb4hENUoOns3Cj5Pl5pVn1sJy9RcXU38g8sp4IStU/H80T4rR/mapV8wWaCbuj
+	 8lCgNQev7Ocif3PzNMUb2s3QknYO6V1IwG2mLQF4Euigjr+G1dD5IX5MPtO6EpuHyWn9O
+	 reEPMcX6+sGhT0tgtNVkQwTUBcvMDOfjvwEzkzn80fB1mpp1KunAUvF35sQrBlpwawg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EYl3MtGf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTW5giUr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07737606A325;
-	Thu, 19 Nov 2026 03:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31172606A320;
+	Thu, 19 Nov 2026 03:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EYl3MtGf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF551F000C4;
-	Thu, 19 Nov 2026 03:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTW5giUr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365C21F000C4;
+	Thu, 19 Nov 2026 03:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060021;
-	bh=tq13sSth/GJpnSGAOdPkBh8Dchd9muBluIDRAiEAYQ0=;
+	s=korg; t=1795060024;
+	bh=+V4gYMgnhCDzW/a5jpAG7R18DD+AvXV5R0B6zUCx7wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EYl3MtGfqI1/zPqT8CU7DguNJAgpVS5yMq+ZgPUzMV1+ws257YOT1j56p9vdUY3c4
-	 bR2S+rmSFoKG0ph2xJ7DqU6pmAHFxO56fdG2tZsqxVF5gNUW7zsoiQe+2xo+BMQnLa
-	 afm8Oj32cwT7Vxkg6kUNwenpqktBGHHVBd/C/tss=
+	b=XTW5giUrU1zzFjtK9LDJmb4Xqn9R2ULwUDQz/71yBVWB0vmVMzrfHfvklNt8467Hp
+	 PgxtNSq4yT1IQM2IUrKaqTfWcYl1vijSErrw3JBtx1Ng3Jqtq2+1Qs2czFbymmrtvz
+	 rZg31CIFI850/o/WxYj3s9FQT9V3ef4neaiDBf38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	jjzuming@gmail.com,
+	Bo Cao <treebacker@foxmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1049/1848] ocfs2: cache the mount context for dentry lock callbacks
-Date: Wed, 18 Nov 2026 15:51:27 +0100
-Message-ID: <20261118150001.223559724@linuxfoundation.org>
+Subject: [PATCH 5.10 1050/1848] ALSA: pcm: Prevent O_APPEND open on OSS streams
+Date: Wed, 18 Nov 2026 15:51:28 +0100
+Message-ID: <20261118150001.262662313@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -74,138 +68,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 5b4696e0bfc358619adaeab25ad35b4979af8331 ]
+[ Upstream commit 9017bc3d13da0ea4e63be618c87143a7b69185e6 ]
 
-ocfs2_drop_dentry_lock() drops the inode reference before releasing the
-DENTRY lock.  This lets inode eviction release the local inode and open
-locks before a remote unlink can proceed past the DENTRY lock.
+ALSA PCM core accepts to re-use the existing stream when O_APPEND is
+passed, and it's been used for dmix, etc.  However, this mode isn't
+supposed to be used for OSS: the OSS stream allows re-configuration
+via its hw_params/hw_refine procedure even while it's being mmapped,
+so it implies the usage of only a single stream.  Because of this
+assumption, the sanity check is skipped for OSS streams, and if user
+may attach to an existing OSS stream with O_APPEND, it may result in a
+UAF of the mapped pages which could be used as a privilege escalation
+exploit.
 
-A DLM callback can still arrive before the DENTRY lock has been dropped.
-ocfs2_get_dentry_osb() obtains the mount context through dl_inode->i_sb,
-which can access a freed inode when the downconvert thread drops the
-last inode reference in its post-unlock callback:
+For addressing it, this patch simply prohibits the O_APPEND behavior
+on the OSS stream.  O_APPEND is never used for OSS layer itself, so
+this can't break for the right applications.
 
-  Downconvert thread                     DLM callback thread
-  ------------------                     -------------------
-  ocfs2_process_blocked_lock()
-    ocfs2_dentry_post_unlock()
-      ocfs2_dentry_lock_put()
-        ocfs2_drop_dentry_lock()
-          iput(dl->dl_inode)
-          [inode reclaimed after RCU]
-                                         ocfs2_blocking_ast()
-                                           ocfs2_get_dentry_osb()
-                                             dl->dl_inode->i_sb
-          ocfs2_simple_drop_lockres()
-
-Store the mount context in the DENTRY lock resource's l_priv field and use
-the default mount-context lookup.  Recover the containing dentry lock with
-container_of(), as already done for refcount locks, and remove
-ocfs2_get_dentry_osb().  ocfs2_dismount_volume() shuts down the DLM before
-freeing the mount context, so callbacks can use it without accessing the
-inode.  Preserve the existing iput-before-unlock order to avoid delaying
-local inode and open lock release until after the DENTRY lock is released.
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0012-v9-eeb9084fb29577971229@gmail.com
-Fixes: 8ed6b23709b3 ("ocfs2: revert iput deferring code in ocfs2_drop_dentry_lock")
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
-Cc: <jjzuming@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 0df63e44c3e3 ("[ALSA] Add O_APPEND flag support to PCM")
+Cc: stable@vger.kernel.org
+Reported-by: Bo Cao <treebacker@foxmail.com>
+Link: https://lore.kernel.org/tencent_E90BB4F086165FAA3313723567A5C675EA06@qq.com
+Link: https://patch.msgid.link/20261103155844.120838-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: Adjusted context for relocating the is_oss_stream macro because surrounding helpers are absent. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/dcache.h  |  5 ++---
- fs/ocfs2/dlmglue.c | 16 ++++------------
- 2 files changed, 6 insertions(+), 15 deletions(-)
+ sound/core/pcm.c        | 2 ++
+ sound/core/pcm_local.h  | 6 ++++++
+ sound/core/pcm_native.c | 6 ------
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ocfs2/dcache.h b/fs/ocfs2/dcache.h
-index 3686a52ba1435..2e7fa014942d5 100644
---- a/fs/ocfs2/dcache.h
-+++ b/fs/ocfs2/dcache.h
-@@ -19,9 +19,8 @@ struct ocfs2_dentry_lock {
- 	u64			dl_parent_blkno;
+diff --git a/sound/core/pcm.c b/sound/core/pcm.c
+index bec81f6ba6ba5..d4eb842784143 100644
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -930,6 +930,8 @@ int snd_pcm_attach_substream(struct snd_pcm *pcm, int stream,
+ 			return -ENODEV;
+ 		if (! SUBSTREAM_BUSY(substream))
+ 			return -EBADFD;
++		if (is_oss_stream(substream))
++			return -EINVAL;
+ 		substream->ref_count++;
+ 		*rsubstream = substream;
+ 		return 0;
+diff --git a/sound/core/pcm_local.h b/sound/core/pcm_local.h
+index b3e8be5aeafb3..353f675724337 100644
+--- a/sound/core/pcm_local.h
++++ b/sound/core/pcm_local.h
+@@ -72,4 +72,10 @@ struct page *snd_pcm_sgbuf_ops_page(struct snd_pcm_substream *substream,
  
- 	/*
--	 * The ocfs2_dentry_lock keeps an inode reference until
--	 * dl_lockres has been destroyed. This is usually done in
--	 * ->d_iput() anyway, so there should be minimal impact.
-+	 * The inode reference is dropped before dl_lockres is unlocked.
-+	 * Callbacks must not use it to find the mount context during teardown.
- 	 */
- 	struct inode		*dl_inode;
- 	struct ocfs2_lock_res	dl_lockres;
-diff --git a/fs/ocfs2/dlmglue.c b/fs/ocfs2/dlmglue.c
-index 6338ee9fc5a47..8d51575c348d2 100644
---- a/fs/ocfs2/dlmglue.c
-+++ b/fs/ocfs2/dlmglue.c
-@@ -57,7 +57,6 @@ struct ocfs2_mask_waiter {
- #endif
- };
+ #define PCM_RUNTIME_CHECK(sub) snd_BUG_ON(!(sub) || !(sub)->runtime)
  
--static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_inode_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_file_osb(struct ocfs2_lock_res *lockres);
- static struct ocfs2_super *ocfs2_get_qinfo_osb(struct ocfs2_lock_res *lockres);
-@@ -257,7 +256,6 @@ static const struct ocfs2_lock_res_ops ocfs2_orphan_scan_lops = {
- };
- 
- static const struct ocfs2_lock_res_ops ocfs2_dentry_lops = {
--	.get_osb	= ocfs2_get_dentry_osb,
- 	.post_unlock	= ocfs2_dentry_post_unlock,
- 	.downconvert_worker = ocfs2_dentry_convert_worker,
- 	.flags		= 0,
-@@ -308,7 +306,7 @@ static inline struct ocfs2_dentry_lock *ocfs2_lock_res_dl(struct ocfs2_lock_res
- {
- 	BUG_ON(lockres->l_type != OCFS2_LOCK_TYPE_DENTRY);
- 
--	return (struct ocfs2_dentry_lock *)lockres->l_priv;
-+	return container_of(lockres, struct ocfs2_dentry_lock, dl_lockres);
++#if IS_ENABLED(CONFIG_SND_PCM_OSS)
++#define is_oss_stream(substream)	((substream)->oss.oss)
++#else
++#define is_oss_stream(substream)	false
++#endif
++
+ #endif	/* __SOUND_CORE_PCM_LOCAL_H */
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index 40020c5dceda0..7b6902bf0fd12 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -702,12 +702,6 @@ int snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
  }
+ EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
  
- static inline struct ocfs2_mem_dqinfo *ocfs2_lock_res_qinfo(struct ocfs2_lock_res *lockres)
-@@ -609,13 +607,6 @@ static __u64 ocfs2_get_dentry_lock_ino(struct ocfs2_lock_res *lockres)
- 	return be64_to_cpu(inode_blkno_be);
- }
- 
--static struct ocfs2_super *ocfs2_get_dentry_osb(struct ocfs2_lock_res *lockres)
--{
--	struct ocfs2_dentry_lock *dl = lockres->l_priv;
+-#if IS_ENABLED(CONFIG_SND_PCM_OSS)
+-#define is_oss_stream(substream)	((substream)->oss.oss)
+-#else
+-#define is_oss_stream(substream)	false
+-#endif
 -
--	return OCFS2_SB(dl->dl_inode->i_sb);
--}
--
- void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 				u64 parent, struct inode *inode)
+ static int snd_pcm_hw_params(struct snd_pcm_substream *substream,
+ 			     struct snd_pcm_hw_params *params)
  {
-@@ -623,6 +614,7 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 	u64 inode_blkno = OCFS2_I(inode)->ip_blkno;
- 	__be64 inode_blkno_be = cpu_to_be64(inode_blkno);
- 	struct ocfs2_lock_res *lockres = &dl->dl_lockres;
-+	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
- 
- 	ocfs2_lock_res_init_once(lockres);
- 
-@@ -651,9 +643,9 @@ void ocfs2_dentry_lock_res_init(struct ocfs2_dentry_lock *dl,
- 	memcpy(&lockres->l_name[OCFS2_DENTRY_LOCK_INO_START], &inode_blkno_be,
- 	       sizeof(__be64));
- 
--	ocfs2_lock_res_init_common(OCFS2_SB(inode->i_sb), lockres,
-+	ocfs2_lock_res_init_common(osb, lockres,
- 				   OCFS2_LOCK_TYPE_DENTRY, &ocfs2_dentry_lops,
--				   dl);
-+				   osb);
- }
- 
- static void ocfs2_super_lock_res_init(struct ocfs2_lock_res *res,
 -- 
 2.53.0
 
