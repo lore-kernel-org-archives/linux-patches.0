@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057494;
-	b=KbpS1tEzwWu2h1CFoCy4Ak7QXGeSFL7gQ/ukZJ2Yz1Y9zRD+TSOy1XnhC18cPsoSfwd/
-	 /J6xojKMBn6vIhnLNoEOIy8yGveyO6/sw6m+tW6vpHME+BArhguJDv29JqEKZJSGg5YJc
-	 jCqwl9e7ezPYPw7vkeVMlkf+Ry2ub3w6W2ndLCsACc+efqsCx/N7tfCPWPdq4apoFp4e+
-	 IhpnpV7pH5RWozZlqlt0x0j8g6OGHWAy6Dx1zaGnC6xzsJFqZkElbPdzhLgPsHSt/8EA9
-	 TB8k/cKSuyrJasb7p+PQFV6/mQU6oPGGGBXU1Ab2jRt1acWsw5A/eIIr20q+7L2nwRA==
+	t=1795057497;
+	b=qZ1/dMAQIKQ2QApPE4T883pPjMsMmloDJNEZoqpH1mzcGps8Jgms8RSGR+er5evRrBr5
+	 dEqSoTfTNpKKcYe/pBzlFAxKWap8laSIHUqeSzLfhg5SfJQuWvwJzbLW/vDRXy1OZx2fB
+	 DY7n+dxluNXFlIYwQVZgfV3J/Z3f0T8DtGn6+nB163baHtEtbQJ1QzWQqw4c2QR5pVHzf
+	 nY/hiZY1zO5yrb9KY2q0pEnDZL4OmSF10gGTDXa/APzZvDmNyqnWpv19Hnm8dILVKv/4B
+	 rtRKl4N0lca8fraM95dCb3QcSc26gvwf+jigcGjqD93KgLNvuW5O0jY8om5jVpeZjTQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057497;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=GHoUV9lMSMzAepOHUjUGsOMlEileXAS+ycVszRO9Ipo=;
-	b=keyPEBFQBkO6Xd6sSTYiGG9nbomj8uuWlQDSRjmGEk29TLtmRsLQnyQc+Ie68Tv0JBqh
-	 FADMSj5p4bBmTdEUvo0fiA38r/QO+ocyabBpViSMDVY77iphR6tbDBZk9vHPpzkCMfh/X
-	 cVkeLrOMbmErJFCMAki15pOmB968+odq52cxMtBoFMpakfFjQYfheEcTASFdrWVkDTGbE
-	 mAcw6Wqwgh9CLIYoSBO1U9rgg6bw9a2iSG1fDUqJ8heYdr7lyotsZgT6WF9mf/mTZud1/
-	 oaG+Gd8wkCaNGqY8jtKR7OE4pX9kivlDR7mzbhrdegpspYdgkZ+0akaoObT9PYYszAA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=tjdWD9ni5JE360Ea110tNYs3Q9K7KYaexDyXvo0Lrj8=;
+	b=dyworX2ytaFBFLALQLLn4iZzbezVbPtfx8cI1JRTl8gcwj+rnGwrIrbtz4ZVzuYMlgx5
+	 yxnSr+9i+TBnvnNsW0OO8bOE3h70ETzu2JjzMzRBPDWJjPe0wlwjq5q2RiKJ90cvrGIGr
+	 VMYox/hF700CCfPtPiZm3fUzK7AvyyF+YDAESONk5xqe7z91b0jz7emo/FMoIbcq6Ztxe
+	 KOU/t1hfQGo3lI7Y5gQ03J7pLYG+XaMTPX1xDlHJvANkPzH/5v9uxA39CNduWumIEtEyF
+	 CaB0tWCGr58kcYmLchObjGCYhlEaeOSfpg5iGyBNhhC72gXPvgSzvqL6eYkmkBlsGxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="kNcJ+/Z6";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+qE0v8q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78059606A338;
-	Thu, 19 Nov 2026 03:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C02960A2628;
+	Thu, 19 Nov 2026 03:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNcJ+/Z6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06511F000C6;
-	Thu, 19 Nov 2026 03:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E+qE0v8q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830351F000C9;
+	Thu, 19 Nov 2026 03:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057494;
-	bh=GHoUV9lMSMzAepOHUjUGsOMlEileXAS+ycVszRO9Ipo=;
+	s=korg; t=1795057497;
+	bh=tjdWD9ni5JE360Ea110tNYs3Q9K7KYaexDyXvo0Lrj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kNcJ+/Z63kdzeAXT5RWE4bZ0yR1ZbrnD7esxKq8JpQWrGjdqGF+sysGc9LYf8VRUC
-	 4v4xw0JQGPaYspy+gCM+Q2CZbmCW7RQhAVraak2YBmSHoMqfCLWz/AtmJw/f7H2/aU
-	 YSK+AojXlLmaSI4syV2UNGzbzVC8rW3SaF/S0Xyk=
+	b=E+qE0v8q928zw4F3TT1FS9R6BISV0uCwNyfQVYoVCf7lW1haifeGyA0ygVihybEPy
+	 8KR3nL6V0WrYBFYNNOgD354aUwoFWdlShOYnL/YOkBXSp438NmHR8TLkVab5JXCEbK
+	 Y9YTm9VDjf+Way2sJ5NIHaJwmIuwJULpBAmtXs5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Jiri Kosina <jkosina@suse.com>,
+	Yu Junzhe <junzheyu1@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0151/1848] HID: rmi: check report length before trimming sentinel bytes
-Date: Wed, 18 Nov 2026 15:36:29 +0100
-Message-ID: <20261118145917.557509615@linuxfoundation.org>
+Subject: [PATCH 5.10 0152/1848] ext4: guard against NULL s_group_info in ext4_get_group_info
+Date: Wed, 18 Nov 2026 15:36:30 +0100
+Message-ID: <20261118145917.609047151@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,42 +62,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Junzhe Yu <junzheyu1@gmail.com>
 
-[ Upstream commit 28a3e326fad2451bdb66b747dd1f7ccbb900eed6 ]
+[ Upstream commit 8f3901fbb40745046e513226ad84e8b84492632d ]
 
-rmi_check_sanity() trims trailing 0xff sentinel bytes, but its loop
-reads data[valid_size - 1] before checking that valid_size is non-zero.
+Resend: previous attempt was rejected by vger for containing HTML.
 
-Reverse the condition so the length is proved before the last byte is
-inspected.
+==================================================================
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+ext4_mark_group_bitmap_corrupted() already treats a NULL return from
+ext4_get_group_info() as "nothing to do", but ext4_get_group_info()
+indexes s_group_info without checking whether the array exists.
+
+During mount, fast-commit replay runs inside jbd2_journal_load() from
+ext4_load_and_init_journal(), which is before ext4_mb_init() allocates
+s_group_info. Replaying an FC UNLINK for an inode whose bitmap bit is
+already clear takes:
+
+   ext4_fc_replay_unlink -> iput -> ext4_evict_inode -> ext4_free_inode
+     -> ext4_mark_group_bitmap_corrupted -> ext4_get_group_info
+
+and faults on the NULL s_group_info base. Userspace only mounts a dirty
+ext4 image; this is a supported recovery path.
+
+Return NULL when s_group_info (or the per-block grp_info row) is unset
+so the existing caller check is effective during early mount.
+
+Tested on Linux v6.6.145 KASAN: crafted FC-unlink image previously
+triggered KASAN null-ptr-deref / panic in ext4_get_group_info; with this
+patch, mount succeeds (EXT4 "bit already cleared" may still log). Also
+observed on v6.6.144; still present on torvalds/linux as of
+f5098b6bae76 (2026-07-26).
+
+A self-contained Docker/QEMU reproducer (craft + mount + patch verify) is
+available on request.
+
+Signed-off-by: Yu Junzhe <junzheyu1@gmail.com>
+Link: https://patch.msgid.link/65c955b0-716b-4599-b925-59c2782e38b4@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-rmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/balloc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-rmi.c b/drivers/hid/hid-rmi.c
-index a7d268ac45c49..e57b628db964e 100644
---- a/drivers/hid/hid-rmi.c
-+++ b/drivers/hid/hid-rmi.c
-@@ -386,7 +386,7 @@ static int rmi_check_sanity(struct hid_device *hdev, u8 *data, int size)
- 	 * such reports here.
- 	 */
+diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
+index be267cd9dea75..679bf230b2984 100644
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -327,9 +327,13 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
  
--	while ((data[valid_size - 1] == 0xff) && valid_size > 0)
-+	while (valid_size > 0 && data[valid_size - 1] == 0xff)
- 		valid_size--;
+ 	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
+ 		return NULL;
++	if (unlikely(!EXT4_SB(sb)->s_group_info))
++		return NULL;
+ 	indexv = group >> (EXT4_DESC_PER_BLOCK_BITS(sb));
+ 	indexh = group & ((EXT4_DESC_PER_BLOCK(sb)) - 1);
+ 	grp_info = sbi_array_rcu_deref(EXT4_SB(sb), s_group_info, indexv);
++	if (unlikely(!grp_info))
++		return NULL;
+ 	return grp_info[indexh];
+ }
  
- 	return valid_size;
 -- 
 2.53.0
 
