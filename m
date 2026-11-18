@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036442;
-	b=ZaLx+zpW+rtQ+dJC9NnubkyOv4wdOpBopGBL2qN8yrEYX2zmOWRf5iv5UXEIUXWYJz0A
-	 dYQEFqIMsQmT1qUkZXQES5qkdw3W+IQOz2fGxwzRSKzRss0epFTDgyQpl7ZoLx/3Q3TyW
-	 S4HVdhw3WDIolIidm1IHsPYawe79AtrAyUpFmjBqPK3d1vsxYQEP7ZKQLhZ2yznRFDV2h
-	 PLm/jakfjwaaHDpLF6zpbxaC0OQf4hBZXje7OI3YIMOhzxUAx6B4REecdiswsmXW9pWW0
-	 N+Qa9diggGj3eqAULzOoBwuRflXHW2y8134ljolC/ja/CZtUN0PzntJoX6Y4g4RrnoQ==
+	t=1795036445;
+	b=GQsP3FAVNsYhpnSMhDKOZDn4vFBl+OJqLTM5ETEzzv3UZvlIw2N430jU4u1DV2gvFeVG
+	 4kLXuF8wfuiVDik6F7UkX7udx5K6929nVKYjlXchUS9Po1Xv9rEwBtp/5KAfQtVJYPaCH
+	 KWN+9IlSByc6vo4CNTd7toxi/tcsGm8vBRTaHerbvCF+0Y/7wq1DBjU1FhQT2d36z/wiu
+	 h99LZNz2JdvLxfYtIkY/8kMsRdr8xb8u14A+eu6Yv2HJh3dDn4+Fn5SdOII0gn75wD75c
+	 WmzQ8sUrF2zYjOcLUsKsP0qGl+D7sGr1cuI4Wiv0WIIuk3BI06KOBEVoBlrGYPTHIEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036442;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=v6bdpqoMAIrvsQsOWjL2DEdklXKu2FOBZs0sv0F/Mmo=;
-	b=3jda8wrSWL3WGBfsg2ZFeL3Xlag3VXglV9ea2rBJPb/Qm+qzCs9iA2DdNDDyLwBMHkDt
-	 52+Z45cXL+kZGwqCAU7gvzPDUA0QIMoSF3/kPrpdknmkoBFTET9fPAk/H4EhmaOSb1YUh
-	 Fb9HSYgTK/SZ6i1TeaBSZgwYam9AHKuP8gs5Be2+9hzrvi6NP5Tr0CWhQprTO+ES0ypBN
-	 34VjOnM+LZjZUWV8Rzkwy0gMdkqnjFlZ44xN/dx3SWtybp3xLBqZPWRBI6+whaEzcw4hU
-	 jauO7okuhUEVRZjRqJgRVnvjGr8TI5/b39AHwMLi1t5eZzCM8aK0K3/Eom5J5Dlj/Rw==
+	bh=3rTaPCtHfSrQgQjGpUlIq/eeCAOwC2GetghhwdfjiJQ=;
+	b=O/qYUWI9LzXguxblykAKk+0HCMirHt1sIB9QJV9JlxFdKdhyM0iOexcWKkyuoU1AEC/D
+	 tJAWnxIjy/ec2aDHeSIwiruUmAvTw2zazFlwyLC41QwtQU9C8vsVNxntJWDQ5BbVTd8zb
+	 5nrpxk9NSQFEGZ51O8vrqqYDX5MmQ3s41bHJS5KD7ldOxlAeY/MBJuIwXK1ojFA/lt32t
+	 xUitrhV6u84YrBYsormwgAs44Yv+7uD7lPEWbY97YJ2jQ183psY8HETc8DB9huVwpFyb7
+	 02+250xxq4S0SW5m6vJ/cPaa9CkPBT/U5dzNjJdnHrOOorkhUrXw+0lBDS1h99VGlxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0nuJnPt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4tL+M9Y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B968606A332;
-	Wed, 18 Nov 2026 21:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08F9606A32C;
+	Wed, 18 Nov 2026 21:14:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=t0nuJnPt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5571F000C4;
-	Wed, 18 Nov 2026 21:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N4tL+M9Y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5441F000C4;
+	Wed, 18 Nov 2026 21:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036442;
-	bh=v6bdpqoMAIrvsQsOWjL2DEdklXKu2FOBZs0sv0F/Mmo=;
+	s=korg; t=1795036444;
+	bh=3rTaPCtHfSrQgQjGpUlIq/eeCAOwC2GetghhwdfjiJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=t0nuJnPtLMt/8WL7/W3IzYcT70Ch5uwltqoXV9LSVTX0YzNgPR7lM+DgZaOnZnki7
-	 2dWae4J02/9N38nASFsPhAUkpMe6q4DOIBcl9TrTI7R4puTJ/zDRvRCIXxEn+5L6K0
-	 ar4VTy1DQpw4Mp43zCNpSCaItSGwDE0DRPdhiPX8=
+	b=N4tL+M9Yu79nVv0JZ64s5h0RGW82qpeYxWSRM3qaXoEdkRQNBbdx5z1k4hrVDS2ju
+	 bqNu3DaZ8PN5er89O6fMHFXV4zdn3YKyBUJGdU4wDIM0JibMe1XBL/2uulBETn0l6S
+	 wkl7XkEEmzVy1WD1JYnvVm/KbVmI0/92WemklGE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Xiaofeng Yuan <yuanxiaofeng@eswincomputing.com>,
-	Nutty Liu <nutty.liu@hotmail.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Anup Patel <anup@brainfault.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1059/3318] RISC-V: KVM: Fix IPI delivery for out-of-order vcpu_id
-Date: Wed, 18 Nov 2026 15:28:01 +0100
-Message-ID: <20261118150351.720874441@linuxfoundation.org>
+Subject: [PATCH 6.6 1018/3318] wifi: brcmsmac: Adjust txpwrindex value in nphy_ipa_rxcal_gaintbl_2GHz
+Date: Wed, 18 Nov 2026 15:27:20 +0100
+Message-ID: <20261118150350.423895167@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,73 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaofeng Yuan <yuanxiaofeng@eswincomputing.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit c367d3bf721f2bc391d6cfb47f6884e99d563df0 ]
+[ Upstream commit f7463a9c99a506b3308a852f9aaaf2a26b659e95 ]
 
-The SBI IPI handler walks vCPUs with kvm_for_each_vcpu(), which
-iterates by vcpu_idx (creation order) rather than vcpu_id order.
-Since vcpu_id can be assigned out of order by userspace, a vCPU whose
-hart_bit falls outside the XLEN-bit hart_mask range may be reached
-before vCPUs the mask actually targets. In that case the handler jumps
-to "done" and stops sending IPIs, leaving valid target vCPUs without
-an interrupt.
+After a recent change in clang to warn on signed char conversions within
+array initializers [1], there is a warning (or error with
+CONFIG_WERROR=y / W=e) from nphy_ipa_rxcal_gaintbl_2GHz:
 
-Replace the early "goto done" with "continue" so vCPUs outside the
-hart_mask range are skipped without aborting the loop.
+  drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c:224:18: error: implicit conversion from 'int' to 's8' (aka 'signed char') changes value from 128 to -128 [-Werror,-Wconstant-conversion]
+    224 |         {0, 0, 0, 0, 0, 128},
+        |         ~               ^~~
+  1 error generated.
 
-Reproduced with a minimal userspace VMM driving KVM inside a QEMU
-(RISC-V virt) guest: three vCPUs are created with ids 100, 0, 1 (in
-creation order) and sbi_send_ipi(hart_mask=bit0, hbase=0) is called
-from vcpu_id 1. Before this change the IPI is dropped and the ecall
-returns SBI_ERR_INVALID_PARAM; with this change the IPI is delivered
-and the ecall returns SBI_SUCCESS.
+This value was introduced in the original staging merge of brcmsmac in
+commit a9533e7ea3c4 ("Staging: Add initial release of brcm80211 - Broadcom
+802.11n wireless LAN driver.") and it is the same in the proprietary
+driver [2]. Presumably it is correct since there have been no reported issues,
+so update the value to '-128' to be type correct and clear up the warning.
 
-Fixes: 0611f78f83c9 ("riscv: KVM: Fix SBI IPI error generation")
 Cc: stable@vger.kernel.org
-Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Xiaofeng Yuan <yuanxiaofeng@eswincomputing.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://lore.kernel.org/r/20260917122012.2577-1-yuanxiaofeng@eswincomputing.com
-Signed-off-by: Anup Patel <anup@brainfault.org>
+Fixes: a9533e7ea3c4 ("Staging: Add initial release of brcm80211 - Broadcom 802.11n wireless LAN driver.")
+Link: https://github.com/llvm/llvm-project/commit/a5ef934a8d295dc03be3960f2b3744ec2e53238e [1]
+Link: https://lore.kernel.org/1a107e21b08.2873.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com/ [2]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20261005-brcmsmac-clang-24-constant-conversion-v1-1-a30c5692d582@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu_sbi_replace.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kvm/vcpu_sbi_replace.c b/arch/riscv/kvm/vcpu_sbi_replace.c
-index 36f5386c60db7..07b8fa51c7d75 100644
---- a/arch/riscv/kvm/vcpu_sbi_replace.c
-+++ b/arch/riscv/kvm/vcpu_sbi_replace.c
-@@ -64,8 +64,17 @@ static int kvm_sbi_ext_ipi_handler(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 			if (tmp->vcpu_id < hbase)
- 				continue;
- 			hart_bit = tmp->vcpu_id - hbase;
-+			/*
-+			 * kvm_for_each_vcpu() walks kvm->vcpus[] by
-+			 * vcpu_idx, i.e. the creation order, which has
-+			 * nothing to do with the vcpu_id (hart id) space
-+			 * that the SBI IPI operates on. vcpu_ids need not
-+			 * increase along the iteration, so harts outside
-+			 * the hart_mask window must be skipped instead of
-+			 * aborting the loop.
-+			 */
- 			if (hart_bit >= __riscv_xlen)
--				goto done;
-+				continue;
- 			if (!(hmask & (1UL << hart_bit)))
- 				continue;
- 		}
-@@ -76,7 +85,6 @@ static int kvm_sbi_ext_ipi_handler(struct kvm_vcpu *vcpu, struct kvm_run *run,
- 		kvm_riscv_vcpu_pmu_incr_fw(tmp, SBI_PMU_FW_IPI_RCVD);
- 	}
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+index 42e7bc67e9143..930f22418a4c4 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_n.c
+@@ -221,7 +221,7 @@ static const struct nphy_ipa_txrxgain nphy_ipa_rxcal_gaintbl_5GHz[] = {
+ };
  
--done:
- 	if (hbase != -1UL && (hmask ^ sentmask))
- 		retdata->err_val = SBI_ERR_INVALID_PARAM;
- 
+ static const struct nphy_ipa_txrxgain nphy_ipa_rxcal_gaintbl_2GHz[] = {
+-	{0, 0, 0, 0, 0, 128},
++	{0, 0, 0, 0, 0, -128},
+ 	{0, 0, 0, 0, 0, 70},
+ 	{0, 0, 0, 0, 0, 20},
+ 	{0, 0, 0, 3, 0, 20},
 -- 
 2.53.0
 
