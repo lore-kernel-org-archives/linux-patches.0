@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034940;
-	b=Go9N5PyG4FG2wIwCzx2TIhTrrgg2aUrWaay0eV/we+y47KkdgmSmuqTi+IPJRnbEONIp
-	 8QkKwrF0X4qAB88D17Kg516Gfsc3i3il/Ova/qJnesVQSCF3VWWtmVgJv+CuomivMzqgG
-	 2GZspXPSnTaLRLKsTeplX0z9iGQtSRU/1wit5oERqtw+iL7vKJWHm2W/Rh5l+5VDqenfY
-	 6LwHPJ6Nj9aWfu6ZumAzhthS6JKhI1TPEmCeiMoZiap6xhXYItcIpzVxc3smkvoYhd1SW
-	 iZM61xv6L2ePt7UmDCDPBs8TwNvgVuxunwin916p8Vu7fGTO/Q3EavHVSL8vY5G4K+g==
+	t=1795034942;
+	b=dklOKmJVUif2ikngOwx2gUYzvn8qN6s9EvAp2cQX6MKzvW+f9T/zieiR0ui0F9evsOOz
+	 2VaMqMCXw5KLbpA+3NeuPIJ4q8Jp2BhgcNH4sFtBNB2dSNuSsSpe+n5jar4MKFcZ1ZvL7
+	 NfGomfWWx4sg5k1LLGrqEz1a51a8ZxnfyCvaUuuCcoUvPI5rvJuMUXUbbeoTQTdCRHCpO
+	 zy5jhdg4K4ts3ypA4VEdiyn2/DJlCNAGybF2+GDj12CG7hjQPz0wguMxuCLsKxyRZw12Z
+	 xC0KvYvg8/FsaPbnwKkGL+r5Yob+kOGrpqSGVfRHcpMyG5zdA7LSgD8xZt/rXuX5wrQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034940;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034942;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qfMknR1jjuCLS+EsZpo1iE4nYrMn6880GTJzdJ3Uijo=;
-	b=GOL2SSD7VzJxRbwuNj/31lm2UqJj4LjhJCrt0Q0+8DRaEWGGfVmOWa06Om9ZGhQJX1Cr
-	 dN30zBPDvb3gwaFHO62L/cCMb2Yx4dk4CClPMfa1iOT3y6ay/pfaiG6C3tLVwhF15Ro3j
-	 z+Tl5qznmSauI1ZXvJQ7uxo7iqR1sehkE2uChZQR8Mi03+t43TJVJ7+RPdjiROFWxN6pd
-	 5S3dIcSo5XruKJUHoY/r7XtNWzdG17xnFWdSrnorLzRHOnnEmdqdqx7aku4+rK9XJzD+t
-	 ZyS7RP3nyuJUH1isoK7I3q4RMBtb2KQeSDROK3/pWg3ImubzRu9aysFSdige98oFIWA==
+	bh=4FeOr2/9J/og6hflzt06L7gOOCnfSHBwKakq9iU/m2I=;
+	b=2QKxr7FsgYu87QoO2jih6zkFIPgfn7akVPrl/PnrZvlL24KK7/6gvMuSXc7ahqWs0b3b
+	 fWPKZ1tEBbVOyW35LEbQNLmtA1ZoajbelPgZhawz4e8x7YzpCHPWHaFcgeiFrCmeHfLOp
+	 Ws8Fs8YAQiqbKthwoVcPlcLlShXzivqsmL4DQGJ3SkeTR+rPjC+6wJkYcfVkd9dGgw9eE
+	 DcyzG+AfHWzawrN1Jlj0k8loT1MXxnJRNYBY5ln65/Qf2ro/T11xc26YCLA7EJMO4iSuR
+	 wTfPdP42Lns7X2b+ootOKFoYuLygYuH3UdUiLvvtjx/Vm9yyqId2JQu9cRZMPHDRW1A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcgWre1i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iu2udcbL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070BC606A31C;
-	Wed, 18 Nov 2026 20:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4ECE606A31C;
+	Wed, 18 Nov 2026 20:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JcgWre1i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5295C1F000C4;
-	Wed, 18 Nov 2026 20:48:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Iu2udcbL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D0611F000C4;
+	Wed, 18 Nov 2026 20:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034939;
-	bh=qfMknR1jjuCLS+EsZpo1iE4nYrMn6880GTJzdJ3Uijo=;
+	s=korg; t=1795034942;
+	bh=4FeOr2/9J/og6hflzt06L7gOOCnfSHBwKakq9iU/m2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JcgWre1iVko3Brnqj1PDI523akvNmNaEan1doJyLjDbIQ5RTrktbwTogH/g9JuDbK
-	 9OlPRVxHbhkbYyE4j2NbmYdaW05g4vBoBoU6t5O3dKeQ9crZO843wBVAHJYS/vcpYo
-	 qp9gKb/3ylhx2yvPNwgal5y6MheWR062Gf5IGok4=
+	b=Iu2udcbLLL8miW5EuIIGaGdEacuOfc60OCHzlDtwXtT+hSQlJYriDShsEFdPUcbP9
+	 v9Cum2n8rb6CfSG1xpYCLUiaY3MI1h2c1+2+TsSWHID1Xc/LOl2TjL58F7rnGZMM7w
+	 rhx7BLG0IFVrmATJmEGjGcyg3xV+BKTyiWAyVN+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+351f8764833934c68836@syzkaller.appspotmail.com,
-	Eric Dumazet <eric.dumazet@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Ben Hutchings <benh@debian.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0549/3318] ALSA: rawmidi: Fix kvfree() call in spinlock
-Date: Wed, 18 Nov 2026 15:19:31 +0100
-Message-ID: <20261118150333.772985800@linuxfoundation.org>
+Subject: [PATCH 6.6 0550/3318] bootconfig: Fix negative seeks on 32-bit with LFS enabled
+Date: Wed, 18 Nov 2026 15:19:32 +0100
+Message-ID: <20261118150333.806873480@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,53 +68,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ben Hutchings <benh@debian.org>
 
-[ Upstream commit 20c0c49720dc4e205d4c1d64add56a5043c5ec5f ]
+[ Upstream commit 729dc340a4ed1267774fc8518284e976e2210bdc ]
 
-At the conversion of locking with guard(), I overlooked that kvfree()
-must not be called inside the spinlock unlike kfree(), and this was
-caught by syzkaller now.
+Commit 26dda5769509 "tools/bootconfig: Cleanup bootconfig footer size
+calculations" replaced some expressions of type int with the
+BOOTCONFIG_FOOTER_SIZE macro, which expands to an expression of type
+size_t, which is unsigned.
 
-This patch reverts the conversion partially for restoring the kvfree()
-call outside the spinlock.  It's not trivial to use guard() in this
-context, unfortunately.
+On 32-bit architectures with LFS enabled (i.e. off_t is 64-bit), the
+seek offset of -BOOTCONFIG_FOOTER_SIZE now turns into a positive
+value.
 
-Fixes: 84bb065b316e ("ALSA: rawmidi: Use guard() for locking")
-Reported-by: syzbot+351f8764833934c68836@syzkaller.appspotmail.com
-Reported-by: Eric Dumazet <eric.dumazet@gmail.com>
-Closes: https://lore.kernel.org/6744737b.050a0220.1cc393.007e.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20241125142041.16578-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this by casting the size to off_t before negating it.
+
+Just in case someone changes BOOTCONFIG_MAGIC_LEN to have type size_t
+later, do the same thing to the seek offset of -BOOTCONFIG_MAGIC_LEN.
+
+Link: https://lore.kernel.org/all/aKHlevxeg6Y7UQrz@decadent.org.uk/
+
+Fixes: 26dda5769509 ("tools/bootconfig: Cleanup bootconfig footer size calculations")
+Signed-off-by: Ben Hutchings <benh@debian.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/rawmidi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/bootconfig/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/core/rawmidi.c b/sound/core/rawmidi.c
-index 7da8ce4c1ef09..96e7c1e5c1d53 100644
---- a/sound/core/rawmidi.c
-+++ b/sound/core/rawmidi.c
-@@ -727,8 +727,9 @@ static int resize_runtime_buffer(struct snd_rawmidi_substream *substream,
- 		newbuf = kvzalloc(params->buffer_size, GFP_KERNEL);
- 		if (!newbuf)
- 			return -ENOMEM;
--		guard(spinlock_irq)(&substream->lock);
-+		spin_lock_irq(&substream->lock);
- 		if (runtime->buffer_ref) {
-+			spin_unlock_irq(&substream->lock);
- 			kvfree(newbuf);
- 			return -EBUSY;
- 		}
-@@ -736,6 +737,7 @@ static int resize_runtime_buffer(struct snd_rawmidi_substream *substream,
- 		runtime->buffer = newbuf;
- 		runtime->buffer_size = params->buffer_size;
- 		__reset_runtime_ptrs(runtime, is_input);
-+		spin_unlock_irq(&substream->lock);
- 		kvfree(oldbuf);
- 	}
- 	runtime->avail_min = params->avail_min;
+diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
+index 655ca7da4b843..5ccdb9881b5a0 100644
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -205,7 +205,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	if (stat.st_size < BOOTCONFIG_FOOTER_SIZE)
+ 		return 0;
+ 
+-	if (lseek(fd, -BOOTCONFIG_MAGIC_LEN, SEEK_END) < 0)
++	if (lseek(fd, -(off_t)BOOTCONFIG_MAGIC_LEN, SEEK_END) < 0)
+ 		return pr_errno("Failed to lseek for magic", -errno);
+ 
+ 	if (read(fd, magic, BOOTCONFIG_MAGIC_LEN) < 0)
+@@ -215,7 +215,7 @@ static int load_xbc_from_initrd(int fd, char **buf)
+ 	if (memcmp(magic, BOOTCONFIG_MAGIC, BOOTCONFIG_MAGIC_LEN) != 0)
+ 		return 0;
+ 
+-	if (lseek(fd, -BOOTCONFIG_FOOTER_SIZE, SEEK_END) < 0)
++	if (lseek(fd, -(off_t)BOOTCONFIG_FOOTER_SIZE, SEEK_END) < 0)
+ 		return pr_errno("Failed to lseek for size", -errno);
+ 
+ 	if (read(fd, &size, sizeof(uint32_t)) < 0)
 -- 
 2.53.0
 
