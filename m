@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030451;
-	b=YaiUcrAGnepkqE5O+8poXqhnjIRnuSeEV61L9irAXctPLASMwM+8aYZu76vZnTMpzOlD
-	 wF99gV5f2Br16Wzvt3URVYJqMKPTgR8KBZUzhbNBEHTJbfc/N9+3fqH6SxGOQ19OPO7Cn
-	 xxPfqc42vHTQjZP5bOO0yFiIunOqW8EEY4viBv1bRvkFZodGrbQwgDb1YQQL282sHRnrS
-	 eAshNQYppkFEpX/0iXkGNR7Z8Qc6e9dHLV7m+FFWRe3H3ViJTIth6O5w+9pIH9VBfu8MR
-	 J9fs/HWwVln9ljz6Z4MdFMNMZ11+QsVquFXvgIwXIxTfAS5By7qWeFpkvvBNBqsOnvQ==
+	t=1795030454;
+	b=znLgAf34wQPoQwIs36alXYLnQnye/Qpq2FYyJm63vSz084e7OYl2KP3bgCtfVXda3j43
+	 ZdwqSoqndFe7gMre8lrO/30z/Mg3JZX2UTDfinKbR6mDRGmKJJlB+eysvEpHQVmJYG2Bq
+	 sgOfLfi2oIMVYbKBocXlsdd8lx1t65QXKWcafJwsJKJyuajzdmoeZS7KrjpVdpav+Z7ya
+	 JS+lqFQiweFmdcDowZdlT+ECa+2Sb1xjLEMJO9zcprJFh8Q365DUyy4EjN1l2LTLoJbkD
+	 IbewAW3oWriO6C2t74gRTcojLcZP1NDNNafgg7/Usj5FVLFT58mQTm/iCVNetJb61XA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030451;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030454;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6y+BiKjSWiUP4MZAAlBFBJN/ZV+i/jXsZTjnG/RW7rk=;
-	b=mo6J4ALTjDliss2oKXlcwCYQEzeWisMTUY7fV6iiHQceozb1CZ71SYcx5pJFq28lFcaX
-	 vXOylzHNushYJCqFfB7+YxsryXIOySI3m6QEx9zTmQj9OGL6wQAbHa8wJdO67WW64aSxB
-	 AT2lv0djSW/l8Ihc7e91rDIRLnlf/VCzx1Bh7TzzdwWgvlzX2w54vyKmqyU/DyDZBu/Vu
-	 PbC5VupgbaDBMS8fRu0FSsU45IYjLPBgbe9/+s8be8W4XI5JIqU/MQLmNBlxkjAS89/kA
-	 9IoKazey+OWhNEVEw6JgjGs6Gek55dO5DSlcKcU6F6FfcPoYQl8zRISDmqi2m67u4ow==
+	bh=6xUYVlZ4FXWmBAxVXSXGCjvmj5MTN0BDFQvdz5xb5QY=;
+	b=cdqPoltM6khunZmz5XhOXggwE5BFtKZsZ7sGGgOMiRQFV3J85HvQNjW2intz4mXPJlau
+	 2vkGduTOVUbOSniIIGk8VAsRLHDKp3Ld/CKNkF6jvvKaIH8VHKEOjPSMt8x0a2+iHJq2t
+	 HnZKDw4niPfFnFqvHrm1k4GMGGpvfYHRU0F84S7zoa7ihxnQ9d2H+YNh9wFuD8QXKEW54
+	 jNg8twSocjzKvKDJQYoQsIQ1h0h8mpZ8Pl3bhfO0i0lH60mf66+H3QtKbnbMokKHMfEEo
+	 gEl6V2jmexnxF9NdADe/5zUrJfa1LCha24AY/OcTQgYE+GAxs5+pRQpv4YKRd6GJvQA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="j/jarDIj";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="B/5I+kP8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A02606B10B;
-	Wed, 18 Nov 2026 19:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1E8606A7F0;
+	Wed, 18 Nov 2026 19:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j/jarDIj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80DE91F000C5;
-	Wed, 18 Nov 2026 19:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B/5I+kP8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5511F000C4;
+	Wed, 18 Nov 2026 19:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030451;
-	bh=6y+BiKjSWiUP4MZAAlBFBJN/ZV+i/jXsZTjnG/RW7rk=;
+	s=korg; t=1795030453;
+	bh=6xUYVlZ4FXWmBAxVXSXGCjvmj5MTN0BDFQvdz5xb5QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j/jarDIjHRhwkM+Dg+D8nXtgjYvSWtD5BbF6qADshBTK9AgWT249r8aRlecGwenMh
-	 ZkhlZOPzAfReXH/9h+H7vB2nTBfBb58OJsByVwHLqc54HwfuDNoG/A6ao4vGblwQh7
-	 O3/I+yagySNbTdd4XaJcHUldB5lOT760KrPBA/2E=
+	b=B/5I+kP8LPvGXK2cIbHZJwgH/3SoHh/IuQOd+fni9PHBZgpvB7ZZOqKBlqSIKW8ir
+	 t4SHLrCPGX7IZHI/dAlDaIqcujGuiSkuKKIoACL/DqKQxn2iNSCX5C72S7TNNCuwjE
+	 3LrWgrf74pxVoiBbsPknXJDCRa09pPOTJdGBMEuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongyan Xu <getshell@seu.edu.cn>,
-	Leon Romanovsky <leon@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0709/1756] RDMA/hfi1: quiesce SDMA asynchronous cleanup on exit
-Date: Wed, 18 Nov 2026 15:47:16 +0100
-Message-ID: <20261118150037.608167154@linuxfoundation.org>
+Subject: [PATCH 6.12 0710/1756] pinctrl: nuvoton: Fix clock reference leak in ma35_get_bank_data()
+Date: Wed, 18 Nov 2026 15:47:17 +0100
+Message-ID: <20261118150037.651185997@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,42 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongyan Xu <getshell@seu.edu.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit e95d076bc1fca7cc36fc8f2f0e9687f79fd314bd ]
+[ Upstream commit a854aa8e550502ef05c2836a4b426141d735bed1 ]
 
-The SDMA state reference and completion cover the software cleanup
-tasklet, but not the hardware cleanup tasklet, err_halt_worker, or
-flush_worker. Queued instances can therefore access an SDMA engine after
-per_sdma is released.
+ma35_get_bank_data() obtains the bank clock with of_clk_get() and
+stores it in bank->clk, but returns clk_prepare_enable() directly.  If
+that call fails, the reference taken by of_clk_get() is never dropped,
+and the driver has no other clk_put() for it.
 
-After the state machine has stopped, cancel err_halt_worker first
-because it can publish the hardware cleanup tasklet. Then kill that
-tasklet and drain the remaining flush work.
+Drop the reference when clk_prepare_enable() fails.
 
-Fixes: 7724105686e7 ("IB/hfi1: add driver files")
-Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
-Link: https://patch.msgid.link/20260928134148.977-1-getshell@seu.edu.cn
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: f805e356313b ("pinctrl: nuvoton: Add ma35d1 pinctrl and GPIO driver")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/sdma.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/pinctrl/nuvoton/pinctrl-ma35.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/sdma.c b/drivers/infiniband/hw/hfi1/sdma.c
-index b67d23b1f2862..3e54b3b390b3f 100644
---- a/drivers/infiniband/hw/hfi1/sdma.c
-+++ b/drivers/infiniband/hw/hfi1/sdma.c
-@@ -1583,6 +1583,9 @@ void sdma_exit(struct hfi1_devdata *dd)
- 		 * it is not running.
- 		 */
- 		sdma_finalput(&sde->state);
-+		cancel_work_sync(&sde->err_halt_worker);
-+		tasklet_kill(&sde->sdma_hw_clean_up_task);
-+		cancel_work_sync(&sde->flush_worker);
- 	}
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-ma35.c b/drivers/pinctrl/nuvoton/pinctrl-ma35.c
+index 3330e444ede18..4ab1904c56f90 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-ma35.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-ma35.c
+@@ -570,6 +570,8 @@ static int ma35_gpiolib_register(struct platform_device *pdev, struct ma35_pinct
+ 
+ static int ma35_get_bank_data(struct ma35_pin_bank *bank)
+ {
++	int ret;
++
+ 	bank->reg_base = fwnode_iomap(bank->fwnode, 0);
+ 	if (!bank->reg_base)
+ 		return -ENOMEM;
+@@ -582,7 +584,11 @@ static int ma35_get_bank_data(struct ma35_pin_bank *bank)
+ 	if (IS_ERR(bank->clk))
+ 		return PTR_ERR(bank->clk);
+ 
+-	return clk_prepare_enable(bank->clk);
++	ret = clk_prepare_enable(bank->clk);
++	if (ret)
++		clk_put(bank->clk);
++
++	return ret;
  }
  
+ static int ma35_pinctrl_get_soc_data(struct ma35_pinctrl *pctl, struct platform_device *pdev)
 -- 
 2.53.0
 
