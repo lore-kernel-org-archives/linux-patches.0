@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026925;
-	b=pmvHZoTuzZOTH1PFEmllsXQhXDNP7TtFYJQeilS2JMuicI5fzZfb1QVFSEl1RP2wSQDt
-	 1pcbt426mqjULRXjD290DDGIz6tVyvpgrhYH2NbaylgCHP8kflqRDFwyyVY288l9BuoIk
-	 1Z/46BmQXwEoy30SYMwi1CzP7v5J2TffFXLg72b6ZvYOF7NeTglb1OZzPAnfT+M8Gf/ZY
-	 syQI9h9lhIlNSryV6Tnh7DQn9mSd1OWwEhz6KQzBpl+EKvlFfL8qA3nJCFmy66ULMFyET
-	 EolpGBQzGuuxQOxIitdTAfTToTyzXR9wRmLFWdrgshAzSq1QU4GQxm0IelgKMIaKvFQ==
+	t=1795026928;
+	b=kxrXJp6VeRk7oBq/yQE02teSbpcy0/qSAoTTlnmhIdtPt63mAWgifyVdlbxbIWXvOf/5
+	 Fi451OqCT3SedW301Wtv9ETmlum1BTfcNAVsp7kYSKBX4SbH/9Enr1W7WpQF++fM7Cy8o
+	 KvS0JHmd1VeGTt3A1Z+LlpkU26uwo/uN9jubr32WqOYC05DSgj6mTlta51nJpAM2B4nqS
+	 XPX1Gd9xcKYsogWuBQmqGdBrc8CPZeZxZQ9YiQAhLTmghWoYMibtBwPz7a593OhA9jjL7
+	 MSlkfnp/3vgSlBzeF5m0qjvM29uPc2f03oPYtCf06i6Z6LGS5i7f0Hz95TUb454KnEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026925;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026928;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=2Pdt2dnEyyIK+cYv8YKii9LA6TkxN+37+8YhlnDtBvs=;
-	b=YR/+LO5gtm2XMpP5Qf9scW4GhXwGmnYoDYK11r+OfSXVm8tr6UcCUQ081EWqFTlDHcK/
-	 o77y1IN6S3EdUoqck0/2yg5YDMPSaRE6+HlH8S2+sghR9v36IlvY39meKuSghEoLlTARL
-	 9Nt+H5ZZXiR2AMq4RObngs8xiYFLPNq4ZnimRjK7SZhpZBl9Tjpg8UqoWZHVo1usrASvu
-	 AE+6fSU3y51Hu3K8UkPgp2uvxOjhS7374XA8o5DJbslwvWQk73zYsCcqn6z6LFesUT6oG
-	 ZPrua1pxVmkXJ7YDvKc6wN5CHAeLKx3ZZ+ll8GpjlzKGh6dYC6P9U0V2WtMQCzuSnCg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=3Bkcz6RexBxMwXfBE/AAwfA5jSGMj01/9J0k4o8RbZI=;
+	b=4MTxkKHe4ARVHCqj82cteU0M43od/cQENPoVzvw1V8Pxr3WceHBB4NPPRM5UNZtH9ZpL
+	 SmAPyK8CJuzsAcJre+dGC3QUiDXiyNjVVXB0/UdJH6gAObaj0yvAkFDj/VOce6ZCDek90
+	 Vw/tnXs5mb2O0nKqkO72ShpR3+LFABfrrOfzH121Uh91/IF3IaxJF6PDf9z7hVXyifDbj
+	 dnMZfOUHV91b5lcBuMzKf5WrWBN4XSjx9SYErFIl7lp97+Dsz94+ubIVgmECmogr+850P
+	 5kyUpilql8J7xwGXyMvjgNPIcs2inml0wVE4hEn+tfNCgXKzeCD4al47d39WJUh7ImA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uOhA7NjM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e7+ys+Ep;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F138D606A331;
-	Wed, 18 Nov 2026 18:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E5A606A335;
+	Wed, 18 Nov 2026 18:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uOhA7NjM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6161F000C4;
-	Wed, 18 Nov 2026 18:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e7+ys+Ep
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C311F000C7;
+	Wed, 18 Nov 2026 18:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026924;
-	bh=2Pdt2dnEyyIK+cYv8YKii9LA6TkxN+37+8YhlnDtBvs=;
+	s=korg; t=1795026927;
+	bh=3Bkcz6RexBxMwXfBE/AAwfA5jSGMj01/9J0k4o8RbZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uOhA7NjMk2ycgGVXvM9j7VsyYpCdB/CEGFlT3pMHfkY9fxkl161J+oPB5AUk36bdw
-	 TkiULX9uB5iHo6RETNTxcPutLlWUnoMsy6r9Ju0ALcDT/2m8+fNHSr64jvqGe1AuGG
-	 iMpMz9N7W73Xe7LoFeoTyxgBDRPBjpySnFNjr7LU=
+	b=e7+ys+EpXyzKA11B8sI1EuWtkY2BeFhHEtkZTZohuZDUDjXQoIfjpD8X4QplD6xnY
+	 P4p3jpzD8tUK9CRdgpte9UEwC7FiDwhV+G9JkL3tDfHiWwH5qHtlLQJ6IoT5ziruWa
+	 NUcM4Xjco4tXvLkL7InIXUZ2MkwxyaZxxiyInbWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhan Xusheng <zhanxusheng@xiaomi.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1609/2151] vdso/vsyscall: Keep the CLOCK_AUX base scaled
-Date: Wed, 18 Nov 2026 15:55:44 +0100
-Message-ID: <20261118150220.484490829@linuxfoundation.org>
+Subject: [PATCH 6.18 1610/2151] selftests/bpf: Create the vxlan devices of test_tunnel with their MAC
+Date: Wed, 18 Nov 2026 15:55:45 +0100
+Message-ID: <20261118150220.520942932@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,80 +62,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhan Xusheng <zhanxusheng1024@gmail.com>
+From: Qiliang Yuan <odys.yuan@gmail.com>
 
-[ Upstream commit 8d17190fae2caab89cd5df19257ed9dac0739e3b ]
+[ Upstream commit 33cbc5c2cadfe3b43f024e89880dd8fe2efb3a2e ]
 
-The vDSO basetime of a clock is stored in the scaled nanoseconds of
-tkr_mono, so that the reader can floor the base and the cycle delta
-together in vdso_calc_ns().
+The vxlan tests of test_tunnel create a tunnel device in the initial
+netns with "ip link add", and then give it the MAC address that the
+static neighbor entry at the other end points to with "ip link set".
 
-vdso_time_update_aux() instead shifts the base down to nanoseconds, adds
-the offset, and shifts it back up, which zeroes the fractional nanoseconds
-of xtime_nsec.  The reader then floors the base and the delta separately:
+systemd-udevd assigns new devices of the initial netns a MAC address of
+its own, following its MACAddressPolicy, when it handles their uevent.
+When it gets to that after the test set the address, the replies sent
+to the configured MAC are dropped as meant for another host, and the
+ping of vxlan_tunnel fails after 10 seconds.
 
-  ktime_get_aux():  base + ((delta * mult + xtime_nsec) >> shift)
-  vdso:             base + (xtime_nsec >> shift)
-                         + ((delta * mult) >> shift)
+Pass the address to "ip link add". udevd leaves alone the address of a
+device that was created with one.
 
-Since floor(a) + floor(b) <= floor(a + b), the vDSO reports 0 or 1 ns
-below the syscall for the same clock.  It is not a monotonicity problem:
-across an update the step is floor(a + d) - floor(a) - floor(d), which is
-0 or 1, never negative.
-
-Add the offset in scaled nanoseconds as the other high resolution clocks
-do, and normalise with __iter_div64_u64_rem() so that the stored base
-stays below one second and the userspace fast-path does not iterate more
-in __iter_div_u64_rem().
-
-Only the sub-second field changes.  (a + (b << shift)) >> shift is exactly
-(a >> shift) + b, so the seconds carried out of the normalisation are the
-same as before; what the old form dropped was the low shift bits of the
-remainder.
-
-monotonic_to_aux.tv_nsec is a normalised timespec64 fraction, so it stays
-below NSEC_PER_SEC even for a negative offset, and the sum stays below
-2 * (NSEC_PER_SEC << shift).  The largest shift clocks_calc_mult_shift()
-can pick is 32, which makes that 8.6e18 against a u64 limit of 1.8e19.
-
-Fixes: 380b84e168e5 ("vdso/vsyscall: Update auxiliary clock data in the datapage")
-Signed-off-by: Zhan Xusheng <zhanxusheng@xiaomi.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20261002153104.1347978-4-zhanxusheng@xiaomi.com
+Fixes: 1ee7efd40abf ("selftests/bpf: Move vxlan tunnel testcases to test_progs")
+Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-tunnel-vxlan-mac-v1-1-624dd769c334@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/vsyscall.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ .../testing/selftests/bpf/prog_tests/test_tunnel.c  | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/time/vsyscall.c b/kernel/time/vsyscall.c
-index f43dd3f4744b5..0e4b499328c08 100644
---- a/kernel/time/vsyscall.c
-+++ b/kernel/time/vsyscall.c
-@@ -155,11 +155,11 @@ void vdso_time_update_aux(struct timekeeper *tk)
+diff --git a/tools/testing/selftests/bpf/prog_tests/test_tunnel.c b/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
+index bae0e9de277d2..5e876a5f0f32e 100644
+--- a/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
++++ b/tools/testing/selftests/bpf/prog_tests/test_tunnel.c
+@@ -161,9 +161,9 @@ static int add_vxlan_tunnel(void)
+ 	    IP4_ADDR2_VETH1, MAC_VETH1);
  
- 		vdso_ts->sec = tk->xtime_sec + tk->monotonic_to_aux.tv_sec;
+ 	/* root namespace */
+-	SYS(fail, "ip link add dev %s type vxlan external gbp dstport 4789",
+-	    VXLAN_TUNL_DEV1);
+-	SYS(fail, "ip link set dev %s address %s up", VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip link add dev %s address %s type vxlan external gbp dstport 4789",
++	    VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip link set dev %s up", VXLAN_TUNL_DEV1);
+ 	SYS(fail, "ip addr add dev %s %s/24", VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
+ 	SYS(fail, "ip neigh add %s lladdr %s dev %s",
+ 	    IP4_ADDR_TUNL_DEV0, MAC_TUNL_DEV0, VXLAN_TUNL_DEV1);
+@@ -198,11 +198,10 @@ static int add_ip6vxlan_tunnel(void)
+ 	    IP6VXLAN_TUNL_DEV0, MAC_TUNL_DEV0);
  
--		nsec = tk->tkr_mono.xtime_nsec >> tk->tkr_mono.shift;
--		nsec += tk->monotonic_to_aux.tv_nsec;
--		vdso_ts->sec += __iter_div_u64_rem(nsec, NSEC_PER_SEC, &nsec);
--		nsec = nsec << tk->tkr_mono.shift;
--		vdso_ts->nsec = nsec;
-+		nsec = tk->tkr_mono.xtime_nsec;
-+		nsec += (u64)tk->monotonic_to_aux.tv_nsec << tk->tkr_mono.shift;
-+		vdso_ts->sec += __iter_div64_u64_rem(nsec,
-+						     (u64)NSEC_PER_SEC << tk->tkr_mono.shift,
-+						     &vdso_ts->nsec);
- 	}
+ 	/* root namespace */
+-	SYS(fail, "ip link add dev %s type vxlan external dstport 4789",
+-	    IP6VXLAN_TUNL_DEV1);
+-	SYS(fail, "ip addr add dev %s %s/24", IP6VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
+-	SYS(fail, "ip link set dev %s address %s up",
++	SYS(fail, "ip link add dev %s address %s type vxlan external dstport 4789",
+ 	    IP6VXLAN_TUNL_DEV1, MAC_TUNL_DEV1);
++	SYS(fail, "ip addr add dev %s %s/24", IP6VXLAN_TUNL_DEV1, IP4_ADDR_TUNL_DEV1);
++	SYS(fail, "ip link set dev %s up", IP6VXLAN_TUNL_DEV1);
  
- 	__arch_update_vdso_clock(vc);
+ 	return 0;
+ fail:
 -- 
 2.53.0
 
