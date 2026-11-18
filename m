@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036833;
-	b=Gn62q3CqY3HXXrtGtqrbGO3fHomT+x5o5GCGQwXiqwCqYaH5Om2R/20hefxpGlmznruc
-	 BiA9uuWbeLhMNQHbitcHTUItP/COkvQCWc4rpaRK04sai4+g5jUVLSlO9qkL0P3um+kxZ
-	 srijzlzPm82ikpYDINX9SiACaAXANi73ESY8gFyCHEzgxqwBPlEdc41PHAqGHg81ekLwd
-	 K8cv+Syn7Ka4wqNNL1VRUZ0awY7Pq0oV9fT+fi5mU1IcKVbbq8STgOPgbOPClzu1JVDm6
-	 4bLupkGz+kaYObnSN3WGaNOT/7M+4MGCpqfL4ZDeA1W1ynAdWQKdEWmN+1Kw5+vugrw==
+	t=1795036836;
+	b=e1u5OK4B1HfARa6WPRuiBlkLmVajDqGS3ef86aUZ3qdtMIwUcX7yYdYPGaIYt6H+0t2g
+	 ow+/WQ83XunmAkhBjI3NCpbSeJNU9s3SZktfw8MpWiQ+LieaRvy5lBS2LSg1baa12Nm6/
+	 jLHBBlN/jJghSUdPow3c7uyTq/ssVHr6B21vq5I1NOOWV8Ph/xaEDkYYpOkt5Fg2AagZy
+	 7MH4JY/tFxyrGuEqzpSUAGPBfq10KTfJorz8WTAGKM8qnW+UMRY3nIMavh5Lly7l+TRD7
+	 F75fNJDfdk6i8EUZvj6RMoWewT7iTLA6IgFKc5Faf4dJvOjOdhIC7CAxXNd9BSwrzUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036836;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=izuj/2C3aPWZBoiYHHQa3QCkUMLc1oIOW/mILOhw70Y=;
-	b=0Y2i9st93rSUmfCpcKul0NtVRQ+1OqyZdpiZC1fJ44LOwEB8GsIr+Js44JzvRzCssXRV
-	 PH9eokNMSZG4w/tk90460CaDRDNcqSVhOaFp6Nu8CyZocFyd/8Q9gyEPc9gXYia08JAfC
-	 SHvi1qYWL0qcrLp0q7+Ej5JsU2ROUTA0NZq+3iORTpvZvefm30pfD4c3gUUazU5X5THv1
-	 7RzMAJ5UiCnDlzH62aEsDQkIDulJJPKIrpVJaV4fJD6DCoM7DoutEtwif157EJ9BI/cuz
-	 0SOk+YYziTjtBRldOonavVrg0dg05LtDMX9EV4d3DeH7zcRqEKyb47YpZAlop8nqwRw==
+	bh=cNA6eZ5bZdeUS/M9wgeHalXwjbmbG7kD/D01R/wnWgY=;
+	b=ox8ulx7OZLCKi1q4TN7HpePmEodqFSOWqvSpCe4MyAq4ej0o7QYdIoTL4xeRFt8f6hkT
+	 5qn3EABBQ9D5LS5xqH33JaHKQElWI9yWsrxCfJa058yS5sZWADmoe+1L6ux149itXXTbM
+	 hbhytCM3ijzXz+GJGo51IfhGBw21DRqnvC37wM17smKKzaLpqtogLSkmGHC7dBhxh9ufI
+	 ErshFK5mGw9JIKg1xJ7ha+Tlk6A24C9s7m1mo7v4gZfNqvfEDyCx7lvfz2oCt3cRd4y2Y
+	 WHfyFXAh0UunVos6LWoGv9jicPvZtCCSQzpgU9tbYL6lN1Y9pCSIYynXApS22LyXBzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bkgKBxih;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCJHs1AG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FEB606A31C;
-	Wed, 18 Nov 2026 21:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB05606A31C;
+	Wed, 18 Nov 2026 21:20:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bkgKBxih
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51141F000C4;
-	Wed, 18 Nov 2026 21:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCJHs1AG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932901F000C4;
+	Wed, 18 Nov 2026 21:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036833;
-	bh=izuj/2C3aPWZBoiYHHQa3QCkUMLc1oIOW/mILOhw70Y=;
+	s=korg; t=1795036836;
+	bh=cNA6eZ5bZdeUS/M9wgeHalXwjbmbG7kD/D01R/wnWgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bkgKBxihhRiNwMNB3SgeqkEHXMYwVLCTafJ5fqqZXSVzwK/+RnouXyAtlOrB3D9Q5
-	 y0Dqc1b4CgLhwZ0GVOtZfaCTlFNuzkRqe+vOL4f2zqYwE4UXIhgu9OWUryea7G+5V5
-	 SOfvyOnWLYBjfCUzFtqqEGZti6/t9zgwJGr9smQo=
+	b=mCJHs1AGjRAtFBWNkzm6cPwhuofNeHn+OCKGTVQNlLMRaUj+p/XtEMLrjDVOXS/EN
+	 rHQvY0KP+mu58Q2sx1aYCNquO0X0sgoXHHP4mZZdvJH8mWFx5ud6LWIwKSHb79O+Y4
+	 UHg8eawFwOmAKCdLqZJqJlLOsSwKV483Hb7xaVnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Seongjae Jeong <jsjlee1020@gmail.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1159/3318] f2fs: fix submit accounting for IPU writeback
-Date: Wed, 18 Nov 2026 15:29:41 +0100
-Message-ID: <20261118150354.877976456@linuxfoundation.org>
+Subject: [PATCH 6.6 1160/3318] rtc: cmos: Disable ACPI RTC event before handling it
+Date: Wed, 18 Nov 2026 15:29:42 +0100
+Message-ID: <20261118150354.908880715@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,45 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seongjae Jeong <jsjlee1020@gmail.com>
+From: Gregory Price <gourry@gourry.net>
 
-[ Upstream commit 6d1f622b9c069378cdb83088be2b15a9b480b8a3 ]
+[ Upstream commit 3f67038df8b5cba07254d1cff60d73e988b49ab7 ]
 
-f2fs_write_cache_pages() uses the submitted count, which is set to
-fio.submitted in f2fs_write_single_data_page(), to update nwritten
-and decrement wbc->nr_to_write.
+Users of RTC_UIE_ON can stop receiving update interrupts when rtc-cmos
+handles alarms through ACPI. In one 50-run test, 40 runs passed and 10
+timed out after receiving between one and four of five expected events.
 
-In the OPU path, f2fs_submit_page_write() sets fio->submitted to 1.
-However, in the IPU path, fio->submitted is never set and remains zero.
-As a result, successful IPU writes are not accounted for.
-This can cause asynchronous writeback to continue beyond its budget.
+The ACPI ff_rt_clk counter stopped at 218, exactly matching the number
+of events delivered to userspace, and reported:
 
-Set fio->submitted in f2fs_inplace_write_data() after a page is
-successfully merged into a bio or submitted, so that successful
-IPU writes are included in the writeback accounting.
+    218     STS disabled     unmasked
 
-Cc: stable@kernel.org
-Fixes: d68f735b3bc9 ("f2fs: check io submission more precisely")
-Signed-off-by: Seongjae Jeong <jsjlee1020@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+rtc_handler() runs in the threaded ACPI SCI handler and calls
+cmos_interrupt(), which schedules rtc->irqwork. The work can run before
+rtc_handler() returns:
+
+    ACPI SCI thread          rtc->irqwork
+
+    cmos_interrupt()
+      schedule_work()
+                             __rtc_set_alarm()
+                               rtc_wake_on()
+    acpi_clear_event()
+    acpi_disable_event()
+
+The SCI thread then disables the event that the worker enabled for the
+next alarm. That alarm sets its status while delivery remains disabled,
+so no update interrupt reaches userspace.
+
+Clear and disable the current ACPI RTC event before cmos_interrupt()
+schedules the work. The worker can then enable the next event without
+the handler undoing it. With this ordering, 150 runs delivered all 750
+events without a stall.
+
+Fixes: 311ee9c151ad ("rtc: cmos: allow using ACPI for RTC alarm instead of HPET")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Link: https://patch.msgid.link/20261015173029.3091872-2-gourry@gourry.net
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-cmos.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 50a362256fab4..8f505bac8c2df 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -3720,6 +3720,7 @@ int f2fs_inplace_write_data(struct f2fs_io_info *fio)
- 	else
- 		err = f2fs_submit_page_bio(fio);
- 	if (!err) {
-+		fio->submitted = 1;
- 		f2fs_update_device_state(fio->sbi, fio->ino,
- 						fio->new_blkaddr, 1);
- 		f2fs_update_iostat(fio->sbi, fio->page->mapping->host,
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index e06f3b9cab2c8..ecda3e6cb026b 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -757,7 +757,9 @@ static u32 rtc_handler(void *context)
+ 	unsigned char rtc_intr;
+ 	unsigned long flags;
+ 
+-
++	/* Quiesce this event before rtc->irqwork can arm the next one. */
++	acpi_clear_event(ACPI_EVENT_RTC);
++	acpi_disable_event(ACPI_EVENT_RTC, 0);
+ 	/*
+ 	 * Always update rtc irq when ACPI is used as RTC Alarm.
+ 	 * Or else, ACPI SCI is enabled during suspend/resume only,
+@@ -780,8 +782,6 @@ static u32 rtc_handler(void *context)
+ 	}
+ 
+ 	pm_wakeup_hard_event(dev);
+-	acpi_clear_event(ACPI_EVENT_RTC);
+-	acpi_disable_event(ACPI_EVENT_RTC, 0);
+ 	return ACPI_INTERRUPT_HANDLED;
+ }
+ 
 -- 
 2.53.0
 
