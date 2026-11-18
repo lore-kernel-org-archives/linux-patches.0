@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053167;
-	b=5e22myGSgqzmpezm2uUwE92TBsot75tFwb6+sM+Kqi7zY2Zll+rAimnWI4jJrtbgBnYg
-	 l6GlVj4Co7y7nJ2+UvuEp1b7nbLRVFN9klzTH3oGAEVKeTugKBYelHHtGLqBBiw9CFEcj
-	 Gpy/ek7i5SPkXIyUAkzc6CK/Hx0A37CYK80ItExi5LTScJLxy//Bj3OQoRjzbf4DjBX1X
-	 wz4/u6K474doz50F9P7I5TsHGS7uxTBXxf5Infs6ZKTvjCZj4+ho9KE1KmXrvCCvWoy1h
-	 mBURzeScfirLsFCDpt94HNArrssGDqLTk+jaeX3i3R04XaJ84mG0io0vZOW0/c4E/IQ==
+	t=1795053170;
+	b=PAzmlqQoSYpiGK1QKsfzP5weAJ9S5bNPpdTAQXCyK8TykSWYWhMlj1489xglX8QPSrKB
+	 uU+gEhxCZ8lFooME2FmQBwWJJJiCncGHBF1uiMo79+WVvXYYCa7VIHPoI04lbY3431q4s
+	 PZCyZRF21ShZQgdM0qiXWnqfg98/KYjCgrmmjZ7XQbjIrnrIomHJXHOMF1J8GETXJygsM
+	 ZJeSQBuo++TiN2GfIMcvBuRZjJm/cLKSAZdowjm1ULQqkc+ev0dqDkiTqRMx1MS2fTqdp
+	 veP+O8iN9aTTPo35Roj5PVJqtsP56oGjiuSn3rcEjBDHIiZJ0eNL0bnB6UzTEOQhE/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053167;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053170;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ulMQChogFk2j+SLM3l7M4aMfovTgB15M7iED+A9FK1c=;
-	b=R4fdwLyhdoERKck7qWjNO8AqwPJcxrKXOHQsUJWhbgOls+l+IK/7bPLBTG+AWCKshAK2
-	 SmX4P/5K+Nok7AaLWiBuxWEc3DR6qi+aYRIDcBFcfFm0Mt/BKNUzVkZUP3QE6U6rjwQWK
-	 oit0sEjp7jWIWhj6PyLGnIAcAzNHVV1Ku3g0Zu60zHcl3L+3OEVpE3aQMgkQ2epWqf7J1
-	 pDSxjAyD4BI+jHUdOei7bRZKFO+EqLGjIVGcB02/kAX3wRJ7aZatDKWYhfgXDtEKvWbQt
-	 tlMbNOE3bYR3mFM7IE6B9W6MbP+GUdEBKz5QPh2fL3YG7uqsJOHB/apIFUBP1lhzMlQ==
+	bh=44vVyU6na2JNQ5W5BxbO9hZRBrE7zHifyrVCa9N9I4g=;
+	b=HtD6BWLSU7sl+KHJFJkdx3XCENduj5s6ufOn6umJAaTPSSi+dz908m9TWP3dX4d1Cw3o
+	 Wrz0NY1MfRLBu94w6J7xN421iwZn9rDcH5UpJS0yDdXKN0S//Bv2J26BVIGvkgZ5jziUH
+	 dXEphnzVVc+MkTmQT+agRjUniU/HLYX4HT8F2oam9uZBzPVrym8zd+zonKhkvABAI2Ewy
+	 8O1f/2IdidrgQ5fsaRln9E+1Svr2+B4RYp+TJx9dBBdDYOR7+MAlIjwnnI5x0fJG8ZP1x
+	 iOJGv9ghNSM7Hkxk/D1XnYk/Oes6NanDwy023+AJyMz5gJ80NyiQimaPYPIK7Qsvepw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjmmizTa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pZy6vEyj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6BC606A320;
-	Thu, 19 Nov 2026 01:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0F7606A320;
+	Thu, 19 Nov 2026 01:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pjmmizTa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD571F000C4;
-	Thu, 19 Nov 2026 01:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pZy6vEyj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81191F000C4;
+	Thu, 19 Nov 2026 01:52:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053167;
-	bh=ulMQChogFk2j+SLM3l7M4aMfovTgB15M7iED+A9FK1c=;
+	s=korg; t=1795053170;
+	bh=44vVyU6na2JNQ5W5BxbO9hZRBrE7zHifyrVCa9N9I4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pjmmizTapoqn7U2K4XQesAldI/M5TqH2697TiKzDYqjm2AEM5P5peQg9etFKlOCGi
-	 mzjX6rxd6Ykx/YGZ2U5GsHR6qIhS7P120UWvk9EtnrzMOzIBuI9GJpqKj4/bcOIEAK
-	 MRL9Ba9H8Kxt2TATQ2R/IyKLLikEMDD83M19zCHs=
+	b=pZy6vEyjDA4l3bId5FDPGC7aWCwnb49iWtwzvShREEg8nwg7iAqXS11f6Y7y/vmrM
+	 kEA7lxS7x4BtO1HLXnOdzXVhGgy5iXXs+VANp5zhMD1mXM3nfxpvDiwXrqL3FN0jx2
+	 L0xXkjLQ3Mo2mNzFWbXdeHK85lcX/+HmCf9YhSmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kazuki Hanai <hnkz.64@gmail.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chuck Lever <cel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0822/2214] media: mediatek: jpeg: Avoid context access after job finish
-Date: Wed, 18 Nov 2026 15:41:38 +0100
-Message-ID: <20261118150044.570485630@linuxfoundation.org>
+Subject: [PATCH 5.15 0823/2214] NFSD: Resolve the recall-any mask names in the trace format
+Date: Wed, 18 Nov 2026 15:41:39 +0100
+Message-ID: <20261118150044.628339413@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,55 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kazuki Hanai <hnkz.64@gmail.com>
+From: Chuck Lever <cel@kernel.org>
 
-[ Upstream commit 7c7f31405b76acd95a628c834ee8a2d6da439782 ]
+[ Upstream commit c563a1f0679566d7d586802e5346591d0af8da78 ]
 
-v4l2_m2m_job_finish() publishes job completion and wakes waiters
-before it returns. A concurrent file release can therefore finish
-v4l2_m2m_ctx_release() and free the context while the single-core IRQ
-handler continues with its tail.
+RCA4_TYPE_MASK_* are enum constants, so the preprocessor cannot fold
+them into the print format that show_rca_mask() builds for the
+nfsd_cb_recall_any event. Nothing declares an eval map for them
+either, so trace_event_eval_update() has no substitution to apply at
+module load, and the event's format file ships the enumerator names
+verbatim. trace-cmd and perf cannot decode the bmval0 field.
 
-Both handlers only need the device for the matching runtime PM put.
-Use the IRQ-owned jpeg pointer instead of dereferencing ctx after
-completion has been published. This preserves the get/put pairing and
-removes the post-completion context access.
+Declare the eval maps for the nine mask bits show_rca_mask() decodes.
+The format then carries the shift counts as integers, the same shape
+the SUNRPC trace points already emit from their BIT() flag decoders.
 
-Fixes: 45f13a57d813 ("media: platform: Add jpeg enc feature")
-Fixes: 5827e4b14ee7 ("media: platform: Improve power on and power off flow")
+Fixes: 638593be55c0 ("NFSD: add CB_RECALL_ANY tracepoints")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Kazuki Hanai <hnkz.64@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260818184151.31180-1-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/trace/misc/nfs.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c b/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c
-index ba490b06ff703..5840c0eb0dc0d 100644
---- a/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mtk-jpeg/mtk_jpeg_core.c
-@@ -1096,7 +1096,7 @@ static irqreturn_t mtk_jpeg_enc_done(struct mtk_jpeg_dev *jpeg)
- 	v4l2_m2m_buf_done(src_buf, buf_state);
- 	v4l2_m2m_buf_done(dst_buf, buf_state);
- 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
--	pm_runtime_put(ctx->jpeg->dev);
-+	pm_runtime_put(jpeg->dev);
- 	return IRQ_HANDLED;
- }
+diff --git a/include/trace/misc/nfs.h b/include/trace/misc/nfs.h
+index 7d336ba1c34f7..0cf1fb805d33e 100644
+--- a/include/trace/misc/nfs.h
++++ b/include/trace/misc/nfs.h
+@@ -359,6 +359,16 @@ TRACE_DEFINE_ENUM(IOMODE_ANY);
+ 		{ IOMODE_RW,			"RW" }, \
+ 		{ IOMODE_ANY,			"ANY" })
  
-@@ -1163,7 +1163,7 @@ static irqreturn_t mtk_jpeg_dec_irq(int irq, void *priv)
- 	v4l2_m2m_buf_done(src_buf, buf_state);
- 	v4l2_m2m_buf_done(dst_buf, buf_state);
- 	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
--	pm_runtime_put(ctx->jpeg->dev);
-+	pm_runtime_put(jpeg->dev);
- 	return IRQ_HANDLED;
- }
- 
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_RDATA_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_WDATA_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_DIR_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_FILE_LAYOUT);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_BLK_LAYOUT);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MIN);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MAX);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MIN);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MAX);
++
+ #define show_rca_mask(x) \
+ 	__print_flags(x, "|", \
+ 		{ BIT(RCA4_TYPE_MASK_RDATA_DLG),	"RDATA_DLG" }, \
 -- 
 2.53.0
 
