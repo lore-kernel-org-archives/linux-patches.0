@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050565;
-	b=YFf6x6eR6NqV0IWST3mGUHQd+1ANFA5WGjy8uvMwn4CnscwSB8eM8SJhpNwlsuNaBmpj
-	 8A/8d85NZ8MRu/RevojZ+RUo/haM0PDdaY6jcUDuXXhgTyD9GjsTkiek/mxC7UFzJvYYO
-	 ePJ6ljJMfnWwXw6p20yMj4VhuuF0XbAuTh7vB6wxk5OzZOykfMIg7we/kOPZdjj9NAGSm
-	 q9naUJta8Xr/ShJKV/Yj/xVPPZ4IqTIdxCQKDdlny2bCcXd9kz8vrFmq90xw+59fwlWTp
-	 W86lLOkxTo/luDelqw6IOyClSG97c9Rj5ojbCXJvw1blnAKvG26le4QD/5UZcvn+fzQ==
+	t=1795050568;
+	b=RI9cuKxZ87EBrra+8y+66TBbyUFRqp5095AqhAI+QUC+IAkE5fNqu6Sc/zmRjL2wBUD5
+	 eQIOHvDP5gpWb/XlXt+BZIlibN2NIe6hQ1dqiW92xndg4bGq/5bA/t3008r0OTJtbeBTN
+	 h1SJb9kCKbkekKTARswPdHuDhQUlahl1oC5ySZZNgcCWYWpENZLiADqpjEkpkLm94AeVn
+	 Diyjisz1qrGWvkzdY7BRMyaBMlfYZlRwzEkARXEnTFBEnT/+9x19eEHpAG6bFyYYWghMO
+	 wK/Qrw1BB0I3k+Cnh3tiNkOx7N0d23efaeOGOsmxqcsGTQtEQ0+E9hcWAIcJV59wGfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050565;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050568;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sMrydzdfx1DmQKJLBLgDpM8GvkCeMCtOSOov3YEGQxk=;
-	b=doxszFvsZP/WHm0Afq1dsWMA4J42Xx88ZCkYG6PWFcvvKSNV4Zywao7xQLsvmEAU5QH3
-	 lII196GdIIt0OUc+e3gk/v8SMB4MAd9SUjQ+Tc8bYguKbg4QE4P6O9474GTcw5AprDVyA
-	 XqRoSOFdLH5Z27PRAPxPRbPMx0qsoC+IwmuJnPmQmQkHu8gYBfO3dMPIprM3EvyPmvmX9
-	 q37CeJkeiK/c3uH26rgRQRVNZznc820IQ6R2etd3r1htEbsHIYrZoZK1FdjYE+bbTAzXF
-	 nWMR1ZYpHLd5NCcjsiOI7UBLZ4eIC+NAZauRGfbshbVgSALXxsJd1FY0FDAdNLV+qJQ==
+	bh=MxKSGL+NrHLltIgiwYddX9O5Y93himrYNgFwpd5T0OA=;
+	b=XE6KIuSdb07MJsoYiYXNWE9cWlyrZ/DhxrJi7xJ2zlen81qafmhrpgNWknEsLpQoWmOk
+	 AVdo4B70VQdJqQhY6XvYvXaAtwOsA0fHKDWWUBAk4MsuFUinGX/fe88MRMVS1R4KRRmC1
+	 ele9OmIBVh2imUAvN3q+t0YNfPE4BZswl2MfYII9hfyNQIRwB5mQJ49KdL6vbEfLprolw
+	 LD2vJfMgQbMZciREotD3dOVwvU3dFuIw5bN8EHno+tlQUmQFko2u8Ne0+FTDQY78b8m+X
+	 M+Ca/HPYJTvFjiy5uW8dcRrZnC4zCrzQfiC9UvSAMmVNqOBacef8M+oQLmdT84RtQvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUuhCAcz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2I1q9adP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4069D606A31C;
-	Thu, 19 Nov 2026 01:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D1D606A320;
+	Thu, 19 Nov 2026 01:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oUuhCAcz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BCC1F000C4;
-	Thu, 19 Nov 2026 01:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2I1q9adP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E7D1F000C4;
+	Thu, 19 Nov 2026 01:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050565;
-	bh=sMrydzdfx1DmQKJLBLgDpM8GvkCeMCtOSOov3YEGQxk=;
+	s=korg; t=1795050568;
+	bh=MxKSGL+NrHLltIgiwYddX9O5Y93himrYNgFwpd5T0OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oUuhCAczLnheyXvUjKDSZgA5irxM8YKQsyGJYW4lN19W6kFcpf/UqEMi8kDSTarsd
-	 IAl78D742CV2cBQKReCXGs8Uc3RaqT2YtOhyx++IuHa4hL+gQWXfpmFMzYb4EzuP4D
-	 tFl8QOz5L9FUQkf8Fgyie27ylPoR/IYDy8NzjdTs=
+	b=2I1q9adPjds5rsyzUghHBOxM4iFFJ+VcLh1UpusY5IOja6Cw3ttxA0OWrbrOLQpL0
+	 W4GXWsK4GnPseHluuUCRfGdYkO77qP+HKOnHamWrFpkUCFLs9D8oz+jO3iTlKpwzXV
+	 sW04x3gP6sVywO9aajK426iVfX9XHHxex/X7dYQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Allison Henderson <achender@kernel.org>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Antoine Tenart <atenart@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2751/2857] net/rds: do not initialize transports after rds_init() failed
-Date: Wed, 18 Nov 2026 16:03:05 +0100
-Message-ID: <20261118150340.663437782@linuxfoundation.org>
+Subject: [PATCH 6.1 2752/2857] net: xps: bound the cleanup loop by the old maps num_tc
+Date: Wed, 18 Nov 2026 16:03:06 +0100
+Message-ID: <20261118150340.698352122@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,124 +69,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit ffbbc315b8b883a1c0e131fb3186b9428d2812aa ]
+[ Upstream commit 6d5a2cb0b7d6caf170d37ae7ac74738d592d2a05 ]
 
-rds, rds_rdma and rds_tcp each have their own module_init().  When they
-are built in, those run in link order, so rds_init() goes first, but
-do_initcalls() does not stop when it fails.  The transports then
-initialize against a core that has already been torn down: rds_wq has
-been destroyed, yet rds_ib_dev_put(), rds_ib_unregister_client() and
-rds_tcp_accept_work() still queue onto or flush it, and
-rds_trans_register() hands the transports to a core whose socket
-family may never have been registered.
+__netif_set_xps_queue() walks the OLD dev_maps to free its entries.  The
+per-row trip count uses the NEW num_tc while the row stride uses the OLD
+dev_maps->num_tc, so when dev->num_tc was raised without rebuilding the
+XPS map the last row indexes attr_map[] past the allocation:
 
-This was seen with CONFIG_SYSCTL=n, where rds_sysctl_init() failed and
-rds_ib_init()'s error path then flushed the freed rds_wq [1], but any
-rds_init() failure after rds_threads_init() has the same effect.
+  BUG: KASAN: slab-out-of-bounds in __netif_set_xps_queue+0x1458/0x1ee8
+  Read of size 8 at addr ffff000014f69458 by task insmod/112
 
-Record whether rds_init() succeeded and have rds_rdma_init() and
-rds_tcp_init() bail out with -ENODEV otherwise.  Modular builds are
-unaffected: the transports need symbols exported by rds.ko, so they
-cannot be loaded unless rds_init() succeeded.
+The loop frees entries in dev_maps, so both the trip count and the stride
+must come from dev_maps->num_tc.  The map is sized
+XPS_CPU_DEV_MAPS_SIZE(old num_tc)/XPS_RXQ_DEV_MAPS_SIZE(old num_tc, ...),
+so iterating the new (larger) num_tc reads past the end.
 
-[1] https://lore.kernel.org/oe-lkp/202610190310.9737b2e3-lkp@intel.com
-Fixes: 55b7ed0b582f ("RDS: Common RDMA transport code")
-Fixes: 70041088e3b9 ("RDS: Add TCP transport to RDS")
-Suggested-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20261021195837.142802-3-achender@kernel.org
+Fixes: 255c04a87f43 ("net: embed num_tc in the xps maps")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Antoine Tenart <atenart@kernel.org>
+Link: https://patch.msgid.link/20261021155538.67867-1-phx0fer@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/af_rds.c         | 14 ++++++++++++++
- net/rds/rdma_transport.c |  3 +++
- net/rds/rds.h            |  1 +
- net/rds/tcp.c            |  3 +++
- 4 files changed, 21 insertions(+)
+ net/core/dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rds/af_rds.c b/net/rds/af_rds.c
-index 00f6d3d6e242f..fdb153e61bdb5 100644
---- a/net/rds/af_rds.c
-+++ b/net/rds/af_rds.c
-@@ -922,8 +922,11 @@ static void rds6_sock_info(struct socket *sock, unsigned int len,
- }
- #endif
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 8c3f9946a6bfa..74c1a512a065f 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2737,7 +2737,7 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
+ 		goto out_no_old_maps;
  
-+static bool rds_initialized;
-+
- static void rds_exit(void)
- {
-+	rds_initialized = false;
- 	sock_unregister(rds_family_ops.family);
- 	proto_unregister(&rds_proto);
- 	rds_conn_exit();
-@@ -944,6 +947,16 @@ module_exit(rds_exit);
- 
- u32 rds_gen_num;
- 
-+/* When RDS is built in, a failed rds_init() does not stop the rds_rdma
-+ * and rds_tcp initcalls from running against a core that has already
-+ * been torn down (rds_wq in particular).  Let them bail out early.
-+ */
-+bool rds_is_initialized(void)
-+{
-+	return rds_initialized;
-+}
-+EXPORT_SYMBOL_GPL(rds_is_initialized);
-+
- static int __init rds_init(void)
- {
- 	int ret;
-@@ -980,6 +993,7 @@ static int __init rds_init(void)
- 	rds_info_register_func(RDS6_INFO_SOCKETS, rds6_sock_info);
- 	rds_info_register_func(RDS6_INFO_RECV_MESSAGES, rds6_sock_inc_info);
- #endif
-+	rds_initialized = true;
- 
- 	goto out;
- 
-diff --git a/net/rds/rdma_transport.c b/net/rds/rdma_transport.c
-index 7be38be1228ec..cc6a7d29791ae 100644
---- a/net/rds/rdma_transport.c
-+++ b/net/rds/rdma_transport.c
-@@ -325,6 +325,9 @@ static int __init rds_rdma_init(void)
- {
- 	int ret;
- 
-+	if (!rds_is_initialized())
-+		return -ENODEV;
-+
- 	ret = rds_ib_init();
- 	if (ret)
- 		goto out;
-diff --git a/net/rds/rds.h b/net/rds/rds.h
-index ce5af872e2b1c..97ff5073491a7 100644
---- a/net/rds/rds.h
-+++ b/net/rds/rds.h
-@@ -1009,6 +1009,7 @@ extern unsigned int  rds_sysctl_trace_level;
- int rds_threads_init(void);
- void rds_threads_exit(void);
- extern struct workqueue_struct *rds_wq;
-+bool rds_is_initialized(void);
- void rds_queue_reconnect(struct rds_conn_path *cp);
- void rds_connect_worker(struct work_struct *);
- void rds_shutdown_worker(struct work_struct *);
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index b0cb3ef9f0659..495fce3f7e459 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -820,6 +820,9 @@ static int __init rds_tcp_init(void)
- {
- 	int ret;
- 
-+	if (!rds_is_initialized())
-+		return -ENODEV;
-+
- 	rds_tcp_conn_slab = KMEM_CACHE(rds_tcp_connection, 0);
- 	if (!rds_tcp_conn_slab) {
- 		ret = -ENOMEM;
+ 	for (j = 0; j < dev_maps->nr_ids; j++) {
+-		for (i = num_tc, tci = j * dev_maps->num_tc; i--; tci++) {
++		for (i = dev_maps->num_tc, tci = j * dev_maps->num_tc; i--; tci++) {
+ 			map = xmap_dereference(dev_maps->attr_map[tci]);
+ 			if (!map)
+ 				continue;
 -- 
 2.53.0
 
