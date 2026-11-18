@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045619;
-	b=30NhLZjo4s1q7StnpBVNHbEPKmzGMgQEpnnDvX7pmM50EjiCoTNY3zL6qtwQgQRnNrOH
-	 EPcT29lbs/tBiFgTuP7wiKxafxxJfF9K7QZnrqpBC3PgBGBbEf8CeFrSgUK+tesYqQvt5
-	 jWqWM0m4Z2pUCVzmILmNiwXi8vYKqQQ7OIUgYw4FKUwr5mJE8ka3spg4fw65fFnaEaeX/
-	 duRU+OWOCtxcjUH3MabngDqAWKjUqaQI4LP7QPSEtD37h8jrObsg6adAjdZej45Oy4WTs
-	 vygxbeHIfRew+0ttFHJ2PmDiPnbAXCuYo54V+b9OeEMk5h0uZsIAbGPgUZgy0XkG6iA==
+	t=1795045622;
+	b=qZt1pzssywhjgeo5qMEAjo2ZZzRhngjainBDfLz0PAHwCFgkp3hhdrhX2neu+Cyfbha7
+	 TYSY8PQmEpcpCW6AmDawD2COYp/uXbRQv4W4zm8X1ONcTPKVhJi9yNzMnkiZaDb4599ku
+	 gPAULa1HsfDvzVyjG82H6d+5Lo3rP+V6/0giUuIKy4VRz0VGrttfFBwBKRU2+XCkGSZ/Y
+	 jXEZD0TOk19kbiAPUynA1ol+28dtkykH9Aiyx/8ulw+trQHznsop9BzCxl40d9ejbns3p
+	 qkLovxkkjjPuz8BN9Nz92KRsRdJFeLJXL4qEpFnXkTkxHrBhst1nsYkwvY7XH7+fWNg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045619;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045622;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Co7zIQAHDXyX8tuCtdbJcXNanflWLMEDymcu6yCV/sM=;
-	b=jYy+bCedMf2UU5EIxtfXTUoI3Vr2q265SnFBmrmqMVWDd75w9recpzeCEj5zSDjxu9aG
-	 TXJIxHkYb0TK8Qj1YRhFCFbLvlugQhug59K6pn34udO0EI+ZLFM+zvnaLxghRpyxtqyKJ
-	 jixZOI5If5gGTpSfttIxKg0zZPEeulmESiGxluPeM54A+JFAchtxcyp9sCAdqoqsf7A5L
-	 ps5ssaCoj1QIHn58na+Cu4GlOORpyy/ZDSriZoEHgFX+xPCsu203Nqcy/o1iILecAY/08
-	 Om0CqFuCu8jXjAf/eQ/rQYTzRT/g+ClHYAjRxA4UroxwLUTDdIHHH2B6U5mc17HXpIQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=K0aVC4wgjJdfVGPZzKX7NppewLoZRh48D7teLi4Wpno=;
+	b=yDsk6YDQJCPZHI6VEkR18MbT2Pi3/r65hL83eOXEfgkY97qJZ+HL7hk1uyKpwrtZu0qd
+	 yjMEXJP3c8pygN/sDtNeaTL+mYYS+iDdeccZKs7PIciWwjpprIbSkyf/eaOa9E7moQN1Q
+	 qXv+M5NBPLEtGaUvoTK+10HKaNH43B/ZxhIqD9iGeoljZOmxfu06T8GdbOIP7GjGrxrCe
+	 qJk65bfsmCZXd3PnVJy3nOInbvMDlTszxDmI8/HYwJsaK5as4dqO42yOgSX+Evc2yR4MM
+	 2LxsEV2+Sr3p2hbfzvgA3rWaLvOlrCKKysCDIzq9vPzMvEvkVisP3156qrg/hdOEIjA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NRkLJmTv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MfZdabp1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818E6606A32A;
-	Wed, 18 Nov 2026 23:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73818606A320;
+	Wed, 18 Nov 2026 23:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NRkLJmTv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22621F000C4;
-	Wed, 18 Nov 2026 23:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MfZdabp1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE16F1F000C7;
+	Wed, 18 Nov 2026 23:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045619;
-	bh=Co7zIQAHDXyX8tuCtdbJcXNanflWLMEDymcu6yCV/sM=;
+	s=korg; t=1795045622;
+	bh=K0aVC4wgjJdfVGPZzKX7NppewLoZRh48D7teLi4Wpno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NRkLJmTvza1W2tZGJYN0jzwtSLl4OwH9EtVkr0sbdXF1S5+cqRNoh62KYo75s5fhv
-	 flMnRKKD5G6GWhORVsnkKHlPpEd473uKm44tyWBUN9TbRj3qiSilnc92IgTQFkVKq8
-	 rvZJT336NhZ3euErA2cmlfKTxjozrtnReuCQHc5s=
+	b=MfZdabp1/PYo2hvMoo2q4SuBhBpGBNuUpAimJs/Fr8/jD6tvOa9hCdY4it6yqdZ97
+	 /9uEALC7L/TRL9ByIjfq2kxuf+XHhRIOk098mOGdRwmcMJXUKwqMu0kO6GFI9dgDbM
+	 Nsx44CXCgsYB5K4ityf3g6otRzAPvzBJmGnJCM/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	stable@kernel.org,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	linux-serial@vger.kernel.org,
+	Tim Douglas <me@timdoug.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0948/2857] serial: 8250_lpss: do not touch uninitialized line in ehl_serial_exit()
-Date: Wed, 18 Nov 2026 15:33:02 +0100
-Message-ID: <20261118150235.740091347@linuxfoundation.org>
+Subject: [PATCH 6.1 0949/2857] serial: pmac_zilog: push received data to the port that received it
+Date: Wed, 18 Nov 2026 15:33:03 +0100
+Message-ID: <20261118150235.774374872@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -65,68 +61,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Tim Douglas <me@timdoug.com>
 
-[ Upstream commit 3e3ae95a3d84a6028f37a07ab7ad78bb14689f2e ]
+[ Upstream commit f3dc727da3af64abc12b625bbf1eb68d55d882cc ]
 
-lpss8250_probe() calls lpss->board->exit() on its error path. For the
-EHL board, that is ehl_serial_exit() and it does:
-serial8250_get_port(lpss->data.line)->dma = NULL;
+pmz_interrupt() drains both channels but, since commit 2e124b4a390c
+("TTY: switch tty_flip_buffer_push"), pushes the flip buffer of the
+port whose handler is running rather than the port that was drained.
+With both ports open, data received on the other port can be left in
+its flip buffer until something else pushes it, so its reader may not
+see it.
 
-But when lpss8250_dma_setup() or serial8250_register_8250_port() fails,
-lpss->data.line was never assigned. As lpss is kzalloc()ed, line is 0
-and ehl_serial_exit() clears the dma pointer of an unrelated port --
-serial8250_ports[0], i.e. ttyS0, which is often the console.
-
-Initialize lpss->data.line to -1 in probe and skip the clearing in
-ehl_serial_exit() if no port was registered.
-
-Fixes: 5318f70da7e8 ("serial: 8250_lpss: Balance reference count for PCI DMA device")
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Fixes: 2e124b4a390c ("TTY: switch tty_flip_buffer_push")
+Cc: stable@vger.kernel.org
 Assisted-by: LLM
-Cc: "Ilpo Järvinen" <ilpo.jarvinen@linux.intel.com>
-Cc: stable@kernel.org
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: linux-serial@vger.kernel.org
-Link: https://patch.msgid.link/f389df34aaa538270313ebd4cea75c2baaf46b95.1791873876.git.jirislaby@kernel.org
+Signed-off-by: Tim Douglas <me@timdoug.com>
+Link: https://patch.msgid.link/20261013013541.4535-2-me@timdoug.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_lpss.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/tty/serial/pmac_zilog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_lpss.c b/drivers/tty/serial/8250/8250_lpss.c
-index 0e43bdfb74598..4a46ee9de2a13 100644
---- a/drivers/tty/serial/8250/8250_lpss.c
-+++ b/drivers/tty/serial/8250/8250_lpss.c
-@@ -183,9 +183,8 @@ static int ehl_serial_setup(struct lpss8250 *lpss, struct uart_port *port)
+diff --git a/drivers/tty/serial/pmac_zilog.c b/drivers/tty/serial/pmac_zilog.c
+index daf15d23bb42e..67cb3905fed87 100644
+--- a/drivers/tty/serial/pmac_zilog.c
++++ b/drivers/tty/serial/pmac_zilog.c
+@@ -445,7 +445,7 @@ static irqreturn_t pmz_interrupt(int irq, void *dev_id)
+  skip_a:
+ 	spin_unlock(&uap_a->port.lock);
+ 	if (push)
+-		tty_flip_buffer_push(&uap->port.state->port);
++		tty_flip_buffer_push(&uap_a->port.state->port);
  
- static void ehl_serial_exit(struct lpss8250 *lpss)
- {
--	struct uart_8250_port *up = serial8250_get_port(lpss->data.line);
--
--	up->dma = NULL;
-+	if (lpss->data.line >= 0)
-+		serial8250_get_port(lpss->data.line)->dma = NULL;
- }
+ 	if (!uap_b)
+ 		goto out;
+@@ -470,7 +470,7 @@ static irqreturn_t pmz_interrupt(int irq, void *dev_id)
+  skip_b:
+ 	spin_unlock(&uap_b->port.lock);
+ 	if (push)
+-		tty_flip_buffer_push(&uap->port.state->port);
++		tty_flip_buffer_push(&uap_b->port.state->port);
  
- #ifdef CONFIG_SERIAL_8250_DMA
-@@ -332,6 +331,8 @@ static int lpss8250_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		return ret;
- 
- 	lpss->board = (struct lpss8250_board *)id->driver_data;
-+	/* for tests in lpss->board->exit() */
-+	lpss->data.line = -1;
- 
- 	memset(&uart, 0, sizeof(struct uart_8250_port));
- 
+  out:
+ 	return rc;
 -- 
 2.53.0
 
