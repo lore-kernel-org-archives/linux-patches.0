@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038826;
-	b=1xMZ9aMQFX1kd73icjrSlon6MVTPOBWt40cjmCTmeXWGBZwRlTvqknOr45UJI+9Oobaw
-	 vj3CbsQGAKI0Qah09VApjkIpdmlK5ox18bvT/3uRXveJI9Pb0KZcuwdIIS+FtRme0wvLD
-	 IYkwpschCT+742FgiToSLEfyPYvPIbSjsXYaSvQJc7xHtrI/3qFZC/wsF3bZlk/NF9ZCW
-	 gKTEViOWWYBI/vGsKaRv7MJiyJE2zKumV2wnG9qTfuGq0R8iH8WPjqyfnpg/1mMaBkVtm
-	 rp9G9auhx+6eeKC8uWG/Spb5pOVxFg5bQfuVVg+DibxLDpEpokt5e5xHkpYL3QjQD5Q==
+	t=1795038829;
+	b=I51FjCSzkVhctMPmmZY0DrF8IT6oFDyuM5rV9aT6REEHD008tD60Jo3l4MgpNSX7FmLD
+	 /FQWTNaIgMUa64gAb1j+IjhnWxogLmDRh4ktm8IDCLpLI79Ob8wWDmslApFIk9t5OxB64
+	 0ChEM+9rNBszmMjEgs/QGER53oZyPGtPfX6H8CS8R5iENyN5OLcT5k2OHiEZSI+FoyMuB
+	 vs0MHUGhSjnvcjisYaXHbqgpKL7TdN431ddTh+93H96wUx8PPqeU0tLe+qdmEwnNqlmjz
+	 St7dLxHBOQHN1SkhHGCAmoTzA2iU/2ViINtA2OCVn+cRY8EcTua/fo+eve5mn+4MlHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NiajgWqGAXnHNa3vNE3u7sKNkFKyHF1qUvban+cCqGI=;
-	b=iCA4bYwT0BUzsyNAqRQpTFmwoXbVEFVlgogESc48gfZdDsQcvjBDqnlYWz59/S6YZpdM
-	 /E5KKvMZTigBo+lBNrzvOObzTMYLlLV3A2+xAfJbPSsitXA+kKZXbnXNKYAHE7kIBode7
-	 t1iB4/cJ2liJ2FAH7shWLaWaFRE1DvDwywl/yHyneyVgd45pq5Q2g1dzmPzYgppLMyme4
-	 A1cOVqEw9+EMoHnPbvixHBkKFwgC8m1S4ZIaQcWt7h4iIClVoF2bxmJffiydIX3m0m9lx
-	 yGpl+JLJphfRruaS5ThAL+lGuLJn7GRebMagsZMsDpG6qwIrCQeit2STIrBq11IifVw==
+	bh=45i5abFSuhLxTgA9DepstgoXz+MdVgBFVisOIZQReRQ=;
+	b=sXe+o/rig+f+3x5OljXnyB2ScEGS3+EXakA79zxV00yJEsTUBjeHDXgZmj41dyEmjQex
+	 h9oHyWnNx6+YeDPYSWUscFtVGhTuj7rq4VimkpB7vUYDt8r16YyDc5S54BR8BjX5L3xK8
+	 Dy7/0pRakP+QaZPFe7f0fuPRQk5jOi/OMCiA9iTiGfIEJPxRtcRDCPEcpaXK7H7rP0cx/
+	 xZOVGq7MBgFLEeETUgNrxIRPM2zCtbEH7sY6Grtz98p/sCPQRcbL7LvYiOgHw7Hl2SLiK
+	 RL2ct7NS0azUqAkjQ44lvtOdQLEvbuNbh/o4+A0W5eGykmoHPRSSrFi0nx/be3f3jnQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pyyy0yEM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SBlB9OG2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A546D606A32C;
-	Wed, 18 Nov 2026 21:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683F3606A31C;
+	Wed, 18 Nov 2026 21:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pyyy0yEM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078031F000C4;
-	Wed, 18 Nov 2026 21:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SBlB9OG2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC59C1F000C4;
+	Wed, 18 Nov 2026 21:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038826;
-	bh=NiajgWqGAXnHNa3vNE3u7sKNkFKyHF1qUvban+cCqGI=;
+	s=korg; t=1795038829;
+	bh=45i5abFSuhLxTgA9DepstgoXz+MdVgBFVisOIZQReRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pyyy0yEMet6ffr3+eix5+/GlN+55tkcMoN6YW9GUb1VJ+CVmkdU8UR9nzH03Uw3pd
-	 g3DL616DSaaywRTHwRZBzCJLRTEgBRkDmZwYMvS/lnFh8xGynCPLHsN4QSP4FftINa
-	 4aIG7xEzYW6ATQ9b2pcP17AfUaxzKSrHkugZTKQ4=
+	b=SBlB9OG2+gVsjt3L5QjNStt2Ep1m2GjGjLeYsDrAEO73HQtqFVRP8sjoPiOqJoqHL
+	 GZGN0mVURC8N1J/rkdjMT6QRQOUoToWN87AnpdVk3LpiXnZ+VsG91wOX+NOFXQbUWd
+	 G4F9x6EDf8VoVQoUorUImPjDt7BMFtK+brTZRo34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Dave Chinner <dgc@kernel.org>,
+	Daejun Park <daejun7.park@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1882/3318] f2fs: fix to fetch ino via ino_of_node() under cache lock
-Date: Wed, 18 Nov 2026 15:41:44 +0100
-Message-ID: <20261118150418.447617823@linuxfoundation.org>
+Subject: [PATCH 6.6 1883/3318] xfs: dont skip free extents of the longest length in a whole-AG FITRIM
+Date: Wed, 18 Nov 2026 15:41:45 +0100
+Message-ID: <20261118150418.479785507@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Daejun Park <daejun7.park@samsung.com>
 
-[ Upstream commit cd6d8b1891395b681f2060916a4b83880b765698 ]
+[ Upstream commit 5745f4f10a1a16aa5bb020acc38afa33f2d5ff99 ]
 
-In f2fs_writeback_node_caches(), it's better to fetch ino via ino_of_node()
-under cache lock, otherwise, node cache content may become stale after cache
-is unlocked due to racing w/ truncation.
+Since commit a66d636385d6 ("xfs: fix fstrim offset calculations"), the
+by-length walk of an AG in FITRIM starts with
+xfs_alloc_lookup_ge(cur, 0, pagf_longest) and walks down. The lookup
+lands on the longest free extent with the lowest block number. The
+other free extents of that length sort after it and are never
+discarded.
 
-Commit 493b9dc8b52c ("f2fs: cache: use node cache") fixes similar issue in
-f2fs_flush_inline_data() introduced in commit 34c061ad85a2 ("f2fs: Avoid double
-lock for cp_rwsem during checkpoint").
+Start every by-length batch with xfs_alloc_lookup_le() at restart_bno.
 
-Cc: stable@kernel.org
-Fixes: 2049d4fcb057 ("f2fs: avoid multiple node page writes due to inline_data")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ sashal: adapted cache-entry handling to page-based access in f2fs_sync_node_pages(), using ino_of_node(page) ]
+Suggested-by: Dave Chinner <dgc@kernel.org>
+Link: https://lore.kernel.org/r/ZgiJWxVcVwag0fIP@dread.disaster.area
+Cc: stable@vger.kernel.org
+Fixes: a66d636385d6 ("xfs: fix fstrim offset calculations")
+Signed-off-by: Daejun Park <daejun7.park@samsung.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ sashal: adapted trim cursor fields restart_bno and count to ar_startblock and ar_blockcount. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_discard.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/node.c b/fs/f2fs/node.c
-index c57d89f3664b2..f4422790923e7 100644
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -2088,9 +2088,11 @@ int f2fs_sync_node_pages(struct f2fs_sb_info *sbi,
+diff --git a/fs/xfs/xfs_discard.c b/fs/xfs/xfs_discard.c
+index d5787991bb5b4..80d4a39e69008 100644
+--- a/fs/xfs/xfs_discard.c
++++ b/fs/xfs/xfs_discard.c
+@@ -175,12 +175,11 @@ xfs_trim_gather_extents(
+ 	cur = xfs_allocbt_init_cursor(mp, NULL, agbp, pag, XFS_BTNUM_CNT);
  
- 			/* flush inline_data */
- 			if (page_private_inline(page)) {
-+				nid_t ino = ino_of_node(page);
-+
- 				clear_page_private_inline(page);
- 				unlock_page(page);
--				flush_inline_data(sbi, ino_of_node(page));
-+				flush_inline_data(sbi, ino);
- 				goto lock_node;
- 			}
- 
+ 	/*
+-	 * Look up the extent length requested in the AGF and start with it.
++	 * A by-len walk starts at the last record of the longest
++	 * length (ar_startblock is NULLAGBLOCK until the first batch
++	 * ends) and then where the previous batch stopped.
+ 	 */
+-	if (tcur->ar_startblock == NULLAGBLOCK)
+-		error = xfs_alloc_lookup_ge(cur, 0, tcur->ar_blockcount, &i);
+-	else
+-		error = xfs_alloc_lookup_le(cur, tcur->ar_startblock,
++	error = xfs_alloc_lookup_le(cur, tcur->ar_startblock,
+ 				tcur->ar_blockcount, &i);
+ 	if (error)
+ 		goto out_del_cursor;
 -- 
 2.53.0
 
