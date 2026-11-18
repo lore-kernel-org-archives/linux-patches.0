@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015701;
-	b=vfZVQtj0ifJpaX9f20Zg/LdQ0gdHyP3DLD04l7wglb/hqf5jSPVLq8aYAB3iw0CKqHc3
-	 PoMSyidmAznEnmX197JQi2OCqZAql993nsFG5Mg9FtFH/8kZWAUdBoKhdinEa57UA0EQh
-	 PMt5JkyliNwH4qkbb6N2KT3uei8XHiv8VRjZaXanHXm87uB3zQRluPE+t7fULiMgbkh18
-	 NQ5O4EWiRmPSRosAdvFaKVqu9+wKNOcOaZ8XgTxAaVXbcr2GuhhjLfK5t04dmbwTZ44Mc
-	 xn7OsEagbunhFHxaTtZhYXVMw2Fu/7wQ3Z7D0rq1miElDAlGy+jv3m/T58UegTOngSQ==
+	t=1795015704;
+	b=ihC0kwDmkcBru7Bg206EiY9t8GMMe7NB9yemqTT3vpNTsC0bgGl2w98rcxCuc8IlUU6x
+	 CfCQ9+N75CqYFKpQKwO53GXwFx7JPs3wq3xZ6TaZ8o9Wl0ktzgDRCSFiBz3RYLoo/Y4DM
+	 yPj6Srwth+bgMTVveX65iH4LTE7Ix6Am8/ZQVHVfAlFCwgze0/gCoA6AOALfuk1Fw+Jqu
+	 zJBCaPuqkOs1HOKLIOFj3lqGTxV3cFx4uI2FYamCKyC7TwDaRLCuLywT0bFUdRtKH0uZN
+	 9Yu23OdQNSj/q0s0CWFlW/xSfMuMnLsjlGmVeBFdI5eqjQRxvnKC9LbKGTyla9IzpDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015701;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015704;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=02qQxCiWDNtj0N4prXXFXOGjcUUqYIlfv3MtnGwmVG0=;
-	b=34hf2r3XATC5j2p7jHIbSzRYNQ+pi19qI99Rmnd1KqINP1tAAgeNzvGSOpUi0M4/GNz+
-	 8fyhae0cv6PV/PZSshKnspLngUO99HiATY1Ey6KptOkS/zXPtrxNdzAM+/wHqQ0MrjVsD
-	 Jim/lqSerzSaPcoCPneFyFWt7Ccb8QvlQgyVLUPf04fFPinT4V7I98ejhAbXT1jBX3Lpb
-	 z16tHcmuJVDGnN42RsF5KV2lnRSXW4pJCMv4D61Rep+2I7Le1IaPCfCrmsG+Pdl4/dQR1
-	 eHqSX80OVaFEZek/F0SxzT/0GC04WGxxb1JiJbeaDT5GC4KcyY7aYUrkiGcHnYzoLyw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=djsOvkYN/jmg1h+BcAIEoqyZFIhtsQyd5IPgax5We9k=;
+	b=oen6jc6z6HVVuga2jGVzjz8wHT0fqRtDej+VxKUuFf5lamyV3Y1dOtrf2N4wiVEQfyJA
+	 E+NtG2gZSwNq4CgAreamXIiVon8AQL3bcI0eDmUh4/a/LQvIlCaig5YehpP74KMYbNPjf
+	 25MQTYzzmA12HRVTe3SAChTp/xYfI7IpBM7o2SJnxJ4De/t/BkU0ppMtTo2sOgVZattZu
+	 hHKstUO2h8++wBc55R9nmidO17MAAayZuNPJ5puRV5uUI4JE8J2CoaydesELck0e5RWWO
+	 gaRDbL6lV6SNrQhnHFb5Wg80qQimEtVcKlqxH4PAKXYTVW8hjPSkdQv3yo61LoYQN7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pkt1z0VW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="EntQwe7/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DC4606A33A;
-	Wed, 18 Nov 2026 15:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A024606A33A;
+	Wed, 18 Nov 2026 15:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Pkt1z0VW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5A6E1F000C8;
-	Wed, 18 Nov 2026 15:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EntQwe7/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEC81F000C5;
+	Wed, 18 Nov 2026 15:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015701;
-	bh=02qQxCiWDNtj0N4prXXFXOGjcUUqYIlfv3MtnGwmVG0=;
+	s=korg; t=1795015704;
+	bh=djsOvkYN/jmg1h+BcAIEoqyZFIhtsQyd5IPgax5We9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Pkt1z0VW43zwmvjXqsdZsqwjASOnR/aAjzUv8rgghxVc4w1QUZDxgGGEbP7yOI/Z1
-	 zUCYWSo1dbK/KNJvsSiuJa0/AwsBLAXYkROiXa/SRfLAuKd5A2NrTyadGq5/5cxl4P
-	 l9avZFLgg0NWFj8g8ORMt3y6/vmpjYcKNGNUIomM=
+	b=EntQwe7/qpx5zKLPuQFQEtL+ZFc62a9OaFD+QO4nrDQ53ilX4rpYo9tAHE5GWgCfU
+	 3Sz8cUPqtN/xMolDVZTut2DNyPBRzOugG0RgWXFPun7Vc+4Sfpq76IEiAolB9Tjmcu
+	 wg4GUXk7EscZbjvNADe9UQS1AhicH0OQvdvhLmcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jitao Shi <jitao.shi@mediatek.com>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Fei Shao <fshao@chromium.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0267/2651] virtio_ccw: always take irq_lock in the classic interrupt handler
-Date: Wed, 18 Nov 2026 15:25:07 +0100
-Message-ID: <20261118150257.515366528@linuxfoundation.org>
+Subject: [PATCH 7.3 0268/2651] pwm: mtk-disp: Fix period readback
+Date: Wed, 18 Nov 2026 15:25:08 +0100
+Message-ID: <20261118150257.556581879@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,69 +65,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 48a355cf5b382570975e60857450ff3d42f268e9 ]
+[ Upstream commit c5b29baad42b2b02389cc6a716697a8a63209930 ]
 
-virtio_ccw_int_handler() takes vcdev->irq_lock around its
-vring_interrupt() calls only when VIRTIO_HARDEN_NOTIFICATION is enabled.
+The period value stored in the register is the number of clock cycles - 1.
 
-The virtio shutdown path calls synchronize_cbs() even when notification
-hardening is disabled. virtio_reset_device() now does so after the
-transport reset too.
+Account for the offset when calculating the period in nanoseconds. This
+fixes the discrepancy reported by the pwm core when CONFIG_PWM_DEBUG=1:
 
-For classic interrupts, synchronize_cbs() takes vcdev->irq_lock for
-writing, but the interrupt handler does not take the matching read
-lock in that configuration. synchronize_cbs() can return while a
-callback is still running.
+    mediatek-disp-pwm 1100e000.pwm: .apply is not idempotent
+    	(ena=1 pol=0 281500/499875) -> (ena=1 pol=0 281500/499750)
 
-Take the read lock unconditionally so the write side can synchronize
-with the callbacks.
+Calculation discrepancy in the driver was found by AI run by a colleague
+while debugging another PWM related issue. Check against SoC datasheet
+and fix done by the author.
 
-Fixes: 8bd2fa086a04 ("virtio: break and reset virtio devices on device_shutdown()")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20260908053817.26065-3-kmehltretter@gmail.com>
+Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
+Cc: Jitao Shi <jitao.shi@mediatek.com>
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Fei Shao <fshao@chromium.org>
+Link: https://patch.msgid.link/20260827105738.8570-1-wenst@chromium.org
+[ukleinek: Adapt comment accordingly]
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/virtio/virtio_ccw.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/pwm/pwm-mtk-disp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/s390/virtio/virtio_ccw.c b/drivers/s390/virtio/virtio_ccw.c
-index b90299205698b..552d779980129 100644
---- a/drivers/s390/virtio/virtio_ccw.c
-+++ b/drivers/s390/virtio/virtio_ccw.c
-@@ -1204,13 +1204,11 @@ static void virtio_ccw_int_handler(struct ccw_device *cdev,
- 			vcdev->err = -EIO;
- 	}
- 	virtio_ccw_check_activity(vcdev, activity);
--#ifdef CONFIG_VIRTIO_HARDEN_NOTIFICATION
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index b5409e15dac86..56d10cde5b460 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -210,9 +210,9 @@ static int mtk_disp_pwm_get_state(struct pwm_chip *chip,
+ 	period = FIELD_GET(PWM_PERIOD_MASK, con1);
  	/*
- 	 * Paired with virtio_ccw_synchronize_cbs() and interrupts are
- 	 * disabled here.
+ 	 * period has 12 bits, clk_div 11 and NSEC_PER_SEC has 30,
+-	 * so period * (clk_div + 1) * NSEC_PER_SEC doesn't overflow.
++	 * so (period + 1) * (clk_div + 1) * NSEC_PER_SEC doesn't overflow.
  	 */
- 	read_lock(&vcdev->irq_lock);
--#endif
- 	for_each_set_bit(i, indicators(vcdev),
- 			 sizeof(*indicators(vcdev)) * BITS_PER_BYTE) {
- 		/* The bit clear must happen before the vring kick. */
-@@ -1219,9 +1217,7 @@ static void virtio_ccw_int_handler(struct ccw_device *cdev,
- 		vq = virtio_ccw_vq_by_ind(vcdev, i);
- 		vring_interrupt(0, vq);
- 	}
--#ifdef CONFIG_VIRTIO_HARDEN_NOTIFICATION
- 	read_unlock(&vcdev->irq_lock);
--#endif
- 	if (test_bit(0, indicators2(vcdev))) {
- 		virtio_config_changed(&vcdev->vdev);
- 		clear_bit(0, indicators2(vcdev));
+-	state->period = DIV64_U64_ROUND_UP(period * (clk_div + 1) * NSEC_PER_SEC, rate);
++	state->period = DIV64_U64_ROUND_UP((period + 1) * (clk_div + 1) * NSEC_PER_SEC, rate);
+ 	high_width = FIELD_GET(PWM_HIGH_WIDTH_MASK, con1);
+ 	state->duty_cycle = DIV64_U64_ROUND_UP(high_width * (clk_div + 1) * NSEC_PER_SEC,
+ 					       rate);
 -- 
 2.53.0
 
