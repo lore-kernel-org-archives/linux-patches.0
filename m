@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021223;
-	b=baH2jzDmEIHiVDGi7lGtz2wlUmxyJ997iR32m3ngWrKIDF5rotAIjZmNdn/yiH3MYeGM
-	 TZi6i4VAsT86ynn+mHQJIrX8aqXVCHMsOT/DQ2cvYvVKt1DymqliyHqEegVE6mAy5qDlX
-	 Xqf+8XvqD2ozW4tuRvjpiBP1vlZTmWMip95Zy/kf5G8F8tyxbM/++Ch+/xKymswFAm9as
-	 x1U3qtWJjeJ8CpV+tvMzKMQmJvHL+qNnkE5nPKc2/eec7WNqUgxYl4yPWxSzmJrcWsuKP
-	 cUV7aygmSwqcm/xjvdBOidtw8/mYtg2eLxtJwSGbAGIJD09XZkcQhNBfEmukkbJxn0A==
+	t=1795021225;
+	b=G0hrA4H48YFwefJC+EE98l4Lo6iHbUCnnbE/sOC1PSZshpBMttfxJniniskqCHMHi0J+
+	 aZcCwY+ZNShXX5gEljNgmAkqeuCAHEqNtG6bCGqdhxi586J9699IgtIY0EqraQS8I+bi4
+	 lrzh56y1nPtkDXe57b52sMlHw6gz2AFtlnAUkg0fKsIFWSv055akE7xUDUZi5QBTKY/Aa
+	 wtH3pBJD2mAksFO/RP2bEkUT4ozyT9P5z7+vX5fLGoywXLukGPCnm5IZXnYT6OIkNl1kQ
+	 9CcQ5lowyy7yYRaBTpHa+r3GvwgjT2M841mCreoQYy966SO0Fz1Dm/5m6d5BvQTOcgw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021223;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021225;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VL3qYv6uRGdX+vGZPzueiq1My9fs1VDzJGDxe5WsJEc=;
-	b=zsURxDfL7hkjuDuNWnHjPuHbCAsG+ivt5FRLd9xUcrwpco8+3i7F8gAp5XNUu9U73Sv6
-	 /UjHdqSuUXj6s8AP4jgKUDyCSyro3b+NoHV6LBBiMD5LqcPk0rAaMokOOVU1YZLFMjGuB
-	 +7MNIorL9xoIU5/ra9HA8gqb6eDaFZAlBoh2Y7i1Qxt1srDTQ3XvoGoiooudUN103kq8Z
-	 Kl0SPUvi3w4B8I38Tg7ZW6OIwjwblw0OW+9PLXi5FXnAih40jsZvrgS//RVHDAxthgjOa
-	 GPHUqzMYe44JegvsWiPNNUNdi2y8X+LAaebFdHaX/cD0lOlepSknmrfYpGZdOuq6MVg==
+	bh=mxL5kXxFtps6MVJMZ6S9JyZmodAIU7yiJB5vBYTebkE=;
+	b=yeHYapGEJU2wttuhlpjELvoQ21tIX/kJS7PHcCyXShQlCvPPIYMGaifJNwJl0Ba+RvAk
+	 mXyvvZTQx3NQpHN0nXWh1L3C54D6XIrm5kqxOFF5MXuJRTXskMSVhaBMYL1WFLdwuN+v0
+	 /dhr3SpvDXEpunVcARk+GFCRgZ2GhDo8SJYvCkthT01bme9DQSTv/BKqSHUSCxBPDuX4z
+	 FC6DXvctPX/4LlFzMRr+iKmpuiddz6DRszT/yzB7oERzaMO159F2Myxn5XnfFfjCydrHW
+	 xxDgAXKuTvNBOjuKjoViaqMzV7zrbfbZB1L0QWRnnqhMhsL4eAqh4lD0XEGDAR2pZxw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HswEC13d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6Ku0AVj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2EFF606A31C;
-	Wed, 18 Nov 2026 17:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E94606A31C;
+	Wed, 18 Nov 2026 17:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HswEC13d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A4521F000C4;
-	Wed, 18 Nov 2026 17:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I6Ku0AVj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36C91F000C4;
+	Wed, 18 Nov 2026 17:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021222;
-	bh=VL3qYv6uRGdX+vGZPzueiq1My9fs1VDzJGDxe5WsJEc=;
+	s=korg; t=1795021225;
+	bh=mxL5kXxFtps6MVJMZ6S9JyZmodAIU7yiJB5vBYTebkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HswEC13dgtpaEQQ7vylaMYFCLwx5OQC1u+0uyMRlt/Aq8IzG2I0n5KpUEd0oojeIn
-	 /pvJbGZCPMYGUykLcQMLZyivkTGneQjoCZbTiETRTBWLrkfX5rz8ngI81GkEd4L1xV
-	 9vjIeCf6/pU+BSej16d62cI7yNM5WcEkagA4Gv/4=
+	b=I6Ku0AVjqbb+mt0ML0KK+SPz34HXscC47rXywg7MUaa//L5QIKhRXLJvmS7hV0Ldo
+	 sypz/WbUz9jZXRZX4il51qDO0wCG5T7P99rKBYqN7PdFxU5Pwv9ObW15ML9k449g2p
+	 dxSqT2Bcu951D8EbjT9NworFvUbTSQaKpcVEAf7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mykola Lysenko <nickolay.lysenko@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Emil Tsalapatis <emil@etsalapatis.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2189/2651] bpf: Revalidate faulted arena pages before installing user mappings
-Date: Wed, 18 Nov 2026 15:57:09 +0100
-Message-ID: <20261118150404.573934040@linuxfoundation.org>
+Subject: [PATCH 7.3 2190/2651] bpf: Fix arena race between page free and alloc leading to incoherency
+Date: Wed, 18 Nov 2026 15:57:10 +0100
+Message-ID: <20261118150404.602911024@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,66 +71,284 @@ Content-Transfer-Encoding: 8bit
 
 From: Emil Tsalapatis <emil@etsalapatis.com>
 
-[ Upstream commit 05bee0638bacf4e9298bbf0bfef749b6a8ff4478 ]
+[ Upstream commit 7244a2e58d2167292972f9380abb3a4d17a343e3 ]
 
-A user fault on an arena pins the page that the kernel arena maps,
-drops the arena spinlock and returns the page to the core fault code,
-which then locks the folio and installs the user PTE. A concurrent
-free can clear the kernel mapping in that window. The page reference
-prevents a use-after-free, but the fault can still install a user PTE
-for a page the arena has already released. User space and BPF programs
-then see different memory at the same arena offset.
+Existing arena kfunc code has an underlying race condition
+that can lead to writes being lost from the BPF program's
+point of view:
 
-Close the window from the fault side. Lock the page, recheck that the
-kernel mapping still points to it, and return it with VM_FAULT_LOCKED so
-that it stays locked until the core fault code has installed the user
-PTE. If a free removed the page, drop it and return VM_FAULT_NOPAGE so
-that the fault starts over. Return VM_FAULT_HWPOISON for a poisoned
-page.
+a) A memory range gets freed by operation (1), and its range
+is added back to the arena range tree.
 
-This change alone does not close the race, because the free path does
-not yet wait for the page lock. The following change makes frees wait
-for in-flight faults before zapping user mappings.
+b) A concurrent allocation (2) reallocates the range, and does
+writes to it. Writes from that CPU may follow the stale TLB
+entries into the pages that are about to be freed.
 
-Fixes: 317460317a02 ("bpf: Introduce bpf_arena.")
+c) (1) invalidates the TLB. The old pages, and any writes done
+to them, are now inaccessible. zap_pages() similarly removes the
+mappings for userspace threads.
+
+This can be triggered by particularly demanding BPF arena data
+structures that constantly allocate and deallocate memory, like
+hash table allocations.
+
+Solve this ABA problem by keeping the range allocated until TLB
+invalidation and unmapping are complete. Under the arena spinlock,
+claim any free pages in the range and clear its kernel PTEs. Then drop
+the spinlock, lock and unlock each cleared page to wait for faults that
+are still installing a user PTE, flush the kernel TLB and zap the user
+page tables. Finally, retake the spinlock to release the range. Frees
+serialize on zap_mutex, so an overlapping free cannot release the range
+early. Claiming the range only allocates a range tree node when the
+whole range is free, and then there is nothing to free.
+
+User faults on a range that is allocated without a page now raise
+SIGBUS instead of populating it. That covers a range reserved with
+bpf_arena_reserve_pages() and a range whose kernel PTEs a free has
+already cleared. Touching a page while a BPF program frees it is a user
+space bug, and in a BPF_F_SEGV_ON_FAULT arena it already raises SIGSEGV.
+
+Sleepable frees run synchronously and are deferred only when the arena
+spinlock cannot be taken. The deferred free worker retries such a free
+in place instead of requeueing itself, so the flush_work() in
+arena_map_free() waits for all of its work.
+
+Fixes: b8467290edab ("bpf: arena: make arena kfuncs any context safe")
+Reported-by: Mykola Lysenko <nickolay.lysenko@gmail.com>
 Suggested-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261019201108.4552-2-emil@etsalapatis.com
+Link: https://patch.msgid.link/20261019201108.4552-3-emil@etsalapatis.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/arena.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ kernel/bpf/arena.c | 159 +++++++++++++++++++++------------------------
+ 1 file changed, 73 insertions(+), 86 deletions(-)
 
 diff --git a/kernel/bpf/arena.c b/kernel/bpf/arena.c
-index 0ff707707da04..5e0e0837980b4 100644
+index 5e0e0837980b4..868589f073301 100644
 --- a/kernel/bpf/arena.c
 +++ b/kernel/bpf/arena.c
-@@ -584,8 +584,22 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf)
- 	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
- 	if (new_page)
- 		free_pages_nolock(new_page, 0);
--	vmf->page = page;
--	return 0;
-+
-+	/*
-+	 * A free clears the kernel pte and then takes the page lock before it
-+	 * zaps user vma-s. Either it waits for this fault and zaps its pte, or
-+	 * the page is gone from here.
-+	 */
-+	lock_page(page);
-+	if (vmalloc_to_page((void *)kaddr) == page && !PageHWPoison(page)) {
-+		vmf->page = page;
-+		return VM_FAULT_LOCKED;
-+	}
-+	/* The page was freed meanwhile. Let the fault start over. */
-+	fault_ret = PageHWPoison(page) ? VM_FAULT_HWPOISON : VM_FAULT_NOPAGE;
-+	unlock_page(page);
-+	put_page(page);
-+	return fault_ret;
+@@ -543,6 +543,12 @@ static vm_fault_t arena_vm_fault(struct vm_fault *vmf)
+ 		goto out_err_locked;
+ 	}
  
- out_err_locked_memcg:
++	if (is_range_tree_set(&arena->rt, vmf->pgoff, 1)) {
++		/* Allocated without a page: reserved or being freed */
++		fault_ret = VM_FAULT_SIGBUS;
++		goto out_err_locked;
++	}
++
+ 	bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
+ 
+ 	if (!new_page) {
+@@ -868,7 +874,7 @@ static void zap_pages(struct bpf_arena *arena, long uaddr, long page_cnt)
+ 	 * otherwise call B's mark would make call A skip a vml that A has
+ 	 * not yet zapped for A's uaddr range.
+ 	 */
+-	mutex_lock(&arena->zap_mutex);
++	lockdep_assert_held(&arena->zap_mutex);
+ 	mutex_lock(&arena->lock);
+ 	my_gen = ++arena->zap_gen;
+ 	for (;;) {
+@@ -902,49 +908,41 @@ static void zap_pages(struct bpf_arena *arena, long uaddr, long page_cnt)
+ 		mutex_lock(&arena->lock);
+ 	}
+ 	mutex_unlock(&arena->lock);
+-	mutex_unlock(&arena->zap_mutex);
+ }
+ 
+-static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt, bool sleepable)
++/*
++ * The range stays allocated in the range tree until the pages are unmapped
++ * from vmalloc area and from all user space vma-s, so that nobody can
++ * populate it while stale TLB entries or user ptes are still around.
++ */
++static int arena_free_range(struct bpf_arena *arena, long uaddr, long page_cnt)
+ {
+-	struct mem_cgroup *new_memcg, *old_memcg;
+-	u64 full_uaddr, uaddr_end;
+-	long kaddr, pgoff;
+-	struct page *page;
+-	struct llist_head free_pages;
+-	struct llist_node *pos, *t;
+-	struct arena_free_span *s;
++	u64 full_uaddr = clear_lo32(arena->user_vm_start) + uaddr;
++	long kaddr = bpf_arena_get_kern_vm_start(arena) + uaddr;
++	long pgoff = compute_pgoff(arena, uaddr);
+ 	struct clear_range_data cdata;
++	struct llist_node *pos, *t;
++	LLIST_HEAD(free_pages);
+ 	unsigned long flags;
+-	int ret = 0;
+-
+-	/* only aligned lower 32-bit are relevant */
+-	uaddr = (u32)uaddr;
+-	uaddr &= PAGE_MASK;
+-	kaddr = bpf_arena_get_kern_vm_start(arena) + uaddr;
+-	full_uaddr = clear_lo32(arena->user_vm_start) + uaddr;
+-	if (full_uaddr < arena->user_vm_start)
+-		return;
+-	uaddr_end = min(arena->user_vm_end, full_uaddr + (page_cnt << PAGE_SHIFT));
+-	if (full_uaddr >= uaddr_end)
+-		return;
+-
+-	page_cnt = (uaddr_end - full_uaddr) >> PAGE_SHIFT;
+-	pgoff = compute_pgoff(arena, uaddr);
+-	bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
++	struct page *page;
++	int ret;
+ 
+-	if (!sleepable)
+-		goto defer;
++	/* An overlapping free must not release the range before this one is done */
++	guard(mutex)(&arena->zap_mutex);
+ 
+ 	ret = raw_res_spin_lock_irqsave(&arena->spinlock, flags);
+-
+-	/* Can't proceed without holding the spinlock so defer the free */
+ 	if (ret)
+-		goto defer;
++		return ret;
+ 
+-	range_tree_set(&arena->rt, pgoff, page_cnt);
++	/*
++	 * Take the free pages of the range too. It allocates, and can fail,
++	 * only when the whole range is free. Then there is nothing to do.
++	 */
++	if (range_tree_clear(&arena->rt, pgoff, page_cnt)) {
++		raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
++		return 0;
++	}
+ 
+-	init_llist_head(&free_pages);
+ 	cdata.arena = arena;
+ 	cdata.free_pages = &free_pages;
+ 	/* clear ptes and collect struct pages */
+@@ -954,6 +952,12 @@ static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt,
+ 	/* drop the lock to do the tlb flush and zap pages */
+ 	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
+ 
++	/* wait for arena_vm_fault() that found the page before its pte was cleared */
++	llist_for_each_entry(page, free_pages.first, pcp_llist) {
++		lock_page(page);
++		unlock_page(page);
++	}
++
+ 	/* ensure no stale TLB entries */
+ 	flush_tlb_kernel_range(kaddr, kaddr + (page_cnt * PAGE_SIZE));
+ 
+@@ -972,8 +976,39 @@ static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt,
+ 			zap_pages(arena, full_uaddr, 1);
+ 		__free_page(page);
+ 	}
+-	bpf_map_memcg_exit(old_memcg, new_memcg);
+ 
++	/* The callers hold no other rqspinlock, so this one can only time out */
++	while (raw_res_spin_lock_irqsave(&arena->spinlock, flags))
++		cond_resched();
++	range_tree_set(&arena->rt, pgoff, page_cnt);
++	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
++	return 0;
++}
++
++static void arena_free_pages(struct bpf_arena *arena, long uaddr, long page_cnt, bool sleepable)
++{
++	struct mem_cgroup *new_memcg, *old_memcg;
++	u64 full_uaddr, uaddr_end;
++	struct arena_free_span *s;
++
++	/* only aligned lower 32-bit are relevant */
++	uaddr = (u32)uaddr;
++	uaddr &= PAGE_MASK;
++	full_uaddr = clear_lo32(arena->user_vm_start) + uaddr;
++	if (full_uaddr < arena->user_vm_start)
++		return;
++	uaddr_end = min(arena->user_vm_end, full_uaddr + (page_cnt << PAGE_SHIFT));
++	if (full_uaddr >= uaddr_end)
++		return;
++
++	page_cnt = (uaddr_end - full_uaddr) >> PAGE_SHIFT;
++	bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
++
++	/* Can't proceed without holding the spinlock so defer the free */
++	if (!sleepable || arena_free_range(arena, uaddr, page_cnt))
++		goto defer;
++
++	bpf_map_memcg_exit(old_memcg, new_memcg);
+ 	return;
+ 
+ defer:
+@@ -1035,66 +1070,18 @@ static void arena_free_worker(struct work_struct *work)
+ {
+ 	struct bpf_arena *arena = container_of(work, struct bpf_arena, free_work);
+ 	struct mem_cgroup *new_memcg, *old_memcg;
+-	struct llist_node *list, *pos, *t;
++	struct llist_node *pos, *t;
+ 	struct arena_free_span *s;
+-	u64 arena_vm_start, user_vm_start;
+-	struct llist_head free_pages;
+-	struct clear_range_data cdata;
+-	struct page *page;
+-	unsigned long full_uaddr;
+-	long kaddr, page_cnt, pgoff;
+-	unsigned long flags;
+-
+-	if (raw_res_spin_lock_irqsave(&arena->spinlock, flags)) {
+-		schedule_work(work);
+-		return;
+-	}
+ 
+ 	bpf_map_memcg_enter(&arena->map, &old_memcg, &new_memcg);
+ 
+-	init_llist_head(&free_pages);
+-	cdata.arena = arena;
+-	cdata.free_pages = &free_pages;
+-	arena_vm_start = bpf_arena_get_kern_vm_start(arena);
+-	user_vm_start = bpf_arena_get_user_vm_start(arena);
+-
+-	list = llist_del_all(&arena->free_spans);
+-	llist_for_each(pos, list) {
+-		s = llist_entry(pos, struct arena_free_span, node);
+-		page_cnt = s->page_cnt;
+-		kaddr = arena_vm_start + s->uaddr;
+-		pgoff = compute_pgoff(arena, s->uaddr);
+-
+-		/* clear ptes and collect pages in free_pages llist */
+-		apply_to_existing_page_range(&init_mm, kaddr, page_cnt << PAGE_SHIFT,
+-					     apply_range_clear_cb, &cdata);
+-
+-		range_tree_set(&arena->rt, pgoff, page_cnt);
+-	}
+-	raw_res_spin_unlock_irqrestore(&arena->spinlock, flags);
+-
+-	/* Iterate the list again without holding spinlock to do the tlb flush and zap_pages */
+-	llist_for_each_safe(pos, t, list) {
++	llist_for_each_safe(pos, t, llist_del_all(&arena->free_spans)) {
+ 		s = llist_entry(pos, struct arena_free_span, node);
+-		page_cnt = s->page_cnt;
+-		full_uaddr = clear_lo32(user_vm_start) + s->uaddr;
+-		kaddr = arena_vm_start + s->uaddr;
+-
+-		/* ensure no stale TLB entries */
+-		flush_tlb_kernel_range(kaddr, kaddr + (page_cnt * PAGE_SIZE));
+-
+-		/* remove pages from user vmas */
+-		zap_pages(arena, full_uaddr, page_cnt);
+-
++		while (arena_free_range(arena, s->uaddr, s->page_cnt))
++			cond_resched();
+ 		kfree_nolock(s);
+ 	}
+ 
+-	/* free all pages collected by apply_to_existing_page_range() in the first loop */
+-	llist_for_each_safe(pos, t, __llist_del_all(&free_pages)) {
+-		page = llist_entry(pos, struct page, pcp_llist);
+-		__free_page(page);
+-	}
+-
  	bpf_map_memcg_exit(old_memcg, new_memcg);
+ }
+ 
 -- 
 2.53.0
 
