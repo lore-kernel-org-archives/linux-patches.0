@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059191;
-	b=TBC5da8nT5QawK/LioHS8qQ8A86/+cdP+0Cla9ZEQ5lrDsyy9PevFAnLCtEenbi6yAnC
-	 EuOPzdMQf0Z3Y9DKlVg7B9xHe4DRWPbOoWYoQiQVWWR0aI+Np9XCidCnAHDSBYQ8A412P
-	 ioP1NEZgFvtWIqtLMuWh4CXUMBCIdJJBhNEyzWR4etHF2mTYBTa3ms3eZDZH6M6oeUwSo
-	 9b83NJ0Vo6NTzN98L4dTNb4GVdS29iYjU81bsELZ8aQ/oKxevZa7elTeOPijkJEpsCB0N
-	 vSvKmnouvMQMOv1h/Yw0LEfWZCyW91PlhicyOn05yJ2MexOkPbHa62SmI8N1KzL//HA==
+	t=1795059193;
+	b=dYhiLEbUhtvaZFuwZYqe8IkID57s8eqG2BCahBlXoly8o4UZU7qAYcKyBrWeLtlzx41V
+	 Sh6W+KohOZXKBMaFEuisLmNEDm6LJdmCWXzAGl9/A07ZhY4tOH5ViND8QjeMVJtNpHELZ
+	 hcU36a2s1FJXgdeNvS4X66UIyEBbDFizM3pT8VGy8wli9Ibc34fPxDteILH/iVKTHvIej
+	 Vz4Ak13RKtqOn554uwruw63TJTwaOna0LKRelNZGoUnyxtPzjwzwXuIfjNvcLO9AE5f72
+	 HEI7em8qnWD2w7ZIX6Y1bOV659vBXTrP89aD4ZVnmb+rgHWWLVvA5w2WAAvaN2kjIlw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059191;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0dg13L115ImW9UwuAEa+nr7KhgGE7zS7p5BQuWYFA+c=;
-	b=yEktJhKgYii+uA0ilHAX5y/oiySpGKYyWzu8W+MDdo6iK/ueB9j5cudW9EIl126/Rv7C
-	 PhtPsTx+jPn0qwTGPeeGwDigF3T3rAfTjW6eKrxX6eP2reSP37kEVYV6PT071ZP8KFTnN
-	 F5P1KNfjRRLBWsqjn1bSgTqaYKurJs8Rl7CR6PZSgqLE7OeVdnP/3yzKw+WoAOhDJYWm2
-	 ZFWC1iep9MO3YK3QPvnArqLi1GFukyASPeAMLU2gfBRcKk3YPoEuFTCMKYCpvXkT1jtAX
-	 52VXJaQSODZeRO/AkrVd9r/vx4s7LYZ/31UPuwpKdcBxecVpaGYmqzC6j9D4C/EOxKw==
+	bh=TCYqfY0iQSxYEyF9uO0jfWJroqNUm4jTN4gEbSP13IU=;
+	b=jWsZnODemil7u3zBCX2Yb2R01KIUoVo9mL0XKU5aDc8RviCYH+8LRcttKbv2cGJtW1kv
+	 aJKZpywTFTtZ0QI2sZznE/1rvLas4xIZKavNxDi0nqkOHyU54OwF+NBpsaAufoU6Gd5+7
+	 myFUaRuVBffssFMkP966BgaSF4XgcOD9lWCYqzkNfyJVXtrfla62ihBg7Si11XlzaphOj
+	 5Q9gqs8ALjIq1NrltvjrbqvoyiD2LwMfAB7zvlVF+f9UN7AZNTiJ06uB6LwQ6JcT6TL65
+	 keZ7QjtgRgjb2H5QeiWzI59BTiXM5nYlU6g8K09i0pYAzKd9jG8Y5g02trF9/9bJJRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=olCESqp4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKUQw1tQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8698F606A31C;
-	Thu, 19 Nov 2026 03:33:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6DBE606A31C;
+	Thu, 19 Nov 2026 03:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=olCESqp4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C231F000C4;
-	Thu, 19 Nov 2026 03:33:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sKUQw1tQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C2C1F000C4;
+	Thu, 19 Nov 2026 03:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059191;
-	bh=0dg13L115ImW9UwuAEa+nr7KhgGE7zS7p5BQuWYFA+c=;
+	s=korg; t=1795059193;
+	bh=TCYqfY0iQSxYEyF9uO0jfWJroqNUm4jTN4gEbSP13IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=olCESqp4HShItlmu6gGkoGD7fJhtIuk6TwsF/hILwC3/IhOd+h7M4YLrAorZLv9n7
-	 znXe6Rth8i/ULRBEkdcyl+yVRhhyklx4n/hwwDVVDDPE9FqMi0QS0TvBBuoRou7Nx+
-	 O5ekZQb+wb0OMB5kcLEIaZx3gnd9PBhp9mjrBKkQ=
+	b=sKUQw1tQ6FIhUoRr3ejbGvBEIPyo70r8z8ErgwGlHJ+sEjeOq2oOCEicBP1AopyYA
+	 mFJweanEKYBl+0JHf8SitymFGuYpW+d9rjFZKjN6prYdbN83JD59ySMVqg97Rs/+F3
+	 eHLzrgdcecY7jZSoVD+XjzKsUt9v/LYq2vlLpyq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,12 +47,15 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Fasheh <mark@fasheh.com>,
 	Joel Becker <jlbec@evilplan.org>,
 	Heming Zhao <heming.zhao@suse.com>,
+	Kees Cook <kees@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sunil Mushran <sunil.mushran@oracle.com>,
 	Jia-Ju Bai <baijiaju1990@gmail.com>,
 	jjzuming@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0713/1848] ocfs2: stop recovery before shutting down local allocators
-Date: Wed, 18 Nov 2026 15:45:51 +0100
-Message-ID: <20261118145945.717920174@linuxfoundation.org>
+Subject: [PATCH 5.10 0714/1848] ocfs2/cluster: unlink socket containers before releasing resources
+Date: Wed, 18 Nov 2026 15:45:52 +0100
+Message-ID: <20261118145945.753520547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -76,234 +79,163 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 126429e2f503ade63502978beb0c519066442250 ]
+[ Upstream commit 0988f0c0c7c908f0ff77fd8b90ce9918a1f41479 ]
 
-Recovery completion needs the local allocators until it has finished
-reclaiming a failed node's allocation window and truncate log.  During
-unmount, quota recovery is stopped first, but that leaves recovery_state
-at OCFS2_REC_QUOTA_DISABLED.  New non-quota recovery can still start.
+A socket container's node and socket must remain alive while the
+container is on sock_containers. The debugfs formatter reads sc_node
+and sc_sock under o2net_debug_lock without taking their references, but
+sc_kref_release() releases both before taking that lock to unlink the
+container.
 
-ocfs2_truncate_log_shutdown() drains existing completion work and releases
-osb_tl_bh before ocfs2_recovery_exit() closes that publication path:
+With CONFIG_DEBUG_FS enabled, a synchronous sender can retain its last
+socket-container reference after o2net_disconnect_node() has detached
+the connection and flushed o2net_wq. The caller runs outside that
+workqueue. After the sender removes its configfs dependency, node
+removal can proceed without waiting for the sender's final sc_put():
 
-  Unmount                             Recovery
-  -------                             --------
-  stop quota recovery; disable quotas
-  truncate_log_shutdown()
-    flush existing completion work
-                                      recover another failed node
-                                        queue completion
-    flush local log; release buffer
-                                      complete_truncate_log_recovery()
-                                        use released osb_tl_bh
-  recovery_exit(): disable and drain
+  Sender (final sc_put)    Configfs rmdir        Debugfs reader
+  --------------------    --------------        --------------
+  o2nm_undepend_item()
+                          Drop node item refs
+  o2nm_node_put()
+    [node can be freed]
+                                               sc_seq_show()
+                                                 Lock debug lock
+                                                 Read sc_node->nd_name
+                                                 Unlock debug lock
+  sc_node = NULL
+  o2net_debug_del_sc()
 
-An extra buffer reference alone would still let completion append new
-records after the final truncate-log flush.
+The earlier socket release has a similar window. The container is
+still selectable while its socket has been released and sc_sock has
+not yet been cleared:
 
-Split stopping and draining recovery from freeing its state. Stop all
-recovery producers and drain completion work before shutting down either
-local allocator. Keep recovery-state release at its existing later point,
-so its lifetime relative to other teardown users stays unchanged. The
-second stop at recovery_exit() is harmless once recovery is disabled.
+  Sender (final sc_put)                       Debugfs reader
+  --------------------                       --------------
+  sock_release(sc->sc_sock)
+    [socket can be freed]
+                                             sc_seq_show()
+                                               Lock debug lock
+                                               Read sc_sock->sk fields
+                                               Unlock debug lock
+  sc_sock = NULL
+  ...
+  o2net_debug_del_sc()
+
+Move o2net_debug_del_sc() before releasing either resource. Unlinking
+under the existing debug lock waits for an active formatter to finish
+and prevents later readers from selecting the container. This covers
+both socket fields and node fields, including nd_num in the stats
+formatter.
 
 KASAN report as below:
 
-    BUG: KASAN: slab-use-after-free in ocfs2_truncate_log_needs_flush+0x23d/0x360
-    Read of size 8 at addr ffff8881093711e8 by task kworker/u16:3/53
+    BUG: KASAN: slab-use-after-free in string+0x42b/0x470
+    Read of size 1 at addr ffff88810f56fc90 by task python3/506
 
-    CPU: 0 UID: 0 PID: 53 Comm: kworker/u16:3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
+    CPU: 0 UID: 0 PID: 506 Comm: python3 Not tainted 7.3.0-rc4-next-20260921-pmb-ocfs2-functional-v1+ #1 PREEMPT(lazy)
     Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Workqueue: ocfs2_wq ocfs2_complete_recovery
     Call Trace:
      <TASK>
      dump_stack_lvl+0x93/0xd0
      print_report+0xce/0x630
-     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20e/0x420
-     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
      kasan_report+0xe0/0x110
-     ? ocfs2_truncate_log_needs_flush+0x23d/0x360
-     ocfs2_truncate_log_needs_flush+0x23d/0x360
-     ? __pfx_ocfs2_truncate_log_needs_flush+0x10/0x10
-     ? __pfx_down_write+0x10/0x10
-     ocfs2_complete_truncate_log_recovery+0x315/0x780
-     ? trace_hardirqs_on+0x18/0x160
-     ? __pfx_ocfs2_complete_truncate_log_recovery+0x10/0x10
-     ? ocfs2_complete_recovery+0x666/0x11b0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? kfree+0x308/0x580
-     ocfs2_complete_recovery+0x676/0x11b0
-     ? __pfx_ocfs2_complete_recovery+0x10/0x10
-     ? reacquire_held_locks+0xdd/0x200
-     ? process_one_work+0x7c8/0x1b40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_acquire+0x190/0x300
-     ? __pfx_autoremove_wake_function+0x10/0x10
-     ? process_one_work+0x834/0x1b40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x290
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x9a8/0x1b40
-     ? __pfx_process_one_work+0x10/0x10
-     ? lock_acquire+0x190/0x300
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __kthread_parkme+0x177/0x220
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x351/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf70
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-
-    Allocated by task 538:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_slab_alloc+0x89/0x90
-     kmem_cache_alloc_noprof+0x20b/0x5c0
-     alloc_buffer_head+0x26/0x120
-     folio_alloc_buffers+0x122/0x1d0
-     bdev_getblk+0x299/0x4f0
-     ocfs2_read_blocks_sync+0x513/0xbc0
-     ocfs2_iget+0x9cd/0x1a00
-     ocfs2_get_system_file_inode+0x25e/0x7a0
-     ocfs2_fill_super+0x1b05/0x3930
-     get_tree_bdev_flags+0x35d/0x5f0
-     vfs_get_tree+0x93/0x320
-     fc_mount+0x1d/0x200
-     path_mount+0x592/0x1e00
-     __x64_sys_mount+0x24b/0x2d0
+     string+0x42b/0x470
+     vsnprintf+0x330/0x1110
+     seq_printf+0x1a8/0x260
+     sc_seq_show+0x604/0x9f0
+     seq_read_iter+0x480/0x1110
+     seq_read+0x362/0x5a0
+     full_proxy_read+0x11f/0x180
+     vfs_read+0x1a0/0xc20
+     ksys_read+0x111/0x200
      do_syscall_64+0x114/0x620
      entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-    Freed by task 553:
+(User register dump omitted.)
+
+     </TASK>
+
+    Allocated by task 497:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kmalloc_cache_noprof+0x28d/0x610
+     o2nm_node_group_make_item+0xea/0x1a0
+     configfs_mkdir+0x762/0xca0
+     vfs_mkdir+0x399/0x7e0
+     filename_mkdirat+0x129/0x450
+     __x64_sys_mkdir+0x70/0xa0
+     do_syscall_64+0x114/0x620
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+    Freed by task 505:
      kasan_save_stack+0x33/0x60
      kasan_save_track+0x14/0x30
      kasan_save_free_info+0x3b/0x60
      __kasan_slab_free+0x5f/0x80
-     kmem_cache_free+0x242/0x580
-     free_buffer_head+0x4b/0xc0
-     try_to_free_buffers+0x1dc/0x330
-     ocfs2_truncate_log_shutdown+0x789/0x1290
-     ocfs2_dismount_volume+0x1da/0x940
-     generic_shutdown_super+0x15f/0x490
-     kill_block_super+0x40/0xa0
-     deactivate_locked_super+0xae/0x120
-     deactivate_super+0xa2/0xc0
-     cleanup_mnt+0x217/0x450
-     task_work_run+0x144/0x230
-     exit_to_user_mode_loop+0x17d/0x570
-     do_syscall_64+0x4d1/0x620
+     kfree+0x308/0x580
+     config_item_cleanup+0x14b/0x230
+     config_item_put+0x79/0x90
+     sc_put+0x454/0x6e0
+     o2net_send_message_vec+0x63d/0x1560
+     o2net_send_message+0xa6/0xe0
+     validation_send_write+0x17f/0x1d0
+     full_proxy_write+0x11f/0x180
+     vfs_write+0x25a/0x1010
+     ksys_write+0x111/0x200
+     do_syscall_64+0x114/0x620
      entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-    The buggy address belongs to the object at ffff8881093711c0
-     which belongs to the cache buffer_head of size 160
-    The buggy address is located 40 bytes inside of
-     freed 160-byte region [ffff8881093711c0, ffff888109371260)
+    The buggy address belongs to the object at ffff88810f56fc00
+     which belongs to the cache kmalloc-512 of size 512
+    The buggy address is located 144 bytes inside of
+     freed 512-byte region [ffff88810f56fc00, ffff88810f56fe00)
 
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x109371
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881008883c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000120012 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
+(Page and shadow-memory dumps omitted.)
 
-    Memory state around the buggy address:
-     ffff888109371080: 00 00 00 00 fc fc fc fc fc fc fc fc 00 00 00 00
-     ffff888109371100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-    >ffff888109371180: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
-                                                              ^
-     ffff888109371200: fb fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-     ffff888109371280: fc fc fc fc 00 00 00 00 00 00 00 00 00 00 00 00
-    ==================================================================
-
-Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0019-v8-574dd69fd3f47f56348b@gmail.com
-Fixes: ccd979bdbce9 ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
+Link: https://lore.kernel.org/pm-ocfs2-objects-candidate-0065-v6-3090153fd7cacb810214@gmail.com
+Fixes: 2309e9e040fe ("ocfs2/net: Add debug interface to o2net")
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Assisted-by: LLM
 Cc: Mark Fasheh <mark@fasheh.com>
 Cc: Joel Becker <jlbec@evilplan.org>
 Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Sunil Mushran <sunil.mushran@oracle.com>
 Cc: Jia-Ju Bai <baijiaju1990@gmail.com>
 Cc: <jjzuming@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/journal.c | 15 ++++++++++++---
- fs/ocfs2/journal.h |  1 +
- fs/ocfs2/super.c   |  3 +++
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ fs/ocfs2/cluster/tcp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/journal.c b/fs/ocfs2/journal.c
-index 9809ae9debb54..da355eb757bac 100644
---- a/fs/ocfs2/journal.c
-+++ b/fs/ocfs2/journal.c
-@@ -234,13 +234,22 @@ void ocfs2_recovery_disable_quota(struct ocfs2_super *osb)
- 	ocfs2_recovery_disable(osb, OCFS2_REC_QUOTA_WANT_DISABLE);
- }
+diff --git a/fs/ocfs2/cluster/tcp.c b/fs/ocfs2/cluster/tcp.c
+index bd9a2eb244673..e02b32e91b048 100644
+--- a/fs/ocfs2/cluster/tcp.c
++++ b/fs/ocfs2/cluster/tcp.c
+@@ -385,6 +385,9 @@ static void sc_kref_release(struct kref *kref)
  
-+/* Stop producers and drain completion work without freeing recovery state. */
-+void ocfs2_recovery_stop(struct ocfs2_super *osb)
-+{
-+	ocfs2_recovery_disable(osb, OCFS2_REC_WANT_DISABLE);
-+}
+ 	sclog(sc, "releasing\n");
+ 
++	/* Unlink before freeing anything the debugfs readers dereference. */
++	o2net_debug_del_sc(sc);
 +
- void ocfs2_recovery_exit(struct ocfs2_super *osb)
- {
- 	struct ocfs2_recovery_map *rm;
+ 	if (sc->sc_sock) {
+ 		sock_release(sc->sc_sock);
+ 		sc->sc_sock = NULL;
+@@ -394,8 +397,6 @@ static void sc_kref_release(struct kref *kref)
+ 	o2nm_node_put(sc->sc_node);
+ 	sc->sc_node = NULL;
  
--	/* disable any new recovery threads and wait for any currently
--	 * running ones to exit. Do this before setting the vol_state. */
--	ocfs2_recovery_disable(osb, OCFS2_REC_WANT_DISABLE);
-+	/*
-+	 * Disable producers and drain work before freeing recovery state.
-+	 * Do this before setting vol_state to VOLUME_DISMOUNTED: completion
-+	 * work may still be waiting in __ocfs2_wait_on_mount().
-+	 */
-+	ocfs2_recovery_stop(osb);
- 
- 	/*
- 	 * Now that recovery is shut down, and the osb is about to be
-diff --git a/fs/ocfs2/journal.h b/fs/ocfs2/journal.h
-index 4199d73bebf4d..dad955bd431bd 100644
---- a/fs/ocfs2/journal.h
-+++ b/fs/ocfs2/journal.h
-@@ -149,6 +149,7 @@ void ocfs2_complete_recovery(struct work_struct *work);
- void ocfs2_wait_for_recovery(struct ocfs2_super *osb);
- 
- int ocfs2_recovery_init(struct ocfs2_super *osb);
-+void ocfs2_recovery_stop(struct ocfs2_super *osb);
- void ocfs2_recovery_exit(struct ocfs2_super *osb);
- void ocfs2_recovery_disable_quota(struct ocfs2_super *osb);
- 
-diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
-index 3cb235a196126..91a9b86389160 100644
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -1893,6 +1893,9 @@ static void ocfs2_dismount_volume(struct super_block *sb, int mnt_err)
- 	/* Wait for worker to be done with the work structure in osb */
- 	cancel_work_sync(&osb->dquot_drop_work);
- 
-+	/* Stop recovery producers before releasing their local allocators. */
-+	ocfs2_recovery_stop(osb);
-+
- 	ocfs2_shutdown_local_alloc(osb);
- 
- 	ocfs2_truncate_log_shutdown(osb);
+-	o2net_debug_del_sc(sc);
+-
+ 	if (sc->sc_page)
+ 		__free_page(sc->sc_page);
+ 	kfree(sc);
 -- 
 2.53.0
 
