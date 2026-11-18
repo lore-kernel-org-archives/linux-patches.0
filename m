@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053159;
-	b=gkqoNMwHV3DE9Q7nUZBlEfPJwLp0aZx+cO6CAtgxaAMkvJipXTff6dEyol/270KePQYb
-	 QBiiE6rFM1UN9n36If8NBiyN6fSpYAIXKeA/SNjJEe4VeGoxVfU83DoiP0CSVfIx4aIbx
-	 P/n1RZBC54V1lLe/GCR6/IVK7ZSlbf2yfSgskIhanLYQ8EkOaSQc+6Z+DaIjpChU8KNZ/
-	 Kvfo3zx0qqXZFhaqfsd3FeZy86eMpOe1B/sN1q9Gq6SVyM9pAJmMrhPyNkYQbLrLYHR5w
-	 1W60CTD/f0XoUrs2dx98AbQpYN0cT0h1kRjwpwBxNpg3FtQ54wHSCYVdMWoYegd17zg==
+	t=1795053162;
+	b=i6Xcljpg+qa0WXAlr0aDY3YrixlbyhX908gYC6CAzCGPjayjDpJZLXtXDIOKwPW6Xuc0
+	 FwgtG1K0EbPyJ9/IFWMQTTb7btXdlR8YzGFp3av0dZ2phuOipZfJh/0OtFmP5PAyC9/UG
+	 w0oNcC6qXHBmd95+h1rcskfBMAXAIfaAZxOqToYO2DfTMWuex9v3SyGFSo1o2Uf/f+wfe
+	 3AZxaWXHb8nyG4N65psC9tcJd/JuZk1yCXOANbXXIA1dni6/pqKhfAMZYLXgdrDYdxBE5
+	 pcj3B9qtMzKNGUTlt96y+u7ngzxbSm3/2b5yscAgDANvtHZXn6o/m2x/zoch7UfCxZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053159;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053162;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1r6XLwKGNwngCeLaLFAzrBf4P16xvqainY6M6Xy4Nag=;
-	b=tbGiQZovCtOvl9LtY/3//AQjB9uhDb4lKDFiiF3xJlyk56bxnooyIM4PvVHFKQzPKmzw
-	 40xIyfSND0f7ZhVt38399rwKXh7lRYq8OAa1QtBVZZ9ssLAG+xGrQc4TtwZkpGtity/mJ
-	 KfpmVv6mXyMtZ5XshXEVwkzDKwxrNlYDwzpgDSWBDtK043Hht17Fh/xP+jitKKFnVwejs
-	 +WmOjZsxIEorbHysO36tB9AVdYRjdpgaaS549BRx+FDbdLV/RCTZWvve8xichDR9M/CxG
-	 qhPh13t5mOTKELcvljYpHg1Z9Mr2W1P4inbaECWrb9+1kSN+mgbByhkWLSTL9FQyTLA==
+	bh=OOfFmWkfhwocb6XQZ0MA1d9hxzCdE59n6QazU4jHaoU=;
+	b=fGNVE2iOWv4DUamIXFWQFnOCahcd3FppkmXPZlqmBAQYWCuJLs/m+Arh6jKqLqV2YjJE
+	 d5y9C3j7CErnTnuLVb2ap/DwNjHUPvDjCvK3pInSFY2igZjXmlVbZegBtxteQOAwL//hR
+	 6rIZDHD6ytxl26b+qECcJ5QTCHjU284T5RaylQ8N/i4XbgLI16rOeZIjCS5YzJQSQA3as
+	 6nv4rqVJr7TZgDaZ1gTUNPjrh3pj64Dpaak+Spx1vF7FtHyDgutPBBees7FTT4sbn6gaR
+	 lpm33gxGcsVwKKYEKn0/yw72VH6ctHbqRxjzwiy+uo9nP6xgE8ZK1BFustVcQi58g/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h62U2M6Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fz70EF6v;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56E3606A337;
-	Thu, 19 Nov 2026 01:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694E8606A31C;
+	Thu, 19 Nov 2026 01:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h62U2M6Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045AF1F000C7;
-	Thu, 19 Nov 2026 01:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fz70EF6v
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5541F000C5;
+	Thu, 19 Nov 2026 01:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053159;
-	bh=1r6XLwKGNwngCeLaLFAzrBf4P16xvqainY6M6Xy4Nag=;
+	s=korg; t=1795053162;
+	bh=OOfFmWkfhwocb6XQZ0MA1d9hxzCdE59n6QazU4jHaoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h62U2M6ZP1A8ox3xxYm1HefXpxVmi6iBUZpN1xTn4gsv8fA7PQFPqOfTNLK3dlvjT
-	 AuT6fu3TNkBCFROMGC3OcrBJZcwoDtQFyzhEqOmEKQPmcJzj2l6fYSw6EaYEe+1zAN
-	 E1/S+TTfaj7jomg46NZb3sxRmfOjwcNEpwfnHeas=
+	b=fz70EF6vMOWt3ZbuqQ2vlrzk4+NoGUYxMy54l72MW3h+oabGnqIAMjCarESm3wdZz
+	 4Ej4V0RbOW3Z0EZl5PnsLHbARurE8Wj+V7r+nTZtdRBmXrn2W2ZwfHM+mggUKjINY8
+	 /VzabLXKmYkoXMW9ADzfRc5bSPee0MNAESx5q2PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0819/2214] media: require two-byte Cypress type 04 records
-Date: Wed, 18 Nov 2026 15:41:35 +0100
-Message-ID: <20261118150044.326789541@linuxfoundation.org>
+Subject: [PATCH 5.15 0820/2214] media: adv748x: Fix endpoint reference leaks on probe failure
+Date: Wed, 18 Nov 2026 15:41:36 +0100
+Message-ID: <20261118150044.407309191@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,57 +68,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit e22872703386c3885d8c6bd595124587bc4e5081 ]
+[ Upstream commit 359db09cf055497075a668b192f4578a0ed00955 ]
 
-Both Cypress Intel HEX parsers read two address bytes from type 04
-records. Generic record framing permits any record length, so a short
-record can make the parser consume the checksum or bytes beyond the
-firmware record. A longer record also violates the Intel HEX type 04
-layout.
+adv748x_parse_dt() takes an extra reference for every endpoint saved in
+state->endpoints. If parsing later fails, adv748x_probe() skips
+adv748x_dt_cleanup(), so the saved references remain held. A CSI-2 lane
+parsing error also returns from for_each_endpoint_of_node() without
+dropping the iterator's reference.
 
-Require the type 04 payload length to be exactly two bytes in both
-implementations.
+Save the endpoint reference only after lane parsing succeeds. Drop the
+iterator reference before returning a lane parsing error and route all
+parse failures through the endpoint cleanup path to release any saved
+references. This retains the endpoints only for a successful probe.
 
-Fixes: 79a63c60a6a2 ("[media] media: move dvb-usb-v2/cypress_firmware.c to media/common")
-Fixes: 776338e121b9 ("[PATCH] dvb: Add generalized dvb-usb driver")
-Cc: stable@kernel.org
-Assisted-by: Codex:gpt-5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: 6a18865da8e3 ("media: i2c: adv748x: store number of CSI-2 lanes described in device tree")
+Fixes: eccf442ce156 ("media: i2c: adv748x: Support probing a single output")
+Cc: stable@vger.kernel.org
+Suggested-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/common/cypress_firmware.c      | 2 ++
- drivers/media/usb/dvb-usb/dvb-usb-firmware.c | 2 ++
- 2 files changed, 4 insertions(+)
+ drivers/media/i2c/adv748x/adv748x-core.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/common/cypress_firmware.c b/drivers/media/common/cypress_firmware.c
-index cdc7050ed3ac8..3468eff508b02 100644
---- a/drivers/media/common/cypress_firmware.c
-+++ b/drivers/media/common/cypress_firmware.c
-@@ -59,6 +59,8 @@ static int cypress_get_hexline(const struct firmware *fw,
- 	if (hx->type == 0x04) {
- 		/* b[4] and b[5] are the Extended linear address record data
- 		 * field */
-+		if (hx->len != 2)
-+			return -EINVAL;
- 		hx->addr |= (b[4] << 24) | (b[5] << 16);
+diff --git a/drivers/media/i2c/adv748x/adv748x-core.c b/drivers/media/i2c/adv748x/adv748x-core.c
+index 4e54148147b9a..fa60743528ecd 100644
+--- a/drivers/media/i2c/adv748x/adv748x-core.c
++++ b/drivers/media/i2c/adv748x/adv748x-core.c
+@@ -675,9 +675,6 @@ static int adv748x_parse_dt(struct adv748x_state *state)
+ 			continue;
+ 		}
+ 
+-		of_node_get(ep_np);
+-		state->endpoints[ep.port] = ep_np;
+-
+ 		/*
+ 		 * At least one input endpoint and one output endpoint shall
+ 		 * be defined.
+@@ -689,8 +686,13 @@ static int adv748x_parse_dt(struct adv748x_state *state)
+ 
+ 		/* Store number of CSI-2 lanes used for TXA and TXB. */
+ 		ret = adv748x_parse_csi2_lanes(state, ep.port, ep_np);
+-		if (ret)
++		if (ret) {
++			of_node_put(ep_np);
+ 			return ret;
++		}
++
++		of_node_get(ep_np);
++		state->endpoints[ep.port] = ep_np;
  	}
  
-diff --git a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-index 0fb3fa6100e4a..675d9d1d4f472 100644
---- a/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-+++ b/drivers/media/usb/dvb-usb/dvb-usb-firmware.c
-@@ -141,6 +141,8 @@ int dvb_usb_get_hexline(const struct firmware *fw, struct hexline *hx,
+ 	return in_found && out_found ? 0 : -ENODEV;
+@@ -739,7 +741,7 @@ static int adv748x_probe(struct i2c_client *client)
+ 	ret = adv748x_parse_dt(state);
+ 	if (ret) {
+ 		adv_err(state, "Failed to parse device tree");
+-		goto err_free_mutex;
++		goto err_cleanup_dt;
+ 	}
  
- 	if (hx->type == 0x04) {
- 		/* b[4] and b[5] are the Extended linear address record data field */
-+		if (hx->len != 2)
-+			return -EINVAL;
- 		hx->addr |= (b[4] << 24) | (b[5] << 16);
- /*		hx->len -= 2;
- 		data_offs += 2; */
+ 	/* Configure IO Regmap region */
+@@ -809,7 +811,6 @@ static int adv748x_probe(struct i2c_client *client)
+ 	adv748x_unregister_clients(state);
+ err_cleanup_dt:
+ 	adv748x_dt_cleanup(state);
+-err_free_mutex:
+ 	mutex_destroy(&state->mutex);
+ 
+ 	return ret;
 -- 
 2.53.0
 
