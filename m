@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056763;
-	b=BX6ZVVjvGXRTJsVrM1cDfCvOcJvdDQIDJNGqHCPEgeKir+jwRtCUDoyoLlNKb/QMSi4B
-	 rmKB6gO+PiQ31Qm7W+jOjqN4eCqYRXy8AKuf1OgQ2WNpRWQD9X+Hc452aUrclkAzgEq6N
-	 YN6azntdC9oK+JYrredS7CqrBAt4/zE2CJn88U2IPXYsz2RrkQeAhkpG+1rokviAL3elB
-	 wyu3+OUecwThTH2agv0/rQJeGYfLiGOII8NLaUmCDuFrU27Etm7S97EBaKS8z4lwsEo2g
-	 nL6qHtZXT/Ye40pcui8T507MaRRUJ1Po7cGTmtwDpWCyzLlu+Ve6Cfcqzjjl+V+g7hA==
+	t=1795056766;
+	b=xVkEjS0tpFMoY87r3ivHafS4Q7RiCQw5ddarjZu14kjbfUmveOq3Zudo680x4FSET9Mk
+	 +hvG1iLJb23CXqq7859SbBrkGdpuzZKeNOLH9SYmhG+zDwE6f+EOkCXGYBvvvIoNTc2sx
+	 EsuD7hVK+xtw6rXLk+m4SZ01ui+SWFoGbUgSvTi4JUM0VgNTqKJ+RXwT5zMytfYY7w1T8
+	 YsK6kI6gFPzsrjn8FGkjqnPyPxkf+JlR5iunHCx0nBn7WlvJr7Tw7Lbsw6ZZ+M1etKDUP
+	 IFpOQcXBVtS2pPvhDzrKvUQpxyIs5cHUicYBu4iDt0eNZsOsPZdc5haHXGKYfnvOu+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056766;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=svUC9osj2OXZ5o7nhhTB+ZxJEc6YBjF6KVJjY0LT7CM=;
-	b=a8/gZvSYmVnfp66oszKXM6q8kEd14WmqduSm6XXcC8ifjikxGPjmMreGcXPESQTW0Jmm
-	 dmb+1rkuHrOioGti8rvOTq6mCjUA74/cLQGZmCOgt81A8w5VZgREN41Pyqq1mFdHo9f7k
-	 Ew+XM+oiNwNFXvteWQEV9kBnNqBq1lhhTdtYyfW0jYkl5M6/MC53MhTXq6pWPCwbVH0IZ
-	 49yVVgWsp37C9G03AYlQDDy9LAE1fmxTaEsr+EgqdUw6tYxTTXvmwD8hjQdXgm/UX1eZ9
-	 4+6vjclZKoy2zxE0oCSmnGV/hX4p9QtCF4r2a+l06VizibgG2MgNtN+9IXSXMxKK6nw==
+	bh=2OssO3dNkIipl2txt+fX4i9MHrBGr69Kv6FbEjwVvfA=;
+	b=VJrDQQP+rSk/OA5Gwnu8hY5l75rIrBtuib9RFCCznPEJPn30FakBfH6ZXCBLAmRGAMU0
+	 /q2ZhHnkJiM2VMQ+saCK1hmMadJmsAjiE+G1l8oIWwjkQpl8/4e1fpyYzaaX+7tC90YMC
+	 L+KCOHkgbLLblyaSZTzJjYKShdVpskqcAI6OZ2cawenYtR33VtXRj4MHNT4jggQhjmGKZ
+	 FpZ9cb/u1tJpyVy+2feEo7vLX6RDNc6hQeCyfVyncP+eXNWZEYdcdgJnbQfFU25zQyAoF
+	 D+glpQbye32TCjYR1D9AylZTDaJZAcR1nwBC2ug+jr4VmitaPUcwKpzKDOiScSmNdtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmjP+bWd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gY7PluJa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E89606A32C;
-	Thu, 19 Nov 2026 02:52:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F44606A32A;
+	Thu, 19 Nov 2026 02:52:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gmjP+bWd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54791F000C4;
-	Thu, 19 Nov 2026 02:52:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gY7PluJa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B710A1F000C4;
+	Thu, 19 Nov 2026 02:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056763;
-	bh=svUC9osj2OXZ5o7nhhTB+ZxJEc6YBjF6KVJjY0LT7CM=;
+	s=korg; t=1795056766;
+	bh=2OssO3dNkIipl2txt+fX4i9MHrBGr69Kv6FbEjwVvfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gmjP+bWdE21ogPSeLcLvU0TYushZ0rNx/vwpDXQ+2OgydNfgVohGmtij0HujAYHl+
-	 BAuBFUWL0lhmQL73o4KmrV8Im91U/hhWkPcTgXcMZFxf0NWouDoSItkFisyGDVz9uH
-	 QLO/OgbzIMMXJ8xX09vy1aJ4kGJquVdMZdDgFryM=
+	b=gY7PluJaCaLrHQvgU200kp7dkOoAIeX0zNYkVJuZYkV0j/Pn3MBFQl8gpUaQ2zNwW
+	 ctdsNP2wXuCpORwL2baS4u2ygsSgD9bnCg3fiWg01oSNv9uYTxDxZWt1frQrRf0Ila
+	 OxzRSYAeNVxYUqhXF0/BTOLpRtilxmoq2dzHmpmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-reviews <sashiko-bot@kernel.org>,
-	bui duc phuc <phucduc.bui@gmail.com>,
+	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2104/2214] ASoC: amd: raven: Fix memory leak in acp3x_dma_close()
-Date: Wed, 18 Nov 2026 16:03:00 +0100
-Message-ID: <20261118150134.813152206@linuxfoundation.org>
+Subject: [PATCH 5.15 2105/2214] regulator: Add regulator_err2notif() helper
+Date: Wed, 18 Nov 2026 16:03:01 +0100
+Message-ID: <20261118150134.850799918@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,40 +68,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
 
-[ Upstream commit e0b17f84f6e3fa1201b8e2857094023c42ce5636 ]
+[ Upstream commit 6fadec4c5561e2fbe1dfa8a7da9bc58d094a8f04 ]
 
-acp3x_dma_open() allocates a struct i2s_stream_instance for
-each substream, but acp3x_dma_close() never frees it, leaking
-it on every open/close cycle.
+Help drivers avoid storing both supported notification and supported error
+flags by supporting conversion from regulator error to notification.
+This may help saving some bytes.
 
-Free it in acp3x_dma_close().
+Add helper for finding the regulator notification corresponding to a
+regulator error.
 
-Fixes: 9f7041b71a2f ("ASoC: amd: closing specific instance.")
-Reported-by: sashiko-reviews <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/all/sashiko-outbox-173760@kernel.org/
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261016085047.535265-1-phucduc.bui@gmail.com
+Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+Link: https://lore.kernel.org/r/eb1755ac0569ff07ffa466cf8912c6fd50e7c7c6.1637736436.git.matti.vaittinen@fi.rohmeurope.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 8a6d73e316f9 ("regulator: irq: freeze deferred hardware access during suspend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/raven/acp3x-pcm-dma.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/regulator/driver.h | 34 ++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/sound/soc/amd/raven/acp3x-pcm-dma.c b/sound/soc/amd/raven/acp3x-pcm-dma.c
-index 57ba07d918eb3..800cb3279b510 100644
---- a/sound/soc/amd/raven/acp3x-pcm-dma.c
-+++ b/sound/soc/amd/raven/acp3x-pcm-dma.c
-@@ -354,6 +354,8 @@ static int acp3x_dma_close(struct snd_soc_component *component,
- 		}
- 	}
+diff --git a/include/linux/regulator/driver.h b/include/linux/regulator/driver.h
+index bd7a73db2e66c..6324677ca8abf 100644
+--- a/include/linux/regulator/driver.h
++++ b/include/linux/regulator/driver.h
+@@ -644,6 +644,40 @@ struct regulator_dev {
+ 	spinlock_t err_lock;
+ };
  
-+	kfree(ins);
++/*
++ * Convert error flags to corresponding notifications.
++ *
++ * Can be used by drivers which use the notification helpers to
++ * find out correct notification flags based on the error flags. Drivers
++ * can avoid storing both supported notification and error flags which
++ * may save few bytes.
++ */
++static inline int regulator_err2notif(int err)
++{
++	switch (err) {
++	case REGULATOR_ERROR_UNDER_VOLTAGE:
++		return REGULATOR_EVENT_UNDER_VOLTAGE;
++	case REGULATOR_ERROR_OVER_CURRENT:
++		return REGULATOR_EVENT_OVER_CURRENT;
++	case REGULATOR_ERROR_REGULATION_OUT:
++		return REGULATOR_EVENT_REGULATION_OUT;
++	case REGULATOR_ERROR_FAIL:
++		return REGULATOR_EVENT_FAIL;
++	case REGULATOR_ERROR_OVER_TEMP:
++		return REGULATOR_EVENT_OVER_TEMP;
++	case REGULATOR_ERROR_UNDER_VOLTAGE_WARN:
++		return REGULATOR_EVENT_UNDER_VOLTAGE_WARN;
++	case REGULATOR_ERROR_OVER_CURRENT_WARN:
++		return REGULATOR_EVENT_OVER_CURRENT_WARN;
++	case REGULATOR_ERROR_OVER_VOLTAGE_WARN:
++		return REGULATOR_EVENT_OVER_VOLTAGE_WARN;
++	case REGULATOR_ERROR_OVER_TEMP_WARN:
++		return REGULATOR_EVENT_OVER_TEMP_WARN;
++	}
++	return 0;
++}
 +
- 	return 0;
- }
- 
++
+ struct regulator_dev *
+ regulator_register(const struct regulator_desc *regulator_desc,
+ 		   const struct regulator_config *config);
 -- 
 2.53.0
 
