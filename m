@@ -1,51 +1,64 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059642;
-	b=DS5OCh9d+7rQqIqvqzJIqSphZ6p/c0PViHNNXrA10SzJNRx6M7/LpaXID4aypIVtG/xS
-	 jGLYA4KpCdMSaDUXZr2/4/dkwZuA1ApUEzcCIhEi2vajIQ9Sj9Aioci6o2/d38RYu655r
-	 RVHiDLDRENFl0QQkb6XLMPlF5pcz1gZeEQHh1AhSSk94SOE2ixSmKOf/yCPrQVPxsV076
-	 OcHtYeDWoG3V5CKV0Bq4LqhOjzjNoqe2ZXMK+Df371eqFqU8KJDFPmTn5tHUM7NYNsKq8
-	 loNB5o58HhLw/N3G1sXwBvNb0eE0TQ8DjlMdueQ/NjmgNxlw6D5wccr2sqVkwcpUNBA==
+	t=1795059644;
+	b=NnXi5CCJTLN98Qv6uNwMR0OvzwRUaKi9OdSsp5YPlDMFtZjlwXNkHjvpSgWp2Yxiprm4
+	 YpoJIAPBsmJ4CL7a/ToDtCNoBus+5qyVzjFK3sQGhhSAAN4PHtdz5B30hQ4wXmxYAlJV5
+	 +gKU2p7hIFnbZj+1QouZHaNRWN4kZZQ23ArxAMc1NM+uQT7rckLU0oK+r9q37eW9LMESO
+	 8PDQt5gBvlFN44Y6vhFwR6Y6FvDFyBzYq9aUOXzT5QxlA+aNKo3Jx1XVL7uzhqAUeUHgK
+	 ZwrvMyAjIHgIxlgRWprc0F0jnt6/9XNNCVHO/MDcAFFi0JFpqFhS16ooUl0VE4EKMaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Invcot8Na+e4itn+FwL7WSX5soXHj1VWeIFIan0yHno=;
-	b=2kpxZz/HQwxkAxkYz32iSYIDw2JnWPiQRICuwFhQCHG4yU/L9UOfB/cszM45VYoGK0j0
-	 OpXoRNk6sbSxMWUm95WV1XaYSVVzav5U3SK22p3EPCfhsGAYnCrjgvB+zumVnazGrdBS7
-	 9QHrnx8lw8qn2M8GYv5OjUIURVzrLUQMyyiRutiJ6l9PsdpEwFPwfbURpASYOqsj6auog
-	 vborz/cnzIgCNdbhPNG8G9A/m8HnCZCYcDgQqohy66c78pezs+B7mX4czv6p4zBghYtn7
-	 XWutGd+lnNHj2pE5HyQYuu7qgwYYNktYUHlVga4GKCLm2AjQDJgvQlUD2aAl7ugNyqA==
+	bh=utFAmo5tgIN0TX9ynwm0CHhW1YmUyv6qjW5CPM7ibJ8=;
+	b=EOWYU+YGIgQgmlu7W/2U1Xe1Vq4Z0pnwxbLVlPQYQT4cxJ19UziKwT3syC1EZFjcHNur
+	 gaycLMZdUEs3yrZEPfW2ofb7dozWajDcwMH1kExrph0cSNRuyO2N2A6yrKdHqRS7NbrSG
+	 BUQrI5g4XxdGQJA8CR46tZAXlKcsadUi2VSqbudvd/2R/hoVDlqUi5K2px03v/JJQFGDS
+	 rBbwC4/YB9N69Yu0RJyPJbBtqKMaS0XsjVopODjUv/smbN6VotkUpBOmM44qGVYqI1xSN
+	 BYN253rGQSAUUj/lIMYtXYS7QCohAgGfpj1eA0ta9Qyfem0N77Z9I3BBIyGUZgYNRwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zJ6c/7Ut";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3u47ufi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D27360A2620;
-	Thu, 19 Nov 2026 03:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B570560A6F75;
+	Thu, 19 Nov 2026 03:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJ6c/7Ut
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5821F000CA;
-	Thu, 19 Nov 2026 03:40:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b3u47ufi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79E51F000C4;
+	Thu, 19 Nov 2026 03:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059641;
-	bh=Invcot8Na+e4itn+FwL7WSX5soXHj1VWeIFIan0yHno=;
+	s=korg; t=1795059644;
+	bh=utFAmo5tgIN0TX9ynwm0CHhW1YmUyv6qjW5CPM7ibJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zJ6c/7Utly+FuPhzDw/284Mhx3wPKTEfDV691cfSFbNrBln2ZDAaWoeXBj8BHzu8C
-	 v8KAQ3L19nsiT3O8lPWDElZblNSjQiZCqck+U6qNN0V8blTqIYAy1XU8yKJIVyZ5hd
-	 UpXVEv1Qhk0D19afIzKkXbNy9xKgaLY3nGCbmano=
+	b=b3u47ufiRfHzbGZ2N+8S/haEWZam5M2uJck+tSNfjSxD2SqSSqsyfxYTfxSYn9maJ
+	 2EhcN2/CFncOF+2bWikApX8yRF1lAJ7DkFu5QdMyECReJToSyh6NqdLu0CQEQ3hnKE
+	 8d+1Z2JbVE9FVGgrPZkyvvoSQ3ZCQhOnf97vtu2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	"Liam R. Howlett" <liam@infradead.org>,
+	Vlastimil Babka <vbabka@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Rik van Riel <riel@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0914/1848] serial: 8250_exar: store the GPIO platform device in struct exar8250
-Date: Wed, 18 Nov 2026 15:49:12 +0100
-Message-ID: <20261118145955.128244369@linuxfoundation.org>
+Subject: [PATCH 5.10 0888/1848] mm: disallow ioremaping ordinary RAM in generic_access_phys()
+Date: Wed, 18 Nov 2026 15:48:46 +0100
+Message-ID: <20261118145953.690852280@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -67,136 +80,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 33d337816e00994daaf670243186d9e537ee090d ]
+[ Upstream commit 4590752e20aa393cc0d4fe538c0747d14a98c97a ]
 
-The GPIO platform device is registered via platform->register_gpio()
-when port 0 is being set up. It is stored to port->port.private_data of
-the on-stack uart template (and from there it is copied into every
-registered port). pci_xr17v35x_exit() then fetches it back by
-serial8250_get_port(priv->line[0]).
+generic_access_phys() can end up getting called on CoW PFNMAP mappings,
+resulting in it trying to ioremap anonymous folios, which especially
+the x86 code doesn't enjoy, and which is in general just odd/wrong.
 
-But port 0 does not have to exist at that point. If
-serial8250_register_8250_port() fails for port 0, priv->line[0] holds a
-negative error code. The probe still succeeds (it only breaks the loop),
-so on unbind, priv->line[0] (a negative value) is passed to
-serial8250_get_port(). The GPIO device is never unregistered and a
-bogus port is accessed.
+E.g., with a CoW mapping of a PCI BAR:
 
-The same problem would also occur after the planned conversion of
-serial8250_register_8250_port() to return a uart port instead of a
-line. As Sashiko pointed out in that case:
-  If board->setup() fails for the first port (i=0) in exar_pci_probe(),
-  priv->uport[0] remains NULL. If serial8250_register_8250_port() fails,
-  it returns an ERR_PTR. In either case, the loop breaks and probe
-  returns success. When the device is later unbound,
-  pci_xr17v35x_exit() unconditionally passes priv->uport[0] to
-  platform->unregister_gpio(), which will dereference it without
-  checking for validity.
+ioremap on RAM at 0x0000000045623000 - 0x0000000045623fff
+  WARNING: arch/x86/mm/ioremap.c:216 at __ioremap_caller.isra.0+0x4c2/0x5f0
+  Call Trace:
+   generic_access_phys+0x130/0x4d0 mm/memory.c:7178
+   kernfs_vma_access+0x1ce/0x280 fs/kernfs/file.c:437
+   __access_remote_vm+0x58f/0x890 mm/memory.c:7256
+   mem_rw+0x2a1/0x670 fs/proc/base.c:912
 
-The GPIO device belongs to the PCI device, not to any particular port.
-So store it in a new struct exar8250::gpio member. Pass priv to both
-->register_gpio() and ->unregister_gpio(), so that pci_xr17v35x_exit()
-does not need to look up any port at all.
+But more generically, we should disallow access to anything that looks
+like ordinary RAM in the system: including allocating memory (e.g.,
+alloc_pages) and mapping them in a VM_PFNMAP.
 
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Fixes: d0aeaa83f0b0 ("serial: exar: split out the exar code from 8250_pci")
-Link: https://lore.kernel.org/all/sashiko-outbox-166269@kernel.org/
-Assisted-by: LLM
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/03a8b5c71614fc672fef1e55c083bda6c73b5bf3.1791873876.git.jirislaby@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: adapted GPIO lifecycle changes to the existing property-array API and direct cleanup in pci_xr17v35x_exit() ]
+For pages with an online memmap, allow only pages marked as reserved
+(PageReserved). This also includes memblock allocations, however,
+distinguishing them from other MMIO is tricky, and nobody should really
+be mapping them in a PFNMAP (except someone abusing /dev/mem, which we
+do not care about).
+
+So only allow access if there is no online memmap, or if the pages are
+marked reserved. Reject other pages with -EINVAL.
+
+Note that, just like other pfn_to_online_page() users, we won't care about
+concurrent memory offlining; mapping memory that can concurrently get
+offlined is highly dubious.
+
+Link: https://lore.kernel.org/20261013-generic_access_phys-v1-1-b3963ef76e37@kernel.org
+Fixes: 28b2ee20c7cb ("access_process_vm device memory infrastructure")
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: <syzbot+49b1021becba70c1f3f6@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=49b1021becba70c1f3f6
+Reported-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Closes: https://lore.kernel.org/r/20261001152524.171115-1-ngocthang2710.1999@gmail.com/
+Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Cc: Liam R. Howlett <liam@infradead.org>
+Cc: Vlastimil Babka <vbabka@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: Rik van Riel <riel@redhat.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted follow_pfnmap_start()/end() handling to follow_phys(), deriving the PFN from phys_addr after the PTE lock is released ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_exar.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ mm/memory.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
-index c48417ea9e30c..72f13829be6bd 100644
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -168,7 +168,8 @@ struct exar8250;
- struct exar8250_platform {
- 	int (*rs485_config)(struct uart_port *, struct serial_rs485 *);
- 	const struct serial_rs485 *rs485_supported;
--	int (*register_gpio)(struct pci_dev *, struct uart_8250_port *);
-+	int (*register_gpio)(struct exar8250 *priv, struct pci_dev *pcidev,
-+			     struct uart_8250_port *port);
- };
+diff --git a/mm/memory.c b/mm/memory.c
+index 403fcef10bdac..ad8184041a75b 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -4985,11 +4985,22 @@ int generic_access_phys(struct vm_area_struct *vma, unsigned long addr,
+ 	resource_size_t phys_addr;
+ 	unsigned long prot = 0;
+ 	void __iomem *maddr;
++	struct page *page;
+ 	int offset = addr & (PAGE_SIZE-1);
  
- /**
-@@ -190,6 +191,7 @@ struct exar8250 {
- 	unsigned int		nr;
- 	struct exar8250_board	*board;
- 	void __iomem		*virt;
-+	struct platform_device	*gpio;
- 	int			line[];
- };
+ 	if (follow_phys(vma, addr, write, &prot, &phys_addr))
+ 		return -EINVAL;
  
-@@ -435,12 +437,11 @@ static const struct property_entry exar_gpio_properties[] = {
- 	{ }
- };
- 
--static int xr17v35x_register_gpio(struct pci_dev *pcidev,
-+static int xr17v35x_register_gpio(struct exar8250 *priv, struct pci_dev *pcidev,
- 				  struct uart_8250_port *port)
- {
- 	if (pcidev->vendor == PCI_VENDOR_ID_EXAR)
--		port->port.private_data =
--			__xr17v35x_register_gpio(pcidev, exar_gpio_properties);
-+		priv->gpio = __xr17v35x_register_gpio(pcidev, exar_gpio_properties);
- 
- 	return 0;
- }
-@@ -522,8 +523,9 @@ static const struct property_entry iot2040_gpio_properties[] = {
- 	{ }
- };
- 
--static int iot2040_register_gpio(struct pci_dev *pcidev,
--			      struct uart_8250_port *port)
-+static int iot2040_register_gpio(struct exar8250 *priv,
-+				 struct pci_dev *pcidev,
-+				 struct uart_8250_port *port)
- {
- 	u8 __iomem *p = port->port.membase;
- 
-@@ -532,8 +534,7 @@ static int iot2040_register_gpio(struct pci_dev *pcidev,
- 	writeb(IOT2040_UARTS_ENABLE, p + UART_EXAR_MPIOLVL_15_8);
- 	writeb(IOT2040_UARTS_GPIO_HI_MODE, p + UART_EXAR_MPIOSEL_15_8);
- 
--	port->port.private_data =
--		__xr17v35x_register_gpio(pcidev, iot2040_gpio_properties);
-+	priv->gpio = __xr17v35x_register_gpio(pcidev, iot2040_gpio_properties);
- 
- 	return 0;
- }
-@@ -602,7 +603,7 @@ pci_xr17v35x_setup(struct exar8250 *priv, struct pci_dev *pcidev,
- 		/* Setup Multipurpose Input/Output pins. */
- 		setup_gpio(pcidev, p);
- 
--		ret = platform->register_gpio(pcidev, port);
-+		ret = platform->register_gpio(priv, pcidev, port);
- 	}
- 
- 	return ret;
-@@ -611,11 +612,11 @@ pci_xr17v35x_setup(struct exar8250 *priv, struct pci_dev *pcidev,
- static void pci_xr17v35x_exit(struct pci_dev *pcidev)
- {
- 	struct exar8250 *priv = pci_get_drvdata(pcidev);
--	struct uart_8250_port *port = serial8250_get_port(priv->line[0]);
--	struct platform_device *pdev = port->port.private_data;
- 
--	platform_device_unregister(pdev);
--	port->port.private_data = NULL;
-+	if (priv->gpio) {
-+		platform_device_unregister(priv->gpio);
-+		priv->gpio = NULL;
-+	}
- }
- 
- static inline void exar_misc_clear(struct exar8250 *priv)
++	/*
++	 * Reject anything that looks like ordinary RAM, including anonymous
++	 * folios in CoW mappings or allocated kernel memory. Note that we
++	 * cannot distinguish memblock allocations from non-RAM reliably, so
++	 * we cannot easily reject them here.
++	 */
++	page = pfn_to_online_page(phys_addr >> PAGE_SHIFT);
++	if (page && !PageReserved(page))
++		return -EINVAL;
++
+ 	maddr = ioremap_prot(phys_addr, PAGE_ALIGN(len + offset), prot);
+ 	if (!maddr)
+ 		return -ENOMEM;
 -- 
 2.53.0
 
