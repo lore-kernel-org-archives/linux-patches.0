@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059708;
-	b=htbXoKCBh0KEWxWotWlnWXa9heHYAQH+gFpb/nZaaxRI4PHtLRb0y+kfDQhsi0ORw1x9
-	 WZndl94vIgF07nHJ4jEfNdOWodcNfp9HGiA+kJeguW8jKqpmsPUXs8fgAgO0V7pCpRGQn
-	 UTuBT4NBq9ye7XNC8FCmirt9h4tjlte6VC6YLwM/+gj6p6XVSQT2ir+bmRRG/K3LZF9lU
-	 cDQTGB/kMSCwDMw00ffL/LZBRjcT3lMVgtGRp/E9Ivq7yiqijWS0jmCvk8D04uFDVQboY
-	 PYwr/d2anrUcfJYEUxq9Varpol/HpFwF5HbnXWdTrZms1Tvy52v9ZFVUfpFYctTEDtw==
+	t=1795059711;
+	b=S8bcR8QBp/Rc4NRJvttsN8F1hrOsqut897j1wBrCE/pndjBzsXuyuh9lYtntfo/qjbwI
+	 8kr+0MlUMBe3+NY1EXz8AijlwwPisx17xLP0O4UlJqbkFzK96Hxk6maAfCyuIvoh9/WKD
+	 43cBwu5Zs1lTPSuGhseEc1PQjv18FJxXMgeNRXSkuwNzSEpBTxOGWcQiK1rLdJ6cALAqY
+	 +89qglMBveVEEv/zQ8pzkFNJ7Jsi4KgqJ+N8ZFbXvgM7vbiBgdxp2oZRL5fyFYfbAZLMJ
+	 JAuECRoTL7O6OIAh6wTtnBWO0kt1UqO2e8ppqo6hTRoIXwFqWNQyzjtsdtisqg8tl5w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059708;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059711;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=H3H10TqYEq2F8vNGzF6BcijB8PiOt7LFkzFClZM9ybI=;
-	b=ECqFNss0O6Oq8jhQ2N+JrkNXcyURa2mosvwx60dTn0HkytL/Pt+cQEvsQW8rbtzNVKsz
-	 RkNsfNCUfalo73Rpx8t1uCS3oT15RZ6mBAJVYJHVdv8Vy/XNW7/NHoZy8eD3j+lALm7ui
-	 Hcrh0ihvMZvpifv/yWOckQbhl+PsA5Cz1tvaiUs5Ry7aPTxyniq925KuXpmkWGczfSjDZ
-	 5zwv2ww47a8Y+DVv7aYJks3GwbvCjN/K+a/FnG28kb+WXWY63KJnPbMyzbgpXRRcXtpVP
-	 W8rMjIlgrFTgSnPqPcXTp2wB8Vn9ZwRXSxQ4jsEaORAFF5nubuHYBtL2m8FNImKG5Eg==
+	bh=sFa/ZCtI9Wo+F3hQqVKyKHqf0+JEmGqfwFNeU6WaHaM=;
+	b=ubHdf9OhHb3GzMWkeCvbhrSUeHwsgMDudGB0spyvST5z3KeskWeCj9oZ65p/1gEVIVSq
+	 ePQguHq8mspFGru04g5tYnAU/oEHQvsoIC2yUomC6sJuL5FXWBxpLIeknD8dirhJlTixx
+	 4RCQSKRjzfWqBjKJddghZUiKZ1cM1mA32fJnPZGcyga+FImQRzgAvk1QedCUvLJu2xL0X
+	 a+TEngTv6uAE/bvf525amDuvo7OxOyl6X+MMhn4QL0ZQJIlGOmXimSDofMInkUBuGV5NI
+	 rlHbCNY4CKOtsNGFySyIM8w+TJB/qdK4cniP4bcPksWkhtzQrAo5gJQ7+BUpE/XDFvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeO3sP78;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wk3gJBtd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7958B606A320;
-	Thu, 19 Nov 2026 03:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2572E606A325;
+	Thu, 19 Nov 2026 03:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YeO3sP78
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE771F000C4;
-	Thu, 19 Nov 2026 03:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wk3gJBtd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803B01F000C4;
+	Thu, 19 Nov 2026 03:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059708;
-	bh=H3H10TqYEq2F8vNGzF6BcijB8PiOt7LFkzFClZM9ybI=;
+	s=korg; t=1795059711;
+	bh=sFa/ZCtI9Wo+F3hQqVKyKHqf0+JEmGqfwFNeU6WaHaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YeO3sP78iQPydPQS00v+VX1lQmGKUlozr1oLV+YeJA702vwhQkbNm3+sJDL3rN0jU
-	 6MDP3sU9E3k9FpaydtIvjic6TR/dF93LK1++N9wEuKcbMno0c7tx4+XPtfEZSW5Iqs
-	 uz89ofjU7+cPqJhSRAndcdKDgO7iL+ypbgskNda8=
+	b=wk3gJBtdqM2XxQNKaNOPaeathH4qYDgm2QnPvs0vMQueUn6dL3SB3KwjiDBos3M//
+	 aQQ3fHIHTMQOuh5ReMgdySJQleGe47iOH1Lh4qrqeQzKcoMRr8P1823jwsk1scqRtm
+	 JmdjpykdVhv5jpnW/csMZscxv9gZk9STGiSAJNIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Nikolaos Karaolidis <nick@karaolidis.com>,
+	Jan Kara <jack@suse.cz>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	"Christian Brauner (Amutable)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0939/1848] gpio: pca953x: Handle direction register read errors in IRQ paths
-Date: Wed, 18 Nov 2026 15:49:37 +0100
-Message-ID: <20261118145956.202313365@linuxfoundation.org>
+Subject: [PATCH 5.10 0940/1848] fs: rotate inodes whose page cache could not be dropped
+Date: Wed, 18 Nov 2026 15:49:38 +0100
+Message-ID: <20261118145956.294858943@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,87 +70,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+From: Nikolaos Karaolidis <nick@karaolidis.com>
 
-[ Upstream commit a0fe269293509acdd93b9cfb3f46636f7b91b33a ]
+[ Upstream commit 8ee09f597763acfd31c62a578ba88b792fc41b24 ]
 
-Three IRQ paths ignore the result of reading the direction registers
-and then use the destination bitmap. pca953x_read_regs() does not populate
-that bitmap when regmap_bulk_read() fails, leaving the callers to use
-uninitialized stack data.
+When inode_lru_isolate() drops the page cache of an unused inode, it
+has to unlock the list, so it returns LRU_RETRY and the walk restarts
+at the head of the list, where the inode still is. If
+invalidate_mapping_pages() could not empty the mapping, the restarted
+walk strips the same inode again, and so on until nr_to_walk runs out.
+Every walk of that list then ends on this inode, and nothing behind it
+is reclaimed for as long as its cache stays.
 
-This can select incorrect GPIOs for direction changes during IRQ bus
-synchronization, corrupt the saved input state during IRQ setup, or
-produce incorrect pending interrupt decisions.
+Before commit 2a0629834cd8 ("vfs: Don't evict inode under the inode lru
+traversing context") the walker pinned the inode with a reference, and
+dropping it in iput_final() set I_REFERENCED, so the restarted walk
+rotated the inode to the tail. Set I_REFERENCED again when the mapping
+is still populated after the invalidation, in the same i_lock section
+that clears I_LRU_ISOLATING. inode_unpin_lru_isolating() now expects
+i_lock to be held, like inode_pin_lru_isolating().
 
-Check the read result at all three sites. Release irq_lock without
-changing GPIO directions on failure, leave the IRQ history untouched
-when pending detection fails, and propagate the error from IRQ setup.
-The read helper already logs the error.
+On CONFIG_HIGHMEM kernels this can happen to any unused inode: a folio
+is left behind if it is locked, under writeback, spliced into a pipe,
+or still in another CPU's LRU-add batch after being read. Without
+HIGHMEM it happens to DAX inodes whose only entry is at index 0, which
+mapping_shrinkable() lets onto the LRU and invalidate_mapping_pages()
+never removes.
 
-Fixes: 0f25fda840a9 ("gpio: pca953x: Zap ad-hoc reg_direction cache")
+Fixes: 2a0629834cd8 ("vfs: Don't evict inode under the inode lru traversing context")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
-Link: https://patch.msgid.link/20261018165003.3372368-1-sahaj123.sc@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Nikolaos Karaolidis <nick@karaolidis.com>
+Link: https://patch.msgid.link/20261016102515.111285-1-nick@karaolidis.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[ sashal: adapted inode APIs to use xa_empty() and direct i_state bit updates ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-pca953x.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ fs/inode.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index 5d71e453dc1c2..7d0c6d7303aa0 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -672,6 +672,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	DECLARE_BITMAP(irq_mask, MAX_LINE);
- 	DECLARE_BITMAP(reg_direction, MAX_LINE);
- 	int level;
-+	int ret;
+diff --git a/fs/inode.c b/fs/inode.c
+index 40cc72fe37f99..9f246531ae9cb 100644
+--- a/fs/inode.c
++++ b/fs/inode.c
+@@ -462,12 +462,11 @@ static void inode_pin_lru_isolating(struct inode *inode)
  
- 	if (chip->driver_data & PCA_PCAL) {
- 		/* Enable latch on interrupt-enabled inputs */
-@@ -684,7 +685,9 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	}
- 
- 	/* Switch direction to input if needed */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		goto out;
- 
- 	bitmap_or(irq_mask, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
- 	bitmap_complement(reg_direction, reg_direction, gc->ngpio);
-@@ -694,6 +697,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
- 	for_each_set_bit(level, irq_mask, gc->ngpio)
- 		pca953x_gpio_direction_input(&chip->gpio_chip, level);
- 
-+out:
- 	mutex_unlock(&chip->irq_lock);
+ static void inode_unpin_lru_isolating(struct inode *inode)
+ {
+-	spin_lock(&inode->i_lock);
++	lockdep_assert_held(&inode->i_lock);
+ 	WARN_ON(!(inode->i_state & I_LRU_ISOLATING));
+ 	inode->i_state &= ~I_LRU_ISOLATING;
+ 	smp_mb();
+ 	wake_up_bit(&inode->i_state, __I_LRU_ISOLATING);
+-	spin_unlock(&inode->i_lock);
  }
  
-@@ -740,7 +744,9 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
- 		return false;
- 
- 	/* Remove output pins from the equation */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		return false;
- 
- 	bitmap_copy(old_stat, chip->irq_stat, gc->ngpio);
- 
-@@ -828,7 +834,9 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
- 	 * interrupt.  We have to rely on the previous read for
- 	 * this purpose.
- 	 */
--	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
-+	if (ret)
-+		return ret;
- 	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
- 	mutex_init(&chip->irq_lock);
- 
+ static void inode_wait_for_lru_isolating(struct inode *inode)
+@@ -821,7 +820,13 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
+ 			if (current->reclaim_state)
+ 				current->reclaim_state->reclaimed_slab += reap;
+ 		}
++
++		spin_lock(&inode->i_lock);
++		/* The walk restarts here: don't retry leftovers right away */
++		if (!xa_empty(&inode->i_data.i_pages))
++			inode->i_state |= I_REFERENCED;
+ 		inode_unpin_lru_isolating(inode);
++		spin_unlock(&inode->i_lock);
+ 		spin_lock(lru_lock);
+ 		return LRU_RETRY;
+ 	}
 -- 
 2.53.0
 
