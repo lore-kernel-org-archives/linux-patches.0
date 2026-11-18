@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017906;
-	b=YMCaaNo+bnTZKYaUs64i+4ayACkv0h88klz5o6aZvWsTZf9LY7htTNr9I8py1Cqfb6hM
-	 rZL8ETEyTNMnJwUc8vnwYPrAFXMjpkcZRnek8jrgW+yynM+m4gdlswXKRk8iiQLLzaa5H
-	 n7WAGnXWpCZ/DpZGhEhhQpM7jCxNB40Ww/ALNKBFJ6npLylOZh9PZJDVNOddPvJDceYV6
-	 B+X3CyQg8Dc6Xs3kQNql6Xn/udzdNp3Q8sl+2DBtTXr0xuRGZx7ZXiChDOUNkXdZqZzZs
-	 au/jjdPV3cvisMF8S2DMyMCBH2POZ8eE+pSTced/RCkR6OfzfT8No5FY55hY/Ws7sWw==
+	t=1795017909;
+	b=WASsm2GgNp0XF1sYo6UpryZRAEOQJF00DVa2+0DCyElgUSYT9O/URxZTrgYUezA7jPPM
+	 qH25VDTtjJkyp0OrKENHC9oCY2Mou2IyVNJG/wp0ovHlv+lYTEZ3rrytwpqB1qOTW/NAz
+	 HlBYAr3p8lurs7Trec4RD6Dd6HFD9C0xWs2NnoFGQormn4yWtRTvAIV0vIGdGpUFp6PFu
+	 3vc+f/1wc0Hi+WwB+6ezeNF5cH6z0cWpkcLBMsIUTeWoqCjTvE8+1CcTAgX3e581A8Quw
+	 VKczME6oGHAfc4qd6P1kQJU3EFsBynTgzjUjob/otjNVzyrCHzzPUFycUTAGWsaJqcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017906;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017909;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=emB6qpjIMtjeMPYatTyiPX0xCIic0WAMkOEZKvOEul8=;
-	b=eDUbFGuP4F6Nn9ku3B36sMSHtG0HH9QgAFJbF8V2lDRTvepelE9H1Y+lFgMcMTt/0CX8
-	 0uqDjLDFG9l9Cj9YJXhwl7b7TOvpAi5WTW0wLFr0j4bi1WPoS9VynP9WfLZtzWiU+JskW
-	 RGwDvlty4ErwTQrmWSbYvwkpi6cojFawXRQbo+KHLLALPCoiNUACzfvHuU2AcTrF2fmKR
-	 RcWDGE/sni7j4D51VeNGYEuWbrlp9bBz8Ke6pnMtM+nS5HiOXMe4s662jndxUnv2CEoZT
-	 tJBca9f6xkhknst2rzUIM7caRx2X/wr6t9IX1WWdA61AriBndrUj09USdgpolXvRTZA==
+	bh=EAvB2ZjCpIeFbTg4MfvMVoBn8HUM/NtR3C8jgfLkYFk=;
+	b=h8txWYVs6BuZ5ze7bUvKuVxj320rl0KXZbPG0fJ3PicZCtzH4TrdAOVDtSjCsVcjxgt4
+	 uoDiXgRfXzJkpbQSXkuJ+1nf1t9CZSp1M/fj3qN1hWfOJH3t3ahvKQBaL9/xXOoG1GEYt
+	 BBGQlPUZkaoPfPejQD/1Wmz/PTh2Gz+noWdSVgg9fo2COhGBJP6Jh6QEUDn8wKwgttuy8
+	 eCsf6887TKzpJJ+Khc+WyvDlFS0UhKiSzoh4sVUaXIj4S74ZgvD8GlGMwF8JiinkaBOGa
+	 hso1bNE7D2lAEDDDS4q/nTBDXCT+fBzZvgFZ5zxILHfsBPIhGDvQAzahWef1lfqWLKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1hxNEuD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fx40rN71;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8901B606A31C;
-	Wed, 18 Nov 2026 16:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E69B606A320;
+	Wed, 18 Nov 2026 16:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1hxNEuD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA8881F000C4;
-	Wed, 18 Nov 2026 16:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fx40rN71
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBFC1F000C4;
+	Wed, 18 Nov 2026 16:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017906;
-	bh=emB6qpjIMtjeMPYatTyiPX0xCIic0WAMkOEZKvOEul8=;
+	s=korg; t=1795017909;
+	bh=EAvB2ZjCpIeFbTg4MfvMVoBn8HUM/NtR3C8jgfLkYFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v1hxNEuDfw/ndnodWTKmZ11WRBVg5dY5OLExVCiQSqSC7ryUmvL4qPsf+Z/4WVka6
-	 +1zj/ZGiOJHt0ia3mrpJts1hWw3UzphvQaDr7iP8Um2YwqCr+J8JwApyTMpDlCYPbW
-	 4ZvbNwaVcS/cvF6V5vy1W0NreCZbLaLqJb8GvfOk=
+	b=Fx40rN71rdYbBhDrZ69Xmyo96c/E32+vgBLvuM9EAtSf8W6rdAKExxD4hslVGEDLr
+	 6mqLuKCy5txYTzowCSyHjRPul0hGceApgQl4qy+iLreSpNEBDpaVhfzlSCcaPfmw5Y
+	 U1spDjIaFhQMUs5LDtwCr3u8ixedga5iDzynF0FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Askar Safin <safinaskar@gmail.com>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Alireza Haghdoost <haghdoost@uber.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1052/2651] kbuild: Mark usr_gen_init_cpio as no-dot-config-target
-Date: Wed, 18 Nov 2026 15:38:12 +0100
-Message-ID: <20261118150325.844067276@linuxfoundation.org>
+Subject: [PATCH 7.3 1053/2651] perf symbols: Dont let a modules last symbol overlap the next module
+Date: Wed, 18 Nov 2026 15:38:13 +0100
+Message-ID: <20261118150325.879090812@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,39 +69,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Schier <nsc@kernel.org>
+From: Alireza Haghdoost <haghdoost@uber.com>
 
-[ Upstream commit 14e2c1f5431a03478ed4bbf2e72298c769f375ac ]
+[ Upstream commit 45d15e89a783a0a279b7a54f9018c230127380d7 ]
 
-Let usr/gen_init_cpio be built also if there is no kernel configuration.
+symbols__fixup_end() extends a zero-size symbol that is the last one in
+the kernel or in a module to the end of the next page. On x86 the next
+module can start in that page, so the stretched symbol overlaps it, and
+a lookup can return the wrong symbol. For example:
 
-Askar Safin reported that gen_init_cpio may be of use before any kernel
-configuration is available.  Add usr_gen_init_cpio to list of targets
-that do not require a .config file.
+  ffffffffc0c4aa50 t dca_sysfs_exit    [dca]
+  ffffffffc0c4b000 t __nft_trace_packet [nf_tables]
+  ffffffffc0c4b0b0 t nft_do_chain      [nf_tables]
 
-Reported-by: Askar Safin <safinaskar@gmail.com>
-Closes: https://lore.kernel.org/all/20260220191150.244006-1-safinaskar@gmail.com
-Fixes: f8e05c10631e ("kbuild: Add top-level target for building gen_init_cpio")
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20260928-move-gen_init_cpio-to-scripts-v4-1-f437a33c40ac@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+dca_sysfs_exit gets end 0xffffffffc0c4c000, and samples in nft_do_chain
+are reported as dca_sysfs_exit.
+
+This patch clamps the end to the next symbol's start. The ARM case this
+code was added for, where the next module is far away, is unchanged.
+
+Add a "Kallsyms symbol ends" test case to the Symbols suite that covers
+the kernel/module boundary, adjacent modules and a distant module.
+
+Fixes: 8799ebce84d672aa ("perf symbol: Update symbols__fixup_end()")
+Fixes: bacefe0c7b77b752 ("perf tools: Fixup module symbol end address properly")
+Signed-off-by: Alireza Haghdoost <haghdoost@uber.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/tests/symbols.c | 96 +++++++++++++++++++++++++++++++++++++-
+ tools/perf/util/symbol.c   |  4 ++
+ 2 files changed, 99 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 51e278ccea9c5..d0ba6f0aac017 100644
---- a/Makefile
-+++ b/Makefile
-@@ -298,6 +298,7 @@ no-dot-config-targets := $(clean-targets) \
- 			 %asm-generic kernelversion %src-pkg dt_binding_check \
- 			 dt_style_selftest \
- 			 outputmakefile rustavailable rustfmt rustfmtcheck \
-+			 usr_gen_init_cpio \
- 			 run-command
- no-sync-config-targets := $(no-dot-config-targets) %install modules_sign kernelrelease \
- 			  image_name
+diff --git a/tools/perf/tests/symbols.c b/tools/perf/tests/symbols.c
+index c09e04f36035a..b644d95c6be9a 100644
+--- a/tools/perf/tests/symbols.c
++++ b/tools/perf/tests/symbols.c
+@@ -2,6 +2,7 @@
+ #include <linux/compiler.h>
+ #include <linux/string.h>
+ #include <sys/mman.h>
++#include <inttypes.h>
+ #include <limits.h>
+ #include "debug.h"
+ #include "dso.h"
+@@ -223,4 +224,97 @@ static int test__symbols(struct test_suite *test __maybe_unused, int subtest __m
+ 	return ret;
+ }
+ 
+-DEFINE_SUITE("Symbols", symbols);
++struct kallsyms_sym {
++	u64 start;
++	const char *name;
++};
++
++/*
++ * kallsyms from an x86 host where nf_tables was loaded in the page right
++ * after the last symbol of dca, plus a kernel symbol followed closely by a
++ * module and a module far away from the others.
++ */
++static const struct kallsyms_sym kallsyms_syms[] = {
++	{ 0xffffffff81000000, "_stext" },
++	{ 0xffffffff81000ff0, "last_kernel_symbol" },
++	{ 0xffffffff81001000, "near_module_symbol\t[near]" },
++	{ 0xffffffffc0c4aa40, "dca_exit\t[dca]" },
++	{ 0xffffffffc0c4aa50, "dca_sysfs_exit\t[dca]" },
++	{ 0xffffffffc0c4b000, "__nft_trace_packet\t[nf_tables]" },
++	{ 0xffffffffc0c4b0b0, "nft_do_chain\t[nf_tables]" },
++	{ 0xffffffffc0c4b4e0, "nf_tables_core_module_exit\t[nf_tables]" },
++	{ 0xffffffffc2000000, "far_module_symbol\t[far]" },
++};
++
++static int check_symbol(struct dso *dso, u64 addr, const char *name, u64 end)
++{
++	struct symbol *sym = dso__find_symbol_nocache(dso, addr);
++
++	if (!sym || strcmp(sym->name, name)) {
++		pr_debug("%#" PRIx64 ": expected %s, got %s\n", addr, name,
++			 sym ? sym->name : "no symbol");
++		return TEST_FAIL;
++	}
++	if (sym->end != end) {
++		pr_debug("%s: expected end %#" PRIx64 ", got %#" PRIx64 "\n",
++			 name, end, sym->end);
++		return TEST_FAIL;
++	}
++	return TEST_OK;
++}
++
++static int test__kallsyms_fixup_end(struct test_suite *test __maybe_unused,
++				    int subtest __maybe_unused)
++{
++	struct dso *dso = dso__new("[kernel.kallsyms]");
++	int ret = TEST_FAIL;
++
++	if (!dso)
++		return TEST_FAIL;
++
++	for (unsigned int i = 0; i < ARRAY_SIZE(kallsyms_syms); i++) {
++		struct symbol *sym = symbol__new(kallsyms_syms[i].start, 0, 0, 0,
++						 kallsyms_syms[i].name);
++
++		if (!sym)
++			goto out;
++		symbols__insert(dso__symbols(dso), sym);
++	}
++
++	symbols__fixup_end(dso__symbols(dso), true);
++
++	ret = TEST_OK;
++	/* The next symbol is too close for the end of the page. */
++	if (check_symbol(dso, 0xffffffff81000ff8, "last_kernel_symbol",
++			 0xffffffff81001000))
++		ret = TEST_FAIL;
++	if (check_symbol(dso, 0xffffffffc0c4aa58, "dca_sysfs_exit\t[dca]",
++			 0xffffffffc0c4b000))
++		ret = TEST_FAIL;
++	if (check_symbol(dso, 0xffffffffc0c4b280, "nft_do_chain\t[nf_tables]",
++			 0xffffffffc0c4b4e0))
++		ret = TEST_FAIL;
++
++	/* Far from the next module, the end of the page is still used. */
++	if (check_symbol(dso, 0xffffffffc0c4b4f0,
++			 "nf_tables_core_module_exit\t[nf_tables]",
++			 0xffffffffc0c4d000))
++		ret = TEST_FAIL;
++	if (check_symbol(dso, 0xffffffff81001008, "near_module_symbol\t[near]",
++			 0xffffffff81002000))
++		ret = TEST_FAIL;
++out:
++	dso__put(dso);
++	return ret;
++}
++
++static struct test_case tests__symbols[] = {
++	TEST_CASE("Symbols", symbols),
++	TEST_CASE("Kallsyms symbol ends", kallsyms_fixup_end),
++	{ .name = NULL, }
++};
++
++struct test_suite suite__symbols = {
++	.desc = "Symbols",
++	.test_cases = tests__symbols,
++};
+diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
+index 3206929473a2d..ad21f9bbe4404 100644
+--- a/tools/perf/util/symbol.c
++++ b/tools/perf/util/symbol.c
+@@ -301,6 +301,10 @@ void symbols__fixup_end(struct rb_root_cached *symbols, bool is_kallsyms)
+ 			else
+ 				prev->end = curr->start;
+ 
++			/* The next module can start within that page */
++			if (prev->end > curr->start)
++				prev->end = curr->start;
++
+ 			pr_debug4("%s sym:%s end:%#" PRIx64 "\n",
+ 				  __func__, prev->name, prev->end);
+ 		}
 -- 
 2.53.0
 
