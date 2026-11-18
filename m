@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040104;
-	b=xzS+/FC34GvCygG4C1fBzyNvQRRao5VfL3i+FhNYHjiKaPcgdnHInEcB+JEe47Adkx51
-	 Tl9auEo6yFxlgidtESZyqIgIVOI34e757L7R6myGyqGWvUUUhEB+2qWUgPnIY76UUINi8
-	 dDttMOiu2XEabuvZtZr955dILNjHpP8QNT1FquF3nCnmJh9IfRxB+qUQtiinbf3YGD4SZ
-	 NnUtfwzfm+IPWRJjFASyC2Kj3papnptqvq7wecpuhJ2cqW1F0betF8iBInggd9l5Zr2Gh
-	 tYcoNot2p1LIZHcYEYrQ6c8OnP33ydDA5p/gOVYp4jb82ngFPnOedH6GM2Ta9xLxdKA==
+	t=1795040107;
+	b=Q4udFeQWUO7EpmExay6qIGN5+TWHzRzvlieQT3fvkMe+ZaOt9zHRk1JWWd016bUGs8Ow
+	 LW5sSQw0quHz+4jnhsuRJ9zW15TY+kNsoZlJte7n/k2Gm6eJ01WatWyCHtpKEk2GeGmVU
+	 NRsqOAqpkpz7KCq5EpwWLW3+sG7P3MEWu0htbRs6py2apeTpk3Ew9A3obvRWWkyVd8M8F
+	 CSux6Pm5E37egoyQOEB7YCT8OvClcy+BfvTCX0lUdiiw9cNt5Gt1xO8OA3ilZcCJRwJxf
+	 U7WASiFjXRu5/Dasdrie4uD/DOdnXaNd8vPJ3yig9UL34P75Cj/CWubb/Kq698MJ/Iw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040104;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040107;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N0D9olcUM7QCFlrutDDIZagddW1eedrFwRiGF87eM8E=;
-	b=VXeUPrrZsi/xHI6cwo9ElUnS68m8yfHGjONmSIXt98lvSn5vtZfgdBWo/PsEgkYE1SZp
-	 ZQ124w9kGHbB0enRx/JyQcyBcX+0lAC/E0vkhpJf3MHaWokRIMVYKhnQaGKI1OJtDUcsk
-	 2C+OtzNZqQTMROHqArd5dx+OLLtdTCRVH/G9m/NeietMr0/MkRfKH3opbaDC6T5wyildu
-	 MEX3+GCvVL9S1DpaCjmgDVsw3c/jFxUMUQoWEUIpNSsmkc2EmJBvemkKRtbeYOhG7prOu
-	 K4a9sf2QF2QqLR5LWELczguObu7n2iQXE89X0xhAYi+h/dJ5/hBojWJTK+0ka2n/8Cg==
+	bh=kQ5bk/uy5/9aYpLXNDJFXozdPVZ04bpE5vZh/nZJCcs=;
+	b=rb8Xkfps8u0bN3jPCg1jDypxclY5q4J7+AklfgPoVaPpNVuXPtXYYuZA9SL6NhHbhdBz
+	 /L+Go+9pZxxbj2c5aDWbuCgAmUjXdgWosuiFUt40qpnlUKJegpxXb/azN49zZ+OUqkmL0
+	 Zz6lOIapePWaug8UnAQwPsGsIWm8fBH9YmQPCUnaRRZbusARMfYOpK/kA0qnezZul4LPe
+	 NDlsFnMI5htGSxzpTfAIu8maltRyWIc/J28D5LTp2yp49T86Apeo36LGqFSDyaJD4h/yk
+	 JuKBOn/Pg/Yx4qhEoXQzEckiHrrVaSkaBZWyIPIaD05p1t8kcKGlSjOCobn+BJ6fg8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NqQH6Q/Y";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8q0O6i8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B36606A32C;
-	Wed, 18 Nov 2026 22:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051EB606A32F;
+	Wed, 18 Nov 2026 22:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NqQH6Q/Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A121F000C8;
-	Wed, 18 Nov 2026 22:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R8q0O6i8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 589291F000C4;
+	Wed, 18 Nov 2026 22:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040104;
-	bh=N0D9olcUM7QCFlrutDDIZagddW1eedrFwRiGF87eM8E=;
+	s=korg; t=1795040106;
+	bh=kQ5bk/uy5/9aYpLXNDJFXozdPVZ04bpE5vZh/nZJCcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NqQH6Q/Y9acGVt2S+VX1gy8Pf1On9WfuQINNffLibeg9LcYTvsRWG/4dd6OPn8nGs
-	 XXq9m8YHyRTXQMUfHhSB6egghENoaLBrGqgGN/t+DBcjpLz/A8f+e1RPTlkY8CYbzF
-	 4wMc1yPWlwxDPVsdbPyGDib/5wr+w/nW1mbPdrZs=
+	b=R8q0O6i8G+pgidDC0mLuPIG/6VsiWjR6dU0EideDuYlihDckp7c/i++QIngL/gHvu
+	 deAS9ehA5VNWFNJfSZYehri+/ANmPl9UQyNElvIzVO4GfzkT/1G/4LB7RC7byFD8gb
+	 7dQN+JRM7Q9h2LR9daNXGbZn6yY31O507W8biqKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Anderson <ejona86@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2338/3318] mfd: rk8xx: Register poweroff handler in atomic phase
-Date: Wed, 18 Nov 2026 15:49:20 +0100
-Message-ID: <20261118150431.776329190@linuxfoundation.org>
+Subject: [PATCH 6.6 2339/3318] mfd: intel_quark_i2c_gpio: Manage the fixed-rate clock
+Date: Wed, 18 Nov 2026 15:49:21 +0100
+Message-ID: <20261118150431.804718259@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,51 +69,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Anderson <ejona86@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 128115b520c6b61afbffd01809cfc3e8cbb78516 ]
+[ Upstream commit 14a7cf1a3730c7c2393ef5a226e90baf61aa8a9f ]
 
-This fixes a regression from v6.1 to v6.6 where Google Veyron devices
-(rk3288) would not power off after being shut down.
+The I2C clock is allocated by clk_register_fixed_rate(), but cleanup uses
+clk_unregister(), leaving the fixed-rate provider allocation behind.
 
-Prior to commit 4fec8a5a85c4 ("mfd: rk808: Convert to device managed
-resources"), pm_power_off was called by legacy_pm_power_off() which
-itself was registered using SYS_OFF_MODE_POWER_OFF. But in that commit
-the registration of rk808_power_off() moved to
-SYS_OFF_MODE_POWER_OFF_PREPARE. At the very least, the code should be
-consistent between SYS_OFF_MODE_POWER_OFF and SYS_OFF_MODE_RESTART; both
-should be *_PREPARE or both not.
+Manage the provider with devm_clk_hw_register_fixed_rate() and its lookup
+with devm_clk_hw_register_clkdev(). Managed resources release the lookup
+before the provider, after the MFD children have been removed.
 
-It appears interrupt delivery is already shut down (but not disabled)
-when SYS_OFF_MODE_POWER_OFF_PREPARE is triggered, so
-regmap_update_bits() in rk808_power_off() does not complete
-successfully. Registering rk808_power_off() as SYS_OFF_MODE_POWER_OFF
-runs with interrupts disabled which causes polling I/O to be used
-instead, and the device to power down.
+Remove the manual clock cleanup and the private structure that only
+stored the clock and lookup pointers.
 
-Fixes: 4fec8a5a85c4 ("mfd: rk808: Convert to device managed resources")
-Signed-off-by: Eric Anderson <ejona86@gmail.com>
-Assisted-by: Gemini:gemini-3.5-flash
-Link: https://patch.msgid.link/20260908-veyron-shutdown-v1-1-066ecb80f5f2@gmail.com
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 60ae5b9f5cdd ("mfd: intel_quark_i2c_gpio: Add Intel Quark X1000 I2C-GPIO MFD Driver")
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260912191223.46136-1-mhun512@gmail.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/rk8xx-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/intel_quark_i2c_gpio.c | 52 ++++--------------------------
+ 1 file changed, 6 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/mfd/rk8xx-core.c b/drivers/mfd/rk8xx-core.c
-index a577f950c6324..c75ce0a9b56e1 100644
---- a/drivers/mfd/rk8xx-core.c
-+++ b/drivers/mfd/rk8xx-core.c
-@@ -679,7 +679,7 @@ int rk8xx_probe(struct device *dev, int variant, unsigned int irq, struct regmap
+diff --git a/drivers/mfd/intel_quark_i2c_gpio.c b/drivers/mfd/intel_quark_i2c_gpio.c
+index 9b9c76bd067b8..443a1a0cf7778 100644
+--- a/drivers/mfd/intel_quark_i2c_gpio.c
++++ b/drivers/mfd/intel_quark_i2c_gpio.c
+@@ -35,11 +35,6 @@
+ /* The Quark I2C controller source clock */
+ #define INTEL_QUARK_I2C_CLK_HZ	33000000
  
- 	if (device_property_read_bool(dev, "rockchip,system-power-controller")) {
- 		ret = devm_register_sys_off_handler(dev,
--				    SYS_OFF_MODE_POWER_OFF_PREPARE, SYS_OFF_PRIO_HIGH,
-+				    SYS_OFF_MODE_POWER_OFF, SYS_OFF_PRIO_HIGH,
- 				    &rk808_power_off, rk808);
- 		if (ret)
- 			return dev_err_probe(dev, ret,
+-struct intel_quark_mfd {
+-	struct clk		*i2c_clk;
+-	struct clk_lookup	*i2c_clk_lookup;
+-};
+-
+ static const struct property_entry intel_quark_i2c_controller_standard_properties[] = {
+ 	PROPERTY_ENTRY_U32("clock-frequency", I2C_MAX_STANDARD_MODE_FREQ),
+ 	{ }
+@@ -160,37 +155,12 @@ MODULE_DEVICE_TABLE(pci, intel_quark_mfd_ids);
+ 
+ static int intel_quark_register_i2c_clk(struct device *dev)
+ {
+-	struct intel_quark_mfd *quark_mfd = dev_get_drvdata(dev);
+-	struct clk *i2c_clk;
+-
+-	i2c_clk = clk_register_fixed_rate(dev,
+-					  INTEL_QUARK_I2C_CONTROLLER_CLK, NULL,
+-					  0, INTEL_QUARK_I2C_CLK_HZ);
+-	if (IS_ERR(i2c_clk))
+-		return PTR_ERR(i2c_clk);
+-
+-	quark_mfd->i2c_clk = i2c_clk;
+-	quark_mfd->i2c_clk_lookup = clkdev_create(i2c_clk, NULL,
+-						INTEL_QUARK_I2C_CONTROLLER_CLK);
+-
+-	if (!quark_mfd->i2c_clk_lookup) {
+-		clk_unregister(quark_mfd->i2c_clk);
+-		dev_err(dev, "Fixed clk register failed\n");
+-		return -ENOMEM;
+-	}
+-
+-	return 0;
+-}
+-
+-static void intel_quark_unregister_i2c_clk(struct device *dev)
+-{
+-	struct intel_quark_mfd *quark_mfd = dev_get_drvdata(dev);
+-
+-	if (!quark_mfd->i2c_clk_lookup)
+-		return;
++	struct clk_hw *hw;
+ 
+-	clkdev_drop(quark_mfd->i2c_clk_lookup);
+-	clk_unregister(quark_mfd->i2c_clk);
++	hw = devm_clk_hw_register_fixed_rate(dev, INTEL_QUARK_I2C_CONTROLLER_CLK,
++					     NULL, 0, INTEL_QUARK_I2C_CLK_HZ);
++	return devm_clk_hw_register_clkdev(dev, hw, NULL,
++					 INTEL_QUARK_I2C_CONTROLLER_CLK);
+ }
+ 
+ static int intel_quark_i2c_setup(struct pci_dev *pdev)
+@@ -238,19 +208,12 @@ static int intel_quark_gpio_setup(struct pci_dev *pdev)
+ static int intel_quark_mfd_probe(struct pci_dev *pdev,
+ 				 const struct pci_device_id *id)
+ {
+-	struct intel_quark_mfd *quark_mfd;
+ 	int ret;
+ 
+ 	ret = pcim_enable_device(pdev);
+ 	if (ret)
+ 		return ret;
+ 
+-	quark_mfd = devm_kzalloc(&pdev->dev, sizeof(*quark_mfd), GFP_KERNEL);
+-	if (!quark_mfd)
+-		return -ENOMEM;
+-
+-	dev_set_drvdata(&pdev->dev, quark_mfd);
+-
+ 	ret = intel_quark_register_i2c_clk(&pdev->dev);
+ 	if (ret)
+ 		return ret;
+@@ -260,7 +223,7 @@ static int intel_quark_mfd_probe(struct pci_dev *pdev,
+ 	/* This driver only requires 1 IRQ vector */
+ 	ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
+ 	if (ret < 0)
+-		goto err_unregister_i2c_clk;
++		return ret;
+ 
+ 	ret = intel_quark_i2c_setup(pdev);
+ 	if (ret)
+@@ -282,8 +245,6 @@ static int intel_quark_mfd_probe(struct pci_dev *pdev,
+ 	software_node_unregister_node_group(intel_quark_gpio_node_group);
+ err_free_irq_vectors:
+ 	pci_free_irq_vectors(pdev);
+-err_unregister_i2c_clk:
+-	intel_quark_unregister_i2c_clk(&pdev->dev);
+ 	return ret;
+ }
+ 
+@@ -292,7 +253,6 @@ static void intel_quark_mfd_remove(struct pci_dev *pdev)
+ 	mfd_remove_devices(&pdev->dev);
+ 	software_node_unregister_node_group(intel_quark_gpio_node_group);
+ 	pci_free_irq_vectors(pdev);
+-	intel_quark_unregister_i2c_clk(&pdev->dev);
+ }
+ 
+ static struct pci_driver intel_quark_mfd_driver = {
 -- 
 2.53.0
 
