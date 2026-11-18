@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050901;
-	b=cP4c+5124mM0J1Nl4L/LRRzjA/ERWKwvFQH8gbl6wa0Xyix7O1ppp6jO/tGKoOBCgog4
-	 wqLYdU9uAqQyZ41FjGC8KcurInwL3G9GNi7b7L0/ltnvI0AqEyyNW/8xdng8JgVkf1/Z7
-	 VrX3G7s4fcB8T183sIxMiibhyEFG5lHIApS0nkRSUnCNRjKPtUe7yf9YhP8svhtlZeLZw
-	 NSwD52DU7npbkk0zzTAtU3Av5j4O/lQMEdCFhR677mRWMaI1cFTj8R4R5ZW4bzlV9EQGF
-	 4OmdUDYEbpYb/Zz7/JpsCmL1vT2X7wStHpWjlC9tj7AkJf6akKjCZjcQFVh+I8/89/g==
+	t=1795050905;
+	b=A41o2hbm3UD9i7n0LN9EQfvGePrj5BlswR4wMg7ButM8OYmqX95G3IVd2b219dXuq7Ez
+	 MeQ+rk/XEN7BIbFD4M9mK2zgSuRJ1JdWhmVMgM5gHt4E7BTD3bK7Bfuq+CF5gVj0KgYBg
+	 Lco9Pdlm5Q0q9YIUA8NuJuuyQDDb7Glarst6XAx3OUySIhUdUsP4RdjOupdjOlZ6mFDIy
+	 grmWfhlZkjnJ/6mRdC+IZZFYlRv4FZUmDT7NhCmAW76IvypQXoJqbNRSrasHj4WQH5ebJ
+	 kfDB9ILDUsJn9W406ca6jLvZ7bLLwf5OfOYaklVc1G9ctrXHLOp95obYwgxm/ddZfxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050901;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050905;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Ap8smpNkD6bhxaLcjuoH+3n/VahlT5bW233bLIO4lQE=;
-	b=ri/71oJI2qSzEIw6PgIag0Lgxh1sqIe0RYPLNbR48dqhkJXmZJrskkWJ0SyKaecD+38K
-	 6eOZ7+jqGP8q7dtV6v6LtZeiuvm+o627rsc9IBbL60rDIyth3/EADBE2ytD+Np84JEvTs
-	 bQXLP2EP4wq/qOW06P6YEYclazQW2yD2dj87k2BJHDGWPhsVqMRRElQ8Sdnq1DGvtYUXa
-	 fuadlUx1K+66aLYqflKsDiyQKiZncWEVUjBMZ6/SW/k2w0chXicRzxzbl9PYNYPJVikvR
-	 vgv2UnXT3Ou3AeZ8yGYjnz8OKLwn6/ZpdxxyTvV3IjKQ3ufACOks4bVTVyk+AISC28g==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CeUXb2bubXaiNuRddJIWWfs0OlBk+PMlitHtE32oyXU=;
+	b=Mhcir0n78uhtMaGef5zN/8ijYbjsjmIX+2iLRriSxMHmIQaBZoOlPdFmyFQ7eXOn6W1F
+	 +5vHCp70CklNma1zNTSHd4p89+dz3A+Z2Ch+lusi37/uvETDbmZYo8yqky9LDO3AKoOWk
+	 P5gr8QFJ1m2TWGRqdxXj0QcsRbXXayHCZQsAZwGfblLxuoC2NtGHE/Pf7Ll8gSG+7NMxw
+	 jltE41NF2IbZkynRPtiSgp1MLJIKWNE1e3UIr930mNz/fcEq7sprZUqwHuBIr/IhJHYym
+	 aRIZJR3Vdmhn3kRmx9qBogRN+46dKOkLfsN/HsSZYNxgj1GZpKmUpcQs0ekjVUT773Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fa/ct3vH";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Jwl9A//0";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C022C606A320;
-	Thu, 19 Nov 2026 01:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E827E606A320;
+	Thu, 19 Nov 2026 01:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fa/ct3vH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D3E1F000C4;
-	Thu, 19 Nov 2026 01:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jwl9A//0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BBE1F000C4;
+	Thu, 19 Nov 2026 01:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050901;
-	bh=Ap8smpNkD6bhxaLcjuoH+3n/VahlT5bW233bLIO4lQE=;
+	s=korg; t=1795050904;
+	bh=CeUXb2bubXaiNuRddJIWWfs0OlBk+PMlitHtE32oyXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fa/ct3vHASyKpbExTIVRBQFrULhACkk8VtdEapkLS6M8dpAnhEglLQKsXpr4K4vtj
-	 qmc+mixY21mz+LSXI9T2J754PotVl1kqne3wBzTXNFLZ53krcYtGqBa16X9ht3CpvD
-	 9bO6sgFlFBFoplAhShFngH80+Yh/b5emL6vWi6Ow=
+	b=Jwl9A//0NJa0Bj6vnRJo2/i/oNvlhcU8dsyaO2ewTGg9qhfl3VoJZNVjjDgMoObrE
+	 vVs6Fco8E9eMLimRolx9kcblfajW9cahVbcTY4RtzhsyF8NLIdEcpKp7iZ6fYgrzjV
+	 6kQmPXiHegGF8Eq8N2WCpwEZsQyGSh6PE0tAQiXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Ray Wu <ray.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Yinjie Yao <yinjie.yao@amd.com>,
 	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.15 0019/2214] drm/amdgpu/jpeg: set no_user_fence for JPEG v2.0 ring
-Date: Wed, 18 Nov 2026 15:28:15 +0100
-Message-ID: <20261118150010.909083052@linuxfoundation.org>
+Subject: [PATCH 5.15 0020/2214] drm/amd/display: Fix out-of-bounds read in dp_get_eq_aux_rd_interval()
+Date: Wed, 18 Nov 2026 15:28:16 +0100
+Message-ID: <20261118150010.945986255@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,41 +64,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yinjie Yao <yinjie.yao@amd.com>
+From: Harry Wentland <harry.wentland@amd.com>
 
-commit e5f612dc91650561fe2b5b76dd6d2898ec9ad480 upstream.
+commit e8b4d37eba05141ee01794fc6b7f2da808cee83b upstream.
 
-JPEG rings do not support 64-bit user fence writes, reject CS
-submissions with user fences.
+[Why & How]
+The aux_rd_interval array in struct dc_lttpr_caps is declared with
+MAX_REPEATER_CNT - 1 (7) elements, indexed 0..6. However, the offset
+parameter passed to dp_get_eq_aux_rd_interval() can be as large as
+MAX_REPEATER_CNT (8) when a sink reports 8 LTTPR repeaters via DPCD.
+This leads to an out-of-bounds read of aux_rd_interval[7] when offset
+is 8.
 
-Fixes: 6ac27241106b ("drm/amdgpu: add JPEG v2.0 function supports")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
+Fix this by growing aux_rd_interval to MAX_REPEATER_CNT elements to
+accommodate the full range of valid repeater counts defined by the DP
+spec.
+
+Assisted-by: GitHub Copilot:Claude claude-4-opus
+Signed-off-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Ray Wu <ray.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 96179da0c6b059eb31706a0abe8dd6381c533143)
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit a55a458a8df37a65ffda5cf721d554a8f74f6b04)
+Cc: stable@vger.kernel.org
 Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/dc_types.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-@@ -778,6 +778,7 @@ static const struct amd_ip_funcs jpeg_v2
- static const struct amdgpu_ring_funcs jpeg_v2_0_dec_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_JPEG,
- 	.align_mask = 0xf,
-+	.no_user_fence = true,
- 	.vmhub = AMDGPU_MMHUB_0,
- 	.get_rptr = jpeg_v2_0_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v2_0_dec_ring_get_wptr,
+--- a/drivers/gpu/drm/amd/display/dc/dc_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
+@@ -395,7 +395,7 @@ struct dc_lttpr_caps {
+ 	uint8_t max_link_rate;
+ 	uint8_t phy_repeater_cnt;
+ 	uint8_t max_ext_timeout;
+-	uint8_t aux_rd_interval[MAX_REPEATER_CNT - 1];
++	uint8_t aux_rd_interval[MAX_REPEATER_CNT];
+ };
+ 
+ struct dc_dongle_caps {
 
 
