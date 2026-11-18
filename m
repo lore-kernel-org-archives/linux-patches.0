@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041716;
-	b=1O+fvlD9v4ilWeyj+SV7dxpxOoGg+1Oc2fpSJwHUzIZQddmHzhayaPqW2Z3X3WwXm0uu
-	 6rpDIxCVxoVX+zj8YslxsNBQTaB7/IK6WruPh0APmDC74bulwsRhUHigwSpUiikYutvst
-	 dB1ppzYyQo8WvFVJYXN1t3zcv1MFyNNLkjO0jYy6nV5XLVfom/8/s1MpW5ovruq01TX7n
-	 zrdvuPjWNr+yqHtSowEGlNb266SrweWcmUUa1VUSx5Uhw5AkzkAICQKQ2R/nPe3XkDeq8
-	 OZIP7haRj3S+rM0acMSj3JTsPBKZpO6Y3EDA5HR3d8vZpVg8F7lMBCQx9u9+SQSI7bQ==
+	t=1795041718;
+	b=Ao4/pJuL9cKuqR2P5NEhFvB7kJfCLSP9Z7/4+2r+N0sm7UQtVzTjMIiYo8+QpNVvHvVC
+	 Q58z+wq/GYWsdGJBhYU4/6qTnTFIigB48LF5K1UYu9UDWGPih12tyJJDxeXBiNgRVPVrt
+	 nSTQc89uJgw+b5irBolkAZicy368WHvKdBVsryA9eb8sXbz8dm6c4XcEaesclhRbDN3AU
+	 XzkyARscfttmGo7JHDWurZZQr7vyllziSxdeepkbiKsVB/XF5ifpwGK0WfpdBCxIEPc/2
+	 JXCU10GkIeuptvgKFWFe2YgZ75F2IXr7+TFtm7i/AE/z42GqmAKJjQp9dGiAYAl+JXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041716;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041718;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=Ozs886vxazTo7cAI1GONQrm7zSX0yzsvWzJjXjSwuBU=;
-	b=AxG4SFTdxsIrjaQD6s3KVzjWQpaRT0pq64utG6YS8mCokv2Ql7fGUi4tRBGHYf26LAr0
-	 kJSH8tJoMFW+9H9/QL5UjvMyOy8chBuBrT2aLDVFzJoXOlMbr4aOQRQRnF1cNdLR4fC9h
-	 oujHc4ieXfWwZjyR+eNkECa0tuJ4BL2ut8Cq3Q3jKpC0rYpY6Yoce8sTzXU5DFadBmzrA
-	 7WtNzc0wG/z6o5VUQQbQW/GuQ0X0XWvjBp38YmWHXIUHaZRsz/RWmpi8x8touXCMRxTPR
-	 Qw9dECn55ddX4rHFaY1CKp5JfaFx3eCOg6ILBs/3DzSY3ODY+uhC3/E01Q3rcevFRcA==
+	bh=Sr462d6i51O1peS9k5FrvFXf0eRNkoISZ20UnYfIZlc=;
+	b=yFiEjtj1HIdFt+VBBc/mHcGbNbO92UMV48RNKzb5qqKedYrEayhgx1jwcPVlz2FM5kIQ
+	 4t3Z8uCeEBNx/LC5vwCFsPjtyoE5wPx686lhvSTY28lPAtgpiev1vUXiOUo8iQtmXkNEB
+	 nzDWsF+2Osi7eiDcFeGzdOtzLOasFxXMjgjtfxVDiQmvug6YjaI8NUQ8DUYRVdnVK+oh0
+	 bdQQ/wBKGcjmJsz01L55ydT9k4WSfw+/PoaD8BXs/P5ZkyRCoUUf/D7tiYr3zOP3Tfhme
+	 XNUPROr0Lw/cCzgCMJ++sIYv523bLiMn4VkeeNbdbMXO3Bkov8Y4d6Ug/1z4ihv1qiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aB0wRSPv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5EinFUP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C71606A320;
-	Wed, 18 Nov 2026 22:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4A4606A325;
+	Wed, 18 Nov 2026 22:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aB0wRSPv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BA21F000C4;
-	Wed, 18 Nov 2026 22:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R5EinFUP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 459771F000C4;
+	Wed, 18 Nov 2026 22:41:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041716;
-	bh=Ozs886vxazTo7cAI1GONQrm7zSX0yzsvWzJjXjSwuBU=;
+	s=korg; t=1795041718;
+	bh=Sr462d6i51O1peS9k5FrvFXf0eRNkoISZ20UnYfIZlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aB0wRSPvv9GtaNHQ8aYzwfA5FCK9ArdE3msU+nNGWP84OiTGMnNteeDT8O199XmjE
-	 VcEgVr2bnFAD4/aKlXc3M5yAQx/soS+G6Pjf3FAIvsbn8RnwP0lbOKvnHC2Gc4K7wR
-	 2jlM9tMRMgW5mKUfUSKrgr/okht0aBwfSMRXz6x8=
+	b=R5EinFUP4tMfMk+dHT33Mu1HBcdTBm9IJrlDK5T9lkn5eJr+4/6FPQbYQPhrFR1qz
+	 0MxOGxI4ELnOxMK9ZGNvr8SiWEEwypcvMTNmaTwtsDkWZhE57ntJUi5Nd2BiXlbw9d
+	 Ba7i/tMAwvtD1RaJlhUQ/493ytl9oiFzqUC/32Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Serge Semin <fancer.lancer@gmail.com>,
 	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.6 2913/3318] spi: Introduce internal spi_xfer_is_dma_mapped() helper
-Date: Wed, 18 Nov 2026 15:58:55 +0100
-Message-ID: <20261118150447.834378051@linuxfoundation.org>
+Subject: [PATCH 6.6 2914/3318] spi: omap2-mcspi: Use new spi_xfer_is_dma_mapped() helper
+Date: Wed, 18 Nov 2026 15:58:56 +0100
+Message-ID: <20261118150447.862239332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,41 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 0535cf64e4b1ead224fbbe1c25c81221a298c5e4 ]
+[ Upstream commit 6361b4e4f7a43dd5d8e3f2d2ece8148f30b55cb3 ]
 
-There are few drivers that use the same pattern to check if the transfer
-is DMA mapped or not. Provide a helper.
+Replace a few lines of code by calling a spi_xfer_is_dma_mapped() helper.
 
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Link: https://lore.kernel.org/r/20240531194723.1761567-2-andriy.shevchenko@linux.intel.com
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20240531194723.1761567-5-andriy.shevchenko@linux.intel.com
 Reviewed-by: Serge Semin <fancer.lancer@gmail.com>
 Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: c126e07bde21 ("spi: omap2-mcspi: handle DMA setup failures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/internals.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/spi/spi-omap2-mcspi.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/internals.h b/drivers/spi/internals.h
-index 4a28a8395552d..47a87c2a69796 100644
---- a/drivers/spi/internals.h
-+++ b/drivers/spi/internals.h
-@@ -40,4 +40,12 @@ static inline void spi_unmap_buf(struct spi_controller *ctlr,
- }
- #endif /* CONFIG_HAS_DMA */
+diff --git a/drivers/spi/spi-omap2-mcspi.c b/drivers/spi/spi-omap2-mcspi.c
+index 0d8aaf8c5ed0e..97409a4384694 100644
+--- a/drivers/spi/spi-omap2-mcspi.c
++++ b/drivers/spi/spi-omap2-mcspi.c
+@@ -27,6 +27,8 @@
  
-+static inline bool spi_xfer_is_dma_mapped(struct spi_controller *ctlr,
-+					  struct spi_device *spi,
-+					  struct spi_transfer *xfer)
-+{
-+	return ctlr->can_dma && ctlr->can_dma(ctlr, spi, xfer) &&
-+	       ctlr->cur_msg_mapped;
-+}
+ #include <linux/spi/spi.h>
+ 
++#include "internals.h"
 +
- #endif /* __LINUX_SPI_INTERNALS_H */
+ #include <linux/platform_data/spi-omap2-mcspi.h>
+ 
+ #define OMAP2_MCSPI_MAX_FREQ		48000000
+@@ -1204,8 +1206,7 @@ static int omap2_mcspi_transfer_one(struct spi_controller *ctlr,
+ 		unsigned	count;
+ 
+ 		if ((mcspi_dma->dma_rx && mcspi_dma->dma_tx) &&
+-		    ctlr->cur_msg_mapped &&
+-		    ctlr->can_dma(ctlr, spi, t))
++		    spi_xfer_is_dma_mapped(ctlr, spi, t))
+ 			omap2_mcspi_set_fifo(spi, t, 1);
+ 
+ 		omap2_mcspi_set_enable(spi, 1);
+@@ -1216,8 +1217,7 @@ static int omap2_mcspi_transfer_one(struct spi_controller *ctlr,
+ 					+ OMAP2_MCSPI_TX0);
+ 
+ 		if ((mcspi_dma->dma_rx && mcspi_dma->dma_tx) &&
+-		    ctlr->cur_msg_mapped &&
+-		    ctlr->can_dma(ctlr, spi, t))
++		    spi_xfer_is_dma_mapped(ctlr, spi, t))
+ 			count = omap2_mcspi_txrx_dma(spi, t);
+ 		else
+ 			count = omap2_mcspi_txrx_pio(spi, t);
 -- 
 2.53.0
 
