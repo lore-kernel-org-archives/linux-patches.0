@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016256;
-	b=AzZJmlaNiJH+hM600GWOz1BNS/nlsrsmhMFlbBMaYdeHI4Ma0/wKHPL3pVjct8i7wHk0
-	 IDTB+g/m9UCgam+6gL77aE84jufzL4X9R5aGSm8zP2TWDea7nhHgZZjcxeOFmDHJTNd1/
-	 14Ro9nF54pWguejVBp6y16JEZTtW1RFWrHEh2ntUgfhnWHcrI77/GjKYy5NffD5dnMexG
-	 Nxrq5xd0v4R16eycvWKUaxEu+riBOWvlVt4z2T0p/X8nq/WM3iTokvpTLNhIQOrLwN7+A
-	 xalrJCe3ih0VprJEUIIzWhWNnM9aUNfSxRdbnPDwR1j2u0r1RtvPn/X/gLrrU3sPdEQ==
+	t=1795016259;
+	b=ocgg4cmoujTSQF//+pnapjpJuj7gHH7NL6WlA0f4i7FzbKiSZhbwX3srMxm1Xa0emDev
+	 jEp5jLawI5f4yskM/WoaVE+6jJV5F37lBOhsGQMJE/pNRaOH0exJ+4HUip8ngI4DALFx5
+	 j13lz9hELkdBZleUClZyXkvPOp0lAM07WVNP/FrBEk3JF6nekDx5gIPrhHGV+nsuiLwOj
+	 SqlXv/pwfl+FvLQ2oasQqqMROmN8dAIt3F7Q4ew5Zu29Ot6LP/zkbz5bUdpb5CTlQw3Nm
+	 0/3SyI49JoI4uYn3x1Dp+Gi8eL9n2AtNl4Cakb4rkdJUIVDV7aLYBAxPtjHvgyd+hKQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=B/EcW91HobCiuDiEv+Zr5CvCYSJGf+TFDpbeEMNgPEY=;
-	b=CTKfFzFiR8LPuVshystRVQOFak6yYqcWreHSj5yJnxz8a+5pMis9ZxHu9BOj8/Y8wtav
-	 yaTiCO7AJyyF/O/gF5U6/B09gW8t8eh1IKv761cA8cF43+WiYFhHMEnBhF+7b4C7lusL9
-	 yttjMFz0+UMYIeaJQt1MwAMzTcQ1eNfeq34Kmwh5vTqiA4xCXGv3DiYA576JhEp8YbPMf
-	 wQQX/FkKMbldvVRxEgvSsHtrRUKJukXdwvhft+Vn8NuZDs9jw6ZQh+1ZUOOpVwJQcWCzh
-	 D8tzGYx1HAwsNw4PAXySzLsB2aAjmtueGhDZk4XOZvu9z3vEeSSOZd3md0ckkUuZs0w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=BnMO3YxvsJddAWthpFhNpg5cd0yHOY1DC1DqZiekiDg=;
+	b=z8gAAwOJ7WySHNvQomJ6SoaaYN8Gaem1cTqxMAYQKf3MKxX42NIE2s8PASsEPFR4v3XM
+	 D0Lhty5H01vwmXfCb4cr1HWO+xb/RRdadHjk6F1ziH2kYKeS3up7mLzUmrhqHT/ooPpsj
+	 3GcDE3vznwX3eYyN9fOK8Pk2IX+KlTgYQAqf9SThcANycgZeG9NwvQYKmqp8QSenJJ9/m
+	 8phjETe+FoZ5b5wUXuDxRQ08EVT4o+e0HnVqo878T24E1HYxz/I/5i7FQlTZO9nwtwPra
+	 eBFKAIt6MWIXUGr+yKsawsjp6wWlpwvL0KKAJ1/BAx+qF9Z0aNolwdCwh6EkusHftbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqpJX7R1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKC2zBSB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E2960A2608;
-	Wed, 18 Nov 2026 15:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFC3606A320;
+	Wed, 18 Nov 2026 15:37:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqpJX7R1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934E21F000CB;
-	Wed, 18 Nov 2026 15:37:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TKC2zBSB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBB91F000CA;
+	Wed, 18 Nov 2026 15:37:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016256;
-	bh=B/EcW91HobCiuDiEv+Zr5CvCYSJGf+TFDpbeEMNgPEY=;
+	s=korg; t=1795016258;
+	bh=BnMO3YxvsJddAWthpFhNpg5cd0yHOY1DC1DqZiekiDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zqpJX7R16LPhRstGraUFM+PB6BlBISWdwVbRA/v6pQDOmz2zKllh/K3MSVndfWCHR
-	 lW/jGYDh1OWcfJN7aS9qZiMLx6X6AjnXmUtxpQ5+sTQBsMJmdv+KsTSC0xa1qF3utO
-	 7WDf9CNG3p3HgKp7MW3VtXphrU5hq5w2fayCFh5w=
+	b=TKC2zBSBf7kNp3FzHUi2wbuPLOa4kHnJKI9POxE73OSB7NRFb+DBBLUj8gY2ohzre
+	 spNldt8JpN7ZSzwo3e96Psdt7Eic/ZOuL51iB+FlW4ggyothXkM1c2uOt1KqTbZiQQ
+	 +vKf0pkORJf4QiJCNxYhgD3HPQOszT5lJ6ZI5zIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?J=C3=A9r=C3=B4me=20Pouiller?= <jerome.pouiller@silabs.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jianan Huang <jnhuang95@gmail.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0463/2651] wifi: wfx: fix use-after-free of the cooling work on device removal
-Date: Wed, 18 Nov 2026 15:28:23 +0100
-Message-ID: <20261118150304.469653524@linuxfoundation.org>
+Subject: [PATCH 7.3 0464/2651] f2fs: quota: fix stale lock holder on remount failure
+Date: Wed, 18 Nov 2026 15:28:24 +0100
+Message-ID: <20261118150304.503029752@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,76 +63,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jérôme Pouiller <jerome.pouiller@silabs.com>
+From: Jianan Huang <jnhuang95@gmail.com>
 
-[ Upstream commit 17402a869778f6c17b88fd360d7a96378779f97c ]
+[ Upstream commit 3f140a60c92a5e2e9885adac70cd3686ba4ee19a ]
 
-When the device reports that it is too hot, wfx_suspend_hot_dev() blocks
-the Tx queues and arms cooling_timeout_work with a 10s delay. If the
-device recovers a normal temperature before the delay expires, the work
-is canceled. Else, the work declares the chip frozen and unblocks the Tx
-queues.
+F2FS remount can fail while duplicating a journalled quota file name.
 
-However, this work is never canceled when the device is removed.
-cooling_timeout_work is queued on the system workqueue, while struct
-wfx_dev is released by wfx_free_common() (through ieee80211_free_hw()).
-So, if the device is unbound during this 10s window, the work fires
-after struct wfx_dev has been freed and dereferences it.
+f2fs_remount()
+- sbi->umount_lock_holder = current
+- kstrdup(F2FS_OPTION(sbi).s_qf_names[i])
+  : fails
+- free previously duplicated names
+- return -ENOMEM
 
-Cancel the work during the teardown. It has to be done after
-wfx_bh_unregister(): the "device too hot" indication is processed by the
-bh, so canceling the work earlier would allow the bh to rearm it. On the
-other hand, the work calls wfx_tx_unlock(), which may in turn call
-wfx_bh_request_tx(). So it has to be canceled before bh_wq is destroyed.
+The direct return leaves umount_lock_holder pointing at the failed
+remount context.  A later checkpoint may then wrongly treat another
+context as the s_umount lock holder.
 
-Note that the Tx queues are intentionally left blocked: the device is
-going away, so there is nothing to unblock.
+Add a restore_holder cleanup path and use it before returning -ENOMEM.
 
-The issue was reported by the Sashiko review bot and the fix has been
-written by Copilot (including the commit log). The use-case is difficult
-to reproduce, so this code has not been tested. However, I don't believe
-this patch could cause any regression.
-
-Fixes: 1d52d29983e5d ("staging: wfx: add support for 'device too hot' indication")
-Assisted-by: Sashiko:gemini-3.1-pro-preview
-Assisted-by: Copilot:claude-opus-5
-Signed-off-by: Jérôme Pouiller <jerome.pouiller@silabs.com>
-Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20260906204831.949692-2-jerome.pouiller@silabs.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: eb85c2410d6f ("f2fs: quota: fix to avoid warning in dquot_writeback_dquots()")
+Signed-off-by: Jianan Huang <jnhuang95@gmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/silabs/wfx/main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/super.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/silabs/wfx/main.c b/drivers/net/wireless/silabs/wfx/main.c
-index 4e99fe7e5bb78..b6fd9d4c1f5fc 100644
---- a/drivers/net/wireless/silabs/wfx/main.c
-+++ b/drivers/net/wireless/silabs/wfx/main.c
-@@ -487,6 +487,7 @@ int wfx_probe(struct wfx_dev *wdev)
- 		wdev->hwbus_ops->irq_unsubscribe(wdev->hwbus_priv);
- bh_unregister:
- 	wfx_bh_unregister(wdev);
-+	cancel_delayed_work_sync(&wdev->cooling_timeout_work);
- 	destroy_workqueue(wdev->bh_wq);
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index b18ea09bcbe2c..17e00d5003b02 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -2864,7 +2864,8 @@ static int __f2fs_remount(struct fs_context *fc, struct super_block *sb)
+ 			if (!org_mount_opt.s_qf_names[i]) {
+ 				for (j = 0; j < i; j++)
+ 					kfree(org_mount_opt.s_qf_names[j]);
+-				return -ENOMEM;
++				err = -ENOMEM;
++				goto restore_holder;
+ 			}
+ 		} else {
+ 			org_mount_opt.s_qf_names[i] = NULL;
+@@ -3125,6 +3126,7 @@ static int __f2fs_remount(struct fs_context *fc, struct super_block *sb)
+ 	sbi->mount_opt = org_mount_opt;
+ 	sb->s_flags = old_sb_flags;
+ 
++restore_holder:
+ 	sbi->umount_lock_holder = NULL;
  	return err;
  }
-@@ -497,6 +498,7 @@ void wfx_release(struct wfx_dev *wdev)
- 	wfx_hif_shutdown(wdev);
- 	wdev->hwbus_ops->irq_unsubscribe(wdev->hwbus_priv);
- 	wfx_bh_unregister(wdev);
-+	cancel_delayed_work_sync(&wdev->cooling_timeout_work);
- 	destroy_workqueue(wdev->bh_wq);
- }
- 
 -- 
 2.53.0
 
