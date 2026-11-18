@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041860;
-	b=DS8FSGzoh1YjSiC7v0PnSG62e7ob+07BnN4skRwBDemckIwQhToj7l9T86F2Lxvw7xnP
-	 KMrnNdfhpxJpoIoAHe2kBmi16z+LIQgoziJ7ybmru57Ihu9/btvdmpKi8r0JpWAIRXcp2
-	 etJDy/W7a1KzjjrETPT/9pfQRM1n4JTya/0HGRC1Lfae9WJt0Qv90KuM3FrcADH8+N4o/
-	 Oz9wna8ynqH98MLukvvWU8YzmLm5gzMvoAV2WRZKGLL4gi7refc/Rc/pUkuKsAF8C5fiT
-	 7sc4U1TZfR9jE/cQTG7siECvSGvykChCHSAedZuyxdFCukJPFEbxcs4hRz3aW5c4FEQ==
+	t=1795041863;
+	b=5T5TLqVy7dauubyKbhWt6Qu54sVLfclIPwOdeXQfBTrOwphm/p5VtTYJPk8MufwZM5Zm
+	 /Y17HfgBQ7UWq/9dUIRLtXsRDVM3QCwiyGJdoN/+O2HLhUOJRLMJbV4U7JB5/XjVxNbgI
+	 ISGkymfnl0yE6jjM7Yrah/qvEeEvzKMIMnT4wC4CbBEh6v0q0a+wfJWoP7L56IgqBYQ2m
+	 eE+mlpGA+oGIJnTabEyrAMubgFCdsNBjKHwKAPjzTmIKHbVzVuuC4nHOgqihsPcCA9K5b
+	 3+cfQjGlwHn78ymhz/fkhXqw6qCtw3vjzJrShhCgEoVUqsNb65S6BVGj7/hF827DIAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041860;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041863;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9qIt62f554fIaL/jFeLPEMiqGqgKbdydr4JdCqdGU0A=;
-	b=2m5O+4cYTu55F5v+NqjteZTVJ4may2baX05n+vCGn4saAxIzZiHhKL2S+THN8U867J5Y
-	 RZZ0T8rvGIguVLJPXB0arrmTYrFZeaakbSBBKgQpiqZtMA/WRH9WRCPOgxvl3spYunScv
-	 UrlcqqOyZgxwQkcxbUBBuydQ/GZ5BDqQr1tBif8nn6/CUfX3QJtxy9ZsE1aCj9c89UhLG
-	 WJb5LshpcNgxvQ8833IxsIRG0ftzAIP82clNgQFOVrUw3hAH4koW2vBYtAF6R0rHr/OZq
-	 9zaZWOY20JXSutrHW4DurkZwOU9Yhx61eZkmaAZtiwuooaUM76sSAdrv8XSbDSCiVRg==
+	bh=SnxplM7aoxRE3g4AVt897QoVqH86fFe2M4Pc/9S++Io=;
+	b=k6JlJ0CHxmyG/nhve9+BGF8+EC0zgwIE8/0ceYxoLzZe/uW1a3hLREJyRc6SH5KhXJYF
+	 QSxOCVNyh0+UGViPk6nOnZVIVQ3fxrGGWulcLSQFzmfs1cZMxpCCjwgSO6NkUhKn9vdNv
+	 A9vIsNPIsdp2rCQG8c4RBf6bcqW1ojL4vKzMdNJHmdwky/cRnRQrOGmAa59WvGTS1S5O+
+	 lJSQWw/LZRQXK8ie9CUKWBKSHx5vI/toZIsXZvP4qfOvXoAkwx2RImRflHaM7s3gBWND+
+	 V7jkt1YVeBMmXS3z5Qo5Xw39d3AfPB8PCBQDnoox8AmlB66ZUy0PvdFv6FK3oHHpnyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncCcL2uN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zskXGKZ9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF41606A325;
-	Wed, 18 Nov 2026 22:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F530606A320;
+	Wed, 18 Nov 2026 22:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ncCcL2uN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DACA01F000C4;
-	Wed, 18 Nov 2026 22:44:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zskXGKZ9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C551F000CD;
+	Wed, 18 Nov 2026 22:44:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041860;
-	bh=9qIt62f554fIaL/jFeLPEMiqGqgKbdydr4JdCqdGU0A=;
+	s=korg; t=1795041863;
+	bh=SnxplM7aoxRE3g4AVt897QoVqH86fFe2M4Pc/9S++Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ncCcL2uNPwifRFjJX6n8cUV8YKh9bxm3C8TAHZw2Y7UjYu8+wsiL6QkmgYTaw0I6H
-	 DtJM/nhwmEXkh1AplsJ6JEqFKIgOH5BTPW1+87Ukb7/Vocwd8ZfbAISCZYkCsaEZBa
-	 zJqBgMB5Q6evukNRo3YJ9T/6jRifsSIeDPzzBOXw=
+	b=zskXGKZ9t+fXeqijScCwbkKZMEhKPACu+fjWrd76/TchuKhEukZz+hwxaJmLhGnCo
+	 xXoFI9eGitXdax6S/VRe3w1hZXtvU+6WBzzQG4bhlTyCHZ3cKOm5uFIT6swIDKE1lw
+	 qQZ02li6Z/fe81gGyNvEfaIY4MtuVq32IPO3zSF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donggeun Yoo <donggeunyoo.kernel@gmail.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2964/3318] tracing: Only report the stacktrace modifier on a real field
-Date: Wed, 18 Nov 2026 15:59:46 +0100
-Message-ID: <20261118150449.213769105@linuxfoundation.org>
+Subject: [PATCH 6.6 2938/3318] ASoC: Intel: avs: Unprepare a stream when recovery occurs
+Date: Wed, 18 Nov 2026 15:59:20 +0100
+Message-ID: <20261118150448.503007536@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,51 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 18bb005845b78e0c0eb44b7f231c29d138552438 ]
+[ Upstream commit 85bc213f96ac03d74a3e531968c68861e5598281 ]
 
-get_hist_field_flags() returns "stacktrace" for any field carrying
-HIST_FIELD_FL_STACKTRACE, including the common_stacktrace pseudo-field,
-which has no ftrace_event_field behind it. parse_field() no longer takes
-the modifier there:
+Recovery on alsa-lib side is handled with either:
+1) snd_pcm_prepare(state=XRUN)
+2) snd_pcm_drop/drain() -> snd_pcm_prepare(state=SETUP)
 
-	if (stack_modifier &&
-	    (!field || field->filter_type != FILTER_STACKTRACE)) {
-		hist_err(tr, HIST_ERR_BAD_FIELD_MODIFIER, errpos(field_str));
+before starting the PCM anew. Relying solely on state=XRUN leaves 2)
+unaccounted for. sound/core/pcm_native.c ensures correctness of the
+state machine so plain state!=PREPARED check suffices.
 
-so expr_field_str() renders "common_stacktrace.stacktrace", a spelling
-that cannot be parsed back.
+This is the BE equivalent of job done previously for FE side only with
+commit cfca1637bc2b ("ASoC: Intel: avs: Unprepare a stream when XRUN
+occurs") and its follow up titled: ("ASoC: Intel: avs: Reset the stream
+unless it is already prepared").
 
-Report the modifier only when there is a field to report it for.
-
-hist_field_print(), the other caller of get_hist_field_flags(), excludes
-HIST_FIELD_FL_STACKTRACE before it calls, so this is confined to
-expr_field_str(), whose only key renderer arrives in the next patch.
-
-Link: https://patch.msgid.link/20260914053443.981201-4-donggeunyoo.kernel@gmail.com
-Fixes: a5e70ba87ca8 ("tracing: Fix memory corruption from the histogram stacktrace modifier")
-Signed-off-by: Donggeun Yoo <donggeunyoo.kernel@gmail.com>
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Link: https://lore.kernel.org/linux-sound/20261010103753.16969-1-stiraspo@gmail.com/T/
+Fixes: d070002a20fc ("ASoC: Intel: avs: HDA PCM BE operations")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20261015190240.729793-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/avs/pcm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index e6259e04ea663..c3fb3cc447e31 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -1718,7 +1718,7 @@ static const char *get_hist_field_flags(struct hist_field *hist_field)
- 		flags_str = "percent";
- 	else if (hist_field->flags & HIST_FIELD_FL_GRAPH)
- 		flags_str = "graph";
--	else if (hist_field->flags & HIST_FIELD_FL_STACKTRACE)
-+	else if (hist_field->flags & HIST_FIELD_FL_STACKTRACE && hist_field->field)
- 		flags_str = "stacktrace";
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 4c3ed762bedf8..62305dfe773de 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -369,6 +369,8 @@ static int avs_dai_hda_be_prepare(struct snd_pcm_substream *substream, struct sn
+ 	data = snd_soc_dai_get_dma_data(dai, substream);
+ 	link_stream = data->link_stream;
  
- 	return flags_str;
++	if (substream->runtime->state != SNDRV_PCM_STATE_PREPARED)
++		link_stream->link_prepared = false;
+ 	if (link_stream->link_prepared)
+ 		return 0;
+ 
 -- 
 2.53.0
 
