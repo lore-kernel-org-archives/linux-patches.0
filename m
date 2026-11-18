@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026127;
-	b=qkwvv5/xcWwButYNQ0QXDQGov5rb6Vx46233coQhHyNv384i7gJK7z6TtUNfbzTljih+
-	 BB9BbgBQ111n67RnYwpg5VIBOJFN6Hu0/BdgZR2LWqRmg3Ljrr7SYeR1I2V+2vykiEB36
-	 bQY2HcmfYpoUcQu4n8bMM42dppNuS5KQonPaWVGAd/qitrORMwJ/TGDxeaEmOvxQ4C+dX
-	 Wt+YJoD6i2ex/UmSf/4oscFZ9VmNdSJfElIJbPdvSxVXVWJrY1dY2SYmE5UDhtYB9BG8H
-	 RwC53CGs+wuoCDCf9USqYpykA3cGtqIiziTcNL4Gpd2AkbhWXID2IT1tEofVLwVpXSQ==
+	t=1795026130;
+	b=GRGchvMMeeLmCURvEUz/nL1yyp4PsGPeCHZR8A2HE5Cr5n3uNl7sxO98XT4rYYEvq765
+	 3FjVNV5GoEobbnoDi8viXijSE3lAqWyCqAUB4Imn/InTngbLQZJFzq7nG7YGDkKIHgs6I
+	 ESeCO7tX20EW3oEz+khKZjG9bST1s2y6jbmW7Y/OxtmgI9hW2nwPcqMGk3pckd2ufdG2K
+	 r1C4MD3qvgWTuWkN30EcDDP0HSfRCgMgtje93tTDU/jfIS75ApChPmrYdYH9f1uzv9alv
+	 e3s13OYLdYzBEXnnQ+12D9+QFAJ2Zw3DzyYG20rTg+qkMIXzViN8Ib2Q1vkEDch5tYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026127;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026130;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ooMQKu1bK+mRcsJc3hK+JXY0N1pSpm2yxVgyXRfJTGk=;
-	b=oME+779VLU4kvAg3sjv5tF4uK9zlNPl8fyzqVjzk5y3fGi78Aa9c+KEVW8Kytlt6CZP0
-	 p94O4wh70OZ22+ZWm0jp3gW3X1LRtqwcHtYZlnK/abm9Qj83bS3QV3bdBxDA44jZcjfEp
-	 uN1lrwt440UMeub4k3F7PwkkGlohD+HUDBcfzQ48JCrTujBzeOLo8XcHYS56nsXWl4owh
-	 a0GjVgyD4LC08Zeqh1fVxaa8Ha5ycF+DrAY43puuPXFEIRKA2QGRnToeSjEenFPmvD6oo
-	 KvRasV9uE0LnFBC+FMpKMsNbVN0NUb1r57R29vHwWYvUXqhVTwqNl8AHoH8chWU/67Q==
+	bh=sQubHeJy+Ju++IQPJ928oM6Wov2QK2TkH5/UecJC41M=;
+	b=0WamzWL+TP9qhRAC1WzpR7Ns+7TFSwhDFhZ+x0O6UWsvalFkzxdrgD4ATZ2attOONKZH
+	 06q2RWEnZnoeJnPlK2JLRpsKhXYzS1H0kKI+0SwXY3wI97aATvKzDaWqJsWrO2ps3JRg8
+	 uDsJCerWXcyKZw+4v3Hv6xN4N0onzKhjH0HQLn/gFmTREPIAxeSXVRL4KPn3vkJI3w3F8
+	 jDpQOnUFSwUrPTaMcOpP6Z6Ew+3Jj9HC1xJFnuYfU5d3l29vvpHMuYBesvXM3xzvPXxwz
+	 Rlg5qjufZqp2xVFPSvcFZToIrgjAovJ6+Juhujy9I2vDUakIrxnXWsYwyCVYCgrslwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u8I//cUf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQXeRcnP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C94606A333;
-	Wed, 18 Nov 2026 18:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FF0606A320;
+	Wed, 18 Nov 2026 18:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u8I//cUf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32AA1F000CB;
-	Wed, 18 Nov 2026 18:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQXeRcnP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B02801F000C5;
+	Wed, 18 Nov 2026 18:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026127;
-	bh=ooMQKu1bK+mRcsJc3hK+JXY0N1pSpm2yxVgyXRfJTGk=;
+	s=korg; t=1795026130;
+	bh=sQubHeJy+Ju++IQPJ928oM6Wov2QK2TkH5/UecJC41M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=u8I//cUf+vkIrLeLkHG3c1x0WH7jnT15nH60FSnHKI7PngMS8zSo0tVLT0ZAwVKjH
-	 J+BavXUsMZc2wIjZ/nBcpR08uG3mQOQ40y5gcdrdjRDChffT2DBEVAUofutFBnEkJk
-	 17S/pba++PVkqPKZr2fDmwEVViyHNjDtNtktrQrM=
+	b=XQXeRcnPy3bCtq0WJZdhv4q76zZJzKevCigm/RwfMVUM9hB4OuslMYKp0eHr3HM5t
+	 xTPzUj4ya5PI0uP/SyuPxeYZc1LzItC939PmaVSxDXYIRUl4AHHvYPkxxUe6WHEwBF
+	 Z+DcqNilXL3SSMaNwYPeTo/KCkq8Di4ikXlT+jMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pan Chuang <panchuang@vivo.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
+	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1323/2151] mailbox: Remove redundant dev_err()/dev_err_probe()
-Date: Wed, 18 Nov 2026 15:50:58 +0100
-Message-ID: <20261118150210.280897196@linuxfoundation.org>
+Subject: [PATCH 6.18 1324/2151] mailbox: qcom-ipcc: Remove redundant mbox_controller_unregister() on probe failure
+Date: Wed, 18 Nov 2026 15:50:59 +0100
+Message-ID: <20261118150210.313743247@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,357 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pan Chuang <panchuang@vivo.com>
+From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
 
-[ Upstream commit c8235bbe5dd69f6b7ef159bd0c8ebf29c963c092 ]
+[ Upstream commit da988ac6afe152f802140ccaa0ad5e8f675b8814 ]
 
-Since commit 55b48e23f5c4 ("genirq/devres: Add error handling in
-devm_request_*_irq()"), devm_request_irq() and devm_request_threaded_irq()
-automatically log detailed error messages on failure. Remove the
-now-redundant driver-specific dev_err() and dev_err_probe() calls.
+qcom_ipcc_probe() registers the mailbox controller via
+devm_mbox_controller_register(), which automatically calls
+mbox_controller_unregister() through devres when the device is removed
+or probe fails. If devm_request_irq() subsequently fails, the
+err_req_irq: label also manually calls mbox_controller_unregister(),
+resulting in a double call that corrupts the global mailbox controller
+list and causes a kernel panic.
 
-Signed-off-by: Pan Chuang <panchuang@vivo.com>
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Remove the redundant manual call and rely on devres for cleanup.
+
+Fixes: e9d50e4b4d04 ("mailbox: qcom-ipcc: Dynamic alloc for channel arrangement")
+Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Stable-dep-of: da988ac6afe1 ("mailbox: qcom-ipcc: Remove redundant mbox_controller_unregister() on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/arm_mhu_db.c               |  1 -
- drivers/mailbox/arm_mhuv2.c                |  9 ++-------
- drivers/mailbox/arm_mhuv3.c                |  5 ++---
- drivers/mailbox/armada-37xx-rwtm-mailbox.c |  4 +---
- drivers/mailbox/bcm-pdc-mailbox.c          |  5 +----
- drivers/mailbox/bcm2835-mailbox.c          |  5 +----
- drivers/mailbox/bcm74110-mailbox.c         |  2 +-
- drivers/mailbox/cv1800-mailbox.c           |  2 +-
- drivers/mailbox/hi6220-mailbox.c           |  5 +----
- drivers/mailbox/mailbox-mpfs.c             |  2 --
- drivers/mailbox/mailbox-sti.c              |  4 +---
- drivers/mailbox/qcom-cpucp-mbox.c          |  2 +-
- drivers/mailbox/qcom-ipcc.c                |  4 +---
- drivers/mailbox/sprd-mailbox.c             | 12 +++---------
- drivers/mailbox/stm32-ipcc.c               |  4 +---
- drivers/mailbox/sun6i-msgbox.c             |  4 +---
- drivers/mailbox/tegra-hsp.c                | 11 ++---------
- 17 files changed, 20 insertions(+), 61 deletions(-)
+ drivers/mailbox/qcom-ipcc.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/mailbox/arm_mhu_db.c b/drivers/mailbox/arm_mhu_db.c
-index 9e937b09c5fbc..a39239e38a479 100644
---- a/drivers/mailbox/arm_mhu_db.c
-+++ b/drivers/mailbox/arm_mhu_db.c
-@@ -318,7 +318,6 @@ static int mhu_db_probe(struct amba_device *adev, const struct amba_id *id)
- 						mhu_db_mbox_rx_handler,
- 						IRQF_ONESHOT, "mhu_db_link", mhu);
- 		if (err) {
--			dev_err(dev, "Can't claim IRQ %d\n", irq);
- 			mbox_controller_unregister(&mhu->mbox);
- 			return err;
- 		}
-diff --git a/drivers/mailbox/arm_mhuv2.c b/drivers/mailbox/arm_mhuv2.c
-index f035284944c05..213fd4a399937 100644
---- a/drivers/mailbox/arm_mhuv2.c
-+++ b/drivers/mailbox/arm_mhuv2.c
-@@ -986,10 +986,7 @@ static int mhuv2_tx_init(struct amba_device *adev, struct mhuv2 *mhu,
- 		ret = devm_request_threaded_irq(dev, adev->irq[0], NULL,
- 						mhuv2_sender_interrupt,
- 						IRQF_ONESHOT, "mhuv2-tx", mhu);
--		if (ret) {
--			dev_err(dev, "Failed to request tx IRQ, fallback to polling mode: %d\n",
--				ret);
--		} else {
-+		if (!ret) {
- 			mhu->mbox.txdone_irq = true;
- 			mhu->mbox.txdone_poll = false;
- 			mhu->irq = adev->irq[0];
-@@ -1039,10 +1036,8 @@ static int mhuv2_rx_init(struct amba_device *adev, struct mhuv2 *mhu,
- 	ret = devm_request_threaded_irq(dev, mhu->irq, NULL,
- 					mhuv2_receiver_interrupt, IRQF_ONESHOT,
- 					"mhuv2-rx", mhu);
--	if (ret) {
--		dev_err(dev, "Failed to request rx IRQ\n");
-+	if (ret)
- 		return ret;
--	}
- 
- 	/* Mask all the channel windows */
- 	for (i = 0; i < mhu->windows; i++)
-diff --git a/drivers/mailbox/arm_mhuv3.c b/drivers/mailbox/arm_mhuv3.c
-index 0910da67f8a17..b43eb71b7c017 100644
---- a/drivers/mailbox/arm_mhuv3.c
-+++ b/drivers/mailbox/arm_mhuv3.c
-@@ -982,8 +982,7 @@ static int mhuv3_setup_pbx(struct mhuv3 *mhu)
- 						mhuv3_pbx_comb_interrupt,
- 						IRQF_ONESHOT, "mhuv3-pbx", mhu);
- 		if (ret)
--			return dev_err_probe(dev, ret,
--					     "Failed to request PBX IRQ\n");
-+			return ret;
- 
- 		mhu->mbox.txdone_irq = true;
- 		mhu->mbox.txdone_poll = false;
-@@ -1020,7 +1019,7 @@ static int mhuv3_setup_mbx(struct mhuv3 *mhu)
- 					mhuv3_mbx_comb_interrupt, IRQF_ONESHOT,
- 					"mhuv3-mbx", mhu);
- 	if (ret)
--		return dev_err_probe(dev, ret, "Failed to request MBX IRQ\n");
-+		return ret;
- 
- 	for (i = 0; i < NUM_EXT; i++)
- 		if (mhu->ext[i])
-diff --git a/drivers/mailbox/armada-37xx-rwtm-mailbox.c b/drivers/mailbox/armada-37xx-rwtm-mailbox.c
-index 456a117a65fdf..047926711e96f 100644
---- a/drivers/mailbox/armada-37xx-rwtm-mailbox.c
-+++ b/drivers/mailbox/armada-37xx-rwtm-mailbox.c
-@@ -108,10 +108,8 @@ static int a37xx_mbox_startup(struct mbox_chan *chan)
- 
- 	ret = devm_request_irq(mbox->dev, mbox->irq, a37xx_mbox_irq_handler, 0,
- 			       DRIVER_NAME, chan);
--	if (ret < 0) {
--		dev_err(mbox->dev, "Cannot request irq\n");
-+	if (ret < 0)
- 		return ret;
--	}
- 
- 	/* enable IRQ generation */
- 	reg = readl(mbox->base + RWTM_HOST_INT_MASK);
-diff --git a/drivers/mailbox/bcm-pdc-mailbox.c b/drivers/mailbox/bcm-pdc-mailbox.c
-index 406bc41cba604..6fcc4002ad4fd 100644
---- a/drivers/mailbox/bcm-pdc-mailbox.c
-+++ b/drivers/mailbox/bcm-pdc-mailbox.c
-@@ -1403,11 +1403,8 @@ static int pdc_interrupts_init(struct pdc_state *pdcs)
- 
- 	err = devm_request_irq(dev, pdcs->pdc_irq, pdc_irq_handler, 0,
- 			       dev_name(dev), dev);
--	if (err) {
--		dev_err(dev, "IRQ %u request failed with err %d\n",
--			pdcs->pdc_irq, err);
-+	if (err)
- 		return err;
--	}
- 	return PDC_SUCCESS;
- }
- 
-diff --git a/drivers/mailbox/bcm2835-mailbox.c b/drivers/mailbox/bcm2835-mailbox.c
-index ea12fb8d24015..5af1e434c71c7 100644
---- a/drivers/mailbox/bcm2835-mailbox.c
-+++ b/drivers/mailbox/bcm2835-mailbox.c
-@@ -147,11 +147,8 @@ static int bcm2835_mbox_probe(struct platform_device *pdev)
- 	ret = devm_request_irq(dev, irq_of_parse_and_map(dev->of_node, 0),
- 			       bcm2835_mbox_irq, IRQF_NO_SUSPEND, dev_name(dev),
- 			       mbox);
--	if (ret) {
--		dev_err(dev, "Failed to register a mailbox IRQ handler: %d\n",
--			ret);
-+	if (ret)
- 		return -ENODEV;
--	}
- 
- 	mbox->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(mbox->regs)) {
-diff --git a/drivers/mailbox/bcm74110-mailbox.c b/drivers/mailbox/bcm74110-mailbox.c
-index 0ae6c56b87869..4650472727fde 100644
---- a/drivers/mailbox/bcm74110-mailbox.c
-+++ b/drivers/mailbox/bcm74110-mailbox.c
-@@ -614,7 +614,7 @@ static int bcm74110_mbox_probe(struct platform_device *pdev)
- 	ret = devm_request_irq(dev, mbox->rx_irq, bcm74110_mbox_isr,
- 			       IRQF_NO_SUSPEND, pdev->name, mbox);
- 	if (ret)
--		return dev_err_probe(dev, ret, "Failed to request irq\n");
-+		return ret;
- 
- 	mbox->controller.ops = &bcm74110_mbox_chan_ops;
- 	mbox->controller.dev = dev;
-diff --git a/drivers/mailbox/cv1800-mailbox.c b/drivers/mailbox/cv1800-mailbox.c
-index 4761191acf782..2ed449dd7775d 100644
---- a/drivers/mailbox/cv1800-mailbox.c
-+++ b/drivers/mailbox/cv1800-mailbox.c
-@@ -190,7 +190,7 @@ static int cv1800_mbox_probe(struct platform_device *pdev)
- 					cv1800_mbox_isr, IRQF_ONESHOT,
- 					dev_name(&pdev->dev), mb);
- 	if (err < 0)
--		return dev_err_probe(dev, err, "Failed to register irq\n");
-+		return err;
- 
- 	for (idx = 0; idx < MAILBOX_MAX_CHAN; idx++) {
- 		mb->priv[idx].idx = idx;
-diff --git a/drivers/mailbox/hi6220-mailbox.c b/drivers/mailbox/hi6220-mailbox.c
-index f77741ce42e72..f009935a6571d 100644
---- a/drivers/mailbox/hi6220-mailbox.c
-+++ b/drivers/mailbox/hi6220-mailbox.c
-@@ -301,11 +301,8 @@ static int hi6220_mbox_probe(struct platform_device *pdev)
- 
- 	err = devm_request_irq(dev, mbox->irq, hi6220_mbox_interrupt, 0,
- 			dev_name(dev), mbox);
--	if (err) {
--		dev_err(dev, "Failed to register a mailbox IRQ handler: %d\n",
--			err);
-+	if (err)
- 		return -ENODEV;
--	}
- 
- 	mbox->controller.dev = dev;
- 	mbox->controller.chans = &mbox->chan[0];
-diff --git a/drivers/mailbox/mailbox-mpfs.c b/drivers/mailbox/mailbox-mpfs.c
-index ef40fe2be30d6..a7383917dd8ca 100644
---- a/drivers/mailbox/mailbox-mpfs.c
-+++ b/drivers/mailbox/mailbox-mpfs.c
-@@ -220,8 +220,6 @@ static int mpfs_mbox_startup(struct mbox_chan *chan)
- 		return -EINVAL;
- 
- 	ret = devm_request_irq(mbox->dev, mbox->irq, mpfs_mbox_inbox_isr, 0, "mpfs-mailbox", chan);
--	if (ret)
--		dev_err(mbox->dev, "failed to register mailbox interrupt:%d\n", ret);
- 
- 	return ret;
- }
-diff --git a/drivers/mailbox/mailbox-sti.c b/drivers/mailbox/mailbox-sti.c
-index b4b5bdd503cfa..83776e836c173 100644
---- a/drivers/mailbox/mailbox-sti.c
-+++ b/drivers/mailbox/mailbox-sti.c
-@@ -470,10 +470,8 @@ static int sti_mbox_probe(struct platform_device *pdev)
- 					sti_mbox_irq_handler,
- 					sti_mbox_thread_handler,
- 					IRQF_ONESHOT, mdev->name, mdev);
--	if (ret) {
--		dev_err(&pdev->dev, "Can't claim IRQ %d\n", irq);
-+	if (ret)
- 		return -EINVAL;
--	}
- 
- 	dev_info(&pdev->dev, "%s: Registered Tx/Rx Mailbox\n", mdev->name);
- 
-diff --git a/drivers/mailbox/qcom-cpucp-mbox.c b/drivers/mailbox/qcom-cpucp-mbox.c
-index 57f731418fafb..d8fabc410a09c 100644
---- a/drivers/mailbox/qcom-cpucp-mbox.c
-+++ b/drivers/mailbox/qcom-cpucp-mbox.c
-@@ -159,7 +159,7 @@ static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
- 	ret = devm_request_irq(dev, irq, qcom_cpucp_mbox_irq_fn,
- 			       IRQF_TRIGGER_HIGH | IRQF_NO_SUSPEND, "apss_cpucp_mbox", cpucp);
- 	if (ret < 0)
--		return dev_err_probe(dev, ret, "Failed to register irq: %d\n", irq);
-+		return ret;
- 
- 	writeq(APSS_CPUCP_RX_MBOX_CMD_MASK, cpucp->rx_base + APSS_CPUCP_RX_MBOX_MAP);
- 
 diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-index b0b4e40d9202a..387aa72aeedf1 100644
+index 387aa72aeedf1..43985fe6816c2 100644
 --- a/drivers/mailbox/qcom-ipcc.c
 +++ b/drivers/mailbox/qcom-ipcc.c
-@@ -334,10 +334,8 @@ static int qcom_ipcc_probe(struct platform_device *pdev)
- 	ret = devm_request_irq(&pdev->dev, ipcc->irq, qcom_ipcc_irq_fn,
+@@ -335,15 +335,12 @@ static int qcom_ipcc_probe(struct platform_device *pdev)
  			       IRQF_TRIGGER_HIGH | IRQF_NO_SUSPEND |
  			       IRQF_NO_THREAD, name, ipcc);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "Failed to register the irq: %d\n", ret);
-+	if (ret < 0)
- 		goto err_req_irq;
--	}
+ 	if (ret < 0)
+-		goto err_req_irq;
++		goto err_mbox;
  
  	platform_set_drvdata(pdev, ipcc);
  
-diff --git a/drivers/mailbox/sprd-mailbox.c b/drivers/mailbox/sprd-mailbox.c
-index 46d0c34177ab9..f2956872ef084 100644
---- a/drivers/mailbox/sprd-mailbox.c
-+++ b/drivers/mailbox/sprd-mailbox.c
-@@ -334,10 +334,8 @@ static int sprd_mbox_probe(struct platform_device *pdev)
+ 	return 0;
  
- 	ret = devm_request_irq(dev, inbox_irq, sprd_mbox_inbox_isr,
- 			       IRQF_NO_SUSPEND, dev_name(dev), priv);
--	if (ret) {
--		dev_err(dev, "failed to request inbox IRQ: %d\n", ret);
-+	if (ret)
- 		return ret;
--	}
+-err_req_irq:
+-	if (ipcc->num_chans)
+-		mbox_controller_unregister(&ipcc->mbox);
+ err_mbox:
+ 	irq_domain_remove(ipcc->irq_domain);
  
- 	outbox_irq = platform_get_irq_byname(pdev, "outbox");
- 	if (outbox_irq < 0)
-@@ -345,20 +343,16 @@ static int sprd_mbox_probe(struct platform_device *pdev)
- 
- 	ret = devm_request_irq(dev, outbox_irq, sprd_mbox_outbox_isr,
- 			       IRQF_NO_SUSPEND, dev_name(dev), priv);
--	if (ret) {
--		dev_err(dev, "failed to request outbox IRQ: %d\n", ret);
-+	if (ret)
- 		return ret;
--	}
- 
- 	/* Supplementary outbox IRQ is optional */
- 	supp_irq = platform_get_irq_byname(pdev, "supp-outbox");
- 	if (supp_irq > 0) {
- 		ret = devm_request_irq(dev, supp_irq, sprd_mbox_supp_isr,
- 				       IRQF_NO_SUSPEND, dev_name(dev), priv);
--		if (ret) {
--			dev_err(dev, "failed to request outbox IRQ: %d\n", ret);
-+		if (ret)
- 			return ret;
--		}
- 
- 		supp = (unsigned long) of_device_get_match_data(dev);
- 		if (!supp) {
-diff --git a/drivers/mailbox/stm32-ipcc.c b/drivers/mailbox/stm32-ipcc.c
-index 4f63f1a14ca65..c6134de1a93b8 100644
---- a/drivers/mailbox/stm32-ipcc.c
-+++ b/drivers/mailbox/stm32-ipcc.c
-@@ -263,10 +263,8 @@ static int stm32_ipcc_probe(struct platform_device *pdev)
- 		ret = devm_request_threaded_irq(dev, ipcc->irqs[i], NULL,
- 						irq_thread[i], IRQF_ONESHOT,
- 						dev_name(dev), ipcc);
--		if (ret) {
--			dev_err(dev, "failed to request irq %lu (%d)\n", i, ret);
-+		if (ret)
- 			goto err_clk;
--		}
- 	}
- 
- 	/* mask and enable rx/tx irq */
-diff --git a/drivers/mailbox/sun6i-msgbox.c b/drivers/mailbox/sun6i-msgbox.c
-index 6ba6920f4645e..1cbc4d478beb3 100644
---- a/drivers/mailbox/sun6i-msgbox.c
-+++ b/drivers/mailbox/sun6i-msgbox.c
-@@ -257,10 +257,8 @@ static int sun6i_msgbox_probe(struct platform_device *pdev)
- 
- 	ret = devm_request_irq(dev, irq_of_parse_and_map(dev->of_node, 0),
- 			       sun6i_msgbox_irq, 0, dev_name(dev), mbox);
--	if (ret) {
--		dev_err(dev, "Failed to register IRQ handler: %d\n", ret);
-+	if (ret)
- 		goto err_disable_unprepare;
--	}
- 
- 	mbox->controller.dev           = dev;
- 	mbox->controller.ops           = &sun6i_msgbox_chan_ops;
-diff --git a/drivers/mailbox/tegra-hsp.c b/drivers/mailbox/tegra-hsp.c
-index 7991e8dba579f..1ae0fbae5a630 100644
---- a/drivers/mailbox/tegra-hsp.c
-+++ b/drivers/mailbox/tegra-hsp.c
-@@ -710,11 +710,8 @@ static int tegra_hsp_request_shared_irq(struct tegra_hsp *hsp)
- 
- 		err = devm_request_irq(hsp->dev, irq, tegra_hsp_shared_irq, 0,
- 				       dev_name(hsp->dev), hsp);
--		if (err < 0) {
--			dev_err(hsp->dev, "failed to request interrupt: %d\n",
--				err);
-+		if (err < 0)
- 			continue;
--		}
- 
- 		hsp->shared_irq = i;
- 
-@@ -858,12 +855,8 @@ static int tegra_hsp_probe(struct platform_device *pdev)
- 		err = devm_request_irq(&pdev->dev, hsp->doorbell_irq,
- 				       tegra_hsp_doorbell_irq, IRQF_NO_SUSPEND,
- 				       dev_name(&pdev->dev), hsp);
--		if (err < 0) {
--			dev_err(&pdev->dev,
--			        "failed to request doorbell IRQ#%u: %d\n",
--				hsp->doorbell_irq, err);
-+		if (err < 0)
- 			return err;
--		}
- 	}
- 
- 	if (hsp->shared_irqs) {
 -- 
 2.53.0
 
