@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051233;
-	b=I6/h/1Z4AZ7NGM95PwchgMQpMsC8tA1iIE3pw33JPmCruxvJiGgNQ7g6Ya+CZWtyqijB
-	 1N7kvx/TWoJFneuCLKsqt1ga9C7c9PNcDrByLuTimCCyXs/1YO4X7uxsGK7PURSkM06fK
-	 kFYAXp2WvOq9Y/Q0RX1SZ+e1UzDFSYSGoovgVOPaihkNwlZIBniFAtnyrBFmk1K7QiR2M
-	 26PhSMhxYZJVNSC9cCrz4AW/GxI+T4YEus7b8aopZ5TY/jBLpftpRddT0Rk9qzFy2FcYE
-	 DEXX6ubykcO9WHbVwIrKhPDUwuvlm9BnP9QIcQCqutveclQptfqSxvKm9eQ8Fs4Hlng==
+	t=1795051236;
+	b=eXVBaASs2BZcSnRPVhOV0me7RSRqzsMoSTmBQsFuEQZuG2ZmvSclid/4+qmgmwTO+eTY
+	 EZuStvY8/B/dkfmVSkcGdc8/agBY1Ykfcgk249SX9eU98drjomilBu24VqraprxhBkN+U
+	 7D+iGfkl6f8gqxf0MyV0720HdMv9sTKgLnbTMgp45J/o5/6ODpfbnnjvJHpf8Nm31H7QO
+	 rpQ8eGroKkUch7sh3hz5pq5azaqE7MkGcKYZ4mwQ3/4rBtxTZMwXRL9owKW3QX9zdPynV
+	 zRpES2S2OZxJJijaWwtm6KgmJv4D4J3OldDKBs9YTYJpg1TjMD9F+bPXMq9fhs6hUIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051233;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051236;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yxs6BERAcoe4nLQonRvBfPXVwNkhOOoyPuQrMlcjwvA=;
-	b=ERwepcVJkdvqL5+V7+mUGg40V3H/EGoBiCKvxw4kyFXNaF6cL+pNZHVmig3oaCxlIklp
-	 wpJE7EBNpJ0rGRO9hcYGAhPrxBGXWupyDA7cfKqoDwO9HbkZf4pgU3PI5LjItIEopXaV1
-	 dHMeytq6GfTlKKcQd727ZrBEkOEG/K8nJlWwwgfzOG7wBpx9MGw4bpfDtWLsm3AAER0uH
-	 Q8duR86sFDIiVV7eRQGQa8iDr28rN7L3n7lcQOwCKtgs3oVp/AuzWvhbAckUIRUk7Oz4S
-	 bMNJU4Yn5KM2pRxqmYIkNFROZ0XO/GhbG3l1MBuX+P+plwuA+t6ZXsDRBjRR6KzAzhA==
+	bh=Jf0T/HrccrI9pDt8PU78r5mD9ylPdeMN+b4DaeWiFVc=;
+	b=0z1eGmAwD1zz8F5fw9lA+Y30uxtZuvmpc74nR/fd3m23ChGmrlEC55U3Ewape0RfDrAQ
+	 MCSG0vEhn+mM4lOb2BrEn7adTMNqQooTiTtWTNnqpBW4M+DnxsQTC32/z+DedFrcOECyW
+	 /VsXSQHHCcnyWX+v1hBML/q7fxaAW58e1LPpwmfnLhNvJqNIoXwiig8FNBMHGoBOyC8k9
+	 ABm6961DTJ9tXbOtfouhdMZFigpdkEj42Z05eh04fvA3XBuVDn+50uRE0z5D//S8qf9lF
+	 Pco/t3j4VDEPTQ5EREcFM+/c37nMoYsWQyNrMbq2YWlF0uUdW7dj00PwS2q9b3FeKyg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPhgGwYL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WJcwgVjM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CFE3606A320;
-	Thu, 19 Nov 2026 01:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC3B606A31C;
+	Thu, 19 Nov 2026 01:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HPhgGwYL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843431F000C5;
-	Thu, 19 Nov 2026 01:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WJcwgVjM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500901F000C4;
+	Thu, 19 Nov 2026 01:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051233;
-	bh=yxs6BERAcoe4nLQonRvBfPXVwNkhOOoyPuQrMlcjwvA=;
+	s=korg; t=1795051235;
+	bh=Jf0T/HrccrI9pDt8PU78r5mD9ylPdeMN+b4DaeWiFVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HPhgGwYLq5KiXdmaeFkck/ZsNYsSboAkRauByRhc9LfzLQ69dyqhvaXc+mTYVO333
-	 jOgjgxzlzpo7V15iQO2QB0IR/AJj77UXdj/shpT2PATq0N5+D4+umGeJu+K3OitPPC
-	 kWBNH72Fy3Pnx6/ct66f8EgF9UxwLPlVUE2+vXrs=
+	b=WJcwgVjMJPj8i2nYmTuvHZGHnq4JuOp2vSXSnqk7M8HD9xRxCPSTIXZdowlBg1ayA
+	 cI4FRoLvyCAdYru3M9Arsoco2eHBauyIDc9MHQmlAjpP9tQuJZcGIWNc7cxyXb5BJ9
+	 IsJF72MOqGx89oIBdFLC0Het6VBp7lQ6W8X+sjMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Frank Li <Frank.Li@nxp.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0137/2214] firmware: imx: scu: manage mailbox channels and global handle
-Date: Wed, 18 Nov 2026 15:30:13 +0100
-Message-ID: <20261118150015.673426865@linuxfoundation.org>
+Subject: [PATCH 5.15 0138/2214] hsi: omap_ssi: remove debugfs on port creation failure
+Date: Wed, 18 Nov 2026 15:30:14 +0100
+Message-ID: <20261118150015.709504325@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,82 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 55c748d596f841a18cf659ce0999f64029a5c88c ]
+[ Upstream commit 760318e2e69857214314e94ac477219f0c89106b ]
 
-imx_scu_probe() requests mailbox channels with the non-managed
-mbox_request_channel_byname() helper and then publishes sc_ipc through
-the global imx_sc_ipc_handle.  Later probe failures, including child
-population failure, can leave the channels and global handle live after
-the probe has failed.
+ssi_probe() creates the controller debugfs tree before creating the SSI
+port child devices. If a port device cannot be created, the error path
+removes any children and tears down the controller, but leaves the
+debugfs tree behind.
 
-Register devres actions to free each mailbox channel and clear the global
-handle.  Also depopulate partially created child devices when
-devm_of_platform_populate() reports an error.
+Remove the controller debugfs tree on the port creation failure path,
+matching the normal remove path.
 
 Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260616004348.97684-1-pengpeng@iscas.ac.cn
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-scu.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ drivers/hsi/controllers/omap_ssi_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/firmware/imx/imx-scu.c b/drivers/firmware/imx/imx-scu.c
-index fa25c082109ac..d724c0973a29b 100644
---- a/drivers/firmware/imx/imx-scu.c
-+++ b/drivers/firmware/imx/imx-scu.c
-@@ -81,6 +81,17 @@ static int imx_sc_linux_errmap[IMX_SC_ERR_LAST] = {
- 
- static struct imx_sc_ipc *imx_sc_ipc_handle;
- 
-+static void imx_scu_free_mbox_chan(void *data)
-+{
-+	mbox_free_channel(data);
-+}
-+
-+static void imx_scu_clear_handle(void *data)
-+{
-+	if (imx_sc_ipc_handle == data)
-+		imx_sc_ipc_handle = NULL;
-+}
-+
- static inline int imx_sc_to_linux_errno(int errno)
- {
- 	if (errno >= IMX_SC_ERR_NONE && errno < IMX_SC_ERR_LAST)
-@@ -321,6 +332,11 @@ static int imx_scu_probe(struct platform_device *pdev)
- 		dev_dbg(dev, "request mbox chan %s\n", chan_name);
- 		/* chan_name is not used anymore by framework */
- 		kfree(chan_name);
-+
-+		ret = devm_add_action_or_reset(dev, imx_scu_free_mbox_chan,
-+					       sc_chan->ch);
-+		if (ret)
-+			return ret;
- 	}
- 
- 	sc_ipc->dev = dev;
-@@ -328,6 +344,9 @@ static int imx_scu_probe(struct platform_device *pdev)
- 	init_completion(&sc_ipc->done);
- 
- 	imx_sc_ipc_handle = sc_ipc;
-+	ret = devm_add_action_or_reset(dev, imx_scu_clear_handle, sc_ipc);
-+	if (ret)
-+		return ret;
- 
- 	ret = imx_scu_soc_init(dev);
- 	if (ret)
-@@ -340,7 +359,11 @@ static int imx_scu_probe(struct platform_device *pdev)
- 
- 	dev_info(dev, "NXP i.MX SCU Initialized\n");
- 
--	return devm_of_platform_populate(dev);
-+	ret = devm_of_platform_populate(dev);
-+	if (ret)
-+		of_platform_depopulate(dev);
-+
-+	return ret;
- }
- 
- static const struct of_device_id imx_scu_match[] = {
+diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
+index d3a34cfd5a05d..c384526eccdcb 100644
+--- a/drivers/hsi/controllers/omap_ssi_core.c
++++ b/drivers/hsi/controllers/omap_ssi_core.c
+@@ -542,6 +542,9 @@ static int ssi_probe(struct platform_device *pd)
+ 	return err;
+ out3:
+ 	device_for_each_child(&pd->dev, NULL, ssi_remove_ports);
++#ifdef CONFIG_DEBUG_FS
++	ssi_debug_remove_ctrl(ssi);
++#endif
+ out2:
+ 	ssi_remove_controller(ssi);
+ 	pm_runtime_disable(&pd->dev);
 -- 
 2.53.0
 
