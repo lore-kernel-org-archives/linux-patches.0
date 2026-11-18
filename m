@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023512;
-	b=CePJ+7sJ6WdnPJ4kt2O/t/ZBDTd9qCUW3o1coovhrM0xFfRLLF43d6iTxTeMOnYU3gPK
-	 f4EVQV3jVNy6j84qH3EogtNshZBayiCo2AbOks1NlKiMIg93g2ZBmT4CCGamhgyu0uAxT
-	 jV7xzbyWEm0/HD7XJMSWw/DD0u9JoIhU4D1hq5S1aMj6PPOiN6i1xEVnUeDAnQlF2UPQ8
-	 VppjfeJLsCqZ67pIhLn8tN6gWsl2yZVmyUbA/dZRmr2eiXVAa5Je5tfNRYvw71ZvJXbSF
-	 kuVdrxoEsI8A0adDXVvMLkNWvpXY8or6TZ/K0dxStayNbn4KtuIDCcWVj5fY13taMZw==
+	t=1795023515;
+	b=Eq+c+kFXn5pxmGCtjBnf1Fe+UiIyk7vWfxJiCT7d+Pf0v0ocnfe4nAtOHNoNQ7DCM/nF
+	 ROWV5X62fHGRwsxgphWzgverQisM7rJlJZrd874TnRTt9soMCNlc2lo11xwujp4kAMF8H
+	 YH9ijN+gI9WKSSfXrQUSTkhvGOZ5bLXhPRUp8pBDc3WDvnl4BJd6CQ6KVLEZegBuSLFEd
+	 dgVc6FGLapmGbPGcEq+SWM67WMcxfw1IGDJNJxP53nPeNv4KaLsBzYnIT9v4poDRKgawJ
+	 HoVUwrnp2tE4G6PSZg2ATpgVj6DFmeOGUl6tPDZ5u+usrGo/F5Ga3fIRNhvVRUey7cQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023512;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023515;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3mhTAkGOsOhrP0KF0YGrxIfhFOQJ4Obdrra1LqKgffM=;
-	b=fkRlBGdJhShqluqgB7dOn1QoVUyuweahB3MVC3AsSxbmcgPaOmbxF6//FhI2JFFAYRla
-	 T1lB8z0P5kWk8w9vypBehN1Cvv5czHQ3P7jIzXA6Jcf8riJNi8Q8q40MX3zmnKAm49IeC
-	 OE7vdj7Tc48uqgUOMBQy8fp5n3l7aT34vCyQ83CAegTgoiCoPj7qSDFQz8wjvZDzhx+Eh
-	 b4JRqP0XUN5yJ6O2D0bx2ufhxUmMx5gG8Gt6ZqQsQcALUIIrfLMue+oJhww/uy/i4gHFz
-	 xp9fgO6PnYGzkbAFHk4AtoBbT5huoSqA6od4MtGocb9CW6P0ZQUa+ckGT7VE/QFmqgw==
+	bh=peIhqgDEFNDqZsuUImm1/5CuHRhEVfl+SGkM2jk4js8=;
+	b=YTKzow7TFLin4K/qKnQh5yaN5P+S+Y15tFxnCAdRNYoJzShicaMy5sgbHQ3qfWJyeSrc
+	 LOXAAiPCqoo28tVEGfqlcj9yiwR1ejEB/SH1IX+TkftKujaJvKlJlGO0pLG4nmmOTLvEP
+	 gENgONsb909B/pc9i5YgiN5bqwPVbzA4R5lF+KXujOfnISCj36YoyTaVqstOnMC+mfzUZ
+	 z0BnN5SrEpu7iUpr/vE+ciezqeKESTHX5NQ5CpK2LmaX1qGXuK+gcgGW+BKEVjwHdp4+P
+	 HxRR07NlPKdAK+7G8sapfcECha55PqU1CpWElloiIbXa+KeO0YWNtgzhQZ+eNI0AfwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrnuESpz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QnTebq9+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0A1606A31C;
-	Wed, 18 Nov 2026 17:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791DC606A31C;
+	Wed, 18 Nov 2026 17:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wrnuESpz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9E71F000C7;
-	Wed, 18 Nov 2026 17:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QnTebq9+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C813B1F000C4;
+	Wed, 18 Nov 2026 17:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023512;
-	bh=3mhTAkGOsOhrP0KF0YGrxIfhFOQJ4Obdrra1LqKgffM=;
+	s=korg; t=1795023515;
+	bh=peIhqgDEFNDqZsuUImm1/5CuHRhEVfl+SGkM2jk4js8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wrnuESpzNNmL4acRkwHA+1+zNC/rV+OspJE3Lp9a1OmUSq4bnYjXZK0BtAEh3QxZl
-	 twH4CjmFYUCH0fGiRb2Mh3jAGd5P1RJTtoJWWChfyxDyXq91dzaCqNT+HSse7sxZbJ
-	 rG2k8HFejjno4/cUzBdthQ8TZOSUq5TE+/0J7b9A=
+	b=QnTebq9+dOivi7d/JFPLwh3Jc1vYB9dnqd4CYO8h2N1lc5EydRILEuBIqVvZoZPJE
+	 maiMUfM0COaQrY6IfaQArcrEGgjUq6PqDjfCvWq2gDUTIcKJDpLL6PST/3EfoMsv7l
+	 3XmxJcAPHIWTB+nS9nwG5uluH6jvuH/yGo1MLA2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xueqin Luo <luoxueqin@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ahmad Fatoum <a.fatoum@pengutronix.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0397/2151] cpuidle: menu: Do not return a disabled idle state
-Date: Wed, 18 Nov 2026 15:35:32 +0100
-Message-ID: <20261118150136.528147527@linuxfoundation.org>
+Subject: [PATCH 6.18 0398/2151] ARM: dts: stm32: lxa-mc1: change stdout-path baud rate from 9600 to 115200
+Date: Wed, 18 Nov 2026 15:35:33 +0100
+Message-ID: <20261118150136.562471047@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,48 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xueqin Luo <luoxueqin@kylinos.cn>
+From: Ahmad Fatoum <a.fatoum@pengutronix.de>
 
-[ Upstream commit d594187cafd5ad65afc5f00242f8fa20e1d8c0f1 ]
+[ Upstream commit fc3c0ffefc169719316eddb8c36e2427e11ce713 ]
 
-When idle state 0 is disabled and the PM QoS latency constraint is
-zero (latency_req == 0), the first branch of the || in the early-return
-condition of menu_select() is taken immediately, so state 0 is returned
-regardless of its disable flag.
+The default baud rate when none is specified is up to the DT consumer.
 
-Address this by making the !disable check a prerequisite for the entire
-early-return condition, so that when state 0 is disabled the normal
-state selection loop is used instead, which already skips disabled
-states.
+In the case of the Linux STM32 serial driver, it defaults to 9600 baud,
+which differs from the 115200 baud that this board's barebox bootloader
+configured.
 
-Fixes: 53812cdc9100 ("cpuidle: menu: Move the latency_req == 0 special case check")
-Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
-Link: https://patch.msgid.link/20260827094820.3900062-1-luoxueqin@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+This went unnoticed, because barebox automatically fixes up a console=
+command-line option that looks like this on the LXA boards:
+
+  console=ttySTM0,115200n8
+
+This had precedence over the 9600 fallback baud rate.
+
+But when EFI booting a kernel via GRUB, we run into this issue, because
+the barebox-provided command-line is disregarded by GRUB.
+
+Fix this by explicitly setting the baud rate to the correct 115200.
+
+Fixes: 666b5ca85cd3 ("ARM: dts: stm32: add STM32MP1-based Linux Automation MC-1 board")
+Signed-off-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Link: https://lore.kernel.org/r/20260611-lxa-stdout-path-baudrate-v1-1-59b60a5069ff@pengutronix.de
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/governors/menu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
-index 899ff16ff1fe2..d50fb883f75ca 100644
---- a/drivers/cpuidle/governors/menu.c
-+++ b/drivers/cpuidle/governors/menu.c
-@@ -281,10 +281,10 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 		data->bucket = BUCKETS - 1;
- 	}
+diff --git a/arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts b/arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts
+index eada9cf257be9..b3d8eb57aa24e 100644
+--- a/arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts
++++ b/arch/arm/boot/dts/st/stm32mp157c-lxa-mc1.dts
+@@ -33,7 +33,7 @@ backlight: backlight {
+ 	};
  
--	if (latency_req == 0 ||
--	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
--	      latency_req < drv->states[1].exit_latency_ns) &&
--	     !dev->states_usage[0].disable)) {
-+	if (!dev->states_usage[0].disable &&
-+	    (latency_req == 0 ||
-+	     data->next_timer_ns < drv->states[1].target_residency_ns ||
-+	     latency_req < drv->states[1].exit_latency_ns)) {
- 		/*
- 		 * In this case state[0] will be used no matter what, so return
- 		 * it right away and keep the tick running if state[0] is a
+ 	chosen {
+-		stdout-path = &uart4;
++		stdout-path = "serial0:115200n8";
+ 	};
+ 
+ 	led-controller-0 {
 -- 
 2.53.0
 
