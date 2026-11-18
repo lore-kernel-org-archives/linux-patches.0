@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031967;
-	b=XaeuFewBTEdHjbgeV3bD+CDxa2ZKuqQaMA1sYLNZFIAgjdW+68NEJIWFnxBuRCFopKqR
-	 HiaIuc7s3E2ojBmMqMlGP56xdiPt7rPebYWp1Fj3IYtoCfyojok2HGoKOZgqZmJBHUb+M
-	 J84o8ScL/3VUWNMD0z1l62J/0cP88b/ntRkCb48+xZ3OgT+O7mZeryql2xvD4plzkV+93
-	 1NjL/sdKBnS3J5cXtIcWL1rjy1zu80pmgv+zav3Kin5HnF3BORxc89lWepOn7Rx/GlCMI
-	 Qgx6eej2gCig71DEfVBYj76IUUtAmCSErkNtr+eu/IFYt0YUkpiN6mCcJB2p5+rppNA==
+	t=1795031970;
+	b=LfaEaCEf9SHRFx+ZDXdlSo64jOzXfbAeGkypSSX/u2S4pKXAVTLU74dCDgc9CeDc6F/Z
+	 vmZXnBEQhCCnlUrFEVutPPmljMQjJIMKxpIBqqqmnXRRaFbPYNrrsDX8fjBv7J/P1OQTR
+	 hE5ifztQuwjA+qov1CTZ9ipvFL6JXetmS7S2gX61VhLM+7HYxDsn6gGc0BxhJhTSuufD6
+	 x/QJiSfoyNYP//XTXKGFkV1/3NJo7WUzO1R2FMEn3AzADH9f+8+Vv2aN/6O7ElBZihSY2
+	 mGjrULtEnstWiITV5e78w0w4aMrNdcJvEhw+r4c3M5vQTGa8nV8BmFKN/jJwHgDdFbA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=cc0d0iGsfH+4Md5o3GyKkU3GwZ/mVgfBPNJNywzIis4=;
-	b=GC1elsCxF38l0A07jtH/EHSR78a8yOHFRYDCyQ4PEZbPMs9agPCLNTxOMaY3NyyI7Fxx
-	 mbqwBOJldcACSj5hVLlOYky3J8Un97REtXNZHxyu/eAEd2bpaI1ekoFh8KvFbW8nbwiFp
-	 5x20AUJeh7DMA8UZfoHTH+wFvqdE1XsH883XdQHDgEZVvlKZtHmprL4SXuGbZENxvLN9X
-	 BHoI3OSpQaz0C7JOldZUEp02sQEZk7CZcF21VEMS4xcUVx+tbmQmb0Skbw7QIkQzmN5Xd
-	 va5wNvfXEnlwOurU0HAqjXva1zTxY80dq/j9cAByHlIVCxXq4yhHDaZjHT9aZIn1Dkw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ZPhmvXmEdnZiK53IBniyYkPW2f4vJdn1Kab6Fzh+lYo=;
+	b=QCTP9ZJXr58Rt9ajVTEzTsHy9D9FTaCf8Il2ctNXsxtj4fww5itVAyOAbWuD4m1pSt/V
+	 YZ2sJiAdGkbqwRGnqn5y82RDYak9i5/b3SkMmGtecce/4GplFY4Bzo/smYEpb8XUz58Qw
+	 Bu8WLwWYl5pgguzDTUBHDP1/fGCzWbBpKKuQ1MFc/okOPee9MfA/MU+Sn6Yn2pIKuYdEX
+	 ku3if/DTAlPWcQI7mC/H9oJ3Lj9Cg0fSoWChzCbxjgJUla+4+gaQSOQ0fbPE/RREjkEoO
+	 GgECb2c9jH6onTEiKbvsTExAF+JVrL+nTrX+we2b4GxO4hqw0LBabn8QFxiCdCwM8ow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWevmc8e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dxogpXpA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D70606A31C;
-	Wed, 18 Nov 2026 19:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02651606A31C;
+	Wed, 18 Nov 2026 19:59:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EWevmc8e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD521F000C4;
-	Wed, 18 Nov 2026 19:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dxogpXpA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5497A1F000C4;
+	Wed, 18 Nov 2026 19:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031967;
-	bh=cc0d0iGsfH+4Md5o3GyKkU3GwZ/mVgfBPNJNywzIis4=;
+	s=korg; t=1795031969;
+	bh=ZPhmvXmEdnZiK53IBniyYkPW2f4vJdn1Kab6Fzh+lYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EWevmc8eIriQRegLJrcZ1ag8ldW4odYExWnMq1JPvQdeXmGzJJ6W8sDqy1VMmX1dv
-	 8mmswe4Z41IcGi2/V13iiTnTMT+pgOEKs8nGeMsaHja1bYUAeOaYwqO2GvJ/Y8zf0U
-	 bZqWFTK99L043fXR+c8CLfcIt5cQhxXFnxkQZPkM=
+	b=dxogpXpAkmsZe5j78nDNS435NxxvNveOqAXMQKZXjOB72UG+EiYsHdVISPH4FeCPm
+	 EdSoTQ/bCBCSrONoqS8XzIBrRU4A1hYxeV5E3ihArObGB2hq9VDTKt/lUafEfbu+1l
+	 ZLUoJ7ywqI+FMfkX4ejl17z2zmHc+RAz/SN+Pybw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	=?UTF-8?q?Kai=20M=C3=A4kisara?= <Kai.Makisara@kolumbus.fi>,
+	John Meneghini <jmeneghi@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1246/1756] scsi: hisi_sas: Fix incorrect delay values from magic-number cleanup
-Date: Wed, 18 Nov 2026 15:56:13 +0100
-Message-ID: <20261118150059.339541151@linuxfoundation.org>
+Subject: [PATCH 6.12 1247/1756] scsi: scsi_debug: Add READ BLOCK LIMITS and modify LOAD for tapes
+Date: Wed, 18 Nov 2026 15:56:14 +0100
+Message-ID: <20261118150059.371368577@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,80 +63,294 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
 
-[ Upstream commit 7307109c92f702434669bfcd29fb8058ccc07b45 ]
+[ Upstream commit e7795366c41d7b31ab8c9c37bc07c1d058a99fed ]
 
-Commit 4ca7fe99fc84 ("scsi: hisi_sas: Use macro instead of magic
-number") replaced several delay constants with a single macro of value
-100. However, three sites originally used different values:
+The changes:
 
-  - reset_hw_v3_hw:     udelay(50) -> udelay(100) [doubled]
-  - disable_phy_v3_hw:  mdelay(50) -> mdelay(100) [doubled]
-  - disable_host_v3_hw: mdelay(10) -> mdelay(100) [10x longer]
+ - Add READ BLOCK LIMITS (512 - 1048576 bytes)
 
-The overly long delays on the PHY disable and host shutdown paths
-increase boot and shutdown time for all local PHYs.
+ - Make LOAD send New Media UA (not correct by the standard, but makes
+   possible to test also this UA)
 
-Add separate macros for each delay to restore the original values while
-still avoiding magic numbers.
-
-Fixes: 4ca7fe99fc84 ("scsi: hisi_sas: Use macro instead of magic number")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Link: https://patch.msgid.link/20261009033238.1076098-3-yangxingui@huawei.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Kai Mäkisara <Kai.Makisara@kolumbus.fi>
+Link: https://lore.kernel.org/r/20250213092636.2510-3-Kai.Makisara@kolumbus.fi
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Tested-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 92821c2358c7 ("scsi: hisi_sas: Fix spinup failure for SAS SSP devices in Active_Wait state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi_debug.c | 127 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 121 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 64aad320a04a3..1b21cde7849fc 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -546,6 +546,9 @@ struct hisi_sas_err_record_v3 {
- #define IRQ_AXI_INDEX 11
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index c4e7b210183e9..ca7cf3835898e 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -80,6 +80,7 @@ static const char *sdebug_version_date = "20210520";
+ #define INVALID_FIELD_IN_CDB 0x24
+ #define INVALID_FIELD_IN_PARAM_LIST 0x26
+ #define WRITE_PROTECTED 0x27
++#define UA_READY_ASC 0x28
+ #define UA_RESET_ASC 0x29
+ #define UA_CHANGED_ASC 0x2a
+ #define TARGET_CHANGED_ASC 0x3f
+@@ -175,7 +176,11 @@ static const char *sdebug_version_date = "20210520";
  
- #define DELAY_FOR_RESET_HW 100
-+#define STOP_PHY_DELAY_US 50
-+#define DISABLE_PHY_DELAY_MS 50
-+#define DISABLE_HOST_PHY_DELAY_MS 10
- #define HDR_SG_MOD 0x2
- #define LUN_SIZE 8
- #define ATTR_PRIO_REGION 9
-@@ -980,7 +983,7 @@ static int reset_hw_v3_hw(struct hisi_hba *hisi_hba)
+ /* Default parameters for tape drives */
+ #define TAPE_DEF_DENSITY  0x0
++#define TAPE_BAD_DENSITY  0x65
+ #define TAPE_DEF_BLKSIZE  0
++#define TAPE_MIN_BLKSIZE  512
++#define TAPE_MAX_BLKSIZE  1048576
++#define TAPE_MAX_PARTITIONS 2
  
- 	/* Disable all of the PHYs */
- 	hisi_sas_stop_phys(hisi_hba);
--	udelay(HISI_SAS_DELAY_FOR_PHY_DISABLE);
-+	udelay(STOP_PHY_DELAY_US);
+ #define SDEBUG_LUN_0_VAL 0
  
- 	/* Ensure axi bus idle */
- 	ret = hisi_sas_read32_poll_timeout(AXI_CFG, val, !val,
-@@ -1069,7 +1072,7 @@ static void disable_phy_v3_hw(struct hisi_hba *hisi_hba, int phy_no)
- 	cfg &= ~PHY_CFG_ENA_MSK;
- 	hisi_sas_phy_write32(hisi_hba, phy_no, PHY_CFG, cfg);
+@@ -220,7 +225,8 @@ static const char *sdebug_version_date = "20210520";
+ #define SDEBUG_UA_LUNS_CHANGED 5
+ #define SDEBUG_UA_MICROCODE_CHANGED 6	/* simulate firmware change */
+ #define SDEBUG_UA_MICROCODE_CHANGED_WO_RESET 7
+-#define SDEBUG_NUM_UAS 8
++#define SDEBUG_UA_NOT_READY_TO_READY 8
++#define SDEBUG_NUM_UAS 9
  
--	mdelay(HISI_SAS_DELAY_FOR_PHY_DISABLE);
-+	mdelay(DISABLE_PHY_DELAY_MS);
+ /* when 1==SDEBUG_OPT_MEDIUM_ERR, a medium error is simulated at this
+  * sector on read commands: */
+@@ -370,6 +376,8 @@ struct sdebug_dev_info {
+ 	/* For tapes */
+ 	unsigned int tape_blksize;
+ 	unsigned int tape_density;
++	unsigned char tape_partition;
++	unsigned int tape_location[TAPE_MAX_PARTITIONS];
  
- 	state = hisi_sas_read32(hisi_hba, PHY_STATE);
- 	if (state & BIT(phy_no)) {
-@@ -2757,7 +2760,7 @@ static int disable_host_v3_hw(struct hisi_hba *hisi_hba)
+ 	struct dentry *debugfs_entry;
+ 	struct spinlock list_lock;
+@@ -491,14 +499,16 @@ enum sdeb_opcode_index {
+ 	SDEB_I_ZONE_OUT = 30,		/* 0x94+SA; includes no data xfer */
+ 	SDEB_I_ZONE_IN = 31,		/* 0x95+SA; all have data-in */
+ 	SDEB_I_ATOMIC_WRITE_16 = 32,
+-	SDEB_I_LAST_ELEM_P1 = 33,	/* keep this last (previous + 1) */
++	SDEB_I_READ_BLOCK_LIMITS = 33,
++	SDEB_I_LOCATE = 34,
++	SDEB_I_LAST_ELEM_P1 = 35,	/* keep this last (previous + 1) */
+ };
  
- 	hisi_sas_stop_phys(hisi_hba);
  
--	mdelay(HISI_SAS_DELAY_FOR_PHY_DISABLE);
-+	mdelay(DISABLE_HOST_PHY_DELAY_MS);
+ static const unsigned char opcode_ind_arr[256] = {
+ /* 0x0; 0x0->0x1f: 6 byte cdbs */
+ 	SDEB_I_TEST_UNIT_READY, SDEB_I_REZERO_UNIT, 0, SDEB_I_REQUEST_SENSE,
+-	    0, 0, 0, 0,
++	    0, SDEB_I_READ_BLOCK_LIMITS, 0, 0,
+ 	SDEB_I_READ, 0, SDEB_I_WRITE, 0, 0, 0, 0, 0,
+ 	0, 0, SDEB_I_INQUIRY, 0, 0, SDEB_I_MODE_SELECT, SDEB_I_RESERVE,
+ 	    SDEB_I_RELEASE,
+@@ -506,7 +516,7 @@ static const unsigned char opcode_ind_arr[256] = {
+ 	    SDEB_I_ALLOW_REMOVAL, 0,
+ /* 0x20; 0x20->0x3f: 10 byte cdbs */
+ 	0, 0, 0, 0, 0, SDEB_I_READ_CAPACITY, 0, 0,
+-	SDEB_I_READ, 0, SDEB_I_WRITE, 0, 0, 0, 0, SDEB_I_VERIFY,
++	SDEB_I_READ, 0, SDEB_I_WRITE, SDEB_I_LOCATE, 0, 0, 0, SDEB_I_VERIFY,
+ 	0, 0, 0, 0, SDEB_I_PRE_FETCH, SDEB_I_SYNC_CACHE, 0, 0,
+ 	0, 0, 0, SDEB_I_WRITE_BUFFER, 0, 0, 0, 0,
+ /* 0x40; 0x40->0x5f: 10 byte cdbs */
+@@ -581,6 +591,8 @@ static int resp_open_zone(struct scsi_cmnd *, struct sdebug_dev_info *);
+ static int resp_close_zone(struct scsi_cmnd *, struct sdebug_dev_info *);
+ static int resp_finish_zone(struct scsi_cmnd *, struct sdebug_dev_info *);
+ static int resp_rwp_zone(struct scsi_cmnd *, struct sdebug_dev_info *);
++static int resp_read_blklimits(struct scsi_cmnd *, struct sdebug_dev_info *);
++static int resp_locate(struct scsi_cmnd *, struct sdebug_dev_info *);
  
- 	reg_val = hisi_sas_read32(hisi_hba, AXI_MASTER_CFG_BASE +
- 				  AM_CTRL_GLOBAL);
+ static int sdebug_do_add_host(bool mk_new_store);
+ static int sdebug_add_host_helper(int per_host_idx);
+@@ -808,6 +820,7 @@ static const struct opcode_info_t opcode_info_arr[SDEB_I_LAST_ELEM_P1 + 1] = {
+ 	    resp_pre_fetch, pre_fetch_iarr,
+ 	    {10,  0x2, 0xff, 0xff, 0xff, 0xff, 0x3f, 0xff, 0xff, 0xc7, 0, 0,
+ 	     0, 0, 0, 0} },			/* PRE-FETCH (10) */
++						/* READ POSITION (10) */
+ 
+ /* 30 */
+ 	{ARRAY_SIZE(zone_out_iarr), 0x94, 0x3, F_SA_LOW | F_M_ACCESS,
+@@ -823,6 +836,12 @@ static const struct opcode_info_t opcode_info_arr[SDEB_I_LAST_ELEM_P1 + 1] = {
+ 	    resp_atomic_write, NULL, /* ATOMIC WRITE 16 */
+ 		{16,  0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+ 		 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff} },
++	{0, 0x05, 0, F_D_IN, resp_read_blklimits, NULL,    /* READ BLOCK LIMITS (6) */
++	    {6,  0, 0, 0, 0, 0xc7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
++	{0, 0x2b, 0, F_D_UNKN, resp_locate, NULL,    /* LOCATE (10) */
++	    {10,  0x2, 0xff, 0xff, 0xff, 0xff, 0x3f, 0xff, 0xff, 0xc7, 0, 0,
++	     0, 0, 0, 0} },
++
+ /* sentinel */
+ 	{0xff, 0, 0, 0, NULL, NULL,		/* terminating element */
+ 	    {0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} },
+@@ -1501,6 +1520,12 @@ static int make_ua(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
+ 			if (sdebug_verbose)
+ 				cp = "reported luns data has changed";
+ 			break;
++		case SDEBUG_UA_NOT_READY_TO_READY:
++			mk_sense_buffer(scp, UNIT_ATTENTION, UA_READY_ASC,
++					0);
++			if (sdebug_verbose)
++				cp = "not ready to ready transition/media change";
++			break;
+ 		default:
+ 			pr_warn("unexpected unit attention code=%d\n", k);
+ 			if (sdebug_verbose)
+@@ -2204,6 +2229,14 @@ static int resp_start_stop(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
+ 	changing = (stopped_state != want_stop);
+ 	if (changing)
+ 		atomic_xchg(&devip->stopped, want_stop);
++	if (sdebug_ptype == TYPE_TAPE && !want_stop) {
++		int i;
++
++		set_bit(SDEBUG_UA_NOT_READY_TO_READY, devip->uas_bm); /* not legal! */
++		for (i = 0; i < TAPE_MAX_PARTITIONS; i++)
++			devip->tape_location[i] = 0;
++		devip->tape_partition = 0;
++	}
+ 	if (!changing || (cmd[1] & 0x1))  /* state unchanged or IMMED bit set in cdb */
+ 		return SDEG_RES_IMMED_MASK;
+ 	else
+@@ -2736,6 +2769,17 @@ static int resp_sas_sha_m_spg(unsigned char *p, int pcontrol)
+ 	return sizeof(sas_sha_m_pg);
+ }
+ 
++static unsigned char partition_pg[] = {0x11, 12, 1, 0, 0x24, 3, 9, 0,
++	0xff, 0xff, 0x00, 0x00};
++
++static int resp_partition_m_pg(unsigned char *p, int pcontrol, int target)
++{	/* Partition page for mode_sense (tape) */
++	memcpy(p, partition_pg, sizeof(partition_pg));
++	if (pcontrol == 1)
++		memset(p + 2, 0, sizeof(partition_pg) - 2);
++	return sizeof(partition_pg);
++}
++
+ /* PAGE_SIZE is more than necessary but provides room for future expansion. */
+ #define SDEBUG_MAX_MSENSE_SZ PAGE_SIZE
+ 
+@@ -2876,6 +2920,12 @@ static int resp_mode_sense(struct scsi_cmnd *scp,
+ 		}
+ 		offset += len;
+ 		break;
++	case 0x11:	/* Partition Mode Page (tape) */
++		if (!is_tape)
++			goto bad_pcode;
++		len = resp_partition_m_pg(ap, pcontrol, target);
++		offset += len;
++		break;
+ 	case 0x19:	/* if spc==1 then sas phy, control+discover */
+ 		if (subpcode > 0x2 && subpcode < 0xff)
+ 			goto bad_subpcode;
+@@ -2974,9 +3024,16 @@ static int resp_mode_select(struct scsi_cmnd *scp,
+ 					mselect6 ? 3 : 6, -1);
+ 			return check_condition_result;
+ 		}
++		if (arr[off] == TAPE_BAD_DENSITY) {
++			mk_sense_invalid_fld(scp, SDEB_IN_DATA, 0, -1);
++			return check_condition_result;
++		}
+ 		blksize = get_unaligned_be16(arr + off + 6);
+-		if ((blksize % 4) != 0) {
+-			mk_sense_invalid_fld(scp, SDEB_IN_DATA, off + 6, -1);
++		if (blksize != 0 &&
++			(blksize < TAPE_MIN_BLKSIZE ||
++				blksize > TAPE_MAX_BLKSIZE ||
++				(blksize % 4) != 0)) {
++			mk_sense_invalid_fld(scp, SDEB_IN_DATA, 1, -1);
+ 			return check_condition_result;
+ 		}
+ 		devip->tape_density = arr[off];
+@@ -3177,6 +3234,36 @@ static int resp_log_sense(struct scsi_cmnd *scp,
+ 		    min_t(u32, len, SDEBUG_MAX_INQ_ARR_SZ));
+ }
+ 
++enum {SDEBUG_READ_BLOCK_LIMITS_ARR_SZ = 6};
++static int resp_read_blklimits(struct scsi_cmnd *scp,
++			struct sdebug_dev_info *devip)
++{
++	unsigned char arr[SDEBUG_READ_BLOCK_LIMITS_ARR_SZ];
++
++	arr[0] = 4;
++	put_unaligned_be24(TAPE_MAX_BLKSIZE, arr + 1);
++	put_unaligned_be16(TAPE_MIN_BLKSIZE, arr + 4);
++	return fill_from_dev_buffer(scp, arr, SDEBUG_READ_BLOCK_LIMITS_ARR_SZ);
++}
++
++static int resp_locate(struct scsi_cmnd *scp,
++		struct sdebug_dev_info *devip)
++{
++	unsigned char *cmd = scp->cmnd;
++
++	if ((cmd[1] & 0x02) != 0) {
++		if (cmd[8] >= TAPE_MAX_PARTITIONS) {
++			mk_sense_invalid_fld(scp, SDEB_IN_CDB, 8, -1);
++			return check_condition_result;
++		}
++		devip->tape_partition = cmd[8];
++	}
++	devip->tape_location[devip->tape_partition] =
++		get_unaligned_be32(cmd + 3);
++
++	return 0;
++}
++
+ static inline bool sdebug_dev_is_zoned(struct sdebug_dev_info *devip)
+ {
+ 	return devip->nr_zones != 0;
+@@ -4963,7 +5050,10 @@ static int resp_sync_cache(struct scsi_cmnd *scp,
+  * a GOOD status otherwise. Model a disk with a big cache and yield
+  * CONDITION MET. Actually tries to bring range in main memory into the
+  * cache associated with the CPU(s).
++ *
++ * The pcode 0x34 is also used for READ POSITION by tape devices.
+  */
++enum {SDEBUG_READ_POSITION_ARR_SZ = 20};
+ static int resp_pre_fetch(struct scsi_cmnd *scp,
+ 			  struct sdebug_dev_info *devip)
+ {
+@@ -4975,6 +5065,31 @@ static int resp_pre_fetch(struct scsi_cmnd *scp,
+ 	struct sdeb_store_info *sip = devip2sip(devip, true);
+ 	u8 *fsp = sip->storep;
+ 
++	if (sdebug_ptype == TYPE_TAPE) {
++		if (cmd[0] == PRE_FETCH) { /* READ POSITION (10) */
++			int all_length;
++			unsigned char arr[20];
++			unsigned int pos;
++
++			all_length = get_unaligned_be16(cmd + 7);
++			if ((cmd[1] & 0xfe) != 0 ||
++				all_length != 0) { /* only short form */
++				mk_sense_invalid_fld(scp, SDEB_IN_CDB,
++						all_length ? 7 : 1, 0);
++				return check_condition_result;
++			}
++			memset(arr, 0, SDEBUG_READ_POSITION_ARR_SZ);
++			arr[1] = devip->tape_partition;
++			pos = devip->tape_location[devip->tape_partition];
++			put_unaligned_be32(pos, arr + 4);
++			put_unaligned_be32(pos, arr + 8);
++			return fill_from_dev_buffer(scp, arr,
++						SDEBUG_READ_POSITION_ARR_SZ);
++		}
++		mk_sense_invalid_opcode(scp);
++		return check_condition_result;
++	}
++
+ 	if (cmd[0] == PRE_FETCH) {	/* 10 byte cdb */
+ 		lba = get_unaligned_be32(cmd + 2);
+ 		nblks = get_unaligned_be16(cmd + 7);
 -- 
 2.53.0
 
