@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021334;
-	b=d1nAM8gYP6m3yeupV7Pp0bxHN8wTj6E738sFC9kfLoRMcZMWm7Ihy2LJ1pZ2UaMHPI5r
-	 zvwEMFNGxkIfJPy5t0k7T/+P7h8+ddbiRmV/5XNtajsmRbrmtWmRVZSKLX+ywCFfzVsKh
-	 9L5nzRIQUUfaCwk/GYmIWeh02SkZVrsO9bzXxDt7qQnx5kH7VVSops7z0j8OmVUSHMcUG
-	 6Hfq7xYrinsdS1bCp+HvMrtXN0rPH6zpxNsOc+/iCPfsxWDf0aLCQPGRVpD4n3om52Z1j
-	 EEckRyP/BF/mtqVWR8d2ITwlniy7DZv7zPDnDvXtP+Bs/WM3XCc8xlz2yMY7MYr4Kiw==
+	t=1795021336;
+	b=zJzwar1l3SZEqWAkS7mi9avRIWlUgVNok/oE1hCYdA4pTfMrCMAPYs2XDBr1nlybam5w
+	 yx16gVz3KPVqTFA9oovcURyHK3WoUiXVU5/KUrKYtB3+K0tKZ1P0eLImwSbs2ivmAw005
+	 c1/NqOz9AD8qX4Bh93Smvm+gbqO6NoU0QWwC5FucOpl1dq9Q73D+MxcsNzCaLqls1iDl6
+	 nu7OYYiGk96XpQLA1FfdZWufXChmPis+Z2SIZkth03bpOh9QARbz06TO1a8ndjaS6jUhR
+	 zgxNddvf7TwFynD+CqumUlM1g9eZPF15obDkFI23MXteV54qXv+bdaqxidcO3K/PpYA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021334;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021336;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QM8E5M62Gj/nXSAMAMbwcOcItYPELpXLvl+4+6kb7BM=;
-	b=u1STNt7V2IFRqOztC4Zdo1FxzqwpwvtfvyAS/vkdGnZoiSnTCFAf5dDcyvjx/Jcd0Ckv
-	 xeuwZD2cjZPkMTO1x2js4NOrumn0kDEiUMpu8tpbDsZvP6qKA/5/arX3lQ5+rtYD5mxUG
-	 AP/tClnKxpA1FW1LY144kyxtbMEYoEiRUuCva1X6eSv/x+4IrB6l7Gcq3O2et2jZu2E0o
-	 8xYtr2y9jy0biZww+1FmaEgODGj7b7ZloMIuFZ6CsM4VxOj7iQDsf3wDsuborMVPA3DrC
-	 ISPJD2afqKJmHRNXAaG4i0iGLn4tlCG/jmCAGO6KG6tBRqkuBGjlpLJM+nF2tDL2eCQ==
+	bh=KAkpYPFCnLpn5qPgH/ZmmO+4xBKV3y/JUgRQ/KDWAl8=;
+	b=aiG3T8ZWfibemGozZSyMISXDayHgzQc6mo/kcWb97cZ4TgByvuE2kUb1S+ZruAHGWRA8
+	 9s+XU6icCSp1zIndIr/HbyMLcOdz1iK2gyuxls+W48btR9MKsQF6VD1SUUrZQA7hHaBOK
+	 rlNOYKT3jDRa6N1nWhRX1lFAhzWmu5OLnf5MikV2d7ueF0j4S/yrQ9XYQkoc6PszfSnJ1
+	 HXI0LC9rbMVurhC2ySz5B7ODzA2oaVxaTMXK/hJNG3EyaTuEadElEQOO0k+XKv0u9eUhs
+	 uVIvExZz4XklLa5ueJpn8xbZ0kdTSPF/m/NntDpotcr0eHpu2OwVZ2i5nNzfcvxx8mg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g5gCGgC+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfWzajFT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989FE606A339;
-	Wed, 18 Nov 2026 17:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737FC606A338;
+	Wed, 18 Nov 2026 17:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g5gCGgC+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D3301F000C5;
-	Wed, 18 Nov 2026 17:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VfWzajFT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C059A1F000C4;
+	Wed, 18 Nov 2026 17:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021333;
-	bh=QM8E5M62Gj/nXSAMAMbwcOcItYPELpXLvl+4+6kb7BM=;
+	s=korg; t=1795021336;
+	bh=KAkpYPFCnLpn5qPgH/ZmmO+4xBKV3y/JUgRQ/KDWAl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g5gCGgC+yHrMssdIy7nocyZvPSreMU22TuH7//LYgx8XmcNb54gPzJWCHGLuMlbmC
-	 G+c3+RR+iV81E5JUzh+rXu2Wa0tTVstAAqpn+lRI2Ir+7Cj5vLTSK06P5c/5YwKJsD
-	 5n4YgdXsyop4hJ4EZ+QP/We2tvK4o4qLZEXsvriQ=
+	b=VfWzajFTx/9u9WQm3Gi7h7Sd1tQb3ot7jWsFqCTYf0skkSJNmPzwsUb1O3bvwfJkw
+	 oxpKdco4pCVtazXJZKv/5y6tV9su00++g5vmH5pVFH4Qsl4QJob47m65gmvLzlqfxB
+	 t3Z5Lt8Z9iEoSB8NcMxE3l5SQ5d/3CWuSVrRDgyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Mingming Cao <mmc@linux.ibm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2268/2651] net: stmmac: Track the TX DMA threshold per queue
-Date: Wed, 18 Nov 2026 15:58:28 +0100
-Message-ID: <20261118150407.023325145@linuxfoundation.org>
+Subject: [PATCH 7.3 2269/2651] ibmveth: fix netpoll races with RX replenish
+Date: Wed, 18 Nov 2026 15:58:29 +0100
+Message-ID: <20261118150407.052732799@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,138 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Mingming Cao <mmc@linux.ibm.com>
 
-[ Upstream commit 9dd53418781900f02897c805eed397555cf98417 ]
+[ Upstream commit 8d9ecac6b96e61d0e6d126c60644829fd9f66952 ]
 
-Commit 3a6c12a0c6c3 ("net: stmmac: bump tc when get underflow error from
-DMA descriptor") made dwmac4 raise the DMA threshold of the queues that
-report TX underflows. This is done by incrementing a module global
-parameter 'tc' by 64 on each underflow.
+ibmveth_poll_controller() runs RX replenish outside NAPI and without
+a lock, racing NAPI's replenish on another CPU. Both can fill the
+same slot, so an skb and its DMA mapping leak and PHYP can write
+into an unmapped buffer. netpoll calls it from netconsole and from
+netpoll-enabled bonds.
 
-This leads to inconsistent TX DMA thresholds between queues and causes
-issues on platforms with multiple stmmac controllers, as 'tc' is shared
-by all of them. Once 'tc' goes over 256 the bumping stops, and queues
-that did not underflow before are left at the initial threshold.
+ibmveth_open() also enables NAPI before the RX resources exist.
+ibmveth_change_mtu(), veth_pool_store(), ibmveth_set_csum_offload()
+and ibmveth_set_tso() call close() and open() directly, so while
+open() is still setting up, netpoll and the direct ibmveth_interrupt()
+calls can replenish NULL pools and read freed memory.
 
-On the Renesas RZ/V2H platform, which has two dwmac4 controllers, we
-observed sporadic iperf3 TCP TX failures:
+Remove the callback, as Eric Dumazet did for many drivers after
+commit ac3d9dd034e5 ("netpoll: make ndo_poll_controller() optional"),
+including ibmvnic in commit 0c3b9d1b37df ("ibmvnic: remove
+ndo_poll_controller"). netpoll then polls NAPI itself with budget 0.
+napi->poll_owner serializes that with NAPI, but not with a NAPI poll
+that was already running when netpoll was set up, so skip RX
+replenish at budget 0, which netpoll uses for TX only. TX completes
+synchronously, so ibmveth_poll() has nothing else to do for netpoll.
 
-  iperf3 -c <server> -t5 --bind-dev end1
-  ...
-  [  5]   0.00-5.00   sec  1.00 MBytes  1.68 Mbits/sec   87       sender
-  [  5]   0.00-5.00   sec   768 KBytes  1.26 Mbits/sec            receiver
+Enable NAPI just before request_irq(), once everything
+ibmveth_poll() touches exists.
 
-This happens because the TX queues of end1 were underflowing on a large
-fraction of the packets, but the DMA TX threshold was never raised from
-the default of 64 bytes. The threshold was not raised because end0
-had underflowed first and had already pushed 'tc' past 256. Which
-controller is affected depends on which one underflows first.
+Found in review of the ibmveth multi-queue RX series and confirmed by
+code inspection of poll_one_napi() and the direct close()/open()
+callers; neither race was reproduced. Tested on a POWER10 LPAR with
+netconsole over ibmveth: a ping flood (678,470 packets, no loss) during
+a printk flood, and MTU changes and buffer pool toggles under traffic,
+with no warnings. No kernel selftests cover ibmveth.
 
-To fix this, make the TX DMA threshold per queue instead of global.
-Each time an underflow happens on a queue, its TX DMA threshold gets
-incremented, without affecting other queues or controllers. With this
-change, 'tc' is only used as the initial value, and the RX threshold
-is no longer bumped together with the TX one, as TX underflows have
-nothing to do with the RX side.
-
-Fixes: 3a6c12a0c6c3 ("net: stmmac: bump tc when get underflow error from DMA descriptor")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20261013114503.57487-2-ovidiu.panait.rb@renesas.com
+Fixes: 6b4223748895 ("[PATCH] ibmveth: Add netpoll function")
+Fixes: bea3348eef27 ("[NET]: Make NAPI polling independent of struct net_device objects.")
+Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
+Link: https://patch.msgid.link/20261013182926.30417-2-mmc@linux.ibm.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  1 +
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 33 +++++++++++--------
- 2 files changed, 21 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/ibm/ibmveth.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index ee128111cb2d5..9cdad84308568 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -270,6 +270,7 @@ struct stmmac_priv {
- 	bool sph_capable;
- 	u32 sarc_type;
- 	u32 rx_riwt[MTL_MAX_RX_QUEUES];
-+	u32 tx_threshold[MTL_MAX_TX_QUEUES];
- 	int hwts_rx_en;
- 	bool tsfupdt_coarse;
+diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
+index abebdb1fc2628..4a5869183be66 100644
+--- a/drivers/net/ethernet/ibm/ibmveth.c
++++ b/drivers/net/ethernet/ibm/ibmveth.c
+@@ -628,8 +628,6 @@ static int ibmveth_open(struct net_device *netdev)
  
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 388575cf588ad..80489d1fe3036 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -2593,7 +2593,6 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
+ 	netdev_dbg(netdev, "open starting\n");
+ 
+-	napi_enable(&adapter->napi);
+-
+ 	for(i = 0; i < IBMVETH_NUM_BUFF_POOLS; i++)
+ 		rxq_entries += adapter->rx_buff_pool[i].size;
+ 
+@@ -717,10 +715,18 @@ static int ibmveth_open(struct net_device *netdev)
+ 		}
  	}
  
- 	if (priv->plat->force_thresh_dma_mode) {
--		txmode = tc;
- 		rxmode = tc;
- 	} else if (priv->plat->force_sf_dma_mode || priv->plat->tx_coe) {
- 		/*
-@@ -2607,7 +2606,6 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
- 		rxmode = SF_DMA_MODE;
- 		priv->xstats.threshold = SF_DMA_MODE;
- 	} else {
--		txmode = tc;
- 		rxmode = SF_DMA_MODE;
- 	}
- 
-@@ -2626,8 +2624,11 @@ static void stmmac_dma_operation_mode(struct stmmac_priv *priv)
- 	for (chan = 0; chan < tx_channels_count; chan++) {
- 		qmode = priv->plat->tx_queues_cfg[chan].mode_to_use;
- 
--		stmmac_dma_tx_mode(priv, priv->ioaddr, txmode, chan,
--				txfifosz, qmode);
-+		if (txmode == SF_DMA_MODE)
-+			priv->tx_threshold[chan] = SF_DMA_MODE;
++	/* NAPI can run as soon as it is enabled, from netpoll during the
++	 * direct close()/open() pairs or from a direct ibmveth_interrupt()
++	 * call, so enable it only once everything ibmveth_poll() touches
++	 * exists.
++	 */
++	napi_enable(&adapter->napi);
 +
-+		stmmac_dma_tx_mode(priv, priv->ioaddr, priv->tx_threshold[chan],
-+				   chan, txfifosz, qmode);
- 	}
+ 	netdev_dbg(netdev, "registering irq 0x%x\n", netdev->irq);
+ 	rc = request_irq(netdev->irq, ibmveth_interrupt, 0, netdev->name,
+ 			 netdev);
+ 	if (rc != 0) {
++		napi_disable(&adapter->napi);
+ 		netdev_err(netdev, "unable to request irq 0x%x, rc %d\n",
+ 			   netdev->irq, rc);
+ 		goto out_free_buffer_pools;
+@@ -765,7 +771,6 @@ static int ibmveth_open(struct net_device *netdev)
+ out_free_buffer_list:
+ 	free_page((unsigned long)adapter->buffer_list_addr);
+ out:
+-	napi_disable(&adapter->napi);
+ 	return rc;
  }
  
-@@ -2794,17 +2795,20 @@ static bool stmmac_xdp_xmit_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+@@ -1542,7 +1547,11 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
+ 		}
+ 	}
  
- static void stmmac_bump_dma_threshold(struct stmmac_priv *priv, u32 chan)
- {
--	if (unlikely(priv->xstats.threshold != SF_DMA_MODE) && tc <= 256) {
--		tc += 64;
-+	u32 thresh = priv->tx_threshold[chan];
+-	ibmveth_replenish_task(adapter);
++	/* netpoll polls with budget 0 for TX only, and is not serialized
++	 * with a NAPI poll that was already running when it was set up
++	 */
++	if (budget)
++		ibmveth_replenish_task(adapter);
  
--		if (priv->plat->force_thresh_dma_mode)
--			stmmac_set_dma_operation_mode(priv, tc, tc, chan);
--		else
--			stmmac_set_dma_operation_mode(priv, tc, SF_DMA_MODE,
--						      chan);
-+	if (unlikely(thresh == SF_DMA_MODE) || thresh > 256)
-+		return;
- 
--		priv->xstats.threshold = tc;
--	}
-+	thresh += 64;
-+
-+	if (priv->plat->force_thresh_dma_mode)
-+		stmmac_set_dma_operation_mode(priv, thresh, tc, chan);
-+	else
-+		stmmac_set_dma_operation_mode(priv, thresh, SF_DMA_MODE, chan);
-+
-+	priv->tx_threshold[chan] = thresh;
-+	priv->xstats.threshold = thresh;
+ 	if (frames_processed == budget)
+ 		goto out;
+@@ -1682,14 +1691,6 @@ static int ibmveth_change_mtu(struct net_device *dev, int new_mtu)
+ 	return -EINVAL;
  }
  
+-#ifdef CONFIG_NET_POLL_CONTROLLER
+-static void ibmveth_poll_controller(struct net_device *dev)
+-{
+-	ibmveth_replenish_task(netdev_priv(dev));
+-	ibmveth_interrupt(dev->irq, dev);
+-}
+-#endif
+-
  /**
-@@ -8034,6 +8038,9 @@ static int __stmmac_dvr_probe(struct device *device,
+  * ibmveth_get_desired_dma - Calculate IO memory desired by the driver
+  *
+@@ -1791,9 +1792,6 @@ static const struct net_device_ops ibmveth_netdev_ops = {
+ 	.ndo_validate_addr	= eth_validate_addr,
+ 	.ndo_set_mac_address    = ibmveth_set_mac_addr,
+ 	.ndo_features_check	= ibmveth_features_check,
+-#ifdef CONFIG_NET_POLL_CONTROLLER
+-	.ndo_poll_controller	= ibmveth_poll_controller,
+-#endif
+ };
  
- 	priv->xstats.threshold = tc;
- 
-+	for (i = 0; i < MTL_MAX_TX_QUEUES; i++)
-+		priv->tx_threshold[i] = tc;
-+
- 	/* Initialize RSS */
- 	rxq = priv->plat->rx_queues_to_use;
- 	netdev_rss_key_fill(priv->rss.key, sizeof(priv->rss.key));
+ static int ibmveth_probe(struct vio_dev *dev, const struct vio_device_id *id)
 -- 
 2.53.0
 
