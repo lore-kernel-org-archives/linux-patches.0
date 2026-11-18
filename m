@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036960;
-	b=hQ1sg2no8VZY4bRoG82zFuB9p1ZswMaFTTM2R8j4xY0MYj+sUDxtWLAJE+oykHKdaCrr
-	 kjuj8Mo3rTEySQ9xITRobjeAd24dCJXLd0a5A6YqkdOvEbHrEQnca21rSHyX9McytaN5K
-	 /nWYuXBCnzXQt8/KEm6NhCpe+58PUbZGkSqe9E/gukwe9Gxjx7aQu2Inid4iCr1k+Wtho
-	 FWjXZhPCVUUJGMfCm9GMXfFLGotqKbujrP7GMwFjFC1u/xoRm06Modj+E5a5w2El23bD+
-	 KrcjRpgwkEJX7/gqf1ZBBJxzXQm6F0SaxzB1IogFikTr53Uwl6aKDS+8IWqpP1LCVIQ==
+	t=1795036963;
+	b=vErKZc2eJYXv8k8x/Of77g0uNvV32awqSdEvn++mORB+6levtzGUS0YZYXz65t91hu6L
+	 rE0/5dTPEMLXaQaETN6wGCPNfNsDSdWz9b4mwZmUAM4gn0GkLe8hz76gJv/28TtfIfstJ
+	 FRMAnW7E5GFNgowUxV3Pfpn5FxuPUDpAJBVjjtI9k+mwps5C8ItH1GppF889kh3+5GxYr
+	 c12Qab6kYp+Do9EZndwb3qQQmEWq+34t9Eg2XWtcke+qyfqfMCzbLH/iZDXJNS9XG1X1p
+	 yi9bOJajEhcfXBzes54XvqklSI3tmow/TDTy9a9FBBumTgZ0lRFavvWMcT52zlJTsvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036960;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036963;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kHAS3XxMcDvXhYuDo0OFqSB0sd1wO9Jv3fX3nbPSrYI=;
-	b=Sw0RuvQjLo9VrHjtOveeWS7YqQVTL0lV+6RkyjrWiJXeEVlCPf+v81vI3Hj0GarJW2Ut
-	 //wmsj9JmQTmG2oclJOqYydToJu1/Rr6AzKuK8PdpXZk08fRVj72yTAD1rZ61V4JOhdaW
-	 TE09qYrdBQ+TvSLQF66fKOMhOmhXeu4PxWvp/FgyJfjn56AosKcYn6jyzQAT5JvkK0hhJ
-	 Ey5gBD2QfTtH0Q/tR3VvVtWkxpU9lD1Ny75HNFZYB5xwMC5lhnpj/+HUSRHNgC7Hos1JY
-	 mr5Ju/YeoE3SLCM0R1CCXpgjh4xJLWyq/WTOrtxtSWJPa0yHCK+UGklZ0lID43Tq67w==
+	bh=f5gUDsx2kXAJ4+dbM4ySrJsDnutVQOrBZpBPd7i8U8g=;
+	b=MLn+kCLN9KawxwFEDv7VOeCsTfP6NpSiom6DhxfhrjpYWjkSPowDwelH5Comvf12MG3M
+	 t4FZPwwocljzL+wlRIfTgjnZm/2Fq/alqE9qwt65RpngLFMHEO0DHscb04Wqn1KcFjQGr
+	 8GausjpooK0aEs+kDSW0PdTOKupAwx5hlglV+GhyjIO7FfjJriBk/EbuXBAmw2FAz84H1
+	 KJRHZb8Imr6c8GyaDGpVZ2iuvcQkCbes9Bry1ddGxahzTGmorSLrSWC26lHgAcE6b/QMx
+	 7Es4UUi0v/zdFK5go2I4+hiUdUjtulVjntWA8+UHkx7qZvMcbWpJeYgmpcMVfQY8IYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NViaZzPE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Kbbz1VF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C94606A325;
-	Wed, 18 Nov 2026 21:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43640606A336;
+	Wed, 18 Nov 2026 21:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NViaZzPE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20CD1F000C4;
-	Wed, 18 Nov 2026 21:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1Kbbz1VF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EFD1F000CA;
+	Wed, 18 Nov 2026 21:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036960;
-	bh=kHAS3XxMcDvXhYuDo0OFqSB0sd1wO9Jv3fX3nbPSrYI=;
+	s=korg; t=1795036963;
+	bh=f5gUDsx2kXAJ4+dbM4ySrJsDnutVQOrBZpBPd7i8U8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NViaZzPEOEmuLEDfaY3ctHIGqs+VEusMXaINxOQpCzAW5Gsr+8X2UW/L1in3ZtREg
-	 BEEq3gJdTgWazESBVyTP6Esa74oC/3gt6QvCzxwTKcmRhvFf0Mmwe2ng7h7wkFWstV
-	 Hkd6krbOwbgsirk6bkLc/S/F0X2C2Jo61QixE9VI=
+	b=1Kbbz1VFg8b6m5svqMSHPXfxPUAVjbYFFtn4MXieWoLJkdKNFEETKDWCleAdRmNnr
+	 Cv02ydGHtoP9SFGCmYkJdTA04hxsy0icYbI3vM65xGdlVykVMRGBscaqfJwKHGG/kg
+	 RKj32n7/IhLTCFsNtwGB6onQu6L0J47Mo+TJzOYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sung byeongchan <tjdqudcks0424@naver.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1242/3318] ceph: validate fscrypt auth blob length
-Date: Wed, 18 Nov 2026 15:31:04 +0100
-Message-ID: <20261118150357.448272732@linuxfoundation.org>
+Subject: [PATCH 6.6 1202/3318] tpm: tpm_nsc: stop using the cleanup callback as dev.release
+Date: Wed, 18 Nov 2026 15:30:24 +0100
+Message-ID: <20261118150356.231461053@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,49 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sung byeongchan <tjdqudcks0424@naver.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit bc418e234e5be14b97dec90e84a680e615b4134e ]
+[ Upstream commit df0ef271087623439a1e900f323ed2a57204706d ]
 
-ceph_crypt_get_context() trusts cfa_blob_len after checking only that the
-inode-owned fscrypt_auth allocation contains the fixed header and one byte.
-An MDS can therefore place a larger inner length in a shorter outer object,
-causing memcpy() to read beyond the allocation when a caller requests the
-encryption nonce.
+tpm_nsc_remove() is called explicitly from cleanup_nsc() and also
+runs as the platform device release callback on the final
+platform_device_put(), so the cleanup executes twice on module
+exit; the second invocation operates on a chip that has already
+been freed by the devm cleanup, and the I/O region is released
+twice.
 
-Require the complete blob to fit in the inode-owned allocation before using
-the inner length.
+Overwriting the release callback installed by
+platform_device_alloc() also keeps platform_device_release() from
+running, leaking the platform object allocation.
 
-On the tested baseline, the malformed reply produced the same KASAN
-slab-out-of-bounds read twice. An ordinary UID obtained sixteen wire-absent
-SLUB redzone bytes in two non-KASAN production-path runs. The input was
-rejected twice after this change, while a complete context still worked.
+Leave the default release callback in place; the explicit call in
+cleanup_nsc() remains the single cleanup point.
 
 Cc: stable@vger.kernel.org
-Fixes: 2d332d5bc424 ("ceph: fscrypt_auth handling for ceph")
-Assisted-by: LLM
-Signed-off-by: sung byeongchan <tjdqudcks0424@naver.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 570302a31149 ("[PATCH] tpm: move nsc driver off pci_dev")
+Assisted-by: GLM-5.3
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Link: https://lore.kernel.org/r/a6155310e6772f708b47291cc959e02c05b90eb7.1791015549.git.xiaopei01@kylinos.cn
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/crypto.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/char/tpm/tpm_nsc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/ceph/crypto.c b/fs/ceph/crypto.c
-index 29ec2f705a504..62f33516e8bb6 100644
---- a/fs/ceph/crypto.c
-+++ b/fs/ceph/crypto.c
-@@ -83,6 +83,9 @@ static int ceph_crypt_get_context(struct inode *inode, void *ctx, size_t len)
- 		return -ENOBUFS;
+diff --git a/drivers/char/tpm/tpm_nsc.c b/drivers/char/tpm/tpm_nsc.c
+index bec0b1fcad27a..c33d49172df23 100644
+--- a/drivers/char/tpm/tpm_nsc.c
++++ b/drivers/char/tpm/tpm_nsc.c
+@@ -326,7 +326,6 @@ static int __init init_nsc(void)
  
- 	ctxlen = le32_to_cpu(cfa->cfa_blob_len);
-+	if (ctxlen > ci->fscrypt_auth_len -
-+		     offsetof(struct ceph_fscrypt_auth, cfa_blob))
-+		return -ENOBUFS;
- 	if (len < ctxlen)
- 		return -ERANGE;
+ 	pdev->num_resources = 0;
+ 	pdev->dev.driver = &nsc_drv.driver;
+-	pdev->dev.release = tpm_nsc_remove;
  
+ 	if ((rc = platform_device_add(pdev)) < 0)
+ 		goto err_put_dev;
 -- 
 2.53.0
 
