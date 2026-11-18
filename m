@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027881;
-	b=FLxtPIp6MJgZs+eKK6e8ftRKp5QfnBnxOCOQqHmEhexgEGNmJ047wwJIKk4AQAvXxAAC
-	 gRUKUby1padWJY8QxE1yMo9fd5BB8iPPHW4w7ojHSazXvJO3DPHcZrACAfTEwgbGn/xRD
-	 VaNCjLUExBFpwWmdXfWOUDSnUI76viiL/dOmdXl27iKOBn5+yA6+j5nM/3UZoNi3a8hx3
-	 hH7oZ4EZjEivXOWd+PeXiG+iuFohm5jbKyCaZ6rdn9HLQn8lDkd9lnfGm5O7ntRPNE4gM
-	 /7UFtRcFATj+DQJnVjE37SaHzIYF6ZuiwcCINBfCXTsXmQqoSvdHIs/WpFEPohmf67w==
+	t=1795027883;
+	b=SZQZdmAGS66m7w7nxouFV5rCkgJpJ6QboHC1BRH1t28fTI03unseDDkXPcuVkroD6vDo
+	 TJWivFWLUaFfKJZ40v9XfdEEiJzxPhW1L69qO4hM/EOKaLxPFPLepvSoe/ONwrFI6/SQx
+	 hdvChZ227K9/7Frox7g0jtdumNSzHs6k0YCHLBLsVuO0ZOrIHHRXRzgLjKdGFuSRx5+ba
+	 3viFuzHijkM9f0gkTuvZGFaIsmuhpXI9+HzBukTadgmFvr7SRd/zVsBoj7CkkcjMzuWkE
+	 Hs9usNtBGpU3txUu4i0L9mldFiQ1ORJqKboMOblcTDFr3T+hp6ayzrNlIPNRwrCB3lg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027881;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027883;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5T8DT1Wgp22CPGUOMA4Y7QqtakF9MHoy40d9uwcsL/M=;
-	b=k7xUb1bxIlfS0HtuBT45eBs+5M5v9BuNNfYTD0hl8KVeKj6TWGmH4ttG0M5YjTGxNxX8
-	 JI5XFUjMrGmRPbupV9pUxaB8nBMQnRADh3cho6bTKVK+aHp0p33N9gj+ZGO5ExOiCN26G
-	 FmKoi5RrEAg/DeIuZoVvCGyvRKaLtqTWLtyXmaTMXcqOzDgKAZGhXYy1S8q6t7i410iIR
-	 nGQwN7ORW2NOzrPaFVfXLevekF4F3tuy/P5o782KF8co6vwKgf9M46uiOTKs6mRwSEQGQ
-	 VG7OVfWer34Y74iPQByfNgOcXYzYiE6bKts3TF4RcwbNwg8vzHed1pwXSCjHIN8kvIg==
+	bh=rF7n3SjrfN/owHmTrtseRwNI2jWfEj2CwbBBG58Blp4=;
+	b=0Z4QsodtzXAsNIzt8MpawRtdv51IWjeRr8JT+ddRC7ftefB07OYuO3uPuvovAGkWhi9/
+	 yJr4/wgEzqRcuAnatQruf2hacy0udm1Su3o89ZWyt6JzUI9UwHkmdRAcX2kdn8VZ7tkXE
+	 M0GnT3QkEAiYubmBxxlLGq7bBKVujdXQAAsgleoaIXZxFUQ/bf8yW1rNE1jhwnwzuCTrc
+	 d5QwNjUW5gIVALLzN9VUkdlC33+ihmQgJ7yiufFaPaE1e/0UThAb0I0YYl9tpobtoqP0y
+	 1s0xn1WLqz1cKGZ1iYP+NlQskc/76btuX6vVKuw+7L8lOZ0dOdQLZ4lIO2LW3/stdyQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MT4nXE4b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkAZqE62;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8914C606A31C;
-	Wed, 18 Nov 2026 18:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D092A606A31C;
+	Wed, 18 Nov 2026 18:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MT4nXE4b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C8451F000C6;
-	Wed, 18 Nov 2026 18:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nkAZqE62
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335D51F000C4;
+	Wed, 18 Nov 2026 18:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027881;
-	bh=5T8DT1Wgp22CPGUOMA4Y7QqtakF9MHoy40d9uwcsL/M=;
+	s=korg; t=1795027883;
+	bh=rF7n3SjrfN/owHmTrtseRwNI2jWfEj2CwbBBG58Blp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MT4nXE4b/xZ1fcWkeB6EUCkr5xAGbBiUc5vX2QdQR1ooABeunvwXEULgJvepcSg/j
-	 SJYLTJix7KtvPh3t8wfOqqpJi2KBSiz2sseyOi0LVf4yuEJyX1xoTUZJsfOvgXYIBS
-	 ysGUICjc6aY93ff0TFkls7uLU/TZgH/Y4sSh4Zq4=
+	b=nkAZqE62N1yL84f5txGRpRXo4kYTvlA8QWkmx08gMwYFfmsXUBJIQ0ow9EF5lCRmU
+	 dPQANykqI5fxp3v2XaIgJgG7+40Pa3GCOTUaYiiLlPJZpUGsQIdMdX67DKhqFLL7lK
+	 TEuFKYeApHQfOxuWCK3HwkLf0op/WSJEhfDv2GiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitris Charisis <dchar@cslab.ece.ntua.gr>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	"Liam R. Howlett (Google)" <liam@infradead.org>,
-	Florian Schmaus <florian.schmaus@codasip.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andrew Ballance <andrewjballance@gmail.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1945/2151] maple_tree: fix maple_range_64 crashes in RCU mode
-Date: Wed, 18 Nov 2026 16:01:20 +0100
-Message-ID: <20261118150232.621678146@linuxfoundation.org>
+Subject: [PATCH 6.18 1946/2151] ALSA: ump: Drain sequencer callbacks before freeing their client
+Date: Wed, 18 Nov 2026 16:01:21 +0100
+Message-ID: <20261118150232.657666166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,276 +68,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitris Charisis <dchar@cslab.ece.ntua.gr>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit baed735a956f2a7badb5436bef6810303034f920 ]
+[ Upstream commit 9b30046de03acb3b3f2135d45af6be7ee0b565b6 ]
 
-Patch series "maple_tree: fix maple_range_64 crashes in RCU mode", v3.
+seq_ump_client_free() cancels group_notify_work while the endpoint still
+publishes seq_ops and seq_client. A received Function Block update can
+enter the sequencer callback after cancellation and queue the work again.
+Even disabling the work cannot protect a callback that already loaded
+seq_client and then resumes after the client has been freed.
 
-The patch series fixes two RCU destroy path issues on maple_range_64
-nodes.  Both arising from the fact that a maple_range_64 node repurposes
-the last slot to hold metadata when the node is not full.  Patch 1
-addresses the issues, and patch 2 adds a test used to catch them.
+A USB UMP endpoint can continue receiving while its sequencer binding
+is removed. The following order uses the same endpoint and client:
 
-Currently there is no in-tree user of maple_range_64 nodes in RCU mode.
-All in-tree users of MT_FLAGS_USE_RCU also set MT_FLAGS_ALLOC_RANGE which
-makes the internal nodes maple_arange_64.
+  Sequencer binding removal             UMP input completion
+  -------------------------             --------------------
+  cancel_work_sync()
+                                        load seq_ops and seq_client
+  delete sequencer client
+  clear endpoint binding
+  kfree(client)
+                                        schedule group_notify_work
+                                        read client->seq_client
 
-Below is the minimal reproducer used during debugging:
+Cover all calls through seq_ops with SRCU in the UMP core. Withdraw the
+operations pointer and wait for those callbacks before canceling work
+and deleting the client. No producer can then queue work after the final
+cancellation, and both the client and callback code remain available
+until the last in-flight callback returns.
 
-static DEFINE_MTREE(tree);
-static int __init maple_fix_init(void)
-{
-        unsigned long i, j;
+Publish seq_ops with release/acquire ordering so the separately stored
+seq_client is initialized before any callback uses it. Use SRCU because
+sequencer notification delivery can sleep; no callback needs to change
+its existing execution context or allocation behavior.
 
-        for (i = 10; i < 4000; i++) {
-                mt_init_flags(&tree, MT_FLAGS_USE_RCU);
-
-                for (j = 0; j < i; j++) {
-                        mtree_insert_range(&tree, j * 10, j * 10 + 9,
-                                        xa_mk_value(j), GFP_KERNEL);
-                }
-
-                mtree_destroy(&tree);
-                rcu_barrier();
-        }
-        return 0;
-}
-
-The splat for the first issue addressed by the first patch is shown below.
-mt_clear_meta() runs after the slots have been rewritten with raw
-pointers by mte_dead_leaves(), so it cannot recognize a valid last pointer
-because the type information is stripped.  On my 64-bit LE machine, it
-clears bytes 248 and 249 of the maple_range_64 which are the two least
-significant bytes of the last pointer.  The lowest byte is already zero,
-since nodes are 256-byte aligned, but zeroing byte 249 corrupts the
-pointer.
-
-KASAN catches it as a double-free, because that corrupted pointer happens
-to land on a node that was freed previously.  The splat appears at 226
-insertions in the reproducer.  This is when the tree has a full root node
-on a 64-bit build.
-
-  ==================================================================
-  BUG: KASAN: double-free in mt_free_walk+0x138/0x3a0
-  Free of addr ffff0000f3d40000 by task swapper/2/0
-  [...]
-  Call trace:
-   [...]
-   kmem_cache_free_bulk+0x5b8/0xc18
-   mt_free_walk+0x138/0x3a0
-   rcu_core+0x5d0/0x1638
-   rcu_core_si+0x18/0x30
-   [...]
-
-  Allocated by task 1218:
-   [...]
-   kmem_cache_alloc_from_sheaf_noprof+0xa8/0x2f0
-   dst_setup+0x210/0x630
-   mas_wr_split+0x568/0x26e0
-   mas_wr_store_entry+0x98c/0x1de0
-   mas_insert.isra.0+0x3d0/0x5d8
-   mtree_insert_range+0xec/0x1c8
-   maple_fix_init+0x94/0xff8 [maple_fix_obj]
-   [...]
-
-  Freed by task 0:
-   [...]
-   __kasan_slab_free+0x88/0xb8
-   __rcu_free_sheaf_prepare+0x94/0x360
-   rcu_free_sheaf+0x30/0x138
-   rcu_core+0x5d0/0x1638
-   rcu_core_si+0x18/0x30
-   [...]
-
-  The buggy address belongs to the object at ffff0000f3d40000
-   which belongs to the cache maple_node of size 256
-  The buggy address is located 0 bytes inside of
-   256-byte region [ffff0000f3d40000, ffff0000f3d40100)
-
-  [...]
-  Memory state around the buggy address:
-   ffff0000f3d3ff00: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-   ffff0000f3d3ff80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-  >ffff0000f3d40000: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                     ^
-   ffff0000f3d40080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-   ffff0000f3d40100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-  ==================================================================
-
-The second issue fixed in the first patch is in the mt_free_walk().
-mt_free_walk() descends by checking if the corresponding slot[offset]
-entry is non-zero. In a maple_range_64 node that has
-MAPLE_RANGE64_SLOTS-1 valid pointers to child nodes, all slots will be
-non-zero, since the last slot holds the metadata. Thus, mte_dead_walk()
-dereferences the metadata as if it were a node and hits the
-null-ptr-deref as shown in the splat below.
-
-After fixing the first issue, the reproducer reaches this case at 3166
-insertions. The affected node is the root on a tree with height 3 and it
-has 15 valid child nodes on a 64-bit machine. The first fix does not
-introduce this bug, but it exposes it for the root node because it no
-longer clears the root metadata. On an unmodified kernel, the same bug
-exists and is reachable when such a maple_range_64 node appears below
-the root, where mt_clear_meta() is not called.
-
-Second KASAN splat:
-
-  Unable to handle kernel paging request at virtual address dfff800000000006
-  KASAN: null-ptr-deref in range [0x0000000000000030-0x0000000000000037]
-  [...]
-  Call trace:
-   mte_dead_walk+0x78/0x140 (P)
-   mt_free_walk+0x1f8/0x3a0
-   rcu_core+0x5d0/0x1638
-   rcu_core_si+0x18/0x30
-   [..]
-
-Both splats are from an arm64 QEMU guest. The test_maple_tree and the
-userspace suite pass after each patch in the series.
-
-This patch (of 2):
-
-This commit fixes two issues in maple_range_64 nodes under RCU mode. A
-maple_range_64 node repurposes its last slot to hold metadata whenever
-the node is not full. Both issues arise from mishandling that last slot.
-
-More specifically the two fixes are:
-
-1. Remove mt_clear_meta() function. mt_clear_meta() decides whether the
-   last slot of a maple_range_64 node holds a child pointer or a
-   struct maple_metadata with the check
-
-        if (unlikely((mte_to_node(next) &&
-                      mte_node_type(next))))
-                return; /* no metadata, could be node */
-
-   The check expects the pointer to be encoded.  But the only callsite
-   of mt_clear_meta() is mt_destroy_walk() on the RCU destroy path, and
-   by the time it runs, mte_dead_leaves() has overwritten every slot on
-   a full node with a raw pointer, stripping the type information. Thus,
-   the check above never returns early for a full node as it should. It
-   falls through and then:
-           meta->gap = 0;
-           meta->end = 0;
-   zeroes two bytes of a valid child pointer. Later, mt_free_walk()
-   dereferences the corrupted pointer.
-
-  Fix this by removing mt_clear_meta() along with its only callsite.
-  mt_clear_meta() is only called for the root of each sub-tree destroyed
-  under RCU. Descendant nodes retain their metadata until they are
-  freed. RCU readers may use the metadata while traversing a node, but
-  do not use cleared metadata to detect that a node has been removed.
-  They detect a dead node via ma_dead_node().
-
-2. Fix invalid memory access in mt_free_walk().  mt_free_walk() descends
-   to the left-most unvisited "parent-of-a-leaf" node by checking the
-   condition:
-
-        if ((offset < mt_slots[type]) &&
-            rcu_dereference_protected(slots[offset],
-                                      lock_is_held(&rcu_callback_map)))
-                slots = mte_dead_walk(&enode, offset);
-
-   On a maple_range_64 node with MAPLE_RANGE64_SLOTS-1 children *all*
-   slots are non-NULL. The first MAPLE_RANGE64_SLOTS-1  hold valid
-   pointers to child nodes, and the last slot contains metadata. The
-   above check therefore passes for all offsets, and mte_dead_walk()
-   dereferences the metadata as if it were a node.
-
-   To trigger this, a node at least two levels above the leaves has to
-   have exactly MAPLE_RANGE64_SLOTS-1 valid pointers to other nodes.
-   maple_arange_64 nodes cannot hit this since they store the metadata
-   in a separate field.
-
-   Fix this by bounding the descent with slot_len which holds the number
-   of children of a dead node.
-
-Link: https://lore.kernel.org/20261005-fix-maple-tree-range64-rcu-v3-0-ebe7fb278e20@cslab.ece.ntua.gr
-Link: https://lore.kernel.org/20261005-fix-maple-tree-range64-rcu-v3-1-ebe7fb278e20@cslab.ece.ntua.gr
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Fixes: 2e5b4921f8ef ("maple_tree: fix freeing of nodes in rcu mode")
-Signed-off-by: Dimitris Charisis <dchar@cslab.ece.ntua.gr>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Liam R. Howlett (Google) <liam@infradead.org>
-Reviewed-by: Florian Schmaus <florian.schmaus@codasip.com>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Cc: Andrew Ballance <andrewjballance@gmail.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: 4a16a3af0571 ("ALSA: seq: ump: Handle FB info update")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/pm-pmb-00625126b81966d1bf1d-v2-915f6bbabe1fd458c3ab@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/maple_tree.c | 43 +------------------------------------------
- 1 file changed, 1 insertion(+), 42 deletions(-)
+ include/sound/ump.h             |  5 +++
+ sound/core/seq/seq_ump_client.c |  5 +--
+ sound/core/ump.c                | 59 ++++++++++++++++++++++++++++-----
+ 3 files changed, 59 insertions(+), 10 deletions(-)
 
-diff --git a/lib/maple_tree.c b/lib/maple_tree.c
-index cff42ec10f4bf..2a6b5f2129db8 100644
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -823,43 +823,6 @@ static inline void ma_set_meta(struct maple_node *mn, enum maple_type mt,
- 	meta->end = end;
+diff --git a/include/sound/ump.h b/include/sound/ump.h
+index 73f97f88e2ed7..387143783a9b5 100644
+--- a/include/sound/ump.h
++++ b/include/sound/ump.h
+@@ -66,6 +66,7 @@ struct snd_ump_endpoint {
+ 
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+ 	struct snd_seq_device *seq_dev;
++	/* Published after seq_client; calls are covered by UMP core SRCU. */
+ 	const struct snd_seq_ump_ops *seq_ops;
+ 	void *seq_client;
+ #endif
+@@ -126,6 +127,10 @@ int snd_ump_receive_ump_val(struct snd_ump_endpoint *ump, u32 val);
+ int snd_ump_switch_protocol(struct snd_ump_endpoint *ump, unsigned int protocol);
+ void snd_ump_update_group_attrs(struct snd_ump_endpoint *ump);
+ 
++#if IS_ENABLED(CONFIG_SND_SEQUENCER)
++void snd_ump_detach_seq(struct snd_ump_endpoint *ump);
++#endif
++
+ /*
+  * Some definitions for UMP
+  */
+diff --git a/sound/core/seq/seq_ump_client.c b/sound/core/seq/seq_ump_client.c
+index 9a6b4b61bd74c..dfafd2904317f 100644
+--- a/sound/core/seq/seq_ump_client.c
++++ b/sound/core/seq/seq_ump_client.c
+@@ -346,12 +346,12 @@ static int create_ump_endpoint_port(struct seq_ump_client *client)
+ /* release the client resources */
+ static void seq_ump_client_free(struct seq_ump_client *client)
+ {
++	snd_ump_detach_seq(client->ump);
+ 	cancel_work_sync(&client->group_notify_work);
+ 
+ 	if (client->seq_client >= 0)
+ 		snd_seq_delete_kernel_client(client->seq_client);
+ 
+-	client->ump->seq_ops = NULL;
+ 	client->ump->seq_client = NULL;
+ 
+ 	kfree(client);
+@@ -518,7 +518,8 @@ static int snd_seq_ump_probe(struct device *_dev)
+ 	snd_seq_kernel_client_put(cptr);
+ 
+ 	ump->seq_client = client;
+-	ump->seq_ops = &seq_ump_ops;
++	/* Publish the initialized client before callbacks can observe seq_ops. */
++	smp_store_release(&ump->seq_ops, &seq_ump_ops);
+ 	return 0;
+ 
+  error:
+diff --git a/sound/core/ump.c b/sound/core/ump.c
+index 2534c1b143ffd..50e0d8d7f04e7 100644
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -8,6 +8,7 @@
+ #include <linux/module.h>
+ #include <linux/export.h>
+ #include <linux/mm.h>
++#include <linux/srcu.h>
+ #include <sound/core.h>
+ #include <sound/rawmidi.h>
+ #include <sound/ump.h>
+@@ -18,6 +19,31 @@
+ #define ump_info(ump, fmt, args...)	dev_info((ump)->core.dev, fmt, ##args)
+ #define ump_dbg(ump, fmt, args...)	dev_dbg((ump)->core.dev, fmt, ##args)
+ 
++#if IS_ENABLED(CONFIG_SND_SEQUENCER)
++DEFINE_STATIC_SRCU(ump_seq_srcu);
++
++static const struct snd_seq_ump_ops *seq_ops_load(struct snd_ump_endpoint *ump)
++{
++	/* Pair with publication after seq_client has been initialized. */
++	return smp_load_acquire(&ump->seq_ops);
++}
++
++/**
++ * snd_ump_detach_seq - stop callbacks to a sequencer binding
++ * @ump: UMP endpoint
++ *
++ * Withdraw the binding and wait for all callbacks already in progress.
++ * The caller can then drain binding work and free the sequencer client.
++ * Must not be called from one of the binding callbacks.
++ */
++void snd_ump_detach_seq(struct snd_ump_endpoint *ump)
++{
++	WRITE_ONCE(ump->seq_ops, NULL);
++	synchronize_srcu(&ump_seq_srcu);
++}
++EXPORT_SYMBOL_GPL(snd_ump_detach_seq);
++#endif
++
+ static int snd_ump_dev_register(struct snd_rawmidi *rmidi);
+ static int snd_ump_dev_unregister(struct snd_rawmidi *rmidi);
+ static long snd_ump_ioctl(struct snd_rawmidi *rmidi, unsigned int cmd,
+@@ -348,8 +374,13 @@ int snd_ump_receive(struct snd_ump_endpoint *ump, const u32 *buffer, int count)
+ 			continue;
+ 		ump_handle_stream_msg(ump, ump->input_buf, n);
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+-		if (ump->seq_ops)
+-			ump->seq_ops->input_receive(ump, ump->input_buf, n);
++		scoped_guard(srcu, &ump_seq_srcu) {
++			const struct snd_seq_ump_ops *ops;
++
++			ops = seq_ops_load(ump);
++			if (ops)
++				ops->input_receive(ump, ump->input_buf, n);
++		}
+ #endif
+ 		process_legacy_input(ump, ump->input_buf, n);
+ 	}
+@@ -699,8 +730,12 @@ static void choose_default_protocol(struct snd_ump_endpoint *ump)
+ static void seq_notify_ep_change(struct snd_ump_endpoint *ump)
+ {
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+-	if (ump->parsed && ump->seq_ops && ump->seq_ops->notify_ep_change)
+-		ump->seq_ops->notify_ep_change(ump);
++	const struct snd_seq_ump_ops *ops;
++
++	guard(srcu)(&ump_seq_srcu);
++	ops = seq_ops_load(ump);
++	if (ump->parsed && ops && ops->notify_ep_change)
++		ops->notify_ep_change(ump);
+ #endif
  }
  
--/*
-- * mt_clear_meta() - clear the metadata information of a node, if it exists
-- * @mt: The maple tree
-- * @mn: The maple node
-- * @type: The maple node type
-- */
--static inline void mt_clear_meta(struct maple_tree *mt, struct maple_node *mn,
--				  enum maple_type type)
--{
--	struct maple_metadata *meta;
--	unsigned long *pivots;
--	void __rcu **slots;
--	void *next;
--
--	switch (type) {
--	case maple_range_64:
--		pivots = mn->mr64.pivot;
--		if (unlikely(pivots[MAPLE_RANGE64_SLOTS - 2])) {
--			slots = mn->mr64.slot;
--			next = mt_slot_locked(mt, slots,
--					      MAPLE_RANGE64_SLOTS - 1);
--			if (unlikely((mte_to_node(next) &&
--				      mte_node_type(next))))
--				return; /* no metadata, could be node */
--		}
--		fallthrough;
--	case maple_arange_64:
--		meta = ma_meta(mn, type);
--		break;
--	default:
--		return;
--	}
--
--	meta->gap = 0;
--	meta->end = 0;
--}
--
- /*
-  * ma_meta_end() - Get the data end of a node from the metadata
-  * @mn: The maple node
-@@ -4935,9 +4898,7 @@ static void mt_free_walk(struct rcu_head *head)
- 
- 		type = mte_node_type(enode);
- 		slots = ma_slots(mte_to_node(enode), type);
--		if ((offset < mt_slots[type]) &&
--		    rcu_dereference_protected(slots[offset],
--					      lock_is_held(&rcu_callback_map)))
-+		if (offset < mte_to_node(enode)->slot_len)
- 			slots = mte_dead_walk(&enode, offset);
- 		node = mte_to_node(enode);
- 	} while ((node != start) || (node->slot_len < offset));
-@@ -5031,8 +4992,6 @@ static void mt_destroy_walk(struct maple_enode *enode, struct maple_tree *mt,
- free_leaf:
- 	if (free)
- 		kfree(node);
--	else
--		mt_clear_meta(mt, node, node->type);
+@@ -797,8 +832,12 @@ static int ump_handle_product_id_msg(struct snd_ump_endpoint *ump,
+ static void seq_notify_protocol(struct snd_ump_endpoint *ump)
+ {
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+-	if (ump->seq_ops && ump->seq_ops->switch_protocol)
+-		ump->seq_ops->switch_protocol(ump);
++	const struct snd_seq_ump_ops *ops;
++
++	guard(srcu)(&ump_seq_srcu);
++	ops = seq_ops_load(ump);
++	if (ops && ops->switch_protocol)
++		ops->switch_protocol(ump);
+ #endif /* CONFIG_SND_SEQUENCER */
  }
  
- /*
+@@ -893,8 +932,12 @@ static void seq_notify_fb_change(struct snd_ump_endpoint *ump,
+ 				 struct snd_ump_block *fb)
+ {
+ #if IS_ENABLED(CONFIG_SND_SEQUENCER)
+-	if (ump->seq_ops && ump->seq_ops->notify_fb_change)
+-		ump->seq_ops->notify_fb_change(ump, fb);
++	const struct snd_seq_ump_ops *ops;
++
++	guard(srcu)(&ump_seq_srcu);
++	ops = seq_ops_load(ump);
++	if (ops && ops->notify_fb_change)
++		ops->notify_fb_change(ump, fb);
+ #endif
+ }
+ 
 -- 
 2.53.0
 
