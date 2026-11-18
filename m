@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023871;
-	b=EHhhAEYAGBicxR8MaEZQJRVTXQkKNabDy/TBBH8pX4icZbh4pGKHSJO2w/Emyu5CTUIT
-	 cYTHx785R2POa3w9RAIxf6GzxcnIvdpxfTxzoTdkcPmaMpsjQ7SlQz3dILyjVhVgXH1f7
-	 DFsN6gYEnWg51bHwt4SB706Vnrc+LAcnEHlBZL+bXDuUOHh7A37dwy4I1pAHPn5ucxDHU
-	 LUEZrZ9RirNyhblFGaWfeDEPpZVjO0GYPtlk+GHvksDIW+8tXufY2JabwYX4B3H1lVVYF
-	 0miW0fSN6mFCxDumymLdZ3WWo/PgRK+QQu7pJU7VFkVYjaEVNd6C5PFMn7xN7UE7MNw==
+	t=1795023874;
+	b=CrqGTfoLh9R7kOYcruHaIeYR3AhFnK6qDExhDuQKoeZTVpK/PIDIzR12K8lBmPGZqe7v
+	 m2ELixnCyIq3CnkRQnyx3wWN5Ui5dkWnXNiAqHDZVgpQW3xzedPgSVFOWaLcEK+GTGXCc
+	 Vv12rEquxfx0Y5wYh/ZIQELHA30gG0zCIWKDDZDwGSspkhj3KO0gMsZRxcFr/1oiuINBW
+	 LIZb7fE6pZGrWinyiHbG9wdGTrWdgNtyZBjYrogA0xM5L6psacGc4wr399AShNDViRyI8
+	 ZBxoipeiTVl6jZXF25v3hvS89YK+mvL8OiePsJQDcHZfdyHyesbgC/sPKNQ0yRt0ywQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023874;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HzRjGbq50+kVJer83KRSm+3A2nSFovx4eeukIvH+vbs=;
-	b=DtcS/FSvQiyqSjxA7hpjQOLdCiNH6RJ5JdRWg6O7f877ny4+tjEaGm635QMnz8m1BVFf
-	 RhAvOBV1S7qhgyr94RATEpzV8QCVO+5CvgMEMuJXEWinVY05zdvAnNB7eiy5E5Ro+00PZ
-	 AyBSZLrW6sqGY6x+R78WymRASWttiocNRl4sTcgPz8kDLVvjfu6PtCz6SC0w5oSYSQwlx
-	 VUg/nIFp0lvNFRtipLLeRI9y9c86LxvYQMuyH4eEcJtpp+8dbkOrwJJNxCAa5XhB3BreT
-	 YMO59ln80N9DwTc7E0sSktprz7SCZ0/SLMqWmv37NlhOclx5G3jrY6GgyHBbjaI443g==
+	bh=W9fq7otwGyt3aGLl0f7MkEekp7tGjBBg2EahRX0jf0I=;
+	b=Sq+c9lDQunhpG7XIQSr8AWGwfK84iqOOZhRp7VgXOsvVZYZ4LGXKk5w6XfQq7J5CTia5
+	 C6mRFugiihRMKpaSycteov7Q6iEBB5jCBDAf6GW92YaSAd7Qy/CGCSBFjMM69q1OdOQQp
+	 ENP9tq+CHjneLzmxjvBkuc9kgqyldiQ3ecMkxt/Kifyj4gfLJ0asK6umANxAqNe7pAyI6
+	 Io4QIrw8GIKyR90enWIBiSK3u+g2nY2pA/8BInkT+Z7pzC5D2roii3hEAN6Ai8Te5jkbP
+	 ISxSXlA9H9jtyAgZEhAcUVpJRomL+1d76grOihonqadECi3l8XMzdb7UQL7MdqsgllQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWYfuEOZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dpqrLiVe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4189F606A325;
-	Wed, 18 Nov 2026 17:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC79606A31C;
+	Wed, 18 Nov 2026 17:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MWYfuEOZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9019C1F000C4;
-	Wed, 18 Nov 2026 17:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dpqrLiVe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9711F000C4;
+	Wed, 18 Nov 2026 17:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023871;
-	bh=HzRjGbq50+kVJer83KRSm+3A2nSFovx4eeukIvH+vbs=;
+	s=korg; t=1795023874;
+	bh=W9fq7otwGyt3aGLl0f7MkEekp7tGjBBg2EahRX0jf0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MWYfuEOZWcTYRkNCktznNcPD2K8mhe1JVfqLFL9Lkn7eVIPBYaqSpuHHtaX2hGwV2
-	 rx2cTZOc1sap82ot34wk+0uTFFZEPQBjeNS6OT2MLci38dD3ZBwK3Cerw39+hjF4x0
-	 4qptpqnJVtxZZ970gZDdNKiydYZf9/6KWlgOB3+M=
+	b=dpqrLiVevF5LiAJ/OwuDGXKKjfcYjJE5iKlxP21ivDWNiqNyrwzz4+D+SmJBDBWtS
+	 BL7Ys0FK4R4QIDTJi4NjWy4NRxs5IEBzcR+am4fafY4dnm+xp+EB7b3znRGpqnQdDv
+	 VrlC4FY3VdiI8oGtVl5x48cBvpLunmOibmFRZdGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Li RongQing <lirongqing@baidu.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0524/2151] RDMA/core: Fix swapped list_add_tail() arguments in ib_add_sub_device()
-Date: Wed, 18 Nov 2026 15:37:39 +0100
-Message-ID: <20261118150141.123839138@linuxfoundation.org>
+Subject: [PATCH 6.18 0525/2151] RDMA/restrack: Dont set RESTRACK_DD mark after a failed xa_insert()
+Date: Wed, 18 Nov 2026 15:37:40 +0100
+Message-ID: <20261118150141.155105809@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,54 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit fad7b0dcb0821c0f201df3d85065145857a6f55b ]
+[ Upstream commit 391c5d826fd0a5dacad54613dbef74c50e966f5c ]
 
-ib_add_sub_device() links a new sub-device into its parent's sub-device
-list with:
+When adding a QP to the restrack xarray, rdma_restrack_add() does:
 
-	list_add_tail(&parent->subdev_list_head, &sub->subdev_list);
+	ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
+	if (ret)
+		res->id = 0;
 
-list_add_tail(new, head) expects the node to insert as the first
-argument and the list head as the second, so the call above does the
-opposite of what was intended: it treats the parent's list head as the
-new node and the sub-device's node as the list head.
+	if (qp->qp_type >= IB_QPT_DRIVER)
+		xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
 
-Because _ib_alloc_device() initialises subdev_list to a self-referencing
-empty head, the misplaced insertion does not crash, but it corrupts the
-parent->subdev_list_head list.  After adding two or more sub-devices,
-only the last one is reachable through the parent's head, and
-ib_del_sub_device_and_put()'s list_del() on &sub->subdev_list rewrites
-the head pointers, potentially severing earlier sub-devices from the
-chain.  During parent teardown, the reverse iteration over
-subdev_list_head then skips the orphaned sub-devices, so their
-del_sub_dev() callbacks are never invoked and ib_device_put() on the
-parent is never paired, leaking both the HW sub-devices and a refcount.
+The xa_set_mark() call is not guarded by "!ret".  When xa_insert() fails
+(possible on a qp_num collision or memory pressure), res->id is reset to
+0, yet the mark is still applied to index 0.  If a legitimate QP whose
+qp_num is 0 already occupies that slot - e.g. a normal QP or the SMI QP
+- it is spuriously tagged as driver-private (RESTRACK_DD), and the
+netlink dump path res_get_common_dumpit() then hides it from "rdma res"
+output whenever the caller does not request driver details.
 
-Swap the arguments to match the documented intent: insert the
-sub-device node into the parent's list head.
+Only set the mark when the insertion actually succeeded by folding the
+mark into the non-failure branch.
 
-Fixes: bca51197620a ("RDMA/core: Support IB sub device with type "SMI"")
+Fixes: e18fa0bbcedf8 ("RDMA/core: Add an option to display driver-specific QPs in the rdmatool")
 Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260916064435.2180-1-lirongqing@baidu.com
+Link: https://patch.msgid.link/20260916073042.1746-1-lirongqing@baidu.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/restrack.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index 004952357e055..6d872c351ad0a 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2904,7 +2904,7 @@ int ib_add_sub_device(struct ib_device *parent,
- 	sub->parent = parent;
- 
- 	mutex_lock(&parent->subdev_lock);
--	list_add_tail(&parent->subdev_list_head, &sub->subdev_list);
-+	list_add_tail(&sub->subdev_list, &parent->subdev_list_head);
- 	mutex_unlock(&parent->subdev_lock);
- 
- 	return ret;
+diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
+index 56aa1def56fac..97fdfca1cd8c5 100644
+--- a/drivers/infiniband/core/restrack.c
++++ b/drivers/infiniband/core/restrack.c
+@@ -248,8 +248,7 @@ void rdma_restrack_add(struct rdma_restrack_entry *res)
+ 		ret = xa_insert(&rt->xa, res->id, res, GFP_KERNEL);
+ 		if (ret)
+ 			res->id = 0;
+-
+-		if (qp->qp_type >= IB_QPT_DRIVER)
++		else if (qp->qp_type >= IB_QPT_DRIVER)
+ 			xa_set_mark(&rt->xa, res->id, RESTRACK_DD);
+ 	} else if (res->type == RDMA_RESTRACK_COUNTER) {
+ 		/* Special case to ensure that cntn points to right counter */
 -- 
 2.53.0
 
