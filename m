@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030680;
-	b=SowVE/bPwNqQECOLcdrUHFKPQnQhi1dY1f0xJkeLjHpee/+FOFIulOIrOTlZcUl772ms
-	 vIJw03A2BNmdsqbrjYZ8oIA6jH07pQzqKVdac71zpbhov3QmMTQfTRXWTevs4tNJfx4JA
-	 dunoTc8z0sZppuu4rNSdFwpp9LKEyuP9FR6UIVZzOEpBvdi7F2ZRlLjyUjNjoAC5dLi9K
-	 fYEBJ2iK8spam5tkIxRZBuR+hbKJ5nOtkLS8/eiRpwd32i49GUB2NmtJu/f5t+8ufd2+B
-	 bSxfeCQa4AA0RU00xl6rmdZIWOfAcSHzXc1qIEr1I0207mmrxiyAuf3ylpVg+CCT4gw==
+	t=1795030683;
+	b=yxIiKNU0W6oxFqbz1BZ5KoRgllNIj8PhPvqGf/63lFQwZYVGQ7zIR2yLmaFAjgdm9py6
+	 0aZBLrmq5FdrwrnsHt7P+9FeQXuX4VgaMGykergEeF1/H50s1whm2W1/3IKYTotwu0SoM
+	 FXFl5FPbUt3tFZPLUqU7kGa4bt/2QLSaSEkB1tRHdJqkKiHzYic3sYcw+fHVk913wjzrM
+	 Ew/l5zPXF0ybVAgdJnS/TTuhWTRD6KvhNww5V5DNPbmy81idlKAr7uv62Wl1FDejxO3sp
+	 y4Stkraj89DPXjQ9/aid6t4lycQJ6wU8wk8HswO1yXsq/a4NygmCnEuKe9PmLAv9xPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030680;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030683;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oJPWSby4iZVUSOaBc7ko6iD5X+i7cM86kyDfSW+ErCI=;
-	b=0TI9uGEaaSNVo73NK6cDA2wLq3bm4TMiYHLUaZwEThJChfAqXGK1XpYhfjj5rZB0zXdI
-	 sntXtbEkE0+FyIdz6BaKJsGMs/0s9o9WP1DNSp0fHeD3FRA9ketQMBVteqPgEFpQvJqI2
-	 7wuWZZy1IICaBFmqt4VHwahFhXm1g9BnlmDK04X3hGQC+QG+H2lhT4fCrS28jWQw+CpzY
-	 DJ6HqRC/y/CjBEDXapu86WaAf2dBOPY7aHI5wSCzWzEFaT1ikyinVF/KRw9QKY7xIzCTi
-	 pcEVKz1ZP+Hea3qUCIuu3Ex2qKOC3S1/4Uw3nVu7gCCUlL8xKSvX42xqrTbKEiTuXtA==
+	bh=5DhxFE3vm+9AoKk6NgSbYOmHRwXgDtmPy+wjiaFZovs=;
+	b=yGDVpjNyI6NzePzhAY63nCAh8pe2szS4QwtvJXQyqrT+HwWxQFbFRBCfarKH12Kr2c9I
+	 ZQ9xY8W+EODaZ9jow5lkc20+ElZdyGOGl9XsMR+PprtmhenMS4qAFTWFVnBeBu/cCjXSH
+	 DpGSJnMIuS2sL9ngJku5y5+LGueJb9FZyFMNaNnnGb6OyZcVjqV+PbjIJMv3dvMW3m4Ya
+	 Q2ypwbsv93pd4ZcuuBv7EnAcRFD+CEUWtvd7iKJsTrkuwobrDZaCAkRhFgJ4j3ZYVm81b
+	 RTpASioDDZ2E+mHnPz5Y1ccBTdvz/fK9S7m2Q5pVnp3CjU9wSum7f6Q39Vd+Mmcb0ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dsdUSQdk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhkz9NXI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405B3606A7C6;
-	Wed, 18 Nov 2026 19:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1452E606A7C6;
+	Wed, 18 Nov 2026 19:38:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dsdUSQdk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7435A1F000C5;
-	Wed, 18 Nov 2026 19:37:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lhkz9NXI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632C81F000C4;
+	Wed, 18 Nov 2026 19:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030680;
-	bh=oJPWSby4iZVUSOaBc7ko6iD5X+i7cM86kyDfSW+ErCI=;
+	s=korg; t=1795030682;
+	bh=5DhxFE3vm+9AoKk6NgSbYOmHRwXgDtmPy+wjiaFZovs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dsdUSQdkx9v2VK2ZTqXEvfAdH3f5aHE4N163cBqA7u+3mRClnh98QxeLyCgBsTYnO
-	 Qo9A75YHBFqFJ8LOKJ0qFGarJMcBB/gLpiqcKdrq9VR9jZxpMgg9pHLgEifvgvDuLP
-	 Y0feFh8w+XnFsvzmBug1MdP2EBwP93agDXEZ0arI=
+	b=lhkz9NXIXiEcGivWNRQoHvmw4tyZoJ7Rfntok/08g/7520wi9R86NRSw4T2lWBifO
+	 HJnztrjhzE7Z+PfRQKqPGjWwqx/O9SfRNZkvHxifExPrx0HDu80Ay9al4LBwTcp/eu
+	 5ZGpVY0/5iPuNodta3aOq8xn80fIOj1RSNOO/EWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <muchun.song@linux.dev>,
-	Lance Yang <lance.yang@linux.dev>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0748/1756] mm/memory_hotplug: fix missing rollback in __add_pages()
-Date: Wed, 18 Nov 2026 15:47:55 +0100
-Message-ID: <20261118150039.351399440@linuxfoundation.org>
+Subject: [PATCH 6.12 0749/1756] drm/tegra: Fix syncobj_in wait return value check
+Date: Wed, 18 Nov 2026 15:47:56 +0100
+Message-ID: <20261118150039.389368457@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,60 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit c31bb839fb829958101250ee5acfa4f94fdb7ecd ]
+[ Upstream commit 27836c46a3db5a7869a9f7e181136f0c4d8bc0d1 ]
 
-__add_pages() returns on a sparse_add_section() failure without removing
-the sections already added in the same request.
+dma_fence_wait_timeout() returns the remaining timeout in jiffies on
+success, zero on timeout, and a negative error code if interrupted. The
+return value was assigned to 'err' and checked as if it were an errno,
+the opposite of the correct logic.
 
-For memremap_pages(), the failed range is not counted in pgmap->nr_range,
-so memunmap_pages() skips it. The sections already added in that range
-retain their vmemmap mappings and subsection bits. Retrying a
-section-aligned range can then fail with -EEXIST.
+Fix the code to use a properly typed variable and check each condition
+correctly.
 
-Save the initial PFN and remove [start_pfn, pfn) on failure. For a vmemmap
-population failure, section_activate() already cleans up the current
-section, so the rollback excludes it. If the first section fails,
-__remove_pages() receives an empty range and does nothing.
-
-Link: https://lore.kernel.org/all/BAD58999-1EDD-4A37-ABA0-DB1BD8AB3453@linux.dev/
-Suggested-by: Muchun Song <muchun.song@linux.dev>
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Fixes: ba72b4c8cf60 ("mm/sparsemem: support sub-section hotplug")
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Link: https://patch.msgid.link/20260930160432.5564-1-lance.yang@linux.dev
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: 13abe0bb15ce ("drm/tegra: Implement job submission part of new UAPI")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/aJM_te551jUwnRv7@stanley.mountain/
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260730-b4-host1x-syncobj-wait-v1-1-afa730410392@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory_hotplug.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/tegra/submit.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
-index e21f59cf29d9f..28fb4587ed8b0 100644
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -388,6 +388,7 @@ EXPORT_SYMBOL_GPL(pfn_to_online_page);
- int __add_pages(int nid, unsigned long pfn, unsigned long nr_pages,
- 		struct mhp_params *params)
- {
-+	const unsigned long start_pfn = pfn;
- 	const unsigned long end_pfn = pfn + nr_pages;
- 	unsigned long cur_nr_pages;
- 	int err;
-@@ -421,8 +422,11 @@ int __add_pages(int nid, unsigned long pfn, unsigned long nr_pages,
- 				   SECTION_ALIGN_UP(pfn + 1) - pfn);
- 		err = sparse_add_section(nid, pfn, cur_nr_pages, altmap,
- 					 params->pgmap);
--		if (err)
-+		if (err) {
-+			__remove_pages(start_pfn, pfn - start_pfn, altmap,
-+				       params->pgmap);
- 			break;
-+		}
- 		cond_resched();
+diff --git a/drivers/gpu/drm/tegra/submit.c b/drivers/gpu/drm/tegra/submit.c
+index 705382035f5f6..f35e5c3ff37cd 100644
+--- a/drivers/gpu/drm/tegra/submit.c
++++ b/drivers/gpu/drm/tegra/submit.c
+@@ -530,6 +530,7 @@ int tegra_drm_ioctl_channel_submit(struct drm_device *drm, void *data,
+ 
+ 	if (args->syncobj_in) {
+ 		struct dma_fence *fence;
++		long wait_err;
+ 
+ 		err = drm_syncobj_find_fence(file, args->syncobj_in, 0, 0, &fence);
+ 		if (err) {
+@@ -537,10 +538,15 @@ int tegra_drm_ioctl_channel_submit(struct drm_device *drm, void *data,
+ 			goto unlock;
+ 		}
+ 
+-		err = dma_fence_wait_timeout(fence, true, msecs_to_jiffies(10000));
++		wait_err = dma_fence_wait_timeout(fence, true, msecs_to_jiffies(10000));
+ 		dma_fence_put(fence);
+-		if (err) {
++		if (wait_err == 0) {
+ 			SUBMIT_ERR(context, "wait for syncobj_in timed out");
++			err = -ETIMEDOUT;
++			goto unlock;
++		} else if (wait_err < 0) {
++			/* In practice, -ERESTARTSYS */
++			err = wait_err;
+ 			goto unlock;
+ 		}
  	}
- 	vmemmap_populate_print_last();
 -- 
 2.53.0
 
