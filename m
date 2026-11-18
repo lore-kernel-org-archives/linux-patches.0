@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031051;
-	b=bxJscYkQ0velFQFsJ7zv78njg55NGMJHCPTHafzy5/SZT4cuGr48r1q4UPU/7I4dSQbC
-	 kGmH3xiYYyfdCuuf2+0Lg0iq9dma+HY/38z5SCYNEYVkbxUBaueyieLtyjrdzpK9bQ1fj
-	 ecyuwu5rbZgp+DmCO/vPllW/blx4lEEqLuIec/LhGrx1MzqEPUtFzKvWkOIZPqXemrbkj
-	 VpHaJYwsE6r9xDMb8uAS6M2kM1LaJxdGSaNm4Qhf3OuSB3dg34VsTiih/rwanW+6t0Na0
-	 BJDT3t82pu3CahIRa4LnMkVRgO6J8kvSIE6BIbwIqyfOYlqVZC4HTvTiuoCTZzc8TsQ==
+	t=1795031054;
+	b=QwGtrwI8RWyNBnAiqKHw2+OTFEqdw38WET20RsocN6/Mvw6prN58/q9LAGaT7m+A25AB
+	 CBNUt2s+qQwx4JOpGTtOjbbEuD3zmVsNOKyYkAHTXUq7ParfaSfv+rbFtpvceXXyRohIH
+	 HFSDvuoHDkq8vvl2r/lhlny1D7eF+c2AseUi0lWnqPrMvEacl7KMHsmSL962QUul1zmD9
+	 M3WVg8dGThSSEB1j9BfoOmdkVBnrPhDty6lkP/xFJjC7lNOdHnoKlDgo8lWotag8tvRH+
+	 h5pkxZYeq8vFRto7GOOdPNFm08s16QN3hYJCsF1S4rTLqo25Vj91TA2dvI3XKdhTguA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031051;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031054;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=6nF6/FlQNXhy85/FlchRfCHbmfvfzM/9V20XvRu9G8E=;
-	b=jaMpzoSHO83IVeJr3z6EfXDj4j+rh5EW2DgtQf/V+Hs23mOaq54ySpdEwA8sTKkHdTVE
-	 u6aWhYccw30SOid0D/oWvMFcYAcGCaWgAzg3KPZwPDog5CVZ90/1Zcwd9VAicC3fRYnlc
-	 uD0sq6w29IAYfBNSW0Esmtwsz6KhBn6q+mjucaUpGtA2R2cX9lFulWMy+G4aKiTAQntOX
-	 Y8Rcrc5r4Su4eaCr2SC14v1W9ENSRr1ZHg2AO5AAoMeNvyZdUS7SZQZ6JkpFieAxp7TxC
-	 DBeYNdy4J+DA58QyvCRoWwiL3ZDlOoPVVO2E0zF/Ev7bYwZHZ5eTObdoqXT7+fMtnlw==
+	bh=ymLXZvW9qk7rmR/hsq8CCRgGpPrJuiSLh3nYu85Cq7A=;
+	b=aWdGBjCvqztcw6B8FKS6vdJMrGL+OwGs1dIvTUmwr83CqbymXgn4PJlCxauKCA80T+SI
+	 1sK4l6wQOletCOfnCBkRL4+D2GLN3XkhWdVBMes4WjlefBSjnH3b6Cfq0WnMsZf5cyL9h
+	 VQ+Ck+q82LcMkPPkzcKkjMCI83J28CDDHP73Qd16ep6b76GWbtds/N5I1XToAyd8zyKTh
+	 ueiXDeXCsy1xgobmxIm2IOp4t0eorcT6gmhbsss7AEfG4LU1Tj90q9+3WnVvjV8H2juV/
+	 yc7utRKJh3hNr95UbWCgbWt26bGw7RF/MPpME5TTrkwjyGpPe/SQD96eyxoYsPA72BQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oULxKdu0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0QQt6a0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3751E606A31C;
-	Wed, 18 Nov 2026 19:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20685606A320;
+	Wed, 18 Nov 2026 19:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oULxKdu0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8671F000C4;
-	Wed, 18 Nov 2026 19:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B0QQt6a0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE2E1F000C4;
+	Wed, 18 Nov 2026 19:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031051;
-	bh=6nF6/FlQNXhy85/FlchRfCHbmfvfzM/9V20XvRu9G8E=;
+	s=korg; t=1795031054;
+	bh=ymLXZvW9qk7rmR/hsq8CCRgGpPrJuiSLh3nYu85Cq7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oULxKdu00OKlPwbealr9Nm0+1TERnOfcm+q1k/nakf/iDUOdT1hw0GozXFU1H3qvT
-	 SQGqXCpx+R+pgBqsn2uY203na5bM40d4YcEtd+/LJXMQHkQ+E3jvkp5+9xKxzTcXKh
-	 AXtMa2jXB0y1Evel+Y4Ao2cj/+4eeivSL57ypyl8=
+	b=B0QQt6a0KWTPfSlmUGPKvlmzGAdsDu4NQVhD86e9YnO+R5dO27f6CUgCQi//Ywm/d
+	 9d27wTLPpOmyerp/ge8s8JDAxse4p3XTn+bS19gEEw4VTdCieAF1J4i3Egz+uMHF92
+	 t5j5kibUejOLZVeNnjfNJYI37wz227MmvZGLFVj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Molnar <mingo@kernel.org>,
+	Vincent Mailhol <mailhol@kernel.org>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0919/1756] x86/efistub: Merge PE and handover entrypoints
-Date: Wed, 18 Nov 2026 15:50:46 +0100
-Message-ID: <20261118150046.570346473@linuxfoundation.org>
+Subject: [PATCH 6.12 0920/1756] efi/libstub: make local GUID variables static
+Date: Wed, 18 Nov 2026 15:50:47 +0100
+Message-ID: <20261118150046.605850173@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,208 +68,378 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Vincent Mailhol <mailhol@kernel.org>
 
-[ Upstream commit dac628e9563640e2de7878decc03a508b1ba319a ]
+[ Upstream commit e57b05932a49b1ef54c6f116b9b044ce37db7dcc ]
 
-The difference between the PE and handover entrypoints in the EFI stub
-is that the former allocates a struct boot_params whereas the latter
-expects one from the caller. Currently, these are two completely
-separate entrypoints, duplicating some logic and both relying of
-efi_exit() to return straight back to the firmware on an error.
+Local efi_guid_t variables with automatic storage produce assembly
+similar to passing the address of the GUID macro directly. For the same
+reason, make these GUID variables static.
 
-Simplify this by making the PE entrypoint call the handover entrypoint
-with NULL as the argument for the struct boot_params parameter. This
-makes the code easier to follow, and removes the need to support two
-different calling conventions in the mixed mode asm code.
+Put the static declarations first in their local declaration block to
+visually separate them from the automatic variables.
 
-While at it, move the assignment of boot_params_ptr into the function
-that actually calls into the legacy decompressor, which is where its
-value is required.
+For an x86_64 build with gcc 15.3.0, bloat-o-meter reports:
 
-Acked-by: Ingo Molnar <mingo@kernel.org>
+  add/remove: 15/0 grow/shrink: 0/10 up/down: 336/-742 (-406)
+  Function                                     old     new   delta
+  tbl_guid                                       -      32     +32
+  rng_proto                                      -      32     +32
+  pci_proto                                      -      32     +32
+  guid                                           -      32     +32
+  fs_proto                                       -      32     +32
+  cc_guid                                        -      32     +32
+  tpm2_guid                                      -      16     +16
+  text_to_dp_guid                                -      16     +16
+  tcg2_guid                                      -      16     +16
+  rng_table_guid                                 -      16     +16
+  rng_algo_raw                                   -      16     +16
+  proto                                          -      16     +16
+  linux_eventlog_guid                            -      16     +16
+  lf2_proto_guid                                 -      16     +16
+  info_guid                                      -      16     +16
+  efi_get_memory_map                           707     696     -11
+  efi_pci_disable_bridge_busmaster            1199    1184     -15
+  efi_get_random_bytes                         216     188     -28
+  efi_remap_image                              357     328     -29
+  efi_load_initrd                             1113    1065     -48
+  efi_random_get_seed                         1368    1297     -71
+  efi_measure_tagged_event                     935     854     -81
+  efi_retrieve_eventlog                       1686    1570    -116
+  handle_cmdline_files                        2501    2341    -160
+  efi_stub_entry                              4136    3953    -183
+  Total: Before=28877, After=28471, chg -1.41%
+
+Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Stable-dep-of: 8ea857a2bb54 ("efi/libstub: Free cmdline_ptr in efi_pe_entry")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/boot/compressed/efi_mixed.S    | 16 +-------
- drivers/firmware/efi/libstub/x86-stub.c | 52 ++++++++++++++-----------
- 2 files changed, 30 insertions(+), 38 deletions(-)
+ drivers/firmware/efi/libstub/efi-stub-entry.c    |  2 +-
+ drivers/firmware/efi/libstub/efi-stub-helper.c   | 10 +++++-----
+ drivers/firmware/efi/libstub/efi-stub.c          |  2 +-
+ drivers/firmware/efi/libstub/file.c              |  8 ++++----
+ drivers/firmware/efi/libstub/kaslr.c             |  2 +-
+ drivers/firmware/efi/libstub/mem.c               |  2 +-
+ drivers/firmware/efi/libstub/pci.c               |  2 +-
+ drivers/firmware/efi/libstub/random.c            |  8 ++++----
+ drivers/firmware/efi/libstub/riscv.c             |  2 +-
+ drivers/firmware/efi/libstub/tpm.c               |  8 ++++----
+ drivers/firmware/efi/libstub/unaccepted_memory.c |  2 +-
+ drivers/firmware/efi/libstub/x86-stub.c          | 10 +++++-----
+ 12 files changed, 29 insertions(+), 29 deletions(-)
 
-diff --git a/arch/x86/boot/compressed/efi_mixed.S b/arch/x86/boot/compressed/efi_mixed.S
-index 876fc6d46a131..d681e30c6732c 100644
---- a/arch/x86/boot/compressed/efi_mixed.S
-+++ b/arch/x86/boot/compressed/efi_mixed.S
-@@ -56,22 +56,8 @@ SYM_FUNC_START(startup_64_mixed_mode)
- 	movl	efi32_boot_sp(%rip), %esp
- 	andl	$~7, %esp
+diff --git a/drivers/firmware/efi/libstub/efi-stub-entry.c b/drivers/firmware/efi/libstub/efi-stub-entry.c
+index a6c0498351905..2ebb81fd9f42a 100644
+--- a/drivers/firmware/efi/libstub/efi-stub-entry.c
++++ b/drivers/firmware/efi/libstub/efi-stub-entry.c
+@@ -30,13 +30,13 @@ struct screen_info *alloc_screen_info(void)
+ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
+ 				   efi_system_table_t *systab)
+ {
++	static efi_guid_t loaded_image_proto = LOADED_IMAGE_PROTOCOL_GUID;
+ 	efi_loaded_image_t *image;
+ 	efi_status_t status;
+ 	unsigned long image_addr;
+ 	unsigned long image_size = 0;
+ 	/* addr/point and size pairs for memory management*/
+ 	char *cmdline_ptr = NULL;
+-	efi_guid_t loaded_image_proto = LOADED_IMAGE_PROTOCOL_GUID;
+ 	unsigned long reserve_addr = 0;
+ 	unsigned long reserve_size = 0;
  
--#ifdef CONFIG_EFI_HANDOVER_PROTOCOL
- 	mov	8(%rdx), %edx		// saved bootparams pointer
--	test	%edx, %edx
--	jnz	efi_stub_entry
--#endif
--	/*
--	 * efi_pe_entry uses MS calling convention, which requires 32 bytes of
--	 * shadow space on the stack even if all arguments are passed in
--	 * registers. We also need an additional 8 bytes for the space that
--	 * would be occupied by the return address, and this also results in
--	 * the correct stack alignment for entry.
--	 */
--	sub	$40, %rsp
--	mov	%rdi, %rcx		// MS calling convention
--	mov	%rsi, %rdx
--	jmp	efi_pe_entry
-+	call	efi_stub_entry
- SYM_FUNC_END(startup_64_mixed_mode)
+diff --git a/drivers/firmware/efi/libstub/efi-stub-helper.c b/drivers/firmware/efi/libstub/efi-stub-helper.c
+index 1ad414da9920a..c1a25d8d9adb3 100644
+--- a/drivers/firmware/efi/libstub/efi-stub-helper.c
++++ b/drivers/firmware/efi/libstub/efi-stub-helper.c
+@@ -244,6 +244,7 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
+ 					     unsigned long load_size,
+ 					     enum efistub_event_type event)
+ {
++	static efi_guid_t tcg2_guid = EFI_TCG2_PROTOCOL_GUID;
+ 	union {
+ 		efi_status_t
+ 		(__efiapi *hash_log_extend_event)(void *, u64, efi_physical_addr_t,
+@@ -253,7 +254,6 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
+ 	struct efistub_measured_event *evt;
+ 	int size = struct_size(evt, tagged_event.tagged_event_data,
+ 			       events[event].event_data_len);
+-	efi_guid_t tcg2_guid = EFI_TCG2_PROTOCOL_GUID;
+ 	efi_tcg2_protocol_t *tcg2 = NULL;
+ 	union efistub_event ev;
+ 	efi_status_t status;
+@@ -272,7 +272,7 @@ static efi_status_t efi_measure_tagged_event(unsigned long load_addr,
+ 		method.hash_log_extend_event =
+ 			(void *)efi_table_attr(tcg2, hash_log_extend_event);
+ 	} else {
+-		efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
++		static efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
+ 		efi_cc_protocol_t *cc = NULL;
  
- SYM_FUNC_START(__efi64_thunk)
+ 		efi_bs_call(locate_protocol, &cc_guid, NULL, (void **)&cc);
+@@ -550,7 +550,7 @@ static
+ efi_status_t efi_load_initrd_dev_path(struct linux_efi_initrd *initrd,
+ 				      unsigned long max)
+ {
+-	efi_guid_t lf2_proto_guid = EFI_LOAD_FILE2_PROTOCOL_GUID;
++	static efi_guid_t lf2_proto_guid = EFI_LOAD_FILE2_PROTOCOL_GUID;
+ 	efi_device_path_protocol_t *dp;
+ 	efi_load_file2_protocol_t *lf2;
+ 	efi_handle_t handle;
+@@ -612,7 +612,7 @@ efi_status_t efi_load_initrd(efi_loaded_image_t *image,
+ 			     unsigned long hard_limit,
+ 			     const struct linux_efi_initrd **out)
+ {
+-	efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
++	static efi_guid_t tbl_guid = LINUX_EFI_INITRD_MEDIA_GUID;
+ 	efi_status_t status = EFI_SUCCESS;
+ 	struct linux_efi_initrd initrd, *tbl;
+ 
+@@ -722,7 +722,7 @@ efi_status_t efi_wait_for_key(unsigned long usec, efi_input_key_t *key)
+ void efi_remap_image(unsigned long image_base, unsigned alloc_size,
+ 		     unsigned long code_size)
+ {
+-	efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
++	static efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
+ 	efi_memory_attribute_protocol_t *memattr;
+ 	efi_status_t status;
+ 	u64 attr;
+diff --git a/drivers/firmware/efi/libstub/efi-stub.c b/drivers/firmware/efi/libstub/efi-stub.c
+index 52b7029707642..8d627f3d316a5 100644
+--- a/drivers/firmware/efi/libstub/efi-stub.c
++++ b/drivers/firmware/efi/libstub/efi-stub.c
+@@ -69,8 +69,8 @@ static struct screen_info *setup_graphics(void)
+ 
+ static void install_memreserve_table(void)
+ {
++	static efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
+ 	struct linux_efi_memreserve *rsv;
+-	efi_guid_t memreserve_table_guid = LINUX_EFI_MEMRESERVE_TABLE_GUID;
+ 	efi_status_t status;
+ 
+ 	/*
+diff --git a/drivers/firmware/efi/libstub/file.c b/drivers/firmware/efi/libstub/file.c
+index d6a025df07dcf..f91965b2067cf 100644
+--- a/drivers/firmware/efi/libstub/file.c
++++ b/drivers/firmware/efi/libstub/file.c
+@@ -39,7 +39,7 @@ static efi_status_t efi_open_file(efi_file_protocol_t *volume,
+ 				  efi_file_protocol_t **handle,
+ 				  unsigned long *file_size)
+ {
+-	efi_guid_t info_guid = EFI_FILE_INFO_ID;
++	static efi_guid_t info_guid = EFI_FILE_INFO_ID;
+ 	efi_file_protocol_t *fh;
+ 	unsigned long info_sz;
+ 	efi_status_t status;
+@@ -74,7 +74,7 @@ static efi_status_t efi_open_file(efi_file_protocol_t *volume,
+ static efi_status_t efi_open_volume(efi_loaded_image_t *image,
+ 				    efi_file_protocol_t **fh)
+ {
+-	efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
++	static efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
+ 	efi_simple_file_system_protocol_t *io;
+ 	efi_status_t status;
+ 
+@@ -128,9 +128,9 @@ static int find_file_option(const efi_char16_t *cmdline, int cmdline_len,
+ static efi_status_t efi_open_device_path(efi_file_protocol_t **volume,
+ 					 struct finfo *fi)
+ {
+-	efi_guid_t text_to_dp_guid = EFI_DEVICE_PATH_FROM_TEXT_PROTOCOL_GUID;
++	static efi_guid_t text_to_dp_guid = EFI_DEVICE_PATH_FROM_TEXT_PROTOCOL_GUID;
++	static efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
+ 	static efi_device_path_from_text_protocol_t *text_to_dp = NULL;
+-	efi_guid_t fs_proto = EFI_FILE_SYSTEM_GUID;
+ 	efi_device_path_protocol_t *initrd_dp;
+ 	efi_simple_file_system_protocol_t *io;
+ 	struct efi_file_path_dev_path *fpath;
+diff --git a/drivers/firmware/efi/libstub/kaslr.c b/drivers/firmware/efi/libstub/kaslr.c
+index 4bc963e999eb9..f5074656457a6 100644
+--- a/drivers/firmware/efi/libstub/kaslr.c
++++ b/drivers/firmware/efi/libstub/kaslr.c
+@@ -18,7 +18,7 @@
+  */
+ u32 efi_kaslr_get_phys_seed(efi_handle_t image_handle)
+ {
+-	efi_guid_t li_fixed_proto = LINUX_EFI_LOADED_IMAGE_FIXED_GUID;
++	static efi_guid_t li_fixed_proto = LINUX_EFI_LOADED_IMAGE_FIXED_GUID;
+ 	void *p;
+ 
+ 	if (!IS_ENABLED(CONFIG_RANDOMIZE_BASE))
+diff --git a/drivers/firmware/efi/libstub/mem.c b/drivers/firmware/efi/libstub/mem.c
+index 9c82259eea816..fe623a0126ecb 100644
+--- a/drivers/firmware/efi/libstub/mem.c
++++ b/drivers/firmware/efi/libstub/mem.c
+@@ -20,10 +20,10 @@
+ efi_status_t efi_get_memory_map(struct efi_boot_memmap **map,
+ 				bool install_cfg_tbl)
+ {
++	static efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
+ 	struct efi_boot_memmap tmp, *m __free(efi_pool) = NULL;
+ 	int memtype = install_cfg_tbl ? EFI_ACPI_RECLAIM_MEMORY
+ 				      : EFI_LOADER_DATA;
+-	efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
+ 	efi_status_t status;
+ 	unsigned long size;
+ 
+diff --git a/drivers/firmware/efi/libstub/pci.c b/drivers/firmware/efi/libstub/pci.c
+index 1dccf77958d3a..5daa7a0a0e87a 100644
+--- a/drivers/firmware/efi/libstub/pci.c
++++ b/drivers/firmware/efi/libstub/pci.c
+@@ -15,7 +15,7 @@
+ 
+ void efi_pci_disable_bridge_busmaster(void)
+ {
+-	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
++	static efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
+ 	efi_handle_t *pci_handle __free(efi_pool) = NULL;
+ 	unsigned long pci_handle_num;
+ 	efi_handle_t handle;
+diff --git a/drivers/firmware/efi/libstub/random.c b/drivers/firmware/efi/libstub/random.c
+index 7109b8a2dcba8..3ca230fa7aa3e 100644
+--- a/drivers/firmware/efi/libstub/random.c
++++ b/drivers/firmware/efi/libstub/random.c
+@@ -38,7 +38,7 @@ union efi_rng_protocol {
+  */
+ efi_status_t efi_get_random_bytes(unsigned long size, u8 *out)
+ {
+-	efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
++	static efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
+ 	efi_status_t status;
+ 	efi_rng_protocol_t *rng = NULL;
+ 
+@@ -64,9 +64,9 @@ efi_status_t efi_get_random_bytes(unsigned long size, u8 *out)
+  */
+ efi_status_t efi_random_get_seed(void)
+ {
+-	efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
+-	efi_guid_t rng_algo_raw = EFI_RNG_ALGORITHM_RAW;
+-	efi_guid_t rng_table_guid = LINUX_EFI_RANDOM_SEED_TABLE_GUID;
++	static efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
++	static efi_guid_t rng_algo_raw = EFI_RNG_ALGORITHM_RAW;
++	static efi_guid_t rng_table_guid = LINUX_EFI_RANDOM_SEED_TABLE_GUID;
+ 	struct linux_efi_random_seed *prev_seed, *seed = NULL;
+ 	int prev_seed_size = 0, seed_size = EFI_RANDOM_SEED_SIZE;
+ 	unsigned long nv_seed_size = 0, offset = 0;
+diff --git a/drivers/firmware/efi/libstub/riscv.c b/drivers/firmware/efi/libstub/riscv.c
+index f66f33ceb99e3..49db47c05bfe9 100644
+--- a/drivers/firmware/efi/libstub/riscv.c
++++ b/drivers/firmware/efi/libstub/riscv.c
+@@ -45,7 +45,7 @@ static int get_boot_hartid_from_fdt(void)
+ 
+ static efi_status_t get_boot_hartid_from_efi(void)
+ {
+-	efi_guid_t boot_protocol_guid = RISCV_EFI_BOOT_PROTOCOL_GUID;
++	static efi_guid_t boot_protocol_guid = RISCV_EFI_BOOT_PROTOCOL_GUID;
+ 	struct riscv_efi_boot_protocol *boot_protocol;
+ 	efi_status_t status;
+ 
+diff --git a/drivers/firmware/efi/libstub/tpm.c b/drivers/firmware/efi/libstub/tpm.c
+index 1fd6823248ab6..bf5dcde25d82a 100644
+--- a/drivers/firmware/efi/libstub/tpm.c
++++ b/drivers/firmware/efi/libstub/tpm.c
+@@ -28,8 +28,8 @@ static const efi_char16_t efi_MemoryOverWriteRequest_name[] =
+  */
+ void efi_enable_reset_attack_mitigation(void)
+ {
++	static efi_guid_t var_guid = MEMORY_ONLY_RESET_CONTROL_GUID;
+ 	u8 val = 1;
+-	efi_guid_t var_guid = MEMORY_ONLY_RESET_CONTROL_GUID;
+ 	efi_status_t status;
+ 	unsigned long datasize = 0;
+ 
+@@ -52,7 +52,7 @@ static void efi_retrieve_tcg2_eventlog(int version, efi_physical_addr_t log_loca
+ 				       efi_bool_t truncated,
+ 				       struct efi_tcg2_final_events_table *final_events_table)
+ {
+-	efi_guid_t linux_eventlog_guid = LINUX_EFI_TPM_EVENT_LOG_GUID;
++	static efi_guid_t linux_eventlog_guid = LINUX_EFI_TPM_EVENT_LOG_GUID;
+ 	efi_status_t status;
+ 	struct linux_efi_tpm_eventlog *log_tbl = NULL;
+ 	unsigned long first_entry_addr, last_entry_addr;
+@@ -147,9 +147,9 @@ static void efi_retrieve_tcg2_eventlog(int version, efi_physical_addr_t log_loca
+ 
+ void efi_retrieve_eventlog(void)
+ {
++	static efi_guid_t tpm2_guid = EFI_TCG2_PROTOCOL_GUID;
+ 	struct efi_tcg2_final_events_table *final_events_table = NULL;
+ 	efi_physical_addr_t log_location = 0, log_last_entry = 0;
+-	efi_guid_t tpm2_guid = EFI_TCG2_PROTOCOL_GUID;
+ 	int version = EFI_TCG2_EVENT_LOG_FORMAT_TCG_2;
+ 	efi_tcg2_protocol_t *tpm2 = NULL;
+ 	efi_bool_t truncated;
+@@ -170,7 +170,7 @@ void efi_retrieve_eventlog(void)
+ 				get_efi_config_table(EFI_TCG2_FINAL_EVENTS_TABLE_GUID);
+ 		}
+ 	} else {
+-		efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
++		static efi_guid_t cc_guid = EFI_CC_MEASUREMENT_PROTOCOL_GUID;
+ 		efi_cc_protocol_t *cc = NULL;
+ 
+ 		status = efi_bs_call(locate_protocol, &cc_guid, NULL, (void **)&cc);
+diff --git a/drivers/firmware/efi/libstub/unaccepted_memory.c b/drivers/firmware/efi/libstub/unaccepted_memory.c
+index 757dbe734a47a..2a7eac7fef862 100644
+--- a/drivers/firmware/efi/libstub/unaccepted_memory.c
++++ b/drivers/firmware/efi/libstub/unaccepted_memory.c
+@@ -9,7 +9,7 @@ struct efi_unaccepted_memory *unaccepted_table;
+ efi_status_t allocate_unaccepted_bitmap(__u32 nr_desc,
+ 					struct efi_boot_memmap *map)
+ {
+-	efi_guid_t unaccepted_table_guid = LINUX_EFI_UNACCEPTED_MEM_TABLE_GUID;
++	static efi_guid_t unaccepted_table_guid = LINUX_EFI_UNACCEPTED_MEM_TABLE_GUID;
+ 	u64 unaccepted_start = ULLONG_MAX, unaccepted_end = 0, bitmap_size;
+ 	efi_status_t status;
+ 	int i;
 diff --git a/drivers/firmware/efi/libstub/x86-stub.c b/drivers/firmware/efi/libstub/x86-stub.c
-index d54454cbab1c3..2d7c6817af4b7 100644
+index 2d7c6817af4b7..731990c22e789 100644
 --- a/drivers/firmware/efi/libstub/x86-stub.c
 +++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -401,17 +401,13 @@ static void __noreturn efi_exit(efi_handle_t handle, efi_status_t status)
- 		asm("hlt");
- }
- 
--void __noreturn efi_stub_entry(efi_handle_t handle,
--			       efi_system_table_t *sys_table_arg,
--			       struct boot_params *boot_params);
--
- /*
-  * Because the x86 boot code expects to be passed a boot_params we
-  * need to create one ourselves (usually the bootloader would create
-  * one for us).
+@@ -118,9 +118,9 @@ preserve_pci_rom_image(efi_pci_io_protocol_t *pci, struct pci_setup_rom **__rom)
   */
--efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
--				   efi_system_table_t *sys_table_arg)
-+static efi_status_t efi_allocate_bootparams(efi_handle_t handle,
-+					    struct boot_params **bp)
+ static void setup_efi_pci(struct boot_params *params)
  {
- 	efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
- 	struct boot_params *boot_params;
-@@ -421,21 +417,15 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 	unsigned long alloc;
- 	char *cmdline_ptr;
- 
--	efi_system_table = sys_table_arg;
--
--	/* Check if we were booted by the EFI firmware */
--	if (efi_system_table->hdr.signature != EFI_SYSTEM_TABLE_SIGNATURE)
--		efi_exit(handle, EFI_INVALID_PARAMETER);
--
- 	status = efi_bs_call(handle_protocol, handle, &proto, (void **)&image);
- 	if (status != EFI_SUCCESS) {
- 		efi_err("Failed to get handle for LOADED_IMAGE_PROTOCOL\n");
--		efi_exit(handle, status);
-+		return status;
- 	}
- 
- 	status = efi_allocate_pages(PARAM_SIZE, &alloc, ULONG_MAX);
- 	if (status != EFI_SUCCESS)
--		efi_exit(handle, status);
-+		return status;
- 
- 	boot_params = memset((void *)alloc, 0x0, PARAM_SIZE);
- 	hdr	    = &boot_params->hdr;
-@@ -451,14 +441,14 @@ efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 	cmdline_ptr = efi_convert_cmdline(image, &options_size);
- 	if (!cmdline_ptr) {
- 		efi_free(PARAM_SIZE, alloc);
--		efi_exit(handle, EFI_OUT_OF_RESOURCES);
-+		return EFI_OUT_OF_RESOURCES;
- 	}
- 
- 	efi_set_u64_split((unsigned long)cmdline_ptr, &hdr->cmd_line_ptr,
- 			  &boot_params->ext_cmd_line_ptr);
- 
--	efi_stub_entry(handle, sys_table_arg, boot_params);
--	/* not reached */
-+	*bp = boot_params;
-+	return EFI_SUCCESS;
- }
- 
- static void add_e820ext(struct boot_params *params,
-@@ -745,13 +735,16 @@ static efi_status_t parse_options(const char *cmdline)
- 	return efi_parse_options(cmdline);
- }
- 
--static efi_status_t efi_decompress_kernel(unsigned long *kernel_entry)
-+static efi_status_t efi_decompress_kernel(unsigned long *kernel_entry,
-+					  struct boot_params *boot_params)
- {
- 	unsigned long virt_addr = LOAD_PHYSICAL_ADDR;
- 	unsigned long addr, alloc_size, entry;
++	static efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
  	efi_status_t status;
- 	u32 seed[2] = {};
+ 	efi_handle_t *pci_handle __free(efi_pool) = NULL;
+-	efi_guid_t pci_proto = EFI_PCI_IO_PROTOCOL_GUID;
+ 	struct setup_data *data;
+ 	unsigned long num;
+ 	efi_handle_t h;
+@@ -159,7 +159,7 @@ static void setup_efi_pci(struct boot_params *params)
  
-+	boot_params_ptr	= boot_params;
-+
- 	/* determine the required size of the allocation */
- 	alloc_size = ALIGN(max_t(unsigned long, output_len, kernel_total_size),
- 			   MIN_KERNEL_ALIGN);
-@@ -782,7 +775,7 @@ static efi_status_t efi_decompress_kernel(unsigned long *kernel_entry)
- 			seed[0] = 0;
- 		}
- 
--		boot_params_ptr->hdr.loadflags |= KASLR_FLAG;
-+		boot_params->hdr.loadflags |= KASLR_FLAG;
- 	}
- 
- 	status = efi_random_alloc(alloc_size, CONFIG_PHYSICAL_ALIGN, &addr,
-@@ -820,20 +813,27 @@ static void __noreturn enter_kernel(unsigned long kernel_addr,
- void __noreturn efi_stub_entry(efi_handle_t handle,
- 			       efi_system_table_t *sys_table_arg,
- 			       struct boot_params *boot_params)
-+
+ static void retrieve_apple_device_properties(struct boot_params *boot_params)
  {
- 	efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
--	struct setup_header *hdr = &boot_params->hdr;
+-	efi_guid_t guid = APPLE_PROPERTIES_PROTOCOL_GUID;
++	static efi_guid_t guid = APPLE_PROPERTIES_PROTOCOL_GUID;
+ 	struct setup_data *data, *new;
+ 	efi_status_t status;
+ 	u32 size = 0;
+@@ -347,7 +347,7 @@ efi_status_t efi_adjust_memory_range_protection(unsigned long start,
+ 
+ static void setup_unaccepted_memory(void)
+ {
+-	efi_guid_t mem_acceptance_proto = OVMF_SEV_MEMORY_ACCEPTANCE_PROTOCOL_GUID;
++	static efi_guid_t mem_acceptance_proto = OVMF_SEV_MEMORY_ACCEPTANCE_PROTOCOL_GUID;
+ 	sev_memory_acceptance_protocol_t *proto;
+ 	efi_status_t status;
+ 
+@@ -409,7 +409,7 @@ static void __noreturn efi_exit(efi_handle_t handle, efi_status_t status)
+ static efi_status_t efi_allocate_bootparams(efi_handle_t handle,
+ 					    struct boot_params **bp)
+ {
+-	efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
++	static efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
+ 	struct boot_params *boot_params;
+ 	struct setup_header *hdr;
+ 	int options_size = 0;
+@@ -815,7 +815,7 @@ void __noreturn efi_stub_entry(efi_handle_t handle,
+ 			       struct boot_params *boot_params)
+ 
+ {
+-	efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
++	static efi_guid_t guid = EFI_MEMORY_ATTRIBUTE_PROTOCOL_GUID;
  	const struct linux_efi_initrd *initrd = NULL;
  	unsigned long kernel_entry;
-+	struct setup_header *hdr;
- 	efi_status_t status;
- 
--	boot_params_ptr = boot_params;
--
- 	efi_system_table = sys_table_arg;
- 	/* Check if we were booted by the EFI firmware */
- 	if (efi_system_table->hdr.signature != EFI_SYSTEM_TABLE_SIGNATURE)
- 		efi_exit(handle, EFI_INVALID_PARAMETER);
- 
-+	if (!IS_ENABLED(CONFIG_EFI_HANDOVER_PROTOCOL) || !boot_params) {
-+		status = efi_allocate_bootparams(handle, &boot_params);
-+		if (status != EFI_SUCCESS)
-+			efi_exit(handle, status);
-+	}
-+
-+	hdr = &boot_params->hdr;
-+
- 	if (have_unsupported_snp_features())
- 		efi_exit(handle, EFI_UNSUPPORTED);
- 
-@@ -875,7 +875,7 @@ void __noreturn efi_stub_entry(efi_handle_t handle,
- 	if (efi_mem_encrypt > 0)
- 		hdr->xloadflags |= XLF_MEM_ENCRYPTION;
- 
--	status = efi_decompress_kernel(&kernel_entry);
-+	status = efi_decompress_kernel(&kernel_entry, boot_params);
- 	if (status != EFI_SUCCESS) {
- 		efi_err("Failed to decompress kernel\n");
- 		goto fail;
-@@ -945,6 +945,12 @@ void __noreturn efi_stub_entry(efi_handle_t handle,
- 	efi_exit(handle, status);
- }
- 
-+efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
-+				   efi_system_table_t *sys_table_arg)
-+{
-+	efi_stub_entry(handle, sys_table_arg, NULL);
-+}
-+
- #ifdef CONFIG_EFI_HANDOVER_PROTOCOL
- void efi_handover_entry(efi_handle_t handle, efi_system_table_t *sys_table_arg,
- 			struct boot_params *boot_params)
+ 	struct setup_header *hdr;
 -- 
 2.53.0
 
