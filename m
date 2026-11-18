@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040573;
-	b=vopHTse9PtUOemUF948bMHCrQnT6fqHvPcqGfRodFDkf8uoRmN7lAJx8Xc98UJitpfWF
-	 9laeRLbxxZi6xIY6pxy+ep88S/0dxxkizPL17SekNC/DOO2tUD5mOG685UC4bnP92ecEv
-	 TLBona1Nqzhce6Igg1cGuyhjNbQIHPbQ13BN+W2ziZQZSPzNHvGRrYxlsLarfdQ/4hA75
-	 eeH/qD+VqS7O2iowctIe38cZMKOMSudpIGTAP3Cz3thqFZyAnAAPsu6GYEa8jLNMlHNgW
-	 wngCYCZMgI8lLjmN5zuzZmcC9r0RJ9wXqSlL+6M20vl3LzCBO69f7H1xDIk7baX+eCw==
+	t=1795040576;
+	b=rAwaAq1t8uan2pTR7TrHJJgPRFzwFAoRfu97m2cTx828w0OYUoxII+YctuVNDunDGf+u
+	 CoZmzCvORJKwLyJcGg6zxcg8DOBn2iWm9XqNnEUf4nIB3tZzbQVDaoJLtGbNlAdJM/h8L
+	 P8amLfSd4XyqdX0dTAQd2MqUhifLXA4VqNfrJH8LeDLW0XBDRGbCJixUTXjb+V0GLwznO
+	 ypEx8teE7bwUgWBjt1SzgaObdXv1r8IEQCB5Bph5vrtXAWzdvtg4tqFE5xe2TBCaEhDf5
+	 1/5hI8sm2bm1IlVYcvgxJ7e+gWSnEL+xjBt4XANBXTkwwMt6EL6Y7FzxZ1oSsHk0cnQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=69i9VTKd6+e8dxb++RxicS5vaxXJLbSagkXH5gEXa3g=;
-	b=o5L4daXhSyQMQ+vCcdH3t0aqR5DMNI26J1YRpbPpm+OwWJqRPWjnZ0eOkGMQhBe/p7W6
-	 95UFO9ly7L3gRzQTVehShns/MjTp0F1C9iA51r2hTwDSh2zNlp+Q4fSkkzNHDa1zymzfe
-	 Bsw1u5ok+VCz3LstnvDYktfXxYzLnOGcA8umV4pSF9d2QXP16geXImTnxR3jBFEoJGd2m
-	 6vxbznDdN115KPErC1r4RejUDHe/rX9RpWIJzydgdaNS6Bbu3ykxGp/OVJgETtqdNnltK
-	 LGvosboy8csf/pjE+W3x1H6UJlUbJHj9cfZjNUpZPgODpV3oQrxA+CQqDBtRoPAmuHA==
+	bh=VT5Fdhhxxh4/hFfERpeKYJfepW3EeoB+PmXhKALB2A4=;
+	b=cl1beYdsemOLzAelprMeZUDkMKfNBbq/FonZ6rUn9qU71x8ZhCYBjMPCJXmBu7XjCdE4
+	 EukHjOTwN4EGvpqZaEHa0Ml1apA7Bo6+FwOl6+aZwkqZhfXuv5zpDfhZGyx6kWMnR2/QV
+	 0/nEaHXtjx639X4QNqitNpOjgvWyOh40g/VHSdfBdpn5sIZDxLlxO/+hxxSEnJ6XUDldi
+	 R/y3P0Q0ZqaPWQ0NzH/O1zzb7wC5Oa2p4JP3AWM8h40W4k7K358Lf6l/8w+PUhanpc5MO
+	 wmOhZ2iJn7c4ko01WN3I37X2wTxnqNUTcFB5QvcgQPX8OFbt2Va3GYN261nA2Gb8aBg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oslOAevZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mtm2WFKT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885F0606A325;
-	Wed, 18 Nov 2026 22:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672E4606A320;
+	Wed, 18 Nov 2026 22:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oslOAevZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FFD1F000C4;
-	Wed, 18 Nov 2026 22:22:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mtm2WFKT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944E61F000C4;
+	Wed, 18 Nov 2026 22:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040573;
-	bh=69i9VTKd6+e8dxb++RxicS5vaxXJLbSagkXH5gEXa3g=;
+	s=korg; t=1795040576;
+	bh=VT5Fdhhxxh4/hFfERpeKYJfepW3EeoB+PmXhKALB2A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oslOAevZwkiPRA/nNgfGx5UxX2Esxk8hmqQtuciCjR3/5iKfpmtp5BjgnLyclXR/E
-	 o6MRZiagLG5gfg/RUD2MrCuK5f6562FWCAI15lp/HCzSjIpKyyn50008Ki5u1hSKW0
-	 c8FnXhWmJ4eCrmpQNyBBxanINhHvPQX4N8vqhuEg=
+	b=mtm2WFKThYg/FK6a3MYm/tTrbYQEmaGLtXSgCCYQIjF9f7+kbREG2jFjaRa+VkaeX
+	 DtGUkGjt33NZYk5OEAuuHGPBXjcqZcJARVkPPy0DgtvACADF0MVx1EQO3bbLhzekUF
+	 980hAby5vSgILl9vm4KjGHB85Tqiyblo2AE/t2T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Mikko Perttunen <mperttunen@nvidia.com>,
 	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2506/3318] drm/tegra: Fix syncobj_in wait return value check
-Date: Wed, 18 Nov 2026 15:52:08 +0100
-Message-ID: <20261118150436.554221144@linuxfoundation.org>
+Subject: [PATCH 6.6 2507/3318] drm/tegra: Dont pass an ERR_PTR to drm_syncobj_replace_fence()
+Date: Wed, 18 Nov 2026 15:52:09 +0100
+Message-ID: <20261118150436.583580377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,57 +70,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit 27836c46a3db5a7869a9f7e181136f0c4d8bc0d1 ]
+[ Upstream commit 7fce3d34eddfff6361cb4de2c5b8789b88a552b6 ]
 
-dma_fence_wait_timeout() returns the remaining timeout in jiffies on
-success, zero on timeout, and a negative error code if interrupted. The
-return value was assigned to 'err' and checked as if it were an errno,
-the opposite of the correct logic.
-
-Fix the code to use a properly typed variable and check each condition
-correctly.
+When host1x_fence_create() fails, avoid trying to attach the error
+pointer to the out syncobj.
 
 Fixes: 13abe0bb15ce ("drm/tegra: Implement job submission part of new UAPI")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/aJM_te551jUwnRv7@stanley.mountain/
 Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
 Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260730-b4-host1x-syncobj-wait-v1-1-afa730410392@nvidia.com
+Link: https://patch.msgid.link/20260730-b4-host1x-syncobj-wait-v1-2-afa730410392@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/submit.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/tegra/submit.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/tegra/submit.c b/drivers/gpu/drm/tegra/submit.c
-index 705382035f5f6..f35e5c3ff37cd 100644
+index f35e5c3ff37cd..43720a69d0f0d 100644
 --- a/drivers/gpu/drm/tegra/submit.c
 +++ b/drivers/gpu/drm/tegra/submit.c
-@@ -530,6 +530,7 @@ int tegra_drm_ioctl_channel_submit(struct drm_device *drm, void *data,
- 
- 	if (args->syncobj_in) {
- 		struct dma_fence *fence;
-+		long wait_err;
- 
- 		err = drm_syncobj_find_fence(file, args->syncobj_in, 0, 0, &fence);
- 		if (err) {
-@@ -537,10 +538,15 @@ int tegra_drm_ioctl_channel_submit(struct drm_device *drm, void *data,
- 			goto unlock;
+@@ -655,6 +655,7 @@ int tegra_drm_ioctl_channel_submit(struct drm_device *drm, void *data,
+ 		if (IS_ERR(fence)) {
+ 			err = PTR_ERR(fence);
+ 			SUBMIT_ERR(context, "failed to create postfence: %d", err);
++			goto put_job;
  		}
  
--		err = dma_fence_wait_timeout(fence, true, msecs_to_jiffies(10000));
-+		wait_err = dma_fence_wait_timeout(fence, true, msecs_to_jiffies(10000));
- 		dma_fence_put(fence);
--		if (err) {
-+		if (wait_err == 0) {
- 			SUBMIT_ERR(context, "wait for syncobj_in timed out");
-+			err = -ETIMEDOUT;
-+			goto unlock;
-+		} else if (wait_err < 0) {
-+			/* In practice, -ERESTARTSYS */
-+			err = wait_err;
- 			goto unlock;
- 		}
- 	}
+ 		drm_syncobj_replace_fence(syncobj, fence);
 -- 
 2.53.0
 
