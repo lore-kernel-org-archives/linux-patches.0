@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055087;
-	b=tgTI6TKsigLBssfJKB2SxtH2m/qrAhPbrA+mnPWc6/NmfK+ZwBmhnfpxwdmGX/vLjZgU
-	 LR4m/tsTeyHRD8LW19VtO8v30sSUwNATt4pof8KcqNdIqCQGMudHFqdMyAi7XebppPAjb
-	 wcJ1mc4gPrxQmD+0ZylBHD5OJqvMmTdXLpy8xhhygZhvgXzRpIayfvx3n3qXDsMvCAbT+
-	 TYpUREUY55WN9VqPZX/MwJLtg2do9h3YQQ9x3N39mtwa7VqF5r0zQG2GFNvQ9uiLqJYM/
-	 Gw/gCwiLHXZtK4Elrq8h1YDn7NPGqX5hFP1jqx+jg124Xv7/p3/h8THHIK+UihD7EzQ==
+	t=1795055090;
+	b=pNP8kQD1tdMJb4Sw9cqa0kpH6DCjypMJO8ltQyMSpu+j8TV7hxbkxIBvvjWcfYDEIY1Z
+	 5bMJys7ne+xvrOpBRBoGHvaA/ZXVFN7MKpN+2kKF+GFZfDC52LzK0oZqIPFjKwkIFW6/p
+	 VZr/g3kyTd4H6HdSTboBNzaJY/hjymZpcZ4Gq3YXhEYf3vx/YH9w6mR+pXd88OgVI5XK7
+	 YW2KHVziwrafITvpd+Ez6lgj9ExkCSUaPjzXxhtDtYvhCdqbkzIALxQlEWUQ+MTQ+VYaB
+	 3Tbwojozes8jINjEILvugRhnq0YrI2m6OnfJ8DBdwm4udCOpt/piNPoVoRz/LRrTTyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055087;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055090;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=4hCJ43Iuviv1h7clwrcfpcLtEVkAWYaM9Y6pirtIZKw=;
-	b=z5oBexNDvixzPsN0rPpcmCIUhTLHATTveT3Ox+RM/4aHqMk4MtactOPfP0OHu4TkiGWK
-	 Xt1liXEWgvecSlzZj6rkhd6F5610J+ZoIa8gcG7Ccg276S6kNkyKlJ2bM0lPlUTVDCPsJ
-	 fO9FYWqYJ/KyHPIIMLwoOSgvPfI5qk8VuHMP1nImzOfGG0wxfiDdbLr0LwWrVQ3vWI77I
-	 SI+O7Pix1jqyvd+jexXTpKjmHDOIInqk4mGWZw3wJoaiVgJxt645elydeWlzMWEVnpw6k
-	 8+BTbWzVwgyph+4clABWbAAg9G5aAvLA6j6qYQWY+VoeatAbxWFlAp9Wi/Q3gxDmaRA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=WtkZIQdPsxWcNRCBdgppW46lO6nIas+jh82gDKie/as=;
+	b=cES+LjtPecufT4ejucXP8PslMacSq1k1kvTUIw778Dss/Ux7Q0VzN+fYEFCDj8UMG8Os
+	 qYeXe/Vv/08G/hjj3zhSddel8t0uCdC8J8dJpeyYZdMcebanxzPtkMFkzpYliVD92zspg
+	 CoDmQN/8Nj/NwJL9Dd6cZTIwATNkE0w0kabKe7anDVLFGxxxhNHEGG2kqFky8Dyc1Psot
+	 ip1LPjiRq2U+vTODx7xw3QCvI595oCBaN9YvMFQL+PM07geFo5vef+0lTqhV9i18MdMoc
+	 ouMAn4CNwGDQbCDPYqkJksUqNHEKFJlNoePFTErJkB/cHtllxarfSYv+S1TKVoN9jMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcMocSFY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rjP6Pag2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD96C606A31C;
-	Thu, 19 Nov 2026 02:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2782606A31C;
+	Thu, 19 Nov 2026 02:24:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lcMocSFY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A8C1F000C4;
-	Thu, 19 Nov 2026 02:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rjP6Pag2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4001F000C4;
+	Thu, 19 Nov 2026 02:24:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055087;
-	bh=4hCJ43Iuviv1h7clwrcfpcLtEVkAWYaM9Y6pirtIZKw=;
+	s=korg; t=1795055090;
+	bh=WtkZIQdPsxWcNRCBdgppW46lO6nIas+jh82gDKie/as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lcMocSFYmGQreLSdjCkiZOHsYg+C5QU8ACrNQ50QsMUULEDmFqNZLU8U8a2uWJZ+H
-	 A8cG+M5HD9xDWF8KE84cnqeTD7xynIjUHmFfl6Gl6A2jNNYl5SmGVn4IXVUaFGnFZo
-	 wwYBpUVSBJYulAh82gyi0wTWUTeYA2/jEpl6wfMo=
+	b=rjP6Pag2bnGWJQT7vYaCW5wJN/fBrpNn3ky7izVASfBT+XJa0QqfYxKSKChEzO02D
+	 BfiJ6x+QZKhWG7GcQOKvAwzec52pQys3eYrCdA48mUTa4cS6K9EuKY+4wN/1E1yw1o
+	 xDXn39PmhQ4OfOSG9QmzlHqPVPTXKDmbmplnL2Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1504/2214] memory: emif: Convert to platform remove callback returning void
-Date: Wed, 18 Nov 2026 15:53:00 +0100
-Message-ID: <20261118150112.080652339@linuxfoundation.org>
+Subject: [PATCH 5.15 1466/2214] regulator: ab8500: Add AB8505 VAUX3 3.05 V setting
+Date: Wed, 18 Nov 2026 15:52:22 +0100
+Message-ID: <20261118150109.834381723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,67 +62,193 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit c8a53461990cb697ca494d6671fab9e196d20ce4 ]
+[ Upstream commit ac72c091a9810493ccd9209414d4f859276727ab ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+AB8505 has an additional VAUX3 voltage setting which is not encoded
+in the normal three-bit selector. ArmRegu2.Vaux3Sel3 overrides that
+selector and selects 3.05 V.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Add the missing voltage and use the override bit as an extended
+selector. Program the ordinary selector before clearing the override
+so VAUX3 does not briefly switch to a stale voltage.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Reference: AB8505 User Manual, DM00046744 Rev 3, pp. 229 and 254
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/da2fa8d040d542edc1318aeae5117317bb22aa06.1702822744.git.u.kleine-koenig@pengutronix.de
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Stable-dep-of: 314ef67d6732 ("memory: emif: fix device_node reference leak on np_ddr")
+Fixes: 547f384f33db ("regulator: ab8500: add support for ab8505")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-2-fe88b01829bf@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/emif.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/regulator/ab8500.c | 101 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 98 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/memory/emif.c b/drivers/memory/emif.c
-index ecc78d6f89ed2..ca800aa3c59df 100644
---- a/drivers/memory/emif.c
-+++ b/drivers/memory/emif.c
-@@ -1170,13 +1170,11 @@ static int __init_or_module emif_probe(struct platform_device *pdev)
- 	return -ENODEV;
+diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
+index 066ce04cbca4b..51a4ccb710b1a 100644
+--- a/drivers/regulator/ab8500.c
++++ b/drivers/regulator/ab8500.c
+@@ -173,6 +173,7 @@ struct ab8500_shared_mode {
+  * @voltage_bank: bank to control regulator voltage
+  * @voltage_reg: register to control regulator voltage
+  * @voltage_mask: mask to control regulator voltage
++ * @expand_register: additional register used to select an extra voltage
+  */
+ struct ab8500_regulator_info {
+ 	struct device		*dev;
+@@ -193,6 +194,12 @@ struct ab8500_regulator_info {
+ 	u8 voltage_bank;
+ 	u8 voltage_reg;
+ 	u8 voltage_mask;
++	struct {
++		u8 voltage_limit;
++		u8 voltage_bank;
++		u8 voltage_reg;
++		u8 voltage_mask;
++	} expand_register;
+ };
+ 
+ /* voltage tables for the vauxn/vintcore supplies */
+@@ -226,6 +233,18 @@ static const unsigned int ldo_vaux3_voltages[] = {
+ 	2910000,
+ };
+ 
++static const unsigned int ldo_vaux3_ab8505_voltages[] = {
++	1200000,
++	1500000,
++	1800000,
++	2100000,
++	2500000,
++	2750000,
++	2790000,
++	2910000,
++	3050000,
++};
++
+ static const unsigned int ldo_vaux56_voltages[] = {
+ 	1800000,
+ 	1050000,
+@@ -593,6 +612,64 @@ static int ab8500_regulator_set_voltage_sel(struct regulator_dev *rdev,
+ 	return ret;
  }
  
--static int __exit emif_remove(struct platform_device *pdev)
-+static void __exit emif_remove(struct platform_device *pdev)
- {
- 	struct emif_data *emif = platform_get_drvdata(pdev);
++static int ab8500_regulator_get_voltage_sel_expand(struct regulator_dev *rdev)
++{
++	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
++	u8 regval;
++	int ret;
++
++	if (!info)
++		return -EINVAL;
++
++	ret = abx500_get_register_interruptible(info->dev,
++			info->expand_register.voltage_bank,
++			info->expand_register.voltage_reg, &regval);
++	if (ret < 0) {
++		dev_err(rdev_get_dev(rdev),
++			"couldn't read voltage expand reg for regulator\n");
++		return ret;
++	}
++
++	if (regval & info->expand_register.voltage_mask)
++		return info->expand_register.voltage_limit;
++
++	return ab8500_regulator_get_voltage_sel(rdev);
++}
++
++static int ab8500_regulator_set_voltage_sel_expand(struct regulator_dev *rdev,
++						   unsigned int selector)
++{
++	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
++	u8 regval;
++	int ret;
++
++	if (!info)
++		return -EINVAL;
++
++	if (selector > info->expand_register.voltage_limit)
++		return -EINVAL;
++
++	if (selector < info->expand_register.voltage_limit) {
++		ret = ab8500_regulator_set_voltage_sel(rdev, selector);
++		if (ret < 0)
++			return ret;
++
++		regval = 0;
++	} else {
++		regval = info->expand_register.voltage_mask;
++	}
++
++	ret = abx500_mask_and_set_register_interruptible(info->dev,
++			info->expand_register.voltage_bank,
++			info->expand_register.voltage_reg,
++			info->expand_register.voltage_mask, regval);
++	if (ret < 0)
++		dev_err(rdev_get_dev(rdev),
++			"couldn't set voltage expand reg for regulator\n");
++
++	return ret;
++}
++
+ static const struct regulator_ops ab8500_regulator_volt_mode_ops = {
+ 	.enable			= ab8500_regulator_enable,
+ 	.disable		= ab8500_regulator_disable,
+@@ -605,6 +682,18 @@ static const struct regulator_ops ab8500_regulator_volt_mode_ops = {
+ 	.list_voltage		= regulator_list_voltage_table,
+ };
  
- 	emif_debugfs_exit(emif);
--
--	return 0;
- }
- 
- static void emif_shutdown(struct platform_device *pdev)
-@@ -1196,7 +1194,7 @@ MODULE_DEVICE_TABLE(of, emif_of_match);
- #endif
- 
- static struct platform_driver emif_driver = {
--	.remove		= __exit_p(emif_remove),
-+	.remove_new	= __exit_p(emif_remove),
- 	.shutdown	= emif_shutdown,
- 	.driver = {
- 		.name = "emif",
++static const struct regulator_ops ab8500_regulator_volt_mode_expand_ops = {
++	.enable			= ab8500_regulator_enable,
++	.disable		= ab8500_regulator_disable,
++	.is_enabled		= ab8500_regulator_is_enabled,
++	.get_optimum_mode	= ab8500_regulator_get_optimum_mode,
++	.set_mode		= ab8500_regulator_set_mode,
++	.get_mode		= ab8500_regulator_get_mode,
++	.get_voltage_sel	= ab8500_regulator_get_voltage_sel_expand,
++	.set_voltage_sel	= ab8500_regulator_set_voltage_sel_expand,
++	.list_voltage		= regulator_list_voltage_table,
++};
++
+ static const struct regulator_ops ab8500_regulator_volt_ops = {
+ 	.enable		= ab8500_regulator_enable,
+ 	.disable	= ab8500_regulator_disable,
+@@ -908,12 +997,12 @@ static struct ab8500_regulator_info
+ 	[AB8505_LDO_AUX3] = {
+ 		.desc = {
+ 			.name		= "LDO-AUX3",
+-			.ops		= &ab8500_regulator_volt_mode_ops,
++			.ops		= &ab8500_regulator_volt_mode_expand_ops,
+ 			.type		= REGULATOR_VOLTAGE,
+ 			.id		= AB8505_LDO_AUX3,
+ 			.owner		= THIS_MODULE,
+-			.n_voltages	= ARRAY_SIZE(ldo_vaux3_voltages),
+-			.volt_table	= ldo_vaux3_voltages,
++			.n_voltages	= ARRAY_SIZE(ldo_vaux3_ab8505_voltages),
++			.volt_table	= ldo_vaux3_ab8505_voltages,
+ 		},
+ 		.load_lp_uA		= 5000,
+ 		.update_bank		= 0x04,
+@@ -925,6 +1014,12 @@ static struct ab8500_regulator_info
+ 		.voltage_bank		= 0x04,
+ 		.voltage_reg		= 0x21,
+ 		.voltage_mask		= 0x07,
++		.expand_register = {
++			.voltage_limit	= 8,
++			.voltage_bank	= 0x04,
++			.voltage_reg	= 0x01,
++			.voltage_mask	= 0x10,
++		},
+ 	},
+ 	[AB8505_LDO_AUX4] = {
+ 		.desc = {
 -- 
 2.53.0
 
