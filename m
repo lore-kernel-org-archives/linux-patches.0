@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050263;
-	b=N60aVG9F/ESPW14QgGpNq93obXXQITMRDeUXtCKpwfm3LODZj7/ybm9TnsRGz2m8EIin
-	 YtBbwA+xJLQYQ/cvNXRG6I08h9Ak4P5rVgUBOKzuj4laZ7rvtdkgBinWm4nqBc6sWTK9s
-	 fHNu4HiyTVriMXIFpTpI/Gox69V+0nJPVnQ/6/LzPojvly8iBzpKg9OaKE5PaI3nW3VRe
-	 /P+tewrBSmSQduI+ge9CV5Nkuj3O7KQtE19Zsi7Au+FlW2a6BxUvRwgYB20tQwQW7XRZB
-	 4fp95BPNjOZ8v6+YWsbKx2/SJLYEzhfkryHMiic7v1HvQHUmnoJasRl3TSrfNlb7DWg==
+	t=1795050266;
+	b=Gx2T0wiSwVi9koGX8eU+8yFHzb23FsHEcTRinlpSODHxrW7elVYb4iX5cl/7LQ16wfKj
+	 NOFWrD+eyJNAY+mAl/stYsurzqHm7HdEx+w0L/ECrJYTWdmEzmEOi2/i03ZIxywBAj9oB
+	 FU163efPs948SqJHxjT8jgqE0meZrq6D7UdAkkKSGI+yuHGToYcbWpiKfOLfgyQmkpnes
+	 u2IMu0nmTdHJ/PpI+Jx5y2T37ILX0DqA2MEd3zLVnJGmNorNmsD/uYJZ7SCol/g1WOUVJ
+	 Zm+SyAyugIKJC4kE3Kbri7uDuUTiIDCtqdQCJvnI3Zvr4P0ZvnjZK9eEGxSMsIKKvZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050263;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050266;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8IiAMvVMXIc96dg9yVc7SVnNYjRabVfHU5OoMXvZGtk=;
-	b=SQsKnJzCPoNPYfhls2EU56Ag7nSm8pPEMDAJBBq9mT851chRLbgtAjGk9Qw6yoGSv7Cs
-	 UGdaOTezUV9/DLBLt5AXk7/r0i8wJ5kBPKRv5BY1ZYfNh2qEJY/gfIyL6p1aNUhCjSHhL
-	 l3Su/eO+g6vtZ8fTfOWaQRcXYOawt4Y5VT6uN58GQAa4y8k4a/849wT1oK1uuoswoaye9
-	 jgXcs6YJ2o2eZhzp3grAqlBl6ToCbo1JssUd3SbBsUOqfxqNo8GalLXfSSGf/Foe8rLAB
-	 uXreFXz0k7FbP4uv3l+cC9WBeGYllCbiNzwiNU3fS4+JT0h+HL1VpkU/spsnh6K32qA==
+	bh=V9U6MWS8KlPtmwTWrqJ195UR5iFQlLa56q+E+HTpuYg=;
+	b=EPnsRBmWI8OpNoXdi086F8yH/zg9WHgGurVZ0omP7tPEMrkZt7Rbc5+VnKgjULO6lGUw
+	 Qpwnhl563eM9ldfa7msAVy1dy7cltnZjsfWedh2vsBSSzYZTlO9GqNOzmF6Qw7/dAtKJn
+	 fGLJQe/PrJxfqZluHm6Ylgh0lA+7/eaGAzy5Wtvk/y6+EmU5/zRdT8T3Qak8UmmejAGrq
+	 HviFRHCN4WiwhV2NnKm7gLoqqnU4mPYjBJzebQz5IH/OVVwsL3p/32tjzrt8RZCsOTLpW
+	 KbCBUMkexxgPaR+IYXkJVXcZJtex9/yGy6w0HTmW+bM3Q+DT5WSBTdtfW3egmh6qPCA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7Q+lhtS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2omkOEqJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BEA606A334;
-	Thu, 19 Nov 2026 01:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B75606A31C;
+	Thu, 19 Nov 2026 01:04:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c7Q+lhtS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191CD1F000C4;
-	Thu, 19 Nov 2026 01:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2omkOEqJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1F71F000C4;
+	Thu, 19 Nov 2026 01:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050263;
-	bh=8IiAMvVMXIc96dg9yVc7SVnNYjRabVfHU5OoMXvZGtk=;
+	s=korg; t=1795050266;
+	bh=V9U6MWS8KlPtmwTWrqJ195UR5iFQlLa56q+E+HTpuYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c7Q+lhtSLAJOKA4br4AX4vZVE09KCmMcmEF2dUqnGHe2ccVAGrACcWTTcIWLjWdB4
-	 oVK7NjDEAWOzBGJe0i3qjG8ZgP+gyNNq12NJjlRvFaJ7XyJmTR5UAJPzArPJzXJ+0S
-	 /y1Z6ZVSViE0fAwBEWemuBISVsv00SjnpUI6uEKk=
+	b=2omkOEqJ4cVmMOAthHrv2QDeDoHmJoJkgxEgtCfinyhfQBiDCcFiH4sLrdhMoPFwo
+	 EKlvuPgywCpDVo6xTZ2bH0zZOAfJd8DWO8YzitVoQx+9KZvnHRXINWzWRdULYnjTJi
+	 nPNlmpTfLH4Bl+iXwzobkypirurKtkCaGOIdDrhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Qiliang Yuan <odys.yuan@gmail.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2646/2857] net: openvswitch: drop IP fragments on SCTP set action
-Date: Wed, 18 Nov 2026 16:01:20 +0100
-Message-ID: <20261118150336.860426634@linuxfoundation.org>
+Subject: [PATCH 6.1 2647/2857] tcp: tcp_metrics: use the socket netns, not the dst device netns
+Date: Wed, 18 Nov 2026 16:01:21 +0100
+Message-ID: <20261118150336.898304398@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,51 +71,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 4d0d8f491307f22aea34b22f73351e1cd2ede735 ]
+[ Upstream commit 504bdcb8c1566a6f887f9accebe1aa99b502ae97 ]
 
-The SCTP checksum is a CRC32c over the whole SCTP packet. set_sctp()
-updates it as old_csum ^ old_correct_csum ^ new_csum, with the two CRCs
-computed over the bytes of the current skb only. That is correct only
-when the skb holds the whole SCTP packet. For a first fragment, and for
-a later fragment, it holds just a part of it, and the CRC delta of a
-change at the start of the packet depends on how many bytes follow, so
-the checksum written is wrong. The receiver drops the reassembled
-packet.
+tcp_get_metrics(), __tcp_get_metrics_req() and tcpm_new() look up and
+create metrics entries in the netns of the cached dst device rather than
+in the netns of the socket.
 
-validate_set() accepts SCTP set action for any flow with ip.proto set to
-SCTP, regardless of the fragmentation bits, as it only receives the
-masked key. As the checksum cannot be fixed up without the whole
-datagram, fail the action for packets that are IP fragments of either
-family, so the packet is dropped with OVS_DROP_ACTION_ERROR instead of
-being forwarded with modified ports and an invalid checksum.
+These usually match, but not after the device has been moved to another
+netns or unregistered: a socket can keep a stale dst in sk_dst_cache
+until it is checked again, and tcp_update_metrics() reads it with
+__sk_dst_get() without any dst_check(). Once dst_dev_put() has run, the
+dst device is blackhole_netdev and the entry is created in init_net.
+Before that, for instance for routes through nexthop objects whose
+cached dsts are released from a nested RCU callback, it is the netns the
+device has just been moved to.
 
-Link: https://lore.kernel.org/netdev/d4fc14f3-4308-4560-9012-43c09c1b3845@ovn.org/
-Fixes: a175a723301a ("openvswitch: Add SCTP support")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20261015124749.4694-2-fmancera@suse.de
+A TCP socket of netns A that enters TIME_WAIT in that window then
+creates or updates an entry carrying A's addresses and RTT in another
+netns, where TCP_METRICS_CMD_GET can dump it and where new connections
+to the same peer inherit those metrics.
+
+The metrics belong to the netns of the socket, so use sock_net() for
+full sockets and request sockets, and pass it to tcpm_new().
+
+Kernel sockets that do not hold a netns reference can still reach
+tcp_time_wait() after tcp_net_metrics_exit_batch() has flushed the
+entries of their dismantling netns, and an entry created then would
+never be flushed and would keep a dangling tcpm_net. Make tcpm_new()
+refuse to create entries when check_net() fails. Its callers are in
+an RCU read-side section, and cleanup_net() waits for a grace period
+between the refcount reaching zero and the flush, so an entry added
+after a successful check is always seen by the flush.
+
+Fixes: 51c5d0c4b169 ("tcp: Maintain dynamic metrics in local cache.")
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Cc: Qiliang Yuan <odys.yuan@gmail.com>
+Reviewed-by: Neal Cardwell <ncardwell@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20261016084802.2725187-1-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/tcp_metrics.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index 1eab2a43f7cec..6e7e4b8b757ed 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -696,6 +696,9 @@ static int set_sctp(struct sk_buff *skb, struct sw_flow_key *flow_key,
- 	__le32 old_correct_csum, new_csum, old_csum;
- 	int err;
+diff --git a/net/ipv4/tcp_metrics.c b/net/ipv4/tcp_metrics.c
+index d3559a9cb2330..29969168f41db 100644
+--- a/net/ipv4/tcp_metrics.c
++++ b/net/ipv4/tcp_metrics.c
+@@ -161,16 +161,26 @@ static void tcpm_check_stamp(struct tcp_metrics_block *tm,
+ 	rcu_dereference_protected(p, lockdep_is_held(&tcp_metrics_lock))
  
-+	if (flow_key->ip.frag != OVS_FRAG_TYPE_NONE)
-+		return -EINVAL;
+ static struct tcp_metrics_block *tcpm_new(struct dst_entry *dst,
++					  struct net *net,
+ 					  struct inetpeer_addr *saddr,
+ 					  struct inetpeer_addr *daddr,
+ 					  unsigned int hash)
+ {
+ 	struct tcp_metrics_block *tm;
+ 	bool reclaim = false;
+-	struct net *net;
+ 
+ 	spin_lock_bh(&tcp_metrics_lock);
+-	net = dst_dev_net_rcu(dst);
 +
- 	err = skb_ensure_writable(skb, sctphoff + sizeof(struct sctphdr));
- 	if (unlikely(err))
- 		return err;
++	/* Do not add entries to a dismantling netns: they would not be
++	 * flushed again. Callers are in an RCU read-side section, and
++	 * cleanup_net() waits for a grace period after the netns refcount
++	 * reached zero and before tcp_metrics_flush_all(NULL) runs, so an
++	 * entry added after a successful check_net() is seen by the flush.
++	 */
++	if (unlikely(!check_net(net))) {
++		tm = NULL;
++		goto out_unlock;
++	}
+ 
+ 	/* While waiting for the spin-lock the cache might have been populated
+ 	 * with this entry and so we have to check again.
+@@ -273,7 +283,7 @@ static struct tcp_metrics_block *__tcp_get_metrics_req(struct request_sock *req,
+ 		return NULL;
+ 	}
+ 
+-	net = dst_dev_net_rcu(dst);
++	net = sock_net(req_to_sk(req));
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
+ 
+@@ -318,7 +328,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
+ 	else
+ 		return NULL;
+ 
+-	net = dst_dev_net_rcu(dst);
++	net = sock_net(sk);
+ 	hash ^= net_hash_mix(net);
+ 	hash = hash_32(hash, tcp_metrics_hash_log);
+ 
+@@ -326,7 +336,7 @@ static struct tcp_metrics_block *tcp_get_metrics(struct sock *sk,
+ 	if (tm == TCP_METRICS_RECLAIM_PTR)
+ 		tm = NULL;
+ 	if (!tm && create)
+-		tm = tcpm_new(dst, &saddr, &daddr, hash);
++		tm = tcpm_new(dst, net, &saddr, &daddr, hash);
+ 	else
+ 		tcpm_check_stamp(tm, dst);
+ 
 -- 
 2.53.0
 
