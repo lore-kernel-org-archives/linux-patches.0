@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022275;
-	b=txu6Yd2mJeycwpta1CMBKbsOunztdQ6dYCzJCJ8u3Q1VzWGxdj4LUgygZMwRXVddRTV9
-	 d1q1F+otcDazKWMfV9YMlozItIKBW2k2gsUX/FF/MHWVWjjRrOwfEN6LWjBcJzCkL5zmj
-	 DlExsByjbLWW0ehOmiBSG/D5QuuRzOPnohBRSwW1vNRBgC70zetx3aRv4UsgF9x9JvUGE
-	 dsD60PUgYSc7tqOWWmUgUIR29hR8MqtIbVZOYthtFI1xqJ5cHnPMi8qwSnw9Z3u6l1oSc
-	 LkXxgQJBvpVfnKOSWOqumJVuFGe1kc7dqyLatJB5l1Ozh3QKKSFu9WolwNTDCpQ5QHQ==
+	t=1795022278;
+	b=PGQr7TLn8KairPmrMgH30Ovdy/2ylSdgtBphrJ+20SC41Sk/4UjfMGqa8m2ZnHy+6FDC
+	 mZfRqlnrXfIE0YOA/hHS7ZtwNSgM6HxLww6Q+sHXqMB2PjQifBxTINj0+/ZXbbgfw3F9s
+	 qtox+a4FABLJ7HlyCO9vHOliV12iUVntawICkTBSWOo2i1dVd6CxLsJLKN9cym5T29K2J
+	 1+PO82lbzKVC/QqbF7bHOnYgQlUDbADc6c6dDllnSBVp3iTEdIJip3nrFpwdN2fPzBspW
+	 Iac/ZhmVDcmG8Z0au97m4Wzbdr2P8DRydha8K5Na8SRw6QTPaOPxi7niZsQnO+I4wEA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=i0TELLpwpoJdi3xcPnlmX0Ts2lAgIyhtxpkTkED+CaM=;
-	b=Rp9SUrECq7tLWf86ysYhdBxzwDjv3PSj0x0ZwIHp0mxIa2y/Axp4RkmETQ9cliFPzYhi
-	 Yfaxk/52EDJ+wanbK+KsVrYxpMR3y8dsM4Jav8B947nrG5yhLhrX2MSxKCKj3T0prjWZY
-	 4kkWutI9I1Fwydm9IAIeSRhviFHUC2WSR1ZVwqeBMwmpwIJYACo4m4MdgK12e4aiwzc+6
-	 lIxJTBUuwO7bMU+ZPHHJPNzsqtQ9IDk7ZhkbAYG68iNfhkCgxyidSkthaKSL7bDKPv0hh
-	 caDco738m0OSATSjhrwVMEP6fFh9EVE1wNTPJJ7j4lk+TAprIlGZTmHU3LidvkkNOYA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=jTBK+xt6lYy8a+bcLdfjXp4tXnEkB1u/k0lQCP+zjcI=;
+	b=Kycw6uRN8NtxTbGMMBQt0wVvd6pmV/o2Kg0sqwC9kIf5OK+ELmKk1qFDXQYk1vws1QL+
+	 eVvxoatThUe3axdjUDg5ulikA2ic/YdDExDbtvPeRGJQubKOmDcg6piihppL1b+BRTu1K
+	 1rC33fLPAbr7eQeHetXisMkDiPP6V0j19kRQXHpbduz10NkOZ1TUCkm8JqcrNdFA+3HOs
+	 QStd/5UthYHKflO2tgl0VinpzDOOW2+Bxn0r9ZugGrlSS8mqgRzkSMgvYfW/qOgI01k1c
+	 esyIYjZXxp2UW8QPaaq/yZedz24t8yYPZhL50LnxxOZBjlTBRVd4Qd68Qpx7DAHWQ2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqCTSKxT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC4ZshaW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6983D606A320;
-	Wed, 18 Nov 2026 17:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE67606A31C;
+	Wed, 18 Nov 2026 17:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqCTSKxT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6E71F000C4;
-	Wed, 18 Nov 2026 17:17:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hC4ZshaW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF7C1F000C4;
+	Wed, 18 Nov 2026 17:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022275;
-	bh=i0TELLpwpoJdi3xcPnlmX0Ts2lAgIyhtxpkTkED+CaM=;
+	s=korg; t=1795022278;
+	bh=jTBK+xt6lYy8a+bcLdfjXp4tXnEkB1u/k0lQCP+zjcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zqCTSKxT2rJ3JbAF+Yk14udMkrrghpRHg8QNY67+7BzMe0ruo+qaoB8O6Od9DYI0S
-	 auFKTxwtnlTwLMyFKDmHmG59rii9y3pyx7Jxx0Y72mvJGHMRIpYEg1Fqo0aZV0QOaU
-	 60/z61poKiYlmky8345MLBN16pI+0PXtBW0M2Z2M=
+	b=hC4ZshaW2D+MPaFBgeyJvOq3bnV8EppK0GHFbcmAh58tu5vNpMfFP9s/1+ee5/Yag
+	 UnK+4lSkCY7jVupoCqtfOW9q+xIqPY9xlPnQjoguYTFRhtGdBK1oS7T/ZAdmMpCPOZ
+	 Tq2xGlmvEy/2EvSryNOCCm7bOfj2JVEfZef9Dotk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2604/2651] apparmor: report a label allocation failure as -ENOMEM
-Date: Wed, 18 Nov 2026 16:04:04 +0100
-Message-ID: <20261118150418.009880946@linuxfoundation.org>
+Subject: [PATCH 7.3 2605/2651] zloop: remove a duplicate call to zloop_get_block_size
+Date: Wed, 18 Nov 2026 16:04:05 +0100
+Message-ID: <20261118150418.044036399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,57 +62,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Bélair <maxime.belair@canonical.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 07aee062c6ecaa7199be583c83a1c74ae9885f03 ]
+[ Upstream commit 0835f4909553e78a97d1ac59ed6eb776b4f78c92 ]
 
-aa_label_strn_parse() returns -ENOENT for every failure, so a caller
-cannot tell "no such profile" from "could not allocate a label".
+The sequential zone path has two calls to zloop_get_block_size, one
+conditional on not having a block size, and one unconditionally.
 
-Report an allocation failure as -ENOMEM.
+Remove the latter as the block size only needs to be queried once.
 
-Fixes: f1bd904175e8 ("apparmor: add the base fns() for domain labels")
-Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20261029150353.2503201-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/block/zloop.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 42ed476fe89d9..fd67262330f90 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -1954,12 +1954,18 @@ struct aa_label *aa_label_strn_parse(struct aa_label *base, const char *str,
- 		goto out;
+diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
+index 394dc2408ed73..c61a93b806894 100644
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -1173,8 +1173,6 @@ static int zloop_init_zone(struct zloop_device *zlo, struct zloop_options *opts,
+ 			return ret;
  	}
  
--	if (create)
-+	if (create) {
- 		label = aa_vec_find_or_create_label(vec, len, gfp);
--	else
-+		if (!label) {
-+			/* not absence: creating only fails on allocation */
-+			label = ERR_PTR(-ENOMEM);
-+			goto out;
-+		}
-+	} else {
- 		label = vec_find(vec, len);
--	if (!label)
--		goto fail;
-+		if (!label)
-+			goto fail;
-+	}
- 
- out:
- 	/* use adjusted len from after vec_unique, not original */
+-	zloop_get_block_size(zlo, zone);
+-
+ 	mutex_lock(&zone->lock);
+ 	ret = zloop_update_seq_zone(zlo, zone_no);
+ 	mutex_unlock(&zone->lock);
 -- 
 2.53.0
 
