@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019646;
-	b=LUm9AhoTGoN64Y+1v0DqF1UpvL7Ur6TpPeryhmJBtXtW67q8HQivmEsgBv+bT/IDj2YN
-	 qdbgklWFHWAd8BFJu3V7rHlMB7sAQTxryTLYc9Z70G0o0oTWbEqJ2Ii0eqOMFaKoNnghk
-	 Tjc6mV9gyOQ3a24bsUIFw2k8xUgDOUIpzVG7SwXRiEixMG5d2b/dJ+R0OvL8YC9Jqn3Gm
-	 qk5HqDxgWZziW4xgzBRsAdv0KadXQdVNNgEKzFTMOK8rng+WUVV895nt9fEkx+koPJY0o
-	 flfOxcKJ5F4BLMxMXYnrl5w3eSeo7U9s/oqI1fvvioaHMlAPv4CuFwywsrDMG//vz7w==
+	t=1795019649;
+	b=4Ui8FsvzM+B6cWjPltOcOfLqttVrUYOqa/A9vmd1lPc36JuenB5NTq3hz0KY5JhXmJt3
+	 5eO/63W0dRKKPbiAVOAeMkb6+d372TfhepGUB+acH8603Dq1U1q/cTfincecvchdiO7hq
+	 EpPDsSaUGw2B+4fNr5xjtMtx788IP1yEJUzOYtoRFzk6j52JEX4pv1AuGu6gc/SwIe/T0
+	 Bgmj3vpcTs4HaJndj1iM41q2NcM2/ZvXrxrfn1/ae8l+5m/jVtttQTQO6wz5pf6CpP63g
+	 XtcVc+EMXDZL5vvcRenKlVT8FwXHsk7MzpHim//z5+bi7sZ5TwAVqvDLMdjFZLOCTxg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019646;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019649;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jJ4IspscW/pziZzL4VaLniQ+LeffvAsX1WYGKOybbFc=;
-	b=l47wYG1hlEID8yo34h5y7TtnbsWijh9NesGENZ9PfNnbwFj87OY73mOp9eLeGqM/17ZK
-	 9EO1kQaYupdwXV2jesBJL5h52aQbx0a6JX1o8WKETNvuCZwg4YLO8WpecI0RxO8iY8RJE
-	 dS9L9DLoPRZ9/AT38JH/CmbRLAro1+RXH8JO8+IOqJ8VmHTF09uoPiw/zNI45MCkcll9V
-	 T7AQtP22cbQdqTUzlODbfWQlB8qDLyzItEwf3bJGOGaY1yZlI673eZEFieFKOao0NgUhX
-	 TOqiST9qrs3uOclpawUSaxk6NiQ84JuxzH3NuDfgd/HPwh0o98ZqjWAm6iqCab/MPgg==
+	bh=DpmJZifdg9NfwheGDzia8MY17IKU/TerChrgXXFr9T8=;
+	b=jRTE2BNE+iIoQeKywKCkdamhnGRxSPH7VVOgcG0nvqqo6PMx4JFf3j2ACmvItUvI2YWV
+	 jEZcYaAUGFsXt9EYFtz8ekqYTRQDcXgpNbsgrffOd7HEJ3Z9AjyXz+Z2pvn+ftS4wFRHq
+	 eh/Yl8/FlxwU77AYv8mluzrep9w/hA7V6lMFTvlKYJZBlfpuMv4NteBusbuKL4VzB01Pi
+	 tKGV2oeUoOEpjuWke6W+C7pvKJCpGdXXnN+O7rSkA1c+wgedr4OaKunmk1kZ3m0Ug93le
+	 0jKA5CQ6LBN4uaLQ3VboCU4UkGROy+R/m4f6iIavarJMzjxwgbaFhs1vfKVcwFNq43Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VKhJjJaU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRNJ2pB8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01FA606A7C0;
-	Wed, 18 Nov 2026 16:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2A1606A325;
+	Wed, 18 Nov 2026 16:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VKhJjJaU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1941F000C8;
-	Wed, 18 Nov 2026 16:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRNJ2pB8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078631F000C4;
+	Wed, 18 Nov 2026 16:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019646;
-	bh=jJ4IspscW/pziZzL4VaLniQ+LeffvAsX1WYGKOybbFc=;
+	s=korg; t=1795019649;
+	bh=DpmJZifdg9NfwheGDzia8MY17IKU/TerChrgXXFr9T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VKhJjJaU+9tcQn7W1ipfFfHcKPNiqxuUCb1oF2Vnoy4XvnbCbfIED5Vf2czAMBO2g
-	 GydHmNex0ejDdgmwC4TpMAEpcofq+5sG9EAgxe8CLehkcrbLAhv5J/7T/1bqdnUwFS
-	 aO96iN2jTvbTglkv/9dyqhkiOqPTZTEK3fA2nvCk=
+	b=wRNJ2pB8eO9LdTtpvdGHqEUS6PShAE+w1wohVlmjsDtzqZ/0mkUCldIc2xCgFSGcC
+	 zOnXYvYlYWzOw0ksOd9le9LC00PA4q1/Rqi3zwoilbtJ7nvbOCo7eiaFgLLMk05B1p
+	 Cb/i4DYj9oscHDmHOwzVWwhhdoqAgpUEWCO6fdS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunwu Chan <kunwu.chan@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1671/2651] rcutorture: Fix divide-by-zero with fwd_progress_div=1
-Date: Wed, 18 Nov 2026 15:48:31 +0100
-Message-ID: <20261118150347.859372555@linuxfoundation.org>
+Subject: [PATCH 7.3 1672/2651] wifi: ath12k: Fix NAPI resource leaks in AHB external IRQ paths
+Date: Wed, 18 Nov 2026 15:48:32 +0100
+Message-ID: <20261118150347.896377757@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,59 +70,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kunwu Chan <kunwu.chan@gmail.com>
+From: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
 
-[ Upstream commit 5b748d8aa6833f2dec3f545311be69a2064bc6d1 ]
+[ Upstream commit ebc938ba1d5ff33652013b99c7b9a74f05690336 ]
 
-When fwd_progress_div=1, the forward-progress test computes:
-  sd4 = (sd + div - 1) / div = sd
-  dur = sd4 + torture_random(&trs) % (sd - sd4) = sd4 + % 0
+Currently, NAPI instances and their associated netdevs allocated for AHB
+external IRQ groups are not released when external IRQ configuration
+fails. They are also not freed when arch_init() fails after
+ath12k_ahb_config_irq() succeeds during probe, or when the driver is
+unloaded.
 
-The modulo operation with a zero divisor triggers an integer
-division by zero (undefined behavior at the C level, #DE trap on x86),
-causing a kernel Oops and panic. On x86_64, this manifests as:
+Fix this by adding a common cleanup helper to release the NAPI instances
+and associated netdevs. Call it from the external IRQ configuration error
+path, probe error path, and driver cleanup path.
 
-  rcu_torture_fwd_prog_nr: Starting forward-progress test 0
-  Oops: divide error: 0000 [#1] SMP PTI
-  RIP: 0010:rcu_torture_fwd_prog+0x90b/0x1160
-  R12: 0000000000000000
+Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.6-01275-QCAHKSWPL_SILICONZ-1
 
-The existing guard only handles non-positive values. However,
-fwd_progress_div=1 also makes the random range empty because
-sd4 == sd.
-
-Change the guard to reject values below 2. The forward-progress test
-only reaches this calculation when stall_dur() is positive, so
-sd = stall_dur() + 1 >= 2. For fwd_progress_div >= 2, sd4 < sd,
-ensuring that sd - sd4 is at least 1.
-
-Keep the existing fallback to the default value of 4 for invalid
-values.
-
-Verified with QEMU/KVM: a 138-second run with fwd_progress_div=1
-completed 81 forward-progress test cycles without a crash.
-
-Fixes: 1b27291b1ea4f ("rcutorture: Add forward-progress tests for RCU grace periods")
-Signed-off-by: Kunwu Chan <kunwu.chan@gmail.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: 6cee30f0da75 ("wifi: ath12k: add AHB driver support for IPQ5332")
+Fixes: 614c23e24ee8 ("wifi: ath12k: Support arch-specific DP device allocation")
+Signed-off-by: Aaradhana Sahu <aaradhana.sahu@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261001045423.493121-1-aaradhana.sahu@oss.qualcomm.com
+[renamed label err_free_irq]
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcutorture.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/ahb.c | 41 ++++++++++++++++++++++++---
+ 1 file changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index 794937e13e7c3..83819424cf35d 100644
---- a/kernel/rcu/rcutorture.c
-+++ b/kernel/rcu/rcutorture.c
-@@ -3856,7 +3856,7 @@ static int __init rcu_torture_fwd_prog_init(void)
+diff --git a/drivers/net/wireless/ath/ath12k/ahb.c b/drivers/net/wireless/ath/ath12k/ahb.c
+index d89a49c6ebb74..df79f15c1ccae 100644
+--- a/drivers/net/wireless/ath/ath12k/ahb.c
++++ b/drivers/net/wireless/ath/ath12k/ahb.c
+@@ -191,6 +191,26 @@ static void __ath12k_ahb_ext_irq_disable(struct ath12k_base *ab)
  	}
- 	if (fwd_progress_holdoff <= 0)
- 		fwd_progress_holdoff = 1;
--	if (fwd_progress_div <= 0)
-+	if (fwd_progress_div < 2)
- 		fwd_progress_div = 4;
- 	rfp = kzalloc_objs(*rfp, fwd_progress);
- 	fwd_prog_tasks = kzalloc_objs(*fwd_prog_tasks, fwd_progress);
+ }
+ 
++static void ath12k_ahb_free_napi_for_group(struct ath12k_ext_irq_grp *irq_grp)
++{
++	netif_napi_del(&irq_grp->napi);
++	free_netdev(irq_grp->napi_ndev);
++	irq_grp->napi_ndev = NULL;
++}
++
++static void ath12k_ahb_free_napi(struct ath12k_base *ab, int num_ext_irq_grp)
++{
++	int i;
++
++	for (i = 0; i < num_ext_irq_grp; i++)
++		ath12k_ahb_free_napi_for_group(&ab->ext_irq_grp[i]);
++}
++
++static void ath12k_ahb_free_ext_napi(struct ath12k_base *ab)
++{
++	ath12k_ahb_free_napi(ab, ATH12K_EXT_IRQ_GRP_NUM_MAX);
++}
++
+ static void ath12k_ahb_ext_grp_enable(struct ath12k_ext_irq_grp *irq_grp)
+ {
+ 	int i;
+@@ -594,8 +614,10 @@ static int ath12k_ahb_config_ext_irq(struct ath12k_base *ab)
+ 		irq_grp->grp_id = i;
+ 
+ 		irq_grp->napi_ndev = alloc_netdev_dummy(0);
+-		if (!irq_grp->napi_ndev)
+-			return -ENOMEM;
++		if (!irq_grp->napi_ndev) {
++			ret = -ENOMEM;
++			goto free_napi_ndev;
++		}
+ 
+ 		netif_napi_add(irq_grp->napi_ndev, &irq_grp->napi,
+ 			       ath12k_ahb_ext_grp_napi_poll);
+@@ -647,12 +669,19 @@ static int ath12k_ahb_config_ext_irq(struct ath12k_base *ab)
+ 					       ath12k_ahb_ext_interrupt_handler,
+ 					       IRQF_TRIGGER_RISING,
+ 					       irq_name[irq_idx], irq_grp);
+-			if (ret)
++			if (ret) {
+ 				ath12k_warn(ab, "failed request_irq for %d\n", irq);
++				ath12k_ahb_free_napi_for_group(irq_grp);
++				goto free_napi_ndev;
++			}
+ 		}
+ 	}
+ 
+ 	return 0;
++
++free_napi_ndev:
++	ath12k_ahb_free_napi(ab, i);
++	return ret;
+ }
+ 
+ static int ath12k_ahb_config_irq(struct ath12k_base *ab)
+@@ -1229,7 +1258,7 @@ static int ath12k_ahb_probe(struct platform_device *pdev)
+ 	ret = ab_ahb->device_family_ops->arch_init(ab);
+ 	if (ret) {
+ 		ath12k_err(ab, "AHB arch_init failed %d\n", ret);
+-		goto err_rproc_deconfigure;
++		goto err_free_ext_napi;
+ 	}
+ 
+ 	ret = ath12k_core_init(ab);
+@@ -1243,6 +1272,9 @@ static int ath12k_ahb_probe(struct platform_device *pdev)
+ err_deinit_arch:
+ 	ab_ahb->device_family_ops->arch_deinit(ab);
+ 
++err_free_ext_napi:
++	ath12k_ahb_free_ext_napi(ab);
++
+ err_rproc_deconfigure:
+ 	mutex_lock(&ath12k_rproc_info_lock);
+ 	ath12k_ahb_deconfigure_rproc(ab);
+@@ -1285,6 +1317,7 @@ static void ath12k_ahb_free_resources(struct ath12k_base *ab)
+ 	struct platform_device *pdev = ab->pdev;
+ 	struct ath12k_ahb *ab_ahb = ath12k_ab_to_ahb(ab);
+ 
++	ath12k_ahb_free_ext_napi(ab);
+ 	ath12k_hal_srng_deinit(ab);
+ 	ath12k_ce_free_pipes(ab);
+ 	ath12k_ahb_resource_deinit(ab);
 -- 
 2.53.0
 
