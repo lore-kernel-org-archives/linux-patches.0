@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015201;
-	b=rKMfGwNUc1ThsNT7B7FYTXr0ECxklBoB0qnXfQt4diXWQTbTmHtQOO8PPFBdq227SmBP
-	 uZbIM1/e0MgwV1nucicuN5dQevrmmMSq/YwF9UcYj3PtKnzF57JkWjAYexKde1baDhQ73
-	 P2hMSOct57JNyMN2uzO0mdURzuNaGS5IP3Epy2ksmG4rzs0h/tlHWE0sPFLqdTLbnLOZ2
-	 oFttA4i6z8tRDm5tP4oWcZLVsBlKzP4QI9uYM+tOOrNTgUMN0mT/eEcr0gLQcbg9R6HBA
-	 WEufFJZj0Ykcv/DlmsvxWDOwfMKKFZiFIywIV5oyW88rMKuaVfnbK5t4RiN0MBua43g==
+	t=1795015205;
+	b=F71/F3Zdpy41lgvEZY2VsxaHOMk46LVBxju0RAVP7xRlFU+nEZnjWI39YfW5rXHBDvmP
+	 O6Dp9/nysY1TDWO0wljHAEfb+RCEWLLuFp8dUOneji9yiTT48n86QmyHhtVd+qQFcPIaJ
+	 DyyIb4B9pq4qDyf703+l47BvF4JJRKK52OgAbaw1gJBsRzZ6PihCj75ifLYgwBqLwLcMa
+	 5nOusgOsvTen9FlcZvA3aQ8ovVVe2ojNdoKA4lhcQ1MPifkrmCs+mg0WIt6n+sm7I127J
+	 bPRpetXTzCw/gL5GEUBHW1R482ATkK+TeBhnN6nLP5Tgymit2St+SdgW4syGyFlpm0Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015201;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015205;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CWcq6DdgdmgwpMpadQsORabwewbZ5BgKFAe0s93BV+I=;
-	b=yXWYyvC6bFg51IguJPQDMvHFK/ZtAG+4gnk6qoL7y7n6E3SEcUQe2OIMS5qmLBLpqqwd
-	 3iy1RAU/6bF96qLKj5Kux4f9Yq3esJDuHGHreo64/ygWqjt41toyOpS9IHLY/J0QB3J32
-	 SivkoLxCa/koZAT2hMJMqF+QRyCUXO1k/gbjaN3RaufaT7FoxDDb9K0nZbhzleLBQToO0
-	 7wSKVgwWL2RAhDR+ZZ5JJu0Slk8JH6h3UWngDizU6qGZX9FuajGF4CotuquPtM92v2xrn
-	 MmoLdbe2GUHFsElDYXa7/vEG12On0FPb73FZX3MD9YTKXnzK+2438hf1RAQ5G8exkMg==
+	bh=cz0SLKoH3HMoTWEx1FkmejFDRrahKnGpRrt4/GKqZ1U=;
+	b=Lqw3e4EU5a7GiUgvsjwD2nhzduhL0ltrX6lDeF1UG0v/0/Bl8SoRSt7dA2i6zznBrryX
+	 e6+9TAmummpS14RdRz/ubqwolbsIcNF/Yhk0Z/Hrgp4ni2WTvWB3E4Zx9qajAnAzUJq1O
+	 2h9gIiMIjOIoxjt3/ZDUHj3XuD8couLJAwT975s3jw7y72yBfjdK4AZz+86nUg9P7baiW
+	 Yfkh86YmiPxgcibopKCsmj6S0j2bhz0+xpj+7Zp4jkCRe94NGM7wo7Pazk9dkv1jv7CyV
+	 bRYwD1DtntkGx6OkOOr+RERN95olT8O39gBLi5+JXDq+/niOAnkDigJtKL5uN4usfow==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xCpOxyu1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=STXhCVzo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62B460A260B;
-	Wed, 18 Nov 2026 15:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7F6606A337;
+	Wed, 18 Nov 2026 15:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xCpOxyu1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141E91F000C4;
-	Wed, 18 Nov 2026 15:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=STXhCVzo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB16E1F000C8;
+	Wed, 18 Nov 2026 15:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015201;
-	bh=CWcq6DdgdmgwpMpadQsORabwewbZ5BgKFAe0s93BV+I=;
+	s=korg; t=1795015204;
+	bh=cz0SLKoH3HMoTWEx1FkmejFDRrahKnGpRrt4/GKqZ1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xCpOxyu1agOHhnCx1G0yHzWO1j67AmBjDUdS5i4IG5KbPikaWRY4phbCaU2I4/Gs7
-	 QBmABC4u4cCE5aEeueHCThtJbPeeQhSqoA8RoOG4z3B2pDcmYrNgN3ip2PhnCwyVdA
-	 NsFZtPWoi7XaE60/KY3tyqobgyakMwoy6br9JXWE=
+	b=STXhCVzoVv7Yxq/rvFpfY8QqR8RS5Co3oscK0ES6e7A4of/hMBjzoYZRIawZFpeCT
+	 82yD/i9mfBgsV/qqtpunBApozTA0NHvgGkn7NAbjOBB5Y1cuM+wS/8CV3EeVJUvk6V
+	 npvVX6unMSLoL9UbC0wHoP1Bq9lx2y2Ax5xA6K+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <shijianlin11@foxmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0072/2651] bpf: Fix stream capacity leak in staging path
-Date: Wed, 18 Nov 2026 15:21:52 +0100
-Message-ID: <20261118150250.529072457@linuxfoundation.org>
+Subject: [PATCH 7.3 0090/2651] spi: sh-msiof: propagate setup runtime-PM errors
+Date: Wed, 18 Nov 2026 15:22:10 +0100
+Message-ID: <20261118150251.149375551@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,55 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianlin Shi <shijianlin11@foxmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit effa6370ba89e7839c9bfeb802d8f05d6843ddf1 ]
+[ Upstream commit 152867998da9f331d6235d76aae1c7e1650708a9 ]
 
-bpf_stream_stage_printk() increments ss->len before pushing the
-formatted string to the staging log. If element allocation fails,
-ss->len remains inflated and bpf_stream_stage_commit() permanently
-charges the stream capacity for data that was never queued.
+sh_msiof_spi_setup() ignores pm_runtime_get_sync() before programming
+native chip-select registers and marking the configuration initialized.
 
-Only account the string length after a successful push, and use
-vscnprintf() so the staged length is the truncated payload without
-the trailing NUL.
+Use the checked runtime-PM helper and return failure before register
+access.
 
-Fixes: 5ab154f1463a ("bpf: Introduce BPF standard streams")
-Signed-off-by: Jianlin Shi <shijianlin11@foxmail.com>
-Link: https://lore.kernel.org/r/46898fb1ae482b2f8b1da459922b187378dfdc1d.1787492521.git.shijianlin11@foxmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Fixes: 7ff0b53c4051 ("spi: sh-msiof: Avoid writing to registers from spi_master.setup()")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830140133.24156-1-pengpeng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stream.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/spi/spi-sh-msiof.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/stream.c b/kernel/bpf/stream.c
-index 0b157ec4e38eb..a36fc93389677 100644
---- a/kernel/bpf/stream.c
-+++ b/kernel/bpf/stream.c
-@@ -316,17 +316,18 @@ int bpf_stream_stage_printk(struct bpf_stream_stage *ss, const char *fmt, ...)
- {
- 	struct bpf_bprintf_buffers *buf;
- 	va_list args;
--	int ret;
-+	int len, ret;
+diff --git a/drivers/spi/spi-sh-msiof.c b/drivers/spi/spi-sh-msiof.c
+index 1aeab7ec0bc8d..4c425ec627767 100644
+--- a/drivers/spi/spi-sh-msiof.c
++++ b/drivers/spi/spi-sh-msiof.c
+@@ -453,6 +453,7 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
+ 	struct sh_msiof_spi_priv *p =
+ 		spi_controller_get_devdata(spi->controller);
+ 	u32 clr, set, tmp;
++	int ret;
  
- 	if (bpf_try_get_buffers(&buf))
- 		return -EBUSY;
- 
- 	va_start(args, fmt);
--	ret = vsnprintf(buf->buf, ARRAY_SIZE(buf->buf), fmt, args);
-+	len = vscnprintf(buf->buf, ARRAY_SIZE(buf->buf), fmt, args);
- 	va_end(args);
--	ss->len += ret;
- 	/* Exclude NULL byte during push. */
--	ret = __bpf_stream_push_str(&ss->log, buf->buf, ret);
-+	ret = __bpf_stream_push_str(&ss->log, buf->buf, len);
-+	if (!ret)
-+		ss->len += len;
- 	bpf_put_buffers();
- 	return ret;
- }
+ 	if (spi_get_csgpiod(spi, 0) || spi_controller_is_target(p->ctlr))
+ 		return 0;
+@@ -468,7 +469,9 @@ static int sh_msiof_spi_setup(struct spi_device *spi)
+ 		clr |= SIMDR1_SYNCAC;
+ 	else
+ 		set |= SIMDR1_SYNCAC;
+-	pm_runtime_get_sync(&p->pdev->dev);
++	ret = pm_runtime_resume_and_get(&p->pdev->dev);
++	if (ret < 0)
++		return ret;
+ 	tmp = sh_msiof_read(p, SITMDR1) & ~clr;
+ 	sh_msiof_write(p, SITMDR1, tmp | set | SIMDR1_TRMD | SITMDR1_PCON);
+ 	tmp = sh_msiof_read(p, SIRMDR1) & ~clr;
 -- 
 2.53.0
 
