@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050573;
-	b=m81du0Lx7ZQZWE/W+1UYAGDAzAURGvE1TxPA7T4BSHIU4kPiYPkROCul+zj0BiKLbKRO
-	 J1bU2BbrQbSAmK+RRWO8cU6mA5SZdKig/VckQ3bNmvGvjlxdIBoL/lVo+HpZ9EWqnu7pU
-	 GJFWdznVxzmWu4qsiHx2yf+O8epRve12+4DeRUzyrKocUyPu/loI2HQsffhGQDmeVHFwB
-	 NMTADpYnQUTNWk2W6uojZP8S4S5dKnknVxD7IrlZ6pQWbeJVcbbHE7hC1dA13O2QCn6OM
-	 HrtJ+ILQNDIxgq62EDdA+JbZ3akGhLNSUdGQE+g0eqaQPeTsNj0VmckYMiuGIsOoarA==
+	t=1795050576;
+	b=hIGy4MbJKaceI4MnL1z9QknaQenkhtcQ/2DD4vTF9nufG/jAmk6cMhXqfVJ3HlEDzVQs
+	 XB8NOzDy7GvLJ1+W5cwhuAec+K9jMtWgdsB6cehK5AKQYG/8g8ZEtrbXjLcYthDYA4KaR
+	 eD6URPIQlh6adOKf6t1XdGmNSyo2BxzRUEjiNoqHu2sUqiCl+d739stzQvv+B2NPgMg42
+	 3snbvTnAI793SZdwKSU/y48Db8PMLXRFEpNmhMVVTmxmUYnPsiFUhZewRPeQS1ZbLtk53
+	 A7P7jd4pBpJ6O/chQQ/8VLKOY/U0SdH6i8x7Eb+vgfw7zf08CW3baiTsQQDzECPvlGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zKjaQ6JOVzy+YZADf6T1hvTyzprOeMUl5qWfSc982RY=;
-	b=K0IoVvN6x5suwJMb+UCuNFMRC+U/8pH+X6jg1Z/lEGc3cQVLvStstnm3qEPWFCpyFBkb
-	 qIsVacqmLbH99fDxfDhNQltniLRK088c7r0BKSnrlr70IuPHL+VN0y/LlKKfZ5IAxaiiI
-	 uTzofz9OHQhDgHcb8VhqNca6C4iZ6dKlfwHVQv6M5VQTXck7oljEZGsEisKXXBpD3OwUO
-	 LLl1CxMmFdQVqoFKPQCUrAHK4DhyliMLYyydI3G3FfIuv7HGBYmMONrEcD03y6ME4sMI9
-	 t/wtHYXzmXZ/f75EqNu893gsI7qmhns8MBRGoRBriMrVZMrLx7KkEdVVJnx75MNM2/A==
+	bh=dtcZofAJrtEQOQGmx9tPT18FxelcYh8y0zDQIPJOlxs=;
+	b=nnNqveN5oq5Vktsh2PTb98U8b2EHWyJgmxsvq+w2+y//54Bb/e6d6vmWpatJ64WgzfrN
+	 kk5KHddWDT8KNJuj7WfzLDnJiSkkXmCJiCip3dY8z7IAhxfIN8m7kfeZhy7dq4Ey6d8Uu
+	 eK4tR82Hrf351kYKSMI6bdhKu3ToGIScXlLipIw4G0fqU3fdPmxjsSfxojhkEP7JweLLz
+	 /c+yG9IISQr4Z4NdFGoT/qbWE3XpSQfLJjsC438zEsc5YsRrKlp1bQa6jN9iRH3wd1m/S
+	 HVWovhoGUTTtvRqjAQqzzwJST1GFygHGvZ4nyoZb3z8ZBbYaB16BDLsVJyJDrDl5d4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YN85LO/c";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lyBbu2bi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF459606A31C;
-	Thu, 19 Nov 2026 01:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D01606A31C;
+	Thu, 19 Nov 2026 01:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YN85LO/c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4141F000C4;
-	Thu, 19 Nov 2026 01:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lyBbu2bi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0729B1F000C4;
+	Thu, 19 Nov 2026 01:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050573;
-	bh=zKjaQ6JOVzy+YZADf6T1hvTyzprOeMUl5qWfSc982RY=;
+	s=korg; t=1795050576;
+	bh=dtcZofAJrtEQOQGmx9tPT18FxelcYh8y0zDQIPJOlxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YN85LO/cnD6QZO8KeRyouprZ9ifN/GkR9/3yzNkSKTPJl+vH2uCU6gor91K00xOwg
-	 pjrxuyPIyRyY5SkUnbPKz7orF7zxTE1O/77YJ64uGuHyc6aoZDsOeTg2E0Qdk/idzO
-	 CXjnZABv61ZJPNKPtu09yNvvvqLGfAayfiX4Bt3c=
+	b=lyBbu2bi0TStnT/qhk2FYc/cpv7MyOwu6tvUuCniRp/EnWeYKG9h5KTeW8PjWOd+j
+	 bhCXzASbrm+hnWtAvWI+TQFPp8OfbhgL2/5fnThy7J3dimNgkdhW1rnppsJNINDSsh
+	 UtJuvC9ifBm9pqVY5oCI5fNYqe+F8d4x65LJWDL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2715/2857] tls: reduce size of tls_cipher_size_desc
-Date: Wed, 18 Nov 2026 16:02:29 +0100
-Message-ID: <20261118150339.370311360@linuxfoundation.org>
+Subject: [PATCH 6.1 2716/2857] tls: rename tls_cipher_size_desc to tls_cipher_desc
+Date: Wed, 18 Nov 2026 16:02:30 +0100
+Message-ID: <20261118150339.408582604@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,138 +70,322 @@ Content-Transfer-Encoding: 8bit
 
 From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 037303d6760751fdb95ba62cf448ecbc1ac29c98 ]
+[ Upstream commit 8db44ab26bebe969851468bea6072d9a094b2ace ]
 
-tls_cipher_size_desc indexes ciphers by their type, but we're not
-using indices 0..50 of the array. Each struct tls_cipher_size_desc is
-20B, so that's a lot of unused memory. We can reindex the array
-starting at the lowest used cipher_type.
-
-Introduce the get_cipher_size_desc helper to find the right item and
-avoid out-of-bounds accesses, and make tls_cipher_size_desc's size
-explicit so that gcc reminds us to update TLS_CIPHER_MIN/MAX when we
-add a new cipher.
+We're going to add other fields to it to fully describe a cipher, so
+the "_size" name won't match the contents.
 
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://lore.kernel.org/r/5e054e370e240247a5d37881a1cd93a67c15f4ca.1692977948.git.sd@queasysnail.net
+Link: https://lore.kernel.org/r/76ca6c7686bd6d1534dfa188fb0f1f6fabebc791.1692977948.git.sd@queasysnail.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: c43c1c24f3cd ("tls: avoid field-spanning write when copying crypto info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls.h                 | 13 ++++++++++++-
- net/tls/tls_device.c          |  4 ++--
- net/tls/tls_device_fallback.c |  8 ++++----
- net/tls/tls_main.c            |  4 ++--
- 4 files changed, 20 insertions(+), 9 deletions(-)
+ net/tls/tls.h                 |  8 +++----
+ net/tls/tls_device.c          | 34 ++++++++++++++--------------
+ net/tls/tls_device_fallback.c | 42 +++++++++++++++++------------------
+ net/tls/tls_main.c            | 20 ++++++++---------
+ 4 files changed, 52 insertions(+), 52 deletions(-)
 
 diff --git a/net/tls/tls.h b/net/tls/tls.h
-index 8ac493a56f38f..9f76eb5a71727 100644
+index 9f76eb5a71727..b69952298705e 100644
 --- a/net/tls/tls.h
 +++ b/net/tls/tls.h
-@@ -58,7 +58,18 @@ struct tls_cipher_size_desc {
- 	unsigned int rec_seq;
- };
+@@ -50,7 +50,7 @@
+ #define TLS_DEC_STATS(net, field)				\
+ 	SNMP_DEC_STATS((net)->mib.tls_statistics, field)
  
--extern const struct tls_cipher_size_desc tls_cipher_size_desc[];
-+#define TLS_CIPHER_MIN TLS_CIPHER_AES_GCM_128
-+#define TLS_CIPHER_MAX TLS_CIPHER_ARIA_GCM_256
-+extern const struct tls_cipher_size_desc tls_cipher_size_desc[TLS_CIPHER_MAX + 1 - TLS_CIPHER_MIN];
-+
-+static inline const struct tls_cipher_size_desc *get_cipher_size_desc(u16 cipher_type)
-+{
-+	if (cipher_type < TLS_CIPHER_MIN || cipher_type > TLS_CIPHER_MAX)
-+		return NULL;
-+
-+	return &tls_cipher_size_desc[cipher_type - TLS_CIPHER_MIN];
-+}
-+
+-struct tls_cipher_size_desc {
++struct tls_cipher_desc {
+ 	unsigned int iv;
+ 	unsigned int key;
+ 	unsigned int salt;
+@@ -60,14 +60,14 @@ struct tls_cipher_size_desc {
  
- /* TLS records are maintained in 'struct tls_rec'. It stores the memory pages
-  * allocated or mapped for each TLS record. After encryption, the records are
+ #define TLS_CIPHER_MIN TLS_CIPHER_AES_GCM_128
+ #define TLS_CIPHER_MAX TLS_CIPHER_ARIA_GCM_256
+-extern const struct tls_cipher_size_desc tls_cipher_size_desc[TLS_CIPHER_MAX + 1 - TLS_CIPHER_MIN];
++extern const struct tls_cipher_desc tls_cipher_desc[TLS_CIPHER_MAX + 1 - TLS_CIPHER_MIN];
+ 
+-static inline const struct tls_cipher_size_desc *get_cipher_size_desc(u16 cipher_type)
++static inline const struct tls_cipher_desc *get_cipher_desc(u16 cipher_type)
+ {
+ 	if (cipher_type < TLS_CIPHER_MIN || cipher_type > TLS_CIPHER_MAX)
+ 		return NULL;
+ 
+-	return &tls_cipher_size_desc[cipher_type - TLS_CIPHER_MIN];
++	return &tls_cipher_desc[cipher_type - TLS_CIPHER_MIN];
+ }
+ 
+ 
 diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 8dd9d3a94aba9..1f44c7a562cb5 100644
+index 1f44c7a562cb5..f03920c17711f 100644
 --- a/net/tls/tls_device.c
 +++ b/net/tls/tls_device.c
-@@ -924,7 +924,7 @@ tls_device_reencrypt(struct sock *sk, struct tls_context *tls_ctx)
+@@ -910,7 +910,7 @@ static int
+ tls_device_reencrypt(struct sock *sk, struct tls_context *tls_ctx)
+ {
+ 	struct tls_sw_context_rx *sw_ctx = tls_sw_ctx_rx(tls_ctx);
+-	const struct tls_cipher_size_desc *cipher_sz;
++	const struct tls_cipher_desc *cipher_desc;
+ 	int err, offset, copy, data_len, pos;
+ 	struct sk_buff *skb, *skb_iter;
+ 	struct scatterlist sg[1];
+@@ -924,10 +924,10 @@ tls_device_reencrypt(struct sock *sk, struct tls_context *tls_ctx)
  	default:
  		return -EINVAL;
  	}
--	cipher_sz = &tls_cipher_size_desc[tls_ctx->crypto_recv.info.cipher_type];
-+	cipher_sz = get_cipher_size_desc(tls_ctx->crypto_recv.info.cipher_type);
+-	cipher_sz = get_cipher_size_desc(tls_ctx->crypto_recv.info.cipher_type);
++	cipher_desc = get_cipher_desc(tls_ctx->crypto_recv.info.cipher_type);
  
  	rxm = strp_msg(tls_strp_msg(sw_ctx));
- 	orig_buf = kmalloc(rxm->full_len + TLS_HEADER_SIZE + cipher_sz->iv,
-@@ -1120,7 +1120,7 @@ int tls_set_device_offload(struct sock *sk, struct tls_context *ctx)
+-	orig_buf = kmalloc(rxm->full_len + TLS_HEADER_SIZE + cipher_sz->iv,
++	orig_buf = kmalloc(rxm->full_len + TLS_HEADER_SIZE + cipher_desc->iv,
+ 			   sk->sk_allocation);
+ 	if (!orig_buf)
+ 		return -ENOMEM;
+@@ -943,8 +943,8 @@ tls_device_reencrypt(struct sock *sk, struct tls_context *tls_ctx)
+ 
+ 	sg_init_table(sg, 1);
+ 	sg_set_buf(&sg[0], buf,
+-		   rxm->full_len + TLS_HEADER_SIZE + cipher_sz->iv);
+-	err = skb_copy_bits(skb, offset, buf, TLS_HEADER_SIZE + cipher_sz->iv);
++		   rxm->full_len + TLS_HEADER_SIZE + cipher_desc->iv);
++	err = skb_copy_bits(skb, offset, buf, TLS_HEADER_SIZE + cipher_desc->iv);
+ 	if (err)
+ 		goto free_buf;
+ 
+@@ -955,7 +955,7 @@ tls_device_reencrypt(struct sock *sk, struct tls_context *tls_ctx)
+ 	else
+ 		err = 0;
+ 
+-	data_len = rxm->full_len - cipher_sz->tag;
++	data_len = rxm->full_len - cipher_desc->tag;
+ 
+ 	if (skb_pagelen(skb) > offset) {
+ 		copy = min_t(int, skb_pagelen(skb) - offset, data_len);
+@@ -1072,7 +1072,7 @@ int tls_set_device_offload(struct sock *sk, struct tls_context *ctx)
+ {
+ 	struct tls_context *tls_ctx = tls_get_ctx(sk);
+ 	struct tls_prot_info *prot = &tls_ctx->prot_info;
+-	const struct tls_cipher_size_desc *cipher_sz;
++	const struct tls_cipher_desc *cipher_desc;
+ 	struct tls_record_info *start_marker_record;
+ 	struct tls_offload_context_tx *offload_ctx;
+ 	struct tls_crypto_info *crypto_info;
+@@ -1120,31 +1120,31 @@ int tls_set_device_offload(struct sock *sk, struct tls_context *ctx)
  		rc = -EINVAL;
  		goto release_netdev;
  	}
--	cipher_sz = &tls_cipher_size_desc[crypto_info->cipher_type];
-+	cipher_sz = get_cipher_size_desc(crypto_info->cipher_type);
+-	cipher_sz = get_cipher_size_desc(crypto_info->cipher_type);
++	cipher_desc = get_cipher_desc(crypto_info->cipher_type);
  
  	/* Sanity-check the rec_seq_size for stack allocations */
- 	if (cipher_sz->rec_seq > TLS_MAX_REC_SEQ_SIZE) {
+-	if (cipher_sz->rec_seq > TLS_MAX_REC_SEQ_SIZE) {
++	if (cipher_desc->rec_seq > TLS_MAX_REC_SEQ_SIZE) {
+ 		rc = -EINVAL;
+ 		goto release_netdev;
+ 	}
+ 
+ 	prot->version = crypto_info->version;
+ 	prot->cipher_type = crypto_info->cipher_type;
+-	prot->prepend_size = TLS_HEADER_SIZE + cipher_sz->iv;
+-	prot->tag_size = cipher_sz->tag;
++	prot->prepend_size = TLS_HEADER_SIZE + cipher_desc->iv;
++	prot->tag_size = cipher_desc->tag;
+ 	prot->overhead_size = prot->prepend_size + prot->tag_size;
+-	prot->iv_size = cipher_sz->iv;
+-	prot->salt_size = cipher_sz->salt;
+-	ctx->tx.iv = kmalloc(cipher_sz->iv + cipher_sz->salt, GFP_KERNEL);
++	prot->iv_size = cipher_desc->iv;
++	prot->salt_size = cipher_desc->salt;
++	ctx->tx.iv = kmalloc(cipher_desc->iv + cipher_desc->salt, GFP_KERNEL);
+ 	if (!ctx->tx.iv) {
+ 		rc = -ENOMEM;
+ 		goto release_netdev;
+ 	}
+ 
+-	memcpy(ctx->tx.iv + cipher_sz->salt, iv, cipher_sz->iv);
++	memcpy(ctx->tx.iv + cipher_desc->salt, iv, cipher_desc->iv);
+ 
+-	prot->rec_seq_size = cipher_sz->rec_seq;
+-	ctx->tx.rec_seq = kmemdup(rec_seq, cipher_sz->rec_seq, GFP_KERNEL);
++	prot->rec_seq_size = cipher_desc->rec_seq;
++	ctx->tx.rec_seq = kmemdup(rec_seq, cipher_desc->rec_seq, GFP_KERNEL);
+ 	if (!ctx->tx.rec_seq) {
+ 		rc = -ENOMEM;
+ 		goto free_iv;
 diff --git a/net/tls/tls_device_fallback.c b/net/tls/tls_device_fallback.c
-index 7fbb1d0b69b34..0b704a7955fd9 100644
+index 0b704a7955fd9..20c14b2979262 100644
 --- a/net/tls/tls_device_fallback.c
 +++ b/net/tls/tls_device_fallback.c
-@@ -69,7 +69,7 @@ static int tls_enc_record(struct aead_request *aead_req,
+@@ -55,7 +55,7 @@ static int tls_enc_record(struct aead_request *aead_req,
+ 			  struct tls_prot_info *prot)
+ {
+ 	unsigned char buf[TLS_HEADER_SIZE + MAX_IV_SIZE];
+-	const struct tls_cipher_size_desc *cipher_sz;
++	const struct tls_cipher_desc *cipher_desc;
+ 	struct scatterlist sg_in[3];
+ 	struct scatterlist sg_out[3];
+ 	unsigned int buf_size;
+@@ -69,9 +69,9 @@ static int tls_enc_record(struct aead_request *aead_req,
  	default:
  		return -EINVAL;
  	}
--	cipher_sz = &tls_cipher_size_desc[prot->cipher_type];
-+	cipher_sz = get_cipher_size_desc(prot->cipher_type);
+-	cipher_sz = get_cipher_size_desc(prot->cipher_type);
++	cipher_desc = get_cipher_desc(prot->cipher_type);
  
- 	buf_size = TLS_HEADER_SIZE + cipher_sz->iv;
+-	buf_size = TLS_HEADER_SIZE + cipher_sz->iv;
++	buf_size = TLS_HEADER_SIZE + cipher_desc->iv;
  	len = min_t(int, *in_len, buf_size);
-@@ -310,7 +310,7 @@ static void fill_sg_out(struct scatterlist sg_out[3], void *buf,
+ 
+ 	scatterwalk_copychunks(buf, in, len, 0);
+@@ -85,11 +85,11 @@ static int tls_enc_record(struct aead_request *aead_req,
+ 	scatterwalk_pagedone(out, 1, 1);
+ 
+ 	len = buf[4] | (buf[3] << 8);
+-	len -= cipher_sz->iv;
++	len -= cipher_desc->iv;
+ 
+-	tls_make_aad(aad, len - cipher_sz->tag, (char *)&rcd_sn, buf[0], prot);
++	tls_make_aad(aad, len - cipher_desc->tag, (char *)&rcd_sn, buf[0], prot);
+ 
+-	memcpy(iv + cipher_sz->salt, buf + TLS_HEADER_SIZE, cipher_sz->iv);
++	memcpy(iv + cipher_desc->salt, buf + TLS_HEADER_SIZE, cipher_desc->iv);
+ 
+ 	sg_init_table(sg_in, ARRAY_SIZE(sg_in));
+ 	sg_init_table(sg_out, ARRAY_SIZE(sg_out));
+@@ -100,7 +100,7 @@ static int tls_enc_record(struct aead_request *aead_req,
+ 
+ 	*in_len -= len;
+ 	if (*in_len < 0) {
+-		*in_len += cipher_sz->tag;
++		*in_len += cipher_desc->tag;
+ 		/* the input buffer doesn't contain the entire record.
+ 		 * trim len accordingly. The resulting authentication tag
+ 		 * will contain garbage, but we don't care, so we won't
+@@ -121,7 +121,7 @@ static int tls_enc_record(struct aead_request *aead_req,
+ 		scatterwalk_pagedone(out, 1, 1);
+ 	}
+ 
+-	len -= cipher_sz->tag;
++	len -= cipher_desc->tag;
+ 	aead_request_set_crypt(aead_req, sg_in, sg_out, len, iv);
+ 
+ 	rc = crypto_aead_encrypt(aead_req);
+@@ -309,14 +309,14 @@ static void fill_sg_out(struct scatterlist sg_out[3], void *buf,
+ 			int sync_size,
  			void *dummy_buf)
  {
- 	const struct tls_cipher_size_desc *cipher_sz =
--		&tls_cipher_size_desc[tls_ctx->crypto_send.info.cipher_type];
-+		get_cipher_size_desc(tls_ctx->crypto_send.info.cipher_type);
+-	const struct tls_cipher_size_desc *cipher_sz =
+-		get_cipher_size_desc(tls_ctx->crypto_send.info.cipher_type);
++	const struct tls_cipher_desc *cipher_desc =
++		get_cipher_desc(tls_ctx->crypto_send.info.cipher_type);
  
  	sg_set_buf(&sg_out[0], dummy_buf, sync_size);
  	sg_set_buf(&sg_out[1], nskb->data + tcp_payload_offset, payload_len);
-@@ -348,7 +348,7 @@ static struct sk_buff *tls_enc_skb(struct tls_context *tls_ctx,
+ 	/* Add room for authentication tag produced by crypto */
+ 	dummy_buf += sync_size;
+-	sg_set_buf(&sg_out[2], dummy_buf, cipher_sz->tag);
++	sg_set_buf(&sg_out[2], dummy_buf, cipher_desc->tag);
+ }
+ 
+ static struct sk_buff *tls_enc_skb(struct tls_context *tls_ctx,
+@@ -328,7 +328,7 @@ static struct sk_buff *tls_enc_skb(struct tls_context *tls_ctx,
+ 	struct tls_offload_context_tx *ctx = tls_offload_ctx_tx(tls_ctx);
+ 	int tcp_payload_offset = skb_tcp_all_headers(skb);
+ 	int payload_len = skb->len - tcp_payload_offset;
+-	const struct tls_cipher_size_desc *cipher_sz;
++	const struct tls_cipher_desc *cipher_desc;
+ 	void *buf, *iv, *aad, *dummy_buf, *salt;
+ 	struct aead_request *aead_req;
+ 	struct sk_buff *nskb = NULL;
+@@ -348,16 +348,16 @@ static struct sk_buff *tls_enc_skb(struct tls_context *tls_ctx,
  	default:
  		goto free_req;
  	}
--	cipher_sz = &tls_cipher_size_desc[tls_ctx->crypto_send.info.cipher_type];
-+	cipher_sz = get_cipher_size_desc(tls_ctx->crypto_send.info.cipher_type);
- 	buf_len = cipher_sz->salt + cipher_sz->iv + TLS_AAD_SPACE_SIZE +
- 		  sync_size + cipher_sz->tag;
+-	cipher_sz = get_cipher_size_desc(tls_ctx->crypto_send.info.cipher_type);
+-	buf_len = cipher_sz->salt + cipher_sz->iv + TLS_AAD_SPACE_SIZE +
+-		  sync_size + cipher_sz->tag;
++	cipher_desc = get_cipher_desc(tls_ctx->crypto_send.info.cipher_type);
++	buf_len = cipher_desc->salt + cipher_desc->iv + TLS_AAD_SPACE_SIZE +
++		  sync_size + cipher_desc->tag;
  	buf = kmalloc(buf_len, GFP_ATOMIC);
-@@ -495,7 +495,7 @@ int tls_sw_fallback_init(struct sock *sk,
+ 	if (!buf)
+ 		goto free_req;
+ 
+ 	iv = buf;
+-	memcpy(iv, salt, cipher_sz->salt);
+-	aad = buf + cipher_sz->salt + cipher_sz->iv;
++	memcpy(iv, salt, cipher_desc->salt);
++	aad = buf + cipher_desc->salt + cipher_desc->iv;
+ 	dummy_buf = aad + TLS_AAD_SPACE_SIZE;
+ 
+ 	nskb = alloc_skb(skb_headroom(skb) + skb->len, GFP_ATOMIC);
+@@ -471,7 +471,7 @@ int tls_sw_fallback_init(struct sock *sk,
+ 			 struct tls_offload_context_tx *offload_ctx,
+ 			 struct tls_crypto_info *crypto_info)
+ {
+-	const struct tls_cipher_size_desc *cipher_sz;
++	const struct tls_cipher_desc *cipher_desc;
+ 	const u8 *key;
+ 	int rc;
+ 
+@@ -495,13 +495,13 @@ int tls_sw_fallback_init(struct sock *sk,
  		rc = -EINVAL;
  		goto free_aead;
  	}
--	cipher_sz = &tls_cipher_size_desc[crypto_info->cipher_type];
-+	cipher_sz = get_cipher_size_desc(crypto_info->cipher_type);
+-	cipher_sz = get_cipher_size_desc(crypto_info->cipher_type);
++	cipher_desc = get_cipher_desc(crypto_info->cipher_type);
  
- 	rc = crypto_aead_setkey(offload_ctx->aead_send, key, cipher_sz->key);
+-	rc = crypto_aead_setkey(offload_ctx->aead_send, key, cipher_sz->key);
++	rc = crypto_aead_setkey(offload_ctx->aead_send, key, cipher_desc->key);
  	if (rc)
+ 		goto free_aead;
+ 
+-	rc = crypto_aead_setauthsize(offload_ctx->aead_send, cipher_sz->tag);
++	rc = crypto_aead_setauthsize(offload_ctx->aead_send, cipher_desc->tag);
+ 	if (rc)
+ 		goto free_aead;
+ 
 diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index deb3085264311..b1fbba1a6e6a5 100644
+index b1fbba1a6e6a5..11e872438bf4e 100644
 --- a/net/tls/tls_main.c
 +++ b/net/tls/tls_main.c
 @@ -58,7 +58,7 @@ enum {
  	TLS_NUM_PROTS,
  };
  
--#define CIPHER_SIZE_DESC(cipher) [cipher] = { \
-+#define CIPHER_SIZE_DESC(cipher) [cipher - TLS_CIPHER_MIN] = {	\
+-#define CIPHER_SIZE_DESC(cipher) [cipher - TLS_CIPHER_MIN] = {	\
++#define CIPHER_DESC(cipher) [cipher - TLS_CIPHER_MIN] = {	\
  	.iv = cipher ## _IV_SIZE, \
  	.key = cipher ## _KEY_SIZE, \
  	.salt = cipher ## _SALT_SIZE, \
-@@ -66,7 +66,7 @@ enum {
+@@ -66,15 +66,15 @@ enum {
  	.rec_seq = cipher ## _REC_SEQ_SIZE, \
  }
  
--const struct tls_cipher_size_desc tls_cipher_size_desc[] = {
-+const struct tls_cipher_size_desc tls_cipher_size_desc[TLS_CIPHER_MAX + 1 - TLS_CIPHER_MIN] = {
- 	CIPHER_SIZE_DESC(TLS_CIPHER_AES_GCM_128),
- 	CIPHER_SIZE_DESC(TLS_CIPHER_AES_GCM_256),
- 	CIPHER_SIZE_DESC(TLS_CIPHER_AES_CCM_128),
+-const struct tls_cipher_size_desc tls_cipher_size_desc[TLS_CIPHER_MAX + 1 - TLS_CIPHER_MIN] = {
+-	CIPHER_SIZE_DESC(TLS_CIPHER_AES_GCM_128),
+-	CIPHER_SIZE_DESC(TLS_CIPHER_AES_GCM_256),
+-	CIPHER_SIZE_DESC(TLS_CIPHER_AES_CCM_128),
+-	CIPHER_SIZE_DESC(TLS_CIPHER_CHACHA20_POLY1305),
+-	CIPHER_SIZE_DESC(TLS_CIPHER_SM4_GCM),
+-	CIPHER_SIZE_DESC(TLS_CIPHER_SM4_CCM),
+-	CIPHER_SIZE_DESC(TLS_CIPHER_ARIA_GCM_128),
+-	CIPHER_SIZE_DESC(TLS_CIPHER_ARIA_GCM_256),
++const struct tls_cipher_desc tls_cipher_desc[TLS_CIPHER_MAX + 1 - TLS_CIPHER_MIN] = {
++	CIPHER_DESC(TLS_CIPHER_AES_GCM_128),
++	CIPHER_DESC(TLS_CIPHER_AES_GCM_256),
++	CIPHER_DESC(TLS_CIPHER_AES_CCM_128),
++	CIPHER_DESC(TLS_CIPHER_CHACHA20_POLY1305),
++	CIPHER_DESC(TLS_CIPHER_SM4_GCM),
++	CIPHER_DESC(TLS_CIPHER_SM4_CCM),
++	CIPHER_DESC(TLS_CIPHER_ARIA_GCM_128),
++	CIPHER_DESC(TLS_CIPHER_ARIA_GCM_256),
+ };
+ 
+ static const struct proto *saved_tcpv6_prot;
 -- 
 2.53.0
 
