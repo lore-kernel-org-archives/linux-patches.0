@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016399;
-	b=Dze4HVGAlcGClSoNEcDBehQbe8IlS21Qz1POUzqdOOUmqnvRIEbVTvZoZ8sElN6cqMGd
-	 wqm2sOXYJejJqmU9NDFp0ZBUzczaalxFu7grA+QyIhDQ0RqMZcRxGEm7I4Ou+YvxFVFBx
-	 mxrUHCxZersfgTIq59qRB/eytMS7se4jIUqR3T2nrU3Xmg0M6fPIsLXDJhCGoK7FmrBay
-	 qvyEsF3TY8Oy9VD3TgiMW+RlZBqR+nLOmeOZRgxecG7zbodI4sBzoU9vqQNRS/Sfbbt/1
-	 qmRxo0+7S+fHDl22nu3VcY507i3El2Aga/XgtfG0J5o5NDVa6kDaTGx21ECry2O5Auw==
+	t=1795016402;
+	b=vf4+oN623Uo6MPoY91c+QWrlrEuw9rEE51ijUesdlXEh/TYtJl9OHJ8SC1HR0Ifd6pYd
+	 IOFjCZVGsqneyGVJ0mfwsEk2XEqBWlhTe00UjiNzINlNx01Op/afEd5tWHhRaEakaLsyI
+	 +sHTpPN7+Bwim/TR8qSO9LZ17ut+qYxRmeqUyaqOGpC7p6yUSjfyHvBHQhFBbV8yjflUT
+	 FJnsjjF56XBJUUz7BVqX4RSNEb09TRGcujkG7FV6gJww+bmkz1QmzidT+FWbqoET2UwZz
+	 m5LB1nvt2EU++X05own9IU6VcZ7m85NXLFb3xSyD5Lhdbr6GbbmG/N+OJYmGNBfo40w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016399;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016402;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mQ3iTiHb4JLuoG5MgAndRNWgt+Te0vWMcuwrtN3FdMk=;
-	b=U9/l6Lw3pnxNs/BZtRKs3jqEDTuELyOsfFrWiwHdqAAAwJw9yYXcQ3TsK3wGqb42UE+f
-	 RMiJ/Bpb+QOQ181Nnrjf1bpksJqg0Qm4V2luTd/vyTeKwjNNn2mFOZhjjtcBZIyvJ2yH7
-	 GLgF3w5OCgCtdLuA6iN66V4SnbDHZ4ZUseoVETgiFgeU3oE0lejLuhPNLIvCPgUMIeoyM
-	 gbNrIz9WcHYkM+kJsGCHGJhUgl0EIe3Wl5NDtKLD/uDd3CtqaqkIFtFoinHDyYK7CQ9x9
-	 ZLMpRDoRVgGytu+tcocP2u70BXYhUc1xINi3nIFmYsTurq5YzuzkPq+1n88VnZQTIhQ==
+	bh=5+bPLB6yC/QPM5jlJ1lDksTUELAuIb9DS1bBochMruo=;
+	b=LYqOufdTuu9f/ict5vH1x8BvnTdfAzBxnTP8Kej26HqKcs6cfqBGcjWGla5BsvO5O6B3
+	 70trD+cZ9+I8XVqcWIz+U+qXub5WP8v1gNQH3V2bwXlQ/3gS2IrNpyXO77qmbs88VlV2l
+	 YCl9s0a8bqqJ4znUVvp+8DTaFdWrd+y+zjtsWwDj7FispQC1JndvPJkwusbz2LrtbQzxg
+	 5sEWTFAWD6Ao4V/yDOcLOoZDqjTAN3x5qsXjLwtAHA6ld3zjMKOgu3jozdmUCd2VORl3r
+	 uE/d+Su37r61H/fF8bheMPyeg2drsTTT4Ugo0rNN5F5ZNojAjgIIlAUI+50RP12cueg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BG4GFqrV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WUro5Gmy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4084460A2631;
-	Wed, 18 Nov 2026 15:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E58060A260A;
+	Wed, 18 Nov 2026 15:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BG4GFqrV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE231F000C5;
-	Wed, 18 Nov 2026 15:39:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WUro5Gmy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B7C1F000C4;
+	Wed, 18 Nov 2026 15:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016399;
-	bh=mQ3iTiHb4JLuoG5MgAndRNWgt+Te0vWMcuwrtN3FdMk=;
+	s=korg; t=1795016401;
+	bh=5+bPLB6yC/QPM5jlJ1lDksTUELAuIb9DS1bBochMruo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BG4GFqrVV2bwCg2zw1ht+p7RJGl8TX2NOoNX5PrlrCjn4hgOxF6AO2JnHdqffpdHt
-	 vHZRMaPkHkAar1QZd7k2OUr21EWAG4z2eK+DERGG82uZdKunTZt66EycAduoaOUsBI
-	 xH/HK/ml5NaDHC/Fs0lpFxo8yJsmdGygU1UFawSg=
+	b=WUro5GmyAW7FqnQEhR/bCtncWe/X3xviRqwnLphPNHyhQgMI5sqnqZAUQLreT205G
+	 BUa1mtphGkYWVBO7jLrpDkD3Ih4RfLjJJdPjuAtdezwopYx2sCIrocZjb4ROMW+Qk0
+	 9iXn5MriBsK1vPseohyshmsro7YcjVDQy2tqVxHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0474/2651] RDMA/uverbs: Make CQ handle mandatory for WQ creation
-Date: Wed, 18 Nov 2026 15:28:34 +0100
-Message-ID: <20261118150304.855370850@linuxfoundation.org>
+Subject: [PATCH 7.3 0475/2651] drm/atmel-hlcdc: Drop spurious csc_init call from reset
+Date: Wed, 18 Nov 2026 15:28:35 +0100
+Message-ID: <20261118150304.888757588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,59 +68,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Maxime Ripard <mripard@kernel.org>
 
-[ Upstream commit f7d28791433d373ecdab7b00f60ddb504e858e0a ]
+[ Upstream commit 4699bb3b1dbd8ccd25cd678acb4ca12da7bd45dd ]
 
-UVERBS_ATTR_CREATE_WQ_CQ_HANDLE is declared UA_OPTIONAL in the ioctl
-method definition, so the mandatory attribute bitmap does not enforce
-its presence.  When userspace omits it, uverbs_attr_get_obj() returns
-ERR_PTR(-ENOENT) and the handler stores that error pointer into
-wq_init_attr.cq without validation.
+The lcdc_csc_init callback was introduced in commit aa71584b323a ("drm:
+atmel-hlcdc: add driver ops to differentiate HLCDC and XLCDC IP") and
+called only once, at init time, from atmel_hlcdc_plane_init_properties().
 
-The bogus cq pointer is then passed to the driver's create_wq callback.
-In the mlx5 case, create_rq() calls to_mcq(init_attr->cq) which applies
-container_of to the ERR_PTR value, producing a near-NULL pointer.  The
-subsequent access in get_rq_ts_format() triggers a kernel NULL pointer
-dereference:
+commit 81af99cbd9e4 ("drm/atmel-hlcdc: destroy properly the plane state
+in the reset callback") then reworked the reset hook to use
+atmel_hlcdc_plane_atomic_destroy_state() instead of duplicating the
+code. However, it also introduced a new call to lcdc_csc_init in the
+reset path that wasn't there before and wasn't mentioned in the commit
+log.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000296
-  RIP: 0010:create_rq+0x32/0x550 [mlx5_ib]
-  Call Trace:
-   mlx5_ib_create_wq+0x14a/0x210 [mlx5_ib]
-   ib_uverbs_handler_UVERBS_METHOD_WQ_CREATE+0x1f0/0x320 [ib_uverbs]
-   ib_uverbs_run_method+0x296/0x320 [ib_uverbs]
-   ib_uverbs_cmd_verbs+0x1a0/0x260 [ib_uverbs]
-   ib_uverbs_ioctl+0xa8/0x120 [ib_uverbs]
+Since CSC coefficients are hardware constants that only need to be
+written once at init time. This also prevents the conversion to
+atomic_create_state, which must not have any hardware side-effect.
 
-A WQ without a CQ was never valid; the legacy write path always required
-one via uobj_get_obj_read() in ib_uverbs_ex_create_wq().  Declare the
-attribute UA_MANDATORY so the uverbs framework rejects the ioctl early
-when the CQ handle is missing, before the handler ever runs.
-
-Fixes: ef3bc084a8ed ("IB/uverbs: Introduce create/destroy WQ commands over ioctl")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Link: https://patch.msgid.link/20260911021557.2113-1-lirongqing@baidu.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 81af99cbd9e4 ("drm/atmel-hlcdc: destroy properly the plane state in the reset callback")
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20260908-drm-no-more-plane-reset-v4-28-a31b3fcfc989@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/uverbs_std_types_wq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/infiniband/core/uverbs_std_types_wq.c b/drivers/infiniband/core/uverbs_std_types_wq.c
-index 7ded8339346f3..c23f455231bf0 100644
---- a/drivers/infiniband/core/uverbs_std_types_wq.c
-+++ b/drivers/infiniband/core/uverbs_std_types_wq.c
-@@ -140,7 +140,7 @@ DECLARE_UVERBS_NAMED_METHOD(
- 	UVERBS_ATTR_IDR(UVERBS_ATTR_CREATE_WQ_CQ_HANDLE,
- 			UVERBS_OBJECT_CQ,
- 			UVERBS_ACCESS_READ,
--			UA_OPTIONAL),
-+			UA_MANDATORY),
- 	UVERBS_ATTR_FD(UVERBS_ATTR_CREATE_WQ_EVENT_FD,
- 		       UVERBS_OBJECT_ASYNC_EVENT,
- 		       UVERBS_ACCESS_READ,
+diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+index f17a832351e9d..70a1cef24388f 100644
+--- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
++++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+@@ -1186,8 +1186,6 @@ static void atmel_hlcdc_plane_atomic_destroy_state(struct drm_plane *p,
+ static void atmel_hlcdc_plane_reset(struct drm_plane *p)
+ {
+ 	struct atmel_hlcdc_plane_state *state;
+-	struct atmel_hlcdc_dc *dc = p->dev->dev_private;
+-	struct atmel_hlcdc_plane *plane = drm_plane_to_atmel_hlcdc_plane(p);
+ 
+ 	if (p->state) {
+ 		atmel_hlcdc_plane_atomic_destroy_state(p, p->state);
+@@ -1204,9 +1202,6 @@ static void atmel_hlcdc_plane_reset(struct drm_plane *p)
+ 		}
+ 		__drm_atomic_helper_plane_reset(p, &state->base);
+ 	}
+-
+-	if (plane->layer.desc->layout.csc)
+-		dc->desc->ops->lcdc_csc_init(plane, plane->layer.desc);
+ }
+ 
+ static const struct drm_plane_funcs layer_plane_funcs = {
 -- 
 2.53.0
 
