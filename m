@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040736;
-	b=hObIJ6lA3mzLvhcaZ4e0Mqn/kLWlyEgUwesp44jJKvc6nEksfuSdyJFKCIzh/IksaVKd
-	 dycmgaHk+X1e6vPSzwnHcUfVL/to8S5I4caYw34tYy+x8oZ8RfmP0s+PPoM3dRrqaoJCI
-	 c6PJlsf8jaSHqaczA/bF0SP8VrpiRJzUWWjQSJSgM43k3arVXQnxGO2xLGlfnGZuRqdbW
-	 cWUch16IbNd5dMv8DAEVshdMc87lQwnQqonwXofnd52Igu3pfsXt5IZ2NbV3lApwBUrzo
-	 0MpxX8GW5HfQUkZvndU5VNCspdg32ieOh3TZNdIeDIw69mO8N+wg7ESb94jmBGsMncA==
+	t=1795040739;
+	b=ZKrJWLZxnk48T4bpNjYEjk2/n8op6/1eRqtNWUGg9AGL/ZR0naTM8Onccj1LxfZ+QUF4
+	 SOXVai+5uHA6rJ/y92vI9F8hUPRbvD6otNe34nnV/xvsRttlio/owCV0TRdOPgktdUBoV
+	 O6K+3dEtpyLS/DtOvurF/zlxerW8Z8H5MQZwYc4/LwaorWtR/oY5773K3WrYssbI4K+2z
+	 +V2X6cYzRJcNhCDJWU10gfq2ZjsV76V1MmEUlTxGKXWmWIQsZC9WF4wR6BMwwWi26qbDD
+	 OqEQETSzgLDkBE/4DXOLBmDUS5fCc58NiNtijaCDIn0SOOFk+PXJgYMfKED3tOkBB3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040736;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040739;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HbxO3rT9kEhjfeHxk6TJhRRw/1XT+cvwtADdwv7Deew=;
-	b=W23R2pnPSwYT47MdZV6nSP5IZKr3hG5SOwpDLXffWIA8lmdfjwG9npldJE4nCseUDn6q
-	 7ZhZOZkzo7RwhKEoNNSDf97X3cT4AykBArkcfI8uWp2rkl7skzsYycygECNgNXZF8bdom
-	 doQef3LPAZ97BtxmM24np+HCLoagtt+0DdWsWil9zitwqevxhpHJsRtfmHqb3jqGJ/3qk
-	 /20sZQAIn0iaeGJBrFmISy6QpU7iWBiCCRtItGea7/RqSKHd7qUEaWSrLdziMi3jpNy7n
-	 vjfnBAe1VsgYcZENXvUKQ/YgeGHiReWnPxKBgf6UikCJlcI7dHAIUDiu5IJlLChGE+g==
+	bh=jmqEs9f4oAsbr5lONR70t2zLWOoxTfqkZ9qd4xaCcPA=;
+	b=ygXnR0LUGZReXkYkx18h9b7oLDeo4y1hPNkb83MfXTvzQGHaCAyEYGERTsCdJhcQlYvp
+	 x2V3XPDopRUYe3+t8rCLL4vWjktV3+hcoaN3miSunRSQpS4HbLldZ9D9+hNw+Sp/toNjE
+	 BVD4ntd7J89fkRYehjgWIzmJZ94KAc3Gg5Hc7+rMXc/ybYPpA1cT0Rg+H1cVQnJiFZJUe
+	 fmjcaFzJXBedprnN0z4Peo3kKnAou0WKMeT6QQaEo8YIwgS5/ggIvsBsTVNlK1oJwHT8r
+	 i0CRfAKVfj20LYktA0Wk5g67QHO7dLtSlmaBkETKaO5i9g8el9P78XXu7bW/qQm+FcA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wl18Quf0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MSlIMwaq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D624606A325;
-	Wed, 18 Nov 2026 22:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2217E606A31C;
+	Wed, 18 Nov 2026 22:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wl18Quf0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7081F000C4;
-	Wed, 18 Nov 2026 22:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MSlIMwaq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7721F000C4;
+	Wed, 18 Nov 2026 22:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040736;
-	bh=HbxO3rT9kEhjfeHxk6TJhRRw/1XT+cvwtADdwv7Deew=;
+	s=korg; t=1795040739;
+	bh=jmqEs9f4oAsbr5lONR70t2zLWOoxTfqkZ9qd4xaCcPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wl18Quf05LUIre3bbWbco90c/2PGvu/Uh30Yhk5bvXKvHiaOF1YWxTb5YAjgvk5cD
-	 VyGeo+jGix2ohsDdQqcIy4IdFNY3+rx1J4d9jHAmHozwoIk2AFYjZ6E6nTZqhZAwGu
-	 962ITcl6qCg7XjZFD28UQq36ap+S59ZljC3u2JYU=
+	b=MSlIMwaqyF89t9KtG89P9agabBw3NyvzchexgMSsFVz7593AHVjwV6R3S+OuxULSA
+	 cGTpfVB/gS1XLx4QZ96YNvOgMo/RE9nVU2U7BDsuEPHFMSWSQsSQK+kCtro2KZC5g3
+	 v6gaF71tQdTCdvEvKQQR93G8iQUEQoT66JzxVyUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Walleij <linusw@kernel.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2563/3318] power: supply: ab8500_charger: Recover inactive AB8505 charger
-Date: Wed, 18 Nov 2026 15:53:05 +0100
-Message-ID: <20261118150438.142347833@linuxfoundation.org>
+Subject: [PATCH 6.6 2564/3318] power: supply: ab8500_fg: Finalize current measurements
+Date: Wed, 18 Nov 2026 15:53:06 +0100
+Message-ID: <20261118150438.169780043@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,128 +70,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 76bdf9d78245bb068207c23e9bf43d4b9bb201c3 ]
+[ Upstream commit 9a0461fb5e7cc64ed303bee3661452879ee139a1 ]
 
-UsbChCtrl1.UsbChEna can remain set while UsbChStatus1.UsbChOn is
-clear. The existing recovery only checks the control bit, so it considers
-the charger enabled and leaves charging stopped.
+ab8500_fg_inst_curr_start() returns with cc_lock held and the CCEOC
+IRQ enabled. The bounded sampling loop in the load-compensated voltage
+path returns without calling ab8500_fg_inst_curr_finalize() when it
+expires, leaving both resources active. The next fuel-gauge work item
+then blocks on cc_lock and all cached power-supply values stop updating.
 
-The Samsung-GT-S7710-Skomer, Samsung-SGH-I407-Kyle, and
-Samsung-SGH-T599-Codina-TMO product trees are reference points for
-checking both bits and cycling the charger when they disagree.
+The Samsung-GT-I8530-Gavini, Samsung-GT-S7710-Skomer,
+Samsung-SGH-I407-Kyle and Samsung-SGH-T599-Codina-TMO product trees use
+a bounded sampling loop in drivers/battery/abb_fuelgauge.c but still
+call the finalizer. Follow that pattern so the normal completion timeout
+also performs the required cleanup.
 
-Extend the USB charger check to detect this AB8505 state and enable the
-check in the charging algorithm for AB8505. Only cycle the charger when
-VBUS is debounced and no charger-not-OK, thermal, overvoltage, or
-watchdog fault accounts for the inactive hardware.
+Check the start result as well and return an uncompensated voltage if
+the instantaneous current transaction cannot be started or completed.
 
-Fixes: 4dcdf57773fd ("ab8500-bm: Quick re-attach charging behaviour")
+Fixes: edc400e1632f ("power: supply: ab8500_fg: Break loop for measurement")
 Assisted-by: LLM
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-13-e986ed321cc6@kernel.org
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-14-e986ed321cc6@kernel.org
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_chargalg.c |  9 ++---
- drivers/power/supply/ab8500_charger.c  | 51 +++++++++++++++++++++++++-
- 2 files changed, 53 insertions(+), 7 deletions(-)
+ drivers/power/supply/ab8500_fg.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_chargalg.c b/drivers/power/supply/ab8500_chargalg.c
-index 5a79772394f65..e684ad777057d 100644
---- a/drivers/power/supply/ab8500_chargalg.c
-+++ b/drivers/power/supply/ab8500_chargalg.c
-@@ -1239,12 +1239,9 @@ static void ab8500_chargalg_algorithm(struct ab8500_chargalg *di)
+diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
+index 26246cc559d5a..0e9ab48aa339c 100644
+--- a/drivers/power/supply/ab8500_fg.c
++++ b/drivers/power/supply/ab8500_fg.c
+@@ -939,9 +939,15 @@ static int ab8500_load_comp_fg_bat_voltage(struct ab8500_fg *di, bool always)
+ 	int i = 0;
+ 	int vbat_uv = 0;
+ 	int rcomp;
++	int ret;
  
- 	charger_status = ab8500_chargalg_check_charger_connection(di);
- 
--	if (is_ab8500(di->parent)) {
--		ret = ab8500_chargalg_check_charger_enable(di);
--		if (ret < 0)
--			dev_err(di->dev, "Checking charger is enabled error"
--					": Returned Value %d\n", ret);
--	}
-+	ret = ab8500_chargalg_check_charger_enable(di);
-+	if (ret < 0)
-+		dev_err(di->dev, "Checking charger enable failed: %d\n", ret);
- 
- 	/*
- 	 * First check if we have a charger connected.
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index a991207cc5183..d81cfff91b89e 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -52,6 +52,7 @@
- #define MAIN_CH_DET			0x01
- #define MAIN_CH_CV_ON			0x04
- #define USB_CH_CV_ON			0x08
-+#define USB_CH_ON			0x04
- #define VBUS_DET_DBNC_LONG		0x02
- #define VBUS_DET_DBNC1			0x01
- #define OTP_ENABLE_WD			0x01
-@@ -1865,6 +1866,9 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
- 	int vset_uv, int iset_ua)
- {
- 	u8 usbch_ctrl1 = 0;
-+	u8 usbch_status1;
-+	u8 usbch_status2;
-+	bool reenable;
- 	int ret = 0;
- 
- 	struct ab8500_charger *di = to_ab8500_charger_usb_device_info(charger);
-@@ -1880,7 +1884,52 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
- 	}
- 	dev_dbg(di->dev, "USB charger ctrl: 0x%02x\n", usbch_ctrl1);
- 
--	if (!(usbch_ctrl1 & USB_CH_ENA)) {
-+	reenable = !(usbch_ctrl1 & USB_CH_ENA);
-+	if (is_ab8505(di->parent)) {
-+		ret = abx500_get_register_interruptible(di->dev,
-+							AB8500_CHARGER,
-+							AB8500_CH_USBCH_STAT1_REG,
-+							&usbch_status1);
-+		if (ret < 0) {
-+			dev_err(di->dev, "USB charger status read failed\n");
-+			return ret;
-+		}
-+
-+		if (!reenable && (usbch_status1 & USB_CH_ON))
-+			return 0;
-+
-+		if (!(usbch_status1 & VBUS_DET_DBNC_LONG))
-+			return 0;
-+
-+		ret = abx500_get_register_interruptible(di->dev,
-+							AB8500_CHARGER,
-+							AB8500_CH_USBCH_STAT2_REG,
-+							&usbch_status2);
-+		if (ret < 0) {
-+			dev_err(di->dev, "USB charger fault status read failed\n");
-+			return ret;
-+		}
-+
-+		if ((usbch_status2 &
-+		     (VBUS_CH_NOK | USB_CH_TH_PROT | VBUS_OVV_TH)) ||
-+		    di->flags.usbchargernotok || di->flags.usb_thermal_prot ||
-+		    di->flags.vbus_ovv || di->usb.wd_expired)
-+			return 0;
-+
-+		if (!reenable) {
-+			dev_info(di->dev,
-+				 "USB charger enabled but inactive, cycling it\n");
-+			ret = abx500_mask_and_set_register_interruptible(di->dev,
-+									 AB8500_CHARGER,
-+									 AB8500_USBCH_CTRL1_REG,
-+									 USB_CH_ENA, 0);
-+			if (ret < 0)
-+				return ret;
-+			reenable = true;
-+		}
+ 	/* Average the instant current to get a stable current measurement */
+-	ab8500_fg_inst_curr_start(di);
++	ret = ab8500_fg_inst_curr_start(di);
++	if (ret) {
++		dev_err(di->dev, "failed to start instantaneous current measurement\n");
++		di->vbat_uv = ab8500_fg_bat_voltage(di);
++		return di->vbat_uv;
 +	}
-+
-+	if (reenable) {
- 		dev_info(di->dev, "Charging has been disabled abnormally and will be re-enabled\n");
  
- 		ret = abx500_mask_and_set_register_interruptible(di->dev,
+ 	do {
+ 		vbat_uv += ab8500_fg_bat_voltage(di);
+@@ -950,15 +956,14 @@ static int ab8500_load_comp_fg_bat_voltage(struct ab8500_fg *di, bool always)
+ 	} while (!ab8500_fg_inst_curr_done(di) &&
+ 		 i <= WAIT_FOR_INST_CURRENT_MAX);
+ 
+-	if (i > WAIT_FOR_INST_CURRENT_MAX) {
++	ret = ab8500_fg_inst_curr_finalize(di, &di->inst_curr_ua);
++	if (ret) {
+ 		dev_err(di->dev,
+ 			"TIMEOUT: return uncompensated measurement of VBAT\n");
+ 		di->vbat_uv = vbat_uv / i;
+ 		return di->vbat_uv;
+ 	}
+ 
+-	ab8500_fg_inst_curr_finalize(di, &di->inst_curr_ua);
+-
+ 	/*
+ 	 * If there is too high current dissipation, the compensation cannot be
+ 	 * trusted so return an error unless we must return something here, as
 -- 
 2.53.0
 
