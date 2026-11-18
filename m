@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016173;
-	b=0nxLYOLh84+CsQIcsXZimNkUjKEgXiMFGoIrKTM8cyPgr+D5EniPvXns2XxjCtaYSrQk
-	 4ta94qGHjb3uWJLtPGeyPT+ndhpuki1FtbZUQydW3J0IgV9GnJDeHaCf7WVpiHUsW2NjQ
-	 /EMfb5DUagEWIfpcvru+kjV7/V7VjztScgYfh60SsSEL00/Dc0TtGCjoLdMCoghKnafyF
-	 OX2Ev/o0cFy8ou5cHkg29BusRNbAnxCRJArToFbNbLYpwsCZLdalbWnznS7EZy+cdtiz5
-	 4ourewfngnYXB2YPtlmBpUkJFO7uUSHxQxlFcoebz+fYKanKD2mF2/Pq9O9R1riUcJQ==
+	t=1795016175;
+	b=YiEZ9xfpWWGuuo/QsW3lQOh/1b14XUgowZn5uxLv2F95ftqTuak6NPiOV44RbHWyEqxT
+	 CVjq9pJ/47bmkYtrF+eimR7rw6nvns2QTlocXC2HcWoO0vslsv+w5i9V4c5//XGcT02mk
+	 u+BxqzoSuiUevOtn5PhjSejzivKnY7qWPVRUKORyCWejpST6wKRMWKDC9IEzTU56dVkxI
+	 rM8oIHHH7niMw0Vcf3nb10t7I93XBhdCvjtso1xTbxYDxTNZRp1uUOiHj/6+HxTW1I2Pc
+	 2vlUB4bcpYf/IjaMq3cmGJzEyoIUs7eEoIiIS5b+Liz0wIJh6GmZxEQkhGztOIVybfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016173;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016175;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GsnXl62hq4aEKiUibd5eAuJ72KUiEjJBNj4td/2uMAY=;
-	b=LAJf82I0A+aFgWv0GTNqlfmGIFniRj3+uhwYbPZPJ6L7R5YGFp9jaiWPVRPAn3fjJmSD
-	 8xMcVuXtAu4QI8vteqVoPYd60z7Tzab1RxQ+a0ScNznp7msTNzHOW429/a4KiqGDlzMbA
-	 SMw0x1jbRsdaIH6XFpQuuA2KDZnIG4/cJ7U0Jn6VJKKiYFhhrtzTtlyzGLffO+wkzkzzS
-	 XZKr0C+6sfeGP4Yw2NEN2F5k/C53QK82kws4SMQeUl0s5geyJeNZ/FVPAUUtk+PKkJ1/C
-	 DH2BMN7KTp/zWaF2V8wJhyJ8n6+f6RvCZctrhGrDg5+NSbaqK5Jgbitf/6vTZ9qIUKQ==
+	bh=RquJmRFsmQhltKe023GDgLOHsOl1I4+ARtEuXj7N+rY=;
+	b=wIe1nuFL99l8ztjiqvVRnJkZzYJv60VISwah/m+YugW4m0cOJk4AWHhn+uVo3CTaH8tc
+	 LfSuZkDtpZLiEfgh4fQrqZYLHJI/vsdJw41r7yJ9LaFws/JFSYt4Nr669XeSoB1ivVb9Y
+	 q/IuHHaRtNtc89d4G6LaLZeJCgd4wPFxWRwkjdYCRGFmxYf24C6i8SwKnKyOQ+RnLEiGI
+	 Xx1FjlLib2HCleYNcbkP5WD0gGqFhNxjfZVsVcj71vI+1XMlS31i6KnsuNnlkx5HmgcE2
+	 dEs1xJD+Zqq+k+WPAxae/HV7Gji9Q7itE46fJ5kp3fhX/oIvV9sSGvgPjtLPiZUoLtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0W3mO7hX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Osg0hSnW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EF9606A31C;
-	Wed, 18 Nov 2026 15:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48D6606A320;
+	Wed, 18 Nov 2026 15:36:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0W3mO7hX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A85F1F000C4;
-	Wed, 18 Nov 2026 15:36:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Osg0hSnW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5671F000C4;
+	Wed, 18 Nov 2026 15:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016172;
-	bh=GsnXl62hq4aEKiUibd5eAuJ72KUiEjJBNj4td/2uMAY=;
+	s=korg; t=1795016175;
+	bh=RquJmRFsmQhltKe023GDgLOHsOl1I4+ARtEuXj7N+rY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0W3mO7hXQtRXdMV4F4Y5AF/jdvk2NX3wqoDtVgqMLpDi1Fk8GKDey3rMorA1YlBol
-	 +6x66kKVAxqYzlhTXDmRhJZtiLDuExHH3pCGddlPd27QPfQIi4xfBektL6tDOwogwH
-	 OVLgMVJf+ncYwT8g8zCvBfmhDoNZslZvBXxhAW5o=
+	b=Osg0hSnWnhUpTPXWz1dMWqCXvuiiCF7Wqr0ciaQozRpjLbHyrf+W0T1YnPscNH45E
+	 f5JI02JeXVgTaxoZ9KT0wsITGZehT+hBEAdwKaje6KB82GKFrT91RmUMh2R6kytZG1
+	 YFoFWdFxihz4mi6tL8C/f0ADOAj1UZCqsODdyHEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Jiri Pirko <jiri@resnulli.us>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0436/2651] virtio: synchronize callbacks after device reset
-Date: Wed, 18 Nov 2026 15:27:56 +0100
-Message-ID: <20261118150303.522929049@linuxfoundation.org>
+Subject: [PATCH 7.3 0437/2651] virtio_pci_modern: move avq cleanup from reset to del_vqs
+Date: Wed, 18 Nov 2026 15:27:57 +0100
+Message-ID: <20261118150303.558974166@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,44 +71,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit dd75508e6fe77116589c49658d0d18897688dc0b ]
+[ Upstream commit 2a12d96dd863cb23eadf07d8845e961580b5fcdf ]
 
-virtio_reset_device says:
-	Note: this guarantees that vq callbacks are not in progress
-but in practice, only virtio pci correctly synchronizes the cbs.
+vp_modern_avq_cleanup() detaches unused buffers from the admin
+virtqueue. Calling it from vp_reset() is incorrect:
+virtqueue_get_buf in the avq interrupt handler can race with
+virtqueue_detach_unused_buf in cleanup, and get_buf after
+detach is not documented as valid.
 
-On other transports, a callback that is already executing, keeps running
-while the driver tears down the state it uses.
+The root cause is that detaching buffers does not belong in
+reset at all - reset quiesces the device, while cleanup belongs
+where the virtqueue is about to be destroyed, from del_vqs.
 
-Add virtio_synchronize_cbs to virtio_reset_device fixing this for all
-transports that correctly implement synchronize_cbs().
-
-Reported-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://lore.kernel.org/all/20260818040433.66986-1-kmehltretter@gmail.com/
-Fixes: c46eccdaadab ("virtio: document virtio_reset_device")
-Tested-by: Karl Mehltretter <kmehltretter@gmail.com>
-Acked-by: Karl Mehltretter <kmehltretter@gmail.com>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Link: https://lore.kernel.org/virtualization/20260911125745.E0A2F1F00899@smtp.kernel.org/
+Fixes: 4c3b54af907e ("virtio_pci_modern: use completion instead of busy loop to wait on admin cmd result")
+Cc: Jiri Pirko <jiri@resnulli.us>
 Assisted-by: LLM
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <8ae2995ee649adcfe1398f7f1c4fc9f7028c3db1.1789204858.git.mst@redhat.com>
+Message-ID: <21fe35ad7b66e2c30dbdba6fe4df4824d1c0db66.1789204858.git.mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/virtio/virtio_pci_modern.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/virtio/virtio.c b/drivers/virtio/virtio.c
-index b6c9e927bef57..a8588d7ad109f 100644
---- a/drivers/virtio/virtio.c
-+++ b/drivers/virtio/virtio.c
-@@ -264,6 +264,8 @@ void virtio_reset_device(struct virtio_device *dev)
- #endif
- 
- 	dev->config->reset(dev);
-+	/* Flush pending VQ/configuration callbacks. */
-+	virtio_synchronize_cbs(dev);
+diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
+index 6d8ae2a6a8caf..b4249afd7f580 100644
+--- a/drivers/virtio/virtio_pci_modern.c
++++ b/drivers/virtio/virtio_pci_modern.c
+@@ -364,6 +364,12 @@ static void vp_modern_avq_cleanup(struct virtio_device *vdev)
+ 	}
  }
- EXPORT_SYMBOL_GPL(virtio_reset_device);
  
++static void vp_modern_del_vqs(struct virtio_device *vdev)
++{
++	vp_modern_avq_cleanup(vdev);
++	vp_del_vqs(vdev);
++}
++
+ static void vp_transport_features(struct virtio_device *vdev, u64 features)
+ {
+ 	struct virtio_pci_device *vp_dev = to_vp_device(vdev);
+@@ -558,8 +564,6 @@ static void vp_reset(struct virtio_device *vdev)
+ 	while (vp_modern_get_status(mdev))
+ 		msleep(1);
+ 
+-	vp_modern_avq_cleanup(vdev);
+-
+ 	/* Flush pending VQ/configuration callbacks. */
+ 	vp_synchronize_vectors(vdev);
+ }
+@@ -1232,7 +1236,7 @@ static const struct virtio_config_ops virtio_pci_config_nodev_ops = {
+ 	.set_status	= vp_set_status,
+ 	.reset		= vp_reset,
+ 	.find_vqs	= vp_modern_find_vqs,
+-	.del_vqs	= vp_del_vqs,
++	.del_vqs	= vp_modern_del_vqs,
+ 	.synchronize_cbs = vp_synchronize_vectors,
+ 	.get_extended_features = vp_get_features,
+ 	.finalize_features = vp_finalize_features,
+@@ -1252,7 +1256,7 @@ static const struct virtio_config_ops virtio_pci_config_ops = {
+ 	.set_status	= vp_set_status,
+ 	.reset		= vp_reset,
+ 	.find_vqs	= vp_modern_find_vqs,
+-	.del_vqs	= vp_del_vqs,
++	.del_vqs	= vp_modern_del_vqs,
+ 	.synchronize_cbs = vp_synchronize_vectors,
+ 	.get_extended_features = vp_get_features,
+ 	.finalize_features = vp_finalize_features,
 -- 
 2.53.0
 
