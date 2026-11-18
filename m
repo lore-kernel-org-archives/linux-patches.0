@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029861;
-	b=0YJPaAViiEBJr+BRCEye9+UUtsNFWa4TN2E8rqsoqimhYaWcw241hwBVpNC31Q+tg1GD
-	 jky1u2am87jZBHxE2+1oHCk82ODHlVPoPC0PvhY3eap7cwbadcvZApqp77KaCRzWa+YN8
-	 kltpx7IZXnxA8d6s1BmBfvMaW+O5KxX16mtDQC8NST8udG3y4wwDC7J+oYuEOixdiwpbc
-	 oW/p/pVGKaUbaqHcA5lG8eU3yPADg3jHrrwvzWjaMS+9gcUat6Ta6+d7XX+CACxKYPIs1
-	 j8IfVtDOV51S74X4+eYDdmOrAc0VGdxR09halLcacA4meeDH9iHsqTDe795uaNIJgsw==
+	t=1795029864;
+	b=qjShwB8dAse/uWmfjxqK96dSoiPOPEwoA0zywdNYsHhxqapWhdWOg/FTFEDQ05znUml7
+	 COvaHofxpYyvjZt6aOsSuYuU0d71duISgmLETolYnVx0qG8wJXV77VR/Va6KXfky6LG/n
+	 qLbKwJKkSP+ZKxu4/aqeLu+6+M4eaOX39Un08yawGHnSmeodQotoDgB4AtuVp5m5D9lpF
+	 CKogudtRE4HYXt/M9P8EUVMTjAVFzb1fhAvexWFURoRULaUqbbOVkuRmDwfITizqZZaJE
+	 uNjpttdaXt3Wwx4Ga7mkGMkQttOPPL82wevxVJUB4HUNxg3nBzB0MQ84lmg5u6oL+DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029861;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029864;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LjIq6yEmk5vxtVIdrEqSfN6ObCkR1A5Ss1BaaP/qoic=;
-	b=0ELlKYXYUfHYs2pXg4lffkRqfI6u6wAzHUiPVvOiQqR8gwTvE5pPBwswdRRHPaODj8dH
-	 0jTouA2WawZvxcqbz/+wK+JWAWXwhmsw3VNk8WHz0jdLmdr+vrK23UQGn9XfYRQjbiwQf
-	 G9MvbDFMtDa2KsgrlTJrEHPqRGnRUpyRDkjNdgfu55gERAoSkmTywlm6j/yjNRFZKhwU1
-	 Pz9nT/5TcBEicIQXKDgRxHKXQSLFBTsW8kOo40MCit4Hi/cMgsge5qSswNj770PG/1R+e
-	 SzRKQhOBfK2Bpkz8q09M3F1v42NuUSoh+cMjmC9i1k6L+5JFqyshMha+K9Q27/yeOEQ==
+	bh=HIJ/5YIKQIVvw6RwdRF6i0DyovoPKimKDdATirdE8Vk=;
+	b=lPd1WRMFDr7uJA7bHf+nLXuEVt8pbY8T2I+LsCS01bLwXdnhIK6VrVo+xNXVAZMfrM+9
+	 yoodWz7Bscp/Qx+0gTEWZi5PanAk3BqQGt4Y5GW8BkhgSnpl9IhGcs3UOkGABmjhPGYsJ
+	 vyZ1y/COslaEUUcjS/l+qknoJM3Wwex9zDZIUH9i+SnxTpYXuO1AUVq6cUnIjxyzSi1VG
+	 CtBv02JLZ0rLxvhDAJyvfaTJkn6kiwhLLLZDG6SBxJqui4P5it5tA4XZagCw/v86dpDhK
+	 0U0zY+J364EgnbWTB0EUQM33DU4MGMBIyOCyw3DFEoiNeEm1l+YBS+4g+ptbg2TtRBw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHL2QrHp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MKQt4mnO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCC0606A320;
-	Wed, 18 Nov 2026 19:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204FF606A31C;
+	Wed, 18 Nov 2026 19:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHL2QrHp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EE31F000C4;
-	Wed, 18 Nov 2026 19:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MKQt4mnO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BACD1F000C4;
+	Wed, 18 Nov 2026 19:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029861;
-	bh=LjIq6yEmk5vxtVIdrEqSfN6ObCkR1A5Ss1BaaP/qoic=;
+	s=korg; t=1795029864;
+	bh=HIJ/5YIKQIVvw6RwdRF6i0DyovoPKimKDdATirdE8Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PHL2QrHp/BLHHzYfORYdl8BzYBs48qOV0ky5qXMh9PgLoQwt9jD7E/pelrYg65iWi
-	 VU3ahqjgQFbCIlIcNbJul99AV7SfX01ntXV6Ea5ogxioJSCDjrHwiP/k1Ugnb4uARv
-	 bmQIMDXQ515KkIE2yRLKkngKLC50QiJvkTE0eMuw=
+	b=MKQt4mnOe1yfpF2NwtZ7XTVtCCbxmtgpPTCpsYDkfB0epvXRpxSECPEtam+m/u33L
+	 s3/aOpP747AUfQRZKRX2A9G0vnaoz7ul23vZR8paloazAfNT0rHQFo9OiOrn+d31rD
+	 oqGpbPBWqjhk+9NZv2PtOS47TvkGwoZVoo+xHBCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0499/1756] regulator: mp886x: fix pontential division by zero
-Date: Wed, 18 Nov 2026 15:43:46 +0100
-Message-ID: <20261118150028.948694215@linuxfoundation.org>
+Subject: [PATCH 6.12 0500/1756] arm64: dts: ti: k3-am62-verdin: fix main_gpio0/main_gpio1 line names size
+Date: Wed, 18 Nov 2026 15:43:47 +0100
+Message-ID: <20261118150028.983591574@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,37 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jisheng Zhang <jszhang@kernel.org>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit d16ef5debccc4289c1f25309a2cccfbbe879601a ]
+[ Upstream commit 11a51e82e1f997975a28358a1dcffec190ea7282 ]
 
-If the "mps,fb-voltage-divider" 2nd var is 0, there will be division
-by zero bug.
+gpio-line-names sized main_gpio0/main_gpio1 for 87/88 lines, the SoC's
+ti,ngpio values before they were corrected to 92/52 in commit
+28c8f2189d80 ("arm64: dts: ti: k3-am62-main: Fix GPIO numbers in DT"),
+four months before this file was written. Resize both arrays to match,
+keeping every existing label at its original index.
 
-Fixes: 97be82880b61 ("regulator: add support for MP8869 regulator")
-Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260901043123.5401-1-jszhang@kernel.org?part=1
-Link: https://patch.msgid.link/20260909143957.9284-3-jszhang@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 316b80246b16 ("arm64: dts: ti: add verdin am62")
+Assisted-by: LLM
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://patch.msgid.link/20260914190943.50843-1-francesco@dolcini.it
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mp886x.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi | 41 +++-------------------
+ 1 file changed, 5 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/regulator/mp886x.c b/drivers/regulator/mp886x.c
-index 75c6d9e5d550a..773da194a4e4e 100644
---- a/drivers/regulator/mp886x.c
-+++ b/drivers/regulator/mp886x.c
-@@ -317,6 +317,9 @@ static int mp886x_i2c_probe(struct i2c_client *client)
- 	if (ret)
- 		return ret;
+diff --git a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+index 7cb4d28a28845..47e32b05ea62a 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+@@ -994,6 +994,11 @@ &main_gpio0 {
+ 		"",
+ 		"",
+ 		"",
++		"",
++		"",
++		"",
++		"",
++		"", /* 90 */
+ 		"";
+ };
  
-+	if (di->r[1] == 0)
-+		return -EINVAL;
-+
- 	di->en_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_HIGH);
- 	if (IS_ERR(di->en_gpio))
- 		return PTR_ERR(di->en_gpio);
+@@ -1050,42 +1055,6 @@ &main_gpio1 {
+ 		"",
+ 		"SODIMM_17",
+ 		"SODIMM_155", /* 50 */
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"", /* 60 */
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"", /* 70 */
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"", /* 80 */
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+-		"",
+ 		"";
+ };
+ 
 -- 
 2.53.0
 
