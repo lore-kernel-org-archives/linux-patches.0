@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038190;
-	b=qP4QE8IRTDCmBkviL3h9CBtjnCoFrAqlEN8t6PKEhz4JvVOUYcxauXcDrRS9YRU3KaGe
-	 oaf8yBWx64g/4YudQ1YO14xClnfd96LQBy5UJOvAE5f+ZcHhsgnKLs9/qYZQVm8Tl7ytf
-	 KGK6yS9js/I+kisj35jIS54t+3jUWH2dX1DQNGG91gCVwg7AdNTwhAsRMCC6zJtFi6i8n
-	 0YNx4ES1ADQarPRJKScKNcXIZ2NL5iCC/gZ6RU5hcjplo4pAI2IuXJtP6Vp9/d/orPaCE
-	 uGLqKvWHRlID8u3hbEnxvTfCQaEOK1gMKShPtfc1cljLbQsRDYLLyyOCNjlZDt1SH3A==
+	t=1795038193;
+	b=LTNNquBZujNz7YdTgyibZjB8xon1Xgnc0E7slnr0hGXysMeXrxxntdiZw5pL2en9+ZBz
+	 RJOerPWUEl0zmJzlj/YAwlfca3sQ3OPfWO5nxzrsInLHuxUqMNz+JYMlde0CyMxRa8WRX
+	 A72JiuS98A8PZb69dY7C1514N2j9VKBWb7puzcfp+cXo7yb4ahvSq7OSegLSbdKOor1vh
+	 8vRsDFnY1jsMzkBrzGC1nQ4A0jzWnGs877ZUlRFrDxYF1H/b81Pt6BbHy2LMCcxz7hELW
+	 dMNYcQ5eOVsdDKqcHyAFQhkNf13gxQREKb+2ztebZod61uyLy+c3/bE8lN7dlYOic7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038190;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038193;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5VC0Y9Lii/N4vtVqvDatnE3BH85bsIDWyq0K4k5tdmA=;
-	b=vvEuaSkfIisWv4jk8Ua9vFfA914G+y/pfHX4mVXy3CsX62vml49w5t+Ej8FFbkmRBqGg
-	 iA0MkK/QOZh2eaE0mq2shi5wz2OdrOSBTd4FTeVW018BHhFvgyJ6yEuQLSKiaaPkZbDsO
-	 bS7AKHOm5YIfCBAqvYTruvXKX3D8OAokQzzGguY9hFn8sRLWyFtxj/F8waTE//5RGPa5l
-	 B7H6kyb1DrN7jNJC9+IraP8Eldkq7ZYhphxRx0mttsoGtdH442G5npbhiPanQmX1Ghkup
-	 F0SnvysUg+PmcLQ93RV209+LhJpEnG0pHhwcZ2BfL8iV9WUtE6lwLeni7BtKPoUQOgw==
+	bh=bBjaK/Gwn0EdqmwHUgo5e1zBDcoht5YPvsFHBki8ZC0=;
+	b=bU86czBLm6d9ryk/oLDTucRjfzHqcLwdnTOZK2ySQLsadSNlTTPleTWHml3GkhHib6kq
+	 lc6nEkr1sIS3bbQmkx6ARianD9/CoFAHYcvwnMLmacsF4Dmktoegnh1k+HoDg+Yg1Lmry
+	 TWgHyh4ryM+fxYDH2ZSQiweAfi8b19q23iqHU8s+l/KPOVMM8lupbqKTBXSj2tVQu7R6b
+	 hCOxD5LVOXWRVxeN1cCBmOWpH/2cTOdjuor+RAOuQGdypAnelDVdvkOkE3kLBxN9fxoPB
+	 ABTNyT4Vsv9G69I62GxP/c5TzdOa5e5ALXeNM96UEL0C7+mDr+D33jolE3ijuSK23Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHX4E7eG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWt7OLve;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD2D606A32C;
-	Wed, 18 Nov 2026 21:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B671606A320;
+	Wed, 18 Nov 2026 21:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UHX4E7eG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01CE31F000C5;
-	Wed, 18 Nov 2026 21:43:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWt7OLve
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67751F000C4;
+	Wed, 18 Nov 2026 21:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038190;
-	bh=5VC0Y9Lii/N4vtVqvDatnE3BH85bsIDWyq0K4k5tdmA=;
+	s=korg; t=1795038193;
+	bh=bBjaK/Gwn0EdqmwHUgo5e1zBDcoht5YPvsFHBki8ZC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UHX4E7eGwDD1g0yu0qnQHXT6e3fDO7ZXgw0OgWIxrMkiZ55/otl4CjFYjsAwtFCIJ
-	 3P2uBMev+bAMzeEAnW2EwkvETspeWohC4p9eIrRMY/aDZB9neB1SnY6tsqp+ihiK4U
-	 mFYeW/XssnUmlLZ7EPSMQfSurn9WJWdOof/qqsok=
+	b=oWt7OLveTnqXBzjajo8/0vGv8i2BI4b+FR9AobhyMo0fRzndEruCJUUppr6ZC3qPe
+	 RsNiu/TbdgdZeB2wBhwauTVPVlAin6rRyXQzWGwmmY/udboJsTS7F7+id1FfMRAf/G
+	 hu7BZL9stxau4cTo/vMZ2xJIKxnQxA4RBrdaFrhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+fd80bc5967eb22c3@bugs.sh,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Joey Gouly <joey.gouly@arm.com>,
+	Fuad Tabba <fuad.tabba@linux.dev>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1658/3318] usb: xhci: Fix bounce buffer overflow
-Date: Wed, 18 Nov 2026 15:38:00 +0100
-Message-ID: <20261118150411.513306851@linuxfoundation.org>
+Subject: [PATCH 6.6 1659/3318] KVM: arm64: Validate the host vCPUs VM before reading it under pKVM
+Date: Wed, 18 Nov 2026 15:38:01 +0100
+Message-ID: <20261118150411.544673961@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,72 +71,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 68c5cb7574c567e83ba95258cb146db95e069a87 ]
+[ Upstream commit cf533b4d3630b229d78ad55567c5db2f365052a2 ]
 
-High-speed devices with out of spec 1024 byte bulk endpoints exist and
-are allowed by USB core, but xhci-hcd always sets packet size to 512.
-The exact nature of these devices isn't documented, commit fb5ee84ea72c
-("USB: Accept bulk endpoints with 1024-byte maxpacket") only states
-that they "don't work with xHCI host controllers", whatever it means.
+On an MTE-capable host under pKVM, enter_exception64() reads the VM's
+MTE flag through vcpu->kvm, which for a host vCPU is a host-writable
+pointer nothing validates. The host can point it at any address in the
+hyp linear map and read back bit 1 of that word through PSR_TCO in the
+vCPU's CPSR, or panic the hypervisor with an unmapped one.
 
-But somebody (or a malicious device) can try, and then the driver will
-allocate a 512 byte bounce buffer for this endpoint and may write up to
-1024 bytes into it if particular scatter-gather URBs are used, because
-xhci_align_td() obtains packet size from the descriptor. Fix this.
+Get the VM through a get/put pair around the read: a loaded vCPU's is
+the hyp VM, an unloaded host vCPU's is read once and pinned, and a
+pointer the host never shared leaves TCO clear.
 
-As a side effect, TRBs will be aligned to the packet size chosen by the
-driver on all endpoints of all speeds. Alignment serves the xHC, not
-device, so this is fine. Only out of spec devices are affected anyway.
-
-Reported-by: co+fd80bc5967eb22c3@bugs.sh
-Link: https://lore.kernel.org/linux-usb/D4tcSGerkYkIV1DmaUo1t8TaR5qQElDLkidn@bugs.sh/
-Fixes: f9c589e142d0 ("xhci: TD-fragment, align the unsplittable case with a bounce buffer")
+Fixes: ea7fc1bb1cd1b ("KVM: arm64: Introduce MTE VM feature")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260914070536.877D91F000FF@smtp.kernel.org/
+Reviewed-by: Vincent Donnefort <vdonnefort@google.com>
+Reviewed-by: Joey Gouly <joey.gouly@arm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20261009151624.618967-11-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: adapted the max_pkt assignment removal to match usb_endpoint_maxp() instead of xhci_usb_endpoint_maxp() ]
+Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
+Link: https://patch.msgid.link/20261001135711.1640520-3-fuad.tabba@linux.dev
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+[ sashal: replaced unavailable pkvm_get_loaded_hyp_vcpu() with a NULL-checked lookup through host_ctxt->__hyp_running_vcpu. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ arch/arm64/kvm/hyp/exception.c             |  5 ++-
+ arch/arm64/kvm/hyp/include/hyp/adjust_pc.h | 28 ++++++++++++++
+ arch/arm64/kvm/hyp/include/nvhe/pkvm.h     |  2 +
+ arch/arm64/kvm/hyp/nvhe/pkvm.c             | 43 ++++++++++++++++++++++
+ 4 files changed, 77 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 66c399253a9b4..3794492b16ec2 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3644,15 +3644,13 @@ static u32 xhci_td_remainder(struct xhci_hcd *xhci, int transferred,
- 
- 
- static int xhci_align_td(struct xhci_hcd *xhci, struct urb *urb, u32 enqd_len,
--			 u32 *trb_buff_len, struct xhci_segment *seg)
-+			 u32 *trb_buff_len, struct xhci_segment *seg, u32 max_pkt)
+diff --git a/arch/arm64/kvm/hyp/exception.c b/arch/arm64/kvm/hyp/exception.c
+index 424a5107cddb5..e20979138305a 100644
+--- a/arch/arm64/kvm/hyp/exception.c
++++ b/arch/arm64/kvm/hyp/exception.c
+@@ -92,6 +92,7 @@ static void enter_exception64(struct kvm_vcpu *vcpu, unsigned long target_mode,
+ 			      enum exception_type type)
  {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
- 	unsigned int unalign;
--	unsigned int max_pkt;
- 	u32 new_buff_len;
- 	size_t len;
+ 	unsigned long sctlr, vbar, old, new, mode;
++	struct kvm *kvm;
+ 	u64 exc_offset;
  
--	max_pkt = usb_endpoint_maxp(&urb->ep->desc);
- 	unalign = (enqd_len + *trb_buff_len) % max_pkt;
+ 	mode = *vcpu_cpsr(vcpu) & (PSR_MODE_MASK | PSR_MODE32_BIT);
+@@ -131,8 +132,10 @@ static void enter_exception64(struct kvm_vcpu *vcpu, unsigned long target_mode,
+ 	new |= (old & PSR_C_BIT);
+ 	new |= (old & PSR_V_BIT);
  
- 	/* we got lucky, last normal TRB data on segment is packet aligned */
-@@ -3797,9 +3795,8 @@ int xhci_queue_bulk_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
- 		if (enqd_len + trb_buff_len < full_len) {
- 			field |= TRB_CHAIN;
- 			if (trb_is_link(ring->enqueue + 1)) {
--				if (xhci_align_td(xhci, urb, enqd_len,
--						  &trb_buff_len,
--						  ring->enq_seg)) {
-+				if (xhci_align_td(xhci, urb, enqd_len, &trb_buff_len,
-+						ring->enq_seg, ring->bounce_buf_len)) {
- 					send_addr = ring->enq_seg->bounce_dma;
- 					/* TD bounced at least, and last on this seg */
- 					td->bounce_seg = ring->enq_seg;
+-	if (kvm_has_mte(kern_hyp_va(vcpu->kvm)))
++	kvm = vcpu_get_kvm(vcpu);
++	if (kvm && kvm_has_mte(kvm))
+ 		new |= PSR_TCO_BIT;
++	vcpu_put_kvm(vcpu, kvm);
+ 
+ 	new |= (old & PSR_DIT_BIT);
+ 
+diff --git a/arch/arm64/kvm/hyp/include/hyp/adjust_pc.h b/arch/arm64/kvm/hyp/include/hyp/adjust_pc.h
+index 4fdfeabefeb43..f55950ee2a7e4 100644
+--- a/arch/arm64/kvm/hyp/include/hyp/adjust_pc.h
++++ b/arch/arm64/kvm/hyp/include/hyp/adjust_pc.h
+@@ -13,6 +13,34 @@
+ #include <asm/kvm_emulate.h>
+ #include <asm/kvm_host.h>
+ 
++#ifdef __KVM_NVHE_HYPERVISOR__
++#include <nvhe/pkvm.h>
++
++/* Under pKVM a host vCPU's ->kvm is host-writable. */
++static inline struct kvm *vcpu_get_kvm(struct kvm_vcpu *vcpu)
++{
++	if (is_protected_kvm_enabled())
++		return pkvm_vcpu_get_kvm(vcpu);
++
++	return kern_hyp_va(vcpu->kvm);
++}
++
++static inline void vcpu_put_kvm(struct kvm_vcpu *vcpu, struct kvm *kvm)
++{
++	if (is_protected_kvm_enabled())
++		pkvm_vcpu_put_kvm(vcpu, kvm);
++}
++#else
++static inline struct kvm *vcpu_get_kvm(struct kvm_vcpu *vcpu)
++{
++	return vcpu->kvm;
++}
++
++static inline void vcpu_put_kvm(struct kvm_vcpu *vcpu, struct kvm *kvm)
++{
++}
++#endif
++
+ static inline void kvm_skip_instr(struct kvm_vcpu *vcpu)
+ {
+ 	if (vcpu_mode_is_32bit(vcpu)) {
+diff --git a/arch/arm64/kvm/hyp/include/nvhe/pkvm.h b/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
+index 82b3d62538a61..d8efb924d57fd 100644
+--- a/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
++++ b/arch/arm64/kvm/hyp/include/nvhe/pkvm.h
+@@ -64,5 +64,7 @@ int __pkvm_teardown_vm(pkvm_handle_t handle);
+ struct pkvm_hyp_vcpu *pkvm_load_hyp_vcpu(pkvm_handle_t handle,
+ 					 unsigned int vcpu_idx);
+ void pkvm_put_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu);
++struct kvm *pkvm_vcpu_get_kvm(struct kvm_vcpu *vcpu);
++void pkvm_vcpu_put_kvm(struct kvm_vcpu *vcpu, struct kvm *kvm);
+ 
+ #endif /* __ARM64_KVM_NVHE_PKVM_H__ */
+diff --git a/arch/arm64/kvm/hyp/nvhe/pkvm.c b/arch/arm64/kvm/hyp/nvhe/pkvm.c
+index fd3e0b2891c60..471cef3e29df6 100644
+--- a/arch/arm64/kvm/hyp/nvhe/pkvm.c
++++ b/arch/arm64/kvm/hyp/nvhe/pkvm.c
+@@ -258,6 +258,49 @@ void pkvm_put_hyp_vcpu(struct pkvm_hyp_vcpu *hyp_vcpu)
+ 	hyp_spin_unlock(&vm_table_lock);
+ }
+ 
++static struct pkvm_hyp_vm *pkvm_get_loaded_hyp_vm(struct kvm_vcpu *vcpu)
++{
++	struct kvm_cpu_context *host_ctxt = &this_cpu_ptr(&kvm_host_data)->host_ctxt;
++	struct kvm_vcpu *running_vcpu = host_ctxt->__hyp_running_vcpu;
++	struct pkvm_hyp_vcpu *hyp_vcpu;
++
++	if (!running_vcpu)
++		return NULL;
++
++	hyp_vcpu = container_of(running_vcpu, struct pkvm_hyp_vcpu, vcpu);
++
++	if (vcpu == &hyp_vcpu->vcpu || vcpu == hyp_vcpu->host_vcpu)
++		return pkvm_hyp_vcpu_to_hyp_vm(hyp_vcpu);
++
++	return NULL;
++}
++
++/*
++ * A loaded vCPU's VM is the hyp VM. An unloaded host vCPU's is mapped at
++ * EL2 only while pinned, so it's read once and pinned; the pin fails for
++ * memory the host isn't sharing.
++ */
++struct kvm *pkvm_vcpu_get_kvm(struct kvm_vcpu *vcpu)
++{
++	struct pkvm_hyp_vm *hyp_vm = pkvm_get_loaded_hyp_vm(vcpu);
++	struct kvm *kvm;
++
++	if (hyp_vm)
++		return &hyp_vm->kvm;
++
++	kvm = kern_hyp_va(READ_ONCE(vcpu->kvm));
++	if (hyp_pin_shared_mem(kvm, kvm + 1))
++		return NULL;
++
++	return kvm;
++}
++
++void pkvm_vcpu_put_kvm(struct kvm_vcpu *vcpu, struct kvm *kvm)
++{
++	if (kvm && !pkvm_get_loaded_hyp_vm(vcpu))
++		hyp_unpin_shared_mem(kvm, kvm + 1);
++}
++
+ static void unpin_host_vcpu(struct kvm_vcpu *host_vcpu)
+ {
+ 	if (host_vcpu)
 -- 
 2.53.0
 
