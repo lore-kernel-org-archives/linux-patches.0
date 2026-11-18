@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025324;
-	b=lvgLUmDnDqqGbTPQqdfsg5UNZszWNdvk+2NznxWyyaQDF2Xgg+Oc24vlvTxGvSdzW7ZV
-	 +d9f3KF1lOIiBW+qFCbkheoKb1XyH6iPUaQyd5nLF8jLx/wppLPhCrp79IUdLCsK2C0My
-	 vTW8v/CaW3YKXJ62BcmMqS4shFfOMPkleztn+6BJvmPWd2GouXHhP57wOgs7O4e7Fodgs
-	 5WP4f1DFplyD8M9lVayFQnA6Yxx2+JHpthQqTvV8xVnl2TFVqmhbOXKJFdOuyMurD8D0r
-	 c272DtM6gt37SPmFuMQ36XSBi8hmEo9ys/7qF+UW7CuhZv23KwgzgjEjrhHS/1bUxdg==
+	t=1795025326;
+	b=Nv33H0eC6XU0yRCrnYH4BwOv577Uq8XkxoTt1HR9sH1ULjop8rpRqRPz2j2ec6gqKArt
+	 zySV70jGj3KxMO/Qp/X8omwmef6zvYn85gPn9z+LfqsYM38I+68tSR5g+uIeTBVDX8tBe
+	 oOqsjXjD+EuAmDhSghIX+sD5N8gwXVvNHUShh8sZsqEl8f3JOWKWPS5McBtMXE6tk+XC5
+	 kWp0HQkUgpLIIewMg/w1yQ/a0Jmfds1T3d9zLIxxNWbU/VQvI7Lyd7Yl1uktxK0qGmMB5
+	 X389K+BDgmsjNifGn6xVE594By+1+1Woyb8LrXSNnT7CjE4a2VsiKHcY5ddorJN/Wog==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025324;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F6cTc6fDrjjZmPRmWVsRcGcuNWZbmSmqceE2X08PgsY=;
-	b=d9eIk5oAaMS6jEOOnYb5fukUJfCmw2fcTM01cSMqa+eiFnQG2+zllRUORPWNMAwsxLmc
-	 /dU0yeinuNpRM5WyT4wZphWYMjkqcpnUUKPDjOxL9L0+VLcCCyPX4VWnhREHvZ3ApU1H6
-	 +qT7NyrY/jETeFbNXVTaHKd2FqnewxOkzx5itM0ZaW1umSLByVKDXJpv9y9IAw3/eVVe/
-	 6SSIsaU4AR95E6tOkRcvEbgvjf56Zn1a9WDR6SGv1S07nPmbNkTBHVKN/v43U+c1W1Ntf
-	 H1KZWdp67EztE8UsDhh4ArOWK2h6Msm82ja1zuXE2pUR2K2698uFe3rc1KmGS6Hadow==
+	bh=Tf37JcXq2YeC3wPD701A3hD5vzxZbM6jyuyDC+6NR0w=;
+	b=JeFNQGuyJZ5apR5peV/hmqulscC5YgMdXCvsw0vxr8Bj86cWa6WecyEguEV+NCdVtfCO
+	 wSDJhbNS9Wz/C5bCntM5O996YqIghQeamIIGm9BNiKnQnMgGJ8LoVYlKL1mzs+YZg6O4o
+	 FlKSRwHFj77c2WDHGV6QvMzkBpn3Z1SkmVtfFZ6Xoh3n6+D9AjJBFF54eUprcqmzzAUL/
+	 VZ0hjs8uLp7cIFlRSarrXbcxkzsA0HUULOGBFQtzlQsFyV+nquMDpPVnwl3umyG0kNyb3
+	 G8xTdQl+GotdToxOxnoHh0hK7eOGiFzj7pOZpYQAZGbyHe4tdN/zZif99CeAMhH32FQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cv+mw2Oy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCZAnz1g;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C78606A337;
-	Wed, 18 Nov 2026 18:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFD9606A333;
+	Wed, 18 Nov 2026 18:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cv+mw2Oy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466DB1F000CA;
-	Wed, 18 Nov 2026 18:08:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WCZAnz1g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1214D1F000CA;
+	Wed, 18 Nov 2026 18:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025323;
-	bh=F6cTc6fDrjjZmPRmWVsRcGcuNWZbmSmqceE2X08PgsY=;
+	s=korg; t=1795025326;
+	bh=Tf37JcXq2YeC3wPD701A3hD5vzxZbM6jyuyDC+6NR0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cv+mw2OypV7Hx11Mb9B7zRPpEG5w6ieQ7H2p3IeGX/jXUIu1Wog4gTYuU52Wk65Dl
-	 crj7TaoKgmyN5aEbH9quf6LGgj0LaU8O6lZIJnMGXNL+78leX8gTVs+eD4nrX9mB7M
-	 N4nASNGLj4bUp3B6UJX9y51ftmPpOLFgQA8MSuZ8=
+	b=WCZAnz1gg7kh0tSZQJeRhD8zvjA0509lmSQoFIzVpyBDRaK8MybTeEKTT2gEnthHU
+	 pKYygdltbX+paqVdbnqOxtCJB9dZACV4jQPTGAwGrZzKxHn0h80/EUiWJBbDSYgIJc
+	 6GG5krqhVjW5bn7thQ30Ri8vT6j+IsbDeSoTrMig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1039/2151] perf/cxl: Clear stale event fields before reprogramming a counter
-Date: Wed, 18 Nov 2026 15:46:14 +0100
-Message-ID: <20261118150200.191053675@linuxfoundation.org>
+Subject: [PATCH 6.18 1040/2151] perf/cxl: Fix the counter overflow delta fixup
+Date: Wed, 18 Nov 2026 15:46:15 +0100
+Message-ID: <20261118150200.225675005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,15 +72,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 7406d6cf76b1dad53084f3988dc65ab967209344 ]
+[ Upstream commit 0326269ed73529cdf821664b6176814cde9ca374 ]
 
-cxl_pmu_event_start() ORs the event group id, event mask, edge and invert
-selections into a configurable counter's config register without clearing
-them first, and cxl_pmu_event_stop() leaves them set. Reuse the counter for
-another event and the new selection lands on top of the old one, so the
-counter counts the wrong events with stale edge and invert behaviour.
+The counter is masked to counter_width, so the subtraction in
+__cxl_pmu_read() throws away the bit that records the wrap. A delta of one
+whole period reads back as 0, the same as no events at all, and only the
+overflow status tells the two apart - which is why __cxl_pmu_read() takes
+an overflow argument.
 
-Use FIELD_MODIFY() so each field is replaced rather than accumulated.
+The fixup keys off the delta rather than the operands:
+
+	delta = (new_cnt - prev_cnt) & GENMASK_ULL(counter_width - 1, 0);
+	if (overflow && delta < GENMASK_ULL(counter_width - 1, 0))
+		delta += (1UL << counter_width);
+
+so it cannot tell which of these it is looking at:
+
+  event_start         polled read          wrap
+  ctr = 0 ..........  ctr = P/2 .........  mask -> 0 (+r)
+  prev = 0            prev = P/2                 IRQ reads new = r
+
+  prev = 0    (no read yet):  new >= prev, fell short -> add period
+  prev = P/2  (polled):       new <  prev, spans wrap -> add nothing
+
+Both rows are the same interrupt and the old guard adds a period in both,
+so a mid-period read makes the event over-count. 'perf stat -I' hits that.
+
+Condition the fixup on new_cnt >= prev_cnt, the one case the subtraction
+cannot express. Dropping it outright would break the first row. It stays
+exact whatever the residual r is, which matters because some events
+increment by more than 1 per cycle (CXL r4.0 8.2.7.2.1, Threshold) and can
+step past 0 as they wrap.
+
+Use mask + 1 for the period rather than a shift. It is 0 for a 64-bit
+counter, and avoids the old 1UL << counter_width - undefined for width 64,
+and for >= 32 on 32-bit kernels.
 
 Fixes: 5d7107c72796 ("perf: CXL Performance Monitoring Unit driver")
 Reported-by: sashiko-bot@kernel.org
@@ -88,43 +114,47 @@ Closes: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net
 Assisted-by: Claude:claude-opus-4-8
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
-Link: https://sashiko.dev/#/patchset/20260715191454.459673-1-dave@stgolabs.net?part=1
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/cxl_pmu.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/perf/cxl_pmu.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
-index eedc94616531a..7a770278f6892 100644
+index 7a770278f6892..39231f5feb4fb 100644
 --- a/drivers/perf/cxl_pmu.c
 +++ b/drivers/perf/cxl_pmu.c
-@@ -646,17 +646,17 @@ static void cxl_pmu_event_start(struct perf_event *event, int flags)
- 	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_INT_ON_OVRFLW, 1);
- 	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_FREEZE_ON_OVRFLW, 1);
- 	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_ENABLE, 1);
--	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_EDGE,
--			  cxl_pmu_config1_get_edge(event) ? 1 : 0);
--	cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_INVERT,
--			  cxl_pmu_config1_get_invert(event) ? 1 : 0);
-+	FIELD_MODIFY(CXL_PMU_COUNTER_CFG_EDGE, &cfg,
-+		     cxl_pmu_config1_get_edge(event) ? 1 : 0);
-+	FIELD_MODIFY(CXL_PMU_COUNTER_CFG_INVERT, &cfg,
-+		     cxl_pmu_config1_get_invert(event) ? 1 : 0);
+@@ -689,7 +689,7 @@ static void __cxl_pmu_read(struct perf_event *event, bool overflow)
+ {
+ 	struct cxl_pmu_info *info = pmu_to_cxl_pmu_info(event->pmu);
+ 	struct hw_perf_event *hwc = &event->hw;
+-	u64 new_cnt, prev_cnt, delta;
++	u64 new_cnt, prev_cnt, delta, mask;
  
- 	/* Fixed purpose counters have next two fields RO */
- 	if (test_bit(hwc->idx, info->conf_counter_bm)) {
--		cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_EVENT_GRP_ID_IDX_MSK,
--				  hwc->event_base);
--		cfg |= FIELD_PREP(CXL_PMU_COUNTER_CFG_EVENTS_MSK,
--				  cxl_pmu_config_get_mask(event));
-+		FIELD_MODIFY(CXL_PMU_COUNTER_CFG_EVENT_GRP_ID_IDX_MSK, &cfg,
-+			     hwc->event_base);
-+		FIELD_MODIFY(CXL_PMU_COUNTER_CFG_EVENTS_MSK, &cfg,
-+			     cxl_pmu_config_get_mask(event));
- 	}
- 	cfg &= ~CXL_PMU_COUNTER_CFG_THRESHOLD_MSK;
+ 	do {
+ 		prev_cnt = local64_read(&hwc->prev_count);
+@@ -697,12 +697,16 @@ static void __cxl_pmu_read(struct perf_event *event, bool overflow)
+ 	} while (local64_cmpxchg(&hwc->prev_count, prev_cnt, new_cnt) != prev_cnt);
+ 
  	/*
+-	 * If we know an overflow occur then take that into account.
+-	 * Note counter is not reset as that would lose events
++	 * The mask discards the bit that says the counter wrapped, so a delta of
++	 * one whole period reads back as 0 - the same as no events at all. Only
++	 * the overflow status separates them, and new_cnt >= prev_cnt is that
++	 * case, so add the period back. mask + 1 is 2^counter_width, which comes
++	 * out as 0 for a 64-bit counter and avoids an undefined 1 << 64.
+ 	 */
+-	delta = (new_cnt - prev_cnt) & GENMASK_ULL(info->counter_width - 1, 0);
+-	if (overflow && delta < GENMASK_ULL(info->counter_width - 1, 0))
+-		delta += (1UL << info->counter_width);
++	mask = GENMASK_ULL(info->counter_width - 1, 0);
++	delta = (new_cnt - prev_cnt) & mask;
++	if (overflow && new_cnt >= prev_cnt)
++		delta += mask + 1;
+ 
+ 	local64_add(delta, &event->count);
+ }
 -- 
 2.53.0
 
