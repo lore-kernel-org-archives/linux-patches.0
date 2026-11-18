@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034465;
-	b=L/yvpm3iBSjjEH23tbf1fjgzX3jrd0htvdCDI7PKir5WBXPtMUl6ulRiTupXhOvFftMf
-	 EmQOqZ1D0tU26a1Lc/p45fq33a5D+2blw3SPa30Il7eHIfuWCtU2I10pbLM72cLcrlLwF
-	 bLqRgLfkfx37Vh5YmWpafUlb2ju72Bt5EZaYs+RQo6N9DMAp6a0mTDFDP5A580G+k9sAw
-	 kXStSvjs48UXWHomLMzLN5S4NjjtWKplsg5DesY5J/PNxGqpml76pdnFv6/KN3p1nJ70e
-	 45lbdaVD64AB1JjZM5WeEStKE4fviR61fCvrbreEazuCneaRE0YBNUvEDYWt+HyAObw==
+	t=1795034468;
+	b=pdCWMSMZcxz+gYaHDERtmEfkxheOD42Vumqefq76sGJvUFyxTPjFOQ2LJ3aDVQubAxwf
+	 utPVOl9dDB24pbuxf8o231twQiQTHY+nvFJ3BrW2tVQWLpBQjCOpn/ezD6RPdzTnRrR0w
+	 VE1r2pojIPuRSYbLPKPf/F+5I8NFNkW3VGwI4R9QVO33kVtVVk9EpnyjTtELgzby3QiQb
+	 srJE7N5EEAmHDwqMjUpaIrbvAfjD2vlmdgDR47gNdhkJbU4LOoXKhjevViq1cZRABRMR6
+	 cHv4M2yVFpSay2ZlgsqEFvH7Inn1r6W6fKEp5yEm2LHGjQ89Mgr9/3MNSXFHakf1lWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034465;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034468;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l+/cGWC0XttgUlwqFK0fBFes7dGwIhLv0wgEGNSnRmk=;
-	b=CFkV1/hYwPTS2FTa/BymwDUvnBUpw20KFn4BixmerveD2LiBHp7CQmKZcGu8M/aocBIG
-	 c6Px3d+XPdfoY4uxEarSVwQKlL6uDtwX6W1aL40CvmboK14VmSEFYzLvQm7OTgZJFRPby
-	 +DQMORVnkBQSgLjl700lQXBEufH1XCkfvdBzln2KZuLqoxGD+Bk3QJR/4MJS5UQx2lBUW
-	 CjRDzR5CeWwd2+O3mqHaJA7vneLmHbiNe9b3Z+aVXaJRKHT9oNiCZGdEAut52ooPFz2GG
-	 BhW5BmAYQtWhqA1WemJE3cehk5tbD141pKOe2yvOl3KV7+ENhOrhD3zN4TWELy6aI+g==
+	bh=UNnoid5+a4fNc3jaTTjPPR5fQb6hMU3rzBda1YD63HA=;
+	b=ZSAttZ7IqGy6wx2RMVkafEAI4e8h9JR0IJ5tulPuMSAyVJ2VlyVjhGGzUfToJ17vGwv/
+	 hbgbp3PfS1ywS0+KH1AjaPLW+/4Lf4qpfEQ0fwdMBhl2ui07H2eiCkajf3u5t9x6EQaQD
+	 tPGjaXrJ6zmLltL72rmrsM/QBOHI1KZ2nSMiBJ0g+Z94G+m+cAJaieds/2zfx6Qau5GTo
+	 Aiuw2OMfJkAheRlFczXiBOp/CqwMLy4RsQMT9xYrtiVOtmIC6CKy0rnLtE98r6xlHPTz3
+	 KsDKuotpJEkDrmPZSB0nbpzfSSmZEGHogEnTF48+UdTBS46EpU44cHb3n/woL7ltzOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3nS9u9G;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="rMbTo/QH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8D0606A32C;
-	Wed, 18 Nov 2026 20:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05951606A31C;
+	Wed, 18 Nov 2026 20:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K3nS9u9G
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B06F1F000C4;
-	Wed, 18 Nov 2026 20:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rMbTo/QH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D521F000C4;
+	Wed, 18 Nov 2026 20:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034465;
-	bh=l+/cGWC0XttgUlwqFK0fBFes7dGwIhLv0wgEGNSnRmk=;
+	s=korg; t=1795034467;
+	bh=UNnoid5+a4fNc3jaTTjPPR5fQb6hMU3rzBda1YD63HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K3nS9u9GnwXDsV/jEv422BnF9oypRLurYUrdFvVJ8o2CkTv23Yb6zqtK7eIk3sEJ5
-	 X8IU4ciHQIOPRoqQ9skg0dEEXgqJnTulC+/8a3YQD2tB3gMgLYgksQ5PQblN0qbDMo
-	 956E7geDJAT3JQsLcIo1vopI30hL2jDUjCU4fZIQ=
+	b=rMbTo/QH0//47YCj8OpbEEY9hLYTQD4lS2WqZPiYCJ4oGaBY4ogd41zGUDBxIHO2l
+	 Z64HOnSl4CULVbzf6ITiIPWxVU59CsfMcQDa1c1bKZjDt/7iH1xwGghAWxh+Z7FVIK
+	 r3bJh59fTYxq8oYJfzQHFvBIsV/HWox8PXFieMhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Thierry Reding <treding@nvidia.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Javier Martinez Canillas <javierm@redhat.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0377/3318] drm/sysfb: simpledrm: Improve framebuffer-size validation
-Date: Wed, 18 Nov 2026 15:16:39 +0100
-Message-ID: <20261118150327.549485802@linuxfoundation.org>
+Subject: [PATCH 6.6 0333/3318] netfilter: tproxy: use DEBUG_NET_WARN_ON_ONCE for protocol fallbacks
+Date: Wed, 18 Nov 2026 15:15:55 +0100
+Message-ID: <20261118150325.929949947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,50 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 03f1a3545b721fa7fdadd00080e237519a286a97 ]
+[ Upstream commit 1f0391aea883e99d402d0f77ba3530e4e879350d ]
 
-Validate the framebuffer size from the firmware against the
-limitations of struct drm_display_mode. The type only stores sizes
-in 16-bit fields. Fail probing on errors.
+Replace WARN_ON calls with DEBUG_NET_WARN_ON_ONCE in the default switch
+blocks of nf_tproxy_get_sock_v4 and v6. Unsupported transport protocols
+are already safely handled by returning a NULL socket pointer. This
+prevents unnecessary system panics when panic_on_warn=1 is enabled in
+production systems.
 
-v2:
-- remove unused function simplefb_get_validated_int0() (Sashiko)
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Thierry Reding <treding@nvidia.com>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Fixes: 11e8f5fd223b ("drm: Add simpledrm driver")
-Cc: <stable@vger.kernel.org> # v5.14+
-Fixes: 11e8f5fd223b ("drm: Add simpledrm driver")
-Link: https://patch.msgid.link/20260625094509.157581-2-tzimmermann@suse.de
-[ sashal: Kept the local simplefb_get_validated_int0() helper and made it reject values above U16_MAX, since the tree lacks drm_sysfb_get_validated_int0(). ]
+Link: https://patch.msgid.link/cover.1786968834.git.zhilinz@nebusec.ai/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/simpledrm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/netfilter/nf_tproxy_ipv4.c | 2 +-
+ net/ipv6/netfilter/nf_tproxy_ipv6.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/tiny/simpledrm.c b/drivers/gpu/drm/tiny/simpledrm.c
-index d10574e630a86..5d18ed29bf634 100644
---- a/drivers/gpu/drm/tiny/simpledrm.c
-+++ b/drivers/gpu/drm/tiny/simpledrm.c
-@@ -52,12 +52,12 @@ static int
- simplefb_get_validated_int0(struct drm_device *dev, const char *name,
- 			    uint32_t value)
- {
--	if (!value) {
-+	if (!value || value > U16_MAX) {
- 		drm_err(dev, "simplefb: invalid framebuffer %s of %u\n",
- 			name, value);
- 		return -EINVAL;
+diff --git a/net/ipv4/netfilter/nf_tproxy_ipv4.c b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+index 73e66a088e25e..9b51e84606040 100644
+--- a/net/ipv4/netfilter/nf_tproxy_ipv4.c
++++ b/net/ipv4/netfilter/nf_tproxy_ipv4.c
+@@ -138,7 +138,7 @@ nf_tproxy_get_sock_v4(struct net *net, struct sk_buff *skb,
+ 		}
+ 		break;
+ 	default:
+-		WARN_ON(1);
++		DEBUG_NET_WARN_ON_ONCE(1);
+ 		sk = NULL;
  	}
--	return simplefb_get_validated_int(dev, name, value);
-+	return (int)value;
- }
  
- static const struct drm_format_info *
+diff --git a/net/ipv6/netfilter/nf_tproxy_ipv6.c b/net/ipv6/netfilter/nf_tproxy_ipv6.c
+index 52f828bb5a83d..ead5d161464cb 100644
+--- a/net/ipv6/netfilter/nf_tproxy_ipv6.c
++++ b/net/ipv6/netfilter/nf_tproxy_ipv6.c
+@@ -137,7 +137,7 @@ nf_tproxy_get_sock_v6(struct net *net, struct sk_buff *skb, int thoff,
+ 		}
+ 		break;
+ 	default:
+-		WARN_ON(1);
++		DEBUG_NET_WARN_ON_ONCE(1);
+ 		sk = NULL;
+ 	}
+ 
 -- 
 2.53.0
 
