@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053498;
-	b=t44uxzF1lpSsHPmyiYPE/E6Y9hhCUhAk7fHz+PuOymJVaIuN37O2UAacj+hTZntQwFVB
-	 JVG9E9PSdnAXtSUpwADKgAXJNADSMOP14n5TvUBbGFigcpe/u2IzLkGKD6rUn0VTknh3M
-	 92eVsHpqVMRE8dXsOJXy9Dsc2xYbwXj9JFrOZQYdCiL6SwE15mRdpChA0HIuR88RxqzSW
-	 vCN7Onyq0Mbcf+uF5EyJEqewbEEfr3YxDwI3f5vIXwNKlKhFOKoa1t7Hdy1mFZxSLyAof
-	 g4EW0y8OExTn8qnLQohgn5Adwt8NZd0LFcLkA+LPSJD6OGm8LKAnozxODoITGVG9aWQ==
+	t=1795053501;
+	b=JwZxBLvUPlnCXMsNiPX4QU6KXH4eGhQstuutCjxc1QNtEMgf1SGLn3ucqPeAB2iJ9ya2
+	 vA4zjx3c5RiHuPDOm5PHrsRLE6xOGZpMDVfvZRPQfsrUjUfrj0LEV5G1CgMFrb7c9Y8JP
+	 UrFr462ehTWgKdKlGRB/AxeoQ2uIxfusIwl14FS5IUqX/IP9k0iJfVnXLHl8bpE5tc0fN
+	 z/f9ljbq1JsR0rXN7zj4mT/jqjDhEaGxPLjN6sd4aOV4vxXL/WggZ4e4oydLc9/Y0WwB5
+	 GzWnjWzeTEINFudqVtkl0ldlKTSTbJPsLWSQhccS5YzX91jytoLDqC9sMtgxqj4og4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053498;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053501;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=5TgPiV1OjLtjmfP/2pp/yohNZB91aSPWNDl+v9iTnNY=;
-	b=PgLRi8Bb3o+1INFX6c5kC5vsBKZyd3gQ3F6qlyYkY8YjirrBlPlEGhTLU7sXvR4Th1F3
-	 /YWMsRX4Jq36+HBtrZGB01YMVa6j0TIruIA7Zf/3pc8hVLLn1fBxr1zBcCUVXRKTRF/Id
-	 SzkYJvZAX4PIydsCOBuDBWPmRm1eB0BwgRtjMBpCcCMxU6GxSbxtWerQWlkt9w42y76tW
-	 w8EXQqCFmo9Y5DscidDReoAN7KS6HvdOBq0vkaD+xPRpzNsK42QA8lK7ZMXMynRErgtjd
-	 K6ObqiJjk70JkfYI0QLZ7N3BJfEPN1qlYvvFrffuEt9TqP+nDfazu0Svq5V2afFXKpA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=s78EJJBB7wX8rzpEAoWFSXjgOpJApT3VX5bjg7UZZsQ=;
+	b=rifArlQx8CVAxIr5eBOY1ok8DSrJq7yFaGBeON0/Sh59jOYe/3j/jEQceGdOOTZPC0R/
+	 +splICJMGRpVPXuDK6TT107VJakL5FJgZ0wUieIfpRNxXXZw2XlG+X683izvLql1JRARI
+	 jEYdDkORmVCQj51/waVDTJVtNnWlD8ZzCsXWBw5zPnfzGTSQZWl07bp9N13fCyJ0dstd7
+	 LMfUqWvsVlzVkKHByQC+roL//IvpvfJTnifCfFvE7/HarIciIVaQc9KVRkNNLV0GgvTID
+	 EO+uHfakxKLneGkcYeNr46UUZBGMmoZzAoot4eSkDsiiiMimF3Usc115jmrwTJFAzLw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeR3Udow;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z16JvQlB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB914606A32C;
-	Thu, 19 Nov 2026 01:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB5F606A32A;
+	Thu, 19 Nov 2026 01:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DeR3Udow
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221251F000C4;
-	Thu, 19 Nov 2026 01:58:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z16JvQlB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C506B1F000C4;
+	Thu, 19 Nov 2026 01:58:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053498;
-	bh=5TgPiV1OjLtjmfP/2pp/yohNZB91aSPWNDl+v9iTnNY=;
+	s=korg; t=1795053501;
+	bh=s78EJJBB7wX8rzpEAoWFSXjgOpJApT3VX5bjg7UZZsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DeR3UdowRNmhtAP56Bu9qwLDl1/1cJDwXcl9GAAhVKj6OjlKX11pcS3DZ6orgYTD5
-	 PHNJhoW/DOZ6GSUKXjOBNAJ9eL/GJKWPO0mFaibHTEA6XK6Ilem2BkNiyO+4vvDHP/
-	 pzHZkkkRkChNSpYkfefL57SdOsfSasnX2oORG3k0=
+	b=z16JvQlBxi/FpQRv4NCcXg6X+eeE8YxbvuuZbrru+UH0oMb69q/Ts+1cBLLQ1+Yg7
+	 89+wimadPlgXLEbGKroW7pryngj89xjqCG8V1iXSs0BdAz6yPfnrJ3FAdu4aoyxfCl
+	 HmjFOOKifcFj7CqF5vHsfHJ6+wRsGsn0V8byKdgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	SJ Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Fernand Sieber <sieberf@amazon.com>,
+	SeongJae Park <sjpark@amazon.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0934/2214] ceph: clamp the inline data length in ceph_fill_inline_data()
-Date: Wed, 18 Nov 2026 15:43:30 +0100
-Message-ID: <20261118150049.730434723@linuxfoundation.org>
+Subject: [PATCH 5.15 0943/2214] mm/damon/core: move static variable last_nr_regions to damon_ctx
+Date: Wed, 18 Nov 2026 15:43:39 +0100
+Message-ID: <20261118150050.075132452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,53 +64,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanglei Zhu <zhugl3@xiaopeng.com>
+From: SJ Park <sj@kernel.org>
 
-[ Upstream commit 9c1d14d3b66b3e1dd96ee664c0dd2548f2b77a52 ]
+[ Upstream commit 26ae50a0901a44f7d50053f87dc38abd9f9a269c ]
 
-The MDS decides how much inline data to attach to a reply, and the
-client parses inline_len without any upper bound: ceph_decode_need()
-only verifies that the message actually carries that many bytes.
-ceph_fill_inline_data() then copies the data into a single page
-with no length check, so a malicious or buggy MDS returning more
-inline data than the page can hold writes past its end.
+kdamond_split_regions() uses a static variable last_nr_regions, to infer
+if the region boundaries are too stable.  If it looks too stable, it
+does a more aggressive region split because it might be a fake stability
+coming from non-aggressive split.  Because the variable is static, the
+inference can be racy and wrong when multiple kdamonds are running in
+parallel.
 
-Clamp the length to PAGE_SIZE so both callers, handle_cap_grant()
-and fill_inode(), are covered.
+The user impact is not critical.  No crash, no leak.  DAMON's
+best-effort monitoring accuracy can be degraded when multiple kdamonds
+are used in parallel and the workload has certain access patterns. Still
+it is a bug that is better to fix.
 
-Cc: stable@vger.kernel.org
-Fixes: 31c542a199d7 ("ceph: add inline data to pagecache")
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-[ Adapted for 5.15.y: folio_size()/memcpy_to_folio() → PAGE_SIZE and the page API; this tree has no pr_warn_ratelimited_client(), so the warning is dropped. ]
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Move the variable into the damon_ctx struct to fix the problem.
+
+Link: https://lore.kernel.org/20261025164808.152048-3-sj@kernel.org
+Fixes: 75c1c2b53c78 ("mm/damon/dbgfs: support multiple contexts")
+Signed-off-by: SJ Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Closes: https://sashiko.dev/#/bug/linux-eebfcdde-2881-48ef-8df1-e2019d2a47f2
+Cc: Fernand Sieber <sieberf@amazon.com>
+Cc: SeongJae Park <sjpark@amazon.de>
+Cc: <stable@vger.kernel.org> # 5.15.x
+Signed-off-by: SJ Park <sj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/addr.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/linux/damon.h | 6 ++++++
+ mm/damon/core.c       | 5 ++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ceph/addr.c b/fs/ceph/addr.c
-index 618ef368b5649..0fb3fdfdc8685 100644
---- a/fs/ceph/addr.c
-+++ b/fs/ceph/addr.c
-@@ -1572,6 +1572,9 @@ void ceph_fill_inline_data(struct inode *inode, struct page *locked_page,
- 	dout("fill_inline_data %p %llx.%llx len %zu locked_page %p\n",
- 	     inode, ceph_vinop(inode), len, locked_page);
+diff --git a/include/linux/damon.h b/include/linux/damon.h
+index d68b67b8d458d..bc0cdd67e2473 100644
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -203,6 +203,12 @@ struct damon_ctx {
+ 	unsigned long min_nr_regions;
+ 	unsigned long max_nr_regions;
+ 	struct list_head adaptive_targets;
++/* private: */
++	/*
++	 * number of regions after last merge.  Read kdamond_split_regions()
++	 * for more details.
++	 */
++	unsigned long last_nr_regions;
+ };
  
-+	if (len > PAGE_SIZE)
-+		len = PAGE_SIZE;
-+
- 	if (len > 0) {
- 		void *kaddr = kmap_atomic(page);
- 		memcpy(kaddr, data, len);
+ #define damon_next_region(r) \
+diff --git a/mm/damon/core.c b/mm/damon/core.c
+index 3a50ced2efc0f..1ce0438328b94 100644
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -603,7 +603,6 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ {
+ 	struct damon_target *t;
+ 	unsigned int nr_regions = 0;
+-	static unsigned int last_nr_regions;
+ 	int nr_subregions = 2;
+ 
+ 	damon_for_each_target(t, ctx)
+@@ -613,14 +612,14 @@ static void kdamond_split_regions(struct damon_ctx *ctx)
+ 		return;
+ 
+ 	/* Maybe the middle of the region has different access frequency */
+-	if (last_nr_regions == nr_regions &&
++	if (ctx->last_nr_regions == nr_regions &&
+ 			nr_regions < ctx->max_nr_regions / 3)
+ 		nr_subregions = 3;
+ 
+ 	damon_for_each_target(t, ctx)
+ 		damon_split_regions_of(ctx, t, nr_subregions);
+ 
+-	last_nr_regions = nr_regions;
++	ctx->last_nr_regions = nr_regions;
+ }
+ 
+ /*
 -- 
 2.53.0
 
