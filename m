@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031584;
-	b=hvzK8NFZXA3IXhKonv22DlfEbGLnaI92tb1N7Vg1NewN+vYIbu7ZZe3PDLvNZgE3rD4Y
-	 zDO5Z0b+W4DIZ3BpPFK6JwtF1QtMwZuNLnBHRQ2/V/indUaLHFXhREaMCn7lk6oyzMTRY
-	 bwj04zLcztZ75pz9O2BzpSDefZ7yOqHJM5ncK2PfpnVa/JuUxVWNS46D1//e3baixiuN7
-	 nQzpQXsyAI8x+h8BBwqJs9tq7WIzl2alebmbh1c3u0j4NLLsWd4/E82hbEE1fTv0Ph6W9
-	 +JPuLztrVRXgL0v70opNonUdUhVPAdBsryWruwTvPUQpaY0SKW7+OzXo0aT2IwIIa+Q==
+	t=1795031587;
+	b=gj5FzI/IozK3R2Wf3QPrrWzKPYlBqt3hDTS97tG0LIffteZAuCuOPp/veXwQ7CeFWpo2
+	 Q/Amp8lPQVIfrVK2qUP9APxlFcWnzKtW3sJqX7ViiWIxyIZhCyi1aOg6Z59VnVNjQIdpg
+	 CBtsYyZiCLNgYiQF1hNnLbbhNCetUuixLt3bH9P0k2zFAgibhrU12+nmmAI66uLIm3SIt
+	 wrhbaE0q3o4M8ctq3q8blqoIuusI6X20D+fnUoAsL7E9NavdCDjbxtwU4xr7vaBVxe4h2
+	 xFPpkXaLAHngAddihFPQS4tjaJ2Wx9A+6ltIIttQi+bLDdDbpy8DhxMH1B4Ze6qkshg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031584;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vQUYtUbEmt8e5MrwW9PkYBkKyqCGReopNLJj5ys+sU8=;
-	b=jE2aIchIauIpfhHhS2piU8Ky19Zy9cYZWQZg38ZX/FR5VCT5/il8gTWyudwgNkkURkGm
-	 a/Gp8dV4B4sQdPBkkjNVcG8CJiunFCEx7wDNqkT5sw79r0hT0cfxYtTHzPii3wc1loXnP
-	 zghB9437q7KA68GEZNy9c6TXRa8BelZMU+DVhoWM74C8uHNGZOZ4uHoswTNXaZxIpP0J2
-	 xgcLN8qKZmTtVGU7L35K45JNkEnf8mmxV1GgHgklrouDFEuD8Ahs4ecJoZ5jizck426ob
-	 qnBZgbQHbYnN812/paxSrcZXig4hFmrlnZLPomKHlng9NUC/jATOQSGLykVZb1bpYVw==
+	bh=44hzYtVJa7fd1EDkrGpRgoshX9nu1OvwPWXXPgoUUw4=;
+	b=ypkkSoIvVdytBKuuWGF+n8djvY2MPI5wIpZ2Rpc2EhbQA1kv2/PKUmVkwfwULKs+jCLV
+	 N+cdJDl1NvWrIqkQosJRz85N2aaSMllBQQEHFDbcKCK68xgFA/m9yRu3a72cQ967VRZ9m
+	 HsUilgleMWE/eLa+vWNlZt9WXNm/89R0fQKWmn0QYos8I0Je54GcVe9UZjFdY7jGXq3Ov
+	 LOY82brYuUDLEJ9zSTbRslOgabW4jYlX7YO/D8imaXvAAj0MEe5nFRfX0mq5DouWQrIaT
+	 v76FWoujo+XWXZ6Ay2a1jYPzlH5ujhOc84dSRHleRN+ci/T7xPI6cnWBiexPPFs3gpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ufF+KfyE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WXAxdd4D;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C88A606A320;
-	Wed, 18 Nov 2026 19:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E156D606A31C;
+	Wed, 18 Nov 2026 19:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ufF+KfyE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968A61F000C4;
-	Wed, 18 Nov 2026 19:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WXAxdd4D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408DE1F000C7;
+	Wed, 18 Nov 2026 19:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031584;
-	bh=vQUYtUbEmt8e5MrwW9PkYBkKyqCGReopNLJj5ys+sU8=;
+	s=korg; t=1795031586;
+	bh=44hzYtVJa7fd1EDkrGpRgoshX9nu1OvwPWXXPgoUUw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ufF+KfyE7Tdi8y2B7vOY8NWkyNATy5+jkyMUUfYNA0AXWTtBKYVUGciGUfMR16k0q
-	 83CQ5PIY9GNmq5RB49z3m5vKUS/IWucjK2KZGKxJEnW27HQ+VSGS8MNZ3d+g+dMK72
-	 oA1AzAZK1h+LqF3bpKmQSBJwSHsZEMgrbh07gvJM=
+	b=WXAxdd4DkDi0ntuh582lWecmSfi6UtdWujEJwvE2LiAMz3gid5+Mb0GQPw5AO5nTU
+	 3GzP4z95JfllLHfORjgTmpeJ4ueF3XQ6WUyBS50OoxC0knZ+wibug/yK9BanDAH3xS
+	 n2lS0PVAMGZ9hHpOAgVvIMYtSv4lUCJxeRm7MOjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.12 1102/1756] PCI: qcom: Honor IOMMU providers #iommu-cells in qcom_pcie_config_sid_1_9_0()
-Date: Wed, 18 Nov 2026 15:53:49 +0100
-Message-ID: <20261118150054.060646930@linuxfoundation.org>
+	VEGA <vega@nebusec.ai>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 1111/1756] tcp_hybla: fix divide by zero on rtt0 == 0
+Date: Wed, 18 Nov 2026 15:53:58 +0100
+Message-ID: <20261118150054.383399125@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,185 +70,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 5121d76cb9dde74662962cd5678a64abeaf3b3e4 ]
+[ Upstream commit f09eb97322b16a6f709a47599c95b62f786905f9 ]
 
-qcom_pcie_config_sid_1_9_0() reads the "iommu-map" property as an array
-of fixed four-word {rid-base, phandle, sid, rid-len} entries to program
-the BDF to SID translation table. But that layout only holds for an
-IOMMU with '#iommu-cells = <1>'. The PCIe SMMUs on these SoCs use
-'#iommu-cells = <2>' (SID and mask), so per the pci-iommu binding each
-entry is really five cells long.
+rtt0 is the reference RTT in ms, so 0 makes no sense, and
+hybla_recalc_param() divides by it right from hybla_init().
 
-This used to work only because the DTs were themselves broken. They
-described iommu-map with four-cell entries that omitted the SID mask,
-which of_map_id() tolerated via its of_check_bad_map() fallback, and the
-four-word parsing coincidentally matched that malformed shape.
+Reject values below 1 when the parameter is written. Also cap it at
+U32_MAX / USEC_PER_MSEC, since rtt0 * USEC_PER_MSEC can wrap to 0 on
+32-bit. An rtt0 above that (about 71 minutes) makes no sense anyway.
 
-Since commit ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps") the
-OF core parses such maps correctly, so the device trees were converted
-to proper five-cell entries, e.g. commit c41749e9554d ("arm64: dts:
-qcom: sm8250: Fix the PCIe iommu-map entries"). With five-cell entries
-the fixed four-word stride slips by one cell for each entry after the
-first, so qcom_pcie_config_sid_1_9_0() reads the endpoint mapping's RID
-from the preceding entry's length cell and its SID from the phandle cell.
-As the RID is the hash key, the endpoint's real RID is never programmed
-into the BDF to SID table. Its DMA then hashes to an unprogrammed slot,
-gets tagged with SID 0 and the SMMU faults like below on QCS8300:
-
-  arm-smmu 15200000.iommu: Unhandled context fault: fsr=0x402, iova=0xffa00000, cbfrsynra=0x0, cb=1
-
-To fix this, walk the map with a stride of 3 + '#iommu-cells' of the
-referenced IOMMU and take the SID from the first specifier cell, which is
-all the BDF to SID table needs. Validate the layout instead of trusting
-the array size. Also, preserve the legacy behavior of the old DTs by
-detecting the same pattern that of_check_bad_map() recognizes and
-falling back to a stride of four.
-
-Fixes: 4c9398822106 ("PCI: qcom: Add support for configuring BDF to SID mapping for SM8250")
-Reported-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-Link: https://patch.msgid.link/20260907143349.317495-1-mani@kernel.org
+Fixes: 835b3f0c0d7e ("[TCP]: Add TCP Hybla congestion control module.")
+Fixes: 740b0f1841f6 ("tcp: switch rtt estimations to usec resolution")
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261008092641.140777-3-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 90 ++++++++++++++++++--------
- 1 file changed, 64 insertions(+), 26 deletions(-)
+ net/ipv4/tcp_hybla.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 81ba04cedc72a..7a26646352132 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1044,50 +1044,90 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+diff --git a/net/ipv4/tcp_hybla.c b/net/ipv4/tcp_hybla.c
+index abd7d91807e54..b9b482180d30b 100644
+--- a/net/ipv4/tcp_hybla.c
++++ b/net/ipv4/tcp_hybla.c
+@@ -26,8 +26,20 @@ struct hybla {
+ };
  
- static int qcom_pcie_config_sid_1_9_0(struct qcom_pcie *pcie)
- {
--	/* iommu map structure */
--	struct {
--		u32 bdf;
--		u32 phandle;
--		u32 smmu_sid;
--		u32 smmu_sid_len;
--	} *map;
- 	void __iomem *bdf_to_sid_base = pcie->parf + PARF_BDF_TO_SID_TABLE_N;
- 	struct device *dev = pcie->pci->dev;
-+	struct device_node *iommu_np;
- 	u8 qcom_pcie_crc8_table[CRC8_TABLE_SIZE];
--	int i, nr_map, size = 0;
--	u32 smmu_sid_base;
-+	const __be32 *map;
-+	u32 iommu_cells, entry_cells, phandle, smmu_sid_base;
-+	int i, nr_cells, nr_map, size = 0;
- 	u32 val;
- 
--	of_get_property(dev->of_node, "iommu-map", &size);
--	if (!size)
-+	map = of_get_property(dev->of_node, "iommu-map", &size);
-+	if (!map || !size)
- 		return 0;
- 
-+	if (size % sizeof(*map)) {
-+		dev_err(dev, "Malformed iommu-map property\n");
-+		return -EINVAL;
-+	}
-+	nr_cells = size / sizeof(*map);
+ /* Hybla reference round trip time (default= 1/40 sec = 25 ms), in ms */
+-static int rtt0 = 25;
+-module_param(rtt0, int, 0644);
++static unsigned int rtt0 = 25;
 +
-+	/*
-+	 * Each iommu-map entry is: rid-base (1 cell), phandle (1 cell),
-+	 * IOMMU specifier (#iommu-cells cells), length (1 cell). Read
-+	 * #iommu-cells from the IOMMU provider referenced by the first
-+	 * entry to compute the per-entry stride.
-+	 */
-+	phandle = be32_to_cpu(map[1]);
-+	iommu_np = of_find_node_by_phandle(phandle);
-+	if (!iommu_np) {
-+		dev_err(dev, "Failed to find IOMMU node in iommu-map\n");
-+		return -ENODEV;
-+	}
++static int rtt0_set(const char *val, const struct kernel_param *kp)
++{
++	/* avoid rtt0 * USEC_PER_MSEC overflow */
++	return param_set_uint_minmax(val, kp, 1, U32_MAX / USEC_PER_MSEC);
++}
 +
-+	if (of_property_read_u32(iommu_np, "#iommu-cells", &iommu_cells))
-+		iommu_cells = 1;
-+	of_node_put(iommu_np);
++static const struct kernel_param_ops rtt0_ops = {
++	.set = rtt0_set,
++	.get = param_get_uint,
++};
 +
-+	entry_cells = 3 + iommu_cells;
-+
-+	/*
-+	 * Retain backward compatibility with DTs that describe iommu-map
-+	 * with 4-cell entries against an IOMMU declaring #iommu-cells = 2,
-+	 * matching the fallback in drivers/of/base.c::of_check_bad_map().
-+	 */
-+	if (iommu_cells == 2 && !(nr_cells % 4)) {
-+		bool legacy = true;
-+
-+		for (i = 0; i < nr_cells; i += 4) {
-+			if (be32_to_cpu(map[i + 1]) != phandle ||
-+			    be32_to_cpu(map[i + 3]) != 1) {
-+				legacy = false;
-+				break;
-+			}
-+		}
-+
-+		if (legacy) {
-+			dev_warn_once(dev, "iommu-map has 1-cell entries with #iommu-cells=2, using 1-cell\n");
-+			entry_cells = 4;
-+		}
-+	}
-+
-+	if (nr_cells % entry_cells) {
-+		dev_err(dev, "Malformed iommu-map property\n");
-+		return -EINVAL;
-+	}
-+	nr_map = nr_cells / entry_cells;
-+
- 	/* Enable BDF to SID translation by disabling bypass mode (default) */
- 	val = readl(pcie->parf + PARF_BDF_TO_SID_CFG);
- 	val &= ~BDF_TO_SID_BYPASS;
- 	writel(val, pcie->parf + PARF_BDF_TO_SID_CFG);
++module_param_cb(rtt0, &rtt0_ops, &rtt0, 0644);
+ MODULE_PARM_DESC(rtt0, "reference rout trip time (ms)");
  
--	map = kzalloc(size, GFP_KERNEL);
--	if (!map)
--		return -ENOMEM;
--
--	of_property_read_u32_array(dev->of_node, "iommu-map", (u32 *)map,
--				   size / sizeof(u32));
--
--	nr_map = size / (sizeof(*map));
--
- 	crc8_populate_msb(qcom_pcie_crc8_table, QCOM_PCIE_CRC8_POLYNOMIAL);
- 
- 	/* Registers need to be zero out first */
- 	memset_io(bdf_to_sid_base, 0, CRC8_TABLE_SIZE * sizeof(u32));
- 
- 	/* Extract the SMMU SID base from the first entry of iommu-map */
--	smmu_sid_base = map[0].smmu_sid;
-+	smmu_sid_base = be32_to_cpu(map[2]);
- 
- 	/* Look for an available entry to hold the mapping */
- 	for (i = 0; i < nr_map; i++) {
--		__be16 bdf_be = cpu_to_be16(map[i].bdf);
--		u32 val;
-+		u32 bdf = be32_to_cpu(map[i * entry_cells]);
-+		u32 sid = be32_to_cpu(map[i * entry_cells + 2]);
-+		__be16 bdf_be = cpu_to_be16(bdf);
- 		u8 hash;
- 
- 		hash = crc8(qcom_pcie_crc8_table, (u8 *)&bdf_be, sizeof(bdf_be), 0);
-@@ -1109,12 +1149,10 @@ static int qcom_pcie_config_sid_1_9_0(struct qcom_pcie *pcie)
- 		}
- 
- 		/* BDF [31:16] | SID [15:8] | NEXT [7:0] */
--		val = map[i].bdf << 16 | (map[i].smmu_sid - smmu_sid_base) << 8 | 0;
-+		val = bdf << 16 | (sid - smmu_sid_base) << 8 | 0;
- 		writel(val, bdf_to_sid_base + hash * sizeof(u32));
- 	}
- 
--	kfree(map);
--
- 	return 0;
- }
- 
+ /* This is called to refresh values for hybla parameters */
 -- 
 2.53.0
 
