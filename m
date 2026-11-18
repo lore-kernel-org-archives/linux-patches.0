@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027697;
-	b=qKaN0eYuVMQmD52iTHVYNvMuTQd82yDqNU6bbh90CPZnKm+TeaXPg9pGI7gPg6Rril9X
-	 EIAKpADuNWBlo6eKxVPjofvUWvJVRCNCYqM+SXXG1kT1NG6g26VtpZhYfxlWixKhOv7wy
-	 M8rgM4bHpVlBdeedkgmcGCRq3C4IP4sgODkwBbV9kiiMTxGFmYQRhZfEHHKLjy4tYgpz6
-	 HrDOoq0ZZWlnvcvuexguB5VxfdqgcJB5civGCMbxsfDaXdNos6Y+VCZ/SSm/7/Ev/Y+LA
-	 Hef58QeClvehsx2fVF8fbxK/7MKAUW35IOK4cJ93Ms5T8fNpMe6aPFIR2mzEEJmXeeg==
+	t=1795027700;
+	b=waxKXyM8FWV7xL+5vT0wgjRSOSAp2Nfb6SYUFpb24fr795lCtBLUChNmJ18kOkktQkPf
+	 K4WBMdlbGEJFDlF6+gh8giqAMRQSSJObH83BxEydZDlRaVsShJjq7lBPQUpx29W8SQzyk
+	 7oEmnlXZi/rpLQ8pLHvlp1fXX1zj7pHZC4DWV3CscMvo5yG0tGFrxQTjqGPMeo/gjHE8d
+	 ZfgAhPn9qBkMsAqtIhn88QiLFdw5yleQuMSZVk9+fPz/4JeELQjkD698bNcGkfMmHymLD
+	 bZjFqjiDhCd18fDtUYt1/IgkdhOylw86k79D6HLVtfg0BiCo9CFjjVCuJCYXCBGVzyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027697;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9w2kSUbX2yvJTiuoaSUbe7ytLSig0W43B2nu00zPIBA=;
-	b=R2xsqf8Pylz2ivxZcUWq8ZsC69hn/uB4wgf989eGeP6o0Kqe9x9v3DRZZoY7JcwSN0xY
-	 87GIMpGt/jPPQRCU/fjEkE9M/0fr+CP4Hv5h4+oGIuNsaUW66t9q9HVe90TDMefi6HOQf
-	 /4bQmoT69MRUXHLhQk/M9k/QUVcsFlQAwq65K260ZlcWuh08Mi5vhxtaI9viMwXuKbRnS
-	 SZ8GtDuS2my2x8s4lwkLLqoCn+uPw7RGxhXFZ2vnD8Y1x8NC9B7rWCcEaM5nManXPqiPg
-	 lZJT2Y8FDt+L7rXQdO7Ov5VTIJsRrK15G3eKxyJnMY/uMlI12aYRJ55ToGI6E4UmIUQ==
+	bh=HQBjGTCAZ03fB55oMudRNX7DUyFAzQIkJRjOo04eYlc=;
+	b=EVj0PFBGLKgEYlsbI6j2p1FBDf/956SX0z+fHVGQg20eGqK4FKz9xSSycDL5aMmgdpog
+	 sfgZZjEga0weFKIXBUQpmylDekhQSJ0RmHitRoOOkDPqlq5kRHOqw6sbW2x4hht6AJzvl
+	 ZpVobD1KBzG4wEhhtOxML5I+9d0AcHQIHnScF0AlOuC45YBUoVnP5uZSlt2pAZbqJSTon
+	 kyFwuMzpgVRMgbeV+NG9zx3o8kiB5xW9cXLe3xhPN1tKa2n5NgcI2QDmMX2dWTKU3jivO
+	 iz27507bCa129hLM12DdSncFI3/puAHlLaWsCyJYy11GupaOAnzxB8Z2s8u/8rKFeOw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxEyBR2a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TXqHkKsQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298BC606A33E;
-	Wed, 18 Nov 2026 18:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01AA60A2611;
+	Wed, 18 Nov 2026 18:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SxEyBR2a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820DB1F000C9;
-	Wed, 18 Nov 2026 18:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TXqHkKsQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA4B1F000D2;
+	Wed, 18 Nov 2026 18:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027697;
-	bh=9w2kSUbX2yvJTiuoaSUbe7ytLSig0W43B2nu00zPIBA=;
+	s=korg; t=1795027699;
+	bh=HQBjGTCAZ03fB55oMudRNX7DUyFAzQIkJRjOo04eYlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SxEyBR2aA5n42p3UbQ/wcnoLSba1KmEVfX4Byoe8RAkWwicbz/E7tPRbEliu7bctH
-	 6roA5AyOTB9iswUFHV7Yp8idB8bHjxT0uEt8z/3TxUHH6WXtvCbag1XrLgWIW7jsOS
-	 Zk2bcK+EuCo3zD6vTpJuVNquiyKpVE9VWt2OcVfo=
+	b=TXqHkKsQ4Vrx/QqNIq30AXUCgALUJ0XnH9JFzDRkrKqbRonZ/dGCPzZDBYZxOCoxg
+	 bus13ZfqI837GplHWoKbNcJgt6e74u68iJYe6DR6ge0KWJ1u7kP4x+tXQ7Js45VA55
+	 xwkdBnx+GWexMOmLUKz/W5A4tnBn0TLhIZr+ltVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wagner <wagi@kernel.org>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1882/2151] nvme-fabrics: limit each queue type to the number of online CPUs
-Date: Wed, 18 Nov 2026 16:00:17 +0100
-Message-ID: <20261118150230.354011196@linuxfoundation.org>
+Subject: [PATCH 6.18 1883/2151] nvme-fabrics: clear the poll map if no poll queues are mapped
+Date: Wed, 18 Nov 2026 16:00:18 +0100
+Message-ID: <20261118150230.392869794@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,89 +72,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit 99fd0cbae84988e0af34784aa18ddd51ae094ade ]
+[ Upstream commit 36ede1aa85d5d74c39ed375a906f6eadb15cee5b ]
 
-nvmf_nr_io_queues limits each queue type to the number of online CPUs
-when asking for I/O queues, but nvmf_set_io_queues hands out the
-granted queues without these limits, and only nr_io_queues is clamped
-when parsing the options.
+blk_mq_alloc_tag_set sets the nr_queues of every map to nr_hw_queues.
+When nr_poll_queues is set but no queues are left for polling,
+nvmf_map_queues skips the poll map and leaves it this way, with all CPUs
+mapped to hctx 0.  The queue then claims poll support, polled I/O ends
+up on hctx 0, which isn't a poll queue, and hctx 0 is marked as a poll
+hctx, so even the Connect command of the first I/O queue is marked as
+polled.
 
-E.g. with 2 CPUs, nr_io_queues=2, nr_write_queues=10 and
-nr_poll_queues=10, 2 + 2 + 2 = 6 queues are requested, but handed out
-as 4 default, 2 read and 0 poll queues.  blk_mq_map_queues can't create
-more CPU masks than there are CPUs, so default queues 2 and 3 take over
-the CPUs of default queues 0 and 1, and connecting the I/O queue of
-default queue 1 fails with -EXDEV.
+Clear the poll map when no poll queues are mapped, so polled I/O is
+rejected with -EOPNOTSUPP.
 
-Apply the same limits in nvmf_set_io_queues.  A queue type with more
-queues than online CPUs always has a hardware context without an online
-CPU, so no working setup changes.  The options are not modified, so the
-limits follow CPU hotplug on reconnect.
-
-Fixes: 6486199378a5 ("nvme-tcp: fix queue mapping when queue count is limited")
-Fixes: a249d3066de6 ("nvme-fabrics: add queue setup helpers")
+Fixes: 1a9460cef571 ("nvme-tcp: support simple polling")
+Fixes: 5651cd3c4336 ("nvme-rdma: fix queue mapping when queue count is limited")
 Reviewed-by: Hannes Reinecke <hare@kernel.org>
 Tested-by: Maurizio Lombardi <mlombard@redhat.com>
 Signed-off-by: Daniel Wagner <wagi@kernel.org>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fabrics.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/nvme/host/fabrics.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
-index 9c3e0c755ce54..03941bcd2dd97 100644
+index 03941bcd2dd97..c9b7356e6f654 100644
 --- a/drivers/nvme/host/fabrics.c
 +++ b/drivers/nvme/host/fabrics.c
-@@ -1125,18 +1125,27 @@ static int nvmf_parse_options(struct nvmf_ctrl_options *opts,
- void nvmf_set_io_queues(struct nvmf_ctrl_options *opts, u32 nr_io_queues,
- 			u32 io_queues[HCTX_MAX_TYPES])
- {
-+	/*
-+	 * Each queue type is mapped to the CPUs separately, so a type with
-+	 * more queues than online CPUs has hardware contexts without an online
-+	 * CPU.  Use the same limits as nvmf_nr_io_queues.
-+	 */
-+	u32 nr_io = min(opts->nr_io_queues, num_online_cpus());
-+	u32 nr_write = min(opts->nr_write_queues, num_online_cpus());
-+	u32 nr_poll = min(opts->nr_poll_queues, num_online_cpus());
-+
- 	memset(io_queues, 0, sizeof(*io_queues) * HCTX_MAX_TYPES);
- 
--	if (opts->nr_write_queues && opts->nr_io_queues < nr_io_queues) {
-+	if (nr_write && nr_io < nr_io_queues) {
- 		/*
- 		 * separate read/write queues
- 		 * hand out dedicated default queues only after we have
- 		 * sufficient read queues.
- 		 */
--		io_queues[HCTX_TYPE_READ] = opts->nr_io_queues;
-+		io_queues[HCTX_TYPE_READ] = nr_io;
- 		nr_io_queues -= io_queues[HCTX_TYPE_READ];
- 		io_queues[HCTX_TYPE_DEFAULT] =
--			min(opts->nr_write_queues, nr_io_queues);
-+			min(nr_write, nr_io_queues);
- 		nr_io_queues -= io_queues[HCTX_TYPE_DEFAULT];
- 	} else {
- 		/*
-@@ -1145,14 +1154,14 @@ void nvmf_set_io_queues(struct nvmf_ctrl_options *opts, u32 nr_io_queues,
- 		 * sufficient queue count to have dedicated default queues.
- 		 */
- 		io_queues[HCTX_TYPE_DEFAULT] =
--			min(opts->nr_io_queues, nr_io_queues);
-+			min(nr_io, nr_io_queues);
- 		nr_io_queues -= io_queues[HCTX_TYPE_DEFAULT];
+@@ -1199,6 +1199,13 @@ void nvmf_map_queues(struct blk_mq_tag_set *set, struct nvme_ctrl *ctrl,
+ 			io_queues[HCTX_TYPE_DEFAULT] +
+ 			io_queues[HCTX_TYPE_READ];
+ 		blk_mq_map_queues(&set->map[HCTX_TYPE_POLL]);
++	} else {
++		/*
++		 * blk_mq_alloc_tag_set sets nr_queues of all maps to
++		 * nr_hw_queues.  Clear the poll map, otherwise the queue claims
++		 * poll support and polled I/O ends up on hctx 0.
++		 */
++		set->map[HCTX_TYPE_POLL].nr_queues = 0;
  	}
  
--	if (opts->nr_poll_queues && nr_io_queues) {
-+	if (nr_poll && nr_io_queues) {
- 		/* map dedicated poll queues only if we have queues left */
- 		io_queues[HCTX_TYPE_POLL] =
--			min(opts->nr_poll_queues, nr_io_queues);
-+			min(nr_poll, nr_io_queues);
- 	}
- }
- EXPORT_SYMBOL_GPL(nvmf_set_io_queues);
+ 	dev_info(ctrl->device,
 -- 
 2.53.0
 
