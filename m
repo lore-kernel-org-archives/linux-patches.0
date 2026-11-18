@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032238;
-	b=D101banShwzwHSgYe6F+D1gASietXkf0NZ6oH3NhyoVzUK5FJ0HPACygOJ3+wR3Vgfk6
-	 /cgddAiBFQS9NSSYJADoQpC/AiiCPgepw3T1VmmzMsxdXrK3cRprI4GM46hzLy8rSvyVt
-	 cC0J9iY1XKpcZGipx33o4y19h3p+b1SS5XLXfyzliTEPbA69Tk7wU3Wnj+bXw391fwh94
-	 flzVz5RVcNX0lIkrp9UT0UXibVx59WZsG7bXD4x4OtHewSX7qd85MhOA71br0WxJSAkmC
-	 miyLC5E0ob7LMMgF/VjSJIQaMN15kPZvoUBPKHG9CF0Ket5QTUGr2pyBrx2j87PQYYg==
+	t=1795032241;
+	b=tsMABKYO/tj4tqLZ2VIFhXJac52hpsrdHyFWEfNxQsUVtODJRrVpUGW+5gHWEHNbVnU5
+	 NPsgYiomp+kOYMIwU3Fc8UoMUou7IZJejiXfcoSmDk2HVlvUsaIiwx1WeJAPjzNQr941t
+	 4pUM1pFh7IMg4hqS+T26LwlNzg4DRNUsuw+SEkEC7zORbsauawV9vWFh+X6Dz4b6aMW8E
+	 j5G6I1tSDlFK2iPNKq4TeVVrfwJiBzmcSp/H7Z/BuxgnIWsZ/NMZnL2OHX64rYvv6K2wG
+	 zCV/iSOjx7DC3pb7rIfgXKyiHr5grfueWbhgNJf716Jq9rdZDgIdtUunhOL3sdspPRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=HVgQHxe5sgeG9L3rwru7HBncDkj/r2kl3yk4tGNkzhA=;
-	b=Fdr997tguS/ziClLlovPJeIFI/iuwdcWyIHmo/B4GyA+pvewMss6qCcC8wgvnlveoifZ
-	 Nk/90e6Cy1r4NVMBHb/MVnAV13XAKOZikKcGafqD4Lq7w43u0AomaBMD2ZLAjQBtkuNLp
-	 aiSV1cZtuoc17lNmLX38i3A3+SIlmqAZXS/ccEWFRV4lkNLAHK36kQ17qSbyEuAi6ewBf
-	 i3Q1olk9HyN/xw6YSJpAfBNJYeSSVq5KSaQW0y2g8EyAt3hXfH5oE1Wzg1UlLV8seunCk
-	 OaFlE0aq2914TFrIqYPrqZ4KdLITsqyU7YCrkPneMfz2YggDdx5Xdj/24cVsRRGZzyQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=18xlYOrhudUEq4B5dgFAn/FT1pM6VzFW6ccwivmUo0c=;
+	b=X5He5GMzUAv8ceUOrl0MhD0akDWFnTT/1WI6F4HQji1wPAgoXkOmWMyPT8pInH6G3j3o
+	 IW6Nl+oMk1P/KsnG1sorlq+5VHMJ8WWkt4A9tgarpYwNcbrYQXOfH84Z+tHEthd62wBwS
+	 fT1d9ZdHVJwp1thEkD1fat6DwZXhI4TKbpGk142gN/qEOv9L++DwNXUlvGRRwyhvbHQxW
+	 4YLXKQffyHxDFMFonXMZB2R+EcgHjRQunYHYHG/UAD0dqktDno5dttlVcp2jgB7FXIXuK
+	 VKCL06ZinJ6uN68uLkaYOoukMQm0WgIX3k6KY1nviDq+8iVkkW60Ut7HXJ8LMRZj26g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQmymY9I;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kQ1BTqp9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4B9606A330;
-	Wed, 18 Nov 2026 20:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C589606A320;
+	Wed, 18 Nov 2026 20:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pQmymY9I
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DC841F000C5;
-	Wed, 18 Nov 2026 20:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kQ1BTqp9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DBD1F000C5;
+	Wed, 18 Nov 2026 20:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032238;
-	bh=HVgQHxe5sgeG9L3rwru7HBncDkj/r2kl3yk4tGNkzhA=;
+	s=korg; t=1795032241;
+	bh=18xlYOrhudUEq4B5dgFAn/FT1pM6VzFW6ccwivmUo0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pQmymY9I7KsGksQD5B78/TQxWcVR78ByKPmXfBUNKMtFYneSAMqllO+lbfG4RqJoe
-	 xq+7vhnAvIEMfuS8YEeOBxRfAzkmtmyTYZF9jUJ+/wLtcrVgTy+VyQdirEkcppOM4S
-	 Gt7+xuo6zWPW4MN8sJRcw+KJyWeU5YlSY6SYFhsE=
+	b=kQ1BTqp9YbsvbdAI7w9u02K8QKksM4y5KsHgHwsSqSwfbcMqAsqGtMveVs+Qgpq4D
+	 giRVfzWbPymL2D7vT388r0rfL7yN3ICDh03inzGrKPYGGrVlDyaUWTm3DXotv/J4qP
+	 X7u/WnycJ2Aqx9w33b5xESA550D9v3I6ZmTdKraM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Piotr=20Gli=C5=BAniewicz?= <p.glizniewicz@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1342/1756] ALSA: 6fire: take stream_mutex in the Digital Thru control
-Date: Wed, 18 Nov 2026 15:57:49 +0100
-Message-ID: <20261118150102.765617990@linuxfoundation.org>
+Subject: [PATCH 6.12 1343/1756] btrfs: remove leftover EXTENT_UPTODATE clear from an inodes io_tree
+Date: Wed, 18 Nov 2026 15:57:50 +0100
+Message-ID: <20261118150102.802098126@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,79 +63,171 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit d030561d53cb272bb55ba2dd11aaa609e8240b7e ]
+[ Upstream commit d2c41835fd284b73d61239ff5d637167f2563895 ]
 
-usb6fire_control_digital_thru_put() calls
-usb6fire_control_streaming_update(), which on an idle card with Digital
-Thru on selects altsetting 2 and writes the clock register for 96 kHz
-through usb6fire_control_set_rate(). usb6fire_pcm_prepare() calls both
-functions through usb6fire_pcm_set_rate() under rt->stream_mutex. The
-put does not take stream_mutex, so the two can run at the same time.
+After commit 52b029f42751 ("btrfs: remove unnecessary EXTENT_UPTODATE
+state in buffered I/O path") we never set EXTENT_UPTODATE in an inode's
+io_tree anymore, but we still have some code attempting to clear that
+bit from an inode's io_tree. Remove that code as it doesn't do anything
+anymore. The sole use of the EXTENT_UPTODATE bit is for the excluded
+extents io_tree (fs_info->excluded_extents), which is used to track the
+locations of super blocks, so that their ranges are never marked as free,
+making them unavailable for extent allocation.
 
-500 runs of a 0.2 s aplay at 48 kHz while a second loop toggled
-"Digital Thru Playback Route" with amixer (12693 on/off cycles, kernel
-7.2.9): in 216 cases the two usb_set_interface() calls ran at the same
-time and the kernel logged "sysfs: cannot create duplicate filename
-'.../3-2:1.1/ep_82'" with a stack dump. 27 of the aplay runs failed,
-and for each of them the kernel logged "could not start pcm stream".
-
-Take stream_mutex in the put. The pcm runtime is created before the
-controls and freed with the card, so chip->pcm is valid whenever the
-put runs. The put waits for a running prepare, which makes synchronous
-USB transfers under stream_mutex; on a card that responds late the wait
-can reach about 12 s, or 24 s with Digital Thru on, and during the wait
-the other controls of the card can be neither read nor written, because
-snd_ctl_elem_write() holds controls_rwsem around the put. Before this
-patch the put already made transfers of the same kind under
-controls_rwsem. No code that holds stream_mutex takes controls_rwsem.
-
-The same test on kernel 7.2.10 with this patch (12863 cycles) gave no
-failed aplay run and no "duplicate filename" message.
-
-Fixes: 2475b0d40761 ("ALSA: 6fire - Add support of digital-thru mixer")
-Assisted-by: LLM
-Signed-off-by: Piotr Gliźniewicz <p.glizniewicz@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20261016073132.109288-2-p.glizniewicz@gmail.com
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: bca2cf55a733 ("btrfs: drop the extent maps of the written part of a failed ordered extent")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/6fire/control.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/btrfs/extent-io-tree.h    |  7 -------
+ fs/btrfs/inode.c             | 22 ++++++++++------------
+ fs/btrfs/relocation.c        |  3 ---
+ fs/btrfs/tests/inode-tests.c | 12 ++++--------
+ 4 files changed, 14 insertions(+), 30 deletions(-)
 
-diff --git a/sound/usb/6fire/control.c b/sound/usb/6fire/control.c
-index 7c2274120c765..4474bdc78e535 100644
---- a/sound/usb/6fire/control.c
-+++ b/sound/usb/6fire/control.c
-@@ -20,6 +20,7 @@
- #include "control.h"
- #include "comm.h"
- #include "chip.h"
-+#include "pcm.h"
+diff --git a/fs/btrfs/extent-io-tree.h b/fs/btrfs/extent-io-tree.h
+index 3553bcf822e9f..e17243c637171 100644
+--- a/fs/btrfs/extent-io-tree.h
++++ b/fs/btrfs/extent-io-tree.h
+@@ -196,13 +196,6 @@ int set_record_extent_bits(struct extent_io_tree *tree, u64 start, u64 end,
+ int set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 		   u32 bits, struct extent_state **cached_state);
  
- static const char * const opt_coax_texts[2] = { "Optical", "Coax" };
- static const char * const line_phono_texts[2] = { "Line", "Phono" };
-@@ -383,6 +384,12 @@ static int usb6fire_control_digital_thru_put(struct snd_kcontrol *kcontrol,
- 	struct control_runtime *rt = snd_kcontrol_chip(kcontrol);
- 	int changed = 0;
+-static inline int clear_extent_uptodate(struct extent_io_tree *tree, u64 start,
+-		u64 end, struct extent_state **cached_state)
+-{
+-	return __clear_extent_bit(tree, start, end, EXTENT_UPTODATE,
+-				  cached_state, NULL);
+-}
+-
+ static inline int clear_extent_dirty(struct extent_io_tree *tree, u64 start,
+ 				     u64 end, struct extent_state **cached)
+ {
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index e4d0f87344fab..ff7dd3f16f4fc 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3177,8 +3177,6 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
+ 		btrfs_end_transaction(trans);
  
-+	/*
-+	 * with Digital Thru on, streaming_update() selects the altsetting and
-+	 * writes the clock register of an idle card; prepare does the same
-+	 * under stream_mutex
-+	 */
-+	guard(mutex)(&rt->chip->pcm->stream_mutex);
- 	if (rt->digital_thru_switch != ucontrol->value.integer.value[0]) {
- 		rt->digital_thru_switch = ucontrol->value.integer.value[0];
- 		usb6fire_control_streaming_update(rt);
+ 	if (ret || truncated) {
+-		u64 unwritten_start = start;
+-
+ 		/*
+ 		 * If we failed to finish this ordered extent for any reason we
+ 		 * need to make sure BTRFS_ORDERED_IOERR is set on the ordered
+@@ -3190,10 +3188,6 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
+ 		if (ret)
+ 			btrfs_mark_ordered_extent_error(ordered_extent);
+ 
+-		if (truncated)
+-			unwritten_start += logical_len;
+-		clear_extent_uptodate(io_tree, unwritten_start, end, NULL);
+-
+ 		/*
+ 		 * Drop extent maps for the part of the extent we didn't write.
+ 		 *
+@@ -3208,9 +3202,15 @@ int btrfs_finish_one_ordered(struct btrfs_ordered_extent *ordered_extent)
+ 		 * we don't mess with the extent map tree in the NOCOW case, but
+ 		 * for now simply skip this if we are the free space inode.
+ 		 */
+-		if (!btrfs_is_free_space_inode(inode))
++		if (!btrfs_is_free_space_inode(inode)) {
++			u64 unwritten_start = start;
++
++			if (truncated)
++				unwritten_start += logical_len;
++
+ 			btrfs_drop_extent_map_range(inode, unwritten_start,
+ 						    end, false);
++		}
+ 
+ 		/*
+ 		 * If the ordered extent had an IOERR or something else went
+@@ -7419,12 +7419,10 @@ static void btrfs_invalidate_folio(struct folio *folio, size_t offset,
+ 		 *    Since the IO will never happen for this page.
+ 		 */
+ 		btrfs_qgroup_free_data(inode, NULL, cur, range_end + 1 - cur, NULL);
+-		if (!inode_evicting) {
++		if (!inode_evicting)
+ 			clear_extent_bit(tree, cur, range_end, EXTENT_LOCKED |
+-				 EXTENT_DELALLOC | EXTENT_UPTODATE |
+-				 EXTENT_DO_ACCOUNTING | EXTENT_DEFRAG |
+-				 extra_flags, &cached_state);
+-		}
++					 EXTENT_DELALLOC | EXTENT_DO_ACCOUNTING |
++					 EXTENT_DEFRAG | extra_flags, &cached_state);
+ 		cur = range_end + 1;
+ 	}
+ 	/*
+diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
+index 7d0d3279231e2..bdca67a2befc1 100644
+--- a/fs/btrfs/relocation.c
++++ b/fs/btrfs/relocation.c
+@@ -2828,9 +2828,6 @@ static noinline_for_stack int prealloc_file_extent_cluster(struct reloc_control
+ 		if (ret < 0)
+ 			return ret;
+ 
+-		clear_extent_bits(&inode->io_tree, i_size,
+-				  round_up(i_size, PAGE_SIZE) - 1,
+-				  EXTENT_UPTODATE);
+ 		folio = filemap_lock_folio(mapping, i_size >> PAGE_SHIFT);
+ 		/*
+ 		 * If page is freed we don't need to do anything then, as we
+diff --git a/fs/btrfs/tests/inode-tests.c b/fs/btrfs/tests/inode-tests.c
+index c21536161c436..cdc1c85d59074 100644
+--- a/fs/btrfs/tests/inode-tests.c
++++ b/fs/btrfs/tests/inode-tests.c
+@@ -953,8 +953,7 @@ static int test_extent_accounting(u32 sectorsize, u32 nodesize)
+ 	ret = clear_extent_bit(&BTRFS_I(inode)->io_tree,
+ 			       BTRFS_MAX_EXTENT_SIZE >> 1,
+ 			       (BTRFS_MAX_EXTENT_SIZE >> 1) + sectorsize - 1,
+-			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
+-			       EXTENT_UPTODATE, NULL);
++			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW, NULL);
+ 	if (ret) {
+ 		test_err("clear_extent_bit returned %d", ret);
+ 		goto out;
+@@ -1021,8 +1020,7 @@ static int test_extent_accounting(u32 sectorsize, u32 nodesize)
+ 	ret = clear_extent_bit(&BTRFS_I(inode)->io_tree,
+ 			       BTRFS_MAX_EXTENT_SIZE + sectorsize,
+ 			       BTRFS_MAX_EXTENT_SIZE + 2 * sectorsize - 1,
+-			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
+-			       EXTENT_UPTODATE, NULL);
++			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW, NULL);
+ 	if (ret) {
+ 		test_err("clear_extent_bit returned %d", ret);
+ 		goto out;
+@@ -1054,8 +1052,7 @@ static int test_extent_accounting(u32 sectorsize, u32 nodesize)
+ 
+ 	/* Empty */
+ 	ret = clear_extent_bit(&BTRFS_I(inode)->io_tree, 0, (u64)-1,
+-			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
+-			       EXTENT_UPTODATE, NULL);
++			       EXTENT_DELALLOC | EXTENT_DELALLOC_NEW, NULL);
+ 	if (ret) {
+ 		test_err("clear_extent_bit returned %d", ret);
+ 		goto out;
+@@ -1070,8 +1067,7 @@ static int test_extent_accounting(u32 sectorsize, u32 nodesize)
+ out:
+ 	if (ret)
+ 		clear_extent_bit(&BTRFS_I(inode)->io_tree, 0, (u64)-1,
+-				 EXTENT_DELALLOC | EXTENT_DELALLOC_NEW |
+-				 EXTENT_UPTODATE, NULL);
++				 EXTENT_DELALLOC | EXTENT_DELALLOC_NEW, NULL);
+ 	iput(inode);
+ 	btrfs_free_dummy_root(root);
+ 	btrfs_free_dummy_fs_info(fs_info);
 -- 
 2.53.0
 
