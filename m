@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039790;
-	b=tAtsH443PqaYBWlCYkVXd2H1Olk2PElrV3aw2koVOu+8+bfH2uBbdHv6LLZqvWfne3Te
-	 Bshx7sZjeORQVTlsW61afriYjKgBrBmFVeIowkopMgC1NxTrp6Q+9j1/Eat2+4OeW89kR
-	 XTwJcbnn+hmxbRawbD+6r7zMrJ4ErMGcfxS/sCmOOpYYhQJVs2emOOGpcbZ3LUkCzguMH
-	 Ceud/Ft8Rc7Ixaq7N3QebR9Vm2aJ0a2ly1lCbWTdrCXAjOuy5IvTuGFTXCYQet4emGox6
-	 /vRWQJmoWMH2KFbRdeQ34Yzm70HOhvEiYx4/49xVkxB9X4faVB3b3KUo/3E2Nn7L37g==
+	t=1795039793;
+	b=qrndJzZ/Jgj5dJ5jPwepZrjx3ojH/gLb6v0DrOm/vqpJ42G2zt8ddjBhQVsmNwtZ5cKH
+	 r3BR3X+uqbntW5YtUaX163N0zhn4EraSb3JsuULVKzqv57w7fDm3bA8KvjNXmng67+U5+
+	 fg21NHl6/pcptVglBJw+Pr12cb/fmjaB2g3gBW8PaWAm6SQ79rAKs7U+uCxg+J4LhTCKb
+	 wuBgnBJmmQ+6vSGTE/eVuyB3vDKTlAVUxTnD2J8gd+PYLjriLV+XVoMS+0RWBsXYTEmB9
+	 di/5a484zTC+7xIWbPWD+HrR1qlxaxemYlzBUCv+E+n+QEQiU0IOGOJpdVurALTn5Ow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EfpN1KzrfYTonjyVbMDtn00P/6xoQ0awnm3APs3DA6U=;
-	b=AQ66uvbjI1PsUTFHsnINb4iqETJ5KYteebcsTLeZPpXJhG3kbvUV2sdI+F5ABn+S3Gah
-	 CLdgGZvoSI1Vxu0Iv68UsodVBFm1SNQAC2ZavIqoxCVc9eLXYBB5zQ4PP8+oUtCL6330V
-	 ItQVZzekbkQoVVpo44tSMPTt+qE8Ss4FcYgSVDQTux/FPjUXLzF+Yl+jdC5kXzeuu1o18
-	 lbi+TLbOFcc8UHzrCe9xb35uEqvEqOLqEiBCGLu5yhpqt1+m0rmNQgtmRU8vqIDaHNUlv
-	 MFxXmxqx771BvzbeLTd84BOiYYKZ9IACGjtairp6nHqblWFXJOerBc/Xx9cW0nH6Gmg==
+	bh=54Z/OwYPAsoXZZLVQUltV83iUz/PYFAFzmBUEvPJSVk=;
+	b=pdmmnYwVfuA9QK5p4YCWcsXGcJRKMc02oiElDyJTFBRhgPWGx8KgOp7hQcT3UTi3Lr/G
+	 fnYO0Qifxb1U7IBfM0r2OlZ0uMcmjh/gBJEd/Syfjj9/R0hgaj0KJDHBm/paQntPsebnJ
+	 yd/A1YiBAu0CIzUerfZ5Nzna44oT+KHpGlAbPRoc6+P7DmrOt1oVFLcKPPBbCk4CVMlZ8
+	 yNGILNv0qcIlxxUEUo5uYGcy4HGSZ+8JbTfXPXbnaB0TlTKhvXYOlxSWANUptpnzWo1Qd
+	 8Rr2z4zMybOlDMM2yi648cJFsf09OmnuAIY2L8H3JvSQN/XqJ7WxiTRI2Em8M4pcimw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Y/qLxBVd";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BaoF3Krc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482F8606A32A;
-	Wed, 18 Nov 2026 22:09:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E651606A320;
+	Wed, 18 Nov 2026 22:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y/qLxBVd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965391F000C4;
-	Wed, 18 Nov 2026 22:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BaoF3Krc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DF61F000C5;
+	Wed, 18 Nov 2026 22:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039790;
-	bh=EfpN1KzrfYTonjyVbMDtn00P/6xoQ0awnm3APs3DA6U=;
+	s=korg; t=1795039792;
+	bh=54Z/OwYPAsoXZZLVQUltV83iUz/PYFAFzmBUEvPJSVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y/qLxBVdUw18onTrtDwoU5xfG00WjhNmXHuRfNCIr+RAW+ZObClNktPCi4Ceik5qa
-	 06CQVGIMByE3XsiXUhA2JTZpBvuSs/OWx4cj43l5gME0/Sz1c3gsobz1e5kGIh/0tY
-	 p+AzsQkwqToToznTPKFO4IK0POQRmFNVj/z1RfjY=
+	b=BaoF3KrcMFap2rq0iIxz6fNuXtljIKYumRlbWIZG1LtCXprLvtoaia2D/4bI1QU0V
+	 CaiUSwLKx7r94FmIQxUIJSjEkGzntY5eAIdojk9AMdRbxkIdBIFI7jB3v05b44VEs0
+	 5EJf5cTM4CDyZkKfBg/zPt6/AxlxJQ4/2RV4qlME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Yonghao Zhang <hyz3367@gmail.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2224/3318] media: i2c: ar0521: remove duplicate media entity cleanup
-Date: Wed, 18 Nov 2026 15:47:26 +0100
-Message-ID: <20261118150428.607664346@linuxfoundation.org>
+Subject: [PATCH 6.6 2225/3318] remoteproc: core: Set trace buffer name for diagnostics
+Date: Wed, 18 Nov 2026 15:47:27 +0100
+Message-ID: <20261118150428.634948617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,40 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Yonghao Zhang <hyz3367@gmail.com>
 
-[ Upstream commit 069a0343581bfcaee44bc598e2b95be2e2789807 ]
+[ Upstream commit e23eab619b0d2dd796618406ba25da62f4d539a2 ]
 
-The error path taken when ar0521_power_on() fails calls
-media_entity_cleanup() at the disable label and then falls through to
-the entity_cleanup label, where media_entity_cleanup() is called again.
+rproc_trace_read() (in remoteproc_debugfs.c) prints the name of a
+trace buffer whose device address could not be resolved, but nothing
+ever assigns trace_mem.name, so that the diagnostics always prints
+an empty string:
 
-There is no need to clean up the media entity twice. Remove the first
-call and let all error paths converge on the common entity_cleanup
-label.
+	Trace  not available
 
-This issue was found by manual code inspection.
+Copy the generated "trace%d" name into the memory entry, so the
+diagnostics identifies the buffer failed to translate.
 
-Fixes: 852b50aeed15 ("media: On Semi AR0521 sensor driver")
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: a987e6b91a5a ("remoteproc: fix trace buffer va initialization")
+Assisted-by: Claude-Code:glm-5.3
+Signed-off-by: Yonghao Zhang <hyz3367@gmail.com>
+Link: https://lore.kernel.org/r/20260911081810.740028-1-hyz3367@gmail.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ar0521.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/remoteproc/remoteproc_core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/i2c/ar0521.c b/drivers/media/i2c/ar0521.c
-index 60ab433cafb11..5bbf776e20c21 100644
---- a/drivers/media/i2c/ar0521.c
-+++ b/drivers/media/i2c/ar0521.c
-@@ -1159,7 +1159,6 @@ static int ar0521_probe(struct i2c_client *client)
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index cba79fcb87d59..d0abed199d232 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -578,6 +578,9 @@ static int rproc_handle_trace(struct rproc *rproc, void *ptr,
+ 	/* create the debugfs entry */
+ 	trace->tfile = rproc_create_trace_file(name, rproc, trace);
  
- disable:
- 	v4l2_async_unregister_subdev(&sensor->sd);
--	media_entity_cleanup(&sensor->sd.entity);
- free_ctrls:
- 	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
- entity_cleanup:
++	/* keep the name for the diagnostic in rproc_trace_read() */
++	strscpy(trace->trace_mem.name, name, sizeof(trace->trace_mem.name));
++
+ 	list_add_tail(&trace->node, &rproc->traces);
+ 
+ 	rproc->num_traces++;
 -- 
 2.53.0
 
