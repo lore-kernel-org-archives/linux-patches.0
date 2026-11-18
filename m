@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057573;
-	b=bZ2A4MVf0L7Qu3Y/fVxJRlnMBJVYRpoBy9qD9Iwx16x2VpHU98Kx79FZp4C606a+Y7Sb
-	 OX2Pnsv1usApX8vr9ZrzzXiwmvqlyoh8lT9E1mBe+RiM0y+nfskr+QrbuiF3kRqKnKmqm
-	 7i5EjcVs6t+xszvAVQiFKdpFl/oDODyg3NjYcLxDRumjTdBZ/IWmA9ExbvGQxVAxWTcoY
-	 4zu4O/zcSPzqK0eyLuE3hTj81TgoM6LJOsco6/gA/5tbnC286b43JiybR+EV5g1SkZxoU
-	 zz5dwGYzP/Set81RRosJ/uIhBiOxr6CFR0oQXDjf7jnC9uVcR/2ljFsfUR21zBBPw8g==
+	t=1795057576;
+	b=0RWZLlpJorz6Wh1AhVkPXZqhMPL68T5JwPxlbMDusK9JhQBJjiBjL8SymUuo1rrvIJgq
+	 Y9Zy1YzbPzImp9KlVxlYjtoE+A7jHkoTuf6AhsBVvJYy1x7A/97VqJxHp4bBa76+GAyyZ
+	 Dk+jo1dqn34YbIC6IZdkTLdEUWdPpF+5HYtHRMZYGhp9EUdpZ5vbUDEtsmg9mQmvSe+37
+	 NMiodIcFl7a9VxTwEjDQC8BvtKxPZyGsnST/FT/qiwza69oAVzxwYu9AmUrzE93xoIloN
+	 UmupwtWZBWgZt9Crd1hCoUSbnFKg9fZnoYfVoBND9i0xLJhv2nQB3OJeKVP7Tk9vPaA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057573;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057576;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=rCvPANXbIJC12wqXm4+itN0Wvq6ETkV6+/gGs03ccJ8=;
-	b=vqZtJgA3Om3nBVvLJma/q0OwN9TNdj67Ci3/jTZ94Qe+dmSo69C6I45f8MAlloPHDuta
-	 dEyQUmFznwApGji5OjiOYCXNr32solRytmavEaE8SiKVkHDg/vVL19UFuNFl2EcXb06gI
-	 7YjkLCls+vt8fLy9xl6c1hbEKBoq0ssZ+WgCp2+WITHm/PuvupSnLHGu+sNRiwlaqmFVt
-	 Oo8jpWliT/WJOHDeR+nEPhJXB7wwLNh4Vc4Nx4X45+Xia4OIp07ZGeGvKA/L9Dj28+XAt
-	 ENGJoQsBAmLwwWfNEkAE8vlgLC5d3TRdqI5cPt+18xajkb/L2JtbyBKUCTSxpvgk42A==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=JbC1SEuMBz6VOwV7VALeCRoxdSL421cmgnfp6qCzcVo=;
+	b=vQmC3xQzK9GdohhH8HsaI2wr+HnKqa9Ui0MRJ6wRyKdrMP3K8kSKwZ6R89RQwPjh+xVj
+	 VtYqHml/3W5Lt4q8kWMgMqY8gYyBaFvHv0BXR0tNoAKrE0Nru/yZ0cFAMaG8fwZWFVdyP
+	 5VmYMUL5wmtoUv5wFLn7rjABlLSRbJlgXXa873aEEo23Nb7Kb1kxg15cvkMMlonu4A1Zy
+	 8D5OHR9WLJ+aUgGwpeJ0jKgJyIddE76O9oowPyvyVaxR6oRqNiV+P+reE+TN/1fLw4rsJ
+	 64UWaFJqjjwpwd1OaLiYzx+mIuq7kBPn25VXM0gSlsMCJRcthUEOMBS9Yvuri827KbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F32e691i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ug5rROdc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87D860A2617;
-	Thu, 19 Nov 2026 03:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D21760A261C;
+	Thu, 19 Nov 2026 03:06:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F32e691i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BAC1F000C4;
-	Thu, 19 Nov 2026 03:06:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ug5rROdc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09211F000C6;
+	Thu, 19 Nov 2026 03:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057573;
-	bh=rCvPANXbIJC12wqXm4+itN0Wvq6ETkV6+/gGs03ccJ8=;
+	s=korg; t=1795057576;
+	bh=JbC1SEuMBz6VOwV7VALeCRoxdSL421cmgnfp6qCzcVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=F32e691iz4am4NHKvl7vWF7wjH8iVGjUL9g6GvwdsyLSFUxNRTlNC0KzN4n/iRAEC
-	 Ap1HycrgnMa+UOBCspGNOvNNGu8VPvIBI0FpDlBTXpGz29794vJ6GlcnDim+8LvsYF
-	 gozJvuiSnSRPj5o3QvnEfNiMMh+7xHDh/ogpTKA8=
+	b=ug5rROdc3YdjGxi7dmIWd2rp385vv1YQzhG1IXlgIrfombpGmaUYN0L2thKxqWS4M
+	 wVRp7WRv8IQrXGMXGrKdF5gYfOlosB6y/oBbwf/ciaCJp/7Hl7t6ZrjWEJU31KbIR4
+	 Plrt0a46YrI+6ZNjWruuHhdzAPkgzmam0kjfo6i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?H=C3=A5kon=20Bugge?= <haakon.bugge@oracle.com>,
 	Allison Henderson <achender@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0143/1848] net/rds: dont use unpin_user_pages_dirty_lock() from atomic context
-Date: Wed, 18 Nov 2026 15:36:21 +0100
-Message-ID: <20261118145917.295190864@linuxfoundation.org>
+Subject: [PATCH 5.10 0144/1848] net/rds: hold the socket while an rds_mr references it
+Date: Wed, 18 Nov 2026 15:36:22 +0100
+Message-ID: <20261118145917.331851181@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,249 +63,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Allison Henderson <achender@kernel.org>
+From: Håkon Bugge <haakon.bugge@oracle.com>
 
-[ Upstream commit d100966325f782aa7775e5f0e8fb04f66f56308e ]
+[ Upstream commit 9079adef042c1e7a6141dcdfd3041acd30607297 ]
 
-rds_rdma_free_op() and rds_atomic_free_op() are reached from the IB
-send completion path via
+Each rds_mr stores a bare back pointer to the socket that created it
+(mr->r_sock) but takes no reference on it.  When the mr is destroyed it
+references the rs. Hence, provisions must be made to avoid the rs
+being destroyed before all mrs referencing it have been destroyed.
 
-  rds_ib_tasklet_fn_send()
-    rds_ib_send_cqe_handler()
-      rds_message_put()
-        rds_message_purge()
-          rds_rdma_free_op() / rds_atomic_free_op()
+The MR itself is refcounted, and in-flight messages legitimately hold
+MR krefs that can outlive the socket: rds_release() drops the rb-tree
+references via rds_rdma_drop_keys(), but a send completion arriving
+afterwards drops the final message reference from the CQ handler and
+ends up in
 
-which runs in tasklet (softirq) context.  Both functions unpin the
-user pages of the op with unpin_user_pages_dirty_lock(), which uses
-set_page_dirty_lock() and thus may take the folio lock and sleep.
-Sleeping in softirq context is not allowed and can deadlock or crash.
+  rds_message_purge()
+    __rds_put_mr_final()
+      rds_destroy_mr()   -> takes rs->rs_rdma_lock
 
-Dirtying the pages with the non-sleeping set_page_dirty() instead
-would just trade one bug for another, as pointed out during review:
-the pinned range can be file-backed.  rds_pin_pages() pins with
-FOLL_LONGTERM, which refuses fs-dax but takes the page-cache pages
-of a MAP_SHARED file mapping just fine, and RDS does not restrict
-what memory the caller registers as an RDMA destination.
+dereferencing a socket that may already have been freed.
 
-For a file-backed page, set_page_dirty() from a tasklet can take
-non-irq-safe filesystem locks (e.g. mapping->i_private_lock and
-inode->i_lock in block_dirty_folio()) and deadlock against the task
-it interrupted.  Without the folio lock, it races with truncation
-clearing folio->mapping, which is the race set_page_dirty_lock()
-exists to close.  The pre-pin_user_pages() version of this code
-dirtied pages that way from the tasklet, so that bug is older than
-the sleeping unpin.
+Oracle UEK fixed the same use-after-free ("rds: Add proper refcnt when
+an RDS MR references an RDS Socket") after seeing crashes of the form:
 
-The page dirtying therefore has to move to process context, not
-merely avoid the folio lock.  When the final rds_message_put() runs
-in atomic context, rds_rdma_free_op() and rds_atomic_free_op() now
-leave the op's pages pinned and flag the op. Later, rds_message_put()
-hands the message to a work item that unpins the flagged ops' pages
-and frees the message from process context. Here,
-unpin_user_pages_dirty_lock() is safe outside the atomic context.
-Everything else keeps running in the caller's context exactly as
-before: the rest of the purge - the zerocopy completion, the socket
-put and the MR reference drops - as well as RDMA writes, whose pages
-the remote side only reads and which unpin without dirtying,
-everything on rds_tcp, and final puts that already happen in process
-context (socket close, connection teardown).
+  PF: supervisor write access in kernel mode
+  _raw_spin_lock_irqsave+0x4a/0x6a
+  __rds_put_mr_final+0x2c/0xe0 [rds]
+  rds_message_purge+0x13c/0x150 [rds]
+  rds_message_put+0x39/0x54 [rds]
+  rds_ib_send_cqe_handler+0x147/0x3dd [rds_rdma]
 
-Deferring only the unpin means the work item touches nothing but the
-pinned pages and the rds module's own memory: it cannot call back
-into a transport module, so it changes nothing about the transports'
-shutdown and unload ordering.  rds_exit() drains any pending unpin
-work via destroy_workqueue(rds_wq) before the module goes away.
+To fix this, take a socket reference when an MR is created and drop it
+when the final MR kref goes away.  The reference cycle is broken by
+rds_release(), which always runs rds_rdma_drop_keys() on close.  So the
+socket reference held by an MR never prevents release, it only delays
+sk_free() until the last MR user is done.
 
-The Oracle UEK kernel avoids the sleeping unpin by calling
-set_page_dirty() directly from the tasklet, which is subject to the
-file-backed page problem above, so this deliberately does not follow
-UEK here.
+The hold sits next to kref_init() at both allocation sites -
+__rds_rdma_map() and the on-demand-paging path in
+rds_cmsg_rdma_args() - so every MR owns exactly one socket reference
+from the moment it becomes kref-managed.  For that to work on the ODP
+path, its get_mr() error handling is converted from a bare kfree() to
+kref_put(..., __rds_put_mr_final), with r_trans_private cleared first
+since it holds an ERR_PTR there; both sites then tear down through
+the same path and a future error-path change cannot silently leak or
+double-drop the reference.
 
+Signed-off-by: Håkon Bugge <haakon.bugge@oracle.com>
+[achender: port to net-next (sock_hold/sock_put in place of the UEK
+ rds_sock_addref/rds_sock_put helpers); also balance the reference on
+ the rds_cmsg_rdma_args() ODP path and unify its error path with
+ __rds_put_mr_final(); update commit message]
 Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-2-achender@kernel.org
+Link: https://patch.msgid.link/20260730041629.3512480-3-achender@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/message.c | 26 +++++++++++++++++++++++++
- net/rds/rdma.c    | 49 ++++++++++++++++++++++++++++++++++++-----------
- net/rds/rds.h     | 10 ++++++++++
- 3 files changed, 74 insertions(+), 11 deletions(-)
+ net/rds/rdma.c | 14 +++++++++++++-
+ net/rds/rds.h  |  5 ++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/net/rds/message.c b/net/rds/message.c
-index 7444594a02e11..a4ec08a551e05 100644
---- a/net/rds/message.c
-+++ b/net/rds/message.c
-@@ -180,6 +180,19 @@ static void rds_message_purge(struct rds_message *rm)
- 		kref_put(&rm->atomic.op_rdma_mr->r_kref, __rds_put_mr_final);
- }
- 
-+static void rds_message_unpin_worker(struct work_struct *work)
-+{
-+	struct rds_message *rm = container_of(work, struct rds_message,
-+					      m_unpin_work);
-+
-+	if (rm->rdma.op_unpin_deferred)
-+		rds_rdma_op_unpin_pages(&rm->rdma);
-+	if (rm->atomic.op_unpin_deferred)
-+		rds_atomic_op_unpin_page(&rm->atomic);
-+
-+	kfree(rm);
-+}
-+
- void rds_message_put(struct rds_message *rm)
- {
- 	rdsdebug("put rm %p ref %d\n", rm, refcount_read(&rm->m_refcount));
-@@ -187,8 +200,21 @@ void rds_message_put(struct rds_message *rm)
- 	if (refcount_dec_and_test(&rm->m_refcount)) {
- 		BUG_ON(!list_empty(&rm->m_sock_item));
- 		BUG_ON(!list_empty(&rm->m_conn_item));
-+
- 		rds_message_purge(rm);
- 
-+		/* A final put in atomic context cannot dirty the ops'
-+		 * user pages on unpin, so rds_rdma_free_op() and
-+		 * rds_atomic_free_op() deferred it.  Finish the unpin,
-+		 * and the free, from process context.
-+		 */
-+		if (rm->rdma.op_unpin_deferred ||
-+		    rm->atomic.op_unpin_deferred) {
-+			INIT_WORK(&rm->m_unpin_work, rds_message_unpin_worker);
-+			queue_work(rds_wq, &rm->m_unpin_work);
-+			return;
-+		}
-+
- 		kfree(rm);
- 	}
- }
 diff --git a/net/rds/rdma.c b/net/rds/rdma.c
-index a02b29ad7f349..ba23bc5628d02 100644
+index ba23bc5628d02..f3b6a7b554f88 100644
 --- a/net/rds/rdma.c
 +++ b/net/rds/rdma.c
-@@ -483,22 +483,36 @@ void rds_rdma_unuse(struct rds_sock *rs, u32 r_key, int force)
- 		kref_put(&mr->r_kref, __rds_put_mr_final);
+@@ -117,6 +117,7 @@ void __rds_put_mr_final(struct kref *kref)
+ 	struct rds_mr *mr = container_of(kref, struct rds_mr, r_kref);
+ 
+ 	rds_destroy_mr(mr);
++	sock_put(rds_rs_to_sk(mr->r_sock));
+ 	kfree(mr);
  }
  
--void rds_rdma_free_op(struct rm_rdma_op *ro)
-+void rds_rdma_op_unpin_pages(struct rm_rdma_op *ro)
- {
- 	unsigned int i;
+@@ -243,7 +244,11 @@ static int __rds_rdma_map(struct rds_sock *rs, struct rds_get_mr_args *args,
+ 	kref_init(&mr->r_kref);
+ 	RB_CLEAR_NODE(&mr->r_rb_node);
+ 	mr->r_trans = rs->rs_transport;
++	/* The MR can outlive its socket: a socket reference is held
++	 * until the final kref is dropped in __rds_put_mr_final().
++	 */
+ 	mr->r_sock = rs;
++	sock_hold(rds_rs_to_sk(rs));
  
-+	for (i = 0; i < ro->op_nents; i++) {
-+		struct page *page = sg_page(&ro->op_sg[i]);
-+
-+		/* Mark page dirty if it was possibly modified, which
-+		 * is the case for a RDMA_READ which copies from remote
-+		 * to local memory
-+		 */
-+		unpin_user_pages_dirty_lock(&page, 1, !ro->op_write);
-+	}
-+}
-+
-+void rds_rdma_free_op(struct rm_rdma_op *ro)
-+{
- 	if (ro->op_odp_mr) {
- 		kref_put(&ro->op_odp_mr->r_kref, __rds_put_mr_final);
-+	} else if (in_task() || ro->op_write) {
-+		/* An RDMA write's pages are only read by the remote
-+		 * side; unpinning without dirtying does not sleep.
-+		 */
-+		rds_rdma_op_unpin_pages(ro);
- 	} else {
--		for (i = 0; i < ro->op_nents; i++) {
--			struct page *page = sg_page(&ro->op_sg[i]);
--
--			/* Mark page dirty if it was possibly modified, which
--			 * is the case for a RDMA_READ which copies from remote
--			 * to local memory
--			 */
--			unpin_user_pages_dirty_lock(&page, 1, !ro->op_write);
--		}
-+		/* Dirtying the pages on unpin can sleep; leave them
-+		 * pinned and have rds_message_put() finish the unpin
-+		 * from process context.
-+		 */
-+		ro->op_unpin_deferred = 1;
- 	}
- 
- 	kfree(ro->op_notifier);
-@@ -507,7 +521,7 @@ void rds_rdma_free_op(struct rm_rdma_op *ro)
- 	ro->op_odp_mr = NULL;
- }
- 
--void rds_atomic_free_op(struct rm_atomic_op *ao)
-+void rds_atomic_op_unpin_page(struct rm_atomic_op *ao)
- {
- 	struct page *page = sg_page(ao->op_sg);
- 
-@@ -515,6 +529,19 @@ void rds_atomic_free_op(struct rm_atomic_op *ao)
- 	 * is the case for a RDMA_READ which copies from remote
- 	 * to local memory */
- 	unpin_user_pages_dirty_lock(&page, 1, true);
-+}
-+
-+void rds_atomic_free_op(struct rm_atomic_op *ao)
-+{
-+	if (in_task()) {
-+		rds_atomic_op_unpin_page(ao);
-+	} else {
-+		/* Dirtying the page on unpin can sleep; leave it
-+		 * pinned and have rds_message_put() finish the unpin
-+		 * from process context.
-+		 */
-+		ao->op_unpin_deferred = 1;
-+	}
- 
- 	kfree(ao->op_notifier);
- 	ao->op_notifier = NULL;
+ 	if (args->flags & RDS_RDMA_USE_ONCE)
+ 		mr->r_use_once = 1;
+@@ -762,7 +767,12 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
+ 			RB_CLEAR_NODE(&local_odp_mr->r_rb_node);
+ 			kref_init(&local_odp_mr->r_kref);
+ 			local_odp_mr->r_trans = rs->rs_transport;
++			/* The MR can outlive its socket: a socket
++			 * reference is held until the final kref is
++			 * dropped in __rds_put_mr_final().
++			 */
+ 			local_odp_mr->r_sock = rs;
++			sock_hold(rds_rs_to_sk(rs));
+ 			local_odp_mr->r_trans_private =
+ 				rs->rs_transport->get_mr(
+ 					NULL, 0, rs, &local_odp_mr->r_key, NULL,
+@@ -771,7 +781,9 @@ int rds_cmsg_rdma_args(struct rds_sock *rs, struct rds_message *rm,
+ 				ret = IS_ERR(local_odp_mr->r_trans_private);
+ 				rdsdebug("get_mr ret %d %p\"", ret,
+ 					 local_odp_mr->r_trans_private);
+-				kfree(local_odp_mr);
++				local_odp_mr->r_trans_private = NULL;
++				kref_put(&local_odp_mr->r_kref,
++					 __rds_put_mr_final);
+ 				ret = -EOPNOTSUPP;
+ 				goto out_pages;
+ 			}
 diff --git a/net/rds/rds.h b/net/rds/rds.h
-index 1257867e85e4e..6090a6045379a 100644
+index 6090a6045379a..a411e9ba60a43 100644
 --- a/net/rds/rds.h
 +++ b/net/rds/rds.h
-@@ -424,6 +424,12 @@ struct rds_message {
+@@ -299,7 +299,10 @@ struct rds_mr {
+ 	unsigned int		r_invalidate:1;
+ 	unsigned int		r_write:1;
  
- 	void			*m_final_op;
- 
-+	/* Unpins the ops' user pages and frees the message from
-+	 * process context when the final put happens in atomic
-+	 * context: dirtying the pages on unpin can sleep.
-+	 */
-+	struct work_struct	m_unpin_work;
-+
- 	struct {
- 		struct rm_atomic_op {
- 			int			op_type;
-@@ -447,6 +453,7 @@ struct rds_message {
- 			unsigned int		op_mapped:1;
- 			unsigned int		op_silent:1;
- 			unsigned int		op_active:1;
-+			unsigned int		op_unpin_deferred:1;
- 			struct scatterlist	*op_sg;
- 			struct rds_notifier	*op_notifier;
- 
-@@ -462,6 +469,7 @@ struct rds_message {
- 			unsigned int		op_mapped:1;
- 			unsigned int		op_silent:1;
- 			unsigned int		op_active:1;
-+			unsigned int		op_unpin_deferred:1;
- 			unsigned int		op_bytes;
- 			unsigned int		op_nents;
- 			unsigned int		op_count;
-@@ -939,6 +947,8 @@ int rds_cmsg_rdma_map(struct rds_sock *rs, struct rds_message *rm,
- 			  struct cmsghdr *cmsg);
- void rds_rdma_free_op(struct rm_rdma_op *ro);
- void rds_atomic_free_op(struct rm_atomic_op *ao);
-+void rds_rdma_op_unpin_pages(struct rm_rdma_op *ro);
-+void rds_atomic_op_unpin_page(struct rm_atomic_op *ao);
- void rds_rdma_send_complete(struct rds_message *rm, int wc_status);
- void rds_atomic_send_complete(struct rds_message *rm, int wc_status);
- int rds_cmsg_atomic(struct rds_sock *rs, struct rds_message *rm,
+-	struct rds_sock		*r_sock; /* back pointer to the socket that owns us */
++	struct rds_sock		*r_sock; /* socket that owns us; counted
++					  * reference, dropped by
++					  * __rds_put_mr_final()
++					  */
+ 	struct rds_transport	*r_trans;
+ 	void			*r_trans_private;
+ };
 -- 
 2.53.0
 
