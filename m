@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036943;
-	b=ZFIGc4qkkqlBeBsa8aYuUJqoevDqmaThBn/ak6B7rBjdlXCLhu02jN3mDT3Lf+2INynf
-	 QNKHCzoQMQGsk9Xe1XkfkK9+PbyggbBHOhqJanCpsKAHztR/kXAN77M0hgaBetSIgYo2v
-	 funpsOQ68Cyprt0Hfa7UVccVawagtkUZUqsAvKJzjiaRKlP8XxXzF2iiiKCg99XD6RwVq
-	 H25dD8O6H9fCdO67R9k3Y7PjFvWFEgA7/d8tXBgjLwn3B9BxR6iS4W8Pw9EMzvctft6eF
-	 vY1ZtMGVtvLZyYJCmzxOhegfV08ztiWxDEIPvQokUGDlMr5tkvcDPF36ZZIwhiO8eyQ==
+	t=1795036946;
+	b=Z4uM5vrCUB8q1OI+OToQ7ehzFIMP6ykJkB9V0IQrSa44GPRvP1wWmpLb/rQUHjVUHIJM
+	 GGQ+tGP5NN/Ay7ZvAs4uQMAsFWwSz8OrhhAnrUDeWvzFahaOzTzVFY6FDlXGVAnZPx6+o
+	 /0VffIzG83uKvDZ034c6nAG7jd6+HgL3PB0odvXSN2QaAWmlMNxEiioitlRGBm4RQVfdS
+	 hSjNvLUeSQK1LQ3S/H5uBEK8kwvBvPU9CAVhiE8Obur5ocShIzpqwzud61MSOmDDP88dm
+	 9iiPxCWHds1vYJOqEwhcfN67QshPyOuu3bc4fMoavVetuMou8dO+x5GWFaUTBTFz5sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036943;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036946;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tz5YU0PB4gB6QJSEgRwN3Ixxn8jnKLFal8dEx9C0bWw=;
-	b=wv3dPwQ36PSDtlX4iVpX/VwkTakffPAqBRtQ0Mq0zITiUmugu6PvK0gTGi3dtOostOU8
-	 chqS7CLbkgF7TV3dpo6Ki0Hdoh61/kzJhCKIXQGWhGQa5a/2PRyepG3J1ZCn8wjOiWjZk
-	 Eos1lET1AQlkqJJIRlWpLFMbuVQ5ibByXKgAUnVHiOuuIz/bGCU6L4GSbhkR7wcS2UjxP
-	 g6PYBkniHnq+eM91Ffys+oCG2Q3buycQvu6jtFSSJh3m8fKXum86FNsx33FY0nBBaqZlf
-	 TB6JAgeeTeUbWHt8JKm/vtT1ltAMr+9yA1/ZGHdDeQx4O5pOrt7keLUCPLf1jmu/h1g==
+	bh=ob5PBVzv1MIuCwSFxV7JmE2mQAZQOhSOmyoit0RIddI=;
+	b=Vuqw1stLCGcwa4HZwzf+r64GwBbydzqfTFtH+yBT8yAcFG2l51VBbFuR/jEjsROif02s
+	 FudcWwM2pkSnboWU4ouqkJUpDBQY4O2qd3uV6cNVUEg5P7JILAWWATDzZPboXnAtHuvFc
+	 THiMeAmWD5tidStguqLhnfbvRvY+2p5DyWTdzvXfMdVDv+umaH6YqRJ4exajUiTsPCrqB
+	 vVC1H9ZhHAi9Gp0z2xQFppdNdtopDQfMeXY+T1m5RoTa7B9JtETpl09i3Onpv5vxA2cxf
+	 KkOV/aa9kw96g70dF7kNsBNdUVWCgtdagdH88PNmV86XiO3hxO11DWESFBrjIrRUdxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0g3qllNt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rHawz9nx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E25606A31C;
-	Wed, 18 Nov 2026 21:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3793F606A31C;
+	Wed, 18 Nov 2026 21:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0g3qllNt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C021F000C4;
-	Wed, 18 Nov 2026 21:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rHawz9nx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872231F000C4;
+	Wed, 18 Nov 2026 21:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036943;
-	bh=tz5YU0PB4gB6QJSEgRwN3Ixxn8jnKLFal8dEx9C0bWw=;
+	s=korg; t=1795036946;
+	bh=ob5PBVzv1MIuCwSFxV7JmE2mQAZQOhSOmyoit0RIddI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0g3qllNtIiGgriXR8/6ysTtKoTrAh0cbqe7IV22zPNC8rnHvDhO1tY35KwwqoncLf
-	 3fqaBxK50BJhMeM57fN2zrl/neyXli0c3R3D/Rkx8IYpW87yjD+G0xFOYtBomWbvme
-	 JUgLp/tW8Ul7sdaWwz4pjn7gsqa4alc7wzvlmVrc=
+	b=rHawz9nxc9HBXBUSs7Dt/+eD9vEthDpnc3V9FwtSdRcnRVn/bh+bgXp7ZUynkg/L2
+	 qMZuNvbFZRpXrNgvQelqPtQEZWKfcncwcxCgEJVL+jSabhsdQjH+5iy4AjbJ6MWxwl
+	 SWq2O+fI0225jpIZrUlnxdFgD6eAksSfIOhITsq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1201/3318] tpm: tpm_nsc: fix NULL pointer dereference on init failure
-Date: Wed, 18 Nov 2026 15:30:23 +0100
-Message-ID: <20261118150356.202288171@linuxfoundation.org>
+Subject: [PATCH 6.6 1237/3318] ceph: Fix mds session leak in __open_export_target_session()
+Date: Wed, 18 Nov 2026 15:30:59 +0100
+Message-ID: <20261118150357.302458403@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,48 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit 1900449684cf71427a51e0bb1d7914c0c8b39152 ]
+[ Upstream commit 6c80207392fdb86107d7acbdbf4c86cac38da1af ]
 
-tpm_nsc_remove() is used as the release callback of the hand-created
-platform device and dereferences the chip drvdata unconditionally.
-If init fails before tpmm_chip_alloc() (e.g. request_region() cannot
-claim the ports), the error path drops the last device reference and
-the release callback runs with chip == NULL, crashing module init.
+__open_export_target_session() holds a reference on the target session,
+either from __ceph_lookup_mds_session() or from register_session(),
+which the caller is expected to drop. When __open_session() fails, the
+helper returns ERR_PTR(ret) without dropping that reference, leaking
+one session reference on every open failure.
 
-Return early when the chip has not been created yet.
+Drop the session reference before returning the error.
 
 Cc: stable@vger.kernel.org
-Fixes: afb5abc262e9 ("tpm: two-phase chip management functions")
-Assisted-by: GLM-5.3
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Link: https://lore.kernel.org/r/d5f0b38d6d6c17c01519c879d26448dbae388b0e.1791015549.git.xiaopei01@kylinos.cn
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: b682c6d41bc2 ("ceph: switch to WARN_ON_ONCE in encode_supported_features()")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_nsc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ceph/mds_client.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm_nsc.c b/drivers/char/tpm/tpm_nsc.c
-index 038701d483513..bec0b1fcad27a 100644
---- a/drivers/char/tpm/tpm_nsc.c
-+++ b/drivers/char/tpm/tpm_nsc.c
-@@ -258,7 +258,12 @@ static struct platform_device *pdev = NULL;
- static void tpm_nsc_remove(struct device *dev)
- {
- 	struct tpm_chip *chip = dev_get_drvdata(dev);
--	struct tpm_nsc_priv *priv = dev_get_drvdata(&chip->dev);
-+	struct tpm_nsc_priv *priv;
-+
-+	if (!chip)
-+		return;
-+
-+	priv = dev_get_drvdata(&chip->dev);
+diff --git a/fs/ceph/mds_client.c b/fs/ceph/mds_client.c
+index 20c3e637ba796..07dd43f4d472c 100644
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -1738,8 +1738,10 @@ __open_export_target_session(struct ceph_mds_client *mdsc, int target)
+ 	if (session->s_state == CEPH_MDS_SESSION_NEW ||
+ 	    session->s_state == CEPH_MDS_SESSION_CLOSING) {
+ 		ret = __open_session(mdsc, session);
+-		if (ret)
++		if (ret) {
++			ceph_put_mds_session(session);
+ 			return ERR_PTR(ret);
++		}
+ 	}
  
- 	tpm_chip_unregister(chip);
- 	release_region(priv->base, 2);
+ 	return session;
 -- 
 2.53.0
 
