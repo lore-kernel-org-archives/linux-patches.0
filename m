@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048978;
-	b=2TQ35YS7VC4JBsmbBz5bPFVhZX1Y7bRHmJzeKZywiSLr/tQNEBKSdkC0eKw9LB/jtO/K
-	 itMQNusC6xOIjaVgGEABSA/KfG+mKrMTlhbPqYtNpHbRqonDYyysWcCEMH+wrCrauCBF/
-	 Rged2FzouIUOFY2lWINJJzXY+xapUa1xpuCg5E+8UQu3pDAG36qjkUcj9tDvTYvdKQkbA
-	 BTlP6gBCPAJkRgsJOx9Ua2rdCSEVnzoGUIv2ODs4lHseDi6bPb21nVO5pDYSaXYTst31R
-	 BA3t+BDwMSuumsju5asVQuBsIeMgmYMYTH7DrQKo/kxprfBryxq3kPTY9uKAhqP6x4g==
+	t=1795048980;
+	b=Xs+xnzSiIt9VJpQ9w2HzBknck9/Oul7/ZRhDcSnEvNLc666OsnkYv2y5LaZdgkOmcgca
+	 gXY/10Onz/brs2R3EKXFd2P2PayKM1VOLasz3VGWj2NjWheYuAVVGphFtnEL+xVLSAyJf
+	 Ta/5Nc8pXSyTl+XV6Xz/1+tadU2AQ6vDgjH16+l3A7hsicRr/UUR1l9SVwdB0Yrn8sL26
+	 XoZmHhU4GjMh2WzWzUtblq1f/PbxoRJDmK39QdN4/kI4dHwplOWi7lpJiy3ry8wjpgfRP
+	 XKw+3P5+j5yiMkQis/Q+9h2T+h9YTn0r0pZQCNyDo3wbEZgqOgg+QVcioxfspQ4jeow==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048978;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048980;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YMewI+JgmbdByqwgP6uJy5EyWF/teTSJDtbhwQwNGlI=;
-	b=hnw429LBVHL3789YHl2yalZNU/Y6Y3wYaPeDxGm5UC5FCE2PvOPwPpc7/dRo2O2xk5v4
-	 X0bCgS7a13LX4vF3jszKkyc811QQuR3NZ9jrhQwJkfeIZEEqO3Eg8VmI1lgn4zCpIiX5q
-	 WkzKZI5kaX6yU4XoD5tUfMb4EQbJnp2K+YtqsBkRR4N7FBSZkNd9UP4ajBe70gWtASPha
-	 3dj1ssn5Rgw/wxF0DV28I7SKaMSvg74O0r/TlgEz21z3k0fXWivShDl9ejgKS23W4qVxz
-	 /lvkuygNhy4fa1w/12mRyJcCzFdumOlhhMv5GbJPvu1jBjUamqu4Pi/8DsfT35g4hzQ==
+	bh=BGiftTLm+G0Y1cmaPeEIDrucw8uE12jpDIXEO8bmo/g=;
+	b=iL2+hPKtK2ujUAmx5MhkPIPZ1Usg2pIuSPlCJIy3KyZJ7Zg3pVcuEUUOcPCCOTVGKNmU
+	 r0j2qj4GYDYB6XEc98Zb6odMbMh1YISZOKJFpF5bcEib5/iFB5NxmfG+sQ4Bcn4KUIpCO
+	 9zelbfXh4ROaFx9sZuiX9ytO5aq8GeKeWSxS1/P19lIZweS13SqANlFEkxjmcY4zGnBgb
+	 7KMyk0Qh06GZeccvnh5M8CC7VA0zSTDydeqiMklWyOfpt1HsM83+Sdpfw9lUFpPlkosPR
+	 3pFJjw+i63JOfLEsSN4SdLN/FyUfVugyFVec2m6YP/pPRwvUkDldXDLspt0Y12TJNlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A297JVrE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I9ux9nzi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C9A606A320;
-	Thu, 19 Nov 2026 00:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57B8606A320;
+	Thu, 19 Nov 2026 00:43:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A297JVrE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565921F000C4;
-	Thu, 19 Nov 2026 00:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I9ux9nzi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1952A1F000C5;
+	Thu, 19 Nov 2026 00:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048977;
-	bh=YMewI+JgmbdByqwgP6uJy5EyWF/teTSJDtbhwQwNGlI=;
+	s=korg; t=1795048980;
+	bh=BGiftTLm+G0Y1cmaPeEIDrucw8uE12jpDIXEO8bmo/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A297JVrE8kL7qiJRGgJof76B5BE0tLfABVsn33J/lMs3srYO+pkHMjuGeQtxooSVN
-	 1xCnC7j/uFYQe7NSSadA9OyeTscdeJkXkr7ELhTWHFBOwUQPLoVHxKkiX8qE0hAwsO
-	 K4QTqlGmMD48yqpl2nQZWHQptxdkb/AJHzsYDaDI=
+	b=I9ux9nziHS+6Q0cHkT3IEUBCQAGugeyjaWLpyKhD10Qq/apS4w5h+u+bEdid45sWg
+	 PChHlUSxJ2heHtnr9wS4MDBv4BDjpjyxCiHypSOGMF3rbU79mqf3WPGWk9CjXo9vuT
+	 Lq0AsjGx+i2qXBAzuuL1lTIK+j66pA/H/AfIGy8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Benson Leung <bleung@chromium.org>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2170/2857] platform/chrome: cros_ec_typec: Stash port driver info
-Date: Wed, 18 Nov 2026 15:53:24 +0100
-Message-ID: <20261118150319.533218136@linuxfoundation.org>
+Subject: [PATCH 6.1 2171/2857] platform/chrome: cros_ec_typec: Move structs to header
+Date: Wed, 18 Nov 2026 15:53:25 +0100
+Message-ID: <20261118150319.571417463@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,55 +71,233 @@ Content-Transfer-Encoding: 8bit
 
 From: Prashant Malani <pmalani@chromium.org>
 
-[ Upstream commit 4dc9355cef4f507f12289c56b7ea5df911758278 ]
+[ Upstream commit 69058096515359fbe15b63ea8b111fe0bb21cecb ]
 
-Stash port number and a pointer to the driver-specific struct in the
-local typec port struct.
+Move ChromeOS Type-C structs into their own header, so they can be
+referenced by other files which can be added to the same module.
 
-These can be useful to the port driver to figure out how to communicate
-with the Chrome EC when an altmode-driver related callback is invoked
-from the Type-C class code.
+No functional changes introduced by this patch.
 
 Signed-off-by: Prashant Malani <pmalani@chromium.org>
 Reviewed-by: Benson Leung <bleung@chromium.org>
 Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221228004648.793339-4-pmalani@chromium.org
+Link: https://lore.kernel.org/r/20221228004648.793339-7-pmalani@chromium.org
 Stable-dep-of: 317e7abcaf60 ("platform/chrome: cros_ec_typec: Validate SVID and mode counts in discovery data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ MAINTAINERS                             |  2 +-
+ drivers/platform/chrome/cros_ec_typec.c | 78 +----------------------
+ drivers/platform/chrome/cros_ec_typec.h | 85 +++++++++++++++++++++++++
+ 3 files changed, 88 insertions(+), 77 deletions(-)
+ create mode 100644 drivers/platform/chrome/cros_ec_typec.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index bf4a79088f500..66aa65cdddffb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4932,7 +4932,7 @@ CHROMEOS EC USB TYPE-C DRIVER
+ M:	Prashant Malani <pmalani@chromium.org>
+ L:	chrome-platform@lists.linux.dev
+ S:	Maintained
+-F:	drivers/platform/chrome/cros_ec_typec.c
++F:	drivers/platform/chrome/cros_ec_typec.*
+ F:	drivers/platform/chrome/cros_typec_switch.c
+ 
+ CHROMEOS EC USB PD NOTIFY DRIVER
 diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index bf204a96b740b..7414d33016922 100644
+index 7414d33016922..2febfef7943f9 100644
 --- a/drivers/platform/chrome/cros_ec_typec.c
 +++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -45,6 +45,7 @@ struct cros_typec_altmode_node {
- /* Per port data. */
- struct cros_typec_port {
- 	struct typec_port *port;
+@@ -7,96 +7,22 @@
+  */
+ 
+ #include <linux/acpi.h>
+-#include <linux/list.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+ #include <linux/platform_data/cros_ec_commands.h>
+-#include <linux/platform_data/cros_ec_proto.h>
+ #include <linux/platform_data/cros_usbpd_notify.h>
+ #include <linux/platform_device.h>
+-#include <linux/usb/pd.h>
+ #include <linux/usb/pd_vdo.h>
+-#include <linux/usb/typec.h>
+-#include <linux/usb/typec_altmode.h>
+ #include <linux/usb/typec_dp.h>
+-#include <linux/usb/typec_mux.h>
+-#include <linux/usb/typec_retimer.h>
+ #include <linux/usb/typec_tbt.h>
+-#include <linux/usb/role.h>
++
++#include "cros_ec_typec.h"
+ 
+ #define DRV_NAME "cros-ec-typec"
+ 
+ #define DP_PORT_VDO	(DP_CONF_SET_PIN_ASSIGN(BIT(DP_PIN_ASSIGN_C) | BIT(DP_PIN_ASSIGN_D)) | \
+ 				DP_CAP_DFP_D | DP_CAP_RECEPTACLE)
+ 
+-/* Supported alt modes. */
+-enum {
+-	CROS_EC_ALTMODE_DP = 0,
+-	CROS_EC_ALTMODE_TBT,
+-	CROS_EC_ALTMODE_MAX,
+-};
+-
+-/* Container for altmode pointer nodes. */
+-struct cros_typec_altmode_node {
+-	struct typec_altmode *amode;
+-	struct list_head list;
+-};
+-
+-/* Per port data. */
+-struct cros_typec_port {
+-	struct typec_port *port;
+-	int port_num;
+-	/* Initial capabilities for the port. */
+-	struct typec_capability caps;
+-	struct typec_partner *partner;
+-	struct typec_cable *cable;
+-	/* SOP' plug. */
+-	struct typec_plug *plug;
+-	/* Port partner PD identity info. */
+-	struct usb_pd_identity p_identity;
+-	/* Port cable PD identity info. */
+-	struct usb_pd_identity c_identity;
+-	struct typec_switch *ori_sw;
+-	struct typec_mux *mux;
+-	struct typec_retimer *retimer;
+-	struct usb_role_switch *role_sw;
+-
+-	/* Variables keeping track of switch state. */
+-	struct typec_mux_state state;
+-	uint8_t mux_flags;
+-	uint8_t role;
+-
+-	struct typec_altmode *port_altmode[CROS_EC_ALTMODE_MAX];
+-
+-	/* Flag indicating that PD partner discovery data parsing is completed. */
+-	bool sop_disc_done;
+-	bool sop_prime_disc_done;
+-	struct ec_response_typec_discovery *disc_data;
+-	struct list_head partner_mode_list;
+-	struct list_head plug_mode_list;
+-
+-	/* PDO-related structs */
+-	struct usb_power_delivery *partner_pd;
+-	struct usb_power_delivery_capabilities *partner_src_caps;
+-	struct usb_power_delivery_capabilities *partner_sink_caps;
+-
+-	struct cros_typec_data *typec_data;
+-};
+-
+-/* Platform-specific data for the Chrome OS EC Type C controller. */
+-struct cros_typec_data {
+-	struct device *dev;
+-	struct cros_ec_device *ec;
+-	int num_ports;
+-	unsigned int pd_ctrl_ver;
+-	/* Array of ports, indexed by port number. */
+-	struct cros_typec_port *ports[EC_USB_PD_MAX_PORTS];
+-	struct notifier_block nb;
+-	struct work_struct port_work;
+-	bool typec_cmd_supported;
+-	bool needs_mux_ack;
+-};
+-
+ static int cros_typec_parse_port_props(struct typec_capability *cap,
+ 				       struct fwnode_handle *fwnode,
+ 				       struct device *dev)
+diff --git a/drivers/platform/chrome/cros_ec_typec.h b/drivers/platform/chrome/cros_ec_typec.h
+new file mode 100644
+index 0000000000000..deda180a646f3
+--- /dev/null
++++ b/drivers/platform/chrome/cros_ec_typec.h
+@@ -0,0 +1,85 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++
++#ifndef __CROS_EC_TYPEC__
++#define __CROS_EC_TYPEC__
++
++#include <linux/list.h>
++#include <linux/notifier.h>
++#include <linux/platform_data/cros_ec_proto.h>
++#include <linux/usb/pd.h>
++#include <linux/usb/role.h>
++#include <linux/usb/typec.h>
++#include <linux/usb/typec_altmode.h>
++#include <linux/usb/typec_mux.h>
++#include <linux/usb/typec_retimer.h>
++#include <linux/workqueue.h>
++
++/* Supported alt modes. */
++enum {
++	CROS_EC_ALTMODE_DP = 0,
++	CROS_EC_ALTMODE_TBT,
++	CROS_EC_ALTMODE_MAX,
++};
++
++/* Container for altmode pointer nodes. */
++struct cros_typec_altmode_node {
++	struct typec_altmode *amode;
++	struct list_head list;
++};
++
++/* Platform-specific data for the Chrome OS EC Type C controller. */
++struct cros_typec_data {
++	struct device *dev;
++	struct cros_ec_device *ec;
++	int num_ports;
++	unsigned int pd_ctrl_ver;
++	/* Array of ports, indexed by port number. */
++	struct cros_typec_port *ports[EC_USB_PD_MAX_PORTS];
++	struct notifier_block nb;
++	struct work_struct port_work;
++	bool typec_cmd_supported;
++	bool needs_mux_ack;
++};
++
++/* Per port data. */
++struct cros_typec_port {
++	struct typec_port *port;
 +	int port_num;
- 	/* Initial capabilities for the port. */
- 	struct typec_capability caps;
- 	struct typec_partner *partner;
-@@ -78,6 +79,8 @@ struct cros_typec_port {
- 	struct usb_power_delivery *partner_pd;
- 	struct usb_power_delivery_capabilities *partner_src_caps;
- 	struct usb_power_delivery_capabilities *partner_sink_caps;
++	/* Initial capabilities for the port. */
++	struct typec_capability caps;
++	struct typec_partner *partner;
++	struct typec_cable *cable;
++	/* SOP' plug. */
++	struct typec_plug *plug;
++	/* Port partner PD identity info. */
++	struct usb_pd_identity p_identity;
++	/* Port cable PD identity info. */
++	struct usb_pd_identity c_identity;
++	struct typec_switch *ori_sw;
++	struct typec_mux *mux;
++	struct typec_retimer *retimer;
++	struct usb_role_switch *role_sw;
++
++	/* Variables keeping track of switch state. */
++	struct typec_mux_state state;
++	uint8_t mux_flags;
++	uint8_t role;
++
++	struct typec_altmode *port_altmode[CROS_EC_ALTMODE_MAX];
++
++	/* Flag indicating that PD partner discovery data parsing is completed. */
++	bool sop_disc_done;
++	bool sop_prime_disc_done;
++	struct ec_response_typec_discovery *disc_data;
++	struct list_head partner_mode_list;
++	struct list_head plug_mode_list;
++
++	/* PDO-related structs */
++	struct usb_power_delivery *partner_pd;
++	struct usb_power_delivery_capabilities *partner_src_caps;
++	struct usb_power_delivery_capabilities *partner_sink_caps;
 +
 +	struct cros_typec_data *typec_data;
- };
- 
- /* Platform-specific data for the Chrome OS EC Type C controller. */
-@@ -408,6 +411,8 @@ static int cros_typec_init_ports(struct cros_typec_data *typec)
- 			goto unregister_ports;
- 		}
- 
-+		cros_port->port_num = port_num;
-+		cros_port->typec_data = typec;
- 		typec->ports[port_num] = cros_port;
- 		cap = &cros_port->caps;
- 
++};
++
++#endif /*  __CROS_EC_TYPEC__ */
 -- 
 2.53.0
 
