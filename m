@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017575;
-	b=e2VHNdUKBAqxFB2lk7RsggjB1kH+OQ+iNBJIx7T5ZTdJMZuXcFbTNR2tnehMZ2oVdFhX
-	 OcAtJhoRWz3/+O1ij6H9rS/5nSokdEKkdL0/rm688h/uF1wQakAfxOdOx7D5hiB32XnGP
-	 EKwcE/kGHJcC92yhtJze/IRxpt+G0QIoNeJoM0bJiIOpmCc0E3JAHx/LdK6XTKQge0/gh
-	 F4XbcFT9SxnExSQyCi3StBdCyY3O3G+7qAZ2XNKgYazCSboHdBoYL7tORaeLIgJ8tUJ45
-	 qEFOqrRwEpcVk4IfKhn8BV5RBWz3WxoFQ8JwSbp3CtlY6Lr1AUtpWHwGt5JbPPggEZQ==
+	t=1795017577;
+	b=yeYRNocSVIodIuZRJI+uzBcrElvRa8DxIzy9ANAy+p5WBDPD7fpU2I85tl9inK0fNKzI
+	 ZA1L7AEwAESZgly5xm4dWJaxzjKENXwg9Z1pbexd6PLi2IXcOpsNsdazhIuWHKQujv8Q8
+	 UHZf0bnE2YOD+OvmLmHVNedbsar0WPvWok93j0AgKoJxEEWhv0LApdGf4hgOeFTdh8T6s
+	 EkKYdHIwDqF5I3kH/d/EOB0289AeiNIx/P9nE8MFGHgpiPL0tkbz9IB8F3ZFBSvIf54Ed
+	 7i+TaZwbPTDyFBBBCgLIaCmBOSBOVgwGAdIlNwd6kyCGDCFlek+GkCGWuyyhBVI1xWg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017575;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017577;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fmdGYTVW9wUMLBgu81HRfIyFJwSm9PYkz0r3PmHj5CU=;
-	b=3EI/7q67tE/+DgOPSixIhWiGGJUpHEvsA/8ZZZJNB0Pk6i0lz0j3OMFGrFgAJJZQO4/L
-	 nz+DOtf2MouO15hCbB6+DqbBZWdZXyHIWaqlXiQ6iCbRoervZTq8x3OK5Ov4uTS2QFJOR
-	 SMDKwcyAAhjVSs0wwS1uc3H/L4jZwcxK4zhafiK4QfecDk8xY35iWbdZBMsKo+K/w0+HS
-	 p53moGchnjgWq4Ga1nuU1ZEAzFTPp0qcwfyU/36IPF0qKbASQvODClphobdDeZdKxgHFk
-	 vNMiZUltN1nx83Dz28OPAYkC0qdodmSh7UV3gCEBJiuYCJN80gW0hz8Yf3NSfbfxeQg==
+	bh=SslzATc85YvyaUUY8ajG11CZWRDY11itiSyr5ZcT1yM=;
+	b=ZE2FCEERe50t0OiA/CNwpSyE9SQoLO/l41fGHMBikg/KGmL/9uUy87bnqtQpBBP6JFhR
+	 U6vWPiu/hhzZnwlTbdCd+QDSra5lfX9bTHclLi8fSL/1t9+FpO4d5XrKTp7TrkeN+ed48
+	 V5JB24v5YpY6b/8YHjIE8cWpOucUZ9drJMdKza98Vz4O5/ZtOFK9tU/TaeC79tZYujRVd
+	 A4Y65pJLGh/+9/XUGXo7PMGlrtrO9DNWSZeoKa5vOI6JGsc3zIzqKWlsXnz5HMsbuQU/j
+	 gKtsATgwF2YE1+p9PlbTpOSZPg2/hdPECd08lFHYJXlVtuTm1vUn4DAhJ7PIXalhW6A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRCOHHT7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IBNT9wGU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F45606A320;
-	Wed, 18 Nov 2026 15:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF30B606A32A;
+	Wed, 18 Nov 2026 15:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iRCOHHT7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC271F000C4;
-	Wed, 18 Nov 2026 15:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IBNT9wGU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D8E1F000C4;
+	Wed, 18 Nov 2026 15:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017574;
-	bh=fmdGYTVW9wUMLBgu81HRfIyFJwSm9PYkz0r3PmHj5CU=;
+	s=korg; t=1795017577;
+	bh=SslzATc85YvyaUUY8ajG11CZWRDY11itiSyr5ZcT1yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iRCOHHT7GbaOstV/RDqpKKkxyrbTtat12PbY9zQlbJETIWJqKnFDBgYA8ORDkm0mZ
-	 1+95yH2Hvrg2GiqGpIS4YFifcIu7OcwQDCNVL4X6vnVHvpT3IQlr8c/BnudL+a25K/
-	 +wUEe1lH67UdAOZOBpmV8Kmpj2xDJz/wavoErXHE=
+	b=IBNT9wGUAgH9kyEEUjHdS55u/8xZsLUeIks6C+7a3kYaJUUYzTvVlfHHHV6Eu1xVW
+	 ddkYoBjaLVxcuH6tduDKXBTPlOmL0M7ORWfdmEpXzSbeE/VIPBVEsXu/ye7+Eut+to
+	 LxU0gLhPG/axrl3/+ZFqeDlm2qODR3+VrXj0v5hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger Li <ginger.jzllee@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Serhat Kumral <serhatkumral1@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0933/2651] wifi: mac80211: Fix a race when expiring a mesh path
-Date: Wed, 18 Nov 2026 15:36:13 +0100
-Message-ID: <20261118150321.470341031@linuxfoundation.org>
+Subject: [PATCH 7.3 0934/2651] RDMA/irdma: Free IRQ when CEQ vector mapping fails
+Date: Wed, 18 Nov 2026 15:36:14 +0100
+Message-ID: <20261118150321.509182466@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,76 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ginger Li <ginger.jzllee@gmail.com>
+From: Serhat Kumral <serhatkumral1@gmail.com>
 
-[ Upstream commit 6571b6a24cc37c650a1815b1c320e30db5de466f ]
+[ Upstream commit 952f18e04fa9790e347e09263c25318afe723d86 ]
 
-My static analyzer identified a potential issue in 'net/mac80211/mesh_pathtbl.c':
-mpath_expired() reads mpath->flags and mpath->exp_time without holding
-mpath->state_lock, while mesh_path_fix_nexthop() and the other writers update
-both fields under that lock.  In mpath_lookup() and
-__mesh_path_lookup_by_idx() the unlocked check is followed by taking the lock
-and clearing MESH_PATH_ACTIVE, so the check and the update are not atomic:
+irdma_cfg_ceq_vector() registers an IRQ handler before requesting the
+CEQ-to-vector mapping through the virtual channel. If the mapping
+fails, the function returns without releasing the IRQ resources.
+The caller destroys the CEQ, leaving the IRQ handler registered
+and potentially referencing freed memory.
 
-CPU0 (mpath_lookup)                    CPU1 (mesh_path_fix_nexthop)
-  mpath_expired() reads the stale
-  flags/exp_time and returns true
-                                        spin_lock_bh(&mpath->state_lock)
-                                        mpath->exp_time = 0;
-                                        mpath->flags = FIXED|SN_VALID;
-                                        mesh_path_activate(mpath);
-                                        spin_unlock_bh(&mpath->state_lock)
-  spin_lock_bh(&mpath->state_lock)
-  mpath->flags &= ~MESH_PATH_ACTIVE;
-  spin_unlock_bh(&mpath->state_lock)
+Call irdma_destroy_irq() on mapping failure to release
+the IRQ resources and drain the associated tasklet
+before the caller destroys the CEQ. Use the same dev_id
+passed to request_irq(), accounting for CEQ0 sharing
+its interrupt vector with the AEQ.
 
-A path which mesh_path_fix_nexthop() has just set up as MESH_PATH_FIXED and
-MESH_PATH_ACTIVE then has MESH_PATH_ACTIVE cleared again, and forwarding to
-that destination silently stops.
-
-Take mpath->state_lock before evaluating mpath_expired() so that the check and
-the clearing of MESH_PATH_ACTIVE are atomic with respect to the writers.
-
-Fixes: 60854fd94573 ("mac80211: mesh: convert path table to rhashtable")
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
-Link: https://patch.msgid.link/20260922054253.11976-1-ginger.jzllee@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: b800e82feba7 ("RDMA/irdma: Add GEN3 support for AEQ and CEQ")
+Assisted-by: Claude:claude-opus-5
+Signed-off-by: Serhat Kumral <serhatkumral1@gmail.com>
+Link: https://patch.msgid.link/20260918110428.36586-1-serhatkumral1@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/irdma/hw.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index 5a6ed1b6db97e..7b2f71186dfbd 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -247,9 +247,10 @@ static struct mesh_path *mpath_lookup(struct mesh_table *tbl, const u8 *dst,
- 
- 	mpath = rhashtable_lookup(&tbl->rhead, dst, mesh_rht_params);
- 
--	if (mpath && mpath_expired(mpath)) {
-+	if (mpath) {
- 		spin_lock_bh(&mpath->state_lock);
--		mpath->flags &= ~MESH_PATH_ACTIVE;
-+		if (mpath_expired(mpath))
-+			mpath->flags &= ~MESH_PATH_ACTIVE;
- 		spin_unlock_bh(&mpath->state_lock);
+diff --git a/drivers/infiniband/hw/irdma/hw.c b/drivers/infiniband/hw/irdma/hw.c
+index c345cc6542566..b060ddc8b67bc 100644
+--- a/drivers/infiniband/hw/irdma/hw.c
++++ b/drivers/infiniband/hw/irdma/hw.c
+@@ -1252,12 +1252,21 @@ static int irdma_cfg_ceq_vector(struct irdma_pci_f *rf, struct irdma_ceq *iwceq,
  	}
- 	return mpath;
-@@ -290,11 +291,11 @@ __mesh_path_lookup_by_idx(struct mesh_table *tbl, int idx)
- 	if (!mpath)
- 		return NULL;
  
--	if (mpath_expired(mpath)) {
--		spin_lock_bh(&mpath->state_lock);
-+	spin_lock_bh(&mpath->state_lock);
-+	if (mpath_expired(mpath))
- 		mpath->flags &= ~MESH_PATH_ACTIVE;
--		spin_unlock_bh(&mpath->state_lock);
--	}
-+	spin_unlock_bh(&mpath->state_lock);
+ 	msix_vec->ceq_id = ceq_id;
+-	if (rf->sc_dev.privileged)
++	if (rf->sc_dev.privileged) {
+ 		rf->sc_dev.irq_ops->irdma_cfg_ceq(&rf->sc_dev, ceq_id,
+ 						  msix_vec->idx, true);
+-	else
++	} else {
+ 		status = irdma_vchnl_req_ceq_vec_map(&rf->sc_dev, ceq_id,
+ 						     msix_vec->idx);
++		if (!status)
++			return 0;
 +
- 	return mpath;
++		if (rf->msix_shared && !ceq_id)
++			irdma_destroy_irq(rf, msix_vec, rf);
++		else
++			irdma_destroy_irq(rf, msix_vec, iwceq);
++	}
++
+ 	return status;
  }
  
 -- 
