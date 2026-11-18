@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023603;
-	b=G2wQBuBELLGSZuo6EbC22K6t4p8hYbyT6FlaXSnn84hSQ0l1jNZqPcXp6LuqcF3vlxnE
-	 jIpvDxb6zg93dNPn0E5UFI8/sXmzr9F30xHr7F2KCn4AyW/0LZzaEVLWB3MQMJ/v6FCeT
-	 AIp6cDTSxx/8oW6vQ8eHFWK3TeqBqIz3gekr8KsgRGkD2DGnN+ou0w6aRBN+fb9GlQnI4
-	 ExLCW5YWuWb4VQ/IZAakiUVFxHHAdYAFiTGyOeqWLhzDWzZsksz7OvuFKRklXEBk9b5HI
-	 vKGPqjhI3EpnuDcwr7Uzwu+5Wvt50C22R3j3luhxEp2KgFv1Jd6+EDZw3JRLou2FRBQ==
+	t=1795023606;
+	b=anYPqsmmFhFqey+0KcOS/9f5+YENqG1mmm5ut7wRY+f39m/hJriPl+cAv/mfDRXcIXuM
+	 iPlvzXk7G9MEd3ikyalaOpoQcjark/73m+4L9ElTvX/WxOw1Eo0Ixgn8wjfUNWIfRYQA0
+	 akzMWpPOcQoWlBmCcL5dtR7j0vAAIvtPUpeH+QDGoBcnYSMDaxY/q+6YOMqqWer22UaHg
+	 C3Jn1Mj1S4/+ShP68MtV3pW2wQhM6A/zTfDRI5JumTKXCiBz2wyqETzijqacKbsu7Dss9
+	 622BRz14NpywL0xYu+Jv1/gK4PycIfJ7aiXGug1vl6tGO9CrChgDrheDGB8kPC7HTFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023603;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023606;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Vr1SyBp79DVThLPX3QVrKuqOKR7N0BcrsanHARbp+DA=;
-	b=bN5azT22rOcdkU+BsyJhYgDoowPu/03TWLl+/znsoCm6/Gq5gc9UEtx3dYDg9D3dA1x+
-	 XqtkMdrFRZoGWbjhLqz8wwpCiF088phcX+Mrfd3Ll9+Jr+NTun9edl7fxNCPVgxS6KJTR
-	 foCMGtyCRYu7z0nueSD8SU4J0E/+HkpiCn5DN09tl8R39C34Fw1yr7vbpMhvsq4UW1267
-	 q8FlMAGKS/vZXFyTtPLR6ppuoc6Z9XPf00Pby9+qEHNvqIYtlezI/KHFIqzD5JMmN+2LP
-	 /SL6P00CPri7kdpYjfwmOBWxyBE/oh+UYCw4URfDKUpqws+3MEVI5ayFELg9T5s+/gw==
+	bh=/J7vbX+m1aC9wONWeqsOhA4ACqGayDATsRUB0nHafbQ=;
+	b=biF1gF2Jh2AwhW79FiENpCRuxrUkT6+/EJXrzz1E4iDpPlQtdi3kX6uS70u6YhZ34US+
+	 2FbuLZFRDV/I48tENyg0i+hCkIvw1xV4JSey1daE2D4pE4e+qaKfNYW3OPJN4xXpGIJ9R
+	 hb8zk8FC59C68Ct2gjq+A5/AmjwyGjwyNKCGVhWx+TkFFvPHlytYMKMfAcXI1JaApHLF4
+	 qVog/Uy8s5zMjwy7C6jSoDZSz54IpZGGbQzTHALlxe9EH5VghVNVXem9+iIGxcd7j+V9C
+	 8mZuVcjLOzEPdRz8j45/k+e5bTAevbjzy+mnJXMcVRHObbB4kYi0XsvAhZdGKdofLpQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIpXAe0v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoeW3Sgk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9186D606A31C;
-	Wed, 18 Nov 2026 17:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D39606A337;
+	Wed, 18 Nov 2026 17:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qIpXAe0v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E131F000C4;
-	Wed, 18 Nov 2026 17:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GoeW3Sgk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61C11F000CC;
+	Wed, 18 Nov 2026 17:40:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023603;
-	bh=Vr1SyBp79DVThLPX3QVrKuqOKR7N0BcrsanHARbp+DA=;
+	s=korg; t=1795023606;
+	bh=/J7vbX+m1aC9wONWeqsOhA4ACqGayDATsRUB0nHafbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qIpXAe0vHCru04a419rOp+6vAF0xrrIYSnbA5Rx6A7ViHKSrSmA0FFJ1hUxoVSIaQ
-	 02aJ4OBBj5xElrzcTRqQjt88IFsPaS6ZjHnt962RIZPsLOHygvzcc3lO3v2O1ihFWu
-	 s9Sqpqgyq5NNEvRbVPR9hKGr7uJICACacunUiDGA=
+	b=GoeW3SgkJC91iDhh96fbcUWZi7S6QYku6qOUIq/GYKxr0gP4+ky4VW6tOYJc7Mo/3
+	 rU1kmpzFXup1LDcRls0YzI/FZ3E7x0kYopnrz4p3QvxSM1T6OaRPkY1hyEu4mPoc7o
+	 irG6VvjbsJyq2vvDWBKhRB19wY1sosQD2nR+chpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jiawen Liu <1298662399@qq.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0387/2151] crypto: lskcipher - preserve state across unaligned chunks
-Date: Wed, 18 Nov 2026 15:35:22 +0100
-Message-ID: <20261118150136.169731325@linuxfoundation.org>
+Subject: [PATCH 6.18 0388/2151] memory: exynos5422-dmc: handle clock enable failures
+Date: Wed, 18 Nov 2026 15:35:23 +0100
+Message-ID: <20261118150136.204975426@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,67 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit ba871255f796d1f599ba710f03e1803d1b374a75 ]
+[ Upstream commit cce46902ea9fcd585cd200fffa3166f63bc571f1 ]
 
-crypto_lskcipher_crypt_unaligned() splits a request into page-sized
-chunks but never sets CRYPTO_LSKCIPHER_FLAG_CONT, so a stateful algorithm
-restarts from its keyed state at every page boundary. It also marks every
-chunk CRYPTO_LSKCIPHER_FLAG_FINAL, which is wrong but harmless: chunks are
-trimmed to a multiple of the chunk size, so the trailing partial block that
-FINAL guards against is caught after the loop instead.
+Check the return values of clk_prepare_enable() for fout_bpll and
+mout_bpll.
 
-ARC4 is the only lskcipher with internal state, and cbc, the other
-in-tree user of the direct API, never passes more than one block, so
-this went unnoticed. bpf_crypto_crypt() however hands
-__bpf_dynptr_data() to crypto_lskcipher_encrypt() unchecked, leaving
-both alignment and length to the BPF program. An 8192-byte ARC4 request
-offset by one byte comes back with its second page identical to its
-first: the keystream is reused.
+If enabling fout_bpll fails, propagate the error. If enabling mout_bpll
+fails, disable fout_bpll before returning. This keeps the clock enable
+count balanced on probe error paths.
 
-Set FINAL only on the last chunk and CONT after the first, mirroring the
-progression used by crypto_lskcipher_crypt_sg().
-
-Fixes: 0ae4dcc1ebf6 ("crypto: skcipher - Add internal state support")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 6e7674c3c6df ("memory: Add DMC driver for Exynos5422")
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://patch.msgid.link/tencent_B0189529F550458590E3BA614EAB800FBF08@qq.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/lskcipher.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/memory/samsung/exynos5422-dmc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/lskcipher.c b/crypto/lskcipher.c
-index 091761d6ca0bf..b78522212ad53 100644
---- a/crypto/lskcipher.c
-+++ b/crypto/lskcipher.c
-@@ -75,6 +75,7 @@ static int crypto_lskcipher_crypt_unaligned(
- 	unsigned ivsize = crypto_lskcipher_ivsize(tfm);
- 	unsigned bs = crypto_lskcipher_blocksize(tfm);
- 	unsigned cs = crypto_lskcipher_chunksize(tfm);
-+	u32 flags = 0;
- 	int err;
- 	u8 *tiv;
- 	u8 *p;
-@@ -98,13 +99,16 @@ static int crypto_lskcipher_crypt_unaligned(
+diff --git a/drivers/memory/samsung/exynos5422-dmc.c b/drivers/memory/samsung/exynos5422-dmc.c
+index 788d49c688b1d..98c3195525831 100644
+--- a/drivers/memory/samsung/exynos5422-dmc.c
++++ b/drivers/memory/samsung/exynos5422-dmc.c
+@@ -1297,8 +1297,15 @@ static int exynos5_dmc_init_clks(struct exynos5_dmc *dmc)
+ 	if (ret)
+ 		return ret;
  
- 		if (chunk > cs)
- 			chunk &= ~(cs - 1);
-+		if (chunk == len)
-+			flags |= CRYPTO_LSKCIPHER_FLAG_FINAL;
+-	clk_prepare_enable(dmc->fout_bpll);
+-	clk_prepare_enable(dmc->mout_bpll);
++	ret = clk_prepare_enable(dmc->fout_bpll);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(dmc->mout_bpll);
++	if (ret) {
++		clk_disable_unprepare(dmc->fout_bpll);
++		return ret;
++	}
  
- 		memcpy(p, src, chunk);
--		err = crypt(tfm, p, p, chunk, tiv, CRYPTO_LSKCIPHER_FLAG_FINAL);
-+		err = crypt(tfm, p, p, chunk, tiv, flags);
- 		if (err)
- 			goto out;
- 
- 		memcpy(dst, p, chunk);
-+		flags |= CRYPTO_LSKCIPHER_FLAG_CONT;
- 		src += chunk;
- 		dst += chunk;
- 		len -= chunk;
+ 	/*
+ 	 * Some bootloaders do not set clock routes correctly.
 -- 
 2.53.0
 
