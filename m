@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058739;
-	b=1VhHkmSL0OZGHYLAtjcfDpTMsWph0+D4Yuu43OF7m+qRfMaR5lGfTj65J0tV45J0YY7X
-	 S5gV+NDkud/wcwt51cjGOaJfdOCS3yXXNrWQqekOfN0pKGzABgLOUYHNoblIUvZXuUNy6
-	 gSIVX7PBU6No98l/yoIEynx1ZoItDrfUvRfA3CGHYxCcnIG6hdQhD9v81DdRGHl2p0XSF
-	 NGBlC+CfMcZV+CIRwCRlQ6eciTW0UbgPUDCmd9V/48eDQEvZmOIZ6Q+mYexYsklAHCLP1
-	 DWrgZ67A8IYL6UxV4zV7NDzzKMyeC9QMhEvqGpET5aoOm825xWbZ7EPUoJyGt29u6jA==
+	t=1795058742;
+	b=YTsVulbN5lAwb9ORvaRC4dayXNonWiltPFW+x2dz2jjJt0f6b2CzqY1gBs5p/hTd913U
+	 lBc+Yh5s3X6oJXJj0b8lZFD2KY+17xHSzPPRtTViK5sCpcwUgeJbmMWkqmDCIk0Ebl/yl
+	 rzxGn+EuAdkUSK/rm73a0a/qV7dJlnX3TIAUse3MTdqzdjaNsH2bw4MWiwdd+8sTJ6Y06
+	 seQsZAbS0cp37Tn9gyesHvVM8gt8NcO3Rnd2xoIvq82Z7xGN6PVVGQCJfaywA0vrBLBzJ
+	 QedSVT6ThPW/a5PTncs+cbYWbEXqlt3pzX6FgGIZGw9dUDD5vS+a00LO4Hg4jYWt3mg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058739;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GAiz2Scew+l/KbyB030KT/81KLJYR3174vPkoH752og=;
-	b=NC2DHtupKrRRMIiQdDiP4tzi/V8lv88U3WEAY2ZvElkli2G81yJ7ununqp/WLuEGd8YD
-	 kvFsdBGFNzDwJwc9Rsf/JWojMF38eR98ajWfhokKYMaA7A+R8Re2sleKPovoAijBUndiA
-	 CjOvtaP2cIjLTDvC4aeSMr5Yx4f8CDb/P4780bEu0Q1dpEVLA/UG8UeqGUwdCH1rHrmQL
-	 J/Fb8NYJBLOQqIZKP0nfVJBg0XX+5P2SmcFxDTsvNTzJdeqkmONtci7LuNVQFX0Mruxfz
-	 aflfFViVO2C0TRr0DSVbcawnq6dUyIGCbdWAKZUAEcFX1YVdsgHXi8X5UmcJjJk/2Ew==
+	bh=BA5g831+4+4TVIT66zOk3xUj9LZwFYbWBbogHCcWVLw=;
+	b=AdWk3kmCMZLUpPhOEn4vP9Yesh2fKPwyjZ3fll0sCmuZWjXdTbE3a7yx7OC2Ayc9R20k
+	 4r/34lPdt4pGaFYf0QfGBWCRhNx1v4udXR/x2RATNHOcUw6gE/yi+gOHKWgVkJbJN7PVS
+	 RlBtIMvE2xn2tiYRxaHU8UTwANeZ0l/cD/49lFBkOzZhWCVGjjrgdJIc5SVIQh2HAHYst
+	 j9w4lf6Ev3hcj0SB1jWEnxTlwH8L3xEZQXZolvqh2WdfbBw7MXWsc2FUwJWBPg3a0aHNm
+	 ZH5PGh6eXRzA7x2Qjg66covBlex2hMFFXTYlvFjETR8+mN3eIlksMqiiSxPhBOV9K4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xo6gw4Wj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VOZviFUf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB70606A31C;
-	Thu, 19 Nov 2026 03:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4723B606A31C;
+	Thu, 19 Nov 2026 03:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xo6gw4Wj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69261F000C4;
-	Thu, 19 Nov 2026 03:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VOZviFUf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B311F000C4;
+	Thu, 19 Nov 2026 03:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058739;
-	bh=GAiz2Scew+l/KbyB030KT/81KLJYR3174vPkoH752og=;
+	s=korg; t=1795058742;
+	bh=BA5g831+4+4TVIT66zOk3xUj9LZwFYbWBbogHCcWVLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Xo6gw4Wj9Lh5lAFBzNf7NCyUn1wTfL8Bj8N7or9gL3U+80Qws0P1NA1D2bIrhAETS
-	 p+UuJdsui+Sdu55uIuxONIM8J7fQs5E1f/RhtvX8jbM0wuQ63X7YzusiNXJ9bAU1Dw
-	 REnCJBgWmzWw1Lk0hjzyXDqcZFzT8Geff+yeDFbw=
+	b=VOZviFUfjGcCiqcnh9DlGzwGWW5DLOyRuVmk/h8xF8YFxj9MkdeGx40ZHec/uDj3X
+	 Ay5AQzFs06QH/bZZk6E6dUmvqN1DLQAfCiMmZhWIKGLpujDr9AA0L9KUjP1ic3iBWq
+	 9RNsLq8XmsAsPSWOTfpsSpELzVK1unjwqcmtrl3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Xia Yan <yanxia@cmss.chinamobile.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0593/1848] cpufreq: stats: Fix potential out-of-bounds access in deferred reset
-Date: Wed, 18 Nov 2026 15:43:51 +0100
-Message-ID: <20261118145940.225018201@linuxfoundation.org>
+Subject: [PATCH 5.10 0594/1848] macvlan: fix passthru promiscuity accounting while down
+Date: Wed, 18 Nov 2026 15:43:52 +0100
+Message-ID: <20261118145940.258741023@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,53 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+From: Xia Yan <yanxia@cmss.chinamobile.com>
 
-[ Upstream commit 8a702989677216489e471a6f27599da53f753567 ]
+[ Upstream commit b6743653d134c9ef8436e2db1be1ad4c1e0d0091 ]
 
-cpufreq_stats_create_table() sets stats->last_index to -1 if policy->cur
-is not in the frequency table. It then stays at -1, because
-cpufreq_stats_record_transition() returns early on old_index == -1 before
-it gets to update last_index.
+macvlan_changelink() adjusts the lower device's promiscuity count when
+NOPROMISC changes, even if the passthru macvlan is down. The reference
+is acquired in macvlan_open() and released in macvlan_stop(), so a down
+interface has no reference to change.
 
-Commit 46a310b80bc2 ("[CPUFREQ] Don't set stat->last_index to -1 if
-the pol->cur has incorrect value.") added that check. However, since
-commit 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to
-cpufreq_stats_record_transition()"), the stats reset is deferred to the
-beginning of cpufreq_stats_record_transition(), before that check, and
-cpufreq_stats_reset_table() ends with an unconditional
-cpufreq_stats_update(). So if the "reset" attribute is written while
-last_index is -1, the next frequency transition accesses
-time_in_state[-1].
+Clearing NOPROMISC while down leaves an extra reference after the next
+open/stop cycle. Setting it while down can remove a reference held by
+another user of the lower device.
 
-Fix it by also returning early on last_index == -1 in
-cpufreq_stats_reset_table().
+Guard the count adjustment with netif_running(dev). Keep storing the
+requested flags while down so the next open uses the new setting.
 
-Fixes: 40c3bd4cfa6f ("cpufreq: stats: Defer stats update to cpufreq_stats_record_transition()")
-Cc: 5.10+ <stable@vger.kernel.org> # 5.10+
-Signed-off-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
-Link: https://patch.msgid.link/20261027133332.377546-1-zhongqiu.han@oss.qualcomm.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Comparing changelink with open/stop exposed the unmatched count changes;
+the same issue was also described in earlier macvlan reviews. A netlink
+test on UML reproduced both DOWN cases before the fix and verified the
+expected counts afterwards. Repeated flag updates, two open/stop cycles,
+deletion and bidirectional small-frame delivery were also checked.
+
+Full x86_64 builds completed with WERROR disabled for allmodconfig, and
+WERROR and KASAN disabled for allyesconfig, including the resulting
+dependency changes. Neither comparison showed new diagnostics.
+
+Fixes: df8ef8f3aaa6 ("macvlan: add FDB bridge ops and macvlan flags")
+Link: https://lore.kernel.org/netdev/179170088566.434549.4699134797461783473@kernel.org/
+Link: https://lore.kernel.org/netdev/20261016003009.2692872-1-kuba@kernel.org/
+Cc: stable@vger.kernel.org
+Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261022090809.12019-1-yanxia@cmss.chinamobile.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq_stats.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/macvlan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/cpufreq_stats.c b/drivers/cpufreq/cpufreq_stats.c
-index ab856dd2d5fc0..fdf9fd938e4b7 100644
---- a/drivers/cpufreq/cpufreq_stats.c
-+++ b/drivers/cpufreq/cpufreq_stats.c
-@@ -52,6 +52,10 @@ static void cpufreq_stats_reset_table(struct cpufreq_stats *stats)
- 	 * reset_pending accesses in cpufreq_stats_record_transition().
- 	 */
- 	smp_rmb();
-+
-+	if (stats->last_index == -1)
-+		return;
-+
- 	cpufreq_stats_update(stats, READ_ONCE(stats->reset_time));
- }
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index f6ad599252d32..a92e6c0acf749 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1580,7 +1580,8 @@ static int macvlan_changelink(struct net_device *dev,
+ 	if (data && data[IFLA_MACVLAN_FLAGS]) {
+ 		__u16 flags = nla_get_u16(data[IFLA_MACVLAN_FLAGS]);
+ 		bool promisc = (flags ^ vlan->flags) & MACVLAN_FLAG_NOPROMISC;
+-		if (macvlan_passthru(vlan->port) && promisc) {
++		if (macvlan_passthru(vlan->port) && promisc &&
++		    netif_running(dev)) {
+ 			int err;
  
+ 			if (flags & MACVLAN_FLAG_NOPROMISC)
 -- 
 2.53.0
 
