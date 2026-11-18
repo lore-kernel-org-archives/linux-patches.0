@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028347;
-	b=GesmQKUK2nCjeicycxswhVxge4hZlDzXh+Tp7qtutxmYb+2lcFyQM9LgwYEugUnBToVg
-	 H2+d7BkO7F4A2NPU1nNk3ccCYBHCBOTgp17MnOLbrOME5GGZc4IynV0lGx9yzZgOCV8JL
-	 FbgHtXkW/BIQPNG+w5el+aTXEUYTz7GSDhVYUGinOmqpeZPLAzkwYtcVNh9pa3CGn5aYz
-	 CXjsIQH6LC9lYeBAKFxvdVgZejDFSHo+Lupu4jWUkT0aPVj5hcgLWSdebcx2U3andTN/l
-	 G7aQKMBO/iggNvPOL6GXpiQpU1aANQyB8hUhM89QFJ4ZNaddh8YH4yaabSvf9ySlfQQ==
+	t=1795028350;
+	b=jtk0x4H5pPOAop/6NnTDiiOo01qygGcdlqJTc1a+xCvHvMpQykpHxOB2VLTOB394qRLi
+	 NwPgNRx01xXcFySgxthRvFBQwLGiPF9ZQ9Ct1BT7WG9DG1DOt/mzaYNDFDpQDUDIiIbbT
+	 I9re70RpbOXmxQZ8hqEgZp2OKI7cb2Ovw6eVhydai68ruEu8BQVxPCRlYJ4cZ4OzJdM7d
+	 te28PhKR3OmumAVdYXMYnhQOQEagXBgBLPP2chcrzciSQ1F6bWVPQy4q4hPmHXoBKaFHG
+	 EtJxtpvXxmXS7FKJIXRSuM+NEB+pVdChyuiyG4rML23/1jQdm43hNuZvhy+u0zi8k9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028347;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028350;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=IHMbCpdCVQ4/8PTNhHecD9GF/mSj7V9hKUUQZDVpclc=;
-	b=Cn2lIRLhcEhpfUFA6gwBKctCW4iV3hcIVqfAfW8AFrb8R3D2mO6kh8HCVWHcfOyOvH/+
-	 fWp+PWUQjYcaUxg3atrbDeB3da0muOlOncDzpn1Whg6iev5LiwPIucjlLSxZSTkmgMwOK
-	 WSX/xfl26SRpLM7giBt4iKcy+zZtHgXeA+91C2KpJKXF7cS306J965QQTHSeXXnZc579e
-	 NlCOEADvLKBnm2o6D0XnZXXhq9RxU/diDXRudcn7grfdR4IWEItyPIHuVaPlT7uk9Mrtx
-	 iGOFmTYSTy4amGYRKLQ4SOBUDuMTbR/BiJOWgcEnADDh3XwK5PhHGOFVFfosz2lewxg==
+	bh=oqWFpxv+A9jYhJCPKMcWYO+a+cMXITjbj7x1Y5NuaT4=;
+	b=tEaYjyeCXCCj85Pfhwhfe1gP+MTwmeC/LfoeqsPuXL76YlJq86vbu9nxNWYxN3BAZwRO
+	 J9sj8wlhkGquFRErcyrMfZeHMo+c4EIddVJwpXtzu13DSqTdObfTqifNTnX41HUpf+zqi
+	 DUnGfNDECWs0BxxpjG60awzcS9gKeNc8T8Q6ydsbt92D82gPuC1BaQ6bQouJG+NdIS+ih
+	 upqdqIXnqbCruL7R45nywkaHXpHAOOhKd5ECObpuKcteclAqH6mfai5AqK9DHvXQZWLPL
+	 mGqiToESSaSKJjMNh+FowLcwrph2BP+SevmWVi2iV5EAKWL0kNKeewJglCuzfg03lgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7OIGGzU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jo6UzCdF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B4960A2608;
-	Wed, 18 Nov 2026 18:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C44B606A320;
+	Wed, 18 Nov 2026 18:59:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=d7OIGGzU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 216B01F000CD;
-	Wed, 18 Nov 2026 18:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jo6UzCdF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0FF1F000CB;
+	Wed, 18 Nov 2026 18:59:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028347;
-	bh=IHMbCpdCVQ4/8PTNhHecD9GF/mSj7V9hKUUQZDVpclc=;
+	s=korg; t=1795028350;
+	bh=oqWFpxv+A9jYhJCPKMcWYO+a+cMXITjbj7x1Y5NuaT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=d7OIGGzUuIQizJnqQti0X613lCO98OOG6Mkgt6phvoW9UB2hYuLSMIe2rw5dIP0U1
-	 Ala0l8icLhuBo+ITlOjjOp+5Sv6DTv1UTumWnJ6Fhj98/rl4NwO4/bkB4G9MG3Xzc5
-	 lG1OcDCwGEQt1LD9RMFWFtmX7w2xzzMfv2YpfgZ8=
+	b=jo6UzCdFBuf4xsc8IFjPNjDCHdWqT2q4nKmyu+NBG8ZWr93QUf+zutUdkVXKaupSp
+	 eSPwy7s2lBiWPk4fRfOHmO5uXmKdmS02lpDINVD7uODznaVQUYXl8yDsL7/kSSJ1ms
+	 7Rmz42h/iPvg466/nFZZ8CTjx2KjJqetjgTWT1Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2113/2151] loopback: use eth_type_trans_careful()
-Date: Wed, 18 Nov 2026 16:04:08 +0100
-Message-ID: <20261118150238.667020597@linuxfoundation.org>
+Subject: [PATCH 6.18 2114/2151] selftests/bpf: cover short IPv4/IPv6 inputs with adjust_room
+Date: Wed, 18 Nov 2026 16:04:09 +0100
+Message-ID: <20261118150238.702402998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,71 +68,144 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-[ Upstream commit 093a28998374f4007ffe67cc661f8192c1b062a9 ]
+[ Upstream commit f1cc94665df907a85589ddb5fe74d7768ff61533 ]
 
-tc egress actions can leave an skb with fewer than ETH_HLEN bytes in
-its linear part. loopback_xmit() then crashes in eth_type_trans():
+Add a selftest covering ETH_HLEN-sized IPv4/IPv6 EtherType inputs for
+bpf_prog_test_run_skb().
 
-  tc qdisc add dev lo clsact
-  tc filter add dev lo egress matchall action vlan pop_eth
-  # AF_PACKET SOCK_RAW: eth / eth / 8192 bytes of payload
+Reuse a single zero-initialized struct ethhdr eth_hlen and set
+eth_hlen.h_proto from the per-test h_proto field.
 
-  kernel BUG at include/linux/skbuff.h:2839!
-  RIP: 0010:eth_type_trans (include/linux/etherdevice.h:635 net/ethernet/eth.c:163)
-  Call Trace:
-   loopback_xmit (drivers/net/loopback.c:87)
-   dev_hard_start_xmit (include/linux/netdevice.h:5455 include/linux/netdevice.h:5464 net/core/dev.c:4057 net/core/dev.c:4073)
-   __dev_queue_xmit (net/core/dev.c:5066)
-   packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
+Also add a dedicated tc_adjust_room program and route the short
+IPv4/IPv6 cases to it, so the selftest actually exercises the
+bpf_skb_adjust_room() path from the report.
 
-The same happens with "action ife decode" on lo egress.
-
-Use eth_type_trans_careful(), and drop the packet if the Ethernet
-header can not be pulled.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Vega <vega@nebusec.ai>
-Link: https://lore.kernel.org/netdev/20261005052249.1914367-2-weir@nebusec.ai/
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028122703.2093730-3-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://lore.kernel.org/r/20260408034623.180320-3-sun.jian.kdev@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: 695e1408eb90 ("net: use eth_type_trans_careful() in __dev_forward_skb2()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/loopback.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ .../selftests/bpf/prog_tests/empty_skb.c      | 40 +++++++++++++++++--
+ tools/testing/selftests/bpf/progs/empty_skb.c |  7 ++++
+ 2 files changed, 44 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
-index 1fb6ce6843ade..6d16d6040401d 100644
---- a/drivers/net/loopback.c
-+++ b/drivers/net/loopback.c
-@@ -70,6 +70,7 @@ EXPORT_SYMBOL(blackhole_netdev);
- static netdev_tx_t loopback_xmit(struct sk_buff *skb,
- 				 struct net_device *dev)
- {
-+	enum skb_drop_reason reason;
- 	int len;
+diff --git a/tools/testing/selftests/bpf/prog_tests/empty_skb.c b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
+index 438583e1f2d12..c9fcb70cbafbc 100644
+--- a/tools/testing/selftests/bpf/prog_tests/empty_skb.c
++++ b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
+@@ -10,8 +10,8 @@ void test_empty_skb(void)
+ 	struct empty_skb *bpf_obj = NULL;
+ 	struct nstoken *tok = NULL;
+ 	struct bpf_program *prog;
++	struct ethhdr eth_hlen;
+ 	char eth_hlen_pp[15];
+-	char eth_hlen[14];
+ 	int veth_ifindex;
+ 	int ipip_ifindex;
+ 	int err;
+@@ -25,7 +25,9 @@ void test_empty_skb(void)
+ 		int err;
+ 		int ret;
+ 		int lwt_egress_ret; /* expected retval at lwt/egress */
++		__be16 h_proto;
+ 		bool success_on_tc;
++		bool adjust_room;
+ 	} tests[] = {
+ 		/* Empty packets are always rejected. */
  
- 	skb_tx_timestamp(skb);
-@@ -84,7 +85,12 @@ static netdev_tx_t loopback_xmit(struct sk_buff *skb,
- 	 */
- 	skb_dst_force(skb);
+@@ -46,6 +48,28 @@ void test_empty_skb(void)
+ 			.err = -EINVAL,
+ 		},
  
--	skb->protocol = eth_type_trans(skb, dev);
-+	reason = eth_type_trans_careful(skb, dev);
-+	if (unlikely(reason)) {
-+		dev_core_stats_tx_dropped_inc(dev);
-+		kfree_skb_reason(skb, reason);
-+		return NETDEV_TX_OK;
-+	}
++		/* ETH_HLEN-sized packets with IPv4/IPv6 EtherType but
++		 * no L3 header are rejected.
++		 */
++		{
++			.msg = "veth short IPv4 ingress packet",
++			.data_in = &eth_hlen,
++			.data_size_in = sizeof(eth_hlen),
++			.ifindex = &veth_ifindex,
++			.err = -EINVAL,
++			.h_proto = htons(ETH_P_IP),
++			.adjust_room = true,
++		},
++		{
++			.msg = "veth short IPv6 ingress packet",
++			.data_in = &eth_hlen,
++			.data_size_in = sizeof(eth_hlen),
++			.ifindex = &veth_ifindex,
++			.err = -EINVAL,
++			.h_proto = htons(ETH_P_IPV6),
++			.adjust_room = true,
++		},
++
+ 		/* ETH_HLEN-sized packets:
+ 		 * - can not be redirected at LWT_XMIT
+ 		 * - can be redirected at TC to non-tunneling dest
+@@ -54,7 +78,7 @@ void test_empty_skb(void)
+ 		{
+ 			/* __bpf_redirect_common */
+ 			.msg = "veth ETH_HLEN packet ingress",
+-			.data_in = eth_hlen,
++			.data_in = &eth_hlen,
+ 			.data_size_in = sizeof(eth_hlen),
+ 			.ifindex = &veth_ifindex,
+ 			.ret = -ERANGE,
+@@ -68,7 +92,7 @@ void test_empty_skb(void)
+ 			 * tc: skb->len=14 <= skb_network_offset=14
+ 			 */
+ 			.msg = "ipip ETH_HLEN packet ingress",
+-			.data_in = eth_hlen,
++			.data_in = &eth_hlen,
+ 			.data_size_in = sizeof(eth_hlen),
+ 			.ifindex = &ipip_ifindex,
+ 			.ret = -ERANGE,
+@@ -108,17 +132,27 @@ void test_empty_skb(void)
+ 	SYS(out, "ip addr add 192.168.1.1/16 dev ipip0");
+ 	ipip_ifindex = if_nametoindex("ipip0");
  
- 	len = skb->len;
- 	if (likely(__netif_rx(skb) == NET_RX_SUCCESS))
++	memset(eth_hlen_pp, 0, sizeof(eth_hlen_pp));
++	memset(&eth_hlen, 0, sizeof(eth_hlen));
++
+ 	bpf_obj = empty_skb__open_and_load();
+ 	if (!ASSERT_OK_PTR(bpf_obj, "open skeleton"))
+ 		goto out;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
++		if (tests[i].data_in == &eth_hlen)
++			eth_hlen.h_proto = tests[i].h_proto;
++
+ 		bpf_object__for_each_program(prog, bpf_obj->obj) {
+ 			bool at_egress = strstr(bpf_program__name(prog), "egress") != NULL;
+ 			bool at_tc = !strncmp(bpf_program__section_name(prog), "tc", 2);
++			bool is_adjust_room = !strcmp(bpf_program__name(prog), "tc_adjust_room");
+ 			int expected_ret;
+ 			char buf[128];
+ 
++			if (tests[i].adjust_room != is_adjust_room)
++				continue;
++
+ 			expected_ret = at_egress && !at_tc ? tests[i].lwt_egress_ret : tests[i].ret;
+ 
+ 			tattr.data_in = tests[i].data_in;
+diff --git a/tools/testing/selftests/bpf/progs/empty_skb.c b/tools/testing/selftests/bpf/progs/empty_skb.c
+index 4b0cd67532511..44326f5cc8bb4 100644
+--- a/tools/testing/selftests/bpf/progs/empty_skb.c
++++ b/tools/testing/selftests/bpf/progs/empty_skb.c
+@@ -35,3 +35,10 @@ int tc_redirect_egress(struct __sk_buff *skb)
+ 	ret = bpf_clone_redirect(skb, ifindex, 0);
+ 	return 0;
+ }
++
++SEC("tc")
++int tc_adjust_room(struct __sk_buff *skb)
++{
++	ret = bpf_skb_adjust_room(skb, 4, BPF_ADJ_ROOM_NET, 0);
++	return 0;
++}
 -- 
 2.53.0
 
