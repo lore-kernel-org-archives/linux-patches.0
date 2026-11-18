@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029359;
-	b=Nzl/PikVIVwlfXQAWJSYB0p4DjxEAjgcQSKekoCQqNdXCqvePbBnKwA+64Xx5DIv93Ez
-	 mXkHeP2mvPyVNQ5Vu/3T+n/uY7UnM+2OFIEo5nxRq9Q6Al1DG8fAdW+LDsKKQjipYa8sb
-	 oF+bjTrPWEr7/CuFu9pbNLfpvDXbhpKCdmwxhRDlRCa96fgLG7zkEN72sYHLrSXMRhAP/
-	 uc+Po1G561R8M991di0GD9kti7wQ1zhdtTdQ/gBZORGD37WL+Kq+DA5Fak5EG6plK4kYP
-	 +edBFcEPosZsRtvuXJbq/KL8x9RkbAENKFhHHjuUB89vD4ee/Vwk9rSbvdHKEXljlIQ==
+	t=1795029362;
+	b=ykJpm0Htds96l5EW7YGHWe3WXp6h6AnDA8CK1ELSsiTWCpCt4PYJ/ImX4UENILH4lpC6
+	 iqW+1iO0HqxxDs7MmxdSYvxAzCb8xzBqDP05Jj6maME2C5+IX7wML9xf+3mPiu3hfRkYc
+	 4J/c1GQ4j07PqmeVmjX0BaifpIxWgGs6faCZMbybqCBcsN+jn2ol+wToKYWhloTaBCa1L
+	 RPa3cTrKb4RguqFnk79awbx072UoM5UG4oOFlQxiAT15Uma0DNjhv5vxq0mUFNnUG+Epx
+	 n8mlb1WkZryIMbFRlonsgVzKjzrKKvh6UCyz2zcT/SaaRmzPLLmZEMy9T9v0HMWq0rg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029359;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029362;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=M/rPy/jGJ8ChFNon7ySnXQr97EUGfrGuf+NUpFj9RHc=;
-	b=rIcJ5F+jLaCz44roNihpwXu+auQi7aCcHJxv2xOKhuE77M5yCQvGjK8ka3nonWjNqF9N
-	 EEzeXxHxNwUm1JuJZSLtV97ATJ8nybTJ/wTRgC2UTAS/di/uh34MMHo+mLY/QC6xJjn++
-	 KKU9HrQpDndCIW6l9SmScnpDF3Z+sSTN/Rjwj/PMhKOpdxMHvRrddDFDfo3+acqavx4/r
-	 sYSUXywymvCYoBBs6JUurY2afYd0t1scC4k75A5sSYH32bILcr6kb4tzwq2gFu9iEznZ5
-	 7OyyP36jcfgXqA8I8DqB0tJu4MuP85kOJoKjDqkED3CMJLXZXwBpwUtywzXQ8S22p/Q==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Ku8SjzcvuUVK/MCxOHVbw7BRUE+PY40lvevNnRm1lBA=;
+	b=YjL3l5GsP2xDWmRubSbncUfhvp+ULdBDZMgC5pHpD25AOVP4bLvx8aHFJyrRhGsFtReU
+	 jqSHK62yveTQvodIEwHS7XyWQ5rY1JdN/SyDkwFu0Yivg0Zh/C1BghFZHFDdlEHi9cQa6
+	 OKbLv24W3EOJ/qdQkJXYDE1VopfSOdPWIoBZF+iUXzIZp3OlOLd4EtRHSXLPwmZ6DEzLr
+	 70wUQ4ooYhoq7v1SZkm3mDILsnzI2mWw+sQHWMr1HXM7sfRLnWDTXWEk0M1N/qdYNNxIo
+	 ree2BQaNznnhy1lCAI6UmAtOeTN1pkMI/UvM40gnr0Ay8o/VPOBjKLxyliNXC2eLUlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bv0OXF1a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LL7yBHH7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1F8606A31C;
-	Wed, 18 Nov 2026 19:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651E1606A31C;
+	Wed, 18 Nov 2026 19:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bv0OXF1a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917851F000C4;
-	Wed, 18 Nov 2026 19:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LL7yBHH7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B101F000C4;
+	Wed, 18 Nov 2026 19:16:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029359;
-	bh=M/rPy/jGJ8ChFNon7ySnXQr97EUGfrGuf+NUpFj9RHc=;
+	s=korg; t=1795029362;
+	bh=Ku8SjzcvuUVK/MCxOHVbw7BRUE+PY40lvevNnRm1lBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bv0OXF1aShVLFL58TZNMRztaPSHAykVmjiX545EZB+jTPihKRPfQxS+MP4R9z1Zct
-	 cgw0zHeDOJP9nIg94aVHLFLqSS+Z69u2fd5nzh7A1EQFi960j6po4lJkZMnpMNL5Hl
-	 iMSYQzCC9bhkPowWz+M46NWuz2cHpYzx9ixtGyu4=
+	b=LL7yBHH7cvKgReCZs9hGhEI18Qgxt/3I2/qITX1QVOLP1I0I2glGlQpD9vTedebDF
+	 NZkwcNhJd4oc08ZRIcWqdAWJIUSXtfIMmUjHfD7xECe3LcMjYlM58fygMTCGKseQfM
+	 kht2uDqrnLyfzUHzT79PlGt6mfnrLx1nGcoWrSYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
 	Hongling Zeng <zenghongling@kylinos.cn>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0272/1756] dmaengine: sun6i-dma: Fix use-after-free in error handling paths
-Date: Wed, 18 Nov 2026 15:39:59 +0100
-Message-ID: <20261118150019.244918323@linuxfoundation.org>
+Subject: [PATCH 6.12 0273/1756] dmaengine: at_hdmac: Fix use-after-free by proper tasklet cleanup
+Date: Wed, 18 Nov 2026 15:40:00 +0100
+Message-ID: <20261118150019.290492873@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -64,6 +64,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -72,102 +73,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Hongling Zeng <zenghongling@kylinos.cn>
 
-[ Upstream commit f472919f4c0650d7fb22bb230eacaada0c6ee951 ]
+[ Upstream commit 13f2d32a09609d083ace2d589fbdc68e970ae34c ]
 
-In error handling paths, the for loop frees v_lli in the loop body,
-then accesses v_lli->v_lli_next and v_lli->p_lli_next in the
-increment expression, which is use-after-free.
+Current cleanup paths have a use-after-free vulnerability:
+- vchan_init() creates tasklets that access at_dma_chan memory
+- free_irq() only waits for IRQ handler, NOT tasklets
+- atdma is devm-managed and freed after probe/remove
+- Running tasklets accessing freed memory → Use-After-Free!
 
-Fix by refactoring the cleanup into a helper function sun6i_dma_free_desc()
-that saves both the next virtual and physical pointers before freeing the
-current node, preventing the use-after-free.
+The fix requires careful ordering:
+- free_irq() FIRST to synchronize with running IRQ handlers and prevent
+  them from scheduling new tasklets
+- Then kill tasklets to wait for already-scheduled ones to complete
+- Only then free other resources
 
-Fixes: 555859308723 ("dmaengine: sun6i: Add driver for the Allwinner A31 DMA controller")
+Fixes: ac803b56860f ("dmaengine: at_hdmac: Convert driver to use virt-dma")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/all/20260604073945.54B311F00898@smtp.kernel.org/
 Signed-off-by: Hongling Zeng <zenghongling@kylinos.cn>
-Suggested-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Suggested-by: Frank Li <Frank.Li@nxp.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727061142.44195-1-zenghongling@kylinos.cn
+Link: https://patch.msgid.link/20260727061705.45169-1-zenghongling@kylinos.cn
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sun6i-dma.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ drivers/dma/at_hdmac.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/dma/sun6i-dma.c b/drivers/dma/sun6i-dma.c
-index a2085bf206b74..fed034f461b02 100644
---- a/drivers/dma/sun6i-dma.c
-+++ b/drivers/dma/sun6i-dma.c
-@@ -407,16 +407,12 @@ static inline void sun6i_dma_dump_lli(struct sun6i_vchan *vchan,
- 		v_lli->len, v_lli->para, v_lli->p_lli_next);
+diff --git a/drivers/dma/at_hdmac.c b/drivers/dma/at_hdmac.c
+index 606f0b81c0672..de117f9c3f285 100644
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -1940,6 +1940,20 @@ static void at_dma_off(struct at_dma *atdma)
+ 		cpu_relax();
  }
  
--static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
-+static void sun6i_dma_free_desc(struct sun6i_dma_dev *sdev,
-+				struct sun6i_desc *txd)
- {
--	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
--	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
- 	struct sun6i_dma_lli *v_lli, *v_next;
- 	dma_addr_t p_lli, p_next;
- 
--	if (unlikely(!txd))
--		return;
--
- 	p_lli = txd->p_lli;
- 	v_lli = txd->v_lli;
- 
-@@ -433,6 +429,17 @@ static void sun6i_dma_free_desc(struct virt_dma_desc *vd)
- 	kfree(txd);
- }
- 
-+static void sun6i_dma_free_desc_virt(struct virt_dma_desc *vd)
++static void at_dma_cleanup_channels(struct at_dma *atdma)
 +{
-+	struct sun6i_desc *txd = to_sun6i_desc(&vd->tx);
-+	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vd->tx.chan->device);
++	struct dma_chan *chan, *_chan;
++	int i = 0;
 +
-+	if (unlikely(!txd))
-+		return;
-+
-+	sun6i_dma_free_desc(sdev, txd);
++	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
++			device_node) {
++		/* Disable interrupts */
++		atc_disable_chan_irq(atdma, i++);
++		tasklet_kill(&to_at_dma_chan(chan)->vc.task);
++		list_del(&chan->device_node);
++	}
 +}
 +
- static int sun6i_dma_start_desc(struct sun6i_vchan *vchan)
+ static int __init at_dma_probe(struct platform_device *pdev)
  {
- 	struct sun6i_dma_dev *sdev = to_sun6i_dma_dev(vchan->vc.chan.device);
-@@ -789,10 +796,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_slave_sg(
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
+ 	struct at_dma		*atdma;
+@@ -2105,6 +2119,8 @@ static int __init at_dma_probe(struct platform_device *pdev)
+ err_of_dma_controller_register:
+ 	dma_async_device_unregister(&atdma->dma_device);
+ err_dma_async_device_register:
++	disable_irq(platform_get_irq(pdev, 0));
++	at_dma_cleanup_channels(atdma);
+ 	dma_pool_destroy(atdma->memset_pool);
+ err_memset_pool_create:
+ 	dma_pool_destroy(atdma->lli_pool);
+@@ -2118,23 +2134,17 @@ static int __init at_dma_probe(struct platform_device *pdev)
+ static void at_dma_remove(struct platform_device *pdev)
+ {
+ 	struct at_dma		*atdma = platform_get_drvdata(pdev);
+-	struct dma_chan		*chan, *_chan;
  
- err_lli_free:
--	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
--	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
--		dma_pool_free(sdev->pool, v_lli, p_lli);
--	kfree(txd);
-+	sun6i_dma_free_desc(sdev, txd);
- 	return NULL;
+ 	at_dma_off(atdma);
+ 	if (pdev->dev.of_node)
+ 		of_dma_controller_free(pdev->dev.of_node);
+ 	dma_async_device_unregister(&atdma->dma_device);
+ 
+-	dma_pool_destroy(atdma->memset_pool);
+-	dma_pool_destroy(atdma->lli_pool);
+ 	free_irq(platform_get_irq(pdev, 0), atdma);
+ 
+-	list_for_each_entry_safe(chan, _chan, &atdma->dma_device.channels,
+-			device_node) {
+-		/* Disable interrupts */
+-		atc_disable_chan_irq(atdma, chan->chan_id);
+-		list_del(&chan->device_node);
+-	}
++	at_dma_cleanup_channels(atdma);
++	dma_pool_destroy(atdma->memset_pool);
++	dma_pool_destroy(atdma->lli_pool);
+ 
+ 	clk_disable_unprepare(atdma->clk);
  }
- 
-@@ -860,10 +864,7 @@ static struct dma_async_tx_descriptor *sun6i_dma_prep_dma_cyclic(
- 	return vchan_tx_prep(&vchan->vc, &txd->vd, flags);
- 
- err_lli_free:
--	for (p_lli = txd->p_lli, v_lli = txd->v_lli; v_lli;
--	     p_lli = v_lli->p_lli_next, v_lli = v_lli->v_lli_next)
--		dma_pool_free(sdev->pool, v_lli, p_lli);
--	kfree(txd);
-+	sun6i_dma_free_desc(sdev, txd);
- 	return NULL;
- }
- 
-@@ -1418,7 +1419,7 @@ static int sun6i_dma_probe(struct platform_device *pdev)
- 		struct sun6i_vchan *vchan = &sdc->vchans[i];
- 
- 		INIT_LIST_HEAD(&vchan->node);
--		vchan->vc.desc_free = sun6i_dma_free_desc;
-+		vchan->vc.desc_free = sun6i_dma_free_desc_virt;
- 		vchan_init(&vchan->vc, &sdc->slave);
- 	}
- 
 -- 
 2.53.0
 
