@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042605;
-	b=NXe2ufL5VeNqlPJc+zRa0kHhSzzNSq/GwjKK3+5JUrc2vvs+7zUmqMZYzxgKUiz53tLg
-	 +VOTrZlwI37kwBFw1bKvkn2+A42m6jOHYu0NvTQP2rtcUCM6wdcThmeRvSvBdN8fOxsAY
-	 qyp9xEyNFDAuYPTgndGidcgdr87pCEHHharxu+cbeaUnCn/z5Y+t+oM1ttUaBxLVaUlyN
-	 Yz9GmdNTpSUVi43nlYbKXURES1JLWkjsJ/bqWgt87sKwrFW0SIGMqHFH8rlXxuIs0IobM
-	 pMNOEJkQQuy5KcjadbrrZ4oYK8Y0yShZvHs03IwKqyXLuDcx0kNdwFP5aB731+rR2/g==
+	t=1795042608;
+	b=ca8ou2FLwKEHQi/oS0w01XETF+2awpNyFWLwHywlt0OSIF2DIXPyLwS3SQFGEttSipzl
+	 qCuKJkxZWu9ELgQ3kqwP8liEL61OIdIsJjKL9Ui9eyVH3fPVQ/ToPOMtoQfaRC17vcp05
+	 S/5MvxK1jjgxBZI+69ulkr8ZBwI/PTlMK/DU3vYTocpUYeVS1x1MMt8hERY2KTszp7NcY
+	 GyKJLFeewE9CtJQdYae3KDK/LRVW/WGxpyiFQTRSorAtMpVVSIlQacVyefylMsQY29wi5
+	 Eep/SsoNapNNej8tQlkqIuFxGVTVzEfgjGasa8HpI7xC3NOYTL2HP6qMd8rPkldbUbg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XwwNX95FMgIb5RxEt6l+Os9Fhyc0PTqwSEz/BUEuGLo=;
-	b=eirFkqrX5lMM5Afs5FhXU7xq2P/3gGnEgD05kWMzaWgKWeF1Lo16wFl5v67MpRJhgtaT
-	 ELpdgxOSh0VBo7/XwNVuz7pex2dVnlkdhMsj/ZvUxSqhdrPqMZrdCuLyVxob/96Axlb+f
-	 mLTZNHPCDOYd1ddZ2j6sM3I002u7BxBv8j+yxiAu+UUk72drhHeLOb6MNR4h1eaJBrcPe
-	 zDCWSxf1x7wRW/XSpJ3gWDc1c5TxmWMcry84GREfN2TLQ/xsFFW5jvwA/VzYKTwjaOcpq
-	 FZoHBadgmq1kAwijiuLeHlp/JminCQNC+B3ceO+5NmMcWdXFGolSW3GV0twhNY6OpUA==
+	bh=3HTSWBDXUhLMaE7yg+/pYrfJbfHHXdatXuGyrSUsFMk=;
+	b=Adv82/KR6or7Jt662xkeFsSFJstcT3+L9QC5mD6LMViNne6wnsY9EENIq5FGfV5v37Uc
+	 Ayf2dFQPuiM7eqbTybv6YnRPnp5tOGzYakx3JHdquTxqNEbY12VMb2tpU+X5BuvKVM73q
+	 dihifO/ZZt7mlyXVwxn3S5nw31twW6t+LF211CBFeVCgW8/V8ey3s/4B+meKlAnP+wI4f
+	 DFRCAuOaXOV3ha5JTN351sSBOxPFIk7Jyh4nNa1Bkmo7sUR1eQQdVXuqUt7J/+EcNw4od
+	 O5SyzXZDcQBEAS0eOWw3ZQRyufWPWc0ZdHrRVVKlgSbip88tGNqjD03vmNDdRv2wkXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wWZ06r9Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKx6CsWJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E633606A31C;
-	Wed, 18 Nov 2026 22:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B003606A31C;
+	Wed, 18 Nov 2026 22:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wWZ06r9Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F7751F000C4;
-	Wed, 18 Nov 2026 22:56:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wKx6CsWJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420081F000C4;
+	Wed, 18 Nov 2026 22:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042605;
-	bh=XwwNX95FMgIb5RxEt6l+Os9Fhyc0PTqwSEz/BUEuGLo=;
+	s=korg; t=1795042607;
+	bh=3HTSWBDXUhLMaE7yg+/pYrfJbfHHXdatXuGyrSUsFMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wWZ06r9QuLouHtXcI9DBOkoyBy9gKMTpt5INNw8iUt39Vcx5m79DXJLI85WGzBBpa
-	 znxPSld7z+gc7G8D/iaB7xYPrP5TNMZXeBtxFMJ4g+DF0Wdy5iYWQHXi8rxMBnnjNW
-	 Ef9EgAalxefm4i5tYV+Kj3cUGNOJSVLHoKe8b//k=
+	b=wKx6CsWJjueMJC21lCSk626V8BD3cjsc/cjtcCYTmvDcEVmArAVgPTBiTowxz/N+T
+	 jW2DQmt6pZLW9jLC2C/oPUmWYHOQ71M5WVw2+scrCa507VmKlyeWQdszsvZueEB4GS
+	 1aBJKh+xmaQadyczyO3YUbSuIfPJSL9+L91vg4eg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3229/3318] net: bcmgenet: remove dma_ctrl argument
-Date: Wed, 18 Nov 2026 16:04:11 +0100
-Message-ID: <20261118150456.580642953@linuxfoundation.org>
+Subject: [PATCH 6.6 3230/3318] net: bcmgenet: consolidate dma initialization
+Date: Wed, 18 Nov 2026 16:04:12 +0100
+Message-ID: <20261118150456.609046883@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,112 +71,276 @@ Content-Transfer-Encoding: 8bit
 
 From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit 8b031d4e9baaa33e1b0abd09b9a98a84576a21f0 ]
+[ Upstream commit 58affb23b66793033f95cb4e9a57a388e0485edb ]
 
-Since the individual queues manage their own DMA enables there
-is no need to return dma_ctrl from bcmgenet_dma_disable() and
-pass it back to bcmgenet_enable_dma().
+The functions bcmgenet_dma_disable and bcmgenet_enable_dma are
+only used as part of dma initialization. Their functionality is
+moved inside bcmgenet_init_dma and the functions are removed.
+
+Since the dma is always disabled inside of bcmgenet_init_dma,
+the initialization functions bcmgenet_init_rx_queues and
+bcmgenet_init_tx_queues no longer need to attempt to manage its
+state.
 
 Signed-off-by: Doug Berger <opendmb@gmail.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20250306192643.2383632-9-opendmb@gmail.com
+Link: https://patch.msgid.link/20250306192643.2383632-10-opendmb@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 1c1f51c3ee9c ("net: bcmgenet: recover from a failed resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/broadcom/genet/bcmgenet.c    | 21 +++++++------------
- 1 file changed, 8 insertions(+), 13 deletions(-)
+ .../net/ethernet/broadcom/genet/bcmgenet.c    | 150 +++++++-----------
+ 1 file changed, 54 insertions(+), 96 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 37f42e8787a0e..8b173da1611cb 100644
+index 8b173da1611cb..1c59b5fde7175 100644
 --- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
 +++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3233,8 +3233,7 @@ static void bcmgenet_get_hw_addr(struct bcmgenet_priv *priv,
+@@ -2818,17 +2818,7 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
+ {
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 	unsigned int start = 0, end = GENET_Q0_TX_BD_CNT;
+-	u32 i, dma_enable;
+-	u32 dma_ctrl, ring_cfg;
+-	u32 dma_priority[3] = {0, 0, 0};
+-
+-	dma_ctrl = bcmgenet_tdma_readl(priv, DMA_CTRL);
+-	dma_enable = dma_ctrl & DMA_EN;
+-	dma_ctrl &= ~DMA_EN;
+-	bcmgenet_tdma_writel(priv, dma_ctrl, DMA_CTRL);
+-
+-	dma_ctrl = 0;
+-	ring_cfg = 0;
++	u32 i, ring_mask, dma_priority[3] = {0, 0, 0};
+ 
+ 	/* Enable Weighted Round-Robin arbiter mode */
+ 	bcmgenet_tdma_writel(priv, DMA_ARBITER_WRR, DMA_ARB_CTRL);
+@@ -2838,8 +2828,6 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
+ 		bcmgenet_init_tx_ring(priv, i, end - start, start, end);
+ 		start = end;
+ 		end += priv->hw_params->tx_bds_per_q;
+-		ring_cfg |= (1 << i);
+-		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
+ 		dma_priority[DMA_PRIO_REG_INDEX(i)] |=
+ 			(i ? GENET_Q1_WEIGHT : GENET_Q0_WEIGHT)
+ 			<< DMA_PRIO_REG_SHIFT(i);
+@@ -2850,13 +2838,13 @@ static void bcmgenet_init_tx_queues(struct net_device *dev)
+ 	bcmgenet_tdma_writel(priv, dma_priority[1], DMA_PRIORITY_1);
+ 	bcmgenet_tdma_writel(priv, dma_priority[2], DMA_PRIORITY_2);
+ 
+-	/* Enable Tx queues */
+-	bcmgenet_tdma_writel(priv, ring_cfg, DMA_RING_CFG);
++	/* Configure Tx queues as descriptor rings */
++	ring_mask = (1 << (priv->hw_params->tx_queues + 1)) - 1;
++	bcmgenet_tdma_writel(priv, ring_mask, DMA_RING_CFG);
+ 
+-	/* Enable Tx DMA */
+-	if (dma_enable)
+-		dma_ctrl |= DMA_EN;
+-	bcmgenet_tdma_writel(priv, dma_ctrl, DMA_CTRL);
++	/* Enable Tx rings */
++	ring_mask <<= DMA_RING_BUF_EN_SHIFT;
++	bcmgenet_tdma_writel(priv, ring_mask, DMA_CTRL);
+ }
+ 
+ static void bcmgenet_enable_rx_napi(struct bcmgenet_priv *priv)
+@@ -2905,17 +2893,9 @@ static int bcmgenet_init_rx_queues(struct net_device *dev)
+ {
+ 	struct bcmgenet_priv *priv = netdev_priv(dev);
+ 	unsigned int start = 0, end = GENET_Q0_RX_BD_CNT;
+-	u32 i, dma_enable, dma_ctrl = 0, ring_cfg = 0;
++	u32 i, ring_mask;
+ 	int ret;
+ 
+-	dma_ctrl = bcmgenet_rdma_readl(priv, DMA_CTRL);
+-	dma_enable = dma_ctrl & DMA_EN;
+-	dma_ctrl &= ~DMA_EN;
+-	bcmgenet_rdma_writel(priv, dma_ctrl, DMA_CTRL);
+-
+-	dma_ctrl = 0;
+-	ring_cfg = 0;
+-
+ 	/* Initialize Rx priority queues */
+ 	for (i = 0; i <= priv->hw_params->rx_queues; i++) {
+ 		ret = bcmgenet_init_rx_ring(priv, i, end - start, start, end);
+@@ -2924,17 +2904,15 @@ static int bcmgenet_init_rx_queues(struct net_device *dev)
+ 
+ 		start = end;
+ 		end += priv->hw_params->rx_bds_per_q;
+-		ring_cfg |= (1 << i);
+-		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
+ 	}
+ 
+ 	/* Configure Rx queues as descriptor rings */
+-	bcmgenet_rdma_writel(priv, ring_cfg, DMA_RING_CFG);
++	ring_mask = (1 << (priv->hw_params->rx_queues + 1)) - 1;
++	bcmgenet_rdma_writel(priv, ring_mask, DMA_RING_CFG);
+ 
+ 	/* Enable Rx rings */
+-	if (dma_enable)
+-		dma_ctrl |= DMA_EN;
+-	bcmgenet_rdma_writel(priv, dma_ctrl, DMA_CTRL);
++	ring_mask <<= DMA_RING_BUF_EN_SHIFT;
++	bcmgenet_rdma_writel(priv, ring_mask, DMA_CTRL);
+ 
+ 	return 0;
+ }
+@@ -3025,14 +3003,42 @@ static void bcmgenet_fini_dma(struct bcmgenet_priv *priv)
+ }
+ 
+ /* init_edma: Initialize DMA control register */
+-static int bcmgenet_init_dma(struct bcmgenet_priv *priv)
++static int bcmgenet_init_dma(struct bcmgenet_priv *priv, bool flush_rx)
+ {
+-	int ret;
+-	unsigned int i;
+ 	struct enet_cb *cb;
++	u32 reg, dma_ctrl;
++	unsigned int i;
++	int ret;
+ 
+ 	netif_dbg(priv, hw, priv->dev, "%s\n", __func__);
+ 
++	/* Disable RX/TX DMA and flush TX queues */
++	dma_ctrl = 1 << (DESC_INDEX + DMA_RING_BUF_EN_SHIFT) | DMA_EN;
++	for (i = 0; i < priv->hw_params->tx_queues; i++)
++		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
++	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
++	reg &= ~dma_ctrl;
++	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
++
++	dma_ctrl = 1 << (DESC_INDEX + DMA_RING_BUF_EN_SHIFT) | DMA_EN;
++	for (i = 0; i < priv->hw_params->rx_queues; i++)
++		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
++	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
++	reg &= ~dma_ctrl;
++	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
++
++	bcmgenet_umac_writel(priv, 1, UMAC_TX_FLUSH);
++	udelay(10);
++	bcmgenet_umac_writel(priv, 0, UMAC_TX_FLUSH);
++
++	if (flush_rx) {
++		reg = bcmgenet_rbuf_ctrl_get(priv);
++		bcmgenet_rbuf_ctrl_set(priv, reg | BIT(0));
++		udelay(10);
++		bcmgenet_rbuf_ctrl_set(priv, reg);
++		udelay(10);
++	}
++
+ 	/* Initialize common Rx ring structures */
+ 	priv->rx_bds = priv->base + priv->hw_params->rdma_offset;
+ 	priv->num_rx_bds = TOTAL_DESC;
+@@ -3082,6 +3088,15 @@ static int bcmgenet_init_dma(struct bcmgenet_priv *priv)
+ 	/* Initialize Tx queues */
+ 	bcmgenet_init_tx_queues(priv->dev);
+ 
++	/* Enable RX/TX DMA */
++	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
++	reg |= DMA_EN;
++	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
++
++	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
++	reg |= DMA_EN;
++	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
++
+ 	return 0;
+ }
+ 
+@@ -3233,53 +3248,6 @@ static void bcmgenet_get_hw_addr(struct bcmgenet_priv *priv,
  	put_unaligned_be16(addr_tmp, &addr[4]);
  }
  
--/* Returns a reusable dma control register value */
--static u32 bcmgenet_dma_disable(struct bcmgenet_priv *priv, bool flush_rx)
-+static void bcmgenet_dma_disable(struct bcmgenet_priv *priv, bool flush_rx)
- {
- 	unsigned int i;
- 	u32 reg;
-@@ -3266,20 +3265,18 @@ static u32 bcmgenet_dma_disable(struct bcmgenet_priv *priv, bool flush_rx)
- 		bcmgenet_rbuf_ctrl_set(priv, reg);
- 		udelay(10);
- 	}
+-static void bcmgenet_dma_disable(struct bcmgenet_priv *priv, bool flush_rx)
+-{
+-	unsigned int i;
+-	u32 reg;
+-	u32 dma_ctrl;
 -
--	return dma_ctrl;
- }
- 
--static void bcmgenet_enable_dma(struct bcmgenet_priv *priv, u32 dma_ctrl)
-+static void bcmgenet_enable_dma(struct bcmgenet_priv *priv)
- {
- 	u32 reg;
- 
- 	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
--	reg |= dma_ctrl;
-+	reg |= DMA_EN;
- 	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
- 
- 	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
--	reg |= dma_ctrl;
-+	reg |= DMA_EN;
- 	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
- }
- 
-@@ -3306,7 +3303,6 @@ static void bcmgenet_netif_start(struct net_device *dev)
- static int bcmgenet_open(struct net_device *dev)
+-	/* disable DMA */
+-	dma_ctrl = DMA_EN;
+-	for (i = 0; i <= priv->hw_params->tx_queues; i++)
+-		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
+-	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
+-	reg &= ~dma_ctrl;
+-	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
+-
+-	dma_ctrl = DMA_EN;
+-	for (i = 0; i <= priv->hw_params->rx_queues; i++)
+-		dma_ctrl |= (1 << (i + DMA_RING_BUF_EN_SHIFT));
+-	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
+-	reg &= ~dma_ctrl;
+-	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
+-
+-	bcmgenet_umac_writel(priv, 1, UMAC_TX_FLUSH);
+-	udelay(10);
+-	bcmgenet_umac_writel(priv, 0, UMAC_TX_FLUSH);
+-
+-	if (flush_rx) {
+-		reg = bcmgenet_rbuf_ctrl_get(priv);
+-		bcmgenet_rbuf_ctrl_set(priv, reg | BIT(0));
+-		udelay(10);
+-		bcmgenet_rbuf_ctrl_set(priv, reg);
+-		udelay(10);
+-	}
+-}
+-
+-static void bcmgenet_enable_dma(struct bcmgenet_priv *priv)
+-{
+-	u32 reg;
+-
+-	reg = bcmgenet_rdma_readl(priv, DMA_CTRL);
+-	reg |= DMA_EN;
+-	bcmgenet_rdma_writel(priv, reg, DMA_CTRL);
+-
+-	reg = bcmgenet_tdma_readl(priv, DMA_CTRL);
+-	reg |= DMA_EN;
+-	bcmgenet_tdma_writel(priv, reg, DMA_CTRL);
+-}
+-
+ static void bcmgenet_netif_start(struct net_device *dev)
  {
  	struct bcmgenet_priv *priv = netdev_priv(dev);
--	unsigned long dma_ctrl;
- 	int ret;
- 
- 	netif_dbg(priv, ifup, dev, "bcmgenet_open\n");
-@@ -3336,7 +3332,7 @@ static int bcmgenet_open(struct net_device *dev)
+@@ -3331,18 +3299,13 @@ static int bcmgenet_open(struct net_device *dev)
+ 	/* HFB init */
  	bcmgenet_hfb_init(priv);
  
- 	/* Disable RX/TX DMA and flush TX and RX queues */
--	dma_ctrl = bcmgenet_dma_disable(priv, true);
-+	bcmgenet_dma_disable(priv, true);
- 
+-	/* Disable RX/TX DMA and flush TX and RX queues */
+-	bcmgenet_dma_disable(priv, true);
+-
  	/* Reinitialize TDMA and RDMA and SW housekeeping */
- 	ret = bcmgenet_init_dma(priv);
-@@ -3345,7 +3341,7 @@ static int bcmgenet_open(struct net_device *dev)
+-	ret = bcmgenet_init_dma(priv);
++	ret = bcmgenet_init_dma(priv, true);
+ 	if (ret) {
+ 		netdev_err(dev, "failed to initialize DMA\n");
  		goto err_clk_disable;
  	}
  
--	bcmgenet_enable_dma(priv, dma_ctrl);
-+	bcmgenet_enable_dma(priv);
- 
+-	bcmgenet_enable_dma(priv);
+-
  	ret = request_irq(priv->irq0, bcmgenet_isr0, IRQF_SHARED,
  			  dev->name, priv);
-@@ -4194,7 +4190,6 @@ static int bcmgenet_resume(struct device *d)
- 	struct net_device *dev = dev_get_drvdata(d);
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 	struct bcmgenet_rxnfc_rule *rule;
--	unsigned long dma_ctrl;
- 	int ret;
- 
- 	if (!netif_running(dev))
-@@ -4220,7 +4215,7 @@ static int bcmgenet_resume(struct device *d)
+ 	if (ret < 0) {
+@@ -4214,18 +4177,13 @@ static int bcmgenet_resume(struct device *d)
+ 		if (rule->state != BCMGENET_RXNFC_STATE_UNUSED)
  			bcmgenet_hfb_create_rxnfc_filter(priv, rule);
  
- 	/* Disable RX/TX DMA and flush TX queues */
--	dma_ctrl = bcmgenet_dma_disable(priv, false);
-+	bcmgenet_dma_disable(priv, false);
- 
+-	/* Disable RX/TX DMA and flush TX queues */
+-	bcmgenet_dma_disable(priv, false);
+-
  	/* Reinitialize TDMA and RDMA and SW housekeeping */
- 	ret = bcmgenet_init_dma(priv);
-@@ -4229,7 +4224,7 @@ static int bcmgenet_resume(struct device *d)
+-	ret = bcmgenet_init_dma(priv);
++	ret = bcmgenet_init_dma(priv, false);
+ 	if (ret) {
+ 		netdev_err(dev, "failed to initialize DMA\n");
  		goto out_clk_disable;
  	}
  
--	bcmgenet_enable_dma(priv, dma_ctrl);
-+	bcmgenet_enable_dma(priv);
- 
+-	bcmgenet_enable_dma(priv);
+-
  	if (!device_may_wakeup(d))
  		phy_resume(dev->phydev);
+ 
 -- 
 2.53.0
 
