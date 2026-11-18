@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030518;
-	b=iQ2Sa/KNj/V/YzrcLJvlYLmTqQYsRz3q3H6UdkiF/WnVFtTfg7+0Z78hn6H3lyVcvv5A
-	 sPqI1J5rsdBJIe7h4SWPYi7VK3sK3g3mvBzf5QAxm2al7murGzhuIOJRhpZ3cx5o/ck60
-	 A55l7EO16fzU9gWrsxo5EcSxsIdK5hxAbZmmDRNY0d2MssQhKkfa6v9ztscEGlAozLFSs
-	 tHgH3HxrxxECv00JRJKppAXc8dsoDd8wqY1iugEIT48kDzJjEpDz3cfn8Uw/iPrnKF0tP
-	 747OVRSiQjoTH1a1wVL9ynb0JMAtH7qTli410YjqUfRegZCaxxkp5oK6hHvPTMQCEDQ==
+	t=1795030521;
+	b=BA18VVUt0RCnBMiTpehEAhrGD2bUESJNYmxWv2by/FTpdVJC60LZMlWSUDWlUob4jnpY
+	 2L2Ycgu4RXVmkZdCvOzWKAjSAzoSPP1yBvsMQYIZvMwQn7g/k2r9gC0/ptxXxtuaRYzOQ
+	 1aLyl0jEc8jajbLZ3Kc+EGplqJKXXJ7myTJT0sLhMSy04peDWmlDhLluklVVR8xH5h3y7
+	 H82OFiXrasNTqugLDRdRleac1V0ZiZ58NQ4VEG+7aX61GUPDw7twuH8tNThcQ8Px+M9hJ
+	 l8m28Cum+rGfxZGZjIlx0RT2KU+87HNWPLnQ4MLTvlzcVuHVXjxssxFfSWTDm/sor4A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030521;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2LSRKPOvPbgYJXKmLfuzFVkCz/GbLdG3Qu58Tg8LNTQ=;
-	b=U9c3Jy9T6+SE/DnSq3tU0PLQg+5aG+G4lVnQ6Kh0TYhivYHbjOEMhbcYw43bJBYuvUsS
-	 VSWcYF+4eUdr0VZSGvgGR7L0al0WcXFFEuroYNBW2VioQfDwcilpJwbbP0mMKg0O55s+8
-	 qEszVkx7usZi9vpIyfssVrtouehbHm24cPxyOQQG9ctj4BoTyNXqHKB+qDfWI1xN49VvQ
-	 UJufm92vLAyXEoF6WjQR9EKPvzkfPa9dC/Q7lGmyG1FeyXR6Ios0OnEWCoFfK5oqd96oX
-	 AvVVRh9HWX9NxHhD3fTT/YE49JGr+5dcq4RTdt+Snjw8KeMu8m7f5SA9BaP87o6haZg==
+	bh=HDGk7adp5rdS9m8lipu725+qqnuztEqoK5ru8/Aj9fE=;
+	b=VR5M4nWSqZ0PrF3aCb+zIudt1+2WRB7vpVYBhZJfDyH9cqes7iy7l7NmxV6u28CmEazk
+	 578owqFJ1e3fzECxX3ORVujHLwki5VZCOqwbGpEQJALbMowqk2w0Ymuv+Jq2U3d/fdbCg
+	 zUahMKMrR+OfbV0NzsGElGJYjnHEhTZrhuZB+8ny//NDb9gB8iV9AGaPbXc+fDVqze1Dr
+	 Ua5bm2YGygxcy0wz1gHm/xK+zUJNFLD6p42I2zCLkefBuAgN22Ka+zWydEWq4NpZ/NRq+
+	 PcxRZh0ptB84EfLmWiKMK8RmNwFinYTI9oCNNOHZ7IHFhidNXfIDwY38djScbHo5zEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9qdn4U2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I5YTgOzL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A04606BB50;
-	Wed, 18 Nov 2026 19:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F410B606B10C;
+	Wed, 18 Nov 2026 19:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9qdn4U2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795941F000C5;
-	Wed, 18 Nov 2026 19:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I5YTgOzL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8401F000C5;
+	Wed, 18 Nov 2026 19:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030518;
-	bh=2LSRKPOvPbgYJXKmLfuzFVkCz/GbLdG3Qu58Tg8LNTQ=;
+	s=korg; t=1795030520;
+	bh=HDGk7adp5rdS9m8lipu725+qqnuztEqoK5ru8/Aj9fE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x9qdn4U2jnrbUKKIWDvU9ZnJnuUkytOKnCVtCTi5J2STE9TrUCR9DrptKsbStlztA
-	 CQg8n33DPLWAWPQkLX/EaQHavFvbD9KujR50UOBOOMRF5YW297pKMsgcX5VQJMxQP/
-	 j4rzeBO9MlAWE4XRwvw1hkY2nIkzDKSmgK5utP24=
+	b=I5YTgOzLM9O8XmhaY5k9WWLoaZ07+LsqlSgfVcIgO+jKCUc6Tdi+Db4UkETFQTTmy
+	 5H9rE2a4Png8WmA0JPavbXaV32wCTVbDNRcvFMzwFmoR50eTDsnvfj0pdM8E66Mkcr
+	 Lji+UdC+1RTSn6I07Qp9TCgbQEILNCJeEekicieg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Dalin <liudalin@kylinsec.com.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0731/1756] rtc: ftrtc010: use devm clock APIs to fix use-after-disable in remove
-Date: Wed, 18 Nov 2026 15:47:38 +0100
-Message-ID: <20261118150038.763190029@linuxfoundation.org>
+Subject: [PATCH 6.12 0732/1756] ARM: vexpress: fix device_node refcount leak in vexpress_flags_set()
+Date: Wed, 18 Nov 2026 15:47:39 +0100
+Message-ID: <20261118150038.802083845@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,145 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Dalin <liudalin@kylinsec.com.cn>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit d41ee317c9907d714014d0d5e4726fbd6acf338e ]
+[ Upstream commit 62b9ae8ae4a7f0b93efa1efa230782b37057b1e7 ]
 
-The driver mixes devm_rtc_register_device() with manual clock
-disabling in ftrtc010_rtc_remove(). Because the RTC device was
-registered via devm, it remains registered until devres cleanup
-runs after .remove() returns. An unprivileged process holding an
-open /dev/rtc0 file descriptor could issue ioctl(RTC_RD_TIME)
-during this window, triggering MMIO reads on clock-gated hardware
-and causing a synchronous external abort.
+vexpress_flags_set() obtains a reference to the "arm,vexpress-sysreg"
+device node via of_find_compatible_node() and passes it to of_iomap(),
+but never calls of_node_put() on it. of_iomap() only reads the node's
+reg property to create the mapping and does not take ownership, so the
+node reference is leaked. The function runs from the __init SMP prepare
+path and caches the mapping in a static, so this is a one-shot leak of a
+single refcount during boot, with no functional impact.
 
-Replace devm_clk_get() + clk_prepare_enable() with
-devm_clk_get_enabled() to tie clock lifecycle to devres. Remove
-the manual .remove() callback and the corresponding error handling
-labels in ftrtc010_rtc_probe().
+The lookup was added to drivers/mfd/vexpress-sysreg.c by the commit
+below and later moved here by commit 9b06fc39084e ("ARM: vexpress: Move
+vexpress_flags_set() into arch code").
 
-Fixes: 1d61d2592c1f ("rtc: ftrtc010: Rename to Faraday FTRTC010")
-Assisted-by: Sashiko AI [static analysis]
-Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Link: https://patch.msgid.link/0238203A74C9B9F6+20260827080320.3351155-3-liudalin@kylinsec.com.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Annotate node with the __free(device_node) cleanup attribute so the
+reference is released when it goes out of scope.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 974cc7b93441 ("mfd: vexpress: Define the device as MFD cells")
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260925173252.933705-2-geoffreyhe2@gmail.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ftrtc010.c | 67 +++++++++-----------------------------
- 1 file changed, 16 insertions(+), 51 deletions(-)
+ arch/arm/mach-versatile/v2m.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
-index f398d6dc85ae4..2f610a0fc6e9b 100644
---- a/drivers/rtc/rtc-ftrtc010.c
-+++ b/drivers/rtc/rtc-ftrtc010.c
-@@ -120,51 +120,33 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 	platform_set_drvdata(pdev, rtc);
+diff --git a/arch/arm/mach-versatile/v2m.c b/arch/arm/mach-versatile/v2m.c
+index 79afdf2a90b6f..c86b38386cf7c 100644
+--- a/arch/arm/mach-versatile/v2m.c
++++ b/arch/arm/mach-versatile/v2m.c
+@@ -13,8 +13,8 @@ void vexpress_flags_set(u32 data)
+ 	static void __iomem *base;
  
--	rtc->pclk = devm_clk_get(dev, "PCLK");
--	if (IS_ERR(rtc->pclk)) {
-+	rtc->pclk = devm_clk_get_enabled(dev, "PCLK");
-+	if (IS_ERR_OR_NULL(rtc->pclk)) {
- 		dev_err(dev, "could not get PCLK\n");
--	} else {
--		ret = clk_prepare_enable(rtc->pclk);
--		if (ret) {
--			dev_err(dev, "failed to enable PCLK\n");
--			return ret;
--		}
-+		return PTR_ERR_OR_ZERO(rtc->pclk);
+ 	if (!base) {
+-		struct device_node *node = of_find_compatible_node(NULL, NULL,
+-				"arm,vexpress-sysreg");
++		struct device_node *node __free(device_node) =
++			of_find_compatible_node(NULL, NULL, "arm,vexpress-sysreg");
+ 
+ 		base = of_iomap(node, 0);
  	}
--	rtc->extclk = devm_clk_get(dev, "EXTCLK");
--	if (IS_ERR(rtc->extclk)) {
-+	rtc->extclk = devm_clk_get_enabled(dev, "EXTCLK");
-+	if (IS_ERR_OR_NULL(rtc->extclk)) {
- 		dev_err(dev, "could not get EXTCLK\n");
--	} else {
--		ret = clk_prepare_enable(rtc->extclk);
--		if (ret) {
--			dev_err(dev, "failed to enable EXTCLK\n");
--			goto err_disable_pclk;
--		}
-+		return PTR_ERR_OR_ZERO(rtc->extclk);
- 	}
- 
- 	rtc->rtc_irq = platform_get_irq(pdev, 0);
--	if (rtc->rtc_irq < 0) {
--		ret = rtc->rtc_irq;
--		goto err_disable_extclk;
--	}
-+	if (rtc->rtc_irq < 0)
-+		return rtc->rtc_irq;
- 
- 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--	if (!res) {
--		ret = -ENODEV;
--		goto err_disable_extclk;
--	}
-+	if (!res)
-+		return -ENODEV;
- 
- 	rtc->rtc_base = devm_ioremap(dev, res->start,
- 				     resource_size(res));
--	if (!rtc->rtc_base) {
--		ret = -ENOMEM;
--		goto err_disable_extclk;
--	}
-+	if (!rtc->rtc_base)
-+		return -ENOMEM;
- 
- 	rtc_dev = devm_rtc_allocate_device(dev);
--	if (IS_ERR(rtc_dev)) {
--		ret = PTR_ERR(rtc_dev);
--		goto err_disable_extclk;
--	}
-+	if (IS_ERR(rtc_dev))
-+		return PTR_ERR(rtc_dev);
- 
- 	rtc_dev->ops = &ftrtc010_rtc_ops;
- 
-@@ -179,29 +161,13 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
- 	ret = devm_request_irq(dev, rtc->rtc_irq, ftrtc010_rtc_interrupt,
- 			       IRQF_SHARED, pdev->name, dev);
- 	if (unlikely(ret))
--		goto err_disable_extclk;
-+		return ret;
- 
- 	ret = devm_rtc_register_device(rtc_dev);
- 	if (ret)
--		goto err_disable_extclk;
-+		return ret;
- 
- 	return 0;
--
--err_disable_extclk:
--	clk_disable_unprepare(rtc->extclk);
--err_disable_pclk:
--	clk_disable_unprepare(rtc->pclk);
--	return ret;
--}
--
--static void ftrtc010_rtc_remove(struct platform_device *pdev)
--{
--	struct ftrtc010_rtc *rtc = platform_get_drvdata(pdev);
--
--	if (!IS_ERR(rtc->extclk))
--		clk_disable_unprepare(rtc->extclk);
--	if (!IS_ERR(rtc->pclk))
--		clk_disable_unprepare(rtc->pclk);
- }
- 
- static const struct of_device_id ftrtc010_rtc_dt_match[] = {
-@@ -217,7 +183,6 @@ static struct platform_driver ftrtc010_rtc_driver = {
- 		.of_match_table = ftrtc010_rtc_dt_match,
- 	},
- 	.probe		= ftrtc010_rtc_probe,
--	.remove		= ftrtc010_rtc_remove,
- };
- 
- module_platform_driver_probe(ftrtc010_rtc_driver, ftrtc010_rtc_probe);
 -- 
 2.53.0
 
