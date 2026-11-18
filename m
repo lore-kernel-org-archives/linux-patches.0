@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034141;
-	b=kTiTeRLQgq81MTFCm5OTtbZ3bewgsD9+EE9cGs/C0VMBqcBf0hu46AIJGgjn5tL4/NkM
-	 jYjPWN9Ty2ErV3RplWo2oGqtkRJscWvmBK5IPSojqXbHpn1zbM6X8JuPNGU/koh0jYlPF
-	 bf4RazCi7sRitLEhOpprvXzohq2eRNqYLWI/qE0Wr75ywBdPllN6f2KH8mHvwS5izvBXT
-	 BsrsSzGKzbZ6JEGbtSJrY4aFOpi/u39Yd8LWkNSaoDYJGE6xA93kU94yIYnOXByGKHbez
-	 eTD0ddQ07WnSRTdCrbltFZPBSX19zJt529vHf+o2Yfzt7U5qX6sTvCJgOcYUMx27RDQ==
+	t=1795034143;
+	b=UFTA8/5dw73wjqHaL3xDTNopGlnHdBjLPZZIZowMi991IV139CZDbT07zxUs/fuy1KgX
+	 2YUTDgubGLn4gNOyzQgHVPkjBQ/aRm8qyErRO06arI3sHs2dxjiB8HzmARfnM81GKSYG1
+	 Uzqx/QdtuYYShrIS6AP/SGfw9PPo4ycLoKIPmVtGJHPqQ1qOG0zarD3tLZchtQZvAmwpc
+	 9uHhWa8u4iWEAmHoeksimf6ceMnjt3aK33/G1W+2+yMPGSssWz5aSamj1V59wddINss1V
+	 dBHI8DOEI9WYeu5HQ07bRu55muxEr0FX+1uCruEfgq4E/e86cywY8XpcpzzXgWNxSjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034141;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034143;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TzxFUy5ifq3AzB2KjiKxbWke9RZGBd9+mePDcD+7pE4=;
-	b=tC7jqUOKOD+9idQL5YYoUajhF7A9qf0Kyf1zxITS2N1BlCbnsbseC40Z7PtWcD0GpsFJ
-	 J5oTBEnjiwqpqDcXoE4S+Q+YbOAW84pWSH126YczKZdRg5xfP3kc/9/EBHbPxrwtNKM92
-	 c/tzCInAkIkyUavVWVeupzqdZjkEq/iaoTF5jsh8QBIM+e21wMBEARb+YaE1hqf5BBcZT
-	 UdjsGck4w7BTsOIZ5IBpwh0MFMkYgiTa/KA2QAcdtj4wRVfBO8XseK2G/mbjzZlSKFK1P
-	 /NcyrEnJNM5GXYl4XURLim7M1BlHmT01YMuEhttpLDRJ62wZL1SWG31Vzr8sdE/EqnA==
+	bh=fNM19AVSKZcelN+MSH2ByAA1Ir8SOvc/eNZvTWW/2Vc=;
+	b=puyQkjmpCWmn4ZkIItF6N+9lR8bQUmodRpnqDpFIWuSlhrc8OMo8h/uMamHt8M2tA9O3
+	 jgSNsIj8ZDdnQ8k0KzKfDpUhTU0ABMJfYlP9Ly0cYSyAm40FD9YlqlemTi391CscYNm9s
+	 365hB03bB8+AotITj8KLlMsQYHqujQt8nyoiQ/BG4eV1tg2P6Ozi99v7dVtL9G2w12+PK
+	 9G5uUuT8Pp2M9+3oAYH2a8U2iNPDhR4+zg25cy+twFSLrp64yPmd0/aDHt+hNUTeTuh7p
+	 Z/ktqimwNJcJBow1XDeqF03ejntmUGSd4ZygS2pWjkofzpFfwNmo/eKCn7TjWsg+yyA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kl9aMDDC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2igE9wuG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E717F606A32C;
-	Wed, 18 Nov 2026 20:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05F3606A32A;
+	Wed, 18 Nov 2026 20:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kl9aMDDC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4917C1F000C4;
-	Wed, 18 Nov 2026 20:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2igE9wuG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC921F000C4;
+	Wed, 18 Nov 2026 20:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034140;
-	bh=TzxFUy5ifq3AzB2KjiKxbWke9RZGBd9+mePDcD+7pE4=;
+	s=korg; t=1795034143;
+	bh=fNM19AVSKZcelN+MSH2ByAA1Ir8SOvc/eNZvTWW/2Vc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kl9aMDDCSozUqglCB4vDG45prvZquxayNZZsVX2UIX5WuZN0RRN7daKzSiVHEOHEq
-	 ErWeS5aIXfGHFq7Cfl92HqDmHAQ+GpozytRC6m95gQ0oxWX220ABs6q0Rj7gnNYv2r
-	 eB+J8akBouS4JFDA3fdgE0OimkTNY/wbRWPRIi5w=
+	b=2igE9wuGNRMhw0g/0C9So5PoNoqSrLz1vu5dyIfuPgp0gR3kLN2yBk4IowWcs8SjI
+	 wxM/u3cF6hgP5xnQChEAYD+FYVk6EZ3wi9Yn5uOKJWBmnuyjCbWOKKpVwB4yMxBFQb
+	 VYfPQnapvku6A0TwlqTbKz8vYwayUYUiHV3leqTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0247/3318] ALSA: hda/realtek: Fix headset mic on ASUS Vivobook S14 S5406SA
-Date: Wed, 18 Nov 2026 15:14:29 +0100
-Message-ID: <20261118150322.685767515@linuxfoundation.org>
+Subject: [PATCH 6.6 0265/3318] apparmor: fix auditing of mount binary data
+Date: Wed, 18 Nov 2026 15:14:47 +0100
+Message-ID: <20261118150323.356524979@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,36 +67,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit f2d08f3651fb12634347fef2c41687a807a7dcba ]
+[ Upstream commit b9f2181b90ec047488dcb4fb1c631d417aff07e0 ]
 
-On the ASUS Vivobook S14 S5406SA (subsystem 0x104310c4, Lunar Lake
-platform) with an ALC294 codec, the headset microphone (3.5mm jack)
-fails to capture any audio. Adding the ALC2XX_FIXUP_HEADSET_MIC
-quirk resolves the issue and restores proper headset mic recording.
+AppArmor only mediates non-binary mount data, and should only
+audit the mount data if it is non-binary.
 
-Link: https://github.com/thesofproject/linux/issues/5729
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260807125857.678297-3-zhangheng@kylinos.cn
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ security/apparmor/mount.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 77ef197d6ae48..27356a33a93b2 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10318,6 +10318,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1074, "ASUS G614PH/PM/PP", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x10a1, "ASUS UX391UA", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x10c0, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x10c4, "ASUS Vivobook S14 S5406SA", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x10d0, "ASUS X540LA/X540LJ", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x10d3, "ASUS K6500ZC", ALC294_FIXUP_ASUS_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x115d, "Asus 1015E", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+diff --git a/security/apparmor/mount.c b/security/apparmor/mount.c
+index 49fe8da6fea45..5a92ed773f2ba 100644
+--- a/security/apparmor/mount.c
++++ b/security/apparmor/mount.c
+@@ -343,8 +343,8 @@ static int match_mnt_path_str(const struct cred *subj_cred,
+ 
+ audit:
+ 	return audit_mount(subj_cred, profile, OP_MOUNT, mntpnt, devname,
+-			   type, NULL,
+-			   flags, data, AA_MAY_MOUNT, &perms, info, error);
++			   type, NULL, flags, !binary ? data : NULL,
++			   AA_MAY_MOUNT, &perms, info, error);
+ }
+ 
+ /**
 -- 
 2.53.0
 
