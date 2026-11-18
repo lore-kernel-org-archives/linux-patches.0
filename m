@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017641;
-	b=FKcDioHlnIqr/cqejUDR8GT83kkd21pbhM67u/c550y8v7rxz0TiKhK+t1dlDexCxqtF
-	 pp8gIPSQ3HGMq08w9D1146cMB088+MR6drANNiyHtmqSa1Iy9pEZTooMAHy3BEj6SqLry
-	 NvZuDzBnCcmbZowEqR/UxQtQOC1sLVDsSVEbq0nI8rxrzsgpYWyR6p/ynxlHefQeB3m4r
-	 Zz4ooyJZ7Lmnl6nAdG/e5qlTzqid2HKaLdoeCTGzWqaJay4W7sXJiI09+JeRsvTebnvUM
-	 Puyr6e9sbG2cPghCsv0FxvvE64z6IjKtrer2a1yNxShcHRn5n1MSjhpDTmrOGNo4aAw==
+	t=1795017644;
+	b=GPr+vAO2A3wjCSpYacpshEIbbL3oAr4wcpwsEhy0Rv5nN+Ve0Hkfwfs/QvIR5xMV4Dk4
+	 PZsGTz1LArUgUEzZPFDUYPzrZ6cWJ98XLDp3Z/Q8CKZF7UXIyvBxLv51Jz11GIJrWtBnE
+	 hv41ebUVnKxZOgFPm0CrtyfWRFWPursrOh/lSLXR+YjkC0obgMJXMSA4bySLz5eCmi7cS
+	 QzeaIq9S42anGf6Z84o8cDtveuPDLF+VMKn8NPDTP9rqcZ9uCqvOzLWOxx1tYCwHjEs78
+	 zosqQ4+vMrQZMgPZ10stv2YCJS3AEApV2VupmHKjoGKdyWvb2ld52eyaJdNQWKOs23w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017641;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017644;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YPFsxdyvIUxrtEGcbk5p+xdHEAu6yab4p9Jn5cwbpdc=;
-	b=HX163k6/aYo/oOh07NjwIuwDdOulS4WT8YItLMarjSWgGfjP/30AcuptwCvlUtr/1E0u
-	 MQ0uoeHfLuXhsn5qnOspwlOF2Mf09M7+ghoOblQHIKW3gel+DfQzUDl4aThM1xnl4kUMK
-	 psMORVor7SLCyJpFR1NDCDynyxJepUqsZ5LRDr5+ZKeXCwAApLsRI9Z6pg+IjpfmCLwT2
-	 g+Jx3tCgo4fHnr0zZu54LhhQue8VJ+EZgCcjGbXja5iBt/eB4TYRRKVLay+AZW1+gltqy
-	 PPM/bR0Np/78ikfkqm6Dmtzjc29dKcCFsuv34ha5avl0YD7u0LybnQlphaxlY1dghvA==
+	bh=/gtKe3m9UDAnbwLCYuEp43dmNSLLzsKC4hwUr+lWbtI=;
+	b=B0HCiAhcfnV52nOt3JaD1xm+HhjvoVLnKWTHDfIadgVESHs/L5qleJMWD8RB+hB8J1LG
+	 JryYLrcF52RewvPHxtI0DdU5OTAib/GyvvY6S/5bwq49bNB4jt7FOjIJi+vc8PEgyWOfF
+	 VbuSrkTWx9SImYxjud9kDdgXBJgDlOz1reXGh9VlsrJvdkKnJuBMj58C3K1Q+83cW30ot
+	 ydT6LpF1UQ62naKk66tObwLiRRCI1BkY8xlWICHgbnnRYUe8c2MJaX5+s4jnbNc2ygI2m
+	 eG5SX+TiW4y3rtFjeIMGjXMNLRkopnH6pOVigU/Esby510mXe7cqv2N7VkRjwHI64cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bf8ER4Sq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pT+c5M2G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1A560A260F;
-	Wed, 18 Nov 2026 16:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93549606A31C;
+	Wed, 18 Nov 2026 16:00:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bf8ER4Sq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E7A1F000CA;
-	Wed, 18 Nov 2026 16:00:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pT+c5M2G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E70851F000C5;
+	Wed, 18 Nov 2026 16:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017641;
-	bh=YPFsxdyvIUxrtEGcbk5p+xdHEAu6yab4p9Jn5cwbpdc=;
+	s=korg; t=1795017644;
+	bh=/gtKe3m9UDAnbwLCYuEp43dmNSLLzsKC4hwUr+lWbtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bf8ER4Sqtu2SJoP1pZ3L47rvSmlD0G1CviBy74Ii5p97QoC6l+U22K/yh8E8rAlHH
-	 A8L2uXfS4KHjauO3DAzez6yyeh7BOyWJntbEI/d6IpSMvZP4iQ/JyPN14nKFPKgLbx
-	 Q3akmU207GkOT8EY8RD5fRUOLlRyx0MLqnrd+qO8=
+	b=pT+c5M2G1A4OEb1+q6wCJHE+f8g0/5BMkznMnegoFzH/Xh424Pj6An7J6A/tfTqib
+	 pz6Y1zgCtaf2Sy5ciI45XPwFUcJSOGzLo0qr60rvWlX/bzoB8xxOKLLutKTcU3NZs8
+	 A1/VewoREq1ekvYMhZmBRXaCwfCwKD5xN7KV8jpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Sutter <phil@nwl.cc>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Xin Liu <xin.liu@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0916/2651] netfilter: nfnetlink: Fix for interrupted hook dumps
-Date: Wed, 18 Nov 2026 15:35:56 +0100
-Message-ID: <20261118150320.870575094@linuxfoundation.org>
+Subject: [PATCH 7.3 0917/2651] arm64: dts: qcom: purwa-iot-evk: use on-board crystal for PS8830 retimers
+Date: Wed, 18 Nov 2026 15:35:57 +0100
+Message-ID: <20261118150320.907191946@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,295 +70,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phil Sutter <phil@nwl.cc>
+From: Xin Liu <xin.liu@oss.qualcomm.com>
 
-[ Upstream commit d3950004ba90350bcdf414c5f804da277178564a ]
+[ Upstream commit bda6d233a6ea408817fa5fb5727d11fa2349d9a5 ]
 
-Handling of concurrent hook changes with a dump in progress was
-problematic in nfnl_hook_dump and entirely broken in nfnl_hook_dump_nat.
-Address all issues in a single patch to please the review LLM.
+On the Purwa IoT EVK, each PS8830 retimer has its own 25 MHz crystal
+wired to the retimer's XI/XO pins. The reference clock does not come
+from the PMIC, so the RPMH_RF_CLK4/5 references in the retimer nodes
+are wrong: they keep those RF clocks enabled for nothing and describe a
+connection that does not exist on the board.
 
-Introduce sequence numbers in struct netns_nf to replace pointer
-value-based modification detection which may fail due to memory buffer
-reuse. This also eliminates the need for most manual cb->seq updates and
-excessive array index value checks.
+Remove the stale "Left unused" annotation from the vreg_rtmr0 regulators
+as the retimer is actively used.
 
-Since nat hook updates are protected by a different mutex than others,
-they have to bump their own sequence number. nfnl_hook_dump_nat
-therefore open-codes what nl_dump_check_consistent does but bumps
-cb->seq instead of setting NLM_F_DUMP_INTR flag.
-
-Dumps of many nat hooks was entirely broken since the array index was
-not (re)stored. Use cb->args[1] for that and make sure it is reset upon
-completion as the same dump may loop over multiple arrays of nat hooks.
-
-In nfnl_hook_dump, don't signal NLM_F_DUMP_INTR if
-nfnl_hook_entries_head returns error: This is a permanent condition
-which does not change during a dump. It is already caught by
-nfnl_hook_dump_start though, so should not happen anyway.
-
-In general, access ops array pointer values using READ_ONCE since they
-are assigned to using WRITE_ONCE.
-
-Avoid setting NLM_F_DUMP_INTR flag in garbage memory by calling
-nl_dump_check_consistent only for non-empty skbs. If not a single
-netlink message was created, nfnetlink code will take care of setting
-the flag.
-
-Fixes: e2cf17d3774c ("netfilter: add new hook nfnl subsystem")
-Fixes: b010e2a4a9ac ("netfilter: nfnetlink_hook: Dump nat type chains")
-Signed-off-by: Phil Sutter <phil@nwl.cc>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 9ed20e877239 ("arm64: dts: qcom: Add base PURWA-IOT-EVK board")
+Signed-off-by: Xin Liu <xin.liu@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260914101233.981643-2-xin.liu@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netns/netfilter.h  |  2 +
- net/netfilter/core.c           | 18 ++++++++-
- net/netfilter/nf_nat_core.c    | 11 +++++
- net/netfilter/nfnetlink_hook.c | 74 ++++++++++++++++++++--------------
- 4 files changed, 73 insertions(+), 32 deletions(-)
+ arch/arm64/boot/dts/qcom/purwa-iot-evk.dts | 27 ++++++++++++++++++----
+ 1 file changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/netns/netfilter.h b/include/net/netns/netfilter.h
-index a6a0bf4a247e5..7fd78394d1e7b 100644
---- a/include/net/netns/netfilter.h
-+++ b/include/net/netns/netfilter.h
-@@ -33,5 +33,7 @@ struct netns_nf {
- #if IS_ENABLED(CONFIG_NF_DEFRAG_IPV6)
- 	unsigned int defrag_ipv6_users;
- #endif
-+	unsigned int hook_base_seq;
-+	unsigned int nat_hook_base_seq;
- };
- #endif
-diff --git a/net/netfilter/core.c b/net/netfilter/core.c
-index 675a1034b3400..940dea2663e95 100644
---- a/net/netfilter/core.c
-+++ b/net/netfilter/core.c
-@@ -386,6 +386,15 @@ static void nf_static_key_dec(const struct nf_hook_ops *reg, int pf)
- #endif
- }
+diff --git a/arch/arm64/boot/dts/qcom/purwa-iot-evk.dts b/arch/arm64/boot/dts/qcom/purwa-iot-evk.dts
+index ad503beec1d3d..49ef183e2f5e9 100644
+--- a/arch/arm64/boot/dts/qcom/purwa-iot-evk.dts
++++ b/arch/arm64/boot/dts/qcom/purwa-iot-evk.dts
+@@ -60,6 +60,26 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
  
-+static void bump_hook_base_seq(struct net *net)
-+{
-+	unsigned int base_seq = READ_ONCE(net->nf.hook_base_seq);
++	clocks {
++		clk_rtmr0_xo: clock-rtmr0-xo {
++			compatible = "fixed-clock";
++			clock-frequency = <25000000>;
++			#clock-cells = <0>;
++		};
 +
-+	while (++base_seq == 0)
-+		;
-+	smp_store_release(&net->nf.hook_base_seq, base_seq);
-+}
++		clk_rtmr1_xo: clock-rtmr1-xo {
++			compatible = "fixed-clock";
++			clock-frequency = <25000000>;
++			#clock-cells = <0>;
++		};
 +
- static int __nf_register_net_hook(struct net *net, int pf,
- 				  const struct nf_hook_ops *reg)
- {
-@@ -430,6 +439,7 @@ static int __nf_register_net_hook(struct net *net, int pf,
- 	if (!IS_ERR(new_hooks)) {
- 		hooks_validate(new_hooks);
- 		rcu_assign_pointer(*pp, new_hooks);
-+		bump_hook_base_seq(net);
- 	}
- 
- 	mutex_unlock(&nf_hook_mutex);
-@@ -483,6 +493,7 @@ static void __nf_unregister_net_hook(struct net *net, int pf,
- {
- 	struct nf_hook_entries __rcu **pp;
- 	struct nf_hook_entries *p;
-+	bool found;
- 
- 	pp = nf_hook_entry_head(net, pf, reg->hooknum, reg->dev);
- 	if (!pp)
-@@ -496,7 +507,8 @@ static void __nf_unregister_net_hook(struct net *net, int pf,
- 		return;
- 	}
- 
--	if (nf_remove_net_hook(p, reg)) {
-+	found = nf_remove_net_hook(p, reg);
-+	if (found) {
- #ifdef CONFIG_NETFILTER_INGRESS
- 		if (nf_ingress_hook(reg, pf))
- 			net_dec_ingress_queue();
-@@ -511,6 +523,8 @@ static void __nf_unregister_net_hook(struct net *net, int pf,
- 	}
- 
- 	p = __nf_hook_entries_try_shrink(p, pp);
-+	if (found)
-+		bump_hook_base_seq(net);
- 	mutex_unlock(&nf_hook_mutex);
- 	if (!p)
- 		return;
-@@ -784,6 +798,8 @@ static int __net_init netfilter_net_init(struct net *net)
- 		return -ENOMEM;
- 	}
- #endif
-+	net->nf.hook_base_seq = 1;
-+	net->nf.nat_hook_base_seq = 1;
- 
- 	return 0;
- }
-diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
-index cc8e1e81006d5..b214e0f0a5c86 100644
---- a/net/netfilter/nf_nat_core.c
-+++ b/net/netfilter/nf_nat_core.c
-@@ -1161,6 +1161,15 @@ nfnetlink_parse_nat_setup(struct nf_conn *ct,
- }
- #endif
- 
-+static void bump_nat_hook_base_seq(struct net *net)
-+{
-+	unsigned int base_seq = READ_ONCE(net->nf.nat_hook_base_seq);
++		clk_rtmr2_xo: clock-rtmr2-xo {
++			compatible = "fixed-clock";
++			clock-frequency = <25000000>;
++			#clock-cells = <0>;
++		};
++	};
 +
-+	while (++base_seq == 0)
-+		;
-+	smp_store_release(&net->nf.nat_hook_base_seq, base_seq);
-+}
-+
- static struct nf_ct_helper_expectfn follow_master_nat = {
- 	.name		= "nat-follow-master",
- 	.expectfn	= nf_nat_follow_master,
-@@ -1245,6 +1254,7 @@ int nf_nat_register_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
- 		nat_proto_net->nat_hook_ops = nat_ops;
+ 	connector3 {
+ 		compatible = "usb-a-connector";
+ 		label = "USB-3-Type-A";
+@@ -295,7 +315,6 @@ vreg_pcie_3v3_aux: regulator-pcie-3v3-aux {
+ 		pinctrl-names = "default";
+ 	};
  
- 	nat_proto_net->users++;
-+	bump_nat_hook_base_seq(net);
+-	/* Left unused as the retimer is not used on this board. */
+ 	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
+ 		compatible = "regulator-fixed";
  
- 	mutex_unlock(&nf_nat_proto_mutex);
+@@ -686,7 +705,7 @@ typec-mux@8 {
+ 		compatible = "parade,ps8830";
+ 		reg = <0x08>;
  
-@@ -1299,6 +1309,7 @@ void nf_nat_unregister_fn(struct net *net, u8 pf, const struct nf_hook_ops *ops,
- 		goto unlock;
- 	priv = nat_ops[hooknum].priv;
- 	nf_hook_entries_delete_raw(&priv->entries, ops);
-+	bump_nat_hook_base_seq(net);
+-		clocks = <&rpmhcc RPMH_RF_CLK5>;
++		clocks = <&clk_rtmr2_xo>;
  
- 	if (nat_proto_net->users == 0) {
- 		nf_unregister_net_hooks(net, nat_ops, ops_count);
-diff --git a/net/netfilter/nfnetlink_hook.c b/net/netfilter/nfnetlink_hook.c
-index 95005e9a60668..b05fd79397c5b 100644
---- a/net/netfilter/nfnetlink_hook.c
-+++ b/net/netfilter/nfnetlink_hook.c
-@@ -54,7 +54,6 @@ static int nf_netlink_dump_start_rcu(struct sock *nlsk, struct sk_buff *skb,
+ 		vdd-supply = <&vreg_rtmr2_1p15>;
+ 		vdd33-supply = <&vreg_rtmr2_3p3>;
+@@ -743,7 +762,7 @@ typec-mux@8 {
+ 		compatible = "parade,ps8830";
+ 		reg = <0x8>;
  
- struct nfnl_dump_hook_data {
- 	char devname[IFNAMSIZ];
--	unsigned long headv;
- 	u8 hook;
- };
+-		clocks = <&rpmhcc RPMH_RF_CLK4>;
++		clocks = <&clk_rtmr0_xo>;
  
-@@ -338,27 +337,47 @@ nfnl_hook_entries_head(u8 pf, unsigned int hook, struct net *net, const char *de
- }
+ 		vdd-supply = <&vreg_rtmr0_1p15>;
+ 		vdd33-supply = <&vreg_rtmr0_3p3>;
+@@ -848,7 +867,7 @@ typec-mux@8 {
+ 		compatible = "parade,ps8830";
+ 		reg = <0x8>;
  
- static int nfnl_hook_dump_nat(struct sk_buff *nlskb,
--			      const struct nfnl_dump_hook_data *ctx,
--			      const struct nf_hook_ops *ops,
--			      int family, unsigned int seq)
-+			      struct netlink_callback *cb,
-+			      const struct nf_hook_ops *ops, int family)
- {
- 	struct nf_nat_lookup_hook_priv *priv = ops->priv;
--	struct nf_hook_entries *e = rcu_dereference(priv->entries);
-+	struct nfnl_dump_hook_data *ctx = cb->data;
-+	struct net *net = sock_net(nlskb->sk);
- 	struct nf_hook_ops **nat_ops;
--	int i, err;
-+	unsigned int i = cb->args[1];
-+	struct nf_hook_entries *e;
-+	unsigned int base_seq;
-+	int err = 0;
+-		clocks = <&rpmhcc RPMH_RF_CLK4>;
++		clocks = <&clk_rtmr1_xo>;
  
-+	base_seq = smp_load_acquire(&net->nf.nat_hook_base_seq);
-+
-+	e = rcu_dereference(priv->entries);
- 	if (!e)
--		return 0;
-+		goto out;
- 
- 	nat_ops = nf_hook_entries_get_hook_ops(e);
- 
--	for (i = 0; i < e->num_hook_entries; i++) {
--		err = nfnl_hook_dump_one(nlskb, ctx, nat_ops[i],
--					 ops->priority, family, seq);
-+	for (; i < e->num_hook_entries; i++) {
-+		err = nfnl_hook_dump_one(nlskb, ctx,
-+					 READ_ONCE(nat_ops[i]),
-+					 ops->priority, family,
-+					 cb->nlh->nlmsg_seq);
- 		if (err)
--			return err;
-+			break;
-+
- 	}
--	return 0;
-+out:
-+	if (!err)
-+		i = 0;
-+	cb->args[1] = i;
-+
-+	if (cb->args[2] && base_seq != cb->args[2]) {
-+		cb->seq++;
-+		err = -EINTR;
-+	}
-+	cb->args[2] = base_seq;
-+
-+	return err;
- }
- 
- static int nfnl_hook_dump(struct sk_buff *nlskb,
-@@ -373,35 +392,31 @@ static int nfnl_hook_dump(struct sk_buff *nlskb,
- 	unsigned int i = cb->args[0];
- 
- 	rcu_read_lock();
-+	cb->seq = smp_load_acquire(&net->nf.hook_base_seq);
- 
- 	e = nfnl_hook_entries_head(family, ctx->hook, net, ctx->devname);
--	if (!e)
-+	if (!e || IS_ERR(e))
- 		goto done;
- 
--	if (IS_ERR(e)) {
--		cb->seq++;
--		goto done;
--	}
--
--	if ((unsigned long)e != ctx->headv || i >= e->num_hook_entries)
--		cb->seq++;
--
- 	ops = nf_hook_entries_get_hook_ops(e);
- 
- 	for (; i < e->num_hook_entries; i++) {
--		if (ops[i]->hook_ops_type == NF_HOOK_OP_NAT)
--			err = nfnl_hook_dump_nat(nlskb, ctx, ops[i], family,
--						 cb->nlh->nlmsg_seq);
--		else
--			err = nfnl_hook_dump_one(nlskb, ctx, ops[i],
--						 ops[i]->priority, family,
-+		const struct nf_hook_ops *cur = READ_ONCE(ops[i]);
-+
-+		if (cur->hook_ops_type == NF_HOOK_OP_NAT) {
-+			err = nfnl_hook_dump_nat(nlskb, cb, cur, family);
-+		} else {
-+			err = nfnl_hook_dump_one(nlskb, ctx, cur,
-+						 cur->priority, family,
- 						 cb->nlh->nlmsg_seq);
-+		}
- 		if (err)
- 			break;
- 	}
- 
- done:
--	nl_dump_check_consistent(cb, nlmsg_hdr(nlskb));
-+	if (nlskb->len > 0)
-+		nl_dump_check_consistent(cb, nlmsg_hdr(nlskb));
- 	rcu_read_unlock();
- 	cb->args[0] = i;
- 	return nlskb->len;
-@@ -442,10 +457,7 @@ static int nfnl_hook_dump_start(struct netlink_callback *cb)
- 		return -ENOMEM;
- 
- 	strscpy(ctx->devname, name, sizeof(ctx->devname));
--	ctx->headv = (unsigned long)head;
- 	ctx->hook = hooknum;
--
--	cb->seq = 1;
- 	cb->data = ctx;
- 
- 	return 0;
+ 		vdd-supply = <&vreg_rtmr1_1p15>;
+ 		vdd33-supply = <&vreg_rtmr1_3p3>;
 -- 
 2.53.0
 
