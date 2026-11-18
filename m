@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031959;
-	b=d8G3KljBKLPQT55vgwAEO22CxwkUdwV+ZYOY4z8K/OTISKQ+IwFHW6CZOeLSM74/MbJQ
-	 ZVsIaFGmqKDkRQyhwDcHkh++4F5XO4eKU+Xg5vG3oTg/CYA+kYaTocla/U63mZtZHI5Xc
-	 xQaGgPND2Umj+mn9Z2y/NnH1ZQPTVV2bR9JAvTgrMQ5U2Wbd1bciAebphMKwF/ZiwR005
-	 k0tkz+W5B3/dp/Fj1S+e5gjkcjBXGaaM/0NLzkfN2rO5+fqf5Jgle9GZ6jBdBjhhTnUUZ
-	 S9IEQeGDXNVZfrxSngRJZXhRGl8PkETTYSaZRdJteLI2mz0bmgtG/Xu3qrkl4vQRvDg==
+	t=1795031961;
+	b=bZmMLfkH7UNvZ7VELSBa4PD7YrxC4ntas7aZgFGak1WrAZd6dAF2uJyoSNi7KNtpQ0yN
+	 Yo/k/GW2Sn49rhavYT5/iqupH4OYpGpuoUO1aIdsBb2eYXMbJoeIN0eYhtiBfCtVyWNxN
+	 JtqCA5EWwWugtYm7lHQCTle04OASc1W5AJD9bD5L0In/og6hg/xsVwvKPAtPL8/oh/MxM
+	 dBv1Swgv/katayqDYm3YQ8sUTdw/HHuBQTFJqWaN4dx6vrTMj04LrwqvDV6VcUFFdKfUh
+	 vsd28lKKJHGvzaZ/6I0jU17KYlw81JX01UMQZUt23p2Exy4GXRE6moZ4MjY5E3Iiuhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031959;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031961;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=UFWAFqeNRPgXE9REj7rcT94ciiSOrBLf2UoT/nRRGP8=;
-	b=IeNX/P6hK0aVW7hCkuwoxryYrvLr/pt5gbblr8VMJqlkvgr2VBZjUQ3OGeiEKK56q2c2
-	 oIkk0aD94mnT+9onfHpuU0+7N2GWBjZSj8uT5+Iv1XlZjTmh+lSCeIoulr/ff3x8FooC5
-	 fjcuD5XPh9mF3V0HmrEYOQVEZcAx75b0kyJeek8elhoInqViyO0ilxmf0q6BUZIJqHvPG
-	 kUPRJTqlgADPy3udqp8cy9JM88AC72px5GZVAo4oA4+QDAQzUTLP/P5kECVrBQdGHKHx4
-	 O4rWH7wmOAnvcUbAdgaL2ERhQvI8txjtmeXNYQ4rpIStiXNjK1g+lIXu0kY2OqvvfOQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=Ma+XF8nQGlt3GB98Sp6+KcdnO34horcO5PmtaaMf8/s=;
+	b=IOZXiCwUc4zM3eFRie33XOi9HsKEkFiWlJkijsVxM0CQnDfGnjbitQUzTsYXVxHVpsRQ
+	 NL2awUoPTCqeyXv/0am5IrdCT+tsLfzkeLfI4VJ6KKO967fkE5bSZh5+4CUQhKSWG1n2Z
+	 tZcIG6T3eSwAnr+xe8daVXtKva2v3sP3YFZbMsycmhi914NmvBKaMIcGG8LpLqHNonHns
+	 Q8agayzkNiXzxrdXqIzoNVXHf+4ngNRvR3DgMMVYehG/ULkZuSpT2oKSiCafnUVTwYWvY
+	 vfsq9fczk7a8T+/gIBFmHLAk1NUdMaLDI5TdZkDJBY5OMs/46f+IijjMmK2EkZrnDeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRkCBhj6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tRlChqwL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002BF60A260B;
-	Wed, 18 Nov 2026 19:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46F4606A325;
+	Wed, 18 Nov 2026 19:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wRkCBhj6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111791F000C4;
-	Wed, 18 Nov 2026 19:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tRlChqwL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E811F000C5;
+	Wed, 18 Nov 2026 19:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031958;
-	bh=UFWAFqeNRPgXE9REj7rcT94ciiSOrBLf2UoT/nRRGP8=;
+	s=korg; t=1795031961;
+	bh=Ma+XF8nQGlt3GB98Sp6+KcdnO34horcO5PmtaaMf8/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wRkCBhj6Z9eB8UshInv28b/MbOW8f0q2UxLbU+nuiyabeUk87XgN5989cCeeTwKQU
-	 ERs228R3UC0BWO4sRm5xywti3QTKsCtrED/uMhDeP7wIUE+0VFfP3rUTGi6eBar3Nr
-	 SR2S4KiCn3T8LEa6qpb/FjHpP0N5MYCOafhK6nY4=
+	b=tRlChqwLdMJ1IDWWH5SGq/OTu13RAalmneTGmnSwz8mlj135mXsNyzWLzlbQtnpa4
+	 EdwauI0YfVzaQiUUSJzESjN6StwYq8kGw2EpxpGbZL9rUqTcgnPHzfj7QlJDrLWKkU
+	 e0ci3s0JE33TDgcPhx37Cf5RNhQnzXgiX3xQryNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Bilal <meatuni001@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1190/1756] platform/x86: hp-bioscfg: fix off-by-one in password length check
-Date: Wed, 18 Nov 2026 15:55:17 +0100
-Message-ID: <20261118150057.259397222@linuxfoundation.org>
+Subject: [PATCH 6.12 1236/1756] Bluetooth: 6lowpan: Drain RCU readers on registration failure
+Date: Wed, 18 Nov 2026 15:56:03 +0100
+Message-ID: <20261118150058.979744419@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,55 +62,228 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Muhammad Bilal <meatuni001@gmail.com>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 0c22178524864af85ea380be4b2d36078c0edc9c ]
+[ Upstream commit ebba800d140b580540ad55f670d943e4a7edaffd ]
 
-current_password and new_password hold MAX_PASSWD_SIZE bytes including
-the NUL, but validate_password_input() accepts a password of exactly
-MAX_PASSWD_SIZE characters when the firmware limits allow it.
-strscpy() then truncates it and fails with -E2BIG, which
-store_password_instance() ignores, so the write reports success with a
-truncated password stored.
+A lowpan_btle_dev is embedded in its net_device allocation and must
+remain alive until readers of bt_6lowpan_devices have left their RCU
+sections. setup_netdev() publishes it before registration, but its
+error path only unlinks it before calling free_netdev().
 
-For example, with a max_password_length of 64 or more, writing 64
-characters succeeds but only 63 are stored.
+If a second controller's registration fails while multicast is sent
+on an existing 6LoWPAN interface, send_mcast_pkt() can already have
+selected the new entry. It reads entry->netdev before checking which
+interface owns it. An early failure, such as allocating the device's
+name node, leaves NETREG_UNINITIALIZED, so free_netdev() releases the
+storage immediately.
 
-Reject lengths of MAX_PASSWD_SIZE or more.
+The following ordering frees the selected entry before the reader
+loads its netdev field:
 
-Compile tested only.
+  Adapter creation (controller B)       Multicast on controller A
+  setup_netdev()
+    list_add_rcu()
+                                       rcu_read_lock()
+                                       select B's entry
+    lowpan_register_netdev() fails
+    list_del_rcu()
+    free_netdev()
+                                       read entry->netdev
+                                       rcu_read_unlock()
 
-Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
-Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
-Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
-Link: https://patch.msgid.link/20261007134711.473857-6-meatuni001@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Removing the list node does not wait for that reader, and
+devices_lock does not serialize the multicast reader. The subsequent
+field load is a use-after-free, reported by KASAN in bt_xmit().
+
+Wait for an RCU grace period after dropping devices_lock and before
+free_netdev(). This keeps the failed adapter allocated until traversals
+that could have selected it complete. The callback is already sleepable,
+and the wait happens outside the list spinlock.
+
+KASAN report as below:
+
+    ==================================================================
+    BUG: KASAN: slab-use-after-free in bt_xmit+0x1d06/0x21e0
+    Read of size 8 at addr ffff88810ef45030 by task python3/556
+
+    Call Trace:
+     <TASK>
+     dump_stack_lvl+0x93/0xd0
+     print_report+0xce/0x630
+     ? bt_xmit+0x1d06/0x21e0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __virt_addr_valid+0x20d/0x410
+     ? bt_xmit+0x1d06/0x21e0
+     kasan_report+0xe0/0x110
+     ? bt_xmit+0x1d06/0x21e0
+     bt_xmit+0x1d06/0x21e0
+     ? __pfx_bt_xmit+0x10/0x10
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_acquire+0x17b/0x2f0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_is_held_type+0x8f/0x100
+     ? dev_hard_start_xmit+0x187/0x660
+     ? __pfx_bt_xmit+0x10/0x10
+     dev_hard_start_xmit+0x187/0x660
+     sch_direct_xmit+0x153/0x850
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_sch_direct_xmit+0x10/0x10
+     ? do_raw_spin_lock+0x130/0x270
+     ? __pfx_do_raw_spin_lock+0x10/0x10
+     ? lock_is_held_type+0x8f/0x100
+     __dev_queue_xmit+0x3111/0x3aa0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? look_up_lock_class+0x59/0x130
+     ? register_lock_class+0x41/0x790
+     ? __pfx___dev_queue_xmit+0x10/0x10
+     ? __lock_acquire+0x466/0x2260
+     ? find_held_lock+0x2b/0x80
+     ? ___neigh_create+0x1690/0x2540
+     ? __local_bh_enable_ip+0xa6/0x120
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lockdep_hardirqs_on_prepare+0xea/0x1a0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_acquire+0x17b/0x2f0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? find_held_lock+0x2b/0x80
+     ? ip6_finish_output2+0x8be/0x1840
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? neigh_connected_output+0x39f/0x4e0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     neigh_connected_output+0x33f/0x4e0
+     ip6_finish_output2+0x8be/0x1840
+     ip6_finish_output+0x424/0xd50
+     ip6_output+0x210/0x640
+     ? __pfx_ip6_mr_output+0x10/0x10
+     ip6_local_out+0x193/0x1c0
+     ip6_send_skb+0xfb/0x3e0
+     udp_v6_send_skb+0x6e1/0x1180
+     udpv6_sendmsg+0x1f9b/0x2a00
+     ? get_random_u32+0xaf/0x640
+     ? __pfx_udpv6_sendmsg+0x10/0x10
+     ? lock_release+0xc8/0x280
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lockdep_hardirqs_on_prepare+0xea/0x1a0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __local_bh_enable_ip+0xa6/0x120
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? __pfx_udpv6_sendmsg+0x10/0x10
+     ? inet6_sendmsg+0xff/0x140
+     inet6_sendmsg+0xff/0x140
+     __sys_sendto+0x320/0x470
+     ? __pfx___sys_sendto+0x10/0x10
+     ? exc_page_fault+0x5c/0xc0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? lock_release+0xc8/0x280
+     ? handle_mm_fault+0x12e/0x580
+     __x64_sys_sendto+0xe5/0x1c0
+     ? lockdep_hardirqs_on_prepare+0xea/0x1a0
+     ? srso_alias_return_thunk+0x5/0xfbef5
+     ? trace_hardirqs_on+0x18/0x160
+     do_syscall_64+0x115/0x6a0
+     entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    Allocated by task 502:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     __kasan_kmalloc+0xaa/0xb0
+     __kvmalloc_node_noprof+0x353/0x930
+     alloc_netdev_mqs+0xa0/0x1250
+     chan_ready_cb+0x198/0x1110
+     l2cap_recv_frame+0x6dc0/0x8830
+     l2cap_recv_acldata+0xe9f/0x10e0
+     hci_rx_work+0x5a6/0xf00
+     process_one_work+0x908/0x19c0
+     worker_thread+0x65c/0xe40
+     kthread+0x34f/0x460
+     ret_from_fork+0x659/0x940
+     ret_from_fork_asm+0x1a/0x30
+
+    Freed by task 502:
+     kasan_save_stack+0x33/0x60
+     kasan_save_track+0x14/0x30
+     kasan_save_free_info+0x3b/0x60
+     __kasan_slab_free+0x5f/0x80
+     kfree+0x307/0x580
+     free_netdev+0x6ca/0x8f0
+     chan_ready_cb+0xd91/0x1110
+     l2cap_recv_frame+0x6dc0/0x8830
+     l2cap_recv_acldata+0xe9f/0x10e0
+     hci_rx_work+0x5a6/0xf00
+     process_one_work+0x908/0x19c0
+     worker_thread+0x65c/0xe40
+     kthread+0x34f/0x460
+     ret_from_fork+0x659/0x940
+     ret_from_fork_asm+0x1a/0x30
+
+    The buggy address belongs to the object at ffff88810ef44000
+                                                                which
+                                belongs to the cache kmalloc-8k of size
+                                8192
+    The buggy address is located 4144 bytes inside of
+                                                                freed
+                                8192-byte region [ffff88810ef44000,
+                                ffff88810ef46000)
+
+    The buggy address belongs to the physical page:
+        page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
+    pfn:0x10ef40
+    head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
+    flags: 0x200000000000040(head|node=0|zone=2)
+    page_type: f5(slab)
+        raw: 0200000000000040 ffff888100043180 dead000000000100
+    dead000000000122
+        raw: 0000000000000000 0000000000020002 00000000f5000000
+    0000000000000000
+        head: 0200000000000040 ffff888100043180 dead000000000100
+    dead000000000122
+        head: 0000000000000000 0000000000020002 00000000f5000000
+    0000000000000000
+        head: 0200000000000003 fffffffffffffe01 00000000ffffffff
+    00000000ffffffff
+        head: ffff88810ef41a80 0000000000000000 00000000ffffffff
+    0000000000000000
+    page dumped because: kasan: bad access detected
+
+    Memory state around the buggy address:
+     ffff88810ef44f00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     ffff88810ef44f80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+    >ffff88810ef45000: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                                         ^
+     ffff88810ef45080: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     ffff88810ef45100: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+    ==================================================================
+    Disabling lock debugging due to kernel taint
+
+Fixes: 5857d1dbae7d ("Bluetooth: 6lowpan: Fix possible race")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/6lowpan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-index 52bff847d4297..814a4e8026cb5 100644
---- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-+++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
-@@ -74,7 +74,7 @@ static int validate_password_input(int instance_id, const char *buf,
- 	if (is_current && !length)
- 		return 0;
- 
--	if (length > MAX_PASSWD_SIZE)
-+	if (length >= MAX_PASSWD_SIZE)
- 		return -E2BIG;
- 
- 	if (password_data->min_password_length > length ||
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index ae513367b9d6d..ab8efe35761e5 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -705,6 +705,7 @@ static int setup_netdev(struct l2cap_chan *chan, struct lowpan_btle_dev **dev)
+ 		spin_lock(&devices_lock);
+ 		list_del_rcu(&(*dev)->list);
+ 		spin_unlock(&devices_lock);
++		synchronize_rcu();
+ 		free_netdev(netdev);
+ 		goto out;
+ 	}
 -- 
 2.53.0
 
