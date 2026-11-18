@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034115;
-	b=4hauin86pJgNK0rypRh7ebfB7kaY0TaMACA0SO5jCC0IjuMitZ1pSSiXBCIwmCPPK7mS
-	 DApEPBoVLFugDAutbE1Rx3MEEqo4RAfpc/5bJe3t/wSbfamr8z4GDgcvV1rqNwdRBDm4j
-	 2jXQUClWMAQbAccwkKgdJiHGlUa+FgLcO3A7bQHDo+61y0U8Mc6v3i+woZtpqdM+Y7wno
-	 cXMj3eLZFquJzdWHNQJhyjfiGbTbtdMNXvC4pn7wN00VzU95iWK5ikcTNG9urrVgX6Jfw
-	 ljBTS2d/15aaDAyDKHe7Ibe+rGTCNunTbFu72Lf4nxiXGs6bQPjYUNFWxxj2xhGJPIg==
+	t=1795034118;
+	b=qtR/1zPlLCY8RRjVzHUESHGRf1q20rPj1WEIDUnBzT/WjN3xv8hRmc/KC6ltNKD/xUB1
+	 22llZfbiIBhk+s+s44G1DBPBxbgPfgotSd4jyGr9dGe5EijTSD0Uqzp5y/WxHzK0/HaHm
+	 fTPCDfur8AtpxlSM+MJnYzCCSsXUhB6/XT5zNMZqTfdmbMeL2fQ09p+8YFZB1kd0tw/x5
+	 TSBCbfNA6YS6aS4D2PaG7p3EoIx2ZO1BYLgM6pKmx0B5f1pkNZTer18n++/p1OyZaoLWl
+	 FGmNjn8CUEoy6sptnrFbUnX8nOmTuPdnrunnNucQzfupqpxiZOOvvs0rWios9R+sYLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034115;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034118;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8v/AHxfpf8MjlSEKnu5aHUOb+XGchoyP68BFB0hojrc=;
-	b=zYr9hw53VBj6RvZjuIzwmE/rYw3Sa2uoq75m8q4xJDs9d3A/FD2wNvZ81Thn0VPVxZPq
-	 Tpxmd9hCIwT90khYLRIC5s/ciXx4Iyjp2KpBaOQ8jfLbEA0eFMHshQWkeJsW321GwRm9d
-	 WxuMapZUMtUJPHqUT5tiy+tCB+ysGWJr/jJnlFtyh2IJX3tNHNWgXyQWFMkkfm87+3YzU
-	 C6+CB8Elh+LOpY2Kq1JL4pcxrCF/UAoJ0JYKNCHz0c50A6ADlXtHZxZ4Rlg8WR9At1o9V
-	 MINs6iSJvs5wHxIpG21EIJQzkH9pJ5tPXKvGPtRSyzhX1A+7xzzosCsULcn3BbBsKcw==
+	bh=LLYQX6Tbpj0s6XOgUeXMQim4Eu7sn3dK7AodTgqm0YU=;
+	b=P0cGaR5P2ujxISheYGdMJE7oPOjeOjnhpvyzH4J7eRD0Vy0QRp3HAzwJTn/tb/oPb2yv
+	 4UZoTbkCLzBeFaywqFnewlSDnpokaTN6plMgnlD8HI3ZKVQ7pabIHB+VmHwCUotl/uXNV
+	 pjp80m9h4azGYtej3osaUQhNVKcrkpBKKz/HphCkCs5kkPxolVSsCPnJBXDvqh8FgV9bp
+	 UpG8WmU1Xq4KoOZrrE782hXzsDeEAiW4S9jSvHZollX1s8pElUp2UJlhmEMIqxyHcIZMQ
+	 f6c2Uag8jl7AdgotITHkTQFAWUq8WBzqOYV8+mkxz13pnTwajm+4YPgwKV4a8SuYyVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CN6bxwMC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZARZawW7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFB8606A31C;
-	Wed, 18 Nov 2026 20:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF17606A31C;
+	Wed, 18 Nov 2026 20:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CN6bxwMC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC741F000C4;
-	Wed, 18 Nov 2026 20:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZARZawW7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D631F000C4;
+	Wed, 18 Nov 2026 20:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034115;
-	bh=8v/AHxfpf8MjlSEKnu5aHUOb+XGchoyP68BFB0hojrc=;
+	s=korg; t=1795034118;
+	bh=LLYQX6Tbpj0s6XOgUeXMQim4Eu7sn3dK7AodTgqm0YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CN6bxwMChWdXaJ2lGWWdK4OX4/wTnqlUBuWigtDpZxv1kmfVzIP4dDVUzFaZva5Pk
-	 r2g8/LYGpbhxM351oHqQ+Ylnjz9Q8hryn9twU9/V0akitiYDxcGpVbXmWwwvCfOD9n
-	 5NxK873t57GHuxhujSXre+spbkBEGFr6IeBycAgA=
+	b=ZARZawW7dMRvfcHKU1CVq3AMA3gSMMAHmxQ5zNqzzvQmpufGGri4pAa23q+atQa/T
+	 kFiKuaL421YzUuA9DkhGK7jbHq0zF+wUnskx8DHlXYz5aImW+py/isNzwarqMGmLmj
+	 3CcCPyzi+YxSYPWIBFJ3EYkeuNZZZUX7wkKj71p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Helge Deller <deller@gmx.de>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0256/3318] fbdev: udlfb: validate vendor descriptor items
-Date: Wed, 18 Nov 2026 15:14:38 +0100
-Message-ID: <20261118150323.022040984@linuxfoundation.org>
+Subject: [PATCH 6.6 0257/3318] ALSA: usx2y: Stop clearing urb->hcpriv before submission
+Date: Wed, 18 Nov 2026 15:14:39 +0100
+Message-ID: <20261118150323.056944093@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,63 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 3cc2fad376ac7360b4518277aa923752624db59c ]
+[ Upstream commit fabae5548149ef5c8a056875d9ebdc38366db539 ]
 
-dlfb_parse_vendor_descriptor() walks key-length-value items inside the
-DisplayLink vendor descriptor.
+This is managed by USB core and drivers aren't expected to touch it.
 
-Require each item to contain its key, length and declared value bytes
-before reading item-specific fields such as max_area.
+It should only be not NULL on a submitted URB, in which case clearing
+defeats the "submitted while active" sanity check in usb_submit_urb()
+and may crash the HCD handling the URB and panic the kernel.
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Link: https://patch.msgid.link/20260810075728.483c827e.michal.pecio@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/udlfb.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ sound/usb/usx2y/usbusx2yaudio.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/udlfb.c b/drivers/video/fbdev/udlfb.c
-index 80b36f4caf0cf..0175869e58e54 100644
---- a/drivers/video/fbdev/udlfb.c
-+++ b/drivers/video/fbdev/udlfb.c
-@@ -1629,19 +1629,29 @@ static int dlfb_parse_vendor_descriptor(struct dlfb_data *dlfb,
- 		desc += 5; /* the fixed header we've already parsed */
- 
- 		while (desc < desc_end) {
-+			char *value;
- 			u8 length;
- 			u16 key;
- 
--			key = *desc++;
--			key |= (u16)*desc++ << 8;
-+			if (desc_end - desc < sizeof(key) + sizeof(length))
-+				goto unrecognized;
-+
-+			key = get_unaligned_le16(desc);
-+			desc += sizeof(key);
- 			length = *desc++;
- 
-+			if (length > desc_end - desc)
-+				goto unrecognized;
-+
-+			value = desc;
- 			switch (key) {
- 			case 0x0200: { /* max_area */
--				u32 max_area = *desc++;
--				max_area |= (u32)*desc++ << 8;
--				max_area |= (u32)*desc++ << 16;
--				max_area |= (u32)*desc++ << 24;
-+				u32 max_area;
-+
-+				if (length < sizeof(max_area))
-+					goto unrecognized;
-+
-+				max_area = get_unaligned_le32(value);
- 				dev_warn(&intf->dev,
- 					 "DL chip limited to %d pixel modes\n",
- 					 max_area);
+diff --git a/sound/usb/usx2y/usbusx2yaudio.c b/sound/usb/usx2y/usbusx2yaudio.c
+index e8c7a9ba4e51d..3a7efa57edab3 100644
+--- a/sound/usb/usx2y/usbusx2yaudio.c
++++ b/sound/usb/usx2y/usbusx2yaudio.c
+@@ -167,7 +167,6 @@ static int usx2y_urb_submit(struct snd_usx2y_substream *subs, struct urb *urb, i
+ 	if (!urb)
+ 		return -ENODEV;
+ 	urb->start_frame = frame + NRURBS * nr_of_packs();  // let hcd do rollover sanity checks
+-	urb->hcpriv = NULL;
+ 	urb->dev = subs->usx2y->dev; /* we need to set this at each time */
+ 	err = usb_submit_urb(urb, GFP_ATOMIC);
+ 	if (err < 0) {
 -- 
 2.53.0
 
