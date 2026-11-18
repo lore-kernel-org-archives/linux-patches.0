@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044945;
-	b=Fg0YiOwlIgeJ6cSmfUji3udVCad6MiZrOaPR6y9euYjF4qQ7zxszEMA4hU/6ly5DLal7
-	 P7YTqaxLimSxH9O3iEP7Y5y6Dw4IW4iRyRL802UMG7WNXbm9EVnOvlKP8G9uVNYh8qP/g
-	 d6uHe+PzfkhIlSTuhvkNkhm6zm8mttyvFh0bwTPwKupeoKHsAPjqfufQf1blaeVOD9ToG
-	 ZBohRAilMzf74HL+wxl/yMN1QQ4Cl653F3AK1CmRN8XRQlxnJLn3PQ3cTDNEBR7Q9BtXj
-	 2jZVcZc8KwPal275KgYdH+eiCJQKcX00I2r9IxhPcttQSWq37t9Pf4upxNndf5PQRuA==
+	t=1795044948;
+	b=xFixZNuiVfNLrKRn6Kh8pa4PHE3rYodnaZ5dtxyQupGTtFMO8aJm3GD9XoN+JOEGXyQG
+	 31Y40CHAMejIcnKrQgg/8d6CmMugV54Zqp5hTm+2WRp2Qn/5j1xTQuLAkSbrIHsEPKtBA
+	 8HV9+UDQVzjetqVnZyoqp5lMLEMGVn3TKMqSCkisRM6OAfoWVSubZEyCOzsBD52X0Td3v
+	 GYFG4veoSgKigARFCwaUdc/dYAsrMIZMHUgLQ7zSXbSXgqx2nyat4pgf9yYNGi1uwEZUY
+	 jy5orTJs2TaTo25oB/8QznGzuk7kq9uNGs3ujpR4w5qQ9DX9yZx/t7NIBXboGEJ/C/A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044945;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044948;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jydgW45lFgG4e4ND4uMRxR1J1tWOp5XzHXbv2shJcfs=;
-	b=YExC7owRaTZKhscXZNIV8TfifzfZg2gAbntyAys4SJjdK6Xv6QEaNjqd/Fj35rPTQrD4
-	 sT/cIAqgfbWpSMAHZYTO3EdM4Ghv7SohNPxniJpW2cSPiP/ZiJBeMs5e0Z1Vs9cjziHXL
-	 KAoM/BWlcDVluxno5EaASalmfIY89wVbEnM9JURFXEcExaYzhRDmMwC2EaeJR12X38ye4
-	 VeiU4HC8yeKhXLaVSn4UWLdzu1bME50M/qmxStGtDTVSXrHMqLOZCiRGDOl+dyb4Uh4GP
-	 6mntCYsQlsFb0gP2lYQZsug7g4+Wwt8/jm9JjDIM210nfTDj+tlHeEq+yJg/9PoCnPQ==
+	bh=s57fSZaHw2OGPv/3nlGK73bhUU3CF4NDtUzwx5zeG8s=;
+	b=A6eIm+kcN9Kv2ULx361qB4UPhS2IEHu9DkLld9jqZmsn4+uV476ScC2DL0zfp8M8lbCq
+	 Dyo6yNEIR4qR+eXG+K9QjNJfGxe0m4Fu+PcreBJxaI0v3agbasvkMjWz6LvVPyiwdPW7u
+	 LUDkAPHJyhRJDbrPg9NG56YN/hDbY4XgWML/Mxg1v+4X+LJb+eMCROEFckLR7WHsv3i/4
+	 y2uy+O4b4JpOiBo0r4qFflAD1319gQWCQ6Yu0hHy19aGz96nF+E6sRb7ZqflgmW4OZKG/
+	 TfyJ/WjOPujrbWsqY78rPrjwjAzn9xeByJ2v5H0fvV+zrMhkkazaSv4JDDnvjVrf6eg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCjjdsHH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hJ7snIbN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C32606A32F;
-	Wed, 18 Nov 2026 23:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1BD606A325;
+	Wed, 18 Nov 2026 23:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mCjjdsHH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CD21F000C4;
-	Wed, 18 Nov 2026 23:35:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hJ7snIbN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49031F000C4;
+	Wed, 18 Nov 2026 23:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044945;
-	bh=jydgW45lFgG4e4ND4uMRxR1J1tWOp5XzHXbv2shJcfs=;
+	s=korg; t=1795044948;
+	bh=s57fSZaHw2OGPv/3nlGK73bhUU3CF4NDtUzwx5zeG8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mCjjdsHHgizN4fbm+iUWeMPqFxsFx89CzRsqmS9h64xfCKQ6QtfjFInAIBbPCYYsv
-	 zvZmrSPFjlBnNHevOT9UisSS3ksBk82Ql8ZfpjGBu/2zPNAx55/45QwOyhnjSsrqfl
-	 quWm4BYxpEc+epW+VRzFouWDfCwOx8QEJdPETTk8=
+	b=hJ7snIbNfVClljVhI5AKt2MKG7H8WQASd2XfRQKCL42rN0Om1PkmOw0PSFWI2Ensn
+	 ghIaOjxkVqkoGJTjZFFTrge5QCOLusF4fjlwj9njqOhsq+xL9rm8cgrP85FyLBIVcn
+	 PUFmk2H/ee3KfL++Cxw56s/2tw/rOHGuwG1I9coA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Michael Walle <mwalle@kernel.org>,
+	Balakrishnan Sambath <balakrishnan.s@microchip.com>,
+	Eugen Hristev <ehristev@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0731/2857] mtd: spi-nor: sfdp: check the length of the xSPI Profile 1.0 table
-Date: Wed, 18 Nov 2026 15:29:25 +0100
-Message-ID: <20261118150227.870803714@linuxfoundation.org>
+Subject: [PATCH 6.1 0749/2857] media: microchip-isc: fix PM runtime leak in AWB work handler
+Date: Wed, 18 Nov 2026 15:29:43 +0100
+Message-ID: <20261118150228.519997505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,58 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Balakrishnan Sambath <balakrishnan.s@microchip.com>
 
-[ Upstream commit b9f34a95a81021fa1f3c9cb8cfd458e66824cad6 ]
+[ Upstream commit 21ad8225822a892c4c273bf1368d477a83a19dbb ]
 
-The spi_nor_parse_profile1() sizes its buffer from the table length the
-flash reports in the SFDP parameter header. But it then reads DWORD1,
-DWORD4 and DWORD5 without ever checking the table is that long.
+Early return when streaming stops skips pm_runtime_put_sync(),
+leaking the reference and preventing runtime suspend.
 
-So if a flash reports a length of one, the buffer is only four bytes
-while DWORD4 and DWORD5 sit at byte offsets 12 and 16. With a length of
-zero kmalloc() returns ZERO_SIZE_PTR rather than an error, so the NULL
-check doesn't catch it and the first read dereferences it. And the value
-doesn't just get thrown away. It ends up as the dummy cycle count for
-8D-8D-8D fast reads.
-
-To fix this, reject a table that's too short for the highest DWORD the
-parser reads, the way spi_nor_parse_4bait() already does. The table is
-optional, so this isn't fatal. The spi_nor_parse_sfdp() warns and
-carries on.
-
-Fixes: fb27f198971a ("mtd: spi-nor: sfdp: parse xSPI Profile 1.0 table")
+Fixes: 314c96e5203d ("media: atmel: atmel-isc-base: use mutex to lock awb workq from streaming")
 Cc: stable@vger.kernel.org
-Assisted-by: Claude:claude-opus-4-8
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Balakrishnan Sambath <balakrishnan.s@microchip.com>
+Reviewed-by: Eugen Hristev <ehristev@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/sfdp.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/platform/atmel/atmel-isc-base.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/sfdp.c b/drivers/mtd/spi-nor/sfdp.c
-index f738f6d5219a9..d13f5988c34ff 100644
---- a/drivers/mtd/spi-nor/sfdp.c
-+++ b/drivers/mtd/spi-nor/sfdp.c
-@@ -1142,6 +1142,7 @@ static int spi_nor_parse_4bait(struct spi_nor *nor,
- #define PROFILE1_DWORD5_DUMMY_166MHZ		GENMASK(31, 27)
- #define PROFILE1_DWORD5_DUMMY_133MHZ		GENMASK(21, 17)
- #define PROFILE1_DWORD5_DUMMY_100MHZ		GENMASK(11, 7)
-+#define SFDP_PROFILE1_DWORD_MIN			5
+diff --git a/drivers/media/platform/atmel/atmel-isc-base.c b/drivers/media/platform/atmel/atmel-isc-base.c
+index bb9c082764076..9e91e4d948a24 100644
+--- a/drivers/media/platform/atmel/atmel-isc-base.c
++++ b/drivers/media/platform/atmel/atmel-isc-base.c
+@@ -1471,7 +1471,7 @@ static void isc_awb_work(struct work_struct *w)
+ 	/* streaming is not active anymore */
+ 	if (isc->stop) {
+ 		mutex_unlock(&isc->awb_mutex);
+-		return;
++		goto out_pm_put;
+ 	}
  
- /**
-  * spi_nor_parse_profile1() - parse the xSPI Profile 1.0 table
-@@ -1159,6 +1160,9 @@ static int spi_nor_parse_profile1(struct spi_nor *nor,
- 	int ret;
- 	u8 dummy, opcode;
+ 	isc_update_profile(isc);
+@@ -1482,6 +1482,7 @@ static void isc_awb_work(struct work_struct *w)
+ 	if (ctrls->awb)
+ 		regmap_write(regmap, ISC_CTRLEN, ISC_CTRL_HISREQ);
  
-+	if (profile1_header->length < SFDP_PROFILE1_DWORD_MIN)
-+		return -EINVAL;
-+
- 	len = profile1_header->length * sizeof(*dwords);
- 	dwords = kmalloc(len, GFP_KERNEL);
- 	if (!dwords)
++out_pm_put:
+ 	pm_runtime_put_sync(isc->dev);
+ }
+ 
 -- 
 2.53.0
 
