@@ -1,58 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049535;
-	b=ToOxvoZULeMIlP4kGD43qLDwzkGend2aNolI63Gm9gSZv0pNqSf0p3x+MALvZiEiOze2
-	 xzRRuVF+d6axHH5/oF72P3VpLHzqYbje/d94bQgvWjHR8oeWEHmql628AJZXOhvK0vA/v
-	 TVSIhtjwkQU0QnvcuCJECIO5Gj6RnLXrbpXIVtqPBFFDiUK5UJb5f95L5e1/jeiTf6LqL
-	 XT8Wbr1TutZI6/FHDkhj0Eg6GR7q4+11PKeh5ve6xCn+Meh5j5BewSs74QndR7pHdWH3N
-	 0Qvbqt6s8RQKXdkerNNbkDrTxVskqY9Igh8q2XvKbOw+WpEO2glZ92HODY5aVMjDB4g==
+	t=1795049538;
+	b=uDuvMwAkGunPP10S03fkTY9qvvCbTN532EekGL79VSnEuM+FC04Xq8y1cXP1IL1GkHCY
+	 kG0LK3eufY2wIVpSchbIZnreMRz5eIp81HLIPfK9VVwa9km/axlsQ17XHy70ACGFsH5k5
+	 SiaEHDLkbelYYSrGc08TTcB+2ebAxqDuf5a+VRYlq5H6ZvDpTCQYsQijHvZ1VZNR/8UMF
+	 f7ulUj1xxxaB95QdIcwm6AxmcHDSz5WldsPjkBDW8WGG88iQl/va/SBHCMXJAEheVyT6s
+	 6M2I2BR+jWKHSOrdRn0lR0CLAOqqYqrQQwwQQMNHwR05HtKTOVQ5u2kbQZgJxttnLhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049535;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ZG0rojApCUeo2aAlCqLPy7pPNeqwTkcgxmMXBybDL6s=;
-	b=ut4bCBfoQmueabKObfOEfdVj+ynARjTWgawYg8P+C/F400D7cQAREs/iqpmaqru34X9z
-	 B6hCQW/Fq/FVPFyzx/CyTlC7z+SmpumuyUFHx/1Q7NWhFeEy6U2VuwEebILSohYlsu8pD
-	 AMXfnXJ9BLNZplfdBtX6yWRkqooKf0AxPlK9cuZ+XiUBvNyhKS1U5wf49Bj6xOYQ/9gVf
-	 2CSvBICMK2LcExwjPiL6PuOM/vx3wO8H1m6ekOD/XV3wpbZOCisYSu1QByXd2H+XsXV2U
-	 pVfcBWbIg+z6cYtvny70SOFSu/5Bt5NGKfkZUj3p3ehZokBuAP/lv3UeF7kbmTsbENg==
+	bh=iYz570iBahStLe5RSdfqrDUf1tSmCEBADoKqOtdclRE=;
+	b=aoFdls46FIy8eJrJOaEMqKD2lqSXvfjZJ7HSxO/lbjs/H9mzG7nZCJS7AhG/COqr5hjv
+	 HB6QIkGA3DvRt6cUxPuhdpSynTfbpVHEmwCdfAkZEbK1C1JmHkLYoOAKjQu15r2miX8IO
+	 JGgZip5+rMpFaWlT43XARE9sk1K4RJItKuZkCI20CeCWFOL8jg6B41tap7/T0VpAnf0uB
+	 eRzzqxZso5SijQ7ggNMb1s9VKWVyh4e3yrl5nuiwNowCXn7A0cd/KQMKIoRm4OPUp3Fj/
+	 S1r2Bk83MC4N+AXsElFQlf6l2VNAStX3nvoSJV/FCWcGEH+Q0QuLYk/RG/RhurFVEGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q49mbxq4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7EpgeJF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A6C606A32A;
-	Thu, 19 Nov 2026 00:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99468606A325;
+	Thu, 19 Nov 2026 00:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q49mbxq4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BBF1F000C4;
-	Thu, 19 Nov 2026 00:52:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x7EpgeJF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82BD1F000C4;
+	Thu, 19 Nov 2026 00:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049535;
-	bh=ZG0rojApCUeo2aAlCqLPy7pPNeqwTkcgxmMXBybDL6s=;
+	s=korg; t=1795049538;
+	bh=iYz570iBahStLe5RSdfqrDUf1tSmCEBADoKqOtdclRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Q49mbxq4J6U/hgJWByBtPV43s7CcnoV474MuejkV4vAdb4DrInIn59T0y6lyKfFKx
-	 phnw6mdFhbUtelK2xwxa3TgGk6gy1/RlrzMpyXczLekjzpa9y3XV2ARCI86xANtHl/
-	 ANiK2YR7iJqmtna0yYIFvDtwsRQgPFxzKW8cUaGU=
+	b=x7EpgeJFhyDqATOfkJCJkPE6c8km6jVP6/kLYQfHokudc60Uao8KW1jIhtRxXxJ8u
+	 KbMHo73+9JlXb3x+619feELbc2CLpnVvjKKA8FSH7x9jB850ho80CgdGp3HVpwIPiK
+	 CZc+wjoaylrUXp6hki/npYF6ORjxl444LUtJ3dfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alistair Popple <apopple@nvidia.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Jerome Glisse <jglisse@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2386/2857] mm/hmm/test: reject overflowing page counts
-Date: Wed, 18 Nov 2026 15:57:00 +0100
-Message-ID: <20261118150327.436403428@linuxfoundation.org>
+Subject: [PATCH 6.1 2387/2857] ALSA: control: Take controls_rwsem lock in snd_ctl_remove()
+Date: Wed, 18 Nov 2026 15:57:01 +0100
+Message-ID: <20261118150327.473462582@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -74,50 +67,242 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <error27@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b59925301211ccc351d98d70b11f6d1b2c63150f ]
+[ Upstream commit 192c4cccd015f52c94d0420eb5d7305a1ca28998 ]
 
-The number of pages comes directly from userspace.  Shifting a value
-larger than ULONG_MAX >> PAGE_SHIFT discards its high bits before the
-existing end-address check.  A request for a huge number of pages can
-therefore be accepted and processed as a much smaller request.
+So far, snd_ctl_remove() requires its caller to take
+card->controls_rwsem manually before the call for avoiding possible
+races.  However, many callers don't care and miss the locking.
 
-Reject page counts that cannot be represented as a byte size before
-performing the shift.
+Basically it's cumbersome and error-prone to enforce it to each
+caller.  Moreover, card->controls_rwsem is a field that should be used
+only by internal or proper helpers, and it's not to be touched at
+random external places.
 
-So far as ChatGPT and I can tell this doesn't cause an issue in practice
-but preventing this integer overflow is the correct thing to do.
+This patch is an attempt to make those calls more consistent: now
+snd_ctl_remove() takes the card->controls_rwsem internally, just like
+other API functions for kctls.  Since a few callers already take the
+controls_rwsem locks, the patch removes those locks at the same time,
+too.
 
-Link: https://lore.kernel.org/6f0d39089e938d4f53dc72632eb84aca34de7015.1789457465.git.error27@gmail.com
-Fixes: b2ef9f5a5cb3 ("mm/hmm/test: add selftest driver for HMM")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Assisted-by: ChatGPT:gpt-5
-Cc: Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Jerome Glisse <jglisse@redhat.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Wei Yongjun <weiyongjun1@huawei.com>
+Link: https://lore.kernel.org/r/20230718141304.1032-5-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: d3b59d50e1ff ("ALSA: jack: Remove debugfs before freeing unregistered jacks")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_hmm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/core/control.c      | 27 +++++++++++++++++++++------
+ sound/core/jack.c         |  2 --
+ sound/core/pcm.c          |  2 --
+ sound/isa/sb/emu8000.c    |  2 --
+ sound/isa/sb/sb16_csp.c   |  2 --
+ sound/pci/emu10k1/emufx.c |  2 --
+ sound/pci/hda/hda_codec.c |  2 --
+ sound/soc/soc-topology.c  |  3 ---
+ 8 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/lib/test_hmm.c b/lib/test_hmm.c
-index b0010b15aec5c..b96b07b23bfa8 100644
---- a/lib/test_hmm.c
-+++ b/lib/test_hmm.c
-@@ -1332,6 +1332,8 @@ static long dmirror_fops_unlocked_ioctl(struct file *filp,
+diff --git a/sound/core/control.c b/sound/core/control.c
+index 6eece0d0afda2..00008005ad9de 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -39,6 +39,9 @@ static LIST_HEAD(snd_control_compat_ioctls);
+ #endif
+ static struct snd_ctl_layer_ops *snd_ctl_layer;
  
- 	if (cmd.addr & ~PAGE_MASK)
- 		return -EINVAL;
-+	if (cmd.npages > ULONG_MAX >> PAGE_SHIFT)
-+		return -EINVAL;
- 	if (cmd.addr >= (cmd.addr + (cmd.npages << PAGE_SHIFT)))
- 		return -EINVAL;
++static int snd_ctl_remove_locked(struct snd_card *card,
++				 struct snd_kcontrol *kcontrol);
++
+ static int snd_ctl_open(struct inode *inode, struct file *file)
+ {
+ 	unsigned long flags;
+@@ -483,7 +486,7 @@ static int __snd_ctl_add_replace(struct snd_card *card,
+ 			return -EBUSY;
+ 		}
  
+-		err = snd_ctl_remove(card, old);
++		err = snd_ctl_remove_locked(card, old);
+ 		if (err < 0)
+ 			return err;
+ 	}
+@@ -589,20 +592,32 @@ static int __snd_ctl_remove(struct snd_card *card,
+ 	return 0;
+ }
+ 
++static inline int snd_ctl_remove_locked(struct snd_card *card,
++					struct snd_kcontrol *kcontrol)
++{
++	return __snd_ctl_remove(card, kcontrol, true);
++}
++
+ /**
+  * snd_ctl_remove - remove the control from the card and release it
+  * @card: the card instance
+  * @kcontrol: the control instance to remove
+  *
+  * Removes the control from the card and then releases the instance.
+- * You don't need to call snd_ctl_free_one(). You must be in
+- * the write lock - down_write(&card->controls_rwsem).
++ * You don't need to call snd_ctl_free_one().
+  *
+  * Return: 0 if successful, or a negative error code on failure.
++ *
++ * Note that this function takes card->controls_rwsem lock internally.
+  */
+ int snd_ctl_remove(struct snd_card *card, struct snd_kcontrol *kcontrol)
+ {
+-	return __snd_ctl_remove(card, kcontrol, true);
++	int ret;
++
++	down_write(&card->controls_rwsem);
++	ret = snd_ctl_remove_locked(card, kcontrol);
++	up_write(&card->controls_rwsem);
++	return ret;
+ }
+ EXPORT_SYMBOL(snd_ctl_remove);
+ 
+@@ -627,7 +642,7 @@ int snd_ctl_remove_id(struct snd_card *card, struct snd_ctl_elem_id *id)
+ 		up_write(&card->controls_rwsem);
+ 		return -ENOENT;
+ 	}
+-	ret = snd_ctl_remove(card, kctl);
++	ret = snd_ctl_remove_locked(card, kctl);
+ 	up_write(&card->controls_rwsem);
+ 	return ret;
+ }
+@@ -665,7 +680,7 @@ static int snd_ctl_remove_user_ctl(struct snd_ctl_file * file,
+ 			ret = -EBUSY;
+ 			goto error;
+ 		}
+-	ret = snd_ctl_remove(card, kctl);
++	ret = snd_ctl_remove_locked(card, kctl);
+ error:
+ 	up_write(&card->controls_rwsem);
+ 	return ret;
+diff --git a/sound/core/jack.c b/sound/core/jack.c
+index bd795452e57bf..e4bcecdf89b7e 100644
+--- a/sound/core/jack.c
++++ b/sound/core/jack.c
+@@ -67,12 +67,10 @@ static int snd_jack_dev_free(struct snd_device *device)
+ 	struct snd_card *card = device->card;
+ 	struct snd_jack_kctl *jack_kctl, *tmp_jack_kctl;
+ 
+-	down_write(&card->controls_rwsem);
+ 	list_for_each_entry_safe(jack_kctl, tmp_jack_kctl, &jack->kctl_list, list) {
+ 		list_del_init(&jack_kctl->list);
+ 		snd_ctl_remove(card, jack_kctl->kctl);
+ 	}
+-	up_write(&card->controls_rwsem);
+ 
+ 	if (jack->private_free)
+ 		jack->private_free(jack);
+diff --git a/sound/core/pcm.c b/sound/core/pcm.c
+index a8d10a844e51e..958e5837b00a0 100644
+--- a/sound/core/pcm.c
++++ b/sound/core/pcm.c
+@@ -815,9 +815,7 @@ static void free_chmap(struct snd_pcm_str *pstr)
+ 	if (pstr->chmap_kctl) {
+ 		struct snd_card *card = pstr->pcm->card;
+ 
+-		down_write(&card->controls_rwsem);
+ 		snd_ctl_remove(card, pstr->chmap_kctl);
+-		up_write(&card->controls_rwsem);
+ 		pstr->chmap_kctl = NULL;
+ 	}
+ }
+diff --git a/sound/isa/sb/emu8000.c b/sound/isa/sb/emu8000.c
+index e020296777436..a6405772d5370 100644
+--- a/sound/isa/sb/emu8000.c
++++ b/sound/isa/sb/emu8000.c
+@@ -1040,10 +1040,8 @@ snd_emu8000_create_mixer(struct snd_card *card, struct snd_emu8000 *emu)
+ 
+ __error:
+ 	for (i = 0; i < EMU8000_NUM_CONTROLS; i++) {
+-		down_write(&card->controls_rwsem);
+ 		if (emu->controls[i])
+ 			snd_ctl_remove(card, emu->controls[i]);
+-		up_write(&card->controls_rwsem);
+ 	}
+ 	return err;
+ }
+diff --git a/sound/isa/sb/sb16_csp.c b/sound/isa/sb/sb16_csp.c
+index 7ad8c5f7b664b..8d83570197199 100644
+--- a/sound/isa/sb/sb16_csp.c
++++ b/sound/isa/sb/sb16_csp.c
+@@ -1080,7 +1080,6 @@ static void snd_sb_qsound_destroy(struct snd_sb_csp * p)
+ 
+ 	card = p->chip->card;	
+ 	
+-	down_write(&card->controls_rwsem);
+ 	if (p->qsound_switch) {
+ 		snd_ctl_remove(card, p->qsound_switch);
+ 		p->qsound_switch = NULL;
+@@ -1089,7 +1088,6 @@ static void snd_sb_qsound_destroy(struct snd_sb_csp * p)
+ 		snd_ctl_remove(card, p->qsound_space);
+ 		p->qsound_space = NULL;
+ 	}
+-	up_write(&card->controls_rwsem);
+ 
+ 	/* cancel pending transfer of QSound parameters */
+ 	spin_lock_irqsave (&p->q_lock, flags);
+diff --git a/sound/pci/emu10k1/emufx.c b/sound/pci/emu10k1/emufx.c
+index 413da7cc4c188..7c9c8961193f7 100644
+--- a/sound/pci/emu10k1/emufx.c
++++ b/sound/pci/emu10k1/emufx.c
+@@ -914,11 +914,9 @@ static int snd_emu10k1_del_controls(struct snd_emu10k1 *emu,
+ 				       in_kernel);
+ 		if (err < 0)
+ 			return err;
+-		down_write(&card->controls_rwsem);
+ 		ctl = snd_emu10k1_look_for_ctl(emu, &id);
+ 		if (ctl)
+ 			snd_ctl_remove(card, ctl->kcontrol);
+-		up_write(&card->controls_rwsem);
+ 	}
+ 	return 0;
+ }
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index 1a448981545d5..70bbcdcf0f5c5 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -1774,10 +1774,8 @@ void snd_hda_ctls_clear(struct hda_codec *codec)
+ 	int i;
+ 	struct hda_nid_item *items = codec->mixers.list;
+ 
+-	down_write(&codec->card->controls_rwsem);
+ 	for (i = 0; i < codec->mixers.used; i++)
+ 		snd_ctl_remove(codec->card, items[i].kctl);
+-	up_write(&codec->card->controls_rwsem);
+ 	snd_array_free(&codec->mixers);
+ 	snd_array_free(&codec->nids);
+ }
+diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
+index 369435b926467..4bbb754528105 100644
+--- a/sound/soc/soc-topology.c
++++ b/sound/soc/soc-topology.c
+@@ -2648,7 +2648,6 @@ EXPORT_SYMBOL_GPL(snd_soc_tplg_component_load);
+ /* remove dynamic controls from the component driver */
+ int snd_soc_tplg_component_remove(struct snd_soc_component *comp)
+ {
+-	struct snd_card *card = comp->card->snd_card;
+ 	struct snd_soc_dobj *dobj, *next_dobj;
+ 	int pass;
+ 
+@@ -2656,7 +2655,6 @@ int snd_soc_tplg_component_remove(struct snd_soc_component *comp)
+ 	for (pass = SOC_TPLG_PASS_END; pass >= SOC_TPLG_PASS_START; pass--) {
+ 
+ 		/* remove mixer controls */
+-		down_write(&card->controls_rwsem);
+ 		list_for_each_entry_safe(dobj, next_dobj, &comp->dobj_list,
+ 			list) {
+ 
+@@ -2695,7 +2693,6 @@ int snd_soc_tplg_component_remove(struct snd_soc_component *comp)
+ 				break;
+ 			}
+ 		}
+-		up_write(&card->controls_rwsem);
+ 	}
+ 
+ 	/* let caller know if FW can be freed when no objects are left */
 -- 
 2.53.0
 
