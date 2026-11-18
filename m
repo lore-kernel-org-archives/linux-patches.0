@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060477;
-	b=32fXq3hv11jg+/cVlOd8Y236PKI5C57vIpkEcose/By2EIsJXURi9D624W3uZih8vee5
-	 hIDYB5xlE45tSEen/bLcmOBqQRGgeSGAqVBhl8W06Mm0lTQvEpevLdW2VE7HpFggLgf9T
-	 QWrA5E2fhW2NL4VjKgpP0Jew6O1yn177M1XnOSgIAnprxaN/2p2qk76mrrlmYR4/iXuug
-	 0jCsYmcVSzFBuDSlm5QiRg91iksrOzlxCMDLuBKsTsZsKB3YAnHScKnES/AqpNnUJ8cwB
-	 Sl6AjBF5c2cNEsq27leUgfe/JCBE+3U1/fEFvP08ZyVK+/UbLM+DfuP4lUrpEODa/Xg==
+	t=1795060480;
+	b=dqGXekxINPWEbjwnM+ncXAhdDnl5DGVHzgTnsijLLfbdCr0tymEZXVkMLNyVtvLnc0V6
+	 x2sPYiq8z3Ol5IejzFlvA9JQZV8gB+qKUR6Z+N1AgnvhplJLaXW2i7vuNAeAy6sYFb3v+
+	 V7dGheMtNiCazEROu7nSH3+MCXmAHe7ds48jq5H+OLICv/Katown36MOdzAyIKI9J/K9D
+	 PYpUaKylvyPFgyJmDCzna0Dx9UYXjbQpJc7RavR/wu7RGMRskDeV6e7tU5/I4CER18c42
+	 jc9Xb+PRLQ0ElJsE769qogwNXOmzCD5HeR2NR3EtoE4U1EdEm6wlCe4CxQIrhm1n4vw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060477;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060480;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vIHMJKF//o7GMaJdRvzH7aW1wVTKtVnGdDsS878Vx/c=;
-	b=dbsYOAGbI29QzUwm+pXEr2cIAAI3CsFRtv9vlEHugW+q4gBuP0GeMr7M1+AZ0pd88p9M
-	 q8wN5VP0AFBUAcScXEZ/NO6L+jWch+mOJZ8Jh/ZvNfdj0uvFR6kue8zuXaCzthz9PlHJ0
-	 nJ/9U1pr/tp2E31OQHz7C3n4KTWwvy4tMjVEHjuv98Rg8pkGvH1E2jE+ilueH8S5GfUrX
-	 GNQwBsITrtwg1U75R/4icUpE+5YRbbmzDavZGt1ntRzyAsEMI5ZCLmV9dQByf6siXTxIL
-	 a1cDofAtkgHbPALwQQHOkCUxC21Ld9tNDB8VEvePbfptCXSRqtqGR20k4QxpQSCtSnA==
+	bh=rEXMxFFdnH7hj8LZpti/IaLJfk7z0mGUOeW+9U4PUnE=;
+	b=FVEJK+ICDKJovpuwpNQPRuxAkzGHQzz4K7923qY8Jaox81pdFzoLn+tWzV0bOJDppx1y
+	 uJCi8BTSelvxBsvymJy2NnZgRHhzRWfoe41LxicI0BlZQpEQcQilOe8Y7OraYIaSqGSw9
+	 SHOVV3835zTAUqycFWzR8ogFMEWPYZXjWrPlX4jTtIzBQfXe4c1W2PH+OY8PqikHm7UCw
+	 zhiuxe08i7Hal3xStB0+43a8UZwAvjYEjdHw9c8Gkv/rHMTLOS8t4SS+bLsQhL6LwmID+
+	 O0Unf/LklrdSUXgX+nbXekBezHVhdksNdCDEETue6XEGjQxUVy+4RMK3vahuTkluotg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srpOewIy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdpoXmFE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB3D606A333;
-	Thu, 19 Nov 2026 03:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F0B606A334;
+	Thu, 19 Nov 2026 03:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srpOewIy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F111F000C4;
-	Thu, 19 Nov 2026 03:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hdpoXmFE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C721F000C8;
+	Thu, 19 Nov 2026 03:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060477;
-	bh=vIHMJKF//o7GMaJdRvzH7aW1wVTKtVnGdDsS878Vx/c=;
+	s=korg; t=1795060480;
+	bh=rEXMxFFdnH7hj8LZpti/IaLJfk7z0mGUOeW+9U4PUnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srpOewIypQrP/ET3k7wIScqYwj0FPHPYMZoSGrjfLJVcORsY+vDyenMww+zUAKXEw
-	 buy8uI7p+DP+8AcQDSW9scasm7C7EDkXe+BS8QEdUJ+7C7tz6n/vWGiaEx9LCZ3o9y
-	 XIFYvazkomP9KFRjHrBkwiqYtYqbaRRGm9jHgeWw=
+	b=hdpoXmFEmWhddDG0bm4vsk3wIZhYYwD4LgERkTYm5vNcehkUC3wey4uOxS+VDB+2D
+	 l6lp4UKECQBEtzpI22C6MaYpWW2HO2dWc19Z3qjH9xyX5XAi1UflJxnggrzJZrOIB5
+	 rSWTTelzTJpoGk94VkfUTbdiKNGQbOZauA0TR/Xg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1196/1848] wifi: ath11k: fix locking problem in ath11k_dp_rx_tid_del_func()
-Date: Wed, 18 Nov 2026 15:53:54 +0100
-Message-ID: <20261118150009.735964003@linuxfoundation.org>
+Subject: [PATCH 5.10 1214/1848] usb: musb: da8xx: depopulate OF children on probe failure
+Date: Wed, 18 Nov 2026 15:54:12 +0100
+Message-ID: <20261118150010.807252433@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,98 +67,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit c7555d47b1d051e0406474349deccf74b491ae01 ]
+[ Upstream commit 8d70a378e702141424e27e0b8341e421f058635d ]
 
-In this function, we iterate over dp->reo_cmd_cache_flush_list using
-list_for_each_entry_safe(), under dp->reo_cmd_lock for concurrent access,
-and for each expired entries we :
-  - drop the lock
-  - call ath11k_dp_reo_cache_flush()
-  - kfree() the entry
-  - retake the lock to keep on iterating
+da8xx_probe() creates the CPPI child devices before registering the MUSB
+platform device. If population partially succeeds or the later MUSB
+registration fails, the probe path unregisters the generic PHY but leaves
+the OF children registered under a parent whose probe failed.
 
-list_for_each_entry_safe() protects us from deleting the entry during
-iteration but doesn't protect for concurrent access. So another thread can
-take the lock and modify the list in between and crash like below.
+Depopulate the OF children before unregistering the PHY on both failure
+paths. Use one cleanup label so each resource is unwound in reverse
+publication order without introducing an unused label.
 
-To fix the issue, move all entries that needs to be freed to a local list
-while under the lock and then iterate over the list to free the entries
-without holding the lock.
-
-	BUG: Unable to handle kernel paging request at virtual address 00000010ddbeef8c
-	Call trace:
-	ath11k_dp_rx_tid_del_func+0x164/0x3c8
-	ath11k_dp_process_reo_status+0x1d4/0x2fc
-	ath11k_dp_service_srng+0x334/0x338
-	ath11k_pcic_ext_grp_napi_poll+0x30/0xc0
-	__napi_poll+0x34/0x184
-	napi_threaded_poll+0xb4/0x1d8
-	kthread+0xdc/0xe0
-	ret_from_fork+0x10/0x20
-
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Suggested-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260813-ath11k-locking-v2-1-f4113a0bd0f4@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: d6299b6efbf6 ("usb: musb: Add support of CPPI 4.1 DMA controller to DA8xx")
+Assisted-by: Codex:gpt-5
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260813153230.40421-1-pengpeng@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/usb/musb/da8xx.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 4951561ceddbf..1a66c6dc84b5d 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -729,6 +729,9 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
- 	struct ath11k_base *ab = dp->ab;
- 	struct dp_rx_tid *rx_tid = ctx;
- 	struct dp_reo_cache_flush_elem *elem, *tmp;
-+	struct list_head flush_list;
-+
-+	INIT_LIST_HEAD(&flush_list);
+diff --git a/drivers/usb/musb/da8xx.c b/drivers/usb/musb/da8xx.c
+index 46920c3576503..a9e0717627abe 100644
+--- a/drivers/usb/musb/da8xx.c
++++ b/drivers/usb/musb/da8xx.c
+@@ -556,7 +556,7 @@ static int da8xx_probe(struct platform_device *pdev)
+ 	ret = of_platform_populate(pdev->dev.of_node, NULL,
+ 				   da8xx_auxdata_lookup, &pdev->dev);
+ 	if (ret)
+-		goto err_unregister_phy;
++		goto err_depopulate;
  
- 	if (status == HAL_REO_CMD_DRAIN) {
- 		goto free_desc;
-@@ -750,23 +753,25 @@ static void ath11k_dp_rx_tid_del_func(struct ath11k_dp *dp, void *ctx,
- 	list_add_tail(&elem->list, &dp->reo_cmd_cache_flush_list);
- 	dp->reo_cmd_cache_flush_count++;
- 
--	/* Flush and invalidate aged REO desc from HW cache */
-+	/* identify aged REO desc that needs removal */
- 	list_for_each_entry_safe(elem, tmp, &dp->reo_cmd_cache_flush_list,
- 				 list) {
- 		if (dp->reo_cmd_cache_flush_count > DP_REO_DESC_FREE_THRESHOLD ||
- 		    time_after(jiffies, elem->ts +
- 			       msecs_to_jiffies(DP_REO_DESC_FREE_TIMEOUT_MS))) {
--			list_del(&elem->list);
-+			list_move_tail(&elem->list, &flush_list);
- 			dp->reo_cmd_cache_flush_count--;
--			spin_unlock_bh(&dp->reo_cmd_lock);
--
--			ath11k_dp_reo_cache_flush(ab, &elem->data);
--			kfree(elem);
--			spin_lock_bh(&dp->reo_cmd_lock);
- 		}
+ 	memset(musb_resources, 0x00, sizeof(*musb_resources) *
+ 			ARRAY_SIZE(musb_resources));
+@@ -582,12 +582,13 @@ static int da8xx_probe(struct platform_device *pdev)
+ 	ret = PTR_ERR_OR_ZERO(glue->musb);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to register musb device: %d\n", ret);
+-		goto err_unregister_phy;
++		goto err_depopulate;
  	}
- 	spin_unlock_bh(&dp->reo_cmd_lock);
  
-+	/* remove aged REO desc from HW */
-+	list_for_each_entry_safe(elem, tmp, &flush_list, list) {
-+		ath11k_dp_reo_cache_flush(ab, &elem->data);
-+		list_del(&elem->list);
-+		kfree(elem);
-+	}
-+
- 	return;
- free_desc:
- 	dma_unmap_single(ab->dev, rx_tid->paddr, rx_tid->size,
+ 	return 0;
+ 
+-err_unregister_phy:
++err_depopulate:
++	of_platform_depopulate(&pdev->dev);
+ 	usb_phy_generic_unregister(glue->usb_phy);
+ 	return ret;
+ }
 -- 
 2.53.0
 
