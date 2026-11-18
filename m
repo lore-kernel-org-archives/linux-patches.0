@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061956;
-	b=wCnYVDimwSbzPM75TaW/WhtoughdGeFlMCd23+y1dxHO+E83PJPaWsqhpr5GLnVgxUOo
-	 25SvfukNxGyq1ufAKgA76bvvwAlaV4E8mqrhmCVRcjVerDKFVcrKmTytVyaM7GNrbo8cB
-	 Y1M4Siycjg2sWH6z5qCeb5H3BmzIT9WEu3WxUwjV1+nzlIaV75RJC/TaOZr13Ds27jRr6
-	 LSIDSWVpTZwaeScSQYmF80deDpKqq4Yg26vzPk2faJDOJzm/zwiLmmgX+8hc37xilvs3O
-	 Wv4eJJZT+BLTCQBBxMO3rarqt+5xTsjhILysvn/bm5byJIpFDzmMN9N4p6gnS0sk78g==
+	t=1795061959;
+	b=JisPSXJ7c+33rKhwIBiNpXu2RrjZ4jGR4IBoct8W+G+7yWptT0tqFz/tdvpssZvpB1ZQ
+	 pRxr0DtkdGYM6EZvqzeKdpoKSF8pJk9IhVPC35Kr8q3TweV536rIsyhIiJQTLXAfqgrE1
+	 AJ5Qteyo2HQvo9xA66TP5Y2tv6QFiQvXgiz1hpe21TCCylD6+NdrIjoSRLtpxWJ1FK1dG
+	 E6jmcYaIzpzKLuLiLwDdp2Bwz7wEipi8fD+pSC82u1TYwH/XXdd6Q99YFmsQz80HddPPN
+	 G4XHpW1/wjLsYU/u9dBv6DhPojExLGmLF7J/o3kU9664XBTjpeCxwLlFR9J4pL47FtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061956;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061959;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pBtzzf+bDOy+YK/KkZ7b+YWXZzMX3Rzy6dggLicRa9g=;
-	b=axIhjLvyWJqJInD5P6D9yD+GFQH3aRFza3middh0btZ8PAHareqJjM2iKH9RHglTQrOA
-	 brXOuK/zwfUGAu3YbcUECWXRV5SKd8jWKYVuh2G58WbzF0eQT4Dqh67tfAhfu6yuDkXI1
-	 SsHVagBdrF5DA2aQtyEVKg0Vgkd85QzWoiy/M/4IouKHQnarOsKhFjPvaeKFz+4jXMC6h
-	 lyt6uq06fpYXWarEQlh0zekri3dzOITsdnMwBJmHX+amHIlYJLgggWTwDmxaiza76Ed2l
-	 fxm1C2MfQ1+ByFXJVBnWJIFSreJ26v3zbQKWHHZbu5gIVRTzq0sIbPIG+TXO6yKG5DQ==
+	bh=SbAwef7yi9F6p7o9m+vQjX8NoXKwCgj2no+9Oj5f+lQ=;
+	b=li9DZSolTQfO3IZAWPmniP1stOv41xB0YboUNzGUmTWvEH1s9xZxbMQvO4hL4gV1t2mM
+	 o63L/FjVZvFzt5R7gMs9qFEhrNYTrulqd++vHUV9NyAkHf0ec7KDdxmQI9uOu+KH7Ngvm
+	 UREJAErjd4lCnRkGKasYTUDmt8VG/mGubVg5DX0UThDbzVAE42Y6r0v0oZF3EQp2y9Hn+
+	 SCilDXGaiN19xnIVbDoyeInRC9yOJPGmug0UGqxJtL0FDdglr5RcsAsCw9sa5gRY3aG+f
+	 wyuNlGVjDG2wB3oP9QQHbE9pWHn1fl4xpjntK4XXFYlHG0T9BP+uJ8lFBV6hm25DXkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9sMclZL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nk2ow0Uf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F68B606A320;
-	Thu, 19 Nov 2026 04:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25707606A325;
+	Thu, 19 Nov 2026 04:19:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C9sMclZL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A40421F000C4;
-	Thu, 19 Nov 2026 04:19:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nk2ow0Uf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7668F1F000C4;
+	Thu, 19 Nov 2026 04:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061956;
-	bh=pBtzzf+bDOy+YK/KkZ7b+YWXZzMX3Rzy6dggLicRa9g=;
+	s=korg; t=1795061959;
+	bh=SbAwef7yi9F6p7o9m+vQjX8NoXKwCgj2no+9Oj5f+lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C9sMclZLfIgyWdSqphG6k6Y0TXWz4QUCDc9lc1Eyq83Fx5ihVhIE9AHOU2skSpRfm
-	 Hk0waGiPERxOeWsH3rYkfy+9oRNiN5TODVfR+wLrPg7ZBrWtoYngfje2pZUhZ/S5UM
-	 OZ4y5Gbvij0DfjAuuKnZElIxKftJem6iIX79VoOs=
+	b=nk2ow0UfVTSfpolbSxHzdw1DqxS+kzcdovmzpV9Dgf57I2DNBZFrHF/yWbvT76SaB
+	 nnWAm2h5nlC7Q1nTiKZgOJ533i+Nt/J53nE74r6frYQP0kIRFuXCY+yNEouPisP5z7
+	 +8xlsBeIIAEuGdp9k9TdjoYy5A/O3M78k6j4ky/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1739/1848] ipv6: account route exceptions to the netns of their dst
-Date: Wed, 18 Nov 2026 16:02:57 +0100
-Message-ID: <20261118150032.342622328@linuxfoundation.org>
+Subject: [PATCH 5.10 1740/1848] team: reject CAN, IEEE 802.15.4 and 6LoWPAN devices in team_port_add
+Date: Wed, 18 Nov 2026 16:02:58 +0100
+Message-ID: <20261118150032.382005014@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,76 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 8ff017b891e89276c15f06dfd7155981d572af77 ]
+[ Upstream commit 9043be310c6a4c5e57f7bba4b9870554eac7aa96 ]
 
-rt6_insert_exception() and rt6_remove_exception() update
-rt6_stats->fib_rt_cache of dev_net(rt6i->dst.dev), but the device of an
-exception dst can move to another netns while the exception is still in
-its bucket.
+When the first port has a non-Ethernet type, team_setup_by_port()
+copies port_dev->type to the team device while netdev_priv() of the
+team device still holds a struct team. Several L2 stacks identify their
+devices by dev->type alone and then access type specific data that the
+team driver never sets up:
 
-This happens when the bucket is flushed from an RCU callback, for
-instance from nexthop_free_rcu() for the nh_info of a replaced nexthop,
-whose exceptions still point to live routes. If the device moves to
-another netns before that callback runs, the decrement hits the other
-netns, whose u32 counter underflows in /proc/net/rt6_stats, while the
-counter of the original netns never goes back down.
+- CAN protocols rely on the CAN mid-layer private data (ml_priv)
+- IEEE 802.15.4 code dereferences ieee802154_ptr and the mlme ops in
+  ml_priv
+- the 6LoWPAN netdev notifier writes through lowpan_dev(dev) on
+  NETDEV_DOWN and reads it on NETDEV_UP/NETDEV_CHANGE
 
-Account exceptions to the netns their dst was allocated in, derived from
-dst->ops as ip6_dst_gc() already does, which does not depend on the
-device. The dst already relies on that netns' ip6_dst_ops being alive
-when it is destroyed, which happens after the exception is removed.
+Enslaving such a device (e.g. vxcan, wpan0, lowpan0) therefore leads to
+NULL pointer dereferences or to writes into struct team.
 
-Fixes: 81eb8447daae ("ipv6: take care of rt6_stats")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261016091556.2750902-1-edumazet@kernel.org
+This is the same problem that syzbot reported for the bonding driver
+with a vxcan device enslaved to a bond master, which crashed in
+can_rx_unregister() and was fixed by commit 8ba68464e478 ("bonding:
+refuse to enslave CAN devices"). The team driver has the same gap.
+
+Reject ARPHRD_CAN, ARPHRD_IEEE802154, ARPHRD_IEEE802154_MONITOR and
+ARPHRD_6LOWPAN devices in team_port_add().
+
+Link: https://lore.kernel.org/all/b58d98e0-8fe3-4e4e-b8a5-c1c7e647ccca@hartkopp.net/
+Link: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95 # bonding splat
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261019155407.61487-1-socketcan@hartkopp.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/team/team.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 0439d9e6a9601..98e670e425f25 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1437,6 +1437,15 @@ static struct rt6_info *rt6_make_pcpu_route(struct net *net,
-  */
- static DEFINE_SPINLOCK(rt6_exception_lock);
+diff --git a/drivers/net/team/team.c b/drivers/net/team/team.c
+index 6d7be450e57c7..f39339438cdc5 100644
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -1163,6 +1163,17 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 		return -EINVAL;
+ 	}
  
-+/* Exceptions are accounted to the netns their dst was allocated in.
-+ * Unlike dev_net(dst->dev), it does not change when the device moves to
-+ * another netns or when dst_dev_put() points the dst to blackhole_netdev.
-+ */
-+static struct net *rt6_exception_net(const struct rt6_info *rt)
-+{
-+	return container_of(rt->dst.ops, struct net, ipv6.ip6_dst_ops);
-+}
++	if (port_dev->type == ARPHRD_CAN ||
++	    port_dev->type == ARPHRD_IEEE802154 ||
++	    port_dev->type == ARPHRD_IEEE802154_MONITOR ||
++	    port_dev->type == ARPHRD_6LOWPAN) {
++		NL_SET_ERR_MSG(extack,
++			       "CAN, IEEE 802.15.4 and 6LoWPAN devices can't be added as a team port");
++		netdev_err(dev, "Device %s is CAN, IEEE 802.15.4 or 6LoWPAN. These device types can't be added as a team port\n",
++			   portname);
++		return -EINVAL;
++	}
 +
- /* Remove rt6_ex from hash table and free the memory
-  * Caller must hold rt6_exception_lock
-  */
-@@ -1449,7 +1458,7 @@ static void rt6_remove_exception(struct rt6_exception_bucket *bucket,
- 	if (!bucket || !rt6_ex)
- 		return;
- 
--	net = dev_net(rt6_ex->rt6i->dst.dev);
-+	net = rt6_exception_net(rt6_ex->rt6i);
- 	net->ipv6.rt6_stats->fib_rt_cache--;
- 
- 	/* purge completely the exception to allow releasing the held resources:
-@@ -1711,7 +1720,7 @@ static int rt6_insert_exception(struct rt6_info *nrt,
- 	rt6_ex->stamp = jiffies;
- 	hlist_add_head_rcu(&rt6_ex->hlist, &bucket->chain);
- 	bucket->depth++;
--	net->ipv6.rt6_stats->fib_rt_cache++;
-+	rt6_exception_net(nrt)->ipv6.rt6_stats->fib_rt_cache++;
- 
- 	/* Randomize max depth to avoid some side channels attacks. */
- 	max_depth = FIB6_MAX_DEPTH + prandom_u32_max(FIB6_MAX_DEPTH);
+ 	if (netif_is_team_port(port_dev)) {
+ 		NL_SET_ERR_MSG(extack, "Device is already a port of a team device");
+ 		netdev_err(dev, "Device %s is already a port "
 -- 
 2.53.0
 
