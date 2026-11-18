@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042588;
-	b=geUncI1sGTpj7cTTPgOgnavYhS7WlYLNW6alnB0tdp9Q2tzszPT0JKCmNwzoli+mcbv+
-	 VDV71+Ss7TTE18G7X4DtJpmr/nyNms4fJ5dw2jFfGebM3FltHYnXnEStMc5K9Lano1seS
-	 +tIqT4wplyJVwMRacLBQHbKOIezkqGdkfKTOMBxvtCaAKWuUnjJlKwNuSpXeZTXDcgaDo
-	 yQN86qEoNDvumO9ujok9XwNAEBFDCZskKBM1AVPUBJvo6MzIaPUO7yH+/z2Dj0qa8A6Pp
-	 /CBAUzJYrztA0DOdRqL1gxRmO28ZYOIFTFQYmVTIB6Nrk9flwdOKyVd8vyyLGvqe0zw==
+	t=1795042591;
+	b=F7muytfIZznGer3vf35c/DJfkwBhv58D7ZsWHqAmpzL7uNlQZNrqHyAFTPY6aX58pwvg
+	 b8H2W1GgKiieOsvACAq/c+gSFigwFzMqMZEqiqwSSXSlFn9VnmhkrxpRl+xrLYITjUOKC
+	 UZ78tgti3+CSd6Bjrgru/4w1Ln0pFQZzJR7ojAUfkhUGZ50e1W5xAkxn2wDGdGtQRzfH7
+	 KIoD3cPnOlhYJyuoeHHhgVa+MId+q1PAZJ9xXDeJ9gCPoVqGGF55ilmFoGuBIBzmexlzZ
+	 dfI4m/Ez0pR5gdaQ3bcCqYmjIihlcFEfAuMalcfIMJ49siwuXoI9YsM1huhMd2MLaTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042588;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042591;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+cKXZkD2yasWutNPeL57SIwgFuCC4JTavlRmxISWMuo=;
-	b=HWKNVA5QlNbTiC1PNaGQtlMwCA9t2G0EFOETTPhOsbXE3TIQmAUCDbJPGxO9uLovvDnx
-	 ySvZjCRr38aNLQt9tD0+DjPYTzyFjBvQ9fEQdKakltNCpf7FnYMK8nXBRJybOn/Ki8Tox
-	 MaqFQKgVX88HXR3jxqmDJgWSc8HIR3FOuMbcHxnQO+ieVbbJOTZR/FkgJUePKCW4TVSg/
-	 Fq6NXu7qpYyjPQljfhsTS6W01PCqWWeluqgJ/abCOTqm+vDaKwYQNzezfcAPPyJ6Z5gJA
-	 f53pf13nPjX9okseFu9ZYA8Lge8a4QgWM6W+yBrmfJRIDJcmw3MqEG19bZPAFWm4Ntg==
+	bh=rrTQNoJgXwlt8DQtOSiaSC4601L7nt7APqfe3OcI9GI=;
+	b=YSC7GSJeK44O2paPlPTbV0MOcuqQs+Bag2MT/GZ6oZQzkKVLw1c230K6kEHRTO69JWh1
+	 VhLOaH46S+SvounucHWWacPJy5KzwDOwy9XIlMiFoLmmGawi3pqp4gZI9VHlpmuniN+By
+	 yIgCGVg0I0rUP4M3G9X7VUT+Gx431hJcX/8hAUd+5bNvg/E9M2r/U1Y2r93Dtrquqw62Y
+	 H78FcTmqc0KsMp+GPnXY5neU2dK6mkKpC5YLbDbAL4OkzMVpatXZqqZ93FRvP7kYQ1B0D
+	 5tBk6ifjcqVp3jcXmiPuCKRXZ2uA80qM6n6G8b670GUEQEGkF6HaypZU7JKq+e3FA6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2PZ9OmaE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muDuUBqk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497C8606A325;
-	Wed, 18 Nov 2026 22:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C8B606A31C;
+	Wed, 18 Nov 2026 22:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2PZ9OmaE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C00A1F000C4;
-	Wed, 18 Nov 2026 22:56:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=muDuUBqk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717BB1F000C4;
+	Wed, 18 Nov 2026 22:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042588;
-	bh=+cKXZkD2yasWutNPeL57SIwgFuCC4JTavlRmxISWMuo=;
+	s=korg; t=1795042591;
+	bh=rrTQNoJgXwlt8DQtOSiaSC4601L7nt7APqfe3OcI9GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2PZ9OmaEfBqjeuSoV6WEjdR0cYrHYZ/G7oHeq8fVgSKMc8n16tdOA2fheF7TYq3w7
-	 RQSQm+j5g+3jExii0PEVZG/YxOPwti1vOzGZ3qSeQACW5VPDtoGydcKFkONH6kmrsR
-	 3jaEShJBekbdrN9wkhVQU2j8GMmnmX4m+Wi+cp3c=
+	b=muDuUBqkcQqC3e7UVQf0xLSnA9SkGWRuy8ZVS0AC1FIyoCbO0aJU4kMbiQz6YD7ix
+	 rgFbrxsz/wBfpKrFLTttWaBwV/5zNb2qz0S6tBkcgFyqWRJZLFFjeFWsiF86G974PL
+	 oWSEDXbPMPZEQ0fXx9bdTtiCFDwGWqkd/ID2rGqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Chris Mason <mason@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
-	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3224/3318] nvmet: dont clear sq->ctrl for a Connect with sqsize 0
-Date: Wed, 18 Nov 2026 16:04:06 +0100
-Message-ID: <20261118150456.442435474@linuxfoundation.org>
+Subject: [PATCH 6.6 3225/3318] blk-throttle: dont truncate the cgroup v1 iops limits
+Date: Wed, 18 Nov 2026 16:04:07 +0100
+Message-ID: <20261118150456.470611747@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,51 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 89480d137bf0d943a82c64f86ae2407a15276b5e ]
+[ Upstream commit 7d96874ba80ba7a2ab578ea9139c2af79c353b88 ]
 
-nvmet_install_queue() checks sqsize first and jumps to err on zero,
-where sq->ctrl is set to NULL. Since commit b71df12605ca the cmpxchg()
-that sets sq->ctrl comes after the checks, so err now undoes a bind
-that this call never made. Over RDMA a host can send two Connects
-together and the second is parsed before the first executes, so a
-second Connect with sqsize 0 clears the sq->ctrl the first one set.
-The reference it held is never dropped and the controller leaks, with
-its cntlid, until reboot. The discovery subsystem lets any host do
-that, 20 connections leak around 10 controllers. A pending AER on such
-a queue hangs nvmet_sq_destroy() forever, and a queue can keep its
-"authenticated" mark across a rebind.
+tg_set_conf() parses the limit into a u64 and stores the iops ones
+through an unsigned int, so anything above UINT_MAX is truncated and a
+multiple of 2^32 becomes a limit of 0. The next IO of the group then
+divides by it in tg_within_iops_limit().
 
-Return the status directly, as the two checks after it do, so err is
-only reached after this call's cmpxchg() succeeded.
+Clamp to UINT_MAX, which means no limit, like tg_set_limit() does on the
+default hierarchy.
 
-Fixes: b71df12605ca ("nvmet: avoid duplicate qid in connect cmd")
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Sagi Grimberg <sagi@grimberg.me>
-Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Chris Mason <mason@kernel.org>
+Fixes: af133ceb2610 ("blkcg: move blkio_group_conf->iops and ->bps to blk-throttle")
+Cc: Tejun Heo <tj@kernel.org>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://patch.msgid.link/20261028164415.1262013-4-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fabrics-cmd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ block/blk-throttle.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
-index 7807cee08790b..2c6a1c0bc7a67 100644
---- a/drivers/nvme/target/fabrics-cmd.c
-+++ b/drivers/nvme/target/fabrics-cmd.c
-@@ -179,8 +179,7 @@ static u16 nvmet_install_queue(struct nvmet_ctrl *ctrl, struct nvmet_req *req)
- 		pr_warn("queue size zero!\n");
- 		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
- 		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
--		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
--		goto err;
-+		return NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
- 	}
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index ed6fa1e7b8624..a765db9fc46da 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -1403,7 +1403,8 @@ static ssize_t tg_set_conf(struct kernfs_open_file *of,
+ 	if (is_u64)
+ 		*(u64 *)((void *)tg + of_cft(of)->private) = v;
+ 	else
+-		*(unsigned int *)((void *)tg + of_cft(of)->private) = v;
++		*(unsigned int *)((void *)tg + of_cft(of)->private) =
++			min_t(u64, v, UINT_MAX);
  
- 	if (ctrl->sqs[qid] != NULL) {
+ 	tg_conf_updated(tg, false);
+ 	ret = 0;
 -- 
 2.53.0
 
