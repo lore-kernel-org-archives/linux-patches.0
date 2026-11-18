@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041250;
-	b=LYSxIST3WjtqJw3Mi/nSNtTDFUNYGU1CQJwMbk5Dm5g+vrOYh/HfcijBWfDvOZTLn6Vy
-	 Xx/sHfYY4SWlJWRdHz+dQE7vkFHRWE5BxW+CCSmkfHfGDJ3vqi66JR8c14f3R4ql0ckRN
-	 zsNto67YLZYq1Wfig2t4Tuii79KOB06kh8t19SEIamu7Lw5EbPTlOXTEpEpPPRpxvL+eI
-	 93yh89Y/u+s5LPqjCrhKgF7yDgp5VaDFpIpkcQiLq6QpBVgrAzabC9xv0Gl0HrU4x0uLs
-	 HI4P6/5DrmNUu1pkLHWl57704YChWtgal7lsQ9o+scIug2E2HFhqdtkZe8pJqxE39pA==
+	t=1795041253;
+	b=wRhYvpbDzp8VOueJejK+aKk252fvyXxlaKsQwZwnh039Sase6QjPgZ8JBBzU5Lu1WCsm
+	 lsXxRu8WlLU/ZZIewQVGqGzWAql1bCm66xO+wCJ1cOSBdPPUdSTNIX2zNWfJchZ+saODA
+	 ouHe3HUx8fLch/TugG+kxBxieS7Ws8JbibuIIt4F8zDE/JoNdQtbBO9k9VFgl21pYYl3q
+	 iFyWvRWbls+anUcBQtWtBJ2kr/RApeQNRUsfWyk7nIQX2uchykjIxQlR7dSwjVktAS5Iu
+	 YxehPdmVXFZz+XDc5qGxqxSSS/X5LVqP2wdUA8i7oUoQrGgd9yuHph6lPeR8dRR0Ivg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041250;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041253;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5qU5t1vmukeSLr5p/rL1qtF+qgExBwdl2GmXBr/EEL8=;
-	b=K7kFOdq/T7uc5MxWggYyJEFrbJEWzxHpxtSZEbOjpmn7k89ynoFuWx3UmRgmD4wBIFtl
-	 T0UF3+l0B40e9W5I52qAwLS8b8fEGz7NDLsucJqQ3S54XDRdcSr2ET98wHgFD+bi2vlb/
-	 bD3N1ErDbtOKQUGIx5isWeFuhEbXtiLQDPQCw8xFUlyBFi2oKcBTy11BI4bMuiCz7vK5I
-	 xkQYEOfVpHeLruiHsbGmZVXuY0J2jBtNCkbpndQBlUfOavoKOf2nqnRqaJiDdaiRLrkxj
-	 aVNNPo3R8XBwsIKE9l7sWeasC9ejaFyIGeqPhXzuGeqCeSJ7Df6DaHN4qUJ/j6pTGkA==
+	bh=yWLfVXGDEVJZWW2mLyGRq7k8XqH+c1ZwF1TGn1ZvAhc=;
+	b=cKAK3sgljRwMBxPpGXk7oMfcZwiTJ1TPdHYrqu+LHFdXMqaYe4jEp2iPGWVQjgJR1U1G
+	 bszkAFmoavsb4ypbAvqbErBZMSc6fHJAtYT1VyxjOf3eigSQQ6IZLmGx1v3CJ7cZMqYrq
+	 v2OAVK0fgWLvVSQJi3UpKTJK8aQa12ehUaX646Q6BmXlL7+fsBKRaNNx0gWvVhVvcNc27
+	 T+IpYZ18wdiMtVgXuhRAE9m2gTLcV9U+apP3xMxVP9PQxkBRJgQxxrrLHDDdY7wBm+821
+	 tKXXtiq8/NohCUDjH6YSFpRNKO3pHjWgnRYtMX1PMuBk0tXPu+SUO9UOkRYPxCDcr2A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m28N9fk4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GkiQT8HN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45308606A325;
-	Wed, 18 Nov 2026 22:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 283FF606A31C;
+	Wed, 18 Nov 2026 22:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m28N9fk4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C291F000C4;
-	Wed, 18 Nov 2026 22:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GkiQT8HN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BAA1F000C4;
+	Wed, 18 Nov 2026 22:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041250;
-	bh=5qU5t1vmukeSLr5p/rL1qtF+qgExBwdl2GmXBr/EEL8=;
+	s=korg; t=1795041253;
+	bh=yWLfVXGDEVJZWW2mLyGRq7k8XqH+c1ZwF1TGn1ZvAhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=m28N9fk4FohNPPFzZqKmTfmr2sDD0bY2WwF4npEcKuDSgZPG/3apoJ5XZEKPwLocp
-	 EAX5aVmEJkar3G97c83BFv0HwfqOKpct2sH9yKXSmwZ9F6Ag8+G5QE6U7jd5eIS4pz
-	 K6zeynGVQfB/NJtScQFGAnrMlfuOksXjrKBdC8vc=
+	b=GkiQT8HNeH67QB677PfmAE7jU+4Y37p3kGgAZ+S0gwttiK/rlvqxkxRgE5vEIZAgV
+	 eDiqvo0BwgV8eW1EBG5YhdBlIFalyJRdf8o5Bv45ZMd3689vc2swUk37WSeWjGo4dt
+	 yuMCaJVu6iGa8LuqXvCpgef41ZqnSZk4EbnL8EAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
 	David Sterba <dsterba@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2745/3318] btrfs: convert read_key_bytes() to take a folio
-Date: Wed, 18 Nov 2026 15:56:07 +0100
-Message-ID: <20261118150443.120165929@linuxfoundation.org>
+Subject: [PATCH 6.6 2746/3318] btrfs: refactor read_key_bytes() to remove the dest_folio parameter
+Date: Wed, 18 Nov 2026 15:56:08 +0100
+Message-ID: <20261118150443.149920215@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,80 +69,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 884937793db595928961397dd3ec2287b40371c6 ]
+[ Upstream commit fdf56b9d03d475881d73b75afbdbe4058db04ffc ]
 
-The old page API is being gradually replaced and converted to use folio
-to improve code readability and avoid repeated conversion between page
-and folio. Moreover, use kmap_local_folio() instead of kmap_local_page(),
-which is more consistent with folio usage.
+The function read_key_bytes() have 3 call sites:
 
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
+- For BTRFS_VERITY_DESC_ITEM_KEY offset 0 inside btrfs_get_verity_descriptor()
+- For BTRFS_VERITY_DESC_ITEM_KEY offset 1 inside btrfs_get_verity_descriptor()
+  Those are to read the description items, which are pretty small with
+  fixed item size.
+
+  Those call sites do not utilize the @dest_folio parameter.
+
+- For btrfs_read_merkle_tree_page()
+  This is to read the BTRFS_VERITY_MERKLE_ITEM_KEY, which can be pretty
+  large and split into multiple items.
+
+  This is the only call site utilizing the @dest_folio parameter.
+
+Just for the only btrfs_read_merkle_tree_page() call site, we have a
+complex scheme for @dest and @dest_folio parameters.
+Since @dest can be NULL, it means if we pass @dest as NULL, then no
+matter if @dest_folio is provided, the merkle data will not be loaded
+into that @dest_folio.
+
+This can lead to a bug where a highmem folio is not mapped, then we pass
+folio_address(folio), which is NULL, into read_key_bytes(), causing no
+data to be written into @dest_folio.
+
+To address the complex scheme between @dest and @dest_folio, remove the
+@dest_folio parameter completely, and let the only caller to map the
+folio and pass the mapped kernel address into read_key_bytes() instead.
+
+This not only reduces the parameter list, but also make it much clear on
+the @dest parameter handling.
+The only downside is a longer duration of locally mapped page, but this
+should still be fine, as kmap_local_folio() can survive context switch.
+
+Reported-by: Hongling Zeng <zenghongling@kylinos.cn>
+Link: https://lore.kernel.org/linux-btrfs/20260817022012.19658-1-zenghongling@kylinos.cn/
+Fixes: 146054090b08 ("btrfs: initial fsverity support")
 Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: fdf56b9d03d4 ("btrfs: refactor read_key_bytes() to remove the dest_folio parameter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/verity.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/btrfs/verity.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
 diff --git a/fs/btrfs/verity.c b/fs/btrfs/verity.c
-index 73e1ded8e839a..ca0e2a45e18d7 100644
+index ca0e2a45e18d7..a02e6664bd5d8 100644
 --- a/fs/btrfs/verity.c
 +++ b/fs/btrfs/verity.c
-@@ -285,7 +285,7 @@ static int write_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
-  *              page and ignore dest, but it must still be non-NULL to avoid the
-  *              counting-only behavior.
+@@ -281,21 +281,17 @@ static int write_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
+  * @dest:       Buffer to read into. This parameter has slightly tricky
+  *              semantics.  If it is NULL, the function will not do any copying
+  *              and will just return the size of all the items up to len bytes.
+- *              If dest_page is passed, then the function will kmap_local the
+- *              page and ignore dest, but it must still be non-NULL to avoid the
+- *              counting-only behavior.
   * @len:        length in bytes to read
-- * @dest_page:  copy into this page instead of the dest buffer
-+ * @dest_folio: copy into this folio instead of the dest buffer
+- * @dest_folio: copy into this folio instead of the dest buffer
   *
   * Helper function to read items from the btree.  This returns the number of
   * bytes read or < 0 for errors.  We can return short reads if the items don't
-@@ -295,7 +295,7 @@ static int write_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
+  * exist on disk or aren't big enough to fill the desired length.  Supports
+- * reading into a provided buffer (dest) or into the page cache
++ * reading into a provided buffer (dest).
+  *
   * Returns number of bytes read or a negative error code on failure.
   */
  static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
--			  char *dest, u64 len, struct page *dest_page)
-+			  char *dest, u64 len, struct folio *dest_folio)
+-			  char *dest, u64 len, struct folio *dest_folio)
++			  char *dest, u64 len)
  {
  	struct btrfs_path *path;
  	struct btrfs_root *root = inode->root;
-@@ -315,7 +315,7 @@ static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
+@@ -315,7 +311,11 @@ static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
  	if (!path)
  		return -ENOMEM;
  
--	if (dest_page)
-+	if (dest_folio)
+-	if (dest_folio)
++	/*
++	 * Merkle items can be large and split across multiple items, so enable
++	 * readahead for such cases.
++	 */
++	if (key_type == BTRFS_VERITY_MERKLE_ITEM_KEY)
  		path->reada = READA_FORWARD;
  
  	key.objectid = btrfs_ino(inode);
-@@ -372,15 +372,15 @@ static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
+@@ -359,7 +359,7 @@ static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
+ 				break;
+ 		}
+ 
+-		/* desc = NULL to just sum all the item lengths */
++		/* dest == NULL to just sum all the item lengths */
+ 		if (!dest)
+ 			copy_end = item_end;
+ 		else
+@@ -372,16 +372,10 @@ static int read_key_bytes(struct btrfs_inode *inode, u8 key_type, u64 offset,
  		copy_offset = offset - key.offset;
  
  		if (dest) {
--			if (dest_page)
--				kaddr = kmap_local_page(dest_page);
-+			if (dest_folio)
-+				kaddr = kmap_local_folio(dest_folio, 0);
- 
+-			if (dest_folio)
+-				kaddr = kmap_local_folio(dest_folio, 0);
+-
  			data = btrfs_item_ptr(leaf, path->slots[0], void);
  			read_extent_buffer(leaf, kaddr + dest_offset,
  					   (unsigned long)data + copy_offset,
  					   copy_bytes);
- 
--			if (dest_page)
-+			if (dest_folio)
- 				kunmap_local(kaddr);
+-
+-			if (dest_folio)
+-				kunmap_local(kaddr);
  		}
  
-@@ -768,7 +768,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 		offset += copy_bytes;
+@@ -673,7 +667,7 @@ int btrfs_get_verity_descriptor(struct inode *inode, void *buf, size_t buf_size)
+ 
+ 	memset(&item, 0, sizeof(item));
+ 	ret = read_key_bytes(BTRFS_I(inode), BTRFS_VERITY_DESC_ITEM_KEY, 0,
+-			     (char *)&item, sizeof(item), NULL);
++			     (char *)&item, sizeof(item));
+ 	if (ret < 0)
+ 		return ret;
+ 
+@@ -690,7 +684,7 @@ int btrfs_get_verity_descriptor(struct inode *inode, void *buf, size_t buf_size)
+ 		return -ERANGE;
+ 
+ 	ret = read_key_bytes(BTRFS_I(inode), BTRFS_VERITY_DESC_ITEM_KEY, 1,
+-			     buf, buf_size, NULL);
++			     buf, buf_size);
+ 	if (ret < 0)
+ 		return ret;
+ 	if (ret != true_size)
+@@ -718,6 +712,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 	struct folio *folio;
+ 	u64 off = (u64)index << PAGE_SHIFT;
+ 	loff_t merkle_pos = merkle_file_pos(inode);
++	void *kaddr;
+ 	int ret;
+ 
+ 	if (merkle_pos < 0)
+@@ -761,6 +756,7 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
+ 	}
+ 
+ read_folio:
++	kaddr = kmap_local_folio(folio, 0);
+ 	/*
+ 	 * Merkle item keys are indexed from byte 0 in the merkle tree.
+ 	 * They have the form:
+@@ -768,7 +764,8 @@ static struct page *btrfs_read_merkle_tree_page(struct inode *inode,
  	 * [ inode objectid, BTRFS_MERKLE_ITEM_KEY, offset in bytes ]
  	 */
  	ret = read_key_bytes(BTRFS_I(inode), BTRFS_VERITY_MERKLE_ITEM_KEY, off,
--			     folio_address(folio), PAGE_SIZE, &folio->page);
-+			     folio_address(folio), PAGE_SIZE, folio);
+-			     folio_address(folio), PAGE_SIZE, folio);
++			     kaddr, PAGE_SIZE);
++	kunmap_local(kaddr);
  	if (ret < 0) {
  		folio_unlock(folio);
  		folio_put(folio);
