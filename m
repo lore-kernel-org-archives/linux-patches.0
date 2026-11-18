@@ -1,50 +1,50 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044529;
-	b=wvJokWd3I8yJP9ltzx4xvnVr5bPrSvnuccKRvWkSODGkokhRozXIewZrE0wNeqqUJkug
-	 E80R+vzared/RNrtWhLajduU3XTNQI6+w/tZBoWeqLBc2YABVNWEHq62jM85C6+ZO/rmR
-	 gYzWnIz3U5HCx7QpnG3Crgrzp3T9Q0XBY4FpRT2ICxWiPaqeN8axQmfQWS+4p7iMmG+Yr
-	 FxlUhMLZsOtKpS2hRx4TWa4lsi8IxkxXeQO5EEjblpyVtx3Csv32bDqWx4EBKdfyjpG78
-	 /IpnXi7oalmYOjNXE1iYsVbBJOB9GDhOlqZSfmLfzxw3/8T+UP/2os81k+l+DjvuoZA==
+	t=1795044532;
+	b=o0q0QLwf1d0IxqFEVsd2zC7yybkVXivtdDe0/J91/bsFEfP/sYgztqsjGTdhiEmaVNxs
+	 u4H9j7WpAvQigHskIG1H1j2LMNVnvRivPI8mofExH2uNXdKcoPG8RGqvTxYK3w1EVz3vT
+	 dmqbj0auyQshdBpOyTk+hjjmy0yZVvUF2kVdOGKVdXMc4zu/9jlEEgQfDkZO4/V2T+rZK
+	 s41s+BAGC1l1bjjqDVwpXIOW2eO3OkYUuuR9wlUDJIvJe9W+5R+cKF8XUutg8Equ8nBAB
+	 XsjjbEH89NnjGaTt88VmwZvaF6uFd4Tmc3r+MELs6J8NbdBaNVhF5E3oQND4rE1jjQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044529;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BAEPP00IjA0RrHu7UBkWK7ZGRBNW06Ua48/apB+OzTY=;
-	b=SOToTtaV4lm8Ig5bJMySLTxQmwr3QKf8096/Kk1lcmKmK+OoPh58GzzpiEhTLEantH3i
-	 H18bSq8/GfahBAotzT9M+LmgjvTeEjrXFBLl1Dywtv/PHaN0Mu6zt+JlGl8QkLpEFSnu1
-	 KZzW+Fu7qT+3v4thDbuqtuvmpV13E6wDggJbBcv6jUB2Um2mjD4j/CYumH+Vx9DU6n8S9
-	 5ivEr9VAee1fi9XYZy6PwkYPtzVcEbFOOootsv4IKH5lwZgfrlleDViPChncFLoe+6euW
-	 QOORILCulX0ynmGKQAYG703PvGBV8QDBsnIG9yzcBn+XWVlBQobRDdPDNSXETLtA6Bw==
+	bh=89m5NhTZP9KL6yksIls713TNeiJSS041zo7zABORCJQ=;
+	b=psqdelKh6hjujzoP8jrElKDAhWO7p6YvTXlO3FN1Ie4wC2TQWVhSb2fdOGQZSleoYpUT
+	 x0v7OXULtif/ijUR0gK6VnRGL5Pl8y7a1qN9wlTJkDgxz0ql0ovIXdU7X2h9OO1tWD32/
+	 A6z0uJzzeRjGXNJej3QLm6PCpwS9OspVKd1MiUIvYTt+tXZ4k2Uf+yCTQV9CBYOST6OvD
+	 h8cI/mxtijFhJ+RtZCOp68+/CPCtaTntNDFIbDsv3hl2B/C/oriKC560t8+02M3Sdo5Bz
+	 6oyKJvsqL/JY5nqFBS6SptoSaillD98qrTj7gUZVUNgGehUnAmmonXgcTW3pCTcMt6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="gjK3teC/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L4fcrX7O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F897606A32A;
-	Wed, 18 Nov 2026 23:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3292B606A320;
+	Wed, 18 Nov 2026 23:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gjK3teC/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DC71F000C4;
-	Wed, 18 Nov 2026 23:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=L4fcrX7O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8461B1F000C4;
+	Wed, 18 Nov 2026 23:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044529;
-	bh=BAEPP00IjA0RrHu7UBkWK7ZGRBNW06Ua48/apB+OzTY=;
+	s=korg; t=1795044532;
+	bh=89m5NhTZP9KL6yksIls713TNeiJSS041zo7zABORCJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gjK3teC/BujdR139oMgIK57FJDr1QOC3j637xHckiWPi7XDTRAYFFUG1DikPnOH4R
-	 MCWyif4EIHdEUHbwGCY5Y8CuIfMLLfYAGUTWUpBF2cBT+mRW4cu3sYsbujujtUNZl8
-	 nQgZSE7hGxR4Al6O/s0GAAHSFh8yyYdrvzyZ9qLQ=
+	b=L4fcrX7ONiqzk4vdcptxLluc1+dDMUj8dU7J0PplzBpglW9hwQ4w9Fd1BpHT5NVQk
+	 LHDRfsdctPlEBj+JLjcMsnOMn53+niC67yI3unD9e51FH6C3l2w7pIhzo2xDHoNTLv
+	 m61zT8fgzJ7Fw8235LnjkWcEOvupHVVdHnY4xee0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <cel@kernel.org>
-Subject: [PATCH 6.1 0599/2857] pnfs/blocklayout: Complete a device upcall only on its own reply
-Date: Wed, 18 Nov 2026 15:27:13 +0100
-Message-ID: <20261118150223.058391496@linuxfoundation.org>
+Subject: [PATCH 6.1 0600/2857] pnfs/blocklayout: Complete a device upcall when the pipe is closed
+Date: Wed, 18 Nov 2026 15:27:14 +0100
+Message-ID: <20261118150223.095409974@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,186 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <cel@kernel.org>
 
-commit acfbea6c5e27c68d6b6d12849eb2b7f8466ccf06 upstream.
+commit 2a25cc8e984610828a526086313b8a7aeefe507d upstream.
 
-bl_pipe_downcall() wakes bl_resolve_deviceid() on any write of the
-right size, without checking that blkmapd has read the upcall being
-replied to. A write that arrives first returns the waiter while its
-struct rpc_pipe_msg is still queued on the pipe, which then holds a
-list_head into a dead stack frame. Reaching the pipe takes root, so
-the trigger is a broken or hostile blkmapd.
+Once blkmapd has read a whole upcall, rpc_pipe_read() unlinks the
+message from every pipe list, so the purges in rpc_pipe_release()
+and rpc_close_pipes() no longer reach it. bl_upcall_ops supplies no
+.release_pipe callback, and bl_pipe_destroy_msg() returns without
+completing the upcall because a downcall is expected to follow. A
+daemon that exits between the read and the write therefore strands
+its waiter: bl_resolve_deviceid() sleeps in wait_for_completion()
+and never returns, and it holds nn->bl_mutex across that wait, so
+every later device resolution in the net namespace blocks behind
+it.
 
-The wait has two further defects. bl_resolve_deviceid() sets
-TASK_UNINTERRUPTIBLE only after rpc_queue_upcall() has made the
-message visible, so a reply that lands in between wakes a running
-task and the schedule() that follows sleeps forever holding
-bl_mutex. And nn->bl_mount_reply is never reset, so when the pipe
-purges an unread upcall the waiter takes the previous reply as its
-own.
-
-Move the message into struct nfs_net, where bl_mutex already limits
-the pipe to one upcall per net namespace. Accept a reply only while
-blkmapd has read the whole message and no earlier reply has been
-taken, and reject any other write with -EINVAL. Wait for that reply
-on a completion so it cannot slip past the sleep, and check
-msg->errno before trusting it.
+Add a .release_pipe that completes an upcall blkmapd has consumed
+and left unanswered. Completing an upcall retires it, so a message
+the framework has already purged is no longer in flight and is not
+completed a second time here.
 
 Fixes: fe0a9b740881 ("pnfsblock: add device operations")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260901-alemi-v2-5-e163f94a3a6e@kernel.org
+Link: https://patch.msgid.link/20260901-alemi-v2-8-e163f94a3a6e@kernel.org
 Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/blocklayout/blocklayout.h |    5 ---
- fs/nfs/blocklayout/rpc_pipefs.c  |   58 ++++++++++++++++++++++++---------------
- fs/nfs/netns.h                   |    5 ++-
- 3 files changed, 41 insertions(+), 27 deletions(-)
+ fs/nfs/blocklayout/rpc_pipefs.c |   21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
---- a/fs/nfs/blocklayout/blocklayout.h
-+++ b/fs/nfs/blocklayout/blocklayout.h
-@@ -155,11 +155,6 @@ BLK_LSEG2EXT(struct pnfs_layout_segment
- 	return BLK_LO2EXT(lseg->pls_layout);
- }
- 
--struct bl_pipe_msg {
--	struct rpc_pipe_msg msg;
--	wait_queue_head_t *bl_wq;
--};
--
- struct bl_msg_hdr {
- 	u8  type;
- 	u16 totallen; /* length of entire message, including hdr itself */
 --- a/fs/nfs/blocklayout/rpc_pipefs.c
 +++ b/fs/nfs/blocklayout/rpc_pipefs.c
-@@ -55,17 +55,15 @@ bl_resolve_deviceid(struct nfs_server *s
- 	struct net *net = server->nfs_client->cl_net;
- 	struct nfs_net *nn = net_generic(net, nfs_net_id);
- 	struct bl_dev_msg *reply = &nn->bl_mount_reply;
--	struct bl_pipe_msg bl_pipe_msg;
--	struct rpc_pipe_msg *msg = &bl_pipe_msg.msg;
-+	struct rpc_pipe_msg *msg = &nn->bl_pipe_msg;
+@@ -151,10 +151,31 @@ static void bl_pipe_destroy_msg(struct r
+ 	complete(&nn->bl_done);
+ }
+ 
++/*
++ * An upcall blkmapd has consumed is off every pipe list, so the
++ * purges in rpc_pipe_release() and rpc_close_pipes() cannot reach it.
++ * No downcall can arrive once the pipe is closed; release its waiter
++ * here.
++ */
++static void bl_release_pipe(struct inode *inode)
++{
++	struct nfs_net *nn = net_generic(inode->i_sb->s_fs_info, nfs_net_id);
 +	struct rpc_pipe *pipe = nn->bl_device_pipe;
- 	struct bl_msg_hdr *bl_msg;
--	DECLARE_WAITQUEUE(wq, current);
- 	dev_t dev = 0;
- 	int rc;
- 
- 	dprintk("%s CREATING PIPEFS MESSAGE\n", __func__);
- 
- 	mutex_lock(&nn->bl_mutex);
--	bl_pipe_msg.bl_wq = &nn->bl_wq;
- 
- 	b->simple.len += 4;	/* single volume */
- 	if (b->simple.len > PAGE_SIZE)
-@@ -83,17 +81,15 @@ bl_resolve_deviceid(struct nfs_server *s
- 	nfs4_encode_simple(msg->data + sizeof(*bl_msg), b);
- 
- 	dprintk("%s CALLING USERSPACE DAEMON\n", __func__);
--	add_wait_queue(&nn->bl_wq, &wq);
--	rc = rpc_queue_upcall(nn->bl_device_pipe, msg);
--	if (rc < 0) {
--		remove_wait_queue(&nn->bl_wq, &wq);
-+	reinit_completion(&nn->bl_done);
-+	rc = rpc_queue_upcall(pipe, msg);
-+	if (rc < 0)
- 		goto out_free_data;
--	}
- 
--	set_current_state(TASK_UNINTERRUPTIBLE);
--	schedule();
--	remove_wait_queue(&nn->bl_wq, &wq);
-+	wait_for_completion(&nn->bl_done);
- 
-+	if (msg->errno < 0)
-+		goto out_free_data;
- 	if (reply->status != BL_DEVICE_REQUEST_PROC) {
- 		printk(KERN_WARNING "%s failed to decode device: %d\n",
- 			__func__, reply->status);
-@@ -113,26 +109,46 @@ static ssize_t bl_pipe_downcall(struct f
- {
- 	struct nfs_net *nn = net_generic(file_inode(filp)->i_sb->s_fs_info,
- 					 nfs_net_id);
-+	struct rpc_pipe *pipe = nn->bl_device_pipe;
-+	struct bl_dev_msg reply;
-+	bool accepted;
- 
--	if (mlen != sizeof (struct bl_dev_msg))
-+	if (mlen != sizeof(reply))
- 		return -EINVAL;
--
--	if (copy_from_user(&nn->bl_mount_reply, src, mlen) != 0)
-+	if (copy_from_user(&reply, src, mlen) != 0)
- 		return -EFAULT;
- 
--	wake_up(&nn->bl_wq);
--
-+	/*
-+	 * Accept a reply only after blkmapd has read the whole upcall.
-+	 * Completion retires the message, here and in
-+	 * bl_pipe_destroy_msg(), so a later reply finds nothing in
-+	 * flight.
-+	 */
++
 +	spin_lock(&pipe->lock);
-+	accepted = rpc_msg_is_inflight(&nn->bl_pipe_msg);
-+	if (accepted) {
++	if (rpc_msg_is_inflight(&nn->bl_pipe_msg)) {
 +		nn->bl_pipe_msg.copied = 0;
-+		nn->bl_mount_reply = reply;
++		nn->bl_pipe_msg.errno = -EPIPE;
 +		complete(&nn->bl_done);
 +	}
 +	spin_unlock(&pipe->lock);
-+	if (!accepted)
-+		return -EINVAL;
- 	return mlen;
- }
- 
- static void bl_pipe_destroy_msg(struct rpc_pipe_msg *msg)
- {
--	struct bl_pipe_msg *bl_pipe_msg =
--		container_of(msg, struct bl_pipe_msg, msg);
-+	struct nfs_net *nn = container_of(msg, struct nfs_net, bl_pipe_msg);
-+	struct rpc_pipe *pipe = nn->bl_device_pipe;
- 
- 	if (msg->errno >= 0)
- 		return;
--	wake_up(bl_pipe_msg->bl_wq);
++}
 +
-+	spin_lock(&pipe->lock);
-+	msg->copied = 0;
-+	spin_unlock(&pipe->lock);
-+	complete(&nn->bl_done);
- }
- 
  static const struct rpc_pipe_ops bl_upcall_ops = {
-@@ -235,7 +251,7 @@ static int nfs4blocklayout_net_init(stru
- 	struct dentry *dentry;
+ 	.upcall		= rpc_pipe_generic_upcall,
+ 	.downcall	= bl_pipe_downcall,
+ 	.destroy_msg	= bl_pipe_destroy_msg,
++	.release_pipe	= bl_release_pipe,
+ };
  
- 	mutex_init(&nn->bl_mutex);
--	init_waitqueue_head(&nn->bl_wq);
-+	init_completion(&nn->bl_done);
- 	nn->bl_device_pipe = rpc_mkpipe_data(&bl_upcall_ops, 0);
- 	if (IS_ERR(nn->bl_device_pipe))
- 		return PTR_ERR(nn->bl_device_pipe);
---- a/fs/nfs/netns.h
-+++ b/fs/nfs/netns.h
-@@ -10,6 +10,8 @@
- #include <net/net_namespace.h>
- #include <net/netns/generic.h>
- #include <linux/sunrpc/stats.h>
-+#include <linux/sunrpc/rpc_pipe_fs.h>
-+#include <linux/completion.h>
- 
- struct bl_dev_msg {
- 	int32_t status;
-@@ -21,8 +23,9 @@ struct nfs_netns_client;
- struct nfs_net {
- 	struct cache_detail *nfs_dns_resolve;
- 	struct rpc_pipe *bl_device_pipe;
-+	struct rpc_pipe_msg bl_pipe_msg;
- 	struct bl_dev_msg bl_mount_reply;
--	wait_queue_head_t bl_wq;
-+	struct completion bl_done;
- 	struct mutex bl_mutex;
- 	struct list_head nfs_client_list;
- 	struct list_head nfs_volume_list;
+ static struct dentry *nfs4blocklayout_register_sb(struct super_block *sb,
 
 
