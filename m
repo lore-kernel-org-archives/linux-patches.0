@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038688;
-	b=iktIfl3lmTb8aLfcMgnhsUP1onTt03xztqTzKFLALmQ0XTogOb5Iqc4TOajW+nQ+ar47
-	 PPsjbgZrlT7fUNn/W0BTrDM/HDks7OMyEi10WP8k/4X3Nj+cMAdD7c7GJHziRMMYvXOoq
-	 9+UDqithlk4pBOoG7SJ9gHDdnQePegrtlLePYmDh8z9Hrzld4EJgDiR/JQY4OutZnH9zI
-	 5slOdFlRsmg57Pgrounygqp2PHip4F4v/3DPqSD5STACggzVJVVg3g+81kkfXGXTG5vQk
-	 721q3yEi265hiRjHJ9tqQV+Ry/byYi+XGfZbeRFIDwgvfglSWIx+KQ8iQhEvPMSM41w==
+	t=1795038690;
+	b=sFN6vKmhMTPAedYeQ0lg3c/cBznUaIiQ/Ja7652nGylNG3wrAbcrAp6mIOU/oktmyL/T
+	 y7vEvXsR9ToZoClSQZViS6FxKORpqDEF+aLVkYionyRvVRsMFgn0xOVOSe94786vYVu1Z
+	 6rD9NOoVBJSevXtFHiFQ54u2VXl8fQbGR3t+y0aXFTQp/S7WZAzMuU5kBqLGpzPBhb1u7
+	 TBeqiol1oqAUNhSx+2ZrtB2GkXycGOezEJ0t98ptG9cz7/G5Yt79cZXbVF3UT+DbDoluK
+	 gT7OGG/zJs6f1rGTBCqZ01rAK99GXwLFBsuRNCQ9KunvYC9UQ94YrHIwv+iYOxoLE4Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038688;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038690;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A7srSwSDwmQ6FJjj76+wtd0cmjT8nvt8dvPacyzCCqs=;
-	b=WW9D3rt8iyUruyGLMwUTyWe4QQnQDZ2qdpZkGeGbKjQNcz0SsQQhDt8Z7oVfH/Hx1kC+
-	 b7+MOqYQL1keNZiQBV6xHwdbW8vzs9F69N//0xSxc8OJ9AKX5LGDOW3T7P/1bdTHRSzXo
-	 gtgJjMBtlKsXiRbguHpkYCE8VXrbCYxw2VU9qzR0E2JspDwzdKwdpZXXxkhjuv+1oNZrd
-	 4hKlZf+oNKsUbhQMc92C4GU+gWs7Os398X1IxrPm9HSjBJKsc5uxiX3EPE1bLAt6cDukR
-	 kl+85AAyCbb6ysaB59U7saYANxX3GZ4lt82FTSp+csw78y+2BRQi4UhLb+V/+PIRwhA==
+	bh=ycVP1Rb5f2wcVNQt9ZITjAPQ4LhUI3geEpOeJzULxq8=;
+	b=IGPbIMBK8F764P5J3JhM7uBRxxYyG1YvnqcTfyCC1qep0MbbSVOFRk0cFbynZJDxxsfP
+	 uCnVEwCS1PXW7rcu0x5NTSawLOeKSTCKnGoAF99SR3Xr42RFza2QY2XdxNOerYmnxjbSL
+	 IDBWNeEimZEwlg6VqsYcs39aAStvkbY88fUgGCLNNZrQ/WLGJQng1YKqGpjKfUF+Vb5PZ
+	 5Twq7sGyIys1AxVdqtgg2PWQtpnDLUjl7KbbMsNOgW7IaFVD1vSd123h9bVPtq8JehLE0
+	 0L6USsM6PgeZtu+RGe5u7w2FVBnQLK2v0aLchkJs5v4hsOy2OfZMMdlNiHErMBCCykA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6XCoWA0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Qit/FPPv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D191606A31C;
-	Wed, 18 Nov 2026 21:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7263606A31C;
+	Wed, 18 Nov 2026 21:51:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K6XCoWA0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F6B1F000C4;
-	Wed, 18 Nov 2026 21:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qit/FPPv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6C51F000C4;
+	Wed, 18 Nov 2026 21:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038688;
-	bh=A7srSwSDwmQ6FJjj76+wtd0cmjT8nvt8dvPacyzCCqs=;
+	s=korg; t=1795038690;
+	bh=ycVP1Rb5f2wcVNQt9ZITjAPQ4LhUI3geEpOeJzULxq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K6XCoWA0I/MHBqj2qo+L+izYHQ9Dz+biNedoWauXLMfhVkbX72Jm8zBKuHFSfpnqx
-	 F6b7KiqYNOXnWe4nZhuVsA7DusFV2e7WiN0A31qgj1cnjlYMz/qBPAgYKIiAvmkOOp
-	 Q/e6VMl1PBMeqUKpyfhT9Z1cbwJTM7dahl1uQ9Xs=
+	b=Qit/FPPv+QLGYvXlpKXxaKxhhypnwnhk8nIAj7RAIWt5OPEGOub+1FFNxsS402oph
+	 r4O4sqoVH0MjccD2IH/9ZnPc9o+5qeHhY8X93mf++sU6qFIQfsG287jsv0Ua1SUU3X
+	 VhGRg0mAK6XYgCq6UZL4b0bDHDwqkjKSnOgSe1zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1790/3318] ASoC: hdac_hda: Allocate the private data at codec driver bind
-Date: Wed, 18 Nov 2026 15:40:12 +0100
-Message-ID: <20261118150415.558613649@linuxfoundation.org>
+Subject: [PATCH 6.6 1781/3318] gpio: pca953x: Handle direction register read errors in IRQ paths
+Date: Wed, 18 Nov 2026 15:40:03 +0100
+Message-ID: <20261118150415.290616444@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,117 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
 
-[ Upstream commit 7d357eae973a1e1933f81f55aa1b3b4e3064570f ]
+[ Upstream commit a0fe269293509acdd93b9cfb3f46636f7b91b33a ]
 
-The SOF HDA code allocates struct hdac_hda_priv and stores it as drvdata
-of the codec device before the codec driver is bound. The driver core
-clears drvdata on unbind, so after unbinding the codec driver via sysfs
-a subsequent bind dereferences a NULL pointer in hdac_hda_dev_probe().
+Three IRQ paths ignore the result of reading the direction registers
+and then use the destination bitmap. pca953x_read_regs() does not populate
+that bitmap when regmap_bulk_read() fails, leaving the callers to use
+uninitialized stack data.
 
-All information in the private data can be derived from the codec
-device itself, so allocate and set it up in hdac_hda_dev_probe() as a
-device managed resource, which is released on unbind.
+This can select incorrect GPIOs for direction changes during IRQ bus
+synchronization, corrupt the saved input state during IRQ setup, or
+produce incorrect pending interrupt decisions.
 
-Remove the allocation from SOF, keeping the check for iDisp codecs
-without display audio component.
+Check the read result at all three sites. Release irq_lock without
+changing GPIO directions on failure, leave the IRQ history untouched
+when pending detection fails, and propagate the error from IRQ setup.
+The read helper already logs the error.
 
-Fixes: 3fd63658caed ("ASoC: Intel: Drop hdac_ext usage for codec device creation")
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027083840.28813-2-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-
-Omit the dev_index initialization because the private structure has no
-such member and the firmware patch loader that uses it is absent. Keep
-the allocation tied to codec driver binding and preserve the existing
-iDisp audio-component check.
-
-Stable-dep-of: 08a44bde821d ("ASoC: hdac_hda: Restore the codec device type on unbind")
+Fixes: 0f25fda840a9 ("gpio: pca953x: Zap ad-hoc reg_direction cache")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+Link: https://patch.msgid.link/20261018165003.3372368-1-sahaj123.sc@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c     | 12 +++++++++++-
- sound/soc/sof/intel/hda-codec.c | 22 ++++------------------
- 2 files changed, 15 insertions(+), 19 deletions(-)
+ drivers/gpio/gpio-pca953x.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index a3229a51eef33..5a196a756aaf4 100644
---- a/sound/soc/codecs/hdac_hda.c
-+++ b/sound/soc/codecs/hdac_hda.c
-@@ -606,10 +606,20 @@ static const struct snd_soc_component_driver hdac_hda_hdmi_codec = {
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index 6384c0760e0ee..dacb936ead643 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -763,6 +763,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	DECLARE_BITMAP(irq_mask, MAX_LINE);
+ 	DECLARE_BITMAP(reg_direction, MAX_LINE);
+ 	int level;
++	int ret;
  
- static int hdac_hda_dev_probe(struct hdac_device *hdev)
- {
--	struct hdac_hda_priv *hda_pvt = dev_get_drvdata(&hdev->dev);
-+	struct hdac_hda_priv *hda_pvt;
- 	struct hdac_ext_link *hlink;
- 	int ret;
+ 	guard(mutex)(&chip->i2c_lock);
  
-+	hda_pvt = devm_kzalloc(&hdev->dev, sizeof(*hda_pvt), GFP_KERNEL);
-+	if (!hda_pvt)
-+		return -ENOMEM;
-+
-+	hda_pvt->codec = dev_to_hda_codec(&hdev->dev);
-+	/* Intel iDisp (HDMI/DP) codec */
-+	if (((hdev->vendor_id >> 16) & 0xFFFF) == 0x8086)
-+		hda_pvt->need_display_power = true;
-+	dev_set_drvdata(&hdev->dev, hda_pvt);
-+
- 	/* hold the ref while we probe */
- 	hlink = snd_hdac_ext_bus_get_hlink_by_name(hdev->bus, dev_name(&hdev->dev));
- 	if (!hlink) {
-diff --git a/sound/soc/sof/intel/hda-codec.c b/sound/soc/sof/intel/hda-codec.c
-index 82a6707fb4b80..0bb9e547127ba 100644
---- a/sound/soc/sof/intel/hda-codec.c
-+++ b/sound/soc/sof/intel/hda-codec.c
-@@ -15,8 +15,6 @@
- #include "hda.h"
- 
- #if IS_ENABLED(CONFIG_SND_SOC_SOF_HDA_AUDIO_CODEC)
--#include "../../codecs/hdac_hda.h"
--
- #define CODEC_PROBE_RETRIES	3
- 
- #define IDISP_VID_INTEL	0x80860000
-@@ -139,7 +137,6 @@ static struct hda_codec *hda_codec_device_init(struct hdac_bus *bus, int addr, i
- /* probe individual codec */
- static int hda_codec_probe(struct snd_sof_dev *sdev, int address)
- {
--	struct hdac_hda_priv *hda_priv;
- 	struct hda_bus *hbus = sof_to_hbus(sdev);
- 	struct hda_codec *codec;
- 	u32 hda_cmd = (address << 28) | (AC_NODE_ROOT << 20) |
-@@ -159,26 +156,15 @@ static int hda_codec_probe(struct snd_sof_dev *sdev, int address)
- 	dev_dbg(sdev->dev, "HDA codec #%d probed OK: response: %x\n",
- 		address, resp);
- 
--	hda_priv = devm_kzalloc(sdev->dev, sizeof(*hda_priv), GFP_KERNEL);
--	if (!hda_priv)
--		return -ENOMEM;
--
- 	codec = hda_codec_device_init(&hbus->core, address, HDA_DEV_LEGACY);
- 	ret = PTR_ERR_OR_ZERO(codec);
- 	if (ret < 0)
- 		return ret;
- 
--	hda_priv->codec = codec;
--	dev_set_drvdata(&codec->core.dev, hda_priv);
--
--	if ((resp & 0xFFFF0000) == IDISP_VID_INTEL) {
--		if (!hbus->core.audio_component) {
--			dev_dbg(sdev->dev,
--				"iDisp hw present but no driver\n");
--			ret = -ENOENT;
--			goto out;
--		}
--		hda_priv->need_display_power = true;
-+	if ((resp & 0xFFFF0000) == IDISP_VID_INTEL && !hbus->core.audio_component) {
-+		dev_dbg(sdev->dev, "iDisp hw present but no driver\n");
-+		ret = -ENOENT;
-+		goto out;
+@@ -777,7 +778,9 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
  	}
  
- 	if (is_generic_config(hbus))
+ 	/* Switch direction to input if needed */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		goto out;
+ 
+ 	bitmap_or(irq_mask, chip->irq_trig_fall, chip->irq_trig_raise, gc->ngpio);
+ 	bitmap_or(irq_mask, irq_mask, chip->irq_trig_level_high, gc->ngpio);
+@@ -789,6 +792,7 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	for_each_set_bit(level, irq_mask, gc->ngpio)
+ 		pca953x_gpio_direction_input_unlocked(&chip->gpio_chip, level);
+ 
++out:
+ 	mutex_unlock(&chip->irq_lock);
+ }
+ 
+@@ -883,7 +887,9 @@ static bool pca953x_irq_pending(struct pca953x_chip *chip, unsigned long *pendin
+ 	}
+ 
+ 	/* Remove output pins from the equation */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		return false;
+ 
+ 	bitmap_copy(old_stat, chip->irq_stat, gc->ngpio);
+ 
+@@ -984,7 +990,9 @@ static int pca953x_irq_setup(struct pca953x_chip *chip, int irq_base)
+ 	 * interrupt.  We have to rely on the previous read for
+ 	 * this purpose.
+ 	 */
+-	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	ret = pca953x_read_regs(chip, chip->regs->direction, reg_direction);
++	if (ret)
++		return ret;
+ 	bitmap_and(chip->irq_stat, irq_stat, reg_direction, gc->ngpio);
+ 	mutex_init(&chip->irq_lock);
+ 
 -- 
 2.53.0
 
