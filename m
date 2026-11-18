@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038238;
-	b=WhDzK31nhRLLOP1Gdo1zhHElZxGAbrkySxS1zP3rR2k0V1ITYVmAvnOohRqEVw9ZkKA8
-	 LevmwJbI4EYf8D1Q/7UdL6ssNTIILxuFRw2LweXdqSO+Uz9peL8ymi3KiHnYRvmJOH8Eo
-	 rm4hEJMQWLk6tSlPzJvz0shFlIUTwLLPeX3ML7/WBg84oXVLR6ZspHj5tzBYlW3TVuK3O
-	 4D2OWMXG0tpSVi4Ei3w51c9MmBVWhJAt/meMVCC5iOlT47Zdwgnl17E+vVVz2Lmmh7YFB
-	 ojlWyIr4Nj2Yhd1Ur/2QeEMR5Kq9D5u1gXcIGpfM9csxOFa5741hUkbgwwNFbsuCEhQ==
+	t=1795038241;
+	b=mOIQXtxQf4XIGURQvRMJUgAELvnJVzm/3kIy+qYvKJ51asnqcBm11T2g2N+P08oaHwRY
+	 sGYNuL9N1QJN3Q2bReY/x5cMd8uEO/WdTHeB71jeMjTmSvj+bAfAeiuD8NsOv2ezsxbcD
+	 kxH8dWNJDLJSkkUznDYj2wj8u9BJ4aOFvnpAPW7xGKyo327X51qWRnFTF6HZPoj2O0KWp
+	 ly8WijuxJ4tfA5u9se0WsmNa0rm9NCCKRq/HKwoHPKtRZOBhiGDEjMNE77c8xv9XdT4J6
+	 s2vUsGn1rN5FAPsjRwc+a+25xU4fpx9jlTJNXoGUJuRbbAlFV6m1J7iatVfyiiNeCHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038238;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038241;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=azFX8I4F5BEkhkIKLxKyEtiNvOPrV07Is8w6W/EjSlM=;
-	b=bbC0vU4+JfBoKJ+PstLBGp/4ko88TQYB433oiGL9kc/j3RrpxbwcFkbwLY6gyUgWE3i+
-	 yfbqgs+DS8PiTe3cil3i/KaOMziVO09WOav8zK4mQdC4Q9nOgANY7wCUKM5fxs5c2fq4T
-	 9fbX5VXxOOEVKASz5pH6DDjQpcItmvSThy2DR+k041JOaAmV3MxHiH+CHJUDbZHO0EIaU
-	 mO4032qwOqjpn53epTR2qJGdQHHWzmGl7AhS6YvQ4S8vz+9EhLcy7WM/ZLPGHE3sm3qNU
-	 tRJDOLtlCfjT0VziixNAXguZdP41PcadXw0KFvTMEUGylTgvIpMR2f4sAKnl8ORhmAw==
+	bh=u3k/oLXE3vuMvS1cz1dAAmKzqkeLpoxS3MVEKONnB3w=;
+	b=pzkDCXVd8ekpvxI+hx/LbgctEigL/7qcMu3cDC1TKeUlKpoaUt0JmDdF7ECd3FpPSgLA
+	 20xHLTFhuXUSXcofF3qVmo2qJe0UMtrcxBc2JW4dM1HsDblwJDRNw2pHfGto+O3SWa5sI
+	 g3Hz4EGwAw0TLyqJjTtgbhOQnA+XI5VHtVF4mmE/ZsyxfkKaYqrx2PB1Wk8C8NfQKox4i
+	 qd4f8DRhnBCC4o9Nw5eGpecEBd39fBw9znCBetw1Iz9YTQQQ8KGSHKuwluDtbXuHaYXAn
+	 RYAGqXKPrIezTGAJj2U0+nYiMrf6Lm1Bcyarcu4KUbUW81saLV5/Zl55Gi2HYUxNsIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gcs5LsQa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JmlNTy8e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D1B606A31C;
-	Wed, 18 Nov 2026 21:43:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F182C606A31C;
+	Wed, 18 Nov 2026 21:44:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gcs5LsQa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6CB51F000C4;
-	Wed, 18 Nov 2026 21:43:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JmlNTy8e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D16A1F000C4;
+	Wed, 18 Nov 2026 21:44:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038238;
-	bh=azFX8I4F5BEkhkIKLxKyEtiNvOPrV07Is8w6W/EjSlM=;
+	s=korg; t=1795038240;
+	bh=u3k/oLXE3vuMvS1cz1dAAmKzqkeLpoxS3MVEKONnB3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gcs5LsQa/PFSJj4iv7sHI2tADWoLonYZocND69Ds8ePbN7XhITYj6cR6PP9Y2ySmQ
-	 te3opHoowtQwWjZo4Nz985iMK8PTUjHYttnnXe+qE6OtubErT6qC3AbHk0Rd6do80j
-	 OH+mCgon7phdQXHZ1uhxNEx8FFHs28wi5EydCsbI=
+	b=JmlNTy8eXI8UsFj9URQJJ8mpr7tfsM8I0okvmbv15E0QFbCOl741ajcUxDHdat+FO
+	 63dkzTy0hklxHEvulA+IzknQPvkEKFJEMGGV0V9nEyFBmajdzkQxFXboP/i2wlDXkW
+	 UFNndlKYbIr5hQiKy9ReCfIaLnWGCkLhN6y148Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanglei Zhu <zhugl3@xiaopeng.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Mehmet Fide <mehmet.fide@screeningeagle.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1674/3318] apparmor: check accept index + 1 is in bounds
-Date: Wed, 18 Nov 2026 15:38:16 +0100
-Message-ID: <20261118150412.021253906@linuxfoundation.org>
+Subject: [PATCH 6.6 1675/3318] wifi: rtw88: usb: route bmc frames via the high queue only for DTIM delivery
+Date: Wed, 18 Nov 2026 15:38:17 +0100
+Message-ID: <20261118150412.052255207@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,83 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanglei Zhu <zhugl3@xiaopeng.com>
+From: Mehmet Fide <mehmet.fide@screeningeagle.com>
 
-[ Upstream commit afe5d5a747393cb3d00795db31d7fce5108a766a ]
+[ Upstream commit c710c7c2e0380d7c0eeb33b686262edcaef7cb07 ]
 
-aa_lookup_fperms() returns perms[index + 1] when the current fsuid
-does not match cond->uid, so such an entry consumes two slots in the
-perms table.  But verify_dfa_accept_index() only checks that index is
-within the perms table, so a policy whose last accept entry is reached
-with a non-matching fsuid reads perms[index + 1] one entry past the
-end of the table.
+In AP mode every broadcast and multicast data frame is routed to
+TX_DESC_QSEL_HIGH, the after-DTIM queue, whether or not anybody is
+asleep. The firmware drains that queue at beacon pace, a dozen or so
+frames per second measured on RTL8822BU, while one associated client's
+mDNS/SSDP chatter alone exceeds that. The excess accumulates inside
+the chip until the shared TX page pool is exhausted (measured: 14 of
+1803 pages left). From that point every host-sourced frame queues
+behind the backlog: authentication responses reach the air seconds
+after the client has given up, so no station can associate anymore,
+and the beacon reserved-page download fails the BCN_VALID poll
+("error beacon valid") because it needs pages from the same pool. The
+AP keeps beaconing, so the failure looks like a silent RX stall and
+only a reboot recovers.
 
-The perms table is allocated by unpack_perms_table() with a u16 size
-read from the policy blob, so a crafted policy can place an accept
-entry at index size - 1 to reach the out-of-bounds read.
+mac80211 already decides when after-DTIM delivery is needed: it sets
+IEEE80211_TX_CTL_SEND_AFTER_DTIM on bmc frames only while at least one
+station is actually dozing. Honor that instead of routing
+unconditionally: flagged frames keep going through the high queue with
+the MORE_DATA and HGQMD handling introduced by commit 076f786a0ae1
+("wifi: rtw88: Fix AP mode incorrect DTIM behavior"), everything else
+leaves at line rate through the AC queues. This partially reverts the
+usb.c hunk of that commit, whose unconditional routing is what lets
+the backlog build up.
 
-Check that index + 1 is also in bounds.
+On a bench AP (USB2, 20 MHz, WPA2, hostapd, a Windows client driven
+through disconnect/reconnect cycles): reconnects fail 0/5 on RTL8822BU
+and 0/3 on RTL8821CU before this change, and pass 10/10 and 5/5 with
+it, with the page pool staying healthy and no beacon errors logged.
 
-Fixes: 6f442d42c0d89 ("apparmor: fix profile verification and enable it")
-Cc: stable@vger.kernel.org
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-[ Adapted for 6.6.y: this tree predates ACCEPT_FLAG_OWNER (2e12c5f06017), so aa_lookup_fperms() reads perms[index + 1] whenever fsuid does not match cond->uid and every accept index of a standalone file pdb gets the pair bound.  A compat-mapped policy dfa has one perms slot per state (accept[state] == state, table size == state_count) and aa_lookup_perms() never reads index + 1, and unpack_profile() aliases rules->file to a compat-mapped rules->policy when the profile has no separate file dfa, so verify_dfa_accept_index() takes a pair flag that is set only when rules->file != rules->policy.  The pair check is thus skipped whenever rules->file aliases rules->policy, including when the policy pdb supplies an explicit permission table; unlike upstream, this tree still uses aa_lookup_fperms(), which can access index + 1 on this path, so this backport does not address the aliased-policy case. ]
-Signed-off-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Signed-off-by: Mehmet Fide <mehmet.fide@screeningeagle.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260814053426.2473247-1-mehmet.fide@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/net/wireless/realtek/rtw88/usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
-index 589b43c34703e..2514672214dd9 100644
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -1194,13 +1194,22 @@ static int verify_header(struct aa_ext *e, int required, const char **ns)
-  * verify_dfa_accept_index - verify accept indexes are in range of perms table
-  * @dfa: the dfa to check accept indexes are in range
-  * table_size: the permission table size the indexes should be within
-+ * @pair: the accept indexes reference two slots, index and index + 1
-  */
--static bool verify_dfa_accept_index(struct aa_dfa *dfa, int table_size)
-+static bool verify_dfa_accept_index(struct aa_dfa *dfa, int table_size,
-+				    bool pair)
+diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
+index c64bc4091b407..c19689b13383a 100644
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -499,6 +499,7 @@ static int rtw_usb_write_data_h2c(struct rtw_dev *rtwdev, u8 *buf, u32 size)
+ static u8 rtw_usb_tx_queue_mapping_to_qsel(struct sk_buff *skb)
  {
- 	int i;
- 	for (i = 0; i < dfa->tables[YYTD_ID_ACCEPT]->td_lolen; i++) {
- 		if (ACCEPT_TABLE(dfa)[i] >= table_size)
- 			return false;
-+		/*
-+		 * Accept indexes for owner-conditional permissions come
-+		 * in pairs, so the non-owner entry at index + 1 must also
-+		 * be in bounds.
-+		 */
-+		if (pair && ACCEPT_TABLE(dfa)[i] + 1 >= table_size)
-+			return false;
- 	}
- 	return true;
- }
-@@ -1264,15 +1273,17 @@ static int verify_profile(struct aa_profile *profile)
- 	if (!rules)
- 		return 0;
+ 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
++	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 	__le16 fc = hdr->frame_control;
+ 	u8 qsel;
  
--	if (rules->file->dfa && !verify_dfa_accept_index(rules->file->dfa,
--							rules->file->size)) {
-+	if (rules->file->dfa &&
-+	    !verify_dfa_accept_index(rules->file->dfa, rules->file->size,
-+				     rules->file != rules->policy)) {
- 		audit_iface(profile, NULL, NULL,
- 			    "Unpack: file Invalid named transition", NULL,
- 			    -EPROTO);
- 		return -EPROTO;
- 	}
- 	if (rules->policy->dfa &&
--	    !verify_dfa_accept_index(rules->policy->dfa, rules->policy->size)) {
-+	    !verify_dfa_accept_index(rules->policy->dfa, rules->policy->size,
-+				     false)) {
- 		audit_iface(profile, NULL, NULL,
- 			    "Unpack: policy Invalid named transition", NULL,
- 			    -EPROTO);
+@@ -506,7 +507,8 @@ static u8 rtw_usb_tx_queue_mapping_to_qsel(struct sk_buff *skb)
+ 		qsel = TX_DESC_QSEL_MGMT;
+ 	else if (is_broadcast_ether_addr(hdr->addr1) ||
+ 		 is_multicast_ether_addr(hdr->addr1))
+-		qsel = TX_DESC_QSEL_HIGH;
++		qsel = (info->flags & IEEE80211_TX_CTL_SEND_AFTER_DTIM) ?
++		       TX_DESC_QSEL_HIGH : skb->priority;
+ 	else if (skb_get_queue_mapping(skb) <= IEEE80211_AC_BK)
+ 		qsel = skb->priority;
+ 	else
 -- 
 2.53.0
 
