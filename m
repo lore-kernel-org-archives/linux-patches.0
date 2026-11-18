@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047289;
-	b=xvpCzr47Vx4UNCB5p+es+Vk5TZlLIL8WdR/M/jjghSw4CptTymqXl0DX0aWB2Ol5I7g5
-	 /6/x0kNV7Nf5b3N4FzkVUdZXC9s6to7SUOYRfiTqOaR2XnMIz4xKzxv/fYw6n1fvGcXou
-	 e2DmbHWeRrjbwnZB0uTRzsv+Ijtml6YnppMznfMVj/SDo/318BD3vE4OMAL2AO6kDUbDv
-	 313IKbBsMyqxTSBJRTbLPbKDzDnIHpTNZI0qLxlJvD/w3E+jv3KIKlVVczI37U1wHhvTn
-	 hP5cuNrzYK4oFVriflT7wOQixrRYQjnMTsIcFW+RCy1I9ioTSWDti6KeRLbSdiX4cMQ==
+	t=1795047292;
+	b=z+hreZPx6qxgGm3p8JEEqQXWhnghTy2g3HI1OKhU0l7WVidpGXH8Z11Euj/Rouaq+2ud
+	 fWyi6GtR6DAIdcQbn7gjMgD6qZkNWtY/jRj3J2dUdOxgxJy7yk96EY23n1pET+LRjrHS/
+	 XvZOUWHCjCpBJw/mrSvNPtjjEZI0q8XIQUF7/arpAuNOiAesvt0lI5dLGe3m4ikHWdg7U
+	 QsBmz9HSrjS2U9PrGZpl2dottjdWEHCx8drzRWhN88GTyCxmKGn53R56nJ3cEPnc7qiyt
+	 XvP1ho0LDz5bttjfFGOlBXD3PSolN+42fcjSmz+1t2eqxa27htqJgB45T17NxNUqbtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Q3oeThaTgltsdWtNBg9/7nZkkZx+64g5Dx7w7nOUu+c=;
-	b=QfMuwL0PkXnmtfrhIwkGz7xSAQ13KKgR/u1T6QhLaQ8N9PQfwiBylB+gHI+16O3fqAS8
-	 GM9aFoE2h3EhteqVhqESk/luyG7OYFATB0Px9ORYKF+gDGZqRCZZMzNDfKhy1omE+d9F+
-	 3czx8dq2LbMU31KXxBvHiM8enWbAdfmdFRIqePbwBqKzOAuutA+u93gytEVG6nmMYhVk8
-	 V7XZMqAPGmileKRBgmgK/n/S4wa2sztYYuYyb2aSqgjLYvHIWItw+hAsCiH0OlmlwZjTi
-	 iEEMggtY/iBgO2qKK4ouMWKcrqmb4erBuKY3JudNbQscDZs6AdU29To1yghmzH3P9XA==
+	bh=gItKfY1zHUK+8uD0pWOfJj/h3V0fEZZQ6F9viSxEPOM=;
+	b=wnux+7L8hBck7RAWs7WxnXN9LOT44TeL5peT6yE5Ws+ne6tcmZP0nyBvj9HpkobcKSzO
+	 /pSzVslRy8WPpm7/KtV9mhEjC9+REt1U2AdHtm3pUmeYejP5ZW9Xg9wKVKpU6lc7BQgpd
+	 z56ml6W3rrexDEwvXJUdmrGMuo34riq71ul8G+vCv03/1KurcVZ8+9ihTflaiI62oTXxV
+	 1v5QDmUDFcQKAbSf4x7ZAKx0/gYb3JTToMVjp3qQn4e/RBn4k/dEIJERAcCx4FYCIIExH
+	 OEQdw+mRKjF4u931grM0tJ7nKnwK2KisiLzrz9sgHtGeKOU2549swvejwMZ6ncdm3gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QBq2OGnd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oODXTa9S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99275606A31C;
-	Thu, 19 Nov 2026 00:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF89606A31C;
+	Thu, 19 Nov 2026 00:14:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QBq2OGnd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A641F000C4;
-	Thu, 19 Nov 2026 00:14:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oODXTa9S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1441F000C4;
+	Thu, 19 Nov 2026 00:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047289;
-	bh=Q3oeThaTgltsdWtNBg9/7nZkkZx+64g5Dx7w7nOUu+c=;
+	s=korg; t=1795047292;
+	bh=gItKfY1zHUK+8uD0pWOfJj/h3V0fEZZQ6F9viSxEPOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QBq2OGndUKJOddR/NutE7dPYr9KJFBc3gAfOc19Y/1J8VjL5zgu5JLaDjaUVaiB7O
-	 86rZ45On0rBjThIDhGS8eRu5MTwcmBBprSTrarqXj5LK4hJ1o+3dBA/59z3Elm4r57
-	 +uYuuOcPLRScuOqodgbp2+2wtSlo+pu9i0bXXyx4=
+	b=oODXTa9S9VXwIXKvLXcTGmYMcDT0olRyCic2nMhd1ka5CHHOnPWBgTAJ7Nu8ollcn
+	 cIhwvTbxVhv+fEr+fSIlrBOpci9XuyUMqARwk5gxRpZCkoGuKqmpp+qlz05Zpbf6JC
+	 SSnQ+HJoqI4/HJD/o3osJOh3B7FNQftIfJkSU1YE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Francesco Orlando <francesco.orlando99@libero.it>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1585/2857] wifi: mt76: mt7615: restore DBDC state after ext PHY failure
-Date: Wed, 18 Nov 2026 15:43:39 +0100
-Message-ID: <20261118150258.444295038@linuxfoundation.org>
+Subject: [PATCH 6.1 1586/2857] Input: xpad - add GameSir Nova Lite support
+Date: Wed, 18 Nov 2026 15:43:40 +0100
+Message-ID: <20261118150258.480696645@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,68 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Francesco Orlando <francesco.orlando99@libero.it>
 
-[ Upstream commit 7907d5270dc5c13b6a95754c08a77d5b06bbc786 ]
+[ Upstream commit 2e6f2e5799f328ca0879dad14d7f3709c7f7496b ]
 
-mt7615_register_ext_phy() limits the primary PHY to DBDC capabilities
-before allocating and registering the secondary PHY. If allocation,
-EEPROM override, or PHY registration fails, it returns without restoring
-the primary PHY capabilities. The EEPROM override failure also leaks the
-newly allocated ieee80211_hw.
+Add vendor and product ID for GameSir Nova Lite (0x3537:0x1040) in
+XInput mode to enable force feedback rumble support.
 
-Route all failures through common labels that free the secondary hardware
-when it was allocated and restore the primary PHY capabilities.
-
-This issue was identified during our ongoing static-analysis research while
-reviewing kernel code.
-
-Fixes: 0f2173f093b3 ("mt76: mt7615: add support for registering a second wiphy via debugfs")
+Signed-off-by: Francesco Orlando <francesco.orlando99@libero.it>
+Link: https://patch.msgid.link/20261011165821.72698-1-francesco.orlando99@libero.it
 Cc: stable@vger.kernel.org
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/20260910215441.76683-1-mhun512@gmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-[ sashal: Omitted the mt76_eeprom_override() error-path change because that call is absent. ]
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+[ sashal: Added the missing XPAD_XBOX360_VENDOR(0x3537) prerequisite entry already present upstream. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/init.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/input/joystick/xpad.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-index cb5965700dfbb..333e33189c4e8 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
-@@ -463,8 +463,10 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index 458e166b97095..85c58e512bd40 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -383,6 +383,7 @@ static const struct xpad_device {
+ 	{ 0x31e3, 0x1300, "Wooting 60HE (AVR)", 0, XTYPE_XBOX360 },
+ 	{ 0x31e3, 0x1310, "Wooting 60HE (ARM)", 0, XTYPE_XBOX360 },
+ 	{ 0x3285, 0x0607, "Nacon GC-100", 0, XTYPE_XBOX360 },
++	{ 0x3537, 0x1040, "GameSir Nova Lite", 0, XTYPE_XBOX360 },
+ 	{ 0x3767, 0x0101, "Fanatec Speedster 3 Forceshock Wheel", 0, XTYPE_XBOX },
+ 	{ 0xffff, 0xffff, "Chinese-made Xbox Controller", 0, XTYPE_XBOX },
+ 	{ 0x0000, 0x0000, "Generic X-Box pad", 0, XTYPE_UNKNOWN }
+@@ -521,6 +522,7 @@ static const struct usb_device_id xpad_table[] = {
+ 	XPAD_XBOX360_VENDOR(0x2f24),		/* GameSir Controllers */
+ 	XPAD_XBOX360_VENDOR(0x31e3),		/* Wooting Keyboards */
+ 	XPAD_XBOX360_VENDOR(0x3285),		/* Nacon GC-100 */
++	XPAD_XBOX360_VENDOR(0x3537),		/* GameSir Controllers */
+ 	{ }
+ };
  
- 	mt7615_cap_dbdc_enable(dev);
- 	mphy = mt76_alloc_phy(&dev->mt76, sizeof(*phy), &mt7615_ops, MT_BAND1);
--	if (!mphy)
--		return -ENOMEM;
-+	if (!mphy) {
-+		ret = -ENOMEM;
-+		goto error;
-+	}
- 
- 	phy = mphy->priv;
- 	phy->dev = dev;
-@@ -503,7 +505,14 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
- 	ret = mt76_register_phy(mphy, true, mt76_rates,
- 				ARRAY_SIZE(mt76_rates));
- 	if (ret)
--		ieee80211_free_hw(mphy->hw);
-+		goto error_free_hw;
-+
-+	return 0;
-+
-+error_free_hw:
-+	ieee80211_free_hw(mphy->hw);
-+error:
-+	mt7615_cap_dbdc_disable(dev);
- 
- 	return ret;
- }
 -- 
 2.53.0
 
