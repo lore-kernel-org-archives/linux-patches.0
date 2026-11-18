@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024099;
-	b=uLZU1SfDEQDkwFYHcKJZkRbTIinUMurAzeClo1WeapfSFdeccUFDu63c6trZcsJNVEhF
-	 XV0KzhQHetA22o3P/ImBPkn9nizCuQsABk7lDj//toWC8UzL1df/mCxhXznAtdkBqUT5+
-	 dw1o33GOZYwY+3izU144McviLubssASx2q1gEifmp8dDtEpqQOF4zkon9Gwzbs0GyuDvi
-	 ZxaGzmGUerTHwbDRTPEre0umWpZYmzEKqB4Vodn4dxipgq/J+WkD5OR6xHjk7QfGSx+M+
-	 bEs4+k8Cyp4wCt8Vpp1cR9iSOq3BjgOo7dIOUgDQc3F8owW6K81hGWHYEGMAmOJn4ew==
+	t=1795024102;
+	b=kzwUzGGzMxmHsc7m20gVQDKlXcc3BdJp/gKKJsOzdpTdqQ/DQSUm1yXx8a4qXzRMyici
+	 swEXZRLxq5u2WUMFLOpWThrIfFj+jiVeilcRouKG7C48Ws84BxpNI6dA5dmgtJ5+9irtF
+	 hReA0PVLhgRr+ptGXinTCe8o+wXQl5oqWPGMk5A6vdkYhNzz2GHjYMBu/IcB7y2a4Tlu0
+	 4hx7GjH428rSJfCTV3V8fXbr96cA4fCs4qwJ2BbgDEmm+UM/2fAOZtDJ+h8Hwuy2RJgr3
+	 EExoN0yx1F7N6VTAB35Q6aJj1M8ePl87fhT5lfW6eXhtXIMWoJzspL08Iv5t8gNr6nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024099;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024102;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ndix21rCxURLQJPOMINE2mraayy+NmrXvii6kztpmkk=;
-	b=juQnZzLHERFMl3XjucPA1bT5fjbTocMFrgqAf2UHZie7ao4pHY2FEJsSW10hzVGQ/yJ/
-	 64fRkFBXOZ06Ii5kh2qcCFNflsuGDTZ+iuAnqX5NBylcFWHbUa10/p9MUt6DVHZZgPzFr
-	 mC1oURomQrMtunqZsWCLG6RO2LmAxGaU/yromCxoPWCGqjOANZNsS3cteJroX4+AI4sPT
-	 8fEVC3OMx1COOqWc5juroVAM8Eh9RxBTzLAlnmPO4uDijpmS2x5vR8Bp/ibJF1vHUFrlE
-	 UySJ8LvAGMEQyUqGyx8nAWmq0gdaaxD0tPANkP8uMul/weAp1xI02qVvYmb5g2ad4jQ==
+	bh=aMS8ZPTJMwsI+tJ5WD4WpLRUoML03/Vwb4C9etb+NhM=;
+	b=z3bl/i5t5z/GTV0wGQGWBapZvw8Ce0HmbkzPf5ESczWciCscRFvXpQQNaJPQ1O5YRILG
+	 wQxbMsA9jIUezU9PoWwUCNOGqdAuIz7fI9/eWS3urvrNMF+z9zBq/y41eiNzQYWdbqkyJ
+	 PVHvbbFLeEomEGzpQznVjjz/R23BHKAomxRW0zN+gOiH4GpcqZGzeLV6ZBN776knNTTbS
+	 00dPWlOJHbRH0jfNCbsBXizX3L7sdqs/Lx+dO6M8xdkc7umipfqowc3pEDTCdJwx0g2ud
+	 O3GFbMLs01jWDJ8eAIwn+k5whNpLe1ZQknRmdDLdAvaoQi6fgbUjyoD8H0FLNv4Vreg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=epFcu7rA;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UX8LzMcL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7062606A325;
-	Wed, 18 Nov 2026 17:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC28606A320;
+	Wed, 18 Nov 2026 17:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=epFcu7rA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1413F1F000C4;
-	Wed, 18 Nov 2026 17:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UX8LzMcL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF7521F000C4;
+	Wed, 18 Nov 2026 17:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024099;
-	bh=ndix21rCxURLQJPOMINE2mraayy+NmrXvii6kztpmkk=;
+	s=korg; t=1795024102;
+	bh=aMS8ZPTJMwsI+tJ5WD4WpLRUoML03/Vwb4C9etb+NhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=epFcu7rAUT+9fQvsZaSTESiSyuWBIqTVpIZUmtRFGmdpFhOff1WsAhdiaG8lXYNSr
-	 eDeDcvI6KYaK15sw6pkQmEYm/ZnRgyaSc8YlAuueKW1bR/omi/xB02pxZq7QEo1kVQ
-	 5vF2m+36gjoNRereyuXvcLOJQGLU87dz3zWNywgw=
+	b=UX8LzMcLlTM+fxV+eB9WSV9rwTpCqEI2t5+aedIU8zUziXSRTgp0v3PlwVdDyTgoO
+	 RQrZblJlzFCbxJJv09J5LZdtyXe1t27jQw5NFSthdz01E8tXPcSp+7WDqjnDUjiMVo
+	 0mbVhjxBWHafgnkBpCQJ51HD4m8DGIuBvikWuuw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
+	Yun Lu <luyun@kylinos.cn>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0564/2151] bpftool: Compute map size of light skeletons at runtime
-Date: Wed, 18 Nov 2026 15:38:19 +0100
-Message-ID: <20261118150142.498235772@linuxfoundation.org>
+Subject: [PATCH 6.18 0565/2151] selftests/bpf: Clean up child when task_work__open() fails
+Date: Wed, 18 Nov 2026 15:38:20 +0100
+Message-ID: <20261118150142.532695378@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,238 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Yun Lu <luyun@kylinos.cn>
 
-[ Upstream commit a885470df10b1c0dbc011177c19d3fd3bb8af2e9 ]
+[ Upstream commit 8715b13c1a800f34f9d8177837e5244ac8288f60 ]
 
-bpftool rounds memory-mapped data map sizes to the host page size when
-generating a light skeleton. The generated code therefore uses a 64K
-mapping size when bpftool runs on a 64K-page host, even if the skeleton
-runs on a 4K-page target. The target rejects the oversized map mmap(),
-causing failure of loading the light skeleton.
+task_work_run() forks a child that blocks reading a pipe until the
+parent wakes it. If task_work__open() fails afterwards, the parent
+returns without closing either pipe fd or waiting for the child.
+Because the parent retains the write end, the child remains blocked in
+read() until test_progs exits.
 
-When try to run 64K-page selftests on 4K-page VM, the error message does
-not provide the reason about page size.
+Route this failure through the common cleanup path. At this point
+cleanup is safe: pe_fd is -1, link is NULL, task_work__destroy() accepts
+NULL, and the pid > 0 branch closes the read end, wakes the child,
+closes the write end and waits for it.
 
- test_atomics:PASS:atomics skeleton open 0 nsec
- test_atomics:FAIL:atomics skeleton load unexpected error: -12 (errno 22)
- #15      atomics:FAIL
+This is the last early return after a successful fork. The fork failure
+path already closes both pipe fds after commit 5730dacb3f17
+("selftests/bpf: Task_work selftest cleanup fixes").
 
-Pass the original map value size and max entries to the generated code and
-round mmap size to the runtime page size in the user-space light
-skeleton helpers. This keeps generated light skeletons independent of the
-build host page size.
-
-Fixes: d510296d331a ("bpftool: Use syscall/loader program in "prog load" and "gen skeleton" command.")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
+Fixes: 39fd74dfd5d2 ("selftests/bpf: BPF task work scheduling tests")
+Signed-off-by: Yun Lu <luyun@kylinos.cn>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20260915161450.96249-1-leon.hwang@linux.dev
+Acked-by: Mykyta Yatsenko <yatsenko@meta.com>
+Link: https://lore.kernel.org/bpf/20260918024300.18321-1-luyun_611@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/gen.c       | 26 ++++++-------------
- tools/lib/bpf/skel_internal.h | 48 +++++++++++++++++++++++++----------
- 2 files changed, 42 insertions(+), 32 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/test_task_work.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/gen.c b/tools/bpf/bpftool/gen.c
-index 72fe9d4f34b1f..78b915bfcc8ed 100644
---- a/tools/bpf/bpftool/gen.c
-+++ b/tools/bpf/bpftool/gen.c
-@@ -500,16 +500,6 @@ static void print_hex(const char *data, int data_sz)
- 	}
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/test_task_work.c b/tools/testing/selftests/bpf/prog_tests/test_task_work.c
+index 774b31a5f6ca1..fe0cb1702eaa0 100644
+--- a/tools/testing/selftests/bpf/prog_tests/test_task_work.c
++++ b/tools/testing/selftests/bpf/prog_tests/test_task_work.c
+@@ -85,7 +85,7 @@ static void task_work_run(const char *prog_name, const char *map_name)
  
--static size_t bpf_map_mmap_sz(const struct bpf_map *map)
--{
--	long page_sz = sysconf(_SC_PAGE_SIZE);
--	size_t map_sz;
--
--	map_sz = (size_t)roundup(bpf_map__value_size(map), 8) * bpf_map__max_entries(map);
--	map_sz = roundup(map_sz, page_sz);
--	return map_sz;
--}
--
- /* Emit type size asserts for all top-level fields in memory-mapped internal maps. */
- static void codegen_asserts(struct bpf_object *obj, const char *obj_name)
- {
-@@ -686,8 +676,8 @@ static void codegen_destroy(struct bpf_object *obj, const char *obj_name)
- 		if (!get_map_ident(map, ident, sizeof(ident)))
- 			continue;
- 		if (is_skel_data(map, ident, sizeof(ident)))
--			printf("\tskel_free_map_data(skel->%1$s, skel->maps.%1$s.initial_value, %2$zu);\n",
--			       ident, bpf_map_mmap_sz(map));
-+			printf("\tskel_free_map_data(skel->%1$s, skel->maps.%1$s.initial_value, %2$u, %3$u);\n",
-+			       ident, bpf_map__value_size(map), bpf_map__max_entries(map));
- 		codegen("\
- 			\n\
- 				skel_closenz(skel->maps.%1$s.map_fd);	    \n\
-@@ -771,13 +761,13 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
- 		\n\
- 		\";							    \n\
- 									    \n\
--				skel->%1$s = (__typeof__(skel->%1$s))skel_prep_map_data((void *)data, %2$zd,\n\
-+				skel->%1$s = (__typeof__(skel->%1$s))skel_prep_map_data((void *)data, %2$u, %3$u,\n\
- 								sizeof(data) - 1);\n\
- 				if (!skel->%1$s)			    \n\
- 					goto cleanup;			    \n\
- 				skel->maps.%1$s.initial_value = (__u64) (long) skel->%1$s;\n\
- 			}						    \n\
--			", ident, bpf_map_mmap_sz(map));
-+			", ident, bpf_map__value_size(map), bpf_map__max_entries(map));
- 	}
- 	codegen("\
- 		\n\
-@@ -869,14 +859,14 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
- 		if (bpf_map__type(map) == BPF_MAP_TYPE_PERCPU_ARRAY) {
- 			codegen("\
- 		\n\
--			err = skel_protect_map_data(skel->%1$s, &skel->maps.%1$s.initial_value, %2$zd);\n\
-+			err = skel_protect_map_data(skel->%1$s, &skel->maps.%1$s.initial_value, %2$u, %3$u);\n\
- 			if (err)					    \n\
- 				return err;				    \n\
- 		#ifdef __KERNEL__					    \n\
- 			skel->%1$s = NULL;				    \n\
- 		#endif							    \n\
- 			",
--			ident, bpf_map_mmap_sz(map));
-+			ident, bpf_map__value_size(map), bpf_map__max_entries(map));
- 			continue;
- 		}
+ 	skel = task_work__open();
+ 	if (!ASSERT_OK_PTR(skel, "task_work__open"))
+-		return;
++		goto cleanup;
  
-@@ -888,11 +878,11 @@ static int gen_trace(struct bpf_object *obj, const char *obj_name, const char *h
- 		codegen("\
- 		\n\
- 			skel->%1$s = (__typeof__(skel->%1$s))skel_finalize_map_data(&skel->maps.%1$s.initial_value,\n\
--							%2$zd, %3$s, skel->maps.%1$s.map_fd);\n\
-+							%2$u, %3$u, %4$s, skel->maps.%1$s.map_fd);\n\
- 			if (!skel->%1$s)				    \n\
- 				return -ENOMEM;				    \n\
- 			",
--		       ident, bpf_map_mmap_sz(map), mmap_flags);
-+		       ident, bpf_map__value_size(map), bpf_map__max_entries(map), mmap_flags);
- 	}
- 	codegen("\
- 		\n\
-diff --git a/tools/lib/bpf/skel_internal.h b/tools/lib/bpf/skel_internal.h
-index da0669b5b5af0..6dd1795c796fc 100644
---- a/tools/lib/bpf/skel_internal.h
-+++ b/tools/lib/bpf/skel_internal.h
-@@ -11,6 +11,7 @@
- #include <linux/bpf.h>
- #else
- #include <unistd.h>
-+#include <sys/param.h>
- #include <sys/syscall.h>
- #include <sys/mman.h>
- #include <linux/keyctl.h>
-@@ -131,7 +132,7 @@ static inline void skel_free(const void *p)
-  * either bpf_probe_read_kernel() or bpf_copy_from_user() from initial_value
-  * depending on bpf_loader_ctx->flags.
-  */
--static inline void skel_free_map_data(void *p, __u64 addr, size_t sz)
-+static inline void skel_free_map_data(void *p, __u64 addr, size_t val_sz, __u32 max_entries)
- {
- 	if (addr != ~0ULL)
- 		kvfree(p);
-@@ -142,18 +143,20 @@ static inline void skel_free_map_data(void *p, __u64 addr, size_t sz)
- 	 */
- }
- 
--static inline void *skel_prep_map_data(const void *val, size_t mmap_sz, size_t val_sz)
-+static inline void *skel_prep_map_data(const void *val, size_t val_sz, __u32 max_entries,
-+				       size_t data_sz)
- {
- 	void *addr;
- 
--	addr = kvmalloc(val_sz, GFP_KERNEL);
-+	addr = kvmalloc(data_sz, GFP_KERNEL);
- 	if (!addr)
- 		return NULL;
--	memcpy(addr, val, val_sz);
-+	memcpy(addr, val, data_sz);
- 	return addr;
- }
- 
--static inline void *skel_finalize_map_data(__u64 *init_val, size_t mmap_sz, int flags, int fd)
-+static inline void *skel_finalize_map_data(__u64 *init_val, size_t val_sz, __u32 max_entries,
-+					   int flags, int fd)
- {
- 	struct bpf_map *map;
- 	void *addr = NULL;
-@@ -176,9 +179,10 @@ static inline void *skel_finalize_map_data(__u64 *init_val, size_t mmap_sz, int
- 	return addr;
- }
- 
--static inline int skel_protect_map_data(void *p, __u64 *init_val, size_t sz)
-+static inline int skel_protect_map_data(void *p, __u64 *init_val, size_t val_sz, __u32 max_entries)
- {
--	(void)sz;
-+	(void)val_sz;
-+	(void)max_entries;
- 
- 	kvfree(p);
- 	*init_val = ~0ULL;
-@@ -197,25 +201,39 @@ static inline void skel_free(void *p)
- 	free(p);
- }
- 
--static inline void skel_free_map_data(void *p, __u64 addr, size_t sz)
-+static inline size_t skel_map_mmap_sz(size_t val_sz, __u32 max_entries)
- {
--	munmap(p, sz);
-+	const long page_sz = sysconf(_SC_PAGE_SIZE);
-+	size_t mmap_sz;
-+
-+	mmap_sz = roundup(val_sz, 8) * max_entries;
-+	mmap_sz = roundup(mmap_sz, page_sz);
-+	return mmap_sz;
- }
- 
--static inline void *skel_prep_map_data(const void *val, size_t mmap_sz, size_t val_sz)
-+static inline void skel_free_map_data(void *p, __u64 addr, size_t val_sz, __u32 max_entries)
- {
-+	munmap(p, skel_map_mmap_sz(val_sz, max_entries));
-+}
-+
-+static inline void *skel_prep_map_data(const void *val, size_t val_sz, __u32 max_entries,
-+				       size_t data_sz)
-+{
-+	size_t mmap_sz = skel_map_mmap_sz(val_sz, max_entries);
- 	void *addr;
- 
- 	addr = mmap(NULL, mmap_sz, PROT_READ | PROT_WRITE,
- 		    MAP_SHARED | MAP_ANONYMOUS, -1, 0);
- 	if (addr == (void *) -1)
- 		return NULL;
--	memcpy(addr, val, val_sz);
-+	memcpy(addr, val, data_sz);
- 	return addr;
- }
- 
--static inline void *skel_finalize_map_data(__u64 *init_val, size_t mmap_sz, int flags, int fd)
-+static inline void *skel_finalize_map_data(__u64 *init_val, size_t val_sz, __u32 max_entries,
-+					   int flags, int fd)
- {
-+	size_t mmap_sz = skel_map_mmap_sz(val_sz, max_entries);
- 	void *addr;
- 
- 	addr = mmap((void *) (long) *init_val, mmap_sz, flags, MAP_SHARED | MAP_FIXED, fd, 0);
-@@ -224,11 +242,13 @@ static inline void *skel_finalize_map_data(__u64 *init_val, size_t mmap_sz, int
- 	return addr;
- }
- 
--static inline int skel_protect_map_data(void *p, __u64 *init_val, size_t sz)
-+static inline int skel_protect_map_data(void *p, __u64 *init_val, size_t val_sz, __u32 max_entries)
- {
-+	size_t mmap_sz = skel_map_mmap_sz(val_sz, max_entries);
-+
- 	(void)init_val;
- 
--	if (mprotect(p, sz, PROT_READ))
-+	if (mprotect(p, mmap_sz, PROT_READ))
- 		return -errno;
- 	return 0;
- }
+ 	bpf_object__for_each_program(prog, skel->obj) {
+ 		bpf_program__set_autoload(prog, false);
 -- 
 2.53.0
 
