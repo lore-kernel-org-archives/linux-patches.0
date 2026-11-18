@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022730;
-	b=r+mR8wx6oMXAZebjkBulKNGgYltUCXJIG1RfTfJxxdlqqNG19I1aImryPt1jM3hUrXsp
-	 1ahxP0o+Sv+EHGCfKTwaf0EpSC00bFu/7KQbrpCno3IUaf8kSBVE0BkT0mlNuXzAQeAZo
-	 grkVBNXQUuUU11ihJQYXI6ATuFsdDztn/pS//szajVQnpNb9gVhHmPynN10DUxxe3uxW+
-	 lfpea9lL69CZhtbEqgpb05C+5s/k4qDkGUQ8LsRpvfwI4p9lzSgWwquXRThiqIgB+jZZJ
-	 +2sDLhu2sX3H5dD6ttZEhKBWMa0/vXDCe3zM4Sd8AfVgHXNa9h7tfVFvj9J3UAMSXOA==
+	t=1795022733;
+	b=vzoPoELxAI3HqANFI9W5CR/+5s0sCrF9PpXEdePc1ZGPUiFDW7CUKpHF/VG7wxfr+rgS
+	 ElaKLal+vbUbhPQfnLO+yaTvdsMpdQhY36v3aM/SNg7iuvDSjRCoGxpY/OxcgIbhh9Y6j
+	 T86YRZX5KP9H2D/eJ7Uty3hK+MKp2efBWuEVzD+wyGo65CHqNF6U9E5J3oCXkJ+MbBAFj
+	 /lXz508aqK7aE+9rah9sjinhlndCKOnkKutBfxOHj5Ngzzyi8OGpQijK0OTqBUZPF2cED
+	 BWbgam/So9Tg1mRVy9ru03zvN6SpUpE0+QdjG2cCpaWMTmcclNdwUAZjR7kMpE3RsJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022730;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022733;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gMToeS9Y28Js0yN6kCpK526pOxI43B7tC4siORb+VSo=;
-	b=la9+M9uONwim0m8hUnpEO1cAoOwP5Hlqw1jbUAGpLjOCXBvC/KTVePVA6bVX8rxf3O42
-	 CUr6USLwNR1R8fng8qFozr9F1T0AeSYv1cQW7PHIO9Dp8hDTxs95tAeepdcvecd9xaVFT
-	 epgsT/5vPKa6F6A+T4kAjAhf2/EWeJxuW/66nS5F+hGzuVFcwxKl+k1DekXO+m7sm5tqb
-	 iC7tPoigtpQLe5W3M2cM471gfm9yMbATABSFL47qjIF2OnEugORF0JUKijXt9e4rZ2l73
-	 a0GQF0/zPTCS76UKOyupxsE+7oRTDFQ/zeg543TNdR0PM6kx2lMZwFAnS4Ivv8cMc0A==
+	bh=PwMIA2dF7Dm9rpF1WsathnDYohZtCyjTHj8cpvXI1mc=;
+	b=xBtz+AvbPf6w7LYugxYcxVeZjsJ9Nzq6fcgfwdG0vO5j9u8xGlYPLDE8AUmVtmMrfJCb
+	 zpY94uMT8wYYjVSuV26aAxdL6sWHyyI2eMRATGD2ybgNnRE+fnhQZFs6gbis2BQ+sTckQ
+	 bLFIg/a2mP6r1YZ5vb9ypzZfNkV0NpDg32iJJjb8YsZncY/QtAamHUClJJw3U+WHlqsn8
+	 4xPU6GbJulf7tTW3t0NB1HeViUg8FoJZjYjxM714N5++8OcpsvNduIIjmWf9ntwDLdKPA
+	 iHM55wDLgPVa5Wet/I4QkwBsbQXhgy1C5H+EvXtOW1/C53A88bM7H8BtNMcgfs/mp5Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A2ioj5HL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2hgtOzjM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D4D606A32F;
-	Wed, 18 Nov 2026 17:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E217D606A332;
+	Wed, 18 Nov 2026 17:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A2ioj5HL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732AE1F000C9;
-	Wed, 18 Nov 2026 17:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2hgtOzjM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EE71F000C8;
+	Wed, 18 Nov 2026 17:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022730;
-	bh=gMToeS9Y28Js0yN6kCpK526pOxI43B7tC4siORb+VSo=;
+	s=korg; t=1795022732;
+	bh=PwMIA2dF7Dm9rpF1WsathnDYohZtCyjTHj8cpvXI1mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=A2ioj5HLiS+LEyblv3LcDip0LFpvjeeu3g4AgTuex5LbL4hXBxOpajSp2ARvGIgj5
-	 feIWfZeXgDmn8UN+jyXmeB97CSfXAbCGtqi13LifFXEo5aDB7CeHFMSVP2zVE5JQQQ
-	 Il0xg8bP0+4xvhu0+8utdk2HQdS6nNv8qrrSnPAw=
+	b=2hgtOzjMbCm95Qv6iKNJEh7N4PK1AxBnPfelFG1DW+6RFcvDMcJ/hbIfsJne+s/OX
+	 ActUtL/BwfY5AwdTSP5w4At0aoPGO0KqDE0J39TwUV30bbPf7lBG6Q5sDgzMgT7Y5w
+	 mmfL+I7OWU+ncfn4onWbyCqdRfZqIhazaEEBDUNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Dillon Varone <dillon.varone@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0117/2151] mm/shmem: make shmem_file() check the files inode
-Date: Wed, 18 Nov 2026 15:30:52 +0100
-Message-ID: <20261118150126.053233200@linuxfoundation.org>
+Subject: [PATCH 6.18 0118/2151] drm/amd/display: Reset DET of HUBPs without a plane before outstanding updates
+Date: Wed, 18 Nov 2026 15:30:53 +0100
+Message-ID: <20261118150126.089145038@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,116 +73,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Arm) <david@kernel.org>
+From: Roman Li <Roman.Li@amd.com>
 
-[ Upstream commit d3710111839d11339e414b1bb3fea3d05ab83f6e ]
+[ Upstream commit f3afbf7d832ab138655afc96bd42226775d03ce7 ]
 
-shmem_file() only checks if file->f_mapping is a shmem mapping. This
-mapping can belong to another file, however, as with a Coda file backed
-by a tmpfs container after mmap().
+[WHY]
+DC asserts with:
+WARNING: dc/hubbub/dcn401/dcn401_hubbub.c at dcn401_program_compbuf_segments
+Call Trace:
+<TASK>
+dcn401_program_outstanding_updates+0x36/0x60 [amdgpu]
+hwss_process_outstanding_hw_updates+0x33/0x40 [amdgpu]
+commit_planes_for_stream+0x171f/0x1ff0 [amdgpu]
+dc_update_state_execute+0xaa/0x170 [amdgpu]
+dc_update_planes_and_stream+0x42/0x70 [amdgpu]
+amdgpu_dm_atomic_commit_tail+0x16a9/0x4020 [amdgpu]
+commit_tail+0xc3/0x1b0 [drm_kms_helper]
 
-So it does not guarantee that the file inode is an actual shmem inode.
+The DET left by the VBIOS on a HUBP without a plane can be larger than
+the DET planned for the new state. The compbuf is sized for the planned
+DET, so DET + compbuf can exceed the CRB size. Programming the compbuf
+then triggers the ASSERT and sets CONFIG_ERROR in hardware.
 
-Seal handling and memfd preservation use this check before accessing
-shmem inode state, so they can access an inode of the wrong type.
+[HOW]
+Release the DET of HUBPs without a plane before the compbuf is
+programmed.
 
-Let's make shmem_file() check the inode's file operations instead, to
-identify shmem inodes reliably. This will identify regular shmem inodes,
-including memfds and ordinary tmpfs files, independently of wrapper file
-operations.
+Add hwss_reset_unused_det() and call it in the commit and flip paths,
+to cover both seamless and non-seamless boots.
 
-Use shmem_mapping() in collapse_file() instead to not change the behavior
-of collapse_file(): it operates on the page cache and uses mapping->host
-for shmem inode operations. Focusing on the file does not seem relevant.
-
-Fixes: c49fcfcda8b5 ("mm/shmem: update file sealing comments and file checking")
-Fixes: b3749f174d68 ("mm: memfd_luo: allow preserving memfd")
+Fixes: 7a1eb6680939 ("drm/amd/display: Perform outstanding programming on full updates")
+Cc: Dillon Varone <dillon.varone@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Roman Li <Roman.Li@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c93f6fc7175b445ba3b7c85a1fc31e4e4951bbc9)
 Cc: stable@vger.kernel.org
-Reported-by: Chris Mason <mason@kernel.org>
-Suggested-by: Pratyush Yadav <pratyush@kernel.org>
-Reviewed-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-3-d6437171ecc3@kernel.org
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-[ sashal: adjusted context for the missing shmem_freeze() helper and combined integer declarations in collapse_file() ]
+[ sashal: added the missing header include to expose the complete struct hubbub definition ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/shmem_fs.h | 15 ++++++---------
- mm/khugepaged.c          |  2 +-
- mm/shmem.c               |  5 +++++
- 3 files changed, 12 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc.c      |  6 +++-
+ .../drm/amd/display/dc/core/dc_hw_sequencer.c | 32 +++++++++++++++++++
+ .../drm/amd/display/dc/hwss/hw_sequencer.h    |  3 ++
+ 3 files changed, 40 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/shmem_fs.h b/include/linux/shmem_fs.h
-index 0e47465ef0fd5..2b49d4d1426ff 100644
---- a/include/linux/shmem_fs.h
-+++ b/include/linux/shmem_fs.h
-@@ -99,8 +99,14 @@ extern unsigned long shmem_get_unmapped_area(struct file *, unsigned long addr,
- 		unsigned long len, unsigned long pgoff, unsigned long flags);
- extern int shmem_lock(struct file *file, int lock, struct ucounts *ucounts);
- #ifdef CONFIG_SHMEM
-+bool shmem_file(struct file *file);
- bool shmem_mapping(const struct address_space *mapping);
- #else
-+static inline bool shmem_file(struct file *file)
-+{
-+	return false;
-+}
-+
- static inline bool shmem_mapping(const struct address_space *mapping)
- {
- 	return false;
-@@ -171,15 +177,6 @@ static inline struct page *shmem_read_mapping_page(
- 					mapping_gfp_mask(mapping));
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc.c b/drivers/gpu/drm/amd/display/dc/core/dc.c
+index 1c312f2e128fc..6a6c4aa584d40 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc.c
+@@ -2282,6 +2282,8 @@ static enum dc_status dc_commit_state_no_check(struct dc *dc, struct dc_state *c
+ 		 * update pending complete before optimizing bandwidth.
+ 		 */
+ 		hwss_wait_for_odm_update_pending_complete(dc, context);
++		/* No DET may stay allocated to a HUBP without a plane (e.g. left over from VBIOS) */
++		hwss_reset_unused_det(dc, context);
+ 		/* pplib is notified if disp_num changed */
+ 		dc->hwss.optimize_bandwidth(dc, context);
+ 		/* Need to do otg sync again as otg could be out of sync due to otg
+@@ -4089,8 +4091,10 @@ static void commit_planes_for_stream(struct dc *dc,
+ 	dc_exit_ips_for_hw_access(dc);
+ 
+ 	dc_z10_restore(dc);
+-	if (update_type == UPDATE_TYPE_FULL && dc->optimized_required)
++	if (update_type == UPDATE_TYPE_FULL && dc->optimized_required) {
++		hwss_reset_unused_det(dc, dc->current_state);
+ 		hwss_process_outstanding_hw_updates(dc, dc->current_state);
++	}
+ 
+ 	if (update_type != UPDATE_TYPE_FAST && dc->res_pool->funcs->prepare_mcache_programming)
+ 		dc->res_pool->funcs->prepare_mcache_programming(dc, context);
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+index f28f61787f16e..277d7c1abbe2f 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -32,6 +32,7 @@
+ #include "resource.h"
+ #include "dc_dmub_srv.h"
+ #include "dc_state_priv.h"
++#include "dchubbub.h"
+ 
+ #define NUM_ELEMENTS(a) (sizeof(a) / sizeof((a)[0]))
+ #define MAX_NUM_MCACHE 8
+@@ -1194,6 +1195,37 @@ void hwss_wait_for_odm_update_pending_complete(struct dc *dc, struct dc_state *c
+ 	hwss_wait_for_all_blank_complete(dc, context);
  }
  
--static inline bool shmem_file(struct file *file)
--{
--	if (!IS_ENABLED(CONFIG_SHMEM))
--		return false;
--	if (!file || !file->f_mapping)
--		return false;
--	return shmem_mapping(file->f_mapping);
--}
--
- /*
-  * If fallocate(FALLOC_FL_KEEP_SIZE) has been used, there may be pages
-  * beyond i_size's notion of EOF, which fallocate has committed to reserving:
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 6fa4d9b7e0129..7ca1772c5aa8b 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1860,6 +1860,7 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 			 struct collapse_control *cc)
- {
- 	struct address_space *mapping = file->f_mapping;
-+	const bool is_shmem = shmem_mapping(mapping);
- 	struct page *dst;
- 	struct folio *folio, *tmp, *new_folio;
- 	unsigned long new_pfn = -1;
-@@ -1867,7 +1868,6 @@ static int collapse_file(struct mm_struct *mm, unsigned long addr,
- 	LIST_HEAD(pagelist);
- 	XA_STATE_ORDER(xas, &mapping->i_pages, start, HPAGE_PMD_ORDER);
- 	int nr_none = 0, result = SCAN_SUCCEED;
--	bool is_shmem = shmem_file(file);
- 	bool do_readahead = false;
- 	bool readahead_done = false;
- 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index e7c4d134b8255..63286a727fe4e 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -275,6 +275,11 @@ static const struct vm_operations_struct shmem_vm_ops;
- static const struct vm_operations_struct shmem_anon_vm_ops;
- static struct file_system_type shmem_fs_type;
- 
-+bool shmem_file(struct file *file)
++void hwss_reset_unused_det(struct dc *dc, struct dc_state *context)
 +{
-+	return file && file_inode(file)->i_fop == &shmem_file_operations;
++	struct hubbub *hubbub = dc->res_pool->hubbub;
++	unsigned int i, j;
++
++	if (!hubbub || !hubbub->funcs->program_det_segments)
++		return;
++
++	for (i = 0; i < dc->res_pool->pipe_count; i++) {
++		struct hubp *hubp = dc->res_pool->hubps[i];
++		bool hubp_in_use = false;
++
++		if (!hubp)
++			continue;
++
++		for (j = 0; j < dc->res_pool->pipe_count; j++) {
++			const struct pipe_ctx *pipe = &context->res_ctx.pipe_ctx[j];
++
++			/* A plane-less pipe renders from the DPG, its HUBP (assigned with the stream) needs no DET */
++			if (pipe->plane_state && pipe->plane_res.hubp &&
++					pipe->plane_res.hubp->inst == hubp->inst) {
++				hubp_in_use = true;
++				break;
++			}
++		}
++
++		if (!hubp_in_use)
++			hubbub->funcs->program_det_segments(hubbub, hubp->inst, 0);
++	}
 +}
 +
- bool shmem_mapping(const struct address_space *mapping)
+ void hwss_wait_for_no_pipes_pending(struct dc *dc, struct dc_state *context)
  {
- 	return mapping->a_ops == &shmem_aops;
+ 	int i;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
+index 619ac4dfff078..16251963cdf8d 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
++++ b/drivers/gpu/drm/amd/display/dc/hwss/hw_sequencer.h
+@@ -566,6 +566,9 @@ void hwss_wait_for_odm_update_pending_complete(struct dc *dc,
+ void hwss_wait_for_no_pipes_pending(struct dc *dc,
+ 		struct dc_state *context);
+ 
++void hwss_reset_unused_det(struct dc *dc,
++		struct dc_state *context);
++
+ void hwss_wait_for_outstanding_hw_updates(struct dc *dc,
+ 		struct dc_state *dc_context);
+ 
 -- 
 2.53.0
 
