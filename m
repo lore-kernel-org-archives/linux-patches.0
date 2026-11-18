@@ -1,52 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047664;
-	b=KJ6iIhFD9I3ZfX2mRRNaLlT8pCDfAtNbdWgR5byoo6bvhSnlJsFSPE16E7XbQqB9r1tT
-	 XWv2fHLldMH5/jLrG1FDDZ9juyjjrX6UzQLAPg2gqYrLKPdqw0uyjebkF1vU10fNRRyPb
-	 ZW2A6BWdUwmmnKZdwVJaW4e7tqf5+Pp0dzx9DFVorjUYdtSM2ngQCgmjcRvTovzelwRso
-	 +W/wV+3MQwcU/DaSX1/LhkYiAXaPK7JR+yTQ96elwVfjzWMaOw4Gc8kgyuLL6RpEUOH1U
-	 zlhfmuJT/N473qKYoPZSbG1CY0c4T9Slir8gBYBV/wgvjFZaCkdISuoIEMm1OIgaTYg==
+	t=1795047666;
+	b=0CnclhBZQIY8m0nxbWPyMZ53HulqFHS0niXd2IOjisbk4Iml786hkqq2GMpwOKazO5CO
+	 /V8gl9c2Yo2UK8Ungkk7dxmpr/vtXmgBfeEE/bwS0FkgDhH5RuZ2uoOp7bn+Q6G+L6YbA
+	 ulqAsD+pu1Qor+r/DpgoMjjniIDdtZHfFW5MXaA9DprNC+iEskliOPcRWtHd8/bkGzf3b
+	 SNF/RGRcL8LkYrHa5kzGkg2DFU2FsNK+jjrAf4O0Tuh0vf9Y6NYXJwZymBzYCHzruoe3O
+	 lFA3IlHQR94VFf9OGwzMbDpGgKnKl1aDtAkDmZTZgBCEBsZ3ar5/w3ctfep/Yrbt3pg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047664;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=CSvoHguio/Q9i4LAxjSJqnQWJTKSNv9KHyie+FhL9nY=;
-	b=S/aqi5wI+/A4Ji9tQh1hb8pqCokkEmBpH/tUnFIBLfqWUJU7n0e45cMhVM4l3Ygh+MWo
-	 fDL7Y0D3ktj5Y/aDPT6wwFWKQ9BiWYmDNTOBTL3ZKyL8Oex/GJ7EkTog6R+g6PBRY5PCX
-	 SFTRGtFcLwpUh27KauWTudLeu+7zowM0yGjMqEskYXGCOsIyXoigBBqPRou6/DyymjS29
-	 CLAQTasWI3J2zlpaSUrZz5T4txeDsriYpOP3/R/7xBXaMHHOg8qMrgf4D0iy2myGrra0t
-	 vX1k2ZbQMFQvVUzU9E/kJbmHlTKS71ZouYejAFkLz81+WbQXFENEe/V7nRSTgpaQ7dQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=hZN5B5WNlRH+iqDN7QumfhLdn3V1uR+wdoDLJjzNNuQ=;
+	b=QqAQSRulO2w1xMCFMmBJHs7he4sBSnkf+UzRSmP31wRzZd17AtmzKPkQ8SvlPTLzTiwL
+	 Pc2Td7SvxSQwE05iBkhH5mkoblyj/J2d9iWwQ+fWQWYyfmSjEcJ7HDedjAVtMXk3+Dhxm
+	 rDv3oQq28A2GDFEvlayb1RpBGp/xd7szgs522cMns6nXtTZ/O4yKpmuRnpNG0knd6FHJj
+	 H8s9X4NDypHUK3BJxbP8jFOdm1ixMjQhgeNOrOzDOwdHJY2YKhPs9sN/1hQi2+TEVi+sj
+	 nZ2QW+j8tO/E3UwQZTI17iUshacr6uBld/mPEuq2SehRp5GGUUnG046CrtEUCCQsv6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K07e7MUW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BIqYQQgy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA71B606A320;
-	Thu, 19 Nov 2026 00:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E099606A320;
+	Thu, 19 Nov 2026 00:21:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=K07e7MUW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446D21F000CE;
-	Thu, 19 Nov 2026 00:21:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BIqYQQgy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5261F000CB;
+	Thu, 19 Nov 2026 00:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047663;
-	bh=CSvoHguio/Q9i4LAxjSJqnQWJTKSNv9KHyie+FhL9nY=;
+	s=korg; t=1795047666;
+	bh=hZN5B5WNlRH+iqDN7QumfhLdn3V1uR+wdoDLJjzNNuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=K07e7MUW7uZnVJZGKm+ciUcciySAuCnxONNK3ZQeLuGv9okBTGQyGbGWG7OexhPWf
-	 fgTo3VvOLVqPkcMplTwqqM60qWih9HZ8gbaugcmj51dZaClOiIgsMvbHXqGn0ZboWD
-	 NHax+pwBL/lNppZoJcegZFzGGUW5l54pjDulcNAQ=
+	b=BIqYQQgyKN+9l7STKuwCK1Wqc0Tw7iCm/tDKZUSYHSExuuKgw3XNZfLpQ3KpU0Ker
+	 1W6rNm/2aHV7s/NwmkeBnIfL41BI1OyktazeIwoAlz1yL8KEWQ6AJ+mmGui276zeXO
+	 Tp/bm/lyOB6lXUBqWqGTq4mC9CJIXJJyMpvV7Vw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edvard Conrad <edvard@tuta.io>,
-	Amir Goldstein <amir73il@gmail.com>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Ying Huang <ying.huang@linux.alibaba.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Gregory Price <gourry@gourry.net>,
+	Alistair Popple <apopple@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1718/2857] ovl: inherit FMODE_NONOTIFY when reading directory layers
-Date: Wed, 18 Nov 2026 15:45:52 +0100
-Message-ID: <20261118150303.184426596@linuxfoundation.org>
+Subject: [PATCH 6.1 1719/2857] mm/migrate: snapshot the source nid before the misplaced migration
+Date: Wed, 18 Nov 2026 15:45:53 +0100
+Message-ID: <20261118150303.219434643@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -62,183 +71,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit 9ff338af0e002fe217cfa16b1289b76f6b21fc72 ]
+[ Upstream commit fe623a81ad9eddf10059b4e44bca0440d9120613 ]
 
-Listing a merged or impure overlay directory opens the real layer
-directories from ovl_dir_read(), when the readdir cache is filled.
-Those opens use plain ovl_path_open(), so when the directory fd is
-one that fanotify created for a permission event, they can still raise
-FS_OPEN_PERM.  A listener that also marks the backing filesystem and
-calls getdents() on the event fd before answering then deadlocks the
-same way as with the directory open fixed by the previous commit.
+A successful migration frees the source folio before the promotion
+counter update, so the folio_nid() read there operates on a freed
+folio — which may already have been reallocated. It happens to work
+today, as Zi explained:
 
-Store the overlay user file in struct ovl_readdir_data and pass it to
-ovl_path_open_realfile() from ovl_dir_read(), for both the merged and
-the impure cache.  Internal readers such as ovl_check_empty_dir() and
-the mount-time workdir cleanup still pass no user file.
+  : Strictly speaking, it can be seen as a benign UAF. It works, because
+  : 1. folio->flags happens to be the same as page->flags,
+  : 2. folio/page nid is stored in the ->flags and never changed.
+  :
+  : In memdesc world, after a folio is freed, I assume folio->flags would be
+  : zeroed since struct folio is freed and calling folio_nid() on a freed
+  : folio would give a bogus result (yeah, it can be mitigated by not
+  : zeroing node field and each node has its own struct folio pool, but that
+  : makes folio_nid() implementation dependent).
 
-A note about severity and real world impact: The FAN_OPEN_PERM event is
-traditionally used by anti-malware protection agents and security/audit
-agents. The scope that is often used in those use cases is FAN_MARK_MOUNT
-and agents typically monitor multiple mounts in a mount namespace.
-FAN_OPEN_PERM from directory open requires user opt-in with FAN_ONDIR.
-It is often not the case that anti-malware agents monitor open of
-directories. Security/audit engines are more likely to opt-into
-FAN_OPEN_PERM on directories, but are less likely to list the content
-of a directory within the scope of FAN_OPEN_PERM event, so the real
-world impact of this bug is likely not significant.
+and Matthew explained further:
 
-Reported-by: Edvard Conrad <edvard@tuta.io>
-Closes: https://lore.kernel.org/all/P5Qu3co--N-9@tuta.io/
-Cc: stable@vger.kernel.org
-Tested-by: Edvard Conrad <edvard@tuta.io>
-Link: https://lore.kernel.org/ltp/P5WKBbq--F-9@tuta.io/
-Co-developed-by: Edvard Conrad <edvard@tuta.io>
-Signed-off-by: Edvard Conrad <edvard@tuta.io>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[ sashal: replaced ovl_path_open_realfile() with ovl_path_open() and explicit FMODE_NONOTIFY flag handling ]
+  : once struct folio is separately allocated, it's a UAF.  It could be
+  : recycled to a different NID or maybe the slab containing the folio could
+  : be freed (assuming we're not holding the RCU read lock at this point in
+  : migration, and I don't see why we would be).
+
+A separate concern is memory hot-removal.  With memory-tiering mode
+enabled, successful migration can release the source before the
+promotion-accounting folio_nid() read.  If the task is preempted there,
+an otherwise-free source block can be offlined and removed first.  On
+the x86 path, removal can unmap the source's vmemmap, so the later read
+can fault.  The snapshot avoids that read.
+
+Link: https://lore.kernel.org/20261027021721.95781-1-laoar.shao@gmail.com
+Fixes: e39bb6be9f2b ("NUMA Balancing: add page promotion counter")
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Zi Yan <ziy@nvidia.com>
+Suggested-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: adapted folio_nid(folio) to page_to_nid(page) in migrate_misplaced_page() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/readdir.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ mm/migrate.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/readdir.c b/fs/overlayfs/readdir.c
-index ff3d30a9b3344..ceb903fad28ca 100644
---- a/fs/overlayfs/readdir.c
-+++ b/fs/overlayfs/readdir.c
-@@ -37,6 +37,7 @@ struct ovl_dir_cache {
+diff --git a/mm/migrate.c b/mm/migrate.c
+index 09acee0c43569..0f3af8eb6356c 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -2458,6 +2458,7 @@ int migrate_misplaced_page(struct page *page, struct vm_area_struct *vma,
+ 	int isolated;
+ 	int nr_remaining;
+ 	unsigned int nr_succeeded;
++	int src_node = page_to_nid(page);
+ 	LIST_HEAD(migratepages);
+ 	int nr_pages = thp_nr_pages(page);
  
- struct ovl_readdir_data {
- 	struct dir_context ctx;
-+	const struct file *user_file;
- 	struct dentry *dentry;
- 	bool is_lowest;
- 	struct rb_root *root;
-@@ -295,9 +296,13 @@ static inline int ovl_dir_read(const struct path *realpath,
- 			       struct ovl_readdir_data *rdd)
- {
- 	struct file *realfile;
-+	int flags = O_RDONLY | O_LARGEFILE;
- 	int err;
- 
--	realfile = ovl_path_open(realpath, O_RDONLY | O_LARGEFILE);
-+	if (rdd->user_file && (rdd->user_file->f_mode & FMODE_NONOTIFY))
-+		flags |= __FMODE_NONOTIFY;
-+
-+	realfile = ovl_path_open(realpath, flags);
- 	if (IS_ERR(realfile))
- 		return PTR_ERR(realfile);
- 
-@@ -341,12 +346,13 @@ static void ovl_dir_reset(struct file *file)
- }
- 
- static int ovl_dir_read_merged(struct dentry *dentry, struct list_head *list,
--	struct rb_root *root)
-+	struct rb_root *root, const struct file *user_file)
- {
- 	int err;
- 	struct path realpath;
- 	struct ovl_readdir_data rdd = {
- 		.ctx.actor = ovl_fill_merge,
-+		.user_file = user_file,
- 		.dentry = dentry,
- 		.list = list,
- 		.root = root,
-@@ -390,9 +396,10 @@ static void ovl_seek_cursor(struct ovl_dir_file *od, loff_t pos)
- 	od->cursor = p;
- }
- 
--static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
-+static struct ovl_dir_cache *ovl_dir_cache_get(struct file *file)
- {
- 	int res;
-+	struct dentry *dentry = file->f_path.dentry;
- 	struct ovl_dir_cache *cache;
- 
- 	cache = ovl_dir_cache(d_inode(dentry));
-@@ -411,7 +418,7 @@ static struct ovl_dir_cache *ovl_cache_get(struct dentry *dentry)
- 	INIT_LIST_HEAD(&cache->entries);
- 	cache->root = RB_ROOT;
- 
--	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root);
-+	res = ovl_dir_read_merged(dentry, &cache->entries, &cache->root, file);
- 	if (res) {
- 		ovl_cache_free(&cache->entries);
- 		kfree(cache);
-@@ -547,14 +554,15 @@ static bool ovl_fill_plain(struct dir_context *ctx, const char *name,
- 	return true;
- }
- 
--static int ovl_dir_read_impure(const struct path *path,  struct list_head *list,
--			       struct rb_root *root)
-+static int ovl_dir_read_impure(const struct path *path, struct list_head *list,
-+			       struct rb_root *root, const struct file *user_file)
- {
- 	int err;
- 	struct path realpath;
- 	struct ovl_cache_entry *p, *n;
- 	struct ovl_readdir_data rdd = {
- 		.ctx.actor = ovl_fill_plain,
-+		.user_file = user_file,
- 		.list = list,
- 		.root = root,
- 	};
-@@ -592,9 +600,10 @@ static int ovl_dir_read_impure(const struct path *path,  struct list_head *list,
- 	return 0;
- }
- 
--static struct ovl_dir_cache *ovl_cache_get_impure(const struct path *path)
-+static struct ovl_dir_cache *ovl_cache_get_impure(struct file *file)
- {
- 	int res;
-+	const struct path *path = &file->f_path;
- 	struct dentry *dentry = path->dentry;
- 	struct ovl_fs *ofs = OVL_FS(dentry->d_sb);
- 	struct ovl_dir_cache *cache;
-@@ -611,7 +620,7 @@ static struct ovl_dir_cache *ovl_cache_get_impure(const struct path *path)
- 	if (!cache)
- 		return ERR_PTR(-ENOMEM);
- 
--	res = ovl_dir_read_impure(path, &cache->entries, &cache->root);
-+	res = ovl_dir_read_impure(path, &cache->entries, &cache->root, file);
- 	if (res) {
- 		ovl_cache_free(&cache->entries);
- 		kfree(cache);
-@@ -726,7 +735,7 @@ static int ovl_iterate_real(struct file *file, struct dir_context *ctx)
- 	dput(parent);
- 
- 	if (ovl_is_impure_dir(file)) {
--		rdt.cache = ovl_cache_get_impure(&file->f_path);
-+		rdt.cache = ovl_cache_get_impure(file);
- 		if (IS_ERR(rdt.cache))
- 			return PTR_ERR(rdt.cache);
+@@ -2495,7 +2496,7 @@ int migrate_misplaced_page(struct page *page, struct vm_area_struct *vma,
  	}
-@@ -773,7 +782,7 @@ static int ovl_iterate(struct file *file, struct dir_context *ctx)
- 	if (!od->cache) {
- 		struct ovl_dir_cache *cache;
- 
--		cache = ovl_cache_get(dentry);
-+		cache = ovl_dir_cache_get(file);
- 		err = PTR_ERR(cache);
- 		if (IS_ERR(cache))
- 			goto out;
-@@ -987,7 +996,7 @@ int ovl_check_empty_dir(struct dentry *dentry, struct list_head *list)
- 	const struct cred *old_cred;
- 
- 	old_cred = ovl_override_creds(dentry->d_sb);
--	err = ovl_dir_read_merged(dentry, list, &root);
-+	err = ovl_dir_read_merged(dentry, list, &root, NULL);
- 	revert_creds(old_cred);
- 	if (err)
- 		return err;
+ 	if (nr_succeeded) {
+ 		count_vm_numa_events(NUMA_PAGE_MIGRATE, nr_succeeded);
+-		if (!node_is_toptier(page_to_nid(page)) && node_is_toptier(node))
++		if (!node_is_toptier(src_node) && node_is_toptier(node))
+ 			mod_node_page_state(pgdat, PGPROMOTE_SUCCESS,
+ 					    nr_succeeded);
+ 	}
 -- 
 2.53.0
 
