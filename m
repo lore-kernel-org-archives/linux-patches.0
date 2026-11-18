@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032415;
-	b=CGz+LwMfS2orMEgeoM+03XJUHvm5ujk0vzcMIOczNnbpMfjpS7AH7Wqz0rGVKXJDmyQB
-	 uDxdKTM4M0exJqr101DrvmBogbi7Me0LSmDfZ5GOCut66ZLMbXgiQL+rXx82/tiFVvinS
-	 EX9WMuPsEWwtwTGQL2vrmWWWwLErrtTZLn7OtRAEf3QqNDE340euf9LwfopCTfnO57+3N
-	 fC6J1q2UwS19+0W8JzwJOq9dXLnP9jcJlt/U6p4KQgBZlq8h3oA8geq9YxUqsJnGN3aNF
-	 DWNE3ubzAJ80zI0dLN4uRsbah4GLQnznzENsAe49PNOB9OnBIoA/1Pe4/EywThZrZmw==
+	t=1795032412;
+	b=P0vn+JRSXpnS3uhszt7Bg9i66gb5cRDzhO3Ni3IRnv6yGqHqnCzBvE/mz1Z42XMfPe0h
+	 WXwzNCi+zt0eus+saqY1b0fucjlfwZjNtp/aSiGZfzxCNfxKttv4c2DX98l+KMHeReg/A
+	 O5s4/kHmAcfnOX+BZBeKTctprDcNsmoYk8wibMd+exoKTdYTWi4z6f+Wc6Rs3VhgqHLAS
+	 724Ror1LMhn1EDaNfnO87ZEcEptZfE5N8dMryYxAVJq2rnSBHz1s5k6mLXBjUCwwAchUI
+	 o5xp0eEsRxPKHlS+EXW1dCcoMyfsGJYwHhtif6NY9f72X2Lltz3wEX9cRxyWEmIKVuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032415;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032412;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+IxwOd+4dYdX1EmCmpBtkh/gGiAuGyd9jQhUoIMCWt4=;
-	b=xh5LPA1P99N+CgqTSOLusV9lP33rgHhfZ32h/LEgye1EykJbKGrDM0bMDUBD6tyXh7/o
-	 cNc59yyEXOwXx9dvTCaHJ6JE9Stdweahz57gZaAgKvtOP7q693W+MUvD8vvSgG9ZY1fF1
-	 PdWtPv3TYYOSTbRtemdUpQCxqg77mhtCCaqVUvTbNSQKf2hcCx0KY5EvxzT7zrgzVAR7q
-	 B/bMrk/tLWYFnIzC6KGw6CTj19nuWhLR3ftvdiT/kyFby3d9GS6fLnNNwSPnDoXj9frmQ
-	 +bvzFIkPnoYkEOa6xseOrxJ6M4rfBho3vvyas2s4smr05m1bps/vYLos2U2LptYNxxg==
+	bh=tLn4qbfBIla++o7LyVdcDN8Z6deXUl8FUoX+mgS/lsQ=;
+	b=pw5rhlKomDmzHISz5kDKojOl4driwYIoS1UzMLUr4FumTk8UDw4EoU1zn47FSAk58qQO
+	 rhDi6eA2ojte2uqCQyqLVYQWt8SF3Gh8XpDTbjq9WhEn3RCDOqD12HvwdutBXn1ycwNsu
+	 A7Yr4zv9Vx5k7aXmMeBlkBIJvEOFddR7zYWmiJ7eOjuCk9vsY4JNm2j6m6rVAONdjB6eo
+	 Bc8V1j2Wn9yfM26WfNsCrZ5VOvkekjBo/pPuQUQU0XeGSgMJG/Cnyg8PFnNFrJzW6Bgxr
+	 S4dbn8vSO3DuURhF+0zb4rCLiXjDOwAW20sd8ywsTxW8NssZ8yAoV1e3MnK0bE+c5iQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okesLcPk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P7vCITCS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65EE760A3819;
-	Wed, 18 Nov 2026 20:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D4B60A261F;
+	Wed, 18 Nov 2026 20:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=okesLcPk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 611D61F0182C;
-	Wed, 18 Nov 2026 20:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P7vCITCS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785461F000C4;
+	Wed, 18 Nov 2026 20:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032414;
-	bh=+IxwOd+4dYdX1EmCmpBtkh/gGiAuGyd9jQhUoIMCWt4=;
+	s=korg; t=1795032412;
+	bh=tLn4qbfBIla++o7LyVdcDN8Z6deXUl8FUoX+mgS/lsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=okesLcPkRwgcRf91GhEUzifmWqxDrO/+3pRLNjvhT/BOiTxhKWho5bleDtJGDTNoq
-	 uL+vhpDpyufEUHczAGzOhbXqJ+s1mTmz1Zj97QK8egoNflPz/kUIaX0U6m3/5DiQaf
-	 tx1R5UcrWudST8O5ErefNjPoz5ygmI80fgX/lZbM=
+	b=P7vCITCS66USHW4gsE/1IHhMXNi3QgEPxdUItakf0mqa1tbhZoMUN3gTCoBOlPCVy
+	 agcIy6pgpVU4RmjJRNX3gUAb58PVanwuxJtQC2Dy18JmpAFoKAD+ySeMewdj+8dYvr
+	 embTxpLuI8ShmreQjOrq94ICq4vwJusVYvB9qyz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiliang Yuan <odys.yuan@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	KaFai Wan <kafai.wan@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1403/1756] selftests/bpf: Run the cpumask map insert tests only for the test task
-Date: Wed, 18 Nov 2026 15:58:50 +0100
-Message-ID: <20261118150105.040014867@linuxfoundation.org>
+Subject: [PATCH 6.12 1402/1756] selftests/bpf: Use _exit() in uprobe_multi_test clone-ed child
+Date: Wed, 18 Nov 2026 15:58:49 +0100
+Message-ID: <20261118150105.003537817@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,57 +68,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiliang Yuan <odys.yuan@gmail.com>
+From: KaFai Wan <kafai.wan@linux.dev>
 
-[ Upstream commit e2c978ad415ce223e71f6ddaa92778225eca0bef ]
+[ Upstream commit ce42271dc517baa880352d76548d301850e7385b ]
 
-verify_success() attaches each cpumask test program to task_newtask,
-forks a single child, and expects err to be 0 afterwards. Most programs
-return right away for other tasks than the test one.
+child_func() terminates with exit(), but spawn_child_flag() also starts
+it via clone(CLONE_VM), which shares the parent's address space. That
+exit() then runs atexit handlers and static destructors against globals
+the parent is still using.
 
-test_insert_leave and test_insert_remove_release don't, and insert a
-cpumask into the single entry of __cpumask_map for every task created
-in the system while they are attached. test_insert_leave leaves its
-cpumask in the map, so a second task created, for instance by a test
-running in parallel, fails to insert one and sets err to 3. Two tasks
-created at the same time can do the same to test_insert_remove_release.
+LLVM commit `3c3ed59c6a2a ("[llvm] Add format check for
+MCSubtargetFeatures")` [1], included in the LLVM 23.1 releases, added
+Target::isValidFeatureListFormat() with a function-local static holding
+the compiled regex:
 
-Return early for other tasks than the test one in both programs, as the
-other programs do.
+	static const llvm::Regex pattern("^([+-][^,]+)(,[+-][^,]+)*,?$");
+	return pattern.match(Features);
 
-Fixes: 7b6abcfa15cd ("selftests/bpf: Add selftest suite for cpumask kfuncs")
-Signed-off-by: Qiliang Yuan <odys.yuan@gmail.com>
-Link: https://lore.kernel.org/bpf/20261009-selftests-bpf-cpumask-insert-filter-v1-1-3249218594d7@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+The child exit destroys that static while its guard variable still marks
+it as initialized, so the regex is never rebuilt in the parent. From that
+point on, get_jited_program_text() gets NULL from
+LLVMCreateDisasmCPUFeatures(), so every jited program text check in the
+tests running after filter_clone_vm fails, e.g. "verifier_jit_convergence",
+"verifier_private_stack", "verifier_tailcall_jit" and "verifier_jit_inline".
+
+Use _exit(), which runs neither atexit handlers nor static destructors, as
+uprobe_syscall.c already does for its own CLONE_VM child.
+
+[1] https://github.com/llvm/llvm-project/pull/180943
+
+Fixes: d2520bdb1932f ("selftests/bpf: Add uprobe multi pid filter test for clone-ed processes")
+Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261018005348.2195130-5-kafai.wan@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/cpumask_success.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/cpumask_success.c b/tools/testing/selftests/bpf/progs/cpumask_success.c
-index 80ee469b0b602..7462474ef1adc 100644
---- a/tools/testing/selftests/bpf/progs/cpumask_success.c
-+++ b/tools/testing/selftests/bpf/progs/cpumask_success.c
-@@ -460,6 +460,9 @@ int BPF_PROG(test_insert_leave, struct task_struct *task, u64 clone_flags)
- {
- 	struct bpf_cpumask *cpumask;
+diff --git a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+index 02a484b22aa69..6dbf9816fa3c1 100644
+--- a/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
++++ b/tools/testing/selftests/bpf/prog_tests/uprobe_multi_test.c
+@@ -80,14 +80,14 @@ static int child_func(void *arg)
+ 	/* wait for parent's kick */
+ 	err = read(child->go[0], &c, 1);
+ 	if (err != 1)
+-		exit(err);
++		_exit(err);
  
-+	if (!is_test_task())
-+		return 0;
-+
- 	cpumask = create_cpumask();
- 	if (!cpumask)
- 		return 0;
-@@ -476,6 +479,9 @@ int BPF_PROG(test_insert_remove_release, struct task_struct *task, u64 clone_fla
- 	struct bpf_cpumask *cpumask;
- 	struct __cpumask_map_value *v;
+ 	uprobe_multi_func_1();
+ 	uprobe_multi_func_2();
+ 	uprobe_multi_func_3();
+ 	usdt_trigger();
  
-+	if (!is_test_task())
-+		return 0;
-+
- 	cpumask = create_cpumask();
- 	if (!cpumask)
- 		return 0;
+-	exit(errno);
++	_exit(errno);
+ }
+ 
+ static int spawn_child_flag(struct child *child, bool clone_vm)
 -- 
 2.53.0
 
