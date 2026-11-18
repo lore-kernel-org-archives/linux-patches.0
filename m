@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056941;
-	b=T+WzqPMKynvfedSYlm67po8V8TjIYsvDyR7FjaDCN5pfVLECRYNk++lPW1F3WlPyr3xi
-	 F3MTYgYy+uKGCIdJyz7ekVrlfHyAt53HW0xCC5STWiPRUwRYhwwvCDt2RhTaTzlyZ32XI
-	 Y0TNWiINKd9mVRcOzYohdoLaGU6TouEyJRs+sQRf/WEtXvEwQJdZuBFcrMSc6XJPFUdUH
-	 wp8wc5U6DGzirdcXz6sh5YkJfH/QKrI87C0axhhNezIsu9jwO+UfAi4kxWAvAFrX2Mlkq
-	 UYs4pHxnq4Bt8Idm/Q/XLIbbA3lKtEUvrR4qXeY0VNXexmUOY0TOMdlXfFpWDjZtC0w==
+	t=1795056944;
+	b=DhUDdwiZboE3V+IV7wicTD0k4mrC9GizbBBP0UNoqC8TgO676plRabVoN4gshWJuaAkD
+	 2wRnsspfvFM2Bu6VElr24G7ZrP2w39q3dfRTzvcA2xV5rt/eXwioP1QwvhEa5cYhaUJHc
+	 AIJ7OmHYucDpN+dORGgJXsig8r5xmPgLAkJNJ4lk9Qu6ZCjpgH5IhywYmiBWiFeh1Y5gD
+	 VcVS9TNbhTBsJlXsgum2eGk3EtbRjOsPL7uWbVcGrFy450c1KlzrTNf7/lZosCfohmZYy
+	 r+qmcds3kUpIpZ1cEw2MePKm5UAtVDwv7mVzW488SpNvFjYf6yFLkUpvxMmkpNYtC/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A6ceWG0DrkrTmqmqycMMSVl8/xlf18UfpaZe6/3t3kU=;
-	b=sDeTc7qvSYBaxRTgK8oWIBWrpPLil5GICS/z6R5vw6adAvYJCmpbH9HDAtFirzmk/DcN
-	 K5PTaBfWzTYhGqXc4d9gePf+NAA5f3H5PjlUjgh8UVNDMHrYJF8KCu84H0jN8l5ruqfwI
-	 ojXgClUfRf3xT1LSYbbCtFiSWifD1kx6HiEG/sQ9fIvg7bMUpKfAlpcxOfbR92N9ZiiAo
-	 Ju5lawhhFDQHntkKq708Su4qEiVdCY/4wsuk0FNyNcdLMsYuUbtrX4bnHGZndLcEWeNaF
-	 7WUqYFvt+wtloVfk4KfexEhzNpJKIJGo+/DzsDYnQqSZiEZeZpNGf8jsRw1Yz6WBwXw==
+	bh=vCaAh4gCY9DcqTq1KTi0+iLlbD5Gmt7Q/PZqsdZMQZo=;
+	b=Sl+4MH8hv6pb+577QRGf1R63rfnY55wmDwLjkv37ZW5Oo/7peCxtg3jIyJeakCPNQFcP
+	 j+rYAf7kgWo53Z1id2/L71QZZmi8iTNyZ2S/GBijZeoy6xhxDuXm9GIQjX0VTOMmKRdz2
+	 m74g5XFe7CiE0k9Y41A1Tt/9yj0lNpNJmZsKmTKtV2Ir/6NslEXZ0CaJccetsPGX0hocO
+	 0iQRTosXNiMasF6a/UmetI7NK2vAHmENB+qvt52I6KyWLwgqxR3Y80J3wb4537EuhmrVM
+	 CWSsKvtsIhQtpjDwUst3pLR4nyUPj4LPz04G1G2lgfkEcVcx7o4Ep7L9KHKkZ48Zu1Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hW6YTTx5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWYbdOMa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD99E606A32A;
-	Thu, 19 Nov 2026 02:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1689E606A325;
+	Thu, 19 Nov 2026 02:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hW6YTTx5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F0E1F000C4;
-	Thu, 19 Nov 2026 02:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oWYbdOMa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 717B81F000C5;
+	Thu, 19 Nov 2026 02:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056941;
-	bh=A6ceWG0DrkrTmqmqycMMSVl8/xlf18UfpaZe6/3t3kU=;
+	s=korg; t=1795056943;
+	bh=vCaAh4gCY9DcqTq1KTi0+iLlbD5Gmt7Q/PZqsdZMQZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hW6YTTx5ojgikGfYomi4q24UC7eU/tofwd5qdR7k7QmGWLKksBvZDeDdgXmtIv+PF
-	 cZRFaPhEHT6gqzmbFIWyq6xTWa7dfY9rZ8RevjEutbvDFHvRIJzEOxaRpcewPuZaVu
-	 0VVxD3i03gTva1ESQ7Xgq0UqJOQUhJqO90B9YdbA=
+	b=oWYbdOMaw5+qVBDvvNobL0EmYFjbrzLqqwjyOlG4rx/oaqyxBtnzchW07ta4dZdVJ
+	 o6Ha4Iq4FJyqjkIoNPkbdr1LT/h3Xexh1UAG6uOX/jgkx16hL30wWhsOjSpPLU7qrE
+	 jTmuchEUbMMbmHkXbOJVKL3nSLIPpZbbBT89Antk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Dudu Lu <phx0fer@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2126/2214] thermal: Fix CPU mask truncation in power limit trace event
-Date: Wed, 18 Nov 2026 16:03:22 +0100
-Message-ID: <20261118150135.608251724@linuxfoundation.org>
+Subject: [PATCH 5.15 2127/2214] net/sched: gred: keep the qdisc lock while updating the table
+Date: Wed, 18 Nov 2026 16:03:23 +0100
+Message-ID: <20261118150135.640653610@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,48 +70,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Dudu Lu <phx0fer@gmail.com>
 
-[ Upstream commit 82c9c94f54a444a686e926c872dae4b198d1036f ]
+[ Upstream commit 306f788134a21a3d60c1eb872d0ec0ce7c7e09bc ]
 
-num_possible_cpus() counts CPUs, but CPU IDs need not be contiguous.
-Using it to size the thermal_power_cpu_limit bitmap can omit CPUs with
-higher IDs. For example, possible CPUs 0 and 64 produce an eight-byte
-bitmap on a 64-bit system, dropping CPU 64.
+gred_change_table_def() publishes table->DPs/def/red_flags under
+sch_tree_lock(), drops the lock, and then keeps writing state the
+datapath reads without it:
 
-Use nr_cpumask_bits for both sizing and copying the bitmap.
+  - gred_enable_rio_mode()/gred_disable_rio_mode()/gred_disable_wred_mode()
+    set/clear table->flags;
+  - the red_flags_changed loop writes table->tab[i]->red_flags;
+  - the shadowed-VQ loop frees table->tab[i] and clears the slot.
 
-Fixes: 6828a4711f99 ("thermal: add trace events to the power allocator governor")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261023060724.5691-1-dennylin0707@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+gred_enqueue() and gred_dequeue() read those same fields (test_bit on
+table->flags, q->red_flags, t->tab[]/t->DPs) under the same root lock on
+another CPU, so the post-unlock writes race with the enqueue path:
+
+  BUG: KCSAN: data-race in gred_change_table_def [sch_gred] / gred_enqueue [sch_gred]
+  read (marked) to 0xffff000007ad3b00 of 8 bytes by task 110 on cpu 0:
+   gred_enqueue+0x88/0xc60 [sch_gred]
+   dev_qdisc_enqueue+0x4c/0x19c
+   __dev_queue_xmit+0x10a4/0x1ea4
+
+The comment justifying the early unlock only covers the DP-vs-DPs check,
+which the shadowed-VQ free loop relies on; it does not cover the scalar
+mode bits and per-VQ red_flags written afterwards.  Move the unlock below
+those updates so everything the datapath reads is published under the
+lock that protects it.
+
+Fixes: 6639607ed9de ("[PKT_SCHED]: GRED: Use a central table definition change procedure")
+Signed-off-by: Dudu Lu <phx0fer@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261021155434.66572-1-phx0fer@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/thermal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_gred.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/include/trace/events/thermal.h b/include/trace/events/thermal.h
-index 8a5f04888abd7..997c5e7d1930e 100644
---- a/include/trace/events/thermal.h
-+++ b/include/trace/events/thermal.h
-@@ -129,7 +129,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
- 	TP_ARGS(cpus, freq, cdev_state, power),
+diff --git a/net/sched/sch_gred.c b/net/sched/sch_gred.c
+index 8caf9623f855f..7c42b3b75cd89 100644
+--- a/net/sched/sch_gred.c
++++ b/net/sched/sch_gred.c
+@@ -435,13 +435,6 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
+ 	red_flags_changed = table->red_flags != sopt->flags;
+ 	table->red_flags = sopt->flags;
  
- 	TP_STRUCT__entry(
--		__bitmask(cpumask, num_possible_cpus())
-+		__bitmask(cpumask, nr_cpumask_bits)
- 		__field(unsigned int,  freq      )
- 		__field(unsigned long, cdev_state)
- 		__field(u32,           power     )
-@@ -137,7 +137,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
+-	/*
+-	 * Every entry point to GRED is synchronized with the above code
+-	 * and the DP is checked against DPs, i.e. shadowed VQs can no
+-	 * longer be found so we can unlock right here.
+-	 */
+-	sch_tree_unlock(sch);
+-
+ 	if (sopt->grio) {
+ 		gred_enable_rio_mode(table);
+ 		gred_disable_wred_mode(table);
+@@ -467,6 +460,15 @@ static int gred_change_table_def(struct Qdisc *sch, struct nlattr *dps,
+ 		}
+ 	}
  
- 	TP_fast_assign(
- 		__assign_bitmask(cpumask, cpumask_bits(cpus),
--				num_possible_cpus());
-+				nr_cpumask_bits);
- 		__entry->freq = freq;
- 		__entry->cdev_state = cdev_state;
- 		__entry->power = power;
++	/*
++	 * Keep the lock until every field the datapath reads (the
++	 * RIO/WRED mode bits, the per-VQ red_flags and the tab[] slots)
++	 * has been updated: gred_enqueue()/gred_dequeue() read them under
++	 * the same lock, so publishing them after the unlock races with
++	 * the enqueue path.
++	 */
++	sch_tree_unlock(sch);
++
+ 	gred_offload(sch, TC_GRED_REPLACE);
+ 	return 0;
+ }
 -- 
 2.53.0
 
