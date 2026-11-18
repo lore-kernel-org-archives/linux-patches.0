@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044119;
-	b=yOWIGre1PHHszqre82DNacK2XAgCrxFSpdE5wlZLdTDSrAnYEMjEed6ykQVsiJo/8xWb
-	 2VV7fELmhmKqW5c013TFMAlI6H2nQY2mYUmvXyniMNPpQYyPziMevtxMjDj6Qj+Nmd9LS
-	 kSd6TMVW4GyseWXBIRnH/Fun1zVwbKUM459JMwlwHOvP/ScPBlpvsRviHtxHeFDdLV31K
-	 K65qWW4GjEupzvNuC6hjrUlTpdKoqt/aQuS6aMH039ZYdhu6RUQsATdeyHTMmCBXxlVAV
-	 ucEW+zcH3nxUteZ+za9ftb8lYSkGOALLc4efsppjQKZhWrrsjjMrbYSgBm8GqmSUhEw==
+	t=1795044122;
+	b=GndmPl/PLIRJV/d+XSg5HjMPn24ITrKbUzqGV6N7JwLckrDA8dW8YA6H0jLmsKOTVjd5
+	 Qt8R9vQHHi8iKQLJLIUMec5/APP/2YV/gwQSpc2MTjIunu8Bja3pIiAW6z+6iF+hgct81
+	 O3r+uvxUvigRfwAWtILIUP+PIxo9Wi34Fi25lD+RuOZUaR0jacc3e0SnpoEPBEFUmEbNe
+	 TZgodBUp5TMJ8MlhDeR0/YTuI9MkYZ5iNIr4u6n2N+OBuMZYcO+LB8ZfIFAMa9uFyaKIP
+	 CeaXIdgOXyumP+Qbf0tKZ5mwGPrNKQRVP/LEGmz8DuTtVxalz0zBznVkXZKmVw9Cg5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044119;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044122;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=28rrBrjHQPTBT1ODGLA681bZxZWnzufKPgMca8MQpEA=;
-	b=d+OTS6/DlY3vt7Aw2K908VbppplhEVdPSDtcNWaomDYzKDMBVTNy6YhLacCHINERnKyo
-	 87Mm4fpFpplEVWuse0KFLvfcqhsetqOZchK95BTCGwKF4SpbtHNlfTKOozXZmWcoDoIVQ
-	 cSBr273O99/vHTe2PmINbXJPAApKw4M8TDCoILMQRKq4cqOASQKyeVZqSnL8BhoZSUxTt
-	 XBIHG1ogSwV3Vr5djYl0MdCpvH883MTik53odPu2TSri+MSVQzkddkTARg9w9AUcv89kZ
-	 onGTHZcU226+btpZC4FV8MFuZhTDHPzhBchq4uU2IDOU4891XGuBHCqGZ3qeeBRQ1ew==
+	bh=NTrTs7vGWVALgHMjXaiFKQBEn4jiraE1Oazm5tv0gr4=;
+	b=tXflDO8L/+xqhe68xgaA1l+Kl2qmqYmafFWFfGXN0r2UhHjWZpWEcWCamDFVePNZZuYe
+	 5/1Pr+4pJ9D+ZhLOC8mxh5Cs+Z1i1ENTBVCCNbAldQJYRPww+a25FAtuhQ7mQSjtRrAkX
+	 hbyaVRZpuMVAGH4aOcryTBXsSCbxe+3YbLOoefcb4mEKkzMqDpiLQ+j4B2fBaiFSweoWH
+	 qHK632RNGEP1+6UVWAxShXdwcodVhNGZpsu5F+oo9SxGIh2gely+VCd9Fx1FKOP2w9pQc
+	 9ZErg2B2obdRtHkEvH5Vn1ObWQa+QIllzGqroGTOq8Od0xz+HwN+G60yPcbiSiZ4PeA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuQpERZj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jXcpFEaq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0726606A31C;
-	Wed, 18 Nov 2026 23:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F566606A325;
+	Wed, 18 Nov 2026 23:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OuQpERZj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E1821F000C4;
-	Wed, 18 Nov 2026 23:21:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jXcpFEaq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8551F000C4;
+	Wed, 18 Nov 2026 23:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044119;
-	bh=28rrBrjHQPTBT1ODGLA681bZxZWnzufKPgMca8MQpEA=;
+	s=korg; t=1795044122;
+	bh=NTrTs7vGWVALgHMjXaiFKQBEn4jiraE1Oazm5tv0gr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OuQpERZjFhCcSCGkNPXMtGC34L5MpALv+fD9ww5ScpxrRYPduHyxCUTiJCyYfmOi3
-	 rf/SLyz+G6kQM3uoX50cqmESPDj7m05Ufj8ZIAHyykLJ8xBSHuM/QtLGRSs0qRp4GB
-	 8g/Yyd7tN9G9labGwfrczjFLWiwaKu2PsYEKIZFs=
+	b=jXcpFEaqevwmdnrCEIWXjKg0X1IEukhDsC3Iboe+olSwJmPp5l3Ae87A79D4u1WFJ
+	 cUsf1o7Qspf0cIEZaSnohNuhfZ06TzJbDS23Ij61crum3/VlXSysUBnNLh1tt4NN58
+	 EeVJm6NGjyYl8+SCM2PfmHspZLVARtJyim9pCO4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Daniel Starke <daniel.starke@siemens.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0452/2857] tty: n_gsm: fix missing modem controls after DLCI open in convergence layer type 2
-Date: Wed, 18 Nov 2026 15:24:46 +0100
-Message-ID: <20261118150217.655816796@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.1 0453/2857] serial: fix ioctl hangup race
+Date: Wed, 18 Nov 2026 15:24:47 +0100
+Message-ID: <20261118150217.691434870@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,177 +68,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Starke <daniel.starke@siemens.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 11ea5a63d30ad6d305b1c22301cd99ff45a98c8d ]
+[ Upstream commit 8ca59f7baee7c72cf7729950b4ab2e7f910c9549 ]
 
-The current implementation only updates the virtual V.24 control signals
-after DLCI open in basic option mode. In advanced option mode with
-convergence layer type 2 an empty data frame needs to be transmitted to
-inform the peer about the initial virtual V.24 control signals. Not doing
-so has two unwanted side effects:
-1. hardware flow control status is unclear (initial CTS line is unknown)
-2. DLCI user presence is not transmitted (initial DTR line is unknown)
+The tty ioctls can race with hangup and end up calling into a tty
+driver for a device that is already gone or powered down.
 
-Applications waiting on these lines can not start after a DLCI has been
-opened until the first data frame has been transmitted.
+Add the missing checks to make sure the port has not been hung up before
+accessing the hardware to avoid issues like kernel panic due to
+unclocked accesses.
 
-Fix this by using gsm_modem_update() thoroughly which handles basic and
-advanced option mode correctly. Add a flag in gsm_modem_update() and the
-delegated gsm_modem_upd_via_msc() to control whether waiting for the MSC
-command response is possible. Remove obsolete gsm_modem_send_initial_msc().
+Note that TIOCGSERIAL, TIOCGICOUNT do not access hardware and are
+therefore not affected by the race.
 
-Fixes: 3cf0b3c243e5 ("tty: n_gsm: Don't block input queue by waiting MSC")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Daniel Starke <daniel.starke@siemens.com>
-Link: https://patch.msgid.link/20260826063026.2472-1-daniel.starke@siemens.com
+Also note that the initialised check in uart_set_ldisc() added by commit
+2f70e49ed860 ("serial_core: Check for port state when tty is in error
+state") should have been done under the port lock to avoid racing with
+uart_do_autoconfig().
+
+Fixes: 04f378b198da ("tty: BKL pushdown")
+Cc: stable@kernel.org	# 2.6.26
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260910130816.642699-3-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Kept the tree's if (dlci->addr) form in gsm_dlci_open() without upstream's DLCI 0 keep-alive else branch, and deleted the helper whose comment text differs. ]
+[ sashal: Replaced the upstream guard()/scoped-guard locking with explicit mutex_lock/unlock and goto out, and reordered port->mutex and port ref in two wait paths to avoid a deadlock with port removal. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c | 47 ++++++++++++++-------------------------------
- 1 file changed, 14 insertions(+), 33 deletions(-)
+ drivers/tty/serial/serial_core.c | 52 +++++++++++++++++++++++---------
+ 1 file changed, 38 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index db9382b573000..9d354a3260bf6 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -414,13 +414,12 @@ static const u8 gsm_fcs8[256] = {
- #define GOOD_FCS	0xCF
+diff --git a/drivers/tty/serial/serial_core.c b/drivers/tty/serial/serial_core.c
+index 69845f9e7aea0..0efcebcd9991d 100644
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -816,7 +816,7 @@ static int uart_set_info(struct tty_struct *tty, struct tty_port *port,
+ 	upf_t old_flags, new_flags;
+ 	int retval = 0;
  
- static int gsmld_output(struct gsm_mux *gsm, u8 *data, int len);
--static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk);
-+static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait);
- static struct gsm_msg *gsm_data_alloc(struct gsm_mux *gsm, u8 addr, int len,
- 								u8 ctrl);
- static int gsm_send_packet(struct gsm_mux *gsm, struct gsm_msg *msg);
- static void gsmld_write_trigger(struct gsm_mux *gsm);
- static void gsmld_write_task(struct work_struct *work);
--static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci);
+-	if (!uport)
++	if (!uport || tty_io_error(tty))
+ 		return -EIO;
  
- /**
-  *	gsm_fcs_add	-	update FCS
-@@ -1835,7 +1834,7 @@ static void gsm_dlci_open(struct gsm_dlci *dlci)
- 		pr_debug("DLCI %d goes open.\n", dlci->addr);
- 	/* Send current modem state */
- 	if (dlci->addr)
--		gsm_modem_send_initial_msc(dlci);
-+		gsm_modem_update(dlci, 0, false);
- 	gsm_dlci_data_kick(dlci);
- 	wake_up(&dlci->gsm->event);
- }
-@@ -3466,9 +3465,10 @@ static void gsm_modem_upd_via_data(struct gsm_dlci *dlci, u8 brk)
-  *	gsm_modem_upd_via_msc	-	send modem bits via control frame
-  *	@dlci: channel
-  *	@brk: break signal
-+ *	@wait: wait for the MSC command
+ 	new_port = new_info->port;
+@@ -1120,7 +1120,7 @@ static int uart_break_ctl(struct tty_struct *tty, int break_state)
+ 
+ 	mutex_lock(&port->mutex);
+ 	uport = uart_port_check(state);
+-	if (!uport)
++	if (!uport || tty_io_error(tty))
+ 		goto out;
+ 
+ 	if (uport->type != PORT_UNKNOWN && uport->ops->break_ctl)
+@@ -1149,7 +1149,7 @@ static int uart_do_autoconfig(struct tty_struct *tty, struct uart_state *state)
+ 		return -ERESTARTSYS;
+ 
+ 	uport = uart_port_check(state);
+-	if (!uport) {
++	if (!uport || tty_io_error(tty)) {
+ 		ret = -EIO;
+ 		goto out;
+ 	}
+@@ -1204,7 +1204,7 @@ static void uart_enable_ms(struct uart_port *uport)
+  * FIXME: This wants extracting into a common all driver implementation
+  * of TIOCMWAIT using tty_port.
   */
- 
--static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk)
-+static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk, bool wait)
+-static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
++static int uart_wait_modem_status(struct tty_struct *tty, struct uart_state *state, unsigned long arg)
  {
- 	u8 modembits[3];
- 	struct gsm_control *ctrl;
-@@ -3485,41 +3485,22 @@ static int gsm_modem_upd_via_msc(struct gsm_dlci *dlci, u8 brk)
- 		modembits[2] = (brk << 4) | 2 | EA; /* Length, Break, EA */
- 		len++;
+ 	struct uart_port *uport;
+ 	struct tty_port *port = &state->port;
+@@ -1215,14 +1215,26 @@ static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
+ 	/*
+ 	 * note the counters on entry
+ 	 */
++	mutex_lock(&port->mutex);
+ 	uport = uart_port_ref(state);
+-	if (!uport)
++	if (!uport) {
++		mutex_unlock(&port->mutex);
+ 		return -EIO;
++	}
++
++	if (tty_io_error(tty)) {
++		mutex_unlock(&port->mutex);
++		ret = -EIO;
++		goto out_deref;
++	}
++
+ 	spin_lock_irq(&uport->lock);
+ 	memcpy(&cprev, &uport->icount, sizeof(struct uart_icount));
+ 	uart_enable_ms(uport);
+ 	spin_unlock_irq(&uport->lock);
+ 
++	mutex_unlock(&port->mutex);
++
+ 	add_wait_queue(&port->delta_msr_wait, &wait);
+ 	for (;;) {
+ 		set_current_state(TASK_INTERRUPTIBLE);
+@@ -1251,6 +1263,7 @@ static int uart_wait_modem_status(struct uart_state *state, unsigned long arg)
  	}
-+	if (!wait)
-+		return gsm_control_command(dlci->gsm, CMD_MSC, modembits, len);
- 	ctrl = gsm_control_send(dlci->gsm, CMD_MSC, modembits, len);
- 	if (ctrl == NULL)
- 		return -ENOMEM;
- 	return gsm_control_wait(dlci->gsm, ctrl);
- }
+ 	__set_current_state(TASK_RUNNING);
+ 	remove_wait_queue(&port->delta_msr_wait, &wait);
++out_deref:
+ 	uart_port_deref(uport);
  
--/**
-- * gsm_modem_send_initial_msc - Send initial modem status message
-- *
-- * @dlci channel
-- *
-- * Send an initial MSC message after DLCI open to set the initial
-- * modem status lines. This is only done for basic mode.
-- * Does not wait for a response as we cannot block the input queue
-- * processing.
-- */
--static int gsm_modem_send_initial_msc(struct gsm_dlci *dlci)
--{
--	u8 modembits[2];
--
--	if (dlci->adaption != 1 || dlci->gsm->encoding != GSM_BASIC_OPT)
--		return 0;
--
--	modembits[0] = (dlci->addr << 2) | 2 | EA; /* DLCI, Valid, EA */
--	modembits[1] = (gsm_encode_modem(dlci) << 1) | EA;
--	return gsm_control_command(dlci->gsm, CMD_MSC, (const u8 *)&modembits, 2);
--}
--
- /**
-  *	gsm_modem_update	-	send modem status line state
-  *	@dlci: channel
-  *	@brk: break signal
-+ *	@wait: wait for the MSC command
-  */
+ 	return ret;
+@@ -1568,7 +1581,7 @@ uart_ioctl(struct tty_struct *tty, unsigned int cmd, unsigned long arg)
+ 	 */
+ 	switch (cmd) {
+ 	case TIOCMIWAIT:
+-		ret = uart_wait_modem_status(state, arg);
++		ret = uart_wait_modem_status(tty, state, arg);
+ 		break;
+ 	}
  
--static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
-+static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk, bool wait)
+@@ -1629,15 +1642,15 @@ static void uart_set_ldisc(struct tty_struct *tty)
  {
- 	if (dlci->gsm->dead)
- 		return -EL2HLT;
-@@ -3529,7 +3510,7 @@ static int gsm_modem_update(struct gsm_dlci *dlci, u8 brk)
- 		return 0;
- 	} else if (dlci->gsm->encoding == GSM_BASIC_OPT) {
- 		/* Send as MSC control message. */
--		return gsm_modem_upd_via_msc(dlci, brk);
-+		return gsm_modem_upd_via_msc(dlci, brk, wait);
+ 	struct uart_state *state = tty->driver_data;
+ 	struct uart_port *uport;
+-	struct tty_port *port = &state->port;
+-
+-	if (!tty_port_initialized(port))
+-		return;
+ 
+ 	mutex_lock(&state->port.mutex);
+ 	uport = uart_port_check(state);
+-	if (uport && uport->ops->set_ldisc)
++	if (!uport || tty_io_error(tty))
++		goto out;
++
++	if (uport->ops->set_ldisc)
+ 		uport->ops->set_ldisc(uport, &tty->termios);
++out:
+ 	mutex_unlock(&state->port.mutex);
+ }
+ 
+@@ -1652,7 +1665,7 @@ static void uart_set_termios(struct tty_struct *tty,
+ 
+ 	mutex_lock(&state->port.mutex);
+ 	uport = uart_port_check(state);
+-	if (!uport)
++	if (!uport || tty_io_error(tty))
+ 		goto out;
+ 
+ 	/*
+@@ -1817,14 +1830,25 @@ static void uart_wait_until_sent(struct tty_struct *tty, int timeout)
+ 	 * 'timeout' / 'expire' give us the maximum amount of time
+ 	 * we wait.
+ 	 */
+-	while (!port->ops->tx_empty(port)) {
++	for (;;) {
++		bool done;
++
++		uart_port_deref(port);
++		mutex_lock(&state->port.mutex);
++		port = uart_port_ref(state);
++		done = !port || tty_io_error(tty) || port->ops->tx_empty(port);
++		mutex_unlock(&state->port.mutex);
++		if (done)
++			break;
++
+ 		msleep_interruptible(jiffies_to_msecs(char_time));
+ 		if (signal_pending(current))
+ 			break;
+ 		if (timeout && time_after(jiffies, expire))
+ 			break;
  	}
- 
- 	/* Modem status lines are not supported. */
-@@ -3568,7 +3549,7 @@ static void gsm_dtr_rts(struct tty_port *port, int onoff)
- 		modem_tx &= ~(TIOCM_DTR | TIOCM_RTS);
- 	if (modem_tx != dlci->modem_tx) {
- 		dlci->modem_tx = modem_tx;
--		gsm_modem_update(dlci, 0);
-+		gsm_modem_update(dlci, 0, true);
- 	}
+-	uart_port_deref(port);
++	if (port)
++		uart_port_deref(port);
  }
  
-@@ -3760,7 +3741,7 @@ static int gsmtty_tiocmset(struct tty_struct *tty,
- 
- 	if (modem_tx != dlci->modem_tx) {
- 		dlci->modem_tx = modem_tx;
--		return gsm_modem_update(dlci, 0);
-+		return gsm_modem_update(dlci, 0, true);
- 	}
- 	return 0;
- }
-@@ -3822,7 +3803,7 @@ static void gsmtty_throttle(struct tty_struct *tty)
- 		dlci->modem_tx &= ~TIOCM_RTS;
- 	dlci->throttled = true;
- 	/* Send an MSC with RTS cleared */
--	gsm_modem_update(dlci, 0);
-+	gsm_modem_update(dlci, 0, true);
- }
- 
- static void gsmtty_unthrottle(struct tty_struct *tty)
-@@ -3834,7 +3815,7 @@ static void gsmtty_unthrottle(struct tty_struct *tty)
- 		dlci->modem_tx |= TIOCM_RTS;
- 	dlci->throttled = false;
- 	/* Send an MSC with RTS set */
--	gsm_modem_update(dlci, 0);
-+	gsm_modem_update(dlci, 0, true);
- }
- 
- static int gsmtty_break_ctl(struct tty_struct *tty, int state)
-@@ -3852,7 +3833,7 @@ static int gsmtty_break_ctl(struct tty_struct *tty, int state)
- 		if (encode > 0x0F)
- 			encode = 0x0F;	/* Best effort */
- 	}
--	return gsm_modem_update(dlci, encode);
-+	return gsm_modem_update(dlci, encode, true);
- }
- 
- static void gsmtty_cleanup(struct tty_struct *tty)
+ /*
 -- 
 2.53.0
 
