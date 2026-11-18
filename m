@@ -1,57 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038355;
-	b=hVVreOX6u0hgXabGv+JCHAv399rYJni5a1Tel+JBFNnajS+23LNPoAPHgcXDbzu4YOPZ
-	 5EI6U33Aw/UFX0w8X/A7aGuGAkRsd3y9Dd8I/UjZYpEOxzCWQNNEv+gahTo0MjaLOcoDw
-	 0ucjZd35U5yRC7yJI4WOu3iDyO/27nEhRLH6YSj3l6aGRdbrZtb74Zjt5ebiYBtFVZt03
-	 ABk5nAVfvrdIcZHWon4oFQgnZsdya+QHRGNS7P6vatoU5D1+JEOw127NgvEHqWvMG+oSK
-	 o5SBFj3pzw2jBc2jFf4uClCgxhVfcF1EZnUupis5ZRoPtt8ew61zrk11STxoklTiCKA==
+	t=1795038358;
+	b=45vuLEaMaiuqQeW4fgVy5iK4Q02Grwm5TILuJAP7mMlpNbFeliVP2wsXDNeugaqBybmG
+	 4BFSg84JPcD7Faqd15L2W9TLR/wi8PgaOEMgi3B3i2B/yA3swfGpw2Nn2ClpWS0M+YWy8
+	 mxuQaKayw197JfbXaLqpjsmg71DjQ2xVOModQpcyGYomLI+iD1TSNe9Y0aIgW+gwpRctU
+	 LR8m8hVnShRz0pKciW+c8epl0kcnKaSK0CEn2cgtarDUs4/SE8ZnPdJcQz8lyoF6Jvonv
+	 f6vYzB1ePv5qF7AS3ULYPe7PQvQmubsvyfROfBwUVo1nQQ0JEVLdu93mG3US8zXT71A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038355;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038358;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nY7XziTq/GYTTuxAVmFMKsCRT1liDwW5ISBvynHUsLQ=;
-	b=1zRy187UuEfsZlddWQeuSl2z8sxHRNp9ZL/lQiNxo/GhQb3KUa4gOwX/ccKZCTJFehVp
-	 T3B7w/TAZkFnsBKJoTl71OL9wkcy8uaZdxEfbvXbLV/cUIxwUm9HdzDpa3E+3kn9OCCmO
-	 hiIjqPbVcF3Xca8YCXgymepIL+EESqXiZlhQcx4zR38SolMG22kN0w0RZ0plkh+F3YwBI
-	 NFy3sIJbP3gGg0S49ZLbk67wP/m/iVehRDE6GOSXVu4euQGIs3FKFoAn7Fps2ito6wKmd
-	 xGvge8FGoijfmTTOSmx5ayh8R8ICYKIk75/2vCL9cdPvC1hRU72BtwPSjR0wqYbSodg==
+	bh=1OvSq2S3byfP3TTye5r5TNYAJFkNifXeGDMARO3DAjY=;
+	b=God8G3L30URgD0YaFAEUbN72xgmyaqi3nD6DuB2I9ASHc+PnuFIEvK4l+V2326DDB04X
+	 yvtQ4TkXTtPyNjixLEBW5yZHBD77825XhNkr+1yPnkjVRlLIm3RyPZy9RGuONqhmOe2wz
+	 FHLSXAFdz1XvcqubL1i9am/9vJpgEU8DB7lQ3Aqfoor5loFfLgFY/mXKH3fgYanj1x8ez
+	 cBWC+Lu6Ek4HtB2E29+4Hd0mO8h6m1Y7i+iQBbwXD4eF+kJ+/pQz1RqpJo0P65pcTnO64
+	 MlzwlMGMZ1UGWYgFl7FTTziNR5DQlqWtfGXsnTNOmbYxGG7ilGfORK9KG5oj9ZTT/cg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yrQ9C81y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kqwewJaD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F44606A320;
-	Wed, 18 Nov 2026 21:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE05606A325;
+	Wed, 18 Nov 2026 21:45:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yrQ9C81y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137B31F000C4;
-	Wed, 18 Nov 2026 21:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kqwewJaD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB8541F000C5;
+	Wed, 18 Nov 2026 21:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038355;
-	bh=nY7XziTq/GYTTuxAVmFMKsCRT1liDwW5ISBvynHUsLQ=;
+	s=korg; t=1795038358;
+	bh=1OvSq2S3byfP3TTye5r5TNYAJFkNifXeGDMARO3DAjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yrQ9C81y5kcTUaLoUUOFplP7TNqRL/bwyhAtdEj4OITq0EGo3/YOvBhc7AF0TroG4
-	 pOPLqehKbuRdcAJ6UOGIw5caDWheeLMGtpYW7R4p5Hoo8EHKy+d3eSdBpPYwW2PLfG
-	 fWCp0PA/IqG9RcQQtQPQ7nPE/vslYqM8wLUKp8vw=
+	b=kqwewJaDpmqF317p31rLSsv4K72sygDnLb1cH+Iv62C0IXeTu5ka07kDu4eVGzU0B
+	 9EX4FcCupoGTmdyld7+l7kAgbpD1Jnju14TOZc9sHb/2lymcRk0u2EBWP7bF8R2mDu
+	 brulEFfnjHYZhBtse3ahuuAr2acYb0jqvUKKynjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1715/3318] mm: memcontrol: raise MEMCG_MAX for charges that fail without reclaiming
-Date: Wed, 18 Nov 2026 15:38:57 +0100
-Message-ID: <20261118150413.318225198@linuxfoundation.org>
+Subject: [PATCH 6.6 1716/3318] f2fs: atomic: fix to forbid dio in atomic_file
+Date: Wed, 18 Nov 2026 15:38:58 +0100
+Message-ID: <20261118150413.346984804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,121 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <joe@dama.to>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 374f65b1481992eb6b9c6bffd53f3afa5c2e94cf ]
+[ Upstream commit b2c160f4f3cfe9334b3e6bb52cb89a3a20ef0385 ]
 
-Charges that exceed memory.max and return through the nomem label can
-raise no event and simply return -ENOMEM.
+atomic write can only be used via buffered IO, let's fail direct IO on
+atomic_file and return -EOPNOTSUPP.
 
-A non-blocking charge can hit the limit, get rejected, but is not visible
-in memory.events.
-
-This was noticed in a production setting where bpf_mem_alloc() attempted
-to refill its per-cpu freelists, which triggered a non-blocking charge
-while at the limit.
-
-Commit d6e103a757fa ("mm: memcontrol: do not miss MEMCG_MAX events for
-enforced allocations") added raised_max_event to cover charges that are
-force charged without ever reaching reclaim, but charges that are rejected
-outright were left out.  Getting an allocation failure without the
-corresponding MEMCG_MAX event is unexpected and makes debugging and
-monitoring harder.
-
-Raise the event on the way out for rejected charges as well, by routing
-the -ENOMEM return through the same exit path that already covers forced
-charges.  The existing behavior of raising a MEMCG_MAX event on every
-charge/reclaim/retry iteration is left unchanged.
-
-Tested with a module that performs accounted GFP_NOWAIT page allocations
-from a task in a cgroup at its memory.max, and measures the resulting
-memory.events:max delta.  Without this patch the rejected charges raise no
-event at all; with it the delta matches the number of rejected charges
-exactly.  A GFP_KERNEL|__GFP_NORETRY control, which reaches reclaim,
-raises the same two events per failed charge before and after, confirming
-the existing charge/reclaim/retry accounting is unchanged.
-
-Link: https://lore.kernel.org/20260831174836.3102406-1-joe@dama.to
-Fixes: d6e103a757fa ("mm: memcontrol: do not miss MEMCG_MAX events for enforced allocations")
-Signed-off-by: Joe Damato <joe@dama.to>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Suggested-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: <stable@vger.kernel.org>
-[ sashal: Changed __memcg_memory_event(..., allow_spinning) to memcg_memory_event(...) to match the existing API. ]
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 06dfe4a7eb69 ("f2fs: disallow mmap write and data-modifying fallocate on atomic files")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memcontrol.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ fs/f2fs/file.c | 36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
-diff --git a/mm/memcontrol.c b/mm/memcontrol.c
-index e6fffb91742a8..ff9927140c836 100644
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -2682,10 +2682,11 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
- 	bool drained = false;
- 	bool raised_max_event = false;
- 	unsigned long pflags;
-+	int ret = 0;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index f4863d7331802..65aa0d889435c 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2275,6 +2275,7 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 		goto out;
  
- retry:
- 	if (consume_stock(memcg, nr_pages))
--		return 0;
-+		return ret;
+ 	f2fs_down_write(&fi->i_gc_rwsem[WRITE]);
++	f2fs_down_write(&fi->i_gc_rwsem[READ]);
  
- 	if (!do_memsw_account() ||
- 	    page_counter_try_charge(&memcg->memsw, batch, &counter)) {
-@@ -2797,16 +2798,11 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
- 	 * put the burden of reclaim on regular allocation requests
- 	 * and let these go through as privileged allocations.
- 	 */
--	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH)))
--		return -ENOMEM;
-+	if (!(gfp_mask & (__GFP_NOFAIL | __GFP_HIGH))) {
-+		ret = -ENOMEM;
+ 	/*
+ 	 * Should wait end_io to count F2FS_WB_CP_DATA correctly by
+@@ -2284,10 +2285,8 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 		f2fs_warn(sbi, "Unexpected flush for atomic writes: ino=%lu, npages=%u",
+ 			  inode->i_ino, get_dirty_pages(inode));
+ 	ret = filemap_write_and_wait_range(inode->i_mapping, 0, LLONG_MAX);
+-	if (ret) {
+-		f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
+-		goto out;
+-	}
++	if (ret)
++		goto out_unlock;
+ 
+ 	/* Check if the inode already has a COW inode */
+ 	if (fi->cow_inode == NULL) {
+@@ -2296,10 +2295,8 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 		struct inode *dir = d_inode(dentry->d_parent);
+ 
+ 		ret = f2fs_get_tmpfile(idmap, dir, &fi->cow_inode);
+-		if (ret) {
+-			f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
+-			goto out;
+-		}
++		if (ret)
++			goto out_unlock;
+ 
+ 		set_inode_flag(fi->cow_inode, FI_COW_FILE);
+ 		clear_inode_flag(fi->cow_inode, FI_INLINE_DATA);
+@@ -2313,10 +2310,8 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 		invalidate_mapping_pages(fi->cow_inode->i_mapping, 0, -1);
+ 
+ 		ret = f2fs_do_truncate_blocks(fi->cow_inode, 0, true);
+-		if (ret) {
+-			f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
+-			goto out;
+-		}
++		if (ret)
++			goto out_unlock;
+ 	}
+ 
+ 	f2fs_write_inode(inode, NULL);
+@@ -2335,7 +2330,11 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 	}
+ 	f2fs_i_size_write(fi->cow_inode, isize);
+ 
++out_unlock:
++	f2fs_up_write(&fi->i_gc_rwsem[READ]);
+ 	f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
++	if (ret)
++		goto out;
+ 
+ 	f2fs_update_time(sbi, REQ_TIME);
+ 	fi->atomic_write_task = current;
+@@ -4729,6 +4728,13 @@ static ssize_t f2fs_dio_read_iter(struct kiocb *iocb, struct iov_iter *to)
+ 		f2fs_down_read(&fi->i_gc_rwsem[READ]);
+ 	}
+ 
++	/* dio is not compatible w/ atomic file */
++	if (f2fs_is_atomic_file(inode)) {
++		f2fs_up_read(&fi->i_gc_rwsem[READ]);
++		ret = -EOPNOTSUPP;
 +		goto out;
 +	}
- force:
--	/*
--	 * If the allocation has to be enforced, don't forget to raise
--	 * a MEMCG_MAX event.
--	 */
--	if (!raised_max_event)
--		memcg_memory_event(mem_over_limit, MEMCG_MAX);
--
- 	/*
- 	 * The allocation either can't fail or will lead to more memory
- 	 * being freed very soon.  Allow memory usage go over the limit
-@@ -2816,7 +2812,15 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
- 	if (do_memsw_account())
- 		page_counter_charge(&memcg->memsw, nr_pages);
- 
--	return 0;
-+out:
-+	/*
-+	 * Don't forget to raise a MEMCG_MAX event for forced or rejected
-+	 * requests.
-+	 */
-+	if (!raised_max_event)
-+		memcg_memory_event(mem_over_limit, MEMCG_MAX);
 +
-+	return ret;
+ 	/*
+ 	 * We have to use __iomap_dio_rw() and iomap_dio_complete() instead of
+ 	 * the higher-level function iomap_dio_rw() in order to ensure that the
+@@ -5134,6 +5140,12 @@ static ssize_t f2fs_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
+ 	/* Determine whether we will do a direct write or a buffered write. */
+ 	dio = f2fs_should_use_dio(inode, iocb, from);
  
- done_restock:
- 	if (batch > nr_pages)
-@@ -2869,7 +2873,7 @@ static int try_charge_memcg(struct mem_cgroup *memcg, gfp_t gfp_mask,
- 	    gfpflags_allow_blocking(gfp_mask)) {
- 		mem_cgroup_handle_over_high(gfp_mask);
- 	}
--	return 0;
-+	return ret;
- }
- 
- static inline int try_charge(struct mem_cgroup *memcg, gfp_t gfp_mask,
++	/* dio is not compatible w/ atomic write */
++	if (dio && f2fs_is_atomic_file(inode)) {
++		ret = -EOPNOTSUPP;
++		goto out_unlock;
++	}
++
+ 	/* Possibly preallocate the blocks for the write. */
+ 	target_size = iocb->ki_pos + iov_iter_count(from);
+ 	preallocated = f2fs_preallocate_blocks(iocb, from, dio);
 -- 
 2.53.0
 
