@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050899;
-	b=FAmaGhHJBxnhgpMBMGLk1L4eRg6DSwlwOG/h16GHH734UD9favKx9ApLlViiw4yA+hdK
-	 R+eudDf2D3609SWDmWuZ6MSGhpipjzSDoA3KwA+yOLIust920vb9+ppYz9IPYpfPoHxd5
-	 K0HUYsjJIY+eIjmtB3voHr/NqjTZDZnCLO8SLz3lwkM7x4SgukO7bAUqAugWR2/0a/4Ka
-	 gWt5Igp3QupM+qxlpSv0EsdkgNCL2zGueMUjJagSLkoWKD851SIrnAlzJVCBGJ0Hyy8zg
-	 m0ot8LzqKS7ODNfGijQDkMe1uwdfGsCs6keqvo7a7FBm0n/KNsh9OnzxjeGW+nh7Jsg==
+	t=1795050901;
+	b=cP4c+5124mM0J1Nl4L/LRRzjA/ERWKwvFQH8gbl6wa0Xyix7O1ppp6jO/tGKoOBCgog4
+	 wqLYdU9uAqQyZ41FjGC8KcurInwL3G9GNi7b7L0/ltnvI0AqEyyNW/8xdng8JgVkf1/Z7
+	 VrX3G7s4fcB8T183sIxMiibhyEFG5lHIApS0nkRSUnCNRjKPtUe7yf9YhP8svhtlZeLZw
+	 NSwD52DU7npbkk0zzTAtU3Av5j4O/lQMEdCFhR677mRWMaI1cFTj8R4R5ZW4bzlV9EQGF
+	 4OmdUDYEbpYb/Zz7/JpsCmL1vT2X7wStHpWjlC9tj7AkJf6akKjCZjcQFVh+I8/89/g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050899;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050901;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=O3E9fVmBxrav53N+sMzvrzROQYJBD97Sienn2Ca0RF8=;
-	b=EXVtR62McfZRUKmW9cgvfFUz2GWPaEEGjBZ7PGQjFQu+xpKftTN9L//qPx+1ZlA16zx/
-	 aM7EQVX68o/tADgzcZ2ZjjgsfSf+ViQ2PvidzorUdNzM8ydPr5FyrRiP0VDUEMslhU+GI
-	 sQDMW4OUpcMnY1Kf7XIdWBhp2EipD7HSaHqHDLy2NMQnmHIo0AbBUBoZMj6PSoXYBYlbW
-	 4d+9OP2J0lB0NlP1uQif3NCoZeI/VowF3BvvI1BM5FoJ4+ih1H2DQo0pxW/e+tBj85awu
-	 Z6hyz45C4j2cdDxI2d9EOqc4whFckuGtb5173nVqAoy4CCjbPct0DZ9b8BhPGW6e1DA==
+	bh=Ap8smpNkD6bhxaLcjuoH+3n/VahlT5bW233bLIO4lQE=;
+	b=ri/71oJI2qSzEIw6PgIag0Lgxh1sqIe0RYPLNbR48dqhkJXmZJrskkWJ0SyKaecD+38K
+	 6eOZ7+jqGP8q7dtV6v6LtZeiuvm+o627rsc9IBbL60rDIyth3/EADBE2ytD+Np84JEvTs
+	 bQXLP2EP4wq/qOW06P6YEYclazQW2yD2dj87k2BJHDGWPhsVqMRRElQ8Sdnq1DGvtYUXa
+	 fuadlUx1K+66aLYqflKsDiyQKiZncWEVUjBMZ6/SW/k2w0chXicRzxzbl9PYNYPJVikvR
+	 vgv2UnXT3Ou3AeZ8yGYjnz8OKLwn6/ZpdxxyTvV3IjKQ3ufACOks4bVTVyk+AISC28g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0JmBTwCp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fa/ct3vH";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB44606A325;
-	Thu, 19 Nov 2026 01:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C022C606A320;
+	Thu, 19 Nov 2026 01:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0JmBTwCp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE581F000C4;
-	Thu, 19 Nov 2026 01:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fa/ct3vH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D3E1F000C4;
+	Thu, 19 Nov 2026 01:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050898;
-	bh=O3E9fVmBxrav53N+sMzvrzROQYJBD97Sienn2Ca0RF8=;
+	s=korg; t=1795050901;
+	bh=Ap8smpNkD6bhxaLcjuoH+3n/VahlT5bW233bLIO4lQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0JmBTwCpvnW4sFPbYFMDnGN8GnUrlj3RbXUWBX9Zqw71PX6Npk/JSFwGKDxwU59Rc
-	 OLxoYCKxLr5tSO9rr6F7guGS+xxdcSVXr9l73Ksymw+290nn4T89cN0R8WBT3RQAeu
-	 hD5yOBrgzyza8I2mFnjzwOXOZsxjQpziyGBN8BaY=
+	b=fa/ct3vHASyKpbExTIVRBQFrULhACkk8VtdEapkLS6M8dpAnhEglLQKsXpr4K4vtj
+	 qmc+mixY21mz+LSXI9T2J754PotVl1kqne3wBzTXNFLZ53krcYtGqBa16X9ht3CpvD
+	 9bO6sgFlFBFoplAhShFngH80+Yh/b5emL6vWi6Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Yinjie Yao <yinjie.yao@amd.com>,
 	Roman Demidov <roman.demidov.nn@gmail.com>
-Subject: [PATCH 5.15 0018/2214] drm/amdgpu/jpeg: set no_user_fence for JPEG v2.5 ring
-Date: Wed, 18 Nov 2026 15:28:14 +0100
-Message-ID: <20261118150010.874079683@linuxfoundation.org>
+Subject: [PATCH 5.15 0019/2214] drm/amdgpu/jpeg: set no_user_fence for JPEG v2.0 ring
+Date: Wed, 18 Nov 2026 15:28:15 +0100
+Message-ID: <20261118150010.909083052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,40 +72,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Yinjie Yao <yinjie.yao@amd.com>
 
-commit 79405e774ede411c6b47ed41c651e40b92de64a2 upstream.
+commit e5f612dc91650561fe2b5b76dd6d2898ec9ad480 upstream.
 
 JPEG rings do not support 64-bit user fence writes, reject CS
 submissions with user fences.
 
-Fixes: 14f43e8f88c5 ("drm/amdgpu: move JPEG2.5 out from VCN2.5")
+Fixes: 6ac27241106b ("drm/amdgpu: add JPEG v2.0 function supports")
 Reviewed-by: Christian König <christian.koenig@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Yinjie Yao <yinjie.yao@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3216a7f4e2642bda5fd14f57586e835ae9202587)
-Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
+(cherry picked from commit 96179da0c6b059eb31706a0abe8dd6381c533143)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-@@ -586,6 +586,7 @@ static const struct amd_ip_funcs jpeg_v2
- static const struct amdgpu_ring_funcs jpeg_v2_5_dec_ring_vm_funcs = {
- 	.type = AMDGPU_RING_TYPE_VCN_JPEG,
- 	.align_mask = 0xf,
-+	.no_user_fence = true,
- 	.vmhub = AMDGPU_MMHUB_1,
- 	.get_rptr = jpeg_v2_5_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v2_5_dec_ring_get_wptr,
-@@ -616,6 +617,7 @@ static const struct amdgpu_ring_funcs jp
- static const struct amdgpu_ring_funcs jpeg_v2_6_dec_ring_vm_funcs = {
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
+@@ -778,6 +778,7 @@ static const struct amd_ip_funcs jpeg_v2
+ static const struct amdgpu_ring_funcs jpeg_v2_0_dec_ring_vm_funcs = {
  	.type = AMDGPU_RING_TYPE_VCN_JPEG,
  	.align_mask = 0xf,
 +	.no_user_fence = true,
  	.vmhub = AMDGPU_MMHUB_0,
- 	.get_rptr = jpeg_v2_5_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v2_5_dec_ring_get_wptr,
+ 	.get_rptr = jpeg_v2_0_dec_ring_get_rptr,
+ 	.get_wptr = jpeg_v2_0_dec_ring_get_wptr,
 
 
