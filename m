@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041308;
-	b=IBL/fApIhkizlmfmq/YBgfuQjTnzMmTT478GwJa59CazMMA1FDhq7JEL1u8cyWSRIeXb
-	 DBadkOXqwYAdcG7D5XOW5+jBOFyUN5NLRlPjM1qFSzkZA/FcjWaichnxSoxqaLUo+qbyQ
-	 NBZCBilMbsvqKWCIdsoeAc43HMXZu4tW+kWH4jE9Xdf1yJBLMCYTO8d0uQT4UtJeGCnu2
-	 f97fqkxb4Ikgc3DBm59rVETYm3H4K/xjE8XUW15pDk9uk5jGRm/9tJzxZ4X/5jIGQDFga
-	 1ASvzCvoHbCLtR8r6BbF2SLP1aqNmVdI6xeJJqFLlW+Rm6wibwjRHlBm8KHEkSRxeVg==
+	t=1795041311;
+	b=joOpk/d3EF2nPnnr4vS+2/w8Etp0opCqG2iiTBxNTCKPO0mmqJWsX0NBdEtQXJ5HW0mq
+	 MZbdmmDxTNaLSBsAKsUhtFhkrymhgphs761b9wSt5a5nVmWvkOF2sewuj3dFCDoi66fkY
+	 8YInHKYQHymtTeBibxh5gY+GPHNer8rMdxNBB4+z/cczWAllIHbldph7vyNF2qkxfealU
+	 OhyD7JwsapVZiOO+mIIGePEcYZypItn0DP1k7o+Z3rmlwX1LNV7hsTt0XoR4JGw8Gspia
+	 fb5U2J7CzCj4sjNq9vCBe5phzo9JBVMrVNE9wZrhETrji8DOlI54AI5OPsjoc716cvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041308;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041311;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=CszhdA4Yzp5HUmDssCFT3xh6rt60ewIlAsEspLEOgXM=;
-	b=z6KsDOYGJh2RreGJ/TLTCl/vT+amoFx175nctVMirZRQuavo5R6iJ2O3yZdIFei7HJzG
-	 a1r86g/yoe0lUz+ZmgtMqfMqzM0zrj6Oj3q1bvJpqI7uHlBf5A9Jw+xvFyzb6n3S0yKim
-	 2Fwn3cRQfolYK+ELMOfCLpILwv5xQr44eE2enUuGxcuC5khKlh5xL7PUIF9NcAdpkWEGB
-	 RJrhg10VH7itt7iiYqL7pUvUNu+HvCP9FTu8F0Er+FqxkV5HLQUKUoggKgucsHQwOp7md
-	 aTBroTdMuIKKFGyto7JZCluCkBZU/+2hdTO44ez1BGIn5qoJGphY4PNdb+ozhFUTMLA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=puwaE6Jq48sGV8z0Lzm59ggJHV1yq3vZl2/A70wZH/I=;
+	b=GMZ4Uidc5OU07HwtK+IWbXaMxQrx6jUv7z+tREYp0sCKY3hQdkG5Lg0NXSBcCABttQxH
+	 M9cVQT+V/7lMioBDlE0Wg6zIQHqTWIb46yEBE9vLT233VGIcoeDMaHdbOrvWmJH3QiWjU
+	 cwGTl6y6JbKcidXASpQXNIQ1kke2Bt9Gct1H7EsqbezZgr0wtEoxJCfE7ut9HLPIMENJo
+	 mmc0QcEbSGFA9rZf79tUWRwx0uH030+tbFpQ3Syhx0I3VVHL3Sa3yVoDhVfi9+gYtvzcG
+	 3S/ljx3I1Rk8s/jMMO4PIxChThQUP5zxGi9bAIFkxr/PXKU2ApE0ugZi2FZKNx2zQUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ugDSvAkP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbZwgEr8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C927606A31C;
-	Wed, 18 Nov 2026 22:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15634606A320;
+	Wed, 18 Nov 2026 22:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ugDSvAkP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 933A41F000C4;
-	Wed, 18 Nov 2026 22:35:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qbZwgEr8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6802E1F000C4;
+	Wed, 18 Nov 2026 22:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041308;
-	bh=CszhdA4Yzp5HUmDssCFT3xh6rt60ewIlAsEspLEOgXM=;
+	s=korg; t=1795041310;
+	bh=puwaE6Jq48sGV8z0Lzm59ggJHV1yq3vZl2/A70wZH/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ugDSvAkPI9qynB5GZdygV3UDMdbdcepDdDmU28WjcjnapoUpDZReRpSEJRH8pYt3t
-	 LdT44/sq+4NekjDjIjOu2T5zB8ceUTslbJvRtLL9RsB9MVfb+183StoJFkxVGeZitk
-	 nwxOpW0TheBQwXBnlr+Wij1ZDuK2tHBjbri4+E04=
+	b=qbZwgEr89bEA07CKX25ahj5rfWz49jwXkAnm8I/EX5UaC9Eyc06TzJ1I/UQvv3kCf
+	 6y8Nz4mHwBRP7qmLia0t5RVd1an24A+A8u01HvK+DNLOwWKmYZgbNisAZ7Ge7AS9y/
+	 nUmZEmBCmPVteAD2Uu08Duxjszg4P7FtjC3ZAG1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2768/3318] platform/olpc: Reserve space for a string terminator
-Date: Wed, 18 Nov 2026 15:56:30 +0100
-Message-ID: <20261118150443.759374754@linuxfoundation.org>
+Subject: [PATCH 6.6 2769/3318] fbdev: gxt4500: Release WC setup on probe failure
+Date: Wed, 18 Nov 2026 15:56:31 +0100
+Message-ID: <20261118150443.784878034@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,47 +63,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 1fe88b1741ff655bb59e4fd78178fe2c557b9185 ]
+[ Upstream commit b71e0bb7ad40c005b167e9b48be3af5a3fa51974 ]
 
-ec_dbgfs_cmd_write() copies user input into a zero-initialized stack
-buffer and passes it to sscanf(). A write that overwrites the entire
-buffer leaves no terminator, so the subsequent parsing can read beyond
-the buffer.
+gxt4500_probe() adds a write-combining range before allocating the cmap
+and registering the framebuffer. If a later step fails, the range is
+not released. Add the missing cleanup before unmapping the framebuffer,
+matching the successful remove path.
 
-Limit the copy to leave room for the trailing NUL.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-Fixes: 6cca83d498bd ("Platform: OLPC: move debugfs support from x86 EC driver")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260926121250.3258285-2-yaojiale02@163.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 38fc4d45fae5 ("gxt4500: Use arch_phys_wc_* for framebuffer")
+Assisted-by: LLM
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/olpc/olpc-ec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/gxt4500.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/olpc/olpc-ec.c b/drivers/platform/olpc/olpc-ec.c
-index 921520475ff68..9e9d20343faab 100644
---- a/drivers/platform/olpc/olpc-ec.c
-+++ b/drivers/platform/olpc/olpc-ec.c
-@@ -269,7 +269,7 @@ static ssize_t ec_dbgfs_cmd_write(struct file *file, const char __user *buf,
- 
- 	mutex_lock(&ec_dbgfs_lock);
- 
--	size = simple_write_to_buffer(cmdbuf, sizeof(cmdbuf), ppos, buf, size);
-+	size = simple_write_to_buffer(cmdbuf, sizeof(cmdbuf) - 1, ppos, buf, size);
- 
- 	m = sscanf(cmdbuf, "%x:%u %x %x %x %x %x", &ec_cmd_int[0],
- 			&ec_dbgfs_resp_bytes, &ec_cmd_int[1], &ec_cmd_int[2],
+diff --git a/drivers/video/fbdev/gxt4500.c b/drivers/video/fbdev/gxt4500.c
+index 15a82c6b609ea..138f5efbf4f40 100644
+--- a/drivers/video/fbdev/gxt4500.c
++++ b/drivers/video/fbdev/gxt4500.c
+@@ -719,6 +719,7 @@ static int gxt4500_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+  err_free_cmap:
+ 	fb_dealloc_cmap(&info->cmap);
+  err_unmap_all:
++	arch_phys_wc_del(par->wc_cookie);
+ 	iounmap(info->screen_base);
+  err_unmap_regs:
+ 	iounmap(par->regs);
 -- 
 2.53.0
 
