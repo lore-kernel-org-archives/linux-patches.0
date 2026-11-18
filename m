@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022064;
-	b=fdZnRRz7ptcaE6rrZIj1JxluIS0+LBR9ikEfqb4SqDMTS0FKNfGp/AAwKE9CFOHunoVg
-	 4P4zrw3VPGCDBKQyMnj6QZQXKU062lY0h/VL7SoQMrb+IC+1Ov7umshlxQltH1G+ulFfe
-	 w962xtxekQ7I70jNtFlev5gWo7UuqW8JvoDY6IX28zsSPZiW3CA41CXkNpPZO+vahZP8r
-	 RwK1CeGS4+umV1i/SB+slCeFWWIEC/VZlYlakm8sc8zIMWdj1oinlmp28dny8ahXQFCG0
-	 OlzZMhiLzas0yKEVUjHGWygb2jYn7ziId8Ndkz94UorgXguwFybsv1tD9R5+tVvu1pQ==
+	t=1795022067;
+	b=zGj+mDnQ8SyQqGONo132sF3Mj7SWAqYZxBK5G20AshGKCZi0AhsCaVEIBOl0eS8K3Spr
+	 9HaUxpy/Ye1Do5DFk29Hj/iB3/PYHKEcObCT6fWfwnocWpWo5cdz6xKNW03w9QfWYul0T
+	 KR6xqjfrPgb2NaMtWQgFf3RhEkfmBEKS6YiBZYcallaz3nlVGluM9BCXDjAZUih0NTCtC
+	 f4WgnGbIo+bQA6wP1eKFibSJFzp/yqIt4mErkYrVc7pDvHE1SgW2hy6NI3Ga3Uxc2xD5i
+	 ZNqk2+baCDdO+COu5cRFaUYUsu9jRx4/9B/PEPvf3LmnZvQbsBSORq4XQ3k2p3zPWwA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022064;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022067;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=L4/hpjzlh/6XLHmYbw1101bPoVmLh5H7oiL3ieObrdk=;
-	b=BI32NTQaBTQcW0nJUlefH1x5etOfCmPnd4TPHw6Ofrw3FUAt6JaZzJO0VLm4x1TBs8QT
-	 TGaaSzTyUmGv8O3NSV5TI2EkdWPwpN/30XSHCXGJWWQzoDoJ7pDj/W5CHBvFGWHMP99/W
-	 2leCze8Iwknk3zKkMFt7IAAjE0dIV9/70d7qMhDa0j/LViOZc1iOrK7oObwGHPkGfHs45
-	 aCidJzdT5RoRMRHKLdIybJ3BzU7X+A8E7B9fCCNVWksZRkItMIANr85sGE48z1FSLDkvj
-	 a/lmb+knwdjiQOI4pcxN2AAuGneclKRB0ncNw+R0aY/nL22BgcB0YBWIv6DxKNPc4vA==
+	bh=ICzQQ6v7vfr3RTWrOeVo57Q3dC1kseg29JExTDpzgmo=;
+	b=FGR/i9qMLmS746242mmdVAJv+1oPVQP12t8Y9YUBYasYdLKgRgektcokKyIiuNLcu+g1
+	 fzB93QkDx0vRtj3UYGr/i2Rs7GhK3ahv0YROLIKKzivhcL98FN5jyDxwHakqEhOSKZ/Fg
+	 vVrAF/brPZP35ruWZQ1WiRZ1bT3u4Bl7IKSQiIVu+v1JW/6hIVRujjVy478v9TjhiIguU
+	 NFOMTyxCqc6tKe3G7B5SGpq96fJ4hhC/SfnJLhuTYWMaDGmxQ27FXYiVxHxJTWUuHb8Xc
+	 PESWCiNrEpdbtuoxu+Ir9bw0uifnyhUCgHL5xB2Ab3P95FMk6/awQr4ufGTwY+nxLjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PRBz40nW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D5CWCkpL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1095606A31C;
-	Wed, 18 Nov 2026 17:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE90606A31C;
+	Wed, 18 Nov 2026 17:14:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PRBz40nW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD091F000C4;
-	Wed, 18 Nov 2026 17:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D5CWCkpL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64731F000C4;
+	Wed, 18 Nov 2026 17:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022064;
-	bh=L4/hpjzlh/6XLHmYbw1101bPoVmLh5H7oiL3ieObrdk=;
+	s=korg; t=1795022067;
+	bh=ICzQQ6v7vfr3RTWrOeVo57Q3dC1kseg29JExTDpzgmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PRBz40nWj1nOZ/XO5VGBgkQD/zIoZZFHHfmpp3KO+TqXoPRldyTzxOkniUJps4yI3
-	 bP7mxnlAUDgs+JChPQq9Qtry2hgpEhJSfwtl5AyGvOoJHLz3v4JRLIfTxPEiqqozMy
-	 VKWQ6PXcfX78v+xvXVWSUXu/m1+Gp2IYzB8ci8Vg=
+	b=D5CWCkpLShP6jj3J3n3/BeSZr+JSVeVKISpw9IltJqmcP4J+hgSO3rqP9r2BAMpTZ
+	 wu0S4gC2UPWuUFKX81zfoIoYXZRaiiev1oA7dhQ7nz8hvW7jZNpuNxNx3KL8e8hC4t
+	 LxSgyuCJfooXo1rLUvyiW84QKFO0+fBlG2QO68dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Qing Zhang <diasyzhang@tencent.com>,
+	syzbot+c98b21427617af7f547a@syzkaller.appspotmail.com,
+	Rongzheng Wang <testwrzwrz@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2528/2651] nvmet: protect nvmet_ports_list with nvmet_config_sem
-Date: Wed, 18 Nov 2026 16:02:48 +0100
-Message-ID: <20261118150415.647424757@linuxfoundation.org>
+Subject: [PATCH 7.3 2529/2651] nvmet: use the enabled transport when disabling a port
+Date: Wed, 18 Nov 2026 16:02:49 +0100
+Message-ID: <20261118150415.677207025@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,66 +69,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Zhang <diasyzhang@tencent.com>
+From: Rongzheng Wang <testwrzwrz@gmail.com>
 
-[ Upstream commit cead6beb89256ae7145b65fbe8e8a5fedba4a47c ]
+[ Upstream commit 60385038754ed9fb05dab127b35f88c702252505 ]
 
-Readers of nvmet_ports_list (e.g. nvmet_subsys_disc_changed()) hold
-nvmet_config_sem and assert it via lockdep.  The writers --
-nvmet_ports_make() and nvmet_port_release() -- do not take the lock;
-they rely on the parent directory's VFS inode lock for serialization,
-which is an implementation detail of configfs and not a guaranteed
-contract.  Align the writers with the lock the readers already require.
+nvmet_disable_port() looks up the transport from the current
+disc_addr.trtype, while nvmet_enable_port() records the transport in
+port->tr_ops.  If trtype is changed while a port is being enabled, the
+port can be removed through a different transport, passing the private
+data of the original transport to the wrong ->remove_port().
 
-Also move list_add() in nvmet_ports_make() to after the port is fully
-initialized: the old position published the port on the global list
-before INIT_LIST_HEAD(&port->subsystems), so a concurrent reader
-could traverse uninitialized list heads.
+The same mismatch is reachable with loop and RDMA: loop add_port()
+leaves port->priv NULL, and RDMA remove_port() dereferences it.
 
-flush_workqueue() in nvmet_port_release() stays outside the semaphore
-to avoid a lock dependency on nvmet_wq.
+Use port->tr_ops for removal and serialize trtype changes with
+nvmet_config_sem in nvmet_addr_trtype_store(), so the transport that
+added the port is also the one that removes it.
 
-Fixes: b662a078576e ("nvmet: enable Discovery Controller AENs")
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Qing Zhang <diasyzhang@tencent.com>
+Fixes: 8f000cac6e7a ("nvmet-rdma: add a NVMe over Fabrics RDMA target driver")
+Reported-by: syzbot+c98b21427617af7f547a@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=c98b21427617af7f547a
+Link: https://lore.kernel.org/all/6acbc835.a150a118.27e199.003c.GAE@google.com/T/
+Signed-off-by: Rongzheng Wang <testwrzwrz@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/configfs.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/nvme/target/configfs.c | 16 ++++++++++++----
+ drivers/nvme/target/core.c     |  8 +++++---
+ 2 files changed, 17 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/nvme/target/configfs.c b/drivers/nvme/target/configfs.c
-index 61107bcfc895e..0c9d02299bcf4 100644
+index 0c9d02299bcf4..81d7ada2fa05f 100644
 --- a/drivers/nvme/target/configfs.c
 +++ b/drivers/nvme/target/configfs.c
-@@ -2011,7 +2011,9 @@ static void nvmet_port_release(struct config_item *item)
+@@ -387,10 +387,15 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
+ 		const char *page, size_t count)
+ {
+ 	struct nvmet_port *port = to_nvmet_port(item);
++	ssize_t ret = count;
+ 	int i;
  
- 	/* Let inflight controllers teardown complete */
- 	flush_workqueue(nvmet_wq);
+-	if (nvmet_is_port_enabled(port, __func__))
+-		return -EACCES;
 +	down_write(&nvmet_config_sem);
- 	list_del(&port->global_entry);
-+	up_write(&nvmet_config_sem);
++
++	if (nvmet_is_port_enabled(port, __func__)) {
++		ret = -EACCES;
++		goto out;
++	}
  
- 	key_put(port->keyring);
- 	kfree(port);
-@@ -2072,8 +2074,6 @@ static struct config_group *nvmet_ports_make(struct config_group *group,
- 			port->ana_state[i] = NVME_ANA_INACCESSIBLE;
+ 	for (i = 0; i < ARRAY_SIZE(nvmet_transport); i++) {
+ 		if (sysfs_streq(page, nvmet_transport[i].name))
+@@ -398,7 +403,8 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
  	}
  
--	list_add(&port->global_entry, &nvmet_ports_list);
--
- 	INIT_LIST_HEAD(&port->entry);
- 	INIT_LIST_HEAD(&port->subsystems);
- 	INIT_LIST_HEAD(&port->referrals);
-@@ -2107,6 +2107,10 @@ static struct config_group *nvmet_ports_make(struct config_group *group,
- 	configfs_add_default_group(&port->ana_default_group.group,
- 			&port->ana_groups_group);
+ 	pr_err("Invalid value '%s' for trtype\n", page);
+-	return -EINVAL;
++	ret = -EINVAL;
++	goto out;
  
-+	down_write(&nvmet_config_sem);
-+	list_add(&port->global_entry, &nvmet_ports_list);
+ found:
+ 	memset(&port->disc_addr.tsas, 0, NVMF_TSAS_SIZE);
+@@ -407,7 +413,9 @@ static ssize_t nvmet_addr_trtype_store(struct config_item *item,
+ 		nvmet_port_init_tsas_rdma(port);
+ 	else if (port->disc_addr.trtype == NVMF_TRTYPE_TCP)
+ 		nvmet_port_init_tsas_tcp(port, NVMF_TCP_SECTYPE_NONE);
+-	return count;
++out:
 +	up_write(&nvmet_config_sem);
-+
- 	return &port->group;
++	return ret;
+ }
+ 
+ CONFIGFS_ATTR(nvmet_, addr_trtype);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 8f791d5651bd3..c3c94bb7fb846 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -393,11 +393,13 @@ void nvmet_disable_port(struct nvmet_port *port)
+ 
+ 	lockdep_assert_held(&nvmet_config_sem);
+ 
+-	port->enabled = false;
+-	port->tr_ops = NULL;
++	if (!port->enabled)
++		return;
+ 
+-	ops = nvmet_transports[port->disc_addr.trtype];
++	ops = port->tr_ops;
++	port->enabled = false;
+ 	ops->remove_port(port);
++	port->tr_ops = NULL;
+ 	module_put(ops->owner);
  }
  
 -- 
