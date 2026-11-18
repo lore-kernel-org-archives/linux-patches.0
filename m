@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037967;
-	b=B4sWB/sr0qUwtnzlk/1WE17Gp2ATwCU1yxEFGLZHWDz1ddzmGCS1U1n90z+RMR7dUMtz
-	 YreD+kiOVVQy9zDt9YTAAf23al4x9FeadPXGRlkrFkBigHhbOY8mgMwE2fYRJZvcDX3x2
-	 3X/8nwBGMkAmgCQMa7/19pRPn/TlHza0CpAIRlJ2FhXbPlmBP3C+JDU8JOwcwrvG6YGbT
-	 DH6SpY15vV5ziSlbY0Wws9JHfAtwG541l7ltoP5FtO24XPWRbGJ2mr4WwOAUWWwNLAvVx
-	 j+4iSHRkKvXiiVwsXFaSy33ypDW/1DIBO5H+dDoPZwPFKGVvU8XxAkKjNeI4Nn9u32Q==
+	t=1795037970;
+	b=SIkfG6sKqezQ5Dn0vskkPWIcft/UZFMKYf1STjEn2v6Rv5zBTYCjQhwpuBnAMwfPJlLZ
+	 RMkH9JonVZH+ADgsbKhnMvdVeahm25JKXzGtzxx9sP3TOLtC8idxJoq4ZhgRrJgOywYpB
+	 dvZKwiDLrfmabIADLt+2CYP+RKITiS7Bp1zCwIeAXJYsFxjhA40E8B2JKMobatlFCIgYF
+	 Z4X3oAKr0ZAXDVdSmV7/Ov2uWv38b0qeW11KqXHp2f7VT6DOysldJ4HxYRDiBKyFfrNFe
+	 cs7kXmzWTrr3Wz5KaCTXMhySI77/VCVtffmHiB3HR/c7obh1lwujMUs3azCubbzbGkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037967;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037970;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F6b8tMLzbmUiYw3TDP6buGfddiyfnZ3E91Zk+ARRn6Q=;
-	b=JPw47+S6IOfVyyV9ZW9eXYAcPqlUUkfGyA9S5mXF5AOoQMkZM9zbCrodXSp3Fed3cutH
-	 NcO3MO5y3BaNxtCzDGVkq/ku5eMoeWZUvsB7774gwnL+1dU63WnQVJjfHxqzOsKLfxhHx
-	 ZdgQAcKdXUTPxI929CQvkB/jaHASRiuN0Ynbr8dpAn4vMXoqTAyc1T81rk5vZG3Y1ls/c
-	 aAHUbw6GT3sBhDNDPJz9qBWwz1SfbwSeMkdpe9BidQBiGXPo85UY4Q8oKeiFGkaD9pAXH
-	 vtebrjTV4eYtG1gimoKU4dwSJ4ptNbQ5oQz29o+L8wzQs/9dSYKyaHdein+Byht8eDw==
+	bh=TzSddSmcDHkFNHtT66iGOCE2cXd/yVJJYq42q6iNMRs=;
+	b=5JPpBaLXsnocM5d/jg5rcsmTPTv1w3NE3GlWUpubleyZ8zBmLbKjREAXGI0m6F6J8UQr
+	 4W8PAbTwjH0ZJdoY4RHp6xJbE2idMZMRoui6n18SEDIrTn7FrtZ96AZd5mVVTh/TJFmB1
+	 ULywEJseRHMYTjB8co8tIiXRJQNd01c8PWU5sB1zkug1XwRM1VbFUlZvj88milR4rSgYo
+	 m+X2UsfWBJldW/gZTMxFhCawCMF7k+lLhUlLyuqW+1lGfE77aHXDlpf9naAtonip9xqU+
+	 /gp6XevIbv3vfV7VmoSADKS+9VKovHV5fmF0dKXZjTRkSmusJcxwBptL34kaW/eKj4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR3F1uCV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nNSZ/FDf";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6716B606A32C;
-	Wed, 18 Nov 2026 21:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154C0606A32A;
+	Wed, 18 Nov 2026 21:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZR3F1uCV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C8E1F000C4;
-	Wed, 18 Nov 2026 21:39:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nNSZ/FDf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6211F000C4;
+	Wed, 18 Nov 2026 21:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037967;
-	bh=F6b8tMLzbmUiYw3TDP6buGfddiyfnZ3E91Zk+ARRn6Q=;
+	s=korg; t=1795037969;
+	bh=TzSddSmcDHkFNHtT66iGOCE2cXd/yVJJYq42q6iNMRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZR3F1uCVdC1ptPlLeZfW6Y8Gg5219lzuxfK/1oEEzE2d95UFveQ7cOdRgO44oE0pN
-	 hbj8Evo9mViWtvbhPv0312JVLz40BqDLQJNW8DcSoEOx/CmsIGDJKl4JVjgmHko8yp
-	 9h+ngUzNNjjRmBl16btXw2qqTOIEFpGdYKDJoqHM=
+	b=nNSZ/FDfgxgm8J61rXB93PTYzY501BGlwdlEGOuEvaKY46yTYZNtLIIdYT4YuTlyu
+	 L6i9OgSSZzA9uLUq2iBm186hLQ7aEt3HiGLn9ly8bjeCzV6zx7CealmyjCK14mShsr
+	 z+BjJ5MA88GOgQN33cEcwRw3CMRhh2SnF6Z/47Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@kernel.org>,
-	Igor Velkov <iav@iav.lv>,
+	stable@kernel.org,
+	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1580/3318] genirq/kexec: Do not take the bus lock of an interrupt chip on the crash path
-Date: Wed, 18 Nov 2026 15:36:42 +0100
-Message-ID: <20261118150408.517827796@linuxfoundation.org>
+Subject: [PATCH 6.6 1581/3318] f2fs: force out-place update for all writes on compressed file
+Date: Wed, 18 Nov 2026 15:36:43 +0100
+Message-ID: <20261118150408.551839288@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,142 +70,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Velkov <iav@iav.lv>
+From: Jiucheng Xu <jiucheng.xu@amlogic.com>
 
-commit 717862eac6eff0eea8ac30a0c0de0bed84922aab upstream.
+commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4 upstream.
 
-machine_kexec_mask_interrupts() calls irq_set_irqchip_state() for every
-started interrupt. That function takes the bus lock of the chip and
-desc->lock, and syncs the chip when it drops them. On the crash path
-interrupts are off and the other CPUs are stopped, so a chip whose bus
-transfer is completed by an interrupt never returns from the sync.
+For compressed file, compressed write may fail and fall back to raw
+write.
 
-On RK3399 boards with an RK808 PMIC the RTC alarm interrupt belongs to
-the regmap-irq chip of the RK808, which sits on I2C. rk808_irq_chip sets
-init_ack_masked, so regmap_irq_sync_unlock() writes the ack register on
-every unlock, and the I2C controller needs its own interrupt to finish
-the transfer. A panic with a crash kernel loaded prints
+-Thread A                                         - Thread B
+  - f2fs_write_multi_pages                          - f2fs_down_write(&sbi->cp_rwsem);
+   - f2fs_write_compressed_pages                    - ...
+    - f2fs_trylock_op                               - ...
+     - f2fs_down_read_trylock(&sbi->cp_rwsem);      - ...
+   - f2fs_write_raw_pages                           - ...
 
-  SMP: stopping secondary CPUs
+Thread B acquires the lock first, which causes Thread A to fail lock
+acquisition and fall back to raw-data write.
+IPU_FORCE is enabled on small-capacity storage devices (< 16GB),
+so f2fs_write_raw_pages() overwrites the original compressed data
+in-place.
 
-and then nothing until the watchdog resets the board.
+The in-memory node has been updated with raw-data addresses, while the
+node metadata stored on eMMC still remains in compressed state.
+If a power-cut occurs before the node is flushed to disk, on-disk
+inconsistency arises: disk data is raw, yet metadata treats it as a
+compressed cluster, leading to decompression failure.
 
-machine_kexec_mask_interrupts() takes neither lock for the other
-operations on the descriptor. Move the search for the chip that
-implements irq_set_irqchip_state() into __irq_set_irqchip_state(), which
-takes no locks, and call it from machine_kexec_mask_interrupts().
+To eliminate this risk completely, force out-place update for all
+write operations on compressed file.
 
-Fixes: 78fd584cdec0 ("arm64: kdump: implement machine_crash_shutdown()")
-Suggested-by: Thomas Gleixner <tglx@kernel.org>
-Signed-off-by: Igor Velkov <iav@iav.lv>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015-kexec-irq-bus-lock-v2-1-2af15f0757b6@iav.lv
+Cc: stable@kernel.org
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+(cherry picked from commit a64a3fec11e77a3a0dc0009bdc58b925e45a1bb4)
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/machine_kexec.c |  2 +-
- include/linux/interrupt.h         |  1 +
- kernel/irq/manage.c               | 49 ++++++++++++++++---------------
- 3 files changed, 27 insertions(+), 25 deletions(-)
+ fs/f2fs/data.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/arch/arm64/kernel/machine_kexec.c b/arch/arm64/kernel/machine_kexec.c
-index 9307a1421d67e..ece524271b964 100644
---- a/arch/arm64/kernel/machine_kexec.c
-+++ b/arch/arm64/kernel/machine_kexec.c
-@@ -235,7 +235,7 @@ static void machine_kexec_mask_interrupts(void)
- 		 * First try to remove the active state. If this
- 		 * fails, try to EOI the interrupt.
- 		 */
--		ret = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
-+		ret = __irq_set_irqchip_state(desc, IRQCHIP_STATE_ACTIVE, false);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index b0c633c5deb75..65f933d24fe8f 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2629,6 +2629,13 @@ bool f2fs_should_update_outplace(struct inode *inode, struct f2fs_io_info *fio)
+ 		return true;
+ 	if (f2fs_used_in_atomic_write(inode))
+ 		return true;
++	/*
++	 * rewrite low ratio compress data w/ OPU mode to avoid fragmentation.
++	 * If IO comes from compressed write path and fallback to raw write,
++	 * force out-place to prevent metadata-data inconsistency.
++	 */
++	if (f2fs_compressed_file(inode))
++		return true;
  
- 		if (ret && irqd_irq_inprogress(&desc->irq_data) &&
- 		    chip->irq_eoi)
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index a42191c6a0e87..2d1dd4a86e49c 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -507,6 +507,7 @@ extern int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
- 				 bool *state);
- extern int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
- 				 bool state);
-+extern int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val);
- 
- #ifdef CONFIG_IRQ_FORCED_THREADING
- # ifdef CONFIG_PREEMPT_RT
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 4b976a8fc0698..a67e40c8ce62d 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -2864,6 +2864,28 @@ int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
- }
- EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
- 
-+int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val)
-+{
-+	struct irq_data *data = irq_desc_get_irq_data(desc);
-+	struct irq_chip *chip;
-+
-+	do {
-+		chip = irq_data_get_irq_chip(data);
-+
-+		if (WARN_ON_ONCE(!chip))
-+			return -ENODEV;
-+
-+		if (chip->irq_set_irqchip_state)
-+			break;
-+
-+		data = irqd_get_parent_data(data);
-+	} while (data);
-+
-+	if (data)
-+		return chip->irq_set_irqchip_state(data, which, val);
-+	return -EINVAL;
-+}
-+
- /**
-  *	irq_set_irqchip_state - set the state of a forwarded interrupt.
-  *	@irq: Interrupt line that is forwarded to a VM
-@@ -2880,36 +2902,15 @@ int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
- 			  bool val)
- {
- 	struct irq_desc *desc;
--	struct irq_data *data;
--	struct irq_chip *chip;
- 	unsigned long flags;
--	int err = -EINVAL;
-+	int err;
- 
- 	desc = irq_get_desc_buslock(irq, &flags, 0);
- 	if (!desc)
--		return err;
--
--	data = irq_desc_get_irq_data(desc);
--
--	do {
--		chip = irq_data_get_irq_chip(data);
--		if (WARN_ON_ONCE(!chip)) {
--			err = -ENODEV;
--			goto out_unlock;
--		}
--		if (chip->irq_set_irqchip_state)
--			break;
--#ifdef CONFIG_IRQ_DOMAIN_HIERARCHY
--		data = data->parent_data;
--#else
--		data = NULL;
--#endif
--	} while (data);
-+		return -EINVAL;
- 
--	if (data)
--		err = chip->irq_set_irqchip_state(data, which, val);
-+	err = __irq_set_irqchip_state(desc, which, val);
- 
--out_unlock:
- 	irq_put_desc_busunlock(desc, flags);
- 	return err;
- }
+ 	/* swap file is migrating in aligned write mode */
+ 	if (is_inode_flag_set(inode, FI_ALIGNED_WRITE))
 -- 
 2.53.0
 
