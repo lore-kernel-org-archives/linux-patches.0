@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022611;
-	b=2qGe9Zf3LmBXpHpTY56kFeB5G8oFYeZPwjeb86U4UouXJQ/uY1ahCDOaG7sdf/pQ4/iR
-	 GhdnckzYi1l9m5AjZsubRglv8f8qD6RSJnLSdPbKzKOupcwcD+y4S2oHda9yM4OllnSb1
-	 vzNwSadyaYqGbirtddFd9cfHMTqfZ5j0hv2aYBocngp6L6stA3sw3ihzX49rZqbbn5VVe
-	 HJhZZcIC2PUf9bcWJ7mffr8rWRltBKe8UYN9kGh3zw/qjcNnAOoO2cZFyt3A4XOr5F02d
-	 4iYuzp6hzgm9App87cXoNZ70CsJx2iLQS0TTgIZWnM9MJcE4TfEqJE29myCIVJ5HxBw==
+	t=1795022614;
+	b=kdfgvJWJZaQ+wJbRtT4wMLZaq59wTuTYcX6c2wJwO3KYKeyfbiP1cH5sA4WPe30We4fl
+	 YrM/3hLoGf+6IOoerEZV8lbl23zNVdq3o+urBns5TUbJDg5shnKvm96Rp6J8nVhRvs4SU
+	 6Fn9WvQi6t8WOzoaqSNOvJYSE/L/2E+MjtyqG+KqBwMsi2cztXTQvW44NlcUxTias7YYI
+	 8W8mdiXSqkzjxMm+BvUhK4jQDzf6WX+8vkmyMapw8uic1qqmDSB/Fn2UXyNhQyJyQbHv0
+	 sQpa0pczqofULEj727L7a9KIrO4TcegixqfOBnQmga5RpVZ6Mr4JaqbglTSqDqOaxgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022611;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022614;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xC27h6AUtDaUJXg51XUDCzpoIAxt+hbmBSGDNywpxNE=;
-	b=fXsYsFalECH2bKtU5mpbSlIDKtDGxcs9W7StJj5qREk4D0yGWtZ6Jc6/9fwUtZ5zmeDa
-	 qhXYqq4UyekFrUVm6Hi4Mk4vsD1OyAnbJ2aynSmm20IzZyyhVyNgLhirH6llclX1gjgFX
-	 K/F3zI9fwuI5iNTZfKdDHR9PODht+5U8iC0aEVnNNmzEIBqKgj7ifO+DRUONjtPx0tLNq
-	 CopchQ2/3P+o9z6awWwnUPMMMJQp3/0VetIP0iLnPhRPnNNUYh06D1tC6jhYk/8ERJa0M
-	 OgtSVy69mErGJ/HU5gm291YYYkVqQcqbPExlHuUKCPg68GjcAiqq63C5R40OHFvpt4Q==
+	bh=vtDAvBVlgLbBLnaKisNnMHieZldbAVuPFF6vgt2+5gg=;
+	b=vWb+F3ew577g9dXo7htrLyVj0euT/7eUspJocK7ikHrWuF0iHAdlIg3tWAOKfIWXeS1t
+	 0PUK90Kk/b5Pam4kTDXn3oIvnlz1SJx/u9QdGirYl7weerS9C9OgsD+WGwq0382IgaCtn
+	 DoY1RvLqGxvktsGRFLUMaLLK98SU3oqfv5MtqOgRrDtl/vVnnmSKMSAEIpfRNlHzCvqQq
+	 JgatAXjxeV2U761aoh2Rwq5siN5TAbqYGc/s8bzABFjBhv0Ec66E+LbLHzRH4Zi8CtXOZ
+	 6kkonDfXCA35baaH0SexjlHKNld07S95ElE35/Kk7l2sZmLKVtfUbFSebHdAGYzRf/w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dff7F59Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uslJE2Nc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72CB606A32C;
-	Wed, 18 Nov 2026 17:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD11B606A31C;
+	Wed, 18 Nov 2026 17:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dff7F59Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293E61F000C4;
-	Wed, 18 Nov 2026 17:23:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uslJE2Nc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064061F000C4;
+	Wed, 18 Nov 2026 17:23:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022611;
-	bh=xC27h6AUtDaUJXg51XUDCzpoIAxt+hbmBSGDNywpxNE=;
+	s=korg; t=1795022614;
+	bh=vtDAvBVlgLbBLnaKisNnMHieZldbAVuPFF6vgt2+5gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dff7F59Z3ZGBTOqTkvIOHnhuQfGnV92c6EbdwErdq3GSuG1QB04fM4M8IOkYOR8s+
-	 4W3B0ix4IRw60ZIxTCjweVRHJLzdkEVGVKs/iazHaOfITPM51yFks9wHhC6zUs8drk
-	 ZiG6YaYzORi/1iog5SX+4JF2os48IE3rl2NkTxeU=
+	b=uslJE2NcncoclBWqgbBSb/ApDf1MbQohlyXbTXX2+53wNSZkXQq9ogL+KvxzRnB4Q
+	 W7Hj1L8L7Ym+dIaOLJ+dwpP7s5sXyq0VUVQ7lFKl7Rhl3sIfX+C6sJ5xNV8XkmlNao
+	 VGSBySVkYJ45Rhzei2GeerVWlSI90zJtWHjGqaT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Eric Dumazet <edumazet@kernel.org>,
-	Paul Moore <paul@paul-moore.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Daehyeon Ko <4ncienth@gmail.com>,
+	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0075/2151] cipso: stop modifying live ip_options_rcu
-Date: Wed, 18 Nov 2026 15:30:10 +0100
-Message-ID: <20261118150124.496087443@linuxfoundation.org>
+Subject: [PATCH 6.18 0076/2151] mm/vma: avoid spurious write locks when mm->mm_lock_seq overflows
+Date: Wed, 18 Nov 2026 15:30:11 +0100
+Message-ID: <20261118150124.530069341@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,346 +70,397 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 
-[ Upstream commit 1f2c5183fc0902892648f0453e38c0951cef3fec ]
+[ Upstream commit 7135a05838e85845e1bbf6caa6596a7e3b791a40 ]
 
-cipso_v4_delopt() operates on the ip_options_rcu of a socket or a request
-socket, and tries to remove CIPSO options from the middle by moving all
-subsequent options.
-That's not allowed - ip_options_rcu can be read locklessly and must always
-be consistent. For example, ip_options_undo() reads trusted offsets and
-length values from the options buffer.
-Fix it by doing the modification in a copy.
+So far the assumption has been that mm->mm_lock_seq overflow is benign,
+resulting only in readers spuriously falling back to the mmap lock, however
+it turns out that this was an unsafe assumption.
 
-The core change is in cipso_v4_delopt(), the rest is ugly plumbing to
-propagate memory allocation failures.
+If a VMA can be spuriously considered write locked that means read lock
+exclusion does not take place, and thus a VMA can end up write-locked with
+concurrent readers.
 
-Triggering this bug requires that the system is configured to use CIPSO.
-(Setting up CIPSO requires privileges in init_user_ns.)
+Since overflow only occurs every 2^31 write lock/unlock cycles, resolve the
+issue by resetting every VMA's vma->vm_lock_seq each time such an overflow
+occurs.
 
-Fixes: f6d8bd051c39 ("inet: add RCU protection to inet->opt")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Eric Dumazet <edumazet@kernel.org>
-Acked-by: Paul Moore <paul@paul-moore.com>
-Link: https://patch.msgid.link/20261106-cipso-rcuopts-v1-1-31ae931d7a0f@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is done in vma_end_write_all(), which is called when the mmap write
+lock is released, i.e. in mmap_write_unlock() and mmap_write_downgrade().
+
+Care must be taken, as resetting the sequence count at overflow means
+changing the seqcount of VMAs which are already attached and observable.
+
+The mm's seqcount is guaranteed to be odd when a write lock is held, and
+thus any write locked VMA will have an odd seqcount assigned.
+
+Therefore resetting to an even value prevents spurious write locks, since
+these can only occur with the mmap write lock held, at which point the mmap
+seqcount will be odd.
+
+However, vma_start_read() also checks vma->vm_lock_seq == mm->mm_lock_seq,
+bailing if so (indicating a write lock).
+
+This would cause any even reset value chosen to prevent VMA read locks from
+being taken - avoid this by also checking whether the VMA seqcount is odd
+before bailing on the read lock.
+
+So far, vma->vm_lock_seq has defaulted to UINT_MAX, but this has been
+unnecessary since commit e5e7fb278e59 ("mm: convert mm_lock_seq to a proper
+seqcount"), since this is assigned when the VMA is still detached, and
+cannot be observed.
+
+Therefore perform both reset and initialisation of vma->vm_lock_seq by
+simply setting vma->vm_lock_seq to zero.
+
+The reset, performed in __mm_reset_vma_seqcounts(), only needs to
+WRITE_ONCE() the value.
+
+However the read of vma->vm_lock_seq in vma_start_read() needs to have
+acquire semantics to pair with the smp_wmb() in do_raw_write_seqcount_end()
+so a reader reading a reset value also observes VMA modifications made
+under the write lock.
+
+Since all VMA write locks were just released and the mmap write lock is
+still held, there are no concurrent VMA writers.
+
+Concurrent VMA readers are unaffected. New VMA readers observe either zero,
+never a write lock, or the prior seqcount, behaving as before the reset.
+
+Since this only occurs every 2^31 write lock/unlock cycles, the time taken
+to update all VMAs is considered to be acceptable.
+
+Also update comments, documentation and VMA userland tests to reflect the
+change.
+
+User facing effects are - dangerous races that could cause memory
+corruption or NULL pointer derefences (especially on page table traversal)
+are avoided.
+
+Fixes: 5e31275cc997 ("mm: add per-VMA lock and helper functions to control it")
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Daehyeon Ko <4ncienth@gmail.com>
+Closes: https://lore.kernel.org/all/20261015143735.1630957-1-4ncienth@gmail.com/
+Reviewed-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Tested-by: Jose A. Perez de Azpillaga <azpijr@gmail.com>
+Cc: <stable@vger.kernel.org>
+[ ljs - Placed the seqcount reset under CONFIG_PER_VMA_LOCK, applied test changes to vma.c, vma_internal.h. ]
+Signed-off-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cipso_ipv4.h     | 11 ++++++-----
- include/net/netlabel.h       | 11 ++++++-----
- net/ipv4/cipso_ipv4.c        | 16 +++++++++++++---
- net/netlabel/netlabel_kapi.c | 24 ++++++++++--------------
- security/selinux/netlabel.c  |  5 +++--
- security/smack/smack_lsm.c   | 14 +++++++++-----
- 6 files changed, 47 insertions(+), 34 deletions(-)
+ Documentation/mm/process_addrs.rst | 14 ++++-
+ include/linux/mm_types.h           | 12 ++--
+ include/linux/mmap_lock.h          | 32 ++++++++---
+ mm/mmap_lock.c                     | 89 ++++++++++++++++++++++++++----
+ tools/testing/vma/vma.c            |  8 +--
+ tools/testing/vma/vma_internal.h   |  2 +-
+ 6 files changed, 126 insertions(+), 31 deletions(-)
 
-diff --git a/include/net/cipso_ipv4.h b/include/net/cipso_ipv4.h
-index d6780d7903f4a..b41672221797b 100644
---- a/include/net/cipso_ipv4.h
-+++ b/include/net/cipso_ipv4.h
-@@ -185,12 +185,12 @@ int cipso_v4_sock_setattr(struct sock *sk,
- 			  const struct cipso_v4_doi *doi_def,
- 			  const struct netlbl_lsm_secattr *secattr,
- 			  bool sk_locked);
--void cipso_v4_sock_delattr(struct sock *sk);
-+int cipso_v4_sock_delattr(struct sock *sk);
- int cipso_v4_sock_getattr(struct sock *sk, struct netlbl_lsm_secattr *secattr);
- int cipso_v4_req_setattr(struct request_sock *req,
- 			 const struct cipso_v4_doi *doi_def,
- 			 const struct netlbl_lsm_secattr *secattr);
--void cipso_v4_req_delattr(struct request_sock *req);
-+int cipso_v4_req_delattr(struct request_sock *req);
- int cipso_v4_skbuff_setattr(struct sk_buff *skb,
- 			    const struct cipso_v4_doi *doi_def,
- 			    const struct netlbl_lsm_secattr *secattr);
-@@ -221,8 +221,9 @@ static inline int cipso_v4_sock_setattr(struct sock *sk,
- 	return -ENOSYS;
- }
+diff --git a/Documentation/mm/process_addrs.rst b/Documentation/mm/process_addrs.rst
+index be49e2a269e47..b0607449485f6 100644
+--- a/Documentation/mm/process_addrs.rst
++++ b/Documentation/mm/process_addrs.rst
+@@ -807,9 +807,17 @@ All this is achieved by the use of per-mm and per-VMA sequence counts, which are
+ used in order to reduce complexity, especially for operations which write-lock
+ multiple VMAs at once.
  
--static inline void cipso_v4_sock_delattr(struct sock *sk)
-+static inline int cipso_v4_sock_delattr(struct sock *sk)
- {
-+	return 0;
- }
- 
- static inline int cipso_v4_sock_getattr(struct sock *sk,
-@@ -238,9 +239,9 @@ static inline int cipso_v4_req_setattr(struct request_sock *req,
- 	return -ENOSYS;
- }
- 
--static inline void cipso_v4_req_delattr(struct request_sock *req)
-+static inline int cipso_v4_req_delattr(struct request_sock *req)
- {
--	return;
-+	return 0;
- }
- 
- static inline int cipso_v4_skbuff_setattr(struct sk_buff *skb,
-diff --git a/include/net/netlabel.h b/include/net/netlabel.h
-index 02914b1df38ba..f896b9d52ed16 100644
---- a/include/net/netlabel.h
-+++ b/include/net/netlabel.h
-@@ -477,7 +477,7 @@ int netlbl_sock_setattr(struct sock *sk,
- 			u16 family,
- 			const struct netlbl_lsm_secattr *secattr,
- 			bool sk_locked);
--void netlbl_sock_delattr(struct sock *sk);
-+int netlbl_sock_delattr(struct sock *sk);
- int netlbl_sock_getattr(struct sock *sk,
- 			struct netlbl_lsm_secattr *secattr);
- int netlbl_conn_setattr(struct sock *sk,
-@@ -485,7 +485,7 @@ int netlbl_conn_setattr(struct sock *sk,
- 			const struct netlbl_lsm_secattr *secattr);
- int netlbl_req_setattr(struct request_sock *req,
- 		       const struct netlbl_lsm_secattr *secattr);
--void netlbl_req_delattr(struct request_sock *req);
-+int netlbl_req_delattr(struct request_sock *req);
- int netlbl_skbuff_setattr(struct sk_buff *skb,
- 			  u16 family,
- 			  const struct netlbl_lsm_secattr *secattr);
-@@ -626,8 +626,9 @@ static inline int netlbl_sock_setattr(struct sock *sk,
- {
- 	return -ENOSYS;
- }
--static inline void netlbl_sock_delattr(struct sock *sk)
-+static inline int netlbl_sock_delattr(struct sock *sk)
- {
-+	return 0;
- }
- static inline int netlbl_sock_getattr(struct sock *sk,
- 				      struct netlbl_lsm_secattr *secattr)
-@@ -645,9 +646,9 @@ static inline int netlbl_req_setattr(struct request_sock *req,
- {
- 	return -ENOSYS;
- }
--static inline void netlbl_req_delattr(struct request_sock *req)
-+static inline int netlbl_req_delattr(struct request_sock *req)
- {
--	return;
-+	return 0;
- }
- static inline int netlbl_skbuff_setattr(struct sk_buff *skb,
- 				      u16 family,
-diff --git a/net/ipv4/cipso_ipv4.c b/net/ipv4/cipso_ipv4.c
-index 793c556c206d7..cea4bcfe26937 100644
---- a/net/ipv4/cipso_ipv4.c
-+++ b/net/ipv4/cipso_ipv4.c
-@@ -2005,11 +2005,16 @@ static int cipso_v4_delopt(struct ip_options_rcu __rcu **opt_ptr)
- 	if (!opt || opt->opt.cipso == 0)
- 		return 0;
- 	if (opt->opt.srr || opt->opt.rr || opt->opt.ts || opt->opt.router_alert) {
-+		struct ip_options_rcu *old_opt = opt;
- 		u8 cipso_len;
- 		u8 cipso_off;
- 		unsigned char *cipso_ptr;
- 		int optlen_new;
- 
-+		/* ip_options_rcu must not be modified in place, use a copy */
-+		opt = kmemdup(opt, sizeof(*opt) + opt->opt.optlen, GFP_ATOMIC);
-+		if (!opt)
-+			return -ENOMEM;
- 		cipso_off = opt->opt.cipso - sizeof(struct iphdr);
- 		cipso_ptr = &opt->opt.__data[cipso_off];
- 		cipso_len = cipso_ptr[1];
-@@ -2037,6 +2042,8 @@ static int cipso_v4_delopt(struct ip_options_rcu __rcu **opt_ptr)
- 
- 		memset(&opt->opt.__data[optlen_new], IPOPT_END,
- 		       opt->opt.optlen - optlen_new);
-+		rcu_assign_pointer(*opt_ptr, opt);
-+		kfree_rcu(old_opt, rcu);
- 	} else {
- 		/* only the cipso option was present on the socket so we can
- 		 * remove the entire option struct */
-@@ -2056,7 +2063,7 @@ static int cipso_v4_delopt(struct ip_options_rcu __rcu **opt_ptr)
-  * Removes the CIPSO option from a socket, if present.
-  *
-  */
--void cipso_v4_sock_delattr(struct sock *sk)
-+int cipso_v4_sock_delattr(struct sock *sk)
- {
- 	struct inet_sock *sk_inet;
- 	int hdr_delta;
-@@ -2069,6 +2076,7 @@ void cipso_v4_sock_delattr(struct sock *sk)
- 		sk_conn->icsk_ext_hdr_len -= hdr_delta;
- 		sk_conn->icsk_sync_mss(sk, sk_conn->icsk_pmtu_cookie);
- 	}
-+	return (hdr_delta < 0) ? hdr_delta : 0;
- }
- 
- /**
-@@ -2079,9 +2087,11 @@ void cipso_v4_sock_delattr(struct sock *sk)
-  * Removes the CIPSO option from a request socket, if present.
-  *
-  */
--void cipso_v4_req_delattr(struct request_sock *req)
-+int cipso_v4_req_delattr(struct request_sock *req)
- {
--	cipso_v4_delopt(&inet_rsk(req)->ireq_opt);
-+	int hdr_delta = cipso_v4_delopt(&inet_rsk(req)->ireq_opt);
+-If the mm sequence count, :c:member:`!mm->mm_lock_seq` is equal to the VMA
+-sequence count :c:member:`!vma->vm_lock_seq` then the VMA is write-locked. If
+-they differ, then it is not.
++The mm sequence count :c:member:`!mm->mm_lock_seq` is incremented on both mmap
++write lock and unlock, so it is odd while the mmap write lock is held. If it is
++equal to the VMA sequence count :c:member:`!vma->vm_lock_seq`, and that value
++is odd, then the VMA is write-locked. If they differ, then it is not.
 +
-+	return (hdr_delta < 0) ? hdr_delta : 0;
++A VMA's sequence count is not updated on unlock, so after 2^31 write lock/unlock
++cycles the mm sequence count would wrap and match stale VMA values again. To
++prevent this, when the mm sequence count wraps to zero,
++:c:func:`!vma_end_write_all` invokes :c:func:`!__mm_reset_vma_seqcounts` to
++reset every VMA's sequence count to zero, an even value which can never
++indicate a write lock.
+ 
+ Each time the mmap write lock is released in :c:func:`!mmap_write_unlock` or
+ :c:func:`!mmap_write_downgrade`, :c:func:`!vma_end_write_all` is invoked which
+diff --git a/include/linux/mm_types.h b/include/linux/mm_types.h
+index 08495d38572f3..74ecc8f04d295 100644
+--- a/include/linux/mm_types.h
++++ b/include/linux/mm_types.h
+@@ -845,15 +845,19 @@ struct vm_area_struct {
+ 	 * Can only be written (using WRITE_ONCE()) while holding both:
+ 	 *  - mmap_lock (in write mode)
+ 	 *  - vm_refcnt bit at VMA_LOCK_OFFSET is set
++	 * The one exception is __mm_reset_vma_seqcounts(), which stores zero
++	 * (an even value, which can never indicate a write lock) under the
++	 * mmap write lock alone once the mm seqcount has wrapped, so a reader
++	 * holding only vm_refcnt may observe the value change from odd to zero.
+ 	 * Can be read reliably while holding one of:
+ 	 *  - mmap_lock (in read or write mode)
+-	 *  - vm_refcnt bit at VMA_LOCK_OFFSET is set or vm_refcnt > 1
++	 *  - vm_refcnt bit at VMA_LOCK_OFFSET is set
+ 	 * Can be read unreliably (using READ_ONCE()) for pessimistic bailout
+ 	 * while holding nothing (except RCU to keep the VMA struct allocated).
+ 	 *
+-	 * This sequence counter is explicitly allowed to overflow; sequence
+-	 * counter reuse can only lead to occasional unnecessary use of the
+-	 * slowpath.
++	 * Assigned the (odd) mm seqcount on write lock and not updated on
++	 * unlock, so a stale value would alias the mm seqcount again 2^31 write
++	 * lock/unlock cycles later. The reset described above prevents this.
+ 	 */
+ 	unsigned int vm_lock_seq;
+ #endif
+diff --git a/include/linux/mmap_lock.h b/include/linux/mmap_lock.h
+index 81c4d552bfab6..2e8bef12c76c8 100644
+--- a/include/linux/mmap_lock.h
++++ b/include/linux/mmap_lock.h
+@@ -119,7 +119,7 @@ static inline void vma_lock_init(struct vm_area_struct *vma, bool reset_refcnt)
+ #endif
+ 	if (reset_refcnt)
+ 		refcount_set(&vma->vm_refcnt, 0);
+-	vma->vm_lock_seq = UINT_MAX;
++	vma->vm_lock_seq = 0;
  }
  
- /**
-diff --git a/net/netlabel/netlabel_kapi.c b/net/netlabel/netlabel_kapi.c
-index 33b77084a4e5f..34ef835191dd2 100644
---- a/net/netlabel/netlabel_kapi.c
-+++ b/net/netlabel/netlabel_kapi.c
-@@ -1045,18 +1045,18 @@ int netlbl_sock_setattr(struct sock *sk,
-  * ensuring that @sk is locked.
-  *
+ static inline bool is_vma_writer_only(int refcnt)
+@@ -148,9 +148,10 @@ static inline void vma_refcount_put(struct vm_area_struct *vma)
+ }
+ 
+ /*
+- * Use only while holding mmap read lock which guarantees that locking will not
+- * fail (nobody can concurrently write-lock the vma). vma_start_read() should
+- * not be used in such cases because it might fail due to mm_lock_seq overflow.
++ * Use only while holding mmap read lock which guarantees that vma lock is not
++ * contended (nobody can concurrently write-lock the vma). vma_start_read() need
++ * not be used in such cases, as the mmap lock already excludes VMA writers so
++ * its sequence number checks are redundant.
+  * This functionality is used to obtain vma read lock and drop the mmap read lock.
   */
--void netlbl_sock_delattr(struct sock *sk)
-+int netlbl_sock_delattr(struct sock *sk)
- {
- 	switch (sk->sk_family) {
- 	case AF_INET:
--		cipso_v4_sock_delattr(sk);
--		break;
-+		return cipso_v4_sock_delattr(sk);
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
- 		calipso_sock_delattr(sk);
- 		break;
- #endif /* IPv6 */
- 	}
-+	return 0;
+ static inline bool vma_start_read_locked_nested(struct vm_area_struct *vma, int subclass)
+@@ -167,9 +168,10 @@ static inline bool vma_start_read_locked_nested(struct vm_area_struct *vma, int
  }
  
- /**
-@@ -1156,8 +1156,7 @@ int netlbl_conn_setattr(struct sock *sk,
- 		case NETLBL_NLTYPE_UNLABELED:
- 			/* just delete the protocols we support for right now
- 			 * but we could remove other protocols if needed */
--			netlbl_sock_delattr(sk);
--			ret_val = 0;
-+			ret_val = netlbl_sock_delattr(sk);
- 			break;
- 		default:
- 			ret_val = -ENOENT;
-@@ -1185,8 +1184,7 @@ int netlbl_conn_setattr(struct sock *sk,
- 		case NETLBL_NLTYPE_UNLABELED:
- 			/* just delete the protocols we support for right now
- 			 * but we could remove other protocols if needed */
--			netlbl_sock_delattr(sk);
--			ret_val = 0;
-+			ret_val = netlbl_sock_delattr(sk);
- 			break;
- 		default:
- 			ret_val = -ENOENT;
-@@ -1234,8 +1232,7 @@ int netlbl_req_setattr(struct request_sock *req,
- 						       entry->cipso, secattr);
- 			break;
- 		case NETLBL_NLTYPE_UNLABELED:
--			netlbl_req_delattr(req);
--			ret_val = 0;
-+			ret_val = netlbl_req_delattr(req);
- 			break;
- 		default:
- 			ret_val = -ENOENT;
-@@ -1255,8 +1252,7 @@ int netlbl_req_setattr(struct request_sock *req,
- 						      entry->calipso, secattr);
- 			break;
- 		case NETLBL_NLTYPE_UNLABELED:
--			netlbl_req_delattr(req);
--			ret_val = 0;
-+			ret_val = netlbl_req_delattr(req);
- 			break;
- 		default:
- 			ret_val = -ENOENT;
-@@ -1280,18 +1276,18 @@ int netlbl_req_setattr(struct request_sock *req,
- * Remove all the NetLabel labeling from @req.
- *
- */
--void netlbl_req_delattr(struct request_sock *req)
-+int netlbl_req_delattr(struct request_sock *req)
- {
- 	switch (req->rsk_ops->family) {
- 	case AF_INET:
--		cipso_v4_req_delattr(req);
--		break;
-+		return cipso_v4_req_delattr(req);
- #if IS_ENABLED(CONFIG_IPV6)
- 	case AF_INET6:
- 		calipso_req_delattr(req);
- 		break;
- #endif /* IPv6 */
- 	}
-+	return 0;
- }
- 
- /**
-diff --git a/security/selinux/netlabel.c b/security/selinux/netlabel.c
-index d51dfe8923122..24b11d1891d85 100644
---- a/security/selinux/netlabel.c
-+++ b/security/selinux/netlabel.c
-@@ -557,9 +557,10 @@ static int selinux_netlbl_socket_connect_helper(struct sock *sk,
- 	 * is set to AF_UNSPEC, if that is what is happening we want to reset
- 	 * the socket */
- 	if (addr->sa_family == AF_UNSPEC) {
--		netlbl_sock_delattr(sk);
-+		rc = netlbl_sock_delattr(sk);
-+		if (rc)
-+			return rc;
- 		sksec->nlbl_state = NLBL_REQSKB;
--		rc = 0;
- 		return rc;
- 	}
- 	secattr = selinux_netlbl_sock_genattr(sk);
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index 217304cd20c3b..a8dc3a8a46b89 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -2658,22 +2658,26 @@ static int smack_netlbl_add(struct sock *sk)
-  *
-  * Remove the outbound smack value from a socket
+ /*
+- * Use only while holding mmap read lock which guarantees that locking will not
+- * fail (nobody can concurrently write-lock the vma). vma_start_read() should
+- * not be used in such cases because it might fail due to mm_lock_seq overflow.
++ * Use only while holding mmap read lock which guarantees that vma lock is not
++ * contended (nobody can concurrently write-lock the vma). vma_start_read() need
++ * not be used in such cases, as the mmap lock already excludes VMA writers so
++ * its sequence number checks are redundant.
+  * This functionality is used to obtain vma read lock and drop the mmap read lock.
   */
--static void smack_netlbl_delete(struct sock *sk)
-+static int smack_netlbl_delete(struct sock *sk)
+ static inline bool vma_start_read_locked(struct vm_area_struct *vma)
+@@ -334,6 +336,10 @@ static inline int __must_check mmap_write_lock_killable(struct mm_struct *mm)
+ 	return ret;
+ }
+ 
++#ifdef CONFIG_PER_VMA_LOCK
++void __mm_reset_vma_seqcounts(struct mm_struct *mm);
++#endif
++
+ /*
+  * Drop all currently-held per-VMA locks.
+  * This is called from the mmap_lock implementation directly before releasing
+@@ -346,6 +352,18 @@ static inline void vma_end_write_all(struct mm_struct *mm)
  {
- 	struct socket_smack *ssp = smack_sock(sk);
-+	int rc;
+ 	mmap_assert_write_locked(mm);
+ 	mm_lock_seqcount_end(mm);
++
++#ifdef CONFIG_PER_VMA_LOCK
++	/*
++	 * VMA seqcounts are not updated on unlock, so once the mm seqcount has
++	 * wrapped, any VMA still carrying a sequence number from before the
++	 * wrap would satisfy __is_vma_write_locked() when that number comes
++	 * round again, and readers would not be excluded. Reset every VMA's
++	 * seqcount so that no stale value survives the wrap.
++	 */
++	if (unlikely(!mm->mm_lock_seq.sequence))
++		__mm_reset_vma_seqcounts(mm);
++#endif
+ }
+ 
+ static inline void mmap_write_unlock(struct mm_struct *mm)
+diff --git a/mm/mmap_lock.c b/mm/mmap_lock.c
+index 42e3dde73e741..c6becd6dd5d50 100644
+--- a/mm/mmap_lock.c
++++ b/mm/mmap_lock.c
+@@ -127,21 +127,38 @@ void vma_mark_detached(struct vm_area_struct *vma)
+ 	}
+ }
+ 
++/* Do the VMA, mm seqcounts indicate the VMA is write locked? */
++static bool vma_seqcount_is_write_locked(unsigned int vma_seq, unsigned int mm_seq)
++{
++	/* VMA and mm sequence numbers must match for a write lock. */
++	if (vma_seq != mm_seq)
++		return false;
++
++	/*
++	 * The VMA seqcount is always odd if locked. For an attached VMA an even
++	 * value can only be the zero stored by __mm_reset_vma_seqcounts(),
++	 * never a write lock.
++	 */
++	return vma_seq & 1;
++}
++
+ /*
+  * Try to read-lock a vma. The function is allowed to occasionally yield false
+  * locked result to avoid performance overhead, in which case we fall back to
+  * using mmap_lock. The function should never yield false unlocked result.
+- * False locked result is possible if mm_lock_seq overflows or if vma gets
+- * reused and attached to a different mm before we lock it.
++ * False locked result is possible if vma gets reused and attached to a
++ * different mm before we lock it.
+  * Returns the vma on success, NULL on failure to lock and EAGAIN if vma got
+  * detached.
+  *
+  * IMPORTANT: RCU lock must be held upon entering the function, but upon error
+  *            IT IS RELEASED. The caller must handle this correctly.
+  */
+-static inline struct vm_area_struct *vma_start_read(struct mm_struct *mm,
+-						    struct vm_area_struct *vma)
++static struct vm_area_struct *vma_start_read(struct mm_struct *mm,
++					     struct vm_area_struct *vma)
+ {
++	unsigned int vma_seq;
++	unsigned int mm_seq;
+ 	struct mm_struct *other_mm;
+ 	int oldcnt;
+ 
+@@ -153,7 +170,9 @@ static inline struct vm_area_struct *vma_start_read(struct mm_struct *mm,
+ 	 * we don't rely on for anything - the mm_lock_seq read against which we
+ 	 * need ordering is below.
+ 	 */
+-	if (READ_ONCE(vma->vm_lock_seq) == READ_ONCE(mm->mm_lock_seq.sequence)) {
++	vma_seq = READ_ONCE(vma->vm_lock_seq);
++	mm_seq = READ_ONCE(mm->mm_lock_seq.sequence);
++	if (vma_seqcount_is_write_locked(vma_seq, mm_seq)) {
+ 		vma = NULL;
+ 		goto err;
+ 	}
+@@ -177,17 +196,26 @@ static inline struct vm_area_struct *vma_start_read(struct mm_struct *mm,
+ 		goto err_unstable;
  
  	/*
- 	 * Take the label off the socket if one is set.
+-	 * Overflow of vm_lock_seq/mm_lock_seq might produce false locked result.
+-	 * False unlocked result is impossible because we modify and check
++	 * False unlocked result is impossible because a write lock sets
+ 	 * vma->vm_lock_seq under vma->vm_refcnt protection and mm->mm_lock_seq
+ 	 * modification invalidates all existing locks.
+ 	 *
+-	 * We must use ACQUIRE semantics for the mm_lock_seq so that if we are
+-	 * racing with vma_end_write_all(), we only start reading from the VMA
+-	 * after it has been unlocked.
+-	 * This pairs with RELEASE semantics in vma_end_write_all().
++	 * ACQUIRE semantics are required for both reads.
++	 *
++	 * __mm_reset_vma_seqcounts() might reset vma->vm_lock_seq to zero
++	 * after an overflow. A reader observing that zero must also observe
++	 * the VMA modifications made under the write lock which just ended, so
++	 * the ACQUIRE pairs with the smp_wmb() in do_raw_write_seqcount_end()
++	 * that precedes the reset stores.
++	 *
++	 * The ACQUIRE semantics for the mm_lock_seq read is required so that,
++	 * if we are racing with vma_end_write_all(), we only start reading from
++	 * the VMA after it has been unlocked. This pairs with the RELEASE
++	 * semantics in vma_end_write_all().
  	 */
- 	if (ssp->smk_state != SMK_NETLBL_LABELED)
--		return;
-+		return 0;
+-	if (unlikely(vma->vm_lock_seq == raw_read_seqcount(&mm->mm_lock_seq))) {
++	vma_seq = smp_load_acquire(&vma->vm_lock_seq);
++	mm_seq = raw_read_seqcount(&mm->mm_lock_seq);
++	if (unlikely(vma_seqcount_is_write_locked(vma_seq, mm_seq))) {
+ 		vma_refcount_put(vma);
+ 		vma = NULL;
+ 		goto err;
+@@ -359,6 +387,43 @@ struct vm_area_struct *lock_next_vma(struct mm_struct *mm,
  
- 	local_bh_disable();
- 	bh_lock_sock_nested(sk);
--	netlbl_sock_delattr(sk);
-+	rc = netlbl_sock_delattr(sk);
- 	bh_unlock_sock(sk);
- 	local_bh_enable();
-+	if (rc)
-+		return rc;
- 	ssp->smk_state = SMK_NETLBL_UNLABELED;
-+	return 0;
+ 	return vma;
+ }
++
++/*
++ * Called with mmap write lock held after mm->mm_lock_seq just overflowed (and
++ * therefore zero), with all VMA write locks now released.
++ *
++ * The stores below follow the smp_wmb() in do_raw_write_seqcount_end(), so
++ * a reader that observes a reset value also observes this cycle's VMA
++ * modifications (ordered by the ACQUIRE on vma->vm_lock_seq in
++ * vma_start_read()).
++ */
++void __mm_reset_vma_seqcounts(struct mm_struct *mm)
++{
++	struct vm_area_struct *vma;
++	VMA_ITERATOR(vmi, mm, 0);
++
++	mmap_assert_write_locked(mm);
++	VM_WARN_ON_ONCE(mm->mm_lock_seq.sequence);
++
++	/*
++	 * Failing to reset means stale vma->vm_lock_seq values could result in
++	 * those VMAs becoming spuriously write locked when mm->mm_lock_seq
++	 * happens to match their values.
++	 *
++	 * This is problematic, as it causes the VMA write lock to not exclude
++	 * readers, which can result in concurrent readers while a VMA write
++	 * lock is held.
++	 *
++	 * Avoid this by resetting to an even value (indicates no write lock
++	 * held).
++	 *
++	 * Readers will either observe zero (not write locked) or the previous
++	 * value, so this is safe.
++	 */
++	for_each_vma(vmi, vma)
++		WRITE_ONCE(vma->vm_lock_seq, 0);
++}
++EXPORT_SYMBOL(__mm_reset_vma_seqcounts);
+ #endif /* CONFIG_PER_VMA_LOCK */
+ 
+ #ifdef CONFIG_LOCK_MM_AND_FIND_VMA
+diff --git a/tools/testing/vma/vma.c b/tools/testing/vma/vma.c
+index db580c5d21515..0e68b523db91f 100644
+--- a/tools/testing/vma/vma.c
++++ b/tools/testing/vma/vma.c
+@@ -120,7 +120,7 @@ static struct vm_area_struct *alloc_and_link_vma(struct mm_struct *mm,
+ 	 * begun. Linking to the tree will have caused this to be incremented,
+ 	 * which means we will get a false positive otherwise.
+ 	 */
+-	vma->vm_lock_seq = UINT_MAX;
++	vma->vm_lock_seq = 0;
+ 
+ 	return vma;
+ }
+@@ -268,13 +268,13 @@ static int cleanup_mm(struct mm_struct *mm, struct vma_iterator *vmi)
+ /* Helper function to determine if VMA has had vma_start_write() performed. */
+ static bool vma_write_started(struct vm_area_struct *vma)
+ {
+-	int seq = vma->vm_lock_seq;
++	unsigned int seq = vma->vm_lock_seq;
+ 
+ 	/* We reset after each check. */
+-	vma->vm_lock_seq = UINT_MAX;
++	vma->vm_lock_seq = 0;
+ 
+ 	/* The vma_start_write() stub simply increments this value. */
+-	return seq > -1;
++	return seq > 0;
  }
  
- /**
-@@ -2713,7 +2717,7 @@ static int smk_ipv4_check(struct sock *sk, struct sockaddr_in *sap)
- 		 * Clear the socket netlabel if it's set.
- 		 */
- 		if (!rc)
--			smack_netlbl_delete(sk);
-+			rc = smack_netlbl_delete(sk);
- 	}
- 	rcu_read_unlock();
- 
-@@ -4550,7 +4554,7 @@ static int smack_inet_conn_request(const struct sock *sk, struct sk_buff *skb,
- 	if (hskp == NULL)
- 		rc = netlbl_req_setattr(req, &ssp->smk_out->smk_netlabel);
- 	else
--		netlbl_req_delattr(req);
-+		rc = netlbl_req_delattr(req);
- 
- 	return rc;
+ /* Helper function providing a dummy vm_ops->close() method.*/
+diff --git a/tools/testing/vma/vma_internal.h b/tools/testing/vma/vma_internal.h
+index b736528815bd8..02e6c32d16bb1 100644
+--- a/tools/testing/vma/vma_internal.h
++++ b/tools/testing/vma/vma_internal.h
+@@ -658,7 +658,7 @@ static inline void vma_init(struct vm_area_struct *vma, struct mm_struct *mm)
+ 	vma->vm_mm = mm;
+ 	vma->vm_ops = &vma_dummy_vm_ops;
+ 	INIT_LIST_HEAD(&vma->anon_vma_chain);
+-	vma->vm_lock_seq = UINT_MAX;
++	vma->vm_lock_seq = 0;
  }
+ 
+ /*
 -- 
 2.53.0
 
