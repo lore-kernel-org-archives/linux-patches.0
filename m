@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046094;
-	b=nU5irf6SXhrS6pffHrmx3osFUZAVW/sMW/vKTjp37Orxom+usI24vbls1LOyQc0EeXgm
-	 OVZVQc5LkcgLwsOHvbMwAjyuhqlc8aNTITpj3Po5OgMBWJoMhkL0c0FyXd0YCLL3EiwZx
-	 Z9TbAZH+/qZS/zzJpln/fC/4i0hP0ttAVERySQL8hAsasNimsM56QAwMg/jU6tyNMBF1M
-	 VhS/BxQf334fu4spwsC9E0APhxZSh4kqIMRHjIvFraDN5UnrPmgO276za/ME6Z5WHIFK6
-	 Po/tbacT5Ny1XhvOfrRibVLM6PemM+O76YqxP81Xsd6lS6tIdpbRpdJ0Jg0zVSpTg3Q==
+	t=1795046097;
+	b=pMKmo0wvn7j2jB0Kacbr1tngkpeeSoDVnmfo00vtFmLdYJ5/Ngl7EZkntVujx8Z+XgE6
+	 Lu7i608wrthms6myaKVM1rfyIAjtNfAT6QQAIe71SJxWalxAd2KNyqGoXHkHKIQg2rhFz
+	 K730vQvL2mQsQSgt5OOAwGiwniA5x4AXdarr/jifNsn+v7H3Vh4C5t8JEoZfg2tnT/0xF
+	 Bvz8JWk/G+2uV+aJtaroSjhLzxSLE/05JN/gyMcPzI5dZghv7G9yOBJFVod7Zb+usfPbk
+	 eGSad1LL8o8Vn19q1S9UQhwyUEOF3glQ1sZaUfquZRITrbeGhttryohW8H8MXZwJ5Lw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=bjKmKzU2Vo4YfBmr5Y70heP2RPJ4H+UhWtLt0sy7whU=;
-	b=P3GZdkx45hape9l+21UpMZtAiqzG6vF0KVMmPvD4C9bZHD8TSPW31tFA3Dj9VB2ZxMlK
-	 RAbSaELbj3x1wUHDFHk59Q94o5lYBepA7JKXUODHyKeRYxYQawzSWTEVM8p6fQ3Ehbrdy
-	 giFq+8R0DUnszbHgBefFRHMT8P8DgokbHpQbvBsA8sFZMu57t+PYfDuSEzh9EtuAGs3e7
-	 ALR2/iLBN7DlMQEaqZFQIZ6X30iSnQPs5ItQ7ULOr+0kkvZ1Y/Wk89jBbcj2ohqTT+PMP
-	 t730C1FnupuHuEqxHRvkPEZwnvTZLpvgYG+Xe6Ehcq3QJsIpq3J/Iv1BJDcnDFBvuvw==
+	bh=DlLmMMeQXbloeMUfOP37gIr0qMwEN3SiTlrfL9Er1xU=;
+	b=0HO7+AaHXA+LNgZe7zCy39DlOvSkHAPvkCGdvA4eS0y+xnP9LmzQlPd11g2TsiJt6Lwr
+	 LCreMDpNj6oXxxBlIgHle9oC8sadOGGlpPqbpYdhg2coa6aeUO+8Yp99H5FQKZnZpHRgR
+	 v6ekVwjSfcdB1BQ0fH88ZXif9+OJOc5u2So7/Q5PaUdl9DoEwp1H9tzRLBFJvKrrxdTbC
+	 O17qkIQOozbzto9e8gkX1zjL9F9r6SmFiBrXz7RLGx8K2m7+PpYtMKSek6bkDr/P4+Rx3
+	 SaGmf7jY8j1iJiBieO1yMN6wKVADmgQE1GNrzJF4w+E5pdrYuKgyBI7Xry43xZbUDxg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvDRQq3f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7Uu5q0q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89439606A31C;
-	Wed, 18 Nov 2026 23:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EBE606A31C;
+	Wed, 18 Nov 2026 23:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvDRQq3f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D678C1F000C5;
-	Wed, 18 Nov 2026 23:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u7Uu5q0q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CC21F000C4;
+	Wed, 18 Nov 2026 23:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046094;
-	bh=bjKmKzU2Vo4YfBmr5Y70heP2RPJ4H+UhWtLt0sy7whU=;
+	s=korg; t=1795046097;
+	bh=DlLmMMeQXbloeMUfOP37gIr0qMwEN3SiTlrfL9Er1xU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fvDRQq3fSk+mDGiK+PxJ2PIpPWkiBMUzg6SL+rUpR9lDdiNnyzsAuu0O0JS8qFb8C
-	 6BXO/oDoZXzsF3zKE73Lle3N/egLwR5OOMXE8a13d+dL+lreuhdqkcTBmlWwOI/olf
-	 j2lddWd7Xt12juwjW/pmrsJyGzGLqAbpoqg9Ed4g=
+	b=u7Uu5q0q2HlicfSz84EaZQ7cafEXQ0kakSkuOdV0cqFHq3wQOMDPHTMgSBRovT83D
+	 S7fH6OP53rIEvzL+Ys3SXA5kuXGBA4Y64H6o0mSPTjA3ViAtKVnG+64ig8EcKzlzhL
+	 2C6r8ddmWL6amR+hfNxag6AZBLVVBdgeUTvVMwEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1156/2857] xfs: rescan the AGs if incore delalloc counter is negative
-Date: Wed, 18 Nov 2026 15:36:30 +0100
-Message-ID: <20261118150243.209625729@linuxfoundation.org>
+Subject: [PATCH 6.1 1157/2857] xfs: reject absurdly large xattr value lengths in xchk_xattr_actor
+Date: Wed, 18 Nov 2026 15:36:31 +0100
+Message-ID: <20261118150243.245949701@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,52 +71,43 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 47b1e941bb55f735d82ba2649412260da78b98f8 ]
+[ Upstream commit fd012955641881169a9f01a00f656f6ca73842ec ]
 
-LOLLM complains that percpu_counter_sum can return a negative number but
-we instead misinterpret that into a huge unsigned value and do bad
-things to fdblocks.  It shouldn't do that, so let's add a retry loop and
-an attempt to freeze the filesystem to (hopefully) zero out the incore
-delalloc counter.  It probably won't work, but at least failing the
-repair beats doing the wrong thing.
+LOLLM suggests that we shouldn't try to allocate absurdly large buffers
+for xattr value checks because that will push reclaim very hard, never
+succeed, and is pointless because nobody can create xattrs that large.
+Since the xattr repair code ignores values larger than XATTR_SIZE_MAX,
+we can flag the corruption and return early.
 
-Cc: stable@vger.kernel.org # v5.2
-Fixes: 75efa57d0bf5fc ("xfs: add online scrub for superblock counters")
+Cc: stable@vger.kernel.org # v5.3
+Fixes: 6d6ccedd76823c ("xfs: only allocate memory for scrubbing attributes when we need it")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: omitted the changes to xchk_fscount_count_frextents() ]
+[ sashal: adapted the check to xchk_xattr_listent() using sx->sc and goto fail_xref instead of returning -ECANCELED ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/fscounters.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/attr.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/xfs/scrub/fscounters.c b/fs/xfs/scrub/fscounters.c
-index 88d6961e38866..1f4170bab6908 100644
---- a/fs/xfs/scrub/fscounters.c
-+++ b/fs/xfs/scrub/fscounters.c
-@@ -173,7 +173,7 @@ xchk_fscount_aggregate_agcounts(
- {
- 	struct xfs_mount	*mp = sc->mp;
- 	struct xfs_perag	*pag;
--	uint64_t		delayed;
-+	int64_t			delayed;
- 	xfs_agnumber_t		agno;
- 	int			tries = 8;
- 	int			error = 0;
-@@ -233,6 +233,11 @@ xchk_fscount_aggregate_agcounts(
- 	 * of the computation.
- 	 */
- 	delayed = percpu_counter_sum(&mp->m_delalloc_blks);
-+	if (delayed < 0) {
-+		ASSERT(delayed >= 0);
-+		xchk_set_incomplete(sc);
-+		return -EFSCORRUPTED;
-+	}
- 	fsc->fdblocks -= delayed;
+diff --git a/fs/xfs/scrub/attr.c b/fs/xfs/scrub/attr.c
+index dba6b6bf8e3c9..47c4bad11fcea 100644
+--- a/fs/xfs/scrub/attr.c
++++ b/fs/xfs/scrub/attr.c
+@@ -133,6 +133,12 @@ xchk_xattr_listent(
+ 		return;
+ 	}
  
- 	trace_xchk_fscounters_calc(mp, fsc->icount, fsc->ifree, fsc->fdblocks,
++	/* Don't even try to handle a bizarrely large xattr. */
++	if (valuelen > XATTR_SIZE_MAX) {
++		xchk_fblock_set_corrupt(sx->sc, XFS_ATTR_FORK, args.blkno);
++		goto fail_xref;
++	}
++
+ 	/*
+ 	 * Try to allocate enough memory to extrat the attr value.  If that
+ 	 * doesn't work, we overload the seen_enough variable to convey
 -- 
 2.53.0
 
