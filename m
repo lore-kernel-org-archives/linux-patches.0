@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021395;
-	b=BruVOtCPjxjkNEC7KDIx1ouOg8UiBC+y0ASo2MDCDxCSY2WiZz0v10AUItSPTP+JAmbG
-	 LojkVtzdmcELmmerkixZQRDrOUA9rq0ClPFzyaGFtkxwZkUsh08wY7MyhZNXJ4ls2+pSo
-	 MONz83y2t/I0ZN8tiiZIgZY7JvlcFoCNOtFOL3CWR+zJJLhlIkG8WcR90FhC8eh1seYou
-	 /KiKUVU4KiUs41MVFNO6/74lfsU22by6bux5IAZLv+mnQKxsXqtq5ZCSll5umEOb/Kfeg
-	 5fDS4aGsMydpkl6Pjxuq7NkkvW3d7PYtFjj/9lVtiWI0AmUHcbTsuU2Z157Y/zXZ5eg==
+	t=1795021397;
+	b=r/yo9ORHEzewDIEw8dDECJWaa4D89ZSZgRhC38P8RJIL+XCBUi8l4zoTQNPl1CM2LcKG
+	 JY9showRJq9mqUguPGDT/yuozZLU2oVljHM3wT6HyUUE0PH0twN4uhU3sut1KqiXbOZ2d
+	 jsZkom/62GMxdIMAjDZP/q7ulQBKY4SEOS9VTSoDmY8zSFa3s3XaOFrWIU4yj8nf5aw+Z
+	 nEZvMcOhRw8a/YN45AuLivzyyve/nOCDWB44OCox7QCEBQ7I/0pIMnFQuYoEfZ1ESa2SC
+	 1KpZ7RkypvLz4ZLYoHLFocEP7UKL9ejeH0AWqdjNIAZfqLx+WWyNC46VKksKy8ueRBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021395;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5nNDRm0nXISLhHJBAQ+IIZoWdUU3GYZ6R6u5BLwBGeU=;
-	b=2ccbo136jGMWjEdme4hPm7jmJVk8QGtcU6VbXXSqDv0kKEqMwCmJiD6lcr0do6wcaNmh
-	 9zT2vT+GgBrmoV5Ljdkp7Zn/0WVpVbBENnHJvlb3gU/GREwPIAc9NDk4CnCBoZ2LWbDTZ
-	 NjvmJWrJdOPxUtxGjVJexKN1BR/tWLvtE9wex64pa6DNSzlaPBI7Y/7niiY86dZ54S5+t
-	 oxrglq9WMQQXgKyv5hl0X7h2XHKh6T11s8jlz48LvL0PosTQS660XvXoscw3xFJYmb8ek
-	 yaLOQw+XEtkSmGvT2qDtyi6CKRPMyoe3Euoy7BtH47pLEj0gR4TqVnamxU7reKBOSDQ==
+	bh=iTY1lbaX85ZZF8yhJQgU4/tNPXBzBV/60zqI7qvuuCg=;
+	b=gBQVKwcMWp03YuO7/3X0GRzPlxZmBbRm5G7tyZSfF1ky6cVUnghjgTN2AyJjLgjsgBS6
+	 9iN6BQsB8JEy8D6TuwZblBoWo/Mu6Tseyn1wuoco0pi4IlpVZctcr/JbqmUOLnVs32cFP
+	 VGlf0r7jni9vRFZunHbUX17th9lErIAnEWsWzCYspVwu6MZiWgk56njszqKWr7tCDsIZQ
+	 gttnM+5smmjidGn1fXP8y+gu5q+V9k0h0U/ryVtXLBVPdxYY5t9txqnf4tjyD/7bJA6oD
+	 KLAdZyOBFvzsP5YFJhwrPsRJWZU5R3SZ6/NcEFG/sy9hyEbD7TzC9YPuSEjxjBjgyHA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4D2czsm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DjK1DRoA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C71606A336;
-	Wed, 18 Nov 2026 17:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF80606A31C;
+	Wed, 18 Nov 2026 17:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h4D2czsm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC591F000C4;
-	Wed, 18 Nov 2026 17:03:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DjK1DRoA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AC21F000C4;
+	Wed, 18 Nov 2026 17:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021395;
-	bh=5nNDRm0nXISLhHJBAQ+IIZoWdUU3GYZ6R6u5BLwBGeU=;
+	s=korg; t=1795021397;
+	bh=iTY1lbaX85ZZF8yhJQgU4/tNPXBzBV/60zqI7qvuuCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h4D2czsmEHvdiDmLCp2snk8H2fMGXAIQ5Fob8KsR4OtkPjRT2MpdVJ+DnGySe9oeR
-	 u/flcjoqqm4wBFf2VHh9f5YRvgBMQrcTC/e3zjzeBMrJO/qdHtOheZNpbJOVunWyaG
-	 Ip/poMo/UkTiFQxVJPj7LDwBmIEniy/GBXzo0MGc=
+	b=DjK1DRoAfvtk/dH6Kt+SbYuHMJmNqbku1gEAVeef7fVpdb3GkF4EJVMLiOkDCCrkE
+	 OdZj/E50ZwUwKKodtYs/GH0sOVDPo3kmTRP+KTFLzkiYIaIoqDspifIZqNHZdIz35M
+	 40WuWF17iOosJjguKfkk51DZWuwx08AYE4zEt770=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dairui Zhang <zhangdairui@gmail.com>,
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2292/2651] ksmbd: fix durable reconnects for root shares
-Date: Wed, 18 Nov 2026 15:58:52 +0100
-Message-ID: <20261118150407.774652120@linuxfoundation.org>
+Subject: [PATCH 7.3 2293/2651] smb: smbdirect: dont WARN on an unexpected receive opcode
+Date: Wed, 18 Nov 2026 15:58:53 +0100
+Message-ID: <20261118150407.804203114@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,42 +73,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit 25e36df831a47597c03c6239fbc71285e7d714c2 ]
+[ Upstream commit e8592dec2e935befe842f90f4044d210f59c4d30 ]
 
-When a share exports "/", ksmbd_validate_name_reconnect() expects
-another slash after the share path. For a file at /foo, this rejects
-the valid reconnect name "foo" even though the file is in the share.
+The receive completion handlers smbdirect_connection_recv_io_done(),
+smbdirect_accept_negotiate_recv_done() and
+smbdirect_connect_negotiate_recv_done() verify that the completion is a
+regular receive with WARN_ON_ONCE(wc->opcode != IB_WC_RECV).
 
-Compare the requested name with the rendered file path after its
-leading slash when the resolved share root is "/". Keep the
-exact-root/empty-name check and reject rendered paths without an
-initial slash.
+But wc->opcode is controlled by the remote peer: a posted receive work
+request is consumed not only by an incoming SEND, but also by an RDMA
+Write with Immediate, which completes as IB_WC_RECV_RDMA_WITH_IMM. An
+unauthenticated peer can transmit such a message, even before the
+negotiate completes, so it reaches the accept/connect negotiate
+handlers as well. With panic_on_warn set this is a remote denial of
+service, and otherwise it still taints the kernel and spams the log for
+something a peer can trigger at will.
 
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Reported-by: Dairui Zhang <zhangdairui@gmail.com>
+The opcode check itself was inherited from the original client and
+server recv_done() handlers (fs/smb/client/smbdirect.c and
+fs/smb/server/transport_rdma.c), where an unexpected opcode was simply
+logged and the connection was torn down. Only the WARN_ON_ONCE() was
+added on top during the socketization rework. Drop the WARN_ON_ONCE()
+and keep the existing graceful error path, which logs the unexpected
+opcode (unless the status is IB_WC_WR_FLUSH_ERR) and tears the
+connection down.
+
+Fixes: ea4151222a93 ("smb: smbdirect: introduce smbdirect_connection_recv_io_done()")
+Fixes: eb3ed1e9048c ("smb: smbdirect: introduce smbdirect_accept_connect_request()")
+Fixes: d1f187656797 ("smb: smbdirect: introduce smbdirect_connect[_sync]()")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-5341a0c0-7b00-4eef-915c-91e099649d3e
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: Paulo Alcantara <pc@manguebit.org>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/vfs_cache.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/smb/smbdirect/accept.c     | 2 +-
+ fs/smb/smbdirect/connect.c    | 2 +-
+ fs/smb/smbdirect/connection.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index 56f07914197c1..f00d4d81283a8 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -1943,6 +1943,10 @@ int ksmbd_validate_name_reconnect(struct ksmbd_share_config *share,
- 			/* the durable fp is the share root itself */
- 			if (name[0])
- 				ret = -EINVAL;
-+		} else if (share_path_sz == 1 && share_path[0] == '/') {
-+			if (ab_pathname[0] != '/' ||
-+			    strcmp(ab_pathname + 1, name))
-+				ret = -EINVAL;
- 		} else if (len <= share_path_sz ||
- 			   strncmp(ab_pathname, share_path, share_path_sz) ||
- 			   ab_pathname[share_path_sz] != '/' ||
+diff --git a/fs/smb/smbdirect/accept.c b/fs/smb/smbdirect/accept.c
+index e7e5eb75a5aea..85e37d11f43de 100644
+--- a/fs/smb/smbdirect/accept.c
++++ b/fs/smb/smbdirect/accept.c
+@@ -234,7 +234,7 @@ static void smbdirect_accept_negotiate_recv_done(struct ib_cq *cq, struct ib_wc
+ 	struct smbdirect_socket *sc = recv_io->socket;
+ 	unsigned long flags;
+ 
+-	if (unlikely(wc->status != IB_WC_SUCCESS || WARN_ON_ONCE(wc->opcode != IB_WC_RECV))) {
++	if (unlikely(wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_RECV)) {
+ 		if (wc->status != IB_WC_WR_FLUSH_ERR)
+ 			smbdirect_log_rdma_recv(sc, SMBDIRECT_LOG_ERR,
+ 				"wc->status=%s (%d) wc->opcode=%d\n",
+diff --git a/fs/smb/smbdirect/connect.c b/fs/smb/smbdirect/connect.c
+index 34a3e72c38fbb..0d02f03063ac7 100644
+--- a/fs/smb/smbdirect/connect.c
++++ b/fs/smb/smbdirect/connect.c
+@@ -581,7 +581,7 @@ static void smbdirect_connect_negotiate_recv_done(struct ib_cq *cq, struct ib_wc
+ 	struct smbdirect_socket *sc = recv_io->socket;
+ 	unsigned long flags;
+ 
+-	if (unlikely(wc->status != IB_WC_SUCCESS || WARN_ON_ONCE(wc->opcode != IB_WC_RECV))) {
++	if (unlikely(wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_RECV)) {
+ 		if (wc->status != IB_WC_WR_FLUSH_ERR)
+ 			smbdirect_log_rdma_recv(sc, SMBDIRECT_LOG_ERR,
+ 				"wc->status=%s (%d) wc->opcode=%d\n",
+diff --git a/fs/smb/smbdirect/connection.c b/fs/smb/smbdirect/connection.c
+index f48c857bda5a4..e6c7b343fe870 100644
+--- a/fs/smb/smbdirect/connection.c
++++ b/fs/smb/smbdirect/connection.c
+@@ -1529,7 +1529,7 @@ void smbdirect_connection_recv_io_done(struct ib_cq *cq, struct ib_wc *wc)
+ 	u32 data_length;
+ 	u32 remaining_data_length;
+ 
+-	if (unlikely(wc->status != IB_WC_SUCCESS || WARN_ON_ONCE(wc->opcode != IB_WC_RECV))) {
++	if (unlikely(wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_RECV)) {
+ 		if (wc->status != IB_WC_WR_FLUSH_ERR)
+ 			smbdirect_log_rdma_recv(sc, SMBDIRECT_LOG_ERR,
+ 				"wc->status=%s (%d) wc->opcode=%d\n",
 -- 
 2.53.0
 
