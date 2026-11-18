@@ -1,57 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034753;
-	b=MyF/+T7t53JivjyMag04J26L+6k5lkN7c7e1F2a6b77o9MYItgAbSXwXmi/gqK//6Wlr
-	 WLP2IDebhfDouaLCedRKgbb3T9gAvHU+bZKzzTWQOrUPYI/I3GPVVX0JoYErLOHJj/pw2
-	 18qoNhXZZMCat2P3CuM63bJl0yj+vXHSTTfrC5g3NiN3rFucU2uoAtpGxz3ZyARJPpoWk
-	 iT128BtLPONmWJuVgn2WOyop/7oZU8dXhU9zUiJ8LMxSapf4USL8YIOjXRKSeBfAr8raF
-	 kXn7lO6FxVYFbMtYs6VpAMh1d07lLtZdjOmdEHKlB33fsyNcYgpgEmhoWKEG7ztKaKg==
+	t=1795034755;
+	b=DHUGC5JGwq6LP2SPboLjqNXrrPL4We8CJLiTksAVqf8Zp12PnZkQCCIb6taqGOHpVN/y
+	 RBe186XpgBPD1+SzmgpwcLyWQBcawdr2tyr4o3mvpiZUdUpWEwYiroVlhCywadOdI+oqY
+	 OjWL30h9nf8S8pq+YaT0a99Lp1u3TyGGltD8aPt/NERkOtOgS0p4Zkh6x/wFxeqvKpBT0
+	 aJlol1mVBtassB6DBgUeV4uqoFvi0BlbnokmjTtJIBtz450dYbrI8rJ2YqIhT6/7LxYcm
+	 TdhaRZGay3HiKNpEONadE01QcchUOWrE/y3yNhCTosoWxYIis8J+YinIJh88ZByux0g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034753;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034755;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QonWHmrFN0ZVQx8nJ5AIUlmfJK6MrUFXByAWsU7Zw9I=;
-	b=REbptfr42dwAWdxr9GkLPLTinr3mPe7Acd3glsrPqzrds2xWUdJdoRjPpSy9qD59gH3I
-	 XSkTqhQXsUrMFBbEue9us9h7Udr4NiZV+IAxfzo6IBpWrwDMpngV5AQ99PcXry0v/MepW
-	 hOJApcP4I6BneCUPQ6U+sxQNb38y1jpZNaOnxTu0PB/1YAIIj9RnwvkHhKDUhq0q5zu1W
-	 28PHzdqQl6rsTN9+ArtjgGOv4fpZFkFsBMRjzsAn7EQ8lBboQXmeyQgIBfO+spMKSDxzQ
-	 LDzTHofx9p5H4LaUjIPYTanbrw0DUDOFAp5QEv2lfdeFo1Cr8+2HYgPT7NnvolI+lcg==
+	bh=aan/r8Gnjj2pF729jgND7YTloS9EY3v1VNl9LHioF60=;
+	b=17lbN4QixNqmWAMNHylGGAzoTn5bDbAT6mcd5+wasSwO8Zmi7O4vVRUs/rpoHyZ+KBd6
+	 5PZ0DfNQrxy/HqiJALCtsGZKVmsxgsghjJ1b5igWilA3tSEB3IIPfTeUFsrwaKc/Hc6ZK
+	 f4XYtNCAfxqPHIvcV973Vb0IuQOD1sHyZVxGJDvEDBYcT8UimiTbVs+qrai3Allgpo0Qp
+	 HAGfXrNFiXvs9Zfs3mVxe01dwXRMI30FOTYm7fS3RG/DpdnleqjLZXIHsQvHUZvuWwtZJ
+	 m8KJL2ljDkNAc7pwHRTSSp2nmDoT3TfDsBwGH4+pvqVs3B1eElzSmztYSNG+hqoZmTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhsyF27O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bfq2JANU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FD25606A320;
-	Wed, 18 Nov 2026 20:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C0F606A31C;
+	Wed, 18 Nov 2026 20:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hhsyF27O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A1C1F000C4;
-	Wed, 18 Nov 2026 20:45:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Bfq2JANU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157111F000C4;
+	Wed, 18 Nov 2026 20:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034752;
-	bh=QonWHmrFN0ZVQx8nJ5AIUlmfJK6MrUFXByAWsU7Zw9I=;
+	s=korg; t=1795034755;
+	bh=aan/r8Gnjj2pF729jgND7YTloS9EY3v1VNl9LHioF60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hhsyF27OlGlaQxdgKzgHUOPSDrDubEIqNCGOPUg42ctf4nCcqOHric8d49GdgoGTG
-	 v3x4U6QHEnIEWiTcMA+SBJGmCRgpclrLfhu5X/Ee/NcZg4ntD2y/jbxWshana59isV
-	 OAK07GxXxpUdrmMyEeWUj88Wv6oAUZQ9xd2J17YM=
+	b=Bfq2JANUHCOdQtjWBqh/3jiwi4bGhUDzDljIoDdA7GMWxoXMYU2S1HLf8X31VjQEM
+	 Rdj1TFerGAr77OqbYuljl60VChYq6xDP7dKQHiNeTz+1faKEmE4NBveBe6p6Dy012W
+	 KVYgM8fqEpQfqXav2dqy6/kVkiVS60smrEKlFq4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Tom Talpey <tom@talpey.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
-	Bharath SM <bharathsm@microsoft.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Andi Shyti <andi.shyti@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0479/3318] smb: client: fix unaligned access in WSL reparse point parser
-Date: Wed, 18 Nov 2026 15:18:21 +0100
-Message-ID: <20261118150331.317643533@linuxfoundation.org>
+Subject: [PATCH 6.6 0435/3318] i2c: qcom-cci: fix autosuspend cleanup
+Date: Wed, 18 Nov 2026 15:17:37 +0100
+Message-ID: <20261118150329.710117015@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,97 +70,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit e1aeaf79dea51e6065da56924bc07e22d59012ac ]
+[ Upstream commit f98d4986482151a835b521a734722fe8dc5ca37d ]
 
-When wsl_to_fattr() parses WSL extended attributes, it computes a
-payload pointer from ea->ea_data + ea_name_length + 1.  Since the
-smb2_file_full_ea_info struct is __packed and all WSL xattr names are
-6 bytes long, the value pointer always lands at an odd byte offset,
-never satisfying __le32 or __le64 alignment requirements.
+cci_probe() calls pm_runtime_use_autosuspend(), but the remove path
+does not call the matching pm_runtime_dont_use_autosuspend() before
+disabling runtime PM.
 
-The code then casts this pointer to __le32 * or __le64 * and
-dereferences it directly, which may cause alignment faults on some
-architectures.
+If the autosuspend delay is set to a negative value while autosuspend
+is enabled, the runtime PM core increments usage_count to prevent
+runtime suspend. Without undoing the autosuspend setting during
+teardown, this reference is not dropped and usage_count remains
+unbalanced.
 
-Replace all such casts with get_unaligned_le32() and
-get_unaligned_le64() in reparse_mkdev(), wsl_make_kuid(),
-wsl_make_kgid() and wsl_to_fattr().
+Use devm_pm_runtime_set_active_enabled() to manage the runtime PM
+state. Its managed cleanup disables autosuspend and runtime PM and
+restores the suspended state on probe failure and driver removal.
+Remove the now redundant manual runtime PM cleanup.
 
-Closes: https://sashiko.dev/#/patchset/20260906200517.725015-1-pc%40manguebit.org
-Fixes: 78e26bec4d6d ("smb: client: parse uid, gid, mode and dev from WSL reparse points")
-Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Paulo Alcantara <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Shyam Prasad N <sprasad@microsoft.com>
-Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Cc: Bharath SM <bharathsm@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: stable@vger.kernel.org
-[ sashal: Changed the include in reparse.h from <linux/unaligned.h> to <asm/unaligned.h>, since the former doesn't exist in this tree. ]
+This issue was found by manual code inspection.
+
+Fixes: e517526195de ("i2c: Add Qualcomm CCI I2C driver")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Cc: <stable@vger.kernel.org> # v5.8+
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://patch.msgid.link/20260812094425.3515179-1-lgs201920130244@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/reparse.c | 4 ++--
- fs/smb/client/reparse.h | 7 ++++---
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-qcom-cci.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/fs/smb/client/reparse.c b/fs/smb/client/reparse.c
-index 010d12b557160..ceddb4ec10ba1 100644
---- a/fs/smb/client/reparse.c
-+++ b/fs/smb/client/reparse.c
-@@ -732,9 +732,9 @@ static bool wsl_to_fattr(struct cifs_open_info_data *data,
- 				fattr->cf_gid = wsl_make_kgid(cifs_sb, v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_MODE, nlen)) {
- 			/* File type in reparse point tag and in xattr mode must match. */
--			if (S_DT(fattr->cf_mode) != S_DT(le32_to_cpu(*(__le32 *)v)))
-+			if (S_DT(fattr->cf_mode) != S_DT(get_unaligned_le32(v)))
- 				return false;
--			fattr->cf_mode = (umode_t)le32_to_cpu(*(__le32 *)v);
-+			fattr->cf_mode = (umode_t)get_unaligned_le32(v);
- 		} else if (!strncmp(name, SMB2_WSL_XATTR_DEV, nlen)) {
- 			fattr->cf_rdev = reparse_mkdev(v);
- 			have_xattr_dev = true;
-diff --git a/fs/smb/client/reparse.h b/fs/smb/client/reparse.h
-index ff05b0e75c928..98da80e1ec97a 100644
---- a/fs/smb/client/reparse.h
-+++ b/fs/smb/client/reparse.h
-@@ -9,6 +9,7 @@
- #include <linux/fs.h>
- #include <linux/stat.h>
- #include <linux/uidgid.h>
-+#include <asm/unaligned.h>
- #include "fs_context.h"
- #include "cifsglob.h"
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index cd2fe0cb77bdd..c73cf7abe5832 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -635,9 +635,11 @@ static int cci_probe(struct platform_device *pdev)
+ 	cci_init(cci);
  
-@@ -22,7 +23,7 @@
+ 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
++	ret = devm_pm_runtime_set_active_enabled(dev);
++	if (ret)
++		goto disable_clocks;
++
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_set_active(dev);
+-	pm_runtime_enable(dev);
  
- static inline dev_t reparse_mkdev(void *ptr)
- {
--	u64 v = le64_to_cpu(*(__le64 *)ptr);
-+	u64 v = get_unaligned_le64(ptr);
+ 	for (i = 0; i < cci->data->num_masters; i++) {
+ 		if (!cci->master[i].cci)
+@@ -653,8 +655,6 @@ static int cci_probe(struct platform_device *pdev)
+ 	return 0;
  
- 	return MKDEV(v & 0xffffffff, v >> 32);
+ error_i2c:
+-	pm_runtime_disable(dev);
+-	pm_runtime_dont_use_autosuspend(dev);
+ 
+ 	for (--i ; i >= 0; i--) {
+ 		if (cci->master[i].cci) {
+@@ -680,9 +680,6 @@ static void cci_remove(struct platform_device *pdev)
+ 			cci_halt(cci, i);
+ 		}
+ 	}
+-
+-	pm_runtime_disable(&pdev->dev);
+-	pm_runtime_set_suspended(&pdev->dev);
  }
-@@ -30,7 +31,7 @@ static inline dev_t reparse_mkdev(void *ptr)
- static inline kuid_t wsl_make_kuid(struct cifs_sb_info *cifs_sb,
- 				   void *ptr)
- {
--	u32 uid = le32_to_cpu(*(__le32 *)ptr);
-+	u32 uid = get_unaligned_le32(ptr);
  
- 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_OVERR_UID)
- 		return cifs_sb->ctx->linux_uid;
-@@ -40,7 +41,7 @@ static inline kuid_t wsl_make_kuid(struct cifs_sb_info *cifs_sb,
- static inline kgid_t wsl_make_kgid(struct cifs_sb_info *cifs_sb,
- 				   void *ptr)
- {
--	u32 gid = le32_to_cpu(*(__le32 *)ptr);
-+	u32 gid = get_unaligned_le32(ptr);
- 
- 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_OVERR_GID)
- 		return cifs_sb->ctx->linux_gid;
+ static const struct cci_data cci_v1_data = {
 -- 
 2.53.0
 
