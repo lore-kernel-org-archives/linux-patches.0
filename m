@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034649;
-	b=4a4jFkVCt6T8md8DL2P24x/cfKaE1SFwWgW17ZSy2eYMW8gXl3buprzUL+gsr3EP7egJ
-	 0Htv0DkDBq58yKy0+WyoxUB7cjTPxm/zMQVKjNW2ITMLpeDglsIVMkm/3ib4WRdFWl3Ib
-	 Z8N1qh21ZGFqlW2DHN1xfsNHdapSiUCPCMGfhm7PEFdWSXnYdHFE94GClQHDL22FuTUOv
-	 Gqw8O8x9W3NMIht6hfMOLB6QN0KAdbLKQydaWfmLNw9oJtJJsINsad/qx2SzXzjiK7EGP
-	 tN/GrlqBtAjSUP6hw5qSp2QiUTaSxb7aSnw1KDDeqYco/VJK+AY1nCJUA3C86Yz1Mog==
+	t=1795034652;
+	b=E/HfrUxUyA1z6gLN+4S8iIG+yDDQeNwYuqD1Dool3mHQGlHA7eph/ra2qVmk2IDwlsQz
+	 Oy3IgJ09Zjiz7XnLawlpaktoP2qN2tAiZpNBYTeqRZDUiGrqBz3JReNx2MGvvPqCBGc3B
+	 K9mEG5wdjJCw7hK3v6nAuDDIaDqp2Y8QIHN+wYJW8/NXWDp8NCoqfiajvZDPtOgMkWUa9
+	 ArQhLKQxFRxMIrWBwfRxdDD7PL3Q80XQksuJazFopHS+SiH/fGGwCc3ABhCDxvDdaZgkd
+	 LvJi/w0GoCZPZZnpR4V0cz/aiTkM+1IXfPxlRsqn8t63DKp+R3BPbdlcSCxYXOlpo0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034649;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034652;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ODo42aGtZQDvK06zZDrZS00h9N6qhIon7R752oRutfE=;
-	b=TKm/pC7iSQ+q210JZw29UA8eZcfTLN3SJdegCNymZ89rHxpoCr1msHUD/gmABISjCFKO
-	 cnD71W6B7tuQviqp7KtcLrTfC41MSM8F4xdRFcTd7x3PuVBE8FqTU749ZXSdRiZ5CEHZA
-	 PhcPfIxMsia+6Uz2MNqwQKO+eAxXzRGSkBRIctNjgbqySWZ57AAEiyHLLEbcF479j+hGa
-	 KyOzvOWwHijZxr9+lijm2NaMqk9CWktnaV0M/4AX+WZ0wAhcyMD9+n433+8CrR8KEgPTW
-	 WJ86yeknJff2lb5aplse2Xa0ivbNnOq2RUsc4RsRYSjR62OYgeqsDhhiWez7p6DRKWw==
+	bh=JvixRwcztoCacmqizMrSuTLgBzes0vwryWYgGCm+Bmk=;
+	b=wuuNlEowQuvLT6esQp5By0/DoRPVyhERx0/lh56PYdPoCzAMkksXSD0q2PhjsRdn9sFF
+	 F+/Eziw+s2L6M+lOQC3WCw5LscRQjB0ZCAexmyXlk+s0uWVL8w2se6Zs+zHIdTn/8bHna
+	 FwQZpaToDKik1UP9DfTLsT1K62VD8ZSYhtnkTbUVX00+p5bxEumZBKJKeDDEy9cLx71ZK
+	 Tlvf1RmvpfX8cJdBWEDYj6te/yRFLsx61zCM3vN451XGxe7IN1tESlp8Ow4t0XkHw4EaW
+	 CJ4EhOs/CBRJ8q3aLj3N2MoThv1NApTo7UlLP4HQASoS3qp01EPOBdSUr876W1dpGbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="c/chuW9j";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEws94Vj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1587F606A31C;
-	Wed, 18 Nov 2026 20:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F416B606A32F;
+	Wed, 18 Nov 2026 20:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c/chuW9j
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A321F000C4;
-	Wed, 18 Nov 2026 20:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vEws94Vj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F931F000C4;
+	Wed, 18 Nov 2026 20:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034648;
-	bh=ODo42aGtZQDvK06zZDrZS00h9N6qhIon7R752oRutfE=;
+	s=korg; t=1795034651;
+	bh=JvixRwcztoCacmqizMrSuTLgBzes0vwryWYgGCm+Bmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c/chuW9jvJRyTlurkFQfwaBBaK98he38fs5+9mQhPh2I5LQLzRcUsO0jS7wrFmGO8
-	 eDISS8PmxdyaprFx/m58jCQYt915hhlkHw6PpGMs5gXqUIC4eGIHnc8vQlFLhXQgnf
-	 bkO8/7mdiXfA9d8YrQuUzNyVF+mY0SZJU2XxoB2U=
+	b=vEws94VjFr58lmIycy6AnA5UOQuqfR9AmxxMBVyyv/y2jVmwMAwwOiH1EjPpM82z6
+	 5dgK7z9nIBoew4oH6lE1PAAH71xk53I8vnY/zYr5HNM+J3O2eIGnooLWNdJR4WGSQH
+	 ucKs+vl9/rL1zexzmSjTRPOd5SobYAMF2eRrGDMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
+	"Jason J. Herne" <jjherne@linux.ibm.com>,
+	Anthony Krowiak <akrowiak@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0445/3318] dm-integrity: fix NULL pointer dereference when the R flag is used
-Date: Wed, 18 Nov 2026 15:17:47 +0100
-Message-ID: <20261118150330.079901415@linuxfoundation.org>
+Subject: [PATCH 6.6 0446/3318] s390/vfio-ap: handle hardware checkstop state on queue reset operation
+Date: Wed, 18 Nov 2026 15:17:48 +0100
+Message-ID: <20261118150330.115686202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,49 +69,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Jason J. Herne <jjherne@linux.ibm.com>
 
-[ Upstream commit 7d4d4f3b668d708d94f62ecdd33ac330a6fd8a84 ]
+[ Upstream commit a681226c675cf4ff4f1ece8f44a7f698c4a6ca6a ]
 
-If the dm-integrity device has the SB_FLAG_DIRTY_BITMAP flag set and the
-user activates the device in the 'R' mode, a crash in dm_integrity_resume
-happens because the function attempts to read the journal containing the
-bitmap.
+Update vfio_ap_mdev_reset_queue() to handle an unexpected checkstop (hardware error) the
+same as the deconfigured case. This prevents unexpected and unhelpful warnings in the
+event of a hardware error.
 
-This patch makes dm-integrity skip any writes to the device in
-dm_integrity_resume if the device is activated in the 'R' mode.
+We also stop lying about a queue's reset response code. This was originally done so we
+could force vfio_ap_mdev_filter_matrix to pass a deconfigured device through to the guest
+for the hotplug scenario. vfio_ap_mdev_filter_matrix is instead modified to allow
+passthrough for all queues with reset state normal, deconfigured, or checkstopped. In the
+checkstopped case we choose to pass the device through and let the error state be
+reflected at the guest level.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Fixes: 468dfca38b1a ("dm integrity: add a bitmap mode")
-Cc: stable@vger.kernel.org
+Signed-off-by: "Jason J. Herne" <jjherne@linux.ibm.com>
+Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240215153144.14747-1-jjherne@linux.ibm.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Stable-dep-of: 65e05ec252a9 ("s390/vfio-ap: fix KVM GISC and page leak when queue removed from host config")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-integrity.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/s390/crypto/vfio_ap_ops.c | 35 ++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/md/dm-integrity.c b/drivers/md/dm-integrity.c
-index a10143b51c984..1259bdf7b2c3b 100644
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -3265,6 +3265,10 @@ static void dm_integrity_resume(struct dm_target *ti)
- 	r = sync_rw_sb(ic, REQ_OP_READ);
- 	if (r)
- 		dm_integrity_io_error(ic, "reading superblock", r);
-+
-+	if (ic->mode == 'R')
-+		goto skip_writes;
-+
- 	if ((ic->sb->flags & flags) != flags) {
- 		ic->sb->flags |= flags;
- 		r = sync_rw_sb(ic, REQ_OP_WRITE | REQ_FUA);
-@@ -3374,6 +3378,7 @@ static void dm_integrity_resume(struct dm_target *ti)
- 		}
- 	}
+diff --git a/drivers/s390/crypto/vfio_ap_ops.c b/drivers/s390/crypto/vfio_ap_ops.c
+index d6c60802c9785..572f9fd511c5a 100644
+--- a/drivers/s390/crypto/vfio_ap_ops.c
++++ b/drivers/s390/crypto/vfio_ap_ops.c
+@@ -663,6 +663,21 @@ static bool vfio_ap_mdev_filter_cdoms(struct ap_matrix_mdev *matrix_mdev)
+ 			     AP_DOMAINS);
+ }
  
-+skip_writes:
- 	ic->reboot_notifier.notifier_call = dm_integrity_reboot;
- 	ic->reboot_notifier.next = NULL;
- 	ic->reboot_notifier.priority = INT_MAX - 1;	/* be notified after md and before hardware drivers */
++static bool _queue_passable(struct vfio_ap_queue *q)
++{
++	if (!q)
++		return false;
++
++	switch (q->reset_status.response_code) {
++	case AP_RESPONSE_NORMAL:
++	case AP_RESPONSE_DECONFIGURED:
++	case AP_RESPONSE_CHECKSTOPPED:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ /*
+  * vfio_ap_mdev_filter_matrix - filter the APQNs assigned to the matrix mdev
+  *				to ensure no queue devices are passed through to
+@@ -691,7 +706,6 @@ static bool vfio_ap_mdev_filter_matrix(struct ap_matrix_mdev *matrix_mdev,
+ 	unsigned long apid, apqi, apqn;
+ 	DECLARE_BITMAP(prev_shadow_apm, AP_DEVICES);
+ 	DECLARE_BITMAP(prev_shadow_aqm, AP_DOMAINS);
+-	struct vfio_ap_queue *q;
+ 
+ 	bitmap_copy(prev_shadow_apm, matrix_mdev->shadow_apcb.apm, AP_DEVICES);
+ 	bitmap_copy(prev_shadow_aqm, matrix_mdev->shadow_apcb.aqm, AP_DOMAINS);
+@@ -720,8 +734,7 @@ static bool vfio_ap_mdev_filter_matrix(struct ap_matrix_mdev *matrix_mdev,
+ 			 * hardware device.
+ 			 */
+ 			apqn = AP_MKQID(apid, apqi);
+-			q = vfio_ap_mdev_get_queue(matrix_mdev, apqn);
+-			if (!q || q->reset_status.response_code) {
++			if (!_queue_passable(vfio_ap_mdev_get_queue(matrix_mdev, apqn))) {
+ 				clear_bit_inv(apid, matrix_mdev->shadow_apcb.apm);
+ 
+ 				/*
+@@ -1709,6 +1722,7 @@ static int apq_status_check(int apqn, struct ap_queue_status *status)
+ 	switch (status->response_code) {
+ 	case AP_RESPONSE_NORMAL:
+ 	case AP_RESPONSE_DECONFIGURED:
++	case AP_RESPONSE_CHECKSTOPPED:
+ 		return 0;
+ 	case AP_RESPONSE_RESET_IN_PROGRESS:
+ 	case AP_RESPONSE_BUSY:
+@@ -1765,14 +1779,6 @@ static void apq_reset_check(struct work_struct *reset_work)
+ 				memcpy(&q->reset_status, &status, sizeof(status));
+ 				continue;
+ 			}
+-			/*
+-			 * When an AP adapter is deconfigured, the
+-			 * associated queues are reset, so let's set the
+-			 * status response code to 0 so the queue may be
+-			 * passed through (i.e., not filtered)
+-			 */
+-			if (status.response_code == AP_RESPONSE_DECONFIGURED)
+-				q->reset_status.response_code = 0;
+ 			if (q->saved_isc != VFIO_AP_ISC_INVALID)
+ 				vfio_ap_free_aqic_resources(q);
+ 			break;
+@@ -1799,12 +1805,7 @@ static void vfio_ap_mdev_reset_queue(struct vfio_ap_queue *q)
+ 		queue_work(system_long_wq, &q->reset_work);
+ 		break;
+ 	case AP_RESPONSE_DECONFIGURED:
+-		/*
+-		 * When an AP adapter is deconfigured, the associated
+-		 * queues are reset, so let's set the status response code to 0
+-		 * so the queue may be passed through (i.e., not filtered).
+-		 */
+-		q->reset_status.response_code = 0;
++	case AP_RESPONSE_CHECKSTOPPED:
+ 		vfio_ap_free_aqic_resources(q);
+ 		break;
+ 	default:
 -- 
 2.53.0
 
