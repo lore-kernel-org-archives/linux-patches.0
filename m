@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056769;
-	b=D9FgDE/nJKhFL+kZ3L9eAhoVHEPyRkdmaRWbGNgcLe2PTHmIjs9VjoWzcCwwUHdzH+ra
-	 91tcuNYmwjzrwO15Q9QX2C1juXCDdJdVV2aoo2XohAWV6INvMryKIyzb/Mf3ad8cejAn1
-	 lfWZiBwKjE5FtLg7jIZ2XqbggEE7CulkJBBrWRmtC1thioOJD0brYwvVm5oO1U1t94u7+
-	 F2sxjnspnYmgvaxwYvyTv1cM8z3KJhRkvSliE0b72LwVJtBtbkkzZRAc5IKp0VjqMnRL1
-	 hlCmdYCSJ4V2oqYOAACwkSHK/6f8OP8spJ8386w1uDllzblntuX1LDH2fsLStr3yK4g==
+	t=1795056772;
+	b=eKSuxCQvHqL6yYfsxOnUKj0bAamyEO7fGcABqgBX2xXWvtiBa0TFyGOArT+RPvuBjfFq
+	 bONBywaookEHLdxBIKRYXGLZ6cvr/Sbkw/1fLq4agOTfrSihPp0vEf1Sjdo9YtBmIcikY
+	 XBWiA75NC9H4UQGvRZWqpR227XNc6oYLni/W84x8lVK0I5ewfvsJz9Ntif33BjdO7B7K2
+	 vQDPqQV8HSaBr2QqC9OMnKmFRRlo9VvaEB235RI2UdYuRhgu5f71neeTrt574h/JIspUx
+	 /8zz0fWdGffWN4zf9ENKdg+qnReJMG0Hcs4f1Udy5CnhxYm1QJ1NYHfvUNuvN1wd9bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056769;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056772;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1RSxojlqzaIT5YmmUQRDaZTKxPvG/OlOMJVXW2i3HK4=;
-	b=F4ptgBYMOvaWJZ9qxCCv3BZrA3r1nPdkRgeAoV3D0m2yvUU0hmZdN8guqgoDGugFBB2j
-	 10IT+VeeeiYoUQpEiVzTFWWjbCO/e+7x97xo4Ml9Sny82BFgaL9mM5jN3gjunVObCOubz
-	 iTH9+2ocXisau/U/GX8RqmJu9wc2+D2JI81qw/WN4Eqy02FNfXWEWWDmKAPQAcJ0L5ypz
-	 n9xwY9hJp8zxluaTFUhLhFYEe44w5C3N1MRf5mH/Vo4kxcG8fh1gTdmr9zAfKjERRzymm
-	 /o8ABg8fYGjnXA5M55ik6vp4hpizXV7amRpi1BDxMeoJ8I2yUrKZ2h1QkSipwcq3P7Q==
+	bh=GwkK/alUuiz7+LE5OSm3l79oJ/k6PM2f0o0yN9p1aCw=;
+	b=blcdLIp4GIIFKvYC82jEcQ6MYsqSUmWO4Ca9cafKySfEJulj039yzzoN+xVk7C0/3ryn
+	 XIcSYfnZM3MQKRyNhM1fJQZrmBrOMTxnoa1VozmmnwFIF055PdKYKcHChFp+MmK6uBL3a
+	 MThvemGHiCgdHW0EdqQ9Q/nuIhwwLdqy+GZ6UfTqBrY4G6BFJ8OqC8oMlK+AE9jeJ1Xea
+	 k02IhLXjWZhlDegMkWPuwAH3aQ+UeYTnevl1K117YesHJKZk+J/681BgnXNiVHf10Vy2w
+	 gNqkdNPxoIoLOy5w13AP9h0lF1j1h5185kNdXpuuYsFPBa8Dsi63gnSWenSaCbFZl8w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xNhrXteS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NlSqPpWo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452F3606A31C;
-	Thu, 19 Nov 2026 02:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089FB606A331;
+	Thu, 19 Nov 2026 02:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xNhrXteS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949191F000C4;
-	Thu, 19 Nov 2026 02:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NlSqPpWo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED921F000C4;
+	Thu, 19 Nov 2026 02:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056769;
-	bh=1RSxojlqzaIT5YmmUQRDaZTKxPvG/OlOMJVXW2i3HK4=;
+	s=korg; t=1795056771;
+	bh=GwkK/alUuiz7+LE5OSm3l79oJ/k6PM2f0o0yN9p1aCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xNhrXteSqP1qJdJdfwcn5jIlKUziIMLUI2aNLTaaU7jLhJyMTbLEiw6admvvH97Zc
-	 une66rckObWEmRQc4Dg56dQ0uJ1mqv+QA8nqXcuAEYPFBu83I+qDdYSNwHrT3d0g0U
-	 tBIELjqZcoGlQlqlVGDIrpPYfGkFrMD56fjfK950=
+	b=NlSqPpWoIdo7VK41tLnwqibIOaBee3k/lkD9vrD0JxriMI1lMW4W1/Tpty4XiuixW
+	 JCtOP3jLv4UY9v8yitSzJ+CS15T9uU6baFpA5pABmx1XdZKdmlCvcVXhSGHhGNbfoF
+	 gn9pNmEtkxJPpu5BBj+J6MqJDUB2GGZgs6n48viw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Henry Hu <huhai@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2106/2214] regulator: irq_helper: Provide helper for trivial IRQ notifications
-Date: Wed, 18 Nov 2026 16:03:02 +0100
-Message-ID: <20261118150134.884507290@linuxfoundation.org>
+Subject: [PATCH 5.15 2080/2214] ksmbd: fix invalid Next offset in interface info replies
+Date: Wed, 18 Nov 2026 16:02:36 +0100
+Message-ID: <20261118150133.855954160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,94 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+From: Henry Hu <huhai@kylinos.cn>
 
-[ Upstream commit a764ff77d697a4a13e69b3379cc613f7409c6b9a ]
+[ Upstream commit 2c50a4a5e75db55880eca43c035649cb51fcb52a ]
 
-Provide a generic map_event helper for regulators which have a notification
-IRQ with single, well defined purpose. Eg, IRQ always indicates exactly one
-event for exactly one regulator device. For such IRQs the mapping is
-trivial.
+fsctl_query_iface_info_ioctl() assigns nii_rsp to the next output
+slot before checking whether the interface has an in_device or
+inet6_dev. If either lookup returns NULL, the loop continues without
+advancing nbytes, leaving nii_rsp pointing at an uncommitted slot. If
+no later entry is committed, clearing nii_rsp->Next updates that slot
+instead of the last returned entry, leaving the latter with a nonzero
+Next offset.
 
-Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Link: https://lore.kernel.org/r/603b7ed1938013a00371c1e7ccc63dfb16982b87.1637736436.git.matti.vaittinen@fi.rohmeurope.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 8a6d73e316f9 ("regulator: irq: freeze deferred hardware access during suspend")
+Fix this by using nbytes to locate the last committed entry and clear
+its Next field, but only when the response contains at least one entry.
+
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260910090818.24479-1-15815827059%40163.com
+Signed-off-by: Henry Hu <huhai@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/irq_helpers.c  | 41 +++++++++++++++++++++++++++++++-
- include/linux/regulator/driver.h |  2 ++
- 2 files changed, 42 insertions(+), 1 deletion(-)
+ fs/ksmbd/smb2pdu.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/irq_helpers.c b/drivers/regulator/irq_helpers.c
-index a44a0b30a6516..5ab1a0befe12f 100644
---- a/drivers/regulator/irq_helpers.c
-+++ b/drivers/regulator/irq_helpers.c
-@@ -320,7 +320,9 @@ static void init_rdev_errors(struct regulator_irq *h)
-  *			IRQF_ONESHOT when requesting the (threaded) irq.
-  * @common_errs:	Errors which can be flagged by this IRQ for all rdevs.
-  *			When IRQ is re-enabled these errors will be cleared
-- *			from all associated regulators
-+ *			from all associated regulators. Use this instead of the
-+ *			per_rdev_errs if you use
-+ *			regulator_irq_map_event_simple() for event mapping.
-  * @per_rdev_errs:	Optional error flag array describing errors specific
-  *			for only some of the regulators. These errors will be
-  *			or'ed with common errors. If this is given the array
-@@ -398,3 +400,40 @@ void regulator_irq_helper_cancel(void **handle)
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index 7e08e71af80e4..a3b4b09d22814 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -7647,9 +7647,15 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
  	}
- }
- EXPORT_SYMBOL_GPL(regulator_irq_helper_cancel);
-+
-+/**
-+ * regulator_irq_map_event_simple - regulator IRQ notification for trivial IRQs
-+ *
-+ * @irq:	Number of IRQ that occurred
-+ * @rid:	Information about the event IRQ indicates
-+ * @dev_mask:	mask indicating the regulator originating the IRQ
-+ *
-+ * Regulators whose IRQ has single, well defined purpose (always indicate
-+ * exactly one event, and are relevant to exactly one regulator device) can
-+ * use this function as their map_event callbac for their regulator IRQ
-+ * notification helperk. Exactly one rdev and exactly one error (in
-+ * "common_errs"-field) can be given at IRQ helper registration for
-+ * regulator_irq_map_event_simple() to be viable.
-+ */
-+int regulator_irq_map_event_simple(int irq, struct regulator_irq_data *rid,
-+			    unsigned long *dev_mask)
-+{
-+	int err = rid->states[0].possible_errs;
-+
-+	*dev_mask = 1;
-+	/*
-+	 * This helper should only be used in a situation where the IRQ
-+	 * can indicate only one type of problem for one specific rdev.
-+	 * Something fishy is going on if we are having multiple rdevs or ERROR
-+	 * flags here.
-+	 */
-+	if (WARN_ON(rid->num_states != 1 || hweight32(err) != 1))
-+		return 0;
-+
-+	rid->states[0].errors = err;
-+	rid->states[0].notifs = regulator_err2notif(err);
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(regulator_irq_map_event_simple);
-+
-diff --git a/include/linux/regulator/driver.h b/include/linux/regulator/driver.h
-index 6324677ca8abf..a98d6389effaa 100644
---- a/include/linux/regulator/driver.h
-+++ b/include/linux/regulator/driver.h
-@@ -699,6 +699,8 @@ void *regulator_irq_helper(struct device *dev,
- 			   int irq_flags, int common_errs, int *per_rdev_errs,
- 			   struct regulator_dev **rdev, int rdev_amount);
- void regulator_irq_helper_cancel(void **handle);
-+int regulator_irq_map_event_simple(int irq, struct regulator_irq_data *rid,
-+				   unsigned long *dev_mask);
+ 	rtnl_unlock();
  
- void *rdev_get_drvdata(struct regulator_dev *rdev);
- struct device *rdev_get_dev(struct regulator_dev *rdev);
+-	/* zero if this is last one */
+-	if (nii_rsp)
++	/*
++	 * nii_rsp may point to an entry not included in nbytes if the IPv4
++	 * or IPv6 device lookup failed. Clear Next in the last returned entry.
++	 */
++	if (nbytes > 0) {
++		nii_rsp = (struct network_interface_info_ioctl_rsp *)
++			  &rsp->Buffer[nbytes - sizeof(*nii_rsp)];
+ 		nii_rsp->Next = 0;
++	}
+ 
+ 	rsp->PersistentFileId = SMB2_NO_FID;
+ 	rsp->VolatileFileId = SMB2_NO_FID;
 -- 
 2.53.0
 
