@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016192;
-	b=vY/cZX54WtXvCA/ihZOkLFfkGtprmf8P6TAhwby78J4++et0T63KazQNMekr0it9XNDq
-	 DVJfijj9Kfckxh1nKu1D3t4LKdKpJeyXeTbvqr1yZlrg7xE8D8BEf+0JidKlAm/V606vI
-	 DbcxJbTLfLZ5V61OZ6AWHAWQUtAAzrXquqXtu0ATxskk4Y4vPhBFwbKSnWAfcdPDrlM0o
-	 4cHqol0/f6r1U73HRNTzp8jpOz6ayOSAqJA9IPkhzwsnKoaEuHU9KUVOQTOMVrEu6iIUn
-	 mkLfI7LslQ2jkK1A3E3ncrWrtAemfq9Wj6hMM4yt6ZSouXrEHhdfxVbmF3yCgKIqgug==
+	t=1795016195;
+	b=Cnv+yCGxa7vM2I8yx04Yt1rU+J8Wk1lLXd+fKgH4gNt2ljMmjvJPZai48MpIhPmadXP7
+	 WOqV1A+QdAXBAboW5iLip6+mhAc2wx0w9MDTrEfvsephwy0yLj0H0yLfnP2W13VQD5yme
+	 3xBx9winz4ammDy/Br5fxnaiDDEfBGdQpBr7d3rPTpRk9O5FzYKvoCvEq1pVOVvEXTozQ
+	 x7bzVKbiK+Qs/O6ASlXdXJClQLzL8LF3JToQYmEZA+bySfu+tjud3jsaDXKyaE8mkH+ux
+	 KTMjCWRg40TG8oR505dsMQKXI1tavP5KQ2N6zeD/ONHn9c/HvhVYDFVei6I0fVBcWcw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=JAmmieT/S/3+pk3twH9szGKRuqTokVXZ1eFo84Gh5SU=;
-	b=syxDpbvEH5+YQKEMY2u5WEA92qy8vKi9UGnLzNjMUEA/Myre8Rc8GV98dfB554tPjZ5f
-	 9jtoAq0BwriZxygrf1z5ieVX0yltDspWIAumC1SJ5xWQHlvnEp4z31owJngZaFnb27Pp6
-	 henhU9hh/zzI31o51voiq9KFVwlwuCHE9jGoqujoA09nSB/WntlQQVjBzOufLA9F192ZY
-	 RgBtqVufYr7ZaIYLmn26Ox8/zyDlYB2/wJjvs1ZODYuwpMpGMylBC00P86aee9sFFKLkc
-	 ++tOqnz25Pym+DJwNYfyqqLSaZsD9T2NbNG8pWhKcv8SnInMrhDrz95OYnR0xSCM7iA==
+	bh=7V1Xt1988ty1h3jrCDrziylSVuEW0OAcYkAjqpod+FE=;
+	b=yq53trKxdCslN9VR3aU9/BWWgI1iyqBmKzqKoVQ2zDpkgAdeOUNobiLVODYiakjFQeNN
+	 xN+liZOlM1KNZsqzIb0u6/AlbTCimbQxLHEbHtilamaYErK0r8xLIlmtcSxP2Yu+qFIdu
+	 DxrEpisHjTktlb6OT02LbKlNatqvppx2s9X7Hh//rnaUl7rR/BY17JawJUxEzCp7S3bgP
+	 STezHsYIDjQNIA0rt5QmzWZF0RqLCt/OkIj/mQ1n2zwH8vZtdteO8QEsUi8KolFFYGcBH
+	 dYXUZ3Yz+1QzO+yF8slL7OraznDflNBgN4yEkrgl/O+l+0r4mlgYc/KvNLRaMF0n//g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ydXbEu+W;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sm+MaQrD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890F1606A325;
-	Wed, 18 Nov 2026 15:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491A9606A320;
+	Wed, 18 Nov 2026 15:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ydXbEu+W
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF3D91F000C4;
-	Wed, 18 Nov 2026 15:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sm+MaQrD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E25D1F000C4;
+	Wed, 18 Nov 2026 15:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016192;
-	bh=JAmmieT/S/3+pk3twH9szGKRuqTokVXZ1eFo84Gh5SU=;
+	s=korg; t=1795016195;
+	bh=7V1Xt1988ty1h3jrCDrziylSVuEW0OAcYkAjqpod+FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ydXbEu+WKA6grYREeX79ann+3TpvoxqkTKxmahyQ7sYAGlYX6YzHZ4LGOYN8hG4Vf
-	 hEq8FQweu8OOaj8Uj1BetqnMnPqkcWBMFhSnrlyAqkm1WX4T5KWnCWw1rIPt5skE6J
-	 eOohU0ZS+xyeyn0x43KJk5bjqvB3RLg+GFTD57BQ=
+	b=sm+MaQrDdp0hSPpPu3kOCb79ghkD/BRZDIq3JOcESZLf0N//2rYOqKmf+daPp+ssf
+	 MAW8T/i5KYZYJVByufg/dvw3QBM4QidHGFEQ2P4iBXZ+lPVPm0b8o77eOEDlcKhyD4
+	 XT3fzDstWdfxpAImNbdpHOdA07WWZvVM/BVYAlM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Junhui Liu <junhui.liu@pigmoral.tech>,
 	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0443/2651] clk: sunxi-ng: div: Add feature support to M clock macro
-Date: Wed, 18 Nov 2026 15:28:03 +0100
-Message-ID: <20261118150303.766475797@linuxfoundation.org>
+Subject: [PATCH 7.3 0444/2651] clk: sunxi-ng: sun55i-a523-ccu: Use M-only clocks for MBUS, IOMMU and DRAM
+Date: Wed, 18 Nov 2026 15:28:04 +0100
+Message-ID: <20261118150303.798311588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,62 +70,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Junhui Liu <junhui.liu@pigmoral.tech>
 
-[ Upstream commit f43bed1fb1ddf7b350ceb7c371c624795a7820e8 ]
+[ Upstream commit 59dced16a82d1ec685b88365c64dde27a0a0b46a ]
 
-Add a variant of SUNXI_CCU_M_DATA_WITH_MUX_GATE() that accepts CCU
-feature flags, such as CCU_FEATURE_UPDATE_BIT.
+The MBUS, IOMMU, and DRAM clocks only have an M divider, but are
+currently modeled as MP clocks with a zero-width P divider.
 
+ccu_mp_set_rate() generates an invalid mask for the zero-width P
+divider, clearing unrelated register fields. It also ignores
+CCU_FEATURE_UPDATE_BIT, so the new divider value does not take effect.
+
+Model these clocks as M-only clocks instead. This avoids accessing a
+nonexistent P divider and uses ccu_div_set_rate(), which handles the
+update bit.
+
+Fixes: 74b0443a0d0a ("clk: sunxi-ng: a523: add system mod clocks")
 Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-1-cbde21c9fe69@pigmoral.tech
+Link: https://patch.msgid.link/20260906-sunxi-clk-no-p-v1-2-cbde21c9fe69@pigmoral.tech
 Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
-Stable-dep-of: 59dced16a82d ("clk: sunxi-ng: sun55i-a523-ccu: Use M-only clocks for MBUS, IOMMU and DRAM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu_div.h | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ drivers/clk/sunxi-ng/ccu-sun55i-a523.c | 45 ++++++++++++--------------
+ 1 file changed, 21 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu_div.h b/drivers/clk/sunxi-ng/ccu_div.h
-index a30a92780a051..6d3541a3b5191 100644
---- a/drivers/clk/sunxi-ng/ccu_div.h
-+++ b/drivers/clk/sunxi-ng/ccu_div.h
-@@ -212,16 +212,17 @@ struct ccu_div {
- 	SUNXI_CCU_M_WITH_GATE(_struct, _name, _parent, _reg,		\
- 			      _mshift, _mwidth, 0, _flags)
+diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+index 20dad06b37ca3..9bc3ff0ab12d7 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
++++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523.c
+@@ -380,14 +380,13 @@ static const struct clk_parent_data mbus_parents[] = {
+ 	{ .hw = &pll_periph1_150M_clk.hw },
+ 	{ .fw_name = "hosc" },
+ };
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(mbus_clk, "mbus", mbus_parents,
+-					    0x540,
+-					    0, 5,		/* M */
+-					    0, 0,		/* no P */
+-					    24, 3,	/* mux */
+-					    BIT(31),	/* gate */
+-					    CLK_IS_CRITICAL,
+-					    CCU_FEATURE_UPDATE_BIT);
++static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(mbus_clk, "mbus", mbus_parents,
++					   0x540,
++					   0, 5,	/* M */
++					   24, 3,	/* mux */
++					   BIT(31),	/* gate */
++					   CLK_IS_CRITICAL,
++					   CCU_FEATURE_UPDATE_BIT);
  
--#define SUNXI_CCU_M_DATA_WITH_MUX_GATE(_struct, _name, _parents, _reg,	\
--				       _mshift, _mwidth,		\
--				       _muxshift, _muxwidth,		\
--				       _gate, _flags)			\
-+#define SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(_struct, _name, _parents, _reg, \
-+					    _mshift, _mwidth,		\
-+					    _muxshift, _muxwidth,	\
-+					    _gate, _flags, _features)	\
- 	struct ccu_div _struct = {					\
- 		.enable	= _gate,					\
- 		.div	= _SUNXI_CCU_DIV(_mshift, _mwidth),		\
- 		.mux	= _SUNXI_CCU_MUX(_muxshift, _muxwidth),		\
- 		.common	= {						\
- 			.reg		= _reg,				\
-+			.features	= _features,			\
- 			.hw.init	= CLK_HW_INIT_PARENTS_DATA(_name, \
- 								   _parents, \
- 								   &ccu_div_ops, \
-@@ -229,6 +230,15 @@ struct ccu_div {
- 		},							\
- 	}
+ static const struct clk_hw *mbus_hws[] = { &mbus_clk.common.hw };
  
-+#define SUNXI_CCU_M_DATA_WITH_MUX_GATE(_struct, _name, _parents, _reg,	\
-+				       _mshift, _mwidth,		\
-+				       _muxshift, _muxwidth,		\
-+				       _gate, _flags)			\
-+	SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(_struct, _name, _parents, _reg, \
-+					    _mshift, _mwidth,		\
-+					    _muxshift, _muxwidth,	\
-+					    _gate, _flags, 0)
-+
- #define SUNXI_CCU_M_DATA_WITH_MUX(_struct, _name, _parents, _reg,	\
- 				  _mshift, _mwidth,			\
- 				  _muxshift, _muxwidth,			\
+@@ -584,14 +583,13 @@ static const struct clk_parent_data iommu_parents[] = {
+ 	{ .fw_name = "hosc" },
+ };
+ 
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(iommu_clk, "iommu", iommu_parents,
+-					    0x7b0,
+-					    0, 5,	/* M */
+-					    0, 0,	/* no P */
+-					    24, 3,	/* mux */
+-					    BIT(31),	/* gate */
+-					    CLK_SET_RATE_PARENT,
+-					    CCU_FEATURE_UPDATE_BIT);
++static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(iommu_clk, "iommu", iommu_parents,
++					   0x7b0,
++					   0, 5,	/* M */
++					   24, 3,	/* mux */
++					   BIT(31),	/* gate */
++					   CLK_SET_RATE_PARENT,
++					   CCU_FEATURE_UPDATE_BIT);
+ 
+ static SUNXI_CCU_GATE_HWS(bus_iommu_clk, "bus-iommu", apb0_hws, 0x7bc,
+ 			  BIT(0), 0);
+@@ -603,14 +601,13 @@ static const struct clk_parent_data dram_parents[] = {
+ 	{ .hw = &pll_periph0_400M_clk.hw },
+ 	{ .hw = &pll_periph0_150M_clk.hw },
+ };
+-static SUNXI_CCU_MP_DATA_WITH_MUX_GATE_FEAT(dram_clk, "dram", dram_parents,
+-					    0x800,
+-					    0, 5,	/* M */
+-					    0, 0,	/* no P */
+-					    24, 3,	/* mux */
+-					    BIT(31),	/* gate */
+-					    CLK_IS_CRITICAL,
+-					    CCU_FEATURE_UPDATE_BIT);
++static SUNXI_CCU_M_DATA_WITH_MUX_GATE_FEAT(dram_clk, "dram", dram_parents,
++					   0x800,
++					   0, 5,	/* M */
++					   24, 3,	/* mux */
++					   BIT(31),	/* gate */
++					   CLK_IS_CRITICAL,
++					   CCU_FEATURE_UPDATE_BIT);
+ 
+ static SUNXI_CCU_GATE_HWS(mbus_dma_clk, "mbus-dma", mbus_hws,
+ 			  0x804, BIT(0), 0);
 -- 
 2.53.0
 
