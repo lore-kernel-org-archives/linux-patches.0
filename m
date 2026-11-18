@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039871;
-	b=CEBgluBBuNX663wsQPWqGvG7gZpDPsYJ/jE1Ut72+7N3vLnX5n4oC1sY23juLpOb8hy4
-	 LwvDrVuDsDMdjNtJuEiPwYhHOXxoqrhIi3Fbt7U44AteZ/kHxA/86HchFvxmzwLIXM0RC
-	 t7AKYbRFd49s0nCjLtscSmURyFe+0ywpc4+wu8AjSYAh0YoPd181Nq1JAeLCt12IdlcwS
-	 bpxJhsgSrllKGvOFkndjRmCm/JyDlgwb13LgrRQUIN80qrLz1yj+tkOnMGOvCs7/SLe+G
-	 8kWzirWhpdmAUG0Xc1aFFjDINxYvzek4w6Tz+AqVGNbRdDZQf3ejSHhuFx/tU7e3hqA==
+	t=1795039873;
+	b=a+XXrFd3O2ENHvbGrvCO+Qhh2Ka+Jm4tAHFUrzktvI6AucS9Wzm91vjrjTJTtqcnl/2Q
+	 0Z9Risa21e8IJWVZpuFS8KVqTQygMz1/UFNeLxPmEVy55JJ8MJCt7p+M0cYCD0LxYZD8b
+	 QVgDvA/3MqMDYEaOXz83TgXN2aRF4JXL+XahrrqZcbo3dgi1UCnNWhTItb5IvQlZLt8I3
+	 /NTgY8Bslri/6OGRnbhJ75IzwLGPBxplcklZLxNZyhORQJCu08j26H6k8/7LTz5FrwrEd
+	 9SGfrfsqF/aBhOcjvyyEdmO0vUYtGBdKH93MTGPcJuFz5vIDLkQkznI3OtxQP42e3nQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039871;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039873;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HDyRjg/uWTn2X4FB6Nh155+qplbtLVk51htgrkEa+KI=;
-	b=e1WfpisIOqdi5QGCrfan4OmckfxAOj7t0SeBPOAglIUas+PeGHlfFNNH5QmbM6KItrWq
-	 JKJcEmF1+xCViOyoQ0HfPVcPIM5gJYRebY54326KpK6FmF5L6S84gK6uEsLhsQcmPyzL7
-	 ws2hMUCvttDCHJInoz9I019z+SbB8ye1gXY4lTsg1Ba9fg3m8vzoP895DIEal64tSY9o5
-	 i+qZEat/MFPZelpwc73zJw0HEpsZZR1t3nl6g9lf80I/7g9XQwrkqloc9wou7x4uxeWCb
-	 lQ3G/Nccfz3u54+x8w+Js6JTSerdz3j111FhcmbS8F/Ii7TrefiXLvtrG4j512nkq5A==
+	bh=uydeEVRb3TOUJPAJa2OaGvY0OPl+ibWRvSotakGlq4A=;
+	b=Qm+FIKzXLl/Ra5RBFPtXDaegPUU2I8GP4u6OGIDvHg61Fl8IOLYLwFarcl9ItVxe/5i5
+	 9pLzj7pid/rBRO1DibuhkprZ4dTTY1usyyAGtbCmJs156nAt+eSfZ4HJFqtrOmk0/L79k
+	 vFbIkg1ACnjcn5MvhyLm6nIUdJ7IgGsGtTrPBsSd1J7Q7nlDBwkEEO0+n7FRe2LmZimdQ
+	 JwfDOXWWK934n1Wyc3IDMzgDyOQqCvuR+eYNBHM9d2sw7cNARFUBwWCotLh3uwH+7fyoa
+	 SuvO+oNHTQ8UhomA2GXC1APW4AjvbfbQSF2SDxQDfLf2PqBoodRRgj85Hmi6zA/uK4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECgUXLHI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zz7NXF/Z";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08281606A31C;
-	Wed, 18 Nov 2026 22:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDC9606A334;
+	Wed, 18 Nov 2026 22:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECgUXLHI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F811F000C4;
-	Wed, 18 Nov 2026 22:11:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zz7NXF/Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5DE1F000C4;
+	Wed, 18 Nov 2026 22:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039870;
-	bh=HDyRjg/uWTn2X4FB6Nh155+qplbtLVk51htgrkEa+KI=;
+	s=korg; t=1795039873;
+	bh=uydeEVRb3TOUJPAJa2OaGvY0OPl+ibWRvSotakGlq4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ECgUXLHIYSo7yWjxLpvKVk1FIwyh1B2pcblNXG27+1AkpH0q/ZQB0IV49cvqdwMI3
-	 FRFJRvQ/VM0ibato9kgH6Q04J8Oliw9WR+MGztXKk1g4/l75UNFU1xlUsNAbGxpXjk
-	 imQPrJ0mUNzmC9Dq1hw5Ecf99z+I+uJL75uEmlqU=
+	b=zz7NXF/ZKt36x3uHNQfye+CiCzc2oe/zPHGGwSPfoQLg2hcJUmMrKVwr3p2ifyx4G
+	 MuONEpA3cImucxvCo5j7DW2WLXIkg16yevFf37808uA063vXeYxoGMVQ8nHVJ44fm9
+	 ltqmE/eys+VJX6okx6DAs26GOSyN0t6I5reBrlmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2255/3318] kconfig: remove unneeded symbol_empty variable
-Date: Wed, 18 Nov 2026 15:47:57 +0100
-Message-ID: <20261118150429.476892933@linuxfoundation.org>
+Subject: [PATCH 6.6 2229/3318] ntfs3: fix out-of-bounds read in ntfs_read_mft()
+Date: Wed, 18 Nov 2026 15:47:31 +0100
+Message-ID: <20261118150428.747968461@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,64 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 4e244c10eab345a735c5052688e4a55bddce5bf7 ]
+[ Upstream commit 7a374d9be8267834dc534e55f01e5e01765cab4c ]
 
-This is used only for initializing other variables.
+ntfs_read_mft() walks the attributes of an MFT record and, for each
+FILE_NAME attribute, compares the resident on-disk name with the name
+being looked up.  The only size check before the compare is
+rsize >= SIZEOF_ATTRIBUTE_FILENAME, which covers the fixed header up to
+and including name_len, but not the variable-length name that follows it.
 
-Use the empty string "" directly.
+name_len comes straight from disk and is not validated against the
+resident data_size.  A crafted image can set name_len large while keeping
+data_size at the header size, so ntfs_cmp_names_cpu() reads name_len
+le16 characters past the end of the MFT record buffer:
 
-Please note newval.tri is unused for S_INT/HEX/STRING.
+  BUG: KASAN: slab-out-of-bounds in ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
+  Read of size 2 at addr ffff888031879c00 by task a.out
+   ntfs_cmp_names_cpu (fs/ntfs3/upcase.c:84)
+   ntfs_iget5 (fs/ntfs3/inode.c:209)
+   dir_search_u (fs/ntfs3/dir.c:265)
+   ntfs_lookup (fs/ntfs3/namei.c:85)
+   __lookup_slow (fs/namei.c:1915)
+   lookup_slow (fs/namei.c:1932)
+   path_lookupat (fs/namei.c:2278)
+   vfs_statx (fs/stat.c)
+   vfs_fstatat (fs/stat.c)
+   __do_sys_newfstatat (fs/stat.c)
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Stable-dep-of: dbe1ae2304a3 ("kconfig: fix extra output from savedefconfig on out-of-range defaults")
+  Allocated by task:
+   mi_init (fs/ntfs3/record.c)
+   ntfs_iget5 (fs/ntfs3/inode.c)
+   dir_search_u (fs/ntfs3/dir.c)
+   ntfs_lookup (fs/ntfs3/namei.c)
+
+Check that the name fits in the resident data before using it.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Assisted-by: Claude:claude-opus-4-8
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/symbol.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ fs/ntfs3/inode.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
-index 1c0306c9d74e2..dc8edb0ac5236 100644
---- a/scripts/kconfig/symbol.c
-+++ b/scripts/kconfig/symbol.c
-@@ -32,12 +32,6 @@ struct symbol symbol_no = {
- 	.flags = SYMBOL_CONST|SYMBOL_VALID,
- };
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 2deb98b484660..dedc5937cd86a 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -206,6 +206,11 @@ static struct inode *ntfs_read_mft(struct inode *inode,
  
--static struct symbol symbol_empty = {
--	.name = "",
--	.curr = { "", no },
--	.flags = SYMBOL_VALID,
--};
--
- struct symbol *modules_sym;
- static tristate modules_val;
- static int sym_warnings;
-@@ -359,7 +353,7 @@ void sym_calc_value(struct symbol *sym)
- 	case S_INT:
- 	case S_HEX:
- 	case S_STRING:
--		newval = symbol_empty.curr;
-+		newval.val = "";
- 		break;
- 	case S_BOOLEAN:
- 	case S_TRISTATE:
-@@ -710,13 +704,12 @@ const char *sym_get_string_default(struct symbol *sym)
- {
- 	struct property *prop;
- 	struct symbol *ds;
--	const char *str;
-+	const char *str = "";
- 	tristate val;
+ 		names += 1;
+ 		fname = Add2Ptr(attr, roff);
++
++		/* Make sure the full name fits in the resident data. */
++		if (rsize < fname_full_size(fname))
++			goto out;
++
+ 		if (fname->type == FILE_NAME_DOS)
+ 			goto next_attr;
  
- 	sym_calc_visibility(sym);
- 	sym_calc_value(modules_sym);
- 	val = symbol_no.curr.tri;
--	str = symbol_empty.curr.val;
- 
- 	/* If symbol has a default value look it up */
- 	prop = sym_get_default_prop(sym);
 -- 
 2.53.0
 
