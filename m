@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022107;
-	b=cUMC0+s1TGk/zy1/o3vXZ2wjA0YoGMdixmJtZBYoHFXHHlDUz1t98uubcuDqYCmdwz4l
-	 hPsvmbRDVxXdKRTNQdgIvbyVO0vCCYQtvGpqHj7WtwQiw7Ytcx+ute4SNTNHxk8o/Befd
-	 GNb358ozRqbaUgIPCzO6nuMfxmAnk9PFkPnkTuApGo6BVrWvhoaEacbsvd3a1g8kgM+21
-	 6HtCt+EaIsUdWfd8rAvfCJg6HFbPmKFyUv49oJtQ1rF8Wmwk1LVsAqy78h93jj+k9sXsS
-	 kHcCUANUYOm8KaSfwpDUAgDaPdBSBED2iEjv1I+XTJtdxXf2DU6hY6u45NcBJuyGb3A==
+	t=1795022109;
+	b=YIvlEzKOK+s9odLSDZSQU2Of7HNeLzVorJqceEQJjSRvU/V1z4h8SbVL9rEmmq0KjIse
+	 WGcYq6JavrA+8flfNBOBSrx138ydDzS6pbn/1B4T+AmKrRJDIQ6naZpBOM+KZJBVU4r0L
+	 hSENBr00pxJmHqEMxAfKpGVv9f8XBB9GGaf+19i8DKMAKn7FY/c+BhcuaJeyRyZStWuS5
+	 ++sYLOJ6cSE+lZFsUiDtfuFVMiHpstHNlZlZuxkoOyy/mlFRO11593cUwr4TvERAhbKPl
+	 JNcFptF1CXIlny2hflMXSqnUOkvSCTYX/CW6J0I7QhWlYiWpFMUZdO1PvgMhRCbV5Tw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022107;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022109;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ope5CiyhPhTS7f2oZ5cM6oa59VdzMoLmbiZxrMXOzzU=;
-	b=pYFQcBPPLZkTEV9qeB2RrHnkI65MLRV+/D87FAyVsly9yhLoEw6vfA21cnUA9pf8x1zH
-	 ShQQsjJ4e6r4jXt0pntxe2Ybt6U1AoxA5Su/AaqTCw/OOvjp9V98Hpzkg7kv7i8ni8I/p
-	 ppShAGrE1oVthFnv1cLqcyguKhf2g0rhnGN4of0+zim3xzhw1RjJviY/sHc2DLzd9Ioua
-	 jnBO3lo8Xy3vKFzt8s+oRQMzQRjZh22JnHUXMzuVwiAhMFCWpJNmmP7tjjWIXvNgUy/EW
-	 DpG1rNd6cflI8v74trwTd+PywL2gR7aY3pldOR+BFRwfphTWxaoVJkK681o0NFn7ZOg==
+	bh=vZq4RxU0WT3LvTMfmHqkXfV+HiE/H51A6siT/w9te0g=;
+	b=pWDDOq+Frr4aSTub27AH9CYKl3wnQn3FrWAdWKvTU4DLx2cBgrotvEeoyBx0P9WYU3rN
+	 mnD+R+kZtW2B3Q/g3FUw8oWMJFhR6z9NE8BVKaD8mTqHVkt2pjfEjFErajO/kYLzHr6KH
+	 1TJBrMyYD9kXbcEiPgGc/dHx127G4GYRpGRgCqBgS0aO9ymBgcMeyjeQcExgDBz2Q/gKI
+	 QaQYekGag3CtcxiCDWUctpsQWjPzXZYx93lXn//ZMBCzdRfkTONTHVmslu6DcV9gV81Nj
+	 OipfprKipHAF1TBsYf8BRKyZYzCFglj9ErAZ9aVz6F50m4KvKPSAdiw8lw4UJRE6uRA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ftWbXN03;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNTN0Q53;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F3260A2601;
-	Wed, 18 Nov 2026 17:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70A5606A32A;
+	Wed, 18 Nov 2026 17:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ftWbXN03
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E1C1F000C7;
-	Wed, 18 Nov 2026 17:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wNTN0Q53
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F2861F000C4;
+	Wed, 18 Nov 2026 17:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022106;
-	bh=Ope5CiyhPhTS7f2oZ5cM6oa59VdzMoLmbiZxrMXOzzU=;
+	s=korg; t=1795022109;
+	bh=vZq4RxU0WT3LvTMfmHqkXfV+HiE/H51A6siT/w9te0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ftWbXN03aqmUchnjYFlA39OUg/0zg0zrWOH82GAiOjAubhByhM0g6VeQVwVUDvrRv
-	 4BKepX60Q0msVNtD++vdOoEiRPVLJGodwWIl82mYjO1l55tYg06pmrkgNyYZmQbNrf
-	 5xuu4o71KpxFq5XMIBJ7gozfnz6+dSwY1E+kgnso=
+	b=wNTN0Q53IxzPzzRGMWUSDnGnfJgUufKTOqYLaaCxRXEBqY/RyvLV4yJ/x9og6Pvqa
+	 aV4LZL0UFvcjE5q2pZORXZv7GAs71wxUidJG27WTQuIxn4BaVDT1FeCuT2hiGb+/iV
+	 LbhKxpu1lf8iUiOh2DdK6Hju/r9G8HWFH9BrIAcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2545/2651] blk-cgroup: keep the old blkg while reassociating a bio
-Date: Wed, 18 Nov 2026 16:03:05 +0100
-Message-ID: <20261118150416.152746684@linuxfoundation.org>
+Subject: [PATCH 7.3 2546/2651] blk-iocost: free struct ioc after a grace period
+Date: Wed, 18 Nov 2026 16:03:06 +0100
+Message-ID: <20261118150416.183987856@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,53 +71,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 0e1daaf9b20df2125452846f768a68d8ea280adf ]
+[ Upstream commit 05ce1df3756773862c056ca8698f8ec4cdd7fe98 ]
 
-bio_associate_blkg_from_css() drops the bio's old blkg before it looks up
-the new one through the css. The css is pinned by the blkg, not by the
-bio, so if the cgroup is gone the bio may hold the last reference and the
-blkcg can be freed under blkg_tryget_closest(). The rcu_read_lock()
-around the whole thing used to cover that, until commit 457d3c4f0fdd
-dropped it.
+ioc_qos_prfill() and ioc_cost_model_prfill() take ioc->lock from
+blkcg_print_blkgs(), which since commit 56cc24f59c14 runs under RCU only.
+That covers the policy data, which is freed after a grace period, but
+not the ioc it points to: ioc_rqos_exit() frees that right away, and a
+concurrent read of io.cost.qos locks freed memory.
 
-Put the old blkg after the new one has been looked up.
+Free the ioc with kfree_rcu_mightsleep().
 
-Fixes: 457d3c4f0fdd ("blk-cgroup: don't nest queue_lock under rcu in bio_associate_blkg()")
+Fixes: 56cc24f59c14 ("blk-cgroup: don't nest queue_lock under rcu in blkcg_print_blkgs()")
 Cc: Tejun Heo <tj@kernel.org>
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://patch.msgid.link/20261028164415.1262013-2-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-3-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ block/blk-iocost.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index b56db1cc6778f..a39167228501d 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -2132,8 +2132,7 @@ static inline struct blkcg_gq *blkg_tryget_closest(struct bio *bio,
- void bio_associate_blkg_from_css(struct bio *bio,
- 				 struct cgroup_subsys_state *css)
- {
--	if (bio->bi_blkg)
--		blkg_put(bio->bi_blkg);
-+	struct blkcg_gq *old_blkg = bio->bi_blkg;
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index d6fe74adf62f7..98d960b15a075 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -2908,7 +2908,8 @@ static void ioc_rqos_exit(struct rq_qos *rqos)
  
- 	if (css && css->parent) {
- 		bio->bi_blkg = blkg_tryget_closest(bio, css);
-@@ -2141,6 +2140,10 @@ void bio_associate_blkg_from_css(struct bio *bio,
- 		blkg_get(bdev_get_queue(bio->bi_bdev)->root_blkg);
- 		bio->bi_blkg = bdev_get_queue(bio->bi_bdev)->root_blkg;
- 	}
-+
-+	/* @old_blkg may be the only thing which pins @css */
-+	if (old_blkg)
-+		blkg_put(old_blkg);
+ 	timer_shutdown_sync(&ioc->timer);
+ 	free_percpu(ioc->pcpu_stat);
+-	kfree(ioc);
++	/* blkcg_print_blkgs() gets here from a pd with only RCU held */
++	kfree_rcu_mightsleep(ioc);
  }
- EXPORT_SYMBOL_GPL(bio_associate_blkg_from_css);
  
+ static const struct rq_qos_ops ioc_rqos_ops = {
 -- 
 2.53.0
 
