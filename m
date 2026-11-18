@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017650;
-	b=QvZ+rMQ1xI6QahM4yu65uD620otpHNysNCAESn8A6i4LgC68l4oJP19AYcR1s5qh+hNy
-	 yti9Mm+zIyKeABxOwUnBWX6ZbelAm6P5oZ0u1ngkQIl8TWq7KQXYBLMfJzBUYTEoadqXQ
-	 HtDlRG2jC17ePknhEtMKkkjTq1e7lABlpqmDiDnPcFASakQ6N9tD28+kWJj5rhXNhGP4o
-	 iDhCeZh0ZQBX+BPVOWzpV5U8XCJnIjqjiUh2IhaYThMKw9aVq9BXVLosvnwH3FmPeN2gM
-	 HYI7jTIV4iSqve4UL3yp1BNk43rsUwIY/grr0j1E/Ay8FgJvrG/sVb6fWmZgxYCTo1A==
+	t=1795017653;
+	b=VvlZ1+P+vxLpGnhOGwBMn7jyq0HxuMNCNAU99nsH6UthNjdG+vdxTGKpMES2S6yabva4
+	 9GluvdjnWhaKzO3W9AGMqgbB9MmHcKYK81PNpZ1JJZJSffI8xaAmC63sXA7Y6GjEVmXQq
+	 WpbsN2LjR9SncUDgFy3hJ1eVOhu+EJnrDDcprC5E7uNjZwxEMCUzqMkmGjlqg/VZs4XUW
+	 YxLqK8ZyvI0rNioUf8uezPqN0IN/odgqlvOBQmq8IN0K0Xi/d1kdjgN5wWO6+vCkW/aA7
+	 fKsYo+9uVJPaazVA3KBxXVyTf5nO7qNk5XY87wWpeq+hvXscxOpZMCT8C1DIGWRXPMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017650;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017653;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pmrw+n4oc0ORVUEclBs6aqMoosDTr/+ffhQOj22w4LM=;
-	b=JiHkifZaiEb/3QkVJSAhOBtLUvKaLK7v+3/7cLh6o0vanqIcMWDDsmgm6a/E7edAbXzI
-	 McoxWB6K/LWiZ4MHPjRZLFFIM1rL5ukNqDgUchiIPc1GE/B6U6DLUReUEzE5iTzS7wKaP
-	 1eIP2s8avDN1XEnywGMQbMzkT1bDcHWGJ1A3Yc4AVJCvdZ/Hz3Z7rzwO/JXhxpTxr8v8V
-	 n0Ku+PRDVTbVKAwBs6De5NWEiGPL4F4KgQGfApy5H9BmML8wqz2949jC0jjbVdfWRNfjb
-	 ooxa0L7H5i2eZj6bG7oUhH4R954BrLTfgfuIojXpDHLtZTNgr3CYRt5Hx1OffWu07TA==
+	bh=6DkDKSda2at6HlXoGqv+JmG393wxOUm5J1+LtrbThA4=;
+	b=d6r6OEmO/Wm1kqXNTGz11+HXpbdhwA40H/QTT+1JW+x+CPfYQcO58hTaUM2Jeyo+/sA6
+	 +MVvdnRldYdT3ZeMcIHQfvagBR35UeECkVjIgMpkkYer6G4vECcWzn8PqXS4wTSzXMZiZ
+	 IkRwkDuAWip9CwmQRerwpB+hyacnjBJPyQPJMrNOKI6s/YggwiqO1sW11pKMoYqT9pGFD
+	 iPplBqTJXe8nNx+gh1m7KgQkYSjKiutBcxXkZ71B/HEtf3vqvOyuVCSHJxdBTKvbKxMW1
+	 c7JKAa8KnlLkdCHw2m4EjKCvQQcrZeSC+EE8qjaXLmGsJTzOaLTU18dKq4SjhemUwCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MCs0uYNo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJo4YiQ5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CD9606A31C;
-	Wed, 18 Nov 2026 16:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFFB606A31C;
+	Wed, 18 Nov 2026 16:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MCs0uYNo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DB71F000D1;
-	Wed, 18 Nov 2026 16:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IJo4YiQ5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FC21F000C4;
+	Wed, 18 Nov 2026 16:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017650;
-	bh=Pmrw+n4oc0ORVUEclBs6aqMoosDTr/+ffhQOj22w4LM=;
+	s=korg; t=1795017652;
+	bh=6DkDKSda2at6HlXoGqv+JmG393wxOUm5J1+LtrbThA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MCs0uYNo15QcNCK2nfdwvwOeJNUYTTRGJQkxZ2SSqVyq51yHPmrL1MlnHBMQtUrTY
-	 7ZCUpCkKkv1NXZqVs++c+73UZI5gS5NkcK5Lx94fdve0kP6eE4H/J6QoV2NAw3j3Aq
-	 iWJEq5oek4P157FgLf0ezcY+qdPF1+1NyAF4H5c0=
+	b=IJo4YiQ5gEiK1gD2RZ92aIWv7iKlm1sTKtwEF6KNKpXtJYVhN5F7S+Rk+nISk9GuF
+	 DMgdZTJ9W/yb92WxCErNNS/9geXAQFcD1lWthkbRFwBtkh1slSnQ8zuTD4G4k6l3Hk
+	 4cq5fqr3E40X6YpOZ7iTIpbewoLB+K8zaXjEsyl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Sam Day <me@samcday.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0919/2651] PCI: aardvark: Disable PHY on probe failures
-Date: Wed, 18 Nov 2026 15:35:59 +0100
-Message-ID: <20261118150320.979104245@linuxfoundation.org>
+Subject: [PATCH 7.3 0910/2651] drm/msm/a3xx: fix VBIF halt mask for A306/A306A
+Date: Wed, 18 Nov 2026 15:35:50 +0100
+Message-ID: <20261118150320.648356377@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,98 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Sam Day <me@samcday.com>
 
-[ Upstream commit 28cc5bc5a6c6cffbe7ba27c0acbfbe06747fa173 ]
+[ Upstream commit b5434691654441448c6d20a8ba887e29d3f81042 ]
 
-advk_pcie_setup_phy() initializes and powers on the PHY before the
-emulated bridge and IRQ domains are created.  If any of those later
-initialization steps or pci_host_probe() fails, probe returns without
-powering off or exiting the PHY.
+A306 and A306A implement only three VBIF XIN halt request bits.
+Consequently, waiting for the full 6-bit A3xx mask times out and
+prevents runtime suspend.
 
-Replace the direct returns with staged cleanup labels.  Remove IRQ
-domains in reverse order, release the emulated bridge allocation only
-after successful initialization, and disable the PHY on every failure
-after advk_pcie_setup_phy() succeeds.  A setup_phy() failure still
-returns directly, so its partial internal cleanup is not repeated.
+This issue was reproduced on a DragonBoard 410c: the request reads back
+as 0x7 and the acknowledgment as 0x00070007 - the poll eventually
+returns -ETIMEDOUT, and a3xx_pm_suspend fails with -EBUSY.
 
-Fixes: 366697018c9a ("PCI: aardvark: Add PHY support")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260910221725.91980-1-mhun512@gmail.com
+The downstream kgsl driver corroborates this (see link). Since the
+single-character difference between A3XX_VBIF_XIN_HALT_CTRL0_MASK and
+A30X_VBIF_XIN_HALT_CTRL0_MASK could be confusing to read, the narrowed
+GENMASK is instead defined inline in a3xx_vbif_halt().
+
+Fixes: be0e82b8e0c9 ("drm/msm/a3xx: Drain VBIF before GPU suspend")
+Link: https://android.googlesource.com/kernel/msm/+/c90c7feeca2f5839ad6824f816c0bd207602a2f4/drivers/gpu/msm/adreno_a3xx.c#637
+Assisted-by: LLM
+Signed-off-by: Sam Day <me@samcday.com>
+Patchwork: https://patchwork.freedesktop.org/patch/756513/
+Message-ID: <20260926-a306-vbif-mask-v1-1-2bae5e81c05a@samcday.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/pci-aardvark.c | 31 ++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pci/controller/pci-aardvark.c b/drivers/pci/controller/pci-aardvark.c
-index ecb81ac730199..2bbdb73cfb45b 100644
---- a/drivers/pci/controller/pci-aardvark.c
-+++ b/drivers/pci/controller/pci-aardvark.c
-@@ -1864,28 +1864,25 @@ static int advk_pcie_probe(struct platform_device *pdev)
- 	ret = advk_sw_pci_bridge_init(pcie);
- 	if (ret) {
- 		dev_err(dev, "Failed to register emulated root PCI bridge\n");
--		return ret;
-+		goto err_disable_phy;
- 	}
+diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+index 0259e60b80115..f672abd5e15e4 100644
+--- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+@@ -500,14 +500,18 @@ static u64 a3xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
  
- 	ret = advk_pcie_init_irq_domain(pcie);
- 	if (ret) {
- 		dev_err(dev, "Failed to initialize irq\n");
--		return ret;
-+		goto err_cleanup_bridge;
- 	}
+ static int a3xx_vbif_halt(struct msm_gpu *gpu)
+ {
++	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
++	u32 mask = A3XX_VBIF_XIN_HALT_CTRL0_MASK;
+ 	u32 ack;
+ 	int ret;
  
- 	ret = advk_pcie_init_msi_irq_domain(pcie);
- 	if (ret) {
- 		dev_err(dev, "Failed to initialize irq\n");
--		advk_pcie_remove_irq_domain(pcie);
--		return ret;
-+		goto err_remove_irq_domain;
- 	}
- 
- 	ret = advk_pcie_init_rp_irq_domain(pcie);
- 	if (ret) {
- 		dev_err(dev, "Failed to initialize irq\n");
--		advk_pcie_remove_msi_irq_domain(pcie);
--		advk_pcie_remove_irq_domain(pcie);
--		return ret;
-+		goto err_remove_msi_irq_domain;
- 	}
- 
- 	bridge->sysdata = pcie;
-@@ -1893,14 +1890,22 @@ static int advk_pcie_probe(struct platform_device *pdev)
- 	bridge->map_irq = advk_pcie_map_irq;
- 
- 	ret = pci_host_probe(bridge);
--	if (ret < 0) {
--		advk_pcie_remove_rp_irq_domain(pcie);
--		advk_pcie_remove_msi_irq_domain(pcie);
--		advk_pcie_remove_irq_domain(pcie);
--		return ret;
--	}
-+	if (ret < 0)
-+		goto err_remove_rp_irq_domain;
- 
- 	return 0;
+-	gpu_write(gpu, REG_A3XX_VBIF_XIN_HALT_CTRL0,
+-		  A3XX_VBIF_XIN_HALT_CTRL0_MASK);
++	/* A306(A) only have three VBIF XIN ports. */
++	if (adreno_is_a306(adreno_gpu) || adreno_is_a306a(adreno_gpu))
++		mask = GENMASK(2, 0);
 +
-+err_remove_rp_irq_domain:
-+	advk_pcie_remove_rp_irq_domain(pcie);
-+err_remove_msi_irq_domain:
-+	advk_pcie_remove_msi_irq_domain(pcie);
-+err_remove_irq_domain:
-+	advk_pcie_remove_irq_domain(pcie);
-+err_cleanup_bridge:
-+	pci_bridge_emul_cleanup(&pcie->bridge);
-+err_disable_phy:
-+	advk_pcie_disable_phy(pcie);
-+	return ret;
- }
++	gpu_write(gpu, REG_A3XX_VBIF_XIN_HALT_CTRL0, mask);
+ 	ret = spin_until(((ack = gpu_read(gpu, REG_A3XX_VBIF_XIN_HALT_CTRL1)) &
+-			  A3XX_VBIF_XIN_HALT_CTRL0_MASK) ==
+-			 A3XX_VBIF_XIN_HALT_CTRL0_MASK);
++			  mask) == mask);
+ 	gpu_write(gpu, REG_A3XX_VBIF_XIN_HALT_CTRL0, 0);
  
- static void advk_pcie_remove(struct platform_device *pdev)
+ 	if (ret)
 -- 
 2.53.0
 
