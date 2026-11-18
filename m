@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028855;
-	b=2kuD9tiRn9TFaKdpnOr82f5CgexAE4ehrOFK+DI772K2pnhUOT7FilaG5P/sZLv9mFmC
-	 meaHKTnCH3w0U3emhapn4/klez8FNpVq10RCXnymqjfY35nNgvPv0R1pM2bSLGFY9ea84
-	 mcydkRSze8oynAH9M4JzDimU/gSRbwoQZ+fA5/5akv7vGHCI24h1nJsK+7lZMQdp8v2Fk
-	 mvXvqr+7s7Eic4wPhrr2O0P4nTw4qj/X/9wYxeyZUReYl54PfdqBCqikZYMqUYWYe09Ad
-	 dQW3hkSZmVg2PGs5O/vS9ZzfmAwvmlPDk4eJeiS9sF1qVnp56pnbe04zrtI/n8fZmpw==
+	t=1795028858;
+	b=M3g9Ohk7hB9pufbTFN8NVKHD3OR4gd2E6lCUiiY6E9emFxY1XrDL1YOD4LdZVvKmUbOD
+	 Py1JcJ85K9LDXnzLUYiImpWAfN2u7w/x3MTAMNklkLURpkN/7DPA3/fLuhsqr6haMc88z
+	 tLsCDHSCo2dkVgfFWJEsOOnC1Ntx4Fx+tjgv9gxGskd5mYpdl1bIttfz5Ylc3MpqsFgEy
+	 ZtQLkQfm0qZJ9NoJHpKJUYpwB8i2+QWzzf7iX/lYK/HJLVkJlhohhfRjRcAfkeolPrqnG
+	 bmmE+Vvo7d6Y2w3S8CZ/9+yXYvRKzEg41+kuEw557a6EeQXWzreF9J/zvqwwbgsWvuA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028855;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028858;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+XrDL8ZMtrN6oZ/mtDfZ3SyjtZOobrS7RviPuwfuonM=;
-	b=jWBmtk+LfmmXYkpMU+Ex35XLAiGX494bzOkB167pUqDtO7oW/4bcSYSxZGM5L4K9A+ra
-	 zR4i5p2XZ+tKP8nzk/zcqknM775WikbmwnzltfQiidtxWpekd7U48LTuppwJS6cfVACY4
-	 iac/FIkeUJeiCjOzKXR20DcUE60yj86aZvyZ5ihdJaK3LYKtU5L4o2J95Dk034361L6xr
-	 3aZbtAPF52voynrGKNsy3B1SQ69w2LB/1+tGANPF7UgPN2C3XuSg0+6vUFCxNJjk4HU6k
-	 DIK2oq0BofEvxj3WALOH+fCmRLd8ecSVicHo9hdurkKRTnqJ3b3A5jtYjMioVRgtCFw==
+	bh=i7q0DnVAvIvkQyb6hHv8bLujv4Wtz5rJ3uPMeEjl7gg=;
+	b=FLaUi/ZNjfKfAx1YdQUL7K9xZZ8kMfkYtPBppzjkz5Ds/cRPcjWlAwf2tdzu//d+NzEG
+	 eScVikS7Wuk5QUJDEzh19EKIkZSWH0GMuLefx+gI6xajs3H4VBRngLIVOoVLcFG2k4AAM
+	 Jh3f6pcL4IMSXTQX6DOwUqYWABprzCX2pyDSAu2u7CqFE6CEkyt2KNI165wACg/RzwTs0
+	 p2vckzqJohO+EQaK8ozMXS1EMOSKgyInQBhvslVTltzxf66DKEv5A2975gvijsewoENwE
+	 StmhZaiH9KHyIgq55nCJEH5Ue7jNvGVHj3edEFO0Ovfkky/694t7xd9OsR72wix70cQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKekQxpw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLozwqwj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514BE606A32F;
-	Wed, 18 Nov 2026 19:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5639760A2602;
+	Wed, 18 Nov 2026 19:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKekQxpw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB411F000C4;
-	Wed, 18 Nov 2026 19:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZLozwqwj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703F31F000C4;
+	Wed, 18 Nov 2026 19:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028855;
-	bh=+XrDL8ZMtrN6oZ/mtDfZ3SyjtZOobrS7RviPuwfuonM=;
+	s=korg; t=1795028858;
+	bh=i7q0DnVAvIvkQyb6hHv8bLujv4Wtz5rJ3uPMeEjl7gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKekQxpwowj5aCmrvq+dsUsgKNQcg7owIpzWoe4Q6GtjNw4AY3zk+v0fpJcQ1VpZ3
-	 PdaX/K41nAcl2SOvLxARTX1yLG39LFKFYGWB6+ODT7mCok+iWqbEV5q3/IArSLKWQH
-	 wk7p3txK2ziU4O85YBQqBQMd0NB+pl9/Zi0q3YrE=
+	b=ZLozwqwjAPt/CFTEuMzhPbV/YIJedx+IhMP+4Qbt/j64CYD+wLqytk6tnE7oetd6q
+	 LEzslldyA+4Dj+HtcnWB7WdkknQvtSjQVb6qYQAnH+EfqY9hUhF47cNRKNgoP2CElX
+	 /9lEcbDdQxRQPwP+CQ4IxqqvLZKKq15MACRZnOJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0142/1756] drm/panthor: Take reqs_lock in soft_reset for clearing pending_reqs
-Date: Wed, 18 Nov 2026 15:37:49 +0100
-Message-ID: <20261118150013.807931357@linuxfoundation.org>
+Subject: [PATCH 6.12 0143/1756] gpio: pcf857x: use new GPIO line value setter callbacks
+Date: Wed, 18 Nov 2026 15:37:50 +0100
+Message-ID: <20261118150013.846519388@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,43 +67,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 2d354adc5bbabe2e818be09bbe13f6bfde4a30c7 ]
+[ Upstream commit 4027438be823abdcfb50ee2abed06fa4e6af4b7c ]
 
-panthor_gpu_soft_reset() sets pending_reqs to 0 without taking the
-requisite reqs_lock.
+struct gpio_chip now has callbacks for setting line values that return
+an integer, allowing to indicate failures. Convert the driver to using
+them.
 
-Fix this by taking the lock for the duration of the modification.
-
-Fixes: 5cd894e258c4 ("drm/panthor: Add the GPU logical block")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20260812-panthor-cache-flush-fix-v4-3-751e32901898@collabora.com
+Link: https://lore.kernel.org/r/20250619-gpiochip-set-rv-gpio-v2-2-74abf689fbd8@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: ed14364ae8c3 ("gpio: pcf857x: implement get_direction()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gpu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-pcf857x.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gpu.c b/drivers/gpu/drm/panthor/panthor_gpu.c
-index 15e4371d98945..038f59df38d95 100644
---- a/drivers/gpu/drm/panthor/panthor_gpu.c
-+++ b/drivers/gpu/drm/panthor/panthor_gpu.c
-@@ -459,7 +459,10 @@ int panthor_gpu_soft_reset(struct panthor_device *ptdev)
- 		return -ETIMEDOUT;
- 	}
- 
--	ptdev->gpu->pending_reqs = 0;
-+	scoped_guard(spinlock, &ptdev->gpu->reqs_lock) {
-+		ptdev->gpu->pending_reqs = 0;
-+	}
-+
- 	return 0;
+diff --git a/drivers/gpio/gpio-pcf857x.c b/drivers/gpio/gpio-pcf857x.c
+index 7c57eaeb0afeb..2b8863eed1d79 100644
+--- a/drivers/gpio/gpio-pcf857x.c
++++ b/drivers/gpio/gpio-pcf857x.c
+@@ -169,21 +169,24 @@ static int pcf857x_output(struct gpio_chip *chip, unsigned int offset, int value
+ 	return status;
  }
  
+-static void pcf857x_set(struct gpio_chip *chip, unsigned int offset, int value)
++static int pcf857x_set(struct gpio_chip *chip, unsigned int offset, int value)
+ {
+-	pcf857x_output(chip, offset, value);
++	return pcf857x_output(chip, offset, value);
+ }
+ 
+-static void pcf857x_set_multiple(struct gpio_chip *chip, unsigned long *mask,
+-				 unsigned long *bits)
++static int pcf857x_set_multiple(struct gpio_chip *chip, unsigned long *mask,
++				unsigned long *bits)
+ {
+ 	struct pcf857x *gpio = gpiochip_get_data(chip);
++	int status;
+ 
+ 	mutex_lock(&gpio->lock);
+ 	gpio->out &= ~*mask;
+ 	gpio->out |= *bits & *mask;
+-	gpio->write(gpio->client, gpio->out);
++	status = gpio->write(gpio->client, gpio->out);
+ 	mutex_unlock(&gpio->lock);
++
++	return status;
+ }
+ 
+ /*-------------------------------------------------------------------------*/
+@@ -291,8 +294,8 @@ static int pcf857x_probe(struct i2c_client *client)
+ 	gpio->chip.owner		= THIS_MODULE;
+ 	gpio->chip.get			= pcf857x_get;
+ 	gpio->chip.get_multiple		= pcf857x_get_multiple;
+-	gpio->chip.set			= pcf857x_set;
+-	gpio->chip.set_multiple		= pcf857x_set_multiple;
++	gpio->chip.set_rv		= pcf857x_set;
++	gpio->chip.set_multiple_rv	= pcf857x_set_multiple;
+ 	gpio->chip.direction_input	= pcf857x_input;
+ 	gpio->chip.direction_output	= pcf857x_output;
+ 	gpio->chip.ngpio		= (uintptr_t)i2c_get_match_data(client);
 -- 
 2.53.0
 
