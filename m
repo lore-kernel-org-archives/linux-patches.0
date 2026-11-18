@@ -1,56 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022414;
-	b=o11zhoKQyFwyRNjBtMJNtZKKqrHMU5fKw8L0MQW9BUpP46zF2sKUL36eKxsrsQ/46aJg
-	 j3BYyKaAErRL3yiLLOiB0hBGMIr9P5X0cT9CPmMcL4RRnpen2Rt+7QpaSt1oOeCE5KWlo
-	 sI5N4j0dd6iC0TsdqrlEVME3h0a1wsupdjHslFpDxsPFLFXP9iE92uKyJ9MYkQj7HCgX7
-	 6r8Ux31mxYqYSXzhgKJw3EOKirfc9s7M+B/TjealC3LGCp6mRtWj01eAUfGzuNQWnI6Jq
-	 /EMDd333R76q/q1xsqbxqIrcg+6zfw4ERiGF0xY7ztipm/W1qisBIjpWv7f1ysvFtHQ==
+	t=1795022417;
+	b=a08UqDCHEpCGxhZd77/owKSGcW/LbqI7Ff4q5N/jaGk8BAlkSTvNJYOwkYkSlJ6mshXK
+	 s0yLOi0gvNaludbNCjVtye/yPxPWchubpl69hffa0qP5zrzw+fiqxEvHraZSd5Q+tHAla
+	 feanvU9l3FkLnppb8ZrFBHYiBv6C1/BECUFX79gmCKEoJGNnNRdAhyCpnxOPND/x1AJpx
+	 3937n770cIXKXJ2AoGRrj185MoivKfGDYd2UVoOdpsRnLBsPF18w6vJ9qPJtwcmXoUv9k
+	 2kUmWkW6UmOyare5INQ4T+P3zlNsFk13Qj+jj4Kzpd3mCvfMHmf+aWvwjCH1dPdpnug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022414;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022417;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gqzfwKFmGDEg/UwYdbrnk/gTg5mJsRDEqhsUgxgLZ3A=;
-	b=Yty6vQVaNVfXXj2StSbjmvj+nFQn4vWrGIPZrGM9y2ZGLXu6AZH6iSihcr7k2LAThnMr
-	 WcS719cuPBuxd6R0c/omcckWmCMn8QbQbMgaOvsTCRJFxiR09abXxJiKayTYEJnErTkY4
-	 jub6chohlzjFOE9QROjX0f/XdNnmD6cum5VCGxbqI3D4bS85RDA35OXVX7jjtp0S9DeNL
-	 9WV0kW0fsl9Y5oDy9pcrY4I1VQN3gelFsB7kFbv1NNED6uyUayADriNhvGFpreWTPd2ti
-	 R1jaVC770eTvmr3C8N4Rw79DnraXvj1zQ9HvtUcmF7vUrliRwJhu0aExM0Kx2MAxlqg==
+	bh=PMpWP9qlKJIlbEu5ToqZ9M+cAITWMl+43i13clD+W84=;
+	b=KUn4+dGs5n0iA9AQQwxvPAWNoHEZPTeIeiFbQuhsC5eZ0tHbVCsCNe1PFjQq3JKE0ZKA
+	 BylaEiBSbf1gws6liowN2Sk4qk8tywfzGapXqMmS43hIIYds5reK1cxJpH02G6PLn/8y1
+	 DE1h7mWZZ2KnE+gFcvsDck6oylkc0Dya0LZIhhEv72vNEG1NRp6uZHyXr76RJvONrqaB/
+	 ZyKwMuaqYBD2QMoRzy1Nvucbmh+qVmZaoBLNbbkEO7F0Y5DN63lmTRrqz4eGXxNtt+GaS
+	 RVK6VyfpUl2JxX7AjJg0uYsMKP83zqNI5ru4ES+628LzCk5bV9ppK2VvDM8UkgArLtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ej9O2xcG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RC9Mz5jy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2250F606A334;
-	Wed, 18 Nov 2026 17:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3935B606A320;
+	Wed, 18 Nov 2026 17:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ej9O2xcG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6E71F000C4;
-	Wed, 18 Nov 2026 17:20:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RC9Mz5jy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475301F000C4;
+	Wed, 18 Nov 2026 17:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022414;
-	bh=gqzfwKFmGDEg/UwYdbrnk/gTg5mJsRDEqhsUgxgLZ3A=;
+	s=korg; t=1795022416;
+	bh=PMpWP9qlKJIlbEu5ToqZ9M+cAITWMl+43i13clD+W84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ej9O2xcGXZZlWQ+4R3nY4kMl2MQCHMFVTexToiqFTv3M4/nXQHHVmxYQ267/AJuWy
-	 8YllFhg3QOB6OlnOkyDqranpYAmRk/4u2aQvehWVNdfWrmUVx/0Vk6Onte0E7F9yHz
-	 tXCfDxb5BN8GFjAMKkk7X04XJPIOazs5DNxADdPQ=
+	b=RC9Mz5jy7BDx1/wsgfxN/Dz309h1db0zm6A1jYz22gu1JVHF9e4JmT9YMA31kVf5q
+	 ce75ZjCrT0GBi6jnJvOhJgF3vWA2wzPOwLASMqDZkbjDRVUB1OJoQiGi8cI1Eao4lC
+	 zF++F7bkfCYmudo05iz20gAJeo6DZhF8+tSk5t4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
 	Eric Dumazet <edumazet@kernel.org>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2625/2651] loopback: use eth_type_trans_careful()
-Date: Wed, 18 Nov 2026 16:04:25 +0100
-Message-ID: <20261118150418.693185256@linuxfoundation.org>
+Subject: [PATCH 7.3 2626/2651] net: use eth_type_trans_careful() in __dev_forward_skb2()
+Date: Wed, 18 Nov 2026 16:04:26 +0100
+Message-ID: <20261118150418.725274824@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -74,69 +73,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit 093a28998374f4007ffe67cc661f8192c1b062a9 ]
+[ Upstream commit 695e1408eb908ac7acf78069933201f92b95727c ]
 
-tc egress actions can leave an skb with fewer than ETH_HLEN bytes in
-its linear part. loopback_xmit() then crashes in eth_type_trans():
+A tc egress BPF program can push a tiny link-layer header with
+bpf_skb_change_head() on an skb whose head is almost empty, then
+redirect it to an Ethernet device ingress. __bpf_redirect_common()
+only checks mac_header < network_header, and __dev_forward_skb2()
+crashes in eth_type_trans():
 
-  tc qdisc add dev lo clsact
-  tc filter add dev lo egress matchall action vlan pop_eth
-  # AF_PACKET SOCK_RAW: eth / eth / 8192 bytes of payload
+  tc filter add dev lo egress pref 1 matchall action vlan pop_eth continue
+  tc filter add dev lo egress pref 2 bpf da obj prog.o
+  # prog: bpf_skb_change_head(skb, 1, 0);
+  #       return bpf_redirect(veth1_ifindex, BPF_F_INGRESS);
+  # AF_PACKET SOCK_RAW on lo: eth / eth / 8192 bytes of payload
 
   kernel BUG at include/linux/skbuff.h:2839!
   RIP: 0010:eth_type_trans (include/linux/etherdevice.h:635 net/ethernet/eth.c:163)
   Call Trace:
-   loopback_xmit (drivers/net/loopback.c:87)
-   dev_hard_start_xmit (include/linux/netdevice.h:5455 include/linux/netdevice.h:5464 net/core/dev.c:4057 net/core/dev.c:4073)
-   __dev_queue_xmit (net/core/dev.c:5066)
+   __dev_forward_skb2 (net/core/dev.c:2507)
+   dev_forward_skb_nomtu (net/core/dev.c:2546)
+   __dev_queue_xmit (net/core/dev.c:4738 net/core/dev.c:4998)
    packet_sendmsg (net/packet/af_packet.c:3157 net/packet/af_packet.c:3189)
 
-The same happens with "action ife decode" on lo egress.
-
 Use eth_type_trans_careful(), and drop the packet if the Ethernet
-header can not be pulled.
+header can not be pulled. This also covers other dev_forward_skb()
+users (veth, macvlan, ipvlan, netdevsim, l2tp_eth).
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Vega <vega@nebusec.ai>
-Link: https://lore.kernel.org/netdev/20261005052249.1914367-2-weir@nebusec.ai/
+Update the empty_skb BPF selftest: at lwt_xmit, BPF_PROG_TEST_RUN
+strips the Ethernet header, so the "veth ETH_HLEN+1" packet is a 1-byte
+skb. Redirecting it to veth ingress used to read the Ethernet header
+past skb->tail and deliver a 1-byte frame; it is now dropped with
+NET_RX_DROP, as veth_xmit() already does at egress.
+
+Fixes: 3a0af8fd61f9 ("bpf: BPF for lightweight tunnel infrastructure")
 Signed-off-by: Eric Dumazet <edumazet@kernel.org>
 Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Tested-by: Jamal Hadi Salim <jhs@mojatatu.com>
 Acked-by: Alexei Starovoitov <ast@kernel.org>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20261028122703.2093730-3-edumazet@kernel.org
+Link: https://patch.msgid.link/20261028122703.2093730-4-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/loopback.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/core/dev.c                                | 18 +++++++++++++-----
+ .../selftests/bpf/prog_tests/empty_skb.c      | 19 ++++++++++++-------
+ 2 files changed, 25 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
-index 1fb6ce6843ade..6d16d6040401d 100644
---- a/drivers/net/loopback.c
-+++ b/drivers/net/loopback.c
-@@ -70,6 +70,7 @@ EXPORT_SYMBOL(blackhole_netdev);
- static netdev_tx_t loopback_xmit(struct sk_buff *skb,
- 				 struct net_device *dev)
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 94570c9601b79..6ebba16aff1c8 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2463,14 +2463,22 @@ EXPORT_SYMBOL_GPL(is_skb_forwardable);
+ static int __dev_forward_skb2(struct net_device *dev, struct sk_buff *skb,
+ 			      bool check_mtu)
  {
+-	int ret = ____dev_forward_skb(dev, skb, check_mtu);
 +	enum skb_drop_reason reason;
- 	int len;
++	int ret;
++
++	ret = ____dev_forward_skb(dev, skb, check_mtu);
++	if (unlikely(ret))
++		return ret;
  
- 	skb_tx_timestamp(skb);
-@@ -84,7 +85,12 @@ static netdev_tx_t loopback_xmit(struct sk_buff *skb,
- 	 */
- 	skb_dst_force(skb);
- 
--	skb->protocol = eth_type_trans(skb, dev);
+-	if (likely(!ret)) {
+-		skb->protocol = eth_type_trans(skb, dev);
+-		skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
 +	reason = eth_type_trans_careful(skb, dev);
 +	if (unlikely(reason)) {
-+		dev_core_stats_tx_dropped_inc(dev);
++		dev_core_stats_rx_dropped_inc(dev);
 +		kfree_skb_reason(skb, reason);
-+		return NETDEV_TX_OK;
-+	}
++		return NET_RX_DROP;
+ 	}
++	skb_postpull_rcsum(skb, eth_hdr(skb), ETH_HLEN);
  
- 	len = skb->len;
- 	if (likely(__netif_rx(skb) == NET_RX_SUCCESS))
+-	return ret;
++	return 0;
+ }
+ 
+ int __dev_forward_skb(struct net_device *dev, struct sk_buff *skb)
+diff --git a/tools/testing/selftests/bpf/prog_tests/empty_skb.c b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
+index c9fcb70cbafbc..a3938c16557b1 100644
+--- a/tools/testing/selftests/bpf/prog_tests/empty_skb.c
++++ b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
+@@ -24,7 +24,7 @@ void test_empty_skb(void)
+ 		int *ifindex;
+ 		int err;
+ 		int ret;
+-		int lwt_egress_ret; /* expected retval at lwt/egress */
++		int lwt_ret; /* expected retval at lwt */
+ 		__be16 h_proto;
+ 		bool success_on_tc;
+ 		bool adjust_room;
+@@ -82,7 +82,7 @@ void test_empty_skb(void)
+ 			.data_size_in = sizeof(eth_hlen),
+ 			.ifindex = &veth_ifindex,
+ 			.ret = -ERANGE,
+-			.lwt_egress_ret = -ERANGE,
++			.lwt_ret = -ERANGE,
+ 			.success_on_tc = true,
+ 		},
+ 		{
+@@ -96,17 +96,23 @@ void test_empty_skb(void)
+ 			.data_size_in = sizeof(eth_hlen),
+ 			.ifindex = &ipip_ifindex,
+ 			.ret = -ERANGE,
+-			.lwt_egress_ret = -ERANGE,
++			.lwt_ret = -ERANGE,
+ 		},
+ 
+-		/* ETH_HLEN+1-sized packet should be redirected. */
++		/* ETH_HLEN+1-sized packet should be redirected at TC.
++		 * At LWT, the Ethernet header is not part of the skb, and
++		 * a 1-byte packet is too short for an Ethernet device.
++		 */
+ 
+ 		{
+ 			.msg = "veth ETH_HLEN+1 packet ingress",
+ 			.data_in = eth_hlen_pp,
+ 			.data_size_in = sizeof(eth_hlen_pp),
+ 			.ifindex = &veth_ifindex,
+-			.lwt_egress_ret = 1, /* veth_xmit NET_XMIT_DROP */
++			/* lwt: skb->len=1, dropped by veth_xmit() at egress
++			 * and by __dev_forward_skb2() at ingress.
++			 */
++			.lwt_ret = 1, /* NET_XMIT_DROP / NET_RX_DROP */
+ 		},
+ 		{
+ 			.msg = "ipip ETH_HLEN+1 packet ingress",
+@@ -144,7 +150,6 @@ void test_empty_skb(void)
+ 			eth_hlen.h_proto = tests[i].h_proto;
+ 
+ 		bpf_object__for_each_program(prog, bpf_obj->obj) {
+-			bool at_egress = strstr(bpf_program__name(prog), "egress") != NULL;
+ 			bool at_tc = !strncmp(bpf_program__section_name(prog), "tc", 2);
+ 			bool is_adjust_room = !strcmp(bpf_program__name(prog), "tc_adjust_room");
+ 			int expected_ret;
+@@ -153,7 +158,7 @@ void test_empty_skb(void)
+ 			if (tests[i].adjust_room != is_adjust_room)
+ 				continue;
+ 
+-			expected_ret = at_egress && !at_tc ? tests[i].lwt_egress_ret : tests[i].ret;
++			expected_ret = at_tc ? tests[i].ret : tests[i].lwt_ret;
+ 
+ 			tattr.data_in = tests[i].data_in;
+ 			tattr.data_size_in = tests[i].data_size_in;
 -- 
 2.53.0
 
