@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052292;
-	b=z1ScnuqCzRuyzeNhtnNHxsx/PaEpxdnLyI70pP0yJxUfFOlserXJZmwwAY3Gj8FLkvW4
-	 xJL6wLuOtG6c4CAH4zteTJhCvKZ13QE3YGqvXILetE8dq3EDoxPwCpQcmcj7CJJZX8E7z
-	 xzfPGwzWYSZT1U/0Ahqx2wcowkkcCKIruxV2QDh+3ZyuYdHe/G2SUWeJzWxpiyl8MIBf6
-	 2Uq2E6uHUFYvfv71eVl1knHYbmN3MBq1Zz3eL0loq5YfrYPAwtcYCve+byYPg3hGoslqz
-	 qAZ+T+Ht5JqIMwWPcfWxDYOpzB1JB04jbU+EeRhMhKEiWA880s7rU7MiNhQSvyPptLQ==
+	t=1795052294;
+	b=ahDhaqF0HFcqLXRD/IZCOzvbbB8b9O7fwGJZ0yqXSgzx33fFzybCa/ZtoQ95+N56DuZ8
+	 FAqfxaFvn26cTcEfjT7hnVZUmukPW+UT9vMFzmO7njN+16/oFfPrQV2aR4oM/oVcBcNky
+	 kTzLfQCHPnEE2IAfNw8w0y037Hze8zoMDdjJE8OWWIyxJwjSqAtvTmdpAATxDJEHHWTVt
+	 7K7FYLtceNPLA/8Wuv4w04qrSJytE4fgaQJVRz2QCHtKOAq7LqIz7RuWaPExupoyEM45D
+	 XtDALuE16B98BBhMrhrbtOHGh5EvH5ffrB/Lkwzaq2cl8JIW8osLcWmqmSSNsd5BKEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052292;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052294;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=63x3aBBXjcm071OIpcW60clOSQnGqq87s652ie8KHjs=;
-	b=ee1awaRSCaI1/2vQbjxxLhlDmY4ZTTATMZr8gktl/Fo6jcxytMDHyNX/W61hw1OCtoa7
-	 FJ3FWSVSjw85XLVtk3ss3uO08fXIXkb5+a1hdfNgQ+s5LxbggE4MV/nWBZgHLRqlfq32E
-	 h1xZTDvvVCP1RTgEhs5Orkaoo9x7kNhEr47RXaDsPiVl+WAwdsG3Oua0kxfaS3Lv6gbrE
-	 n+PY1CdVNe/qH129R4ekVTQhha/socA7G/v65E/3c7tnd22hUczoSf/yFbcpQLqR0tY+/
-	 9GOmtH2zEfkOZFzxXhsooYSG9A/E+mDwacQVImzKkITgvayneJiXmg89TtavjFVRyXQ==
+	bh=816NdoeQjeKff4DKfiiD0UKElqKVFZTsUB4Xn4v7vCI=;
+	b=ZEdaiqbHXvKW5h30zMEPen37iLuZyqCVG+CLfJ65nF7DgM6zFPGVZSjdSmBXlEdy4eCV
+	 94N2ZHRo7/F475Px/aYFwJz2cjumf7nssrmC+6NF3fr1p+9ZLyStoUDTPDzdIit3yM241
+	 SWXI6ABxdeP4zImDZ03YojKIlln07a31j5fc1F5SsJe+0hHmKauYS1gxgk3KSpFhQOxuw
+	 zOlbMTSHZt8JnNVJSWLlKjsJ1NDU8fsMa370m/1onNUnkrSrjYpl5vsdzPmPLz0nd0GlG
+	 N3UwtxIxw6nR0jyqnxNxxIXrblWcviDQWU9mD/xKgxFol3Z2tDMELQKwT71iO595nZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qGAcD6jz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ppfBhH4H;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F271C606A31C;
-	Thu, 19 Nov 2026 01:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98267606A31C;
+	Thu, 19 Nov 2026 01:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qGAcD6jz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17B911F000C4;
-	Thu, 19 Nov 2026 01:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ppfBhH4H
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FAB1F000C4;
+	Thu, 19 Nov 2026 01:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052291;
-	bh=63x3aBBXjcm071OIpcW60clOSQnGqq87s652ie8KHjs=;
+	s=korg; t=1795052294;
+	bh=816NdoeQjeKff4DKfiiD0UKElqKVFZTsUB4Xn4v7vCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qGAcD6jzxP0tTl5joEeNx0+5wynMJBXLpgf/Lc2dq/Dkaf/5ZzhreYPOYmyfA82Xx
-	 ylZE3AOiQ4cucyNhI0ZR16SI71oMAACCXC5CVWW35cKTu1OT8gWclU3tlG6796QA+c
-	 ugVoVm+3E5bldU/w6sA3NwSDqzm9d+tOSiT8OHBg=
+	b=ppfBhH4HmEbadRWLDhwk94r9wMn8hWbYGtASGPivU2SogBhf9Vhwbv8Hpu04DhTBO
+	 VHUG6sOPxe/wms9iGWvFwTy8DsTjeGnrKdXstDRMdETqGgQ+q1Ws+2qilN3BggW3/w
+	 c38bTKHphYKQOvS1x3k5jzx4rdHI1VP+BUyk7zyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Peng <benquike@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Runyu Xiao <runyu.xiao@seu.edu.cn>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0509/2214] ata: libata-scsi: abort multi-sector pass-through commands when multi_count is 0
-Date: Wed, 18 Nov 2026 15:36:25 +0100
-Message-ID: <20261118150031.487539296@linuxfoundation.org>
+Subject: [PATCH 5.15 0510/2214] PCI: pciehp: Make pciehp_poll_mode parameter read-only
+Date: Wed, 18 Nov 2026 15:36:26 +0100
+Message-ID: <20261118150031.524143746@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,69 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hui Peng <benquike@gmail.com>
+From: Runyu Xiao <runyu.xiao@seu.edu.cn>
 
-[ Upstream commit 3bab8c7e0c6ba187a47163a1f71477213a278c48 ]
+[ Upstream commit 5ab17178fca6026d329cb6ced33c30f3b7d3e50a ]
 
-When an ATA_12, ATA_16, or ATA_32 pass-through command with a
-multi-sector PIO command opcode (ATA_CMD_READ_MULTI,
-ATA_CMD_WRITE_MULTI, ATA_CMD_READ_MULTI_EXT, ATA_CMD_WRITE_MULTI_EXT, or
-ATA_CMD_WRITE_MULTI_FUA_EXT) is submitted via SG_IO on a device where
-multiple-sector mode is not configured (dev->multi_count == 0),
-ata_scsi_pass_thru() currently logs a warning and still dispatches the
-taskfile. When the DRQ interrupt fires, ata_pio_sectors() triggers
-WARN_ON_ONCE(qc->dev->multi_count == 0) and computes
-nsect = min((qc->nbytes - qc->curbytes) / qc->sect_size, 0) = 0, failing
-to transfer any sectors:
+pciehp_request_irq() and pciehp_free_irq() select different resources based
+on the global pciehp_poll_mode parameter. The parameter is currently
+writable through sysfs, so changing it while a controller is active can
+make teardown try to stop a nonexistent polling thread or call free_irq()
+for an IRQ that was not requested.
 
-  ata1.00: invalid multi_count 1 ignored
-  WARNING: drivers/ata/libata-sff.c:666 at ata_pio_sectors+0x27d/0x300
-  Call Trace:
-   <IRQ>
-   ata_sff_hsm_move+0x211/0x22e0
-   __ata_sff_port_intr+0x1c8/0x520
-   ata_bmdma_port_intr+0xa1/0x5b0
-   ata_bmdma_interrupt+0x1f5/0x550
+Keep the parameter available for boot and module configuration, but prevent
+runtime changes to the registration mode.
 
-Per ACS-3 section 7.12.7.21, if IDENTIFY DEVICE word 59 bit 8 is cleared
-to zero (multi_count == 0) and a READ MULTIPLE or WRITE MULTIPLE command
-is received without a preceding successful SET MULTIPLE MODE command, the
-device returns command aborted (ABRT). Per the SAT specification, an ABRT
-error translates to the ABORTED COMMAND sense key with NO ADDITIONAL SENSE
-INFORMATION (0x00, 0x00).
+Reproducer:
+Boot an x86_64 guest in QEMU with a native PCIe hotplug root port and an
+e1000 device, using these device options:
 
-Fail multi-sector taskfile commands in ata_scsi_pass_thru() with
-ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0, 0) when
-dev->multi_count == 0.
+  -device pcie-root-port,id=rp1,chassis=1,slot=1 -device e1000,bus=rp1
 
-Fixes: 1dce589c38c3 ("libata passthru: support PIO multi commands")
+Pass "pcie_ports=native pciehp.pciehp_poll_mode=1" to the guest kernel.  As
+root in the guest, replace the device name below with a bound pciehp
+service device and run:
+
+  # dev=0000:00:1c.0:pcie004
+  # driver=/sys/bus/pci_express/drivers/pciehp
+  # echo 0 > /sys/module/pciehp/parameters/poll_mode
+  # echo "$dev" > "$driver/unbind"
+  # dmesg | grep 'Trying to free already-free IRQ'
+
+The unfixed kernel accepts the runtime mode change and reports the warning
+when the service device is removed. The fixed kernel rejects the write and
+removes the device without the warning. The mode change is a deliberate
+privileged test action and is not expected during ordinary operation.
+
+Assisted-by: LLM Codex
+Signed-off-by: Runyu Xiao <runyu.xiao@seu.edu.cn>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://patch.msgid.link/20260921142608.270312-1-runyu.xiao@seu.edu.cn
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Hui Peng <benquike@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260921032556.1160734-1-benquike@gmail.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pci/hotplug/pciehp_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 7ec130c932576..7725910eca0b6 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -3031,6 +3031,11 @@ static unsigned int ata_scsi_pass_thru(struct ata_queued_cmd *qc)
- 	if (is_multi_taskfile(tf)) {
- 		unsigned int multi_count = 1 << (cdb[1] >> 5);
- 
-+		if (!dev->multi_count) {
-+			ata_scsi_set_sense(dev, scmd, ABORTED_COMMAND, 0, 0);
-+			return 1;
-+		}
-+
- 		/* compare the passed through multi_count
- 		 * with the cached multi_count of libata
- 		 */
+diff --git a/drivers/pci/hotplug/pciehp_core.c b/drivers/pci/hotplug/pciehp_core.c
+index 4042d87d539dd..e5ab8b33918a3 100644
+--- a/drivers/pci/hotplug/pciehp_core.c
++++ b/drivers/pci/hotplug/pciehp_core.c
+@@ -37,7 +37,7 @@ int pciehp_poll_time;
+  * not really modular, but the easiest way to keep compat with existing
+  * bootargs behaviour is to continue using module_param here.
+  */
+-module_param(pciehp_poll_mode, bool, 0644);
++module_param(pciehp_poll_mode, bool, 0444);
+ module_param(pciehp_poll_time, int, 0644);
+ MODULE_PARM_DESC(pciehp_poll_mode, "Using polling mechanism for hot-plug events or not");
+ MODULE_PARM_DESC(pciehp_poll_time, "Polling mechanism frequency, in seconds");
 -- 
 2.53.0
 
