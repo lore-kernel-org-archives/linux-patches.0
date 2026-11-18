@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022328;
-	b=Lm0DpS0UkrqlX4tU9TpufzurUIDUOvRaFOTNGslUtqsjBujmD9H8Hd5DIh2iP7fd7tjf
-	 rRoV0mQ54wfcl4U1xS3Hp6gbCcTFVxB0H64JjMrHVlLDhA47vxoPZUHMBhyGN70uesTt9
-	 QaYQu4q9ow4bKUXmN6YnEYwzE4ozAIYtOusMf5x5miGKieqCI1OxBNnMlkIC4kDBgENCJ
-	 TuSAAzcHpNGcc+LWEoeopDINkoGtO/fHYXjrmEQ1MqNoli2kNKbCzz4D7ufWKu8QheKF5
-	 KbAdLJxp5SHCuHdZpvkimRp9a05nM21FC464qg+mz6+aQ8iXr6SCFJjcwI62OZqhiAQ==
+	t=1795022332;
+	b=Hpntz2qlcZhA0nwW5PP7K+DXcld9bDQXYbXSdKXJ0c1oVM5fld3WrXlLmcdn8rUhwWH3
+	 8Qq/HkBMaUTVyaF+rPGsZW1CSsLyKqMP97nZzo9udP0kznTvw+LusaCq/TjOq9a5a+zWx
+	 JCai9WogVkh1XOpQ0JavL+BIk+gu+xPccVe2hroWj0QEN2JoKUvCi1ss0MAenUzkfK6Q/
+	 GdyCBtCvtcdxgRQFydLKzOCHzkk2L8NeeEK2FbBS4QQfxPBZ7zo2TY+jJAFQZRkvuoUok
+	 kOy2agu/x9zygTKo+bPXlnVcm00BdnaI33JWzB9rZ0glbb0S9kcPGfIqqitnygCSrEg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022328;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022332;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ka13mOVwkJKRGbwCdPxgCN1ad25AFOumy3MfY8+AmXk=;
-	b=W60WxK5PK3Y41g7iMNELj4mteYtee7vTtyGlyvRHYKn0a1486xZFLbDFMngH5Q/qWsZP
-	 IsQ6xVXAXfARLzyDFPR1dW3fM/gXSKISAtDMaj0G9dAQRAe6/JlwFQSTViPac9nqQFFFF
-	 9s3BnGgcJrkSlzoHrF4c1/Bt3GUKtGDJfPHk4EhkSub+qWt3bis3feD3/D1WDKHLyHUhf
-	 Lc+6wUsv3axqp83xxw4DWXXmuNiraLk+7xMGeSN7/WPYDhA6svgGfuhsKiNEsW1nESuQ4
-	 0uGnDkxw1wMEuMrW3iPHD5+f1rEf+FeKI6AZU30DxugJk7KBQg1IH9Qcvn4Lb+4MJhQ==
+	bh=NoVB/M1O5xEip6EG2qu7lcbFz9KLMPjikUJIYtg9/7Q=;
+	b=GsheHyKMRhO91NxRTsr0g2jmW5mZdponYE1eeaxr0BeZPfaOwkvbxHl+p46JbP8Fz3ow
+	 p7sthwmX04JMYOmKN2wnkIlsBFaUKIViy65X5BPTWcBNoDXgyEKGQVC6toYriQW/ufKJj
+	 12xSWO23tWAdNJU6MBp7BkxKQRWtlVswfxBXmQP5LOANwJAHNHWHG5XblQXv9XGWVIgWO
+	 fdcVgpo2lJ5vcKFXTSJlt2nR1ag4gAPj98OZ481wAT4YqzFQ8whSXNDrx0tY9y7CPo22g
+	 JPFbMVRcsWNgfrMY9SrnSkC1JMhEdO9UYepRRdmZKkJv3Aw/XzhNn/OWYMCVslNXFiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v7UOArAi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHvjuquU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD4E606A31C;
-	Wed, 18 Nov 2026 17:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F33B606A31C;
+	Wed, 18 Nov 2026 17:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v7UOArAi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DE91F000C4;
-	Wed, 18 Nov 2026 17:18:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZHvjuquU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7727A1F000C4;
+	Wed, 18 Nov 2026 17:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022328;
-	bh=ka13mOVwkJKRGbwCdPxgCN1ad25AFOumy3MfY8+AmXk=;
+	s=korg; t=1795022332;
+	bh=NoVB/M1O5xEip6EG2qu7lcbFz9KLMPjikUJIYtg9/7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v7UOArAijEnbMbXLoxlneFVfUNYDxNaW97g+2b5T4y63GN5DFqlVUnCW2rX65eUb1
-	 RvM7qnwDEBzlm5UiepKVcNlb0A21HW6ri8eGy0fjPcMTK7cFN6/+xzU7k1imQtiao1
-	 y5b3blWSyf6nn3fiG/rWnfHPFok111gVhzUBB6FM=
+	b=ZHvjuquUpTmSkTP+gd3tq74L3CdltDnnQ7ZMrY3NTRLGCFG1Y96TvjB4J3qhrxGiV
+	 pKofkP9SDPeNyVD0vOvpowv97JdoVKES9VtwGtZphh3SvkmLW5SHxCfzNmopPe0m19
+	 1M+91cQwAGbwbD5omujVHeHM/CpbIROv4hOB2720=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2583/2651] blk-mq: dont bring back flags of a completed request
-Date: Wed, 18 Nov 2026 16:03:43 +0100
-Message-ID: <20261118150417.308427364@linuxfoundation.org>
+Subject: [PATCH 7.3 2584/2651] blk-mq: dont forget a timer the driver has restarted
+Date: Wed, 18 Nov 2026 16:03:44 +0100
+Message-ID: <20261118150417.338719772@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,82 +70,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 9531230ee1fcb8eca2c9cbb9bf02651cbf798842 ]
+[ Upstream commit 0db9f8968a8941d4fc9fddf220d4983d9b68deaf ]
 
-The timeout handler sets and clears RQF_TIMED_OUT in a request it only
-holds a reference to, with a plain read-modify-write, while the
-completion clears flags in rq_flags the same way. If the two interleave,
-blk_mq_finish_request() runs twice with the flags back: the zone write
-plug reference is dropped twice and the scheduler's ->finish_request()
-is called again.
+If ->timeout() returns BLK_EH_RESET_TIMER, blk_add_timer() gives the
+request a new deadline that blk_mq_timeout_work() doesn't know about
+when it picks the next expiry. A 2s nbd read next to a 60s one expires
+once and then not again for a minute. Let the new deadline take part.
 
-Change RQF_TIMED_OUT with cmpxchg, so the handler never writes back a
-flag that changed under it.
-
-Fixes: e5c0ca13659e ("blk-mq: release scheduler resource when request completes")
+Fixes: 320ae51feed5 ("blk-mq: new multi-queue block IO queueing mechanism")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20261028164415.1262013-31-axboe@kernel.dk
+Link: https://patch.msgid.link/20261028164415.1262013-32-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c      |  2 +-
- block/blk-timeout.c |  3 ++-
- block/blk.h         | 14 ++++++++++++++
- 3 files changed, 17 insertions(+), 2 deletions(-)
+ block/blk-mq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 9f0e3af0f3366..3440e6906f5a4 100644
+index 3440e6906f5a4..bff51cb759fce 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -1639,7 +1639,7 @@ EXPORT_SYMBOL_GPL(blk_mq_queue_inflight);
- 
- static void blk_mq_rq_timed_out(struct request *req)
+@@ -1710,8 +1710,11 @@ static bool blk_mq_handle_expired(struct request *rq, void *priv)
  {
--	req->rq_flags |= RQF_TIMED_OUT;
-+	blk_rq_change_timed_out(req, true);
- 	if (req->q->mq_ops->timeout) {
- 		enum blk_eh_timer_return ret;
+ 	struct blk_expired_data *expired = priv;
  
-diff --git a/block/blk-timeout.c b/block/blk-timeout.c
-index 1b8de0417fc1a..0590720e38c7f 100644
---- a/block/blk-timeout.c
-+++ b/block/blk-timeout.c
-@@ -137,7 +137,8 @@ void blk_add_timer(struct request *req)
- 	if (!req->timeout)
- 		req->timeout = q->rq_timeout;
+-	if (blk_mq_req_expired(rq, expired))
++	if (blk_mq_req_expired(rq, expired)) {
+ 		blk_mq_rq_timed_out(rq);
++		/* If its timer has been started again, count the new deadline */
++		blk_mq_req_expired(rq, expired);
++	}
+ 	return true;
+ }
  
--	req->rq_flags &= ~RQF_TIMED_OUT;
-+	if (req->rq_flags & RQF_TIMED_OUT)
-+		blk_rq_change_timed_out(req, false);
- 
- 	expiry = jiffies + req->timeout;
- 	WRITE_ONCE(req->deadline, expiry);
-diff --git a/block/blk.h b/block/blk.h
-index 50abfd9328861..694d3f94ced5b 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -332,6 +332,20 @@ static inline void bio_integrity_free(struct bio *bio)
- unsigned long blk_rq_timeout(unsigned long timeout);
- void blk_add_timer(struct request *req);
- 
-+/*
-+ * The timeout handler changes RQF_TIMED_OUT in a request which it does not
-+ * own: whoever completes it changes rq_flags at the same time, with plain
-+ * loads and stores. Never write back a flag that has changed under us.
-+ */
-+static inline void blk_rq_change_timed_out(struct request *rq, bool set)
-+{
-+	req_flags_t old = READ_ONCE(rq->rq_flags), new;
-+
-+	do {
-+		new = set ? old | RQF_TIMED_OUT : old & ~RQF_TIMED_OUT;
-+	} while (!try_cmpxchg(&rq->rq_flags, &old, new));
-+}
-+
- enum bio_merge_status {
- 	BIO_MERGE_OK,
- 	BIO_MERGE_NONE,
 -- 
 2.53.0
 
