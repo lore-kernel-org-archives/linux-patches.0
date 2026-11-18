@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050968;
-	b=GsLgZu3fqyBOTBxb5UqllQiWerCjHklfjzB3wJolbZeg/rW42HrtZ87DI5uIBor4IGxq
-	 VJxPejJsrizjbT0c12IZAxzZF4LBdqX3O1WjmjZc7ucLjquxtFxf01VmPmiVl96zU0CV4
-	 7a5ylxJgX4zQWYvrKveZ8lzv5c1wa0oQLLF9DDQkGFbXhU3afhKa5MSFtuJzJ2yCMV4pW
-	 +xUSMzqQaP10Be4o1eRJbs1RUvhGwoPlwvl5YyDI2M0VvQuiIHO+JGSMWCXebB+1BO5Of
-	 GwuCN2g4rnDlhNUZfb8Oq1q4Bx6EcIqsEJ1RjA4/sSLIclCx+Hga2H9YBh9k9bGr0mA==
+	t=1795050971;
+	b=XePMxMZV0JNe9YJCe0rVGIRzHd6KGkHEIecuww+0MNxa7/43yLZ4UDkWvP624C8i7456
+	 A8FuS23l2AOELlzNynUe8yZC1bZZQEI35NR4/a6KqdWel25WKxlRv+E6jz+vzE35Uh0F2
+	 JXRzf+A+PyeAjEcnHposPak9XSn9a64SbePWARslNNZ3lu+YQzTYIkW7aFS9VJRINulTo
+	 Twk8EkbFC/jn6PRh1k6TEu15CF2Eg2wM+LiaYm1mxlC++F1A+0wDivQQ5bUGk/VwLgdN7
+	 DTIU3NqfA+Tj9zv8KZaqgAs3z0BwXHvIHVMT14lYRGiMzwOzAG4sR0kIOGi2dn9JZkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050968;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050971;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ghSyl/eLEw065e1dkyggxwOrkPu1ec8lSm2aYYgzzpQ=;
-	b=WwP8QkGHtHrQbyV1CKjffrxJlRzosKcZbNztWP8qphSA+AkHVk82OYiFfni/ZET6pjpy
-	 x7mqgjGGdUibQuzEFbQPvZHIktZUjeY99SvLjHTF/C9J+G8vvw0hGc9GM7GCnz1cdLCGj
-	 WMGdRkBJyLKUI4LqlFiBJSZLCnQKzEsuC5Y8FbzEUM2xUJMm7HCmfONJOealUUMxSCq5U
-	 wfvd72z+28EAgjgUoRiJ839SkvC5Wacw4yFadyjy1cpCvM6vZTlIEYnbBWinePrdki4mZ
-	 slYg1/J3+m5CXEYYdYCGJqF0Bz8E60Y1Rwd5sHmYTBCc7H5akyl1m6ed8GXrNYOkKEg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=7yjNVWce0gwRmgh52LDh4oNjAJhJFFFdO+m1QqZajC4=;
+	b=W0TFdaoBXlbZoeE2xMrMn6nJifiq929ty7F6sW2RviDuJgKR330iJF51ahxYUhtureve
+	 D7yHIsQuSry4b4fhDUmJ85IrMZhY3pHjP8yTbmon5PRa/jab0vEC/U0JTMQZnKij20lLg
+	 x3WDB87d7FpoU4dh+KvRYQbVU2Zwx0+hi+JveZCUwvRSgWxHPY7hpUpkML+f7wq60qcPh
+	 EsklqmcLfacjaV8QcYIU1bCH/P5UgP+ZRgLsZnb2zYgse9u2BXIzw+TtMtPaUxkL1MwM8
+	 qkGqFBMvzlr/hLRvD1mUsVxx+eCCrB7Z5z6mAadba26GunQeUa66+L36d28C41ED77Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vslT4nPj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=utQtXK2S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D22F606A325;
-	Thu, 19 Nov 2026 01:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E588606A320;
+	Thu, 19 Nov 2026 01:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vslT4nPj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D60C1F000C4;
-	Thu, 19 Nov 2026 01:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=utQtXK2S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE9C1F000C4;
+	Thu, 19 Nov 2026 01:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050968;
-	bh=ghSyl/eLEw065e1dkyggxwOrkPu1ec8lSm2aYYgzzpQ=;
+	s=korg; t=1795050970;
+	bh=7yjNVWce0gwRmgh52LDh4oNjAJhJFFFdO+m1QqZajC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vslT4nPjDiGNB8L91UHJTM0c+tF+4KLaTnrppA/iELCDlwVEJBip28gG5scD7lyey
-	 CsbcAqtX8P90xjrP4wB3KVA7ehaW7o3LHE6uMOKZc0dvquOfcu1PwPyAqJb28lD/ji
-	 aU5VAh3W9ZguAUPyn396ZogJ9Iz8Edp9vHohR5Mw=
+	b=utQtXK2SC0puW9XzC6y4av8DrMDF/2LXeHF9IluaQvuyn0ErzdF94hNyL99YVBvMv
+	 SsPd/yl0gneYkmJ/GyWzLs8zorSsrnjEK61fbkK2lIufFIvxIX3m9cgnTUKBer9Jv/
+	 uYaAjEXaMLqu/NSdFk19ihy7adcanj16jI+bm4gA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juanlu Herrero <juanlu@fastmail.com>,
-	Anand Natarajan <anand@meta.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0010/2214] io_uring/poll: avoid retry wakeup loss when dropping ownership
-Date: Wed, 18 Nov 2026 15:28:06 +0100
-Message-ID: <20261118150010.564401810@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	=?UTF-8?q?J=C3=A9r=C3=A9my=20Jean?= <Jeremy.Jean@oss.cyber.gouv.fr>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 5.15 0011/2214] lib/crypto: arm64: Fix lost Poly1305 carry when resuming NEON state
+Date: Wed, 18 Nov 2026 15:28:07 +0100
+Message-ID: <20261118150010.597730300@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -63,54 +62,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juanlu Herrero <juanlu@fastmail.com>
+From: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
 
-[ Upstream commit 937d38dcacd675dc0572d6c9b6743960df3128ed ]
+commit 24f07e8c07a0c0dd275331cbb41c79a78741eef9 upstream.
 
-If a wakeup sets IO_POLL_RETRY_FLAG between the owning task consuming
-the existing instance of IO_POLL_RETRY_FLAG and the loop check
-of io_poll_check_events(), then we stall on processing the request
-until an unrelated wakeup comes along.
+When poly1305_blocks_neon() resumes from a base 2^26 accumulator and the
+next update contains an odd number of full 16-byte blocks, it processes
+one leading block through poly1305_mult() so that the remaining NEON
+work has an even block count.  That requires converting the accumulator
+to the base 2^64 form used by poly1305_mult().  The final ADC of that
+conversion stores the carry into d2, but the following accumulation and
+poly1305_mult() use h2.  If the conversion carries across bit 128, the
+carry is dropped and the emitted tag is wrong.
 
-Using atomic_cmpxchg instead of atomic_sub_return to guarantee both the
-count v and poll_refs are 0 and no wake-ups are missed.
+This was introduced by Cryptogams commit 03dc4adf91c8
+("arm/poly1305-armv*.pl: optimize branches."), which removed the
+reduction that consumed d2 shortly before Linux imported the code.
+OpenSSL's copy did not take that change.
 
+The carry is possible because the NEON code stores the accumulator [h0,
+h1, h2, h3, h4] in a lazily reduced, redundant base 2^26 form: its final
+carry chain leaves h0, h2, h3 < 2^26, but h1 and h4 may slightly exceed
+2^26 - 1.  For example, the reachable state
+
+  h0 = 4
+  h1 = 2^26
+  h2 = 2^26 - 1
+  h3 = 2^26 - 1
+  h4 = 2^24 - 1
+
+represents 4 + 2^26*2^26 + (2^26-1)*2^52 + (2^26-1)*2^78 +
+(2^24-1)*2^104 = 2^128 + 4, despite the bit representing the 2^128 term
+(bit 24 of h4) not being set; the extra comes from the h1 limb being
+above the normal base 2^26 range.  When this value is converted into the
+non-redundant base 2^64 form, a carry into the new 2^128 bit (in bit 0
+of h2) is necessary to preserve the value.
+
+Given the above bounds, a carry into bit 128 happens exactly when
+h1 >= 2^26, h2 = h3 = 2^26 - 1, and h4 mod 2^24 = 2^24 - 1.
+
+Store the carry into h2, matching the other base 2^26 to base 2^64
+conversions in poly1305_blocks() and poly1305_emit().
+
+This bug causes an incorrect tag to be emitted.  However, this is
+unlikely to happen in practice where Poly1305 is used with a random key,
+since the random key tends to distribute the accumulator values
+throughout their valid range.  There isn't an obvious way for an
+attacker without knowledge of the r_key to cause [h0, h1, h2, h3, h4] to
+land on the precise values where this bug occurs.
+
+[EB: Rewrote the commit message to more clearly describe the bug and
+ its impact, and simplified explanation about why there's a carry bit.]
+
+Fixes: f569ca164751 ("crypto: arm64/poly1305 - incorporate OpenSSL/CRYPTOGAMS NEON implementation")
 Cc: stable@vger.kernel.org
-Fixes: a26a35e9019f ("io_uring: make poll refs more robust")
-Signed-off-by: Juanlu Herrero <juanlu@fastmail.com>
 Assisted-by: LLM
-Suggested-by: Anand Natarajan <anand@meta.com>
-Link: https://patch.msgid.link/20261013-pu-cmpxchg-v1-1-4ddc10fd8a03@fastmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ sashal: Relocated the change to io_poll_check_events() in the monolithic io_uring implementation. ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Signed-off-by: Jérémy Jean <Jeremy.Jean@oss.cyber.gouv.fr>
+Link: https://patch.msgid.link/20261009125354.315476-2-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/crypto/poly1305-armv8.pl |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 8d5791d8f4031..a87b24c77c0ee 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -5690,8 +5690,8 @@ static int io_poll_check_events(struct io_kiocb *req)
- 		 * Release all references, retry if someone tried to restart
- 		 * task_work while we were executing it.
- 		 */
--	} while (atomic_sub_return(v & IO_POLL_REF_MASK, &req->poll_refs) &
--					IO_POLL_REF_MASK);
-+		v &= IO_POLL_REF_MASK;
-+	} while (atomic_cmpxchg(&req->poll_refs, v, 0) != v);
+--- a/arch/arm64/crypto/poly1305-armv8.pl
++++ b/arch/arm64/crypto/poly1305-armv8.pl
+@@ -372,7 +372,7 @@ poly1305_blocks_neon:
+ 	adc	$h1,$h1,xzr
+ 	lsr	$h2,x14,#24
+ 	adds	$h1,$h1,x14,lsl#40
+-	adc	$d2,$h2,xzr		// can be partially reduced...
++	adc	$h2,$h2,xzr		// preserve carry into top limb
  
- 	return 1;
- }
--- 
-2.53.0
-
+ 	ldp	$d0,$d1,[$inp],#16	// load input
+ 	sub	$len,$len,#16
 
 
