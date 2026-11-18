@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025397;
-	b=UQYmzuSBJI0Av3Ibz3us1+pnTfBNLSw54K+CQ1KW/XHjpxP9hv5wf4RjgQb4Iaz0089I
-	 vMSpX4B5MseV+y1zrdhtMvZwYZAfKXpdA6n9kDMNrJEBhNBDax2h4UkteD1MLsWgN+MB3
-	 Nyv+Lfhjx/oc9swGOLibcZ2ELjcg9rX972p2+GcV9a1IIQWOTuL3CXWvu7MI0mDypk9KP
-	 hYSqYPNMdN+gGo6ggSvEy77DbTjdzVOThrQLsGgemZMKxLgGxpXJm5KwnK5A5AKgozI3O
-	 pXZMcr0JCEdDGeBArrN6KUWJeLOJqGRDgUVQSLeMaAyrJNiVob2sF7KDjHwHlDxwA6w==
+	t=1795025401;
+	b=5Q3+yBMqWsLZlLtCURE0Pegpvr9V7GDQVEmIUhfYkkfUm7sACKud2ZNYSmTCKxLExKsj
+	 42zvaIsoWjfMfKj+r1dZcvVdwomWvNoFvnRuoMZJjhyCmFqfhdULrvZeG9/6nW/ygqMmB
+	 Qf31NgOQpwgUXBim5Zr59Qog2eaFcujNbCKO+OGBmihIk/27a4hA1B+keUXJt3ZMJPVtQ
+	 WpQz4d+ffO42hxx4iXC37yLiCD5x3AQCXP6zSL2VOVhGvd5svYDgD7Oa4Yq42+EwTTcqt
+	 +IC4ades9fdVhtgasyyUCsCHzYNsdkRIQHNlmfFrkNVltRWUfl6i/0vRpKM10I179wA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025397;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025401;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o4h0LD4MRuwFBwB/Rc9LkG4cLqYtCeBosA3OQZcROiY=;
-	b=d291/90FEWx5MJLTFHSqkXVcpPitzMj8KXJ/LVGLH0pA90eaE+DtHPn0VRgH3L7IKAl6
-	 hjiqeFrzvQk+vWjMyp5FFw3pMjIevvhoesM1JFxnWMWzIrgL6VBuNtWbBV4hZxTNvhXtX
-	 6mkkpRdnBYlm/OAqqfLQSP0C/uY7C4GIn3DLrLUgbdt1rVi4QgnGroD/ItTib0hbX/rZz
-	 W/LHz+F29bn6F2ozNexgG7tFjfPoAiE8CDVk56QiGMSIZw+UruRtFW00oT7Ir6RXf8sfL
-	 AQRhCVry7y7TF3faGOLQd4UkT8NGbevwghkCqxUvoRK92ym4WMRojeoS+aNg/VAPqvg==
+	bh=ZKSRg9l14BqfrbGU329M6xJNJ2fNyuKQnQ4LYXuWZgw=;
+	b=BaA3Xg+FeM++FxKD3us2+IcNRcH0VWgNs2q7FLz/VN89OlGadThW8KMmUYgZKAquH/W2
+	 /mfwmnChxPqvHXOHw6Dj6gyl5Xf2NZSNfPFBcV1oWtGaz768usWDoP1VQQD3W6VEVXr/y
+	 c56ienIskk5FW/i+UaWe5sTPrg3VuP1l9uy2aRujTyFT0mMMiyWPdOMIhWassSWb37gpZ
+	 IMsJTLE77JI5mjqh/0vovoFcCvYWpnB50XDCtBRpWfuWDUlMR632TmbtcSuxNcWpIoyUH
+	 711usFljFmKhfmQ9vHlGNj1Tj6yYXXAKjdG6Ajnd6bycIFVDGPKTmU8rmeJ8gs4W4rg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXaTfzqY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OK6P9CrR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB863606A31C;
-	Wed, 18 Nov 2026 18:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7D8606A31C;
+	Wed, 18 Nov 2026 18:10:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iXaTfzqY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C881E1F000C5;
-	Wed, 18 Nov 2026 18:09:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OK6P9CrR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1531F000C4;
+	Wed, 18 Nov 2026 18:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025397;
-	bh=o4h0LD4MRuwFBwB/Rc9LkG4cLqYtCeBosA3OQZcROiY=;
+	s=korg; t=1795025401;
+	bh=ZKSRg9l14BqfrbGU329M6xJNJ2fNyuKQnQ4LYXuWZgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iXaTfzqYGBuW+3uPN97W3VZxwK/OILGDpV6V8eFQ+aj1Y9+a/+13GSO5PA62vu2Kt
-	 tJgW2su0zfMVL/GFVb2AjN09dNGMCEnxLX5qTLDIFT1XGTFTYTA704TPzYnqxe2GgP
-	 EAIMqmx9n4OCAT400b6kRR4DpQSYrKx1cowuYEuo=
+	b=OK6P9CrRcmTb+YbrvNJSSYTmVcnF4AbCXI2hU7UJrrZLWpESbVqTdIedHFC4TlfL5
+	 APMpbV2PwdpOTxIhLwzdUQtlTQ5YUP9cYujrpXka5aRsW+opn+iE3M5eZGX7qlK57Z
+	 dTDn021yUXMSZDOwZXBIzn9HS75z5iNgR3BCjY5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Yang <jason98166@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1024/2151] phy: rockchip-samsung-dcphy: Enable runtime PM at PHY core level
-Date: Wed, 18 Nov 2026 15:45:59 +0100
-Message-ID: <20261118150159.698634044@linuxfoundation.org>
+Subject: [PATCH 6.18 1025/2151] phy: rockchip: naneng-combphy: Fix TX detect RX termination errata
+Date: Wed, 18 Nov 2026 15:46:00 +0100
+Message-ID: <20261118150159.731485465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,57 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Yang <jason98166@gmail.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 261e84f9278f4373970471ad71479df20d82ed4c ]
+[ Upstream commit d68e47a06c5cdc90cbd29ce2e74fa61eab5d47cc ]
 
-phy_create() only enables runtime PM on the new PHY device if the parent
-already has it enabled, and this driver enables it afterwards. The PHY
-device therefore never gets runtime PM, and phy_pm_runtime_get_sync()
-returns -ENOTSUPP for every phy_init() and phy_power_on(). The block is
-still resumed today, but only through the supplier link fw_devlink builds
-from the phys phandle, which fw_devlink=off and =permissive do not.
+Some PHY revisions may fail to detect the peer RX's termination
+resistor (RTERM) under certain critical temperature conditions.
+This causes TX detection failures on PCIe links.
 
-Move devm_pm_runtime_enable() before devm_phy_create(), as done for the
-sibling HDPTX PHY in commit 10ba8479f460 ("phy:
-phy-rockchip-samsung-hdptx: Enable runtime PM at PHY core level").
+Add a workaround to force the RTERM detection ready signal for
+affected PHY revisions. This ensures reliable TX-to-RX termination
+detection across all operating temperature ranges.
 
-Fixes: b2a1a2ae7818 ("phy: rockchip: Add Samsung MIPI D-/C-PHY driver")
-Signed-off-by: Jason Yang <jason98166@gmail.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://patch.msgid.link/20260821-dcphy-rpm-v1-v1-1-a7db728b2539@gmail.com
+The fix applies to RK3562, RK3568, RK3576 and RK3588 SoCs which share
+the same PHY IP with this hardware errata.
+
+Fixes: 7160820d742a ("phy: rockchip: add naneng combo phy for RK3568")
+Fixes: f13bff25161b ("phy: rockchip-naneng-combo: Support rk3562")
+Fixes: ba8ad7eece66 ("phy: rockchip-naneng-combo: add rk3576 support")
+Fixes: a03c44277253 ("phy: rockchip: Add naneng combo phy support for RK3588")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://patch.msgid.link/1788158204-161347-1-git-send-email-shawn.lin@rock-chips.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../rockchip/phy-rockchip-naneng-combphy.c    | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c b/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
-index d4e49db6feeda..d9a542044aca3 100644
---- a/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
-+++ b/drivers/phy/rockchip/phy-rockchip-samsung-dcphy.c
-@@ -1609,16 +1609,16 @@ static int samsung_mipi_dcphy_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(samsung->grf_apb_rst),
- 				     "Failed to get system grf_apb_rst control\n");
+diff --git a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
+index 7f8fc8e6d4890..2b4d5550a311c 100644
+--- a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
++++ b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
+@@ -106,6 +106,9 @@
+ #define RK3568_PHYREG18				0x44
+ #define RK3568_PHYREG18_PLL_LOOP		0x32
  
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to enable runtime PM\n");
++#define RK3568_PHYREG26				0x64
++#define RK3568_PHYREG26_FORCE_RTERM_DET_RDY	BIT(5)
 +
- 	samsung->phy = devm_phy_create(dev, NULL, &samsung_mipi_dcphy_ops);
- 	if (IS_ERR(samsung->phy))
- 		return dev_err_probe(dev, PTR_ERR(samsung->phy), "Failed to create MIPI DC-PHY\n");
+ #define RK3568_PHYREG30				0x74
+ #define RK3568_PHYREG30_GATE_TX_PCK_SEL         BIT(7)
+ #define RK3568_PHYREG30_GATE_TX_PCK_DLY_PLL_OFF BIT(7)
+@@ -193,6 +196,7 @@ struct rockchip_combphy_cfg {
+ 	unsigned int num_phys;
+ 	unsigned int phy_ids[3];
+ 	const struct rockchip_combphy_grfcfg *grfcfg;
++	bool force_rxterm_det_rdy;
+ 	int (*combphy_cfg)(struct rockchip_combphy_priv *priv);
+ };
  
- 	phy_set_drvdata(samsung->phy, samsung);
+@@ -264,6 +268,17 @@ static int rockchip_combphy_init(struct phy *phy)
  
--	ret = devm_pm_runtime_enable(dev);
--	if (ret)
--		return dev_err_probe(dev, ret, "Failed to enable runtime PM\n");
--
- 	phy_provider = devm_of_phy_provider_register(dev, samsung_mipi_dcphy_xlate);
- 	if (IS_ERR(phy_provider))
- 		return dev_err_probe(dev, PTR_ERR(phy_provider),
+ 	switch (priv->type) {
+ 	case PHY_TYPE_PCIE:
++		/*
++		 * Hardware Errata: TX fails to detect peer RX termination.
++		 * Some PHY revisions may fail to detect remote RX's RTERM
++		 * (receiver termination resistor) under certain critical
++		 * temperature conditions. Set force rterm detect ready to
++		 * fix it.
++		 */
++		if (priv->cfg->force_rxterm_det_rdy)
++			rockchip_combphy_updatel(priv, RK3568_PHYREG26_FORCE_RTERM_DET_RDY,
++					RK3568_PHYREG26_FORCE_RTERM_DET_RDY, RK3568_PHYREG26);
++		fallthrough;
+ 	case PHY_TYPE_USB3:
+ 	case PHY_TYPE_SATA:
+ 	case PHY_TYPE_SGMII:
+@@ -747,6 +762,7 @@ static const struct rockchip_combphy_cfg rk3562_combphy_cfgs = {
+ 	},
+ 	.grfcfg		= &rk3562_combphy_grfcfgs,
+ 	.combphy_cfg	= rk3562_combphy_cfg,
++	.force_rxterm_det_rdy  = true,
+ };
+ 
+ static int rk3568_combphy_cfg(struct rockchip_combphy_priv *priv)
+@@ -964,6 +980,7 @@ static const struct rockchip_combphy_cfg rk3568_combphy_cfgs = {
+ 	},
+ 	.grfcfg		= &rk3568_combphy_grfcfgs,
+ 	.combphy_cfg	= rk3568_combphy_cfg,
++	.force_rxterm_det_rdy  = true,
+ };
+ 
+ static int rk3576_combphy_cfg(struct rockchip_combphy_priv *priv)
+@@ -1233,6 +1250,7 @@ static const struct rockchip_combphy_cfg rk3576_combphy_cfgs = {
+ 	},
+ 	.grfcfg		= &rk3576_combphy_grfcfgs,
+ 	.combphy_cfg	= rk3576_combphy_cfg,
++	.force_rxterm_det_rdy  = true,
+ };
+ 
+ static int rk3588_combphy_cfg(struct rockchip_combphy_priv *priv)
+@@ -1420,6 +1438,7 @@ static const struct rockchip_combphy_cfg rk3588_combphy_cfgs = {
+ 	},
+ 	.grfcfg		= &rk3588_combphy_grfcfgs,
+ 	.combphy_cfg	= rk3588_combphy_cfg,
++	.force_rxterm_det_rdy  = true,
+ };
+ 
+ static const struct of_device_id rockchip_combphy_of_match[] = {
 -- 
 2.53.0
 
