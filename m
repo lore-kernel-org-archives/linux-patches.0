@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038378;
-	b=vTmZoXeRibA0gfTTLMNrymgKr7Q7rVP26bKfbvY+WWXFpHBmMgf6RsRn+kcfGvFx434s
-	 ltJHZwZygGNjgVPDfyUef2CZs6/PPIkqPH0wT1etDscoV4mFALO2fLXxPN85O9Jb7z/pq
-	 fJvtap4gWPLLzugSMEneiODIFp5Jr7e7au4EjSP/Yzih7WeuurY2DEKKmgoZfGQf4e94w
-	 C8s7GBVW2JoGzhPLainwTrR7gdHZcbH8BfXT5vQaructSaCixJibPFyYfCHa4lG3yOMe5
-	 TBwUr3zJiQuXb981N0QXn/xoLhKnc2gYlR7+IhELJAJg56oI7gPlJ9wYPYBQLFCFQAg==
+	t=1795038381;
+	b=2gOSjA0wncSgknIon/0BXNVe1giHg61dtHrH73btKDZ0RU3gjzQ6CupEe+6Emk+kMt8p
+	 dQclGWIomv1lD8BfU/o25K6HN5G73Rs2gjHG9plcCsU2WYtcrMTIKuhTyZMz4SUjbDFnQ
+	 jVTU+YYDoSb2xBReePQxNq+HnsqOY8fvqgV88appswSZENSWVtC38JEoO50B3XbMp7VmT
+	 nsAwy4F+drjamwnYgMze3xlkreQANZQYmV82l4qXnJ2mJwYkulwvp+zDdeiSK9ruZ8n0F
+	 /JtZqnVFm36ovKVA1Aub7KY71xjVGTeRvOHqgG4JtYcZ/m36ePRIK22xspaCnKUeE6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038378;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038381;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=14kypSOtd59gy0CVRJu+bBAiavjk3wE4DbPLPpXXJZ4=;
-	b=CPGx0HzYCUbHAmGfypjTVwWqDgUjEFyJE3gxLqvgn0KYnxudnvUPN8cXIIKqMXQiP1Wj
-	 S0YslmRKGfdv59qBcbt/4rsYLsJ7h30Fg6IXUoMuqDOeCiZOUf8tMDDraEeFr31eZlTrY
-	 DpjzducL7gItq3VEQrLJiBUo3mQraFZ6yEOXvXOE6XYxxND8ZPbUfUWzGQ+I6DlJRM/eG
-	 qbHBDf1NCIGyAeHkEbxuhU7nr6d1380SO43rW4WCYwnsTLVWf0vteHvDg3/YUA/RC+eKi
-	 ChuJo4n93l9kxkf8PmzjhQhQTPHx6g3Oyj+uPFz2DJRW633w78LCxJkVH1SyuKP1TDA==
+	bh=cOGiIR6BVn6gmluI8itvtDAK0eVQlUQnzZxXKlZODGw=;
+	b=MIkWlviuktHb0fq0kP4/Uy3XR6jcvHVhZan15cykZyQBcWiF7cT3590Uma2pLA1iXPUM
+	 RYQ3ifdrlouNRfRx/ky+Q8mPF92WPMIZ1e7uk6lQAx/Hc/Gxa7kZ6wRNRCpPTAFDJvRkQ
+	 rIdGCkUWzfyn92ueqmgzTgsPJBCmP4rmzpUu8rgLKAwcAsdKQsPLxMSJFCDXZaLRGXoF9
+	 +QciBShXz129bIubEVJgBl1oWWEcw8wjveJe0Ir//U9CIO++BgtJnLlzFA69OznR0s5gA
+	 tIWYT022SP+AuHW5OIwuFrg+zdZ5uxt7J0rGYlb4qjSXrFMXTv2e2gTVWNDNujSJvHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9tlmerl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxVhQfHF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3AB606A31C;
-	Wed, 18 Nov 2026 21:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79260606A325;
+	Wed, 18 Nov 2026 21:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Y9tlmerl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0558E1F000C8;
-	Wed, 18 Nov 2026 21:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxVhQfHF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D161F000C4;
+	Wed, 18 Nov 2026 21:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038378;
-	bh=14kypSOtd59gy0CVRJu+bBAiavjk3wE4DbPLPpXXJZ4=;
+	s=korg; t=1795038381;
+	bh=cOGiIR6BVn6gmluI8itvtDAK0eVQlUQnzZxXKlZODGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Y9tlmerlP+qb6oiw+iLs3GBIRzSZRDUEHXuhH6gqQgHWUtOEnUBPtiZ6gY9sZ7bj6
-	 QF8bkhdCH3PhYulCQiAbIApn6w4KNKRhsMBfgcnBOaoe4kU0uG8LRcCU5JGMqy8eKP
-	 RF7Sa/TnLr4ZaRZO1nnP+cLuit5tBP9ueXYu+cD0=
+	b=IxVhQfHFDmdBXjBLxIip6Cp53cG7Pc1inqCi5hWbaU/2aLUoGJdnnWh3MFiG2pFTq
+	 zsRE0HHN+FpFo0/mBlDckMAHjQ9fX8vyDnscuW2LOCXbpyxmxKVlClTAQlbysk3J6i
+	 Cz15MxeDP9sXUAgwZLiN5NJCOwyLezS1Qjm7kof4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sung Byeongchan <tjdqudcks0424@naver.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Zhiling Zou <roxy520tt@gmail.com>,
+	Ren Wei <enjou1224z@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Vega <vega@nebusec.ai>,
+	Ye Liu <liuye@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1722/3318] virtiofs: validate fixed-output response length
-Date: Wed, 18 Nov 2026 15:39:04 +0100
-Message-ID: <20261118150413.524398558@linuxfoundation.org>
+Subject: [PATCH 6.6 1723/3318] mm/page_table_check: skip zero pages
+Date: Wed, 18 Nov 2026 15:39:05 +0100
+Message-ID: <20261118150413.555295452@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,101 +71,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sung Byeongchan <tjdqudcks0424@naver.com>
+From: Zhiling Zou <roxy520tt@gmail.com>
 
-[ Upstream commit 5364d081125a34e90851fbb46ecc93f79339ce78 ]
+[ Upstream commit 33afd07412a1efe5b750a3fd5eb0272ebdd12761 ]
 
-A short successful virtiofs response can leave the fixed-output portion of
-the request argument buffer unwritten.  The completion path nevertheless
-copies the full declared output to the request destination, allowing stale
-allocator contents to reach callers such as fuse_statfs().
+page_table_check_set() accounts pages by whether they are PageAnon().  The
+shared zero page is a special page, not an ordinary file-backed page.
+Read faults on private anonymous mappings can install many read-only PTEs
+that point at the zero page, but page_table_check currently accounts them
+in file_map_count.
 
-Require successful fixed-output responses to contain their complete
-declared output.  Continue to permit a shorter final argument only for
-out_argvar requests.  Reject positive and internal restart error values
-and require valid error replies to be header-only.  The error already
-stored in the FUSE output header is returned by fuse_request_end(), so do
-not copy output arguments from an error reply.
+That lets an unprivileged process populate enough zero-page mappings to
+overflow file_map_count and trip the BUG_ON() in page_table_check_set().
 
-This was found by source review with AI assistance.  A header-only
-successful FUSE_STATFS reply returned stale fields in nine of nine calls
-across three boots.  The fixed kernel rejected the short response and
-preserved complete replies, valid negative-error replies, and
-variable-output replies.
+Skip zero pages in page_table_check accounting.  They do not need the
+anonymous/file mapping conflict checks that page_table_check performs for
+ordinary pages, and this keeps the existing counter size and page_ext
+layout unchanged.
 
-Fixes: a62a8ef9d97d ("virtio-fs: add virtiofs filesystem")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Sung Byeongchan <tjdqudcks0424@naver.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://lore.kernel.org/1f8848512d2e3ded944f8d595c29faee8fdaeab0.1784645969.git.roxy520tt@gmail.com
+Fixes: df4e817b7108 ("mm: page table check")
+Signed-off-by: Zhiling Zou <roxy520tt@gmail.com>
+Signed-off-by: Ren Wei <enjou1224z@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Vega <vega@nebusec.ai>
+Assisted-by: Codex:gpt-5.4
+Cc: Ye Liu <liuye@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+[ sashal: Replaced unavailable is_huge_zero_pfn() with is_huge_zero_page(compound_head(pfn_to_page(pfn))). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ mm/page_table_check.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index 7b1e9291c3ef4..b5ecbd146301b 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -535,6 +535,10 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- 	unsigned int num_out;
- 	unsigned int i;
+diff --git a/mm/page_table_check.c b/mm/page_table_check.c
+index 75269bc47547f..4356aa8563c5b 100644
+--- a/mm/page_table_check.c
++++ b/mm/page_table_check.c
+@@ -67,7 +67,8 @@ static void page_table_check_clear(unsigned long pfn, unsigned long pgcnt)
+ 	unsigned long i;
+ 	bool anon;
  
-+	/* fuse_request_end() returns this error; there are no args to copy. */
-+	if (req->out.h.error)
-+		goto out;
-+
- 	remaining = req->out.h.len - sizeof(req->out.h);
- 	num_in = args->in_numargs - args->in_pages;
- 	num_out = args->out_numargs - args->out_pages;
-@@ -560,6 +564,7 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- 	if (args->out_argvar)
- 		args->out_args[args->out_numargs - 1].size = remaining;
+-	if (!pfn_valid(pfn))
++	if (!pfn_valid(pfn) || is_zero_pfn(pfn) ||
++	    is_huge_zero_page(compound_head(pfn_to_page(pfn))))
+ 		return;
  
-+out:
- 	kfree(req->argbuf);
- 	req->argbuf = NULL;
- }
-@@ -567,7 +572,9 @@ static void copy_args_from_argbuf(struct fuse_args *args, struct fuse_req *req)
- /* Verify that the server properly follows the FUSE protocol */
- static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
- {
-+	struct fuse_args *args = req->args;
- 	struct fuse_out_header *oh = &req->out.h;
-+	unsigned int expected;
+ 	page = pfn_to_page(pfn);
+@@ -107,7 +108,8 @@ static void page_table_check_set(unsigned long pfn, unsigned long pgcnt,
+ 	unsigned long i;
+ 	bool anon;
  
- 	if (len < sizeof(*oh)) {
- 		pr_warn("virtio-fs: response too short (%u)\n", len);
-@@ -582,6 +589,29 @@ static bool virtio_fs_verify_response(struct fuse_req *req, unsigned int len)
- 			oh->unique, req->in.h.unique);
- 		return false;
- 	}
-+	if (oh->error <= -ERESTARTSYS || oh->error > 0) {
-+		pr_warn("virtio-fs: invalid error value (%d)\n", oh->error);
-+		return false;
-+	}
-+
-+	if (oh->error) {
-+		if (len != sizeof(*oh)) {
-+			pr_warn("virtio-fs: error response too long (%u)\n", len);
-+			return false;
-+		}
-+		return true;
-+	}
-+
-+	expected = sizeof(*oh) +
-+		   fuse_len_args(args->out_numargs, args->out_args);
-+	if (len > expected ||
-+	    (len < expected &&
-+	     (!args->out_argvar ||
-+	      expected - len > args->out_args[args->out_numargs - 1].size))) {
-+		pr_warn("virtio-fs: invalid response length (%u, expected %u)\n",
-+			len, expected);
-+		return false;
-+	}
- 	return true;
- }
+-	if (!pfn_valid(pfn))
++	if (!pfn_valid(pfn) || is_zero_pfn(pfn) ||
++	    is_huge_zero_page(compound_head(pfn_to_page(pfn))))
+ 		return;
  
+ 	page = pfn_to_page(pfn);
 -- 
 2.53.0
 
