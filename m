@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047448;
-	b=36z7pbxr5M+OPcujFoco/DRQ7Wooa2u+rtkUs3ZeyMsb8SAkU4/rfFkQnxOlcj1zVb3D
-	 Z7nGzZR50uNmSw+NPalGz/+2Jadg4EwdspTfdIUS6eynAEcKeF9e9AfdUtasuqGzfMSAG
-	 cr7OM2hYktbCh+GoGrsPaAVLN61b52J2TOo6IqBwI33KrEnSfenJkJvK3edlbKpleltoV
-	 u4VFoquC/Cc0Q4Fa8iy/LXBbfqlRVir/en7Q2bq7EQknrDQtsiIlcOaYBiztjKrv3bcKl
-	 53zgUfdOQyVlKYj/wPzj0UCf9LkYTtD8sfzeAnaLXE3e6HA0hQSbn4lxxoN7GZjgpvA==
+	t=1795047450;
+	b=rObnlxKChUkvkDuHG0k/qqceId41QciAPEp+CSqNNI0iz908pvoDnBLSg+Yl0MStbuRl
+	 ZU4FJgMC5kgdj62zxzqKRY7yvNU0Bk6mmIvlfi3Tc8rL4USrnfbzR9dgA34rrnwj5NxpF
+	 j4qrLut+jTUTPL4gGMLH4xcs79sEs6sdwXFTFBF73wfafraSskYCV9Vvcu1oqHsK3GA0s
+	 9BzuU5f8NjsKO28QTFwdw8HDXaw3DSeWPXsAN5r8Ied0kgiSeCztcuQ0BZlZp6lsrQfaV
+	 6ycIOMYm7St1UVKB+pOx5ASl/5xzHMaLM/u3aW95gb3DUBDfPKehnFk9uFXl3ACAjnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047448;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047450;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=O0tQL8e1VjCuB8/zrwp1w7d5Mg5xnA3/HAmlNRmJTWE=;
-	b=qA/4g/x+zXfiqJctWA2z9cjNESr4enFEh1UJzqy/6KfpjJCFvHBvS9mMJwNQrmtSbmY8
-	 JVWL00jymwLfs6//pVrgwZQ0vBnKgZq54qEgoWv8WcUJEMjNR+Uo0d7WiS5NRpslunqOI
-	 g2VNFPE9RGcRQXXZM+ekx6ZB+UqfdpMwJnexvl55myc5Ppk4ihRLypa5F9yH4hQ6vbqlI
-	 /uLp5DdSn17iezlC81jg1GocAVNfsDVMPL9zWwArX8kmQJ3yXI46kQ1JTsuLHcvITc8aM
-	 Qw+b8hRLQSdA/62J4TXWYxwVVpb9DbT3iuLXD2LhO0vmDcbfR+v2axZ3PVr51XBywXg==
+	bh=nIJjjU6QfaPOwCNIto6nkOoNxi+f0LXlsMdPeu1+8IQ=;
+	b=iReYYBSkcGi2npBbUF2KYnqyF9st8uNGHrzWGFsKwuKw78/zDyZ7323gBo2QVcP9+FzN
+	 bucsZk1w6AnwECeXBm3UuznRTfexUl935tKh5CWHb0P7lcvj44d6+SfmrQVBbDlyFtFDQ
+	 0p+DUxqrpmExBairy0nkhwVXb/Ym9SdsUugbwXPxNeats8SFETQsVjPIS+flNvsIbcTIt
+	 quKiXemqWDvi9crCnpfH3PoJtpIQCTeYgyjFPq+fQNLUZxzQXmXki4vqgEJeAUVsbuUWG
+	 zRWhqZ6ZYYHIa/25RMFUgyvCanIy04CieKPaczGQ2463QIHiV/VUveS5Q94NWCUTEwg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zsEjrKU/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uY3XySKP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE58606A31C;
-	Thu, 19 Nov 2026 00:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C740B606A331;
+	Thu, 19 Nov 2026 00:17:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zsEjrKU/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB891F000C4;
-	Thu, 19 Nov 2026 00:17:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uY3XySKP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2856A1F000C4;
+	Thu, 19 Nov 2026 00:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047447;
-	bh=O0tQL8e1VjCuB8/zrwp1w7d5Mg5xnA3/HAmlNRmJTWE=;
+	s=korg; t=1795047450;
+	bh=nIJjjU6QfaPOwCNIto6nkOoNxi+f0LXlsMdPeu1+8IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zsEjrKU/4JaNKuXckhyA+BGMWuOGS/z22BliDCZmtfzxCu7EKudwGrHr4DN+tbEPZ
-	 ERVVwwiavhJhXIMtYYybDtvXUFO6feRv/yzxIwSB+s9+VkqOaCm9XbovZRTSvGvEyQ
-	 A3pzhw1C0/t3sIMZjTvdfXcEZZ5Bmrtzfa5eQSR8=
+	b=uY3XySKPicZKDRagnNIkiIIWXkVin4upecBCg9nCsz1xGcNCNdpuSJeepajS0KvJC
+	 0x1fSniLinqxc6lLyt1Jf6f4OiphZr38ljNMSTIIvSEvCEr32+HfJPTgS4WVasXHz4
+	 VUjcPk22Kkx9ZerHgmqD2SbguYpwJhXWl6lxephU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Amir Goldstein <amir73il@gmail.com>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1601/2857] splice: fsnotify_access(in), fsnotify_modify(out) on success in tee
-Date: Wed, 18 Nov 2026 15:43:55 +0100
-Message-ID: <20261118150259.018655790@linuxfoundation.org>
+Subject: [PATCH 6.1 1602/2857] splice: fsnotify_access(fd)/fsnotify_modify(fd) in vmsplice
+Date: Wed, 18 Nov 2026 15:43:56 +0100
+Message-ID: <20261118150259.051845628@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -73,9 +73,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Ahelenia Ziemiańska <nabijaczleweli@nabijaczleweli.xyz>
 
-[ Upstream commit 576d498e0ac5caff2d9f6312573ab54d98f12d32 ]
+[ Upstream commit 7f0f1ea069e52d5a16921abd59377a7da6c25149 ]
 
-Same logic applies here: this can fill up the pipe, and pollers that rely
+Same logic applies here: this can fill up the pipe and pollers that rely
 on getting IN_MODIFY notifications never wake up.
 
 Fixes: 983652c69199 ("splice: report related fsnotify events")
@@ -84,26 +84,36 @@ Link: https://bugs.debian.org/1039488
 Signed-off-by: Ahelenia Ziemiańska <nabijaczleweli@nabijaczleweli.xyz>
 Acked-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Message-Id: <10d76dd8c85017ae3cd047c9b9a32e26daefdaa2.1688393619.git.nabijaczleweli@nabijaczleweli.xyz>
+Message-Id: <8d9ad5acb9c5c1dd2376a2ff5da6ac3183115389.1688393619.git.nabijaczleweli@nabijaczleweli.xyz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/splice.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/splice.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/fs/splice.c b/fs/splice.c
-index 418c03d9b9f84..c6649cd36c21a 100644
+index c6649cd36c21a..cf3d86d90bacc 100644
 --- a/fs/splice.c
 +++ b/fs/splice.c
-@@ -1722,6 +1722,11 @@ long do_tee(struct file *in, struct file *out, size_t len, unsigned int flags)
- 		}
+@@ -1260,6 +1260,9 @@ static long vmsplice_to_user(struct file *file, struct iov_iter *iter,
+ 		pipe_unlock(pipe);
  	}
  
-+	if (ret > 0) {
-+		fsnotify_access(in);
-+		fsnotify_modify(out);
-+	}
++	if (ret > 0)
++		fsnotify_access(file);
 +
+ 	return ret;
+ }
+ 
+@@ -1287,8 +1290,10 @@ static long vmsplice_to_pipe(struct file *file, struct iov_iter *iter,
+ 	if (!ret)
+ 		ret = iter_to_pipe(iter, pipe, buf_flag);
+ 	pipe_unlock(pipe);
+-	if (ret > 0)
++	if (ret > 0) {
+ 		wakeup_pipe_readers(pipe);
++		fsnotify_modify(file);
++	}
  	return ret;
  }
  
