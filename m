@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060407;
-	b=acpJeu2SB6R64ePXgSGbwEWAJ/eXp/eqKVqMUNP+OIqlhaxq0EcbWk3Y33dD8Qy9fyhl
-	 t/Izju+K+P3CVjesR4H+o//kN7Xhe+ktcWHbiYdgVtRv5o5HX01x0LRKB7s1ME8dvT5sS
-	 QnY//5iaPhh7nAeALjZGCXbm4mCaw9NHPzmO5Z21k9xfT7T8EByS5DYzc0yYhM6qPA5He
-	 TefSm3T2NAFjsjk/xRLDshdbYUBGbPluFmGsEnMbUG1IEJl07BvFbmP/Ta7YNl3/KG8xo
-	 maiNqingLn4rCl6G4AvPLeRTDCUgorNm8ravGaoDwQqY8Zqaoa1iqXXtGVsE/tQFurw==
+	t=1795060410;
+	b=LN31zv76l08c5oiuhFK9vM7Wa8G3DWn5jcxS2jUUl73RWmAIaxUWkiDIU0/ehT0Np+tW
+	 MaUFHq2sJvgtLAPRr3nw+HRAby3NVttolNjH96KpJKDkQnU2fvRjjXAZR37J8jODEDtAw
+	 Gbg0NXNPWXvkO7CCfXEQLi3Rx8M9Kgapq3TgPn2pX32bXFuxwogL2i2uGyWm31bPmZkr4
+	 WAzKi9BB4i2IhTVC+w6WjuICKRXfA8/xHNyqYo3vYXGx0Z8wN6uVyB4QGkHQJkqteseBC
+	 9mj4W0gcmL1AyVaqGe4gaolOrfJffzTemDLd4kE/d6taeukNmrNvOnZmeksIQqWtlvg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060407;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060410;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UOjI2l+yia4oi1FQ2a4zhXolhjP5ANaZhYUvYGhgPW0=;
-	b=wJRyfRT6tig4TikvR9/udno/5V9i186apF6W9bNsZslEHkmfnPtB6EMa8apYiWHwr6BO
-	 SMZQ5LJscbBm6cgxO0P2e72XV4NGvJN4Ob3tGjKKCYFHFk1ixQf1oq9T9d0nLBSCRg0mU
-	 /spGnM4ScKha3i6mudmpwAATBYaqfX3wSVN2JUHoQJ01shILo7r+hJVO4S1/QdI4vDeKk
-	 JlMbfY05mjR/rxaVy9ryutBMz2HuDYkhZw021shyRX4G44ZLQkN7YonMXd4NqQadoXqXz
-	 6JQiN6Ydpru5kWBvVPDBTWYYEKlMCR5a4Yj3svOe2L+R9LnUTdFwyF7tgbtTzlzDySg==
+	bh=BfpbdVh36vZsQNhc+RzXVOgCpczga05tj8yr2m+7P48=;
+	b=ixzDF2NWwTAYVMgVj/NIEUdLL38NZTgm7oTfjcb7UecV3Uwj46zJqrRCfW2XECVx14+o
+	 YwOiwDeZLIcdWeB/ToZRhfQ2s7R4SvT/JQ45euNvZZIfD+ASMkH1tcsabY4GjX3AA1s/Z
+	 4CKERO8IG6zhLzpV09TwL++PA8K+Ap1WWHxy+JVy+FD3f10tOw9rTqJqUD33++3Afaskf
+	 llnMa90xcplB4yAKmYShGpbHbbTpwB2h8eGJWhRjshQrLxkFDEJn9VoGEo1ZgS4bcwDri
+	 wyHisOlJlCn9cOBgaWG/f+o8FZeYiE6JkjRnE/cfvVS+7yQlcXgM3BQRnrUPcL4DVvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ATvdjMTa;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIP+B5Ev;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC7D606A326;
-	Thu, 19 Nov 2026 03:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4185606A32A;
+	Thu, 19 Nov 2026 03:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ATvdjMTa
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D589A1F000C4;
-	Thu, 19 Nov 2026 03:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIP+B5Ev
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C531F000C4;
+	Thu, 19 Nov 2026 03:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060407;
-	bh=UOjI2l+yia4oi1FQ2a4zhXolhjP5ANaZhYUvYGhgPW0=;
+	s=korg; t=1795060410;
+	bh=BfpbdVh36vZsQNhc+RzXVOgCpczga05tj8yr2m+7P48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ATvdjMTa0HQ03ga2L4+b3TXxIup/GebN55KOE6fb0hiC3nQ9NrleUewcnmq/ZQKyX
-	 RPxI+YwftgLeg4FAZPAHjpJSoYFe+Harpk53vUP2/eKwagSgFLfh8DcIoGLn3IRiSq
-	 5Dq+Tgf278G1Pgg0Jh6DrLlnbXB0W0m56c4vzI5U=
+	b=tIP+B5EvMdJ3qfmD5cGZne7GCWWbfmQr2w//jQ2YYyIKleUD2H9O5CdMoP8kMkt0D
+	 xv6cLgQyDkG5w82C89CtA4ZuO5tn0Ehbk6kaNZWjxK7d7LnRcDV6QtiIqCj7o83saq
+	 ohvpo302xDQHotw11zEymq2sqWfQNAKB25a8CCPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abin Joseph <abin.joseph@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Golla Nagendra <nagendra.golla@amd.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1187/1848] dmaengine: zynqmp_dma: Add support for AMD Versal Gen 2 DMA IP
-Date: Wed, 18 Nov 2026 15:53:45 +0100
-Message-ID: <20261118150009.211708160@linuxfoundation.org>
+Subject: [PATCH 5.10 1188/1848] dmaengine: zynqmp_dma: Fix chan probe/remove error handling
+Date: Wed, 18 Nov 2026 15:53:46 +0100
+Message-ID: <20261118150009.245966268@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,112 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abin Joseph <abin.joseph@amd.com>
+From: Golla Nagendra <nagendra.golla@amd.com>
 
-[ Upstream commit 13113f750a4ae0b1770fa25dc94852977ebfb942 ]
+[ Upstream commit 0266dac57019201a14a81245d22750ab221d6c66 ]
 
-ZynqMP DMA IP and AMD Versal Gen 2 DMA IP are similar but have different
-interrupt register offset. Create a dedicated compatible string to
-support Versal Gen 2 DMA IP with Irq register offset for interrupt
-Enable/Disable/Status/Mask functionality.
+Keep the real platform_get_irq() error by returning ret directly, stage
+IRQ setup via a local ret variable, and assign chan->irq only after
+devm_request_irq() succeeds.
 
-Signed-off-by: Abin Joseph <abin.joseph@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Link: https://lore.kernel.org/r/20240808100024.317497-3-abin.joseph@amd.com
+Initialize chan->irq to -1 and initialize chan->common.device_node
+before it may be touched by teardown. In channel remove, free IRQ only
+for valid IRQ numbers and delete the channel node only when it is linked.
+
+Register the channel node only after successful IRQ setup. On channel
+probe failure in zynqmp_dma_probe(), route cleanup through the existing
+free_chan_resources teardown path.
+
+Fixes: b0cc417c1637 ("dmaengine: Add Xilinx zynqmp dma engine driver support")
+Signed-off-by: Golla Nagendra <nagendra.golla@amd.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260814045616.1661199-4-nagendra.golla@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 0266dac57019 ("dmaengine: zynqmp_dma: Fix chan probe/remove error handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/zynqmp_dma.c | 27 +++++++++++++++++++++++----
- 1 file changed, 23 insertions(+), 4 deletions(-)
+ drivers/dma/xilinx/zynqmp_dma.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/dma/xilinx/zynqmp_dma.c b/drivers/dma/xilinx/zynqmp_dma.c
-index 27b19e84124ec..504dc00415c30 100644
+index 504dc00415c30..bc1f497732bc4 100644
 --- a/drivers/dma/xilinx/zynqmp_dma.c
 +++ b/drivers/dma/xilinx/zynqmp_dma.c
-@@ -24,10 +24,10 @@
- #include "../dmaengine.h"
+@@ -207,7 +207,7 @@ struct zynqmp_dma_desc_sw {
+  * @desc_pool_p: Physical allocated descriptor base
+  * @desc_free_cnt: Descriptor available count
+  * @dev: The dma device
+- * @irq: Channel IRQ
++ * @irq: Linux IRQ number, or -1 when not registered
+  * @is_dmacoherent: Tells whether dma operations are coherent or not
+  * @tasklet: Cleanup work after irq
+  * @idle : Channel status;
+@@ -873,10 +873,11 @@ static void zynqmp_dma_chan_remove(struct zynqmp_dma_chan *chan)
+ 	if (!chan)
+ 		return;
  
- /* Register Offsets */
--#define ZYNQMP_DMA_ISR			0x100
--#define ZYNQMP_DMA_IMR			0x104
--#define ZYNQMP_DMA_IER			0x108
--#define ZYNQMP_DMA_IDS			0x10C
-+#define ZYNQMP_DMA_ISR			(chan->irq_offset + 0x100)
-+#define ZYNQMP_DMA_IMR			(chan->irq_offset + 0x104)
-+#define ZYNQMP_DMA_IER			(chan->irq_offset + 0x108)
-+#define ZYNQMP_DMA_IDS			(chan->irq_offset + 0x10c)
- #define ZYNQMP_DMA_CTRL0		0x110
- #define ZYNQMP_DMA_CTRL1		0x114
- #define ZYNQMP_DMA_DATA_ATTR		0x120
-@@ -147,6 +147,9 @@
- #define tx_to_desc(tx)		container_of(tx, struct zynqmp_dma_desc_sw, \
- 					     async_tx)
- 
-+/* IRQ Register offset for Versal Gen 2 */
-+#define IRQ_REG_OFFSET			0x308
-+
- /**
-  * struct zynqmp_dma_desc_ll - Hw linked list descriptor
-  * @addr: Buffer address
-@@ -213,6 +216,7 @@ struct zynqmp_dma_desc_sw {
-  * @bus_width: Bus width
-  * @src_burst_len: Source burst length
-  * @dst_burst_len: Dest burst length
-+ * @irq_offset: Irq register offset
-  */
- struct zynqmp_dma_chan {
- 	struct zynqmp_dma_device *zdev;
-@@ -237,6 +241,7 @@ struct zynqmp_dma_chan {
- 	u32 bus_width;
- 	u32 src_burst_len;
- 	u32 dst_burst_len;
-+	u32 irq_offset;
- };
- 
- /**
-@@ -255,6 +260,14 @@ struct zynqmp_dma_device {
- 	struct clk *clk_apb;
- };
- 
-+struct zynqmp_dma_config {
-+	u32 offset;
-+};
-+
-+static const struct zynqmp_dma_config versal2_dma_config = {
-+	.offset = IRQ_REG_OFFSET,
-+};
-+
- static inline void zynqmp_dma_writeq(struct zynqmp_dma_chan *chan, u32 reg,
- 				     u64 value)
- {
-@@ -879,6 +892,7 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 	struct zynqmp_dma_chan *chan;
- 	struct resource *res;
- 	struct device_node *node = pdev->dev.of_node;
-+	const struct zynqmp_dma_config *match_data;
- 	int err;
- 
- 	chan = devm_kzalloc(zdev->dev, sizeof(*chan), GFP_KERNEL);
-@@ -907,6 +921,10 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
- 		return -EINVAL;
- 	}
- 
-+	match_data = of_device_get_match_data(&pdev->dev);
-+	if (match_data)
-+		chan->irq_offset = match_data->offset;
-+
- 	chan->is_dmacoherent =  of_property_read_bool(node, "dma-coherent");
- 	zdev->chan = chan;
- 	tasklet_setup(&chan->tasklet, zynqmp_dma_do_tasklet);
-@@ -1140,6 +1158,7 @@ static int zynqmp_dma_remove(struct platform_device *pdev)
+-	if (chan->irq)
++	if (chan->irq >= 0)
+ 		devm_free_irq(chan->zdev->dev, chan->irq, chan);
+ 	tasklet_kill(&chan->tasklet);
+-	list_del(&chan->common.device_node);
++	if (!list_empty(&chan->common.device_node))
++		list_del(&chan->common.device_node);
  }
  
- static const struct of_device_id zynqmp_dma_of_match[] = {
-+	{ .compatible = "amd,versal2-dma-1.0", .data = &versal2_dma_config },
- 	{ .compatible = "xlnx,zynqmp-dma-1.0", },
- 	{}
- };
+ /**
+@@ -893,13 +894,14 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+ 	struct resource *res;
+ 	struct device_node *node = pdev->dev.of_node;
+ 	const struct zynqmp_dma_config *match_data;
+-	int err;
++	int err, ret;
+ 
+ 	chan = devm_kzalloc(zdev->dev, sizeof(*chan), GFP_KERNEL);
+ 	if (!chan)
+ 		return -ENOMEM;
+ 	chan->dev = zdev->dev;
+ 	chan->zdev = zdev;
++	chan->irq = -1;
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	chan->regs = devm_ioremap_resource(&pdev->dev, res);
+@@ -933,22 +935,26 @@ static int zynqmp_dma_chan_probe(struct zynqmp_dma_device *zdev,
+ 	INIT_LIST_HEAD(&chan->pending_list);
+ 	INIT_LIST_HEAD(&chan->done_list);
+ 	INIT_LIST_HEAD(&chan->free_list);
++	INIT_LIST_HEAD(&chan->common.device_node);
+ 
+ 	dma_cookie_init(&chan->common);
+ 	chan->common.device = &zdev->common;
+-	list_add_tail(&chan->common.device_node, &zdev->common.channels);
+-
+ 	zynqmp_dma_init(chan);
+-	chan->irq = platform_get_irq(pdev, 0);
+-	if (chan->irq < 0)
+-		return -ENXIO;
+-	err = devm_request_irq(&pdev->dev, chan->irq, zynqmp_dma_irq_handler, 0,
++	ret = platform_get_irq(pdev, 0);
++	if (ret < 0)
++		return ret;
++
++	err = devm_request_irq(&pdev->dev, ret, zynqmp_dma_irq_handler, 0,
+ 			       "zynqmp-dma", chan);
+ 	if (err)
+ 		return err;
+ 
++	chan->irq = ret;
++
+ 	chan->desc_size = sizeof(struct zynqmp_dma_desc_ll);
+ 	chan->idle = true;
++	list_add_tail(&chan->common.device_node, &zdev->common.channels);
++
+ 	return 0;
+ }
+ 
+@@ -1104,7 +1110,7 @@ static int zynqmp_dma_probe(struct platform_device *pdev)
+ 	ret = zynqmp_dma_chan_probe(zdev, pdev);
+ 	if (ret) {
+ 		dev_err_probe(&pdev->dev, ret, "Probing channel failed\n");
+-		goto err_disable_pm;
++		goto free_chan_resources;
+ 	}
+ 
+ 	p->dst_addr_widths = BIT(zdev->chan->bus_width / 8);
 -- 
 2.53.0
 
