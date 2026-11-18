@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055812;
-	b=ktZzxubfxudX12BTLw+LB6JHGtqPswi9MKEQvkOg/37D3WwhXDjVt3nUeaaAjzcs+eiE
-	 wQfLMgeJBc9K12VWa8OheQ5fx/fsv8Wc0Y8c0sLDzBWCAO3zsgX2fH50mYoKIo5qoaiWa
-	 XDV53gw2ahZIYGIMnsCuXXZ5VUDfk8tVDwBP2Mh4hhQulvewMOexjsnD05zKRngJGZmta
-	 hXXuvREbx/Z18z8lp8zpritP/OSKxLjJuuNXBFEqzTidVUHVDvEHMRbj4mafkW+C59YOk
-	 UXCpNfGOmNL6CMthSTSqNeDVcBNRACt98Nt0msrWp0lwWuUD6PUz7aM+hlTLlqKjoiw==
+	t=1795055815;
+	b=GbNQ9H0WvMDXhwxE1D14UOdxRGC+j8IRmAWaIRoznmGVaOlpcMcRXs6BI3SsIJZjM9yJ
+	 fcsVIvX3hzbRSpCHHUHYafDlkjn6AbIsQO3PN1hQPf3kQP8IAtwnmNOcTkyuILm02E/uv
+	 Gnsb+Jl689yLr1xy5SbPUcX412ciE+nEmNRUqrT6rPyajuBteqlZPXeoNCr0NvWOx92T6
+	 iRmDppxkgAe73U/SV8WElPQh7lhsJXTNyJjXpvEZIHflsukZkCz9969NtnoHkgP6BL5oR
+	 B+zt20rLNm3VgVuWTkwYDQz1mcLmYj2S2zK+oMR9LJf9xr+qnfBdXM639+bgU0REbyQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055812;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ewr20IEUr8CkpCvoIaE2mS5WBenHSq0M3gBN4JlViog=;
-	b=BnmrhyEO3uAz40JLO3+QtJLbMIiwlNx+LYsW/dH2GP4yvprRSyGBQTV32nIDPwBZ2rmJ
-	 Uyf2NIxF40e96bfTGpTF4a65APrl9BCBodZvsFtByYC+701/PvXKKf42jE5v6RVCioM2n
-	 Y+6XY4tpScrfuW4LVAAT6Pg9EJ8Pzeh48nXc4VpCQnH4ozni/kDKIGqBVe/ietndiklWr
-	 I3GLPkow2/WlCSzaxOmRh2TK0fwnuxHKXixGco6S2H4Dwpt9eFVfoOeLAUbzXi34911jj
-	 Tgg8CYbPuRh6z/g6/VG6VC8qPP5xRPSbGB6uK8su/JWNO2O9ya9WyVrmnkLXdRjyEjQ==
+	bh=bzYDEIW6a5N5jNxpsE51fYiGrgw8IN1McOBVgsY3Ozs=;
+	b=D3JVcbOwuZS9mbPyVc0imXBE4nWPf9zPr/kGSk2aaeUnpufWtG8LEew/TvEL4ao3eEHQ
+	 pxz8a7MsFw9SzxjxfemIxR34PLVcAAZl3sXGVUDGjnL7uv6eRxWoY4+wrAaCp6QKrlTtm
+	 d+ncp9ZbHc8+rni03GJ4fua2kYyM2pmdGc8GZ6MHPZubUQbpOwHVw3ZFWyTkopmnrkI13
+	 sDmieNxRlGSd5r9iFsTQzwtdk+df5Sonoxuj36D+TGl/XCuFtfs2+LpP2BTG6v+yYVY4X
+	 qyV1CbPApeI6VKkRpI8SlNBP6CB0G4PdY5hje91II7aq3S6Jc1IKcw62serR4Q5+zTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9tu2f74;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBssi6l8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD78606A335;
-	Thu, 19 Nov 2026 02:36:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC0A606A32A;
+	Thu, 19 Nov 2026 02:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i9tu2f74
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00411F000C5;
-	Thu, 19 Nov 2026 02:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBssi6l8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27D41F000C4;
+	Thu, 19 Nov 2026 02:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055812;
-	bh=ewr20IEUr8CkpCvoIaE2mS5WBenHSq0M3gBN4JlViog=;
+	s=korg; t=1795055815;
+	bh=bzYDEIW6a5N5jNxpsE51fYiGrgw8IN1McOBVgsY3Ozs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i9tu2f74ajj/vBWf0vtilomvsEl3sAej9O9JYqoNrBguY+O+RzQJdzHWxdQaZh6Q6
-	 w1zyFZckCE+3smep0/s9uJdH8ze+fo98rh6T6KrG5fH5Mvtbp1DOeFx1ttN/zE/qv4
-	 nbfhaBXa69P3Trxe7eyukUU7n50l8f1lazYUE9wA=
+	b=ZBssi6l8Pe4fGGOI8fRdO/2Y4dd6WQYHQQlkZ5hmiio8vUlwKpQAfpqmnDI7jKHQR
+	 ls694LXnbLLdnK9kd1X4Kb3jTP+jvGE94VEM9S6jz33ciOoUgNGNp+IvWOa2wrJvND
+	 vV4K74cqbddqL6H3e/5XPPaXY90Aa1wYsFK4hGkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1728/2214] power: supply: ab8500_charger: Handle detection errors
-Date: Wed, 18 Nov 2026 15:56:44 +0100
-Message-ID: <20261118150120.827435681@linuxfoundation.org>
+Subject: [PATCH 5.15 1764/2214] dmaengine: ste_dma40: Put the LCPA SRAM node
+Date: Wed, 18 Nov 2026 15:57:20 +0100
+Message-ID: <20261118150122.099004602@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,53 +71,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 1098c619ce7595a77a8c2e366a703e9fc5f29bf7 ]
+[ Upstream commit 9a3762b470421658214baeb6cce3eed7344bb435 ]
 
-ab8500_charger_detect_chargers() returns either a charger bitmask or
-a negative register-access error. The probe and component-bind paths
-use a negative return value as a bitmask, making failed reads appear
-as both AC and USB connections.
+of_parse_phandle() takes a reference to the LCPA SRAM node, but d40_probe()
+does not release it after translating the node into a resource. This leaks
+the node reference for the lifetime of the system.
 
-Propagate detection errors and release the bind-time workqueue on
-failure.
+Put the node immediately after of_address_to_resource() so both the success
+and error paths release the reference.
 
-Fixes: 84edbeeab67c ("ab8500-charger: AB8500 charger driver")
-Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
+Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
 Assisted-by: LLM
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-10-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-14-89f595e8851d@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/dma/ste_dma40.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index ae9e938188829..7f35863717c7c 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -3335,6 +3335,10 @@ static int ab8500_charger_bind(struct device *dev)
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index e017298156f9c..4670d5bf9aef2 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -3558,6 +3558,7 @@ static int __init d40_probe(struct platform_device *pdev)
  	}
- 
- 	ch_stat = ab8500_charger_detect_chargers(di, false);
-+	if (ch_stat < 0) {
-+		destroy_workqueue(di->charger_wq);
-+		return ch_stat;
-+	}
- 
- 	if (ch_stat & AC_PW_CONN) {
- 		if (is_ab8500(di->parent))
-@@ -3629,6 +3633,10 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 
- 	/* Identify the connected charger types during startup */
- 	charger_status = ab8500_charger_detect_chargers(di, true);
-+	if (charger_status < 0) {
-+		ret = charger_status;
-+		goto remove_ab8500_bm;
-+	}
- 	if (charger_status & AC_PW_CONN) {
- 		di->ac.charger_connected = 1;
- 		di->ac_conn = true;
+ 	/* This is no device so read the address directly from the node */
+ 	ret = of_address_to_resource(np_lcpa, 0, &res_lcpa);
++	of_node_put(np_lcpa);
+ 	if (ret) {
+ 		dev_err(dev, "no LCPA SRAM resource\n");
+ 		goto report_failure;
 -- 
 2.53.0
 
