@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021788;
-	b=E6xEwqhYvlecRpaihw6EWbHFaoccp0fe3KHJ/FphbWRi75OmWs24PqDRbFr3yrqi2zIW
-	 SJoVVluwoGrTi3YdYcxfTYVrGJ+pTQ3srj+w1HI7Ut0iFvemn8FGHo0h6C2xNlFOmR2dW
-	 gtWv2USXw+rOlEQilLDkVQ6VluK8onSZIMOe047YhY0vTsbiIhvLsJfZ94duhaBq7nxwG
-	 a0opTjaSF6VBq8X/pXS8hKfdXODD4XhfrZ4GGlna9IgjLfqCQ/I1qTHi0mfxeaxP1uQrS
-	 9d+qHQRU1jQSf1dc38K2/5aV+vStqgoaDlWJjF57wqQoqtaEI5mCiQaJUO45CCpYdrA==
+	t=1795021791;
+	b=fAp/uUokOxTHqx1XfOwPB8A/ekznTM93uu6TicpEldfKIw/J1G0WM0WFUlYp42TiCeuP
+	 kqoKwiZBul3xvM9FzO8OnHx4I9wV2DlLxkIjeXPMUXptQCJFaQqn1jdPulhrccOE+4jTR
+	 iOxI8/Bc8dz+an/iVREDpUXcI0kA5RZ6Mh++2G46otpzps+p4fb3eJufUSn9MipYpybLJ
+	 ucZfi0CFJJsZ3QHNVsxo5KwLYOiFXHG9D1ED+l2npjh7X8NmW7A7Z5EKp4CXGzo6YZyMd
+	 XLw9jObhX/f/QgFS+9vwMkjOFkjtAXj+cQ3UzsK5yvCNh6x7nYcAWn7RuAh86jtgSJQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021788;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021791;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=F7yHWfn1B8kBudF/5in6wmuycZBPRow8oNlw5H2rb0E=;
-	b=di7BnCTXeVAizfSlHusbjVFOHhZzLzhiZm0Ibe9EGJIXng++IZSpzFTAE4QmwvNQ9Zpm
-	 x2u5kZT1q/js3IqXsYwZyb+BKdmm/HZJ2fUFc+UPKyxcdi5ozry6kL4TCCxq2NZGUPy9/
-	 pnwJ9GWL1jQ8ZD+xS+0lJFN3CgfDz/hJGdtS0ufXK97qH9jQc5cPMj5Co589Ad6c01LPY
-	 ww+z1Sgn3ZALnHFrede4H5mwdCjsAP44vzc30c+8C6Wh3WrPM93FWuXQYF0Uo1Ou0czwQ
-	 NsnKf+ADy5WhJU6Gnej3ZLF5eqpThYOKD1VSClagS+6RLkZT+DDEwI+Sq9yzTP0btLA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=92rjo9alVJ/iBxoC7wcho9NYp8gjgCaQre+/z5BBBSE=;
+	b=iHypg6AvGcpNkrKZTCJl2sPCeZGPx7LPdf4V0JyFflhy1CnPvm7BK2zLV6sZ6d18Bo9F
+	 aZawwTSwSXm51GEGd/4K5XUu+/+0+hQvvaG0DaGrE0W5zoYRbdOPO/prDLFmPbjIJt1FK
+	 /o3URT3hhTyCHXr71hqioBVAYERFOegJRuG2YEpcym4uts8+AIPNI7hApQRN5Nca+FS9M
+	 EBMBNvecstQSwnxBj6cm5Dv85ZZGpS4bRxFkbfWL9O2WxhiceuuKmdX/JmtZijaLZseZU
+	 05L3/VztuYl2zt/rHxwp5Y/wlz9d2WaLUFjH0nVSQzv/GTe6Ag9qZulDOAt1JffNz5w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c5ddz3Kt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tKiiydLg;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB746606A325;
-	Wed, 18 Nov 2026 17:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44799606A325;
+	Wed, 18 Nov 2026 17:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c5ddz3Kt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48CF1F000C4;
-	Wed, 18 Nov 2026 17:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tKiiydLg
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969AF1F000C5;
+	Wed, 18 Nov 2026 17:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021788;
-	bh=F7yHWfn1B8kBudF/5in6wmuycZBPRow8oNlw5H2rb0E=;
+	s=korg; t=1795021791;
+	bh=92rjo9alVJ/iBxoC7wcho9NYp8gjgCaQre+/z5BBBSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=c5ddz3Kt/m4u8XvoKM9X3BuUrvssb13yqpjbl3Dge2r2cX2/CUgHLPYcjU2hZIVOc
-	 G2GPWgV7FNFGyH8RLVbE7DIc/qGBs6/goZKY1Cn6u8+4Uqhda4kTZsvSL6d4p/zoVx
-	 fEWi45tYOWEmRUO6jqCYdaPF6J/EOfXJ9duB7R5M=
+	b=tKiiydLgidMV17eKpapzkTLvpmr9DubFz7ae9HRHEVtDRJqH1w0/rVhbAcArrzZ2z
+	 xkfvQUzEz/H4zn3LtW+L8INyWXie55b9BaXLgnTcQIdJNS3kTThE8FoJWsqle4s7Bo
+	 1cJpie5aKochQcvJQ2+s6zNRl89mT7HMLnEUj+Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terrence Adams <tadamsjr@google.com>,
-	"Christian A. Ehrhardt" <lk@c--e.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?J=C3=A9r=C3=A9mie=20Rodon?= <jeremie.rodon@gmail.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2431/2651] block: advance iterator after copy-in for SG_DXFER_TO_FROM_DEV
-Date: Wed, 18 Nov 2026 16:01:11 +0100
-Message-ID: <20261118150412.725216177@linuxfoundation.org>
+Subject: [PATCH 7.3 2432/2651] spi: cs42l43: Add speaker ID quirk for Dell XPS 13 DX13260 SKU 0E54
+Date: Wed, 18 Nov 2026 16:01:12 +0100
+Message-ID: <20261118150412.755182261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,62 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: TJ Adams <tadamsjr@google.com>
+From: Jérémie Rodon <jeremie.rodon@gmail.com>
 
-[ Upstream commit 82e72ea18d0af724914c31a1f274c1aef452aad0 ]
+[ Upstream commit 7da2aca123754c0e06092bbe179d58078b58d8d4 ]
 
-When a passthrough request uses transfer direction SG_DXFER_TO_FROM_DEV,
-bio_copy_user_iov() sets up a temporary iterator iter2 with
-data_source = ITER_SOURCE to copy user data into the bio pages before
-execution.
+The Dell XPS 13 DX13260 is also sold with SKU 0E54, which has the same
+ACPI speaker ID layout as SKU 0E53: two pins in one GpioIo() while the
+spk-id-gpios _DSD property references only the first. Without the quirk
+the speaker ID is wrong (0), so there is no speaker audio and no amp
+firmware is loaded.
 
-bio_copy_from_iter(bio, &iter2) copies the data and advances iter2, but
-the original iter is never advanced. Consequently, iov_iter_count(&i)
-remains non-zero in the caller loop in blk_rq_map_user_iov():
+Add a DMI entry for SKU 0E54 using the same handler.
 
-	i = *iter;
-	do {
-		if (copy)
-			ret = bio_copy_user_iov(rq, map_data, &i, gfp_mask);
-...
-	} while (iov_iter_count(&i));
-
-Because i is never advanced, blk_rq_map_user_iov() loops indefinitely,
-continually allocating bios and consuming map_data pages until it
-exhausts pages and fails with -EINVAL.
-
-Fix this by calling iov_iter_advance(iter, bio->bi_iter.bi_size) in the
-map_data && map_data->from_user branch after bio_copy_from_iter().
-
-Fixes: 13f3956eb568 ("block: Fix WARNING in _copy_from_iter")
-Signed-off-by: Terrence Adams <tadamsjr@google.com>
-Assisted-by: LLM
-Acked-by: Christian A. Ehrhardt <lk@c--e.de>
-Link: https://patch.msgid.link/20260929160813.1599129-1-tadamsjr@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: cad16d850e37 ("spi: cs42l43: Workaround for wrong speaker ID on Dell XPS 13 DX13260")
+Signed-off-by: Jérémie Rodon <jeremie.rodon@gmail.com>
+Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20261025095037.18891-1-jeremie.rodon@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-map.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-cs42l43.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/block/blk-map.c b/block/blk-map.c
-index 9cb9605d1f62d..2685f6177ceb6 100644
---- a/block/blk-map.c
-+++ b/block/blk-map.c
-@@ -236,6 +236,7 @@ static int bio_copy_user_iov(struct request *rq, struct rq_map_data *map_data,
- 		ret = bio_copy_from_iter(bio, &iter2);
- 		if (ret)
- 			goto cleanup;
-+		iov_iter_advance(iter, bio->bi_iter.bi_size);
- 	} else {
- 		if (bmd->is_our_pages)
- 			zero_fill_bio(bio);
+diff --git a/drivers/spi/spi-cs42l43.c b/drivers/spi/spi-cs42l43.c
+index 6772abb483dd3..46eeb44130dd5 100644
+--- a/drivers/spi/spi-cs42l43.c
++++ b/drivers/spi/spi-cs42l43.c
+@@ -301,6 +301,14 @@ static const struct dmi_system_id cs42l43_spk_id_quirks[] = {
+ 		},
+ 		.driver_data = cs42l43_get_2bit_speaker_id_from_one_gpioio,
+ 	},
++	{
++		.ident = "Dell XPS 13 DX13260",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0E54"),
++		},
++		.driver_data = cs42l43_get_2bit_speaker_id_from_one_gpioio,
++	},
+ 	{ }
+ };
+ 
 -- 
 2.53.0
 
