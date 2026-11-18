@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042577;
-	b=xcMyFz70EyyRwf9/l/9iwLzABEgh6Du6aJDpRj6LyA0fJyYYjuB4RbgJzs09gE55whEh
-	 yEAa0LSXqsBgDLWCTOKVFVp6VqWzDo1zetU7pfsWpFsUZdwsse1ONaPuIGVs87b7/bmGp
-	 fKp8WdguTsXZoLyIucRES1R5EwZzPeYoY8Ekja7liqG9pGvHYEO3N044S22AQEdrbl8KI
-	 T5ukO96wyJS2DAkxbB2jEfGRvX/rt0N2hqucDdm1alj+ccWFPOsD2ILZf9oWqYjBcL8E+
-	 AQKNzRsSROZaS/Kgj8z0iymCxSXaYxetC7ugzrbkJrxQ6Gm4bduYPIXi3GrDEsR6ScA==
+	t=1795042580;
+	b=31SsRLrhn25Hn4OFPwnZwW0sj+/7DOyYPIJvJikoqqxc/zhukefzxLwrKWVRRwAdjpht
+	 l9essaO5DENKFjDj+qc94Q3poYb3pn869TbhE2F5Q+QSX37Xcryt3lBJ+0eH1rz3phfQZ
+	 vdwhi+BeTJbi65KN9HJM2K0aJFKODG2fk4Te36FrktZUdoxIFt09pZcbYkgDKS8Gq3kKj
+	 UZmAzIgYKzeTG7w5khXeKf+7LxQlAkNoGOgyT32R9cFdm1uD9Tasq5+zjOWY3x5LB6MOy
+	 4MGnBDIt67Mn+qpRe+uSRf4r2KFlGQRCys+P87zdcU+o7f71KxuEweqv2ieKhv6jW4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042577;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AoOKrSIV3fX8/ClgJ3GI50rCzliGMFX7hfykV2c+wHs=;
-	b=yOzjEOAHQOi3cW/MhNTUdXJkFpp4Zbz18HHauHcTaluEaQaZBzzlllPzZIXuEdhzqe1x
-	 ir+F44HN0J4i6Wk5dlr10vFw50VxOuyiMUt5tECFTSnDo5EUlwWoH4CjPReQ7QRjZ9weQ
-	 x/IOXy/41Tj5rMUw8Mzr1WYJBPOfSCyJnwrUmAjvC8NRHEelsmqIMTe/Y8GuzycOFafpS
-	 2WXf7ZBKTPoOwjAoG5OBx9lh6haR3Fc+aa1zEqXPd6azfoMZpW1CkrlVrTPA8tlIVaxce
-	 551R4yB9mRX57InPj9DaO/jw3DrAH6B6VeA2zsqhOV6iLj0RbYpny04cBlgFsePMo4A==
+	bh=nGjGa6jglm9/xALvC4s3Tbvd2kml+2x5N2+JGLqnKPY=;
+	b=ODkwCK7dEPsngGGOmIchcgGxdzww3+qz2t89V1rJGw3jwxU5gBFdjU/CgbWTnZ0zKEaK
+	 nuKd9/3SouJpnYKPsBhNFozYfE0wtNRL10UglHiPtyrc79bSgC4V7Dgfs4UHjmhR6mvy7
+	 TQ7urK4OVZPjStnzDVKFWxIJ31SBeTw9EES1v5ppbP5qBPyDXNXhyJWf4kkPC4j6nOx3D
+	 mUQCQBTx4Z5kdVa6eyjKSPW2O9zN+BreIbb378CJWHvjauWgKkTSoEs0X4Na4rC+t4HbF
+	 gm66G4Nlyg/XD4Lv0dE2HV4q4ShqsgiAQuDULgUYZvkj/YpWuJQRu/ueZ2nBnM8a9JQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="HEN7dw3/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DTlOJSSh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D22606A320;
-	Wed, 18 Nov 2026 22:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF32606A31C;
+	Wed, 18 Nov 2026 22:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HEN7dw3/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818B91F000C4;
-	Wed, 18 Nov 2026 22:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DTlOJSSh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9911F000C4;
+	Wed, 18 Nov 2026 22:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042577;
-	bh=AoOKrSIV3fX8/ClgJ3GI50rCzliGMFX7hfykV2c+wHs=;
+	s=korg; t=1795042579;
+	bh=nGjGa6jglm9/xALvC4s3Tbvd2kml+2x5N2+JGLqnKPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HEN7dw3/Y13y9IRFazxCJAzvIVoHnj00ldIZPZV2xKYg3ZII5QYLlaAjRVz6UO69L
-	 u6UksqofZY+1OiVeYbVNMvw2e4UdYZrhuVBXXimEucjXAN+ahR2icDiAGr+ynBL2oQ
-	 DvNVvGmfHMGcKDa7bDL5gun7UkggtfZm2xREnA40=
+	b=DTlOJSShAD6PUIfj8LYfADLlFBQkUiA0MHNaAH4iNRSNWkTYh7AJF3ObLNBbwIzgA
+	 9Hg7tUna4M8blL2specwuIWy6Wb519iIwVBhzOrs+t83QbJ/09yLGv4HmSYVVvjrPO
+	 egEE1p7SH3TdW8p47Wg9HXvr9jt7rRrgRvkiwKRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,13 +44,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Sagi Grimberg <sagi@grimberg.me>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
-	Josef Bacik <josef@toxicpanda.com>,
+	Chris Mason <mason@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3220/3318] nvme-loop: dont BUG() if a scan runs beside a reset
-Date: Wed, 18 Nov 2026 16:04:02 +0100
-Message-ID: <20261118150456.328954807@linuxfoundation.org>
+Subject: [PATCH 6.6 3221/3318] nvmet-rdma: flush nvmet-wq on module exit
+Date: Wed, 18 Nov 2026 16:04:03 +0100
+Message-ID: <20261118150456.355258751@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,52 +72,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 64e21d782020e267ca57765a30216c38b34f296d ]
+[ Upstream commit 2b646788ee24d895b8862514e12a95ce5d72d6cc ]
 
-A reset sets queue_count to 1 while it destroys the I/O queues and
-counts it back up when the new ones are made, and it doesn't stop the
-scan work. A new namespace found in that window trips the check in
-nvme_loop_init_hctx() for every hctx but the first:
+nvmet_rdma_exit() relies on ib_unregister_client() to flush nvmet-wq
+through nvmet_rdma_remove_one(), but since commit a3dd7d0022c3 that
+returns at once for a device no longer on device_list. The release work
+of the last queue takes the device off the list in nvmet_rdma_free_dev()
+and still has to drop the mutex, free the struct and return through
+nvmet_rdma_release_queue_work(), so an rmmod in that window frees the
+module code it's running.
 
-  kernel BUG at drivers/nvme/target/loop.c:224!
-   nvme_loop_init_hctx+0x7d/0x80
-   __blk_mq_realloc_hw_ctxs+0x3af/0xa80
-   nvme_alloc_ns+0x1a2/0x22f0
+Flush nvmet-wq after ib_unregister_client(). No release work can be
+queued after that point.
 
-The check protects nothing. ctrl->queues has nr_io_queues + 1 entries
-for the life of the controller, the tag set never has more hardware
-queues than that, and nvme_loop_queue_rq() rejects requests until the
-controller is live again.
-
-Remove it.
-
-Fixes: 3a85a5de29ea ("nvme-loop: add a NVMe loopback host driver")
+Fixes: a3dd7d0022c3 ("nvmet-rdma: Don't flush system_wq by default during remove_one")
 Cc: Christoph Hellwig <hch@lst.de>
 Cc: Sagi Grimberg <sagi@grimberg.me>
 Cc: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Chris Mason <mason@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/loop.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/nvme/target/rdma.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/nvme/target/loop.c b/drivers/nvme/target/loop.c
-index bd61a1b82c4cd..16e6d76e26686 100644
---- a/drivers/nvme/target/loop.c
-+++ b/drivers/nvme/target/loop.c
-@@ -221,8 +221,6 @@ static int nvme_loop_init_hctx(struct blk_mq_hw_ctx *hctx, void *data,
- 	struct nvme_loop_ctrl *ctrl = to_loop_ctrl(data);
- 	struct nvme_loop_queue *queue = &ctrl->queues[hctx_idx + 1];
- 
--	BUG_ON(hctx_idx >= ctrl->ctrl.queue_count);
--
- 	/*
- 	 * flush_end_io() can be called recursively for us, so use our own
- 	 * lock class key for avoiding lockdep possible recursive locking,
+diff --git a/drivers/nvme/target/rdma.c b/drivers/nvme/target/rdma.c
+index 629081e4c37c7..ab74f9d800e03 100644
+--- a/drivers/nvme/target/rdma.c
++++ b/drivers/nvme/target/rdma.c
+@@ -2130,6 +2130,12 @@ static void __exit nvmet_rdma_exit(void)
+ {
+ 	nvmet_unregister_transport(&nvmet_rdma_ops);
+ 	ib_unregister_client(&nvmet_rdma_ib_client);
++	/*
++	 * nvmet_rdma_remove_one() does not flush for a device that has left
++	 * device_list, and the release work that took it off still has to
++	 * return from nvmet_rdma_free_dev().
++	 */
++	flush_workqueue(nvmet_wq);
+ 	WARN_ON_ONCE(!list_empty(&nvmet_rdma_queue_list));
+ 	ida_destroy(&nvmet_rdma_queue_ida);
+ }
 -- 
 2.53.0
 
