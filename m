@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056421;
-	b=UnVh0SS0eBRYb1VnBMBhT0R/pwVxJ7ZamCWWtEO2gNJacDCHnxjflk8Ikxn9DyO3l9iA
-	 PRehRouN9JtEmSq0p8TaI7fvLaJo4oewms93IiOQeq8LkvDeMNGlWWT1jj4Tnp7RHnaLu
-	 8hf4ucl20QXgwCwLvfi9KRv3UoK9AsztWBel79KXr+eQSdFPt3Fmyv2aryuXPBygUZyEM
-	 nNuE4MYzhBz/s9p6nCWTMrZSdpDb00XaF7+9doHQeAFNtbIjMLOIxHH7ymgyWy9qPVCZ4
-	 /cUO9ydK70IJCvmg2MDTabo2zm0ZftfrWbGGnUaL6V+pXz0iiV/5P9Gp9f1sPzS3ztA==
+	t=1795056425;
+	b=uSRaCkaTX3BZcuAZA0y5lMok00+nZwBA+B6zPJ91aZ7ozBzUE5bgO4op6drCSGLWpC1I
+	 z7qv/Jc4LjG8eK9rRciQzGvnFkXIsHeS0Ymsp9Km00zBTEK4FI7XgnzIDMv3QzMlSQ9Vb
+	 hBZ7MpHA69P0TkZ6vG8sm49ZlkwdPTozJT/IC60wS3STfX1arDn7KgAHWBS+i5r83jAX6
+	 IBgTtuQc12z2VmAjIZCYD54rvS5gPO50guYH/QWzCzlErIA4L2Y6obDoEa1FuEC0bK8b2
+	 1aEXg2DHqbPKBxhlI/eWJJkzm4HmX47TZPVVk3GjRh32SY0tu7zcHwKhTdv1nQxQIbQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056425;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=IwoK8FSY+ufQ0x+EadOdjbfGSIHbQxe4W7eXNZWuNRk=;
-	b=TYt32jfI1nApfkozw6/So0paHcLRjcvRCgSJoksl4TeOkRFqMGQVmUra97jMphs/7MfV
-	 wZaXPQK1cFj0WBTViIGXBRgqF9qwdu4XCR51I24ET7DaIhx7K6t+BxOhrSYsITNoIiKLe
-	 U+9Psfrmmob+EujOvasAK0sIKezEHOuQesVGISos0EowO48GBgcDOQVDnmL/Wy6ez2WZi
-	 KwM1lS+PutSKhIQnpaaD/3yMH2WOYtzqp/pU5Azn/cb5Rm8Z43NkpLd/tzEux4anKHBIf
-	 NMGl2ega6Y87vV58rIifxWBEnaqOC/ZGv/3d/ipcOW4hWTUortXctIZdpm1pb2RB+sQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cKHqlXO2Tk6EXN207DFQZkYI39jBsZDpd4jqbqqH7Mk=;
+	b=kbJhxqgAucuSRvfkSSUF8e9BTpprxa09BrK2hGaxw12GQifbqogVsc+H7LX9zs1Fa8ll
+	 n9kr9SQKhwoQBnBher7ipZ/ONSAHeo1ktExucwKtYWLSQ91Ua2//GNxzqGvsig/u4bpny
+	 OjGiV8AV93eXOH1qeZ1HzAPZB6Oj7QeAYrgen6dTPV8A8jxKigAlSFT2qU6cSxHO9yWau
+	 GmRxXx62gVzpq3O1f5JC0lSQMCeqQnmveek1SkCFhVAzviAcNwPaTOcOZL2k0ygiXqAjc
+	 pRS8DtZD8LrrB8kjpG5fB1Reg01JcwNEVPKH013itZVdGYD8XBNKxg1uFIu1BEOjJgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wvgT71Jk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqNXmntz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22E4606A32A;
-	Thu, 19 Nov 2026 02:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06BA606A31C;
+	Thu, 19 Nov 2026 02:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wvgT71Jk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F611F000C4;
-	Thu, 19 Nov 2026 02:47:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vqNXmntz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17961F000C4;
+	Thu, 19 Nov 2026 02:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056421;
-	bh=IwoK8FSY+ufQ0x+EadOdjbfGSIHbQxe4W7eXNZWuNRk=;
+	s=korg; t=1795056424;
+	bh=cKHqlXO2Tk6EXN207DFQZkYI39jBsZDpd4jqbqqH7Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wvgT71JkAmC5q/hajZ1dpG1PQcSXDag8AJi4YYO0b46/5To7ogRTmApKav82O5c0H
-	 wVAn/klVzLHs8EjytQdPtAf4d4Ocgq3zG+mIj2vsn1eArsKxq/zrnJqO8bR4gk+K2B
-	 kgdJnr7apTZDMh/6E/QqSkLKC+tP0q8Ib3rc4LZQ=
+	b=vqNXmntzbV9zhLZbkx7hAO9gYkEK5nrMRUVP3P05tdUSJJw24E35SUBH53HP9LZyh
+	 raHZCVWm4QZa9yU9u5Spf5FQWbFWev7RMtR5gy6vGxadL5ol9RXW0JP8kG3KLao3XA
+	 HLiZAF1gsF8YeNGi9N9t8457qw+lKnoIGxL1h5UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
+	Colin Ian King <colin.i.king@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1981/2214] ASoC: soc-component: Fix return type of snd_soc_pcm_component_pointer()
-Date: Wed, 18 Nov 2026 16:00:57 +0100
-Message-ID: <20261118150130.114049427@linuxfoundation.org>
+Subject: [PATCH 5.15 1982/2214] ASoC: mediatek: mt8195: make several arrays static const
+Date: Wed, 18 Nov 2026 16:00:58 +0100
+Message-ID: <20261118150130.151123911@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,57 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amadeusz Sławiński <amade@asmblr.net>
+From: Colin Ian King <colin.i.king@googlemail.com>
 
-[ Upstream commit 9df30adce80dd6b0646e58c12a4cf7c6c88d0778 ]
+[ Upstream commit 91745b034dca6044407b559fe28dd1cf7efccc29 ]
 
-Both caller and pointer callback expect the return value to be
-snd_pcm_uframes_t, however it was defined incorrectly leading to
-potential truncation of returned value.
+Don't populate various arrays on the stack but instead make them
+static const. Also makes the object code smaller by a few hundred
+bytes.
 
-Fixes: 0035e2565b93 ("ASoC: soc-component: add snd_soc_pcm_component_pointer()")
-Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
-Link: https://patch.msgid.link/20261014200608.118770-8-amade@asmblr.net
+Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+Link: https://lore.kernel.org/r/20211129224236.506883-1-colin.i.king@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: c23390ecf5c0 ("ASoC: mediatek: mt8195: Fix register access clock error handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-component.h | 2 +-
- sound/soc/soc-component.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-clk.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/sound/soc-component.h b/include/sound/soc-component.h
-index 8c4d6830597ff..94c8460756dd2 100644
---- a/include/sound/soc-component.h
-+++ b/include/sound/soc-component.h
-@@ -477,7 +477,7 @@ int snd_soc_component_compr_set_metadata(struct snd_compr_stream *cstream,
- int snd_soc_component_compr_get_metadata(struct snd_compr_stream *cstream,
- 					 struct snd_compr_metadata *metadata);
- 
--int snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream);
-+snd_pcm_uframes_t snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream);
- int snd_soc_pcm_component_ioctl(struct snd_pcm_substream *substream,
- 				unsigned int cmd, void *arg);
- int snd_soc_pcm_component_sync_stop(struct snd_pcm_substream *substream);
-diff --git a/sound/soc/soc-component.c b/sound/soc/soc-component.c
-index 8e8d917d22f8f..e6fb36fea18e9 100644
---- a/sound/soc/soc-component.c
-+++ b/sound/soc/soc-component.c
-@@ -921,7 +921,7 @@ int snd_soc_component_test_bits(struct snd_soc_component *component,
- }
- EXPORT_SYMBOL_GPL(snd_soc_component_test_bits);
- 
--int snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream)
-+snd_pcm_uframes_t snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream)
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+index d1939e08d333c..d311c5199f0b5 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+@@ -321,7 +321,7 @@ int mt8195_afe_enable_reg_rw_clk(struct mtk_base_afe *afe)
  {
- 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
- 	struct snd_soc_component *component;
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+ 	int i;
+-	unsigned int clk_array[] = {
++	static const unsigned int clk_array[] = {
+ 		MT8195_CLK_SCP_ADSP_AUDIODSP, /* bus clock for infra */
+ 		MT8195_CLK_TOP_AUDIO_H_SEL, /* clock for ADSP bus */
+ 		MT8195_CLK_TOP_AUDIO_LOCAL_BUS_SEL, /* bus clock for DRAM access */
+@@ -342,7 +342,7 @@ int mt8195_afe_disable_reg_rw_clk(struct mtk_base_afe *afe)
+ {
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+ 	int i;
+-	unsigned int clk_array[] = {
++	static const unsigned int clk_array[] = {
+ 		MT8195_CLK_AUD_A1SYS,
+ 		MT8195_CLK_AUD_A1SYS_HP,
+ 		MT8195_CLK_AUD_AFE,
+@@ -375,11 +375,11 @@ static int mt8195_afe_enable_timing_sys(struct mtk_base_afe *afe)
+ {
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+ 	int i;
+-	unsigned int clk_array[] = {
++	static const unsigned int clk_array[] = {
+ 		MT8195_CLK_AUD_A1SYS,
+ 		MT8195_CLK_AUD_A2SYS,
+ 	};
+-	unsigned int cg_array[] = {
++	static const unsigned int cg_array[] = {
+ 		MT8195_TOP_CG_A1SYS_TIMING,
+ 		MT8195_TOP_CG_A2SYS_TIMING,
+ 		MT8195_TOP_CG_26M_TIMING,
+@@ -398,11 +398,11 @@ static int mt8195_afe_disable_timing_sys(struct mtk_base_afe *afe)
+ {
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
+ 	int i;
+-	unsigned int clk_array[] = {
++	static const unsigned int clk_array[] = {
+ 		MT8195_CLK_AUD_A2SYS,
+ 		MT8195_CLK_AUD_A1SYS,
+ 	};
+-	unsigned int cg_array[] = {
++	static const unsigned int cg_array[] = {
+ 		MT8195_TOP_CG_26M_TIMING,
+ 		MT8195_TOP_CG_A2SYS_TIMING,
+ 		MT8195_TOP_CG_A1SYS_TIMING,
 -- 
 2.53.0
 
