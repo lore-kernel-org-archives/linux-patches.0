@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032587;
-	b=uF+ugOzzeSTpksrXO4LzcKRhWBJQX2TEBehTZ97rG3WXQIT4zjN1JoLVi69y6R/QBf0V
-	 756xlx1wphpdiKlkCo0Q2EjioyBf/hFyT/+LRYMd5yJqL+x3NmWiAxbLYkmkPWhwa/zka
-	 CdP7nwUAob/LzPv+8Qq+hx8HBv2ZUHFNtoy1Ht0jhFhi2hE1VpC0tlEpkUP1ltjq0X9i1
-	 JEdKQKTT1TL1qmK+moL7x15k1pxUaXt8etU8/H1ySSGu5T2aoD0ocdB3kRlQswPjjXqEd
-	 ChRoqhk1H/MevhArPmKFuB9cCRJxo5w0JAiELse3Hdc78ruHYeAFROh7rTrXvPrVvoA==
+	t=1795032590;
+	b=i9XsAYwzCV35BSWBdgxQ27bflobeWH2mFSwHHdkRYkE9O4i5M13wIlId6T4lTyRDi5l7
+	 W7yrOd+gbfJhEP6jj1LEkvA0Fq/y7v6wtOHIN91PHpQ5O4HblnpyZgO6Ckqi0TJaWd/+n
+	 TMuHIiT8iY1GXwVxfX7soaGVY1TA4mjGPOZ1pcbegyXjViIyUaGKykQIf9YPdPrikPBCk
+	 bC0FR5cVH7mdMg747NhMmZREux3aDmlsEOh2IWRfbebtt/6lFe0pf/u6BShIFjOMkqZUd
+	 yVvo97/DDKyAwJctpAlN5bTCImUOgutZdieDZNGps6QziFn3Js34B8xX8JxbcOx1XRA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032587;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032590;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zvr/t0yrwQGfPS9PhflFK0YZ0ydQrh92rvl+xCo17Ec=;
-	b=jNDHP6e+A1/7l7gfIqV0YGNCKvqwEPSv9ZIUapoH+ycWxZQ/PslsOU6WrG0jbnMppjBn
-	 03WxmAwvJn7AtPuAsZ7heY2j+1MJsnfSdIhbgEKG6mJrrZyMmuYhoC0hx2G7SqoYt88IR
-	 zxzgy2bCNUC7Z559jDNbonjoKmd61FVKKSFiDJmM18iHkI9k0ZuzNvdNCIDrGQYPKJVRc
-	 ntIwBLyKiXG9b8GuT2ucGNbBek0VakILqHymNXfU3oLVsvPdOYXs0+0GMSkuAdN4PpVMl
-	 tioI1h+eAxNO4eL6Y9OKzLDHtt+YE4YVVw8Vkg/6li1iBgRWI91ixJ3wxuhJlezpQpg==
+	bh=oXyclQJ5FTeR/C2qXpPc2GXmRTJjnUBaDbJs54oEMgM=;
+	b=JKybmnvMghucKBk2tfjEP0Krxb0OuyzPEcSRlVL8wDepaeq6y7R66MtnyixLOxNDroaU
+	 imZa0F138qsjZTiKmKLp54AjUdZQ8Mbb9h46Inxa+tq/ORY+B0Pljbq6TPZSROdOIk/Gz
+	 snhbhCQr3dmhoG+l8l8raESYqYNxklKaZ8dT3rmxbBzPCasG7Q8FeRAY4gsKuAn4a6IKF
+	 hTmVLlL/FSzNzLLAsotnAvX3D0pEV9pseGXXRtCPFGtcibrd+PXwN6WZiaB48vc2jpigB
+	 juSncDPPOOa5su4KVVzIk5p8Wm9ktcZFXG3QviyFpC3uQ5qeZ/4Zo9kLgu0sVdgstXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PEaywA9i;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="tbshuBp/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDE1606A31C;
-	Wed, 18 Nov 2026 20:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547C5606A325;
+	Wed, 18 Nov 2026 20:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PEaywA9i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D191B1F000C4;
-	Wed, 18 Nov 2026 20:09:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tbshuBp/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FB81F000C5;
+	Wed, 18 Nov 2026 20:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032587;
-	bh=zvr/t0yrwQGfPS9PhflFK0YZ0ydQrh92rvl+xCo17Ec=;
+	s=korg; t=1795032590;
+	bh=oXyclQJ5FTeR/C2qXpPc2GXmRTJjnUBaDbJs54oEMgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PEaywA9iF5ctTviDU5/6c+L2Flsx0OJHLqxtE/rA6HAoRagx6pA9liKGyfN4ptoCw
-	 XosR6rupAV0ZTDFAYXaQDWuYp084OEVm4vtavIpwicCrBZ/sV0PNv7oRpZNxOE+YGN
-	 GJW6jGzEag3RvupvwohVpbMYpdYhMhuJbgPlbZUA=
+	b=tbshuBp/pqqoMp4LcSxL5uCGRfsHnbg+sVyPf3YtgqilFd8rvopk2zXQ4FVIiZfwQ
+	 jF1ZNhTph0ul2yxfpvjX/cCNd0q99/VFWmXX0kYhTDJ8wrekH+AO5t0uu1oW4THgl0
+	 ArOPXxOIJRS1Mgm6M/dajybzu+ri9lp/c9AVSwPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Yu Kuai <yukuai@fygo.io>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1419/1756] block, bfq: initialize active lists for all actuators
-Date: Wed, 18 Nov 2026 15:59:06 +0100
-Message-ID: <20261118150105.665007430@linuxfoundation.org>
+Subject: [PATCH 6.12 1420/1756] cgroup/cpuset: use mems_allowed_seq when checking a policy nodemask
+Date: Wed, 18 Nov 2026 15:59:07 +0100
+Message-ID: <20261118150105.705566878@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,53 +70,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Gregory Price (Meta) <gourry@gourry.net>
 
-[ Upstream commit 00c2c34ead7e84d6594e20fa37a3c503823f5756 ]
+[ Upstream commit b0cec62d2867ab3ed27604d5c177b8960c43b17a ]
 
-Commit 2d31c684a053 ("block, bfq: inject I/O to underutilized
-actuators") extended bfqd->active_list from a single list_head to an
-array indexed by actuator, but bfq_init_queue() still only initialized
-the first two entries:
+A cpuset update changes the task's mems_allowed and rebinds its
+mempolicy in separate steps under mems_allowed_seq, but the check
+reads both without it.  This can cause a spurious numa placement
+miss under some cpuset/mempolicy combinations.
 
-        INIT_LIST_HEAD(&bfqd->active_list[0]);
-        INIT_LIST_HEAD(&bfqd->active_list[1]);
+A reader that loads one mask before the update and the other after
+it can see a spurious empty intersection and drop the nodemask.
 
-For devices with more than two independent access ranges, the remaining
-list heads stay zeroed by kzalloc() and are never set up as empty lists.
-When BFQ later adds a bfq_queue to one of those lists, list_add() writes
-through head->next, which is NULL, corrupting the list or crashing the
-kernel.
+For example, a task with cpuset.mems={0} and MPOL_BIND={0}.  If the
+cpuset moves to mems={1,2}, the policy is rebound to {1}.
 
-Initialize every actuator's active list using bfqd->num_actuators,
-which is already set up earlier in bfq_init_queue().
+The allocator can race and compare the old mems_allowed {0} against
+the new policy {1} - which will result in a dropped nodemask and a
+misplaced allocation on node 2.
 
-Fixes: 2d31c684a053 ("block, bfq: inject I/O to underutilized actuators")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Yu Kuai <yukuai@fygo.io>
-Link: https://patch.msgid.link/20261019051137.1715-1-lirongqing@baidu.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Simply retry the intersection until mems_allowed_seq is stable.
+
+This covers the task policy, which is rebound under mems_allowed_seq.
+VMA policies are rebound afterwards by mpol_rebind_mm(), outside
+mems_allowed_seq, and are not covered by this change.
+
+Fixes: cc9a6c877661 ("cpuset: mm: reduce large amounts of memory barrier related damage v3")
+Reviewed-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/cgroup/cpuset.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 68359e1b92e20..ce7f414e82112 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -7321,8 +7321,8 @@ static int bfq_init_queue(struct request_queue *q, struct elevator_type *e)
- 	bfqd->num_groups_with_pending_reqs = 0;
- #endif
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index 24ec9fa748998..0f21e72703346 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -4185,10 +4185,21 @@ nodemask_t cpuset_mems_allowed(struct task_struct *tsk)
+  * @nodemask: the nodemask to be checked
+  *
+  * Are any of the nodes in the nodemask allowed in current->mems_allowed?
++ *
++ * A cpuset update rebinds the task's mempolicy and changes mems_allowed in
++ * separate steps, so retry if an update raced with the check.
+  */
+ int cpuset_nodemask_valid_mems_allowed(nodemask_t *nodemask)
+ {
+-	return nodes_intersects(*nodemask, current->mems_allowed);
++	unsigned int seq;
++	int ret;
++
++	do {
++		seq = read_mems_allowed_begin();
++		ret = nodes_intersects(*nodemask, current->mems_allowed);
++	} while (read_mems_allowed_retry(seq));
++
++	return ret;
+ }
  
--	INIT_LIST_HEAD(&bfqd->active_list[0]);
--	INIT_LIST_HEAD(&bfqd->active_list[1]);
-+	for (i = 0; i < bfqd->num_actuators; i++)
-+		INIT_LIST_HEAD(&bfqd->active_list[i]);
- 	INIT_LIST_HEAD(&bfqd->idle_list);
- 	INIT_HLIST_HEAD(&bfqd->burst_list);
- 
+ /*
 -- 
 2.53.0
 
