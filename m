@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044824;
-	b=hG9hb/lqy754JazErATKbGbVN+tsTTcJp98E8+7HrGvDvFOXNCXDiPxASMtS7RDItkgp
-	 WceoE99yRj3apQozc9mSP6diz+CU5M+L3DYNqDAhJKC9bVgzsmQI2MwS8CDJnJLLyG2bW
-	 BrYX+memS895/aAI+JIutNHuCzE3GwS0dTlEGYry9eMIeGGxU3DRz82iqFpyxQ7IBNiVx
-	 lZutvk/u/dgBIxsUxkmEK+/lPg2kTOM3Z/paA7M4ssQ3SVInsflhfojtBDepk1JcU6Zsn
-	 ONvu3df+svCNKmgD5gK57FOB0pbrZyNqh3Bcuaea8xMrxw6iYf2svTMs54j/Z7FdmrQ==
+	t=1795044827;
+	b=MSTvWMhRyZ9MGLMTQu0wq8HnAlx+AzJkLA2Zli5gEiYg6Cd9mAkf6p8B7NsM0wcTJYlF
+	 Uq0epg7gQKpEMLOZf8mtSMQcZ64XFtFydS+d2UypFsGnq6Jt4PwFHz0BsWsiNSCGOjxOe
+	 W1xMP1ZnXndq5NszkviMkH7W3RZzsXEHVOZTfy8YYNuCKTz0r7KlxU9k/fJGAtGVV5HRd
+	 T288AI9mtpiDpNU2NwEEq8vwmY6ctOHqTfifyQUyHtxkf6fyj5TAoPz7f9z5eKOeBldG/
+	 QH8nE8Vv6DOi+QZF2Dl+tzXva2aMZR5T8h5CuBS7RXQvqfcghnwq2V4dPam61g8D2Qw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044824;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044827;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TKM8z9GdZAwOL6vt3O5PPrAc8kV/IK5DUGu19nmolIU=;
-	b=CYb9b8SpgVEk5549RzcrHycHdiqJ/TUlQbX4Gu2S/kefQzmA0HuhbqH7rdax5EqdbCeR
-	 rqwW9pNttAbGRgei3xQ/3okSQ2qzeYB9Ws35+lYfCIfElADYN+yiM8pPhp8IY2CWHNUT9
-	 DoMfMO6902v8XcUQ5F0r0lbygMtEl1aWLxVIHwgpOXVCNXps4qDXLYRKspY9rZC3Um4RF
-	 Owrg4dybG2007M4tiBCm46bS1WayM1c3jrjawnTyIIxgVOjz37pkHtXK2GqIBAxtSj9+u
-	 o15EovWp3UxmrMREnMoCvW6nWiYxuG+l5qk3lMkaI3dVrJOfPUmMgHSevWdtyLjVWrw==
+	bh=3KvzklE4R0vBUBghDgA5W+j9O2tHNN/kLMC7qXJFcJ8=;
+	b=iMc7obuuYFctCxmNojNRV74F9wjYtmjpK5XAP/i1nRrAs2l1paIsqIf26vVigsE/lqxF
+	 oXEgx+0rOwBWDNYUdaAXOBD6m6nAuTVdDiCOBKF27rYbuM4Kjh563DPTu3ehBVnVppw9J
+	 OCMZx7C5vYqxP+EiRkbntGLyqSXhyuZIGif8cdJjodRtTtKV8ISd+6UwXLnvzUZl5yYPZ
+	 hE7MNL1SHb7A2yeK3MtixlldqVNoJroEF1Sye+xpWFdBpGrX5ogcOXo08KdrPY17pbsBK
+	 hsa0l44ZAJga1YfEMfJGNzAvsztGAgCovNTI1pFvkdUF+nv7S3YcN4CGCbPPxpvOBdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7ZoAyxL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EJBwrzci;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A1260A263D;
-	Wed, 18 Nov 2026 23:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83952606A9C1;
+	Wed, 18 Nov 2026 23:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g7ZoAyxL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 002DF1F000C5;
-	Wed, 18 Nov 2026 23:33:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EJBwrzci
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30ED1F000C4;
+	Wed, 18 Nov 2026 23:33:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044824;
-	bh=TKM8z9GdZAwOL6vt3O5PPrAc8kV/IK5DUGu19nmolIU=;
+	s=korg; t=1795044827;
+	bh=3KvzklE4R0vBUBghDgA5W+j9O2tHNN/kLMC7qXJFcJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g7ZoAyxLb3JbPMqGeWpJigCv4epI1WE0I8uIwlhuBbaD12Lj3UVLVWBoXEph9ow/c
-	 mvUQJ/gnmaMDtxcs1xZYI6I8PwMjyu2yiGkWFYJK7I/tf1gK3BfLOYTVhybIdnGIWx
-	 XsJiUczuKeb8Ju8VmXtaEh9nj0Tm5zCk57ZsYYH0=
+	b=EJBwrzcixqoZze2r78IuorkeYw3TxDFxDUgZ7btfGlkaK0f5I0QlcteKqAU98AVf3
+	 vXlYHmd7qboWdQD/GCskEPoPEJQ2tHVmLub91ZvpR9akh0+f3xsSz1GmNfOOaqPa74
+	 9CVgW8w7ajQ3z7H1/wOOUKQ0VxeP6k5b8FRjLQWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0705/2857] media: rc: Fix ABBA deadlock by making locks more fine grained
-Date: Wed, 18 Nov 2026 15:28:59 +0100
-Message-ID: <20261118150226.938074069@linuxfoundation.org>
+Subject: [PATCH 6.1 0679/2857] ksmbd: fix session reference leak on compounded SESSION_SETUP
+Date: Wed, 18 Nov 2026 15:28:33 +0100
+Message-ID: <20261118150226.008722476@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,129 +68,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Young <sean@mess.org>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit c6d68866ad8aa1e957a3e5a6ede971148f1e3d59 ]
+[ Upstream commit 03bd8f5279e490e15e0c0f0fa388ffbd2fbacd65 ]
 
-The ir_raw_event_unregister() function takes the ir_raw_handler_lock
-first and then the rc_dev->lock. Other functions like change_protocol
-do this in the reverse order.
+A compound request can place SESSION_SETUP after another command. That
+earlier command leaves a reference to its session in work->sess.
+smb2_sess_setup() then overwrites work->sess with the session it looks up
+or creates, and the dispatcher later puts work->sess only once. The
+inherited reference is never dropped. That leaks the session, together
+with its setup connection and socket, and every repeat of the compound
+leaks another.
 
-This means that an ir decoder module unload and writing to the protocol
-sysfs file can cause a deadlock.
+  unreferenced object (size 512):
+    __kmalloc_cache_noprof+0x32c/0x3a0
+    ksmbd_smb2_session_create+0xf6/0x9c0 [ksmbd]
+    smb2_sess_setup+0xda4/0x6280 [ksmbd]
+    handle_ksmbd_work+0x88c/0x1cb0 [ksmbd]
 
-ir_raw_handler_lock protects the client list, amongst other things.
-Split this out into a separate lock so we can ensure the locking
-order is always the same.
+Save the inherited session on entry. After the request has been
+processed, release it once, but only when smb2_sess_setup() has replaced
+work->sess with its own session or cleared it. Do this after
+ksmbd_conn_unlock() so the put does not run under srv_mutex. An error path
+may instead leave the inherited session in work->sess. Keep it there, so
+the dispatcher still puts it and the error response is still signed or
+encrypted with it as before.
 
-Fixes: 93cffffc18f6 ("[media] media: rc: fix decoder module unloading")
-Signed-off-by: Sean Young <sean@mess.org>
+Fixes: 7aa8804c0b67 ("ksmbd: fix user-after-free from session log off")
 Cc: stable@vger.kernel.org
-Acked-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ sashal: Retained ir_raw_event_free(dev) before releasing ir_raw_handler_lock to preserve the existing cleanup layout. ]
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: omitted the installed flag update for the missing session-binding signature-check block ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/rc-ir-raw.c | 38 +++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 14 deletions(-)
+ fs/smb/server/smb2pdu.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/media/rc/rc-ir-raw.c b/drivers/media/rc/rc-ir-raw.c
-index 16e33d7eaaa2d..d1c551aec63ca 100644
---- a/drivers/media/rc/rc-ir-raw.c
-+++ b/drivers/media/rc/rc-ir-raw.c
-@@ -10,7 +10,8 @@
- #include <linux/sched.h>
- #include "rc-core-priv.h"
- 
--/* Used to keep track of IR raw clients, protected by ir_raw_handler_lock */
-+/* Used to keep track of IR raw clients, protected by ir_raw_client_lock */
-+static DEFINE_MUTEX(ir_raw_client_lock);
- static LIST_HEAD(ir_raw_client_list);
- 
- /* Used to handle IR raw handler extensions */
-@@ -288,13 +289,6 @@ static int change_protocol(struct rc_dev *dev, u64 *rc_proto)
- 	return 0;
- }
- 
--static void ir_raw_disable_protocols(struct rc_dev *dev, u64 protocols)
--{
--	mutex_lock(&dev->lock);
--	dev->enabled_protocols &= ~protocols;
--	mutex_unlock(&dev->lock);
--}
--
- /**
-  * ir_raw_gen_manchester() - Encode data with Manchester (bi-phase) modulation.
-  * @ev:		Pointer to pointer to next free event. *@ev is incremented for
-@@ -632,15 +626,18 @@ int ir_raw_event_register(struct rc_dev *dev)
- {
- 	struct task_struct *thread;
- 
-+	/* Holding dev->lock could result in a dead-lock */
-+	lockdep_assert_not_held(&dev->lock);
-+
- 	thread = kthread_run(ir_raw_event_thread, dev->raw, "rc%u", dev->minor);
- 	if (IS_ERR(thread))
- 		return PTR_ERR(thread);
- 
- 	dev->raw->thread = thread;
- 
--	mutex_lock(&ir_raw_handler_lock);
-+	mutex_lock(&ir_raw_client_lock);
- 	list_add_tail(&dev->raw->list, &ir_raw_client_list);
--	mutex_unlock(&ir_raw_handler_lock);
-+	mutex_unlock(&ir_raw_client_lock);
- 
- 	return 0;
- }
-@@ -664,8 +661,10 @@ void ir_raw_event_unregister(struct rc_dev *dev)
- 	kthread_stop(dev->raw->thread);
- 	del_timer_sync(&dev->raw->edge_handle);
- 
--	mutex_lock(&ir_raw_handler_lock);
-+	mutex_lock(&ir_raw_client_lock);
- 	list_del(&dev->raw->list);
-+
-+	mutex_lock(&ir_raw_handler_lock);
- 	list_for_each_entry(handler, &ir_raw_handler_list, list)
- 		if (handler->raw_unregister &&
- 		    (handler->protocols & dev->enabled_protocols))
-@@ -681,6 +680,8 @@ void ir_raw_event_unregister(struct rc_dev *dev)
- 	 * "device gone" is checked.
- 	 */
- 	mutex_unlock(&ir_raw_handler_lock);
-+
-+	mutex_unlock(&ir_raw_client_lock);
- }
- 
- /*
-@@ -703,15 +704,24 @@ void ir_raw_handler_unregister(struct ir_raw_handler *ir_raw_handler)
- 	struct ir_raw_event_ctrl *raw;
- 	u64 protocols = ir_raw_handler->protocols;
- 
-+	mutex_lock(&ir_raw_client_lock);
-+
- 	mutex_lock(&ir_raw_handler_lock);
- 	list_del(&ir_raw_handler->list);
-+	atomic64_andnot(protocols, &available_protocols);
-+	mutex_unlock(&ir_raw_handler_lock);
-+
- 	list_for_each_entry(raw, &ir_raw_client_list, list) {
-+		mutex_lock(&raw->dev->lock);
-+		mutex_lock(&ir_raw_handler_lock);
- 		if (ir_raw_handler->raw_unregister &&
- 		    (raw->dev->enabled_protocols & protocols))
- 			ir_raw_handler->raw_unregister(raw->dev);
--		ir_raw_disable_protocols(raw->dev, protocols);
-+		raw->dev->enabled_protocols &= ~protocols;
-+		mutex_unlock(&ir_raw_handler_lock);
-+		mutex_unlock(&raw->dev->lock);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 4d4271956492b..ec0ca117ec70a 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1721,6 +1721,8 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 	struct smb2_sess_setup_req *req;
+ 	struct smb2_sess_setup_rsp *rsp;
+ 	struct ksmbd_session *sess;
++	struct ksmbd_session *prev_sess = work->sess;
++	bool installed = false;
+ 	struct negotiate_message *negblob;
+ 	unsigned int negblob_len, negblob_off;
+ 	int rc = 0;
+@@ -1843,6 +1845,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 		conn->binding = false;
  	}
--	atomic64_andnot(protocols, &available_protocols);
--	mutex_unlock(&ir_raw_handler_lock);
+ 	work->sess = sess;
++	installed = true;
+ 
+ 	negblob_off = le16_to_cpu(req->SecurityBufferOffset);
+ 	negblob_len = le16_to_cpu(req->SecurityBufferLength);
+@@ -1996,6 +1999,14 @@ int smb2_sess_setup(struct ksmbd_work *work)
+ 	}
+ 
+ 	ksmbd_conn_unlock(conn);
 +
-+	mutex_unlock(&ir_raw_client_lock);
++	/*
++	 * Later in a compound, work->sess holds the reference that an
++	 * earlier command took. Drop it once this request has installed
++	 * its own session there or cleared it.
++	 */
++	if (prev_sess && (installed || !work->sess))
++		ksmbd_user_session_put(prev_sess);
+ 	return rc;
  }
- EXPORT_SYMBOL(ir_raw_handler_unregister);
+ 
 -- 
 2.53.0
 
