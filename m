@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035232;
-	b=SQTXvVm69TRMYU0b60S2juzF+7vOVdtmmu/crG7lJzJbEDr6VnykpZkcsTKZv6NVmCE9
-	 HKHyjhzy/15RTj4HS2Cv149oZuVvgXBvq8xFs4yoc4CXySXnNzyQchMthAUxfUkvhP6Eq
-	 VIl/dfKSWc0qZqCvxiKHSTP+pGZsIt+XLj/6yy4QHEztUyTPHXy/MqQdQsbrCpnFC/cJ8
-	 i3job6j6dWkKF5DWp4SwR3hGgvQDwxnPpEoc2YVmHvISNUtjc6STu5s9kCA5fe9Uq40iE
-	 cmTQqFPShNFN5kfYv34CJWV2BAlzvF/0Ycdw5/pVCqL4JRyfiKXddB1SrOsruw1l/sg==
+	t=1795035235;
+	b=s13wiv3LELFNUvNrW1bi1lYzsf3Aaubufq+3QPsI3MZEmkU9BIpgejlgQ3ql8STfWWPK
+	 0dc6NsrADUsxDWaB6S3hHryGN7o1LMzHURm+W+DBEH7TVMOkbIrt8BC/Gd3VF/MW7MikK
+	 bxohbK/IHxiI3/dsK1281Uuh89hMovDqBwokm4KRFl5GVl0p+RszBQXHZezW9+r0iz/tq
+	 OjcSWH5Oax3eEEDMJKWY2hWCx032uPj3o+RH6TQvKIivNwMxf1D/wdVwRI1GX3OSgah+9
+	 pGL/q1nNDXD+z1/Enc0S1LLIJNJ7r8NlkZZNDlZtdq7zDsDRzaiDYrcd3WztPHKqnfg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035232;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035235;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kBknCfaXG7ze9xzx/+D2J+aWrK8SS/DckSIhRfflnXs=;
-	b=qFBhSchYSW9awc16DUGd/pcXYrbXjwUD91B9uRT/uarl88Lj/u2gN3nMfiOuevnxN2sw
-	 +ec6gCZSCi8br50fpaGqyj5VkQDcjJJSCJlmAj+SBGMFWJdZRxfT2tgw5C14Bxyue2aC6
-	 N6v3mS4qH4ME3R9BY5PFSGhQgbA9vFwkB8p4Uzyn9an+yeJ/tSSdxxvjwuP6pZSCQndsR
-	 mKoGiFeEnxd/kve23RP1RImd6r6OcZ+ArLPBH4Jrna+uxi0IW1jqyaiBWtP9ui7Q0bODt
-	 vUCn4qXSBDNon84k3o7rxz3JgFgfPKT+vWx/a4hauviBNQ6J32rt/DygceVeB40nLVQ==
+	bh=kwmbstO6uI0/TxBpyeggjxGcQFTVrEhW1BxuE+kxy7Y=;
+	b=ZXCjaN3a8YDHcuakfANPYH+I5PV/BMK3z2WX+CLtZdBSfIULpiONK9JOkanb5IPmJIsg
+	 xdcXXkc1d+EI4ja0OZtamfREtmmAJwsLIQcfLI9zUPYlfTzR1Ah6Mk5PkhNnJ9jEM37W7
+	 RCeo39K/bZGDORF9bc/IRPxNepimCMkCY4IgbRSUbvNwylebaIJZ8kAUbLp0Vr8OyNFhj
+	 BU3k44f6kxYU3DvHWAd09pxkko28UY3h7K8FqUFMPQ3YHSDhxXds1m24Uktn3JE5aOf/0
+	 UdrH/2p1QW5h7dqpXOC1dURrfN2cHxYDe1ZCgQpxvg8SsL0ab36KE7J9pfybkwGB+TQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtKfjuxz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BOVuKM15;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9138860A260E;
-	Wed, 18 Nov 2026 20:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A65606A332;
+	Wed, 18 Nov 2026 20:53:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtKfjuxz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACE31F000C9;
-	Wed, 18 Nov 2026 20:53:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BOVuKM15
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBF01F000C4;
+	Wed, 18 Nov 2026 20:53:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035232;
-	bh=kBknCfaXG7ze9xzx/+D2J+aWrK8SS/DckSIhRfflnXs=;
+	s=korg; t=1795035235;
+	bh=kwmbstO6uI0/TxBpyeggjxGcQFTVrEhW1BxuE+kxy7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GtKfjuxzAWcqwjc5uenQs1EB36h6AyGLgn3A55dy0veKrJ/T2J568T2gF3aXdNkDm
-	 9sqJqBW6No/5eup7JMp3j6W1P17DUoHWhLZbXsg7VQcqskkbQYF9VfO8SDgRVLPV1h
-	 Y2QRa+odTiUnbf82XwanV9b4IEQVYzRB78Dzd2wQ=
+	b=BOVuKM15v11JSMItBc8if0ASU0tb8yttR8pDcjVIHGc8M9RsIoXYOCAVQ6Mgv5NI8
+	 3rB14Kmkm9b2Vu6IVA8qciePk2pWXdiDG5G5wbCzS7SxxOuSxSiibnlrwr4yWzSgLz
+	 jtYhrSqigwSQW+9hpRISRNpi/ILgobh3+gEQbxzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>
-Subject: [PATCH 6.6 0653/3318] ovl: skip copy up of empty security.capability
-Date: Wed, 18 Nov 2026 15:21:15 +0100
-Message-ID: <20261118150337.616401576@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.6 0654/3318] xfs: fix unnecessary dapos truncation in xchk_dir_walk
+Date: Wed, 18 Nov 2026 15:21:16 +0100
+Message-ID: <20261118150337.649259399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,71 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 50912a1715b8a7c614b654011a0db750e372b43e upstream.
+commit f60a2ef8d8a7ac6dedf4d0c3325cc3fc2fe0d948 upstream.
 
-ovl_copy_xattr() gives up if it can't read an attribute that
-listxattr() has named.  An empty security.capability, which anybody has
-been able to store on any file for a long time, is such a case: it is
-listed, and getxattr() has nothing to return for it.  A file in a lower
-layer that carries one can't be copied up: it can't be written to,
-renamed or have its mode changed.
+LOLLM points out that the all the implementations of xchk_dirent_fn can
+handle a signed @dapos parameter, so the truncation here breaks the
+information captured in scrub tracepoints if the directory is very
+large.  I don't think it ever made sense to do the truncation for the
+VFS readdir code for programs that can handle 64-bit offsets, but commit
+15440319767942 has been around for 17 years without complaints so I'll
+leave that alone.
 
-There is nothing to copy if there are no data.  Go on with the next
-one.
-
-Fixes: 8db6c34f1dbc ("Introduce v3 namespaced file capabilities")
-Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: treat -EINVAL as no capability too, and do the same in
- ovl_copy_up_meta_inode_data()]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Stumbled-over: 15440319767942 ("[XFS] truncate readdir offsets to signed 32 bit values")
+Cc: stable@vger.kernel.org # v6.4
+Fixes: 4c233b5c4f29df ("xfs: streamline the directory iteration code for scrub")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Assisted-by: LOLLM # finding obvious bugs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/copy_up.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/readdir.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -76,6 +76,15 @@ static int ovl_copy_acl(struct ovl_fs *o
- static ssize_t ovl_getxattr_value(const struct path *path, char *name,
- 				  char **value, ssize_t *value_size);
+--- a/fs/xfs/scrub/readdir.c
++++ b/fs/xfs/scrub/readdir.c
+@@ -239,7 +239,7 @@ xchk_dir_walk_leaf(
+ 		dep = bp->b_addr + offset;
+ 		length = xfs_dir2_data_entsize(mp, dep->namelen);
  
-+/*
-+ * Any user can store an empty security.capability, which fails to read with
-+ * -EINVAL.  It grants no capability, so treat it as none, like no xattr.
-+ */
-+static bool ovl_no_fscap(ssize_t err)
-+{
-+	return err == -ENODATA || err == -EOPNOTSUPP || err == -EINVAL;
-+}
-+
- int ovl_copy_xattr(struct super_block *sb, const struct path *oldpath, struct dentry *new)
- {
- 	struct dentry *old = oldpath->dentry;
-@@ -135,6 +144,10 @@ int ovl_copy_xattr(struct super_block *s
- 
- 		size = ovl_getxattr_value(oldpath, name, &value, &value_size);
- 		if (size < 0) {
-+			if (!strcmp(name, XATTR_NAME_CAPS) && ovl_no_fscap(size)) {
-+				error = 0;
-+				continue;
-+			}
- 			error = size;
- 			break;
- 		}
-@@ -1005,9 +1018,9 @@ static int ovl_copy_up_meta_inode_data(s
- 	if (c->stat.size) {
- 		err = cap_size = ovl_getxattr_value(&upperpath, XATTR_NAME_CAPS,
- 						    &capability, &cap_size);
--		if (cap_size == -ENODATA || cap_size == -EOPNOTSUPP)
-+		if (ovl_no_fscap(cap_size))
- 			cap_size = 0;
--		if (cap_size < 0)
-+		else if (cap_size < 0)
- 			goto out;
- 	}
- 
+-		dapos = xfs_dir2_byte_to_dataptr(curoff) & 0x7fffffff;
++		dapos = xfs_dir2_byte_to_dataptr(curoff);
+ 		ino = be64_to_cpu(dep->inumber);
+ 		name.name = dep->name;
+ 		name.len = dep->namelen;
 
 
