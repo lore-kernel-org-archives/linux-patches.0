@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059686;
-	b=FNH/t6tb/zMmbRtugWvFwxaTWc1fG2L6hJBZljKEfT/mCGUZdcssNzCjftXP1vhyoEn2
-	 B5nDs9mutwBiX2iVL3TFcLtb1gMYqWG+RMBcMsQUqf5SwPc2RTefHf121giAbcpomxMrf
-	 IppgdhKds5dju2OuZpivB+OUXovJmp7M4XGrq8ZcohgDHY9h8ERWdHfdmMyLnzDAiFZnO
-	 uMk3Zsuz6wb3RVD3UXMQ2XzeV+97dEG8henRs0suL43ckBJRf7JT3R3ME5jpbt5u6t5nj
-	 yn7PYpSBGPdB7+bFQB4JQu+OJ5NGtQDbBd7oPMy0VOsO/JGE8JBvx93TMkte8urGNSw==
+	t=1795059689;
+	b=AjFeeKQHQb7YqEZSQnDa2d0McUWPR4T7RE7OzsXOBXk6DTHW9sOy3HGrr6pcC0+AO82Y
+	 yKcz+/OFAWJmVjFKDpvLn3uJilAOQgum0cXSjAkWH5yJBByHd50SCi2RK172nt2wE4d4T
+	 M6q9y+Qhr2SShTfL4m3jykgRgyPbCqgrnr6JR7s7/pV5VTR9QU1L14JsBqBCZvU/xMHPM
+	 VQH/+zN6cJrJaI5EDcdKGVcp01SxOonkCYyj1sf/y3Qt9k4zS/nWq5JOp3HjC1V1of7vf
+	 ZKHn27rYi+ngN60b0fQ511vFONGphntDMF6tb7oKxpkcDJkP069l98KO7oh/y2dZj+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059686;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059689;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DsRjgTQAzQbdXnn/SX95pKzTbi3OrktXmofoX9mBYMA=;
-	b=xdjD6cFLXTZPiguuQZ6s/yBXwjHn+ygEx3mkLa+kDhyYlGUph2LRaZkg87fMX3PdF3k7
-	 8+qHt1Ce4QSspFBAeJlW+5L9k1u5r6n/lW7usqQ7fKicJEGqXieM+CcDX6nL8mW5vAqYK
-	 B1gaOvFPl5QC90UQMywdG4VYViW/baIHuaUN+1pbMgovcRwpkCbpCQPLcn0hokj5LgbzL
-	 oFgyAJnBikab75kQ0PdXu22O6dR8Qmq5JuzP1cXOJ+EpiVzaolYIBVcf2gozyC6SCbSZV
-	 t6jGb0QhqxahTSJhUr8ki5o1LnsXge/6sgS4j6seUDKorKOwdQLhyosUPNh/Q1Gb94Q==
+	bh=IEFsRv4AFHTzE7aK0oCkzPV72l93jU78QjWpERzP5lA=;
+	b=Qm4XGTRV4+IgzbUEL1dB9vYSWJ1LF6SPGUWeJpC9uuFfHEL4jot9Il/uCsK1x/uoWjMp
+	 OSy4ckCZ6GEEKAVA6gns9HCsMlhZ1+xpPAtrGAwbKWdQ0gEq6wR/tg6hvvWPDFXASKsJt
+	 AGQsoDDnqhC7tyKX3nnYlquM2EfY9KEmosyFvURcKRgsTC097ty2KDTriGMhV3HVVakoH
+	 34SM+BMCV52uPlbOPzzRzJRSwVNbpLd5rgf7+ggulKzioURvOniUinB7uq9n7UV4mDEXw
+	 kgtpBKPP2R1/d3rDOmNDu9//lFKmSAobhbhYtRmNweqtzjEcMBrhlV1E18FGUPXRkpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWM6kbKh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oM2c3abz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7256B606A338;
-	Thu, 19 Nov 2026 03:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35DFD60A2613;
+	Thu, 19 Nov 2026 03:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RWM6kbKh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A3A1F000C4;
-	Thu, 19 Nov 2026 03:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oM2c3abz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F301F000C5;
+	Thu, 19 Nov 2026 03:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059686;
-	bh=DsRjgTQAzQbdXnn/SX95pKzTbi3OrktXmofoX9mBYMA=;
+	s=korg; t=1795059689;
+	bh=IEFsRv4AFHTzE7aK0oCkzPV72l93jU78QjWpERzP5lA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RWM6kbKhF9jEzqAbJkuby55/yWfLm88yEzNget6dCdWWfrE3ks+P2MRujs8u+mO3W
-	 drGD3DUgIqx/20QTsqY57rDIsbYDOtdKQsdFrvN7qBbq6BSvaJh7bkt690O6wnsYIy
-	 hVAoJQXrfDI/Nto4Rq7/Amgf0fp14Jn+UT57dtIs=
+	b=oM2c3abznCdEnNjYGbWDTsJnwmDdqaFZqcaQEZl1QG1UdP+thpyfND/fdsrYL0+yD
+	 FMwjQTCpYo6801lx8urjKHZCCMmizj+x6CSfKDmmgeqL7ZgdSWQ2dWpoEBwTnP+4Tv
+	 3w2G9HysjHZMSInJO3evqMFl1XJfoL/8I8jF37/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Takashi Iwai <tiwai@suse.de>,
+	Tim Menninger <tmenninger@everpuredata.com>,
+	Chuck Lever <cel@kernel.org>,
+	Anna Schumaker <anna.schumaker@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0928/1848] ALSA: emu10k1: prune vestiges of SNDRV_SFNT_SAMPLE_{BIDIR,REVERSE}_LOOP support
-Date: Wed, 18 Nov 2026 15:49:26 +0100
-Message-ID: <20261118145955.625048847@linuxfoundation.org>
+Subject: [PATCH 5.10 0890/1848] xprtrdma: prevent disconnect feedback during endpoint teardown
+Date: Wed, 18 Nov 2026 15:48:48 +0100
+Message-ID: <20261118145953.773462323@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,153 +69,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+From: Tim Menninger <tmenninger@everpuredata.com>
 
-[ Upstream commit 1edeac6555e9df008b1729ca445868c1177baa8b ]
+[ Upstream commit 0b5bb4e586f7b0a449f4d90a524f76a3be5db355 ]
 
-This is required only to implement WAVE_BIDIR_LOOP and WAVE_LOOP_BACK in
-the GUS patch loader. It has not worked on emu10k1 since before ALSA hit
-mainline, yet nobody appears to have complained. And as it isn't super
-easy to implement, just admit defeat and clean up the code.
+xprt_autoclose() clears XPRT_CLOSE_WAIT before invoking the transport's
+->close() operation. For RPC/RDMA, ->close() calls
+rpcrdma_xprt_disconnect(), which disconnects the RDMA CM endpoint and
+drains its QP.
 
-If somebody wanted to resurrect the feature, the emu8k driver could
-serve as a template, but the code would be quite different. But
-arguably, this should be done in user space in the first place, as this
-doesn't represent a hardware feature (somewhat ironically, the actual
-GUS driver has no synth support, and therefore no GUS patch loader).
+Since commit 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on
+connect"), RDMA_CM_EVENT_DISCONNECTED requests a SUNRPC transport
+disconnect. Today that path, along with failed completion handling,
+reaches xprt_force_disconnect() through rpcrdma_force_disconnect().
 
-Note that instead of properly rejecting affected samples, we continue to
-just pretend that the feature wasn't requested. This is extremely
-questionable behavior, but avoids that possibly unused instruments
-suddenly prevent loading the entire file, which would break backwards
-compatibility. But at least we log a warning now.
+Commit c487eb7d8e41 ("xprtrdma: Clean up disconnect") later added
+re_force_disconnect to ensure that multiple failure indications request
+only one SUNRPC disconnect. However, the gate remains open when SUNRPC
+itself begins endpoint teardown.
 
-Signed-off-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Message-ID: <20240406064830.1029573-6-oswald.buddenhagen@gmx.de>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 8a5d87c2ba30 ("ALSA: emux: Stop voices before freeing zones in all cases")
+If re_force_disconnect is still clear, either a CM disconnect event or a
+completion error can set XPRT_CLOSE_WAIT again while the current close
+is in progress. When the transport send lock is subsequently released,
+xprt_clear_locked() observes XPRT_CLOSE_WAIT and queues another
+autoclose.
+
+Requesting a disconnect this way is necessary when a connection is lost
+unexpectedly, but not when the event was generated by
+rpcrdma_xprt_disconnect() itself. In that case SUNRPC is already
+committed to closing the transport.
+
+Mark re_force_disconnect before initiating local endpoint teardown so
+that CM events and completion errors caused by that teardown cannot
+request another close. An unexpected error that wins the race before
+local endpoint teardown begins can still request a disconnect normally.
+
+Use a fully ordered exchange so that the gate is globally closed before
+rdma_disconnect() can transition the QP to error and generate the
+callbacks that the gate suppresses.
+
+In 30-second traces of a sustained recovery loop, without this change
+there were 7,693 xprt_force_disconnect() calls, 6,267 SUNRPC autocloses,
+and 172,892 receive-side IB_WC_WR_FLUSH_ERR completions. With this
+change, the same tracepoints recorded 3,512 xprt_force_disconnect()
+calls, 3,212 autocloses, and 131,287 receive-side flush completions.
+Thus QP teardown continues to produce flushed completions, but closing
+the disconnect gate before teardown substantially reduces their
+feedback into the SUNRPC close path.
+
+Fixes: 31e62d25b5b8 ("xprtrdma: Simplify RPC wake-ups on connect")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tim Menninger <tmenninger@everpuredata.com>
+Reviewed-by: Chuck Lever <cel@kernel.org>
+Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/emu10k1/emu10k1_patch.c | 73 ++++---------------------------
- 1 file changed, 8 insertions(+), 65 deletions(-)
+ net/sunrpc/xprtrdma/verbs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/pci/emu10k1/emu10k1_patch.c b/sound/pci/emu10k1/emu10k1_patch.c
-index 89890f24509f0..49214c2268084 100644
---- a/sound/pci/emu10k1/emu10k1_patch.c
-+++ b/sound/pci/emu10k1/emu10k1_patch.c
-@@ -28,8 +28,6 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 8c05fc11d79e5..064c4a3434967 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -114,9 +114,9 @@ static void rpcrdma_xprt_drain(struct rpcrdma_xprt *r_xprt)
+ 	rpcrdma_ep_put(ep);
+ }
+ 
+-/* Ensure xprt_force_disconnect() is invoked exactly once when a
+- * connection is closed or lost. (The important thing is it needs
+- * to be invoked "at least" once).
++/* Ensure xprt_force_disconnect() is invoked at most once for an
++ * unexpected endpoint failure. Local endpoint teardown closes this
++ * gate before it can generate CM events and flushed completions.
+  */
+ static void rpcrdma_force_disconnect(struct rpcrdma_ep *ep)
  {
- 	int offset;
- 	int truesize, size, blocksize;
--	__maybe_unused int loopsize;
--	int loopend, sampleend;
- 	unsigned int start_addr;
- 	struct snd_emu10k1 *emu;
+@@ -576,6 +576,9 @@ void rpcrdma_xprt_disconnect(struct rpcrdma_xprt *r_xprt)
+ 	if (!ep)
+ 		return;
  
-@@ -43,32 +41,24 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 		return 0;
- 	}
- 
-+	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP | SNDRV_SFNT_SAMPLE_REVERSE_LOOP)) {
-+		/* should instead return -ENOTSUPP; but compatibility */
-+		printk(KERN_WARNING "Emu10k1 wavetable patch %d with unsupported loop feature\n",
-+		       sp->v.sample);
-+	}
++	/* Prevent teardown-generated events from requesting another close. */
++	atomic_xchg(&ep->re_force_disconnect, 1);
 +
- 	/* recalculate address offset */
- 	sp->v.end -= sp->v.start;
- 	sp->v.loopstart -= sp->v.start;
- 	sp->v.loopend -= sp->v.start;
- 	sp->v.start = 0;
- 
--	/* some samples have invalid data.  the addresses are corrected in voice info */
--	sampleend = sp->v.end;
--	if (sampleend > sp->v.size)
--		sampleend = sp->v.size;
--	loopend = sp->v.loopend;
--	if (loopend > sampleend)
--		loopend = sampleend;
--
- 	/* be sure loop points start < end */
- 	if (sp->v.loopstart >= sp->v.loopend)
- 		swap(sp->v.loopstart, sp->v.loopend);
- 
- 	/* compute true data size to be loaded */
- 	truesize = sp->v.size + BLANK_HEAD_SIZE;
--	loopsize = 0;
--#if 0 /* not supported */
--	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP|SNDRV_SFNT_SAMPLE_REVERSE_LOOP))
--		loopsize = sp->v.loopend - sp->v.loopstart;
--	truesize += loopsize;
--#endif
- 	if (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_NO_BLANK)
- 		truesize += BLANK_LOOP_SIZE;
- 
-@@ -96,8 +86,8 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 	snd_emu10k1_synth_bzero(emu, sp->block, offset, size);
- 	offset += size;
- 
--	/* copy start->loopend */
--	size = loopend;
-+	/* copy provided samples */
-+	size = sp->v.size;
- 	if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS))
- 		size *= 2;
- 	if (offset + size > blocksize)
-@@ -108,53 +98,6 @@ snd_emu10k1_sample_new(struct snd_emux *rec, struct snd_sf_sample *sp,
- 		return -EFAULT;
- 	}
- 	offset += size;
--	data += size;
--
--#if 0 /* not supported yet */
--	/* handle reverse (or bidirectional) loop */
--	if (sp->v.mode_flags & (SNDRV_SFNT_SAMPLE_BIDIR_LOOP|SNDRV_SFNT_SAMPLE_REVERSE_LOOP)) {
--		/* copy loop in reverse */
--		if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS)) {
--			int woffset;
--			unsigned short *wblock = (unsigned short*)block;
--			woffset = offset / 2;
--			if (offset + loopsize * 2 > blocksize)
--				return -EINVAL;
--			for (i = 0; i < loopsize; i++)
--				wblock[woffset + i] = wblock[woffset - i -1];
--			offset += loopsize * 2;
--		} else {
--			if (offset + loopsize > blocksize)
--				return -EINVAL;
--			for (i = 0; i < loopsize; i++)
--				block[offset + i] = block[offset - i -1];
--			offset += loopsize;
--		}
--
--		/* modify loop pointers */
--		if (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_BIDIR_LOOP) {
--			sp->v.loopend += loopsize;
--		} else {
--			sp->v.loopstart += loopsize;
--			sp->v.loopend += loopsize;
--		}
--		/* add sample pointer */
--		sp->v.end += loopsize;
--	}
--#endif
--
--	/* loopend -> sample end */
--	size = sp->v.size - loopend;
--	if (size < 0)
--		return -EINVAL;
--	if (! (sp->v.mode_flags & SNDRV_SFNT_SAMPLE_8BITS))
--		size *= 2;
--	if (snd_emu10k1_synth_copy_from_user(emu, sp->block, offset, data, size)) {
--		snd_emu10k1_synth_free(emu, sp->block);
--		sp->block = NULL;
--		return -EFAULT;
--	}
--	offset += size;
- 
- 	/* clear rest of samples (if any) */
- 	if (offset < blocksize)
+ 	id = ep->re_id;
+ 	rc = rdma_disconnect(id);
+ 	trace_xprtrdma_disconnect(r_xprt, rc);
 -- 
 2.53.0
 
