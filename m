@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043519;
-	b=PJQSxcCK0U8p8M/1D9MZ4gEuiHdc5VSMJ78Zh+YzYAH97bxfO6p5gQs55Hpd9esl79z4
-	 VGq8TEvmeU9advKguvTnA/7kIY5MYwWq2I/S3vSdvH4crmgiADJ0uIcsbXa0oSFa2uBgR
-	 ENo7sjdwt+ywJv7VZZM9OiV8SXFiXMP2lZ8lTMJ2yvZuGQBTrBY6hzpRkptJ+AP67NzuI
-	 kecYxddjq/qipmB1V1EgkLG8CRFqscQP+YO9eviOCUABH2GBdCQx2M+lbBLK/7ziuKWrm
-	 ryOm6KH8Bwxl7eWs4lI/0cuXB2F7bUa/it7Da7QztUSK1rVYNs6iq9Mfci9RQ9OEqUg==
+	t=1795043522;
+	b=yO4/vscLjqszPleNKG8fAUfO1wv5CaLe428FTdwGXNhIZwDtUTlLVJ1zc1CRHIinpXCR
+	 h+SWE1jMgyM2xad1J1t5H6lpPgkneq7kW1FOJBTnn5QkAxW8TZmBTAqh32h0l/wDSVNe+
+	 fxQCy1yvWuCvJUAfEHRdUqigfee6inf54JSglCOW9dczfSy31mskmYrEiKaAgb5T35XHU
+	 5HMeb9vTkl72jmht7c1duaRIDFgnEgsMdzXNgscnLOK5yWTk18PQIzwVHd3YAAJCRz+i3
+	 ryY5tIJJb5WlFTYUuuOLP9xaPRCH8xkfMPrsZ+xbIM+hi92uHCl0sk1Ks0+UaxID7yQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043519;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043522;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/27154ExNmldk4zbO8wqgZd8dK8Hc7of5Jci8Oh5U3Y=;
-	b=LO5pZ0zS6cxG1fUXd2nJMm0/2UswDHN+vPiy27lg2Dx+cUoVSEcD+fpkpLVu8jPNcdDk
-	 P9zoUa5akXNGgw1uvptCjioi2Nuy5z1E87P9OW3GGq7uVkEvM3SmpA74es/IR/4V2okIB
-	 dPTMW9BAuYdR8a60fLfbAj4L1hhewsRZ5hEHsrfCSJhQR+3cKz9ds9nqZgqkdVGYM6TfA
-	 AHL7JRrxOCS5daN4u//pFwAyjKYWZJy7Oa4gwsNkBhlkhcOufRpiR5/ieW8+5M7Y/OhRr
-	 2XzmnjulcoEL7X2EVAX0ICIwP6nalvC3iNuGQhmmXaFlv7+p1SJ1Xv2+DTZRRlyLrsA==
+	bh=d0EpG4txKjCWkBwgbRTol4HnfMUAZpAn9dwXXPlEZCs=;
+	b=tFOcCd3oqN54iIWk3qCtUaCPISF/UxlKRnkaci/SPGx6Kie0v/7yj8sh0KHjkQqa+58m
+	 dk06gaWPn/DPr+TMLYZMDJIDC1HlRyU+ioa1YkuxnQ+UfvqCvVSI+dSaqv5BjbhVIRYPq
+	 asJo+J6IPkIx7CbFrPd+ImCMuSwU+826A/naoiE1dJjyVRE9QIhTP+yKXV7TfXTV0Tr/O
+	 9D0Mg4wPbbQ80zQgrmDMgNVrBL3Z+Ob5yxjkLh8b3odDwTCM0zcU5q3QIALegG2L5IJwW
+	 yvU0EPYPp+mvpkz1vqumBhiuh582XicsiPY17iGlSkbrsokLelz48rgCGWbWKDHPlCQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBccseci;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=md9ekyS9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08808606A320;
-	Wed, 18 Nov 2026 23:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BFE606A325;
+	Wed, 18 Nov 2026 23:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GBccseci
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C10F1F000C4;
-	Wed, 18 Nov 2026 23:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=md9ekyS9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE9C1F000C4;
+	Wed, 18 Nov 2026 23:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043518;
-	bh=/27154ExNmldk4zbO8wqgZd8dK8Hc7of5Jci8Oh5U3Y=;
+	s=korg; t=1795043521;
+	bh=d0EpG4txKjCWkBwgbRTol4HnfMUAZpAn9dwXXPlEZCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GBccseciZOmp2c7w9aFV8DZdABg7BiGhz87qdwVomGGViugvd2xg93SGnojir0A3m
-	 sM4az4VEz69FNkxQLwqIEPYHQxBag1Y7quiwqKNdmqh1mqJFN2dTIrOOq0Hvr2OiYB
-	 dwuB2hGuC+cAwNe4HgB2cCbgq6qLsny/9xsQqnbU=
+	b=md9ekyS9Kdk+qKqS0lzRjY1sCmiZKo54AwSzWraJsezcP9oxFwMb+2Gt8xwZYq0Rn
+	 +oeDC8dvCvy46MlWDBHcRlx84JEhBXAKcw1hLo5gy0rvsq0PeUJjEnnlgLiFtl3wyR
+	 ljBh1xuznZyqZNkJBmXc26rPWxkmVG19w1hbQgRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Shi <coshi036@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com,
+	Anuj Bolewar <bolewara@gmail.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0232/2857] nvme: ratelimit the completion-path messages driven by device data
-Date: Wed, 18 Nov 2026 15:21:06 +0100
-Message-ID: <20261118150209.809866401@linuxfoundation.org>
+Subject: [PATCH 6.1 0241/2857] drm/virtio: reclaim pending vbufs before tearing down vqs
+Date: Wed, 18 Nov 2026 15:21:15 +0100
+Message-ID: <20261118150210.127137991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,82 +69,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Shi <coshi036@gmail.com>
+From: Anuj Bolewar <bolewara@gmail.com>
 
-[ Upstream commit c05c86681170e381e24498257db3a879deb1ae89 ]
+[ Upstream commit 61d85f99b5a55d4f717c4bb2f4c4acabf22ee3fc ]
 
-nvme_find_rq() and nvme_handle_cqe() print an unratelimited message for
-every completion queue entry whose command id does not resolve to an
-in-flight request.  Both are reached from the completion interrupt path
-(nvme_irq() -> nvme_poll_cq() -> nvme_handle_cqe()) and the decision to
-print is made entirely from device-supplied data, so a controller that
-posts a stream of bogus command ids drives unbounded printk from hard
-interrupt context.
+virtio_gpu_free_vbufs() destroys the vbufs kmem_cache after the virtqueues
+have already been released. Commands that were queued but never completed
+by the device leave their vbuffers stranded in the virtqueue, so the cache
+still holds live objects when virtio_gpu_deinit() tears everything down.
+This triggers a WARNING in virtio_gpu_free_vbufs:
 
-This is not hypothetical.  A single boot under an emulated controller
-that posts invalid completions produced 846 "could not locate request
-for tag 0x0", 846 "invalid id 0 completed on queue 2" and 123 "genctr
-mismatch" lines.  Once the tag set has been torn down every subsequent
-completion resolves to nothing, so the print rate is bounded only by how
-fast the device can post entries.
+    BUG virtio-gpu-vbufs (Not tainted): Objects remaining in cache
+    on __kmem_cache_shutdown()
 
-Ratelimit the three messages.  The information they carry is diagnostic
-and repeats, so the suppression count printed by the ratelimit helpers
-is enough to tell that the condition persists.  This matches how the
-other device-driven error prints in the driver are already handled, for
-example the status messages in nvme_log_error() and
-nvme_log_err_passthru().
+Drain any buffers still sitting in the control and cursor virtqueues in
+virtio_gpu_deinit() after the device has been reset and before the
+virtqueues are deleted, following the same pattern used by virtio_console's
+remove_vqs(). Each reclaimed buffer is released with free_vbuf(), dropping
+the reference on any GEM objects it holds. Pending RESOURCE_UNREF
+commands are handled as well: their resp_cb_data still references a GEM
+object, so it is cleaned up with virtio_gpu_cleanup_object() to avoid
+leaking it on teardown.
 
-nvme_find_rq() lives in nvme.h and is shared by pci, tcp, rdma, apple and
-target-loop, so all transports are covered.
-
-Found by FuzzNvme.
-
-Signed-off-by: Chao Shi <coshi036@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reported-by: syzbot+06f9b2a53ba4a5a47644@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=06f9b2a53ba4a5a47644
+Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patch.msgid.link/20260802-virtio-gpu-reclaim-vbufs-v2-1-5767fb860691@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/nvme.h | 6 +++---
- drivers/nvme/host/pci.c  | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_drv.h |  1 +
+ drivers/gpu/drm/virtio/virtgpu_kms.c |  1 +
+ drivers/gpu/drm/virtio/virtgpu_vq.c  | 15 +++++++++++++++
+ 3 files changed, 17 insertions(+)
 
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index be940d4148c20..338f98b45c893 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -570,12 +570,12 @@ static inline struct request *nvme_find_rq(struct blk_mq_tags *tags,
+diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.h b/drivers/gpu/drm/virtio/virtgpu_drv.h
+index 1dc92ee7fbdb7..ad0bc7bc7651f 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_drv.h
++++ b/drivers/gpu/drm/virtio/virtgpu_drv.h
+@@ -323,6 +323,7 @@ void virtio_gpu_array_put_free_work(struct work_struct *work);
+ /* virtgpu_vq.c */
+ int virtio_gpu_alloc_vbufs(struct virtio_gpu_device *vgdev);
+ void virtio_gpu_free_vbufs(struct virtio_gpu_device *vgdev);
++void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev);
+ void virtio_gpu_cmd_create_resource(struct virtio_gpu_device *vgdev,
+ 				    struct virtio_gpu_object *bo,
+ 				    struct virtio_gpu_object_params *params,
+diff --git a/drivers/gpu/drm/virtio/virtgpu_kms.c b/drivers/gpu/drm/virtio/virtgpu_kms.c
+index 27b7f14dae89a..7ebabd9193b1c 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_kms.c
++++ b/drivers/gpu/drm/virtio/virtgpu_kms.c
+@@ -280,6 +280,7 @@ void virtio_gpu_deinit(struct drm_device *dev)
+ 	flush_work(&vgdev->cursorq.dequeue_work);
+ 	flush_work(&vgdev->config_changed_work);
+ 	virtio_reset_device(vgdev->vdev);
++	virtio_gpu_reclaim_vbufs(vgdev);
+ 	vgdev->vdev->config->del_vqs(vgdev->vdev);
+ }
  
- 	rq = blk_mq_tag_to_rq(tags, tag);
- 	if (unlikely(!rq)) {
--		pr_err("could not locate request for tag %#x\n",
--			tag);
-+		pr_err_ratelimited("could not locate request for tag %#x\n",
-+				   tag);
- 		return NULL;
- 	}
- 	if (unlikely(nvme_genctr_mask(nvme_req(rq)->genctr) != genctr)) {
--		dev_err(nvme_req(rq)->ctrl->device,
-+		dev_err_ratelimited(nvme_req(rq)->ctrl->device,
- 			"request %#x genctr mismatch (got %#x expected %#x)\n",
- 			tag, genctr, nvme_genctr_mask(nvme_req(rq)->genctr));
- 		return NULL;
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 0ed96b0ecb9e3..8639c8f2066f3 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1075,9 +1075,9 @@ static inline void nvme_handle_cqe(struct nvme_queue *nvmeq,
+diff --git a/drivers/gpu/drm/virtio/virtgpu_vq.c b/drivers/gpu/drm/virtio/virtgpu_vq.c
+index 01a231d21119d..c50caf7f6c75c 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_vq.c
++++ b/drivers/gpu/drm/virtio/virtgpu_vq.c
+@@ -179,6 +179,21 @@ static void free_vbuf(struct virtio_gpu_device *vgdev,
+ 	kmem_cache_free(vgdev->vbufs, vbuf);
+ }
  
- 	req = nvme_find_rq(nvme_queue_tagset(nvmeq), command_id);
- 	if (unlikely(!req)) {
--		dev_warn(nvmeq->dev->ctrl.device,
--			"invalid id %d completed on queue %d\n",
--			command_id, le16_to_cpu(cqe->sq_id));
-+		dev_warn_ratelimited(nvmeq->dev->ctrl.device,
-+				     "invalid id %d completed on queue %d\n",
-+				     command_id, le16_to_cpu(cqe->sq_id));
- 		return;
- 	}
- 
++void virtio_gpu_reclaim_vbufs(struct virtio_gpu_device *vgdev)
++{
++	struct virtio_gpu_vbuffer *vbuf;
++
++	while ((vbuf = virtqueue_detach_unused_buf(vgdev->ctrlq.vq))) {
++		if (vbuf->objs)
++			virtio_gpu_array_put_free(vbuf->objs);
++		if (vbuf->resp_cb_data)
++			virtio_gpu_cleanup_object(vbuf->resp_cb_data);
++		free_vbuf(vgdev, vbuf);
++	}
++	while ((vbuf = virtqueue_detach_unused_buf(vgdev->cursorq.vq)))
++		free_vbuf(vgdev, vbuf);
++}
++
+ static void reclaim_vbufs(struct virtqueue *vq, struct list_head *reclaim_list)
+ {
+ 	struct virtio_gpu_vbuffer *vbuf;
 -- 
 2.53.0
 
