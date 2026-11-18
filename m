@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047112;
-	b=oHMvJilCjk7EVXzGWIP+DAKOXPHgAMCbjO9siWwoOygKt1hVwe+VjxRezyp9mymhpK6G
-	 Q9TJRfGBUvL0v4Hj0Tc1VNbOs3l+or+N4TnpYfGyUzZH2qw+VVwEyh7Oxh6grXMqnvCUe
-	 tqA10tyuLMettEybOmYB1BS0BJiNdKzDTnwSBcsd3GSuJasihww+Npa145rBcOvXtqbtZ
-	 dfQn5oW6fdGEjwNSHQWdQ/kk4M9qxaP3YmQYeO+xLA0v34AcqpYas5aqw/9Pg1oynAjzO
-	 gMkevdwHTmFoi1RhDQ4NR8ZC98xwi2PblSNJlFPVdIOJ7D1a1R8ojB1U41yKCdSZcUw==
+	t=1795047115;
+	b=0q5PaJmOirTQGwSNkQAxyE7zg1QAGNreoeL9GnY4B2XNCiBu35LMGjRDQD006+hogKm0
+	 kY+Z5FbUA0HaXkuLUos9SDRr212sFZjX8CLHR9eslsLlbIs7qYH9twu+j+HqOResl1VPK
+	 HPsSNPhMXH2Alq5IpiKeqy2Uq5JZL05clEFREqHmiSkHITOBSsL3K7ng9/+bsTiSnb2Jz
+	 dKfu63ZWIA9QzKrmJXWTqnlhJhdVK1K2Lqs02JLaTrfFZwl33LEb4FkO+PUyUR4m3xwu3
+	 WAFBEJIS0Gv8v0CctlfjTZbWrN1Az4Yk7ifFhZvZ8O01cbba2vzmJJjuEZq2Um9YTMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047112;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O+mo2j9YS+klyuJ93qHn1ntajEVUGf2jBjuGmORMs+o=;
-	b=Oy/EAdKGMGs6/mq1/ta9s8gDnD0kGi2fsLtG95WQ8z5txkD1xwqqWDdMiKhkOOWCZT8U
-	 FJSkyzXeY2jGFJKi60Gd34kVeODedndhnulI9TEMUeBCvfed1tDNem0tGPhrtP06oXhmn
-	 CN1VBagILCDD+pPUm6qTNm0zAj8HkgFkHgfvRaBDnVBG1bf83gPOY9/aS67HEmpqGXXws
-	 +1qeRd8e4OL6Y1bdHe1Egp2vdJHZmaFZdo2jILviC9Jd0xhl3PIr5MRHaOqdNsEeOqSZM
-	 ijQXwPJtxkOJcaSFvnBTSrE+SfVKOzqnbKqRcGjK5q2avyw4KrQdSXG8r5/IeTcaluQ==
+	bh=wJ7O8mKx9ho+9CEu3XI4IZqDFmSclIv2+Ih53Hdw00E=;
+	b=brh+9PwgLFngtElHjCm0OsTM8nEso0QgqWRHat20Zg4RMNmxmW4Ya8v8IAezfkBvY53D
+	 uspCR5oRhvguzanlYUUov0VAiF9o0Iyemp55NWf4Vw8G/haakg1Ddrr8aEVbM5Uf0+oWL
+	 OJLxSvJOH+bYRgHL3wT7FSbCd5JsKoO6PjJKLvsBSbj88dyzUi+sU6IAGH9GvYF4Zz6Iu
+	 L65oBm/js6kgzKFqCCS9PVSm6GNvhRqBy5hd8Qe+j93IaW0+5gIRoOlx0ZpLNy1BPuKDN
+	 JsLur2faScKbU+0Hi3Qy3JNqqSCmPpJatoeRj6alXvz92C8kA+gfCBaQiqbTN6hi5Lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptQtqujT;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnkAKsuK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295D0606A31C;
-	Thu, 19 Nov 2026 00:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4078C606A320;
+	Thu, 19 Nov 2026 00:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ptQtqujT
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C47E1F000C4;
-	Thu, 19 Nov 2026 00:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lnkAKsuK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AF71F000C4;
+	Thu, 19 Nov 2026 00:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047112;
-	bh=O+mo2j9YS+klyuJ93qHn1ntajEVUGf2jBjuGmORMs+o=;
+	s=korg; t=1795047114;
+	bh=wJ7O8mKx9ho+9CEu3XI4IZqDFmSclIv2+Ih53Hdw00E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ptQtqujTykfMLnkTSuBqB6MUQJPixn4zK+4IT829vnxQhLUPSyHysFxdycFwItXsS
-	 e5k9fgUcBKzaOdDx6+zDtDEyhTKa3aOKEKtB5FBbKimIaYNlbu+8RCwMNN9VXodQRg
-	 XJ50GNASMyxmjNacvyVakT4iKe7SkdHkrZRKObns=
+	b=lnkAKsuKFJE859ZcA6wc4Xfh6nmhXc2kRnRcX6XCGGsvWRn0sLvsKYRD/Bf6Jyy8G
+	 /lsvDh8pmtOpZl/474o7JDTlGR2i7fB3eh5RvdLOiFF/+1/6Ma9WQtGok0of4mCh9e
+	 kw/33vbLjIHnSEbvU10GEsX+pyrFmXItY4Qqi9UM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Vega <vega@nebusec.ai>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Naman Gulati <namangulati@google.com>,
+	Zhiling Zou <zhilinz@nebusec.ai>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1523/2857] fuse: dont drop destination page cache on a zero byte copy reply
-Date: Wed, 18 Nov 2026 15:42:37 +0100
-Message-ID: <20261118150256.160709938@linuxfoundation.org>
+Subject: [PATCH 6.1 1524/2857] ipmr: drop packets with unknown ingress VIF
+Date: Wed, 18 Nov 2026 15:42:38 +0100
+Message-ID: <20261118150256.195679793@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,62 +71,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Zhiling Zou <zhilinz@nebusec.ai>
 
-[ Upstream commit f7585e1ce3418ec282485854b3d8d31c6a961e37 ]
+[ Upstream commit 09280680f2ea060514be2a39ea84209fb6d721d4 ]
 
-__fuse_copy_file_range() clears the destination page cache after the
-server replies:
+A packet can race with VIF publication and make ipmr_find_vif() return
+-1 even though the VIF device pointer is already visible. The parent VIF
+device check can then pass with an invalid ingress VIF. For (*,G)
+entries, this can also let the packet be forwarded back out its ingress
+VIF.
 
-	truncate_inode_pages_range(inode_out->i_mapping,
-				   ALIGN_DOWN(pos_out, PAGE_SIZE),
-				   ALIGN(pos_out + bytes_copied, PAGE_SIZE) - 1);
+Drop packets whose ingress VIF lookup fails in both IPv4 and IPv6
+forwarding, before checking the MFC parent device. This prevents
+forwarding with an unknown ingress VIF and avoids the (*,G) hairpin.
 
-A server may legitimately reply that it copied nothing, eg if the source
-file turns out to be shorter than the size the kernel has cached for it.
+Without the early check, the negative index can reach the IPv4 offload
+lookup only for an skb marked for L3 forwarding offload, currently done
+by mlxsw. The race is rare; the supplied PoC reports only the UBSAN
+negative-index diagnostic.
 
-If pos_out is 0 as well, the end of the range is ALIGN(0, PAGE_SIZE) - 1,
-which is -1. lend is a uoff_t and truncate_inode_pages_range() takes -1
-as its end of file sentinel, so rather than clearing nothing it drops
-every folio in the destination mapping.
-
-That is not only a cache drop. truncate_cleanup_folio() calls
-folio_cancel_dirty(), and fuse_writeback_range() only wrote back
-[pos_out, pos_out + len - 1], so dirty data elsewhere in the destination
-file is discarded without ever reaching the server.
-
-Skip the call when the server copied nothing, since there is nothing
-stale to clear in that case.
-
-Fixes: 9b46418c40fe ("fuse: copy_file_range should truncate cache")
+Fixes: 4eadb88244d1 ("ipmr: do not acquire mrt_lock while calling ip_mr_forward()")
+Fixes: 9b1c21d898fd ("ip6mr: do not acquire mrt_lock while calling ip6_mr_forward()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ sashal: used outarg.size instead of bytes_copied ]
+Reported-by: Vega <vega@nebusec.ai>
+Link: https://lore.kernel.org/netdev/b966eb102e98f299e45be59ada033a8766e4c6df.1791899747.git.zhilinz@nebusec.ai/
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Suggested-by: Naman Gulati <namangulati@google.com>
+Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
+Reviewed-by: Naman Gulati <namangulati@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/5271fcb94a4d9e697ed64a348e92ea9e74faab1c.1792608753.git.zhilinz@nebusec.ai
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Adjusted IPv6 context to preserve wrong_if++ for the unsigned long counter instead of atomic_long_inc(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/file.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/ipv4/ipmr.c  | 3 ++-
+ net/ipv6/ip6mr.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/fuse/file.c b/fs/fuse/file.c
-index b1b82e6a72b1b..8290db2b4f13b 100644
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -3213,9 +3213,11 @@ static ssize_t __fuse_copy_file_range(struct file *file_in, loff_t pos_in,
- 	if (err)
- 		goto out;
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index 623c41514d4c3..c79267abadb85 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -1992,7 +1992,8 @@ static void ip_mr_forward(struct net *net, struct mr_table *mrt,
+ 	}
  
--	truncate_inode_pages_range(inode_out->i_mapping,
--				   ALIGN_DOWN(pos_out, PAGE_SIZE),
--				   ALIGN(pos_out + outarg.size, PAGE_SIZE) - 1);
-+	if (outarg.size)
-+		truncate_inode_pages_range(inode_out->i_mapping,
-+					   ALIGN_DOWN(pos_out, PAGE_SIZE),
-+					   ALIGN(pos_out + outarg.size,
-+						 PAGE_SIZE) - 1);
+ 	/* Wrong interface: drop packet and (maybe) send PIM assert. */
+-	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
++	if (true_vifi < 0 ||
++	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
+ 		if (rt_is_output_route(skb_rtable(skb))) {
+ 			/* It is our own packet, looped back.
+ 			 * Very complicated situation...
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index 362e670fe7f7e..45120e9c750d9 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -2159,7 +2159,8 @@ static void ip6_mr_forward(struct net *net, struct mr_table *mrt,
+ 	/*
+ 	 * Wrong interface: drop packet and (maybe) send PIM assert.
+ 	 */
+-	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
++	if (true_vifi < 0 ||
++	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
+ 		c->_c.mfc_un.res.wrong_if++;
  
- 	file_update_time(file_out);
- 	fuse_write_update_attr(inode_out, pos_out + outarg.size, outarg.size);
+ 		if (true_vifi >= 0 && mrt->mroute_do_assert &&
 -- 
 2.53.0
 
