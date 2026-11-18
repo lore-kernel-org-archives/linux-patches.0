@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045421;
-	b=yDyTbQOZP4Qmfm40N5V+y/XnSoPkf11R5zFuO5DfS+YV9Az/ctwMQOmFXYJjEoNm/LjJ
-	 qOmiM6RBvDSjxlWI+b2M4b33qIKZsD0WCfEga7DYrBlm0TcxFA3mvmSqgYY1WaLcfTZqR
-	 8ZJi4XF0ort7OVCtOCoqefFDJS65l9roP3I1t0Gi4eSWnHjLEED3Ng9iDx98rf0klbu8y
-	 b+tmeKlX+mn56CeOT7RTebrnpSACADbhmaxS1FcaLYs0E4N7PwbZvy9+oJ3/UQ7DoPe4L
-	 /FC7NtSxcMjslyDUGxSKfCcY7QsHJVox1tmh0CteLL+rSx+DJWFYmdXw1nYEFwn4q6w==
+	t=1795045423;
+	b=pbrJqO1ra4bT39QBFtxhFB7kaa6c5oAM0lhZtWm1kYMQZFq5UIfdiSffdYVzcaTNSyUL
+	 aP5TJtVHras5g8uSaXWlVyoeoQTir0zObxFGcyEgJRwkd+30rOHeA+/XTWGIGSHQ92aIy
+	 RCR3qFxXaHMak6x5oN9wzxcyMb4nlz3h3lAnWXUG5ag0TUYmVA9Ht3PQmdYqrasY9sZdL
+	 W4S+DyFSYOnoUBaZYnG6YQXl6oW1nuUPPAphOXYxhDXgHiNFGroKy84Mug5KuNHLrBHIM
+	 oGZynmCA12fDYPA3g5Bp2pM72OBrZXdm2/mBD9Ci0RcXGZ0Mktj4h4SRNiDrs9XH19w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045421;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045423;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dqu9CO4RbATdvr40PvIHQtiHzYZOnQNHSPXnk6Y/ckA=;
-	b=u7Q0bPBA82Ew2RNHIwssjcwEOwtIDUixByPc7dcfi8ppRqC3ZIefWdCuQCVd5SCrouf8
-	 MaLTgA4TVS3r23jY9xqyIrCvDuZc2lZzSZvjefqofwSQ1lUw894yNX3sRNcYWfwiN1biZ
-	 POz4QbPiKAWULoHw4VHpCKXsjsvRSYwmHx+wV45z3/+FWjWNM6ALllKTHMdamiOpGtAER
-	 jSEEy9fIdWsEpkUiN/iIL1Ux+5ZmTCqUR9ALPso4WGbePfYYoqZ2SuYD4E+J2utpYj0DF
-	 8ih/oNKkUJfKnUgVVjBuoK+ekB1vDQR+3WiZwp0y5Q28fmdIRSGbfMXoDRWdSntXtJQ==
+	bh=BVfWtG6ThyFDvumrQDXk8oLF9Q8QYLiC5MSKxPcATCM=;
+	b=k61fZlZTmHD9S/SAnR1KAD9EF2FXCRHvywzw0l7wKRA1AZH8wcJEhrImM20zGk+9Lt28
+	 lNrHhMkxRDB82xCZCxf2OTXknzfSHk3e6yGt0p5uNRVefXIWW2FubELR4KAumtbuETSkS
+	 s/O8/o3Y3Z3cWvTgSQPvafVkRRCQQzA3i+ziomO20gVQfn6CjZN1743FeqpYcKdmFMxHG
+	 ulCJlhY8Jxas9ivE70jesZ4rZeOTG6ZKeNpggo07C8cv5MGyQgo8SlfRvD9kNFYVt/cdU
+	 9eTLSKTr2CdbBu8SBGJCdozJxFDOuQ+LC3vRMcEU9gdYbq4X+O0l2IS67WDi99K+q/Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=on9dDJi7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2CdofbCW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E831A606A320;
-	Wed, 18 Nov 2026 23:43:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0000606A31C;
+	Wed, 18 Nov 2026 23:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=on9dDJi7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC611F000C4;
-	Wed, 18 Nov 2026 23:43:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2CdofbCW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD8411F000C4;
+	Wed, 18 Nov 2026 23:43:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045420;
-	bh=dqu9CO4RbATdvr40PvIHQtiHzYZOnQNHSPXnk6Y/ckA=;
+	s=korg; t=1795045423;
+	bh=BVfWtG6ThyFDvumrQDXk8oLF9Q8QYLiC5MSKxPcATCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=on9dDJi7PuWDFk9+1fINHwVCkGSy5Ov0RYPpRYWO+E+YTDFoEZaR+ULwnN1u+bL7+
-	 gOAQO+ujv+sKY+/kxqtetsGaX62WYMHOwz+pw46LKgJQeH1R1IxbDgi1FTTE2/jVIv
-	 QKWvw49xkIvUacrHRNxMrgMHxhIuBi6zHzFRkOWc=
+	b=2CdofbCWg0z2Dc5rwsBLSqhtvgA01gLclupBKaVTaHz8qpnA2PxtZPGMGg+69LXQC
+	 kD1LOt+rxDtZB/crrJZg78BYMubPwvDXlaIFvO+jHr4c9utkmggAKoOK10RYNRz8VY
+	 hibWR6uV6+4x4q/zAhvw0adpvHvvWfGSXBDxeswc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yishai Hadas <yishaih@nvidia.com>,
-	Seongjun Hong <hsj0512@snu.ac.kr>,
-	Alex Williamson <alex@shazbot.org>,
+	Drobyshev Vladimir <enigma_137@icloud.com>,
+	stable <stable@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0917/2857] vfio/mlx5: Fix boundary check in set_report_output()
-Date: Wed, 18 Nov 2026 15:32:31 +0100
-Message-ID: <20261118150234.599421817@linuxfoundation.org>
+Subject: [PATCH 6.1 0918/2857] USB: cdc-acm: add VeriFone VX820 device ID
+Date: Wed, 18 Nov 2026 15:32:32 +0100
+Message-ID: <20261118150234.634085998@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,38 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seongjun Hong <hsj0512@snu.ac.kr>
+From: Drobyshev Vladimir <enigma_137@icloud.com>
 
-[ Upstream commit 37b2ee6747b7857920ebc71eabc25208a39164a4 ]
+[ Upstream commit ddbddee6592ecf6cf6c24d888780f9ad45a3e30b ]
 
-Use > instead of >= on boundary check of recv_buf to avoid the bug which
-the full message in the last slot of recv_buf is ignored even though the
-received data size does not overflow the recv_buf.
+Add USB ID 11ca:0219 for the VeriFone VX820 to the cdc-acm device
+table and apply the SINGLE_RX_URB quirk.
 
-Fixes: 9c7c5430bca3 ("vfio/mlx5: Align the page tracking max message size with the device capability")
-Cc: stable@vger.kernel.org
-Reviewed-by: Yishai Hadas <yishaih@nvidia.com>
-Signed-off-by: Seongjun Hong <hsj0512@snu.ac.kr>
-Link: https://lore.kernel.org/r/20261005-vfio-mlx5-fix-boundary-check-v2-1-75599d2f4497@snu.ac.kr
-Signed-off-by: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Drobyshev Vladimir <enigma_137@icloud.com>
+Link: https://patch.msgid.link/20260929173833.105208-1-enigma_137@icloud.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/pci/mlx5/cmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/class/cdc-acm.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vfio/pci/mlx5/cmd.c b/drivers/vfio/pci/mlx5/cmd.c
-index 06794c48170c0..87eeea68592e2 100644
---- a/drivers/vfio/pci/mlx5/cmd.c
-+++ b/drivers/vfio/pci/mlx5/cmd.c
-@@ -1231,7 +1231,7 @@ set_report_output(u32 size, int index, struct mlx5_vhca_qp *qp,
- 	int i;
- 
- 	buf_offset = index * qp->max_msg_size;
--	if (WARN_ON(buf_offset + size >= qp->recv_buf.npages * PAGE_SIZE ||
-+	if (WARN_ON(buf_offset + size > qp->recv_buf.npages * PAGE_SIZE ||
- 		    (nent > qp->max_msg_size / entry_size)))
- 		return;
- 
+diff --git a/drivers/usb/class/cdc-acm.c b/drivers/usb/class/cdc-acm.c
+index a699a00a503af..3184d4b959653 100644
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1794,6 +1794,9 @@ static const struct usb_device_id acm_ids[] = {
+ 	{ USB_DEVICE(0x11ca, 0x0201), /* VeriFone Mx870 Gadget Serial */
+ 	.driver_info = SINGLE_RX_URB,
+ 	},
++	{ USB_DEVICE(0x11ca, 0x0219), /* VeriFone Vx820 Gadget Serial */
++	.driver_info = SINGLE_RX_URB,
++	},
+ 	{ USB_DEVICE(0x1901, 0x0006), /* GE Healthcare Patient Monitor UI Controller */
+ 	.driver_info = DISABLE_ECHO, /* DISABLE ECHO in termios flag */
+ 	},
 -- 
 2.53.0
 
