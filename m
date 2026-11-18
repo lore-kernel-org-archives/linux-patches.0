@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042808;
-	b=eqtzg63wGrp5TwudJndqjEQ/3TkCbKXb/7xNkmekXjx3pt/oAT2/0OES6NOia909Rtoi
-	 56p5gZZlIs7wFsKy2X0xF1FAFX9ZLJJnwxzxp/fp9B+sEQC8AAGFIHQlc6s7V2ONM07ND
-	 TOt0aYkSN1Xve7x49nUEsEQbAA4u20NN6i+qMv70XpQp7Ep2f7wGyV9ms3q1j0hTc4YCo
-	 rP3M7XSkg4gKFelkqNdxUIvylvxDpvWzcL1jv+PqoxqqA2z8fB+6cCfMkf0ODl0IFj959
-	 7F1uX+xehbuk7FTN1yBdztVG86/rCI8QaHbbVRZW8t4x2HdHSo2lTYKP4gxfBgS9pnw==
+	t=1795042811;
+	b=b4Q4shQsDxwoyFB1FghifPl/w+RJxsFSpORTSjfQOaAHjfRKXIGjNBynqv1Cqfw9nU/9
+	 QLOezepFeoMORhgyz2kilZ0YoXqcy+Hnh2vgXi2Ed3VUvdlCHbakpEaZzf7uojiWztpo7
+	 fPvzW6n8DrsQ3/82LsFBLISrhLRt0sU+7cL7kUeLhg5/peheYRwhb0UZyapUmhtplmxNa
+	 ZudPMDZYvNb7II0hwUrchHOgF2gAoL8/5fpRgr6fZvUT/FJHtRf1zayHj4171jvLZLP8J
+	 VAhdPHBiIsKHYzRqTr09BrcO1ZA5baEyc26KWFtB8yO/Rho/IjYBF+UaQjKnG0A+sIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nAixyfxEHKdgY5GuO9AuyKg15Nkh1PKuO/G2NK53Flg=;
-	b=Vwm3Bbkd81SZ/ELlctQi8Hv6Kliq81Rx6GYEDINnWS2Novr+5WfSrPQzy604+aofV9UB
-	 xUkUOZk9HZSqzS6u7aJdqo3ur8Wb9pJPBogiPKVCZaTRjSckVe/oBJgd6LaW80x4sdJbc
-	 IByhEpwArkNQCjDllWRPK8nsBkngAn45nk8wSMEdBKFv2//XVhcBg9qdJI9JQCrWR7N6s
-	 K09mn8ca/CLDq4z51xLPC3BKcqrkt16xuUMrpEdvEimvoj5r/3osr5ESN2nZRQTtXK6Us
-	 z+FKSzKc2pE/BGNHKXOqjUidV3j0R+5EJwCH/wEdcfPKWk1syAzWKMJoCsg6LpkRyAw==
+	bh=UYjasaRDrPI0v6M8RR7iAT5tXi/DqLTdNJ87gVSVy1w=;
+	b=iXK4DJ2FBsYcKvlKoRUcuTU6a3/beFYpM0gxRdHI85NXbFseRK3ZHBRr+JAGMDGfa8hn
+	 BmJDfjfsgB8e4Tob7kYh/XrxY241uRQtExU3j/KTLglYLUD9TMA1W+/FH4Afjy2czaVYt
+	 ktdF+mYmkQMXNxPIj0VpFZI9rQyqas9Ke6xhX3MY0zlaDVYeOHxS/u9qQhj4vgIZyFms8
+	 BLAY3FhUFD4aBmUvEgN+I7Bf5NgVAMBMVz+t2VbUvwwq8xOA3EZsklm3+8xwii0o+5Bjv
+	 aA8tP07i2wzS7u+W1MN247xPlHvJW6cjCrLc2LVlKImN/A37AHWlZedlKycGfvAoZZw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1mA+cf4u;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxJN3618;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C81606A330;
-	Wed, 18 Nov 2026 23:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED3606A32F;
+	Wed, 18 Nov 2026 23:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1mA+cf4u
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A151F000C5;
-	Wed, 18 Nov 2026 23:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxJN3618
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E35B1F000C5;
+	Wed, 18 Nov 2026 23:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042807;
-	bh=nAixyfxEHKdgY5GuO9AuyKg15Nkh1PKuO/G2NK53Flg=;
+	s=korg; t=1795042810;
+	bh=UYjasaRDrPI0v6M8RR7iAT5tXi/DqLTdNJ87gVSVy1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1mA+cf4ucT8awdIFgLlYmkcLGma7fYyurY/XgUqVlfgw1+gu74p/XiXDF6D5g83GT
-	 HdwQXRiOQwKCccz6FtVGXgW0tD+H8xtsjGSaQD8SZSTdbsJsTi2GyryTdwWnJWOF8b
-	 1IZToDz1ZjBl1uLg4vLOxHOOplxsKhy862ArCSbg=
+	b=AxJN3618os8VXldPkeipcJfbecHsBrmUrWBmV5TqqkE0KJeOzfiWyMzvrPAoRLVu5
+	 VXz5tsIXxpa7lCM95IN/UkDA38HW+GU9+hf03RZvAYV5duSgYPG/waNuwAGO6UX8zM
+	 6jL1/N45/Nlm/thHgIsolhuhxhUExc56Jw8rx5Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Steven Price <steven.price@arm.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 3303/3318] irqchip/gic-v3-its: Fix over allocation in itt_alloc_pool()
-Date: Wed, 18 Nov 2026 16:05:25 +0100
-Message-ID: <20261118150458.683276887@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 3304/3318] smb: align durable reconnect v2 context to 8 byte boundary
+Date: Wed, 18 Nov 2026 16:05:26 +0100
+Message-ID: <20261118150458.711474981@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,37 +68,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Price <steven.price@arm.com>
+From: Bharath SM <bharathsm@microsoft.com>
 
-commit bc88d44bd7e45b992cf8c2c2ffbc7bb3e24db4a7 upstream.
+commit 05f5e355cf783b30bd6eb3dec17ed1a8b3cfa95c upstream.
 
-itt_alloc_pool() calls its_alloc_pages_node() to allocate an individual
-page to add to the pool (for allocations <PAGE_SIZE). However the final
-argument of its_alloc_pages_node() is the page order not the number of
-pages. Currently it allocates two pages and leaks the second page.
-Fix it by passing 0 instead (1 << 0 = 1 page).
+Add a 4-byte Pad to create_durable_handle_reconnect_v2 so the DH2C
+create context is 8 byte aligned.
+This avoids malformed CREATE contexts on reconnect.
+Recent change removed this Padding, adding it back.
 
-Fixes: b08e2f42e86b ("irqchip/gic-v3-its: Share ITS tables with a non-trusted hypervisor")
-Reported-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/1f6e19c4-1fb9-43ab-a8a2-a465c9cff84b@arm.com
-Closes: https://lore.kernel.org/r/ed65312a-245c-4fa5-91ad-5d620cab7c6b%40nvidia.com
+Fixes: 81a45de432c6 ("smb: move create_durable_handle_reconnect_v2 to common/smb2pdu.h")
+
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/common/smb2pdu.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -262,7 +262,7 @@ static void *itt_alloc_pool(int node, in
- 		if (addr)
- 			break;
+--- a/fs/smb/common/smb2pdu.h
++++ b/fs/smb/common/smb2pdu.h
+@@ -1318,6 +1318,7 @@ struct create_durable_handle_reconnect_v
+ 	struct create_context_hdr ccontext;
+ 	__u8   Name[8];
+ 	struct durable_reconnect_context_v2 dcontext;
++	__u8 Pad[4];
+ } __packed;
  
--		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 1);
-+		page = its_alloc_pages_node(node, GFP_KERNEL | __GFP_ZERO, 0);
- 		if (!page)
- 			break;
- 
+ /* See MS-SMB2 2.2.14.2.12 */
 
 
