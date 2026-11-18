@@ -1,51 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045857;
-	b=GL75Yy3pstBVHg80C6sVQH1m4LmQiS5K1LpESvpjuVE/89NGNaQLdWHfkTSto1RRevNd
-	 viS78mgl3VhPvDScKQfdV8Hr7btvUg7B56H2UzJ6N9l52SJbCnM7lm1cSoEdA0KO/duSW
-	 7w+0/LaOz4PNK/8NbS1+FyVOP0oQNvfKaQY9/N3eda9taCBIQrEQHs+lkcFqfcp5BP+BD
-	 PLy1g/2hVrBWTClox1h6PHLo8p+JMyVRZ3MIwVDVCvmTjE8OOMYT9qjDgGA22hRIDz7oj
-	 nBt2iF8Ml6Mrj6ortjhyG6bIXiw2Fnc44MCPWtOaWNqIfgJyYxE7o6LGDDhN24yotTA==
+	t=1795045860;
+	b=G9Jj5spXU3hh+K7V3vST52HbH6i/H34LyD9FUVGuh8wphvBCuR1V5VANZcu9dbGchRor
+	 suL2xMlMUvVv+Aw2oBpfAyoXLYjP2sgPbaeAEa9HtYxKjbtnXnA/z/sL4b1j4GyioNUvT
+	 me/tqp+sQQy5u89hhiZ0yopKe2/6upZdqK/yygSP9t+0uVnseDleB/BTskHRwQJ2aDQJg
+	 cmRPwDBNboOYfjsuxIHT+C8DVGmHzUGxHODeG1nL6+NCe8wc90eLm9mZdaaD1+r1GD2KL
+	 urcPLv+BTbtMSTUqWg9OsaBrOxmE4CNlKtKMs9c2vJUNDS3RoU+gSK2775yxNIgmwQA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045857;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Plgf++LuroOBwqJMXzUeSEVm+uWwYq7xXPcJeC0zGCU=;
-	b=PgjC4eqyecmo2IC0BJPMBibbWb6FtX6nQ3EuwLkLHcQQzlsLzRDGX+lrtACb+QdEI01G
-	 Q6BdwqbYDObZQ3+RIlpKVb7Pp4mCb4b0UeW783XthO4YxuFgZHWpLbcKsPzcK9k5v1u3p
-	 xjc+vgRMzZW7g7sodtQemxroYEjMfU5Du8Ek4jkCVLCk5L4+NuY5i3/d4ekYzemT5XtWo
-	 MkfuHrj1dhvY7w2MJORPl/NEXED2T0zuRi1Tk9zQoEsPbevJod3821Ck2j5jNb8Cgl+BT
-	 icwYSNdFYUCxHV6c16Cufded530N+ySfwhNwhmFLWQ4fH2JR89W37JTy+qZEBlHaJ9Q==
+	bh=cwUWNwzK7w66+lwc5s0sRNouIB0qSkZnRfgDSqNvCd8=;
+	b=ASXb1cXvfvKApCf6jHniuFz+uxlQLJ0rhmE8hZ4r9MD7s9KlGkVJSp1G7aafC5pQiRUG
+	 Ao7buU8uoYjHUd0xb6HIM6RwMmHl/Sa3DFcjzUiNW8nRVzuWqJoRXnL6lzRp8izTi9gVt
+	 Frbri/77b+jNsyD/dde5qlJbobJf16Gax+q40eaZxxvrB/kKqPWh9lQOv0nNBGvSNnVYr
+	 37X5mJkFYHNn9dDZcg43VcQiyTLLszdxT9SsuHdCsdjGkqLvLfB86iTGOsa00VKSVWVp5
+	 Ciflxzw4FiTXkZwfzHE2hvuRYGSV4otrC8/hD8KY09Lpht5M4T4IzadhxSjhVCzY40w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxp1ig1L;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LU4QuQFU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46129606A31C;
-	Wed, 18 Nov 2026 23:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D0F606A325;
+	Wed, 18 Nov 2026 23:50:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nxp1ig1L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934511F000C4;
-	Wed, 18 Nov 2026 23:50:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LU4QuQFU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAD01F000C4;
+	Wed, 18 Nov 2026 23:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045857;
-	bh=Plgf++LuroOBwqJMXzUeSEVm+uWwYq7xXPcJeC0zGCU=;
+	s=korg; t=1795045859;
+	bh=cwUWNwzK7w66+lwc5s0sRNouIB0qSkZnRfgDSqNvCd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nxp1ig1LovRSGhs2C/h7l57m6ysJYS8FWPfwlzuSKVR9bB80cMqRfWGK6y8ReQdP/
-	 V7DLkwtRQjYJ/cpv8fA8roRBbBHVKK/PIUHJTLMiWjgoTFopr24ANK6FXWH7VQeq++
-	 5DrNICFNabiRhjzQzu1htDyTxI+0yM2Gej9lVEVE=
+	b=LU4QuQFUMwuPLSXLjmYJl4YGhbOLb8bZYTZgvx0+ISXaTGEfITXv3pktvx4fzg787
+	 cVAf0jnbIKGp2N3pV31owNYhrWbF9/L71slBBVIyqy75iovqYEH1gpL5CG7eqmTw9M
+	 nlVcfiXmL/wYjWeJ2KAy3D/nfoDBJpGnlfIGCMcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasha Levin <sashal@kernel.org>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.1 1033/2857] cgroup: dont kill migrated processes through their exiting threads
-Date: Wed, 18 Nov 2026 15:34:27 +0100
-Message-ID: <20261118150238.791899547@linuxfoundation.org>
+	Stanley Jhu <stanleyjhu@google.com>,
+	Bean Huo <beanhuo@micron.com>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1034/2857] scsi: ufs: bsg: Clear the reply buffer before use
+Date: Wed, 18 Nov 2026 15:34:28 +0100
+Message-ID: <20261118150238.827922082@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,59 +71,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-[ Upstream commit 5f4a3f743acc96987ae5c2e966947942c34ba56c ]
+From: Stanley Jhu <stanleyjhu@google.com>
 
-Since commit da13e0e72a73 ("cgroup: fix cgroup.kill for exited thread
-group leader"), __cgroup_kill() visits every thread in the cgroup and
-sends SIGKILL with PIDTYPE_TGID, so each visited thread takes down its
-whole thread group.
+[ Upstream commit 2e63ac76cc08ea376ba61fef52f7b7849e35024d ]
 
-A thread that has started exiting can stay in a cgroup after its process
-has been moved out of it. cgroup_migrate_add_task() skips PF_EXITING
-tasks, and the thread is only unlinked by cgroup_task_dead() after its
-final context switch. mm_release() clears the thread's clear_child_tid
-word and wakes the joiner well before that, so pthread_join() can return
-while the thread is still in the old cgroup.
+The reply buffer is allocated once per tag and reused. Requests that
+complete with a positive status do not fill all of it, so user space
+receives bytes from an earlier request on the same tag.
 
-If cgroup.kill is written in that window, __cgroup_kill() finds the
-exiting thread and complete_signal() passes the group-wide SIGKILL on to
-a live thread, killing a process that already left the cgroup. The cgroup
-selftest test_stress.sh runs into this: test_cgcore_proc_migration()
-joins its threads, moves itself back to the root cgroup, and cg_destroy()
-falls back to cgroup.kill on the old cgroup when rmdir() fails with
-EBUSY, so test_core kills itself. KernelCI has been reporting
-"with_stress.sh: line 94: ... Killed" on several arm64 boards since the
-commit reached linux-next.
+Clear the whole reply buffer on entry to ufs_bsg_request().
 
-Keep visiting every thread, but go back to sending SIGKILL to the thread
-that was found. A SIGKILL sent to a live thread still kills its whole
-thread group, so both cases fixed by that commit stay fixed, and
-task_can_queue_signal() drops one sent to a thread that is already
-exiting.
-
-Fixes: da13e0e72a73 ("cgroup: fix cgroup.kill for exited thread group leader")
-Cc: stable@vger.kernel.org # v5.14+
-Link: https://lore.kernel.org/all/179272264722.329188.4773475583351189022@6e52bff8000c/
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 95e34bf930ea ("scsi: ufs-bsg: Add support for raw upiu in ufs_bsg_request()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Stanley Jhu <stanleyjhu@google.com>
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20261015001855.3450573-3-stanleyjhu@google.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cgroup.c | 2 +-
+ drivers/ufs/core/ufs_bsg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
-index 2de93523cfd1e..2150c16b2d045 100644
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -4018,7 +4018,7 @@ static void __cgroup_kill(struct cgroup *cgrp)
- 		if (__fatal_signal_pending(task))
- 			continue;
+diff --git a/drivers/ufs/core/ufs_bsg.c b/drivers/ufs/core/ufs_bsg.c
+index ead55e063d2b5..118172fd66176 100644
+--- a/drivers/ufs/core/ufs_bsg.c
++++ b/drivers/ufs/core/ufs_bsg.c
+@@ -101,7 +101,7 @@ static int ufs_bsg_request(struct bsg_job *job)
+ 	if (ret)
+ 		goto out;
  
--		do_send_sig_info(SIGKILL, SEND_SIG_NOINFO, task, PIDTYPE_TGID);
-+		send_sig(SIGKILL, task, 0);
- 	}
- 	css_task_iter_end(&it);
- }
+-	bsg_reply->reply_payload_rcv_len = 0;
++	memset(job->reply, 0, job->reply_len);
+ 
+ 	ufshcd_rpm_get_sync(hba);
+ 
 -- 
 2.53.0
 
