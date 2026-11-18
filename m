@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022369;
-	b=yJex1gpGVAXtCzm1Z0Q5X4z6v5j22b8RNOybLgGQR4cj4E0gyUvHRDjQatRJ6eJkogis
-	 M60DI8hp+TCJ7U97UXAudCIJOlpfOrFx1KwUTsMzHibGYaGi5IozQmXIMrg+/UkGA7gAR
-	 olkp9nnkqQS570oHucSbdEBEx90a/fca1T4nGsNR9TIMLseG2KwsJmy5zEsnIT3nltq9w
-	 X7gTGaWIo+UiLaIQ5jFNtL9TCRXdS1WnKROxXVx59YWaZLYiB6V7nPxY8A//wGNFb+eUI
-	 tacJ8qRE/LCetqGFSCJneb5DUTvjB0yipx6LLfp9l6nL5QZqMh/1Ga/yR23RpUJ82Zg==
+	t=1795022372;
+	b=iiTPLSBxnLYpoorVpGqiAZ5AoncA+vCrHk04jJXfaouZDjnMm6qyBZN0DtOvu7CY0CFu
+	 q61eNbbwq3CHWr9LKmbDT6IsavqJEWIju2/rL52s6NH0j8KR6NceeoVA84U8JrG0G5v8v
+	 eHIGj0Y/H+NkamDxjWhfnsmCPZxErZ9ocRAkf2wZl+prPyT9+gnJafJldZ4Ee2WPDs84g
+	 oZPcVrQtxxO1a/jWes3QIA5De8jOjRlDRmA9TowRXbGZr1vSKDeGbOzB0/7vCKolBm8AD
+	 O2mz0GNPyV1GLbgQRCU6KltFu1cNT335m9WEXqwSLqsTqO6YZ+SxQ6HzQLHn0hVrNmw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022369;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022372;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nrL2PNKL0iyAISW2ln+FnS2P+iE9Ftn2e3OJ0J2ODv4=;
-	b=Xuh2xpSH6jNhS2jTdWMs8C5u0s16jyzAM7B9cgfkoiRUuDZCOPDD5TasERlvzIOqRSHM
-	 hRbqMBKhrbjfBTk1GcMRz70h+c2Z2MLL6USe/DdVvHEQHiJM4DYPY0bEPfxgNczayh95H
-	 AmeOmj+wT+cI5XN+2ADKJbRBXkDWcw+4vlDCrFOPRppEWfGbY4XrUroTQiTIHMJGi1RaO
-	 KR83mC7KOv04kXFv3hRxDdgvc+QAikxHG1mUG/HwPy2Wf6mAf4lvHaaWp7nShcgsnhmeX
-	 kiKGmufznqBGZAp1EacX+Rz/mryM2jD7Fqj8vZlge25RbnfZEzLtWIogv3Dl9HnGZdA==
+	bh=Yb38wnorR5HbsaWFyS3pNm6TEkmvJPd4tss8CO9y9Q0=;
+	b=d/p3Xz3LmO0JFLB8LiLQIG9PYHqfBn4W9OvrCyuNqQBbQNtcMr+S8gGSmotfDFtWKccc
+	 WIQN+h04WDd1as3q1YW2VbsJzPjOFO5VhpbV0fmVCMO8ca53gj4iWoxp1zgWbdZ04Y2lj
+	 /a9q1dwx9Nbd1tqOOBmiu9eRt9cHpxpdMsZ5Uq7+WBI4M5ttD13WXppuV3lRVtFGZ7gIe
+	 QqQqy5Ya2RCulhfHTIrnnNbDOb4g4TobC9ZNFYNz3P4iffMnLT8h1n19nc90mHjflrmzt
+	 iSIRvRJ3douM6Lukx6kqbboeUJyH9ihuQUpqrdRyKNnYUvb2kPlQ9hyWzSVWJA0MpdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0kb1z3+4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="PL81+Wu/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C9C606A31C;
-	Wed, 18 Nov 2026 17:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517A9606A31C;
+	Wed, 18 Nov 2026 17:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0kb1z3+4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87F81F000C4;
-	Wed, 18 Nov 2026 17:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PL81+Wu/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47B51F000C5;
+	Wed, 18 Nov 2026 17:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022369;
-	bh=nrL2PNKL0iyAISW2ln+FnS2P+iE9Ftn2e3OJ0J2ODv4=;
+	s=korg; t=1795022372;
+	bh=Yb38wnorR5HbsaWFyS3pNm6TEkmvJPd4tss8CO9y9Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0kb1z3+49y6lYz2iw+L9ALPV+tQMrV8QSrmGgc4+AmqNoF14XJtVLrIYudGvVUQL8
-	 Ab6BT3gDccX6vpN7kGtrWWMOpIdd9R5ewhDnb0Wmmft7RS5FC17qTa9LH1mohVudGV
-	 p4Gu8G4Dsac8hSRjj+iAM1wdPcI6M2usiOHXNL40=
+	b=PL81+Wu/aYysd1L1zhuO279+Sv4LZfhf8gn1wJRRkQZg6KjDtOl/GmUau4c9aBQ/8
+	 b1UCAFhoMCBVopMACTZg3QwdDYnO10LPN09qGdifcOXCNMKE6zzUyRsY+K+y0GwzEh
+	 Lg0yb/sXf7bS8rPBzxQhYiYzspj4YHZ8Rmgbi6ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sashiko <sashiko-bot@kernel.org>,
 	Imre Kaloz <kaloz@kernel.org>,
 	Joshua Kinard <linux@kumba.dev>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2638/2651] rtc: ds1685: arm the wake-up alarm at power-off only if an alarm is set
-Date: Wed, 18 Nov 2026 16:04:38 +0100
-Message-ID: <20261118150419.098377580@linuxfoundation.org>
+Subject: [PATCH 7.3 2639/2651] rtc: ds1685: do not sleep in the power-off handler
+Date: Wed, 18 Nov 2026 16:04:39 +0100
+Message-ID: <20261118150419.127434224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,68 +72,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit c2373bcd50d9654b76eac585c7c98105665b3321 ]
+[ Upstream commit 21a829af60a7f5c7456f1f0ff9b6b0eff0ceb738 ]
 
-ds1685_rtc_poweroff() always sets WIE. The wake-up alarm then compares
-the time-of-day and date alarm registers, which hold whatever was last
-written to them, and a match powers the machine straight back on.
-
-Set WIE only when AIE is set in Control B, and clear it otherwise.
+Power-off handlers run from an atomic notifier chain and must not
+sleep. Use mdelay() for the delay before setting PAB.
 
 Fixes: aaaf5fbf56f1 ("rtc: add driver for DS1685 family of real time clocks")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/sashiko-outbox-169477@kernel.org/
 Signed-off-by: Imre Kaloz <kaloz@kernel.org>
 Acked-by: Joshua Kinard <linux@kumba.dev>
-Link: https://patch.msgid.link/20261013120208.11268-2-kaloz@kernel.org
+Link: https://patch.msgid.link/20261013120208.11268-3-kaloz@kernel.org
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ds1685.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/rtc/rtc-ds1685.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/rtc/rtc-ds1685.c b/drivers/rtc/rtc-ds1685.c
-index 5fc8e36b1abf8..94c89333c5d5c 100644
+index 94c89333c5d5c..123ab9fc9c8d4 100644
 --- a/drivers/rtc/rtc-ds1685.c
 +++ b/drivers/rtc/rtc-ds1685.c
-@@ -1367,7 +1367,7 @@ module_platform_driver(ds1685_rtc_driver);
- void __noreturn
- ds1685_rtc_poweroff(struct platform_device *pdev)
- {
--	u8 ctrla, ctrl4a, ctrl4b;
-+	u8 ctrla, ctrlb, ctrl4a, ctrl4b;
- 	struct ds1685_priv *rtc;
+@@ -1426,7 +1426,7 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
  
- 	/* Check for valid RTC data, else, spin forever. */
-@@ -1394,6 +1394,8 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
- 		ctrla &= ~(RTC_CTRL_A_DV2);
- 		rtc->write(rtc, RTC_CTRL_A, ctrla);
- 
-+		ctrlb = rtc->read(rtc, RTC_CTRL_B);
-+
- 		/*
- 		 * Read Control 4A and check the status of the auxillary
- 		 * battery.  This must be present and working (VRT2 = 1)
-@@ -1408,13 +1410,17 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
- 
- 			/*
- 			 * The auxillary battery is present and working.
--			 * Enable extended functions (ABE=1), enable
--			 * wake-up (WIE=1), and enable kickstart (KSE=1)
--			 * in Control 4B.
-+			 * Enable extended functions (ABE=1) and kickstart
-+			 * (KSE=1) in Control 4B.  Enable wake-up (WIE=1) only
-+			 * if an alarm is set, else stale alarm registers
-+			 * can power the system back on.
- 			 */
- 			ctrl4b = rtc->read(rtc, RTC_EXT_CTRL_4B);
--			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_WIE |
--				   RTC_CTRL_4B_KSE);
-+			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_KSE);
-+			if (ctrlb & RTC_CTRL_B_AIE)
-+				ctrl4b |= RTC_CTRL_4B_WIE;
-+			else
-+				ctrl4b &= ~(RTC_CTRL_4B_WIE);
- 			rtc->write(rtc, RTC_EXT_CTRL_4B, ctrl4b);
- 		}
+ 		/* Set PAB to 1 in Control 4A to power the system down. */
+ 		dev_warn(&pdev->dev, "Powerdown.\n");
+-		msleep(20);
++		mdelay(20);
+ 		rtc->write(rtc, RTC_EXT_CTRL_4A,
+ 			   (ctrl4a | RTC_CTRL_4A_PAB));
  
 -- 
 2.53.0
