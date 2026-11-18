@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031179;
-	b=tYeqOpWqzhAp+YElEGkcEZ69zZaZGx1d+2fuANJ0T+VXca/cQnlKAx71RwIZ282Q2XIQ
-	 1ny6GGKN8N+hBox1e2vn/VAh4kH4+iySwc45Y4ef5ZNttkeP+JbYaS/7t3/UDkMoNAr37
-	 3wpTEJsbUlMO6otfdSq+DzF0ffz7Y88w8bzdZBNpxbgsp4J/2BhjK3npeXhTHG8GP/UKm
-	 Kwc/BY/aKZKCNof03x2I2NzDDHpHAU8Mm1Tzr57H7EzJdnG7fL332ie5iDLDpFd4eLH60
-	 H0QoFbXCoe1QCZBaSvQydYy3JBlRFJoN/nGKeZTjOvjZT7uEccDdNa86+tCpFcdTY9A==
+	t=1795031182;
+	b=PFLsWnmMpMvM7vS3i1ZPyx7YG+M1G3Czx9t3Hez6IaIw9nvS0Txs90ETXRNuFlH9Yabx
+	 shlla+lIoXtUHh9gagrLJC0w4R5Xs5gQ7HB/dflbDKVIsD9biG7QwvrJbEpszxAB0cf1K
+	 xtm5sAL9jzSVQGEalg8+jMKsz9mwowoVwrjAJrz4KjDk55XuzOJe37z6AXe4o4NyICR/B
+	 S2zSXyG3aagOyKYlJ3IWKY7U4FgXH7d0AqiM6vkpfehXxjx+wHPZSthkMW49nsUbvE8TC
+	 0g3uAoUT9SUajrVVYi5Uji2DGmeXX1G5gn/lRYELWd2TuYIgIJvAsUby0U6nM6IH26w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031179;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031182;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XWlxNDmaQtO6BhRFeiUhB4qeq0OVjNerSDW0cv3rLVs=;
-	b=33aAFWNxciz379wL2Acw2uhad1GjedBYBm5uqrGk/9Ja+RAU9JSaakV8IwxN2kEL0mca
-	 geIvfdxHfuA6Uuo7bRa+PkAM7fyBR+WZidCrh51R7C8EPrdtUsqIEgLqCQWxlT0qcER1Z
-	 1nX9aMfZJYQLd1w2hd7RexQYbXqpg5Wrx+54XxxLbjMHnidiGDBzLxlPowXWusv5McJpL
-	 CTgSywxl6YEsZEeBIo0PJXUA9EkDZ8aFIICkvQe8OCjl01oGUGzn8aI6BRY7vV4uvrQ5O
-	 pHQj7Oq2d+yQUrjkkWdPHNHzA83j8W8+MULB3VwHVludDZFHxVoX8lsJ08NP8U/GMBQ==
+	bh=LgPTA4UOKdYPRzKMA+UzquuLIldmRfUvIcu4Tuu3DIQ=;
+	b=JJUHdRTpgLy4O8pds56mtKsw999xw95Hsnejyl7hKcavDX7sNkYFjP7LK2LocL+jle+K
+	 bgmBVLWN7wURf6Unly1XCqYMiLfcjpjtEU1+xKMM+VqgPvfqX8kJ9sTt2aPi55zs3c0wG
+	 lJq52Q/MsgNCMHpA/ziVP58vNJxI/mdD/VK3yOeK6CjV33tlq2IIRlH+LuNmYCV96cLpq
+	 gRcREprNEJ56OPukO7F/5b1LO87hYL/Iu+6AOF8LrGbtYAma4IhBVIzyOkMLd31p+zzuW
+	 8tmmVIS3KRmH8du5FOnRhE++ShOoqSXJfqXjp3azcd8zU56sEvwszWD7Fv/wP0bl3mQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1lrCYGo1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="S/nHafTG";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9880D606A31C;
-	Wed, 18 Nov 2026 19:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B383606A325;
+	Wed, 18 Nov 2026 19:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1lrCYGo1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4081F000C4;
-	Wed, 18 Nov 2026 19:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=S/nHafTG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839AB1F000C4;
+	Wed, 18 Nov 2026 19:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031179;
-	bh=XWlxNDmaQtO6BhRFeiUhB4qeq0OVjNerSDW0cv3rLVs=;
+	s=korg; t=1795031182;
+	bh=LgPTA4UOKdYPRzKMA+UzquuLIldmRfUvIcu4Tuu3DIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1lrCYGo1IrMOszq0Ir8rXqqMIHmsrmr9Rgain1S+SNlFG0pW3Ee3/0/XTlqUn/AC3
-	 dPIA0XqF6EWfF9n60qp48q++bGCCJ8Sf+ttcbwdyWpu8ZgFx+Aly5fT6y8eYw3EdQh
-	 J3ik820/ERUfuTQ/eNOLzb0bH9k1GrVU5MnpQICo=
+	b=S/nHafTG0Fi2W/kNeYi0D4VMEouHAGUOAc6+nf4qtyQoynvsh+S7Y4cC0qFr8KWPC
+	 98QsU8/O49dpY7xyFLUZwXTJs6wLVPlZ/L7s6EoXfrutjWojYihEjtzb73yhDRFlDW
+	 L/7njaQJyrzTeR7gwTMgHmw4+um1mt0f6U7lLNOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Anthony Agarro <markanthonyagarro@gmail.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Felix Fietkau <nbd@nbd.name>,
+	Tobias Schramm <t.schramm@manjaro.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0965/1756] wifi: mt76: mt7921: keep the join ROC until the station is authorized
-Date: Wed, 18 Nov 2026 15:51:32 +0100
-Message-ID: <20261118150048.568347126@linuxfoundation.org>
+Subject: [PATCH 6.12 0926/1756] spi: spi-sun4i: sun4i_spi_handler(): fix race condition between transfer completion and RX FIFO interrupt
+Date: Wed, 18 Nov 2026 15:50:53 +0100
+Message-ID: <20261118150046.830893533@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,110 +70,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Anthony Agarro <markanthonyagarro@gmail.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 6f591a4bb5d9a6a4a28f3f2fd77f394ddbcc4e05 ]
+[ Upstream commit b8f09251da7871fbb9c62bd83516af422641d816 ]
 
-When an association succeeds mac80211 calls mgd_complete_tx(), and
-mt7921 aborts the join ROC there. The AP starts the 4-way handshake
-right away, so the abort lands where message 3 arrives. On an MT7922
-this loses message 3 often enough to matter: the supplicant sends
-message 2 (acked), never receives message 3, and the connection ends
-with reason 15 (4WAY_HANDSHAKE_TIMEOUT) after about 3.3 s. The mt7925
-capture in the linked issue shows the same ordering: abort, message 2
-out, then message 3 retried by the AP several times without an answer.
+In commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
+size"), support for transfers larger than the FIFO size was added.
 
-Keep the ROC after a successful (re)association on a station interface
-and release it when the station is authorized, on disassociation, or
-when the station is removed. The ROC timer still ends it if none of
-that happens. The state lives in a flag in struct mt792x_vif so that an
-unrelated ROC, for example a user remain-on-channel, is never aborted
-by the authorize hook.
+This commit moves the draining of the RX-FIFO from
+sun4i_spi_transfer_one() (after completion of the transfer) to the IRQ
+handler when the IRQ "transfer complete" is handled. In addition, the
+IRQ "RX-FIFO 3/4 full" is activated for all transfers.
 
-Tested on an MT7922 (PCIe), kernel 7.3.0-rc4, WPA3-SAE AP, two rounds
-of 20 disconnect/reconnect cycles per build in the same boot, unpatched
-and patched in ABAB order:
+However, this does not take into account that the RX-IRQ for transfers
+that exceed 3/4 of the FIFO size is still pending after the IRQ
+"transfer complete" has been processed. All interrupt sources are only
+deactivated after the wait_for_completion_timeout() in
+sun4i_spi_transfer_one().
 
-  unpatched   34 of 73 association attempts: M1 rx, M2 tx acked,
-              no M3, reason 15
-  patched      0 of 40
+This opens a race window for "RX-FIFO 3/4 full" interrupts to come.
+The sequence is as follows:
 
-Delaying the abort by 20 ms before it made no difference (8 of 29),
-and delaying 20 ms after it removed the failures (0 of 20), so what
-matters is where the abort lands relative to the handshake. The
-firmware behaviour after the abort is inferred from these outcomes, not
-observed directly.
+| sun4i_spi_transfer_one()
+|     sun4i_spi_fill_fifo()       // fill TX-FIFO with 48 bytes
+|     // enable RX-FIFO 3/4 full IRQ
+|     wait_for_completion_timeout();
+|
+| // SPI controller transfers 48 bytes
+| // SPI controller issues "transfer complete" and "RX-FIFO 3/4 full" IRQ
+|
+| // IRQ handler start
+|     sun4i_spi_handler()
+|         // ACK "transfer complete" IRQ
+|         sun4i_spi_drain_fifo();
+|         complete();                         ----.
+|         return IRQ_HANDLED;                      \
+| // IRQ handler end                                \__ race
+|                                                   /   window
+|     // wait_for_completion_timeout() continues   /
+|     // disable all IRQ sources              ----'
 
-Not tested: MT7921 and other connac2 parts, USB and SDIO, APs other
-than the one above, open or WPA2 networks, scheduled scan, suspend and
-resume.
+Avoid the race condition by disabling all interrupts when handling the
+"transfer complete" IRQ and before calling complete(). Also move the
+draining of the RX-FIFO back into sun4i_spi_transfer_one() where it
+was before commit 196737912da5 ("spi: sun4i: Allow transfers larger than
+FIFO size").
 
-Fixes: 41ac53c899bd ("wifi: mt76: mt7921: introduce chanctx support")
-Link: https://github.com/morrownr/mt76/issues/106
-Signed-off-by: Mark Anthony Agarro <markanthonyagarro@gmail.com>
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20261005203846.239445-1-lucid_duck@justthetip.ca
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+This has the added benefit of spending a little less time in the IRQ
+handler.
+
+With all interrupts disabled once the transfer completed, omit the
+clearing of the Transfer Complete bit in sun4i_spi_handler. This is safe
+because sun4i_spi_transfer_one() takes care of this before enabling any
+interrupts again.
+
+Cc: Tobias Schramm <t.schramm@manjaro.org>
+Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-4-9fe919d5cecf@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7921/main.c    | 17 +++++++++++++++++
- drivers/net/wireless/mediatek/mt76/mt792x.h     |  1 +
- 2 files changed, 18 insertions(+)
+ drivers/spi/spi-sun4i.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 5fda1d848d549..b631df3f6ad52 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -853,6 +853,12 @@ int mt7921_mac_sta_event(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 	if (sta->aid > MT7921_MAX_AID)
- 		return -ENOENT;
+diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
+index 59e8a82cd8b64..ad0200d8dce8c 100644
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -82,6 +82,8 @@ struct sun4i_spi {
  
-+	if (mvif->roc_join_held && !sta->tdls &&
-+	    (ev == MT76_STA_EVENT_AUTHORIZE || ev == MT76_STA_EVENT_DISASSOC)) {
-+		mvif->roc_join_held = false;
-+		mt7921_abort_roc(mvif->phy, mvif);
-+	}
+ 	struct completion	done;
+ 
++	int			irq;
 +
- 	if (ev != MT76_STA_EVENT_ASSOC)
- 	    return 0;
- 
-@@ -894,6 +900,7 @@ void mt7921_mac_sta_remove(struct mt76_dev *mdev, struct ieee80211_vif *vif,
- 		struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
- 
- 		mvif->wep_sta = NULL;
-+		mvif->roc_join_held = false;
- 		ewma_rssi_init(&mvif->bss_conf.rssi);
- 		if (!sta->tdls)
- 			mt76_connac_mcu_uni_add_bss(&dev->mphy, vif,
-@@ -1417,6 +1424,16 @@ static void mt7921_mgd_complete_tx(struct ieee80211_hw *hw,
- {
- 	struct mt792x_vif *mvif = (struct mt792x_vif *)vif->drv_priv;
- 
-+	/* Keep the join ROC until the station is authorized, so that it
-+	 * covers the 4-way handshake. mt7921_mac_sta_event() releases it.
-+	 */
-+	if (vif->type == NL80211_IFTYPE_STATION && info->success &&
-+	    (info->subtype == IEEE80211_STYPE_ASSOC_REQ ||
-+	     info->subtype == IEEE80211_STYPE_REASSOC_REQ)) {
-+		mvif->roc_join_held = true;
-+		return;
-+	}
+ 	const u8		*tx_buf;
+ 	u8			*rx_buf;
+ 	int			len;
+@@ -333,6 +335,7 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 	start = jiffies;
+ 	time_left = wait_for_completion_timeout(&sspi->done,
+ 						msecs_to_jiffies(tx_time));
 +
- 	mt7921_abort_roc(mvif->phy, mvif);
+ 	end = jiffies;
+ 	if (!time_left) {
+ 		dev_warn(&host->dev,
+@@ -340,12 +343,11 @@ static int sun4i_spi_transfer_one(struct spi_controller *host,
+ 			 dev_name(&spi->dev), tfr->len, tfr->speed_hz,
+ 			 jiffies_to_msecs(end - start), tx_time);
+ 		ret = -ETIMEDOUT;
+-		goto out;
++		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
++		synchronize_irq(sspi->irq);
+ 	}
+ 
+-
+-out:
+-	sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
++	sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
+ 
+ 	return ret;
  }
+@@ -357,8 +359,7 @@ static irqreturn_t sun4i_spi_handler(int irq, void *dev_id)
  
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x.h b/drivers/net/wireless/mediatek/mt76/mt792x.h
-index 52d2338c16c43..a476ec0f59aac 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x.h
-@@ -131,6 +131,7 @@ struct mt792x_vif {
- 	struct mt792x_sta *wep_sta;
+ 	/* Transfer complete */
+ 	if (status & SUN4I_INT_CTL_TC) {
+-		sun4i_spi_write(sspi, SUN4I_INT_STA_REG, SUN4I_INT_CTL_TC);
+-		sun4i_spi_drain_fifo(sspi, SUN4I_FIFO_DEPTH);
++		sun4i_spi_write(sspi, SUN4I_INT_CTL_REG, 0);
+ 		complete(&sspi->done);
+ 		return IRQ_HANDLED;
+ 	}
+@@ -462,6 +463,7 @@ static int sun4i_spi_probe(struct platform_device *pdev)
+ 		goto err_free_host;
+ 	}
  
- 	struct mt792x_phy *phy;
-+	bool roc_join_held; /* join ROC kept until the STA is authorized */
- 	u16 valid_links;
- 	u8 deflink_id;
- };
++	sspi->irq = irq;
+ 	sspi->host = host;
+ 	host->max_speed_hz = 100 * 1000 * 1000;
+ 	host->min_speed_hz = 3 * 1000;
 -- 
 2.53.0
 
