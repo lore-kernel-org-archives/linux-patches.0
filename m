@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052663;
-	b=ySFRRDXOPxNMAps2XQakaKwEQK1OzxiYzrO2xaBHks9Mqrini5KL0sIajvepHe+b0KhU
-	 jkezXhSQP6nritOcskHeor3607zmEqzIWV5Adhys2d65Y2drkPUwlBkOf3JI32KdpZVIM
-	 MysE0+ct/b+QtU7eB3OQENVYhWqQ6pn5l2rTy5lL96wDYNISd0//KxaEpR/iNtWqgJzpu
-	 P1G4wdnBX/wiZvkQn0+cGfb/7G0zfmjWB1JubZ4PrKvD1tOwpTWkYMOXV6PFs3U2d4uJm
-	 gNL+9OaqLfgsm8jdoqNSZ2sDr37CjS66zxjVIyZbSB909C5UwECDjJia2hLfBDa/nxA==
+	t=1795052666;
+	b=IU3wA7eKgidhD5lChQLOoigGton7hUDJj0ZjvfWvZfUYRRsinv6ciPFOy23FShmO/KyL
+	 5Wv4WmnwpdTNFYur6DFqa8MZRlm7sPm/8bJNjnd2sp9qNAKue/2N298QYdu849g02PmLN
+	 IsUSG/Ly3Fzj6jhdSGntAcrAvXbNOA7cLSe0m4+Xrj2gDhOMXNIj3QnndhFQMi4kDzHQ4
+	 4A30NFn+eakNQj8qJf6ENOuXUJYVSlM6oypPKtuCA8lcmigKxW8njqlmMiUBXlZgykFAx
+	 C6PGlBi5Ll+GTL5mb6Yzb4L1tcBibieHP2zadzzWQkfqlr78b+9ENFuC8d6wdPDMJeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052663;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052666;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=lTIhW+jDXBTbX4wf8B5N1XUPESnl8w6vglZHpq2RAtI=;
-	b=dG7RiXjJoOAB0IU0b/TbrYwJucCFkiNUjiDyQD2BagQdYdvMEUyxft3UlOgrxKDtYDT3
-	 97Y5fFvhNrKJrtxL3KxmgSF1Ans6t6u1EHR6EmbVUJMjVLaOsSuqbLICAJCsi/1kIk4We
-	 2+4tQcgzOAiVEgF7Vui6WaGgFufEfL/X6KORNKma0Z2+DDHNwd9vzOessc7uXRvrl9hO+
-	 uruL5xMIJL1DsUVW0pCBZXuVubh8leoDDDdClhSHtHlR7/2Xm1jfclli+PTGCamoWI2aT
-	 cFc/Dx0YzQeTfw81tZlngIcoRZ6o2qvdGIlI2JgSL+G/ixGZI2WJpWz+V421l3N6ChQ==
+	bh=c+20IulfEnmA4nVBvG9J+yFniDfrPyDdgim2Kyx2nTE=;
+	b=AWOykpuo+ei2IvuizmaEaluAmQvJkWLado1/q56nYnIvLftWOTmsbpcIV/1wzLgMpiww
+	 6d54WunUjHe5KxVHYzfze7KBtbkcNZt0626UKAt4GBF3smPLyxs0U5NWqGvoUh1YhKETI
+	 lMbiGZ6kc/fziH5R4FRmWOq9BY8pk+mObLTrTnL3eArVlQMSK+ipOICyba8PZGLMvpBgY
+	 1tKSpBFtSwAsorW91pOvLd+YeV3Mc3EJTnPrLdMYZu+iDMLh4i71TzVgBx0XfYyh0xJkb
+	 yJ8C9X/QZ5FFDC8zTrjrNdJF0F680HesDfxsyiltaaAvUcM6NlJeRpZhct5rOI73yjw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ihxOzuQ/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GmjJpXy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836AB606A320;
-	Thu, 19 Nov 2026 01:44:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3664B606A320;
+	Thu, 19 Nov 2026 01:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihxOzuQ/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F4F1F000C4;
-	Thu, 19 Nov 2026 01:44:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GmjJpXy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF4B1F000C5;
+	Thu, 19 Nov 2026 01:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052663;
-	bh=lTIhW+jDXBTbX4wf8B5N1XUPESnl8w6vglZHpq2RAtI=;
+	s=korg; t=1795052666;
+	bh=c+20IulfEnmA4nVBvG9J+yFniDfrPyDdgim2Kyx2nTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihxOzuQ/kVswWoS3X16f1hwdkCI3oirRcDXVhZ7ztthrNJ2VZXT2C13ZEan2cmsZE
-	 Do/vR+I4rti7/fvWxeZ5MY8R3i9FnAbZaAHFhLvrqMvLomwF1NFMD7dh9AwhbT3GJ/
-	 6T+cqctNs1S5g2CxfR+BdqOyFmWPX32jljPsxyQk=
+	b=2GmjJpXyRhC7V/YdUWXJGn9BVXdlWszIwMrJAxX+lYOq3O4vUj0KSgRD1myenmoPb
+	 Dk75ju4gGmt94Jm1Wy0qyuBdCqEcjqEg5fZjeYI+X5oaPVbz+xWkGN5ZAb3KuDKX2T
+	 HA8UBwzz5qTSS/EYfxl3nhCmeSeDRRU0ABBVu4ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
-	"Zenghui Yu (Huawei)" <zenghui.yu@linux.dev>,
-	Radu Rendec <radu@rendec.net>,
+	Guanglei Zhu <zhugl3@xiaopeng.com>,
+	Weibin Liu <liuwb@xiaopeng.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0645/2214] irqchip/gic-v3-its: Dont clamp nvecs to zero when id_bits is 32
-Date: Wed, 18 Nov 2026 15:38:41 +0100
-Message-ID: <20261118150037.130620681@linuxfoundation.org>
+Subject: [PATCH 5.15 0646/2214] spi: jcore: fix divide-by-zero when speed_hz is zero
+Date: Wed, 18 Nov 2026 15:38:42 +0100
+Message-ID: <20261118150037.162590235@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,44 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fuad Tabba <fuad.tabba@linux.dev>
+From: Weibin Liu <liuwb@xiaopeng.com>
 
-[ Upstream commit 5a9d62555e7164ec79a5fe70153d79cf1fdfd614 ]
+[ Upstream commit 7db773075501248893c22b11bedc6745d6d0be45 ]
 
-GITS_TYPER_IDBITS is five bits, so id_bits reaches 32 and
-min_t(unsigned int, ...) truncates BIT(32) to 0. nvecs becomes 0,
-its_lpi_alloc() rejects that, and its_msi_prepare() returns -ENOMEM.
-On 32-bit ARM the shift is undefined instead.
+jcore_spi_baudrate() computes hw->clock_freq / 2 / speed without
+validating speed. The SPI core fills transfer.speed_hz from
+spi->max_speed_hz when it is zero, and jcore_spi_probe() never sets
+host->max_speed_hz, so the clamp in __spi_setup() is skipped. A
+spi_device created via the sysfs new_device interface (or a DT node
+without spi-max-frequency) therefore has max_speed_hz == 0, and any
+SPI_IOC_MESSAGE transfer reaches jcore_spi_baudrate() with speed == 0,
+causing a division by zero and a kernel panic.
 
-The clamp is correct for every value below the maximum, so only that
-one value is affected.
+Clamp speed to a minimum of 1 Hz before the division so the divisor is
+never zero. The computed divider then truncates to the register field
+width and the transfer simply runs at the slowest supported rate.
 
-Fixes: ce9e40a9a5e5c ("irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports")
-Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Zenghui Yu (Huawei) <zenghui.yu@linux.dev>
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260908142632.2795308-3-fuad.tabba@linux.dev
+Verified by inspection of the __spi_setup() clamp and
+__spi_validate()'s speed_hz handling; the division-by-zero path
+requires the J-Core controller, which was not available.
+
+Reviewed-by: Guanglei Zhu <zhugl3@xiaopeng.com>
+Fixes: 2cb1b3b3ac0a ("spi: add driver for J-Core SPI controller")
+Cc: stable@vger.kernel.org # 4.9+
+Signed-off-by: Weibin Liu <liuwb@xiaopeng.com>
+Link: https://patch.msgid.link/20261014-spi-jcore-divzero-v1-1-a8205d30f2d1@xiaopeng.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-jcore.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 297c76cb6e054..9e857e2b5985f 100644
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3411,7 +3411,7 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
- 	 * Also honor the ITS's own EID limit.
- 	 */
- 	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
--	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
-+	nvecs = min_t(u64, nvecs, BIT_ULL(id_bits));
- 	nr_ites = max(2, nvecs);
- 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
- 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
+diff --git a/drivers/spi/spi-jcore.c b/drivers/spi/spi-jcore.c
+index 74c8319c29f17..e8b8e160d2e34 100644
+--- a/drivers/spi/spi-jcore.c
++++ b/drivers/spi/spi-jcore.c
+@@ -84,6 +84,8 @@ static void jcore_spi_baudrate(struct jcore_spi *hw, int speed)
+ {
+ 	if (speed == hw->speed_hz)
+ 		return;
++	if (speed <= 0)
++		speed = 1;
+ 	hw->speed_hz = speed;
+ 	if (speed >= hw->clock_freq / 2)
+ 		hw->speed_reg = 0;
 -- 
 2.53.0
 
