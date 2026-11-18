@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034813;
-	b=1oiX26H2HgOiJRl9+FmmdEYW4d18dt32L3Tj1FQSFqdqpHodt494d/kIudzxFIcW7hz9
-	 jSMFjh+4Z7my8/0AM2gj63TZKK0ezpTcIG9UuaBS2TmkAcjwynDYOsl8jyKmiG5oodBMd
-	 L68tcJf8L4eto2HwB+wa5BZcm1Da7YjTUxDcaTZKRlQos478S/RjokbebPhAgt7UZn8x3
-	 lan5DlVGEPW92MKQNLm2P7vbnjzHIHUjNyM/9PWJrvV9WP2Jch4nYwYKt3WixhPLrN3qe
-	 dFBNxKAKFj7tLXh/qJjuceaKwcoQmV0JtI88Iv+JVp4LvuHsOq75Cg2jMSV8eiYpYFA==
+	t=1795034815;
+	b=2W6gNbU7grkK6DrkuuF1//EXwqFTTJsuOXEyPPH4wOP4cSC6xCdG0L0Yt0GMvH8Ojlyh
+	 qxY1Ppyv7rGe1g8i43ZWIGc02LUYVDf8cxfZqRoyyDAxudDElMCPXesBVzaom8y+ENvOm
+	 zF7WmA9NgQSXPM5mBwCETO3ovjVmMEHyPG3bu5nvntyvlfh1JqOxlfU7BEQHou/sjQvh9
+	 XVYTtn4Dv1AAygiWzrVuiZBgl7huj6UaehEdjI+oKXf8KThYE6x4+JK2gsEtGRV9SgvCN
+	 1K3eGdmNuMYKsCWd/bQKUbF+ZsdoS49xVxc0k8t2n/19HgOA/6hMk/FZw/PA4kAz4nA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034813;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034815;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yKYwvBu5vssCMi8H/n0kWTxlwE5moEJOBGFiXmZAnL4=;
-	b=aZHBF1drgNE4wE4jKTfDrKfIsQ9653Lq4oLOh5nqheUdVHirfs0hatHPS7gZQVAubFWU
-	 7R3c3j1+LChEyWiJS38Yb9re3FklKcyTptnQI4DwSzj7aPk0clOWhPM1dOPqqTOC5HH0W
-	 BDKER7Q873N8c/9dHda0H+5tO2gYDCJCyYKsHe3v01dD9aajHDHj7RdqJ2cTgeruytPPb
-	 ByZczfSzog18Syl6vpzVg2dBpWLbr0bnpK9u/XA2UPoVnO5Qn/885ZoQ7FzsgrpZN7HUJ
-	 aKQmK90+uV0IdVyaomSKoZjhw03knRwPNbXVfW0XAMJ1Fnc4doInkv/+XwGkfPphzGQ==
+	bh=/xBd/Pyt2m1jNTwObEYQ3YH9SfsnYZ8th/XeYp1hSJw=;
+	b=alUWIxGJdyAUELekSDR81w+jOoY9Fej0VfpNqyc1xtG4cZxTsxtV+ni28SmahTGpiy7Q
+	 w6yM7qRA0ZulYA1ka5zUnmIjRfh16Jpbu8Q6EWKMesDRLfpTEBvSrSeBgySXZY/p5b/EG
+	 xkZisrmER+s7P31HMGbe0D23vvxP7sTc0JAfHWVW932tHIDR+kSgDTigokxWwjLnKk3V3
+	 Z/BY8pTZ9UZq9jZ+/cq4gJxrsx6GlWOMzcdn3meTPnI42dRUVGXGaioF1Uie6E4GqOlSo
+	 zHymQ0eSlX3S/+2tmzQCswS6yt8r0B6D+1DmS9sFOptL2DepW9gUDdZooD8FPCuGaKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFiJvzCh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wGCnWCAx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B3A606A32F;
-	Wed, 18 Nov 2026 20:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F6C606A320;
+	Wed, 18 Nov 2026 20:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFiJvzCh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC871F000C5;
-	Wed, 18 Nov 2026 20:46:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wGCnWCAx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C1881F000C5;
+	Wed, 18 Nov 2026 20:46:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034813;
-	bh=yKYwvBu5vssCMi8H/n0kWTxlwE5moEJOBGFiXmZAnL4=;
+	s=korg; t=1795034815;
+	bh=/xBd/Pyt2m1jNTwObEYQ3YH9SfsnYZ8th/XeYp1hSJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xFiJvzChQGTwShAgLf3/0MgV006Q28ELsfuwJOBQXoxHiDBYsf9o5z8D2j5xCQ9Q8
-	 Z6XhvfEBf+AkIDzg0nqywt99Xi5/VlGh/8HqXjiauWt9q3SHl9c4vYMG9YXYFJ+xCr
-	 LXIzha9g8Tc8/E7IL++hr9BMWf8Pow5wBGHXNDdg=
+	b=wGCnWCAx/UTcAlF0/4x4sCK+o2MxX6SpUlKMm9Oy3qwrRyiebRHFD1TGL7mI5+bLJ
+	 KUO+bMSVG/E6mupEnhaZG3KMQqGtZnAb8rTT9xzlT+hUwhuhgiXFlyQrs0rSUddxYC
+	 8V5BcwPAJ9fSEOPhpzf1WvNFUZLP8VQavwT4M4/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	stable@kernel.org,
-	Kendall Willis <k-willis@ti.com>,
-	Tony Lindgren <tony.lindgren@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0503/3318] serial: 8250_omap: fix wake irq cleared during suspend
-Date: Wed, 18 Nov 2026 15:18:45 +0100
-Message-ID: <20261118150332.164689134@linuxfoundation.org>
+Subject: [PATCH 6.6 0504/3318] x86/mce: Fix hardware debug register corruption on task migration
+Date: Wed, 18 Nov 2026 15:18:46 +0100
+Message-ID: <20261118150332.200760731@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,81 +70,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kendall Willis <k-willis@ti.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 73f3e6ca7a6a7c952977c7c94f1c6dddebcafa34 ]
+[ Upstream commit b8d1d5b63a8ef532038eebd9d97d406860385668 ]
 
-The wake irq was cleared in shutdown(), which runs during the suspend
-sequence, making it impossible to wake the system via UART.
-Move wake irq setup to probe() and teardown to remove() so the irq
-remains armed during suspend when the UART is a wakeup source.
+In exc_machine_check_user(), local_db_save() and local_db_restore() are
+invoked in the outer entry stubs (DEFINE_IDTENTRY_MCE_USER,
+DEFINE_FREDENTRY_MCE, and DEFINE_IDTENTRY_RAW), surrounding
+exc_machine_check_user().
 
-Cc: stable@kernel.org
-Fixes: 61929cf0169d ("tty: serial: Add 8250-core based omap driver")
-Signed-off-by: Kendall Willis <k-willis@ti.com>
-Reviewed-by: Tony Lindgren <tony.lindgren@linux.intel.com>
-Link: https://patch.msgid.link/20260825-uart-wakeirq-fix-v2-1-0b9fba03d9b6@ti.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ sashal: Adjusted context for the older tree: startup uses pm_runtime_get_sync, shutdown uses spin_lock_irq, probe lacks the pinctrl block, and remove() returns int. ]
+However, exc_machine_check_user() calls irqentry_exit_to_user_mode(), which
+handles pending thread work and may schedule() if TIF_NEED_RESCHED is set. If
+the task migrates to another CPU during schedule(), local_db_restore() runs on
+the new CPU with the dr7 state saved from the old CPU. This corrupts the new
+CPU's DR7 hardware debug register and leaves the old CPU's DR7 disabled.  In
+short, local_db_save() and local_db_restore() pair must be run on the same
+CPU.
+
+To fix this, move local_db_save() and local_db_restore() inside
+exc_machine_check_user() and exc_machine_check_kernel(). In
+exc_machine_check_user(), DR7 is saved and restored strictly around
+do_machine_check() to avoid schedule() during migration. In
+exc_machine_check_kernel(), local_db_save() is called at the entry point to
+prevent early memory accesses from triggering nested #DB exceptions, and
+restored on all exits.
+
+Fixes: cd840e424f27 ("x86/entry, mce: Disallow #DB during #MC")
+Assisted-by: LLM
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/179005109564.388919.3937970081044095776.stgit@devnote2
+[ sashal: Dropped the FRED machine-check hunk because this tree has no FRED MCE entry, and applied the dr7 save/restore move to the remaining three places. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_omap.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/x86/kernel/cpu/mce/core.c | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_omap.c b/drivers/tty/serial/8250/8250_omap.c
-index 8796d0525f356..b4df9c377b153 100644
---- a/drivers/tty/serial/8250/8250_omap.c
-+++ b/drivers/tty/serial/8250/8250_omap.c
-@@ -704,12 +704,6 @@ static int omap_8250_startup(struct uart_port *port)
- 	struct uart_8250_dma *dma = &priv->omap8250_dma;
- 	int ret;
- 
--	if (priv->wakeirq) {
--		ret = dev_pm_set_dedicated_wake_irq(port->dev, priv->wakeirq);
--		if (ret)
--			return ret;
--	}
--
- 	pm_runtime_get_sync(port->dev);
- 
- 	serial_out(up, UART_FCR, UART_FCR_CLEAR_RCVR | UART_FCR_CLEAR_XMIT);
-@@ -782,7 +776,6 @@ static void omap_8250_shutdown(struct uart_port *port)
- 	serial_out(up, UART_IER, 0);
- 	spin_unlock_irq(&port->lock);
- 	disable_irq_nosync(up->port.irq);
--	dev_pm_clear_wake_irq(port->dev);
- 
- 	serial8250_release_dma(up);
- 	up->dma = NULL;
-@@ -1572,6 +1565,12 @@ static int omap8250_probe(struct platform_device *pdev)
- 
- 	priv->wakeirq = irq_of_parse_and_map(np, 1);
- 
-+	if (priv->wakeirq) {
-+		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev, priv->wakeirq);
-+		if (ret)
-+			goto err;
-+	}
+diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+index 106436ec3c005..fe1bbe1973321 100644
+--- a/arch/x86/kernel/cpu/mce/core.c
++++ b/arch/x86/kernel/cpu/mce/core.c
+@@ -2114,6 +2114,9 @@ bool filter_mce(struct mce *m)
+ static __always_inline void exc_machine_check_kernel(struct pt_regs *regs)
+ {
+ 	irqentry_state_t irq_state;
++	unsigned long dr7;
 +
- 	ret = serial8250_register_8250_port(&up);
- 	if (ret < 0) {
- 		dev_err(&pdev->dev, "unable to register 8250 port\n");
-@@ -1582,6 +1581,7 @@ static int omap8250_probe(struct platform_device *pdev)
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 	return 0;
- err:
-+	dev_pm_clear_wake_irq(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
- 	flush_work(&priv->qos_work);
-@@ -1604,6 +1604,7 @@ static int omap8250_remove(struct platform_device *pdev)
- 	omap_8250_shutdown(&up->port);
- 	serial8250_unregister_port(priv->line);
- 	priv->line = -ENODEV;
-+	dev_pm_clear_wake_irq(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_sync(&pdev->dev);
- 	flush_work(&priv->qos_work);
++	dr7 = local_db_save();
+ 
+ 	WARN_ON_ONCE(user_mode(regs));
+ 
+@@ -2122,20 +2125,26 @@ static __always_inline void exc_machine_check_kernel(struct pt_regs *regs)
+ 	 * mce_check_crashing_cpu() for details.
+ 	 */
+ 	if (mca_cfg.initialized && mce_check_crashing_cpu())
+-		return;
++		goto out;
+ 
+ 	irq_state = irqentry_nmi_enter(regs);
+ 
+ 	do_machine_check(regs);
+ 
+ 	irqentry_nmi_exit(regs, irq_state);
++out:
++	local_db_restore(dr7);
+ }
+ 
+ static __always_inline void exc_machine_check_user(struct pt_regs *regs)
+ {
++	unsigned long dr7;
++
+ 	irqentry_enter_from_user_mode(regs);
+ 
++	dr7 = local_db_save();
+ 	do_machine_check(regs);
++	local_db_restore(dr7);
+ 
+ 	irqentry_exit_to_user_mode(regs);
+ }
+@@ -2144,34 +2153,22 @@ static __always_inline void exc_machine_check_user(struct pt_regs *regs)
+ /* MCE hit kernel mode */
+ DEFINE_IDTENTRY_MCE(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	exc_machine_check_kernel(regs);
+-	local_db_restore(dr7);
+ }
+ 
+ /* The user mode variant. */
+ DEFINE_IDTENTRY_MCE_USER(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	exc_machine_check_user(regs);
+-	local_db_restore(dr7);
+ }
+ #else
+ /* 32bit unified entry point */
+ DEFINE_IDTENTRY_RAW(exc_machine_check)
+ {
+-	unsigned long dr7;
+-
+-	dr7 = local_db_save();
+ 	if (user_mode(regs))
+ 		exc_machine_check_user(regs);
+ 	else
+ 		exc_machine_check_kernel(regs);
+-	local_db_restore(dr7);
+ }
+ #endif
+ 
 -- 
 2.53.0
 
