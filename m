@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017094;
-	b=3WFsphd2v9SMMSSEhTMUki3QZdVLF3uza7UjHb9aSBxu4viZ2qnAkMl8w87r54O7hpHi
-	 HfuK8vcHCBSStG+tPtIFkaaMPBWfRwLa6mEhs+1ZDBp1OjGt3l5htMfaPMwKdvHPeoYI2
-	 //DQR/xqOwbJ/pspVojQ/fTGqh1/TXyn+3Bn0vg3AoABqEAzMQCju5XTRcq9mmCuAwTWA
-	 0EXIvivtVZvTk63mchKDzOpOsjHvsA8t91+2Pjh5JSOLJzux1+4hIewdOedMh1iphsd+W
-	 rjtJpjKMkUDLw7eku26OECbAaCT7ezy7My63WVS2uNlIPYu+Mtp9HUc6dof550au/sw==
+	t=1795017097;
+	b=IfcG5i8RcC/aTU1bHg81gBfdNhhYfzsBUCqZE6P8Icy4ky0hC2NsQPu2F56TjF7+P+2A
+	 h9GlcKx5Yf6S0ry+ZkoSBUQzdR70z2z+/KspxRF4x/6ONKjBm/pB5OYfBjXxzfsTCQdqw
+	 sa1Y47ZtSW04jwqODojdAN26sIoyTaq21n7kEgaK7VKvqbgYcR1Silr9g3cbN94cKYKZi
+	 ZFsSqcg5PAVVC6oMYkHsuCzl0+ej01VYd0NCE2DPaj7tGFF02+KvAx51motJkcwnHLaNf
+	 IJogDOSPwQW2a46sYkpupUSvHCs5PRhN5qJfCNnMA8AlWpCmt/6/8H/zD2Yf9HPxOOA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017094;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017097;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YEWAs27pL1Uxo9CtrJkDn5iUZqIbztj6enaOT38FjzI=;
-	b=D9Kgx3hc6RFEWI7nOo+3s0R5UuyciTUSDKdoNgB3H6Jc3rf/B+SoDgDSukMGGJjhQiyS
-	 3ekUOCfFpKHpL7R45Nnz+y2dYVpQ56b2QjeClK3wRZvp/2w0FP8zAiRRMdkPw6MlIQGcH
-	 knUvKpIx9l8Ujp19dB/y70diEUQ4z+tLh+VKXrYSH1raY9iJ6o5/+NVzBVQFEnZJISybN
-	 qUvOD/m9wA8TcUcD38UqJGRxs+GWd4YEOwJs0YR3VmGyDNyJB5M7iHZWVoOfhp9cOS4Xt
-	 NEaWsJwDbFmmQ6q5JQ7EEjGRCYORFkpeRtrAdYDqK/0xKjiXouiwojJMvsRMZUwhWFA==
+	bh=U+sBlHq7A0akiLfoMNYrzslTaTbF7U6pqpMMWjtP3k0=;
+	b=pn2Xxtgmpo8oDEzUOpO20bzKEzJrP34UbmMoAHjxxdtsv3Up2gPfWk81X6fAaKq2/PVQ
+	 SvwLgsl60Ol4hdjKePbdbHn5VSAYBWCofMVvDJ2zv+OID87HWxC/cD1C4XeVHWv6v0ftm
+	 FpWM6crd4leR+8rPVoQOEMdu01ROHOlapa0vmq4lNiaihKQaoofU4mABjy3JTvetIR9jH
+	 KXKoR4nshgQcdkByctSpIWF2hq/plxEckyo2hnq5UDwr12/rxDe781s0twGi6BZQM9ALv
+	 xNchMVHKvtOLCwetSFfChaX3oQf/CsMuvZwU5KoanCxmf2tKmk/lI1PcQ+mDf6l5LiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+2bKcCi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YJb4l8M3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAFC606A31C;
-	Wed, 18 Nov 2026 15:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFF6606A32A;
+	Wed, 18 Nov 2026 15:51:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V+2bKcCi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51091F000C7;
-	Wed, 18 Nov 2026 15:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YJb4l8M3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EB11F000C4;
+	Wed, 18 Nov 2026 15:51:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017094;
-	bh=YEWAs27pL1Uxo9CtrJkDn5iUZqIbztj6enaOT38FjzI=;
+	s=korg; t=1795017097;
+	bh=U+sBlHq7A0akiLfoMNYrzslTaTbF7U6pqpMMWjtP3k0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=V+2bKcCi0jqE7JxCsHuG37phDVdyZ+T24WG9gkrvxb4/Fj9dQSiYsgakhE3SY/xTc
-	 Nsr5v7Rdxnt0DynM7gLW2RP9hwuZpbFGmMqCywd8o9MVeFUFhPksUQh5X3bqNa7b9P
-	 8ZW/OkuAtpcYihvsOzMkGBab7fsA1rDt7qFcCSlk=
+	b=YJb4l8M3g+Ccy9tDo96kKC5kBNRv1Q/Wmlt7Ig8DDeNrW3vX7cL2tWKR3XjGn0WMv
+	 jtE5JNorLBwPm0T1oJjOdoYszTvneL7IHVWZ8gOcCNJfnsjgUNNNJUY4Nf6tDxxb2C
+	 /3gbhyudqzJKviWUaKG4gR+wwa+hwxhpXDJ9n6z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykyta Yatsenko <yatsenko@meta.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Hui Su <sh_def@163.com>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0762/2651] bpftool: Scale counters and report cycles per run
-Date: Wed, 18 Nov 2026 15:33:22 +0100
-Message-ID: <20261118150315.314948107@linuxfoundation.org>
+Subject: [PATCH 7.3 0763/2651] bpftool: Fix sparse CPU IDs in prog profile
+Date: Wed, 18 Nov 2026 15:33:23 +0100
+Message-ID: <20261118150315.352053347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,334 +68,237 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykyta Yatsenko <yatsenko@meta.com>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit c2c8bd265627364a8257c413e697fee8f2605197 ]
+[ Upstream commit edc071d7b3aaae8047a12c21b02cc537557aacee ]
 
-Perf counters undercount when the PMU multiplexes them. Scale each
-per-CPU value before aggregation. Per-CPU event groups make PMU ratios
-use matching scheduling intervals.
+bpftool prog profile currently treats the number of possible CPUs as
+both the logical CPU ID range and the stride of the perf event array.
+That misses valid logical CPUs when the possible CPU mask is sparse,
+such as 0,2-3, and can use incorrect PERF_EVENT_ARRAY keys.
 
-Keep run_cnt as the total number of program executions, independent of
-counter scheduling.
+Keep the compact possible CPU count for per-CPU result buffers, while
+enumerating the actual logical CPU IDs when creating per-CPU perf event
+groups. Use the maximum logical CPU ID plus one as the metric stride in
+the PERF_EVENT_ARRAY.
 
-Keep JSON value raw, report the scaled value in value_scaled, and
-document the output.
+This keeps the current per-CPU event grouping intact while separating
+the compact per-CPU buffer index from the logical CPU ID and event-array
+key. Report the logical CPU ID when a per-CPU event was not counted.
 
-Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20260916-bpftool_cyles_per_run-v4-3-f2de02c480d5@meta.com
-Stable-dep-of: edc071d7b3aa ("bpftool: Fix sparse CPU IDs in prog profile")
+Fixes: 47c09d6a9f67 ("bpftool: Introduce "prog profile" command")
+Signed-off-by: Hui Su <sh_def@163.com>
+Link: https://lore.kernel.org/bpf/20260813160858.1042834-3-sh_def@163.com/
+Link: https://lore.kernel.org/bpf/20260923004243.969919-3-sh_def@163.com
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpftool/Documentation/bpftool-prog.rst    |  11 +-
- tools/bpf/bpftool/prog.c                      | 122 ++++++++++++------
- 2 files changed, 89 insertions(+), 44 deletions(-)
+ tools/bpf/bpftool/prog.c                  | 51 +++++++++++++++--------
+ tools/bpf/bpftool/skeleton/profiler.bpf.c |  8 ++--
+ 2 files changed, 37 insertions(+), 22 deletions(-)
 
-diff --git a/tools/bpf/bpftool/Documentation/bpftool-prog.rst b/tools/bpf/bpftool/Documentation/bpftool-prog.rst
-index 90fa2a48cc26a..90fe8c61bf424 100644
---- a/tools/bpf/bpftool/Documentation/bpftool-prog.rst
-+++ b/tools/bpf/bpftool/Documentation/bpftool-prog.rst
-@@ -217,7 +217,14 @@ bpftool prog run *PROG* data_in *FILE* [data_out *FILE* [data_size_out *L*]] [ct
- bpftool prog profile *PROG* [duration *DURATION*] *METRICs*
-     Profile *METRICs* for bpf program *PROG* for *DURATION* seconds or until
-     user hits <Ctrl+C>. *DURATION* is optional. If *DURATION* is not specified,
--    the profiling will run up to **UINT_MAX** seconds.
-+    the profiling will run up to **UINT_MAX** seconds. Selected metrics form a
-+    perf event group on each CPU so that ratios use counters scheduled over the
-+    same intervals. Plain output scales each per-CPU metric value to correct
-+    for perf event multiplexing. When **cycles** is selected, it also reports
-+    cycles per program run.
-+
-+    In JSON output, **value** is raw, **value_scaled** is scaled, and
-+    **run_cnt** is the total number of program runs.
- 
- bpftool prog help
-     Print short help message.
-@@ -360,7 +367,7 @@ EXAMPLES
- ::
- 
-          51397 run_cnt
--      40176203 cycles                                                 (83.05%)
-+      40176203 cycles          # 781.68 cycles per run                (83.05%)
-       42518139 instructions    #   1.06 insns per cycle               (83.39%)
-            123 llc_misses      #   2.89 LLC misses per million insns  (83.15%)
- 
 diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index 8cd10186826dc..2b3a0ed4a115d 100644
+index 2b3a0ed4a115d..b454165e8cd07 100644
 --- a/tools/bpf/bpftool/prog.c
 +++ b/tools/bpf/bpftool/prog.c
-@@ -2062,37 +2062,52 @@ static int do_profile(int argc, char **argv)
+@@ -2164,6 +2164,9 @@ struct profile_metric {
+ };
  
- #include "profiler.skel.h"
+ static __u64 profile_total_count;
++static int profile_cpu_cnt;
++static int *profile_cpu_ids;
++static int profile_cpu_id_span;
  
-+enum ratio_metric {
-+	METRIC_NONE = -2,
-+	METRIC_RUN_CNT = -1,
-+	METRIC_CYCLES = 0,
-+	METRIC_INSTRUCTIONS = 1,
-+	METRIC_L1D_LOADS = 2,
-+	METRIC_LLC_MISSES = 3,
-+	METRIC_ITLB_MISSES = 4,
-+	METRIC_DTLB_MISSES = 5,
-+};
-+
- struct profile_metric {
- 	const char *name;
- 	struct bpf_perf_event_value val;
-+	__u64 scaled_val;
- 	struct perf_event_attr attr;
- 	bool selected;
+ #define MAX_NUM_PROFILE_METRICS 4
  
- 	/* calculate ratios like instructions per cycle */
--	const int ratio_metric; /* 0 for N/A, 1 for index 0 (cycles) */
-+	const enum ratio_metric ratio_metric;
- 	const char *ratio_desc;
- 	const float ratio_mul;
- } metrics[] = {
--	{
-+	[METRIC_CYCLES] = {
- 		.name = "cycles",
- 		.attr = {
- 			.type = PERF_TYPE_HARDWARE,
- 			.config = PERF_COUNT_HW_CPU_CYCLES,
- 			.exclude_user = 1,
- 		},
-+		.ratio_metric = METRIC_RUN_CNT,
-+		.ratio_desc = "cycles per run",
-+		.ratio_mul = 1.0,
- 	},
--	{
-+	[METRIC_INSTRUCTIONS] = {
- 		.name = "instructions",
- 		.attr = {
- 			.type = PERF_TYPE_HARDWARE,
- 			.config = PERF_COUNT_HW_INSTRUCTIONS,
- 			.exclude_user = 1,
- 		},
--		.ratio_metric = 1,
-+		.ratio_metric = METRIC_CYCLES,
- 		.ratio_desc = "insns per cycle",
- 		.ratio_mul = 1.0,
- 	},
--	{
-+	[METRIC_L1D_LOADS] = {
- 		.name = "l1d_loads",
- 		.attr = {
- 			.type = PERF_TYPE_HW_CACHE,
-@@ -2102,8 +2117,9 @@ struct profile_metric {
- 				(PERF_COUNT_HW_CACHE_RESULT_ACCESS << 16),
- 			.exclude_user = 1,
- 		},
-+		.ratio_metric = METRIC_NONE,
- 	},
--	{
-+	[METRIC_LLC_MISSES] = {
- 		.name = "llc_misses",
- 		.attr = {
- 			.type = PERF_TYPE_HW_CACHE,
-@@ -2113,11 +2129,11 @@ struct profile_metric {
- 				(PERF_COUNT_HW_CACHE_RESULT_MISS << 16),
- 			.exclude_user = 1
- 		},
--		.ratio_metric = 2,
-+		.ratio_metric = METRIC_INSTRUCTIONS,
- 		.ratio_desc = "LLC misses per million insns",
- 		.ratio_mul = 1e6,
- 	},
--	{
-+	[METRIC_ITLB_MISSES] = {
- 		.name = "itlb_misses",
- 		.attr = {
- 			.type = PERF_TYPE_HW_CACHE,
-@@ -2127,11 +2143,11 @@ struct profile_metric {
- 				(PERF_COUNT_HW_CACHE_RESULT_MISS << 16),
- 			.exclude_user = 1
- 		},
--		.ratio_metric = 2,
-+		.ratio_metric = METRIC_INSTRUCTIONS,
- 		.ratio_desc = "itlb misses per million insns",
- 		.ratio_mul = 1e6,
- 	},
--	{
-+	[METRIC_DTLB_MISSES] = {
- 		.name = "dtlb_misses",
- 		.attr = {
- 			.type = PERF_TYPE_HW_CACHE,
-@@ -2141,7 +2157,7 @@ struct profile_metric {
- 				(PERF_COUNT_HW_CACHE_RESULT_MISS << 16),
- 			.exclude_user = 1
- 		},
--		.ratio_metric = 2,
-+		.ratio_metric = METRIC_INSTRUCTIONS,
- 		.ratio_desc = "dtlb misses per million insns",
- 		.ratio_mul = 1e6,
- 	},
-@@ -2182,7 +2198,7 @@ static int profile_parse_metrics(int argc, char **argv)
- 	return selected_cnt;
- }
+@@ -2200,7 +2203,7 @@ static int profile_parse_metrics(int argc, char **argv)
  
--static void profile_read_values(struct profiler_bpf *obj)
-+static int profile_read_values(struct profiler_bpf *obj)
+ static int profile_read_values(struct profiler_bpf *obj)
  {
- 	__u32 m, cpu, num_cpu = obj->rodata->num_cpu;
+-	__u32 m, cpu, num_cpu = obj->rodata->num_cpu;
++	__u32 m, cpu, num_cpu = profile_cpu_cnt;
  	int reading_map_fd, count_map_fd;
-@@ -2192,15 +2208,11 @@ static void profile_read_values(struct profiler_bpf *obj)
- 
- 	reading_map_fd = bpf_map__fd(obj->maps.accum_readings);
- 	count_map_fd = bpf_map__fd(obj->maps.counts);
--	if (reading_map_fd < 0 || count_map_fd < 0) {
--		p_err("failed to get fd for map");
--		return;
--	}
- 
- 	err = bpf_map_lookup_elem(count_map_fd, &key, counts);
- 	if (err) {
- 		p_err("failed to read count_map: %s", strerror(errno));
--		return;
-+		return err;
- 	}
- 
- 	profile_total_count = 0;
-@@ -2208,24 +2220,37 @@ static void profile_read_values(struct profiler_bpf *obj)
- 		profile_total_count += counts[cpu];
- 
- 	for (m = 0; m < ARRAY_SIZE(metrics); m++) {
--		struct bpf_perf_event_value values[num_cpu];
-+		struct bpf_perf_event_value values[num_cpu], *val;
-+		double scale;
- 
- 		if (!metrics[m].selected)
- 			continue;
- 
- 		err = bpf_map_lookup_elem(reading_map_fd, &key, values);
- 		if (err) {
--			p_err("failed to read reading_map: %s",
--			      strerror(errno));
--			return;
-+			p_err("failed to read reading_map: %s", strerror(errno));
-+			return err;
- 		}
-+
+ 	__u64 counts[num_cpu];
+ 	__u32 key = 0;
+@@ -2235,8 +2238,8 @@ static int profile_read_values(struct profiler_bpf *obj)
  		for (cpu = 0; cpu < num_cpu; cpu++) {
--			metrics[m].val.counter += values[cpu].counter;
--			metrics[m].val.enabled += values[cpu].enabled;
--			metrics[m].val.running += values[cpu].running;
-+			val = &values[cpu];
-+			if (counts[cpu] && !val->running) {
-+				p_err("perf event %s was not counted on CPU %u",
-+				      metrics[m].name, cpu);
-+				return -EAGAIN;
-+			}
-+			metrics[m].val.enabled += val->enabled;
-+			metrics[m].val.running += val->running;
-+			metrics[m].val.counter += val->counter;
-+			if (val->running) {
-+				/* Scale values to account for perf event multiplexing. */
-+				scale = (double)val->enabled / val->running;
-+				metrics[m].scaled_val += val->counter * scale;
-+			}
- 		}
- 		key++;
- 	}
-+	return 0;
+ 			val = &values[cpu];
+ 			if (counts[cpu] && !val->running) {
+-				p_err("perf event %s was not counted on CPU %u",
+-				      metrics[m].name, cpu);
++				p_err("perf event %s was not counted on CPU %d",
++				      metrics[m].name, profile_cpu_ids[cpu]);
+ 				return -EAGAIN;
+ 			}
+ 			metrics[m].val.enabled += val->enabled;
+@@ -2394,6 +2397,7 @@ static void profile_close_perf_events(void)
+ 		close(profile_perf_events[i]);
+ 
+ 	free(profile_perf_events);
++	profile_perf_events = NULL;
+ 	profile_perf_event_cnt = 0;
  }
  
- static void profile_print_readings_json(void)
-@@ -2242,6 +2267,7 @@ static void profile_print_readings_json(void)
- 		jsonw_lluint_field(json_wtr, "value", metrics[m].val.counter);
- 		jsonw_lluint_field(json_wtr, "enabled", metrics[m].val.enabled);
- 		jsonw_lluint_field(json_wtr, "running", metrics[m].val.running);
-+		jsonw_lluint_field(json_wtr, "value_scaled", metrics[m].scaled_val);
+@@ -2427,13 +2431,12 @@ static int profile_open_perf_event(int mid, int cpu,
  
- 		jsonw_end_object(json_wtr);
+ static int profile_open_perf_events(struct profiler_bpf *obj)
+ {
+-	__u32 num_cpu = obj->rodata->num_cpu;
+ 	__u32 map_key;
+ 	unsigned int cpu, m;
+ 	int group_fd, map_fd, pmu_fd;
+ 	int err;
+ 
+-	profile_perf_events = calloc(num_cpu * obj->rodata->num_metric,
++	profile_perf_events = calloc(profile_cpu_cnt * obj->rodata->num_metric,
+ 				     sizeof(*profile_perf_events));
+ 	if (!profile_perf_events) {
+ 		p_err("failed to allocate memory for perf_event array: %s",
+@@ -2442,32 +2445,34 @@ static int profile_open_perf_events(struct profiler_bpf *obj)
  	}
-@@ -2250,24 +2276,34 @@ static void profile_print_readings_json(void)
  
- static void profile_print_readings_plain(void)
- {
--	__u32 m;
-+	__u32 i;
- 
- 	printf("\n%18llu %-20s\n", profile_total_count, "run_cnt");
--	for (m = 0; m < ARRAY_SIZE(metrics); m++) {
--		struct bpf_perf_event_value *val = &metrics[m].val;
-+	for (i = 0; i < ARRAY_SIZE(metrics); i++) {
-+		struct profile_metric *m = &metrics[i];
-+		struct bpf_perf_event_value *val = &m->val;
- 		int r;
-+		__u64 ratio;
- 
--		if (!metrics[m].selected)
-+		if (!m->selected)
- 			continue;
--		printf("%18llu %-20s", val->counter, metrics[m].name);
-+		printf("%18llu %-20s", m->scaled_val, m->name);
- 
--		r = metrics[m].ratio_metric - 1;
--		if (r >= 0 && metrics[r].selected &&
--		    metrics[r].val.counter > 0) {
-+		r = m->ratio_metric;
-+		switch (r) {
-+		case METRIC_RUN_CNT:
-+			ratio = profile_total_count;
-+			break;
-+		case METRIC_NONE:
-+			ratio = 0;
-+			break;
-+		default:
-+			ratio = metrics[r].scaled_val;
-+		}
-+		if (ratio) {
- 			printf("# %8.2f %-30s",
--			       val->counter * metrics[m].ratio_mul /
--			       metrics[r].val.counter,
--			       metrics[m].ratio_desc);
-+			       m->scaled_val * m->ratio_mul / ratio,
-+			       m->ratio_desc);
- 		} else {
- 			printf("%-41s", "");
- 		}
-@@ -2438,21 +2474,24 @@ static int profile_open_perf_events(struct profiler_bpf *obj)
- 	return 0;
- }
- 
--static void profile_print_and_cleanup(void)
-+static int profile_print_and_cleanup(void)
- {
-+	int err;
+ 	map_fd = bpf_map__fd(obj->maps.events);
+-	for (cpu = 0; cpu < num_cpu; cpu++) {
++	for (cpu = 0; cpu < (unsigned int)profile_cpu_cnt; cpu++) {
++		int cpu_id = profile_cpu_ids[cpu];
 +
- 	profile_close_perf_events();
--	profile_read_values(profile_obj);
--	profile_print_readings();
-+	err = profile_read_values(profile_obj);
-+	if (!err)
-+		profile_print_readings();
- 	profiler_bpf__destroy(profile_obj);
+ 		group_fd = -1;
+-		map_key = cpu;
++		map_key = cpu_id;
+ 		for (m = 0; m < ARRAY_SIZE(metrics); m++) {
+ 			if (!metrics[m].selected)
+ 				continue;
+ 
+-			pmu_fd = profile_open_perf_event(m, cpu, map_fd, group_fd,
++			pmu_fd = profile_open_perf_event(m, cpu_id, map_fd, group_fd,
+ 						     map_key);
+ 			if (pmu_fd == -ENODEV && group_fd < 0)
+ 				break;
+ 			if (pmu_fd < 0) {
+-				p_err("failed to add event %s to group on CPU %u: %s",
+-				      metrics[m].name, cpu, strerror(-pmu_fd));
++				p_err("failed to add event %s to group on CPU %d: %s",
++				      metrics[m].name, cpu_id, strerror(-pmu_fd));
+ 				return pmu_fd;
+ 			}
+ 			if (group_fd < 0)
+ 				group_fd = pmu_fd;
+-			map_key += num_cpu;
++			map_key += profile_cpu_id_span;
+ 		}
+ 		if (group_fd < 0)
+ 			continue;
+ 		if (ioctl(group_fd, PERF_EVENT_IOC_ENABLE, PERF_IOC_FLAG_GROUP)) {
+ 			err = -errno;
+-			p_err("failed to enable perf event group on CPU %u: %s",
+-			      cpu, strerror(-err));
++			p_err("failed to enable perf event group on CPU %d: %s",
++			      cpu_id, strerror(-err));
+ 			return err;
+ 		}
+ 	}
+@@ -2486,6 +2491,10 @@ static int profile_print_and_cleanup(void)
  
  	close(profile_tgt_fd);
  	free(profile_tgt_name);
-+	return err;
++	free(profile_cpu_ids);
++	profile_cpu_ids = NULL;
++	profile_cpu_cnt = 0;
++	profile_cpu_id_span = 0;
+ 	return err;
  }
  
- static void int_exit(int signo)
- {
--	profile_print_and_cleanup();
--	exit(0);
-+	exit(!!profile_print_and_cleanup());
- }
+@@ -2496,7 +2505,7 @@ static void int_exit(int signo)
  
  static int do_profile(int argc, char **argv)
-@@ -2542,8 +2581,7 @@ static int do_profile(int argc, char **argv)
- 	signal(SIGINT, int_exit);
+ {
+-	int num_metric, num_cpu, err = -1;
++	int num_metric, err = -1;
+ 	struct bpf_program *prog;
+ 	unsigned long duration;
+ 	char *endptr;
+@@ -2527,11 +2536,12 @@ static int do_profile(int argc, char **argv)
+ 	if (num_metric <= 0)
+ 		goto out;
  
- 	sleep(duration);
--	profile_print_and_cleanup();
--	return 0;
-+	return profile_print_and_cleanup();
+-	num_cpu = libbpf_num_possible_cpus();
+-	if (num_cpu <= 0) {
++	profile_cpu_cnt = get_possible_cpu_ids(&profile_cpu_ids);
++	if (profile_cpu_cnt <= 0) {
+ 		p_err("failed to identify number of CPUs");
+ 		goto out;
+ 	}
++	profile_cpu_id_span = profile_cpu_ids[profile_cpu_cnt - 1] + 1;
  
- out:
- 	profile_close_perf_events();
+ 	profile_obj = profiler_bpf__open();
+ 	if (!profile_obj) {
+@@ -2539,11 +2549,12 @@ static int do_profile(int argc, char **argv)
+ 		goto out;
+ 	}
+ 
+-	profile_obj->rodata->num_cpu = num_cpu;
+ 	profile_obj->rodata->num_metric = num_metric;
++	profile_obj->rodata->cpu_id_span = profile_cpu_id_span;
+ 
+ 	/* adjust map sizes */
+-	bpf_map__set_max_entries(profile_obj->maps.events, num_metric * num_cpu);
++	bpf_map__set_max_entries(profile_obj->maps.events,
++				 num_metric * profile_cpu_id_span);
+ 	bpf_map__set_max_entries(profile_obj->maps.fentry_readings, num_metric);
+ 	bpf_map__set_max_entries(profile_obj->maps.accum_readings, num_metric);
+ 	bpf_map__set_max_entries(profile_obj->maps.counts, 1);
+@@ -2589,6 +2600,10 @@ static int do_profile(int argc, char **argv)
+ 		profiler_bpf__destroy(profile_obj);
+ 	close(profile_tgt_fd);
+ 	free(profile_tgt_name);
++	free(profile_cpu_ids);
++	profile_cpu_ids = NULL;
++	profile_cpu_cnt = 0;
++	profile_cpu_id_span = 0;
+ 	return err;
+ }
+ 
+diff --git a/tools/bpf/bpftool/skeleton/profiler.bpf.c b/tools/bpf/bpftool/skeleton/profiler.bpf.c
+index 6685e7252fb52..0d47a9bdc5b43 100644
+--- a/tools/bpf/bpftool/skeleton/profiler.bpf.c
++++ b/tools/bpf/bpftool/skeleton/profiler.bpf.c
+@@ -10,7 +10,7 @@ struct bpf_perf_event_value___local {
+ 	__u64 running;
+ } __attribute__((preserve_access_index));
+ 
+-/* map of perf event fds, num_cpu * num_metric entries */
++/* map of perf event fds, cpu_id_span * num_metric entries */
+ struct {
+ 	__uint(type, BPF_MAP_TYPE_PERF_EVENT_ARRAY);
+ 	__uint(key_size, sizeof(u32));
+@@ -38,8 +38,8 @@ struct {
+ 	__uint(value_size, sizeof(u64));
+ } counts SEC(".maps");
+ 
+-const volatile __u32 num_cpu = 1;
+ const volatile __u32 num_metric = 1;
++const volatile __u32 cpu_id_span = 1;
+ #define MAX_NUM_METRICS 4
+ 
+ SEC("fentry/XXX")
+@@ -60,7 +60,7 @@ int BPF_PROG(fentry_XXX)
+ 						sizeof(*reading));
+ 		if (err)
+ 			return 0;
+-		key += num_cpu;
++		key += cpu_id_span;
+ 	}
+ 
+ 	return 0;
+@@ -100,7 +100,7 @@ int BPF_PROG(fexit_XXX)
+ 
+ 	/* read all events before updating the maps, to reduce error */
+ 	for (i = 0; i < num_metric && i < MAX_NUM_METRICS; i++) {
+-		err = bpf_perf_event_read_value(&events, cpu + i * num_cpu,
++		err = bpf_perf_event_read_value(&events, cpu + i * cpu_id_span,
+ 						(void *)(readings + i),
+ 						sizeof(*readings));
+ 		if (err)
 -- 
 2.53.0
 
