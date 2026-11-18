@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026249;
-	b=QbSv8+Lm5Z2xQwquSj002g6RHuYJbuG44ZvaxCj/KzZVKjBd9DYTxI1Q652+U8LueWBt
-	 t8jSK7sh2kYgE8UcsGAMG4/h4dLglBTEpr0i2REfZ2KW9tUM/r2OiypDit9YSnHVBcCUj
-	 kThjMPfQJIl/hB0LbJbOwUpTNnJuAUshKatol2XJFn2samPRrAWWaafjS3imDpTihUpHi
-	 rSksO74AlqHUFp9r90snwDq3/mG9XEeOIAKVyRsXk2KmxJezM7F4hw2bOR0Sr79V7G+Cr
-	 YDz50VNUwWWV2sX76OVF1A1WN9QgxWU3OVd/8FjIGVoKEb8svovVd6HE4Ja3kICr/bA==
+	t=1795026252;
+	b=fIUx8aOEyfm10iBJGJxS0OfIOm98LLGG73RisjJJU2PBu7kfWUvRhfNYU9bqQpJviyFZ
+	 ihnrw5ZqZT7r+8tF/o/G0ECYtBhidLIAzt1vI56E8G4wR32T/hajRgTWVtVJwNAHgJlhp
+	 0JuP6YB/NpikiaJbySBoYJnSOeEqAwY3Zqztb8V/Rh9s/mWj9Blet/Wy6Oq/1dLQhbR4x
+	 9kTwZAtor9KK/E7tl35HkUxHULREMKR0kQZcFfRvsDZbMuYPUROZJjU2cgB9JenIR/PtL
+	 V1vWKXDP0ENxeSjCRhpBiWuLzdAVOJ8xiJcVrzuSKzfFRB9KcXYKCELum+KhLnH34lQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026249;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026252;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=l4iknv6dPdiBVS3FUjHpE9JXZpKfrHE5lUIKYIrE0M8=;
-	b=X/c43IX3j1vn8ukRJu9gGT2KTs4OVt19VjMyxNW5hpMUfi3CYuIio43zatQyGjFRwNYO
-	 6vb/LxGOGSeAgWl2UkJTGQrOEpgIZPASC+qMq71nA2fvlcd1SH2KzoReI7Z1kXeUTIIsS
-	 3wamC4ARBb8hN6bFo83Mi41fHXNgOMLUm7viLfbOK8QEPZqTKi/Fpq8DXwS9zAzcSMEfz
-	 OoziXZr5rJbkaHEHgTPtyBY5K8OhTyGTtxBLUto521JNk4NLJYQO3N/8OgpCkQ9nHIoe9
-	 xmyYYNOU0k9KskspW1LJ2Aek/AFMlY9PGbyvxymeSooNo+/WsG87LzKvsQvJ/AbRZtA==
+	bh=zqehlvgeYb02flTF7magq2S5i4mRQm94ZObJdTR7Dak=;
+	b=S6/XEykTQiBHeOkW7fKOQiaGQ4VpjatoGA/xDu0uHjoqxjkNH8ViGaavnEeQhtQ1aCLO
+	 oQg738ln+78kQWOK3Xgp6lcjsS9iAqxyVrNhrX9AwLLHfEv7fHz8iQ3lrDmi59rifLKrK
+	 yzHz429HVILtIkLw4LRLaSPDJ4FuxQ1Hvk/jBeDHAfh857RREYdR1GE/masSas5bCAneD
+	 9svYoOQb9yPXK64SMgaI3CsoTyv5uAemMxcbBqlWpacuvZD4A/dHXBxTRhf7MK4XPGR+O
+	 xjlUvQXFE9C3RSY8Ec/TmMyileKOYceFYTd98TnQ9QHEbdhNPRa79QuSb6K0wVrGYlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TiK10Lxo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D7jYb4QL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB7960A260A;
-	Wed, 18 Nov 2026 18:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40399606A320;
+	Wed, 18 Nov 2026 18:24:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TiK10Lxo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26B21F000C5;
-	Wed, 18 Nov 2026 18:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D7jYb4QL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B261F000C4;
+	Wed, 18 Nov 2026 18:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026249;
-	bh=l4iknv6dPdiBVS3FUjHpE9JXZpKfrHE5lUIKYIrE0M8=;
+	s=korg; t=1795026252;
+	bh=zqehlvgeYb02flTF7magq2S5i4mRQm94ZObJdTR7Dak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TiK10LxoDrGkaiyU0Dbe+XzCZlORkK/q96isBNzs7UJzw9BOlF2ei0jVCjBYZLVAc
-	 I5c9nAXC2z43zLxdMFTiVBSmCXcNil5poWzKfDyRN5Jv64h/rOu758zEtn904Hn+IU
-	 5U0zU+dx3tIbb1Vy5l9WKJHPnnQQHtlhu1i5l7dw=
+	b=D7jYb4QLbJIIsL3a0BBWHiIPAhc9dMRPkf9/rWYCmUckVKQ3ltkkSeJpZDKKvFXJP
+	 qHJuRN6/MgtDKUMvAYT9e2LZif/UyhnbzI45dFdzjVPeOrzAK3hCX7ys/z5bL1eUey
+	 wWcA22lWncrWXW4tfslZ0i5D5GsXYzObs4JmTQIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Bergantinos Corpas <rbergant@redhat.com>,
-	Anna Schumaker <anna.schumaker@hammerspace.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Sidong Yang <sidong.yang@furiosa.ai>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1367/2151] nfs: set gencount on protocol-specific remove
-Date: Wed, 18 Nov 2026 15:51:42 +0100
-Message-ID: <20261118150211.817513543@linuxfoundation.org>
+Subject: [PATCH 6.18 1368/2151] accel/rocket: Dont tear down the scheduler when drm_sched_init() fails
+Date: Wed, 18 Nov 2026 15:51:43 +0100
+Message-ID: <20261118150211.855597705@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,172 +70,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Bergantinos Corpas <rbergant@redhat.com>
+From: Sidong Yang <sidong.yang@furiosa.ai>
 
-[ Upstream commit 8c955dacf45f8964b98f26910ffecb5e26c02e31 ]
+[ Upstream commit a6709a58a01c8fc357e316bee31f369c2ea56235 ]
 
-commit bd4928ec799b ("NFS: Avoid changing nlink when file removes and
-attribute updates race") avoids races on attribute cache with any
-inflight RPC that may modify inode attributes (and gencount) during
-i.e. REMOVE.
+drm_sched_init() cleans up after itself when it fails, but
+rocket_job_init() then calls drm_sched_fini() on the same scheduler.
+That wakes a wait queue that was never initialised, dereferencing a
+NULL pointer, and can destroy the submit workqueue a second time.
 
-However it does not take into account that REMOVE may trigger
-a delegation return which also advances gencount (via the attribute
-refresh during delegation return), and in that case the gencount
-mismatch is not due to an inflight RPC that already reflected the
-removal.
+Only destroy the reset workqueue on this path.
 
-Push the setting of gencount under each version-specific layer,
-reordering correctly for nfsv4 case after the delegation returns.
-
-This fixes LTP/inotify04 failure after bd4928ec799b.
-
-Fixes: bd4928ec799b ("NFS: Avoid changing nlink when file removes and attribute updates race")
-Signed-off-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@hammerspace.com>
+Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://lore.kernel.org/all/20260912114524.7A6131F00893@smtp.kernel.org/
+Signed-off-by: Sidong Yang <sidong.yang@furiosa.ai>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patch.msgid.link/20261004164727.466164-2-sidong.yang@furiosa.ai
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c      | 13 +++----------
- fs/nfs/internal.h |  1 +
- fs/nfs/nfs3proc.c |  8 ++++++++
- fs/nfs/nfs4proc.c |  5 +++++
- fs/nfs/proc.c     |  8 ++++++++
- 5 files changed, 25 insertions(+), 10 deletions(-)
+ drivers/accel/rocket/rocket_job.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index f54c1a485095d..4dc91428c79cc 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -1895,7 +1895,7 @@ static int nfs_dentry_delete(const struct dentry *dentry)
- }
+diff --git a/drivers/accel/rocket/rocket_job.c b/drivers/accel/rocket/rocket_job.c
+index 729b7d6d77d46..269c8a00410be 100644
+--- a/drivers/accel/rocket/rocket_job.c
++++ b/drivers/accel/rocket/rocket_job.c
+@@ -494,8 +494,6 @@ int rocket_job_init(struct rocket_core *core)
+ 	return 0;
  
- /* Ensure that we revalidate inode->i_nlink */
--static void nfs_drop_nlink(struct inode *inode, unsigned long gencount)
-+void nfs_drop_nlink(struct inode *inode, unsigned long gencount)
- {
- 	struct nfs_inode *nfsi = NFS_I(inode);
- 
-@@ -1909,6 +1909,7 @@ static void nfs_drop_nlink(struct inode *inode, unsigned long gencount)
- 			       NFS_INO_INVALID_NLINK);
- 	spin_unlock(&inode->i_lock);
- }
-+EXPORT_SYMBOL_GPL(nfs_drop_nlink);
- 
- /*
-  * Called when the dentry loses inode.
-@@ -2508,7 +2509,6 @@ EXPORT_SYMBOL_GPL(nfs_rmdir);
- static int nfs_safe_remove(struct dentry *dentry)
- {
- 	struct inode *dir = d_inode(dentry->d_parent);
--	struct inode *inode = d_inode(dentry);
- 	int error = -EBUSY;
- 		
- 	dfprintk(VFS, "NFS: safe_remove(%pd2)\n", dentry);
-@@ -2520,14 +2520,7 @@ static int nfs_safe_remove(struct dentry *dentry)
- 	}
- 
- 	trace_nfs_remove_enter(dir, dentry);
--	if (inode != NULL) {
--		unsigned long gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
+ err_sched:
+-	drm_sched_fini(&core->sched);
 -
--		error = NFS_PROTO(dir)->remove(dir, dentry);
--		if (error == 0)
--			nfs_drop_nlink(inode, gencount);
--	} else
--		error = NFS_PROTO(dir)->remove(dir, dentry);
-+	error = NFS_PROTO(dir)->remove(dir, dentry);
- 	if (error == -ENOENT)
- 		nfs_dentry_handle_enoent(dentry);
- 	trace_nfs_remove_exit(dir, dentry, error);
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index 0285cc7bf3fd5..3214533b73c2c 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -397,6 +397,7 @@ extern unsigned long nfs_access_cache_count(struct shrinker *shrink,
- 					    struct shrink_control *sc);
- extern unsigned long nfs_access_cache_scan(struct shrinker *shrink,
- 					   struct shrink_control *sc);
-+extern void nfs_drop_nlink(struct inode *inode, unsigned long gencount);
- struct dentry *nfs_lookup(struct inode *, struct dentry *, unsigned int);
- void nfs_d_prune_case_insensitive_aliases(struct inode *inode);
- int nfs_create(struct mnt_idmap *, struct inode *, struct dentry *,
-diff --git a/fs/nfs/nfs3proc.c b/fs/nfs/nfs3proc.c
-index 993f62636a772..aef15b9f96fdc 100644
---- a/fs/nfs/nfs3proc.c
-+++ b/fs/nfs/nfs3proc.c
-@@ -447,13 +447,21 @@ nfs3_proc_remove(struct inode *dir, struct dentry *dentry)
- 		.rpc_resp = &res,
- 	};
- 	int status = -ENOMEM;
-+	struct inode *inode = d_inode(dentry);
-+	unsigned long gencount;
- 
- 	dprintk("NFS call  remove %pd2\n", dentry);
- 	res.dir_attr = nfs_alloc_fattr();
- 	if (res.dir_attr == NULL)
- 		goto out;
- 
-+	if (inode)
-+		gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
-+
- 	status = rpc_call_sync(NFS_CLIENT(dir), &msg, 0);
-+	if (status == 0 && inode)
-+		nfs_drop_nlink(inode, gencount);
-+
- 	nfs_post_op_update_inode(dir, res.dir_attr);
- 	nfs_free_fattr(res.dir_attr);
- out:
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index d856be907e319..1e8c1fe993aaf 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -4937,12 +4937,14 @@ static int nfs4_proc_remove(struct inode *dir, struct dentry *dentry)
- 	};
- 	struct inode *inode = d_inode(dentry);
- 	int err;
-+	unsigned long gencount;
- 
- 	if (inode) {
- 		if (inode->i_nlink == 1)
- 			nfs4_inode_return_delegation(inode);
- 		else
- 			nfs4_inode_make_writeable(inode);
-+		gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
- 	}
- 	do {
- 		err = _nfs4_proc_remove(dir, &dentry->d_name, NF4REG);
-@@ -4950,6 +4952,9 @@ static int nfs4_proc_remove(struct inode *dir, struct dentry *dentry)
- 		err = nfs4_handle_exception(NFS_SERVER(dir), err,
- 				&exception);
- 	} while (exception.retry);
-+
-+	if (err == 0 && inode)
-+		nfs_drop_nlink(inode, gencount);
- 	return err;
+ 	destroy_workqueue(core->reset.wq);
+ 	return ret;
  }
- 
-diff --git a/fs/nfs/proc.c b/fs/nfs/proc.c
-index 63e71310b9f69..3467932690acb 100644
---- a/fs/nfs/proc.c
-+++ b/fs/nfs/proc.c
-@@ -322,9 +322,17 @@ nfs_proc_remove(struct inode *dir, struct dentry *dentry)
- 		.rpc_argp = &arg,
- 	};
- 	int			status;
-+	struct inode *inode = d_inode(dentry);
-+	unsigned long gencount;
- 
- 	dprintk("NFS call  remove %pd2\n",dentry);
-+	if (inode)
-+		gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
-+
- 	status = rpc_call_sync(NFS_CLIENT(dir), &msg, 0);
-+	if (status == 0 && inode)
-+		nfs_drop_nlink(inode, gencount);
-+
- 	nfs_mark_for_revalidate(dir);
- 
- 	dprintk("NFS reply remove: %d\n", status);
 -- 
 2.53.0
 
