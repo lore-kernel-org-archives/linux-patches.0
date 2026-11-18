@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055846;
-	b=HL5zPtKXZMNkUtkP/Knaz7mi3z1C3tDegX7nZiw+jmHGjTKn06Jo74TvqRAwfiYRjnew
-	 KifONepAwVBpf14Eb3y4W/Mc9jikqiRrS3usbc7zc3CDCGKGW8wbWE8o1jWeoU0vRlSZK
-	 UGvPwhMkGEPE+KnLP4njhO2VqQVK4tjI1d3752HGwJxa6BIp9x9YGGh4GrmMVZ/BOVlt0
-	 xTazOaVE3SCRoWeyetqXIRBpaKEsjQA5dIUuDaDIJ3MyzkuA4o43TQa9ntB91LrzfaJ9h
-	 fOH0tdZfxiVQLczarLjKoH20ZoRcOsJmOy19W5+1TOm6pgsaXwVaKgh+mRResnF8BxA==
+	t=1795055849;
+	b=dD5uJ+I+6oWDamdA1LO5vZRkekxvxat6tbvciHEXiK5yszfKkyLRzYRdpkbJu8wDl64X
+	 sPBvDk6BiypnfQ7gdTqbE/MsyHCFrQ/fDvc2KAhcR9EapoLF8lA8fACUvzktiO26UJ+GI
+	 QFYi4kS1ZrY6Dvf7kocH7r5Ios0mwQZEx0fntfHNm3fNwzLr4rn9gVN5rsVU+/VSXGucH
+	 VnEXivdoiRoj65AoOJMzSD8t6GCUOiZnTNqrJt4pvIEjgI5rpI6sObWPE8961RgFFLfvr
+	 PeZz/HmNmqTdsn6MPpkZO4LKm4jwVLVfg6corfwpuGXQdVj1ZxnvsGsN0uQ8RQsyBLg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055849;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5sA288Ehdr9KJLSLxK1Mt0bk35EZF2Z3Q+NnGWcQjVg=;
-	b=LP3Qw0W1o/O9hyfk/vpKq4l9Xie7eND3SSagGiibd/vH+saelH6Q2JfcbDNZaW+J3Aw3
-	 150GFoCEU96PEEJcTrcHtcyTpwPKTTSj/i4holQTM4b0BTVxFwhVpF2R1jsjms2Dmxk4K
-	 6yjleuYjsWxIxhBr52tcWMwvBCjlRwZGAg561pTey8qK0o6rM9CQaUFkwjtJhX1BObKrV
-	 t1t+oJS0VW5ftrDsuXvC41qFkP6HAC5PQsSfBPPOLvvN0GX5eYJ7lv3z/x0rxWQp2vNIn
-	 gFdy7CH7QSjD7KMSxp2jofoGIecATbfWH5ATrArP9LzxcrQNaGgQxL7dhuBeFB6CnKA==
+	bh=yYBMVwYu7nl9e97ZWsVM9GSny9VWBLJqFDRAzFKdAEY=;
+	b=TF8JeqQnP8sn+GgXb1/aqCEDuNrcpfanzebYq6vQnKjQ5KoEr8Y9yUgVHp5fKflo5EPG
+	 VgeUTq1Qr8dRTedKKHLdJsC5OlNbSl+CdIWI6fnZlj6wTOgUF4ccCbFs4AyExj08kKzg9
+	 +OmRvyRpsnSpc6dM41JoLYSsZf19m0wxTzF6WxuAJPcoHWvokzDbTRIAGgOz3uwIDFaji
+	 acP2ePZzn4KQ03E3aWbCBymg8M+Lb0FYY21APOh46TX+1UboHdoGlJiF426RQi3+6sLE5
+	 I7Krg7MZ6wk3JhcC5/qfhbYnv4O34pWQbWLieKUOd+0cAyxGtE7H7sb0aFZ5okIA9HQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EVYnSp32;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q5Oi0Zv8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E91D606A320;
-	Thu, 19 Nov 2026 02:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA0C606A331;
+	Thu, 19 Nov 2026 02:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EVYnSp32
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A4A1F000C4;
-	Thu, 19 Nov 2026 02:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q5Oi0Zv8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D931F000C4;
+	Thu, 19 Nov 2026 02:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055846;
-	bh=5sA288Ehdr9KJLSLxK1Mt0bk35EZF2Z3Q+NnGWcQjVg=;
+	s=korg; t=1795055848;
+	bh=yYBMVwYu7nl9e97ZWsVM9GSny9VWBLJqFDRAzFKdAEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EVYnSp322256Z5xd/5LS9ck9QoZwo75dLeh1NhlL6DTD8HN8ShBJiVOnZj/wfVZ9l
-	 o7lOVRvj8TkHydFdkkPCAi5yeUp1PjzUdFB21MLJ9WhVFVP6gE25wmqHT493PRWYV3
-	 J5BsFBnrqrnCRkttlKNj79PAz0krATOZCK29sHso=
+	b=Q5Oi0Zv8g2KHab1E8WHb/qfleM+Vw1lncSzpaUN10bL0zs63UmKp1aKchfG3Md2Am
+	 rnEE6/0tM5im7zednGQbd4mnIWNtQ6MnylviRSgpbHj5i6TfxhZtLcinC4xIeSnaqu
+	 NHEyDVwUDILfmhezxSQNM/wSSi0aoAkIKE3rXR58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Linus Walleij <linusw@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jonas Rebmann <jre@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1770/2214] dmaengine: ste_dma40: Fix event group bounds
-Date: Wed, 18 Nov 2026 15:57:26 +0100
-Message-ID: <20261118150122.326631918@linuxfoundation.org>
+Subject: [PATCH 5.15 1779/2214] spi: spi-sun4i: sun4i_spi_transfer_one(): fix transfers for SUN4I_FIFO_DEPTH
+Date: Wed, 18 Nov 2026 15:57:35 +0100
+Message-ID: <20261118150122.664709332@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,134 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit e66a9dbe04c71249cfb2a544c9c25d1b3b761fba ]
+[ Upstream commit f3ce7a3ca82bd9cda9ef61250aeff65fe6b44809 ]
 
-The dev_type validation can allow values whose derived event group has no
-matching physical channel pair. d40_allocate_channel() then indexes
-phy_res with j + event_group * 2, and __d40_set_prio_rt() uses the same
-group to select priority and realtime registers.
+In commit 6d9fe44bd73d ("spi: sun4i: fix FIFO limit"), the TX-FIFO is
+filled max to SUN4I_FIFO_DEPTH - 1 (= 63) bytes to work around timeouts
+observed on A10s SoCs.
 
-The physical-mode validation also compares dev_type with the number of
-physical channels. However, dev_type identifies an event line: DB8500 has
-eight physical channels but 64 source and 64 destination event lines. The
-event group determines which physical channel pair can serve an event, so
-the physical channel count is not a valid dev_type limit.
+Commit 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO
+size") added support for transfers larger than the FIFO size. But this
+commit only enabled the TX-FIFO empty interrupt for transfers larger
+than the FIFO (= 64) bytes.
 
-Reject dev_type values outside the hardware event-group range, remove the
-incorrect physical channel count limit, and stop the physical-channel
-search before a partial final channel group can index past phy_res.
+This breaks transfers with exactly 64 bytes: the TX-FIFO is only filled
+with 63 bytes but the interrupt to refill the FIFO is not triggered. The
+problem can be reproduced with the following command:
 
-Fixes: 26955c07dcf3 ("dmaengine: ste_dma40: Amalgamate DMA source and destination channel numbers")
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Assisted-by: LLM
-Link: https://lore.kernel.org/dmaengine/20260819225008.5F9651F000E9@smtp.kernel.org/
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-20-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+| spidev_test -D /dev/spidev0.1 -S 64 -s 20000000 -I 1
+|
+| [ 7797.548745] spi_master spi0: spi0.1: timeout transferring 64 bytes@20000000Hz for 110(100)ms
+| [ 7797.557237] spidev spi0.1: SPI transfer failed: -110
+| [ 7797.562308] spi_master spi0: failed to transfer one message from queue
+| [ 7797.568936] spi_master spi0: noqueue transfer failed
+
+To fix the problem enable the TX-FIFO interrupt if the total TX length
+is larger than SUN4I_FIFO_DEPTH - 1 (= 63) bytes.
+
+Fixes: 196737912da5 ("spi: sun4i: Allow transfers larger than FIFO size")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Jonas Rebmann <jre@pengutronix.de>
+Link: https://patch.msgid.link/20260914-spi-sun4i-fixes-v3-1-9fe919d5cecf@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ drivers/spi/spi-sun4i.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 4e3fba774358e..92cff7b672c2b 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -49,6 +49,10 @@
- #define D40_LCLA_LINK_PER_EVENT_GRP 128
- #define D40_LCLA_END D40_LCLA_LINK_PER_EVENT_GRP
+diff --git a/drivers/spi/spi-sun4i.c b/drivers/spi/spi-sun4i.c
+index ab99cc7438652..3e2ed10510398 100644
+--- a/drivers/spi/spi-sun4i.c
++++ b/drivers/spi/spi-sun4i.c
+@@ -321,7 +321,7 @@ static int sun4i_spi_transfer_one(struct spi_master *master,
+ 	sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TC |
+ 					 SUN4I_INT_CTL_RF_F34);
+ 	/* Only enable Tx FIFO interrupt if we really need it */
+-	if (tx_len > SUN4I_FIFO_DEPTH)
++	if (tx_len > SUN4I_FIFO_DEPTH - 1)
+ 		sun4i_spi_enable_interrupt(sspi, SUN4I_INT_CTL_TF_E34);
  
-+/* Number of event groups per hardware register layout */
-+#define D40_EVENT_GROUPS_V4A 4
-+#define D40_EVENT_GROUPS_V4B 5
-+
- /* Max number of logical channels per physical channel */
- #define D40_MAX_LOG_CHAN_PER_PHY 32
- 
-@@ -496,6 +500,7 @@ struct d40_chan {
-  * @high_prio_clear: the high priority clear register
-  * @interrupt_en: the interrupt enable register
-  * @interrupt_clear: the interrupt clear register
-+ * @num_event_groups: number of supported event groups
-  * @il: the pointer to struct d40_interrupt_lookup
-  * @il_size: the size of d40_interrupt_lookup array
-  * @init_reg: the pointer to the struct d40_reg_val
-@@ -510,6 +515,7 @@ struct d40_gen_dmac {
- 	u32				 high_prio_clear;
- 	u32				 interrupt_en;
- 	u32				 interrupt_clear;
-+	u32				 num_event_groups;
- 	struct d40_interrupt_lookup	*il;
- 	u32				 il_size;
- 	struct d40_reg_val		*init_reg;
-@@ -1741,6 +1747,11 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 	bool is_log = conf->mode == STEDMA40_MODE_LOGICAL;
- 	bool invalid_dev_type = conf->dev_type < 0;
- 
-+	if (!invalid_dev_type &&
-+	    D40_TYPE_TO_GROUP(conf->dev_type) >=
-+	    d40c->base->gen_dmac.num_event_groups)
-+		invalid_dev_type = true;
-+
- 	if (!conf->dir) {
- 		chan_err(d40c, "Invalid direction.\n");
- 		res = -EINVAL;
-@@ -1757,8 +1768,7 @@ static int d40_validate_conf(struct d40_chan *d40c,
- 		invalid_dev_type = conf->dev_type >= max_dev_type;
- 	}
- 
--	if (invalid_dev_type ||
--	    (!is_log && conf->dev_type > d40c->base->num_phy_chans)) {
-+	if (invalid_dev_type) {
- 		chan_err(d40c, "Invalid device type (%d)\n", conf->dev_type);
- 		res = -EINVAL;
- 	}
-@@ -1923,8 +1933,12 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 				}
- 			}
- 		} else
--			for (j = 0; j < d40c->base->num_phy_chans; j += 8) {
-+			for (j = 0; j < d40c->base->num_phy_chans;
-+			     j += D40_GROUP_SIZE) {
- 				int phy_num = j  + event_group * 2;
-+				if (phy_num + 1 >= num_phy_chans)
-+					break;
-+
- 				for (i = phy_num; i < phy_num + 2; i++) {
- 					if (d40_alloc_mask_set(&phys[i],
- 							       is_src,
-@@ -1944,8 +1958,10 @@ static int d40_allocate_channel(struct d40_chan *d40c, bool *first_phy_user)
- 		return -EINVAL;
- 
- 	/* Find logical channel */
--	for (j = 0; j < d40c->base->num_phy_chans; j += 8) {
-+	for (j = 0; j < d40c->base->num_phy_chans; j += D40_GROUP_SIZE) {
- 		int phy_num = j + event_group * 2;
-+		if (phy_num + 1 >= num_phy_chans)
-+			break;
- 
- 		if (d40c->dma_cfg.use_fixed_channel) {
- 			i = d40c->dma_cfg.phy_channel;
-@@ -3271,6 +3287,7 @@ static struct d40_base * __init d40_hw_detect_init(struct platform_device *pdev)
- 	base->log_chans = &base->phy_chans[num_phy_chans];
- 
- 	if (base->plat_data->num_of_phy_chans == 14) {
-+		base->gen_dmac.num_event_groups = D40_EVENT_GROUPS_V4B;
- 		base->gen_dmac.backup = d40_backup_regs_v4b;
- 		base->gen_dmac.backup_size = BACKUP_REGS_SZ_V4B;
- 		base->gen_dmac.interrupt_en = D40_DREG_CPCMIS;
-@@ -3284,6 +3301,7 @@ static struct d40_base * __init d40_hw_detect_init(struct platform_device *pdev)
- 		base->gen_dmac.init_reg = dma_init_reg_v4b;
- 		base->gen_dmac.init_reg_size = ARRAY_SIZE(dma_init_reg_v4b);
- 	} else {
-+		base->gen_dmac.num_event_groups = D40_EVENT_GROUPS_V4A;
- 		if (base->rev >= 3) {
- 			base->gen_dmac.backup = d40_backup_regs_v4a;
- 			base->gen_dmac.backup_size = BACKUP_REGS_SZ_V4A;
+ 	/* Start the transfer */
 -- 
 2.53.0
 
