@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053274;
-	b=zGZ87mhOpvFQL6F7bMUI9YOyKdiRQMU5vO7grKaMza4RKBDaxWINV7UFthFP/EHwPz/P
-	 xBynDv/oPzpblmykHoT3K51RjW+T0qZhEfUVaoeYpXvO8bFh3zOK+o7JrP0hsMTludjCM
-	 ELfQmANy6/2oAJU2kpvVN/UEd73cDLdqqyyuhRX2DwbvVSvzn8tD5EAIQMMyZCz/L0SXt
-	 eBZak6at2MiiLJ56mUQ0MjA5mJUbZlKlRt9myXKbH+TsVPo4WLSSMru6vmSUYLxLjlSgX
-	 zsheSDIeJqDLaNwS+PWH6fPbzaU7yc7xikB3kcTjnUCItWveLianNWYOxs65oiYKwrg==
+	t=1795053276;
+	b=pxxBf6ZMPk1ZhKf9PNXM9XxM1e8xdqC8yONLzWko/3/wRtHPSHID5BzLgCKU7c6nkXlS
+	 tB3uo6cPVvCMS3V9XoDkuKbKQewLLx2TV5P+Gk9g9RpPTNFJWJKkOCdEbPrxKpezmUFck
+	 xnICGRt1lxOneD8XZonxN9JrngEB74bidvDcG8eZuet+EPIvumXdACNCpsBSH59BMDoQ+
+	 3p9/9GgSWrxMDvyGY3cYG62Hu4S52ggTgyzn4wXg2UjNEAnmGvt2XmA4e6vQSq+iBcpb5
+	 Kwtvb6tT5Bl1Kr1buvgkYuauCPwsh8oSSXkKfVIWQDXXntniPAOQhnRDCwtOrzW95aQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053274;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053276;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FbNUzbsQ57yZMUuVMgxSaM1w4RGZAzHGIAkBQB8K890=;
-	b=myX7EpgHYZMNfgfGEgzyZ3dTpyQy3CCCym0RJ8oCSHS2peoyX6CBEsesUBWMCG/neiEv
-	 pgEIr2Upe9iMpJWRdQptIFEzY9UAD765pw/z0TEIkjMhwqRIHgnj3FyHEYc1BEvaFg2U8
-	 o5Fa1UiYfWbV3e01oAulrPvrf2hNHRpDRHlChzZjytQbXhXGbVANX+ZYoY2QigX5GHJ4R
-	 rmDY9pmgYIUXFfaLQb02o/YHA9lOjV4jdIAKfcNC4ncoh4GwPeUxxpZzV0zPhp+vX1T3g
-	 pPkKk7WtIbmGYgM5uY8JB2xzC9NKlWO5OkCL/WsGenM87LbpmiaVmCtof3tOzVLTJXg==
+	bh=Wmi2/x9Y6K4Kda0TfHt817H/KSw6zVdtBsrdabcIBX4=;
+	b=Y6aZfNhBxLtLhmPwG1W8LiStc8VvW/hn0F/rrAbdb6KU0gjfI1WkYGd1+WraBCLAI5FJ
+	 wBZIYiiJiKzEG6HFjNhVQUXF2CU94A3X8E+sdjx62AbvFZQzXKpajcVC+udqqFqL0xvAZ
+	 LAUNeiakOajN6dhD/J3COVsaP5sl/ZRbrfdNkedeihkDo9gE5YctqZK6Ndk6FOcCEm9dJ
+	 9WqmnUZvzSupZYeiOJy5vpkkL2KnZ9zSf3y78DY4BOQDQTYcuPIiB9AA2FSop6wVnuDDV
+	 xm0X9wzZ6ELIv7HnbX+6SG844bm5ibMipukYCj7ZD3DP/OWG3JZeLuGN140SQFfIY3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jv+k77Sg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHe+K1tW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52071606A320;
-	Thu, 19 Nov 2026 01:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA91B606A31C;
+	Thu, 19 Nov 2026 01:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jv+k77Sg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DE731F000C4;
-	Thu, 19 Nov 2026 01:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PHe+K1tW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9B41F000C5;
+	Thu, 19 Nov 2026 01:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053274;
-	bh=FbNUzbsQ57yZMUuVMgxSaM1w4RGZAzHGIAkBQB8K890=;
+	s=korg; t=1795053276;
+	bh=Wmi2/x9Y6K4Kda0TfHt817H/KSw6zVdtBsrdabcIBX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jv+k77SgwTK5j2VO/PVp2Mce6A3qsyLzVgcdvrUVLI0dAc7Zg+4A83q9afr7OJqXQ
-	 0Be4veTIjORIxXrCWDF9x8jcgvZSZQXP0ggJ1nyD0ec/XpJxiILfNchz8K2/4TPxJu
-	 da7Iuro5zUkOmut3Mo1JrQ/C1hy4A/OOYhHJND6k=
+	b=PHe+K1tWXegS+j+k2iQHm1K/+GUGkw76PqQ1xOM1cvbtogM/oKXGZV86+y+EcgVw6
+	 rsYqWUuBdbBixxCtDt6MdcU9kp33wMp+7h4NJk2lDQHvXcV8+XcCFuiwi4jKNXdDQK
+	 kKjBWOx0fXaFYRfQwt+gIB5UqojFsadSaTDadGiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Ian Bridges <icb@fastmail.org>,
+	Chris Mason <mason@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"Kiryl Shutsemau (Meta)" <kas@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Balbir Singh <balbirs@nvidia.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0861/2214] ksmbd: grant a POSIX ACL group entry only to the groups members
-Date: Wed, 18 Nov 2026 15:42:17 +0100
-Message-ID: <20261118150046.601184449@linuxfoundation.org>
+Subject: [PATCH 5.15 0862/2214] mm/mempolicy: charge shared policy nodes
+Date: Wed, 18 Nov 2026 15:42:18 +0100
+Message-ID: <20261118150046.636730749@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,46 +74,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Bridges <icb@fastmail.org>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit c00ec7ad449b68c291a4986e481941302ed399c5 ]
+[ Upstream commit 68b2aa37afa390f08de13bc0bac61a9ded3318bc ]
 
-When no ACE of the DACL matches the caller, Everyone or Authenticated
-Users, smb_check_perm_dacl() falls back to the file's POSIX ACL. It
-takes the first ACL_USER or ACL_GROUP entry whose id equals the
-caller's uid. For ACL_GROUP, this compares a gid with the caller's uid.
-A numerical match grants the group's permissions even when the caller
-is not a member.
+Any local user can bypass memory.max with mbind() on a tmpfs file, and
+allocate unbounded kernel memory.
 
-Match a group entry only when the caller is also in the group.
+mbind() sets a NUMA memory policy for a range of a mapping. If the
+mapping is of a shmem and friends, the kernel also stores the policy on
+the inode, in a tree with one entry per range of the file.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Reported-by: Namjae Jeon <linkinjeon@kernel.org>
-Closes: https://lore.kernel.org/linux-cifs/CAKYAXd93czbFD=znZUq_pJLXzDR5N3zc_auvAGWT7pzKR1f9Ag@mail.gmail.com/
+Each mbind() on a single page of a mapping can add one shared policy node
+(struct sp_node) and one struct mempolicy to that tree. They outlive the
+mapping and stay around until the inode is destroyed. The tree is not
+bounded by the file size, so the file can be empty.
+
+Memory that user space can allocate must be charged to a memory cgroup. A
+slab cache does that for all of its objects if it is created with
+SLAB_ACCOUNT. numa_policy_init() creates the slab caches for both
+structs without SLAB_ACCOUNT, so they are not charged to any cgroup.
+
+Reproduced with mbind() on single pages of an empty tmpfs file, from a
+cgroup with memory.max=8M: the global OOM killer killed tasks owned by
+root, and the machine panicked.
+
+Fix this by creating both caches with SLAB_ACCOUNT. This change implies
+that mbind() can now fail when running into memcg limits. Further,
+the policy_cache also serves task and VMA policies, so they are
+similarly accounted now.
+
+Note that per-file limits are not really helpful, as the user could
+simply use many files; having limits per user is tricky as well.
+
+Fix generated by an LLM and submitted by Chris Mason in private.
+
+Fixes: 5d097056c9a0 ("kmemcg: account certain kmem allocations to memcg")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Bridges <icb@fastmail.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Chris Mason <mason@kernel.org>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Acked-by: Kiryl Shutsemau (Meta) <kas@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Tested-by: Gregory Price (Meta) <gourry@gourry.net>
+[ david: smaller description tweaks ]
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Link: https://patch.msgid.link/20261029-fixes_shmem-v4-1-392fc715d8f6@kernel.org
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smbacl.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ mm/mempolicy.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ksmbd/smbacl.c b/fs/ksmbd/smbacl.c
-index 6d5611c47c434..ed690767837fd 100644
---- a/fs/ksmbd/smbacl.c
-+++ b/fs/ksmbd/smbacl.c
-@@ -1375,7 +1375,10 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
- 				else
- 					continue;
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index f089de8564cad..51ec529425118 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -2713,11 +2713,11 @@ void __init numa_policy_init(void)
  
--				if (id == uid) {
-+				/* A group entry grants only to the group's members */
-+				if (id == uid &&
-+				    (pa_entry->e_tag == ACL_USER ||
-+				     in_group_p(make_kgid(&init_user_ns, id)))) {
- 					mode_to_access_flags(pa_entry->e_perm,
- 							     0777,
- 							     &access_bits);
+ 	policy_cache = kmem_cache_create("numa_policy",
+ 					 sizeof(struct mempolicy),
+-					 0, SLAB_PANIC, NULL);
++					 0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
+ 
+ 	sn_cache = kmem_cache_create("shared_policy_node",
+ 				     sizeof(struct sp_node),
+-				     0, SLAB_PANIC, NULL);
++				     0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
+ 
+ 	for_each_node(nid) {
+ 		preferred_node_policy[nid] = (struct mempolicy) {
 -- 
 2.53.0
 
