@@ -1,56 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017449;
-	b=jjiQHXdbYESPVQOXhxCHsl3F2bF1jeWIZIo0LlcGe64EYyQowcEgnNWEt1Avn8mWDFDz
-	 wEOXCMA079PgU6l2GbKbhatFSMU67wRlIEB9i2LpoxhBZ+EKFK2hmqMC7VvsJEU36vK6L
-	 jEQDdcPGqjpDuPMdB6FubrtwgRRHPDv/LbG8qDal48qxgxEDUDhgqiu4UYHZuF9l1JNvU
-	 yYyg9bskTld0QVNBu/RsfhxprGcMUOcXBNMsdS/glPSsm5tfOa3kIbrx8IkjBCHqdWDIt
-	 kqmtkHO1aO1609ZsS4Xxq0vttEzScHVVey2pUkfB6i/l6G/TYmqfUuBGoYYEfKJgayw==
+	t=1795017452;
+	b=NCIFCWevmlGVWrCuZunAl6TlLrvU496/B4jhN77tdfUn6nKMjFWnkHp9UxERHtEikPIB
+	 1xLfLdqEAq4vtft6CN+D0kBnV7jO2qzoErPPIdg8MPq8mWymkARYreltzUDbgOz2L/GOp
+	 /2ePmt1kUmwxJdkEc4Eb/y/BbEcsctqvdRnqZcOHrYhDIcrKk7TwzmHfp3YjZOtEphYVz
+	 5qcwN4z188lELlE45dK9Oh9wsSfSzfGpQNQKaRQhDPbTqgFrBODEjuqXwiKK1uQotOba3
+	 861O+88RVo+cIDy1O9+fAhlDk6FnqziL8AE4AQUaFc5HWN1PjXSk1kjbrdy790/v5SQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017449;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017452;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3p+FzR9irV1C70gZ5z79gmaMNC9BMc2qCD3Puu+wcRo=;
-	b=DtY+T5crjA3kYvEH9hY8pCR1Ue1LvUjYQiytCcDkVVPwGf6lw+YDmczMljJ69lZg8R++
-	 /vsaUJQjDtSPplhZHYj4qge4dzAeEgG1+5GsFBgnXyTf+DYh1h+Ezaa6EIdU5K32o1jRx
-	 P0VOZJibMDXPOqqRCI7A4dh1FKFHphmFb72I7uFyoUBb1HA+yImeTBnNgD1mK6b2QPsjM
-	 dBnxfKugn3DsgTpJEAEoRqWOlOeXHb1rImNp6KM9JE7gu/qywvar9Dma6E0QcGKi/Eif7
-	 Q5ndjUHZkeHor7/ZRwJWCb7BK3HPPWBqT0m6Mm4ZqPecb8v/RIdW6GSgisOs4BN7/1A==
+	bh=1RATixfnYKRcUdiQ46QK581lLNSIxP1hLRuSwtb/C8g=;
+	b=Jre1h4JbGY0bp+8ByN2pylbiBlx4K4bWJWl+71WKFEw5aGJnkmHYbFIFQYJDL5Zdvob2
+	 IoNo0qnGK8JIdw8M5tJH8GGxlONSiVPFKhXduzrMi81asWRa092IJr6zqJnmOU4du9u8E
+	 whoHfe5G0hiE4e5QL6d9/+hAwJOjWpjbWkOkPFIy3v3MzmeBPRkvVGleMPRkfg/MjU1S9
+	 gHHcru654uwhQ3TVTKhF0p8QJbQ93G12Sl/0iCAAL5VzPODATl1EzOvf4oWZLUxEco03c
+	 R/4qwV2GND3/g0vni2CzaWMj6M6KuML92gJyRNZMO3XjRCnrWJGSPV8wxhouP2nelzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GnLcUXDY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ano7GRLR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B39D606A31C;
-	Wed, 18 Nov 2026 15:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D65606A330;
+	Wed, 18 Nov 2026 15:57:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GnLcUXDY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D08E21F000C4;
-	Wed, 18 Nov 2026 15:57:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ano7GRLR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9794A1F000C4;
+	Wed, 18 Nov 2026 15:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017449;
-	bh=3p+FzR9irV1C70gZ5z79gmaMNC9BMc2qCD3Puu+wcRo=;
+	s=korg; t=1795017452;
+	bh=1RATixfnYKRcUdiQ46QK581lLNSIxP1hLRuSwtb/C8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GnLcUXDYOJUw+GaIVfIss2xYh+g0qzB4f14tGbmTF/X3EOYrgON/FIq0CNzGsf2kE
-	 JSCvzr9Lu+elm/nQTQ/LMx0rfYeD+ZfCNtl0a+qYNyO6hqW1DhcH/Lb9fMFViDORvr
-	 doOpGY7k5JSW/I6zC/vqI0jeXub9ZgqfGlcBOfvU=
+	b=Ano7GRLRZKC2JmDtEohfQ0QvSXG25/He1k4ZgzJxdlA16/X947v9cHlOq3sNWhwSP
+	 vJ2M3+GPKfjXqBFcOgQOWUNBS/5zzMaFftVDSPrI7b/UW9Rvo5K89YmYXBsxqm8ZSL
+	 HTNaej2cNNTn8s4hAP/t3myA5Mb/VSKvZBY4AEiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Roy <saroy@redhat.com>,
-	James Burton <jamesburton@meta.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Alexei Starovoitov <ast@kernel.org>,
-	Anton Protopopov <a.s.protopopov@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0888/2651] bpf: Clear insn array jitted pointers on map reuse
-Date: Wed, 18 Nov 2026 15:35:28 +0100
-Message-ID: <20261118150319.832027861@linuxfoundation.org>
+Subject: [PATCH 7.3 0889/2651] bpf: Clear the insn array used flag with release semantics
+Date: Wed, 18 Nov 2026 15:35:29 +0100
+Message-ID: <20261118150319.869846934@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -74,58 +70,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 9aa11c4656b7bd8a32869296603f117a49eadd6e ]
+[ Upstream commit a83512036e0809497ee3259ba7458de287949b94 ]
 
-An insn array records, per entry, the xlated offset, the jitted offset and
-a jitted target pointer in ips[]. bpf_insn_array_init() runs when the map
-is bound to a program and resets only xlated_off; the jitted offset and the
-ips[] pointer are left as the previous owner set them. A program can be
-verified and JITed and only then fail to load (e.g. bpf_check_tail_call()).
-By that point bpf_prog_update_insn_ptrs() has already filled ips[] with
-pointers into that program's JIT image. Thus, the map is handed back for
-reuse with the stale pointers intact. If the next program reuses the map,
-the stale pointer survives in the now active program's jump table,
-pointing into the previous, freed image. Fix by resetting the jitted offset
-and the ips[] pointer alongside the xlated offset.
+A program that fails after the JIT ran, for example in bpf_check_tail_call(),
+has already stored its jitted offsets and target pointers into the insn array
+maps it uses through bpf_prog_update_insn_ptrs() when release_insn_arrays()
+hands them back by clearing the used flag with a plain atomic_set(). Nothing
+orders those stores before the flag, so on a weakly ordered architecture they
+can still be in flight when the next program takes the map: it is acquired
+with atomic_xchg() in bpf_insn_array_init() and reset there, and the late
+stores then land on top of whatever the new owner has written since, be it
+that reset or the pointers its own JIT stored, leaving entries that point
+into an image which is about to be freed.
+
+Clear the flag with atomic_set_release() instead, so that everything the
+releasing program stored is visible before the map can be acquired again.
+This pairs with the fully ordered atomic_xchg() on the acquire side.
 
 Fixes: b4ce5923e780 ("bpf, x86: add new map type: instructions array")
-Reported-by: Sandipan Roy <saroy@redhat.com>
-Reported-by: James Burton <jamesburton@meta.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Anton Protopopov <a.s.protopopov@gmail.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://patch.msgid.link/20260925175244.1136329-9-daniel@iogearbox.net
+Link: https://patch.msgid.link/20260925175244.1136329-10-daniel@iogearbox.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/bpf_insn_array.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ kernel/bpf/bpf_insn_array.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/kernel/bpf/bpf_insn_array.c b/kernel/bpf/bpf_insn_array.c
-index a2f84afe6f7c6..5874abd1f7438 100644
+index 5874abd1f7438..61d6a076dfdb6 100644
 --- a/kernel/bpf/bpf_insn_array.c
 +++ b/kernel/bpf/bpf_insn_array.c
-@@ -199,12 +199,16 @@ int bpf_insn_array_init(struct bpf_map *map, const struct bpf_prog *prog)
- 		return -EBUSY;
+@@ -232,7 +232,8 @@ void bpf_insn_array_release(struct bpf_map *map)
+ {
+ 	struct bpf_insn_array *insn_array = cast_insn_array(map);
  
- 	/*
--	 * Reset all the map indexes to the original values.  This is needed,
--	 * e.g., when a replay of verification with different log level should
--	 * be performed.
-+	 * Reset the map to its pre-verification state. The xlated and jitted
-+	 * offsets and the jitted target pointers are recomputed by the verifier
-+	 * and the JIT for this program, so any values left by a previous owner
-+	 * must be cleared here.
- 	 */
--	for (i = 0; i < map->max_entries; i++)
-+	for (i = 0; i < map->max_entries; i++) {
- 		values[i].xlated_off = values[i].orig_off;
-+		values[i].jitted_off = 0;
-+		insn_array->ips[i] = 0;
-+	}
- 
- 	return 0;
+-	atomic_set(&insn_array->used, 0);
++	/* Paired with atomic_xchg() in bpf_insn_array_init(). */
++	atomic_set_release(&insn_array->used, 0);
  }
+ 
+ void bpf_insn_array_adjust(struct bpf_map *map, u32 off, u32 len)
 -- 
 2.53.0
 
