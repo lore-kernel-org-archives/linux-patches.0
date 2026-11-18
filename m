@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058607;
-	b=r03vfiOxUs33dn2BH0Biqt04BV3IF7jsKXY9T6XFJZWl/LK55Dg53L+Q/T0OtryLJW/Q
-	 B3o/eOlne3bVaGMgWo9xqMypMTrzmcNzquDy+rleiLV3fBomMACcRirAj/tQxOYTQv+cG
-	 6CHqC/iWQBoU08PeWNqQPNO07c+WSyt9LbxSxU8/7YezberJlzDBKE7TAbdQCZddXeDdC
-	 Wzrr77Y3fDV3OGgzZKENuVQRR58VAVHpHE+jGZtYT/9Y/vpdwYL41AdWIpqA78M5hyfAH
-	 azYVhlUvehCScTgdNAdyVxQcNIMU2c09nFFsMfOXXhuBl0zOJ9Glhe/LJCgTKfGqJGg==
+	t=1795058610;
+	b=pIqXhn1lARZPlbEwJt7sK7B1muhEhS8E9U5DXcdMbSPEkuiQEpKu+KY0L9q5DlpADisi
+	 VvAWq/qdbHbPsl8aZmvjXHpxacMVYOsU8ZyzggVWEAGiXKHdqNv6yAjb8xoDiWOYlWN7N
+	 aBWPgzaZTzKgj1bkostN4TVRG1AQhmYHMbI/5uFfTFCFRQenjTLtgKHlssxlKlAJP/eTV
+	 vUOVe8l9tOKPvcllKMLzn2vXTQ1eGQ5R8o0B80QcjxB08sgfhB3wncY5YbJN/3wyuxy3m
+	 7KvGt5CNi1IGiWJnP22Cqau9COVDkkUI3KJbyQADPUuQsF1SyL0TU3WJ2ZWVM26kF0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058607;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058610;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XCubV4Gxk8gSHcqVKhASmk5vdxTAA3cskxOTP0hOcV4=;
-	b=qZpDVUSyzyMimWiqP+hk9TEpJhRSKTkmdK7vAsEh/6f+ixLfAkZ5WlNbH8MXXJbWe3T4
-	 Q12PRlU/3nq0vGhIIxowLnc1FkqwQtFLmauhTg9NpRb9nLO1MKzIxNlwtjVq2pjNNKvZ4
-	 3yXHNeNMQeDv6ljnBndC/hqvr5fqPL0bYv4hMQ+dCcVxi/kz+Eav9SwtrRDtlqcv/bb6p
-	 8UdXEbhAL81Dhjl5HKuMzMNhvWIuc+vIBaWewkxM8JoqWJGDXvuITAI2WHddle/JSpzXF
-	 EHbdOfolIKbKYAefc8yHFZYJ10w8r5HnRJp5WKskZetl7Vc78vS21zA+3wKUkxcvosA==
+	bh=bVSvN0Mh3q34mMe9YM00nQmyl75KR0g6T3WcQgZHr6k=;
+	b=chhBN6fmr/Bau1nv4XcgExK6J764bmxJDR10Tlv8yGqFksaIdSov9kdhqfR/PHbgtB5F
+	 crUdofVA7nvjiDUlIzzu7VcwK3Ks3CxiWGvqO72lwJ5+RgcseRnp6/IZS1V/k3CvB6Xq8
+	 sriPRHVJBraBJ4Da14M8T+zrMBu7BfalTkufLMXDQzjy9nTpSknL2quHttTlcFZnuXmwq
+	 xn4W/NzCaa48LrIug/L2QfBRo2W3k9x24khzCBoYr81NKptS3n3S6bz3z0wOjvQdSPJHH
+	 +fnN3GoVdkde/wQR+M36OBNAUW0iLneQmR65EC99wu6N6iaNnghS++8zb5/ycl+mjBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KzDDOmy3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VN1OYlXA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF31606A331;
-	Thu, 19 Nov 2026 03:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6C6606A331;
+	Thu, 19 Nov 2026 03:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KzDDOmy3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB131F000C6;
-	Thu, 19 Nov 2026 03:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VN1OYlXA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916381F000C5;
+	Thu, 19 Nov 2026 03:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058607;
-	bh=XCubV4Gxk8gSHcqVKhASmk5vdxTAA3cskxOTP0hOcV4=;
+	s=korg; t=1795058610;
+	bh=bVSvN0Mh3q34mMe9YM00nQmyl75KR0g6T3WcQgZHr6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=KzDDOmy3Xg+FupZxAQp3CrVo1ZnCWNqFLKmm2aL/prOHA6p3+u3sc5aBFWJ9qJGUs
-	 KvW2mwWp6gBBYPimn7xt7ROkZvOhBzzPT+ZtGbtxellbE6IVZ3XsaQQ02KId6DEUDR
-	 hZbqk05gTXGamNpbp4Md9m4fVqMuMgMg0DGiBDqA=
+	b=VN1OYlXAxErpBu8LW4qddCDXML960jKe5A2azv/rFxjt0Z5COJmM/jABAx7lkUDRu
+	 MN2qqM6VMUscvq3/VgABW2UuYXbObm7BUJhtyD6AU9GqtdrduQn3LfwE8h42khuOQy
+	 nhzolGyvDGsCQwJw95NaL3fEfLebt/wLHrd/brpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmoy Das <nirmoyd@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Xin Long <lucien.xin@gmail.com>,
+	Seung Min Shin <guncraft2000@naver.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0547/1848] blk-mq: clear stale inactive flag on hctx reuse
-Date: Wed, 18 Nov 2026 15:43:05 +0100
-Message-ID: <20261118145937.866466415@linuxfoundation.org>
+Subject: [PATCH 5.10 0530/1848] sctp: hold transport reference across connect wait
+Date: Wed, 18 Nov 2026 15:42:48 +0100
+Message-ID: <20261118145937.125845713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,80 +69,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nirmoy Das <nirmoyd@nvidia.com>
+From: Seung Min Shin <guncraft2000@naver.com>
 
-[ Upstream commit afc1de47a7ab607ae6403c4bfda36b0bf3cd342f ]
+[ Upstream commit 5bef8649bb9ac4b2a014bcc227202ebd2df824be ]
 
-When the last CPU mapped to an hctx goes offline,
-blk_mq_hctx_notify_offline() sets BLK_MQ_S_INACTIVE. Updating the
-number of hardware queues exits every hctx and parks it on
-q->unused_hctx_list. A later update can reuse a parked hctx through
-blk_mq_alloc_and_init_hctx(), at any queue index, and nothing clears
-the flag.
+sctp_sendmsg_to_asoc() selects a transport before waiting for a new
+interleaved association to become established. sctp_wait_for_connect()
+drops the socket lock while sleeping.
 
-If the reused hctx is mapped to an online CPU, blk_mq_get_tag() keeps
-returning BLK_MQ_NO_TAG for it. __blk_mq_alloc_requests() sleeps and
-retries, expecting CPU hotplug to move the task to another CPU, so a
-task that stays on that CPU never gets a tag. Onlining the original CPU
-doesn't recover it either, because blk_mq_hctx_notify_online() only
-clears the flag on the hctx that CPU now maps to.
+While the lock is dropped, backlog processing can handle a COOKIE ACK and
+an ASCONF DEL-IP that removes the selected transport. sctp_assoc_rm_peer()
+then marks the transport dead and drops its association-owned reference.
+The transport can be freed through RCU before the send path resumes.
 
-Clear BLK_MQ_S_INACTIVE in blk_mq_init_hctx() so a reused hctx starts
-like a freshly allocated one. A reused hctx has no cpuhp instances at
-that point, so the offline callback can't set the flag again before
-blk_mq_add_hw_queues_cpuhp() registers it. Clearing the flag in
-blk_mq_exit_hctx() is not enough, because a parked hctx keeps its cpuhp
-instances until blk_mq_remove_hw_queues_cpuhp(). Preserve the other
-hctx state flags.
+After the wait, the stale pointer is assigned to newly created DATA or
+I-DATA chunks and later dereferenced by sctp_outq_select_transport().
 
-Reproduced with null_blk on v7.3 in a four-vCPU arm64 QEMU/KVM guest:
+Hold a reference to the selected transport across
+sctp_wait_for_connect(). After the socket lock is reacquired, abort the
+send if the transport was marked dead. Callers without a selected
+transport pass NULL and retain their existing behavior.
 
-  modprobe null_blk nr_devices=0
-  mkdir /sys/kernel/config/nullb/nullb0
-  cd /sys/kernel/config/nullb/nullb0
-  echo 4 > submit_queues; echo 1 > memory_backed; echo 16 > size
-  echo 1 > power
-  echo 0 > /sys/devices/system/cpu/cpu3/online
-  echo 2 > submit_queues
-  echo 4 > submit_queues
-
-Offlining CPU3 marks hctx3 inactive. After the two updates it comes back
-as hctx1 and is mapped to CPU0:
-
-  # cat /sys/block/nullb0/mq/1/cpu_list
-  0
-  # cat /sys/kernel/debug/block/nullb0/hctx1/state
-  INACTIVE
-
-A 4K O_DIRECT read pinned to CPU0 hangs in D state, while the same read
-on CPU1 and CPU2 completes. Onlining CPU3 again leaves hctx1 inactive
-and the CPU0 read still hangs. With this change hctx1 state is empty and
-the reads on CPU0, CPU1 and CPU2 complete, before and after onlining
-CPU3.
-
-Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Nirmoy Das <nirmoyd@nvidia.com>
-Link: https://patch.msgid.link/20261020125129.430600-1-nirmoyd@nvidia.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 668c9beb9020 ("sctp: implement assign_number for sctp_stream_interleave")
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Signed-off-by: Seung Min Shin <guncraft2000@naver.com>
+Link: https://patch.msgid.link/20261011162750.1529631-1-guncraft2000@naver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/socket.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index b5f3e2d045601..e81af96eb18a7 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -2734,6 +2734,7 @@ static int blk_mq_init_hctx(struct request_queue *q,
- 		struct blk_mq_hw_ctx *hctx, unsigned hctx_idx)
- {
- 	hctx->queue_num = hctx_idx;
-+	clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index 026b9a23c4964..96215fc4ee466 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -74,7 +74,8 @@ static int sctp_wait_for_sndbuf(struct sctp_association *asoc,
+ 				struct sctp_transport *transport,
+ 				long *timeo_p, size_t msg_len);
+ static int sctp_wait_for_packet(struct sock *sk, int *err, long *timeo_p);
+-static int sctp_wait_for_connect(struct sctp_association *, long *timeo_p);
++static int sctp_wait_for_connect(struct sctp_association *,
++				 struct sctp_transport *, long *timeo_p);
+ static int sctp_wait_for_accept(struct sock *sk, long timeo);
+ static void sctp_wait_for_close(struct sock *sk, long timeo);
+ static void sctp_destruct_sock(struct sock *sk);
+@@ -1242,7 +1243,7 @@ static int __sctp_connect(struct sock *sk, struct sockaddr *kaddrs,
+ 		*assoc_id = asoc->assoc_id;
  
- 	if (!(hctx->flags & BLK_MQ_F_STACKING))
- 		cpuhp_state_add_instance_nocalls(CPUHP_AP_BLK_MQ_ONLINE,
+ 	timeo = sock_sndtimeo(sk, flags & O_NONBLOCK);
+-	return sctp_wait_for_connect(asoc, &timeo);
++	return sctp_wait_for_connect(asoc, NULL, &timeo);
+ 
+ out_free:
+ 	pr_debug("%s: took out_free path with asoc:%p kaddrs:%p err:%d\n",
+@@ -1849,7 +1850,7 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
+ 
+ 		if (asoc->ep->intl_enable) {
+ 			timeo = sock_sndtimeo(sk, 0);
+-			err = sctp_wait_for_connect(asoc, &timeo);
++			err = sctp_wait_for_connect(asoc, transport, &timeo);
+ 			if (err || sk->sk_shutdown & RCV_SHUTDOWN) {
+ 				err = -ESRCH;
+ 				goto err;
+@@ -1892,7 +1893,7 @@ static int sctp_sendmsg_to_asoc(struct sctp_association *asoc,
+ 
+ 	if (unlikely(wait_connect)) {
+ 		timeo = sock_sndtimeo(sk, msg->msg_flags & MSG_DONTWAIT);
+-		sctp_wait_for_connect(asoc, &timeo);
++		sctp_wait_for_connect(asoc, NULL, &timeo);
+ 	}
+ 
+ 	err = msg_len;
+@@ -9119,7 +9120,9 @@ static bool sctp_writeable(const struct sock *sk)
+ /* Wait for an association to go into ESTABLISHED state. If timeout is 0,
+  * returns immediately with EINPROGRESS.
+  */
+-static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
++static int sctp_wait_for_connect(struct sctp_association *asoc,
++				 struct sctp_transport *transport,
++				 long *timeo_p)
+ {
+ 	struct sock *sk = asoc->base.sk;
+ 	int err = 0;
+@@ -9128,12 +9131,16 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
+ 
+ 	pr_debug("%s: asoc:%p, timeo:%ld\n", __func__, asoc, *timeo_p);
+ 
+-	/* Increment the association's refcnt.  */
++	/* Hold references while the socket lock is dropped. */
++	if (transport)
++		sctp_transport_hold(transport);
+ 	sctp_association_hold(asoc);
+ 
+ 	for (;;) {
+ 		prepare_to_wait_exclusive(&asoc->wait, &wait,
+ 					  TASK_INTERRUPTIBLE);
++		if (transport && transport->dead)
++			goto do_transport_dead;
+ 		if (!*timeo_p)
+ 			goto do_nonblock;
+ 		if (sk->sk_shutdown & RCV_SHUTDOWN)
+@@ -9162,7 +9169,8 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
+ out:
+ 	finish_wait(&asoc->wait, &wait);
+ 
+-	/* Release the association's refcnt.  */
++	if (transport)
++		sctp_transport_put(transport);
+ 	sctp_association_put(asoc);
+ 
+ 	return err;
+@@ -9181,6 +9189,10 @@ static int sctp_wait_for_connect(struct sctp_association *asoc, long *timeo_p)
+ do_nonblock:
+ 	err = -EINPROGRESS;
+ 	goto out;
++
++do_transport_dead:
++	err = -EAGAIN;
++	goto out;
+ }
+ 
+ static int sctp_wait_for_accept(struct sock *sk, long timeo)
 -- 
 2.53.0
 
