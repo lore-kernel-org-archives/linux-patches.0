@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023462;
-	b=3QU9Dzxs1CENzI3TsDlmi/eZt0AESdg94GnTKQrMD22nIOXOjZt/2AuyltvriC9FDLv9
-	 ea10DIE/EUBwhG4y4noRMfeS/Bj+UtE8ZPide7EllVHUwQK1sbHPmT/aXP6xi8YP6+WWR
-	 zdyxfaV9c1WWnsTIKjMx6+wRuhxeALxLIp7dn6WYID4vKkI7Fu+ttirPlIaN5DpKrI1FL
-	 UoLrL8Be+FuraBGKdraxCTsC2gTv3j8GgLHnsj7uHBEtQF9i2igsYZmpbdHVEnjPOyNod
-	 YTglRmT8OB0bvOGUjbYP+fuJK3Nvs+na7Aa1DglkkfVIDjv2Q08w+BwzVf8yHYSFH9A==
+	t=1795023465;
+	b=xZJ4QrESWjWWAMdXZTnVSAvFi/R0UpA5dZLXnSWoeYsP010s3qDee57z+yisIMK6MDcR
+	 3ez753M8HXUREn070NRf2grh2GbszLMX/JxY2pL7vOnewIHogcc4k+tIFqDSGgUoIKSKe
+	 hIuWWch4YflxlfBW3aHKjp1M1pE9qabotQ/q0zmyIVKvoeNczRWFlzMZmgmDBuaZZFyfU
+	 sTiRqsptX7vginAxO60Ie6apq1Du7RIciCsW/nRSneYo2yBnccxPM0QoC7el5sYF+aSG6
+	 unK3g/kDvR4FNF8DshyPtuHKCBwexF3CxdYd3W9dim7PGz/yx2YlZLVOI5nrHkJGKrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023462;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023465;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=sMj8C9II4qIqfteMXuOAuvhh1EinkU4tmGYtJ6W5gNA=;
-	b=R2dMrF+nWvzdVHnf5B5qnnS+j5wz++KHtVXUuBbKMEUtjiE9j9tQiFTmMMUW4r4duIpp
-	 XErj8wSP7U0pg5lRnDXeUT3Jj6t4yo7WOadBOwI4/fXqM5BMI61O09KoIuyTc+S3dBS2P
-	 8HrNkrGUUZ11jAW6SBqPUKvaQDrcGSHY+jM19u33HH0ZWQw/4BuKI2ENgjkKWKBe5D8dG
-	 +v3mXwH84R58uIv7vRvGu6+GiubfC3yakpJpyFnsOzFFAxPvgFwcrRf6XtlswhglIHRdy
-	 cF6a2n6IG5EBLRWPEQvnplztaktjV5KuOqwdlyunHVQT2ZOwmPuXYQo0ZS2ureXk3ug==
+	bh=7ENB93WajVG6PWUx9ZX5ngMPA6uprOoKB08TltHAff4=;
+	b=Hdj5eYs26CaaC23ZmHfrM4T+/iH/wndPEmeLWyFtyMMWQh7BZGkLRDCvmMpYAcdlqdJl
+	 dQSnHM9rm8oA3Na0/3Z9i+yqjdDA3X9WJcipY8xcRTx2MWOtGrEXyFshufc0k/EelHEO2
+	 KGrLWjTRp7PmyEyMbJqxyoM71TvBokgM4MlKrZkPaeAt0k05KM4GNSDST2jjnzj6fE24c
+	 yc9dCp06SZJQTZNXjVMRjrRbuRerGfRfZ11IRJ10HxHqYXvQo2o53AO9tX2ZH9v1gucLQ
+	 yVR8l7yuyfSGKZhZGkxHkoaSyrpzgcCzClvwqMP1s8PnmKCCA3Nf7ljJcicTfkKZ6Gg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i7vwCma3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cY0CbsaY;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B092A606A336;
-	Wed, 18 Nov 2026 17:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D053A60A2600;
+	Wed, 18 Nov 2026 17:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i7vwCma3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6F41F000C9;
-	Wed, 18 Nov 2026 17:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cY0CbsaY
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C401F000C4;
+	Wed, 18 Nov 2026 17:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023462;
-	bh=sMj8C9II4qIqfteMXuOAuvhh1EinkU4tmGYtJ6W5gNA=;
+	s=korg; t=1795023465;
+	bh=7ENB93WajVG6PWUx9ZX5ngMPA6uprOoKB08TltHAff4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i7vwCma3XX2xTtrR1PxH+tNuL7anIAj+LuB0l5r1kIvv6EE4pRQ6xtFHsPVmMhmq1
-	 V79Y3lrhVGhYxRas6GrxePm5VdY9Vl1y1lZTpJiUo2vuvr1riuVlZLhSShg6yzBA2N
-	 8r5qcURnh6FtpBrW4KlubXF7pXEz2B+fhWJwovZ4=
+	b=cY0CbsaYQAuvUjmGJHaq8AcDzSc1TaepvUqRkug7rtVP0PNdENdkPXhvSgci4KDbO
+	 WzInK0COOGTVVk5iVo6f7XalYgHYU1Okg7HM50hojsRR5or6ZjRalnoLwgXMXXkpzA
+	 EOF5b5G2NSG5nTn8fd1VVuvaWN/Cok4CI2eYR8DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0377/2151] regulator: ab8500: Propagate mode enable read errors
-Date: Wed, 18 Nov 2026 15:35:12 +0100
-Message-ID: <20261118150135.822262821@linuxfoundation.org>
+Subject: [PATCH 6.18 0342/2151] scsi: mpi3mr: Fix use-after-free of the firmware event workqueue
+Date: Wed, 18 Nov 2026 15:34:37 +0100
+Message-ID: <20261118150134.563008987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,63 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 71ac8878573058e2b85210760ccaeaac90796c35 ]
+[ Upstream commit c94c746e6c80439a4a9a0e1e20f2dae62a4d57ef ]
 
-For regulators whose enable and mode share a state field, set_mode()
-first reads that field so changing the requested mode does not enable a
-disabled rail. A register read error is currently treated as true and
-the driver proceeds to write the new mode, potentially enabling a rail
-whose state is unknown.
+The enqueue path reads the workqueue pointer before taking the event lock,
+while the remove path clears that pointer and destroys the workqueue while
+holding it. The enqueue can therefore reach queue_work() after the
+workqueue is gone.
 
-Return the read error without changing the register or cached mode.
+Move the check inside the lock.
 
-References: AB8500 User Manual, UM0836 Rev 3, p. 227;
-AB8505 User Manual, DM00046744 Rev 3, p. 237
-
-Fixes: 438e695b87e0 ("regulator: ab8500: Get rid of is_enabled from struct ab8500_regulator_info")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260901-ux500-dts-snowball-regulator-v2-6-fe88b01829bf@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-17-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/ab8500.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/regulator/ab8500.c b/drivers/regulator/ab8500.c
-index 05c6b9c7af0c7..e4c3502c8dbcc 100644
---- a/drivers/regulator/ab8500.c
-+++ b/drivers/regulator/ab8500.c
-@@ -433,7 +433,7 @@ static unsigned int ab8500_regulator_get_optimum_mode(
- static int ab8500_regulator_set_mode(struct regulator_dev *rdev,
- 				     unsigned int mode)
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index cb105c8fdbb18..d0f9eb45750df 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -233,10 +233,11 @@ static void mpi3mr_fwevt_add_to_list(struct mpi3mr_ioc *mrioc,
  {
--	int ret = 0;
-+	int enabled, ret = 0;
- 	u8 bank, reg, mask, val;
- 	bool lp_mode_req = false;
- 	struct ab8500_regulator_info *info = rdev_get_drvdata(rdev);
-@@ -490,7 +490,17 @@ static int ab8500_regulator_set_mode(struct regulator_dev *rdev,
- 		goto out_unlock;
- 	}
+ 	unsigned long flags;
  
--	if (info->mode_mask || ab8500_regulator_is_enabled(rdev)) {
-+	if (info->mode_mask) {
-+		enabled = 1;
-+	} else {
-+		enabled = ab8500_regulator_is_enabled(rdev);
-+		if (enabled < 0) {
-+			ret = enabled;
-+			goto out_unlock;
-+		}
+-	if (!mrioc->fwevt_worker_thread)
+-		return;
+-
+ 	spin_lock_irqsave(&mrioc->fwevt_lock, flags);
++	if (!mrioc->fwevt_worker_thread) {
++		spin_unlock_irqrestore(&mrioc->fwevt_lock, flags);
++		return;
 +	}
-+
-+	if (enabled) {
- 		ret = abx500_mask_and_set_register_interruptible(info->dev,
- 			bank, reg, mask, val);
- 		if (ret < 0) {
+ 	/* get fwevt reference count while adding it to fwevt_list */
+ 	mpi3mr_fwevt_get(fwevt);
+ 	INIT_LIST_HEAD(&fwevt->list);
 -- 
 2.53.0
 
