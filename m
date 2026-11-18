@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039948;
-	b=ESF8I5/SpzkZ5F4ji7jwEAHIeuCcGIvp7Yy5joPIiAedUOMwh5A7UgZzh+tkXwY0n9Qv
-	 gA8nexMwIEqDOi8gWiQhL2mu/MSgjZX8GADseUhkiVZP326R/+cgsdRyRKKMsl5FaEqiA
-	 BwABkDA3N9dqtokrMbm2BRPgDETTZjgrUbDOwAFDk+g3IOUO2SR2cwpjECZbwrxhEYEFw
-	 k1yQDqNumFZwuNcYXRyoepQ0HCp9FKQPQ7YbkhZtK6vmbV1oym3eElikpFHfuRusocYrY
-	 Kv9RgOPtrU+Eg/9NlMa4eKK/z8DbhaRSyGhGtc8iXbKi8PJA0SyHjFgxJQBm92pUUJQ==
+	t=1795039951;
+	b=bcSsquJCjHMmWvrS89MOflez8vX2lXvNUdexuCC4uXa7xnx1z7zorOZrcadFTOj4hQtx
+	 nnM2EWj190D2FiBapo/9lIQWhlx8emcdcDqR/+L4tuEFcX63jc7cHr4M4vIn47SjQzE7w
+	 FRp/MGAsFq6e+KPsn5G6V7YEG3W+U84XnWjaY7r9Td3HPdn6JxxPCL239IjpTVMxTQJEV
+	 zEn9lb9c8Ud4rVG9h71duFfDufzVD/OvL+RCktnxIYoccRhOQMrrlgn+WJp/0FlyefOPR
+	 x6YxwbejmfZT236KAZ5xFObn6PyRKOFeRpmdIzo5pqWOD6nE2zG5VdfPAC5pZnB2jFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/a2EM6fvLI58cWmjFHm9Yga+8l8GMWxbypUkWetv7zY=;
-	b=0PgDWHYQCFZWwKZuTsM05fexH8Sn3lh+t6koSRflCVSkN7aFsCycx51v2iJj33bL3L01
-	 Z69XR1rgRGFSUZJ87CC/xl6GwfxLeWC/BUfwr4C5sPqxIVupD42Yo0cvvHXIuQUOYW6A9
-	 uIcok2glO2F9aQnS3BhmcPVBcWklTY0J/k36DtP5SN+3qvx7dK5JsBSpTOtNm/bqPDA9a
-	 iEq1ycG5o7muhzoNSfMrjP4ZMHbgztQgF1zUS5NAW6TvgZ3j6WJ1dXWOIvvn/PBAuMl0S
-	 ZOB6mjQhT2jGeL3BBWvd25pm8baTx5I6fjbIg68lA5cuDpHc+Pj5JUuvEHIitLmNzJQ==
+	bh=pvYZxiPGr9YNm4nNZkUX6rvpCp013tOqGsPwcdRCqCU=;
+	b=n+mp4yK2bgxHYmwuhL6SlyWxCWDhOCxSQNM786LEAkGBBwzT9kYBTAql4zxVq+BjzG31
+	 m7MiKzfxrn8tu0pjnro2n0Px0BZHMhBi9BVb7JZcIqjO6e/8P/ADeTRf3tEpiDmmMDZZX
+	 DUpuIiZ2cP1u+uC5tFgE74HSq3REUnseQsvGoY4p14BSqekdKnNzYBRC92cB3X66exYKs
+	 GeipigGG6JTMJyxq3RiG+7Qtze4zJIk/as6PrYloijPN+YznwU320TzkVbyPAvYfbTRiU
+	 wFHf2vewnpj0ykzNf281Z9UKjpMJSojr90HZ+pkP/+C7Ipy8hME2XWUl4c/Zz6yBvtg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="f5sn6/Gf";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bzC+VL7C;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A56606A31C;
-	Wed, 18 Nov 2026 22:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A991606A31C;
+	Wed, 18 Nov 2026 22:12:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f5sn6/Gf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB291F000C4;
-	Wed, 18 Nov 2026 22:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bzC+VL7C
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39AF91F000C4;
+	Wed, 18 Nov 2026 22:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039947;
-	bh=/a2EM6fvLI58cWmjFHm9Yga+8l8GMWxbypUkWetv7zY=;
+	s=korg; t=1795039950;
+	bh=pvYZxiPGr9YNm4nNZkUX6rvpCp013tOqGsPwcdRCqCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f5sn6/GfCrA/G/zzDI79UiwsOrvnMpPNsbxIjIJAqG2So/8dJjadVQjiofTgyfkMx
-	 7B9odHhQZMt3NM76F8wS5OJlXPennix57npEzI4i9G6p59SsfGhvsrM74AdrDIynQD
-	 Zhw+n8SICxWepDYXto9ksHYInvuHrim1ttmXCnLk=
+	b=bzC+VL7C7j57CniJNso96YXPykmKDtsz3V8mooeYnJK5h2jptEJ6EmRFZoselM2Bg
+	 M1fjt4FficdikH4dUcxW44qtgCi394EDQ9QooQVB30vppzVDfdqEKcndpBxRt6IYlu
+	 bhUc7y23I2tSef+PQWq1bm0x/6ki5QkoO32vGtk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miles Krause <mileskrause5200@gmail.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2283/3318] leds: lp8860: Fix device_node leak in lp8860_probe()
-Date: Wed, 18 Nov 2026 15:48:25 +0100
-Message-ID: <20261118150430.255647705@linuxfoundation.org>
+Subject: [PATCH 6.6 2284/3318] leds: pca9532: Check i2c_smbus_read_byte_data() return value
+Date: Wed, 18 Nov 2026 15:48:26 +0100
+Message-ID: <20261118150430.280925242@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,82 +69,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miles Krause <mileskrause5200@gmail.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit f9879086c4eb4b3b0f4baa80139a5720b99b229e ]
+[ Upstream commit 1b75f038e5f71ed32ce6593b5763f9776ec58a25 ]
 
-lp8860_probe() looks up the driver's single LED child node with
-of_get_next_available_child() and hands it to the LED core as
-init_data.fwnode, but never drops the reference that lookup returned:
+Coverity report INTEGER_OVERFLOW (tainted_data_return ->
+cast_underflow -> overflow) in pca9532_getled().
+pca9532_getled() stored the return value of i2c_smbus_read_byte_data()
+into a char and used it directly to compute the LED state without
+checking for an error. i2c_smbus_read_byte_data() returns a negative
+error code on failure. On an I2C read error the negative value was
+assigned to an unsigned type, triggering an integer underflow/overflow,
+and a meaningless LED state was returned to the caller.
 
-	child_node = of_get_next_available_child(np, NULL);
-	if (!child_node)
-		return -EINVAL;
-	...
-	init_data.fwnode = of_fwnode_handle(child_node);
+Read the value into an int, check for the error, and fall back to
+PCA9532_OFF while emitting a warning when the read fails.
 
-of_get_next_available_child() returns the node with its refcount
-incremented, and the LED core does not take a reference of its own:
-led_classdev_register_ext() only reads properties out of
-init_data.fwnode and then stores the bare pointer with
-device_set_node().  The reference therefore stays owned by the driver
-for as long as it holds the node.
-
-Nothing in lp8860_probe() ever releases it, so it is leaked on every
-error return taken after the lookup - the enable GPIO, the vled
-regulator, devm_mutex_init(), the regmap allocation, the optional
-EEPROM programming and the LED class registration - and on a fully
-successful probe alike.  A device that binds and unbinds repeatedly
-leaks one device_node reference per bind.
-
-Sibling drivers already get this right: leds-lm3692x.c, from the same
-TI LED family, calls fwnode_handle_put(init_data.fwnode) once after
-devm_led_classdev_register_ext() to cover both outcomes, while
-leds-ktd2692.c and leds-aat1290.c take the node with __free(device_node).
-
-Use __free(device_node) here too.  Unlike a single of_node_put() at the
-end of probe it also covers the intermediate error returns, and it keeps
-the node alive for the whole function, which the LED core still needs
-when it reads the child's properties during registration.
-
-Fixes: 99ca0ea57309 ("leds: lp8860: Use generic support for composing LED names")
-Signed-off-by: Miles Krause <mileskrause5200@gmail.com>
-Link: https://patch.msgid.link/20260910-leds-lp8860-of-node-leak-v1-1-d333cff4345b@gmail.com
+Fixes: 28c5fe99016d ("leds: pca9532: Extend pca9532 device tree support")
+Assisted-by: VeroCoder:vero-1 [cli]
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260727-led-fix-v1-1-d635c5037109@nxp.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-lp8860.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/leds/leds-pca9532.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/leds/leds-lp8860.c b/drivers/leds/leds-lp8860.c
-index 03d3ca414a75d..65c37150754ae 100644
---- a/drivers/leds/leds-lp8860.c
-+++ b/drivers/leds/leds-lp8860.c
-@@ -7,6 +7,7 @@
-  * Author: Dan Murphy <dmurphy@ti.com>
-  */
+diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
+index 34eab5f547fc6..0fea8f3ea798c 100644
+--- a/drivers/leds/leds-pca9532.c
++++ b/drivers/leds/leds-pca9532.c
+@@ -257,12 +257,15 @@ static enum pca9532_state pca9532_getled(struct pca9532_led *led)
+ 	struct i2c_client *client = led->client;
+ 	struct pca9532_data *data = i2c_get_clientdata(client);
+ 	u8 maxleds = data->chip_info->num_leds;
+-	char reg;
+-	enum pca9532_state ret;
++	int reg;
++	enum pca9532_state ret = PCA9532_OFF;
  
-+#include <linux/cleanup.h>
- #include <linux/i2c.h>
- #include <linux/init.h>
- #include <linux/leds.h>
-@@ -377,14 +378,14 @@ static int lp8860_probe(struct i2c_client *client)
- 	int ret;
- 	struct lp8860_led *led;
- 	struct device_node *np = dev_of_node(&client->dev);
--	struct device_node *child_node;
- 	struct led_init_data init_data = {};
- 
- 	led = devm_kzalloc(&client->dev, sizeof(*led), GFP_KERNEL);
- 	if (!led)
- 		return -ENOMEM;
- 
--	child_node = of_get_next_available_child(np, NULL);
-+	struct device_node *child_node __free(device_node) =
-+		of_get_next_available_child(np, NULL);
- 	if (!child_node)
- 		return -EINVAL;
- 
+ 	mutex_lock(&data->update_lock);
+ 	reg = i2c_smbus_read_byte_data(client, LED_REG(maxleds, led->id));
+-	ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
++	if (reg >= 0)
++		ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
++	else
++		dev_warn(&client->dev, "failed to read LED register: %d\n", reg);
+ 	mutex_unlock(&data->update_lock);
+ 	return ret;
+ }
 -- 
 2.53.0
 
