@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055723;
-	b=HQykFm7u3soVyA1uiF0d4RbJpFUr2AfNYxHBhQeSS0WZ+EYOvKX6PdcjBcj2nfn7xTOq
-	 cyfiz7+yHb9nsFKC8zzpu6te7XLz0kUdPwwqBHeLyRyNYih0nae9cO2LtfCN18Jim7Dai
-	 Ki7bwZQr8yQ9t5+fFQNvAVUqeAecSHWTW1qNbFH9ZEesERMdJdhkbdJ2cdjBfhbPgZI35
-	 5zEapAomM9njLpsa7fGEFvzqwJtA3f4BOG3dHqCAhXnRkvI8MRk+Y+/oTyCoPu3H8PIK/
-	 g/1pM83u6CH/8QDOMxBPVr8i+xNQ6+omOFt6MQ23SikzqB50ZS+DPI/nCmx4wtH1CCw==
+	t=1795055725;
+	b=CrcYmEjowaYisE6t489xmwUp+fMgl4otJFMXJ2HN874W5jfT0lctj9jOKSYDZGYkqYgS
+	 OlCySnrd1Xs14un9W0e8/yq//Gs1y7IXZzxkMbQ5hqqMQprRdni9ZaE4eI0mhR/wYdm3W
+	 D2ObFu/5QnJMubS46rHpkh+oFRc7U3nFmqm3PvddMVTx/ve97YI0uQh7YdF7INiXf0Lte
+	 9+6RdZOXYFksjAINjyodHsTGtIkig7Dw6RHuf9yoY9dnzNXjyNSqj1Kg1hQ9+69m3kdmW
+	 8mNwywmCJtLYEtJneO6zCLGE1Eu5IGUea7M6N0vGwlCeu+yixNtCBrWbeWCFB42Y3cg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055723;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055725;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=70zFno0SrYNYoVg1iZu3glRQ2t7I/CURDyYdqNBRJ5o=;
-	b=otoq1Rslrs6fF4rHtUxg3bMtisNjQa9qk9ZfLrab3mGIHiVjrU55KApL5X9rqd/kLPuE
-	 44gc3l1UYttSWty2ePYwpxBxJBA8TsgtRf6IfTXfpteYZyizTBmDQ/Wc9S85hcUgth8YO
-	 wXEBPNH7bxJstKDfwN3ZSPgtYcuh0he4njbOQ637+iauPKoU1pBfrAMoFJ33t3L76ijg4
-	 89wFo+fjpnQQZFkhLM0e9JWE1zky7EaFY8VwSO1BcvguEmoFA091PMavs0apieUQYpq+U
-	 V0F/wBU8HFTcCDj9zdbz7AI7b4DSq01XGut2Al6rqqLPA+8AmoHkMas5RXXPkkYxtIQ==
+	bh=Qu49KhDD8S5rRdW9809vypc5PTYscYaw1Fqwu3ZVUAI=;
+	b=qCtCIudFeHqOV8t9i2Fz9d6jijTNlpcaWqzyYSn2UFauzG2xBmVE1mwGXmB/q9y/ufQA
+	 9PXnnw30VOxOcH1hZw1jo0H7KngDhRKRnajfjMDeZjX3g2shjUsk57XRldC6eIChAfAbE
+	 f6w7sXZ5mJ3fdNd9L+bU3N5VZgWM/vm6niStmavkAVk8092JV0L94J0zQik2o6gL219sX
+	 CEFXfFqt4nLIWFp/2YQ5WefJ44zPElzoDk+Q6bvW01JLXvHIXX6Pbk9vAFtEWTrjVjvMc
+	 KW96LYhC2+eaVpCB51BHD2186eK9GY/MLw8sw1ixpYUlpJwq+IpaAt/JgSmo/5JQwUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLHtJ5Lz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="jadg8/Ej";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A7A606A32A;
-	Thu, 19 Nov 2026 02:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8AC606A320;
+	Thu, 19 Nov 2026 02:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jLHtJ5Lz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB241F000C4;
-	Thu, 19 Nov 2026 02:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jadg8/Ej
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4AB1F000C4;
+	Thu, 19 Nov 2026 02:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055722;
-	bh=70zFno0SrYNYoVg1iZu3glRQ2t7I/CURDyYdqNBRJ5o=;
+	s=korg; t=1795055725;
+	bh=Qu49KhDD8S5rRdW9809vypc5PTYscYaw1Fqwu3ZVUAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jLHtJ5Lzubb0LBJpGCfflnw5y3dyaGiLSsJ/TzBa75rKZAkNZPyFg2arX25ihd/zX
-	 OnpArV4jejdbHINPbENV75h2mtqPFFPkVpzE3dz/03GKlE4MasKg+u+m/G9O5MpSzu
-	 nKoVHi1cNOu6JOZItHKIQaChzgpaL/hlPeIMTzTk=
+	b=jadg8/EjqQA1R3QB2FcZO8PqHzmpn3Mab2U2rb0q8h1FVkAM49ooKUzXq0ulGb7st
+	 Gqksyy1PZnM6w87Mc76FDHGq7/PDxdWPHr4U024jlCwe6aN71N9CuctVhZzd6eGErE
+	 kGHzSaeJtRjc4FXVGLz5BFWSVueZPoq9xBZbCuY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Mark Brown <broonie@kernel.org>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1734/2214] ASoC: rt711-sdca: always cancel jack work on remove
-Date: Wed, 18 Nov 2026 15:56:50 +0100
-Message-ID: <20261118150121.043570665@linuxfoundation.org>
+Subject: [PATCH 5.15 1735/2214] arm64: dts: rockchip: Rename rk3328 HDMI audio card
+Date: Wed, 18 Nov 2026 15:56:51 +0100
+Message-ID: <20261118150121.080349142@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,47 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Detlev Casanova <detlev.casanova@collabora.com>
 
-[ Upstream commit ecc2fca6decefe27d8cf40a4c9815798eec24d30 ]
+[ Upstream commit daa0db717771d43c25d98c2798fa6a7b0252deb7 ]
 
-rt711_sdca_sdw_remove() cancels the jack work only when hw_init is true.
-rt711_sdca_update_status() clears hw_init when the SoundWire slave
-becomes unattached, but jack work may already have been queued by
-rt711_sdca_interrupt_callback() or the jack initialization path.
+Rename the card from "HDMI" to "RK3328 HDMI" so it identifies the SoC
+in user-visible ALSA fields and no longer collides with the identical
+"HDMI" string used by other Rockchip SoCs.
 
-A remove after that status update can therefore skip the cancellation and
-leave delayed work pending after the codec private data has been freed.
-
-The work objects are initialized during probe, so cancel them
-unconditionally instead of relying on the mutable hw_init state.
-
-Fixes: ac63716da307 ("ASoC: Realtek/Maxim SoundWire codecs: disable pm_runtime on remove")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Link: https://patch.msgid.link/20260925145019.2290367-4-yaojiale02@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 29e8976e604f1 ("arm64: dts: rockchip: Add RK3328 audio pipelines")
+Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+Link: https://patch.msgid.link/20260910-fix-rockchip-hdmi-audio-names-v2-4-1396a6168e20@collabora.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt711-sdca-sdw.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt711-sdca-sdw.c b/sound/soc/codecs/rt711-sdca-sdw.c
-index 25e8b9906f316..eb814575d2eb7 100644
---- a/sound/soc/codecs/rt711-sdca-sdw.c
-+++ b/sound/soc/codecs/rt711-sdca-sdw.c
-@@ -365,10 +365,8 @@ static int rt711_sdca_sdw_remove(struct sdw_slave *slave)
- {
- 	struct rt711_sdca_priv *rt711 = dev_get_drvdata(&slave->dev);
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+index 93ef90315cda6..e1fdfb047cee6 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+@@ -176,7 +176,7 @@ hdmi_sound: hdmi-sound {
+ 		compatible = "simple-audio-card";
+ 		simple-audio-card,format = "i2s";
+ 		simple-audio-card,mclk-fs = <128>;
+-		simple-audio-card,name = "HDMI";
++		simple-audio-card,name = "RK3328 HDMI";
+ 		status = "disabled";
  
--	if (rt711->hw_init) {
--		cancel_delayed_work_sync(&rt711->jack_detect_work);
--		cancel_delayed_work_sync(&rt711->jack_btn_check_work);
--	}
-+	cancel_delayed_work_sync(&rt711->jack_detect_work);
-+	cancel_delayed_work_sync(&rt711->jack_btn_check_work);
- 
- 	if (rt711->first_hw_init)
- 		pm_runtime_disable(&slave->dev);
+ 		simple-audio-card,cpu {
 -- 
 2.53.0
 
