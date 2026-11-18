@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056391;
-	b=YVWkLXnFvRKYWPGsMEX2xDwa7g/Ay/WjMZGr0z20F79cHx+saQoI5FkBZMBYi5v+njZh
-	 MrhliazAP4gi7bDt//0/dP5vmBeHJpyf7kTFXtZwdjFd59DrjLrssEfyTcB/Qk9NtkF9A
-	 cpSQKFExBpPtiLbs+yeCum3Uqk0zx1IQOymXIJ3V2vY1s/IdG3t8ZGjIoiPFBRC7c1lTq
-	 KH0IThCaplh5CLFKmHwWN+HRSgftu5+59Yr6PBtEjuO5f6ny4LTu/QtowF4wER92D0wSM
-	 srgiNv2+iFXxifEWotALXOzH9TTYqxwzRBrdsCM8MHLGIVqiA+GpTsdzHoVVJmSyMOQ==
+	t=1795056393;
+	b=0H/gXGjhGvGufZpK4tZPVZ80hHBCjVCBuLz5boIaKXgXhor7eqMLs/Rj9+4VscxeB3ft
+	 K3nJeX1KswwEdxC2GcoR9v3Rw2t202FGPw1XUA3MNh7pQrkLL+1rsLzk1ugn+X1pBJ9NO
+	 j+jjreLt9nUs7Nm91bc9KG89y3Ucga0YDk3vjJIsOMflMlcGhDgdK5s5zNHeAf8BRmec3
+	 6ZeMDlzS9ZKFwerxU3RDl7kR0IPYJ4Df85zSxszIYrCP2O+doAIZ4p7JYsz8ckYVl60vK
+	 uVjdQPtLkZRs6HLHuEJ8XcT0+SAG5diZYhI9AX3xbK8dXxfZBNhLRa4RolJ0zkZg11g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056391;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056393;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AAtUvE7j3DOIW8j3VQgPBp5w1ssVpy1xwCsekYlGX5U=;
-	b=cMeVZMoMSAffJWhgOBRLX0TainokL01PKj3Ko1H6S1FYCs9VN2w9Mk9GBWWJJ4k/nhHq
-	 T9XiBKjOmsyUgFpdM1ul2QrWBtVUH6GTGYiB+ZOoVcXxuYwlhLpg0u0fZpLi8q7EI3pjZ
-	 Mka8cwxP4YgeQ05sqV0nzZpmXd4TyQ9sKUxjM15dOCaP7IlfaALCmNfOlrEA2QJyXYfWv
-	 fSveE1GVgx2hGw+ItxF9IBn0t7K9PteeEdCIPZw2lKkqQy1ZURURbo/Xz/oV3Z0tGvqRZ
-	 FtcZ/RIFkEctikv0PXOGF3QEoOnAYpx2iYCVBrq8ZW5qw69HPQzWQ82gGMJeCk5cv4g==
+	bh=1EquYVB06iiMSm96s4JJmxeBswzACVRS36MnM0RC8qQ=;
+	b=zuKtuV5ML61qiYykkBxT70whVz5MmPHbynQ/CCV6IEsh1RzzxBCoHMXFwgpk8nOpk1kV
+	 ILmHHhwTtKhPGmH/+MGL5bh/G9/6BO4af9yfu/8ZQaNuOGPskk/TEXuofh3gjKM8utRMX
+	 o5MvjDypoh6blcBRA0aDY4TUq0m2+VuLtRI+vwMtF6Ypu955z6Xbc9Tcb64zA2liuhwOx
+	 jHfhF7lBFEQ38pLU3Jwn1i/9ur+GF0qeYqHmwD2F2JW7cpxGnf6ZsIuXUpk+RPMicF8eM
+	 9VGzG5pMvZ8bNb4IGgLK1Omu/WV+87JBlKSEvZD2I/ihEhBGCYa2Az7tgeAZ9c28vJg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+1+tKZ5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FFeLzmu8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A440606A320;
-	Thu, 19 Nov 2026 02:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4F5606A31C;
+	Thu, 19 Nov 2026 02:46:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+1+tKZ5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686261F000C4;
-	Thu, 19 Nov 2026 02:46:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FFeLzmu8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EB91F000C4;
+	Thu, 19 Nov 2026 02:46:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056391;
-	bh=AAtUvE7j3DOIW8j3VQgPBp5w1ssVpy1xwCsekYlGX5U=;
+	s=korg; t=1795056393;
+	bh=1EquYVB06iiMSm96s4JJmxeBswzACVRS36MnM0RC8qQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0+1+tKZ5IDmtYnphzJDCAHhgCq8a55Eu/2AWeXUQI2wL9vdzPHi2UkRMJsJNBDMPM
-	 ZOW7BhLXvCYZcLUtSoHwgHFEcgdgyqzIYBNHnMVP/+VQ1Buh+EziDrlKezsZ/pSNg0
-	 eB5K2DXbfhU3vK090uXzCQR2tK0rgrgnu9sX0490=
+	b=FFeLzmu8LyUKYw/uOMbgWx29qf2DWL25Il/uYyDTLxgn+lueJcGOwOjTeF6kWVU6H
+	 8qxYhjvl6m43Rr0zyUHxMh71TC4Yw7p5ZvBRAJBflef0vF+y1OoqUP+iDKMjjQ9SN9
+	 QGusHXdyNpXJIbfYe+98rN90FyWrYjgozVrAKeTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Youngsung Ahn <ays511.kr@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Cen Zhang <zzzccc427@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1971/2214] RDMA/rxe: bound the WQE opcode before indexing rxe_wr_opcode_info[]
-Date: Wed, 18 Nov 2026 16:00:47 +0100
-Message-ID: <20261118150129.762463119@linuxfoundation.org>
+Subject: [PATCH 5.15 1972/2214] ALSA: core: Serialize snd_refcount put and sync
+Date: Wed, 18 Nov 2026 16:00:48 +0100
+Message-ID: <20261118150129.797977709@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,49 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Youngsung Ahn <ays511.kr@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c887e53e1c852b88bd5442d1bf4717ee3e7aadda ]
+[ Upstream commit 6904743ab77e0684dff319f3806ef982e5eea6cf ]
 
-wr_opcode_mask() indexes the global rxe_wr_opcode_info[] array with
-a caller-supplied opcode and no bounds check. For a user QP the WQE
-comes from an mmap'd SQ ring, so wqe->wr.opcode is an
-attacker-controlled __u32 read back by the requester
-(req_next_wqe() -> rxe_requester()); rxe_post_send() takes the
-qp->is_user branch and never runs validate_send_wr(), whose only
-opcode check is itself !wr_opcode_mask() (it indexes before it
-checks). rxe_wr_opcode_info[] has entries only up to IB_WR_REG_MR,
-so an out-of-range opcode reads out of bounds and the result is used
-as a mask and dereferenced; observed as a KASAN global-out-of-bounds
-"Read of size 4" and a wild-pointer oops.
+When a thread tries to sync-and-destroy the resource with
+snd_refcount_sync(), it might lead to a UAF in a very slight time
+window.  Namely, snd_refount_put() calls wake_up() after
+atomic_dec_and_test(), but wait_event() in snd_refcount_sync() checks
+the condition via atomic_test() without serialization, hence the
+thread that called snd_refcount_sync() can continue immediately to
+release the resource before another thread calls wake_up().
 
-Return a zero mask for an out-of-range opcode, matching how
-validate_send_wr() already treats a zero mask (an invalid WR), so no
-path indexes the array out of bounds.
+For avoiding the race above, introduce the spinlock and take it at
+snd_refcount_put() and snd_refcount_sync() in order to serialize the
+operations.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
-Link: https://patch.msgid.link/20261002164552.294749-1-ays511.kr@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: dcca9b6064c3 ("ALSA: Add simple refcount helper functions")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/patchset/20261015071838.31082-1-tiwai%40suse.de
+Reviewed-by: Cen Zhang <zzzccc427@gmail.com>
+Link: https://patch.msgid.link/20261015112256.3902-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_loc.h | 3 +++
- 1 file changed, 3 insertions(+)
+ include/sound/core.h | 1 +
+ sound/core/misc.c    | 5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
-index 6e4c68a32e522..8282f8efd57e3 100644
---- a/drivers/infiniband/sw/rxe/rxe_loc.h
-+++ b/drivers/infiniband/sw/rxe/rxe_loc.h
-@@ -205,6 +205,9 @@ void rxe_comp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb);
+diff --git a/include/sound/core.h b/include/sound/core.h
+index b76345c8e2e0d..2e30269a99813 100644
+--- a/include/sound/core.h
++++ b/include/sound/core.h
+@@ -83,6 +83,7 @@ struct snd_device {
+ struct snd_refcount {
+ 	atomic_t count;
+ 	wait_queue_head_t waiter;
++	spinlock_t lock;
+ };
  
- static inline unsigned int wr_opcode_mask(int opcode, struct rxe_qp *qp)
+ void snd_refcount_init(struct snd_refcount *ref);
+diff --git a/sound/core/misc.c b/sound/core/misc.c
+index 9012a23047f86..07556a38a1fe2 100644
+--- a/sound/core/misc.c
++++ b/sound/core/misc.c
+@@ -256,11 +256,13 @@ void snd_refcount_init(struct snd_refcount *ref)
  {
-+	if (unlikely(opcode < 0 || opcode > IB_WR_REG_MR))
-+		return 0;
-+
- 	return rxe_wr_opcode_info[opcode].mask[qp->ibqp.qp_type];
+ 	atomic_set(&ref->count, 0);
+ 	init_waitqueue_head(&ref->waiter);
++	spin_lock_init(&ref->lock);
  }
+ EXPORT_SYMBOL_GPL(snd_refcount_init);
  
+ void snd_refcount_put(struct snd_refcount *ref)
+ {
++	guard(spinlock_irqsave)(&ref->lock);
+ 	if (atomic_dec_and_test(&ref->count))
+ 		wake_up(&ref->waiter);
+ }
+@@ -268,6 +270,7 @@ EXPORT_SYMBOL_GPL(snd_refcount_put);
+ 
+ void snd_refcount_sync(struct snd_refcount *ref)
+ {
+-	wait_event(ref->waiter, !atomic_read(&ref->count));
++	guard(spinlock_irq)(&ref->lock);
++	wait_event_lock_irq(ref->waiter, !atomic_read(&ref->count), ref->lock);
+ }
+ EXPORT_SYMBOL_GPL(snd_refcount_sync);
 -- 
 2.53.0
 
