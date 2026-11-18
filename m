@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027305;
-	b=YpwbI8UH9m4NROxW2sAz9VbnCjaDYxXbralIFGoQTwtrZcn9VUJhBH9oGEYBxCyVRFEe
-	 eZOioxrk/0uanFpEDOuYlrYyRlFmPckjHGLGmCkIno1Srw0xcKdrlW8ChQzW1AQoIn3Fa
-	 flTe+AzRzkO+ljljhip/eEIWdf8MCTGZNCKC6I5ZtJE0cjDIyusZCRSqSW1LhcfrZzEOU
-	 ufgUm9YyKi7XyT1vxaeJcVpylsh4DGKgUentbtarMjsw7EXae68C+rgG5aCc5Op3D5g63
-	 YVCwPCm8CGCXcUY475MqASZ2BgKCgbWJ94empJdfHSAHK+dsDnMlF2Gju7pIEnv7nAg==
+	t=1795027307;
+	b=J8mNiXHK0onxelRyphUP/kIV/zGkZPVQnR8wQZ9s5yUdvXOdyDuT+z9Psba570kqxx4o
+	 t83LyvrIBSfTmJnKgdovVkTiz1rlvaflGuRZTO00CTucZz1e5uBaTM5oLF5gOKQTl1y2K
+	 Rrtsojl2lPC2r+VelXMS5rXT36Qc/5S2TycdSSOkdRDV6PTlMzyMKJUqFGMbW2uigi/Ri
+	 B31L3MH8Kyq5TRYEeEidFa44T26dn+UeMIQiscuKZoNuX43uoq6DX1yeoPRB6YD36mArB
+	 dtEk4yrM3c+oW2B87QZFquKrrcrmIGeWHLlm48f1CT75K6f35r32N6Nbkw9jjzf1npQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027305;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027307;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vBiscLU93Xwg9Sfa3Vi67OirOpJz0jtvoAg7BSz2KLc=;
-	b=ptEpWR9M95x+mSHj8zBR1GhKooe4/O2ofcu2X9Oyvu+MarC7q46JQYWVoBxZ+vO0dgg3
-	 gp3hmNsJsCKTDDyMnIKVdoJqcP6iqpgq2JeE+K+XdM83bMf7mcIjDlbwJNNfvPASUy8i1
-	 iUGSo68bFpCUFHUdP9ffrXzs3yMoH/vTqMaNCRRKhxPApYXdmhhtpbASTRxUaxBitEB/R
-	 E1pKzINUGXH3xN5hXD0tcpwrgoDqP/ygbcv5tOZinmKWe+ADG+um7T5uzuzBNIHAzgPxD
-	 0rGf4NmMp4FDf0HJgc94EkO5bG3x9pt6vfamXQdegTpiuQCIArQFSb1MeL3BqEtBwWA==
+	bh=KTb+LUcO+4x6BDeCnWVcAIiAAqBYLSU+t2jYMDleo/c=;
+	b=kq6Xx6U4OQ+fJ/i33Dvr0B4+fVAKQnzG+iEEgbZMQ5Qzak6n+aHZ1RrF+aQyx5SIWrD0
+	 0zPTS2tVy0naYWAXUTiB1G5gbyiWni4s9WBIj3MYeKVZCnwoeu1lDsfu/WDak33fjUPTi
+	 YbB9tezgUa5JApuilGE+Q4stx28mSxMQZrua50p0HM7jEa+/Z78Fi2HWYoqe1dur3lXoa
+	 qeJHr7WuiEVO3og3/fD1pSfb4Tl3N0/Qhs0ttVJVeRganGN2WDzF50tZXWLatXyMGgueH
+	 LM9z7f0QrkAtLJsOHLgdN6kqwokpsLiMzxOteN6gVOxCkJvllf++LyNZFH3VaI7X3GQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OAf5QY3s;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F8dRR88N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03305606A320;
-	Wed, 18 Nov 2026 18:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18FE606A32A;
+	Wed, 18 Nov 2026 18:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OAf5QY3s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FBC11F000C4;
-	Wed, 18 Nov 2026 18:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=F8dRR88N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD401F000C4;
+	Wed, 18 Nov 2026 18:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027304;
-	bh=vBiscLU93Xwg9Sfa3Vi67OirOpJz0jtvoAg7BSz2KLc=;
+	s=korg; t=1795027307;
+	bh=KTb+LUcO+4x6BDeCnWVcAIiAAqBYLSU+t2jYMDleo/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OAf5QY3s84qyDCQrh8jNhJdxqChJglf0gPntaHXIuaPno5bwEU+x8h86NF3pnqs9C
-	 Cq3/e7Dk80yEDjumbPTpMtn7jF7e0zjbzvQO936YpmeEiLEzw2Utfy1i4MggxXd9pZ
-	 SpKBaDTkZ8t0MZsMionfe9ulEsCaMDJ0FVkpPdlM=
+	b=F8dRR88Nmvg+GA68KHOPUtzzlVi4G9/S1ZQoyAwGmB/YWjSxSL0JuvPDwYuQSFh9u
+	 c9WEpoM79Bh5QR3O/Lv5B9qFYc9Tjha2Rc7YgvgtCK/EwZBkgpqFx7za9aNMMBpo17
+	 9SI9NMd5lb126uingLF5pjJMYnntcTT7B7WupwxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1743/2151] bpf, cpumap: Hold the device of frames in the queue
-Date: Wed, 18 Nov 2026 15:57:58 +0100
-Message-ID: <20261118150225.353087733@linuxfoundation.org>
+Subject: [PATCH 6.18 1744/2151] bpf: Unclone skb head on bpf_dynptr_write to skb metadata
+Date: Wed, 18 Nov 2026 15:57:59 +0100
+Message-ID: <20261118150225.388141005@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,152 +68,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit f99351272933ba2e1221484a5e53b7a5d2c035f0 ]
+[ Upstream commit f38499ff45f567c932d0911e6a30b8ca022b9b52 ]
 
-A frame that is redirected to another CPU waits in the queue of the cpumap
-entry with a plain pointer to the device it came from, and an skb from
-generic XDP with skb->dev.  Nothing keeps that device.  Closing and
-unregistering it waits for its NAPI and for RCU, but not for the kthread
-of the entry.  If the kthread is late by more than that, since its CPU is
-busy with something of a higher priority, it builds skbs for a device that
-has been freed and hands them to the stack:
+Currently bpf_dynptr_from_skb_meta() marks the dynptr as read-only when
+the skb is cloned, preventing writes to metadata.
 
-  BUG: KASAN: use-after-free in dev_gro_receive+0x1f51/0x2b30
-  Read of size 8 at addr ffff88800a7340b0 by task cpumap/1/map:1/54
+Remove this restriction and unclone the skb head on bpf_dynptr_write() to
+metadata, now that the metadata is preserved during uncloning. This makes
+metadata dynptr consistent with skb dynptr, allowing writes regardless of
+whether the skb is cloned.
 
-Take a reference to the device for each entry of the queue.  The kthread
-cannot drop it at the end of the batch, since its GRO node may keep the skb
-for longer.  Let it note the devices and drop the references behind a full
-GRO flush, which it does whenever the queue is empty, and from now on also
-when it has noted about 2048 of them.
-
-A device whose frames are stuck in a queue is now unregistered only when
-the kthread has got to them.  RTNL is not held meanwhile, but if the device
-goes with its network namespace, the cleanup of all namespaces waits.
-
-Fixes: 1c601d829ab0 ("bpf: cpumap xdp_buff to skb conversion and allocation")
-Fixes: 11941f8a8536 ("bpf: cpumap: Implement generic cpumap")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-8-alexei.starovoitov@gmail.com
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20251105-skb-meta-rx-path-v4-3-5ceb08a9b37b@cloudflare.com
+Stable-dep-of: 1c19f2b3b2f3 ("bpf: Follow the head if an skb is written from a slice")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cpumap.c | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+ include/linux/filter.h |  9 +++++++++
+ kernel/bpf/helpers.c   |  6 ++----
+ net/core/filter.c      | 18 ++++++++++++------
+ 3 files changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/bpf/cpumap.c b/kernel/bpf/cpumap.c
-index 306bf98378041..06848dbd59f15 100644
---- a/kernel/bpf/cpumap.c
-+++ b/kernel/bpf/cpumap.c
-@@ -45,6 +45,7 @@
-  */
- 
- #define CPU_MAP_BULK_SIZE 8  /* 8 == one cacheline on 64-bit archs */
-+#define CPU_MAP_HELD_DEVS 2048
- struct bpf_cpu_map_entry;
- struct bpf_cpu_map;
- 
-@@ -74,6 +75,13 @@ struct bpf_cpu_map_entry {
- 
- 	struct completion kthread_running;
- 	struct rcu_work free_work;
-+
-+	/*
-+	 * Every frame and skb in the queue holds a reference to its device.
-+	 * The kthread keeps it until nothing is left in GRO.
-+	 */
-+	struct net_device *held[CPU_MAP_HELD_DEVS];
-+	u32 nr_held;
- };
- 
- struct bpf_cpu_map {
-@@ -129,9 +137,11 @@ static void __cpu_map_ring_cleanup(struct ptr_ring *ring)
- 		WARN_ON_ONCE(1);
- 		if (unlikely(__ptr_test_bit(0, &ptr))) {
- 			__ptr_clear_bit(0, &ptr);
-+			dev_put(((struct sk_buff *)ptr)->dev);
- 			kfree_skb(ptr);
- 			continue;
- 		}
-+		dev_put(((struct xdp_frame *)ptr)->dev_rx);
- 		xdp_return_frame(ptr);
- 	}
+diff --git a/include/linux/filter.h b/include/linux/filter.h
+index 260a190634055..a11c92e104965 100644
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -1827,6 +1827,8 @@ int __bpf_xdp_store_bytes(struct xdp_buff *xdp, u32 offset, void *buf, u32 len);
+ void *bpf_xdp_pointer(struct xdp_buff *xdp, u32 offset, u32 len);
+ void bpf_xdp_copy_buf(struct xdp_buff *xdp, unsigned long off,
+ 		      void *buf, unsigned long len, bool flush);
++int __bpf_skb_meta_store_bytes(struct sk_buff *skb, u32 offset,
++			       const void *from, u32 len, u64 flags);
+ void *bpf_skb_meta_pointer(struct sk_buff *skb, u32 offset);
+ #else /* CONFIG_NET */
+ static inline int __bpf_skb_load_bytes(const struct sk_buff *skb, u32 offset,
+@@ -1863,6 +1865,13 @@ static inline void bpf_xdp_copy_buf(struct xdp_buff *xdp, unsigned long off, voi
+ {
  }
-@@ -308,7 +318,7 @@ static int cpu_map_kthread_run(void *data)
- 		void *frames[CPUMAP_BATCH];
- 		void *skbs[CPUMAP_BATCH];
- 		u32 i, n, m;
--		bool empty;
-+		bool empty, full;
  
- 		/* Release CPU reschedule checks */
- 		if (__ptr_ring_empty(rcpu->queue)) {
-@@ -341,10 +351,12 @@ static int cpu_map_kthread_run(void *data)
- 				struct sk_buff *skb = f;
++static inline int __bpf_skb_meta_store_bytes(struct sk_buff *skb, u32 offset,
++					     const void *from, u32 len,
++					     u64 flags)
++{
++	return -EOPNOTSUPP;
++}
++
+ static inline void *bpf_skb_meta_pointer(struct sk_buff *skb, u32 offset)
+ {
+ 	return ERR_PTR(-EOPNOTSUPP);
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index 8476f9bab6bc3..31afbb74a0523 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -1856,10 +1856,8 @@ int __bpf_dynptr_write(const struct bpf_dynptr_kern *dst, u32 offset, void *src,
+ 			return -EINVAL;
+ 		return __bpf_xdp_store_bytes(dst->data, dst->offset + offset, src, len);
+ 	case BPF_DYNPTR_TYPE_SKB_META:
+-		if (flags)
+-			return -EINVAL;
+-		memmove(bpf_skb_meta_pointer(dst->data, dst->offset + offset), src, len);
+-		return 0;
++		return __bpf_skb_meta_store_bytes(dst->data, dst->offset + offset, src,
++						  len, flags);
+ 	default:
+ 		WARN_ONCE(true, "bpf_dynptr_write: unknown dynptr type %d\n", type);
+ 		return -EFAULT;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 8eb54d7bc7325..ea3e98e2d42da 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -12099,6 +12099,18 @@ void *bpf_skb_meta_pointer(struct sk_buff *skb, u32 offset)
+ 	return skb_metadata_end(skb) - skb_metadata_len(skb) + offset;
+ }
  
- 				__ptr_clear_bit(0, &skb);
-+				rcpu->held[rcpu->nr_held++] = skb->dev;
- 				skbs[ret.skb_n++] = skb;
- 				continue;
- 			}
++int __bpf_skb_meta_store_bytes(struct sk_buff *skb, u32 offset,
++			       const void *from, u32 len, u64 flags)
++{
++	if (unlikely(flags))
++		return -EINVAL;
++	if (unlikely(bpf_try_make_writable(skb, 0)))
++		return -EFAULT;
++
++	memmove(bpf_skb_meta_pointer(skb, offset), from, len);
++	return 0;
++}
++
+ __bpf_kfunc_start_defs();
+ __bpf_kfunc int bpf_dynptr_from_skb(struct __sk_buff *s, u64 flags,
+ 				    struct bpf_dynptr *ptr__uninit)
+@@ -12126,9 +12138,6 @@ __bpf_kfunc int bpf_dynptr_from_skb(struct __sk_buff *s, u64 flags,
+  * XDP context with bpf_xdp_adjust_meta(). Serves as an alternative to
+  * &__sk_buff->data_meta.
+  *
+- * If passed @skb_ is a clone which shares the data with the original, the
+- * dynptr will be read-only. This limitation may be lifted in the future.
+- *
+  * Return:
+  * * %0         - dynptr ready to use
+  * * %-EINVAL   - invalid flags, dynptr set to null
+@@ -12146,9 +12155,6 @@ __bpf_kfunc int bpf_dynptr_from_skb_meta(struct __sk_buff *skb_, u64 flags,
  
-+			rcpu->held[rcpu->nr_held++] = ((struct xdp_frame *)f)->dev_rx;
- 			frames[ret.xdp_n++] = f;
- 			page = virt_to_page(f);
+ 	bpf_dynptr_init(ptr, skb, BPF_DYNPTR_TYPE_SKB_META, 0, skb_metadata_len(skb));
  
-@@ -395,10 +407,13 @@ static int cpu_map_kthread_run(void *data)
- 		/* Flush either every 64 packets or in case of empty ring */
- 		packets += n;
- 		empty = __ptr_ring_empty(rcpu->queue);
--		if (packets >= NAPI_POLL_WEIGHT || empty) {
--			cpu_map_gro_flush(rcpu, empty);
-+		full = empty || rcpu->nr_held > CPU_MAP_HELD_DEVS - CPUMAP_BATCH;
-+		if (packets >= NAPI_POLL_WEIGHT || full) {
-+			cpu_map_gro_flush(rcpu, full);
- 			packets = 0;
- 		}
-+		while (full && rcpu->nr_held)
-+			dev_put(rcpu->held[--rcpu->nr_held]);
+-	if (skb_cloned(skb))
+-		bpf_dynptr_set_rdonly(ptr);
+-
+ 	return 0;
+ }
  
- 		local_bh_enable(); /* resched point, may call do_softirq() */
- 	}
-@@ -730,12 +745,14 @@ static void bq_flush_to_queue(struct xdp_bulk_queue *bq)
- 
- 	for (i = 0; i < bq->count; i++) {
- 		struct xdp_frame *xdpf = bq->q[i];
--		int err;
- 
--		err = __ptr_ring_produce(q, xdpf);
--		if (err) {
-+		if (__ptr_ring_full(q)) {
- 			drops++;
- 			xdp_return_frame_rx_napi(xdpf);
-+		} else {
-+			/* The device cannot go before the flush, from now on it can */
-+			dev_hold(xdpf->dev_rx);
-+			__ptr_ring_produce(q, xdpf);
- 		}
- 		processed++;
- 	}
-@@ -799,11 +816,15 @@ int cpu_map_generic_redirect(struct bpf_cpu_map_entry *rcpu,
- 
- 	__skb_pull(skb, skb->mac_len);
- 	skb_set_redirected(skb, false);
-+	dev_hold(skb->dev);
- 	__ptr_set_bit(0, &skb);
- 
- 	ret = ptr_ring_produce(rcpu->queue, skb);
--	if (ret < 0)
-+	if (ret < 0) {
-+		__ptr_clear_bit(0, &skb);
-+		dev_put(skb->dev);
- 		goto trace;
-+	}
- 
- 	wake_up_process(rcpu->kthread);
- trace:
 -- 
 2.53.0
 
