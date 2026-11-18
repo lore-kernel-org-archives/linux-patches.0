@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020552;
-	b=HQ0GhVHJ3Gdjgq7t0BXBz7GkD04lLIzqIvMq39U/v+galQfZotaHcB/aNSw4O1J8Np7z
-	 x5xt3gfRTvwWe3PTuoOwDpQSYtc7sqgA9m8zlA3zku8QxzGfha4GklRZKssNfLE19Gxum
-	 s2iPiS3AZq4MjyMdcPn+t5esVO0wzGRqsBxinrJMatsMu3PIwmUb49IgMvByy40ieFDK6
-	 PoZg73kOm/hEhlUJxaD8NNA6ePNY0eAbapcS7dTOxurWjs2ENhFL2jHIRue7qQD6+LQq9
-	 CZE3eRwMChsEcv6A0d4Yhbxz8kvTO77lek3DXu2vv698JNGMXn6V76CB0S+h+nNdsBg==
+	t=1795020555;
+	b=ZuO1+MzcpKCGawgGhzaOaJWm0oOacbnQ3O1u5vwQwKX3d4mb5pF6gglNJVM1pKqbjUX8
+	 vE7BKAtNFRoTi5Nvh3Z4W18351c04J7W/P6HwS/5WfVvUm3swdyrNZJXS5Uv5qoRNjdXU
+	 U5YmZpswy9UY09rvIFEk0yGDrCuyWT3yZn9wiGf2zuhEJOG7K/LqQqHSQey59PsEMs4FX
+	 0ApsEWlCiJPH8pS7JTxpJDt+HDrP301m/7m12G8h7KvZ9yYj/I2N8X3Ip9jqzulgCSmfO
+	 XIndpInrjnOFYOVUeGWX5KrmDUf4rsa1O6h+RNt5/3Cju/kXbFGHGFoNCS0VH9bd5gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020552;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020555;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=yRIyCkbC6KC2ktNAlpUjVatdvNsGOpOB3o/I80kgYKY=;
-	b=HfXYJmQkLgkqbHchj+vjnZmKAOnICWhlWApCb+ZB2M07TJREH3R+8bHxNdTR1UTytae+
-	 BnrUOWO463pbWaGpFHqH5t4QkzbqO+H7Gu0q/g/sn9g+K5x9TQJiA30bK8El1ybYfN7QI
-	 +YZQKRcWK7o0bSDjEej0VOZw9y64g9hOptQ3rIMzp4lJ1v0+3jN2LdgZmpZt5Hm7KieOY
-	 BKlbpVfJU5XsrVqyF3Fh4QmDr5xvGE4Q5N3RB35IBu4mR57r9ZLoy/rfZkhPBsOFwOO6C
-	 coe1rRuRUpmo92pJvBqr3+ltMqTlwcpXCg0AYf/25l2xFl17Cqh9hhIY8DMg6MMVv+w==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=CI9hfYm4OlH4r16Q3j0waDMR4OV5rIRo3jmLC6m0xOU=;
+	b=BWemM5f8qFylTzdc9cLDUAvYmZT4SXz8vZB5FiSss7sj6vUMfaONZyGCTlItCscG0GHA
+	 ouABiEFPBd0eYZ0LIm8ORMWZqMJXtqAl1NVVYuJNxujWu3WtwSjZwUjp8a/o5duI7t0D8
+	 QI+DU2ZcdyJ6s42Dg2Z/dlckHCRqH4JnCEKvlmsop+IlVEHVRHBiqHqdwBrxC6Yql3WNm
+	 s+j+QqBJk24JwxcuJ3v00fAcEHj6ppUb6MI6TV5p7vgqxpaJRn+rodsfgXmBXDEPcT9+X
+	 jd2efQBXY6M4wP7B3pM7j2txk41p/aXzhoLEUxN5pwAK1shehRVxwqsKu6GmfVdI1ww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="p/NfJyH+";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V0juDYbS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CA2606A32F;
-	Wed, 18 Nov 2026 16:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAF8606A333;
+	Wed, 18 Nov 2026 16:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p/NfJyH+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2199A1F000C6;
-	Wed, 18 Nov 2026 16:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=V0juDYbS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A101F000C6;
+	Wed, 18 Nov 2026 16:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020552;
-	bh=yRIyCkbC6KC2ktNAlpUjVatdvNsGOpOB3o/I80kgYKY=;
+	s=korg; t=1795020555;
+	bh=CI9hfYm4OlH4r16Q3j0waDMR4OV5rIRo3jmLC6m0xOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=p/NfJyH+4jlzAsYyn9MHNWbycTQVtA/Rd70pTuEymFRj+S5SZOBWKbj6ncBB31WW4
-	 cyNhT+NSbeXx6igGeyXVuF4Bb4cMfCpn1VEH6mFlj0y4oDrQSTpcCzvHk1CL8Iopxn
-	 VUoEft7G25TMDY6mqzTdJKyFlSrAXc3wNBd4/DVM=
+	b=V0juDYbSIxCsZvKkEmQ+PeTwDtSyeXSA4//t9vzOeXaF1sQxiHcC203pFcDHWfr2Q
+	 QTOxBvHPXyO0xaibkXMNzXIvOkNqr/ThzIaJM07FOBo05Dm71cl4WzYF4/cnKDVw44
+	 t66WP+TSJaEV3Hk8WOkgIkrsIgmd3lGbAgbtD8hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
+	bui duc phuc <phucduc.bui@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1992/2651] ASoC: soc-component: Fix return type of snd_soc_pcm_component_pointer()
-Date: Wed, 18 Nov 2026 15:53:52 +0100
-Message-ID: <20261118150358.064154911@linuxfoundation.org>
+Subject: [PATCH 7.3 1993/2651] ASoC: mediatek: mt8195: Fix tuner clock error handling
+Date: Wed, 18 Nov 2026 15:53:53 +0100
+Message-ID: <20261118150358.100228802@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -62,57 +62,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amadeusz Sławiński <amade@asmblr.net>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 9df30adce80dd6b0646e58c12a4cf7c6c88d0778 ]
+[ Upstream commit 8e5a2eabb0d7cbd6db0b94f7f30e1ca2c0a8994f ]
 
-Both caller and pointer callback expect the return value to be
-snd_pcm_uframes_t, however it was defined incorrectly leading to
-potential truncation of returned value.
+Check and propagate errors from mt8195_afe_enable_clk(). If enabling
+the tuner clock fails, disable the previously enabled APLL clock.
 
-Fixes: 0035e2565b93 ("ASoC: soc-component: add snd_soc_pcm_component_pointer()")
-Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
-Link: https://patch.msgid.link/20261014200608.118770-8-amade@asmblr.net
+Fixes: ff5a90173d98 ("ASoC: mediatek: mt8195: enable apll tuner")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261014112752.683032-2-phucduc.bui@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/soc-component.h | 2 +-
- sound/soc/soc-component.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-clk.c | 24 +++++++++++++++++-----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/include/sound/soc-component.h b/include/sound/soc-component.h
-index c49b59630101f..bd64ebf2379b5 100644
---- a/include/sound/soc-component.h
-+++ b/include/sound/soc-component.h
-@@ -423,7 +423,7 @@ int snd_soc_component_compr_set_metadata(struct snd_compr_stream *cstream,
- int snd_soc_component_compr_get_metadata(struct snd_compr_stream *cstream,
- 					 struct snd_compr_metadata *metadata);
- 
--int snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream);
-+snd_pcm_uframes_t snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream);
- int snd_soc_pcm_component_ioctl(struct snd_pcm_substream *substream,
- 				unsigned int cmd, void *arg);
- int snd_soc_pcm_component_sync_stop(struct snd_pcm_substream *substream);
-diff --git a/sound/soc/soc-component.c b/sound/soc/soc-component.c
-index dc7d203cb76af..c4d9e80a9d851 100644
---- a/sound/soc/soc-component.c
-+++ b/sound/soc/soc-component.c
-@@ -935,7 +935,7 @@ int snd_soc_component_test_bits(struct snd_soc_component *component,
- }
- EXPORT_SYMBOL_GPL(snd_soc_component_test_bits);
- 
--int snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream)
-+snd_pcm_uframes_t snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream)
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+index 618d8400913a3..ec1ea5b988ffc 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-clk.c
+@@ -241,21 +241,35 @@ static int mt8195_afe_enable_tuner_clk(struct mtk_base_afe *afe,
+ 				       unsigned int id)
  {
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
- 	struct snd_soc_component *component;
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
++	int ret;
+ 
+ 	switch (id) {
+ 	case MT8195_AUD_PLL1:
+-		mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL]);
+-		mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL1_TUNER]);
++		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL]);
++		if (ret)
++			return ret;
++		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL1_TUNER]);
++		if (ret) {
++			mt8195_afe_disable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL]);
++			return ret;
++		}
+ 		break;
+ 	case MT8195_AUD_PLL2:
+-		mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2]);
+-		mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2_TUNER]);
++		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2]);
++		if (ret)
++			return ret;
++		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2_TUNER]);
++		if (ret) {
++			mt8195_afe_disable_clk(afe, afe_priv->clk[MT8195_CLK_AUD_APLL2]);
++			return ret;
++		}
+ 		break;
+ 	default:
++		ret = 0;
+ 		break;
+ 	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int mt8195_afe_disable_tuner_clk(struct mtk_base_afe *afe,
 -- 
 2.53.0
 
