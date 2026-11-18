@@ -1,56 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057808;
-	b=VlBEiUu7qo3k/sQabPGkyAUCVhEFw3FP/EG286RQpwSYdS/arg/J8Vzxxx9iO52FWTyh
-	 b52obhNDwZpPhFyo2WRR/B7fUxYhCTt3E+E39FwOMDzf59uDG8HuL0biJt8AvHa2mrM2v
-	 Rhnd4GSJv2xXlkIFhW3r50vZuzCy/K1ZCGsADg1aWGRhU3kOOTHEFV9ytNpOvrcwSvXEQ
-	 hX1/oDxpkt0wRHGOzDx2qED/edckPmB7+Di6b6wK8ERqbzHHafto7y5qktPry7XZHSK8Z
-	 z7ExYqeJgfpNYLhvAGX5+3ad95wd4cNuTpl1fT5M3+lC/TxlBx0zaX2wQazDBKyDAdQ==
+	t=1795057811;
+	b=iSAZ/+3IxvvHLVI4J44qcd24ysU7tYoG3F5tfrhZZNMABhjUIoHYsURIvqJdYpv/YeAG
+	 JP3wENWzxudLNg4glVebZ+jJoWjunJdXaybO611Zf6YtFIh6KTwkh2vA87A2DCmXvTb/L
+	 ywt4hYzMMyfPWAGildAwkHrmU+87LgigSOO5ojEYTNRACQA8bGybqL60UPoPmh+w9k5fI
+	 02ssrOphSwp9ZJmYJktEPpNC91hsZM+k0MT+pdWs4YA5p44IrT7jS2bJ2LVP0crrSCqgy
+	 8viiC/F+GBcmNEOFZbllLK6NUMxBbocIMDtVm0m5W9TNQbK+gbNzeD1WN3mKWyUwNPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=8rLevn8GwW53a54Zsy0QQYRXY6lGevgvkS2Tj1WlAVM=;
-	b=wzvqIyxDylup9y8oHJAy9mYsPJqS7n9tAzVjh1MoCkH8bsxFWQcb51du9+YYdrh63rE7
-	 88QJilTbFLEkYrqyP1bCUr8qGLs/Cq7ANm18hC8c92950tdrHtP7yxqTnhLBTLD4uwld2
-	 XbHjFw9hBRzwqPB8A2stWeqhyIZmlMoktZf5am9lhUI0MhvC0PpTQmNUgKnZb3SHAIfwx
-	 j5UIO6vRtSgWWIs+xHCAzXacAl5+4baSRXtEyl6zo3bLyTyfM3s4ZsAOgbOBO0EjWW8Qo
-	 UCwE/fkuf/QUMJxOAsfisYLu/8pR+0QxqWMfzxiS0RqhyUbga5A/eBz0eX146zdwvfQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=dfFhkSuysqVOavSpCnIsodOYAS3iO295s/vO3OcrE8o=;
+	b=y0rmojTPtNNG6wjuU4+PIt71TSDzLbb0BAp21SPiyqaskY7Vlm8ofodKBCwxp+I4VXvW
+	 VDZuV69pKjWzv/f9ro/bEyx7OWT/EdN+5r4z2AQ5C0v2QqlMfha5nT3RdWQj4a7LCTHCB
+	 1eMDVPsONV0eCmargxlCZlHYzuVF4gAnqaDJFQLMDAMmiC8yP+xoLMfnCRtDaRp9qKhYG
+	 /eSi3YeUgsVOh5kCNT6CUrLFQmRc1nlDMOFhCJcrgO1yjIYz6Gi0Z2esqdkyqFK68xYPe
+	 2yhhcA41lzxKvRw8qJ3w3ZG+dUBfOaDBU5kl7ZujFOqE+LnQIrwxa79Ht0vmVfqXhdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="xFWoX/V8";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kpEgDMiX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626DC606A31C;
-	Thu, 19 Nov 2026 03:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263BE606A31C;
+	Thu, 19 Nov 2026 03:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xFWoX/V8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC32E1F000C4;
-	Thu, 19 Nov 2026 03:10:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kpEgDMiX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B3C51F000C5;
+	Thu, 19 Nov 2026 03:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057808;
-	bh=8rLevn8GwW53a54Zsy0QQYRXY6lGevgvkS2Tj1WlAVM=;
+	s=korg; t=1795057811;
+	bh=dfFhkSuysqVOavSpCnIsodOYAS3iO295s/vO3OcrE8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xFWoX/V8Vnqe/Jo+pdpvk1lvlDjoovgdo6oOasM9f2QbbmzoyuIFa0IBFKmJdx7Cd
-	 TgZ1mQhrWwhr2LZz2lT/D3+V2eK5Dzr94nIKPF6nVVY6xpdWEe9z9AzI3QNnp1FJCV
-	 H3XbSBXGBjhFPgkgNIA6ueXophiPeN4jDA+VAf6w=
+	b=kpEgDMiXmJIiEO1MGhH0ufYbi+iMkTwLxbKVyU9iLAQLkCSp8HUwTup2kjMUB8pbh
+	 lE3JZu0YOnk7E2CSv2IABqQX9JSc8w5viI8WkbkMy1ZJKS3LCGXEv/S4LigsKpykJG
+	 Ep8aOBs1oCRz8LoEPJyS0hH5vU5EVwMU3Y9GknMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Tejun Heo <tj@kernel.org>,
-	Bradley Morgan <brads@mainlining.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 5.10 0259/1848] resource: report a devm_request_resource() conflict under the lock
-Date: Wed, 18 Nov 2026 15:38:17 +0100
-Message-ID: <20261118145923.086188844@linuxfoundation.org>
+	Weigang He <geoffreyhe2@gmail.com>,
+	Sean Young <sean@mess.org>
+Subject: [PATCH 5.10 0260/1848] media: rc: fintek-cir: process a full RX buffer instead of overflowing it
+Date: Wed, 18 Nov 2026 15:38:18 +0100
+Message-ID: <20261118145923.147157046@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -66,104 +61,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-commit d2f7bdfdeac8137e942b32e0badc40e181127d7b upstream.
+commit d1febef1bcfa7bbc401729f994c375b91a833911 upstream.
 
-devm_request_resource() calls request_resource_conflict(), which takes
-resource_lock, tries to insert the new resource and returns a pointer to
-the conflicting resource after dropping the lock.  The error message is
-then formatted from that pointer: conflict->name and the %pR argument
-read the name, start, end, flags and desc of a resource that nothing
-pins any more.  The owner of the conflicting resource may call
-release_resource() and free it the moment the lock is dropped.
+fintek_get_rx_ir_data() drains the CIR RX FIFO into fintek->buf[], which
+holds RX_BUF_LEN (32) bytes, for as long as CIR_STATUS reports pending
+RX data:
 
-The conflicting resource normally belongs to another device.  With two
-devices whose drivers claim overlapping regions (two PCI host bridges
-whose "ranges" windows overlap, two instances of a controller on the
-same aperture, or a stale claim an administrator is replacing), the
-following interleaving reads freed memory:
+	do {
+		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
+		...
+		fintek->buf[fintek->pkts] = sample;
+		fintek->pkts++;
+		...
+	} while (status & rx_irqs);
 
-  CPU 0: driver B probe                  CPU 1: driver A unbind
-  devm_request_resource(devB, root, resB)
-    request_resource_conflict()
-      write_lock(&resource_lock)
-      __request_resource() -> resA
-      write_unlock(&resource_lock)
-                                         devres_release_all(devA)
-                                           devm_resource_release()
-                                             release_resource(resA)
-                                         put_device() -> kfree(resA)
-    dev_err(..., resA->name, resA)        use after free
+Nothing bounds fintek->pkts. If the hardware reports data for more than
+RX_BUF_LEN reads in one interrupt, the loop writes past the end of
+buf[], starting with the pkts counter that follows it in struct
+fintek_dev.
 
-Both halves are reachable from userspace on any kernel: a write to the
-"unbind" file of the driver that holds the region and a write to the
-"bind" file of the driver that wants it.  One in-tree path is
-drivers/pci/bus.c devm_request_pci_bus_resources(), called from host
-bridge probe for every bridge window; the windows are the embedded
-struct resource of kzalloc'ed resource_entry objects that
-pci_free_resource_list() frees when the other bridge is released.
-In the common case the "resource collision" message is garbled; with
-the slab object poisoned (CONFIG_SLUB_DEBUG) or reused, formatting
-conflict->name oopses, and KASAN reports a slab-use-after-free read in
-devm_request_resource().  All of this happens in a probe that is
-already failing with -EBUSY.  The window is a few hundred instructions
-wide and exists only when two devices actually collide, so the race
-has not been observed outside of analysis.
+Hand a full buffer to fintek_process_rx_ir_data(), which parses the
+samples and resets fintek->pkts, before storing the next sample. This
+keeps the parser state consistent and drops no samples. The loop still
+relies on the status register to terminate.
 
-Do the same here: take resource_lock, insert with __request_resource()
-and print the diagnostic while the lock still keeps the conflicting
-resource in the tree, then drop the lock.  The return values and the
-devres handling are unchanged.
+The driver does not document the hardware FIFO depth, so it is not
+known whether a working device can trigger this.
 
-The change was built for x86_64 and RISC-V; the resource KUnit tests
-pass on both.
+Found by static analysis tool CodeQL.
 
-Found by formal verification of kernel/resource.c against the kernel
-binary.
-
-Link: https://lore.kernel.org/20261016140043.790048-1-nickolai@csail.mit.edu
-Fixes: 8d38821cbcf5 ("resources: Add device-managed request/release_resource()")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Acked-by: Tejun Heo <tj@kernel.org>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Assisted-by: LLM
-Cc: Bjorn Helgaas <bhelgaas@google.com>
-Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: Thierry Reding <treding@nvidia.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 9bdc79ea07d9 ("[media] fintek-cir: new driver for Fintek LPC SuperIO CIR function")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/resource.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/media/rc/fintek-cir.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/resource.c
-+++ b/kernel/resource.c
-@@ -1464,10 +1464,15 @@ int devm_request_resource(struct device
+--- a/drivers/media/rc/fintek-cir.c
++++ b/drivers/media/rc/fintek-cir.c
+@@ -340,6 +340,10 @@ static void fintek_get_rx_ir_data(struct
+ 		sample = fintek_cir_reg_read(fintek, CIR_RX_DATA);
+ 		fit_dbg("%s: sample: 0x%02x", __func__, sample);
  
- 	*ptr = new;
- 
--	conflict = request_resource_conflict(root, new);
--	if (conflict) {
-+	/* Report a conflict while the lock still keeps it in the tree. */
-+	write_lock(&resource_lock);
-+	conflict = __request_resource(root, new);
-+	if (conflict)
- 		dev_err(dev, "resource collision: %pR conflicts with %s %pR\n",
- 			new, conflict->name, conflict);
-+	write_unlock(&resource_lock);
++		/* Process a full buffer before storing the next sample. */
++		if (fintek->pkts >= RX_BUF_LEN)
++			fintek_process_rx_ir_data(fintek);
 +
-+	if (conflict) {
- 		devres_free(ptr);
- 		return -EBUSY;
- 	}
+ 		fintek->buf[fintek->pkts] = sample;
+ 		fintek->pkts++;
+ 
 
 
