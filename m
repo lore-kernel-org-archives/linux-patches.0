@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018073;
-	b=NK9mIx6426LMb1tabrXvuaijWcAaGtGHTNiFW94Krr15sxTPOInC36l6iRSube4+9Da7
-	 F2wVYOJAqwK53TOw5T9/uE8dGkTUcjqEo0dN3UOerS+98pOWN8prYupVV2MuJjcuBjHJM
-	 HG5ofLTK63jL812ZqTTmkS4p2Ye8rI4BxcyQA8fE/MQYXa5LhLxgwfNGgJ9n6aUsu3iiI
-	 rs4awndAErJI5TocpYyfviDRJ8KowX/D5XUs61q1R0MlvrQhV1TYWL8KVnau0jj92VYBG
-	 +mwori+5JccnH45QDjSvyuJio1zLsEgCaSBCk1WJJXMbAz2DwP5XLEaIKE2Nx5llJ3A==
+	t=1795018076;
+	b=Qv9pAUWSfQenLwD5dFq4HXqIUzTBZEF2TDA9HvEWM5oIwJUK2vJWONgHpjtbbTNLE9Ri
+	 /Ac/R7EQpFHos7guj0sEP8PTuAcmteEsVOSX8KdrApNRDd/1zYk/Y5K79RMWOAAwcltDE
+	 ezewr5JZI2ysUnEMr4oqwq8eJxOQyt2MGWP7y9r7Ch1eDkz7ScG7jw+xV9TLamKSOLZV3
+	 8tP3/Y+MP+WZKNcUqey7ydG+4yg/o9LmVhnVcwI/gE2ZDmVzDK43Kxz5kTsR/v50lNwPp
+	 QpSPh+7Crx/p4OveJnhv1cRQf3RPFJs5OQsL4gEwZpuSNkTbqXVTlK2c5Coc2xPokcA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018073;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018076;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=HCiEKj+YtIAhFPeFTfjVHbJgrHNM7AlYzpoXNsnXxOc=;
-	b=KdTGYIzwSVuqIvcEvRBq9X4I92Dm9U+9vueQt+unrqqWytm8RjrerGBNutrYIQoiW+aC
-	 SsyuiBoQsT+x5RHESDyOhtO0tXjcH0Sgp5KNhp5lJ0ndSRNcPAcFZ/V/nI/I2s5tyZfuV
-	 cbdORXcIJiARUOzZ11CjlhAmYaM78egQ3xharbOpDq7z1qAyswXQ8W3Y/0vNvz5qmOQzp
-	 9o/LhW7E/lZ7dfy+B0H2LuaqXzsOTEH/UdHx43M1AQjQxWdqoB85kSVV/8q4RTMtMb7tN
-	 HvQSddstA/d9y1ajs9cYLO3dpn+bQ0QLb0DlooG6eC4v0h9iPWaG+q6MCX90gQ4no/A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=E0Ghw0tg0YGxBjJkhLIUT8MOzwH6KKltjYF47u2shcI=;
+	b=EuHJUst3Cw9kuOAYm1EAGn8sDTqJnUAv9c/cktS3wxBJvvLyfbjbU5YjYdf/MK57NxB+
+	 GNkBJW51JT8s3nbMbEnny3dERIU40L+5joMJFujKuctEtXnemQ6OXtfV1q1fXcYx8qt9I
+	 l28vBVuzt/K4zw+GyhQaieMBYLqr2Q57gxebOq3+mz53mPsqblQItFVlsaaMdzKEy9kyo
+	 knnO/n76DbEt2YjOww9de3Tzcmcfi+BgFsaGq/QL3xRTgK3X5xkBzkA/QEHX3fIicClFY
+	 nuvNNQlol4+tS316TI1Gs0ud3voLXsdFqIR7DcQC0pnIyaMpBGGoua1nWO4PU80oBUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJCOE1ch;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ficH83NO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411A660A6F4F;
-	Wed, 18 Nov 2026 16:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEB960A2637;
+	Wed, 18 Nov 2026 16:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xJCOE1ch
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3FA1F000C7;
-	Wed, 18 Nov 2026 16:07:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ficH83NO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0891F000C9;
+	Wed, 18 Nov 2026 16:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018072;
-	bh=HCiEKj+YtIAhFPeFTfjVHbJgrHNM7AlYzpoXNsnXxOc=;
+	s=korg; t=1795018075;
+	bh=E0Ghw0tg0YGxBjJkhLIUT8MOzwH6KKltjYF47u2shcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xJCOE1chklJxIxkYmcryroeGjM3CxSOUpBpj5o80J+yLUhDiB4Ep50XPxmgpPtZQv
-	 XQy6ezdmenqRoNfaTCnE6IBo4+wFzZ1b2wWohbb18fI3lLjmLK3My54ipKEHOvcPni
-	 6DGEx1OZwS5ZCrj2JV4DL7g4BHlIe9tUg4b9xuKU=
+	b=ficH83NOvoDwn1DN2L/Cd5gSK4RUhvscQRk/wZ6brpTeur2blmV0/0DBIDwTDw+vQ
+	 uOD48ZqBV5oBv4LPz0c37J+gIB04PPoiHqMtnqL59sl6UMw23YIFsDNLTYuljoTy6r
+	 sjDcRFsP/c7JuFxA1H2srEMNC4yYmBcrzYFMf6hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <barnabas.pocze+renesas@ideasonboard.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Yuya Kusakabe <yuya.kusakabe@gmail.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1110/2651] media: rcar-isp: ispcore: Fix inconsistent step sizes
-Date: Wed, 18 Nov 2026 15:39:10 +0100
-Message-ID: <20261118150327.959005629@linuxfoundation.org>
+Subject: [PATCH 7.3 1111/2651] seg6: fix HMAC validation when an extension header precedes the SRH
+Date: Wed, 18 Nov 2026 15:39:11 +0100
+Message-ID: <20261118150327.993885795@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,114 +63,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Barnabás Pőcze <barnabas.pocze+renesas@ideasonboard.com>
+From: Yuya Kusakabe <yuya.kusakabe@gmail.com>
 
-[ Upstream commit a5b7cf994f6361e2c7be43979c82f16f897afa63 ]
+[ Upstream commit f9cb4d296d81adb0923546ca5d54fae57a81af52 ]
 
-`risp_io_{input,capture}_enum_framesizes()` sets the horizonal and vertical
-step size to 2. However, `risp_io_{input,capture}_try_format()` passes 2
-to `v4l_bound_align_image()`, which corresponds to a step size of 2^2 = 4.
+seg6_hmac_validate_skb() derived the SRH from skb_transport_header().
+That only holds while the two coincide, which is not true on the
+seg6_local input path.
 
-So move these constants into macros to avoid the repetition, and with that,
-use 4 as the step size everywhere.
+ip6_rcv_core() leaves the transport header just past the IPv6 header.
+A Hop-by-Hop options header is consumed before the route lookup and
+advances it, but a Destination Options header is not: the seg6_local
+lwtunnel is entered through an input redirect from the route lookup,
+which bypasses the extension header handlers. The transport header
+then still points at the Destination Options header while
+seg6_get_srh() has located the real SRH further down the chain.
 
-Fixes: 2151350f60d1 ("media: rcar-isp: Add support for ISPCORE")
-Signed-off-by: Barnabás Pőcze <barnabas.pocze+renesas@ideasonboard.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+The HMAC is therefore computed over the Destination Options header,
+and a packet carrying a valid HMAC TLV is dropped when
+seg6_require_hmac is set. Such a packet is legitimate: RFC 8200 allows
+Destination Options before a routing header, and get_srh() has walked
+the header chain since commit 5829d70b0b6c ("ipv6: sr: fix get_srh() to
+comply with IPv6 standard "RFC 8200"").
+
+With a Fragment or an Authentication header in front of the SRH, the
+same mistake also reads past the data pulled by seg6_get_srh(). This
+happens before seg6_require_hmac is read, so the default configuration
+is affected.
+
+Reproduce by giving a node a seg6local End SID with
+net.ipv6.conf.<dev>.seg6_require_hmac=1 and a key installed with
+"ip sr hmac set <keyid> sha1", then sending
+
+  IPv6 -> Destination Options -> SRH (carrying a valid HMAC TLV) -> payload
+
+to that SID: it is dropped, while the same packet without the
+Destination Options header passes.
+
+Fixes: 5829d70b0b6c ("ipv6: sr: fix get_srh() to comply with IPv6 standard "RFC 8200"")
+Assisted-by: LLM
+Signed-off-by: Yuya Kusakabe <yuya.kusakabe@gmail.com>
+Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Link: https://patch.msgid.link/20260926-b4-seg6-hmac-transport-header-v2-1-8087b76f6375@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/renesas/rcar-isp/core-io.c | 40 +++++++++++--------
- 1 file changed, 24 insertions(+), 16 deletions(-)
+ include/net/seg6_hmac.h | 3 ++-
+ net/ipv6/exthdrs.c      | 2 +-
+ net/ipv6/seg6_hmac.c    | 5 +----
+ net/ipv6/seg6_local.c   | 6 +++---
+ 4 files changed, 7 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/media/platform/renesas/rcar-isp/core-io.c b/drivers/media/platform/renesas/rcar-isp/core-io.c
-index 820af506f896c..b60b91f43d42d 100644
---- a/drivers/media/platform/renesas/rcar-isp/core-io.c
-+++ b/drivers/media/platform/renesas/rcar-isp/core-io.c
-@@ -15,6 +15,12 @@
+diff --git a/include/net/seg6_hmac.h b/include/net/seg6_hmac.h
+index e9f41725933e4..3161a8104b897 100644
+--- a/include/net/seg6_hmac.h
++++ b/include/net/seg6_hmac.h
+@@ -48,7 +48,8 @@ extern int seg6_hmac_info_add(struct net *net, u32 key,
+ extern int seg6_hmac_info_del(struct net *net, u32 key);
+ extern int seg6_push_hmac(struct net *net, struct in6_addr *saddr,
+ 			  struct ipv6_sr_hdr *srh);
+-extern bool seg6_hmac_validate_skb(struct sk_buff *skb);
++extern bool seg6_hmac_validate_skb(struct sk_buff *skb,
++				   struct ipv6_sr_hdr *srh);
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+ extern int seg6_hmac_net_init(struct net *net);
+ extern void seg6_hmac_net_exit(struct net *net);
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index 09a4552f7f08a..3ef3c2635581a 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -387,7 +387,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb, struct inet6_dev *idev)
+ 	}
  
- #include "risp-core.h"
- 
-+#define RISP_MIN_WIDTH 128
-+#define RISP_MAX_WIDTH 5120
-+#define RISP_MIN_HEIGHT 128
-+#define RISP_MAX_HEIGHT 4096
-+#define RISP_SIZE_ALIGNMENT 2 /* 2^2 = 4 */
-+
- #define risp_io_err(d, fmt, arg...)         dev_err((d)->core->dev, fmt, ##arg)
- 
- static struct risp_buffer *risp_io_vb2buf(struct vb2_v4l2_buffer *vb)
-@@ -330,8 +336,9 @@ static void risp_io_input_try_format(struct rcar_isp_core_io *io,
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+-	if (!seg6_hmac_validate_skb(skb)) {
++	if (!seg6_hmac_validate_skb(skb, hdr)) {
+ 		kfree_skb(skb);
+ 		return -1;
+ 	}
+diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
+index e6964c6b0d381..bd2704d4c7a0f 100644
+--- a/net/ipv6/seg6_hmac.c
++++ b/net/ipv6/seg6_hmac.c
+@@ -173,13 +173,12 @@ EXPORT_SYMBOL(seg6_hmac_compute);
+  *
+  * called with rcu_read_lock()
+  */
+-bool seg6_hmac_validate_skb(struct sk_buff *skb)
++bool seg6_hmac_validate_skb(struct sk_buff *skb, struct ipv6_sr_hdr *srh)
  {
- 	unsigned int bpp = 0;
+ 	u8 hmac_output[SEG6_HMAC_FIELD_LEN];
+ 	struct net *net = dev_net(skb->dev);
+ 	struct seg6_hmac_info *hinfo;
+ 	struct sr6_tlv_hmac *tlv;
+-	struct ipv6_sr_hdr *srh;
+ 	struct inet6_dev *idev;
+ 	int require_hmac;
  
--	v4l_bound_align_image(&pix->width, 128, 5120, 2,
--			      &pix->height, 128, 4096, 2, 0);
-+	v4l_bound_align_image(&pix->width, RISP_MIN_WIDTH, RISP_MAX_WIDTH, RISP_SIZE_ALIGNMENT,
-+			      &pix->height, RISP_MIN_HEIGHT, RISP_MAX_HEIGHT, RISP_SIZE_ALIGNMENT,
-+			      0);
+@@ -187,8 +186,6 @@ bool seg6_hmac_validate_skb(struct sk_buff *skb)
+ 	if (!idev)
+ 		return false;
  
- 	for (unsigned int i = 0; i < ARRAY_SIZE(risp_io_input_formats); i++) {
- 		if (risp_io_input_formats[i].fourcc == pix->pixelformat) {
-@@ -423,13 +430,13 @@ static int risp_io_input_enum_framesizes(struct file *file, void *fh,
+-	srh = (struct ipv6_sr_hdr *)skb_transport_header(skb);
+-
+ 	tlv = seg6_get_tlv_hmac(srh);
  
- 	fsize->type = V4L2_FRMSIZE_TYPE_STEPWISE;
+ 	require_hmac = READ_ONCE(idev->cnf.seg6_require_hmac);
+diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
+index 53f7b24525759..0c3d1be7f1299 100644
+--- a/net/ipv6/seg6_local.c
++++ b/net/ipv6/seg6_local.c
+@@ -222,7 +222,7 @@ static struct ipv6_sr_hdr *get_and_validate_srh(struct sk_buff *skb)
+ 		return NULL;
  
--	fsize->stepwise.min_width = 128;
--	fsize->stepwise.max_width = 5120;
--	fsize->stepwise.step_width = 2;
-+	fsize->stepwise.min_width = RISP_MIN_WIDTH;
-+	fsize->stepwise.max_width = RISP_MAX_WIDTH;
-+	fsize->stepwise.step_width = 1u << RISP_SIZE_ALIGNMENT;
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+-	if (!seg6_hmac_validate_skb(skb))
++	if (!seg6_hmac_validate_skb(skb, srh))
+ 		return NULL;
+ #endif
  
--	fsize->stepwise.min_height = 128;
--	fsize->stepwise.max_height = 4096;
--	fsize->stepwise.step_height = 2;
-+	fsize->stepwise.min_height = RISP_MIN_HEIGHT;
-+	fsize->stepwise.max_height = RISP_MAX_HEIGHT;
-+	fsize->stepwise.step_height = 1u << RISP_SIZE_ALIGNMENT;
+@@ -239,7 +239,7 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
+ 		return false;
  
- 	return 0;
- }
-@@ -720,8 +727,9 @@ static const struct v4l2_pix_format_mplane risp_io_capture_default_format = {
- static void risp_io_capture_try_format(struct rcar_isp_core_io *io,
- 				       struct v4l2_pix_format_mplane *pix)
- {
--	v4l_bound_align_image(&pix->width, 128, 5120, 2,
--			      &pix->height, 128, 4096, 2, 0);
-+	v4l_bound_align_image(&pix->width, RISP_MIN_WIDTH, RISP_MAX_WIDTH, RISP_SIZE_ALIGNMENT,
-+			      &pix->height, RISP_MIN_HEIGHT, RISP_MAX_HEIGHT, RISP_SIZE_ALIGNMENT,
-+			      0);
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+-	if (srh && !seg6_hmac_validate_skb(skb))
++	if (srh && !seg6_hmac_validate_skb(skb, srh))
+ 		return false;
+ #endif
  
- 	pix->field = V4L2_FIELD_NONE;
- 	pix->colorspace = V4L2_COLORSPACE_SRGB;
-@@ -824,13 +832,13 @@ static int risp_io_capture_enum_framesizes(struct file *file, void *fh,
- 
- 	fsize->type = V4L2_FRMSIZE_TYPE_STEPWISE;
- 
--	fsize->stepwise.min_width = 128;
--	fsize->stepwise.max_width = 5120;
--	fsize->stepwise.step_width = 2;
-+	fsize->stepwise.min_width = RISP_MIN_WIDTH;
-+	fsize->stepwise.max_width = RISP_MAX_WIDTH;
-+	fsize->stepwise.step_width = 1u << RISP_SIZE_ALIGNMENT;
- 
--	fsize->stepwise.min_height = 128;
--	fsize->stepwise.max_height = 4096;
--	fsize->stepwise.step_height = 2;
-+	fsize->stepwise.min_height = RISP_MIN_HEIGHT;
-+	fsize->stepwise.max_height = RISP_MAX_HEIGHT;
-+	fsize->stepwise.step_height = 1u << RISP_SIZE_ALIGNMENT;
- 
- 	return 0;
- }
+@@ -841,7 +841,7 @@ static int end_flv8986_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
+ 	srhoff = srh ? ((unsigned char *)srh - skb->data) : 0;
+ 	pinfo = seg6_get_srh_pktinfo(srh);
+ #ifdef CONFIG_IPV6_SEG6_HMAC
+-	if (srh && !seg6_hmac_validate_skb(skb))
++	if (srh && !seg6_hmac_validate_skb(skb, srh))
+ 		goto drop;
+ #endif
+ 	flvmask = finfo->flv_ops;
 -- 
 2.53.0
 
