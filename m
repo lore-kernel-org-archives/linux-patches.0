@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016623;
-	b=nnwL8KHlgcOHGlHjJtFWcPjw/hOWg3g0NbyxLRZY5VrsDJGCx8l9yaT0slBfJULDTt0u
-	 CngMMnFTWgkk5UmQpl64GC0T/r3Jtgu9hUj7otDLxLfcy96qPzEjX5pRzdK5A1AKBidqF
-	 DMe5bKXap3APu3c0ZgSHeNkSUqolKpugT4qUyjw1mCDlN7xhdWH0JwZPObUkJg0Mrpm4A
-	 +kc6VMdws4tXp/fpZWyrm10FP5+bAj3hRL6eWsUOchT/FahDdOALscqfXRvRCfnBEqrUW
-	 /8jaK5q1e5ABIYpLeYjcA53dCwU5obq6Zi6WzW3/ilmYeODDiPX+8R+x9HJR5Xnzc2w==
+	t=1795016626;
+	b=K/xJvZ2TJJJT3u+1Md/+mepvRKIXtpaoi+QgcJ5tD3cGHprOF73KenC98YMyQQat/ltI
+	 hM1rqj9WCLSbOSn4hQUO/6bsvEw9lPDEMQk6LqZaTjVYeZWmRYFwuRfdt/q3NaTOYkhJR
+	 z9qOnbQw/WtpYnWW/zTg2AZGTrSbOl8PyXHbrHsUgumnu0/zjEY2e4ll1U+f71+evZxFs
+	 Hpava7Ok9YU2C5upBllJBle6XnmqhF9yrAYPUh8aj4JluleA/M+03/AIW+TLwb8zWG+63
+	 7DdsMHOc6q8NiiX0Qr5m/qg4FIE2QIYLSQwB4VcLLfjVjxif6Rb/kh4Ns4v+OutAD2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016623;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016626;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mdXWLOYnUrDmOZxAjpCZfxrYLQO25W00/4jasUjKmSI=;
-	b=gu70sBnfFbINQ9joSNbjRAp6+NB9OPRSYlMkwUFbpxdKceWrms2nyfz8PQlrZAKvwIX+
-	 93hP0DzrVF4P6C9MRF6cIMLp5IW2T/yQYRkcttObEsp+k4pgD+bXoI8PfUMWJL5UZ64rw
-	 3uJc2A1KzvaIZrfnBeDXdv7iXp2HQhqhBM7xwCC1PCsPXzMKhczZFoVnClISmmxhgTl/7
-	 31mouDgS2YPabyeuz3GlNRaQ3nAkqKOc1zi0q3TLW9BfV+U4M5gE2vSQsd71SiMylL1w5
-	 MFNglUz4VP4snEXAfzIoLCwmeZ+wR1Q4GGX9w3r6uLYt5rf9PCX6HdM7G9Epm8CQaDw==
+	bh=tqNJMUamw3MgPNXtzrBmBU8BLujAj8/UQbUwUSDMfL4=;
+	b=qi1RkGJEQK4bV1A/RPAYxnfodZuAoDGVDhDGI/mEx1R3HQ7U+wwFksDNjprAn3NC7Jjd
+	 n9zR5Syy9/Gh/pSus69rAvo0tirifhruuNUpzPb8MrAvtA0wAKn5leN4S0R4zEfiZhBYL
+	 pNflZ7LggtkFLT7hwCaGPwbjce499H/UjGTyEmeYdiD1AqkgDfKjIYqsB1xTqEZ/7aiTm
+	 Ife+uzHjrjwg6xUI1iGCfP1yuasFv10VALXYmnMqpNGO8IiFgKaWLv1/NK8jlX9aU1bbZ
+	 j4JxlIhhdhjYnwtQyklmUiAcu/bWTvPOo1cjIPMJDz+3R7opox4Fo33cjy0S7cC3Xuw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxQwjK6N;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKE5asUb;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7517A606A332;
-	Wed, 18 Nov 2026 15:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E231606A325;
+	Wed, 18 Nov 2026 15:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IxQwjK6N
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB481F000C7;
-	Wed, 18 Nov 2026 15:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QKE5asUb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B291F000C4;
+	Wed, 18 Nov 2026 15:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016623;
-	bh=mdXWLOYnUrDmOZxAjpCZfxrYLQO25W00/4jasUjKmSI=;
+	s=korg; t=1795016626;
+	bh=tqNJMUamw3MgPNXtzrBmBU8BLujAj8/UQbUwUSDMfL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IxQwjK6Nbrz9Z97QRWI7yJumDzvRt2JzoQtT9k1Dq3E4zHBtKSZR7p6cFy4YGHoNv
-	 PIYKkKA1A7bLGEYlQAQUqwEKWofDsfrkETsFz7mDc73HoGjZ1TNZTkLsRX4Sci0Z2H
-	 VHDGsOW7w5AFF799/0icJDIVEuCjNAybkLLlhMLY=
+	b=QKE5asUbbs+iU6DGFVIu2+Bs0mvu8/QiR1ozNjVt2sFa3wdgqHe2A99rhalj8OMin
+	 dl18pGb5ejs97Ex1pY03ZeE5siAKjaD70QmK3Yi8nq//uPmT813j0RvOwwdj2kx2LW
+	 BQzGBhHC9AYMv/Kqxbuk7xyFqq5B0fBtvAcBO8Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Ian Rogers <irogers@google.com>,
-	Zide Chen <zide.chen@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0593/2651] perf topdown: Dont require config1==0 for a slots event
-Date: Wed, 18 Nov 2026 15:30:33 +0100
-Message-ID: <20261118150309.066795938@linuxfoundation.org>
+Subject: [PATCH 7.3 0594/2651] perf libdw: Fix Dwfl discovery with split files
+Date: Wed, 18 Nov 2026 15:30:34 +0100
+Message-ID: <20261118150309.101570375@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,113 +68,641 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 0824af00a8d2ede0d8bc70bdc0b493ecfd167900 ]
+[ Upstream commit bf96e296d52d74a1ae5254a341175afede8a1963 ]
 
-arch_is_topdown_slots() requires config1 == 0, so it misidentified
-"cpu/slots,metrics_clear=1/" as not being the slots event, and an
-additional slots event gets inserted, which fails event scheduling
-since the group now needs two fixed counter 3.
+dso__libdw_dwfl() opens the Dwfl with dso__long_name(), the file the
+samples came from. When the debug information lives in a separate file,
+symbol loading finds it and records it as the dso's symsrc filename, but
+the Dwfl still refers to the original file, so libdw has no DWARF to
+resolve addresses against.
 
-  $ perf stat -e "{cpu/slots,metrics_clear=1/,cpu/topdown-retiring/}" -- sleep 1
-  WARNING: events were regrouped to match PMUs
-       <not counted>      slots
-     <not supported>      cpu/slots,metrics_clear=1/
-       <not counted>      cpu/topdown-retiring/
+Open the Dwfl with the symsrc filename when one is known and fall back
+to the long name when it isn't.
 
-Drop the config1 == 0 check from arch_is_topdown_slots(). This is
-safe: config1 has no bearing on the event's identifying config value
-(TOPDOWN_SLOTS, 0x0400).
+The symsrc file is found while symbols are loaded, which can happen
+after the Dwfl has been created and cached, so drop the cached Dwfl and
+the addr2line cache built from it when the symsrc filename is set.  That
+teardown can run while another thread is using the cache, so take the
+dso lock across both the teardown and the Dwfl accessors, and re-read
+dso__symsrc_filename() under the dso lock in libbfd__addr2line() and
+cmd__addr2line() to prevent a TOCTOU race with cache invalidation.
 
-The attr.type == PERF_TYPE_RAW check is what actually matters: only the
-core PMU is registered with PERF_TYPE_RAW, and on x86, 0x400 is
-guaranteed to be slots event on core CPU.
-
-arch_is_topdown_metrics() keeps its own config1 == 0 check, since
-genuine metrics events have no "metrics_clear" and config1 remains 0.
-
-Add a test verifying that an explicit "slots,metrics_clear=1" event in
-a group does not trigger an extra slots event injection.
-
-Fixes: 5b546de9cc177936 ("perf topdown: Use attribute to see an event is a topdown metic or slots")
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-[ Add missing stdio.h and string.h as noticed by Sashiko ]
+Fixes: b7a2b011e9627ff3 ("perf powerpc: Unify the skip-callchain-idx libdw with that for addr2line")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Assisted-by: Antigravity:gemini-3.1-pro
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/x86/tests/topdown.c | 30 +++++++++++++++++++++++++++++
- tools/perf/arch/x86/util/topdown.c  |  3 +--
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ .../arch/powerpc/util/skip-callchain-idx.c    |  4 +-
+ tools/perf/util/addr2line.c                   | 42 +++++++++---
+ tools/perf/util/dso.c                         |  9 +++
+ tools/perf/util/dso.h                         |  5 +-
+ tools/perf/util/libbfd.c                      | 29 ++++++---
+ tools/perf/util/libdw.c                       | 39 +++++++----
+ tools/perf/util/srcline.c                     | 62 ++++++++++++------
+ tools/perf/util/unwind-libdw.c                |  2 +
+ tools/perf/util/unwind-libunwind.c            | 64 ++++++++++++++-----
+ 9 files changed, 187 insertions(+), 69 deletions(-)
 
-diff --git a/tools/perf/arch/x86/tests/topdown.c b/tools/perf/arch/x86/tests/topdown.c
-index 2b6f47ce49324..520075329c378 100644
---- a/tools/perf/arch/x86/tests/topdown.c
-+++ b/tools/perf/arch/x86/tests/topdown.c
-@@ -1,5 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <errno.h>
-+#include <stdio.h>
-+#include <string.h>
- #include "arch-tests.h"
- #include "../util/topdown.h"
- #include "debug.h"
-@@ -229,10 +231,38 @@ static int test__x86_topdown_slots_injection(struct test_suite *test __maybe_unu
- 	return TEST_OK;
+diff --git a/tools/perf/arch/powerpc/util/skip-callchain-idx.c b/tools/perf/arch/powerpc/util/skip-callchain-idx.c
+index e57f10798fa6a..472714cfad389 100644
+--- a/tools/perf/arch/powerpc/util/skip-callchain-idx.c
++++ b/tools/perf/arch/powerpc/util/skip-callchain-idx.c
+@@ -152,9 +152,10 @@ static int check_return_addr(struct dso *dso, Dwarf_Addr mapped_pc)
+ 	Dwarf_Addr	end = mapped_pc;
+ 	bool		signalp;
+ 
++	mutex_lock(dso__lock(dso));
+ 	dwfl = dso__libdw_dwfl(dso);
+ 	if (!dwfl)
+-		return -1;
++		goto out;
+ 
+ 	mod = dwfl_addrmodule(dwfl, mapped_pc);
+ 	if (!mod) {
+@@ -183,6 +184,7 @@ static int check_return_addr(struct dso *dso, Dwarf_Addr mapped_pc)
+ 	rc = check_return_reg(ra_regno, frame);
+ 
+ out:
++	mutex_unlock(dso__lock(dso));
+ 	return rc;
  }
  
-+/*
-+ * An explicit "slots,metrics_clear=1" event is still the slots event and
-+ * must not cause an extra slots event to be injected into the group.
-+ */
-+static int test__x86_topdown_metrics_clear(struct test_suite *test __maybe_unused,
-+					   int subtest __maybe_unused)
-+{
-+	struct perf_pmu *pmu;
-+	char event_str[128];
-+	int ret;
-+
-+	if (!topdown_sys_has_perf_metrics())
-+		return TEST_OK;
-+
-+	pmu = perf_pmus__find_by_type(PERF_TYPE_RAW);
-+	if (!pmu || !perf_pmu__has_format(pmu, "metrics_clear"))
-+		return TEST_OK;
-+
-+	snprintf(event_str, sizeof(event_str),
-+		 "{%s/slots,metrics_clear=1/,%s/topdown-retiring/}",
-+		 pmu->name, pmu->name);
-+	ret = test_sort(event_str, 2, 1);
-+	TEST_ASSERT_EQUAL("explicit metrics_clear slots event isn't duplicated", ret, TEST_OK);
-+
-+	return TEST_OK;
-+}
-+
- static struct test_case x86_topdown_tests[] = {
- 	TEST_CASE("topdown events", x86_topdown),
- 	TEST_CASE("topdown sorting", x86_topdown_sorting),
- 	TEST_CASE("topdown slots injection", x86_topdown_slots_injection),
-+	TEST_CASE("topdown metrics_clear no extra slots", x86_topdown_metrics_clear),
- 	{ .name = NULL, }
- };
+diff --git a/tools/perf/util/addr2line.c b/tools/perf/util/addr2line.c
+index 4b0d349ed334b..6f64f6b424429 100644
+--- a/tools/perf/util/addr2line.c
++++ b/tools/perf/util/addr2line.c
+@@ -15,6 +15,7 @@
+ #include <signal.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <unistd.h>
  
-diff --git a/tools/perf/arch/x86/util/topdown.c b/tools/perf/arch/x86/util/topdown.c
-index bafd285119d7a..64bc64e335a2a 100644
---- a/tools/perf/arch/x86/util/topdown.c
-+++ b/tools/perf/arch/x86/util/topdown.c
-@@ -37,8 +37,7 @@ bool topdown_sys_has_perf_metrics(void)
- bool arch_is_topdown_slots(const struct evsel *evsel)
+ #define MAX_INLINE_NEST 1024
+ 
+@@ -284,7 +285,7 @@ int cmd__addr2line(const char *dso_name, u64 addr,
+ 		   struct inline_node *node,
+ 		   struct symbol *sym __maybe_unused)
  {
- 	return evsel->core.attr.type == PERF_TYPE_RAW &&
--	       evsel->core.attr.config == TOPDOWN_SLOTS &&
--	       evsel->core.attr.config1 == 0;
-+	       evsel->core.attr.config == TOPDOWN_SLOTS;
+-	struct child_process *a2l = dso__a2l(dso);
++	struct child_process *a2l;
+ 	char *record_function = NULL;
+ 	char *record_filename = NULL;
+ 	unsigned int record_line_nr = 0;
+@@ -296,24 +297,38 @@ int cmd__addr2line(const char *dso_name, u64 addr,
+ 	ssize_t written;
+ 	struct io io = { .eof = false };
+ 	enum cmd_a2l_style cmd_a2l_style;
++	const char *current_dso_name;
++
++	mutex_lock(dso__lock(dso));
++	current_dso_name = dso__symsrc_filename(dso) ?: dso_name;
++	a2l = dso__a2l(dso);
+ 
+ 	if (!a2l) {
+-		if (!filename__has_section(dso_name, ".debug_line"))
+-			goto out;
++		if (!filename__has_section(current_dso_name, ".debug_line"))
++			goto out_unlock;
+ 
+ 		dso__set_a2l(dso,
+-			     addr2line_subprocess_init(symbol_conf.addr2line_path, dso_name));
++			     addr2line_subprocess_init(symbol_conf.addr2line_path,
++						       current_dso_name));
+ 		a2l = dso__a2l(dso);
+ 	}
+ 
+ 	if (a2l == NULL) {
+ 		if (!symbol_conf.addr2line_disable_warn)
+ 			pr_warning("%s %s: addr2line_subprocess_init failed\n", __func__, dso_name);
+-		goto out;
++		goto out_unlock;
+ 	}
+ 	cmd_a2l_style = cmd_addr2line_configure(a2l, dso_name);
+ 	if (cmd_a2l_style == BROKEN)
+-		goto out;
++		goto out_unlock;
++
++	/*
++	 * Take ownership of the a2l subprocess so we can safely perform
++	 * blocking IPC without holding the dso lock. If another thread
++	 * resolves a symbol concurrently, it will spawn a new a2l process.
++	 */
++	dso__set_a2l(dso, NULL);
++	mutex_unlock(dso__lock(dso));
+ 
+ 	/*
+ 	 * Send our request and then *deliberately* send something that can't be
+@@ -414,12 +429,21 @@ int cmd__addr2line(const char *dso_name, u64 addr,
+ 	}
+ 
+ out:
++	mutex_lock(dso__lock(dso));
+ 	free(record_function);
+ 	free(record_filename);
+-	if (io.eof) {
+-		dso__set_a2l(dso, NULL);
++
++	current_dso_name = dso__symsrc_filename(dso) ?: dso__long_name(dso);
++	if (!io.eof && dso__a2l(dso) == NULL && current_dso_name &&
++	    !strcmp(current_dso_name, dso_name))
++		dso__set_a2l(dso, a2l);
++	else
+ 		addr2line_subprocess_cleanup(a2l);
+-	}
++	mutex_unlock(dso__lock(dso));
++	return ret;
++
++out_unlock:
++	mutex_unlock(dso__lock(dso));
+ 	return ret;
  }
  
- bool arch_is_topdown_metrics(const struct evsel *evsel)
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 42bfe30a3b518..df39e6ca88e6a 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -2075,3 +2075,12 @@ struct debuginfo *dso__debuginfo(struct dso *dso)
+ 	free(name);
+ 	return dinfo;
+ }
++
++void dso__set_symsrc_filename(struct dso *dso, char *val)
++{
++	RC_CHK_ACCESS(dso)->symsrc_filename = val;
++	dso__free_libdw(dso);
++	dso__free_a2l(dso);
++	dso__set_has_srcline(dso, true);
++	dso__set_a2l_fails(dso, 0);
++}
+diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
+index 55c4aaa53c382..7966c7048c85a 100644
+--- a/tools/perf/util/dso.h
++++ b/tools/perf/util/dso.h
+@@ -735,10 +735,7 @@ static inline const char *dso__symsrc_filename(const struct dso *dso)
+ 	return RC_CHK_ACCESS(dso)->symsrc_filename;
+ }
+ 
+-static inline void dso__set_symsrc_filename(struct dso *dso, char *val)
+-{
+-	RC_CHK_ACCESS(dso)->symsrc_filename = val;
+-}
++void dso__set_symsrc_filename(struct dso *dso, char *val);
+ 
+ static inline void dso__free_symsrc_filename(struct dso *dso)
+ {
+diff --git a/tools/perf/util/libbfd.c b/tools/perf/util/libbfd.c
+index 33dc6158b2b1f..35aa9d98f2f86 100644
+--- a/tools/perf/util/libbfd.c
++++ b/tools/perf/util/libbfd.c
+@@ -226,7 +226,11 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
+ 		      struct symbol *sym)
+ {
+ 	int ret = 0;
+-	struct a2l_data *a2l = dso__a2l(dso);
++	struct a2l_data *a2l;
++
++	mutex_lock(dso__lock(dso));
++	dso_name = dso__symsrc_filename(dso) ?: dso_name;
++	a2l = dso__a2l(dso);
+ 
+ 	if (!a2l) {
+ 		a2l = addr2line_init(dso_name);
+@@ -236,7 +240,8 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
+ 	if (a2l == NULL) {
+ 		if (!symbol_conf.addr2line_disable_warn)
+ 			pr_warning("addr2line_init failed for %s\n", dso_name);
+-		return 0;
++		ret = -1;
++		goto out;
+ 	}
+ 
+ 	a2l->addr = addr;
+@@ -244,14 +249,18 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
+ 
+ 	bfd_map_over_sections(a2l->abfd, find_address_in_section, a2l);
+ 
+-	if (!a2l->found)
+-		return 0;
++	if (!a2l->found) {
++		ret = 0;
++		goto out;
++	}
+ 
+ 	if (unwind_inlines) {
+ 		int cnt = 0;
+ 
+-		if (node && inline_list__append_dso_a2l(dso, node, sym))
+-			return 0;
++		if (node && inline_list__append_dso_a2l(dso, node, sym)) {
++			ret = 0;
++			goto out;
++		}
+ 
+ 		while (bfd_find_inliner_info(a2l->abfd, &a2l->filename,
+ 					     &a2l->funcname, &a2l->line) &&
+@@ -261,8 +270,10 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
+ 				a2l->filename = NULL;
+ 
+ 			if (node != NULL) {
+-				if (inline_list__append_dso_a2l(dso, node, sym))
+-					return 0;
++				if (inline_list__append_dso_a2l(dso, node, sym)) {
++					ret = 0;
++					goto out;
++				}
+ 				// found at least one inline frame
+ 				ret = 1;
+ 			}
+@@ -277,6 +288,8 @@ int libbfd__addr2line(const char *dso_name, u64 addr,
+ 	if (line)
+ 		*line = a2l->line;
+ 
++out:
++	mutex_unlock(dso__lock(dso));
+ 	return ret;
+ }
+ 
+diff --git a/tools/perf/util/libdw.c b/tools/perf/util/libdw.c
+index 4ca7e7e4fbe93..c4504cceb313b 100644
+--- a/tools/perf/util/libdw.c
++++ b/tools/perf/util/libdw.c
+@@ -35,7 +35,7 @@ struct Dwfl *dso__libdw_dwfl(struct dso *dso)
+ 	if (dwfl)
+ 		return dwfl;
+ 
+-	dso_name = dso__long_name(dso);
++	dso_name = dso__symsrc_filename(dso) ?: dso__long_name(dso);
+ 	/*
+ 	 * Initialize Dwfl session.
+ 	 * We need to open the DSO file to report it to libdw.
+@@ -167,32 +167,41 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
+ 		     struct dso *dso, bool unwind_inlines,
+ 		     struct inline_node *node, struct symbol *sym)
+ {
+-	Dwfl *dwfl = dso__libdw_dwfl(dso);
++	Dwfl *dwfl;
+ 	Dwfl_Module *mod;
+ 	Dwfl_Line *dwline;
+ 	Dwarf_Addr bias;
+ 	const char *src;
+ 	int lineno = 0;
++	int ret = 0;
+ 
++	mutex_lock(dso__lock(dso));
++	dwfl = dso__libdw_dwfl(dso);
+ 	if (!dwfl)
+-		return 0;
++		goto out;
+ 
+ 	mod = dwfl_addrmodule(dwfl, addr);
+-	if (!mod)
+-		return 0;
++	if (!mod) {
++		ret = 0;
++		goto out;
++	}
+ 
+ 	/*
+ 	 * Get/ignore the dwarf information. Determine the bias, difference
+ 	 * between the regular ELF addr2line addresses and those to use with
+ 	 * libdw.
+ 	 */
+-	if (!dwfl_module_getdwarf(mod, &bias))
+-		return 0;
++	if (!dwfl_module_getdwarf(mod, &bias)) {
++		ret = -1;
++		goto out;
++	}
+ 
+ 	/* Find source line information for the address. */
+ 	dwline = dwfl_module_getsrc(mod, addr + bias);
+-	if (!dwline)
+-		return 0;
++	if (!dwline) {
++		ret = -1;
++		goto out;
++	}
+ 
+ 	/* Get line information. */
+ 	src = dwfl_lineinfo(dwline, /*addr=*/NULL, &lineno, /*col=*/NULL, /*mtime=*/NULL,
+@@ -219,7 +228,8 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
+ 				free(*file);
+ 				*file = NULL;
+ 			}
+-			return 0;
++			ret = 0;
++			goto out;
+ 		}
+ 
+ 		/* Walk from the parent down to the leaf. */
+@@ -235,8 +245,13 @@ int libdw__addr2line(u64 addr, char **file, unsigned int *line_nr,
+ 				*file = NULL;
+ 			}
+ 			inline_node__clear_frames(node);
+-			return 0;
++			ret = 0;
++			goto out;
+ 		}
+ 	}
+-	return 1;
++	ret = 1;
++
++out:
++	mutex_unlock(dso__lock(dso));
++	return ret;
+ }
+diff --git a/tools/perf/util/srcline.c b/tools/perf/util/srcline.c
+index b082178c279b6..5ed89f97ff112 100644
+--- a/tools/perf/util/srcline.c
++++ b/tools/perf/util/srcline.c
+@@ -1,40 +1,49 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include "srcline.h"
++
++#include <inttypes.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++
++#include <linux/string.h>
++#include <linux/zalloc.h>
++
+ #include "addr2line.h"
+-#include "dso.h"
+ #include "callchain.h"
++#include "debug.h"
++#include "dso.h"
+ #include "libbfd.h"
++#include "libdw.h"
+ #include "llvm.h"
+ #include "symbol.h"
+-#include "libdw.h"
+-#include "debug.h"
+ #include "util.h"
+ 
+-#include <inttypes.h>
+-#include <string.h>
+-#include <linux/string.h>
+-#include <linux/zalloc.h>
+-
+ bool srcline_full_filename;
+ 
+ char *srcline__unknown = (char *)"??:0";
+ 
+-static const char *srcline_dso_name(struct dso *dso)
++static char *srcline_dso_name(struct dso *dso)
+ {
+ 	const char *dso_name;
++	char *ret = NULL;
+ 
++	mutex_lock(dso__lock(dso));
+ 	if (dso__symsrc_filename(dso))
+ 		dso_name = dso__symsrc_filename(dso);
+ 	else
+ 		dso_name = dso__long_name(dso);
+ 
+ 	if (dso_name[0] == '[')
+-		return NULL;
++		goto out;
+ 
+ 	if (is_perf_pid_map_name(dso_name))
+-		return NULL;
++		goto out;
+ 
+-	return dso_name;
++	ret = strdup(dso_name);
++out:
++	mutex_unlock(dso__lock(dso));
++	return ret;
+ }
+ 
+ int inline_list__append(struct symbol *symbol, char *srcline, struct inline_node *node)
+@@ -258,7 +267,7 @@ char *__get_srcline(struct dso *dso, u64 addr, struct symbol *sym,
+ 	char *file = NULL;
+ 	unsigned line = 0;
+ 	char *srcline;
+-	const char *dso_name;
++	char *dso_name;
+ 
+ 	if (!dso__has_srcline(dso))
+ 		goto out;
+@@ -268,8 +277,11 @@ char *__get_srcline(struct dso *dso, u64 addr, struct symbol *sym,
+ 		goto out_err;
+ 
+ 	if (!addr2line(dso_name, addr, &file, &line, dso,
+-		       unwind_inlines, /*node=*/NULL, sym))
++		       unwind_inlines, /*node=*/NULL, sym)) {
++		free(dso_name);
+ 		goto out_err;
++	}
++	free(dso_name);
+ 
+ 	srcline = srcline_from_fileline(file, line);
+ 	free(file);
+@@ -277,16 +289,20 @@ char *__get_srcline(struct dso *dso, u64 addr, struct symbol *sym,
+ 	if (!srcline)
+ 		goto out_err;
+ 
++	mutex_lock(dso__lock(dso));
+ 	dso__set_a2l_fails(dso, 0);
++	mutex_unlock(dso__lock(dso));
+ 
+ 	return srcline;
+ 
+ out_err:
++	mutex_lock(dso__lock(dso));
+ 	dso__set_a2l_fails(dso, dso__a2l_fails(dso) + 1);
+ 	if (dso__a2l_fails(dso) > A2L_FAIL_LIMIT) {
+ 		dso__set_has_srcline(dso, false);
+ 		dso__free_a2l(dso);
+ 	}
++	mutex_unlock(dso__lock(dso));
+ out:
+ 	if (!show_addr)
+ 		return (show_sym && sym) ?
+@@ -305,7 +321,7 @@ char *__get_srcline(struct dso *dso, u64 addr, struct symbol *sym,
+ char *get_srcline_split(struct dso *dso, u64 addr, unsigned *line)
+ {
+ 	char *file = NULL;
+-	const char *dso_name;
++	char *dso_name;
+ 
+ 	if (!dso__has_srcline(dso))
+ 		return NULL;
+@@ -315,18 +331,25 @@ char *get_srcline_split(struct dso *dso, u64 addr, unsigned *line)
+ 		goto out_err;
+ 
+ 	if (!addr2line(dso_name, addr, &file, line, dso, /*unwind_inlines=*/true,
+-			/*node=*/NULL, /*sym=*/NULL))
++			/*node=*/NULL, /*sym=*/NULL)) {
++		free(dso_name);
+ 		goto out_err;
++	}
++	free(dso_name);
+ 
++	mutex_lock(dso__lock(dso));
+ 	dso__set_a2l_fails(dso, 0);
++	mutex_unlock(dso__lock(dso));
+ 	return file;
+ 
+ out_err:
++	mutex_lock(dso__lock(dso));
+ 	dso__set_a2l_fails(dso, dso__a2l_fails(dso) + 1);
+ 	if (dso__a2l_fails(dso) > A2L_FAIL_LIMIT) {
+ 		dso__set_has_srcline(dso, false);
+ 		dso__free_a2l(dso);
+ 	}
++	mutex_unlock(dso__lock(dso));
+ 
+ 	return NULL;
+ }
+@@ -420,13 +443,16 @@ void srcline__tree_delete(struct rb_root_cached *tree)
+ struct inline_node *dso__parse_addr_inlines(struct dso *dso, u64 addr,
+ 					    struct symbol *sym)
+ {
+-	const char *dso_name;
++	char *dso_name;
++	struct inline_node *node;
+ 
+ 	dso_name = srcline_dso_name(dso);
+ 	if (dso_name == NULL)
+ 		return NULL;
+ 
+-	return addr2inlines(dso_name, addr, dso, sym);
++	node = addr2inlines(dso_name, addr, dso, sym);
++	free(dso_name);
++	return node;
+ }
+ 
+ void inline_node__clear_frames(struct inline_node *node)
+diff --git a/tools/perf/util/unwind-libdw.c b/tools/perf/util/unwind-libdw.c
+index 63a5c2253174f..f2f734cb3c81a 100644
+--- a/tools/perf/util/unwind-libdw.c
++++ b/tools/perf/util/unwind-libdw.c
+@@ -42,8 +42,10 @@ static int __find_debuginfo(Dwfl_Module *mod __maybe_unused, void **userdata,
+ 	const struct dso *dso = *userdata;
+ 
+ 	assert(dso);
++	mutex_lock(dso__lock((struct dso *)dso));
+ 	if (dso__symsrc_filename(dso) && strcmp(file_name, dso__symsrc_filename(dso)))
+ 		*debuginfo_file_name = strdup(dso__symsrc_filename(dso));
++	mutex_unlock(dso__lock((struct dso *)dso));
+ 	return -1;
+ }
+ 
+diff --git a/tools/perf/util/unwind-libunwind.c b/tools/perf/util/unwind-libunwind.c
+index 73d191ce51a55..6052383e862b7 100644
+--- a/tools/perf/util/unwind-libunwind.c
++++ b/tools/perf/util/unwind-libunwind.c
+@@ -1,20 +1,28 @@
+ // SPDX-License-Identifier: GPL-2.0
++#include "unwind.h"
++
++#include <inttypes.h>
++#include <limits.h>
++#include <stdlib.h>
++#include <string.h>
++
++#include <elf.h>
++#include <fcntl.h>
++#include <gelf.h>
++#include <unistd.h>
++
++#include <dwarf-regs.h>
++
+ #include "callchain.h"
+ #include "debug.h"
+ #include "dso.h"
+ #include "env.h"
++#include "libunwind-arch/libunwind-arch.h"
+ #include "map.h"
+ #include "perf_regs.h"
+ #include "session.h"
+ #include "symbol.h"
+ #include "thread.h"
+-#include "unwind.h"
+-#include "libunwind-arch/libunwind-arch.h"
+-#include <dwarf-regs.h>
+-#include <elf.h>
+-#include <fcntl.h>
+-#include <gelf.h>
+-#include <inttypes.h>
+ 
+ #define DW_EH_PE_FORMAT_MASK	0x0f	/* format of the encoded value */
+ #define DW_EH_PE_APPL_MASK	0x70	/* how the value is to be applied */
+@@ -293,10 +301,19 @@ static int read_unwind_spec_debug_frame(struct dso *dso,
+ 		}
+ 
+ 		if (ofs <= 0) {
+-			fd = open(dso__symsrc_filename(dso), O_RDONLY);
+-			if (fd >= 0) {
+-				ofs = elf_section_offset(fd, ".debug_frame");
+-				close(fd);
++			char *alloc_name;
++
++			mutex_lock(dso__lock(dso));
++			alloc_name = dso__symsrc_filename(dso) ?
++					strdup(dso__symsrc_filename(dso)) : NULL;
++			mutex_unlock(dso__lock(dso));
++			if (alloc_name) {
++				fd = open(alloc_name, O_RDONLY);
++				if (fd >= 0) {
++					ofs = elf_section_offset(fd, ".debug_frame");
++					close(fd);
++				}
++				free(alloc_name);
+ 			}
+ 		}
+ 
+@@ -321,6 +338,7 @@ static int read_unwind_spec_debug_frame(struct dso *dso,
+ 				}
+ 			}
+ 			if (ofs > 0) {
++				mutex_lock(dso__lock(dso));
+ 				if (dso__symsrc_filename(dso) != NULL) {
+ 					pr_warning(
+ 						"%s: overwrite symsrc(%s,%s)\n",
+@@ -330,6 +348,7 @@ static int read_unwind_spec_debug_frame(struct dso *dso,
+ 					dso__free_symsrc_filename(dso);
+ 				}
+ 				dso__set_symsrc_filename(dso, debuglink);
++				mutex_unlock(dso__lock(dso));
+ 			} else {
+ 				free(debuglink);
+ 			}
+@@ -429,12 +448,23 @@ int __libunwind__find_proc_info(void *as, uint64_t ip, void *pi, int need_unwind
+ 			dso__data_put_fd(dso);
+ 		}
+ 
+-		symfile = dso__symsrc_filename(dso) ?: dso__name(dso);
+-
+-		if (libunwind_arch__dwarf_find_debug_frame(ui->e_machine, /*found=*/0, &di, ip,
+-							   base, symfile, start, map__end(map))) {
+-			ret = libunwind_arch__dwarf_search_unwind_table(ui->e_machine, as, ip, &di, pi,
+-									need_unwind_info, arg);
++		mutex_lock(dso__lock(dso));
++		symfile = dso__symsrc_filename(dso) ?
++				strdup(dso__symsrc_filename(dso)) :
++				strdup(dso__name(dso));
++		mutex_unlock(dso__lock(dso));
++
++		if (symfile) {
++			if (libunwind_arch__dwarf_find_debug_frame(ui->e_machine,
++								   /*found=*/0, &di, ip,
++								   base, symfile, start,
++								   map__end(map))) {
++				ret = libunwind_arch__dwarf_search_unwind_table(ui->e_machine, as,
++										ip, &di, pi,
++										need_unwind_info,
++										arg);
++			}
++			free((char *)symfile);
+ 		}
+ 	}
+ 	map__put(map);
 -- 
 2.53.0
 
