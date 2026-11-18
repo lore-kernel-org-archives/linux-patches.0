@@ -1,52 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050353;
-	b=oPjwFfauGh6+S3Drd/01tYxpTFYUD3c6QmVdI3TPVutPVbuJ9Bq7BE6yXMmiKZDu+0+w
-	 CwC9xQkB/7n85MvJb6IouxrzdlPiuazT7sjzRtcP/qKzbUOKCQ/etoqt/7TazJm6+wums
-	 Pco+zF68U2E2kAyVICMWWqFGV7KNOfCaIgM9fhkBj3baT+qhGETerhSdEW++4koX7of+F
-	 ylqBFwPDUT8zKEibdWORqoH9ZNieWCkHDjvSPqkXpsI6FRSbVNttjLMSnvWWqIejGqERM
-	 HNT1gpValLNobLikLRjvLK8MAcoN08uC41ljukzRCnaxQgSmvMF/71cTIKl7Lu/Zt0g==
+	t=1795050356;
+	b=PLmMskcE9aktvqsAPCKBSbAPeLMXzF8lz7Nx1KBDTQN2MXXHE9fa5QRWz4s6M90lhCpD
+	 +WHUNsyCjYk9jYppiv9uv+xZ7F+QKtEO2yi96mNNLe4VBOZpgGrcSJ1Sw4YXKfoeJULri
+	 TtiHbuLDScLjm985sEtaHz9Mpekc7bjHV4WmTiF3wPFWklLk0aVwrSWNvh421w60pmtM5
+	 ofGF7gcRBhGpAlvZOjMmb5zapGz2GL6cGRb1yOq3fJf0yAJcUgc0jPnkBW77PA0HP6pe7
+	 X0fhIDYffC7iBmIUbkYbLYoOc4xZkUtltACg93wvLyMGMk8Vm3FAhU9iHti3XWjE7ZA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050353;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050356;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7uPNNrRD/G+tmtoayCUOVeprmVBxPeMBGKQIVCuh3PE=;
-	b=EsHbmoNVFmaw/np7lX08pqj19grvngd8bNTu9gLOJmnTHWigoNRKPp8yYQ8Hpm3pFhQr
-	 HT+qORUEPppbtM95a6EQPRv2WurfMiuYFOZb30vnIBX8zcDpNTNq/PwMcxCNk4oNhJ7Im
-	 23QH/nvng4Ur9gkef7K1bPl/UEAtSMBjEOQYB27+lQdIjRPqi4JYQasRCSYEZ/G4oxRfF
-	 o9EIuFs1LVfOdEZxKinfctG/KPVAKDPsIxwhLYmx+Ketr2ZiV6/+BmvSREX+d+plIYbst
-	 V2AZd4yjE4lUP2/Jk7S5yCJmwoFeAwWYjuvkYFJjtODceFfEhA4WcVq1Y1vFVMiIOaw==
+	bh=3t63E9YjCHi+iaYwrImCyCws6X0RAOblzSmeaPd88yw=;
+	b=nzshx8GIpfjF9HHVwn1yTYNgn1+HlexVXr12kxxbUW5iHmsTqSsKPgZ5AgpS33FbiH+G
+	 YOXwxRUSO9CfdskHVy8xM7KyYoV+b3J0NKwAjFpP7sfXgn2lxhHIBtZPplk/xbqNIvN7F
+	 9/UikwVsDqCwc+UOt0oozX14J/Vb4QcEIabPv0XWOKV1j++KvRdO/TRfbZhAS068juYSB
+	 l1pAWjyQO5Eh6Zx8ylo6MlnGSbjsleguAlQhQB6VNqhXaS68S48xT7Jm1Tm3WI9lInKXb
+	 yh4suPK5P1AxRp2QG7lCZF/1xdJJ0APgmeDkRS/CeewrEKIBxYyElAiFaVBEwd/thKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P3l00fOd;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0jguTByM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D94F606A32F;
-	Thu, 19 Nov 2026 01:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CCA606A33E;
+	Thu, 19 Nov 2026 01:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P3l00fOd
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFBD1F000C5;
-	Thu, 19 Nov 2026 01:05:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0jguTByM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F0AD1F000C4;
+	Thu, 19 Nov 2026 01:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050353;
-	bh=7uPNNrRD/G+tmtoayCUOVeprmVBxPeMBGKQIVCuh3PE=;
+	s=korg; t=1795050356;
+	bh=3t63E9YjCHi+iaYwrImCyCws6X0RAOblzSmeaPd88yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=P3l00fOdoch9g1SkaWPOHV53q8LewoXm8n7mvxsGMFyGw75LaWHqXRui40ftVASyj
-	 shQhGi1MRSnBaqmIFMGtuP48sb0CyfDOgYf+l9DdH6KDT7p38MldFA0CK1GB8qkv03
-	 bEj+BwnHmnH6V38wUpSVTjppbEDZ5QHxz3Kcvexg=
+	b=0jguTByMMarEyLQq2asgSx293GMs2RFTbSfLbI6OgJoUbc08Ui+RHXjsArDLv1VrA
+	 QcKP4jOkq8SgSu+zZPSlqA+I+z7G54Kc073CNxsGBA1O06nU8Zn7fldquCwtQeilTv
+	 8eTHoc3z376R7u0TjrB+cE9pwSn6VMS8+rOPjAoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	linux-sh@vger.kernel.org,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2679/2857] ASoC: samsung: midas_wm1811: run FLL1 at the AIF1 configured rate when idle
-Date: Wed, 18 Nov 2026 16:01:53 +0100
-Message-ID: <20261118150338.035106756@linuxfoundation.org>
+Subject: [PATCH 6.1 2680/2857] sh: Emulate one-byte cmpxchg
+Date: Wed, 18 Nov 2026 16:01:54 +0100
+Message-ID: <20261118150338.072926119@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,88 +73,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit d9c23ac1217ab094e6bd9ab95e159ec72c8baca5 ]
+[ Upstream commit c81a748edefd098ea21dd35d4bba03f69412fc26 ]
 
-When the codec is brought up without an active stream, for example
-because the mixer state restored by alsactl powers up a digital path,
-midas_start_fll1() sets FLL1 to the default 11.2896MHz rate. The
-codec's AIF1 however keeps the configuration of the last stream, or its
-reset default of 48kHz at 256fs before the first stream, which needs
-a 12.288MHz AIF1 clock. The digital paths then run with AIF1 clocked
-at a rate not matching its configuration.
+Use the new cmpxchg_emu_u8() to emulate one-byte cmpxchg() on sh.
 
-Remember the FLL1 rate requested by the last hw_params() call, which
-matches the AIF1 configuration kept in the codec, and use it when no
-specific rate is requested. Change the default rate used before the
-first stream to 12.288MHz, matching the codec's default AIF1
-configuration.
+[ paulmck: Drop two-byte support per Arnd Bergmann feedback. ]
+[ paulmck: Apply feedback from Naresh Kamboju. ]
+[ Apply Geert Uytterhoeven feedback. ]
 
-Fixes: fd0ea9cd9698 ("ASoC: samsung: Add sound support for Midas boards")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20261021101750.3297770-5-m.szyprowski@samsung.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Palmer Dabbelt <palmer@rivosinc.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: <linux-sh@vger.kernel.org>
+Acked-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Stable-dep-of: f45711b39e03 ("sh: Select BINFMT_FLAT_NO_DATA_START_OFFSET for !MMU")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/samsung/midas_wm1811.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ arch/sh/Kconfig               | 1 +
+ arch/sh/include/asm/cmpxchg.h | 3 +++
+ 2 files changed, 4 insertions(+)
 
-diff --git a/sound/soc/samsung/midas_wm1811.c b/sound/soc/samsung/midas_wm1811.c
-index fe1478bf63908..5b76ec618a91d 100644
---- a/sound/soc/samsung/midas_wm1811.c
-+++ b/sound/soc/samsung/midas_wm1811.c
-@@ -26,7 +26,8 @@
-  */
- #define MCLK1_RATE 24000000U
- #define MCLK2_RATE 32768U
--#define DEFAULT_FLL1_RATE 11289600U
-+/* Matches the codec's default AIF1 configuration: 48kHz, 256fs */
-+#define DEFAULT_FLL1_RATE 12288000U
+diff --git a/arch/sh/Kconfig b/arch/sh/Kconfig
+index a0593f6ce0e0f..dbbfc9ffbb955 100644
+--- a/arch/sh/Kconfig
++++ b/arch/sh/Kconfig
+@@ -16,6 +16,7 @@ config SUPERH
+ 	select ARCH_HIBERNATION_POSSIBLE if MMU
+ 	select ARCH_MIGHT_HAVE_PC_PARPORT
+ 	select ARCH_WANT_IPC_PARSE_VERSION
++	select ARCH_NEED_CMPXCHG_1_EMU
+ 	select CPU_NO_EFFICIENT_FFS
+ 	select DMA_DECLARE_COHERENT
+ 	select GENERIC_ATOMIC64
+diff --git a/arch/sh/include/asm/cmpxchg.h b/arch/sh/include/asm/cmpxchg.h
+index 0ed9b3f4a5779..3d5ca061ffba3 100644
+--- a/arch/sh/include/asm/cmpxchg.h
++++ b/arch/sh/include/asm/cmpxchg.h
+@@ -9,6 +9,7 @@
  
- struct midas_priv {
- 	struct regulator *reg_mic_bias;
-@@ -34,6 +35,7 @@ struct midas_priv {
- 	struct gpio_desc *gpio_fm_sel;
- 	struct gpio_desc *gpio_lineout_sel;
- 	unsigned int fll1_rate;
-+	unsigned int aif1clk_rate;
+ #include <linux/compiler.h>
+ #include <linux/types.h>
++#include <linux/cmpxchg-emu.h>
  
- 	struct snd_soc_jack headset_jack;
- };
-@@ -60,11 +62,12 @@ static int midas_start_fll1(struct snd_soc_pcm_runtime *rtd, unsigned int rate)
- 	if (!rate)
- 		rate = priv->fll1_rate;
- 	/*
--	 * If no new rate is requested, set FLL1 to a sane default for jack
--	 * detection.
-+	 * If no new rate is requested, set FLL1 to the rate the codec's AIF1
-+	 * is currently configured for, as its digital paths can be powered
-+	 * up without an active stream.
- 	 */
- 	if (!rate)
--		rate = DEFAULT_FLL1_RATE;
-+		rate = priv->aif1clk_rate ?: DEFAULT_FLL1_RATE;
- 
- 	if (rate != priv->fll1_rate && priv->fll1_rate) {
- 		/* while reconfiguring, switch to MCLK2 for SYSCLK */
-@@ -130,6 +133,7 @@ static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
- 				struct snd_pcm_hw_params *params)
+ #if defined(CONFIG_GUSA_RB)
+ #include <asm/cmpxchg-grb.h>
+@@ -56,6 +57,8 @@ static inline unsigned long __cmpxchg(volatile void * ptr, unsigned long old,
+ 		unsigned long new, int size)
  {
- 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
-+	struct midas_priv *priv = snd_soc_card_get_drvdata(rtd->card);
- 	unsigned int pll_out;
- 
- 	/* AIF1CLK should be at least 3MHz for "optimal performance" */
-@@ -138,6 +142,8 @@ static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
- 	else
- 		pll_out = params_rate(params) * 256;
- 
-+	priv->aif1clk_rate = pll_out;
-+
- 	return midas_start_fll1(rtd, pll_out);
- }
- 
+ 	switch (size) {
++	case 1:
++		return cmpxchg_emu_u8(ptr, old, new);
+ 	case 4:
+ 		return __cmpxchg_u32(ptr, old, new);
+ 	}
 -- 
 2.53.0
 
