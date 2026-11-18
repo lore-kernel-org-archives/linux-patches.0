@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018851;
-	b=Q+DhM4Qy8oUL7Z+na2o2eg0W8UxBMLftrlotIK+9Bg4STIwrmFDY730RVCktYsfrQ7+U
-	 kn4xMkAKz/4dcf7U9359T7NelSD1MZNiE/ifwaMIlzSE32g1NTfyBmf85j7L914iVT8yK
-	 9v2jg6XkRkzcygwqTE103JxNFaqG9QalFo8q8T+gszGu3rOPczjpGAqUnvr5k9qDqSNNd
-	 dygAMHiIp6yFB5FkImVS2S/0YPezBu2DaB2IBErsJDMuU1zloGNCasifMpB++wJgrNT80
-	 fM6HfFXju2Sw4A7DzR+AiOjo8vJiwocgCxtYdEE1+I/C3Ei9DN/N/ivrYZnvR+URjfQ==
+	t=1795018854;
+	b=rVOXVBr3aegxyxx6Ce9wqaV7L1aRCgADXCSrO8sbHx+9rm1VZ445ZcbVqNJKcpNmE6ke
+	 X56grYtntX8TWqUa1hpN61Inck9g0DybPP3Jvcs7CZJVWmWqC6mCcPF9PUAjSIMxM1JBh
+	 +JjvtJ/Mmtc4d8Pi1plTOsjv9kVHPbTiNL/iFqtkMjVx/5b4n0TxoR+5v0x7v8yiuJ48I
+	 L86J+DBZ269mx3XWvH5JDqbXOJUjtP7FOwc+WG6U2X1FUm5xEv65zOclG6BwC8Ca7tvez
+	 SoSSfNV1yslS3Ggjg/9Ri/f7Ezkt1ZobNgG7ttUCMjALQ8IU60dJ+kdZxKoqHFpKBJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018851;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018854;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=r/ti0EudLSujIbhMUi6Tody4uluzcd2pu6aa6RKPUPw=;
-	b=1cJbm0uGx0X7rrMQWeOosbU9duNd+0ppoH6CxrLfBbWr1SZLLlAm2Gegd6QKsKk5I7FC
-	 qAcwjpmkEAjyROV5a4sSxAsrWU3VUvGc93P286F6NUWQllqVmKJjOwTIocLAQ3D02hZoQ
-	 XYUPpxZOT+8k+8XuwlDUhaHM0pnRzr+wfoHReP12/YHSrcWk1JvHpmKE2oNxcrtdrfZmL
-	 X74HVg7wVE0yTvCV8asSVo8HiYIqvNu34tF+oNlQBzorA1YfqjZE4TDgQXp44/TO0bvnh
-	 jAvnWouY+uPLS3DCtBZjHbaqySR9Sy3o38M/RfpSZzbdODI3/uTtuj/iS2SUNQDZxJg==
+	bh=nG/dcYTZSAOofmVIa3v0M644Vc6K+NPzquUihaQT04w=;
+	b=3LFZfQY9i8MlwFLwJhsCJqe7r8ZUDBG/WSMXsgus67h2Xw8gACd6BiAVG82UMfXyBi74
+	 z8kf32EGcSpzdYzQBtr/2xxuA93ZtEHJraODNyWHDuQKp4lz5/okVVYo/UBYq2krX/3P+
+	 Wgy6qWY5V1fH6gqWGkEbaFzqyKXYM7sFVBgD6ooqkkNmg1BEPcbcnTCw+qQSlIStxyk7s
+	 scrgUib74ac0y6fmBHqNesHVBSOwJrR6YUoWryzWIpQrGXZknHVniHY0yGdRgTgqaiGPl
+	 G7VD4qYt71IsI/JcxNjVROrat/HmKc4ozeMhzoN7QHzsvcnJE/NZccpbeLDFqTN8ZXQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1DeM6F9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwdfWgC6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59ABE606A31C;
-	Wed, 18 Nov 2026 16:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247AC606A31C;
+	Wed, 18 Nov 2026 16:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G1DeM6F9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC281F000C5;
-	Wed, 18 Nov 2026 16:20:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GwdfWgC6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778CF1F000C5;
+	Wed, 18 Nov 2026 16:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018851;
-	bh=r/ti0EudLSujIbhMUi6Tody4uluzcd2pu6aa6RKPUPw=;
+	s=korg; t=1795018854;
+	bh=nG/dcYTZSAOofmVIa3v0M644Vc6K+NPzquUihaQT04w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G1DeM6F9GpzDb1Nuo/xy8Y+oIUfRpFYzFDO+a0+ntyYh27C5szGafS7UZAyioQ+MY
-	 6y/TpyMXSPsAn+PtqBoUDbLdx0AmN2UnJT2kgvfc3bBqG7tRSStsb8XjNxO77BFLg6
-	 nqf3Ne88k2fanXmLvb75jbySqlJOadrm3JvSjYH4=
+	b=GwdfWgC6POTm/p5Xu3Uv6VZPfYCDSAuxNRS5ZTLbYd1qrkQF8toU5+ATVinJBd89z
+	 3G3Fq5OSZi20nfCDjDuA6G2KMbATUNzBr8BpM9UHoK+uA3CnAn8k3Ou3XXeR9y0zSq
+	 VJGAHZ2A4cCWf/0OdR+YRL+R+Can6eSN6XzC0h7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c388db0347b7fc88fa7a@syzkaller.appspotmail.com,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1386/2651] nilfs2: fix link count underflow when removing corrupted directory
-Date: Wed, 18 Nov 2026 15:43:46 +0100
-Message-ID: <20261118150337.910346872@linuxfoundation.org>
+Subject: [PATCH 7.3 1387/2651] PCI/ACPI: Tidy _OSC control bit checking
+Date: Wed, 18 Nov 2026 15:43:47 +0100
+Message-ID: <20261118150337.950855051@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,53 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit 814f5a53b4724798795b15690ff3d1c1d9ac1eb6 ]
+[ Upstream commit 0a1fdf4546ccf2f02845135fa5b36ed90685b220 ]
 
-When removing an empty directory with a corrupted link count (e.g.,
-i_nlink is 1 due to filesystem corruption), nilfs_rmdir() calls
-drop_nlink() via nilfs_do_unlink() and then calls drop_nlink() again
-on the directory inode.  This second call causes an underflow of
-i_nlink, triggering a kernel WARNING in drop_nlink().
+Add OSC_OWNER() helper to prettify checking the _OSC control bits to learn
+whether the platform has granted us control of PCI features.  No functional
+change intended.
 
-Fix this issue by using clear_nlink() instead of drop_nlink() to
-finalize the link count reset for the target directory in nilfs_rmdir().
-Additionally, log a warning message when i_nlink is not 2 before
-removing an empty directory to notify about the link count inconsistency.
-
-Reported-by: syzbot+c388db0347b7fc88fa7a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=c388db0347b7fc88fa7a
-Fixes: d25006523d0b ("nilfs2: pathname operations")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Acked-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Link: https://patch.msgid.link/20261002211828.1293177-3-sathyanarayanan.kuppuswamy@linux.intel.com
+Stable-dep-of: 4fe37866b0d9 ("PCI/ACPI: Centralize pcie_ports_native checking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/namei.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/acpi/pci_root.c | 37 ++++++++++++++++++++++---------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/fs/nilfs2/namei.c b/fs/nilfs2/namei.c
-index e037e0c6e31a3..d326bb1acb118 100644
---- a/fs/nilfs2/namei.c
-+++ b/fs/nilfs2/namei.c
-@@ -341,10 +341,16 @@ static int nilfs_rmdir(struct inode *dir, struct dentry *dentry)
+diff --git a/drivers/acpi/pci_root.c b/drivers/acpi/pci_root.c
+index 88c65f34e3058..756dc2f055f51 100644
+--- a/drivers/acpi/pci_root.c
++++ b/drivers/acpi/pci_root.c
+@@ -993,6 +993,12 @@ static void acpi_pci_root_release_info(struct pci_host_bridge *bridge)
+ 	__acpi_pci_root_release_info(bridge->release_data);
+ }
  
- 	err = -ENOTEMPTY;
- 	if (nilfs_empty_dir(inode)) {
-+		if (unlikely(inode->i_nlink != 2))
-+			nilfs_warn(dir->i_sb,
-+				"inconsistent empty directory link count %u (ino=%llu)",
-+				inode->i_nlink,
-+				(unsigned long long)inode->i_ino);
++#define OSC_OWNER(ctrl, bit, flag)		\
++	do {					\
++		if (!((ctrl) & (bit)))		\
++			flag = 0;		\
++	} while (0)
 +
- 		err = nilfs_do_unlink(dir, dentry);
- 		if (!err) {
- 			inode->i_size = 0;
--			drop_nlink(inode);
-+			clear_nlink(inode);
- 			nilfs_mark_inode_dirty(inode);
- 			drop_nlink(dir);
- 			nilfs_mark_inode_dirty(dir);
+ struct pci_bus *acpi_pci_root_create(struct acpi_pci_root *root,
+ 				     struct acpi_pci_root_ops *ops,
+ 				     struct acpi_pci_root_info *info,
+@@ -1003,6 +1009,7 @@ struct pci_bus *acpi_pci_root_create(struct acpi_pci_root *root,
+ 	int node = acpi_get_node(device->handle);
+ 	struct pci_bus *bus;
+ 	struct pci_host_bridge *host_bridge;
++	u32 ctrl, ext_ctrl;
+ 
+ 	info->root = root;
+ 	info->bridge = device;
+@@ -1028,21 +1035,21 @@ struct pci_bus *acpi_pci_root_create(struct acpi_pci_root *root,
+ 		goto out_release_info;
+ 
+ 	host_bridge = to_pci_host_bridge(bus->bridge);
+-	if (!(root->osc_control_set & OSC_PCI_EXPRESS_NATIVE_HP_CONTROL))
+-		host_bridge->native_pcie_hotplug = 0;
+-	if (!(root->osc_control_set & OSC_PCI_SHPC_NATIVE_HP_CONTROL))
+-		host_bridge->native_shpc_hotplug = 0;
+-	if (!(root->osc_control_set & OSC_PCI_EXPRESS_AER_CONTROL))
+-		host_bridge->native_aer = 0;
+-	if (!(root->osc_control_set & OSC_PCI_EXPRESS_PME_CONTROL))
+-		host_bridge->native_pme = 0;
+-	if (!(root->osc_control_set & OSC_PCI_EXPRESS_LTR_CONTROL))
+-		host_bridge->native_ltr = 0;
+-	if (!(root->osc_control_set & OSC_PCI_EXPRESS_DPC_CONTROL))
+-		host_bridge->native_dpc = 0;
+-
+-	if (!(root->osc_ext_control_set & OSC_CXL_ERROR_REPORTING_CONTROL))
+-		host_bridge->native_cxl_error = 0;
++
++	ctrl = root->osc_control_set;
++	ext_ctrl = root->osc_ext_control_set;
++
++	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_NATIVE_HP_CONTROL,
++		  host_bridge->native_pcie_hotplug);
++	OSC_OWNER(ctrl, OSC_PCI_SHPC_NATIVE_HP_CONTROL,
++		  host_bridge->native_shpc_hotplug);
++	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_AER_CONTROL, host_bridge->native_aer);
++	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_PME_CONTROL, host_bridge->native_pme);
++	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_LTR_CONTROL, host_bridge->native_ltr);
++	OSC_OWNER(ctrl, OSC_PCI_EXPRESS_DPC_CONTROL, host_bridge->native_dpc);
++
++	OSC_OWNER(ext_ctrl, OSC_CXL_ERROR_REPORTING_CONTROL,
++		  host_bridge->native_cxl_error);
+ 
+ 	acpi_dev_power_up_children_with_adr(device);
+ 
 -- 
 2.53.0
 
