@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028722;
-	b=RDsL+n1deC6GCKalyDMETc39L2uw5Q8mdd59o05cF6YggL9Tz6X2eS5bE7l1na05/6l1
-	 oZj6kysg7u9Zz/Srn1Eo1NmoT5vBflB17xPGyfDIXKpr/mfmuhPjuwLUXVM6zIeD9lnJx
-	 9c+r6+Io+mATXT8z0gZPtZAO4t2QrfT9JqhEBdhUx7TFcifqVPNmynTsgVTfBcxosaFSH
-	 HuHdZPZriCt3WvwblHXbG64cdSap/WmsTsrGx64iXR08KapXdSMtoPAPWW21uRODx3nxn
-	 iFZPYj1F4/1wiuqUzS8n0ok7UHkzeTGdunPl20Cvg8htS8kd3LFAeqpZbL7IoQYhzPA==
+	t=1795028724;
+	b=3uu6B6DdtBybswJNB3oyNUfwQ6ICjpWQPGBoKdHvMbU9q1Ht3fFNOTg+JmlnEMC24Sf/
+	 PL6HJIPr5p2esR+ocBmPopcZVOnNZg4Zfg599KAYfMl+AsVWlWorAx4shctTKuFcEJxHg
+	 yPtJWWuYvSvTG3uhDmtodtlnQII1RCS9wQm5LcDmqL9A0nA2QD0iUPFnbQCCC0tFJ/03q
+	 U5+AEmTsRba6uScI5SdrSIRX5FdiNeZoXrxPmOCGPwyiGf9PrLEFyrusgojNZmj53O+Cv
+	 A7r+kvBFdxhM1f3iJuhGRk6kuCHEt+uNee2asM+dT1VdDUIhUMjQOL7bCO99XwlkLeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028722;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028724;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EQ6uA3gi9qYclfWS4ryrs3es9AjMdY3es/wS9XHL1cI=;
-	b=U9WhdIrSq9b9hZCwtC5OEXa/pgAYPLmgF4oJDk0Gr5hrQzRza611kFCf1eq1rmGMB4Tl
-	 NHWO8mCkNE0yIcfbxDELS0ygfvxwPPYvaEUO0aFJNBwxjoYQmePMV9US+8OdX7cSghn+0
-	 M4xb+Q/iyjgPIIBEr3ajTN2PwA0VfA7/dlJyktSE3J2mx86tsTPw+rqmxk8Pscljaa3Qc
-	 kXMuIhRP6Mir9W6foxjrg3DuPO+T/Qb78+g5YToWAnegeP9T3woj1g7hxXr9yUHcuAw6p
-	 SEZE1TKMmjuh48n5KvA8TeyHVhA2pf2AF6vP4E15TWiwznyrDjRK32id3d/Q0lmoY9Q==
+	bh=GhgZAhXSuT3YB3Dm+iB34gCY8T9mwckL9339e3UX2X4=;
+	b=yY/x51Pk0eKKoG7gL7tMMee0EXp2cAwGVXbfW7BQdHHCqA3lVcJjxVssKTBWAZrxFcw4
+	 u/AOeQLdgXYSORjqWXFYMckxsZrM/e6pIr5SgEkp8t7jGodWdjPOb9fSsPDiyUY2BUGOB
+	 fe6t7L+JQGyxZohIijx9JcBP3J+GBoB1ZdXdN8W6oEi9frFWvNiLtT3cLPsahylygxRmW
+	 6j2RtuXxCNjgWkfy+Ym+QI52vm6ZpZDSQm2O1Re7dfXFb0v2sTUk7mZGfOa3/AR66EBFS
+	 YXfNsBkvHKfzo6bvR9I43HCqWnJJBqPfk8vSS2gdnsXc9/L27XXlqyMMzQNfDtV7ZjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ewciUPVz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKUx6WDZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94F4606A337;
-	Wed, 18 Nov 2026 19:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FB9606A337;
+	Wed, 18 Nov 2026 19:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ewciUPVz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D811F000C5;
-	Wed, 18 Nov 2026 19:05:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bKUx6WDZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C261F000C5;
+	Wed, 18 Nov 2026 19:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028721;
-	bh=EQ6uA3gi9qYclfWS4ryrs3es9AjMdY3es/wS9XHL1cI=;
+	s=korg; t=1795028724;
+	bh=GhgZAhXSuT3YB3Dm+iB34gCY8T9mwckL9339e3UX2X4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ewciUPVz490mIYwzvP/x3EPl6bWOO6XFapDq4BbZ9lL10A6rx22am1Fsjb1qnU+yt
-	 iUz3+jjv2DtTdZ1g6gg0a0R91iWhNIiXQSZgf+tiRVlUDZxUkDf3AkrE7MCzUiOPjn
-	 vBuU7ubJ8PKg80sQlw5K60HMjSnRmYJxGwLNWxmc=
+	b=bKUx6WDZVi1rqdPJICBqMd5g8QkcZ1MimzNfbHKfBkj9NIPKWEHXvfysgioQS9QOm
+	 NNZhxKDkT9vTGzQ+/Njj2qITSmPGJCHTVJ85oX+7ychy7XGzVnRQF0tcG8dsb/IdwD
+	 At2smJFlMyKrcOAcHtrVEucWTumQRWQFHusMg7RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dylan Johnson <dgj@amazon.com>,
-	YouYou Yu <youyouyu@amazon.com>,
-	Gunnar Kudrjavets <gunnarku@amazon.com>,
-	Jan Kara <jack@suse.cz>,
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0095/1756] quota: initialize dquot cache before mounting rootfs
-Date: Wed, 18 Nov 2026 15:37:02 +0100
-Message-ID: <20261118150012.027464428@linuxfoundation.org>
+Subject: [PATCH 6.12 0096/1756] ksmbd: let the owner read and change the DACL when no ACE names it
+Date: Wed, 18 Nov 2026 15:37:03 +0100
+Message-ID: <20261118150012.066346923@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,135 +68,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YouYou Yu <youyouyu@amazon.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit e21a6f39aa6d0336ffbf5f34e5fa20ff8de36773 ]
+[ Upstream commit ffc855fe16afe02b22305111aa68cd8d07360941 ]
 
-On some systems, a tmpfs backed rootfs is extensively used throughout
-system's lifecycle. tmpfs quotas are needed to limit per user rootfs
-usage. However, booting with CONFIG_TMPFS_QUOTA=y, an initramfs, no root=
-and "initramfs_options=usrquota" panics at boot:
+smb_check_perm_dacl() refuses the owner when neither its DACL lookup nor
+the POSIX ACL fallback matches. The owner then cannot read or replace
+the DACL over SMB. MS-DTYP 2.5.3.2 grants the owner READ_CONTROL and
+WRITE_DAC unless an OWNER RIGHTS ACE applies.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000000
-  RIP: 0010:dqget+0x1ac/0x490
-  Call Trace:
-   __dquot_initialize
-   dquot_initialize
-   shmem_get_inode
-   shmem_fill_super
-   ...
-   mnt_init
-   vfs_caches_init
-   start_kernel
+An empty DACL allows the owner's explicit requests for these rights but
+refuses MAXIMUM_ALLOWED. smb2_open() uses that check for the maximal
+access reply (MS-SMB2 3.3.5.9.5), so even a READ_CONTROL open fails when
+it asks for that reply.
 
-The rootfs is mounted from mnt_init(), but the dquot hash table and
-cache are only set up later by dquot_init(), an fs_initcall. Creating
-the root inode of a quota enabled rootfs thus dereferences the NULL
-dquot_hash in dqget().
+Grant the owner's implicit rights on both paths, for explicit requests
+and MAXIMUM_ALLOWED, unless an OWNER RIGHTS ACE applies.
 
-Rename dquot_init() to dquot_cache_init() and call it from
-vfs_caches_init() before mnt_init(). The slab, percpu and early
-workqueue code it relies on is available there, and the workqueue
-rescuer and shrinker debugfs entries are set up later by their own
-subsystems. Keep the sysctl registration in an fs_initcall, as done
-for the dcache, inode and mount sysctls. This only moves existing
-allocations earlier in boot.
-
-Fixes: 278033a225e1 ("fs: Add 'initramfs_options' to set initramfs mount options")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Co-developed-by: Dylan Johnson <dgj@amazon.com>
-Signed-off-by: Dylan Johnson <dgj@amazon.com>
-Signed-off-by: YouYou Yu <youyouyu@amazon.com>
-Reviewed-by: Gunnar Kudrjavets <gunnarku@amazon.com>
-Link: https://patch.msgid.link/20261021181217.20171-1-youyouyu@amazon.com
-Signed-off-by: Jan Kara <jack@suse.cz>
-[ sashal: adjusted context to match existing quota initialization declarations and surrounding includes ]
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: added the missing sid_owner_rights constant definition for OWNER_RIGHTS SID S-1-3-4 ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dcache.c              |  2 ++
- fs/quota/dquot.c         | 10 ++++++----
- include/linux/quotaops.h |  5 +++++
- 3 files changed, 13 insertions(+), 4 deletions(-)
+ fs/smb/server/smbacl.c | 37 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/fs/dcache.c b/fs/dcache.c
-index ff9d401e18539..55270ad327b48 100644
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -32,6 +32,7 @@
- #include <linux/bit_spinlock.h>
- #include <linux/rculist_bl.h>
- #include <linux/list_lru.h>
-+#include <linux/quotaops.h>
- #include "internal.h"
- #include "mount.h"
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index d8c01e775d941..42a638d1d2b97 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -27,6 +27,9 @@ static const struct smb_sid creator_owner = {
+ /* security id for everyone/world system group */
+ static const struct smb_sid creator_group = {
+ 	1, 1, {0, 0, 0, 0, 0, 3}, {cpu_to_le32(1)} };
++/* security id for owner rights */
++static const struct smb_sid sid_owner_rights = {
++	1, 1, {0, 0, 0, 0, 0, 3}, {cpu_to_le32(4)} };
  
-@@ -3204,6 +3205,7 @@ void __init vfs_caches_init(void)
- 	inode_init();
- 	files_init();
- 	files_maxfiles_init();
-+	dquot_cache_init();
- 	mnt_init();
- 	bdev_cache_init();
- 	chrdev_init();
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index 7c3095622872f..1912ebf2bafdb 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -3020,7 +3020,7 @@ static struct ctl_table fs_dqstats_table[] = {
- #endif
- };
+ /* security id for everyone/world system group */
+ static const struct smb_sid sid_everyone = {
+@@ -1466,6 +1469,7 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 	int i, found = 0;
+ 	unsigned int access_bits = 0, denied = 0;
+ 	struct smb_ace *others_ace = NULL;
++	bool or_ace = false;
+ 	struct posix_acl_entry *pa_entry;
+ 	unsigned int sid_type = SIDOWNER;
+ 	unsigned short ace_size;
+@@ -1498,6 +1502,8 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 	is_owner = uid == from_kuid(&init_user_ns, vfsuid_into_kuid(vfsuid));
  
--static int __init dquot_init(void)
-+void __init dquot_cache_init(void)
- {
- 	int i, ret;
- 	unsigned long nr_hash, order;
-@@ -3028,8 +3028,6 @@ static int __init dquot_init(void)
- 
- 	printk(KERN_NOTICE "VFS: Disk quotas %s\n", __DQUOT_VERSION__);
- 
--	register_sysctl_init("fs/quota", fs_dqstats_table);
--
- 	dquot_cachep = kmem_cache_create("dquot",
- 			sizeof(struct dquot), sizeof(unsigned long) * 4,
- 			(SLAB_HWCACHE_ALIGN|SLAB_RECLAIM_ACCOUNT|
-@@ -3071,7 +3069,11 @@ static int __init dquot_init(void)
- 					   WQ_UNBOUND | WQ_MEM_RECLAIM, WQ_MAX_ACTIVE);
- 	if (!quota_unbound_wq)
- 		panic("Cannot create quota_unbound_wq\n");
-+}
- 
-+static int __init init_fs_dquot_sysctls(void)
-+{
-+	register_sysctl_init("fs/quota", fs_dqstats_table);
- 	return 0;
- }
--fs_initcall(dquot_init);
-+fs_initcall(init_fs_dquot_sysctls);
-diff --git a/include/linux/quotaops.h b/include/linux/quotaops.h
-index 2334a02c30149..06563b0baccfd 100644
---- a/include/linux/quotaops.h
-+++ b/include/linux/quotaops.h
-@@ -40,6 +40,7 @@ void __quota_error(struct super_block *sb, const char *func,
- /*
-  * declaration of quota_function calls in kernel.
-  */
-+void dquot_cache_init(void);
- int dquot_initialize(struct inode *inode);
- bool dquot_initialize_needed(struct inode *inode);
- void dquot_drop(struct inode *inode);
-@@ -206,6 +207,10 @@ static inline int sb_has_quota_active(struct super_block *sb, int type)
- 	return 0;
- }
- 
-+static inline void dquot_cache_init(void)
-+{
-+}
+ 	if (!pdacl->num_aces) {
++		unsigned int allowed = 0;
 +
- static inline int dquot_initialize(struct inode *inode)
- {
- 	return 0;
+ 		/*
+ 		 * An empty (present, zero-ACE) DACL grants no access to
+ 		 * anyone except the object owner's implicit READ_CONTROL
+@@ -1506,9 +1512,14 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 		 * not let trailing bytes after a zero-ACE DACL become an
+ 		 * implicit grant.
+ 		 */
+-		if (!is_owner ||
+-		    (*pdaccess & ~(FILE_READ_CONTROL_LE | FILE_WRITE_DAC_LE)))
++		if (is_owner)
++			allowed = READ_CONTROL | WRITE_DAC;
++		if (*pdaccess & FILE_MAXIMAL_ACCESS_LE)
++			requested |= allowed;
++		if (!allowed || requested & ~allowed)
+ 			rc = -EACCES;
++		else
++			*pdaccess = cpu_to_le32(requested);
+ 		goto err_out;
+ 	}
+ 
+@@ -1585,6 +1596,9 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 			found = 1;
+ 			break;
+ 		}
++		if (!compare_sids(&sid_owner_rights, &ace->sid) &&
++		    !(ace->flags & INHERIT_ONLY_ACE))
++			or_ace = true;
+ 		if (!compare_sids(&sid_everyone, &ace->sid) ||
+ 		    !compare_sids(&sid_authusers, &ace->sid))
+ 			others_ace = ace;
+@@ -1629,8 +1643,23 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ 		if (others_ace) {
+ 			ace = others_ace;
+ 		} else {
+-			ksmbd_debug(SMB, "Can't find corresponding sid\n");
+-			rc = -EACCES;
++			unsigned int allowed = 0;
++
++			/*
++			 * No ACE names the owner, who may still read and
++			 * change the DACL unless OWNER RIGHTS applies
++			 * (MS-DTYP 2.5.3.2).
++			 */
++			if (is_owner && !or_ace)
++				allowed = READ_CONTROL | WRITE_DAC;
++			if (*pdaccess & FILE_MAXIMAL_ACCESS_LE)
++				requested |= allowed;
++			if (!allowed || requested & ~allowed) {
++				ksmbd_debug(SMB, "Can't find corresponding sid\n");
++				rc = -EACCES;
++				goto err_out;
++			}
++			*pdaccess = cpu_to_le32(requested);
+ 			goto err_out;
+ 		}
+ 	}
 -- 
 2.53.0
 
