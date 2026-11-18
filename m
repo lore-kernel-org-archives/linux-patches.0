@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038863;
-	b=e4j2Ygq84phs60X4VyNI67sGDmOv0+D7lm59UQgG5aPuwXG2IGgdaKIlJgfW3psFGMdP
-	 dVIJyahm3PJWvaZw2nQd0gRy4Sli4nZ35R6o4qCd/91U4QriDlRXrQHhW/QeJp8Ipy2Ye
-	 eRwiohiHrk6u3Nv8erQcNzqd5eonIOPX475CKjN6hYWRw6i/up3OsB3O0B+KHjT715XKK
-	 v8VzeLt0Cp3ix3K1ltmd51q3OFJhv4Dtybo3TacZWdsh5AeMzWYk6gv79QeScdp8PAqKe
-	 twTma+cLCv85OcSZ+2E0cfkQGrnMINNRd6iDvUOVzmiglUI+2I1bHlsaFT7xLTrlCpA==
+	t=1795038865;
+	b=QqAMnsDsEtF7oWxEsUmtLmaeisz7H6ujUWae6Cs3cRqV1YLzn6pq0lpd9iRyXsxcnH7I
+	 BKfPV70rKYRzMmfzVWuRVrFozq4jvrDyd9gUhDhGSarrP/6URciNCrWyYCIR6ZjeWupmZ
+	 N29PjMWTKo67SrsTs8rcrUMd1/g/EWZbqkxRaUUPf7OP9+bvAVmPDoxLXhOEpj88FnO0D
+	 k9CSVtZwel7p+zIBvbcScZ2bK4hsrxvcF8bxLU7YSlNNSi5TTaVOKSsTXJw9pDJrHj0PM
+	 pqn0zmJSUyQSBFBj3kf4MeB6qSeYUpaj4owVDKF5Ub66wmQnWKhyuBG4MH2UL692uQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038865;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LzYUh62Qj6zWqf35aJdd7BJR/odabu1Dp+tlJysI9Zg=;
-	b=jFPp/mDO/Sh7FKv+X3AwSolLh2MAnuIGTwxetQrIJNxnAptYPpVxL6uhPeasBXEveGBr
-	 SEvWTo2bfRTLmPuVbszgeZHZXFTeE6dne6kRL0aGpt1JP2u9C4qQ/wIr2Olbt/r2gJNmy
-	 n0DBGudmJYQB7wn1BnHS7Z0JK5NX7+CZdXDI7xGoqFH/M5nChTXBNlNJboIapMqZuYFMf
-	 6uXKc0zR64KzGMwFN0uoFvBbVMceubx2SsKTGbGNlsDn0skx+Ccb31hrBmxsjIrGXLpdA
-	 LPcai+z4YSXzT3Frfgi35iQ6ZtUcqb39pYSQjqWnl2x0qQpahmcIE1OtbvqOjC/6MBA==
+	bh=xzNLAWNKPhiLGRRpOo/jp/YcZfRY7pGkMWplb7DY0W4=;
+	b=bkru2x+lQL9Bx+pH/hOP/ZdutEo6nqLBYYC0hGVOJSwQlCccv1CFUe78XJTJYaAB+x4f
+	 o/36ip3dze3wKfCLm+D9Hd+ufDZcM78kGo6jngakRPJrpQATTlEq25g31bj2F5Sltjct7
+	 L6OqX90eiSQfOqRz3rjc5xlQTqbghv8aJKt5WlCp+6iCBe5ELyxbmYg9euDSJYrNh+tSX
+	 p5+HPsH3R9zi8ig4hCMz22YtvhmKc5GLiAtGAhnDaVx0OcIrkuCCTOnO0JvGuiAm+yh4Y
+	 I5Ynsr+E8G+I1kYFyaPwMAOvKrhY3HfXlqHWAyJHUjHQN3e8M7neHnvvFM4RE1eoEuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvZ+mtL1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z5lcyg6f;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053B6606A31C;
-	Wed, 18 Nov 2026 21:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB883606A31C;
+	Wed, 18 Nov 2026 21:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvZ+mtL1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 146961F000C4;
-	Wed, 18 Nov 2026 21:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Z5lcyg6f
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6AF01F000C4;
+	Wed, 18 Nov 2026 21:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038862;
-	bh=LzYUh62Qj6zWqf35aJdd7BJR/odabu1Dp+tlJysI9Zg=;
+	s=korg; t=1795038865;
+	bh=xzNLAWNKPhiLGRRpOo/jp/YcZfRY7pGkMWplb7DY0W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PvZ+mtL1l6IGz4MJ0RVFefYZtehy8ea/XUIffY5TsiV/6LmHslbYYZh69vYnkbDP1
-	 +2TWTZhfctLOI2bPefYkpFNwrOAdO9CFSonmK7Z3hRsgJ6j9BwKTBRBFwus4AgYLZ/
-	 iUCx4t4GqzkVQGbHJb2BRH9otgjMUlWlW8x9m7wU=
+	b=Z5lcyg6fzl7tlfZxo0YIvCkoh1a+f0tzn2IRH8wmsJWYBQ2r5347zoSYNv81BmSxZ
+	 8P+emfOshAhh5FtgiNE0hW0vIfu6J38T94X0XOFpMxu7ZkRIV/Px3a9a48Wu9Bv6RV
+	 L+h3JEncKHMfIAeRLVgw0aR/wjdZ6SNrlCdg9zhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	stable@kernel.org,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Kyle Zeng <kylebot@openai.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1894/3318] can: dev: can_dropped_invalid_skb: drop CAN XL frames on non-CAN XL devices
-Date: Wed, 18 Nov 2026 15:41:56 +0100
-Message-ID: <20261118150418.829228228@linuxfoundation.org>
+Subject: [PATCH 6.6 1895/3318] mptcp: pm: kernel: use RCU to free endpoint listeners
+Date: Wed, 18 Nov 2026 15:41:57 +0100
+Message-ID: <20261118150418.859523822@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,59 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol@kernel.org>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 0fce44e29fce4b07642491b098afb41bd571e4f2 ]
+[ Upstream commit 49b09ae0bf57b4230187d4cdd0a370558e44a6e8 ]
 
-Sending a PF_PACKET bypasses the CAN framework logic and can directly
-reach a CAN driver's xmit() function. The PF_PACKET framework only
-checks that skb->len does not exceed the net_device MTU.
+mptcp_pm_nl_create_listen_socket() starts the TCP listener directly
+instead of going through mptcp_listen(). It consequently misses setting
+SOCK_RCU_FREE on the parent MPTCP socket.
 
-For a CAN device that is not CAN XL capable, anything above CANFD_MTU
-(72 bytes) is therefore dropped before it reaches the driver. However,
-CAN XL frames are variable length. can_is_canxl_skb() accepts lengths in
-the range CANXL_HDR_SIZE + CANXL_MIN_DLEN up to CANXL_MTU, i.e. 13 to
-2060 bytes.
+tcp_child_process() can invoke the listener's subflow_data_ready()
+callback without holding the MPTCP parent lock or a reference to the
+parent. An authenticated MP_JOIN racing with endpoint teardown can
+therefore access the parent after its last reference has been dropped.
+The ADD_ADDR error path can also close an already published listener.
 
-As a result, an ETH_P_CANXL skb with a length between 13 and 72 bytes
-can pass both the MTU and the can_dropped_invalid_skb() checks.
+Set SOCK_RCU_FREE before __inet_listen_sk() publishes the TCP listener,
+matching mptcp_listen(). This protects the parent on every subsequent
+close path, including a failed endpoint addition.
 
-A driver that does not support CAN XL will interpret canxl_frame->flags
-as a length because of the overlap with can_frame->len. And because
-CANXL_XLF is set, the resulting length is between 128 and 255. For
-drivers that do not check can_frame->len before copying can_frame->data,
-as most drivers do, this results in a buffer overflow of up to 247
-bytes.
-
-Drop ETH_P_CANXL skbs if the device does not have the CAN_CAP_XL
-capability. Keep can_is_canxl_skb() for the validation of CAN XL skbs.
-
-Closes: https://sashiko.dev/#/patchset/20260731-master-v5-0-5b27029dee20@qq.com?part=1
-Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
-Signed-off-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20260731-drop_canxl_frames-v1-1-7387b70353b3@kernel.org
-Cc: stable@kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[ sashal: Replaced unavailable can_cap_enabled(dev, CAN_CAP_XL) with can_is_canxl_dev_mtu(dev->mtu). ]
+Fixes: 1729cf186d8a ("mptcp: create the listening socket for new port")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261030042255.74216-1-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: redirected the unchanged hunk to the original path-manager source file because the code had not been moved ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index 6fb1f9b2a9e20..4f5eec05db220 100644
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -354,7 +354,8 @@ bool can_dropped_invalid_skb(struct net_device *dev, struct sk_buff *skb)
- 		break;
- 
- 	case ETH_P_CANXL:
--		if (!can_is_canxl_skb(skb))
-+		if (!can_is_canxl_dev_mtu(dev->mtu) ||
-+		    !can_is_canxl_skb(skb))
- 			goto inval_skb;
- 		break;
- 
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index 8eb7fed89d6fc..81d78a5121fb1 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1273,6 +1273,7 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+ 	 * old status is known (TCP_CLOSE).
+ 	 */
+ 	inet_sk_state_store(newsk, TCP_LISTEN);
++	sock_set_flag(newsk, SOCK_RCU_FREE);
+ 	lock_sock(ssk);
+ 	WRITE_ONCE(mptcp_subflow_ctx(ssk)->pm_listener, true);
+ 	err = __inet_listen_sk(ssk, backlog);
 -- 
 2.53.0
 
