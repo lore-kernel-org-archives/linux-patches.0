@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038666;
-	b=rOv+k2j11HArfi4VLqWjEsewkpp7zBpUvM2PefKTjGZVtDey9OkNOF5qYqOTmpj3+576
-	 1CdShuc8KBlZxAGqJMjoBWcJhJN2rmGNhyh5eMoyqTCLnRv6IhuSvwuUFo4omGPKcYQMG
-	 ZXmLbCiMgbQCG9a1hSjRr3GmhyitL6OvHzIQNFRypXNWyoYhXeXiKQ6OGzaYLx1wbJ3DQ
-	 5Mrhbqnyu5T3TGUs/J1yOKauLF1yUYykomWO3gg6tlCPj1OW0mSUKag1GyQRT5dG1a9u3
-	 0REc4lJX31fCxdPuFi1gI9tTJn7w9wReHGLXehF4ybfAmaObt1PYr/5N6Y0zxKwQEgA==
+	t=1795038669;
+	b=X9kpnHpcgP8mG5i8X0W+b30EqlNG+xXXT9LpgWpoawmyVtZXnp72AZyLQk+N1dn/KWFM
+	 bYAHMG+24XXJl9xt9JWV/jRSFjSVPtSFlirXSzAGafb+cTtn0s0/dO9QZUaKgGEuS+wg1
+	 83vNwB5hkhd9xNMqRBQG+wEU6jWlwCh478vSWUMZ0rGt37ASMpYiHzzGYt6ewANBaxqLi
+	 Qo69Oy+iZ15bV382Ldec7QIUeIU3np4xqRJPpDqbphnnbm01SaTfgMPB4kl2lxO03zPY3
+	 SeBTwQIxvOWNBFh4plZ01Cz27yqFvbSFwBsPpVT8rH5FBqkxUNf8YhccGVRfBV80z3g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=EGyZfa8PPpbfY/11adGdwSR12VsYAnMxKdcsXWiz21Q=;
-	b=zzLhfofF/K3t0cHjCjej1VNrci1fA+2cRrtfBKUKzDojqJAiqjsXKSNNNmhqgNY9TNCV
-	 cKJzr8DMI4RuUVY1/Nxuo9ybGpqJjbnIEIDKc+3xURRXe4ekOfpmeH+Fh2I27/JvlhK+9
-	 uEnNAqDFpDX9zQ+AATkU9Wthrspza2hBps6KBB2O08DSgbuNBJheoYplYAuSXhK8/AE2k
-	 Xet4bSliOjNOnXlIM11KwKZvs/RSRiXgr/gL9Nv84cHRQXHTNe90XEXG7dO1VcohjWOk+
-	 yaWUygxu8OW6DDFU/8ZcLrab2Ze+km2CUBWqBmJJVqNml3OCDCyUq1jPaqxWW2F4KMg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=xoDg/j4oXZkcfzzsW7h866DhTzv0DJ2iSfmwIe2dVBc=;
+	b=aFmF+cHeW2LJwV973ynw2I7OHRqfu0dwiiCYFeh/GJTmnU40nb46H4t0jt6UmM7uX6at
+	 Jj3TMLScCFp+Tz5rGiODKJ8a2w1Xx8PZMelX0KMPG6DE0lp7QvB1oCDGsj9X1glf7xwXa
+	 X9vm+Cb3fJbrv9X927L8mNNztyAunhf905qiU8SMdpAyASawcgjnqI1AZAO31ms2QpkMJ
+	 Mn9g7YkJ9WmP3/GuBvq4zLl/llmUGlnC7651XluoC9S6PC03e/+iiPtwu41c3jEnESMUx
+	 aB9Vf7xXUzpc1MzeV9YJhbbCfxEWX2F8OJA0r1SGB8ckGy6NKIXsOtpMQGMC/YDoIMw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="iil2/iDy";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1B0MqW0G;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C793606A31C;
-	Wed, 18 Nov 2026 21:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4801E606A31C;
+	Wed, 18 Nov 2026 21:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iil2/iDy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B921F000C4;
-	Wed, 18 Nov 2026 21:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1B0MqW0G
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A261F000C4;
+	Wed, 18 Nov 2026 21:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038666;
-	bh=EGyZfa8PPpbfY/11adGdwSR12VsYAnMxKdcsXWiz21Q=;
+	s=korg; t=1795038668;
+	bh=xoDg/j4oXZkcfzzsW7h866DhTzv0DJ2iSfmwIe2dVBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iil2/iDyGl4eW/l2zcGijOOpn1yQx2lmpheF47TFlQkFP/gxVIvpAg9OrQRmBdAvw
-	 YYjDRAiw3bApjRKRkITk5DmNNIjHDHFhTTgwsUKKnU1DjFbLST1G4vOhVl/H4IIrSe
-	 YN85EAGMf9Y4cRwdNHVQkyddY5gLrlqe/AAOgCmo=
+	b=1B0MqW0GP49c0BXdIfb60BHohU9GIk9wriJMcWdnd7KFuFk+0zxWcXNj0yz3iz78m
+	 jlT1fAu58R9HyRvxFu8Yq+yjQeRew5y+brRyGINVLFreeLWvfqZ/pjKLCnWMbaoKzt
+	 8EKpmlJTxju2cMiP6Ht/B+kZmFEH5C0T55e9HgfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Miklos Szeredi <mszeredi@redhat.com>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1822/3318] virtio_fs: read the vring size under virtio_fs_mutex in ->get_tree
-Date: Wed, 18 Nov 2026 15:40:44 +0100
-Message-ID: <20261118150416.521803832@linuxfoundation.org>
+Subject: [PATCH 6.6 1823/3318] crypto: omap-sham - fix crypto engine cleanup
+Date: Wed, 18 Nov 2026 15:40:45 +0100
+Message-ID: <20261118150416.552838776@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,95 +62,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit e7ccc777a040343b80f95f4cc5c12ce1df3187f4 ]
+[ Upstream commit be51ea091c6563158531e8c74e040552fdb1e28c ]
 
-The vring size was read after virtio_fs_find_instance() had dropped
-virtio_fs_mutex, so a concurrent virtio_fs_remove() could free the
-virtqueue first. The reference from the lookup keeps the virtio_fs
-alive, but not its virtqueues.
+omap_sham_probe() allocates and starts a crypto engine, but the remove
+path does not call the matching crypto_engine_exit(). The probe failure
+path already performs this cleanup.
 
-Hold the mutex across the lookup and the read.
+crypto_engine_alloc_init() creates a kthread worker for processing
+requests. Without crypto_engine_exit() during driver removal, the
+worker is left running after the device is removed.
 
-This issue was found by an in-house static analysis tool.
+Call crypto_engine_exit() after unregistering the algorithms and before
+tearing down the remaining request handling resources. This stops the
+engine and destroys its worker.
 
-Fixes: a7f0d7aab0b4 ("virtiofs: split requests that exceed virtqueue size")
+This issue was found by manual code inspection.
+
+Fixes: 133c3d434d91 ("crypto: omap-sham - convert to use crypto engine")
 Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-[ sashal: Adjusted context to preserve kref_get(&fs->refcount) instead of upstream’s kobject_get(&fs->kobj). ]
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ sashal: adjusted cleanup context to match the existing inline unregister loops and tasklet_kill() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/crypto/omap-sham.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index b5ecbd146301b..d78ad4cc4fc94 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -265,26 +265,23 @@ static int virtio_fs_add_instance(struct virtio_fs *fs)
- 	return 0;
- }
- 
--/* Return the virtio_fs with a given tag, or NULL */
-+/* Return the virtio_fs with a given tag, or NULL.
-+ * Callers hold virtio_fs_mutex, which also keeps the virtqueues alive.
-+ */
- static struct virtio_fs *virtio_fs_find_instance(const char *tag)
- {
- 	struct virtio_fs *fs;
- 
--	mutex_lock(&virtio_fs_mutex);
-+	lockdep_assert_held(&virtio_fs_mutex);
- 
- 	list_for_each_entry(fs, &virtio_fs_instances, list) {
- 		if (strcmp(fs->tag, tag) == 0) {
- 			kref_get(&fs->refcount);
--			goto found;
-+			return fs;
+diff --git a/drivers/crypto/omap-sham.c b/drivers/crypto/omap-sham.c
+index a6b4a0b3ace30..81f178ca426e6 100644
+--- a/drivers/crypto/omap-sham.c
++++ b/drivers/crypto/omap-sham.c
+@@ -2216,6 +2216,7 @@ static int omap_sham_remove(struct platform_device *pdev)
+ 					&dd->pdata->algs_info[i].algs_list[j]);
+ 			dd->pdata->algs_info[i].registered--;
  		}
- 	}
- 
--	fs = NULL; /* not found */
--
--found:
--	mutex_unlock(&virtio_fs_mutex);
--
--	return fs;
-+	return NULL; /* not found */
- }
- 
- static void virtio_fs_free_devs(struct virtio_fs *fs)
-@@ -1488,13 +1485,17 @@ static int virtio_fs_get_tree(struct fs_context *fsc)
- 	 * in fc->iq->priv. Once fuse_conn is going away, it calls ->put()
- 	 * to drop the reference to this object.
- 	 */
-+	mutex_lock(&virtio_fs_mutex);
- 	fs = virtio_fs_find_instance(fsc->source);
-+	if (fs)
-+		virtqueue_size = virtqueue_get_vring_size(fs->vqs[VQ_REQUEST].vq);
-+	mutex_unlock(&virtio_fs_mutex);
-+
- 	if (!fs) {
- 		pr_info("virtio-fs: tag <%s> not found\n", fsc->source);
- 		return -EINVAL;
- 	}
- 
--	virtqueue_size = virtqueue_get_vring_size(fs->vqs[VQ_REQUEST].vq);
- 	if (WARN_ON(virtqueue_size <= FUSE_HEADER_OVERHEAD))
- 		goto out_err;
- 
++	crypto_engine_exit(dd->engine);
+ 	tasklet_kill(&dd->done_task);
+ 	pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.53.0
 
