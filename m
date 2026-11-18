@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045281;
-	b=TWm9+f96s+C0woQBbJ/fXin6dWWBaKFExWmRq4vryyVcz2KfmBZv5Z4exTqLpAAaBDdU
-	 D2SilDnej52QnXZiN3UpYjOwsfCesZjUftbmtH3jT+VzPg/maY6DUYqSD282bbnutRQLi
-	 F0tWDH8WeL9kUeqBngH0vaRQJ6+ZJhUCWtY7XXvzwrA5CO3Z9vs29KtU1sgh2B1wKTCBE
-	 rbRIj4RI1H7nVfnIcD35xAo7hKavMwl9j4rY7NW8/w/XI7FSdhTgrsbVwbdsRVn/uEPMY
-	 Q4KSQ2kypYY3uu7pFX8mtXnioup1eNMLFJEybWflP/yz5SVHXGOlaL4uWmSHwDzJ9hw==
+	t=1795045283;
+	b=hwlHo89rjFltBf/E8XhNEI387UqHt+gOIYDN6S3pbhR0bcEJuqP8jJYfrcyzBVZgj260
+	 jML/IQs69DXirwEkl8FtksudIMgLyvk4+o0zj6hqpIJ0iKQt1WQKgFB0SaYZmSLNoiStV
+	 2GLRXla9GDbJiNLfdWZ8F6ehEhVnoGqWunMuPTriTQtW525ZneOINJTFDSHAa79HtMs00
+	 JiKIQoPFtwOgUpNvod+oA1FJP+dVY6TIzJLsfwquqAz25wakkruSiOqB7ET6A4url1Knh
+	 g8Iz6/EVoIX8IOJh5auf4+VoGButqNzRPiA9PLqrIc4wN9S/6ePx0GhyKX20MkGRjdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045281;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045283;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=j0bWYZka9s9BiOzAKOgvBrblAO8bAtFItACyjri1s/c=;
-	b=m48cvKuNP2z6nYVzPt8JKD3qGZDihkll5mLej288BgFI0j72Au/q2T8Tzthmu8n2XafK
-	 UOoAKsYeBjCTr3k8X4UujzBTnFJW7rVZWANoQORTLtF9HAZJBya7YsKmjpzL7pTbWUacp
-	 xkD112dZ4OFFZFQbbLBJGANDv0PONu3RefRJM6euCSM6VeDbZju/rywIrDwiU2MXQXYku
-	 AfQtEZq0eeT+lKVQKy7jcZY3U4GZyHhqsmV72vh+6eW6lssN3sIHXvjn6/0uGcdZ+N7K4
-	 bHUEx1hlrnr8u5u1j3kS+jpRu/+4ToEDNDrEBBb3n9o2dezsryrn6a0mB7vJoV2sCrg==
+	bh=T7JFgEQ9w7VvIAHABRJ4wKoLKf8YI5AXcaF2H0Gk0es=;
+	b=pAelkHcan3OffNnnEQtawvfpcdd/ZKxJVIeBbo5OkIWh4xmOw6sf6dGna+KgpSk3i3Zk
+	 JKeszskvAn0RFpU/lF4kDw4iBe10DgAtG8clDunx/4P01opzqpptQfvg3fNTeex9WhsBV
+	 WSEQhXrgVlFaNn3w9t01+mZk3XNgmQKZw6ICcH92ZzxPsvHMAZJotl2G4LfupECokxr6s
+	 g8TXIJ0L5/bj4SbYRpIJVqyzFq0bn12UKiFiYcAkTDhXK9ZuWZKTb8ho2Hbmw2vjKVNel
+	 YMi7vWmw9AZlpLwi24vCj7g8uCV4g4Qke8EQSBWiCufWS02FcTe94TlqnCRU7MVtOEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q6fYbGA4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Llcc2GFE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEA9606A320;
-	Wed, 18 Nov 2026 23:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C84606A31C;
+	Wed, 18 Nov 2026 23:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q6fYbGA4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CA21F000C4;
-	Wed, 18 Nov 2026 23:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Llcc2GFE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FB81F000C4;
+	Wed, 18 Nov 2026 23:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045280;
-	bh=j0bWYZka9s9BiOzAKOgvBrblAO8bAtFItACyjri1s/c=;
+	s=korg; t=1795045283;
+	bh=T7JFgEQ9w7VvIAHABRJ4wKoLKf8YI5AXcaF2H0Gk0es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q6fYbGA4KPTqJlqKHC6yK/Mee9STgzRHR39oYU2/XEfsEuqv4KRW2bWWDIrOhw72I
-	 D53I8L8EQac6WagfZP/3GZlOhNv3ospsjX2ttHRcGjyeyLPSgRLlnIwHu7IvlRmlSx
-	 l7t4DuFDM1bwK2PL/Ze0xvuq8KlYO6vVQ//i1KWI=
+	b=Llcc2GFEz1/GjNRvFbD93WrTfW2j94ioasQa5gqLf/oJmGh7Uf3Px5Ac187Y0q+cq
+	 r20XDuMyTl3KY0OjyNG/3BLi/5hEPL/nP7GxUtc5+xzdqm9IBUDVrvm5usSyKVjhpx
+	 P1ptvW8VEpoxWL1lR9+1gL2BOh2+zxzQ2Kz+lvbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Freidkin <freidkin@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Ming Qian <ming.qian@oss.nxp.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0866/2857] media: meson: vdec: size capture planes from the aligned canvas
-Date: Wed, 18 Nov 2026 15:31:40 +0100
-Message-ID: <20261118150232.743362799@linuxfoundation.org>
+Subject: [PATCH 6.1 0867/2857] media: amphion: drain message work before releasing core state
+Date: Wed, 18 Nov 2026 15:31:41 +0100
+Message-ID: <20261118150232.779290135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,51 +71,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Freidkin <freidkin@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit b3a805dd5a83ba8c85e2085d3411eb9975e0aea4 ]
+[ Upstream commit ec95ae226f240ed657834fe4114abb7067e1af2d ]
 
-The decoder writes a whole canvas of ALIGN(width, 32) x ALIGN(height, 32)
-(amvdec_set_canvases()) and reports bytesperline = ALIGN(width, 32), but
-get_output_size() derives sizeimage from the raw width x height.
+vpu_core_unregister() frees core->msg_buffer before cancelling the message
+workers, although core->msg_fifo still uses the buffer as its backing
+storage. A queued worker can read it after it has been freed.
 
-When the width is not a multiple of 32 the planes are too small for the
-advertised stride: for 720x360 NV12M the luma plane is 262144 bytes while
-736 * 360 = 264960 are needed (282624 for the canvas the firmware fills).
-The decoder writes past the buffer, and importing the capture dma-buf
-into DRM fails: drmModeAddFB2() returns -EINVAL, so e.g. Kodi plays the
-sound over a black screen. 1280x720 and 1920x1080 are not affected.
+Drain the core and instance message work first, then release core->vpu
+and the FIFO buffer. This follows the ordering in vpu_core_suspend().
 
-Size the planes from the aligned canvas the hardware actually uses.
-
-Tested on an S905X (GXL p212) board with LibreELEC 12 (6.16.0-rc3):
-720x360 and 1920x1080 H.264 play through V4L2 m2m + DRM PRIME with no
-AddFB2 errors.
-
-Fixes: 3e7f51bd9607 ("media: meson: add v4l2 m2m video decoder driver")
+Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Freidkin <freidkin@gmail.com>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/meson/vdec/vdec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/amphion/vpu_core.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/staging/media/meson/vdec/vdec.c b/drivers/staging/media/meson/vdec/vdec.c
-index 5ea218c1ae682..a280676205fcc 100644
---- a/drivers/staging/media/meson/vdec/vdec.c
-+++ b/drivers/staging/media/meson/vdec/vdec.c
-@@ -34,7 +34,7 @@ struct dummy_buf {
- 
- static u32 get_output_size(u32 width, u32 height)
- {
--	return ALIGN(width * height, SZ_64K);
-+	return ALIGN(ALIGN(width, 32) * ALIGN(height, 32), SZ_64K);
+diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
+index fabbf442c66ab..d549c0f4fa36a 100644
+--- a/drivers/media/platform/amphion/vpu_core.c
++++ b/drivers/media/platform/amphion/vpu_core.c
+@@ -301,22 +301,23 @@ static void vpu_core_put_vpu(struct vpu_core *core)
+ 	core->vpu->put_vpu(core->vpu);
  }
  
- u32 amvdec_get_output_size(struct amvdec_session *sess)
++static void vpu_core_cancel_work(struct vpu_core *core);
++
+ static int vpu_core_unregister(struct device *dev, struct vpu_core *core)
+ {
+ 	list_del_init(&core->list);
+ 
+-	vpu_core_put_vpu(core);
+-	core->vpu = NULL;
+-	vfree(core->msg_buffer);
+-	core->msg_buffer = NULL;
+-
+ 	if (core->workqueue) {
+-		cancel_work_sync(&core->msg_work);
+-		cancel_delayed_work_sync(&core->msg_delayed_work);
++		vpu_core_cancel_work(core);
+ 		destroy_workqueue(core->workqueue);
+ 		core->workqueue = NULL;
+ 	}
+ 
++	vpu_core_put_vpu(core);
++	core->vpu = NULL;
++	vfree(core->msg_buffer);
++	core->msg_buffer = NULL;
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
