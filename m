@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041079;
-	b=XN1DlgeQlgs9UbMcjSFiGMt14aCb/P5r2pbHGjXhapXuTO5S8bX8smewDEn/lY8bNJsx
-	 jm3aMAPtoux3oy4DyEWLQQv9FukfY0Fi2ogKWwGLts7/UZxK1tlxGnAJ86HQt4NAN+egR
-	 T9KdWFkM49fcbvRWergiAxSF+Z/9WupqNRbKOMmfTCF5kVWnEYZV2hadAUKIcWIb4kdNM
-	 lgsG+Uk68rcDfmcr1UXPK+GqwGxunJWMmb8b3R7lpfq4Gfsdd0NE13cBLPu0mr83h7shw
-	 4GzzDlScPwMPGih6InT2Uxg6xkor3HiVIbUtfLB9f/uW6TIjkpKcNxH6+M+Tn6/ep0A==
+	t=1795041081;
+	b=N13rpey515WwkZ92KnvljXhiMJnDZZSoAsziLu9EzzSxK+wZ65LQAUJ/3lQLt/bA3S7I
+	 WUc4nZHPb5wFDH8bzPGIwhoSvW3kvP3ETLlDSo9Kqr6AV5AnxzfgsPp+Y3TkoiBVKOzUL
+	 coyE30BiW+q6NVKNjoqAQacoQ7V3ScvC32/NaBg3A0WIRoQE2SkTqWsPwrBKm3sBzTmgN
+	 K/q3975aiThvEtGpUjDNZF5OeBegZoDHm5yMGdGVHgAkQAgD8wX4/63D0Fe/awLoRveMD
+	 6vrnSX2YHdwnI+PHWDYxP1grRalUpXeNJZscIWLeXASTdT0B+5bXsj+Z6pcwGgk5LNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041079;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041081;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=5rUa5JUC6t2BX3uBgvVCmsvPwSxAXbeW6xfRKqZTE6c=;
-	b=Zj41BPpNoBZcMAddX9V6wd8cJkEu/lBydki+JUTOdDSDltrNypuhamRA7ikZbLI2lgeC
-	 zD7oItX93ty0e47VP1AZwb9FL7/EdY0AgEEDICHeWk6QyCMmDe51WJySve88N/sQr6UdP
-	 imW2wpknCUsbSVyih8m2h8bJeV38gBtoT+zDA2+IY3WyTI+ZGmk3v8Xwh+TpdU18Bso+F
-	 TwBE5mUxLR0HolgR/D0KQCg5UJJG81x52G7vseoKxixqCMGcZe0nZeiVk3UUG13jO5tBf
-	 26eLsiSloWUdZbSIIH29RVG8aJzs/zs3Vrbht2KE/V8oEf/VYt6XVr1r5Eih8bWbigA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=vOpAli3i3QlqQHq1+sb/Ic0RTR7Xq+2khb/qNyarR4E=;
+	b=Ufyhn6ykctXEDm14baqkM/hiNPMTm5zCEtK8o4sv9YO5f0+0P/B2Vhg+zkjC2+VNMBaM
+	 +F0eoN7q5GjTmHTqkh0KiMwAEbx1a+d5tFh3OI4mNkk2QN5jTyQ+apau6gN6WidCjywKp
+	 RECSSjcaKtucbBRGeSVNUNQ+sbDD0eHX9Dr7AOiIZOl73+/TqWmrdeRWekscirfea1LSo
+	 5VjgR5Bd9JoCYsokRXh4nh0xG/pqqofFodBfWFr818yBaITps5SFXxsJapjjIDAKMJ2yp
+	 uxyWC4/3Al5uBtrNaQamhD7xh5aNGnq6vNeZ7ruAKjg7bHDaK8X3YxITmEILIC2L4Ag==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ESbBpJ/E";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=erK7DrSW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E54606A31C;
-	Wed, 18 Nov 2026 22:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4345B606A325;
+	Wed, 18 Nov 2026 22:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ESbBpJ/E
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8811F000C4;
-	Wed, 18 Nov 2026 22:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=erK7DrSW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AD8F1F000C4;
+	Wed, 18 Nov 2026 22:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041078;
-	bh=5rUa5JUC6t2BX3uBgvVCmsvPwSxAXbeW6xfRKqZTE6c=;
+	s=korg; t=1795041081;
+	bh=vOpAli3i3QlqQHq1+sb/Ic0RTR7Xq+2khb/qNyarR4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ESbBpJ/En5H8yxiEO61q26R6ied1fdVEsUlKASPv54RvU618BDEVXyTZYB1Ah+Pj1
-	 P1imL5+WofMHM7HxgvSj424TTvTvWGOlPiAcz/2LD/jiLjqTSIeuVbk3QdeHbhqcCx
-	 RDMX+fMuk/iYykTJI0W/xQqDVA9l3u/Q/blPKNBw=
+	b=erK7DrSWoFOjKMvaIOcHyOOhGyN1n6CMbjFmioAQq2YQFyVNEdb59ZEAI1rkntVSw
+	 VrHRexEWvju4s6ednGgwYDluLdLHLJyAcWTA9WWCQsofeKuWFdP5gc1bI/kRy1F2nV
+	 dK5P/xsnnjOa+e9Pik6YI9k4mgBASzICvN6UWdI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2686/3318] PCI/sysfs: Handle a malformed _DSM result in acpi_attr_is_visible()
-Date: Wed, 18 Nov 2026 15:55:08 +0100
-Message-ID: <20261118150441.550043406@linuxfoundation.org>
+Subject: [PATCH 6.6 2687/3318] ALSA: hda: Fix potential UAF for gating jack
+Date: Wed, 18 Nov 2026 15:55:09 +0100
+Message-ID: <20261118150441.576132706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,124 +62,57 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Wilczyński <kwilczynski@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1832dc1579aa7cc7cd41843770767e7a3ffa8364 ]
+[ Upstream commit 27cee4141c8de82cf051104ca830c3a209816033 ]
 
-Currently, the "label" and "acpi_index" attributes are created whenever the
-_DSM function 0 bitmap advertises the Device Name function, without
-evaluating that function.  The documented ABI states that each attribute is
-created only if the firmware has given a name or an instance number to the
-PCI device.
+snd_hda_jack_set_gating_jack() assigns gated and gating variables from
+the succeeding calls of snd_hda_jack_tbl_get().  This works normally,
+but the second call might kick off the reallocation of the jack table,
+hence the first pointer might become invalid, which leads to a UAF.
 
-The bitmap says nothing about the object the function returns.  Firmware
-that advertises the function but returns an object that cannot be parsed
-therefore produces attributes that exist and fail every read, as in the
-report below.
+For avoiding that pitfall, this patch changes the code to two phases:
+the first to only create two entries, and the second phase to get the
+pointers from the table, so that no relocation can happen any longer.
 
-Evaluate the Device Name _DSM when deciding attribute visibility and create
-each attribute only when the element it exports has a type the read path
-accepts, mirroring the checks performed at read time.  The SMBIOS attribute
-group already follows this pattern by performing the DMI lookup in its
-is_visible() callback.  The read side checks remain in place since the two
-evaluations happen at different times.
-
-This restores the behaviour from before commit 2fc59fe2ecdc ("PCI /
-pci-label: treat PCI label with index 0 as valid label"), which switched
-visibility from evaluating the function to checking only the function 0
-bitmap.  The check is now made for each attribute, not once for both.
-
-Fixes: 2fc59fe2ecdc ("PCI / pci-label: treat PCI label with index 0 as valid label")
-Closes: https://github.com/pciutils/pciutils/issues/175
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20260814070522.2327975-4-kwilczynski@kernel.org
+Fixes: 0619ba8c17b1 ("ALSA: hda - Allow jack state to depend on another jack")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261007172051.13240-4-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-bus-pci | 14 ++++++++---
- drivers/pci/pci-label.c                 | 33 ++++++++++++++++++++++++-
- 2 files changed, 42 insertions(+), 5 deletions(-)
+ sound/pci/hda/hda_jack.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-pci b/Documentation/ABI/testing/sysfs-bus-pci
-index 7f3e6bc3ff0ff..3c369d99be2b9 100644
---- a/Documentation/ABI/testing/sysfs-bus-pci
-+++ b/Documentation/ABI/testing/sysfs-bus-pci
-@@ -244,10 +244,16 @@ Contact:	Narendra K <narendra_k@dell.com>, linux-bugs@dell.com
- Description:
- 		Reading this attribute will provide the firmware
- 		given name (SMBIOS type 41 string or ACPI _DSM string) of
--		the PCI device.	The attribute will be created only
--		if the firmware	has given a name to the PCI device.
--		ACPI _DSM string name will be given priority if the
--		system firmware provides SMBIOS type 41 string also.
-+		the PCI device. The attribute will be created only if the
-+		firmware naming mechanism is implemented for the device:
-+		a SMBIOS type 41 record with a non-empty reference
-+		designation, or a Device Name _DSM that returns the name
-+		as a string or a buffer. The value read is empty when the
-+		firmware implements the _DSM but gives the device no name,
-+		which per PCI Firmware r3.3, sec 4.6.7 the firmware reports
-+		as a NULL string. ACPI _DSM string name will be given
-+		priority if the system firmware provides SMBIOS type 41
-+		string also.
- Users:
- 		Userspace applications interested in knowing the
- 		firmware assigned name of the PCI device.
-diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
-index 17f1bc0cf458e..f81248a11a18e 100644
---- a/drivers/pci/pci-label.c
-+++ b/drivers/pci/pci-label.c
-@@ -217,11 +217,42 @@ static umode_t acpi_attr_is_visible(struct kobject *kobj, struct attribute *a,
- 				    int n)
+diff --git a/sound/pci/hda/hda_jack.c b/sound/pci/hda/hda_jack.c
+index 7d7786df60ea7..8c25c7d81128b 100644
+--- a/sound/pci/hda/hda_jack.c
++++ b/sound/pci/hda/hda_jack.c
+@@ -383,12 +383,15 @@ EXPORT_SYMBOL_GPL(snd_hda_jack_detect_enable);
+ int snd_hda_jack_set_gating_jack(struct hda_codec *codec, hda_nid_t gated_nid,
+ 				 hda_nid_t gating_nid)
  {
- 	struct device *dev = kobj_to_dev(kobj);
-+	union acpi_object *obj, *tmp;
-+	umode_t mode = 0;
+-	struct hda_jack_tbl *gated = snd_hda_jack_tbl_new(codec, gated_nid, 0);
+-	struct hda_jack_tbl *gating =
+-		snd_hda_jack_tbl_new(codec, gating_nid, 0);
++	struct hda_jack_tbl *gated, *gating;
  
- 	if (!device_has_acpi_name(dev))
- 		return 0;
+ 	WARN_ON(codec->dp_mst);
++	if (!snd_hda_jack_tbl_new(codec, gated_nid, 0) ||
++	    !snd_hda_jack_tbl_new(codec, gating_nid, 0))
++		return -ENOMEM;
  
--	return a->mode;
-+	/*
-+	 * The bitmap from _DSM function 0 only advertises function 7,
-+	 * and whether the returned object can be parsed is a separate
-+	 * question. Evaluate it and expose each attribute only if the
-+	 * element it exports has one of the types the read path
-+	 * accepts, mirroring the checks in dsm_get_label().
-+	 */
-+	obj = acpi_evaluate_dsm(ACPI_HANDLE(dev), &pci_acpi_dsm_guid, 0x2,
-+				DSM_PCI_DEVICE_NAME, NULL);
-+	if (!obj)
-+		return 0;
-+
-+	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count != 2)
-+		goto out;
-+
-+	tmp = obj->package.elements;
-+	if (tmp[0].type != ACPI_TYPE_INTEGER)
-+		goto out;
-+
-+	if (a == &dev_attr_acpi_index.attr)
-+		mode = a->mode;
-+	else if (a == &dev_attr_label.attr &&
-+		 (tmp[1].type == ACPI_TYPE_STRING ||
-+		  tmp[1].type == ACPI_TYPE_BUFFER))
-+		mode = a->mode;
-+
-+out:
-+	ACPI_FREE(obj);
-+
-+	return mode;
- }
++	gated = snd_hda_jack_tbl_get_mst(codec, gated_nid, 0);
++	gating = snd_hda_jack_tbl_get_mst(codec, gating_nid, 0);
+ 	if (!gated || !gating)
+ 		return -EINVAL;
  
- const struct attribute_group pci_dev_acpi_attr_group = {
 -- 
 2.53.0
 
