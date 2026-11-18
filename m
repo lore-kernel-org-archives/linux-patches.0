@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056894;
-	b=payr2kaxHs/GzbBb73oWUEwaoNivaWa7uP8kY2U0qDY+XB68rRqYOqyHYT7C+aktPfZC
-	 QweLyySAMb1GyO06b9CHq9pbKBqAiBtXRqW9fS1237e94SRvSpwEmyS4WD9NiWtXGbneb
-	 5+v++hC2n3+iXMEAKaEl1omCptYmPzSg/mTyJcIqZGrvT/qJgG6tOqzr17bedmXsT4mx1
-	 AZmmOtBpzA+I/WHKtkIhk5ngU3iGIl+kFNO/iM4zonfzGRB6qHV0C/2ctBn0aGpLw/mRF
-	 1E02ky+m05/jPYG0rA+ms3XM1fdD/C9nWZm6arnXq5yOQ14SXwmy6lQEZcTaEV9qrcQ==
+	t=1795056897;
+	b=vGV9ZpfLEp8jTYHMPH5bn/kuNUCvwggWdbLHj0w7qyrZeDAFdNrE7q4XVky2/NKLfGGY
+	 NuWBDP+tIPEK4jLvy9OFPITaYhU0iGMUXZ48sU20FRjfEmrxSOnLhTyNUDf8QqTwvz1Kx
+	 wBBSzRaEZ9hAq+GtXgvGOXJ8qNyvq5wveBKILPNSMSS/ahq+UelvVRViKuFhIaqLdF+HZ
+	 DuE2ks3+JhLLF7QfaKwnDU0OkcWbKIT9eCr9DBqLK6eJhPw/jast98Yxil9ilUe0swcyw
+	 /7YWGN93wXq5WaAmUn0Q//QAy1EYfPrqIyb0UtvLtKXcB4qoULQZVDfQT42Y4utXNhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056897;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m66sJnASVylCU0wtJqxlQJ3TPc4iIXl8fAJrejurDMU=;
-	b=ulH04HUnzsnUSc0Q6tbfA0fWPzpjws6L6MXcfI5EX08EUjzFkQlivuScgN5HdV5ysWTd
-	 xagF7GSZwCTOr+AvFK22hdcKb71E/UgWT+pA/j0IZB9ofVv2yITnGfVPILzzoi5vebHbz
-	 BKNSxOWUgGbSqarJpRw8+knGZpSj/Box+/jw/i1B36tlGTouvKBBf9Ei3uxJVq8QYCPE6
-	 qCLTs5ptUUjH9KYqjSbtS94ijKTIE5tZs9AuH45pZ4As875+FhaPbQ2jawH2l00m/Ebo5
-	 grsRVQJWC7maMFvQcvXsP3bs6x0A4G/tTnOVb0DejJKOXVOUuWlMXFCWRSvVbBJavzg==
+	bh=Do2PsKGYV0hbKXCOpl8r5VM+jGubeVokSgNqvgeIddo=;
+	b=uP3W+/8wKF+RFRzo/ok3SAUJ6mRUqvboFB2wJYCyot0aw6IfMOvBU6SrEX5dE5d5Ti6B
+	 N4GN4t2apAfk4OM36GmiddvVX7mO9XAxq/nJe6329CLSZqnqbRTGXs9Zlo6EZ9M5swB2K
+	 6ZHzPLyT9hD606G+8i0EwAMeXEhVTdKP8z6zv//WntdCogKXkipuI4/0QbIvkhdMg+MI9
+	 1qQRBXaVObEOxKJyvupp1to/k6Vml0QuIlwqUzYrkfn/+nvB143L0hlYmikKhr4QyT85T
+	 VXEskNGqwqhom/mCJjb7EM3TcOIlJwxi96nfH4E++WlXzAKKR02J/5KJ6GAgwVh9wkg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HCr3B507;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GiaUOCQk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B531606A31C;
-	Thu, 19 Nov 2026 02:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EF0606A31C;
+	Thu, 19 Nov 2026 02:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HCr3B507
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C381F000C4;
-	Thu, 19 Nov 2026 02:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GiaUOCQk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569B71F000C4;
+	Thu, 19 Nov 2026 02:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056894;
-	bh=m66sJnASVylCU0wtJqxlQJ3TPc4iIXl8fAJrejurDMU=;
+	s=korg; t=1795056896;
+	bh=Do2PsKGYV0hbKXCOpl8r5VM+jGubeVokSgNqvgeIddo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HCr3B507GlOLIrDX1P9csQHhUVjt0eXtGd7M/U3y5abI/tgBBvPkI+wW7yf65cj7O
-	 VC/BD5j7PK8f6HKdBee5QsU+QuSpQVOxO5fC6uUDixkI4CmvIFKXLykyPOJwtwy6Kc
-	 IgW9xbXjXoLRdnnIthqc+c687fGDOOdSMbCjlgsk=
+	b=GiaUOCQkzfjZqoRVvJTGV1JGl2couOfwrfn67AdF0pNShW99s9FA0Kmjjj0ucAYj0
+	 pm5TpgavPt1jNg1G5hOUMbl9Lc+DbhIC7a3hx9RIi5IAXHV8KP1DAM4WKxkLRd8shl
+	 kMsm02h2gXZ05tUst/knMmorh71hXI9HIXbdoY6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2150/2214] nvmet: prevent double-free after metadata SGL allocation failure
-Date: Wed, 18 Nov 2026 16:03:46 +0100
-Message-ID: <20261118150136.471392621@linuxfoundation.org>
+Subject: [PATCH 5.15 2124/2214] ceph: mark the superblock active after mounting
+Date: Wed, 18 Nov 2026 16:03:20 +0100
+Message-ID: <20261118150135.536811390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,38 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit 2f61b9d1d54edf75a352c43eebe3804144b5d44e ]
+[ Upstream commit 32eacfae3b16f6a9c0c20f946115abf5a091c922 ]
 
-If metadata SGL allocation fails, nvmet_req_alloc_sgls() frees
-req->sg without clearing it. The RDMA error completion path later
-frees the same scatterlist again.
+ceph_get_tree() calls sget_fc() directly and so never goes through
+vfs_get_super(), which is what sets SB_ACTIVE after fill_super for
+filesystems that use it.  Before commit 82995cc6c5ae ("libceph, rbd,
+ceph: convert to use the new mount API") the flag used to be set by
+get_sb_nodev(), which did this for ceph, but the conversion dropped it.
 
-Use nvmet_req_free_sgls() instead so that the scatterlist pointers
-and counts are cleared before response cleanup.
+SB_ACTIVE is required for iput_final() to retain an inode on the
+inode LRU instead of evicting it once its last reference goes away.
+This has gone unnoticed because ceph sets inode_just_drop() for
+->drop_inode, which always asks for eviction, so the retain branch in
+iput_final() was never reachable.  The next patch makes ->drop_inode()
+able to retain inodes, and that needs the flag to actually work.
 
-Fixes: c6e3f13398123 ("nvmet: add metadata support for block devices")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Set it once the mount is up, like nfs_get_tree() does.
+
+Fixes: 82995cc6c5ae ("libceph, rbd, ceph: convert to use the new mount API")
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ceph/super.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 5dd23446a91a7..8e2ac39ce3263 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1075,7 +1075,7 @@ int nvmet_req_alloc_sgls(struct nvmet_req *req)
- 
+diff --git a/fs/ceph/super.c b/fs/ceph/super.c
+index e520ad25454a9..ff771715f6d5e 100644
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -1118,6 +1118,15 @@ static int ceph_get_tree(struct fs_context *fc)
+ 	dout("root %p inode %p ino %llx.%llx\n", res,
+ 	     d_inode(res), ceph_vinop(d_inode(res)));
+ 	fc->root = fsc->sb->s_root;
++
++	/*
++	 * The mount is up.  sget_fc() leaves SB_ACTIVE unset, and, unlike
++	 * filesystems that go through vfs_get_super(), nothing else sets
++	 * it here, so iput_final() would always evict an inode whose
++	 * ->drop_inode() asks to retain it.  Set it like nfs_get_tree()
++	 * does.
++	 */
++	sb->s_flags |= SB_ACTIVE;
  	return 0;
- out_free:
--	sgl_free(req->sg);
-+	nvmet_req_free_sgls(req);
- out:
- 	return -ENOMEM;
- }
+ 
+ out_splat:
 -- 
 2.53.0
 
