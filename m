@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019920;
-	b=HY1LExiMimFQllglsmpm7LyRiwPIAp+8eWQc3uk5EHtCjjJSNsniRPLdIPXDLHcw0kxG
-	 6ui5hNejbrgHT93MNqahs4eBNeYPo8MBz9Z0g5uhTexXqN6yXsF5W40kRkR9eiUdIHjl8
-	 rK/idqOGhFwyxKN2KiDRs90bGi88D24XWS2bhA2Y8WBdCrh/HX8OOYrvkN8FwjuICW3UD
-	 470XVDCMAIl0tgwVgNV50VpMZvoAGSXu1a7w3Ed7FuXeLVWyViGrPUs1xRejIrdAcC9Su
-	 MtZpGQ7ELg8xJN1Ft//p7tVHq8k55l/CMF655YRDYpmcN6yoNSK6CzusB0ymlRKGoSQ==
+	t=1795019923;
+	b=Rj4reVoIZeIuVL54Xkjj9NfB9UeOvexv1r/AQr/GYi4AWsctTWK0iG5GKW05i3Ym1Jlu
+	 WT4d64zcZTkYTrKaPPjLZeSqv9+4kIrWDuWOvzCK5Fa6W8nB6ZIpcPkOqZmhqk6QBiPST
+	 qQuy+vA7l8lFq4Yy1doX19luHTd5qlAwzrvEAoRdRbPNC9rjc2xajCbfayekCG9E8mzE8
+	 Wjqtd7L6bnyfVdGUB96SKohYaYCQ90pEMBXlLCtSk3AdmvFGBsncsoABbPrGoCoGz3Z47
+	 1hhCJUBCD9xMjUzRgRS2M8j52v4dAh55p4hJ66h58csSqZjNodgCTrisvs+bhQH7vkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019923;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DDUR6gaCpvsrej9ergF1TIMzzqL2oYJhiPmP2yh1fHs=;
-	b=clJ1Eh5wTlPvlQOWGhwrggDZVFOvc5py4nHT9z4qlBbnK0KfK85gphmJse3ZphYcqgZR
-	 J80t9BFeGBnLYZTdIby58PkRu/cNRgd31lVQjJmLfauC4cMVxeLOyOcwXJ7Yj31kjG471
-	 IbmwbdG8FFQadJHymm8pbBM0zgTDHQ5rD5LBZ5zZKCFEwcaBG5WLbwGZ0EwmXSd8w0Xg/
-	 N/CXMui8DgcCxqhfa/4QxBI04pKafLUHzJde3IDiRjjkv0BSRfFVranv4ntF4fehBlipk
-	 sIOJlI9p5PGwBSRgdDkBF6tAz5zSy1N3k98qri4OP5Mg3Z+nRj5VBuELChPyn/4W3tw==
+	bh=aKs1jqkQVb8g6P/Ud6lx+sjjhvZCvZ45i5MJqcYGfLA=;
+	b=R7VhvtBfx5MzcSDdU5aq4woo4Vglw6EnL8BIuULLNwgd8IWebsiwanYlZNhuKsMLci/N
+	 9KWm5loB2IA1x+8nG30cwAjnop2vL7+rnwf0Znfv0LY0I4GkIeEUtHOlUPbSXAzZJDQU/
+	 gDutbaOxvOp7YIJ16/xawoaCivMJLMLEX1tnv8fcccBDuqDEpNHHIXsFZld01ssFFeDYU
+	 Wk9E+vn38TB20kCBXfzosvynWwinHbpQ2ou0TCiII3CmgJFulLB9YW+w+1810ysKoyTYD
+	 pyNHjsEpD8enLZJTmf8ndujeVQcjbxyknSQ62eShFYIHZ8IiNYperwVRq6K86UOAD+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="W/Tu8AhA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2a7dH16;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816C6606A31C;
-	Wed, 18 Nov 2026 16:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437D8606A320;
+	Wed, 18 Nov 2026 16:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W/Tu8AhA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF671F000C4;
-	Wed, 18 Nov 2026 16:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h2a7dH16
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6EC1F000C4;
+	Wed, 18 Nov 2026 16:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019920;
-	bh=DDUR6gaCpvsrej9ergF1TIMzzqL2oYJhiPmP2yh1fHs=;
+	s=korg; t=1795019923;
+	bh=aKs1jqkQVb8g6P/Ud6lx+sjjhvZCvZ45i5MJqcYGfLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W/Tu8AhAVeqLP48XOqT0gwLLTVY+k8D9cIKuXpLQbaNjeIVvF70OjOkJHFB01IZf6
-	 Kc/VyueNMGRq2aq5WVBH/o4KFZe969cd4Wu6HvTYzAVczh4Cm/HlTVoK9mrr9X/hhb
-	 p/EsxWwwTqcm+twZwBE/QjBYqGmfTJ6mJk6MLbgw=
+	b=h2a7dH16gOUTX3HL4bLZgeL7bM15DYzwcrg3apK6LBScFGpzu6x4w8evlGd9EEJV3
+	 TyqgSAdvEoxKeDqDtMkwQa0dmVIg2oL3nfeu/7td45idlqTHG7KwwGFQjx1RJdDxKo
+	 id5YDgVOjSDW2IXOiv3p6O2MNgOL0P9E0dMoSVGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1767/2651] s390/percpu: Use asm_inline for arch_this_cpu_add()
-Date: Wed, 18 Nov 2026 15:50:07 +0100
-Message-ID: <20261118150351.041558837@linuxfoundation.org>
+Subject: [PATCH 7.3 1768/2651] RDMA/bnxt_re: Use kvzalloc for QP table allocation
+Date: Wed, 18 Nov 2026 15:50:08 +0100
+Message-ID: <20261118150351.078065532@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,52 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>
 
-[ Upstream commit 10f9cf286ec3e6f99569e5ce3e99afbeb77b962f ]
+[ Upstream commit 724a39b36af94787d32094da87729f24a28888b7 ]
 
-When converting to preemptible percpu operations the arch_this_cpu_add()
-inline assemblies were not converted to use asm_inline instead of a plain
-asm statement.
+The QP table size depends on the firmware reported max_qp, so it can
+be large and a physically contiguous kzalloc may fail. Use kvzalloc_objs()
+and free it with kvfree().
 
-With all the macro usage the inline assemblies grow significantly, and
-the compiler may decide to not inline even small functions. This can be
-observed with gcc16 and a defconfig build where many calls to
-__srcu_read_lock_fast() are not inlined anymore, even though it is
-basically only a this_cpu_inc().
-
-Use asm_inline to address this.
-
-Fixes: 18ec6c5d7ec6 ("s390/percpu: Use new percpu code section for arch_this_cpu_add()")
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Fixes: 82f1f575aa13 ("RDMA/bnxt_re: Fix allocation of QP table")
+Signed-off-by: Abhishek Mohapatra <abhishek.mohapatra@broadcom.com>
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Link: https://patch.msgid.link/20261013140427.256612-2-selvin.xavier@broadcom.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/percpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/s390/include/asm/percpu.h b/arch/s390/include/asm/percpu.h
-index b5417e34cc976..3f983285f944e 100644
---- a/arch/s390/include/asm/percpu.h
-+++ b/arch/s390/include/asm/percpu.h
-@@ -193,7 +193,7 @@ do {										\
- 	ptr__ = PERCPU_PTR(&(pcp));						\
- 	if (__builtin_constant_p(val__) &&					\
- 	    ((szcast)val__ > -129) && ((szcast)val__ < 128)) {			\
--		asm volatile(							\
-+		asm_inline volatile(						\
- 			__PCPU_BEGIN("%[lcreg]","%[lcoff]","%[ptr__]",		\
- 				      "%[pair__]","%N[pair__]")			\
- 			op2 "   0(%N[pair__]),%[val__]\n"			\
-@@ -206,7 +206,7 @@ do {										\
- 			  "m" (((struct lowcore *)0)->percpu_offset)		\
- 			: "cc");						\
- 	} else {								\
--		asm volatile(							\
-+		asm_inline volatile(						\
- 			__PCPU_BEGIN("%[lcreg]","%[lcoff]","%[ptr__]",		\
- 				     "%[pair__]","%N[pair__]")			\
- 			op1 "   %[old__],%[val__],0(%N[pair__])\n"		\
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index 7ff587ce91269..e8a111646fc9a 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -910,7 +910,7 @@ int bnxt_qplib_init_res(struct bnxt_qplib_res *res)
+ 
+ void bnxt_qplib_free_res(struct bnxt_qplib_res *res)
+ {
+-	kfree(res->rcfw->qp_tbl);
++	kvfree(res->rcfw->qp_tbl);
+ 	bnxt_qplib_free_sgid_tbl(res, &res->sgid_tbl);
+ 	bnxt_qplib_free_pd_tbl(&res->pd_tbl);
+ 	bnxt_qplib_free_dpi_tbl(res, &res->dpi_tbl);
+@@ -927,8 +927,8 @@ int bnxt_qplib_alloc_res(struct bnxt_qplib_res *res, struct net_device *netdev)
+ 
+ 	/* Allocate one extra to hold the QP1 entries */
+ 	rcfw->qp_tbl_size = max_t(u32, BNXT_RE_MAX_QPC_COUNT + 1, dev_attr->max_qp);
+-	rcfw->qp_tbl = kzalloc_objs(struct bnxt_qplib_qp_node,
+-				    rcfw->qp_tbl_size);
++	rcfw->qp_tbl = kvzalloc_objs(struct bnxt_qplib_qp_node,
++				     rcfw->qp_tbl_size);
+ 	if (!rcfw->qp_tbl)
+ 		return -ENOMEM;
+ 
 -- 
 2.53.0
 
