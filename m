@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025796;
-	b=3yLLQIA8pYFi2F47Kd1pw2Ukb0rxMS571eG7hh/IsSwbYurOR4CyPOcNCES0nt9qVVO+
-	 KXjJo0rUjVS1vWtEEU9OsF5W9deEug0h6HkK7RCq4+E2sNQzhnxFX3Bl0NtT0B5Hm19kP
-	 kItIzov0AbR0LZIX50DdJ+rvfL8iuhq93au+GD74TiH+F8h3mRRx57AWRH5sB8jvIgY0o
-	 wwMU07fv1OTP6irw4ay1hwSf7tvMa444Q+PdTogYGjz3YN2O2EmKxcly6/cNzAl57Oa64
-	 pfIDrmJ6DkpTbgiZ4Uw4aqan30LZQAd2Bu423lYN+0qZ9vAmx0irFLmrgRmbIHVEJqA==
+	t=1795025799;
+	b=3g9GYPLTd+u7X9us6EDUQW4WtXBYA1fVaVlZxYN8Hp32Ai6KM062+gcqqYNuNfc/F5EN
+	 sIPxYx4FS4UywVEXtUg8NgGdhjph0T1r3p9WvFvjGdVqt7OFw760KdsuSChTff9f27Dsu
+	 qhzom7GEivtwv7Y909d9aClvOgMaBQrEPp7/X1n9YRLdsh1Ex5ocFMbC4v7gHz1xC8qTG
+	 XAEGH1PHaJ8tGgdixWh+KTJ5bygzNolZ9F6PDI3OnOxmT5TjjnD5Sq/r6RP57XjRWNaer
+	 zBiysx3UwYvfvb4ugIHtPYzC4Ir3EDOZ4ZYZpGwbW0xnkAb/dO0GLQc2bidELRbpmXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3y9kC3Vf7gnVL708kSn0+bvJv+mKEdt1SXzNClulTyk=;
-	b=TpBw4TMXagzIYb14rgQhyeufkQE1Hbr3o6KztWWYwBVfvgxprdhDb9jaZA28SIvnUJY3
-	 ptjcE9+WcjbOdcFfQzr6IgMNbqlhU7E3Bf2WIWACL0MzmMwySPf/TJQ/H7oyc1xAxcEQS
-	 pOuouIKhaDB/FE47vTVijM+mUl0Qrx9Ank6OVTaQeTdEceU5feoXVu+FOe2t8/KCT3rRh
-	 +tYxRtFdg+MlZW7+yyWtfWuxt5kmwjiCxsrHKnDIhFgLzB82TSMLlr5geMCpW6rDaiBnd
-	 2YTNCD0iRYEP/9KrF2/22c7xHWyXtCEeeUJRDO0gTklCl/EAtbyV81MBp8tmbHkNmGQ==
+	bh=sRUVZ4z0LYdz+WOdnY5DOkNwXo77VtKz1SacZydCklk=;
+	b=pr1aJjNVk4nYD3O9aNqgskyIssI0nxZ1kL7HdRvgYHAWCjuEBaFr4vRdfs8yjlNTSuBz
+	 GGMHZEY6qkds7TjK/+ZNCRrV7qlutt/hAUlMlfSVIJ85nuFh2uGfoGOOqI0GdLHD2i5sl
+	 a70JhGcx6BEGSXnA2TOIKdLQI1qdZlv6/KlZemcB4cVmO0FpJGqGnNim4VrdNnBka3v0O
+	 5cO+Hzx2v7ucJRPqOFoAdP1AAgHvMKm06GFGSymy5OYSvfaCmJ4uIcKKw7Sr6E4jmq2j9
+	 I8w1rLeTwL4NNqyNdZRzfsbB9AcQe8QfXqsuBSuA+vA35yaJfYaR6Wq7BOCjib1bLHQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPs5Ig2Y;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTpv6XRW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D356606A31C;
-	Wed, 18 Nov 2026 18:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05628606A31C;
+	Wed, 18 Nov 2026 18:16:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mPs5Ig2Y
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7C91F000C4;
-	Wed, 18 Nov 2026 18:16:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XTpv6XRW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 561261F000C4;
+	Wed, 18 Nov 2026 18:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025796;
-	bh=3y9kC3Vf7gnVL708kSn0+bvJv+mKEdt1SXzNClulTyk=;
+	s=korg; t=1795025798;
+	bh=sRUVZ4z0LYdz+WOdnY5DOkNwXo77VtKz1SacZydCklk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mPs5Ig2YG2XAGIGXNLuqmCY6BPfkr2tVpqg2oq2edtIxM/weNxo8j8fmg+08Pk3Lx
-	 UNijEMzGQHVH//oLuA+4eggyQrLBp4zIcEC2KJUrKjz4FqTCubbRWoDaS/eIYPeMz5
-	 qNBieHPvEd1uI6ssFm+NAMPwe3S/pSfqT0MGWgxM=
+	b=XTpv6XRWoPmA8bcwFWtkAIM33A0kN9Le3DffSDsUAkHMK20m5D/SySlneCYdIibwY
+	 vyEe/0VaGz4ESe3zgAjs6xO9eywTF+6Dam70MLkjkOcoRZYRIx/tnw2vbTm+Bb/f9L
+	 Qj3iZJoB5G6ppC66fYLZeO+g2iH0El+z287DYcK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Mark Anthony Agarro <markanthonyagarro@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1207/2151] wifi: mt76: mt7925: honour mac80211s FIF_FCSFAIL instead of hardcoding drop_err
-Date: Wed, 18 Nov 2026 15:49:02 +0100
-Message-ID: <20261118150206.170459129@linuxfoundation.org>
+Subject: [PATCH 6.18 1208/2151] wifi: mt76: mt7921: honour FIF_FCSFAIL instead of hardcoding drop_err
+Date: Wed, 18 Nov 2026 15:49:03 +0100
+Message-ID: <20261118150206.209543172@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,103 +68,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Anthony Agarro <markanthonyagarro@gmail.com>
+From: Devin Wittmayer <lucid_duck@justthetip.ca>
 
-[ Upstream commit 31b53a9c4ada2ce49201ed0da0105819acfd86bf ]
+[ Upstream commit f8794eb3ff6dedbba0337c5197626b62da0ef057 ]
 
-mt7925_mcu_config_sniffer() hardcodes drop_err = 1, ignoring what
-mac80211 actually requested via configure_filter(). FIF_FCSFAIL is
-computed there but discarded instead of persisted.
+When a monitor interface asks to see frames that failed their checksum,
+mac80211 passes the request down to the driver. mt7921 works out the
+answer, sends it to the firmware as a receive filter, and then configures
+the sniffer with a hardcoded byte telling it to drop those frames anyway.
+The answer is used once and never kept, so the sniffer never gets to see
+it.
 
-Persist the FCSFAIL bit on the phy in mt7925_configure_filter() and
-read it back in mt7925_mcu_config_sniffer() to derive drop_err, so the
-firmware sniffer only passes through unfiltered/marginal frames when a
-monitor listener actually requested them.
+That matters to anyone using monitor mode to judge a link honestly, which
+is most of the reason to be in monitor mode at all.
 
-mt7925_mcu_config_sniffer() is only reached from mt7925_change_chanctx(),
-which is itself only exercised on a monitor-mode chanctx, so this stays
-scoped to monitor mode.
+Mark Anthony Agarro posted the same change for mt7925: keep what mac80211
+asked for on the phy, and read it back when the sniffer is configured.
+This does that for mt7921, and applies on top of it, since that patch is
+what adds the field.
 
-Fixes: c948b5da6bbe ("wifi: mt76: mt7925: add Mediatek Wi-Fi7 driver for mt7925 chips")
-Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Signed-off-by: Mark Anthony Agarro <markanthonyagarro@gmail.com>
-Link: https://patch.msgid.link/20260826091757.469953-1-markanthonyagarro@gmail.com
+https://lore.kernel.org/linux-wireless/20260826091757.469953-1-markanthonyagarro@gmail.com/
+
+The stored value is read in one place only, configuring the sniffer, which
+has a single caller, and that call sits inside a branch reached only by a
+monitor interface. Nothing else changes.
+
+Measured on an MT7922 with a read-only probe on the command as the driver
+sends it, so these are the driver's own bytes rather than an inference
+from what came back:
+
+  request  arm      drop_err
+  none     stock    1 1 1 1
+  none     patched  1 1 1 1
+  fcsfail  stock    1 1
+  fcsfail  patched  0 0
+
+Stock sends the drop byte whether or not anyone asked for it. Patched
+sends it only when nobody did. Withdrawing the request and making it again
+inside one driver load moves the byte back and forth, 0 then 1 then 0
+across three changes, so nothing sticks once set.
+
+If it does appear to stick when trying this against an MT7927, that is
+mac80211 rather than the driver. It raises the filter count
+unconditionally when a monitor comes up, but skips lowering it again for
+drivers that set NO_VIRTUAL_MONITOR, and that is the only chip in this
+family which does.
+
+Fixes: 914189af23b8 ("wifi: mt76: mt7921: fix channel switch fail in monitor mode")
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260826231029.39632-1-lucid_duck@justthetip.ca
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7925/main.c   | 7 +++----
- drivers/net/wireless/mediatek/mt76/mt7925/mcu.c    | 2 +-
- drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h | 5 +++++
- drivers/net/wireless/mediatek/mt76/mt792x.h        | 1 +
- 4 files changed, 10 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c   | 8 +++-----
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c    | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h | 5 +++++
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-index cd9058075a878..aab70b030c747 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
-@@ -809,11 +809,8 @@ static void mt7925_configure_filter(struct ieee80211_hw *hw,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index d00ef69f06355..1f3cc7447a85d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -667,12 +667,8 @@ static void mt7921_configure_filter(struct ieee80211_hw *hw,
  				    unsigned int *total_flags,
  				    u64 multicast)
  {
--#define MT7925_FILTER_FCSFAIL    BIT(2)
--#define MT7925_FILTER_CONTROL    BIT(5)
--#define MT7925_FILTER_OTHER_BSS  BIT(6)
--#define MT7925_FILTER_ENABLE     BIT(31)
+-#define MT7921_FILTER_FCSFAIL    BIT(2)
+-#define MT7921_FILTER_CONTROL    BIT(5)
+-#define MT7921_FILTER_OTHER_BSS  BIT(6)
+-#define MT7921_FILTER_ENABLE     BIT(31)
+-
  	struct mt792x_dev *dev = mt792x_hw_dev(hw);
 +	struct mt792x_phy *phy = mt792x_hw_phy(hw);
- 	u32 flags = MT7925_FILTER_ENABLE;
+ 	u32 flags = MT7921_FILTER_ENABLE;
  
- #define MT7925_FILTER(_fif, _type) do {			\
-@@ -825,6 +822,8 @@ static void mt7925_configure_filter(struct ieee80211_hw *hw,
- 	MT7925_FILTER(FIF_CONTROL, CONTROL);
- 	MT7925_FILTER(FIF_OTHER_BSS, OTHER_BSS);
+ #define MT7921_FILTER(_fif, _type) do {			\
+@@ -684,6 +680,8 @@ static void mt7921_configure_filter(struct ieee80211_hw *hw,
+ 	MT7921_FILTER(FIF_CONTROL, CONTROL);
+ 	MT7921_FILTER(FIF_OTHER_BSS, OTHER_BSS);
  
 +	phy->rxfilter = flags;
 +
  	mt792x_mutex_acquire(dev);
- 	mt7925_mcu_set_rxfilter(dev, flags, 0, 0);
+ 	mt7921_mcu_set_rxfilter(dev, flags, 0, 0);
  	mt792x_mutex_release(dev);
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-index 75f105d224ed5..ea79bf40b5c6a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
-@@ -2181,7 +2181,7 @@ int mt7925_mcu_config_sniffer(struct mt792x_vif *vif,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index f63ef02542387..7363a553a007d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -1233,7 +1233,7 @@ int mt7921_mcu_config_sniffer(struct mt792x_vif *vif,
  			.len = cpu_to_le16(sizeof(req.tlv)),
  			.control_ch = chandef->chan->hw_value,
  			.center_ch = ieee80211_frequency_to_channel(freq1),
 -			.drop_err = 1,
-+			.drop_err = !(vif->phy->rxfilter & MT7925_FILTER_FCSFAIL),
++			.drop_err = !(vif->phy->rxfilter & MT7921_FILTER_FCSFAIL),
  		},
  	};
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-index 7f67e0a978726..cfeaaa635c8bb 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7925/mt7925.h
+ 	if (chandef->chan->band < ARRAY_SIZE(ch_band))
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
+index faa0d93982144..c2bae5026ca2f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mt7921.h
 @@ -7,6 +7,11 @@
  #include "../mt792x.h"
  #include "regs.h"
  
-+#define MT7925_FILTER_FCSFAIL		BIT(2)
-+#define MT7925_FILTER_CONTROL		BIT(5)
-+#define MT7925_FILTER_OTHER_BSS	BIT(6)
-+#define MT7925_FILTER_ENABLE		BIT(31)
++#define MT7921_FILTER_FCSFAIL		BIT(2)
++#define MT7921_FILTER_CONTROL		BIT(5)
++#define MT7921_FILTER_OTHER_BSS		BIT(6)
++#define MT7921_FILTER_ENABLE		BIT(31)
 +
- #define MT7925_BEACON_RATES_TBL		25
+ #define MT7921_MAX_AID                  20
  
- #define MT7925_TX_RING_SIZE		2048
-diff --git a/drivers/net/wireless/mediatek/mt76/mt792x.h b/drivers/net/wireless/mediatek/mt76/mt792x.h
-index f2c8b9e4aa0f5..082285be95926 100644
---- a/drivers/net/wireless/mediatek/mt76/mt792x.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt792x.h
-@@ -162,6 +162,7 @@ struct mt792x_phy {
- 	s16 coverage_class;
- 	u8 slottime;
- 
-+	u32 rxfilter;
- 	u32 rx_ampdu_ts;
- 	u32 ampdu_ref;
- 
+ #define MT7921_TX_RING_SIZE		2048
 -- 
 2.53.0
 
