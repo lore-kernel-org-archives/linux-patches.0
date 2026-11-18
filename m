@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025776;
-	b=mSlF+jq6gnm07JEYiUEjhdkXTF/3NiJz4d3jC7CkItek6xaLafwG4ighvuZMyDQcs9X6
-	 1l9j9WZyliA2mbdB++peHuDFrwyc3mc3lhKjAGbDg8FjvFx/Kg3Ak+V1k7nO02WGm+nmb
-	 SHTM+fusIUlhbA/puF2AnKI40mW+frQtgtfWFcewQ5UGyyTB9BEDT5nzXjtaioH1Pewiw
-	 gQOWJBrVmRj9Mb0Cw9ijmplOIzvoRKVgJUV3gpRmzvFEVKjhBrUkkTwq+VpkZYkIlAecm
-	 COzHKdPrebo0ipk8RfBQIfg+0HGrXqDIRq4YeqFjs35K+754z9ksE7FkJ35LVoDXpdA==
+	t=1795025779;
+	b=cbej7V65xc8HJLZTXNeCjUzoZN0HKPXniCzp1cvFPgzH5nsi41wQSO/uWJa2W+/wgwj9
+	 5a8WV2L6OSLREEyQkHTdW9853TtVM+L2IJoFqaSntTdoSaPlHm7iTLhVykSBcTGabmbNN
+	 E3w2PxPe59OBbzLFMnXHDBP3Rhi1pG0peS/2B+7fYhILtM1p5UE6mhKvjyG5tKdf1ocAk
+	 S+WdiL/yLjq/wWgmFJo9m6HWKPlF0kkOtjYXHU5Bg/WGE0swMpqWWLy4HAR3B5OGGaedk
+	 uO7OcC5LOWdD3hZfbya4o9VhrLYwAsqfJVgzj7SY3OmZ4sLOQEm3q4HIy2tpY3Bc8rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025776;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025779;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=KVtTIsKI1YxNPp/Km5YGTQ4qxzcGplAJNpsiSTJIw4A=;
-	b=TcpM3H21yjcnWOiIALiVYae3gr2Rw+XeOTo1FF2+Z0D8RHEUVoekxzRDT2CC3r/HVj9e
-	 tpSZ54bjSis/+IZnKey9147CUwl1Bm9AwVfRcxFtdhJmQnTq2PF1FAaVhpLMJPfW8Eiiu
-	 yguHtoRFamO+ey6Jrq4Cg8CjsJ9OBv1lcvkQbNrOOULbZMcMfbR4msts9hHBbeI6VJB5f
-	 QznzGOFe13IOCDe8fu8wKbGUliU2t2xmCL4h4FL7DtYMHiSmhYeeHKikcVCALfBbkAs6M
-	 WEvzL7I9569MBPZCgLFbr3f6YzcHBl7fEb9899qarT/Nuvs2fbkSQHH3r1abbbj4RuA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ewwO43AfANBHu6GJd4h4Tu9IGt53HvFp+0Zl0AtE9ds=;
+	b=CGi5rypSgzfBL9ml3yqB73hNCtSEQfJfTkTn1Eyy3mkwmvLySFwflebctbruDDZp/KhF
+	 FbiOm5btFbuI0mwc4Bm/qv0SS4pzbFUtz8slklZmY7GhL9JRdzMe8PVyZpTaJKFCYeRyH
+	 R21XBYZHjTiLrUNVFLpFTcXDTs8CZc3wAeNF00V36Zll60EZNPs051MN/OaYReUbHbtZ9
+	 5VtWlNkO3G+z/+15x36WTbK2HlRztK3IQkIaaU/POrk1prQEzkvLr5m5qkX3LSbAMV6v+
+	 INKdZtTToK/oU/zMcCa5u8p7Pa4WjSr4PUVkJEGJ3vccXmK23dyA8zhgmlZ0YzzU5nA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9rndyZ3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rRzuxqY9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93A7606A320;
-	Wed, 18 Nov 2026 18:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FC6606A320;
+	Wed, 18 Nov 2026 18:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=e9rndyZ3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F321F000C5;
-	Wed, 18 Nov 2026 18:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rRzuxqY9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70751F000C4;
+	Wed, 18 Nov 2026 18:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025776;
-	bh=KVtTIsKI1YxNPp/Km5YGTQ4qxzcGplAJNpsiSTJIw4A=;
+	s=korg; t=1795025779;
+	bh=ewwO43AfANBHu6GJd4h4Tu9IGt53HvFp+0Zl0AtE9ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=e9rndyZ3blMny/GISEJDzyEtC+gKhHbYm8HMgBCqfESSJyVFb1JFTgONdup+sdm6n
-	 FlnbTddD1NM1FtkfJXdK3uxQ6DozQI7XYJLWxgprAWm7jcNCa4Yq13cv8SzvFQR2ED
-	 toWjPx0jx5FE+2EQz4DD69DrBy1DQpRKDAPa+Wyg=
+	b=rRzuxqY9MXTqMfhDkZgOPNom5h2rXwjS1Qca/mf2Xw6FaZqQjfl7R1MJF9RxD5neS
+	 B4jtgLbtW2nqCMqLhlJwClSZxhwr335v1K1sR4z0y1g0EnCu3Wzs7uC/J0p5gjGzCw
+	 IpDlu2ayT0nT9wsHVe/edmzH7S3xPGEzdLrDNnq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1157/2151] dt-bindings: dma: dma40: Restore disabled-channels
-Date: Wed, 18 Nov 2026 15:48:12 +0100
-Message-ID: <20261118150204.320759776@linuxfoundation.org>
+Subject: [PATCH 6.18 1158/2151] drm/vc4: Drop the undocumented brcm,vc4-v3d compatible
+Date: Wed, 18 Nov 2026 15:48:13 +0100
+Message-ID: <20261118150204.355097302@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -63,62 +63,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 38d97b1122e02f6b8859e660990aaeda1c32e00f ]
+[ Upstream commit fb825a46e7982460bd620f5e6a71924c647f4280 ]
 
-The conversion of the DMA40 binding to YAML omitted the optional
-disabled-channels property from the original text binding. The driver still
-parses this property, but additionalProperties: false rejects any device
-tree using it.
+"brcm,vc4-v3d" is the compatible string V3D support originally shipped
+with in commit d3f5168a0810 ("drm/vc4: Bind and initialize the V3D
+engine."). Commit 90d7116061f8 ("drm/vc4: Recognize a more specific
+compatible string for V3D.") added "brcm,bcm2835-v3d" in v4.6 and kept
+the original one around, because the Raspberry Pi firmware was shipping
+device trees that used it.
 
-Restore disabled-channels and constrain it to the physical channel range.
-Also constrain memcpy-channels to the limits enforced by the driver and
-reject duplicate channel entries in both properties.
+That string was never part of the binding: the documentation added in
+commit 4653f22e9ab0 ("dt-bindings: Add binding docs for V3D.") describes
+only "brcm,bcm2835-v3d", and no upstream device tree has ever used
+"brcm,vc4-v3d": the first in-tree V3D node, from commit 49ac67e0c39c
+("ARM: bcm2835: Add VC4 to the device tree."), already carried the
+specific name. The firmware device trees the compatible was kept for
+predate v4.6, released in 2016.
 
-Fixes: 23fbc87c8ae6 ("dt-bindings: dma: Rewrite ST-Ericsson DMA40 to YAML")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Link: https://patch.msgid.link/20260918-dma40-dt-disabled-channels-v1-1-0f691109d8d3@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Drop it from both match tables.
+
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-vc4-reset-control-v2-1-cb3a25b07822@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Stable-dep-of: b0a6b769cc17 ("drm/vc4: Set DRM DMA device directly from HVS and V3D")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/dma/stericsson,dma40.yaml  | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/vc4/vc4_drv.c | 1 -
+ drivers/gpu/drm/vc4/vc4_v3d.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-index 7b94d24d5ef42..73a69a1547701 100644
---- a/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-+++ b/Documentation/devicetree/bindings/dma/stericsson,dma40.yaml
-@@ -145,8 +145,22 @@ properties:
-     items:
-       maxItems: 1
+diff --git a/drivers/gpu/drm/vc4/vc4_drv.c b/drivers/gpu/drm/vc4/vc4_drv.c
+index 298e6cf3be54d..2e730ab4c3e61 100644
+--- a/drivers/gpu/drm/vc4/vc4_drv.c
++++ b/drivers/gpu/drm/vc4/vc4_drv.c
+@@ -280,7 +280,6 @@ static const struct of_device_id vc4_dma_range_matches[] = {
+ 	{ .compatible = "brcm,bcm2835-hvs" },
+ 	{ .compatible = "brcm,bcm2835-v3d" },
+ 	{ .compatible = "brcm,cygnus-v3d" },
+-	{ .compatible = "brcm,vc4-v3d" },
+ 	{}
+ };
  
-+  disabled-channels:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 1
-+    maxItems: 31
-+    uniqueItems: true
-+    items:
-+      maximum: 31
-+    description: Physical channels that cannot be used by the DMA engine.
-+
-   memcpy-channels:
-     $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 1
-+    maxItems: 8
-+    uniqueItems: true
-+    items:
-+      maximum: 63
-     description: Array of u32 elements indicating which channels on the DMA
-       engine are eligible for memcpy transfers
+diff --git a/drivers/gpu/drm/vc4/vc4_v3d.c b/drivers/gpu/drm/vc4/vc4_v3d.c
+index 03589596b7fd9..ef28908668fae 100644
+--- a/drivers/gpu/drm/vc4/vc4_v3d.c
++++ b/drivers/gpu/drm/vc4/vc4_v3d.c
+@@ -533,7 +533,6 @@ static void vc4_v3d_dev_remove(struct platform_device *pdev)
+ const struct of_device_id vc4_v3d_dt_match[] = {
+ 	{ .compatible = "brcm,bcm2835-v3d" },
+ 	{ .compatible = "brcm,cygnus-v3d" },
+-	{ .compatible = "brcm,vc4-v3d" },
+ 	{}
+ };
  
 -- 
 2.53.0
