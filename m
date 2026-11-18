@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047139;
-	b=rt8tsHURUP2d70i7oO0TiuXZ5clVzUHT9mbu63WaEeFGA/9cwJPyBo0XXLSV3Wz1hVDW
-	 if6jY9+2arvd/C+weg/ly8Exz88Lofl57NJ5j6xxEp8XtoA7NULvum9ZyYzAkJUd06jKS
-	 acTdosoer+sfLWI95QpIk6oKabkG6YBe6UAtQ6Agl5fYAFPAFTZyNNvjDepW6x6nUrH5L
-	 wdv6nzciG7fXZd7/Ve1UnSiiQpYbW9o+e824BbvhSTiM+fqJADvRl3QMNWSaYVKRC/s7z
-	 Quq7OPfKpZsbEUlfXbbUnd/fNe/Bv7yWjFbowu04avAI+ZT6BWovgOXEHZCy/kab3Qg==
+	t=1795047142;
+	b=eh4YSAWCKq2UoQ0/GMHq7Vb6jlgenCKtbkDplhvrTfq0Dq1TO9vEww2stxG5cwzkQ8li
+	 gW7ULs5SJUbGsPcdaziEjmVzWAvmb3C7BRUfKWkKOuz5FvAZN8fzGwIM/kCax1eFfOTWL
+	 f0w3mSyz5cZtR0hdFhuslR0oEH4RkwMNJhFwYPsxPepLd+hrIbkWPz0kQRDYIMofvCzd2
+	 p+eDTIA2VL5h3+h9YO49x/vTK7CHB5CfG5q9ZgY/KncDTiLMe4F1hUR2vAoBshe69sfU4
+	 8/62mWVKEhZIlYHhEsgQx2nplreQISafNddLrKuklG1gGJo1A0mu6JcyZdtSOCPY5sQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047139;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047142;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SfO6I7/hTamCSUIQMy8CHN+vEZkY0uwkI2ctRlZnWrg=;
-	b=x4ZQf6kOLs2192y3qAwRorQ6+wKqtPvjMv5/BrQJGiO1XUnGzg8/8vISXbRfo4OUbIrw
-	 iXurbqJ0wtshhmBl8lAcidAEjZHi7Pv4Y3q+rakfD9X98ukqHOigCmPaiULrc55mcii5C
-	 cO4vguwOORPTaHfF0v8oyA3UyKiOLhWkhWqiEqfEPz0FoE7kTy7oWNLkaqae1DDRGMFgy
-	 6+di9maO+Urk+PN3Ckr94h/sKC3PfjSJvuUFE4KVHCVWvBmiMu85r7cw4EyqXlkuqwU9I
-	 /FKqOBFhLERJVf+734oqh7dt3+RuVpRkyPq8lQsfYqcqGHvJ5eSFVN2aW5YiA07d6/g==
+	bh=+XJ7fKKAz84ihznKEsxIIiHoB3qDP7qqSgmwPbUIhKc=;
+	b=POsZlA12syW8CHvLfZOH/xm+EgjDUZoeWlMmgjVB6WxNUmbEfo76OGNuj/SeunTEB+oJ
+	 CUDAcWlMcVuqcdY8aiwVNTTWSa62mEYNSNWBTfI3U+ltATS7/VkCa2cTTaDFSOjKz6cRC
+	 OWc4aCC9G3w1krYW+hxMeVqF1h6+k4dTflvNOjRSvhCRbzOkOs21CPx2LNO9IVLlnUWcL
+	 nC2XKayiDOP0nZrLmyli0SFvbRH/qfsq6HcxbJZ3OoXTaKThxsCKsPeuwYS7rbqNGpd/P
+	 fd4S5XjJLz17SAmJwboYRSCZGOGofXPkRhoL8CXTzOhTVo1iXu3rYEpSly4tcrTJHKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fbg9T/dj";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RgG3+12W;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97CB606A325;
-	Thu, 19 Nov 2026 00:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D811606A320;
+	Thu, 19 Nov 2026 00:12:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fbg9T/dj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7441F000C4;
-	Thu, 19 Nov 2026 00:12:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RgG3+12W
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11121F000C4;
+	Thu, 19 Nov 2026 00:12:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047139;
-	bh=SfO6I7/hTamCSUIQMy8CHN+vEZkY0uwkI2ctRlZnWrg=;
+	s=korg; t=1795047142;
+	bh=+XJ7fKKAz84ihznKEsxIIiHoB3qDP7qqSgmwPbUIhKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fbg9T/djKP4m3rn4VuqYCwsLJU8lTzOkcrW/FCtCZ4GA+9ZoN2EFgstC12zRRFsXZ
-	 krVv1a3m9cp4ykpLmiFkXFz+Q4USO/sdDBn7KQ3g1hbfi+Q3J5N7aA+434DgetGYMY
-	 Z56sO75o28srEdY1BX5JRkruXDvZbJpxkC0oc2Fg=
+	b=RgG3+12WT9MdXuy49EQCuoZVhH0AUlj5UgrrAyX+tkcDorUZwKU7TPcE1LzT3n4Rh
+	 +99eFtMTlu39tXFgPpampRwdKYKaER5bZsBbpaHymkGkabtOgq67tK3oamws4cXXBg
+	 4UPXY8siGJup5oTuWD4eR0RcjZQxOSM2FYG5MFVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1532/2857] ASoC: hdac_hda: Allocate the private data at codec driver bind
-Date: Wed, 18 Nov 2026 15:42:46 +0100
-Message-ID: <20261118150256.481220275@linuxfoundation.org>
+Subject: [PATCH 6.1 1533/2857] ASoC: hdac_hda: Restore the codec device type on unbind
+Date: Wed, 18 Nov 2026 15:42:47 +0100
+Message-ID: <20261118150256.515465347@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,109 +70,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 7d357eae973a1e1933f81f55aa1b3b4e3064570f ]
+[ Upstream commit 08a44bde821d4fe22c0b6e63da04b3c59ac243a8 ]
 
-The SOF HDA code allocates struct hdac_hda_priv and stores it as drvdata
-of the codec device before the codec driver is bound. The driver core
-clears drvdata on unbind, so after unbinding the codec driver via sysfs
-a subsequent bind dereferences a NULL pointer in hdac_hda_dev_probe().
+hdac_hda_codec_probe() changes the type of the codec device to
+HDA_DEV_ASOC to prevent snd_hda_codec_unregister() from unregistering
+the device when the card is freed.
 
-All information in the private data can be derived from the codec
-device itself, so allocate and set it up in hdac_hda_dev_probe() as a
-device managed resource, which is released on unbind.
+The type is never restored, and hda_bus_match() requires the device and
+driver types to be equal. After unbinding the codec driver via sysfs the
+HDA_DEV_LEGACY codec drivers no longer match the device and bind fails
+with -ENODEV.
 
-Remove the allocation from SOF, keeping the check for iDisp codecs
-without display audio component.
+Restore HDA_DEV_LEGACY with a device managed action registered before
+the component, so it runs after the component and the card are gone.
 
-Fixes: 3fd63658caed ("ASoC: Intel: Drop hdac_ext usage for codec device creation")
+Fixes: b60ee2e281b6 ("ASoC: hdac_hda: overwrite hdev type to HDA_DEV_ASOC")
+Cc: stable@vger.kernel.org
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20261027083840.28813-2-peter.ujfalusi@linux.intel.com
+Link: https://patch.msgid.link/20261027083840.28813-3-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 08a44bde821d ("ASoC: hdac_hda: Restore the codec device type on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hda.c     | 12 +++++++++++-
- sound/soc/sof/intel/hda-codec.c | 22 ++++------------------
- 2 files changed, 15 insertions(+), 19 deletions(-)
+ sound/soc/codecs/hdac_hda.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/sound/soc/codecs/hdac_hda.c b/sound/soc/codecs/hdac_hda.c
-index 2ca9104853970..e1f53e8fb8295 100644
+index e1f53e8fb8295..8fd6849e0ddbb 100644
 --- a/sound/soc/codecs/hdac_hda.c
 +++ b/sound/soc/codecs/hdac_hda.c
-@@ -606,10 +606,20 @@ static const struct snd_soc_component_driver hdac_hda_hdmi_codec = {
+@@ -604,6 +604,13 @@ static const struct snd_soc_component_driver hdac_hda_hdmi_codec = {
+ 	.endianness		= 1,
+ };
  
++static void hdac_hda_restore_dev_type(void *data)
++{
++	struct hdac_device *hdev = data;
++
++	hdev->type = HDA_DEV_LEGACY;
++}
++
  static int hdac_hda_dev_probe(struct hdac_device *hdev)
  {
--	struct hdac_hda_priv *hda_pvt = dev_get_drvdata(&hdev->dev);
-+	struct hdac_hda_priv *hda_pvt;
- 	struct hdac_ext_link *hlink;
- 	int ret;
+ 	struct hdac_hda_priv *hda_pvt;
+@@ -620,6 +627,11 @@ static int hdac_hda_dev_probe(struct hdac_device *hdev)
+ 		hda_pvt->need_display_power = true;
+ 	dev_set_drvdata(&hdev->dev, hda_pvt);
  
-+	hda_pvt = devm_kzalloc(&hdev->dev, sizeof(*hda_pvt), GFP_KERNEL);
-+	if (!hda_pvt)
-+		return -ENOMEM;
-+
-+	hda_pvt->codec = dev_to_hda_codec(&hdev->dev);
-+	/* Intel iDisp (HDMI/DP) codec */
-+	if (((hdev->vendor_id >> 16) & 0xFFFF) == 0x8086)
-+		hda_pvt->need_display_power = true;
-+	dev_set_drvdata(&hdev->dev, hda_pvt);
++	/* Allow the legacy codec driver to match again after unbind */
++	ret = devm_add_action(&hdev->dev, hdac_hda_restore_dev_type, hdev);
++	if (ret)
++		return ret;
 +
  	/* hold the ref while we probe */
  	hlink = snd_hdac_ext_bus_get_link(hdev->bus, dev_name(&hdev->dev));
  	if (!hlink) {
-diff --git a/sound/soc/sof/intel/hda-codec.c b/sound/soc/sof/intel/hda-codec.c
-index 8603694710e0a..d156d0264a2c7 100644
---- a/sound/soc/sof/intel/hda-codec.c
-+++ b/sound/soc/sof/intel/hda-codec.c
-@@ -18,8 +18,6 @@
- #include "hda.h"
- 
- #if IS_ENABLED(CONFIG_SND_SOC_SOF_HDA_AUDIO_CODEC)
--#include "../../codecs/hdac_hda.h"
--
- #define CODEC_PROBE_RETRIES	3
- 
- #define IDISP_VID_INTEL	0x80860000
-@@ -130,7 +128,6 @@ static struct hda_codec *hda_codec_device_init(struct hdac_bus *bus, int addr, i
- /* probe individual codec */
- static int hda_codec_probe(struct snd_sof_dev *sdev, int address)
- {
--	struct hdac_hda_priv *hda_priv;
- 	struct hda_bus *hbus = sof_to_hbus(sdev);
- 	struct hda_codec *codec;
- 	u32 hda_cmd = (address << 28) | (AC_NODE_ROOT << 20) |
-@@ -150,26 +147,15 @@ static int hda_codec_probe(struct snd_sof_dev *sdev, int address)
- 	dev_dbg(sdev->dev, "HDA codec #%d probed OK: response: %x\n",
- 		address, resp);
- 
--	hda_priv = devm_kzalloc(sdev->dev, sizeof(*hda_priv), GFP_KERNEL);
--	if (!hda_priv)
--		return -ENOMEM;
--
- 	codec = hda_codec_device_init(&hbus->core, address, HDA_DEV_LEGACY);
- 	ret = PTR_ERR_OR_ZERO(codec);
- 	if (ret < 0)
- 		return ret;
- 
--	hda_priv->codec = codec;
--	dev_set_drvdata(&codec->core.dev, hda_priv);
--
--	if ((resp & 0xFFFF0000) == IDISP_VID_INTEL) {
--		if (!hbus->core.audio_component) {
--			dev_dbg(sdev->dev,
--				"iDisp hw present but no driver\n");
--			ret = -ENOENT;
--			goto out;
--		}
--		hda_priv->need_display_power = true;
-+	if ((resp & 0xFFFF0000) == IDISP_VID_INTEL && !hbus->core.audio_component) {
-+		dev_dbg(sdev->dev, "iDisp hw present but no driver\n");
-+		ret = -ENOENT;
-+		goto out;
- 	}
- 
- 	if (is_generic_config(hbus))
 -- 
 2.53.0
 
