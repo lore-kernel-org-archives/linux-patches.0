@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051042;
-	b=X5z8LZGwdTZ368DzFUTqkrFqXp18OaqKcJc3jNOOpo0VWp+xuYnh1OP7KNB9l+hDObcU
-	 iHmvfiZWoikobdPx5jhbQDU+4luaaAcT5ZdAfdqsb7AczQPA02zjyVVAKaFOo4p8j84gN
-	 iuH3Fuem5D9r8ulTaWOZocod1+L+clMdJZRHg6TeJXBoDqY4cw3Vjof02GDDmRIK6uK4u
-	 pQWp6rY879wpUoh2mMobjFUElScmYyjKyCc/VbyC5f6de/7zNZVwahCM6ERHRBPqHYSim
-	 NhqIDuKIrezNpwHJ/bbyVXcyQ8yq0seAj/rYPrthymMV652dV6Cqdle7YVwrm0o05OA==
+	t=1795051045;
+	b=i7NMJrHSkHL4+zG/wpgbJGh/C29faYtoKkgjgPKpm9BEPYb5iw7upIsYh5FRYMP9DJRo
+	 +nikF5bJARBomZBNNYVNUAQnSSjOfaR33ewErqHdnhIU4WXcbONc2ffmdFqtyaBN+esim
+	 9na0qpTpXBgOOiPkvQpuVV55iSAcCRA4/Zds4Kh/88kTUgdUNX2os6HVUTVvAi5kaMjPN
+	 vI9nUBEb4lMJqM+TphyrdLPkty5zchOmT1ngb3A/8esE25F5D/YxzH/tzP3lwb22uYuR4
+	 b8U1G/zcsM9+xIuZTDzOdUP68546eqQWVtUpwEopo1bUk6iQNIY8MenWQ1f8A++T4JQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051042;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051045;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WZ5BEH8m1ZoR84WjSOGJALQTXPNQ3x9h8Hof0xkEr1U=;
-	b=FjjOyu3DXPv0qZatlrDNyD72hIjk8j3WXLyRDqZECyF6G/dLYDFRXkp08qAhb5r6uDJ2
-	 p5knfTJ90vMWB3jGLMdfCkUNcXx43zwHx3JKUwPEPJzWq232bk2WIpX/0mA6kBQ9jBJQX
-	 GE6YrVrpdTkrO10nnk+u5+EUnsMkztZwTSqMak1YsuSUpvZK1jdCKBevfdhoH0KXNYFX6
-	 YiSEGM737A0eM7p/RrA0ilQioJHgeWDVBKlrINJfHLq24668tCOmQxVsmxlOqzjzVha6P
-	 4IqaaAr6uxXdS6YJV5U6e3jijwh1iF++zYTc1dKkO0iCY3/KStlHOKAnJ6o97T0pxJQ==
+	bh=2JT/sl5FL6sMVufAFS/ZMJ+ATzd4SCGWVJyh+4trVRM=;
+	b=oBkjtVGGd+uuMJ1jXe3E9GyY2eAHcHLr3jcoswOvDiRwkcXMgl4q/1vres+/belGPMdj
+	 QQJPfw+XTCXQXUhHLzy9ojabTnAF/ti1DKH2ogJzAmED65A3gfGc5UaNbDanE9JOqv+Fw
+	 O50OtKlSy1FHKHuaUd9BZ18JoqJgHn7YLy25BEqq8dnSXO4IAUdA6qRoO7YVPEZPD5Bsr
+	 YehbqsrPNYELM5gIuPuW6DVeZc1bMcgL5x4w8mUOfYm6sN/MvAlTOs5UU2MLcrg5kw/0P
+	 Bbbq8PUsbfJ0Q2oEymH70QbKRHvyvDNUfTAVJgEdC94T1865+cGL8TjAn997k0nR+2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EqBbwETv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tl+E4M5O;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B51A606A32A;
-	Thu, 19 Nov 2026 01:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1E2606A31C;
+	Thu, 19 Nov 2026 01:17:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EqBbwETv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8BF1F000C4;
-	Thu, 19 Nov 2026 01:17:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tl+E4M5O
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2FD1F000C4;
+	Thu, 19 Nov 2026 01:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051042;
-	bh=WZ5BEH8m1ZoR84WjSOGJALQTXPNQ3x9h8Hof0xkEr1U=;
+	s=korg; t=1795051045;
+	bh=2JT/sl5FL6sMVufAFS/ZMJ+ATzd4SCGWVJyh+4trVRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EqBbwETvCQJSORZjHDHMTHC+tRFVnorZdm3S7pIfTnII93bV1vqjU/nBj8+4QtKuo
-	 ztUD8U8/n8p4Rkx2Xz+i4sklLkAKrl6l403qQuwx7qSmwgzyOhXs7ljZNwwmcVLTfD
-	 HVOorJ0dMYGziQ8084/peWclY0CwCsgE7FmFFx1g=
+	b=Tl+E4M5OKf1Y3Vi9yMM9xJGPl5FfNb4aSBGueI8Sp2S/TKYdA0IITcStVmRlJJMjf
+	 FHhOSoQDW0NrjPTphehn745c2PQ1K9wWJcHk9a5Q3OL4Xuf+vwdPWK04ggjhvtR1ib
+	 3z1DDKGDGkdPlgWayiiWWGqOap0nOZE8492O+wQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	David Laight <david.laight.linux@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0041/2214] drm/amd/pm: validate vega10 profile mode inputs
-Date: Wed, 18 Nov 2026 15:28:37 +0100
-Message-ID: <20261118150011.704850939@linuxfoundation.org>
+Subject: [PATCH 5.15 0068/2214] usb_string_copy: Use kzalloc() to avoid leaking old data
+Date: Wed, 18 Nov 2026 15:29:04 +0100
+Message-ID: <20261118150012.721661633@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,47 +67,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit bf939f2a1687ef4ab815640096357f8ef5bd5fb6 ]
+[ Upstream commit 057df423bf4747091cf942af57307627e941e1fb ]
 
-Check for out of range profile modes and custom params that exceed 8 bits.
+If the string is read while being updated (which is why the copy is done
+in place) and the new string is longer than the old one, then the reader
+can read memory that isnt part of either string.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Use memcpy() to copy the known length string instead of strcpy.
+
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Link: https://patch.msgid.link/20260608095523.2606-37-david.laight.linux@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/usb/gadget/configfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index 7d0cf2a6d2d54..60accc56a1178 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -5227,6 +5227,11 @@ static int vega10_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
- 	uint8_t min_active_level;
- 	uint32_t power_profile_mode = input[size];
- 
-+	if (power_profile_mode > PP_SMC_POWER_PROFILE_CUSTOM) {
-+		pr_err("Invalid power profile mode %u\n", power_profile_mode);
-+		return -EINVAL;
-+	}
-+
- 	if (power_profile_mode == PP_SMC_POWER_PROFILE_CUSTOM) {
- 		if (size != 0 && size != 4)
- 			return -EINVAL;
-@@ -5242,6 +5247,10 @@ static int vega10_set_power_profile_mode(struct pp_hwmgr *hwmgr, long *input, ui
- 				return -EINVAL;
- 		}
- 
-+		if ((input[0] & ~0xFF) || (input[1] & ~0xFF) ||
-+		    (input[2] & ~0xFF) || (input[3] & ~0xFF))
-+			return -EINVAL;
-+
- 		data->custom_profile_mode[0] = busy_set_point = input[0];
- 		data->custom_profile_mode[1] = FPS = input[1];
- 		data->custom_profile_mode[2] = use_rlc_busy = input[2];
+diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+index b2e1b3ac0487c..5fc740d329550 100644
+--- a/drivers/usb/gadget/configfs.c
++++ b/drivers/usb/gadget/configfs.c
+@@ -114,11 +114,11 @@ static int usb_string_copy(const char *s, char **s_copy)
+ 	if (copy) {
+ 		str = copy;
+ 	} else {
+-		str = kmalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
++		str = kzalloc(USB_MAX_STRING_WITH_NULL_LEN, GFP_KERNEL);
+ 		if (!str)
+ 			return -ENOMEM;
+ 	}
+-	strcpy(str, s);
++	memcpy(str, s, ret + 1);
+ 	if (str[ret - 1] == '\n')
+ 		str[ret - 1] = '\0';
+ 	*s_copy = str;
 -- 
 2.53.0
 
