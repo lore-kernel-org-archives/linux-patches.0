@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020808;
-	b=XxntLf4CwozntCsu2dpAMZzD0P5xs8wH/FPGak/eJggBm0jllAWkallBox7xNyKstWOm
-	 csBBq7036xaRGX25yDawnKPwtCa2SQl5n7EBcG09mwh/fJW7ONUBjOkHNg1pDWKKczEcE
-	 +RkqZw408N/TTps1OQTChZcvgqSV3+LI0GmLLVfSgxLabP4cDjgp2XjNq8G0odEza6hy9
-	 NzL1dCc8VdrTf9DzCudyw6xCCIPVHZ3klKYLGq7m+lUaiY1/7TRFElYDLdaoEpkLGFZgc
-	 IZDd9q2xmM+2X5UmpP6dXdEsKHRhCEdSxZGr9CTDmfgGHZPml2G1gubT9XyzbsAcCpQ==
+	t=1795020811;
+	b=dc5TXk1VwNnwpwW+kcKoeBbzhFY3lANfCAg57FX62VepKqvUjnANLKsQn810l6nu4ngP
+	 /x1LWIV1CAgeIWcLdXxqb6FoSv2cAVbjKPXfUuDA2PK0eg7iBhJOvlCD22v5lvmLZdpvk
+	 l6v4n/+m45uOQLPVCADOxMlW5f3+eDS9brGIdjBRLNnEb0vYeWd1Dpp1r4u5ouCukukRd
+	 CB1gDOea0byxMN0VoUPih6D79Lw94T1xSp3xxovF5wP/bIw/c100bCGILhWwWS6/ikNEu
+	 mJ3VlCDhJ+A1AvXfpCs/YrHIQ5qCREadRg2YkZYqj8K2khlXtPrVDc4XyyijQ7J7Snw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pfU86u3GWwCCmBRGUWbOnbyf823jekq33/6/mjqjfpU=;
-	b=wo91tUZieLdQSwwEOY5ejmvcsBsaxjGD5jLG4wCnYvLry5gP38HBYvuVgXPWIYH2+Lu+
-	 RwqW+DgneGV0rifwQKkP19P5RHXB5srJYy3/jFG4DhWt+wf7t4Ghcfd5VJFfARJRbB9Au
-	 W7yayLnAbuhwtpFD3gHEPA4jFl+fXVoxu1tlBzkz4wVCyOrfSnKScQb7O1QnJVZaIS0aU
-	 ljo6AbRL0lwIzd8/tXNCLpJClwl4bzLz7sl863MvSEOgC04AVt8bWi7HKUW7/tiiIiEtN
-	 u238UF8A8sSNhrJayRDCbeKE8lB1xXc/A12zf1vvqSPGncxz7Qhdkf6y8+F09QYrGsg==
+	bh=Aige4PbjWn+3wxkR6PHkBhQCy/BAvq9VH+d/4fKbHLA=;
+	b=uUESdGtNsJcm2KYqRN4M6YWoEPER0Brk1qB7OnIjn9kpGh16Y0vmNCChawcxwC23GmKD
+	 A+EJWm8uPqAAMKVjXP17lPGdlkXzBp4DO2CuqRcXQR5XHfkst3timIOoOsEOBtsogzYWK
+	 ISnCosl5ULIfypLYC1uOW1WnQ4AFOfm1lsiVQkn6vcc25S/Zq3M0Xm5gPCijIvL5LorwQ
+	 FkEE+xHo1Mr4tsfJqeGYyC65POtIPbq0D49+aFVDPAayhyUBjeySf5KCy14FAYwJeZA8U
+	 e2x8/N69xcukBaavljnoXr1LpcMtqKG4tTGwvXMSVbd27VmPEn85nXjszufE7mq28zA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WrzuYJdi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZxR8z93Q;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BC4A60A263E;
-	Wed, 18 Nov 2026 16:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4359606A33F;
+	Wed, 18 Nov 2026 16:53:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WrzuYJdi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D501F000C6;
-	Wed, 18 Nov 2026 16:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZxR8z93Q
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C77E21F000C9;
+	Wed, 18 Nov 2026 16:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020808;
-	bh=pfU86u3GWwCCmBRGUWbOnbyf823jekq33/6/mjqjfpU=;
+	s=korg; t=1795020811;
+	bh=Aige4PbjWn+3wxkR6PHkBhQCy/BAvq9VH+d/4fKbHLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WrzuYJdiEgJTrMb3E7R8d5KSmQ7245J2dqzt1uSNerPcpChBGpQ0MQITvLNx6B8Y6
-	 rhmQ7iiciV8moupVW0rnYcTvK3HkR9y7ORwLwIy54vhGKnUzyg3Xqci7TXWbP/BimA
-	 npihwMHtMYmMNbmu+q4UKXXaYxS4tUmiGHKqtgzM=
+	b=ZxR8z93QeFLaKhw3I8AK5sZC5D5kONbT1h/xuj2FsT1mcrKndrEX6flbFw5mx7k/5
+	 EFFKVti7ZvhjE/TkMr/oFI59pSeYWpxLTL3CeCRMbXReaDPVoinzkcV7bXmR8qr6T+
+	 0uOdSxAmMtNuZ1WYE9Z2pKChMGJTyMjTrMRJsh1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2082/2651] perf test attr: Relax group checking for ungrouped expectations
-Date: Wed, 18 Nov 2026 15:55:22 +0100
-Message-ID: <20261118150400.980478784@linuxfoundation.org>
+Subject: [PATCH 7.3 2083/2651] perf evsel: Mark the event as supported when retrying an open
+Date: Wed, 18 Nov 2026 15:55:23 +0100
+Message-ID: <20261118150401.013697396@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,74 +70,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit ac416cf3eff650ad4b6dabc3407c7174e1826db9 ]
+[ Upstream commit cc956e0cd6a405fbc6ad3055cbbdb178562ef27d ]
 
-When matching the recorded events back against the expectations,
-attr.py requires every event opened in a group to match an expectation
-that declares the same group.  The perf stat default metrics open the
-events of each metric in groups, but the test expectations only verify
-the event attributes, so test-stat-default fails with:
+Opening a group with perf record on a machine with perf_event_paranoid >
+1 and no CAP_PERFMON fails the first perf_event_open() with EACCES, after
+which evsel__open_cpu() clears evsel->supported; evsel__fallback() then
+adds exclude_kernel and record__open() retries, and the retry succeeds
+with supported left false.  get_group_fd() treats unsupported events as
+ungroupable, so the retry opens the group members without their leader:
 
-  FAILED '.../test-stat-default' - group failure
+  sys_perf_event_open: pid 12345 cpu 0 group_fd -1
+  FAILED '.../test-record-group-sampling1' - group failure
 
-Only enforce the group of a recorded event when the expectation it
-matches declares one.  Expectations that ask for a group are still
-verified in both directions.
+which fails the group subtests of "perf test 82", the Perf attribute
+expectations test, when it is run as a regular user, while it passes as
+root or with CAP_PERFMON, where the first open doesn't fail.
 
-Fixes: c7adeb0974f18da4 ("perf jevents: Add set of common metrics based on default ones")
-Fixes: 2dfc0cab3da4a205 ("perf stat: Add detail -d,-dd,-ddd metrics")
+commit 2cc7aa995ce9 ("perf stat: Refactor retry/skip/fatal error handling")
+dropped the pos->supported = true that record__open() did after a
+successful open and moved the resets into the stat code only, while
+saying "When an event is tried the supported is set to true again".  Do
+that in evsel__open_cpu(), which every open entry point funnels through,
+so that a retry describes its own try instead of the previous failure.
+
+Fixes: 2cc7aa995ce9ecd8 ("perf stat: Refactor retry/skip/fatal error handling")
 Reviewed-by: Ian Rogers <irogers@google.com>
 Tested-by: Ian Rogers <irogers@google.com>
+Cc: Ian Rogers <irogers@google.com>
 Assisted-by: LLM
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/lib/attr.py | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ tools/perf/util/evsel.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/tools/perf/tests/shell/lib/attr.py b/tools/perf/tests/shell/lib/attr.py
-index bfccc727d9b25..54635082d6308 100644
---- a/tools/perf/tests/shell/lib/attr.py
-+++ b/tools/perf/tests/shell/lib/attr.py
-@@ -307,7 +307,7 @@ class Test(object):
-             else:
-                 raise Unsup(self)
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index 806a9e56b8e6c..12e05676b0daa 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -2997,6 +2997,12 @@ static int evsel__open_cpu(struct evsel *evsel, struct perf_cpu_map *cpus,
+ 	enum rlimit_action set_rlimit = NO_CHANGE;
+ 	struct perf_cpu cpu;
  
--    def compare(self, expect, result):
-+    def compare(self, expect, result, strict_groups=True):
-         match = {}
- 
-         log.debug("  compare");
-@@ -341,8 +341,9 @@ class Test(object):
- 
-             match[exp_name] = exp_list
- 
--        # For each defined group in the expected events
--        # check we match the same group in the result.
-+        # Check that each expected group is matched in the result; an event
-+        # opened in a group may match an expectation that doesn't declare
-+        # one, as those only verify the event attributes.
-         for exp_name, exp_event in expect.items():
-             group = exp_event.group
- 
-@@ -351,6 +352,8 @@ class Test(object):
- 
-             for res_name in match[exp_name]:
-                 res_group = result[res_name].group
-+                if res_group == '' and not strict_groups:
-+                    continue
-                 if res_group not in match[group]:
-                     raise Fail(self, 'group failure')
- 
-@@ -389,7 +392,7 @@ class Test(object):
- 
-             # do the expectation - results matching - both ways
-             self.compare(self.expect, self.result)
--            self.compare(self.result, self.expect)
-+            self.compare(self.result, self.expect, strict_groups=False)
- 
-         finally:
-             # cleanup
++	/*
++	 * A failed attempt being retried after evsel__fallback() would
++	 * otherwise keep group members out of their group in get_group_fd().
++	 */
++	evsel->supported = true;
++
+ 	if (evsel__is_retire_lat(evsel)) {
+ 		err = evsel__tpebs_open(evsel);
+ 		goto out;
 -- 
 2.53.0
 
