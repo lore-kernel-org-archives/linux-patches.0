@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020793;
-	b=uPvyNMMGy75qbyYAueVkUxSzTvVp++5N6DXXc9EHzj/tBfpGp1p8cAaZbOSFXnaxkGLS
-	 zwsfijCwSa3pp0QtQFsFT0UpwbjKwjBYGFL8565xPP03KPoVAxvGidT0ZqNKkeW6eF7Cq
-	 VGlPuW30J86Joa1qztrkFG1gjeUsaexeAPrre8Ksl9CiW9h5QgeOzso0gybZa+YQSxWyU
-	 Nt1o7b1igc0c58Z+7nmPBqjUFteh13CuV6DMr+pSgv8A+eiqxrBystneb/CSy4JgcXZwU
-	 I6QCIOs4j5lAXZ+tWd2UlvhD9Hi4RW3jywO/5jCVcvh8z+ejB9aKMasw9pfszhZX0Ug==
+	t=1795020795;
+	b=XgDyCz71UBRP460WiLdlHJCEl3lmRYCtzOwHJbud9BrPjagBK+yi0D7KM4TNZXLwC4J9
+	 Kb5oOv3+veH4wmWOpbo6H504+3rRGcD7eSLdPJ3LszFQS0N0vy2Fv3A3CTg/HRQwhSHsR
+	 5BAs4Aj4ONl0yx2pk2/uWTkKiadvWwGU9SUt7VGNbCbuNdw1CUhZ4Z3b+SuWTbtxmpb71
+	 slgCD8nGSEzXG4oCzGc3+8MUichlrnVjL+2/suUOxVPqxFjFYWX+bLrCo2H3H4JrMNjC+
+	 go+caPjVgD+YlLN4dsWUjFHQ0EH7mBd0SGuoP9Hef9W/0goK4LTBvsnqO3e9sl9pfMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020793;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020795;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+qeH6xwlpi/FsRxT+Ch37nxcvuUcdMZ0uaFhf4SVVPo=;
-	b=PeBcBpPmMpe2OMapHPC95zjGsXyqLBnQ0meZCVQ6e0XqOBeNteWFBKBGJ2iBuU1rUvcU
-	 LzLj3AK/w9tL7Dwmb7LTRSL/sEhB/p4A8Rq9JnFLaT7l/S1foHgh+GTYwb1YJ9Khs/d9W
-	 Ar40yLKdBZBXS+xrjbJdLceHnwemytRiERepI3wV50IALqCMg5l1ZL5g/TXe2bWFmstjD
-	 ZiLR/CcU4qytIL/WSDZ+3WSrBfmZXrrjNm5DvDpEIf0BTbUzGXdrRoFbHvVRDbX2HREPn
-	 yhLEvp6BkrSNlndwM00v5waVBoQTNrE5ZGCGDQ0N98kZEoISeF/RihTXxhCSU/aKB8w==
+	bh=g8GKn2GeKFqTRDctHKGN4ZgyImdXTMS5S//yTOY+4jE=;
+	b=bANAUwg3OdoCQIrwv9qEeNfD8MNePJ1gPXe57tR14Ek3op1pUAcmxhmpQJqRjNEjTrDK
+	 Yo7svuaoLp19YQt2re4QNfWHb4WXYshMd6VlmKeSeU8o8Fgjv2u1fxulmkzZ9UJqt10+z
+	 FwFw34OPWawN3vBNAFUD3B8yTCjTcjHh34fYvnfFe1nWSNd+YexfodI+EcMAp68UB59bk
+	 RrJPqAnx6iZxKpSTplqElm3jHQvNYMIykWfxes1eCz3YTwSOnQGTDc37+pajBmjEkYoTD
+	 qi5sPcS4gUcXu1VBZFDNsj/wTKYoCmFhlrH42xtSrtzHtFKV//TvenP1bJaaIg2WyiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbG3aVeG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLo082WZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C535606B59E;
-	Wed, 18 Nov 2026 16:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD15606A330;
+	Wed, 18 Nov 2026 16:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SbG3aVeG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65491F000C4;
-	Wed, 18 Nov 2026 16:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LLo082WZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9ED1F000C7;
+	Wed, 18 Nov 2026 16:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020792;
-	bh=+qeH6xwlpi/FsRxT+Ch37nxcvuUcdMZ0uaFhf4SVVPo=;
+	s=korg; t=1795020795;
+	bh=g8GKn2GeKFqTRDctHKGN4ZgyImdXTMS5S//yTOY+4jE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SbG3aVeG9KfK3mz44vrWRddVB1oIN4kzOrcsA+jAdDbljc6HzESFdZFGZaxBZfLUX
-	 HgVJ62QLnszGKhfTYo9zVaf92/12TXUfCLAITYoAB3HzRQvz/Juvt8QMNfwtyeXkb4
-	 36/VNSm6R9RxkWAi7vLx6OmEeNSkZeoNDwUEneA8=
+	b=LLo082WZWK9mDS8Ao5EpLhqcoxFWodeYSgooHEublibwNcQV/lzDb3KYOXHbLmPI2
+	 3Im274boONtARaXAe8968hKnEw9As1Nbz2paFxqrVDRT5wTFGk/R7Z1vTxuT/7KXfO
+	 Zv5SEeBeu234a6IBYK3kTIwpnzdYmFs951yKogHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2078/2651] PCI: endpoint: pci-epf-vntb: Honor MSI-X selection
-Date: Wed, 18 Nov 2026 15:55:18 +0100
-Message-ID: <20261118150400.845339832@linuxfoundation.org>
+Subject: [PATCH 7.3 2079/2651] perf test attr: Fix record dwarf sample_type expectation
+Date: Wed, 18 Nov 2026 15:55:19 +0100
+Message-ID: <20261118150400.876722120@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,173 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit a5401ce3ab2356b7861f53d09205008b7a49d57e ]
+[ Upstream commit 10e2992e5438c39d8404714aebf3261a391bc76d ]
 
-ntb_hw_epf tries MSI-X first and falls back to MSI. It reports the
-result in COMMAND_CONFIGURE_DOORBELL. pci-epf-vntb ignores MSIX_ENABLE,
-configures only MSI, and always raises peer interrupts with PCI_IRQ_MSI.
-When MSI-X is selected, the host does not program MSI, so raising it can
-issue a write to an invalid address. This was observed as IOMMU faults
-on the RC, with no doorbell interrupts delivered.
+Since commit bdd051e24914 ("perf record: Split --data-mmap option"),
+record_opts__parse_callchain() sets record_data_mmap instead of
+record->sample_address for the DWARF unwind mode, so -d/--data and its
+implied PERF_SAMPLE_DATA_SRC are not enabled implicitly anymore.
 
-Configure MSI-X when supported and use the selected type for peer
-doorbells and link events. Allocate the MSI-X Table and PBA in the config
-BAR and configure db_count entries. Use this EPF-owned layout even if the
-EPC has fixed, hardware-owned Table/PBA regions, as pci-epf-test and
-nvmet-pci-epf already do.
+As a result, --call-graph dwarf no longer sets PERF_SAMPLE_ADDR and
+PERF_SAMPLE_DATA_SRC, making the test fail:
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20261015014402.2976188-3-den@valinux.co.jp
+  expected sample_type=45359, got 12583
+
+where 45359 (0xb12f) is:
+
+  IP|TID|TIME|ADDR|CALLCHAIN|PERIOD|REGS_USER|STACK_USER|DATA_SRC
+
+and 12583 (0x3127) is:
+
+  IP|TID|TIME|CALLCHAIN|PERIOD|REGS_USER|STACK_USER
+
+i.e. the values differ exactly by PERF_SAMPLE_ADDR (0x8) and
+PERF_SAMPLE_DATA_SRC (0x8000).  The mmap_data=1 expectation is still
+correct as DWARF now enables record_data_mmap.
+
+This went unnoticed until tests/attr.sh stopped ignoring attr.py's
+return value.
+
+Fixes: bdd051e249141c79 ("perf record: Split --data-mmap option")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Tested-by: Ian Rogers <irogers@google.com>
+Assisted-by: LLM
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 47 ++++++++++++++++---
- 1 file changed, 41 insertions(+), 6 deletions(-)
+ tools/perf/tests/shell/attr/test-record-graph-dwarf | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 61858e3739438..f77e28f2fe96a 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -152,6 +152,7 @@ struct epf_ntb {
- 	struct mutex link_lock;
- 	bool host_link_enabled;
- 	bool vhost_link_enabled;
-+	bool peer_msix;
+diff --git a/tools/perf/tests/shell/attr/test-record-graph-dwarf b/tools/perf/tests/shell/attr/test-record-graph-dwarf
+index ae92061d611de..fbe0faa8cdb6a 100644
+--- a/tools/perf/tests/shell/attr/test-record-graph-dwarf
++++ b/tools/perf/tests/shell/attr/test-record-graph-dwarf
+@@ -4,7 +4,7 @@ args    = --no-bpf-event --call-graph dwarf -- kill >/dev/null 2>&1
+ ret     = 1
  
- 	/*
- 	 * True when doorbells are interrupt-driven (MSI or embedded), false
-@@ -159,6 +160,7 @@ struct epf_ntb {
- 	 */
- 	bool msi_doorbell;
- 	u32 spad_size;
-+	u32 msix_table_offset;
- 
- 	enum pci_barno epf_ntb_bar[VNTB_BAR_NUM];
- 
-@@ -202,13 +204,16 @@ static void epf_ntb_update_link(struct epf_ntb *ntb)
- 
- static int epf_ntb_notify_link(struct ntb_dev *ndev)
- {
--	struct pci_epf *epf = ntb_ndev(ndev)->epf;
-+	struct epf_ntb *ntb = ntb_ndev(ndev);
-+	struct pci_epf *epf = ntb->epf;
-+	unsigned int irq_type;
- 	int ret;
- 
- 	ntb_link_event(ndev);
- 
-+	irq_type = ntb->peer_msix ? PCI_IRQ_MSIX : PCI_IRQ_MSI;
- 	ret = pci_epc_raise_irq(epf->epc, epf->func_no, epf->vfunc_no,
--				PCI_IRQ_MSI, EPF_IRQ_LINK + 1);
-+				irq_type, EPF_IRQ_LINK + 1);
- 	if (ret)
- 		dev_err(&epf->dev, "Failed to raise link event IRQ: %d\n", ret);
- 
-@@ -311,6 +316,7 @@ static void epf_ntb_teardown_mw(struct epf_ntb *ntb, u32 mw)
-  */
- static void epf_ntb_cmd_handler(struct work_struct *work)
- {
-+	const struct pci_epc_features *epc_features;
- 	struct epf_ntb_ctrl *ctrl;
- 	u32 command, argument;
- 	struct epf_ntb *ntb;
-@@ -343,6 +349,15 @@ static void epf_ntb_cmd_handler(struct work_struct *work)
- 
- 	switch (command) {
- 	case COMMAND_CONFIGURE_DOORBELL:
-+		epc_features = pci_epc_get_features(ntb->epf->epc,
-+						    ntb->epf->func_no,
-+						    ntb->epf->vfunc_no);
-+		if (((argument & MSIX_ENABLE) && !epc_features->msix_capable) ||
-+		    (!(argument & MSIX_ENABLE) && !epc_features->msi_capable)) {
-+			ctrl->command_status = COMMAND_STATUS_ERROR;
-+			break;
-+		}
-+		ntb->peer_msix = argument & MSIX_ENABLE;
- 		ctrl->command_status = COMMAND_STATUS_OK;
- 		break;
- 	case COMMAND_TEARDOWN_DOORBELL:
-@@ -484,8 +499,9 @@ static void epf_ntb_config_spad_bar_free(struct epf_ntb *ntb)
-  * @ntb: NTB device that facilitates communication between HOST and VHOST
-  *
-  * Allocate the Local Memory mentioned in the above diagram. The size of
-- * CONFIG REGION is sizeof(struct epf_ntb_ctrl) and size of SCRATCHPAD REGION
-- * is obtained from "spad-count" configfs entry.
-+ * CONFIG REGION is sizeof(struct epf_ntb_ctrl), plus space for the MSI-X
-+ * Table and PBA if supported. The size of SCRATCHPAD REGION is obtained
-+ * from "spad-count" configfs entry.
-  *
-  * Returns: Zero for success, or an error code in case of failure
-  */
-@@ -506,6 +522,12 @@ static int epf_ntb_config_spad_bar_alloc(struct epf_ntb *ntb)
- 	spad_count = ntb->spad_count;
- 
- 	ctrl_size = ALIGN(sizeof(struct epf_ntb_ctrl), sizeof(u32));
-+	if (epc_features->msix_capable) {
-+		ntb->msix_table_offset = ALIGN(ctrl_size, 8);
-+		ctrl_size = ntb->msix_table_offset +
-+			    ntb->db_count * PCI_MSIX_ENTRY_SIZE +
-+			    BITS_TO_U64(ntb->db_count) * sizeof(u64);
-+	}
- 	spad_size = 2 * spad_count * sizeof(u32);
- 
- 	base = pci_epf_alloc_space(epf, ctrl_size + spad_size,
-@@ -574,6 +596,17 @@ static int epf_ntb_configure_interrupt(struct epf_ntb *ntb)
- 		}
- 	}
- 
-+	if (epc_features->msix_capable) {
-+		ret = pci_epc_set_msix(epf->epc, epf->func_no, epf->vfunc_no,
-+				       ntb->db_count,
-+				       ntb->epf_ntb_bar[BAR_CONFIG],
-+				       ntb->msix_table_offset);
-+		if (ret) {
-+			dev_err(dev, "MSI-X configuration failed\n");
-+			return ret;
-+		}
-+	}
-+
- 	return 0;
- }
- 
-@@ -1579,6 +1612,7 @@ static void vntb_epf_peer_db_work(struct work_struct *work)
- 	struct epf_ntb *ntb = container_of(work, struct epf_ntb, peer_db_work);
- 	struct pci_epf *epf = ntb->epf;
- 	unsigned int budget = VNTB_PEER_DB_WORK_BUDGET;
-+	unsigned int irq_type;
- 	u8 func_no, vfunc_no;
- 	unsigned int db_bit;
- 	u32 interrupt_num;
-@@ -1590,6 +1624,7 @@ static void vntb_epf_peer_db_work(struct work_struct *work)
- 
- 	func_no = epf->func_no;
- 	vfunc_no = epf->vfunc_no;
-+	irq_type = ntb->peer_msix ? PCI_IRQ_MSIX : PCI_IRQ_MSI;
- 
- 	/*
- 	 * Drain doorbells from peer_db_pending in snapshots (atomic64_xchg()).
-@@ -1603,7 +1638,7 @@ static void vntb_epf_peer_db_work(struct work_struct *work)
- 
- 		while (db_bits) {
- 			/*
--			 * pci_epc_raise_irq() for MSI expects a 1-based
-+			 * pci_epc_raise_irq() for MSI/MSI-X expects a 1-based
- 			 * interrupt number. The first usable doorbell starts
- 			 * at EPF_IRQ_DB_START in the legacy slot layout.
- 			 *
-@@ -1623,7 +1658,7 @@ static void vntb_epf_peer_db_work(struct work_struct *work)
- 			db_bits &= ~BIT_ULL(db_bit);
- 
- 			ret = pci_epc_raise_irq(epf->epc, func_no, vfunc_no,
--						PCI_IRQ_MSI, interrupt_num);
-+						irq_type, interrupt_num);
- 			if (ret)
- 				dev_err(&epf->dev,
- 					"Failed to raise IRQ for interrupt_num %u: %d\n",
+ [event:base-record]
+-sample_type=45359
++sample_type=12583
+ exclude_callchain_user=1
+ sample_stack_user=8192
+ # TODO different for each arch, no support for that now
 -- 
 2.53.0
 
