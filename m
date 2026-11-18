@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058897;
-	b=s1e0pKzj0xvxZrYJ/okw3B39bR2r8GJWnBxl39ZNqpujZt2i++awSdlYgF7yTKxCOnrt
-	 CGdeo9it4WU+6chkw3cewiNn1LwG9IirPJI2JaIhMrfrN73EYRFGtAb1LbICcOiTyOApM
-	 VyNdfGH1kTM2os5plzT8Pxu+2o1Ddmifrxy76LYa6GnFbCyrI2xnMfYWLLAdYBIvObzUn
-	 fNChQxem6ppqv5/Uh+KDolW2ewTCC82WW4s8iK0fBTdqLr90/YhpSzH2eAESE5meNM/TC
-	 jj97AsBV6TWSXKjfflfmQwUeYsivKM50OhTYC1I+kMcYrhNu3Nbq0cqq5PAMTRH/Osw==
+	t=1795058900;
+	b=TxEj9k3qSy9UMAbf7LQrtikkpLyJKTnbRiqrrv3zLVRWoth+On8O6YzwkyxntLaWH/t2
+	 DRTcW13xn12kB96wHL9w70LXgCOhBEVt87/jFmSCWe91yv7yYzU6ulNDtk7+fSLdO8xMZ
+	 IyeoTXKjEQiq2J/sc9NEQgGgvFA73BbCmV4RdewRkpS4XSUxe6bhiYMHprATRMFQJtq+y
+	 3QF/0iPCGbidgufaDvJvmsXlPvKjfdqFkWhdzGBmwR09tlc1fWCBzyOxtY6EsCz/BZwcu
+	 CF8hUz9oLMLo3GDX35MJUuzeyB+r/VMMvPbbr6fuB26KBhECR77DjJqb5/XYcgW9rEw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058897;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058900;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fbSpzsgVyjKwyp290OJRadobi3KNCu/welkYATHPcMQ=;
-	b=dSUZQKPwzRx/lG5r8HDKNh5Aa6tmuXRrr/zFF086mKzE6//6hr5NodWLT2bPIQseyGq7
-	 AH3BMg7FaKpQUhVkg2jDB0e/ygCJZVm2yuTOC84JX88zFi3zrt+p9IomMkcK/ccDmBT2k
-	 xM52q3BlBbKvTzyqWxAdqgOCuUTxbdQauJYuyRMuqNSYZlKp88TME9hbKpI9rTDoHRAhD
-	 Ch3tbSKRkJKLlFspIXr7bgFQe7rJP1Ppi0e8puFVxZDkjt4JAJJG0LQa6t7RNZTNDFfT9
-	 GoKuFVDxNiC1xYaLKE9A0W1LbjvgXYknfH27DS1mDj+LZwkqz9u5rHH86gACwImw41Q==
+	bh=O1HjiCgoClBUgL2TnqJrAkVwXalR527p48tWIT/cgO0=;
+	b=ceiJ908/5Fus2MB3oRLzIjKYWzU0bpKA+PzQyep5RWvOZshrIrA5stZJ6z9tLQ6Ov8cX
+	 USm3aJVq1Mh2aMfO/UYj7T8nOiRec8x9eDNJL/LAVuPAS4c8YvRaOJuYT2RSJTfKCCyRm
+	 N1HTO2AQePLj5EFMJoGjeL/ZD4N0Gi8Dru32RK7ajatNzTKJk7zGduXWMZ8KADHLZUPdH
+	 W3bkbhH1GhEA/CVvW1+x0QlF7Rl9Q2/0asaEVMiZs9FvnC7Q6MF9owJHsEdehGTULc1B/
+	 jFmSuiXXPGFmIrfoRTkfz4XKLgn3kdCqQtycLnPRHxJQ3SKmQcR1fDn3Xas1Ol/mPbQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNrL1U9U;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCqpPCVq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73F9606A330;
-	Thu, 19 Nov 2026 03:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF55606A32F;
+	Thu, 19 Nov 2026 03:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WNrL1U9U
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016921F000C4;
-	Thu, 19 Nov 2026 03:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCqpPCVq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE67A1F000C4;
+	Thu, 19 Nov 2026 03:28:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058897;
-	bh=fbSpzsgVyjKwyp290OJRadobi3KNCu/welkYATHPcMQ=;
+	s=korg; t=1795058900;
+	bh=O1HjiCgoClBUgL2TnqJrAkVwXalR527p48tWIT/cgO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WNrL1U9U6pztJNf0hhKe5bZm94eAv6Z/UMXLfkzZsGrTyqOPdGsFUtiz5wXbMOq3B
-	 kMuKneaOBFN2L3NG4uVva91lMbsEOxrY9lTz3QDSR6tbswvi2FZNnJiw+r1RAsZGy5
-	 +CixHiXZIfv6bPV8IkrWd57K2k8+OwLvI8PnRJeI=
+	b=FCqpPCVqPBjEoM7bn2Y6THxUsaq9J2GLQG6vXErq4udhzFIJX72Vs+5UMyzsrmdn6
+	 EBE5WPO8B/QeKtpVSCxYf5ooCJMCug6jBYp6R59S9ZRnF/Psfsae5GV7XWQBvGuY7z
+	 vw3qxSrpvdNzoa4jfk+a5bJfMDYNQSH15ekvZGOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0649/1848] xfs: allow softlimit with no hardlimit in quota scrub
-Date: Wed, 18 Nov 2026 15:44:47 +0100
-Message-ID: <20261118145942.978493610@linuxfoundation.org>
+Subject: [PATCH 5.10 0650/1848] xfs: rescan the AGs if incore delalloc counter is negative
+Date: Wed, 18 Nov 2026 15:44:48 +0100
+Message-ID: <20261118145943.023114938@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,53 +71,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Darrick J. Wong <djwong@kernel.org>
 
-[ Upstream commit 342c2e00b3a99099a7088f7b8c8f075670c603a9 ]
+[ Upstream commit 47b1e941bb55f735d82ba2649412260da78b98f8 ]
 
-LOLLM observes that the sysadmin can set a user's soft limit to a
-nonzero value and the hard limit to zero, so those aren't corruptions.
+LOLLM complains that percpu_counter_sum can return a negative number but
+we instead misinterpret that into a huge unsigned value and do bad
+things to fdblocks.  It shouldn't do that, so let's add a retry loop and
+an attempt to freeze the filesystem to (hopefully) zero out the incore
+delalloc counter.  It probably won't work, but at least failing the
+repair beats doing the wrong thing.
 
-Cc: stable@vger.kernel.org # v4.15
-Fixes: c2fc338c87a31f ("xfs: scrub quota information")
+Cc: stable@vger.kernel.org # v5.2
+Fixes: 75efa57d0bf5fc ("xfs: add online scrub for superblock counters")
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
 Assisted-by: LOLLM # finding obvious bugs
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ sashal: omitted the quota repair changes in xrep_quota_item() ]
+[ sashal: omitted the realtime extent counter changes in xchk_fscount_count_frextents() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/scrub/quota.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/xfs/scrub/fscounters.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/xfs/scrub/quota.c b/fs/xfs/scrub/quota.c
-index e34ca20ae8e40..42cccc6505f76 100644
---- a/fs/xfs/scrub/quota.c
-+++ b/fs/xfs/scrub/quota.c
-@@ -103,21 +103,21 @@ xchk_quota_item(
- 	 * suspect, which is why we flag it for review.
- 	 *
- 	 * Complain about corruption if the soft limit is greater than
--	 * the hard limit.
-+	 * the hard limit and there's a hard limit set.
+diff --git a/fs/xfs/scrub/fscounters.c b/fs/xfs/scrub/fscounters.c
+index ec2064ed3c30f..de7151f55d0d6 100644
+--- a/fs/xfs/scrub/fscounters.c
++++ b/fs/xfs/scrub/fscounters.c
+@@ -157,7 +157,7 @@ xchk_fscount_aggregate_agcounts(
+ {
+ 	struct xfs_mount	*mp = sc->mp;
+ 	struct xfs_perag	*pag;
+-	uint64_t		delayed;
++	int64_t			delayed;
+ 	xfs_agnumber_t		agno;
+ 	int			tries = 8;
+ 	int			error = 0;
+@@ -213,6 +213,11 @@ xchk_fscount_aggregate_agcounts(
+ 	 * of the computation.
  	 */
- 	if (dq->q_blk.hardlimit > mp->m_sb.sb_dblocks)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_blk.softlimit > dq->q_blk.hardlimit)
-+	if (dq->q_blk.hardlimit && dq->q_blk.softlimit > dq->q_blk.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
+ 	delayed = percpu_counter_sum(&mp->m_delalloc_blks);
++	if (delayed < 0) {
++		ASSERT(delayed >= 0);
++		xchk_set_incomplete(sc);
++		return -EFSCORRUPTED;
++	}
+ 	fsc->fdblocks -= delayed;
  
- 	if (dq->q_ino.hardlimit > M_IGEO(mp)->maxicount)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_ino.softlimit > dq->q_ino.hardlimit)
-+	if (dq->q_ino.hardlimit && dq->q_ino.softlimit > dq->q_ino.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
- 
- 	if (dq->q_rtb.hardlimit > mp->m_sb.sb_rblocks)
- 		xchk_fblock_set_warning(sc, XFS_DATA_FORK, offset);
--	if (dq->q_rtb.softlimit > dq->q_rtb.hardlimit)
-+	if (dq->q_rtb.hardlimit && dq->q_rtb.softlimit > dq->q_rtb.hardlimit)
- 		xchk_fblock_set_corrupt(sc, XFS_DATA_FORK, offset);
- 
- 	/* Check the resource counts. */
+ 	trace_xchk_fscounters_calc(mp, fsc->icount, fsc->ifree, fsc->fdblocks,
 -- 
 2.53.0
 
