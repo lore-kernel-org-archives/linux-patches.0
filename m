@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059306;
-	b=miEDBE8pkiYoamNkSwslgsunwwSKBWeWFC8r6pM9iOf4wG7vn6gYJOhHCSmiLzQq6VPv
-	 QLam28x/KRwKGscrSpOcSydHNBsN7vjzdTkvBxO5YfJ2cH01Bnv2E9vm6DBtms/GYF2XM
-	 21emuC/AC9eMNS66kw8VORsodts8iBlGUbIq8zj/3cDydcW6+1++LCFc486Zx90kN7fju
-	 n7AmmBGoQ1OpLqJYh7KwEfDVqd/wNxC0TGLM0MRVpa19lWy2y+J+gITggHb88SoCERIp6
-	 JarY4PbaK7WvdyGy/mKmivQNWS/YloTZSu2dGGcpSCYsXE336w60nyRXG6yNxT5PXAg==
+	t=1795059309;
+	b=Oc4ldpvsssAvb9R4VoF7BLwJwZKGjitQ08dD7J3PC9EcI7W/kvdLE4Ili7lvi/oe84D7
+	 5eSNTlg/9EM1wxj0vpxUeL/7loWoX2I5Dv2BPtauO2dfuejcbiQY3pBdg91P5wv6LU38o
+	 pSGBnDBowtqk6BL9QJX+9OQ3xew28nMnrZaArBQyooTKqKWoAZe2tfC+L9aEYMn5BM0Zq
+	 dt7MxSR8tsCGOUg7sYETDKqFwbHT2g1te2uxXprRI1PLTNuB1JtHtr0wFVpaKQOVzhzKz
+	 GMhCLEyLgIkhL6y3XyVQUMmSN1eEOYmiNtt5N+W188W8AM7Xe2XLbo/hz70jW8DnaGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059309;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LOM22M3kHel+tGm9XP+YNLEGo+zlTauJ6T2SC9RE+PA=;
-	b=xN6zFbup/XhPbefDjnYTIgqFNMKJHA58WMdSyhael7kBlDXbfRM3yCFv4YzE+cHYA92m
-	 m5Q1yOXoFypGShQk+cOiWuFlPxAgx44bbsPjEfT6yi4BYrx9YJkUkTG3sqq6Vww2MIhyO
-	 ZlQvC+21hSr2Mhrbc8Te3TTS1FhrKzVddDi0mTPerDkQ0EwSKOqwVIFLlIoRHYLYDqQ/I
-	 Xigcz2ynYdC5gI8+m5Z+LKQKsh9Lu/Uc2THKt18GkL4XfOTe1mXnQ2FP3OLFO5i8qZBwf
-	 qZz2seRuQTpJ8GKkXDFMyA7ZiXqEGWyfYKCR+5dMZcLiteACS5JvyCL/9X7enwqdkmQ==
+	bh=aumk/ZVWbUb071u2iIjS8nuq6ajVzm6T7ReUNqhvRTk=;
+	b=vX9ApAZeaU0urzXaw/Ej/GrFd/vebvJctpwrL+yxsi1KMzNYjIxrM5L+AeDZ6uoDitgr
+	 9YR4eQQCTro0kg7CbN7HCru8tTfyE3Yy7bj3M565hZuIkBcsW7CKYhFmuwLFzy5BiCqVj
+	 /A2xG99pMiV40zYmLQfccXnO6dirmrXfMW4Z5zCG8G7EBqQ0FlIRe8jbOhavVCMqi8/Jl
+	 K0IaC2G3bHp7KsIUAgdg5MO3ozQaBDsD4FK/AeasRyzTVG4w4B1bsR2E01kB6LNLY67vK
+	 QdEF7gD8wHHx/Lm6xlMv0V4rsll0h/KtsC1qaxT8qE7qxBwtvaWQPEnH4/CQV8x+esA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQvFR0di;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lfjr1+Dq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CDF606A336;
-	Thu, 19 Nov 2026 03:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47724606A32F;
+	Thu, 19 Nov 2026 03:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PQvFR0di
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 742AF1F000C5;
-	Thu, 19 Nov 2026 03:35:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lfjr1+Dq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 493281F000C4;
+	Thu, 19 Nov 2026 03:35:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059306;
-	bh=LOM22M3kHel+tGm9XP+YNLEGo+zlTauJ6T2SC9RE+PA=;
+	s=korg; t=1795059308;
+	bh=aumk/ZVWbUb071u2iIjS8nuq6ajVzm6T7ReUNqhvRTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PQvFR0diUozAlzto0jGgMOTbcJwJYVaUngHZhSIVMK4Cmc1nXtn88sT1t2Ehet1VX
-	 PuhTbqZKwWsdZxasQ98xRIkZntKz/HWSs+hFNaoONmeMx9DcB0VckRwxNkPdbpvc6i
-	 C4iupokXq4LMF76beVowsuJSh33NzxAo/GVodFhQ=
+	b=lfjr1+DqaH/KUOaDonaYDrCQgYo5TDbxkxuQysK1W7QHh+JmESDQk3lEiDfCJaB6P
+	 b+3VtgVMLlhG05nJ2EFINbVfwjAq/EhqNvobjZjvBf9l0QOMzS/VZhQxh3OOih0OTY
+	 kDyUSeWRdgKUI90V4exSlODWc+jnAyVVC10G7mKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0792/1848] crypto: algif_skcipher - rewind rounded output bytes
-Date: Wed, 18 Nov 2026 15:47:10 +0100
-Message-ID: <20261118145949.582376314@linuxfoundation.org>
+Subject: [PATCH 5.10 0793/1848] batman-adv: Limit number of aggregated packets directly
+Date: Wed, 18 Nov 2026 15:47:11 +0100
+Message-ID: <20261118145949.621351173@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,70 +68,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 2f90facc7b94934653eb7ebfadcc25d503b89196 ]
+commit 434becf57bdc89f939db635ed3337b9d1da5967e upstream.
 
-af_alg_get_rsgl() advances the receive iterator by the unrounded RX
-scatterlist length.  For a continuing skcipher request,
-_skcipher_recvmsg() then rounds its local length down to a whole chunksize
-without restoring the iterator.
+The currently selected size in BATADV_MAX_AGGREGATION_BYTES (512) is chosen
+such that the number of possible aggregated packets is lower than 32. This
+number must be limited so that the type of
+batadv_forw_packet->direct_link_flags has enough bits to represent each
+packet (with the size of at least 24 bytes).
 
-A later chunk starts after bytes which the provider never wrote, while the
-syscall returns only the processed length.  When copy_splice_read()
-supplies non-zeroed pages and publishes that return as a dense prefix, the
-gap exposes stale bytes from a previous page lifetime.
+This requirement is better implemented in code instead of having it inside
+a comment.
 
-With unprivileged xts(aes), a 31-byte MSG_MORE request followed by one
-final byte advances a 47-byte destination while returning 32 bytes.  A
-hardened v7.2-rc5 image retained all 15 seeded stale bytes in 4,829 of
-4,829 records.  With init_on_alloc enabled, all 72,345 gap bytes observed
-were zero.
-
-Rewind the iterator by the tail excluded during rounding, before rejecting
-a zero processed length.  The crypto request uses only the rounded length;
-af_alg_free_resources() releases the entire RX list before another receive
-iteration.
-
-The fixed target-like kernel returned byte-identical dense 48-byte output
-in 4,771 of 4,771 rounds.  The unmodified kernel returned the vulnerable
-32-byte short record in 2,409 of 2,409 rounds.
-
-Fixes: e870456d8e7c ("crypto: algif_skcipher - overhaul memory management")
-Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ sashal: added the zero-length guard where no short-input check previously existed ]
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algif_skcipher.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ net/batman-adv/bat_iv_ogm.c | 4 ++++
+ net/batman-adv/main.h       | 3 ---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/crypto/algif_skcipher.c b/crypto/algif_skcipher.c
-index 6a1a71284fe82..c037c3969e9d6 100644
---- a/crypto/algif_skcipher.c
-+++ b/crypto/algif_skcipher.c
-@@ -82,8 +82,17 @@ static int _skcipher_recvmsg(struct socket *sock, struct msghdr *msg,
- 	 * If more buffers are to be expected to be processed, process only
- 	 * full block size buffers.
- 	 */
--	if (ctx->more || len < ctx->used)
--		len -= len % bs;
-+	if (ctx->more || len < ctx->used) {
-+		size_t excess = len % bs;
-+
-+		len -= excess;
-+		iov_iter_revert(&msg->msg_iter, excess);
-+
-+		if (!len) {
-+			err = -EINVAL;
-+			goto free;
-+		}
-+	}
+diff --git a/net/batman-adv/bat_iv_ogm.c b/net/batman-adv/bat_iv_ogm.c
+index cc4fbfd0b7553..06908c324f110 100644
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -451,6 +451,7 @@ batadv_iv_ogm_can_aggregate(const struct batadv_ogm_packet *new_bat_ogm_packet,
+ 	struct batadv_ogm_packet *batadv_ogm_packet;
+ 	int aggregated_bytes = forw_packet->packet_len + packet_len;
+ 	struct batadv_hard_iface *primary_if = NULL;
++	u8 packet_num = forw_packet->num_packets + 1;
+ 	bool res = false;
+ 	unsigned long aggregation_end_time;
  
- 	/*
- 	 * Create a per request TX SGL for this request which tracks the
+@@ -476,6 +477,9 @@ batadv_iv_ogm_can_aggregate(const struct batadv_ogm_packet *new_bat_ogm_packet,
+ 	if (aggregated_bytes > BATADV_MAX_AGGREGATION_BYTES)
+ 		return false;
+ 
++	if (packet_num >= BITS_PER_TYPE(forw_packet->direct_link_flags))
++		return false;
++
+ 	/* packet is not leaving on the same interface. */
+ 	if (forw_packet->if_outgoing != if_outgoing)
+ 		return false;
+diff --git a/net/batman-adv/main.h b/net/batman-adv/main.h
+index a47dc332d7968..369f7c8d0c01f 100644
+--- a/net/batman-adv/main.h
++++ b/net/batman-adv/main.h
+@@ -103,9 +103,6 @@
+  */
+ #define BATADV_TQ_SIMILARITY_THRESHOLD 50
+ 
+-/* should not be bigger than 512 bytes or change the size of
+- * forw_packet->direct_link_flags
+- */
+ #define BATADV_MAX_AGGREGATION_BYTES 512
+ #define BATADV_MAX_AGGREGATION_MS 100
+ 
 -- 
 2.53.0
 
