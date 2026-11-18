@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051503;
-	b=kFdImxOu1cNIdbWXe/AlWoXc9ji+QKhmiG32aK9B1JAgvIKb1WkoFOcG8Ai7WMdeaVvI
-	 IK/US97DOaYktL9cYyyh3QT6acDOiMAoZc9u9LRsIBJDo4l3+Yh72uFhA01FZpoYgrk1t
-	 dVDQcjU/ETq6NiX14DNO8NwaXQhjxKRbW2L/ctRylgMQ9xoIXDNBPIb7o2qOYblxgsv5x
-	 7xFYtM3zLO6bpGH2xdVJWY6ZUNbeh/P3SH0uRzIZR/2ZAeTj3BhP5DIDBnSELuhc9oYQQ
-	 Dykw64EWNbzRPnJa5NDsnkUCB0WeEJGdAecOnm88DO7A+U62tzk3s2omRMJPGqlC1zQ==
+	t=1795051505;
+	b=CwkHUMWsajXHxlX8GykxkKsIrhRaU3i/zrw9GXhEh+KMSh0xL052FWyJ38ojhWF7I3Pw
+	 +uMDi/tJ0HHi42UEurl7Qj8niJnf4UrqFvNNKvWYkatOIP+a3dGilYxdcGz+pbU+I3SoG
+	 0gJUDb/aViOg8CNUCnmKDHJCtxzYMiQHlSyGw9P1Gq3BlA1Ig4PptzvEehmS1lwdyujMG
+	 FXnI6GuXPeWTu5hG1awt5UD3TiAy9FrxJdq2lrZUz5LAHkqxhR/X+enWVdn7+XpR6xuBs
+	 RSywL8BkalUIAQkdfF/Pk58BIS99vgmd8iumfFEwWBr7WKV//FrNRb2twpAZioD4nyg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051503;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051505;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2uyBcjOQIw884CLSeyhAelc9odH/rTv/SPtHSZddIyI=;
-	b=W/afIjP2Z07f/j/LKzLGvlhPpsG6lEj73qJ1RUzvvYc0vjSpVOLw/bW0YgYD9/PE+Oez
-	 HIHB5ht8cTsoWom81JC+TnX+4x2jt9pVsVkEC1QGz58VUWHTkQpkRGRqGgFMqri0ojwjy
-	 wrViUiIZpe+454rioJGYtw5Xv15vPD71/FWpNmnc1Bp0x4ptCemO5Pqn90xp0YIHz8adQ
-	 M8IudMrlG3hiEluYJZd7kYxtESw0kzokfEoupr8YfM9id3pn6TP3ctsdKRfMAZPQQpIfN
-	 pgwitfPMegvBNwUrTG1DwaARdLf8Z9NCvkV3K29b8gdTZkEy1/LtarkjhBtSkvGz8sg==
+	bh=Yrv0Ts1t+IZMOOWpPCCjSR/PQ/RbAQujaO2UQxjPZf0=;
+	b=OwddNy0zxOhZupAYyWEBKLmTMHX8a/SIdPA35eRVZw1V4IUE4lkcxn1B/M6hAjRkk/rj
+	 IH4jQui8MhlQt1ClDbLFvQ1SyccVecUoamb95UUSqgrzeIB661RLBQq910uBPol3D9cK4
+	 KOSN5DSozNZ+WMvVHbI2ljtav2xYcUHthLBkbauShaV3gNWuDXKEjl8Ha99kz6D03Vzmx
+	 dJjtdn9qIvCOhX5BXoGEcnNS7cRz16+qEw3U7HPsMY5v2D9yw1g9Xv1sF6ciiUKkQBYUw
+	 D4Jo4KL51zSQ7OJX442lBjb2PVzAA0ZncF+TGHGI5nG3OPtVsNImtOvdrTlICLenXDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTFxFUrV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJfFgAEt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F6C606A330;
-	Thu, 19 Nov 2026 01:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D3B606A320;
+	Thu, 19 Nov 2026 01:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fTFxFUrV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BBB81F000C4;
-	Thu, 19 Nov 2026 01:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJfFgAEt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183441F000C4;
+	Thu, 19 Nov 2026 01:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051502;
-	bh=2uyBcjOQIw884CLSeyhAelc9odH/rTv/SPtHSZddIyI=;
+	s=korg; t=1795051505;
+	bh=Yrv0Ts1t+IZMOOWpPCCjSR/PQ/RbAQujaO2UQxjPZf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fTFxFUrVrSikcbsZceuC/aUIrqhwfoKa76lSjW0ACP18qxjv6wEUrM9t29JPxpNzH
-	 XBlsg3mfceMpZfF6p1NYgdKFdjF6v7mt8dhFtCJL4HJXNYpub/fYZkX2Pf5feGZnTv
-	 +TE3NUXZmz6EElsst8Uyurf6JRabd/+xFZiWEPWM=
+	b=dJfFgAEtCkqMbaZHiRSASO8JgzE8lFK313fRVLY9oZQxKDRCZwkv8VHJSBl/MNS0e
+	 wo0ilW+SX8zFXCqV5QQFdw/sSLLc/elSFtL4N34XAEgsyK+9+DwwgbmU5usFNE0tZK
+	 E2/XZbRHYYWizgLcZzs9CUbpBrZ4BcYi8DH3WwPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Changcheng <chenchangcheng@kylinos.cn>,
-	Narsimhulu Musini <nmusini@cisco.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Jenson Johnathon Reggentin <mail@jregg.de>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0231/2214] scsi: snic: Fix SCSI host leak on workqueue allocation failure
-Date: Wed, 18 Nov 2026 15:31:47 +0100
-Message-ID: <20261118150019.467709830@linuxfoundation.org>
+Subject: [PATCH 5.15 0232/2214] docs: block: fix dead http link in blk-mq.rst
+Date: Wed, 18 Nov 2026 15:31:48 +0100
+Message-ID: <20261118150019.506305175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,80 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Changcheng <chenchangcheng@kylinos.cn>
+From: Jenson Johnathon Reggentin <mail@jregg.de>
 
-[ Upstream commit 12e67eb89eb2b9516685c744d3f7de0a2d1bd701 ]
+[ Upstream commit b40a680ea4efe4ef2addada63e304a94d19500d1 ]
 
-In snic_add_host(), if scsi_add_host() succeeds but
-alloc_ordered_workqueue() fails, the function returns -ENOMEM with
-shost->work_q left as NULL. The caller's error path then calls
-snic_del_host(), which returns early when !shost->work_q without calling
-scsi_remove_host(). The Scsi_Host remains registered in sysfs as a zombie
-device even after the probe has failed. This causes:
+The current link http://kernel.dk/blk-mq.pdf leads to a 404 error page.
+https://www.kernel.dk/blk-mq.pdf leads to the correct document.
 
- - The leaked host remains visible in /sys/class/scsi_host/ after probe
-   failure, with state "running".
+v2 to add the missing www. prefix in the actual file change.
 
- - Subsequent SCSI host numbering is permanently shifted (the leaked host
-   ID from ida_alloc() is never reclaimed).
-
- - Memory leak: the Scsi_Host allocation can never be freed because
-   device_add() took a reference that can only be released by device_del()
-   inside scsi_remove_host().
-
-Fix by adding scsi_remove_host() in the workqueue allocation failure path
-inside snic_add_host(), undoing the successful scsi_add_host() before
-returning the error. This is cleaner than modifying snic_del_host() because
-snic_del_host() is called from a shared error label that also serves paths
-where snic_add_host() was never invoked.
-
-Reproducer (requires no real SNIC hardware):
-
- - Build CONFIG_SCSI_SNIC=y (built-in)
-
- - Add snic.test_mode=1 snic.inject_wq_fail=1 to kernel cmdline
-
- - Boot with a PCI device matching the snic driver (e.g. QEMU edu device,
-   PCI ID 0x1234:0x11e8, temporarily added to the driver's PCI ID table)
-
-Before the fix:
-
-  # /sys/class/scsi_host/ contains a zombie host0:
-  $ cat /sys/class/scsi_host/host0/proc_name
-  snic_scsi
-  $ cat /sys/class/scsi_host/host0/state
-  running
-  # ata_piix gets host1, host2 (host0 stuck):
-  scsi host1: ata_piix
-  scsi host2: ata_piix
-
-After the fix:
-
-  # host0 is properly freed and reused by ata_piix:
-  scsi host0: ata_piix
-  scsi host1: ata_piix
-  # No zombie host in /sys/class/scsi_host/
-
-Signed-off-by: Chen Changcheng <chenchangcheng@kylinos.cn>
-Acked-by: Narsimhulu Musini <nmusini@cisco.com>
-Link: https://patch.msgid.link/20260727073438.209673-1-chenchangcheng@kylinos.cn
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Signed-off-by: Jenson Johnathon Reggentin <mail@jregg.de>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20260819192422.42189-1-mail@jregg.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/snic/snic_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/block/blk-mq.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/snic/snic_main.c b/drivers/scsi/snic/snic_main.c
-index 14f4ce665e584..31df534b08c88 100644
---- a/drivers/scsi/snic/snic_main.c
-+++ b/drivers/scsi/snic/snic_main.c
-@@ -320,6 +320,7 @@ snic_add_host(struct Scsi_Host *shost, struct pci_dev *pdev)
- 	if (!shost->work_q) {
- 		SNIC_HOST_ERR(shost, "Failed to Create ScsiHost wq.\n");
+diff --git a/Documentation/block/blk-mq.rst b/Documentation/block/blk-mq.rst
+index 31f52f3269714..9a8b3899e5581 100644
+--- a/Documentation/block/blk-mq.rst
++++ b/Documentation/block/blk-mq.rst
+@@ -139,7 +139,7 @@ completed.
+ Further reading
+ ---------------
  
-+		scsi_remove_host(shost);
- 		ret = -ENOMEM;
- 	}
+-- `Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems <http://kernel.dk/blk-mq.pdf>`_
++- `Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems <https://www.kernel.dk/blk-mq.pdf>`_
+ 
+ - `NOOP scheduler <https://en.wikipedia.org/wiki/Noop_scheduler>`_
  
 -- 
 2.53.0
