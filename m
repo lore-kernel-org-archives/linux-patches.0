@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037476;
-	b=Xdr+8IJ+w1ZcQePEzR1MWY5bQrB6xVOBATTdmlJlHVtPOttwkkvy35bUGL95k9EJjErp
-	 H2gfLsvOZ1+BjHLPOe/7nGnXXXYg7Ig5tOoFDSGDCmXRhcle5DoZn2zuqQOoQFOMLYzuF
-	 nMYs482BOh2yFyZ7RDiUa7Sgp8Z3qgSSrnhAxN5o45H7Gg7u8Ei1UvZWBvp7gvYLglT2J
-	 tPCXEsYkRjBPP8QQJWWwxHSbqL/hm78LuDlV31oaipNwbgbr9ub99f++6z7o6hxJPhmYi
-	 on25oLoAXW48DpM6GrQWiLSmIAnJQriAySZlbBo0+rTn6ygbjNx7VwCadu5RGkwZ1rQ==
+	t=1795037479;
+	b=yZvPdLt7wlDmP+gu/eDXJG6KqrTJfhJ7zQA0mIUlaLvZD2RAKVUONQWiMNm+l1dAF5Zf
+	 jIrqv4ieRiNekGMlZvE8MPV+Y8o0Y01KunnA//V0LwJ147UhTv8ykk8yw0RwYbonimFHB
+	 0Ut1iHHPHOEr+/5cDELKO0Is3ExByamGWrmduHXz/ShhK0/EqueuoY8y9Raz3nE2k3WVy
+	 17T6jzG3OoxJbZ6QwwPhtCbeOGNvH87y5UKcepZDItYF/2LA/GB4WWZOVc+fzWzmPwgGe
+	 TKLiZmxHMgU+YLdXCddxAN2uAkGSVNYzwv0b7k7GHhhtjTUeMd7Eqfha5N45fGp1fqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037476;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037479;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=DP80wtR564yX9UkNrIzMZjyhnilZb7WGYd/4ut933i4=;
-	b=MDrjuqZW511m1z8+khAaM4iKTI6OI66uuyWck+Ig2Fbq8UBuMmeDDONSKaIZ9WSOduE5
-	 OjWoXMI/DRmElIzIyFzwfvNUuZoDTpet9iIhBEr8ocv4ri8/vWe9DX9deR0HQQzdA8XIe
-	 p9JoBFIdx0U0lJa9e2wwG/3kLvagl3+pVDSiBi1/yD49zJTvlTpu7FkO/Zm9slIlfCidd
-	 60SgbjYvt7CD57hHJ85jAg0CxTFYlfU3qnfnAYJPw8E8qEmQj609KTjkwYXNQl157i0Ag
-	 HY0OPq3hGVkg3UrvYhxR6rC39VX/X1ZI2EHYWuuPGGQJ+vGj+orFN9KLtKqG/SInVsA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8Cw75fRzWh9DXhc57zIAHrPBJJGBpkJqPCQjbeK47MQ=;
+	b=O/jYLzpR+yaJ0WRUdgGRVmOZqUAfn9Q52qsiD/540Q/OA1ssSQofLc/ZETQ3gGi5ZgR/
+	 M9eyGrdKZegoyD/Qpg+A6SYTRBx1RRnOsKwkhECtGXauZ/nyWlyD/b/LvStnIxEDz5A9i
+	 GC/aeGvAAnfE7Oqozc6rCbren9y0LLcq4W1fuZuCWuZQFS/r+CLUVPMUGmzNtmfHIQrEc
+	 CoJJVzNHC7wBBcrjVFbcAHuyqOI4NC3x5zlVk1oodEELus+iAt6XHKZW58QSANWr8aTCT
+	 mdw6FDoHZVawEl2T48wSwge0GNPNPAi+H/3u2i03yxGAHD5uHD1FqNSFlxT/Y1VjBBA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jz1cdXCt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ULbGREFw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B66606A320;
-	Wed, 18 Nov 2026 21:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2FF3606A32F;
+	Wed, 18 Nov 2026 21:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jz1cdXCt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C51B61F000C4;
-	Wed, 18 Nov 2026 21:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ULbGREFw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1463A1F000C4;
+	Wed, 18 Nov 2026 21:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037476;
-	bh=DP80wtR564yX9UkNrIzMZjyhnilZb7WGYd/4ut933i4=;
+	s=korg; t=1795037479;
+	bh=8Cw75fRzWh9DXhc57zIAHrPBJJGBpkJqPCQjbeK47MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jz1cdXCtiVTfk4JkMExR04/7XLZ/yJcEW3E7S+4HEnXOfEmYpJiE3DlkNa4+LmbwU
-	 i0MCu3NtJZEJMHOpelwbgc5CCxfLYblszNzw5lR06eWZzrfjdrhMaLdj6BmxlCFBvu
-	 OGjlZ/iDa6ChQ2GRANfnbqmEz7byyzA1H8fOzzlQ=
+	b=ULbGREFwT+Z0klXSoazOUHoU31ardD5lj+We4Oc+DGBjLcjSyocDkItDrlxwl56Sx
+	 p17KMIRCvKdprATmMMHRRKTL0qzHhZDMDuIjxiZJtrQuYh+o8HU3ooDiZyY4aLrJel
+	 aUbC+nD0bgSvt8nAF5aWCgeZPh83cZne+VsVtScg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijing Yin <yzjaurora@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1410/3318] wifi: cfg80211: fix out-of-bounds read in valid_rule()
-Date: Wed, 18 Nov 2026 15:33:52 +0100
-Message-ID: <20261118150402.947762019@linuxfoundation.org>
+Subject: [PATCH 6.6 1411/3318] drm/vc4: Publish the output fence outside of job_lock
+Date: Wed, 18 Nov 2026 15:33:53 +0100
+Message-ID: <20261118150402.987440449@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,74 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zijing Yin <yzjaurora@gmail.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 9d8ec0b5b5295bd23d979d1b2b905de25c36fff2 ]
+[ Upstream commit 9ee552a42c3905b4547e83173d46413137ec329a ]
 
-valid_rule() validates a struct fwdb_rule from the regulatory database
-firmware file, but bounds checks only the first byte of the structure,
-the length field itself.
+job_lock is taken by the V3D interrupt handler, so nesting an IRQ-unsafe
+lock under it creates an inversion. drm_syncobj_replace_fence() takes
+drm_syncobj::lock, which other paths acquire with interrupts enabled. For
+example, a thread interrupted while holding it blocks the handler on
+job_lock, and the handler can only make progress once the submit path
+releases job_lock, which it cannot do while waiting for drm_syncobj::lock.
 
-It then uses that length, which comes straight out of the file, to
-decide whether the optional fields are present, and reads rule->wmm_ptr
-at offset 18 of the 20-byte structure once the length claims 20 bytes or
-more.
+This is reported by lockdep:
 
-A rule placed in the last bytes of the file therefore makes the parser
-read up to 19 bytes past the end of the firmware image. The image comes
-from vmalloc() in kernel_read_file(), so with the rule at the end of a
-page the read falls into the guard page and oopses, with no memory
-debugging enabled.
+[  188.139076] ========================================================
+[  188.139086] WARNING: possible irq lock inversion dependency detected
+[  188.139096] 7.3.0-rc3-00067-gc4f3feeaf60f #67 Tainted: G         C
+[  188.139108] --------------------------------------------------------
+[  188.139116] swapper/0/0 just changed the state of lock:
+[  188.139125] ffff0000054f8ff8 (&vc4->job_lock){-...}-{3:3}, at: vc4_irq+0xa8/0x28c [vc4]
+[  188.139234] but this lock took another, HARDIRQ-unsafe lock in the past:
+[  188.139242]  (&syncobj->lock){+.+.}-{3:3}
+[  188.139256] and interrupts could create inverse lock ordering between them.
+[  188.139267] other info that might help us debug this:
+[  188.139275]  Possible interrupt unsafe locking scenario:
+[  188.139284]        CPU0                    CPU1
+[  188.139291]        ----                    ----
+[  188.139299]   lock(&syncobj->lock);
+[  188.139312]                                local_irq_disable();
+[  188.139320]                                lock(&vc4->job_lock);
+[  188.139335]                                lock(&syncobj->lock);
+[  188.139350]   <Interrupt>
+[  188.139358]     lock(&vc4->job_lock);
+[  188.139372] *** DEADLOCK ***
 
-A length of at least offsetofend(max_bw) but below offsetofend(wmm_ptr)
-takes the other branch, so valid_rule() returns true having read nothing
-out of bounds, and the database is accepted. regdb_query_country() does
-not re-check the rule, and reads rule->start, rule->end, rule->max_bw
-and rule->cac_timeout off the end of the kmemdup()ed copy.
+Hand the fence over after job_lock is dropped. The job can complete and
+drop exec->fence in that window, so take a reference first and publish
+through the local pointer, as exec may already be gone.
 
-A malformed regulatory.db is parsed by cfg80211's own
-request_firmware_nowait() at init time, and on demand from user space
-through NL80211_CMD_RELOAD_REGDB, which needs CAP_NET_ADMIN but no
-wireless hardware. Both paths require write access to the firmware
-search path and CONFIG_CFG80211_REQUIRE_SIGNED_REGDB=n.
-
-Bound the whole declared rule, not just its length field. The existing
-check on sizeof(rule->len) is still needed, since rule->len has to be
-shown to be inside the file before it can be read, so the new test goes
-after it. A rule reaching past the end of the file is now rejected,
-which fails the database rather than reading out of bounds. That also
-gives regdb_query_country() the bound it already assumes.
-
-Fixes: 230ebaa189af ("cfg80211: read wmm rules from regulatory database")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijing Yin <yzjaurora@gmail.com>
-Link: https://patch.msgid.link/20261015133159.1499728-1-yzjaurora@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: e84fcb95e074 ("drm/vc4: Export fence through syncobj")
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20261004-vc4-misc-fixes-v1-1-b763df9e33e1@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/reg.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/vc4/vc4_gem.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index 4c695f29dfed7..6e14734c00330 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -689,6 +689,9 @@ static bool valid_rule(const u8 *data, unsigned int size, u16 rule_ptr)
- 	/* mandatory fields */
- 	if (rule->len < offsetofend(struct fwdb_rule, max_bw))
- 		return false;
-+	/* the rule must lie entirely within the database */
-+	if ((u8 *)rule + rule->len > data + size)
-+		return false;
- 	if (rule->len >= offsetofend(struct fwdb_rule, wmm_ptr)) {
- 		u32 wmm_ptr = be16_to_cpu(rule->wmm_ptr) << 2;
- 		struct fwdb_wmm_rule *wmm;
+diff --git a/drivers/gpu/drm/vc4/vc4_gem.c b/drivers/gpu/drm/vc4/vc4_gem.c
+index cede3bf3d722a..8562b4df4c130 100644
+--- a/drivers/gpu/drm/vc4/vc4_gem.c
++++ b/drivers/gpu/drm/vc4/vc4_gem.c
+@@ -706,8 +706,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
+ 	fence->seqno = exec->seqno;
+ 	exec->fence = &fence->base;
+ 
++	/* The job can complete and drop exec->fence as soon as job_lock is
++	 * released, so hold our own reference.
++	 */
+ 	if (out_sync)
+-		drm_syncobj_replace_fence(out_sync, exec->fence);
++		dma_fence_get(&fence->base);
+ 
+ 	vc4_update_bo_seqnos(exec, seqno);
+ 
+@@ -729,6 +732,11 @@ vc4_queue_submit(struct drm_device *dev, struct vc4_exec_info *exec,
+ 
+ 	spin_unlock_irqrestore(&vc4->job_lock, irqflags);
+ 
++	if (out_sync) {
++		drm_syncobj_replace_fence(out_sync, &fence->base);
++		dma_fence_put(&fence->base);
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
