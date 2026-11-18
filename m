@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030473;
-	b=XivB3vDfdlLjLv3la5Q9D2vukTBijm04WIH/qQctdqqkpyD4j3T8unEYuHpilbY6WgGX
-	 n6GCvfxzW6wsuQeoU1eHvo75qtg3taQdLfKMNVGf1XHccaKuDwAlsDoFaBM8WKYLGQeUp
-	 JSlEn7WNggohPLYgTNXiZZH3Dw9cBI5H91qErG38VR7ShKKR6yU1I9z/tudvojWFRpH6Q
-	 R7o/wg9pnz8o7hqAACCUcVXUqyL9Tz/lXwyuVeT3R6vA0c6GTVECbKJCMa0la5R4ju22C
-	 0+fFYKP8qYHve6sbEbGbSbe6jID+Yv+6MvW3rhj/0dwLUM/gMxjA4++r0Mm09vCuYYA==
+	t=1795030476;
+	b=udWYmHz+XfhAtsD7D34i6NdNuomW0m2/BWzjmPXZOXfD47hmpVFlPVQg35HB5xDXd8hw
+	 mcClEbV2OrJacOkxmPzDP+oIua5x0FVdINy/fthx1zgqVnRb8E/lolv6djOPmu4pWjw7L
+	 ROWRbwM4TiZsqYClJODC4BJdXG+bSJNUlbMcvh507+wHYKw+1AefKjK24HoR3O9yrso4i
+	 ZHdIF/yZJeEanhrxvb8ZnJuxTHF0CEBJi6jn2jWEBYlDncSVbugnslOeN+UrUvql4EBt2
+	 2oCnXLsR51m0OaogkH4+BD7NofQvSXDq3P6/n7oKuiVPm4NWcotvQJ24H2qg/w3geSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030473;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030476;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=54cnjLTeUU0hiTgoQqgLob2Ots/eFY3r3spWXxUAbbM=;
-	b=UYAx8lu9wVHdRhk9Jz13Aw/YyYNCjwKdWpae02fS3C8uyBEUTZ465Bj/L3OwOKDRiRHR
-	 OwwdJNYkaBQEXLcXL16NMbJckCINAS7FB79c5tculahw9bIS2egzGyiC4KiMJBZrJqSii
-	 99lUNhznJHAH/qvn1jMRFwF4ymsibS8kOogZ5zl69k5UiUkRdmiln4Tfv8o+CqJdSSK6U
-	 ajyxBsiNYIME/tUaxi3F6YfPqa/3RhhTzxJ1czY/qCnrHz0bN0DhvlBauu2aXtnh4RbQB
-	 dlxdZY0usSw5LK18rz7TTqyMgg6SufSZKv5+4BjJZj2iRkzFFfNVc6AvVxxzzRbNSMA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=8dlh6WEpfrOspd9qHMSG/uQ3lnGEJeVmWX5o/35I0Mc=;
+	b=mtC5Fth2qcoHbpB6+eMg/0bTl6JC3253s5+tJueK0f4D7CyhWQ6sGLvVwP024akteaf4
+	 MGyMBe9Aga0Llm+YDXVaPARfYgOqSbmhecPjjXsxtGr6c9QUYARKyZjqRiTDP+NO81/nA
+	 WkIqz5lT4Uy/J3RJEfvyUvB2n/YEfPe/GnopcDD2XemBLz5AMeNwYpvgVdcE8+V2UAfjs
+	 CJdJeoM3fYqCK+OgfE3a6T95IcqqEbk0GgsrdBgIFyOxnNkniDl/pdiT5U2T6vZ5YHJON
+	 citunGpoe434mvU0e6DqW6tpXrbgunscI+/Xq+Tp+zY6vxf2EdWSrb1OjQP9qrj2Ijw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="unq8Cv3/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBEj1RZv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5951606BB43;
-	Wed, 18 Nov 2026 19:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37366606BB4C;
+	Wed, 18 Nov 2026 19:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unq8Cv3/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0FE21F000C5;
-	Wed, 18 Nov 2026 19:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZBEj1RZv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A991F000C7;
+	Wed, 18 Nov 2026 19:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030473;
-	bh=54cnjLTeUU0hiTgoQqgLob2Ots/eFY3r3spWXxUAbbM=;
+	s=korg; t=1795030476;
+	bh=8dlh6WEpfrOspd9qHMSG/uQ3lnGEJeVmWX5o/35I0Mc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=unq8Cv3/GTnO51tWvWzdv26BK0QmGYZIFUYciNS3tptIhNgjy2H+H263EQriINIS4
-	 tnUxJuBM+NAG4daMn5BvogkzlaBj8Er1VndW+KhER6fZ1yfT70vmVH1pUOAkzVD52D
-	 N3LKvo6l3FV7iMNigmODKjEMkKKKelKbbSPLRGVc=
+	b=ZBEj1RZv5r+uyyd3FTW2XaTDOVT4XtXdArwaX6OhpmWtXmYoeP+TAplsnz6vsVvNM
+	 hd7ny5AX2yDJddzruDZlJ5o+tF2jaSYlwoRzGcDt/X6hepT9awVt80JEUkQwjaX7yl
+	 X0f4v/Ya0l43PgXGskKInKpGFcdr4rR5jihBNISI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danish Khateeb <danishkhateeb03@gmail.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0717/1756] tools/nolibc: check for overflow in malloc()
-Date: Wed, 18 Nov 2026 15:47:24 +0100
-Message-ID: <20261118150038.106073175@linuxfoundation.org>
+Subject: [PATCH 6.12 0718/1756] dt-bindings: vendor-prefixes: Add Sophos
+Date: Wed, 18 Nov 2026 15:47:25 +0100
+Message-ID: <20261118150038.196154969@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -62,60 +63,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danish Khateeb <danishkhateeb03@gmail.com>
+From: Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>
 
-[ Upstream commit 2111eb4273e7fda0815de85319653104f323c441 ]
+[ Upstream commit 538f8ec6b9c711833c5217a8bd8207a282265303 ]
 
-malloc() adds the size of its header to the requested size without
-checking for overflow. For a size within the header size of SIZE_MAX,
-the sum wraps around to a few bytes, and malloc() returns a single page
-instead of NULL.
+Add the "sophos" vendor prefix for Sophos Ltd., a vendor of network
+security appliances.
 
-calloc() checks its multiplication for overflow, but then passes the
-product to malloc(), so calloc(SIZE_MAX, 1) returns a single page too.
-So does realloc(ptr, SIZE_MAX).
-
-Such a size is usually a bug in the caller, for instance a length of -1
-used as a size_t, and returning a page instead of NULL can turn it into
-a heap overflow.
-
-Fail with ENOMEM when adding the header overflows, as glibc does for
-sizes this large.
-
-Fixes: 0e0ff638400b ("tools/nolibc/stdlib: Implement `malloc()`, `calloc()`, `realloc()` and `free()`")
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Assisted-by: LLM
-Signed-off-by: Danish Khateeb <danishkhateeb03@gmail.com>
-Link: https://patch.msgid.link/20260926152414.251214-3-danishkhateeb03@gmail.com
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Nicolo Giuliani <nicolo.giuliani6@studio.unibo.it>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/stdlib.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/include/nolibc/stdlib.h b/tools/include/nolibc/stdlib.h
-index 4c2da9731b1e7..577cd2966f093 100644
---- a/tools/include/nolibc/stdlib.h
-+++ b/tools/include/nolibc/stdlib.h
-@@ -132,7 +132,11 @@ void *malloc(size_t len)
- {
- 	struct nolibc_heap *heap;
- 
--	len  = sizeof(*heap) + len;
-+	if (__builtin_expect(__builtin_add_overflow(len, sizeof(*heap), &len), 0)) {
-+		SET_ERRNO(ENOMEM);
-+		return NULL;
-+	}
-+
- 	heap = mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_ANONYMOUS|MAP_PRIVATE,
- 		    -1, 0);
- 	if (__builtin_expect(heap == MAP_FAILED, 0))
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 633d540e504b3..fb89e413e3d24 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -1406,6 +1406,8 @@ patternProperties:
+     description: Sony Corporation
+   "^sophgo,.*":
+     description: Sophgo Technology Inc.
++  "^sophos,.*":
++    description: Sophos Ltd.
+   "^sourceparts,.*":
+     description: Source Parts Inc.
+   "^spansion,.*":
 -- 
 2.53.0
 
