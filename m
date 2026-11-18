@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045566;
-	b=Jy1aWDTBV7zXjHNqA//HtVH+Xine/FAlmPzpDmzPW/lfvy0W72dCqJAPYE+NFRVge5YV
-	 KVmb9M9YGgFaLLKCVZhxVNlckCmlOy+3Ay2s9b5OvaGHg3CrjmB/hcNqBcl2K8fumQFTS
-	 ZmpRy7ESg+tpqqGB/SCgLxkyUO+VFO4IQ9DQ+HcYASoDci6xW/WQDg3xYYPFzGjp2QGT5
-	 CU05gMXDssODVVBgUaL9R9Fh1uD95CRXaB1cUkv2qjCV0iXlICzgK5ueiAyoNQyBtPhlv
-	 3Ck88JWLmqGK2LEPm4KmIsCGG/krnxcNhnNi4rDCBLAMsbRoNd/GbM02+VgQDv0Bmtw==
+	t=1795045569;
+	b=z28Vk4sdlrudMfkSKB9BmEpZuEOce1eQPGEAKmOaz8HPswiDq0kXF2Sey3dM4Kbi7VEH
+	 dqhnRd7eSDsZlhfEIEb15Au8H7g2VgWMLq7wsA8062dEemIsfEhDavba/5Z7CQVVWCcPY
+	 PLPI9JKtnvfbqiJyttLE4IM+6CZqocLysH+oaZ1pKsdSMWmbzVLzf6h3e4a/EDyHq6Nvr
+	 7whE/qARH98ZX3poZyzFl3RIiczrcCeZeJhHpEKHP+B3V/jfqmUqWYyZa0UzQFC+oYh/n
+	 SrQ9mxa5BBZBpqkqBfe60qntEVRcUcotIHKhWoeMrWtdpk5uf5zoT4OUxMbhMvNJGFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045566;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045569;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B9YeTp0ajnKcYAxcTxxD4bIqHW3b88B5mNT3hBtj67s=;
-	b=l2TEJz1auBq8iSS/7ql360/pAyUe1kIDquzRfidz3znk1gW+j603ODBcACV0ZPPQ/J6x
-	 bvOs1X6b/Ql231pTfYIOgE8q80+BOH0KuVAbUEbqN9cMqUOeF6pEgBZ0XHX0lVKeZohkd
-	 O0Nd3luBy0/HUkZMFgf7jHch2IUOJwXAE8zxY15j2Eg8pZKTUxVeWkYQwe202VMyjCl62
-	 OZgRAOwicVVAFNIH7URoSkVbKhyH8lyPKPbAdqpYtim1ta0Ww4CrUp1xFrcW1qQ9ZwPi9
-	 1j0s/fLqrVu8mSVYwTqGgINJhVQJrcf0TRv3bNMJg3JoAnGk68Xqd99tDBOQT84QxVQ==
+	bh=cNHKJhErnEaxt7ynELMsPIo1kmUaKa6uQJmUjInbV70=;
+	b=RaOMwsmSe+PA8k553YlkX//AYTRAo1+YsX+Th304KVhLLWslOLSccjBJMcb5le3rWi6j
+	 kz4KzYWkUAO+sLoKq5BZXP82UkoOJ+jLBunxym9CWFqxmAVBVCYI6t2Oc9rozLRjzD8zs
+	 KUhFghdT5v9LzZxubqiUGlzZc41upF57iTQoOKk9yMNFyuzIPuNxPKM+xrIw0I7H0LDiQ
+	 ImH/DkNwau03AX2tGHWNe++QzLNY0pCByWE/7RA7LORJe9imJ1iRSunEzZB0PflZajHWo
+	 acpjyxMoMexr5dgwULeMqYfLLKjuepVymG2Fg/KqmAplK9n8LfEYBQdGikSrEpavscA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHjCmeek;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FQGzy0WL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5AF1606A320;
-	Wed, 18 Nov 2026 23:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AE4606A33F;
+	Wed, 18 Nov 2026 23:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JHjCmeek
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 328B71F000C4;
-	Wed, 18 Nov 2026 23:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FQGzy0WL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074E81F000C4;
+	Wed, 18 Nov 2026 23:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045566;
-	bh=B9YeTp0ajnKcYAxcTxxD4bIqHW3b88B5mNT3hBtj67s=;
+	s=korg; t=1795045569;
+	bh=cNHKJhErnEaxt7ynELMsPIo1kmUaKa6uQJmUjInbV70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JHjCmeekXZI1PlPWYdKf0WTCk7+1ydqOwjuatzZ37PS7sKaKUY/NUk/Pov1AryrCA
-	 mLZ5qOzAm6+b+11xS8JG3pC9Bw5kpjmgrh5aZ7JSbKItwg+giBNArHWgnsF3cMA4rH
-	 whIfxwj3mRfM8Vp9jaFcCFPRp/B3tYbjqGGJ0flo=
+	b=FQGzy0WLktd7xZb7TiiUG0KgENDfur//ZrKg0YQg2U5DpiVDk7aL1n5ZKh9qz/Wih
+	 EcKotAvEL8JEs2GymD2/ANigvMdWdwO5MGrMlvB05VO+z5WhInq5PO60WgKqgmUTQM
+	 eBMjIezYG6RvRnUDAKnIOlRbDOd6WmAqfznuiQjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyokhan Kochmarla <gyokhan@amazon.de>,
-	Gao Xiang <xiang@kernel.org>,
+	Jianyun Gao <jianyungao89@gmail.com>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0969/2857] erofs: use on-disk blkszbits for lz4 max pcluster bound
-Date: Wed, 18 Nov 2026 15:33:23 +0100
-Message-ID: <20261118150236.498854054@linuxfoundation.org>
+Subject: [PATCH 6.1 0970/2857] dax: Return errors from dax_core_init()
+Date: Wed, 18 Nov 2026 15:33:24 +0100
+Message-ID: <20261118150236.535493088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,65 +70,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gyokhan Kochmarla <gyokhan@amazon.de>
+From: Jianyun Gao <jianyungao89@gmail.com>
 
-[ Upstream commit 90b7e4a7a16443d9f6807b5c1dde52074d9f74c0 ]
+[ Upstream commit 4da700e2cadf84a6e858391d5be51d64dcba080f ]
 
-z_erofs_load_lz4_config() rejects a valid LZ4 image when the kernel's
-page size differs from the image's block size. It bounds the on-disk
-max_pclusterblks with erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE), which
-expands to Z_EROFS_PCLUSTER_MAX_SIZE >> sb->s_blocksize_bits.
+dax_core_init() returns success when either the character device
+number allocation or DAX bus registration fails, even though the
+error paths have already released the initialized resources.
 
-At the point this runs, sb->s_blocksize_bits still holds PAGE_SHIFT:
-erofs_fc_fill_super() seeds s_blocksize_bits to PAGE_SHIFT before
-reading the superblock, and only corrects it down to the on-disk
-blkszbits after erofs_read_superblock() returns. The LZ4 config is
-parsed inside erofs_read_superblock(), before that correction, so the
-bound is computed with the wrong shift.
+For modular DAX, this allows the module to remain loaded despite
+failed initialization, leaving subsequent users and module removal
+to access resources that have already been released.
 
-On a 64K-page kernel mounting a 4K-block image (e.g. one built with
-mkfs.erofs -C 262144 on a 4K-page host), the bound evaluates to
-1 MiB >> 16 = 16 blocks instead of the correct 1 MiB >> 12 = 256
-blocks. The image's legitimate max_pclusterblks of 64 then fails the
-check, mount returns -EINVAL, and booting from such an image as the
-root filesystem panics:
+Return the error code from the failed operation so that module
+loading fails rather than reporting successful initialization
+after the resources have been released.
 
-  erofs (device dm-0): too large lz4 pclusterblks 64
-  Kernel panic - not syncing: VFS: Unable to mount root fs
-
-sbi->blkszbits already holds the on-disk block size at this point, so
-compute the bound from it directly. This makes the check independent of
-the host page size and of superblock-parse ordering.
-
-commit 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block
-support") already handled the same ordering hazard for the superblock
-checksum path by using sbi->blkszbits in erofs_superblock_csum_verify();
-the lz4 config path was missed.
-
-Fixes: 3acea5fc3354 ("erofs: avoid hardcoded blocksize for subpage block support")
+Fixes: 9567da0b408a ("device-dax: Introduce bus + driver model")
 Cc: stable@vger.kernel.org
-Assisted-by: Kirocrew:gpt-5.6-sol
-Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.de>
-Reviewed-by: Gao Xiang <xiang@kernel.org>
-Signed-off-by: Gao Xiang <xiang@kernel.org>
+Signed-off-by: Jianyun Gao <jianyungao89@gmail.com>
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20261012151857.22534-1-jianyungao89@gmail.com
+Signed-off-by: Alison Schofield <alison.schofield@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/decompressor.c | 2 +-
+ drivers/dax/super.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/erofs/decompressor.c b/fs/erofs/decompressor.c
-index a63522e84fe0a..4f1a4d75b6013 100644
---- a/fs/erofs/decompressor.c
-+++ b/fs/erofs/decompressor.c
-@@ -42,7 +42,7 @@ static int z_erofs_load_lz4_config(struct super_block *sb,
- 		if (!sbi->lz4.max_pclusterblks) {
- 			sbi->lz4.max_pclusterblks = 1;	/* reserved case */
- 		} else if (sbi->lz4.max_pclusterblks >
--			   erofs_blknr(sb, Z_EROFS_PCLUSTER_MAX_SIZE)) {
-+			   Z_EROFS_PCLUSTER_MAX_SIZE >> sbi->blkszbits) {
- 			erofs_err(sb, "too large lz4 pclusterblks %u",
- 				  sbi->lz4.max_pclusterblks);
- 			return -EINVAL;
+diff --git a/drivers/dax/super.c b/drivers/dax/super.c
+index d34788813da74..4188307c0f64a 100644
+--- a/drivers/dax/super.c
++++ b/drivers/dax/super.c
+@@ -585,7 +585,7 @@ static int __init dax_core_init(void)
+ 	unregister_chrdev_region(dax_devt, MINORMASK+1);
+ err_chrdev:
+ 	dax_fs_exit();
+-	return 0;
++	return rc;
+ }
+ 
+ static void __exit dax_core_exit(void)
 -- 
 2.53.0
 
