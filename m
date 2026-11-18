@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051994;
-	b=SzEm+EPaTOthXWVa9lrhFyGwwqu5Sgvj7wy4+n20W4yyheafAf7c2k71Ihaqp+HHI45W
-	 CJC5YFg8DmYnuAvUMXNjyyaAmikal8DkLGojApoRfKefLmCQVWM/383SwDcoBPC1FqKgG
-	 VP49lqQSfp8pnpFLtKohmvlMnmC6P8bvKO3/23qV/VPEs1pGFVOielKKkrYoCsOmFUbTm
-	 eJkiPjb84qfDxiXRLiJliKcdlSLQpOihtgSGM/yIOlNk3LxbhT2GJ0qrKsg5pE4O+iin4
-	 43d0QHKl+uCITMhL9kbNcdKqHmbkfKSohMLZBsHtCBbdXHJiOsv26L0qorq+6OZVC5A==
+	t=1795051996;
+	b=a2P4HAbPBRA+9+rr3sRyICXVDGb1ATV1Qs1CH2o5A0x48C4KSab8tIgP17CfabBvNdMn
+	 tluxdNjvWtyPC7y5r+3qcvQv74u99ZARP2FOcznfffO+E599DzmnE9U/dZvWJ9Yh3zQJi
+	 2vEKjxd69g/fknUS1ZtF9buMtbaPE/Bvu6vHukJfcTUlH0VjXr2MUGr4cB4yYtPE4IF3p
+	 DvUyn9Kp4WU4hDrCpOwVpvgzV5fCbCxQNUQqnDN1SPh0ire1J9jyCI7lDKvaaa9qqoWq7
+	 hkbQnqzXoF3HqlszGN6wpbTyP5cdkv8awk/+NZfbUDweeqKHeTL+NgrwG7umrFwmyiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051994;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051996;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cde3zSEpUgdjwynXTeiWot4zBCtPjXeT4B4brQxVzig=;
-	b=SrdgJQiqvKWp+9x+OqXxbeDS1kPMvdy/kOkMKXRYuTzXkBkBPswY2rM9+yPZCQfk8kL5
-	 p8LSR/ew9sV78q23FqPhcSC3KKsQg2Uv2kbxy1vo2h2JI2yKmmEm4gFyeGXW35wX39XOP
-	 xv66s9Wm4VlZXA98faQoZRc37aoHLiEyGvfEmRnEN9WnIAhFIecTTVzkt0FJrFY0LgrT8
-	 ZMrGM2zw5Y5B8f6h5edXYXH8F6KKJPIjDS9hGecINZnS+0llpcyblmk2IcxjJGUcTUYZ7
-	 6qdMgbNJs0h4vv84pvpZxsQVjH2n9/ous3PGhpwwTShHfUIFUCZEDFpsj2C51PScVqA==
+	bh=kRkg5sXGMXj2ehtZDnId2sdXJlxbDuVlq55eYJNgjl4=;
+	b=kGmW+bZWSdQS8HThiittfPMA4SIspQ4gbavmKDI8wSVEJa6ijvEWsf780R17n/XuRjid
+	 IHHU9cXsPxedGWtD7zr6hW4Yt7yUQeYCbI25E69StKDkdqq/8wTTMcsA3Hxwbmq/3j+/T
+	 OJuqM42zqF9Ck60vqenHH7iANP2KNrt5XcEOnd47/Tjb7jiDjzET5wTo7I9j29FkeApca
+	 5ZV/9yEHsQe97wqNwudZkjDukJ3pvbqP9r4FBAVccgktJ7hCbt/OwPVl+Y7RZnZSY/8au
+	 zoG2g1MEQi66K5+T7xHyruofreyuoiO5q/CLHnw+i1AMDt2yOYH5cOAN73zcNIGURQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=na7+aRX3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k6uD7IEk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB309606A32A;
-	Thu, 19 Nov 2026 01:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1779606A338;
+	Thu, 19 Nov 2026 01:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=na7+aRX3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1211F000C5;
-	Thu, 19 Nov 2026 01:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k6uD7IEk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCE61F000C4;
+	Thu, 19 Nov 2026 01:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051993;
-	bh=cde3zSEpUgdjwynXTeiWot4zBCtPjXeT4B4brQxVzig=;
+	s=korg; t=1795051996;
+	bh=kRkg5sXGMXj2ehtZDnId2sdXJlxbDuVlq55eYJNgjl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=na7+aRX3jhs9+eT1zkWY9PxkG6RTJRP+m9YGHLYLjulQ8YVGVY3MA6nFycbwdC7zU
-	 0NOmCdhKr7ue2Zc77khJ5aKWvsPXlSOqz4qI7KQqmF8vM2RS93xn3DeRNQIjgwd0Qq
-	 1SjqBBshpPJ1ns0Gy7liml8FGkq23OuZ3TRR9H/s=
+	b=k6uD7IEk10a6khHiuHDSxWfwg6jpoS7NO8O6tFmXUpYApzbnHp64W0QOKT8d3d2hY
+	 YV3eARdkuxSgOcinqiUoH9XUb9Om+uOeQn+LzJzWqtFJaR1igE7z1WQia5yEJFzuuW
+	 7dhqqGtUZos+gL9F4bYgbQU9WqH76Xl4RrcyzrbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DaeMyung Kang <charsyam@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Xu Wang <vulab@iscas.ac.cn>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0404/2214] ksmbd: avoid restoring only in-memory EOF after allocation change
-Date: Wed, 18 Nov 2026 15:34:40 +0100
-Message-ID: <20261118150026.913205425@linuxfoundation.org>
+Subject: [PATCH 5.15 0405/2214] backlight: lm3630a_bl: Remove redundant flush_workqueue() calls
+Date: Wed, 18 Nov 2026 15:34:41 +0100
+Message-ID: <20261118150026.952038317@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,66 +69,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaeMyung Kang <charsyam@gmail.com>
+From: Xu Wang <vulab@iscas.ac.cn>
 
-[ Upstream commit 9455e920aebe41217cabff3f81e90da4c407fdb6 ]
+[ Upstream commit adc122011125682932ef279d717153670feedde4 ]
 
-When SetAllocation requests a size below the allocated block count but
-above EOF, ksmbd truncates the file to that size and restores only the
-in-memory i_size. The larger EOF remains on disk and reappears after a
-reboot. A 3-byte file preallocated to 64 KiB can acquire a 4 KiB EOF
-after reducing its allocation to 4 KiB. Extending EOF this way is not
-a reliable way to reclaim the preallocation beyond the old EOF either.
+'destroy_workqueue()' already drains the queue before destroying it, so
+there is no need to flush it explicitly.
 
-Only use this truncate path when the requested allocation is at or below
-the observed EOF. A truncate to the existing EOF still lets filesystems
-release preallocated blocks beyond EOF. Remove the in-memory-only i_size
-restoration. The size check still precedes vfs_truncate() taking the
-inode lock, so a concurrent shrink can make the truncate extend EOF;
-that race also existed in the original path.
+Remove the redundant 'flush_workqueue()' calls.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Signed-off-by: DaeMyung Kang <charsyam@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Stable-dep-of: 2cf184caab8b ("backlight: lm3630a: Cancel delayed work before destroying workqueue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/video/backlight/lm3630a_bl.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 55fb52cf2518f..13069c375a906 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -5896,24 +5896,17 @@ static int set_file_allocation_info(struct ksmbd_work *work,
- 			pr_err("vfs_fallocate is failed : %d\n", rc);
- 			return rc;
- 		}
--	} else if (alloc_blks < stat.blocks) {
--		loff_t size;
--
-+	} else if (alloc_blks < stat.blocks &&
-+		   alloc_blks * 512 <= i_size_read(inode)) {
- 		/*
--		 * Allocation size could be smaller than original one
--		 * which means allocated blocks in file should be
--		 * deallocated. use truncate to cut out it, but inode
--		 * size is also updated with truncate offset.
--		 * inode size is retained by backup inode size.
-+		 * Truncate at or below EOF to discard excess allocation.
-+		 * Truncating above EOF would extend the file on disk.
- 		 */
--		size = i_size_read(inode);
- 		rc = ksmbd_vfs_truncate(work, fp, alloc_blks * 512);
- 		if (rc) {
- 			pr_err("truncate failed!, err %d\n", rc);
- 			return rc;
- 		}
--		if (size < alloc_blks * 512)
--			i_size_write(inode, size);
+diff --git a/drivers/video/backlight/lm3630a_bl.c b/drivers/video/backlight/lm3630a_bl.c
+index a15102bf21365..0886bbce25e54 100644
+--- a/drivers/video/backlight/lm3630a_bl.c
++++ b/drivers/video/backlight/lm3630a_bl.c
+@@ -589,7 +589,6 @@ static int lm3630a_remove(struct i2c_client *client)
+ 
+ 	if (pchip->irq) {
+ 		free_irq(pchip->irq, pchip);
+-		flush_workqueue(pchip->irqthread);
+ 		destroy_workqueue(pchip->irqthread);
  	}
  	return 0;
- }
 -- 
 2.53.0
 
