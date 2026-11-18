@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024506;
-	b=ypGT4efl2Het0PfthmNfCdvChk6fqsLOy6roExp1MbCqKEKlDmF9FQfYg3Q9AALFn2PM
-	 AksvaQHC0GfP1vmofv/pDrK8+fKKvHoFvhIuqLTYtNb0TgdYZzgmTlDEKw3V2IXxOC2td
-	 zbeMh9TdBQOzeC360LiQ2lFX/O2u7Fg82uX0Oxj1wrh5mmO/mmm1E7tRVmJJ23SK9jJ1B
-	 hKL+XlsL4cVzb/Fr4zuWkN9U+h53D4H9n+TVxg72w+HZLPHs6YnFaFXI6KDN+gwR19euP
-	 MPH0jkAgliC/7NeCwW7rwo4cfUxKHhhnky8T/PcnyS/X9dHzOs9b1QGhVlSDVThvq2g==
+	t=1795024508;
+	b=e60d8YfwYANJa216qwvreHJeV9QBcVi4DvkBmSkmVaHfHmipZSqzNOfa0DyYWVBOVP+x
+	 tKu4ZEbZntoakoa4Hs9fMGfMbfTQlF6pE1B6qESc0esO4d1zEDR3CvCzcnsfgbCDl+EVN
+	 Hsab8XUVy+E+p5XYi/LN/xkU/MnpLAKckjgZQ0TmLT0SDhEzYGvAA/GYgEF27ILBq4lPn
+	 pcA8kaDmTE4dgdQ53upAoBxJ19Q/GSFe934caGiuYUfDJQ5Pa76axR+7bVlKGwa6t0smp
+	 wcta7gFIyOJXoKsaF0POn+5G8qcXeMXHGs1zFlF/aCLt4Rsy2/u/x/+q0/1yGZTfLVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024506;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024508;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nHeFbNZKByooKWtHp7nSXDbye8QE6m0QD7tQ2Srae4g=;
-	b=ch5//+YEn29MwwXOS1Nt4OKhusx/awZfDxMTZLVRDKb76I/fetoly4yWrdN8mz0UW5wx
-	 wLyz6RtFTDhcu2lLBifCTEhXOvOHL1pkelJ8i7O3UYA/mDzFVneZ0/z8tEy+aB7C3/15+
-	 m0K1SIF2eTnUk+FBxCD1l2L7IsW38XSCJRURIJmBJtqlTAh2LHsVivR6KDT5o0VqtloLd
-	 +kM1s5UnrVwjE7AMF3TnwLt3Nv0/e5dVprQwFPpHvF2Orhvyg/jFdPJuVR59V1Al0g4DN
-	 R+R/a5yGS4nlp+0UPHUZQNHartj6/SW8N9QHASSqBp1k7HADGUBXbLRmAjIAGbOivsA==
+	bh=YGQ2IWkZloGuLx6cL9bBjfzx/KMiySprcVqxkPQbTV0=;
+	b=BUOTqEvNTtfFVEeYBI4FpG843VkpMReOOvDltEqfdRkjtYvDlO/XtO0jT6VRFOB9zn3+
+	 b1MfHFShFP4JahDhR+TXViziJd9c7py4NIiBTVpwDsCi0iv/GfAAcibzVuflxb4oXPeu6
+	 B7QPbmy7wcO3ue6JXOcN96HgNbrVcqy8tV8mxPhrqEkFtQSdqXC4DuzsHCC7vts1gAsnJ
+	 Dr5V/0mRIogUwVtxLdhvqCiPKA8y08j/CVqCm/EiRQjUZyJfEdGrTw6G8H0oZMTxvmgxP
+	 ywjWe3d5Fi5sP/FIm90OkKg4kpfnPjvayoWZW21t2YLut7vKkm7tH9OdlbOGjoEGWKw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfLTnKFw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyiLQwAV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16496606A330;
-	Wed, 18 Nov 2026 17:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D138D606A31C;
+	Wed, 18 Nov 2026 17:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YfLTnKFw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238E51F000CA;
-	Wed, 18 Nov 2026 17:55:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FyiLQwAV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF731F000C5;
+	Wed, 18 Nov 2026 17:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024505;
-	bh=nHeFbNZKByooKWtHp7nSXDbye8QE6m0QD7tQ2Srae4g=;
+	s=korg; t=1795024508;
+	bh=YGQ2IWkZloGuLx6cL9bBjfzx/KMiySprcVqxkPQbTV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YfLTnKFwgcODMmSNL8UP7wu/+lW2u7OIgYzLV3Hk4+CZl+MiaUCzcdHWFVBSXgMGt
-	 7iWbkPj33iXgZXv0IjRJYM8sf1RNhbB2lUma7GYdJ8MPi3xb7XUubO8/69hMjzusQM
-	 FEhiHvM9/C3lIbDpCiB19nIMxlPZk6lh0U2Ye37o=
+	b=FyiLQwAV6M+grxnyHvKwiBlDB+i50OynSIJ4i2Ay7UQ0K5lsS9htzwv42bS4FN+ry
+	 b/1PJMAbCuKrfDzuDZQSwtl6e+n7q9jS4cXyRTuSjz2z9UMXvL315WBSH/vuaM/nbJ
+	 s6K9dG1HkeUJa4YJCUF60xuUllRHMEoAQXlpLfgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Kling <webgeek1234@gmail.com>,
+	Paul Sajna <sajattack@postmarketos.org>,
+	David Heidelberg <david@ixit.cz>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0750/2151] dt-bindings: vendor-prefixes: Add Chip Wealth Technology
-Date: Wed, 18 Nov 2026 15:41:25 +0100
-Message-ID: <20261118150149.351429406@linuxfoundation.org>
+Subject: [PATCH 6.18 0751/2151] arm64: dts: qcom: sdm845-lg: fix sdcard pinctrl nodes
+Date: Wed, 18 Nov 2026 15:41:26 +0100
+Message-ID: <20261118150149.384688525@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,33 +70,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Kling <webgeek1234@gmail.com>
+From: Paul Sajna <sajattack@postmarketos.org>
 
-[ Upstream commit 058ee00216a1356e710446b59a800065d2abbd80 ]
+[ Upstream commit e57d572ed779eb53e7eb5b8f9546731eff21bc93 ]
 
-Add an entry for Chip Wealth Technology (https://www.chipwealth.com/)
+sdcard was previously rather unreliable during boot on sdm845-lg-judyln
 
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-Link: https://patch.msgid.link/20260727-ayn-qcs8550-v9-1-e3db456e10e5@gmail.com
+Identified and applied correct settings from downstream lineageos kernel.
+
+Verified card was properly detected over 5 reboots with rootfs on sdcard.
+
+Refer to downstream: https://github.com/LineageOS/android_kernel_lge_sdm845/blob/efa8458f79dffeb380d43b38b9403407f87d9f05/arch/arm64/boot/dts/qcom/sdm845-pinctrl.dtsi#L148-L303
+
+Fixes: 28ae8aa3923c ("arm64: dts: qcom: add device tree for LG G7 and LG V35")
+Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+Reviewed-by: David Heidelberg <david@ixit.cz>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260802-judyln-sdcard-fix-v1-1-b3477cfc42cc@postmarketos.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-index 8bc95dd4b2592..5e80440a22395 100644
---- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
-+++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
-@@ -305,6 +305,8 @@ patternProperties:
-     description: ChipOne
-   "^chipspark,.*":
-     description: ChipSPARK
-+  "^chipwealth,.*":
-+    description: Chip Wealth Technology
-   "^chongzhou,.*":
-     description: Shenzhen Chongzhou Electronic Technology Co., Ltd
-   "^chrontel,.*":
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+index 99dafc6716e76..db05fb2e99cf2 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+@@ -556,33 +556,26 @@ &tlmm {
+ 	sdc2_clk: sdc2-clk-state {
+ 		pins = "sdc2_clk";
+ 		bias-disable;
+-
+-		/*
+-		 * It seems that mmc_test reports errors if drive
+-		 * strength is not 16 on clk, cmd, and data pins.
+-		 *
+-		 * TODO: copy-pasted from mtp, try other values
+-		 * on these devices.
+-		 */
+ 		drive-strength = <16>;
+ 	};
+ 
+ 	sdc2_cmd: sdc2-cmd-state {
+ 		pins = "sdc2_cmd";
+ 		bias-pull-up;
+-		drive-strength = <16>;
++		drive-strength = <10>;
+ 	};
+ 
+ 	sdc2_data: sdc2-data-state {
+ 		pins = "sdc2_data";
+ 		bias-pull-up;
+-		drive-strength = <16>;
++		drive-strength = <10>;
+ 	};
+ 
+ 	sd_card_det_n: sd-card-det-n-state {
+ 		pins = "gpio126";
+ 		function = "gpio";
+ 		bias-pull-up;
++		drive-strength = <2>;
+ 	};
+ };
+ 
 -- 
 2.53.0
 
