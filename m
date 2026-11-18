@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044857;
-	b=DvE/aAXsdEqwejZKmEDmlDoOpfscve6U9Hgfz6pFYQzct0gzdwEQpEgP5oQcQYywlz0H
-	 gPAVOMzpZLJ+jZ78HmsYDhB3N6IkDRo7akur+f7wNaG36S5Q0F6As0SIQ9/XzR7/5TKV3
-	 4LzXJpfBi370B8QEqhEEv7m6lq0vTOKTaUVHcgIXruPEdbeY3hRymQZIAMU0YMhnTi+B0
-	 Kn7KiZNUGRuDOaMldl+IY8jHaiDicjj0cKP4UGlYZT3yntsgbUFb1s3EcUt+kSY7eagXe
-	 hfD4RK5ppw/awtxWbeBjNr/XBsm99Lmd0GJZHzsRb8NSf1uIVSGI0dg4jHxqDQbr0Cg==
+	t=1795044860;
+	b=wU9+pdJxR4ezaFW7OLtyxFMlkY8pXjm8iwNd8QOauI5U+tEiNMr6di+m6Kk4k0tG9XDt
+	 63TbYZvmMKEVN6YL2oRNK5iEVVmcG24txK7ola6kb8n4oxit0wj6AaDqZA72U14g2c2L0
+	 uNsdIN55BA5QpYrBcggUCNZnX96ZumbF5JF0hErBRGO54fiijDLOzr9F2w2zCNKx4ntB0
+	 EJbtfonc2aD1cixGesKi70CaGM/V9JwDOFQtu3NAK+knb/u0pSxEipeGrTbvVner8L7rT
+	 mWFmlYy6hiE3RHZjAv9LY4IFCnvNxWdqLfGQCJO8vuiG/Tl4hWeMd9J1X58eU46FWQw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044857;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044860;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hH28so9qm6xrJN5/OD4X1J8LdDmjrwu9KU6t4hUuYCI=;
-	b=ybH/J+OFc3vK/GVMpFrzBbgVmIjJDcfug0Ur9sQjUyTM5C7Il9Mso1d/TKekDJSnnMAK
-	 CMFubkjlQCFJutEv6Qe4eTdXFm4IGc0DLZb5cZ62/RE3D/wk9s6jqg8gu8kSbU5UesOux
-	 APGk9o/QcTK7ITGgX3KEYpZaOhDaU0gIE7Ol18mFbeAN5c2h3hcNfTuRYd/epQzyLJO8u
-	 swk1bFR5W21PqgSyOYU6ntO9DhEdmCnaUf2aVl2YFxkNcqicUZzZGyQJeg3yy5oeSWMdB
-	 5Cxi7gbF+UcxXNLiErrhsM/tEguGS3HlmIvXoWJtGa6qBXCp/C8eaexbKy7HWZgqytQ==
+	bh=cmlo7R1Dp2aOZpDyOe/GewcoTSw5m/ZbKLPdn1ezGPg=;
+	b=dso4TiHIUoLYw99m26mzQxxqe7SNE/dOOp6KAfzLCHVt70XR2tnfpC9YIRopAvMwBxtF
+	 XwnoG3qFcwaPlWDhnCguwkMMPf4JZ6uaC8pgAtqUFBMCcqc3t7qposJAXIj69dwe8wj48
+	 bdpPuuOF3J1JhHNQN2e3MBqNVuMs8FHCt6EQAWB2zuLL1qVpNFLfl+MSLTXLJPn+8QghF
+	 RUX8zfG4MA3j2D+GF9r/vP+H+OUl3RIBlQtmpqT65dBXwfVgpBMYWSyFSFWXBLdRSFtDi
+	 ohWRRGzVrUz6DhOrZSxE9RMuszii++Fvf3M9VFD1jblFwwxVsBGgFnBKiEXdFVhogbg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=llRvK+uZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="c3/uvOCy";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3D2606A9D5;
-	Wed, 18 Nov 2026 23:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20720606A9D5;
+	Wed, 18 Nov 2026 23:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=llRvK+uZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE021F000C4;
-	Wed, 18 Nov 2026 23:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=c3/uvOCy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726C31F000C4;
+	Wed, 18 Nov 2026 23:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044857;
-	bh=hH28so9qm6xrJN5/OD4X1J8LdDmjrwu9KU6t4hUuYCI=;
+	s=korg; t=1795044860;
+	bh=cmlo7R1Dp2aOZpDyOe/GewcoTSw5m/ZbKLPdn1ezGPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=llRvK+uZMVTiUuKwxecnfDen2mo7ugWpEiXI6VlFk/yRvLjhZ6YUJJ/F3uGbhgekS
-	 ufECGIzAA/I7EqceuTLh2hp/yl6O8MWrOvqatIdSNGsZ9gnCQb707zt8wP7vnn1tsv
-	 Kbaq3VPL0G4/X825aHGdf9ohXgdV5ZdmyxeFEbAg=
+	b=c3/uvOCy+YiYJCGkV/wCSs/w+/dshn6s+6zRZgYVFghxcTkpH/ZSJHreDlEeHkgtN
+	 93S95q+SIxCHqfDmIld/gANNblTxYYqkQuVadCQcS6W8omw6otNGOtNXIxlGsLpBjL
+	 1cTZYsy8WH0APOXi2Y69rnoq6DOvpAHP5iQlV0Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Henry Hu <huhai@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0715/2857] media: imx-jpeg: finish the job on device_run() error paths
-Date: Wed, 18 Nov 2026 15:29:09 +0100
-Message-ID: <20261118150227.291737337@linuxfoundation.org>
+Subject: [PATCH 6.1 0680/2857] ksmbd: fix invalid pointer dereference when get_inode_acl() fails
+Date: Wed, 18 Nov 2026 15:28:34 +0100
+Message-ID: <20261118150226.044853786@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,96 +69,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Henry Hu <huhai@kylinos.cn>
 
-[ Upstream commit 30b35fd2b999e1b8c26f8191d974d20c8848d2d6 ]
+[ Upstream commit 19d180c7baab7126af5848ed87d5f7b5add0cef2 ]
 
-mxc_jpeg_device_run() returns early through a shared "end" label on several
-error paths (no free slot, mxc_jpeg_alloc_slot_data() failure, or missing
-buffers or queue data), and none of them calls v4l2_m2m_job_finish().
-Since the delayed work is queued only after the hardware is started, those
-paths neither finish the job directly nor queue timeout work that could
-finish it later. The job is left with TRANS_RUNNING set, so the
-wait_event() in v4l2_m2m_cancel_job() (reached from v4l2_m2m_ctx_release()
-at close) waits indefinitely and the close hangs.
+When get_inode_acl() fails, it returns an ERR_PTR(), but
+ksmbd_acls_fattr() stored that pointer in smb_fattr without
+checking for errors. Later callers then passed the error pointer
+to security descriptor helpers or posix_acl_release(), resulting
+in an invalid pointer dereference.
 
-mxc_jpeg_alloc_slot_data() uses dma_alloc_coherent(), so the failure path
-is reachable under memory pressure.
+This was reproduced on an XFS-backed share when xfs_get_acl()
+returned ERR_PTR(-ENOMEM). Querying the SMB ACL from a CIFS client
+triggered the crash:
 
-Return the src/dst buffers with VB2_BUF_STATE_ERROR and call
-v4l2_m2m_job_finish() on those paths: paths that have buffers use a
-"buf_finish" label; the no-buffer path uses "job_finish" directly. This
-mirrors the existing jpeg_parse_error path.
+  BUG: unable to handle page fault for address: fffffffffffffff8
+  RIP: smb_acl_sec_desc_scratch_len+0x58/0x90 [ksmbd]
+  Call Trace:
+   smb2_query_info+0x40d/0x17c0 [ksmbd]
+   handle_ksmbd_work+0x1ca/0x770 [ksmbd]
 
-This bug was found by static analysis.
+Fix this by checking the return values from get_inode_acl() in
+ksmbd_acls_fattr(). Treat -EOPNOTSUPP as indicating that no ACL is
+available, and propagate all other errors to the callers. Update
+smb2_open() and smb2_get_info_sec() to handle these errors.
 
-Fixes: 2db16c6ed72c ("media: imx-jpeg: Add V4L2 driver for i.MX8 JPEG Encoder/Decoder")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Assisted-by: Codex:gpt-5.6-sol
+Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Signed-off-by: Henry Hu <huhai@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: adapted ACL lookup and mount mapping to use get_acl() and the existing user_namespace API. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/nxp/imx-jpeg/mxc-jpeg.c    | 21 +++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ fs/smb/server/smb2pdu.c | 42 +++++++++++++++++++++++++++++++++--------
+ 1 file changed, 34 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-index 25f2223901269..6e2a8ccaac0ce 100644
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -1055,15 +1055,15 @@ static void mxc_jpeg_device_run(void *priv)
- 	dst_buf = v4l2_m2m_next_dst_buf(ctx->fh.m2m_ctx);
- 	if (!src_buf || !dst_buf) {
- 		dev_err(dev, "Null src or dst buf\n");
--		goto end;
-+		goto job_finish;
- 	}
- 
- 	q_data_cap = mxc_jpeg_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_CAPTURE);
- 	if (!q_data_cap)
--		goto end;
-+		goto buf_finish;
- 	q_data_out = mxc_jpeg_get_q_data(ctx, V4L2_BUF_TYPE_VIDEO_OUTPUT);
- 	if (!q_data_out)
--		goto end;
-+		goto buf_finish;
- 	src_buf->sequence = q_data_out->sequence++;
- 	dst_buf->sequence = q_data_cap->sequence++;
- 
-@@ -1101,11 +1101,11 @@ static void mxc_jpeg_device_run(void *priv)
- 	ctx->slot = mxc_get_free_slot(&jpeg->slot_data);
- 	if (ctx->slot < 0) {
- 		dev_err(dev, "No more free slots\n");
--		goto end;
-+		goto buf_finish;
- 	}
- 	if (!mxc_jpeg_alloc_slot_data(jpeg)) {
- 		dev_err(dev, "Cannot allocate slot data\n");
--		goto end;
-+		goto buf_finish;
- 	}
- 
- 	mxc_jpeg_enable_slot(reg, ctx->slot);
-@@ -1125,8 +1125,17 @@ static void mxc_jpeg_device_run(void *priv)
- 		mxc_jpeg_dec_mode_go(dev, reg);
- 	}
- 	schedule_delayed_work(&ctx->task_timer, msecs_to_jiffies(hw_timeout));
--end:
-+
- 	spin_unlock_irqrestore(&ctx->mxc_jpeg->hw_lock, flags);
-+	return;
-+buf_finish:
-+	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
-+	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
-+	v4l2_m2m_buf_done(src_buf, VB2_BUF_STATE_ERROR);
-+	v4l2_m2m_buf_done(dst_buf, VB2_BUF_STATE_ERROR);
-+job_finish:
-+	spin_unlock_irqrestore(&ctx->mxc_jpeg->hw_lock, flags);
-+	v4l2_m2m_job_finish(jpeg->m2m_dev, ctx->fh.m2m_ctx);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index ec0ca117ec70a..630b2f8de3dcf 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2727,10 +2727,11 @@ static int smb2_create_sd_buffer(struct ksmbd_work *work,
+ 			    le32_to_cpu(sd_buf->ccontext.DataLength), true, false);
  }
  
- static int mxc_jpeg_decoder_cmd(struct file *file, void *priv,
+-static void ksmbd_acls_fattr(struct smb_fattr *fattr,
+-			     struct user_namespace *mnt_userns,
+-			     struct inode *inode)
++static int ksmbd_acls_fattr(struct smb_fattr *fattr,
++			    struct user_namespace *mnt_userns,
++			    struct inode *inode)
+ {
++	struct posix_acl *acl;
+ 	vfsuid_t vfsuid = i_uid_into_vfsuid(mnt_userns, inode);
+ 	vfsgid_t vfsgid = i_gid_into_vfsgid(mnt_userns, inode);
+ 
+@@ -2741,10 +2742,28 @@ static void ksmbd_acls_fattr(struct smb_fattr *fattr,
+ 	fattr->cf_dacls = NULL;
+ 
+ 	if (IS_ENABLED(CONFIG_FS_POSIX_ACL)) {
+-		fattr->cf_acls = get_acl(inode, ACL_TYPE_ACCESS);
+-		if (S_ISDIR(inode->i_mode))
+-			fattr->cf_dacls = get_acl(inode, ACL_TYPE_DEFAULT);
++		acl = get_acl(inode, ACL_TYPE_ACCESS);
++		if (IS_ERR(acl)) {
++			if (acl != ERR_PTR(-EOPNOTSUPP))
++				return PTR_ERR(acl);
++			acl = NULL;
++		}
++		fattr->cf_acls = acl;
++
++		if (S_ISDIR(inode->i_mode)) {
++			acl = get_acl(inode, ACL_TYPE_DEFAULT);
++			if (IS_ERR(acl)) {
++				if (acl != ERR_PTR(-EOPNOTSUPP)) {
++					posix_acl_release(fattr->cf_acls);
++					return PTR_ERR(acl);
++				}
++				acl = NULL;
++			}
++			fattr->cf_dacls = acl;
++		}
+ 	}
++
++	return 0;
+ }
+ 
+ /**
+@@ -3237,7 +3256,10 @@ int smb2_open(struct ksmbd_work *work)
+ 					int pntsd_size;
+ 					size_t scratch_len;
+ 
+-					ksmbd_acls_fattr(&fattr, user_ns, inode);
++					rc = ksmbd_acls_fattr(&fattr, user_ns, inode);
++					if (rc)
++						goto err_out;
++
+ 					scratch_len = smb_acl_sec_desc_scratch_len(&fattr,
+ 							NULL, 0,
+ 							OWNER_SECINFO | GROUP_SECINFO |
+@@ -5470,7 +5492,11 @@ static int smb2_get_info_sec(struct ksmbd_work *work,
+ 
+ 	user_ns = file_mnt_user_ns(fp->filp);
+ 	inode = file_inode(fp->filp);
+-	ksmbd_acls_fattr(&fattr, user_ns, inode);
++	rc = ksmbd_acls_fattr(&fattr, user_ns, inode);
++	if (rc) {
++		ksmbd_fd_put(work, fp);
++		return rc;
++	}
+ 
+ 	if (test_share_config_flag(work->tcon->share_conf,
+ 				   KSMBD_SHARE_FLAG_ACL_XATTR))
 -- 
 2.53.0
 
