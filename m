@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018740;
-	b=EBCQKxEXJlJ+Eo8qUZyPY1CiQSUz6gk5eiRvAuT8X9efIsgeA9etU4vlu/PrKUCd5jD0
-	 RbKbr6iwzGtOY5cnkNDx+QCF0dJ5I2mrS7SmhKg46wVF3mFIWNQxVY8wjG50oLA6MEQB+
-	 yaDQfGeenVc59Z5O89Pnb/NX1wnCuCPnyz+rjhOyOAsS67UUZ0mwsI4MYg6N+LHQNCF+K
-	 X42R8fo0YOv448wOi+4renMD3K0OQuh4C8cLR0sNtIEWlvRhQ8dLy5pUFRQOPHbtEmhso
-	 W0vzjWAZGNkS8ovtWb1TBqPWd/QmT/b11lRC1tVFbOkTN3gPqY7iwBPPzfC7AA4JKfg==
+	t=1795018742;
+	b=C7QSPhAqvS+/GygkSmV2TJomVPe3t4GJ7qOhw7Om1HAHVdaRAAPqRUnTvSx87fAsMxYJ
+	 zfL/0eKZgs+6n4RwEh0giGSxQ16KJ+Q7VZKdmzSVuqcnL8cv3Gdy9qlX55LTLBAa5a4we
+	 iXfzgjNlP9aPu7WCoyQEXaT83t8Z5H7fy09Ono849ykBFi/5W+5BTiHbv5FCEQ6/52nIv
+	 OBMzJDWpec+LPO+O9ID2M2h8A0LYfr4mIqPViBBKJtUGSQuuL0zkmylgmOzKZGL/xNUh+
+	 wURgaRShYxZO1kS51UhNoDIwy/oMeTiDGuOhDdxhyGj7oCGB+IDtnhLOOt2SxquPHnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018742;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1WILOy+Ma7x3DnsUzIpfD6jXhs4GZB1ESeOSkxsa+O4=;
-	b=lQ2zmqrMUKWeSuAeG6YHpVcqOD7MwO64C3oPQY/SzWBj5DQLZPew+b15WNlZ9uzmuSOH
-	 Yt4bKNG3M+fhZugJfUU5VPFRTXEuDGebAwnZdXtpWfHy+4P1fPRUN3d7bYbSHCcm9f1+x
-	 0tfAXe0BpPjTTIwK7udJcE70V+NQFcEqmdbnybGnaD5WZ+LKJsJ6UKmszW9KIkq7+Czjf
-	 8lBR7d6SV9uYzrLqDYXkvdmkFhk2WwCgQJ8fBP8vlS+LM5Fbh7dROF45KpTXaj+Ya21nv
-	 NL+MaGOTzG9N4C25UYsJYkaErxoDIuuPp2byY2EPaQOcTdb6GiJc7sZo0NEte5L9n/g==
+	bh=PbuXTOQD7plkT6BwuM0zmN0gAorltxNfORwx/daatxY=;
+	b=NM6bN+G5z6NoscB9apanybU99ph7Z/TMdUqkiaGv43LLvOgH5w7mdnBrCF1A8glSOFQL
+	 3quhYbqblH0FvcJcmKbODN54oPG2HDlaOScZIqfMXRTQaYntegSvyTqv/cVvJfaiEtiV9
+	 zUiB9CLSqwX6pO9BLVcE6/D8j2lyoZK8Nzp37VZC/6gpd+SfKRFaDLM94pnQlukqv15Dc
+	 M9MxPe3p04cxgKTZu3xGbsBe6egbWtgUMec+VkS4oX4vx6PgiZ1gsfbnZ11eOrHTOD4JI
+	 mGK+xDytsdM6NynjeNuvQGqkkfNIRfkbaSx7JMjaSx68PixXJR9FnW83amPOTMRCJ5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIfr2T+O;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="dTb/ZaRU";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05674606A325;
-	Wed, 18 Nov 2026 16:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03AE606A335;
+	Wed, 18 Nov 2026 16:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DIfr2T+O
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18D461F000C4;
-	Wed, 18 Nov 2026 16:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dTb/ZaRU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068771F000C4;
+	Wed, 18 Nov 2026 16:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018739;
-	bh=1WILOy+Ma7x3DnsUzIpfD6jXhs4GZB1ESeOSkxsa+O4=;
+	s=korg; t=1795018742;
+	bh=PbuXTOQD7plkT6BwuM0zmN0gAorltxNfORwx/daatxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DIfr2T+OEKcyb5LWAMjkbSnVxXI4P+Xhb/tiqc1N+L5mH/CQ3m+hfCBI2eyVpIMZa
-	 wyJWo/h8vLpsxMtMJ/OSjFBAoB3NXX3AyQWpQ2Vi1ztvXMf43KpddfjZnDllHHssCh
-	 mj7eKsIxwLj0MBKMw4dkU4Z3MU3FUE+PfKPHoICc=
+	b=dTb/ZaRUn+XVfwxPXMDT3PSx5GoFFAmw0ME8rHWgBealC7F3Jr26hmWq7J7UCnt1i
+	 ajEDYwRIAEL8/UoOxBRM6tw6g/3QVuc2iDPEUR+e7u8lVq3gWaKVaQQHhfjDLdJZks
+	 NEPDEVhRevjRFmkuLICor8RpQvqvQYJBz4ZcoEOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	sashiko-bot@kernel.org,
 	Frank Li <Frank.Li@nxp.com>,
 	Linus Walleij <linusw@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1345/2651] dmaengine: ste_dma40: Put the LCPA SRAM node
-Date: Wed, 18 Nov 2026 15:43:05 +0100
-Message-ID: <20261118150336.447658329@linuxfoundation.org>
+Subject: [PATCH 7.3 1346/2651] dmaengine: ste_dma40: Fix memcpy channel parsing
+Date: Wed, 18 Nov 2026 15:43:06 +0100
+Message-ID: <20261118150336.482069894@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,38 +72,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 9a3762b470421658214baeb6cce3eed7344bb435 ]
+[ Upstream commit f2baf04a695de4f952513cb00ccf0338c6db2e00 ]
 
-of_parse_phandle() takes a reference to the LCPA SRAM node, but d40_probe()
-does not release it after translating the node into a resource. This leaks
-the node reference for the lifetime of the system.
+d40_of_probe() validates the memcpy-channels property against
+D40_MEMCPY_MAX_CHANS, but reads the property directly into a smaller global
+array. A long property can therefore overwrite adjacent data. The mutable
+global also lets a later DMA40 instance replace the memcpy channel mapping
+used for future allocations on an earlier instance.
 
-Put the node immediately after of_address_to_resource() so both the success
-and error paths release the reference.
+Store the mapping in the per-device platform data, validate the property
+against that storage, and check the property read result. The property is
+required and d40_probe() always populates the platform data, so remove the
+obsolete global mapping and fallback.
 
-Fixes: 5a1a3b9c19dd ("dmaengine: ste_dma40: Get LCPA SRAM from SRAM node")
+Fixes: a7dacb68b35a ("dmaengine: ste_dma40: Allow memcpy channels to be configured from DT")
+Reported-by: sashiko-bot@kernel.org
+Closes: https://lore.kernel.org/dmaengine/20260819225215.5EA2F1F000E9@smtp.kernel.org/
 Assisted-by: LLM
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-14-89f595e8851d@kernel.org
+Link: https://patch.msgid.link/20260927-dma40-fixes-v7-15-89f595e8851d@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/ste_dma40.c | 45 +++++++++++++----------------------------
+ 1 file changed, 14 insertions(+), 31 deletions(-)
 
 diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index e3756d8edc618..70f2a6594945c 100644
+index 70f2a6594945c..43a6ded6aa09d 100644
 --- a/drivers/dma/ste_dma40.c
 +++ b/drivers/dma/ste_dma40.c
-@@ -3771,6 +3771,7 @@ static int __init d40_probe(struct platform_device *pdev)
+@@ -28,6 +28,8 @@
+ #include "ste_dma40.h"
+ #include "ste_dma40_ll.h"
+ 
++#define D40_MEMCPY_MAX_CHANS	8
++
+ /**
+  * struct stedma40_platform_data - Configuration struct for the dma device.
+  *
+@@ -41,6 +43,7 @@
+  * to use SoftLLI.
+  * @use_esram_lcla: flag for mapping the lcla into esram region
+  * @num_of_memcpy_chans: The number of channels reserved for memcpy.
++ * @memcpy_channels: The event lines used for memcpy.
+  * @num_of_phy_chans: The number of physical channels implemented in HW.
+  * 0 means reading the number of channels from DMA HW but this is only valid
+  * for 'multiple of 4' channels, like 8.
+@@ -51,6 +54,7 @@ struct stedma40_platform_data {
+ 	int				 num_of_soft_lli_chans;
+ 	bool				 use_esram_lcla;
+ 	int				 num_of_memcpy_chans;
++	u32				 memcpy_channels[D40_MEMCPY_MAX_CHANS];
+ 	int				 num_of_phy_chans;
+ };
+ 
+@@ -89,25 +93,6 @@ struct stedma40_platform_data {
+ #define D40_ALLOC_PHY		BIT(30)
+ #define D40_ALLOC_LOG_FREE	0
+ 
+-#define D40_MEMCPY_MAX_CHANS	8
+-
+-/* Reserved event lines for memcpy only. */
+-#define DB8500_DMA_MEMCPY_EV_0	51
+-#define DB8500_DMA_MEMCPY_EV_1	56
+-#define DB8500_DMA_MEMCPY_EV_2	57
+-#define DB8500_DMA_MEMCPY_EV_3	58
+-#define DB8500_DMA_MEMCPY_EV_4	59
+-#define DB8500_DMA_MEMCPY_EV_5	60
+-
+-static int dma40_memcpy_channels[] = {
+-	DB8500_DMA_MEMCPY_EV_0,
+-	DB8500_DMA_MEMCPY_EV_1,
+-	DB8500_DMA_MEMCPY_EV_2,
+-	DB8500_DMA_MEMCPY_EV_3,
+-	DB8500_DMA_MEMCPY_EV_4,
+-	DB8500_DMA_MEMCPY_EV_5,
+-};
+-
+ /* Default configuration for physical memcpy */
+ static const struct stedma40_chan_cfg dma40_memcpy_conf_phy = {
+ 	.mode = STEDMA40_MODE_PHYSICAL,
+@@ -2154,7 +2139,8 @@ static int d40_config_memcpy(struct d40_chan *d40c)
+ 
+ 	if (dma_has_cap(DMA_MEMCPY, cap) && !dma_has_cap(DMA_SLAVE, cap)) {
+ 		d40c->dma_cfg = dma40_memcpy_conf_log;
+-		d40c->dma_cfg.dev_type = dma40_memcpy_channels[d40c->chan.chan_id];
++		d40c->dma_cfg.dev_type =
++			d40c->base->plat_data->memcpy_channels[d40c->chan.chan_id];
+ 
+ 		d40_log_cfg(&d40c->dma_cfg,
+ 			    &d40c->log_def.lcsp1, &d40c->log_def.lcsp3);
+@@ -3434,12 +3420,7 @@ static int __init d40_hw_detect_init(struct platform_device *pdev,
+ 	num_phy_chans = min(num_phy_chans, STEDMA40_MAX_PHYS);
+ 
+ 	/* The number of channels used for memcpy */
+-	if (plat_data->num_of_memcpy_chans)
+-		num_memcpy_chans = plat_data->num_of_memcpy_chans;
+-	else
+-		num_memcpy_chans = ARRAY_SIZE(dma40_memcpy_channels);
+-
+-	num_memcpy_chans = min(num_memcpy_chans, D40_MEMCPY_MAX_CHANS);
++	num_memcpy_chans = plat_data->num_of_memcpy_chans;
+ 	num_log_chans = num_phy_chans * D40_MAX_LOG_CHAN_PER_PHY;
+ 
+ 	dev_info(dev,
+@@ -3688,6 +3669,7 @@ static int __init d40_of_probe(struct device *dev,
+ 	struct stedma40_platform_data *pdata;
+ 	int num_phy = 0, num_memcpy = 0, num_disabled = 0;
+ 	const __be32 *list;
++	int ret;
+ 
+ 	pdata = devm_kzalloc(dev, sizeof(*pdata), GFP_KERNEL);
+ 	if (!pdata)
+@@ -3701,18 +3683,19 @@ static int __init d40_of_probe(struct device *dev,
+ 	list = of_get_property(np, "memcpy-channels", &num_memcpy);
+ 	num_memcpy /= sizeof(*list);
+ 
+-	if (num_memcpy > D40_MEMCPY_MAX_CHANS || num_memcpy <= 0) {
++	if (num_memcpy > ARRAY_SIZE(pdata->memcpy_channels) ||
++	    num_memcpy <= 0) {
+ 		d40_err(dev,
+ 			"Invalid number of memcpy channels specified (%d)\n",
+ 			num_memcpy);
+ 		return -EINVAL;
  	}
- 	/* This is no device so read the address directly from the node */
- 	ret = of_address_to_resource(np_lcpa, 0, &res_lcpa);
-+	of_node_put(np_lcpa);
- 	if (ret) {
- 		dev_err(dev, "no LCPA SRAM resource\n");
- 		goto report_failure;
++	ret = of_property_read_u32_array(np, "memcpy-channels",
++					 pdata->memcpy_channels, num_memcpy);
++	if (ret)
++		return ret;
+ 	pdata->num_of_memcpy_chans = num_memcpy;
+ 
+-	of_property_read_u32_array(np, "memcpy-channels",
+-				   dma40_memcpy_channels,
+-				   num_memcpy);
+-
+ 	list = of_get_property(np, "disabled-channels", &num_disabled);
+ 	num_disabled /= sizeof(*list);
+ 
 -- 
 2.53.0
 
