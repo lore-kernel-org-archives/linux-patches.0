@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039935;
-	b=YqFzil8qg34wdk/Vt7GFmc7+I0KFTcy7B7rddQCQtc31kU8vM+TcnnLSmDS428s+d8Zd
-	 2mMiDhiTzR74vzy17274rbnqS2qGe+7kgShxS1I8cE5O6SabhNIsc2dfgcs9/mkS6OPaQ
-	 E7xyjhmS9rKhJZytrjm29e2CqavCd3KYm8w+cgepWLNi/12KdDEJkg7a2f7dzizr7K4uO
-	 vRo9tU9N1uYMYVscFy1sD1tVG6VQ63z1M7pd6/MecQAmVIhenfZY/syUk4rFO4QplJqFU
-	 riDOTNXpacPHTvU1x3kjBK37umu/VVBjgi453dKwMWMX4ANjp3JGZYtpOnw7+tprlaw==
+	t=1795039937;
+	b=HO+Uqqdgjv7ZoR6WAeZe5tSmJ5LyEaY6Vk8Jw4PGxbHRWwvnoPxOVul8s7jOPS5evCT6
+	 Z0NC3CdZBB2HZQhknQJ6rIqaTQVvz3mTSlAPgRuPPL8FCrAlc79ZTS8swUs7WUSao+gFu
+	 1sTMRGM1gfSltraINw6IRtzBE3Owe32RyH6mlnfgQi8PTXZ01EUCr/MdFkgNAsz0nYJRL
+	 2mxlDAtTQeVu+26lcyUj1UskwljDAsyPkEzzXWK32PJ4+rNGXSi5w5LjgTbXBB7K0h+2P
+	 SX9yLffSeihsmJnjzyh6egQEHoQ1YvbGDyxpc+P9ef6I4e5TGZAhDfTMUr9YHfxZAew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039935;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039937;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cHuRr6Lb9uhSNcPphj6Ls7gNCgi2JaiEJ0mQj8Jq5XA=;
-	b=v8pxLW8QQZmbTugrP1TnNFER+qs0Y6284SkTEG3twtJZaMxxVY32xLkFbqkYuTZAr3y6
-	 0EOk1rYHX/J95riindvDRv3aUY5r1m4ZXaYPq00yQYsrq5zFA/RjgJTWBYXMrUFZDBCHR
-	 LUZarnqTtzP3yZ2sBaps0xFe3o/GAdxDsmBFOzDy/HTf5vZn2Cnk3ziKyaavuDf6armZo
-	 KDtHET1EQifwwbg6k1W5CEZLvUOytoMx6c75qMZ8UQXIQTeDCezPL+tFQe7soITEpmUuf
-	 poqDm0lpDtS1J/jeqD1A27/PRunZ5wl1Y392qruBpXs1N6KnTVUKqbAfcsYQ67O8DJw==
+	bh=Uyi872vlthIFF+uRDLdlZC8wvi1NPL5BQRmUEr/f0NM=;
+	b=j2MNAAnoQrykKM8tYKcMViSENr86v93z2eRqepL6ovJzvEZikyeTpJIknrREsqmNTnc7
+	 NBEwIBI8Txu+rM5b0AxD2OXgwCI0L6Kagm812TBBtKT/IOmX1BIcI15ODEteOndFiXVpF
+	 iqr+bqxxr4mznxrbpWPCReYm5E1KOUJ8g7wE+xNzCXyCQnOmcB66vadk8lavj24SDJbh/
+	 GuqXPF3vVNA6N+vkKVvs+1oqkzGQnfVEQ5AKfeWMFV5hGwMiTDPWpMwboUTbHJPQNn84t
+	 BO8tiT+ERxS2sXMJjUMRUSp8hzzIB5FXa1Yo4Z6xP9RqJX2l9yIzpmTCm98/Kdz2zXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yogOUcOq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQnrmPfw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC45606A31C;
-	Wed, 18 Nov 2026 22:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1A9606A31C;
+	Wed, 18 Nov 2026 22:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yogOUcOq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B6F1F000C4;
-	Wed, 18 Nov 2026 22:12:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DQnrmPfw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ED111F000C4;
+	Wed, 18 Nov 2026 22:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039935;
-	bh=cHuRr6Lb9uhSNcPphj6Ls7gNCgi2JaiEJ0mQj8Jq5XA=;
+	s=korg; t=1795039937;
+	bh=Uyi872vlthIFF+uRDLdlZC8wvi1NPL5BQRmUEr/f0NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yogOUcOqBh6HKdG6nByLSYAmHu9/VWS1jdEOn8Eb7n1zQKKKYXLBnXYA1nCsJhTQq
-	 /1+VN2MkhhNvXPw8+T/Q0Y5YCJ/a2uOhKCAh8feklHGDVNPqkIc8xKJQ+7t8+HQa7r
-	 mbCAnocCJMTxXOtJn3uCY+1E732T26hl0yByS2rY=
+	b=DQnrmPfw8ZeiNsGHdFxvR/kh40XZ8rygv0/Fewx1VDReeJQLS4aDDeOGKpdWWT8IC
+	 zyirRO953hQ+XYsPGt4nbvcxAVNVvSWyqm09fy/K2osmPhtW2RX3BiuYPIalhWGurr
+	 ginlwCYgx5BbYeTfCerjHdYcyiNiJ7Z87XVd16JM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2226/3318] dmaengine: mv_xor: kill tasklet on channel add error path
-Date: Wed, 18 Nov 2026 15:47:28 +0100
-Message-ID: <20261118150428.661778824@linuxfoundation.org>
+Subject: [PATCH 6.6 2272/3318] bpf, lsm: Reject writes into the BPF LSM program context
+Date: Wed, 18 Nov 2026 15:48:14 +0100
+Message-ID: <20261118150429.952405941@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,40 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit bcb4d469b19d53dc21e4a1da12d4438e7489e150 ]
+[ Upstream commit c42da1d3ba9d5067cf3f0676b98bcb3f5f9e3ce1 ]
 
-If request_irq() succeeds but a later step (self-test or device
-registration) fails, the error path at err_free_irq frees the IRQ
-but does not kill the tasklet.  A previously scheduled tasklet can
-still run after the channel is freed, accessing freed memory.
+The verifier types a load from a tracing-style context by its offset
+alone: btf_ctx_access() looks the offset up in the attach hook's
+prototype, and check_mem_access() stamps the resulting type onto the
+destination register. Nothing tracks what the slot actually holds.
+That is sound only as long as the context is read-only, and for BPF LSM
+it is not. lsm_verifier_ops wires ->is_valid_access() straight to
+btf_ctx_access(), which never looks at enum bpf_access_type, so a store
+into the context passes verification. Every other user of the helper
+either goes through bpf_tracing_btf_ctx_access() or open-codes the same
+type != BPF_READ test first; BPF LSM is the only one that does neither.
 
-Add tasklet_kill() after free_irq() on the error path.
+A program can therefore store a scalar of its choosing into a context
+slot, read the slot back, and get a register the verifier believes is a
+trusted pointer of the hook's argument type. Handing that to a kfunc or
+helper which dereferences a trusted argument turns it into an arbitrary
+kernel access. Route BPF LSM through bpf_tracing_btf_ctx_access() like
+everyone else.
 
-Fixes: ff7b04796d98 ("dmaengine: DMA engine driver for Marvell XOR engine")
-Assisted-by: opencode:big-pickle
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260909234601.101883-1-rosenp@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: fc611f47f218 ("bpf: Introduce BPF_PROG_TYPE_LSM")
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260915150739.284189-3-daniel@iogearbox.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mv_xor.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/bpf_lsm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index 8b215cbca1186..7c1fdb2c91ce1 100644
---- a/drivers/dma/mv_xor.c
-+++ b/drivers/dma/mv_xor.c
-@@ -1162,6 +1162,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+diff --git a/kernel/bpf/bpf_lsm.c b/kernel/bpf/bpf_lsm.c
+index 984e944a0221d..7904513373672 100644
+--- a/kernel/bpf/bpf_lsm.c
++++ b/kernel/bpf/bpf_lsm.c
+@@ -399,6 +399,6 @@ const struct bpf_prog_ops lsm_prog_ops = {
+ };
  
- err_free_irq:
- 	free_irq(mv_chan->irq, mv_chan);
-+	tasklet_kill(&mv_chan->irq_tasklet);
- err_free_dma:
- 	dma_free_wc(&pdev->dev, MV_XOR_POOL_SIZE,
- 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
+ const struct bpf_verifier_ops lsm_verifier_ops = {
+-	.get_func_proto = bpf_lsm_func_proto,
+-	.is_valid_access = btf_ctx_access,
++	.get_func_proto		= bpf_lsm_func_proto,
++	.is_valid_access	= bpf_tracing_btf_ctx_access,
+ };
 -- 
 2.53.0
 
