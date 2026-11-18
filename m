@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047081;
-	b=ujuABC5eNLGVTIy+/qCtuLwQplh6n0svAke238u0nnDi5UMo08MgD3EKazWY9i+RFv4u
-	 fExq54qa3cvB9VhaxiSpM/VRMILTG4fPrWcDD9dI371ZPU5W99a7HE6THi4vgJV/wE0KD
-	 5PZP4R3SAWA2Mfld6V6rIPCwQiu5aaQXZ4O1LO8RF94krs1VqsQ9j8lq7w62WjoQ+nW2D
-	 JGNnDAXVM1QIhJbE0qly/b3IOPlo/Rdk6djDEHem4M5U8xnoAvqUsdspJk4++bvc2Ebyx
-	 4rKNoyA7MbsvJ1JoS5DYtelfBiNC74HprV9ub2WVZ3FX56Iu7vLN59fX/B9NEaiPplA==
+	t=1795047084;
+	b=cXBABSDlQD5dBJbRgigmJ3Nq6tqyrgx58XnS9r5Oit/uvs6jwc/L1bfR4wDrsShjOKHL
+	 FXV2Nk9/hoQYhcpvTFYYVdaMi+2a2aApp2CLvaX5I5u8IuRjMr6dGyIWnmlM0z5nmYHvE
+	 M0+Tbe6/HqfXlE8tNDIhCFMHhLqq4JWVzt1eMCb5R1+I2iZ+WkFTA6Q+Lc6PlLWsq1M68
+	 7XVeICJj6S5gNDtOpyAcCostIHTxY10G4T7beWYWmSj7APX+50RPpuHoDSoHO3XkTzBZ5
+	 Lq/KNOvPmbqCmKRTtU0eOp87L2dGooAdHRbehOaL3dHy9ryHpvgt6Bj62ajWiTkANPA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047081;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=WIY/24QhqgczTJ4FXbDVDStse5GzLtmhtPpoBf1wZ8g=;
-	b=d2O1kY0EYkzsOqD5P6uceIsO9WKzGJ5z7puIn4nCx/l75cekw/oGBCKw5thRiepwdMpB
-	 b6ereHkbW4J9t0uhMZOV93yzEHaJzuUrdV65RnFs7ekyPQ3RlRiga2WhAn6VCQ26yGDHe
-	 FUtAJwdIZPRr+KyBrd2VnbwcFA0CwajwtQ9shLOhukwm2dVtpAm9eD7ZgJK2xxqP7Ppku
-	 KR/OHj+gVcW84qyGfo9KMe1TrbKxWPtYXOLq12VbalLXgVY59noMXUsZcrpbKLL9EJSrn
-	 jI/+JNlyo7lodePVtVrV76UCNtnbdHjdeJFY9ytOwTQWNJn8PPt63mLTu3OWaCYNUNA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=tUf22j6uKss9wdpDSOBJ7+1eB3aPL1ivF17WbdMr6nw=;
+	b=OV8D+/gXkL2BRfzQMD+JnZyveuLEFXSwZlunoT+reIue338DJJeONX2aKycopQjDtWbU
+	 fuxx67req0zHe4PsEBPsY6MjfwNWVMTPZgkuohpuxw6TqQI2/pPJDbynz4sGAwLdf7Xrg
+	 eMm/0M3OL1eEpOKclGDdqZiib5Ie5WnJ+HE0+LlqysvDsbyciola4x+YpbvK39B8gTPXY
+	 2cVOm3VOO8nr90IYjQV/NlhTC4AUHgkS8KJ1NUjEcYgLA45bv4RF+jloYmMoOMIfk2fCl
+	 9ci4vgEwfhonCQ4bArGd+05TLjNMx2FEehAYaCxu10FXntJburFNUn3nBnKxDwu9/1g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhqU9QmN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xDwWBDk5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773BE606A330;
-	Thu, 19 Nov 2026 00:11:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593EB606A320;
+	Thu, 19 Nov 2026 00:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HhqU9QmN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BAA1F000C4;
-	Thu, 19 Nov 2026 00:11:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xDwWBDk5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D971F000C4;
+	Thu, 19 Nov 2026 00:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047081;
-	bh=WIY/24QhqgczTJ4FXbDVDStse5GzLtmhtPpoBf1wZ8g=;
+	s=korg; t=1795047084;
+	bh=tUf22j6uKss9wdpDSOBJ7+1eB3aPL1ivF17WbdMr6nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HhqU9QmNX8z20H7qtBujHqS0r6NnBqpQ9nXthLMdaK4aJ1HO5Yofhv5cgpHWzTF0D
-	 eoX2741BLWDPOdc9kKt+oNTz/RUUr2TBfxjRU8CM5KyXXqmrEHbinpoLae32n753z8
-	 6eLTnk4XlN1qE73iIHY+Zom3JkcfaplJZwIZfv2Q=
+	b=xDwWBDk5pNaAn8ifHzatHknSALBrDRzXNMAA+8mtC9Qpxdc50jBXrY6iQZUSgkIHB
+	 jXGgLlKqeQTqBqzyEIpDy9ekuNWWOkxT+AbW+m/OLF4ZAjhHZhWCS2x+D9D6WFQ+KN
+	 F7P2u68IroHOC5cUY7+JVsKn/moZjNlD6Frdiusc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Radu Rendec <radu@rendec.net>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1471/2857] irqchip/atmel-aic[5]: Disable interrupts in the irq_pm_shutdown() callbacks
-Date: Wed, 18 Nov 2026 15:41:45 +0100
-Message-ID: <20261118150254.273763773@linuxfoundation.org>
+Subject: [PATCH 6.1 1472/2857] irqchip/imx-intmux: Convert to platform_driver::remove_new() callback
+Date: Wed, 18 Nov 2026 15:41:46 +0100
+Message-ID: <20261118150254.312884154@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,99 +62,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 0ca21fe111457c843624a835641bb490e704bb2f ]
+[ Upstream commit 984e5c7b8d7bac9efd3818e06dcf1f7aab7701b2 ]
 
-irq_gc_shutdown() calls the irq_pm_shutdown() callbacks from
-syscore_shutdown() with interrupts enabled. aic_pm_shutdown() and
-aic5_pm_shutdown() take the generic chip lock with raw_spin_lock(), and
-irq_gc_eoi() takes the same lock from the interrupt handler. An
-interrupt from the chip while the lock is held spins in irq_gc_eoi()
-and hangs the reboot.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Lockdep reports this on every reboot of a SAM9X75 Curiosity board:
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-  WARNING: inconsistent lock state
-  inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
-  busybox/101 [HC0[0]:SC0[0]:HE1:SE1] takes:
-  c1c2b434 (&gc->lock){?.-.}-{2:2}, at: aic5_pm_shutdown+0x34/0xd8
-  {IN-HARDIRQ-W} state was registered at:
-    ...
-    irq_gc_eoi+0x28/0x60
-    handle_fasteoi_irq+0x120/0x214
-  ...
-   aic5_pm_shutdown from irq_gc_shutdown+0x4c/0x58
-   irq_gc_shutdown from syscore_shutdown+0x5c/0x9c
-   syscore_shutdown from kernel_restart+0x34/0x78
-   kernel_restart from sys_reboot+0x180/0x25c
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Use the irqsave guard, as
-commit 33517881ede7 ("irqchip/brcmstb-l2: Use _irqsave locking variants in non-interrupt code")
-did for brcmstb-l2.
-
-Fixes: b1479ebb7720 ("irqchip: atmel-aic: Add atmel AIC/AIC5 drivers")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Assisted-by: LLM
-Reviewed-by: Radu Rendec <radu@rendec.net>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260926004124.88221-1-kmehltretter@gmail.com
-[ sashal: replaced scoped spinlock guards with explicit irq_gc_lock_irqsave() and irq_gc_unlock_irqrestore() calls ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/edeee074956dd943d3c67da894a01dc5f0d33bd7.1703284359.git.u.kleine-koenig@pengutronix.de
+Stable-dep-of: b167c1a30e9e ("irqchip/imx-intmux: Fix runtime PM teardown on remove")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-atmel-aic.c  | 5 +++--
- drivers/irqchip/irq-atmel-aic5.c | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-imx-intmux.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/irqchip/irq-atmel-aic.c b/drivers/irqchip/irq-atmel-aic.c
-index 4631f68479537..120ec1ae95d7b 100644
---- a/drivers/irqchip/irq-atmel-aic.c
-+++ b/drivers/irqchip/irq-atmel-aic.c
-@@ -126,11 +126,12 @@ static void aic_resume(struct irq_data *d)
- static void aic_pm_shutdown(struct irq_data *d)
+diff --git a/drivers/irqchip/irq-imx-intmux.c b/drivers/irqchip/irq-imx-intmux.c
+index 80aaea82468aa..c7bf73dcb7a10 100644
+--- a/drivers/irqchip/irq-imx-intmux.c
++++ b/drivers/irqchip/irq-imx-intmux.c
+@@ -281,7 +281,7 @@ static int imx_intmux_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int imx_intmux_remove(struct platform_device *pdev)
++static void imx_intmux_remove(struct platform_device *pdev)
  {
- 	struct irq_chip_generic *gc = irq_data_get_irq_chip_data(d);
-+	unsigned long flags;
- 
--	irq_gc_lock(gc);
-+	irq_gc_lock_irqsave(gc, flags);
- 	irq_reg_writel(gc, 0xffffffff, AT91_AIC_IDCR);
- 	irq_reg_writel(gc, 0xffffffff, AT91_AIC_ICCR);
--	irq_gc_unlock(gc);
-+	irq_gc_unlock_irqrestore(gc, flags);
- }
- #else
- #define aic_suspend		NULL
-diff --git a/drivers/irqchip/irq-atmel-aic5.c b/drivers/irqchip/irq-atmel-aic5.c
-index 145535bd75605..61636866b4916 100644
---- a/drivers/irqchip/irq-atmel-aic5.c
-+++ b/drivers/irqchip/irq-atmel-aic5.c
-@@ -224,15 +224,16 @@ static void aic5_pm_shutdown(struct irq_data *d)
- 	struct irq_domain_chip_generic *dgc = domain->gc;
- 	struct irq_chip_generic *bgc = irq_get_domain_generic_chip(domain, 0);
- 	struct irq_chip_generic *gc = irq_data_get_irq_chip_data(d);
-+	unsigned long flags;
+ 	struct intmux_data *data = platform_get_drvdata(pdev);
  	int i;
- 
--	irq_gc_lock(bgc);
-+	irq_gc_lock_irqsave(bgc, flags);
- 	for (i = 0; i < dgc->irqs_per_chip; i++) {
- 		irq_reg_writel(bgc, i + gc->irq_base, AT91_AIC5_SSR);
- 		irq_reg_writel(bgc, 1, AT91_AIC5_IDCR);
- 		irq_reg_writel(bgc, 1, AT91_AIC5_ICCR);
+@@ -297,8 +297,6 @@ static int imx_intmux_remove(struct platform_device *pdev)
  	}
--	irq_gc_unlock(bgc);
-+	irq_gc_unlock_irqrestore(bgc, flags);
+ 
+ 	pm_runtime_disable(&pdev->dev);
+-
+-	return 0;
  }
- #else
- #define aic5_suspend		NULL
+ 
+ #ifdef CONFIG_PM
+@@ -353,11 +351,11 @@ static const struct of_device_id imx_intmux_id[] = {
+ 
+ static struct platform_driver imx_intmux_driver = {
+ 	.driver = {
+-		.name = "imx-intmux",
+-		.of_match_table = imx_intmux_id,
+-		.pm = &imx_intmux_pm_ops,
++		.name		= "imx-intmux",
++		.of_match_table	= imx_intmux_id,
++		.pm		= &imx_intmux_pm_ops,
+ 	},
+-	.probe = imx_intmux_probe,
+-	.remove = imx_intmux_remove,
++	.probe		= imx_intmux_probe,
++	.remove_new	= imx_intmux_remove,
+ };
+ builtin_platform_driver(imx_intmux_driver);
 -- 
 2.53.0
 
