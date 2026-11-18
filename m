@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055015;
-	b=g3isYqaOGcYNzw7SuZ6eKYRWkDgIF1oUqDT50bDFaVRg1qOjbwB8M4tF54pKH25Z7ZB0
-	 /+Gv29f60sPWkjZni2W4FSk4JDMhiUBAbKc1mmY5GwDbG5u4/+onLn5vcji0qBit9iZrp
-	 j6pA4CV8tAYVNlHtqx55hA2kaikj87dPcoBhvRyaFj8CVX1Fn3wV/d9k2TBmsg0ovFsw3
-	 iZPXSzlIQOGhDNckdz080cwehb7o9Gm511atWGmRgKG0MF4nF+ugxt3zFsyquvqHbOh1d
-	 9sLgA9Nb1DOJEj9qxh+5kg0cdm1nnbYyPvJnZk+wQjAxkFJOMIKizMrXL9c97hGs/Pg==
+	t=1795055018;
+	b=GoS8DhjklbFuGpD+h+dQpnwlDuTTvrpAmlRDnsoUD6Pb3E4oBakEz0pUh/sKKQkqo6Gc
+	 KWZRfUrbmaW15WRO4c2hFNV9faz7OcFeOOeMbJZD0R8KEzSYNfVy0hwkkjNaYhousVlkG
+	 +dwW+u8RYkKdo3/3sfcLhE+sQ/kjU+POb1i3F+GOnoGcKo85w7QBt7kJANyoYIX6LNRYf
+	 nQUkaYRv1nhj7e3tNrevp04IlaEJOqm+oqdx9l2Or3lTtFE1pnp2AL4kvVyHq4VRJavVa
+	 fESB8FjqIfOELoznLd8ieRZadylIYOTd72hO/gWifH9eniJSQdamxJTpLTHuY5Ha//g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055018;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ATUJybU9Mkr71TuYMFj6zdOUztqEbvm/amV8rOPDyDA=;
-	b=A8O1dDEDPSRJ4SmvBsXDIMaMDrGpCfIEkRRiMn/eirfOftJntPD9rk8BpOv/Kmu/zohP
-	 PAyPJTtCLudRWSLGM7RfBr7SVte2m4c8lKMDPmOD65aHum2yFFg8qiqFy3wlAiSXCfojo
-	 pipT6f63l63T8aRGJ82CxaxvUmqVy//cZluoGJMDS4U5K4O/bHBRegS82heEOI/PAp0qL
-	 2pVNBzX2urMNMJcJdTY5FZAuyuM/JLrNkz0Vvii92YguO6ANTWonwbpw64+Lht7zmZwaR
-	 xVva4StfEOFM8xJ2IJ3Dv1beAYvXR6njzr9mFyPKGgpSqFUZSWlOg9qRS7eyvf3iUUg==
+	bh=rGG4uuio27U8gjuAVkeeS0jnCL8Y+xN8U3F3QC6x1Ls=;
+	b=dTT9975i63Krm5BXYpAgDkQLMwcGz1uTp18Hb6IrdpbzGHQnsFKO27TZnUYyjTEA5gPi
+	 B/FlbiZG8uH4qzjc3a25LGsHANzaAQAuN38HcI2+czVXnN0jVcn49OCf25IkzEDDLN4A/
+	 vivMIVSsOZwXvHseVYpfWFvbSAIXX0J62CVNXtbH65UDdV/V+9EVeSzoI/9XvY7NKaX1I
+	 Mh6OU1v7vWcBRa4ydzNDjKfzD7KWh2fA7UvYID2BfwwOeJYEEHpuNGC0RBiiQ/pnzb9n7
+	 LbkRLc2IYnPgo87dYlrcBZk0hdCrSEAY/fJ1bUZs1Zglpuo12oGPE1c1nBHAuAbaV9g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqlNxYyn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isdPdZn8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2028E606A320;
-	Thu, 19 Nov 2026 02:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C27606A320;
+	Thu, 19 Nov 2026 02:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CqlNxYyn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75E0B1F000C4;
-	Thu, 19 Nov 2026 02:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=isdPdZn8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBF41F000C5;
+	Thu, 19 Nov 2026 02:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055015;
-	bh=ATUJybU9Mkr71TuYMFj6zdOUztqEbvm/amV8rOPDyDA=;
+	s=korg; t=1795055017;
+	bh=rGG4uuio27U8gjuAVkeeS0jnCL8Y+xN8U3F3QC6x1Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CqlNxYyndNtIh1qVFWUQvi+pzGHXmlT+0LtKtPZz6B8N8MydJvCnTD4U6vvXWou0/
-	 cY8o+CD/XsJP6J3R4QcyT1ycjoOyAmAhSqlao6nVtkWSNt2oEcs0gINFPkRFWwQGsG
-	 ZDE3uu2eMVh0NRYu5j21hE956Fh6r4t7D4z3jCMY=
+	b=isdPdZn82BHoaLPZyDOF1Tf5VVHEWIIhLo05zXI9uTHZ0Ag4bySdwDzqhcUrU/dZB
+	 +UyWDzyHpCqRR/8RNzEe4TL+hLigb/QLjb2mdnZk25ucQ/HIhHknwAQH+rqCJaecmH
+	 B0sRypQMD2U4HBGyQmkXd0Ttz+i+uNLN26kPeHbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Koichiro Den <den@valinux.co.jp>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Breno Leitao <leitao@debian.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1463/2214] PCI: endpoint: pci-epf-vntb: Serialize virtual PCI bus scan
-Date: Wed, 18 Nov 2026 15:52:19 +0100
-Message-ID: <20261118150109.642500061@linuxfoundation.org>
+Subject: [PATCH 5.15 1481/2214] cpuidle: menu: Remove incorrect unlikely() annotation
+Date: Wed, 18 Nov 2026 15:52:37 +0100
+Message-ID: <20261118150110.398199236@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -70,51 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 84c3520c9e8c14b09a5cf645cc4fa7c6d9d61127 ]
+[ Upstream commit fcbd7897b871e157ee5c595e950c8466d86c0cd5 ]
 
-The virtual PCI bus is scanned without holding the PCI rescan/remove
-lock. This can race with other PCI topology changes.
+The unlikely() annotation on the early-return condition in menu_select()
+is incorrect on systems with only one idle state (e.g., ARM64 servers
+with a single ACPI LPI state). Branch profiling shows 100% misprediction
+on such systems since drv->state_count <= 1 is always true.
 
-Hold the lock across the bus scan and device addition.
+On platforms where only state0 is available, this path is the common
+case, not an unlikely edge case. Remove the misleading annotation to
+let the branch predictor learn the actual behavior.
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://lore.kernel.org/r/3tgrcel5fl55ulf3zjya4fkz4t2ms7iwwjif5rnzn2rafsydd6@i4e5etm7uqvz/
-Link: https://patch.msgid.link/20260901063238.631166-2-den@valinux.co.jp
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20260105-annotated_idle-v1-1-10ddf0771b58@debian.org
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: d594187cafd5 ("cpuidle: menu: Do not return a disabled idle state")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/cpuidle/governors/menu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 30c003d8b0dd6..390bb9c9e8836 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -977,14 +977,19 @@ static int vpci_scan_bus(void *sysdata)
- 	struct pci_bus *vpci_bus;
- 	struct epf_ntb *ndev = sysdata;
+diff --git a/drivers/cpuidle/governors/menu.c b/drivers/cpuidle/governors/menu.c
+index 956b42729c376..3188c55612ce7 100644
+--- a/drivers/cpuidle/governors/menu.c
++++ b/drivers/cpuidle/governors/menu.c
+@@ -314,7 +314,7 @@ static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 	nr_iowaiters = nr_iowait_cpu(dev->cpu);
+ 	data->bucket = which_bucket(data->next_timer_ns, nr_iowaiters);
  
-+	pci_lock_rescan_remove();
-+
- 	vpci_bus = pci_scan_bus(ndev->vbus_number, &vpci_ops, sysdata);
- 	if (!vpci_bus) {
- 		pr_err("create pci bus failed\n");
-+		pci_unlock_rescan_remove();
- 		return -EINVAL;
- 	}
- 
- 	pci_bus_add_devices(vpci_bus);
- 
-+	pci_unlock_rescan_remove();
-+
- 	return 0;
- }
- 
+-	if (unlikely(drv->state_count <= 1 || latency_req == 0) ||
++	if (drv->state_count <= 1 || latency_req == 0 ||
+ 	    ((data->next_timer_ns < drv->states[1].target_residency_ns ||
+ 	      latency_req < drv->states[1].exit_latency_ns) &&
+ 	     !dev->states_usage[0].disable)) {
 -- 
 2.53.0
 
