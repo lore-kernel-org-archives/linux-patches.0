@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035491;
-	b=ZFnDbX/fxZKzy79JnQ9WQPpIXN+5z3lZMHXy3rx54CCzPaPmeBXpTYa3PCkadYDvY8qa
-	 xQaO1XNPmT2aEpkiRA/LgTXLsO3pMIis4LsorzOZ/2m6LhGBpt48oBZ3d8bTEp9n5Ii6s
-	 fYa62WXAoWYXnALkwsH2ch7KdImWo5wf0pOsLCvJQfbyXX0dhnYgB9TGxdxK0UCqBF5cI
-	 E5KrLAsoY5Jvj3DiQ1W2RBoG+UXQdpdvWhiZpfwFADi8stZqXzQo3aAPa+RO7B11abRw9
-	 zWFrwerhFp0ZoO6vI1o3+M35VryctlxFF+7fzsQOrzUNL7aQI3oKQGJ5BO6gZh1FkXQ==
+	t=1795035493;
+	b=ii/rZCTnc93FRDQVn1J/w6m6s7UlWjOWGQY9/yo9aYkbpKIfxFoNpBRq8qXQU63GSbzX
+	 8MfTmQwTdGqPoBd4Qxl/Tnz7l0ydCW0isPpLo8V7wRw56bga8lF0LSblXGUarHacQePmr
+	 5n/EDrd6Jc37qxDHGYhhF66ynhGVV7+tlHpWU5ZxLdjvH8KKUjzGYD5DBBdXaOufJJyYP
+	 qle0JET2WYLhzY3UoSik/7gKVtmptvSSubipvEbsXEVo1yvv8kvTUKiKsX1L2lRwfwfqB
+	 VvmdhVCOHTteF4Do6vr4el9Sa5M67SiA6z16kOOYtZ6uae6b5f/4ndpDFttMUzRNYhw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035491;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035493;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=f1Zqq5W2dZ8WzyKGeK7OhzQpJujjs5S9B0KDuoznjlQ=;
-	b=C9HrrB3QgVklkIgOEVtoAYrbjnj1Oz9MoT18ji5ppva9Hlv8scCKVdw5m52Y5rrrkWjv
-	 Z8eh5a5fgqwPyInOkMF+QsIrdKo+7I1BfzIrOhD09SCGIhyUn0oqpX8qYGBpuxoSnAvBo
-	 zMpaZRo5omdhKhRj6PiwXRrlzR2oa7fbqPbSIW7S7GzxbQUwW+pzyLoKlj5UrwOnbYlvS
-	 Mu+LizAu+Qs/+QT+80fBzO/b6k9kG81HKMAZ8fHYGXBNPug+AdXJJ/Oe2hwYe9ZP7+uhc
-	 8AjLHcDoeuPKTEEqciXyuRrAn6nqdWm/ZKkIP1CsaVf1KDt8zY3l24lPI/E1Ghj3Wpg==
+	bh=ewV3l7cyUs0yWTjVeBjNk8uipTvYIsfgS4Rh3HY0mW8=;
+	b=b0nH8ONtO8PktxCWkodQ4KJXVjzgs0bLln40HXCoJoE7VaoExJBFUrQlMfT2Er2fGhyF
+	 Bg0KLd9auAgb/3PzYUuamW1EnxJMUvp8IpNklgvcAs52w531SYedXzd+JvLJ90XSjtiX7
+	 hw+u+9ObPprGy2+TtC2ZnFGwrRE2GYCbXEMX/sGYrSPMNNDmorSCZS229VqKJKPcBbOaw
+	 MtT3Cgx/Jo+RpBgKaNv2qoCv1FWkFgukpIieDoKh0Z0lQ4iSBZo3nfn54Gt0WmoRmwy1v
+	 JNvyL1wSKW4ZnNem/1JhzLJwmjNCDzJB+Qbi2Mx63eNhDdCqzN5Pm4XQnVuOuZXyU3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDI5Z0xB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MA22jduo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AE2606A31C;
-	Wed, 18 Nov 2026 20:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF4D606A31C;
+	Wed, 18 Nov 2026 20:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yDI5Z0xB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4F31F000C4;
-	Wed, 18 Nov 2026 20:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MA22jduo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D0C1F000C4;
+	Wed, 18 Nov 2026 20:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035490;
-	bh=f1Zqq5W2dZ8WzyKGeK7OhzQpJujjs5S9B0KDuoznjlQ=;
+	s=korg; t=1795035493;
+	bh=ewV3l7cyUs0yWTjVeBjNk8uipTvYIsfgS4Rh3HY0mW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yDI5Z0xBLarS8BzpPSXw2Hg/iEoXGjFOUftzu/VblKg4VRJeZZWiL5uLdkBVjOFUK
-	 EIoTg0+F4uMPs6N5mzZixvyMD++Y+fIapSiYWktNFuv1CpYdplpbKBDhuVWr1G7+XA
-	 gKQmuE2hMXKKGep22Ph/zqjEhYGSyJuR8aFnHpWc=
+	b=MA22jduoMKgCJN9fbaQPcNr1cWsTgn7FUgjbtdnNTK6g6VpxT7ovr4oZBfFUSEgoO
+	 NEZXYhex1A7JUCkAOVWOvMbm5kIMLJ5w7f++J0hDayWy4YUnD6tc/NG8TTWjwmNPh4
+	 F7NRhYu48LyvTqFQbeKf5mEjlC4s+dWufTr+4PXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Scek <scek.andrej@gmail.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.6 0723/3318] HID: amd_sfh: Remove unsupported motion-state field from accelerometer report
-Date: Wed, 18 Nov 2026 15:22:25 +0100
-Message-ID: <20261118150340.191307592@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chuck Lever <cel@kernel.org>
+Subject: [PATCH 6.6 0697/3318] NFSD: Resolve the recall-any mask names in the trace format
+Date: Wed, 18 Nov 2026 15:21:59 +0100
+Message-ID: <20261118150339.251959107@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,66 +68,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Chuck Lever <cel@kernel.org>
 
-commit 6ff86122906357687735dd379c6279e3b2fa26af upstream.
+commit c563a1f0679566d7d586802e5346591d0af8da78 upstream.
 
-The accelerometer HID report descriptor declares a trailing motion-state
-field (usage 0x0451), but the Sensor Fusion Hub never reports this data,
-so each accelerometer input report is one byte shorter than the descriptor
-advertises.
+RCA4_TYPE_MASK_* are enum constants, so the preprocessor cannot fold
+them into the print format that show_rca_mask() builds for the
+nfsd_cb_recall_any event. Nothing declares an eval map for them
+either, so trace_event_eval_update() has no substitution to apply at
+module load, and the event's format file ships the enumerator names
+verbatim. trace-cmd and perf cannot decode the bmval0 field.
 
-This was previously harmless because hid-core zero-padded short reports.
-Since commit 0a3fe972a7cb ("HID: core: Mitigate potential OOB by removing
-bogus memset()") such reports are rejected instead:
+Declare the eval maps for the nine mask bits show_rca_mask() decodes.
+The format then carries the shift counts as integers, the same shape
+the SUNRPC trace points already emit from their BIT() flag decoders.
 
-  hid-sensor-hub 0020:1022:0001.0003: Event data for report 1 was too short (15 vs 14)
-
-As a result the accelerometer input events are dropped and screen
-auto-rotation stops working on AMD SFH systems.
-
-Remove the motion-state field from the accelerometer report descriptor and
-drop the unused in_accel_shake_detection member, so the descriptor matches
-the report actually provided by the hardware.
-
-Fixes: 1434f9fc0e47 ("SFH: Create HID report to Enable support of AMD sensor fusion Hub (SFH)")
-Reported-by: Andrej Scek <scek.andrej@gmail.com>
-Closes: https://lore.kernel.org/linux-input/CADrS85612m-Hh-G4BJmOhy-y6r3Ni3kD8_GM-2QRBeWWEEZWuA@mail.gmail.com/
+Fixes: 638593be55c0 ("NFSD: add CB_RECALL_ANY tracepoints")
 Cc: stable@vger.kernel.org
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20260818184151.31180-1-cel@kernel.org
+Signed-off-by: Chuck Lever <cel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h        |    2 --
- drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h |    7 -------
- 2 files changed, 9 deletions(-)
+ include/trace/misc/nfs.h |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h
-+++ b/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_desc.h
-@@ -48,8 +48,6 @@ struct accel3_input_report {
- 	int in_accel_x_value;
- 	int in_accel_y_value;
- 	int in_accel_z_value;
--	/* include if required to support the "shake" event */
--	u8 in_accel_shake_detection;
- } __packed;
+--- a/include/trace/misc/nfs.h
++++ b/include/trace/misc/nfs.h
+@@ -359,6 +359,16 @@ TRACE_DEFINE_ENUM(IOMODE_ANY);
+ 		{ IOMODE_RW,			"RW" }, \
+ 		{ IOMODE_ANY,			"ANY" })
  
- struct gyro_feature_report {
---- a/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h
-+++ b/drivers/hid/amd-sfh-hid/hid_descriptor/amd_sfh_hid_report_desc.h
-@@ -169,13 +169,6 @@ static const u8 accel3_report_descriptor
- 0x95, 1,		/* HID report count (1) */
- 0x55, 0x0E,		/* HID unit exponent(0x0E) */
- 0X81, 0x02,		/* HID Input (Data_Arr_Abs) */
--
--0x0A, 0x51, 0x04,	/* HID usage sensor data motion state */
--0x15, 0,		/* HID logical Min_8(0) False = Still*/
--0x25, 1,		/* HID logical Min_8(1) True = In motion */
--0x75, 8,		/* HID report size(8) */
--0x95, 1,		/* HID report count (1) */
--0X81, 0x02,		/* HID Input (Data_Arr_Abs) */
- 0xC0			/* HID end collection */
- };
- 
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_RDATA_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_WDATA_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_DIR_DLG);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_FILE_LAYOUT);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_BLK_LAYOUT);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MIN);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OBJ_LAYOUT_MAX);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MIN);
++TRACE_DEFINE_ENUM(RCA4_TYPE_MASK_OTHER_LAYOUT_MAX);
++
+ #define show_rca_mask(x) \
+ 	__print_flags(x, "|", \
+ 		{ BIT(RCA4_TYPE_MASK_RDATA_DLG),	"RDATA_DLG" }, \
 
 
