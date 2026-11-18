@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045494;
-	b=eiuFGRcvj8B4W9JMhzYTgocMOd5tJoHVAm8fV7DdC73udOCzy5fJ7zFFAelGvaKKd+Em
-	 CAjbL3FWYtPdAhzu5rY485Ozu3fgkncbQOmSJBB4OXjrs5xEtnxdunon+1Eu1w041nqtH
-	 PgPma9/IuatCeXcpcR69McWlpQSIAiBo4/Ckg9nkPtmzQnnVwxS2w/XBY+uPIxQ4gkQQ3
-	 fiop+y4evxz34w4UCPaqEQHUyZZdBlDfR12kKBaUeOJbz4BspWPG9nc/9PiHVxr5kMSMt
-	 q4A5zKEQTs8ats5Ks2DbWcoO5Y3hfLfkbd7cTe99f/1Fa7QcylBUH1fhXRZnBwT9tkg==
+	t=1795045497;
+	b=tSdS8b11t5b3TI3a+s6C6HLBZwYz+2E6qRQl7BSeiU22ugs4ci9i60O2IYixLPcsMNCL
+	 bhcCUB42TE8SjTmyD1Iw2O07FKNGevq+oXPB7PEXDPnmIi2EBBiEx8xALlyOMF9mY01HV
+	 LA6RH64drnkDxARY4A5oS5YjRtlpIt+Sn4O7/gNpE3z/JOKaepWJlP6hlO3Cda4MYJIwW
+	 RhxF4OoGKC6yJY8p/KrHRYTkYONYPiOKv6DzT2cMSyzvVetuvvQQ8zTxTH3losBVTAfuH
+	 6+J2hhvQBzfAO5WBYkP81bb8y1wFuHzDha1950I0CTCBTS8VCMaSkRsWLLObA+2pOug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045497;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1XprbiX9Jg2c/tH1o99hw/tVB/2pnh0SC9JI6/6lI/8=;
-	b=hzEdz8svIkgWlLHGYXC2FiuozG9x8qUsmUCmY7y/gjNSEMGWqvCc8w9Vkk73/xFSbA/h
-	 qzjJOS2srH3VrHecrzCvBJCE6by+gFsD2VL26T3nV53Sj7lRhLoUU5HlgoZIQyPfTtvGQ
-	 CfCoFnr9lbcMx0MmsMcgWVQQsRIsBFPmmR3obAK6/nF96Wrqn4whGLe4DdRUQA2Pni8BS
-	 /tE21TLls/qXUyxvLAwZ+qVk2sBmC5fgXmiqL1uzYov3Djko14JmyzenvfoPzh8sx9Eiy
-	 lDJvLJH+hPZzBYtZ6DYZVOo0p2An7rvPtW+4iBMdStpAim+rEPGXiwo4ZiiRS2aeCcA==
+	bh=frUitSx59cE0ZWIyIzr0OgLyE/zI5OuYZJxXYwRMKzU=;
+	b=JAhzuhRRzXIiHnY+yhhChE1ERC/nl0UXgJ9Kee6/glM94XQQlyLT4ep56GvnTanFvpKo
+	 fSKtGUfNI3eBaVTEOug/B3j25xThJAOlyZMIyZTotLz1pzq92foINUf0eERCAKnAqoyOB
+	 JhuVbC064jo98sh2QrZlfaq2J0j1py/su6KA9+OcX9WSyJJEYDIxms/DOTaR11ErbutwY
+	 GCMMYA2hT7EaUtXsVYXYNz0G86ND3wOPsHt+r50GhuEeF08IwW2QomOOaDaNU+TE11rIv
+	 ZgLVeoM7/9GgKBNVOT7mswx6BMxzuWQxBx/gHgoyzu1pelb3ZhprpwG+VPA4Y4jyfQg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="VYfsN2S/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJnjEVZ3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F54F606A31C;
-	Wed, 18 Nov 2026 23:44:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7EE606A32C;
+	Wed, 18 Nov 2026 23:44:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VYfsN2S/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DE41F000C5;
-	Wed, 18 Nov 2026 23:44:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iJnjEVZ3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E0C1F000C4;
+	Wed, 18 Nov 2026 23:44:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045494;
-	bh=1XprbiX9Jg2c/tH1o99hw/tVB/2pnh0SC9JI6/6lI/8=;
+	s=korg; t=1795045497;
+	bh=frUitSx59cE0ZWIyIzr0OgLyE/zI5OuYZJxXYwRMKzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=VYfsN2S/qOyiswHbekhZ7umeyBcZZeXne71/pYBFz90n+UOP1lUUEKGskRjFfIB94
-	 q+D+uf/vMP35Y6jU6zmoR73D1SZ9yGfmHs0wIkd9L1q09KzOwNJr++GYGNwv1qo4+E
-	 Ks24+N0lyTrRD1lN3ZCjK26y6ZILp01qv6EBFgps=
+	b=iJnjEVZ3f0+6j4stHNVooz30I3/rMK0HyiR5bPh4flHXWCuyc+yJQlTlR/6oYNjte
+	 knR53nmQhEAwOLPVKoju4OGviIDvYohAYdhGSeZGg/NcC98jBMQOddQzGJa5dKEGkb
+	 kcpuJT7QDYVh2XEa/f8AWHVMC+5K7CR5zJpBJCFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Jiale Yao <yaojiale02@163.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0940/2857] nvmet: zns: dont leak stale memory in zone management receive
-Date: Wed, 18 Nov 2026 15:32:54 +0100
-Message-ID: <20261118150235.450381933@linuxfoundation.org>
+Subject: [PATCH 6.1 0895/2857] wifi: mt76: mt7615: cancel reset work during unregister
+Date: Wed, 18 Nov 2026 15:32:09 +0100
+Message-ID: <20261118150233.783479627@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,83 +68,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 31b8a6af19b73e6167c4b655cd5e86681bac1c41 ]
+[ Upstream commit 5b779c63fb1e20e6729d3241b78be7502759296d ]
 
-A Zone Management Receive report returns the full buffer the host asked
-for, but nvmet_bdev_zone_zmgmt_recv_work() writes only the 8-byte
-Number of Zones field and one 64-byte descriptor for each matching zone
-that fits. The 56 reserved header bytes and every descriptor slot past
-the last match keep whatever the buffer held before. A 4096-byte report
-covering a single zone leaves 4024 bytes unwritten.
+The MCU error interrupt handler queues reset_work on the device workqueue.
+Device removal can reach mt76_unregister_device() while that work is still
+pending, since the workqueue is not destroyed until mt76_free_device().
 
-The tcp, rdma and fc transports allocate that buffer with sgl_alloc()
-and pci-epf with kmalloc(), none with __GFP_ZERO, and on success each
-sends the whole buffer to the host (nvmet_setup_c2h_data_pdu() for
-tcp), so the host receives old kernel memory from the target.
+If reset_work runs in this window, it operates on an unregistered hw and
+can requeue mac_work after ieee80211_unregister_hw() has torn the device
+down. Cancel it before unregistering the device so it cannot outlive the
+registered hw.
 
-nvmet_bdev_execute_zone_mgmt_recv() also never checks the transport
-data length against NUMD, so on transports where the host sets that
-length, the buffer sent back can be much larger than the report NUMD
-describes. pci-epf derives its data length from NUMD, so the length
-check below does not apply there, but the zeroing still covers the
-report.
-
-Reject a data length that does not match NUMD with
-nvmet_check_transfer_len(), as nvmet_bdev_execute_zone_append() does,
-and zero the report with nvmet_zero_sgl() before filling it. Zeroing
-NUMD bytes is only enough because of the length check, so the two go
-together.
-
-Allocating with __GFP_ZERO in the transports would also close the leak,
-but it adds a memset to every read command to fix one handler, so the
-transports are left alone.
-
-Tested over the loop, tcp, rdma and fc transports with a zoned
-null_blk namespace: before this patch, zone reports carried stale bytes
-and a data length larger than NUMD was accepted; with it, reports are
-fully initialized and such a length fails with Data SGL Length Invalid.
-
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
+Fixes: 61c4fa721968 ("mt76: mt7615: implement hardware reset support")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260927101041.957362-1-yaojiale02@163.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/zns.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
-index bb512a88053df..64ec757c7c23b 100644
---- a/drivers/nvme/target/zns.c
-+++ b/drivers/nvme/target/zns.c
-@@ -291,6 +291,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
- 	if (status)
- 		goto out;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c b/drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c
+index 87b4aa52ee0f9..d8cb621cad241 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/pci_init.c
+@@ -174,6 +174,7 @@ void mt7615_unregister_device(struct mt7615_dev *dev)
+ 	mcu_running = mt7615_wait_for_mcu_init(dev);
  
-+	/* Only the zone count and matching descriptors are written below. */
-+	status = nvmet_zero_sgl(req, 0, out_bufsize);
-+	if (status)
-+		goto out;
-+
- 	if (!req_slba_nr_zones) {
- 		status = NVME_SC_SUCCESS;
- 		goto out;
-@@ -319,6 +324,11 @@ static void nvmet_bdev_zone_zmgmt_recv_work(struct work_struct *w)
- 
- void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req)
- {
-+	u32 out_bufsize = (le32_to_cpu(req->cmd->zmr.numd) + 1) << 2;
-+
-+	if (!nvmet_check_transfer_len(req, out_bufsize))
-+		return;
-+
- 	INIT_WORK(&req->z.zmgmt_work, nvmet_bdev_zone_zmgmt_recv_work);
- 	queue_work(zbd_wq, &req->z.zmgmt_work);
- }
+ 	mt7615_unregister_ext_phy(dev);
++	cancel_work_sync(&dev->reset_work);
+ 	mt76_unregister_device(&dev->mt76);
+ 	if (mcu_running)
+ 		mt7615_mcu_exit(dev);
 -- 
 2.53.0
 
