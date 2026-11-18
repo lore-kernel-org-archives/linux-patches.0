@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037594;
-	b=k9WQ2Y5kzL5wAj1kDgz4o1JnMWgdUNdj4XctwrHyWMCrH5aCA0WJ0+oANAUzd93sfg40
-	 bvwt9Rwvxe0ihZPCt1rnobrCbNNERB728OuQMSvWMAwTMlNXbRCUu9PYnK9inh/qfp0X6
-	 nMNJXhDgsa6eWvlDJmrzU0vzbDMSwNGwkwpZFdVZoy0X4Tjcvx3//gOe4G8IdfMAUgQWD
-	 CFLqS+CJvUA06H19fyIXMGfpfcYoTrGgQzw5b7yEMmvPH+KnJh+0jEp0w3fImafsJIgXr
-	 FbUq/iTRD8qhA59BIxOs6rTfcAN3kvbnj9v3g532XKtjthn3/FwnKjM6xULS14bu2Aw==
+	t=1795037596;
+	b=j0YdKvsmBML/FPAnHmiMHRxgnxWZPmbIJ6l+MLHqrOexOFqUNnXdMIudl1GkQSZHd1Ma
+	 +Pg0dsx2aAv4ELXzP6ei864yXvMjPDDpe96F6jIBY3abW9OJcEGWTPLg9v3nhmQFRTIiz
+	 GW6qFMy4VczwRdPBKnuYWloaOKhCb1mfuGyfasImt8MMwhUZOhl+RLRnw9nHxnA9Fngvb
+	 5HKc0h6hDAFh2VxLG+9ScIIdNANZw4/IzJS1WcUd3UjCIR9Tr4mXtxnkeffcrI0J6MyJu
+	 Dy/jPxydH8A3DucTyRFs1RYs4NfJoRsrf/TBpsK7Np4yUGiM75Xnmx4B69EI7/nXfYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037594;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037596;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CNv35QZU7W9oP61T98GClfNBAT7xRM1tqiLW8EE9PJg=;
-	b=jiSoGX1BEg5KpFD5A8LJJRuwPW4ffGXlOi0Um1kUHeJSQc4qq/clAWVRZ+vodNWRW23A
-	 t9CA565msegN7rS4KBd7dGfJoyb1r5G8W7wHRIE8Er0ANpIOLrQQ1dOIshwqksX8TEgB1
-	 wvTvPxdulW9b2hM9qN9F0IVvWbU5BUkNkX3EOA0KhE+a5GWf9Bgxg/28Svw6CBnEiUDAY
-	 +r3S06aQal0aogg7lBPQ/bP9mdh+P6YVdFw1/VpzAY/XzazmnJXP7FI7IwxfFfJfasuVY
-	 y6UoBjLxQ/0Oy3EAwUgVgRRLQUDB0daM3XMzkus+o0StfGTcD471vOVyX998yxlpsEg==
+	bh=L3P4KPQPmHcoP6S1SjUXa76lUKVqZVhOEFtYj0xsuns=;
+	b=LagfPBzblUmbAeyV9jOvdyRz7WUh35aj1I10Ul+d3iAH+TNgEZftSLihIsUFC5latDNQ
+	 4iUkso8Oin2PcosQGurU6OISrzaLL8a5EkhmBoECzvk70pPsyiNGJtzcZ8PtoMNtN6MdR
+	 ucLDhTQ3I5eMwNpRmewCENv0/90Lwf8CqViytWdeG/AsQJ9uJLCRkM0IH8qLLxGULz+qe
+	 8OGr6060wveGVlRyPM+4uaJKSyhEjEFXLMnMYnXkW1pOrloC7LFInRzHCPTEGz0rOCbac
+	 gt9V5zLn4SuCntZ8HP25z7iIjWmyjqKlzwa6hQimSysmwaQtNQzD6SIqlLfz/sk5C7Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="M+ado1f/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P4HbtGjB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2861A606A31C;
-	Wed, 18 Nov 2026 21:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE11F606A32C;
+	Wed, 18 Nov 2026 21:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M+ado1f/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753691F000C4;
-	Wed, 18 Nov 2026 21:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=P4HbtGjB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403F91F000C4;
+	Wed, 18 Nov 2026 21:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037594;
-	bh=CNv35QZU7W9oP61T98GClfNBAT7xRM1tqiLW8EE9PJg=;
+	s=korg; t=1795037596;
+	bh=L3P4KPQPmHcoP6S1SjUXa76lUKVqZVhOEFtYj0xsuns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=M+ado1f/xUp80VZHo9yKa50oEU3YMGnIy5ZXSeioWojs9f6uSK63LTekaDT4o9Bgq
-	 CsExNrfYEn7/qfLgRcjz+6ECWB/47XSPKI0PBDf+ZHegvmUzEBgoA4pRtDvctev0+D
-	 F6CS6X0wWhjBkIMLNFBYWgykdYiIugJ5b88ixAVo=
+	b=P4HbtGjBjHcKZ7U/8eTP+iFRgkhPIbkbnkT4l25qK33vDlqdkslmaJi8OyxJodkI9
+	 PZPVSQm63JoLK5AZmX6Y0k/rmA+zbOu+Ek14kec1lqGUqo3TWdj9y3HbLB0CsLUF3L
+	 gyJ7pU0A/zyaNfk63yNKUgXRxZ2KqZErpifkleyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kitta <kitta@linux.alibaba.com>,
-	sashiko AI review <sashiko-bot@kernel.org>,
-	Bryam Vargas <hexlabsecurity@proton.me>,
-	John Garry <john.garry@linux.dev>,
-	Yuanhe Shu <xiangzao@linux.alibaba.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	Xie Yongji <xieyongji@bytedance.com>,
+	Fang Xieyan <fangxy@xiaopeng.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1425/3318] scsi: target: Verify the iSCSI ISID is null-terminated
-Date: Wed, 18 Nov 2026 15:34:07 +0100
-Message-ID: <20261118150403.469364586@linuxfoundation.org>
+Subject: [PATCH 6.6 1452/3318] vringh: bound top-level re-entry into indirect tables
+Date: Wed, 18 Nov 2026 15:34:34 +0100
+Message-ID: <20261118150404.418573559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,98 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuanhe Shu <xiangzao@linux.alibaba.com>
+From: Fang Xieyan <fangxy@xiaopeng.com>
 
-[ Upstream commit cdf4b87a18cb6a0ee26865cb1b7b5660a491d302 ]
+[ Upstream commit f898439ace7f89922e853b43bcbfcd26ea2e0a98 ]
 
-iscsi_parse_pr_out_transport_id() returns the ISID of a FORMAT CODE 01b
-TransportID as a pointer into the PERSISTENT RESERVE OUT parameter list,
-lowercased in place and never null-terminated.  spc4r37 Table 508 requires
-the field to be null-terminated, but a non-conforming initiator can omit
-the NULL; when the ISID ends at the end of the received buffer, the pointer
-is not a C string.
+In __vringh_iov(), the F_INDIRECT branch descends into the indirect
+table and continues before the descriptor accounting runs. A top-level
+indirect descriptor is therefore never charged to count. If such a
+descriptor sets NEXT to point back at itself, returning from the
+indirect table resumes at the same top-level descriptor, which is again
+not counted, so the walk never makes forward progress.
 
-The registration code still consumes it as one: strcmp() in
-__core_scsi3_locate_pr_reg() and in the REGISTER AND MOVE path, and
-snprintf("%s") in __core_scsi3_do_alloc_registration(), which also reads
-its first 8 bytes unconditionally with get_unaligned_be64() - a NUL check
-does not bound that read.
+Because count stays flat and indirect_count is reset to 0 on every
+return to the top-level table, neither bound in the loop check trips.
+A guest can spin the vringh worker at 100% CPU inside __vringh_iov(),
+an uninterruptible host DoS.
 
-When the parameter list spans more than one page, transport_kmap_data_sg()
-maps it with vmap(), and the over-read walks off the end of the mapping
-into the vmalloc() guard page and oopses.  Reproduced with a PR OUT
-REGISTER + SPEC_I_PT parameter list of exactly 8192 bytes whose final
-TransportID carries a 12-byte ISID without a terminating NUL:
+Move the descriptor accounting above the indirect switch so that a
+top-level indirect descriptor is charged one top-level traversal step
+before the walk descends into its table, bringing this re-entry under
+the existing vrh->vring.num bound. Each top-level descriptor is still
+charged at most one step and indirect_count still bounds a single
+table, so legitimate chains (including the multiple-indirect case in
+tools/virtio/vringh_test.c) stay within vring.num, while a cyclic
+indirect descriptor is now rejected with -ELOOP.
 
-  BUG: unable to handle page fault for address: ffffc9000138c000
-  RIP: 0010:strcmp+0xc/0x30
-  Call Trace:
-   __core_scsi3_locate_pr_reg+0xd3/0x120 [target_core_mod]
-   core_scsi3_decode_spec_i_port+0x8fc/0x13a0 [target_core_mod]
-   core_scsi3_emulate_pro_register+0x73c/0x900 [target_core_mod]
-   ...
-   iscsi_target_rx_thread+0xef/0x1d0 [iscsi_target_mod]
-
-With a single-page parameter list the buffer is a kmap() direct mapping, so
-the over-read continues into the physically adjacent page instead of
-faulting.  snprintf("%s") then copies whatever follows the ISID in memory
-into pr_reg_isid, and PR IN READ FULL STATUS reports the registration back
-to any initiator, turning the over-read into an info leak of kernel heap
-contents.  Reproduced with a 4096-byte parameter list whose last
-TransportID ends at the end of the buffer with a 4-byte ISID and no NUL,
-interleaved with I/O to populate adjacent pages: the READ FULL STATUS
-response returned the ISID as "0xleak" followed by raw bytes that were not
-part of the parameter list.  The snprintf() into
-pr_reg_isid[PR_REG_ISID_LEN] caps the echoed ISID at 15 characters, so at
-most 11 bytes past the buffer are leaked per command, but the PR OUT
-command is not rate limited.
-
-Any initiator that can send PR OUT to an iSCSI-exported LUN can trigger
-either variant, including a guest via vhost-scsi.
-
-Require 8 bytes to remain after the ",i,0x" separator, and a NUL inside the
-rest of the descriptor, before the ISID pointer is returned.  REGISTER AND
-MOVE fails with TCM_INVALID_PARAMETER_LIST; on SPEC_I_PT no target port
-claims the malformed TransportID, and the command fails the same way.
-
-Fixes: d04a179085c2 ("scsi: target: Bound PR-OUT TransportID parsing to the received buffer")
-Reported-by: kitta <kitta@linux.alibaba.com>
-Reported-by: sashiko AI review <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/r/sashiko-outbox-184760@kernel.org/
+Fixes: dbd29e075228 ("vringh: Fix loop descriptors check in the indirect cases")
+Cc: Xie Yongji <xieyongji@bytedance.com>
 Cc: stable@vger.kernel.org
-Cc: Bryam Vargas <hexlabsecurity@proton.me>
-Cc: John Garry <john.garry@linux.dev>
-Assisted-by: LLM
-Signed-off-by: Yuanhe Shu <xiangzao@linux.alibaba.com>
-Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
-Link: https://patch.msgid.link/20261026124138.2708365-1-xiangzao@linux.alibaba.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+Assisted-by: Hawkeye:GLM-5.3-flash
+Assisted-by: Qoder:Qwen3.8-Max
+Signed-off-by: Fang Xieyan <fangxy@xiaopeng.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20260922122955.69433-2-fangxy@xiaopeng.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_fabric_lib.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/vhost/vringh.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/target/target_core_fabric_lib.c b/drivers/target/target_core_fabric_lib.c
-index 8deadabca8884..be92cd880d207 100644
---- a/drivers/target/target_core_fabric_lib.c
-+++ b/drivers/target/target_core_fabric_lib.c
-@@ -370,6 +370,16 @@ static bool iscsi_parse_pr_out_transport_id(
- 			pr_err("Missing ISID in iSCSI Initiator port TransportID\n");
- 			return false;
- 		}
-+		/*
-+		 * The registration code reads the ISID as a C string,
-+		 * and its first 8 bytes with get_unaligned_be64(), so
-+		 * require 8 bytes after the separator and a NUL inside
-+		 * the rest of the descriptor.
-+		 */
-+		if (buf + tid_len - p < 8 || !memchr(p, '\0', buf + tid_len - p)) {
-+			pr_err("Incomplete or unterminated ISID in iSCSI Initiator port TransportID\n");
-+			return false;
+diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
+index 134cc10af776b..03cbe0333cab2 100644
+--- a/drivers/vhost/vringh.c
++++ b/drivers/vhost/vringh.c
+@@ -334,6 +334,17 @@ __vringh_iov(struct vringh *vrh, u16 i,
+ 		if (unlikely(err))
+ 			goto fail;
+ 
++		if (up_next == -1)
++			count++;
++		else
++			indirect_count++;
++
++		if (count > vrh->vring.num || indirect_count > desc_max) {
++			vringh_bad("Descriptor loop in %p", descs);
++			err = -ELOOP;
++			goto fail;
 +		}
- 		*port_nexus_ptr = p;
- 		/*
- 		 * Go ahead and do the lower case conversion of the received
++
+ 		if (unlikely(desc.flags &
+ 			     cpu_to_vringh16(vrh, VRING_DESC_F_INDIRECT))) {
+ 			u64 a = vringh64_to_cpu(vrh, desc.addr);
+@@ -359,17 +370,6 @@ __vringh_iov(struct vringh *vrh, u16 i,
+ 			continue;
+ 		}
+ 
+-		if (up_next == -1)
+-			count++;
+-		else
+-			indirect_count++;
+-
+-		if (count > vrh->vring.num || indirect_count > desc_max) {
+-			vringh_bad("Descriptor loop in %p", descs);
+-			err = -ELOOP;
+-			goto fail;
+-		}
+-
+ 		if (desc.flags & cpu_to_vringh16(vrh, VRING_DESC_F_WRITE))
+ 			iov = wiov;
+ 		else {
 -- 
 2.53.0
 
