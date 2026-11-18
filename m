@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025388;
-	b=gSvZuLk/gK5rSjMudgYPMB1yjFxeN/g8IC+i31xI8Qk5Nd8Sj8zmb2kkZl0Eu2DCC3ap
-	 ZnzM4DUuREkwOD0zehXjjNCBrWCHywShFnql71b0q90rFb69RTmKRBx5lJhGS4UUqkG5C
-	 N1WEyvPRk1dg6xOA85Y/stNL8IyL6ghDpUmylsPp/NFHhpWcmD/dBY0x7VNy24TSSzwSb
-	 wp2eRIdgFg0sSp3AwvGvEo+lyvuTI5JT25+dH94p2E0I5jDk28ouyEOKw5m2ESrDHKA3e
-	 xsGEqIEmbXDRkvnft8jxxkMf8bpS/XQcxgIpHpAPEzpnYwI4hWwuH4hApebJuXns9ow==
+	t=1795025391;
+	b=BLb7WdqcP5r1UrIxTLQeK6iQ0ssJbJyBvs/JMp3VhoVr4K6sdjnL2FhFg4bHLdXpZ1Ov
+	 ymM3ih8EjyQLrbEdBv6VMr8X2xhr8Tu3FyavoNxlegZ0dK6HSv1Y1Shuj1oFSWqeV9kov
+	 qwvqc2fWugQALdHMEtKVvDr7m51BUPAUUrilcHBj2OZLczs7MhZw81Vss4rlsdjjsKx89
+	 WGisvO0oVzmxL9GF5Nd4iGFxtRu2H3iyJCg4tZt7SxySfM3loy0X0fJbxPtUvjEkNgY5Z
+	 CYgLJ45thq6xtRIXJRFmiQ/og6uZqKjvkDy677SGC/x7OQzQg0jjelxPcVSsil3znSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025388;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025391;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=kswwitvIYFHv+TaRyMux0aeQwhGy24lhZ8RllQ3blEg=;
-	b=KUHT68OHScBwA44A3aAetM1kanpgXF8WLJ/d9beBenxS1gdNnzHtva4ojWUTN+aL+pc2
-	 tLBvyFYVP3a+CtP0t7XTJKafpdbjQuZpWohMrgiyfeFJUTGU5DVh8Ro7tJmxQ0NmMAhQb
-	 +aD2LN9zYwWPjd9lkuB0R947eX+RZdTJF/2O7PaeAIgo3YA7oINaEM/2ccIE2RWWxtSKX
-	 +8VPehhwkV/tZo/5Yj3oVvgyZLjoxxB6dnrP6RBHV8wqxynYN86+TGasMzl1e1gbip/a6
-	 e8yCh989xypwGziB3MOvfciJjRIeqZ7SSKmEQKeNf3gSVhYF4o5RGycd+r5k3rs0j7w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=6Ab+Y6IaT8r7QL5QqjXrmKja8NFGh8ODDWeJefbuMqc=;
+	b=MfQj/iOzsT84PqjtOm/ehdTpPuHKrWj9wrWMtZ7EnmFYaSHbchgSzhqHqUCqlw/bq4p2
+	 ZvweggsQkWQe0ZQddPMfI2xGkWQ5ySy8qeFcJQFHEaJwcbJjOaBOo3z16YPNw1IhFTpc0
+	 GkoqgCOKacox1QrJRE4BPKAXK6w+1RxxGhjL7W+jeM2MA+bnnjdax/kLAFYbpkTdG4VhS
+	 NRa9m530qor/L44J1P7rxLnDmNjBNQy3jRbFxCmsFUQQGsky+H5YIL7OX5wBSnNPCgOst
+	 dnchbh48VFOkNziEGeEYVyZ11woLA4miawQ6QSpl5Swf76qnobODUncuh1UFZOsj3+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLcX4jTm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M9smAqHL;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C2A606A31C;
-	Wed, 18 Nov 2026 18:09:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64719606A31C;
+	Wed, 18 Nov 2026 18:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLcX4jTm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B061F000C4;
-	Wed, 18 Nov 2026 18:09:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M9smAqHL
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B530E1F000C4;
+	Wed, 18 Nov 2026 18:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025388;
-	bh=kswwitvIYFHv+TaRyMux0aeQwhGy24lhZ8RllQ3blEg=;
+	s=korg; t=1795025391;
+	bh=6Ab+Y6IaT8r7QL5QqjXrmKja8NFGh8ODDWeJefbuMqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JLcX4jTm0jQ4TQjePujqm0+zAkQ5aTEt3TTpk7v1/AyODWOfnKt5H2vAuCM5oZZyJ
-	 dSFt35RCef02hFLn8TMBqdqvV3UqXQ90yIfk6hCG/VHPtc/4k2YS28GEuTmP5Hs9vP
-	 Mll6Admq6t1JwhcumDfUsRpe6NZmVxtR7DUNpzw0=
+	b=M9smAqHL2IBGMstQjDVS71M+bg2vOCzvDY6/TS2lmuuGT3gPmxRhFxYjcfMzcOb4D
+	 860L7JcnHNnbKRk/9sc3cNoY3QSBLf7FtlCPCAJi0wWNuWHbIII2agcMV65WUycPv1
+	 b8ducbZeSsrMcABbk2DT7VzrWhJDsNYZxzcy+ch4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Laurence Oberman <loberman@redhat.com>,
+	=?UTF-8?q?Kai=20M=C3=A4kisara?= <kai.makisara@kolumbus.fi>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1060/2151] power: supply: ab8500_charger: Recover inactive AB8505 charger
-Date: Wed, 18 Nov 2026 15:46:35 +0100
-Message-ID: <20261118150200.914139313@linuxfoundation.org>
+Subject: [PATCH 6.18 1022/2151] scsi: st: Restore changed drive settings after reset also for MTLOAD and MTRETEN
+Date: Wed, 18 Nov 2026 15:45:57 +0100
+Message-ID: <20261118150159.630504437@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,136 +63,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Laurence Oberman <loberman@redhat.com>
 
-[ Upstream commit 76bdf9d78245bb068207c23e9bf43d4b9bb201c3 ]
+[ Upstream commit 8d1cc285194dbcba88c136e1ff7c25cb10e38a5b ]
 
-UsbChCtrl1.UsbChEna can remain set while UsbChStatus1.UsbChOn is
-clear. The existing recovery only checks the control bit, so it considers
-the charger enabled and leaves charging stopped.
+A device reset returns the drive's density and block size to their
+defaults.  Commit 7081dc75df79 ("scsi: st: Restore some drive settings
+after reset") re-applies values changed by the user when the position is
+recovered with MTREW, MTSEEK or MTEOM.  MTLOAD and MTRETEN are also allowed
+to clear the reset condition and also leave the same medium at BOT, but
+they restore nothing.
 
-The Samsung-GT-S7710-Skomer, Samsung-SGH-I407-Kyle, and
-Samsung-SGH-T599-Codina-TMO product trees are reference points for
-checking both bits and cycling the charger when they disagree.
+Because check_tape() reads the drive's block size with MODE SENSE on every
+open, the driver silently switches to the drive default after the reset.
+An application that set fixed-block mode with MTSETBLK and recovers with
+MTLOAD or MTRETEN keeps writing, but variable-length blocks, without any
+error.
 
-Extend the USB charger check to detect this AB8505 state and enable the
-check in the charging algorithm for AB8505. Only cycle the charger when
-VBUS is debounced and no charger-not-OK, thermal, overvoltage, or
-watchdog fault accounts for the inactive hardware.
+Restore the changed density and block size for MTLOAD and MTRETEN as well.
+Both operations may make the drive report a new medium, and the new session
+started by check_tape() clears the "changed" flags and applies the mode
+defaults.  So save the values before the operation, let check_tape() run
+first (do_load_unload() already calls it for MTLOAD; call it after
+MTRETEN), and then re-apply them.  Retry the restore once in case a unit
+attention is still pending.  Only restore when the drive is ready after the
+operation: with an immediate-mode load and O_NONBLOCK, check_tape() does
+not wait and the drive may still be loading.  In immediate mode
+(MT_ST_NOWAIT) MTRETEN may return before the retension has finished; do not
+wait for it there.
 
-Fixes: 4dcdf57773fd ("ab8500-bm: Quick re-attach charging behaviour")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-13-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+MTOFFL is not changed: the medium is unloaded and a different one may be
+loaded next, for which the mode defaults apply.
+
+Reproduced with scsi_debug (which reports a new medium after MTRETEN and
+MTLOAD) and with IBM LTO drives on FC (which do not).
+
+Fixes: 7081dc75df79 ("scsi: st: Restore some drive settings after reset")
+Assisted-by: Claude sashiko
+Signed-off-by: Laurence Oberman <loberman@redhat.com>
+Reviewed-by: Kai Mäkisara <kai.makisara@kolumbus.fi>
+Link: https://patch.msgid.link/20260929192821.997675-2-loberman@redhat.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_chargalg.c |  9 ++---
- drivers/power/supply/ab8500_charger.c  | 51 +++++++++++++++++++++++++-
- 2 files changed, 53 insertions(+), 7 deletions(-)
+ drivers/scsi/st.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/drivers/power/supply/ab8500_chargalg.c b/drivers/power/supply/ab8500_chargalg.c
-index dc6c8b0dd1cfd..3826e8a008c7e 100644
---- a/drivers/power/supply/ab8500_chargalg.c
-+++ b/drivers/power/supply/ab8500_chargalg.c
-@@ -1238,12 +1238,9 @@ static void ab8500_chargalg_algorithm(struct ab8500_chargalg *di)
+diff --git a/drivers/scsi/st.c b/drivers/scsi/st.c
+index 476a45fdf7871..f90e5b055fa97 100644
+--- a/drivers/scsi/st.c
++++ b/drivers/scsi/st.c
+@@ -3535,6 +3535,23 @@ static int partition_tape(struct scsi_tape *STp, int size)
+ 
  
- 	charger_status = ab8500_chargalg_check_charger_connection(di);
  
--	if (is_ab8500(di->parent)) {
--		ret = ab8500_chargalg_check_charger_enable(di);
--		if (ret < 0)
--			dev_err(di->dev, "Checking charger is enabled error"
--					": Returned Value %d\n", ret);
--	}
-+	ret = ab8500_chargalg_check_charger_enable(di);
-+	if (ret < 0)
-+		dev_err(di->dev, "Checking charger enable failed: %d\n", ret);
- 
- 	/*
- 	 * First check if we have a charger connected.
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index 1c4e4d0af48b2..30b819f6a13c3 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -52,6 +52,7 @@
- #define MAIN_CH_DET			0x01
- #define MAIN_CH_CV_ON			0x04
- #define USB_CH_CV_ON			0x08
-+#define USB_CH_ON			0x04
- #define VBUS_DET_DBNC_LONG		0x02
- #define VBUS_DET_DBNC1			0x01
- #define OTP_ENABLE_WD			0x01
-@@ -1877,6 +1878,9 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
- 	int vset_uv, int iset_ua)
++/*
++ * Re-apply a density and block size that were changed by the user before a
++ * device reset (a negative value means "not changed").  A unit attention
++ * still pending after the operation (e.g. new medium after a load) fails the
++ * first MODE SELECT, so retry each once.  As in the other post-reset restore
++ * path, errors are ignored and one setting failing does not prevent
++ * restoring the other.
++ */
++static void st_restore_changed_settings(struct scsi_tape *STp, int density,
++					int blksize)
++{
++	if (density >= 0 && st_int_ioctl(STp, MTSETDENSITY, density))
++		st_int_ioctl(STp, MTSETDENSITY, density);
++	if (blksize >= 0 && st_int_ioctl(STp, MTSETBLK, blksize))
++		st_int_ioctl(STp, MTSETBLK, blksize);
++}
++
+ /* The ioctl command */
+ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
  {
- 	u8 usbch_ctrl1 = 0;
-+	u8 usbch_status1;
-+	u8 usbch_status2;
-+	bool reenable;
- 	int ret = 0;
+@@ -3543,6 +3560,7 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 	int retval = 0;
+ 	unsigned int blk;
+ 	bool cmd_mtiocget;
++	int restore_density = -1, restore_blksize = -1;
+ 	struct scsi_tape *STp = file->private_data;
+ 	struct st_modedef *STm;
+ 	struct st_partstat *STps;
+@@ -3680,6 +3698,17 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 					st_int_ioctl(STp, MTSETDENSITY, STp->changed_density);
+ 				if (STp->blksize_changed)
+ 					st_int_ioctl(STp, MTSETBLK, STp->changed_blksize);
++			} else if (mtc.mt_op == MTLOAD || mtc.mt_op == MTRETEN) {
++				/*
++				 * The same medium ends up at BOT, so the settings
++				 * apply as with MTREW.  The operation may start a
++				 * new session, which clears the "changed" flags:
++				 * save the values and restore them afterwards.
++				 */
++				if (STp->density_changed)
++					restore_density = STp->changed_density;
++				if (STp->blksize_changed)
++					restore_blksize = STp->changed_blksize;
+ 			}
+ 		}
  
- 	struct ab8500_charger *di = to_ab8500_charger_usb_device_info(charger);
-@@ -1892,7 +1896,52 @@ static int ab8500_charger_usb_check_enable(struct ux500_charger *charger,
+@@ -3759,6 +3788,14 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 
+ 		if (mtc.mt_op == MTLOAD) {
+ 			retval = do_load_unload(STp, file, max(1, mtc.mt_count));
++			/*
++			 * Restore only if the drive is ready: after an
++			 * immediate-mode load with O_NONBLOCK, check_tape()
++			 * does not wait and the drive may still be loading.
++			 */
++			if (!retval && STp->ready == ST_READY)
++				st_restore_changed_settings(STp, restore_density,
++							    restore_blksize);
+ 			goto out;
+ 		}
+ 
+@@ -3777,6 +3814,20 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+ 			retval = st_compression(STp, (mtc.mt_count & 1));
+ 		else
+ 			retval = st_int_ioctl(STp, mtc.mt_op, mtc.mt_count);
++		if (!retval && mtc.mt_op == MTRETEN && !STp->immediate &&
++		    (restore_density >= 0 || restore_blksize >= 0)) {
++			/*
++			 * Retension reloads the medium and the drive may
++			 * report a new medium.  Let check_tape() start the new
++			 * session (applying the mode defaults) now, as for
++			 * MTLOAD; otherwise it happens at the next open and
++			 * overrides the restored settings.
++			 */
++			if (check_tape(STp, file) >= 0 &&
++			    STp->ready == ST_READY)
++				st_restore_changed_settings(STp, restore_density,
++							    restore_blksize);
++		}
+ 		goto out;
  	}
- 	dev_dbg(di->dev, "USB charger ctrl: 0x%02x\n", usbch_ctrl1);
- 
--	if (!(usbch_ctrl1 & USB_CH_ENA)) {
-+	reenable = !(usbch_ctrl1 & USB_CH_ENA);
-+	if (is_ab8505(di->parent)) {
-+		ret = abx500_get_register_interruptible(di->dev,
-+							AB8500_CHARGER,
-+							AB8500_CH_USBCH_STAT1_REG,
-+							&usbch_status1);
-+		if (ret < 0) {
-+			dev_err(di->dev, "USB charger status read failed\n");
-+			return ret;
-+		}
-+
-+		if (!reenable && (usbch_status1 & USB_CH_ON))
-+			return 0;
-+
-+		if (!(usbch_status1 & VBUS_DET_DBNC_LONG))
-+			return 0;
-+
-+		ret = abx500_get_register_interruptible(di->dev,
-+							AB8500_CHARGER,
-+							AB8500_CH_USBCH_STAT2_REG,
-+							&usbch_status2);
-+		if (ret < 0) {
-+			dev_err(di->dev, "USB charger fault status read failed\n");
-+			return ret;
-+		}
-+
-+		if ((usbch_status2 &
-+		     (VBUS_CH_NOK | USB_CH_TH_PROT | VBUS_OVV_TH)) ||
-+		    di->flags.usbchargernotok || di->flags.usb_thermal_prot ||
-+		    di->flags.vbus_ovv || di->usb.wd_expired)
-+			return 0;
-+
-+		if (!reenable) {
-+			dev_info(di->dev,
-+				 "USB charger enabled but inactive, cycling it\n");
-+			ret = abx500_mask_and_set_register_interruptible(di->dev,
-+									 AB8500_CHARGER,
-+									 AB8500_USBCH_CTRL1_REG,
-+									 USB_CH_ENA, 0);
-+			if (ret < 0)
-+				return ret;
-+			reenable = true;
-+		}
-+	}
-+
-+	if (reenable) {
- 		dev_info(di->dev, "Charging has been disabled abnormally and will be re-enabled\n");
- 
- 		ret = abx500_mask_and_set_register_interruptible(di->dev,
+ 	if (!STm->defined) {
 -- 
 2.53.0
 
