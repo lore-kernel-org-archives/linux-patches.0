@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032761;
-	b=EN9Cpn2CWjFjJuV/50mkriPSDO8hRN3AswCTcFpoB9UsgHj2Tbapz+rTRBOVEC2RDFOH
-	 c+a7Crd+ny9uyhyg01Yljhg++GS3+l9iGLHCr9g6F12yw0YXoxP4WragaTatVFxsqbgEG
-	 Ku1mZu2xPz2aPX149hsC9VCyzwY7Xsla8LqJct4+uM0Q3jqFIS4sklOM7+jPhaGCofC4q
-	 R5PpsSNCXNlnFg9jpnJCshutGC2EVp7LNJcZ6H6tAaogH3MY5VrV1m1Vxft/MC0N+A0Q2
-	 5wszPbFLyq/8pg8kHM4Xh00fF+olDYSzQvvRu4cjmiGKY+2y0G6vSKYyMMkdAiabkYw==
+	t=1795032764;
+	b=ZJY4xmNaB3LYPcZ+mANCwzOj6xP4jCQ+jtY/z2ne/efJrpG9yGRProYiTubSqclb8b5v
+	 AvoJdfhnPOeUadytZBbXJ6XqJW6hd4rizpWgCIK4rItxuL8AYH+uCPDXg04e0jx2oZGnW
+	 V/V6pCP3tOengCamfqw1r+Q8BN/X/9iFQewi8st6LGitm8XqO5Qwyu30CydJOvVp6EJl5
+	 40ZTVGLwOiU5bNWKju7uckLETjnUgSfRtT3vyA4/ke/PWQoaw8uMWLwN0xYBpCvFr3Q7h
+	 qLhDQuPhkpX5w1Myx2AtRxgV+mZudOzZGG+tD1bU0GXKh3tzpTDfYmmTRJ96m742aXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032761;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032764;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DFhT7LM/NfrmX7D8fihkOXB21DXc8P2M1SRiAOxsGwM=;
-	b=bi1t2YrymURCCp878SgZL85htV/wLTEOgLU993mgDzd1mz4YnPsabI9ieFJL5p7CwOZk
-	 2SXDLN1bNtVL0ABBJOiTQZPhNkUd4F1MsTe1KsXjfHJBlZThMa3xOeGlN6SOeaVZee94b
-	 eFDawJRA01Sc84+Z5cjqzTakMUwi/JzgONkQ+3MGIIAL4wisf3mJZ5dNn5rfLaDuNdzCD
-	 uQcfoPOlPq4IPurh9VpWMNmWe834Vy/4jGncXNhjFRN808aOu1Kfs+Wz5CXorF5SHGNRA
-	 34lQL7rLV/aWzq8zSzAIGeSNuuqzyaQ+9rcInV7nzEpdxgEMkI2UY+941cw5YfDjpUA==
+	bh=BgnkUerDgLwflY4mKy0LHzVy691aUS5UrkTeFNYtzg8=;
+	b=wMJXuvT5j0Y4pghOw7e/G6Ub70cg6rCW0id7iJA7sMGa6l/WYXbxL0HxfMc5P+EZqP6A
+	 u6F1rM/TE+puNhyms4K+CGFBbxkOznSG7Z8N3LQinRmP2Ltc+gIP5J0ksg7Fz61ot5Shj
+	 QaGaCcE9b2P+Qju5fm+XGqeTnNAQIeVlaWhBGmLNUKFELQmiYazb9x5HxSldd/3qWm2h8
+	 E1VyAavNQPF+I0lkkmxRD9hrHm/x1D9EDC9es6N5xj1WO4E2wtXqDnAL1oUT1TDxYoMsS
+	 vZJcn00ZyhlFYMudwaM/b4gzRlWzYFq3+gTGIvZoxVVMpHINXQUtXZ/NM5ZYsRlPzoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vcYVUlfm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zOlTC4bh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DED43606A31C;
-	Wed, 18 Nov 2026 20:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748D8606A320;
+	Wed, 18 Nov 2026 20:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vcYVUlfm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3FBC1F000C4;
-	Wed, 18 Nov 2026 20:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zOlTC4bh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C74A81F000C4;
+	Wed, 18 Nov 2026 20:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032761;
-	bh=DFhT7LM/NfrmX7D8fihkOXB21DXc8P2M1SRiAOxsGwM=;
+	s=korg; t=1795032764;
+	bh=BgnkUerDgLwflY4mKy0LHzVy691aUS5UrkTeFNYtzg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vcYVUlfmvz9ZTWnVZ8NaobYwoEMP8qDDx/hDDpqXW1d29HGUi6J9LeFWE5NSQNL9J
-	 tduzfuMk89jlYFrjR4LqTATWf5xoUnYYFRQZh9txy415fQyxEUNXqRlGVo6udVJBEr
-	 T3zt7bN/kRdiSBVGuELueuqmLiRgojuA0UOqqV8c=
+	b=zOlTC4bhfeSVxAKpVZeuq/KEUMAuH0ez69isTEcNWhmiBHKCzfDvM+T6T8Bdtiypj
+	 Qd4R04PM1YHr3dX/bwD3BmnR2LQ9KwbFqG43XPwcA2Q574KNrotRn5xXRQOhPFPcNO
+	 4qy4dE4qW4MHDNKvWWQFsKLROIhPwkl91S/T+i54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Tejun Heo <tj@kernel.org>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1527/1756] cpuidle: haltpoll: Only define guest_halt_poll_ns tracepoint when used
-Date: Wed, 18 Nov 2026 16:00:54 +0100
-Message-ID: <20261118150109.735690419@linuxfoundation.org>
+Subject: [PATCH 6.12 1528/1756] regulator: irq_helper: replace use of system_wq with system_dfl_wq
+Date: Wed, 18 Nov 2026 16:00:55 +0100
+Message-ID: <20261118150109.797932745@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,48 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-[ Upstream commit 107b87efc8fcd6a597f1b534f116385620770e56 ]
+[ Upstream commit b6f4bd64f453183954184ffbc2b89d73ed8fb135 ]
 
-Tracepoints that are defined take up around 5K each, even if they are not
-used. When a tracepoint is used only in code when a specific config is
-enabled, their definition must also be only defined when the same config
-is enabled otherwise it wastes memory.
+Currently if a user enqueues a work item using schedule_delayed_work() the
+used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
+WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
+schedule_work() that is using system_wq and queue_work(), that makes use
+again of WORK_CPU_UNBOUND.
 
-The tracepoint guest_halt_poll_ns is only used when CONFIG_CPU_IDLE_GOV_HALTPOLL
-is enabled. Guard the definition of that tracepoint with the same config.
+This lack of consistency cannot be addressed without refactoring the API.
 
-Link: https://patch.msgid.link/20261022153359.2433474b@gandalf.local.home
-Fixes: 0da11bf0cab90 ("cpuidle: haltpoll: Add trace points for guest_halt_poll_ns grow/shrink")
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+This continues the effort to refactor worqueue APIs, which has begun
+with the change introducing new workqueues and a new alloc_workqueue flag:
+
+commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
+commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
+
+This specific workload do not benefit from a per-cpu workqueue, so use
+the default unbound workqueue (system_dfl_wq) instead.
+
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Link: https://patch.msgid.link/20251106142914.227875-1-marco.crivellari@suse.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 8a6d73e316f9 ("regulator: irq: freeze deferred hardware access during suspend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/power.h | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/regulator/irq_helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/trace/events/power.h b/include/trace/events/power.h
-index d2349b6b531ac..f14a123ce2696 100644
---- a/include/trace/events/power.h
-+++ b/include/trace/events/power.h
-@@ -522,6 +522,7 @@ DEFINE_EVENT(dev_pm_qos_request, dev_pm_qos_remove_request,
- 	TP_ARGS(name, type, new_value)
- );
+diff --git a/drivers/regulator/irq_helpers.c b/drivers/regulator/irq_helpers.c
+index 0aa188b2bbb26..2a31704da6c5d 100644
+--- a/drivers/regulator/irq_helpers.c
++++ b/drivers/regulator/irq_helpers.c
+@@ -146,7 +146,7 @@ static void regulator_notifier_isr_work(struct work_struct *work)
  
-+#ifdef CONFIG_CPU_IDLE_GOV_HALTPOLL
- TRACE_EVENT(guest_halt_poll_ns,
- 
- 	TP_PROTO(bool grow, unsigned int new, unsigned int old),
-@@ -550,6 +551,8 @@ TRACE_EVENT(guest_halt_poll_ns,
- 	trace_guest_halt_poll_ns(true, new, old)
- #define trace_guest_halt_poll_ns_shrink(new, old) \
- 	trace_guest_halt_poll_ns(false, new, old)
-+#endif /* CONFIG_CPU_IDLE_GOV_HALTPOLL */
-+
- #endif /* _TRACE_POWER_H */
- 
- /* This part must be outside protection */
+ reschedule:
+ 	if (!d->high_prio)
+-		mod_delayed_work(system_wq, &h->isr_work,
++		mod_delayed_work(system_dfl_wq, &h->isr_work,
+ 				 msecs_to_jiffies(tmo));
+ 	else
+ 		mod_delayed_work(system_highpri_wq, &h->isr_work,
 -- 
 2.53.0
 
