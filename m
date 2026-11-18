@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037437;
-	b=KEPgRWzqC1e7khMVhcaLBkVwfzRov11OW/draC5BXa4Z0LNOKzDHPlTwXhdW+S3i1+dl
-	 5xIEkLnEzqkJ6o1Pn6+mZyaTXaLdl6Nw4jYjnGbmvVHBZhcT73PxnHtc381W+0Njug44b
-	 Y1iBlRcJQGNh5tGU5qf9I28R68QOQAo3zJYMfNPUazrCvQ2qfjTRCtxMPWWn1+Arq0UGt
-	 6E179Hs0Wdb9QDzbA1mhm+5ahCzaA+0vOFRNFpA6bWa3sKmol2ZQf4afX1rtdjCgtDR71
-	 /J5HJer/pC+WUnCG8SxzNr3+cB01hOOfqmd0vrBr+L/VPpE6ntQ63kFPaDtIFIBkpKw==
+	t=1795037440;
+	b=V07QTpmlaN3Mkgs4reQ8x/Z3GcFHCkVf9W+WHzysho504/6XK7L9rYoK3Ql9t92Oepqe
+	 o/qt1tyfoljbrarMG9/kVTnUa6j6cSA2T+I7wDU441O2025nXUDE1Wzcfy8kwqafeKjmB
+	 04mKbyvhV/Li/AKUknoSZbfb2PaIA4PtoaCcYWgx3hvIrCFxxUJFTaqVh/iLxnWMBDajb
+	 3KJbLuxrjgROyyNal0JwRkskX+tTivQLQx12G1XC3vq+jyLNUGgoCcGhN+5EExIjnq/S7
+	 gwx+GprCUMa5fx5h6cTwbHKAXfTJnu1IcGnj/GvjWes/a3dmjn6NrM8lrgNnQ4SJLGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037437;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037440;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=VVIpXGd8AYtw7ZyjGdDkWJdczvNhIbXtHYujakAt8Js=;
-	b=E8iYQmw7rN6QN1Z493e4p95uJt/w8FTafE5kA1McVKEfoa1nghRZGkEKM7sGC75zxXPP
-	 HIO8zgig+R/fBkUMVRTpfuzKbwziBSWpdpY7WBFnWW3pWLo6WjaV90SIFgn0VvtqoFVFC
-	 jztUNi0jFcaSqIFaEF1M3bUkSZ7aIkgikDZXZMJJK4KLaGULK7/9+OmNi1oTfxQRghAco
-	 k2rZUHXu0fsac0tccQD/MIsYlwuF7JL+8/PDk66zjfMAo9DAUYl9hiJ4Ehb6dN1mTxpxQ
-	 qgdV0uBHY2RZsxIUZ5nQ4lyjDyg4F92CncxkwPUnhxfMx/LXapnKAXJASckjpu5qk/w==
+	bh=7SKjo9uh2n+/EAxQ/c7Nx1BZEYf1BYNm/yHQ3+JPQdY=;
+	b=EO+7/Ee4K3pazdp1oC6wbYaonQEzYojBO2iL4wGL4NXxazSI8HURhIFPD1G17yLvzUx4
+	 4KDPtciBoGL6nUisWRmEoLlDM8ZyhrstP/pOJhsx+inA7gYgwYsud5L+7DIU6s2/Isi8G
+	 qwWvUgcYSPzlVieHK55gQxy7o8Z2rzN4qrREltZF0knxRylyChnyflvSYAwNhN7sP15Pe
+	 E0NMtiSJLfd4DHQjoGe505UdkrKGaB6dTNGMJNGrh03Cf4O8GCfHLQ1zQNdfD12WxTNuy
+	 irR9PvAvFSB3g+w55ckGaMFgLgy6zBskyRVFtRvFkY7APIfp9KrKysmClS3/YeKo76A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="oP4sh/A0";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zakJQty/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB85C606A32C;
-	Wed, 18 Nov 2026 21:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799FA606A320;
+	Wed, 18 Nov 2026 21:30:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oP4sh/A0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3138D1F000C4;
-	Wed, 18 Nov 2026 21:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zakJQty/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EB91F000C4;
+	Wed, 18 Nov 2026 21:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037436;
-	bh=VVIpXGd8AYtw7ZyjGdDkWJdczvNhIbXtHYujakAt8Js=;
+	s=korg; t=1795037440;
+	bh=7SKjo9uh2n+/EAxQ/c7Nx1BZEYf1BYNm/yHQ3+JPQdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oP4sh/A0uiO/oRh4GHz8+Rjrm1qEWAqXtQc8xLA4I0v06L7DKlWY6bh0P8JeeBXHG
-	 hS/JhWes91QmTqP2xBQMfoJQ9RhZ8vpBsqhVmtbOpcu1213SdjL7L/IPwh8nWXaXyz
-	 SX5UBzZr3GaqdRs10cmM+66AVN1VGlKsYZnyJbBo=
+	b=zakJQty/esQC7SamwDxaV456oJtWmod3z5aEAWWPL8FYN4vH4jG/+Dy1rvONrOw4G
+	 CpQVNf+gD0/84jl2vvDHWLTc1P/yt0qlqUv9z8XWCdR3KvRUEZHuike3yFIXNinjgl
+	 FFebqdOMAG+SW9gbu7wGpbzPh8byoYZpEgbqYfLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Naman Gulati <namangulati@google.com>,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Noam D. Eliyahu" <noam.d.eliyahu@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1399/3318] ipmr: drop packets with unknown ingress VIF
-Date: Wed, 18 Nov 2026 15:33:41 +0100
-Message-ID: <20261118150402.576455921@linuxfoundation.org>
+Subject: [PATCH 6.6 1400/3318] tg3: Invert restart quirk logic to restrict SNP power-down bypass
+Date: Wed, 18 Nov 2026 15:33:42 +0100
+Message-ID: <20261118150402.605371169@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,71 +69,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: Noam D. Eliyahu <noam.d.eliyahu@gmail.com>
 
-[ Upstream commit 09280680f2ea060514be2a39ea84209fb6d721d4 ]
+[ Upstream commit d7314b51341c037973ce022f12c6009fd07b021e ]
 
-A packet can race with VIF publication and make ipmr_find_vif() return
--1 even though the VIF device pointer is already visible. The parent VIF
-device check can then pass with an invalid ingress VIF. For (*,G)
-entries, this can also let the packet be forwarded back out its ingress
-VIF.
+Commit 9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF")
+bypassed `tg3_power_down()` on system restarts to prevent reboot hangs and
+NMIs on servers where NICs were initialized via SNP (such as Dell PowerEdge
+R650 and R750).
 
-Drop packets whose ingress VIF lookup fails in both IPv4 and IPv6
-forwarding, before checking the MFC parent device. This prevents
-forwarding with an unknown ingress VIF and avoids the (*,G) hairpin.
+However, skipping the power-down flow globally causes the ACPI _PTS method
+to trigger fatal PCIe AER events and hangs on other models. Commit
+e0efe83ed325 ("tg3: Disable tg3 PCIe AER on system reboot") attempted to
+mitigate this by adding an AER-disable DMI quirk table. Maintaining a
+growing list of models for a secondary symptom misses the root cause,
+leaving systems like the PowerEdge T440 (sharing the BCM5720 NIC) exposed.
 
-Without the early check, the negative index can reach the IPv4 offload
-lookup only for an skb marked for L3 forwarding offload, currently done
-by mlxsw. The race is rare; the supplied PoC reports only the UBSAN
-negative-index diagnostic.
+Fix this by inverting the quirk logic:
+1. Restrict SNP power-down avoidance strictly to
+   `tg3_restart_snp_quirk_table` for the specific systems requiring it
+   (Dell PowerEdge R650 and R750).
+2. Restore standard power-down behavior for all other systems, eliminating
+   the separate AER-disable quirk table.
 
-Fixes: 4eadb88244d1 ("ipmr: do not acquire mrt_lock while calling ip_mr_forward()")
-Fixes: 9b1c21d898fd ("ip6mr: do not acquire mrt_lock while calling ip6_mr_forward()")
+For systems affected by the original SNP restart issue, their shutdown flow
+remains completely untouched.
+
+Link: https://lore.kernel.org/netdev/20251221175050.14089-1-noam.d.eliyahu@gmail.com/T/#u
+Fixes: 9fc3bc764334 ("tg3: power down device only on SYSTEM_POWER_OFF")
+Fixes: e0efe83ed325 ("tg3: Disable tg3 PCIe AER on system reboot")
 Cc: stable@vger.kernel.org
-Reported-by: Vega <vega@nebusec.ai>
-Link: https://lore.kernel.org/netdev/b966eb102e98f299e45be59ada033a8766e4c6df.1791899747.git.zhilinz@nebusec.ai/
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Suggested-by: Naman Gulati <namangulati@google.com>
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Reviewed-by: Naman Gulati <namangulati@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/5271fcb94a4d9e697ed64a348e92ea9e74faab1c.1792608753.git.zhilinz@nebusec.ai
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Noam D. Eliyahu <noam.d.eliyahu@gmail.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://patch.msgid.link/20261026220955.473247-1-noam.d.eliyahu@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c  | 3 ++-
- net/ipv6/ip6mr.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 42 ++++++++---------------------
+ 1 file changed, 11 insertions(+), 31 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 587fa6b1f9b92..edd2413edff99 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -1990,7 +1990,8 @@ static void ip_mr_forward(struct net *net, struct mr_table *mrt,
- 	}
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index c4c361c713861..6983e0680e4b9 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -18122,41 +18122,17 @@ static int tg3_resume(struct device *device)
  
- 	/* Wrong interface: drop packet and (maybe) send PIM assert. */
--	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
-+	if (true_vifi < 0 ||
-+	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
- 		if (rt_is_output_route(skb_rtable(skb))) {
- 			/* It is our own packet, looped back.
- 			 * Very complicated situation...
-diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
-index 1724d50c50fd8..38446928f1c45 100644
---- a/net/ipv6/ip6mr.c
-+++ b/net/ipv6/ip6mr.c
-@@ -2149,7 +2149,8 @@ static void ip6_mr_forward(struct net *net, struct mr_table *mrt,
- 	/*
- 	 * Wrong interface: drop packet and (maybe) send PIM assert.
- 	 */
--	if (rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
-+	if (true_vifi < 0 ||
-+	    rcu_access_pointer(mrt->vif_table[vif].dev) != dev) {
- 		atomic_long_inc(&c->_c.mfc_un.res.wrong_if);
+ static SIMPLE_DEV_PM_OPS(tg3_pm_ops, tg3_suspend, tg3_resume);
  
- 		if (true_vifi >= 0 && mrt->mroute_do_assert &&
+-/* Systems where ACPI _PTS (Prepare To Sleep) S5 will result in a fatal
+- * PCIe AER event on the tg3 device if the tg3 device is not, or cannot
+- * be, powered down.
++/* Systems where powering down a tg3 device on restarts triggers
++ * NMIs and fatal hangs during reboot if the network adapters were
++ * initialized under SNP.
+  */
+-static const struct dmi_system_id tg3_restart_aer_quirk_table[] = {
+-	{
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R440"),
+-		},
+-	},
+-	{
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R540"),
+-		},
+-	},
+-	{
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R640"),
+-		},
+-	},
++static const struct dmi_system_id tg3_restart_snp_quirk_table[] = {
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R650"),
+ 		},
+ 	},
+-	{
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R740"),
+-		},
+-	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
+@@ -18180,14 +18156,18 @@ static void tg3_shutdown(struct pci_dev *pdev)
+ 	if (netif_running(dev))
+ 		dev_close(dev);
+ 
+-	if (system_state == SYSTEM_POWER_OFF)
++	if (!dmi_first_match(tg3_restart_snp_quirk_table) ||
++	    system_state == SYSTEM_POWER_OFF) {
+ 		tg3_power_down(tp);
+-	else if (system_state == SYSTEM_RESTART &&
+-		 dmi_first_match(tg3_restart_aer_quirk_table) &&
++	} else if (system_state == SYSTEM_RESTART &&
+ 		 pdev->current_state != PCI_D3cold &&
+ 		 pdev->current_state != PCI_UNKNOWN) {
+ 		/* Disable PCIe AER on the tg3 to avoid a fatal
+ 		 * error during this system restart.
++		 * Needed since on restarts for systems in
++		 * tg3_restart_snp_quirk_table skipping on powering down the
++		 * tg3 device causes a fatal AER error during ACPI _PTS
++		 * (Prepare To Sleep).
+ 		 */
+ 		pcie_capability_clear_word(pdev, PCI_EXP_DEVCTL,
+ 					   PCI_EXP_DEVCTL_CERE |
 -- 
 2.53.0
 
