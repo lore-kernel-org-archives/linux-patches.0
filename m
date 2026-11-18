@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046345;
-	b=hMjXFeHEcmQ6ahi9DbdcGFFPwCEt5/R+zdRtY4SVia7mCRbtimzpLZaZmlBkvVQ1WPCF
-	 z8nf2558JK0QbfJRhDs9YzZM+bCMSUVpVkpTeOttvWMMt5qgLZaWp0Lc/hUuEvTMWX5sW
-	 e2lUQ4eegrahD6wLf7YFh0LAn2X8XuOqZfJ7JZXwULdLG24S8AIp8iQDK5Hr18DH6pwqO
-	 wK1/FDZrX3W1W8Erz6SiUuOnJNijOKNXBTB1c2s3QMMgvGQ2fMYBC4fAWXIsqnWnYlDul
-	 bbIDLR4WzPK4LP+9eY9wq7X2utEYPgzQQy+fCHBRKZ9eb05z4GtUQQ6K85/iFxhRW8w==
+	t=1795046348;
+	b=cIkRYhv1Bllry1SCeOl7qLOaqk3Ggv0JPecjA+dcVyNiHwJRV0FbVcUrh72R+MtwZDcD
+	 u+no0l8YuoY4QQ6en1QKATxmrs2dg6EZp6n2O0bcvxYnntH7kQZKb7UHeyuvTeWzSxDPG
+	 8oCiDM3JXaEi0aham6Ab0a4rodzrcRjsFsRgkJhWADzSLq8qma4T5BwESMVjKRL0UwVTH
+	 gIvEpVkANeLWE9JZVGwtXMDlpYGG+9V/sonyUkUb84F7u35JZHoU8cRxaVnbL/yME4LXj
+	 F5B0X+wU+H8z0fjWFGokTOwtx0PL3tywSWnOxP3UcWmSsd+hBpWRV/9dDOvj4d8qDtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046345;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046348;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=44hZ3EXdw+a8rfgnOc6s/H1oHxO53sr//hHt50beLlw=;
-	b=ydYEkQ4MBy4ZP+wvf9xgtyxLTKuNCwYCYp9/OAeRuTLbXW2jFwNLd6VbywA28O0DQ+E0
-	 IVBmLrQkTUyN2jJ4wXm8L8zwJHs8bZYhagk49QTpwpv8tsWdciI++k/Ui9gaMtuFLs5td
-	 d2xYFd9KUExDQj5TNDrAi/htmhii07+ILNXP0UxxbzpOzPRbipKiqIiUIogIFL7zsb3g0
-	 yvXHGzR9w4ekf2MaMdjptIdwTK/daxAmaZv8owTH+YWZXHChWX4s6XOhUBkhhr7qtz3MV
-	 vOQbTZs7NHONDD/7OTQnWX+eKAeyZ9g3rG8pisIhmFGBm2K3TUrl3q+L7diN7Uk79Bw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=6md0sRgZ1bNg5Hz6aXo5eGwCMl4W1KilDh0Kq5cMtpM=;
+	b=H5yVfPOBqQ8WktHlQKzFODc635h/zG45bGVEWF4hg6Xy5r0CNtyL9nJNrMlIf+U8QASn
+	 zw1+rIwxXA8F3RC1QdfYamXOVNIw9q7pdQEtDPlNkxkGXOpzkD3cJeM2ynMPOYXpprho5
+	 rcbBZD4zti1uYUE9K/hmDDIrAUD8OKVa14CnKnc/ES9Z/gyWYps3UV3b0z6MnuyQCn8G/
+	 ppMxcYbnOKreZnJJcCF77By6Bb+hwCANcpJ8Yn2fj512M00ICLFFzrSD7LRAPpu4pFMKh
+	 bJKWxX+ywqOZlqDKKgcH086HNj3n6RvnM22cbhcsRLccZ41sgoLMigNpNNl8RQ78nEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QXDGJR4K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCVr1E71;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AAF606A31C;
-	Wed, 18 Nov 2026 23:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CE5606A31C;
+	Wed, 18 Nov 2026 23:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QXDGJR4K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B891F000C4;
-	Wed, 18 Nov 2026 23:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CCVr1E71
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E431F000C4;
+	Wed, 18 Nov 2026 23:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046345;
-	bh=44hZ3EXdw+a8rfgnOc6s/H1oHxO53sr//hHt50beLlw=;
+	s=korg; t=1795046348;
+	bh=6md0sRgZ1bNg5Hz6aXo5eGwCMl4W1KilDh0Kq5cMtpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QXDGJR4KUwBXZfbUYofV6vbNz0qLCzAdz0gjgDapv6BAQsIDJfMwqKqsxyOFjQ+eC
-	 rzYHi4vClHGYRzlddIraRiNnRIaGQ76MBYcJPmy5uJ1KWYyaC9eXFBfWsXLiRdZxiJ
-	 TB+S7wq60foxmnofQwixMvkiycV5yL+telyNEPAI=
+	b=CCVr1E7136/Npty56VQE2TTNyhODWzgToug/PnTc5Ng+zfv+pJAdXP3p477wlT0Y0
+	 wCOPpPQFuO2Tem2u/Ys7psCKu5/J3qy0dr0BWjWGs7YPt12d+OBTbHHGx59W7lRjZL
+	 bPAr3GQF4Qr27kNd2X9lBJdra6UVb2jadq1Cl+ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhou Qiuyue <n0ps1edzz@gmail.com>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>,
+	Lucas Tanure <lucas.tanure@neat.no>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1207/2857] ipv6: raw: fix use-after-free in rawv6_send_hdrinc()
-Date: Wed, 18 Nov 2026 15:37:21 +0100
-Message-ID: <20261118150245.056551356@linuxfoundation.org>
+Subject: [PATCH 6.1 1208/2857] drm/vc4: hdmi: always cancel the scrambling work synchronously
+Date: Wed, 18 Nov 2026 15:37:22 +0100
+Message-ID: <20261118150245.092498508@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,56 +62,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhou Qiuyue <n0ps1edzz@gmail.com>
+From: Lucas Tanure <lucas.tanure@neat.no>
 
-[ Upstream commit 66dfb2cacda7faae614d688943d85e75abf7f586 ]
+[ Upstream commit 2e47848f0d076dec66df3bc403214073cd2214ac ]
 
-rawv6_send_hdrinc() caches the route before handing the skb to
-l3mdev_ip6_out(). The VRF output path may replace skb->dst and release
-the original route, leaving the cached pointer stale.
+The scrambling work re-arms itself every second while a scrambled mode
+is active. When the output is disabled, the work may be executing at
+that moment rather than pending, and delayed_work_pending() is then
+false, so the cancel is skipped. The running instance finishes after
+the disable, sees the sink report scrambling off, writes the SCDC
+scrambling and clock ratio bits back on, and queues itself again. The
+sink is left configured for a scrambled 1/40 link that no longer exists
+and the work keeps running until the next enable.
 
-The function later dereferences that pointer for statistics accounting
-and as the output device passed to NF_HOOK(). Its RCU read-side critical
-section starts after l3mdev_ip6_out(), so it cannot prevent the old route
-from being reclaimed in between.
+cancel_delayed_work_sync() handles both states: it waits for a running
+instance and blocks it from queueing itself again.
 
-Reload the route from the current skb destination after
-l3mdev_ip6_out() returns.
-
-KASAN reports a slab-use-after-free in rawv6_sendmsg(), with the route
-allocated by ip6_dst_alloc(), freed by dst_destroy() from rcu_core(), and
-the related RCU callback queued from vrf_l3_out().
-
-Fixes: 4c1feac58e06 ("net: vrf: Flip IPv6 output path from FIB lookup hook to out hook")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhou Qiuyue <n0ps1edzz@gmail.com>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Signed-off-by: Dave Miller <davem@davem-thinkpadp1gen8.ibmlond.csb>
+Fixes: 257d36d493e9 ("drm/vc4: hdmi: Add a workqueue to set scrambling")
+Assisted-by: LLM
+Signed-off-by: Lucas Tanure <lucas.tanure@neat.no>
+Reviewed-by: Maíra Canal <mcanal@igalia.com>
+Link: https://patch.msgid.link/20261026164028.78792-3-lucas.tanure@neat.no
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/raw.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/vc4/vc4_hdmi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index 7b17f1b2a6128..0430115bb26a4 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -645,6 +645,9 @@ static int rawv6_send_hdrinc(struct sock *sk, struct msghdr *msg, int length,
- 	if (unlikely(!skb))
- 		return 0;
+diff --git a/drivers/gpu/drm/vc4/vc4_hdmi.c b/drivers/gpu/drm/vc4/vc4_hdmi.c
+index 7ff1f378dd2fd..f2a8a9d17aa70 100644
+--- a/drivers/gpu/drm/vc4/vc4_hdmi.c
++++ b/drivers/gpu/drm/vc4/vc4_hdmi.c
+@@ -938,8 +938,7 @@ static void vc4_hdmi_disable_scrambling(struct drm_encoder *encoder)
  
-+	/* l3mdev_ip6_out() may have replaced the skb dst. */
-+	rt = dst_rt6_info(skb_dst(skb));
-+
- 	/* Acquire rcu_read_lock() in case we need to use rt->rt6i_idev
- 	 * in the error path. Since skb has been freed, the dst could
- 	 * have been queued for deletion.
+ 	vc4_hdmi->scdc_enabled = false;
+ 
+-	if (delayed_work_pending(&vc4_hdmi->scrambling_work))
+-		cancel_delayed_work_sync(&vc4_hdmi->scrambling_work);
++	cancel_delayed_work_sync(&vc4_hdmi->scrambling_work);
+ 
+ 	if (!drm_dev_enter(drm, &idx))
+ 		return;
 -- 
 2.53.0
 
