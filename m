@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016306;
-	b=loLP/PrDQ8eSlO/nDbZbMZcN64Avzn0dkHjbPk03tFmUfYA3XoTLbSPe8YNDhfh3OVnx
-	 Gagk5zDfWhfJBWSinX7uxzUXDpP2XXYsab0uWRvR5uEv9tgTsvqmLAKDSWr0892lI5d8f
-	 PHkJfVeZYD5lI4AT2zpLVZOUvcmiEzpJ+5GBGN9DzhZMDS8usJXlG74hVyO1Bb6+x+ysV
-	 g/tDvDa7Smb6ISrrtaH1MIb4BmuuOaWfmhfPvFl9xHLW0H4BPz90V/UGKbFmJmO0noOQk
-	 0MtOiR1wgP54LzyW4Lhu5zUXADcILD27UxiBRCulQGQAPDWzeFdvFgE5Ut7OqhOazWQ==
+	t=1795016309;
+	b=zraPBTxlSkAcxxOpMJ/7GEqR7nWFKF4KX9QtwHocyQwbC/efaroFMMRC2sFnMtb9hKky
+	 wtnG2/E98otxQiz67rGRmh0cT+qD2vXb7h8Wc6XOcq90faVEj0/t95cbdnpzGJfESTclp
+	 Ioytg6Rz71Lh93EJpCa798z0jtzKoCKzv892t1vvpTADZrAJ863ekZXxxVCZIAQaw3x1/
+	 5b4XjCAEb+TPy2Do37h9CZ3LsVS7uvay/tnWJGmKtxe+t1zfH6UX7CFij2COL4v7JzSwN
+	 PCbNv8s+BB4Oqvcu51YcdrzzD7nY24BK8npJ8Mk4+XN0Ou2V8DyMjThibSfO1eSqM4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016306;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016309;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=g7dplGtWn3l74hH4eMq/RvtM0tkIf5Sm0Int2wCZJHc=;
-	b=k3M8JgV0oCf9/1Wjdy2qAHxmgLPDj2vi3C3qOwRldGXMdw1fkjJiLpMkZxF79KVaHsjT
-	 OFZ0tYEdxygmakFmjDiJUw+SG/tz4/TLiQ/VkpGykjOXiJt3/qX640ihMxDzD7SSvg7iu
-	 ctmqtySJ5TPGtj+/iZ7Rh205eP8Te9VDvJv+DC2oK1Qtr4rcX06krz8sYP8Yfydzm1VnC
-	 z2B/BNQEPwUEn+XTWmO3Bs/GQdOMaF9YwPWTI6F4x9o5BguPrx11gm6dki3SiDyHmIi6s
-	 1p6OWrH7tsJt1IUGKhQ1k1u5U6GSXV6DTiZoMnXx/jWckzgII9jBZinjz3jNjhhmLnw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=HN9Ms+Hdt7GFxVdUUDsBYlpia4blQ66Ny2UpH3ygYPU=;
+	b=NpfYqM29fbzDwaUcXUa5u4YMU7gQX0G52UB8+gfX3WwH2c+ATzJBNEfZuYM335cbkP05
+	 s3nNd6d/3gpdNwUro2q1ivncOgvneKL3eWSnAhze8PlHRX58XQXhieAyZE5CBZizChwKV
+	 8XLLJR4O9hlbxjd9t2IfKQ4prQUMgZ/beBSu52fiHxOPleGfaFchDQuRrOQx4y76GmNap
+	 xBaOXSWm67c7iCxz71e7ga0qtyhjb7ffxe4CY81pXinfjggYOofmdSZ2m2uHNt2cSBE0S
+	 Ws0AUWZmy2M9MJOI5Rzenlw83fvS2FXRELoKlvJdoXwSaRZjiJdxgzwXq4dvRgBW/7w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yyHnukEt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDLYt3kX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 807BB60A2637;
-	Wed, 18 Nov 2026 15:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5CC60A2616;
+	Wed, 18 Nov 2026 15:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yyHnukEt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E9B1F000C4;
-	Wed, 18 Nov 2026 15:38:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PDLYt3kX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C6181F000C4;
+	Wed, 18 Nov 2026 15:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016306;
-	bh=g7dplGtWn3l74hH4eMq/RvtM0tkIf5Sm0Int2wCZJHc=;
+	s=korg; t=1795016309;
+	bh=HN9Ms+Hdt7GFxVdUUDsBYlpia4blQ66Ny2UpH3ygYPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yyHnukEti0JGSs5trHn0JlLM0RaEeMT/jGZnJEJj/v0NBdkQ7NYT3fqjb/jkPLJX0
-	 6IorzhJ9F1Y+10J4Gl7R1B1RHPP50Xf2q9V0yusoTSEjKrR2sRYR1gPXush02PfwSf
-	 2TAMG6+W3CDDOp3sbO8YataccuCuZz7Cm94pCoQ8=
+	b=PDLYt3kXj3eYw/Yq2AsICJqL/GFdckX/RX3sQ9BjrMmn41jlOgNv0QVFwDgkdiS2s
+	 u0UXkpEJWRk/fwNV5Li0ZNnOrR2oIJ8PsUI1+BUzlomowEWaf9P6rzy2qiHWVqEPbw
+	 Kxt+oyUpVgSrBP1Wl8mG34dB32qs73jgXScLsmLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0483/2651] loadpin: Fix stale KEXEC_VERIFY_SIG reference in documentation
-Date: Wed, 18 Nov 2026 15:28:43 +0100
-Message-ID: <20261118150305.168416188@linuxfoundation.org>
+Subject: [PATCH 7.3 0484/2651] platform/x86/intel/vsec: reset state before re-enumerating
+Date: Wed, 18 Nov 2026 15:28:44 +0100
+Message-ID: <20261118150305.204688292@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,52 +62,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit eb0b0d222a832b6ec851e56d4922a775ac762955 ]
+[ Upstream commit ee26050614d02397eb743854d718689dcaf1889b ]
 
-Commit 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG
-and KEXEC_SIG_FORCE") removed CONFIG_KEXEC_VERIFY_SIG but left the
-LoadPin documentation pointing at it. Refer to CONFIG_KEXEC_SIG instead.
+The change referenced by the Fixes tag split the VSEC enumeration logic
+out of intel_vsec_pci_probe() and made PCIe error recovery call
+intel_vsec_pci_init() directly. This avoids another pcim_enable_device()
+devm action and another devm allocation during slot reset, but it also
+means that error recovery reuses the priv structure allocated by probe.
 
-While at it, clean up the grammar of the sentence.
+On the initial probe, priv is zeroed by devm_kzalloc(), so state[],
+suppliers[] and found_caps start from their initial values. During slot
+reset, the existing aux devices are removed before re-enumerating, but
+the reused priv still records the old devices as registered and the old
+capabilities as found.
 
-Fixes: 99d5cadfde2b ("kexec_file: split KEXEC_VERIFY_SIG into KEXEC_SIG and KEXEC_SIG_FORCE")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
-Message-ID: <20260905013655.58665-1-kmehltretter@gmail.com>
+The next intel_vsec_pci_init() call can therefore short-circuit in
+intel_vsec_register_device() with -EEXIST, or stop early because
+found_caps already matches info->caps. The aux devices removed during
+slot reset are then not recreated, leaving VSEC functionality missing
+after PCIe error recovery.
+
+Reset the VSEC registration state after removing the old aux devices and
+before re-enumerating them.
+
+Fixes: 348ccc754d89 ("platform/x86/intel/vsec: Fix enable_cnt imbalance on PCIe error recovery")
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
+Link: https://patch.msgid.link/20260708032647.712412-1-lgs201920130244@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/LSM/LoadPin.rst | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/platform/x86/intel/vsec.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/Documentation/admin-guide/LSM/LoadPin.rst b/Documentation/admin-guide/LSM/LoadPin.rst
-index dd3ca68b5df18..a90fd9dac9606 100644
---- a/Documentation/admin-guide/LSM/LoadPin.rst
-+++ b/Documentation/admin-guide/LSM/LoadPin.rst
-@@ -23,9 +23,9 @@ sysctl allows for easy testing on systems with a mutable filesystem.)
- It's also possible to exclude specific file types from LoadPin using kernel
- command line option "``loadpin.exclude``". By default, all files are
- included, but they can be excluded using kernel command line option such
--as "``loadpin.exclude=kernel-module,kexec-image``". This allows to use
-+as "``loadpin.exclude=kernel-module,kexec-image``". This allows using
- different mechanisms such as ``CONFIG_MODULE_SIG`` and
--``CONFIG_KEXEC_VERIFY_SIG`` to verify kernel module and kernel image while
--still use LoadPin to protect the integrity of other files kernel loads. The
--full list of valid file types can be found in ``kernel_read_file_str``
--defined in ``include/linux/kernel_read_file.h``.
-+``CONFIG_KEXEC_SIG`` to verify kernel modules and kernel images while
-+still using LoadPin to protect the integrity of other files the kernel
-+loads. The full list of valid file types can be found in
-+``kernel_read_file_str`` defined in ``include/linux/kernel_read_file.h``.
+diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
+index 7d51f27f09bc9..eea63c170ac43 100644
+--- a/drivers/platform/x86/intel/vsec.c
++++ b/drivers/platform/x86/intel/vsec.c
+@@ -51,6 +51,13 @@ struct vsec_priv {
+ 	unsigned long found_caps;
+ };
+ 
++static void intel_vsec_reset_state(struct vsec_priv *priv)
++{
++	memset(priv->suppliers, 0, sizeof(priv->suppliers));
++	memset(priv->state, 0, sizeof(priv->state));
++	priv->found_caps = 0;
++}
++
+ static const char *intel_vsec_name(enum intel_vsec_id id)
+ {
+ 	switch (id) {
+@@ -857,6 +864,7 @@ static pci_ers_result_t intel_vsec_pci_slot_reset(struct pci_dev *pdev)
+ {
+ 	struct intel_vsec_device *intel_vsec_dev;
+ 	pci_ers_result_t status = PCI_ERS_RESULT_DISCONNECT;
++	struct vsec_priv *priv = pci_get_drvdata(pdev);
+ 	unsigned long index;
+ 
+ 	dev_info(&pdev->dev, "Resetting PCI slot\n");
+@@ -877,6 +885,13 @@ static pci_ers_result_t intel_vsec_pci_slot_reset(struct pci_dev *pdev)
+ 		devm_release_action(&pdev->dev, intel_vsec_remove_aux,
+ 				    &intel_vsec_dev->auxdev);
+ 	}
++
++	/*
++	 * intel_vsec_pci_init() reuses priv. Reset the registration state
++	 * after tearing down old aux devices or the rewalk will skip them as
++	 * already registered.
++	 */
++	intel_vsec_reset_state(priv);
+ 	pci_restore_state(pdev);
+ 	intel_vsec_pci_init(pdev);
+ 
 -- 
 2.53.0
 
