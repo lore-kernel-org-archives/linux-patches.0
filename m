@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056460;
-	b=VKvCPe8HmNeVwqOBrfXv/3ql2gXpX7k46btctwOvb7jJBMtV2KnQ4w+k2XioKhUNLhiw
-	 ctZD/NyyI6KfFiy+wUys5mGYmjPIatQV3ukCF+cnADY8KDSr6V5jXVB9kTHUfNYWybzlS
-	 S8ZfG+8/uEu3nG4v4ADZNzE4hc4IJBpTRI5tYhRlcYNeFHpArgAIspjVvqBenJYyrjYGn
-	 aXSoWwa4C2Z/QpUPJO2jlwI2+cWqGFitk1H9G+DpjyqdpvbOAzOFi4n6ReQ4KqTasWNBC
-	 J5V0qlK1s23IYy6uudHLzKrtMUJxToWuaqTJ+sVM7KdlUKstxWMqtez8hkbyykggR5Q==
+	t=1795056463;
+	b=0KpEnbZOzhyfzr7sxsmnEByuA95Ol/VEj2YvZSfZgGQeqrTRJClR6tVotw5vlEJqEMVH
+	 bV4wZzbgIGQdGkbxpp1v8LWmIa9Rw0veCRJdL7gHtXA/W1o5lhPWxcsvb/EQQiTfiRQIm
+	 oKYSNsALg5oygVsxoCbiuKX2moyjPgqHu8zVzQ0q6XTE5d2+zpIUwgLgUy0VnJcROO+Zo
+	 3x/3Vuw583oMJpuuUjhOZKKM3uekxTK0TlADCDC961Q/mh63Q7P7/uhI5yalUso0gUc0g
+	 2DS3pjf0Uo8ivIw9q4HIKQqheM3/VjhIS1Yy7znb/Pu+KSZ3uaD7lKxU314CTaV3Low==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056460;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056463;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=AIlJoZgIB6VJ1Meu8g0BcdOQn90kZeERl/Ax/8RN7jQ=;
-	b=MIyo+AXOxgUmFyl9f16P53HaMnpnomi4/ouee1jAisF0N8+E/Njzk12hq01Opq79pLND
-	 ncCe1ggnc95SSAX2A/xmCSNf3tkLZ2aMWEvXYtUddKrXCSkCMeCigKFP3cT1VWMLz9TD5
-	 zobnXucqx7D6yzbQG0Gq2Y/YoiiXT9SykhwosHoZRcnGDZ2YBMqciAhDCfhYsKLXkaQRS
-	 M7XhSq6susmDRQH/Tg5Wsjjt67v8dzNlOhkYD/iTPYmC1TN5d/6/JoztRkA1v90FY/2pW
-	 nUPTGDiqvw8vmygoLJ+TKMdOuicZHPdnc31kmT6EJoiZaguE/Ky913y/18aE7dXSAzg==
+	bh=VTj9wAYDybz8RULtckn95HzyFh19CTENQNQvbQMRWW0=;
+	b=tlMQqCGSYAjPf2FrrfRdJdlgNni82CkqgRJhZhgZqCE28U/W0pis7NhVLjDee2Nn24E6
+	 kZbTPzeqmvlGwSrn/zcLAjWoNMLCXg7Y6PKzCYo1ZnlSf9ufo9d9E+YhTODyPjtZLIiky
+	 cZUagp6ryAfiU0iUodXZpuz7lz+vivF9vPyYX00+FwuqnhFwgmDTtsfBvIJg2UjtnfZrn
+	 nqP8yiVApU3ePbTreft5qV30NeMEEI/NCmIt9HmRZmoN+R7TFt5rclygEaMLl0bFkvrJp
+	 no0aPHWqF37wLY9VogdajsSjgWfDAcgkJDQ2IDxpzbEsbHkLv0IwWs/iCcXNP3BkuZg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ofKvW54a;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kcW31Qyl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA53C606A31C;
-	Thu, 19 Nov 2026 02:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A436606A331;
+	Thu, 19 Nov 2026 02:47:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ofKvW54a
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA9D1F000C4;
-	Thu, 19 Nov 2026 02:47:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kcW31Qyl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B1C1F000C5;
+	Thu, 19 Nov 2026 02:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056460;
-	bh=AIlJoZgIB6VJ1Meu8g0BcdOQn90kZeERl/Ax/8RN7jQ=;
+	s=korg; t=1795056463;
+	bh=VTj9wAYDybz8RULtckn95HzyFh19CTENQNQvbQMRWW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ofKvW54aY9RaP/3DcRUTKnFGWHkech3wN4tvt9rjpVb3fZKpoICV5U5BYA6yyp3WK
-	 pjvxZr+PYwsObkOTpUiSSxfE01JIT9sWpQnSGRyY8cUcBGGk+dc9hw0ZJxyMFIMZgQ
-	 mVDeoUDOJBvuAxnAt1blCzgb3bZSpUVPFf7FNW+g=
+	b=kcW31QylAzvb0zBLdw7Au4udzSLprjCBmZE/3Z/k5TrCUCfX/V0ooFJjJPtY/Lroc
+	 C6IAgwbIzfCPzGkRfNAFncjyb9o0zTbxJow5jLRFJ2dKUfw4LKaB1jS7JukP4+jgrt
+	 +597KxbhwZl5imCQ9RqtcoPHohGdDysZRIZNxDYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1945/2214] scsi: libsas: Fix out-of-bounds memcpy() in sas_ssp_task_response()
-Date: Wed, 18 Nov 2026 16:00:21 +0100
-Message-ID: <20261118150128.811666620@linuxfoundation.org>
+Subject: [PATCH 5.15 1990/2214] ASoC: mediatek: mt8195: Fix runtime resume error handling
+Date: Wed, 18 Nov 2026 16:01:06 +0100
+Message-ID: <20261118150130.441477803@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,37 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 4d7f9c3fdce773f6c69d17c1d4a05bd5e17f4b99 ]
+[ Upstream commit 933fbfb6648850e003a1fc47b7bcc08fe3687961 ]
 
-The min_t(int, ...) clamp of the device-provided sense_data_len turns
-negative for values >= 0x80000000 and is then used as the memcpy()
-length, reading and writing out of bounds. Compare as u32
-instead. Well-formed responses are unaffected.
+Check and propagate errors when enabling the register access and main
+clocks during runtime resume.
 
-Fixes: 366ca51f30de ("[SCSI] libsas: abstract STP task status into a function")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Link: https://patch.msgid.link/20261009033238.1076098-2-yangxingui@huawei.com
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+If regcache_sync() or main clock enable fails, restore regmap cache-only
+mode and disable the register access clocks before returning the error.
+
+Fixes: 6746cc858259 ("ASoC: mediatek: mt8195: add platform driver")
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20261014112752.683032-10-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libsas/sas_task.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8195/mt8195-afe-pcm.c | 23 +++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/libsas/sas_task.c b/drivers/scsi/libsas/sas_task.c
-index 2966ead1d4217..aca9332b66013 100644
---- a/drivers/scsi/libsas/sas_task.c
-+++ b/drivers/scsi/libsas/sas_task.c
-@@ -22,7 +22,7 @@ void sas_ssp_task_response(struct device *dev, struct sas_task *task,
- 	else if (iu->datapres == 2) {
- 		tstat->stat = SAS_SAM_STAT_CHECK_CONDITION;
- 		tstat->buf_valid_size =
--			min_t(int, SAS_STATUS_BUF_SIZE,
-+			min_t(u32, SAS_STATUS_BUF_SIZE,
- 			      be32_to_cpu(iu->sense_data_len));
- 		memcpy(tstat->buf, iu->sense_data, tstat->buf_valid_size);
+diff --git a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+index 432a14683c5fd..4558c1059433c 100644
+--- a/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
++++ b/sound/soc/mediatek/mt8195/mt8195-afe-pcm.c
+@@ -2969,18 +2969,31 @@ static int mt8195_afe_runtime_resume(struct device *dev)
+ {
+ 	struct mtk_base_afe *afe = dev_get_drvdata(dev);
+ 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
++	int ret;
  
+-	mt8195_afe_enable_reg_rw_clk(afe);
++	ret = mt8195_afe_enable_reg_rw_clk(afe);
++	if (ret)
++		return ret;
+ 
+ 	if (!afe->regmap || afe_priv->pm_runtime_bypass_reg_ctl)
+-		goto skip_regmap;
++		return 0;
+ 
+ 	regcache_cache_only(afe->regmap, false);
+-	regcache_sync(afe->regmap);
++	ret = regcache_sync(afe->regmap);
++	if (ret)
++		goto err_restore_cache;
++
++	ret = mt8195_afe_enable_main_clock(afe);
++	if (ret)
++		goto err_restore_cache;
+ 
+-	mt8195_afe_enable_main_clock(afe);
+-skip_regmap:
+ 	return 0;
++
++err_restore_cache:
++	regcache_cache_only(afe->regmap, true);
++	mt8195_afe_disable_reg_rw_clk(afe);
++
++	return ret;
+ }
+ 
+ static int mt8195_afe_component_probe(struct snd_soc_component *component)
 -- 
 2.53.0
 
