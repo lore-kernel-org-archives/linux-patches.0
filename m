@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039331;
-	b=Kl46L6daKR7jfNcoE0PEC4DcFBVZoPYYy0x1IiSeM3tOhzJD1Xp84VXIpLiqZFYbyIG5
-	 SlE5rP4piLFdoFRtH1lKpaiz+zM3mMIfj2HoJlmQItlfAzI8fqbXzBb7PleLXqeNqCIGt
-	 Me/65pdTlv3JTGj8vZH8wPpi+MX0sKXOw2lPJTReit/oKJJH7dzRXioomEJvL9eeSfZ9k
-	 tVOxJo45QqmR4rrRKf2glVKisjJSyFDh4H6xxoQEGOYZNlZwJ5pcwxKctNUditObxQPHw
-	 k2JviUhSY2WjxtYYVkyyeRLA03byWfWUXUgDTbaYpODiiCX/YoYEtmpql1wZPevwXQA==
+	t=1795039334;
+	b=l+dLNLGeX0a9PhDaB04x0oVKyjvKYhsjfdnxKV7DVL3Grpoe6V5pIDQR8dEEntGolyR/
+	 AXLr+XnEHUzVT6X1EsMDBnLGyDApug9jUeVWItFq8Z+somSc/Vcq7NMh8hfgJrf2FmBP7
+	 WVyiZXR2OHVLRtV0AFFdr5Ipe8S3YoEL9Pctn429b+giAh2YnTKmktA+Vq1bO88pD+3xN
+	 ZGLT9LvlDVHEXgODWV61qHbyCOLMSm5gc5ooQYNgPLhMW57oSRNn+n9FkoMshlfptHP8J
+	 aPj2TdEKOGqasyU4M6Q9+WtmbaN96lNLFkb/X4CmUhHDWLopd4LYt/Ekn3SIkE4buPQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039331;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jdTnxvKXS1cA6kw90eUILUyHU/Ymx2C7oaBrVire+ik=;
-	b=bB++RpSm1Lmeg1wac1iM6U0NAkgze/OG9xoQPi7OT0P36wjkTuqBCI5owijv0aU2v/uY
-	 QpLN0DHeETQft3pGt5k5M+CwQdHEuK45AIYv3NMkjWloXY4WTucy1/7psGY+j539Qv57N
-	 sqLUvISNKPhLElxdB6FpHTPKtCpOaGoi2s3PAcu0zy3qCwzjHSeCn3o51df1UqdL4djkA
-	 ps+J69Vjr44kKJYPYgYlVbd7lDsalQHjiCYUHIpav/BU6D9eOyWeXwSBLmm5vzECpiD4g
-	 4nIuYa6me63XqGwjVlLxccYR4Kf/G6SU9vX42qiR95D4Y7YsNmDrN3/dwAZ3J7M/c0Q==
+	bh=6+1cbTtKjzYbytoyojlUsdwP5Pdze51sDkGTDzp7Bao=;
+	b=LzGwMXc53aW8lShm8TFujczWd3lpAP9lWN5vsyyUbIYJ1CUd7AhIoLRFQBN/wUP6JuNt
+	 JjR6ddoSRPtE95Y9nzyAQE1QLxrnZlyxdvAwiNyOuNiw8JKKCnQUPfufL9xFWRf0dLn8R
+	 lRLmpxxqDWfjKgiyx+e5vP4dzgr5Soxxpp2djr5k8Zl9PxZTNuqW4fzc3jmLJu6kjvAyI
+	 G1SZscfkxu6O02mai8EdD0HNAYt0TQyiGCviZ7OIIISfpYYnL1Dn/kn/mUlVSn3vaUKP+
+	 h6YnM31TSiSwyL8l2KWi/Uf55dIvcje2yEnL5xRiLYPfC+v0C3mlNxN8ALNa0S5igrA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1xrQkAy;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs9bOVXn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F08D606A332;
-	Wed, 18 Nov 2026 22:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA84A60A260F;
+	Wed, 18 Nov 2026 22:02:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B1xrQkAy
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFD51F000D4;
-	Wed, 18 Nov 2026 22:02:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Rs9bOVXn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7331F000CF;
+	Wed, 18 Nov 2026 22:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039331;
-	bh=jdTnxvKXS1cA6kw90eUILUyHU/Ymx2C7oaBrVire+ik=;
+	s=korg; t=1795039334;
+	bh=6+1cbTtKjzYbytoyojlUsdwP5Pdze51sDkGTDzp7Bao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B1xrQkAyRJ5VAjr0phlGTAXeu1U4UBFBwAAhocZw6qQSB+KqHPKznwlnoVtAwRD+D
-	 VQjFKbhNkhuOaRduLFEbPNqNbCIBCLJMvoAbp44dEYW8u+tD0bpyuiXQ6P9oQVUPB6
-	 VWgF8o1NCX/xsF56BqIz0ckyjTwSImE699rG9aSk=
+	b=Rs9bOVXnUS4jXRaL9Y0qAU3SHXbn8wCdmEmoC7JUhJo+V/YpN1wHsPZkQ8Fzs9oSB
+	 jLgPbWkHzCEmD9Pg1VadUT7RMJPBmo0Ag8B3Oxp/XDC2Q+ZWtO8xp/0HuNeti5kMI4
+	 NKmoe3K9heFkg4tipyGn2nyrH3DZzCDoBOVW7sgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
 	Mark Amirkan <markdamirkan@gmail.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2063/3318] perf evsel: Validate branch stack before byte swapping
-Date: Wed, 18 Nov 2026 15:44:45 +0100
-Message-ID: <20261118150423.962773576@linuxfoundation.org>
+Subject: [PATCH 6.6 2064/3318] perf evsel: Validate RAW sample before byte swapping
+Date: Wed, 18 Nov 2026 15:44:46 +0100
+Message-ID: <20261118150423.994544975@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,70 +72,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Amirkan <markdamirkan@gmail.com>
 
-[ Upstream commit 2148e094671b0f6a44f033787b7da4ed14e96c27 ]
+[ Upstream commit 02f6847e1822714a4201b87e42f92b0d43e8549d ]
 
-When perf reads an opposite-endian branch stack, __evsel__parse_sample()
-swaps each entry before checking whether all entries fit in the event. A
-truncated sample can therefore make the swap loop read and write past the
-event boundary.
+For an opposite-endian RAW sample, __evsel__parse_sample() passes the
+input-controlled size to mem_bswap_64() before checking whether the
+payload fits in the event. A truncated record can therefore make the helper
+read and write past the event boundary.
 
-A truncated perf.data file makes perf report crash with SIGSEGV. ASan
-reports an out-of-bounds read. A regression test puts an entry just past
-the declared end and shows that its flags are changed before the parser
-returns -EFAULT.
+A crafted perf.data file makes perf report crash with SIGSEGV. ASan
+reports the out-of-bounds access. A regression test puts backed data past
+the declared end and shows that it is changed before the parser returns
+-EFAULT.
 
-Move the bounds check before the byte-swap loop. Valid samples are handled
-as before.
+Move the bounds checks before mem_bswap_64(). Check the rounded length too,
+because the helper accesses complete 64-bit words. Complete records are
+handled as before.
 
-Fixes: 63c12ae2f246dcdc ("perf evsel: Add bitfield_swap() to handle branch_stack endian issue")
+Fixes: f9d8adb345d7adbb ("perf evsel: Fix swap for samples with raw data")
 Reviewed-by: Ian Rogers <irogers@google.com>
 Assisted-by: Symbolic
 Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/sample-parsing.c | 48 +++++++++++++++++++++++++++++++
- tools/perf/util/evsel.c           |  3 +-
- 2 files changed, 50 insertions(+), 1 deletion(-)
+ tools/perf/tests/sample-parsing.c | 61 +++++++++++++++++++++++++++++++
+ tools/perf/util/evsel.c           | 17 +++++----
+ 2 files changed, 70 insertions(+), 8 deletions(-)
 
 diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
-index 25a3f6cece505..95d204f908f0f 100644
+index 95d204f908f0f..eaac9a8b9a25a 100644
 --- a/tools/perf/tests/sample-parsing.c
 +++ b/tools/perf/tests/sample-parsing.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <stdbool.h>
-+#include <errno.h>
- #include <inttypes.h>
- #include <stdlib.h>
- #include <string.h>
-@@ -366,6 +367,49 @@ static int do_test(u64 sample_type, u64 sample_regs, u64 read_format)
- 	return ret;
+@@ -410,6 +410,55 @@ static int test_truncated_branch_stack(void)
+ 	return 0;
  }
  
-+static int test_truncated_branch_stack(void)
++static int test_truncated_swapped_raw(u16 event_size, u32 raw_size)
 +{
 +	struct perf_event_attr attr = {
-+		.sample_type = PERF_SAMPLE_BRANCH_STACK,
++		.sample_type = PERF_SAMPLE_RAW,
 +	};
 +	struct {
 +		struct perf_event_header header;
-+		u64 nr;
-+		struct branch_entry entry;
++		union {
++			u64 value;
++			u32 words[2];
++		} raw;
++		u64 canary;
 +	} input = {
 +		.header = {
 +			.type = PERF_RECORD_SAMPLE,
-+			.size = sizeof(input.header) + sizeof(input.nr),
++			.size = event_size,
 +		},
-+		.nr = 1,
++		/* Parsing a pre-swapped word exchanges these two u32 values. */
++		.raw.words = { 0x12345678, raw_size },
++		.canary = 0x8877665544332211ULL,
 +	};
 +	struct perf_sample sample;
 +	struct evsel *evsel;
-+	u64 flags = 1;
++	u64 raw = input.raw.value;
++	u64 canary = input.canary;
 +	int err;
 +
-+	input.entry.flags.value = flags;
 +	evsel = evsel__new(&attr);
 +	if (!evsel)
 +		return -1;
@@ -147,11 +146,12 @@ index 25a3f6cece505..95d204f908f0f 100644
 +	evsel__put(evsel);
 +
 +	if (err != -EFAULT) {
-+		pr_debug("truncated branch stack returned %d, expected -EFAULT\n", err);
++		pr_debug("truncated swapped RAW sample (size %u, raw %u) returned %d, expected -EFAULT\n",
++			 event_size, raw_size, err);
 +		return -1;
 +	}
-+	if (input.entry.flags.value != flags) {
-+		pr_debug("truncated branch stack modified data past the event\n");
++	if (input.raw.value != raw || input.canary != canary) {
++		pr_debug("truncated swapped RAW sample modified data before validation\n");
 +		return -1;
 +	}
 +	return 0;
@@ -160,11 +160,19 @@ index 25a3f6cece505..95d204f908f0f 100644
  /**
   * test__sample_parsing - test sample parsing.
   *
-@@ -382,6 +426,10 @@ static int test__sample_parsing(struct test_suite *test __maybe_unused, int subt
- 	size_t i;
- 	int err;
+@@ -430,6 +479,18 @@ static int test__sample_parsing(struct test_suite *test __maybe_unused, int subt
+ 	if (err)
+ 		return err;
  
-+	err = test_truncated_branch_stack();
++	/* The declared RAW payload extends past an otherwise aligned event. */
++	err = test_truncated_swapped_raw(sizeof(struct perf_event_header) +
++					 sizeof(u64), 16);
++	if (err)
++		return err;
++
++	/* The final complete word touched by mem_bswap_64() extends past it. */
++	err = test_truncated_swapped_raw(sizeof(struct perf_event_header) +
++					 sizeof(u32) + 9, 9);
 +	if (err)
 +		return err;
 +
@@ -172,26 +180,43 @@ index 25a3f6cece505..95d204f908f0f 100644
  	 * Fail the test if it has not been updated when new sample format bits
  	 * were added.  Please actually update the test rather than just change
 diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
-index ff9ad7637562a..c02178eb3b1b3 100644
+index c02178eb3b1b3..b2be92bc7c5e7 100644
 --- a/tools/perf/util/evsel.c
 +++ b/tools/perf/util/evsel.c
-@@ -2570,6 +2570,8 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
- 			e = (struct branch_entry *)&data->branch_stack->hw_idx;
- 		}
- 
-+		OVERFLOW_CHECK(array, sz, max_size);
-+
- 		if (swapped) {
- 			/*
- 			 * struct branch_flag does not have endian
-@@ -2585,7 +2587,6 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
- 				e->flags.value = evsel__bitfield_swap_branch_flags(e->flags.value);
- 		}
- 
--		OVERFLOW_CHECK(array, sz, max_size);
- 		array = (void *)array + sz;
+@@ -2515,7 +2515,10 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
  	}
  
+ 	if (type & PERF_SAMPLE_RAW) {
++		const __u64 *raw;
++
+ 		OVERFLOW_CHECK_u64(array);
++		raw = array;
+ 		u.val64 = *array;
+ 
+ 		/*
+@@ -2531,16 +2534,14 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
+ 		}
+ 		data->raw_size = u.val32[0];
+ 
+-		/*
+-		 * The raw data is aligned on 64bits including the
+-		 * u32 size, so it's safe to use mem_bswap_64.
+-		 */
+-		if (swapped)
+-			mem_bswap_64((void *) array, data->raw_size);
+-
+ 		array = (void *)array + sizeof(u32);
+-
+ 		OVERFLOW_CHECK(array, data->raw_size, max_size);
++		if (swapped) {
++			/* mem_bswap_64() accesses complete 64-bit words. */
++			sz = roundup((u64)data->raw_size, sizeof(u64));
++			OVERFLOW_CHECK(raw, sz, max_size);
++			mem_bswap_64((void *)raw, data->raw_size);
++		}
+ 		data->raw_data = (void *)array;
+ 		array = (void *)array + data->raw_size;
+ 	}
 -- 
 2.53.0
 
