@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044000;
-	b=g45J+CIZB/8XIMJiOigpKtYVJyuqegKgZyMr7ok1O4h3iEEGov9nGGEUA+S/rsfpZrW5
-	 BHtzR8I6SR0QaoC4CmYpJHVZvDHvxAT4kdmTKmMZIDefZYMlOtQBMX2ix8ZCCJdEtqxXK
-	 JXdYr+kfB7HRL1agnDKiLfe/mhoHqzXq6Vohz0gDgofQaSeMiA5QmarrAYJ/1eRQQCGH0
-	 ooNL58rogex5bhNqXJLSAjknCUNHdRTqM7AYFNjxEko/OIRnt55uQSt3SdowexB12ktH+
-	 niKNxBhH56L6AAZjbXyJTsurLIMNbmgKGqvQxNodApZwzXk+UTtnRk6u7tNEV+ry2/g==
+	t=1795044003;
+	b=283ShgQmPNsb0bCGHJb+gHNtnNEpZZkuaBzZbYGXevUNXKkJbWiTjkUx/bEGSVrloL6m
+	 2XVZiq4LwPzEvMGblGxSXvbg6XQUT+BcYSGOWWkDDbc3f9H6Swk6Nf0k1IF2+1+nYijNn
+	 AkfNfpVTwabasWpe8MAwb7OOKyx/f34d2Vm6c02wqAsCxzvqre2kkO0+8Aou7e2uqktUn
+	 1i2IeTTdrtXDwPvv7EkYPEXKVFMULgOrQxvR7F4VM7ljEn6QQrpEeDW03OkogRaoTz7IN
+	 2DGY/MzWl+TA/DbnTA5uygf0kBO00yCx32Ith/1jRAp9PDgF6aUsr955QEN1SF5Q2+A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044000;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044003;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+jCyOsxp++W4ePk0uWT8mgRiwsRytlM+upckVK9809I=;
-	b=mA5AgKqIiDe0qHO5Df+YvGGK2EsbXME74bYIgaplcVMuxti3AkafStgY78NbOSeNdMp3
-	 rEuR5A36/St/dwUh3B9GanxTuSUqWiGuEGa/ya/UHOzJMTRgrH49ybQB2jA4U0wwrPcyt
-	 I9FyUT/gkHPcafesZgXgo6ORKv0PapF1I1JjV/sS8F13v9K5dWlP2iMBsSBfh4zuJujgZ
-	 HJ67NepZ3BCLZ6zsjTD6uLYJQrS3GmmYYhGgltUN8sTBf86ucCTjiMEb1PnmJPMGTkGjE
-	 yFKqWRu3MJK1P1+UWIsmOiPVYeYo2vzIm87yXdVqY6eoLo8OkflSsjDFTeNzl3I65pw==
+	bh=MPDzfv7VSrkCXb5204tmC3VrEy5MJlYhwclugF/baRc=;
+	b=2TOkUXqt0Fo75VsfBeqlIlqdIgklYPUKaZ6H4y/49mRwk8P9Ns+schpvhmnUyy800fmP
+	 NePo1oZtnPPwVsysV4ui01/oLow5IEjlgf8WgDObyoqKAcI2B80QJecUgh21HMOxqX14o
+	 rm5Rusgt1oM38VVh9CAw7TFIwyXWssi3ogD85Jqg0GhwyxX7ugHKJk7iRrLtMQem4/fTj
+	 IbMtpDrvlMXGemDlidosWUNR1CGdUJWN8P1oVw8SyTVLJN/cDRVB1IL/u3JZdD8e2Cvnm
+	 iA+H/JLviqbsrJhwK4f3WbV0MfeQyinYh4m/V+mZ8gnryxKhhFGZasEZaIGg0v7u0Fw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xBRtEwaS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G39e2+t5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3215E606A331;
-	Wed, 18 Nov 2026 23:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A84D606A32F;
+	Wed, 18 Nov 2026 23:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xBRtEwaS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 831591F000C4;
-	Wed, 18 Nov 2026 23:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G39e2+t5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1DF1F000C4;
+	Wed, 18 Nov 2026 23:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044000;
-	bh=+jCyOsxp++W4ePk0uWT8mgRiwsRytlM+upckVK9809I=;
+	s=korg; t=1795044002;
+	bh=MPDzfv7VSrkCXb5204tmC3VrEy5MJlYhwclugF/baRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xBRtEwaSNMuRT7bIpxWesz1qQnrgT48TrpIBo/e8lgG4WioUp4kS0X38riDCBHKX3
-	 ZBkXJg4vkDEXgmHysSD9BlohlXW39luSVDuZumeBqAtMr+0Hv084NG8UOE9USZ6eK0
-	 bPhwi8l3QpzR3x6cXjRx/C6WEcApPhCFFkNINleQ=
+	b=G39e2+t57cQ3JBG4CtBBvY+vCWp3sTjGCOYlHFvl34ayc1cP0sLwMjM1O4Y5cu1n8
+	 bevyHEjTOFrueD+b61+icyGRNlR6bgchaXcClnTkdoF8KgB4iB1pGTJmVVS0nu+gu4
+	 8jOnr6i8ii0JweHvFwFwGIFg0Pbe2P6oVIch0Yvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0409/2857] EDAC/altera: Use parent device for devres in altr_portb_setup()
-Date: Wed, 18 Nov 2026 15:24:03 +0100
-Message-ID: <20261118150216.109484549@linuxfoundation.org>
+Subject: [PATCH 6.1 0410/2857] s390/crypto: Fix skcipher_walk return code handling in aes_s390
+Date: Wed, 18 Nov 2026 15:24:04 +0100
+Message-ID: <20261118150216.149562171@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,77 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinh Nguyen <dinguyen@kernel.org>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 9868f5c077dfe0b606331f2e782484f91a5789a5 ]
+[ Upstream commit 15fa028589c3a2545f0bff355eff06d5844196bf ]
 
-Anchor the devres group and the devm-managed IRQ requests in altr_portb_setup()
-to the actual parent device (device->edac->dev) instead of the embedded struct
-device inside the copied per-port altr_edac_device_dev.
+The return codes from skcipher_walk_virt() were not properly checked
+before entering the processing loops in ecb_aes_crypt() and ctr_aes_crypt().
+If skcipher_walk_virt() fails, the walk structure may be in an undefined
+state, and attempting to process data could lead to incorrect behavior
+or accessing uninitialized memory.
 
-This keeps devres_open_group(), devm_request_irq(), devres_remove_group() and
-devres_release_group() all referring to the same long-lived device so the
-group and the resources allocated inside it are torn down together.
+Add proper return code checking to ensure correct handling of the walk
+initialization and walk advance and eventually return to the caller
+with that return code.
 
-Fixes: 911049845d70 ("EDAC, altera: Add Arria10 SD-MMC EDAC support")
-Closes: https://sashiko.dev/#/patchset/20260503212558.2811480-1-dbgh9129%40gmail.com
-Assisted-by: LLM
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260617164303.585555-1-dinguyen@kernel.org
+Fixes: 7988fb2c03c8 ("crypto: s390/aes - convert to skcipher API")
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Holger Dengler <dengler@linux.ibm.com>
+Cc: stable@vger.kernel.org # 5.5+
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+[ sashal: Dropped the hunk for fullxts_aes_crypt, which doesn't exist here, and applied the remaining loop and tail condition edits by hand to the existing functions. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/altera_edac.c | 10 +++++-----
+ arch/s390/crypto/aes_s390.c | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/edac/altera_edac.c b/drivers/edac/altera_edac.c
-index 8d3eedb55e2dd..7a46ca232ed77 100644
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1544,7 +1544,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 	altdev = dci->pvt_info;
- 	*altdev = *device;
+diff --git a/arch/s390/crypto/aes_s390.c b/arch/s390/crypto/aes_s390.c
+index d2bd676502741..b6760f032e51d 100644
+--- a/arch/s390/crypto/aes_s390.c
++++ b/arch/s390/crypto/aes_s390.c
+@@ -231,7 +231,7 @@ static int ecb_aes_crypt(struct skcipher_request *req, unsigned long modifier)
+ 		return fallback_skcipher_crypt(sctx, req, modifier);
  
--	if (!devres_open_group(&altdev->ddev, altr_portb_setup, GFP_KERNEL))
-+	if (!devres_open_group(device->edac->dev, altr_portb_setup, GFP_KERNEL))
- 		return -ENOMEM;
+ 	ret = skcipher_walk_virt(&walk, req, false);
+-	while ((nbytes = walk.nbytes) != 0) {
++	while (!ret && ((nbytes = walk.nbytes) != 0)) {
+ 		/* only use complete blocks */
+ 		n = nbytes & ~(AES_BLOCK_SIZE - 1);
+ 		cpacf_km(sctx->fc | modifier, sctx->key,
+@@ -335,7 +335,7 @@ static int cbc_aes_crypt(struct skcipher_request *req, unsigned long modifier)
+ 		return ret;
+ 	memcpy(param.iv, walk.iv, AES_BLOCK_SIZE);
+ 	memcpy(param.key, sctx->key, sctx->key_len);
+-	while ((nbytes = walk.nbytes) != 0) {
++	while (!ret && ((nbytes = walk.nbytes) != 0)) {
+ 		/* only use complete blocks */
+ 		n = nbytes & ~(AES_BLOCK_SIZE - 1);
+ 		cpacf_kmc(sctx->fc | modifier, &param,
+@@ -465,7 +465,7 @@ static int xts_aes_crypt(struct skcipher_request *req, unsigned long modifier)
+ 	memcpy(xts_param.key + offset, xts_ctx->key, xts_ctx->key_len);
+ 	memcpy(xts_param.init, pcc_param.xts, 16);
  
- 	/* Update PortB specific values */
-@@ -1572,7 +1572,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 		rc = -ENODEV;
- 		goto err_release_group_1;
- 	}
--	rc = devm_request_irq(&altdev->ddev, altdev->sb_irq,
-+	rc = devm_request_irq(device->edac->dev, altdev->sb_irq,
- 			      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
- 			      ecc_name, altdev);
- 	if (rc) {
-@@ -1594,7 +1594,7 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
- 			rc = -ENODEV;
- 			goto err_release_group_1;
- 		}
--		rc = devm_request_irq(&altdev->ddev, altdev->db_irq,
-+		rc = devm_request_irq(device->edac->dev, altdev->db_irq,
- 				      prv->ecc_irq_handler, IRQF_TRIGGER_HIGH,
- 				      ecc_name, altdev);
- 		if (rc) {
-@@ -1614,13 +1614,13 @@ static int altr_portb_setup(struct altr_edac_device_dev *device)
+-	while ((nbytes = walk.nbytes) != 0) {
++	while (!ret && ((nbytes = walk.nbytes) != 0)) {
+ 		/* only use complete blocks */
+ 		n = nbytes & ~(AES_BLOCK_SIZE - 1);
+ 		cpacf_km(xts_ctx->fc | modifier, xts_param.key + offset,
+@@ -581,7 +581,7 @@ static int ctr_aes_crypt(struct skcipher_request *req)
+ 	locked = mutex_trylock(&ctrblk_lock);
  
- 	list_add(&altdev->next, &altdev->edac->a10_ecc_devices);
+ 	ret = skcipher_walk_virt(&walk, req, false);
+-	while ((nbytes = walk.nbytes) >= AES_BLOCK_SIZE) {
++	while (!ret && ((nbytes = walk.nbytes) >= AES_BLOCK_SIZE)) {
+ 		n = AES_BLOCK_SIZE;
  
--	devres_remove_group(&altdev->ddev, altr_portb_setup);
-+	devres_remove_group(device->edac->dev, altr_portb_setup);
- 
- 	return 0;
- 
- err_release_group_1:
- 	edac_device_free_ctl_info(dci);
--	devres_release_group(&altdev->ddev, altr_portb_setup);
-+	devres_release_group(device->edac->dev, altr_portb_setup);
- 	edac_printk(KERN_ERR, EDAC_DEVICE,
- 		    "%s:Error setting up EDAC device: %d\n", ecc_name, rc);
- 	return rc;
+ 		if (nbytes >= 2*AES_BLOCK_SIZE && locked)
+@@ -600,7 +600,7 @@ static int ctr_aes_crypt(struct skcipher_request *req)
+ 	/*
+ 	 * final block may be < AES_BLOCK_SIZE, copy only nbytes
+ 	 */
+-	if (nbytes) {
++	if (!ret && nbytes) {
+ 		memset(buf, 0, AES_BLOCK_SIZE);
+ 		memcpy(buf, walk.src.virt.addr, nbytes);
+ 		cpacf_kmctr(sctx->fc, sctx->key, buf, buf,
 -- 
 2.53.0
 
