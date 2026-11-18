@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034562;
-	b=e1rNOUXTeB/A8APss54VD1X5ZTnzcbdnWcGTKUD9VkEUze5UcwPlExJ32ZDbeZ45oqhN
-	 Zq1k4/vOJj6weDHmRq3j/N8Vl4zZlIBHpnury7FkOMdewCNaExzf4w3B1ZpvB5aph3xVY
-	 5at0pnJH3ZW1rNns155jQbdtpFmN2S+I18ZpUpjuuxd+e3LsEzNLabRKFi/GPp3xXvWsZ
-	 vfKSkzzCxJpE+ec/k3M8Zi8mlHNaOOWFfPBC7frn/hQzywzJO5WE6zpFJ/xsYwU1Uk/Jc
-	 QDxr7t0yGbOuPR6hXSRhsHMOMSETTcXES7lCF5ZMzJZR4b1W7IRcJ8BA/ylenQ6CYsA==
+	t=1795034565;
+	b=q6/82lMw/h6vivcnyAt8IYet+9+w9DiObG9T/XjXxtrbNOMjPw96NgKVq4lb45EbxNDP
+	 416+2m3+D19ltNwuzYYvyBIBKpjFq3uKT59zsKcI/U+assXWVCkEKitT/zrUMiwNqiSNJ
+	 ZVkIpLpxJbiqsl6SNqVVnH+Ojg5HY/2SyB0fA+PYbwi0jJkbVUhhFF1jh1HrXX2IYO6fc
+	 gSNrIDUdmwL6gqrYTP5jK9gqf4xvn1ApqWNUXVvC5F86/hRaTuz1VKuv11cLxoh1nWZRl
+	 jdYCjvlGAeBoafv6hKFWPPAx/VID/aQrTu2GBcqR//7QWlVy2yOWzGOPzakAEhRwaFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034562;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034565;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=SfAfX+FvtRAZM2YU2JxlZjxQvswatRaP2Pqn4U26p3w=;
-	b=zzlvs67BOQOypLxTW7OYCeFsM0ZHu4AyjjO2X/QrbxkFpeL8YZr75Heot5bxvpzFB2bP
-	 LJ5j1wLMv+w9Lp1+RwO4Vxin800+RChfWT76sExrn+SoV+fmD30mi1tfqypF3YZKCBhrG
-	 AxURRhzZZbeQfBY/+qPvgCGf8N9zVX5bFJ+DDsmo6/+7SwfdPNp040RfA2PmuciVAerz+
-	 UTOSHDqgdwn0yh7Xgl7EEqInmfpWKhM8VNSAQkVtu4OOwdx33aL0nV3xIXFyYd9ZvAd2/
-	 9oip0lt2aM7KFZguu9oQCE77TtniPSot/qs+lGvxrPK7NdLnnbqPTQwUqlInRDQJ+Rw==
+	bh=0N7+2oDvUsf9Db99c6xOGbSfbFU32hA6MdW3UvqRhqI=;
+	b=YXUJAQ8TR3v/Hk+BC6wdFzMMveAY9cpkuzSqR5RggXLIVYCOOtyAoCP6uX5rf7wXTf0P
+	 wo+2K1h9bvUF/3IENego2iod8LUMY2PzSmHEXn/kvw3DLvmRURB6no13fYkVeMwFPmxDT
+	 luS3/Uilcy+7tHqvd13KvigtZFnk4Q80k62jJaWRkUdtAQQkSuLD3ZPkrQx7YY1GB/Fl/
+	 3EidEXzLeXN5CjS0kk7eoM+ICu49CG3iLVUDuFUlENSw2sY29UMCeECWgCCXQ1I2cuDIy
+	 uUBfH2pfBCBTLF10a0IVupsZp2qq/N+7rYll3OMIrbBKyTylqXfxunWdvh+ipIutkEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOJrBlzo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcPtRwCC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F11C606A320;
-	Wed, 18 Nov 2026 20:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83751606A31C;
+	Wed, 18 Nov 2026 20:42:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lOJrBlzo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09981F000C4;
-	Wed, 18 Nov 2026 20:42:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GcPtRwCC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21011F000C4;
+	Wed, 18 Nov 2026 20:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034562;
-	bh=SfAfX+FvtRAZM2YU2JxlZjxQvswatRaP2Pqn4U26p3w=;
+	s=korg; t=1795034565;
+	bh=0N7+2oDvUsf9Db99c6xOGbSfbFU32hA6MdW3UvqRhqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lOJrBlzoiHc6CeU352BRxckFH335cswS2NO67n6RQ+tu9AiG3nET31ILT15knh9ss
-	 grBT2o0izPRt3MHly+Rg5L6mSRBsTrc1MW5RSeH3L4hHaMH5v+qBJdD5QlI67KT+7Z
-	 mS8mCwZTRcDDSw+BHRq5njk5OhuLMMTJ3BMFY8LM=
+	b=GcPtRwCCM38qxVjyI0LEucZBZ0wcKdFVDfX6+b0UttVQHn4+sn39CKBtrNquj3Jli
+	 q8Asc0R4ap0ghqMez0P7QB3AkgGZaMxhFPpY8uZHHYZpcVf9z60TNDiPFzGej5cruj
+	 K/1A8fG7rXbthPM8s4tYlT9y52hfwaHPH59Ju6s8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0413/3318] platform/x86/intel/tpmi: Move TPMI ID definition
-Date: Wed, 18 Nov 2026 15:17:15 +0100
-Message-ID: <20261118150328.888733324@linuxfoundation.org>
+Subject: [PATCH 6.6 0414/3318] platform/x86: ISST: Process read/write blocked feature status
+Date: Wed, 18 Nov 2026 15:17:16 +0100
+Message-ID: <20261118150328.931366009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,70 +72,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit 046d7be6210e7f870e53eb38fd410237e9d1d88f ]
+[ Upstream commit 8bed9ff7dbcce4d1a436f7839be48c6fd5fac0ce ]
 
-Move TPMI ID definitions to common include file. In this way other
-feature drivers don't have to redefine.
+When a feature is read blocked, don't continue to read SST information
+and register with SST core.
+
+When the feature is write blocked, continue to offer read interface for
+SST parameters, but don't allow any operation to change state. A state
+change results from SST level change, feature change or class of service
+change.
 
 Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20231204221740.3645130-4-srinivas.pandruvada@linux.intel.com
+Link: https://lore.kernel.org/r/20231204221740.3645130-5-srinivas.pandruvada@linux.intel.com
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+
+Adapt to this tree: the TPMI core here only exposes a locked/disabled status
+query, which does not report firmware read/write blocked state, so the
+status query and the read-blocked early exit are dropped. The write_blocked
+field and the checks that honor it are kept so that the following change
+applies; the field stays false until the TPMI core can report it.
+The existing max_level and feature mask checks are kept next to the new
+write_blocked checks.
+
 Stable-dep-of: 574b59bb4b6b ("platform/x86: ISST: Validate parameter for frequency and priority")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/tpmi.c | 13 -------------
- include/linux/intel_tpmi.h        | 13 +++++++++++++
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ .../x86/intel/speed_select_if/isst_tpmi_core.c   | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/intel/tpmi.c b/drivers/platform/x86/intel/tpmi.c
-index 4c42c28bdd3d4..021e56f52ac12 100644
---- a/drivers/platform/x86/intel/tpmi.c
-+++ b/drivers/platform/x86/intel/tpmi.c
-@@ -143,19 +143,6 @@ struct tpmi_info_header {
- 	u64 lock:1;
- } __packed;
+diff --git a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+index 30f4f047ef5a2..8ba207a3908dc 100644
+--- a/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
++++ b/drivers/platform/x86/intel/speed_select_if/isst_tpmi_core.c
+@@ -233,6 +233,7 @@ struct perf_level {
+  * @saved_clos_configs:	Save SST-CP CLOS configuration to store restore for suspend/resume
+  * @saved_clos_assocs:	Save SST-CP CLOS association to store restore for suspend/resume
+  * @saved_pp_control:	Save SST-PP control information to store restore for suspend/resume
++ * @write_blocked:	Write operation is blocked, so can't change SST state
+  *
+  * This structure is used store complete SST information for a power_domain. This information
+  * is used to read/write request for any SST IOCTL. Each physical CPU package can have multiple
+@@ -258,6 +259,7 @@ struct tpmi_per_power_domain_info {
+ 	u64 saved_clos_configs[4];
+ 	u64 saved_clos_assocs[4];
+ 	u64 saved_pp_control;
++	bool write_blocked;
+ };
  
--/*
-- * List of supported TMPI IDs.
-- * Some TMPI IDs are not used by Linux, so the numbers are not consecutive.
-- */
--enum intel_tpmi_id {
--	TPMI_ID_RAPL = 0, /* Running Average Power Limit */
--	TPMI_ID_PEM = 1, /* Power and Perf excursion Monitor */
--	TPMI_ID_UNCORE = 2, /* Uncore Frequency Scaling */
--	TPMI_ID_SST = 5, /* Speed Select Technology */
--	TPMI_CONTROL_ID = 0x80, /* Special ID for getting feature status */
--	TPMI_INFO_ID = 0x81, /* Special ID for PCI BDF and Package ID information */
--};
--
- /*
-  * The size from hardware is in u32 units. This size is from a trusted hardware,
-  * but better to verify for pre silicon platforms. Set size to 0, when invalid.
-diff --git a/include/linux/intel_tpmi.h b/include/linux/intel_tpmi.h
-index ee07393445f9f..fdcebb8c30e98 100644
---- a/include/linux/intel_tpmi.h
-+++ b/include/linux/intel_tpmi.h
-@@ -12,6 +12,19 @@
- #define TPMI_MINOR_VERSION(val)	FIELD_GET(GENMASK(4, 0), val)
- #define TPMI_MAJOR_VERSION(val)	FIELD_GET(GENMASK(7, 5), val)
- 
-+/*
-+ * List of supported TMPI IDs.
-+ * Some TMPI IDs are not used by Linux, so the numbers are not consecutive.
-+ */
-+enum intel_tpmi_id {
-+	TPMI_ID_RAPL = 0,	/* Running Average Power Limit */
-+	TPMI_ID_PEM = 1,	/* Power and Perf excursion Monitor */
-+	TPMI_ID_UNCORE = 2,	/* Uncore Frequency Scaling */
-+	TPMI_ID_SST = 5,	/* Speed Select Technology */
-+	TPMI_CONTROL_ID = 0x80,	/* Special ID for getting feature status */
-+	TPMI_INFO_ID = 0x81,	/* Special ID for PCI BDF and Package ID information */
-+};
-+
  /**
-  * struct intel_tpmi_plat_info - Platform information for a TPMI device instance
-  * @package_id:	CPU Package id
+@@ -522,6 +524,9 @@ static long isst_if_clos_param(void __user *argp)
+ 		return -EINVAL;
+ 
+ 	if (clos_param.get_set) {
++		if (power_domain_info->write_blocked)
++			return -EPERM;
++
+ 		_write_cp_info("clos.min_freq", clos_param.min_freq_mhz,
+ 			       (SST_CLOS_CONFIG_0_OFFSET + clos_param.clos * SST_REG_SIZE),
+ 			       SST_CLOS_CONFIG_MIN_START, SST_CLOS_CONFIG_MIN_WIDTH,
+@@ -619,6 +624,9 @@ static long isst_if_clos_assoc(void __user *argp)
+ 
+ 		power_domain_info = &sst_inst->power_domain_info[punit_id];
+ 
++		if (assoc_cmds.get_set && power_domain_info->write_blocked)
++			return -EPERM;
++
+ 		offset = SST_CLOS_ASSOC_0_OFFSET +
+ 				(punit_cpu_no / SST_CLOS_ASSOC_CPUS_PER_REG) * SST_REG_SIZE;
+ 		shift = punit_cpu_no % SST_CLOS_ASSOC_CPUS_PER_REG;
+@@ -773,6 +781,9 @@ static int isst_if_set_perf_level(void __user *argp)
+ 	if (perf_level.level > power_domain_info->max_level)
+ 		return -EINVAL;
+ 
++	if (power_domain_info->write_blocked)
++		return -EPERM;
++
+ 	if (!(power_domain_info->pp_header.allowed_level_mask & BIT(perf_level.level)))
+ 		return -EINVAL;
+ 
+@@ -833,6 +844,9 @@ static int isst_if_set_perf_feature(void __user *argp)
+ 	if (perf_feature.feature & ~SST_PP_FEATURE_STATE_VALID_MASK)
+ 		return -EINVAL;
+ 
++	if (power_domain_info->write_blocked)
++		return -EPERM;
++
+ 	_write_pp_info("perf_feature", perf_feature.feature, SST_PP_CONTROL_OFFSET,
+ 		       SST_PP_FEATURE_STATE_START, SST_PP_FEATURE_STATE_WIDTH,
+ 		       SST_MUL_FACTOR_NONE)
+@@ -1342,7 +1356,7 @@ int tpmi_sst_dev_add(struct auxiliary_device *auxdev)
+ 		tpmi_sst->power_domain_info[i].package_id = pkg;
+ 		tpmi_sst->power_domain_info[i].power_domain_id = i;
+ 		tpmi_sst->power_domain_info[i].auxdev = auxdev;
+-		tpmi_sst->power_domain_info[i].sst_base = devm_ioremap_resource(&auxdev->dev, res);
++			tpmi_sst->power_domain_info[i].sst_base = devm_ioremap_resource(&auxdev->dev, res);
+ 		if (IS_ERR(tpmi_sst->power_domain_info[i].sst_base))
+ 			return PTR_ERR(tpmi_sst->power_domain_info[i].sst_base);
+ 
 -- 
 2.53.0
 
