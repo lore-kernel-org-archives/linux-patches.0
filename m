@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025270;
-	b=VigyBdk6OkcbxxU4x3YFMcnNOJUUjrSGl8+PcQiIJK98RIWictSoHJkmmouz7ahfxYEk
-	 I4LQ/dzH9d1XKT+0Hzsjf1c3iX8ruIC+VVh7pB0ne+L+cGPaYbcFXn7qlAnWmNYmuCzHG
-	 sKgGDk1sygtPDi/3zfeZmyl9OsJG+BGcURd2/xw7EeagEv5+RQ0tlojYgP+WFP6GFYCtE
-	 nsWWX1zptgopzzitoCaLcREvjusO0/XdIu4aIwZRMh8j0fSgjz4w+2TuGkHdx67epiOmf
-	 DBGxOzzS10Cy7PQUkMy0SUP1k4nkb7sJq1iTakkhRNCPcvnbYfeCSd/7KegK4fNzIjg==
+	t=1795025273;
+	b=J4Xl33919M0AbYeuUOxtV7hdikQYVwfNlxh9G5X6nejdofYMUbKhjwbkotW4R5jaXc/u
+	 1Bp4e+MyxudUUfXa7eWDaI5c6a+hBeRZd9ebe78LJuPyurII92j+NxuLiXTiVdakhCaJt
+	 xkgiJtWY/zEYXarCw5sz2dGWLDCCel/s5FTPJmp4taaHQRouiPCiMeDiREL2cA21Wnhal
+	 FtUrK16r65hTwmmbjqCFOPWDyoE39FQRSIDrGiuhd165rcwHNqurHiBU5HdvUwHu1Uz5J
+	 DTqR2k4ba9vRRaOhU5tLbzmNBKdtn9A/kxRycMeoJj2ruyLiKxbB4umWdjijR9k+dDA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025270;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025273;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hRqdH2SBI1AOlEreRCy78JtFx9EF9OmmNU42kbXVwbM=;
-	b=WwoZxQN9Spy5oCq69ZncvdC5GA25lKJYeh6GNGqtmRMOVpZMz8MhadBBE75Mrz7zxKnQ
-	 0PzvnM1C2Ff6blOJiuyRw9dgKcdbx9v3I5IJF6RpXH2Dclq8a65QCtmFViFdJMudiRR45
-	 4CAqDmdw3Q0Rf63ayM6B356hEQI9dnTM10b1SR8U/sYou6vyjo6A1VeOMmb7LZ8egA8Me
-	 aYxlgsd6JomiwCcFUGz+4EQ1yVKf/bIOT5l16g2Zcqb5mtJ1LMNzBhtT8GnqoonJGFQiU
-	 93HTF+MIAwFWoVKN6kx5aCPb0w7RE6aXTUlHujtvKVrwAoGBPzplWSY9NPqGrONW36Q==
+	bh=7HFpkdTZxbXMjOnq4aysDsqpMcJrgaVg/+owcarkEfk=;
+	b=NKK6h+ksvt6N8hVzSMSATMyhc2OsX1xc4Im6usWDSbd8T+sNdQS0KDC2zYYU9xUcqwe9
+	 IFWG/AzkIPL8K3Zd87kBZJcSW5Vddwbk6KyzYgoQPkea3T7g/alN1cmgcYRhXRcwDh0wR
+	 /D9vaTeILYprulttudYi70ck4JYC2nZVGFLIKom5LOX603Urc56BiQ+2YaBINYw6gJ5Te
+	 s0Vs3kpPvPr4zGK3aUZZ7a1egPmVxkFh3CI9zV1bzpj+GQNmZNbaHNwCiwcUbr265iM4J
+	 iBK1FQxFpka9VltlR6JHwXyodbDjRYEaIkxHXbjzQRYrkMFmrkHMih8guh49tM1TCSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkcQTItw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A2hX62ut;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9FB606A320;
-	Wed, 18 Nov 2026 18:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B6F60A260F;
+	Wed, 18 Nov 2026 18:07:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkcQTItw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1331F000C5;
-	Wed, 18 Nov 2026 18:07:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=A2hX62ut
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC6C1F000C4;
+	Wed, 18 Nov 2026 18:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025270;
-	bh=hRqdH2SBI1AOlEreRCy78JtFx9EF9OmmNU42kbXVwbM=;
+	s=korg; t=1795025273;
+	bh=7HFpkdTZxbXMjOnq4aysDsqpMcJrgaVg/+owcarkEfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SkcQTItwd9Ro0IAx5EirE32HDnmvW8Kls1d39dIAdEmt4oM1e9u2j37vcJgnZb7I5
-	 71vYJv+FNVfWkvgIBMQOsxyGFmcR5grWMoGLkZ7KngP8lFAsHEGvxfiDM3cyRdwaJm
-	 j+MmJVQ+913D6FT2s48UXHv7X3DzFaD1VjEPEPfo=
+	b=A2hX62ut83yc1XCFg+z4VgfiCrBzs682UQzb2rLAHXUo8TBF+AYQlAe/4BaeOLEMa
+	 d9OZEMGLAryG9nHLMF3+XX6Nvt0LLp1tg9bka6K6RWOvq350FOH2EovlQfYseUjCFn
+	 DPAzMh1kEbURUyymNEtCN/U7SIjY3VaQxxvzVnQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	James Clark <james.clark@linaro.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0978/2151] perf python: Clean up and restructure setup.py
-Date: Wed, 18 Nov 2026 15:45:13 +0100
-Message-ID: <20261118150158.117267312@linuxfoundation.org>
+Subject: [PATCH 6.18 0979/2151] perf python: Track linked libraries as extension dependencies
+Date: Wed, 18 Nov 2026 15:45:14 +0100
+Message-ID: <20261118150158.152071306@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,342 +69,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 1fa8d81be1ebaf0393a5141c48916f335e26f2f2 ]
+[ Upstream commit 2ed38aa8a52d3e245a9f71b98825ad7f77956d50 ]
 
-Clean up and restructure the python setup script to resolve pylint
-warnings, improve code quality, and increase robustness and
-readability, targeting Python 3.9+ (the Linux kernel build minimum
-Python version).
+Since the Python extension switched to linking perf libraries, setup.py
+only lists util/python.c as a source. The libraries are supplied through
+LDFLAGS, which setuptools does not consider when deciding whether the
+extension needs to be rebuilt.
 
-Changes:
-- Restructure the script to use a `main()` function as the entry point,
-  leaving only imports, classes, and pure functions at module level.
-- Eliminate all global/module-level variables, making them local to
-  `main()` or the respective classes/functions.
-- Make `clang_has_option` a pure function by passing all necessary
-  parameters explicitly.
-- Extract clang compiler flag filtering into a new
-  `filter_clang_options` helper function. This function uses a loop
-  over a tuple of options, replacing ~30 lines of repetitive blocks
-  and reducing branch/statement complexity in the main flow.
-- Cleanly define attributes in `__init__` for `BuildExt` and
-  `InstallLib` and read environment variables dynamically within the
-  methods (including `srctree` in `InstallLib.run`), removing their
-  dependency on global variables.
-- Replace legacy Popen with subprocess.run for safer process handling.
-- Use quote-aware flag filtering (`shlex.split`, filter, `shlex.join`)
-  on sysconfig CFLAGS and OPT instead of regex `re.sub` substitutions.
-  This avoids boundary bugs and safely handles quoted arguments and
-  options with values.
-- Rely on setuptools to handle user CFLAGS from the environment
-  directly rather than manually prepending them to extra_compile_args.
-- Safely parse `CC` env var using `shlex.split` to handle quotes and
-  pass compiler arguments as `list[str]` lists to helper functions,
-  avoiding redundant string formatting and parsing.
-- Remove unused `import re`.
-- Rename setuptools command subclasses to PascalCase (BuildExt,
-  InstallLib).
-- Add type annotations to functions and methods.
-- Add missing docstrings for module, functions, and classes.
-- Split long lines to adhere to standard limits.
+When a library changes, make invokes setup.py, but setuptools can skip
+the build and the recipe copies the stale cached extension back into
+python/. This leaves perf and its Python module running different
+versions of the same code.
 
-Assisted-by: Antigravity:gemini-3.5-flash
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: 2ed38aa8a52d ("perf python: Track linked libraries as extension dependencies")
+Pass the linked library paths to setup.py and declare them as Extension
+dependencies so that library changes trigger a rebuild. Include
+EXTRA_PERFLIBS in the shared library list so that both make and
+setuptools track those inputs as well, preserving the existing linker
+order.
+
+Fixes: 9dabf4003423c8d3 ("perf python: Switch module to linking libraries from building source")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Assisted-by: Codex:GPT-6-Astra
+Signed-off-by: James Clark <james.clark@linaro.org>
+[ Applied manually to address some fuzz ]
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/setup.py | 256 ++++++++++++++++++++++++++-------------
- 1 file changed, 169 insertions(+), 87 deletions(-)
+ tools/perf/Makefile.perf | 5 +++--
+ tools/perf/util/setup.py | 1 +
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
+index 21a25a938acf3..3146b119e3d9b 100644
+--- a/tools/perf/Makefile.perf
++++ b/tools/perf/Makefile.perf
+@@ -482,8 +482,8 @@ endif
+ EXTLIBS := $(call filter-out,$(EXCLUDE_EXTLIBS),$(EXTLIBS))
+ LIBS = -Wl,--whole-archive $(PERFLIBS) $(EXTRA_PERFLIBS) -Wl,--no-whole-archive -Wl,--start-group $(EXTLIBS) -Wl,--end-group
+ 
+-PERFLIBS_PY := $(call filter-out,$(LIBPERF_BENCH) $(LIBPERF_TEST),$(PERFLIBS))
+-LIBS_PY = -Wl,--whole-archive $(PERFLIBS_PY) $(EXTRA_PERFLIBS) -Wl,--no-whole-archive -Wl,--start-group $(EXTLIBS) -Wl,--end-group
++PERFLIBS_PY := $(call filter-out,$(LIBPERF_BENCH) $(LIBPERF_TEST),$(PERFLIBS)) $(EXTRA_PERFLIBS)
++LIBS_PY = -Wl,--whole-archive $(PERFLIBS_PY) -Wl,--no-whole-archive -Wl,--start-group $(EXTLIBS) -Wl,--end-group
+ 
+ export INSTALL SHELL_PATH
+ 
+@@ -744,6 +744,7 @@ $(shell [ -d '$(OUTPUT)python' ] || mkdir -p '$(OUTPUT)python')
+ $(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): util/python.c util/setup.py python/perf.pyi $(PERFLIBS_PY)
+ 	$(QUIET_GEN)LDSHARED="$(CC) -pthread -shared" \
+         CFLAGS='$(CFLAGS)' LDFLAGS='$(LDFLAGS) $(LIBS_PY)' \
++	  PYTHON_EXT_DEPS='$(PERFLIBS_PY)' \
+ 	  $(PYTHON_WORD) util/setup.py \
+ 	  $(python_setup_quiet) build_ext; \
+ 	cp $(PYTHON_EXTBUILD_LIB)perf*.so $(OUTPUT)python/; \
 diff --git a/tools/perf/util/setup.py b/tools/perf/util/setup.py
-index cb14554454a21..8380980ade4c4 100644
+index 8380980ade4c4..3b6a59f66944c 100644
 --- a/tools/perf/util/setup.py
 +++ b/tools/perf/util/setup.py
-@@ -1,112 +1,194 @@
--from os import getenv, path
--from subprocess import Popen, PIPE
--from re import sub
-+# SPDX-License-Identifier: GPL-2.0
-+"""Setup script for perf python extension.
-+
-+This script is used to build and install the perf python binding.
-+It handles compiler-specific flags, especially for clang, and configures
-+the setuptools Extension.
-+"""
-+
-+import os
- import shlex
- import shutil
-+import subprocess
-+import sysconfig
- 
--cc = getenv("CC")
--assert cc, "Environment variable CC not set"
-+from setuptools import setup, Extension
-+from setuptools.command.build_ext import build_ext as _build_ext
-+from setuptools.command.install_lib import install_lib as _install_lib
- 
--# Check if CC has options, as is the case in yocto, where it uses CC="cc --sysroot..."
--cc_tokens = cc.split()
--if len(cc_tokens) > 1:
--    cc = cc_tokens[0]
--    cc_options = " ".join([str(e) for e in cc_tokens[1:]]) + " "
--else:
--    cc_options = ""
- 
--# ignore optional stderr could be None as it is set to PIPE to avoid that.
--# mypy: disable-error-code="union-attr"
--cc_is_clang = b"clang version" in Popen([cc, "-v"], stderr=PIPE).stderr.readline()
-+def clang_has_option(cc: str, cc_args: list[str], src_feature_tests: str, option: str) -> bool:
-+    """Check if clang supports a specific option.
- 
--srctree = getenv('srctree')
--assert srctree, "Environment variable srctree, for the Linux sources, not set"
--src_feature_tests  = f'{srctree}/tools/build/feature'
-+    Args:
-+        cc: The compiler executable.
-+        cc_args: Compiler arguments from CC environment variable.
-+        src_feature_tests: Path to the feature tests directory.
-+        option: The compiler option to check (e.g., "-mcet").
- 
--def clang_has_option(option):
-+    Returns:
-+        True if the option is supported, False otherwise.
-+    """
-     error_substrings = (
-         b"unknown argument",
-         b"is not supported",
-         b"unknown warning option"
+@@ -173,6 +173,7 @@ def main() -> None:
+     perf = Extension(
+         'perf',
+         sources=[os.path.join(src_perf, 'util/python.c')],
++        depends=shlex.split(os.getenv('PYTHON_EXT_DEPS', '')),
+         include_dirs=['util/include'],
+         extra_compile_args=cflags,
      )
--    cmd = shlex.split(f"{cc} {cc_options} {option}") + [
-+    cmd = [cc] + cc_args + [
-+        option,
-         "-o", "/dev/null",
--        path.join(src_feature_tests, "test-hello.c")
-+        os.path.join(src_feature_tests, "test-hello.c")
-     ]
--    cc_output = Popen(cmd, stderr=PIPE).stderr.readlines()
-+    try:
-+        res = subprocess.run(cmd, stderr=subprocess.PIPE, stdout=subprocess.DEVNULL, check=False)
-+        cc_output = res.stderr.splitlines()
-+    except OSError:
-+        return False
-     return not any(any(error in line for error in error_substrings) for line in cc_output)
- 
--if cc_is_clang:
--    from sysconfig import get_config_vars
--    vars = get_config_vars()
-+
-+def filter_clang_options(cc: str, cc_args: list[str], src_feature_tests: str) -> None:
-+    """Filter out unsupported clang options from sysconfig CFLAGS and OPT.
-+
-+    Args:
-+        cc: The compiler executable.
-+        cc_args: Compiler arguments from CC environment variable.
-+        src_feature_tests: Path to the feature tests directory.
-+    """
-+    config_vars = sysconfig.get_config_vars()
-     for var in ('CFLAGS', 'OPT'):
--        vars[var] = sub("-specs=[^ ]+", "", vars[var])
--        if not clang_has_option("-mcet"):
--            vars[var] = sub("-mcet", "", vars[var])
--        if not clang_has_option("-fcf-protection"):
--            vars[var] = sub("-fcf-protection", "", vars[var])
--        if not clang_has_option("-fstack-clash-protection"):
--            vars[var] = sub("-fstack-clash-protection", "", vars[var])
--        if not clang_has_option("-fstack-protector-strong"):
--            vars[var] = sub("-fstack-protector-strong", "", vars[var])
--        if not clang_has_option("-fno-semantic-interposition"):
--            vars[var] = sub("-fno-semantic-interposition", "", vars[var])
--        if not clang_has_option("-ffat-lto-objects"):
--            vars[var] = sub("-ffat-lto-objects", "", vars[var])
--        if not clang_has_option("-ftree-loop-distribute-patterns"):
--            vars[var] = sub("-ftree-loop-distribute-patterns", "", vars[var])
--        if not clang_has_option("-gno-variable-location-views"):
--            vars[var] = sub("-gno-variable-location-views", "", vars[var])
-+        if var not in config_vars:
-+            continue
-+
-+        # Split into individual flags using shlex to preserve quoted arguments
-+        flags = shlex.split(config_vars[var])
-+
-+        # Remove -specs=...
-+        flags = [f for f in flags if not f.startswith("-specs=")]
-+
-+        options = (
-+            "-mcet",
-+            "-fcf-protection",
-+            "-fstack-clash-protection",
-+            "-fstack-protector-strong",
-+            "-fno-semantic-interposition",
-+            "-ffat-lto-objects",
-+            "-ftree-loop-distribute-patterns",
-+            "-gno-variable-location-views"
-+        )
-+        for option in options:
-+            if not clang_has_option(cc, cc_args, src_feature_tests, option):
-+                # Remove the option and any variant (e.g. -option=...)
-+                flags = [f for f in flags if not f.startswith(option)]
-+
-+        # Re-join flags preserving quoting
-+        config_vars[var] = shlex.join(flags)
-+
-+
-+class BuildExt(_build_ext):
-+    """Custom build_ext command to set output directories."""
-+
-+    def __init__(self, *args, **kwargs):
-+        self.build_lib = None
-+        self.build_temp = None
-+        super().__init__(*args, **kwargs)
-+
-+    def finalize_options(self) -> None:
-+        _build_ext.finalize_options(self)
-+        build_lib = os.getenv('PYTHON_EXTBUILD_LIB')
-+        build_tmp = os.getenv('PYTHON_EXTBUILD_TMP')
-+        if build_lib:
-+            self.build_lib = build_lib
-+        if build_tmp:
-+            self.build_temp = build_tmp
- 
--from setuptools import setup, Extension
- 
--from setuptools.command.build_ext   import build_ext   as _build_ext
--from setuptools.command.install_lib import install_lib as _install_lib
-+class InstallLib(_install_lib):
-+    """Custom install_lib command to set output directory."""
- 
--class build_ext(_build_ext):
--    def finalize_options(self):
--        _build_ext.finalize_options(self)
--        self.build_lib  = build_lib
--        self.build_temp = build_tmp
-+    def __init__(self, *args, **kwargs):
-+        self.build_dir = None
-+        super().__init__(*args, **kwargs)
- 
--class install_lib(_install_lib):
--    def finalize_options(self):
-+    def finalize_options(self) -> None:
-         _install_lib.finalize_options(self)
--        self.build_dir = build_lib
-+        build_lib = os.getenv('PYTHON_EXTBUILD_LIB')
-+        if build_lib:
-+            self.build_dir = build_lib
- 
-     def run(self):
-         _install_lib.run(self)
--        shutil.copy2(f'{src_perf}/python/perf.pyi', self.install_dir)
--
--
--# switch off several checks (need to be at the end of cflags list)
--extra_cflags = ['-fno-strict-aliasing', '-Wno-write-strings', '-Wno-unused-parameter', '-Wno-redundant-decls' ]
--if cc_is_clang:
--    extra_cflags += ["-Wno-unused-command-line-argument" ]
--    if clang_has_option("-Wno-cast-function-type-mismatch"):
--        extra_cflags += ["-Wno-cast-function-type-mismatch" ]
--else:
--    extra_cflags += ['-Wno-cast-function-type' ]
--
--# The python headers have mixed code with declarations (decls after asserts, for instance)
--extra_cflags += [ "-Wno-declaration-after-statement" ]
--
--src_perf  = f'{srctree}/tools/perf'
--build_lib = getenv('PYTHON_EXTBUILD_LIB')
--build_tmp = getenv('PYTHON_EXTBUILD_TMP')
--
--perf = Extension('perf',
--                 sources = [ src_perf + '/util/python.c' ],
--		         include_dirs = ['util/include'],
--		         extra_compile_args = extra_cflags,
--                 )
--
--setup(name='perf',
--      version='0.1',
--      description='Interface with the Linux profiling infrastructure',
--      author='Arnaldo Carvalho de Melo',
--      author_email='acme@redhat.com',
--      license='GPLv2',
--      url='http://perf.wiki.kernel.org',
--      ext_modules=[perf],
--      cmdclass={'build_ext': build_ext, 'install_lib': install_lib})
-+        srctree = os.getenv('srctree', '.')
-+        src_perf = os.path.join(srctree, 'tools/perf')
-+        shutil.copy2(os.path.join(src_perf, 'python/perf.pyi'), self.install_dir)
-+
-+
-+def main() -> None:
-+    """Main entry point for the setup script."""
-+    cc_env = os.getenv("CC")
-+    assert cc_env, "Environment variable CC not set"
-+
-+    # Safe parsing of CC environment variable which might contain options/quotes
-+    cc_tokens = shlex.split(cc_env)
-+    cc = cc_tokens[0]
-+    cc_args = cc_tokens[1:]
-+
-+    # Run CC -v to check if it is clang.
-+    try:
-+        cc_info = subprocess.run(
-+            [cc, "-v"], stderr=subprocess.PIPE, stdout=subprocess.DEVNULL, check=False
-+        )
-+        cc_is_clang = b"clang version" in cc_info.stderr
-+    except OSError as e:
-+        raise RuntimeError(f"Failed to execute compiler '{cc}': {e}") from e
-+
-+    srctree = os.getenv('srctree')
-+    assert srctree, "Environment variable srctree, for the Linux sources, not set"
-+    src_feature_tests = f'{srctree}/tools/build/feature'
-+
-+    if cc_is_clang:
-+        filter_clang_options(cc, cc_args, src_feature_tests)
-+
-+    # switch off several checks (need to be at the end of cflags list)
-+    cflags = [
-+        '-fno-strict-aliasing',
-+        '-Wno-write-strings',
-+        '-Wno-unused-parameter',
-+        '-Wno-redundant-decls'
-+    ]
-+    if cc_is_clang:
-+        cflags += ["-Wno-unused-command-line-argument"]
-+        if clang_has_option(
-+            cc, cc_args, src_feature_tests, "-Wno-cast-function-type-mismatch"
-+        ):
-+            cflags += ["-Wno-cast-function-type-mismatch"]
-+    else:
-+        cflags += ['-Wno-cast-function-type']
-+
-+    # The python headers have mixed code with declarations (decls after asserts, for instance)
-+    cflags += ["-Wno-declaration-after-statement"]
-+
-+    src_perf = f'{srctree}/tools/perf'
-+
-+    perf = Extension(
-+        'perf',
-+        sources=[os.path.join(src_perf, 'util/python.c')],
-+        include_dirs=['util/include'],
-+        extra_compile_args=cflags,
-+    )
-+
-+    setup(
-+        name='perf',
-+        version='0.1',
-+        description='Interface with the Linux profiling infrastructure',
-+        author='Arnaldo Carvalho de Melo',
-+        author_email='acme@redhat.com',
-+        license='GPLv2',
-+        url='http://perf.wiki.kernel.org',
-+        ext_modules=[perf],
-+        cmdclass={'build_ext': BuildExt, 'install_lib': InstallLib},
-+    )
-+
-+
-+if __name__ == '__main__':
-+    main()
 -- 
 2.53.0
 
