@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045082;
-	b=2Bw94jqCdvO974XBdT15jwZPbbwz1zU/O/1S2RIzfoDqhQyfSHzs0dIDZoDzjLVXrcJ+
-	 GFg9v7wG+oTdg3xd23GH5E0sCWD6YqrSCaxJp5IqeiGx1StAWGPxYG/e7/YJf+t1G06WB
-	 oTwHPEemuke7BHCTbWIDrgNsvTBtfBS1YF/Fm1ujGG/KPYTAEXeWmKBN1Kqa+GZcp4KWA
-	 VjHObpMZY4gSAsI6vOjketrVMi463wgJOjji3CyIkR81MuNDpTKpWOoDJTm6w4t5uLGw0
-	 oJ6281k49kKqHX1KOfvACRAMgw3IXxHTsn04GaeYzywrg0Zrn9pQAlYky2Hyws3E2Lw==
+	t=1795045085;
+	b=N5KMOpsTkp2gPvmEsR+qbcGp2R012cjo7Y6JMY02orQgeZNLuYwIzS3e73jqvb2z9599
+	 LNk0CuOg+RZtYHWlQc0IetQt9eTVpkFhSURYfBgA+k6sSjHdgRtbqsL0Nh/AQ7yJ67VSL
+	 g66dWk13cIBsS3Kn5rmFNuKEzF1y+PZ1m6zaleDidY3q5rpVoorAIqdx7UEz5lYRbjceP
+	 U7rIa4HGa0BWZZ7UwWXnCm2UnevyDJhWudzM3TUINSIt3E5RrZu6xAObde+1QEKrSOYhu
+	 D76ixCadJPs2vqPg6DgkzU0wFaWS4LbRpKdwOCivcd+EWfRJXQNMbvpSvnrxZIA1nkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045082;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045085;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4OXEYcltw71HlhZ95//6NVFuME3VDMZeMq/AQXS3OTk=;
-	b=0YhV0DnQNazHtaX0qzFKFvcWDR2n1+48CDH0YF+w5OS0NGqmOU4tqGgbNvf+mkxoWejj
-	 VanGSVvJzsnxQdehh2Kd2i60S/mhfVy9+vuqz1vdsLDsooM1177yoRapU9IcRTVuVgDKa
-	 DbyyMKW/0AhU+522OmkWgs+pFapSQXKBB6Wwskc8fvOxpahgLkGxhPanXCxjFqLrGZCJW
-	 iIYv0uLZRhHDGtnugo6fRn0meaYtvE3Vd4l3/V3uPHSRvkADSorOP/ymiOY9pw0Fde/eG
-	 xyYEd50JjHwP8K76/lcbSrazISniekkdvQWGT3mfynuSM+S/VR+hSuHI8vqrHPRYCwg==
+	bh=TeyL/4sjhaso/Fr8ekPw3ucLau6vxZ2oXJ7KgXMKOC8=;
+	b=vfghS1iW2/GJhA+rdhwgKGlLSNqNpNMder6+SMjKV0ugGmpZyhd2/FKQxUXpASF63GAB
+	 P7rTFqS9jhnCX0uoSJyf1v2HboC6AKZuIw2awvp8wyeB1zhiLFDJqZlEfqNTXJsY3JdzE
+	 uDVrPIdoG8h1/e+7ztSZ338aYUa+/QB0e4McANJLOMAqtP/503NxbkwQoGyclHcRkMkTp
+	 pQL+z8MAFK7EGmZcsYJM3Ypz8ULd67FdymztnrR8+k17cep7cwckeTRognTiPOPNp35h6
+	 A1vLSgRXp9SJ9u8rQJgZodorJqqI3y9H1VoiSyFYslr5jEgctKUNdoHArdIH2RJCGTQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bhNf53tc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6PTgiMZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9BF2606A330;
-	Wed, 18 Nov 2026 23:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37F3606A334;
+	Wed, 18 Nov 2026 23:38:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bhNf53tc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BBB1F000C5;
-	Wed, 18 Nov 2026 23:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6PTgiMZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0410B1F000C5;
+	Wed, 18 Nov 2026 23:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045082;
-	bh=4OXEYcltw71HlhZ95//6NVFuME3VDMZeMq/AQXS3OTk=;
+	s=korg; t=1795045085;
+	bh=TeyL/4sjhaso/Fr8ekPw3ucLau6vxZ2oXJ7KgXMKOC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bhNf53tc4t/ngowSIEzhP6tN5ruRXbxJzSd+ynClR7kRI3qLdMuh4F80LtKHii1ax
-	 9Dsoflh9wyHccYntm5XTeIfYUro+sNGLuwJfpMdutlx1BTneud1ytf75WIPc+K4cOu
-	 9K3UkL/c1b0XRw/qS1/RKmz0JaFUSjazCFwJAn4I=
+	b=z6PTgiMZzv49DMtaKA1EJXZ6JiHhy5Xi+EvLpZ8gwHyEVBUU98ryvUuFEWMzpTXz9
+	 eBF3Kg7S+a5LT8pcuv/l9bDqPRFWatVdgO5CO3GL09Kx618nWGSgwJntOEgR+IrHh0
+	 piWoiBhC4EYyLvpQfH8NVLGpdGyWmU9e/Qbo/aJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuchao Zhang <ndaugoing@gmail.com>,
-	Yu Kuai <yukuai@fygo.io>,
+	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0798/2857] md: validate bblog_size when loading v1.x badblocks metadata
-Date: Wed, 18 Nov 2026 15:30:32 +0100
-Message-ID: <20261118150230.308671008@linuxfoundation.org>
+Subject: [PATCH 6.1 0799/2857] crypto: amlogic - Fix IRQ handler return value and fallthrough logic
+Date: Wed, 18 Nov 2026 15:30:33 +0100
+Message-ID: <20261118150230.344723590@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,58 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuchao Zhang <ndaugoing@gmail.com>
+From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
 
-[ Upstream commit ae5f89b23cb88667cfa1273b42d6a551db9c651e ]
+[ Upstream commit 4b8ae2732070c5669adee2d5d3bb97b14af53a63 ]
 
-In super_1_load(), when the on-disk feature_map does not have
-MD_FEATURE_BAD_BLOCKS set but sb->bblog_offset is non-zero,
-rdev->badblocks.shift is initialized to 0 without validating
-sb->bblog_size.  The same field is validated in the
-MD_FEATURE_BAD_BLOCKS branch ("sectors > (PAGE_SIZE / 512)"), but this
-branch bypasses that check.
+In meson_irq_handler(), when an interrupt matches a flow but the status
+register is empty, the driver prints an error but doesn't return. It
+falls through the loop and incorrectly prints an `unknown irq` message.
 
-A forged on-disk superblock (malicious storage device or crafted
-image) can therefore carry an oversized sb->bblog_size.  When bad
-blocks are later recorded, super_1_sync() sets bb->size from
-sb->bblog_size and md_write_metadata() issues a bio larger than the
-single rdev->bb_page, reading beyond the page and leaking kernel
-memory contents to disk.
+Fix this by returning immediately. For empty status registers, return
+IRQ_NONE instead of IRQ_HANDLED to avoid masking spurious interrupts and
+allow the kernel to detect interrupt storms. Also use
+dev_err_ratelimited() to prevent console lockups during an interrupt
+storm.
 
-sb->bblog_size is never modified by the kernel between load and sync,
-and the MD_FEATURE_BAD_BLOCKS branch already validates it, so checking
-it in this branch is sufficient to cover both paths.
+Additionally, the handler returned IRQ_HANDLED for genuinely unknown
+interrupts. Return IRQ_NONE instead for unhandled interrupts.
 
-Fix this by rejecting an oversized sb->bblog_size with -EINVAL,
-matching the existing check in the MD_FEATURE_BAD_BLOCKS branch.
-
-Fixes: 2699b67223ac ("md: load/store badblock list from v1.x metadata")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuchao Zhang <ndaugoing@gmail.com>
-Link: https://patch.msgid.link/20260922044606.30774-1-ndaugoing@gmail.com
-Signed-off-by: Yu Kuai <yukuai@fygo.io>
+Fixes: 48fe583fe5417 ("crypto: amlogic - Add crypto accelerator for amlogic GXL")
+Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/crypto/amlogic/amlogic-gxl-core.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 712789d386dd4..b60321f1e808f 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -1749,8 +1749,11 @@ static int super_1_load(struct md_rdev *rdev, struct md_rdev *refdev, int minor_
- 			if (badblocks_set(&rdev->badblocks, sector, count, 1))
- 				return -EINVAL;
+diff --git a/drivers/crypto/amlogic/amlogic-gxl-core.c b/drivers/crypto/amlogic/amlogic-gxl-core.c
+index 5db6848b49af6..c4c4b952d389a 100644
+--- a/drivers/crypto/amlogic/amlogic-gxl-core.c
++++ b/drivers/crypto/amlogic/amlogic-gxl-core.c
+@@ -35,12 +35,13 @@ static irqreturn_t meson_irq_handler(int irq, void *data)
+ 				complete(&mc->chanlist[flow].complete);
+ 				return IRQ_HANDLED;
+ 			}
+-			dev_err(mc->dev, "%s %d Got irq for flow %d but ctrl is empty\n", __func__, irq, flow);
++			dev_err_ratelimited(mc->dev, "%s %d Got irq for flow %d but ctrl is empty\n", __func__, irq, flow);
++			return IRQ_NONE;
  		}
--	} else if (sb->bblog_offset != 0)
-+	} else if (sb->bblog_offset != 0) {
-+		if (le16_to_cpu(sb->bblog_size) > (PAGE_SIZE / 512))
-+			return -EINVAL;
- 		rdev->badblocks.shift = 0;
-+	}
+ 	}
  
- 	if ((le32_to_cpu(sb->feature_map) &
- 	    (MD_FEATURE_PPL | MD_FEATURE_MULTIPLE_PPLS))) {
+-	dev_err(mc->dev, "%s %d from unknown irq\n", __func__, irq);
+-	return IRQ_HANDLED;
++	dev_err_ratelimited(mc->dev, "%s %d from unknown irq\n", __func__, irq);
++	return IRQ_NONE;
+ }
+ 
+ static struct meson_alg_template mc_algs[] = {
 -- 
 2.53.0
 
