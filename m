@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024327;
-	b=aLRyNdHH3zVAzSLj6ullosZrIUvJCXHfEPtgLOu+8mDIc56n6gFsjxxkYjcTZLytK4oM
-	 TWflxlv0ZqDLtdBZDqIQWLZ2OC4NTGkDsiSgTnonGVn+5509nf1B7WmE0k9CjY3BYQvuZ
-	 hGJC/0LroLdqHeMtI8MMHQSR5/wkNeQZhefu+hCJEDOoVpKZL/bHICSok40KvR0uAhyx4
-	 D0h/SC/eEUDtIVUYBIhm1SMCGbJYoI3ZyZGjvG5FiwRhMR1eQ6bbft+y4/NNYuCBwTuQJ
-	 Dzs5YY5yHCkjBMR5EZuzCo5HEWfhqx+k9RcNeJ1znb4ucRIqXmMx0KI+aFo7cL2V14g==
+	t=1795024330;
+	b=tVkqx/UfOmBqSo/fM+TxECicHZhpdeieD5mFALiAKZEFiu1IKfuIv5O5aDuiZpFGtgGI
+	 JgpVFcdFlkMyQSBCwjGXB78S/u6ewlODnzNRYcyka95LZTuYw+p9LIKrBVSC87IcWvQUZ
+	 edx+bP8jMEx9+HAAHZldgqaNQCHx7I5NWZqeOKJGSjVGgVqDFBgbpr+jiHUL2MpVOYv64
+	 uomR91suinILqKZaOGh+R80IKvQmh6NC4u7kvjwyF18d3bkf79L/0j4CPc/NyxzqUcGpZ
+	 +EO6/hNc97OnBgeeWaiU83BPl/wegRCR77cwSIjXDt8rrvyEok8Wall5fZzusaZ+KiA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024327;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024330;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=X0pFYAUtbNjsQx0/lSHFsF5mVG4b4rtY6PWIOkALsFY=;
-	b=Gwoh/lL4IftF/I6cnr2pvPDmYPfVwev0CNTFxtc/wiKO5MCUOsWvnSlsNzhJ5hfKJbVZ
-	 HD8Mzma+rA8lZ9pep2dggcT3dj7Hixhwnoms0GDYunGHQmk4U+JK1wfmKPaaqjCZgXIRX
-	 eCKE1xZ/khW5LYD7Cug7md/D+nzXkERgO2I7w3c5Jc0ja3E9q8aIxK5yMn7ZRQG3xk4wK
-	 B2+3tWniDTzTZIyIekUfsUo3sCo1qSW4I9mB97T2FPqDXRC9RwTSwBAj/dLPtTXtsA4it
-	 bi3E/dH+QzfmeY4CEoaZjlc8XQQCvFKvlz2DG5tTQ69cApvQl1mHh40AE+S/AXkhUBA==
+	bh=kyylfqVKMuBLNg4/6eHtXtnIyxfKVwF2eu0PnFXIQSw=;
+	b=IJFhkckiau43W8+uCr1JF3oJNUAsoJC4Fyko5OjumeOmC+4Tr/6GOC5Q9Kq1wpAx8VD6
+	 Y9471i4M3qvm/w5ckFR2aemqrFDbUWSypu1juN9293PlAwQQmRchFLVVCIDocl82vyC14
+	 U7xHvD+d4QSf2sM4f7uPRsApb+AVcqeJR6iOTpBAoTbOz1BL1X1pxmw1krMsfaY1/zQVo
+	 EFrpZzCfg6BL8oT2ot+LxbaIzE0Z7bRzEPRyFmClLxFeuETLnNTJiFpanfVDDVSO1MAiO
+	 IuxMakF3WlGOnszskqOSlvRny7FxbBSHG5ITNmCW/k+6wcCr6fyxJRGcTtLif5lwskQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWT634fb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqOdVRt2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBD6606A33B;
-	Wed, 18 Nov 2026 17:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8025160A2610;
+	Wed, 18 Nov 2026 17:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iWT634fb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4171F000C4;
-	Wed, 18 Nov 2026 17:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zqOdVRt2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D066C1F00939;
+	Wed, 18 Nov 2026 17:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024327;
-	bh=X0pFYAUtbNjsQx0/lSHFsF5mVG4b4rtY6PWIOkALsFY=;
+	s=korg; t=1795024330;
+	bh=kyylfqVKMuBLNg4/6eHtXtnIyxfKVwF2eu0PnFXIQSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iWT634fbcrbly+1z04PX9sloPNd56LnrMdLapXQNolN37Ze/Q6K5NjMWYB8hxv3fq
-	 VNDNO0kOHz9+dhZU3c68wlqYFML+kWQTvS6vVqGTWiz4cqgWpzSDwsZYZSa+5ATL4P
-	 2d7a6k6BECgrcScVGuX6/PZxE3nOB4Mh2pqvyGGo=
+	b=zqOdVRt2tILYoofkXhGG+rihJtgtABgB58cutEF9bHcSt3lNm9L/bitK8QpyLn0cS
+	 HW5+QT6aIFnBzqYJDYrpP5V9lv0xZxAzP6LUVptNJByECTUskgkSnLdkEQILBJ1KAQ
+	 JfuLD6iiqE9JhQIGSvR+x1I38aB0sn4gxhY1nAbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Laurent Vivier <laurent@vivier.eu>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0685/2151] um: Add definition of __NR_close_range for older host OSs
-Date: Wed, 18 Nov 2026 15:40:20 +0100
-Message-ID: <20261118150146.756344463@linuxfoundation.org>
+Subject: [PATCH 6.18 0650/2151] swim: Revisit delays
+Date: Wed, 18 Nov 2026 15:39:45 +0100
+Message-ID: <20261118150145.524911704@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,49 +70,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 03dcf7bd302c9bae0c75a21a3004a44b4940317e ]
+[ Upstream commit bbcd3e38a4f355d6b0320f3f6916df96c109f2ad ]
 
-__NR_close_range was introduced with
-278a5fbaed89dacd04e9d052f4594ffd0e0585de ("open: add close_range()")
-which is present in Linux >= 5.9. Older hosts running a kernel version
-prior to that range currently fail to build due to that missing system
-call number definition.
+AFAIK, timing requirements for the various FDHD drive mechanisms aren't
+well documented. But we do have the UPD72070 spec and secondary sources
+like swim3.c and mkLinux source code. This patch is needed to satisfy
+the requirements in the UPD72070 spec and follows mkLinux.
 
-Fixes: f82a9e7b9fa9 ("um: fix execve stub execution on old host OSs")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260812173249.98435-1-florian.fainelli@broadcom.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Change the LSTRB pulse to 2 microseconds, because this is what mkLinux
+does. Inside Macintosh says, "Hold LSTRB high for at least one usec but
+not more than one msec".
+
+When a disk is ejected, pause before de-asserting /ENBL. Wait 150 us after
+the STEP command for valid signalling. Pause for 1 us after setting the
+step direction before sending the STEP command.
+
+Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://patch.msgid.link/af356248a1e6a4fd956f71acf17feead27ba4918.1788513997.git.fthain@linux-m68k.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/include/shared/skas/stub-data.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/block/swim.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/um/include/shared/skas/stub-data.h b/arch/um/include/shared/skas/stub-data.h
-index 27db38e95df91..1230a325debcd 100644
---- a/arch/um/include/shared/skas/stub-data.h
-+++ b/arch/um/include/shared/skas/stub-data.h
-@@ -9,11 +9,20 @@
- #define __STUB_DATA_H
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index 2e343766f4535..2fdf36868155e 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -290,7 +290,7 @@ static inline void swim_action(struct swim __iomem *base, int action)
+ 	swim_select(base, action);
+ 	udelay(1);
+ 	swim_write(base, phase, LSTRB | action | PHASE_PIN_DIR);
+-	udelay(1);
++	udelay(2);
+ 	swim_write(base, phase, action | PHASE_PIN_DIR);
+ 	udelay(1);
  
- #include <linux/compiler_types.h>
-+#include <asm/unistd.h>
- #include <as-layout.h>
- #include <sysdep/tls.h>
- #include <sysdep/stub-data.h>
- #include <mm_id.h>
+@@ -337,6 +337,7 @@ static inline void swim_drive(struct swim __iomem *base,
+ 		swim_write(base, mode0, EXTERNAL_DRIVE);
+ 		swim_write(base, mode0, MOTON);
+ 	}
++	udelay(1);
+ }
  
-+#ifndef __NR_close_range
-+# if defined(__alpha__)
-+#  define __NR_close_range 546
-+# else
-+#  define __NR_close_range 436
-+# endif
-+#endif
-+
- #define FUTEX_IN_CHILD 0
- #define FUTEX_IN_KERN 1
+ static inline void swim_motor(struct swim __iomem *base,
+@@ -355,6 +356,7 @@ static inline void swim_eject(struct swim __iomem *base)
+ {
+ 	swim_action(base, EJECT);
+ 	swim_readbit_timeout(base, DISK_IN, false, 2000 * 1000);
++	msleep(1);
+ }
+ 
+ static inline void swim_head(struct swim __iomem *base, enum head head)
+@@ -368,6 +370,7 @@ static inline void swim_head(struct swim __iomem *base, enum head head)
+ static inline int swim_step(struct swim __iomem *base)
+ {
+ 	swim_action(base, STEP);
++	udelay(150);
+ 	return swim_readbit_timeout(base, STEP, false, 20 * 1000);
+ }
+ 
+@@ -398,6 +401,7 @@ static inline int swim_seek(struct swim __iomem *base, int step)
+ 		step = -step;
+ 	} else if (step > 0)
+ 		swim_action(base, SEEK_POSITIVE);
++	udelay(1);
+ 
+ 	swim_READY_timeout(base);
  
 -- 
 2.53.0
