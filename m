@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028538;
-	b=icz/eC34FiRXGcs0TBfU6h+SlZXHk6PN8DiOzkWilgHRSx3p6caR1+Hane4KGzViC/EU
-	 aVsxw0lSndl3ieKGZFUDcuRW0Ud/pY9JYjDBlBxKLDRec/2puAoFA8ZwgTlpEgs5gr+xw
-	 IeVptuUFKto60ihq2DD1V+y3W5kUHY2NRr/pixzfhXsC+6ZxmhCePF2BH6CAEdjfFhBOB
-	 +gE8o81L5VT6GZuGm6K1S8jMh5W2S6EG1TBCq6jyYAye5Or8YfonilIg5UQMm8FvfcANs
-	 bKIuFo59fX4P+W4ijHFeG0ioNv5SGDDlluGi8i5nBCHvnUOWUnw7VYbHekf1t5s7FYA==
+	t=1795028541;
+	b=MRSjEfyFLtt3E0HAjB04BI/gMnL3aapzzos0ntvAfZi5PdAV634WgZV+t0awuh3THxuQ
+	 JgjXmJbagx12ZBeOVrlyFrSF2sXqRoevctNVZf+EhgIw5XW4wKNhDJkajO1I193Z8J5n1
+	 CazOnCtQRPR8dLtv6VK0WU0jY3ySB1VRPC/VwpqkWJSGbYEslZbmPJ4/J1q/AR+9sfnSX
+	 joNLURLsyvnhySJLXSCw5x94GfkiV4fJLBbJIbw1Xpd4E/QOLZnfKA2VSav+hpoQX1BM3
+	 ufj4sT5bH2aGhgTm7VXoDhPGv6pNYSUI3qUrVlubJrgcTfYt5JfdOcUJr742jkQiE7A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=/fY3rO8o3AJ/jkzAZq+2AbFLO43WQzjCi8WgYV4hXsg=;
-	b=huQV7FhWAWVAD1HsGG6s5VdnQy7KNpvHyyFPQ6fgt5G+DZha9tUNULLSV5ILzpfNPm8A
-	 vqvT0xyrik15QHSgQ/hq9QzWcCgMwMcDxr4xeYnRwDtQ39992jD21RiqgTxojpfOTzclr
-	 tvAsZePvugjHZ+wutFlm91/qKyApGRqVgjifKvyfvWjS0tIl+KIUvd96kQrPGRkdx/3D6
-	 h/NvREZbgDBOUce+JEr2mfiD8cSwwpltJkWsm+auH63Xv8DyNzSNUNYg/UOKR2yDvLDf9
-	 9HPIjmtvnKm4ROSZAmgibUu4AcmGPBdV7Ym3zkeQjrNAvmay8QkwNekmuZmuIyNPzeA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=USwK2v6sYuvKKBzE/eWG31USYjKd1RG1Y1HCb8jg9eg=;
+	b=KGpeamtkBug+C57gZQK9J1ky0T8CUaDr08CguaVjD2dELZTFc03/qH9RqMyzYMLOPmUe
+	 Ci1xRK4UfYBqidcUYDuUP1f3ljSoUrsaiR1wdFzxJoZuS7qP8SDpfxvy5cjxAeGPX28u4
+	 LlsEYaxfBpwUZMLDGaZ/Qj17hzZ1slMQrzaNS7zT9wqgiCszmGcIqxlKbAuzCz+lV+Z7k
+	 D7PO2WCAh4tOCN6Hw7z1A1eYmU7NMR/BO9OTsmDXz4BPXrA78yfE0RMgqxY/JruKyQwu2
+	 aDeVj1mGCJpQp/tTuYksgvNkwdkOxBw0QZu35ZoqFNGUunDnUq/mxnMc50YA091T4FA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPZ+RQzf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZqZbzLf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DB37606A31C;
-	Wed, 18 Nov 2026 19:02:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECF6606A320;
+	Wed, 18 Nov 2026 19:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BPZ+RQzf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73351F000C4;
-	Wed, 18 Nov 2026 19:02:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kZqZbzLf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB02F1F000C4;
+	Wed, 18 Nov 2026 19:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028538;
-	bh=/fY3rO8o3AJ/jkzAZq+2AbFLO43WQzjCi8WgYV4hXsg=;
+	s=korg; t=1795028541;
+	bh=USwK2v6sYuvKKBzE/eWG31USYjKd1RG1Y1HCb8jg9eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BPZ+RQzftS3TaIhG8to4P0T3QrJ//qD9+f6BSd3RUy+RfPZfrD1qsRgKRhjx4ZYof
-	 BN+9l5O8433ZpEHH2MY9L07FTmSYfdioZFg/yPwWP/uL4AY1ceKg3u8sZuL8Lq6LGH
-	 1HeltZMwY9/AqAO2Mb4nOLC+A49og1fidCOIDf9g=
+	b=kZqZbzLfXvkRB8hRTNGBPeTH/z2yQX4sFWWWIGGP2U4xFL46ZyYzoKbFqE6fZXXxQ
+	 LWDdp7iFBsiM8/5mTgoOGGjBmHf9ycTbpbSCL1Pk9N26+iEjWpG27bWuz/TQ5Cj545
+	 fjHPIvAOSCeTJOQS6G8S43xZfPW2jHxir01PeD0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0032/1756] drm/amdgpu: finish GPU recovery callbacks before restarting schedulers
-Date: Wed, 18 Nov 2026 15:35:59 +0100
-Message-ID: <20261118150009.142238260@linuxfoundation.org>
+Subject: [PATCH 6.12 0033/1756] drm/amdgpu: drop the gang leader reference when freeing gang jobs
+Date: Wed, 18 Nov 2026 15:36:00 +0100
+Message-ID: <20261118150009.179615023@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,113 +63,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prike Liang <Prike.Liang@amd.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 733389cb31e2c55e355410759fdc68afe74a4582 ]
+[ Upstream commit c1584e10a7deb655438f21867b2b7a356a9aaf9f ]
 
-Run GPU post-reset callbacks, including KFD and display-audio resume,
-before restarting DRM scheduler workqueues. IP hardware initialization
-already happens inside ASIC recovery; this change orders the remaining
-callbacks before new scheduler submissions. Preserve the emergency-stop
-and guity job completition path's callbacks without starting schedulers,
+Every job of a gang except the leader holds a reference to the
+scheduled fence of the leader in job->gang_submit. Only
+amdgpu_job_free(), used for jobs which never ran, drops it, so for every
+gang submission which completes the scheduler fence of the leader, and
+with it its hardware fence, is leaked. amdgpu_job_free() in turn checks
+for the leader only after drm_sched_job_cleanup() cleared the scheduler
+fence, so a leader freed there drops a reference it never took.
 
-Signed-off-by: Prike Liang <Prike.Liang@amd.com>
-Acked-by: Lijo Lazar <lijo.lazar@amd.com>
+On navi31, 100 submissions of a GFX + COMPUTE gang grow the slab cache
+drm_sched_fence is merged into by 60 to 180 objects each time, while
+100 GFX only submissions don't.
+
+Use amdgpu_job_free() for the jobs the scheduler frees too, and check
+for the gang leader there before drm_sched_job_cleanup() clears the
+scheduler fence. As the scheduler clears the entity of the jobs it
+picked up, check for the scheduler fence instead to tell whether the job
+needs cleaning up.
+
+Keep freeing the remaining IBs with amdgpu_job_free_resources() after
+drm_sched_job_cleanup(), so that it frees them with the hardware fence or
+right away and not with the scheduler fence, which nobody signals for
+jobs aborted after drm_sched_job_arm(), like a CS returning -EAGAIN.
+
+v2: unify amdgpu_job_free() and amdgpu_job_free_cb() (Christian), don't
+    free the remaining IBs with the scheduler fence
+v3: drop the comments (Christian)
+v4: free the IBs with amdgpu_job_free_resources() again (Christian)
+
+Fixes: 68ce8b242242 ("drm/amdgpu: add gang submit backend v2")
+Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1f6433e2b264e75c56ae95f187788806201bdbc3)
+(cherry picked from commit df4d6d404d44bbc8fc850bc7f9f136a25dabf180)
 Cc: stable@vger.kernel.org
-[ sashal: adapted resume helper reordering to existing inline code in amdgpu_device_gpu_recover() ]
+[ sashal: adjusted cleanup context for an embedded hw_fence instead of separately allocated hardware and VM fences ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 48 +++++++++++-----------
- 1 file changed, 25 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 037cb9ce69e42..798e82769e789 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -6030,7 +6030,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+index 0abc38bb242ca..348a38ee36bb4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -274,17 +274,7 @@ void amdgpu_job_free_resources(struct amdgpu_job *job)
  
- 	if (need_emergency_restart)
--		goto skip_sched_resume;
-+		goto post_resume;
- 
- 	/*
- 	 * Must check guilty signal here since after this point all old
-@@ -6041,7 +6041,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 	if (job && dma_fence_is_signaled(&job->hw_fence.base)) {
- 		job_signaled = true;
- 		dev_info(adev->dev, "Guilty job already signaled, skipping HW reset");
--		goto skip_hw_reset;
-+		goto post_resume;
- 	}
- 
- retry:	/* Rest of adevs pre asic reset from XGMI hive. */
-@@ -6087,7 +6087,28 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 		amdgpu_device_stop_pending_resets(tmp_adev);
- 	}
- 
--skip_hw_reset:
-+post_resume:
-+	list_for_each_entry(tmp_adev, device_list_handle, reset_list) {
-+		/* unlock kfd: SRIOV would do it separately */
-+		if (!need_emergency_restart && !amdgpu_sriov_vf(tmp_adev))
-+			amdgpu_amdkfd_post_reset(tmp_adev);
-+
-+		/* kfd_post_reset will do nothing if kfd device is not initialized,
-+		 * need to bring up kfd here if it's not be initialized before
-+		 */
-+		if (!adev->kfd.init_complete)
-+			amdgpu_amdkfd_device_init(adev);
-+
-+		if (audio_suspended)
-+			amdgpu_device_resume_display_audio(tmp_adev);
-+
-+		amdgpu_device_unset_mp1_state(tmp_adev);
-+
-+		amdgpu_ras_set_error_query_ready(tmp_adev, true);
-+	}
-+
-+	if (need_emergency_restart)
-+		goto reset_unlock;
- 
- 	/* Post ASIC reset for all devs .*/
- 	list_for_each_entry(tmp_adev, device_list_handle, reset_list) {
-@@ -6126,26 +6147,7 @@ int amdgpu_device_gpu_recover(struct amdgpu_device *adev,
- 		}
- 	}
- 
--skip_sched_resume:
--	list_for_each_entry(tmp_adev, device_list_handle, reset_list) {
--		/* unlock kfd: SRIOV would do it separately */
--		if (!need_emergency_restart && !amdgpu_sriov_vf(tmp_adev))
--			amdgpu_amdkfd_post_reset(tmp_adev);
+ static void amdgpu_job_free_cb(struct drm_sched_job *s_job)
+ {
+-	struct amdgpu_job *job = to_amdgpu_job(s_job);
 -
--		/* kfd_post_reset will do nothing if kfd device is not initialized,
--		 * need to bring up kfd here if it's not be initialized before
--		 */
--		if (!adev->kfd.init_complete)
--			amdgpu_amdkfd_device_init(adev);
+-	drm_sched_job_cleanup(s_job);
 -
--		if (audio_suspended)
--			amdgpu_device_resume_display_audio(tmp_adev);
+-	amdgpu_sync_free(&job->explicit_sync);
 -
--		amdgpu_device_unset_mp1_state(tmp_adev);
--
--		amdgpu_ras_set_error_query_ready(tmp_adev, true);
--	}
--
-+reset_unlock:
- 	tmp_adev = list_first_entry(device_list_handle, struct amdgpu_device,
- 					    reset_list);
- 	amdgpu_device_unlock_reset_domain(tmp_adev->reset_domain);
+-	/* only put the hw fence if has embedded fence */
+-	if (!job->hw_fence.base.ops)
+-		kfree(job);
+-	else
+-		dma_fence_put(&job->hw_fence.base);
++	amdgpu_job_free(to_amdgpu_job(s_job));
+ }
+ 
+ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
+@@ -305,13 +295,14 @@ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
+ 
+ void amdgpu_job_free(struct amdgpu_job *job)
+ {
+-	if (job->base.entity)
++	if (job->gang_submit != &job->base.s_fence->scheduled)
++		dma_fence_put(job->gang_submit);
++
++	if (job->base.s_fence)
+ 		drm_sched_job_cleanup(&job->base);
+ 
+ 	amdgpu_job_free_resources(job);
+ 	amdgpu_sync_free(&job->explicit_sync);
+-	if (job->gang_submit != &job->base.s_fence->scheduled)
+-		dma_fence_put(job->gang_submit);
+ 
+ 	if (!job->hw_fence.base.ops)
+ 		kfree(job);
 -- 
 2.53.0
 
