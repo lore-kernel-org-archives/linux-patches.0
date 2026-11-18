@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059275;
-	b=Y6dJIX4Bifa4QZJJIDk5VdUytOGCxuq6Rnsf+mBurwAXAa8yJq3P1jqK6z+wwdlvIkxn
-	 vPZa+Ea+rpVuIb5qTcqkHEwdF8jGC2GPWcVl4yCKM/UmBI4he6rQiSvXK5Z/pz3WScUf2
-	 V6RQL/OEiKbWh4tTRITdg27OfJY3DYlikFsS0Vt7KE9ZHzS+Er+tuNv+SwGfSoFE5/ELE
-	 xeUGJ7yLDLGG90IRdWzTOQRX0EmkSmhA3uJ+CtyW1CuIDR2EkYOa7ikq+Q2oVoo8Dovm/
-	 r7LIhbAQ8iBiu8ekB+wMe8iK+wih4+Jnzet9DpZWpNh7CzRtcDFMVMSi6kOuOrsgJIg==
+	t=1795059277;
+	b=nt9/0gIwIV83Q+QqsBWKoy46eoO3P6Pg/mZ7GiSgnqbdhJgfFxrTlm/EoS2FJD7bCZ6Q
+	 2TOutT16sdVWblGbBaDVenL+JyeJWGwhbNTBh3aZuRz4O1Uqv3WaNLSfvknBVPeuoLDUA
+	 +r3+4zKkAHx/FjqXM3pOieqhsgTvCdznzTqApanu1XN79HVhOwXdcHRo/Vg9fvMh3Qm8V
+	 tdfpkCtKzvVJCl0fokTk4kMn4ATgSB/nJcxXma6G7+gwaIiqMIoM/ooJq9Jh1IyfvD38R
+	 iZuQtOjNwv6VLlV0Zm8lcXioEz+kmOwWzdLR3alYDytg/bqsA+8i9Kznsqzx6bBaY7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059277;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Y7UQSjjFjnq3qYIyQ4c3eNvjm7ij6A8KLWwakMNY+7M=;
-	b=KyNrzXETX6rzIHZO8pqEIwrjfqgF6FmDCuIQZ+Ko4ylC31p9Fa6YRNX7rtyXBmxMv7iJ
-	 f58Dj2FePbhowBJNusLOcXLU5xhGI80ejiVz2Y8ZhvuowIWPi9rTVSzgzGz9kw+9G3xim
-	 HCyCM2VanjwvVeTcXdIfYGhbg2ZSibFmR7hMbeDqlHyRNTVT6CYoMbXTSm2K1LVAlcL2U
-	 K2+XdW7uWv9xrbDE7pqzHNnzAOKaILMTiRRj1mevx4OiOmKn2KhGi/lJF95Hy/PNbzQ9Y
-	 sbPUZRb8eirFLy9Hd42keRAZ9xQUEez/3DH/rjgt0uBclFvlWutOvZv8WsPHpdqcSnQ==
+	bh=apfrn3SGv3+QIwvvoWp6jj61xp3V6P3gYeaaOjQN0K4=;
+	b=Jt0kcaYS9FBHlvP3m6rTXOTgtkEKoo9VUeFu0EEJ+tS2kQN5w3JoCmHsbjVDXh0Ard+T
+	 v+Ok8NQhVdbRjna2IdHiOZAErAFAGi/K5nioztb5L9O08rURLVbsiucZDj40aUIAsLFZi
+	 H+W+qZk5b/Ue4Z2HaP6jDYmwvNfHOgzxeoiu2zq2JNU01xqvuWd+9QzcZARO2d9FgRjMh
+	 RBMDth7iuVz+NHMQLwtf3vZfyqut3FaAe9UviSAAen3dpc6nwPI2/W4WzCDzneYjVsr8Y
+	 i6TtM1aWvdOIvBWVx3IQHIai8YqWjHcTrp1WZ+l1Wl25/wmDso+BEI85YECGXXt14Lg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Owu4kdQu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DHW6u2fU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7E4606A325;
-	Thu, 19 Nov 2026 03:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54EB606A320;
+	Thu, 19 Nov 2026 03:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Owu4kdQu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3C71F000C4;
-	Thu, 19 Nov 2026 03:34:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DHW6u2fU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B0A1F000C4;
+	Thu, 19 Nov 2026 03:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059274;
-	bh=Y7UQSjjFjnq3qYIyQ4c3eNvjm7ij6A8KLWwakMNY+7M=;
+	s=korg; t=1795059277;
+	bh=apfrn3SGv3+QIwvvoWp6jj61xp3V6P3gYeaaOjQN0K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Owu4kdQubB8Ql0MWSbBZO1Mx8sYKqUEtmgjPOWkuFa2ioBpkRz/J0VOaGmiPc8lOr
-	 vXvWrdG2tSYj20Os05G3ysGMZISI5iUYKDLc3M9ckR4f9X19NiPD/clW++6Jm2NB4C
-	 EnUyO7sLFewuRo9IELWdZRlk92fiQpu8m75LOyEA=
+	b=DHW6u2fUuXmxpYSvrXWumaTjoA+tdhIbc+79+Ct+2i/8ry9T2XPdGXMY0Kqo7CwTR
+	 rzlUXnJUfOHSyI0JVgCflh3bTqDGCJ7U0jigOWN5F2Ny4nZQCKO17In42v2YwaRI6A
+	 e+kd0dHb1449VlsYt39lYUD5dLCMODfg74n3JRiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@kernel.org>,
-	Igor Velkov <iav@iav.lv>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0782/1848] genirq/kexec: Do not take the bus lock of an interrupt chip on the crash path
-Date: Wed, 18 Nov 2026 15:47:00 +0100
-Message-ID: <20261118145949.205989562@linuxfoundation.org>
+Subject: [PATCH 5.10 0783/1848] efi/libstub: arm64: Dont use the platform register x18
+Date: Wed, 18 Nov 2026 15:47:01 +0100
+Message-ID: <20261118145949.241728576@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,142 +67,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Velkov <iav@iav.lv>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 717862eac6eff0eea8ac30a0c0de0bed84922aab upstream.
+commit 4c86b5f3fa78347fa9cbc9e8ec06615b2f80e397 upstream
 
-machine_kexec_mask_interrupts() calls irq_set_irqchip_state() for every
-started interrupt. That function takes the bus lock of the chip and
-desc->lock, and syncs the chip when it drops them. On the crash path
-interrupts are off and the other CPUs are stopped, so a chip whose bus
-transfer is completed by an interrupt never returns from the sync.
+The UEFI specification designates x18, the platform register, as "do not
+use" on AArch64, so that UEFI code is compatible both with an OS that
+assigns a fixed role to x18, and with one that uses it as a temporary
+register.
 
-On RK3399 boards with an RK808 PMIC the RTC alarm interrupt belongs to
-the regmap-irq chip of the RK808, which sits on I2C. rk808_irq_chip sets
-init_ack_masked, so regmap_irq_sync_unlock() writes the ack register on
-every unlock, and the I2C controller needs its own interrupt to finish
-the transfer. A panic with a crash kernel loaded prints
+The arm64 EFI stub and the EFI zboot decompressor only avoid x18 if the
+kernel is built with shadow call stacks, as that is the only case where
+-ffixed-x18 is added to KBUILD_CFLAGS, which the stub inherits.
+Otherwise, the compiler is free to use x18 as a temporary register, and
+it does so.
 
-  SMP: stopping secondary CPUs
+So pass -ffixed-x18 unconditionally when building the stub for arm64,
+so that the image can be run by loaders that rely on x18 being left
+alone, such as a kernel that uses it for its shadow call stack.
 
-and then nothing until the watchdog resets the board.
-
-machine_kexec_mask_interrupts() takes neither lock for the other
-operations on the descriptor. Move the search for the chip that
-implements irq_set_irqchip_state() into __irq_set_irqchip_state(), which
-takes no locks, and call it from machine_kexec_mask_interrupts().
-
-Fixes: 78fd584cdec0 ("arm64: kdump: implement machine_crash_shutdown()")
-Suggested-by: Thomas Gleixner <tglx@kernel.org>
-Signed-off-by: Igor Velkov <iav@iav.lv>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261015-kexec-irq-bus-lock-v2-1-2af15f0757b6@iav.lv
+Cc: <stable@vger.kernel.org> # 6.1.y and older
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/machine_kexec.c |  2 +-
- include/linux/interrupt.h         |  1 +
- kernel/irq/manage.c               | 49 ++++++++++++++++---------------
- 3 files changed, 27 insertions(+), 25 deletions(-)
+ drivers/firmware/efi/libstub/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/kernel/machine_kexec.c b/arch/arm64/kernel/machine_kexec.c
-index a0b144cfaea71..f36a37eee1cd4 100644
---- a/arch/arm64/kernel/machine_kexec.c
-+++ b/arch/arm64/kernel/machine_kexec.c
-@@ -230,7 +230,7 @@ static void machine_kexec_mask_interrupts(void)
- 		 * First try to remove the active state. If this
- 		 * fails, try to EOI the interrupt.
- 		 */
--		ret = irq_set_irqchip_state(i, IRQCHIP_STATE_ACTIVE, false);
-+		ret = __irq_set_irqchip_state(desc, IRQCHIP_STATE_ACTIVE, false);
- 
- 		if (ret && irqd_irq_inprogress(&desc->irq_data) &&
- 		    chip->irq_eoi)
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 3b85bebd82d5e..e52c742715847 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -520,6 +520,7 @@ extern int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
- 				 bool *state);
- extern int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
- 				 bool state);
-+extern int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val);
- 
- #ifdef CONFIG_IRQ_FORCED_THREADING
- # ifdef CONFIG_PREEMPT_RT
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 066af7a5522e8..a1d077068359c 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -2859,6 +2859,28 @@ int irq_get_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
- }
- EXPORT_SYMBOL_GPL(irq_get_irqchip_state);
- 
-+int __irq_set_irqchip_state(struct irq_desc *desc, enum irqchip_irq_state which, bool val)
-+{
-+	struct irq_data *data = irq_desc_get_irq_data(desc);
-+	struct irq_chip *chip;
-+
-+	do {
-+		chip = irq_data_get_irq_chip(data);
-+
-+		if (WARN_ON_ONCE(!chip))
-+			return -ENODEV;
-+
-+		if (chip->irq_set_irqchip_state)
-+			break;
-+
-+		data = irqd_get_parent_data(data);
-+	} while (data);
-+
-+	if (data)
-+		return chip->irq_set_irqchip_state(data, which, val);
-+	return -EINVAL;
-+}
-+
- /**
-  *	irq_set_irqchip_state - set the state of a forwarded interrupt.
-  *	@irq: Interrupt line that is forwarded to a VM
-@@ -2875,36 +2897,15 @@ int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
- 			  bool val)
- {
- 	struct irq_desc *desc;
--	struct irq_data *data;
--	struct irq_chip *chip;
- 	unsigned long flags;
--	int err = -EINVAL;
-+	int err;
- 
- 	desc = irq_get_desc_buslock(irq, &flags, 0);
- 	if (!desc)
--		return err;
--
--	data = irq_desc_get_irq_data(desc);
--
--	do {
--		chip = irq_data_get_irq_chip(data);
--		if (WARN_ON_ONCE(!chip)) {
--			err = -ENODEV;
--			goto out_unlock;
--		}
--		if (chip->irq_set_irqchip_state)
--			break;
--#ifdef CONFIG_IRQ_DOMAIN_HIERARCHY
--		data = data->parent_data;
--#else
--		data = NULL;
--#endif
--	} while (data);
-+		return -EINVAL;
- 
--	if (data)
--		err = chip->irq_set_irqchip_state(data, which, val);
-+	err = __irq_set_irqchip_state(desc, which, val);
- 
--out_unlock:
- 	irq_put_desc_busunlock(desc, flags);
- 	return err;
- }
+diff --git a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
+index d719134e2d3aa..b17a082675430 100644
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -19,7 +19,7 @@ cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu89 \
+ # arm64 uses the full KBUILD_CFLAGS so it's necessary to explicitly
+ # disable the stackleak plugin
+ cflags-$(CONFIG_ARM64)		:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) \
+-				   -fpie $(DISABLE_STACKLEAK_PLUGIN) \
++				   -fpie $(DISABLE_STACKLEAK_PLUGIN) -ffixed-x18 \
+ 				   $(call cc-option,-mbranch-protection=none)
+ cflags-$(CONFIG_ARM)		:= $(subst $(CC_FLAGS_FTRACE),,$(KBUILD_CFLAGS)) \
+ 				   -fno-builtin -fpic \
 -- 
 2.53.0
 
