@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025974;
-	b=V0knXX8j67D5tVkxPYfVl5WlaFTE6oZw9XeDwdAXzQVqAkNQKgpnzbwMEtyp1u/L43ES
-	 oYmfL9n1iQwwf7RadjkT9rcObwHWpOxgbZL1WThK7/ZViwVHqTh5qzvyRG+RPa2RTM1LO
-	 Ewg3DVscMr36iKhOVnQ9A3/QsQXxuRJdFBzKSmxelGbvEpM5mSR5o+jsjF5fW2wHSMV1R
-	 gjhhBGkCstyf6XrkKqb9t/196/QAlEIj0hKeMitIjDvEEZWH9zSHcDjaVU0uIVtojQ7HC
-	 1X6GtpaDa4Fh8RSlxYhjq7UXE591Ojglvhjg8bPJlkPm4g+/NCtbbzCEa5wAL0jNMww==
+	t=1795025977;
+	b=r3yPmhx4D1A3KdbmLGCe8aBHGPVHn9wzUE536An/auzk6katlNsLmEnBFhMdw5ufRomA
+	 etxwuhdq5Ymm25fAH3CG5WAyW1S7Om4WMIBOymBJWbeHSWJkZpTuKiF+1AYzgrU8Im5TQ
+	 idgNATmREjW9pBT9BR3SZmGJMAwZ347iHFMvi6VadH8NOOg5qAhgka+YzWxbHy1qWwqHg
+	 8O4BNZnTl870dwFgmthJMbmTHWN9jyFkRmtvQPDZMHZB5rcYapK6IkV17Ehi5uK8/1l+I
+	 BRZ/1jd2fXvfGHhs3gHDNXagDRB2Rh6QQy/PjA8B+F4wGMxJNRF4/7dYy0PqeTWCrUw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025974;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025977;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=W9QM1G9sKmevFAQtx8HsmbUfTYAENP0wysyT02iRODk=;
-	b=1VwB9Tw2FDAmEJan2UrmqW0hMUVSFDqxJw9oeN6Bn95zTmt9vOCnOX3mnhPCx5MpkNeK
-	 dmXvGTHgDpSCZIq0VLDHpaP8h2g2ustlsY/zghjDD+5D0B8bbT/dw7bnhPZEx3Q+uHBrz
-	 aHALUnR0EuvObCl2wyTbfnGXME9FDLjfJnJENbhEIuomeTcnhQJWeZQWXXiKcZV5UPd1s
-	 LsguPcd5IZqbdUE0dHY80vZLVSuK1De0bR0D38a2EhQYzA4HaiE5i6TSKl6rHvbqJsS8G
-	 +RKHPqqeMNNIquUMIZYxORYu+ale6FQSkJ8p3VoqYEv+qlKw7RJpFfsN2sjoATan+Mw==
+	bh=hA8+TgzDCU3mOwR16CslbcSM8a6MUt0vzx6Ooig1gBI=;
+	b=zirPYyMTWUhBcGh3tE2t3Yr7yfC7rRXnH4ScgXvZAWQFn/dnJAuP1E3WQFj2Q/ub1+ED
+	 GbZDg6YYch1phxepGl9FSahhtSF6lD5rFn8mIX++bmkfAlMijMYBlKOOIZHZaYSncQ9f8
+	 MWwgAnuJlOGsNi6UlO/WuPdqEqppcSi8MV0w73gt8/JhWsoLCztm9kPk5ZPTbgC7qiO4i
+	 6BhptH/pH+thA/8z0SqsEO/ViVtEd4DsZdXzIrs11i4z+yFtc8rPrt+HhPqNzCw9xtsyh
+	 60ySRz7+ZDXYqZ+nEJtn5VxzkXYZr5/Qb8R4UA+pWevq356dSiEKU5W4S/O8/4zwSVA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f8ZBROxF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1SRL9LTZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7715606A31C;
-	Wed, 18 Nov 2026 18:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918BA606A32C;
+	Wed, 18 Nov 2026 18:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f8ZBROxF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C001F000C4;
-	Wed, 18 Nov 2026 18:19:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1SRL9LTZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2AD1F000C4;
+	Wed, 18 Nov 2026 18:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025974;
-	bh=W9QM1G9sKmevFAQtx8HsmbUfTYAENP0wysyT02iRODk=;
+	s=korg; t=1795025977;
+	bh=hA8+TgzDCU3mOwR16CslbcSM8a6MUt0vzx6Ooig1gBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=f8ZBROxFL5LpOEqe7d/H5gmGfka3ZhbPAhRxcMXkvS/ffavRixxdSxpYcZTqwUrJ+
-	 /Gb6SZ0aNE2rqs/aOe/PIO6LqcFnihEZ6QePnwsj20krflbPSgfh2mYerHToTJ74zo
-	 3PeMo68Z5owewtPmuRE7CFpHoy8MarXHD2aHYXYc=
+	b=1SRL9LTZyUw7wBNgrrbPdiHy1LKzPJso+h8verWw6py6tl6O9Z22NLadGg2HtVNcJ
+	 lUAD18h/P6UxwqGrEIBfQ5WLevpqhflAvYNFUmJusQCO0N+n8vaNIEzKvBrBAbc+Po
+	 FKcMSe9rmB2tgQvzffrjXnExJHwf77Wo/XCorCbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Melissa Wen <mwen@igalia.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1270/2151] crypto: talitos - use devm_platform_ioremap_resource()
-Date: Wed, 18 Nov 2026 15:50:05 +0100
-Message-ID: <20261118150208.400855152@linuxfoundation.org>
+Subject: [PATCH 6.18 1244/2151] drm/amd/display: assign missing trace entry in amdgpu_dm_dc_clocks_state
+Date: Wed, 18 Nov 2026 15:49:39 +0100
+Message-ID: <20261118150207.485042035@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,56 +71,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit 463be1c718fb9f07bdce3d51363a17eac4522538 ]
+[ Upstream commit ec167063dbf9fc66dc1364b6f9dd220c6742edeb ]
 
-platform_get_resource and devm_ioremap effectively open codes this.
+disp_dpp_voltage_level_khz is declared and printed, but never assigned.
+So when using clock tracepoint the value of this clock is just garbage.
+Assign clk->disp_dpp_voltage_level_khz since this is stored in dc_clocks
+as other entries.
 
-The return type of devm_platform_ioremap_resource() is also nice as it
-has multiple errors that it can return.
-
-Because it internally calls devm_request_mem_region(), reg values and
-sizes cannot overlap. This was manually verified to be the case for all
-talitos users.
-
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 666d66df2525 ("crypto: talitos - init tasklets before requesting IRQs")
+Fixes: 13b5ca42ca9c ("drm/amd/display: Add tracepoint for capturing clocks state")
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Roman Li <roman.li@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/talitos.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/talitos.c b/drivers/crypto/talitos.c
-index 2d69ee6086658..584508963241c 100644
---- a/drivers/crypto/talitos.c
-+++ b/drivers/crypto/talitos.c
-@@ -3413,7 +3413,6 @@ static int talitos_probe(struct platform_device *ofdev)
- 	unsigned int num_channels;
- 	int i, err;
- 	int stride;
--	struct resource *res;
- 
- 	if (of_property_read_u32(np, "fsl,num-channels", &num_channels))
- 		return -EINVAL;
-@@ -3432,13 +3431,10 @@ static int talitos_probe(struct platform_device *ofdev)
- 
- 	spin_lock_init(&priv->reg_lock);
- 
--	res = platform_get_resource(ofdev, IORESOURCE_MEM, 0);
--	if (!res)
--		return -ENXIO;
--	priv->reg = devm_ioremap(dev, res->start, resource_size(res));
--	if (!priv->reg) {
-+	priv->reg = devm_platform_ioremap_resource(ofdev, 0);
-+	if (IS_ERR(priv->reg)) {
- 		dev_err(dev, "failed to of_iomap\n");
--		err = -ENOMEM;
-+		err = PTR_ERR(priv->reg);
- 		goto err_out;
- 	}
- 
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
+index aa56fd6d56c34..0995522bf58b5 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_trace.h
+@@ -513,6 +513,7 @@ TRACE_EVENT(amdgpu_dm_dc_clocks_state,
+ 	    TP_fast_assign(
+ 			   __entry->dispclk_khz = clk->dispclk_khz;
+ 			   __entry->dppclk_khz = clk->dppclk_khz;
++			   __entry->disp_dpp_voltage_level_khz = clk->disp_dpp_voltage_level_khz;
+ 			   __entry->dcfclk_khz = clk->dcfclk_khz;
+ 			   __entry->socclk_khz = clk->socclk_khz;
+ 			   __entry->dcfclk_deep_sleep_khz = clk->dcfclk_deep_sleep_khz;
 -- 
 2.53.0
 
