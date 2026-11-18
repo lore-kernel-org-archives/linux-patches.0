@@ -1,58 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039059;
-	b=2/3R9ARKUJuZ8oNaZqzkpmn5NRFYjej7iZQMC8i1nw6Ox/9QHB+ji7aWuquriBePs+fQ
-	 3wW7v9gCsPd8eEPRMUf0kf0WMq4nwTtYJooShp1VXuo4gjwIC9c/nthT8iefAJRjEWQ0c
-	 25lgArdv6HmZ6nDnLsiSyMAse5HqAkEv8IAoVJ1OcMyfbcpZtv31MFDUDh1OaevKmMf67
-	 MDFCgnCdW4zX2HmP/bHSwDa0v0eqN/uoNWCU8B0Z6ZFAOKPEHXcRITazXXe9/VJyxOXa9
-	 OHq+NilTnT/pvsZGlwQfgQHy/U69PD/+loKZKlKFMYckFqcnR/mYQPR3tVbsjZUdH5w==
+	t=1795039061;
+	b=WbpHUR0eagmpVdk+wQBJUIj+e1Lq6Hj1ij2HNICPLRJ/flHqxO0a/2sUXnCRZFwGeayc
+	 V9uLG5YMGQYuEqsUyHxOFvqLoLNTRLyPr7q8wEHKqDjXM6SwAWHLSev6DItVXRqQBz6Bl
+	 sBjK8khN7nWZWFYpli74hxPBzLN6eFsBlNn1jcZ7apXNUArbmzzt5rDdfsZ/rd+bw6KbZ
+	 Wq3EqXS3I2qmj+Fs1Q+TP18qs0PxQyn8BBShtepenmjEmoPGdQY6/N7xhiFmCgUzvfzTi
+	 yg95Z+4FNoZOsDs0Me1XHCrL6gxCdo/zFfFeOkMjdCDUD6NN4/nQo+75jTyS9np8Hpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039059;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039061;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Pbi8YGtMFh70X8DBb+UYJOyIXUEEMXm6GL4pwejf820=;
-	b=VPPO3JCpJW+LuU5DZ0BXDySmn2l4bGVvOaqw9CT2LukRAGIa7vKiWxwRy8QgxkJUn3ww
-	 /B7BIwaiSYZWyYrANWT/4jgPqoXzPa5yj3xloKy1BripzE65WDzMjFjRF3SlVlr3Pw6sH
-	 r6Q+kqn5KYx+lrM8UMgtDkvmuffqoYKRTG5AdpxZ5J1ragqrrvg6etfiGKGuX+D6S05CY
-	 44yYASpCZqQSoVUIX22h52K18sGxeKNNbzup9gMSMvXAEW2hNoOKOPcgAFOVMEyHgKpqV
-	 xVCwnI/WxolGjEbnh0tLYaapOutC3JrZBTYcae+Hr2vMqP533Vugjulc/v1mFiJ4yKQ==
+	bh=U7S5B8HGMTaKWHFTB71NNj1U//xOlTnzsh/aJ8L1Ruw=;
+	b=eo8wks6SsCGLfykh+ZjcKi9w50XlxFXdZ/tpaXN+ibGhoIJi6z4YXxfBA8eZFmMsDCOr
+	 kvUoWBMim8pKVX57z0kHsbBXti1/KXl62qPX2z6ZXh3cl4EChYK0sCcEVNk6DEL3Gr95R
+	 evv8K7r+cGWb494Rq9Kw4w5cKvyP4IpI2WUvJKE28kgmFLNycs4LyFqdyAqaSueZ2rbuX
+	 SkWIEyPU0YROSeH0PW+KkcBGg/xOkvTuc6AZFh0qbYewrxCrOxwtH+UKJfLn+ZTOMNYQJ
+	 nP8s0zGLCaBRTA6xQkvYQ8i0Rqv/MpCJnZZjY5OCO6QQTRJnnhvKgnlzKl/XTaR0lhQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NUd30eki;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NtwKHhl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE385606A336;
-	Wed, 18 Nov 2026 21:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862F9606A332;
+	Wed, 18 Nov 2026 21:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NUd30eki
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 384091F000CA;
-	Wed, 18 Nov 2026 21:57:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1NtwKHhl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AF71F000C4;
+	Wed, 18 Nov 2026 21:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039058;
-	bh=Pbi8YGtMFh70X8DBb+UYJOyIXUEEMXm6GL4pwejf820=;
+	s=korg; t=1795039061;
+	bh=U7S5B8HGMTaKWHFTB71NNj1U//xOlTnzsh/aJ8L1Ruw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NUd30ekiHdd8aoxW9Rn4l4ZI/c4JCABGEJW0OJ5JAaYvqIm8GyQ0aKHIbVyOeSIbV
-	 yTHlWvoWHYMXyDlE8Hm6xVBt0JpGCH8/yKEKA7lgEqA9ueA5ElkHD3z94m5XIcpSKV
-	 oEzgzVZb6yOcq4fnR842d7yA35pNfgVSex8uU9a4=
+	b=1NtwKHhlzSurJW9/mvfDUO0wpPtQ7+Vt+d8Ee/Q6ZWoszXkSrLVC9pCUjoWz+VEAi
+	 0MpBH4Q/OOCwwcHg97zfFlsIP9mguyNZVkjXbPuHRudBmT8Y7zokFkHh4AUn1SyKw9
+	 KFBjmU7UcEA8jB9NVEzK9W/2ea/3Rrb+4AZ2JUPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhe <lizhe.67@bytedance.com>,
+	Chris Mason <mason@kernel.org>,
+	"Gregory Price (Meta)" <gourry@gourry.net>,
+	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	"Jose A. Perez de Azpillaga" <azpijr@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1922/3318] mm/hugetlb: fix mremap deadlock when PMD sharing is possible
-Date: Wed, 18 Nov 2026 15:42:24 +0100
-Message-ID: <20261118150419.671477460@linuxfoundation.org>
+Subject: [PATCH 6.6 1923/3318] mm/huge_memory: fix truncate racing with PMD zapping
+Date: Wed, 18 Nov 2026 15:42:25 +0100
+Message-ID: <20261118150419.702063079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,142 +72,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhe <lizhe.67@bytedance.com>
+From: Chris Mason <mason@kernel.org>
 
-[ Upstream commit 92daa8652f88c8cfc05f4899a8408a04b02f211e ]
+[ Upstream commit e6a07d29b0a60f3a4cfe77fe34eeb4b3fb38d6c4 ]
 
-move_hugetlb_page_tables() holds the mapping's i_mmap_rwsem for
-write while moving hugetlb PTEs. This prevents races with truncation
-and protects huge_pmd_unshare(), but the move loop must not call
-helpers that can acquire the same rwsem for read.
+zap_huge_pmd_folio() removes the rmap before calling folio_mark_dirty().
+If this was the last mapping, truncation can skip unmapping the folio
+and proceed without waiting for the PMD lock, racing with dirtying.
 
-huge_pte_alloc() can do that when the destination can use PMD
-sharing: it may call huge_pmd_share(), which takes i_mmap_rwsem for
-read while searching for a shareable PMD table. Calling it while the
-move path already holds i_mmap_rwsem for write can deadlock.
+ifs_set_range_dirty() can oops if MADV_DONTNEED races with
+ftruncate() on XFS, when we get the folio set dirty after it was found
+to not be mapped anymore.
 
-Avoid that path for PMD-sized hugetlb mappings that can use PMD
-sharing. Instead of allocating or sharing the destination page table
-while moving, zap the source range and let the destination fault path
-populate or share the PMD lazily.
+Move folio_mark_dirty() and folio_mark_accessed() before rmap removal,
+matching the PTE zap path. This keeps the folio mapped while updating
+its state, so truncation must wait for the page table lock.
 
-Reuse the hugetlb unmap logic for the source-side zap by splitting
-the core loop out of __unmap_hugepage_range(). The wrapper keeps the
-existing tlb_start_vma(), tlb_end_vma() and huge_pmd_unshare_flush()
-behavior, while move_hugetlb_page_tables() can reuse the unmap loop
-with its existing mmu_gather.
+Fix generated by an LLM and sent by Chris Mason in private.
 
-Link: https://lore.kernel.org/20261022034543.51226-4-lizhe.67@bytedance.com
-Fixes: 550a7d60bd5e ("mm, hugepages: add mremap() support for hugepage backed vma")
-Signed-off-by: Li Zhe <lizhe.67@bytedance.com>
-Co-developed-by: David Hildenbrand (Arm) <david@kernel.org>
+Fixes: fe6cf984939d ("mm/huge_memory: transfer the pmd dirty bit to the folio on zap")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chris Mason <mason@kernel.org>
+[ david: simplify comment and description ]
+Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
+Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
+Link: https://patch.msgid.link/20261031-fixes_core-v3-13-d6437171ecc3@kernel.org
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Jose A. Perez de Azpillaga <azpijr@gmail.com>
-Cc: <stable@vger.kernel.org>
-[ sashal: adapted hugetlb unmap helpers to use struct page ref_page instead of struct folio ]
+[ sashal: Adapted zap_huge_pmd_folio() changes to zap_huge_pmd() using page_remove_rmap(). ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 47 +++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 37 insertions(+), 10 deletions(-)
+ mm/huge_memory.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 8e1da134d2a75..7c31def01df68 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -100,6 +100,10 @@ static int __huge_pmd_unshare(struct mmu_gather *tlb,
- 		bool check_locks);
- static void hugetlb_unshare_pmds(struct vm_area_struct *vma,
- 		unsigned long start, unsigned long end, bool take_locks);
-+static void hugetlb_unmap_range(struct mmu_gather *tlb,
-+				struct vm_area_struct *vma, unsigned long start,
-+				unsigned long end, struct page *ref_page,
-+				zap_flags_t zap_flags);
- static struct resv_map *vma_resv_map(struct vm_area_struct *vma);
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index 4aa032e96fa60..c9b40d69ff1fd 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1717,8 +1717,6 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
  
- static inline bool subpool_is_free(struct hugepage_subpool *spool)
-@@ -5303,6 +5307,8 @@ unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
- 	for (; old_addr < old_end; old_addr += sz, new_addr += sz) {
- 		const unsigned long offset_to_last_entry =
- 			(old_addr | last_addr_mask) - old_addr;
-+		const unsigned long offset_to_last_dst_entry =
-+			(new_addr | last_addr_mask) - new_addr;
- 
- 		src_pte = hugetlb_walk(vma, old_addr, sz);
- 		if (!src_pte) {
-@@ -5319,6 +5325,24 @@ unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
- 			continue;
+ 		if (pmd_present(orig_pmd)) {
+ 			page = pmd_page(orig_pmd);
+-			page_remove_rmap(page, vma, true);
+-			VM_BUG_ON_PAGE(page_mapcount(page) < 0, page);
+ 			VM_BUG_ON_PAGE(!PageHead(page), page);
+ 		} else if (thp_migration_supported()) {
+ 			swp_entry_t entry;
+@@ -1742,6 +1740,12 @@ int zap_huge_pmd(struct mmu_gather *tlb, struct vm_area_struct *vma,
+ 				folio_mark_dirty(page_folio(page));
  		}
  
-+		/*
-+		 * Avoid entering the destination PMD sharing path while holding
-+		 * i_mmap_rwsem for write. Leave destination page table
-+		 * population to the fault path, which can share the PMD lazily.
-+		 */
-+		if (sz == PMD_SIZE && want_pmd_share(new_vma, new_addr)) {
-+			const unsigned long unmap_size =
-+				min(old_end - old_addr,
-+				    offset_to_last_dst_entry + sz);
-+
-+			hugetlb_unmap_range(&tlb, vma, old_addr,
-+					    old_addr + unmap_size, NULL,
-+					    ZAP_FLAG_DROP_MARKER);
-+			old_addr += unmap_size - sz;
-+			new_addr += unmap_size - sz;
-+			continue;
++		/* Remove the rmap after transferring the dirty bit to the folio. */
++		if (pmd_present(orig_pmd)) {
++			page_remove_rmap(page, vma, true);
++			VM_BUG_ON_PAGE(page_mapcount(page) < 0, page);
 +		}
 +
- 		dst_pte = huge_pte_alloc(mm, new_vma, new_addr, sz);
- 		if (!dst_pte)
- 			break;
-@@ -5338,9 +5362,10 @@ unsigned long move_hugetlb_page_tables(struct vm_area_struct *vma,
- 	return len + old_addr - old_end;
- }
- 
--void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
--			    unsigned long start, unsigned long end,
--			    struct page *ref_page, zap_flags_t zap_flags)
-+static void hugetlb_unmap_range(struct mmu_gather *tlb,
-+				struct vm_area_struct *vma, unsigned long start,
-+				unsigned long end, struct page *ref_page,
-+				zap_flags_t zap_flags)
- {
- 	struct mm_struct *mm = vma->vm_mm;
- 	unsigned long address;
-@@ -5356,13 +5381,6 @@ void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 	BUG_ON(start & ~huge_page_mask(h));
- 	BUG_ON(end & ~huge_page_mask(h));
- 
--	/*
--	 * This is a hugetlb vma, all the pte entries should point
--	 * to huge page.
--	 */
--	tlb_change_page_size(tlb, sz);
--	tlb_start_vma(tlb, vma);
--
- 	last_addr_mask = hugetlb_mask_last_page(h);
- 	address = start;
- 	for (; address < end; address += sz) {
-@@ -5447,6 +5465,15 @@ void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
- 		if (ref_page)
- 			break;
- 	}
-+}
-+
-+void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
-+			    unsigned long start, unsigned long end,
-+			    struct page *ref_page, zap_flags_t zap_flags)
-+{
-+	tlb_change_page_size(tlb, huge_page_size(hstate_vma(vma)));
-+	tlb_start_vma(tlb, vma);
-+	hugetlb_unmap_range(tlb, vma, start, end, ref_page, zap_flags);
- 	tlb_end_vma(tlb, vma);
- 
- 	huge_pmd_unshare_flush(tlb, vma);
+ 		spin_unlock(ptl);
+ 		if (flush_needed)
+ 			tlb_remove_page_size(tlb, page, HPAGE_PMD_SIZE);
 -- 
 2.53.0
 
