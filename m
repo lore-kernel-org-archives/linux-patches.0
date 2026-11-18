@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020934;
-	b=c3obT1fFDSU2jDFvi0VfxcT7uxa46alqJWwDzBeO3sOq1FwJXT5Lomayjzr4bRL6Be/S
-	 MI8eHxDe5vGlaGjennbOGRusOScnLD1JDyA3gFYaocvfMkWMrwYhfaEqlZPnYgdxmlCSM
-	 /Zu/OpKrl/AZSAo/nequxKjUB9h5mLlBcFDfeA1fKVY/gjeVfro7KzghwrmNW+OPs7sXM
-	 ARCvKbrBX6nSpuM4NOTCBf7RsscHJFozpwbsP3Lco0y064frvDiqaYC6F1GxBUuEKXqWT
-	 rKfsq8VOIE0gLqDvz+4keCyyUFgjnB9rYJCgYGobyP4eB8Z0YfrPzQ20zC3R2+h/U6g==
+	t=1795020937;
+	b=hWQ2IkOFf1lIIJs9ThOHv1XkRIRtez/FjeonQ2+mW39bBsE+zSxsgJxxeRt4FkqPmyDM
+	 M4O6Oo6q90a6s64g2+uGdp4j70+pZQP6C4oLpVodASiG64mQUxSw3uIPsJTXMKfWbO9km
+	 8zBJbiTGeziSravPaOmilFuu5zGAEEReqbKRzkuAxa0pn6DkzAdczcqFBQmTAI/QOz6yE
+	 PBYEuQRJVtKG4HD2+Qo3Yg3a447TI8QbiXfMZycVaCoKTtLCUkmIaxbHjh0p2pX5hgxaJ
+	 JGk2SdUj3y8LZ9Svj/hUnCaeVuDR4RywlORP5qybw5Z+j83UXROHap1yecUYZhZP6XQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020934;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020937;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cNF/NjHMZmvAQdRdEzf9/OsZ2moTQSev5pI9OWOrj/g=;
-	b=bV3YZ4UQ4TAzwlmWPljFve+B7rFLIMaSFzkniftkBqTpWwP3+sGRbcOK+qaEWoaS2uUo
-	 CvEyLg85Ko0w9BCFJ+85VsEKDEm5QjSMVtF2f2oaqL8g7Z3XfxaeTZvG7yL0XhBpkIvoI
-	 IpsU3mh+bO2Wkf2ABRZWEjJgPhvYOK/XO+p0IjiWuRD7/3xzxz3blt3w5N0++E0C7BqS0
-	 vsi93v2AvLsbmv48Bjw5Z0iExcSyhY8YLyMuU6wdIUKONYt+HaVY/zfDk/uaIvLl4N6XP
-	 Y8a5QUmS8o5B0RoyInvoyRTwmYpVbz8TN7kX4GmU3346r/27yQW6c4NdJ8VPkivAp2Q==
+	bh=jx5tBrM6Ska4fbd8vqwPfQeV/XhCWI5vEXKrNLyqzv4=;
+	b=xdDbSx1xjl4UrtT1F5/G4+12qDVrwrNLl1pLYz1AbB5znLP59g/tEguzPja1f+71pvTJ
+	 s62DuaANLgP8n4azMpCZzK+0EzNaLSSMqjLfOsAX/7BG79KRufIA2MFHcHC3+HRMxJyUd
+	 EngdA2z+mkDXWMKu/5GEmSqGoedBBvlUNgeZ9EKCigdVEv+tQZhCOYxGhYtC5KorpDYll
+	 rbcEX+sBkykdggTuDFjqeapbik1rGAd54z9Wy1LtIiGo754bXfMlzU2VGcthjYm78tMgY
+	 +4dNnsBr+BYJ5ELILMrCXdrPD5GZ/HVsUi0x74SAFaP/GdphuMGdfRpZ4FqiHXl+dEw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sa8ymq0l;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Qt/8ot8u";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACE0606B59A;
-	Wed, 18 Nov 2026 16:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427A0606A339;
+	Wed, 18 Nov 2026 16:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sa8ymq0l
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8991F000CA;
-	Wed, 18 Nov 2026 16:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qt/8ot8u
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A721F000C5;
+	Wed, 18 Nov 2026 16:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020934;
-	bh=cNF/NjHMZmvAQdRdEzf9/OsZ2moTQSev5pI9OWOrj/g=;
+	s=korg; t=1795020937;
+	bh=jx5tBrM6Ska4fbd8vqwPfQeV/XhCWI5vEXKrNLyqzv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sa8ymq0laetHIClBD3ULJsZKMUuqqA72fuIP4PW1TzzuiBsXp6cliIVbVVXBrl9LJ
-	 de/d4tI0WW3Ukq/2zQnmG2q9hmkuCQKONnDr0nVxpygoHtcRhT0T5F+NTlRuv6UMb6
-	 sLTU3oUyfVCGBf21DGjmdMlNh5KEtSS9h+dZXEdo=
+	b=Qt/8ot8uYwkZawayVMyynpFohiJH8z0FZQT5FZqNozuYPyhIe5iDU010q1NxZjRxh
+	 i1b2zoykAtxJLYTSJzu+F1xK7QtomihKhHah/Zv5c57Cc329ey3nTzTTh9XC1TZC+J
+	 4BioJjr2wMTFP+q/X5QdPS5VON7X6hmkHAlKz+5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2127/2651] bpf: Let bpf_dynptr_write() mark a global function
-Date: Wed, 18 Nov 2026 15:56:07 +0100
-Message-ID: <20261118150402.472911044@linuxfoundation.org>
+Subject: [PATCH 7.3 2128/2651] bpf: Dont take a dynptr argument for a local dynptr
+Date: Wed, 18 Nov 2026 15:56:08 +0100
+Message-ID: <20261118150402.510149866@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,46 +70,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 589998616e0f9190ba6f6644a19532c5b2ba66d0 ]
+[ Upstream commit b7f97db88948aa511bcd989978f181e1367e0e8b ]
 
-The caller of a global function loses its packet pointers if the function
-may change packet data. That is found out by a scan for calls of the
-helpers which bpf_helper_changes_pkt_data() lists.
+A global function is verified on its own. A dynptr which it gets as an
+argument is assumed to be of type BPF_DYNPTR_TYPE_LOCAL, but the callers
+may pass one of any type, that of an skb for example.
 
-bpf_dynptr_write() is not on the list, because it depends on the type of
-the dynptr: check_helper_call() looks at it. The scan cannot do that, and
-so a global function which makes a dynptr from the skb, or gets one as an
-argument, and writes through it counts as harmless. The write can
-reallocate the head of the skb, and the caller goes on with pointers into
-the old one, which has been freed.
+The type decides whether a write through the dynptr invalidates packet
+pointers, and whether a slice of it is invalidated together with them.
+Inside of the function neither happens. It can take a packet pointer from
+its context argument, or a slice from the dynptr, write through the dynptr
+and go on using the pointer, although the write may have reallocated the
+head of the skb.
 
-Let every call of bpf_dynptr_write() mark the function, as a tail call
-does. The same mark decides whether a program may replace a function.
+Assume the type of an skb dynptr instead. Nothing becomes forbidden for the
+dynptr itself, and a clone inherits the caution. The dynptr which the
+callback of bpf_user_ringbuf_drain() gets is known to be local, and stays
+so.
 
-Fixes: 51081a3f25c7 ("bpf: track changes_pkt_data property for global functions")
+Fixes: a64bfe618665 ("bpf: add support for passing dynptr pointer to global subprog")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017230950.802052-10-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017230950.802052-11-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cfg.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/cfg.c b/kernel/bpf/cfg.c
-index c4c3badde6c9c..5501ccc6649f8 100644
---- a/kernel/bpf/cfg.c
-+++ b/kernel/bpf/cfg.c
-@@ -529,7 +529,9 @@ static int visit_insn(int t, struct bpf_verifier_env *env)
- 			 */
- 			if (ret == 0 && fp->might_sleep)
- 				mark_subprog_might_sleep(env, t);
--			if (bpf_helper_changes_pkt_data(insn->imm))
-+			/* nobody knows yet whether the dynptr is that of an skb */
-+			if (bpf_helper_changes_pkt_data(insn->imm) ||
-+			    insn->imm == BPF_FUNC_dynptr_write)
- 				mark_subprog_changes_pkt_data(env, t);
- 			if (insn->imm == BPF_FUNC_tail_call) {
- 				ret = visit_abnormal_return_insn(env, t);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 090576a79d9fa..b31b96cbdc8b3 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -19734,8 +19734,12 @@ static int do_check_common(struct bpf_verifier_env *env, int subprog,
+ 				reg->type = SCALAR_VALUE;
+ 				mark_reg_unknown(env, regs, i);
+ 			} else if (arg->arg_type == ARG_PTR_TO_DYNPTR) {
+-				/* assume unspecial LOCAL dynptr type */
+-				__mark_dynptr_reg(reg, BPF_DYNPTR_TYPE_LOCAL, true, ++env->id_gen, 0);
++				/*
++				 * The callers may hand in a dynptr of any type.
++				 * Take it for that of an skb, so that a write
++				 * through it and its slices are treated with care.
++				 */
++				__mark_dynptr_reg(reg, BPF_DYNPTR_TYPE_SKB, true, ++env->id_gen, 0);
+ 			} else if (base_type(arg->arg_type) == ARG_PTR_TO_MEM) {
+ 				reg->type = PTR_TO_MEM;
+ 				reg->type |= arg->arg_type &
 -- 
 2.53.0
 
