@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044879;
-	b=IO5S+6k8cciz0E6z87/zsBp3DLn39f/9diKUcYL1C44XCUxCyLrOaf8ETMiVjNncwtsk
-	 YgjZhJfexx2I2b0EnvjM7bquCgN+DbGIovcLmasjw28KV5HSpwJZW035fK0vmyOq8Cwl/
-	 lbHUcPkYg+/XXKLliv/cD90KdIf/CjQss9RxncJcXgeV3kg+m87Mhf/Q7K3Ob8Ty9uViV
-	 fBOEXVzKhcsuKRphNrRAEtULD48YRLfu598q0vOMVL8j1Nk3OdlPPlVlxty/xvqhCWUcx
-	 g9siHy9cUd2+dp7DdjgtqLYECwZ2FzFEwU8Hp/nrdjIc0+IZBS/Apo2/W37UEK8fqgg==
+	t=1795044882;
+	b=QYvTB0Zdt+3wwdnpf733tvNGsK6DsBlDsFXjHoOM5agWIHYrrH7ceD8OaucWTLHi5ie5
+	 EKN/5TI7/F9tfC/an7KWQ4+tFG/+BBwWOfKudHVGez0MqDpUynHAQ1hbLdUnGr09coiRN
+	 Ls/n8C/U8jgsDAu3H51pphIlqer3NprB8rcUzzUK7pYnmHmeh9NvhK4x8Sdh8KGath6mF
+	 FN8CU5w8aktFuekxUWR1FmmFCsfTppcoOW6PrLMaxv+rCWYzVr5f/kxxnYeSg5GQZawsg
+	 PRQMoAkehNHVYTsEWFxZu6n17XAJgZy2elBgW2yNVXpmvOKTiGeLqoCJWIKLloTxALQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044879;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044882;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WnMJfP4f4fGD5zBiTdU8zDYtQ4rRLwQCBEgm4/DEl9Q=;
-	b=MaAZxjNkLeUr9Ld5g2A60sPtJinsqRbYemodKuErXYZ06PO5oV7YU7T6njOUF5VmWEay
-	 qIGsrRcQPr8l8mb01B2oqujE2Jp0Q/DpY0yYBPrUetWz4o45J5B+6l5Qzx4ccrEs9ZMIw
-	 pnK/zaIiEDdXb/auLwUEf7kr/azNO1e4hOWRPEjmdTUVp9aurISbacEo03i67XeCRY8lU
-	 iq29yezAVPwBDFpCg9TFdcAvro0KJKYhfHnp5jpWvKVglkKA8b48tg42BZY0PyfPOPoiZ
-	 0NDa3+QvEkJ1pQc9zNe+hJrRv4Y7fC/d8LPFgfIe1Q0I6ERyOweDv3/3RkFam4pKihA==
+	bh=7ckkYLi8EzGjnDPEYmv+yM+R/WpC1lGwnyqLrha/vac=;
+	b=MQv+YOxrCdp+lPYd5bDq6wee97WixOGuX0ubc2tv5vYyCGBSoGH0FevMZm8o9UZmL+zO
+	 t60sYBshMOaDL8TCEfqcqpIHDP+/RpTnnKK6VKHIdIqrQ+T6sn0vJDZ8/SAdbkn07av8P
+	 5FCGOz2O+aiEmv+l89KhhPvG2uKuFhqEE1iKGCbBKsEgy9JSvgqhVbbREajXP0jcKfqkq
+	 VtJk6ERKsfLSffABlLiIBUoCVT+PkRtoDU5A3/MjMbw3HGyxwE2dQ7+6Z67+ECsedCkGc
+	 qr63UxFSvmBpJYgCFvY03bwJmHJtcCGNwdXXMOFozCwQ1+eySZLxYFF4Hbd0wX3Zomg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNDWH+N5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0yxWJUEW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6687E606A332;
-	Wed, 18 Nov 2026 23:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31B08606A332;
+	Wed, 18 Nov 2026 23:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kNDWH+N5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB14D1F000C4;
-	Wed, 18 Nov 2026 23:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0yxWJUEW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84F251F000C4;
+	Wed, 18 Nov 2026 23:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044879;
-	bh=WnMJfP4f4fGD5zBiTdU8zDYtQ4rRLwQCBEgm4/DEl9Q=;
+	s=korg; t=1795044882;
+	bh=7ckkYLi8EzGjnDPEYmv+yM+R/WpC1lGwnyqLrha/vac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kNDWH+N5pYqCgBTLKJHVpV1ppqzVRB/xgMBYavkaWZ6rZ1AnY94GYmZwnUBlEVN3R
-	 MxVfuvGJfL6ZidL9Hf13epAFRbjQZzgD2z+smVmVbtNWHUGTkMkn2pZ/OX0HqHOyOF
-	 SrKm7z9qZhT5ICZ/8JMVMlpGFaRBxkILQRJTKIDs=
+	b=0yxWJUEWxo4eGpjX8ZhMi99VozPlt19WDGFDNDtNlJRi7jUTZy+KqIY+b6FUlCvFC
+	 pt87gJAtwVmIjhd7nT6a+JciDCxHudSJWzIT7AwuOrK1BZWker70YDA79GZDs53FB7
+	 STCc6IzkAJAnJI9ekja7Y6R1+aNCUd5u+DvLxAGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Price <thesamprice@gmail.com>,
-	Ramin Moussavi <ramin.moussavi@yacoub.de>,
-	Waldemar Brodkorb <wbx@openadk.org>,
-	Michal Simek <michal.simek@amd.com>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Danesh Petigara <danesh.petigara@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0722/2857] microblaze: preserve the MSR carry flags across signals
-Date: Wed, 18 Nov 2026 15:29:16 +0100
-Message-ID: <20261118150227.541370063@linuxfoundation.org>
+Subject: [PATCH 6.1 0723/2857] memory: brcmstb_dpfe: Fix out-of-bounds access due to DCPU offset
+Date: Wed, 18 Nov 2026 15:29:17 +0100
+Message-ID: <20261118150227.578450548@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,107 +70,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Price <thesamprice@gmail.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit ca35dd21a5f8343f47a23e4e5b3f0ffccf76a4ae ]
+[ Upstream commit 7c0b82d087908765c6c7daeb06943e21b78d523e ]
 
-setup_sigcontext() and restore_sigcontext() copy r0-r31, pc, ear, esr and
-fsr to and from the signal frame but never touch MSR.  The interrupted
-MSR is therefore dropped from the signal context entirely: the handler's
-ucontext does not expose it, a handler cannot adjust the resumed
-arithmetic flags through uc_mcontext.regs.msr, and -- because
-restore_sigcontext() leaves regs->msr as whatever the rt_sigreturn trap
-left in it -- the interrupted context resumes with the carry produced by
-the syscall entry path (_user_exception does "addi r14, r14, 4", which
-writes carry), not with its own.
+On API v1/v2 boards, the DCPU coprocessor can steer kernel readl_relaxed()
+and writel_relaxed() to any address within 256 MB of the ioremapped DPFE
+dmem or regs base. The DCPU firmware provides a 28-bit offset which the
+driver adds to the ioremap base without any bounds checking in
+get_msg_ptr().
 
-Other architectures round-trip the user-visible flags through the signal
-frame (arm's cpsr, csky's carry, x86's eflags), so a handler can both read
-and adjust the resumed flags; purely privileged status registers such as
-riscv's sstatus are left out.  MicroBlaze should do the same for the
-user-writable bits.
+This allows a compromised DCPU firmware to trick the host kernel into
+reading or writing arbitrary memory-mapped I/O registers in vmalloc
+space. When combined with a root-writable sysfs file like dpfe_refresh,
+it provides an arbitrary MMIO write primitive. Similarly, world-readable
+sysfs files can be used to leak other devices' register contents.
 
-Concretely, MSR[C] (carry) is lost across signal delivery.  Code that
-keeps a live carry across a point where a signal can be delivered -- for
-example an lwx/swx compare-and-swap retry loop, between the swx and the
-carry test -- resumes with the handler's carry and mis-evaluates the
-result; the same failure class as the rt_sigreturn r3/r4 clobber, reached
-through a different register.  Demonstrated under qemu-system-microblazeel
-(machine petalogix-s3adsp1800): a handler that sets MSR_C in
-uc_mcontext.regs.msr has no effect before this change (0 of 132 in-window
-signals propagated) and takes effect after (130 of 132).
+Fix this by recording the resource_size() of the dmem and regs ioremaps
+at probe time, and rejecting any offset that, along with the largest
+field accessed (DRAM_VENDOR_ERROR + sizeof(u32)), exceeds the recorded
+mapping size.
 
-Save MSR in setup_sigcontext() so the handler's ucontext exposes it.  The
-signal frame is user-writable, so restore_sigcontext() must not restore it
-verbatim: MicroBlaze packs the user-writable carry (MSR_C, MSR_CC) and the
-privileged control bits (MSR_UM, MSR_VM, MSR_IE, MSR_EE, ...) into the one
-register, and a verbatim restore would let userspace alter privileged
-return state -- rtbd derives the resumed mode from MSR_UMS/MSR_VMS.
-Restore only MSR_C | MSR_CC from the frame and keep the rest from the
-current regs->msr.  This mirrors x86's
-restore_sigcontext(), which masks the restored EFLAGS to FIX_EFLAGS for
-the same reason; arches whose status register is purely privileged (e.g.
-riscv sstatus) simply do not restore it at all.
-
-Comment on the exposed MSR reworded: it is not read-only,
-restore_sigcontext() applies MSR_C|MSR_CC from the frame.  Author's
-Signed-off-by kept; he agreed to comment and changelog cleanups.
-
-Fixes: 2148daa9c45f ("microblaze_v8: Signal support")
+Fixes: fee5f1ef6cf7 ("memory: brcmstb: dpfe: support new way of passing data from the DCPU")
 Cc: stable@vger.kernel.org
-Signed-off-by: Sam Price <thesamprice@gmail.com>
-Signed-off-by: Ramin Moussavi <ramin.moussavi@yacoub.de>
-Tested-by: Waldemar Brodkorb <wbx@openadk.org>
-Link: https://patch.msgid.link/20260821151809.1233057-6-ramin.moussavi@yacoub.de
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Assisted-by: Gemini:gemini-3.1-pro-preview cursor
+Signed-off-by: Danesh Petigara <danesh.petigara@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260826201500.3000125-2-danesh.petigara@broadcom.com
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/microblaze/kernel/signal.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/memory/brcmstb_dpfe.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/arch/microblaze/kernel/signal.c b/arch/microblaze/kernel/signal.c
-index 33c04b5c52b12..4049ec452bf1a 100644
---- a/arch/microblaze/kernel/signal.c
-+++ b/arch/microblaze/kernel/signal.c
-@@ -33,6 +33,7 @@
- #include <linux/linkage.h>
- #include <linux/resume_user_mode.h>
- #include <asm/entry.h>
-+#include <asm/registers.h>
- #include <asm/ucontext.h>
- #include <linux/uaccess.h>
- #include <linux/syscalls.h>
-@@ -81,6 +82,22 @@ static int restore_sigcontext(struct pt_regs *regs,
- 	COPY(pc);	COPY(ear);	COPY(esr);	COPY(fsr);
- #undef COPY
+diff --git a/drivers/memory/brcmstb_dpfe.c b/drivers/memory/brcmstb_dpfe.c
+index 9339f80b21c50..c2da86e37d679 100644
+--- a/drivers/memory/brcmstb_dpfe.c
++++ b/drivers/memory/brcmstb_dpfe.c
+@@ -183,6 +183,8 @@ struct brcmstb_dpfe_priv {
+ 	void __iomem *regs;
+ 	void __iomem *dmem;
+ 	void __iomem *imem;
++	resource_size_t regs_size;
++	resource_size_t dmem_size;
+ 	struct device *dev;
+ 	const struct dpfe_api *dpfe_api;
+ 	struct mutex lock;
+@@ -402,9 +404,14 @@ static void __iomem *get_msg_ptr(struct brcmstb_dpfe_priv *priv, u32 response,
+ 	 */
+ 	switch (msg_type) {
+ 	case 1:
++		if (DCPU_MSG_RAM_START + offset + DRAM_VENDOR_ERROR +
++		    sizeof(u32) > priv->regs_size)
++			goto bad_offset;
+ 		ptr = priv->regs + DCPU_MSG_RAM_START + offset;
+ 		break;
+ 	case 0:
++		if (offset + DRAM_VENDOR_ERROR + sizeof(u32) > priv->dmem_size)
++			goto bad_offset;
+ 		ptr = priv->dmem + offset;
+ 		break;
+ 	default:
+@@ -416,6 +423,12 @@ static void __iomem *get_msg_ptr(struct brcmstb_dpfe_priv *priv, u32 response,
+ 	}
  
-+	/*
-+	 * The frame is user-writable, so restore only the user-writable
-+	 * status flags (carry) and keep the kernel-controlled MSR bits
-+	 * (UMS/VMS/IE/EE/...) from regs->msr: rtbd derives the resumed mode
-+	 * from UMS/VMS, so a verbatim restore would hand userspace the
-+	 * privileged return state.  Same idea as x86 masking the restored
-+	 * EFLAGS to FIX_EFLAGS.
-+	 */
-+	{
-+		unsigned long msr;
+ 	return ptr;
 +
-+		err |= __get_user(msr, &sc->regs.msr);
-+		regs->msr = (regs->msr & ~(MSR_C | MSR_CC)) |
-+			    (msr & (MSR_C | MSR_CC));
-+	}
-+
- 	*rval_p = regs->r3;
++bad_offset:
++	dev_err(priv->dev, "DCPU returned out-of-range offset %#x\n", offset);
++	if (buf && size)
++		*size = sprintf(buf, "ERROR: DCPU offset out of range\n");
++	return NULL;
+ }
  
- 	return err;
-@@ -140,6 +157,7 @@ setup_sigcontext(struct sigcontext __user *sc, struct pt_regs *regs,
- 	COPY(r26);	COPY(r27);	COPY(r28);	COPY(r29);
- 	COPY(r30);	COPY(r31);
- 	COPY(pc);	COPY(ear);	COPY(esr);	COPY(fsr);
-+	COPY(msr);	/* restore_sigcontext() accepts only carry state */
- #undef COPY
+ static void __finalize_command(struct brcmstb_dpfe_priv *priv)
+@@ -859,6 +872,7 @@ static int brcmstb_dpfe_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct brcmstb_dpfe_priv *priv;
++	struct resource *res;
+ 	int ret;
  
- 	err |= __put_user(mask, &sc->oldmask);
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+@@ -870,17 +884,21 @@ static int brcmstb_dpfe_probe(struct platform_device *pdev)
+ 	mutex_init(&priv->lock);
+ 	platform_set_drvdata(pdev, priv);
+ 
+-	priv->regs = devm_platform_ioremap_resource_byname(pdev, "dpfe-cpu");
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "dpfe-cpu");
++	priv->regs = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(priv->regs)) {
+ 		dev_err(dev, "couldn't map DCPU registers\n");
+ 		return -ENODEV;
+ 	}
++	priv->regs_size = resource_size(res);
+ 
+-	priv->dmem = devm_platform_ioremap_resource_byname(pdev, "dpfe-dmem");
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "dpfe-dmem");
++	priv->dmem = devm_ioremap_resource(dev, res);
+ 	if (IS_ERR(priv->dmem)) {
+ 		dev_err(dev, "Couldn't map DCPU data memory\n");
+ 		return -ENOENT;
+ 	}
++	priv->dmem_size = resource_size(res);
+ 
+ 	priv->imem = devm_platform_ioremap_resource_byname(pdev, "dpfe-imem");
+ 	if (IS_ERR(priv->imem)) {
 -- 
 2.53.0
 
