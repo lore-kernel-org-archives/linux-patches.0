@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017808;
-	b=BaAZlh55oWojugX0t0KHLUula+u+XDm9huN+At3zPDWGF92WJqdQWzB3rGVcpfALYaUr
-	 SXQgg+mq6bKmd+CeS1QtQ1wJgVKkFba2DM4FiTk9ILzlkTLB+poUYjFMH9K1aypTDplDT
-	 JxA24/fVW7TELfntXBwnZLklU+76bZlZ0A/p6uIKzvfbIO/WqPMaxzYCuCkenqkffsFAI
-	 QboYyA89jz5eGIVrf41WKBVJNM0tPXyHALwlWNddjq0xN/qCd87gU/Vp25arx0wspFrKE
-	 Y+xOGDERS677C3LBpdFCSAeiJfY8Gt01tgTZY4rfjye3kk2LtpS56s4sFK8myyMtmwA==
+	t=1795017811;
+	b=2sm9qsWdPicEzraU28LxxHhB5TuvPWcACZXLPbBlscT7YcS0URdixQ0VW6emQnOV33eC
+	 fcfVshxD1ucG38s8X9miPvV/KefMUMsJJ7q18IogPLeL6UPkno8wuO8L3z9Jh2JVXPzzK
+	 zdZP+tOou5EWw5y8eiJ2nJHEC0+P31VRymQo3vaG+tFWllETdiBfZdGL38e6qu04LwPlA
+	 T900b6hoWj/b8nH9X7Jp7SPi1JyP14gY/jexn9XPBBhdoc4B7yRD5vFg233sNwwZlx+Me
+	 zIPzaEC9/L9+HEVtngSaJXciVtkPOo0rxXSVOPSqTrYIYKYreiTmlmNi1bnCHHhOHKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zsnNxJAm9xn+qAr5YusbdI5b/p7RWNgVn79LyoPT7Sw=;
-	b=bryhMkwvSwtCmy/eSK6k/6csM4p4ndmtkGyBLZx+e5SwNa2/RWOGIFDvNkfzPKhTb7ZT
-	 AKTgno1oXh+vZKAk1q1epK6N9Xx9FGyDc6DN480lEskzo04idxs5nksUhhVKh96gQqgFj
-	 2QR2NhilQTNRKUdHXOMAD59dhBsY+rNa+WYOb7hCklUaAd0vLsaRiqHCUlPFEP8aG8Dqf
-	 NuFBSOWUGfmkGlIG6zzKEHikLEOCouPqccNkQnX842vDHR0U0+Hd8E4unaGECDN8p20zG
-	 Q7GMiWSuhB9xWOUpys81YBUvkvo+IUejszKDU/Q85mpXffIjsHfOPYoZkv06QGDtELg==
+	bh=Q3w+KpvUQqdmPa1oyW5K4/dYd0caZp7zhllQ9oTd74o=;
+	b=enUaKekpSwlbdSWnCdEGS8Dqrd79SO6nbx4LT7iYgLCUjouk5GfUm1ITfVfwfbwsBzBq
+	 tCNwrsyt0eUZ4+/e2wK+4ckFfQwRnCYBJeJIJAuVb5aaFy0fWlJ8/zYQgOZj16o+pFEJ5
+	 7QARXlkXvIDyjsLFwkSKRwGZXFRd/togKfSGPIFc2iI8XasXPIsaqtiEkpsX/UJCVEZ0J
+	 qV+PtdSznpqy4C0p64LoVRcmpeno2qG/7gvn/E8jJbwXX48nHgQ+yRIgWVvmNLQE8BqV3
+	 vOXXxS9zja7aRzJd7/jffq/bexHjtsT7iymFgTCo0MBoEXfG0VUcny1MrCVlu9IZ2Vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w7RnkIrC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kMXEtdtx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6AF60A260E;
-	Wed, 18 Nov 2026 16:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37164606A333;
+	Wed, 18 Nov 2026 16:03:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w7RnkIrC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30231F000CB;
-	Wed, 18 Nov 2026 16:03:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kMXEtdtx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B60A1F000CD;
+	Wed, 18 Nov 2026 16:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017808;
-	bh=zsnNxJAm9xn+qAr5YusbdI5b/p7RWNgVn79LyoPT7Sw=;
+	s=korg; t=1795017811;
+	bh=Q3w+KpvUQqdmPa1oyW5K4/dYd0caZp7zhllQ9oTd74o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w7RnkIrCUSKK3EsuifdqdvK2Olb1t65Oavfx1y/EFmHWl1ZfY1YlmUC0BGzCcfC+z
-	 wMB8v1wLhjFjJrzeYNC7KldepafbQul3QwDH9on8qpptyd5Kl16SpYoUhRZQ1b6Zf/
-	 8FLUREf35CGAIa0lPhFzoK42Ja1USgMFWFIl6Z4o=
+	b=kMXEtdtx+drr5ejf+h1sJAbxttnQl8lOI2yyNpzy7iAv/kHuVcwXw8tWJIWkwtbOo
+	 mLa8SdfYaLHS9HN5iGPvxvdu1YZS27qsRbJINI8p5WQ1ur+L3L24Ajqk7HXQ6uzFAE
+	 3eArLfSJ4v7AU7dvB4/tTD6RgsZdDTuP4ZtZqNCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Hungyu Lin <dennylin0707@gmail.com>,
+	Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bod@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0999/2651] arm64: dts: imx93-14x14-evk: fix reserved memory node names for remoteproc
-Date: Wed, 18 Nov 2026 15:37:19 +0100
-Message-ID: <20261118150323.876326633@linuxfoundation.org>
+Subject: [PATCH 7.3 1017/2651] media: iris: cancel sys error work on driver removal
+Date: Wed, 18 Nov 2026 15:37:37 +0100
+Message-ID: <20261118150324.539049727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,46 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Hungyu Lin <dennylin0707@gmail.com>
 
-[ Upstream commit e62f7ef5320d05361ee7f665568d05361b0c59d9 ]
+[ Upstream commit 4524809316482b64ff092afb7e7b0525ce137c75 ]
 
-The imx_rproc driver checks for the name "vdev0buffer" to skip mapping
-the vdev buffer region, as it is handled by rproc_add_virtio_dev.
-With the node named "vdevbuffer", the check fails and the region gets
-unnecessarily mapped. Rename it to "vdev0buffer" to match what the
-driver expects.
+Cancel sys_error_handler before tearing down the driver.
 
-Fixes: 0481dadbc5e5 ("arm64: dts: imx93: support i.MX93-14x14-EVK board")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
+The delayed work may still be pending when iris_remove()
+runs. Since iris_core is allocated with devm_kzalloc(),
+allowing the work to execute after driver removal could
+result in accessing freed memory.
+
+Fixes: fb583a214337 ("media: iris: introduce host firmware interface with necessary hooks")
+Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
+Reviewed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+[bod: Fixed patch title]
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/iris/iris_probe.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts b/arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts
-index ec78c03f4788b..3ea50d8080344 100644
---- a/arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts
-+++ b/arch/arm64/boot/dts/freescale/imx93-14x14-evk.dts
-@@ -75,7 +75,7 @@ rsc_table: rsc-table@2021e000 {
- 			no-map;
- 		};
+diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
+index 6581a969fe3fb..c4b8b4be339d9 100644
+--- a/drivers/media/platform/qcom/iris/iris_probe.c
++++ b/drivers/media/platform/qcom/iris/iris_probe.c
+@@ -251,6 +251,8 @@ static void iris_remove(struct platform_device *pdev)
+ 	if (!core)
+ 		return;
  
--		vdevbuffer: vdevbuffer@a4020000 {
-+		vdev0buffer: vdev0buffer@a4020000 {
- 			compatible = "shared-dma-pool";
- 			reg = <0 0xa4020000 0 0x100000>;
- 			no-map;
-@@ -222,7 +222,7 @@ &cm33 {
- 	mboxes = <&mu1 0 1>,
- 		 <&mu1 1 1>,
- 		 <&mu1 3 1>;
--	memory-region = <&vdevbuffer>, <&vdev0vring0>, <&vdev0vring1>,
-+	memory-region = <&vdev0buffer>, <&vdev0vring0>, <&vdev0vring1>,
- 			<&vdev1vring0>, <&vdev1vring1>, <&rsc_table>;
- 	status = "okay";
- };
++	cancel_delayed_work_sync(&core->sys_error_handler);
++
+ 	iris_core_deinit(core);
+ 
+ 	video_unregister_device(core->vdev_dec);
 -- 
 2.53.0
 
