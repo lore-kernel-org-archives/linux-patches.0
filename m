@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043106;
-	b=av9iOA0aL4auKVdL1SbY4cyjcodrx0MMaJwOKKX3mzu/aQt5HejIJDkF6urGXUjeBEQ/
-	 AY1i/oFyTCs3LaJlKAw7tMvGYtvIe2OTd1cJLgA17mg/vOg2eGqhjvDsb8fRR49Ukc2JF
-	 VnJboBzLENsDDqqZF+KmUoxvawoH+6eqeHKNyzxHmgJY8LzlTjBSQxNyMZeW6+q85v0BO
-	 fSxe7g8E0WF6tAg2ctKeSwmMHppwPp/jxX4y3uoLK9arufXF+7BDpRKrRj/sIkrcxc5YQ
-	 fl7cBrpRbtffdQvK8hy0QsiTmwLttJGv/Lyh+DVgK2SR0e11lmBOpjYK6YofwJAHUlw==
+	t=1795043108;
+	b=RmxxaC6K47Zx2sjUPJosXZ8WWHjZHSHz7ei2leun5rQKF/wQmsKleSu0eJmswXHYOVHo
+	 OWrS/r3R2YpKQTDs7XsJ1okZkCJmRRgnC9TVDpDLdpz604KMD5nf6BW4egmNtGWWa3xlr
+	 AoxC7avkQAcZZJboa2bkDcKb5/wKLYnOHm8zKTNZiSyvy7EBlG0nZ6kIL0xQ/07hczBOi
+	 1DcZJCSdsBI7blY8F7wxzujeVYGmH0kfN9J1L5Mjsz3XCFi728R3fOZ1YbHRDvr+Oge70
+	 LI6S1Pcb6CCH7hnDooEfHW4/2jYsQ1fDLbFqCIvkb8VQdxNPZFIPACty4WkVjRES8VA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043106;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043108;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=I7nTp5nkZKxWkj7Lf0TNdyX9/oVa9WCUjSO9Bb4Ryzs=;
-	b=g9hcgX+IYdooTRePpLs90RuAZ2BLrvIWsGSbzisSqlbcF+1Z7culv3Rdcklgo4zss59V
-	 UIEkKQ8rc0PcAkXNwQiA1FWKpR8AFlzaF9P2GYaJYLgZynOY0qhfxED/OeaWYmQgzN/A+
-	 o0Jyc0+fOLL4Xcfj4byGUGk+ln5cdecplbjN2q5DJxvSNotnDh0EUfm8khICJQvt3TL6i
-	 j4HpJPpXxP01px6usYsIv5URSs9siLLzYKV0ZnJngL4CuyTLLUf9s0wnd3ch+t+9tuzJf
-	 8qAcbTngW/FscBtiwQy2iGxTT1Hmxg8EsZqDMoj+p98FoO4bpz9EcMT2IzLM9pbRk1Q==
+	bh=pNbrmcP0VKxYF2vLtGX3n3SKFg10Fqm51QFFadEzFkg=;
+	b=JuPW13XMRQYXsecqX6a7dn9u1oxIGNmYgjIIYF7M+BC/S4EiHu+0lnQC4Um+9xO3gYCL
+	 u+W38H/3SD+5mDBdBP/yKZSay8mr/g4q1Rqjpk6m35vtFrW51n+Ud7442gH5VKQvmiHR5
+	 fw+LEGhBgPrqYrqAZCTXaogeZWkSjDclLV98kvNK3SqpiaO/BtpaPcuKCvsa6WqZ6PySh
+	 B4OehtBsaSCaCw7BJgjM2GGV8R65YT5YNEN7UcXEwt8mrX+U5v3xzxX0qnRjg+jzxAF11
+	 5NITuT7uxs5SwavBbnP+Dhd0s1AJVj6pJzejC69ugrw1MkTjENYcYWaf0X2hLg5etDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FcLILrUQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aNtU8MZx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E693C606A325;
-	Wed, 18 Nov 2026 23:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A73606A320;
+	Wed, 18 Nov 2026 23:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FcLILrUQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468E81F000C4;
-	Wed, 18 Nov 2026 23:05:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aNtU8MZx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071921F000C4;
+	Wed, 18 Nov 2026 23:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043105;
-	bh=I7nTp5nkZKxWkj7Lf0TNdyX9/oVa9WCUjSO9Bb4Ryzs=;
+	s=korg; t=1795043108;
+	bh=pNbrmcP0VKxYF2vLtGX3n3SKFg10Fqm51QFFadEzFkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FcLILrUQBMHvQUoLGYaiYq48t9kE6C3rJy9MHYagUY8cqqeiQ/FgffcGvx3NSsiYh
-	 yW3+1lwKawxMCOQqIKpw+cWQYfEQdgpeM484orga5h9NDCEEbS/Fl2DpqUxsZQUJ7g
-	 cxTADzKyKwZ1XO0mT2HiQhi2IkzzTfmWW5xANBwI=
+	b=aNtU8MZx+1A2GHfDgzGgICaGsMOhum5zXVg2dPc0aNs2wMviiqAhoNUqbFpdylhgz
+	 6x0JDOluX0nNngAovI9jB8RQ6AmSMFI9lj7McAeua1Pdqcfjn/mKNLypcQ77xJRdFO
+	 vuB8hFthmYRb+geVdQ0/ICaQi5sq4bDi44yU0wZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yousef Alhouseen <alhouseenyousef@gmail.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0091/2857] media: go7007: avoid undefined shifts in MPEG-4 headers
-Date: Wed, 18 Nov 2026 15:18:45 +0100
-Message-ID: <20261118150204.553555398@linuxfoundation.org>
+Subject: [PATCH 6.1 0092/2857] remoteproc: qcom: Check subdev start status in rproc_stop()
+Date: Wed, 18 Nov 2026 15:18:46 +0100
+Message-ID: <20261118150204.590080438@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,89 +68,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yousef Alhouseen <alhouseenyousef@gmail.com>
+From: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 
-[ Upstream commit 41f82777e547732460290ceb28fcc7c1b95ef192 ]
+[ Upstream commit f44ae8ce156a387b07d40e2d6a0ef979a2748aa1 ]
 
-The byte-alignment paths can call CODE_ADD() with a zero bit
-length.  The macro then shifts an int by name.b, which can be 32
-after the preceding bit was flushed.
+For rproc that doing attach, rproc_start_subdevices() is called only when
+attach successfully. If rproc_report_crash() is called in the attach
+function, rproc_boot_recovery()->rproc_stop()->rproc_stop_subdevices()->
+glink_subdev_stop() could be called and cause NULL pointer dereference:
 
-vti_bitlen() can likewise shift a signed int into its sign bit while
-searching for the bit length, and the package mask construction can
-shift by the full type width.
+ Unable to handle kernel NULL pointer dereference at virtual address 0000000000000300
+ Mem abort info:
+ ...
+ pc : qcom_glink_smem_unregister+0x14/0x48 [qcom_glink_smem]
+ lr : glink_subdev_stop+0x1c/0x30 [qcom_common]
+ ...
+ Call trace:
+  qcom_glink_smem_unregister+0x14/0x48 [qcom_glink_smem] (P)
+  glink_subdev_stop+0x1c/0x30 [qcom_common]
+  rproc_stop+0x58/0x17c
+  rproc_trigger_recovery+0xb0/0x150
+  rproc_crash_handler_work+0xa4/0xc4
+  process_scheduled_works+0x18c/0x2d8
+  worker_thread+0x144/0x280
+  kthread+0x124/0x138
+  ret_from_fork+0x10/0x20
+ Code: a9be7bfd 910003fd a90153f3 aa0003f3 (b9430000)
+ ---[ end trace 0000000000000000 ]---
 
-Make zero-length additions a no-op, derive the bit length with fls(),
-and build the mask with GENMASK().
+Introduce "subdevs_started" flag to indicate rproc_start_subdevices() has
+been called successfully. Ensure subdevices are only stopped if they have
+been started.
 
-Signed-off-by: Yousef Alhouseen <alhouseenyousef@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260623-rproc-attach-issue-v3-2-8e24310707ce@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/go7007/go7007-fw.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 7 +++++++
+ include/linux/remoteproc.h           | 2 ++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/media/usb/go7007/go7007-fw.c b/drivers/media/usb/go7007/go7007-fw.c
-index 018019ba47d46..d50304301eeae 100644
---- a/drivers/media/usb/go7007/go7007-fw.c
-+++ b/drivers/media/usb/go7007/go7007-fw.c
-@@ -13,6 +13,7 @@
-  */
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 80ea239394875..328a41051c77d 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -1102,6 +1102,8 @@ static int rproc_start_subdevices(struct rproc *rproc)
+ 		}
+ 	}
  
- #include <linux/module.h>
-+#include <linux/bitops.h>
- #include <linux/time.h>
- #include <linux/mm.h>
- #include <linux/device.h>
-@@ -58,14 +59,16 @@ struct code_gen {
- #define CODE_GEN(name, dest) struct code_gen name = { dest, 0, 32, 0 }
++	rproc->subdevs_started = true;
++
+ 	return 0;
  
- #define CODE_ADD(name, val, length) do { \
--	name.b -= (length); \
--	name.a |= (val) << name.b; \
--	while (name.b <= 24) { \
--		*name.p = name.a >> 24; \
--		++name.p; \
--		name.a <<= 8; \
--		name.b += 8; \
--		name.len += 8; \
-+	if (length) { \
-+		name.b -= (length); \
-+		name.a |= (val) << name.b; \
-+		while (name.b <= 24) { \
-+			*name.p = name.a >> 24; \
-+			++name.p; \
-+			name.a <<= 8; \
-+			name.b += 8; \
-+			name.len += 8; \
-+		} \
- 	} \
- } while (0)
- 
-@@ -707,11 +710,10 @@ static int gen_mpeg1hdr_to_package(struct go7007 *go,
- 
- static int vti_bitlen(struct go7007 *go)
+ unroll_registration:
+@@ -1117,10 +1119,15 @@ static void rproc_stop_subdevices(struct rproc *rproc, bool crashed)
  {
--	unsigned int i, max_time_incr = go->sensor_framerate / go->fps_scale;
-+	unsigned int max_time_incr = go->sensor_framerate / go->fps_scale;
-+	int bitlen = fls(max_time_incr);
+ 	struct rproc_subdev *subdev;
  
--	for (i = 31; (max_time_incr & ((1 << i) - 1)) == max_time_incr; --i)
--		;
--	return i + 1;
-+	return bitlen ?: 1;
++	if (!rproc->subdevs_started)
++		return;
++
+ 	list_for_each_entry_reverse(subdev, &rproc->subdevs, node) {
+ 		if (subdev->stop)
+ 			subdev->stop(subdev, crashed);
+ 	}
++
++	rproc->subdevs_started = false;
  }
  
- static int mpeg4_frame_header(struct go7007 *go, unsigned char *buf,
-@@ -1209,7 +1211,7 @@ static int seqhead_to_package(struct go7007 *go, __le16 *code, int space,
- 		0xbf08,		fps,
- 		0xbf09,		0,
- 		0xbff2,		vop_time_increment_bitlength,
--		0xbff3,		(1 << vop_time_increment_bitlength) - 1,
-+		0xbff3,		GENMASK(vop_time_increment_bitlength - 1, 0),
- 		0xbfe6,		0,
- 		0xbfe7,		(fps / 1000) << 8,
- 		0,		0,
+ static void rproc_unprepare_subdevices(struct rproc *rproc)
+diff --git a/include/linux/remoteproc.h b/include/linux/remoteproc.h
+index 32f2a75e23832..e819c9707bdc7 100644
+--- a/include/linux/remoteproc.h
++++ b/include/linux/remoteproc.h
+@@ -273,6 +273,7 @@ enum rproc_features {
+  * @has_iommu: flag to indicate if remote processor is behind an MMU
+  * @auto_boot: flag to indicate if remote processor should be auto-started
+  * @sysfs_read_only: flag to make remoteproc sysfs files read only
++ * @subdevs_started: flag to indicate if subdevs have started
+  * @dump_segments: list of segments in the firmware
+  * @nb_vdev: number of vdev currently handled by rproc
+  * @elf_class: firmware ELF class
+@@ -317,6 +318,7 @@ struct rproc {
+ 	bool has_iommu;
+ 	bool auto_boot;
+ 	bool sysfs_read_only;
++	bool subdevs_started;
+ 	struct list_head dump_segments;
+ 	int nb_vdev;
+ 	u8 elf_class;
 -- 
 2.53.0
 
