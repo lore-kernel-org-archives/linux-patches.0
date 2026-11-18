@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026305;
-	b=H2nv8bhpoxYl3q4Ma98l+5CfqH+Wz6jqCF+Wm6ABpMenOb3ulDMt9NF/62sbTlOgslMu
-	 urLE7oZhXOZlz0uf82cC13f4ZSUL7yv6fKzcyvHbrecNyDhbojlNqXPP+PnMz42B2HqGl
-	 YeLRqI2ZYA7d6hXWDLNUitBXb97fseAw5kqyq/1nofY9Bt0I4F+ixz2a+RksjHai4XoQ4
-	 /8S1Kl0tG1ly79rtB/08Dl2fo5VlRR9VU2Cl39Ywrse/kwy5eFPD4XTmFNUTgsPnWJRhM
-	 Mwb5b2LMvYnFNya5+dNW/tWVmzFypT+EaKMnGzSgoNsIXE5q6a1nt+tYKk+uNreqjxw==
+	t=1795026308;
+	b=Z4H9IPCTm7IUtbb5smBUMmobvcb8R6po3WdY/ZN7Q8GLe14qepDOFYzJlkELBDengOYe
+	 X+rSM/X7dEcJr3wYrFM+46AiEx3lexjfje2i+zH4soIAw6eenlOm1CZd/7q3eWo1TO/ke
+	 r7rj/QIhJ1hmLHpVxGPhVHfiKGZIhtPdlZzXbjabNhFZMFegoLXDVMvB/Fz+Hw1sjxD1F
+	 eprvZ08EeshzwAXWL7+0+AzQo5DQsmrdc4TmksWw9vNOFNf7G9cIeCei+8Kmv5I7XY6Md
+	 s/7AqSvxDwiPB9bIMgJXVYxCdr6z/rRjnc1CuvZuICs4apZXXDu3DVwxtjCjqn5GpZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026305;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026308;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YBLgLKaWoFlvy8GFiZ2JGBqhZEyhC9rabPr5bH98ONo=;
-	b=n7DvrkqIhTAosqcRV9mwhbQgxzVobsCQXBGdt1YzYkkvdYIP3x6yi6HJP2m/TA60dFjV
-	 sopKfsLVmHkgNu2GM+qdsr/1raJgzYm8yLBkIMMij1i3gb/salqu8E/q29psdflIBBcv1
-	 Y22ofwjVNCacmfJAuXg/IuOBRfibJs/538xmNZsOjrrobk3m52rH2KsSYLYy73UKhjyuR
-	 5/z2wgALgifshuE0kcpwFD2aJQe+HlkkxxJtpVSs9QkmRF8uWGvjZGAp7yUioF9JyqqNw
-	 bFiTklXr8irojABkq7rFGqiMnxKCI+ncerFT+pBlUXeNLv+lvTCOqPRR7yuS36Oeckg==
+	bh=PvehK0GFW+LNJT5ElML0fgtlnppj4SRWpx0HEmSCe3k=;
+	b=YqsS00edCVT6Ikp3OKwdX/aUIoL1gcqmIjPvst3IQqNwpygaU56Dng0j5PZSkcL4dFWF
+	 DTpWBkVA5qMmQlkXJqMW46iYgMbI7WOFr7cKmzjiKeMAwH+Z22KT+k6RMHEIwDjpSGfy/
+	 ZSXfgfgYA8J0T995h8FA/3dz4bg26anZxHgVvZi4qoXl1d3bP4l5ace+uopBNFPGk+duG
+	 SljUb8cI/rehvbbxiMx7kY2owisuLJRUmaQ4oZHLu8wXxrSJI5AmdiDtQSmFy51e5Nfk2
+	 ygvjr2ykOgd0zd02t3kmaJhosDWYmTX8OfM45+xksmWLrrpUtdqkAuAZ033YJa9+few==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTB5xmdS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yykq6UyH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91854606A338;
-	Wed, 18 Nov 2026 18:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42026606A32C;
+	Wed, 18 Nov 2026 18:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qTB5xmdS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75151F000C7;
-	Wed, 18 Nov 2026 18:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Yykq6UyH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3331F000C4;
+	Wed, 18 Nov 2026 18:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026305;
-	bh=YBLgLKaWoFlvy8GFiZ2JGBqhZEyhC9rabPr5bH98ONo=;
+	s=korg; t=1795026308;
+	bh=PvehK0GFW+LNJT5ElML0fgtlnppj4SRWpx0HEmSCe3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qTB5xmdSoSSn2QGQQEZB4+kknajevjiU1nt7B6HLx64Kl4WW60MMBwHT5qu8fnxVL
-	 rT7RYuLkSHasNN4GblY7bl1NDI9HOwFl8ia5hrhBhtlLVwVJd/PudDyX0lycTAwGiq
-	 lCliaTooyuB7I+xDUFHlmzDqD5qStKMb6bYCzUHg=
+	b=Yykq6UyHac22fJY8CDD0DW4vKzGClGyAi1o/1x+VmiriSh2/dLGQRBU2G7UhmnwPO
+	 G2QuUkOiS8VuWolaar8/+Da6EcIHXCrjcen3wnDPG24/fK+dLtbPKcxf19eMaJVLcQ
+	 ho6fLXPYoEU4zoH4rIKjm5iQifHHM+MWoHGNlUY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1389/2151] ALSA: pcm: Protect delay DMA sync against concurrent HW_FREE
-Date: Wed, 18 Nov 2026 15:52:04 +0100
-Message-ID: <20261118150212.604066377@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.18 1390/2151] PCI: qcom: Honor IOMMU providers #iommu-cells in qcom_pcie_config_sid_1_9_0()
+Date: Wed, 18 Nov 2026 15:52:05 +0100
+Message-ID: <20261118150212.638011927@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,230 +69,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 
-[ Upstream commit 50f413b83b31ea8d8ee4276165ab95ed5ab0e10f ]
+[ Upstream commit 5121d76cb9dde74662962cd5678a64abeaf3b3e4 ]
 
-A PCM DMA buffer must remain allocated until explicit DMA synchronization
-finishes. snd_pcm_delay() calls snd_pcm_dma_buffer_sync() after dropping
-the stream lock, without participating in the buffer-access exclusion
-used by HW_FREE.
+qcom_pcie_config_sid_1_9_0() reads the "iommu-map" property as an array
+of fixed four-word {rid-base, phandle, sid, rid-len} entries to program
+the BDF to SID translation table. But that layout only holds for an
+IOMMU with '#iommu-cells = <1>'. The PCIe SMMUs on these SoCs use
+'#iommu-cells = <2>' (SID and mask), so per the pci-iommu binding each
+entry is really five cells long.
 
-With a managed NONCONTIG buffer requiring explicit sync, HW_PARAMS can
-allocate a separate runtime descriptor when the requested ring exceeds
-the preallocation. In PREPARED state with mmap_count zero, concurrent
-HWSYNC and HW_FREE calls on the same open PCM file can interleave:
+This used to work only because the DTs were themselves broken. They
+described iommu-map with four-cell entries that omitted the SID mask,
+which of_map_id() tolerated via its of_check_bad_map() fallback, and the
+four-word parsing coincidentally matched that malformed shape.
 
-1. HWSYNC checks the state in snd_pcm_delay() under the stream lock and
-   releases that lock.
-2. The sync helper fetches runtime->dma_buffer_p and enters
-   snd_dma_noncontig_sync() with that descriptor.
-3. HW_FREE takes the negative buffer-access count, checks PREPARED under
-   the stream lock, releases the lock, and frees the DMA allocation and
-   dynamic descriptor through snd_pcm_lib_free_pages().
-4. The sync callback resumes and reads the freed descriptor.
+Since commit ccb2fd725d41 ("of: Respect #{iommu,msi}-cells in maps") the
+OF core parses such maps correctly, so the device trees were converted
+to proper five-cell entries, e.g. commit c41749e9554d ("arm64: dts:
+qcom: sm8250: Fix the PCIe iommu-map entries"). With five-cell entries
+the fixed four-word stride slips by one cell for each entry after the
+first, so qcom_pcie_config_sid_1_9_0() reads the endpoint mapping's RID
+from the preceding entry's length cell and its SID from the phandle cell.
+As the RID is the hash key, the endpoint's real RID is never programmed
+into the BDF to SID table. Its DMA then hashes to an unprogrammed slot,
+gets tagged with SID 0 and the SMMU faults like below on QCS8300:
 
-The stream lock does not cover the allocation's release, and the sync
-operation has no positive buffer-access count to prevent it. The stale
-read causes a use-after-free in snd_dma_noncontig_sync(). DELAY uses the
-same snd_pcm_delay() path.
+  arm-smmu 15200000.iommu: Unhandled context fault: fsr=0x402, iova=0xffa00000, cbfrsynra=0x0, cb=1
 
-Take a positive buffer-access count before checking the state and keep it
-until the DMA sync finishes, as the transfer and mmap paths already do.
-HW_FREE then returns -EBUSY while this access is active. If a buffer
-writer has already entered, snd_pcm_delay() returns -EBUSY before using
-the buffer. Keep the sync outside the stream lock and balance the count
-on the state-error path as well.
+To fix this, walk the map with a stride of 3 + '#iommu-cells' of the
+referenced IOMMU and take the SID from the first specifier cell, which is
+all the BDF to SID table needs. Validate the layout instead of trusting
+the array size. Also, preserve the legacy behavior of the old DTs by
+detecting the same pattern that of_check_bad_map() recognizes and
+falling back to a stride of four.
 
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-    Read of size 4 at addr ffff888108f58584 by task pcm-uaf-fixture/487
-
-    CPU: 1 UID: 0 PID: 487 Comm: pcm-uaf-fixture Not tainted 7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     kasan_report+0xe0/0x110
-     ? snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_noncontig_sync+0x295/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_buffer_sync+0xc9/0x110 [snd_pcm]
-     snd_pcm_delay+0x3bd/0x550 [snd_pcm]
-     snd_pcm_common_ioctl+0x1e7/0x3aa0 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     ? __pfx_snd_pcm_ioctl+0x10/0x10 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f1cae7ab91b
-    Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b 04 25 28 00 00
-    RSP: 002b:00007ffe12d544f0 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 00007f1cae7ab91b
-    RDX: 0000000000000000 RSI: 0000000000004122 RDI: 0000000000000003
-    RBP: 00000000000001ee R08: 0000000000000073 R09: 00000000ffffffff
-    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-    R13: 0000000000000001 R14: 00005584f32b1398 R15: 00005584f32b2ce8
-     </TASK>
-
-    Allocated by task 487:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     snd_pcm_lib_malloc_pages+0x27c/0x9f0 [snd_pcm]
-     snd_pcm_hw_params+0x171c/0x1d10 [snd_pcm]
-     snd_pcm_common_ioctl+0x1f62/0x3aa0 [snd_pcm]
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 499:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     snd_pcm_lib_free_pages+0x1c9/0x420 [snd_pcm]
-     snd_pcm_common_ioctl+0x2bd3/0x3aa0 [snd_pcm]
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    The buggy address belongs to the object at ffff888108f58580
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 4 bytes inside of
-     freed 64-byte region [ffff888108f58580, ffff888108f585c0)
-
-    The buggy address belongs to the physical page:
-    page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x108f58
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-    raw: 0200000000000000 ffff8881000428c0 dead000000000100 dead000000000122
-    raw: 0000000000000000 0000000000200020 00000000f5000000 0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff888108f58480: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff888108f58500: 00 00 00 00 00 06 fc fc fc fc fc fc fc fc fc fc
-    >ffff888108f58580: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                       ^
-     ffff888108f58600: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff888108f58680: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-    Disabling lock debugging due to kernel taint
-    ------------[ cut here ]------------
-    kernel BUG at kernel/dma/mapping.c:417!
-    Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-    CPU: 1 UID: 0 PID: 487 Comm: pcm-uaf-fixture Tainted: G    B               7.2.0-rc6-pmb-alsa-functional-v2+ #1 PREEMPT(lazy)
-    Tainted: [B]=BAD_PAGE
-    Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-    RIP: 0010:__dma_sync_sg_for_cpu+0x230/0x360
-    Code: df 48 c1 e8 03 80 3c 10 00 0f 85 fa 00 00 00 4c 8b 35 d4 6b 7a 09 e8 7f e2 17 00 83 fd 02 0f 86 39 fe ff ff e8 71 e2 17 00 90 <0f> 0b e8 69 e2 17 00 be 08 00 00 00 4c 89 ff e8 bc 5f 77 00 4c 89
-    RSP: 0018:ffff888111f3fc50 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: ffffffffc0250d10 RCX: ffffffff816d395f
-    RDX: ffff88810836ba00 RSI: ffff888108f58580 RDI: ffffffffc02510d8
-    RBP: 00000000ffff8881 R08: 0000000000000000 R09: fffffbfff804a239
-    R10: ffffffffc02511cf R11: 6e696c6261736944 R12: ffff888108f58580
-    R13: 0000000002ce00e5 R14: ffffffffc0258720 R15: 0000000000000000
-    FS:  00007f1cae69c780(0000) GS:ffff8881fd861000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: 000055d1affa2480 CR3: 0000000108fc0003 CR4: 0000000000770ef0
-    PKRU: 55555554
-    Call Trace:
-     <TASK>
-     snd_dma_noncontig_sync+0x15a/0x310 [snd_pcm]
-     ? __pfx_snd_dma_noncontig_sync+0x10/0x10 [snd_pcm]
-     snd_dma_buffer_sync+0xc9/0x110 [snd_pcm]
-     snd_pcm_delay+0x3bd/0x550 [snd_pcm]
-     snd_pcm_common_ioctl+0x1e7/0x3aa0 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10 [snd_pcm]
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0 [snd_pcm]
-     ? __pfx_snd_pcm_ioctl+0x10/0x10 [snd_pcm]
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x7f1cae7ab91b
-    Code: 00 48 89 44 24 18 31 c0 48 8d 44 24 60 c7 04 24 10 00 00 00 48 89 44 24 08 48 8d 44 24 20 48 89 44 24 10 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1c 48 8b 44 24 18 64 48 2b 04 25 28 00 00
-    RSP: 002b:00007ffe12d544f0 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 00007f1cae7ab91b
-    RDX: 0000000000000000 RSI: 0000000000004122 RDI: 0000000000000003
-    RBP: 00000000000001ee R08: 0000000000000073 R09: 00000000ffffffff
-    R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000003
-    R13: 0000000000000001 R14: 00005584f32b1398 R15: 00005584f32b2ce8
-     </TASK>
-    Modules linked in: snd_pcmtest snd_pcm
-    ---[ end trace 0000000000000000 ]---
-    RIP: 0010:__dma_sync_sg_for_cpu+0x230/0x360
-    Code: df 48 c1 e8 03 80 3c 10 00 0f 85 fa 00 00 00 4c 8b 35 d4 6b 7a 09 e8 7f e2 17 00 83 fd 02 0f 86 39 fe ff ff e8 71 e2 17 00 90 <0f> 0b e8 69 e2 17 00 be 08 00 00 00 4c 89 ff e8 bc 5f 77 00 4c 89
-    RSP: 0018:ffff888111f3fc50 EFLAGS: 00010293
-    RAX: 0000000000000000 RBX: ffffffffc0250d10 RCX: ffffffff816d395f
-    RDX: ffff88810836ba00 RSI: ffff888108f58580 RDI: ffffffffc02510d8
-    RBP: 00000000ffff8881 R08: 0000000000000000 R09: fffffbfff804a239
-    R10: ffffffffc02511cf R11: 6e696c6261736944 R12: ffff888108f58580
-    R13: 0000000002ce00e5 R14: ffffffffc0258720 R15: 0000000000000000
-    FS:  00007f1cae69c780(0000) GS:ffff8881fd861000(0000) knlGS:0000000000000000
-    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-    CR2: 000055d1affa2480 CR3: 0000000108fc0003 CR4: 0000000000770ef0
-    PKRU: 55555554
-    Kernel panic - not syncing: Fatal exception
-    Kernel Offset: disabled
-    Rebooting in 1 seconds..
-
-Fixes: a25684a95646 ("ALSA: memalloc: Support for non-contiguous page allocation")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-d74585d187e0b1810c08-v2-25432d0951f67fdaa1a9@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4c9398822106 ("PCI: qcom: Add support for configuring BDF to SID mapping for SM8250")
+Reported-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Tested-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+Link: https://patch.msgid.link/20260907143349.317495-1-mani@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pci/controller/dwc/pcie-qcom.c | 90 ++++++++++++++++++--------
+ 1 file changed, 64 insertions(+), 26 deletions(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 79b49d8e6a87c..b1353c3bd1892 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -3075,14 +3075,19 @@ static snd_pcm_sframes_t snd_pcm_forward(struct snd_pcm_substream *substream,
- static int snd_pcm_delay(struct snd_pcm_substream *substream,
- 			 snd_pcm_sframes_t *delay)
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index fbdb5a9264785..559aa85902d51 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1063,50 +1063,90 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+ 
+ static int qcom_pcie_config_sid_1_9_0(struct qcom_pcie *pcie)
  {
-+	struct snd_pcm_runtime *runtime = substream->runtime;
- 	int err;
+-	/* iommu map structure */
+-	struct {
+-		u32 bdf;
+-		u32 phandle;
+-		u32 smmu_sid;
+-		u32 smmu_sid_len;
+-	} *map;
+ 	void __iomem *bdf_to_sid_base = pcie->parf + PARF_BDF_TO_SID_TABLE_N;
+ 	struct device *dev = pcie->pci->dev;
++	struct device_node *iommu_np;
+ 	u8 qcom_pcie_crc8_table[CRC8_TABLE_SIZE];
+-	int i, nr_map, size = 0;
+-	u32 smmu_sid_base;
++	const __be32 *map;
++	u32 iommu_cells, entry_cells, phandle, smmu_sid_base;
++	int i, nr_cells, nr_map, size = 0;
+ 	u32 val;
  
-+	/* Keep the DMA buffer alive through the sync below. */
-+	if (!atomic_inc_unless_negative(&runtime->buffer_accessing))
-+		return -EBUSY;
- 	scoped_guard(pcm_stream_lock_irq, substream) {
- 		err = do_pcm_hwsync(substream);
- 		if (delay && !err)
- 			*delay = snd_pcm_calc_delay(substream);
+-	of_get_property(dev->of_node, "iommu-map", &size);
+-	if (!size)
++	map = of_get_property(dev->of_node, "iommu-map", &size);
++	if (!map || !size)
+ 		return 0;
+ 
++	if (size % sizeof(*map)) {
++		dev_err(dev, "Malformed iommu-map property\n");
++		return -EINVAL;
++	}
++	nr_cells = size / sizeof(*map);
++
++	/*
++	 * Each iommu-map entry is: rid-base (1 cell), phandle (1 cell),
++	 * IOMMU specifier (#iommu-cells cells), length (1 cell). Read
++	 * #iommu-cells from the IOMMU provider referenced by the first
++	 * entry to compute the per-entry stride.
++	 */
++	phandle = be32_to_cpu(map[1]);
++	iommu_np = of_find_node_by_phandle(phandle);
++	if (!iommu_np) {
++		dev_err(dev, "Failed to find IOMMU node in iommu-map\n");
++		return -ENODEV;
++	}
++
++	if (of_property_read_u32(iommu_np, "#iommu-cells", &iommu_cells))
++		iommu_cells = 1;
++	of_node_put(iommu_np);
++
++	entry_cells = 3 + iommu_cells;
++
++	/*
++	 * Retain backward compatibility with DTs that describe iommu-map
++	 * with 4-cell entries against an IOMMU declaring #iommu-cells = 2,
++	 * matching the fallback in drivers/of/base.c::of_check_bad_map().
++	 */
++	if (iommu_cells == 2 && !(nr_cells % 4)) {
++		bool legacy = true;
++
++		for (i = 0; i < nr_cells; i += 4) {
++			if (be32_to_cpu(map[i + 1]) != phandle ||
++			    be32_to_cpu(map[i + 3]) != 1) {
++				legacy = false;
++				break;
++			}
++		}
++
++		if (legacy) {
++			dev_warn_once(dev, "iommu-map has 1-cell entries with #iommu-cells=2, using 1-cell\n");
++			entry_cells = 4;
++		}
++	}
++
++	if (nr_cells % entry_cells) {
++		dev_err(dev, "Malformed iommu-map property\n");
++		return -EINVAL;
++	}
++	nr_map = nr_cells / entry_cells;
++
+ 	/* Enable BDF to SID translation by disabling bypass mode (default) */
+ 	val = readl(pcie->parf + PARF_BDF_TO_SID_CFG);
+ 	val &= ~BDF_TO_SID_BYPASS;
+ 	writel(val, pcie->parf + PARF_BDF_TO_SID_CFG);
+ 
+-	map = kzalloc(size, GFP_KERNEL);
+-	if (!map)
+-		return -ENOMEM;
+-
+-	of_property_read_u32_array(dev->of_node, "iommu-map", (u32 *)map,
+-				   size / sizeof(u32));
+-
+-	nr_map = size / (sizeof(*map));
+-
+ 	crc8_populate_msb(qcom_pcie_crc8_table, QCOM_PCIE_CRC8_POLYNOMIAL);
+ 
+ 	/* Registers need to be zero out first */
+ 	memset_io(bdf_to_sid_base, 0, CRC8_TABLE_SIZE * sizeof(u32));
+ 
+ 	/* Extract the SMMU SID base from the first entry of iommu-map */
+-	smmu_sid_base = map[0].smmu_sid;
++	smmu_sid_base = be32_to_cpu(map[2]);
+ 
+ 	/* Look for an available entry to hold the mapping */
+ 	for (i = 0; i < nr_map; i++) {
+-		__be16 bdf_be = cpu_to_be16(map[i].bdf);
+-		u32 val;
++		u32 bdf = be32_to_cpu(map[i * entry_cells]);
++		u32 sid = be32_to_cpu(map[i * entry_cells + 2]);
++		__be16 bdf_be = cpu_to_be16(bdf);
+ 		u8 hash;
+ 
+ 		hash = crc8(qcom_pcie_crc8_table, (u8 *)&bdf_be, sizeof(bdf_be), 0);
+@@ -1128,12 +1168,10 @@ static int qcom_pcie_config_sid_1_9_0(struct qcom_pcie *pcie)
+ 		}
+ 
+ 		/* BDF [31:16] | SID [15:8] | NEXT [7:0] */
+-		val = map[i].bdf << 16 | (map[i].smmu_sid - smmu_sid_base) << 8 | 0;
++		val = bdf << 16 | (sid - smmu_sid_base) << 8 | 0;
+ 		writel(val, bdf_to_sid_base + hash * sizeof(u32));
  	}
- 	snd_pcm_dma_buffer_sync(substream, SNDRV_DMA_SYNC_CPU);
-+	atomic_dec(&runtime->buffer_accessing);
  
- 	return err;
+-	kfree(map);
+-
+ 	return 0;
  }
+ 
 -- 
 2.53.0
 
