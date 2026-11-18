@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045457;
-	b=U1T+sj83IjRy+5ruL9GoT1rJ0pRU/dN8ITCH9C0joMRohB4Ny8BYxBzrVOCYnUjRKbGg
-	 xy790BmYz7Ntt73IPXQyhYLG3ElwRWsK7mKQMQYhK1E2ji9DTHtw6TZ2hQQRpEOXJ4Ic9
-	 oxbZkzq98BAWD4KDLxuk5ahGnKAiDtCuD5DUZBg8dYjVoB7/a8LIn1YsDC63uAL0KTbvc
-	 XmnhwkHaRZTrkhUxjLnSdd47DKeVv1LdSZeFWDIrbiQPRuAasdmQzg1iUJQqDaibeIrgc
-	 w8Ehz5J/zH+ce9FKBoBMSdotQuPHSUocdeyizgBq5RC4TNWYJNaTgQDY8BYPGei0AwQ==
+	t=1795045460;
+	b=ioSIdA9biChayia5bR7WJ9RjOrMIZAgCCKd+b6N9Z6dsWGC1ZGZP123/7kkkpW2IBjn/
+	 jANd8EZbuzjNMkeYis7MEtApGp4WT/mp7YwngpJKOnmS4eJpdjYzwwnxG9H4O6OtZ5bHG
+	 i+Ns6br0ULLqQzsBcvmbgtXLWUSbxCs1/nK319GwlwGWRLXlLK4theZekYUUNeRh2WV7R
+	 TyXaHrltWj3rHuJ5e4BQ6M218+njH8WewbxfqE66dVeG03s89+N/cv02idMc3g/f7LUzy
+	 ouA0/zqt0SiyFyYTqlF7NSHgSwgNtCoc7YhBZV+vIZZ651+Aie4IUMtUUyxa1JDDLfQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=6yJE4PawrBkq2pjQO0y/DZ5OhapwwJ5G54yhdy35r78=;
-	b=UP0MZxaIzlLK4P1a3U7LEBdB9Yil2PX5N1bFGZlx3a12OkFu7mUX+6ZHHTVJ0g0KUj4M
-	 cgNw5Dgf3hCAaxomCFRaYV6J7zT8LTIkRRnQJ3XEf0qWEQtTm+NLU2yOHUUj5sduwjc6N
-	 5C8/lpInVh8jlITvgHeTMlkRYkqlSjCi0sy0eeKZaTyxW8TRR+fVitd9s1P4hjaakYuEQ
-	 eMhU1JWYA9U7SN81s6p5GfyFOFLey3NJa4oRBAoSEZrdwQ0GCzi5PtwzGojz1Tzm4Tys8
-	 EER3512bK5W/itePYJW54w7QysdNEtSzGXHSZOoVcXRTc5VVDWqxr76RkaSemCj8Fkw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=8+6ynl0oV9L0sI2JF86LQyObjlqY/IfnqIhEPzrxn/w=;
+	b=B3AucvcLaXogmhC31o9TiVvsGDA37pemaLD9FomTB9dH/r+aTtoSGR0jixuzC0OwfVN/
+	 zy2Ns8nABYFSlcnukR0VT6BtHs1YSrCw4D/fsp6Z3ky2922zvbBRcRsvOexeKUCw7gz8Y
+	 UQj2JK9Q5qLYtDtW+pUKA75eSVg39j3Rzd0M50qdeu/zWO83rt213go6qzO4FZG9NhV/t
+	 qTY4rohZjFnM9EeYeWSxE4CPK0mbxX0e50XSyko1lFlGhnXZHS5YSTH0ynhLdDMCqLavD
+	 U0PY12mCYT9G+UnVLAyIsq5Qmw859PO83SsrRxSQFgrefC+2ggtSeuiTNpieHuwjVvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="v/xu0o+v";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hI0JkVGe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D47606A320;
-	Wed, 18 Nov 2026 23:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1DD606A325;
+	Wed, 18 Nov 2026 23:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v/xu0o+v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416501F000C4;
-	Wed, 18 Nov 2026 23:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hI0JkVGe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFC81F000C4;
+	Wed, 18 Nov 2026 23:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045456;
-	bh=6yJE4PawrBkq2pjQO0y/DZ5OhapwwJ5G54yhdy35r78=;
+	s=korg; t=1795045459;
+	bh=8+6ynl0oV9L0sI2JF86LQyObjlqY/IfnqIhEPzrxn/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=v/xu0o+vYM/QsCcjcMu20xvTHZOO25LCm/jH/VkP+0sPLKigTu2LWOeHwheRsOWNT
-	 7KoRK7M3hoyTdhusObKFBSb4nskZfCqjGF/TAZAcDvvxgUCnHt4L/FHdd1jwvpyEEl
-	 jNgmjtBvJiLnVvWhp4OeZwwfdc9ZIjO98XY+a/Dk=
+	b=hI0JkVGexKmPTSaUac+c9X/mXj0wNFvbiQwH/b62ybeMEPmpo+M8qhHyns0rgJ9ot
+	 j8OogVPLZ/2wxvyzhHxK0+VuWfivYjg1k+euF3W0fmQUllZothd/WGOjHWQjZ0I2Ej
+	 XPXw/EGeihk+qzZg3QMioVUeTJr+1sIld62/tZOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
-	Eason Lai <eason.lai@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0893/2857] wifi: mt76: mt792x: fix UAF in SDIO TX path when out of memory
-Date: Wed, 18 Nov 2026 15:32:07 +0100
-Message-ID: <20261118150233.709475063@linuxfoundation.org>
+Subject: [PATCH 6.1 0929/2857] platform/x86: hp-wmi: fix heap OOB read and memory corruption in hp_wmi_perform_query()
+Date: Wed, 18 Nov 2026 15:32:43 +0100
+Message-ID: <20261118150235.039209182@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -63,62 +62,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eason Lai <eason.lai@mediatek.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit f5dd4833463ed45794027e33928539b3c532f82d ]
+[ Upstream commit 6dea092b261f04d632411c2be52d13190f5f67b1 ]
 
-Using __skb_pad() instead of skb_pad() in mt76_skb_adjust_pad()
-to prevent double-free, as the caller handles cleanup.
+hp_wmi_perform_query() evaluates an ACPI WMI method and expects a
+struct bios_return header in the returned buffer. However, it only
+checks that the ACPI object type is ACPI_TYPE_BUFFER without verifying
+that obj->buffer.length is at least sizeof(*bios_return) (8 bytes).
 
-Free the MCU message skb in __mt76x02u_mcu_send_msg() as well, which
-relied on skb_pad() to release it.
+If the firmware or ACPI method returns a buffer shorter than 8 bytes:
 
-Fixes: 808f2767d421 ("wifi: mt76: mt792x: Fix memory leak in SDIO TX path")
+1. bios_return->return_code at offset 4 reads out of bounds from the
+   allocated ACPI buffer slab.
+
+2. If return_code evaluates to 0 and outsize is non-zero,
+   (int)(obj->buffer.length - sizeof(*bios_return)) evaluates to a
+   negative integer (e.g. -8 for a 0-length buffer). actual_outsize is
+   set to this negative value and passed to memcpy(buffer, ...,
+   actual_outsize), where the signed negative value is cast to
+   size_t (e.g. 0xfffffffffffffff8), attempting to copy ~18 Exabytes
+   and triggering an immediate kernel crash. Additionally,
+   memset(buffer + actual_outsize, ...) performs an out-of-bounds
+   write before buffer.
+
+Fix this by ensuring obj->buffer.length is at least sizeof(*bios_return)
+before accessing the return code, and compute actual_outsize safely
+using min_t(u32, ...), which is sound specifically because the guard
+above already rules out obj->buffer.length being smaller than
+sizeof(*bios_return) by the time that subtraction runs.
+
+Fixes: c3021ea1beee ("hp-wmi: allow setting input and output buffer sizes separately")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/morrownr/mt76/issues/83
-Co-developed-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Signed-off-by: Eason Lai <eason.lai@mediatek.com>
-Link: https://patch.msgid.link/20260914021920.32246-2-eason.lai@mediatek.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://patch.msgid.link/20260826103012.240453-1-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c | 2 +-
- drivers/net/wireless/mediatek/mt76/tx.c              | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c
-index 02da543dfc5cf..b7162c2499c82 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_usb_mcu.c
-@@ -90,7 +90,7 @@ __mt76x02u_mcu_send_msg(struct mt76_dev *dev, struct sk_buff *skb,
- 	       MT_MCU_MSG_TYPE_CMD;
- 	ret = mt76x02u_skb_dma_info(skb, CPU_TX_PORT, info);
- 	if (ret)
--		return ret;
-+		goto out;
- 
- 	ret = mt76u_bulk_msg(dev, skb->data, skb->len, NULL, 500,
- 			     MT_EP_OUT_INBAND_CMD);
-diff --git a/drivers/net/wireless/mediatek/mt76/tx.c b/drivers/net/wireless/mediatek/mt76/tx.c
-index 49886cdfa31bc..5a06392479a55 100644
---- a/drivers/net/wireless/mediatek/mt76/tx.c
-+++ b/drivers/net/wireless/mediatek/mt76/tx.c
-@@ -694,7 +694,7 @@ int mt76_skb_adjust_pad(struct sk_buff *skb, int pad)
- 		}
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index f0abb1d5968b7..305240c1917c4 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -339,8 +339,9 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
+ 		goto out_free;
  	}
  
--	if (skb_pad(last, pad))
-+	if (__skb_pad(last, pad, false))
- 		return -ENOMEM;
+-	if (obj->type != ACPI_TYPE_BUFFER) {
+-		pr_warn("query 0x%x returned an invalid object 0x%x\n", query, ret);
++	if (obj->type != ACPI_TYPE_BUFFER ||
++	    obj->buffer.length < sizeof(*bios_return)) {
++		pr_warn("query 0x%x returned wrong type or too small buffer\n", query);
+ 		ret = -EINVAL;
+ 		goto out_free;
+ 	}
+@@ -359,7 +360,7 @@ static int hp_wmi_perform_query(int query, enum hp_wmi_command command,
+ 	if (!outsize)
+ 		goto out_free;
  
- 	__skb_put(last, pad);
+-	actual_outsize = min(outsize, (int)(obj->buffer.length - sizeof(*bios_return)));
++	actual_outsize = min_t(u32, outsize, obj->buffer.length - sizeof(*bios_return));
+ 	memcpy(buffer, obj->buffer.pointer + sizeof(*bios_return), actual_outsize);
+ 	memset(buffer + actual_outsize, 0, outsize - actual_outsize);
+ 
 -- 
 2.53.0
 
