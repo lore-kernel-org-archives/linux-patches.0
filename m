@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028176;
-	b=3VHTVuUGnCBmAdp7tolz+hOSKU4E4h/fNM1ah54Eca2NZtfaDPD+aVebBSEHpZZHypTy
-	 S7VVVSI4fgFFQ5UepSMkFEQYqGk0GSbnmT5/+baCCDHdgKuoiw8pMEoy7kAqV+BUIBOoQ
-	 bqr2+RpmgwMCSySqOkZ11m7As2Eu8r+GCGX/LXbz+vY4IeJfd0yUnvAxM6PU+0RmQOKVz
-	 ETG7g7XjOEyjOZw1FrzojbIghCXl3PGVKc+ct3AHcrwh2QJk+fp4jy+0TDnr+dEjvClPC
-	 sQnJAcB59j0pxsCbC81LJZbgwKtzXwt0E2cPu0kCFUkeeDaUpGkf/oYaoECGmRoCjOw==
+	t=1795028179;
+	b=W9snk6/p7D92rsVgBvzr9Xbku3SPWbxNx30m2KJ4O/CIXtUpLDsGpBUyiNIiy9JZrRM+
+	 br8we1X2V1HWVvdT2O8xHofCbfrO0c6Mo/dZjskANJclwOSkWuYP3XvlFEOjmiIJVTxCd
+	 HJFSkp9t2/ZP+Azdh1C1of1EfaM2NlWbvno4LICDg1V/2aHOLoup4xYJKCBVbuEiDLm4+
+	 QQdh43xqCKfhn0CVt7Ba7w8EILUY+TiQUQ3N+500di1dSKZz1WfzqAGk1FuZwF/IPlAyS
+	 /t2Iu7IPGPOTlTCorE3Xc0pVUPKcsYC052uBZw2eytVtSId/+cGnmnlvGgVnVZP1YDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028176;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028179;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=N5rYX3CoqKQNW/zGitDmXi2FgOISKKibiL3JSCuQUDA=;
-	b=1TQeAQvduKpoJ3RkbxeOvsasSc0e5SaJBvSH4Go0UNIi+aBu82PpeO5kcBEznAJffSsT
-	 5uebqWJOOqKV0nVzuCgqTDjhnMDXXbwajiaL5ibq7OjunDbgsUYxqH+pBCwk/pUxBtYbq
-	 flF1/QGvz2CrZEG/WwE54s99X/Nlc0Am1MH1XQSLHnWL1jzZrc++ymSxJ9H/ULwthI9Y3
-	 kajeFSUDnWd7hyGFuaTBquZBAFZeZznKg60hFSC/x1rAiw19pDf8iBgvYamB9Uy/WWDwq
-	 Ruay5odrfSQW9AdCM4YLjg9x07CxETMEhu3zyrOkPwDku6zsUEiGVi3w0YV/iYulIOQ==
+	bh=r65i5DU2VEeryeSR+gEF74TakoLA4+Lg3VE3VcYLYx8=;
+	b=lC3Elcz0A21EkTRugq1u821Yn7P1pGdJZOx4dgVdE4rgsj3n2j8J1sr/4oc73Ll6LyHU
+	 lTHCXRs6OMZW7AoOhA9rNGGtzOkCJ4CMZNa5hnuK7l8HiO8wPoTjTqI9m8+FecGcWobhj
+	 o0yinG34q/R5X6wfTinqgRNh5v1YtAvNUWVfAcXUVw6v1nGev7yDSZTy6mfXrPG6Kmtau
+	 HkgNBRy6sYmO0xGtaa4qWPqkz3u2+G2MMUnc95hoSDmNLgt0FJ0KzT+w18AluDHXaaZZH
+	 1p60hn+Wz5Anom9Nu7RFtmRazFNobBJP0hHYmzoLIay4FToaYbwXys7OYMdEYrg+Ztw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="EBQ7/W1A";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cf7OApSx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE42F606A320;
-	Wed, 18 Nov 2026 18:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AE8606A31C;
+	Wed, 18 Nov 2026 18:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EBQ7/W1A
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8D91F000C4;
-	Wed, 18 Nov 2026 18:56:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cf7OApSx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042F71F000C4;
+	Wed, 18 Nov 2026 18:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028176;
-	bh=N5rYX3CoqKQNW/zGitDmXi2FgOISKKibiL3JSCuQUDA=;
+	s=korg; t=1795028179;
+	bh=r65i5DU2VEeryeSR+gEF74TakoLA4+Lg3VE3VcYLYx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EBQ7/W1Ak9WwBVpsbq5EIZZF4Gu9PLu4jp2Jp4BWKKmFdBaYMHwnWv7lZsoYMVMYN
-	 gW5qWM4/6jOzf4p/MfAeLFPwEYdQ9TV/rAC2ftNUE5wNoiCzE98KIwKsjLO3Da7QN+
-	 ZVmZFLM2WIx4e4tC76ys0jOjCYnwbhDFGo62mf8k=
+	b=cf7OApSxzzlcD/u5qH3JFG0Pewt4WV/B9vYXCeWnbng10ad7aC4N4Nq3s+eB/lphJ
+	 zFKMxa8rOk9O95NUdxrCCnDMFo8EMizALSabOORYlzOvatSU9O8VY8ARRCZBWmZ6TX
+	 88wVgKhytzIEYyfWWX30LlckqKBaQhgoPrKRoe5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Ido Schimmel <idosch@nvidia.com>,
-	Danielle Ratson <danieller@nvidia.com>,
 	Nikolay Aleksandrov <razor@blackwall.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2053/2151] bridge: Add internal flags for neigh_forward_grat
-Date: Wed, 18 Nov 2026 16:03:08 +0100
-Message-ID: <20261118150236.510235819@linuxfoundation.org>
+Subject: [PATCH 6.18 2054/2151] bridge: add bridge_flags_bit enum
+Date: Wed, 18 Nov 2026 16:03:09 +0100
+Message-ID: <20261118150236.545999957@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,55 +70,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danielle Ratson <danieller@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3a28ccb9dd47d1b6f64c64a94c958a968299aa1d ]
+[ Upstream commit 87020def2529ec26fc9077e889fa1c34f53f1f83 ]
 
-Add internal flags for the neigh_forward_grat feature:
+We want to use atomic operations for lockless p->flags changes
+and reads.
 
-- BR_NEIGH_FORWARD_GRAT: Port-level flag
-- BR_VLFLAG_NEIGH_FORWARD_GRAT_ENABLED: Per-VLAN flag
+Add definitions for bits in addition of masks so that we can use
+test_bit(), clear_bit() and set_bit() in subsequent patches.
 
-These will be used to control whether gratuitous ARP and unsolicited NA
-packets are forwarded when neighbor suppression is enabled.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Danielle Ratson <danieller@nvidia.com>
 Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20260511065936.4173106-3-danieller@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20260604141343.2124500-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: fcc00b15cb21 ("net: bridge: netlink: do not clear the vlan info dump error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/if_bridge.h | 1 +
- net/bridge/br_private.h   | 1 +
- 2 files changed, 2 insertions(+)
+ include/linux/if_bridge.h | 78 ++++++++++++++++++++++++++-------------
+ 1 file changed, 53 insertions(+), 25 deletions(-)
 
 diff --git a/include/linux/if_bridge.h b/include/linux/if_bridge.h
-index c5fe3b2a53e82..ec9ffea1e46ed 100644
+index ec9ffea1e46ed..75673b8bffcb8 100644
 --- a/include/linux/if_bridge.h
 +++ b/include/linux/if_bridge.h
-@@ -61,6 +61,7 @@ struct br_ip_list {
- #define BR_PORT_LOCKED		BIT(21)
- #define BR_PORT_MAB		BIT(22)
- #define BR_NEIGH_VLAN_SUPPRESS	BIT(23)
-+#define BR_NEIGH_FORWARD_GRAT	BIT(24)
+@@ -36,32 +36,60 @@ struct br_ip_list {
+ 	struct br_ip addr;
+ };
+ 
+-#define BR_HAIRPIN_MODE		BIT(0)
+-#define BR_BPDU_GUARD		BIT(1)
+-#define BR_ROOT_BLOCK		BIT(2)
+-#define BR_MULTICAST_FAST_LEAVE	BIT(3)
+-#define BR_ADMIN_COST		BIT(4)
+-#define BR_LEARNING		BIT(5)
+-#define BR_FLOOD		BIT(6)
++enum bridge_flags_bit {
++	BR_HAIRPIN_MODE_BIT,
++	BR_BPDU_GUARD_BIT,
++	BR_ROOT_BLOCK_BIT,
++	BR_MULTICAST_FAST_LEAVE_BIT,
++	BR_ADMIN_COST_BIT,
++	BR_LEARNING_BIT,
++	BR_FLOOD_BIT,
++	BR_PROMISC_BIT,
++	BR_PROXYARP_BIT,
++	BR_LEARNING_SYNC_BIT,
++	BR_PROXYARP_WIFI_BIT,
++	BR_MCAST_FLOOD_BIT,
++	BR_MULTICAST_TO_UNICAST_BIT,
++	BR_VLAN_TUNNEL_BIT,
++	BR_BCAST_FLOOD_BIT,
++	BR_NEIGH_SUPPRESS_BIT,
++	BR_ISOLATED_BIT,
++	BR_MRP_AWARE_BIT,
++	BR_MRP_LOST_CONT_BIT,
++	BR_MRP_LOST_IN_CONT_BIT,
++	BR_TX_FWD_OFFLOAD_BIT,
++	BR_PORT_LOCKED_BIT,
++	BR_PORT_MAB_BIT,
++	BR_NEIGH_VLAN_SUPPRESS_BIT,
++	BR_NEIGH_FORWARD_GRAT_BIT,
++};
++
++#define BR_HAIRPIN_MODE		BIT(BR_HAIRPIN_MODE_BIT)
++#define BR_BPDU_GUARD		BIT(BR_BPDU_GUARD_BIT)
++#define BR_ROOT_BLOCK		BIT(BR_ROOT_BLOCK_BIT)
++#define BR_MULTICAST_FAST_LEAVE	BIT(BR_MULTICAST_FAST_LEAVE_BIT)
++#define BR_ADMIN_COST		BIT(BR_ADMIN_COST_BIT)
++#define BR_LEARNING		BIT(BR_LEARNING_BIT)
++#define BR_FLOOD		BIT(BR_FLOOD_BIT)
+ #define BR_AUTO_MASK		(BR_FLOOD | BR_LEARNING)
+-#define BR_PROMISC		BIT(7)
+-#define BR_PROXYARP		BIT(8)
+-#define BR_LEARNING_SYNC	BIT(9)
+-#define BR_PROXYARP_WIFI	BIT(10)
+-#define BR_MCAST_FLOOD		BIT(11)
+-#define BR_MULTICAST_TO_UNICAST	BIT(12)
+-#define BR_VLAN_TUNNEL		BIT(13)
+-#define BR_BCAST_FLOOD		BIT(14)
+-#define BR_NEIGH_SUPPRESS	BIT(15)
+-#define BR_ISOLATED		BIT(16)
+-#define BR_MRP_AWARE		BIT(17)
+-#define BR_MRP_LOST_CONT	BIT(18)
+-#define BR_MRP_LOST_IN_CONT	BIT(19)
+-#define BR_TX_FWD_OFFLOAD	BIT(20)
+-#define BR_PORT_LOCKED		BIT(21)
+-#define BR_PORT_MAB		BIT(22)
+-#define BR_NEIGH_VLAN_SUPPRESS	BIT(23)
+-#define BR_NEIGH_FORWARD_GRAT	BIT(24)
++#define BR_PROMISC		BIT(BR_PROMISC_BIT)
++#define BR_PROXYARP		BIT(BR_PROXYARP_BIT)
++#define BR_LEARNING_SYNC	BIT(BR_LEARNING_SYNC_BIT)
++#define BR_PROXYARP_WIFI	BIT(BR_PROXYARP_WIFI_BIT)
++#define BR_MCAST_FLOOD		BIT(BR_MCAST_FLOOD_BIT)
++#define BR_MULTICAST_TO_UNICAST	BIT(BR_MULTICAST_TO_UNICAST_BIT)
++#define BR_VLAN_TUNNEL		BIT(BR_VLAN_TUNNEL_BIT)
++#define BR_BCAST_FLOOD		BIT(BR_BCAST_FLOOD_BIT)
++#define BR_NEIGH_SUPPRESS	BIT(BR_NEIGH_SUPPRESS_BIT)
++#define BR_ISOLATED		BIT(BR_ISOLATED_BIT)
++#define BR_MRP_AWARE		BIT(BR_MRP_AWARE_BIT)
++#define BR_MRP_LOST_CONT	BIT(BR_MRP_LOST_CONT_BIT)
++#define BR_MRP_LOST_IN_CONT	BIT(BR_MRP_LOST_IN_CONT_BIT)
++#define BR_TX_FWD_OFFLOAD	BIT(BR_TX_FWD_OFFLOAD_BIT)
++#define BR_PORT_LOCKED		BIT(BR_PORT_LOCKED_BIT)
++#define BR_PORT_MAB		BIT(BR_PORT_MAB_BIT)
++#define BR_NEIGH_VLAN_SUPPRESS	BIT(BR_NEIGH_VLAN_SUPPRESS_BIT)
++#define BR_NEIGH_FORWARD_GRAT	BIT(BR_NEIGH_FORWARD_GRAT_BIT)
  
  #define BR_DEFAULT_AGEING_TIME	(300 * HZ)
  
-diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
-index ba379e65c5687..1161ab10fc276 100644
---- a/net/bridge/br_private.h
-+++ b/net/bridge/br_private.h
-@@ -183,6 +183,7 @@ enum {
- 	BR_VLFLAG_GLOBAL_MCAST_ENABLED = BIT(3),
- 	BR_VLFLAG_NEIGH_SUPPRESS_ENABLED = BIT(4),
- 	BR_VLFLAG_TAGGING_BY_SWITCHDEV = BIT(5),
-+	BR_VLFLAG_NEIGH_FORWARD_GRAT_ENABLED = BIT(6),
- };
- 
- /**
 -- 
 2.53.0
 
