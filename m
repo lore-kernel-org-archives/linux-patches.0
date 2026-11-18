@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028900;
-	b=I98ABqEt/+uaV03aMnIxHgw45HalVZR4rY8yscbZLWWq+U55Gb2u1YZQ/SDkfQn9mQzW
-	 mFP2xiLfc5ZFijfr5qCPF3YzBgiBYLeWsyQYROzGhO6/CQCASUJZ1NFc2k4IXL5/R9HHw
-	 plk8/vLfxIjVOrrvHtFzPKcA+C1HjkrLHXhUHUa6H/1TQde3cSrUO9hy4m2rki21TDYlc
-	 txcC1XsWpQ27x8pv3om4Ymdjcrqnt4Fo92qj5stsOSnyaSCkgp1HLPR3QCLaqoQOxFsiu
-	 I0ihTO+CcLQA9vXwWMAeMtKva+POzaADjgNgkIOeAss+nHrI7bf5j5FXSo2iaE+4F7A==
+	t=1795028903;
+	b=pe3rQ4QIMAf1Df9ypmtqQDf55Hk6wdPGExQclJCsJpvZk4BpQ4yfXrK/6+IAXX9w73yo
+	 LbazuU/8CcGdGJyLUDkdhJY/e3zu+2PTyDUD101ncvFJWz2C1cDJfI8z/Q+nm+6BywayM
+	 2SGgW4w+MmSGt86ljYrfk0FLuEQItxT9Uwf63VjYw32+2hadu42Oho60pSIjOcSpAlqt2
+	 0P3W5z6byIIcYKCw5wYmRw+QuRr5WkJ3wOKy4buSaL0H2QUwNq00zcIKzsNJ2uSuT9xPx
+	 eJ30y3tinblBJALxIyeviPj1flKn/IkNHXT+ZYDEnZ/UU8esjsV75/Bc62NAeUNq9GQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028900;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028903;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yJOe1LIwOCVa4M+5sDR7FzKPzqbG0zWtJ/Mr1/JL4N4=;
-	b=YXhfZHq7lBGgK5TDekCoTbChGe5NPkNxTDcjiKiUClI/RgF926RjLjCpGlXS6kenlRqj
-	 VbP2/on5oT8eV9y77Whx4QZmIwhVMTXU08Rgl+6dT/ZnUVnWoapolAEb24XxmeHwE9J+X
-	 fQo9PUHAa5eLmsMOVRC1EQfd/QVYrw0tJGRN3uRxQpDhPDHzVehirYapWPJVqfl6JZL7P
-	 pHW56QaSIdJ+aFcd4+UaDZQi4WLRqlQnPz9eB/MZraiiScck+jHqDwHd1KXpFGMw97FFA
-	 bZ2DEHIRp1SCHyFqUt7Vto0XEuSlLOXdstjjHOr2S341UUftoZbaTo9Q/X4yBQVlrCw==
+	bh=KHSsMZ/GxWC+qUnSxqyxC74VyO6C4lKFPOwMHFBUo6M=;
+	b=fx3f0uETLYuGEmSXmuWt/Pt0+UlukyRthysUPaM1LzWoMR0/Qf3ggWvtoCyNs1NpsMCc
+	 nk+7wnBmLPBaMDPsfFThA2MiiXq8PXn8otcpBXmxnyY69Lyz3mR4IlX7WKuvN4QAqytv/
+	 NpSFbTxad/BMVDCq63t1wCWjHZv7eOeU8xy4Wbg7zN/GffJjnyq6HKECrMIJk0NAfvlt9
+	 cPtQsqEKo9OsrTes2T5W5hv44p19D7g8MH3unIBggFvPnQOZTtl2rVTEEnOpWN4ULRtV1
+	 223QcBo1nIv4s8cgNb8HYENtlLNDx2DX0BiLFMoJsI6dw2uAeLgWS3bqLQqBXDDYtMg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xDsC0mre;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pOFZECdK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D92E606A331;
-	Wed, 18 Nov 2026 19:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021B560A2606;
+	Wed, 18 Nov 2026 19:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xDsC0mre
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7C91F000C5;
-	Wed, 18 Nov 2026 19:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pOFZECdK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B921F000C4;
+	Wed, 18 Nov 2026 19:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028900;
-	bh=yJOe1LIwOCVa4M+5sDR7FzKPzqbG0zWtJ/Mr1/JL4N4=;
+	s=korg; t=1795028902;
+	bh=KHSsMZ/GxWC+qUnSxqyxC74VyO6C4lKFPOwMHFBUo6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=xDsC0mreQ+0ue3XD4qY+2tWgT2VabKsTG51wrdqqnPgFCqBswBXoXEPysUnVil8Je
-	 eYjsWLXQQK3L+3QsbBeod2/WsM36/DIKCzDgDodUWGQAqlDC9H8dq1vYbnCBiwNkFL
-	 WLZpy04npzhvJS9eOZssaWho1ahIZoYq5U1jKWsw=
+	b=pOFZECdK6FiK0/dTZTB6p82/6K0hTcX4RBXPXWWjoq9iSCRPJFuD+POCxD7v0Js4h
+	 cantRHBG+5bL5FuI4bcv21ptbpmmaZHaV8YS12BnpETa0/FgPeSijtY7yJoGxCl8le
+	 rDG4Zetm/DTesntcsIV43dAZ6kmyvZANI5MILnK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rosen Penev <rosenp@gmail.com>,
 	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0157/1756] ARM: dts: armada-395-gp: drop unsupported SDHCI clock-frequency
-Date: Wed, 18 Nov 2026 15:38:04 +0100
-Message-ID: <20261118150014.374169013@linuxfoundation.org>
+Subject: [PATCH 6.12 0158/1756] ARM: dts: armada-388-helios4: fix vmmc property name
+Date: Wed, 18 Nov 2026 15:38:05 +0100
+Message-ID: <20261118150014.412200487@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,38 +70,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit a56183c7f15215d804290808a2b5a1fa997aa9cd ]
+[ Upstream commit 008e9faadef8c0aaa9b8a3ff05a2126e3c5b08b7 ]
 
-The SDHCI node carries a "clock-frequency" property, but the
-marvell,armada-380-sdhci binding does not define it and dtbs_check
-rejects the node as a result. No driver consumes it either: only a
-few other sdhci-pltfm based drivers (imx, mcf, iproc, arasan,
-dwcmshc, xenon) read that property, while sdhci-pxav3 derives the
-maximum clock from the io clock rate.
+The sdhci@d8000 node references the 3.3V regulator through a bare
+"vmmc" property, which is not part of the mmc controller DT
+binding. The binding requires supply properties in the form
+"vmmc-supply", so the current entry is ignored by the driver.
 
-Remove the property.
+Rename the property to "vmmc-supply" so the fixed regulator is
+correctly wired up as the card power supply.
 
-Fixes: 356645123581 ("ARM: dts: mvebu: armada-395-gp: add support for the Armada 395 GP Board")
+Fixes: ced8025b569e ("ARM: dts: armada388-helios4")
 Assisted-by: opencode:big-pickle
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/marvell/armada-395-gp.dts | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm/boot/dts/marvell/armada-388-helios4.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/marvell/armada-395-gp.dts b/arch/arm/boot/dts/marvell/armada-395-gp.dts
-index 6dd9e9077f842..9ea447cd35a85 100644
---- a/arch/arm/boot/dts/marvell/armada-395-gp.dts
-+++ b/arch/arm/boot/dts/marvell/armada-395-gp.dts
-@@ -59,7 +59,6 @@ sata@a8000 {
- 
- 			/* CON18 */
- 			sdhci@d8000 {
--				clock-frequency = <200000000>;
- 				broken-cd;
+diff --git a/arch/arm/boot/dts/marvell/armada-388-helios4.dts b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
+index f5ae4bea1211f..0545452a983fc 100644
+--- a/arch/arm/boot/dts/marvell/armada-388-helios4.dts
++++ b/arch/arm/boot/dts/marvell/armada-388-helios4.dts
+@@ -269,7 +269,7 @@ sdhci@d8000 {
+ 					     &helios_sdhci_cd_pins>;
+ 				pinctrl-names = "default";
+ 				status = "okay";
+-				vmmc = <&reg_3p3v>;
++				vmmc-supply = <&reg_3p3v>;
  				wp-inverted;
- 				bus-width = <8>;
+ 			};
+ 
 -- 
 2.53.0
 
