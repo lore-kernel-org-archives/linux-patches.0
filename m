@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057323;
-	b=z5xP69H+rZFdNOz0VNGocm0yuG7nAnhYkc53xWFpLWJgjQyQ4sqgE8jEKrrVIOL6SaSx
-	 IZegKWxv3PhfzDlZ+CmGiPG9atvcLsvg94Xj+VfMvvuYsPcj3JHWiG7m0oHI24G9CtTJF
-	 chpYDfN0/t05HpBwmvU8CBVm3Z8EpkpokxJwE8xDddE6OjDSVWp+AHX0MYANwZecB4Utq
-	 EkUExDitKatDkAw7jU7+W0B6vlgessvfEKLajeLwafusv8Zq12ngpjC8ADHDYM7gnteoL
-	 uEKJQg1WyqvibtbxA+jvYPGuAVPoco3jSBQZL9AuQqU0xOaH6CjXl+vFD7xpACXb7rg==
+	t=1795057326;
+	b=TkIU+q8NavSzMlbFle/vFURzmzZoKvW6/wvRqnIG8HFsRec7Q0R2P+70idTZh7X/iEZy
+	 cj0kZ1mF0nIImoh1j9SGvKShQSCg6QT/PE72OgOHoydKcNw6aSnG61pddM0lOMjgS8Ykc
+	 PPDn9boTB0m23Sf1d4/KAkJHP22FhXYOwB/JSsvS94cC17EUesNCZX/VPaCpDR2nWXiGb
+	 R204p6iJP+kR/hqyJF0tc3lbm2q8QIzc55grcpfUQ2sfzHvh0xBpqJdZp/y4BG7hoHIls
+	 dwZ3Rz2mmSFoAbX9iqGLhWZ6ATM3pR7Yuy9xZ9bEExJ6/1XOB4h10Pn+zbl26lZfksQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057323;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057326;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xJOqQMQBPwRCa4TROqi8LW/WXPT4Bg1kJxGj6J5kKAk=;
-	b=oksMj0lDsMJSq9jFx8jwFNEvZLcJFK7CbshCp67Q7FuMWwkWczEFACPyqAqLsuBeKrUr
-	 QdBkUVWm/HykdTl7yOgoCwTx4THZ2RKLCipBdF+/iNrBgZ9kTuWmHI9jzXz2keiNLS7zq
-	 J6M41G5ez3ci0Qf2VVdze4F8WbKjEWXwyFI6pi0iUdtium+hQx8U2ussLusWwhpt33RcY
-	 O0So81qnQx0MHqt8blUOVbUSpSMXQ5dX15Ti5jOHfZvlFgfQJVRokWwjOyJ7mfd83Nctc
-	 lPjg8YGiAYMCtl6aA4gDS23/W0Dw5ciavuZh/VB2SH+G14YNAm3OI+iDDMuilnTXigA==
+	bh=fr7eIAQvrrF39eOpv6lf7VW71ANz3ab8fbmlBFDzbs8=;
+	b=hurPH1suLTD8721nY3dTCxTGXjgWFSHbAOJG2MEJVK6OtrNXXx/Xhraz2txvczlFdxx0
+	 t0uRmf+7zfAtM1+Mr8lNLT83wOJ65/n9l0TZcHns3YCwzjKZInJOUCtQhE5DHwMLyBNW7
+	 iPefsC2rofmKBFqDWjTe+4xw4crvfRAzn0U57qLutJE4sMNOMJGmzUjdiK/gnWzWq21qo
+	 UveArPRbyH1q60/gtZ0U19ma58ms5o51tTkfkO/oFTZucQPBTtuGhhYhlzdiR+uhs6kU+
+	 WHS+36y4i6C0mg25Prb6ukcMMQxaB7RZIpVQYu+M5RpTtEeB7cSXQ6/9m5Prw/m5xJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDL+Khom;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvGN4fVc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F13460A3803;
-	Thu, 19 Nov 2026 03:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2CDB60A380B;
+	Thu, 19 Nov 2026 03:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GDL+Khom
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E12471F000C5;
-	Thu, 19 Nov 2026 03:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EvGN4fVc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F91F000C4;
+	Thu, 19 Nov 2026 03:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057323;
-	bh=xJOqQMQBPwRCa4TROqi8LW/WXPT4Bg1kJxGj6J5kKAk=;
+	s=korg; t=1795057326;
+	bh=fr7eIAQvrrF39eOpv6lf7VW71ANz3ab8fbmlBFDzbs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GDL+KhomOV5ZtFl0uO+MUYC+Zuvc6hXJsIp8J+w0R3kqMkfbZg6aofdE3FsSMmhZP
-	 LCuhM6Jbq+FiJLWknIU5XQlmKK5yAM5Zkx0vu/3fBKzzG7IQ8mBNsUE93sLtNyWcnp
-	 iwcihDmYTCE+M/NA7gAULrgFhiKndXE9YmBSD5Jc=
+	b=EvGN4fVc5orPvgFBzZ2v6cl3+nGtEP4U8cLn3WcrvEZj6d9Sf7H1WhHoqxQLYVjzd
+	 bS1f6F8rDluL7VxGAVuxQbHZa0lHHxbtInMtz3Ikl+aqtbbGEuwZiaTdgMYeiP5IgU
+	 e8j5thci2fXmI0lQaQZbs1u9tMTztx1Kyd1idx2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jerome Brunet <jbrunet@baylibre.com>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Sangyun Kim <sangyun.kim@snu.ac.kr>,
+	Kyungwook Boo <bookyungwook@gmail.com>,
+	Ian Abbott <abbotti@mev.co.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0053/1848] clk: sunxi-ng: fix ccu probe clock unregister on error
-Date: Wed, 18 Nov 2026 15:34:51 +0100
-Message-ID: <20261118145913.331356575@linuxfoundation.org>
+Subject: [PATCH 5.10 0089/1848] comedi: pcmmio: Add sanity check to interrupt handler
+Date: Wed, 18 Nov 2026 15:35:27 +0100
+Message-ID: <20261118145914.859002707@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,75 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 81f4ddc9f7e0c11d3e9d24d0f30023845a02f7ee ]
+[ Upstream commit ea72e2fc9026f375314421ddfa4dbdc49432a899 ]
 
-When registering clocks with sunxi_ccu_probe(), the number of ccu_clocks
-and the number of hw clocks might be different, eventhough they usually are
-the same.
+The driver requests an interrupt handler for the device, after setting
+device registers to disable interrupt generation.  The interrupt handler
+should not be called prematurely unless the user-configured I/O port
+base address and/or IRQ number are incorrect or the hardware is bad.
 
-If they are different, it could lead to out-of-bound access or registered
-clock left behind on error.
+For safety, check the dev->attached flag in the interrupt handler to
+ensure the device has been fully set up, avoiding a possible null
+pointer dereference of dev->read_subdev.
 
-Use a different variable when iterating on hw clocks so every registered
-clock, and only those, gets unregistered on error.
-
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://lore.kernel.org/r/20260629131254.7E34C1F00A3A@smtp.kernel.org
-Reviewed-by: Chen-Yu Tsai <wens@kernel.org>
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://patch.msgid.link/20260706-a733-rtc-v4-3-f330728db3d3@baylibre.com
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://lore.kernel.org/lkml/20260610115912.780131-1-jjy600901@snu.ac.kr/
+Reported-by: Sangyun Kim <sangyun.kim@snu.ac.kr>
+Reported-by: Kyungwook Boo <bookyungwook@gmail.com>
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260618102949.26607-10-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu_common.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/staging/comedi/drivers/pcmmio.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/sunxi-ng/ccu_common.c b/drivers/clk/sunxi-ng/ccu_common.c
-index 2e20e650b6c01..9df98d99752c8 100644
---- a/drivers/clk/sunxi-ng/ccu_common.c
-+++ b/drivers/clk/sunxi-ng/ccu_common.c
-@@ -83,7 +83,7 @@ int sunxi_ccu_probe(struct device_node *node, void __iomem *reg,
- 		    const struct sunxi_ccu_desc *desc)
- {
- 	struct ccu_reset *reset;
--	int i, ret;
-+	int i, j, ret;
+diff --git a/drivers/staging/comedi/drivers/pcmmio.c b/drivers/staging/comedi/drivers/pcmmio.c
+index 24a9568d33788..d1cd4bc7f36e8 100644
+--- a/drivers/staging/comedi/drivers/pcmmio.c
++++ b/drivers/staging/comedi/drivers/pcmmio.c
+@@ -363,6 +363,9 @@ static irqreturn_t interrupt_pcmmio(int irq, void *d)
+ 	unsigned int triggered;
+ 	unsigned char int_pend;
  
- 	for (i = 0; i < desc->num_ccu_clks; i++) {
- 		struct ccu_common *cclk = desc->ccu_clks[i];
-@@ -95,8 +95,8 @@ int sunxi_ccu_probe(struct device_node *node, void __iomem *reg,
- 		cclk->lock = &ccu_lock;
- 	}
- 
--	for (i = 0; i < desc->hw_clks->num ; i++) {
--		struct clk_hw *hw = desc->hw_clks->hws[i];
-+	for (j = 0; j < desc->hw_clks->num ; j++) {
-+		struct clk_hw *hw = desc->hw_clks->hws[j];
- 		const char *name;
- 
- 		if (!hw)
-@@ -105,7 +105,7 @@ int sunxi_ccu_probe(struct device_node *node, void __iomem *reg,
- 		name = hw->init->name;
- 		ret = of_clk_hw_register(node, hw);
- 		if (ret) {
--			pr_err("Couldn't register clock %d - %s\n", i, name);
-+			pr_err("Couldn't register clock %d - %s\n", j, name);
- 			goto err_clk_unreg;
- 		}
- 	}
-@@ -140,8 +140,8 @@ int sunxi_ccu_probe(struct device_node *node, void __iomem *reg,
- err_alloc_reset:
- 	of_clk_del_provider(node);
- err_clk_unreg:
--	while (--i >= 0) {
--		struct clk_hw *hw = desc->hw_clks->hws[i];
-+	while (--j >= 0) {
-+		struct clk_hw *hw = desc->hw_clks->hws[j];
- 
- 		if (!hw)
- 			continue;
++	if (!dev->attached)
++		return IRQ_NONE;
++
+ 	/* are there any interrupts pending */
+ 	int_pend = inb(dev->iobase + PCMMIO_INT_PENDING_REG) & 0x07;
+ 	if (!int_pend)
 -- 
 2.53.0
 
