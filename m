@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057014;
-	b=Nw78rEWBoWaJ5bbsJRr6XnJ09s9a7QoVJ+fzCFIvvujkjrRoe08UnTG7AtzDGUD3M22Z
-	 U0Zil7TssCPf6T184/3Y7ZDo0nW2ig7LqKXB13uy+1YgqKY99593TEneIKwD4KSgFUglY
-	 enc7BuHhwxQgIQWaTRBwzWVoek5xXUqL+vTdeAo8jEmBoVxsMWW6nRaXD8xrrmPGEIfBo
-	 dw0NUuYmYbDRfEwsDFi9dxriNmt3Td7YMbPUolia65B4+Wodx3+H3bbsCMpDO2NOOaFlV
-	 YFiFpC1fnL1yrFOw/vyf9HWwZk20WyoA3/uVFwWRqI5kOgoeCYsURmLoRKB9bHh1m1Q==
+	t=1795057016;
+	b=j0aciFNuuog9kmQXFTqR0W6EnPixSuncUh6OSjmo52Xm7c7mMd4UW/RP2Pw/ohc4H1a7
+	 hCHO6c7LDsa5Sknhm0qAIBBcrRa90ixIViWb9zrKicqqyhgfWMp8ys8jupHmQ1ix4aktX
+	 t9hqJU+jjSpnND7OoHqBnFHwNWqX/X+vqiNGKR6otg4iB0smnSmqIskMT6dtyVE9vpJ10
+	 CES0Mwh4Kp02yrwF3JrNES4d5Oyx5WqrWVk415oTQT3WZkEUAIA14ieTyTOLATAmcORsh
+	 V+N3EhedWuOBsrgyixIrOhN1ed7nHC28psWGT4uxnfTqtNeAvDEg8yGgowO7FZqxejw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057014;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057016;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E9xPk2zpN/1aOQK2x+3P0Ds2uGOzATt/RMm5pRaToiw=;
-	b=ijV45bwp9QG4Xg+sUCqR9P1O2OZ5GmEbxeiSICF4pPheJcCopXX0Kk142hoJBH32KGn5
-	 FPs75Y+y151/AYgpi5x8Gme0ioFe8rhStbZduWsYLkYlqr2H8p278Wf7XL5bsTCqIbfGh
-	 CLodHSqdNcQqugA/LS3PtBPJD+9I1gUa5W7M+x8jg3oZCRbHWQmWGz3Bn+QMQ51bFpE2c
-	 ERAfS5+TLiwgdFDejx79MKgr5i28K2HS6d1muD/uKqunNn8SQGhcXSyveQ3Ma7WB+dHmp
-	 J0fDj0U67pLnpWh0mQKMJi+1f/Ias+qCiF11ZhQGusPIVt48J8wgqlzweJe/MrTqFqQ==
+	bh=b5gTW/UidCLHlXoN6vfNxy5U/UvaqrQpqsJGwt8x17s=;
+	b=w96N4PUbNJwPeJEXUsuwJ38oGYopRIsCHprOunP0U9pz9AK9jP2Cl1xbDE+uRYAY36g2
+	 0ep4fTQFRXU73+U8+h8Q4Ws7KKq7SwFqZv0DcBePDxrU/NSK9LdYgKGR+uBWdYqxoaQtq
+	 1AYJAJrebTSZTFNTuTJJSiP1K0lutJeJDfNPF+7/kLK1SxPbqILOR/DecEbIw2rfKwMh9
+	 V7SEKN22n0AgBq5mwTnDQ/Lld8JM9A6/vbkR6lpCu1MOaFHrl4vSmAeZuIM5GGnrMa3Cj
+	 /CEexHeJFBvKzPUrAkp+Ebkui9vBGkvAZ+2fslZOHkZBRb/Tnjbp5N0aQsPnSjCA4Tw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfCaor23;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0zZXgLka;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F03160A2600;
-	Thu, 19 Nov 2026 02:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEEF606A325;
+	Thu, 19 Nov 2026 02:56:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gfCaor23
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF151F000C9;
-	Thu, 19 Nov 2026 02:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0zZXgLka
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 200391F000C4;
+	Thu, 19 Nov 2026 02:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057013;
-	bh=E9xPk2zpN/1aOQK2x+3P0Ds2uGOzATt/RMm5pRaToiw=;
+	s=korg; t=1795057016;
+	bh=b5gTW/UidCLHlXoN6vfNxy5U/UvaqrQpqsJGwt8x17s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gfCaor23tNn/JiENGr6uFEJ5zQ/eqYQ28RMRdfkPMihMFfkR7t8m4AwoCx3CQLhzX
-	 eI+wRgHCBcsMWKArYCCXfOLbaandcXG/QqZh/KLtxkcZ1O+Nx+K6lHWYcQLIuPaxcN
-	 PSS7jbSMQs3eu9mf6ijKnoMemebHd5JlJPiT5u44=
+	b=0zZXgLkaO+B1CcBbeNepRta8Zc4BL6GMaEv6G/iX4xFX58uOVUzT8RJk/RNmLsPHd
+	 Jxxq+LjQR3gcci3oVJP2/gvPn+ovVj674rgQ7Zpvile3pp9TmCLwx2Ju6vaLp3y38q
+	 iZKlMBACVBB26iDm6+OQKpRXfRq3LpapRjw5sVGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nickolai Zeldovich <nickolai@csail.mit.edu>,
-	Bradley Morgan <brads@mainlining.org>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Joshua Kinard <linux@kumba.dev>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2193/2214] ucount: read the parent ucounts before dropping the rlimit count
-Date: Wed, 18 Nov 2026 16:04:29 +0100
-Message-ID: <20261118150138.049113517@linuxfoundation.org>
+Subject: [PATCH 5.15 2194/2214] rtc: ds1685: arm the wake-up alarm at power-off only if an alarm is set
+Date: Wed, 18 Nov 2026 16:04:30 +0100
+Message-ID: <20261118150138.087201537@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,56 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nickolai Zeldovich <nickolai@csail.mit.edu>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 38bf603d1ea5d5a65a9cb277df75327ffec01ff1 ]
+[ Upstream commit c2373bcd50d9654b76eac585c7c98105665b3321 ]
 
-do_dec_rlimit_put_ucounts() drops its share of iter->rlimit[type] and
-only then loads iter->ns->ucounts. If the decrement leaves the count
-non-zero, a concurrent caller can take it to zero and put the last
-reference, which frees the ucounts and possibly its user namespace with
-kfree_rcu(). An exiting task frees its pending signals without siglock
-or any RCU read-side section, so when it is preempted between the
-decrement and the load for a grace period it reads freed memory and
-then decrements a counter through the pointer it found there.
+ds1685_rtc_poweroff() always sets WIE. The wake-up alarm then compares
+the time-of-day and date alarm registers, which hold whatever was last
+written to them, and a match powers the machine straight back on.
 
-A pending signal holds no reference on its ucounts: the reference is
-taken by whoever moves the count from 0 to 1 and dropped by whoever
-moves it back to 0, so the caller's share of the count is all that
-keeps iter alive, and only until it is dropped.
+Set WIE only when AIE is set in Control B, and clear it otherwise.
 
-Load the parent first; it stays pinned by the caller's share of its
-own count.
-
-Fixes: 15bc01effefe ("ucounts: Fix signal ucount refcounting")
-Signed-off-by: Nickolai Zeldovich <nickolai@csail.mit.edu>
-Link: https://patch.msgid.link/20261024015513.830312-1-nickolai@csail.mit.edu
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: aaaf5fbf56f1 ("rtc: add driver for DS1685 family of real time clocks")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Acked-by: Joshua Kinard <linux@kumba.dev>
+Link: https://patch.msgid.link/20261013120208.11268-2-kaloz@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/ucount.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-ds1685.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/ucount.c b/kernel/ucount.c
-index f483f83fc750e..e0ae3e95a7965 100644
---- a/kernel/ucount.c
-+++ b/kernel/ucount.c
-@@ -288,9 +288,12 @@ static void do_dec_rlimit_put_ucounts(struct ucounts *ucounts,
+diff --git a/drivers/rtc/rtc-ds1685.c b/drivers/rtc/rtc-ds1685.c
+index 1e09c9a228d6c..a7e6839998958 100644
+--- a/drivers/rtc/rtc-ds1685.c
++++ b/drivers/rtc/rtc-ds1685.c
+@@ -1376,7 +1376,7 @@ module_platform_driver(ds1685_rtc_driver);
+ void __noreturn
+ ds1685_rtc_poweroff(struct platform_device *pdev)
  {
- 	struct ucounts *iter, *next;
- 	for (iter = ucounts; iter != last; iter = next) {
--		long dec = atomic_long_sub_return(1, &iter->rlimit[type]);
--		WARN_ON_ONCE(dec < 0);
-+		long dec;
+-	u8 ctrla, ctrl4a, ctrl4b;
++	u8 ctrla, ctrlb, ctrl4a, ctrl4b;
+ 	struct ds1685_priv *rtc;
+ 
+ 	/* Check for valid RTC data, else, spin forever. */
+@@ -1403,6 +1403,8 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+ 		ctrla &= ~(RTC_CTRL_A_DV2);
+ 		rtc->write(rtc, RTC_CTRL_A, ctrla);
+ 
++		ctrlb = rtc->read(rtc, RTC_CTRL_B);
 +
-+		/* Our count pins @iter; once it is dropped @iter may be freed. */
- 		next = iter->ns->ucounts;
-+		dec = atomic_long_sub_return(1, &iter->rlimit[type]);
-+		WARN_ON_ONCE(dec < 0);
- 		if (dec == 0)
- 			put_ucounts(iter);
- 	}
+ 		/*
+ 		 * Read Control 4A and check the status of the auxillary
+ 		 * battery.  This must be present and working (VRT2 = 1)
+@@ -1417,13 +1419,17 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+ 
+ 			/*
+ 			 * The auxillary battery is present and working.
+-			 * Enable extended functions (ABE=1), enable
+-			 * wake-up (WIE=1), and enable kickstart (KSE=1)
+-			 * in Control 4B.
++			 * Enable extended functions (ABE=1) and kickstart
++			 * (KSE=1) in Control 4B.  Enable wake-up (WIE=1) only
++			 * if an alarm is set, else stale alarm registers
++			 * can power the system back on.
+ 			 */
+ 			ctrl4b = rtc->read(rtc, RTC_EXT_CTRL_4B);
+-			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_WIE |
+-				   RTC_CTRL_4B_KSE);
++			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_KSE);
++			if (ctrlb & RTC_CTRL_B_AIE)
++				ctrl4b |= RTC_CTRL_4B_WIE;
++			else
++				ctrl4b &= ~(RTC_CTRL_4B_WIE);
+ 			rtc->write(rtc, RTC_EXT_CTRL_4B, ctrl4b);
+ 		}
+ 
 -- 
 2.53.0
 
