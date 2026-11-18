@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059853;
-	b=bBLWochPjUd1197iRyE43F+AXJnF4hNDcMnZKpTte2dvFvrqavmkWPUj+HfXbNvnGn1/
-	 XpPxk2Y+XQBvgIN+gM5KK8ejEqi8qHobhOmhUpX3rbm65HL4TQZuRDTYzljejbLc9zYjv
-	 LTVtYplyy6KSVXq8ilNd2Q5jo+GdlcrWSl8YwEkEg8Qak8qrXkTQ+SysRSZUyJI5euqr9
-	 NGhuuHsGtzQCBgXROn3rSIGOwyG1pYqpU61l0eaIqvER0l9+2SGYyZVNCI23J2DmNfITU
-	 emTIj8mkFgUXKCkUFyf9/mAw1Hwk/n04x46iBVBDdufRO7y0TEfNIcPPb5p0O7aCKiA==
+	t=1795059856;
+	b=FcaKX9ECKVKmU6jBl7DmyCLL1v5WFJYcRRdAmzJIGZLhNNng2ezTc1/9yKQYgVcjIJwL
+	 +kjkibEAXXkwLti9YhGlcoutrnaU8vJPAslqeJDs5zhcZYhGnjS1Pf9Z8HbAjhB87vOa7
+	 i7YBWOeTidHtyQTsiSowHINWfmzGPhX3xH6a6GT106NX8thsl1FN13sMrPCb9tQyNhKkL
+	 TywrNNXASiXFhbB1H7qgeERgm3L0RH+ZSK4Yix5Msw546yfNapqK4EGbPYi01mO4QQTNL
+	 SSYNVUf3GfzgeruO+l7FASJmKv0g5Hynpbn0LG+UwBgIG+VNaNrdulSWgcu2OkovRYg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059853;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059856;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FpDVIudZkmiM74dMvGIxiiw6hCOPP0oGUNmMiwHZoP0=;
-	b=bX8eP6iUdOcfMyDyDkm6qwyvfvyp6ZNU5qvUg7kxYh7eL9iOqQsWUdu18i8lA4o0Aumr
-	 OHbFhQ6k6jcqmv8v26ogK1XFRDpx+i48c3/97jx/PLpIZOBaJGCVWlZ9FD54TjxLDFvMr
-	 sXENBGvE7jHSXRstV5zDMR+BriAhXOemWmJmDxBd2MtQuCp5tMCHDpxzsG0o2bVEjAxcj
-	 oWMPZYFf/GDW4wXJ3zrygz6JP1s07KT5i+H9fYMZ7a0OIJb3Zw7O2Lxn6ew1zGpiASlQj
-	 E+L7bOnLzxmcj4W5ep0fEU9qt7m9savxzSOVwjIwf59r/3gl9E8EG3WDBK6uHwdzK7Q==
+	bh=U4gRUhExVVO1+MC+mKs14B76ymZq59FL4fTR2Tmkg80=;
+	b=t/l+tNmYqLPJi06xTf2pXjiijssOAcShrvsR3LrfMwG1lci1PDvFrEgZ0FzCCPzWFOSY
+	 SjRXjQXP4RcUXqGqbbREzfUTl9zVgKwEpePmYNWd8wvctWtySIzWdveSjg54gv/SG8C4t
+	 UlPXf69J+CT5EhvUMg2EQvuusAbxigNrFPFSzFSmY6TPknY0+AXJcj4kPHshWjE0tDhlH
+	 mhJovW+nlXXoRRnyXBvr9HNEmQpTwdBW5q48dA7KqvNR9s/ahMU+h055kZ8s7GfetaOmq
+	 KE2qeRnONnW3Y0iHtTRZW264Sm6Z0c49AIvd4ZC8+yLNPSAgGrSKXj5eHFlG6YVBDUg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eugcriDf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhYYzVw5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D2C606A325;
-	Thu, 19 Nov 2026 03:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22F9606A325;
+	Thu, 19 Nov 2026 03:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eugcriDf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671941F000C4;
-	Thu, 19 Nov 2026 03:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JhYYzVw5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5C01F000C4;
+	Thu, 19 Nov 2026 03:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059852;
-	bh=FpDVIudZkmiM74dMvGIxiiw6hCOPP0oGUNmMiwHZoP0=;
+	s=korg; t=1795059855;
+	bh=U4gRUhExVVO1+MC+mKs14B76ymZq59FL4fTR2Tmkg80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eugcriDfs9VemFahdkrrul4cH8N6Y5ZP7yD+aSHrEEWumc4+Pci8gXu0KSVC04iw7
-	 JJwK98UcHLpzpwbd87TefXIWX4w4ZXiS9GZUyL9StBxUlf+7buSH3CuEdDfwj8AxhM
-	 sgxIn+VjDeYA+6B7aPWDnWajBfRgFFqDetMpMQ9U=
+	b=JhYYzVw5/v4huLB1/NaduK9RoMV6VJwXMHbjXNzuL4/+FzkWILGAQntEucuc263XH
+	 25Vj0VSsip8Z5/g7/Ay/xHkduR29K4gXMDDBHVVOlFnHI3zaYmpcahXuoGnNBaHejq
+	 HdEO3Xn6TxRJ2buOz8RunCnpVJMebEUsR0QtcIX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0991/1848] ata: libahci: Free the IRQs when activating a multi-IRQ host fails
-Date: Wed, 18 Nov 2026 15:50:29 +0100
-Message-ID: <20261118145958.367468908@linuxfoundation.org>
+Subject: [PATCH 5.10 0992/1848] wifi: mt76: mt7615: restore DBDC state after ext PHY failure
+Date: Wed, 18 Nov 2026 15:50:30 +0100
+Message-ID: <20261118145958.402175450@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,85 +69,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 34a4a34431ed81d85d14f8fb8035e5a25214ad39 ]
+[ Upstream commit 7907d5270dc5c13b6a95754c08a77d5b06bbc786 ]
 
-ahci_host_activate_multi_irqs() requests one IRQ per port, but it does
-not free them when requesting one of them, or when registering the host,
-fails. The IRQs are only freed by the driver core, when it releases the
-devres of the device after probe() has returned, while the caller of
-ahci_host_activate() releases the resources of the host in its probe()
-error path, e.g. ahci_probe() disables the clocks, regulators, resets and
-PHYs of the host. An IRQ handler running in that window would access the
-MMIO of a host which is no longer clocked.
+mt7615_register_ext_phy() limits the primary PHY to DBDC capabilities
+before allocating and registering the secondary PHY. If allocation,
+EEPROM override, or PHY registration fails, it returns without restoring
+the primary PHY capabilities. The EEPROM override failure also leaks the
+newly allocated ieee80211_hw.
 
-ahci_host_activate_multi_irqs() did free the IRQs until commit
-0a142b26921c ("ahci: cleanup ahci_host_activate_multi_irqs"), which
-removed the explicit free because devm makes it unnecessary. That is true
-for freeing the IRQs as such, but not for the window described above:
-devres is only released after probe() has returned, i.e. after the error
-path of the caller has released the resources of the host.
+Route all failures through common labels that free the secondary hardware
+when it was allocated and restore the primary PHY capabilities.
 
-Note that this window cannot be hit with the current users: the only user
-of AHCI_HFLAG_MULTI_MSI is the AHCI PCI driver, which does not release
-any resource in its probe() error path, and the ports of the host are
-still frozen, i.e. their interrupts are masked, when ata_host_register()
-fails.
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
 
-Free the IRQs explicitly again, like ata_host_activate() does, so that
-the IRQ handlers cannot run once ahci_host_activate() has failed.
-
-Fixes: 0a142b26921c ("ahci: cleanup ahci_host_activate_multi_irqs")
+Fixes: 0f2173f093b3 ("mt76: mt7615: add support for registering a second wiphy via debugfs")
 Cc: stable@vger.kernel.org
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20260915084127.692494-12-cassel@kernel.org
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/20260910215441.76683-1-mhun512@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+[ sashal: adjusted context for older mt76 PHY API signatures and omitted the unavailable EEPROM override error handling ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libahci.c | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/init.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ata/libahci.c b/drivers/ata/libahci.c
-index 32ebcfcb7914c..83f82b3ffe7d4 100644
---- a/drivers/ata/libahci.c
-+++ b/drivers/ata/libahci.c
-@@ -2577,11 +2577,33 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
- 				0, pp->irq_desc, host->ports[i]);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/init.c b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+index e194259c84e90..b579dbf173f1e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/init.c
+@@ -398,8 +398,10 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
  
- 		if (rc)
--			return rc;
-+			goto free_irqs;
- 		ata_port_desc_misc(host->ports[i], irq);
- 	}
+ 	mt7615_cap_dbdc_enable(dev);
+ 	mphy = mt76_alloc_phy(&dev->mt76, sizeof(*phy), &mt7615_ops);
+-	if (!mphy)
+-		return -ENOMEM;
++	if (!mphy) {
++		ret = -ENOMEM;
++		goto error;
++	}
  
--	return ata_host_register(host, sht);
-+	rc = ata_host_register(host, sht);
-+	if (rc)
-+		goto free_irqs;
+ 	phy = mphy->priv;
+ 	phy->dev = dev;
+@@ -431,7 +433,14 @@ int mt7615_register_ext_phy(struct mt7615_dev *dev)
+ 
+ 	ret = mt76_register_phy(mphy);
+ 	if (ret)
+-		ieee80211_free_hw(mphy->hw);
++		goto error_free_hw;
 +
 +	return 0;
 +
-+free_irqs:
-+	/*
-+	 * Free the IRQs which have been requested, so that the handlers can no
-+	 * longer access the MMIO of the host once we return, e.g. after the
-+	 * caller has disabled the clocks of the host.
-+	 */
-+	while (--i >= 0) {
-+		struct ahci_port_priv *pp = host->ports[i]->private_data;
-+
-+		if (!pp)
-+			continue;
-+
-+		devm_free_irq(host->dev, hpriv->get_irq_vector(host, i),
-+			      host->ports[i]);
-+	}
-+
-+	return rc;
- }
++error_free_hw:
++	ieee80211_free_hw(mphy->hw);
++error:
++	mt7615_cap_dbdc_disable(dev);
  
- /**
+ 	return ret;
+ }
 -- 
 2.53.0
 
