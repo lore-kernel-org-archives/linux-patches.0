@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045486;
-	b=NGB0esVM5nz7WFxdBPRhn0qrcYr33QWWIa6DwP7UugLxtZXpbwDGRka6A8cviW2n3oQw
-	 ypNLYLksUh6FyAHEC4ISPa4XIcnqg1BISplUF3EtcaStO7hyAT5TfWNh88WccKUPlERNB
-	 u74WTDFc7boPlXvaDUVuhnYHAgPgj3VXBByFlOssEfFsMnxsXXJvZODFPxQpBrKqmhJf+
-	 KV8ymdOmioo1KyuyDHIDh/NYHTIcJ2gEslt0kLbafy/VK6c09B6MCONV6yiDdCCJc4uRi
-	 MUv/rV89g97h1DC7dz4gzoPBNk1DDxnN2pxco2L1Qbol/jqdV+9l4QdzhDZRceod8oQ==
+	t=1795045489;
+	b=l09is9CvLYAd9tPAOoBHE2KH6CdTmBVDORjwaMxiVt+BXl9Mh0CTbTELydbNFS4/pXCB
+	 uHvqgM5L/H8lt3VokIDrLGvq5RJyr90Ta5PvAYhPjOjA3zF+7gWw++gsxs8G6GwzxtQiA
+	 CU0mi6/dXVTN7yfdFsW2nXk1Nd9UoKqnGyI3J+EGlEcEQAN/Kf0OWr4nmqrzzSVvUJaPq
+	 hn56d4P088Gt3HG5l4EdzheMG0AnDiQOFHoDiR2iDdNvsq/Mhk3Vy+WhXXKTFzmfIuPV7
+	 Js9vQvZwsdUttFze1dz2PYe3IY9yP5CKHkV9hwyCDdnIDknuXJ1xeqXvlUfepJiMQfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045486;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045489;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mXk9bPCR2dSWjcqqYipDRO/8z84DUYz1n2z9q1ux1Uk=;
-	b=z7nsQltve6JenH41/yVFGmIFPxT/UwQDX3TraBfB3erqewiIV5MF/19tHyjkuikZCXWZ
-	 YRyJ2aglKQkZfYCUgHhm2mWru4M6avSqbZaQjkVpMFv24xB1yOJG42UdYdp7ZvmwstKhZ
-	 tYITV9yZc33tHIN96a5ZqS96UtU7shGU/mrsTU4Tj/YyMU11J0NrpSVg613Eh5TdMIO8y
-	 8p0mM1Al0CvmjCXl4ZRgRBibPkZeoldt/ZgT7cLhX7+ByTv9zHpwb6CnsEsgiE2ecTfVC
-	 1Fe/FagY63r+efTZBbWy5Fsmmn0aJzB3SSuvIYhQIVieqIJ/uHBVaTWyxgQW+k4LEDw==
+	bh=VEPanzYuV2U4cYjOiGjI3qndbUgwRDOpLEJXdZjdlaY=;
+	b=y4NK+dsGJhpv9FrwNpeLk1iL+k9YCxhsXkF3Wsjbd6kXwU/WtVgp7hI3+TnkJFtNd8ZA
+	 VXfGal0Nl7qz33wPjORhbtISeuUCoeAo8lW2wqBlDTepqQdF0Y6PjRQIcO+ankzF3bWrm
+	 MfYOQ1o7wLTIcqqOT6m6WL6+rR6uEkkEYmFNnypTrS5GzkQHEuOrvlAvAfZlWxDvrDOAn
+	 sYIge/m3jnuAg/UgWpvgOPWpyz1De5zbwUS6UKxZbXrbRjPtCKyafe/FGSybD46jjCZsx
+	 0rG8JcZxhzrnA9WBNM9AsOx0TXrzC+pa+eudsWTccxINpNPvifDfunia+7Hmxh094Pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnEfQa4g;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gwpXGQt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1608606A336;
-	Wed, 18 Nov 2026 23:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA28606A31C;
+	Wed, 18 Nov 2026 23:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tnEfQa4g
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C300E1F000C7;
-	Wed, 18 Nov 2026 23:44:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0gwpXGQt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946171F000C4;
+	Wed, 18 Nov 2026 23:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045486;
-	bh=mXk9bPCR2dSWjcqqYipDRO/8z84DUYz1n2z9q1ux1Uk=;
+	s=korg; t=1795045489;
+	bh=VEPanzYuV2U4cYjOiGjI3qndbUgwRDOpLEJXdZjdlaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tnEfQa4gBjGMfI5t44drVcUdV6XD8+eHDWgjD1DLllqjMWSe9aLstNgItD4iReP+z
-	 q5D69Nb1vC0ntiprBx2Vf3HyERkflysvYhXQ6g0kMbJq20fFk7hyhbExy02/HdDk/Q
-	 ODvVYupTB/X7+QhDWcU7SozqyjHAr8OWN0r83rEY=
+	b=0gwpXGQtyiX1yPik3fDtSp1TQsQmD1S0Z0BD5VuM8BrF3/3vPDJXbOmn+TE3Feb+b
+	 lmhdLG8otJDC4zXjhfDUskZmtGXRxVfAb4/OJrHR/SxwXLZ/0L/Xx6v1o5TxzwrQgq
+	 2TRM3Q924wMycYG3e+fLAhGkrLt3VnD5uQKPBxT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
-	Keith Busch <kbusch@kernel.org>,
+	Devin Wittmayer <lucid_duck@justthetip.ca>,
+	Eason Lai <eason.lai@mediatek.com>,
+	Hans Buchheim <hbuchheim@gmail.com>,
+	Sergei Melnichenko <sergei.melnichenko@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0938/2857] nvme-rdma: dont complete a request after a bogus remote invalidation
-Date: Wed, 18 Nov 2026 15:32:52 +0100
-Message-ID: <20261118150235.378227087@linuxfoundation.org>
+Subject: [PATCH 6.1 0894/2857] wifi: mt76: fix memory leak in USB TX path
+Date: Wed, 18 Nov 2026 15:32:08 +0100
+Message-ID: <20261118150233.747548685@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,44 +71,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+From: Eason Lai <eason.lai@mediatek.com>
 
-[ Upstream commit 909307cea08aff4e486cdb7491de5c76a2c31341 ]
+[ Upstream commit 82856da2d3b6a30011f4db6ea5f34c13484e0ef8 ]
 
-When a remote invalidation names an rkey that is not the one we handed out
-for this request, nvme_rdma_process_nvme_rsp() logs and schedules error
-recovery, then falls through to nvme_rdma_end_request().  The request is
-completed with req->mr never invalidated, and nvme_rdma_unmap_data() hands
-it back with ib_mr_pool_put(), which only puts it on a list.  The rkey
-stays valid and still maps the pages the completed read filled, so a
-controller that sent the bogus invalidation can write into those pages
-after pread() has returned.
+When errors occur in mt76u_tx_queue_skb(), the skb is not properly
+freed, leading to memory leaks. This happens when:
+- The queue is full
+- tx_prepare_skb() drops zero-length frames (such as WMM NULL frames)
+  to prevent hardware TX hangs
+- Buffer setup fails
 
-Return instead, the way the local invalidation path below already does,
-and leave the request for error recovery to cancel.
+Fix by properly releasing the skb with ieee80211_tx_status_ext() when
+the queue is full or tx_prepare_skb() fails, and using
+mt76_tx_complete_skb() when mt76u_tx_setup_buffers() fails (since
+tx_prepare_skb() has already succeeded and may have allocated resources
+that need cleanup)
 
-Fixes: 3ef0279bb0031 ("nvme-rdma: Check remotely invalidated rkey matches our expected rkey")
+Fixes: b40b15e1521f ("mt76: add usb support to mt76 layer")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Tested-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Closes: https://github.com/morrownr/mt76/issues/83
+Signed-off-by: Eason Lai <eason.lai@mediatek.com>
+Tested-by: Hans Buchheim <hbuchheim@gmail.com>
+Reported-by: Sergei Melnichenko <sergei.melnichenko@gmail.com>
+Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
+Link: https://patch.msgid.link/20260914021920.32246-3-eason.lai@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/rdma.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/usb.c | 31 ++++++++++++++++++++----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index 77a4727d503d6..4524315edd027 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -1734,6 +1734,7 @@ static void nvme_rdma_process_nvme_rsp(struct nvme_rdma_queue *queue,
- 				"Bogus remote invalidation for rkey %#x\n",
- 				req->mr ? req->mr->rkey : 0);
- 			nvme_rdma_error_recovery(queue->ctrl);
-+			return;
- 		}
- 	} else if (req->mr) {
- 		int ret;
+diff --git a/drivers/net/wireless/mediatek/mt76/usb.c b/drivers/net/wireless/mediatek/mt76/usb.c
+index 1e2133670291c..82d20e052d19a 100644
+--- a/drivers/net/wireless/mediatek/mt76/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/usb.c
+@@ -856,23 +856,36 @@ mt76u_tx_queue_skb(struct mt76_dev *dev, struct mt76_queue *q,
+ 		   enum mt76_txq_id qid, struct sk_buff *skb,
+ 		   struct mt76_wcid *wcid, struct ieee80211_sta *sta)
+ {
++	struct ieee80211_tx_status status = {
++		.sta = sta,
++	};
+ 	struct mt76_tx_info tx_info = {
+ 		.skb = skb,
+ 	};
+ 	u16 idx = q->head;
+ 	int err;
+ 
+-	if (q->queued == q->ndesc)
+-		return -ENOSPC;
++	if (q->queued == q->ndesc) {
++		err = -ENOSPC;
++		goto err_free_skb;
++	}
+ 
+ 	skb->prev = skb->next = NULL;
+ 	err = dev->drv->tx_prepare_skb(dev, NULL, qid, wcid, sta, &tx_info);
+ 	if (err < 0)
+-		return err;
++		goto err_free_skb;
+ 
+ 	err = mt76u_tx_setup_buffers(dev, tx_info.skb, q->entry[idx].urb);
+-	if (err < 0)
+-		return err;
++	if (err < 0) {
++		/*
++		 * mt76_tx_status_skb_get() walks the idr and dereferences
++		 * a freed skb. This SKB is not counted in non-AQL counter
++		 * due to error return, so using 0xffff as wcid to keep
++		 * balanced.
++		 */
++		mt76_tx_complete_skb(dev, 0xffff, tx_info.skb);
++		goto err_ret;
++	}
+ 
+ 	mt76u_fill_bulk_urb(dev, USB_DIR_OUT, q2ep(q->hw_idx),
+ 			    q->entry[idx].urb, mt76u_complete_tx,
+@@ -884,6 +897,14 @@ mt76u_tx_queue_skb(struct mt76_dev *dev, struct mt76_queue *q,
+ 	q->queued++;
+ 
+ 	return idx;
++
++err_free_skb:
++	status.skb = tx_info.skb;
++	spin_lock_bh(&dev->rx_lock);
++	ieee80211_tx_status_ext(dev->hw, &status);
++	spin_unlock_bh(&dev->rx_lock);
++err_ret:
++	return err;
+ }
+ 
+ static void mt76u_tx_kick(struct mt76_dev *dev, struct mt76_queue *q)
 -- 
 2.53.0
 
