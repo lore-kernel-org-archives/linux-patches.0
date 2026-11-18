@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023918;
-	b=vQ/QvaVh61k4uN66NDGKiArESLlNE+ZKkBW9mdP+Zr9Z/Vhx8FLYYWM4ivLHI9WI0leL
-	 2CwoJysioNJSBnAGeONglpS1JS12aBWsrtVL+2ASBiuXHllI+O/+T8yH4J83FMKL92hit
-	 ujnz0doznXcJKpfgzyIAv8Q1zXH5FdIWaCmx2liWA4pBFWnX0hoalCHDyEEAdyfNFfysr
-	 5UNyh+90vj+kC31GLh+tuHHYjtAMy9+/r9rvW+uRRzTpiDchVoXKBAFLXxL50bbP3Rc+D
-	 nx/Lvst62PQ+6JDzVWyuuLs1sWj6slYqPOsmDUW3CMhWCNtSgJmsKu9tF8TtiS8zNzw==
+	t=1795023921;
+	b=Qkn/r3TMq19X+7iP6Akb+OLsyf2EEMb5nW67ZlZ7zmuOa6z5/yCLQZBxEHyb4sQy7a0E
+	 LlsmZpNFKbmKRaRPVxlJVJpMPcSUenagQvciRVwLc9GKkxOPBZIex3KWSvjEL3TZjHaOp
+	 KowPDOGCKlPMzdtt1aqg2q5YE64sWx0nVslspAvPyIIY2aAH7jnHx54WfOotHyirwvYwQ
+	 U+qO4pKF1sn/ueDiJvSGaeR4DZ/OxMXr8G2FUOtYF9DNd08d7qWq1v8Wsh9RAMScCjyZM
+	 IMe1VtveXoDh4lxKjE4d2v4eqy5jbWyvULv4/EzTAF/lkj2E/XQRgKaJFr5ndbguKFw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023918;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023921;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RB+Be5bowHbDIcOSH4jmsuUe817JAqpKSWAYnHR16h0=;
-	b=FmGoORtWV4eJygfALUn/3FdfVuD9RS3V5Tka+XSsx/yK8kDbVMITn3j53FbjH7KH6dYJ
-	 bX7a3fsX08hidJJPkuEDwsX5FTFn/mnhlRxFP40ZA4wKKikug23plu7sx6oyjsgucwFZf
-	 TBVsSXHnOHw7JlC1xxvwV00gHr8BBspDu/fAtd3ZxSl8W1BfT88PQicuRoYnj4YvTYtf2
-	 nn1rFzp50XeIHi11LJNf1W9IRGfUfLcnf7lFrEnd1bG9kO9CInLUV1RZcX92puCJfOVfH
-	 T/nPBItZXbKMJ4OTaIJQwGylwhgoa1iJGPD7TKoaQjA9YEMA4e/CGuX0m9t2REZRMPA==
+	bh=qCdNajnoDkwNBttx01uOTJjdTwDDe3nOzOPCrs2oRHs=;
+	b=uX7gAbAI9Ohdy7jwNkL7m7gFFufCyZsUI3fCjEP3v7xyAcxiYn3X/Gx81YDEDZQFc2++
+	 dYhIm/DhiXBsyLwtU8KjnJpmJhsx05cyZxhjzdvJ3XG1vO7JTu2kPNzd35ex6qRzWUujW
+	 ts3doek0Oi9n67TYKb+RwXhD14cH1BhUVQAtvZNliXFjXz7Wu05qAMUOQavAj8oAtCZe6
+	 Le3xQaDBuaN8xcNLsPcpNbup5P24acprRBHngFBTs28Se7jh09ZTEo5JN026RmjMu23Nq
+	 Q0FcmX2I7PvBdhUKi9XEn4+JFgN2ilO1aaDT7L6GSaDN//T6jw4ostStNZzpS5cyc0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i+nwwoHK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsYUEnTW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D26D6606A31C;
-	Wed, 18 Nov 2026 17:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68AB606A32A;
+	Wed, 18 Nov 2026 17:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i+nwwoHK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE051F000C4;
-	Wed, 18 Nov 2026 17:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsYUEnTW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CE31F000C4;
+	Wed, 18 Nov 2026 17:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023918;
-	bh=RB+Be5bowHbDIcOSH4jmsuUe817JAqpKSWAYnHR16h0=;
+	s=korg; t=1795023921;
+	bh=qCdNajnoDkwNBttx01uOTJjdTwDDe3nOzOPCrs2oRHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i+nwwoHK/s61/qxH0Obgxj3RUo+Rb9NRaiemRK6B3i9TcDtuAcu1MSph8Ir0LfchM
-	 8N9zRDDq03YSyJVypiSr6hsVrP5RjU2PY71eD6oGGhAQNDerKPHl3tGqaAAE6I721x
-	 OO8bCyxACP+vP1q3CtqYVGfm3a0/Mcy1PQAGy2+A=
+	b=rsYUEnTWziOeW/Jd9v5pSOk1b4pDh7g3+VcUC+kqQsyHfR6PmKmiPcHV/uuHB8hjY
+	 /7NJw051dhhgDvsYhjJ/giOf2QCEp/iLNrmwdD9Y3F/6xVEN30PlJYwKpnNp6plU7F
+	 OVY4FirHTddyAm85+CkDloKcCv/tywliombnyXPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	James Clark <james.clark@linaro.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0540/2151] perf build: Remove NO_AUXTRACE build option
-Date: Wed, 18 Nov 2026 15:37:55 +0100
-Message-ID: <20261118150141.668881907@linuxfoundation.org>
+Subject: [PATCH 6.18 0541/2151] perf auxtrace: Remove errno.h from auxtrace.h and fix transitive dependencies
+Date: Wed, 18 Nov 2026 15:37:56 +0100
+Message-ID: <20261118150141.702785156@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,14 +71,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 754187ad73b73bcb44f106a8e5fc88789beff1bd ]
+[ Upstream commit ca016b6527e154013693722a2cdbec7c05fb6df7 ]
 
-The NO_AUXTRACE build option was used when the __get_cpuid feature
-test failed or if it was provided on the command line. The option no
-longer avoids a dependency on a library and so having the option is
-just adding complexity to the code base. Remove the option
-CONFIG_AUXTRACE from Build files and HAVE_AUXTRACE_SUPPORT by assuming
-it is always defined.
+errno.h isn't used in auxtrace.h so remove it and fix build failures
+caused by transitive dependencies through auxtrace.h on errno.h.
 
 Signed-off-by: Ian Rogers <irogers@google.com>
 Reviewed-by: James Clark <james.clark@linaro.org>
@@ -86,767 +82,434 @@ Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Stable-dep-of: 0824af00a8d2 ("perf topdown: Don't require config1==0 for a slots event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Documentation/perf-check.txt |   1 -
- tools/perf/Makefile.config              |   5 -
- tools/perf/Makefile.perf                |   2 -
- tools/perf/arch/arm/util/Build          |   2 +-
- tools/perf/arch/arm/util/pmu.c          |   2 -
- tools/perf/arch/arm64/util/Build        |  19 +-
- tools/perf/arch/powerpc/util/Build      |   2 +-
- tools/perf/arch/s390/util/Build         |   2 +-
- tools/perf/arch/x86/tests/Build         |   4 +-
- tools/perf/arch/x86/tests/arch-tests.c  |   4 -
- tools/perf/arch/x86/util/Build          |   6 +-
- tools/perf/arch/x86/util/pmu.c          |   2 -
- tools/perf/builtin-check.c              |   1 -
- tools/perf/builtin-inject.c             |  15 --
- tools/perf/builtin-record.c             |  36 ----
- tools/perf/builtin-script.c             |  12 --
- tools/perf/tests/make                   |   4 +-
- tools/perf/util/Build                   |  24 +--
- tools/perf/util/arm-spe-decoder/Build   |   2 +-
- tools/perf/util/auxtrace.h              | 220 +-----------------------
- tools/perf/util/cs-etm-decoder/Build    |   2 +-
- tools/perf/util/hisi-ptt-decoder/Build  |   2 +-
- tools/perf/util/intel-pt-decoder/Build  |   8 +-
- tools/perf/util/synthetic-events.h      |  15 --
- 24 files changed, 37 insertions(+), 355 deletions(-)
+ tools/perf/arch/arm/annotate/instructions.c   | 1 +
+ tools/perf/arch/arm/util/auxtrace.c           | 1 +
+ tools/perf/arch/arm64/annotate/instructions.c | 1 +
+ tools/perf/arch/arm64/util/arm-spe.c          | 1 +
+ tools/perf/arch/arm64/util/hisi-ptt.c         | 1 +
+ tools/perf/arch/powerpc/util/auxtrace.c       | 2 +-
+ tools/perf/arch/s390/util/auxtrace.c          | 1 +
+ tools/perf/arch/x86/tests/topdown.c           | 1 +
+ tools/perf/arch/x86/util/topdown.c            | 1 +
+ tools/perf/bench/evlist-open-close.c          | 1 +
+ tools/perf/bench/futex.c                      | 1 +
+ tools/perf/bench/pmu-scan.c                   | 1 +
+ tools/perf/bench/synthesize.c                 | 1 +
+ tools/perf/builtin-mem.c                      | 1 +
+ tools/perf/tests/hwmon_pmu.c                  | 1 +
+ tools/perf/tests/parse-metric.c               | 1 +
+ tools/perf/tests/pfm.c                        | 1 +
+ tools/perf/ui/hist.c                          | 1 +
+ tools/perf/util/annotate-data.c               | 2 +-
+ tools/perf/util/auxtrace.h                    | 1 -
+ tools/perf/util/bpf-filter.h                  | 2 ++
+ tools/perf/util/bpf-trace-summary.c           | 1 +
+ tools/perf/util/bpf_counter_cgroup.c          | 1 +
+ tools/perf/util/bpf_ftrace.c                  | 3 ++-
+ tools/perf/util/bpf_map.c                     | 1 +
+ tools/perf/util/cgroup.c                      | 1 +
+ tools/perf/util/drm_pmu.c                     | 1 +
+ tools/perf/util/evswitch.c                    | 1 +
+ tools/perf/util/intel-tpebs.c                 | 1 +
+ tools/perf/util/kvm-stat.h                    | 1 +
+ tools/perf/util/mmap.c                        | 1 +
+ tools/perf/util/pfm.c                         | 1 +
+ tools/perf/util/powerpc-vpadtl.c              | 1 +
+ tools/perf/util/stat-shadow.c                 | 1 +
+ 34 files changed, 35 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/Documentation/perf-check.txt b/tools/perf/Documentation/perf-check.txt
-index 4c9ccda6ce916..09e1d35677f5b 100644
---- a/tools/perf/Documentation/perf-check.txt
-+++ b/tools/perf/Documentation/perf-check.txt
-@@ -50,7 +50,6 @@ feature::
-                 dwarf                   /  HAVE_LIBDW_SUPPORT
-                 dwarf_getlocations      /  HAVE_LIBDW_SUPPORT
-                 dwarf-unwind            /  HAVE_DWARF_UNWIND_SUPPORT
--                auxtrace                /  HAVE_AUXTRACE_SUPPORT
-                 libbfd                  /  HAVE_LIBBFD_SUPPORT
-                 libbpf-strings          /  HAVE_LIBBPF_STRINGS_SUPPORT
-                 libcapstone             /  HAVE_LIBCAPSTONE_SUPPORT
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index d91ec4450cc66..06b6b4ce903c4 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -1113,11 +1113,6 @@ ifndef NO_CAPSTONE
-   endif
- endif
+diff --git a/tools/perf/arch/arm/annotate/instructions.c b/tools/perf/arch/arm/annotate/instructions.c
+index cf91a43362b0e..5e667b0f55126 100644
+--- a/tools/perf/arch/arm/annotate/instructions.c
++++ b/tools/perf/arch/arm/annotate/instructions.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/compiler.h>
+ #include <linux/zalloc.h>
++#include <errno.h>
+ #include <sys/types.h>
+ #include <regex.h>
+ #include <stdlib.h>
+diff --git a/tools/perf/arch/arm/util/auxtrace.c b/tools/perf/arch/arm/util/auxtrace.c
+index 3b8eca0ffb171..eb6404267f171 100644
+--- a/tools/perf/arch/arm/util/auxtrace.c
++++ b/tools/perf/arch/arm/util/auxtrace.c
+@@ -5,6 +5,7 @@
+  */
  
--ifndef NO_AUXTRACE
--  $(call detected,CONFIG_AUXTRACE)
--  CFLAGS += -DHAVE_AUXTRACE_SUPPORT
--endif
+ #include <dirent.h>
++#include <errno.h>
+ #include <stdbool.h>
+ #include <linux/coresight-pmu.h>
+ #include <linux/zalloc.h>
+diff --git a/tools/perf/arch/arm64/annotate/instructions.c b/tools/perf/arch/arm64/annotate/instructions.c
+index d465d093e7eb5..16cb62d40bd96 100644
+--- a/tools/perf/arch/arm64/annotate/instructions.c
++++ b/tools/perf/arch/arm64/annotate/instructions.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/compiler.h>
++#include <errno.h>
+ #include <sys/types.h>
+ #include <regex.h>
+ #include <stdlib.h>
+diff --git a/tools/perf/arch/arm64/util/arm-spe.c b/tools/perf/arch/arm64/util/arm-spe.c
+index cac43cde7dbee..d5ec1408d0aec 100644
+--- a/tools/perf/arch/arm64/util/arm-spe.c
++++ b/tools/perf/arch/arm64/util/arm-spe.c
+@@ -10,6 +10,7 @@
+ #include <linux/log2.h>
+ #include <linux/string.h>
+ #include <linux/zalloc.h>
++#include <errno.h>
+ #include <time.h>
+ 
+ #include "../../../util/cpumap.h"
+diff --git a/tools/perf/arch/arm64/util/hisi-ptt.c b/tools/perf/arch/arm64/util/hisi-ptt.c
+index eac9739c87e6c..fe457fd58c9e8 100644
+--- a/tools/perf/arch/arm64/util/hisi-ptt.c
++++ b/tools/perf/arch/arm64/util/hisi-ptt.c
+@@ -9,6 +9,7 @@
+ #include <linux/bitops.h>
+ #include <linux/log2.h>
+ #include <linux/zalloc.h>
++#include <errno.h>
+ #include <time.h>
+ 
+ #include <internal/lib.h> // page_size
+diff --git a/tools/perf/arch/powerpc/util/auxtrace.c b/tools/perf/arch/powerpc/util/auxtrace.c
+index 57f2910c0b019..d0082eb276425 100644
+--- a/tools/perf/arch/powerpc/util/auxtrace.c
++++ b/tools/perf/arch/powerpc/util/auxtrace.c
+@@ -2,7 +2,7 @@
+ /*
+  * VPA support
+  */
 -
- ifdef EXTRA_TESTS
-     $(call detected,CONFIG_EXTRA_TESTS)
-     CFLAGS += -DHAVE_EXTRA_TESTS
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index 562b9d356d2a2..5aee6f6e8b983 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -84,8 +84,6 @@ include ../scripts/utilities.mak
- #
- # Define NO_LZMA if you do not want to support compressed (xz) kernel modules
- #
--# Define NO_AUXTRACE if you do not want AUX area tracing support
--#
- # Define NO_LIBBPF if you do not want BPF support
- #
- # Define NO_SDT if you do not want to define SDT event in perf tools,
-diff --git a/tools/perf/arch/arm/util/Build b/tools/perf/arch/arm/util/Build
-index f7a8b37d1c688..fd695e1fdaee2 100644
---- a/tools/perf/arch/arm/util/Build
-+++ b/tools/perf/arch/arm/util/Build
-@@ -3,4 +3,4 @@ perf-util-y += perf_regs.o
- perf-util-$(CONFIG_LOCAL_LIBUNWIND)    += unwind-libunwind.o
- perf-util-$(CONFIG_LIBDW_DWARF_UNWIND) += unwind-libdw.o
- 
--perf-util-$(CONFIG_AUXTRACE) += pmu.o auxtrace.o cs-etm.o
-+perf-util-y += pmu.o auxtrace.o cs-etm.o
-diff --git a/tools/perf/arch/arm/util/pmu.c b/tools/perf/arch/arm/util/pmu.c
-index f70075c89aa07..9be8da5207f55 100644
---- a/tools/perf/arch/arm/util/pmu.c
-+++ b/tools/perf/arch/arm/util/pmu.c
-@@ -20,7 +20,6 @@ void perf_pmu__arch_init(struct perf_pmu *pmu)
- {
- 	struct perf_cpu_map *intersect, *online = cpu_map__online();
- 
--#ifdef HAVE_AUXTRACE_SUPPORT
- 	if (!strcmp(pmu->name, CORESIGHT_ETM_PMU_NAME)) {
- 		/* add ETM default config here */
- 		pmu->auxtrace = true;
-@@ -39,7 +38,6 @@ void perf_pmu__arch_init(struct perf_pmu *pmu)
- 		pmu->selectable = true;
- #endif
- 	}
--#endif
- 	/* Workaround some ARM PMU's failing to correctly set CPU maps for online processors. */
- 	intersect = perf_cpu_map__intersect(online, pmu->cpus);
- 	perf_cpu_map__put(online);
-diff --git a/tools/perf/arch/arm64/util/Build b/tools/perf/arch/arm64/util/Build
-index a74521b79eaaa..d63881081d2eb 100644
---- a/tools/perf/arch/arm64/util/Build
-+++ b/tools/perf/arch/arm64/util/Build
-@@ -1,13 +1,14 @@
-+perf-util-$(CONFIG_LIBDW_DWARF_UNWIND) += unwind-libdw.o
-+perf-util-$(CONFIG_LIBTRACEEVENT) += kvm-stat.o
-+perf-util-$(CONFIG_LOCAL_LIBUNWIND) += unwind-libunwind.o
-+perf-util-y += ../../arm/util/auxtrace.o
-+perf-util-y += ../../arm/util/cs-etm.o
-+perf-util-y += ../../arm/util/pmu.o
-+perf-util-y += arm-spe.o
- perf-util-y += header.o
-+perf-util-y += hisi-ptt.o
- perf-util-y += machine.o
-+perf-util-y += mem-events.o
- perf-util-y += perf_regs.o
--perf-util-y += tsc.o
- perf-util-y += pmu.o
--perf-util-$(CONFIG_LIBTRACEEVENT) += kvm-stat.o
--perf-util-$(CONFIG_LOCAL_LIBUNWIND) += unwind-libunwind.o
--perf-util-$(CONFIG_LIBDW_DWARF_UNWIND) += unwind-libdw.o
--
--perf-util-$(CONFIG_AUXTRACE) += ../../arm/util/pmu.o \
--			      ../../arm/util/auxtrace.o \
--			      ../../arm/util/cs-etm.o \
--			      arm-spe.o mem-events.o hisi-ptt.o
-+perf-util-y += tsc.o
-diff --git a/tools/perf/arch/powerpc/util/Build b/tools/perf/arch/powerpc/util/Build
-index a5b0babd307e9..3d0d5427aef7f 100644
---- a/tools/perf/arch/powerpc/util/Build
-+++ b/tools/perf/arch/powerpc/util/Build
-@@ -10,4 +10,4 @@ perf-util-$(CONFIG_LIBDW) += skip-callchain-idx.o
- 
- perf-util-$(CONFIG_LIBUNWIND) += unwind-libunwind.o
- perf-util-$(CONFIG_LIBDW_DWARF_UNWIND) += unwind-libdw.o
--perf-util-$(CONFIG_AUXTRACE) += auxtrace.o
-+perf-util-y += auxtrace.o
-diff --git a/tools/perf/arch/s390/util/Build b/tools/perf/arch/s390/util/Build
-index 736c0ad091943..c64eb18dbdae9 100644
---- a/tools/perf/arch/s390/util/Build
-+++ b/tools/perf/arch/s390/util/Build
-@@ -7,4 +7,4 @@ perf-util-$(CONFIG_LIBDW_DWARF_UNWIND) += unwind-libdw.o
- perf-util-y += machine.o
- perf-util-y += pmu.o
- 
--perf-util-$(CONFIG_AUXTRACE) += auxtrace.o
-+perf-util-y += auxtrace.o
-diff --git a/tools/perf/arch/x86/tests/Build b/tools/perf/arch/x86/tests/Build
-index 7790b3e20f4e4..b017d1ca6e3c9 100644
---- a/tools/perf/arch/x86/tests/Build
-+++ b/tools/perf/arch/x86/tests/Build
-@@ -3,9 +3,9 @@ perf-test-$(CONFIG_DWARF_UNWIND) += dwarf-unwind.o
- 
- perf-test-y += arch-tests.o
- perf-test-y += hybrid.o
--perf-test-$(CONFIG_AUXTRACE) += intel-pt-test.o
-+perf-test-y += intel-pt-test.o
- ifeq ($(CONFIG_EXTRA_TESTS),y)
--perf-test-$(CONFIG_AUXTRACE) += insn-x86.o
-+perf-test-y += insn-x86.o
- endif
- perf-test-$(CONFIG_X86_64) += bp-modify.o
- perf-test-y += amd-ibs-via-core-pmu.o
-diff --git a/tools/perf/arch/x86/tests/arch-tests.c b/tools/perf/arch/x86/tests/arch-tests.c
-index 8f9cfeaa170ff..c3e1619c5e794 100644
---- a/tools/perf/arch/x86/tests/arch-tests.c
-+++ b/tools/perf/arch/x86/tests/arch-tests.c
-@@ -3,7 +3,6 @@
- #include "tests/tests.h"
++#include <errno.h>
+ #include <linux/kernel.h>
+ #include <linux/types.h>
+ #include <linux/string.h>
+diff --git a/tools/perf/arch/s390/util/auxtrace.c b/tools/perf/arch/s390/util/auxtrace.c
+index 5068baa3e092b..1a36761450661 100644
+--- a/tools/perf/arch/s390/util/auxtrace.c
++++ b/tools/perf/arch/s390/util/auxtrace.c
+@@ -1,3 +1,4 @@
++#include <errno.h>
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <linux/kernel.h>
+diff --git a/tools/perf/arch/x86/tests/topdown.c b/tools/perf/arch/x86/tests/topdown.c
+index 1eba3b4594ef2..3ee4e5e71be3b 100644
+--- a/tools/perf/arch/x86/tests/topdown.c
++++ b/tools/perf/arch/x86/tests/topdown.c
+@@ -1,4 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
++#include <errno.h>
  #include "arch-tests.h"
- 
--#ifdef HAVE_AUXTRACE_SUPPORT
- #ifdef HAVE_EXTRA_TESTS
- DEFINE_SUITE("x86 instruction decoder - new instructions", insn_x86);
- #endif
-@@ -19,7 +18,6 @@ struct test_suite suite__intel_pt = {
- 	.test_cases = intel_pt_tests,
- };
- 
--#endif
- #if defined(__x86_64__)
- DEFINE_SUITE("x86 bp modify", bp_modify);
- #endif
-@@ -39,12 +37,10 @@ struct test_suite *arch_tests[] = {
- #ifdef HAVE_DWARF_UNWIND_SUPPORT
- 	&suite__dwarf_unwind,
- #endif
--#ifdef HAVE_AUXTRACE_SUPPORT
- #ifdef HAVE_EXTRA_TESTS
- 	&suite__insn_x86,
- #endif
- 	&suite__intel_pt,
--#endif
- #if defined(__x86_64__)
- 	&suite__bp_modify,
- #endif
-diff --git a/tools/perf/arch/x86/util/Build b/tools/perf/arch/x86/util/Build
-index 06d7c0205b3d0..c0dc5965f3624 100644
---- a/tools/perf/arch/x86/util/Build
-+++ b/tools/perf/arch/x86/util/Build
-@@ -14,7 +14,7 @@ perf-util-y += iostat.o
- perf-util-$(CONFIG_LOCAL_LIBUNWIND)    += unwind-libunwind.o
- perf-util-$(CONFIG_LIBDW_DWARF_UNWIND) += unwind-libdw.o
- 
--perf-util-$(CONFIG_AUXTRACE) += auxtrace.o
-+perf-util-y += auxtrace.o
- perf-util-y += archinsn.o
--perf-util-$(CONFIG_AUXTRACE) += intel-pt.o
--perf-util-$(CONFIG_AUXTRACE) += intel-bts.o
-+perf-util-y += intel-pt.o
-+perf-util-y += intel-bts.o
-diff --git a/tools/perf/arch/x86/util/pmu.c b/tools/perf/arch/x86/util/pmu.c
-index 58113482654b7..a3f96221758d5 100644
---- a/tools/perf/arch/x86/util/pmu.c
-+++ b/tools/perf/arch/x86/util/pmu.c
-@@ -273,7 +273,6 @@ void perf_pmu__arch_init(struct perf_pmu *pmu)
- {
- 	struct perf_pmu_caps *ldlat_cap;
- 
--#ifdef HAVE_AUXTRACE_SUPPORT
- 	if (!strcmp(pmu->name, INTEL_PT_PMU_NAME)) {
- 		pmu->auxtrace = true;
- 		pmu->selectable = true;
-@@ -283,7 +282,6 @@ void perf_pmu__arch_init(struct perf_pmu *pmu)
- 		pmu->auxtrace = true;
- 		pmu->selectable = true;
- 	}
--#endif
- 
- 	if (x86__is_amd_cpu()) {
- 		if (strcmp(pmu->name, "ibs_op"))
-diff --git a/tools/perf/builtin-check.c b/tools/perf/builtin-check.c
-index 9ce2e71999dfd..d19769a8f6897 100644
---- a/tools/perf/builtin-check.c
-+++ b/tools/perf/builtin-check.c
-@@ -42,7 +42,6 @@ struct feature_status supported_features[] = {
- 	FEATURE_STATUS("dwarf", HAVE_LIBDW_SUPPORT),
- 	FEATURE_STATUS("dwarf_getlocations", HAVE_LIBDW_SUPPORT),
- 	FEATURE_STATUS("dwarf-unwind", HAVE_DWARF_UNWIND_SUPPORT),
--	FEATURE_STATUS("auxtrace", HAVE_AUXTRACE_SUPPORT),
- 	FEATURE_STATUS_TIP("libbfd", HAVE_LIBBFD_SUPPORT, "Deprecated, license incompatibility, use BUILD_NONDISTRO=1 and install binutils-dev[el]"),
- 	FEATURE_STATUS("libbpf-strings", HAVE_LIBBPF_STRINGS_SUPPORT),
- 	FEATURE_STATUS("libcapstone", HAVE_LIBCAPSTONE_SUPPORT),
-diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
-index c41970928f180..d560e49b93d3c 100644
---- a/tools/perf/builtin-inject.c
-+++ b/tools/perf/builtin-inject.c
-@@ -241,8 +241,6 @@ static int perf_event__repipe_event_update(const struct perf_tool *tool,
- 	return perf_event__repipe_synth(tool, event);
- }
- 
--#ifdef HAVE_AUXTRACE_SUPPORT
+ #include "../util/topdown.h"
+ #include "debug.h"
+diff --git a/tools/perf/arch/x86/util/topdown.c b/tools/perf/arch/x86/util/topdown.c
+index 0d01b662627a3..bafd285119d7a 100644
+--- a/tools/perf/arch/x86/util/topdown.c
++++ b/tools/perf/arch/x86/util/topdown.c
+@@ -1,4 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
++#include <errno.h>
+ #include "util/evlist.h"
+ #include "util/pmu.h"
+ #include "util/pmus.h"
+diff --git a/tools/perf/bench/evlist-open-close.c b/tools/perf/bench/evlist-open-close.c
+index bfaf50e4e5193..faf9c34b4a5dc 100644
+--- a/tools/perf/bench/evlist-open-close.c
++++ b/tools/perf/bench/evlist-open-close.c
+@@ -1,4 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
++#include <errno.h>
+ #include <inttypes.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+diff --git a/tools/perf/bench/futex.c b/tools/perf/bench/futex.c
+index 1481196a22f0c..1968c9d00b5bb 100644
+--- a/tools/perf/bench/futex.c
++++ b/tools/perf/bench/futex.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <err.h>
++#include <errno.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <sys/prctl.h>
+diff --git a/tools/perf/bench/pmu-scan.c b/tools/perf/bench/pmu-scan.c
+index 9e4d36486f625..14a464ad8cea8 100644
+--- a/tools/perf/bench/pmu-scan.c
++++ b/tools/perf/bench/pmu-scan.c
+@@ -4,6 +4,7 @@
+  *
+  * Copyright 2023 Google LLC.
+  */
++#include <errno.h>
+ #include <stdio.h>
+ #include "bench.h"
+ #include "util/debug.h"
+diff --git a/tools/perf/bench/synthesize.c b/tools/perf/bench/synthesize.c
+index b3d493697675c..265d49a913d94 100644
+--- a/tools/perf/bench/synthesize.c
++++ b/tools/perf/bench/synthesize.c
+@@ -6,6 +6,7 @@
+  *
+  * Copyright 2019 Google LLC.
+  */
++#include <errno.h>
+ #include <stdio.h>
+ #include "bench.h"
+ #include "../util/debug.h"
+diff --git a/tools/perf/builtin-mem.c b/tools/perf/builtin-mem.c
+index c6496adff3fea..d43500b92a7b9 100644
+--- a/tools/perf/builtin-mem.c
++++ b/tools/perf/builtin-mem.c
+@@ -1,4 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
++#include <errno.h>
+ #include <inttypes.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>
+diff --git a/tools/perf/tests/hwmon_pmu.c b/tools/perf/tests/hwmon_pmu.c
+index 151f02701c8cc..4aa4aac94f09c 100644
+--- a/tools/perf/tests/hwmon_pmu.c
++++ b/tools/perf/tests/hwmon_pmu.c
+@@ -4,6 +4,7 @@
+ #include "hwmon_pmu.h"
+ #include "parse-events.h"
+ #include "tests.h"
++#include <errno.h>
+ #include <fcntl.h>
+ #include <sys/stat.h>
+ #include <linux/compiler.h>
+diff --git a/tools/perf/tests/parse-metric.c b/tools/perf/tests/parse-metric.c
+index 66a5275917e22..9b1df1eb455a7 100644
+--- a/tools/perf/tests/parse-metric.c
++++ b/tools/perf/tests/parse-metric.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <linux/compiler.h>
++#include <errno.h>
+ #include <string.h>
+ #include <perf/cpumap.h>
+ #include <perf/evlist.h>
+diff --git a/tools/perf/tests/pfm.c b/tools/perf/tests/pfm.c
+index 2e38dfa34b6ce..fca4a86452df6 100644
+--- a/tools/perf/tests/pfm.c
++++ b/tools/perf/tests/pfm.c
+@@ -4,6 +4,7 @@
+  *
+  * Copyright 2020 Google LLC.
+  */
++#include <errno.h>
+ #include "tests.h"
+ #include "util/debug.h"
+ #include "util/evlist.h"
+diff --git a/tools/perf/ui/hist.c b/tools/perf/ui/hist.c
+index b085eb0de8499..e58327595d37d 100644
+--- a/tools/perf/ui/hist.c
++++ b/tools/perf/ui/hist.c
+@@ -1,4 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
++#include <errno.h>
+ #include <inttypes.h>
+ #include <math.h>
+ #include <stdlib.h>
+diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
+index 903027a6fb7d3..687f381aeaec2 100644
+--- a/tools/perf/util/annotate-data.c
++++ b/tools/perf/util/annotate-data.c
+@@ -4,7 +4,7 @@
+  *
+  * Written by Namhyung Kim <namhyung@kernel.org>
+  */
 -
- static int copy_bytes(struct perf_inject *inject, struct perf_data *data, off_t size)
- {
- 	char buf[4096];
-@@ -299,19 +297,6 @@ static s64 perf_event__repipe_auxtrace(const struct perf_tool *tool,
- 	return event->auxtrace.size;
- }
- 
--#else
--
--static s64
--perf_event__repipe_auxtrace(const struct perf_tool *tool __maybe_unused,
--			    struct perf_session *session __maybe_unused,
--			    union perf_event *event __maybe_unused)
--{
--	pr_err("AUX area tracing not supported\n");
--	return -EINVAL;
--}
--
--#endif
--
- static int perf_event__repipe(const struct perf_tool *tool,
- 			      union perf_event *event,
- 			      struct perf_sample *sample __maybe_unused,
-diff --git a/tools/perf/builtin-record.c b/tools/perf/builtin-record.c
-index 87cff5f5a99c1..8c8d67a3da982 100644
---- a/tools/perf/builtin-record.c
-+++ b/tools/perf/builtin-record.c
-@@ -718,8 +718,6 @@ static void record__sig_exit(void)
- 	raise(signr);
- }
- 
--#ifdef HAVE_AUXTRACE_SUPPORT
--
- static int record__process_auxtrace(const struct perf_tool *tool,
- 				    struct mmap *map,
- 				    union perf_event *event, void *data1,
-@@ -878,40 +876,6 @@ static int record__auxtrace_init(struct record *rec)
- 	return auxtrace_parse_filters(rec->evlist);
- }
- 
--#else
--
--static inline
--int record__auxtrace_mmap_read(struct record *rec __maybe_unused,
--			       struct mmap *map __maybe_unused)
--{
--	return 0;
--}
--
--static inline
--void record__read_auxtrace_snapshot(struct record *rec __maybe_unused,
--				    bool on_exit __maybe_unused)
--{
--}
--
--static inline
--int auxtrace_record__snapshot_start(struct auxtrace_record *itr __maybe_unused)
--{
--	return 0;
--}
--
--static inline
--int record__auxtrace_snapshot_exit(struct record *rec __maybe_unused)
--{
--	return 0;
--}
--
--static int record__auxtrace_init(struct record *rec __maybe_unused)
--{
--	return 0;
--}
--
--#endif
--
- static int record__config_text_poke(struct evlist *evlist)
- {
- 	struct evsel *evsel;
-diff --git a/tools/perf/builtin-script.c b/tools/perf/builtin-script.c
-index d813adbf98895..bd82315bdf8e6 100644
---- a/tools/perf/builtin-script.c
-+++ b/tools/perf/builtin-script.c
-@@ -2002,7 +2002,6 @@ static int perf_sample__fprintf_synth_iflag_chg(struct perf_sample *sample, FILE
- 	return len + perf_sample__fprintf_pt_spacing(len, fp);
- }
- 
--#ifdef HAVE_AUXTRACE_SUPPORT
- static int perf_sample__fprintf_synth_vpadtl(struct perf_sample *data, FILE *fp)
- {
- 	struct powerpc_vpadtl_entry *dtl = (struct powerpc_vpadtl_entry *)data->raw_data;
-@@ -2021,13 +2020,6 @@ static int perf_sample__fprintf_synth_vpadtl(struct perf_sample *data, FILE *fp)
- 
- 	return len;
- }
--#else
--static int perf_sample__fprintf_synth_vpadtl(struct perf_sample *data __maybe_unused,
--		FILE *fp __maybe_unused)
--{
--	return 0;
--}
--#endif
- 
- static int perf_sample__fprintf_synth(struct perf_sample *sample,
- 				      struct evsel *evsel, FILE *fp)
-@@ -3649,7 +3641,6 @@ static int process_feature_event(const struct perf_tool *tool __maybe_unused,
- 	return 0;
- }
- 
--#ifdef HAVE_AUXTRACE_SUPPORT
- static int perf_script__process_auxtrace_info(const struct perf_tool *tool,
- 					      struct perf_session *session,
- 					      union perf_event *event)
-@@ -3664,9 +3655,6 @@ static int perf_script__process_auxtrace_info(const struct perf_tool *tool,
- 
- 	return ret;
- }
--#else
--#define perf_script__process_auxtrace_info 0
--#endif
- 
- static int parse_insn_trace(const struct option *opt __maybe_unused,
- 			    const char *str, int unset __maybe_unused)
-diff --git a/tools/perf/tests/make b/tools/perf/tests/make
-index fa4500c65949a..c721cd1bcaa9a 100644
---- a/tools/perf/tests/make
-+++ b/tools/perf/tests/make
-@@ -88,7 +88,6 @@ make_no_backtrace   := NO_BACKTRACE=1
- make_no_libcapstone := NO_CAPSTONE=1
- make_no_libnuma     := NO_LIBNUMA=1
- make_no_libbionic   := NO_LIBBIONIC=1
--make_no_auxtrace    := NO_AUXTRACE=1
- make_no_libbpf	    := NO_LIBBPF=1
- make_libbpf_dynamic := LIBBPF_DYNAMIC=1
- make_no_libbpf_DEBUG := NO_LIBBPF=1 DEBUG=1
-@@ -121,7 +120,7 @@ make_static         := LDFLAGS=-static NO_PERF_READ_VDSO32=1 NO_PERF_READ_VDSOX3
- make_minimal        := NO_LIBPYTHON=1 NO_GTK2=1
- make_minimal        += NO_DEMANGLE=1 NO_LIBELF=1 NO_BACKTRACE=1
- make_minimal        += NO_LIBNUMA=1 NO_LIBBIONIC=1 NO_LIBDW=1
--make_minimal        += NO_LIBDW_DWARF_UNWIND=1 NO_AUXTRACE=1 NO_LIBBPF=1
-+make_minimal        += NO_LIBDW_DWARF_UNWIND=1 NO_LIBBPF=1
- make_minimal        += NO_SDT=1 NO_JVMTI=1 NO_LIBZSTD=1
- make_minimal        += NO_CAPSTONE=1
- 
-@@ -158,7 +157,6 @@ run += make_no_backtrace
- run += make_no_libcapstone
- run += make_no_libnuma
- run += make_no_libbionic
--run += make_no_auxtrace
- run += make_no_libbpf
- run += make_no_libbpf_DEBUG
- run += make_no_libllvm
-diff --git a/tools/perf/util/Build b/tools/perf/util/Build
-index 4be313cd115ae..1c2a43e1dc68e 100644
---- a/tools/perf/util/Build
-+++ b/tools/perf/util/Build
-@@ -129,22 +129,22 @@ perf-util-y += iostat.o
- perf-util-y += stream.o
- perf-util-y += kvm-stat.o
- perf-util-y += lock-contention.o
--perf-util-$(CONFIG_AUXTRACE) += auxtrace.o
-+perf-util-y += auxtrace.o
- perf-util-y += intel-pt-decoder/
--perf-util-$(CONFIG_AUXTRACE) += intel-pt.o
--perf-util-$(CONFIG_AUXTRACE) += intel-bts.o
--perf-util-$(CONFIG_AUXTRACE) += arm-spe.o
--perf-util-$(CONFIG_AUXTRACE) += arm-spe-decoder/
--perf-util-$(CONFIG_AUXTRACE) += hisi-ptt.o
--perf-util-$(CONFIG_AUXTRACE) += hisi-ptt-decoder/
--perf-util-$(CONFIG_AUXTRACE) += s390-cpumsf.o
--perf-util-$(CONFIG_AUXTRACE) += powerpc-vpadtl.o
-+perf-util-y += intel-pt.o
-+perf-util-y += intel-bts.o
-+perf-util-y += arm-spe.o
-+perf-util-y += arm-spe-decoder/
-+perf-util-y += hisi-ptt.o
-+perf-util-y += hisi-ptt-decoder/
-+perf-util-y += s390-cpumsf.o
-+perf-util-y += powerpc-vpadtl.o
- 
- ifdef CONFIG_LIBOPENCSD
--perf-util-$(CONFIG_AUXTRACE) += cs-etm.o
--perf-util-$(CONFIG_AUXTRACE) += cs-etm-decoder/
-+perf-util-y += cs-etm.o
-+perf-util-y += cs-etm-decoder/
- endif
--perf-util-$(CONFIG_AUXTRACE) += cs-etm-base.o
-+perf-util-y += cs-etm-base.o
- 
- perf-util-y += parse-branch-options.o
- perf-util-y += dump-insn.o
-diff --git a/tools/perf/util/arm-spe-decoder/Build b/tools/perf/util/arm-spe-decoder/Build
-index 960062b3cb9ea..ab500e0efe244 100644
---- a/tools/perf/util/arm-spe-decoder/Build
-+++ b/tools/perf/util/arm-spe-decoder/Build
-@@ -1 +1 @@
--perf-util-$(CONFIG_AUXTRACE) += arm-spe-pkt-decoder.o arm-spe-decoder.o
-+perf-util-y += arm-spe-pkt-decoder.o arm-spe-decoder.o
++#include <errno.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <inttypes.h>
 diff --git a/tools/perf/util/auxtrace.h b/tools/perf/util/auxtrace.h
-index bab05ba01e41d..79ffdddab7ab4 100644
+index 79ffdddab7ab4..ab826d4a58e02 100644
 --- a/tools/perf/util/auxtrace.h
 +++ b/tools/perf/util/auxtrace.h
-@@ -7,17 +7,12 @@
+@@ -7,7 +7,6 @@
  #ifndef __PERF_AUXTRACE_H
  #define __PERF_AUXTRACE_H
  
--#include <sys/types.h>
- #include <errno.h>
--#include <stdbool.h>
--#include <stddef.h>
+-#include <errno.h>
  #include <stdio.h> // FILE
--#include <linux/list.h>
  #include <linux/perf_event.h>
  #include <linux/types.h>
--#include <perf/cpumap.h>
--#include <asm/bitsperlong.h>
- #include <asm/barrier.h>
-+#include <perf/cpumap.h>
+diff --git a/tools/perf/util/bpf-filter.h b/tools/perf/util/bpf-filter.h
+index 122477f2de44b..818c554b91b28 100644
+--- a/tools/perf/util/bpf-filter.h
++++ b/tools/perf/util/bpf-filter.h
+@@ -36,6 +36,8 @@ int perf_bpf_filter__unpin(void);
  
- union perf_event;
- struct perf_session;
-@@ -459,8 +454,6 @@ struct addr_filters {
+ #else /* !HAVE_BPF_SKEL */
  
- struct auxtrace_cache;
++#include <errno.h>
++
+ static inline int perf_bpf_filter__parse(struct list_head *expr_head __maybe_unused,
+ 					 const char *str __maybe_unused)
+ {
+diff --git a/tools/perf/util/bpf-trace-summary.c b/tools/perf/util/bpf-trace-summary.c
+index 8dfe7e678941d..cf6e1e4402d52 100644
+--- a/tools/perf/util/bpf-trace-summary.c
++++ b/tools/perf/util/bpf-trace-summary.c
+@@ -1,4 +1,5 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
++#include <errno.h>
+ #include <inttypes.h>
+ #include <math.h>
+ #include <stdio.h>
+diff --git a/tools/perf/util/bpf_counter_cgroup.c b/tools/perf/util/bpf_counter_cgroup.c
+index 690be3ce3e114..8d701724a807c 100644
+--- a/tools/perf/util/bpf_counter_cgroup.c
++++ b/tools/perf/util/bpf_counter_cgroup.c
+@@ -4,6 +4,7 @@
+ /* Copyright (c) 2021 Google */
  
--#ifdef HAVE_AUXTRACE_SUPPORT
--
- u64 compat_auxtrace_mmap__read_head(struct auxtrace_mmap *mm);
- int compat_auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail);
+ #include <assert.h>
++#include <errno.h>
+ #include <limits.h>
+ #include <unistd.h>
+ #include <sys/file.h>
+diff --git a/tools/perf/util/bpf_ftrace.c b/tools/perf/util/bpf_ftrace.c
+index e61a3b20be0a0..c456d24efa308 100644
+--- a/tools/perf/util/bpf_ftrace.c
++++ b/tools/perf/util/bpf_ftrace.c
+@@ -1,6 +1,7 @@
+-#include <stdio.h>
++#include <errno.h>
+ #include <fcntl.h>
+ #include <stdint.h>
++#include <stdio.h>
+ #include <stdlib.h>
  
-@@ -705,215 +698,4 @@ void itrace_synth_opts__clear_time_range(struct itrace_synth_opts *opts)
- 	opts->range_num = 0;
- }
+ #include <bpf/bpf.h>
+diff --git a/tools/perf/util/bpf_map.c b/tools/perf/util/bpf_map.c
+index 578f27d2d6b46..442f91b4e8e15 100644
+--- a/tools/perf/util/bpf_map.c
++++ b/tools/perf/util/bpf_map.c
+@@ -5,6 +5,7 @@
+ #include <bpf/libbpf.h>
+ #include <linux/err.h>
+ #include <linux/kernel.h>
++#include <errno.h>
+ #include <stdbool.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+diff --git a/tools/perf/util/cgroup.c b/tools/perf/util/cgroup.c
+index 0038d2ac647c4..1b5664d1481f5 100644
+--- a/tools/perf/util/cgroup.c
++++ b/tools/perf/util/cgroup.c
+@@ -10,6 +10,7 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <sys/statfs.h>
++#include <errno.h>
+ #include <fcntl.h>
+ #include <stdlib.h>
+ #include <string.h>
+diff --git a/tools/perf/util/drm_pmu.c b/tools/perf/util/drm_pmu.c
+index 98d4d2b556d4e..b3052266d5993 100644
+--- a/tools/perf/util/drm_pmu.c
++++ b/tools/perf/util/drm_pmu.c
+@@ -10,6 +10,7 @@
+ #include <api/io.h>
+ #include <ctype.h>
+ #include <dirent.h>
++#include <errno.h>
+ #include <fcntl.h>
+ #include <unistd.h>
+ #include <linux/unistd.h>
+diff --git a/tools/perf/util/evswitch.c b/tools/perf/util/evswitch.c
+index 40cb56a9347da..d4c06a3f825a8 100644
+--- a/tools/perf/util/evswitch.c
++++ b/tools/perf/util/evswitch.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ // Copyright (C) 2019, Red Hat Inc, Arnaldo Carvalho de Melo <acme@redhat.com>
  
--#else
--#include "debug.h"
--
--static inline struct auxtrace_record *
--auxtrace_record__init(struct evlist *evlist __maybe_unused,
--		      int *err)
--{
--	*err = 0;
--	return NULL;
--}
--
--static inline
--void auxtrace_record__free(struct auxtrace_record *itr __maybe_unused)
--{
--}
--
--static inline
--int auxtrace_record__options(struct auxtrace_record *itr __maybe_unused,
--			     struct evlist *evlist __maybe_unused,
--			     struct record_opts *opts __maybe_unused)
--{
--	return 0;
--}
--
--static inline
--int perf_event__process_auxtrace_info(const struct perf_tool *tool __maybe_unused,
--				      struct perf_session *session __maybe_unused,
--				      union perf_event *event __maybe_unused)
--{
--	return 0;
--}
--
--static inline
--s64 perf_event__process_auxtrace(const struct perf_tool *tool __maybe_unused,
--				 struct perf_session *session __maybe_unused,
--				 union perf_event *event __maybe_unused)
--{
--	return 0;
--}
--
--static inline
--int perf_event__process_auxtrace_error(const struct perf_tool *tool __maybe_unused,
--				       struct perf_session *session __maybe_unused,
--				       union perf_event *event __maybe_unused)
--{
--	return 0;
--}
--
--static inline
--void perf_session__auxtrace_error_inc(struct perf_session *session
--				      __maybe_unused,
--				      union perf_event *event
--				      __maybe_unused)
--{
--}
--
--static inline
--void events_stats__auxtrace_error_warn(const struct events_stats *stats
--				       __maybe_unused)
--{
--}
--
--static inline
--int itrace_do_parse_synth_opts(struct itrace_synth_opts *synth_opts __maybe_unused,
--			       const char *str __maybe_unused, int unset __maybe_unused)
--{
--	pr_err("AUX area tracing not supported\n");
--	return -EINVAL;
--}
--
--static inline
--int itrace_parse_synth_opts(const struct option *opt __maybe_unused,
--			    const char *str __maybe_unused,
--			    int unset __maybe_unused)
--{
--	pr_err("AUX area tracing not supported\n");
--	return -EINVAL;
--}
--
--static inline
--int auxtrace_parse_snapshot_options(struct auxtrace_record *itr __maybe_unused,
--				    struct record_opts *opts __maybe_unused,
--				    const char *str)
--{
--	if (!str)
--		return 0;
--	pr_err("AUX area tracing not supported\n");
--	return -EINVAL;
--}
--
--static inline
--int auxtrace_parse_sample_options(struct auxtrace_record *itr __maybe_unused,
--				  struct evlist *evlist __maybe_unused,
--				  struct record_opts *opts __maybe_unused,
--				  const char *str)
--{
--	if (!str)
--		return 0;
--	pr_err("AUX area tracing not supported\n");
--	return -EINVAL;
--}
--
--static inline
--int auxtrace_parse_aux_action(struct evlist *evlist __maybe_unused)
--{
--	pr_err("AUX area tracing not supported\n");
--	return -EINVAL;
--}
--
--static inline
--int auxtrace__process_event(struct perf_session *session __maybe_unused,
--			    union perf_event *event __maybe_unused,
--			    struct perf_sample *sample __maybe_unused,
--			    const struct perf_tool *tool __maybe_unused)
--{
--	return 0;
--}
--
--static inline
--void auxtrace__dump_auxtrace_sample(struct perf_session *session __maybe_unused,
--				    struct perf_sample *sample __maybe_unused)
--{
--}
--
--static inline
--int auxtrace__flush_events(struct perf_session *session __maybe_unused,
--			   const struct perf_tool *tool __maybe_unused)
--{
--	return 0;
--}
--
--static inline
--void auxtrace__free_events(struct perf_session *session __maybe_unused)
--{
--}
--
--static inline
--void auxtrace_cache__free(struct auxtrace_cache *auxtrace_cache __maybe_unused)
--{
--}
--
--static inline
--void auxtrace__free(struct perf_session *session __maybe_unused)
--{
--}
--
--static inline
--int auxtrace_index__write(int fd __maybe_unused,
--			  struct list_head *head __maybe_unused)
--{
--	return -EINVAL;
--}
--
--static inline
--int auxtrace_index__process(int fd __maybe_unused,
--			    u64 size __maybe_unused,
--			    struct perf_session *session __maybe_unused,
--			    bool needs_swap __maybe_unused)
--{
--	return -EINVAL;
--}
--
--static inline
--void auxtrace_index__free(struct list_head *head __maybe_unused)
--{
--}
--
--static inline
--bool auxtrace__evsel_is_auxtrace(struct perf_session *session __maybe_unused,
--				 struct evsel *evsel __maybe_unused)
--{
--	return false;
--}
--
--static inline
--int auxtrace_parse_filters(struct evlist *evlist __maybe_unused)
--{
--	return 0;
--}
--
--int auxtrace_mmap__mmap(struct auxtrace_mmap *mm,
--			struct auxtrace_mmap_params *mp,
--			void *userpg, int fd);
--void auxtrace_mmap__munmap(struct auxtrace_mmap *mm);
--void auxtrace_mmap_params__init(struct auxtrace_mmap_params *mp,
--				off_t auxtrace_offset,
--				unsigned int auxtrace_pages,
--				bool auxtrace_overwrite);
--void auxtrace_mmap_params__set_idx(struct auxtrace_mmap_params *mp,
--				   struct evlist *evlist,
--				   struct evsel *evsel, int idx);
--
--#define ITRACE_HELP ""
--
--static inline
--void itrace_synth_opts__set_time_range(struct itrace_synth_opts *opts
--				       __maybe_unused,
--				       struct perf_time_interval *ptime_range
--				       __maybe_unused,
--				       int range_num __maybe_unused)
--{
--}
--
--static inline
--void itrace_synth_opts__clear_time_range(struct itrace_synth_opts *opts
--					 __maybe_unused)
--{
--}
--
--#endif
--
- #endif
-diff --git a/tools/perf/util/cs-etm-decoder/Build b/tools/perf/util/cs-etm-decoder/Build
-index 056d665f7f88a..27550db2aa4c5 100644
---- a/tools/perf/util/cs-etm-decoder/Build
-+++ b/tools/perf/util/cs-etm-decoder/Build
-@@ -1 +1 @@
--perf-util-$(CONFIG_AUXTRACE) += cs-etm-decoder.o
-+perf-util-y += cs-etm-decoder.o
-diff --git a/tools/perf/util/hisi-ptt-decoder/Build b/tools/perf/util/hisi-ptt-decoder/Build
-index 3298f7b7e308b..2ee0eb7316565 100644
---- a/tools/perf/util/hisi-ptt-decoder/Build
-+++ b/tools/perf/util/hisi-ptt-decoder/Build
-@@ -1 +1 @@
--perf-util-$(CONFIG_AUXTRACE) += hisi-ptt-pkt-decoder.o
-+perf-util-y += hisi-ptt-pkt-decoder.o
-diff --git a/tools/perf/util/intel-pt-decoder/Build b/tools/perf/util/intel-pt-decoder/Build
-index 5b8f0149167d9..8fd7e4330044e 100644
---- a/tools/perf/util/intel-pt-decoder/Build
-+++ b/tools/perf/util/intel-pt-decoder/Build
-@@ -1,4 +1,4 @@
--perf-util-$(CONFIG_AUXTRACE) += intel-pt-pkt-decoder.o intel-pt-insn-decoder.o intel-pt-log.o intel-pt-decoder.o
-+perf-util-y += intel-pt-pkt-decoder.o intel-pt-insn-decoder.o intel-pt-log.o intel-pt-decoder.o
++#include <errno.h>
+ #include "evswitch.h"
+ #include "evlist.h"
  
- inat_tables_script = $(srctree)/tools/arch/x86/tools/gen-insn-attr-x86.awk
- inat_tables_maps = $(srctree)/tools/arch/x86/lib/x86-opcode-map.txt
-@@ -7,11 +7,7 @@ $(OUTPUT)util/intel-pt-decoder/inat-tables.c: $(inat_tables_script) $(inat_table
- 	$(call rule_mkdir)
- 	@$(call echo-cmd,gen)$(AWK) -f $(inat_tables_script) $(inat_tables_maps) > $@ || rm -f $@
+diff --git a/tools/perf/util/intel-tpebs.c b/tools/perf/util/intel-tpebs.c
+index 21359155f2a0b..3c958d738ca6c 100644
+--- a/tools/perf/util/intel-tpebs.c
++++ b/tools/perf/util/intel-tpebs.c
+@@ -25,6 +25,7 @@
+ #include "stat.h"
+ #include <sys/stat.h>
+ #include <sys/file.h>
++#include <errno.h>
+ #include <poll.h>
+ #include <math.h>
  
--ifeq ($(SRCARCH),x86)
--  perf-util-y += inat.o insn.o
--else
--  perf-util-$(CONFIG_AUXTRACE) += inat.o insn.o
--endif
-+perf-util-y += inat.o insn.o
+diff --git a/tools/perf/util/kvm-stat.h b/tools/perf/util/kvm-stat.h
+index 53db3d56108bd..a356b839c2ee0 100644
+--- a/tools/perf/util/kvm-stat.h
++++ b/tools/perf/util/kvm-stat.h
+@@ -10,6 +10,7 @@
+ #include "symbol.h"
+ #include "record.h"
  
- $(OUTPUT)util/intel-pt-decoder/inat.o: $(srctree)/tools/arch/x86/lib/inat.c $(OUTPUT)util/intel-pt-decoder/inat-tables.c
- 	$(call rule_mkdir)
-diff --git a/tools/perf/util/synthetic-events.h b/tools/perf/util/synthetic-events.h
-index ee29615d68e57..f8588b6cf11a0 100644
---- a/tools/perf/util/synthetic-events.h
-+++ b/tools/perf/util/synthetic-events.h
-@@ -107,24 +107,9 @@ int machine__synthesize_threads(struct machine *machine, struct target *target,
- 				struct perf_thread_map *threads, bool needs_mmap, bool data_mmap,
- 				unsigned int nr_threads_synthesize);
++#include <errno.h>
+ #include <stdlib.h>
+ #include <linux/zalloc.h>
  
--#ifdef HAVE_AUXTRACE_SUPPORT
- int perf_event__synthesize_auxtrace_info(struct auxtrace_record *itr, const struct perf_tool *tool,
- 					 struct perf_session *session, perf_event__handler_t process);
+diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
+index fcc0939846830..d64aec6c7c843 100644
+--- a/tools/perf/util/mmap.c
++++ b/tools/perf/util/mmap.c
+@@ -7,6 +7,7 @@
+  */
  
--#else // HAVE_AUXTRACE_SUPPORT
--
--#include <errno.h>
--
--static inline int
--perf_event__synthesize_auxtrace_info(struct auxtrace_record *itr __maybe_unused,
--				     const struct perf_tool *tool __maybe_unused,
--				     struct perf_session *session __maybe_unused,
--				     perf_event__handler_t process __maybe_unused)
--{
--	return -EINVAL;
--}
--#endif // HAVE_AUXTRACE_SUPPORT
--
- #ifdef HAVE_LIBBPF_SUPPORT
- int perf_event__synthesize_bpf_events(struct perf_session *session, perf_event__handler_t process,
- 				      struct machine *machine, struct record_opts *opts);
+ #include <sys/mman.h>
++#include <errno.h>
+ #include <inttypes.h>
+ #include <asm/bug.h>
+ #include <linux/zalloc.h>
+diff --git a/tools/perf/util/pfm.c b/tools/perf/util/pfm.c
+index e5b3a2a5ddef5..d9043f4afbe7b 100644
+--- a/tools/perf/util/pfm.c
++++ b/tools/perf/util/pfm.c
+@@ -15,6 +15,7 @@
+ #include "util/strbuf.h"
+ #include "util/thread_map.h"
+ 
++#include <errno.h>
+ #include <string.h>
+ #include <linux/kernel.h>
+ #include <perfmon/pfmlib_perf_event.h>
+diff --git a/tools/perf/util/powerpc-vpadtl.c b/tools/perf/util/powerpc-vpadtl.c
+index eacc845ebda26..740fef005cf56 100644
+--- a/tools/perf/util/powerpc-vpadtl.c
++++ b/tools/perf/util/powerpc-vpadtl.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <linux/string.h>
++#include <errno.h>
+ #include <inttypes.h>
+ #include "color.h"
+ #include "evlist.h"
+diff --git a/tools/perf/util/stat-shadow.c b/tools/perf/util/stat-shadow.c
+index abaf6b579bfc2..0002e51194c2c 100644
+--- a/tools/perf/util/stat-shadow.c
++++ b/tools/perf/util/stat-shadow.c
+@@ -1,4 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0
++#include <errno.h>
+ #include <math.h>
+ #include <stdio.h>
+ #include "evsel.h"
 -- 
 2.53.0
 
