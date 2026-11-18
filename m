@@ -1,63 +1,57 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
 	t=1795020914;
-	b=SwdVgXymKToBmkgnGC9CP0ocBsrc3JurS/6F+pntNyFDCRruT7uXllETlvZfVhkmcvQh
-	 WrCpUnvmNKczDuz1JcVEVaPAPOmm5d8s8rGNN9q7TduIbo04TUSPim2OdOgkMiyzhl+6v
-	 t0vcn4PQmp3TWU7X24DZ2j+3ZzRE8mbI+WaKX9Xxe4DULSCrVXSbJmh0YEOxXcUcQJkA7
-	 8RBHWxzkElrdQIl9jUPVCgQriASQkICl9jshM28iAvKcFm6XdvczB/ON25PWBSEiGyIx9
-	 zuD/MzNnIp/R1Jkk3PfTX8E7vbDtlQWZF1WUv0BCtkZl/U/zDFmGnnitUobVgKNP86A==
+	b=gV58odSRE++RhSvs56BTEZAczpCswIjLPfOEriammH4SsrGh+pMe/jaqSMH2vFEP//m0
+	 lSAmuKlwPJcqo9pDXKVBQIlJLcBNjv7fq/7zOAOLm5udEgTkcSuXIf2ociDocJSrapxmH
+	 9De4DpKn978BTiqOPkTjOcFo9Wi9mFBnmywtDHXhC9nFpKPddCfKX9+rz+NCui5Cp/SXD
+	 mVfzOJgPh4SoDRTVyvI5UU3LVcB1WxZkHRgy9X6+HcbEytbb5iVEx6eOeI7RY4vNS0Rwi
+	 iT6P/Xv7aak3ltKLpin4qvIGpOPtLtfqyOE+PXkDTG48qp1DstjsfI1HM8+d4dWduAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795020914;
-	h=DMARC-Filter:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
-	bh=ZLM3s8d8UDzrM9sfjMtb4usIGUWvbcJkqCBFK/uTBxo=;
-	b=QsApUsJWXzDO/m+ikjPdNisNkDxvnH7+mmIeK0I3yoJb55VwnbNYuxukGbsLk15IA46Q
-	 wF6YkLEqOaBtYD6p49OhQnuhKzYt3S3mjNt3p6ZdO/3dD4dvAn1M/qDPaxgxv4yt4h+Qp
-	 TUY1EfJDDz19ymznEP8kMp2ti1rw1sDFeFXeb6FRB3l5UJ5X8FVWPxgl8ceRqOUyHiwAj
-	 oNRKOJzNTxyEa0fwHaTOstw0lolunDhoX5lrlBRuL+DtgxlaTscWmKZE1NcB2KSvgo5CX
-	 J3npGiLeiQv54DbvBp3rvMc/Vkb34NvDh2iXtqY4tEBqsosaQESnDL1JBaLwbzhkB2g==
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=1eLqoZI41uOrx2jOd67crji5XjLazEgMEPG6h0J549s=;
+	b=S9CAKUyHtCQ4nTR2SWEIAPaJSBXisTQ1TX1DRJqbZi0Cdgck9FoE0WcA+w1PwnMIOeXJ
+	 Tr6Q8i30cVDZfwSTxWtDNoLgoIGY4AHIakXKAuxnpOsTLz/b/hXTovoAZBFrU2rs6kEb1
+	 xbansbiPRrA2sUUdUbUPNyitB3/IDlNXOlPR664cP0qxs7TkNAVT3mIq9YOcg2VzZmW73
+	 kDv0bQlM1EIJYpmAqoTTur46aN9Qe/Sw8A8cV97oN+t5bIf/Yk/YLPgknLiNUK3dYbAQs
+	 skk6tYbfiVGWm74Y5/zt+ZW8JotsD09MxPOcc/4r/vB7+ZLvGppfpNDcZcLiqClaLvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=librecast.net;
-	spf=pass smtp.mailfrom=librecast.net;
-	dkim=pass header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b="Z1Wj3+L/";
-	arc=none smtp.remote-ip=185.128.210.58
-Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHIdRlHn;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD357606A31C;
-	Wed, 18 Nov 2026 16:55:13 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CD357606A31C
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A825606A325;
+	Wed, 18 Nov 2026 16:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=librecast.net header.i=@librecast.net header.a=rsa-sha256 header.s=2026110900 header.b=Z1Wj3+L/
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=librecast.net; s=2026110900; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ZLM3s8d8UDzrM9sfjMtb4usIGUWvbcJkqCBFK/uTBxo=; t=1795020913; x=1795884913; 
-	b=Z1Wj3+L/fBH0smUe3N/4DWjZswp6mIRxDNziMdaQwG7Pcn4NLfGPrZ4K3IiNMKLQG6OY6yxnahZ
-	IwwSNbVOHfRNRZdaa6cPzcrkjvw+0jsHH9lxyj3PDhGf94oh45wCqO8HeeMJr14A1ZKszGFzubk1V
-	vCcfQA+3G0uNIL2AcoGzcIMIUOlyNnly3JMckeFQubb+2KhoLzp1Uo7u+jpFSLSNkZVL/16HAEtxW
-	IYTjDPGO45g8CFqmLZFUMuf3p3VQXJ+/miG7ff0zaWEedR1QyYl6iXmPOtuy3XBmcHQBK6Cx32ojN
-	dDAODXVUU+shGG2wlnZKBeXUNiCIx0M6DOyQ==;
-Date: Wed, 18 Nov 2026 17:46:26 +0100
-From: Brett A C Sheffield <bacs@librecast.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.1 0000/2857] 6.1.193-rc1 review
-Message-ID: <av3WYtoFXmHPM8uk@karahi.librecast.net>
-References: <20261118150201.293410965@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHIdRlHn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA2681F000C4;
+	Wed, 18 Nov 2026 16:55:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795020914;
+	bh=1eLqoZI41uOrx2jOd67crji5XjLazEgMEPG6h0J549s=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=nHIdRlHnvfiDAyJU8375UYptnTNC5i+XvYumwDUhVHwC969Hg+fxQy8mmat8SiqDv
+	 /JHy1iMstgnKAskwRUgEE/tDOTUSDHjcmlTw5boZtjI/+cXGy3hjeaIqllCTIMtqwC
+	 gMeXzsWwkn88HYZx4vwcyJV7IbSWZUytTsRkC1W4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 7.3 2121/2651] bpf: Dont take a program with a target program for an iterator
+Date: Wed, 18 Nov 2026 15:56:01 +0100
+Message-ID: <20261118150402.277025432@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
+References: <20261118150247.972732815@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -67,26 +61,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On 2026-11-18 15:17, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.193 release.
-> There are 2857 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 20 Nov 2026 14:55:40 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.193-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
+7.3-stable review patch.  If anyone has any objections, please let me know.
 
-Same build failure on amd64 as reported for 5.{10,15}.y
+------------------
 
+From: Alexei Starovoitov <ast@kernel.org>
+
+[ Upstream commit b83bacf2161d0f8583e3f1e9c90402638992ad82 ]
+
+bpf_iter_prog_supported() goes by the name of the attach function.  Commit
+7cc639dc45c5 ("bpf: Don't take an extension for an iterator program")
+keeps out extensions, for which that is the name of a function of another
+program.  A tracing program with BPF_TRACE_ITER that is loaded with
+attach_prog_fd gets there as well: unlike for BPF_TRACE_RAW_TP,
+bpf_check_attach_target() does not mind the target program.
+
+If the function is called like that of an iterator target, bpf_iter_bpf_map
+for example, its id in the BTF of the program is cached as the id of the
+target, even if the load fails later.  Programs of that target which are
+loaded already cannot be attached any more.  And the program itself can be
+attached as an iterator of that target, with a context that the verifier
+has taken from the prototype of that function:
+
+  BUG: KASAN: stack-out-of-bounds in bpf_prog_66d4234e2e50f5b6_ts26_forged+0x12a/0x20b
+  Read of size 8 at addr ffffc90000d9fc48 by task ts26/104
+
+Refuse every program that has a target program.  That covers extensions.
+
+Fixes: 15d83c4d7cef ("bpf: Allow loading of a bpf_iter program")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261017230950.802052-2-alexei.starovoitov@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ kernel/bpf/bpf_iter.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
+index 05d8b30bc4f7c..8e5069b477aae 100644
+--- a/kernel/bpf/bpf_iter.c
++++ b/kernel/bpf/bpf_iter.c
+@@ -352,10 +352,10 @@ int bpf_iter_prog_supported(struct bpf_prog *prog)
+ 	int prefix_len = strlen(prefix);
+ 
+ 	/*
+-	 * The attach function of an extension is a subprogram of the iterator
+-	 * program that it extends, whatever its name is.
++	 * The attach function of a program that has a target program is a
++	 * function of that program, whatever its name is.
+ 	 */
+-	if (prog->type == BPF_PROG_TYPE_EXT)
++	if (prog->aux->dst_prog)
+ 		return -EINVAL;
+ 
+ 	if (strncmp(attach_fname, prefix, prefix_len))
 -- 
-Brett Sheffield (he/him)
+2.53.0
+
+
+
