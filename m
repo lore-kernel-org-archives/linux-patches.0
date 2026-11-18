@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018078;
-	b=uDxQfg0HaoWLN89feIsHBgvCJVn5lrvIAXEgiml6iO8KCwAL7s+mCeS2RHiga3wimUF1
-	 rV99nRl+XIzep+hYxmX7xlO1+ZdeAML5TEyaEXvLcOc55roOAWxxyb1l788IfiHa7C1Q+
-	 HuIgRKYhuDDtlEjOSx3UiJHTui9Fx+O52IXhPVh7y2LpLnSWCI/Y9dcYB4+UOAWLpR0n5
-	 J5EgoytZ0ahUbxdMFfPuoUElzHbvatQBVBK0buUpwxHX4t77qHC4YT4h3mziBPLLj6xvV
-	 HYCp2DUZ/V6fiQFG7fPnUm0KG0jftICRLAUldNs53D7saQag4HDUkflCoJbaYjsp3zg==
+	t=1795018081;
+	b=i0W/epKvBVV+WLZroyygPMUR11fyP8hyT52m2ThwPGDYrRRKC1HO+JKDxWoEOir94Rnq
+	 LAk+RA7PNk1EWr3v7kK5ZiaqL7QzeCFuCIrnBBvPkH0sPg3sZ3VjMRG/fcMOQAljWIr6N
+	 MxbaVwAvjXwPw7Fnj4kCgHiyn7tMetfBlRIRvJvNk2WiMXpBKLYZ/qLv7wKzNhkMZrM4e
+	 2J3g4XVbX1V+LOH8TyZXQRkkRWDoTptMwWxBA0D/OBh7RGdwXMm3LM0tAx+hEH7Fm2B+r
+	 fX0PhEwkYsfmiTiCK50VWaiCjgR1AMlTlP5rzomkAvXBnXbl6vwN5Wii96Iz35AUsdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018078;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018081;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=JZeNGhqHlL9qn2ynd3Rcrgq94yFZ7dGJujA4KZnyRBc=;
-	b=V8L/FHAlFvnrsz1oJQjKxRbyvhSDwiNS8eM5+7ClFCJtv9iq7cBSUhUmtgcY84W7wSSX
-	 MuF/u+67YBM1dy5ed7b0J97dt5YbnKLktrto58/6ipkvsnaY54AT4fopVNu1Dyipx9IBh
-	 aKP7dZ3/QgjlzYTTPdnkKIFDLWU7e7zd5v7mqdASq2pS9jTXk7ouDbHp62elZJNKRQBfQ
-	 EfXKa6VZMeWTgzjLNobaLs6fAzYY36CLgdRqdV88WzybrlcdIebH3U/LmCt1w3JFKNIkS
-	 BWSyHO509SlNh1kDMLzlWDhCB4Sem4unCsWTUc80XkIlCLfuezB/efDJneK5uFNXvcg==
+	bh=QRCLBgerfSWpVfjmEmTy0BxNHTXHeafoyvy3bu8SEYY=;
+	b=OnHhXFStMeRZP/0QvFGSXay7Z/UFKNua+RL1cMjN32VVYHyKImZoYiwLKSXSDy9H7k8a
+	 QTuglH4/ICTbvicpIZz9hXGNrhcb1CUZCiyjcTJp8/dfbe21zhWBrP2bElfKX7aa3zzRB
+	 x6pKve1+/Rff8w7YUZdl/GBy4sst5G6ty+s181TPyn0RCwTAiRdlw7eruV8Ly8nhi1Y46
+	 kPoWUkYPuvsmsk3PPLar/XnpoVTJxZIOdaLuZu+H9lCVYlKtei4MotzQlk2jpKLB/IPfc
+	 0h4/KOCdjCav6ZCmsbVmaOTohmMT0cSYYmfSeT2YPR5+Eq9SX8uR8lLiN5E0ns2C6dA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TsSEV1+9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UChvUCVZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88221606A336;
-	Wed, 18 Nov 2026 16:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF0860A2606;
+	Wed, 18 Nov 2026 16:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TsSEV1+9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6ED1F000C5;
-	Wed, 18 Nov 2026 16:07:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UChvUCVZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27A91F000C5;
+	Wed, 18 Nov 2026 16:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018078;
-	bh=JZeNGhqHlL9qn2ynd3Rcrgq94yFZ7dGJujA4KZnyRBc=;
+	s=korg; t=1795018081;
+	bh=QRCLBgerfSWpVfjmEmTy0BxNHTXHeafoyvy3bu8SEYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TsSEV1+9lnjhBthKLQXHqvH9KnVzWK7xFCa93DVh2ImbbRhiZV06YTv31xUe57Ipq
-	 11QSyl42GDoOpt5IL00ks5kFew0vSYv+WqwPQsO2BgZR4DmOHj0OI/G5ZgBX4Xtcmd
-	 RIYOi0i7iBUuunUa3FDs4MuyxBP8TxJ64I/ZXIxI=
+	b=UChvUCVZ32vlFuTMcxx+wU9mGKzftf5SrUOgGQ1+pA9MDlNn/Pd7z1JSHERn/Nsdf
+	 WxJuEM4OhdATsbIMYY7j1Is1a7Dyv+au4ep8LChzbKaQIDpw/ZzDrTwbWKsD0MUcpb
+	 /gp6mRI6VDdofv1HUnTnOoG5QrK0XwrzmgJz38Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1088/2651] drm: Move drm_timeout_abs_to_jiffies() to drm_timeout.c
-Date: Wed, 18 Nov 2026 15:38:48 +0100
-Message-ID: <20261118150327.168628138@linuxfoundation.org>
+Subject: [PATCH 7.3 1089/2651] drm: Add drm_timeout_rel_to_jiffies()
+Date: Wed, 18 Nov 2026 15:38:49 +0100
+Message-ID: <20261118150327.204951518@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -73,295 +72,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit ae72b9c39d280e02b1c9e6c91f1f7dd23b550a85 ]
+[ Upstream commit 421cf7ccfc61cb990f38d671ddfe3a901519e21d ]
 
-drm_timeout_abs_to_jiffies() began as a static helper inside the syncobj
-wait implementation and was later exported in place, so that it could be
-called by multiple drivers (e.g. panfrost, lima, tegra and accel
-drivers). All of them reach it through drm_utils.h.
+drm_timeout_abs_to_jiffies() covers the drivers whose wait UAPI takes an
+absolute deadline, but there is no equivalent for the drivers that
+express a wait as a duration. Drivers such as i915 and v3d convert the
+value themselves.
 
-Give it a file of its own, so that timeout conversion helpers have a
-home, which will be useful when we add new timeout handlers. Also create
-a drm_timeout.h header to host all timeout-related helpers.
+Converting a nanosecond duration to jiffies needs some care.
+nsecs_to_jiffies() returns unsigned long, so on 32-bit a large
+userspace-supplied timeout overflows its range and is silently truncated.
 
-The function was moved to the new file as it is, including the use of
-"signed long" as the return type. Note that the return and parameters
-types should be reconsidered in the future to better represent the
-non-negative nature of a timeout.
+i915 already handles both cases in a local helper, which v3d has a copy
+of. Add the same conversion to the core, so that it is available to any
+driver and both copies can be dropped.
 
-No functional change.
+Differently from drm_timeout_abs_to_jiffies(), the new function enforces
+that a timeout in jiffies is a positive value and therefore, returns an
+unsigned value.
 
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patch.msgid.link/20260915-drm-timeout-helpers-v3-1-f2ae987d861f@igalia.com
+Link: https://patch.msgid.link/20260915-drm-timeout-helpers-v3-2-f2ae987d861f@igalia.com
 Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Stable-dep-of: 88b7a9fb64af ("drm/vc4: Use drm_timeout_rel_to_jiffies()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ethosu/ethosu_drv.c       |  2 +-
- drivers/accel/ivpu/ivpu_gem.c           |  2 +-
- drivers/accel/rocket/rocket_gem.c       |  2 +-
- drivers/gpu/drm/Makefile                |  1 +
- drivers/gpu/drm/drm_syncobj.c           | 35 +----------------
- drivers/gpu/drm/drm_timeout.c           | 50 +++++++++++++++++++++++++
- drivers/gpu/drm/lima/lima_gem.c         |  2 +-
- drivers/gpu/drm/panfrost/panfrost_drv.c |  2 +-
- drivers/gpu/drm/tegra/uapi.c            |  2 +-
- drivers/gpu/drm/xe/xe_wait_user_fence.c |  2 +-
- include/drm/drm_timeout.h               | 16 ++++++++
- include/drm/drm_utils.h                 |  2 -
- 12 files changed, 75 insertions(+), 43 deletions(-)
- create mode 100644 drivers/gpu/drm/drm_timeout.c
- create mode 100644 include/drm/drm_timeout.h
+ drivers/gpu/drm/drm_timeout.c | 45 +++++++++++++++++++++++++++++++++++
+ include/drm/drm_timeout.h     |  1 +
+ 2 files changed, 46 insertions(+)
 
-diff --git a/drivers/accel/ethosu/ethosu_drv.c b/drivers/accel/ethosu/ethosu_drv.c
-index 8108622de258f..4a24bbd2bb617 100644
---- a/drivers/accel/ethosu/ethosu_drv.c
-+++ b/drivers/accel/ethosu/ethosu_drv.c
-@@ -12,10 +12,10 @@
- 
- #include <drm/drm_drv.h>
- #include <drm/drm_ioctl.h>
--#include <drm/drm_utils.h>
- #include <drm/drm_gem.h>
- #include <drm/drm_accel.h>
- #include <drm/drm_managed.h>
-+#include <drm/drm_timeout.h>
- #include <drm/ethosu_accel.h>
- 
- #include "ethosu_drv.h"
-diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
-index 4f2005a8d4966..563eeffb57365 100644
---- a/drivers/accel/ivpu/ivpu_gem.c
-+++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -12,7 +12,7 @@
- #include <drm/drm_cache.h>
- #include <drm/drm_debugfs.h>
- #include <drm/drm_file.h>
--#include <drm/drm_utils.h>
-+#include <drm/drm_timeout.h>
- 
- #include "ivpu_drv.h"
- #include "ivpu_fw.h"
-diff --git a/drivers/accel/rocket/rocket_gem.c b/drivers/accel/rocket/rocket_gem.c
-index a5fffa51ff355..d981c6a93ff12 100644
---- a/drivers/accel/rocket/rocket_gem.c
-+++ b/drivers/accel/rocket/rocket_gem.c
-@@ -3,7 +3,7 @@
- 
- #include <drm/drm_device.h>
- #include <drm/drm_print.h>
--#include <drm/drm_utils.h>
-+#include <drm/drm_timeout.h>
- #include <drm/rocket_accel.h>
- #include <linux/dma-mapping.h>
- #include <linux/iommu.h>
-diff --git a/drivers/gpu/drm/Makefile b/drivers/gpu/drm/Makefile
-index e635fcffd3790..7283cf87880f1 100644
---- a/drivers/gpu/drm/Makefile
-+++ b/drivers/gpu/drm/Makefile
-@@ -68,6 +68,7 @@ drm-y := \
- 	drm_rect.o \
- 	drm_syncobj.o \
- 	drm_sysfs.o \
-+	drm_timeout.o \
- 	drm_trace_points.o \
- 	drm_vblank.o \
- 	drm_vblank_work.o \
-diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
-index c23a5de27effa..f1d4da1685457 100644
---- a/drivers/gpu/drm/drm_syncobj.c
-+++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -208,7 +208,7 @@
- #include <drm/drm_gem.h>
- #include <drm/drm_print.h>
- #include <drm/drm_syncobj.h>
--#include <drm/drm_utils.h>
-+#include <drm/drm_timeout.h>
- 
- #include "drm_internal.h"
- 
-@@ -1193,39 +1193,6 @@ static signed long drm_syncobj_array_wait_timeout(struct drm_syncobj **syncobjs,
- 	return timeout;
- }
- 
--/**
-- * drm_timeout_abs_to_jiffies - calculate jiffies timeout from absolute value
-- *
-- * @timeout_nsec: timeout nsec component in ns, 0 for poll
-- *
-- * Calculate the timeout in jiffies from an absolute time in sec/nsec.
-- */
--signed long drm_timeout_abs_to_jiffies(int64_t timeout_nsec)
--{
--	ktime_t abs_timeout, now;
--	u64 timeout_ns, timeout_jiffies64;
--
--	/* make 0 timeout means poll - absolute 0 doesn't seem valid */
--	if (timeout_nsec == 0)
--		return 0;
--
--	abs_timeout = ns_to_ktime(timeout_nsec);
--	now = ktime_get();
--
--	if (!ktime_after(abs_timeout, now))
--		return 0;
--
--	timeout_ns = ktime_to_ns(ktime_sub(abs_timeout, now));
--
--	timeout_jiffies64 = nsecs_to_jiffies64(timeout_ns);
--	/*  clamp timeout to avoid infinite timeout */
--	if (timeout_jiffies64 >= MAX_SCHEDULE_TIMEOUT - 1)
--		return MAX_SCHEDULE_TIMEOUT - 1;
--
--	return timeout_jiffies64 + 1;
--}
--EXPORT_SYMBOL(drm_timeout_abs_to_jiffies);
--
- static int drm_syncobj_array_wait(struct drm_device *dev,
- 				  struct drm_file *file_private,
- 				  struct drm_syncobj_wait *wait,
 diff --git a/drivers/gpu/drm/drm_timeout.c b/drivers/gpu/drm/drm_timeout.c
-new file mode 100644
-index 0000000000000..9329bceb02366
---- /dev/null
+index 9329bceb02366..1a823607c633a 100644
+--- a/drivers/gpu/drm/drm_timeout.c
 +++ b/drivers/gpu/drm/drm_timeout.c
-@@ -0,0 +1,50 @@
-+// SPDX-License-Identifier: MIT
-+/*
-+ * Timeout conversion helpers for wait ioctls.
-+ *
-+ * Copyright 2017 Red Hat
-+ * Copyright 2016 Advanced Micro Devices, Inc.
-+ */
-+
-+#include <linux/export.h>
-+#include <linux/jiffies.h>
-+#include <linux/ktime.h>
-+#include <linux/sched.h>
-+
-+#include <drm/drm_timeout.h>
+@@ -9,6 +9,7 @@
+ #include <linux/export.h>
+ #include <linux/jiffies.h>
+ #include <linux/ktime.h>
++#include <linux/math64.h>
+ #include <linux/sched.h>
+ 
+ #include <drm/drm_timeout.h>
+@@ -48,3 +49,47 @@ signed long drm_timeout_abs_to_jiffies(s64 timeout_nsec)
+ 	return timeout_jiffies64 + 1;
+ }
+ EXPORT_SYMBOL(drm_timeout_abs_to_jiffies);
 +
 +/**
-+ * drm_timeout_abs_to_jiffies - calculate jiffies timeout from absolute value
-+ * @timeout_nsec: timeout nsec component in ns, 0 for poll
++ * drm_timeout_rel_to_jiffies - calculate jiffies timeout from relative value
++ * @timeout_nsec: relative timeout in ns, 0 for poll
 + *
-+ * Calculate the timeout in jiffies from an absolute time in ns. The result is
-+ * clamped to MAX_SCHEDULE_TIMEOUT - 1 to avoid infinite timeouts.
++ * Calculate the timeout in jiffies from a relative timeout in ns, for drivers
++ * whose UAPI expresses a wait as a duration rather than as a deadline.
++ *
++ * The result is clamped to MAX_JIFFY_OFFSET. That keeps it positive once it is
++ * converted to the signed long taken by dma_fence_wait_timeout() and friends,
++ * which matters on 32-bit, and keeps it distinct from MAX_SCHEDULE_TIMEOUT so
++ * that a finite wait is never understood as an infinite one.
++ *
++ * It's strongly discouraged to use relative timeouts in uAPIs, as they do not
++ * survive a restarted ioctl. A signal-interrupted ioctl is re-entered with the
++ * same arguments, so the duration starts counting from zero again. New uAPIs
++ * should take an absolute deadline and use drm_timeout_abs_to_jiffies().
 + *
 + * Returns:
-+ * The number of jiffies until the given timeout, or the upper limit.
++ * 0 if @timeout_nsec is 0. Otherwise the equivalent number of jiffies and
++ * clamped to MAX_JIFFY_OFFSET.
 + */
-+signed long drm_timeout_abs_to_jiffies(s64 timeout_nsec)
++unsigned long drm_timeout_rel_to_jiffies(u64 timeout_nsec)
 +{
-+	ktime_t abs_timeout, now;
-+	u64 timeout_ns, timeout_jiffies64;
++	u64 secs;
++	u32 rem;
 +
-+	/* make 0 timeout means poll - absolute 0 doesn't seem valid */
++	/* Make 0 timeout means poll, as for the absolute variant. */
 +	if (timeout_nsec == 0)
 +		return 0;
 +
-+	abs_timeout = ns_to_ktime(timeout_nsec);
-+	now = ktime_get();
++	/*
++	 * As nsecs_to_jiffies64() does not guard against overflow, split
++	 * the timeout into whole seconds and nanoseconds. This way
++	 * nsecs_to_jiffies64() is always handed a value below a second.
++	 */
++	secs = div_u64_rem(timeout_nsec, NSEC_PER_SEC, &rem);
++	if (secs >= MAX_JIFFY_OFFSET / HZ)
++		return MAX_JIFFY_OFFSET;
 +
-+	if (!ktime_after(abs_timeout, now))
-+		return 0;
-+
-+	timeout_ns = ktime_to_ns(ktime_sub(abs_timeout, now));
-+
-+	timeout_jiffies64 = nsecs_to_jiffies64(timeout_ns);
-+	/*  clamp timeout to avoid infinite timeout */
-+	if (timeout_jiffies64 >= MAX_SCHEDULE_TIMEOUT - 1)
-+		return MAX_SCHEDULE_TIMEOUT - 1;
-+
-+	return timeout_jiffies64 + 1;
++	return min_t(u64, MAX_JIFFY_OFFSET,
++		     secs_to_jiffies(secs) + nsecs_to_jiffies64(rem) + 1);
 +}
-+EXPORT_SYMBOL(drm_timeout_abs_to_jiffies);
-diff --git a/drivers/gpu/drm/lima/lima_gem.c b/drivers/gpu/drm/lima/lima_gem.c
-index 0c73860bb501d..97e1dc541c2e0 100644
---- a/drivers/gpu/drm/lima/lima_gem.c
-+++ b/drivers/gpu/drm/lima/lima_gem.c
-@@ -10,7 +10,7 @@
- 
- #include <drm/drm_file.h>
- #include <drm/drm_syncobj.h>
--#include <drm/drm_utils.h>
-+#include <drm/drm_timeout.h>
- 
- #include <drm/lima_drm.h>
- 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-index 96a66d673ba60..70c05210ea846 100644
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -18,7 +18,7 @@
- #include <drm/drm_ioctl.h>
- #include <drm/drm_print.h>
- #include <drm/drm_syncobj.h>
--#include <drm/drm_utils.h>
-+#include <drm/drm_timeout.h>
- 
- #include "panfrost_device.h"
- #include "panfrost_drv.h"
-diff --git a/drivers/gpu/drm/tegra/uapi.c b/drivers/gpu/drm/tegra/uapi.c
-index c0ac6b45f2d70..bee310b07eb08 100644
---- a/drivers/gpu/drm/tegra/uapi.c
-+++ b/drivers/gpu/drm/tegra/uapi.c
-@@ -7,7 +7,7 @@
- 
- #include <drm/drm_drv.h>
- #include <drm/drm_file.h>
--#include <drm/drm_utils.h>
-+#include <drm/drm_timeout.h>
- 
- #include "drm.h"
- #include "uapi.h"
-diff --git a/drivers/gpu/drm/xe/xe_wait_user_fence.c b/drivers/gpu/drm/xe/xe_wait_user_fence.c
-index 51eb940ceb4ee..e241f3ec35475 100644
---- a/drivers/gpu/drm/xe/xe_wait_user_fence.c
-+++ b/drivers/gpu/drm/xe/xe_wait_user_fence.c
-@@ -7,7 +7,7 @@
- 
- #include <drm/drm_device.h>
- #include <drm/drm_file.h>
--#include <drm/drm_utils.h>
-+#include <drm/drm_timeout.h>
- #include <uapi/drm/xe_drm.h>
- 
- #include "xe_device.h"
++EXPORT_SYMBOL(drm_timeout_rel_to_jiffies);
 diff --git a/include/drm/drm_timeout.h b/include/drm/drm_timeout.h
-new file mode 100644
-index 0000000000000..cd9621c520623
---- /dev/null
+index cd9621c520623..6ee222a3e97ca 100644
+--- a/include/drm/drm_timeout.h
 +++ b/include/drm/drm_timeout.h
-@@ -0,0 +1,16 @@
-+/* SPDX-License-Identifier: MIT */
-+/*
-+ * Function prototypes for timeout conversion helpers for wait ioctls.
-+ *
-+ * Copyright 2017 Red Hat
-+ * Copyright 2016 Advanced Micro Devices, Inc.
-+ */
-+
-+#ifndef __DRM_TIMEOUT_H__
-+#define __DRM_TIMEOUT_H__
-+
-+#include <linux/types.h>
-+
-+signed long drm_timeout_abs_to_jiffies(s64 timeout_nsec);
-+
-+#endif
-diff --git a/include/drm/drm_utils.h b/include/drm/drm_utils.h
-index 7e077484c5bbf..c61dee76451c1 100644
---- a/include/drm/drm_utils.h
-+++ b/include/drm/drm_utils.h
-@@ -25,6 +25,4 @@ struct drm_panel_backlight_quirk {
- const struct drm_panel_backlight_quirk *
- drm_get_panel_backlight_quirk(const struct drm_edid *edid);
+@@ -12,5 +12,6 @@
+ #include <linux/types.h>
  
--signed long drm_timeout_abs_to_jiffies(int64_t timeout_nsec);
--
+ signed long drm_timeout_abs_to_jiffies(s64 timeout_nsec);
++unsigned long drm_timeout_rel_to_jiffies(u64 timeout_nsec);
+ 
  #endif
 -- 
 2.53.0
