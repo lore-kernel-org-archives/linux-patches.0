@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045300;
-	b=qn53HTv1WpRpXvShhTUwc42BfPaShcoSaimF/HMfWVOP7lSRT+iH6MQ9hSsaV8+YWWLM
-	 MV8W2CaHW1yptdtXU1+ULZ4tWvPzriJeReDeEN7IJVaMUv/1GNQUk4xHe3Shj8akCmhTg
-	 gX58Lt3Xz68gYZj7FK0hOOaQbtwxsIyCAKW/2Iau7KqVFENJIPDUI14wndLRaenHcbclQ
-	 fzwptSqsIq+jSJ/kytp4XbP36DHm8B4eJzjR9Woi8rgbvu44N+855IoXRebi8FHxZG9GP
-	 D1aJ6S/I391s9UxUCv8hyh4QDfARc0vE9YrZ+brzHW/kxHbuAbkc3+JV2N/abZHswlw==
+	t=1795045303;
+	b=OYrwT9jnYxDlf4UfKDCgUdBZ10Y+1qsqvkAKK5qH3S0gip8sT1VWLUTMCihARQEtSLhN
+	 gj7uINcxubPKbxwpfKgjfuashqIShqVhMIvo4FM45ixJDBdVyXaTd2mkI1VhLZYUwoQ/1
+	 zOuJVSlwH7h5roxVvP8fxpHW9hmmkW20zTE79FwqvqCECsBr7cr71EE8xlAHpawEq2sb3
+	 GZ9dydDknGz+OgUcTougJMNRpVVSVG8FG7PG7AFr86uYZjzpguGKliOY87JH1/qIrj6w1
+	 5iSjStAscjAwZI6Vyahiv/Get3RrUB/r/Yk63OA5d7DTQjBNvVDHDYZgle1rcPm23bA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045300;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8Gevva4EgnUt8T8YJXOc0t0NLPaDc3MyP/E30dHo438=;
-	b=aasVON6ymSrvePrHiM5XDwZff8Mg4/yWSLZ4u4MLAl3zu46utEwL7NbODncAvLgYfeTK
-	 OZPVNhT6Yf0CPMvHYh4WSafKekvnAyCk/tuTz/KuzagE8XOA6sYRs6RAYS4jJsoEdHKsX
-	 9V6mwBshpJKwbdUb3PcK/bodm3jyV2kX+hoaqzkJR5uZXWx9wcie+66rfizH+AhwBVWFs
-	 GFZhIUYf/zK1B8SJyamdBnCH5SieejyVP4/mZq/0ZuRAenspbVxy3bZb8as4qFqL7LAFd
-	 LEbtctntEvLhvVW468r/Vs43yH7LdRt8OyYE9apGoQCw1Jmm91sBkH9sh9+cYEtLhFA==
+	bh=GYukcRV5YDAClbVgSbJPmd0haxk1mwiR1OA3HudcR0Q=;
+	b=LeuiyeWCE/3Wadghx8aoZ4F8Fb2OEnFVsmWGFZx3K2SGcHH8bXm0LVsbIhV3DpRYhWIp
+	 7Om3xgRXdR54Qw4DqUOVoWsD6qdNDb3+exkrBMQDAyPehCz9q+1LIW0Pmne7pFoNPqXsP
+	 yqM8Mf+au84/BdMrR70PXO5J8pYCLMaAhXf5sumFXgU9WFNkKT13MsH9I2rN3GOjbe7ka
+	 58vmhGh7KEQBHfA3w06YtALtuDj2C69cA1WbWwsKo+tUMxM2e4CbQ6qxQsH3mfOLAmWfQ
+	 5OIdl5INiYqpbGLty8YqhTWD3wANygLIKXW43LpRrJJc7LCjjmS45nqFWGurkQdshww==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keX7FXvS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axBht7LE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F08606A325;
-	Wed, 18 Nov 2026 23:41:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69158606A31C;
+	Wed, 18 Nov 2026 23:41:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=keX7FXvS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31A61F000C7;
-	Wed, 18 Nov 2026 23:41:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axBht7LE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6AF1F000C5;
+	Wed, 18 Nov 2026 23:41:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045300;
-	bh=8Gevva4EgnUt8T8YJXOc0t0NLPaDc3MyP/E30dHo438=;
+	s=korg; t=1795045303;
+	bh=GYukcRV5YDAClbVgSbJPmd0haxk1mwiR1OA3HudcR0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=keX7FXvSyjSNjvozGHAZSFxgBcO8bHqwX6a2d7imZwJyc5zp8qYI10J/xE9fQl0GU
-	 +XPWfUoDSpS/AoA6HqxMGFKLdrAB9ejQqKc08FFv3dL+mAXMjnMVQY60SCq0LjkkvX
-	 7brktx/HUCNSgvRgrDZot9ZY4/6678DjzALyf9Xc=
+	b=axBht7LEnHPluaA+FrZrHC0mY+bKG6Bk+Y4EiTgIttLVF4UAnS/WbbsjnOYjI8rvf
+	 rTOoBkR9tGps11KUGxHY5JSvhbNhDeCL23hYNwUIUB1pu9ROybuhE0lfLmD/pZQ6u3
+	 Tr6YXHNmywIs/PImFwpOzh9tN3iCoUSyOp9y9iCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tharit Tangkijwanichakul <tharitt97@gmail.com>,
+	Jiawen Liu <1298662399@qq.com>,
+	Ming Qian <ming.qian@nxp.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0873/2857] media: hantro: Harden MPEG-2 control access against NULL
-Date: Wed, 18 Nov 2026 15:31:47 +0100
-Message-ID: <20261118150232.995491158@linuxfoundation.org>
+Subject: [PATCH 6.1 0874/2857] media: amphion: fix runtime PM imbalance on probe failure
+Date: Wed, 18 Nov 2026 15:31:48 +0100
+Message-ID: <20261118150233.032021498@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,49 +70,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tharit Tangkijwanichakul <tharitt97@gmail.com>
+From: Jiawen Liu <1298662399@qq.com>
 
-[ Upstream commit 2b685dba4226792933f45b1cbf8991e89ccd21ce ]
+[ Upstream commit 0cabf27cf1e6f7ee5f3c5893c0f1930814d949af ]
 
-The MPEG-2 sequence and picture controls are validated
-before a job is queued, so hantro_get_ctrl() is not expected to return
-NULL in hantro_g1_mpeg2_dec_run(). The controls are nonetheless
-dereferenced unconditionally.
+vpu_core_probe() enables runtime PM before calling
+pm_runtime_resume_and_get().
 
-Harden the invariant by checking the sequence and picture controls with
-WARN_ON().
+If pm_runtime_resume_and_get() fails, it has already dropped the runtime PM
+usage counter that it acquired before trying to resume the device.  Calling
+pm_runtime_put_noidle() again on this error path drops the counter one
+extra time.
 
-Found by code inspection.
+Remove the extra put and keep the existing cleanup that marks the device
+suspended before disabling runtime PM.
 
-Fixes: f329e21e9dad ("media: uapi: mpeg2: Split sequence and picture parameters")
+Fixes: 9f599f351e86ac ("media: amphion: add vpu core driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tharit Tangkijwanichakul <tharitt97@gmail.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Jiawen Liu <1298662399@qq.com>
+Reviewed-by: Ming Qian <ming.qian@nxp.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/platform/amphion/vpu_core.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c b/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
-index 9aea331e1a3c9..ffdd385ba11fb 100644
---- a/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
-+++ b/drivers/media/platform/verisilicon/hantro_g1_mpeg2_dec.c
-@@ -161,8 +161,13 @@ int hantro_g1_mpeg2_dec_run(struct hantro_ctx *ctx)
- 
- 	seq = hantro_get_ctrl(ctx,
- 			      V4L2_CID_STATELESS_MPEG2_SEQUENCE);
-+	if (WARN_ON(!seq))
-+		return -EINVAL;
-+
- 	pic = hantro_get_ctrl(ctx,
- 			      V4L2_CID_STATELESS_MPEG2_PICTURE);
-+	if (WARN_ON(!pic))
-+		return -EINVAL;
- 
- 	reg = G1_REG_DEC_AXI_RD_ID(0) |
- 	      G1_REG_DEC_TIMEOUT_E(1) |
+diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
+index c054fde2b754e..8251738dbbcea 100644
+--- a/drivers/media/platform/amphion/vpu_core.c
++++ b/drivers/media/platform/amphion/vpu_core.c
+@@ -689,7 +689,6 @@ static int vpu_core_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(dev);
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret) {
+-		pm_runtime_put_noidle(dev);
+ 		pm_runtime_set_suspended(dev);
+ 		goto err_runtime_disable;
+ 	}
 -- 
 2.53.0
 
