@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033989;
-	b=bMbgo8IsfwTnCnkkQUm/XwMnsJ2Entz01AqBRTqcjm4Qhed9xm6j3NvzkugK227xUx73
-	 rsru15yg20dXoZOb4HEEvTT7fdxTvzi35KyjJQbefwNnddbUgVgbghZ0ugv4o9Ismybuy
-	 7R2a4trFCJ8GmWY/x8AnIipaGXhIzGkvHYycLA+AG8S5T6yj7KVpGGB/Ga3p71rdV4uqG
-	 oHmRvYmz/yitqQlm7oLS9t13I4Xid1ugocumGLokN6Mf5SuRYbrYVY0MgfUzLMltxc2nq
-	 Y6xSKP80sFQRPMEJkNvT2+1PyNRJd3Ycd5KSD+o8hhnGU3WbU1/p3kzbPfRFqJDhvZQ==
+	t=1795033992;
+	b=sqYPUUjsyxQ4TjMspf3wBx/o9rO3i0Leys6HCxbXWliuyfUVnJD5tU84fuR/6kfeokWp
+	 c9Z8yAa9MhhTBHFvGxXRfxQOm3mnXNczlLXBqoS5F7NAdU9FtjBtdpr968R78uY/R9mRh
+	 VTf6nlI/1NaefSgPiZ+/3QEKGZyQR3xB2FG8sWygGk1az6dveGJuQycAJPB3/IO3diNQu
+	 F9hiyRn2MTqJoZIISn46NuUNl09hzJtjuMlqH8/k4FuFJ9wcRffwqMI4WLAVIvMZTj5G5
+	 DJk1CY1eCn03TVLjDhNnMHquH3l4UOvM/61HO5WA/BJ+aUtmumJEf0K6qssXZImobtA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033989;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033992;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wYSNMNnnfZ9OlhB2FAO0kO1Pup4Nj5sfUDo7ckIIwbk=;
-	b=gAZBRZmWwBToxwFHc5WBbw6ABYwUYcr8WY8MnT6TrVnDyU4ng6shE/a8gjG8tSmn1oeA
-	 HIAtF5PfXUwX80GHjmkKPNem/CQE21oCflXD+UGuO7aEIX8uvScaLggc6ufI0L1PIyFL+
-	 XF1TtDvi6/c88zOBQemeOewdlAVfIwLxQRKUzjC4wR4cTXyKcIJQQxGZHbx0wLkDD8q4X
-	 RbyexnBrumbMaWEcXZKW49My4BYyl4PUQzX8lpPsFt+yn53Bb0VPIYi7bQAyl/cC8wnuI
-	 k7ekjw8L3SBTbOPlbKH4D6XjUFNvJrE8/SeExmvjGheCpVHVb9CGT5FGPXkT8oSo+UA==
+	bh=vm/NJw8oG9737DRlDMYAtRgaOTObWUXrc9Yvr//hPIg=;
+	b=qiZdOniEPPcO4ED9uEijSGWI72RWNqw4bePNwsjEtX3is20qBaVoaoST3oZQaF4wW0OA
+	 ywSiCHLZPkoE9ISoKRPh20O239PyG3W5T0MhtJg3jJNR+trwuR2cniafrwwAHWsq5R1Qu
+	 vwAUtSNh38C+0goSQwGGSkpZvmtLeX0OcS69t73a/e5Zvh+mEnSw3g4MBr0g6CopkD6Dw
+	 F+urnr2kwuZMsxqZeAlanPml/tqa2P21/KU8F/fQZL288WyW7qdUmC9v0WJ3IXF/eI3bM
+	 IlAufYwvc++4I91dxtakJXwNwR+EKc4hTR3FWSzHjxm+XvbqSQCK2JBIKFliLugSwSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="uDo25wH/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yB6IjocV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA04606A331;
-	Wed, 18 Nov 2026 20:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71503606A31C;
+	Wed, 18 Nov 2026 20:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uDo25wH/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B355F1F000C5;
-	Wed, 18 Nov 2026 20:33:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yB6IjocV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720631F000C5;
+	Wed, 18 Nov 2026 20:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033989;
-	bh=wYSNMNnnfZ9OlhB2FAO0kO1Pup4Nj5sfUDo7ckIIwbk=;
+	s=korg; t=1795033992;
+	bh=vm/NJw8oG9737DRlDMYAtRgaOTObWUXrc9Yvr//hPIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uDo25wH/4gLRE8rzf4a02tZgOxrlGMU/G1Q22ZiZqwUv+QQha5u2qJ+Gmj/lgKojQ
-	 XYHqu2HIv2f061vslvAH5pVLARwfvderhPdfR5EZfHWGjMooV3/Xue8WYyrhn1GQtF
-	 fUvS1FdkK0R12qx2hrduCrMMMA+3M0vwShaXoybk=
+	b=yB6IjocVcehHYGqRK6DJ+VpnO1WbIWTqe6vuVSLJbPi8tOPj0oRxT3m8QPy/n/8nB
+	 xzxHQ2XDxieYWFldJZgBaeYRP8UmO75vY1OPt57hra3rM4mp0ISeH5JPixKfF/zmJZ
+	 eg+PQSjaQQq6IeJ99w/VhO/hitkmUoWUGNIQHjjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	0072a70 <90307219+0072a70@users.noreply.github.com>,
-	Devin Wittmayer <lucid_duck@justthetip.ca>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0203/3318] wifi: mt76: mt76x02: report rx FCS errors to mac80211
-Date: Wed, 18 Nov 2026 15:13:45 +0100
-Message-ID: <20261118150320.969002067@linuxfoundation.org>
+Subject: [PATCH 6.6 0212/3318] wifi: mt76: mt7603: fix U-APSD service period termination
+Date: Wed, 18 Nov 2026 15:13:54 +0100
+Message-ID: <20261118150321.294920022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +67,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devin Wittmayer <lucid_duck@justthetip.ca>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit ddae0bcb01e71c1184bb3f526f9622e31dc38f3b ]
+[ Upstream commit 697badc27a9b3b2a8d86092abeed767714f735a2 ]
 
-When the fcsfail filter is enabled the hardware passes frames with a bad
-FCS up to the driver, but mt76x02_mac_process_rx() never checks
-MT_RXINFO_CRCERR and hands them to mac80211 without
-RX_FLAG_FAILED_FCS_CRC. In monitor mode the radiotap flags byte then
-never gets IEEE80211_RADIOTAP_F_BADFCS set and corrupted frames cannot be
-told apart from clean ones.
+Frames released from the driver PS queue were all tagged with MORE_DATA
+and none of them ever carried the EOSP bit, so from the client's point of
+view a U-APSD service period was started but never finished. Clients that
+keep their receiver on until EOSP arrives stop sending trigger frames,
+and all downlink traffic for that station stalls until they give up.
+ieee80211_sta_eosp() only cleared the service period state inside
+mac80211, which is why the mismatch went unnoticed.
 
-Set RX_FLAG_FAILED_FCS_CRC from the descriptor CRC error bit, matching
-mt7603, mt7615, mt7915, mt7921, mt7925 and mt7996.
+Assign MORE_DATA per frame and set the wire EOSP bit on the last one. If
+the last released frame is a bufferable MMPDU it has no QoS control field
+to carry EOSP, so let mac80211 append a QoS-Null frame instead.
 
-Reported-by: 0072a70 <90307219+0072a70@users.noreply.github.com>
-Closes: https://github.com/morrownr/mt76/issues/38
-Tested-by: 0072a70 <90307219+0072a70@users.noreply.github.com>
-Signed-off-by: Devin Wittmayer <lucid_duck@justthetip.ca>
-Link: https://patch.msgid.link/20260613002544.27750-3-lucid_duck@justthetip.ca
+Also stop handing the remaining frame budget to
+mt76_release_buffered_frames() once frames have been released from the PS
+queue: both would signal the end of the same service period. Releasing
+fewer frames than requested is allowed, and MORE_DATA tells the client to
+trigger again.
+
+Link: https://patch.msgid.link/20260801145334.1166751-5-nbd@nbd.name
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76x02_mac.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/wireless/mediatek/mt76/mt7603/main.c  | 74 ++++++++++++++++---
+ 1 file changed, 63 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-index 338f5b46c6511..14cfa597fb622 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
-@@ -794,6 +794,9 @@ int mt76x02_mac_process_rx(struct mt76x02_dev *dev, struct sk_buff *skb,
- 	if (rxinfo & MT_RXINFO_L2PAD)
- 		pad_len += 2;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7603/main.c b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
+index 89d738deea62e..b68b765d1ba1b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/main.c
+@@ -432,13 +432,33 @@ mt7603_sta_ps(struct mt76_dev *mdev, struct ieee80211_sta *sta, bool ps)
+ 	mt7603_ps_tx_list(dev, &list);
+ }
  
-+	if (rxinfo & MT_RXINFO_CRCERR)
-+		status->flag |= RX_FLAG_FAILED_FCS_CRC;
++static struct ieee80211_hdr *
++mt7603_ps_skb_hdr(struct sk_buff *skb)
++{
++	return (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
++}
 +
- 	if (rxinfo & MT_RXINFO_DECRYPT) {
- 		status->flag |= RX_FLAG_DECRYPTED;
- 		status->flag |= RX_FLAG_MMIC_STRIPPED;
++/*
++ * Buffered frames can be recycled into the PS queue by mt7603_filter_tx(), so
++ * both bits have to be assigned, not just set.
++ */
+ static void
+-mt7603_ps_set_more_data(struct sk_buff *skb)
++mt7603_ps_set_flags(struct sk_buff *skb, bool more_data, bool eosp)
+ {
+-	struct ieee80211_hdr *hdr;
++	struct ieee80211_hdr *hdr = mt7603_ps_skb_hdr(skb);
++
++	if (more_data)
++		hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++	else
++		hdr->frame_control &= ~cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++
++	if (!ieee80211_is_data_qos(hdr->frame_control))
++		return;
+ 
+-	hdr = (struct ieee80211_hdr *)&skb->data[MT_TXD_SIZE];
+-	hdr->frame_control |= cpu_to_le16(IEEE80211_FCTL_MOREDATA);
++	if (eosp)
++		*ieee80211_get_qos_ctl(hdr) |= IEEE80211_QOS_CTL_EOSP;
++	else
++		*ieee80211_get_qos_ctl(hdr) &= ~IEEE80211_QOS_CTL_EOSP;
+ }
+ 
+ static void
+@@ -451,7 +471,10 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
+ 	struct mt7603_dev *dev = hw->priv;
+ 	struct mt7603_sta *msta = (struct mt7603_sta *)sta->drv_priv;
+ 	struct sk_buff_head list;
+-	struct sk_buff *skb, *tmp;
++	struct sk_buff *skb, *tmp, *last;
++	bool eosp_null, uapsd;
++	u16 pending = 0;
++	u8 last_tid;
+ 
+ 	__skb_queue_head_init(&list);
+ 
+@@ -467,20 +490,49 @@ mt7603_release_buffered_frames(struct ieee80211_hw *hw,
+ 
+ 		skb_set_queue_mapping(skb, MT_TXQ_PSD);
+ 		__skb_unlink(skb, &msta->psq);
+-		mt7603_ps_set_more_data(skb);
+ 		__skb_queue_tail(&list, skb);
+ 		nframes--;
+ 	}
++
++	skb_queue_walk(&msta->psq, skb)
++		pending |= BIT(skb->priority);
+ 	spin_unlock_bh(&dev->ps_lock);
+ 
+-	if (!skb_queue_empty(&list))
+-		ieee80211_sta_eosp(sta);
++	last = skb_peek_tail(&list);
++	if (!last) {
++		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
++					     more_data);
++		return;
++	}
++
++	/*
++	 * End the service period here instead of passing the remaining frame
++	 * budget on to mt76_release_buffered_frames(), which would signal the
++	 * end of the same service period a second time.
++	 */
++	uapsd = reason == IEEE80211_FRAME_RELEASE_UAPSD;
++	more_data |= !!(pending & tids);
++
++	skb_queue_walk(&list, skb)
++		mt7603_ps_set_flags(skb, skb != last || more_data,
++				    skb == last && uapsd);
++
++	/*
++	 * EOSP lives in the QoS control field, so a bufferable MMPDU cannot
++	 * terminate a U-APSD service period on its own. In that case mac80211
++	 * has to append a QoS-Null frame, which ends the SP through its tx
++	 * status.
++	 */
++	eosp_null = uapsd &&
++		    !ieee80211_is_data_qos(mt7603_ps_skb_hdr(last)->frame_control);
++	last_tid = __fls(tids);
+ 
+ 	mt7603_ps_tx_list(dev, &list);
+ 
+-	if (nframes)
+-		mt76_release_buffered_frames(hw, sta, tids, nframes, reason,
+-					     more_data);
++	if (eosp_null)
++		ieee80211_send_eosp_nullfunc(sta, last_tid);
++	else
++		ieee80211_sta_eosp(sta);
+ }
+ 
+ static int
 -- 
 2.53.0
 
