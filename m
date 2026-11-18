@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024299;
-	b=vZ1MB7U4A48vvERWWWD3OJK0amndjtZjac7tvQzl/grnQMLGov73dNtGPh0Omj0hsP6d
-	 roANrc5stmaEb0/UryN5MrWa6G+f5gtqgAEkdzHP2Hvh+3hQ3VgkcsN47Y/F2nQd5fU3B
-	 hMJ1Dju3nBRG0r2gZW0/m8r30CeQ1akqZCrGhxo/eINDXU/mkSRRtu36bl/uXe+vqpa0V
-	 DxrFb2ybnr+kS36AWrIiZfFgM5a6qBCUak07Gx0Jw8+u86sIbpqlNxlkl/ZsZZESWK8pG
-	 OeTpRfolnl9AnasXolYBMwbnF4mRXT/W/mhBSnATaGpbkYifosPYorCrz3M0h/VPjpg==
+	t=1795024303;
+	b=ucokaYps9OkhM3HwB/96OxDi8JzRZoOsnbjE9TTFFDHQ48snnQcCnoWqASzMz3zg9e+d
+	 HEs5mi9lNW9L4re9jyD0I+Cyirn4oxvn30iU7v0fPuAgSUXjhzzPuRLQCkLxJCRYh6D5M
+	 NpVYhQ8KrYLReG+tTbl3b6Jdg4Rukw3VyHUs8TynBMHnNyJBBPDUnSpGiMLm+hfhc5wTE
+	 9b1m2ivEPfpbPK+jUI2FBfaYUnEU3JtY1Gt6z9C/pF90PXvnixvNJRv75H0NqfDMKNjRT
+	 VEeCVGXvZsEgGabiy7iUcYdZvuK+sO+PT35PcBYOJ8eTYD2mxOhsNZhIRPg+bzETHjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024299;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024303;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NYVm31TtPDcr1gB78h2httgQD3L+L71uRTwwqRVUZ0U=;
-	b=q9hc22h4CrshbQZRVNjlwmzZnWsba/29srJ94vQLCXnqNmq36nuYxEc4lgsGRD0nVqVl
-	 di7riNbk6h+dnMJ5ANcyAiLZ+AUZXyXlKk3IdQL2XF1EsU9qQwxA4+FsD1yX0zC6lWmMZ
-	 3Yq3gWh1xy4sVvLhI7TnVjJu3W9wDifh8NcCFiJE759moC70W5oN5EdUTCkmqYHa9zDjv
-	 HX6PaqnLtwIRTqAu4aRpJLUEPWBN100KOg4SdcouYftWeQsx5vjCLv2JCGgmm4WE0WZKE
-	 qi6rgCYhaDKmEKdpku8SxWllralGJ2ZxJhgLiLEJuh02cZRIKEAtFdSEIG/cG/7+Bmg==
+	bh=MEKzhDC7mXCBcB8vr6h12Fsr4DlF3rb7/QDzFFV7g84=;
+	b=iCHWCAOfdNrmFfY0Sh+BEq8RXkg3RW0LCDtnRj6xtlPAKh6LKfLBVIvLMIZuYrlsBnJ5
+	 jpE1WKktFE0iCVxiyArZOFhlLDH7vramRN44WCtxWO7KpGTU+Sa38HglVBDmYwx34fasp
+	 dF4dTqGYSWwG9eJWpleShgaU67cZt0WhySJJl4pLZmsKrU79xZ1IiyYzZWAXxHvFOIs/n
+	 MY95ycFW3XGH/Q0f+y6ZFeQOPgILCluACy4Ojb2vuYzxDbT0RpiWjRVdcxQWtqob64uRN
+	 YeToiG1ghEzeU3S7hZVgC0iLLKfnZ7Q4/e66epqj2deY2YdMTXdB9gQoBgd59kgVNGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ziEx8NW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=txxhYcKO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D574A606A31C;
-	Wed, 18 Nov 2026 17:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E040A606A31C;
+	Wed, 18 Nov 2026 17:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1ziEx8NW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BAD1F000C4;
-	Wed, 18 Nov 2026 17:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=txxhYcKO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A231F000C4;
+	Wed, 18 Nov 2026 17:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024299;
-	bh=NYVm31TtPDcr1gB78h2httgQD3L+L71uRTwwqRVUZ0U=;
+	s=korg; t=1795024302;
+	bh=MEKzhDC7mXCBcB8vr6h12Fsr4DlF3rb7/QDzFFV7g84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1ziEx8NWrYlEuyswq2c1KBIf0/66OO6bs7XrUk9DXd7z8f/r+B0e/cna4AnjUhwRx
-	 KcdEb6XenpjJP2mh9WMAXbk8SvZFEbOQWKeGvEGNmrJ7cEDFj5XMIvvK5H3O8O3g3l
-	 XSC6LzbArUcCUoFwHjN+4dJR5Mo8sk725ti8iXTA=
+	b=txxhYcKOwJMzYLQ0wTPbtqHXUQkuLA/xXZSfeGT20gjg37FEomeOatkiB2vMWjmDa
+	 FO3h/CdC5l3qObsdb4AkaZxduRE6mgm/Aa0U8KSvx1JFevePh/J6u84wZBcjwKN3Nx
+	 3bsCh3hWhAKDS0LlEb2o0jq1zOKJtzmJdh4Eyf34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
-	Finn Thain <fthain@linux-m68k.org>,
-	Stan Johnson <userm57@yahoo.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mykyta Yatsenko <yatsenko@meta.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0649/2151] swim: Check drive ready bit
-Date: Wed, 18 Nov 2026 15:39:44 +0100
-Message-ID: <20261118150145.491463681@linuxfoundation.org>
+Subject: [PATCH 6.18 0676/2151] bpftool: Accept zero perf counter snapshots
+Date: Wed, 18 Nov 2026 15:40:11 +0100
+Message-ID: <20261118150146.434781520@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,115 +68,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Mykyta Yatsenko <yatsenko@meta.com>
 
-[ Upstream commit abae04f5bed924590e98fe1519566a6e0144e6b5 ]
+[ Upstream commit b2cf39f53478fd4b04d2f04585c21b3d91d7042f ]
 
-The drive provides a readiness signal that has to be tested before
-certain commands are issued to the drive. Rename the SEEK_COMPLETE flag
-as READY because that's how it's known in the documentation as well as
-the mkLinux source code.
+A perf counter can be zero at fentry when PMU multiplexing has
+not scheduled the event. Do not reject that sample.
 
-Poll for that signal after stepping the heads and also after switching
-to MFM mode, as that's what mkLinux does. Check for readiness when
-stepping because testing shows that some drives require this.
+Use enabled time to distinguish a successful snapshot. Read
+directly into the per-CPU map value.
 
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/8d6fc833c719de2248b64ee521418b1032b1e509.1788513997.git.fthain@linux-m68k.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Mykyta Yatsenko <yatsenko@meta.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20260916-bpftool_cyles_per_run-v4-1-f2de02c480d5@meta.com
+Stable-dep-of: edc071d7b3aa ("bpftool: Fix sparse CPU IDs in prog profile")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ tools/bpf/bpftool/skeleton/profiler.bpf.c | 21 +++++++--------------
+ 1 file changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/block/swim.c b/drivers/block/swim.c
-index 474b343452ea5..2e343766f4535 100644
---- a/drivers/block/swim.c
-+++ b/drivers/block/swim.c
-@@ -117,7 +117,7 @@ struct iwm {
- #define TACHO		0x103
- #define READ_DATA_1	0x104
- #define GCR_MODE	0x105
--#define SEEK_COMPLETE	0x106
-+#define READY		0x106
- #define TWOMEG_MEDIA	0x107
- 
- /* Bits in handshake register */
-@@ -313,6 +313,14 @@ static inline bool swim_readbit(struct swim __iomem *base, int bit)
- #define swim_readbit_timeout(base, bit, val, timeout_us) \
- 	poll_timeout_us(, swim_readbit(base, bit) == val, 1000, timeout_us, false)
- 
-+#define swim_READY_timeout(base) \
-+({ \
-+	int ret = swim_readbit_timeout(base, READY, true, 1000 * 1000); \
-+	if (ret) \
-+		printk(KERN_DEBUG "%s: drive not ready\n", __func__); \
-+	ret; \
-+})
-+
- static inline void swim_drive(struct swim __iomem *base,
- 			      enum drive_location location)
+diff --git a/tools/bpf/bpftool/skeleton/profiler.bpf.c b/tools/bpf/bpftool/skeleton/profiler.bpf.c
+index f48c783cb9f7f..6685e7252fb52 100644
+--- a/tools/bpf/bpftool/skeleton/profiler.bpf.c
++++ b/tools/bpf/bpftool/skeleton/profiler.bpf.c
+@@ -45,28 +45,21 @@ const volatile __u32 num_metric = 1;
+ SEC("fentry/XXX")
+ int BPF_PROG(fentry_XXX)
  {
-@@ -351,8 +359,6 @@ static inline void swim_eject(struct swim __iomem *base)
+-	struct bpf_perf_event_value___local *ptrs[MAX_NUM_METRICS];
+ 	u32 key = bpf_get_smp_processor_id();
+ 	u32 i;
  
- static inline void swim_head(struct swim __iomem *base, enum head head)
- {
--	/* wait drive is ready */
+-	/* look up before reading, to reduce error */
+ 	for (i = 0; i < num_metric && i < MAX_NUM_METRICS; i++) {
++		struct bpf_perf_event_value___local *reading;
+ 		u32 flag = i;
 -
- 	if (head == UPPER_HEAD)
- 		swim_select(base, READ_DATA_1);
- 	else if (head == LOWER_HEAD)
-@@ -387,20 +393,25 @@ static inline int swim_track00(struct swim __iomem *base)
- 
- static inline int swim_seek(struct swim __iomem *base, int step)
- {
--	if (step == 0)
--		return 0;
+-		ptrs[i] = bpf_map_lookup_elem(&fentry_readings, &flag);
+-		if (!ptrs[i])
+-			return 0;
+-	}
 -
- 	if (step < 0) {
- 		swim_action(base, SEEK_NEGATIVE);
- 		step = -step;
--	} else
-+	} else if (step > 0)
- 		swim_action(base, SEEK_POSITIVE);
+-	for (i = 0; i < num_metric && i < MAX_NUM_METRICS; i++) {
+-		struct bpf_perf_event_value___local reading;
+ 		int err;
  
-+	swim_READY_timeout(base);
-+
-+	if (step == 0)
-+		return 0;
-+
- 	for ( ; step > 0; step--) {
- 		if (swim_step(base))
- 			return -1;
+-		err = bpf_perf_event_read_value(&events, key, (void *)&reading,
+-						sizeof(reading));
++		reading = bpf_map_lookup_elem(&fentry_readings, &flag);
++		if (!reading)
++			return 0;
++		err = bpf_perf_event_read_value(&events, key, (void *)reading,
++						sizeof(*reading));
+ 		if (err)
+ 			return 0;
+-		*(ptrs[i]) = reading;
+ 		key += num_cpu;
  	}
  
-+	msleep(30);
-+	swim_READY_timeout(base);
-+
- 	return 0;
- }
+@@ -80,7 +73,7 @@ fexit_update_maps(u32 id, struct bpf_perf_event_value___local *after)
  
-@@ -482,6 +493,8 @@ static blk_status_t floppy_read_sectors(struct floppy_state *fs,
+ 	before = bpf_map_lookup_elem(&fentry_readings, &id);
+ 	/* only account samples with a valid fentry_reading */
+-	if (before && before->counter) {
++	if (before && before->enabled) {
+ 		struct bpf_perf_event_value___local *accum;
  
- 
- 	swim_drive(base, fs->location);
-+	swim_READY_timeout(base);
-+
- 	for (i = req_sector; i < req_sector + sectors_nb; i++) {
- 		int x;
- 		track = i / fs->secpercyl;
-@@ -602,6 +615,8 @@ static int floppy_open(struct gendisk *disk, blk_mode_t mode)
- 
- 	swim_motor(base, ON);
- 	swim_action(base, SETMFM);
-+	msleep(30);
-+	swim_READY_timeout(base);
- 
- 	set_capacity(fs->disk, fs->total_secs);
- 
+ 		diff.counter = after->counter - before->counter;
 -- 
 2.53.0
 
