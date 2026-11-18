@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029405;
-	b=VFralDEGONlh2s9sG5g431iXT2QyojBH94o4j3acEGbmcknYwltnIX79CeBeRuIfBh9Q
-	 v+Kv+SYuVa1fVEgOrp8cqEQ5G+T9AjJk0lp6jJnw9kjUfaPuYGhHLU9QxnakFNrx7tB1p
-	 xq+Wvl4qnGJHIrsuZT3XHcahqa4jChk9HgzUDyCNCu+t2mD789oOLJUvX9XexnYnFbOpO
-	 dRbJSNHLkv+7+YXL4drNADAneQjGLZfH8UluW0LZOz2Ehkw4LwCXM8kVmA7UmbMbYf4lJ
-	 cq8HbWyGAgT7AmDDRw8WofetIhsKJANHjpG8D8G1lcJesaj11Iookk0904Qxp5LQPUg==
+	t=1795029408;
+	b=h237XJa4Us7GNy2hIga1BniFDub9axC+1lDi9ztkPixl0midPnot/wAW6HA3HjPpDCn5
+	 6/RMYUDTl2XIp0+3UN8aW/3DzlOPObX64j+8lFv+sJjFa7GWh+c0+/fPfOxQtPvvmsfgR
+	 XEkcqE5/6Peid8kRBlXMJyl+usjdoKeADpQFyPZKQkuj5daxUe9xopk/mvp4iTvrSOAYi
+	 hHS+dKeYiJNCvyssChFZf2Gyoc3VEQWbhYDuFqU/npi64Id1MkKaRFFyjAgHvd2JNp3MQ
+	 7UDbcQHNFnM6zsYTiGc5Pd3PcI60XxVtmjYwYoZhEtnNbJahmmFxKwYRotem1Gx1arg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029405;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029408;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1VT5pOp4JAz6S1NaP1M12Zl+TUEO1wBhwcB6nvf2XQA=;
-	b=Zv9LEe1M5YO4WcgxYkK95x5YE6TTjrom+v2SHdsCLzcPz6Ce7kraWY1SJpBXYxoyaKTC
-	 v4+dcor6hjJB3RGXnQymkE5vUg5im4OZL0c1BnndRcgfjjv/ZboLdnDBwxhW9ECapKajC
-	 OA6ntZeQSXSDrr29lFNBAdzIbgnuBajOoD5zC4ZQKsEj74EvMn2t8xkXtDGNmYZD8LsVI
-	 jm4R87ID4ZqeOLgmF4729E2Hw5+F+yxrQRLEIPbB4/F3Dp/nscmuw98BKtyHlgGtD5pRs
-	 XKDEagvu5TK6UkIbKD1ecWrZkglJCZLssu3BEpNkGTEtZk8otS19EEPAPSgwlHtZvPA==
+	bh=fr4/BBdXwf/uqNoF+ptY8ruA0Z3NmnX1eiW1iIxVmEE=;
+	b=ri59qzCU4lQbl9O921ojL8iwf4PovcrQdLE3+dvF5nHZUpihjKW5nk8mcbSqoUcUg2KJ
+	 7B0tL+VACf9N8aJrnywXXcTaK4ChP/XdGyUeO0z6THjjSXgAY9nay1C8kqLbC8Y63Azxb
+	 8Ce5KZHQOHiT5kWymTts6QB8zreoSf2Fif36YJWyh2ow25XCzmwxcMu7m2TUi3ShP8KwN
+	 du9T+OkkL2fk4FD3qq4P75/TMb6+H5ric0uY146N7TvbzoDttLuAm3GTbZlzp9F7/0Goj
+	 I3emdAE+RDM3L0J6U91VuPA4lsJHPTuY/B5Vcd66VxtHubH5gyRxXTMUTwbXK8vGRAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Kh4ql/Hg";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4qAxC49;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D226606A320;
-	Wed, 18 Nov 2026 19:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3CC606A33E;
+	Wed, 18 Nov 2026 19:16:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kh4ql/Hg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35FE1F000C4;
-	Wed, 18 Nov 2026 19:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4qAxC49
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C941F000C4;
+	Wed, 18 Nov 2026 19:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029405;
-	bh=1VT5pOp4JAz6S1NaP1M12Zl+TUEO1wBhwcB6nvf2XQA=;
+	s=korg; t=1795029408;
+	bh=fr4/BBdXwf/uqNoF+ptY8ruA0Z3NmnX1eiW1iIxVmEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kh4ql/HgezRDSlQAN1bBw1GMJWvQ1irzh+s+RfkekUPRsZpwVRvHouJvsDGaYNOvm
-	 bRNdaZXwMi1ElHAA6ixfWzvXafZu42tndI5ODZqlcJhQsdChBjyGhSoR87L4zsiMpB
-	 7UfjTwGStCFvyjL/KhtrOufCl75TGi4WTngRkPSE=
+	b=w4qAxC49gtlpS2COo3uw7w5I+MSvBfTJRc/MRTSZrIhlq9AeGzPraEq4Gn+LQfdps
+	 jpbg+f0zKnufZcUBnr8tyakLgp3MFPFJ98LJ8bwp1vc669UXYQyhZqdQXRPjTI7iWR
+	 Nwt+3wpnt8vwEG08xsWMtpk0LXCSS/bxnzjQ3150=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Jia Wang <wangjia@ultrarisc.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0321/1756] kernfs: fix up the unlocked attribute reads on the creation paths
-Date: Wed, 18 Nov 2026 15:40:48 +0100
-Message-ID: <20261118150021.073059146@linuxfoundation.org>
+Subject: [PATCH 6.12 0339/1756] dmaengine: dw-axi-dmac: Fix AXI burst length encoding
+Date: Wed, 18 Nov 2026 15:41:06 +0100
+Message-ID: <20261118150021.752182270@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,100 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Jia Wang <wangjia@ultrarisc.com>
 
-[ Upstream commit 81bdc85b4c086502f4446a58eb5d25f29bb5e9f7 ]
+[ Upstream commit 0d59891c42e11c3840276d8a632dbc355d6ddc4f ]
 
-Two creation paths read a live node's attributes without holding
-kernfs_iattr_rwsem, which kernfs_iop_setattr() takes for writing.  They
-need different fixes.
+The snps,axi-max-burst-len property describes the number of beats in an
+AXI burst, while the ARLEN and AWLEN fields encode that value minus one.
 
-kernfs_create_link() copies the target's ia_uid and then its ia_gid into
-the new link.  A chown of the target between the two reads leaves the
-link with the old uid and the new gid, an owner the target never had.
-Read both under the rwsem.
+The driver keeps axi_rw_burst_len as the actual burst length so that
+dma_device.max_burst reports the correct value. However, it also programs
+that unencoded value directly into the hardware fields. A value of 256
+therefore overflows the 8-bit fields and can cause AXI decode errors.
 
-kernfs_new_node() reads the parent's mode and ia_gid for S_ISGID
-inheritance.  Either value is fine there: the node does not exist yet,
-so nothing orders a racing chmod or chown against the creation.  Taking
-the rwsem would only pick between two answers that are both right.  Mark
-the reads with READ_ONCE() instead.
+Subtract one only when constructing hardware descriptors, while keeping
+the actual value for dma_device.max_burst.
 
-The pointer that leads to them is already fine: __kernfs_iattrs()
-publishes kernfs_node::iattr with try_cmpxchg(), and both sides read it
-with READ_ONCE(), like the rest of fs/kernfs.
-
-The Fixes tag is for the symlink half.  kernfs_create_link() has read
-the pair unlocked since it started copying the target's owner; only the
-name of the lock its writer takes has changed.  The READ_ONCE() markings
-are not a fix.
-
-Fixes: 488dee96bb62 ("kernfs: allow creating kernfs objects with arbitrary uid/gid")
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://patch.msgid.link/20260905191613.3143937-5-shakeel.butt@linux.dev
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Fixes: c454d16a7d5a ("dmaengine: dw-axi-dmac: Burst length settings")
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260902-dma-fix-v3-1-414c6449fbcc@ultrarisc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/kernfs/dir.c     | 12 +++++++++---
- fs/kernfs/symlink.c | 17 ++++++++++++++---
- 2 files changed, 23 insertions(+), 6 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
-index 5dc90a498e75d..0eda24cf0ef3d 100644
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -685,13 +685,19 @@ struct kernfs_node *kernfs_new_node(struct kernfs_node *parent,
- {
- 	struct kernfs_node *kn;
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 06bb3e698ec0d..4d4052845534c 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -706,7 +706,7 @@ static int dw_axi_dma_set_hw_desc(struct axi_dma_chan *chan,
+ 	ctlhi = CH_CTL_H_LLI_VALID;
  
--	if (parent->mode & S_ISGID) {
-+	/*
-+	 * The mode and the gid below are read unlocked on purpose: they feed
-+	 * a node that does not exist yet, so nothing orders a racing chmod or
-+	 * chown against this creation.
-+	 */
-+	if (READ_ONCE(parent->mode) & S_ISGID) {
- 		/* this code block imitates inode_init_owner() for
- 		 * kernfs
- 		 */
-+		struct kernfs_iattrs *attrs = READ_ONCE(parent->iattr);
+ 	if (chan->chip->dw->hdata->restrict_axi_burst_len) {
+-		burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
++		burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
+ 		ctlhi |= CH_CTL_H_ARLEN_EN | CH_CTL_H_AWLEN_EN |
+ 			 burst_len << CH_CTL_H_ARLEN_POS |
+ 			 burst_len << CH_CTL_H_AWLEN_POS;
+@@ -977,7 +977,7 @@ dma_chan_prep_dma_memcpy(struct dma_chan *dchan, dma_addr_t dst_adr,
  
--		if (parent->iattr)
--			gid = parent->iattr->ia_gid;
-+		if (attrs)
-+			gid = READ_ONCE(attrs->ia_gid);
+ 		reg = CH_CTL_H_LLI_VALID;
+ 		if (chan->chip->dw->hdata->restrict_axi_burst_len) {
+-			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len;
++			u32 burst_len = chan->chip->dw->hdata->axi_rw_burst_len - 1;
  
- 		if (flags & KERNFS_DIR)
- 			mode |= S_ISGID;
-diff --git a/fs/kernfs/symlink.c b/fs/kernfs/symlink.c
-index 45371a70caa71..3d5fc22878936 100644
---- a/fs/kernfs/symlink.c
-+++ b/fs/kernfs/symlink.c
-@@ -31,9 +31,20 @@ struct kernfs_node *kernfs_create_link(struct kernfs_node *parent,
- 	kuid_t uid = GLOBAL_ROOT_UID;
- 	kgid_t gid = GLOBAL_ROOT_GID;
- 
--	if (target->iattr) {
--		uid = target->iattr->ia_uid;
--		gid = target->iattr->ia_gid;
-+	/*
-+	 * A symlink takes its owner from its target, so both fields have to
-+	 * come from the same moment: read them under kernfs_iattr_rwsem, or
-+	 * a chown of the target racing this could leave the link with the
-+	 * old uid and the new gid.  The section ends before kernfs_add_one()
-+	 * takes kernfs_rwsem.
-+	 */
-+	scoped_guard(rwsem_read, &kernfs_root(target)->kernfs_iattr_rwsem) {
-+		struct kernfs_iattrs *attrs = READ_ONCE(target->iattr);
-+
-+		if (attrs) {
-+			uid = attrs->ia_uid;
-+			gid = attrs->ia_gid;
-+		}
- 	}
- 
- 	kn = kernfs_new_node(parent, name, S_IFLNK|0777, uid, gid, KERNFS_LINK);
+ 			reg |= (CH_CTL_H_ARLEN_EN |
+ 				burst_len << CH_CTL_H_ARLEN_POS |
 -- 
 2.53.0
 
