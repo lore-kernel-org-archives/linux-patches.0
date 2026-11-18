@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043530;
-	b=RDFbgVJRg2SjCzOJIO+5KtNPxpjUT4zsPGFQeGCn5utgXIbC3QIvUX7Bak/JA86hVB4R
-	 GSl62qUHq5wgtpy5X6hHBeYGiT8ibeHhp3kPbnxbcZy5uiDdsFHZtpKQxnBo8Oyk1LDwR
-	 lvqMgLor4UQaGnea4mcfEUW2l+JN2/H2Sd8KSsjgg4d9APZNes0smNDGnfDLDB4PFS8+Q
-	 yo3w/LrVJ8u3clE6DYHZ/vHZYa6QkHiGvYpXiZ6OeOd6eKBUvkjdxgFOQzIZeiODvn8Wy
-	 U6AFeVzBKhFfTblUJpvkkTJ913BH31i9RUBCa8ZEjKSTpBONSon9c70874Emif8ac9Q==
+	t=1795043532;
+	b=tZZ0pB35sMMjWmT8M4SNHo/UHbVQEM0Q0Ii4ZPHW0WH4/PRNW6EmQlvtWmHi+2Jtyh7j
+	 W42FgidCNGDGKJm2LCvc8mbmludgfW5PH+TKObpxJ9WEv8dqSPzPuMdkI2trf6qKRIT7J
+	 O5AL0cGTlq+NBlDUJtXm/qu53g0J8GsdJfzDsW6MXreQBFXYnEyuFUmrcU3QQSGYZFolv
+	 H0SYJiKg1t5C4zdvVq1L8x/1w5PWnxFa5T9Ov3fZ5Fxn77eVE/0GAwLJLPMsVm9/CDyJj
+	 nDbVhc+XcWnxREsAlaXaWVoxTMXaTtTon7U7zO+EzXFu0UXX+dvQW8uISyXz7SmvM9Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043530;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043532;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=es1WPsO1iDV5PkKLRPB/jeyyjQf1PKaQEAQVFblRDf8=;
-	b=1Dg570vHRR+6OtH3RWaSRGdhgJ5zIzUa4m4lIFP2n4VMhiOiG5Uit8n3OY7ODeSmba09
-	 xrRrEe16H+3FjLZou9rTxiErQcM1zBn5zBik+ob3wgXrdG6cCv2Tuu+rdMkvafnPOyxNz
-	 uZxVhSePBOHCeM7mGOJwvT6OTAhVau+e0ojRJimmHDENbwwHre8rAf0tqvwobUhMxe+SP
-	 o7i/Rtv2F4FExc2cGDjrKNHdodKvlbgBrwnOlTk7OvIiR4iSC5MVIHk15WjdVel6j97Ev
-	 o7/8eHRjZ/btylSFLwHomLomwDdOqsWjfWMmxF8sSHe7Pl9HzqfPogmcxMD7cEBjJuw==
+	bh=dsdu3GdSssOiKZ78lq7efP7jjmRNJyPBqsoRCHvUYWk=;
+	b=HnyUDZ7fIHPY3/Tiu9P/AhR4+qVn7o9H+9Fp8XGTWymkAGoqR/OZled3ntFxnYxMTGt+
+	 QaEdfPQTElNl0md+kuG0eOWIq31c68lJguSx1XY33CswtI66zMR2pMQEqdjPUFy78Wv8N
+	 54OzOMQ2DnucczCx5kmAjlEja2yAlDbTvhmBE1acw9pSRhW2R5HSES5JAA9smps5yTqSI
+	 IDa+s7e2IUbAwcAIRAMo70YT9z+blEgZ2z6YtVFR5iigiMeBYdPZyJudd9obehx9IfrS0
+	 3IzrKbmimP78D3UzHr/ZzXhAHRThCzbIoso8I2rLglGr5ef74mgJNjVS0DKfPYYzqLA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EsJ0jpi1;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+A82I5b;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2A1606A31C;
-	Wed, 18 Nov 2026 23:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8240606A320;
+	Wed, 18 Nov 2026 23:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EsJ0jpi1
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0DE1F000C4;
-	Wed, 18 Nov 2026 23:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=m+A82I5b
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD4F1F000C4;
+	Wed, 18 Nov 2026 23:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043530;
-	bh=es1WPsO1iDV5PkKLRPB/jeyyjQf1PKaQEAQVFblRDf8=;
+	s=korg; t=1795043532;
+	bh=dsdu3GdSssOiKZ78lq7efP7jjmRNJyPBqsoRCHvUYWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EsJ0jpi1TLhzsxuZGcyNPz3uajKuV9Msl8kpbomw69fcAs5oTX315mz5bMetCACQn
-	 NMZYvCJHxruR0RyT8xlvV/8pXuNNjhTCTYKchmAkKS0Fh2kwD9nMrWZTX5NYYr7p/w
-	 Il7kb5mhQPXNMRpGw7E++Xl1xq9Rv5NGF1xfvMLg=
+	b=m+A82I5b3ozIu3bt4nuhDbUh0RWMyGZx7HPY2Wk2RG1gyTYmhQzCA3hJ+MVFzj+fG
+	 RWH9GHhkxUr6MVbJg2PEuggBNAOJBbwWLSADqnB0qOpPUJ6xxxbOcby3m8ghZkE2gJ
+	 AqVLqge6+Tca/RmK1n0L8RXC1mId4DRkCx3lBwwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0244/2857] ksmbd: protect private extended attributes
-Date: Wed, 18 Nov 2026 15:21:18 +0100
-Message-ID: <20261118150210.234867781@linuxfoundation.org>
+Subject: [PATCH 6.1 0245/2857] ksmbd: preserve access denied status for copychunk
+Date: Wed, 18 Nov 2026 15:21:19 +0100
+Message-ID: <20261118150210.268988660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,84 +69,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 4ea46ea602fc7055eee4b5b0e84f90f22da7f7e7 ]
+[ Upstream commit f7c0366e0a80bf8cd5eacc5479927abb50958b5e ]
 
-SMB clients can currently create an EA named NTACL because SMB EAs are
-mapped into the user namespace while the ksmbd security descriptor is
-stored as security.NTACL. Allowing the reserved logical name makes the
-server-private ACL metadata appear writable through the SMB EA API.
+The copychunk error mapping handles -EACCES in an independent if
+statement. The following error chain therefore reaches its final else
+clause and overwrites STATUS_ACCESS_DENIED with
+STATUS_UNEXPECTED_IO_ERROR.
 
-Reject NTACL, DOSATTRIB, and DosStream-prefixed EA names without regard
-to case. Filter the same private names from EA query results so stale or
-externally-created user namespace attributes cannot be exposed.
-
-This fixes smb2.ea.acl_xattr when acl_xattr_name is configured as
-NTACL.
+Join the -EACCES check to the remaining error chain so an access failure
+is returned as STATUS_ACCESS_DENIED.
 
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 28 ++++++++++++++++++++++------
- 1 file changed, 22 insertions(+), 6 deletions(-)
+ fs/smb/server/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index bead3fb3e2e32..f5dc49cf06b90 100644
+index f5dc49cf06b90..65dbd33753b05 100644
 --- a/fs/smb/server/smb2pdu.c
 +++ b/fs/smb/server/smb2pdu.c
-@@ -2384,6 +2384,22 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
- 	return err;
- }
- 
-+static bool smb2_is_private_ea(const char *name, size_t name_len)
-+{
-+	if (name_len == SD_PREFIX_LEN &&
-+	    !strncasecmp(name, SD_PREFIX, SD_PREFIX_LEN))
-+		return true;
-+	if (name_len == DOS_ATTRIBUTE_PREFIX_LEN &&
-+	    !strncasecmp(name, DOS_ATTRIBUTE_PREFIX,
-+			   DOS_ATTRIBUTE_PREFIX_LEN))
-+		return true;
-+	if (name_len >= STREAM_PREFIX_LEN &&
-+	    !strncasecmp(name, STREAM_PREFIX, STREAM_PREFIX_LEN))
-+		return true;
-+
-+	return false;
-+}
-+
- /**
-  * smb2_set_ea() - handler for setting extended attributes using set
-  *		info command
-@@ -2425,6 +2441,10 @@ static int smb2_set_ea(struct smb2_ea_info *eabuf, unsigned int buf_len,
- 			rc = -EINVAL;
- 			break;
- 		}
-+		if (smb2_is_private_ea(eabuf->name, eabuf->EaNameLength)) {
-+			rc = -EACCES;
-+			break;
-+		}
- 
- 		memcpy(attr_name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN);
- 		memcpy(&attr_name[XATTR_USER_PREFIX_LEN], eabuf->name,
-@@ -4492,17 +4512,13 @@ static int smb2_get_ea(struct ksmbd_work *work, struct ksmbd_file *fp,
- 		if (strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
- 			continue;
- 
--		if (!strncmp(&name[XATTR_USER_PREFIX_LEN], STREAM_PREFIX,
--			     STREAM_PREFIX_LEN))
--			continue;
--
- 		if (req->InputBufferLength &&
- 		    strncmp(&name[XATTR_USER_PREFIX_LEN], ea_req->name,
- 			    ea_req->EaNameLength))
- 			continue;
- 
--		if (!strncmp(&name[XATTR_USER_PREFIX_LEN],
--			     DOS_ATTRIBUTE_PREFIX, DOS_ATTRIBUTE_PREFIX_LEN))
-+		if (smb2_is_private_ea(&name[XATTR_USER_PREFIX_LEN],
-+				       name_len - XATTR_USER_PREFIX_LEN))
- 			continue;
- 
- 		if (!strncmp(name, XATTR_USER_PREFIX, XATTR_USER_PREFIX_LEN))
+@@ -7591,7 +7591,7 @@ static int fsctl_copychunk(struct ksmbd_work *work,
+ 	if (ret < 0) {
+ 		if (ret == -EACCES)
+ 			rsp->hdr.Status = STATUS_ACCESS_DENIED;
+-		if (ret == -EAGAIN)
++		else if (ret == -EAGAIN)
+ 			rsp->hdr.Status = STATUS_FILE_LOCK_CONFLICT;
+ 		else if (ret == -EBADF)
+ 			rsp->hdr.Status = STATUS_INVALID_HANDLE;
 -- 
 2.53.0
 
