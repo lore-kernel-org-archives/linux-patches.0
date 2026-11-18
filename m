@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042143;
-	b=bqjltI533TNMKzxpO/rTCNMeaR944MoCY9l0qhC43bFzD13IN+RTx/ZFn/A1rRGVq8Eh
-	 r08eX4Wsuc9C9uyxL3yrqvfY+cqKrdRurifJtxhZ307SF16Z2cC0811YgGQ8ehx85X4Ts
-	 fFaMjplh4gsYpuVSD7kiWMmCHGvpkI12Q4R+09eNPX5jFQHlKOMnst5EK893Y/xFkSbJ8
-	 4X/3OncPS5QKeNAxcXniQtbausH0ZrncVt0F+4TsFP4gR+KMzeu8Mw9X++U4vC0I+9Noy
-	 /p7cjEmttXui0yeE3SHr9XAU5ZiGnYxFH2PkYvwqw9J4x5ciBsASGi2R46CphtfNsiA==
+	t=1795042146;
+	b=c4/Qm8proGdVTJzQTjuz8m9Hhyd0DLNms6x8aG5fewOQFdieafPUP+HHoHAAc1lKDVjU
+	 zP540FT5il3sK2YNcC3gL7qzk+jddQwUTZSHxK1oB/H6LTFvGW47DUX2FT7d5IC9SkgA6
+	 pp70Doa4W6E+h7Ak9TBzydqDgZjl9hLoO5loMTsA/S7txaOWqxbx86IXqTXw/Wv5oKBUQ
+	 SqWoRfwKNWG3V5cqWRVXUDvNiEbufHHSzlhFQFaRp4N3kQnbJAak945vkf6zohutrAZaM
+	 c1pC+57ERzle97mTkXjKIjGotClnO/F1MnT9SupkSGD1Q7QLrzPKD2HIUSCnKQZfBXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042143;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042146;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+4QVppKUnCGRyEnLoRkbLo1yNk1wJcg549uYIsie16o=;
-	b=JS4Vb/B2DzxI8ATyZk1oBQmM9Mfeusmn1R4RQmEZG1hpt2GrH0MXvpivjbmoIyXd9qjX
-	 GWYc/li7xttFSNM2pMnGnSAKSjEczi7JjrxNGvTKyCXokzEEsERFhN6CytFUUc1FZLdM/
-	 HL9kSFdNoS5/K5K8ReZw9PScH0Gb9WvESKAfOOKogK+pZA+5qFqCwMgW9QQO1uKU7xZBL
-	 Sgm5jRhPjRdENyQFyn30JHamdWIOutWoFirVeEEwXx+OowcBwVcAEV/vtyqzaCWuC6FRc
-	 TedokG/vomJ6rI8z1atF13zABJ+QxgSZLpW6mFHctAsZo5akSjpgQclsAVX70GoaKPA==
+	bh=5buvAprvdrHdaLi8oOICQhFjmknbtbrXh/IGQ3CCKOM=;
+	b=1k+VWd5DPNCoNZfCm9RflGH5lBFn4AwGm8rGRiwnoXvkw2fmA0J9H7VOwWUG8TNKerc6
+	 t9HNMQPiD1LB/AtpXcv/GblLE4AlTnKmer5iggs0lB0nt6drFLQ9MmAyS3ojMJVR/EQG7
+	 4oq9JIFLk1Wz4xWEZoh7Joydf2a8fw8rATPBQJXQU3wJhIn1v0ImBv1wE/43W8xSSOHL1
+	 hhfNODB0jVEXdtzpYgk0Jrvx2vpcyRK1N4FEAhLGbykcgrFZooDJZYkQQp7smO4qTA5rV
+	 w4qho5TqpKDHJZwnh4etK8BZUPNzo1njKL5+neQsRBzSijB/l9JgvEVT5BFGE2RDBFQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNufkjJG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1AraspO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF056606A320;
-	Wed, 18 Nov 2026 22:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9211E606A325;
+	Wed, 18 Nov 2026 22:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yNufkjJG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF9A1F000C4;
-	Wed, 18 Nov 2026 22:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1AraspO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B311F000C4;
+	Wed, 18 Nov 2026 22:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042143;
-	bh=+4QVppKUnCGRyEnLoRkbLo1yNk1wJcg549uYIsie16o=;
+	s=korg; t=1795042146;
+	bh=5buvAprvdrHdaLi8oOICQhFjmknbtbrXh/IGQ3CCKOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yNufkjJGl1rAznJMJzsTBka8uBovTdUznClW4rD98uzOoZ4KSDuYloqzbnNR5xk85
-	 wXqh0EsNCMf0qTvj/3XQSb3cocRO0R8nqNskUDCoC5D/Y6x72xrbKQrbQle/KL8L8W
-	 D6AgHyc0IXoTkku0dQc6x9DpAQm4almXn/cCI2Is=
+	b=R1AraspOguA3yBlEK8Zg2eZYzbk1D/knV/cXCpl8D5cHXTkfAvXaywHHWI3dJ5HMN
+	 bO36pD2Y/0JrsAq2fZzpqpOtT5QBT0gZ8haKAe8HT7HvCur4MH+I17jXlE5wVNw7RR
+	 RxCdBsizIF+FWfUMWwWIKMh22w/NU03cCg2s/KA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Liang Hao <haohlliang@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3063/3318] rtc: class: Make the time32 hctosys limit configurable
-Date: Wed, 18 Nov 2026 16:01:25 +0100
-Message-ID: <20261118150452.012846911@linuxfoundation.org>
+Subject: [PATCH 6.6 3064/3318] timers: Clear pending_map on CPU hotplug
+Date: Wed, 18 Nov 2026 16:01:26 +0100
+Message-ID: <20261118150452.042164127@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,114 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Liang Hao <haohlliang@gmail.com>
 
-[ Upstream commit b253c2e96a80aac8e2bc67b425bf007ed78d4d8c ]
+[ Upstream commit e7cad586d73276cbd4466de81b2092287d7475c0 ]
 
-The RTC_HCTOSYS feature faces an impossible dilemma on 32-bit systems:
+CPU hotplug migration leaves pending_map bits set on the outgoing CPU
+while its wheel vectors are empty. After re-online, a later next_expiry
+recalc can treat those empty buckets as pending and temporarily pull
+next_expiry forward until collect drains the bits.
 
- a) systemd requires RTC_HCTOSYS=y with the correct timestamp
-    for its intended operation
+Clear pending_map under the base lock after migration in timers_dead_cpu().
 
- b) broken RTC hardware can produce random future timestamps
-    beyond 2038 at boot time
-
- c) time32 userspace immediately hangs if the time is set to a
-    date beyond 2038 and requires timestamps to be clamped
-
- d) time64 userspace is intended to survive the actual 2038
-    date and requires timestamps to not be clamped
-
-Commit b3a5ac42ab18 ("rtc: hctosys: Ensure system time doesn't overflow
-time_t") introduced this limit to protect time32 userspace from future
-RTC dates that can break boot and address constraints a), b) and c),
-but broke d) in the process by limiting RTC_HCTOSYS to the time32 range
-and falling back to RTC_HCTOSYS=n behavior when the RTC time overflows
-that.
-
-Make the behavior configurable with a new RTC_HCTOSYS_TIME32_LIMIT
-option that chooses between breaking c) or d). On systems with
-COMPAT_32BIT_TIME=n, only RTC_HCTOSYS_TIME32_LIMIT=n is allowed since
-userspace can be assumed to be fully built for time64. 64-bit kernels
-running 32-bit userland never had the cutoff and continue to not offer
-the option.
-
-Warn on rejection with the RTC date and option name so users can
-identify the cause and find the setting.
-
-[arnd: reword Kconfig text and patch description,
-       add COMPAT_32BIT_TIME dependency]
-----
-I ended up rewriting most of the text but kept Karl's ownership
-as he did the original patch.
-
-Fixes: b3a5ac42ab18 ("rtc: hctosys: Ensure system time doesn't overflow time_t")
-Link: https://lore.kernel.org/all/20220908115337.1604277-1-arnd@kernel.org/
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://patch.msgid.link/20261020080026.2461578-1-arnd@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 500462a9de65 ("timers: Switch to a non-cascading wheel")
+Signed-off-by: Liang Hao <haohlliang@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260930063621.37740-1-haohlliang@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/Kconfig | 21 +++++++++++++++++++++
- drivers/rtc/class.c |  8 +++++---
- 2 files changed, 26 insertions(+), 3 deletions(-)
+ kernel/time/timer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/Kconfig b/drivers/rtc/Kconfig
-index 92f46a6312c24..2cf50c91a43a3 100644
---- a/drivers/rtc/Kconfig
-+++ b/drivers/rtc/Kconfig
-@@ -30,6 +30,27 @@ config RTC_HCTOSYS
- 	  the value read from a specified RTC device. This is useful to avoid
- 	  unnecessary fsck runs at boot time, and to network better.
+diff --git a/kernel/time/timer.c b/kernel/time/timer.c
+index cf86c1d9d68ee..0988a8cbfac41 100644
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -45,6 +45,7 @@
+ #include <linux/compat.h>
+ #include <linux/random.h>
+ #include <linux/sysctl.h>
++#include <linux/bitmap.h>
  
-+config RTC_HCTOSYS_TIME32_LIMIT
-+	bool "Reject RTC dates after the 2038 cutoff"
-+	depends on RTC_HCTOSYS && COMPAT_32BIT_TIME && !64BIT
-+	default y
-+	help
-+	  Reject RTC dates after 03:14:07 UTC on 19 January 2038 when
-+	  initializing the system clock in order to work around broken
-+	  RTC implementations that produce nondeterministic timestamps
-+	  without a working backup battery.
-+
-+	  A rejected date leaves system time unchanged, normally near
-+	  the Unix epoch, and the RTC's hctosys sysfs attribute reads
-+	  0. Userspace must supply the time if no other source has
-+	  initialized it.
-+
-+	  Say Y here if the kernel may have to run old time32 userspace on
-+	  hardware that can produce unpredictable RTC timestamps.  If the
-+	  kernel is intended to only run time64 compatible userspace and
-+	  continue working past 2038, you must pick N here in order to
-+	  have a working RTC_HCTOSYS functionality.
-+
- config RTC_HCTOSYS_DEVICE
- 	string "RTC used to set the system time"
- 	depends on RTC_HCTOSYS
-diff --git a/drivers/rtc/class.c b/drivers/rtc/class.c
-index af10850fbac2e..2dd24eb499740 100644
---- a/drivers/rtc/class.c
-+++ b/drivers/rtc/class.c
-@@ -73,12 +73,14 @@ static void rtc_hctosys(struct rtc_device *rtc)
+ #include <linux/uaccess.h>
+ #include <asm/unistd.h>
+@@ -2273,6 +2274,7 @@ int timers_dead_cpu(unsigned int cpu)
+ 		for (i = 0; i < WHEEL_SIZE; i++)
+ 			migrate_timer_list(new_base, old_base->vectors + i);
  
- 	tv64.tv_sec = rtc_tm_to_time64(&tm);
- 
--#if BITS_PER_LONG == 32
--	if (tv64.tv_sec > INT_MAX) {
-+	if (IS_ENABLED(CONFIG_RTC_HCTOSYS_TIME32_LIMIT) &&
-+	    tv64.tv_sec > INT_MAX) {
-+		dev_warn(rtc->dev.parent,
-+			 "hctosys: rejecting %ptR UTC due to CONFIG_RTC_HCTOSYS_TIME32_LIMIT=y\n",
-+			 &tm);
- 		err = -ERANGE;
- 		goto err_read;
- 	}
--#endif
- 
- 	err = do_settimeofday64(&tv64);
- 
++		bitmap_zero(old_base->pending_map, WHEEL_SIZE);
+ 		raw_spin_unlock(&old_base->lock);
+ 		raw_spin_unlock_irq(&new_base->lock);
+ 		put_cpu_ptr(&timer_bases);
 -- 
 2.53.0
 
