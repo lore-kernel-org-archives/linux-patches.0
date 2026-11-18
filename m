@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021514;
-	b=dwdWezUHdmUjo91RHq5tVmL7EOCKaEss4m+0D7jIIWf5gJOOFFeKyN1JucVlIZ+Jb4va
-	 Y2r7G2BIfZEOG/OOR4Dk/s8tPlVDws0vtLKBSJH3bVaeNN7bI1rZP+aOwMIqaIXw8Wyi7
-	 K/iiFa5JNtlaJKm40R+M0MX6UrYSUXntDW5j2If9Kgtx4sVre8tf/Vd5WhByUcfbFU2zi
-	 JIoK2k+I3he6ChzEJHBPD/aCnqKqscvCFMzcRB1KdZEJKw5ikNlKQJMTxtducGH5atdos
-	 hS/cco+VjfhwCu6iPj3FUbGZ3hS50FKF0nL+N8aqgjLNnU13gMyMFFe2vYFJz6kPUYg==
+	t=1795021517;
+	b=AFxSLDXrkNov54WkZ5lJKnduGlzLehsSYFm1qh3bNeSFt61yO8vUrU7RVNdfnU5t242l
+	 A5sYwEQbMdLojCUhB5agKn26GXAtuFmosMzWgahi9IbV7JKUbZ1dczOQAOZwOfxfyGdy8
+	 iLj6pTBulwZilOkEdC+s49XWv5t/njIEfn3hvAzKZfr6p2K3M/dgRtsfnilnEYmefsqD2
+	 FRC63dAlZdKIyNJMzj527MAPCFPbKkiKmTP46Bj/TO1brymY3JmF6qgo/Sl8qy0g6jxIU
+	 91UU6mTZZT7bvS+8sLjeFOlwRucFjEcbP6fNTuJH81/vZ6wtHR+JCcTWs8/efR1fSHA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021514;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021517;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=rtxJQUE3AIU8UQ4iOsFpn9Fx4GN3VR1IbgJ5YriWeaY=;
-	b=Cn9KEye1pELoPF0qkNvy5G8x7dXgTEU/PdkyOQnFU4XcJReRvfBCSqcoFt5Ul8qQ4bS3
-	 epNJofr1lEbcYp8oeY5z7CJtCASr8njYlSViYkmv8nq26+n46TBJCKBgLxH7dTme2OzAw
-	 pqUiph21vEqEz7Ew8qiMRLMX1zh2gsESVhmqNmghVydU6gBZbM+OQ1XspXs0peWx7phYX
-	 +383UvO6kKuvEoUqr7EOrnMnZCm+pzBQCxgHoxQjTblGW99Md9Z8kjj+bB502H7xVZlnh
-	 IG3ZikaY5e6Zlu+5YEz13eRFaqam+o/o3cRhfTAFe2ctjNbqBII87lBWZE9gIEdCwSg==
+	bh=rpGiEn5S78gyZtvsmJqDoZ+8lbtpdoKQGOwzF26BaSc=;
+	b=RwXcDvQrNj3jYRZ1HW7GfnNtvsE6eL6yM5Sd2uyckBABMfdEzKLlcDtHc603t5b0AOsX
+	 fD03uf4QJdC9MWb//nHgIJ6DFjwOCho63stUvLP+b3TvrA9NWojC+aUfA9tOZFtGSOgl2
+	 2kVCMACu0wnNrjeF8P5TxSlDu+9bxaLhEqihbLrYf/S4asskP/6hS9UbYHaOK4vSyvqEK
+	 /aBISQ1tnX700axQ+EkidN+FrNb1hiceSeRTaHbxOmCPp1CHM93HwStVKF44938idOgdy
+	 sI7LVCnIdBZboO5TlH1w5BpKQ2aG05aIK1jTFK6oVOijth3m2Go9A43nV9o/hrSVBSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3yWhyOe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M228PZvJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D3A606A332;
-	Wed, 18 Nov 2026 17:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F90C606A332;
+	Wed, 18 Nov 2026 17:05:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T3yWhyOe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD0A1F000C4;
-	Wed, 18 Nov 2026 17:05:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M228PZvJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7E01F000C4;
+	Wed, 18 Nov 2026 17:05:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021514;
-	bh=rtxJQUE3AIU8UQ4iOsFpn9Fx4GN3VR1IbgJ5YriWeaY=;
+	s=korg; t=1795021516;
+	bh=rpGiEn5S78gyZtvsmJqDoZ+8lbtpdoKQGOwzF26BaSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T3yWhyOe6YjUXCWrMcvnpYx1jGA2WuNqq/Y2M0DpOVrePS01Ogzrb4UE4QrUTjcn7
-	 D+B0DWz/cTRZi2IhFp8ZW0oOtytbZhTguspKvMPt7AY8Io+SFW1IHAyDHkmnU+3Xnx
-	 bZribWrFobcz1usewqQcxokLA24IuwaMBhmNLRKs=
+	b=M228PZvJqLSpNPmFZ1866ou4Mzyfc3LSYfS+xHZbv76+hVzXVS4xPDT1cUAUjXh6x
+	 rBwSLbb0Vbcygn/nYCfQvFmIIA3ZvB0IQ7rBheI1ZCCgkg04O6ZiVlLXYDIkvizV6K
+	 wZk400pQBzoEEwyDTG5ap44zMXrYBikdMLOd1eXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HyeongJun An <sammiee5311@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Eric Joyner <eric.joyner@amd.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2317/2651] selftests: ALSA: pcmtest: Compare all captured bytes in ni_capture
-Date: Wed, 18 Nov 2026 15:59:17 +0100
-Message-ID: <20261118150408.607307341@linuxfoundation.org>
+Subject: [PATCH 7.3 2335/2651] ionic: fix port_info use-after-free on firmware recovery
+Date: Wed, 18 Nov 2026 15:59:35 +0100
+Message-ID: <20261118150409.178391271@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,40 +70,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: HyeongJun An <sammiee5311@gmail.com>
+From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit c8c199e1b1b3bb0ef52a2a02d1ec87bee574ce13 ]
+[ Upstream commit d90d1a768b3b022c52beafb3a4701ee2ee3d2b5e ]
 
-The ni_capture test reads rate * time frames into each channel buffer
-and then compares rate * time bytes. A frame is sample_size bytes per
-channel, so with S16_LE only the first half of each channel is checked.
-If the second half is wrong the test still passes.
+ionic_port_init() allocates port_info when the pointer is NULL, but its
+error path frees it without checking whether this call allocated it.
+Before commit ddc5911b9bd2 ("ionic: call ionic_port_init after
+fw-upgrade") the function returned early when the buffer already
+existed, so the two were symmetric.
 
-Compare rate * time * sample_size bytes per channel.
+Since then a failed PORT_INIT on either recovery path - fw_up or
+reset_done - frees a buffer an earlier init owns, while the netdev is
+registered and the ethtool ops are reading it.
 
-Fixes: 10b98a4db11a ("selftests: ALSA: Add test for the 'pcmtest' driver")
-Assisted-by: Claude:claude-opus-5-5
-Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
-Link: https://patch.msgid.link/20261021112554.4037107-1-sammiee5311@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Free only what this call allocated.
+
+Fixes: ddc5911b9bd2 ("ionic: call ionic_port_init after fw-upgrade")
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Signed-off-by: Eric Joyner <eric.joyner@amd.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20261015-ionic-port-info-lifetime-v2-1-57232013fd79@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/alsa/test-pcmtest-driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_main.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/alsa/test-pcmtest-driver.c b/tools/testing/selftests/alsa/test-pcmtest-driver.c
-index e025a7bac26b7..18ee72d5d4c96 100644
---- a/tools/testing/selftests/alsa/test-pcmtest-driver.c
-+++ b/tools/testing/selftests/alsa/test-pcmtest-driver.c
-@@ -265,7 +265,7 @@ TEST_F(pcmtest, ni_capture) {
- 	snd_pcm_close(handle);
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_main.c b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+index 10501be9ef956..38b47b959a114 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_main.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_main.c
+@@ -722,6 +722,7 @@ int ionic_port_init(struct ionic *ionic)
+ {
+ 	struct ionic_identity *ident = &ionic->ident;
+ 	struct ionic_dev *idev = &ionic->idev;
++	bool allocated = false;
+ 	size_t sz;
+ 	int err;
  
- 	for (i = 0; i < CH_NUM; i++) {
--		for (j = 0; j < params.rate * params.time; j++)
-+		for (j = 0; j < params.rate * params.time * params.sample_size; j++)
- 			ASSERT_EQ(chan_samples[i][j], patterns[i].buf[j % patterns[i].len]);
- 		free(chan_samples[i]);
+@@ -733,6 +734,8 @@ int ionic_port_init(struct ionic *ionic)
+ 						     GFP_KERNEL);
+ 		if (!idev->port_info)
+ 			return -ENOMEM;
++
++		allocated = true;
  	}
+ 
+ 	/* If the driver knows about more "extra stats" than the firmware,
+@@ -757,10 +760,12 @@ int ionic_port_init(struct ionic *ionic)
+ 	mutex_unlock(&ionic->dev_cmd_lock);
+ 	if (err) {
+ 		dev_err(ionic->dev, "Failed to init port\n");
+-		dma_free_coherent(ionic->dev, idev->port_info_sz,
+-				  idev->port_info, idev->port_info_pa);
+-		idev->port_info = NULL;
+-		idev->port_info_pa = 0;
++		if (allocated) {
++			dma_free_coherent(ionic->dev, idev->port_info_sz,
++					  idev->port_info, idev->port_info_pa);
++			idev->port_info = NULL;
++			idev->port_info_pa = 0;
++		}
+ 	}
+ 
+ 	return err;
 -- 
 2.53.0
 
