@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025124;
-	b=xAAIA8mCtZPyDJ7sNC5xEXA3Kib4f2p8bASFAYI92Vly2N7TzGMTOazDVnHutG2MpAKf
-	 YTos5mHDovgAyjuBMoyqqzQYfDvJa6kKTvwrCn2CuLNmuRJzyKswDTWbZ4ZRF7WyzmvO8
-	 OHQLVB1VJ/yZ7eVDJFvzRS0o1S8TpkZuNmy7oQGzpMcIe0Iz37dBWsbcN3CLqtLgC4gr1
-	 yMQe5584+kka676GS9eG8IsD6dBPem8Gp1WuCWjKslQYo6hajTltp7JnzfZGn3MYg+fJL
-	 4u3BihJJGXzOTCGNVCeDKXRUDJ9/RNnytMnREsZBm5tkMgYdJZ6Jv+1H1SV52taFUqg==
+	t=1795025127;
+	b=uj7CEUoOZdbCQz5/3Bng+XNR6wVkujdnpQNP+ZiPHVafnTCR68aP/7gQWbuKFZCm1NLZ
+	 bwxFR7NwCqh+UI2++xOmR1a9vAz/jV/cue3XDyM9kv41xSyquhNgKFlV6kTPKpGlw+fW5
+	 NlebGIEZ+dEzT9wjc7RhjdnUcXXHJpV3AdWY1cuDrJsXtxdr8rlJeuvNjLtjAW/RZz+wh
+	 BP/aln4wu9Z/v+TeDEvkKWf0AtPv23n6p/AsFM9riuhIY6agE0B/KBg7l/tZBHK9KtqhV
+	 hF8wKOTP2uoiOAAZ1ykigbuPl3RA9N4dyi+yXPDJ9KVuvs0Ti+C47KH1bnFAVLa33hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025124;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025127;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8wGDfW0f1ynABchh344P/npvxv6m+kf/XYxZMfRxmCQ=;
-	b=YxWBAalO072EhDF6oLT6y34jjKcowD0A6t/OQ/PUlEuYKfZwjpFg8biU/R2fFvci9U5E
-	 j/jApZ1URIwu5RT7EphePdQ4Bc8JvVUpqCkFXkoq3lMfkTjkeYqC1XX3atsFO4P49KwWz
-	 W6K4jUJHJctZvRzHGMSAuYDSucn+PzfJf5KFaegTcZ0Se4SBxkrBTBJ8RNOwb9QKkZf2x
-	 hhD+7RA87qr6Itj1Mta2VrCT/DfOLvNx0MwZj11HOH/j3ftmIWUGXgxXdsJe6Sqis79ew
-	 PYMGeBMp0bzopz2B62dSH5iVf3ZxzHMiBkENxtMuh6MTFlFNvS46RG99dapFC699hXg==
+	bh=0MxTSIdlck80VXR2/ZP6zMqOgCsOQZ02m4nQbcYRWTU=;
+	b=GOuyh8yHqGKthNGSeGbZ3zYVe5wrKlSP4UCoOCyN10dPjhfxkloxIRl7nCJtJK0Lqr6T
+	 2jRiN33SYc9GUxl5GstOvR2s23/qsbnU2eb1HOj5wpJcVnoaWVj8iDbyVjyI1aElG0iX0
+	 CaPYukrcZ4VXPA0xNqHLTNi3hsMItvmsz4GXlgzE6y4NFBXhhDz/FdGPDDTJGwT0xhZTI
+	 ed9Nlkq3mhak07+/yjlvpKlSKoCBE6Z0PqvxkyDXUzVE71f+ix4oZTMqfqW3/bagCFIuF
+	 IWlXttg2OJqjjQYTN97r3WAJ5IDyJ74hw41XUYxCGEnqLXTbFvAFzKlQ5kXkZkDmG0Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNc9oaRJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6YKQ0lJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CD1606A334;
-	Wed, 18 Nov 2026 18:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78872606A325;
+	Wed, 18 Nov 2026 18:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RNc9oaRJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32FC1F000C4;
-	Wed, 18 Nov 2026 18:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o6YKQ0lJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7011F000C5;
+	Wed, 18 Nov 2026 18:05:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025124;
-	bh=8wGDfW0f1ynABchh344P/npvxv6m+kf/XYxZMfRxmCQ=;
+	s=korg; t=1795025127;
+	bh=0MxTSIdlck80VXR2/ZP6zMqOgCsOQZ02m4nQbcYRWTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RNc9oaRJSRfKWSd/eahGCMpNGWiMAad+zOZ3tWpOg/TOWSsFtX7CX2pdIjRongDLK
-	 6JU4sv+iungOKxSKqz/5yNmp2eyzdoiyYCI+0iRE0WjFICQEdjHiKLsoaazMTB6U44
-	 WKLOoeD/kJTYfQSKLPaclgeZGD1wNZ0x+zQjZKDE=
+	b=o6YKQ0lJbGf2qmUNgi5Nawt6kMjpBLXfdTLGEhf0PG8UbOQR92qvGyvqev4qXr5JK
+	 uVmf9k9C4jN8zWZKAnN60I+7y9uKWe/GUDuzxMWKs8QJ/yQxIj2POkDgpgw8ITdOAe
+	 12H3tL28goHxE/Yqeh51Zv/CRo2iQuRBmV2xXxLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <blum@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ruoyu Wang <ruoyuw560@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0967/2151] hwrng: intel - return -ENOMEM when ioremap() fails
-Date: Wed, 18 Nov 2026 15:45:02 +0100
-Message-ID: <20261118150157.742995053@linuxfoundation.org>
+Subject: [PATCH 6.18 0932/2151] misc: nsm: fix CBOR short-length decoding
+Date: Wed, 18 Nov 2026 15:44:27 +0100
+Message-ID: <20261118150156.441080838@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,36 +67,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <blum@kernel.org>
+From: Ruoyu Wang <ruoyuw560@gmail.com>
 
-[ Upstream commit 4c3ca7c8c152278332590bfd3df1b0f086364759 ]
+[ Upstream commit 6edddc1d101bfd5cafc94ca2dffaf13e4394662d ]
 
-intel_init_hw_struct() incorrectly returns -EBUSY when ioremap() fails.
-Return -ENOMEM instead.
+CBOR encodes byte-string lengths from 0 through 23 directly in the
+additional-information field. cbor_object_get_array() only handles 23,
+so shorter byte strings leave array_len uninitialized. Reserved values
+28 through 30 and the unsupported indefinite-length encoding also fall
+through without assigning it.
 
-Fixes: c24c95a085c6 ("[PATCH] fix Intel RNG detection")
-Signed-off-by: Thorsten Blum <blum@kernel.org>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+parse_resp_get_random() then uses the indeterminate value for bounds
+checking and as the byte count returned to the hwrng core. This can
+reject a valid short response or report an incorrect amount of entropy.
+
+Decode the complete inline-length range and reject unsupported values.
+Extended definite-length encodings retain their existing behavior, and
+the existing size and INT_MAX checks continue to bound the returned
+slice.
+
+This issue was found by a static analysis checker and confirmed by
+manual source review.
+
+Fixes: b9873755a6c8 ("misc: Add Nitro Secure Module driver")
+Assisted-by: unnamed:claude-opus-4.8 typestate
+Signed-off-by: Ruoyu Wang <ruoyuw560@gmail.com>
+Link: https://patch.msgid.link/20260815151745.3758574-1-ruoyuw560@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/intel-rng.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/nsm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/hw_random/intel-rng.c b/drivers/char/hw_random/intel-rng.c
-index 94f7116e96682..789a5c709ba87 100644
---- a/drivers/char/hw_random/intel-rng.c
-+++ b/drivers/char/hw_random/intel-rng.c
-@@ -318,8 +318,8 @@ PFX "RNG, try using the 'no_fwh_detect' option.\n";
+diff --git a/drivers/misc/nsm.c b/drivers/misc/nsm.c
+index ba43946b9e39a..d303f48af2bdb 100644
+--- a/drivers/misc/nsm.c
++++ b/drivers/misc/nsm.c
+@@ -117,7 +117,7 @@ static int cbor_object_get_array(u8 *cbor_object, size_t cbor_object_size, u8 **
+ 	array_len_p = &cbor_object[1];
+ 
+ 	switch (cbor_short_size) {
+-	case CBOR_SHORT_SIZE_MAX_VALUE: /* short encoding */
++	case 0 ... CBOR_SHORT_SIZE_MAX_VALUE: /* short encoding */
+ 		array_len = cbor_short_size;
+ 		break;
+ 	case CBOR_LONG_SIZE_U8:
+@@ -132,6 +132,8 @@ static int cbor_object_get_array(u8 *cbor_object, size_t cbor_object_size, u8 **
+ 	case CBOR_LONG_SIZE_U64:
+ 		array_len = be64_to_cpup((__be64 *)array_len_p);
+ 		break;
++	default:
++		return -EFAULT;
  	}
  
- 	intel_rng_hw->mem = ioremap(INTEL_FWH_ADDR, INTEL_FWH_ADDR_LEN);
--	if (intel_rng_hw->mem == NULL)
--		return -EBUSY;
-+	if (!intel_rng_hw->mem)
-+		return -ENOMEM;
- 
- 	return 0;
- }
+ 	if (cbor_object_size < array_offset)
 -- 
 2.53.0
 
