@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052657;
-	b=mJ9nhHisgeJ/E79KUD22Cp/rrgZnDkabKSoDsJ6gg1pTXoDFMq9DNKmVs77kU2Zf2ksC
-	 a21d/CRHPVDQ3KkH/+caLz7gr56ygf732/vR7DCdU2Oi9xxgJ5EmaAScw2KLnwjmF3v1f
-	 +O3dnXqJOukeZN3VjMypAeaY0Uy6I9hE5xq4ilY1jQSZQ3/91P58DvaDU3vk/AK+NYFqy
-	 TcyJmPhJY3o2rvEZwE4qez2C8K3yCxLObCzWQJbb3Jr9L2XWgWSBhmnKAFq02Kp7R+QG0
-	 YsEVNGwGPUoc03IHDdKWo/OEA3VoFzO9xabgot8CjBC904zjNWBDzZmSFkm3mUvY1LQ==
+	t=1795052660;
+	b=vz/nkJq5Gf+QEWZa/P7XXi3r0SiSl/Io2/FHb3Xrn/+4+54A8egPysrvQEQ3gb7+Q9Zs
+	 5Uy0C4DoVQrFAcpjBV4DuzR8xY3zXf4MVjhrfQSBz3V6NTDgwU7CcPSy/jgahplRWzUxe
+	 f/7qqpJcpXxYs2LePGpCX6Jiyj9rE6XmkiBeqMnbMTJwI7l9eBNetu7WNRxmW4pJCJ0vW
+	 xa2ggnsYyE7NAZJpeH5WG1tRKC+G/bntffFDulCOS4JMeBVWXW9wfM4hzk0zRR2ZRK+wm
+	 vHAHxIPb0zCndSoulGNaMsKsBt0OVzSXWedS7emsSjpbORUScYah+emFOCSslDboAzQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052657;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052660;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=y4C5+45OkTQdhayXI/GO5wummvnExChoB+Hk7d19fcM=;
-	b=JyQ3+QPKRKxu7cjDNy3mPn61DhfS6A+BlkCu/jr9u2Jobso7Hbq74AZY/mfnoTd345PU
-	 LulgDYvC0eAImeMEttfJYjtLY2xQttKfTqAak0HplKHy/47gwgfd8up+bMJqPQDHbASEY
-	 TNSDDPzDBImRMs3cqioBL3P7XmXv54q6x97dZd9PTlEf9OrCnY+EBvn4zH8KtQK4fTzO7
-	 /PI98BxY9Dl1BBrRdPGhBmBwa00fTPRax6PwRNwRMqE+4wi9M4T4I2xR7+5Jk0w8rrfGN
-	 a3nO0+QPpvCnvu8beXz2LFjkX5RWDK2EsI1sEmPL0GAGT47gn8HL9+UVGqlO+g1Eiig==
+	bh=Ok9Xacj91vZq6hz8JgHPHaHEhtXLUBpct5HcSDOT2ms=;
+	b=fjATuwUNvlPrfX7Gk0meiwrGY5Xfz6tE2BNQ7nTrW1QPvGB8teR5eaiGVARiy/PtRAVM
+	 o396iIP/RKntf2CQ1uIxv8H88JrH1GO7Jv8Z79pd6+eFX0XqSX2hkwVW+FiF6uxmojL3x
+	 TPpWf6dlyLs/zk3QQhwTHlBlJljpkHqPlxwSAHzYuK14n9jqmlqSMC92sHpYRBQ0ff6wL
+	 OUnJDHixndC0g+CHurLc6ILs6VcHqlFpjV03VC1zgpsiZuwFXkx/xEO1J9vVe/dXlS1l5
+	 ufYVfIG+PQkyXeDwOLVmyWgaIJKJIbnB+eF0wahwnCocgRSo/1j1rgAJo31J85o7AzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJ5G4FSQ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vgkpywkf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44DA606A325;
-	Thu, 19 Nov 2026 01:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2418606A320;
+	Thu, 19 Nov 2026 01:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QJ5G4FSQ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F0E1F000C6;
-	Thu, 19 Nov 2026 01:44:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vgkpywkf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B211F000C4;
+	Thu, 19 Nov 2026 01:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052657;
-	bh=y4C5+45OkTQdhayXI/GO5wummvnExChoB+Hk7d19fcM=;
+	s=korg; t=1795052660;
+	bh=Ok9Xacj91vZq6hz8JgHPHaHEhtXLUBpct5HcSDOT2ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QJ5G4FSQ1WBaWcS9+0uRDhWxl1Y1zntoki8dT9gQu9Dn5nS0DBUBuehAlRRdoYB2o
-	 IHw7pKHvSGtBS4MYcYEyvKp1VOzk4bU17j1+ZN/ggIOniBCyTfn0IpooMgWCDEqiJH
-	 06H9T47GuIQWD4UY8gmpfxbOOKTe1662LTlMgQBk=
+	b=vgkpywkfjVMGMpRetIoDQVNl2IoZs9HvRBQWkqKSmnccrXKNVUvWNHBtaWzw28gro
+	 ZZAENu03Rm4yVAQF6QS11vshouD+Zs5H84YfxW0T1M/p1AbVOcSMOS4Lu01MOW3EwC
+	 K9Rfvz3XEFt/SoEmmEnZ/bnZgxTxGAAIIEIGoS+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siwei Zhang <oss@fourdim.xyz>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>,
+	Hui Su <sh_def@163.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0643/2214] Bluetooth: L2CAP: Use default TxWindow for zero socket option
-Date: Wed, 18 Nov 2026 15:38:39 +0100
-Message-ID: <20261118150037.054165074@linuxfoundation.org>
+Subject: [PATCH 5.15 0644/2214] cpufreq: schedutil: Serialize sugov_start() against rate limit updates
+Date: Wed, 18 Nov 2026 15:38:40 +0100
+Message-ID: <20261118150037.093029194@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,43 +69,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siwei Zhang <oss@fourdim.xyz>
+From: Hui Su <sh_def@163.com>
 
-[ Upstream commit 226fa3b676cbf2236f803bccd347462433ffc2c8 ]
+[ Upstream commit ce390caf5541c493c9061e7a2d98a463e66b736a ]
 
-L2CAP_OPTIONS accepts a txwin_size of zero and
-stores it in tx_win. The zero is then sent to the
-peer in our configuration request, and if the
-channel ends up in ERTM mode it is passed to
-l2cap_seq_list_init().
+The current value of sg_policy->tunables->rate_limit_us is used in
+sugov_start() without locking to update sg_policy->freq_update_delay_ns,
+so if rate_limit_us_store() runs in parallel with it, the rate limit
+update may go unnoticed and the new freq_update_delay_ns value may be
+stale until the rate limit is updated again.
 
-Use the default TxWindow instead, as the mode can
-still be changed to ERTM during configuration.
+To avoid that, acquire the update_lock mutex of the rate limit sysfs
+attribute, that is held by rate_limit_us_store() during rate limit
+updates, around the freq_update_delay_ns in sugov_start().
 
-Fixes: 14b5aa71ec50 ("Bluetooth: Add sockopt configuration for txWindow on L2CAP")
-Cc: stable@vger.kernel.org
-Signed-off-by: Siwei Zhang <oss@fourdim.xyz>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 9bdcb44e391d ("cpufreq: schedutil: New governor based on scheduler utilization data")
+Reviewed-by: Zhongqiu Han <zhongqiu.han@oss.qualcomm.com>
+Signed-off-by: Hui Su <sh_def@163.com>
+Cc: All applicable <stable@vger.kernel.org>
+[ rjw: Subject adjustment, new changelog, edits of the new comment ]
+[ rjw: Add empty code line after guard()() ]
+Link: https://patch.msgid.link/20261013034235.2678177-1-sh_def@163.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_sock.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/sched/cpufreq_schedutil.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
-index 0cc0508298b96..3beb6e5a27cc0 100644
---- a/net/bluetooth/l2cap_sock.c
-+++ b/net/bluetooth/l2cap_sock.c
-@@ -803,6 +803,10 @@ static int l2cap_sock_setsockopt_old(struct socket *sock, int optname,
- 			break;
- 		}
+diff --git a/kernel/sched/cpufreq_schedutil.c b/kernel/sched/cpufreq_schedutil.c
+index 8692d5e7e9ce4..351cc92829ef3 100644
+--- a/kernel/sched/cpufreq_schedutil.c
++++ b/kernel/sched/cpufreq_schedutil.c
+@@ -78,6 +78,18 @@ static void sugov_update_rate_limit_us(struct sugov_policy *sg_policy)
+ 		(s64)sg_policy->tunables->rate_limit_us * NSEC_PER_USEC;
+ }
  
-+		/* A zero TxWindow is invalid, use the default instead */
-+		if (!opts.txwin_size)
-+			opts.txwin_size = L2CAP_DEFAULT_TX_WINDOW;
++static void sugov_update_rate_limit_us_sync(struct sugov_policy *sg_policy)
++{
++	/*
++	 * Serialize with rate_limit_us_store() to prevent this path from using
++	 * a stale rate limit tunable value to set the limit for the given
++	 * policy.
++	 */
++	guard(mutex)(&sg_policy->tunables->attr_set.update_lock);
 +
- 		if (!l2cap_valid_mtu(chan, opts.imtu)) {
- 			err = -EINVAL;
- 			break;
++	sugov_update_rate_limit_us(sg_policy);
++}
++
+ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
+ {
+ 	s64 delta_ns;
+@@ -790,7 +802,7 @@ static int sugov_start(struct cpufreq_policy *policy)
+ 	void (*uu)(struct update_util_data *data, u64 time, unsigned int flags);
+ 	unsigned int cpu;
+ 
+-	sugov_update_rate_limit_us(sg_policy);
++	sugov_update_rate_limit_us_sync(sg_policy);
+ 	sg_policy->last_freq_update_time	= 0;
+ 	sg_policy->next_freq			= 0;
+ 	sg_policy->work_in_progress		= false;
 -- 
 2.53.0
 
