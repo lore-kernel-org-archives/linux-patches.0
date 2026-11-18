@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050252;
-	b=QdUESkKyoS0NqVhoEd17EFiRctfI6IaHGEs0LsrlcNRBTnRyHQuKVrKy2f6qEuBV2zvX
-	 RRSAM4ZtdzWbx0VQo4gLhjYjMBpDM/U8CvVQasu73566M2RcsS1TP1L97rCROntRTisFw
-	 YFXQXj3V/+VHeIIQcPsBt9zRiBvA2ebsVI3E7yy+LdbUa1mmL57KBef41tl8XuJwAS5NY
-	 FMi4aLdE43E4KOpE30eagd6gK03sdl+Rs1jqA9dB4y633/2u23eCQPRWYjxAnbML/LtSE
-	 AqaJTQjRXhU008O9qkaVurxcD4Ai8YyToLXHucy3dK6wQC+ZNj3WbHeDk/H7VM0Enrg==
+	t=1795050255;
+	b=HN8us8igoQiW72/Kbm/1JTbJ82Sh0n1L69DQ9VzzbeOuRxqt99rrk8P6aTgfzipwEYml
+	 +5RYxXZxz6uooyIj+2HAQS6mowUUWPmldX+9j557++EenAM2rmm0nxGeiZKPMuesx5AyK
+	 J73tL0H+pWE7RXxeoGZcuA1YyR0DfS3zhAc2upUO7gdl9DUHe0z3f8qQFgZ3W19VPyoXi
+	 KR6uDPiSM5dWT4jAokxDOFA7999nlColzwdXt/HlX3ATgKfWBnIGCaocOwtL/kz5vyiB0
+	 ENoomZak1xd1MD2fcmdJTooalsLWUGfZWAWeezaYuIpmlI3SfBfOmbOK7j8apEHtzrg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050252;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050255;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+O4N83MCTexJmhgjaIsZy5Znuhr05rQ6mhGyOsCtVMI=;
-	b=zVda52YkM9Y7X2nCisOBG91mpaqrBEP2d5EZcAIq01M76l5Ao6dCOvGS9l46HJWz/r2p
-	 LTy6SWmWSUZyaXKLkNZIpfkcb0dwMhHGML6g6yOo2Y0XzzxAhRPu6ioaScoUnz0ktCctv
-	 VtShbi2RFML3ndVhP6juqAgSrr4Eaq6EVvy4c90jptrd5krQEe68yNxeEeDzbguxL+Lij
-	 KI4AsmPD3T9mhYDtCE6+Oqu7Mz8fhtMZnlR7hLj7Nhl8nwtLb6B4LPLH2OLwatzyL6/Lf
-	 lo5Q5fMBxGVZa8tmT/xARwY6nGchUioF2xeKXai1aGMCbPxpRH0SikMNn0r+b5WEqCA==
+	bh=EpmX4f9nedgEzlazF4UN4Vg/9wPsMrT6kbdGGG9bHNU=;
+	b=l5Vhk/v+VJFSLoT+ZwrIM1PvtE2UJfo+cdcV/f/1OGCswNge7IFsdOzipsEFGlQBWZVP
+	 +xFyl+8IhScccjQQ11VoHzuEMHN/RIIW7s0Z10exxMICoo7wWkthY+M95LrednkZ9O+mr
+	 WCfQFL7HXC5aaoMf9nV/IVM5MIoFRaF6ie6pODVs+bCMCTod3NBRZx/rwRM0umdREH2Is
+	 lyy/suiZq8HvaDzhzfX40URPBD9Op7kMk8ea+zFgUYqLexLv3XrHSlyGgyQR2fnQeMrCQ
+	 hrx+MSeFj09IRqyCjS1hizM3dLkDc3HinDvS6Zj/nLFxurvPxPv17LrTOIaiB0SjJQQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="btRG/LiI";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFKimkp+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE31606A331;
-	Thu, 19 Nov 2026 01:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1959606A320;
+	Thu, 19 Nov 2026 01:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=btRG/LiI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBC81F000C4;
-	Thu, 19 Nov 2026 01:04:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XFKimkp+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52E11F000C4;
+	Thu, 19 Nov 2026 01:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050252;
-	bh=+O4N83MCTexJmhgjaIsZy5Znuhr05rQ6mhGyOsCtVMI=;
+	s=korg; t=1795050255;
+	bh=EpmX4f9nedgEzlazF4UN4Vg/9wPsMrT6kbdGGG9bHNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=btRG/LiI490Nz0q9Un5acA54V9a5lxa9TAqxLpHF3bVgYCyQaqXB4Z0L8C0pJTEXk
-	 bZLo0pFjU7z5Q/ie41vEid+RD66CkM1Cvq8VS6l6vRNfilA9Ah5dGojO64q1ATIfoN
-	 3Mw8kKCAoBpr9F2CD7IAn3R3GqghpoSuWwFQmgTs=
+	b=XFKimkp+2BheW4iNXLVv1LoiMOhAL1GLP2ILnb0GeY3iAmwMDiy1LT9n28gDfWFfb
+	 95hC9SvkIqLje0Z2txeRdzlHT7FcpHChS1UKEbEQhm2g1h/OekuY0x5fQSjXTcLu3s
+	 zqioh8E9OEQ1/g5mZDJVSiptn9vTOEsK+caQ3KWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Hao <haohlliang@gmail.com>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2642/2857] timers: Clear pending_map on CPU hotplug
-Date: Wed, 18 Nov 2026 16:01:16 +0100
-Message-ID: <20261118150336.717692447@linuxfoundation.org>
+Subject: [PATCH 6.1 2643/2857] ASoC: cs42l56: Remove the ADC Mute Switch control
+Date: Wed, 18 Nov 2026 16:01:17 +0100
+Message-ID: <20261118150336.750830256@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,46 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liang Hao <haohlliang@gmail.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit e7cad586d73276cbd4466de81b2092287d7475c0 ]
+[ Upstream commit ff404ef11b975baf38c4472c51a6674c239e8021 ]
 
-CPU hotplug migration leaves pending_map bits set on the outgoing CPU
-while its wheel vectors are empty. After re-online, a later next_expiry
-recalc can treat those empty buckets as pending and temporarily pull
-next_expiry forward until collect drains the bits.
+The ADC Mute Switch control writes bits 2 and 3 of the Misc ADC Control
+register. These are the ADCA Invert and ADCB Invert bits, which have
+their own controls. The ADC mute bits are bits 0 and 1, and the DAI mute
+callback already sets them.
 
-Clear pending_map under the base lock after migration in timers_dead_cpu().
+So the control has never muted the ADCs, and nobody can be relying on
+it. Remove it rather than point it at the mute bits, so the ADCs are
+muted in one place only.
 
-Fixes: 500462a9de65 ("timers: Switch to a non-cascading wheel")
-Signed-off-by: Liang Hao <haohlliang@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260930063621.37740-1-haohlliang@gmail.com
+Fixes: 272b5edd3b8f ("ASoC: Add support for CS42L56 CODEC")
+Suggested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/all/atXh3Br+fuH83S0q@opensource.cirrus.com/
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20261019124022.3410793-1-sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/cs42l56.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/time/timer.c b/kernel/time/timer.c
-index cf86c1d9d68ee..0988a8cbfac41 100644
---- a/kernel/time/timer.c
-+++ b/kernel/time/timer.c
-@@ -45,6 +45,7 @@
- #include <linux/compat.h>
- #include <linux/random.h>
- #include <linux/sysctl.h>
-+#include <linux/bitmap.h>
+diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
+index 206c45318ad4c..94e5742cacc26 100644
+--- a/sound/soc/codecs/cs42l56.c
++++ b/sound/soc/codecs/cs42l56.c
+@@ -387,7 +387,6 @@ static const struct snd_kcontrol_new cs42l56_snd_controls[] = {
+ 			      CS42L56_PGAB_MUX_VOLUME, 0, 0x34, 0x24, pga_tlv),
+ 	SOC_DOUBLE_R_TLV("ADC Volume", CS42L56_ADCA_ATTENUATOR,
+ 			      CS42L56_ADCB_ATTENUATOR, 0, 0x00, 1, adc_tlv),
+-	SOC_DOUBLE("ADC Mute Switch", CS42L56_MISC_ADC_CTL, 2, 3, 1, 1),
+ 	SOC_DOUBLE("ADC Boost Switch", CS42L56_GAIN_BIAS_CTL, 3, 2, 1, 1),
  
- #include <linux/uaccess.h>
- #include <asm/unistd.h>
-@@ -2273,6 +2274,7 @@ int timers_dead_cpu(unsigned int cpu)
- 		for (i = 0; i < WHEEL_SIZE; i++)
- 			migrate_timer_list(new_base, old_base->vectors + i);
- 
-+		bitmap_zero(old_base->pending_map, WHEEL_SIZE);
- 		raw_spin_unlock(&old_base->lock);
- 		raw_spin_unlock_irq(&new_base->lock);
- 		put_cpu_ptr(&timer_bases);
+ 	SOC_DOUBLE_R_SX_TLV("Headphone Volume", CS42L56_HPA_VOLUME,
 -- 
 2.53.0
 
