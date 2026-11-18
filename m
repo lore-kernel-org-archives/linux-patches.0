@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043409;
-	b=34X5042dPk3eXRk9GXIvvz8jfdQQG2kTvfYfBf12DnJum8usWXNlaYayrzYaCCcskiTn
-	 I2V4M3PRdm8l6mIR0S45eBv9QE9DpZ33wgR4ymh0Ojq3vlP9vswVsNI5gkSPcnfEK+nTZ
-	 U8YMShfiBLxv8h2lrRaXr17s7fMBrJu9Wm9aAmh4D8RAXYopFdPPdHyFKCxKd9xK9/zPQ
-	 5aqPH3IaA+Zvn41RCoWP0WFQOgTcP981O5yTtBFc0vvbjW4iwcyibp5uHsRQyzEf48Zau
-	 v4/beN48k9G5yY36gHkhCXbICJ3sX5bW+zgLIQYNvSfONOSD+9s37+210YMWupZE+Jw==
+	t=1795043411;
+	b=tgrIpZtnDbQ4x05Xbva+h8vSGWBRhQacCEPb/haHjNCojRTUQet4wizLQfS/ihHzd5Al
+	 mv7B8Vy/o6Pre+0E6aYdgdraUqjcBVmoR0Zos9SJHOE2dfqYsgxM6XQGu8pNs1toa3zLR
+	 l1H1d4uFuBXOVE5C1tKlUJJrzscXfExPg5KAl4IBdb3yjkv3X7snNTq7qV0Y96XD7/gGh
+	 WQhGX6GhjpZolA8SfAIQCh5kGr0ppRfpCWiSWkDWyL5yKfin3ZSIsblVMwMDsP46ODDFw
+	 fPTXK9GOPZO8O35BkMVnOBP0Da+Sq1d005Yy7TtAomDmHGh9pdFtSJh60SQYvCRIERQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043409;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043411;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=FNV1o1iRPmuPguJBGtrAk5QeP7laJOTYRLc/kJeUTAU=;
-	b=zskkqrO+ojLciyCg1moMrkGXOyHcsX48u7KHHDn3OG4LqmzWxHTndo1157Fz9kzgxOvU
-	 BPgo08bKVkNHhCScT6zX4gmwsZ+vQAvkJ+P/zdFE3h7pZCpDoO0z6tWmiEEMe4iNi/eLs
-	 JBrfzYXE92M2z3GiyupRKC775J68LQpaYA7FeaPMvoT3tDHDgCm86ghP2oRC7kZcpC8YA
-	 DyyF7noL8i9R184pRGbpeOCxfsPtoP7hwUyQJug991EzhzZqZ27HYtc4FrqUdE1UhXQaa
-	 I5C+ia67cX/mCBOJd3bsc/hJDtFPvBr99JpGgn2LsluE8xACfBGCqCTyhw8ciQ1WmAw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=EMZgcMiQYlSuu18wVtUpMlWK0qL8TI7fnK9J2X2Puko=;
+	b=HUPrImkXkS+aI1v2OkA0uFmBp3JuSIoMX0h+VOu6a0S0JELepWCTYVuBZnKKxGXxwDlf
+	 iEdLWIuuro+DDdiGNNjqL/VrueA+Eb8tm/kWdt0TzGdTP3YJSfJ0GVV2PNELXOEbxVhUH
+	 5k4FckaapHsXN8Lr2S6A1jaCZrQee0KtX0eo9kKWD9caXZZlRHJCr0k3cw4s7BAmVncJ1
+	 W/YdvZ/DnPA671Ca8F9oHFtEm9UOLS1D41OGJJerezlVBnKUItstoydUc1BqIxQ1NWEJz
+	 eSe5+80EhLGDUUQhcc/nJUIbNw43a8S7W8Nt7TKzw8ZpqjxURI2XMmO8HZ3RRhQ1QKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McE+BDS5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcplPAlP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8143606A325;
-	Wed, 18 Nov 2026 23:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD6E606A335;
+	Wed, 18 Nov 2026 23:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McE+BDS5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B201F000C4;
-	Wed, 18 Nov 2026 23:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xcplPAlP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17AB41F000C8;
+	Wed, 18 Nov 2026 23:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043408;
-	bh=FNV1o1iRPmuPguJBGtrAk5QeP7laJOTYRLc/kJeUTAU=;
+	s=korg; t=1795043411;
+	bh=EMZgcMiQYlSuu18wVtUpMlWK0qL8TI7fnK9J2X2Puko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=McE+BDS5S8m24vazAHp94kAYf0xJZeeJWI1XdGg6wRe4rTEK0y5WfuC/gXC6xq0lh
-	 9gdBkXtrNt93dlsG0uN3YzQos3Lq4XT92NgAR0oEOfqWvdZ2YJL0MinYAJV6WGWY5B
-	 CHQQjtzpnHfuLlLbzLRKKT85+b31713pPHFldmWY=
+	b=xcplPAlPpPQvH+EYb8DACBA3eB8AQzRLsDjik62iVGI45yY3a19L7n1Jxm9h0a3ss
+	 mIjJh5GWhRilGAgWmV5cNnytFvYhFtfNZ9cFj9EkWRvRLgbN4YS/PJV3yfJ2WF/dBf
+	 Hy+13NveX3Ss2VCujx+UKGWskrgvrLdsicRJUrfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerd Rausch <gerd.rausch@oracle.com>,
-	Sharath Srinivasan <sharath.srinivasan@oracle.com>,
-	Allison Henderson <achender@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	liulhong617 <liulhong617@gmail.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0193/2857] net/rds: fix rds_message leak in the rds_send_xmit() drop path
-Date: Wed, 18 Nov 2026 15:20:27 +0100
-Message-ID: <20261118150208.305035991@linuxfoundation.org>
+Subject: [PATCH 6.1 0202/2857] arm64: mm: fix accidental linear mapping of no-map reserved memory
+Date: Wed, 18 Nov 2026 15:20:36 +0100
+Message-ID: <20261118150208.623702986@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -64,83 +62,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sharath Srinivasan <sharath.srinivasan@oracle.com>
+From: liulhong617 <liulhong617@gmail.com>
 
-[ Upstream commit eb8a59a17f4a8b6f2afb4a8063e99dd96cc3fab0 ]
+[ Upstream commit 7ace06a01efaba1ec585630aa4c98ac39b38452a ]
 
-When rds_send_xmit() picks the next message off cp_send_queue it takes
-its own reference with rds_message_addref().  If the message then hits
-the never-retransmit check (RDS_MSG_FLUSH, or an RDMA op that was
-already retransmitted), it is moved to the local to_be_dropped list and
-that reference is dropped after the batch.
+When reserved-memory regions with the "no-map" property are not
+page-aligned, the kernel may accidentally map them into the linear
+mapping, contradicting the no-map semantics.
 
-However, if RDS_MSG_ON_CONN has already been cleared, the message is
-not added to to_be_dropped and the reference taken above is never
-dropped: cp_xmit_rm has not been set at this point, so the loop simply
-abandons rm and the rds_message (and everything it pins: pages, MRs,
-notifiers) leaks after an RDMA error.
+The root cause is a mismatch between /proc/iomem's address boundaries
+and the actual page table mapping boundaries:
 
-The only other places that clear RDS_MSG_ON_CONN are
-rds_send_path_drop_acked() and rds_send_drop_to(), and both can run
-while rds_send_xmit() has dropped cp_lock between moving the message
-to cp_retrans and re-taking the lock in the never-retransmit check:
-rds_send_path_drop_acked() can ack away a message that already sat on
-cp_retrans - the RDS_MSG_RETRANSMITTED case above - and
-rds_send_drop_to() runs on socket close.  Both unlink the message
-under cp_lock and put their own reference, leaving the xmit-path
-reference stranded.
+1. /proc/iomem derives its ranges from memblock via
+   memblock_region_reserved_base_pfn/memblock_region_reserved_end_pfn,
+   which perform PFN rounding so the displayed boundaries are
+   page-aligned. This gives the impression that the no-map region
+   occupies whole pages.
 
-Drop the reference directly in that case.
+2. However, memblock_mark_nomap() splits memblock.memory regions at
+   exact byte boundaries (memblock_isolate_range preserves raw DT
+   base/size with no alignment). When for_each_mem_range iterates the
+   non-NOMAP regions adjacent to a no-map region, it returns start/end
+   values that are NOT page-aligned — they are the precise byte
+   boundaries from the memblock split.
 
-This mirrors Oracle UEK commit "net/rds: fix rds_message memleak in
-rds_send_xmit".
+3. These sub-page-aligned values are passed to
+   __create_pgd_mapping_locked(), which does:
+     phys &= PAGE_MASK;
+     addr = virt & PAGE_MASK;
+     end = PAGE_ALIGN(virt + size);
+   The downward rounding of phys via PAGE_MASK extends the mapped
+   range backward into the adjacent no-map region, effectively
+   including no-map memory in the linear mapping.
 
-Signed-off-by: Gerd Rausch <gerd.rausch@oracle.com>
-Signed-off-by: Sharath Srinivasan <sharath.srinivasan@oracle.com>
-[achender: port to net-next; update commit message, checkpatch nits]
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260730041629.3512480-4-achender@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For example, with 64K pages, reserved_region@A2000000 (base=0xA2000000,
+size=0x8000, no-map) causes for_each_mem_range to return
+start=0xA2008000 for the next mappable region. After phys &= PAGE_MASK,
+the actual mapping starts at 0xA2000000 — the entire no-map region is
+incorrectly mapped.
+
+Fix this by rounding the mappable range inward to PAGE_SIZE boundaries
+before passing it to __map_memblock: start is rounded UP and end is
+rounded DOWN. This ensures the mapped area never overlaps with adjacent
+no-map regions. The cost is at most one page of unmapped gap at each
+boundary, which is preferable to violating no-map semantics.
+
+Signed-off-by: liulhong617 <liulhong617@gmail.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/send.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ arch/arm64/mm/mmu.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/rds/send.c b/net/rds/send.c
-index c2ef236076188..516ebd03c8400 100644
---- a/net/rds/send.c
-+++ b/net/rds/send.c
-@@ -288,9 +288,21 @@ int rds_send_xmit(struct rds_conn_path *cp)
- 			    (rm->rdma.op_active &&
- 			    test_bit(RDS_MSG_RETRANSMITTED, &rm->m_flags))) {
- 				spin_lock_irqsave(&cp->cp_lock, flags);
--				if (test_and_clear_bit(RDS_MSG_ON_CONN, &rm->m_flags))
--					list_move(&rm->m_conn_item, &to_be_dropped);
--				spin_unlock_irqrestore(&cp->cp_lock, flags);
-+				if (test_and_clear_bit(RDS_MSG_ON_CONN,
-+						       &rm->m_flags)) {
-+					/* our ref is put after the batch */
-+					list_move(&rm->m_conn_item,
-+						  &to_be_dropped);
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+				} else {
-+					/* already off the conn list; drop
-+					 * the ref taken above ourselves
-+					 */
-+					spin_unlock_irqrestore(&cp->cp_lock,
-+							       flags);
-+					rds_message_put(rm);
-+				}
- 				continue;
- 			}
- 
+diff --git a/arch/arm64/mm/mmu.c b/arch/arm64/mm/mmu.c
+index 72fb70f2bfb20..fb6a731970028 100644
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -623,6 +623,20 @@ static void __init map_mem(pgd_t *pgdp)
+ 	for_each_mem_range(i, &start, &end) {
+ 		if (start >= end)
+ 			break;
++		/*
++		 * for_each_mem_range may return sub-page-aligned boundaries
++		 * after memblock_mark_nomap() splits regions at byte precision.
++		 * __create_pgd_mapping_locked aligns phys down to PAGE_MASK,
++		 * which could accidentally map no-map memory on the boundary.
++		 * Round the mappable range inward: start UP, end DOWN, so
++		 * that the mapped area never overlaps with adjacent no-map
++		 * regions. The cost is at most one page of unmapped gap at
++		 * each boundary.
++		 */
++		start = PAGE_ALIGN(start);
++		end = end & PAGE_MASK;
++		if (start >= end)
++			continue;
+ 		/*
+ 		 * The linear map must allow allocation tags reading/writing
+ 		 * if MTE is present. Otherwise, it has the same attributes as
 -- 
 2.53.0
 
