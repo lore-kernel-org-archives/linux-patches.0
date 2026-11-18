@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031604;
-	b=bYlj4ZkiBbeksF38QPzMLIPcAk3cGssY+YcjV4YCcQxKNwJa7fIpGJ0c/xJcdVWehwVw
-	 Zffq91L9zeP7NOLb9N9sYQDdELrx02dt/gOQgQaLq39FtUGULcG2/po3lH3VfUrzW8xV7
-	 5GjEcUqZhSzAiPH0Ar1OJe73axsPCeVP0oxazrkhYsohULuDJ5BzNhQGOriFqP1WDzCuA
-	 g81a/7DBUhD6uybRzCM6Nf2+wOTsvIS4YKKwG9Uyk7NMSE0evVmCe11YMLLGRXcB53cG4
-	 du4D40QvrM7JpAczRMB4MFkNXZE9YQgiS4aZAgZhg0T1qneLAAd+gYaQxXVQ1zpt6IA==
+	t=1795031607;
+	b=w5DhX1QeVObKugy5ni/s4H6y4m2062AAYN5hO5GNgkJSgiCZNwzDTY4bgD0ccgMcQjL/
+	 KHTg5WyfsewwZycBSqQW7BUmIgbWlknDYG+/VPDjc+B8//ZM95M4TcJw2cKwfqfgrh4xx
+	 PPTEwihB310dijD/s1jiDOKlAo5l9ws/bW9Jv2NNjGG5ZmdlzNemukKG0LKu+yVOvnsUc
+	 8d12rsrUU6NEt6S+ogKSMOZk13otk+e16D7nzXq8kuY04UfFMq2WBjKmgHgKqDhKq1RcN
+	 rUPONb2EhLXXIVFJjVJDOGYsYI5NSBwEShn56ukpYR4vwvb1C/aHztCLeQn2ua/Mc2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QDXNJukHwVPP47YvPC8tCezosIMCg4wlitnQLax5QnU=;
-	b=0iCun4kuHJxScWtJyYeq8NC9DctHEK35JaEicPcLjrUn/gjoXW4rkR/XKmok6/amqezy
-	 tZfmZfdDpiyohSM5rXhBXrKZyMOHO0lz7u6JiZ6yoEIC8Lghy4XOpCzL+CbjMUBDsDEJy
-	 pT4ACoO2Qi6S8Btgqvg68NKdADne5dWgO1If9cfYhn9KrJ7m5fAt9jhMt3W0boW6h+8JE
-	 mva6zDuzHuwbPTbxMDFq+/4RU2/ENOo1jnUqlzddbgpHAdiqrlZ1pQ+B/QseH7eAoufGn
-	 WMwYOWRBNPSwcEGxhUxC+nhP1fOGpQJz2X2ts9sHGinVEg/fcsqQdM+UM70b5xq5hYw==
+	bh=v6YIL0s9aOhGV8u4vCRUjoyiMAuvjlzWqQF09O2EKLg=;
+	b=RObrGa7atEroMZMZ36FEgK058gmdWTT7afakWH7teiQql1zJ9AgTIHsc0iPSXJy225FT
+	 bbyJACNaWd9cEvWiuF9vw21T1aQzRCoDf1B37BLCIdBTTovIoOpf+PxaxviftNjeXxWv8
+	 SZkKd+3eBnNrsTHstyVHCY3ekicE0mBKEDhEb2TJkijGoa1RujSpEMKxUi7zQplmz+rJ/
+	 HPJXW+qdZTjFPrSTuhNGKFrx0H59o/ZmK6ag6isb9ccI+pz6E77fRlpqbuY0G+njvMs+z
+	 VbQ8eGRLwX/cslfq2DU1pqOMjzCCMmw4vO7aoGzod/Z0ph4Z8BOS1CHJfzpVCTHMQ5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4DskvkK;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D5b4Hxg+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75077606A330;
-	Wed, 18 Nov 2026 19:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31476606A320;
+	Wed, 18 Nov 2026 19:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w4DskvkK
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42C21F000C5;
-	Wed, 18 Nov 2026 19:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D5b4Hxg+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA771F000C4;
+	Wed, 18 Nov 2026 19:53:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031604;
-	bh=QDXNJukHwVPP47YvPC8tCezosIMCg4wlitnQLax5QnU=;
+	s=korg; t=1795031607;
+	bh=v6YIL0s9aOhGV8u4vCRUjoyiMAuvjlzWqQF09O2EKLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=w4DskvkKl4lf4idJuyDDQ9Cj+ItaSxsFRR+M/3CqDgixdUdMtmw3osN1jH1wGzKqu
-	 gx0+8tJ933j4+dVllzA+OU9+1uu1eGqBAyONxDv3vY7A3MCFkqXYCu5j3GNi9BPn2d
-	 LwVTv+R58qeqGGg5Gqt3MyclE3czoNyIOiRDs5A4=
+	b=D5b4Hxg+QGMqgyNVkxelIP04eb4nvoHq2OQHVqaxm3VNMWskZ2zalktR9iQjOy6Uk
+	 BYp3WA896jJgEp8Cbe2JJb+YU/iZSw/+mGOqhZ7JYtnNc8uG9T36DShyLreyMK6ms3
+	 duNag/au+vifTHr7UmCQj8Gv288RqscE9Qqo9C8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tapio Reijonen <tapio.reijonen@vaisala.com>,
+	Ethan Ferguson <ethan.ferguson@zetier.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1117/1756] serial: max310x: dont power down the port mid-transmission on close
-Date: Wed, 18 Nov 2026 15:54:04 +0100
-Message-ID: <20261118150054.603967117@linuxfoundation.org>
+Subject: [PATCH 6.12 1118/1756] ntfs3: add FS_IOC_GETFSLABEL ioctl
+Date: Wed, 18 Nov 2026 15:54:05 +0100
+Message-ID: <20261118150054.638205778@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -67,134 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tapio Reijonen <tapio.reijonen@vaisala.com>
+From: Ethan Ferguson <ethan.ferguson@zetier.com>
 
-[ Upstream commit c3ad42ccd303113a08bd0b441fb5b3380f29c5bf ]
+[ Upstream commit e4dff970091118f2ecf66146d0b286979078b5cc ]
 
-max310x_shutdown() powers the port down regardless of what the
-transmitter is doing. The power-off stops the UART clock mid-character,
-truncating the final frame, and on the auto-RTS path it freezes the
-RTS output at its current level: a close() with data still queued
-leaves the RS485 transceiver asserted until the next open, which also
-emits the interrupted character corrupted.
+Add support for the FS_IOC_GETFSLABEL ioctl.
 
-Waiting for the data to drain is no better: the tty layer's
-wait-until-sent is bounded by closing_wait, configurable to none, and
-a hangup arrives with no wait at all, so draining a full FIFO blocks
-close() in uninterruptible sleep for seconds at low baud rates - and
-forever when CTS flow control blocks the FIFO.
-
-Instead, set MODE1 TxDisabl: the character in flight completes and the
-transmitter ceases with TX_ at idle. Give that character one character
-time (the chip has no transmitter-idle status), then reset the FIFOs
-so the auto-RTS engine sees the transmitter empty and releases RTS
-within the configured after-send hold; wait that hold plus one bit
-time before powering off. Abandoned data was explicitly not waited
-for, and startup() resets the FIFOs and TxDisabl on open anyway.
-
-Measured on a MAX14830: a truncating close() at 50 baud takes 0.23 s,
-RTS releases one character plus the hold after the last stop bit on
-both polarities, and the reopen corruption is gone.
-
-Fixes: f65444187a66 ("serial: New serial driver MAX310X")
-Assisted-by: Claude:claude-fable-5
-Signed-off-by: Tapio Reijonen <tapio.reijonen@vaisala.com>
-Link: https://patch.msgid.link/20261008-max310x-rs485-sw-delay-v8-5-6ba881f81e1f@vaisala.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ethan Ferguson <ethan.ferguson@zetier.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: 80218408836f ("fs/ntfs3: do not mark frame pages uptodate on read error")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 44 ++++++++++++++++++++++++++++++++----
- 1 file changed, 40 insertions(+), 4 deletions(-)
+ fs/ntfs3/file.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index c56e2772a40fc..16b80d6f735fe 100644
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -289,6 +289,7 @@ struct max310x_one {
- 	struct work_struct	md_work;
- 	struct work_struct	rs_work;
- 	struct regmap		*regmap;
-+	unsigned int		char_time_us;
- 	unsigned int		baud;
- 	bool			tx_break;	/* break_ctl() owns the transceiver */
- 
-@@ -969,6 +970,7 @@ static void max310x_set_termios(struct uart_port *port,
- 				struct ktermios *termios,
- 				const struct ktermios *old)
- {
-+	unsigned int frame_bits = tty_get_frame_size(termios->c_cflag);
- 	unsigned int lcr = 0, flow = 0;
- 	int baud;
- 
-@@ -1081,10 +1083,13 @@ static void max310x_set_termios(struct uart_port *port,
- 	uart_update_timeout(port, termios->c_cflag, baud);
- 
- 	/*
--	 * Cache the new baud rate and reprogram the RS485 RTS delays, whose
--	 * millisecond-to-bit-time conversion depends on it.
-+	 * Cache the new baud rate and the time it takes to clock out one
-+	 * character before reprogramming the RS485 RTS delays: the
-+	 * millisecond-to-bit-time conversion divides by the baud rate.
- 	 */
- 	to_max310x_port(port)->baud = baud;
-+	to_max310x_port(port)->char_time_us =
-+		DIV_ROUND_UP(USEC_PER_SEC * frame_bits, baud);
- 	max310x_set_rts_ctl_params(to_max310x_port(port));
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 13f7d8acecf90..fd46160f48484 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -49,6 +49,14 @@ static int ntfs_ioctl_fitrim(struct ntfs_sb_info *sbi, unsigned long arg)
+ 	return 0;
  }
  
-@@ -1141,9 +1146,10 @@ static int max310x_startup(struct uart_port *port)
- 	one->tx_break = false;
- 	max310x_port_update(port, MAX310X_LCR_REG, MAX310X_LCR_TXBREAK_BIT, 0);
- 
--	/* Configure MODE1 register */
-+	/* Configure MODE1: re-enable the transmitter shutdown() stopped */
- 	max310x_port_update(port, MAX310X_MODE1_REG,
--			    MAX310X_MODE1_TRNSCVCTRL_BIT, 0);
-+			    MAX310X_MODE1_TRNSCVCTRL_BIT |
-+			    MAX310X_MODE1_TXDIS_BIT, 0);
- 
- 	/* Configure MODE2 register & Reset FIFOs*/
- 	val = MAX310X_MODE2_RXEMPTINV_BIT | MAX310X_MODE2_FIFORST_BIT;
-@@ -1180,9 +1186,39 @@ static int max310x_startup(struct uart_port *port)
- 
- static void max310x_shutdown(struct uart_port *port)
- {
-+	struct max310x_one *one = to_max310x_port(port);
++static int ntfs_ioctl_get_volume_label(struct ntfs_sb_info *sbi, u8 __user *buf)
++{
++	if (copy_to_user(buf, sbi->volume.label, FSLABEL_MAX))
++		return -EFAULT;
 +
- 	/* Disable all interrupts */
- 	max310x_port_write(port, MAX310X_IRQEN_REG, 0);
- 
-+	/*
-+	 * Stop the transmitter: the character in flight completes, data
-+	 * still queued is abandoned (the next startup() resets the FIFOs).
-+	 */
-+	max310x_port_update(port, MAX310X_MODE1_REG,
-+			    MAX310X_MODE1_TXDIS_BIT, MAX310X_MODE1_TXDIS_BIT);
++	return 0;
++}
 +
-+	/*
-+	 * Let the character in flight finish (the chip has no
-+	 * transmitter-idle status), then empty the FIFO: auto-RTS releases
-+	 * only once the transmitter is empty, and the power-off below
-+	 * would freeze an asserted pin until the next open.
-+	 */
-+	fsleep(one->char_time_us);
-+	max310x_port_update(port, MAX310X_MODE2_REG,
-+			    MAX310X_MODE2_FIFORST_BIT,
-+			    MAX310X_MODE2_FIFORST_BIT);
-+	max310x_port_update(port, MAX310X_MODE2_REG,
-+			    MAX310X_MODE2_FIFORST_BIT, 0);
-+	if (port->rs485.flags & SER_RS485_ENABLED && one->baud) {
-+		unsigned int hold = DIV_ROUND_UP(one->baud *
-+				port->rs485.delay_rts_after_send,
-+				MSEC_PER_SEC);
-+
-+		fsleep(max(DIV_ROUND_UP((hold + 1) * USEC_PER_SEC,
-+					one->baud), 100U));
-+	}
-+
- 	max310x_power(port, 0);
+ /*
+  * ntfs_fileattr_get - inode_operations::fileattr_get
+  */
+@@ -144,6 +152,8 @@ long ntfs_ioctl(struct file *filp, u32 cmd, unsigned long arg)
+ 	switch (cmd) {
+ 	case FITRIM:
+ 		return ntfs_ioctl_fitrim(sbi, arg);
++	case FS_IOC_GETFSLABEL:
++		return ntfs_ioctl_get_volume_label(sbi, (u8 __user *)arg);
+ 	}
+ 	return -ENOTTY; /* Inappropriate ioctl for device. */
  }
- 
 -- 
 2.53.0
 
