@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061844;
-	b=bNwugQXBLn6/LBVBT5kMjaQCjSxI97nClaGJwF+sqBynKTUKvxXyPChz6EJX2nH25mXU
-	 LJx8pPAWx11uWj6N65ETV+kjTaYWnAykZMWGDJ6wFGRqUgLsLnXaPvV12PYMlxebtrm32
-	 mU371omvaFP83yUHO7mObPFmgd2yCTBaPesBw1QFH347MO6PNW/iGZKWrTcRB/J2Aa39a
-	 Iiyp3I4ayLMA6j7ZUt4/IJUcc8d9O+Jc/iKi230pvBPB/XDqLEW8aAFutCkDancX97Xz8
-	 pZ2BkXk+B7NCVmCAbg90QafRdmRtzh6ryQzRBB46B4OStYS0I8vHRoVxhkSQzvWwY5Q==
+	t=1795061847;
+	b=zDK1pZr7wj0GxILmpyTM2PGMCdFeMH8YTXsjcfkRZ39TTylfNoVhgYxUWwynmg8tnfCI
+	 1qEZZuc67Rtf8vIzuyYs/Jcx/R6SHsankZ+at7y3Rppt5sPwiFGm0ptjgnqrSc1byu7ix
+	 Wc8qlgcRVWZctImREfHi2HhKfWFESrJZgR2Koo4oJkhJjpO+2QMAWUunrPBh15q+f00+k
+	 BlTlmKgeRuUlh+vfHVjt9ChpDNRCtZ6F5pcbcvtgbNZAPTa9XrsIcCj9jtAQottcTW0Lz
+	 QO2o86wAb3tW5Nm6Cz2Jd+kzVMBhSDhFrdc2YoPn0Ua/kUa8UnQTY7H6iyK8g+m9pMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061844;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061847;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=nsWKA6U5drfaHBx/4HA62ptYnN+G28LQd7xijckVYOo=;
-	b=RONHuGdzRmD7dPTCoc1BnDPDpF4bBbVL3p2Yw0bA9uTz0wV2c8A0IdGs91HM3L+lL/Xz
-	 3UgwMrAskbrFV9QqGqNWZxDcIzC5pZQVEoFOnp+HMxbvMuB8s7K+LuA7g+RZlKeP8TtUb
-	 veHpIEc8iSYna+NtvGbYXfJaY8Y+efM5jw0A3ncXQAj7vcbLxh+Pk9G04HV3DXNbZs0P+
-	 pjgC3CIhoTj+t34lCPzpUaj8RMq6mX/Br6UQRp2SOi7PwFJp42kZu64KdXcTQFd0SAkPR
-	 er03Az6uVcbwhbtbWXyzPt9aaDcwRb9h3KGGSZvulvX0csDIfJOccp9ETF4HEOIQ9hg==
+	bh=wnJ3gkBVP3mGdaqzFzBV4LOfqPvoinSIg+/rUx4ZArU=;
+	b=166ahZl9wXbeckRq6XRorKsfb3Mvk1avzL6qyRlcMX2JhJIvrI7Adkr1hRi7gDMoU5zg
+	 OXNydJdmMgFkL+kHYRXKUh+iE4w7H034XH/XurXyTZFiUcALznSjWSqYITjlb4cWAX7Nq
+	 BmTSQF9GivN/dRn0NoMRFKb8LO9A0jBoDDdzYAdXq3A0RF2TkgxzrFtD0RXmD5fmyMvR9
+	 eUMaR3gzWOJdRkDGy5Y4UkwXB4fwo2ExQmSg78Pwif8rmTczTwDA4/nKZSQsQalnvPolA
+	 1r6DtTYkOGmlOLsD4JmyiXvkwG6MPFiarZ81qo4/dAS3y6L+7ikqn0v0/9KnJAlD6hw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gv4GwDyq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zdpLn/ys";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2455F606A337;
-	Thu, 19 Nov 2026 04:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03581606A325;
+	Thu, 19 Nov 2026 04:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Gv4GwDyq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788231F000C6;
-	Thu, 19 Nov 2026 04:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zdpLn/ys
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CE51F000C7;
+	Thu, 19 Nov 2026 04:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061844;
-	bh=nsWKA6U5drfaHBx/4HA62ptYnN+G28LQd7xijckVYOo=;
+	s=korg; t=1795061846;
+	bh=wnJ3gkBVP3mGdaqzFzBV4LOfqPvoinSIg+/rUx4ZArU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Gv4GwDyqFNhfNh7OztJZ3oYK/0Fwn4QC9Gq95K0chGyodNUNrJda8deqE29/UtwXc
-	 4H7an+VWTy9UIFAWCCcZyT2inOC4s+90TEPc+BwHrMlcx7yU2hFuzC4tcDdaVJj8ca
-	 Jindfn6VP+kVngbSJUmRBhjMPZ/AsUZHohTROlN4=
+	b=zdpLn/ysXC5slbTEA1jiC+twpxV1lCF3MZIWcj0leysda8rdQFMpXWLQJFr5vZHoc
+	 vIpFzZ6ScDmBIThmg1essAi5ViRfyh0GLqBlVYYsMR+rb6L9wOqzg5aD2z3bigfISb
+	 EXiZXQ12zdKj0WGNEfAEOZWvGzAGhrMiZyQOq7Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1699/1848] bpf: Bound the nesting that the BTF show code follows
-Date: Wed, 18 Nov 2026 16:02:17 +0100
-Message-ID: <20261118150030.878376316@linuxfoundation.org>
+Subject: [PATCH 5.10 1700/1848] bpf: Dont take an extension for an iterator program
+Date: Wed, 18 Nov 2026 16:02:18 +0100
+Message-ID: <20261118150030.915812310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,66 +70,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 13ac7c05bc45d3445b580da186548dd3487fae4e ]
+[ Upstream commit 7cc639dc45c5d3b69acb2a2fc834e9eec51e0214 ]
 
-btf_struct_show() and btf_array_show() recurse for every nested struct
-and array.  MAX_RESOLVE_DEPTH bounds one resolve walk when BTF is loaded,
-not the nesting: a member whose type is resolved already is not walked
-again, so BTF that defines its types from the inside out can nest them as
-deep as it has types.
+An extension inherits the expected_attach_type of the program it extends.
+If that is BPF_TRACE_ITER, check_attach_btf_id() hands the extension to
+bpf_iter_prog_supported(), which goes by the name of the attach function.
+For an extension that is the name of the subprogram it replaces, so the
+load fails with -EINVAL, unless that subprogram is called like the function
+of a target, bpf_iter_bpf_map_elem for example.
 
-Whoever may load BTF, with CAP_BPF or a BPF token, can give such a type
-to the value of a map.  Reading the file of that map in bpffs then
-overruns the kernel stack: with a few hundred levels the stack guard page
-is hit and the kernel panics.
+Then the extension gets the context of that target.  If the subprogram
+has as many arguments, it can use the key and the value as buffers, but
+how far it reaches is noted in the extension, where the test of the
+iterator link does not look: it reads and writes behind the elements of
+the map.  And the id of the subprogram in the BTF of the program is cached
+as the id of the target, so that programs of that target which are loaded
+already cannot be attached.
 
-Stop at 32 levels.  That is MAX_RESOLVE_DEPTH, and __btf_show_indent()
-has as many columns.  Nothing is shown for a member that lies deeper, and
-the status becomes -E2BIG, which bpf_snprintf_btf() and
-bpf_seq_printf_btf() return.  The types of an x86_64 defconfig kernel nest
-14 deep.
+Refuse all extensions here.
 
-Fixes: b00b8daec828 ("bpf: btf: Add pretty print capability for data with BTF type info")
+Fixes: 15d83c4d7cef ("bpf: Allow loading of a bpf_iter program")
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-19-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-27-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ kernel/bpf/bpf_iter.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index bcdd5a64c43b2..5d9d6678d1a0d 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -751,6 +751,8 @@ static const struct btf_type *btf_type_skip_qualifiers(const struct btf *btf,
- }
- 
- #define BTF_SHOW_MAX_ITER	10
-+/* nested structs and arrays shown; __btf_show_indent() has as many columns */
-+#define BTF_SHOW_MAX_DEPTH	32
- 
- #define BTF_KIND_BIT(kind)	(1ULL << kind)
- 
-@@ -1142,8 +1144,18 @@ static void *btf_show_start_aggr_type(struct btf_show *show,
- 				      const struct btf_type *t,
- 				      u32 type_id, void *data)
- {
--	void *safe_data = btf_show_start_type(show, t, type_id, data);
-+	void *safe_data;
+diff --git a/kernel/bpf/bpf_iter.c b/kernel/bpf/bpf_iter.c
+index e8957e911de31..73e9b584275ee 100644
+--- a/kernel/bpf/bpf_iter.c
++++ b/kernel/bpf/bpf_iter.c
+@@ -321,6 +321,13 @@ bool bpf_iter_prog_supported(struct bpf_prog *prog)
+ 	int prefix_len = strlen(prefix);
+ 	bool supported = false;
  
 +	/*
-+	 * Structs and arrays are shown by recursion.  BTF loading bounds the
-+	 * depth of one resolve walk, not how deep resolved types may nest.
++	 * The attach function of an extension is a subprogram of the iterator
++	 * program that it extends, whatever its name is.
 +	 */
-+	if (show->state.depth >= BTF_SHOW_MAX_DEPTH) {
-+		show->state.status = -E2BIG;
-+		return NULL;
-+	}
++	if (prog->type == BPF_PROG_TYPE_EXT)
++		return -EINVAL;
 +
-+	safe_data = btf_show_start_type(show, t, type_id, data);
- 	if (!safe_data)
- 		return safe_data;
+ 	if (strncmp(attach_fname, prefix, prefix_len))
+ 		return false;
  
 -- 
 2.53.0
