@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023231;
-	b=5MtmBL5sCJQ+gOsSbpARYlFsOIgzg3TanNHZ9uCP7W4SpuQrHXcTcrO/ZGY8LPntiiAP
-	 aKw85CtX8PNqUzv++3R7gcFtRF2G4ixJI2mECPiWs7R8IR90mOd1yzAZAU5lfuqxITj06
-	 IFB2SgGvWjx6/9O9mnlxB1oEQV0VkKIoC30CBbCtcruimvPGP8gE+Di6XVE1O9acG5vnf
-	 NhbaTR35uMTmvVtkU3bmq/eQkVK2pPtI9/i3blwgjzDoAdQDsssaWpoDoOGbTf3oN9aOK
-	 9J0exqdUZ0Bgk1eqqIjxiUh0UjzS5ipYnkxiZGckrXK8zDTYHUIgJi5P2ta6WUyQZMw==
+	t=1795023234;
+	b=16HHcrE6ztsHPTxmQLwMPV0KXp+MQSuxoujYquTP+x1LS3loRe4m2BciLj9jCJq2DAbO
+	 /+2zKVlS48uN+nvkQ2AyV9fMa3IQqJ/QrntF/MJMIRSmu4mKOzvnAbN9ux0lk249wUw5z
+	 VELMq3etfO4CcOU6wMCKqvsuRDmntU8AlJM2ak+suWGAN4HQKXyw6Ol/4nYN+eX45N04t
+	 iqh2rHqNN8Y9uJ6vw4cIMJbrOz/Zge/7H/3E5zcQJ5qOJNLRL5G3C+n+iJiUvzjQp/u1z
+	 7rGSa1kUT5dzjfdUU9nb1T5OJE643ZtIrr8CcSkzxHgJHrTBUOM7gd1Da8kLzBddOrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023231;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023234;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wIXs1RCNB8H6LVtFPc7svkpiOhVtDWZuluxlNi+Rjsk=;
-	b=fRcExMA98eZOEaG6bmR3wXVr8GPNCREq3U9AjXx4wEElHgV6guvjQIDrmOnDPbKbdzmg
-	 VOKiC5rWfR7YxupBGVPLu2KCmTY7ScFnF68KrBMNeubNQEcWqKaUAUDGiUdmZISRewm8/
-	 PLHbSvf10K0mgyLX/F/7AriYthpHh0Y1cgGrq+Xw6L3R9RQcohovczu7wE/9g3c+m3uD0
-	 n704D0/Smlp7tjV5vn+sCfCSW3Na5HgCVDDl52Kce9uk/uSGAqYqXuQtMEubV9euWm8hw
-	 B+yKNg+SxPRCxAw3J2i6y7HYhYj2DsIzkHQG+jDR3d7AVSbizuvRm2u1qOZh15vpzWA==
+	bh=ULpr+IQq1l/DcjlSQBSuHpTeYgoqPzRH37aa/xVp2EU=;
+	b=kOpOGbEEaV1qT7UcQRGuaYYDzB2T/Bk8EkcM76SI+4L8Wk+4wpYMJUhf/cbqTv1ZbC8T
+	 PsnHfyEvsvNCURkisECeGmxV8aRCCGhSzRed3uAT34Vup9P5NIOe3SkjisEPSt0Ey9X7S
+	 SfhOyVh9FWcOfY5kWl8iDd9Sy3NbkyTSVDTR9mOxEBRPP6aEVMbQmulPFIVpiGcuu7Qy4
+	 JbfxJVn7cejTorlYjdCsMLkGHMxVrPL0e15nATrZt6x0krMuTry67USY7n5CLukDRzV0n
+	 tQx7jJIoobILHVlRIR5Qymm0VYnuROVRzKhPXa+ypua2HhN0iNuXAlxgk8Jf98dnGtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="hi0/rWEG";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwCWIZ5c;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE31E606CA49;
-	Wed, 18 Nov 2026 17:33:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CE8606A33E;
+	Wed, 18 Nov 2026 17:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hi0/rWEG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E221F000C4;
-	Wed, 18 Nov 2026 17:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TwCWIZ5c
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E751F000C4;
+	Wed, 18 Nov 2026 17:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023231;
-	bh=wIXs1RCNB8H6LVtFPc7svkpiOhVtDWZuluxlNi+Rjsk=;
+	s=korg; t=1795023234;
+	bh=ULpr+IQq1l/DcjlSQBSuHpTeYgoqPzRH37aa/xVp2EU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hi0/rWEGRaoTnonR1NGkxrNy1j/HZNOkQ8hOZkGDuGES6AF8hFIH/8o0HF2zzRDSa
-	 cgMSxipH9okMvZC1HLdsZtBUf/PpvelwQBAL7Rnh417Irkq7OGHqTe+FHdZu66uGKD
-	 4TA7N9E4A/XYNlGJORy1xCihLmiakpnxtd4+twXg=
+	b=TwCWIZ5cDGEfWE1WXJ8TxXAd19rrRU7sn8GdtqhSzVxU+bbVCJ4Hfu/6DEToUsr/O
+	 ifU9+xSjwAy02euMcNao/iKxKDWPJ+/QkcHxMtT9qhwAE6NK/DNGpETYsFifoaP03V
+	 co/tp7fGZhOZJgk32ioUd3NrB5MLbEG7UmgKJg3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,13 +44,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	sashiko-bot@kernel.org,
 	Alison Schofield <alison.schofield@intel.com>,
 	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Hanjun Guo <guohanjun@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0246/2151] ACPI: extlog: Validate elog record length before walking sections
-Date: Wed, 18 Nov 2026 15:33:01 +0100
-Message-ID: <20261118150130.750567300@linuxfoundation.org>
+Subject: [PATCH 6.18 0247/2151] ACPI: APEI: GHES: Bound CXL event record copy to the firmware section length
+Date: Wed, 18 Nov 2026 15:33:02 +0100
+Message-ID: <20261118150130.791062056@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -74,55 +75,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit e1fd582a8134150aa10c1f0286dbce00cf63b086 ]
+[ Upstream commit b7a4915a2b43d47f0bbb0b2a4c30e722fa0d3191 ]
 
-extlog_print() copies a fixed ELOG_ENTRY_LEN (4096) bytes from the elog
-record into elog_buf, then walks the sections using the firmware-controlled
-data_length. Nothing keeps data_length inside the buffer, so a malformed
-record walks the section pointer past elog_buf and reads adjacent memory.
-Unlike the GHES paths, extlog never calls cper_estatus_check().
+cxl_cper_post_event() copies a fixed sizeof(struct cxl_cper_event_rec)
+out of the firmware CPER section without checking how long the section
+actually is, so a short one reads past the record.
 
-Reject a record longer than ELOG_ENTRY_LEN and run cper_estatus_check()
-before walking the sections. The length test alone is not enough: a wrapped
-length reads back short and passes it, which cper_estatus_check() catches
-via the header check added earlier. Drop a malformed record with
-NOTIFY_DONE and without MCE_HANDLED_EXTLOG, since extlog did not consume
-it.
+Pass gdata->error_data_length in and reject a section too small to hold
+the record before the copy.
 
 Reported-by: sashiko-bot@kernel.org
-Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=6
-Fixes: f6ec01da40e4 ("ACPI: extlog: Handle multiple records")
+Link: https://sashiko.dev/#/patchset/20260617-topics-ahmtib01-ras_ffh_arm_internal_review-v6-0-91f725174aa0@arm.com?part=6
+Fixes: 5e4a264bf8b5 ("acpi/ghes: Process CXL Component Events")
 Reviewed-by: Alison Schofield <alison.schofield@intel.com>
 Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260904172337.1409775-4-dave.jiang@intel.com
+Link: https://patch.msgid.link/20260904172337.1409775-9-dave.jiang@intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_extlog.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/acpi/apei/ghes.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/acpi_extlog.c b/drivers/acpi/acpi_extlog.c
-index f6b9562779de0..d4f21b9b798a3 100644
---- a/drivers/acpi/acpi_extlog.c
-+++ b/drivers/acpi/acpi_extlog.c
-@@ -160,6 +160,15 @@ static int extlog_print(struct notifier_block *nb, unsigned long val,
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index f301bee643318..3031447e1fc0e 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -830,10 +830,15 @@ static DEFINE_RAW_SPINLOCK(cxl_cper_work_lock);
+ struct work_struct *cxl_cper_work;
  
- 	tmp = (struct acpi_hest_generic_status *)elog_buf;
+ static void cxl_cper_post_event(enum cxl_event_type event_type,
+-				struct cxl_cper_event_rec *rec)
++				struct cxl_cper_event_rec *rec, u32 len)
+ {
+ 	struct cxl_cper_work_data wd;
  
-+	/*
-+	 * Bound the length before cper_estatus_check() walks the sections: it
-+	 * iterates over data_length, which is not yet known to fit elog_buf.
-+	 * cper_estatus_check_header() then rejects a length that wrapped, which
-+	 * the bound cannot see.
-+	 */
-+	if (cper_estatus_len(tmp) > ELOG_ENTRY_LEN || cper_estatus_check(tmp))
-+		return NOTIFY_DONE;
++	if (len < sizeof(*rec)) {
++		pr_err(FW_WARN "CXL CPER section too small (%u)\n", len);
++		return;
++	}
 +
- 	if (!ras_userspace_consumers()) {
- 		print_extlog_rcd(NULL, tmp, cpu);
- 		goto out;
+ 	if (rec->hdr.length <= sizeof(rec->hdr) ||
+ 	    rec->hdr.length > sizeof(*rec)) {
+ 		pr_err(FW_WARN "CXL CPER Invalid section length (%u)\n",
+@@ -937,15 +942,18 @@ static void ghes_do_proc(struct ghes *ghes,
+ 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_GEN_MEDIA_GUID)) {
+ 			struct cxl_cper_event_rec *rec = acpi_hest_get_payload(gdata);
+ 
+-			cxl_cper_post_event(CXL_CPER_EVENT_GEN_MEDIA, rec);
++			cxl_cper_post_event(CXL_CPER_EVENT_GEN_MEDIA, rec,
++					    gdata->error_data_length);
+ 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_DRAM_GUID)) {
+ 			struct cxl_cper_event_rec *rec = acpi_hest_get_payload(gdata);
+ 
+-			cxl_cper_post_event(CXL_CPER_EVENT_DRAM, rec);
++			cxl_cper_post_event(CXL_CPER_EVENT_DRAM, rec,
++					    gdata->error_data_length);
+ 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_MEM_MODULE_GUID)) {
+ 			struct cxl_cper_event_rec *rec = acpi_hest_get_payload(gdata);
+ 
+-			cxl_cper_post_event(CXL_CPER_EVENT_MEM_MODULE, rec);
++			cxl_cper_post_event(CXL_CPER_EVENT_MEM_MODULE, rec,
++					    gdata->error_data_length);
+ 		} else {
+ 			void *err = acpi_hest_get_payload(gdata);
+ 
 -- 
 2.53.0
 
