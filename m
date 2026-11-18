@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030387;
-	b=vlW9dr67aLVouMnCqQ/P/3HnPtF4Y3JmwiBIMRs7RNjE6GwXpYWJ/dc1Q47Gw8LAOGzF
-	 ywnCfI7tyxMLeWhjrc8tEvT+gMiwWn6lUPPsDvLV0cavHCrrdFYWWvhDBL2L5E54iLZQV
-	 Z8/lFAf/9GgNizPpheMlMH82jgAg6gWCL/TEbEe/0d5FjlsLXb5x+rzmr8eJtVAl4RSow
-	 TYkq/gH1v0goNgvDoDWoqJGdJla4k+Ky3ZQiNf6ZyOxJxTLHvQrwTC6oYZzbVCinWUo5R
-	 qdZb87DsDdIZAJwpEgi9NmVrPgYrLKJtwAQP/Y3XAbbrPizgzEaf7a4qvDh22gA0gKQ==
+	t=1795030389;
+	b=fZYNF4MhL5vvM0mV5hhOeeraBx7UAqwxy3kptg/i1DOizPHIp/jMSXSwXsCrdGNYj6Su
+	 iKzj7ybKOVhAG2NvIWJjC0XXhYt1KbetMci5YvzghxVjb3dxPGZRZ+89oDjqTDq3GuQdM
+	 6y2wnGP1Ifxx86LPv/jSXIIZXqUBRUGWRxBVkAR2HYsD3z2o+fRF9Gh20w5d8DuNS+CI7
+	 h71USFEGDp/sWlWu2G1Wnjq+1nKfnfQCpwk1UZDgv4omrgcdbdgXMOL0SSJjltUhL1WTT
+	 /AAlGezFSfbOznEt7CkHQqhLbs8wLF/XSAAwZ0j/s6pP+i/ymAfcio2o1twDQLKrKDw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030387;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030389;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BcYZ3K1DaKpEhcg2/DkaPdPDV6tXQ4qxbwXO+06/SzU=;
-	b=sV0KnLICJg87WxVWicnOKV+fAJfuDRNmWvAjpDRnwxu4GxIzo21y/KeBACpU39u5j3ri
-	 rXdoiuYsb4EfEbTfa+vV10px+j2Cqo6HAkfVbO40+9MW3Ob2ICskfk3TahhhcMmagMuCE
-	 of/bn0xffVgk694L9/GC0AtZZs96laMCgcjpvn+wzKi64e0KjyUTH2TF/EiCNYOrmWFfU
-	 nNJQyTpzM1A51/FJvlh2UpJt7GmRB6OQVP3TUuEme50f6gh4dno7xOaXq6Je7Zuql+HBI
-	 MnCha5lFVurFADYaBaLfa0GVBgED9xDJmYsuLrxvbE/ZK8a0jf7sf6TzAqYS/xWUDfQ==
+	bh=+baG1S20f8kBGTqtpOyY2svXhb+QqweXo8GpCPWY4C0=;
+	b=HVSF6XP3kKwozEuYMXVViNDi8bb+AFzJf3h6kszsf3Fy8n2Uk6Q3f2WEFU3L8lI0K2sF
+	 lpWbCT/VbPmo4XV9T7GFKn0nxqAi4wMOsrKGmMeDzvX1BKwwMLMjtuQOlt/XpOl9eB06l
+	 ATgYfVJqDhejR8VmEYAa8dri+m6lJVRBiIhC8EXxAqRUPgknolTzlPIWc1heXOQtSSry0
+	 5DN6XDqJkCLEEVVCpu41BaVJSC5eC7jurHH6k1omqS+mzI1ytVb2Itctx1Snd3/tsqVRa
+	 6MXgUNNfQexpBKYB6wuT4rc0BJ5lOIrJNt2rzS9pv2gFI5ZAxTW8G14CNSfRXaiogvw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+WyPykx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxCuhx7i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C628606A7F1;
-	Wed, 18 Nov 2026 19:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BCC606A7F1;
+	Wed, 18 Nov 2026 19:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0+WyPykx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645131F000C4;
-	Wed, 18 Nov 2026 19:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xxCuhx7i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2899B1F000C4;
+	Wed, 18 Nov 2026 19:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030386;
-	bh=BcYZ3K1DaKpEhcg2/DkaPdPDV6tXQ4qxbwXO+06/SzU=;
+	s=korg; t=1795030389;
+	bh=+baG1S20f8kBGTqtpOyY2svXhb+QqweXo8GpCPWY4C0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0+WyPykxI26rOURCPSv1EmagENSdb6zsgNlP7Tl8kFs+1EBIqlgo7+HqblDKzOnPT
-	 1RyJqUFo50WCqOav1Ju/kLHQ7ZorQlq573r1AkWdLA9+Y5lLVx4Ir5kGThHOaKwBuC
-	 4/Umvq/Lb5vU3vX3NNbgGcibKB8ZhA2sDbBtNglY=
+	b=xxCuhx7iTFLU3WhnleQPaZha4UcKdppMg5J3QOXWo04UUyh8vZ1A+/fVAGy6dLgpA
+	 oofW823L6GbD0sgBeD0G2fITqR6xpwALJBobU3qGMe14JH/UvzSyKFS0sWFEnm1h3m
+	 dyEaQpZH2DFgfEqmcY/4ihRGGbM2H/U7ZuLb9ras=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0649/1756] ASoC: mediatek: mt8192: switch to devm_clk_get_optional()
-Date: Wed, 18 Nov 2026 15:46:16 +0100
-Message-ID: <20261118150034.693223424@linuxfoundation.org>
+Subject: [PATCH 6.12 0685/1756] RDMA/bnxt_re: Validate SRQ max_sge at create time
+Date: Wed, 18 Nov 2026 15:46:52 +0100
+Message-ID: <20261118150036.505889253@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,49 +68,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Selvin Xavier <selvin.xavier@broadcom.com>
 
-[ Upstream commit 6f4edfdce0099dc0c346c78c85f58a23d4ee646e ]
+[ Upstream commit 1894ed9a664d19c190ce1bd2146759efbae77e4b ]
 
-Switch from devm_clk_get() to devm_clk_get_optional() when requesting
-clocks, as optional clocks automatically return NULL when not present
-instead of requiring manual check and NULL assignment.
+bnxt_re_create_srq() stored attr.max_sge into srq->qplib_srq.max_sge
+unvalidated, which defeats the num_sge check in
+bnxt_re_post_srq_recv() since that check compares against this same
+attacker-chosen value. Reject max_sge > dev_attr->max_srq_sges at
+create time, and clamp dev_attr->max_srq_sges to BNXT_STATIC_MAX_SGE
+since SRQ WQEs use the fixed-size SGE array.
 
-Additionally, handle clock errors properly using dev_err_probe() to
-propagate error codes (such as -EPROBE_DEFER) on failure instead of
-just printing a warning and continuing with NULL pointers.
-
-Fixes: 125ab5d588b0 ("ASoC: mediatek: mt8192: add platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20260918133912.133799-6-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 37cb11acf1f7 ("RDMA/bnxt_re: Add SRQ support for Broadcom adapters")
+Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8192/mt8192-afe-clk.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/bnxt_re/ib_verbs.c | 8 ++++++++
+ drivers/infiniband/hw/bnxt_re/qplib_sp.c | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-index 77f596cab92da..9b9a3465ddb52 100644
---- a/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-+++ b/sound/soc/mediatek/mt8192/mt8192-afe-clk.c
-@@ -672,13 +672,10 @@ int mt8192_init_clock(struct mtk_base_afe *afe)
- 		return -ENOMEM;
- 
- 	for (i = 0; i < CLK_NUM; i++) {
--		afe_priv->clk[i] = devm_clk_get(afe->dev, aud_clks[i]);
--		if (IS_ERR(afe_priv->clk[i])) {
--			dev_warn(afe->dev, "%s devm_clk_get %s fail, ret %ld\n",
--				 __func__,
--				 aud_clks[i], PTR_ERR(afe_priv->clk[i]));
--			afe_priv->clk[i] = NULL;
--		}
-+		afe_priv->clk[i] = devm_clk_get_optional(afe->dev, aud_clks[i]);
-+		if (IS_ERR(afe_priv->clk[i]))
-+			return dev_err_probe(afe->dev, PTR_ERR(afe_priv->clk[i]),
-+					     "failed to get clock %s\n", aud_clks[i]);
+diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+index c180936e908b3..cabed393390dc 100644
+--- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
++++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
+@@ -1791,6 +1791,14 @@ int bnxt_re_create_srq(struct ib_srq *ib_srq,
+ 		goto exit;
  	}
  
- 	afe_priv->apmixedsys = syscon_regmap_lookup_by_phandle(of_node,
++	if (srq_init_attr->attr.max_sge > dev_attr->max_srq_sges) {
++		ibdev_err(&rdev->ibdev,
++			  "Create SRQ failed - max_sge %d exceeds supported %d",
++			  srq_init_attr->attr.max_sge, dev_attr->max_srq_sges);
++		rc = -EINVAL;
++		goto exit;
++	}
++
+ 	if (srq_init_attr->srq_type != IB_SRQT_BASIC) {
+ 		rc = -EOPNOTSUPP;
+ 		goto exit;
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+index b09ac66e64466..f757cc10533ef 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
+@@ -159,7 +159,7 @@ int bnxt_qplib_get_dev_attr(struct bnxt_qplib_rcfw *rcfw)
+ 
+ 	attr->max_srq = le16_to_cpu(sb->max_srq);
+ 	attr->max_srq_wqes = le32_to_cpu(sb->max_srq_wr) - 1;
+-	attr->max_srq_sges = sb->max_srq_sge;
++	attr->max_srq_sges = min_t(u32, sb->max_srq_sge, BNXT_STATIC_MAX_SGE);
+ 	attr->max_pkey = 1;
+ 	attr->max_inline_data = attr->max_qp_sges * sizeof(struct sq_sge);
+ 	if (!bnxt_qplib_is_chip_gen_p7(rcfw->res->cctx))
 -- 
 2.53.0
 
