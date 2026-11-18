@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021311;
-	b=mm9kA/MoxZVxpzpxyD3MAZ6D/swoEhA3p04ZnCTDHgPrxSJzhIqI8y37lD83+49LNceD
-	 PnhyBPCq0dwAkIm7dNTAdHUPoFD2WrNvyA3yNZZvsPcnPyiWc3uoYpOhtO9AWeDYovYxU
-	 C3PqA/06LUuJi8RSj6q1r0rUvZcji+0F34RMlDEiPkTAwZ9ceoe6JQpetMIY+TGAmuDSL
-	 fgchI9J3uEWQ1LrlwkeFIrZY4Ak5tM1qhpzThxqztTxa4wCg/azhe5nuUMYiU7tikjrbf
-	 KyxBzNSkFixnf/NSGcHefZZZ8G4lmoTQSZsCtmAjpNmzax8ontXWBUQ1Yd0TvjQTc8A==
+	t=1795021314;
+	b=yYnOakQ0Wb2ftlnSwHKd9eT8n1yBzd4Yl0VpWH7AjYVq27DgDDlruv8lA+Lq8NgpCMwk
+	 Sz6qbx7i4F54oiKv1pu2uw8vWoiZOmq3vLqzvqcfjgfmMYlUbokYzWhv2G9qdm8iQGKle
+	 hEGQEzmio/Wb301Zbaz4aJTNyUmVT/vpqDQOI7GdGTNIKB/YX1k4qWf92+MjG/xVARark
+	 NWaHDTEvHqdJvsePaIaEOXfnpVTyQba1w8pPKBdqoNtrTt9NYcSBG4m8T/5M6fKx+xrxW
+	 p997Wl8SG7QSx+vbmYLVRaz6dQ2ZG1cXQFCMTwv4mrWV3tUoYgfV3pZo+EYlMfPyyVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021314;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=7WHbn4a4xrppPMWUG+675RgjEV+YUk+tzzhEyB8k0g8=;
-	b=JZNYgG7OhZQ6DgsvopVn6mwnY7iBnKBO3K8QQI5NXS01gz0dkiy7/xvIGKZ2yQsSJ8PB
-	 Usx4vdwghvOIS557+b2g+SDxHldL6giBSWSEGgADHyoEI1AHdMVnm63O1nNor+oNUq1se
-	 IbMf1MyAywWAc92j8wgRTbSs9RKH8XmugJcr9eVcT+mT1Qut6vEf3k0dthulOz1SORNIS
-	 WmODdkm6O1pWNznR6/DAoGvt2DP0yZKG8aNJE2W+RDQaE8gkvEdV8ENDSkYwanR0l40Lk
-	 4RcLKS73oTJYvwBo8iJnVDPURARdzAaXELE1Ed83o0F9I6ljPpgwBWD7lShZdT79Gkg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=IkEMIAoqgn7Q/aEfU0K/eEQbU/BlFxIdvCclAenTXRc=;
+	b=BAtH38hEaK+LzWTWBJhx7sg3HniogObJ9DlIa7T4dRKuawOageAVk2MfCXj73vzOihdQ
+	 cD8Bw/s037cYG9mg/7oZZsDEsr+PQ6+XP375ihBGlsiVXQI3X4VoSbgN26O2WyAoQSAVm
+	 MO4HDI8qRY+Ka74Vj7O3D8QYAKtGukIM/ernbaOanMbtaPgDG5kSx+zB8bVXBRVYEAvxy
+	 S0r7E9Bq1nCQ6NcJdunkgMz7nvVsm/nIPdPVGSSGZlqNtyCsucUet/lvWTZ3U2HNoQ8Ac
+	 WpYEf8wX/jfpT+P37F28NXFjbVxLXR0VDY3bod7R2tyqSbrHzHzoB5xJOAbI+lEptXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q2rUsBmw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9XQ7+7r;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F85606A320;
-	Wed, 18 Nov 2026 17:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85203606A33E;
+	Wed, 18 Nov 2026 17:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q2rUsBmw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD0A1F000C4;
-	Wed, 18 Nov 2026 17:01:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9XQ7+7r
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD05A1F000C7;
+	Wed, 18 Nov 2026 17:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021311;
-	bh=7WHbn4a4xrppPMWUG+675RgjEV+YUk+tzzhEyB8k0g8=;
+	s=korg; t=1795021314;
+	bh=IkEMIAoqgn7Q/aEfU0K/eEQbU/BlFxIdvCclAenTXRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=q2rUsBmwl12wbe5pplXwymWHKrG3NaWc/Svc30DnJlSoexRdjytEY1+gmmKXbaJnf
-	 U8sbRNdZ8i5NdrRl34goZhy1K5alQRtvNuVOoGK8F6sGHrr6h4G69BKP0X4B7flrRq
-	 wj7Mmve6RBCKxWew0hI3sN+JjkeRp2K1oB1Er/Uo=
+	b=O9XQ7+7rOtec0t/AZ7SG5tcPG3/ZK7Y6LXzpL1Q8mlybjpOO71NZakPtahtFkNAGU
+	 elPtNRTsnowGtOGyqHndSJ2OSMNVrghyYJPqwAmhtm8gbChk4RS0ZGLhVAtiFQasdo
+	 biD6awcbL/3E2arnprehnotqkN9DNJBrPiRZTmMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2261/2651] ipv6: account route exceptions to the netns of their dst
-Date: Wed, 18 Nov 2026 15:58:21 +0100
-Message-ID: <20261118150406.800508566@linuxfoundation.org>
+Subject: [PATCH 7.3 2262/2651] platform/x86: gpd pocket fan: Cancel work before releasing GPIOs
+Date: Wed, 18 Nov 2026 15:58:22 +0100
+Message-ID: <20261118150406.833393559@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -64,82 +63,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@kernel.org>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 8ff017b891e89276c15f06dfd7155981d572af77 ]
+[ Upstream commit 9962770049c715fc30a7b3274d8f245167c0a410 ]
 
-rt6_insert_exception() and rt6_remove_exception() update
-rt6_stats->fib_rt_cache of dev_net(rt6i->dst.dev), but the device of an
-exception dst can move to another netns while the exception is still in
-its bucket.
+The fan worker changes the direction of both GPIOs and schedules its
+next run. Its managed cancellation action is registered before the GPIOs
+are acquired, so devres releases the GPIOs before cancelling the work. A
+running worker can therefore change a GPIO after the driver has released
+it.
 
-This happens when the bucket is flushed from an RCU callback, for
-instance from nexthop_free_rcu() for the nh_info of a replaced nexthop,
-whose exceptions still point to live routes. If the device moves to
-another netns before that callback runs, the decrement hits the other
-netns, whose u32 counter underflows in /proc/net/rt6_stats, while the
-counter of the original netns never goes back down.
+Register the work cancellation action after both GPIO acquisitions. This
+makes devres cancel and drain the worker before releasing either GPIO.
+No work has been queued yet if GPIO acquisition or action registration
+fails.
 
-Account exceptions to the netns their dst was allocated in, derived from
-dst->ops as ip6_dst_gc() already does, which does not depend on the
-device. The dst already relies on that netns' ip6_dst_ops being alive
-when it is destroyed, which happens after the exception is removed.
+This issue was identified as part of our ongoing research while
+reviewing kernel code.
 
-Fixes: 81eb8447daae ("ipv6: take care of rt6_stats")
-Signed-off-by: Eric Dumazet <edumazet@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20261016091556.2750902-1-edumazet@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b82a7b018b93 ("platform/x86: gpd pocket fan: Clean-up by using managed work init")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Link: https://patch.msgid.link/179229442299.3956787.17526066623947466315.gpd-pocket-fan@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/platform/x86/gpd-pocket-fan.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index bd6bc9ada5398..3688280742e48 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1503,6 +1503,15 @@ static struct rt6_info *rt6_make_pcpu_route(struct net *net,
-  */
- static DEFINE_SPINLOCK(rt6_exception_lock);
+diff --git a/drivers/platform/x86/gpd-pocket-fan.c b/drivers/platform/x86/gpd-pocket-fan.c
+index c9236738f8960..ced93795c5d4b 100644
+--- a/drivers/platform/x86/gpd-pocket-fan.c
++++ b/drivers/platform/x86/gpd-pocket-fan.c
+@@ -153,10 +153,6 @@ static int gpd_pocket_fan_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
  
-+/* Exceptions are accounted to the netns their dst was allocated in.
-+ * Unlike dev_net(dst->dev), it does not change when the device moves to
-+ * another netns or when dst_dev_put() points the dst to blackhole_netdev.
-+ */
-+static struct net *rt6_exception_net(const struct rt6_info *rt)
-+{
-+	return container_of(rt->dst.ops, struct net, ipv6.ip6_dst_ops);
-+}
+ 	fan->dev = &pdev->dev;
+-	ret = devm_delayed_work_autocancel(&pdev->dev, &fan->work,
+-					   gpd_pocket_fan_worker);
+-	if (ret)
+-		return ret;
+ 
+ 	/* Note this returns a "weak" reference which we don't need to free */
+ 	fan->dts0 = thermal_zone_get_zone_by_name("soc_dts0");
+@@ -175,6 +171,11 @@ static int gpd_pocket_fan_probe(struct platform_device *pdev)
+ 	if (IS_ERR(fan->gpio1))
+ 		return PTR_ERR(fan->gpio1);
+ 
++	ret = devm_delayed_work_autocancel(&pdev->dev, &fan->work,
++					   gpd_pocket_fan_worker);
++	if (ret)
++		return ret;
 +
- /* Remove rt6_ex from hash table and free the memory
-  * Caller must hold rt6_exception_lock
-  */
-@@ -1514,7 +1523,7 @@ static void rt6_remove_exception(struct rt6_exception_bucket *bucket,
- 	if (!bucket || !rt6_ex)
- 		return;
+ 	gpd_pocket_fan_force_update(fan);
  
--	net = dev_net(rt6_ex->rt6i->dst.dev);
-+	net = rt6_exception_net(rt6_ex->rt6i);
- 	net->ipv6.rt6_stats->fib_rt_cache--;
- 
- 	/* purge completely the exception to allow releasing the held resources:
-@@ -1783,7 +1792,7 @@ static int rt6_insert_exception(struct rt6_info *nrt,
- 	rt6_ex->stamp = jiffies;
- 	hlist_add_head_rcu(&rt6_ex->hlist, &bucket->chain);
- 	bucket->depth++;
--	net->ipv6.rt6_stats->fib_rt_cache++;
-+	rt6_exception_net(nrt)->ipv6.rt6_stats->fib_rt_cache++;
- 
- 	/* Randomize max depth to avoid some side channels attacks. */
- 	max_depth = FIB6_MAX_DEPTH + get_random_u32_below(FIB6_MAX_DEPTH);
+ 	platform_set_drvdata(pdev, fan);
 -- 
 2.53.0
 
