@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036553;
-	b=2yNyyvSsCF4iBHijBm9cqlPtsqVtbqmMOqosO8MjcepiCPdYCVgazTXrJzs/9ResWKPy
-	 kpeZETc2Zh/jwtei4R9AgqLVZobx/AUcE1Rx4Dt/Tjd8oYT73qLz6tPbHFtpc9lqjRRO/
-	 NfrFNUDoEsTFxwMs1ayT0kMVJ8O4equ3je6Lp0xdosdb8Lp3o8oOHkwwO4Rk82/ocMAfX
-	 jDsQoDk9m946su6USDD2AxhVU1396NHXiJnpqrRHKMNELmzHGolzzW0FZU3br/wXRHMtT
-	 kL8cJa6ge3Dx8Uu0mSnnEezzCCjN5JINnA2hD21fsZ6dJQ0Cap7xxMBXYKNltBYq6Hg==
+	t=1795036556;
+	b=wtWAs/jU5H7QRUCIqv4bIABe+8cESxHuNTwREutaKOLXSFoW4dziYzfhEVZAFgaIAcKu
+	 nz8vY056VyoobtasIhoY9UkkZx7OkC4F5EINPXXMsI/mElMEg8YnIHurpoaPLmQJ6Xa4U
+	 6jyNAfJKLnycftO0k8xZxXeYYJJsD3xEzpGmUmM5V4pKjIXOLsKvbQbDrvyV2jMpdlPZ9
+	 OVoAb6Iqee8NnYry9uyDX0I3xT1MhAZm2Y0eB07UwPb2mrTn2Ji31sLk8mnmilJ3b0ooZ
+	 Q1SYzCL7/zMtefbYt6jD85fVkiqBlqYMcEAOu7VHZ0bQXlHYghvfSac2+YZbITj4RqQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036553;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036556;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9GI6QcoVJ7iL4yL/+Ox0+ERdpOIecJhIHHkcLd/Vn44=;
-	b=ZULnDafXHOu4OhwaxE6/GHWFB32W2VUVRUMxP1UL1bv1ffmD/u6qCECAjJRmkNAg1LuT
-	 QaIwqqAGF4VgG+Nx95so8GbQCwaOPDAkUp5tVhj6rgUA6RchhKCR6JwwPgdYHX1qzbhtb
-	 yMDyvOID1qnrk8ckd/2JlZIcDVazDqXBiMJhTpod3Vs03OZASG+Z+rHY575qS6Cb6GZd+
-	 THLKq47ul8Fs0JNwzcRR3CsQ2v4m249dTqokzl4fLA/ehiFMjutJE+1D/8s0+URS6zXQR
-	 IYqESTVRpgZESaT3myZCqb0d99t4v+Nej5otFur2YBA5Qf4wDa6+fUmm0Y2hR5AEnYw==
+	bh=9xp548cxOqzBg7FQI59T1VjP8kCDPYP2rGCzeTn6MbQ=;
+	b=0tJYyMiS2bFeNeG5U5CDUkLMmQA+KFB8mt701FVQNtgLp01Z8rOe65Le8fKNTGLh7Frg
+	 0E+r2ZM+bPtqWRV99r6St7qEIl4GYL9PfAbidxZLHhdTSdBYdybXToU2g2DoLkPLNoblV
+	 +UQC11+jva1cT2mBLbDx15WwM2ClupT1Xhk51JLCvxJFg4iiBMiD/0bnAwrSmAjJ7J1dW
+	 rY9cn4EaD+NRHnCiSjqEuQbBo0EeVqaFRpzLIuaaT/0nJaWAPQLf0q3p1PU4NocQQGfaI
+	 eoUrb4WxrrToAUZL0Tp5TADqF5njuvDpvJcUA7EADol+qBsX0oCnPnVJre5sPKGT1nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fZhX4PSU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="YKDUmAE/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CB7606A339;
-	Wed, 18 Nov 2026 21:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A7360A2600;
+	Wed, 18 Nov 2026 21:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fZhX4PSU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972B01F000C4;
-	Wed, 18 Nov 2026 21:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YKDUmAE/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736681F000C4;
+	Wed, 18 Nov 2026 21:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036553;
-	bh=9GI6QcoVJ7iL4yL/+Ox0+ERdpOIecJhIHHkcLd/Vn44=;
+	s=korg; t=1795036556;
+	bh=9xp548cxOqzBg7FQI59T1VjP8kCDPYP2rGCzeTn6MbQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fZhX4PSUCaXiJ7JL3pU8whsg9nWTANM6L9LwTVVkNuxpJo5/TtubgRPAGN3mJbF9f
-	 hyW1+HbqhPe9GiCfIaBCdveh0rkRnxAafk5PpP1yv1UtvheV4viFXjKBROJz2m84E7
-	 LR4BMvif/WFIwudvimTM49v34S9USIOZGsEhwY5s=
+	b=YKDUmAE/uzyL0FlQvtVvWlTE9+R7kp5VR9/IQPEYl91MKAi6LBwdoYmcGMU5FRgTP
+	 Pi5AKSwRNLzipweWnC4l2t/u9f77tJdj8ExTan2lzEZOPl5vjupUii9MBCryuWCbEv
+	 fI9kKSy/Lxt8RKL8VD+N/AUsNAJ76X0khVpupb14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	Oliver Neukum <oliver@neukum.org>,
-	Johan Hovold <johan@kernel.org>,
+	Matt Turner <mattst88@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alain Knaff <alain@knaff.lu>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1064/3318] USB: serial: sierra: fix urb leak on write completion
-Date: Wed, 18 Nov 2026 15:28:06 +0100
-Message-ID: <20261118150351.878776732@linuxfoundation.org>
+Subject: [PATCH 6.6 1100/3318] lib/decompress_bunzip2: fix off-by-one in run-length bounds check
+Date: Wed, 18 Nov 2026 15:28:42 +0100
+Message-ID: <20261118150352.983513314@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +70,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Matt Turner <mattst88@gmail.com>
 
-[ Upstream commit e7daa54802c566ed3f22e81513f84c8c9197c5d1 ]
+[ Upstream commit 69919be2b93ef3922f646729ff42b4bd9a30846b ]
 
-Make sure to drop the reference taken by usb_anchor_urb() also on
-successful submission of delayed write URBs during runtime resume to
-prevent them from leaking on completion.
+The run-length path rejects a block when dbufCount+t equals dbufSize, but
+the loop that follows writes exactly t bytes starting at dbufCount, so a
+block that fills the buffer exactly is legal.  bzip2 allows it too: its
+decompressor bounds a block at 100000 * blockSize100k and checks that
+limit per byte appended.  Use > instead of >=.
 
-Fixes: e6929a9020ac ("USB: support for autosuspend in sierra while online")
-Reported-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://lore.kernel.org/20260916165352.2085480-1-vulab@iscas.ac.cn
-Cc: stable@vger.kernel.org	# 2.6.32
-Cc: Oliver Neukum <oliver@neukum.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+bzip2's encoder stops filling a block 19 bytes early, so nothing it
+produces ever reaches the limit and the bug stays hidden.  Compressors
+that use the full block size do reach it: an lbzip2 -9 image whose block
+ends on a run fails to decode, and a self-extracting kernel built that way
+does not boot.
+
+This code came from busybox, which fixed the same line in 2013 in commit
+932e233a491b ("bunzip2: fix off-by-one check").
+
+I ran into this because my system uses lbzip2 as /bin/bzip2 -- a common
+thing on Gentoo I believe.  As far as I can tell, anyone using lbzip2
+as their system bzip2 would run into this and it's only because it's
+very uncommon these days to compress a kernel with bzip2 that no one
+has noticed.  I only noticed because I was adding support for various
+compression formats on alpha.
+
+Link: https://lore.kernel.org/20260912-b4-bunzip2-blocksize-fix-v1-1-c7384bbfc954@gmail.com
+Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: Alain Knaff <alain@knaff.lu>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/sierra.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/decompress_bunzip2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/serial/sierra.c b/drivers/usb/serial/sierra.c
-index 353b2549eaa8a..8cc4e04e214bd 100644
---- a/drivers/usb/serial/sierra.c
-+++ b/drivers/usb/serial/sierra.c
-@@ -972,12 +972,13 @@ static int sierra_submit_delayed_urbs(struct usb_serial_port *port)
- 			intfdata->in_flight--;
- 			usb_unanchor_urb(urb);
- 			kfree(urb->transfer_buffer);
--			usb_free_urb(urb);
+diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
+index ca736166f1000..4f98cdea7e0b3 100644
+--- a/lib/decompress_bunzip2.c
++++ b/lib/decompress_bunzip2.c
+@@ -439,7 +439,7 @@ static int INIT get_next_block(struct bunzip_data *bd)
+ 		   array.) */
+ 		if (runPos) {
+ 			runPos = 0;
+-			if (dbufCount+t >= dbufSize)
++			if (dbufCount+t > dbufSize)
+ 				return RETVAL_DATA_ERROR;
  
- 			spin_lock(&portdata->lock);
- 			portdata->outstanding_urbs--;
- 			spin_unlock(&portdata->lock);
- 		}
-+
-+		usb_put_urb(urb);
- 	}
- 
- 	if (ec)
+ 			uc = symToByte[mtfSymbol[0]];
 -- 
 2.53.0
 
