@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045801;
-	b=hHO7+t3O1UjhZSLGIIqe1RFD9aekBcUb1BsN+4v6oKyx0AOt+WSx8k+8lQsrMz8W0iMr
-	 661bhcpJMPMWNV6PCmcWEd3naNSb4QDuk7B3YcHu8kZB/7s/XpsDglNwr32gZlDuUtYjd
-	 kE0MUyGIA684CVAOCBEunEByybTy9ZHezwviEtzCFJy+9SGCO3GRmN9YE7azrzENWA4QC
-	 LLenhzuqOYG/qbv9vFEuZZvMJCRwcPGQZnoZB8OoJBeSIxtTIYoIU8wDNlzHETOz9/gIo
-	 DBU87NozSmmOPRU1w0ynw6EVoOc07YWAuIzQhP8G2QCCQJT2MtSfMWvx6sQQszl9/YA==
+	t=1795045804;
+	b=i4j6RJWty48Bq2kk2FPeAtBCYoZoWwa+bsPFDRgSdJbXQzQAhFCTTPmm7+FyNKYHoPEz
+	 427Tnxn2q5TXSYNXyPV3YqkKZq/KfQWUROkzk+VI1EHd8T3fNTIOkdF5Od+NxHxDqMs17
+	 gBVCpwKDlhTGXqca1zkQUjCbWRlBOKflWoRuq2aPU2NPTMS6sf0Ol//BnBSQ8ROJm0/Pv
+	 q5Av/0U35lblD7ugK75HT8ZbsSOSE8eBBzwkSOJ1rAgITl+v/m9506ASHqu1z9rGfF/Pb
+	 CC8SMfJfajIHTt/FXOS/zu/wNslZZuwIWjRjlsaMNUXh4t4E6RUbxC/9S0UmM82n1kg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=poPKgm7np1CkWW+DQ8xnd4q24I/wtSg4sn6NY+RwYWk=;
-	b=p194nJ/CqrCjwO1c200VNprYjCajuR+Q4bGaQsSUGCj+MOTRc5X7WVaKofyTNcEQo8ax
-	 8tNI79kMe4VN93s+k2djenezY3sYvGRpZp0qenjkXdfy2zZI2HqrZIAgmxZcupW4+LCUU
-	 rFQrPAyPpzDIB9s4oT6c9dM9AgMAAe26LqW0lrtiq6PgZo8IYV5+anb78ivtTQzWqDIBt
-	 N/aKXbOedGyXimn5Kn1Sk3r0UAx8fZBUjYw+QGwGFKNvg6dXwEuTl2R63Nx/CDmAj+4XK
-	 HfyHNXKmAm5e4FrOisslfnfduIxKK49w5uNwYrcqpARcPNAfIN0gZBNEF431FKom2sg==
+	bh=O3yqVU0Y/9HRlWA9jbrDYZHr5pBCG/CSqr9tFnHifA8=;
+	b=hmCMfjL8RYIqE0D9LQ6jDhyhB0ooIonaYjxCWJFB7ZbKW9KbMDU1d7qiw9ZIhDHfqfH1
+	 0+qJhw5+cZANcF6ct/bcWDsFNv1/XC4Iad1GXLgZymmEu22iDD+ltkcrg+Y78BPutI8S/
+	 bidstCdYbYGGqFzWFzqwL5vqEuYJps7Q94s+XJhUDYjTAW/qFH/7yBIXz9aABidOQO+/C
+	 JCxrN+DRjDSjuQRVbxSxOHbnhnuOUf8BaOqVsLA+xUJP4zT5mA6+srOP//IrHNPePNuaU
+	 1Dz8zLjV6Kvg3Wfeg2ZLLUentQ2o7G57yhkS9KxMMMz4tDwL1LTT0kAZgHqzfg2dT4Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JyApt6ag;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=soGWtmll;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0B6606A325;
-	Wed, 18 Nov 2026 23:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF8B606A32A;
+	Wed, 18 Nov 2026 23:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JyApt6ag
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F2461F000C4;
-	Wed, 18 Nov 2026 23:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=soGWtmll
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E8B1F000C4;
+	Wed, 18 Nov 2026 23:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045801;
-	bh=poPKgm7np1CkWW+DQ8xnd4q24I/wtSg4sn6NY+RwYWk=;
+	s=korg; t=1795045804;
+	bh=O3yqVU0Y/9HRlWA9jbrDYZHr5pBCG/CSqr9tFnHifA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JyApt6ag2RRlXYeEweaBygVQYOwA0ndt7CmuaxbFGzbsLBBDWtidoFA8AXViKVHnp
-	 eBePksOqLCg1+xt3pYb3tkDYsDrb9SRjMSl34COqxRLFY0QrgplTSigEEHAlePLfMM
-	 Qk00DJUgSQJNUQ9dH7Sie2lCv1nXFdx/UdEkPET0=
+	b=soGWtmllIPJANTwA6Qap/RBF4TZiUQdvTga8Lb28nXznl1QWqRxz4AqzQYDQbiTBZ
+	 vQepxGzy2puKl2W3CsRLFtsuW521VKxI3ux0Lu3jIl8YxLnFrhxHulP4QsK6fbbFU2
+	 kyxH9qypuBpNtPDutQsI8L7Fd2RuUO2LM7c4hmrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+ecaada42f806f629@bugs.sh,
-	Xiang Mei <xmei5@asu.edu>,
+	Wentao Liang <vulab@iscas.ac.cn>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1053/2857] ceph: fix integer overflow in the snap trace bounds check
-Date: Wed, 18 Nov 2026 15:34:47 +0100
-Message-ID: <20261118150239.507051207@linuxfoundation.org>
+Subject: [PATCH 6.1 1054/2857] ceph: Fix xattr buffer leak in __send_cap()
+Date: Wed, 18 Nov 2026 15:34:48 +0100
+Message-ID: <20261118150239.541627593@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,87 +69,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit b3bf89767e3ca9506f1c7167cac97c41ec254d42 ]
+[ Upstream commit e51cf76e7275d1bb5ad2d529bb00feade632dadc ]
 
-ceph_update_snap_trace() bounds the two encoded snapid arrays that follow a
-struct ceph_mds_snap_realm with sizeof(u64) * (num_snaps +
-num_prior_parent_snaps).  Both counts come straight off the wire as __le32,
-so the addition is evaluated in unsigned int and wraps before sizeof(u64)
-promotes it to size_t: an MDS sending num_snaps = 1 and
-num_prior_parent_snaps = 0xffffffff makes the sum zero and the check
-degenerates to ceph_decode_need(&p, e, 0, bad), which always passes.
-dup_array() then reads num_snaps * 8 bytes past the end of the message
-front, which ceph_msg_new2() allocates at exactly front_len bytes.  An
-unsolicited CEPH_MSG_CLIENT_SNAP reaches this from a malicious or
-compromised MDS with no client-side action, as do the snaptraces carried in
-an MDS reply and in a cap import.
+__prep_cap() takes a reference on the xattr blob via ceph_buffer_get()
+and also grabs a reference to the old xattr blob returned by
+__ceph_build_xattrs_blob(). These references are normally dropped in
+__send_cap() after the cap message has been sent, but when ceph_msg_new()
+fails, __send_cap() requeues the cap and returns early without dropping
+them, leaking both buffers on every allocation failure.
 
-Compute the length with size_add()/size_mul() so it saturates at SIZE_MAX
-instead of wrapping, in the style fs/ceph/mdsmap.c already uses for
-num_export_targets.
-
-  BUG: KASAN: slab-out-of-bounds in dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
-  Read of size 8 at addr ffff8880102a16c8 by task kworker/1:2/129
-  Workqueue: ceph-msgr ceph_con_workfn
-  Call Trace:
-   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
-   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
-   kasan_report (mm/kasan/report.c:595)
-   dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
-   ceph_update_snap_trace (fs/ceph/snap.c:836)
-   ceph_handle_snap (fs/ceph/snap.c:1155)
-   mds_dispatch (fs/ceph/mds_client.c:7234)
-   ceph_con_process_message (net/ceph/messenger.c:1424)
-   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
-   ceph_con_workfn (net/ceph/messenger.c:1576)
-   process_one_work (kernel/workqueue.c:3396)
-   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
-   kthread (kernel/kthread.c:436)
-   ret_from_fork (arch/x86/kernel/process.c:158)
-   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
-  ...
-  The buggy address is located 0 bytes to the right of
-   allocated 72-byte region [ffff8880102a1680, ffff8880102a16c8)
+Release arg->old_xattr_buf and arg->xattr_buf on the ceph_msg_new()
+failure path before returning.
 
 Cc: stable@vger.kernel.org
-Fixes: 963b61eb041e ("ceph: snapshot management")
-Reported-by: co+ecaada42f806f629@bugs.sh
-Assisted-by: LLM
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Fixes: 16d68903f56a ("ceph: break up send_cap_msg")
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/snap.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/ceph/caps.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
-index a5b5f6b2c1609..b29b6f1e30c69 100644
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -774,6 +774,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
- 	struct ceph_snap_realm *first_realm = NULL;
- 	struct ceph_snap_realm *realm_to_rebuild = NULL;
- 	struct ceph_client *client = mdsc->fsc->client;
-+	size_t snaps_len;
- 	int rebuild_snapcs;
- 	int err = -ENOMEM;
- 	int ret;
-@@ -788,8 +789,10 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
- 	ceph_decode_need(&p, e, sizeof(*ri), bad);
- 	ri = p;
- 	p += sizeof(*ri);
--	ceph_decode_need(&p, e, sizeof(u64)*(le32_to_cpu(ri->num_snaps) +
--			    le32_to_cpu(ri->num_prior_parent_snaps)), bad);
-+	snaps_len = size_mul(size_add(le32_to_cpu(ri->num_snaps),
-+				      le32_to_cpu(ri->num_prior_parent_snaps)),
-+			     sizeof(u64));
-+	ceph_decode_need(&p, e, snaps_len, bad);
- 	snaps = p;
- 	p += sizeof(u64) * le32_to_cpu(ri->num_snaps);
- 	prior_parent_snaps = p;
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index 448ba5ec4e3b3..3b3704d425921 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -1454,6 +1454,8 @@ static void __send_cap(struct cap_msg_args *arg, struct ceph_inode_info *ci)
+ 		spin_lock(&ci->i_ceph_lock);
+ 		__cap_delay_requeue(arg->session->s_mdsc, ci);
+ 		spin_unlock(&ci->i_ceph_lock);
++		ceph_buffer_put(arg->old_xattr_buf);
++		ceph_buffer_put(arg->xattr_buf);
+ 		return;
+ 	}
+ 
 -- 
 2.53.0
 
