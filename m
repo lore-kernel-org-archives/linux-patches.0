@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055385;
-	b=ujPgJllp3uGCWUoj9iZL1pnYTSUGGAqNZOtyRAGmmFrKX/rfT/P3kYVF/F//asjBeBFZ
-	 bZ80LdiYeXv6h/XWyYMnuxm9VD5i41m8y1R9aKRg9Dtunay/yP4p8ehW8jaFZzTGMSA75
-	 EB1SB5yctEvJSigezU5LnaWVAVFob8eAjdQJIVZ8febR4l5qhvN7m2g0eePOOdJZ8tAi+
-	 k26YZk8MkEvKpjaeRS7sa8PvpigrtcERyUQOWyySWcee0r7V0mpF5IzR1ST3jWnADF4hA
-	 fomo1lvZzX3Ded0ivPDkzy29HARGnWPJZwD6yXCrPf6ZpV3Km7qKjOf5qyMCLo5IyEg==
+	t=1795055388;
+	b=0EiCrdLHIAuJKAQV7sJtVpXynSZFE/NDQxWd9Whkdrogf9VzIRMAAq2nyFDcQpk9/2Tv
+	 4/rQMc5964DtanFGgJ0rp50eljL517fv8ejWqmOuzTlNt6hoDQqJy62n7C3+T9AYFVOoe
+	 nhz40t2rTTnJwTogz/AbwHS1Z0Z3GITQ9p95asQhHeFJeicOO3Knp/wpmnirPRTN04aak
+	 lAVi3KSj8cGEZOzUH1rn9otRuHUnL4ss2/gZvercObytyfOCTkYFzGsVt+Rcsq8MObTlB
+	 yE0inPmILxExKAU9lADGtOLEtaRnqfWD+RrF/Nrza+fi8dvGW8DGfl0zwL4o3Lxr5dg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055385;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055388;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HrnwOZPawkEEJ0x4nD4Ff6FIUuwslQcd1ikMNy01Q6w=;
-	b=TXOupbTzMP2hatn2/iWPtqnfaxaZFSsAqPWCXbmJQbvc+zz8yHw/gdfqo3wseYflL7cy
-	 7Yoom3GqQfDkBdnsRZwwElYpAYYeawOd1hoOg+0tO5rWKrq+rfUd+CIJGmN1hDefuzQNZ
-	 RaYlrLuUT9/kKp6xm8wZ+2L6e21/SI5AG/IQIV7uzGOFhbmOMImVylxNSHXEBXb3I4LeD
-	 +0MlILgAFwKuzCRG4JgYdzC2gMZz1PeBnA+JrFRA6+3oXYpozMgY+3doG7cThFnHJome3
-	 U8/x2SJwCXH2aY2w3+ZAARA1OBpsExyxqBtkJe3z218ffkB74LgsdEykDATYIEMDZpA==
+	bh=Hjh5nEqxjlimGHs2eH4u/7ctXKyoVUhEU4XAm5LNiV8=;
+	b=Plq9JYsV1OIL1hR7upHiJD1MVDPXvw2v+zLnqLJ3Ai+2q8VpkdJu0HbuG+wX4XTYr4yc
+	 6iN1/9Tu9SeRAuxhQ0RD70klAiT+vjicWBeD5Y1SxKVrceo9ZloYyVf8cdDZf2ZJyWS/L
+	 7vLKDnna8+A5vcg06NOGMQaPS0MW6Kz2TfF33Zx6xhqxY2g0a77snnqYub9L6VxF6gulU
+	 aB+zD8LK/yIhFKAj64IE6rCgckib3YcM9uYtjq2oOdH9BOb4Uz0criWGKnepnjBCSDmig
+	 QGOgWADxmTqXQQKcYjf5Rnw62dFmAnRofHqVi9LCwDJWyU8K0V7S1twJd7mftcCp1FA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QhObu7qq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ay2VCgAm;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A10D606A32C;
-	Thu, 19 Nov 2026 02:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F15606A32C;
+	Thu, 19 Nov 2026 02:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QhObu7qq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830CC1F000C4;
-	Thu, 19 Nov 2026 02:29:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ay2VCgAm
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A7B1F000C5;
+	Thu, 19 Nov 2026 02:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055385;
-	bh=HrnwOZPawkEEJ0x4nD4Ff6FIUuwslQcd1ikMNy01Q6w=;
+	s=korg; t=1795055387;
+	bh=Hjh5nEqxjlimGHs2eH4u/7ctXKyoVUhEU4XAm5LNiV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QhObu7qq3AMYWdfxAGsv4oLSEC3GWm0PpB1RFAakZCnCL1FvVPfYH3+vb5Zih4V6Z
-	 /i83TfCkrYXejixKLHoi10/UxNKq9Jnet+tXVaRQhKprmG4+pmNTK42CTcMVXL9EHZ
-	 bFcTbJLjNhV9V+AZI7PCJaEmYvuOxG8VZq5DAbv4=
+	b=ay2VCgAmKjtwiPdpYahhEFQb3DF/S8Q6CnBrD12uhETb/aQFGIACdSfhhGS8coh6i
+	 US/h1cyP73kAXl7qhYUZqlrY71eR1SZ96xJYDw0lUU3r6n8JheOjsw91UHuFjE32Wp
+	 RJRj277RMwC/bfI1EOUwxzErr8WfaiDdjYSWyxdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	bui duc phuc <phucduc.bui@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1612/2214] ACPICA: Fix PCC OperationRegion command offsets
-Date: Wed, 18 Nov 2026 15:54:48 +0100
-Message-ID: <20261118150116.471323205@linuxfoundation.org>
+Subject: [PATCH 5.15 1613/2214] ASoC: mediatek: mt8183: Fix wrong clock cleanup on clk_set_parent() failure
+Date: Wed, 18 Nov 2026 15:54:49 +0100
+Message-ID: <20261118150116.521559351@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,59 +69,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@kernel.org>
+From: bui duc phuc <phucduc.bui@gmail.com>
 
-[ Upstream commit 888dab4b04ea8725168c6d50d0bfb8057fccca18 ]
+[ Upstream commit 7f05596bd4047e4623eeb1f3c6921d6f71481c3b ]
 
-ACPI 6.3, section 5.5.2.4.7.3, states that the PCC Operation
-Region is associated with the region of shared memory that follows the
-PCC signature.
+In mt8183_afe_enable_clock(), when clk_set_parent() fails, the current
+error path incorrectly cleans up the previously enabled clock instead of
+the clock used by clk_set_parent().
 
-The generic and extended PCC shared memory layouts include the 4-byte
-signature at offset 0, so their raw shared memory COMMAND fields are at
-offsets 4 and 12 respectively. Since AML field offsets for the PCC
-OperationRegion are relative to the region after that signature, ACPICA
-must look for those COMMAND fields at OperationRegion offsets 0 and 8.
+Fix the error path to clean up the correct clock when clk_set_parent()
+fails.
 
-Adjust the generic and master subspace command checks to use those
-OperationRegion-relative offsets. Otherwise writes to the COMMAND field
-can fail to invoke the PCC address space handler at the offset described
-by the PCC OperationRegion definition.
-
-Link: https://github.com/open-acpica/acpica/pull/1205
-Fixes: aa6ec56b574d ("ACPICA: ACPI 6.3: add PCC operation region support for AML interpreter")
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
-[ rjw: Fixed the Fixes: tag ]
-Link: https://patch.msgid.link/20260922144302.3847593-2-sudeep.holla@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: a94aec035a12 ("ASoC: mediatek: mt8183: add platform driver")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+Link: https://patch.msgid.link/20260903045203.175337-2-phucduc.bui@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/exfield.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sound/soc/mediatek/mt8183/mt8183-afe-clk.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpica/exfield.c b/drivers/acpi/acpica/exfield.c
-index 8618500f23b39..5f3a19e74252d 100644
---- a/drivers/acpi/acpica/exfield.c
-+++ b/drivers/acpi/acpica/exfield.c
-@@ -45,12 +45,13 @@ static const u8 acpi_protocol_lengths[] = {
+diff --git a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+index cc4f8f4d3dab9..6ab0734ad1365 100644
+--- a/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
++++ b/sound/soc/mediatek/mt8183/mt8183-afe-clk.c
+@@ -137,7 +137,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
+ 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
+ 			__func__, aud_clks[CLK_MUX_AUDIO],
+ 			aud_clks[CLK_CLK26M], ret);
+-		goto CLK_MUX_AUDIO_ERR;
++		goto CLK_MUX_AUDIO_INTBUS_ERR;
+ 	}
  
- /*
-  * The following macros determine a given offset is a COMD field.
-- * According to the specification, generic subspaces (types 0-2) contains a
-- * 2-byte COMD field at offset 4 and master subspaces (type 3) contains a 4-byte
-- * COMD field starting at offset 12.
-+ * According to the specification, the PCC OperationRegion begins after
-+ * the PCC signature. The raw shared memory COMD offsets of 4 for generic
-+ * subspaces (types 0-2) and 12 for master subspaces (type 3) therefore
-+ * appear at OperationRegion offsets 0 and 8.
-  */
--#define GENERIC_SUBSPACE_COMMAND(a)     (4 == a || a == 5)
--#define MASTER_SUBSPACE_COMMAND(a)      (12 <= a && a <= 15)
-+#define GENERIC_SUBSPACE_COMMAND(a)     (0 == a || a == 1)
-+#define MASTER_SUBSPACE_COMMAND(a)      (8 <= a && a <= 11)
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_MUX_AUDIOINTBUS]);
+@@ -153,7 +153,7 @@ int mt8183_afe_enable_clock(struct mtk_base_afe *afe)
+ 		dev_err(afe->dev, "%s(), clk_set_parent %s-%s fail %d\n",
+ 			__func__, aud_clks[CLK_MUX_AUDIOINTBUS],
+ 			aud_clks[CLK_TOP_SYSPLL_D2_D4], ret);
+-		goto CLK_MUX_AUDIO_INTBUS_ERR;
++		goto CLK_AFE_ERR;
+ 	}
  
- /*******************************************************************************
-  *
+ 	ret = clk_prepare_enable(afe_priv->clk[CLK_AFE]);
 -- 
 2.53.0
 
