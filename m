@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042671;
-	b=u/9+wBppKfw63ZxeVXm79cIpVoILYgOH/4o3BSE9WXoL1d+0YErz6lem4htH0HtP1XJk
-	 ynKeM+Tb32KYChGy8zwY/z8qwx1z7D33PLjl81dWjxOsljFrkyTCpjQ6w4aG24V4PqpI4
-	 lGM+r+KOnBtl7ll0/SLJ1PdZQuGYieLVJSNSPMJF7vUlkKx6BeuAE/iGTvioHD/flnCXX
-	 pyl+TLBNetJFCbnsUhP+LgWYfYyBDYBQ5YQSDGxDT9LiZIGdgRzbh+XMB+yOtkSlYV6kH
-	 84Dgec1tTYMn6z3+7s72W5Wnm2JKhTt6TSWqkULRuvx+b1qJnqtkhAFObxSDIRoOPXw==
+	t=1795042674;
+	b=hwET+k7S4q4o4taxLXqEG9x/7VHp3ObY+pa3+BgaP5Vf7PCNLMeBOhiyLp7zUbBBrsD/
+	 i8yk0wVeIeFjGHSm6HuWywXHdU5wRNco/3pHGZg84dQkNETDvRACgqlPcfYgnVRD+f6e6
+	 FE9miiM++L6FVmJ58GdA6DEf3smt68TvyhpnsycYZppn27Nx9eFldLh/BRCPZzswGLjMI
+	 5g7U9cvDz0N4cpHddrL2YKnlH2iifinTqh3dSxjkf7+OjzVbqlpmtLABUkbLicZusrsjM
+	 Zi07I3D7EWpwWn4kxAbqbf954jq+SnWZwbSBCi3PMLosfb9jKSlx1EXn/HiODzuxcmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042671;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042674;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dExZhXhB4pPcoY1ZJuu2g8QiB9+Tv44rG3iX+Zx1KVY=;
-	b=aIU0uzFqmXZEJwKE4fl7kEzu9fycZaTF5QMfxLfAs7NFOcww0qemFXhyXOmOyO+7O0fC
-	 1i6V9IFRWM6OCNjCne/00TMFKZqgFdEhYXGHxOwQOAFO0m+IsEf67s8zHQu+aoDE/uMeU
-	 QW06iIkvQ1vekaZ04U5+xCXD9+mNT266sY9KkHMr0Mab4tQqvNxugmPLo5AvpT38EmoIi
-	 oYq2klmrQG5cV2LScHXSbsZMrJXaoyXl9XHAmiRALRZ+zmZu4ZKHSLvmo4m20gA5NRrFO
-	 aukuRTbzqwTx5ozNjXFsMN6RiYoVb0rNzJvQLRYbpyGxL/qdf0+IN2gwnRd2a3dCk3w==
+	bh=agSSSVrnLMsuj6FNp+nPROXEZvTrmMEoXaV2/dlmCX0=;
+	b=FGpX1GgzOr9BPHeOJ+2EvH1awotZHJeRcnPeLwIgi2mRc65hvaZTrEkZ9v7ropwFVQaf
+	 1N3nw8bSn6FugxCE2MK8kQb4sXZq4nl2Sm5NGLRavK/KlUKKEdx1ED7i/55+lIqWzS/yw
+	 g0XJXH05heSM7ebCEUGfDmHV8pqX4xUZLlz3j8FDg+TQ87v/l+Gv+2qwGvKFMJLvUlfNY
+	 CxEoyUxJSLyDdQwy4txYo8mLlg0o8Jsg4ghHv1b0ORV5qmzPlVTHlWYBMY80SGFlfhTII
+	 w2w/Qy+ViIneIheOOR6QolLFmcMaGTwXikx+8+pC3aI35jivjWIFtmCsCFCIS/Pr0NQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4wumv6c;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5SZMwIc;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833CD606A31C;
-	Wed, 18 Nov 2026 22:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D90606A31C;
+	Wed, 18 Nov 2026 22:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o4wumv6c
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD841F000C4;
-	Wed, 18 Nov 2026 22:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h5SZMwIc
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D761F000C4;
+	Wed, 18 Nov 2026 22:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042671;
-	bh=dExZhXhB4pPcoY1ZJuu2g8QiB9+Tv44rG3iX+Zx1KVY=;
+	s=korg; t=1795042674;
+	bh=agSSSVrnLMsuj6FNp+nPROXEZvTrmMEoXaV2/dlmCX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o4wumv6cSHvb4ltU91iherY8/rLlkoy4pCNYQY/u0HMW4TVP51lNLYHyEJs4RbFMo
-	 gQPgE3DNgrc+Cyb5Ej1w1Uzn7ArLuLyice3xvp27B3sn6x4Q4JGOkS/4jo/svsr8AQ
-	 QTsjam23WivTRi/0lMbBey8wOS2YEv5abeXwVx5A=
+	b=h5SZMwIc8Asa50hRgsTluuqFixKeomBv3rCtR9jL/TWYf/+UCmVqJ+nO2+5ecDifK
+	 7Wd7ox4FMuyD7K5eqCyRIKSL396atZVGGvSvUQpObTtgGCsm2LxodyH1rCPuDJaNql
+	 qwdsBrbKiDDB7++4e8E/Rkhpil8BgNt+Aw2klko8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Christoph Hellwig <hch@lst.de>,
-	Hans Holmberg <hans.holmberg@wdc.com>,
-	Dennis Maisenbacher <dennis.maisenbacher@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3255/3318] block: Allow using bio_attempt_back_merge() internally
-Date: Wed, 18 Nov 2026 16:04:37 +0100
-Message-ID: <20261118150457.284610241@linuxfoundation.org>
+Subject: [PATCH 6.6 3256/3318] blk-mq: dont bring back flags of a completed request
+Date: Wed, 18 Nov 2026 16:04:38 +0100
+Message-ID: <20261118150457.311483175@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -75,70 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit dd850ff3eee428b4e1276bd51263dd937643ba19 ]
+[ Upstream commit 9531230ee1fcb8eca2c9cbb9bf02651cbf798842 ]
 
-Remove "static" from the definition of bio_attempt_back_merge() and
-declare this function in block/blk.h to allow using it internally from
-other block layer files. The definition of enum bio_merge_status is
-also moved to block/blk.h.
+The timeout handler sets and clears RQF_TIMED_OUT in a request it only
+holds a reference to, with a plain read-modify-write, while the
+completion clears flags in rq_flags the same way. If the two interleave,
+blk_mq_finish_request() runs twice with the flags back: the zone write
+plug reference is dropped twice and the scheduler's ->finish_request()
+is called again.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Change RQF_TIMED_OUT with cmpxchg, so the handler never writes back a
+flag that changed under it.
+
+Fixes: e5c0ca13659e ("blk-mq: release scheduler resource when request completes")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Hans Holmberg <hans.holmberg@wdc.com>
-Tested-by: Dennis Maisenbacher <dennis.maisenbacher@wdc.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20240408014128.205141-6-dlemoal@kernel.org
+Link: https://patch.msgid.link/20261028164415.1262013-31-axboe@kernel.dk
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 9531230ee1fc ("blk-mq: don't bring back flags of a completed request")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-merge.c | 8 +-------
- block/blk.h       | 8 ++++++++
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ block/blk-mq.c      |  2 +-
+ block/blk-timeout.c |  3 ++-
+ block/blk.h         | 14 ++++++++++++++
+ 3 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-merge.c b/block/blk-merge.c
-index 889ac59759a26..1aa2085e1cde4 100644
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -978,13 +978,7 @@ static void blk_account_io_merge_bio(struct request *req)
- 	part_stat_unlock();
- }
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 58cbf858fe134..9371f95babee9 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1558,7 +1558,7 @@ EXPORT_SYMBOL_GPL(blk_mq_queue_inflight);
  
--enum bio_merge_status {
--	BIO_MERGE_OK,
--	BIO_MERGE_NONE,
--	BIO_MERGE_FAILED,
--};
--
--static enum bio_merge_status bio_attempt_back_merge(struct request *req,
-+enum bio_merge_status bio_attempt_back_merge(struct request *req,
- 		struct bio *bio, unsigned int nr_segs)
+ static void blk_mq_rq_timed_out(struct request *req)
  {
- 	const blk_opf_t ff = bio_failfast(bio);
+-	req->rq_flags |= RQF_TIMED_OUT;
++	blk_rq_change_timed_out(req, true);
+ 	if (req->q->mq_ops->timeout) {
+ 		enum blk_eh_timer_return ret;
+ 
+diff --git a/block/blk-timeout.c b/block/blk-timeout.c
+index 1b8de0417fc1a..0590720e38c7f 100644
+--- a/block/blk-timeout.c
++++ b/block/blk-timeout.c
+@@ -137,7 +137,8 @@ void blk_add_timer(struct request *req)
+ 	if (!req->timeout)
+ 		req->timeout = q->rq_timeout;
+ 
+-	req->rq_flags &= ~RQF_TIMED_OUT;
++	if (req->rq_flags & RQF_TIMED_OUT)
++		blk_rq_change_timed_out(req, false);
+ 
+ 	expiry = jiffies + req->timeout;
+ 	WRITE_ONCE(req->deadline, expiry);
 diff --git a/block/blk.h b/block/blk.h
-index 13243d9fb8964..5590a4996c3b0 100644
+index 5590a4996c3b0..dfaa5aef2edff 100644
 --- a/block/blk.h
 +++ b/block/blk.h
-@@ -276,6 +276,14 @@ static inline void bio_integrity_free(struct bio *bio)
+@@ -276,6 +276,20 @@ static inline void bio_integrity_free(struct bio *bio)
  unsigned long blk_rq_timeout(unsigned long timeout);
  void blk_add_timer(struct request *req);
  
-+enum bio_merge_status {
-+	BIO_MERGE_OK,
-+	BIO_MERGE_NONE,
-+	BIO_MERGE_FAILED,
-+};
++/*
++ * The timeout handler changes RQF_TIMED_OUT in a request which it does not
++ * own: whoever completes it changes rq_flags at the same time, with plain
++ * loads and stores. Never write back a flag that has changed under us.
++ */
++static inline void blk_rq_change_timed_out(struct request *rq, bool set)
++{
++	req_flags_t old = READ_ONCE(rq->rq_flags), new;
 +
-+enum bio_merge_status bio_attempt_back_merge(struct request *req,
-+		struct bio *bio, unsigned int nr_segs);
- bool blk_attempt_plug_merge(struct request_queue *q, struct bio *bio,
- 		unsigned int nr_segs);
- bool blk_bio_list_merge(struct request_queue *q, struct list_head *list,
++	do {
++		new = set ? old | RQF_TIMED_OUT : old & ~RQF_TIMED_OUT;
++	} while (!try_cmpxchg(&rq->rq_flags, &old, new));
++}
++
+ enum bio_merge_status {
+ 	BIO_MERGE_OK,
+ 	BIO_MERGE_NONE,
 -- 
 2.53.0
 
