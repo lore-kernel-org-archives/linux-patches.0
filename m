@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038515;
-	b=WESajj59s4V5lMNhyQeeFY94g8LDzLBc+g0lP79QN57+Q8sO0OL5Z6ERmrBZRPFJC3dq
-	 gRtkJMk+XbgjihVcmKawRFREa2grSsIgzH4F5thZmISyDBtdxoy6hTxI67rxzKKBvvJqq
-	 IZz96PL7jOY3Iq64Y/hAcOPwGnn76SoBvobbox1LABg1ce9j89M7z2FuBLT4Ubl02iaOg
-	 FUhAXuL661Ms2wmOHCJoLqXM5wjBSrivwFeK6CfwGVCUGmLayO3b02AbHBglL2gLhftou
-	 +Eb4Yriou/tN584VMaj8xnjSSl/pgjRg95aRIFszkzZMFXhfmDx/O44E7NP0y3qwAqQ==
+	t=1795038518;
+	b=aQphlMGSHS7bL0OL9epNkok7TICCXJVioB1PYvd40zOToIQPDqZhl8sgpFsGIcK6O0Ln
+	 6g2yclk0Rw9tQpr4LcUfnbaKsCGwPP3cR8gHtp/+dtY4Np28mm0p7lwlD/k/fxeTh3JcY
+	 hb0R9XiR8y8HBr0LcV3xkgL+DNhRFpR7VIIWgbQ2AWBZfeVPTeZr6RF3v3DH7+A5TYFDi
+	 86jXWEdyitiN9tKdsWDy8Jo9jb/b0OYoI+PFdlLXbeNq7LsMLoPmtV7GeWX2iBPI0wIWz
+	 Y6D9CAUTo5dkNbhx6Yr7PbHLUh5hrKepj1NMGLuBgAzXOlNTvhgKe9ilDijNOeW9ysQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038515;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038518;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eMm6OahwCOZfuPthlln2+4qz1KTwLBWbLx7/62uI65s=;
-	b=q7NXS4pEGQjNuRBKWz0NONZlwcB0ORWIQ1iuwpWy27Qb3VMuoo/an9bAGfRgil2aji1n
-	 JKacomp0+PU97ZmAJaa/Y4roXZ2p1yaBUqyrxWQI2sE79a/A7yTmiKsDqjC6VKz5V4KSK
-	 KpWDJ93hhLy8eO0EbT3q3msdLUCGaenT5SgAIGGXiH3TotM6L6dxavgPBCf18pgrc/fN4
-	 TBp4QkDHmV6qhIzFtryApEL5ZOmiHu41Raq4iVuh/injJTMbdvHjgM6/7IWUECwFIqCwa
-	 z29IcZVQ81pnm4YX4ufXeZ12myZgI5wZqPgPpc4GSQG7pez8Yud+RQbErXSVmSDJQ1g==
+	bh=3R7U91neYDjkllpQBhMWM1GdbwbZdOPfFiu3+1h/TvU=;
+	b=rSpmoieeSaZinAZ3FvMWe5EKkoiLAOnJKBuavtahg8VvsVdnonHRv6sgyWZBR25pQ4N8
+	 ESZUzeBTM1YgvnrnwYXSlEzGnTcB8rb/i/0Tz7ttxv7pT6AEXv0jbRnU6WvKVeGHBsIm5
+	 OFhG4ENO0OLGOimGsEKF8MdBNcKAGJ5YdEOIiDDe2I9bmJPOdf3Zu/F8vELYuCutqNoa0
+	 ezIdUA5FCW/P/pv2/jOzPStBH3x/oQ9G4u2c/lgDl328lYhY9jUdjXUdmdoiIxtIFMZt2
+	 Zb3W9C1VSeBgcmXqdVbQgBlZ2r2XhFTOShqvTx1Qj+QnMhrB/DbYOa3NxlmMVD8/ikg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2TfpU0Oe;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NJ8VOVI9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E84606A31C;
-	Wed, 18 Nov 2026 21:48:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E860606A334;
+	Wed, 18 Nov 2026 21:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2TfpU0Oe
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCE41F000CF;
-	Wed, 18 Nov 2026 21:48:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NJ8VOVI9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F74A1F000C7;
+	Wed, 18 Nov 2026 21:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038515;
-	bh=eMm6OahwCOZfuPthlln2+4qz1KTwLBWbLx7/62uI65s=;
+	s=korg; t=1795038518;
+	bh=3R7U91neYDjkllpQBhMWM1GdbwbZdOPfFiu3+1h/TvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2TfpU0OeEgNuoU2J7+q4NTANdu+qNXE7gMKSksWWNvMBFzNHuu7eZjusxXjMdUflT
-	 Ye7gc6NUhVJCUNHGlHkqu+1Vrx6ITAocR4TiY1ZQcNl3Lzqu/sRyMpmzvAPl57/UdV
-	 cfx5GsP9IUaxZBhyjms6wCAhQjfFD1Da5ZOYTWiw=
+	b=NJ8VOVI92xfFu/ET0jfRJhW0r732FnnucNpGEKLhGn6rC/DJ+hwRqV669ME1DxBwu
+	 uikvX4Dy5O4BIA2TWx47woBKeJmi2TJKtyc4cvcbn73Z4J1I4fAB8etFsYgwVb/QT5
+	 v8wcvwdeWMghjnEsoR14TCrUt7vAFNMILaxJuGaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexey Charkov <alchark@flipper.net>,
 	Srinivas Kandagatla <srini@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1769/3318] nvmem: rockchip-otp: alloc clks with main struct
-Date: Wed, 18 Nov 2026 15:39:51 +0100
-Message-ID: <20261118150414.924571320@linuxfoundation.org>
+Subject: [PATCH 6.6 1770/3318] nvmem: rockchip-otp: Serialize reads
+Date: Wed, 18 Nov 2026 15:39:52 +0100
+Message-ID: <20261118150414.954857706@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,59 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Alexey Charkov <alchark@flipper.net>
 
-[ Upstream commit 9f99bb979f930e52e6861114fe03535d4bc2f374 ]
+[ Upstream commit 9fc6a1592d844c0397f115ee8cbd935169b9a71e ]
 
-Use a flexible array member to simplify allocation slightly. No need for
-a separate calloc.
+The OTP controller is driven through a single set of registers holding a
+state machine which has to be stepped through for every word read, yet
+nothing keeps two readers out of each other's way. Concurrent reads
+interleave, and the outcome is either a reader bailing out:
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+  rockchip-otp 2a580000.otp: timeout during read setup
+
+or, worse, one of them silently taking delivery of the other's data.
+
+Reading two cells in parallel from userspace on RK3576 reproduces both
+within 150 iterations - 53 read errors and 9 corrupted results, the latter
+either losing their first word or, in one case, ending in the two bytes
+which belong to the other reader's cell - whereas the same reads issued
+sequentially never fail. Concurrency is not hypothetical here, as six
+thermal sensors source their trim values from the OTP and reach the driver
+straight from asynchronous driver probing.
+
+Guard the read path with a mutex. Reads are the only way into the hardware,
+as the driver registers no write callback, and they always run in process
+context, so a plain mutex spanning the whole clock-enable, read,
+clock-disable sequence is enough.
+
+Fixes: 755864feb729 ("nvmem: add Rockchip OTP driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Alexey Charkov <alchark@flipper.net>
 Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20260530205333.117458-3-srini@kernel.org
+Link: https://patch.msgid.link/20261002101329.1084348-2-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 9fc6a1592d84 ("nvmem: rockchip-otp: Serialize reads")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/rockchip-otp.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/nvmem/rockchip-otp.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvmem/rockchip-otp.c b/drivers/nvmem/rockchip-otp.c
-index c6684ab14e742..f5b7d3f6986b5 100644
+index f5b7d3f6986b5..e5a24283ced76 100644
 --- a/drivers/nvmem/rockchip-otp.c
 +++ b/drivers/nvmem/rockchip-otp.c
-@@ -77,9 +77,9 @@ struct rockchip_data {
- struct rockchip_otp {
- 	struct device *dev;
+@@ -12,6 +12,7 @@
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+ #include <linux/module.h>
++#include <linux/mutex.h>
+ #include <linux/nvmem-provider.h>
+ #include <linux/reset.h>
+ #include <linux/slab.h>
+@@ -79,6 +80,8 @@ struct rockchip_otp {
  	void __iomem *base;
--	struct clk_bulk_data *clks;
  	struct reset_control *rst;
  	const struct rockchip_data *data;
-+	struct clk_bulk_data clks[];
++	/* Serializes access to the OTP controller state machine */
++	struct mutex mutex;
+ 	struct clk_bulk_data clks[];
  };
  
- static int rockchip_otp_reset(struct rockchip_otp *otp)
-@@ -326,7 +326,7 @@ static int rockchip_otp_probe(struct platform_device *pdev)
- 	if (!data)
- 		return dev_err_probe(dev, -EINVAL, "failed to get match data\n");
+@@ -239,16 +242,21 @@ static int rockchip_otp_read(void *context, unsigned int offset,
+ 	if (!otp->data || !otp->data->reg_read)
+ 		return -EINVAL;
  
--	otp = devm_kzalloc(&pdev->dev, sizeof(struct rockchip_otp),
-+	otp = devm_kzalloc(&pdev->dev, struct_size(otp, clks, data->num_clks),
- 			   GFP_KERNEL);
- 	if (!otp)
- 		return -ENOMEM;
-@@ -338,11 +338,6 @@ static int rockchip_otp_probe(struct platform_device *pdev)
++	mutex_lock(&otp->mutex);
++
+ 	ret = clk_bulk_prepare_enable(otp->data->num_clks, otp->clks);
+ 	if (ret < 0) {
+ 		dev_err(otp->dev, "failed to prepare/enable clks\n");
+-		return ret;
++		goto unlock;
+ 	}
+ 
+ 	ret = otp->data->reg_read(context, offset, val, bytes);
+ 
+ 	clk_bulk_disable_unprepare(otp->data->num_clks, otp->clks);
+ 
++unlock:
++	mutex_unlock(&otp->mutex);
++
+ 	return ret;
+ }
+ 
+@@ -333,6 +341,11 @@ static int rockchip_otp_probe(struct platform_device *pdev)
+ 
+ 	otp->data = data;
+ 	otp->dev = dev;
++
++	ret = devm_mutex_init(dev, &otp->mutex);
++	if (ret)
++		return ret;
++
+ 	otp->base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(otp->base))
  		return dev_err_probe(dev, PTR_ERR(otp->base),
- 				     "failed to ioremap resource\n");
- 
--	otp->clks = devm_kcalloc(dev, data->num_clks, sizeof(*otp->clks),
--				 GFP_KERNEL);
--	if (!otp->clks)
--		return -ENOMEM;
--
- 	for (i = 0; i < data->num_clks; ++i)
- 		otp->clks[i].id = data->clks[i];
- 
 -- 
 2.53.0
 
