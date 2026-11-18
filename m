@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029833;
-	b=oVO/WAspIYDFwHCD5Z6ZxoxRKTK4GdpFPu03SskNEyxxsNCyAuZ6kF9LKC1fyvv5DYmc
-	 8EKy4PGBU2ZXRKSdhgBH3s8lktFZ3fqA4Z1booFAzsO1e73WnM0N7Ef2t2bNNeUOKMtmS
-	 yPTcnLU0IGfzqI7PhonzjZbyB2cYJI7mZjDFdHeOZL8kYnkxFZxJXbREXumkcQhq6699E
-	 GJxLf+swyIEDuKcV4Bg2+7zyHPYhNpXJGovx4AAsvliB+r3ETVo21+wlcR5HNKmKtQTaC
-	 xP8v3XZlgLSLdEaE9GuaiZJKY8WMBFASYBfy5moA9Z/eqzYvR690y+i9Q+HBpZeFsrQ==
+	t=1795029835;
+	b=xK4RZ4VT5Z5EAvitUsIp2P03nSD38pEX5n8lvXS+zHh+Gm7ZuU/1+lUD9sW+ctQMfI+7
+	 w3uqdcd1rVZI02HeyZdt/ZgDjrHvzzbhpy0v/+nYmzTlj4rQUJJlhxTdDR4xCBbgLE4xO
+	 Wx/l/2o1LlXl3o+E9lob3mITfyFZ8P5/6EY5UD0T/YyPw8ngPAvMWvvduSdLmLwMMQXsD
+	 knm/git7UEYkQw8mwekbFvE5wlVuauskhd8QBMm6ZG25pnv6ov6fae9oTCruuIKfZyacc
+	 q37Z17P6ZVfxQvWSz4ASxbNeo4NcUwm4Vfz1lGE8KHN7fM76P/9xBbvn8SA0WQeuMnw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029833;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029835;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x2FmvkS3nY8OC2NIUFkvoFfO9mwuULuxiMQsBjsQGlI=;
-	b=nvgDUvvGeOLH5j0+128oATih0dolbPlbJHnHWP+m4bh/L1aIbPH5DNUJisBXSwxxM/5x
-	 /cTv3Hoebqs/ieXASPsQRl5t/+bJuLhwmGdCey0TADkivRS7JA+JYcNF7lScZ7gejYQNE
-	 Wjx1iYHhb7CSxCQzEy7lDtuPHwV9P8ymXKu0S9B4qE7xRFYM5I3bG29P+By59DWNj1KxJ
-	 QKJ7z2zbx8xDfPTh9rB+hrhT6z5nVnunFPX7DUOpNx4vBN79pileH7Njnt1drnEGZSFrY
-	 jIT/pTuWqKWhzkanLv5hkfZHCM8ZVUKNlNLPU7lATLMOglnG6cgA1ugFcIdSM7NAEtw==
+	bh=tEaVL7saISnbVotlVyN9pRe4xJFFoLW5JFYBBMoSjnQ=;
+	b=Xu79w9ooDZ3GPYkn0isVqtw5h3ku8RwCvXnQMVYhpspr2dZ9rpcRc53BSWlHN5FLpJAo
+	 Mw7XRzMZe5M06XSDyWsJW20inq/X4Me/P6kx3RMsbBqy/2WLvlA7F9kgy/PAOS8z0dHNt
+	 3GSztivnsG5eR06El2ND/obDwv9VRV6jlqtGrNCilJ8qVJuK+BzWuNVozmur8Loz8pIq9
+	 lKtXpd1EqATFyH6IwAHMbOZ8zFF8MZRqmTt2pGgMkRmqarPAi14c9x2RuPFuR3kb63qB2
+	 WZB7GwKruDdhtWgsfih9/82zjl4nQIiQDPvYGXD8hBxRum1N72XEg2RXHufS+IID16A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yn29bVgU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LhG5OWaw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2479F606A31C;
-	Wed, 18 Nov 2026 19:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7E3606A31C;
+	Wed, 18 Nov 2026 19:23:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yn29bVgU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B881F000C4;
-	Wed, 18 Nov 2026 19:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LhG5OWaw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4D01F000C4;
+	Wed, 18 Nov 2026 19:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029833;
-	bh=x2FmvkS3nY8OC2NIUFkvoFfO9mwuULuxiMQsBjsQGlI=;
+	s=korg; t=1795029835;
+	bh=tEaVL7saISnbVotlVyN9pRe4xJFFoLW5JFYBBMoSjnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yn29bVgUpsm4mbTqfrDiKmSl/NyVaXZlI/vBffb9vMsEmBuHNHnIZ3I1LNve1zWbE
-	 td7Gsl4dpwxnqeUZhsKksAjWWPM8vXlgeYDW2cIoqahL8yuFRp/SM+I2ktQFcfrPgM
-	 xfDtwO6yTSev+d/kjQ07Moivg3bArMLgP1AZQT1w=
+	b=LhG5OWawdxZh5d6owZ+whluJyLxYtTmsc1LbGq2nUD7T4i2W17LT5x7RUZG7CgxIp
+	 6/0w0baH/dxM6HSp3SsVkC1t+XbEnl3D9TFmdMhBMhFV5/lhr38YU4K6SIWMqGFoaE
+	 4GBrQKpEoJqUfOGcaTwH06pgei3D/d+ksVdUIkVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Lee Jones <lee@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Chen Pei <cp0613@linux.alibaba.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0490/1756] leds: pca9532: Check i2c_smbus_read_byte_data() return value
-Date: Wed, 18 Nov 2026 15:43:37 +0100
-Message-ID: <20261118150028.604567097@linuxfoundation.org>
+Subject: [PATCH 6.12 0491/1756] perf test: Fix a leaked map reference in the arch dwarf unwind tests
+Date: Wed, 18 Nov 2026 15:43:38 +0100
+Message-ID: <20261118150028.657965792@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,56 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Chen Pei <cp0613@linux.alibaba.com>
 
-[ Upstream commit 1b75f038e5f71ed32ce6593b5763f9776ec58a25 ]
+[ Upstream commit 1622c9ae39e2882fcbbae7c9d27dda13f1880b93 ]
 
-Coverity report INTEGER_OVERFLOW (tainted_data_return ->
-cast_underflow -> overflow) in pca9532_getled().
-pca9532_getled() stored the return value of i2c_smbus_read_byte_data()
-into a char and used it directly to compute the LED state without
-checking for an error. i2c_smbus_read_byte_data() returns a negative
-error code on failure. On an I2C read error the negative value was
-assigned to an unsigned type, triggering an integer underflow/overflow,
-and a meaningless LED state was returned to the caller.
+maps__find() has returned a reference to the map it finds since
+commit 42fd623b58db ("perf maps: Get map before returning in
+maps__find"), which updated arch/x86/tests/dwarf-unwind.c but missed
+the arm, arm64 and powerpc copies. Release the map after reading its
+end, as x86 does. All other callers of maps__find() already release
+what they get.
 
-Read the value into an int, check for the error, and fall back to
-PCA9532_OFF while emitting a warning when the read fails.
-
-Fixes: 28c5fe99016d ("leds: pca9532: Extend pca9532 device tree support")
-Assisted-by: VeroCoder:vero-1 [cli]
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260727-led-fix-v1-1-d635c5037109@nxp.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 42fd623b58dbcc48 ("perf maps: Get map before returning in maps__find")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-pca9532.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ tools/perf/arch/arm/tests/dwarf-unwind.c     | 1 +
+ tools/perf/arch/arm64/tests/dwarf-unwind.c   | 1 +
+ tools/perf/arch/powerpc/tests/dwarf-unwind.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/drivers/leds/leds-pca9532.c b/drivers/leds/leds-pca9532.c
-index e2c4aad89a7ca..5dca6b0827ea6 100644
---- a/drivers/leds/leds-pca9532.c
-+++ b/drivers/leds/leds-pca9532.c
-@@ -298,12 +298,15 @@ static enum pca9532_state pca9532_getled(struct pca9532_led *led)
- 	struct i2c_client *client = led->client;
- 	struct pca9532_data *data = i2c_get_clientdata(client);
- 	u8 maxleds = data->chip_info->num_leds;
--	char reg;
--	enum pca9532_state ret;
-+	int reg;
-+	enum pca9532_state ret = PCA9532_OFF;
+diff --git a/tools/perf/arch/arm/tests/dwarf-unwind.c b/tools/perf/arch/arm/tests/dwarf-unwind.c
+index 9bc304cb7762b..7b5330d77b00c 100644
+--- a/tools/perf/arch/arm/tests/dwarf-unwind.c
++++ b/tools/perf/arch/arm/tests/dwarf-unwind.c
+@@ -34,6 +34,7 @@ static int sample_ustack(struct perf_sample *sample,
+ 	}
  
- 	mutex_lock(&data->update_lock);
- 	reg = i2c_smbus_read_byte_data(client, LED_REG(maxleds, led->id));
--	ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
-+	if (reg >= 0)
-+		ret = (reg & LED_MASK(led->id)) >> LED_SHIFT(led->id);
-+	else
-+		dev_warn(&client->dev, "failed to read LED register: %d\n", reg);
- 	mutex_unlock(&data->update_lock);
- 	return ret;
- }
+ 	stack_size = map__end(map) - sp;
++	map__put(map);
+ 	stack_size = stack_size > STACK_SIZE ? STACK_SIZE : stack_size;
+ 
+ 	memcpy(buf, (void *) sp, stack_size);
+diff --git a/tools/perf/arch/arm64/tests/dwarf-unwind.c b/tools/perf/arch/arm64/tests/dwarf-unwind.c
+index b2603d0d3737a..4871041f72146 100644
+--- a/tools/perf/arch/arm64/tests/dwarf-unwind.c
++++ b/tools/perf/arch/arm64/tests/dwarf-unwind.c
+@@ -34,6 +34,7 @@ static int sample_ustack(struct perf_sample *sample,
+ 	}
+ 
+ 	stack_size = map__end(map) - sp;
++	map__put(map);
+ 	stack_size = stack_size > STACK_SIZE ? STACK_SIZE : stack_size;
+ 
+ 	memcpy(buf, (void *) sp, stack_size);
+diff --git a/tools/perf/arch/powerpc/tests/dwarf-unwind.c b/tools/perf/arch/powerpc/tests/dwarf-unwind.c
+index 5ecf82893b84d..f2c5e76590ebe 100644
+--- a/tools/perf/arch/powerpc/tests/dwarf-unwind.c
++++ b/tools/perf/arch/powerpc/tests/dwarf-unwind.c
+@@ -34,6 +34,7 @@ static int sample_ustack(struct perf_sample *sample,
+ 	}
+ 
+ 	stack_size = map__end(map) - sp;
++	map__put(map);
+ 	stack_size = stack_size > STACK_SIZE ? STACK_SIZE : stack_size;
+ 
+ 	memcpy(buf, (void *) sp, stack_size);
 -- 
 2.53.0
 
