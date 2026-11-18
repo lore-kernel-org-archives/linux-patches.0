@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045289;
-	b=3sYHbjLJ0b4BIzBDiBKLUIgdLfxI6QjpKn2Qk8F0ZWZjef2bWNQjXZxYBfv1NF93mfui
-	 Xgb6gCsNdfHT6AhVJBToiTa8DSfc7bl3dN2X07tugiot2YUWnCBR3PyLCv9/9GH8S+3rI
-	 L3Pnbva97wD87G8JVyAV3LiuCL+kNFkGUDfsWLj/lnrldqY8Ln5aGG/j0UrnmPIjJULPs
-	 d+nAe/bfzWExYgo6VVSpyHxwZZJaj/M/rjqA9ep5qCpq/ghnEL3vUAs+Fo6akzn9DbV9d
-	 kowyt8C6a8Oe79iA8c7x9MkDGwccLhGt5yl3sa63DS673ZKwOATsqW6IEjEIryTS8Zg==
+	t=1795045292;
+	b=LZ5sfiFAbjeGEKHIOZaui+zGMMnGcrqcwSeEE840Iz936UIoWWUwX//WHPTnQ5HnJrZS
+	 lzFJL3of09Cz9KxJddTFHFHBrISY8yEPodqxtt8HA/dwwW1tPU2V2dWJhAiRUqT2wWfv4
+	 PlA3WN7Fz6wk0moeDbOA6K7VHU81QGyIGlJHBZ4m/gSo02RP0e7T+hkB/Y3MIzd/RFHmb
+	 QSviJQuWzZB1wnwcDLakpucyOUnOuuHHMoeITiSr/ygrTYEDJkAlWn2ByxQLpNPsj+Zls
+	 9SqxegCkzh1FGoJo8504ww9qh2qYhpT/zQeZo0rAwnsE/C+bShTIyKeK14nGwY+fk1A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045289;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045292;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MuYGgKwUuAC2lvdIZYDhe6q2mJBGwA+gZJu2bIhye7w=;
-	b=cPGKuDPc9Pcxqb977hUWTaHG3frV98rcpl2MBhKNAt1YcjVj8bNKH2I25Orr84OHkeGZ
-	 AJIjRms2WXkPiEhpPa6tbVMJEgtMPznZRFFMKdvsGu/YMij3QBLGSf8EPHZ8HR2LU0Lnh
-	 kmJx3JGE8d/pyD36XTGVaiKTa/695GjFkLr97E6pORXtinR8wt6oSlY80sVFeGmtgCuyG
-	 6XjepgLXnoWm+GK+5xN2yMfnPZCxTjhVHFI2fJijmyuHd4/G2er73xqHQ4KzrS/4rk8k7
-	 ASkJSk2BNN8+INPMS+OmcVCqGrFf3jQ9GtJA0yFDlGNTye8id8tDfSbeKaTEE4fDC9w==
+	bh=Qkv8+10Epa9riAR3nr9/ZFv4v/QKw45vpsCIg3DFSWA=;
+	b=nZNTUUOjxZZzPM7hY2ubsc8gANtjxYqKV25+rwIQDl3oAKaNAeSlzThPwBNvj1M9iiYX
+	 +Q2bzAPK1eq1vVmEOT9P8+OhZx6Qx6fskVMzT96Kdfn60SQxJNQ9iSFeP0jJbMlzfPL2v
+	 FUubZzcL4cf0obIIuHvClPzzxbFM6in15u3Vw09ctAfgNkRoDvh552aoEvHgLKyxLAm7c
+	 P3Hq1qlbSJMIigANlx7hYI98I1/SUgAwdbL0PAze5fXHa/vEchlh7NQzvWIEa8W51GxJ3
+	 d7IwENX8ev/l2GoIGzjMUF0WPeFGhFhRGhZhA5LebQ2s1Jok5gsQPFiJoRp/1mDlJ2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLkLERgP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gNfAJzsa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E57606A325;
-	Wed, 18 Nov 2026 23:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA2C606A333;
+	Wed, 18 Nov 2026 23:41:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JLkLERgP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981DC1F000C4;
-	Wed, 18 Nov 2026 23:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gNfAJzsa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAD01F000C9;
+	Wed, 18 Nov 2026 23:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045289;
-	bh=MuYGgKwUuAC2lvdIZYDhe6q2mJBGwA+gZJu2bIhye7w=;
+	s=korg; t=1795045292;
+	bh=Qkv8+10Epa9riAR3nr9/ZFv4v/QKw45vpsCIg3DFSWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JLkLERgPFr8Ig2tTGXOO2ImL7ONIKIBF7/4K4qnjTQ4tls0haAhY/i4zwVVAclMGE
-	 l4/AZ8QNHr2b5qVF+zw1f0r8sZgWcaFJfQ0Z1NvK6aLOyfNujtrUSmgtb6qARkABOh
-	 dMxTn9JFDS7hAaVJbGSAc2Db5a9vLiQjfC2+vIcg=
+	b=gNfAJzsa8Kgx/vg1G23RY3o1n+D57CPmVXQmAHkibW+AWL+gyS5j6mlBOSYc/Vdku
+	 dKdLKJH1n0CTV0AaPdtrRxIJoI/5f0I1mtPl1Leee6bw1C1ZSP4IuLC0OzTBVODLao
+	 U5N7HHUOk1uBWngSwO3SlB/aBMVbzisemob01cr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Li <songl@zju.edu.cn>,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	Guangshuo Li <lgs201920130244@gmail.com>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0869/2857] media: mediatek: vpu: free IRQ before destroying watchdog workqueue
-Date: Wed, 18 Nov 2026 15:31:43 +0100
-Message-ID: <20261118150232.851490858@linuxfoundation.org>
+Subject: [PATCH 6.1 0870/2857] media: mediatek: vcodec: destroy core workqueue on remove
+Date: Wed, 18 Nov 2026 15:31:44 +0100
+Message-ID: <20261118150232.888841940@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,47 +69,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Guangshuo Li <lgs201920130244@gmail.com>
 
-[ Upstream commit 2c50b58d4105f6dbaa36d6306087954b9100e9ae ]
+[ Upstream commit ceb6e96122e1013550f378c738e621a6e82d246b ]
 
-mtk_vpu_remove() destroys the watchdog workqueue while the interrupt
-handler requested with devm_request_irq() is still registered: the
-devres core frees the interrupt only after remove() has returned. If
-the VPU watchdog fires in that window, vpu_irq_handler() queues
-vpu->wdt.ws on the already destroyed vpu->wdt.wq.
+The decoder probe allocates core_workqueue for architectures with a
+LAT processor. The probe failure paths destroy the workqueues, but the
+remove() function only destroys decode_workqueue.
 
-Fix this by calling devm_free_irq() before destroy_workqueue(), which
-releases the interrupt and waits for a running handler, so no new work
-can be queued while the workqueue is drained and freed.
+As a result, removing a decoder on LAT architectures leaves core_workqueue
+allocated after the device lifetime has ended.
 
-This issue was found by an in-house static analysis tool.
+Destroy core_workqueue during remove for latency-based decoder
+architectures, matching the cleanup performed by the probe failure
+paths.
 
-Fixes: 3003a180ef6b ("[media] VPU: mediatek: support Mediatek VPU")
+This issue was found by manual code inspection.
+
+Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
 Cc: stable@vger.kernel.org
-Co-developed-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Song Li <songl@zju.edu.cn>
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
 Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vpu/mtk_vpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_drv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/mediatek/vpu/mtk_vpu.c b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-index 44adf5cfc9bb2..37c0a4abfe8df 100644
---- a/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-+++ b/drivers/media/platform/mediatek/vpu/mtk_vpu.c
-@@ -962,6 +962,7 @@ static int mtk_vpu_remove(struct platform_device *pdev)
- #ifdef CONFIG_DEBUG_FS
- 	debugfs_remove(vpu_debugfs);
- #endif
-+	devm_free_irq(&pdev->dev, vpu->reg.irq, vpu);
- 	if (vpu->wdt.wq)
- 		destroy_workqueue(vpu->wdt.wq);
- 	vpu_free_ext_mem(vpu, P_FW);
+diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_drv.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_drv.c
+index 42df901e8beb4..6eb96ae75c6f9 100644
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_drv.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_drv.c
+@@ -493,6 +493,8 @@ static int mtk_vcodec_dec_remove(struct platform_device *pdev)
+ 	struct mtk_vcodec_dev *dev = platform_get_drvdata(pdev);
+ 
+ 	destroy_workqueue(dev->decode_workqueue);
++	if (IS_VDEC_LAT_ARCH(dev->vdec_pdata->hw_arch))
++		destroy_workqueue(dev->core_workqueue);
+ 
+ 	if (media_devnode_is_registered(dev->mdev_dec.devnode)) {
+ 		media_device_unregister(&dev->mdev_dec);
 -- 
 2.53.0
 
