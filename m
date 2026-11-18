@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033003;
-	b=EwPKot4EeWKxxiiKRS7itNPkmMjwHY9qKF+k8kA6xQ9SQ14RvwbmCz4cEmhVdF0gNhVw
-	 5cOmZ+jeOBvA+cgxM1iAH/vvy+d148TPnkiv/1dHQyR3FZZvNmeODgyrWU3kPL3prFuz1
-	 oEn4d+jbUqLT7/lm7A7yeP5yn7nPgsakK3xJ4/bdmj5xFHMRJ2UQEb+4Ov/R9vSpAD2L7
-	 T54B9KELa57XY1zVvWBJSXC/BQgursaYJQPJZl0txeINCUFrULyCqrjsfUkTe6TUJzCNY
-	 HpP06c7JHNS3LPH8mZ3uxlTd/n4QVJQNCLgUd1id4BQIr1g6JlMm6vN+PtqMWjwxhew==
+	t=1795033006;
+	b=hKVNiZmWAlwLtZiSGraCrAXrDvWEVTXJiUgDG1NexFyGBuaCZm4LVz0nghihFQ2TKkXt
+	 pHdKz3++OrH7ELYlu3s+bWlBVlYMgsw39YNx2h9j+a+V1ZuhlWKokFSMR2JUT/yQVhgEO
+	 sF3qSY+wQrIctuoSkJTcpJhOMPjz18uiHpUvwQg6Naz2t9Sdi7lR7ieEmzXUVuqSCHQDf
+	 1kmKng+CTEl2pf7N8SnHGkP8ycKYPb4HTJMNm/rOr3zbz6srz76ib4eFqgaTFW8ZAHUU/
+	 uyJNc0o0QiEEuwSZPGC4yRIP387IQ//WbsapdFQl0fQv8qRlIRaqUHZx1p5uQQGrnLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033003;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033006;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=as61gKx2Y4ODRoRBp3+jK6J98i49vW/RtPdhmuW8Kws=;
-	b=yEaaQ0Ykzyg3WfeP/wyzuU5tYjgO2XXBN8X04coyo+T/1GgWbfppsPDxbjkITakt8Eww
-	 alv8CqZW/OIyLICKtx10Qc2OpFNIRFqFuoqL0bUr7DkzE0wpT9Xtg0wosGGVuwmIJm8Im
-	 qwvuWko7FEOeoyRcaQrsS1qzeNtrKfOZgEh314VxmLw7Ited13AX2i2gjas3ysPXh04uW
-	 2vV9OO0KYDQAQZFq+mf+CT/HOEvmiJgW4Dsgz+ChphxCT+Ry5Mo+lGizgZJqhXHJlQsWa
-	 K1ZTpmNM+dOMS52Kwst5l8ncqFr1MoCcRfLnLlyoacwd18vJHXofJqeHXAKxmvIsNWw==
+	bh=hQjLyMNKVI5N1qWBlJW3V24k32T4wyR8yVmiQ6F+Y0s=;
+	b=Gxhp84UtQt7Rr6zxZi6Ml3Al1m9moYQ+qHST7+gwpJYbxPitDNF24kdlq3oDDm7MBrxP
+	 N6Ie2o9Omf3HgxV6iT49B7HtrI8upKE9rLyyInDJrfiK7InwhE7YOvJJmT+E5F+b5uobx
+	 nLijTmLqGdmhPxvUx2BvwrE+LFSFztpr8O4cKsEgq5SEY6Ris3ZuQgprtSIunO9Bk/A7C
+	 2vr8tMK2a/aATiZDwYPTPsceXk94Z9ueW7TqEYpSkyOsjSjw9B8gHMku8C+cbsS2zBo7o
+	 VmMle/v1m5rqN4A3fgJa+BqgrZyeFCbm0JCm/4JGzuIUeU2PRNoaOhiZ6lDb59CtuBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCGQlFm8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NV9mjaBQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66FD060A2603;
-	Wed, 18 Nov 2026 20:16:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F09F606A32C;
+	Wed, 18 Nov 2026 20:16:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bCGQlFm8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF391F000CA;
-	Wed, 18 Nov 2026 20:16:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NV9mjaBQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865491F000C4;
+	Wed, 18 Nov 2026 20:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033003;
-	bh=as61gKx2Y4ODRoRBp3+jK6J98i49vW/RtPdhmuW8Kws=;
+	s=korg; t=1795033006;
+	bh=hQjLyMNKVI5N1qWBlJW3V24k32T4wyR8yVmiQ6F+Y0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bCGQlFm87meDZ+cbYqlI2f6vIx+qTx19+kqXbgSVlKBKbSf230gKVQbUyRTIC6cGj
-	 PygdzWSJfIt1uPtoUyEWnFTQWi8EDLyhEx21LPv5Q5EEtuGgIsjo9DzSl7KnZhuTO6
-	 rc0uPnOz0Ms0a/WCiAbGsobS2fZQ83XtUjRlR27A=
+	b=NV9mjaBQ8qeKGGkAVko6ZlZfhps5Za7MZASbI8NEPCkyPeCCNQ4bP06TBZqIImJ14
+	 HzpCXfW8mWaj1+hy6oi0rqzxIRTRz5JKIShbh7wRy6yXbFqIQrFtCmUM7+wHrUuhN6
+	 jgm8neP2PlE6Oq1E/A3y/EzpBmzdC2sMAzxtybKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
+	Guikun Yang <yangguikun19@qq.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1614/1756] net: microchip: fdma: fix DCB corruption under sustained load
-Date: Wed, 18 Nov 2026 16:02:21 +0100
-Message-ID: <20261118150114.103658863@linuxfoundation.org>
+Subject: [PATCH 6.12 1615/1756] devlink: region: fix snapshot id leak on kernel-allocated ids
+Date: Wed, 18 Nov 2026 16:02:22 +0100
+Message-ID: <20261118150114.138954481@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -68,100 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Machon <daniel.machon@microchip.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 573a6d4c7a21e34d7a2174b8d3c7ca67a5e850b6 ]
+[ Upstream commit ef8f0a1d888e0280452792f6d4edad237c934a51 ]
 
-__fdma_dcb_add() prepares a DCB and links it into a channel's chain by
-writing its address to the NEXT_PTR of the current last DCB. The FDMA
-may be processing the chain while this happens.
+When DEVLINK_CMD_REGION_NEW is issued without a snapshot id, the kernel
+allocates one with __devlink_region_snapshot_id_get(). That helper counts
+the caller as a user of the id, and the caller must release this hold
+once it is done.
 
-Before this patch, the link is written before the new DCB's own nextptr
-and info fields, so the FDMA can follow it to a DCB that hasn't been fully
-prepared yet. Under sustained load this stalls the FDMA.
+devlink_nl_region_new_doit() never drops it. The refcount of the id goes
+1 (allocation) -> 2 (snapshot created) and stays at 2. When the snapshot
+is deleted the count only drops to 1, so the id is never erased from
+the snapshot_ids xarray. The id then stays in use for the lifetime of
+the devlink instance: requesting a snapshot with that explicit id fails
+with -EEXIST, and there is no snapshot left to delete to clean it up.
 
-Prepare the new DCB fully before linking it, and update the previous
-DCB's NEXT_PTR using the two-step sequence from the datasheet (poison
-the LSB and flush, then clear it) so the FDMA never observes a
-partially-updated pointer.
+Reproducer steps:
+  # devlink region new pci/0000:13:00.0/device-caps
+  pci/0000:13:00.0/device-caps: snapshot 0
+  # devlink region del pci/0000:13:00.0/device-caps snapshot 0
+  # devlink region new pci/0000:13:00.0/device-caps snapshot 0
+  kernel answers: File exists
 
-Reported by a customer running iperf3 --bidir against a lan969x board.
+Drop the caller's reference right after the snapshot has been created,
+as the snapshot then holds its own.
 
-Reproduced on lan969x with iperf3, throughput collapsing to zero:
-
-  [  5]   1.00-2.00   sec  73.9 MBytes   620 Mbits/sec    0    305 KBytes
-  [  5]   2.00-3.00   sec  73.9 MBytes   620 Mbits/sec    0    305 KBytes
-  [  5]   3.00-4.00   sec  13.9 MBytes   116 Mbits/sec    2   1.41 KBytes
-  [  5]   4.00-5.00   sec  0.00 Bytes  0.00 bits/sec    1   1.41 KBytes
-  [  5]   5.00-6.00   sec  0.00 Bytes  0.00 bits/sec    0   1.41 KBytes
-  [  5]   6.00-7.00   sec  0.00 Bytes  0.00 bits/sec    1   1.41 KBytes
-
-The race is timing-dependent: across three reproductions the stall
-appeared anywhere from ~400s to ~3000s into the run.
-
-Fixes: 30e48a75df9c ("net: microchip: add FDMA library")
-Signed-off-by: Daniel Machon <daniel.machon@microchip.com>
-Link: https://patch.msgid.link/20261026-microchip-fdma-dcb-corruption-v1-1-36dab6caca07@microchip.com
+Fixes: 043b3e22768d ("devlink: let kernel allocate region snapshot id")
+Reported-by: Guikun Yang <yangguikun19@qq.com>
+Closes: https://lore.kernel.org/netdev/tencent_BE912BA710539F285F9FCF28E854ABEFCD07@qq.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20261026174403.512-1-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microchip/fdma/fdma_api.c    | 30 ++++++++++++++++---
- 1 file changed, 26 insertions(+), 4 deletions(-)
+ net/devlink/region.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/microchip/fdma/fdma_api.c b/drivers/net/ethernet/microchip/fdma/fdma_api.c
-index 6dfe36f58d67a..a85dcb492829d 100644
---- a/drivers/net/ethernet/microchip/fdma/fdma_api.c
-+++ b/drivers/net/ethernet/microchip/fdma/fdma_api.c
-@@ -43,9 +43,19 @@ int __fdma_dcb_add(struct fdma *fdma, int dcb_idx, u64 info, u64 status,
- 				u64 *dataptr))
- {
- 	struct fdma_dcb *dcb = fdma_dcb_get(fdma, dcb_idx);
-+	struct fdma_dcb *prev = fdma->last_dcb;
- 	u64 nextptr;
- 	int i, err;
+diff --git a/net/devlink/region.c b/net/devlink/region.c
+index 7319127c5913f..2bd000d878367 100644
+--- a/net/devlink/region.c
++++ b/net/devlink/region.c
+@@ -721,6 +721,11 @@ int devlink_nl_region_new_doit(struct sk_buff *skb, struct genl_info *info)
+ 	if (!snapshot_id_attr) {
+ 		struct sk_buff *msg;
  
-+	/* Per the FDMA datasheet, adding a DCB to an active channel takes
-+	 * three steps:
-+	 * 1) Write NEXT_PTR of the current last DCB with the LSB forced to
-+	 *    FDMA_DCB_INVALID_DATA, and flush that write.
-+	 * 2) Clear the LSB to complete the link.
-+	 * 3) Reload the channel (FDMA_CH_RELOAD); this is done by the caller
-+	 *    once the chain has been extended.
-+	 */
-+
- 	for (i = 0; i < fdma->n_dbs; i++) {
- 		err = __fdma_db_add(fdma, dcb_idx, i, status, db_cb);
- 		if (unlikely(err))
-@@ -56,13 +66,25 @@ int __fdma_dcb_add(struct fdma *fdma, int dcb_idx, u64 info, u64 status,
- 	if (unlikely(err))
- 		return err;
- 
--	fdma->last_dcb->nextptr = cpu_to_le64(nextptr);
--
--	fdma->last_dcb = dcb;
--
- 	dcb->nextptr = cpu_to_le64(FDMA_DCB_INVALID_DATA);
- 	dcb->info = cpu_to_le64(info);
- 
-+	/* On the first DCB of fdma_dcbs_init() prev is the DCB itself;
-+	 * don't link it to itself.
-+	 */
-+	if (prev != dcb) {
-+		/* Write NEXT_PTR of the current last DCB with the LSB forced
-+		 * to FDMA_DCB_INVALID_DATA, and flush that write.
++		/* Drop the allocation reference, the snapshot
++		 * now holds its own.
 +		 */
-+		prev->nextptr = cpu_to_le64(nextptr | FDMA_DCB_INVALID_DATA);
-+		dma_wmb();
++		__devlink_snapshot_id_decrement(devlink, snapshot_id);
 +
-+		/* Clear the LSB to complete the link. */
-+		prev->nextptr = cpu_to_le64(nextptr);
-+	}
-+
-+	fdma->last_dcb = dcb;
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(__fdma_dcb_add);
+ 		snapshot = devlink_region_snapshot_get_by_id(region,
+ 							     snapshot_id);
+ 		if (WARN_ON(!snapshot)) {
 -- 
 2.53.0
 
