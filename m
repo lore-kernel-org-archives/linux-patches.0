@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027112;
-	b=A4YMXbrJQgfqAv93uMLPdXQy+WsmztMR80rxeOaEFDD9ZZ0xlZGOUkq4hZ8IkuR3ie7t
-	 bQp5bDhqxBZt2ZGqyk9EOo6PSDmTIWwoqn+X2B84JlfEKyGi18g4nXa8lxNgfgpZXprXz
-	 puW+WFOk6pVt5dJIvXL92gTqN5Plpgj8C1YMFo6+jrRBPitO1d8HlNIFupsXcYsMiZ7IM
-	 Or+sl5SZ/IRR9jI9WUQu1yuFyguFR8oLaWlEBGO3DNSG8Mb3noEYQsXBCwZmTSJlMrWIP
-	 PXY8ulniiVPHDDrUfNz2qliQ8gFCalk6SVtIoT02gj5tsUz1iDud5sYmdogLxLvFiyA==
+	t=1795027115;
+	b=aIZedr01CmJlj6ri+0fBdU269zuy7rI6mCCkBVa1GK5UGgaS/32qtNKUoxIWxVgoW35P
+	 AjY6HZZ25imzfJvWUN6e0jVT0DZO4p1dg5aSh0bp3RaXe6EXqFAAe7UC7834D5HSuvIxI
+	 PMGVJEoXH7u4b+RnGpCYkOZX4ORZewhwiRLWwiPqQ6ZOqFYUKsR+JPccDNSQu3I4aWJGN
+	 cm5AO/D0bWmVUQgWz0UnIV8xzCWg5gdUzPWbwY36YBPEIW7naakxxbjrzrWl8IaH5Mahz
+	 CajNYqu/lAdkaPJgTIqveiKixvGi8h/hGna1gq8CZc6iK/W8wBHV+JtA1gi3XYYAQMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027112;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027115;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4rVw5c3ffXjXC7LKgzO9Zpx5V7PwSBeSNIHHrzX0mR8=;
-	b=ZP2Y4IB19BsVVU4YiA3yko8tabL0L/H/F2tJzVvq8YMCkRDcqEonvtRg4MeFROyjieXW
-	 S+OwPImV15bxEWZkjF/apyt6HX0eq9ZM62crtLdm90l3Ag6eG5C65gc6FRf/xKwETZH1a
-	 wCHtyHu2SHzUvEZhs5PBO9pz2a/W1x6rYYTFbvTyIvk4P02k4keZNydVpc1Sdm1AG98hv
-	 FMWcS+InTaxHRQ5+b0xic9QN9hSNme5Lw/5Of8jPHQMB250OMshvdQfYDoLSOP79m4CVq
-	 ltEHmbh9//leIC4qJ9uNigvAKk+LYLumo749fpT8zM5s0HZkNg04ZpBi+LuFCHVXTrw==
+	bh=c4KQjJfmliQu781VFlfGl48HdDgjZQct4TjOXVCjsZk=;
+	b=jQjEtcUR1i10HVj4a1DAOxoJiuf7Jbnm+0c/qZXhiuvKhf+/8pQK6r0rf3V6LqAA1S8F
+	 DxISU6HgY9aaK7O54qsiYJVWl0ldS80tXV3p1gp/eYvI6ZGSzox01W5KkGjp7D4vM6d+d
+	 vL7Ne1n6YWKq2qNPGtGa4A8sBJI4A360iAQvRsAC4zQ9/Ta/fwGrUp8PP7zb522HVRmo3
+	 9hvKiMkhWPV2K9Ku7A3VxLxbXBpCqyfMCcqfEuTViHgSJ1chT6mBA6wvfjAyp2jMMbJAq
+	 SbRIUE3X7j++/Do+d6wEXjLy+enJWwucCPARIH0GXGKABd/77lZLcsfmwxEAlsPjPqw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ZY/0nNxD";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nf1Eimp6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BAC606A320;
-	Wed, 18 Nov 2026 18:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A78606A31C;
+	Wed, 18 Nov 2026 18:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZY/0nNxD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A716F1F000C5;
-	Wed, 18 Nov 2026 18:38:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nf1Eimp6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CE351F000C4;
+	Wed, 18 Nov 2026 18:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027112;
-	bh=4rVw5c3ffXjXC7LKgzO9Zpx5V7PwSBeSNIHHrzX0mR8=;
+	s=korg; t=1795027115;
+	bh=c4KQjJfmliQu781VFlfGl48HdDgjZQct4TjOXVCjsZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZY/0nNxDTPJgV5gQoGcg+XxB6I35mPoOSEupSoJdyCE+ftG7AYTNUrN7rV0nlsIPX
-	 RJaAZMd+283+rBDGvSyJzXVXIfssi7+roJlWNwZH3krh2z+oTRLzc/kVHN6UYohAJE
-	 or4yNGvai6YhirwepfxoxXwhjDpN4+dOfLJ7Lzeo=
+	b=nf1Eimp6+a7/K/cQRyHwpaldBtsc8yHgXJRP6uBKsgtNYe/09ZpnsTPtGuzHHk2z3
+	 T9FKhGMe8XKFK2rYsdXw5+XRENScUj7P8vIILWhajS4nXJD4i9engDa0A+PaCqqC5T
+	 RHFuZ5OtrRjBnV5u4YNP5fOk/K0Sh10UoAHeHdUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitriy Geels <dmitriy.geels@gmail.com>,
+	syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com,
+	Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1673/2151] HID: logitech-hidpp: cancel reset_hi_res_work on probe failure
-Date: Wed, 18 Nov 2026 15:56:48 +0100
-Message-ID: <20261118150222.775267306@linuxfoundation.org>
+Subject: [PATCH 6.18 1674/2151] HID: wacom: fix wacom_intuos_irq NULL pen_input deref
+Date: Wed, 18 Nov 2026 15:56:49 +0100
+Message-ID: <20261118150222.810839203@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,41 +70,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitriy Geels <dmitriy.geels@gmail.com>
+From: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
 
-[ Upstream commit 0be03caba6c002385e74d60be934b961aa5e88dc ]
+[ Upstream commit 2f985de0afbe9366af9d322ea20589712c1dc8fe ]
 
-The probe error path cancels hidpp->work before freeing the HID++ device
-data, but does not cancel reset_hi_res_work.
+Currently, wacom_intuos_irq() passes the parent of wacom_wac's
+pen_input to the dev_dbg() in the unknown report path. However,
+pen_input can be NULL on interfaces without a pen, causing a
+NULL pointer dereference.
 
-reset_hi_res_work can be scheduled while probing the device. If probe
-subsequently fails, the work can run after the driver data has been
-freed.
+Get the HID device from the enclosing struct wacom and use hid_dbg()
+instead.
 
-Cancel reset_hi_res_work in the probe error path to prevent a potential
-use-after-free.
-
-Fixes: ed80cc4667ac ("HID: logitech-hidpp: Add HIDPP_QUIRK_RESET_HI_RES_SCROLL")
-
-Signed-off-by: Dmitriy Geels <dmitriy.geels@gmail.com>
+Fixes: eb71d1bb270e ("Input: wacom - use dev_xxx() instead of naked printk()s and dbg()s")
+Reported-by: syzbot+b5a7cd83622c747977de@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b5a7cd83622c747977de
+Signed-off-by: Matheus Alves de Almeida <matheus.aalmeida@inf.ufrgs.br>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/wacom_wac.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index a931713a9cb69..1140ad92aacee 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4527,6 +4527,7 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- hid_hw_start_fail:
- 	sysfs_remove_group(&hdev->dev.kobj, &ps_attribute_group);
- 	cancel_work_sync(&hidpp->work);
-+	cancel_work_sync(&hidpp->reset_hi_res_work);
- 	mutex_destroy(&hidpp->send_mutex);
- 	return ret;
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index cf459c16b39a9..361738bb87253 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1027,10 +1027,10 @@ static int wacom_intuos_general(struct wacom_wac *wacom)
+ 	return 2;
  }
+ 
+-static int wacom_intuos_irq(struct wacom_wac *wacom)
++static int wacom_intuos_irq(struct wacom_wac *wacom_wac)
+ {
+-	unsigned char *data = wacom->data;
+-	struct input_dev *input = wacom->pen_input;
++	unsigned char *data = wacom_wac->data;
++	struct wacom *wacom = container_of(wacom_wac, struct wacom, wacom_wac);
+ 	int result;
+ 
+ 	if (data[0] != WACOM_REPORT_PENABLED &&
+@@ -1041,23 +1041,23 @@ static int wacom_intuos_irq(struct wacom_wac *wacom)
+ 	    data[0] != WACOM_REPORT_CINTIQ &&
+ 	    data[0] != WACOM_REPORT_CINTIQPAD &&
+ 	    data[0] != WACOM_REPORT_INTUOS5PAD) {
+-		dev_dbg(input->dev.parent,
++		hid_dbg(wacom->hdev,
+ 			"%s: received unknown report #%d\n", __func__, data[0]);
+                 return 0;
+ 	}
+ 
+ 	/* process pad events */
+-	result = wacom_intuos_pad(wacom);
++	result = wacom_intuos_pad(wacom_wac);
+ 	if (result)
+ 		return result;
+ 
+ 	/* process in/out prox events */
+-	result = wacom_intuos_inout(wacom);
++	result = wacom_intuos_inout(wacom_wac);
+ 	if (result)
+ 		return result - 1;
+ 
+ 	/* process general packets */
+-	result = wacom_intuos_general(wacom);
++	result = wacom_intuos_general(wacom_wac);
+ 	if (result)
+ 		return result - 1;
+ 
 -- 
 2.53.0
 
