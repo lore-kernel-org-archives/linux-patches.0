@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058560;
-	b=0TG9QZALf+gnYAe+s9L4uPE3F1ID+WmaSVAS/V6JRLPbSxzd0aqq8VmT59WwMgTerOBC
-	 wFrHyCorqn+H2iQN8Sr6fraZPMJhMlSojIsJ7BahzryKjCcRAl0XdstGKpGdAZTLqtSGs
-	 Dd4GPNG8kBZ9siLhwwjB29eUPlT9oqlgg8ljOpAs9zp35lCVGPqjRWl3MfDMyh5yCAncC
-	 xKKYWr1QHc7EtlVfZb3A/60zCF0Y8WDT5Rm2PRl2FDTJwsJuScXbEM9nFrYzIb1IW/B7f
-	 Eyr6pDZlivUSt2uX/8juKoWOpI6V7BImMtzIRrS/DDsnMShY1lJQUWkXbm0/fVqu5hg==
+	t=1795058562;
+	b=QfucIwEfGd6+GIwDL6lc2KJe4Ua+lhFsBatFkknXGA7h4U0WiEbrwiuqU1XA4EPtWwj0
+	 cAaiWXSJgAZwH/SFGK/3sA9ycRzFFJekOuPjxxsHAx4VXVMzsb9r1NOh1dR8KQ13FVqiC
+	 Yijmt/V9RNNhzZyZlJU/LTJRrS/eUWsyK9B9WRgVIPsa9A+lTiBA/URZenqcTNhkt+6tr
+	 8cg+KG0J4/UZs43DV2P+wSM9jQbmZdsqv/KHxuUjiPCLL337VFcX0IdR9R1LfFyESXlTe
+	 O7VHg8EtMdWnUQrAsv+A0OG45t8tdGBUQy39Ktef/UPzZuL1ms0C9oK0gEPNeY3jZuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058560;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058562;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O7IqFOHStSnOP9dlAKZtgIkNHgzGQmKfN3i7+thZIKg=;
-	b=RH0FYKe16wkFJnAeUORQYTrqsEmngNBcls9KV13avGpenDLQshDRo4SH7A4UC0hTKsJ7
-	 PWmG71Pk6MKzuEl7prLwxDXrODMlpcaaJq0i3nCqxHpujk5Mo9uLvEGV6ycNbjLTV4xOb
-	 ZUZegaH84vwqKC+YVwu+VHU89f2aZCqNDqvjVLZn9kBeT5LeFTXaNLwdFkXRpmVSM7GvC
-	 SfPDx8EBOV9VHCz7D+3okiNCT7ctM1mMo30ILhafah+xZPEYzTfCLbafSu1K51xns4PPB
-	 cYfm444UYHi7YcboqoxHpOZUylQfDn3VR+Xg44TScKeTI42l3QSdmBth/kta+rq1Nlw==
+	bh=FuN9iqezPbdtIDzenf0uERyVN8rx/cYGNTWEOUe4Dww=;
+	b=VdTa3h09mUZQYAfPPh+UCC+bblAwfJYxcQBf0amPQZEAlT347j8ARFdsiwBCtj3Yk95c
+	 WNjpz0rr6QFr11kDAaU36oefyVq11G8rhaQ/c20Vt253XEdIuO7n6ml5zbRZOYJq6Z4cj
+	 t81VpQs3VtK4vYysqYDUHGpe5JQQ+ekgUxcB9YviOmCtySvV0PP3RWedJNC0+w8ajQTVn
+	 H2xq2/SlRydnEbbWmN1d95T4ikJrGBnoZFLmbC8l0hRm2lcAWFJIInUtkjsVpvKHaoJyX
+	 HT61eYN4lkvN30RwOl7V/om83hMd8FaL3uX3sSeY9Oss3jhaiVv7JnRje/GtKHdeBJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WPcgKJgH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZXLL65V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DB1606A320;
-	Thu, 19 Nov 2026 03:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9823D606A33E;
+	Thu, 19 Nov 2026 03:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WPcgKJgH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D0F1F000C5;
-	Thu, 19 Nov 2026 03:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sZXLL65V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 045291F000C4;
+	Thu, 19 Nov 2026 03:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058559;
-	bh=O7IqFOHStSnOP9dlAKZtgIkNHgzGQmKfN3i7+thZIKg=;
+	s=korg; t=1795058562;
+	bh=FuN9iqezPbdtIDzenf0uERyVN8rx/cYGNTWEOUe4Dww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WPcgKJgHPXkA4/OLU3jAYrKu2k2ZR8da395PbJ0S/yGu7EmbrXW5JDsspWxKgLGSa
-	 MdCNkeIlY4WB5eiAupWNJCv1jiZPsqz5Kxp0Ee76nRtV3JCp3lycw5IcEU58qMOSlG
-	 TuCfsCneFa/9L5wxiRiTGl0vCNe2qS5T25KYJO9k=
+	b=sZXLL65VYYV5VFT1xLHGU9TwUU3nmkoSr4NbZTVNdmGeA/kqpTD2Zh1yYcdqXQCgx
+	 6AdRSYyIxWI9v0DTOpnsxorRsgPOLRcFR1jnVuTxvjuR0g7AMcCbnUDnhpR5UgRXfE
+	 7Semd4R18FDR9BGAIJQ80OMvBnE4rwMRPeVBIlhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>,
-	Lee Jones <lee@kernel.org>,
+	"Theodore Tso" <tytso@mit.edu>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Baokun Li <libaokun@linux.alibaba.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0527/1848] mfd: tps65217: Check return value when masking interrupt sources
-Date: Wed, 18 Nov 2026 15:42:45 +0100
-Message-ID: <20261118145936.937780983@linuxfoundation.org>
+Subject: [PATCH 5.10 0490/1848] ext4: fix out-of-bounds read in ext4_get_group_info()
+Date: Wed, 18 Nov 2026 15:42:08 +0100
+Message-ID: <20261118145934.829594221@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,48 +74,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-[ Upstream commit 66ed12c1e5a986bee1dc63f9bd9c7f068138a69a ]
+[ Upstream commit b067d3c1f90b536e9aa9f48b19580475a0b34f0f ]
 
-tps65217_irq_init() ignores the error returned by
-tps65217_set_bits() when masking all interrupt sources. A failed
-register write leaves the driver's software mask out of sync with the
-hardware and may result in spurious interrupts.
+A plain read of s_groups_count in ext4_get_group_info() allows CPU
+load-load reordering. On weak memory models, speculative prefetch of
+s_group_info prior to the boundary check could lead to an out-of-bounds
+read if a concurrent online resize expands the array and increments
+s_groups_count.
 
-Check the return value and propagate the error to the caller.
+The data race occurs between the ioctl configuration path (holding the
+resize lock via ext4_resize_begin) and the lockless metadata lookup path:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+   CPU 0 (Writer, Resize Lock)                CPU 1 (Reader, Lockless)
+   ---------------------------                ------------------------
+   ext4_ioctl()
+     [EXT4_IOC_GROUP_ADD]
+     ext4_ioctl_group_add()
+       ext4_resize_begin() // Takes lock
+       ext4_group_add()
+         ext4_mb_alloc_groupinfo()
+           // Publishes expanded array via RCU
+           rcu_assign_pointer(s_group_info, ...)
 
-Fixes: 6556bdacf646fcaa ("mfd: tps65217: Add support for IRQs")
+         ext4_flex_group_add()
+           ext4_update_super()
+                                              ext4_get_group_info()
+                                                // Speculative / out-of-order read
+                                                [Loads old/smaller s_group_info pointer]
+             [Plain C store / smp_wmb()]
+             sbi->s_groups_count += ...;
+                                                // Reads new s_groups_count,
+                                                // boundary check passes
+                                                if (group >= s_groups_count)
+
+                                                // Out-of-bounds array access!
+                                                sbi_array_rcu_deref(..., s_group_info)
+
+Fix this by using ext4_get_groups_count() to enforce acquire semantics.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Radiy Zhambakiev <r.zhambakiev@prosoftsystems.ru>
-Link: https://patch.msgid.link/20261002113624.178588-3-r.zhambakiev@prosoftsystems.ru
-Signed-off-by: Lee Jones <lee@kernel.org>
+Cc: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Baokun Li <libaokun@linux.alibaba.com>
+Cc: Jan Kara <jack@suse.cz>
+Cc: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Cc: "Ritesh Harjani (IBM)" <ritesh.list@gmail.com>
+Cc: Zhang Yi <yi.zhang@huawei.com>
+Fixes: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
+Link: https://sashiko.dev/#/patchset/20260825095422.3166067-1-ruanjinjie%40huawei.com
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://patch.msgid.link/20260902074805.398540-8-ruanjinjie@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tps65217.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/ext4/balloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/tps65217.c b/drivers/mfd/tps65217.c
-index 40265478639ae..ca81623a74389 100644
---- a/drivers/mfd/tps65217.c
-+++ b/drivers/mfd/tps65217.c
-@@ -164,8 +164,12 @@ static int tps65217_irq_init(struct tps65217 *tps, int irq)
+diff --git a/fs/ext4/balloc.c b/fs/ext4/balloc.c
+index 679bf230b2984..f06b4149bdda5 100644
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -325,7 +325,7 @@ struct ext4_group_info *ext4_get_group_info(struct super_block *sb,
+ 	struct ext4_group_info **grp_info;
+ 	long indexv, indexh;
  
- 	/* Mask all interrupt sources */
- 	tps->irq_mask = TPS65217_INT_MASK;
--	tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
--			  TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
-+	ret = tps65217_set_bits(tps, TPS65217_REG_INT, TPS65217_INT_MASK,
-+				TPS65217_INT_MASK, TPS65217_PROTECT_NONE);
-+	if (ret) {
-+		dev_err(tps->dev, "Failed to mask interrupt sources: %d\n", ret);
-+		return ret;
-+	}
- 
- 	tps->irq_domain = irq_domain_add_linear(tps->dev->of_node,
- 		TPS65217_NUM_IRQ, &tps65217_irq_domain_ops, tps);
+-	if (unlikely(group >= EXT4_SB(sb)->s_groups_count))
++	if (unlikely(group >= ext4_get_groups_count(sb)))
+ 		return NULL;
+ 	if (unlikely(!EXT4_SB(sb)->s_group_info))
+ 		return NULL;
 -- 
 2.53.0
 
