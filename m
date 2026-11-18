@@ -1,55 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053393;
-	b=nijNsGvzOF15mEt27PaYvLpbCYXixDFy6WXCfuV1Lya4guTxhOIcJOx0OSdmCD6tWyYX
-	 jprKiVMdhxvfPitzcFNPrH0x7/zTAl1KP0rtVrXWNUPLMIeS0M7mhDtaNjhbr7Q1/C7F3
-	 SNfnJJpDofo4OyQMGSPaybSFv/RUFZsH2crOzAqYETWgjHewo/2xbRJCb2JJcZfPDKX50
-	 dRywmYDWao9rWQzgZVw3ZUZa8I8qFhRRGgWZrNDwBPDsECWmqkB+IziDdTs0UghX3Crnh
-	 4Yi7c+PN8Mr+3KA54p7L+gqz53UIUhprSeD0s89oRaxDwypxPb1NL2HhENaMppbdixg==
+	t=1795053396;
+	b=b55jWjh/za4kR40h1peGTvfv4p6q+y3UQW2w/Zdj266lW+1yRSwozWwOvEk0UISULVzP
+	 vlD6mEmO1ZAQnziyKwlJLVq0lOX6tmuff3A8dpMuxVTbeeELRmCkOijmbDbaB4akaGrTq
+	 ZsaK12cOz8WzweRK3QMoRQ21UFkCBCCHVXiwmvQP4Ts6gycZwvo9hroYqDi3yHoEwzYI2
+	 mlhAI6o9TX0NglpaAcYc8fOiBNFtb19aNGswkqh5YSJ6omBwECoS5J0q7/TOn0cQBZWr0
+	 W2Ni3Etll9CkpFoZlUoeptH57rdrnV6g2xUmww4W2kZR/t/dBY/b1rFazhr5ZcnuaTg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053393;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053396;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+S3dhiI8IDZUq8NHlGlrWNwvPeTLEvmHhOZlpHMR2+k=;
-	b=L8FyH2nHxkv2qE04rFW+enq4TdIL2OCbnon0cYv87sSbpoLozQbjNJ6kg7K3dyHsdZ+S
-	 AKH0Ll722H23ys9lMpaytFrQ4phWRAJXkQ9qm7SELgt/LSjbdbQ6jJyXpo4kMo+RxIneu
-	 1wkytgqzvLQy9YbHmwyiY41x1x5gFM5/ehMs1nB+ytVNJXQJxtUJJshaCN50+vj3kNTGo
-	 30N0youT6bzG9EVnsGgP9rQkMasGUVOvHcn00GUDfg+j7Z9aQZ4ck1h/JhBqb7uCOk7qx
-	 rcWAt+THdGK+UTLmxrfF/N9OucVOZpAZ1lIqNjbsoaxDLQl3zQSfD1hc0vQYUEU8z7w==
+	bh=/aJv8Llc00gB/voG4KxvpS3lJEOqf5FOwabjzjCA8NQ=;
+	b=BAfLtVbbS1iyFaciLsHlq393PrwCTRo6CQH9SPX2tvwjDgfA2Z14r0fjgReQI5gwG0ic
+	 dVT21AXXHnQc9JxVlbAtSbr937Hee4rXulN/zQsNznmmOf9ZU0ktaQSnLwyt6nhB3jvf4
+	 VJMi2r1c/MIFWeuWkCj6oVkpIq3hyVWTvPaRiIAXcXfFJVIm2qcVmMzX+ETlZ+JgElYTj
+	 ATF4UAgHu97GedexZlDVgna8XtXlG7WQG/7X+dRc+jSmGWnXhCFuNpbVA1PWEZCohG5lQ
+	 syup9ns7XzpLwyxlBsrHkjK7knhdwqOl1WZzbBOdPEqbSbapnA28Jr3eim8bNJ42PSA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zu9pIQlr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bWAVY3cH;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3191606A31C;
-	Thu, 19 Nov 2026 01:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2E4606A320;
+	Thu, 19 Nov 2026 01:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zu9pIQlr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 092EF1F000C4;
-	Thu, 19 Nov 2026 01:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bWAVY3cH
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CC41F000C4;
+	Thu, 19 Nov 2026 01:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053393;
-	bh=+S3dhiI8IDZUq8NHlGlrWNwvPeTLEvmHhOZlpHMR2+k=;
+	s=korg; t=1795053396;
+	bh=/aJv8Llc00gB/voG4KxvpS3lJEOqf5FOwabjzjCA8NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zu9pIQlrw3zTuJGUUir5NAM9GvJM29CEEc3me4bVLsLxTqM2RQFOriYUBtILMOtW5
-	 bQSdfNqLA4G8X3G1bE9Mgs5BhYWirVOsmmDNNLa8D5ciCleBtJxh8CqLpUhxcLgxND
-	 Bo48pxy11F88Qi+7z3aAvR1Oba2BMHueLWXC0qZo=
+	b=bWAVY3cHiEy4WDgt9U+ynZyD9tSjJSkh/NcGLo9diMRpcpuQNaHzFCRQ97ICssXyt
+	 3z3n7Og9cGgZlF3UZ4hCT0eZ/Is2NdN015JjPmS9D0ife5TqXhAsR5PTLijr2TRJBe
+	 rR9RCrTYqmGDY0H0SIJrkF5BOYd0/+bLPb6sa0Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josef Bacik <josef@toxicpanda.com>,
 	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
 	Muhammad Usama Anjum <usama.anjum@arm.com>,
+	Xu Xin <xu.xin@linux.dev>,
 	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0905/2214] mm: fix unmap_mapping_range() beyond 4 GiB on 32-bit
-Date: Wed, 18 Nov 2026 15:43:01 +0100
-Message-ID: <20261118150048.477788196@linuxfoundation.org>
+Subject: [PATCH 5.15 0906/2214] mm/ksm: reset the unstable trees of all nodes
+Date: Wed, 18 Nov 2026 15:43:02 +0100
+Message-ID: <20261118150048.586164955@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,61 +72,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: David Hildenbrand (Arm) <david@kernel.org>
 
-[ Upstream commit 7a81bc23dade8082187be6d9cc36e4be4b7207e2 ]
+[ Upstream commit 890e118e95bfc2aae4432ec2a95192d6f9193211 ]
 
-Commit 9eab0421fa94 ("mm: fix unmap_mapping_range high bits shift bug")
-made holebegin and holelen unsigned before they are shifted, by casting
-them to pgoff_t. That is an unsigned long: on a 32-bit kernel the cast
-cuts off the upper half of the two loff_t values, so a hole which begins
-at 4 GiB or beyond is taken for one in the first 4 GiB of the file.
+Each full scan resets ksm_nr_node_ids unstable tree roots. Enabling
+merge_across_nodes resets this count to 1, even if per-node roots were
+previously allocated.
 
-truncate_pagecache() passes the new size of the file and asks for private
-COWed pages to be unmapped as well. If a file of 6 GiB is truncated to
-5 GiB, everything from 1 GiB on is unmapped, and what a process has
-written to a private mapping of the range between 1 GiB and 5 GiB is
-lost: it reads the contents of the file again.
+So when toggling "merge_across_nodes" 0 -> 1 -> 0, a scan that starts
+while the setting is 1 and continues after switching back to 0 can
+encounter stale unstable tree roots, resulting in UAF.
 
-Where the range has an end, the wrong range is unmapped instead of the
-right one. The page cache copes with that, as it unmaps every folio that
-it removes. The callers which only have unmap_mapping_range() to get
-rid of user mappings do not, for example drm_vma_node_unmap(), whose fake
-offsets reach beyond 4 GiB on 32-bit, and revoke_iomem() with physical
-addresses of more than 32 bits.
+Only root is allowed to change "merge_across_nodes", and the documented
+sequence is: "merge_across_nodes setting can be changed only when there
+are no ksm shared pages in the system: set run 2 to unmerge pages first,
+then to 1 after changing merge_across_nodes, to remerge according to the
+new setting."
 
-Cast to u64 instead. Nothing changes for 64-bit kernels.
+Let's fix it by tracking in ksm_nr_node_ids the actual number of
+allocated tree roots.
 
-Fix generated by an LLM and sent by Josef Bacik in private.
+remove_all_stable_nodes() and ksm_check_stable_tree() will now scan
+more tree roots (skipping the empty ones), which is harmless.
 
-Fixes: 9eab0421fa94 ("mm: fix unmap_mapping_range high bits shift bug")
+Fixes: ef53d16cded7 ("ksm: allocate roots when needed")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reported-by: Josef Bacik <josef@toxicpanda.com>
 Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
 Tested-by: Muhammad Usama Anjum <usama.anjum@arm.com>
-Link: https://patch.msgid.link/20261031-fixes_core-v3-36-d6437171ecc3@kernel.org
+Link: https://patch.msgid.link/20261031-fixes_core-v3-39-d6437171ecc3@kernel.org
+Reviewed-by: Xu Xin <xu.xin@linux.dev>
 Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memory.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/ksm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/mm/memory.c b/mm/memory.c
-index 4998b4c490529..e5c54f39e7e04 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -3481,8 +3481,8 @@ EXPORT_SYMBOL_GPL(unmap_mapping_pages);
- void unmap_mapping_range(struct address_space *mapping,
- 		loff_t const holebegin, loff_t const holelen, int even_cows)
- {
--	pgoff_t hba = (pgoff_t)(holebegin) >> PAGE_SHIFT;
--	pgoff_t hlen = ((pgoff_t)(holelen) + PAGE_SIZE - 1) >> PAGE_SHIFT;
-+	pgoff_t hba = (u64)holebegin >> PAGE_SHIFT;
-+	pgoff_t hlen = ((u64)holelen + PAGE_SIZE - 1) >> PAGE_SHIFT;
+diff --git a/mm/ksm.c b/mm/ksm.c
+index 48b76785db0d0..3ed1bd6085f91 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -280,6 +280,7 @@ static bool ksm_use_zero_pages __read_mostly;
+ #ifdef CONFIG_NUMA
+ /* Zeroed when merging across nodes is not allowed */
+ static unsigned int ksm_merge_across_nodes = 1;
++/* Number of allocated stable and unstable tree roots. */
+ static int ksm_nr_node_ids = 1;
+ #else
+ #define ksm_merge_across_nodes	1U
+@@ -3054,14 +3055,13 @@ static ssize_t merge_across_nodes_store(struct kobject *kobj,
+ 			else {
+ 				root_stable_tree = buf;
+ 				root_unstable_tree = buf + nr_node_ids;
++				ksm_nr_node_ids = nr_node_ids;
+ 				/* Stable tree is empty but not the unstable */
+ 				root_unstable_tree[0] = one_unstable_tree[0];
+ 			}
+ 		}
+-		if (!err) {
++		if (!err)
+ 			ksm_merge_across_nodes = knob;
+-			ksm_nr_node_ids = knob ? 1 : nr_node_ids;
+-		}
+ 	}
+ 	mutex_unlock(&ksm_thread_mutex);
  
- 	/* Check for overflow. */
- 	if (sizeof(holelen) > sizeof(hlen)) {
 -- 
 2.53.0
 
