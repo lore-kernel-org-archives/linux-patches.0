@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049431;
-	b=kAz+7Jn31DsogW7p0ymQax/rTjFqZa9fBFEP4wVUQ4fjcUkt0QHmNzkhtfe+V0MF48bk
-	 WalUs5L+JMCQ3xNit/PyayEpB8c8ykVMMf5ULjYZfmaci6EUcypIx94FWZjoVcvgQ8joh
-	 HcB+ZOAOY6PWUgQiG6UUMN9EGCRckOVLAgFG481FXpQ/Fle6f9FPzqW1jn4i9d06m4v5E
-	 cHLi54ulqfs5kM2OepkqhLgLCwiSp+ogT776cZxDeh0EbtD50c2kfKUiO+t1PNISIzALu
-	 DEUTkobBcWFGeFOVEWRCIXMtvtEt69ZZOzp5Jk94C0xkpUwgRaYMLagrgUrXAfvk0aQ==
+	t=1795049433;
+	b=teucvNtx0y5Be2/6Gf0mCPyI6aHvdylL8ENfQnEDYSwr7qbu7ec82oE8NhOYR8kWaUAA
+	 vvhgiBFnpLcsRDReRhBvg2lAMzoRgFw7Ie1+UjAU5Lv1Lo1jvW6ZRrpahyPeuhfI9hPhZ
+	 2071TOUHQKBNo7Z2Mjxvz9PT4v4O0PLQA4o8dd36Eeu7AbUE7PWx4Ndq+DEvmdby0fOF7
+	 ts3/GrHMq5Rnpfrw+WFah3MFrERvJnTqqtrxPP1sefqR5Ek8LZWlRRPTQCqecylCHGA73
+	 2Y9q97SCEE79QrOCHD3dLhjk/2N8os0+bnvoB43w1vxEkwGBdWrs9GTGYtfKx/tGq+g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049431;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049433;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zcQelGhk+0j9yLpKfplQhOTHJw4rVV2aJm/RKI3WC7g=;
-	b=KuvoFCCKmef9xbSNQEl9X427VrOhCdt56rOnznZ1svoLYXVaVQjhhwSJGABzVTnKUAq+
-	 KQ3hfLZyVXE0JvoopWt+aIIONFbTh0H14CgWUN0oXO2mXz2yHzDzI3uOOpAfKR6jjPBXT
-	 bHxwaQiq2yba3SoaHXAiMQKwPdy+dlppshqszO04tqqnlnwDxgJyYYQIUPEcFrrl/11/C
-	 DvuFE/5aq7fOex/bchYGtN6C/Mc3wVoZVVoAHMwvVyJRv2rGmZAmFgLfXCZmtQjg1uj7h
-	 RkwMRTE0k2ewab1RIuBPZVbdspbZrq2pZFce+iYWvX4d/cM1lAEo/DpBvf/LkwNHVYg==
+	bh=ohrbcoZnp2bV9SpnXGKVFPJYb+Z32bBvIRPs9Htl4c0=;
+	b=MrKabYRscFBNf78rooatpBSc/bkDuXf7eSV8xxdv+PadA31PTZ7beMPEr/vRwXCtq09d
+	 YVRgF609bblSZXfpjejOZ6EugBi5Ox8R1lX2meN+UVSsW3UUEJNGFDR9GiPOa1LBLQrxn
+	 twBOtndx3Mw2h0YHCJBSCO+n75a2BF0LhVDGB6nCI7J/9VxeEx5pCnWLmwl6DBwL2i/aJ
+	 vYBWIs9EOrEZ8G/gclkMRsQjidQeCn8qDIcnRvCxLP6UVHdBvHE32P4yf9HGCw4oxT8/n
+	 STeWINrcE4gBB2CK2NT49Psp9UZ5V1jvkPiS1u0Ioo4OosRf1s9lcR3eRdxTqd8Eg2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rrEIbuxo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sp0SuDEj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4749606A325;
-	Thu, 19 Nov 2026 00:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9520F606A325;
+	Thu, 19 Nov 2026 00:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rrEIbuxo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469961F000C5;
-	Thu, 19 Nov 2026 00:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sp0SuDEj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE4F1F000C4;
+	Thu, 19 Nov 2026 00:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049430;
-	bh=zcQelGhk+0j9yLpKfplQhOTHJw4rVV2aJm/RKI3WC7g=;
+	s=korg; t=1795049433;
+	bh=ohrbcoZnp2bV9SpnXGKVFPJYb+Z32bBvIRPs9Htl4c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rrEIbuxoBPyqR+jTVXjNp7iFWkcYAKRGXy0XEEmW1B1v8xchBpfiHkifxIIYxO1bT
-	 9At1tkeQA/iz7vBgixe1Qj4AbzDweSOufj713MhRPVuQhR4FqGnkq5QBrzNGvYW+3W
-	 6QArPRfsG5k4OFpGLglgY8eDnoXwIbGkELxA6hnY=
+	b=Sp0SuDEjtUGefiKOoppkvRM7BzI1NBPf9ksJszIiYH6la3vce5856thXH4GeSRAWx
+	 Wk3ntoMYbza19xZEo4VYWTStvSo5mhmvnMiT1lXPdYcEhqTpXrW5WApLzevaKaMWZG
+	 zYkgj70zh4ds7XSD6ugfy5wPOigTTfVQ9hABYrwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Antoni Pokusinski <apokusinski01@gmail.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2348/2857] rtc: abx80x: fix error check after i2c_smbus_read in read_alarm()
-Date: Wed, 18 Nov 2026 15:56:22 +0100
-Message-ID: <20261118150326.069808276@linuxfoundation.org>
+Subject: [PATCH 6.1 2349/2857] rtc: abx80x: properly handle shared IRQs
+Date: Wed, 18 Nov 2026 15:56:23 +0100
+Message-ID: <20261118150326.106647687@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,48 +70,120 @@ Content-Transfer-Encoding: 8bit
 
 From: Antoni Pokusinski <apokusinski01@gmail.com>
 
-[ Upstream commit 07c57022afb3afc0d7c20efef45a4d3c7389b1c0 ]
+[ Upstream commit 632916c7bde35495f2f6776d8e335c3ec6e306ec ]
 
-i2c_smbus_read_i2c_block_data() returns the number of bytes read on
-success and a negative error code on failure. The existing code treated
-any non-zero return value as an error.
+The abx80x RTC driver registers its interrupt handler with IRQF_SHARED,
+but the handler always returned IRQ_HANDLED and cleared the status
+register even when no interrupt source from the RTC was active.
 
-Fix the error handling by checking only for negative return values.
+This could cause the driver to claim interrupts belonging to other
+devices sharing the same IRQ line and could also clear unrelated status
+bits in the RTC status register.
+
+Only handle the interrupt when the alarm or watchdog flags are set, and
+clear only those interrupt status bits that were handled. Return
+IRQ_NONE when the interrupt was not generated by the RTC.
 
 Fixes: 718a820a303c ("rtc: abx80x: add alarm support")
 Signed-off-by: Antoni Pokusinski <apokusinski01@gmail.com>
-Link: https://patch.msgid.link/20260916205138.16771-3-apokusinski01@gmail.com
+Link: https://patch.msgid.link/20260916205138.16771-5-apokusinski01@gmail.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-abx80x.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-abx80x.c | 52 ++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 50 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/rtc/rtc-abx80x.c b/drivers/rtc/rtc-abx80x.c
-index fa5f51d7f527a..6b3a47c6d0108 100644
+index 6b3a47c6d0108..08c5adcc8a5e2 100644
 --- a/drivers/rtc/rtc-abx80x.c
 +++ b/drivers/rtc/rtc-abx80x.c
-@@ -282,8 +282,10 @@ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
+@@ -48,12 +48,18 @@
+ #define ABX8XX_CTRL2_RSVD	BIT(5)
  
- 	err = i2c_smbus_read_i2c_block_data(client, ABX8XX_REG_ASC,
- 					    sizeof(buf), buf);
--	if (err)
-+	if (err < 0)
- 		return err;
-+	if (err < ARRAY_SIZE(buf))
-+		return -EIO;
+ #define ABX8XX_REG_IRQ		0x12
++#define ABX8XX_IRQ_EX1E		BIT(0)
++#define ABX8XX_IRQ_EX2E		BIT(1)
+ #define ABX8XX_IRQ_AIE		BIT(2)
++#define ABX8XX_IRQ_TIE		BIT(3)
++#define ABX8XX_IRQ_BLIE		BIT(4)
+ #define ABX8XX_IRQ_IM_1_4	(0x3 << 5)
  
- 	irq_mask = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
- 	if (irq_mask < 0)
-@@ -299,7 +301,7 @@ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
- 	t->enabled = !!(irq_mask & ABX8XX_IRQ_AIE);
- 	t->pending = (buf[6] & ABX8XX_STATUS_AF) && t->enabled;
+ #define ABX8XX_REG_CD_TIMER_CTL	0x18
  
--	return err;
-+	return 0;
+ #define ABX8XX_REG_OSC		0x1c
++#define ABX8XX_OSC_ACIE		BIT(0)
++#define ABX8XX_OSC_OFIE		BIT(1)
+ #define ABX8XX_OSC_FOS		BIT(3)
+ #define ABX8XX_OSC_BOS		BIT(4)
+ #define ABX8XX_OSC_ACAL_512	BIT(5)
+@@ -249,6 +255,7 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
+ 	struct i2c_client *client = dev_id;
+ 	struct abx80x_priv *priv = i2c_get_clientdata(client);
+ 	struct rtc_device *rtc = priv->rtc;
++	unsigned int status_flags_clear;
+ 	int status;
+ 
+ 	status = i2c_smbus_read_byte_data(client, ABX8XX_REG_STATUS);
+@@ -265,9 +272,15 @@ static irqreturn_t abx80x_handle_irq(int irq, void *dev_id)
+ 	if (status & ABX8XX_STATUS_WDT)
+ 		dev_alert(&client->dev, "watchdog timeout interrupt.\n");
+ 
+-	i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS, 0);
++	status_flags_clear = status & (ABX8XX_STATUS_AF | ABX8XX_STATUS_WDT);
+ 
+-	return IRQ_HANDLED;
++	if (status_flags_clear) {
++		i2c_smbus_write_byte_data(client, ABX8XX_REG_STATUS,
++					  status & ~status_flags_clear);
++		return IRQ_HANDLED;
++	}
++
++	return IRQ_NONE;
  }
  
- static int abx80x_set_alarm(struct device *dev, struct rtc_wkalrm *t)
+ static int abx80x_read_alarm(struct device *dev, struct rtc_wkalrm *t)
+@@ -821,6 +834,41 @@ static int abx80x_probe(struct i2c_client *client,
+ 
+ 	i2c_set_clientdata(client, priv);
+ 
++	/* Disable unused interrupts */
++	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_IRQ);
++	if (data < 0) {
++		dev_err(&client->dev, "Unable to read irq register\n");
++		return -EIO;
++	}
++
++	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_IRQ,
++					data & ~(ABX8XX_IRQ_EX1E |
++						 ABX8XX_IRQ_EX2E |
++						 ABX8XX_IRQ_TIE |
++						 ABX8XX_IRQ_BLIE));
++	if (err < 0) {
++		dev_err(&client->dev, "Unable to write irq register\n");
++		return -EIO;
++	}
++
++	data = i2c_smbus_read_byte_data(client, ABX8XX_REG_OSC);
++	if (data < 0) {
++		dev_err(&client->dev, "Unable to read Oscillator Control register\n");
++		return -EIO;
++	}
++
++	/* Unlock write access to Oscillator Control Register */
++	if (abx80x_write_config_key(client, ABX8XX_CFG_KEY_OSC) < 0)
++		return -EIO;
++
++	err = i2c_smbus_write_byte_data(client, ABX8XX_REG_OSC,
++					data & ~(ABX8XX_OSC_ACIE |
++						 ABX8XX_OSC_OFIE));
++	if (err < 0) {
++		dev_err(&client->dev, "Unable to write Oscillator Control register\n");
++		return -EIO;
++	}
++
+ 	if (abx80x_caps[part].has_wdog) {
+ 		err = abx80x_setup_watchdog(priv);
+ 		if (err)
 -- 
 2.53.0
 
