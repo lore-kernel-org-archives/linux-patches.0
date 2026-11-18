@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050197;
-	b=MetMnjLbMsLrOLH6mjZxo2JosASMVqlsLXnDldkf53mS1f1BEjSKG1U3fHSQJA4AwCTt
-	 2cyyqOQeq84QKyho0ouc7qROc9elmrffxC7XlIwf0ATbNhINKs7lQxQuQuoOeeYB0li+Q
-	 iHfEFiFtYkMNMBGtt8rLrVBUZIUXQNZfoFMql7iW1/Ew3o4B+ZPk7yBtPkGiRayH+Fd2m
-	 Ljllg2H+eiXrTUkFCN9ETUECSd2PM8pfEkqpX1WYsKjblE08WOkbB2rbTQUMaMZwE9Iuq
-	 zeqLgIEjzFfmSjUuzbAvR/19G/38F4Za80zesmuEsTqJkCGGIhZyXXMpmHfcNvdZSCA==
+	t=1795050200;
+	b=U/h+vFH9zO7EVLUomwkoFcoy/SLBUNTIpDGElbeY9odJYSFpziFQKI5oWpjowNseEDRs
+	 eY7yN2ElZCitZxLJGhSCthQVKVHh+7k8Z2B2WE2UO4PgF19goSRgLZu8AOxTWeRPIdP/8
+	 vGzGcS/R1adeQNanIPc3KCLXqA6zEO0zZU8ne22RVWn5QaZtvTxKbIrvSPNICNAaQw+n8
+	 N0ZtDOnHYeFREh+cwm+f2jBsD5qqz0ZzPe7QzxoPBpKxXILS/I5F+ab3+egizWtPfid8b
+	 i9PIW3JdwXTnwbmGQEA5EaXmh6XTKD7zn61NCU9CeUr5/7ZP9LmyEzktqWtH/NcdDtw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050197;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050200;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7sQzjzHZq9wO2NrZNWbabKFcJ4DIzOWU7IM47Yy0NL8=;
-	b=BheQXPbLgrgGejrQCe3luHNHowsrRVysrY0FR4gi3BswzdZA2+5TRDJQ3O3aJAsaYsQA
-	 6IuvbgTS83I4+lMqJvivJGPnjINdMZxGoxe+O/jnGuDUfE6J38xY6hz1vdNFzF+rlxFOW
-	 x0NL02YC+lskn7dK1UvKIB8n1RMjqDMkbRejS15x3w2bZQDDSoxjKRQRqMLerrWN6z0Y7
-	 IcGnoo9SiPOynvKxPPocIgyYmAIQ9jpV1fuq73F/PehQ9jbYqrcVyda3w1T6LvYTrws+f
-	 FKux6WBaGbWFvyx6lQk+w+kPS5e/fLXy9dYPl7TYvk0H84ZpGI0I66NwRBpOAUBGDjA==
+	bh=Wtc+On5GhxjXPAQ+bN5gWtpL68OezqYjpwUjtmyL9Yw=;
+	b=IuymdzjzJRZ6y1RN++o/4oWOmdVCdePbDPdTH3dhz5fbp03yZluz36fCkpvZw9yiw+K/
+	 rC9CZvdzUcdFwWATuOBXjqxz3PZgH4gulgFqhGxD6yPjPVjeF+g2OLSqZ+p6MsAqgTykR
+	 LfwHJMX4vhaJSP8600HPW1WSETLif3ymDyLiEULS9DMaZyL/hS9zzQT7/kbwYotQFptoV
+	 V22blLq2eb6MpmylVTBkwfSEMoIaO7AOoerGyzFGUmcNc/3GK62dF8pLpkuisGLjq/l0h
+	 bV/cn5LBV+VIVICUF15XACfrBODGUyB6p1uSbkVtoSUEY6mS5ksysyQi/LcqUyBSbtA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKiDj5mh;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DNGNPJKw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64711606A325;
-	Thu, 19 Nov 2026 01:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04FB1606A330;
+	Thu, 19 Nov 2026 01:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=CKiDj5mh
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 962AB1F000C4;
-	Thu, 19 Nov 2026 01:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DNGNPJKw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ABED1F000C4;
+	Thu, 19 Nov 2026 01:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050197;
-	bh=7sQzjzHZq9wO2NrZNWbabKFcJ4DIzOWU7IM47Yy0NL8=;
+	s=korg; t=1795050199;
+	bh=Wtc+On5GhxjXPAQ+bN5gWtpL68OezqYjpwUjtmyL9Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=CKiDj5mhnWHEY/4imIm+FPz83VfkrUZb0uQx2ZsrZOX64TljChBrJaHNXORMahIwU
-	 YFhVkTY8EUYYZgmpPc4Zce4MIQA9RCCfyWf8Ufkcq15Ca+Ldav+nwBX3LoPfAfwpfA
-	 glktkN967lX4UiOqPHjHS1N4wGp6VnAPgxN/qFVc=
+	b=DNGNPJKwxl1L2bXOjdy5O6UuO/QvWbem7X9gy1n4P9s+p3ri9fhv8n2Vv7ktko6Tt
+	 Rs8GIune26dilSgCUHXt7RiEIyj4vYozZQzVDKpNvhRHgtmx2UlJPUAcuA7nrUvoTe
+	 WjNEHqdxyRMRXMNQjyo1CkQVpzksVosai00YGtQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2620/2857] ALSA: pcm: Protect the unregister notifier traversal
-Date: Wed, 18 Nov 2026 16:00:54 +0100
-Message-ID: <20261118150335.909107807@linuxfoundation.org>
+Subject: [PATCH 6.1 2621/2857] ALSA: oss: Keep emulation modules loaded until object teardown
+Date: Wed, 18 Nov 2026 16:00:55 +0100
+Message-ID: <20261118150335.942344903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,65 +70,265 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit 680be9f82d4977d3410c513d3bfe912d100f64fc ]
+[ Upstream commit f0780cfa6acf72576464dc3b40431db389f46ee8 ]
 
-snd_pcm_free() traverses snd_pcm_notify_list and calls n_unregister
-without register_mutex, although snd_pcm_notify() takes that mutex to
-add and remove notifiers. PCM disconnect releases the mutex before the
-free callback runs, so it does not protect this later traversal.
+OSS proc entries and notifier callbacks can remain in use without an
+open OSS device file. Normal snd-pcm-oss removal can therefore delete
+an existing PCM's OSS proc entry while late HDA codec binding repeats
+snd_card_register() on the same live card:
 
-With no open OSS file, normal snd-pcm-oss removal can overlap PCM card
-teardown, for example when unbinding snd-dummy:
+  OSS PCM module unload                 Card registration
+  ---------------------                 -----------------
+  snd_info_free_entry(entry)
+    proc_remove(entry->p)
+    clear entry->p
+                                        snd_info_card_register()
+                                          republish linked entry
+    unlink and free entry
 
-  PCM card teardown                     snd-pcm-oss unload
-  -----------------                     ------------------
-  snd_pcm_dev_disconnect()
-    remove PCM under register_mutex
-    unlock register_mutex
-  snd_pcm_free()
-    fetch notifier
-                                        snd_pcm_notify(..., 1)
-                                          unlink notifier under mutex
-                                        free module storage
-    read notifier->n_unregister
-    invoke callback
+The new proc node retains a pointer to freed storage. Mixer OSS removal
+can likewise release an adapter while a card notification still uses it.
 
-The free path can then read the notifier from released module storage
-or call its unloaded code.
+Hold a snd-pcm-oss module reference for each PCM registered with its
+notifier and a snd-mixer-oss reference for each card adapter. Release
+them at final unregister or FREE, after proc and adapter cleanup. Normal
+module unload can no longer initiate removal while these objects exist.
 
-Hold register_mutex across the unregister traversal and its callbacks.
-Notifier removal must wait until both have finished. This also protects
-the traversal if a callback releases the last module reference: module
-exit cannot unlink its notifier until the free path releases the mutex.
-Drop the mutex before private_free and the remaining stream cleanup.
+Track PCM OSS registration with a separate bool registered. Unlike
+oss.reg, this state also covers unmapped PCMs and remains set across
+DISCONNECT until final unregister. BUILD-state and creation-error cleanup
+must not drop a reference when registration never acquired one. The PCM
+notifier's register_mutex serialization keeps the final put ahead of
+notifier removal and module teardown until dispatch has finished.
 
-Fixes: c461482c8072 ("[ALSA] Unregister device files at disconnection")
+For mixer OSS, serialize callback publication, dispatch and withdrawal
+in the core so module exit waits for callbacks, including one dropping
+the last reference, to return. Keep card enumeration in the OSS module,
+with card references released after dispatch drops the mutex. Ignore
+duplicate REGISTER notifications so a delayed registration cannot
+replace an adapter retained across DISCONNECT and leak its module pin.
+
+Partial HDA codec teardown can still remove an individual PCM while the
+card remains registered; its object-lifetime handling is separate.
+
+Fixes: 2471b6c80a70 ("ALSA: info: Register proc entries recursively, too")
+Suggested-by: Takashi Iwai <tiwai@suse.de>
 Assisted-by: LLM
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/pm-pmb-26d66390a25fec9fad6c-v6-5be251a3ac8832955a31-1@gmail.com
+Link: https://patch.msgid.link/pm-pmb-26d66390a25fec9fad6c-v6-5be251a3ac8832955a31-2@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/sound/core.h       |  3 ++-
+ include/sound/pcm_oss.h    |  1 +
+ sound/core/init.c          | 29 +++++++++++++++++++++--------
+ sound/core/oss/mixer_oss.c | 36 ++++++++++++++++++++----------------
+ sound/core/oss/pcm_oss.c   | 12 ++++++++++++
+ 5 files changed, 56 insertions(+), 25 deletions(-)
 
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index 84f0ca7ecbc44..8855481be5b48 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -864,8 +864,10 @@ static int snd_pcm_free(struct snd_pcm *pcm)
+diff --git a/include/sound/core.h b/include/sound/core.h
+index 3a0e3010405ca..9820fd8b56cfb 100644
+--- a/include/sound/core.h
++++ b/include/sound/core.h
+@@ -298,7 +298,8 @@ int snd_card_locked(int card);
+ #define SND_MIXER_OSS_NOTIFY_REGISTER	0
+ #define SND_MIXER_OSS_NOTIFY_DISCONNECT	1
+ #define SND_MIXER_OSS_NOTIFY_FREE	2
+-extern int (*snd_mixer_oss_notify_callback)(struct snd_card *card, int cmd);
++void snd_mixer_oss_set_notify(int (*callback)(struct snd_card *card, int cmd));
++void snd_mixer_oss_notify(struct snd_card *card, int cmd);
+ #endif
+ 
+ int snd_card_new(struct device *parent, int idx, const char *xid,
+diff --git a/include/sound/pcm_oss.h b/include/sound/pcm_oss.h
+index c96f23c7755b1..43f7653000314 100644
+--- a/include/sound/pcm_oss.h
++++ b/include/sound/pcm_oss.h
+@@ -70,6 +70,7 @@ struct snd_pcm_oss_stream {
+ struct snd_pcm_oss {
+ 	int reg;
+ 	unsigned int reg_mask;
++	bool registered;
+ };
+ 
+ #endif /* __SOUND_PCM_OSS_H */
+diff --git a/sound/core/init.c b/sound/core/init.c
+index 7cd5e08d4e7ee..001de783cbbbb 100644
+--- a/sound/core/init.c
++++ b/sound/core/init.c
+@@ -82,8 +82,24 @@ static int module_slot_match(struct module *module, int idx)
+ }
+ 
+ #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
+-int (*snd_mixer_oss_notify_callback)(struct snd_card *card, int free_flag);
+-EXPORT_SYMBOL(snd_mixer_oss_notify_callback);
++static DEFINE_MUTEX(mixer_oss_notify_mutex);
++static int (*mixer_oss_notify_callback)(struct snd_card *card, int cmd);
++
++void snd_mixer_oss_notify(struct snd_card *card, int cmd)
++{
++	guard(mutex)(&mixer_oss_notify_mutex);
++	if (mixer_oss_notify_callback)
++		mixer_oss_notify_callback(card, cmd);
++}
++EXPORT_SYMBOL(snd_mixer_oss_notify);
++
++void snd_mixer_oss_set_notify(int (*callback)(struct snd_card *, int))
++{
++	/* Wait for callbacks, including a final module_put(), to return. */
++	guard(mutex)(&mixer_oss_notify_mutex);
++	mixer_oss_notify_callback = callback;
++}
++EXPORT_SYMBOL(snd_mixer_oss_set_notify);
+ #endif
+ 
+ static int check_empty_slot(struct module *module, int slot)
+@@ -523,8 +539,7 @@ void snd_card_disconnect(struct snd_card *card)
+ 	/* at this point, they cannot respond to any calls except release() */
+ 
+ #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
+-	if (snd_mixer_oss_notify_callback)
+-		snd_mixer_oss_notify_callback(card, SND_MIXER_OSS_NOTIFY_DISCONNECT);
++	snd_mixer_oss_notify(card, SND_MIXER_OSS_NOTIFY_DISCONNECT);
+ #endif
+ 
+ 	/* notify all devices that we are disconnected */
+@@ -582,8 +597,7 @@ static int snd_card_do_free(struct snd_card *card)
+ 
+ 	card->releasing = true;
+ #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
+-	if (snd_mixer_oss_notify_callback)
+-		snd_mixer_oss_notify_callback(card, SND_MIXER_OSS_NOTIFY_FREE);
++	snd_mixer_oss_notify(card, SND_MIXER_OSS_NOTIFY_FREE);
+ #endif
+ 	snd_device_free_all(card);
+ 	if (card->private_free)
+@@ -927,8 +941,7 @@ int snd_card_register(struct snd_card *card)
+ 		return err;
+ 
+ #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
+-	if (snd_mixer_oss_notify_callback)
+-		snd_mixer_oss_notify_callback(card, SND_MIXER_OSS_NOTIFY_REGISTER);
++	snd_mixer_oss_notify(card, SND_MIXER_OSS_NOTIFY_REGISTER);
+ #endif
+ 	return 0;
+ }
+diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
+index ecb4af6709598..ec641ba666fa5 100644
+--- a/sound/core/oss/mixer_oss.c
++++ b/sound/core/oss/mixer_oss.c
+@@ -1403,13 +1403,22 @@ static int snd_mixer_oss_free1(void *private)
+ static int snd_mixer_oss_notify_handler(struct snd_card *card, int cmd)
  {
- 	if (!pcm)
- 		return 0;
--	if (!pcm->internal)
--		pcm_call_notify(pcm, n_unregister);
-+	if (!pcm->internal) {
-+		scoped_guard(mutex, &register_mutex)
-+			pcm_call_notify(pcm, n_unregister);
-+	}
- 	if (pcm->private_free)
- 		pcm->private_free(pcm);
- 	snd_pcm_lib_preallocate_free_for_all(pcm);
+ 	struct snd_mixer_oss *mixer;
++	int err;
+ 
+ 	if (cmd == SND_MIXER_OSS_NOTIFY_REGISTER) {
+-		int idx, err;
++		int idx;
++
++		/* Module loading and card registration can both notify us. */
++		if (card->mixer_oss)
++			return 0;
+ 
+ 		mixer = kcalloc(2, sizeof(*mixer), GFP_KERNEL);
+ 		if (mixer == NULL)
+ 			return -ENOMEM;
++		if (!try_module_get(THIS_MODULE)) {
++			kfree(mixer);
++			return -ENODEV;
++		}
+ 		mutex_init(&mixer->reg_mutex);
+ 		err = snd_register_oss_device(SNDRV_OSS_DEVICE_TYPE_MIXER,
+ 					      card, 0,
+@@ -1419,6 +1428,7 @@ static int snd_mixer_oss_notify_handler(struct snd_card *card, int cmd)
+ 				"unable to register OSS mixer device %i:%i\n",
+ 				card->number, 0);
+ 			kfree(mixer);
++			module_put(THIS_MODULE);
+ 			return err;
+ 		}
+ 		mixer->oss_dev_alloc = 1;
+@@ -1452,7 +1462,10 @@ static int snd_mixer_oss_notify_handler(struct snd_card *card, int cmd)
+ 		if (cmd == SND_MIXER_OSS_NOTIFY_DISCONNECT)
+ 			return 0;
+ 		snd_mixer_oss_proc_done(mixer);
+-		return snd_mixer_oss_free1(mixer);
++		err = snd_mixer_oss_free1(mixer);
++		if (!err)
++			module_put(THIS_MODULE);
++		return err;
+ 	}
+ 	return 0;
+ }
+@@ -1461,12 +1474,12 @@ static int __init alsa_mixer_oss_init(void)
+ {
+ 	struct snd_card *card;
+ 	int idx;
+-	
+-	snd_mixer_oss_notify_callback = snd_mixer_oss_notify_handler;
++
++	snd_mixer_oss_set_notify(snd_mixer_oss_notify_handler);
+ 	for (idx = 0; idx < SNDRV_CARDS; idx++) {
+ 		card = snd_card_ref(idx);
+ 		if (card) {
+-			snd_mixer_oss_notify_handler(card, SND_MIXER_OSS_NOTIFY_REGISTER);
++			snd_mixer_oss_notify(card, SND_MIXER_OSS_NOTIFY_REGISTER);
+ 			snd_card_unref(card);
+ 		}
+ 	}
+@@ -1475,17 +1488,8 @@ static int __init alsa_mixer_oss_init(void)
+ 
+ static void __exit alsa_mixer_oss_exit(void)
+ {
+-	struct snd_card *card;
+-	int idx;
+-
+-	snd_mixer_oss_notify_callback = NULL;
+-	for (idx = 0; idx < SNDRV_CARDS; idx++) {
+-		card = snd_card_ref(idx);
+-		if (card) {
+-			snd_mixer_oss_notify_handler(card, SND_MIXER_OSS_NOTIFY_FREE);
+-			snd_card_unref(card);
+-		}
+-	}
++	/* Live adapters hold module references and prevent normal unload. */
++	snd_mixer_oss_set_notify(NULL);
+ }
+ 
+ module_init(alsa_mixer_oss_init)
+diff --git a/sound/core/oss/pcm_oss.c b/sound/core/oss/pcm_oss.c
+index d5cd728c30a00..4b08480316c1b 100644
+--- a/sound/core/oss/pcm_oss.c
++++ b/sound/core/oss/pcm_oss.c
+@@ -3163,6 +3163,12 @@ static void register_oss_dsp(struct snd_pcm *pcm, int index)
+ 
+ static int snd_pcm_oss_register_minor(struct snd_pcm *pcm)
+ {
++	if (pcm->oss.registered)
++		return 0;
++	if (!try_module_get(THIS_MODULE))
++		return -ENODEV;
++	pcm->oss.registered = true;
++
+ 	pcm->oss.reg = 0;
+ 	if (dsp_map[pcm->card->number] == (int)pcm->device) {
+ 		char name[128];
+@@ -3217,8 +3223,14 @@ static int snd_pcm_oss_disconnect_minor(struct snd_pcm *pcm)
+ 
+ static int snd_pcm_oss_unregister_minor(struct snd_pcm *pcm)
+ {
++	/* BUILD-state and creation-error cleanup need not have registered us. */
++	if (!pcm->oss.registered)
++		return 0;
++
+ 	snd_pcm_oss_disconnect_minor(pcm);
+ 	snd_pcm_oss_proc_done(pcm);
++	pcm->oss.registered = false;
++	module_put(THIS_MODULE);
+ 	return 0;
+ }
+ 
 -- 
 2.53.0
 
