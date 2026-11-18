@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049602;
-	b=5A5w9alXwhAR4xzOgVzv0Hw9kKkfEfvsF4mi9ZrAyK66EwazBL/HQn4Qvie43uVXL8WU
-	 iujr5acOQWLOUu5JUee0Qpin3GfrCuSiLlR2WIsrdOCqKV56by5F7OQe6a2hDJkNcGGO1
-	 +9NYPtoLN7ifmKfI8/9MOuO1qUwR6lkUb8ABwX2K//Rc7YH/CMdTYgOTE2wujFgb/ruOA
-	 +Kq9Fjf8wZmVFNQqUM9N8r8gbhzme4I1rVtLEjzGKrU47X7kMsIX3yB5Xr5jwGwZSy9/Y
-	 JG8MyxoaDh11rrGtveYBlH3sAK3+LeEPqMsT3SW/73Y1uqz9Z+eawPHhiw+RfERMugg==
+	t=1795049605;
+	b=H+dbsICvmd+kEbVKkDQiS5T9kMP2O0mFMcSZqN19va1WuQtPdjT6J/HRxw4w4nYKY8nQ
+	 qd1Z/tM/UDNA0+hbkq+XnInvSjbUsNtT5GxyUte1OAX7Dkk2G27QYVSDZ3LuEE+GsZmRK
+	 V+5Th9bp2m9ROmtLEus9Ztk+byLz3IMGIAd+c5XfMMdrZIl0HPselEcTf0Rz2y1fLSN3i
+	 S2XgGR8GYakyRmXqOEH0y0Orl5wR64E4142gGVGPkUYhKBbIJWWUCdocJAASL0YAy8voc
+	 vg13+SEBK5PFdwmvRcjkqptqspOgMTdYVGGiZY8WoHf6/vr4auBo1pHgxxFEoos99xw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049602;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049605;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PbaUXgpiUo/eB6MmmloIKMOuM2QpXnP1nG/N2uMcdPs=;
-	b=E7Pn8eEyHobYlPdJNpR6Hzii1utMvKuLy2uVlYVGcY32lKLSEZ4TLEP5LD7GMPa5+QVu
-	 qFLp09Aj8fnqoEGJFc6lwaDZiHHrefhWpD6rXo5jwGkQBpAWV8sJmwOzKTVsjmlaSfbfV
-	 JwCNsc13FB8Fq4KaLUsw1PmuBMuSirTeL7UnKdALeKesRbkU7JnSVba7m2yemNkwQWE1Y
-	 L55bv4UJIZ7UAawJNXRDQQcO/+wBfa+8eW0yRB2X6ivIuDJ6Hj1HclF56ZvJJfPmX6RR3
-	 v5O/DGlM3ASMJoWfvH8UjshqNsHYTU70zWB4qU6WX7lIh7AD8NcsnImf96X7yCkScqA==
+	bh=g6z7UW75tROV5VcM0Xy1WFCW6M+DEvLzRyZ/qLEfkTQ=;
+	b=NLThNmNlUCTkiOPkEdYWP+fQhjrqXhtiZB/+TS8y5NK1Mce6TbzeqrdyT7+WVFn10FhY
+	 QZwO7Gl1MjsWgiXLyrruXy17vrXEttchygjdZESkN5iUMCE+r5gepfTYipuogrnILs6ro
+	 yjtt9AKgefMwztSNS5Z+ef+UGqhR7Ormi3Loy8NHcEmJz9pzv+I+pVztYdNgDLR9RQF7E
+	 vAVwZZb1ywahWXKiwd3SpVoediqyuj+ZhE9Jn5RL9LUJmidN8nOtzXtH6RbDMvI4RtYaB
+	 Z5SXrM8OrLu8sQxCI32cYnXFmo+2r8YNwjkHVjg7VAXCLEKhLWOdbNTlxwdR8Fb4cBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhqMvhWu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HRhKaFX3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5252C606A31C;
-	Thu, 19 Nov 2026 00:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DD6606A320;
+	Thu, 19 Nov 2026 00:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dhqMvhWu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96461F000C4;
-	Thu, 19 Nov 2026 00:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HRhKaFX3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781511F000C4;
+	Thu, 19 Nov 2026 00:53:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049602;
-	bh=PbaUXgpiUo/eB6MmmloIKMOuM2QpXnP1nG/N2uMcdPs=;
+	s=korg; t=1795049605;
+	bh=g6z7UW75tROV5VcM0Xy1WFCW6M+DEvLzRyZ/qLEfkTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dhqMvhWu1syeWbfFwbqnMF1raFjMZ6abSICyygDNRcTDCr+PxrIqyGf0GG0calhiZ
-	 H25Ju02+Z66FtgkFWNUwdMbG9BjksRi2hjEu8EuA9nSXDLSi+Ph35cLdRvxKihdqcx
-	 Afx/ttgoXNBV9ZUUv0mndmSAzc1U8njkAKXh7bc8=
+	b=HRhKaFX3ASGBPwMhuMwogIwZ4gfKpRIA+LUH8SjtFz4O868XxXaWKMC2ZBfcRu9E6
+	 VOff1VMOD8REwvDdRJ8kNhPx6Sezf40GAUypVZU9Flj1g4bhyp1Bx+E9lmKMG2TqQZ
+	 p2YGmFV6WTgBtYuXnDBGCvFDyekcleN3z0sOVHbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linkai Gong <gonglinkai@kylinos.cn>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2359/2857] mailbox: arm_mhuv2: time out if the receiver never comes up
-Date: Wed, 18 Nov 2026 15:56:33 +0100
-Message-ID: <20261118150326.460670626@linuxfoundation.org>
+Subject: [PATCH 6.1 2404/2857] serial: max310x: remove holes in struct max310x_devtype
+Date: Wed, 18 Nov 2026 15:57:18 +0100
+Message-ID: <20261118150328.098370881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,55 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linkai Gong <gonglinkai@kylinos.cn>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 86976f7cc324aac254136a352f74ac17f21e574c ]
+[ Upstream commit eaf29135abb1c152a05572a5454c61dcd65bdeea ]
 
-mhuv2_tx_init() waits forever for access_ready. Fail probe
-after 1s instead of hanging boot.
+Running pahole shows that there are some holes within the
+max310x_devtype structure.
 
-Fixes: 5a6338cce9f4 ("mailbox: arm_mhuv2: Add driver")
-Signed-off-by: Linkai Gong <gonglinkai@kylinos.cn>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Remove holes and optimize alignment by reorganizing structure members.
+
+This can also lead to data structure size reduction for some CPUs.
+
+On 64-bit CPU (arm64):
+Before:
+    /* size: 40, cachelines: 1, members: 6 */
+    /* sum members: 34, holes: 2, sum holes: 6 */
+    /* last cacheline: 40 bytes */
+After:
+    /* size: 40, cachelines: 1, members: 6 */
+    /* padding: 6 */
+    /* last cacheline: 40 bytes */
+
+On 32-bit CPU (i386):
+Before:
+    /* size: 32, cachelines: 1, members: 6 */
+    /* sum members: 26, holes: 2, sum holes: 6 */
+    /* last cacheline: 32 bytes */
+After:
+    /* size: 24, cachelines: 1, members: 8 */
+    /* padding: 2 */
+    /* last cacheline: 24 bytes */
+
+Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Link: https://lore.kernel.org/r/20240118152213.2644269-7-hugo@hugovil.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 4efacb600bf9 ("serial: max310x: fix breaks not reaching the wire in RS485 mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/arm_mhuv2.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/tty/serial/max310x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mailbox/arm_mhuv2.c b/drivers/mailbox/arm_mhuv2.c
-index cff7c343ee082..76c274931e813 100644
---- a/drivers/mailbox/arm_mhuv2.c
-+++ b/drivers/mailbox/arm_mhuv2.c
-@@ -27,6 +27,7 @@
+diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
+index 56bd6de30c5bd..d08970f73cbe1 100644
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -268,11 +268,11 @@ struct max310x_devtype {
+ 		unsigned short min;
+ 		unsigned short max;
+ 	} slave_addr;
+-	char	name[9];
+ 	int	nr;
+-	u8	mode1;
+ 	int	(*detect)(struct device *);
+ 	void	(*power)(struct uart_port *, int);
++	char	name[9];
++	u8	mode1;
+ };
  
- #include <linux/amba/bus.h>
- #include <linux/interrupt.h>
-+#include <linux/iopoll.h>
- #include <linux/mailbox_controller.h>
- #include <linux/mailbox/arm_mhuv2_message.h>
- #include <linux/module.h>
-@@ -968,6 +969,7 @@ static int mhuv2_tx_init(struct amba_device *adev, struct mhuv2 *mhu,
- {
- 	struct device *dev = mhu->mbox.dev;
- 	int ret, i;
-+	u32 val;
- 
- 	mhu->frame = SENDER_FRAME;
- 	mhu->mbox.ops = &mhuv2_sender_ops;
-@@ -1011,8 +1013,11 @@ static int mhuv2_tx_init(struct amba_device *adev, struct mhuv2 *mhu,
- out:
- 	/* Wait for receiver to be ready */
- 	writel_relaxed(0x1, &mhu->send->access_request);
--	while (!readl_relaxed(&mhu->send->access_ready))
--		continue;
-+	if (readl_relaxed_poll_timeout(&mhu->send->access_ready, val, val,
-+				       100, 1000000)) {
-+		dev_err(dev, "receiver not ready\n");
-+		return -ETIMEDOUT;
-+	}
- 
- 	return 0;
- }
+ struct max310x_one {
 -- 
 2.53.0
 
