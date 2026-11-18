@@ -1,52 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795058615;
-	b=1tsd5hx41DrmGiRHIcNAauE/TPpYgDnWeXd39I76Zg/DR6tbOFfMYZf7wdHfCbm/7Xhg
-	 +hrAjJ15Dfd5kKyvynSqdrZCTeSoqRX+eY45GQfGjoq1GSBJci7s6+mG52XXLbI/G2UUO
-	 cAGUe+yBftQ/BhHlrBhFWoRIjq2h0ISghLApKx5ASieOFCTYLD6/ksYOsnYoaHXUdf8ES
-	 kF1ZtChZx+mh8BI2BBhF+MLlA6jPFc3AkbrY9JnGEgPl+xi4R+a9Cs0haMtIsGnoNhW52
-	 n2CIKdHGRV0XsalwOP0PX3Hf9F8K+nUM415SGrG51f2PFlmsTc5gL+U92sDAMH1DI/g==
+	t=1795058618;
+	b=AdydhZOyhQ4z50R+nYOWfMjxQ0yZCXVX15xQW35dLGlUoyCN1l/PWB4dq4ve4dVqL2gW
+	 Bzmb4KwTNMG6tUrCpt4C2MNSlv3Eu8wdDh1On2WfO5wPMXcXKUnCkVCEDw9dqtsDyGnPp
+	 AaQ9cdprFOJBsIZAx2v1dJA+fazJwWwY31Z+SbxjCXRunkFw+wwEGLpmXx7f5kvS2QRBv
+	 6mRYwL7IP0IdTupW8kO8FI61FFLKdjd/E5ISkUckIiIf0WUKfKNRq5TJkXMdbkVCRHdnZ
+	 M5RI2DCJb0JQBkuyqOJzFLGEDEnwDZMj61KBACSTTzQHXv+p5GgJWlP3MJn4VWwIvCw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795058615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795058618;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=BY+zfizMfuN3O5clHh6J0ovnkQU/4J11e69xy9edDnE=;
-	b=Fo5EsmLEMHPoqafFW0NQON4T8q3J6siyGilAc2vjwC2TDl1bFIXVpbGDYIPqIE6HZMQJ
-	 HlF6vQbXCfpS4upSXOvA82q4c5+H0R58fJj5gyuiCkj+vY+xKlNb1+LajZ2bjaa+NLZKo
-	 ZtkdvOsh28Bb/wR0iI9NSYJokLbcglI56j5u0wYyFcprZuYdQoVbAMi+fZN6nqN7U1Bfo
-	 nEWETY0RfYwSg59gwp5kqtuc1CGe1PjEtkDPg7tjMWm3ZSsoHCUpr1pVjOb8EG2Ovty9a
-	 Qbn2oFoTdP+MCpUxTDubCFz1uaXVMRjtz52LqYK2sDLLpN/bNcnFEML2ThuD5Y9G86g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=NEMknso6McH2sZKJOk6PbYPd0lmKRAO+1ad70Pj/zRE=;
+	b=YElgeKWuZs/UhBhytl1Vb88ZyWVQFvWKSMA9inGM6X55undCqoxsSTzsFNFSFfztMas4
+	 TXnR9CYcJgS/AKmUnLJJPftw80H/l/vPZ0k8z9td0eCAe9BSTMnNqEnKEJ+5o56PZ5xOd
+	 oIpCshVbgrFdllvUTrBmRCjvlHh4uGY3CsJsKEepALImJ5wzsowUmaY33Ht4evWSh4KM3
+	 5h00QPX6HbSuWK8Z6wHv0IOxHqU4Qx0LMwDv3HKfsbKMlOjo0vGKQF81JbROLAZrgyuJU
+	 loSxRxuOXfxFr476szXifLYSA7zK698fUNUN9Wjt/Sa3UrXOmMiq8WwyE1l7V6zpCJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3qo2Aim;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAYz7CBC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5E5606A320;
-	Thu, 19 Nov 2026 03:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CDFE606A31C;
+	Thu, 19 Nov 2026 03:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s3qo2Aim
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EB11F000C4;
-	Thu, 19 Nov 2026 03:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lAYz7CBC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D36701F000C4;
+	Thu, 19 Nov 2026 03:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795058615;
-	bh=BY+zfizMfuN3O5clHh6J0ovnkQU/4J11e69xy9edDnE=;
+	s=korg; t=1795058618;
+	bh=NEMknso6McH2sZKJOk6PbYPd0lmKRAO+1ad70Pj/zRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s3qo2AimVSY4u7dwLu4uf675u8uJKyIbJ/NuZy15qqmfyaZDZpHvosx/ylc6wPzuW
-	 VZSTD1VKoIxlpzVZfyu2t058SXE6D8jpnVmQCi/rpSgwNkecLJHl+3SW542IA8sYvS
-	 8EUs6LaRuTJwS1pnlFa/5ufzojVEor2u4GXYlTbU=
+	b=lAYz7CBCSac8b+hgG5367PF0Th2p05clujKp95stt5UOg37T33OlRiSG+RAtkN11+
+	 nHvrIzFQM6ZWtZbQAnA/titLMmIdWxpWguavl+fssnCm8VO6vnykWE16SkWIQqN6LG
+	 jNxO/KrraXYz4W7fE7Ik7M/62PawYBIYZHlVc1+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Maciej Kucharek <qchcio@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0549/1848] drm/amdgpu: reset VI ASIC on Apple boards with VRAM at 0
-Date: Wed, 18 Nov 2026 15:43:07 +0100
-Message-ID: <20261118145937.937261789@linuxfoundation.org>
+Subject: [PATCH 5.10 0550/1848] drm/amdgpu: reject ANONONLY userptrs that span multiple VMAs
+Date: Wed, 18 Nov 2026 15:43:08 +0100
+Message-ID: <20261118145937.975479033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -62,76 +66,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Kucharek <qchcio@gmail.com>
+From: Jesse Zhang <Jesse.Zhang@amd.com>
 
-[ Upstream commit 92a5184787b81e67f7b831ad860ca9b053505cf8 ]
+[ Upstream commit d577b68a854d0f590f480777249b041507d0708c ]
 
-On MacBookPros with switchable graphics, the firmware puts VRAM at MC
-address 0 when the iGPU is enabled.  A later post (S3 resume, GPU
-reset) moves VRAM back to the VBIOS default.  gmc_v8_0 reads
-MC_VM_FB_LOCATION once at init and reprograms it only on SR-IOV.  On
-bare metal, the driver then keeps using the old layout.
+For AMDGPU_GEM_USERPTR_ANONONLY, amdgpu_ttm_tt_get_user_pages() only
+checks the VMA at the start of the range for a backing file, and
+amdgpu_hmm_range_get_pages() then faults in the whole range, across any
+other VMAs. The check used to reject ranges ending beyond the first VMA
+(vma->vm_end < end), which got lost when the code moved to HMM.
 
-vi_reset_quirks[] handles this for the MacBookPro14,3 by PCI ID:
+An ANONONLY userptr over one page of file-backed memory is rejected
+with -EPERM, but one over an anonymous page followed by the same
+file-backed page is accepted.
 
-  commit b6b1d9721851 ("drm/amdgpu: reset VI ASIC on MacBookPro14,3")
+Restore the check and reject ANONONLY userptrs that cross more than one
+VMA. The second userptr is now rejected too.
 
-Add the test that SI and CIK use: an Apple subsystem vendor and VRAM at
-0.  Other Polaris MacBookPros then get the same reset at load, for
-example the MacBookPro13,3 if its firmware leaves VRAM at 0.  These
-boards are not tested.
+v2: reject ranges spanning multiple VMAs instead of walking every VMA
+    (Christian)
+v3: cast num_pages to u64 to avoid an overflow (Christian)
 
-Keep vi_reset_quirks[].  Its MacBookPro15,1 entries fix a different
-failure, a module reload after S3:
-
-  commit a5be7ad8f5f0 ("drm/amdgpu: reset VI ASIC on MacBookPro15,1")
-
-VRAM is not at 0 at that point, so the new test may not cover it.
-
-After the reset, FB_BASE is not 0, so the new test does not fire again
-on a module reload.
-
-Only compile-tested.
-
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Assisted-by: Claude:claude-opus-5-5
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Maciej Kucharek <qchcio@gmail.com>
+Fixes: 6826cb3b92a3 ("drm/amdgpu: support userptr cross VMAs case with HMM")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Philip Yang <Philip.Yang@amd.com>
+Cc: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Acked-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit c2335b685b1e1e387f2fea1c67f56b5b8a8b6dc6)
+(cherry picked from commit 75d753ed4704d5efc72164d9e546b2a282e42ae2)
 Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vi.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vi.c b/drivers/gpu/drm/amd/amdgpu/vi.c
-index 1ceb23f2fd92d..c2f93e4144644 100644
---- a/drivers/gpu/drm/amd/amdgpu/vi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vi.c
-@@ -1076,6 +1076,16 @@ static bool vi_need_reset_on_init(struct amdgpu_device *adev)
- 	unsigned int i;
- 	u32 clock_cntl, pc;
- 
-+	/*
-+	 * MacBookPros with switchable graphics put VRAM at 0 when the iGPU
-+	 * is enabled.  Any later post (S3 resume, GPU reset) moves it back to
-+	 * the vbios default, so reset and post on load to start with the
-+	 * vbios layout.
-+	 */
-+	if (adev->pdev->subsystem_vendor == PCI_VENDOR_ID_APPLE &&
-+	    !(RREG32(mmMC_VM_FB_LOCATION) & MC_VM_FB_LOCATION__FB_BASE_MASK))
-+		return true;
-+
- 	for (i = 0; i < ARRAY_SIZE(vi_reset_quirks); i++)
- 		if (adev->pdev->device == vi_reset_quirks[i].device &&
- 		    adev->pdev->subsystem_vendor == vi_reset_quirks[i].subsystem_vendor &&
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+index 228da106477d8..9a185949eed2a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ttm.c
+@@ -885,7 +885,8 @@ int amdgpu_ttm_tt_get_user_pages(struct amdgpu_bo *bo, struct page **pages)
+ 		goto out_unlock;
+ 	}
+ 	if (unlikely((gtt->userflags & AMDGPU_GEM_USERPTR_ANONONLY) &&
+-		vma->vm_file)) {
++		     (vma->vm_file ||
++		      vma->vm_end < start + (u64)ttm->num_pages * PAGE_SIZE))) {
+ 		r = -EPERM;
+ 		goto out_unlock;
+ 	}
 -- 
 2.53.0
 
