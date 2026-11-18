@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054505;
-	b=eYXhll3HVYszWHB849f3JiMFQki7xmG35XNlZoBwDcHlNFOZX6XqQRfP5sRUPHcIutL/
-	 f9Pi0UuU9hS2QWtTpsdDiyMCO/nzGwTrRVhREa065N4ltPI1as3TcmSpx/Ft/TGtNB95/
-	 gd5VQjb1ssYMmigOr8o4v4c1EqPYUGXQfdZJe9zUGEhpvrqljAiW+a0kY2iqTHn/JZ4GK
-	 RkfBGcWXynwDRTwDGI3NUTAGD4LmCQsbrcNvHHdAATl3Gc1HXrei33tqRlFc1eEoP3Ejh
-	 UbNzcg5Bs6EkI61Ud8z32xqEAbTayZIC7SZ2kCGH1S/RDLGRzy5nrLF2batBCRprG7w==
+	t=1795054508;
+	b=tD1yBzlrSTa72ZgGdu7aFHq9YqAy16C58pl2na2USqAilDm8789OenhbapTs1qmN7oRZ
+	 ewxbp1+JtJGA/UJEaY5RaE6Ht4XgILRsza2q+BY9JBYZbisPioluw7iRgRId9VjsFZI0A
+	 JLWScB5ldLjHhfKBULVUtpbQKbALD/5nPbbMmKF4Xnfir0AT7sN6Wah+GdQh5RWnPEEAD
+	 V4xVeWFBHVxkShjmmn2a1uRW050CFgi536rXXcxkMIMcNB8nlfvXo0lU0FjqrHaMorgek
+	 /oe+zYTTxUxLhkTmds2mVbK9X3x/uyYjTgcButFVVE0vsQhFHpFgRM1k0z7t4fw1T/w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054505;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054508;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=93/0+p7XsZoW3uoWmz4o3S6G5VQb/+gYMwhDlujtUVQ=;
-	b=g0xBOywIDbDb1CU1ERF3dj4yZhqEacity7G+/gcoXEYXq7dvZSzMEsS8+pMvM1zu6pHp
-	 zGMZQBvA7u/AuzGUvN3XtgFhpGyyI4gC+BwUT8Lxu0EXpkPWkvxcbCFu0uhepDl6Tly8J
-	 ZKFULnxJMDvRA9snGGvfs+ujQsjvks2oOWsrLFWN0Efp8yF653BrFsKBWMhelYOSxMqZc
-	 2UUPisA7YZUnMjxSvjqnAbOvH4FKoAFnnK+kH0xON/6hJO010uuEwV9zlNXux0N3dojH3
-	 3+01ywaaRoNfTWs2OxIroORcP6U1LGhpWVvzc7BlrI43RTwClwW5GkUlomnTz0C6x3g==
+	bh=jsURQ/IRxAisesJYal++mcJtfrsaeKAy0EggYJkozfQ=;
+	b=Dsw+L8UhHpulK5kO2lr1Nt94lf/IFUD2OJ2VXI5rutznFmUcl14DoD2LUcqvtgXJTs0+
+	 I4e2uMFmV7Cx4c5KsDsJcX9ePkcMDtwJdclzvBpGnBpQPuQ9xAVsLmK+0pcZwGhRtk+WM
+	 cKP3NPTa16YTTPd52vN+Jz30qq/axqnz9koH3QfJc5ahEf5mr/UZdeKos6BGv511NPe3+
+	 AKrcpeKXEv1NdgvuG5t9Uwj2L/oBEW/1TGkN+RngBKCAJzJhQcp8oOUU2lyBAsdshI9x9
+	 ZbA+Vejro7pYX4hDbbViFG3RMz3T0WCQKhSKM53bvtPDd2IWAcrDpBOEPnEeRQaVPjQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRtMBP3+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAJzPOvX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D219D606A320;
-	Thu, 19 Nov 2026 02:15:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC93606A331;
+	Thu, 19 Nov 2026 02:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cRtMBP3+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365751F000C5;
-	Thu, 19 Nov 2026 02:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sAJzPOvX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB42A1F000C5;
+	Thu, 19 Nov 2026 02:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054505;
-	bh=93/0+p7XsZoW3uoWmz4o3S6G5VQb/+gYMwhDlujtUVQ=;
+	s=korg; t=1795054508;
+	bh=jsURQ/IRxAisesJYal++mcJtfrsaeKAy0EggYJkozfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cRtMBP3+QhRMuM642ULCM2A5IJq9FUIYQvyW78J7tB0jsEtuUU3qOJanlhLekpG1C
-	 1IzZQcW9SNDJUocURocnY271YrbhKwwNhXIZEJEDlunfiTryJ2bfULxqnddOJvabI5
-	 tLyNgdB/0RUeqq85LpjAWCu3mU5X1zD34Vs1JKSc=
+	b=sAJzPOvXqLwl+J89xiKq6SrsiiEBPy93Nu2VhZm6HS35qgK0tXpeeY3xzCzzg1WGA
+	 Yxmw3UDAdCOwTTKAdQ4/jApRdYV3A7BGhDh9tECPOYlkWTQ73HQ1c2pVstwsDpZ5Im
+	 7HOYVOAD+gwgVEoDUm5fwnv8h9x+B7KWcB6kA0WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yingjie Wang <1075151112@qq.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Jim Mattson <jmattson@google.com>,
+	James Houghton <jthoughton@google.com>,
+	Yosry Ahmed <yosry@kernel.org>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Stefan Teodorescu <fane@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1299/2214] nvmet: reject keep-alive timeouts that would overflow
-Date: Wed, 18 Nov 2026 15:49:35 +0100
-Message-ID: <20261118150103.495123455@linuxfoundation.org>
+Subject: [PATCH 5.15 1300/2214] KVM: x86/mmu: Cap number of parent PTEs per SP at 1000 (the arbitrary rmap limit)
+Date: Wed, 18 Nov 2026 15:49:36 +0100
+Message-ID: <20261118150103.530935696@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,111 +73,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingjie Wang <1075151112@qq.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 96ae13f40ce5930cd58c43128e385131476f2a66 ]
+[ Upstream commit e4558c3d7198ed9a0adc3304681f561f4e4d80e1 ]
 
-nvmet_set_feat_kato() and nvmet_alloc_ctrl() convert the 32-bit
-millisecond KATO from the host to seconds with DIV_ROUND_UP(kato, 1000).
-The addition in DIV_ROUND_UP() is done in 32 bits, so any KATO above
-4294966296 ms wraps around and rounds to 0 seconds. A Set Features
-command with KATO 0xffffffff then succeeds but disables the keep-alive
-timer: Get Features returns 0 and Keep Alive fails with Keep Alive
-Timeout Invalid. A Connect command with such a KATO creates a controller
-without a keep-alive timer.
+When potentially reusing a shadow page, zap the shadow page if its number
+of parent PTEs exceeds KVM's (mostly) arbitrary rmap recycling threshold.
+Letting the guest create a (mostly) unbounded number of parent PTEs allows
+the guest to coerce KVM into creating lists containing millions of PTEs,
+effectively bounded only by the maximum number of shadow pages.
 
-The converted value has more consumers that can overflow. Get Features
-multiplies it by 1000, and the timer paths multiply it by HZ in 32 bits
-and arm a delay that must not exceed MAX_JIFFY_OFFSET.
+Because PTE lists are simple singly linked lists, removal is O(n).  Even
+worse, if a list is constructed just so, teardown can be O(n^2), e.g. if
+SPTEs are built such that zapping child SPTEs always zaps the last entry
+in the list.  To cap things off, all paths that walk PTE lists do so
+while holding mmu_lock, without conditionally rescheduling.
 
-Reject a KATO whose rounded value does not fit all of these. Return Keep
-Alive Timeout Invalid from both Set Features and Connect. Validate Set
-Features before stopping the current timer so a failed update leaves its
-timeout unchanged. Round in 64 bits. A KATO of 0 keeps its current
-meaning.
+Using a doubly linked list would not address the issue, as removal would
+remain O(n) since KVM still wouldn't know where in the list to remove from.
+Removal could be made O(1) by storing a per-SPTE pointer, but that would
+largely defeat the purpose of reusing SPs, and would penalize well-behaved
+guests, especially for nested TDP where aliasing page tables is uncommon.
 
-Fixes: a07b4970f464 ("nvmet: add a generic NVMe target")
+So, cap the maximum number of parent PTEs at the rmap limit.  In practice,
+well-behaved guests will likely never run afoul of the limit.  E.g. when
+running Linux as L1 with TDP, the number of parent PTEs for a single SP
+tops out at under 200 (though undoubtedly obscure workloads can push it
+higher).  Deliberately use a "greater than or equal" as opposed to rmap's
+strictly "greater than", as the rmap code checks the threshold immediately
+*after* inserting into the list, i.e. the limit is 1000 for rmaps, KVM just
+very briefly blows past it.
+
+Apply the check to both indirect and direct SPs, because while a fully
+direct MMU naturally limits the number of parent PTEs to '1', direct SPs in
+indirect MMUs have no such constraint.  E.g. if the guest maps a huge PTE
+into many locations in its page tables, and KVM is backing the hugepage
+with a direct SP, i.e. with a series of smaller pages, then KVM could end
+up with a direct SP with many parents.
+
+Note, shadow_mmu_try_split_huge_pages() always restarts the rmap walk or
+bails entirely if it gets to the point where it tries to grab a SP, i.e.
+there is *no* pre-existing bug that would be tripped by zapping a SP and
+thus rmaps when getting a SP.
+
+Cc: Jim Mattson <jmattson@google.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Yosry Ahmed <yosry@kernel.org>
+Cc: David Woodhouse <dwmw2@infradead.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yingjie Wang <1075151112@qq.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-[ sashal: adapted nvmet_alloc_ctrl() error handling to return status directly and set req->error_loc instead of using args ]
+Reported-by: Stefan Teodorescu <fane@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20261027171518.1432557-1-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ sashal: Adapted the guard from kvm_mmu_find_shadow_page() to kvm_mmu_get_page() using vcpu->kvm as the zap argument. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/admin-cmd.c | 7 ++++++-
- drivers/nvme/target/core.c      | 7 ++++++-
- drivers/nvme/target/nvmet.h     | 8 ++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ arch/x86/kvm/mmu/mmu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-index 7c1fc6310599b..9df4107318ede 100644
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -808,8 +808,13 @@ u16 nvmet_set_feat_kato(struct nvmet_req *req)
- {
- 	u32 val32 = le32_to_cpu(req->cmd->common.cdw11);
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index 887a9d4a1e8bb..8237ff8e889b7 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -2087,6 +2087,16 @@ static struct kvm_mmu_page *kvm_mmu_get_page(struct kvm_vcpu *vcpu, gfn_t gfn,
+ 			continue;
+ 		}
  
-+	if (val32 > NVMET_MAX_KATO * MSEC_PER_SEC) {
-+		req->error_loc = offsetof(struct nvme_common_command, cdw11);
-+		return NVME_SC_KA_TIMEOUT_INVALID | NVME_STATUS_DNR;
-+	}
++		/*
++		 * Note!  Unlike fully direct MMUs, direct SPs in indirect MMUs
++		 * can have an arbitrary number of parents, e.g if the guest is
++		 * mapping a huge PTE at many points in its page tables.
++		 */
++		if (pte_list_count(&sp->parent_ptes) >= RMAP_RECYCLE_THRESHOLD) {
++			kvm_mmu_prepare_zap_page(vcpu->kvm, sp, &invalid_list);
++			break;
++		}
 +
- 	nvmet_stop_keep_alive_timer(req->sq->ctrl);
--	req->sq->ctrl->kato = DIV_ROUND_UP(val32, 1000);
-+	req->sq->ctrl->kato = DIV_ROUND_UP_ULL(val32, MSEC_PER_SEC);
- 	nvmet_start_keep_alive_timer(req->sq->ctrl);
- 
- 	nvmet_set_result(req, req->sq->ctrl->kato);
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index 34e7b86c7d0f9..5dd23446a91a7 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -1355,6 +1355,11 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
- 	int ret;
- 	u16 status;
- 
-+	if (kato > NVMET_MAX_KATO * MSEC_PER_SEC) {
-+		req->error_loc = offsetof(struct nvmf_connect_command, kato);
-+		return NVME_SC_KA_TIMEOUT_INVALID | NVME_STATUS_DNR;
-+	}
-+
- 	status = NVME_SC_CONNECT_INVALID_PARAM | NVME_STATUS_DNR;
- 	subsys = nvmet_find_get_subsys(req->port, subsysnqn);
- 	if (!subsys) {
-@@ -1432,7 +1437,7 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
- 		kato = NVMET_DISC_KATO_MS;
- 
- 	/* keep-alive timeout in seconds */
--	ctrl->kato = DIV_ROUND_UP(kato, 1000);
-+	ctrl->kato = DIV_ROUND_UP_ULL(kato, MSEC_PER_SEC);
- 
- 	ctrl->err_counter = 0;
- 	spin_lock_init(&ctrl->error_lock);
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index 4ab5b5580856e..666f33e010dc5 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -7,6 +7,7 @@
- #define _NVMET_H
- 
- #include <linux/dma-mapping.h>
-+#include <linux/jiffies.h>
- #include <linux/types.h>
- #include <linux/device.h>
- #include <linux/kref.h>
-@@ -519,6 +520,13 @@ void nvmet_add_async_event(struct nvmet_ctrl *ctrl, u8 event_type,
- #define NVMET_KAS		10
- #define NVMET_DISC_KATO_MS		120000
- 
-+/*
-+ * Largest keep-alive timeout in seconds that can be reported back in
-+ * milliseconds and converted to jiffies without overflowing.
-+ */
-+#define NVMET_MAX_KATO	\
-+	min3(U32_MAX / MSEC_PER_SEC, U32_MAX / HZ, MAX_JIFFY_OFFSET / HZ)
-+
- int __init nvmet_init_configfs(void);
- void __exit nvmet_exit_configfs(void);
+ 		if (direct_mmu)
+ 			goto trace_get_page;
  
 -- 
 2.53.0
