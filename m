@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061012;
-	b=J2qCZSLrg/Zcctjv8g9kgKuo7Og0tYoAdyyB0P/Og0ku4CeZoAuuo1qMVJz8FQIkKzUb
-	 hvcgkVns7KHy3HPWPXWCVueoOyt7BMr6US47pIwAVxuKThuLYknL0KEVkLBiK4hfr3zGG
-	 wuz8nw6zLwYlIxf2pe+dukHwneSK2EMNlk4ton2gA/4YrhAosFJ9b+U+kAPIr2cxyhyRY
-	 V3ZJdkSS3nXMMVtnmG6oiTjop/yt1hgItquMUxy0pPPj7gkwb3+uC2SuhDJWigY/RNm0I
-	 UJWxwY/xjcTh64Zpxk62x+J530sD2aoy3TLxHA/YyxVA65O1UobdK5vgpJcVQXVDnMQ==
+	t=1795061015;
+	b=5gJqi814I5p4zYql08arLJMSPc6y2Rb+GQM5eDbziJfO/2e9v5Av5sUny9y5Y3T57WoL
+	 cYWzzPGgbezwmKfN2hq3sdZOQ32lBIaNbLAOzUpCeiouJIDD9DuYq8xmsKI9dkqw/5i2r
+	 qWmQZ2wJ77WTWVO8UxXLYzkn93QL2KDuZ2hcdqj3cCEuCehamfkxRIBibxbjI0hIdmclg
+	 IfiEiZJd64bBOgvQFSeLcpim91JtuUFZBEjQKKJw4D3udYAFuet8cXvgbbQbknCryfVeC
+	 gGMH0Hj5PNR7x2e2yXxfemLkUC9mBD9v2IghfoZ8vkrrMk2WDkRbk5YAf4qqZc/UiBw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061012;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061015;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=iwZEGv9WWDIeyv+tIkzWstp/KZEU0exWoGs7fubXJH0=;
-	b=ycKou1N3HdvU1v3KsNeDX4xQBvfDt6UTFhtWu+EBnV+2dBXywxBqOtWACTn/ioFhWkza
-	 mMr5fNfkoJMTMY14+qSbNzZIL2xhjFbrccUtIY/K//wSU/i3cETZgkdSzqt1P1hVfcKy3
-	 QVvReOjmuA4IpBbIFyRN3OYdbxlh63i00E+0Sd/VXiMwASlZwbZwF44T6sI45PguJi0c5
-	 nC6YwkwLVUXFN3Rv6qn4bpCaBT8p6ImC8TT8lVd7zh0lfYHhEslgZQVfdHf9/Sph0rVwF
-	 atpp/Ae1AYVad1BY6K5jrw9v2H97yHxqECqwe/YRprz1wQP56WeVCvMzzl5ixKO35AA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cQmx5Cj+f9T6iqdm2Itxo4VmFXzOL2sWU3vDQCer2ic=;
+	b=v25sAL+QOR5tpYDFc4psoResLB28IM1ncI19ehlcdcvMBviESLXLWu4hQNQB41OLlPQ/
+	 FKUpOSVUONqIndSnHhTG4U259nLJfSoGGZNyZIxfCiZfnJbp50EsazWI23v6eNCm11ZOW
+	 vjYI2n7vWaKqQW/XTUPCaDrhQ2hmc2+bH+kM+A7TqZoKLOrpiAOKm1g7mInZj5v5l/30R
+	 vF7FNqKDeE5JiQK0+Z0VzzkoMKGiWw5EV5SLMudpU1LdZ+h/Q7bZ4HBGYhSXzzCj618Aj
+	 k/hjJQTIcYhA3z95+x6Fd6fgeg+VlB8oKDEualD3E9lI8VBwTn6I1vvU0+JTjiLpeig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2uGXxkVn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSpcQwkJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461F5606A330;
-	Thu, 19 Nov 2026 04:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48042606A32A;
+	Thu, 19 Nov 2026 04:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2uGXxkVn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9533F1F000C6;
-	Thu, 19 Nov 2026 04:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QSpcQwkJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD151F000C4;
+	Thu, 19 Nov 2026 04:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061012;
-	bh=iwZEGv9WWDIeyv+tIkzWstp/KZEU0exWoGs7fubXJH0=;
+	s=korg; t=1795061015;
+	bh=cQmx5Cj+f9T6iqdm2Itxo4VmFXzOL2sWU3vDQCer2ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2uGXxkVndlekJb5OuSNBKNxA4LK35N6BZ0dagj0Lq49sYCfEFOmTjb6GEhXQbqU30
-	 qTi+gh4tzgnzr0NikU9NCJpvbUusJwPM5KkU6AY6eOe1CJ4yJx9QZ0fCLxzzrr7LPe
-	 gqN7v+eheMbBikSFOhto0lUrr7P5n6ySeKbVDPu0=
+	b=QSpcQwkJRb/9g94nWASlJBPG9H3/C5P4ADBKj0i6je5tVPt/SCSQcr0fqsdstm8i6
+	 n1rXAdStXddJjzAMnXR1jaDBvgMIZgITH9iM6TiS165qtaqt+w+i/7/6R2uHsSelLl
+	 7cTCNRPgNNKmiWTD8fzuD+CQQV1ZZK65/KLEcrX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Dairui Zhang <zhangdairui@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1375/1848] iommu/vt-d: Fix IQE handling to cover all descriptors in submission range
-Date: Wed, 18 Nov 2026 15:56:53 +0100
-Message-ID: <20261118150017.082415976@linuxfoundation.org>
+Subject: [PATCH 5.10 1402/1848] IB/mad: fix UAF and double-free in RMPP receive reassembly
+Date: Wed, 18 Nov 2026 15:57:20 +0100
+Message-ID: <20261118150018.220930483@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,144 +62,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Dairui Zhang <zhangdairui@gmail.com>
 
-[ Upstream commit 754d07b940c4ce025fab022b548fb5c3d11bf766 ]
+[ Upstream commit 90e9b6357bec75f627cde1a85b5887215c80aad8 ]
 
-When an Invalidation Queue Error (IQE) occurs, hardware halts fetching
-and IQH points at the faulting descriptor. The previous code only
-checked whether IQH matched the first descriptor index of the current
-submission, missing faults on any other descriptor within the batch.
+mad_rmpp_recv.state is protected by two locks that do not exclude
+each other: recv_timeout_handler() (port workqueue) uses agent->lock,
+continue_rmpp() (CQ softirq) uses rmpp_recv->lock. Nothing serializes
+the check-then-set sequence on the state word:
 
-Expand the check to cover the entire submission range [index, wait_index],
-accounting for circular wrap-around.
+  T1 (CQ softirq)              T2 (port workqueue)
+  continue_rmpp()
+    lock(rmpp_recv->lock)
+    state == ACTIVE  [passes]
+                               recv_timeout_handler()
+                                 lock(agent->lock)
+                                 state = TIMEOUT
+                                 list_del(&rmpp_recv->list)
+                                 unlock(agent->lock)
+                                 destroy_rmpp_recv()
+                                   wait_for_completion()
+                                   [blocks on T1's ref]
+    state = COMPLETE
+    unlock(rmpp_recv->lock)
+    complete_rmpp()
+      queue cleanup_work (+10s)
+    deref()
+                               [unblocks]
+                               kfree(rmpp_recv)
+                               ib_free_recv_mad(done_wc)
 
-Furthermore, after detecting IQE, the old recovery only replaced the
-single faulting slot with a copy of the wait descriptor and immediately
-returned -EINVAL. This left two problems:
+  +10s: recv_cleanup_handler() runs lock/list_del/destroy on the
+        freed rmpp_recv -> UAF write and double free; nothing can
+        cancel that cleanup_work anymore, the entry is already off
+        agent->rmpp_list. done_wc is also returned to
+        ib_mad_complete_recv() and freed again -> UAF read and
+        double free.
 
-  a) Hardware resumed fetching and could hit another invalid descriptor
-     in the same abandoned batch, raising a second IQE that no submitter
-     would claim — permanently deadlocking the queue.
+Reaching this requires sending MADs to a kernel RMPP agent from the
+InfiniBand/RoCE fabric: the per-port sa_query agent accepts subnet
+manager responses whose SLID/GID/TID are not authenticated on the
+fabric, and legacy user_mad agents registered without
+IB_USER_MAD_USER_RMPP start reassembly on any incoming RMPP DATA
+MAD with an attacker-chosen TID, no in-flight send required. The
+attacker controls segment timing and can run many transactions in
+parallel (agent->rmpp_list has no cap), so landing the
+microseconds-wide receive critical section on the 40-second timeout
+boundary is a matter of patience, not luck.
 
-  b) The caller reclaimed all batch slots (QI_FREE) while hardware might
-     still be asynchronously processing descriptors from that batch,
-     allowing concurrent overwrite and descriptor corruption.
+Unify state transitions under rmpp_recv->lock in
+recv_timeout_handler(), keeping list manipulation under agent->lock
+(which preserves the agent->lock -> rmpp_recv->lock ordering used
+by continue_rmpp()). State check/set in both paths is then
+serialized, so the loser of the race always observes the final
+state and bails out. recv_cleanup_handler() needs no change: with
+transitions serialized, a cleanup_work can only be pending after
+COMPLETE, in which case the timeout handler exits early.
 
-Fix both by introducing qi_drain_remaining_descs(): upon IQE detection,
-overwrite the stranded slots in [IQH, wait_index) with fenced no-op wait
-descriptors, resubmit the wait descriptor at wait_index, clear IQE, and
-spin until hardware signals QI_DONE (with DMAR_OPERATION_TIMEOUT). This
-guarantees hardware has fully drained the batch before the caller
-reclaims slots.
+The race is as old as the RMPP implementation itself.
 
-Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per qi_submit_sync()")
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: fa619a77046b ("[PATCH] IB: Add RMPP implementation")
+Assisted-by: LLM
+Signed-off-by: Dairui Zhang <zhangdairui@gmail.com>
+Link: https://patch.msgid.link/20260922152342.1474845-1-zhangdairui@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/dmar.c | 72 ++++++++++++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 11 deletions(-)
+ drivers/infiniband/core/mad_rmpp.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index 79f593bc8288a..76c0e9aabb250 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1256,6 +1256,49 @@ static void qi_dump_fault(struct intel_iommu *iommu, u32 fault)
- 	       (unsigned long long)desc->qw1);
- }
+diff --git a/drivers/infiniband/core/mad_rmpp.c b/drivers/infiniband/core/mad_rmpp.c
+index e0573e4d04040..d5eeeaf74ce87 100644
+--- a/drivers/infiniband/core/mad_rmpp.c
++++ b/drivers/infiniband/core/mad_rmpp.c
+@@ -245,12 +245,15 @@ static void recv_timeout_handler(struct work_struct *work)
+ 	struct ib_mad_recv_wc *rmpp_wc;
+ 	unsigned long flags;
  
-+static int qi_drain_remaining_descs(struct intel_iommu *iommu, int head,
-+				    int wait_index)
-+{
-+	struct q_inval *qi = iommu->qi;
-+	int shift = qi_shift(iommu);
-+	struct qi_desc wait_desc = {};
-+	struct qi_desc nop_desc = {};
-+	cycles_t start;
+-	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
++	spin_lock_irqsave(&rmpp_recv->lock, flags);
+ 	if (rmpp_recv->state != RMPP_STATE_ACTIVE) {
+-		spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
++		spin_unlock_irqrestore(&rmpp_recv->lock, flags);
+ 		return;
+ 	}
+ 	rmpp_recv->state = RMPP_STATE_TIMEOUT;
++	spin_unlock_irqrestore(&rmpp_recv->lock, flags);
 +
-+	nop_desc.qw0 = QI_IWD_FENCE | QI_IWD_TYPE;
-+
-+	wait_desc.qw0 = QI_IWD_STATUS_DATA(QI_DONE) | QI_IWD_PRQ_DRAIN |
-+			QI_IWD_STATUS_WRITE | QI_IWD_FENCE | QI_IWD_TYPE;
-+	wait_desc.qw1 = virt_to_phys(&qi->desc_status[wait_index]);
-+
-+	while (head != wait_index) {
-+		memcpy(qi->desc + (head << shift), &nop_desc, 1 << shift);
-+		head = (head + 1) % QI_LENGTH;
-+	}
-+
-+	WRITE_ONCE(qi->desc_status[wait_index], QI_IN_USE);
-+	memcpy(qi->desc + (wait_index << shift), &wait_desc, 1 << shift);
-+
-+	/*
-+	 * Order the descriptor rewrites before the writel() that restarts
-+	 * the fetch engine.
-+	 */
-+	wmb();
-+
-+	writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+
-+	start = get_cycles();
-+	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
-+		if (DMAR_OPERATION_TIMEOUT < (get_cycles() - start)) {
-+			pr_err("Timeout draining invalidation queue after IQE\n");
-+			return -ETIMEDOUT;
-+		}
-+		cpu_relax();
-+	}
-+
-+	return 0;
-+}
-+
- static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- {
- 	u32 fault;
-@@ -1276,18 +1319,25 @@ static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- 	 * is cleared.
- 	 */
- 	if (fault & DMA_FSTS_IQE) {
-+		int head_idx, ret;
-+
- 		head = readl(iommu->reg + DMAR_IQH_REG);
--		if ((head >> shift) == index) {
--			struct qi_desc *desc = qi->desc + head;
--
--			/*
--			 * desc->qw2 and desc->qw3 are either reserved or
--			 * used by software as private data. We won't print
--			 * out these two qw's for security consideration.
--			 */
--			memcpy(desc, qi->desc + (wait_index << shift),
--			       1 << shift);
--			writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+		head_idx = (head >> shift) % QI_LENGTH;
-+
-+		/*
-+		 * The faulting descriptor can be anywhere within the current
-+		 * submission's range [index, wait_index]. Since the queue is
-+		 * circular, this submission may wrap around QI_LENGTH
-+		 * (index > wait_index in that case), so check both the
-+		 * non-wrapped and wrapped cases of the range.
-+		 */
-+		if (index <= wait_index ?
-+		    (head_idx >= index && head_idx <= wait_index) :
-+		    (head_idx >= index || head_idx <= wait_index)) {
-+			ret = qi_drain_remaining_descs(iommu, head_idx, wait_index);
-+			if (ret)
-+				return ret;
-+
- 			pr_info("Invalidation Queue Error (IQE) cleared\n");
- 			return -EINVAL;
- 		}
++	spin_lock_irqsave(&rmpp_recv->agent->lock, flags);
+ 	list_del(&rmpp_recv->list);
+ 	spin_unlock_irqrestore(&rmpp_recv->agent->lock, flags);
+ 
 -- 
 2.53.0
 
