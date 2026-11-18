@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053740;
-	b=WJXlod4nyLcFY+mFInUH7wnjVBQe8+kuCMv68np26XoCHxB+4sUZFKbJSggfOrvflFnt
-	 idOYxrOF3aQBRbxNAfGldqsrt1yCFdqhpIyUCQLkhbp6vDcQUwiFMTXciE0q+SOaM6UyV
-	 eLy+TuboDmhASQseLUjHodkIiCltjwecMvjKqgLJyNYYb8uGspyrfyMz5YtKXDnF+nQpS
-	 TKmWrzgSzoEzxP7NQdNgu/CIlbzVMNAzeJO5RyGgokltCgRZ0l4J3Vjr6zO7pMMlNYnj5
-	 gB7KVqdI+M3/Emfr23IxP2nBNi4CszjkV5biF0DVAWjomXWIHk4E1vqRbTNhCDymvGg==
+	t=1795053743;
+	b=NvrjE9ssyo5fXflvBcr+Xz6AK2rcKcLRu3vDkxSTpkVh+bdxY3sOb1TmwJpOpHoMIbf0
+	 y5DblO2LG5H7T3EANeLtRqxaUZzvNhjGdD8J139HhLPUCvQwBURe7W5sa7/lcXJ3SwKAI
+	 VlNzDWZ/SlnZKSTJIpDBIPEXOh4RY81dQeIurRD19G4TAP0l4hyteefvFAJ/2xMzJsKcr
+	 J9wPRFzN1i3nROb2d8cu+Zgca30RY+1xaF48x0GD50PtcDSTTxOLq3o25gAkJT03BnBjp
+	 aBT1U02EL8zvmoLUHyZwcUG7dt9A6/A7qz4nt+Ztlfz++9ZP5dTl+47h2OVP1eyArIA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053740;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053743;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TOggJ/WZw4FTbOcywY9JBoO/ptLrejynKZ1yr1ify+4=;
-	b=zg4C9Q0T39XIUOreKDYTGKBmorDtrmaapXHCuie3SuwC3iMBkRLRzaPeoHMvcUyQB3Ny
-	 q6P37v8/uKetM8bIFXDWHk/JY3V9QjLi4QTQ5TJDPhbQA7hCgmVcj21veleYiSlh7VsGd
-	 WhzO+agzMJpPJ36cRd2EMw/6026t61vJEE6PfV6UbOBgnYdEWhTOxHVF6oJIcs7yKTYRc
-	 dZTxWylYiZtNCI8asqgaiRBqgh5OGkvb6nWlYs7bTNWwwIjLau3Q3xmE+o0TIRQVn5+mz
-	 dYBlaOpkj3BW82kDQbqiyWLmcJWpEcOyBq5kcw11kCS8BBvSzl22bA1K6dgUsbDvh1w==
+	bh=SuRYx1ka+GrGxRJoCyu5S0f9YEU85lcgMDeeuv13xLo=;
+	b=4TbY4nP9xUqku/2b1Ky0YARgWjsEl0vB9rsOP7JSrIxSAXxhqqEK0DkaXO16E5iUIpZN
+	 OIM7Uwd5RM+Hzkyd0BHXnUGFAYjuNtNz8jt8XgXr57T1yw1gt9IqHQsrgtWz9RMhxyy0I
+	 8VmksowCh6iju+NoTU/uywg2mRgDnrZ9LwJ69wUN/37cynsah34mBfY8oc94aAbS9lYsT
+	 u2vzDQtil6kAWRJNw5UVCt3GcgfE2mtsnZ+i3HRJraeH1ahZCBnNGMmnX/dqtYZQaraHk
+	 eruDQ54QgYrkXtNk7pbJTS6B8ml+d7TeuWFs+UpFDY5pNm67sEYkmMubnsUbowQSjxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eeqn6cNm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J87HXWBS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F349606A320;
-	Thu, 19 Nov 2026 02:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A795606A320;
+	Thu, 19 Nov 2026 02:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Eeqn6cNm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8BF1F000C4;
-	Thu, 19 Nov 2026 02:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J87HXWBS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA391F000C4;
+	Thu, 19 Nov 2026 02:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053739;
-	bh=TOggJ/WZw4FTbOcywY9JBoO/ptLrejynKZ1yr1ify+4=;
+	s=korg; t=1795053742;
+	bh=SuRYx1ka+GrGxRJoCyu5S0f9YEU85lcgMDeeuv13xLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Eeqn6cNmYiCGLgL4gUSCF+dpVQNpQlm+h1A6bicNazO2UjpULLDMhqCoXVNl1aUwU
-	 67stOdUTIjVI7AJIJ7hj64YY+cczZB0Q05Pt8OHYJDZI0VBT13dNRcvmYiP3L1izWm
-	 owf8dGhyF/U/FjyAWYO4InPvelUVRSOSQTQ03A2Q=
+	b=J87HXWBSVaa4ZuR7fUoydk7+5gYEGv7PYsErwKFPTIDVcNHYRPPDYeiC1F71VrM69
+	 7wpqYypfmR71K1lJatSJFik3Uc1T3mfqbBSKKFyCaIbPGoGfLXBS+Y3OipiR2RSakY
+	 xB0KDYEx84gMH2YiBiTeYRRvUOj850McSilCqP+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Fuad Tabba <fuad.tabba@linux.dev>,
-	Marc Zyngier <maz@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0985/2214] KVM: arm64: vgic-v3: Undo assignment on iodev registration failure
-Date: Wed, 18 Nov 2026 15:44:21 +0100
-Message-ID: <20261118150051.637153325@linuxfoundation.org>
+Subject: [PATCH 5.15 0986/2214] media: mtk-vpu: Remove redundant flush_workqueue() calls
+Date: Wed, 18 Nov 2026 15:44:22 +0100
+Message-ID: <20261118150051.677213865@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,67 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 8a88a46b86ca3dbbd24522760d29edfb3f24ac2a ]
+[ Upstream commit 360c887a39cb56e75be4f558b16f1b6409ecb93f ]
 
-vgic_register_redist_iodev() assigns a redistributor region and base
-address to the vCPU before adding its iodev to the MMIO bus. However, the
-region's free_index is advanced only after registration succeeds.
+'destroy_workqueue()' already drains the queue before destroying it, so
+there is no need to flush it explicitly.
 
-If kvm_io_bus_register_dev() fails, the vCPU retains the assignment while
-free_index still identifies the same slot as free. A later registration can
-therefore reuse a slot that remains assigned to the vCPU.
+Remove the redundant 'flush_workqueue()' calls.
 
-Reserve the slot before registering its iodev. The caller holds slots_lock,
-so a registration failure cannot race with a later assignment. Undo the
-reservation and clear the cached assignment on failure.
+This was generated with coccinelle:
 
-Fixes: dbd9733ab674 ("KVM: arm/arm64: Replace the single rdist region by a list")
-Cc: stable@vger.kernel.org
-Assisted-by: Codex:gpt-5.6-sol
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Reviewed-by: Fuad Tabba <fuad.tabba@linux.dev>
-Tested-by: Fuad Tabba <fuad.tabba@linux.dev>
-Link: https://patch.msgid.link/20260831081005.41346-2-kmehltretter@gmail.com
-[maz: moved helper into the sole caller]
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-[ sashal: adapted locking to rely on the caller-held kvm->lock instead of config_lock and guard(mutex). ]
+@@
+expression E;
+@@
+- 	flush_workqueue(E);
+	destroy_workqueue(E);
+
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: 2c50b58d4105 ("media: mediatek: vpu: free IRQ before destroying watchdog workqueue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/vgic/vgic-mmio-v3.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/media/platform/mtk-vpu/mtk_vpu.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kvm/vgic/vgic-mmio-v3.c b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-index fd1fa2561520e..c3c0204b3eb1e 100644
---- a/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-mmio-v3.c
-@@ -739,16 +739,21 @@ int vgic_register_redist_iodev(struct kvm_vcpu *vcpu)
- 	rd_dev->nr_regions = ARRAY_SIZE(vgic_v3_rd_registers);
- 	rd_dev->redist_vcpu = vcpu;
- 
-+	/* Protected by kvm->lock */
-+	rdreg->free_index++;
-+
- 	mutex_lock(&kvm->slots_lock);
- 	ret = kvm_io_bus_register_dev(kvm, KVM_MMIO_BUS, rd_base,
- 				      2 * SZ_64K, &rd_dev->dev);
- 	mutex_unlock(&kvm->slots_lock);
- 
--	if (ret)
--		return ret;
-+	if (ret) {
-+		vgic_cpu->rdreg->free_index--;
-+		vgic_cpu->rdreg = NULL;
-+		vgic_cpu->rd_iodev.base_addr = VGIC_ADDR_UNDEF;
-+	}
- 
--	rdreg->free_index++;
--	return 0;
-+	return ret;
- }
- 
- void vgic_unregister_redist_iodev(struct kvm_vcpu *vcpu)
+diff --git a/drivers/media/platform/mtk-vpu/mtk_vpu.c b/drivers/media/platform/mtk-vpu/mtk_vpu.c
+index 87da09148b266..1657575346735 100644
+--- a/drivers/media/platform/mtk-vpu/mtk_vpu.c
++++ b/drivers/media/platform/mtk-vpu/mtk_vpu.c
+@@ -966,10 +966,8 @@ static int mtk_vpu_remove(struct platform_device *pdev)
+ #ifdef CONFIG_DEBUG_FS
+ 	debugfs_remove(vpu_debugfs);
+ #endif
+-	if (vpu->wdt.wq) {
+-		flush_workqueue(vpu->wdt.wq);
++	if (vpu->wdt.wq)
+ 		destroy_workqueue(vpu->wdt.wq);
+-	}
+ 	vpu_free_ext_mem(vpu, P_FW);
+ 	vpu_free_ext_mem(vpu, D_FW);
+ 	of_reserved_mem_device_release(&pdev->dev);
 -- 
 2.53.0
 
