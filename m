@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030808;
-	b=ueZxQKna7YmPJvM/5ovfauuNBxzb2E7eBJLe59cc4tD0dJaV8WlVy0E4c+tSa3TLS8ri
-	 4NW1C23Z9R37OREPNJ35eLNpiz76WbRxL3yoHwwlG/WXm/o1V962lDIzu1ZAkjp+hUVQ3
-	 COP1qreIMKeWqtd8wFFh+B34VzhYKiGO5hoxuNEdSGqChjeiLY3WF+X94sX9MhDFfihyO
-	 T9YEVvnHB+NcN9FQjGCcFN4CjqKKjRkJg28woMoedNubjimQCqBKRuJIOPSnCifNLZ17f
-	 wiqrp1KwAutG/BjouDlPt1yQkdSSCb9JxoYyPdtpTchOmC037KpEgx9rS3B0h7JiqNA==
+	t=1795030811;
+	b=2j+uWnp4nrh0ZQ7cgL7+JhzFoZEytQieDNTC6A56hVzSEYrT24aUJ93AWufS2kwC7Fcy
+	 ZfGp+kQTRtf8WUwkVoBgrx2mUw+lJRmFpGoBUvUUEUWZvmcPJ8lNKxzlXN0TxgVNeBbx+
+	 rl5+QZ4QjjsJ1LgdYLwhmsxu8D9GFSOR5O3j9CUNa8hn7yEPBcXVO5c74M9ZnQWbbcg+e
+	 0Lno+djp68HAV0HmYHOIixpT0YlzCqtKQNcZuzQxLtnzcQ6w+B9ACs/iNYfneBHjLLuZZ
+	 IJIwvIqQm/zcHek+Oe88YIqCwLNh44jXWulaym/G132JyqXMb2XjHaIRg3Hy6PpKJ6Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030808;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030811;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=mCeoMsf5UCumX1TlbEBmAHfPaRmiVo0qqk20SkbIkng=;
-	b=axqeArFHw1mlGQVFXk3UTT9NTbospP6Zu6T+fbkXln9M9USkFpQYTu8fMwDbE4lt31im
-	 zwhfyUWIrQmQQSG2oVzxeAbaMJFIwogn3WiD4lpd/lgBhBoihq7h9NV3ymYtfc7my3R+x
-	 fSONds4cvi6VNSBUWnRtr+B1nhdjM4cTTWSlKskUCgZV4p2cAwAkaIKDjQar9AeyqOzuO
-	 TWlsiggom0cptkmztYMUaER/5SziWQorp8WCjFWa6VRvp4rSFptKp5QSY0kNlYCkjCgy1
-	 XxeEI9oFujyofmtNSUcRsZTBpR9OBrW4CodaYORHID/ODEWMBKlc8rEEsoMM2OsUOUg==
+	bh=DLSKDMr47Fh+bWJcEzHhjAbOc7VhVRtUnbJaYIjKhNI=;
+	b=XMOuXjAxmL2Ee0RTG0R7KsLEknogY/jamt85MgrhANlNklKmXHma+M9HYuatN8YmFV7z
+	 83JBoUVqGCmWG+N6+MlPXU3i1ZADFgzGPjZwdfx9hSRF1dnoKTJ0QPv5+WjAjW+TjZ/jT
+	 8v+WgqUwPrZzo86tvFHlfcBEqbZHR6wI/cAK4X7rfYAXcHQg5SFipMrmqv73OaAFpP35c
+	 TttdjAsjUo/7t/OUEyn4F3pgzVk+dTzMFwu8/SSxVf8pTiF1zrl5uK2NYQRT7K/5SGkzg
+	 uEWFxliiBrZuBh6xNMkwtVObTDRcrkrt6OwtZRh+8pIurYnqJE7kzFWlZ5u6JGpvcBQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nqNJDRsI;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0QsL+rk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D82606A92E;
-	Wed, 18 Nov 2026 19:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D47606C71C;
+	Wed, 18 Nov 2026 19:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nqNJDRsI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362851F000C4;
-	Wed, 18 Nov 2026 19:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z0QsL+rk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9DE1F000C4;
+	Wed, 18 Nov 2026 19:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030808;
-	bh=mCeoMsf5UCumX1TlbEBmAHfPaRmiVo0qqk20SkbIkng=;
+	s=korg; t=1795030811;
+	bh=DLSKDMr47Fh+bWJcEzHhjAbOc7VhVRtUnbJaYIjKhNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nqNJDRsISfBZh850DdRI/W37+B6c1Y6EbcKD5lhP8oYIA1Axt2JbeOrR03l0Yydf2
-	 mbxvJCWJYNLQxR6T2cGK6ZMPwBhkr9RhkcpoKELjbKcOg3HuMRK6YjhSLAsywsSxs/
-	 5oTNoa5ljKZZ275l4wnKbI7aroSbb3UKobG97KQs=
+	b=z0QsL+rkfNTi593Ao0FGVAyrN1WfwHQrDbFGrzGCENHfEcjuU+fUtaJv8p08cIPGR
+	 +AzrY3j5Us0mb/mbjcWt//NhLEr7lR4i2Gt091suyhOfCbC3ne3vRexnUZASkUzgAy
+	 V6p3lV7Qctoarx/tca3a7ZNABVbHdmeu6jL+a1e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Niklas Cassel <cassel@kernel.org>,
 	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0795/1756] scsi: scsi_debug: Refuse a short WRITE ATOMIC (16) before writing it
-Date: Wed, 18 Nov 2026 15:48:42 +0100
-Message-ID: <20261118150041.352229670@linuxfoundation.org>
+Subject: [PATCH 6.12 0796/1756] scsi: scsi_debug: Map the region written by WRITE ATOMIC (16)
+Date: Wed, 18 Nov 2026 15:48:43 +0100
+Message-ID: <20261118150041.389153982@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,55 +72,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit b81608b17c5d04c797e6fc1cfb95182c842a4db9 ]
+[ Upstream commit 491bd55c35cbb1ce059f22e7f3c6284551970fef ]
 
-A write whose data-out buffer is shorter than its transfer length is
-short. An ordinary write transfers what the buffer holds and reports the
-rest as a residual, but an atomic write cannot be short: SBC-6 r02 (T10/BSR
-INCITS 587), 4.28.1, requires each atomic write operation to write either
-all of its data or none of it, and 4.28.2 requires one that cannot complete
-to leave the LBAs that it specifies unaltered.
+When logical block provisioning is enabled, every command that writes user
+data calls map_region() so that GET LBA STATUS reports the region as
+mapped. resp_atomic_write() does not, so GET LBA STATUS keeps reporting a
+region as deallocated after a WRITE ATOMIC (16) has written it.
 
-resp_atomic_write() does fail a short WRITE ATOMIC (16) with DID_ERROR, but
-only after do_device_access() has returned, and do_device_access() copies
-one logical block at a time, so by then the blocks that the buffer did hold
-have been written. An eight block WRITE ATOMIC (16) with a buffer of four
-fails having overwritten the first four.
-
-Check the length of the buffer before writing anything, and fail the
-command with the same DID_ERROR as before.
+Call map_region() the way resp_write_dt0() does, holding the zone metadata
+write lock across the access. That lock is what serialises the map against
+resp_unmap(), which does nothing unless logical block provisioning is
+enabled.
 
 Assisted-by: LLM
 Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Reviewed-by: John Garry <john.garry@linux.dev>
 Fixes: 84f3a3c01d70 ("scsi: scsi_debug: Atomic write support")
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260929082456.857423-26-cassel@kernel.org
+Link: https://patch.msgid.link/20260929082456.857423-27-cassel@kernel.org
 Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/scsi_debug.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 289f298c759fc..961496432fcb3 100644
+index 961496432fcb3..1d9947dc14351 100644
 --- a/drivers/scsi/scsi_debug.c
 +++ b/drivers/scsi/scsi_debug.c
-@@ -5379,6 +5379,14 @@ static int resp_atomic_write(struct scsi_cmnd *scp,
- 		}
- 	}
+@@ -4173,6 +4173,11 @@ static unsigned int map_state(struct sdeb_store_info *sip, sector_t lba,
+ 	return mapped;
+ }
  
-+	/*
-+	 * Short atomic writes are not allowed: SBC-6 4.28.2 requires an
-+	 * atomic write that cannot complete to leave its LBAs unaltered, and
-+	 * do_device_access() would already have written part of it.
-+	 */
-+	if (scsi_bufflen(scp) < len * sdebug_sector_size)
-+		return DID_ERROR << 16;
++/*
++ * Callers may map the whole range of a write without checking how much of
++ * it was written. SBC-6 4.7.4.6.2 allows a deallocated LBA to become mapped
++ * at any time, and only requires an LBA that was written to be mapped.
++ */
+ static void map_region(struct sdeb_store_info *sip, sector_t lba,
+ 		       unsigned int len)
+ {
+@@ -5335,6 +5340,7 @@ static int resp_atomic_write(struct scsi_cmnd *scp,
+ 	u8 *cmd = scp->cmnd;
+ 	u16 boundary, len;
+ 	u64 lba, lba_tmp;
++	bool lbp = scsi_debug_lbp();
+ 	int ret;
+ 
+ 	if (!scsi_debug_atomic_write()) {
+@@ -5387,7 +5393,15 @@ static int resp_atomic_write(struct scsi_cmnd *scp,
+ 	if (scsi_bufflen(scp) < len * sdebug_sector_size)
+ 		return DID_ERROR << 16;
+ 
++	if (lbp)
++		sdeb_meta_write_lock(sip);
 +
  	ret = do_device_access(sip, scp, 0, lba, len, 0, true, true);
++	if (lbp) {
++		map_region(sip, lba, len);
++		sdeb_meta_write_unlock(sip);
++	}
++
  	if (unlikely(ret == -1))
  		return DID_ERROR << 16;
+ 	if (unlikely(ret != len * sdebug_sector_size))
 -- 
 2.53.0
 
