@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043721;
-	b=X8yjdUgYKHfjhQgCcS1uxvqGE2+rUe7AFe0EIev24olZ349+D9bpKAfSQr+WdqpPImS4
-	 z9g/avOq8H84q/seqlEd1GTei6ywV7th2tEuTVTrUKM7jrHWyGxfT+L5tjH6p7J9nSYBD
-	 TQr7WPhOWYncF886WeA23towon+e3V7MUERmDpNznZYDsEfqmSg8dMqmn/5yhCyOKDpPi
-	 V0nUkEc5FPSV1xdNL4ucPo7CcHed6A/ImekKST09IxjgIvbnc8otYQ+/dm/HQPMdGyr/A
-	 fmvj4JSje0s99B+GUAUESzAE0xxT+fJC/qube3bmPxs11xMydqXWF6/yNTIK0Z0+rlw==
+	t=1795043724;
+	b=yJ54eGpxAcwTT404INr1HbCPnhcFQcFkldNXeijc9gx2S7rgqKzPE5v/0Qs2wpDWXgCY
+	 89BSIhI7cv/90vhnQsP3iKtlYpmsTlsdYXGfDjQMtbbk1zc7+UbORjLkfdukiB8FpW/Pd
+	 wpdqKt/hXIsePQlh9pLQFDmjg8ZjurcvztBbWvmz7EJjkZVIQfDXFVHspRI5gop1UX9s4
+	 S9aQsqjIcBtMJLJD+v7RYhu9arxVyw0UM97JZ8LXAXSQX+y5ITQPf+OIarzmHNU98y43g
+	 /BymJ41yOqNULckYCdI+OF9vwjJkZ4hNBsPas0NkeK3+GAlfuFaasGfp76vvsO3AIVw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043721;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043724;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=S8CESGj9Z43DccM+n1h8Bp48lh6Pdkqv7RiJBLcivko=;
-	b=1jIx4tQ2uQI1HzVHG1Xjk/XOyn3upjy8qYC+J+WJ0M3G6ZmxCpZYLdLoaA0jOhqT2Rvb
-	 S8qehI5clrZ98E21JEYR2LIMDZullxgExlhjW1oVIhAWmXk68aqrGnkSga2sv9kyZFGAo
-	 h843K8xUGUWagRwt3HKbXh5Uc7oWZB4CAd7mYqWeGuSjSdRQm4rF06YrUp9i/KwHLZEuu
-	 Y9gDtW7KecuttKhgGM5O4n2TcprfzLCt1+fqau+pyYLaAW+2oqV17E2o6umiCG7zYw1hC
-	 KvbFnsJk65ZdGe8A/cIosjZiHkNMg52JmPp//5PTFLgTxZkvKdkN9cUHcVqH2Dq7Dew==
+	bh=CVeB651fBWPhiH9x+iWba8hROffTBdyexH96pmIBMec=;
+	b=iuTX7GP+ChB1VVkdEZcQ2OEjd1aqrSPx7OvdTAsCpy9+dzIUKRJu9IU2E2EukY2PhtOk
+	 XHoD8YHQ5bnOLmW0/FaLoe+RGtTPZvckR0K6TQisrcUvoSeuLpS7a+5yVckQRoxTy2mIq
+	 iVfBb7DZ0RSRZ+mwKTqm413qPHN24FsrH5G4AzL1rKPAF6Ixn8L5YxeGeDmeLoxcOw+ou
+	 0v6/d+ADPYjTE9D7tWnQHsmwRmenNQvMEpmEIl+MX1H8rUfOOnyCe5y2ZDpkWiaWtkvvm
+	 V0UwOjDgdm9X7Yh3wYJckLOliEb0m3MlRpHwUlzd8Q7gyZ3hajPCIv7/rNeVo4l4IPg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kn1lVKBB;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4jbHTL2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC6C606A320;
-	Wed, 18 Nov 2026 23:15:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B624606A31C;
+	Wed, 18 Nov 2026 23:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kn1lVKBB
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C9E1F000C6;
-	Wed, 18 Nov 2026 23:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D4jbHTL2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DB31F000C5;
+	Wed, 18 Nov 2026 23:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043721;
-	bh=S8CESGj9Z43DccM+n1h8Bp48lh6Pdkqv7RiJBLcivko=;
+	s=korg; t=1795043723;
+	bh=CVeB651fBWPhiH9x+iWba8hROffTBdyexH96pmIBMec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=kn1lVKBBE4D3CJ+EbkplUihsE6INM5KA/t7+ZYy9WilHD7zH5LZoTOuMK5XQzEMWD
-	 9uIFDlF7GNk2VigVGsXRC6FrMFEXFabt2wR0ZHujzouo5SfOEcPJtzfXZm8umrY3Vx
-	 CRaQbIAdqBb3K+ddEHCTGnhiwmGVzVPhoM7Hputo=
+	b=D4jbHTL26tFdjIsvksIWIHv0F/pf6fMZ9NtIICYtD8IGE9csc2GrI1IEHVfkBfhXN
+	 r7pmKHMUqXXYo+aIg6wcBBZ/8+VUJa0GMBDnvJ98MQMNKMUYk20EN8awqeEENpTxrc
+	 giDw+moW0CtBfvuDyMHJj2JEJANLtj5uCSGEf5K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	co+9782320f78c23f40@bugs.sh,
 	Xiang Mei <xmei5@asu.edu>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.1 0310/2857] media: em28xx: reject audio endpoint with zero packet size
-Date: Wed, 18 Nov 2026 15:22:24 +0100
-Message-ID: <20261118150212.608846197@linuxfoundation.org>
+Subject: [PATCH 6.1 0311/2857] media: go7007: only set audio_enabled if go7007_snd_init() succeeded
+Date: Wed, 18 Nov 2026 15:22:25 +0100
+Message-ID: <20261118150212.642025515@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,64 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiang Mei <xmei5@asu.edu>
 
-commit aebfe430ba885d2f8fc882d7a6d60a7fdbe535d8 upstream.
+commit 2eacf058d2dbb0ae3aaf576459da9e5f2b6bbfbd upstream.
 
-em28xx_audio_urb_init() divides by the audio endpoint's wMaxPacketSize
-without checking it, so a USB device that declares a zero-sized audio
-endpoint divides by zero at probe time.
+go7007_register_encoder() sets go->audio_enabled before calling
+go7007_snd_init() and discards its return value.  go7007_snd_init()
+assigns go->snd_context only on success, so a failed ALSA setup leaves
+audio_enabled set with snd_context still NULL.  The disconnect path tests
+audio_enabled and calls go7007_snd_remove(), which dereferences
+snd_context unconditionally.
 
-Reject a zero-sized audio endpoint like a missing one; the caller already
-unwinds on a negative return.
+go7007_snd_init() returns -ENODEV once its never-decremented static card
+counter reaches SNDRV_CARDS, so SNDRV_CARDS attach/detach cycles arm the
+next attach; no memory pressure is needed.
 
-  Oops: divide error: 0000 [#1] SMP NOPTI
+Set go->audio_enabled only once go7007_snd_init() has succeeded.
+
+  Oops: general protection fault, probably for non-canonical address ...
+  KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
   Workqueue: usb_hub_wq hub_event
-  RIP: 0010:em28xx_audio_init (drivers/media/usb/em28xx/em28xx-audio.c:718)
+  RIP: 0010:go7007_snd_remove (drivers/media/usb/go7007/snd-go7007.c:273)
   Call Trace:
-   em28xx_init_extension (drivers/media/usb/em28xx/em28xx-core.c:1248)
-   em28xx_init_dev.isra.0 (drivers/media/usb/em28xx/em28xx-cards.c:3887)
-   em28xx_usb_probe (drivers/media/usb/em28xx/em28xx-cards.c:4258)
-   usb_probe_interface (drivers/usb/core/driver.c:396)
-   ...
-   usb_set_configuration (drivers/usb/core/message.c:2268)
-   usb_generic_driver_probe (drivers/usb/core/generic.c:250)
-   usb_probe_device (drivers/usb/core/driver.c:291)
-   ...
-   usb_new_device (drivers/usb/core/hub.c:2703)
-   hub_event (drivers/usb/core/hub.c:5961)
-   process_one_work (kernel/workqueue.c:3322)
-   worker_thread (kernel/workqueue.c:3486)
+   go7007_usb_disconnect (drivers/media/usb/go7007/go7007-usb.c:1336)
+   usb_unbind_interface (drivers/usb/core/driver.c:461)
+   device_remove (drivers/base/dd.c:618)
+   device_release_driver_internal (drivers/base/dd.c:1349)
+   bus_remove_device (drivers/base/bus.c:664)
+   device_del (drivers/base/core.c:3965)
+   usb_disable_device (drivers/usb/core/message.c:1478)
+   usb_disconnect
+   hub_event (drivers/usb/core/hub.c:5966)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3560)
    kthread (kernel/kthread.c:436)
    ret_from_fork (arch/x86/kernel/process.c:158)
    ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
   Kernel panic - not syncing: Fatal exception
 
-Fixes: 1b3fd2d34266 ("[media] em28xx-audio: don't hardcode audio URB calculus")
 Cc: stable@vger.kernel.org
-Reported-by: co+9782320f78c23f40@bugs.sh
-Closes: https://lore.kernel.org/all/51lCz4R7QyTUKbh4mhXNaNzX0evpk0siOzbh%40bugs.sh/
-Assisted-by: Claude:claude-opus-5
+Fixes: 866b8695d67e ("Staging: add the go7007 video driver")
+Assisted-by: LLM
 Signed-off-by: Xiang Mei <xmei5@asu.edu>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/em28xx/em28xx-audio.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/usb/go7007/go7007-driver.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/media/usb/em28xx/em28xx-audio.c
-+++ b/drivers/media/usb/em28xx/em28xx-audio.c
-@@ -693,6 +693,13 @@ static int em28xx_audio_urb_init(struct
- 	}
+--- a/drivers/media/usb/go7007/go7007-driver.c
++++ b/drivers/media/usb/go7007/go7007-driver.c
+@@ -306,10 +306,9 @@ int go7007_register_encoder(struct go700
+ 	if (ret < 0)
+ 		return ret;
  
- 	ep_size = em28xx_audio_ep_packet_size(udev, ep);
-+	if (ep_size == 0) {
-+		dev_err(&dev->intf->dev,
-+			"Audio endpoint 0x%02x has a zero packet size\n",
-+			EM28XX_EP_AUDIO);
-+		return -ENODEV;
-+	}
-+
- 	interval = 1 << (ep->bInterval - 1);
- 
- 	dev_info(&dev->intf->dev,
+-	if (go->board_info->flags & GO7007_BOARD_HAS_AUDIO) {
++	if ((go->board_info->flags & GO7007_BOARD_HAS_AUDIO) &&
++	    go7007_snd_init(go) == 0)
+ 		go->audio_enabled = 1;
+-		go7007_snd_init(go);
+-	}
+ 	return 0;
+ }
+ EXPORT_SYMBOL(go7007_register_encoder);
 
 
