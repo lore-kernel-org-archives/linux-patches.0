@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015510;
-	b=Q3uviCRikR8HWbr+mNYr/Aq90GoMFfUwMconykLdJmOsCUkhiachJAK2ldx8Mtzmsd5g
-	 NzuCXFRKU6hxzZPI4Fj/QIV/1yrnZlanvQM3pvhAcTGhLvXr8PVdKarWsi2YuxpdB6Lon
-	 SPb7IiyYpIAb00AVoo9UaBKIkSWarz6SvzYiMXki+RYfpmwu677OggKZrJj7+ylvKuUVV
-	 BV/8pxxyTSoi/AozHtztQ1Vzb9yaDSUX84stTRKCk91oua24jIbxCJ+Y6/OUgltHDBv34
-	 vtM7aScdC2f5cRWGbqqoAfU5md0BozZRtyL+qUZmKuBTv3ez/UVq4gi4j3uS0yED0gQ==
+	t=1795015513;
+	b=BQNqMxbV9ccuRBZvybiPLe+YT9q9NdQgs9AsgNd4mEn0LlFrHiNpTUAskoAozgcNYz6p
+	 2NFxxWKyN8ysFjK/7PBurrG25IcaZV41AQfclUdelaoi61ujhikyByTCBpIg4h8Bu0TBf
+	 KNq9tgGAs6gVoP/wIpq0jLsJQqiwXOzYyIxCQX6K65cMAZNLy6IGmVsHzml/9YpNsKC0K
+	 F/o0u2F6vw1EUnURQ4MTnSB4fSXjZ+qhDDHQIW7Z7ifYUgWeC50uAVShG9lvF587rw9rK
+	 kHPrw6Z2L2bKVRpRTXxN5PjcfkKA6Dhwc87kgDLfl10NyWcXhlLkCvnlba0d6JOJa0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015510;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015513;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aZalvUsIr1+r00aaQoDV0aZ9LJv2yTJhXEH40Ndm5mA=;
-	b=tgJKZ5EaFG0Nb2fI3yjqtsTWUrzGTn/64Tn7PXUdcbEVQs+Qs/CDKzCUlXHFp68G3EMd
-	 5k0yv+OwrAxg5dZTjYO2rZcnLEMDXdmOVZ+Yc3EDxWxGAvfNsdn45ekpt755uxvZSkKYm
-	 mzbJ6mGak5QfJWiUaKoJfGdn+pT+c6xkp/0ZzA4uvJwAmnUhUgrNn8iyCWHsKMmAAERAW
-	 kZG9FKi+ITCH5mqdoGYK7MT5tF7OdDKsgdGkVgS68PX2IbOftDecqQZOdHHI89ZLOUjx5
-	 9hniVPdW0A1FQUrrPEvaa6Qwpa/uU/9TAnftzdKJZBkbmxZGq9vpzCB4R1wCuV3KDnQ==
+	bh=bGX1Kd7krEvJtHvELeqEznr7IW9BX2XiDZ4IxvGJLa0=;
+	b=WPszPYeNJiHlyJ+4SPcMoS9y1dU5Br6K3SHjCyTwcDEHaOEssUb+D8wZS68F9Dxz3/aN
+	 mxdFwuW+fbudCe99TVqsDBAHu1QVfiIMQEZX7Pb2/ZVQC7xsozBQ0jC/9ac9l32/PeQHO
+	 hHQLj7q52k5gr4wXF+nIYCXINrwhOT/OBSantBOOlxn8kHyLSCHxaFz8pDtsrfUGPvRqS
+	 9WUOjgaFABBvzqGH2NOlPrd/oXt45MaI++i2h5ZfJ4tu7mv81FoJYvYzJtAI8mjOZuOz6
+	 pAiLx7N4TnSl+XjTvFElBHiG1GF1KPEOLYq4hZjHnNwxWtyxK118uQ8vmqgDmmzivng==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QpRcryqn;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f98ayGZO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80FE606A335;
-	Wed, 18 Nov 2026 15:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBDB606A32C;
+	Wed, 18 Nov 2026 15:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QpRcryqn
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FB61F000C6;
-	Wed, 18 Nov 2026 15:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f98ayGZO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7261F000C9;
+	Wed, 18 Nov 2026 15:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015510;
-	bh=aZalvUsIr1+r00aaQoDV0aZ9LJv2yTJhXEH40Ndm5mA=;
+	s=korg; t=1795015513;
+	bh=bGX1Kd7krEvJtHvELeqEznr7IW9BX2XiDZ4IxvGJLa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QpRcryqn1Rj/VvTTGjV8RXsak0FvsbR0KtZOSSyamq/YlW0ncijPKMIZwnZHeeW81
-	 ViRZ8nkeQsoOoObT8NOcK8bte/5uEWWDEZi9Y91d9V2AjNpY5tU/1xE/z5mIe/kZVU
-	 ZTUbHFAgaaK0TH5n7/GvRIvtblQKiIGZLXJcGCwQ=
+	b=f98ayGZO0MK97d3m1RnxUrldDAg1M4FvrYjIVuqR3xUstT8RZa9+nQCsbAxbBV8aq
+	 h37tSkHixsxKt9ZZxC3UJjgB7RzNMRxygy8cesDplvz1Ys5V3Gm3tJ52B7GwOFCIS6
+	 7lqvRIrlpLsm6SnOr7W6LRQhgND+exBXNqr1br+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	John Stultz <jstultz@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0198/2651] wifi: ath11k: fix sporadic WLAN initialization failures
-Date: Wed, 18 Nov 2026 15:23:58 +0100
-Message-ID: <20261118150254.991870808@linuxfoundation.org>
+Subject: [PATCH 7.3 0163/2651] sched: Switch rq->next_class in proxy_reset_donor()
+Date: Wed, 18 Nov 2026 15:23:23 +0100
+Message-ID: <20261118150253.720417150@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,64 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 32ec8488d75d122768b1977501bcb5ec799230c4 ]
+[ Upstream commit 1f880513859336b1d4f9731d3a67d22d0b3b6aad ]
 
-On WCN6750 platforms, reboot stress testing occasionally results in WLAN
-initialization failures after boot. The WPSS firmware reaches the running
-state successfully, but no WLAN interface is created.
+Similar to commit 04f80f8b12a0 ("sched: Switch rq->next_class on
+proxy_resched_idle()"), we should also set the rq->next_class
+when we call proxy_reset_donor().
 
-Analysis shows that ath11k_ahb depends on the QRTR SMD transport for QMI
-communication with WPSS firmware. However, this dependency is not
-currently expressed in Kconfig, allowing qrtr_smd and ath11k_ahb to load
-in either order when built as modules.
-
-If ath11k_ahb is loaded before qrtr_smd becomes available, WLAN
-initialization may not complete successfully.
-
-Make the QRTR and QRTR_SMD dependencies explicit and add a soft
-dependency to ensure qrtr_smd is loaded before ath11k_ahb.
-
-Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.2.0.c2-00204-QCAMSLSWPLZ-1
-
-Fixes: 00402f49d26f ("ath11k: Add support for WCN6750 device")
-Signed-off-by: Miaoqing Pan <miaoqing.pan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260806101331.484063-2-miaoqing.pan@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: f13beb010e4a ("sched: Have try_to_wake_up() handle return-migration for PROXY_WAKING case")
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260807035232.1881495-6-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/Kconfig | 3 +++
- drivers/net/wireless/ath/ath11k/ahb.c   | 1 +
- 2 files changed, 4 insertions(+)
+ kernel/sched/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/Kconfig b/drivers/net/wireless/ath/ath11k/Kconfig
-index 122726f84492a..44b520d2e66ee 100644
---- a/drivers/net/wireless/ath/ath11k/Kconfig
-+++ b/drivers/net/wireless/ath/ath11k/Kconfig
-@@ -14,6 +14,9 @@ config ATH11K_AHB
- 	tristate "Atheros ath11k AHB support"
- 	depends on ATH11K
- 	depends on REMOTEPROC
-+	select RPMSG
-+	select QRTR
-+	select QRTR_SMD
- 	help
- 	  This module adds support for AHB bus
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index 9c23a190e7de3..174b6b2331744 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -3773,6 +3773,7 @@ static inline void proxy_reset_donor(struct rq *rq)
+ 	WARN_ON_ONCE(rq->donor == rq->curr);
  
-diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-index ec5bf5c9fd792..e417b0a0f2d7f 100644
---- a/drivers/net/wireless/ath/ath11k/ahb.c
-+++ b/drivers/net/wireless/ath/ath11k/ahb.c
-@@ -1343,5 +1343,6 @@ static struct platform_driver ath11k_ahb_driver = {
- 
- module_platform_driver(ath11k_ahb_driver);
- 
-+MODULE_SOFTDEP("pre: qrtr_smd");
- MODULE_DESCRIPTION("Driver support for Qualcomm Technologies 802.11ax WLAN AHB devices");
- MODULE_LICENSE("Dual BSD/GPL");
+ 	put_prev_set_next_task(rq, rq->donor, rq->curr);
++	rq->next_class = rq->curr->sched_class;
+ 	rq_set_donor(rq, rq->curr);
+ 	zap_balance_callbacks(rq);
+ 	resched_curr(rq);
 -- 
 2.53.0
 
