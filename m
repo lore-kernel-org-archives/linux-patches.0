@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051199;
-	b=kbfFBQln0gwl3a3/uoM7EJQsFpBDQ1e7JFUZbqltZNUAJcdgL6LV/Ql4UuxXdLE38IKa
-	 Cs4SHLaQkwv1mvAja7dmPQw0wczanQPVEO+/V28UxQuA1QrDWwvbxF/RW9BWdtFma+h7+
-	 c+4/xxq9sW1rp7BYuOSxPQ1ESt/Tgs0lJhMhOBHvCIV0bfOXMuipYfRR0AsbnC/u12CYS
-	 RdRwnEiH/JK97cnvi1qo186glAE8pYywQ9IzF/W2YZ5YzYQYubx8XPXLH5f+/b/JDLhzB
-	 T2myzhOQM7T0l65Xb0uSXqf8onkN7ffGMDsIMHWscgkLhdS7DIlYZZfc2tqto5QA1jA==
+	t=1795051202;
+	b=iSi05Hck37wXLKP2NyqAzgF4/Ko+UgmV56bgSdgwd1yBQtHJQ4CUlJ7R+0nzphZnQKMT
+	 gMcDqGm/6UpWq5JjJX3uLIbhe38FNKkHmGh5LkM/+5pPPta0eLmA2+g4I1rjTRisH5Hc6
+	 cY4Dhx1TA6OCVlyXsyWf8006YanngcBInVBH9Cu6PjEMxh+FjPHOqGGwc99MSvHXWBnnu
+	 DmH7c5ukX2C6YeyfdDtM2KUWsnBUBRC/jnhNmoE3ahlG+mw+Rx3/a6Qyzoynm0t/oxPzm
+	 f7eUuBwrWigog8Z1na+zt8uuFEqwAuYffNNfRFfB28Q3A8DI7JG9NlAGcq3YsIOjx9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051199;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051202;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BqEzw/tpwquL0zOd97CFngXuesYE90vuI7GkU1CBdgo=;
-	b=pyi42OzD5YlnHb0riZqrfvkXJe5SXnontyG8/juKA82yA5osXlC9zsuBf+QPfXsq0gU0
-	 ZSzov1S6SGG7vcryFlfgChuzyfBFhHUUatenWwvsYVjrFdipVhjDA5biIHzYfUQYDeMZ/
-	 uQUznZrlQdmfk3PinZ8wzsaQIURhma/ucZHBI9zP2WLV5YKJK4M88+LXGkSr2NbKIFJSA
-	 dqVOvy0I6nMKRvOZv2SxbRphDu/jHY2+iVDUCMkUWu/VRcyn/CUIzXjCel6aDthpLPFiL
-	 GsNMfBZltoDQquZfV1e5DXIJDzKfCmPXdGgZ90OQUzCPVJ+l2ufQquGW3hlhHQnEu6Q==
+	bh=0FzabjqZlQHnoPe19AhoRE/kXQBti5q58OG1RYOUzts=;
+	b=R7uyr2mh5Q8iTeRmxhc6R0g3prphZebf61leBBPmcJKzNKey9DSFJ4B+NsTOUtYhaqup
+	 b0YYu0jNgyLeCkKehXxsnkhiOL2is3aVcjinvsv4HjlQ1KZtsR+d1htUqtgvOu7SGIzV8
+	 qpHKbjQZHKGyn1rS0AKUZHnA8t5fAStzYkLlxdcMd8KmAo+Y27e7n6PQVY28VijM3Y/0K
+	 vU4U6G0CbaLCdxamWowAKp2IiJVGimTuHY7+tPkAboScYwozqHjEcLg4exKiWg//uD7h6
+	 ALT7iPezcWe0nAM0TOFcG2k0kImnzMtFjmxXXKvFM0cO+kauwBstZyPCFLG0x5r/WAg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=enkxCq9p;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6UYh+WK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEA1606A320;
-	Thu, 19 Nov 2026 01:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2020E606A320;
+	Thu, 19 Nov 2026 01:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=enkxCq9p
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6631F000C5;
-	Thu, 19 Nov 2026 01:19:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D6UYh+WK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D23B1F000C4;
+	Thu, 19 Nov 2026 01:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051199;
-	bh=BqEzw/tpwquL0zOd97CFngXuesYE90vuI7GkU1CBdgo=;
+	s=korg; t=1795051202;
+	bh=0FzabjqZlQHnoPe19AhoRE/kXQBti5q58OG1RYOUzts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=enkxCq9pGV4r2Nd0UN/w0vFX04RAZUMAJL6RimB2td96WvURnKXEX3j3ZUqfFm8Ck
-	 WO1AtDTPUgyPEZhcsTpCm+bNdRtfr6wc7Rs+7zGqhm3nCpuClZA3f+xH7NmY/QwMDa
-	 UGjpkJTCPZ9oqDrYkdfVFqwdfojC+zzYwc0Hfl+o=
+	b=D6UYh+WKZaAJJCCqYzWRmt977srdjWq5xBxVd5wqX2ecEH+6VSTSkuD/p6h675gZn
+	 HquDbDOQc5uucHoPXX6nlbgH45i5ruHqWW3QhSUW7+0vZESHY/ajJsgzKtFFkePyVJ
+	 FcIC9L2g0SeqLed8RfvLbisg5cnXDjgJyqegzajk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Pu Lehui <pulehui@huawei.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0122/2214] riscv, bpf: Add support for BPF_MOVSX in RV32 JIT
-Date: Wed, 18 Nov 2026 15:29:58 +0100
-Message-ID: <20261118150015.014987700@linuxfoundation.org>
+Subject: [PATCH 5.15 0123/2214] wifi: cfg80211: include cf1 offset when sending chandef
+Date: Wed, 18 Nov 2026 15:29:59 +0100
+Message-ID: <20261118150015.072650084@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,92 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit c6a08afdfe3a81b1a54e921921e9481dd6c78f8a ]
+[ Upstream commit 5a69b8dffd2a1b06e4cc4c9003c639eb78bac4cd ]
 
-The current rv32 bpf jit compiler incorrectly treats BPF_MOVSX as a
-standard zero-extended move operation. The bpf instruction set allows
-sign-extension moves by reusing the BPF_MOV opcode with the instruction
-offset set to 8, 16, or 32.
+The cf1 offset is not included when sending the chandef leading
+to incorrect channel resolution in usermode. Include it.
 
-Update the bpf_jit_emit_insn() function to check the offset field for
-both ALU and ALU64 MOV operations. If the offset is non-zero, emit the
-correct slli and srai instructions to perform the sign extension.
-
-Before this patch:
-[   19.549705] test_bpf: #82 ALU_MOVSX | BPF_B jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-[   19.551354] test_bpf: #83 ALU_MOVSX | BPF_H jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-[   19.552576] test_bpf: #84 ALU64_MOVSX | BPF_B jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-[   19.553542] test_bpf: #85 ALU64_MOVSX | BPF_H jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-[   19.554807] test_bpf: #86 ALU64_MOVSX | BPF_W jited:1 ret 2 != 1 (0x2 != 0x1)FAIL (1 times)
-
-After this patch:
-[   17.931172] test_bpf: #82 ALU_MOVSX | BPF_B jited:1 125 PASS
-[   17.932198] test_bpf: #83 ALU_MOVSX | BPF_H jited:1 124 PASS
-[   17.933039] test_bpf: #84 ALU64_MOVSX | BPF_B jited:1 124 PASS
-[   17.933918] test_bpf: #85 ALU64_MOVSX | BPF_H jited:1 124 PASS
-[   17.934751] test_bpf: #86 ALU64_MOVSX | BPF_W jited:1 122 PASS
-
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Pu Lehui <pulehui@huawei.com>
-Link: https://lore.kernel.org/bpf/20260714002451.4091139-3-visitorckw@gmail.com
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20260721053958.227853-1-lachlan.hodges@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp32.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ net/wireless/nl80211.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/riscv/net/bpf_jit_comp32.c b/arch/riscv/net/bpf_jit_comp32.c
-index bd4961cf349f9..e3cb9c4465bfd 100644
---- a/arch/riscv/net/bpf_jit_comp32.c
-+++ b/arch/riscv/net/bpf_jit_comp32.c
-@@ -975,6 +975,24 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 
- 	switch (code) {
- 	case BPF_ALU64 | BPF_MOV | BPF_X:
-+		if (insn->off != 0) {
-+			const s8 *rd = bpf_get_reg64(dst, tmp1, ctx);
-+			const s8 *rs = bpf_get_reg64(src, tmp2, ctx);
-+
-+			if (insn->off == 8) {
-+				emit(rv_slli(lo(rd), lo(rs), 24), ctx);
-+				emit(rv_srai(lo(rd), lo(rd), 24), ctx);
-+			} else if (insn->off == 16) {
-+				emit(rv_slli(lo(rd), lo(rs), 16), ctx);
-+				emit(rv_srai(lo(rd), lo(rd), 16), ctx);
-+			} else {
-+				emit(rv_addi(lo(rd), lo(rs), 0), ctx);
-+			}
-+			emit(rv_srai(hi(rd), lo(rd), 31), ctx);
-+			bpf_put_reg64(dst, rd, ctx);
-+			break;
-+		}
-+		fallthrough;
- 
- 	case BPF_ALU64 | BPF_ADD | BPF_X:
- 	case BPF_ALU64 | BPF_ADD | BPF_K:
-@@ -1025,6 +1043,20 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
- 			emit_zext64(dst, ctx);
- 			break;
- 		}
-+		if (insn->off != 0) {
-+			const s8 *rd = bpf_get_reg32(dst, tmp1, ctx);
-+			const s8 *rs = bpf_get_reg32(src, tmp2, ctx);
-+
-+			if (insn->off == 8) {
-+				emit(rv_slli(lo(rd), lo(rs), 24), ctx);
-+				emit(rv_srai(lo(rd), lo(rd), 24), ctx);
-+			} else if (insn->off == 16) {
-+				emit(rv_slli(lo(rd), lo(rs), 16), ctx);
-+				emit(rv_srai(lo(rd), lo(rd), 16), ctx);
-+			}
-+			bpf_put_reg32(dst, rd, ctx);
-+			break;
-+		}
- 		fallthrough;
- 
- 	case BPF_ALU | BPF_ADD | BPF_X:
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 312163181d6b6..0a68d4f838445 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -3571,6 +3571,10 @@ static int nl80211_send_chandef(struct sk_buff *msg,
+ 		return -ENOBUFS;
+ 	if (nla_put_u32(msg, NL80211_ATTR_CENTER_FREQ1, chandef->center_freq1))
+ 		return -ENOBUFS;
++	if (chandef->freq1_offset &&
++	    nla_put_u32(msg, NL80211_ATTR_CENTER_FREQ1_OFFSET,
++			chandef->freq1_offset))
++		return -ENOBUFS;
+ 	if (chandef->center_freq2 &&
+ 	    nla_put_u32(msg, NL80211_ATTR_CENTER_FREQ2, chandef->center_freq2))
+ 		return -ENOBUFS;
 -- 
 2.53.0
 
