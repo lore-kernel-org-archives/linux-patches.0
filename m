@@ -1,83 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043801;
-	b=LAPUsKArfjsh22yyirZshGGQyWZlrfGUB/QPvwkuD7vwzK9CgcjmApp72h9ccwDAsKO0
-	 Pjuz2dh8h2T3rPRqU4COhhPd6EyzYWtfU7JTW5GijdeBIrjfbrYFb/Db7lzlMEhZZsjOo
-	 F2SonXTrtkf25eqagYknjtuRZ3t+0g94NDGCZWEiRTEsNzM2GJbK74MLQuC1tOSsG+o05
-	 vcPdGQHakx4Ez+qKWZKprsSU5IWppARyRTwv/JuPO8Im4HC6L2zuQuQVSYu8050cQZhF1
-	 meO9d+NRV1TOxpmAzQlxvjBrMQkRn7puRYozdanzJoqzLdsMW8VoxlFU3tPBtG+1SwQ==
+	t=1795043804;
+	b=aBMQmoZ5K6/9xbLwSYJ3LCIq5LqsdHvymNJayc4/m15wYqmOaHlE4LINwebzgmHqHJNy
+	 CVCm0fpISI82462BvcmjvQUoymmgwemNHJ2Y3ai/AU8qWnLMCoulZMa5w7jn1TbakbbN8
+	 J61YJbTIEpJgWW90nrB5Wiluyq7QSoojQdFl4sEhZs8+oKrtmhpIHlxbJWEt5/dumNiz/
+	 xoQ0RJHpdwLRqS0A9iimiRYbsKKPlIEnOBZHPGIVKc0Y1dp5ukv81L5svUtNulv/Fj4rM
+	 9Vl9Fq9G4d1AB1a686MH6i9/emkvlrC0ZToapKQSRyuAUCKzzBuobO3j6wxcztZDxZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043801;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043804;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=j+442icMM79vTz24CpCnjToqKyTMIme05hFIYFt6Xr4=;
-	b=CfInyWUYp493n6WWIibVcpvGiEQZfUVKuAUZZTA48agarOg5wAkdcq/Kkz0W/l7IwOIB
-	 EZ5Y3rKz00fh6YVPsit4yKraIFIPw4GedMOOx4a4Czaa3CZ0Iy4yu+U91Cutc2F/XCsRZ
-	 TkqsyPaWZXNmgOZzVXNHZL9qjQrxrZsYOe9vYBDd8Vhij6V11xUIoGC5WWRBKfnD4UXiv
-	 HKEJ8L7NV5T76kVGDnauefvis9jupnQnNZl4jRn1DKxKS2OG0d4lrLt93E2oFAq+S6XfJ
-	 QpIqzb3kIB8lk2MYLa5BYsMoSSY70BgQ3YSi5Uj2GPrP5jOVi0H2ihOVNjch2QhCEZA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ciHJilwnb0uzR9x7sItObW6Z+JZpuDSiFCG7OstSSYc=;
+	b=JJUiUDiQ6HQ4FF+SQCt2BIzs7NTNnK298HrH3e/vSYdXzr0mCLR0ePqMp4dgqJHbUkkD
+	 ch4AIQRKQBAJh+229UuCe48FqYhxyJjP8Zfbvjw51Dtela00GQN0/cwOJ2GE9VtV9jNpI
+	 hR9EO6458tlqUkTvhfy9699+Uv/2M32GvYIKOkv6W4VfZqgaIoQ0jAe7V07x1VtyGqygm
+	 xNKCK8/i6F93en08SQugYB51lnaBLInVlxGmuwpQ0C60KVgBRHOcIerAmht3/lhtqXoCd
+	 jsg+GhiFEsU9AZVV7GyNCmvZ0Oz/LJZp7lF+ymqaz3IMIzyTqTLSjvdEJGetitW0X7A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=do9FyhX4;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQwdOi2z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8480606A32F;
-	Wed, 18 Nov 2026 23:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763F0606A330;
+	Wed, 18 Nov 2026 23:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=do9FyhX4
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B6E1F000C4;
-	Wed, 18 Nov 2026 23:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XQwdOi2z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F8F1F000C4;
+	Wed, 18 Nov 2026 23:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043801;
-	bh=j+442icMM79vTz24CpCnjToqKyTMIme05hFIYFt6Xr4=;
+	s=korg; t=1795043804;
+	bh=ciHJilwnb0uzR9x7sItObW6Z+JZpuDSiFCG7OstSSYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=do9FyhX4Hs1IVRITdZDpURcbvkjJn400XBtVaYHvxnU9TBVVMTmYhmtVrDHvqSvBX
-	 g6BDCvPPXwFm97USMZ586iCWDVpSaVlKpsZNHvbCC4pIsvCyrfECFf067E7/Wf5vTZ
-	 8HwrgZMauf8SqgQd8qa13ExZB+uTJVdgPa+QreDs=
+	b=XQwdOi2zFCdcVBdF9Al3E8oyre1zAg+gAhBb7z7Lv52TPDDT4naMjiYNUziWrjT0+
+	 /EFZZBjy1eBA3ngLq6s8Gea8/iv88QvxlORqy2gCJdCkUyjRaLegtmDhR8jsCSGlvd
+	 w2R7gi9zpjTMp+29Jw+pQFNm3eqO1byG1lmlyl7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dev Jain <dev.jain@arm.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Alistair Popple <apopple@nvidia.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Dave Hansen <dave.hansen@intel.com>,
-	Gregory Price <gourry@gourry.net>,
-	Harry Yoo <harry@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Jann Horn <jannh@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	=?UTF-8?q?Junichi=20 Nick =20Nomura?= <j-nomura@ce.jp.nec.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Lorenzo Stoakes <ljs@kernel.org>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Mel Gorman <mel@csn.ul.ie>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Ralph Campbell <rcampbell@nvidia.com>,
-	Rik van Riel <riel@surriel.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Jose=20Villase=C3=B1or=20Montfort?= <pepemontfort@gmail.com>,
+	Alec Hall <signshop.alec@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0340/2857] mm/page_vma_mapped: use huge_ptep_get() for hugetlb
-Date: Wed, 18 Nov 2026 15:22:54 +0100
-Message-ID: <20261118150213.683698295@linuxfoundation.org>
+Subject: [PATCH 6.1 0341/2857] HID: input: read battery capacity from its actual report offset
+Date: Wed, 18 Nov 2026 15:22:55 +0100
+Message-ID: <20261118150213.721467896@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -93,121 +63,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dev Jain <dev.jain@arm.com>
+From: Jose Villaseñor Montfort <pepemontfort@gmail.com>
 
-[ Upstream commit e87df0d5d6962bde50f55f6d02b779daa394f894 ]
+[ Upstream commit d07644524b6511b622ee7b0e2e68c9ee43d522a4 ]
 
-check_pte() is the final validation step in page_vma_mapped_walk().  It
-reads pvmw->pte with ptep_get() to decide whether the entry maps the PFN
-range being walked.  For hugetlb VMAs, that pointer refers to a hugetlb
-entry.
+hidinput_query_battery_capacity() assumes the state-of-charge value is
+the first byte following the report ID (buf[1]) and ignores where the
+battery field actually sits within the report.
 
-On arches which provide their own huge_ptep_get() to dereference a huge
-pte pointer, accessing via ptep_get() would cause pte_pfn(), pte_present()
-etc to misbehave.
+An Apple Magic Trackpad 2 precedes the AbsoluteStateOfCharge byte with a
+byte of status flags in its battery reports, so this query returns the
+flags byte instead of the charge level.
 
-It is not clear whether this has a trivially visible effect to userspace.
+The device happens to make that easy to observe, because it exposes the
+same cell twice: its report descriptor declares AbsoluteStateOfCharge in
+two reports (0x90 and 0x9b), so hidinput_setup_battery() registers two
+power supplies. Only the first one is refreshed by hid-magicmouse -- it
+uses hid_get_battery(), which returns the first battery of the list --
+and that refresh goes through the report event path, which parses the
+field correctly. Nothing ever reports the second one, so every read of
+its capacity takes the query path above. On a USB-C Magic Trackpad over
+USB, on an unpatched 7.1.5:
 
-Use huge_ptep_get() to dereference a huge pte pointer.
+  hid-<serial>-battery-144 = 100%  (Charging)      <- report event path
+  hid-<serial>-battery-155 =   3%  (Discharging)   <- query path
 
-Link: https://lore.kernel.org/20260703114202.365553-6-dev.jain@arm.com
-Fixes: ace71a19cec5 ("mm: introduce page_vma_mapped_walk()")
-Signed-off-by: Dev Jain <dev.jain@arm.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Muchun Song <muchun.song@linux.dev>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Dave Hansen <dave.hansen@intel.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Harry Yoo <harry@kernel.org>
-Cc: "Huang, Ying" <ying.huang@linux.alibaba.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Jun'ichi "Nick" Nomura <j-nomura@ce.jp.nec.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Lorenzo Stoakes <ljs@kernel.org>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Mel Gorman <mel@csn.ul.ie>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Ralph Campbell <rcampbell@nvidia.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ sashal: Adapted check_pte() to read the pte once via huge_ptep_get(ptep) (one-argument form) for hugetlb VMAs, and replaced the older *pvmw->pte dereferences with that value. ]
+Both are the same physical battery. A raw HIDIOCGINPUT of the two
+reports at that same moment:
+
+  report 0x90 -> [90 03 64]
+  report 0x9b -> [9b 03 64 64 00 00 10 00 00 00 00 00 00 00]
+                     ^flags ^SoC = 0x64 = 100%
+
+The device answers correctly in both cases; only the offset the kernel
+reads the capacity from is wrong. 0x03 is the flags byte (present,
+charging), reported as "3%".
+
+Bluetooth takes the same query path for its capacity, where the trackpad
+reported a bogus near-constant ~4% -- 0b100, the FullyCharged flag --
+regardless of the real charge.
+
+Store the battery field's offset within the report at setup time and use
+it when querying, so the capacity is read from its real position. The
+report event path already parses the field correctly through the HID
+core; only the explicit GET_REPORT query was wrong.
+
+Devices whose capacity field is the first field in the report have a
+report_offset of 0 and are unaffected (buf[1 + 0] == buf[1]).
+
+Fixes: 581c4484769e ("HID: input: map digitizer battery usage")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jose Villaseñor Montfort <pepemontfort@gmail.com>
+Reviewed-by: Alec Hall <signshop.alec@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+[ sashal: Adapted to the older flat battery_* fields on struct hid_device (new battery_report_offset field, plain kmalloc/kfree instead of __free(kfree)) since struct hid_battery doesn't exist here. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_vma_mapped.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/hid/hid-input.c | 17 +++++++++++++----
+ include/linux/hid.h     |  1 +
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/mm/page_vma_mapped.c b/mm/page_vma_mapped.c
-index 93e13fc17d3cb..6dfbb975b3e6a 100644
---- a/mm/page_vma_mapped.c
-+++ b/mm/page_vma_mapped.c
-@@ -75,33 +75,39 @@ static bool map_pte(struct page_vma_mapped_walk *pvmw)
- static bool check_pte(struct page_vma_mapped_walk *pvmw)
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index c7bea3868114c..1ab196d51e421 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -437,19 +437,27 @@ static int hidinput_query_battery_capacity(struct hid_device *dev)
  {
- 	unsigned long pfn;
-+	pte_t ptent;
-+
-+	if (is_vm_hugetlb_page(pvmw->vma))
-+		ptent = huge_ptep_get(pvmw->pte);
-+	else
-+		ptent = ptep_get(pvmw->pte);
+ 	u8 *buf;
+ 	int ret;
++	/*
++	 * The capacity field may not be the first field in the report: some
++	 * devices (e.g. the Apple Magic Trackpad 2 over Bluetooth) precede it
++	 * with status flags. Read it from its actual byte offset in the report
++	 * (report_offset is in bits; the leading byte is the report id).
++	 */
++	int offset = 1 + dev->battery_report_offset / 8;
++	int len = offset + 1;
  
- 	if (pvmw->flags & PVMW_MIGRATION) {
- 		swp_entry_t entry;
--		if (!is_swap_pte(*pvmw->pte))
-+		if (!is_swap_pte(ptent))
- 			return false;
--		entry = pte_to_swp_entry(*pvmw->pte);
-+		entry = pte_to_swp_entry(ptent);
+-	buf = kmalloc(4, GFP_KERNEL);
++	buf = kmalloc(max(len, 4), GFP_KERNEL);
+ 	if (!buf)
+ 		return -ENOMEM;
  
- 		if (!is_migration_entry(entry) &&
- 		    !is_device_exclusive_entry(entry))
- 			return false;
- 
- 		pfn = swp_offset_pfn(entry);
--	} else if (is_swap_pte(*pvmw->pte)) {
-+	} else if (is_swap_pte(ptent)) {
- 		swp_entry_t entry;
- 
- 		/* Handle un-addressable ZONE_DEVICE memory */
--		entry = pte_to_swp_entry(*pvmw->pte);
-+		entry = pte_to_swp_entry(ptent);
- 		if (!is_device_private_entry(entry) &&
- 		    !is_device_exclusive_entry(entry))
- 			return false;
- 
- 		pfn = swp_offset_pfn(entry);
- 	} else {
--		if (!pte_present(*pvmw->pte))
-+		if (!pte_present(ptent))
- 			return false;
- 
--		pfn = pte_pfn(*pvmw->pte);
-+		pfn = pte_pfn(ptent);
+-	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, 4,
++	ret = hid_hw_raw_request(dev, dev->battery_report_id, buf, max(len, 4),
+ 				 dev->battery_report_type, HID_REQ_GET_REPORT);
+-	if (ret < 2) {
++	if (ret < len) {
+ 		kfree(buf);
+ 		return -ENODATA;
  	}
  
- 	return (pfn - pvmw->pfn) < pvmw->nr_pages;
+-	ret = hidinput_scale_battery_capacity(dev, buf[1]);
++	ret = hidinput_scale_battery_capacity(dev, buf[offset]);
+ 	kfree(buf);
+ 	return ret;
+ }
+@@ -567,6 +575,7 @@ static int hidinput_setup_battery(struct hid_device *dev, unsigned report_type,
+ 	dev->battery_max = max;
+ 	dev->battery_report_type = report_type;
+ 	dev->battery_report_id = field->report->id;
++	dev->battery_report_offset = field->report_offset;
+ 	dev->battery_charge_status = POWER_SUPPLY_STATUS_DISCHARGING;
+ 
+ 	/*
+diff --git a/include/linux/hid.h b/include/linux/hid.h
+index 09f6ba66f1db2..01c58f4860b4b 100644
+--- a/include/linux/hid.h
++++ b/include/linux/hid.h
+@@ -645,6 +645,7 @@ struct hid_device {							/* device report descriptor */
+ 	__s32 battery_max;
+ 	__s32 battery_report_type;
+ 	__s32 battery_report_id;
++	__s32 battery_report_offset;
+ 	__s32 battery_charge_status;
+ 	enum hid_battery_status battery_status;
+ 	bool battery_avoid_query;
 -- 
 2.53.0
 
