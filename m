@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017194;
-	b=Sp36VBrGdRJ5+nMY6ZCqM3NVd8x6W9zGLeDRh74n4meHcVmY1sE8743/fYSUV+dMRyA7
-	 gD3AybsrUI8AqNZRuH3zm8T9Z6sy8k2BXnTeJXZ5Nth40aNbQj129YJ3+ucSwQzfx+yD4
-	 K0nZnueBK1g9e1TmwzB+SbaEoYmUXXM+SgFUmlUV7SBPFSwXDXcErAAHrVzHZccK+Crbl
-	 hmRWmTUGkBBiyZhimeyRKHoFru3K2rfetWUpSi+8/yimPdQYEyAYLzfus/HWPaPFf+gtM
-	 /DFTUPFQ2s/UBvr+06XOUK77/36tT2MLoFPcaBcTiVef9RFpobBfYh1p7eGRaKla6JQ==
+	t=1795017196;
+	b=CVaFM3pnBJH/R2QKJZC/QNMYVjMWT8Lxag06dyNTppx6Bz4++B29sUDzPSImWDIHrWLC
+	 dOw8OwUCjtwCl2tl+lDn58NTjK2yHYIIUWVkx2KkXxfdL58XhMwhBDaVRc2wrwgAYs+io
+	 5/CIgYWtfrYbdrXtBi1uDJ8Y7sG++Ud/EC8Pjfw4UKwbAviWb6n3/OAEAwrrMrBo1FF2t
+	 Bf+N0clpfOZnsEyF0hdub+xHHjIVCEV2YejiR2y1MoVvAClEIns8Ld0G0l0FOA994L08h
+	 9RTXWt39aW6Dlag48pfUW6S/vJp56ayenpbt9PzVjS0FESNoidf3cJD3wgxzpqAnEFA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017194;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WkBJFpQ1W+DAuvCMY3A4X3iWH/OzgabAgEOgzAJa4Nc=;
-	b=4CPfsACkemPMXj0T6Cb0GU3vx5M0mT/qpFHJcsPfyDGgYgx3r7gixHkAHcENCf8p+XKX
-	 Oex/9BW1GQmcxxX+khp56cxC0ezI/a3+icbTqlBsB/q3nXhXwCIq+uhL0vgVu9I4WPGfn
-	 yHKVzL1E9eeX5uFzukVvHbww6QKoxTl8SMymEChxeMrVQqzfK0p7EeEbQh2cRo0nudyuw
-	 x8Doi6qx6Fz9fF6ccjf0JqGfDSe8LOxXNB2nwmoof2w58GC6bllf6rC2wr3r0Eo/48VnX
-	 95yaxebQVEl41wE/k1zN0GqG5oEtXNsyY+KDHiRXORfbcZ+/4sIYj7CakuGbpOCSVgA==
+	bh=/rOPRmHOBD51nBFjwZy8hfoAG7BBvzJ16fo9yqbUZRU=;
+	b=y6Ru0oXpekdfqLj5FORrbamR8aataNWfiMRLwf6CrdNre9H1pfXqUMIvXDXpK8sTwFqH
+	 KZHI2h1HKyn9hFHmZyU6gos1+pOAzlJ8iu0AC8I0Yvvn9L1/MuUdD2+7yL89+Gi8UlxOy
+	 +6ElRvbko1WsPKMMIB0U45hRz+pWmIC4jASl9eoti/yLeHRdx9BDat4X4azSe5aCal/OW
+	 56QCBhSPBf5XAmP55GLNPSNm3KRHxxMjdoVqgI1qjQCmdnXtS4MBpoE3EFEEc2WaYfXqr
+	 ENRhT+mh2cCWlraaoXS0xpbRvZ67VFJYM9PKAebtjStAbXQADDw27Kqvqv9nlY27mIg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cc7fzBfV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="yLt/LMXq";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F2B606A32F;
-	Wed, 18 Nov 2026 15:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB866606A31C;
+	Wed, 18 Nov 2026 15:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cc7fzBfV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52C081F000C5;
-	Wed, 18 Nov 2026 15:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yLt/LMXq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110901F000C4;
+	Wed, 18 Nov 2026 15:53:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017193;
-	bh=WkBJFpQ1W+DAuvCMY3A4X3iWH/OzgabAgEOgzAJa4Nc=;
+	s=korg; t=1795017196;
+	bh=/rOPRmHOBD51nBFjwZy8hfoAG7BBvzJ16fo9yqbUZRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cc7fzBfV0sLu3uuU+k0uqSSmyer9qVP81Z4N4tqzwmSVB7DRDMid++Rs3bB11uF3J
-	 9wDsVt/4bQxXAfnEvD5N7b4tUj7qjCibeDiHKB25CaISJeACTMUS4NYxJ9AkP/2EwG
-	 oGbAKZvCCfMj1O131L4P10sn4AnROMCrDVrUkstE=
+	b=yLt/LMXqGrZ7lItH+NCejHxEAPXdSgeaTOTtfzFXDZYV6j+4TtxmocJTe1xqrJgIH
+	 APaS8x2I0CO6IOVaYnTIEyc6AT/F54/wkEh7SWcjYUFhY/0TmUW+3P/lGTSPlLpq4s
+	 0zjLzCPTSjS/DhDJgwFQFgqYdIIPeKlkJr0q+j8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Chancel Liu <chancel.liu@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0798/2651] ASoC: rt1308: return cache sync errors from resume
-Date: Wed, 18 Nov 2026 15:33:58 +0100
-Message-ID: <20261118150316.606554868@linuxfoundation.org>
+Subject: [PATCH 7.3 0781/2651] ASoC: fsl_asrc: use regmap_write_bits to update clock source registers
+Date: Wed, 18 Nov 2026 15:33:41 +0100
+Message-ID: <20261118150316.005584195@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,49 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 3db3289178b94056753f7a8c6ee4ab4b232ee6a5 ]
+[ Upstream commit 92871abc1302b852b88d86114115f8fd6b50b9b9 ]
 
-rt1308_resume() restores cached registers during component resume but
-discards the regcache_sync() result and returns success. A failed replay
-can therefore leave the hardware register state stale without reaching
-the component error reporting path.
+After a warm reboot the REG_ASRCSR register may not be in its hardware
+reset state. regmap caches the register value as 0 (the assumed default),
+so when the desired clock source index is also 0, regmap_update_bits()
+skips the actual hardware write because it believes the register already
+holds the correct value. This leaves a stale clock source in the hardware.
 
-Return the cache synchronization result. The ASoC component wrapper
-reports a negative callback result and retains the established
-best-effort resume state, so this adds observability without introducing
-rollback or retry semantics.
+Replace regmap_update_bits() with regmap_write_bits() so that the masked
+fields are always written to hardware regardless of the cached value.
 
-The successful resume path is unchanged.
-
-The issue was found by a tool we developed.
-
-Fixes: 2b9def8c0d92 ("ASoC: rt1308: Add RT1308 amplifier driver")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260902013256.93072-10-pengpeng@iscas.ac.cn
+Fixes: 3117bb3109dc ("ASoC: fsl_asrc: Add ASRC ASoC CPU DAI and platform drivers")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Chancel Liu <chancel.liu@nxp.com>
+Link: https://patch.msgid.link/20260916094043.1496709-1-shengjiu.wang@oss.nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt1308.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/fsl/fsl_asrc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/codecs/rt1308.c b/sound/soc/codecs/rt1308.c
-index 630946cd7cdf8..df95cfbd76d69 100644
---- a/sound/soc/codecs/rt1308.c
-+++ b/sound/soc/codecs/rt1308.c
-@@ -715,9 +715,7 @@ static int rt1308_resume(struct snd_soc_component *component)
- 	struct rt1308_priv *rt1308 = snd_soc_component_get_drvdata(component);
+diff --git a/sound/soc/fsl/fsl_asrc.c b/sound/soc/fsl/fsl_asrc.c
+index b24737add001b..d80afe1bf4be3 100644
+--- a/sound/soc/fsl/fsl_asrc.c
++++ b/sound/soc/fsl/fsl_asrc.c
+@@ -521,10 +521,10 @@ static int fsl_asrc_config_pair(struct fsl_asrc_pair *pair, bool use_ideal_rate)
+ 			   ASRCTR_USR(index));
  
- 	regcache_cache_only(rt1308->regmap, false);
--	regcache_sync(rt1308->regmap);
--
--	return 0;
-+	return regcache_sync(rt1308->regmap);
- }
- #else
- #define rt1308_suspend NULL
+ 	/* Set the input and output clock sources */
+-	regmap_update_bits(asrc->regmap, REG_ASRCSR,
+-			   ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
+-			   ASRCSR_AICS(index, clk_index[IN]) |
+-			   ASRCSR_AOCS(index, clk_index[OUT]));
++	regmap_write_bits(asrc->regmap, REG_ASRCSR,
++			  ASRCSR_AICSi_MASK(index) | ASRCSR_AOCSi_MASK(index),
++			  ASRCSR_AICS(index, clk_index[IN]) |
++			  ASRCSR_AOCS(index, clk_index[OUT]));
+ 
+ 	/* Calculate the input clock divisors */
+ 	indiv = fsl_asrc_cal_asrck_divisor(pair, div[IN]);
 -- 
 2.53.0
 
