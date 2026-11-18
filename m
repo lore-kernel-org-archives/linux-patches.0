@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059475;
-	b=cJxpVRV7cnCWY1T5tme0WncTvot+0miegeJgmgTo/uyBWRIhMmgAhW2z2GRihyOQTYaC
-	 MwTHosfYCuzbSsC0HSoDU02EEiV0LbqQ9KxwVF57qdPboDcu0XzmJI7yGStZJNkhOK60K
-	 blR7r2IRcTgBt03yEa3VGQmCFCGdZIkCDEF/Ob4IlNfuRg8SGHaDDcvo465JMTCqVFuiS
-	 Uo4m1UTpMLMehOLbdXA6Lord35NKUDW13bYYTn4Mfbfkaj0+2ta72kuJLyzjK/QybxzzG
-	 f7MM9Wd0nXh1+mEn3muuxHU8kUk0haGjeJ50EO6Z9xWjc18TbG30SDcwYf+/xF8M+nA==
+	t=1795059478;
+	b=d6xJpLDB+y++EhDK7bS68Alghsh6WN/QWfPTmEdfvk4RXMnGoCAMNCUnb6yTCyl9zHWO
+	 ngZfLF1tccoy2NNJYvy+CPe0it6oO4DbKDYYJ74zIIsLZMpeISRSw8hRv7o4ZsDray52Z
+	 8A6mLdNUI3csEJPhzV3teufs/xQo6rKKBVTOB5/tB2Fi4Zsp+GpRpemrGm+fGFO1Jt+fA
+	 cwOqIdnQeOcRu20ZBBeuaXiwJDuh8j8HibEg3sJS0JyscEC7ESpxE8Y8dOLLVLGCFOr0D
+	 umvDBNz1d6qOeYSUVD3+37XaOFqmZ66Eogk+Jd+/YKLChOKNAk3N+MBCV08MKbluZ6A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059475;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059478;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d9tXu7NWxuZc5KoF3V9/UhdJcszI219Xl0sYDBR6xPA=;
-	b=ha/FF5EZYCYnfYV/7CYbS9CJIpn3FZdghmPcBlJjzr9Dgr4uYjiPGxITwXCSCypRsV5l
-	 7wxQ/rlBbKm/ZCJL/kYLYKKdkzka+plN5JNz/Z7PSmXiMTjVl5jKRyjTAbJpsZ3QeL/SS
-	 WODrJm47JxCfv19yfd8lBGvTEagq4ZmovJUN0njGDdpdkEaK4wK3KrtDw9NCCD3osvnJO
-	 BqFnUHdb7yYoSJwcWAZciNpqKQYM9fgFlK1PcLLkoRq+Bj8vH+j3LvRIHDPJdrXAGf00h
-	 7tKj8YJNJo1COu9wbp3b7rvPhbSTsDKqUWzl7546tDlzcRsGVrwauz6y/hzQSXFywRQ==
+	bh=u0OuJoNXu0H37FXWGy2+rnKxWrHIcUWdjHxJNVCeY4U=;
+	b=c2NGygFQbu2D8DR8Hp42S1Wdk06p3XV7m4/4q6SoF3ROzlCKGIQMlbDFRZ+nPBcf1Nx2
+	 lof38kcaDO4H9t1mNDsW0ps8/VZU1o2xOL+sIyh110xNH70pD5zIw1hCbRDGUSvxUUjYf
+	 QnBlAJeym8h32Lnfz33JdEIMjagKIeukKVx4kNzeQduxRjmOGtR6qW9AWU14FkLx/JAgs
+	 57YFp0OramKbrydUMItjJzk9zKhL/8dR54NGPDI0DC/rCSReEovaPXHIUGt3EhUCmfuAH
+	 EQkCaMhApEeX2hR5afec/LbQasQ/LEALqfa6IyzUloA5FCKK2M3LVFTH+kDV3jhz66g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=piQOvK0f;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRQcvyqQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4481606A320;
-	Thu, 19 Nov 2026 03:37:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A61F606A320;
+	Thu, 19 Nov 2026 03:37:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=piQOvK0f
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E6C1F000C4;
-	Thu, 19 Nov 2026 03:37:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LRQcvyqQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8F31F000C4;
+	Thu, 19 Nov 2026 03:37:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059475;
-	bh=d9tXu7NWxuZc5KoF3V9/UhdJcszI219Xl0sYDBR6xPA=;
+	s=korg; t=1795059478;
+	bh=u0OuJoNXu0H37FXWGy2+rnKxWrHIcUWdjHxJNVCeY4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=piQOvK0fYSb5JTHdfZxWOENUQddfJFa9ZG/26LG+CoMXhSYYQkoWASus5ZDobvjJ1
-	 +MhQNHiU6QfzYlTrKlDvrIzMFqHAKoG6JAEAcIksd/yGO1DnZ5dlo7r5CHOKonf0tb
-	 oeTyKjlRYPkaDF+j9oC1SMP29tiYCdU7gIpYB/xU=
+	b=LRQcvyqQKqBbJJYxdIcCQbHRT1yoZTo9+HbPUmx7HqMsYG9bkY+mqSUr5OWnrhc45
+	 jEF1BZ4T9zFYrswRcWCpworo8j+g2TDGRNrxbQtC/BLpK0NNq/QQYpAPCHGK423UOb
+	 QcjACmdfX8D6UU9UALIzH+qDm2JDt6eMrqjf9w4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daehyeon Ko <4ncienth@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Farhad Alemi <farhad.alemi@berkeley.edu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0856/1848] splice: avoid stale f_pos writeback on error
-Date: Wed, 18 Nov 2026 15:48:14 +0100
-Message-ID: <20261118145952.371974137@linuxfoundation.org>
+Subject: [PATCH 5.10 0857/1848] ALSA: control: Fix UAF in snd_ctl_elem_add() on card disconnect
+Date: Wed, 18 Nov 2026 15:48:15 +0100
+Message-ID: <20261118145952.404236672@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,68 +68,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daehyeon Ko <4ncienth@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 79b496ebe382866e3a05090b7dc9ae95e85e65b2 ]
+[ Upstream commit d4febca239be3c91498762dd0535a87d4af1eabc ]
 
-do_splice() snapshots an implicit file position before calling the splice
-helper. Since splice does not take f_pos_lock, another operation on the
-same open file description can update f_pos while the helper is blocked.
-If the helper then fails, the unconditional writeback restores the stale
-snapshot.
+A use-after-free can be triggered via SNDRV_CTL_IOCTL_ELEM_ADD when a
+USB audio card is disconnected while an ELEM_ADD ioctl is in flight.
 
-For a directory without ->splice_read, a file-to-pipe splice fails with
--EINVAL. A concurrent directory mutation and getdents() call can advance
-f_pos and refresh the filesystem's revalidation cookie before that failure
-restores only the old position. The next ext2 readdir can then trust an
-offset inside a directory entry and copy data from the adjacent page to
-userspace.
+The reproducer parks the ioctl thread inside copy_from_user() using
+userfaultfd, then tears down the USB device.  Unlike every other
+ALSA control _user handler (ELEM_INFO, ELEM_READ, ELEM_WRITE, TLV_*),
+snd_ctl_elem_add_user() never calls snd_power_ref_and_wait(), so the
+parked thread holds no power reference.  snd_card_disconnect() therefore
+cannot observe it via snd_power_sync_ref() and proceeds unimpeded:
 
-Only update an implicit file position when splice returns a non-negative
-result, matching read and write. Keep explicit offset updates unchanged.
+  1. card->shutdown is set to 1
+  2. device_del(&card->card_dev) drops the kobject reference on the
+     parent USB interface device (card->dev = &intf->dev)
+  3. The USB core drops its own reference and calls device_release(),
+     freeing the struct usb_interface, including the embedded struct
+     device that card->dev points to
 
-Fixes: 7995bd287134 ("splice: don't pass the address of ->f_pos to methods")
+When the userfaultfd is resolved and the thread resumes,
+snd_ctl_elem_add() acquires controls_rwsem without checking
+card->shutdown and calls __snd_ctl_add_replace().  Because the
+reproducer pre-registered the same control, the CTL_ADD_EXCLUSIVE
+path calls dev_err(card->dev, ...) on the freed USB interface:
+
+  KASAN: slab-use-after-free Read in __dev_printk
+
+Add a card->shutdown guard immediately after acquiring controls_rwsem
+in snd_ctl_elem_add().  At that point card->shutdown is guaranteed to
+be stable: snd_card_disconnect() sets it before freeing the parent
+device, and it never transitions back to 0.  A thread that acquired
+the lock before disconnect sees shutdown=0 and holds the write lock
+through the rest of the operation, preventing concurrent disconnect
+from proceeding past its own controls_rwsem-less shutdown=1 store
+(which happened earlier, outside the lock) from racing with dev_err().
+
+Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
 Cc: stable@vger.kernel.org
-Signed-off-by: Daehyeon Ko <4ncienth@gmail.com>
-Link: https://patch.msgid.link/20261018051708.2422394-1-4ncienth@gmail.com
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260929125346.1478631-3-tiwai@suse.de
+[ sashal: Adapted the early return to use the existing error path that frees the preallocated control and explicitly releases the lock. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/splice.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ sound/core/control.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/splice.c b/fs/splice.c
-index a11d5ab38ca63..300302969fb34 100644
---- a/fs/splice.c
-+++ b/fs/splice.c
-@@ -1078,10 +1078,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
- 		ret = do_splice_from(ipipe, out, &offset, len, flags);
- 		file_end_write(out);
+diff --git a/sound/core/control.c b/sound/core/control.c
+index 640bafb6605a5..4a9d13086f0b6 100644
+--- a/sound/core/control.c
++++ b/sound/core/control.c
+@@ -1525,7 +1525,10 @@ static int snd_ctl_elem_add(struct snd_ctl_file *file,
  
--		if (!off_out)
--			out->f_pos = offset;
--		else
-+		if (off_out)
- 			*off_out = offset;
-+		else if (ret >= 0)
-+			out->f_pos = offset;
- 	} else if (opipe) {
- 		if (off_out)
- 			return -ESPIPE;
-@@ -1098,10 +1098,10 @@ long do_splice(struct file *in, loff_t *off_in, struct file *out,
- 
- 		ret = splice_file_to_pipe(in, opipe, &offset, len, flags);
- 
--		if (!off_in)
--			in->f_pos = offset;
--		else
-+		if (off_in)
- 			*off_in = offset;
-+		else if (ret >= 0)
-+			in->f_pos = offset;
- 	} else {
- 		ret = -EINVAL;
- 	}
+ 	/* This function manage to free the instance on failure. */
+ 	down_write(&card->controls_rwsem);
+-	err = __snd_ctl_add_replace(card, kctl, CTL_ADD_EXCLUSIVE);
++	if (card->shutdown)
++		err = -ENODEV;
++	else
++		err = __snd_ctl_add_replace(card, kctl, CTL_ADD_EXCLUSIVE);
+ 	if (err < 0) {
+ 		snd_ctl_free_one(kctl);
+ 		goto unlock;
 -- 
 2.53.0
 
