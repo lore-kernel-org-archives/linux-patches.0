@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030583;
-	b=G/MuRtobT3jn2Yp1Kxvy+h7TbvYScn+92pKLEhzJ8LZwzrO0TqC80ZWnu8DMHfjo1Moh
-	 aWhrwRCQSzZgpDTBhnSzpOk3QNqOZgP8fZ0c53wzea+yxPBzhonzJMWldytTKKmJAUbX9
-	 MzFatMZyzJk0IkJAAtwpCshE9VJBaCTkTDKETXWBqEtMdAu7jdasDkpKjiI/9E+/Tn+K7
-	 VLC5kdl2n9aT0v92jtFvMu2FNuhF6YuMOkYu4mYg+/aZcbg5BqTj1+fGL1bxuTQn6OW9H
-	 WuFm9Hchw2CyyDPigW5FDSZFWmrIULq2ufpdUtero5FxAqscEhilThoojSXjYXux1jw==
+	t=1795030586;
+	b=lBHSN1m6dvmDiZZkjkF5wE/L/eeEVZLfkl+Wtni/3Nim7eRel1KjGVug4WIT11bJNv5f
+	 2IVKvDaSese94cC8oeM6KTwDUqUdvdjTFIdvLTRouEJSMEOeiNrXjs9hafXf6LlPRTvMw
+	 +VTADZqwgIqCdiSG1gaXyNDlhAUFNUblJy1asa88NS8PeQvD9PXq+8KDvGJDqerWi1SHA
+	 gDEcfslFRE1TqJIJ4d6CmBvlchuvQDeZlTV90igMgw9ah71nOvbM03VXrTyzE0iW5In0B
+	 jvCfEIbFb4Wuoq5RmSPTtEhxo59xPgHMKTZBjbUomvXHVYunE3i5e+rMSjip1yKhfXw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=hPMfPkmRjwZ5GFgxXDOYAhkQEe1E/xVnQmFALGj7z4E=;
-	b=fzqVQ4fgH/Lubl7NSkLGDoK0OZfsghC0uL7YRvo271nOn6r2k080G1F4jRDEKoORWiLU
-	 8OY8pyEmRRwX5+QQyk6ATfEEelgfe8YqEAl+YT0BYzN3F0vtQIKyPv/Wnt8gIY2smRNct
-	 tVTjb0xRdGwA5Wj+7YnxNiHTcE5Tou8grxXRVMlwdUnUH1tztfXq/xrF+Ij4mIMESR5LG
-	 /voCJNDMG8hPx9sv3FYnknb6cZRz5n4GicDuC6DVdpgcVCQmtgXcp2m4uHxJKt/42pabR
-	 Fsv1kg7lnKOeixtg3fAS9OwhT3NXQrFbwdt5qW645JQJB6nd9W/GvLJq1qfw0yu4h5A==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=GocIgbtK7v3C3rK9LHg8Lcy6Il47mYNe6V7aHqKUaOs=;
+	b=MxKxEA2zT0oPzEtPSLpDHqVY+p0rNWmGuqdhLYYGiX5fCcXN666HreTKqZqhsjzdq+zB
+	 xO+E42Td7NbGPNt4tyKZUwjQlnMZINO4Z84II/QtKW1i3ZlypS2dXMnUMJmtbF9uRwAL/
+	 xv/xs0I2fLmnc5ck4NGuGPpVpiDa73bsZfAmIEiXVhK5cw8QI4CvpTcUw4Hoy5sUA0LbX
+	 ROPKe3RwgMlTUIStMUVKq95VLNNN+3twkGHHylHN57XQMA6UFs17i392Mkz0At3YUQPWS
+	 TLOLPnEtYZkU5gNOR8Oxfq2cYnReJEHur0zfRYb41iBa6/qDkk71mMm18FxBXrYySFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9HJEa7b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fg6pihOv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBE360A381D;
-	Wed, 18 Nov 2026 19:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08BB60A6F48;
+	Wed, 18 Nov 2026 19:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h9HJEa7b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA0A1F000CB;
-	Wed, 18 Nov 2026 19:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fg6pihOv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EACBC1F000C9;
+	Wed, 18 Nov 2026 19:36:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030582;
-	bh=hPMfPkmRjwZ5GFgxXDOYAhkQEe1E/xVnQmFALGj7z4E=;
+	s=korg; t=1795030585;
+	bh=GocIgbtK7v3C3rK9LHg8Lcy6Il47mYNe6V7aHqKUaOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=h9HJEa7bEHvilaK574wl8CAGIIKOOIwUOqvQpFn966I8Cn5gCeO4DMGPfl+htu0aG
-	 qNEOnxFe8poauIyOyQpw6p3LYpxPyAq2EO9VEyEOL/LlgLNraBTyvGjMeKdd/4e6PD
-	 jp1lowexDO9nQPpjvfhb1XfHkv3zUruOYfEJXGx4=
+	b=fg6pihOvN1jBNO8d6phTSsfxlwAXH3dV4PE0jGeXUj0QPjG+8N9RRfni+CbV+h64s
+	 ++HU7wb3tp5kmj9j0/uzepBMXWJHWxL42tn4rJGnRTuJhuyu/imIiY+JuAlMHPItE7
+	 72LGrXr9ydG6AzAmHcPjhMLMyIngBsVqmSaFYOyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Dalin <liudalin@kylinsec.com.cn>,
-	Linus Walleij <linusw@kernel.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0757/1756] rtc: ftrtc010: fix integer overflow in time calculation
-Date: Wed, 18 Nov 2026 15:48:04 +0100
-Message-ID: <20261118150039.766930713@linuxfoundation.org>
+Subject: [PATCH 6.12 0758/1756] ALSA: ump: Avoid dereference with max_src_size=0
+Date: Wed, 18 Nov 2026 15:48:05 +0100
+Message-ID: <20261118150039.806259968@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -63,65 +61,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Liu Dalin <liudalin@kylinsec.com.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 32f04694fa87b8ac9fa58f9ceb2dc6cbc476e2a1 ]
+[ Upstream commit b61a2369085fd995c8ad44245d3fbd45b1216f71 ]
 
-In ftrtc010_rtc_read_time() and ftrtc010_rtc_set_time(), all
-variables (offset, days, hour, min, sec) are u32. The expression
-"days * 86400 + hour * 3600 + min * 60 + sec" is evaluated in
-32-bit arithmetic, which silently wraps around for dates beyond
-approximately year 2106 (U32_MAX / 86400 ≈ 49710 days).
+safe_copy_string() refers the source pointer for a NUL terminator
+before verifying the source size.  When max_src_size=0, it may
+dereference wrongly.  Fix the verification order.
 
-In ftrtc010_rtc_read_time(), perform the addition in 32-bit
-arithmetic first to preserve two's complement wrapping for negative
-offsets, then cast the result to timeu64_t. In
-ftrtc010_rtc_set_time(), cast individual u32 operands to timeu64_t
-before multiplication to prevent overflow in the right-hand side
-of the offset calculation.
+Only hypothetical hardening, and we see no actual issue in the current
+code, as they are all valid sources.
 
-Fixes: 1d61d2592c1f ("rtc: gemini/ftrtc010: rename driver and symbols")
-Assisted-by: Sashiko AI [static analysis]
-Signed-off-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Tested-by: Liu Dalin <liudalin@kylinsec.com.cn>
-Link: https://patch.msgid.link/42C8FBD59AA34EA9+20260827080320.3351155-4-liudalin@kylinsec.com.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: e3f035edadcc ("ALSA: ump: Copy FB name string more safely")
+Link: https://patch.msgid.link/20261002081823.680131-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-ftrtc010.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/core/ump.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
-index 2f610a0fc6e9b..c989574b1fbc6 100644
---- a/drivers/rtc/rtc-ftrtc010.c
-+++ b/drivers/rtc/rtc-ftrtc010.c
-@@ -73,7 +73,7 @@ static int ftrtc010_rtc_read_time(struct device *dev, struct rtc_time *tm)
- 	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
- 	offset = readl(rtc->rtc_base + FTRTC010_RTC_RECORD);
+diff --git a/sound/core/ump.c b/sound/core/ump.c
+index 6542206747a3d..e35253cc019d2 100644
+--- a/sound/core/ump.c
++++ b/sound/core/ump.c
+@@ -66,7 +66,7 @@ static void safe_copy_string(void *dst, size_t max_dst_size,
  
--	time = offset + days * 86400 + hour * 3600 + min * 60 + sec;
-+	time = (timeu64_t)(offset + days * 86400 + hour * 3600 + min * 60 + sec);
- 
- 	rtc_time64_to_tm(time, tm);
- 
-@@ -93,7 +93,8 @@ static int ftrtc010_rtc_set_time(struct device *dev, struct rtc_time *tm)
- 	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
- 	day = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
- 
--	offset = time - (day * 86400 + hour * 3600 + min * 60 + sec);
-+	offset = time - ((timeu64_t)day * 86400 + (timeu64_t)hour * 3600 +
-+			 (timeu64_t)min * 60 + (timeu64_t)sec);
- 
- 	writel(offset, rtc->rtc_base + FTRTC010_RTC_RECORD);
- 	writel(0x01, rtc->rtc_base + FTRTC010_RTC_CR);
+ 	if (!max_dst_size--)
+ 		return;
+-	for (s = src; max_dst_size && *s && max_src_size--; s++) {
++	for (s = src; max_dst_size && max_src_size-- && *s; s++) {
+ 		if (!isascii(*s) || !isprint(*s))
+ 			continue;
+ 		*d++ = *s;
 -- 
 2.53.0
 
