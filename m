@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021469;
-	b=d75Xh1IK79TOwAktrz9qj/EuwdfA1rjjq6s8ntlfVYWOiVxXNenZW69Sj+lsYhY9SzoE
-	 wwjVn0coDCLi9y7ap7zqOqwLLAUL3LUxVjEhLYTab7muqW4OsHAL7xjGxiXVJc4p/lpnY
-	 dgls1ztEI11oqiHILJENhL/1npJIwRV1NrhwE5GoyCB+kbvSxIcB/hQdyDiM46ej8G1AJ
-	 QvekGJufHE5YCSlAU6M5R/b4VRd0rWOYYGzQx2HpwTkmZV6YXH/yepF3Y3yCs+ZrAPQg3
-	 irtzZ64LIQF3iw8OUb983RgByz3ePSWw/TimlU6owgkhTNBUpmavhFvnNtz0tvbPoiw==
+	t=1795021472;
+	b=g3jkIr4ciEcXN8gePgpxU6ed+4BsarNCc1brDcLisjDH6moRMULVahoG4+IuJ+/8FmgU
+	 mZqkpwJqJ7pun7Qu8WPheCGQtkt383e0hsI15DIXtupGGrUiHoGj0+/89mg3b4pUk1L6D
+	 ABKM//vW3knuGajW0jtGXOnGtIj4JtNnVCp8BiC2XhixVe+ZHUdXV5EJacHJkwdPdJ7k+
+	 rk9O3fwkjAMG8F02LVyweGrjUGgnuIhJmExRk/6078bJgr+lcXH1dAxEOL74jghI9lo0h
+	 imJfDk/wzwLlJkb/VYSket9X5bGcwUg6ophpRok1+Xpuhjs1uJQ8UbsaWxWFpzLtDXg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021469;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021472;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qybLleKHzcT9ejk3a8QzcKge7REeejE0JGguqo8hHuY=;
-	b=nqxrZ8NbJORmYpD5cjzatKwI/9P45yGgAffKj4+KN03XCmkBIZpmorCIYOyJXhg8G0vY
-	 S6tmyh9dTJfZN9CVS26DQtPrDMiSxPGfdGcgpXw3X47KO8G/np2MWRBJ/OEq06/fDHjOv
-	 9wxVaaviiRL3akXNDAZ9Y/F4dbjRgWWhC43UleV45an5jZd85P8Hlvfv+i3GU8NQGhgYv
-	 2GgTdTKDbJjmjVk03o7uw4yP0y4GiTnWmTdmv8COuAUBTjBCM1cedbZxlYJr5FoJks69a
-	 Ei1WxPMS6comtIue1BIHHrZmIqmGcgbrhTlYay7qM56b+oA9zg6HVw5W8umSPb4Kw+Q==
+	bh=hHrHOl8XOSOkAFtWUWVklUA3G8C3vcwE9YVgTbJG4EY=;
+	b=sdZWT0ajbqSMxiuRoAdRYhHdcy9AUzheNmbukWCajJPBoHhBGMZCb4sIDKrKL4Ta676E
+	 IJ7LpXIO5Pmei2esfRokmCodnkwlxynGwlclZri69E4vNnPHaZrxNyg2iYtj6e66OEnf4
+	 zKQo4tcaowjcDKT9xNnnPrigVaHAENNkzInrDgXFXDmmxyOxs3equl1l6DuchUCz0R5Sg
+	 hO+GHehRkVB6n8WhCaVJrYg8+NSZ0ZgwU1fvj0bLUjAw07YbmCe3Ng3SEEXrNaoj07wvr
+	 2OqHHoXIq+hEV0w7utGW8u2DYfo9wojnuTVodJWBDYisAAGhTy/IFRVTSRcIJZFsjJQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MuJ9T9wP;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w1k29ekO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978E660A383B;
-	Wed, 18 Nov 2026 17:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E04A60A3832;
+	Wed, 18 Nov 2026 17:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MuJ9T9wP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D5C1F000C8;
-	Wed, 18 Nov 2026 17:04:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w1k29ekO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB871F000C5;
+	Wed, 18 Nov 2026 17:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021469;
-	bh=qybLleKHzcT9ejk3a8QzcKge7REeejE0JGguqo8hHuY=;
+	s=korg; t=1795021472;
+	bh=hHrHOl8XOSOkAFtWUWVklUA3G8C3vcwE9YVgTbJG4EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MuJ9T9wPlw7GmCaR6ZDIadX941LyucRlJ69Mcq7omn5vQNWPoJbO0utOEF9fi5YFh
-	 9jvaXjU15pU9kPXYHdvjZKU2GE+sUbIGtyQIb39ln0xkSnP/oeDMkINK7CZjwfwtxS
-	 htdE6UdzBULwbdCwo6GYqGhqk0pOwDwX8EJhyi9U=
+	b=w1k29ekOk3/hkhtQYjc6SWxNFSBUYqa+Ab+NeVoOOwLst1ZVIW4dEG//FWcLoE2Ub
+	 lUzI5IGrxOGco2SN6TQz0wW3p76fwbsGniQqfoegWJpeb1tIFdeTqK7ciMamBadJqQ
+	 Y2w8j7avvWxyZerAECnAgF8OUrhg0qDa6x3UhcIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mingming Cao <mmc@linux.ibm.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2277/2651] ibmveth: check headers in the RX large send and checksum helpers
-Date: Wed, 18 Nov 2026 15:58:37 +0100
-Message-ID: <20261118150407.298556294@linuxfoundation.org>
+Subject: [PATCH 7.3 2278/2651] exfat: fix used_clusters accounting during cluster allocation
+Date: Wed, 18 Nov 2026 15:58:38 +0100
+Message-ID: <20261118150407.331110917@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,459 +68,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mingming Cao <mmc@linux.ibm.com>
+From: Chi Zhiling <chizhiling@kylinos.cn>
 
-[ Upstream commit 9486c89a8e157cedecfb561c3d86053e654d32ab ]
+[ Upstream commit cb9dbf8a4e34b4fdf311598835ab4d76ed7e07c1 ]
 
-ibmveth_rx_mss_helper() and ibmveth_rx_csum_helper() trust the IP and
-TCP headers of received frames, which come from another partition on
-the virtual LAN.
+In the current exfat_alloc_cluster(), p_chain->size is incremented as
+each cluster is allocated so that the partially allocated chain can
+be freed by __exfat_free_cluster() on the error path.
 
-The worst case is an IPv4 frame with ihl 0 and iph->check 0xffff: the
-checksum helper calls ip_fast_csum(iph, 0), and the ppc64 version
-loops ihl - 1 times on an unsigned count, reading up to 16 GiB in
-softirq: a long stall, or an oops once the read leaves mapped memory.
-Both helpers also read and write header fields past the end of a short
-frame. The large send helper takes the segment size from the TCP
-checksum field and gso_segs from a TCP header length it never checks,
-and treats an IPv4 TCP fragment as a large send, which can zero two of
-its bytes; the checksum helper can write a checksum into a later
-fragment's payload.
+However, sbi->used_clusters is still updated only after all clusters
+have been allocated, while __exfat_free_cluster() unconditionally
+subtracts the number of freed clusters from sbi->used_clusters.
+Therefore, when allocation fails partway through, the partially
+allocated clusters are subtracted from sbi->used_clusters even
+though they were never added to it. This corrupts the free-space
+accounting and can cause sbi->used_clusters to underflow.
 
-The ihl problem dates from the first commit in Fixes:, the large send
-helper from the second, and the checksum helper from the third.
+Increment sbi->used_clusters together with p_chain->size as each
+cluster is allocated. This keeps the accounting consistent with
+__exfat_free_cluster() on both the success and error paths.
 
-Before using a header, check that it fits the frame, that the IPv4 ihl
-is at least 5, and that an IPv4 TCP frame is not a fragment. In the
-large send helper, also require a TCP doff of at least 5, TCP payload
-within the IP length, and an IP length equal to the frame length:
-Ethernet padding or other bytes past the IP length would otherwise
-stay in a bridged or switched frame, which the stack does not trim,
-and be segmented but not counted in gso_segs. Compute gso_segs from
-the IP length, and keep the segment size at or above TCP_MIN_GSO_SIZE,
-as virtio_net_hdr_to_skb() does since commit c27c449d455a ("virtio-net:
-Ensure that TCP packets don't overflow gso_segs"), and below
-GSO_BY_FRAGS, which virtio rejects. With the headers checked and
-gso_segs computed, the skb is not marked SKB_GSO_DODGY, which would
-also keep it from hardware TSO on the egress device.
+This issue is caught by generic/476 with 256k cluster size:
 
-A frame that fails a check is passed up unchanged, without the GSO
-fields or CHECKSUM_UNNECESSARY, so nothing downstream trusts its
-segment count or checksum. The skb is linear, so the checks use
-skb_headlen(); pskb_may_pull() could reallocate the head under the
-helpers' header pointers.
+    Ran: generic/476
+    Failures: generic/476
+    Failed 1 of 1 tests
 
-Add KUnit cases for both helpers: valid IPv4 and IPv6 large sends, the
-segment size clamp, and refused frames. With any one of the ihl, doff,
-IP length, TCP payload, fragment or clamp checks, or the checksum
-helper's IPv4 options, IPv6 header or TCP header length checks,
-removed, a case fails; without the checksum helper's ihl check,
-ip_fast_csum() oopses on qemu.
+    *** fsck.exfat output ***
+    ERROR: <path>: more clusters are allocated. truncate to N bytes
+    ...
+    /dev/vdc: corrupted. directories 331, files 526
+    /dev/vdc: files corrupted 9, files fixed 0
+    *** end fsck.exfat output ***
 
-Found by the Sashiko review of the previous version of this series and
-confirmed by code inspection and the KUnit cases above. Tested with
-KUnit on qemu pseries (ppc64le) and on a POWER10 LPAR with iperf3 large
-sends over IPv4 and IPv6 at MTU 1500 and 9000, threaded NAPI and busy
-polling, with no new drops or InCsumErrors. No kernel selftests cover
-ibmveth.
-
-Fixes: 9c7e8bc584f5 ("ibmveth: Add support for Large Receive Offload")
-Fixes: 7b5967389f5a ("ibmveth: set correct gso_size and gso_type")
-Fixes: 66aa0678efc2 ("ibmveth: Support to enable LSO/CSO for Trunk VEA.")
-Signed-off-by: Mingming Cao <mmc@linux.ibm.com>
-Link: https://patch.msgid.link/20261013182926.30417-10-mmc@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d5c514b6a0c0 ("exfat: fix the newly allocated clusters are not freed in error handling")
+Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ibm/ibmveth.c | 286 ++++++++++++++++++++++++++++-
- 1 file changed, 277 insertions(+), 9 deletions(-)
+ fs/exfat/fatent.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ibm/ibmveth.c b/drivers/net/ethernet/ibm/ibmveth.c
-index 85e176d0ed321..e9874dfedf378 100644
---- a/drivers/net/ethernet/ibm/ibmveth.c
-+++ b/drivers/net/ethernet/ibm/ibmveth.c
-@@ -1396,8 +1396,12 @@ static netdev_tx_t ibmveth_start_xmit(struct sk_buff *skb,
- 
- }
- 
--static void ibmveth_rx_mss_helper(struct sk_buff *skb, u16 mss, int lrg_pkt)
-+/* Returns false when the IP or TCP headers fail the checks; the frame is
-+ * then left unchanged and not marked GSO.
-+ */
-+static bool ibmveth_rx_mss_helper(struct sk_buff *skb, u16 mss, int lrg_pkt)
- {
-+	unsigned int gso_type, ip_len;
- 	struct tcphdr *tcph;
- 	int offset = 0;
- 	int hdr_len;
-@@ -1406,28 +1410,41 @@ static void ibmveth_rx_mss_helper(struct sk_buff *skb, u16 mss, int lrg_pkt)
- 	if (skb->protocol == htons(ETH_P_IP)) {
- 		struct iphdr *iph = (struct iphdr *)skb->data;
- 
-+		if (skb_headlen(skb) < sizeof(*iph) || iph->ihl < 5)
-+			return false;
- 		if (iph->protocol == IPPROTO_TCP) {
-+			/* only a whole datagram has a TCP header to segment */
-+			if (ip_is_fragment(iph))
-+				return false;
- 			offset = iph->ihl * 4;
--			skb_shinfo(skb)->gso_type = SKB_GSO_TCPV4;
-+			ip_len = ntohs(iph->tot_len);
-+			gso_type = SKB_GSO_TCPV4;
- 		} else {
--			return;
-+			return true;
- 		}
- 	} else if (skb->protocol == htons(ETH_P_IPV6)) {
- 		struct ipv6hdr *iph6 = (struct ipv6hdr *)skb->data;
- 
-+		if (skb_headlen(skb) < sizeof(*iph6))
-+			return false;
- 		if (iph6->nexthdr == IPPROTO_TCP) {
- 			offset = sizeof(struct ipv6hdr);
--			skb_shinfo(skb)->gso_type = SKB_GSO_TCPV6;
-+			ip_len = offset + ntohs(iph6->payload_len);
-+			gso_type = SKB_GSO_TCPV6;
- 		} else {
--			return;
-+			return true;
- 		}
- 	} else {
--		return;
-+		return true;
- 	}
- 	/* if mss is not set through Large Packet bit/mss in rx buffer,
- 	 * expect that the mss will be written to the tcp header checksum.
- 	 */
- 	tcph = (struct tcphdr *)(skb->data + offset);
-+	if (skb_headlen(skb) < offset + sizeof(*tcph) || tcph->doff < 5 ||
-+	    ip_len != skb_headlen(skb) || ip_len <= offset + tcph->doff * 4)
-+		return false;
-+	skb_shinfo(skb)->gso_type = gso_type;
- 	if (lrg_pkt) {
- 		skb_shinfo(skb)->gso_size = mss;
- 	} else if (offset) {
-@@ -1436,11 +1453,18 @@ static void ibmveth_rx_mss_helper(struct sk_buff *skb, u16 mss, int lrg_pkt)
- 	}
- 
- 	if (skb_shinfo(skb)->gso_size) {
-+		/* chosen by the sending partition: at least the floor
-+		 * virtio_net_hdr_to_skb() uses, and never GSO_BY_FRAGS
-+		 */
-+		skb_shinfo(skb)->gso_size =
-+			clamp_t(u16, skb_shinfo(skb)->gso_size,
-+				TCP_MIN_GSO_SIZE, GSO_BY_FRAGS - 1);
- 		hdr_len = offset + tcph->doff * 4;
- 		skb_shinfo(skb)->gso_segs =
--				DIV_ROUND_UP(skb->len - hdr_len,
-+				DIV_ROUND_UP(ip_len - hdr_len,
- 					     skb_shinfo(skb)->gso_size);
- 	}
-+	return true;
- }
- 
- static void ibmveth_rx_csum_helper(struct sk_buff *skb,
-@@ -1457,6 +1481,10 @@ static void ibmveth_rx_csum_helper(struct sk_buff *skb,
- 
- 	if (skb_proto == ETH_P_IP) {
- 		iph = (struct iphdr *)skb->data;
-+		if (skb_headlen(skb) < sizeof(*iph) || iph->ihl < 5 ||
-+		    skb_headlen(skb) < iph->ihl * 4 ||
-+		    (iph->protocol == IPPROTO_TCP && ip_is_fragment(iph)))
-+			goto bad_hdr;
- 
- 		/* If the IP checksum is not offloaded and if the packet
- 		 *  is large send, the checksum must be rebuilt.
-@@ -1471,6 +1499,8 @@ static void ibmveth_rx_csum_helper(struct sk_buff *skb,
- 		iph_proto = iph->protocol;
- 	} else if (skb_proto == ETH_P_IPV6) {
- 		iph6 = (struct ipv6hdr *)skb->data;
-+		if (skb_headlen(skb) < sizeof(*iph6))
-+			goto bad_hdr;
- 		iphlen = sizeof(struct ipv6hdr);
- 		iph_proto = iph6->nexthdr;
- 	}
-@@ -1493,6 +1523,8 @@ static void ibmveth_rx_csum_helper(struct sk_buff *skb,
- 	if (iph_proto == IPPROTO_TCP) {
- 		struct tcphdr *tcph = (struct tcphdr *)(skb->data + iphlen);
- 
-+		if (skb_headlen(skb) < iphlen + sizeof(*tcph))
-+			goto bad_hdr;
- 		if (tcph->check == 0x0000) {
- 			/* Recompute TCP pseudo header checksum  */
- 			tcphdrlen = skb->len - iphlen;
-@@ -1510,6 +1542,13 @@ static void ibmveth_rx_csum_helper(struct sk_buff *skb,
- 			skb_reset_network_header(skb);
- 		}
- 	}
-+	return;
-+
-+bad_hdr:
-+	/* headers do not fit the frame, or a fragment has no whole TCP
-+	 * segment; let the stack check it
-+	 */
-+	skb->ip_summed = CHECKSUM_NONE;
- }
- 
- static int ibmveth_poll(struct napi_struct *napi, int budget)
-@@ -1624,7 +1663,8 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
- 			/* PHYP without PLSO support places a -1 in the ip
- 			 * checksum for large send frames.
- 			 */
--			if (skb->protocol == cpu_to_be16(ETH_P_IP)) {
-+			if (skb->protocol == cpu_to_be16(ETH_P_IP) &&
-+			    skb_headlen(skb) >= sizeof(struct iphdr)) {
- 				struct iphdr *iph = (struct iphdr *)skb->data;
- 
- 				iph_check = iph->check;
-@@ -1632,7 +1672,8 @@ static int ibmveth_poll(struct napi_struct *napi, int budget)
- 
- 			if ((length > netdev->mtu + ETH_HLEN) ||
- 			    lrg_pkt || iph_check == 0xffff) {
--				ibmveth_rx_mss_helper(skb, mss, lrg_pkt);
-+				if (!ibmveth_rx_mss_helper(skb, mss, lrg_pkt))
-+					csum_good = 0;
- 				adapter->rx_large_packets++;
+diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
+index a8b11e2ce43f1..a6728c3612899 100644
+--- a/fs/exfat/fatent.c
++++ b/fs/exfat/fatent.c
+@@ -509,13 +509,13 @@ int exfat_alloc_cluster(struct inode *inode, unsigned int num_alloc,
  			}
+ 		}
+ 		p_chain->size++;
++		sbi->used_clusters++;
  
-@@ -2508,10 +2549,237 @@ static void ibmveth_rxq_harvest_buffer_test(struct kunit *test)
- 	flush_work(&adapter->work);
- }
+ 		last_clu = new_clu;
  
-+KUNIT_DEFINE_ACTION_WRAPPER(ibmveth_kfree_skb, kfree_skb, struct sk_buff *);
-+
-+/* A TCP frame after eth_type_trans(): IP header, 20 byte TCP header and
-+ * payload bytes of data, with the IP length matching the frame.
-+ */
-+static struct sk_buff *ibmveth_test_tcp_skb(struct kunit *test, bool ipv6,
-+					    unsigned int payload)
-+{
-+	unsigned int iplen = ipv6 ? sizeof(struct ipv6hdr) :
-+				    sizeof(struct iphdr);
-+	unsigned int len = iplen + sizeof(struct tcphdr) + payload;
-+	struct sk_buff *skb = alloc_skb(len, GFP_KERNEL);
-+	struct tcphdr *tcph;
-+
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, skb);
-+	KUNIT_ASSERT_EQ(test, 0, kunit_add_action_or_reset(test,
-+							   ibmveth_kfree_skb,
-+							   skb));
-+	skb_put_zero(skb, len);
-+	if (ipv6) {
-+		struct ipv6hdr *iph6 = (struct ipv6hdr *)skb->data;
-+
-+		skb->protocol = htons(ETH_P_IPV6);
-+		iph6->version = 6;
-+		iph6->nexthdr = IPPROTO_TCP;
-+		iph6->payload_len = htons(len - iplen);
-+	} else {
-+		struct iphdr *iph = (struct iphdr *)skb->data;
-+
-+		skb->protocol = htons(ETH_P_IP);
-+		iph->version = 4;
-+		iph->ihl = 5;
-+		iph->protocol = IPPROTO_TCP;
-+		iph->tot_len = htons(len);
-+	}
-+	tcph = (struct tcphdr *)(skb->data + iplen);
-+	tcph->doff = 5;
-+	return skb;
-+}
-+
-+/**
-+ * ibmveth_rx_mss_helper_test - unit test for ibmveth_rx_mss_helper
-+ * @test: pointer to kunit structure
-+ *
-+ * Large send frames get gso_size from the descriptor or the TCP checksum
-+ * field, clamped, and gso_segs from the IP length. Frames whose headers
-+ * do not fit, whose IP length is not the frame length, with no TCP
-+ * payload within the IP length, or that are IPv4 fragments, are refused
-+ * and left without GSO.
-+ *
-+ * Return: void
-+ */
-+static void ibmveth_rx_mss_helper_test(struct kunit *test)
-+{
-+	struct sk_buff *skb;
-+	struct tcphdr *tcph;
-+	struct iphdr *iph;
-+
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	tcph = (struct tcphdr *)(skb->data + sizeof(*iph));
-+	tcph->check = (__force __sum16)htons(1448);
-+	KUNIT_EXPECT_TRUE(test, ibmveth_rx_mss_helper(skb, 0, 0));
-+	KUNIT_EXPECT_EQ(test, SKB_GSO_TCPV4, skb_shinfo(skb)->gso_type);
-+	KUNIT_EXPECT_EQ(test, 1448, skb_shinfo(skb)->gso_size);
-+	KUNIT_EXPECT_EQ(test, 2, skb_shinfo(skb)->gso_segs);
-+	KUNIT_EXPECT_EQ(test, 0, (__force u16)tcph->check);
-+
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	KUNIT_EXPECT_TRUE(test, ibmveth_rx_mss_helper(skb, 1000, 1));
-+	KUNIT_EXPECT_EQ(test, 1000, skb_shinfo(skb)->gso_size);
-+	KUNIT_EXPECT_EQ(test, 3, skb_shinfo(skb)->gso_segs);
-+
-+	skb = ibmveth_test_tcp_skb(test, true, 2896);
-+	tcph = (struct tcphdr *)(skb->data + sizeof(struct ipv6hdr));
-+	tcph->check = (__force __sum16)htons(1448);
-+	KUNIT_EXPECT_TRUE(test, ibmveth_rx_mss_helper(skb, 0, 0));
-+	KUNIT_EXPECT_EQ(test, SKB_GSO_TCPV6, skb_shinfo(skb)->gso_type);
-+	KUNIT_EXPECT_EQ(test, 1448, skb_shinfo(skb)->gso_size);
-+	KUNIT_EXPECT_EQ(test, 2, skb_shinfo(skb)->gso_segs);
-+
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	KUNIT_EXPECT_TRUE(test, ibmveth_rx_mss_helper(skb, 1, 1));
-+	KUNIT_EXPECT_EQ(test, TCP_MIN_GSO_SIZE, skb_shinfo(skb)->gso_size);
-+
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	KUNIT_EXPECT_TRUE(test, ibmveth_rx_mss_helper(skb, GSO_BY_FRAGS, 1));
-+	KUNIT_EXPECT_EQ(test, GSO_BY_FRAGS - 1, skb_shinfo(skb)->gso_size);
-+
-+	/* refused: ihl 0, doff 4, IP length past the frame. With ihl 0 the
-+	 * TCP header would overlap the IP header; saddr makes its doff 5.
-+	 */
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	((struct iphdr *)skb->data)->ihl = 0;
-+	((struct iphdr *)skb->data)->saddr = htonl(0x50000000);
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 1448, 1));
-+	KUNIT_EXPECT_EQ(test, 0, skb_shinfo(skb)->gso_size);
-+
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	((struct tcphdr *)(skb->data + sizeof(*iph)))->doff = 4;
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 1448, 1));
-+
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	((struct iphdr *)skb->data)->tot_len = htons(skb->len + 1);
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 1448, 1));
-+
-+	/* refused: bytes past the IP length, its large send fields left
-+	 * alone; gso_segs from the IP length would undercount them
-+	 */
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	((struct iphdr *)skb->data)->tot_len = htons(skb->len - 100);
-+	tcph = (struct tcphdr *)(skb->data + sizeof(*iph));
-+	tcph->check = (__force __sum16)htons(1448);
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 0, 0));
-+	KUNIT_EXPECT_EQ(test, 0, skb_shinfo(skb)->gso_size);
-+	KUNIT_EXPECT_EQ(test, 1448, ntohs((__force __be16)tcph->check));
-+
-+	/* refused: a fragment past the first, its payload left alone */
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	((struct iphdr *)skb->data)->frag_off = htons(185);
-+	tcph = (struct tcphdr *)(skb->data + sizeof(*iph));
-+	tcph->check = (__force __sum16)htons(1448);
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 0, 0));
-+	KUNIT_EXPECT_EQ(test, 0, skb_shinfo(skb)->gso_size);
-+	KUNIT_EXPECT_EQ(test, 1448, ntohs((__force __be16)tcph->check));
-+
-+	/* refused: only Ethernet padding past the TCP header */
-+	skb = ibmveth_test_tcp_skb(test, false, 6);
-+	((struct iphdr *)skb->data)->tot_len = htons(40);
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 1448, 1));
-+	KUNIT_EXPECT_EQ(test, 0, skb_shinfo(skb)->gso_size);
-+
-+	skb = ibmveth_test_tcp_skb(test, true, 2896);
-+	((struct ipv6hdr *)skb->data)->payload_len = 0;
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 1448, 1));
-+
-+	/* refused: no TCP payload, with the IP length matching the frame */
-+	skb = ibmveth_test_tcp_skb(test, false, 0);
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 1448, 1));
-+	KUNIT_EXPECT_EQ(test, 0, skb_shinfo(skb)->gso_size);
-+
-+	skb = ibmveth_test_tcp_skb(test, true, 0);
-+	KUNIT_EXPECT_FALSE(test, ibmveth_rx_mss_helper(skb, 1448, 1));
-+	KUNIT_EXPECT_EQ(test, 0, skb_shinfo(skb)->gso_size);
-+
-+	/* not TCP: accepted and left alone */
-+	skb = ibmveth_test_tcp_skb(test, false, 2896);
-+	((struct iphdr *)skb->data)->protocol = IPPROTO_UDP;
-+	KUNIT_EXPECT_TRUE(test, ibmveth_rx_mss_helper(skb, 1448, 1));
-+	KUNIT_EXPECT_EQ(test, 0, skb_shinfo(skb)->gso_size);
-+}
-+
-+/**
-+ * ibmveth_rx_csum_helper_test - unit test for ibmveth_rx_csum_helper
-+ * @test: pointer to kunit structure
-+ *
-+ * A large send IPv4 header checksum of 0xffff is rebuilt. Headers that
-+ * do not fit the frame, an IPv4 ihl below 5, or a TCP fragment, clear
-+ * CHECKSUM_UNNECESSARY instead of being read.
-+ *
-+ * Return: void
-+ */
-+static void ibmveth_rx_csum_helper_test(struct kunit *test)
-+{
-+	struct sk_buff *skb;
-+	struct tcphdr *tcph;
-+	struct iphdr *iph;
-+
-+	skb = ibmveth_test_tcp_skb(test, false, 100);
-+	iph = (struct iphdr *)skb->data;
-+	iph->check = (__force __sum16)0xffff;
-+	tcph = (struct tcphdr *)(skb->data + sizeof(*iph));
-+	tcph->check = (__force __sum16)htons(1);
-+	skb->ip_summed = CHECKSUM_UNNECESSARY;
-+	ibmveth_rx_csum_helper(skb, NULL);
-+	KUNIT_EXPECT_EQ(test, 0, (__force u16)ip_fast_csum(iph, iph->ihl));
-+	KUNIT_EXPECT_EQ(test, CHECKSUM_UNNECESSARY, (int)skb->ip_summed);
-+
-+	skb = ibmveth_test_tcp_skb(test, false, 100);
-+	iph = (struct iphdr *)skb->data;
-+	iph->ihl = 0;
-+	iph->check = (__force __sum16)0xffff;
-+	skb->ip_summed = CHECKSUM_UNNECESSARY;
-+	ibmveth_rx_csum_helper(skb, NULL);
-+	KUNIT_EXPECT_EQ(test, CHECKSUM_NONE, (int)skb->ip_summed);
-+	KUNIT_EXPECT_EQ(test, 0xffff, (__force u16)iph->check);
-+
-+	/* IPv4 options past the frame; UDP, so no TCP check follows */
-+	skb = ibmveth_test_tcp_skb(test, false, 0);
-+	iph = (struct iphdr *)skb->data;
-+	iph->protocol = IPPROTO_UDP;
-+	iph->ihl = 15;
-+	iph->check = (__force __sum16)0xffff;
-+	skb->ip_summed = CHECKSUM_UNNECESSARY;
-+	ibmveth_rx_csum_helper(skb, NULL);
-+	KUNIT_EXPECT_EQ(test, CHECKSUM_NONE, (int)skb->ip_summed);
-+
-+	/* a TCP fragment past the first: header and payload left alone */
-+	skb = ibmveth_test_tcp_skb(test, false, 100);
-+	iph = (struct iphdr *)skb->data;
-+	iph->frag_off = htons(185);
-+	iph->check = (__force __sum16)0xffff;
-+	skb->ip_summed = CHECKSUM_UNNECESSARY;
-+	ibmveth_rx_csum_helper(skb, NULL);
-+	KUNIT_EXPECT_EQ(test, CHECKSUM_NONE, (int)skb->ip_summed);
-+	KUNIT_EXPECT_EQ(test, 0xffff, (__force u16)iph->check);
-+	KUNIT_EXPECT_EQ(test, 0,
-+			(__force u16)((struct tcphdr *)(skb->data +
-+							sizeof(*iph)))->check);
-+
-+	/* TCP header past the frame */
-+	skb = ibmveth_test_tcp_skb(test, false, 0);
-+	skb_trim(skb, sizeof(struct iphdr));
-+	skb->ip_summed = CHECKSUM_UNNECESSARY;
-+	ibmveth_rx_csum_helper(skb, NULL);
-+	KUNIT_EXPECT_EQ(test, CHECKSUM_NONE, (int)skb->ip_summed);
-+
-+	/* IPv6 header past the frame; UDP, so no TCP check follows */
-+	skb = ibmveth_test_tcp_skb(test, true, 0);
-+	((struct ipv6hdr *)skb->data)->nexthdr = IPPROTO_UDP;
-+	skb_trim(skb, sizeof(struct ipv6hdr) - 1);
-+	skb->ip_summed = CHECKSUM_UNNECESSARY;
-+	ibmveth_rx_csum_helper(skb, NULL);
-+	KUNIT_EXPECT_EQ(test, CHECKSUM_NONE, (int)skb->ip_summed);
-+}
-+
- static struct kunit_case ibmveth_test_cases[] = {
- 	KUNIT_CASE(ibmveth_remove_buffer_from_pool_test),
- 	KUNIT_CASE(ibmveth_rxq_get_buffer_test),
- 	KUNIT_CASE(ibmveth_rxq_harvest_buffer_test),
-+	KUNIT_CASE(ibmveth_rx_mss_helper_test),
-+	KUNIT_CASE(ibmveth_rx_csum_helper_test),
- 	{}
- };
- 
+ 		if (p_chain->size == num_alloc) {
+ done:
+ 			sbi->clu_srch_ptr = hint_clu;
+-			sbi->used_clusters += p_chain->size;
+ 			mutex_unlock(&sbi->bitmap_lock);
+ 			return 0;
+ 		}
 -- 
 2.53.0
 
