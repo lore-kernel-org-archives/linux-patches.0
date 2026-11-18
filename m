@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040282;
-	b=OiBxFvOBuC29t6FpoBVHCQqfUNP2mbhbA0GW+izdgyso1SRwGfQjbiJktvJxqCDEYDT9
-	 JGBHmMKdaydmJNicKbRaL0LImiCCpPSqCjm2i+3MG7m7av6bk3OP9TAJ2N1AClFnK2Bpy
-	 9v9kFYku7gsU8QydmPW0uASrD+eZNcP6fKRusDRK7q/4fBN4ra66xfaWMEnpWm9na70VF
-	 9K2Dwgv/2eqs2xCUGJBntO7UGNjiAHkDFNofWMxBwInhMvCZDblXQnIBHs2FrcUjRVjZW
-	 m6mQ7FWgpbtON5Ga0Md2f6cl9k8kdQs2MJgN2OaA9YoduvR/08AvR7qxhJ7sA4J83WA==
+	t=1795040285;
+	b=UuhreEMqiKVqHXtHYJtrQlL+Oc/F7H2CjG/7B9iqMxQPp0N5fBBlKQh7kThFVOlr21fa
+	 3MmusR2zqR/9wGLC0PMYWlZKADWw5GseDkot+n4kEIWcRHD5mxbK6R49zD2+dDNDQQ0Lm
+	 MCuvvnosnUqopusO+GqDlz2mnJxP7wGHHovL9lPra8OFGKx4DN/CvWXykc8OLfHYNcPp6
+	 CkP5UxLDKdGBPDIRIOVG4Ftt9d+Da7vR68KtwndpTzGm8nld9Luy9eEV9/5N4wCgu0heb
+	 v1lfbU+O64ishn0w/XR0d+c75i6NpsIIwrcmqveyiRZMpcGUGorxkE8NL0CV8qLVhPw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040282;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040285;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Kl9zZJ2dBmUrU5ryL0hABp+qbUBNCdlXE/nplOT1SVw=;
-	b=A+lD0aSRU/BnDfBm2uGMoXfVpzLovYkUcc9gdJPrVyqh69PpAky203QjSYSfn1SU05Ib
-	 1zddeHAAIF4o0fg8UqDUX/snA4AP1+AEAsV0ue0SC5/UPlggRl9nbIrRn4RL3SYmxzWJi
-	 CVH6tQdob0UB3YDRmvmU+dd49MOtOCpJWyq4CijB5lQ0wh1Vgdlsb74qSs1zCoLSCR7C0
-	 gsOS88fqvCrsOLsrEHm7Ox0jHtkfcMMWtBrCU3n0xi40hrKwWylipm4ppCD/sob1V4dc2
-	 qMXlcJ5De4Ja5MPK1gwxU/kPxHBH+DdeyT0zu3pHUYucA0fBxffVaH6Zf6rvPHy3/Kg==
+	bh=xuys3eHX7czJpvG8CGa/Di4NQy1XunAjbhGwO3o36/Y=;
+	b=p2kyBLnz5iitROCvkNUdxDZb6U6sbd1I7OlRc3/Ln7chKskYI2YiC9j64Hyt+XvYeFe0
+	 rGCRJj37uyhWMOP1c6rNGaqajGelAPk02RAfdV5eUBsv0Kj6zszjxIQH1vKkf2TxkmUdX
+	 9uskuAS8rcrZoxxYly6edVd1lm3lHYd6w2a0/pNr2Vnxrsa377RmrWO1PiimIovs/Xyte
+	 jLdY/E823vS7iur7S6asU7kQAIINxhgQcjp7pxXU5a3E/TiOHXL2btix9s55CUWP3BQif
+	 z2IvR/p152JoTbeTy+wZqd1WpaXko6cjCpYQ4s3ufXUroMLw6ZPt6sid6hNKHq4daeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U70q7kOg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gS2o1f6i;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB5F606A320;
-	Wed, 18 Nov 2026 22:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB76606A31C;
+	Wed, 18 Nov 2026 22:18:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U70q7kOg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD9C1F000C4;
-	Wed, 18 Nov 2026 22:18:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gS2o1f6i
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE9C1F000C4;
+	Wed, 18 Nov 2026 22:18:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040282;
-	bh=Kl9zZJ2dBmUrU5ryL0hABp+qbUBNCdlXE/nplOT1SVw=;
+	s=korg; t=1795040284;
+	bh=xuys3eHX7czJpvG8CGa/Di4NQy1XunAjbhGwO3o36/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=U70q7kOglAHOaSxJB/BbIKWY6fbRmUaOO+GKM9afDZsU5kS8IBu+jPi7cpGYweUCk
-	 9FObePV4o1QbomZMq0CuyzTzIAyHDbQulx8n4AROUiIM6cHQnrbuQ4IOn5gidOZfgq
-	 JYOGeHzximokTmSP15yOOAlS19sq5NSxuoA4ZAKI=
+	b=gS2o1f6iwnHKRWKHpIKVKruDg/37DdWCtdt00SKDkz0BnEeImtjuA4PQV1cn/uVj9
+	 YeQGkXYAeIPK39FMXYEKjr7K5VxwkAjh0cl2lLaNd92lnc+1II4z3dRvCWl8yuK0yJ
+	 Vhy9qXWRyPwYD5uGLSs9Bb8qPcmyasb61cMdrEI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ginger Li <ginger.jzllee@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yishai Hadas <yishaih@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2399/3318] wifi: mac80211: Fix a race when expiring a mesh path
-Date: Wed, 18 Nov 2026 15:50:21 +0100
-Message-ID: <20261118150433.478627853@linuxfoundation.org>
+Subject: [PATCH 6.6 2400/3318] RDMA/hns: Pin CQ buffer writable to match device DMA write access
+Date: Wed, 18 Nov 2026 15:50:22 +0100
+Message-ID: <20261118150433.506796898@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,78 +68,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ginger Li <ginger.jzllee@gmail.com>
+From: Yishai Hadas <yishaih@nvidia.com>
 
-[ Upstream commit 6571b6a24cc37c650a1815b1c320e30db5de466f ]
+[ Upstream commit ce29f6e741844a78ad1977f2a550ede27ecf95f8 ]
 
-My static analyzer identified a potential issue in 'net/mac80211/mesh_pathtbl.c':
-mpath_expired() reads mpath->flags and mpath->exp_time without holding
-mpath->state_lock, while mesh_path_fix_nexthop() and the other writers update
-both fields under that lock.  In mpath_lookup() and
-__mesh_path_lookup_by_idx() the unlocked check is followed by taking the lock
-and clearing MESH_PATH_ACTIVE, so the check and the update are not atomic:
+alloc_cq_buf() leaves user_access zero-initialized, but the device
+writes CQEs into the CQ buffer. Set IB_ACCESS_LOCAL_WRITE so the buffer
+is pinned writable, matching the device's write access.
 
-CPU0 (mpath_lookup)                    CPU1 (mesh_path_fix_nexthop)
-  mpath_expired() reads the stale
-  flags/exp_time and returns true
-                                        spin_lock_bh(&mpath->state_lock)
-                                        mpath->exp_time = 0;
-                                        mpath->flags = FIXED|SN_VALID;
-                                        mesh_path_activate(mpath);
-                                        spin_unlock_bh(&mpath->state_lock)
-  spin_lock_bh(&mpath->state_lock)
-  mpath->flags &= ~MESH_PATH_ACTIVE;
-  spin_unlock_bh(&mpath->state_lock)
-
-A path which mesh_path_fix_nexthop() has just set up as MESH_PATH_FIXED and
-MESH_PATH_ACTIVE then has MESH_PATH_ACTIVE cleared again, and forwarding to
-that destination silently stops.
-
-Take mpath->state_lock before evaluating mpath_expired() so that the check and
-the clearing of MESH_PATH_ACTIVE are atomic with respect to the writers.
-
-Fixes: 60854fd94573 ("mac80211: mesh: convert path table to rhashtable")
-Signed-off-by: Ginger Li <ginger.jzllee@gmail.com>
-Link: https://patch.msgid.link/20260922054253.11976-1-ginger.jzllee@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 744b7bdfa79e ("RDMA/hns: Support 0 hop addressing for CQE buffer")
+Signed-off-by: Yishai Hadas <yishaih@nvidia.com>
+Link: https://patch.msgid.link/20260915140933.40580-3-yishaih@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh_pathtbl.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_cq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/mesh_pathtbl.c b/net/mac80211/mesh_pathtbl.c
-index bd91e9de2f4d7..1b0b7707a1189 100644
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -246,9 +246,10 @@ static struct mesh_path *mpath_lookup(struct mesh_table *tbl, const u8 *dst,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_cq.c b/drivers/infiniband/hw/hns/hns_roce_cq.c
+index c72bbf21f1aeb..7d79273b39cd5 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_cq.c
++++ b/drivers/infiniband/hw/hns/hns_roce_cq.c
+@@ -206,6 +206,7 @@ static int alloc_cq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_cq *hr_cq,
+ 	buf_attr.region[0].size = hr_cq->cq_depth * hr_cq->cqe_size;
+ 	buf_attr.region[0].hopnum = hr_dev->caps.cqe_hop_num;
+ 	buf_attr.region_count = 1;
++	buf_attr.user_access = IB_ACCESS_LOCAL_WRITE;
  
- 	mpath = rhashtable_lookup(&tbl->rhead, dst, mesh_rht_params);
- 
--	if (mpath && mpath_expired(mpath)) {
-+	if (mpath) {
- 		spin_lock_bh(&mpath->state_lock);
--		mpath->flags &= ~MESH_PATH_ACTIVE;
-+		if (mpath_expired(mpath))
-+			mpath->flags &= ~MESH_PATH_ACTIVE;
- 		spin_unlock_bh(&mpath->state_lock);
- 	}
- 	return mpath;
-@@ -289,11 +290,11 @@ __mesh_path_lookup_by_idx(struct mesh_table *tbl, int idx)
- 	if (!mpath)
- 		return NULL;
- 
--	if (mpath_expired(mpath)) {
--		spin_lock_bh(&mpath->state_lock);
-+	spin_lock_bh(&mpath->state_lock);
-+	if (mpath_expired(mpath))
- 		mpath->flags &= ~MESH_PATH_ACTIVE;
--		spin_unlock_bh(&mpath->state_lock);
--	}
-+	spin_unlock_bh(&mpath->state_lock);
-+
- 	return mpath;
- }
- 
+ 	ret = hns_roce_mtr_create(hr_dev, &hr_cq->mtr, &buf_attr,
+ 				  hr_dev->caps.cqe_ba_pg_sz + PAGE_SHIFT,
 -- 
 2.53.0
 
