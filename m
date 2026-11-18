@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054981;
-	b=FR5stUsjPhmYKK8KrWh3cforDYYpNrOwLm3a1M4vW7LFsXh5jq4MQEqkhsixfpbZBa5O
-	 GjLJS3NaNziwxiaTJos8uXMW+InTBKYWbw+Cj7o9uGkc4p/xONpbbzBPLYGvuNPYGOLaU
-	 2q/itG3w60Tg5ixsg8Ef257OISOZpwj9dBvN3IaDQ49zAPZ0gsUBfITJqZ80RkMzIxktu
-	 y5L34hHxyw2EzvAnlH4Ih/FMA4iMV2p3epDiWDYcEPIyzIh4NQs4B31Z6f49+HfjAniXN
-	 dv32sHLeocEorpX97oPJsR0Dtw5IgeglSzxsla+2hXjEYq9+IPP0ZgMS+SbgdLSq+Tw==
+	t=1795054984;
+	b=ZDZ2FFnl8pMsmMssFM7n81ttiLDZAwgLhVTu2HwUCIy4z03yuifoh0PGOAPP/LyPVe/5
+	 p1Rt4cDb6mo51E7FebL+f/kTdIPDQSGsS6amquZoFC2NFuskXwDkoBcl+bieJCZMe98QB
+	 6Bvj11PFNpGu+OMkK+NO1BwnfWt0Cw/FW4i4eGd7kb5XeSniWPBz08yo00Wg8Hh1TWJqc
+	 MdSLUY+escSh53YRFZONO/bt6i74sVo15nuOGOWMpbynr6y4N0GhJIFv/nkxWafgQFIZB
+	 N2ROQXMy5YKeX4HmjGfjsFlyhwEu3ROqM13nLYFP0zmkF3ONqfET7RV0hDK/nQUr3Hg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054981;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054984;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=azow6vCMAeMxjEUTXdTSZW3+9Si4mE7qAqSbuD2+w8g=;
-	b=zPxAfptzk+KIDHQjkq7/3vtWbAkK9TVed7XCjRXk9wvv8yEWT3tf8XNtsa6jJb0fRCgF
-	 99O3IBxguYTnuM0pXgKmYZDjIOB62yTiFVrRbtymJikRe0ajqbiUQANnQ8SAMdxFE0xGx
-	 Jdn+mziK9H7KAPvObYick9P7csrbXs8+s2he0/MKuHf4hA7/wFD8R17y+7+pk1Dp5TpHf
-	 QwwBKXGA4iPNTAeMCm2EL4JYwR/iPKEXZutSzUxdO8Kzk3SOCzPN2gF3GHzXcn2kZxqY7
-	 Q87KV6jWHEFyD65CDJ09O0y/2NYxEagy74qLwqUn8kuv3QIaT6L83Tnx1q8B3plMDDw==
+	bh=PdSY4JojCeZMhZ2ACtHlr5pNO7qYlAgtShEHCJekkWQ=;
+	b=hBQohGrBYsn9uwRKMqUtM9A4DYvaA8UR/94BlOBMhiPm9BDlT4aNvrKzvY/ARapYdxTq
+	 T3ziWYmdXy/tupBlQLzZ/4S44Apcwerb1DsHT8lnE4m1DD3JvKn6Jj+lzg8qSrBhCaZga
+	 xCuKYvQ4nceH1WjBUnlqBDuzv8WDIV+MKR8SzY+djNMoWonzVBr0GN2DVz5vR+h+jDxtW
+	 6k5dhiVpqGSYY8FJXI+sCKmZ8jhYQP5VNGd50RzB1eC+la0D+q05Q2tgwje4v0Z1MhXuU
+	 dxRH27VU+6H//JOAY/mcHAHuaPlkDGrRJBv0syJYOd6mNm7OKslcufL/tvoDfDpY9vA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvIieW5m;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZIl5Ddv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C531606A31C;
-	Thu, 19 Nov 2026 02:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233E0606A320;
+	Thu, 19 Nov 2026 02:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fvIieW5m
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B748A1F000C4;
-	Thu, 19 Nov 2026 02:23:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RZIl5Ddv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788B01F000C4;
+	Thu, 19 Nov 2026 02:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054981;
-	bh=azow6vCMAeMxjEUTXdTSZW3+9Si4mE7qAqSbuD2+w8g=;
+	s=korg; t=1795054984;
+	bh=PdSY4JojCeZMhZ2ACtHlr5pNO7qYlAgtShEHCJekkWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=fvIieW5m3WPD9ELX4ba/ycCy5mjOQa1a61k8Xb5yvRcbFWLjvJlYdhbDUauCoVNFw
-	 idBK4uDcZZUahpag/aaXuC6R04iDnSCB3Nxru/B1nB/ZzCl4YL+fwT/8wh7A2k96fA
-	 tmBI9dbG56qmeDSN+51rBAEDSegK/plHszhaMhBc=
+	b=RZIl5DdvyFZJoNvpO3d60WAuKZ2RhvjkBK2Jkr5U4OsN2xQirSzxjOiz8FyFLK5EH
+	 NSr7oZat/wNGERKLJSMz7G9XF0S5cd2VL58Fv00iDjc21zXNjWNOR/X2Wl05hbWn0p
+	 QvkNuendAhD71di89hRbY+KsnEvNrmUkboRxJFfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Gallagher <cdine@cdine.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jia Wang <wangjia@ultrarisc.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1418/2214] ACPI: button: Add lid_init_state quirk for Razer Blade Stealth 13 (Early 2020) RZ09-0310
-Date: Wed, 18 Nov 2026 15:51:34 +0100
-Message-ID: <20261118150107.948157947@linuxfoundation.org>
+Subject: [PATCH 5.15 1462/2214] dmaengine: dw-axi-dmac: Fix CH_CFG2 channel priority position
+Date: Wed, 18 Nov 2026 15:52:18 +0100
+Message-ID: <20261118150109.543448330@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,54 +69,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Gallagher <cdine@cdine.org>
+From: Jia Wang <wangjia@ultrarisc.com>
 
-[ Upstream commit f16c512a07b954aa3b0b3c580e7abb5dd4f5e703 ]
+[ Upstream commit 2a9013c20c46216b92ff09e2283b5244a91c59da ]
 
-This patch adds a quirk mapping for the "Blade Stealth 13 (Early 2020) -
-RZ09-0310" laptop, which exhibits the same issue as the following two
-related products already accounted for in this file.
+The CH_CFG2 channel priority field occupies bits 51:47 of the 64-bit
+channel configuration register, corresponding to bits 19:15 of CH_CFG2_H.
 
- - Razer Blade Stealth 13 Late 2019
- - Blade Pro 17 (Early 2020) - RZ09-0329
+The driver currently shifts the priority value by 20, programming the
+wrong bits. Use bit 15 as the field position.
 
-Summary of the issue this fixes:
-The firmware's _LID method still returns "closed" after resume when the
-lid was opened during S3, causing systemd-logind to suspend the system
-again within several seconds (15-40) after waking.
-
-Signed-off-by: Ian Gallagher <cdine@cdine.org>
-
-Link: https://patch.msgid.link/90ab9b58-da8b-4ffc-bd4b-adf7590545a9@app.fastmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 824351668a41 ("dmaengine: dw-axi-dmac: support DMAX_NUM_CHANNELS > 8")
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260902-dma-fix-v3-3-414c6449fbcc@ultrarisc.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/button.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/button.c b/drivers/acpi/button.c
-index c2d19a2e73d8f..d996c0354922c 100644
---- a/drivers/acpi/button.c
-+++ b/drivers/acpi/button.c
-@@ -141,6 +141,18 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
- 		},
- 		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
- 	},
-+	{
-+		/*
-+		 * Razer Blade Stealth 13 early 2020, when the lid is opened
-+		 * while suspended the open notification is lost and _LID keeps
-+		 * returning closed after resume, causing spurious re-suspends.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Razer"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Blade Stealth 13 (Early 2020) - RZ09-0310"),
-+		},
-+		.driver_data = (void *)(long)ACPI_BUTTON_LID_INIT_OPEN,
-+	},
- 	{
- 		/*
- 		 * Samsung galaxybook2 ,initial _LID device notification returns
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index a51e35df996ec..a84945d2a508c 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -321,7 +321,7 @@ enum {
+ #define CH_CFG2_H_TT_FC_POS		0
+ #define CH_CFG2_H_HS_SEL_SRC_POS	3
+ #define CH_CFG2_H_HS_SEL_DST_POS	4
+-#define CH_CFG2_H_PRIORITY_POS		20
++#define CH_CFG2_H_PRIORITY_POS		15
+ 
+ /**
+  * DW AXI DMA channel interrupts
 -- 
 2.53.0
 
