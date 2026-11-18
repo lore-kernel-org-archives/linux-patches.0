@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021763;
-	b=Uv7MmzOZIDE2lJgX44KI8ZlDrH/6+EFzCUTXPKsFlzpRKvYIAefOktgqR6JJerX080EO
-	 /EeuOrkxSI7tCRwlGXH31iO7tkF4LTa5wxAnbSjz9GyKLg+FXtraxELwfFdmb37TRZq2f
-	 1aT30Ky0gHXykAXW6pXK7MGbrDII+7c1cWPzqZcfVoboKXCiy7ywGhd7fJjpPRYYuHJip
-	 f/XqbFHjLoMiV2DaAwJk86+eBSrhrLRe5hvVk7tSRx7dgFbo2Io9Kyga1KaY0CFqoLtJd
-	 2V0SE1WcoNguqJAF8rO9ldmwTf3STjjCeYxxZrbDVKCi3KrllkVvpmNRnlLiG+vizmA==
+	t=1795021765;
+	b=sVKi/unBCpROGd9Uvk7geAVUgKR/INJtC0DRBboYQPcS9VVrW66qR8zNAfMkoo9nWV9K
+	 watLyJ762PVmupOwtgPwQsvRpR0BCvOFvQrlFwcMOj5Krz4BzCnhiIsT8O8OrTV8JwFb3
+	 a8pgBJNmxI+EVEjOQ4hYQbiKQwEKsVo2puAJp4tBP667cujHdeOZEC0HXyNrSK4yoUcfD
+	 f3jivLm/zPicXp/LqJK7WPXRy/AwwDUZM2bUlt2pJ8Dh5+z6Kt6ewJim1OP+FRs0L3+wW
+	 aEHc/7oklx3qZ3+NjvW9ORoVmfY/pfLFXYm9Rq3DbjRtdp8xwl40+dZSeXouFvYsXjQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021763;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021765;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qIn8HYYFa43QVerfTUUI2cHh7iaGhRUnb+JUpYPMoZA=;
-	b=jNCg1HR4KjuU0VsDUMH6l54r7GR3v2SalGyLfBQyUmEOIKUZitSYK86BYLB5t+GPwsJE
-	 /m/l5JGIj+6Fccyng4D61gZemlpd7TX2LG6wBNHCB7w+WyS6vDeHy5xV4zr+5VgBuFxdF
-	 PgHT6nJYcJhB6Ud8mj8v4Ggs8zwXN/vZkj7jDFXnT5RmmxY2iqt7dnFL09WIwG1hSUVNI
-	 yNn/gKs0iK1TfC/cI3vjuvaH26QGa9pgZ9grE5N6LA0VZqBMMmLmYurYL4ntGcxvo7/mk
-	 4fGDu0h7vo1umoRd5MLFHZxviSF0VI6vbtwMem7SA/KC8t4eJYNoje1+TylHap6wdpw==
+	bh=4nSuzlbH5ry/xG7MpAbaVqUjFlxafnfu2chp0EIO0OI=;
+	b=oiY3ytbG1P+66HewNG7E7DEFubYoPmUq1SpZ7e8Oe/VQ1jZb0KT6yILRAfrcYwzD3GJB
+	 ngDf1tTuyLHM2FOluhSKfjAdeyY2IJIy9Dlp9jrOkHV6/L4ttiAqIFfG/qVYSe9i4gkwG
+	 a/KJeKWZqG48wUrRy/BNiSnlPo2QVgfR/P83SBlrwBlIkP/owKp3dyCiaVU2z3eyBL6LV
+	 PNZ/8fOA/lkCfcQDCKpYV/QaU1PbSpTSCTPx1fTUdPOx8IZ6XwQZTjuDvgoHLUOOEF6ys
+	 HhfIqQd+AcZLUOiiE+Ocx3DPD/qy0PgWFoeUxBFRc0BPoK9p9sh9mndbfdUdiL/faSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtSnbORp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiv6LtEf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560B760A2603;
-	Wed, 18 Nov 2026 17:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C167D60A2603;
+	Wed, 18 Nov 2026 17:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GtSnbORp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D9B1F000C8;
-	Wed, 18 Nov 2026 17:09:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aiv6LtEf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238411F000C4;
+	Wed, 18 Nov 2026 17:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021762;
-	bh=qIn8HYYFa43QVerfTUUI2cHh7iaGhRUnb+JUpYPMoZA=;
+	s=korg; t=1795021765;
+	bh=4nSuzlbH5ry/xG7MpAbaVqUjFlxafnfu2chp0EIO0OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GtSnbORpdNrNKFZf5GMA2S2L8w8cMET6ym5sBnRQcGJZa92Zks0fry8kTyQLiNJx/
-	 eBa5risRjLlzbpG008zRqAmpIMWmHIE/LqnWrfsoh5DmZ+azxVnXgCZyxRZd4K/IAC
-	 D4bwR4Q57LpBbq2q6GORz3to93JPZ8lKysEtPAV8=
+	b=aiv6LtEfkKClJsknUqwnftM/eP3pXfttHSws/O/BZSdswkJXeVsaJ1bXI57IzXAD3
+	 poWplA/GBicXj7U/hLxaQgwTTfEPhztdTH1n/TMsGEpAYvNKoAQeNLXhriF9sUjqYp
+	 sabq4sD9ty600SIt2s5is/B4HYvoW6zbR08B8hxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Weiss <thnkslprpt@gmail.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2405/2651] kthread: Fall back when no preferred housekeeping CPU is online
-Date: Wed, 18 Nov 2026 16:00:45 +0100
-Message-ID: <20261118150411.914789099@linuxfoundation.org>
+Subject: [PATCH 7.3 2423/2651] cgroup/cpuset: Dont allow a child root partition under an isolated parent
+Date: Wed, 18 Nov 2026 16:01:03 +0100
+Message-ID: <20261118150412.471210353@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,42 +68,205 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avi Weiss <thnkslprpt@gmail.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 78ff77ded78f2d3d6040705a3ab5a83cc45275e3 ]
+[ Upstream commit c0189e75d3b8355ed29fea33c184c3eb00dc273d ]
 
-kthread_fetch_affinity() falls back to the housekeeping mask
-only when the intersection with the preferred mask is empty.
+Although it is not typical for real users to create a complicated nested
+partition hierarchy, it is currently allowed to create nested root and
+isolated partitions. In addition, disabling or invalidating a partition
+should always be allowed especially when the cpuset is being deleted.
 
-If the intersection contains only offline CPUs,
-set_cpus_allowed_ptr() returns -EINVAL and the kthread keeps
-its previous affinity, which may still include an isolated CPU.
+With a nested root and isolated partition hierarchy, it is possible
+that all active housekeeping CPUs can be exhausted when disabling or
+invalidating a root partition and returning its CPUs to the isolated
+parent.
 
-Check whether the intersection contains an online CPU instead.
-Fall back to the full housekeeping mask when none are online.
+One way to avoid this problem is to disallow the creation of a root
+partition under an isolated parent. It is indeed a new limitation imposed
+on the existing cpuset partition functionality. However an isolated
+partition is usually a left node where scheduling and some other kernel
+noises are disabled. It doesn't make much sense to create a child root
+partition under an isolated parent and remove some CPUs from the set
+of isolated CPUs again. Creation of a child isolated partition under a
+root or isolated parent is still allowed.
 
-Fixes: e894f6339808 ("kthread: Honour kthreads preferred affinity after cpuset changes")
-Signed-off-by: Avi Weiss <thnkslprpt@gmail.com>
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+If a partition with child root partitions is converted to isolated,
+the child root partitions will be invalidated.
+
+The cgroup-v2 documentation is also updated to reflect this new
+limitation. New test cases are added to test_cpuset_prs.sh to verify
+this new behavior. Some existing test cases are also updated accordingly.
+
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 69a75e4f3776 ("cgroup/cpuset: Properly compute effective xcpus in update_parent_effective_cpumask()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kthread.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/admin-guide/cgroup-v2.rst       |  4 ++-
+ kernel/cgroup/cpuset-internal.h               |  1 +
+ kernel/cgroup/cpuset.c                        | 32 ++++++++++++++++---
+ .../selftests/cgroup/test_cpuset_prs.sh       | 23 +++++++------
+ 4 files changed, 46 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/kthread.c b/kernel/kthread.c
-index a3f95c90456bd..0dbff3b68ffbe 100644
---- a/kernel/kthread.c
-+++ b/kernel/kthread.c
-@@ -343,7 +343,7 @@ static void kthread_fetch_affinity(struct kthread *kthread, struct cpumask *cpum
- 	}
+diff --git a/Documentation/admin-guide/cgroup-v2.rst b/Documentation/admin-guide/cgroup-v2.rst
+index 86a2a0099178e..f8bc721ec408f 100644
+--- a/Documentation/admin-guide/cgroup-v2.rst
++++ b/Documentation/admin-guide/cgroup-v2.rst
+@@ -2727,7 +2727,9 @@ Cpuset Interface Files
+ 	be retained, but behaves more like a "member".
  
- 	cpumask_and(cpumask, pref, housekeeping_cpumask(HK_TYPE_DOMAIN));
--	if (cpumask_empty(cpumask))
-+	if (!cpumask_intersects(cpumask, cpu_online_mask))
- 		cpumask_copy(cpumask, housekeeping_cpumask(HK_TYPE_DOMAIN));
- }
+ 	All possible state transitions among "member", "root" and
+-	"isolated" are allowed.
++	"isolated" are allowed with the exception that a local child
++	"root" partition is not allowed to be created under an "isolated"
++	parent partition.
  
+ 	On read, the "cpuset.cpus.partition" file can show the following
+ 	values.
+diff --git a/kernel/cgroup/cpuset-internal.h b/kernel/cgroup/cpuset-internal.h
+index e7d010661fd32..701c3854ec7ad 100644
+--- a/kernel/cgroup/cpuset-internal.h
++++ b/kernel/cgroup/cpuset-internal.h
+@@ -35,6 +35,7 @@ enum prs_errcode {
+ 	PERR_HKEEPING,
+ 	PERR_ACCESS,
+ 	PERR_REMOTE,
++	PERR_ISOPARENT,
+ };
+ 
+ /* bits in struct cpuset flags field */
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index f9ce9383af3f5..53f6e3c470f11 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -60,6 +60,7 @@ static const char * const perr_strings[] = {
+ 	[PERR_HKEEPING]  = "partition config conflicts with housekeeping setup",
+ 	[PERR_ACCESS]    = "Enable partition not permitted",
+ 	[PERR_REMOTE]    = "Have remote partition underneath",
++	[PERR_ISOPARENT] = "Root partition is not allowed with isolated parent",
+ };
+ 
+ /*
+@@ -1963,6 +1964,10 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 			part_error = PERR_CPUSEMPTY;
+ 			goto write_error;
+ 		}
++		if ((parent_prs == PRS_ISOLATED) && (old_prs == -PRS_ROOT)) {
++			part_error = PERR_ISOPARENT;
++			goto write_error;
++		}
+ 
+ 		/* Check newmask again, whether cpus are available for parent/cs */
+ 		nocpu |= tasks_nocpu_error(parent, cs, newmask);
+@@ -2038,6 +2043,13 @@ static int update_parent_effective_cpumask(struct cpuset *cs, int cmd,
+ 				adding = cpumask_and(tmp->addmask,
+ 						     cs->effective_xcpus,
+ 						     parent->effective_xcpus);
++		} else if ((parent_prs == PRS_ISOLATED) &&
++			   ((old_prs == PRS_ROOT) || (old_prs == -PRS_ROOT))) {
++			part_error = PERR_ISOPARENT;
++			if (old_prs == PRS_ROOT) {
++				cpumask_copy(tmp->addmask, cs->effective_xcpus);
++				adding = true;
++			}
+ 		} else if (is_partition_invalid(cs) && !cpumask_empty(xcpus) &&
+ 			   cpumask_subset(xcpus, parent->effective_xcpus)) {
+ 			struct cgroup_subsys_state *css;
+@@ -3025,6 +3037,7 @@ static int update_prstate(struct cpuset *cs, int new_prs)
+ 	int err = PERR_NONE, old_prs = cs->partition_root_state;
+ 	struct cpuset *parent = parent_cs(cs);
+ 	struct tmpmasks tmpmask;
++	int parent_prs = parent->partition_root_state;
+ 	bool isolcpus_updated = false;
+ 	bool disable_partition = false;
+ 
+@@ -3074,6 +3087,14 @@ static int update_prstate(struct cpuset *cs, int new_prs)
+ 			enum partition_cmd cmd = (new_prs == PRS_ROOT)
+ 					       ? partcmd_enable : partcmd_enablei;
+ 
++			/*
++			 * It is not allowed to create a root partition under
++			 * an isolated parent partition.
++			 */
++			if ((new_prs == PRS_ROOT) && (parent_prs == PRS_ISOLATED)) {
++				err = PERR_ISOPARENT;
++				goto out;
++			}
+ 			err = update_parent_effective_cpumask(cs, cmd, NULL, &tmpmask);
+ 		} else {
+ 			err = remote_partition_enable(cs, new_prs, &tmpmask);
+@@ -3087,12 +3108,15 @@ static int update_prstate(struct cpuset *cs, int new_prs)
+ 		 * Need to update isolated_cpus.
+ 		 */
+ 		if (prstate_housekeeping_conflict(new_prs, parent_prs,
+-						  cs->effective_xcpus, NULL)) {
+-			disable_partition = true;
++						  cs->effective_xcpus, NULL))
+ 			err = PERR_HKEEPING;
+-		} else {
++		else if (parent_prs == PRS_ISOLATED)
++			err = PERR_ISOPARENT;
++
++		if (!err)
+ 			isolcpus_updated = true;
+-		}
++		else
++			disable_partition = true;
+ 	} else {
+ 		/*
+ 		 * Switching back to member is always allowed even if it
+diff --git a/tools/testing/selftests/cgroup/test_cpuset_prs.sh b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+index 6859cde73af1a..bb26a7da0ee73 100755
+--- a/tools/testing/selftests/cgroup/test_cpuset_prs.sh
++++ b/tools/testing/selftests/cgroup/test_cpuset_prs.sh
+@@ -288,16 +288,14 @@ TEST_MATRIX=(
+ 								       A1:P0|A2:P1|A3:P0|B1:P1"
+ 	"   C0-3    C1-3   C3     C4    X2-3  X2-3:P1   P2     P1    0 A1:0-1|A2:2|A3:3|B1:4 \
+ 								       A1:P0|A2:P1|A3:P2|B1:P1 2-4|3"
+-	"   C0-4    C1-4  C2-4     .    X2-4  X2-4:P2  X4:P1    .    0 A1:0-1|A2:2-3|A3:4 \
+-								       A1:P0|A2:P2|A3:P1 2-4|2-3"
+-	"   C0-4    C1-4  C2-4     .    X2-4  X2-4:P2 X3-4:P1   .    0 A1:0-1|A2:2|A3:3-4 \
+-								       A1:P0|A2:P2|A3:P1 2"
++	"  C1-6:P1 C3-6:P1 C5-6:P1 .      .      P2      .      .    0 A1:1-2|A2:3-6|A3:5-6 \
++								       A1:P1|A2:P2|A3:P-1 3-6"
+ 	" C1-4:X2-4 C2-4:X3-4:P1 C3-4:X4:P2 \
+ 				   .      .      X5      .      .    0 A1:1-4|A2:2-4|A3:3-4 \
+ 								       A1:P0|A2:P-1|A3:P-2 ."
+-	" C0-4:X2-4 C1-4:X2-4:P2 C2-4:X4:P1 \
+-				   .      .      .      X1      .    0 A1:0-1|A2:2-4|A3:2-4 \
+-								       A1:P0|A2:P2|A3:P-1 2-4"
++	" C1-4:X2-4 C1-4:X3-4:P1 C3-4:X4:P2 \
++				   .      .      .      X1      .    0 A1:1-2|A2:3-4|A3:3-4 \
++								       A1:P0|A2:P1|A3:P-2 ."
+ 	" CX1-3:P1 CX1-3  CX1-3    .      .      .      P1      .    0 A1:1-3|A2:1-3|A3:1-3 \
+ 								       A1:P1|A2:P0|A3:P-1"
+ 
+@@ -331,8 +329,8 @@ TEST_MATRIX=(
+ 	" C0-3:X1-3:P2 C1-3:X2-3:P2 C2-3:X3:P2 \
+ 				   .      .    C4:X     .      .     0 A1:1-3|A2:1-3|A3:2-3|XA2:|XA3: A1:P2|A2:P-2|A3:P-2 1-3"
+ 	# Local partition CPU change tests
+-	" C0-5:P2  C4-5:P1  .      .      .    C3-5     .      .     0 A1:0-2|A2:3-5 A1:P2|A2:P1 0-2"
+-	" C0-5:P2  C4-5:P1  .      .    C1-5     .      .      .     0 A1:1-3|A2:4-5 A1:P2|A2:P1 1-3"
++	" C0-5:P1  C4-5:P2  .      .      .    C3-5     .      .     0 A1:0-2|A2:3-5 A1:P1|A2:P2 3-5"
++	" C0-5:P1  C4-5:P2  .      .    C1-5     .      .      .     0 A1:1-3|A2:4-5 A1:P1|A2:P2 4-5"
+ 
+ 	# cpus_allowed/exclusive_cpus update tests
+ 	" C0-3:X2-3 C1-3:X2-3 C2-3:X2-3 \
+@@ -433,6 +431,13 @@ TEST_MATRIX=(
+ 	# cpuset.cpus can become empty with task in it as it inherits parent's effective CPUs
+ 	"   C1-3    C2      .      .       .    T:C     .      .     0 A1:1-3|A2:1-3"
+ 
++	# Creation of root partition under an isolated partition is not allowed
++	"  C1-3:P2  C2      .      .       .     P1     .      .     0 A1:1-3|A2:2 A1:P2|A2:P-1 1-3"
++	"  C1-3:P2  C2      .      .       .     P2     .      .     0 A1:1,3|A2:2 A1:P2|A2:P2  1-3"
++	"  C1-3:P2 C2:P2    .      .       .     P1     .      .     0 A1:1-3|A2:2 A1:P2|A2:P-1 1-3"
++	"  C1-3:P2 C2:P1    .      .       .    C2-3    .      .     0 A1:1-3|A2:2-3 A1:P2|A2:P-1 1-3"
++
++	#
+ 	#  old-A1 old-A2 old-A3 old-B1 new-A1 new-A2 new-A3 new-B1 fail ECPUs Pstate ISOLCPUS
+ 	#  ------ ------ ------ ------ ------ ------ ------ ------ ---- ----- ------ --------
+ 	# Failure cases:
 -- 
 2.53.0
 
