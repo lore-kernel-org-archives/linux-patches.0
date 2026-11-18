@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019453;
-	b=ItaAKFaxzj/e18MjJIjcJHHb3CXnIDv0e3M2expk5gEPHTmzHWtmN4EdqWh4mi/pk8sC
-	 f4TK1rGufF2QN3K5D9Krp9aXl6qps84Pznv3DRKIPX2TxaVW7EY+XQqszB8KkAYuZNva1
-	 iiioI83A5HIwTfCIu2avlDVlx4yc2DEzHxAMRbj6hffwFdxh4GG0G4AhFnRLHJWFO8TLN
-	 kFW/d+M+osqLnvrmiytRVRyXY/o/fkL1So9t90sfn/9m2Z2uqO3RogQaQ+lmiLr1pDQto
-	 iL5c1O4tFT2U2hJHCSWFRwlOXE5+LqdQBcBjR7/f5M9X0V8L9ptDrRWc2pYbXaWEqAw==
+	t=1795019456;
+	b=Aa4Xy6FiwcdSKIOHFitDK6zZFgSh5ihcj2mMbFlYv5qijNEQzVg0S1HixVhVW/GUzp6t
+	 iJaJ8fVdU5Uy1BWkldO/Qa7Env2aOSgQZP9Y1DqXkYPFPY7b80805MIt8kIDSJ4PlEfLr
+	 /ty5b8q2nMZDWYkZ+ABN3Pt07A3WDtBqW93/sWoFcBmPdIdLTk9xq1zSXDR3v/zHkJ1DJ
+	 B0vxla6YI8ZqdGlxPBUngiYQmUxesT6pXGL76b28glUWpsZ1nPxsX3ePfo2Pe1/lzCHIl
+	 YFtDEBQuIPYfdReTx9bGdbJ+vZHHhlRbq0rhZo7a9DyltQOTp+ybKe2l6mCaQSWeFSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019453;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019456;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=o9ObCrfzBrbNf3LTgyxYeDCm/N6TiFeBqjZHzftKPaE=;
-	b=s4LSKsdPrzW1hM5iHNnz0dQndmX2on6LvEoWJorHH6zYtLqIp0YLgCYzeaLNMVwT3a2X
-	 37fpd3UMkw+lisn0goYMN9eZEgFoLK5Ngzl2Lm7GSho+DlmY6YsQ6zwo73wjmuXwCq5qd
-	 NkcDflh4R5yVYTbZYhfa5GlQLVKJs8/HMo9z3GQm+DoQgFEiipiEGOEII9pgGwYZ+h9w4
-	 V+pXSbDgV+J8nnucICAy5i7YAN8ojLE4sSLly5BtpL+9BxX4eSF4E7nqmKTbrdL56KxWt
-	 jSuE5l3sPOUdypleQ6ZvVYtFNRxcDWMDBu5hcLaFyJ6ft/7M0CGAI4DFo/6WSu4aL1w==
+	bh=W2O5BSvP0bHx33IFdd9umxL1rs7FOvnByRGjkJB7rYA=;
+	b=Ram9udjTSLfRzx5yhE6AibiefPHr0qQWNRCU1gTvT3GOjkf+OzZqrXtpq0KIM3PeeFCF
+	 TQXS7mLbiZZWCGoxSa8LWwjcQG2famWXr5SsxEjCVEwT48S2eNFzq58Vw3BT2I5CdR+gj
+	 +mZOLPbTtglxFUDigIfGH9Gt1M0ZkUniTHpJDwXLDbfZnXs1gfb89lCOSsCB/KvAqw6hI
+	 NMxG9F+0BCKBECrKL6nqflUfgNNREG87rziXen0H6EeSUOiH+2MmiPsyLq9CI3TVMrx8p
+	 yigXFDkaaIj8wh/IOw3a3SWLcBygiz1h819muho+RIQPDSQBcf3nQkCSC9fjdwck3vA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wcjRD6rC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+jT7LNE;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3614B606A7D2;
-	Wed, 18 Nov 2026 16:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BF2606A335;
+	Wed, 18 Nov 2026 16:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wcjRD6rC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B28C1F000C4;
-	Wed, 18 Nov 2026 16:30:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h+jT7LNE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726061F000C4;
+	Wed, 18 Nov 2026 16:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019453;
-	bh=o9ObCrfzBrbNf3LTgyxYeDCm/N6TiFeBqjZHzftKPaE=;
+	s=korg; t=1795019455;
+	bh=W2O5BSvP0bHx33IFdd9umxL1rs7FOvnByRGjkJB7rYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wcjRD6rCz1btp9MGbDq2kTrSzajmuGWVFe+wCwXR48ay9KxMpBWpz7DxNp4W9lOIP
-	 JA2IxM7L5bgz7tQJX8S4AiB4fc7SsDASokmZiTUrVtvZOcYkzLehYIoOaAoTY5n0TL
-	 VueduS0ndFEohbWPl04WEdjDtOhHGuhtT4WzxCA8=
+	b=h+jT7LNE9I7v15NXkTHQvzNfjqPORJs1WbNppU7d6djMjWOzCDw1+4T52iqUhAXw8
+	 ejkFr76+5EtgAr4bi2IgmS4VJBWI/+i/BJyqhn42frycsIsTdLdoEHmN9YOZv7kra5
+	 ie7mEXJvGtLi8YMRBYx9OH8O4hpQmLcy77Bm2RJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Moroni <jmoroni@google.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1600/2651] RDMA/core: Clear driver_udata before destroying objects in rdma_core
-Date: Wed, 18 Nov 2026 15:47:20 +0100
-Message-ID: <20261118150345.461972023@linuxfoundation.org>
+Subject: [PATCH 7.3 1601/2651] bpf, riscv: Fix stack-passed arguments for indirect trampolines
+Date: Wed, 18 Nov 2026 15:47:21 +0100
+Message-ID: <20261118150345.490743881@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,127 +69,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Moroni <jmoroni@google.com>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit d37e98844afea39a9614cac0de837701263c90f7 ]
+[ Upstream commit b4a1ecae94ae803fcd75fb16a7653ff86b64ed8b ]
 
-When uobject creation fails while copying user output data (i.e.,
-after the HW object has been created), it calls
-rdma_alloc_abort_uobject() with hw_obj_valid=true which then
-invokes the object's destroy callback, but passes the
-uverbs_attr_bundle from the original creation command.
+store_args() reads stack-passed arguments relative to FP assuming the
+trampoline was entered through the fentry call from a traced function. In
+that path, the trampoline pushes the parent frame before establishing its
+final FP, so the incoming stack arguments start at FP + 16.
 
-The issue is that drivers are expected to validate the udata
-and return an error if there's unexpected content, and data from
-the wrong command counts as "unexpected content", so this ends
-up causing the driver's destroy call to fail.
+An indirect trampoline for a struct_ops callback is called through a
+function pointer. Its prologue allocates only the trampoline frame and sets
+FP to the incoming SP. The RISC-V ABI places the first stack argument at
+that incoming SP, so the arguments start at FP, not FP + 16. Every
+stack-passed argument of a callback with more than eight argument slots is
+therefore read two slots late.
 
-A similar issue exists in the rereg_mr path when a new MR
-is created and the old one is destroyed.
+Pass the prologue-dependent offset to store_args(), using zero for a direct
+struct_ops trampoline and 16 for the fentry path.
 
-Fix this by clearing driver_udata before invoking the driver's
-destroy method.
-
-Fixes: 6e0954b11c05 ("RDMA/uverbs: Allow drivers to create a new HW object during rereg_mr")
-Fixes: 0ac8903cbbe6 ("RDMA/core: Allow the ioctl layer to abort a fully created uobject")
-Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Link: https://patch.msgid.link/20261006152908.888059-1-jmoroni@google.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 6801b0aef79d ("riscv, bpf: Add 12-argument support for RV64 bpf trampoline")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20260930083522.1914145-2-pulehui@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/ib_core_uverbs.c | 12 ------------
- drivers/infiniband/core/rdma_core.c      |  2 ++
- drivers/infiniband/core/rdma_core.h      | 17 +++++++++++------
- drivers/infiniband/core/verbs.c          |  3 +--
- 4 files changed, 14 insertions(+), 20 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/core/ib_core_uverbs.c b/drivers/infiniband/core/ib_core_uverbs.c
-index 2bdb6972fe1a6..74d9c006bad5a 100644
---- a/drivers/infiniband/core/ib_core_uverbs.c
-+++ b/drivers/infiniband/core/ib_core_uverbs.c
-@@ -527,18 +527,6 @@ int uverbs_destroy_def_handler(struct uverbs_attr_bundle *attrs)
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 01fe66774f029..33322764234c1 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -875,7 +875,8 @@ int bpf_arch_text_poke(void *ip, enum bpf_text_poke_type old_t,
+ 	return ret;
  }
- EXPORT_SYMBOL(uverbs_destroy_def_handler);
  
--/*
-- * When calling a destroy function during an error unwind we need to pass in
-- * the udata that is sanitized of all user arguments. Ie from the driver
-- * perspective it looks like no udata was passed.
-- */
--struct ib_udata *uverbs_get_cleared_udata(struct uverbs_attr_bundle *attrs)
--{
--	attrs->driver_udata = (struct ib_udata){};
--	return &attrs->driver_udata;
--}
--EXPORT_SYMBOL_NS_GPL(uverbs_get_cleared_udata, "rdma_core");
--
- /**
-  * _uverbs_alloc() - Quickly allocate memory for use with a bundle
-  * @bundle: The bundle
-diff --git a/drivers/infiniband/core/rdma_core.c b/drivers/infiniband/core/rdma_core.c
-index a7cbe643e33c6..b32e5445601bb 100644
---- a/drivers/infiniband/core/rdma_core.c
-+++ b/drivers/infiniband/core/rdma_core.c
-@@ -734,6 +734,7 @@ void rdma_assign_uobject(struct ib_uobject *to_uobj, struct ib_uobject *new_uobj
- 	 * If this fails then the uobject is still completely valid (though with
- 	 * a new ID) and we leak it until context close.
- 	 */
-+	uverbs_get_cleared_udata(attrs);
- 	uverbs_destroy_uobject(to_uobj, RDMA_REMOVE_DESTROY, attrs);
- }
- EXPORT_SYMBOL_NS_GPL(rdma_assign_uobject, "rdma_core");
-@@ -750,6 +751,7 @@ void rdma_alloc_abort_uobject(struct ib_uobject *uobj,
- 	int ret;
- 
- 	if (hw_obj_valid) {
-+		uverbs_get_cleared_udata(attrs);
- 		ret = uobj->uapi_object->type_class->destroy_hw(
- 			uobj, RDMA_REMOVE_ABORT, attrs);
- 		/*
-diff --git a/drivers/infiniband/core/rdma_core.h b/drivers/infiniband/core/rdma_core.h
-index 2b91e85272874..9de14e625dd3a 100644
---- a/drivers/infiniband/core/rdma_core.h
-+++ b/drivers/infiniband/core/rdma_core.h
-@@ -71,14 +71,19 @@ int uverbs_output_written(const struct uverbs_attr_bundle *bundle, size_t idx);
- 
- void setup_ufile_idr_uobject(struct ib_uverbs_file *ufile);
- 
--#if IS_ENABLED(CONFIG_INFINIBAND_USER_ACCESS)
--struct ib_udata *uverbs_get_cleared_udata(struct uverbs_attr_bundle *attrs);
--#else
--static inline struct ib_udata *uverbs_get_cleared_udata(struct uverbs_attr_bundle *attrs)
-+/*
-+ * When calling a destroy function during an error unwind we need to pass in
-+ * the udata that is sanitized of all user arguments. Ie from the driver
-+ * perspective it looks like no udata was passed.
-+ */
-+static inline struct ib_udata *
-+uverbs_get_cleared_udata(struct uverbs_attr_bundle *attrs)
+-static void store_args(int nr_arg_slots, int args_off, struct rv_jit_context *ctx)
++static void store_args(int nr_arg_slots, int args_off, int stack_args_off,
++		       struct rv_jit_context *ctx)
  {
--	return NULL;
-+	if (!attrs)
-+		return NULL;
-+	attrs->driver_udata = (struct ib_udata){};
-+	return &attrs->driver_udata;
- }
--#endif
+ 	int i;
  
- /*
-  * This is the runtime description of the uverbs API, used by the syscall
-diff --git a/drivers/infiniband/core/verbs.c b/drivers/infiniband/core/verbs.c
-index c43e25d372667..308c7fdf486ef 100644
---- a/drivers/infiniband/core/verbs.c
-+++ b/drivers/infiniband/core/verbs.c
-@@ -1331,8 +1331,7 @@ static struct ib_qp *create_qp(struct ib_device *dev, struct ib_pd *pd,
- 	return qp;
+@@ -883,8 +884,8 @@ static void store_args(int nr_arg_slots, int args_off, struct rv_jit_context *ct
+ 		if (i < RV_MAX_REG_ARGS) {
+ 			emit_sd(RV_REG_FP, -args_off, RV_REG_A0 + i, ctx);
+ 		} else {
+-			/* skip slots for T0 and FP of traced function */
+-			emit_ld(RV_REG_T1, 16 + (i - RV_MAX_REG_ARGS) * 8, RV_REG_FP, ctx);
++			emit_ld(RV_REG_T1, stack_args_off +
++				(i - RV_MAX_REG_ARGS) * 8, RV_REG_FP, ctx);
+ 			emit_sd(RV_REG_FP, -args_off, RV_REG_T1, ctx);
+ 		}
+ 		args_off -= 8;
+@@ -1179,7 +1180,12 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
+ 	func_meta = nr_arg_slots;
+ 	emit_store_stack_imm64(RV_REG_T1, -func_meta_off, func_meta, ctx);
  
- err_security:
--	qp->device->ops.destroy_qp(
--		qp, uattrs ? uverbs_get_cleared_udata(uattrs) : NULL);
-+	qp->device->ops.destroy_qp(qp, uverbs_get_cleared_udata(uattrs));
- err_create:
- 	rdma_restrack_put(&qp->res);
- 	xa_destroy(&qp->comp_cntrs);
+-	store_args(nr_arg_slots, args_off, ctx);
++	/*
++	 * A direct struct_ops call has its first stack argument at the incoming
++	 * SP, which the trampoline keeps as FP. The fentry path pushes the
++	 * parent frame first, so its incoming stack arguments start at FP + 16.
++	 */
++	store_args(nr_arg_slots, args_off, is_struct_ops ? 0 : 16, ctx);
+ 
+ 	if (bpf_fsession_cnt(tnodes)) {
+ 		/* clear all session cookies' value */
 -- 
 2.53.0
 
