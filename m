@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037287;
-	b=VrfP1zN8o+O0yXSolK/zOu/R6rYVXlSDoTLXfKBpeyJqCY1lrazsE6bMN4v1JYwnCTgT
-	 OIu7ajbWvAAEySLHe1PSyE8NipZRQ3wwg9LQ6wkQFbediOzNzuY5q9erRCeOeiAGHdso1
-	 eF19aZXd/zeGD4U7GCWN/92p+6cBCVXAsk4SW3tOf7LXglQlDnN69mEgj70yjyHEMPH2h
-	 tTlyavvXNxse8x3rq3o4EDoEYh08vDVWLi4zshIQluoUYyp8tH+5fOGO+tvRpV9ZMQT72
-	 sAYfvbdI7AzSGhBg85CyBwy+mFv2yMIZge+DuI2XaOEm+Trahf3HtAogvQzIlw1Tp/w==
+	t=1795037291;
+	b=d1YEnr/cxqA+zKG5p+RlYpYrYPGwg4sJvQxR6u1LYxrDQRV11zOqSg1/H9lU1MDyWqc/
+	 CjRnI7z3j2emcGTVAnX7QezhvjIZ7BRYShJ6g1ik1K0xmiK7Un8FrXSzEG4f7EG1Op+/i
+	 xuwe/Bq8aN2I95LyQji3WBGO7LCaPZdKdNAijGxaOmOMQD/nsq87XKgp2GZaYsAF/dUNT
+	 wvHiyvt1bYsD9qgjzp4b6B8Re11VJthgN836Sstu0Gw7/z1WUb2uQgzwXnv+ustXM1yMA
+	 Uq8ShjDX2ccvxZAxDqxiWwtTMo8tRt7OQ4GdioT6inDAEEzPgpwnsbSC42dWgQrwvgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037287;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037291;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BBoib4AKuJQGVLjyuFl/1lyUipjtZcI7AIDY8DNujo4=;
-	b=p9MksrrUjyOFbDyNRfmEpD9MkHrY0khtphtSuxI/DH1rTn2MzIdfBEjDnWFWjV6aWAWd
-	 2WSv5MQFxxRCrtNOvfeoeQIn9y6+nugZmRhUPRAlRU1qidQuqMWzrwfre9C9Q0FXTEFRj
-	 vM58N0t+IIYILhngTcF6uAZv1IHzno3gVAH8jXlPkWkrnLA2BGOs0nYW13sWasRL+YsCJ
-	 UPGfSyoMaQTg5OYgsqixIe922lBO0+AlnywOttwFcm59iECvElCCNeM5bm/U6OjEIuk1P
-	 jUUNxElJ/aHrGXL/wzo5AXtvndJgoOhzXcCrJNXW6mYdrowyHl4QRDj1rwDJd38o/bQ==
+	bh=qPeN1tbfW9vNkR887/KBkz9bXwK2ONnhxz49z6h3yDw=;
+	b=qi/+oOkpDTHAoUQzhGKnIL0oI650U8qNVSEfZU1pj4JI7s2X7I2cS2wN7rjDdaPU/4pk
+	 RP8Zhp70FMeTSkitdw+0cl+uzcba1BC7AFx+G+KMi23prlpQLZdTbC+bF3iJmK0pzVHjZ
+	 CbXH8xL+ZRwC6AFyBwUtdPtS2IKbTL1YmXfTtyIWDzIdVWuBQLS6sKtktXema7Wr5DTEm
+	 2Vbub7g8K864YOiNMZXo44YSn8t7Ph7bWD0RV2sWXfJR003/gmLOr3Zxn0hYpzrFkxLRq
+	 Pbz6TRekPhKwbsLjNfZixTEhczXSZF2a5DnZo3Klwc4Cpf+9nb85OuqX3gN/N8NPuFw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TRbkJGPm;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=olfZ2qnh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D9F606A325;
-	Wed, 18 Nov 2026 21:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311DF606A32F;
+	Wed, 18 Nov 2026 21:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TRbkJGPm
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA8AF1F000C4;
-	Wed, 18 Nov 2026 21:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=olfZ2qnh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D51F1F000C4;
+	Wed, 18 Nov 2026 21:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037287;
-	bh=BBoib4AKuJQGVLjyuFl/1lyUipjtZcI7AIDY8DNujo4=;
+	s=korg; t=1795037290;
+	bh=qPeN1tbfW9vNkR887/KBkz9bXwK2ONnhxz49z6h3yDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TRbkJGPmIM9eKd7kl8LzCWZU92v+xVnS9DwWvgM5EQWQ80OwTRwj1IqmxFY8cKV6z
-	 k4XB0rZ4mAFXNAqCq0I6pCpOLfzzkb+wo0SS9YgOI6nW4Fg+p0Z624iigYJ5gordoB
-	 C/5QcznvKnrJS8q2FlMkcTZhuBfOKHr7Q7yaKEog=
+	b=olfZ2qnh6LL3RFAuL9R4hKja3Mw5W3Bb92/roRWE0lpvDA9K/p94KBIGmB4v+yub2
+	 ZcD4JRdN96SsnvxmiNnYAQeywiz7GpaZALJHzMg0TWTzOGqvAwTMctKTigadMNzFZI
+	 GrGcjh2JgGz2NyR0aMWJbmsexekCYPtOfFs3Z8fE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Simon Horman <horms@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Christian Schmidbauer <opensource@grische.xyz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1354/3318] net: core: Implement dstats-type stats collections
-Date: Wed, 18 Nov 2026 15:32:56 +0100
-Message-ID: <20261118150401.045964657@linuxfoundation.org>
+Subject: [PATCH 6.6 1355/3318] vxlan: Remove generic .ndo_get_stats64
+Date: Wed, 18 Nov 2026 15:32:57 +0100
+Message-ID: <20261118150401.078710039@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,103 +70,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 94b601bc4f8528262b2b83194b7fd3fc2a6da75a ]
+[ Upstream commit 195f88c57737f16217b5dece054a4cfd74c33550 ]
 
-We currently have dev_get_tstats64() for collecting per-cpu stats of
-type pcpu_sw_netstats ("tstats"). However, tstats doesn't allow for
-accounting tx/rx drops. We do have a stats variant that does have stats
-for dropped packets: struct pcpu_dstats, but there are no core helpers
-for using those stats.
+Commit 3e2f544dd8a33 ("net: get stats64 if device if driver is
+configured") moved the callback to dev_get_tstats64() to net core, so,
+unless the driver is doing some custom stats collection, it does not
+need to set .ndo_get_stats64.
 
-The VRF driver uses dstats, by providing its own collation/fetch
-functions to do so.
+Since this driver is now relying in NETDEV_PCPU_STAT_TSTATS, then, it
+doesn't need to set the dev_get_tstats64() generic .ndo_get_stats64
+function pointer.
 
-This change adds a common implementation for dstats-type collection,
-used when pcpu_stat_type == NETDEV_PCPU_STAT_DSTAT. This is based on the
-VRF driver's existing stats collator (plus the unused tx_drops stat from
-there). We will switch the VRF driver to use this in the next change.
-
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20240607-dstats-v3-2-cc781fe116f7@codeconstruct.com.au
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Link: https://lore.kernel.org/r/20240311112437.3813987-2-leitao@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Christian Schmidbauer <opensource@grische.xyz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 50 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ drivers/net/vxlan/vxlan_core.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index a5e9e63b67965..3c533479b45f7 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10719,6 +10719,54 @@ void netdev_run_todo(void)
- 	}
- }
- 
-+/* Collate per-cpu network dstats statistics
-+ *
-+ * Read per-cpu network statistics from dev->dstats and populate the related
-+ * fields in @s.
-+ */
-+static void dev_fetch_dstats(struct rtnl_link_stats64 *s,
-+			     const struct pcpu_dstats __percpu *dstats)
-+{
-+	int cpu;
-+
-+	for_each_possible_cpu(cpu) {
-+		u64 rx_packets, rx_bytes, rx_drops;
-+		u64 tx_packets, tx_bytes, tx_drops;
-+		const struct pcpu_dstats *stats;
-+		unsigned int start;
-+
-+		stats = per_cpu_ptr(dstats, cpu);
-+		do {
-+			start = u64_stats_fetch_begin(&stats->syncp);
-+			rx_packets = u64_stats_read(&stats->rx_packets);
-+			rx_bytes   = u64_stats_read(&stats->rx_bytes);
-+			rx_drops   = u64_stats_read(&stats->rx_drops);
-+			tx_packets = u64_stats_read(&stats->tx_packets);
-+			tx_bytes   = u64_stats_read(&stats->tx_bytes);
-+			tx_drops   = u64_stats_read(&stats->tx_drops);
-+		} while (u64_stats_fetch_retry(&stats->syncp, start));
-+
-+		s->rx_packets += rx_packets;
-+		s->rx_bytes   += rx_bytes;
-+		s->rx_dropped += rx_drops;
-+		s->tx_packets += tx_packets;
-+		s->tx_bytes   += tx_bytes;
-+		s->tx_dropped += tx_drops;
-+	}
-+}
-+
-+/* ndo_get_stats64 implementation for dtstats-based accounting.
-+ *
-+ * Populate @s from dev->stats and dev->dstats. This is used internally by the
-+ * core for NETDEV_PCPU_STAT_DSTAT-type stats collection.
-+ */
-+static void dev_get_dstats64(const struct net_device *dev,
-+			     struct rtnl_link_stats64 *s)
-+{
-+	netdev_stats_to_stats64(s, &dev->stats);
-+	dev_fetch_dstats(s, dev->dstats);
-+}
-+
- /* Convert net_device_stats to rtnl_link_stats64. rtnl_link_stats64 has
-  * all the same fields in the same order as net_device_stats, with only
-  * the type differing, but rtnl_link_stats64 may have additional fields
-@@ -10792,6 +10840,8 @@ struct rtnl_link_stats64 *dev_get_stats(struct net_device *dev,
- 		netdev_stats_to_stats64(storage, ops->ndo_get_stats(dev));
- 	} else if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_TSTATS) {
- 		dev_get_tstats64(dev, storage);
-+	} else if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_DSTATS) {
-+		dev_get_dstats64(dev, storage);
- 	} else {
- 		netdev_stats_to_stats64(storage, &dev->stats);
- 	}
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 355337d428e52..c3e2d78d2dd12 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -3195,7 +3195,6 @@ static const struct net_device_ops vxlan_netdev_ether_ops = {
+ 	.ndo_open		= vxlan_open,
+ 	.ndo_stop		= vxlan_stop,
+ 	.ndo_start_xmit		= vxlan_xmit,
+-	.ndo_get_stats64	= dev_get_tstats64,
+ 	.ndo_set_rx_mode	= vxlan_set_multicast_list,
+ 	.ndo_change_mtu		= vxlan_change_mtu,
+ 	.ndo_validate_addr	= eth_validate_addr,
+@@ -3218,7 +3217,6 @@ static const struct net_device_ops vxlan_netdev_raw_ops = {
+ 	.ndo_open		= vxlan_open,
+ 	.ndo_stop		= vxlan_stop,
+ 	.ndo_start_xmit		= vxlan_xmit,
+-	.ndo_get_stats64	= dev_get_tstats64,
+ 	.ndo_change_mtu		= vxlan_change_mtu,
+ 	.ndo_fill_metadata_dst	= vxlan_fill_metadata_dst,
+ };
 -- 
 2.53.0
 
