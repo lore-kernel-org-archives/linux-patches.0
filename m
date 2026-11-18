@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030543;
-	b=dzgWej15bCZJxRNKklAW0AIxADjVmqMLah2a1a/tLOL6OkKqc+tmOsOyBqMhbigj7lO+
-	 U0RT8lBwtQaBDJdp++rcF0kLHar+ziARHHrRiJRhuS1UgpUQgtKkQDscFhpaAAht+py6b
-	 D5bWL1JR0w74LDk/3c6zfJQqnMdjuPhF0HEAhSRgRYGQwibO8byPr8EJ0fZLLCSdBF5tv
-	 XiYUEQPZAXe1I/jj9600zVELqgMpU3M+HsZzsoG5BCxguNhbmqW6TsHY5LvNvVJWRyU9K
-	 GhHHj9T2QPNhc1j/5D7IJX5sPXKeCl2gqPhYkunr+EwGQXQms1Tvg3q8vNMqcFe5fJQ==
+	t=1795030546;
+	b=CZM73UhlnczvSmu38pqbkgwvPObwE9B7eUQtajhFEObWFOMU9q9dHXi1E7LQ8CcuVOkq
+	 OZHptN3R3+FRdj0E5lMKK1aM6fiEFZfoqM5kjE3pCvRqR2nBlD22O2tIyCdm9kPfVzHOd
+	 MCSzUQ/vnjQZ4aqV075UStNOKZsdkvBMOdkU6i9bGmkIpG3VT3M8SfdiCpdI+FoBGrdB/
+	 Tf8RRKM8/5zL0kpAmNZtrUPoZplfxQ1NVhiMx00pBtbqANtpOs2U7SN/btxdk9/1oMcTK
+	 F5RPhvPmQR89vjgiA1zesATqG2vBkzPIsTGfcsEH+dL7BLVPg1C2QXfC0masazgrEmQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030543;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030546;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MF4bYb3QL18t8QQA2IP07+qXbVPL4/MujRp0TN8DDhg=;
-	b=Xmz48Mz8k/dP0T8l6zBFWNiN5tH2c/OAOfFFlaTd8SxJYAmyH2UNqxx1K/8l9gnbTv+Q
-	 5EPy2PSC6eKMhh37+Rpld3xhsukb/nsX8c4cujzvpqpvnbXdZMEWNoqazWdF4IMy/PFhZ
-	 f5+ABHAOOdAeL6IqWdsMZZ8OY7bp9RbUhMpVfpcwTLVViB74n3DuhK7Lw+m7BNItGG9EV
-	 /OF9HJ1GKjyisP8kiExGm/fRgCUsHLlt+PziRSBgkavAON9SPcUXhW7XPcMGTZUXmSwZs
-	 NFa9SycGE+12vat7hmENrR09TZb8NNn/tPy5uOgYzZDGST9f/kvZLrCFlHqwb94Gs9g==
+	bh=XgalkNGc1ufIbGC11rG/ncCZEP4PcWCfoahOklFzq7A=;
+	b=CrIzCUwDbJzhuuMweXODv1NqKy2DueheZGS8YDNMG60vCJZKK/drUvvnZ7hfibddI0Il
+	 mE9vZXVaPcbWLfF8Uv+9TGKJgeTFem+o1zjO7gmVooY3uFB5bXhe5D5NyiSFZ3J4s2y1I
+	 5f2Ha9cI+WKKbB8nFa3p4dsWvpjw7NfB8eyViqajv2stmaQ4mSXXLk1SFOnyk8j2pKndV
+	 CJeqerBF+4BKEvih2172Da8CQhhAUgTl3I/sFWOTsRRx49vKEPueQZpDZbDbfFKYW9YZt
+	 sC/ubw0SZ1iOXHFHyZHFBqGkUCTXuXR0QdycOYODmrMokiE7+ShG4KIN4WGZ8shzofg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D8P0iGp0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p+GP+nng;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8301E606B103;
-	Wed, 18 Nov 2026 19:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E05606A32C;
+	Wed, 18 Nov 2026 19:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=D8P0iGp0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BF51F000C6;
-	Wed, 18 Nov 2026 19:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p+GP+nng
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BBE1F000C4;
+	Wed, 18 Nov 2026 19:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030543;
-	bh=MF4bYb3QL18t8QQA2IP07+qXbVPL4/MujRp0TN8DDhg=;
+	s=korg; t=1795030546;
+	bh=XgalkNGc1ufIbGC11rG/ncCZEP4PcWCfoahOklFzq7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=D8P0iGp0vhe7Svh+0ABLkCqnf9Qi5Xg5WigTXAg6pcCvEUqL0V1PfqcpTg4C4O6LW
-	 gY8mwCYJZDYoyvaOtgSSDE8CsN+a2OyZn8KbTMzXm25caPS6yQTSi9KZ2Ciw0t2DmJ
-	 Wvjtq1t1G83RaPl8vIksESq+RwdejJx7SU5iAXbM=
+	b=p+GP+nngSzD41hRc31gi665U7w+x8T0iRB4FAHM6KtMUI1w8qJJfwB00A1h4DiDmH
+	 RbsF6sY0L49jnpqZc/P03cM0SdsbpWMbxbkZ8j4dCdX/MWNDfZBOeFoURy9Uwu0U5J
+	 A4/2jiyjPLs4bLB9WBPX3ldURyegJkabc9rKarbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuya Kusakabe <yuya.kusakabe@gmail.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0735/1756] seg6: fix HMAC validation when an extension header precedes the SRH
-Date: Wed, 18 Nov 2026 15:47:42 +0100
-Message-ID: <20261118150038.904579344@linuxfoundation.org>
+Subject: [PATCH 6.12 0733/1756] ARM: vexpress: fix device_node refcount leak in vexpress_smp_dt_prepare_cpus()
+Date: Wed, 18 Nov 2026 15:47:40 +0100
+Message-ID: <20261118150038.834131586@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,143 +69,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuya Kusakabe <yuya.kusakabe@gmail.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit f9cb4d296d81adb0923546ca5d54fae57a81af52 ]
+[ Upstream commit 27b98d331f1dcebe088ab51a7061a387a7440cb2 ]
 
-seg6_hmac_validate_skb() derived the SRH from skb_transport_header().
-That only holds while the two coincide, which is not true on the
-seg6_local input path.
+vexpress_smp_dt_prepare_cpus() obtains a reference to the SCU device
+node via of_find_matching_node() and passes it to of_iomap(), but never
+calls of_node_put() on it. of_iomap() does not take ownership of the
+node, so the reference is leaked. The function is the .smp_prepare_cpus
+hook invoked once from the __init SMP bring-up path, so this is a
+one-shot leak of a single refcount during boot, with no functional
+impact.
 
-ip6_rcv_core() leaves the transport header just past the IPv6 header.
-A Hop-by-Hop options header is consumed before the route lookup and
-advances it, but a Destination Options header is not: the seg6_local
-lwtunnel is entered through an input redirect from the route lookup,
-which bypasses the extension header handlers. The transport header
-then still points at the Destination Options header while
-seg6_get_srh() has located the real SRH further down the chain.
+Annotate scu with the __free(device_node) cleanup attribute so the
+reference is released when the function returns.
 
-The HMAC is therefore computed over the Destination Options header,
-and a packet carrying a valid HMAC TLV is dropped when
-seg6_require_hmac is set. Such a packet is legitimate: RFC 8200 allows
-Destination Options before a routing header, and get_srh() has walked
-the header chain since commit 5829d70b0b6c ("ipv6: sr: fix get_srh() to
-comply with IPv6 standard "RFC 8200"").
+Found while reviewing a CodeQL report for vexpress_flags_set() on the
+same SMP bring-up path.
 
-With a Fragment or an Authentication header in front of the SRH, the
-same mistake also reads past the data pulled by seg6_get_srh(). This
-happens before seg6_require_hmac is read, so the default configuration
-is affected.
-
-Reproduce by giving a node a seg6local End SID with
-net.ipv6.conf.<dev>.seg6_require_hmac=1 and a key installed with
-"ip sr hmac set <keyid> sha1", then sending
-
-  IPv6 -> Destination Options -> SRH (carrying a valid HMAC TLV) -> payload
-
-to that SID: it is dropped, while the same packet without the
-Destination Options header passes.
-
-Fixes: 5829d70b0b6c ("ipv6: sr: fix get_srh() to comply with IPv6 standard "RFC 8200"")
-Assisted-by: LLM
-Signed-off-by: Yuya Kusakabe <yuya.kusakabe@gmail.com>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20260926-b4-seg6-hmac-transport-header-v2-1-8087b76f6375@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: d2606f81d563 ("ARM: vexpress: Simplify SMP operations for DT-powered system")
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patch.msgid.link/20260925173252.933705-3-geoffreyhe2@gmail.com
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/seg6_hmac.h | 3 ++-
- net/ipv6/exthdrs.c      | 2 +-
- net/ipv6/seg6_hmac.c    | 5 +----
- net/ipv6/seg6_local.c   | 6 +++---
- 4 files changed, 7 insertions(+), 9 deletions(-)
+ arch/arm/mach-versatile/platsmp-vexpress.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/seg6_hmac.h b/include/net/seg6_hmac.h
-index 24f733b3e3fe9..0544e0595ff5d 100644
---- a/include/net/seg6_hmac.h
-+++ b/include/net/seg6_hmac.h
-@@ -48,7 +48,8 @@ extern int seg6_hmac_info_add(struct net *net, u32 key,
- extern int seg6_hmac_info_del(struct net *net, u32 key);
- extern int seg6_push_hmac(struct net *net, struct in6_addr *saddr,
- 			  struct ipv6_sr_hdr *srh);
--extern bool seg6_hmac_validate_skb(struct sk_buff *skb);
-+extern bool seg6_hmac_validate_skb(struct sk_buff *skb,
-+				   struct ipv6_sr_hdr *srh);
- #ifdef CONFIG_IPV6_SEG6_HMAC
- extern int seg6_hmac_init(void);
- extern void seg6_hmac_exit(void);
-diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
-index 5d1e98ae18187..c4c541b1ef5d8 100644
---- a/net/ipv6/exthdrs.c
-+++ b/net/ipv6/exthdrs.c
-@@ -390,7 +390,7 @@ static int ipv6_srh_rcv(struct sk_buff *skb, struct inet6_dev *idev)
- 	}
+diff --git a/arch/arm/mach-versatile/platsmp-vexpress.c b/arch/arm/mach-versatile/platsmp-vexpress.c
+index 1ee3c45e71c99..b810ad50b98ce 100644
+--- a/arch/arm/mach-versatile/platsmp-vexpress.c
++++ b/arch/arm/mach-versatile/platsmp-vexpress.c
+@@ -61,8 +61,8 @@ static const struct of_device_id vexpress_smp_dt_scu_match[] __initconst = {
  
- #ifdef CONFIG_IPV6_SEG6_HMAC
--	if (!seg6_hmac_validate_skb(skb)) {
-+	if (!seg6_hmac_validate_skb(skb, hdr)) {
- 		kfree_skb(skb);
- 		return -1;
- 	}
-diff --git a/net/ipv6/seg6_hmac.c b/net/ipv6/seg6_hmac.c
-index 214d137d545e7..fe3f12c2e6d9e 100644
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -234,13 +234,12 @@ EXPORT_SYMBOL(seg6_hmac_compute);
-  *
-  * called with rcu_read_lock()
-  */
--bool seg6_hmac_validate_skb(struct sk_buff *skb)
-+bool seg6_hmac_validate_skb(struct sk_buff *skb, struct ipv6_sr_hdr *srh)
+ static void __init vexpress_smp_dt_prepare_cpus(unsigned int max_cpus)
  {
- 	u8 hmac_output[SEG6_HMAC_FIELD_LEN];
- 	struct net *net = dev_net(skb->dev);
- 	struct seg6_hmac_info *hinfo;
- 	struct sr6_tlv_hmac *tlv;
--	struct ipv6_sr_hdr *srh;
- 	struct inet6_dev *idev;
- 	int require_hmac;
+-	struct device_node *scu = of_find_matching_node(NULL,
+-			vexpress_smp_dt_scu_match);
++	struct device_node *scu __free(device_node) =
++		of_find_matching_node(NULL, vexpress_smp_dt_scu_match);
  
-@@ -248,8 +247,6 @@ bool seg6_hmac_validate_skb(struct sk_buff *skb)
- 	if (!idev)
- 		return false;
- 
--	srh = (struct ipv6_sr_hdr *)skb_transport_header(skb);
--
- 	tlv = seg6_get_tlv_hmac(srh);
- 
- 	require_hmac = READ_ONCE(idev->cnf.seg6_require_hmac);
-diff --git a/net/ipv6/seg6_local.c b/net/ipv6/seg6_local.c
-index 191b99b073b06..9259b2d2da059 100644
---- a/net/ipv6/seg6_local.c
-+++ b/net/ipv6/seg6_local.c
-@@ -222,7 +222,7 @@ static struct ipv6_sr_hdr *get_and_validate_srh(struct sk_buff *skb)
- 		return NULL;
- 
- #ifdef CONFIG_IPV6_SEG6_HMAC
--	if (!seg6_hmac_validate_skb(skb))
-+	if (!seg6_hmac_validate_skb(skb, srh))
- 		return NULL;
- #endif
- 
-@@ -239,7 +239,7 @@ static bool decap_and_validate(struct sk_buff *skb, int proto)
- 		return false;
- 
- #ifdef CONFIG_IPV6_SEG6_HMAC
--	if (srh && !seg6_hmac_validate_skb(skb))
-+	if (srh && !seg6_hmac_validate_skb(skb, srh))
- 		return false;
- #endif
- 
-@@ -768,7 +768,7 @@ static int end_flv8986_core(struct sk_buff *skb, struct seg6_local_lwt *slwt)
- 	srhoff = srh ? ((unsigned char *)srh - skb->data) : 0;
- 	pinfo = seg6_get_srh_pktinfo(srh);
- #ifdef CONFIG_IPV6_SEG6_HMAC
--	if (srh && !seg6_hmac_validate_skb(skb))
-+	if (srh && !seg6_hmac_validate_skb(skb, srh))
- 		goto drop;
- #endif
- 	flvmask = finfo->flv_ops;
+ 	if (scu)
+ 		scu_enable(of_iomap(scu, 0));
 -- 
 2.53.0
 
