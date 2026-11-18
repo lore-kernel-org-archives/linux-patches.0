@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020894;
-	b=l6Leb5RCBoi+TjLWOoY8eyXMbth0JgXISaUteiPX2NomA6b0kGhVL79uPI95f5mMZP5/
-	 ygdY8olpzdxmazpYbatxUmvLkUKbPsYXnRGuWpHSECseQx5qHZS3mW42TpQwO04FoePZ9
-	 q6JIIj4VIEcJ8Z4OZAE86gwKkGKbQkzEvbShyXshUyzj72DZOVEeS75kpAlcl6G35IYaC
-	 /VNyGCG/DHemBbB9E1QWgkum3qcQ04dOfi+EImXW7ScNfU++cIN8fgWN9nINVjn7ab0om
-	 YQl5agvJodiplHCYXlueNQIqmss98UBQMTI6J/FeM1nkkhM5uQIYaeMPJ5QhuQcUvmg==
+	t=1795020897;
+	b=dAJ8yWYxCtimFZOZqr2j1fT1BRgdzeAuOQ197jlpr6CBcy/I+fIWwgp7IAkNe7gA6Nlp
+	 mjCoXCapkQNMnH4sBHfuGEnZthe38Ahu01WQ8XrjiwkQLDe1FDspS9EZ0HQcUknNicXXy
+	 kvcCfnUI//IiUe6YMhGnZ1/4+tTCBx+d+vHR2oqOM3yQHb/CXPFtfVbP2WJXOADkP+Ne7
+	 CMUi67ZCZsBT3yCKeGugjT2NSa5Ms4i35cxb/CAFlgJ0gT6A/1Yp8QOGY6uk7lKd8yCMd
+	 ECitTyyerjVVgBMMvPfNULQOB29KLH1NV9r9nzDKwlrAbudSXEmH0RdTM/4b6jEkqrA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020894;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020897;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B5RJ3MM7NsWDIURMJiP4g9j6/nl3VRIBXuTbgjt/89E=;
-	b=SpkKpNaIJGIUq4KR07L6t4L18ZTll/LdiSx0a+vWhBusZb2VbC/oWv9+ayy2HkGKUnov
-	 o3tMzDRRKTCuXXwTFuqMfX/jBJn/IS8WhojW3ReQJaZPOVL4C6vuh4CD04C6Robt+LPlS
-	 e+jbq+v3tkR/Ax1mXWK42bvr/K82yj4rC/iehx0lrCIduFkwfVRizknCEGoHUHpRXpXIl
-	 eBZlOMOEn+/fj3it/QHv+HwwSOvFaaWgJ+kSNCpvzrIkN321fU8wlmrj1mfH8+dzX62wa
-	 Is2qcn4zPYyNiaS8Au6XTGMXmPSJMHHln8akoNsufG6IQBk1zILgmPe4ZDvtuA3IJ2A==
+	bh=meMIs1bzHno3YHddBZCDT1SQI3LqQDCL/Y38pgub95w=;
+	b=x0NPoNWMtR2nD6ZMFgOE+wIGPGcjqDsq5ILtkCrHj2LMbgQdot+jzw8CJN89NKqmJuHj
+	 PeF/UJwb6Mq6KqnrbF7ZwMnTyTPL30GfkCkTpTVJ1d+wH43JJ2L2VIP6XbkaxNGaTXfp3
+	 JP0T3tyEPVpZR8laXHmQ4XFzUQni7haGOU9hGWM6wqb2JeFmcicncmgirl0xlU3/bcimK
+	 hGZMm1xNvC7qSTCo6Qdj5zN7Kds+z4S0lU2JiZLSCSFPNqSzwiy9FuqYv1aoK0sDr5Jow
+	 bJFY5NQS8i8hrNEJyLObZQKG4L8shjx/eELLJpJUoJL7I7z1HkNspuoPKzOa2M4vD8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bL4Izs0e;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xvmTj+Qq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDF1606A325;
-	Wed, 18 Nov 2026 16:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D465606A332;
+	Wed, 18 Nov 2026 16:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bL4Izs0e
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B5701F000C4;
-	Wed, 18 Nov 2026 16:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xvmTj+Qq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0205B1F000C4;
+	Wed, 18 Nov 2026 16:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020894;
-	bh=B5RJ3MM7NsWDIURMJiP4g9j6/nl3VRIBXuTbgjt/89E=;
+	s=korg; t=1795020897;
+	bh=meMIs1bzHno3YHddBZCDT1SQI3LqQDCL/Y38pgub95w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bL4Izs0eSWdVNsynELQZF/Zkcaw0qcxib5o8BQC/cNhA3ZOLWiOyTYnkrqWVXaRDQ
-	 cNs3KHuFEqffolLkMfP+OCcEFj0gq5FDkc94mKbgGh1sUXeOYjk1aKPSwLNXkhGeZ1
-	 y+1zMpaVYS7SGEspG0K4hHL+XMqBRikqfZghgkhU=
+	b=xvmTj+QqY8L91JmML3SZElSzdzwxYZjY6N0UYggMFL5qYhU+3y7zS7ru5pjqjWhwj
+	 jiwh8fRwGGmEwSIeDBqYpRjJYS3uRL7hjHi2q47s0uxl7kpgN1mlUPqS+3dFJpn3gS
+	 Oyb9jlbJj90mEy1+ZYrCWcJRfrfKx4s97Nd+/bZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Josef Bacik <josef@toxicpanda.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2115/2651] bpf: Dont take an extension for a writable raw tracepoint program
-Date: Wed, 18 Nov 2026 15:55:55 +0100
-Message-ID: <20261118150402.080046373@linuxfoundation.org>
+Subject: [PATCH 7.3 2098/2651] bpf: Dont saturate owner_refcnt on the last unpin
+Date: Wed, 18 Nov 2026 15:55:38 +0100
+Message-ID: <20261118150401.526321427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -67,50 +68,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 7fe348f18b37b3f4c8beb981ef3f84564047380a ]
+[ Upstream commit 30a140c9d479974021f5c3eecb64415c96419c3f ]
 
-bpf_probe_register() compares max_tp_access of the program that is
-attached with the size of the buffer that the tracepoint lets programs
-write to.  An extension of that program, or of one of its global
-functions, gets the same context and the same pointer to the buffer.  What
-it accesses is noted in its own max_tp_access, which nobody looks at.  So
-it reads and writes behind the buffer, of a tracepoint that may have none:
+bpf_local_storage_map_free() pins the owner with refcount_inc_not_zero()
+while it uncharges an element.  The pin counts when
+bpf_local_storage_destroy() could not get local_storage->lock: destroy()
+then goes on, drops the owner's reference and spins until the count is
+zero.  So the pin is the last reference whenever it is needed, and
+refcount_dec() takes that for a bug: it warns "decrement hit 0; leaking
+memory" and saturates the count.  Unless destroy() happens to read the
+count between the two stores it spins for ever, under rcu_read_lock().
 
-  BUG: KASAN: stack-out-of-bounds in bpf_prog_5843f2b820eb4929_tr26_ext_far+0xf4/0x10c
-  Write of size 4 at addr ffffc90000d8f894 by task wext/103
+Drop the pin with refcount_dec_and_test().
 
-Refuse such extensions.
-
-Fixes: be8704ff07d2 ("bpf: Introduce dynamic program extensions")
+Fixes: 5d800f87d0a5 ("bpf: Support lockless unlink when freeing map or local storage")
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://patch.msgid.link/20261017163745.3341787-29-alexei.starovoitov@gmail.com
+Link: https://patch.msgid.link/20261017163745.3341787-11-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/linux/bpf_local_storage.h | 13 +++++++++++++
+ kernel/bpf/bpf_local_storage.c    |  6 +++---
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 90fedae1bd3cd..090576a79d9fa 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -20364,6 +20364,15 @@ int bpf_check_attach_target(struct bpf_verifier_log *log,
- 					"Extension programs should be JITed\n");
- 				return -EINVAL;
- 			}
-+			/*
-+			 * How much of the buffer of the tracepoint is used
-+			 * is checked for the program that is attached to it.
-+			 */
-+			if (tgt_prog->type == BPF_PROG_TYPE_RAW_TRACEPOINT_WRITABLE) {
-+				bpf_log(log,
-+					"Cannot extend a writable raw tracepoint program\n");
-+				return -EINVAL;
-+			}
- 			tgt_changes_pkt_data = aux->func
- 					       ? aux->func[subprog]->aux->changes_pkt_data
- 					       : aux->changes_pkt_data;
+diff --git a/include/linux/bpf_local_storage.h b/include/linux/bpf_local_storage.h
+index 9e4f5c45c974d..6c643ac510799 100644
+--- a/include/linux/bpf_local_storage.h
++++ b/include/linux/bpf_local_storage.h
+@@ -104,6 +104,19 @@ struct bpf_local_storage {
+ 	refcount_t owner_refcnt;/* Used to pin owner when map_free is uncharging */
+ };
+ 
++/*
++ * Drop a reference got by refcount_inc_not_zero(&local_storage->owner_refcnt).
++ * bpf_local_storage_destroy() may have dropped the owner's reference meanwhile
++ * and wait for the count to reach zero, so this one can be the last.
++ */
++static inline void
++bpf_local_storage_unpin_owner(struct bpf_local_storage *local_storage)
++{
++	bool last __maybe_unused;
++
++	last = refcount_dec_and_test(&local_storage->owner_refcnt);
++}
++
+ /* U16_MAX is much more than enough for sk local storage
+  * considering a tcp_sock is ~2k.
+  */
+diff --git a/kernel/bpf/bpf_local_storage.c b/kernel/bpf/bpf_local_storage.c
+index 6fc6a4b672b55..a4e6bb97ddcc7 100644
+--- a/kernel/bpf/bpf_local_storage.c
++++ b/kernel/bpf/bpf_local_storage.c
+@@ -199,7 +199,7 @@ static void bpf_selem_unlink_storage_nolock_misc(struct bpf_local_storage_elem *
+ 	}
+ 
+ 	if (pin_owner)
+-		refcount_dec(&local_storage->owner_refcnt);
++		bpf_local_storage_unpin_owner(local_storage);
+ }
+ 
+ /* local_storage->lock must be held and selem->local_storage == local_storage.
+@@ -750,8 +750,8 @@ u32 bpf_local_storage_destroy(struct bpf_local_storage *local_storage)
+ 		while (refcount_read(&local_storage->owner_refcnt))
+ 			cpu_relax();
+ 		/*
+-		 * Paired with refcount_dec() in bpf_selem_unlink_nofail()
+-		 * to make sure destroy() sees the correct local_storage->mem_charge.
++		 * Paired with bpf_local_storage_unpin_owner() to make sure
++		 * destroy() sees the correct local_storage->mem_charge.
+ 		 */
+ 		smp_mb();
+ 	}
 -- 
 2.53.0
 
