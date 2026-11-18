@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045614;
-	b=4cKvi9btx8DB5p6L5SFX11aG3K6I8Zq6zvFW/eqiP+AhI11MGyY39t09IMBQ+0U/V0yw
-	 3AJs2Vzv23JFRoiqj0XFBlArtAGKjQNW4ZGfOC7hNiw6u3dlo/VSpRIeS40JwBWxxMN6N
-	 W1s9pJbboDoVHDp4WxGAmj2AJRAqp3tlhazAkeMEzptAK5EeTXfMP3A2j/NaPvVgJrmZZ
-	 iEE+nOpe/+RJrv3ovQfYHs0UXvvffeGrl27AKESfcRm5qPIKGgnnFTAWCuGE9iZYS2FwD
-	 bxMHt6oim6nMAa86Shj6FTVHNJglAUsql4P7XsjQm9JWJThzRs8P/gmyDI6TEOyt7uA==
+	t=1795045616;
+	b=KrcbDMKlQ3AoqOaSBgVyXZfUtjqs3mDCxuQxOloauOz4Zr5WNY9GJF0NfujQbmLd86xu
+	 3P4GU4ZnHOw1iY90JdbvIAp3kCjqSRdsLXTzXr5UQLE5cceiHB+VZFtIOI6JtCWYGaLsu
+	 WlWZyj71dDnb2hVE5txlZS5m3JJL0+gqfSAfSEbz65AmZtJ5FY5bqmBB92DsvJHpmCwsD
+	 WnyjuRnPyVR7AKRYKuxwu1sx9EIT6HdBHyGnuAXeWbL7l0DBxVpABCgnCdOWTIMSPQktx
+	 ETjkqotMh+DPw942oSEx7HXlN8+pHgtFNkuvk2QCsJ5bf3vIohakrDN+usbpiQLlPyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045614;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045616;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=UtV53unA/3y+D9eJgFLAtUW9xc8pH/YwC0IRJ3udT9Y=;
-	b=I6V+pIZpkS2x9vwbVCNfVIB0lucEi594nHds1ygsmiqdX5qnhZw5waB9Hf80b0mKqqcN
-	 Q+SyE4vI8rPLTlylm6CMrf7MpKQguJJuav8+B3Wlnj4oXFukruLTFg7XQ5aE9GfJ1+Usw
-	 lIm28cIZfIBviFOVoWgGkuBk5x13rrWezf1sbeCuz8B9T9tyuvsA2UKh0+NCXERFh9fiR
-	 j7JBRaye9d7PeoplZ1rfqNtkTreIg8W6Bnbcm5VTMzEHB5vD14EJ3F0zABpHPB2N4tsNf
-	 nF1U2tYaW6fiH7iZcPeviZJMTjAEBL0Z7TCTRnuKY9+aGqQ1SVGAPcnUkBSe4AobzPA==
+	bh=JQnhlmOidrGbst3//E1twTI00m+K1NoowtlO+hTzzoA=;
+	b=w3sUi9jfuQbo8G1MRWL6/SgkpWF33NndivqFJRGFIMMNXw2YXOVWBr+EPnkcU379GkLX
+	 BgbEj1/Qqn3B8sTdWEllG1oonBU+1FeUH5N0mwqecx+E92ZjfaaCsO+bM7OPLnWx6lqqm
+	 sfI7aDy4ACdOWBhooDnickt23CgCPSe79mtEB9QGWFaMbBsREoLocf0fXP8H5pZFabC/7
+	 6VjoD6e9rEErPwqDAwPSVbohAtyzI0aWdGgWX1+32HqUVb7wWXuuy6VMrrNHKGhRdwhK6
+	 62IPbe4eb6FN5JR+/+sqnbsWeaqXBkW8hGU9BfzfnBCoPAid180+z+RNtP8z9Xr8BUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIhkNlVC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8FksZ5J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7FA606A325;
-	Wed, 18 Nov 2026 23:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94F4606A325;
+	Wed, 18 Nov 2026 23:46:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mIhkNlVC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0F51F000C4;
-	Wed, 18 Nov 2026 23:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8FksZ5J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 377CB1F000C4;
+	Wed, 18 Nov 2026 23:46:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045613;
-	bh=UtV53unA/3y+D9eJgFLAtUW9xc8pH/YwC0IRJ3udT9Y=;
+	s=korg; t=1795045616;
+	bh=JQnhlmOidrGbst3//E1twTI00m+K1NoowtlO+hTzzoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mIhkNlVCjuoleOtU47INhuOaL2wXfVWnHUnN4ijh21Lxq9xC2E1sNmk9zmkcMfr1R
-	 2QtKJcIw4jp5ieV+7sABTIu9ws+1mJf+g4WptqOzZdEn3qzrOUQZ4xaVIHFyeAb10G
-	 mQ5zhd9l30Q9E9htM+rDQ3PAPDHVv8J0eHP4F9zw=
+	b=s8FksZ5JEVwEgaZ+yOBDSvgldXj49ztQlFTzERqWaZoP3R97sbpB3ozNCuppenRV/
+	 +BrJwMyFessXvRpTC9AnZpgt+xYzo/ma/yP02cRPG1g7Jctnd5DMHFjCy8D/E5aEu1
+	 gQUK6BrOvGkMFIgCDFlK2NkXbtLPDIn9fLruAfTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aamir Ahmed <elb12345@hotmail.co.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alain Knaff <alain@knaff.lu>,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	Denis Arefev <arefev@swemel.ru>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0946/2857] lib: decompress_bunzip2: fix integer overflow in run-length decoding
-Date: Wed, 18 Nov 2026 15:33:00 +0100
-Message-ID: <20261118150235.669335562@linuxfoundation.org>
+Subject: [PATCH 6.1 0947/2857] ALSA: cs46xx: fix unit mismatch in DSP code area bounds check
+Date: Wed, 18 Nov 2026 15:33:01 +0100
+Message-ID: <20261118150235.705096104@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,54 +68,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aamir Ahmed <elb12345@hotmail.co.uk>
+From: Denis Arefev <arefev@swemel.ru>
 
-[ Upstream commit b822ad8d702df0be9fe3f24f71caeb0522d72319 ]
+[ Upstream commit fd65108f5001ffb416dc9bd37ec1893f55cff24a ]
 
-The RUNA/RUNB decoder in get_next_block() accumulates a run length into
-the signed int t with no bound.  runPos doubles per symbol, so t grows as
-at least 2^n-1 and reaches INT_MAX after 31 RUNA symbols.  The guard that
-follows, dbufCount+t >= dbufSize, is itself a signed addition, and as the
-kernel builds with -fno-strict-overflow it wraps negative once dbufCount
-is nonzero, so the guard is skipped.  while (t--) dbuf[dbufCount++] = uc
-then writes INT_MAX entries into a buffer holding at most 900000.  One
-literal symbol ahead of the run is enough to make dbufCount nonzero.
+ins->code.offset and code->size are measured in 32-bit words, while
+DSP_CODE_BYTE_SIZE is the size of the DSP code area in bytes. The
+check ins->code.offset + code->size > DSP_CODE_BYTE_SIZE in
+cs46xx_dsp_load_module() therefore allowed up to four times more code
+than the code area can hold.
 
-Bound t to the block size as it is accumulated.  t only grows within a
-run, so the value tested never exceeds the final run length; any stream
-that decodes today satisfies dbufCount+t < dbufSize at the flush, hence t
-< dbufSize throughout, and no such stream is rejected.  Because t grows as
-at least 2^n-1 the bound trips by the 20th symbol, leaving runPos at most
-2^19, so the following runPos <<= 1 cannot overflow either.
+The shadow buffer ins->code.data is allocated with
+kmalloc(DSP_CODE_BYTE_SIZE), i.e. it holds DSP_CODE_BYTE_SIZE/4
+words. A firmware file with a code segment larger than
+DSP_CODE_BYTE_SIZE/4 words (28 KiB) passed the check and caused an
+out-of-bounds write in shadow_and_reallocate_code() and an
+out-of-bounds read in snd_cs46xx_download().
 
-Link: https://lore.kernel.org/AS8P251MB00010FE5E38D253CF98A652AC8B92@AS8P251MB0001.EURP251.PROD.OUTLOOK.COM
-Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
-Signed-off-by: Aamir Ahmed <elb12345@hotmail.co.uk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Assisted-by: LLM
-Cc: Alain Knaff <alain@knaff.lu>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: <stable@vger.kernel.org>
+Compare the sum in words against DSP_CODE_BYTE_SIZE/4 and cast it to
+u64 so that the sum cannot wrap for large code->size values.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Denis Arefev <arefev@swemel.ru>
+Link: https://patch.msgid.link/20261014102619.16415-1-arefev@swemel.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_bunzip2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/cs46xx/dsp_spos.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/decompress_bunzip2.c b/lib/decompress_bunzip2.c
-index 4f98cdea7e0b3..b8fb40ed06d22 100644
---- a/lib/decompress_bunzip2.c
-+++ b/lib/decompress_bunzip2.c
-@@ -428,6 +428,10 @@ static int INIT get_next_block(struct bunzip_data *bd)
- 			t += (runPos << nextSym);
- 			/* +runPos if RUNA; +2*runPos if RUNB */
- 
-+			/* Bound the run so t and runPos cannot overflow. */
-+			if (t >= dbufSize)
-+				return RETVAL_DATA_ERROR;
-+
- 			runPos <<= 1;
- 			continue;
- 		}
+diff --git a/sound/pci/cs46xx/dsp_spos.c b/sound/pci/cs46xx/dsp_spos.c
+index 1db6bc58d6a61..dd23b7d68c164 100644
+--- a/sound/pci/cs46xx/dsp_spos.c
++++ b/sound/pci/cs46xx/dsp_spos.c
+@@ -396,7 +396,7 @@ int cs46xx_dsp_load_module (struct snd_cs46xx * chip, struct dsp_module_desc * m
+ 		dev_dbg(chip->card->dev,
+ 			"dsp_spos: module got no code segment\n");
+ 	} else {
+-		if (ins->code.offset + code->size > DSP_CODE_BYTE_SIZE) {
++		if ((u64)ins->code.offset + code->size > DSP_CODE_BYTE_SIZE / 4) {
+ 			dev_err(chip->card->dev,
+ 				"dsp_spos: no space available in DSP\n");
+ 			return -ENOMEM;
 -- 
 2.53.0
 
