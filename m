@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034048;
-	b=iDGuMsd70Ku+MOsAXFkoFFHgU/GAXE3UqjzLLYnFH09bGnA2JmJY7T97zD4RXVPG8WkS
-	 o05q1GFCPae3QZoWYRQRf6SbE6I956XTN45qBfmPPUi7baDCCQxao/v0G0zqXTeUnOsNo
-	 YfkCjDSaeO47GeZrBbG/c3LylT/awGcWiW7R6iddKWsUcXmUyxqaCM6H4gX4iIF8QB6S4
-	 FlMorYpj5qistF2rTr6zGRkV22SbY4eRhCKnov34u6YOAqBqIPpqPlTNiWsT5CH48z4oJ
-	 tdT5iZkhQoU4ubtl0JqOggZlHhMdSdvocVo1xh0r/RcTA9KprpGyhPoods2FTx7CXUw==
+	t=1795034051;
+	b=GeBjSVPQGxLwtT7Rw6H4NpQ/S1R4dk3Q3ix6Kr6RtwGKEJ6uBa86VasEQXn4NSlawJvS
+	 jXIOqoi5Ve9sFztyqhxBSPnltXDChZJnSKSPsp+r0fLruIKYlINdDEqg7JpWl9erGCFLq
+	 iQVOw8HOKTcYENP/338jyWefjYq6JYh7NWtoV4cqQGOUsiizAhlbOFTCFIuOI+g11bfTM
+	 BVjDjxn67vNICtRkNAeS8h95jKbDZNxhU5jJSPBk/okAvwa86R9Z9B2Zum1P2JH3IypB6
+	 Pitk/Qek24kY2BbuDg0BlktzzBqWQ/E6Srmj+Jtlz9FXgfiVWSMLdsNyOboLjqzi5sA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034048;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034051;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SZMEPbfO+majXVlGi4nUB95tTrZYpnrV03/7XC20okY=;
-	b=BTIzK1ZJIraDn1hjVZ98TDfMBMjdxDcHC1OEFYKnmjN0QY1dpEQInAcBCp6tCD982OHN
-	 i5SId9ng5a7uWZBtr4dOWi4WeGj7IMiT2yL7tg2BVTHD3u7jCf9WtGkK7ROxov1bDwKyT
-	 RqpGGEJBlHQ/rOil7WU0yrNB1qHHhMUicY3anEuB+kIHcicPy0qTuqx11JM9RyvbHCNig
-	 9RYpXsMdr0chkqIJIW60CywvcS1XkFCPjkZ1cRwG7rx5nhFL8x9QBu37c8c4b+1LsDkHC
-	 xD3+vG8n74HEwmIBL2RigSmnpQZbOnqj+sI8/c7yQVhUNJbJuEccCkuJoRNUe30A0Dg==
+	bh=Kbs2uw5zEhV9LTM/HINEfBXyTpl8xsDT39DbI20F1JU=;
+	b=R8OHW4IJN4wQaxmGU8F3cgEYpUsfxnF+GSOHc+NTUQdqU7G/miULoxKi5y8c1R0MsYn6
+	 /OQx5vu8cvNNxAPWbC9psjyHwqCEYvD4tF8mYO89YIBp4fOQis5lLYxvSBGf2RlRsDWVJ
+	 sr1KvoFN7czJR8pYchmfKsdiUaOj0psnKFzQXOQrypUzGZk7x2Foov8oorYla9jT/oBU0
+	 QjoN8QnBIripT+zxTATo2n8hMgkaa6LTZOW8nigdezEaY9lr3U5GCc1aXygDf4Tvfdk4L
+	 LWvIeR9tYPz6u+olGvkOuF/uBeoDY2D98iAKwsDC4C+wHpw/rM+f224Ofg01kE7Bscw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZI6Jl96;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Q/4oTW6D";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6756A606A331;
-	Wed, 18 Nov 2026 20:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FF9606A32A;
+	Wed, 18 Nov 2026 20:34:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gZI6Jl96
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4C31F000C4;
-	Wed, 18 Nov 2026 20:34:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Q/4oTW6D
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED321F000C4;
+	Wed, 18 Nov 2026 20:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034048;
-	bh=SZMEPbfO+majXVlGi4nUB95tTrZYpnrV03/7XC20okY=;
+	s=korg; t=1795034051;
+	bh=Kbs2uw5zEhV9LTM/HINEfBXyTpl8xsDT39DbI20F1JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=gZI6Jl96z4QmGnuxI8lsos1CQiob4PuwM6BcfRFiyrMS3eNMpg/H7Xfe+w+KlAeA5
-	 7BJn/6CJyA3vpvn3I69SD1IKSm5ljCHVAq6IG8npiu8Zd4YxRzhpEfc9y/bUBBIJDW
-	 gjOoV4X5zdEFHDxks4uTjos3nrmLGyk+v46Y6Db8=
+	b=Q/4oTW6DRvALc23VzeEco6AoNyKIJ5A6+qVjMX5r0YYTEGJRfQmKU3qwyWCMunCwp
+	 TR6+nWBZSiuo55LEqKcowjVLyHkh0h5vQXXKK8W7zE+AIsmT4F7y6coyK/2W17kPsh
+	 boR12q77wx8AAVBmgGF4DSVDTJRKRuyPX0Oqyiu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carl Quist <equalizerjr@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Prashant Rahul <prashantrahul23@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0231/3318] ALSA: hda/realtek: Enable mute LED on HP Laptop 15-dy0xxx
-Date: Wed, 18 Nov 2026 15:14:13 +0100
-Message-ID: <20261118150321.999129075@linuxfoundation.org>
+Subject: [PATCH 6.6 0205/3318] wifi: mt76: mt7921: fix memory leak when skb_linearize fails in mcu rx event
+Date: Wed, 18 Nov 2026 15:13:47 +0100
+Message-ID: <20261118150321.043885634@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,51 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carl Quist <equalizerjr@gmail.com>
+From: Prashant Rahul <prashantrahul23@gmail.com>
 
-[ Upstream commit eb2b516900f2cff6c931a0d664a625ee93855779 ]
+[ Upstream commit 4361f1660101270611eb5dc39799f620b35f2e4d ]
 
-The mute LED on the HP Laptop 15-dy0xxx (PCI SSID 103c:864f, Realtek
-ALC236) does not work, because the machine has no entry in the quirk
-table. No fixup is applied, so no mute LED classdev is registered and
-nothing ever drives the LED.
+The ownership of sk_buff skb is passed to mt7921_queue_rx_skb, each
+path inside it under the switch case handles cleaning of skb and it
+is true for mt7921_mcu_rx_event as well.
 
-The LED is controlled by COEF index 0x07, bit 0. This was verified on
-the hardware with hda-verb: setting the bit lights the mute LED and
-clearing it turns the LED off.
+mt7921_mcu_rx_event, on a success path, either queues skb via
+mt76_mcu_rx_event or cleans it immediately inside
+mt7921_mcu_uni_rx_unsolicited_event.
 
-  hda-verb /dev/snd/hwC0D0 0x20 SET_COEF_INDEX 0x07
-  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x1     # LED on
-  hda-verb /dev/snd/hwC0D0 0x20 SET_PROC_COEF 0x200   # LED off
+However inside mt7921_mcu_rx_event, if skb_linearize fails, the function
+returns immediately and never bothers cleaning skb which leaks skb.
 
-That is exactly what ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 configures, and
-the closely related HP Laptop 15-dw0xxx (103c:85f0) already uses it.
-Bit 9 (0x200) is set by default on this board and is preserved by the
-fixup's read-modify-write.
+Since skb is fully owned at this point, it is safe to call
+dev_kfree_skb which fixes the leak.
 
-Tested on an HP Laptop 15-dy0xxx (SKU 7FU54UA#ABA, board 864F,
-BIOS F.40).
+Granted, the skb_linearize failure is rare as it can only fail under
+heavy memory usage, but at the same time, leaking memory under heavy
+memory usage can worsen the OOM condition.
 
-Signed-off-by: Carl Quist <equalizerjr@gmail.com>
-Link: https://lore.kernel.org/CAOtcGaxXndKxTK5MVSEcmF-LUy+V51K7fhE=qvLA+VvW5ZyCNA@mail.gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Prashant Rahul <prashantrahul23@gmail.com>
+Link: https://patch.msgid.link/20260716-mt7921-mem-leak-v1-1-6e9c0ea19f63@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 76b316fb1fcb4..77ef197d6ae48 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10127,6 +10127,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
- 	SND_PCI_QUIRK(0x103c, 0x860f, "HP ZBook 15 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
-+	SND_PCI_QUIRK(0x103c, 0x864f, "HP Laptop 15-dy0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x869d, "HP", ALC236_FIXUP_HP_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x86c1, "HP Laptop 15-da3001TU", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
- 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index 141c06a706bf2..f4e3c99bf729b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -309,8 +309,10 @@ void mt7921_mcu_rx_event(struct mt792x_dev *dev, struct sk_buff *skb)
+ {
+ 	struct mt76_connac2_mcu_rxd *rxd;
+ 
+-	if (skb_linearize(skb))
++	if (skb_linearize(skb)) {
++		dev_kfree_skb(skb);
+ 		return;
++	}
+ 
+ 	rxd = (struct mt76_connac2_mcu_rxd *)skb->data;
+ 
 -- 
 2.53.0
 
