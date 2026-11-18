@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043290;
-	b=Tgt9/lKXVLpNxB64EqHuwpr53OVFx+aBSu0LGvywO3qipoYj5SMkD+sWHGjWJyA387IY
-	 UGUyuqyDQv/dKCHyOGfgCzyHIQlN/9i4ucJcDbqMSZU5Bu1p0V10bd8TKD6u/kzHsVNm8
-	 NjwNgt9pKcuRqe91i9BK5zWh3cmuHFnuEYvo+QRDRvwZAM7ZDLByXFUWvIE7PCZ+m2YAs
-	 XPdLq3usdz6IXvKd038GJEzNn+jftp9L6Na0vnfR+CbAt4K+KdgJfQ88780k0+nWDObsq
-	 TbbUfMV2Si+pghy58GkUnRm0g7aqBoUY9KZ/ytbGnmgsx/G9z6TGMWJBWPqweLn/CyA==
+	t=1795043293;
+	b=gSzpESpyZXflt1g6xI4byKT2RHOZ6e2yWTYdhfAtL+LUHM6dTolBXZkqcoTFW1hkBZyh
+	 IQCLz0rLn32ofLQVl7q1/bP1k2HcVpg7av832pLDsrq23JzbtE9NnJQQcHjXNjEbkT00E
+	 HtfZPIUtsybvA01SSn0ohBCxDxiOR6Q8xNgg1FoWLB1HhXFyLFmsrUamJ7n4EbRVo3NQ8
+	 DxO75u+o0tiQQ0mtlkleI31tWw1wa4R8TryGz4PWsW8AfUs/cOWe2K8O9NLwPjKP/Y/7M
+	 3ic/jMEMBm7qv+wBS6Z0SqtNyWfe4fiEOg+kZ9j+bUYV+2+LwiRizFglOVx5IrQFYuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043290;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043293;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wMXS3P48Fhb+8kxiYX1EqbIqrwC0/VyHyC5JYwhTgAY=;
-	b=EKmlWHteln1XNDYovEXQzbtZ/CHE38dpv5sNLpVg1Fhyr7k0i9+6KDcvDkXoBZ/2KIol
-	 gwrwTQ/reETtFmMG5/sfryjEhxdATYKvxIFv/f1d/o/JgkTN4MtydhDnYHkHOFiUMKMm7
-	 eiRXI2XsVkHwv0ehc/+TChDnLZ6XVLl4MTYFcnBLqJwbj2dlwvj7jevlWNqRngkDrNOdx
-	 8Wiyw5hhWtOOiTbQ0JwgLuY3a94txGdVdS0WOvBKt/WwcW9wzbH4yn4eL+PsZmOrUIV1O
-	 t3RxLTVfJlqoOGoSeqKvRMTGzq+L5vk+CYJXj4YhlDa9NNJoMjkJuNtTEBFeARvVW2A==
+	bh=gD0LM0fOhCZY7OE8psksn0/vRWmueVn70mQ7gNk+XQw=;
+	b=fnHCTpQdHk5zHNS+TseprA8YcEWjPgt58bo5yKejFTfkcWV4ubsnfU8oP4DK7TwwWvfm
+	 VQSxT426PnBx4WFj4JtvNkjQBhMDBvT9y/Q5ZNBXYDIlRcgF7dgpO+GrRgNXFlgnjBWRw
+	 ooXk4be6uGRJv0L/kVfNWyNC0uYlLk4dXCVRsBsLjrwYjcGm4bCVIzpenVFtep/BD4M0u
+	 boDCyXrx9H6TZTs+9im9/dFpvLxqNZTkv44QIp0sGpD67neERib2HwVROUSBVu+m4wSyL
+	 3zRcPOXPp5jf+92D0wu7y17C0v511w5S/4sUgACtu8g1tFqDFENa8+jZOrkct2/adTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l354OY4t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3rFOHF+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C9F606A320;
-	Wed, 18 Nov 2026 23:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD78606A330;
+	Wed, 18 Nov 2026 23:08:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=l354OY4t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA721F000C4;
-	Wed, 18 Nov 2026 23:08:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=h3rFOHF+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD1E1F000C4;
+	Wed, 18 Nov 2026 23:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043290;
-	bh=wMXS3P48Fhb+8kxiYX1EqbIqrwC0/VyHyC5JYwhTgAY=;
+	s=korg; t=1795043293;
+	bh=gD0LM0fOhCZY7OE8psksn0/vRWmueVn70mQ7gNk+XQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=l354OY4tPkB7a9ibzrD0ZPD7Dk2lMVgX0wPIuZBYbwmH2+bqpQRHIgJoXQqi6PmSa
-	 tXBXLQ9eXJ8f0EsrrVPgWxSb2ZtngDuz/B+MNX4BWZQSwmWRIsFlw86YmLaI4G8+qv
-	 dlIf1vgka4OR4LZ8y31TzAAwwBgojE9gVF9WvNaw=
+	b=h3rFOHF++YRmLsibWEGzZtW+nSP1JcSyjirt1j707vgVHrA5ZD33/iJd9YclM2yj7
+	 lBuSxtIxbWdrK+CZtw4J4LpyEA+pcmcG6CMZgU8NNlLzvNNpQLQilacZi4h8RTFRbx
+	 ZEs5JeJnWJp6grp1cRg5UQyf73afaT7umrJDcCps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vadayath <jay@artiphishell.com>,
-	Jan Kara <jack@suse.cz>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Brian Masney <bmasney@redhat.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0159/2857] udf: bound lengthAllocDescs from unallocated space entry
-Date: Wed, 18 Nov 2026 15:19:53 +0100
-Message-ID: <20261118150207.078414288@linuxfoundation.org>
+Subject: [PATCH 6.1 0160/2857] clk: imx: imx8qxp: add missing MODULE_DEVICE_TABLE()
+Date: Wed, 18 Nov 2026 15:19:54 +0100
+Message-ID: <20261118150207.110965324@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,72 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jay Vadayath <jay@artiphishell.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit b8228f59dc58aea06dc024efd8f64c2d048c4578 ]
+[ Upstream commit cd21fdcbef3fb32136f72075ab668b075423b3f6 ]
 
-udf_read_inode() copies the on-disk lengthAllocDescs field of a USE
-(unallocSpaceEntry) inode into iinfo->i_lenAlloc without checking that
-it fits in the i_data buffer that is subsequently allocated for the
-inode. udf_count_free_table(), called from udf_statfs(), then walks the
-allocation descriptor array up to i_lenAlloc bytes, so a crafted UDF
-image with lengthAllocDescs larger than (blocksize - sizeof(struct
-unallocSpaceEntry)) causes udf_get_fileshortad() to read past the end
-of the kmalloc'd i_data buffer.
+The driver has a match table for the of bus wired into its driver
+structure, but the table is not exported with MODULE_DEVICE_TABLE().
 
-KASAN report from mounting a crafted UDF image and calling statfs()
-from an unprivileged process:
+Add the missing MODULE_DEVICE_TABLE() entry so module alias information
+is generated for automatic module loading.
 
-  BUG: KASAN: slab-out-of-bounds in udf_get_fileshortad+0x126/0x130
-  Read of size 4 at addr ffff8880042137d8 by task poc/65
-  Call Trace:
-   dump_stack_lvl+0x53/0x70
-   print_report+0xce/0x610
-   kasan_report+0xce/0x100
-   udf_get_fileshortad+0x126/0x130
-   udf_current_aext+0x3c4/0xa10
-   udf_next_aext+0x241/0x440
-   udf_statfs+0xb7d/0x11c0
-   statfs_by_dentry+0x117/0x1e0
-   user_statfs+0xac/0x130
-   __do_sys_statfs+0x80/0xe0
-   do_syscall_64+0x102/0x5a0
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+This is a source-level fix.  It does not claim dynamic hardware
+reproduction; the evidence is the driver-owned match table, its use by
+the driver registration structure, and the missing module alias
+publication.
 
-Reject USE inodes whose lengthAllocDescs would place descriptors past
-the end of the i_data buffer, mirroring the checks the rest of the UDF
-code performs on descriptor lengths.
-
-This bug was discovered by Artiphishell's vTriage pipeline, which
-generated a userspace reproducer that reliably triggers the KASAN
-report on an unpatched kernel. The fix below was drafted with the
-Claude coding assistant; a userspace reproducer (and the crafted UDF
-image) is available on request.
-
-Assisted-by: LLM
-Signed-off-by: Jay Vadayath <jay@artiphishell.com>
-Link: https://patch.msgid.link/20260717184021.13476-1-jay@artiphishell.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Reviewed-by: Brian Masney <bmasney@redhat.com>
+Link: https://patch.msgid.link/20260705001705.70400-1-pengpeng@iscas.ac.cn
+Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/imx/clk-imx8qxp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index 2bda409bf07b7..fd4b8cc20f5f1 100644
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -1326,6 +1326,10 @@ static int udf_read_inode(struct inode *inode, bool hidden_inode)
- 		iinfo->i_lenAlloc = le32_to_cpu(
- 				((struct unallocSpaceEntry *)bh->b_data)->
- 				 lengthAllocDescs);
-+		if (iinfo->i_lenAlloc > bs - sizeof(struct unallocSpaceEntry)) {
-+			ret = -EFSCORRUPTED;
-+			goto out;
-+		}
- 		ret = udf_alloc_i_data(inode, bs -
- 					sizeof(struct unallocSpaceEntry));
- 		if (ret)
+diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
+index 28265e28856c2..bd350ab1e012d 100644
+--- a/drivers/clk/imx/clk-imx8qxp.c
++++ b/drivers/clk/imx/clk-imx8qxp.c
+@@ -316,6 +316,7 @@ static const struct of_device_id imx8qxp_match[] = {
+ 	{ .compatible = "fsl,imx8qm-clk", &imx_clk_scu_rsrc_imx8qm, },
+ 	{ /* sentinel */ }
+ };
++MODULE_DEVICE_TABLE(of, imx8qxp_match);
+ 
+ static struct platform_driver imx8qxp_clk_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
