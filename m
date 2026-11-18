@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043826;
-	b=ppvYXYXY3XFPsAi+E3JZos6FEVLDOLgPT309583w+SoyHGvl1tCa6A5OUBZCAbne2KjQ
-	 NdcXUIPFUcsAR+uQwwNn4EkOfJO8x2V0J63OQeSZDFUE1FnYnhgHkg1b5c6wyrFXnWit/
-	 gBEyRNNVD2UckrVuiIliK7s1UQBwMgiWg0hpq76eaio2V/vKqSDDhjuaHOxp/W9KF4CfQ
-	 gFSE7ZF+jglcKh6HiawyO+Q+BjiiwN1MI3qP0GkEywQDfNiRB5XTPKHH0HdtIFyiop11w
-	 H7p8PMSIO69eiE8zjFNbL4qG7mKMUryXLI8O6CsPLfz7bBDTG+F/nSoa8jWVz7SEj0Q==
+	t=1795043829;
+	b=mjDaZ1TRqCyNeK/Cc6ZYjJ38/3V9RcHJGc0jYsbyeGKkWVK5ln/WCD75/Ze/IjuDqY4t
+	 +qPZTYIYCEnnY+dNa26YT5+SKanFFLJzzHZNLTnvLstiQash9Dot0ybUl7kSBRsk91FF3
+	 aIwfho5rCCuQ3ZqQ06H3nM5wUpuWNf6x/IkDeIdbmc35UPSg96Cn+GfiHrJD2fV1i5n4C
+	 gzVrpbrjpFsimhPOVnzspzCDAPyatSX36X+e0XHvRJXbpnRXT+6UmlsX5XT+pSgKI9xx5
+	 dulXqidaUFqU5EqNMck99uOo2ixllHwhD4kWsBo9Qpd8RuOBs5x0UXiP5tQdbhoJpDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043826;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043829;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=fn2+z07HmsgQzqfR7QECMWfbdzSjVmV0UuyQIBr+BhI=;
-	b=NvdLG7JcLnSo0kNgiOFcQO8m7bpr5BYUpgZIUhTeU/g7+DldNL3cy0uSjHjPjCTtrA8q
-	 QLTbMDogk9Le2GIgkJ0YXC2uWjNB4f2UfIaPRRiCDBlgILDcSLb8GYo3YOthzpHmEpfj4
-	 IZgzPJhVe1ASilGtC37HuXdyFk4zc9LoqdDZd+a1vRFWBqqUWQvNzwB21IR6vi5vO1qWg
-	 4Sclj3nqJmyUxi88QLwFGDXbKSI31aLY4OOaZH81m/1uczomu6eXPKXy290iwnR9osK7V
-	 JCKtFpDUGCMjWP+cHlIA6A+nIFgaCDeYnwBoHGFRZ/RTIx2Q9xKeHW1xtNvziMnHDqA==
+	bh=5qNh4DincCAWEeGwLDnYzy6Mnl7Zh2y+8XMVrmN3r1Q=;
+	b=HOnqhUOA/6AtQ7RUz2YbrRQtGwSd4ZUZXUUx0PEc11UZll/UJZRM0I7URY963b6Isjeo
+	 /hA8berGZV5iXXZLHbknPmI3Knw3LaQKwC2MLNccRSDdBuui57OXfGC4gEpnRjCy2vncK
+	 5zI7qfK+0vek549Y/vuM3PgwcpIcCNs1YBSh9oYjheRL0HZtxH5Gr586ZxcsnDUsDTcsX
+	 4iXK34H3oy81PkZYLKkiMZuZfQMOVpI9no6Rg8DwZRldipG8pwjkHCro52xbr8yTSCz8T
+	 pagGWZ7rcSMOwu572yJfPQGHIWhDbDNEWo5mIXSugSowV9aT/74jIVkfAX8M3SuGolA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NkpjJTy/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9fnR2Sp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D023160A2605;
-	Wed, 18 Nov 2026 23:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AFA606A320;
+	Wed, 18 Nov 2026 23:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NkpjJTy/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF01B1F000C4;
-	Wed, 18 Nov 2026 23:17:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x9fnR2Sp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CA71F000CB;
+	Wed, 18 Nov 2026 23:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043826;
-	bh=fn2+z07HmsgQzqfR7QECMWfbdzSjVmV0UuyQIBr+BhI=;
+	s=korg; t=1795043829;
+	bh=5qNh4DincCAWEeGwLDnYzy6Mnl7Zh2y+8XMVrmN3r1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NkpjJTy/2Q+T4XoJ5eL44rsTtGZeDSMv1G6hC1U/Bo6Sp3F7SrUWYUar7qMIfB3Uc
-	 Qt/5jx8PDWp+IgW3uzj0Qj6gCiJYy6QR9AeVdrZ6w6lUiXMY7XNMpW/wU+Vr+J1ICX
-	 kOGW0kzew44/QufIWKYKd4um0Z+fPWQStNmFgRzc=
+	b=x9fnR2Spi3E+txWQb+0vchVdlF826HzGDdMGWNMfkVKtGaSlEXWAiQsavLIPhH3YM
+	 6lhjvywNmeogcrijx2UlL1FQtC/H/lwYq2MMlFpvtJliFtxfi5+fGEMJA1i6Gbfg49
+	 EC+v/xuTGk5pZv+y/qdo8tCP2zD01E+ZKDEvcEXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qing Luo <luoqing@kylinos.cn>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Harshvardhan Jha <harshvardhan.j.jha@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0322/2857] sctp: auth: discard auth_chunk when skb_clone fails
-Date: Wed, 18 Nov 2026 15:22:36 +0100
-Message-ID: <20261118150213.038741470@linuxfoundation.org>
+Subject: [PATCH 6.1 0349/2857] sticon/parisc: Detect default STI graphics card for console output
+Date: Wed, 18 Nov 2026 15:23:03 +0100
+Message-ID: <20261118150214.004109660@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -71,62 +67,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qing Luo <luoqing@kylinos.cn>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit 9ae7ed101cf28613071ebfbc42668c8917a670cf ]
+[ Upstream commit de508ece1d37cdbbbfa52f074954310f9b066b13 ]
 
-When processing AUTH + COOKIE-ECHO packets, if skb_clone() fails
-due to memory pressure, chunk->auth_chunk is NULL. The original
-code still sets chunk->auth = 1 and continues, leaving the
-COOKIE-ECHO to be processed without a valid auth_chunk for
-deferred verification.
+If a machine has multiple graphic cards, detect the graphic card which is used
+to display firmware messages and use that one as the default graphic card for
+sticon and fbcon.
 
-Discard the AUTH chunk early via pdiscard when skb_clone() fails,
-so that the receive loop can continue processing remaining chunks
-in the inqueue instead of stalling the entire packet.
+On parisc machines the default graphic card used for BCH (boot console
+handler, aka BIOS menu) is stored in the stable storage (equivalent to CMOS
+storage on x86) or in the console path in page zero. Extract that path and
+store it as default STI path for later comparism. Take care that the graphic
+card can be a GSC or a PCI card which use different path strings.
 
-Signed-off-by: Qing Luo <luoqing@kylinos.cn>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20260723061107.384106-1-l1138897701@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Harshvardhan Jha <harshvardhan.j.jha@oracle.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Increase max string size for default_sti_path to 32 chars as the
+print_pa_hwpath() function formats a hardware path using unbounded sprintf
+calls for up to 6 bus converter components and 1 module component (e.g.,
+255/255/...), which can produce a string up to 28 bytes long.
+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/associola.c   | 4 ++++
- net/sctp/endpointola.c | 4 ++++
- 2 files changed, 8 insertions(+)
+ drivers/video/console/sticore.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index a957142672cb2..5149f744eaf21 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -1029,6 +1029,10 @@ static void sctp_assoc_bh_rcv(struct work_struct *work)
- 			if (next_hdr->type == SCTP_CID_COOKIE_ECHO) {
- 				chunk->auth_chunk = skb_clone(chunk->skb,
- 							      GFP_ATOMIC);
-+				if (!chunk->auth_chunk) {
-+					chunk->pdiscard = 1;
-+					continue;
-+				}
- 				chunk->auth = 1;
- 				continue;
- 			}
-diff --git a/net/sctp/endpointola.c b/net/sctp/endpointola.c
-index efffde7f2328e..2313ea9fbe065 100644
---- a/net/sctp/endpointola.c
-+++ b/net/sctp/endpointola.c
-@@ -362,6 +362,10 @@ static void sctp_endpoint_bh_rcv(struct work_struct *work)
- 			if (next_hdr->type == SCTP_CID_COOKIE_ECHO) {
- 				chunk->auth_chunk = skb_clone(chunk->skb,
- 								GFP_ATOMIC);
-+				if (!chunk->auth_chunk) {
-+					chunk->pdiscard = 1;
-+					continue;
-+				}
- 				chunk->auth = 1;
- 				continue;
- 			}
+diff --git a/drivers/video/console/sticore.c b/drivers/video/console/sticore.c
+index db568f67e4dc2..07419b22534bb 100644
+--- a/drivers/video/console/sticore.c
++++ b/drivers/video/console/sticore.c
+@@ -284,7 +284,7 @@ static void sti_rom_copy(unsigned long base, unsigned long count, void *dest)
+ 
+ 
+ 
+-static char default_sti_path[21] __read_mostly;
++static char default_sti_path[32] __read_mostly;
+ 
+ #ifndef MODULE
+ static int __init sti_setup(char *str)
+@@ -1096,6 +1096,26 @@ static void sti_init_roms(void)
+ 	pr_info("STI GSC/PCI core graphics driver "
+ 			STI_DRIVERVERSION "\n");
+ 
++	/*
++	 * Find default console by hardware path which is either stored in
++	 * console entry in stable storage or alternatively from console path
++	 * in PAGE0 used by BCH and PDC.
++	 */
++	if (!default_sti_path[0]) {
++		struct pdc_module_path conspath;
++		struct device *dev = NULL;
++
++		if (pdc_stable_read(0x60, &conspath, sizeof(conspath)) == PDC_OK)
++			dev = hwpath_to_device(&conspath.path);
++		if (!dev)
++			dev = hwpath_to_device(&PAGE0->mem_cons.dp.path);
++		if (dev && dev_is_pci(dev))
++			print_pci_hwpath(to_pci_dev(dev), default_sti_path);
++		else if (dev && !dev_is_pci(dev))
++			print_pa_hwpath(to_parisc_device(dev), default_sti_path);
++		pr_debug("default graphic card: %s\n", default_sti_path);
++	}
++
+ 	/* Register drivers for native & PCI cards */
+ 	register_parisc_driver(&pa_sti_driver);
+ 	WARN_ON(pci_register_driver(&pci_sti_driver));
 -- 
 2.53.0
 
