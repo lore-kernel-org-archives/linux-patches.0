@@ -1,54 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059057;
-	b=W/t3CQK2hdsCAuQNbbRdtrdOk2BwQ5t1aizYuJdauem2Kz+9XxfqrSYayTIU7hZXghAM
-	 v4+CMfenIbLOb73yNczs25qwaoJJfb54XjIEJvZLPkIot8FiMVQGa5V0TEDmtRqWwS432
-	 /cj1C1p1ztaaKZ4RaIrUIyK6QNNQ0ldwt6Fs1x2I6fpsab3uVzTY1q3JSQLStHprhX7Vl
-	 pADyU14PkdCY9YUDuh8G+UGZCTB72jyGT9E4oBYEqzsbOWRNrmsyD1rksIw1WfukdOSMa
-	 d5uFL8YgTf4D1rq0m6+RAIm0JLc/WEf5ilxO90IoG3TNQQgMIf66iAn636G2O99Aa+g==
+	t=1795059060;
+	b=4W1kdVQvvbp39RM6k09M2pjD3lK9Rr7r5D6aar/uKHPEfcTwBlv1QkT5nVyviyhkuAdp
+	 8RMKtzuRtS6xMRCk0bDh4wRGKGTE62vQm6wK6ReDBG3w8cphMmM/FtIxONxMgS46CnwcG
+	 HLBqfPPgz8T0t7dobBrTqFTdXy4zY2vuYh6EcDpPt0PirwrVSe2DZ4DSEJ8YWA50GD+3P
+	 mtscepCeAjXU6pv881d+k53p6d7HXHCd4XsLqHcmusPdKn7K+dkVvu1MKcZtE/PVybYd0
+	 khATgZSw0/WOWrPmPKE4bB7uQBra4MTtMU6ZuvXJ+psqCqtAizcLGLt4wdzYvVMjxjA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=t62+bzUw6zC7vkMkGDAj1Kx+GbUPlhNHKCLRSDPU1kk=;
-	b=yBLUWNRNnFWx9uTnFsyEJPcYz8IVzjZknAJrIAVjruKIXWNcJiVKVFmNL/BX5nFHcNpz
-	 r3M2zu3e9skZClNhOjobZhLgQZiTa3hlMLvuWPlTbp/vnYd7Rj8qcN62T88nj0XmTQ4Z0
-	 I4eoj0uYgenQXt94BgEHlVy8apSjHANnRQ+DRAKB+pIBKHVfWfRGquFCcnXI3emTkiplD
-	 HyV3+NX2hCkrUcemco7QpTCaF2GGCmBmk1G2xiwz4O5ALVzsUPe6mgipNB61OaDlL+nVO
-	 6OzXDMScR54kuOgmfDZpB7mKoIRlSxsqH+WRktXFc+SocmlgSMmW+Etl1RXIqz1UqlA==
+	bh=ZJzydq58jJV0JFASCdKJI6LJI7GXZJNoH8WdwvF92ww=;
+	b=Wbk88SBLJFh4NXVR+giyQPql40O0hmB0PFygpDXcoCldzOq1CnRK3ESgT3j6ZhvZv6ZB
+	 uvLd1LihuzkvkGPPufCbDckE0Egk/UguFJW+8B07QyRpeqHqIkYZroDQBcLcGksydONhZ
+	 D0CRaTD6Hmt9ZRphTqzzfOOANelVE8tz97Bzv62bxjBQ6Ji1B9lPpKiPqbE89Qs2OVoih
+	 xXZ5iOfjpBqMB6zBkDU0jClnm+u99Uu4mLKVS5bdrojeWfPkyf8ffA2hYoCrE1QJ8O/4K
+	 RCFIH1a9myQRRv8tPzJRH/mqtnBrgKKD2oZBTuYJtmMjq98j92twvuiJJ9iQ2yXB6EQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bqaT8Jxo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxF1f1En;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F8A606A320;
-	Thu, 19 Nov 2026 03:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAF4606A320;
+	Thu, 19 Nov 2026 03:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bqaT8Jxo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E361F000C4;
-	Thu, 19 Nov 2026 03:30:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AxF1f1En
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BF21F000C4;
+	Thu, 19 Nov 2026 03:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059057;
-	bh=t62+bzUw6zC7vkMkGDAj1Kx+GbUPlhNHKCLRSDPU1kk=;
+	s=korg; t=1795059060;
+	bh=ZJzydq58jJV0JFASCdKJI6LJI7GXZJNoH8WdwvF92ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bqaT8JxoOkgErxVqY+EwIEOmAe6CFS1qKir0vhyrKaYiRML4fRM4gGsg5jKpGo4hp
-	 kefiR2SKGTeTQLR+C0xYgcS0/76gSJTuirKxKMnhh1nX5PsaRpHevzz9awik+JAMIy
-	 QwXiUewfm8f34O70/d0SiX6c3RuZi+1HKRBZneQ4=
+	b=AxF1f1EnsXaEmtJCqOxEShq5MiyF1PsSm7j+Xg31ingXSJy4gcQGZV5ddGnYNPz1a
+	 Ar351HSuxA6s65sPphy91EcfXdgybcMAFBjITDHcqkO6X+BfJO/RR6KNUuzN0HrhqC
+	 V7xTAFtgH8sh8Y80FgIOjKfzLJlkVjnLx8sOr/Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw2@infradead.org>,
-	Stefan Teodorescu <fane@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Bradley Morgan <brads@mainlining.org>,
+	Jonas Bonn <jonas@southpole.se>,
+	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
+	Stafford Horne <shorne@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0704/1848] KVM: nVMX: Process each host MSR entry at most once when unwinding failed VM-Entry
-Date: Wed, 18 Nov 2026 15:45:42 +0100
-Message-ID: <20261118145945.342549342@linuxfoundation.org>
+Subject: [PATCH 5.10 0705/1848] openrisc: export __mulsi3 for modules
+Date: Wed, 18 Nov 2026 15:45:43 +0100
+Message-ID: <20261118145945.391560206@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,51 +74,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-[ Upstream commit c33ef9d334059f7cb167569ed7b4779752fe4425 ]
+[ Upstream commit 8ff981aa283a0ce516c2dc65a48a185ed336c657 ]
 
-Add a missing "break" in the inner for-loop of the open coded mess that
-unwinds MSRs back to the pre-VM-Enter state when VMLAUNCH/VMRESUME VM-Fails
-due to a consistency check that is caught by hardware but missed by KVM.
-I.e. move on to the next MSR in the VM-Entry load list after performing a
-write using a value found in the VM-Exit load list.  Processing *every*
-matching entry in the VM-Exit load list makes the processing quadratic,
-which is problematic if the load lists are full of MSRs that are expensive
-to emulate.  E.g. writing APIC_BASE triggers kvm_recalculate_apic_map() and
-a whole pile of unnecessary work.
+OpenRISC configurations without hardware multiplication fail to build
+modules which contain compiler-generated calls to __mulsi3.  The failure
+is widespread, affecting filesystems, drivers and KUnit tests at modpost.
 
-Functionally, arbitrarily restoring the value of the first matching entry
-is "fine", because none of this is architecturally correct: the load lists
-are never supposed to have been used in the first place.  In practice, it's
-likely a moot point as no well-behaved VMM will have multiple, diverging
-entries in the load lists.
+When CONFIG_OPENRISC_HAVE_INST_MUL is disabled, the architecture Makefile
+passes -msoft-mul to GCC.  The multiplication helper is supplied by the
+libgcc archive linked into vmlinux, but or32_ksyms.c does not export it.
+Built-in callers can therefore link while module callers cannot resolve
+the symbol.
 
-Fixes: bd18bffca353 ("KVM: nVMX: restore host state in nested_vmx_vmexit for VMFail")
-Cc: stable@vger.kernel.org
-Cc: David Woodhouse <dwmw2@infradead.org>
-Reported-by: Stefan Teodorescu <fane@google.com>
-Suggested-by: Stefan Teodorescu <fane@google.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-ID: <20261027185917.1478906-1-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Export __mulsi3 alongside the other compiler-generated helpers.
+
+The omission predates 7c3f4d699f34 ("resource, kunit: stop selecting
+GET_FREE_REGION"), which the robot identified when reporting an additional
+failing module.  It was already present in the initial OpenRISC export
+list.
+
+Fixes: 616257669e1a ("OpenRISC: Miscellaneous")
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202610290106.o8Fs3NvO-lkp@intel.com/
+Reviewed-by: Bradley Morgan <brads@mainlining.org>
+Cc: Jonas Bonn <jonas@southpole.se>
+Cc: Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
+Cc: Stafford Horne <shorne@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 1 +
+ arch/openrisc/kernel/or32_ksyms.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 7c861d34f9c56..477d69bcd52aa 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -4498,6 +4498,7 @@ static void nested_vmx_restore_host_state(struct kvm_vcpu *vcpu)
- 					__func__, j, h.index, h.value);
- 				goto vmabort;
- 			}
-+			break;
- 		}
- 	}
- 
+diff --git a/arch/openrisc/kernel/or32_ksyms.c b/arch/openrisc/kernel/or32_ksyms.c
+index 212e5f85004cc..c63d7f25bc575 100644
+--- a/arch/openrisc/kernel/or32_ksyms.c
++++ b/arch/openrisc/kernel/or32_ksyms.c
+@@ -35,6 +35,7 @@ DECLARE_EXPORT(__divsi3);
+ DECLARE_EXPORT(__umodsi3);
+ DECLARE_EXPORT(__modsi3);
+ DECLARE_EXPORT(__muldi3);
++DECLARE_EXPORT(__mulsi3);
+ DECLARE_EXPORT(__ashrdi3);
+ DECLARE_EXPORT(__ashldi3);
+ DECLARE_EXPORT(__lshrdi3);
 -- 
 2.53.0
 
