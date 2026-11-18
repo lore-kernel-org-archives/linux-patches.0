@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060877;
-	b=LElWomTHDO7FzqNZP+0Oyq016KnD/GN8IVUPxU9Z7z+5kWmk5Qk4ezyPTgTWfmIvrbW2
-	 pMsqRc0JNhWCQpgDdDB6wPG32lh+7K22UUmwOX5u1TnrnNKW5uvGZMUluEL0mk/fXGnOO
-	 Yr/j6jYl2YekYtdCW30SUtCUssrooA0cmVBUFhx6Yj12f4uYUHdukTHEM0hWrLxiyDJX4
-	 VESfVpXRsN07V0uTaOJaLwsSf+Z4gtBtO/bfBS2iGbSQWQ1+2sBz3DMsnsbrOu+V2zt1L
-	 WrkFEMMtFjFUr0g19me/Zy/AOSCLSAT54giv19LqzLtK3C4iKZ57AFXGbRDJKMsgQBA==
+	t=1795060880;
+	b=kuVVPTtme7FdUPfJjy9UCJGN44FSE5oXOGAfREI4Dgw2Y2cu1alxXLd/jSsVS8TI2KXs
+	 GnHg2wdmAeT1HH1oYzP+a/BBiSTjH653irHZE2EQVajJL8kyuhstSR6BW2vmDh0K2icVK
+	 MgpP98g5nTlveFIcCJzG5BMDmvqn216Pt3+NhDnGlsGObUe6yig285A+LwhMiwuZ2ByI7
+	 BkxSAAKfgxUAgLuXvlK9u8kzCVwiN4bQJltjzS/FfcR0m45fJrQWYcszew7MMIyDoAViJ
+	 Ks1oFooanQi4uBFN3p90EPRtCuzhb4MX/GrYHpBnnGFxrp7mvGV892ZaqV1o2G4u1aQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060877;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060880;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ft149Pd9ercNWvYFOb5QLX5D0SaniM3FEDIG+rTYaTA=;
-	b=t63kF4XCulprH+lId2HDhjtC1BQqAFYoOoa5/dWSqzyvpGng7baEPQhsIsnKH5cn6U/E
-	 UdPRK6uh8rqAGoB+YFIyr9FCbsgNItzUDFR6O+Ix/UqZUP4OPOyW4+/xvgFj1oH0Esru8
-	 /IpLDk+gEEAF6wo0L6ZeE3PqHxVJv2zFknY1JFp9FGp/lLV/KT2MTYbg0HN7ZBCRJ7hCR
-	 aC9BvJKi9QaBwVdaaPgcwf4UI1pDVtaUztLGZgqp6HTea1Dcr1yTJw1k/ZcJGqkr2jlnm
-	 b050PaEUA+TdieK/t616s94KnmsAJa7o9m9ZYs1OUd7Y/YT1S/F/GEC0JkXRgU0P8WQ==
+	bh=gTUSCYSZAnhdd2yUkEdZ4xBJvDujorOxLMHd+DgIYlg=;
+	b=Xy4uONOs5CcnpcsyQ1PA2XWArWjV5hh76Le8nu5F8VKvhLbHBuS5S0CXDR9G0k70Aiw3
+	 AU6sOIVGnaH6ab5XiTTeNqqEVcafTgA7jL18LP0cmfdtHnfuIr8dssFP1mJ8WVV21Zfc1
+	 45mmb0FNGxZfWsjS8Osr0DvvymPg6spTJ11joqilUJ5Y8BldpXoP/dgX2DIDRPYRyUPAV
+	 r4bwuRKUEFJLjp3MTKyQSrhDiOauCgVh0tKMbHmyOD8p6p6t4j/N4GGZBdTLr95nVX1Tk
+	 OWJvDGjcTTTJ+n/WeewgEyQfyIx9vzmMGpTI5kzIX4aFXr2pEGRfve5JBjtmTXmxGAQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVjieDeU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="vg/NPezv";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3083F606A32C;
-	Thu, 19 Nov 2026 04:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22441606A325;
+	Thu, 19 Nov 2026 04:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yVjieDeU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 818301F000C4;
-	Thu, 19 Nov 2026 04:01:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vg/NPezv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D15F1F000C4;
+	Thu, 19 Nov 2026 04:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060877;
-	bh=ft149Pd9ercNWvYFOb5QLX5D0SaniM3FEDIG+rTYaTA=;
+	s=korg; t=1795060880;
+	bh=gTUSCYSZAnhdd2yUkEdZ4xBJvDujorOxLMHd+DgIYlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yVjieDeUorApyKf56INepmS9EQ2scE3MPGniJfHzCKP3az+OnyG5R/OemHcbBFsDZ
-	 0mUkDdkiDULTzLBlyKh3auhpJ1hI/83FhzQXigegYJj+thvThh2lHq1LrqXzQ+5Qb8
-	 /CeWZONIBhz9RfnAWTYVsXFYmFbx6FPRerVQAE5I=
+	b=vg/NPezvBGPJfxX9ccHgrRZpTfGYdhrOyZGWat0CyQQxcggbeAXpiyzzvbury6cZz
+	 CbHzL/zvzpQH6B596Qf/rT17RRSEwkVjX9bZbPZbsg15AXebHD1fPVct2h8f9mAQ0o
+	 DNAqrdy1GW/OMN8LF/tQnmMzawdSC9KWWazbxaEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com,
-	Qingfang Deng <qingfang.deng@linux.dev>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Lee Jones <lee.jones@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1356/1848] mtd: block: prevent reclaim I/O during request processing
-Date: Wed, 18 Nov 2026 15:56:34 +0100
-Message-ID: <20261118150016.386534524@linuxfoundation.org>
+Subject: [PATCH 5.10 1330/1848] mfd: intel_quark_i2c_gpio: Reuse BAR definitions for MFD cell indexing
+Date: Wed, 18 Nov 2026 15:56:08 +0100
+Message-ID: <20261118150015.432330343@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,72 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingfang Deng <qingfang.deng@linux.dev>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit d498b2ddda99eed28cde177b1620dbcea246a1c4 ]
+[ Upstream commit 98d6e7fce6b0174c701dc596539dc7bc1e96f8ce ]
 
-The blktrans request callbacks run under dev->lock and may allocate
-memory with GFP_KERNEL. For example, mtdblock_writesect() uses vmalloc()
-to allocate its eraseblock cache. Direct reclaim can then recurse into
-block I/O and deadlock on resources held by the request being processed.
-syzbot reports a circular locking dependency involving the device mutex
-and fs_reclaim.
+It's convenient and less error prone to use definitions to address
+different cells in an array. For this purpose we may reuse existing
+BAR definitions.
 
-Commit d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC") removed PF_MEMALLOC
-from the MTD request thread. That flag had prevented direct reclaim,
-so its removal made allocations during request processing eligible for
-reclaim without excluding I/O.
-
-Wrap request processing in mtd_queue_rq() in a NOIO scope. This covers
-both the request and background callbacks, including allocations made
-by lower MTD drivers, and prevents reclaim from initiating filesystem
-or block I/O.
-
-Fixes: d5ba1c8ffd0b ("mtd: don't use PF_MEMALLOC")
-Assisted-by: Codex:gpt-6-astra
-Reported-by: syzbot+e08e0a15269eefa87790@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e08e0a15269eefa87790
-Signed-off-by: Qingfang Deng <qingfang.deng@linux.dev>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
+Stable-dep-of: 14a7cf1a3730 ("mfd: intel_quark_i2c_gpio: Manage the fixed-rate clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtd_blkdevs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mfd/intel_quark_i2c_gpio.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mtd/mtd_blkdevs.c b/drivers/mtd/mtd_blkdevs.c
-index dd0d0bf5f57f9..ae5ac5d5451d9 100644
---- a/drivers/mtd/mtd_blkdevs.c
-+++ b/drivers/mtd/mtd_blkdevs.c
-@@ -18,6 +18,7 @@
- #include <linux/spinlock.h>
- #include <linux/hdreg.h>
- #include <linux/mutex.h>
-+#include <linux/sched/mm.h>
- #include <linux/uaccess.h>
+diff --git a/drivers/mfd/intel_quark_i2c_gpio.c b/drivers/mfd/intel_quark_i2c_gpio.c
+index b0e1b1e0df256..66bee47ba69f3 100644
+--- a/drivers/mfd/intel_quark_i2c_gpio.c
++++ b/drivers/mfd/intel_quark_i2c_gpio.c
+@@ -96,15 +96,7 @@ static struct mfd_cell_acpi_match intel_quark_acpi_match_gpio = {
+ };
  
- #include "mtdcore.h"
-@@ -186,6 +187,7 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
- 				 const struct blk_mq_queue_data *bd)
- {
- 	struct mtd_blktrans_dev *dev;
-+	unsigned int noio_flags;
+ static struct mfd_cell intel_quark_mfd_cells[] = {
+-	{
+-		.id = MFD_GPIO_BAR,
+-		.name = "gpio-dwapb",
+-		.acpi_match = &intel_quark_acpi_match_gpio,
+-		.num_resources = ARRAY_SIZE(intel_quark_gpio_res),
+-		.resources = intel_quark_gpio_res,
+-		.ignore_resource_conflicts = true,
+-	},
+-	{
++	[MFD_I2C_BAR] = {
+ 		.id = MFD_I2C_BAR,
+ 		.name = "i2c_designware",
+ 		.acpi_match = &intel_quark_acpi_match_i2c,
+@@ -112,6 +104,14 @@ static struct mfd_cell intel_quark_mfd_cells[] = {
+ 		.resources = intel_quark_i2c_res,
+ 		.ignore_resource_conflicts = true,
+ 	},
++	[MFD_GPIO_BAR] = {
++		.id = MFD_GPIO_BAR,
++		.name = "gpio-dwapb",
++		.acpi_match = &intel_quark_acpi_match_gpio,
++		.num_resources = ARRAY_SIZE(intel_quark_gpio_res),
++		.resources = intel_quark_gpio_res,
++		.ignore_resource_conflicts = true,
++	},
+ };
  
- 	dev = hctx->queue->queuedata;
- 	if (!dev) {
-@@ -193,10 +195,13 @@ static blk_status_t mtd_queue_rq(struct blk_mq_hw_ctx *hctx,
- 		return BLK_STS_IOERR;
- 	}
+ static const struct pci_device_id intel_quark_mfd_ids[] = {
+@@ -244,11 +244,11 @@ static int intel_quark_mfd_probe(struct pci_dev *pdev,
+ 	if (ret)
+ 		return ret;
  
-+	/* Reclaim must not recurse into I/O while processing requests. */
-+	noio_flags = memalloc_noio_save();
- 	spin_lock_irq(&dev->queue_lock);
- 	list_add_tail(&bd->rq->queuelist, &dev->rq_list);
- 	mtd_blktrans_work(dev);
- 	spin_unlock_irq(&dev->queue_lock);
-+	memalloc_noio_restore(noio_flags);
+-	ret = intel_quark_i2c_setup(pdev, &intel_quark_mfd_cells[1]);
++	ret = intel_quark_i2c_setup(pdev, &intel_quark_mfd_cells[MFD_I2C_BAR]);
+ 	if (ret)
+ 		goto err_unregister_i2c_clk;
  
- 	return BLK_STS_OK;
- }
+-	ret = intel_quark_gpio_setup(pdev, &intel_quark_mfd_cells[0]);
++	ret = intel_quark_gpio_setup(pdev, &intel_quark_mfd_cells[MFD_GPIO_BAR]);
+ 	if (ret)
+ 		goto err_unregister_i2c_clk;
+ 
 -- 
 2.53.0
 
