@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044615;
-	b=JHYUqnS49pvqDbXU1CqwPmrCIqDZ+XaeCOmxgyjNfX/sF0i7REDvCS+WW5ta5bjDnjnA
-	 tBJeagzp5tXUneFJQM3+8qR5815vZ14tEm0fdF8GoBOPLSCPS0OiMYD+H2raCMiwCC0Ph
-	 F2Ht9/cMDrMYYRuEwIDTOO0VpYFJPCLgFuplSUAgZNLVfMxpJYEoaFnVYIZmbU2WCtVXZ
-	 9yK5jMc6zDsCMWG0B8y3YFaDX4hRNELlkeirWnb/igh1tWAPhDoFJ7X2OYZojnfcGwUi8
-	 SX31GdHEytu7lJwN33dmbD8cD44di48ixrehdsgdCLMkQQ9BcicUXL8dMlSgp6thO7Q==
+	t=1795044617;
+	b=dMz0+DvoRbUwCwJpjCF+DX/OHgG/Cpxx6IqbaXb4Eb64RyrmgzcyywwOAa29ZF8+88+d
+	 xQ9eXJK3NfYKhT9PPLzbbBxMgyK6t+277ZY41fgcJAphJVC0/H2z+egl9vtnLbQu9qdXM
+	 7DXFrZdYSAAl/izgpkQDXjfJQDo/5IRnIIr7q1//J/pHW83CWzBhMJCsinAG/WvgE4UYU
+	 yjpKuRr3fIZRABCQ8FNCc15sW09x84ebbFLPLLaq8nOxn5lI270mM1lewLOMgMn3KdDRP
+	 wLAFkS0SIGD8sqYiZeQtOyo6Hlp0Er96mUZY/noMSFVksCnmpLRdfLJtFJerXeydYFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044617;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vfI/ItPpXWWlk7EGgNFxirnP5IMmiv6zy51lboEXpN0=;
-	b=5UEGqCHG4z5VOHU1KjskRCwhBuV+s1h4g9415PP9pPftar6/P++7k9XTqm8ORH346GK7
-	 QkmF98mxWGWHnyF/LAfQok3pA4K90iqOM0TlheyyQag1TPCqXefI1IWUpYoTCzTCVLsEo
-	 4oK6KNmusX1gcyK854D99BZ0YJxXlk4s+bCkYKSINrQycWGTZW3nFCFvvYWsctUHw2Ea0
-	 YktatvNEU7Vetncg2CVeHKhia4XzJAmgQf2o9IKWcgVoWo0rS6SZMwacF7XmHWZRmodaz
-	 YYJcC5orJyeeBRM9XOxFX9uZ4yin0oTS6tXcHEOP8T0DRGHoYLUsz+du8vRB9s9Mn5w==
+	bh=ZiIXKBoQmO2rXvRalLZX6BS0yXUVmZHwLHtiqHcx8BI=;
+	b=i9isw0qLSaFAyWLL441yVb+NpnFaVg3PGHo9Br3RVijmPiym2gUXqDDnaMWPmn/U6Nn5
+	 SdGC51TmMMOsBBfzszc2JrUhfmmwYAy3K2bOnSPx1FDMFcrCmYTaKLyuSVgpMsTWQGKzj
+	 rJ7hPnsLHW3mVs1n3aWbGtult02840CjlJN+upYTQ13dqTTZNQFqtWNRM6LnGm7nrPwP/
+	 vHnOCFWTaE25P2OqBrXZPSgT7gqVU2O6gS2ZatCZokdKKgDluE8C5U79xSsbts9FS5LMN
+	 kP7wbq7E9EqmanRz2sQMIicuVxqljXV4LWlblYPFyjZueezL43TrCpsPCS+KoGPpXsQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mpKtxUoF;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iR+RjPn0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02447606A325;
-	Wed, 18 Nov 2026 23:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F69606A333;
+	Wed, 18 Nov 2026 23:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mpKtxUoF
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003291F000C4;
-	Wed, 18 Nov 2026 23:30:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iR+RjPn0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2ADE1F000C5;
+	Wed, 18 Nov 2026 23:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044614;
-	bh=vfI/ItPpXWWlk7EGgNFxirnP5IMmiv6zy51lboEXpN0=;
+	s=korg; t=1795044617;
+	bh=ZiIXKBoQmO2rXvRalLZX6BS0yXUVmZHwLHtiqHcx8BI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mpKtxUoF2qyJg8DjdomovdL8fDOCNJYINR3Dh3H3h80uS2TBwRoc1OhSi7vIVa0f1
-	 zrW3UaU6h+qBviR6LeDPJxlI0foQp1edgsrRb394QQ0fQrcY8cD9rGyomdHgjpTbcN
-	 jv0eojoQ3sLDyEConcRbADDf0nQIRpK2EO4SOyVw=
+	b=iR+RjPn0PFW+T1TWIMZZEFp2FVS4GSJGBuTiaY4lWvqeYgp3QW+4bDsih0ZgykSth
+	 HevmSYHxUe3+ST35XjHdPBh4FKwRxFeDMGHGhcbMGuTWaWoCie7fOrTkjT9d3iefwt
+	 +aSnEnZ90l5m8meX+kZnNDKXbQ0JhVMcUGzbKkFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Ackerley Tng <ackerleytng@google.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 0623/2857] KVM: Use goto to handle errors during memslot preparation
-Date: Wed, 18 Nov 2026 15:27:37 +0100
-Message-ID: <20261118150223.921565375@linuxfoundation.org>
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.1 0632/2857] HID: amd_sfh: Use report type from request node
+Date: Wed, 18 Nov 2026 15:27:46 +0100
+Message-ID: <20261118150224.256902989@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,73 +67,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-commit 23a205797cec86f391d0be886b9bc741e1262063 upstream.
+commit 85f1bea97f1909f81577cfcf3e4db9017e7f5337 upstream.
 
-Use a goto to unwind early memslot changes if preparing for a memslot
-operation fails.  This will allow moving the creation of guest_memfd
-bindings into kvm_set_memslot() without needing to copy+paste the unwind
-logic.
+Use report type from request node while sending feature and input reports
+to HID core. The cli_data report type array is never assigned and
+feature reports are sent as input reports.
 
-No functional change intended.
-
+Fixes: 1434f9fc0e47 ("SFH: Create HID report to Enable support of AMD sensor fusion Hub (SFH)")
+Closes: https://github.com/ublue-os/bazzite/issues/5796
 Cc: stable@vger.kernel.org
-Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: Ackerley Tng <ackerleytng@google.com>
-Link: https://patch.msgid.link/20260922001332.1121266-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/kvm_main.c |   31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ drivers/hid/amd-sfh-hid/amd_sfh_client.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -1866,21 +1866,8 @@ static int kvm_set_memslot(struct kvm *k
- 	}
- 
- 	r = kvm_prepare_memory_region(kvm, old, new, change);
--	if (r) {
--		/*
--		 * For DELETE/MOVE, revert the above INVALID change.  No
--		 * modifications required since the original slot was preserved
--		 * in the inactive slots.  Changing the active memslots also
--		 * release slots_arch_lock.
--		 */
--		if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
--			kvm_activate_memslot(kvm, invalid_slot, old);
--			kfree(invalid_slot);
--		} else {
--			mutex_unlock(&kvm->slots_arch_lock);
--		}
--		return r;
--	}
-+	if (r)
-+		goto err;
- 
- 	/*
- 	 * For DELETE and MOVE, the working slot is now active as the INVALID
-@@ -1912,6 +1899,20 @@ static int kvm_set_memslot(struct kvm *k
- 	kvm_commit_memory_region(kvm, old, new, change);
- 
- 	return 0;
-+
-+err:
-+	/*
-+	 * For DELETE/MOVE, revert the above INVALID change.  No modifications
-+	 * required since the original slot was preserved in the inactive slots.
-+	 * Changing the active memslots also release slots_arch_lock.
-+	 */
-+	if (change == KVM_MR_DELETE || change == KVM_MR_MOVE) {
-+		kvm_activate_memslot(kvm, invalid_slot, old);
-+		kfree(invalid_slot);
-+	} else {
-+		mutex_unlock(&kvm->slots_arch_lock);
-+	}
-+	return r;
- }
- 
- static bool kvm_check_memslot_overlap(struct kvm_memslots *slots, int id,
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
+@@ -90,7 +90,7 @@ void amd_sfh_work(struct work_struct *wo
+ 						    cli_data->feature_report[current_index]);
+ 		if (report_size)
+ 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
+-					 cli_data->report_type[current_index],
++					 node_type,
+ 					 cli_data->feature_report[current_index], report_size, 0);
+ 		else
+ 			pr_err("AMDSFH: Invalid report size\n");
+@@ -99,7 +99,7 @@ void amd_sfh_work(struct work_struct *wo
+ 		report_size = mp2_ops->get_in_rep(current_index, sensor_index, report_id, in_data);
+ 		if (report_size)
+ 			hid_input_report(cli_data->hid_sensor_hubs[current_index],
+-					 cli_data->report_type[current_index],
++					 node_type,
+ 					 in_data->input_report[current_index], report_size, 0);
+ 		else
+ 			pr_err("AMDSFH: Invalid report size\n");
 
 
