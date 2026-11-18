@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034962;
-	b=Zl1SVfZcNQu01eu/pTtGxURxGp95F3/pYCncGOoTbgXYP0ZJxBCcOeNXnaoVGufKYc11
-	 cFV/VNQkBi+32u83EaRPy+p2DA+lDXQreWCZdDjZ2iMEn1aCIy5Edwn5cYW29KEGfPyM2
-	 pqY7ZiItFvl75Y6dI0W3+wAQZALEQXJUAGjn3FioIwalbVRfchu75DuPzZye8WQRCwUMl
-	 2RlNwPMSZjf+PEYKazFsR3ZEhSr7pfGe5BlwkmK4JVlv7Qnh/RWGTRs7P4FyTGs04cU38
-	 V+66p1viYDLvEjkDPp8x1/l5RTZodgNz4s667b+o14J7RbTGiOqtM+aBrKB6MOgKwLg==
+	t=1795034965;
+	b=t7U0BXCo2/nsGVkdv65t6sXOOelpnQMt8rUSrFqiarLNfnBrTdfP9xZdkWfZMT4myS+y
+	 MUnQLzZnxOkaTvEr8lhicvdGQSHuVPuSQSlrAPbztOXlrx4FhkTX0YLdaZ0Sv8CDa9uh4
+	 hELmCmOaPGxQmUSTnRjduS+77PADVMBCv/uhHoJQkhaFecVb06jNDZUqKk1hPpKX7WNZn
+	 U4JscAO1pqc5YNOIO+jWqlhOaBTQIEw84IXBg5ccSGbwM2TDAdqd+TKoMGJ3w5qa1v/Uu
+	 OGvN8LDAj/tHRSQyFTI+GobF51QyAIYuNdwRiyhsqLhKjud6Ev0WpL5uXw5+2b5fNdQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=73T935q8repfORq0bPrlEAvIYrRkdFsEmZ7XaRO6yRA=;
-	b=uc4X1iHdyE6QmEHO+lT7b2/H9KBUlTlOQ/l+Lm6+cfrY4j58j5jo9scKWYNrTLXWI2in
-	 0jvylS2V/Fv3yRgrrdBNc0Ojd/Cq6moBUkVGPr9RdMcj3Dborl7T9C5TzIR+mBE+89fLx
-	 pYOoFDCxiwbZfF0S5Smm9dKo9jdxEancoWkewB1M3lrTTXN2OEqR/lwgL397OsB5umIiV
-	 py98SDmmvV8w7w7yAIxoJDGfNtYrBDNNdF8Yt8oq4EUS9ZIIo5+uCVy9ndinrvQJa0ZEM
-	 zc6RRlOEP5u1nwDoTVGwNk4ZjcrET85M8GjqhDYgQkZ9qUVmNQxMZ1732+4PCh8epWw==
+	bh=Gl74FRkaFUWwmi7EQJF5ameufdo6dy33esLJ+gkskgk=;
+	b=RtCCunmGwLIrcTU+bKmlV4tLUeIbUK2Whgxc8ojO78w2ZZkuHHzQxXo+iA+ibp4e12+n
+	 oLwkYqwpFuw2rzo5wNEMAEFOHHba0BcvE4QBuKdO0gzVDCaWEX0BiXTb8uV5M9YRs81sb
+	 URXMRSlpjmfd0cO0aZhYZf7fmI57Fu1lK+pth/tuY83LOychJ6j/ww0x6rS/XJyxVn/DA
+	 uhSM/ys4xDtixfIN1rTgNFepkvH3f//JVLg9rL6Ho9H2tm+OdFU75fbMoKc+C+01xpIrQ
+	 Jx8Btc74+opsqF1XCHc9dO6Hk3Xln8Wktgi/eExvhsCypelMBuCGOytJWb6BOBPmZ6g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C56w242Q;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MY+IE0Ym;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23BE606A325;
-	Wed, 18 Nov 2026 20:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C104A606A325;
+	Wed, 18 Nov 2026 20:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=C56w242Q
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA6E1F000C4;
-	Wed, 18 Nov 2026 20:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MY+IE0Ym
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7871F000C4;
+	Wed, 18 Nov 2026 20:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034962;
-	bh=73T935q8repfORq0bPrlEAvIYrRkdFsEmZ7XaRO6yRA=;
+	s=korg; t=1795034965;
+	bh=Gl74FRkaFUWwmi7EQJF5ameufdo6dy33esLJ+gkskgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C56w242QZRauMQpRdtkAlOpKrkw7ml+6iamkcdlA8hlm7cZ02Gaf5urbrtQP4ATz6
-	 uOj4/44VHAV7HjBl7uFPJuZFIPy5iK40kEV6yJOEf50EZYqGJsjzP/J/BpC0zUGHz9
-	 f8OSN8U3xZ9HSz/x8fr/EVZppGOw2hXnG6aWS/Uw=
+	b=MY+IE0YmsneJPaPQFLyARxZKA4As2xCbXpGc8mRp2dT5qDLXDFKTEDy3P1e2+PRBy
+	 LQGCnHgHs8ywcoOAE6XkA1oH+MV0/hly2lqhmbpReMqPVjBCA+/ugmR4/heoDtlnyp
+	 qza5du80fRYcTT5FWbOJKU+LL/iGnVN9hIP1Fa78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	owen kwan <owen@verialabs.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 0556/3318] net/sched: sch_teql: fix use-after-free on lower qdisc drop
-Date: Wed, 18 Nov 2026 15:19:38 +0100
-Message-ID: <20261118150334.010615559@linuxfoundation.org>
+	Antonio Quartulli <antonio@mandelbit.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 0557/3318] net/sched: fix packet reordering on requeue
+Date: Wed, 18 Nov 2026 15:19:39 +0100
+Message-ID: <20261118150334.049860132@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,83 +69,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: owen kwan <owen@verialabs.com>
+From: Antonio Quartulli <antonio@mandelbit.com>
 
-commit 782d6bb8f9b8e9d8591181662222bf74cd3ecf79 upstream.
+commit 14368b9aa1017fee35d2589be7b17e0485c0f93e upstream.
 
-The issue: teql_master_xmit() tests the slave's ndo_start_xmit() return
-value against NETDEV_TX_OK alone. A slave that consumes the skb but
-returns an error code (rc < NET_XMIT_MASK, e.g. NET_XMIT_DROP) is treated
-as if the skb were still owned, so the loop restores skb->dev and calls
-__skb_pull() on it. A VLAN slave returns the result of dev_queue_xmit()
-from its ndo_start_xmit() (propagated since cbbef5e18307), and when the
-lower qdisc drops the packet that value is NET_XMIT_DROP after the skb
-has been freed, giving a use-after-free in teql_master_xmit().
+dev_requeue_skb() appends requeued skbs to the tail of q->gso_skb, while
+dequeue_skb() takes them back one at a time from the head. If the driver
+returns NETDEV_TX_BUSY again for the first of them, it moves behind the
+skbs still parked there and is sent after them.
 
-The Fix: test for consumption with dev_xmit_complete(), which accepts
-NETDEV_TX_OK and every rc < NET_XMIT_MASK, matching other callers that
-need to distinguish consumed results from busy. Only NETDEV_TX_OK keeps
-the packet counted in tx_packets/tx_bytes and advances the slave; a
-consumed result that is neither a success nor NET_XMIT_CN ends the
-attempt and is charged to tx_dropped, so lower-qdisc drops are no longer
-reported as good transmits. NET_XMIT_CN is counted like success because
-it can accompany acceptance of the current packet: pfifo_head_drop drops
-the old head, enqueues the current skb and returns NET_XMIT_CN.
+This showed up as heavy TCP reordering while benchmarking over veth,
+which returns NETDEV_TX_BUSY whenever its ring is full since
+commit dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to reduce TX drops").
 
-Conditions to recreate the bug:
-With CONFIG_NET_SCH_TEQL,
-CONFIG_VLAN_8021Q and CONFIG_DUMMY enabled, add lkrdummy0 (dummy) and
-lkrvlan0 (VLAN id 37 on lkrdummy0); set a pfifo limit 0 root on lkrdummy0
-and a teql0 root on lkrvlan0; bring teql0 up with an address and send one
-UDP packet to it. The VLAN xmit returns NET_XMIT_DROP from the lower
-qdisc while holding a freed skb.
+Requeue the skbs at the head of gso_skb, keeping their order. With 4 TCP
+streams over a veth pair with a pfifo qdisc, this removes about 1.3M
+out-of-order segments and 15-37k retransmits per 15 seconds, and raises
+throughput from about 40 to 76 Gbit/s.
 
-Fixes: 572a9d7b6fc7 ("net: allow to propagate errors through ->ndo_hard_start_xmit()")
-Link: https://lore.kernel.org/netdev/179248763469.3135.1739559328868319628@kernel.org/
-Link: https://lore.kernel.org/netdev/20261023162821.GN708417@horms.kernel.org/
+Fixes: a53851e2c321 ("net: sched: explicit locking in gso_cpu fallback")
+Fixes: 9540d977618c ("net: sched: fix skb leak in dev_requeue_skb()")
 Cc: stable@vger.kernel.org
-Signed-off-by: owen kwan <owen@verialabs.com>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/QDISC-Y0BY.v2.r0.20261024060625-2@mojatatu.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Antonio Quartulli <antonio@mandelbit.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20261026153113.3275494-1-antonio@mandelbit.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_teql.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ net/sched/sch_generic.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/sched/sch_teql.c
-+++ b/net/sched/sch_teql.c
-@@ -347,12 +347,18 @@ restart:
- 		case 0:
- 			if (__netif_tx_trylock(slave_txq)) {
- 				unsigned int length = qdisc_pkt_len(skb);
-+				int rc = NETDEV_TX_BUSY;
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -141,8 +141,11 @@ static inline void qdisc_enqueue_skb_bad
  
- 				skb->dev = slave;
--				if (!netif_xmit_frozen_or_stopped(slave_txq) &&
--				    netdev_start_xmit(skb, slave, slave_txq, false) ==
--				    NETDEV_TX_OK) {
--					__netif_tx_unlock(slave_txq);
-+				if (!netif_xmit_frozen_or_stopped(slave_txq))
-+					rc = netdev_start_xmit(skb, slave, slave_txq, false);
-+				__netif_tx_unlock(slave_txq);
-+				if (dev_xmit_complete(rc)) {
-+					if (rc != NETDEV_TX_OK && rc != NET_XMIT_CN) {
-+						master->tx_dropped++;
-+						rcu_read_unlock();
-+						return NETDEV_TX_OK;
-+					}
- 					raw_spin_lock_irqsave(&master->slaves_lock, flags);
- 					if (rcu_dereference_protected(master->slaves,
- 								      lockdep_is_held(&master->slaves_lock)) == q)
-@@ -366,7 +372,6 @@ restart:
- 					rcu_read_unlock();
- 					return NETDEV_TX_OK;
- 				}
--				__netif_tx_unlock(slave_txq);
- 			}
- 			if (netif_xmit_stopped(netdev_get_tx_queue(dev, 0)))
- 				busy = 1;
+ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
+ {
++	struct sk_buff_head requeue;
+ 	spinlock_t *lock = NULL;
+ 
++	__skb_queue_head_init(&requeue);
++
+ 	if (q->flags & TCQ_F_NOLOCK) {
+ 		lock = qdisc_lock(q);
+ 		spin_lock(lock);
+@@ -151,7 +154,7 @@ static inline void dev_requeue_skb(struc
+ 	while (skb) {
+ 		struct sk_buff *next = skb->next;
+ 
+-		__skb_queue_tail(&q->gso_skb, skb);
++		__skb_queue_tail(&requeue, skb);
+ 
+ 		/* it's still part of the queue */
+ 		if (qdisc_is_percpu_stats(q)) {
+@@ -167,6 +170,11 @@ static inline void dev_requeue_skb(struc
+ 		skb = next;
+ 	}
+ 
++	/* the skbs may come from the head of gso_skb, so put them back there:
++	 * appending them would let the ones still parked overtake them
++	 */
++	skb_queue_splice(&requeue, &q->gso_skb);
++
+ 	if (lock) {
+ 		spin_unlock(lock);
+ 		set_bit(__QDISC_STATE_MISSED, &q->state);
 
 
