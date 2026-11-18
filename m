@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047068;
-	b=nn40Hy/1lWOzv/Q3NxSqqsP9vok3vtkPU7naWXteM4lwOl0NF/ixKW+YttZDCuMQ5xUO
-	 ZxidC5dgXBSd3YfpKump5sUbVRoqlweVOXoCjl3LKBGGh22mKYHEXUOnpF2U3rmsC2yw6
-	 uTEutLvi1HzNACWZQxAqohJYw0y6LsOiABWcYYHL6oDH1ai9Lawqd9DxJGfOz/8TnKC2K
-	 VkEAe0XU/Qhhzx6Re3g6RUDe0FjchDW1ODTYfgZe8vJySDP6uZCeLT6rMbXeXQiGWoHHg
-	 zSda1SwqX2LKwjClknh0GEBUPx+uSDiZse8EDnHgh67ztiK6/Yy/XW69LHkVNsdFU+g==
+	t=1795047070;
+	b=TPSFJD18LHK7cWeCSQTdvg+87+e/dO16qgdGs4w/QnyJxEqD/nX4/aTIWTXW8Iav0XKX
+	 FKH19A7otDwyYV2tGcchbaSwZVR+u4y/arJzbx6z7FCZ1lazaN245jBtdESZKGlC5UPRQ
+	 A9Xj7yMoIYsgTi/L3QSoFLU+4KX6YYvjsUlcSMC+VczOSMF5mBirHs7V3qt1c+IlrgjP/
+	 aBQ3sqEOd0i24CUzyoXvunosc+nGxWmBKBmyy/x7Mqpr1qUCQkFtc76l/oH6Y8mj+Edx6
+	 nQA8IdT6DCYDdxPUF2ff2kdmkcFwDrbByIlbUhdrZ+w13TYEH7m1XsjL4t6a2jTmaMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047068;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047070;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=/sRYej8csscaKQgnnxAm45Wv9o8pG3cJBxceav/2BB8=;
-	b=aOpkwZjITZCm5r+c2E1SEAoedVvwTZS6XwkNCNBN7rQR+R0ZX72Nt220PUDQGOSONlbI
-	 D0BkXhzhC9xgiJWBVYjtxQbloNj3LrzbUM6uLweQNtMWFYNBC+g2GUAyE/o32S7tXfFHH
-	 SpSRm0QG8IQ0XUrKnEoJloTCesgBAl4tuBNrFuanj0GIkReSbXSxIgOAYTTwo0Qw1FxFB
-	 0TlJ+zFml/zuh86tBvbrLFR8lpK4unU7A1ZfImkQXpASnukLd+swawhGlBNfG49wZJ+qe
-	 DKtswCfcurTOJk4hpr/7yIht69ajJzQcdjKM9tglPdwCjxNIwbxE2PLuyNIA/EY6t4w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=Kpmia1o7GjxBNqYbFt3V02QAnp75gQ68wHeK1Muc/hU=;
+	b=hwHayjHoMrRrq+h7cYkkPpMqwfNmJCyVQIgOOTRK/8TSJJhaBWcTCQNvPpwBjNgx74Pc
+	 KEL3NQK2L8QLqfS+9sxForBSepjBcXQZNdlg0IoN6bFW3+ulfRCopr/tp5RdO6WXrV/B1
+	 eu+g3IZIaQABXE98PlyxoF+hyVFdnLmNrPyGUAPyM29iJ9Xrla0ZRKfCLp5gecyTPyFGC
+	 H7neoWQLbMje6855f+APSYEotGcEgIVOAsUBQ43hzJjK9braNvL2duSDHzWWWmi4gauf/
+	 WdMrSGbjOmBGP/6SEjlxKcO2JuOzICGJotmgsEqTW+aJNyDsFTxv8x2d6K+pPAKY9yA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JA9cKThv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJCZmQRA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04AD4606A330;
-	Thu, 19 Nov 2026 00:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE797606A31C;
+	Thu, 19 Nov 2026 00:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JA9cKThv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 624571F000C4;
-	Thu, 19 Nov 2026 00:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GJCZmQRA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 119281F000C4;
+	Thu, 19 Nov 2026 00:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047067;
-	bh=/sRYej8csscaKQgnnxAm45Wv9o8pG3cJBxceav/2BB8=;
+	s=korg; t=1795047070;
+	bh=Kpmia1o7GjxBNqYbFt3V02QAnp75gQ68wHeK1Muc/hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JA9cKThvVnER23phD7HGvOeqzvdkAkDhN7R9NN9Bf0qfrcKcNBKw53SOeRFL7EvU+
-	 srGeuZDG1B0tOnrYsP4Ae8e1dSQsXoqLtWAzsShLIYjfeyEQaINoZhNYp4lnMaJu0Y
-	 3g442OsIoJgzBE1YDQjSPeyvRKC2qGZ9gt3iqu5s=
+	b=GJCZmQRA+Z3AnCxfZZVVRffIlu9M1aD1na1n5EXEOM9aw2mNBkpFOuvo9FWQkSmjf
+	 fJcq14ALzcPFUFSuzDrTGaQkVJYfbscopSUVUNL9+xVW7Mf7JZPmLthhNcfKk7lutr
+	 k8sRd9snXcPo5hjaxPknHyV3khMEL0N+a7398oQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Ming Lei <ming.lei@redhat.com>,
-	Chao Leng <lengchao@huawei.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger@xenproject.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1504/2857] block: set the disk capacity to 0 in blk_mark_disk_dead
-Date: Wed, 18 Nov 2026 15:42:18 +0100
-Message-ID: <20261118150255.489356639@linuxfoundation.org>
+Subject: [PATCH 6.1 1505/2857] xen-blkfront: Fix IO race during unplug
+Date: Wed, 18 Nov 2026 15:42:19 +0100
+Message-ID: <20261118150255.522012432@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,94 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit 71b26083d59cd4ab22489829ffe7d4ead93f5546 ]
+[ Upstream commit 61b6d1df1d6234c38a6ea7e4f58e7da035ef6ab4 ]
 
-nvme and xen-blkfront are already doing this to stop buffered writes from
-creating dirty pages that can't be written out later.  Move it to the
-common code.
+During unplug, blkfront stops the hw queues and marks the disk as dead,
+then later during removal calls del_gendisk(). However, IO issued after
+the hw queues are stopped but before the call to del_gendisk() will be
+queued but never handled. This causes del_gendisk() to hang forever
+waiting for the queue refcount to drop to zero.
 
-This also removes the comment about the ordering from nvme, as bd_mutex
-not only is gone entirely, but also hasn't been used for locking updates
-to the disk size long before that, and thus the ordering requirement
-documented there doesn't apply any more.
+This can be reproduced by issuing IO during an artificial delay after
+stopping the hw queues.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Chao Leng <lengchao@huawei.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20221101150050.3510-2-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 61b6d1df1d62 ("xen-blkfront: Fix IO race during unplug")
+Fix this by simply not stopping the hw queues directly. Marking the disk
+as dead already freezes the queue which prevents new requests being
+added and it synchronously runs the hw queues to clear anything pending.
+If the hw queues are stopped when calling blk_mark_disk_dead(), running
+the hw queues is a no-op and can leave queued requests unprocessed.
+
+Cc: stable@vger.kernel.org
+Assisted-by: LLM
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Acked-by: Roger Pau Monné <roger@xenproject.org>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20261006163411.2583538-1-ross.lagerwall@citrix.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/genhd.c                | 5 +++++
- drivers/block/xen-blkfront.c | 1 -
- drivers/nvme/host/core.c     | 7 +------
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ drivers/block/xen-blkfront.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/block/genhd.c b/block/genhd.c
-index ee6dc7feccc6f..f06195e53571c 100644
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -595,6 +595,11 @@ void blk_mark_disk_dead(struct gendisk *disk)
- 	blk_queue_flag_set(QUEUE_FLAG_DYING, disk->queue);
- 	set_bit(GD_DEAD, &disk->state);
- 	blk_queue_start_drain(disk->queue);
-+
-+	/*
-+	 * Stop buffered writers from dirtying pages that can't be written out.
-+	 */
-+	set_capacity_and_notify(disk, 0);
- }
- EXPORT_SYMBOL_GPL(blk_mark_disk_dead);
- 
 diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index df0eaf15a4ddd..7ad03bcd9f274 100644
+index 7ad03bcd9f274..207a2ec844849 100644
 --- a/drivers/block/xen-blkfront.c
 +++ b/drivers/block/xen-blkfront.c
-@@ -2134,7 +2134,6 @@ static void blkfront_closing(struct blkfront_info *info)
- 	if (info->rq && info->gd) {
- 		blk_mq_stop_hw_queues(info->rq);
+@@ -2131,10 +2131,8 @@ static void blkfront_closing(struct blkfront_info *info)
+ 		return;
+ 
+ 	/* No more blkif_request(). */
+-	if (info->rq && info->gd) {
+-		blk_mq_stop_hw_queues(info->rq);
++	if (info->gd)
  		blk_mark_disk_dead(info->gd);
--		set_capacity(info->gd, 0);
- 	}
+-	}
  
  	for_each_rinfo(info, rinfo, i) {
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 9521126738940..61a34581ca70a 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -5337,10 +5337,7 @@ static void nvme_stop_ns_queue(struct nvme_ns *ns)
- /*
-  * Prepare a queue for teardown.
-  *
-- * This must forcibly unquiesce queues to avoid blocking dispatch, and only set
-- * the capacity to 0 after that to avoid blocking dispatchers that may be
-- * holding bd_butex.  This will end buffered writers dirtying pages that can't
-- * be synced.
-+ * This must forcibly unquiesce queues to avoid blocking dispatch.
-  */
- static void nvme_set_queue_dying(struct nvme_ns *ns)
- {
-@@ -5349,8 +5346,6 @@ static void nvme_set_queue_dying(struct nvme_ns *ns)
- 
- 	blk_mark_disk_dead(ns->disk);
- 	nvme_start_ns_queue(ns);
--
--	set_capacity_and_notify(ns->disk, 0);
- }
- 
- /**
+ 		/* No more gnttab callback work. */
 -- 
 2.53.0
 
