@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019310;
-	b=HoRo66VzPdOXYH15lm7HBqrraY+2oVJpRXPe5aW6ZMaGvuXHDcPDHFgzuaQMIx+IZsRf
-	 nG1XxfKpSiOvvos5UY38KhmWvRZVN3rsj6W+Qy4jAQJQ7jKNqbZ1/Bn6ip3jV/UuVHMne
-	 gmRAXQMwLPPg85BocIza7zlEoUIAxVH2/sD5qHndOm7T4wpn3syPu8oqo0mGSXRnumM5Y
-	 q59xISg/oygVgbcXWxiVh1gFMgjDCWlBs5T/sivqBsBsl1hPtVGOImvLY3c1JVyjnJaDO
-	 q7DQgKvX3JSryKiswdt5ovWuwTEz5DHTqAyCbfdc5qolbu+ne3IYGUuuLnCFa5uydyw==
+	t=1795019313;
+	b=5C0erwJN4/zxfzMVqKgmem31zsskGoB9SLb9OayLJylK1ZGODkhlCezbBCk85/2b4KCi
+	 DhlNWVJEQ58eGFihJ/U5L6jUIZP2uOi1QqcSVpKMJEiwXYBIWNngCo57PKzClSzHz8xPN
+	 AbR7BvOejyYwZulaER0+SSvAkYbQG3/XpcEA3iJu/oxZvATVGnwrd0WoUZ8LZ5PQzAUmM
+	 Mn9uNxSylPO8yC6SlB+qWeMSg//q/jLhNyd3eplBM1eA13/G/qn3nHzMTHvw2A2SIl4GO
+	 nAivY0Dj/fsEmMByQf6x/Wdgg3YeZwIuvNEGA5JpNb/gEQZESEGEvZ48N77W0HhTSHw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019310;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019313;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=V1vYCkuvxcHrufrTdu3zmekUms0nlZEEjZzbN7mbAR4=;
-	b=h3EAEu81J1lNmYTFirKzpNjboLFMMt0MaEyPfEjcsb05fxsuNIH2ekwsPhB90SYTlBTv
-	 8nEcaWXEwAL3iXyKT+KAYD3zkBDSytWHdNU9puXCKr+bG87Kl01+eBmhwHUVvtGfJpMBE
-	 yOfHffg8sNETiwWRdKGicJgL6a/7/qLtNY9M1m7jEQggv5XEIUyXnegJr6uNsQPV+nnZK
-	 aPefRlD72BHs+mprOcqcLJvcAMbaeNSIfRgq2Koy+kzAN6vXyu5QjllVLA8t2pjBcXX4L
-	 d+KpLPsHwI6m8k5JCsLqe9QCTmPo91jYldYjeUWY0AqitJRWbLdexdpEk1RTosmNieg==
+	bh=aWpg+p0xFvFxlCrMPj0+flrs+LSwD2q6obBbEQtWEdU=;
+	b=4vs6S1lwE8SotK4pI3OjF8mGMCqZ5+lw6oqxxe8+vvyEAPEJ4Fs2mSBNuvOcN9Rni5i9
+	 TotXZLQeRKc3oAse1+2c407bIu1Tqs2Nw6/CPHW5IOos25KKWj5dfnDX7ry4rJK/8c2uT
+	 CSdMGO1pR9xoHPhulsYTNPAkpsQKh+TuqemiCuJ8HqTE2WBBy0CGE36voy5i9NhTVsw5z
+	 l9Yy5KF2ksMpoa6nasxdGUssC93Zz57xk5t/R0qG0bC9D/pj1xWLvFBNMKDt4VGmRSU7t
+	 blufjcuBkaN4SB+bJaF+NdL0teNKaJEd1nQMtXgplvrI9d9jm/F932y04nmz/FVKxKA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mygsdHfH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jwpx3aZ9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EAE660A2607;
-	Wed, 18 Nov 2026 16:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563F4606A31C;
+	Wed, 18 Nov 2026 16:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mygsdHfH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 853971F000C4;
-	Wed, 18 Nov 2026 16:28:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jwpx3aZ9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D1B51F000C4;
+	Wed, 18 Nov 2026 16:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019310;
-	bh=V1vYCkuvxcHrufrTdu3zmekUms0nlZEEjZzbN7mbAR4=;
+	s=korg; t=1795019312;
+	bh=aWpg+p0xFvFxlCrMPj0+flrs+LSwD2q6obBbEQtWEdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mygsdHfHoZLXNRuGfzKFDOH9p1CLQpbKZPt5trAXNP0WV2ovOzNVD/SPXxBcz6WUI
-	 VgxJ/Hl9vjthXHCIT1qwiz8Wdr0E1lXqv0qAS1K0BACeGreYeuwH7K9sWgcHLnJURH
-	 RfQeuRM7yTh3aSSYYeKobNQeGK/AUlKj/AGIJwQw=
+	b=Jwpx3aZ9BrCiYHH+Ty0n1oY1B0XyCiIPCMUw9qFcq25fiGBhNhQW/nK/G+UuC6GaS
+	 yJJqqSNtQeabv6GqgYeZfNIRD0QE2IhUpSur4NNt689NF+elAWav/UoYO9Z98iBNIb
+	 QZ4nJE8gkTK4L6xpIkuoyITxetAOAosZxayLaljU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sashiko <sashiko-bot@kernel.org>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1550/2651] ALSA: line6: Fix potential OOB write in line6_capture_copy()
-Date: Wed, 18 Nov 2026 15:46:30 +0100
-Message-ID: <20261118150343.761627276@linuxfoundation.org>
+Subject: [PATCH 7.3 1551/2651] ASoC: fsl_asrc_m2m: Fix bogus compress task pointer assignments
+Date: Wed, 18 Nov 2026 15:46:31 +0100
+Message-ID: <20261118150343.796209661@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,39 +70,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit d69798357b5d562bcda1af488cda3ead4d039f8f ]
+[ Upstream commit 360e688f6d24ccd3e9485f57ad451ec1cecfb94c ]
 
-line6_capture_copy() copies the data for the original byte size, but
-the buffer overwrap is checked against the frame size.  Because of it,
-when the data size isn't aligned in frames, the remaining bytes might
-be still copied above the buffer size.
+When a creation of input or output compress-offload task fails in
+fsl-asrc driver, the task->input or task->output pointer is left with
+ERR_PTR(), which is non-NULL.  Then it's handled in the compress
+offload core and it tries to release via dma_buf_put(), resulting in
+an access to a wrong address.
 
-For avoiding the potential OOB write, correct the copied data size in
-line6_capture_copy() to be aligned with frames.
+Clear the bogus pointers properly before returning an error.
 
-Fixes: 1027f476f507 ("staging: line6: sync with upstream")
+Fixes: 24a01710f627 ("ASoC: fsl_asrc_m2m: Add memory to memory function")
 Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://patch.msgid.link/20261008192553.300025-11-tiwai@suse.de
+Link: https://patch.msgid.link/20261008192553.300025-9-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/capture.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_asrc_m2m.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
-index 32922b7f2ffc7..626274e503c7a 100644
---- a/sound/usb/line6/capture.c
-+++ b/sound/usb/line6/capture.c
-@@ -129,7 +129,8 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
- 	} else {
- 		/* copy single chunk */
- 		memcpy(runtime->dma_area +
--		       line6pcm->in.pos_done * bytes_per_frame, fbuf, fsize);
-+		       line6pcm->in.pos_done * bytes_per_frame, fbuf,
-+		       frames * bytes_per_frame);
+diff --git a/sound/soc/fsl/fsl_asrc_m2m.c b/sound/soc/fsl/fsl_asrc_m2m.c
+index 8bd2a144dbf91..a90a1c8ed34d4 100644
+--- a/sound/soc/fsl/fsl_asrc_m2m.c
++++ b/sound/soc/fsl/fsl_asrc_m2m.c
+@@ -475,6 +475,7 @@ static int fsl_asrc_m2m_comp_task_create(struct snd_compr_stream *stream,
+ 	task->input = dma_buf_export(&exp_info_in);
+ 	if (IS_ERR(task->input)) {
+ 		ret = PTR_ERR(task->input);
++		task->input = NULL;
+ 		return ret;
  	}
  
- 	line6pcm->in.pos_done += frames;
+@@ -485,6 +486,7 @@ static int fsl_asrc_m2m_comp_task_create(struct snd_compr_stream *stream,
+ 	task->output = dma_buf_export(&exp_info_out);
+ 	if (IS_ERR(task->output)) {
+ 		ret = PTR_ERR(task->output);
++		task->output = NULL;
+ 		return ret;
+ 	}
+ 
 -- 
 2.53.0
 
