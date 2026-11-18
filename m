@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018580;
-	b=U4WujGw8ICRg+4umllEfvsdSR66ZpEkhaEVwzQukFjhgghVDdu8nw1zeV9bMT406JjUW
-	 eXPuLae2HFbw+U/y/e+ky8TM1cQLekAxtWk2+5dZv3Mp0NHFOEogQnEsWselVtXNFZ2A9
-	 cx5CZBqYrxqwh+swnBsriPOdr/u1eL9WnO20uOnUivvkp7Semwyo30/S/9m1tSZXet+KS
-	 hm8jWQPfbyV/ijBnrqQzAnLeo/zPC10l8mhvjSuLgA+ea4yB5DJD2TqU2vUs3BG3bUD0V
-	 CQ5bRH8cS3p7pvYdLKPfytL1vJZP2919cWBGc+5nju45uA2atVGONmbUjszYLCyBe2Q==
+	t=1795018583;
+	b=Ahcd5msHRoZLR+6TDFypBiSeIbwCHOP8FnmIcDS4KQmEnVkg3pzclV4Gsm8C9GMqqtEC
+	 U4VS/MmC0FDZKjGSdIj7e4h2PhwHPfBjtLPtN9g3GBJe59Lb+G8Y29rOzxp08DSeWGX0c
+	 ZG0Jvq5fBoNa83BmpaLEFMnGbThNqAGJUvVqHUQM+9qq5Mhvf8wuY5uuaz60/UxX5MknQ
+	 VOfRJNlBkVYZTZc9Jtvlf5r+rMVSlneE9EpVyKaNBjx3DpT9Ibld8QmfA97c6r/DCTOy6
+	 yBZRR9Vwt57TH/cxuNtM+SxrSFzacm2LNOlM9qO0lSACiGgudCKNa4C0TmOPPEHfF+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x+T/5M3tB8aBAVvDsh5HIiZMqSt9LR0ASIm1yXlpn/E=;
-	b=sI+zAP9kfhC0G29idJeWfQeBphaENgFyOXVerTV2Ki68UxgZxn0+BtrUWncAnwnKWTKv
-	 UMC8gLO2wrWJj5pOXizmSKd0je2uWznWF+5+UUapNcQmmNwJo9xSZGLAIA1VZOjfD/Fe/
-	 btwsnD7dZEbIgYreMdKNxCjBqoQ7NsgojE5RzCl0AkFxjq6FYixQS4rZtDIvfBuALIkpy
-	 hXzOeUeDnG3w3EdTBdoAI02/sLw3Qds/UyCKC3tsHvvU93fmAxfA1WO03dRTWCBI1m/Un
-	 1lRKFiGABYrZmXndg11MPju3StPtgUBNoS5baImlLKjlzSOgG6xtAkLru+V7N8r/lyg==
+	bh=YU8KjIdePqKjXsdHzmFH/KnzFRkF+y816cdE71ipVsY=;
+	b=fd8ZQ5uEc/djj36LzVcHL6633wiwWG8qtjc8SNzhZSNkZ2RGiiYn8Y4E7gDxwCbSMZVE
+	 fa/KI/aJjoJuDHIV9Oi/Bv6rjATQiYjv4UXtR72AojvBfJ0EMt/4McZjyC9xHfya7/eDA
+	 1zweyTO+Z1U5mcb1ULBPeGjj9OlMNzE07NUhD/5jj8yUS13h7LCZgGpXmaN9cojEclf6w
+	 eXoasQDomPug9QXo9+ksxuSGPozKR9Y8Evf3v+2MrRZ6wn6AM5jLnjKRIfUkuo+lRfg8B
+	 vk9MJCNoZdFkE7tAZ1c0ViqgoYp1zEzB3lF9UHb3h2o5m5xi1kUqXoZ7xeNzR0tL7Yw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qHPGbbU/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T5YFaHiJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9FA606A325;
-	Wed, 18 Nov 2026 16:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8423E606A320;
+	Wed, 18 Nov 2026 16:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHPGbbU/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1BBF1F000C4;
-	Wed, 18 Nov 2026 16:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T5YFaHiJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21871F000C4;
+	Wed, 18 Nov 2026 16:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018580;
-	bh=x+T/5M3tB8aBAVvDsh5HIiZMqSt9LR0ASIm1yXlpn/E=;
+	s=korg; t=1795018583;
+	bh=YU8KjIdePqKjXsdHzmFH/KnzFRkF+y816cdE71ipVsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qHPGbbU/EuugNU9g0uGOVO2U2i+UtDCqxMojV7MXC7Tquiaq2QhdZqhTkDF3Vx8Y6
-	 MGJvf6dfYr4cy+pdgMzdJmRNRVseF7thJAbGOtwpY6SpWoKcjsoFnemnTYShEWmm+V
-	 MTU6ukBEcjYQJ7diRc3FbE5SbTpT+40NVyPyYLJ4=
+	b=T5YFaHiJlm2F/sLxTcSYO7FhqtuDgV06QqdxHOXamWNf7aC1ZFdscQS2m8MhS7mY3
+	 x9QKDSrJSZB0EWyQnkFjflLDRn5ry3/tKGVu2wrw9FT+2sktYHgLlnXLh2Px8bX8Pu
+	 fz/wZ/67zge6e4dzg/MASLun/L9LMB/HlRxQz/hI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joachim Eastwood <joachim.eastwood@gmail.com>,
+	Yaozhong Li <yaozhonguwl@gmail.com>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1290/2651] arm64: dts: rockchip: fix missing pcie rst pinctrl on rk3588s-nanopi-r6
-Date: Wed, 18 Nov 2026 15:42:10 +0100
-Message-ID: <20261118150334.385749117@linuxfoundation.org>
+Subject: [PATCH 7.3 1291/2651] arm64: dts: rockchip: fix analog headphone output on rk3399-firefly
+Date: Wed, 18 Nov 2026 15:42:11 +0100
+Message-ID: <20261118150334.421142018@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,59 +68,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joachim Eastwood <joachim.eastwood@gmail.com>
+From: Yaozhong Li <yaozhonguwl@gmail.com>
 
-[ Upstream commit 1d974afb0ea4e1ffc03535a2b2ae5a84d35738d7 ]
+[ Upstream commit 23eab1a5e36099fd1269f8a18dc389e04dc19011 ]
 
-The pins are used as reset-gpios but not reserved through pinctrl.
+The analog headphone jack on this board has never produced any sound
+with a mainline kernel.
 
-Fixes: f3c6526d6fb2 ("arm64: dts: rockchip: Convert dts files used as parents to dtsi files")
-Signed-off-by: Joachim Eastwood <joachim.eastwood@gmail.com>
-Link: https://patch.msgid.link/20260903-nanopi-m6-v6-3-37416bbd6862@gmail.com
+GPIO4_C5 has to be high for audio to reach the jack. The board file
+muxes the pin to GPIO through the rt5640_hpcon pinctrl group and
+references that group from the codec node, but nothing ever requests or
+drives the line.
+
+Describe it the way rk3399-roc-pc-plus.dts already does something similar,
+as a simple-audio-amplifier auxiliary component, so that DAPM asserts the
+GPIO while the headphone path is active.
+
+Measured on a Firefly-RK3399 by toggling only this line while a 1 kHz
+tone kept playing, with the playback PCM in state: RUNNING throughout:
+
+  high -> audible, low -> silent, high -> audible
+
+With this change the line is claimed and follows the audio path:
+
+  pin 149 (gpio4-21): headphones-amp gpio4:149
+  idle:    gpio-21 (|enable) out lo
+  playing: gpio-21 (|enable) out hi
+
+Fixes: 171582e00db1 ("arm64: dts: rockchip: add support for firefly-rk3399 board")
+Assisted-by: LLM
+Signed-off-by: Yaozhong Li <yaozhonguwl@gmail.com>
+Link: https://patch.msgid.link/20260921063431.103-2-yaozhonguwl@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ .../arm64/boot/dts/rockchip/rk3399-firefly.dts | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
-index 3ee6853b8752e..5bbd5d2fc5fa9 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-nanopi-r6.dtsi
-@@ -360,12 +360,16 @@ rgmii_phy1: ethernet-phy@1 {
- };
- 
- &pcie2x1l1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie20x1_1_perstn_m2>;
- 	reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
- 	vpcie3v3-supply = <&vcc_3v3_pcie20>;
- 	status = "okay";
- };
- 
- &pcie2x1l2 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pcie20x1_2_perstn_m0>;
- 	reset-gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
- 	vpcie3v3-supply = <&vcc_3v3_pcie20>;
- 	status = "okay";
-@@ -420,6 +424,16 @@ rtc_int: rtc-int {
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
+index 0568dfa140b32..e971966516127 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
+@@ -96,6 +96,15 @@ key-power {
  		};
  	};
  
-+	pcie {
-+		pcie20x1_1_perstn_m2: pcie20x1-1-perstn-m2 {
-+			rockchip,pins = <1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+
-+		pcie20x1_2_perstn_m0: pcie20x1-2-perstn-m0 {
-+			rockchip,pins = <3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
++	/* GPIO that enables the headphone output path */
++	headphones_amp: headphones-amp {
++		compatible = "simple-audio-amplifier";
++		enable-gpios = <&gpio4 RK_PC5 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&rt5640_hpcon>;
++		sound-name-prefix = "Headphone Amp";
 +	};
 +
- 	sdmmc {
- 		sdmmc_det_pin: sdmmc-det-pin {
- 			rockchip,pins = <0 RK_PA4 RK_FUNC_GPIO &pcfg_pull_up>;
+ 	ir-receiver {
+ 		compatible = "gpio-ir-receiver";
+ 		gpios = <&gpio0 RK_PA6 GPIO_ACTIVE_LOW>;
+@@ -132,8 +141,11 @@ rt5640-sound {
+ 		simple-audio-card,routing =
+ 			"Mic Jack", "MICBIAS1",
+ 			"IN1P", "Mic Jack",
+-			"Headphone Jack", "HPOL",
+-			"Headphone Jack", "HPOR";
++			"Headphone Amp INL", "HPOL",
++			"Headphone Amp INR", "HPOR",
++			"Headphone Jack", "Headphone Amp OUTL",
++			"Headphone Jack", "Headphone Amp OUTR";
++		simple-audio-card,aux-devs = <&headphones_amp>;
+ 
+ 		simple-audio-card,cpu {
+ 			sound-dai = <&i2s1>;
+@@ -547,8 +559,6 @@ rt5640: rt5640@1c {
+ 		clock-names = "mclk";
+ 		realtek,in1-differential;
+ 		#sound-dai-cells = <0>;
+-		pinctrl-names = "default";
+-		pinctrl-0 = <&rt5640_hpcon>;
+ 	};
+ };
+ 
 -- 
 2.53.0
 
