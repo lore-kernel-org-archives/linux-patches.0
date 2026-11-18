@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056035;
-	b=HkSqk2cYl0cE+OAoOmRKC9MvdSChOA0djjPzOrirzPA+LL1wq8KvQ/4UsKNS+LWehmV8
-	 3fHIfWqHtd8EvNEzRgZVz1j3ZQMaV+vvEh+EEKUaUfLYy3FwRQ7c0nuHNtd+5Kpyrxz1Q
-	 awEpk8CUy6+M9e/Jvmy8bP8ns2Pbe1XDs0jgISH+iwhWSXNkiKK4YGdEzwuKvmY8HFw/S
-	 fINzlufegMLnIxMkgGNajHfwNA6dOzCIjx7sCUtdiZjiRFQew22kGTzvRKLWHuRsgMIb/
-	 7QE5gGwz5IWEI+Z5QzVkVpXKr23GBtoPjj9VSYcSTKF8TkVC/EyNGcnQu6ZEn8Jt/xg==
+	t=1795056038;
+	b=QPJQ/mV3ES+VXhhHwTPJGn3q7K57qKd6rUJQh7hoJ0s0G3lLKvNoV/oBcrhSkKMzxcTm
+	 pcgbMP9SElE90Mlq5QDkoz1C5EaZ3wZ8VPsRYpVVCzyWiELCxo5HKfQIPWSZWItZbTlJB
+	 KBn+cH3JUQicXAIOY5FlRj26q78wxe1ec4n4abxqTJiTS7h9MKEBn1jxH/DPEYvieaxXH
+	 Z2nZWUIbiUrAAfy7mwuWGU0GBsRsUsqkcj99zdqmxFPyPVk46IPRXYkjxd83mR18AQxkW
+	 IlX9nmtVGGyERsOSeS00D/uNOCHpWCA1uu7d96MYVdgJbuLfjteRLAzGCTUgOLSkRkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056035;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056038;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=Ve4R5kZHcLs/1fDbtuF10vE3KldOSaZjnlq3fniimUA=;
-	b=OLu1Sn/gidz44kZfIOSrAaHlNoKAp8kt+vqNpnlkMXGSwqSMMEBwk1o4rs2pBJZsvR2s
-	 zX5pCe7abInBThJGZ+uLsojZfByOHJK5bp+sy1vR1bJ4t63x/1fj2/NbHQtfzwnFVVnfV
-	 egjxtf4+/y0zQdkzSlHg+9vvrk7qwmgBrq9031dxvnWjpWFF/6ZCN8upww94co38KtkIk
-	 p7nvXU8wN/zdVGR5cpTVe+WWoXI81AyGSZSQvvbiUc4HWVImP/2qhyfx74UJEoO/hnb34
-	 oYwd7hluRqEpPOwx9vJAzfHav8jqP2ovqIHpInfv3TWYCHJ3dL/0gE3r8Myob570QgA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=41XxRNsYHMXOr1/rTSb4+g3PhQ/3ezWSJAoFpTc5vyo=;
+	b=eebsjoAt8Jyyi0ce6qQlHxLIPoHES8iCTAu8UtA5zYZsnIMHHCr78zs+30K5u5fCcri5
+	 oZ8FfI7c5eEmnNzemfLOqEqxrNqoDxkhMZeUK7pttIeWxSbIbi0Afb+7Y7BIoG5rYQW9i
+	 um+4D0VFa8gO3PJSZVhVL5XEYbMVv69gaBOkQHjLyQUfiB6Tv4ImBLzreimLUPYO8E9G8
+	 7mNx8I2PdoWzBhGasauYLv08C4al968WaSz+VJ2GEN9m186LGoy/ej6oJV3J1HpMSyfdY
+	 7UcJ4GHI7pA6TxMRSr3o7Qk1RNuLW3f++uBYjvfa1nQ53A4BaIFDOpvafJy7ztD1QdQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZB7ZG2uz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=od9P2Ery;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AF0606A320;
-	Thu, 19 Nov 2026 02:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E8F606A320;
+	Thu, 19 Nov 2026 02:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZB7ZG2uz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A871F000C4;
-	Thu, 19 Nov 2026 02:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=od9P2Ery
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0741F000C4;
+	Thu, 19 Nov 2026 02:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056035;
-	bh=Ve4R5kZHcLs/1fDbtuF10vE3KldOSaZjnlq3fniimUA=;
+	s=korg; t=1795056037;
+	bh=41XxRNsYHMXOr1/rTSb4+g3PhQ/3ezWSJAoFpTc5vyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZB7ZG2uzx+datQXbLdszgML6ZzGzq2pPhYyMOGMsStTv2fUIvgonEGXgmpmn4ExVX
-	 DR5utvzzQihJVYm2vDAsqHY/8GtFu3QgNKvHU10kiHnaUCPc4w7T+BTvAyBsMwyjis
-	 OZw/ldvCrA4tZf6JtNPGIymSu7bBsJo22pRivfTI=
+	b=od9P2EryMOVVuTSeV8Sx0xMOB5tDaPcuAPxajUvsdNo5TDn/RL9NpdXS0znWgvBbi
+	 ynr5oRrRLXKWTyd7PztBNc5b9lfyS+N8NTfN/0Y8GUMB3TV6pA3yR/lOQUj0E+uFNP
+	 5U6w1prnzBN0JBrGuCAtn2VbbFxYEGqn6EGprzDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prathamesh Deshpande <prathameshdeshpande7@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
+	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1843/2214] RDMA/mlx5: Cancel software CQ notifications before teardown
-Date: Wed, 18 Nov 2026 15:58:39 +0100
-Message-ID: <20261118150125.143633547@linuxfoundation.org>
+Subject: [PATCH 5.15 1844/2214] drm/panfrost: Explicitly enable MMU interrupts at device init
+Date: Wed, 18 Nov 2026 15:58:40 +0100
+Message-ID: <20261118150125.179738648@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,41 +63,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
+From: Adrián Larumbe <adrian.larumbe@collabora.com>
 
-[ Upstream commit a0ab2bb269e7fd8523f87950b91a42a36c7f8f2a ]
+[ Upstream commit 8a597d099b8b2f25df655cbe8e30765013784fed ]
 
-GSI completions queue notify_work to invoke the CQ completion handler.
-CQ destruction drains hardware events and core polling, but does not
-cancel this software notifier.
+Because the device must be in a position to accept jobs between the time
+drm_dev_register() is called and autosuspend first kicks in, there's a very
+narrow window inbetween during which jobs targeting the tiler buffer
+object would time out, since the device's PM status is 'Active', but no MMU
+interrupts were enabled at device initialisation time.
 
-Fixes: 25361e02c448 ("IB/mlx5: Generate completions in software")
-Signed-off-by: Prathamesh Deshpande <prathameshdeshpande7@gmail.com>
-Link: https://patch.msgid.link/20261008141209.6923-1-prathameshdeshpande7@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Fixes: 73e467f60acd ("drm/panfrost: Consolidate reset handling")
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20261012-claude-fixes-v15-7-bc0a6c498553@collabora.com
+Signed-off-by: Adrián Larumbe <adrian.larumbe@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/cq.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/panfrost/panfrost_mmu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
-index ff98fd80c03a7..cc37994ef924d 100644
---- a/drivers/infiniband/hw/mlx5/cq.c
-+++ b/drivers/infiniband/hw/mlx5/cq.c
-@@ -1042,6 +1042,9 @@ int mlx5_ib_pre_destroy_cq(struct ib_cq *cq)
- 	struct mlx5_ib_dev *dev = to_mdev(cq->device);
- 	struct mlx5_ib_cq *mcq = to_mcq(cq);
+diff --git a/drivers/gpu/drm/panfrost/panfrost_mmu.c b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+index b5ee076c2841f..9c9a22eb8392a 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_mmu.c
++++ b/drivers/gpu/drm/panfrost/panfrost_mmu.c
+@@ -211,6 +211,12 @@ void panfrost_mmu_as_put(struct panfrost_device *pfdev, struct panfrost_mmu *mmu
+ 	WARN_ON(atomic_read(&mmu->as_count) < 0);
+ }
  
-+	if (!cq->uobject)
-+		cancel_work_sync(&mcq->notify_work);
++static void panfrost_mmu_enable_interrupts(struct panfrost_device *pfdev)
++{
++	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
++	mmu_write(pfdev, MMU_INT_MASK, ~0);
++}
 +
- 	return mlx5_core_destroy_cq(dev->mdev, &mcq->mcq);
+ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ {
+ 	struct panfrost_mmu *mmu, *mmu_tmp;
+@@ -228,8 +234,7 @@ void panfrost_mmu_reset(struct panfrost_device *pfdev)
+ 
+ 	spin_unlock(&pfdev->as_lock);
+ 
+-	mmu_write(pfdev, MMU_INT_CLEAR, ~0);
+-	mmu_write(pfdev, MMU_INT_MASK, ~0);
++	panfrost_mmu_enable_interrupts(pfdev);
+ }
+ 
+ static size_t get_pgsize(u64 addr, size_t size)
+@@ -733,6 +738,8 @@ int panfrost_mmu_init(struct panfrost_device *pfdev)
+ 		return err;
+ 	}
+ 
++	panfrost_mmu_enable_interrupts(pfdev);
++
+ 	return 0;
  }
  
 -- 
