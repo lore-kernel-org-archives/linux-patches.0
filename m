@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048983;
-	b=bR0rEibLmcqtJ+BI2dmkvJcYoOwe5no631vmqWfMjEfMo+YrNbemQCH7dUsYJ5hbUkC2
-	 C6WT1G6cf6TkICFiAYgPTb5F5BqRBYmH4XBnd7ZOEzLWkn8uWlraynt2OY7JN7PbZySfM
-	 QUV1Mg2e/m8Ckt2RWZ8Bg9uhR5Z9XhKjGMG4IqTVHNn8GMgprg+EjmOFom9yoakDUn9kC
-	 kGMPxYuaxKQXYmDh8gwGS0o8KbE5Q+IsVEiLB4oon4yzRSTwgntmn35YxIwZt3Wbtuf4i
-	 oR2l1w5+AyZ9FT4uBSJ/8mjEkPa+WJeieBFpOU/lq55rMlcPuNMeRHId7G9pMMTfQaQ==
+	t=1795048986;
+	b=03TNM7k7WmVuHZNONdrTxgsR77fTbuJUvKDN9+n4lelrBLYxJpIlovHyQOt2id+sJB9+
+	 2d0tKdNmoEG5BE3A5wsU9uFl+8aK+QM6ifNdr7JcNa7D2jbmxc1vYa5g9+HR0utJQ9hRf
+	 lAgHw7jLp5+USz8CIr1cYC+P2W1hgSimY+iqRH/tDw+T1BlrfEvzmjXbhWZ8GqWnicYlA
+	 0UdSABPsVzjhle6HE66JPcd7qfepNo7ahq1Nr1GgXA8XRMpxpIKktU03fUWCAx2RFXrLR
+	 LjvHYttvfs5Off6hy2R3jXIKb2C5kJq/N6ofVY5vMJMIqPY68JrHJnORQiRbjhZGr5A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Tv0+R1iOQkxiU9rFFaeBIaT9ygx0XRZg3Qfz0sjab2c=;
-	b=xA5l15XPXhSDl8JQM1fAEBPNU515twq/FObTN+WPVsfz/c9uJKW88w/TmNWS+kQS8rmo
-	 lCrVsDgNveR02+c9q3/d6eBsNA4tJIU34eNMv7EpXmGYd+YPnNdq6m2+5S+P9u+duU1+8
-	 bnbbHjMshyCD6EdqP0w/IS3GdQMYSjr4gZTF7WrH/ianCQO6Yj7K7cmEVj1Stp8Rgocnl
-	 5m+aGHYdpa4dmcIjism2gAXxgjXC3No0Y36Ucx11hGTzeBFQwt8TSXYLI47x1sLiFWEV0
-	 JJuY7XkbEB7cyjOoUwtBnIB9k6cY1qa2f1d1nMApcVlvRQA8E4jbs3eyZ1wb7uE3wlA==
+	bh=tMd5srqVjLlkVO/Ak4JfISiu2gzNLGP9yFiaDe2gaTk=;
+	b=pV+6FjhvKcOCM7104zjk+x3Xkrwjfy8Mp2k2y5Q8lKqNJK2cy4khiHGF3UCjqIReR4yu
+	 rHCbBKP20RhJivKLV5NGZQEtiAENSJaWTcuC08qOpGRA1qm41LyJVBYN/vHhSBvjPZZlZ
+	 sWBl2thiSXsRlhvtTeXlftwcH7bpOScnK71+bM7P/B5fbXrfqYaTHFk39GKLdTjc7EdSY
+	 sKtMyyO5+22wB1n++Nq85yczIopaFcyfUcvFzpklA+7Xe5CHcEcqvZcDzdCkVp0jmlCkE
+	 3glA2MBhRWkFd/fByRBuj43dMgWnSkOD3gRGdeTTTOpWnoBXBnT+q77i7gNQSY3Kkkw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sitvrubx;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDATeZ+d;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76829606A320;
-	Thu, 19 Nov 2026 00:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F09606A325;
+	Thu, 19 Nov 2026 00:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sitvrubx
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA3C1F000C4;
-	Thu, 19 Nov 2026 00:43:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YDATeZ+d
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22321F000C4;
+	Thu, 19 Nov 2026 00:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048983;
-	bh=Tv0+R1iOQkxiU9rFFaeBIaT9ygx0XRZg3Qfz0sjab2c=;
+	s=korg; t=1795048986;
+	bh=tMd5srqVjLlkVO/Ak4JfISiu2gzNLGP9yFiaDe2gaTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SitvrubxW3x1Xrfam28LcLr4n09eANPMCTrmd8gUqLjFk1EX2MlBAAFQeSfKkUiW3
-	 qcQncTxwkWrsRJA9st9X0CdfbZaBrpOMPJwegwETojbhjd+He/kZk3qXPMZZP8oXhm
-	 NK7Fg62ymhmeAAXtjpc8o0fkjwbki/umLs8JaXVU=
+	b=YDATeZ+dmlY86aPatbQCBFp+yUTSICFoYmUmW0RWPCJy0BYdlbZGHp6uPwusrgG33
+	 hpUweWrGvkw0piJXC2XAqDGR6v6wS+JWQM5E8gkyBC79V6cREsuMQZmj8qSz1vJwcD
+	 NC/66obRiMgO/7RkeoAtYmElsjRZFP7nr8qFSM84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Szpila <bszpila@google.com>,
-	Andrei Kuchynski <akuchynski@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Omar Ramadan <omar@blockcast.net>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2172/2857] platform/chrome: cros_ec_typec: Validate SVID and mode counts in discovery data
-Date: Wed, 18 Nov 2026 15:53:26 +0100
-Message-ID: <20261118150319.609515281@linuxfoundation.org>
+Subject: [PATCH 6.1 2163/2857] amt: pull the AMT header behind the transport header in amt_parse_type()
+Date: Wed, 18 Nov 2026 15:53:17 +0100
+Message-ID: <20261118150319.282013738@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,65 +69,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Szpila <bszpila@google.com>
+From: Omar Ramadan <omar@blockcast.net>
 
-[ Upstream commit 317e7abcaf60b79765dcf35c014edac8b9d37a6e ]
+[ Upstream commit eb0c18404c8943356f4aa164e5db9067b79ea93c ]
 
-cros_typec_register_altmodes() iterates over sop_disc->svid_count and
-sop_disc->svids[i].mode_count from the EC_CMD_TYPEC_DISCOVERY response
-without validating their bounds.
+A gateway's encap socket passes ICMP errors to amt_err_lookup(), which
+calls amt_parse_type() on the quoted datagram to see which AMT message
+failed. On that path skb->data points at the quoted IP header and the
+transport header at the quoted UDP header, and icmp_socket_deliver()
+only guarantees the quoted IP header plus 8 bytes, that is, up to the
+end of the UDP header.
 
-port->disc_data is allocated as a buffer of EC_PROTO2_MAX_RESPONSE_SIZE
-bytes, and each SVID entry contains a fixed mode_vdo[6] array. If the EC
-returns an out-of-bounds svid_count or mode_count, the loops read past
-the end of the mode_vdo array or the disc_data buffer.
+amt_parse_type() pulls sizeof(struct udphdr) + sizeof(struct amt_header)
+bytes from skb->data, which on this path stays inside the quoted IP
+header, and then reads the AMT header behind udp_hdr(skb). An ICMP error
+that quotes only the IP and UDP headers of a Request, the minimum RFC 792
+asks for, therefore makes it read past the pulled data, and past the end
+of the packet when nothing follows.
 
-Validate that the discovery response with svid_count entries fits within
-EC_PROTO2_MAX_RESPONSE_SIZE using struct_size(), and ensure each SVID's
-mode_count does not exceed ARRAY_SIZE(sop_disc->svids[i].mode_vdo)
-before registering altmodes.
+Pull up to the transport header plus the UDP and AMT headers, as
+vxlan_err_lookup() does. amt_rcv() is called with the transport header
+at skb->data, so the pull on the receive path does not change.
 
-Fixes: de0f49487db3 ("platform/chrome: cros_ec_typec: Register partner altmodes")
-Signed-off-by: Bartosz Szpila <bszpila@google.com>
-Reviewed-by: Andrei Kuchynski <akuchynski@chromium.org>
-Link: https://lore.kernel.org/r/20261001085714.1086242-1-bszpila@google.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Fixes: cbc21dc1cfe9 ("amt: add data plane of amt interface")
+Signed-off-by: Omar Ramadan <omar@blockcast.net>
+Reviewed-by: Eric Dumazet <edumazet@@google.com>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20260928181557.85796-1-omar@blockcast.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/amt.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index 2febfef7943f9..02d7533ff8e81 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -7,8 +7,10 @@
-  */
+diff --git a/drivers/net/amt.c b/drivers/net/amt.c
+index 9bdc6c0e7bf9c..ad855130b4300 100644
+--- a/drivers/net/amt.c
++++ b/drivers/net/amt.c
+@@ -1284,8 +1284,12 @@ static int amt_parse_type(struct sk_buff *skb)
+ {
+ 	struct amt_header *amth;
  
- #include <linux/acpi.h>
-+#include <linux/array_size.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/overflow.h>
- #include <linux/platform_data/cros_ec_commands.h>
- #include <linux/platform_data/cros_usbpd_notify.h>
- #include <linux/platform_device.h>
-@@ -678,7 +680,15 @@ static int cros_typec_register_altmodes(struct cros_typec_data *typec, int port_
- 	int ret = 0;
- 	int i, j;
+-	if (!pskb_may_pull(skb, sizeof(struct udphdr) +
+-			   sizeof(struct amt_header)))
++	/* skb->data is the UDP header on receive, but the quoted IP header
++	 * when amt_err_lookup() parses an ICMP error, so pull up to the
++	 * transport header rather than from skb->data.
++	 */
++	if (!pskb_may_pull(skb, skb_transport_offset(skb) +
++			   sizeof(struct udphdr) + sizeof(struct amt_header)))
+ 		return -1;
  
-+	if (struct_size(sop_disc, svids, sop_disc->svid_count) > EC_PROTO2_MAX_RESPONSE_SIZE)
-+		return -EINVAL;
-+
- 	for (i = 0; i < sop_disc->svid_count; i++) {
-+		if (sop_disc->svids[i].mode_count > ARRAY_SIZE(sop_disc->svids[i].mode_vdo)) {
-+			ret = -EINVAL;
-+			goto err_cleanup;
-+		}
-+
- 		for (j = 0; j < sop_disc->svids[i].mode_count; j++) {
- 			memset(&desc, 0, sizeof(desc));
- 			desc.svid = sop_disc->svids[i].svid;
+ 	amth = (struct amt_header *)(udp_hdr(skb) + 1);
 -- 
 2.53.0
 
