@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041358;
-	b=S3tP2AS4HMpZBP8nt/v2ckTAlbGbouc3O0/VyniWic2jDmOD8PDc7ziiMOlhf34zzDWk
-	 YceIci5DcoS4dCT/oNtc2FiecVyInujwm1J45S9eDvSlalhCgrdkZcoKExLkRPwqw3iRu
-	 an2OIZALEzDZ9Wf4d2OHXtOiDJf7/sVLfaxIg9BsEjwOeqfthETW+KIz4pvDqZwRb4+WT
-	 JgoJulrRiWNkQ1MHrWPcJPhYzT/GjZsPGs3YbekuPRWxXw1ITJVlLRE+PHIzLr/4+P6nE
-	 aKEpfnNq2mjxP+8Pqx8B7d+xOglKSCDYdxS0VH2NtZNhEW+zjVlPAEhSe5ifFtB6m3g==
+	t=1795041360;
+	b=AHzoz/zZlu0n/EGR+jrPuEjbrDI7pHMMqzhDmprwqQwj9axenjwRMitne4HPY1EDLsLi
+	 4CmXYQTJkwP08S3RTnZbaXzaRYeJF4BIldHkTVIz7uI7Q7VLHIO2+G4PMhizfhZ+NQLmL
+	 39sZSs4P8m92DdjU/KnbzNFm/4/FQy8ubMX2gEdKGHhMYj4W4vRNlbfPWeoo0GzRm37ve
+	 wu9AF2obOzeUz/HFldBpR9StbchZ8N42u//sK8x7QDAjyp7ZLlH3kMLHaQU/kBp0x5rnq
+	 ZocM+9ao4RXZuKEo76IzKxp+nXcA9iAREWNJEXHQJSn6PPNh1qp8dByy8rmdjzB0gGQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041358;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041360;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Yf4Pp0mM9dPHbbpRtwvz0ZhxkhkEXl0zsrHoZIE3Qcw=;
-	b=Voh3edf1ejP0iNv3ssHiyYHPxczHnzqauL/deGvxbdVk0YXy2JF9MTIYfrEzdHRj9VmK
-	 4KHjRLAZ2Z3V765tv2iCq5ccW+D7Vx+/cK3Jc9Xb7ILOA4WdV8ZZG5mGVDaLitKoxgu2o
-	 uriE178TmiHfhXFA8zhchfucB38/tZctnGmYhF3t/sDuksYxNEwyqERDXr3aAV9VN6/9x
-	 A70QrDNrUIdlePvgiCrp0X6aGF40YDTz/tPP+aX4vGYTuVdlslUR3+K8RCEJHjVsH9j6X
-	 hRkZUQ7GrlFOb6WNnXDqP4nG1dTtNgx5NSapSTUgbqsReFXM64ygaixbI1JKQmLUNsg==
+	bh=VknljSh2IZG/0fbVYHqTrOZr7z0a/TGUjeLiehqUIVk=;
+	b=tutyy0ns3w5yAIOByBjgGJDgQWgUlQQHPAaL9ZsbUv4bjYHA9km46HaMQSoZ7VflWilE
+	 xb8tLjdjDlgHgRUVnWd0EsT0Kg1GJtmg494k9vq+2DmQVEQOeJvJ6qbNuU5JXvwjpY+he
+	 uGgpshkV04Y8rWWzoYfYQU/3TszJmp94dPnMGY9yPSM5boHdXTK77ThkuGGUhL3TShh22
+	 vCjusZPN6Y6emiSr+CToE4AwnHJDeQxhRx5KqktZS8Vtgbfagj3cgDn4urtMxQd5ty2P9
+	 H4v9E9Kw+WF646pOQXcVDEouEODYFDfJo0QPrkHjnfBDNa5x0TBrbveKUAQTQ0MF8gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWS7AaCq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rp2kBBX5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5407E606A32A;
-	Wed, 18 Nov 2026 22:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E59606A31C;
+	Wed, 18 Nov 2026 22:36:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pWS7AaCq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D631F000C5;
-	Wed, 18 Nov 2026 22:35:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rp2kBBX5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3775D1F000C4;
+	Wed, 18 Nov 2026 22:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041358;
-	bh=Yf4Pp0mM9dPHbbpRtwvz0ZhxkhkEXl0zsrHoZIE3Qcw=;
+	s=korg; t=1795041360;
+	bh=VknljSh2IZG/0fbVYHqTrOZr7z0a/TGUjeLiehqUIVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pWS7AaCq8FqsIoj2Gm4Ltxkx825Pv9yw5//BBBDppmtmyRNH3IXkO0D4l6fQwHIPs
-	 HSQoXJWNjsysZB3vVc+sG3hJKKlB6YsELCC5twWsqy85YyHPqFDG1GaLaua8hMJ8x8
-	 Js8Mzi6sxHPyC9wKGWqi8ksYrYoscIls9oYjMUfU=
+	b=rp2kBBX5nMaBRnKlwRcj9tVz6QrQ2pI82s933ZOGAwMvbk9CW62XzHkFhm2Vg+Dk4
+	 Sb8Ra5Jh4tOigp4O5jmoLMtUqS//+1SgBohS8uVLdx0xOFC7SnI0b1GcxIJdZmBKGU
+	 OpGCFtj/QHF0UOHeBMt4JJV+FJRYYfwJXKeRheFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andy.shevchenko@gmail.com>,
 	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2785/3318] serial: max310x: simplify probe() and remove() error handling
-Date: Wed, 18 Nov 2026 15:56:47 +0100
-Message-ID: <20261118150444.242832504@linuxfoundation.org>
+Subject: [PATCH 6.6 2786/3318] serial: max310x: use common detect function for all variants
+Date: Wed, 18 Nov 2026 15:56:48 +0100
+Message-ID: <20261118150444.272173103@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,63 +70,271 @@ Content-Transfer-Encoding: 8bit
 
 From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-[ Upstream commit 5d888f1c32e2281843d58eef963e3ebd625b77a9 ]
+[ Upstream commit 74fe93eae5389c96d4cfd4bc0cc5a547373ab96a ]
 
-Simplify error handling and only call uart_remove_one_port() if line bit
-is set, instead of having to manually set s->p[i].port.dev to NULL.
+Simplify driver by defining a common function to handle the detection
+of all variants.
 
 Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://lore.kernel.org/r/20240118152213.2644269-10-hugo@hugovil.com
+Link: https://lore.kernel.org/r/20240118152213.2644269-14-hugo@hugovil.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 4efacb600bf9 ("serial: max310x: fix breaks not reaching the wire in RS485 mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/max310x.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/tty/serial/max310x.c | 134 ++++++++++++++---------------------
+ 1 file changed, 54 insertions(+), 80 deletions(-)
 
 diff --git a/drivers/tty/serial/max310x.c b/drivers/tty/serial/max310x.c
-index 123a81976ee8f..ee754f23d91c2 100644
+index ee754f23d91c2..cf68a7a24f4b7 100644
 --- a/drivers/tty/serial/max310x.c
 +++ b/drivers/tty/serial/max310x.c
-@@ -1451,10 +1451,9 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
+@@ -66,6 +66,7 @@
+ #define MAX310X_BRGDIVMSB_REG		(0x1d) /* Baud rate divisor MSB */
+ #define MAX310X_CLKSRC_REG		(0x1e) /* Clock source */
+ #define MAX310X_REG_1F			(0x1f)
++#define MAX310X_EXTREG_START		(0x20) /* Only relevant in SPI mode. */
  
- 		/* Register port */
- 		ret = uart_add_one_port(&max310x_uart, &s->p[i].port);
--		if (ret) {
--			s->p[i].port.dev = NULL;
+ #define MAX310X_REVID_REG		MAX310X_REG_1F /* Revision ID */
+ 
+@@ -73,9 +74,9 @@
+ #define MAX310X_GLOBALCMD_REG		MAX310X_REG_1F /* Global Command (WO) */
+ 
+ /* Extended registers */
+-#define MAX310X_SPI_REVID_EXTREG	MAX310X_REG_05 /* Revision ID */
+-#define MAX310X_I2C_REVID_EXTREG	(0x25) /* Revision ID */
+-
++#define MAX310X_REVID_EXTREG		(0x25) /* Revision ID
++						* (extended addressing space)
++						*/
+ /* IRQ register bits */
+ #define MAX310X_IRQ_LSR_BIT		(1 << 0) /* LSR interrupt */
+ #define MAX310X_IRQ_SPCHR_BIT		(1 << 1) /* Special char interrupt */
+@@ -259,8 +260,7 @@
+ 
+ struct max310x_if_cfg {
+ 	int (*extended_reg_enable)(struct device *dev, bool enable);
+-
+-	unsigned int rev_id_reg;
++	u8 rev_id_offset;
+ };
+ 
+ struct max310x_devtype {
+@@ -269,10 +269,11 @@ struct max310x_devtype {
+ 		unsigned short max;
+ 	} slave_addr;
+ 	int	nr;
+-	int	(*detect)(struct device *);
+ 	void	(*power)(struct uart_port *, int);
+ 	char	name[9];
+ 	u8	mode1;
++	u8	rev_id_val;
++	u8	rev_id_reg; /* Relevant only if rev_id_val is defined. */
+ };
+ 
+ struct max310x_one {
+@@ -333,62 +334,52 @@ static void max310x_port_update(struct uart_port *port, u8 reg, u8 mask, u8 val)
+ 	regmap_update_bits(one->regmap, reg, mask, val);
+ }
+ 
+-static int max3107_detect(struct device *dev)
++static int max310x_detect(struct device *dev)
+ {
+ 	struct max310x_port *s = dev_get_drvdata(dev);
+ 	unsigned int val = 0;
+ 	int ret;
+ 
+-	ret = regmap_read(s->regmap, MAX310X_REVID_REG, &val);
+-	if (ret)
+-		return ret;
+-
+-	if (((val & MAX310x_REV_MASK) != MAX3107_REV_ID)) {
+-		dev_err(dev,
+-			"%s ID 0x%02x does not match\n", s->devtype->name, val);
+-		return -ENODEV;
+-	}
++	/* Check if variant supports REV ID register: */
++	if (s->devtype->rev_id_val) {
++		u8 rev_id_reg = s->devtype->rev_id_reg;
+ 
+-	return 0;
+-}
++		/* Check if REV ID is in extended addressing space: */
++		if (s->devtype->rev_id_reg >= MAX310X_EXTREG_START) {
++			ret = s->if_cfg->extended_reg_enable(dev, true);
++			if (ret)
++				return ret;
+ 
+-static int max3108_detect(struct device *dev)
+-{
+-	struct max310x_port *s = dev_get_drvdata(dev);
+-	unsigned int val = 0;
+-	int ret;
+-
+-	/* MAX3108 have not REV ID register, we just check default value
+-	 * from clocksource register to make sure everything works.
+-	 */
+-	ret = regmap_read(s->regmap, MAX310X_CLKSRC_REG, &val);
+-	if (ret)
+-		return ret;
+-
+-	if (val != (MAX310X_CLKSRC_EXTCLK_BIT | MAX310X_CLKSRC_PLLBYP_BIT)) {
+-		dev_err(dev, "%s not present\n", s->devtype->name);
+-		return -ENODEV;
+-	}
++			/* Adjust REV ID extended addressing space address: */
++			if (s->if_cfg->rev_id_offset)
++				rev_id_reg -= s->if_cfg->rev_id_offset;
++		}
+ 
+-	return 0;
+-}
++		regmap_read(s->regmap, rev_id_reg, &val);
+ 
+-static int max3109_detect(struct device *dev)
+-{
+-	struct max310x_port *s = dev_get_drvdata(dev);
+-	unsigned int val = 0;
+-	int ret;
++		if (s->devtype->rev_id_reg >= MAX310X_EXTREG_START) {
++			ret = s->if_cfg->extended_reg_enable(dev, false);
++			if (ret)
++				return ret;
++		}
+ 
+-	ret = s->if_cfg->extended_reg_enable(dev, true);
+-	if (ret)
+-		return ret;
++		if (((val & MAX310x_REV_MASK) != s->devtype->rev_id_val))
++			return dev_err_probe(dev, -ENODEV,
++					     "%s ID 0x%02x does not match\n",
++					     s->devtype->name, val);
++	} else {
++		/*
++		 * For variant without REV ID register, just check default value
++		 * from clocksource register to make sure everything works.
++		 */
++		ret = regmap_read(s->regmap, MAX310X_CLKSRC_REG, &val);
 +		if (ret)
- 			goto out_uart;
--		}
-+
- 		set_bit(line, max310x_lines);
++			return ret;
  
- 		/* Go to suspend mode */
-@@ -1490,10 +1489,8 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
- 
- out_uart:
- 	for (i = 0; i < devtype->nr; i++) {
--		if (s->p[i].port.dev) {
-+		if (test_and_clear_bit(s->p[i].port.line, max310x_lines))
- 			uart_remove_one_port(&max310x_uart, &s->p[i].port);
--			clear_bit(s->p[i].port.line, max310x_lines);
--		}
+-	regmap_read(s->regmap, s->if_cfg->rev_id_reg, &val);
+-	s->if_cfg->extended_reg_enable(dev, false);
+-	if (((val & MAX310x_REV_MASK) != MAX3109_REV_ID)) {
+-		dev_err(dev,
+-			"%s ID 0x%02x does not match\n", s->devtype->name, val);
+-		return -ENODEV;
++		if (val != (MAX310X_CLKSRC_EXTCLK_BIT | MAX310X_CLKSRC_PLLBYP_BIT))
++			return dev_err_probe(dev, -ENODEV,
++					     "%s not present\n",
++					     s->devtype->name);
  	}
  
- out_clk:
-@@ -1511,8 +1508,10 @@ static void max310x_remove(struct device *dev)
- 		cancel_work_sync(&s->p[i].tx_work);
- 		cancel_work_sync(&s->p[i].md_work);
- 		cancel_work_sync(&s->p[i].rs_work);
--		uart_remove_one_port(&max310x_uart, &s->p[i].port);
--		clear_bit(s->p[i].port.line, max310x_lines);
-+
-+		if (test_and_clear_bit(s->p[i].port.line, max310x_lines))
-+			uart_remove_one_port(&max310x_uart, &s->p[i].port);
-+
- 		s->devtype->power(&s->p[i].port, 0);
- 	}
+ 	return 0;
+@@ -403,27 +394,6 @@ static void max310x_power(struct uart_port *port, int on)
+ 		msleep(50);
+ }
  
+-static int max14830_detect(struct device *dev)
+-{
+-	struct max310x_port *s = dev_get_drvdata(dev);
+-	unsigned int val = 0;
+-	int ret;
+-
+-	ret = s->if_cfg->extended_reg_enable(dev, true);
+-	if (ret)
+-		return ret;
+-
+-	regmap_read(s->regmap, s->if_cfg->rev_id_reg, &val);
+-	s->if_cfg->extended_reg_enable(dev, false);
+-	if (((val & MAX310x_REV_MASK) != MAX14830_REV_ID)) {
+-		dev_err(dev,
+-			"%s ID 0x%02x does not match\n", s->devtype->name, val);
+-		return -ENODEV;
+-	}
+-
+-	return 0;
+-}
+-
+ static void max14830_power(struct uart_port *port, int on)
+ {
+ 	max310x_port_update(port, MAX310X_BRGCFG_REG,
+@@ -437,7 +407,8 @@ static const struct max310x_devtype max3107_devtype = {
+ 	.name	= "MAX3107",
+ 	.nr	= 1,
+ 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT | MAX310X_MODE1_IRQSEL_BIT,
+-	.detect	= max3107_detect,
++	.rev_id_val = MAX3107_REV_ID,
++	.rev_id_reg = MAX310X_REVID_REG,
+ 	.power	= max310x_power,
+ 	.slave_addr	= {
+ 		.min = 0x2c,
+@@ -449,7 +420,8 @@ static const struct max310x_devtype max3108_devtype = {
+ 	.name	= "MAX3108",
+ 	.nr	= 1,
+ 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT,
+-	.detect	= max3108_detect,
++	.rev_id_val = 0, /* Unsupported. */
++	.rev_id_reg = 0, /* Irrelevant when rev_id_val is not defined. */
+ 	.power	= max310x_power,
+ 	.slave_addr	= {
+ 		.min = 0x60,
+@@ -461,7 +433,8 @@ static const struct max310x_devtype max3109_devtype = {
+ 	.name	= "MAX3109",
+ 	.nr	= 2,
+ 	.mode1	= MAX310X_MODE1_AUTOSLEEP_BIT,
+-	.detect	= max3109_detect,
++	.rev_id_val = MAX3109_REV_ID,
++	.rev_id_reg = MAX310X_REVID_EXTREG,
+ 	.power	= max310x_power,
+ 	.slave_addr	= {
+ 		.min = 0x60,
+@@ -473,7 +446,8 @@ static const struct max310x_devtype max14830_devtype = {
+ 	.name	= "MAX14830",
+ 	.nr	= 4,
+ 	.mode1	= MAX310X_MODE1_IRQSEL_BIT,
+-	.detect	= max14830_detect,
++	.rev_id_val = MAX14830_REV_ID,
++	.rev_id_reg = MAX310X_REVID_EXTREG,
+ 	.power	= max14830_power,
+ 	.slave_addr	= {
+ 		.min = 0x60,
+@@ -1369,7 +1343,7 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
+ 	dev_set_drvdata(dev, s);
+ 
+ 	/* Check device to ensure we are talking to what we expect */
+-	ret = devtype->detect(dev);
++	ret = max310x_detect(dev);
+ 	if (ret)
+ 		goto out_clk;
+ 
+@@ -1553,7 +1527,7 @@ static int max310x_spi_extended_reg_enable(struct device *dev, bool enable)
+ 
+ static const struct max310x_if_cfg __maybe_unused max310x_spi_if_cfg = {
+ 	.extended_reg_enable = max310x_spi_extended_reg_enable,
+-	.rev_id_reg = MAX310X_SPI_REVID_EXTREG,
++	.rev_id_offset = MAX310X_EXTREG_START,
+ };
+ 
+ static int max310x_spi_probe(struct spi_device *spi)
+@@ -1624,7 +1598,7 @@ static struct regmap_config regcfg_i2c = {
+ 	.writeable_reg = max310x_reg_writeable,
+ 	.volatile_reg = max310x_reg_volatile,
+ 	.precious_reg = max310x_reg_precious,
+-	.max_register = MAX310X_I2C_REVID_EXTREG,
++	.max_register = MAX310X_REVID_EXTREG,
+ 	.writeable_noinc_reg = max310x_reg_noinc,
+ 	.readable_noinc_reg = max310x_reg_noinc,
+ 	.max_raw_read = MAX310X_FIFO_SIZE,
+@@ -1633,7 +1607,7 @@ static struct regmap_config regcfg_i2c = {
+ 
+ static const struct max310x_if_cfg max310x_i2c_if_cfg = {
+ 	.extended_reg_enable = max310x_i2c_extended_reg_enable,
+-	.rev_id_reg = MAX310X_I2C_REVID_EXTREG,
++	.rev_id_offset = 0, /* No offset in I2C mode. */
+ };
+ 
+ static unsigned short max310x_i2c_slave_addr(unsigned short addr,
 -- 
 2.53.0
 
