@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041666;
-	b=3ewzbHBwy5w7P+qCnT0OcHO3+yGj3zZwhKFBQ8rDlVRK3xT0A/kxFiMMEWweBZS6YbXB
-	 GhKfbEPQ+U7ZJ+BxMY98kO57/3Kk+ZGytHEkfayxYWPpNd1VHMm0Et7bgEnhW5wrsQwLM
-	 F5KNZUSWMInqOOxvm4eTi+4giWoRysk1NLsgK4ro4cpmMdVyXVNYlXGQ6RoWJ/MPFvGY8
-	 uBr1U9K3GZjXsiEIuYo37sdVWxQ05qjpFWbZc1dW+Mrl660YpDaX9SYSPu0RcY5bOuSvb
-	 ur6/CsZ/ljkLre4klmzZ5hsEfs0XlNpBiRs5C31nf7adE82vG/aARtEIcKWm/kSTcNw==
+	t=1795041669;
+	b=veibJrFJnxSLESuPn7Q4mCq8slcm1DrInLHsfJFQlggH67iYXJGJ0zMVvjOr8c7SgGdg
+	 yej0tinZ5gB/2jKd1ObmQwQdGjoV55i7mFAGsbGUQf+VfVfjn1AGMlbxKM7KjqIsn/AOd
+	 oESzdB6HqYMvA5QxYuUGm1iZwpoPvrtoLUOXDrvXUKN+WZzI3kq4QnipBJOZcM8kMd53U
+	 aplgWG2aSDfR22Rm9eKXnQLOfgK7w6F1enR75ES9Dc45VcWv6IZYqRiCPTi4c2/0fetu6
+	 Gl7tiwcEsBxLvU8jbL8inDbe86As1SaGLL5HPGpysKmqhEtdUIDotyZpgDMCJLMDiIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041666;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041669;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=x+RrjSzstIPb0qXJfaaQ6tGQFVVjVcPmRu//HPp3/Wk=;
-	b=UJAw1URNrRXl0/Y0WGhk3A3DyqfJEH40qHV2jMp65jS6WQfE4WJWIBvmjPg7bDW4p33T
-	 j/jadrX2C/f9jbAAOwMZiqm9ml0au3vBgOgAX5+kuD6C1qNundt45x90aNBGsUj/N6l+B
-	 ojfxSgp+8E1mXWGQ4nrr0L7h6djELROJjkeNSsoksYvaTyEm4eJzGNDV/hxv8IrYQlscY
-	 kH8XmxEh/NfQPHiPzk4AlWAL/FSL1OTvOIFT9OOMi8gPtI6msPD7ZI3DUl29kp6NhhYGX
-	 ATwkm+BOSCZeD96SWhZ38OJfaFk6HIM2G5jUo63/4wMUqNWRvCyi21ZD5ZdjGorEuDg==
+	bh=SHasddK0bv01rjBzN1CAnUap5ZbD0QLOZncbbBQiQOE=;
+	b=L8V6+aBs9MTr2udpBtnKcZLH5GK557q6MiytoToyzMugbGXmRJ7V9yEocbInTKnVGVi4
+	 qZYQ0n2Jk3YmQLDgUgIQV/u+u2+SApGs5+hGJSGzcyQmi6jkVOwSGzelb5VaGcjBnOObk
+	 rav3/xmEHCveEENGua1YYkv8i42aix/ExRwzCjodu1g3XTvWyqmVHbzz7OKwpaHuC+z/K
+	 9BkEyCGpk55UV5m7iqgBJ5z939kxxiTcdPF36p1GdPyUKqu37H1Y9CJemelPpXHWjBaZA
+	 R2wGTkSw0bWhWJui84QwDZzwc5lwbLY9LsPsOk97muEbfl5cEJlO/XZ2u2ZqQYwa6tA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRAn+Qv3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3hwUxEU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B99606A31C;
-	Wed, 18 Nov 2026 22:41:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CBC606A320;
+	Wed, 18 Nov 2026 22:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uRAn+Qv3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3EE91F000C4;
-	Wed, 18 Nov 2026 22:41:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I3hwUxEU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB781F000C4;
+	Wed, 18 Nov 2026 22:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041666;
-	bh=x+RrjSzstIPb0qXJfaaQ6tGQFVVjVcPmRu//HPp3/Wk=;
+	s=korg; t=1795041668;
+	bh=SHasddK0bv01rjBzN1CAnUap5ZbD0QLOZncbbBQiQOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=uRAn+Qv31JRid+la0NmSSRH8iHcTkUSq3YyQ0TfOL71AAMh6XbcZLMnzQdcb23R/X
-	 Fua5Q2EB21M+s9sZzeav2SzTnRyHR4OO4A8fDKVzsTA8SKUPhg41yzCr+dwrIINRUW
-	 PoQ0nhHe/hw+eRNFcSVC1wBpe+Z4QZ/yFzJYi2l8=
+	b=I3hwUxEU7VBvGVZJoVrKuMMznuRnYjpicT/QnSK+6N5uC5K40/euFoLUv16gjXo7v
+	 JnwyDBFBKL5fhRPLwGgiokpFCUH3YLbLeQfBHtVKyJQlqJgKSlVdmke2SJJQ4qlmRt
+	 JbE2OuBNvpOowhnW2BAss26a9IaJ8KNeKbDZqgew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Tim Douglas <me@timdoug.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2853/3318] serial: ma35d1: Do not force-enable an unselected console
-Date: Wed, 18 Nov 2026 15:57:55 +0100
-Message-ID: <20261118150446.192515603@linuxfoundation.org>
+Subject: [PATCH 6.6 2854/3318] serial: pmac_zilog: report received breaks
+Date: Wed, 18 Nov 2026 15:57:56 +0100
+Message-ID: <20261118150446.220017608@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,41 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Tim Douglas <me@timdoug.com>
 
-[ Upstream commit 171bb8a67cc1af7c88a65961adfb028430e0b783 ]
+[ Upstream commit 8db79ea07a67b126c773da6efdc00066000daeb8 ]
 
-When another console is selected and there is no matching ttyNVT console
-argument, the core accepts the MA35D1 console without calling its setup
-function because it has CON_ENABLED set before registration.  Its index
-remains -1 and printk repeatedly reports an invalid port, flooding the
-console and preventing boot.
+pmz_status_handle() sets PMACZILOG_FLAG_BREAK from RR0, and
+pmz_receive_chars() clears it on the null character that ends the
+break without marking that character, then tests BRK_ABRT in RR1,
+where the SCC does not set it in asynchronous mode. Breaks therefore
+arrive as plain NULs: brk is never counted and BRKINT, PARMRK and SysRq
+never see them.
 
-Let the console core enable it after successful setup.
+Set BRK_ABRT in r1 for that character, as sunzilog does.
 
-Fixes: 930cbf92db01 ("tty: serial: Add Nuvoton ma35d1 serial driver support")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20261012055340.16719-1-kmehltretter@gmail.com
+Signed-off-by: Tim Douglas <me@timdoug.com>
+Link: https://patch.msgid.link/20261013013541.4535-3-me@timdoug.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/ma35d1_serial.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/pmac_zilog.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/ma35d1_serial.c b/drivers/tty/serial/ma35d1_serial.c
-index 225feb5868e85..7618e5f156fea 100644
---- a/drivers/tty/serial/ma35d1_serial.c
-+++ b/drivers/tty/serial/ma35d1_serial.c
-@@ -639,7 +639,7 @@ static struct console ma35d1serial_console = {
- 	.write   = ma35d1serial_console_write,
- 	.device  = uart_console_device,
- 	.setup   = ma35d1serial_console_setup,
--	.flags   = CON_PRINTBUFFER | CON_ENABLED,
-+	.flags   = CON_PRINTBUFFER,
- 	.index   = -1,
- 	.data    = &ma35d1serial_reg,
- };
+diff --git a/drivers/tty/serial/pmac_zilog.c b/drivers/tty/serial/pmac_zilog.c
+index 6fc6b9b93e0f1..b871c813f278b 100644
+--- a/drivers/tty/serial/pmac_zilog.c
++++ b/drivers/tty/serial/pmac_zilog.c
+@@ -233,6 +233,7 @@ static bool pmz_receive_chars(struct uart_pmac_port *uap)
+ 		ch &= uap->parity_mask;
+ 		if (ch == 0 && uap->flags & PMACZILOG_FLAG_BREAK) {
+ 			uap->flags &= ~PMACZILOG_FLAG_BREAK;
++			r1 |= BRK_ABRT;
+ 		}
+ 
+ #if defined(CONFIG_MAGIC_SYSRQ) && defined(CONFIG_SERIAL_CORE_CONSOLE)
 -- 
 2.53.0
 
