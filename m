@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035642;
-	b=OvoUYXE83LhXNImdA8CAa/KN1vik2zVvPIpuH7CwoFRkdIAg9Wlbpq7t6mccT2KozYV7
-	 YGvwCBMMfWqPXCP8DBlStiu8FQCd42gtQIeLnMpzUK5iqJBUG3OOsQsXlzkTfzRh1o34c
-	 oC0ENjwI299y8uoZKjiJiTVl+hF/PDU1JmJBZgxKEzRGnzbzx8EGEtwcDJ2IxSaDgYp+6
-	 HH0Ufc8c/P3fbJJ32dl6Sw/Mq6gpT2O3JEXtm+/x1FVOZvCCys7WNhBze2EerkGUA08r3
-	 ZeUWyO+7ZFKns3JLl3CaJYxOJ4D5WRwdI038Gk7fsyRQd4tOuFOXkRnrO2icBXX+mpg==
+	t=1795035645;
+	b=qyZimubv8uid29pAU75R4shrYjNgyKJqiSo5RfmEoZwDC6EHtpCUm4tHR9vGc/xiafpi
+	 XxeN7ElTrvG8/qExxI/l61Ko85ZztJvQina45ZcuKWP754/k7BElR3n39ag1/oPxMBFrT
+	 8gnJeSuxyQPbmVvbGTmcNuX0zwbzjI5mg+jKufqdBoRMgr1PwgvD2jVD2AfoKtkXUBoEt
+	 zccKnznbAy4ilDpTliS4S0LYlEUwMpuec0HVyI/EEiYkVwIMHtbuDmGYSfi8LkQZoL1Vt
+	 g1NhMN/MRZXKRuvk650bJRteTIBvS5wCvCLF0TLu16IAvcFcLUJoPi3nkusrBLP67GQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035642;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035645;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oENXgpRQxBDgjzCzqS8zFxMrSs6NVOzXdY69lr+8DJI=;
-	b=4rN1lp6+Nqz8fcSq6kIka2Hsr9ovWXcO0BCrk7c5tjem+GW5nuXBxH4dExaWdyZtpsrk
-	 ajXgFC21oSyLM6TownOO0peiRyrRW+Ne7a3MOGnojmCnWMh10JaAaxNz5hOJm3NOCRIuY
-	 MAQ47mH35NbbKYlxTdTpZCU2FzT/93qA+b9RLtzz8D//JJ6OF2dofXOE99Pw7LyiE/xq+
-	 b/LPp5vPBh+UbkvLCEjz8yNyXwvbjAlCacP/od221/h9gGlux1uMazi5tDR+APtxYYll6
-	 RpXrJwxzbe9v8DIc/73TzJdGZFzjOQ4IUDQO2FqEuqM9o/J1Q3QX+0rMTmozl4xVjEg==
+	bh=B3S6nAi7o0DQg36ns4xjkxos+7qpw8ZHpXRxURWH6YA=;
+	b=bWGcuLdf6zzVEMGg0RHbgjwLyx6hoEpIL+EHylyqHClXIwyDrV0faA1t65dnYPksoHxs
+	 4UI0aFJBFuFJNe+oD+FOp2F6c3m2IiVJF7ZufIqin2/67KtFgK00IBx7vZQq6dlx3+fiL
+	 PZLUERpnyOTW3UfVfQqgAh4vp/quCo9o7VhEMUTz+PcHF8pGBB3+tnPwEP+aZAX4DdbMV
+	 hSpkuvzheHkAzxUPMekTo+mp1hC7VjV7UVp4Ica2P7d11cm/ZJT/3q4FZ+P97XqW98UBh
+	 DHYYvvFlTvPh2NczF+Ozc5/7b3FmJ+D/YhLxh5b7bRGebgja1ctBVg92t1jjEnkPp2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hbzoSEFL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gGncOmRZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F822606A320;
-	Wed, 18 Nov 2026 21:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523A4606A31C;
+	Wed, 18 Nov 2026 21:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hbzoSEFL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2BD1F000C4;
-	Wed, 18 Nov 2026 21:00:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gGncOmRZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0DEA1F000C7;
+	Wed, 18 Nov 2026 21:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035642;
-	bh=oENXgpRQxBDgjzCzqS8zFxMrSs6NVOzXdY69lr+8DJI=;
+	s=korg; t=1795035645;
+	bh=B3S6nAi7o0DQg36ns4xjkxos+7qpw8ZHpXRxURWH6YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hbzoSEFLiIOIjQ9rxzodK+s0BTZEQBSx4g5DiavHD81Wt2kIqF0T7PvlwKQkcjgCY
-	 oiToDbt7x+KzQsbsWuJfFm7D1DWT2SOjXhrd1TBoyzQXUrTgVaCjeIzeAi9w5MQvv+
-	 kFaI3AmxVN9zqKeY+PbDL0ChM9Wndbk+eCONAd10=
+	b=gGncOmRZA3QYSRkEsVAmZHabevwXV/CLRg1oYk1kp4ctuYcU2BNt09Gm3e1bcFXY/
+	 QRrvXoP4TVJfNLtUAxadD75woI2+UatcTvlUhAQYqLH2/0NBxJt3pHENR4HFakLdzp
+	 sFdfBWU1bQA1wWaitSJkUz9icX18pwvexORVwOjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <mason@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0775/3318] ovl: do not copy up a dentry that was removed
-Date: Wed, 18 Nov 2026 15:23:17 +0100
-Message-ID: <20261118150342.036820284@linuxfoundation.org>
+	Stefan Metzmacher <metze@samba.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.6 0776/3318] smb: smbdirect: fix buffer length underflow in RDMA transfers
+Date: Wed, 18 Nov 2026 15:23:18 +0100
+Message-ID: <20261118150342.072246987@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,61 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Mason <mason@kernel.org>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit f635192ad223d2009ee640b63adf5ce3198aa338 upstream.
+[ Upstream commit 7193241a49c958782ba4b8df06da3734d1e317d2 ]
 
-A change to a removed file through an open descriptor replaces whatever
-has its old name in the upper layer.
+When a remote buffer descriptor is larger than the remaining local
+buffer, smbdirect_connection_rdma_xmit() clamps its length and sets
+buf_len to zero. The common accounting code then subtracts the clamped
+length from buf_len, causing it to underflow. If another descriptor
+follows, the loop processes it with a wrapped remaining length and
+includes memory beyond the local buffer in the RDMA transfer.
 
-Copy up must only create a name in the upper directory, never replace
-one. After an unlink, an rmdir or a rename over a lower dentry, a
-dentry that an open file keeps alive still has its old parent and name,
-but in the upper directory that name is now a whiteout or a new object.
-ovl_copy_up_workdir() renames the copy over it, which brings back the
-removed object and destroys whatever took its name.
+A client can trigger an out-of-bounds kernel write with an SMB WRITE
+request, or an out-of-bounds kernel read with an SMB READ request, by
+supplying multiple RDMA buffer descriptors with an oversized descriptor
+before the last one.
 
-An unprivileged user opened a lower FIFO and unlinked it, root created
-a file at that name, and fchmod on the old descriptor replaced the file
-of root with the FIFO.
+Remove the premature assignment to buf_len. Subtracting the clamped length
+already consumes the remaining buffer, so the next iteration stops and
+only descriptors within the local buffer are used to build work requests.
 
-Fix this by looking up the target name of the rename in
-ovl_copy_up_workdir() with LOOKUP_EXCL, so that copy up fails with
--EEXIST if the name is taken, as copy up with O_TMPFILE already does
-when it links the copy to the name.
-
-Fixes: e9be9d5e76e3 ("overlay filesystem")
+Fixes: e628bf939aaf ("ksmbd: reduce descriptor size if remaining bytes is less than request size")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Mason <mason@kernel.org>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-[amir: use LOOKUP_EXCL instead of relying on d_unhashed()]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-[backport: no start_renaming_dentry() and LOOKUP_EXCL, fail with -EEXIST if
- the target of ovl_lookup_upper() is positive]
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-33549
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ metze: in 6.6 the code is smb_direct_rdma_xmit() in
+  fs/smb/server/transport_rdma.c ]
+Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/copy_up.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/smb/server/transport_rdma.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/overlayfs/copy_up.c b/fs/overlayfs/copy_up.c
-index 1c2c1b1801eef..74028923aa511 100644
---- a/fs/overlayfs/copy_up.c
-+++ b/fs/overlayfs/copy_up.c
-@@ -758,6 +758,13 @@ static int ovl_copy_up_workdir(struct ovl_copy_up_ctx *c)
- 	if (IS_ERR(upper))
- 		goto cleanup;
+diff --git a/fs/smb/server/transport_rdma.c b/fs/smb/server/transport_rdma.c
+index 8987b1167a38c..5178c7443ebb7 100644
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -1388,7 +1388,6 @@ static int smb_direct_rdma_xmit(struct smb_direct_transport *t,
+ 		if (desc_buf_len > buf_len) {
+ 			desc_buf_len = buf_len;
+ 			desc[i].length = cpu_to_le32(desc_buf_len);
+-			buf_len = 0;
+ 		}
  
-+	/* The name may have been taken since lookup, never replace it */
-+	err = -EEXIST;
-+	if (d_is_positive(upper)) {
-+		dput(upper);
-+		goto cleanup;
-+	}
-+
- 	err = ovl_do_rename(ofs, wdir, temp, udir, upper, 0);
- 	dput(upper);
- 	if (err)
+ 		credits_needed += calc_rw_credits(t, desc_buf, desc_buf_len);
 -- 
 2.53.0
 
