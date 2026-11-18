@@ -1,61 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025268;
-	b=es9XY1RBAG/XGsKlI2fzdt05RPfr9hypFmcH3MonE9cngzUzhX+o2RZvdhvaPLZSw6dp
-	 HFxsMpAgXCmA0jV6ayJKBLiLY3aRK6J4AYaZNY3drQWMKS4InAc2lT/PUlOQEu0WFylVN
-	 Cpcxfm2wwvRIqxahS9qCtofIVlgtVE2GSef1s+wXNfqEvSz6aM31vFh9jFsdGfkrUYt/j
-	 Xz2+R2YJC7oc9+y8uJfulVF8VsarPdcyNSb+79HhFpntvSVU/HNFgwhIXwF8LQg/8sZK/
-	 BBU7NydTrt8wdZ6uEnySgQ2Xl+ookjhiyxOxUOAEP+D+o32N6V88Y/B7+crdTgnS78g==
+	t=1795025270;
+	b=VigyBdk6OkcbxxU4x3YFMcnNOJUUjrSGl8+PcQiIJK98RIWictSoHJkmmouz7ahfxYEk
+	 I4LQ/dzH9d1XKT+0Hzsjf1c3iX8ruIC+VVh7pB0ne+L+cGPaYbcFXn7qlAnWmNYmuCzHG
+	 sKgGDk1sygtPDi/3zfeZmyl9OsJG+BGcURd2/xw7EeagEv5+RQ0tlojYgP+WFP6GFYCtE
+	 nsWWX1zptgopzzitoCaLcREvjusO0/XdIu4aIwZRMh8j0fSgjz4w+2TuGkHdx67epiOmf
+	 DBGxOzzS10Cy7PQUkMy0SUP1k4nkb7sJq1iTakkhRNCPcvnbYfeCSd/7KegK4fNzIjg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025268;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025270;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2kF0QHrVTHYMu5jFLwK2xzNVw86SAfptecRQYXmPKak=;
-	b=WOx/1AXaUQPHIAJBu27+r6xCQBHXc+150l33FmcucWh6+tE5YZ0xgOcacgKOLW47L2E/
-	 mo3rv593CNqvdn6c+RK58HmV/Fn7SmuxolmAUvHH6El3GWFielyPjyYx8f9R2UeyGpNnM
-	 MD/lfqNrF3HasW5b/Kj2QsPMfKO7gva8E1tr8N8nLM64ZDho04CWYHeZbOK+LSfeBFE9q
-	 4iIkS4TF/GhQkwRaYw7tBX4+TFCj3SNNIdMT66vdGMYLHUaAF3mQ6Fxe46Pr2J6n8Sslm
-	 bAM95HDlDvtFLzoza3Ca2KZPSNyvCzlM010ZnYFKql2q2F683G/esi2OENa5ubm2NoA==
+	bh=hRqdH2SBI1AOlEreRCy78JtFx9EF9OmmNU42kbXVwbM=;
+	b=WwoZxQN9Spy5oCq69ZncvdC5GA25lKJYeh6GNGqtmRMOVpZMz8MhadBBE75Mrz7zxKnQ
+	 0PzvnM1C2Ff6blOJiuyRw9dgKcdbx9v3I5IJF6RpXH2Dclq8a65QCtmFViFdJMudiRR45
+	 4CAqDmdw3Q0Rf63ayM6B356hEQI9dnTM10b1SR8U/sYou6vyjo6A1VeOMmb7LZ8egA8Me
+	 aYxlgsd6JomiwCcFUGz+4EQ1yVKf/bIOT5l16g2Zcqb5mtJ1LMNzBhtT8GnqoonJGFQiU
+	 93HTF+MIAwFWoVKN6kx5aCPb0w7RE6aXTUlHujtvKVrwAoGBPzplWSY9NPqGrONW36Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="0n/Mgopc";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkcQTItw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBEB606A336;
-	Wed, 18 Nov 2026 18:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9FB606A320;
+	Wed, 18 Nov 2026 18:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0n/Mgopc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DB51F000C4;
-	Wed, 18 Nov 2026 18:07:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SkcQTItw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1331F000C5;
+	Wed, 18 Nov 2026 18:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025267;
-	bh=2kF0QHrVTHYMu5jFLwK2xzNVw86SAfptecRQYXmPKak=;
+	s=korg; t=1795025270;
+	bh=hRqdH2SBI1AOlEreRCy78JtFx9EF9OmmNU42kbXVwbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0n/MgopcYRDrrfqOXXThf6W6IfKZnp5heIOmhIdahdOHJI2OoWXbhs9JBpk8iykQm
-	 Gum2/i+7oJqmO2X8V706XjqJVfirGyXq/jm2GEA9RvyF/0XsMNK+IsCmvVYaPUDwjd
-	 8U8CBZ4j04y1ZEz7cFvhWOd2vNrs2JwE+KmLAGtY=
+	b=SkcQTItwd9Ro0IAx5EirE32HDnmvW8Kls1d39dIAdEmt4oM1e9u2j37vcJgnZb7I5
+	 71vYJv+FNVfWkvgIBMQOsxyGFmcR5grWMoGLkZ7KngP8lFAsHEGvxfiDM3cyRdwaJm
+	 j+MmJVQ+913D6FT2s48UXHv7X3DzFaD1VjEPEPfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alice Rogers <alice.mei.rogers@gmail.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Leo Yan <leo.yan@linux.dev>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0977/2151] perf python: Add perf.pyi stubs file
-Date: Wed, 18 Nov 2026 15:45:12 +0100
-Message-ID: <20261118150158.082432781@linuxfoundation.org>
+Subject: [PATCH 6.18 0978/2151] perf python: Clean up and restructure setup.py
+Date: Wed, 18 Nov 2026 15:45:13 +0100
+Message-ID: <20261118150158.117267312@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -79,757 +70,340 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit fed8332b0e0ba9dec1729f0422f0b0d96f7893f2 ]
+[ Upstream commit 1fa8d81be1ebaf0393a5141c48916f335e26f2f2 ]
 
-Add Python type stubs for the perf module to improve IDE support and
-static analysis.  Includes docstrings for classes, methods, and
-constants derived from C source and JSON definitions.
+Clean up and restructure the python setup script to resolve pylint
+warnings, improve code quality, and increase robustness and
+readability, targeting Python 3.9+ (the Linux kernel build minimum
+Python version).
 
-Assisted-by: Gemini:gemini-3.1-pro-preview
+Changes:
+- Restructure the script to use a `main()` function as the entry point,
+  leaving only imports, classes, and pure functions at module level.
+- Eliminate all global/module-level variables, making them local to
+  `main()` or the respective classes/functions.
+- Make `clang_has_option` a pure function by passing all necessary
+  parameters explicitly.
+- Extract clang compiler flag filtering into a new
+  `filter_clang_options` helper function. This function uses a loop
+  over a tuple of options, replacing ~30 lines of repetitive blocks
+  and reducing branch/statement complexity in the main flow.
+- Cleanly define attributes in `__init__` for `BuildExt` and
+  `InstallLib` and read environment variables dynamically within the
+  methods (including `srctree` in `InstallLib.run`), removing their
+  dependency on global variables.
+- Replace legacy Popen with subprocess.run for safer process handling.
+- Use quote-aware flag filtering (`shlex.split`, filter, `shlex.join`)
+  on sysconfig CFLAGS and OPT instead of regex `re.sub` substitutions.
+  This avoids boundary bugs and safely handles quoted arguments and
+  options with values.
+- Rely on setuptools to handle user CFLAGS from the environment
+  directly rather than manually prepending them to extra_compile_args.
+- Safely parse `CC` env var using `shlex.split` to handle quotes and
+  pass compiler arguments as `list[str]` lists to helper functions,
+  avoiding redundant string formatting and parsing.
+- Remove unused `import re`.
+- Rename setuptools command subclasses to PascalCase (BuildExt,
+  InstallLib).
+- Add type annotations to functions and methods.
+- Add missing docstrings for module, functions, and classes.
+- Split long lines to adhere to standard limits.
+
+Assisted-by: Antigravity:gemini-3.5-flash
 Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alice Rogers <alice.mei.rogers@gmail.com>
-Cc: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Leo Yan <leo.yan@linux.dev>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Richter <tmricht@linux.ibm.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Stable-dep-of: 2ed38aa8a52d ("perf python: Track linked libraries as extension dependencies")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/Makefile.perf   |   7 +-
- tools/perf/python/perf.pyi | 672 +++++++++++++++++++++++++++++++++++++
- tools/perf/util/setup.py   |   5 +
- 3 files changed, 682 insertions(+), 2 deletions(-)
- create mode 100644 tools/perf/python/perf.pyi
+ tools/perf/util/setup.py | 256 ++++++++++++++++++++++++++-------------
+ 1 file changed, 169 insertions(+), 87 deletions(-)
 
-diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
-index 5e87527c3d13a..21a25a938acf3 100644
---- a/tools/perf/Makefile.perf
-+++ b/tools/perf/Makefile.perf
-@@ -741,12 +741,15 @@ all: shell_compatibility_test $(ALL_PROGRAMS) $(LANG_BINDINGS) $(OTHER_PROGRAMS)
- # Create python binding output directory if not already present
- $(shell [ -d '$(OUTPUT)python' ] || mkdir -p '$(OUTPUT)python')
- 
--$(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): util/python.c util/setup.py $(PERFLIBS_PY)
-+$(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): util/python.c util/setup.py python/perf.pyi $(PERFLIBS_PY)
- 	$(QUIET_GEN)LDSHARED="$(CC) -pthread -shared" \
-         CFLAGS='$(CFLAGS)' LDFLAGS='$(LDFLAGS) $(LIBS_PY)' \
- 	  $(PYTHON_WORD) util/setup.py \
- 	  $(python_setup_quiet) build_ext; \
--	cp $(PYTHON_EXTBUILD_LIB)perf*.so $(OUTPUT)python/
-+	cp $(PYTHON_EXTBUILD_LIB)perf*.so $(OUTPUT)python/; \
-+	if [ "$(abspath python/perf.pyi)" != "$(abspath $(OUTPUT)python/perf.pyi)" ]; then \
-+		cp python/perf.pyi $(OUTPUT)python/; \
-+	fi
- 
- python_perf_target:
- 	@echo "Target is: $(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX)"
-diff --git a/tools/perf/python/perf.pyi b/tools/perf/python/perf.pyi
-new file mode 100644
-index 0000000000000..f266c9baffd01
---- /dev/null
-+++ b/tools/perf/python/perf.pyi
-@@ -0,0 +1,672 @@
-+"""Type stubs for the perf Python module."""
-+from typing import Callable, Dict, List, Optional, Any, Iterator
-+
-+def config_get(name: str) -> Optional[str]:
-+    """Get a configuration value from perf config.
-+
-+    Args:
-+        name: The configuration variable name (e.g., 'colors.top').
-+
-+    Returns:
-+        The configuration value as a string, or None if not set.
-+    """
-+    ...
-+
-+def metrics() -> List[Dict[str, str]]:
-+    """Get a list of available metrics.
-+
-+    Returns:
-+        A list of dictionaries, each describing a metric.
-+    """
-+    ...
-+
-+def syscall_name(id: int, *, elf_machine: Optional[int] = None) -> str:
-+    """Convert a syscall number to its name.
-+
-+    Args:
-+        sc_id: The syscall number.
-+        elf_machine: Optional ELF machine type.
-+
-+    Returns:
-+        The name of the syscall.
-+    """
-+    ...
-+
-+def syscall_id(name: str, *, elf_machine: Optional[int] = None) -> int:
-+    """Convert a syscall name to its number.
-+
-+    Args:
-+        name: The syscall name.
-+        elf_machine: Optional ELF machine type.
-+
-+    Returns:
-+        The number of the syscall.
-+    """
-+    ...
-+
-+def parse_events(
-+    event_string: str,
-+    cpus: Optional[cpu_map] = None,
-+    threads: Optional['thread_map'] = None
-+) -> 'evlist':
-+    """Parse an event string and return an evlist.
-+
-+    Args:
-+        event_string: The event string (e.g., 'cycles,instructions').
-+        cpus: Optional CPU map to bind events to.
-+        threads: Optional thread map to bind events to.
-+
-+    Returns:
-+        An evlist containing the parsed events.
-+    """
-+    ...
-+
-+def parse_metrics(
-+    metrics_string: str,
-+    pmu: Optional[str] = None,
-+    cpus: Optional[cpu_map] = None,
-+    threads: Optional['thread_map'] = None
-+) -> 'evlist':
-+    """Parse a string of metrics or metric groups and return an evlist."""
-+    ...
-+
-+def tracepoint(sys: str, name: str) -> int:
-+    """Returns the tracepoint ID for a given system and name."""
-+    ...
-+
-+def pmus() -> Iterator[Any]:
-+    """Returns a sequence of pmus."""
-+    ...
-+
-+class data:
-+    """Represents a perf data file."""
-+    def __init__(self, path: str = ..., fd: int = ...) -> None: ...
-+
-+class thread:
-+    """Represents a thread in the system."""
-+    def comm(self) -> str:
-+        """Get the command name of the thread."""
-+        ...
-+    pid: int
-+    tid: int
-+    ppid: int
-+    cpu: int
-+
-+class counts_values:
-+    """Raw counter values."""
-+    id: int
-+    val: int
-+    ena: int
-+    run: int
-+    lost: int
-+    values: List[int]
-+
-+class thread_map:
-+    """Map of threads being monitored."""
-+    def __init__(self, pid: int = -1, tid: int = -1) -> None:
-+        """Initialize a thread map.
-+
-+        Args:
-+            pid: Process ID to monitor (-1 for all).
-+            tid: Thread ID to monitor (-1 for all).
-+        """
-+        ...
-+    def __len__(self) -> int: ...
-+    def __getitem__(self, index: int) -> int: ...
-+    def __iter__(self) -> Iterator[int]: ...
-+
-+class evsel:
-+    """Event selector, represents a single event being monitored."""
-+    def __init__(
-+        self,
-+        type: int = ...,
-+        config: int = ...,
-+        sample_freq: int = ...,
-+        sample_period: int = ...,
-+        sample_type: int = ...,
-+        read_format: int = ...,
-+        disabled: bool = ...,
-+        inherit: bool = ...,
-+        pinned: bool = ...,
-+        exclusive: bool = ...,
-+        exclude_user: bool = ...,
-+        exclude_kernel: bool = ...,
-+        exclude_hv: bool = ...,
-+        exclude_idle: bool = ...,
-+        mmap: bool = ...,
-+        context_switch: bool = ...,
-+        comm: bool = ...,
-+        freq: bool = ...,
-+        inherit_stat: bool = ...,
-+        enable_on_exec: bool = ...,
-+        task: bool = ...,
-+        watermark: int = ...,
-+        precise_ip: int = ...,
-+        mmap_data: bool = ...,
-+        sample_id_all: bool = ...,
-+        wakeup_events: int = ...,
-+        bp_type: int = ...,
-+        bp_addr: int = ...,
-+        bp_len: int = ...,
-+        idx: int = ...,
-+    ) -> None: ...
-+    def __str__(self) -> str:
-+        """Return string representation of the event."""
-+        ...
-+    def open(self) -> None:
-+        """Open the event selector file descriptor table."""
-+        ...
-+    def read(self, cpu: int, thread: int) -> counts_values:
-+        """Read counter values for a specific CPU and thread."""
-+        ...
-+    ids: List[int]
-+    def cpus(self) -> cpu_map:
-+        """Get CPU map for this event."""
-+        ...
-+    def threads(self) -> thread_map:
-+        """Get thread map for this event."""
-+        ...
-+    tracking: bool
-+    config: int
-+    read_format: int
-+    sample_period: int
-+    sample_type: int
-+    size: int
-+    type: int
-+    wakeup_events: int
-+
-+
-+class _sample_members:
-+    sample_pid: int
-+    sample_tid: int
-+    sample_time: int
-+    sample_id: int
-+    sample_stream_id: int
-+    sample_period: int
-+    sample_cpu: int
-+
-+class sample_event(_sample_members):
-+    """Represents a sample event from perf."""
-+    evsel: evsel
-+    sample_ip: int
-+    sample_addr: int
-+    sample_phys_addr: int
-+    sample_weight: int
-+    sample_data_src: int
-+    sample_insn_count: int
-+    sample_cyc_count: int
-+    type: int
-+    raw_buf: bytes
-+    dso: str
-+    dso_long_name: str
-+    dso_bid: Optional[bytes]
-+    map_start: int
-+    map_end: int
-+    map_pgoff: int
-+    symbol: str
-+    sym_start: int
-+    sym_end: int
-+    brstack: Optional['branch_stack']
-+    callchain: Optional['callchain']
-+    def srccode(self) -> str: ...
-+    def insn(self) -> str: ...
-+    def __getattr__(self, name: str) -> Any: ...
-+
-+class mmap_event(_sample_members):
-+    """Represents a mmap event from perf."""
-+    type: int
-+    misc: int
-+    pid: int
-+    tid: int
-+    start: int
-+    len: int
-+    pgoff: int
-+    filename: str
-+    evsel: Optional['evsel']
-+
-+class mmap2_event(_sample_members):
-+    """Represents a mmap2 event from perf."""
-+    type: int
-+    misc: int
-+    pid: int
-+    tid: int
-+    start: int
-+    len: int
-+    pgoff: int
-+    prot: int
-+    flags: int
-+    filename: str
-+    maj: Optional[int]
-+    min: Optional[int]
-+    ino: Optional[int]
-+    ino_generation: Optional[int]
-+    build_id: Optional[bytes]
-+    evsel: Optional['evsel']
-+
-+class lost_event(_sample_members):
-+    """Represents a lost events record."""
-+    type: int
-+    id: int
-+    lost: int
-+    evsel: Optional['evsel']
-+
-+class comm_event(_sample_members):
-+    """Represents a COMM record."""
-+    type: int
-+    pid: int
-+    tid: int
-+    comm: str
-+    evsel: Optional['evsel']
-+
-+class task_event(_sample_members):
-+    """Represents an EXIT or FORK record."""
-+    type: int
-+    pid: int
-+    ppid: int
-+    tid: int
-+    ptid: int
-+    time: int
-+    evsel: Optional['evsel']
-+
-+class throttle_event(_sample_members):
-+    """Represents a THROTTLE or UNTHROTTLE record."""
-+    type: int
-+    time: int
-+    id: int
-+    stream_id: int
-+    evsel: Optional['evsel']
-+
-+class read_event(_sample_members):
-+    """Represents a READ record."""
-+    type: int
-+    pid: int
-+    tid: int
-+    evsel: Optional['evsel']
-+
-+class switch_event(_sample_members):
-+    """Represents a SWITCH or SWITCH_CPU_WIDE record."""
-+    type: int
-+    next_prev_pid: int
-+    next_prev_tid: int
-+    evsel: Optional['evsel']
-+
-+class branch_entry:
-+    """Represents a branch entry in the branch stack.
-+
-+    Attributes:
-+        from_ip: Source address of the branch (corresponds to 'from' keyword in C).
-+        to_ip: Destination address of the branch.
-+        mispred: True if the branch was mispredicted.
-+        predicted: True if the branch was predicted.
-+        in_tx: True if the branch was in a transaction.
-+        abort: True if the branch was an abort.
-+        cycles: Number of cycles since the last branch.
-+        type: Type of branch.
-+    """
-+    from_ip: int
-+    to_ip: int
-+    mispred: bool
-+    predicted: bool
-+    in_tx: bool
-+    abort: bool
-+    cycles: int
-+    type: int
-+
-+class branch_stack:
-+    """Sequence of branch entries in the branch stack."""
-+    def __len__(self) -> int: ...
-+    def __getitem__(self, index: int) -> branch_entry: ...
-+
-+class callchain_node:
-+    """Represents a frame in the callchain."""
-+    ip: int
-+    symbol: Optional[str]
-+    dso: Optional[str]
-+
-+class callchain:
-+    """Sequence of callchain frames."""
-+    def __len__(self) -> int: ...
-+    def __getitem__(self, index: int) -> callchain_node: ...
-+
-+class stat_event(_sample_members):
-+    """Represents a stat event from perf."""
-+    type: int
-+    id: int
-+    cpu: int
-+    thread: int
-+    val: int
-+    ena: int
-+    run: int
-+    evsel: Optional['evsel']
-+
-+class stat_round_event(_sample_members):
-+    """Represents a stat round event from perf."""
-+    type: int
-+    time: int
-+    stat_round_type: int
-+    evsel: Optional['evsel']
-+
-+class cpu_map:
-+    """Map of CPUs being monitored."""
-+    def __init__(self, cpustr: Optional[str] = None) -> None: ...
-+    def __len__(self) -> int: ...
-+    def __getitem__(self, index: int) -> int: ...
-+    def __iter__(self) -> Iterator[int]: ...
-+
-+
-+class evlist:
-+    def __init__(self, cpus: cpu_map, threads: thread_map) -> None: ...
-+    def open(self) -> None:
-+        """Open the events in the list."""
-+        ...
-+    def close(self) -> None:
-+        """Close the events in the list."""
-+        ...
-+    def mmap(self) -> None:
-+        """Memory map the event buffers."""
-+        ...
-+    def poll(self, timeout: int) -> int:
-+        """Poll for events.
-+
-+        Args:
-+            timeout: Timeout in milliseconds.
-+
-+        Returns:
-+            Number of events ready.
-+        """
-+        ...
-+    def read_on_cpu(self, cpu: int) -> Optional[Any]:
-+        """Read a sample event from a specific CPU.
-+
-+        Args:
-+            cpu: The CPU number.
-+
-+        Returns:
-+            A sample_event or other event type if available, or None.
-+        """
-+        ...
-+    def all_cpus(self) -> cpu_map:
-+        """Get a cpu_map of all CPUs in the system."""
-+        ...
-+    def metrics(self) -> List[str]:
-+        """Get a list of metric names within the evlist."""
-+        ...
-+    def compute_metric(self, metric: str, cpu: int, thread: int) -> float:
-+        """Compute metric for given name, cpu and thread.
-+
-+        Args:
-+            metric: The metric name.
-+            cpu: The CPU number.
-+            thread: The thread ID.
-+
-+        Returns:
-+            The computed metric value.
-+        """
-+        ...
-+    def config(self) -> None:
-+        """Configure the events in the list."""
-+        ...
-+    def disable(self) -> None:
-+        """Disable all events in the list."""
-+        ...
-+    def enable(self) -> None:
-+        """Enable all events in the list."""
-+        ...
-+    def get_pollfd(self) -> List[int]:
-+        """Get a list of file descriptors for polling."""
-+        ...
-+    def add(self, evsel: evsel) -> int:
-+        """Add an event to the list."""
-+        ...
-+    def __iter__(self) -> Iterator[evsel]:
-+        """Iterate over the events (evsel) in the list."""
-+        ...
-+
-+
-+class session:
-+    def __init__(
-+        self,
-+        data: data,
-+        sample: Optional[Callable[[sample_event], None]] = None,
-+        stat: Optional[Callable[[Any, Optional[str]], None]] = None
-+    ) -> None:
-+        """Initialize a perf session.
-+
-+        Args:
-+            data: The perf data file to read.
-+            sample: Callback for sample events.
-+            stat: Callback for stat events.
-+        """
-+        ...
-+    def process_events(self) -> None:
-+        """Process all events in the session."""
-+        ...
-+    def find_thread(self, pid: int) -> thread:
-+        """Returns the thread associated with a pid."""
-+        ...
-+
-+# Event Types
-+TYPE_HARDWARE: int
-+"""Hardware event."""
-+
-+TYPE_SOFTWARE: int
-+"""Software event."""
-+
-+TYPE_TRACEPOINT: int
-+"""Tracepoint event."""
-+
-+TYPE_HW_CACHE: int
-+"""Hardware cache event."""
-+
-+TYPE_RAW: int
-+"""Raw hardware event."""
-+
-+TYPE_BREAKPOINT: int
-+"""Breakpoint event."""
-+
-+
-+# Hardware Counters
-+COUNT_HW_CPU_CYCLES: int
-+"""Total cycles. Be wary of what happens during CPU frequency scaling."""
-+
-+COUNT_HW_INSTRUCTIONS: int
-+"""Retired instructions. Be careful, these can be affected by various issues,
-+most notably hardware interrupt counts."""
-+
-+COUNT_HW_CACHE_REFERENCES: int
-+"""Cache accesses. Usually this indicates Last Level Cache accesses but this
-+may vary depending on your CPU."""
-+
-+COUNT_HW_CACHE_MISSES: int
-+"""Cache misses. Usually this indicates Last Level Cache misses."""
-+
-+COUNT_HW_BRANCH_INSTRUCTIONS: int
-+"""Retired branch instructions."""
-+
-+COUNT_HW_BRANCH_MISSES: int
-+"""Mispredicted branch instructions."""
-+
-+COUNT_HW_BUS_CYCLES: int
-+"""Bus cycles, which can be different from total cycles."""
-+
-+COUNT_HW_STALLED_CYCLES_FRONTEND: int
-+"""Stalled cycles during issue [This event is an alias of idle-cycles-frontend]."""
-+
-+COUNT_HW_STALLED_CYCLES_BACKEND: int
-+"""Stalled cycles during retirement [This event is an alias of idle-cycles-backend]."""
-+
-+COUNT_HW_REF_CPU_CYCLES: int
-+"""Total cycles; not affected by CPU frequency scaling."""
-+
-+
-+# Cache Counters
-+COUNT_HW_CACHE_L1D: int
-+"""Level 1 data cache."""
-+
-+COUNT_HW_CACHE_L1I: int
-+"""Level 1 instruction cache."""
-+
-+COUNT_HW_CACHE_LL: int
-+"""Last Level Cache."""
-+
-+COUNT_HW_CACHE_DTLB: int
-+"""Data TLB."""
-+
-+COUNT_HW_CACHE_ITLB: int
-+"""Instruction TLB."""
-+
-+COUNT_HW_CACHE_BPU: int
-+"""Branch Processing Unit."""
-+
-+COUNT_HW_CACHE_OP_READ: int
-+"""Read accesses."""
-+
-+COUNT_HW_CACHE_OP_WRITE: int
-+"""Write accesses."""
-+
-+COUNT_HW_CACHE_OP_PREFETCH: int
-+"""Prefetch accesses."""
-+
-+COUNT_HW_CACHE_RESULT_ACCESS: int
-+"""Accesses."""
-+
-+COUNT_HW_CACHE_RESULT_MISS: int
-+"""Misses."""
-+
-+
-+# Software Counters
-+COUNT_SW_CPU_CLOCK: int
-+"""CPU clock event."""
-+
-+COUNT_SW_TASK_CLOCK: int
-+"""Task clock event."""
-+
-+COUNT_SW_PAGE_FAULTS: int
-+"""Page faults."""
-+
-+COUNT_SW_CONTEXT_SWITCHES: int
-+"""Context switches."""
-+
-+COUNT_SW_CPU_MIGRATIONS: int
-+"""CPU migrations."""
-+
-+COUNT_SW_PAGE_FAULTS_MIN: int
-+"""Minor page faults."""
-+
-+COUNT_SW_PAGE_FAULTS_MAJ: int
-+"""Major page faults."""
-+
-+COUNT_SW_ALIGNMENT_FAULTS: int
-+"""Alignment faults."""
-+
-+COUNT_SW_EMULATION_FAULTS: int
-+"""Emulation faults."""
-+
-+COUNT_SW_DUMMY: int
-+"""Dummy event."""
-+
-+
-+# Sample Fields
-+SAMPLE_IP: int
-+"""Instruction pointer."""
-+
-+SAMPLE_TID: int
-+"""Process and thread ID."""
-+
-+SAMPLE_TIME: int
-+"""Timestamp."""
-+
-+SAMPLE_ADDR: int
-+"""Sampled address."""
-+
-+SAMPLE_READ: int
-+"""Read barcode."""
-+
-+SAMPLE_CALLCHAIN: int
-+"""Call chain."""
-+
-+SAMPLE_ID: int
-+"""Unique ID."""
-+
-+SAMPLE_CPU: int
-+"""CPU number."""
-+
-+SAMPLE_PERIOD: int
-+"""Sample period."""
-+
-+SAMPLE_STREAM_ID: int
-+"""Stream ID."""
-+
-+SAMPLE_RAW: int
-+"""Raw sample."""
-+
-+
-+# Format Fields
-+FORMAT_TOTAL_TIME_ENABLED: int
-+"""Total time enabled."""
-+
-+FORMAT_TOTAL_TIME_RUNNING: int
-+"""Total time running."""
-+
-+FORMAT_ID: int
-+"""Event ID."""
-+
-+FORMAT_GROUP: int
-+"""Event group."""
-+
-+
-+# Record Types
-+RECORD_MMAP: int
-+"""MMAP record. Contains header, pid, tid, addr, len, pgoff, filename, and sample_id."""
-+
-+RECORD_LOST: int
-+"""Lost events record. Contains header, id, lost count, and sample_id."""
-+
-+RECORD_COMM: int
-+"""COMM record. Contains header, pid, tid, comm, and sample_id."""
-+
-+RECORD_EXIT: int
-+"""EXIT record. Contains header, pid, ppid, tid, ptid, time, and sample_id."""
-+
-+RECORD_THROTTLE: int
-+"""THROTTLE record. Contains header, time, id, stream_id, and sample_id."""
-+
-+RECORD_UNTHROTTLE: int
-+"""UNTHROTTLE record. Contains header, time, id, stream_id, and sample_id."""
-+
-+RECORD_FORK: int
-+"""FORK record. Contains header, pid, ppid, tid, ptid, time, and sample_id."""
-+
-+RECORD_READ: int
-+"""READ record. Contains header, and read values."""
-+
-+RECORD_SAMPLE: int
-+"""SAMPLE record. Contains header, and sample data requested by sample_type."""
-+
-+RECORD_MMAP2: int
-+"""MMAP2 record. Contains header, pid, tid, addr, len, pgoff, maj, min, ino,
-+ino_generation, prot, flags, filename, and sample_id."""
-+
-+RECORD_AUX: int
-+"""AUX record. Contains header, aux_offset, aux_size, flags, and sample_id."""
-+
-+RECORD_ITRACE_START: int
-+"""ITRACE_START record. Contains header, pid, tid, and sample_id."""
-+
-+RECORD_LOST_SAMPLES: int
-+"""LOST_SAMPLES record. Contains header, lost count, and sample_id."""
-+
-+RECORD_SWITCH: int
-+"""SWITCH record. Contains header, and sample_id."""
-+
-+RECORD_SWITCH_CPU_WIDE: int
-+"""SWITCH_CPU_WIDE record. Contains header, and sample_id."""
-+
-+RECORD_STAT: int
-+"""STAT record."""
-+
-+RECORD_STAT_ROUND: int
-+"""STAT_ROUND record."""
-+
-+RECORD_MISC_SWITCH_OUT: int
-+"""MISC_SWITCH_OUT record."""
 diff --git a/tools/perf/util/setup.py b/tools/perf/util/setup.py
-index a0ce76624a230..cb14554454a21 100644
+index cb14554454a21..8380980ade4c4 100644
 --- a/tools/perf/util/setup.py
 +++ b/tools/perf/util/setup.py
-@@ -2,6 +2,7 @@ from os import getenv, path
- from subprocess import Popen, PIPE
- from re import sub
- import shlex
-+import shutil
- 
- cc = getenv("CC")
- assert cc, "Environment variable CC not set"
-@@ -73,6 +74,10 @@ class install_lib(_install_lib):
-         _install_lib.finalize_options(self)
-         self.build_dir = build_lib
- 
-+    def run(self):
-+        _install_lib.run(self)
-+        shutil.copy2(f'{src_perf}/python/perf.pyi', self.install_dir)
+@@ -1,112 +1,194 @@
+-from os import getenv, path
+-from subprocess import Popen, PIPE
+-from re import sub
++# SPDX-License-Identifier: GPL-2.0
++"""Setup script for perf python extension.
 +
++This script is used to build and install the perf python binding.
++It handles compiler-specific flags, especially for clang, and configures
++the setuptools Extension.
++"""
++
++import os
+ import shlex
+ import shutil
++import subprocess
++import sysconfig
  
- # switch off several checks (need to be at the end of cflags list)
- extra_cflags = ['-fno-strict-aliasing', '-Wno-write-strings', '-Wno-unused-parameter', '-Wno-redundant-decls' ]
+-cc = getenv("CC")
+-assert cc, "Environment variable CC not set"
++from setuptools import setup, Extension
++from setuptools.command.build_ext import build_ext as _build_ext
++from setuptools.command.install_lib import install_lib as _install_lib
+ 
+-# Check if CC has options, as is the case in yocto, where it uses CC="cc --sysroot..."
+-cc_tokens = cc.split()
+-if len(cc_tokens) > 1:
+-    cc = cc_tokens[0]
+-    cc_options = " ".join([str(e) for e in cc_tokens[1:]]) + " "
+-else:
+-    cc_options = ""
+ 
+-# ignore optional stderr could be None as it is set to PIPE to avoid that.
+-# mypy: disable-error-code="union-attr"
+-cc_is_clang = b"clang version" in Popen([cc, "-v"], stderr=PIPE).stderr.readline()
++def clang_has_option(cc: str, cc_args: list[str], src_feature_tests: str, option: str) -> bool:
++    """Check if clang supports a specific option.
+ 
+-srctree = getenv('srctree')
+-assert srctree, "Environment variable srctree, for the Linux sources, not set"
+-src_feature_tests  = f'{srctree}/tools/build/feature'
++    Args:
++        cc: The compiler executable.
++        cc_args: Compiler arguments from CC environment variable.
++        src_feature_tests: Path to the feature tests directory.
++        option: The compiler option to check (e.g., "-mcet").
+ 
+-def clang_has_option(option):
++    Returns:
++        True if the option is supported, False otherwise.
++    """
+     error_substrings = (
+         b"unknown argument",
+         b"is not supported",
+         b"unknown warning option"
+     )
+-    cmd = shlex.split(f"{cc} {cc_options} {option}") + [
++    cmd = [cc] + cc_args + [
++        option,
+         "-o", "/dev/null",
+-        path.join(src_feature_tests, "test-hello.c")
++        os.path.join(src_feature_tests, "test-hello.c")
+     ]
+-    cc_output = Popen(cmd, stderr=PIPE).stderr.readlines()
++    try:
++        res = subprocess.run(cmd, stderr=subprocess.PIPE, stdout=subprocess.DEVNULL, check=False)
++        cc_output = res.stderr.splitlines()
++    except OSError:
++        return False
+     return not any(any(error in line for error in error_substrings) for line in cc_output)
+ 
+-if cc_is_clang:
+-    from sysconfig import get_config_vars
+-    vars = get_config_vars()
++
++def filter_clang_options(cc: str, cc_args: list[str], src_feature_tests: str) -> None:
++    """Filter out unsupported clang options from sysconfig CFLAGS and OPT.
++
++    Args:
++        cc: The compiler executable.
++        cc_args: Compiler arguments from CC environment variable.
++        src_feature_tests: Path to the feature tests directory.
++    """
++    config_vars = sysconfig.get_config_vars()
+     for var in ('CFLAGS', 'OPT'):
+-        vars[var] = sub("-specs=[^ ]+", "", vars[var])
+-        if not clang_has_option("-mcet"):
+-            vars[var] = sub("-mcet", "", vars[var])
+-        if not clang_has_option("-fcf-protection"):
+-            vars[var] = sub("-fcf-protection", "", vars[var])
+-        if not clang_has_option("-fstack-clash-protection"):
+-            vars[var] = sub("-fstack-clash-protection", "", vars[var])
+-        if not clang_has_option("-fstack-protector-strong"):
+-            vars[var] = sub("-fstack-protector-strong", "", vars[var])
+-        if not clang_has_option("-fno-semantic-interposition"):
+-            vars[var] = sub("-fno-semantic-interposition", "", vars[var])
+-        if not clang_has_option("-ffat-lto-objects"):
+-            vars[var] = sub("-ffat-lto-objects", "", vars[var])
+-        if not clang_has_option("-ftree-loop-distribute-patterns"):
+-            vars[var] = sub("-ftree-loop-distribute-patterns", "", vars[var])
+-        if not clang_has_option("-gno-variable-location-views"):
+-            vars[var] = sub("-gno-variable-location-views", "", vars[var])
++        if var not in config_vars:
++            continue
++
++        # Split into individual flags using shlex to preserve quoted arguments
++        flags = shlex.split(config_vars[var])
++
++        # Remove -specs=...
++        flags = [f for f in flags if not f.startswith("-specs=")]
++
++        options = (
++            "-mcet",
++            "-fcf-protection",
++            "-fstack-clash-protection",
++            "-fstack-protector-strong",
++            "-fno-semantic-interposition",
++            "-ffat-lto-objects",
++            "-ftree-loop-distribute-patterns",
++            "-gno-variable-location-views"
++        )
++        for option in options:
++            if not clang_has_option(cc, cc_args, src_feature_tests, option):
++                # Remove the option and any variant (e.g. -option=...)
++                flags = [f for f in flags if not f.startswith(option)]
++
++        # Re-join flags preserving quoting
++        config_vars[var] = shlex.join(flags)
++
++
++class BuildExt(_build_ext):
++    """Custom build_ext command to set output directories."""
++
++    def __init__(self, *args, **kwargs):
++        self.build_lib = None
++        self.build_temp = None
++        super().__init__(*args, **kwargs)
++
++    def finalize_options(self) -> None:
++        _build_ext.finalize_options(self)
++        build_lib = os.getenv('PYTHON_EXTBUILD_LIB')
++        build_tmp = os.getenv('PYTHON_EXTBUILD_TMP')
++        if build_lib:
++            self.build_lib = build_lib
++        if build_tmp:
++            self.build_temp = build_tmp
+ 
+-from setuptools import setup, Extension
+ 
+-from setuptools.command.build_ext   import build_ext   as _build_ext
+-from setuptools.command.install_lib import install_lib as _install_lib
++class InstallLib(_install_lib):
++    """Custom install_lib command to set output directory."""
+ 
+-class build_ext(_build_ext):
+-    def finalize_options(self):
+-        _build_ext.finalize_options(self)
+-        self.build_lib  = build_lib
+-        self.build_temp = build_tmp
++    def __init__(self, *args, **kwargs):
++        self.build_dir = None
++        super().__init__(*args, **kwargs)
+ 
+-class install_lib(_install_lib):
+-    def finalize_options(self):
++    def finalize_options(self) -> None:
+         _install_lib.finalize_options(self)
+-        self.build_dir = build_lib
++        build_lib = os.getenv('PYTHON_EXTBUILD_LIB')
++        if build_lib:
++            self.build_dir = build_lib
+ 
+     def run(self):
+         _install_lib.run(self)
+-        shutil.copy2(f'{src_perf}/python/perf.pyi', self.install_dir)
+-
+-
+-# switch off several checks (need to be at the end of cflags list)
+-extra_cflags = ['-fno-strict-aliasing', '-Wno-write-strings', '-Wno-unused-parameter', '-Wno-redundant-decls' ]
+-if cc_is_clang:
+-    extra_cflags += ["-Wno-unused-command-line-argument" ]
+-    if clang_has_option("-Wno-cast-function-type-mismatch"):
+-        extra_cflags += ["-Wno-cast-function-type-mismatch" ]
+-else:
+-    extra_cflags += ['-Wno-cast-function-type' ]
+-
+-# The python headers have mixed code with declarations (decls after asserts, for instance)
+-extra_cflags += [ "-Wno-declaration-after-statement" ]
+-
+-src_perf  = f'{srctree}/tools/perf'
+-build_lib = getenv('PYTHON_EXTBUILD_LIB')
+-build_tmp = getenv('PYTHON_EXTBUILD_TMP')
+-
+-perf = Extension('perf',
+-                 sources = [ src_perf + '/util/python.c' ],
+-		         include_dirs = ['util/include'],
+-		         extra_compile_args = extra_cflags,
+-                 )
+-
+-setup(name='perf',
+-      version='0.1',
+-      description='Interface with the Linux profiling infrastructure',
+-      author='Arnaldo Carvalho de Melo',
+-      author_email='acme@redhat.com',
+-      license='GPLv2',
+-      url='http://perf.wiki.kernel.org',
+-      ext_modules=[perf],
+-      cmdclass={'build_ext': build_ext, 'install_lib': install_lib})
++        srctree = os.getenv('srctree', '.')
++        src_perf = os.path.join(srctree, 'tools/perf')
++        shutil.copy2(os.path.join(src_perf, 'python/perf.pyi'), self.install_dir)
++
++
++def main() -> None:
++    """Main entry point for the setup script."""
++    cc_env = os.getenv("CC")
++    assert cc_env, "Environment variable CC not set"
++
++    # Safe parsing of CC environment variable which might contain options/quotes
++    cc_tokens = shlex.split(cc_env)
++    cc = cc_tokens[0]
++    cc_args = cc_tokens[1:]
++
++    # Run CC -v to check if it is clang.
++    try:
++        cc_info = subprocess.run(
++            [cc, "-v"], stderr=subprocess.PIPE, stdout=subprocess.DEVNULL, check=False
++        )
++        cc_is_clang = b"clang version" in cc_info.stderr
++    except OSError as e:
++        raise RuntimeError(f"Failed to execute compiler '{cc}': {e}") from e
++
++    srctree = os.getenv('srctree')
++    assert srctree, "Environment variable srctree, for the Linux sources, not set"
++    src_feature_tests = f'{srctree}/tools/build/feature'
++
++    if cc_is_clang:
++        filter_clang_options(cc, cc_args, src_feature_tests)
++
++    # switch off several checks (need to be at the end of cflags list)
++    cflags = [
++        '-fno-strict-aliasing',
++        '-Wno-write-strings',
++        '-Wno-unused-parameter',
++        '-Wno-redundant-decls'
++    ]
++    if cc_is_clang:
++        cflags += ["-Wno-unused-command-line-argument"]
++        if clang_has_option(
++            cc, cc_args, src_feature_tests, "-Wno-cast-function-type-mismatch"
++        ):
++            cflags += ["-Wno-cast-function-type-mismatch"]
++    else:
++        cflags += ['-Wno-cast-function-type']
++
++    # The python headers have mixed code with declarations (decls after asserts, for instance)
++    cflags += ["-Wno-declaration-after-statement"]
++
++    src_perf = f'{srctree}/tools/perf'
++
++    perf = Extension(
++        'perf',
++        sources=[os.path.join(src_perf, 'util/python.c')],
++        include_dirs=['util/include'],
++        extra_compile_args=cflags,
++    )
++
++    setup(
++        name='perf',
++        version='0.1',
++        description='Interface with the Linux profiling infrastructure',
++        author='Arnaldo Carvalho de Melo',
++        author_email='acme@redhat.com',
++        license='GPLv2',
++        url='http://perf.wiki.kernel.org',
++        ext_modules=[perf],
++        cmdclass={'build_ext': BuildExt, 'install_lib': InstallLib},
++    )
++
++
++if __name__ == '__main__':
++    main()
 -- 
 2.53.0
 
