@@ -1,54 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029134;
-	b=bp3Ek9dQDWaal8xfWfYDNoo7rh3Gtzd/rFeCzfU5zIygoUqQduVkqLt2CWUYF6/VUpGW
-	 P/kX3tF9T2dsGvAa+D8VXPj49N72cidHAsNWXxqwNWuf633h8rcNqftKd/PvF6E/wGUul
-	 YVw/MXMgt/njGRxCs5W+8PK0udeu2H8NoeQEfyJHjCQd2alFzfWCZ3zPMQ+gWa/xc0rcL
-	 SzDVJBnQkJyjUEnjGM6K6xYOtuegBAN7k4WuK6+u9SFpPtQefFMoqcMcoQddk3N+SJp/C
-	 hOFTtnNE/MN76R9SU6R4Ze1te+y2jX5ggrhsk+WzsH2U8a/eLNLJBU95L8/gjMmZRpQ==
+	t=1795029137;
+	b=yYpBXPwTqmGxXKMklCJqdQZS1aDEVQQ+i/PGlN/p8b6vxUMA6EMhdbvlkJDiazZv7i7t
+	 xTHLm1w7lK6yl/0A4XF0QNdH1G216SjwNd1gVL/KSHc3/PagdBdy3nJ6/6BBB9x0ivsMN
+	 XcG9qEX5piBFw/KPOcb/nloqe2uoJK5l8evGpAkgMVFG294UEZIP+M1TKKxN3IGydbiYx
+	 lESKvL+7gY6WMeISlZsDtVtBCRXUMJn1xH/ZkVbjQZxCoK0hBw4OLD//EZWzlMmfO1iJX
+	 /KcmS2L0+cBuQa3x4b7zxI2BJuXAI00qgAM+zmiYQCbs1HHSKHjGGMT4W1zacALqoag==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029134;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029137;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=og/mWIC11jyk4nYB93d5sjFRvje4as10JCBYYK9oZbU=;
-	b=tYSlu87UCbCdXR0Ipmg/YZBRg10w4cxK8LA1kUrVGAmgUXMD8/ljEX3JCAFZC5jYy41P
-	 zbVBkm5nG4ahjC8kAHJEnfewuLH2VBKz4iE6n3fD6x6gejFc02Z4U/Ca0YY/R0vb3b09W
-	 d0jMucWuuIXM0rFyI8aEsVw2sWkbTJvY89Dnih9LiUxcO12LMBv7dlT0rvJ5EPJMdol4L
-	 aLkD2x5UDYpBs344fXitoqBIH4BsZsT4AeLPWNXhQ88Kv4mSPTG1rGq3/lMpu5BZ3/dET
-	 QKqKtpwTEPkTBPupT383Xd6eSjkmOKc076uRzYwVO3U2Wjl1ZVt6tg+hzDIigcgkMjw==
+	bh=GIJeIHElKDx6sIaICqEHvng0bfRReXc6f+8kQqrKcF8=;
+	b=qVQHsRoZMctUPFomBH/YqS20qkfBy2mDHMvfw1VVJ/dxjJeDObpKJwQb1ZhL8iT68OkK
+	 mUrMEGWGGUsWDViMQv8qdfpN4TrCAB4Mj+84PT+eaXgW2G8VMUgQJ2qshC3WQecfJ92zG
+	 SFHWt1uFW7OA3KBKeDTaoqYSRzSLcSxjiQiVU4UwnvIJoJq2kJIsPMO63nYlZ0Z6xRMtj
+	 hznpPA8ell8L+wAA+4cIlUi1B9GDVivB35sYK4SzJHAr1B8xpKQnD1ML6TR/IBtfFOrMH
+	 3enqCLZAYjVacZ70ek7IAcCY03R4lQRsVjgbqZQHw2sFf8gK4C9OW61glnj7DVV4ndw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNg47Db9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJR4DWri;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674C9606A32F;
-	Wed, 18 Nov 2026 19:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335E1606A31C;
+	Wed, 18 Nov 2026 19:12:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HNg47Db9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C055C1F000C4;
-	Wed, 18 Nov 2026 19:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dJR4DWri
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA6B1F000C6;
+	Wed, 18 Nov 2026 19:12:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029134;
-	bh=og/mWIC11jyk4nYB93d5sjFRvje4as10JCBYYK9oZbU=;
+	s=korg; t=1795029137;
+	bh=GIJeIHElKDx6sIaICqEHvng0bfRReXc6f+8kQqrKcF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HNg47Db9MRluTsvULC8Momi0D7uwzORg2fq0CVvRQR2gEnABPkZXhTEKDtVgqrWcH
-	 jXoi8SOrrytHqCyvQ8rJ6BpsO9i69UrfAbJfCuL5CW+JTfMNPgCb8+MYCtGoSrWEWq
-	 BgWZHyKAMgNQOX3e3tSkjS0/mjU85zcWaK+gM2xA=
+	b=dJR4DWriJYOuSRDFoc8On3SVnO5Zdkk3gygd/H5ujjN2DgsEODZ2ETcT4J4Eve0q4
+	 pAki1qgFZBSchfSbd2f8Z/QTjeNdaSGq5Wub1ZnGCxbYrw/vOVAXEAeR2SqTRG63wh
+	 wJUKXPxdwEaTG09zIOHN+DR8L1atp4RK6NjnCpG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	"Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>,
-	Brian Masney <bmasney@redhat.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	sashiko-bot@kernel.org,
+	Alison Schofield <alison.schofield@intel.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0215/1756] clk: Use the generic OF phandle parsing in only one place
-Date: Wed, 18 Nov 2026 15:39:02 +0100
-Message-ID: <20261118150016.888634548@linuxfoundation.org>
+Subject: [PATCH 6.12 0242/1756] ACPI: APEI: GHES: Bound CXL event record copy to the firmware section length
+Date: Wed, 18 Nov 2026 15:39:29 +0100
+Message-ID: <20261118150017.970008903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,56 +73,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 57d728b4ab15a8af890013bb0f302e7733f7c1c6 ]
+[ Upstream commit b7a4915a2b43d47f0bbb0b2a4c30e722fa0d3191 ]
 
-Ideally, there should be one single entry in the OF world. This way, the
-DT parsing logic is always identical. At this stage, we call
-of_parse_phandle_with_args() in:
-- of_parse_clkspec()
-- of_clk_get_parent_name()
-which kinds of defeats the above statement. Furthermore, when this call
-is done from of_clk_get_parent_name(), we fail to parse the
-'clock-ranges' property.
+cxl_cper_post_event() copies a fixed sizeof(struct cxl_cper_event_rec)
+out of the firmware CPER section without checking how long the section
+actually is, so a short one reads past the record.
 
-Make sure DT world is entered only once by calling of_parse_clkspec()
-from of_clk_get_parent_name(). Doing so implies that we do not try the
-"clock-ranges" path if we already found a "clocks" property.
+Pass gdata->error_data_length in and reject a section too small to hold
+the record before the copy.
 
-Suggested-by: Stephen Boyd <sboyd@kernel.org>
-Fixes: 4472287a3b2f5 ("clk: Introduce of_clk_get_hw_from_clkspec()")
-Signed-off-by: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+Reported-by: sashiko-bot@kernel.org
+Link: https://sashiko.dev/#/patchset/20260617-topics-ahmtib01-ras_ffh_arm_internal_review-v6-0-91f725174aa0@arm.com?part=6
+Fixes: 5e4a264bf8b5 ("acpi/ghes: Process CXL Component Events")
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260904172337.1409775-9-dave.jiang@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/acpi/apei/ghes.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
-index 1bab1ca73a74c..4a10d5c664572 100644
---- a/drivers/clk/clk.c
-+++ b/drivers/clk/clk.c
-@@ -5237,6 +5237,8 @@ static int of_parse_clkspec(const struct device_node *np, int index,
- 		 * has a "clock-ranges" property, then we can try one of its
- 		 * clocks.
- 		 */
-+		if (of_property_present(np, "clocks"))
-+			break;
- 		np = np->parent;
- 		if (np && !of_property_present(np, "clock-ranges"))
- 			break;
-@@ -5381,8 +5383,7 @@ const char *of_clk_get_parent_name(const struct device_node *np, int index)
- 	int count;
- 	struct clk *clk;
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 045acf13c1313..dd9ea631f6f60 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -714,10 +714,15 @@ static DEFINE_RAW_SPINLOCK(cxl_cper_work_lock);
+ struct work_struct *cxl_cper_work;
  
--	rc = of_parse_phandle_with_args(np, "clocks", "#clock-cells", index,
--					&clkspec);
-+	rc = of_parse_clkspec(np, index, NULL, &clkspec);
- 	if (rc)
- 		return NULL;
+ static void cxl_cper_post_event(enum cxl_event_type event_type,
+-				struct cxl_cper_event_rec *rec)
++				struct cxl_cper_event_rec *rec, u32 len)
+ {
+ 	struct cxl_cper_work_data wd;
+ 
++	if (len < sizeof(*rec)) {
++		pr_err(FW_WARN "CXL CPER section too small (%u)\n", len);
++		return;
++	}
++
+ 	if (rec->hdr.length <= sizeof(rec->hdr) ||
+ 	    rec->hdr.length > sizeof(*rec)) {
+ 		pr_err(FW_WARN "CXL CPER Invalid section length (%u)\n",
+@@ -817,15 +822,18 @@ static bool ghes_do_proc(struct ghes *ghes,
+ 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_GEN_MEDIA_GUID)) {
+ 			struct cxl_cper_event_rec *rec = acpi_hest_get_payload(gdata);
+ 
+-			cxl_cper_post_event(CXL_CPER_EVENT_GEN_MEDIA, rec);
++			cxl_cper_post_event(CXL_CPER_EVENT_GEN_MEDIA, rec,
++					    gdata->error_data_length);
+ 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_DRAM_GUID)) {
+ 			struct cxl_cper_event_rec *rec = acpi_hest_get_payload(gdata);
+ 
+-			cxl_cper_post_event(CXL_CPER_EVENT_DRAM, rec);
++			cxl_cper_post_event(CXL_CPER_EVENT_DRAM, rec,
++					    gdata->error_data_length);
+ 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_MEM_MODULE_GUID)) {
+ 			struct cxl_cper_event_rec *rec = acpi_hest_get_payload(gdata);
+ 
+-			cxl_cper_post_event(CXL_CPER_EVENT_MEM_MODULE, rec);
++			cxl_cper_post_event(CXL_CPER_EVENT_MEM_MODULE, rec,
++					    gdata->error_data_length);
+ 		} else {
+ 			void *err = acpi_hest_get_payload(gdata);
  
 -- 
 2.53.0
