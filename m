@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035135;
-	b=ro/PiPTN45FmeU6amYpY3xBWyPXzXaZJUAMnVFL+8Th/OUuMZ+OHBi+qUXSjFzC4p7rN
-	 fFWKuIQHfq1e7jF/tj4K21Op/Bm7i4vGkHdmOHFgOCkDbgGtYdWl6nh+yKhpQOK/7o6VA
-	 sljjlVCCVSW2IFuRBNk17qgeRQb4pKi8Fb/tNJwWPjlfXxBR2EGyHSjWTxXLX4WqVvtHy
-	 AYnP+x2a61vPnvlWpaB48jmhNUzfSl9XqXklSoGoXajkZPJlH2q69vv7OhSayle/29S3E
-	 TauHS7Zz1u7uEe6loFVLhMS9spA2D66k8AAlhbH7LtypeQuAG9sj4Ru/QDludf4w6FQ==
+	t=1795035138;
+	b=p4f/e0p0Un793VpK2bU9Kfm2Ze+oNzsD7h/hGKvE9wR81Da6xqUZVjDelHgfFMqpHZq0
+	 8Eoikp3zNfpEXGLVGOi6kFgGwJT2tMwxTCaXSZjklfck/oNOaD0Z4y0zCgGx6XJexVk+Z
+	 GaJaJh2ZTtZkBPMuXPr2EkPP6vmiR5hZ/McgSxb9JzcmOdnHA0sWfc7aWB+FvMKL7axlb
+	 IJc0hCJQHj7GXKE2+w0mxGBUiQ0tED6wI5+tT/NcmEY7ED/5IBXMcN3umXmjAcVntjvVV
+	 G8WQiPvUuBtf36zsWSAjD5MDeMaQLWuHZYVROPQBukhncUB0TUpRBrM9KVLGBciRbOQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035135;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035138;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0iqkEbMNLSLa45QmaLDBgp2QDQtLVWCkd7kTitpuH8Y=;
-	b=odHgCwb9tODBzn23tjyh/Xfn+b6OVFi4ZBh4itQuHh8PZBDrUWrlVPTLHQbEDABuH3SU
-	 QCku4gXMoPmZ+2lOQh0cKg8JVVNfSsVUcKOHzAOpPTdUd6+fNJ/TeccQy9gkl2Reol3t2
-	 b7Bk0/meNgp06gnd4jN4s1YXQ/5BV91cc5G1V/6y0tkGjgVWdKpX23L1Joe5FuofCUruj
-	 VZamRobQwnJAxESEGNc2OHlfLVgOKZkQK9Zf3pbvJHvGJtdYIlEv9maGo9Dnb+Tpvj0H+
-	 hH6brf6fBV2Wdmmy1UQzD7y1VGFsQsiXweUzQQx6omKb0YU9SioKrgT91uT4jyMtqFA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=87oKvwmy8UpUwGXfKB56qK7PJkfnrLBmM8Qffubitx0=;
+	b=bJFPXfb2rCqHc8WHjGJL4BaJvpm0+2/SKWh6V2KDRCCEiTzZkuAqAyWjpXeydMvjxJ+U
+	 FaIYxtfjrYssKgAzNwL8KfjlhfYeAIfFckMUxLZn2Gd48ZO2wcsFA4N1nVQTQ87pbJVpr
+	 b2HU+a4JVn97rkuup7zXc5k55aOl2geapFOlmILGChH16AxOM8gI/IcUjxlyCuBKaNB1y
+	 bh93qFFehss2U9rPGRFfP618Hy3G8mAqiYYvQ/SLHoDKBLkGpJtpQxgaHXUdUw1zWuVYp
+	 yIQ0GfsYSWw8ZYkUFRYq0tQKn9KhYlz1zfNqEY3dtw4mleT68pkRerZKOT7WVk5P/Jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OYvV1kCt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LF5p7TpR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADC9606A31C;
-	Wed, 18 Nov 2026 20:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA91606A31C;
+	Wed, 18 Nov 2026 20:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OYvV1kCt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB1C1F000C4;
-	Wed, 18 Nov 2026 20:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LF5p7TpR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605D21F000C4;
+	Wed, 18 Nov 2026 20:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035135;
-	bh=0iqkEbMNLSLa45QmaLDBgp2QDQtLVWCkd7kTitpuH8Y=;
+	s=korg; t=1795035137;
+	bh=87oKvwmy8UpUwGXfKB56qK7PJkfnrLBmM8Qffubitx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OYvV1kCt0xR5OrLBUB6Jsd7RmYpN3w+h8mIwxUivi5bmTgN3TyxFAnS7hkkuKOgmm
-	 xIHSLJarXNsNvsE57lfY1FJqdH1MyqQt05VoDYmQ7f21+g+qZSZl0Kbg3tLmiYqN1K
-	 ZRgTHsn8nogXfJhBCTuPJ+ymKdISt6uXCrEe8flc=
+	b=LF5p7TpRZNcAlIxBO+tnoPHsmvClRBy0dqITSid4hk1zGBn4RYD+wcG9v1f8ei07q
+	 HM2k8x0aY2A42WJ1v/BnekOQa/NpILOfTt8o9w8R6JxgEHa07Mdxxr5lGXc4LmS0mP
+	 i8WIpHPKNLkwUwoSBf5y2ApzIE8z+RREIkzigVl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Amit Machhiwal <amachhiw@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.6 0618/3318] KVM: PPC: Book3S HV: Add SRCU protection for virtual-mode HPT hcalls
-Date: Wed, 18 Nov 2026 15:20:40 +0100
-Message-ID: <20261118150336.352321629@linuxfoundation.org>
+	syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com,
+	Anuj Bolewar <bolewara@gmail.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 0592/3318] media: hackrf: fix use-after-free in hackrf_alloc_urbs() error path
+Date: Wed, 18 Nov 2026 15:20:14 +0100
+Message-ID: <20261118150335.372138328@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,149 +62,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
+From: Anuj Bolewar <bolewara@gmail.com>
 
-commit 61a39797bb136243c48b46e2586d8a9e2cea6a89 upstream.
+commit 6802ad4b6b267dda02209b5811edac7825c8a5f6 upstream.
 
-The virtual-mode HPT hcall handlers (H_ENTER, H_REMOVE, H_BULK_REMOVE,
-H_CLEAR_REF, H_CLEAR_MOD) call into book3s_hv_rm_mmu.c, which accesses
-memslots via kvm_memslots_raw().  kvm_memslots_raw() uses
-rcu_dereference_raw_check() to bypass SRCU lockdep annotation checking.
-This is safe in real mode because the entire guest entry/exit is wrapped
-in srcu_read_lock/unlock inside kvmppc_run_core() and
-kvmhv_run_single_vcpu().
+hackrf_alloc_urbs() frees the URBs it allocated so far when one
+allocation fails, but leaves the entries in dev->urb_list[] and
+dev->urbs_initialized untouched. The caller, hackrf_start_streaming(),
+then calls hackrf_free_urbs() on the error path, which walks
+dev->urbs_initialized entries and calls usb_free_urb() a second time on
+the already-freed URBs, causing a use-after-free (slab-use-after-free
+Write in usb_free_urb()).
 
-However, since commit 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual
-mode handlers for HPT hcalls and page faults"), these same handlers are
-also executed in virtual mode via kvmppc_pseries_do_hcall(), which runs
-after SRCU has already been released on guest exit.
+Drop the redundant cleanup loop inside hackrf_alloc_urbs() and let
+hackrf_free_urbs(), which the caller already invokes on error, own the
+cleanup of the successfully allocated URBs.
 
-A concurrent KVM_SET_USER_MEMORY_REGION deletion or move can therefore
-call synchronize_srcu_expedited() — which does not wait for this thread —
-and then kfree(slot) and vfree(slot->arch.rmap) while the hcall handler
-still holds a raw pointer to the memslot.  lock_rmap() then writes to
-freed vmalloc memory, leading to use-after-free and memory corruption.
-Because kvm_memslots_raw() suppresses lockdep checks, this race is
-entirely silent.
-
-Fix this by factoring out the 7 HPT hcall handlers (H_REMOVE, H_ENTER,
-H_READ, H_CLEAR_MOD, H_CLEAR_REF, H_PROTECT, H_BULK_REMOVE) into a
-helper function, kvmppc_pseries_do_hpt_hcall(), and wrapping its call
-site in srcu_read_lock(&kvm->srcu) / srcu_read_unlock(&kvm->srcu, idx).
-Targeting only the HPT hcalls avoids wrapping non-HPT hcalls that sleep
-(such as H_CONFER, H_REGISTER_VPA, H_PAGE_INIT) or handlers that already
-acquire SRCU internally (such as H_RTAS).
-
-Fixes: 6165d5dd99db ("KVM: PPC: Book3S HV: add virtual mode handlers for HPT hcalls and page faults")
-Cc: stable@vger.kernel.org # v5.14+
-Suggested-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260928122837.8782-2-amachhiw@linux.ibm.com
+Reported-by: syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=832ce9fa3face1b7d44d
+Fixes: 969ec1f6bd92 ("[media] hackrf: HackRF SDR driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kvm/book3s_hv.c |   70 +++++++++++++++++++++----------------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
+ drivers/media/usb/hackrf/hackrf.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -1088,6 +1088,38 @@ static long kvmppc_h_rpt_invalidate(stru
- 	return H_SUCCESS;
- }
+--- a/drivers/media/usb/hackrf/hackrf.c
++++ b/drivers/media/usb/hackrf/hackrf.c
+@@ -665,7 +665,7 @@ static int hackrf_free_urbs(struct hackr
  
-+static long kvmppc_pseries_do_hpt_hcall(struct kvm_vcpu *vcpu, unsigned long req)
-+{
-+	switch (req) {
-+	case H_REMOVE:
-+		return kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
-+				       kvmppc_get_gpr(vcpu, 5),
-+				       kvmppc_get_gpr(vcpu, 6));
-+	case H_ENTER:
-+		return kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
-+				      kvmppc_get_gpr(vcpu, 5),
-+				      kvmppc_get_gpr(vcpu, 6),
-+				      kvmppc_get_gpr(vcpu, 7));
-+	case H_READ:
-+		return kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
-+				     kvmppc_get_gpr(vcpu, 5));
-+	case H_CLEAR_MOD:
-+		return kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
-+					  kvmppc_get_gpr(vcpu, 5));
-+	case H_CLEAR_REF:
-+		return kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
-+					  kvmppc_get_gpr(vcpu, 5));
-+	case H_PROTECT:
-+		return kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
-+					kvmppc_get_gpr(vcpu, 5),
-+					kvmppc_get_gpr(vcpu, 6));
-+	case H_BULK_REMOVE:
-+		return kvmppc_h_bulk_remove(vcpu);
-+	}
-+
-+	return H_FUNCTION;
-+}
-+
- int kvmppc_pseries_do_hcall(struct kvm_vcpu *vcpu)
+ static int hackrf_alloc_urbs(struct hackrf_dev *dev, bool rcv)
  {
- 	struct kvm *kvm = vcpu->kvm;
-@@ -1103,47 +1135,15 @@ int kvmppc_pseries_do_hcall(struct kvm_v
+-	int i, j;
++	int i;
+ 	unsigned int pipe;
+ 	usb_complete_t complete;
  
- 	switch (req) {
- 	case H_REMOVE:
--		ret = kvmppc_h_remove(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5),
--					kvmppc_get_gpr(vcpu, 6));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_ENTER:
--		ret = kvmppc_h_enter(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5),
--					kvmppc_get_gpr(vcpu, 6),
--					kvmppc_get_gpr(vcpu, 7));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_READ:
--		ret = kvmppc_h_read(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_CLEAR_MOD:
--		ret = kvmppc_h_clear_mod(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_CLEAR_REF:
--		ret = kvmppc_h_clear_ref(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_PROTECT:
--		ret = kvmppc_h_protect(vcpu, kvmppc_get_gpr(vcpu, 4),
--					kvmppc_get_gpr(vcpu, 5),
--					kvmppc_get_gpr(vcpu, 6));
--		if (ret == H_TOO_HARD)
--			return RESUME_HOST;
--		break;
- 	case H_BULK_REMOVE:
--		ret = kvmppc_h_bulk_remove(vcpu);
-+		idx = srcu_read_lock(&kvm->srcu);
-+		ret = kvmppc_pseries_do_hpt_hcall(vcpu, req);
-+		srcu_read_unlock(&kvm->srcu, idx);
- 		if (ret == H_TOO_HARD)
- 			return RESUME_HOST;
- 		break;
+@@ -681,11 +681,8 @@ static int hackrf_alloc_urbs(struct hack
+ 	for (i = 0; i < MAX_BULK_BUFS; i++) {
+ 		dev_dbg(dev->dev, "alloc urb=%d\n", i);
+ 		dev->urb_list[i] = usb_alloc_urb(0, GFP_KERNEL);
+-		if (!dev->urb_list[i]) {
+-			for (j = 0; j < i; j++)
+-				usb_free_urb(dev->urb_list[j]);
++		if (!dev->urb_list[i])
+ 			return -ENOMEM;
+-		}
+ 		usb_fill_bulk_urb(dev->urb_list[i],
+ 				dev->udev,
+ 				pipe,
 
 
