@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795030523;
-	b=JuGs6DTWkFdmhQrcurOrW5bU+0SUn2o5iC7jrgm9ASmUghwARtv58Oa4UnAJ9Aocw9pA
-	 lYQs5kRz+zFvSzgDoT4e06/mbR7DtIWNOK8iFtS23nmXAqS7EZfM+qfY3QEkc0nD8N5h+
-	 2KoH/fsV/U0o23v4+bN9kT+Dr6LDTPHtnCawcwefa507z9UGOrGQ58sgtC/fKxT5jBjAI
-	 Ib5cJGZCauw4KJSEPkKxHK2dek2Vl5XpSDd/UgjQKNMMoKBgUjFWH0ykLTHYkaI9mjcAV
-	 xFfAVBP0ETVulnctUblkO7ie/S2YO2tvn/FDk/AoioQK62U4G9Wb+xaFGt3JIQWPVww==
+	t=1795030527;
+	b=kZ8AbmN7dbBxzD5oH+9S37rYA4RLVhPlzeiXmYaRaPgaLRG46y7YO5ZNSqBG9gX3GwY7
+	 Gw6WLKh/WmFk8pm7/WYW1T0Dfx8nBPZVKMSALx48VQ9EYjc6SLBmV1EZwDIDBEwLoqZed
+	 KyPVhwUTXnUzoV3+wh58PTMYoaD3JYrogqbKnme2ELhbC6HGO7pkBGHbNhRJicTO1tkMQ
+	 6K24rw+ubK1T/Fq+HN2UAGbcddCg3JXixaRLEfAhA2QRVTrdT+WPeExjsqw4BFpCy9E/I
+	 0WNUnBjvL8G7fHlZaStdkrtJtHfV+3zhEu8UA6EHTFlCNO6UyyNnVHMxJrcQoT25dyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795030523;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795030527;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=h3D21FziMvZTX1cYlQq/mr4Ujyz6MUuctBzZSUbNat4=;
-	b=MblMv0TQNk+5y0psgBQQvBNQ8IVUIhLo4ZtiB0Btrflzrke28AbZcjHEkPk3geoOeRmY
-	 affgxF0pGFhnsnAK8OTxuB7u4CX6xYcdwbApkqujAlCW+oAwuy+zz6XywRb7FRW3JRD+u
-	 0GPfD2gk6puApsjVing8eU8ST1vTXv2KbMSsjul9dJlpju+BTDzEhbhIC++IZu9QA0KcK
-	 rfvI1Se/X3192G30So2sK9QbO9ctsRlHnHoEpvi8OubNQYX2EqZKAvDq1+eTmw5Krdb+H
-	 y+JYQPOyPM6T0KgNYtYYaYM9Ol32+CjHq2EO4VCykrBY/9/kP/ucZt7PIbN4pKZIa3w==
+	bh=X1Fj8rdfwue1TMsCHs1L08ppec2T7dVf1bTmdfXy9Eg=;
+	b=fIghcmdoItfqwbI4c/7UbDm6wjg5WnjIp96JivSYLRa8YNZPnA2VF5LNzPv9gr7fmS/5
+	 QOXS41cdOjPm+WiH74ZjMwCxrHHQfvq04RXD8ki+tEOMETubRhL+K4XjMQnnloWiKWsPr
+	 I1K/9kAmvlknkPl1YZ5RdexVCTb3R1s3+lFUKCrPIrHVHNl6Nyk1qLFVjLGre2oUiGPCS
+	 aa0rwVZPSJRBIuYeN/uxYJZS+Oab6T4rIRKr7N2nuPuEQGqi17D9iR4RtOLLivoRJS+kw
+	 R2v2RcjNfvrZp6oFIi5p8vdm9uJQu0eM1mWVg4Gv/iQbgCHOCeApTOV235+3R0ShycQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PyCL5Hng;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Im5OrroU;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45A2606B10C;
-	Wed, 18 Nov 2026 19:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9F5606C42B;
+	Wed, 18 Nov 2026 19:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PyCL5Hng
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F8281F000C6;
-	Wed, 18 Nov 2026 19:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Im5OrroU
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F361F000C6;
+	Wed, 18 Nov 2026 19:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795030523;
-	bh=h3D21FziMvZTX1cYlQq/mr4Ujyz6MUuctBzZSUbNat4=;
+	s=korg; t=1795030526;
+	bh=X1Fj8rdfwue1TMsCHs1L08ppec2T7dVf1bTmdfXy9Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PyCL5HngjlWqo8ZuNglvm6sh6yomd9r37Isjf/dwiRCGD3vTsC/XB72VlBpObR22j
-	 umv76so3wJQiqvLDuAQdMsAvUz0X718mwtRzTHtXRdDPuHk82Ko9heVxG+MjiBi7at
-	 i6XuezbzhCYvhzUc4NnT1MfKfkLzWRxL3KySN9mw=
+	b=Im5OrroUSerqXJZILSKsx024uIzgaKH7c8EAR5N0SNgjpaWnK7kC5X4ub53vo8iY/
+	 1MXdTi/vbV+Gs9tseK0kpzcCnIac9ykYU9Y9Jt/+Rsi5S3WMC+Ub1pzqfB9weASBzY
+	 mJ+TWdynnfA0e59vumuLXKkkrkYk7h0ZVK59c9Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Farhad Alemi <farhad.alemi@berkeley.edu>,
-	Quanye Yang <quanyeyang@proton.me>,
-	Jack Wang <jinpu.wang@cloud.ionos.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0694/1756] RDMA/rtrs-clt: Reject invalid queue_depth from the peer
-Date: Wed, 18 Nov 2026 15:47:01 +0100
-Message-ID: <20261118150036.831953680@linuxfoundation.org>
+Subject: [PATCH 6.12 0695/1756] perf python: Initialize debug output on module load
+Date: Wed, 18 Nov 2026 15:47:02 +0100
+Message-ID: <20261118150036.866211196@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,45 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quanye Yang <quanyeyang@proton.me>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 724cd362162ca7ca5a250bec65efd74f7dad9f5c ]
+[ Upstream commit 3d13b3f1f3a7cd33d1847a4b87c3198089b6c4a7 ]
 
-queue_depth is taken from the server's CM private_data and later
-used as a session invariant.  A peer can send 0, which the client
-stores and then trips WARN_ON() in create_con_cq_qp() when the
-next connection is set up.
+Unlike the perf binary's main(), PyInit_perf() does not call
+perf_debug_setup(). As a result, the first warning or error printed from
+the perf Python C extension hits debug_file() with _debug_file == NULL
+and emits 'debug_file not set' without a trailing newline before the
+actual diagnostic message.
 
-Reject a zero queue_depth on ESTABLISHED, same as a bad
-magic or version, and fail the handshake with -ECONNRESET.
+Call perf_debug_setup() in PyInit_perf() and add the missing trailing
+newline to the fallback warning in debug_file().
 
-Fixes: 6a98d71daea1 ("RDMA/rtrs: client: main functionality")
-Reported-by: Farhad Alemi <farhad.alemi@berkeley.edu>
-Closes: https://lore.kernel.org/linux-rdma/CA+0ovCg_sG8gaZXXj9zmOrpxRt=8+-x9wvycVNUKwWmMbr6-Yg@mail.gmail.com
-Signed-off-by: Quanye Yang <quanyeyang@proton.me>
-Link: https://patch.msgid.link/20260922-rtrs-fix-warning-rtrs-clt-rdma-cm-handler-v1-1-2076c0ee1455@proton.me
-Acked-by: Jack Wang <jinpu.wang@cloud.ionos.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: ec49230cf6dda704 ("perf debug: Expose debug file")
+Assisted-by: Antigravity:gemini-3.1-pro
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/rtrs/rtrs-clt.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/perf/util/debug.c  | 2 +-
+ tools/perf/util/python.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-index fea3b17611c50..96f76dfe18619 100644
---- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-+++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
-@@ -1859,6 +1859,10 @@ static int rtrs_rdma_conn_established(struct rtrs_clt_con *con,
+diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
+index bd968b4883cbd..5b53c9f8ec66f 100644
+--- a/tools/perf/util/debug.c
++++ b/tools/perf/util/debug.c
+@@ -55,7 +55,7 @@ FILE *debug_file(void)
+ {
+ 	if (!_debug_file) {
+ 		debug_set_file(stderr);
+-		pr_warning_once("debug_file not set");
++		pr_warning_once("%s not set\n", __func__);
  	}
- 	if (con->c.cid == 0) {
- 		queue_depth = le16_to_cpu(msg->queue_depth);
-+		if (!queue_depth) {
-+			rtrs_err(clt, "Invalid queue depth %u\n", queue_depth);
-+			return -ECONNRESET;
-+		}
+ 	return _debug_file;
+ }
+diff --git a/tools/perf/util/python.c b/tools/perf/util/python.c
+index 66d3b0c633b25..7b9b6d464a3e0 100644
+--- a/tools/perf/util/python.c
++++ b/tools/perf/util/python.c
+@@ -1371,6 +1371,7 @@ PyMODINIT_FUNC PyInit_perf(void)
  
- 		if (clt_path->queue_depth > 0 && queue_depth != clt_path->queue_depth) {
- 			rtrs_err(clt, "Error: queue depth changed\n");
+ 	/* The page_size is placed in util object. */
+ 	page_size = sysconf(_SC_PAGE_SIZE);
++	perf_debug_setup();
+ 
+ 	Py_INCREF(&pyrf_evlist__type);
+ 	PyModule_AddObject(module, "evlist", (PyObject*)&pyrf_evlist__type);
 -- 
 2.53.0
 
