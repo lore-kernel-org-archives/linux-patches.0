@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057025;
-	b=hPeUvqEtSGIsi4eKjzu6qSp9UEDYK8yZlVmn3YeCPo5k4wZGb84RsNLUjcZVZ7wLHzu0
-	 j4KEf/y8wU45491nU2CSgxldnmSeTqX7H8nqKAUV20oOLoCjAd/BwRHeeQn6Lut5mpxve
-	 3xfRR8qQa5WX2ZzbL6t7lLKc74FcWMH5IS9Pi7MWyNL0JuCJT4pL6mmPyWs85o9KG0+OJ
-	 y8MxrY/pcLc31/nNpv6EG6h849+MpgjjR1k8PHfc8uUMM1UwFUHpX6D0PQtGEA1CuH7J2
-	 FrxiU5Mzp669tB4OT6ggMwRwqyh5wb8vLM1Kpfc9qUpVh8sXKKVLGP1y23JR9L52JLA==
+	t=1795057028;
+	b=RV93hT+Hi+4hpGx9vAum3AaruRcThacAo9i93Hv+s4Yq7A1s/cQzzpr0PsYwYlU2zHmL
+	 ORd8zHDXlQcT3gDYKhg47F7J2DwjiGEamcdVaR9Ezr+pW0dBe8RQLEMsAi0pvzG11mmIC
+	 /S1O8udL2NILuCJ86S8XI/2bwJzaGgMtHLGhnAs9bJdxMwBRd3F2XaYmQaCClKKKBkxt0
+	 uXuSKyraUTa8Vqdmg6/Qlq5OJV45XFRZlOO8fNL4HE9d/Vi1OmvsOpUEHDv47HPJO/NQr
+	 teE91KfMaRxkvM4s8zFnZFPDG6FIEa2IWyx5k/OQCwzlcXx25gnUCby9oHjb/ybSqlQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057025;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057028;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=JQSH6dn0a+vGt5rFAfdp9pcLKDsnKo73Ie+XgFmVYAw=;
-	b=dk63BBC27Th7tY2zngynNbe6tP4QQPMvQR5RCJnBvi3MeGJzisS2l+Wz75Wp4a/Zeasg
-	 BEA67UK1d8aKuQZqpZRaiSAnEh1LzNxxtNU0e2k7CdYyGdFYZW510midnKd0bH/+IhHzH
-	 kPfNuEUs74EAsz+O0D3emG7jmPHF643VfUEmy6jVTj4WnXOX3wIN2OcKO75dMW4ra1CCu
-	 Evk2WfKu33k7PD0FstD0fnnFevXQSJnc3kTct7ZA7ASvHfZVHrJxfweCCfkSsJRiy4uVw
-	 zS/1f0NCH6uCdVaQsXEdEkuSVR1h4TMes+BUkUqOFdq+l+aTBen90BhL2bPA0Qw4MrQ==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=K+N3ECCiXSqB024sSpwWnKUDysYGOcTjUs7LIHtJhEk=;
+	b=fLWgONInmZGIcT8YaU/NlUcJpWPYojV0i34cfkV/f+Er5qjiyxs5DRnUptWp6BIfUUC6
+	 GDYc4SKo+lNUNVT9U7iHW32Hk0JtJ+h3OnHbmW62Pl4J7fDZ0QrHoiXt2roH/Tm1aqswt
+	 ZCfKEooDoN/tDGBgDWgCQdSfVMWyc6wlWZM4XZW8VQZVc8laualbX6SkrA9CYSPWVoD46
+	 9Nv35PBx+mLe/vkRgRTuQGm7iz+tp0YTXPpEf7F6bPqebFAtMBIRcjg8o/ZZ3V0EgYrKq
+	 Sr8BmS1enzQMK871WXF4mlHdh8g3pNIEC050bwm6dXBqK5KVYtw8M0KaVOcJZxbAdUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXkxTWZZ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="fNvG/FE6";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCB0606A31C;
-	Thu, 19 Nov 2026 02:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E56606A32A;
+	Thu, 19 Nov 2026 02:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DXkxTWZZ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B28A1F000C4;
-	Thu, 19 Nov 2026 02:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fNvG/FE6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4181E1F000C4;
+	Thu, 19 Nov 2026 02:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057025;
-	bh=JQSH6dn0a+vGt5rFAfdp9pcLKDsnKo73Ie+XgFmVYAw=;
+	s=korg; t=1795057027;
+	bh=K+N3ECCiXSqB024sSpwWnKUDysYGOcTjUs7LIHtJhEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DXkxTWZZjZNbfqd3UUtKFBNgXqOv/AdY9fByIhlghpzqmS2MJOFXdR//zac+Lla5k
-	 Ynr+VMJszK+ssZrxCrdF2IE4mu/Huu4dhgS9OOxKlGSoGSvZ+Aw84K83Zl4dHSRcUL
-	 3EltJT3q+yP23VhwC3zpSItNBQJ9sMPaKUxyXPMk=
+	b=fNvG/FE6QlFwa6dAs9FYuh0Zhz3lKtBOFC7zWa6mgrxVQRy9nAK2zgmbslKHCG8yi
+	 LW15b/FYh/X6tvpZgq10wxA5FJLvKJhCM+CBq6UYK/fKGFd7Z1wqb8YDz6XXL6So8v
+	 M/ByzBa4Nk/wrKSQD6FvlDhwdOh/EiTzyIs0HCRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <almagui@kernel.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2196/2214] libbpf: fix cross-endian build with newer libbpf
-Date: Wed, 18 Nov 2026 16:04:32 +0100
-Message-ID: <20261118150138.157166085@linuxfoundation.org>
+Subject: [PATCH 5.15 2197/2214] PCI/sysfs: Decouple acpi_index from the optional device name element
+Date: Wed, 18 Nov 2026 16:04:33 +0100
+Message-ID: <20261118150138.189863547@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,60 +62,124 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dominique Martinet <asmadeus@codewreck.org>
+From: Krzysztof Wilczyński <kwilczynski@kernel.org>
 
-commit 087f3964f4b3 ("libbpf: Support layout section handling in BTF")
-added extra data to the BTF header.
+[ Upstream commit 337bdf853101a0ee66eadf668f0fef21f8276b52 ]
 
-This extra data is ignored in the native case, but when building with
-different endianness the bswap code in old libbpf would check for strict
-size equality, leading to build failures such as this when BTF data is
-generated with a newer version of libbpf (through pahole)
-    BTFIDS  vmlinux.unstripped
-  libbpf: Can't load BTF with non-native endianness due to unsupported header length 32
-  FAILED: load BTF from vmlinux.unstripped: Operation not supported
-  make[2]: *** [../scripts/Makefile.vmlinux:72: vmlinux.unstripped] Error 255
+The "_DSM for Naming a PCI or PCI Express Device Under Operating Systems"
+(PCI Firmware r3.3, sec 4.6.7) returns a package of two elements:
 
-Newer libbpf versions also properly ignore trailing data in the bswap
-case, but the patch is too intrusive to backport, so take the header
-length comparison fix from it instead.
+  1) Instance number (mandatory Integer)
+  2) String name (optional String, null string if not populated)
 
-Link: https://github.com/NixOS/nixpkgs/pull/570639
-Fixes: 3289959b97ca ("libbpf: Support BTF loading and raw data output in both endianness")
-Acked-by: Alan Maguire <almagui@kernel.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+These are exposed as sysfs 'acpi_index' and 'label'. Previously, if
+the name was malformed, reads of 'acpi_index' failed unnecessarily.
+
+Validate each element only for the attribute that exports it.  So
+"acpi_index" now depends on the instance number alone, and "label" reads
+fail with -EIO when the name element is neither a string nor a buffer.  The
+package elements pointer is read only after the object type has been
+checked.
+
+On platforms with a valid instance number and a malformed name element the
+"acpi_index" attribute starts returning data.  Because udev derives the
+onboard interface name from "acpi_index", an interface on such a platform
+may be renamed once, on the first boot after this change.  That is the
+attribute assuming the value the firmware always provided.
+
+Link: https://github.com/pciutils/pciutils/issues/175
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: commit log]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260814070522.2327975-3-kwilczynski@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/pci-label.c | 53 +++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 20 deletions(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 4d29bd28520ae..f34a15536c16c 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -217,14 +217,14 @@ static int btf_parse_hdr(struct btf *btf)
- 	struct btf_header *hdr = btf->hdr;
- 	__u32 meta_left;
+diff --git a/drivers/pci/pci-label.c b/drivers/pci/pci-label.c
+index f81248a11a18e..08c461f1142d7 100644
+--- a/drivers/pci/pci-label.c
++++ b/drivers/pci/pci-label.c
+@@ -157,7 +157,7 @@ static int dsm_get_label(struct device *dev, char *buf,
+ {
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+ 	union acpi_object *obj, *tmp;
+-	int len = 0;
++	int len;
  
--	if (btf->raw_size < sizeof(struct btf_header)) {
-+	if (btf->raw_size < offsetofend(struct btf_header, str_len)) {
- 		pr_debug("BTF header not found\n");
- 		return -EINVAL;
+ 	if (!handle)
+ 		return -ENODEV;
+@@ -167,30 +167,43 @@ static int dsm_get_label(struct device *dev, char *buf,
+ 	if (!obj)
+ 		return -EIO;
+ 
++	if (obj->type != ACPI_TYPE_PACKAGE || obj->package.count != 2) {
++		len = -EIO;
++		goto out;
++	}
++
+ 	tmp = obj->package.elements;
+-	if (obj->type == ACPI_TYPE_PACKAGE && obj->package.count == 2 &&
+-	    tmp[0].type == ACPI_TYPE_INTEGER &&
+-	    (tmp[1].type == ACPI_TYPE_STRING ||
+-	     tmp[1].type == ACPI_TYPE_BUFFER)) {
+-		/*
+-		 * The second string element is optional even when
+-		 * this _DSM is implemented; when not implemented,
+-		 * this entry must return a null string.
+-		 */
+-		if (attr == ACPI_ATTR_INDEX_SHOW) {
+-			len = sysfs_emit(buf, "%llu\n", tmp->integer.value);
+-		} else if (attr == ACPI_ATTR_LABEL_SHOW) {
+-			if (tmp[1].type == ACPI_TYPE_STRING)
+-				len = sysfs_emit(buf, "%s\n",
+-						 tmp[1].string.pointer);
+-			else if (tmp[1].type == ACPI_TYPE_BUFFER)
+-				len = dsm_label_utf16s_to_utf8s(tmp + 1, buf);
+-		}
++	if (tmp[0].type != ACPI_TYPE_INTEGER) {
++		len = -EIO;
++		goto out;
  	}
  
- 	if (hdr->magic == bswap_16(BTF_MAGIC)) {
- 		btf->swapped_endian = true;
--		if (bswap_32(hdr->hdr_len) != sizeof(struct btf_header)) {
-+		if (bswap_32(hdr->hdr_len) < offsetofend(struct btf_header, str_len)) {
- 			pr_warn("Can't load BTF with non-native endianness due to unsupported header length %u\n",
- 				bswap_32(hdr->hdr_len));
- 			return -ENOTSUP;
++	if (attr == ACPI_ATTR_INDEX_SHOW) {
++		len = sysfs_emit(buf, "%llu\n", tmp[0].integer.value);
++		goto out;
++	}
++
++	/*
++	 * Per PCI Firmware r3.3, sec 4.6.7, the device name is optional
++	 * even when this _DSM is implemented. When not implemented, this
++	 * entry must return a NULL string.
++	 */
++	switch (tmp[1].type) {
++	case ACPI_TYPE_STRING:
++		len = sysfs_emit(buf, "%s\n", tmp[1].string.pointer);
++		break;
++	case ACPI_TYPE_BUFFER:
++		len = dsm_label_utf16s_to_utf8s(&tmp[1], buf);
++		break;
++	default:
++		len = -EIO;
++		break;
++	}
++
++out:
+ 	ACPI_FREE(obj);
+ 
+-	return len > 0 ? len : -EIO;
++	return len;
+ }
+ 
+ static ssize_t label_show(struct device *dev, struct device_attribute *attr,
 -- 
 2.53.0
 
