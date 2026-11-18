@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019057;
-	b=1TyWIKSGsQpmUjfghb9n8BzGvx2Yoqq9aULmneuzrkeSPNUAl4m3FSv653yuvXtaDIb9
-	 jU7oK85MF/Rsl3XIb9kGiCvuleeeapsiH0S43eux7vG8ic1NMcACiGdNBpJGw77J3fVi0
-	 xWyqzigvjq9YVaiqEgaRh9Um8xWi/hWcekVhM9yT3SDHmadV2EXqOIPxKRzUN1ql4q3HA
-	 qv17ElNxSB/ffQ7MTlUAWX+biamCO3Zp+esgtlns0I2mA9zblPX+YnEoDE2NnLV4EgmUh
-	 IEg5KkLvOhX7S//jJRm13sDDLNFX8O8en6f/f6TF0w2/wS1PbUFUvql7Xv6Y7uIEjVQ==
+	t=1795019060;
+	b=bbEbHaMGppmWWsrVD7BEsGN9F85UBWZCfXaL/ZOoR14eCmnp71KNeBGOqjhmyE61p1NN
+	 XevKHLoEm2+VIdYu1AiNRKVRAhOvz/SMLwUbeUTlKC8yOA4SQe19KYs89qMRnUsZ3eKNk
+	 2SoOWS/7womj/xm9M/Nm1Sl8ra7OBOvjir1jT8rReD0f534R0jrBInzekZkXZZa6yxu9S
+	 toEc9lmRTSzYzWKcSSRFjHg5HvsRg8+i5034laQi8pFMydOu2mtZ9Rdr/HjjlU94bPU/0
+	 yTyetyMT4UXtVkEO7OAgkqNI0J0n/sDM0aL2TUSDnGFI3KTvxZony5zAKfnQCZbp2AA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019057;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019060;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QQShBiin/YDiZ6r3LVp56fWYnOh3Mxij2/rfFB9O4+Y=;
-	b=HSOIARmR6vY0aOYl8+FoF3DOkFzJA6zjoqGCy49HhIxeiE3tIEQBC0fifvpwdWewrBSL
-	 PxAyK697FdeC2au/M+2uzis6q/9WflsVt9lKOTR/bLGVH5dpT7TMN1e79NcFcnUV6HxcS
-	 BOlkgXb6DF2ny3FPH6pBKU8y5ObykR//eoQdi1J1/t83EJkbuJyv4OxIuS0LRjZngqC3D
-	 mdys3p8E3fcybfuXESaKFe6JEvUu2Tmn6pZHhhb0Z1ROEUvSy5XfRFVvsDsmOYQEcSxVS
-	 jTDwsLBBrBJUYDnVp7aGZ/bPPwqccCgDCKWpOB60d5PkQY0uenrWXuvhdAhQn1tPbPw==
+	bh=A8+wDgMKMWpmbtMEqetHuwBjYE45CipqGYMXv9hBHas=;
+	b=lhl3RxFsEMVHi8D1uqb3vx4KRM5zzlP9lBg/I1FSk40s4EKheo7PvO5o5DR/XhAUu2L/
+	 FrWa1+v3qlE12WS8m0Uz065Ut5zaJiSVpkFj/CjfQ6Q3+PlaR2JC2z8pndTAkZSrwYRG1
+	 H/0iC3RurE/EMOqSqKtANoHmM5dpzs2gjhL5t0lLgr312tMqLX6QdPXioW4yfXa9497jS
+	 Y7vubw0tIJvuDM0PaqJZholUptsJR1MneuhMVZilgy5E4i2RDnONetcFQ0im3C37E6aS+
+	 TcIjCv5PN5S2/hvp7fR+6bka0ZXD+0lOI6RLAW6TSDRa9I3cGoTnLlRIHgSk+yqopLQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HksJ1CY+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SCOlGX3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719E1606A320;
-	Wed, 18 Nov 2026 16:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4A7606A320;
+	Wed, 18 Nov 2026 16:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HksJ1CY+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31791F000C8;
-	Wed, 18 Nov 2026 16:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SCOlGX3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBDA1F000C8;
+	Wed, 18 Nov 2026 16:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019057;
-	bh=QQShBiin/YDiZ6r3LVp56fWYnOh3Mxij2/rfFB9O4+Y=;
+	s=korg; t=1795019060;
+	bh=A8+wDgMKMWpmbtMEqetHuwBjYE45CipqGYMXv9hBHas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=HksJ1CY+PQ8N6xQGs+r3sdP07b5zk/b2dE+bOvBbsD/lOqv2uczalGomFGSu8R5YH
-	 J1VntyhDN215Qk9fHLKJQjQdVjaSxbKggT8kQ5SYIINurCJ8WpvQ+3Tn855nUAGFTY
-	 btOxgB6u11eHyvPJ+mRh/iTgxFtb4aLsohIYTvzU=
+	b=2SCOlGX3xR0QNbwuTC7OpLuPqOVwg0aR9Obo6CJCuqq9nnF5mVOJW4hr0nexZJqMf
+	 nCWjPjKIwbBzj1Syglwn0GXE6gA4LM2YQlIfZGOdfvi7wxcUzH+4JcoQYWc+EK9BH2
+	 7uMRynan9kWboGoTksU01Kx7wY5lDEmMC8VzFGa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmed Naseef <naseefkm@gmail.com>,
+	Pengpeng Hou <pengpeng@iscas.ac.cn>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1460/2651] wifi: mt76: mt7615: read MT7663 temperature from the correct offset
-Date: Wed, 18 Nov 2026 15:45:00 +0100
-Message-ID: <20261118150340.596468860@linuxfoundation.org>
+Subject: [PATCH 7.3 1461/2651] wifi: mt76: mt7615: validate MCU response lengths
+Date: Wed, 18 Nov 2026 15:45:01 +0100
+Message-ID: <20261118150340.631884022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,48 +68,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ahmed Naseef <naseefkm@gmail.com>
+From: Pengpeng Hou <pengpeng@iscas.ac.cn>
 
-[ Upstream commit 40217d8e6cba433a6ccb8c73737dd38b54dcc26f ]
+[ Upstream commit 356735fc612ea54062eb741ea15fa4ff7df4fc36 ]
 
-On MT7663 the hwmon temp1_input attribute always reads 0.
+mt7615_mcu_parse_response() reads the common response header before
+checking its size and then consumes command-specific fields after unchecked
+skb_pull() calls. A short firmware response can therefore be read beyond
+its current extent.
 
-mt7615_mcu_parse_response() takes the temperature from the first dword of
-the THERMAL_CTRL response payload, but MT7663 firmware reports it in the
-second one. On a DASAN H660GM-A (MT7663E, N9 firmware 7663mp1827) the
-request and its response are:
+Validate the common header and each command-specific payload before reading
+it.
 
-  request:  00 00 00 00
-  response: 00 00 00 00 2a 00 00 00
-
-0x2a is the reading, 42 degrees, while the driver returns the leading
-zero. mt7915 and mt7921 already pull sizeof(*rxd) + 4 for this command.
-
-Restrict the extra pull to MT7663, as no MT7615 or MT7622 hardware was
-available to check whether their firmware uses the same layout.
-
-Fixes: f40ac0f3d3c0 ("mt76: mt7615: introduce mt7663e support")
-Signed-off-by: Ahmed Naseef <naseefkm@gmail.com>
-Link: https://patch.msgid.link/20260819192911.1886457-1-naseefkm@gmail.com
+Fixes: 0e6a29e477f3 ("mt76: mt7615: add support to read temperature from mcu")
+Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
+Link: https://patch.msgid.link/20260830131049.2097-1-pengpeng@iscas.ac.cn
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index ff57ede87f717..1ce0192c2c91f 100644
+index 1ce0192c2c91f..aab4303fef652 100644
 --- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
 +++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -153,6 +153,8 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
+@@ -145,6 +145,9 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
+ 	}
+ 
+ 	rxd = (struct mt7615_mcu_rxd *)skb->data;
++	if (skb->len < sizeof(*rxd))
++		return -EMSGSIZE;
++
+ 	if (seq != rxd->seq)
+ 		return -EAGAIN;
+ 
+@@ -152,11 +155,15 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
+ 		skb_pull(skb, sizeof(*rxd) - 4);
  		ret = *skb->data;
  	} else if (cmd == MCU_EXT_CMD(THERMAL_CTRL)) {
++		if (skb->len < sizeof(*rxd) + (is_mt7663(mdev) ? 8 : 4))
++			return -EMSGSIZE;
  		skb_pull(skb, sizeof(*rxd));
-+		if (is_mt7663(mdev))
-+			skb_pull(skb, 4);
+ 		if (is_mt7663(mdev))
+ 			skb_pull(skb, 4);
  		ret = le32_to_cpu(*(__le32 *)skb->data);
  	} else if (cmd == MCU_EXT_QUERY(RF_REG_ACCESS)) {
++		if (skb->len < sizeof(*rxd) + 8 + sizeof(__le32))
++			return -EMSGSIZE;
  		skb_pull(skb, sizeof(*rxd));
+ 		ret = le32_to_cpu(*(__le32 *)&skb->data[8]);
+ 	} else if (cmd == MCU_UNI_CMD(DEV_INFO_UPDATE) ||
+@@ -167,12 +174,16 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
+ 		   cmd == MCU_UNI_CMD(SUSPEND)) {
+ 		struct mt76_connac_mcu_uni_event *event;
+ 
++		if (skb->len < sizeof(*rxd) + sizeof(*event))
++			return -EMSGSIZE;
+ 		skb_pull(skb, sizeof(*rxd));
+ 		event = (struct mt76_connac_mcu_uni_event *)skb->data;
+ 		ret = le32_to_cpu(event->status);
+ 	} else if (cmd == MCU_CE_QUERY(REG_READ)) {
+ 		struct mt76_connac_mcu_reg_event *event;
+ 
++		if (skb->len < sizeof(*rxd) + sizeof(*event))
++			return -EMSGSIZE;
+ 		skb_pull(skb, sizeof(*rxd));
+ 		event = (struct mt76_connac_mcu_reg_event *)skb->data;
+ 		ret = (int)le32_to_cpu(event->val);
 -- 
 2.53.0
 
