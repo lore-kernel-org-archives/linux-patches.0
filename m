@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027526;
-	b=Ynvr1paHCfNRGmcA6wxqzAIWNFF/Rig6Drtrg7qAsXhex2sRqq5CVPEqgjQU9QRc4foM
-	 RgFsyRWwva3gci7L8pHk9hEweXN96gnCA+yJvR6SI6THeT5kpnh3kZ/6lOeTqsxKJQalw
-	 1zQ2GBWr8l4eZB6pU3MBnZcX7ZA9BhZ17c7jiR4/qw10YAaPGGn+Rd2u1oAwXVMJlYr7c
-	 7Lu7oPu5q5AH7wfQ5uSgYtGcIeOoQ6rG5jWItlGtGz2CUf2F6xCAx0NiHau4o7aPzUY0L
-	 cgNvAhntamiF5RpcR+9CrzNZg+0vZDVHP0rC4MQvq5XJ4b4NHn9QKdE08I+sEpk8WbQ==
+	t=1795027529;
+	b=4ExEAY5Zp8FUX1PvF0byhsrX2PpUyJmmy2gajKwNo+nMKmE8zTMZbjGYhzgpQej7eZ7a
+	 1nUG0FdlebTQRTjRNg0GFmeP+882elnCrn9bESkTZmfUIeojBCYpNS83HvMFChm6D8kF0
+	 wMfTDVlqIVMSzNymweoQGQIu6sc13YaCtcdURkla/SkutXBmAEox6LxdpRnCNLWMktUKG
+	 i4TrMwAwuAqj8NvarYia5+m0tuMbKjeUVH1NqDPLJcDpQ5oSritgzh1bBF0DmRxZtreXx
+	 IOHpmdB0PWzV32Jr9DCiLFYJOUea/MbJ2K0gy6NGTKBMDmmTu6UNYjSed8SbxA5m+aQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027526;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027529;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pqXS/x0TqeO0C4Wp5PGZ/nuDcP5KJ6vBB/BSnfSUCww=;
-	b=FvUdcztTU4bBkmv+Fo0X5wn2ydr03FeKIItMuES8BFp5vyermUBSh94tdjQzuU/S0t1U
-	 xcdwSCGTHwXgIJEey2jUFQlxZwLQwNfgI+K2DTJMfCCGve/OIYQYXX2jQ5s46z9bAld9A
-	 c7qzi2kF9hlWK9Yj19dLMPoDUylVZuaMUS2HsQb12ntVRM+3k9fww55oJhgKnJT1ITtLG
-	 JIoUVSAh06pJiDQPBs81ed/iteiCWKfm1Y6iJ6d93V7Z8NqLYhI55UeXVKMfthaWo/t30
-	 PaeSCS7Ple3EImg5AvygMqT+B+Nu9CfK/ClW97dgK5TSsAdYl3BcfYifqM3LsomBwCg==
+	bh=oVLGU8lN4zNU9QDEnukwFjLGSoJjoGhnxwusg9v+DZw=;
+	b=UyENKIIsir5yIz7N/hiFIGRaSTbLdfCqf890KrEz3FtPErhD3oiFbafvN+OwrI735TeP
+	 q5gBIJqpnSVwky0OcZOujI/HqrxYdHYfj3GMg9hAZRKUgIcZFX3c4kwT67IMc86wMMEq/
+	 oC0QubQHyA7JI+CPt4xOdoZzJXWj8pK9KkdzmxApBpPTxyaxpc8dih8PkdG1N9c+C/ea6
+	 WEGIrnvXhZQoEghGuN8wJf4zMX248jiPkMa0y7xJoLkgrpLo175o9gWYHFQ/UVm0i/8b9
+	 99mR858hyH/7HZKyBNDd5MX1e7RT4YFJTYfyNKiTR5t4wvHgcI0cWuoYe6fjVqjhzvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLOIc64K;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jiPpTVnp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F7560A260A;
-	Wed, 18 Nov 2026 18:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33CE606A32F;
+	Wed, 18 Nov 2026 18:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oLOIc64K
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DAF51F000CF;
-	Wed, 18 Nov 2026 18:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jiPpTVnp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C16B1F000D4;
+	Wed, 18 Nov 2026 18:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027526;
-	bh=pqXS/x0TqeO0C4Wp5PGZ/nuDcP5KJ6vBB/BSnfSUCww=;
+	s=korg; t=1795027529;
+	bh=oVLGU8lN4zNU9QDEnukwFjLGSoJjoGhnxwusg9v+DZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oLOIc64K14lDYGO1oGGx6eR19r/Xo/PZEY/+HkEf0kZdSVxmwb1dnBN0J66SPeH3A
-	 Ar21LYM2EbpQUcjf+I9gzFv2keMQA964Wz8bFIrn5aJFQX2B5zQcKXTNZn+WPm2ZqE
-	 GXKKrb5/RDj9hc3lFGhwP6WiLQwn67nSHcvt3/g4=
+	b=jiPpTVnp3xN9RvDTDHhaxfgCrdf/MMqTr754Yy/3xus2za44Cho6c6Xjix/jlNgG8
+	 LSdZxg4C5Qnuy1Av/olynYQynwcaMB7NY7rFDYOp3IIdWAetToDah9dYx0NgENY/lb
+	 z+ztkeFMFBRN0eBAFnpQjdvHR0q71WuL94mnVYYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Buchwitz <nb@tipi-net.de>,
 	Justin Chen <justin.chen@broadcom.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1819/2151] net: bcmasp: fix OF node reference leak for phy_dn
-Date: Wed, 18 Nov 2026 15:59:14 +0100
-Message-ID: <20261118150228.068362549@linuxfoundation.org>
+Subject: [PATCH 6.18 1820/2151] net: bcmasp: account for offload header in TX short packet padding
+Date: Wed, 18 Nov 2026 15:59:15 +0100
+Message-ID: <20261118150228.103698642@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -72,58 +71,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit a31623d91c6e48b08c74dc95567aeb62f1f35938 ]
+[ Upstream commit 74667a55122ad2fad88af4fd7672e4c8175c2558 ]
 
-In bcmasp_interface_create(), intf->phy_dn is obtained via
-of_parse_phandle() or assigned ndev_dn. of_parse_phandle() returns a
-node reference with its refcount incremented, but of_node_put() was
-never called on intf->phy_dn in bcmasp_interface_destroy() or the
-error unwind path in bcmasp_interface_create().
+When hardware checksum offload is enabled for an skb,
+bcmasp_csum_offload() prepends a struct bcmasp_pkt_offload header
+(20 bytes) to the skb via skb_push(). This increases skb->len and
+skb_headlen(skb) by sizeof(struct bcmasp_pkt_offload).
 
-Acquire a reference on ndev_dn for the fixed-link case as well so that
-intf->phy_dn consistently holds a reference, and release it with
-of_node_put() on teardown and error.
+Because the hardware descriptor processor strips this offload header
+before transmitting the packet on the wire, the wire packet length is
+smaller by sizeof(struct bcmasp_pkt_offload). The padding calculation
+must account for this extra header; otherwise, short frames are sent on
+the wire smaller than the minimum Ethernet frame size (ETH_ZLEN +
+ETH_FCS_LEN).
+
+Furthermore, small frames with payload in page fragments (such as small
+TCP segments with CHECKSUM_PARTIAL) have nr_frags > 0 and were skipping
+padding entirely because the padding check was restricted to
+nr_frags == 0.
+
+Perform the padding check on skb->len before the descriptor loop using
+skb_put_padto(), adding sizeof(struct bcmasp_pkt_offload) to min_size
+when checksum offload is enabled, and re-read nr_frags after padding in
+case the skb was linearized.
 
 Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Reviewed-by: Nicolai Buchwitz <nb@tipi-net.de>
 Reviewed-by: Justin Chen <justin.chen@broadcom.com>
 Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20261013204439.3494046-5-florian.fainelli@broadcom.com
+Link: https://patch.msgid.link/20261013204439.3494046-6-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/broadcom/asp2/bcmasp_intf.c    | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index c2828d1d8c612..dfc6ce4dcec9c 100644
+index dfc6ce4dcec9c..5a107a88f2b84 100644
 --- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
 +++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -1261,7 +1261,7 @@ struct bcmasp_intf *bcmasp_interface_create(struct bcmasp_priv *priv,
- 				 ndev_dn->name);
- 			goto err_free_netdev;
- 		}
--		intf->phy_dn = ndev_dn;
-+		intf->phy_dn = of_node_get(ndev_dn);
- 	}
+@@ -268,7 +268,7 @@ static const struct bcmasp_intf_ops bcmasp_intf_ops = {
+ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct bcmasp_intf *intf = netdev_priv(dev);
+-	unsigned int total_bytes, size;
++	unsigned int total_bytes, size, min_size;
+ 	int spb_index, nr_frags, i, j;
+ 	struct bcmasp_tx_cb *txcb;
+ 	dma_addr_t mapping, valid;
+@@ -294,16 +294,21 @@ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	if (!skb)
+ 		return NETDEV_TX_OK;
  
- 	/* Map resource */
-@@ -1302,6 +1302,7 @@ struct bcmasp_intf *bcmasp_interface_create(struct bcmasp_priv *priv,
- err_deregister_fixed_link:
- 	if (of_phy_is_fixed_link(ndev_dn))
- 		of_phy_deregister_fixed_link(ndev_dn);
-+	of_node_put(intf->phy_dn);
- err_free_netdev:
- 	free_netdev(ndev);
- err:
-@@ -1314,6 +1315,7 @@ void bcmasp_interface_destroy(struct bcmasp_intf *intf)
- 		unregister_netdev(intf->ndev);
- 	if (of_phy_is_fixed_link(intf->ndev_dn))
- 		of_phy_deregister_fixed_link(intf->ndev_dn);
-+	of_node_put(intf->phy_dn);
- 	free_netdev(intf->ndev);
- }
- 
++	min_size = ETH_ZLEN + ETH_FCS_LEN;
++	if (csum_hw)
++		min_size += sizeof(struct bcmasp_pkt_offload);
++
++	if (skb->len < min_size) {
++		if (skb_put_padto(skb, min_size))
++			return NETDEV_TX_OK;
++		nr_frags = skb_shinfo(skb)->nr_frags;
++	}
++
+ 	spb_index = intf->tx_spb_index;
+ 	valid = intf->tx_spb_dma_valid;
+ 	for (i = 0; i <= nr_frags; i++) {
+ 		if (!i) {
+ 			size = skb_headlen(skb);
+-			if (!nr_frags && size < (ETH_ZLEN + ETH_FCS_LEN)) {
+-				if (skb_put_padto(skb, ETH_ZLEN + ETH_FCS_LEN))
+-					return NETDEV_TX_OK;
+-				size = skb->len;
+-			}
+ 			mapping = dma_map_single(kdev, skb->data, size,
+ 						 DMA_TO_DEVICE);
+ 		} else {
 -- 
 2.53.0
 
