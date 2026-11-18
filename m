@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055748;
-	b=vOybnu18QoOnpsmdos9LfDhFpFWGE5EpwqvRyg3dia1yk+q9+R6RKikWPKl1aSFFTCVJ
-	 Hk3M7RWIFipcJFX6mVws8wu6d+OVmi6ZuAesmsCV+4VmZPHG3pYMltTLICRW1wlw0Fimt
-	 kpqxjWQQvrdNdbWv+kiSAQLjMYcgFohuwloIMBFHmTLr5G8ppQl5uM0IFYSC/O7R39TH7
-	 PrZs7DO4RY4zG+FnU8XWvVQKBGnLbNTU/fsKB7JSpyizk8Q7RuevZJ1xglW3b4HWuGxM3
-	 w0t/XKL07pBJLgabw9pwyMFDGr3VFppkTr3zx7vQ284Fitpaes7lbt9UQQbk9C4W37A==
+	t=1795055751;
+	b=osES+uqi+ZcLVithvxm+K9u69RgEvr5FoIZi262IWc7s5ULSW0DUTx6gAuImjseGJbC0
+	 1JmOD1rpy3hIKIh4fWyErbfvdsxvwHOeqLFyThBQ/rTyKNbJ/XfoaoYpZrhda4H6gr0HL
+	 2PsSizvK5zGqkF1BLFUpKspTqXw9Xb+SbhVSS1+3cQ8kV+vab9NfJM/ReJkm+IF8co5oy
+	 QfGvXDDG6YQehAQwpolmZSpBYut8ywREjTNp5k/lmxTLnvqD1ciBBPRgnw74rmr6/7/HD
+	 hRS+foBTLndfKUeT4fVBwXvPxeXaijhdwLCiOUAzOJHXsjn7CGvdKyNAj61d9SethZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055748;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055751;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pdL6WZ4i1iaPbQ0M0og6kSujBtG56kXgtEVGi8b99uU=;
-	b=xsiWOKuTbZp2sK6z0nXrSR2F9NiuwNBPEPvYPOD46ZYJcjKJk1BZ6e/Twj3awPW+RmUK
-	 CwbsF4P24XtaYn0JL4czUEuu0/f2TtA570iH+SAqe2fyRmUh3tIik1bCa08R1Y48bqCXz
-	 PyEnwDp19yYaozuIGysNeuRrw5IX3gUmG0Y/fWI9EuSV8x8e27PxVz7vI+5eFGsHqJU6d
-	 XG7wW2NPDBCOCj04a4h2sOZ/8I4MMdTkjnI4npTRmu0qJkQdeNvbGyVNjXUUS1EvtQaQm
-	 Ui/F+V6koJhITTuqgNzgwMbrq6aqn2ZUYQO9o0kNKnMRMcTXxcUQ4N8sh+y9Hqu2lcA==
+	bh=UqILexQz7gVxuRBeNu1ayaDDPQs9k9q+gaLbulDbSqc=;
+	b=d+urHdJywLuMy1soCk2PIds4/Ln19EZBDHVIRGDFT3PZpkmS5V/q+ZmNPjDXZb1bSv9u
+	 KA7jiwFhufvUDYw45B8WyJVB1JJvFCZWkiG59ET+stLvqEjia1xuZTAqZWDGvZPglh++E
+	 YwYCgx6pfjN4NJS6TwjDq7vu3CbdS8fzWyzMMMjootwljn2MLvSKO2i3Qnea4ckCRRKB0
+	 JKECFARUmTZ6TyNetqgV7xUphDmfuKNbMKH72WCGHO55SJv5wpKtwt7gzEYw2UXRWPZNT
+	 zpTmV3w9sGBZbhT5xDxD7e/+Y4aPiEj+kHaLk2HAaJdgKwIdP6BlRt5c42g5XohQ3gQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ND32VQN+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ile56rxI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70425606A32A;
-	Thu, 19 Nov 2026 02:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD30606A31C;
+	Thu, 19 Nov 2026 02:35:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ND32VQN+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19901F000C4;
-	Thu, 19 Nov 2026 02:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ile56rxI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 911DC1F000C4;
+	Thu, 19 Nov 2026 02:35:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055748;
-	bh=pdL6WZ4i1iaPbQ0M0og6kSujBtG56kXgtEVGi8b99uU=;
+	s=korg; t=1795055751;
+	bh=UqILexQz7gVxuRBeNu1ayaDDPQs9k9q+gaLbulDbSqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ND32VQN+T7t7o8COx9zeENnxs1TD9igDSKbP2zETwWT7O/bnrJ1lO1mfqNRsC8Uat
-	 LmUSb/jpoZ9lLoka5CP3IhW7HpQSQLg8MSViTZ143WbhTyi2fH+RLCr1U/7bfhCPSC
-	 3k/LubECX9HZHzV0Qkvt9AE8/HFcjOFbKKpVV9yA=
+	b=ile56rxImUak5P1yEWRVoT5xmi24PIq+8BmvMCME6p5LTDM2+jBSk2bArtr06HaVL
+	 ftjVn6Bmw5MzhFmyn190LTli1BIzXO82XeJ02vncixYJt0fi8XlcgBczhz1bc/6t3r
+	 DklpTXlIXBNzZ+//vbEJ5AdUSbewyaOaNf4fEjx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominic White <github@singe.za.net>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1743/2214] wifi: cfg80211: allow zero HE OBSS PD offsets
-Date: Wed, 18 Nov 2026 15:56:59 +0100
-Message-ID: <20261118150121.356943588@linuxfoundation.org>
+Subject: [PATCH 5.15 1726/2214] power: supply: ab8500_btemp: Fix event temperature reporting
+Date: Wed, 18 Nov 2026 15:56:42 +0100
+Message-ID: <20261118150120.754080907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,51 +68,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominic White <github@singe.za.net>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit d9ecaa0a31732014a128e3b03243de54bbbd8394 ]
+[ Upstream commit 95990cda8e42dda4bd3f1475d578323981bd8579 ]
 
-IEEE Std 802.11 permits the OBSS PD offset fields in the Spatial Reuse
-Parameter Set element to have a value of zero. (IEEE Std 802.11-2024,
-26.10.2.4)
+The event-aware path initializes its local temperature to zero and
+compares that zero against the thermal thresholds. Consequently some
+events report the measured temperature after it crosses the event
+threshold, while others always report the threshold.
 
-The standard specifies the offsets as unsigned values added to -82 dBm,
-with field presence signalled independently. The valid offset range is
-therefore 0..20.
+Start with the measured temperature, clamp it according to the active
+event, and convert to tenths of a degree only once. This path is used
+by AB8505 and later variants.
 
-nl80211 currently rejects zero for all three HE OBSS PD offset
-attributes during nested netlink policy validation, before the values
-reach cfg80211 or the driver. Allow zero while retaining the upper bound
-and the existing minimum/maximum relationship validation.
-
-Fixes: 796e90f42b7e ("cfg80211: add support for parsing OBBS_PD attributes")
-Signed-off-by: Dominic White <github@singe.za.net>
-Link: https://patch.msgid.link/20260903081804.96532-1-github@singe.za.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 1f855824757e ("ab8500-btemp: AB8500 battery temperature driver")
+Assisted-by: LLM
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260916-ab8500-charging-v1-5-e986ed321cc6@kernel.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/power/supply/ab8500_btemp.c | 28 +++++++++-------------------
+ 1 file changed, 9 insertions(+), 19 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 0a68d4f838445..db2484fb68c62 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -354,11 +354,11 @@ nl80211_pmsr_attr_policy[NL80211_PMSR_ATTR_MAX + 1] = {
- static const struct nla_policy
- he_obss_pd_policy[NL80211_HE_OBSS_PD_ATTR_MAX + 1] = {
- 	[NL80211_HE_OBSS_PD_ATTR_MIN_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_MAX_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_NON_SRG_MAX_OFFSET] =
--		NLA_POLICY_RANGE(NLA_U8, 1, 20),
-+		NLA_POLICY_RANGE(NLA_U8, 0, 20),
- 	[NL80211_HE_OBSS_PD_ATTR_BSS_COLOR_BITMAP] =
- 		NLA_POLICY_EXACT_LEN(8),
- 	[NL80211_HE_OBSS_PD_ATTR_PARTIAL_BSSID_BITMAP] =
+diff --git a/drivers/power/supply/ab8500_btemp.c b/drivers/power/supply/ab8500_btemp.c
+index 896309d3cadfe..9380c38adfc34 100644
+--- a/drivers/power/supply/ab8500_btemp.c
++++ b/drivers/power/supply/ab8500_btemp.c
+@@ -750,39 +750,29 @@ static void ab8500_btemp_periodic(struct ab8500_btemp *di,
+  */
+ static int ab8500_btemp_get_temp(struct ab8500_btemp *di)
+ {
+-	int temp = 0;
++	int temp = di->bat_temp;
+ 
+ 	/*
+ 	 * The BTEMP events are not reliabe on AB8500 cut3.3
+ 	 * and prior versions
+ 	 */
+-	if (is_ab8500_3p3_or_earlier(di->parent)) {
+-		temp = di->bat_temp * 10;
+-	} else {
++	if (!is_ab8500_3p3_or_earlier(di->parent)) {
+ 		if (di->events.btemp_low) {
+ 			if (temp > di->btemp_ranges.btemp_low_limit)
+-				temp = di->btemp_ranges.btemp_low_limit * 10;
+-			else
+-				temp = di->bat_temp * 10;
++				temp = di->btemp_ranges.btemp_low_limit;
+ 		} else if (di->events.btemp_high) {
+ 			if (temp < di->btemp_ranges.btemp_high_limit)
+-				temp = di->btemp_ranges.btemp_high_limit * 10;
+-			else
+-				temp = di->bat_temp * 10;
++				temp = di->btemp_ranges.btemp_high_limit;
+ 		} else if (di->events.btemp_lowmed) {
+ 			if (temp > di->btemp_ranges.btemp_med_limit)
+-				temp = di->btemp_ranges.btemp_med_limit * 10;
+-			else
+-				temp = di->bat_temp * 10;
++				temp = di->btemp_ranges.btemp_med_limit;
+ 		} else if (di->events.btemp_medhigh) {
+ 			if (temp < di->btemp_ranges.btemp_med_limit)
+-				temp = di->btemp_ranges.btemp_med_limit * 10;
+-			else
+-				temp = di->bat_temp * 10;
+-		} else
+-			temp = di->bat_temp * 10;
++				temp = di->btemp_ranges.btemp_med_limit;
++		}
+ 	}
+-	return temp;
++
++	return temp * 10;
+ }
+ 
+ /**
 -- 
 2.53.0
 
