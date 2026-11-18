@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056419;
-	b=tfXqfwIJVMet9Vzc2LRLUxJlofmkZFAAcm4/vaH5OEHG2jZkus8vbLswgXjKw44JoE4n
-	 bj9kI1ROsxzXAia5wjNyAK6KsVXtEmfWnvVy/Gpn54dXKliMkxXFdqTwyXHXkE228v1rb
-	 REfI/s4AscCBYmuOPAH54xnSNQCyVnpcLMDVX9G0liDO3lvnJ5uVANAyCg0j256Yfr9tU
-	 rYL1bPnkrCLopcFNyE18aMe9DlqkHZVdX5eYy83LD8DzeVBWi/X/FASvz1lnItmk67PCw
-	 OVwjuD+k/XLiG8v3zD27KBySMLWWrwYoziCtLxQIeASxYSHujtEteAKHv6YTsiU2+VQ==
+	t=1795056421;
+	b=UnVh0SS0eBRYb1VnBMBhT0R/pwVxJ7ZamCWWtEO2gNJacDCHnxjflk8Ikxn9DyO3l9iA
+	 PRehRouN9JtEmSq0p8TaI7fvLaJo4oewms93IiOQeq8LkvDeMNGlWWT1jj4Tnp7RHnaLu
+	 8hf4ucl20QXgwCwLvfi9KRv3UoK9AsztWBel79KXr+eQSdFPt3Fmyv2aryuXPBygUZyEM
+	 nNuE4MYzhBz/s9p6nCWTMrZSdpDb00XaF7+9doHQeAFNtbIjMLOIxHH7ymgyWy9qPVCZ4
+	 /cUO9ydK70IJCvmg2MDTabo2zm0ZftfrWbGGnUaL6V+pXz0iiV/5P9Gp9f1sPzS3ztA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056419;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056421;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=/i0IA1r9d6XrVD+VoVUH+YArkHYCtQGnAUSov1S1YeI=;
-	b=kOFQo3+UFk72Jb2IWYSSl2UkEAvP/HYw1ED8VDGb1kSxhZd00wX704CtlActHU0CuEgl
-	 Y3w89Dy+olseU4UbQGPAmEX35IFgkDd+jsZwk06NfDrY8IfmUNj5Ee2lCdUQNyzLCHhdU
-	 FP+9NRgAwbM2LsnxGTsN4EcuH/PElIxfxkAKwlrDFjrXxv3KmU+yx+iITEH7ATThnHYjy
-	 E9p8nyIJwRM0bDaEtKrX5rYJi6HCHNfEEEhDcpm+WTYQIbscxmTzzFHZknmgrzwbYWGNu
-	 jNdCfCjCqb5UDmRL8KtD7A8WKO4Wex++g7ImxR0wfPmvm/22oCvKs/ASfEEG79Ur59w==
+	bh=IwoK8FSY+ufQ0x+EadOdjbfGSIHbQxe4W7eXNZWuNRk=;
+	b=TYt32jfI1nApfkozw6/So0paHcLRjcvRCgSJoksl4TeOkRFqMGQVmUra97jMphs/7MfV
+	 wZaXPQK1cFj0WBTViIGXBRgqF9qwdu4XCR51I24ET7DaIhx7K6t+BxOhrSYsITNoIiKLe
+	 U+9Psfrmmob+EujOvasAK0sIKezEHOuQesVGISos0EowO48GBgcDOQVDnmL/Wy6ez2WZi
+	 KwM1lS+PutSKhIQnpaaD/3yMH2WOYtzqp/pU5Azn/cb5Rm8Z43NkpLd/tzEux4anKHBIf
+	 NMGl2ega6Y87vV58rIifxWBEnaqOC/ZGv/3d/ipcOW4hWTUortXctIZdpm1pb2RB+sQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jloVfcVg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wvgT71Jk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2F9606A31C;
-	Thu, 19 Nov 2026 02:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22E4606A32A;
+	Thu, 19 Nov 2026 02:47:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jloVfcVg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A321F000C4;
-	Thu, 19 Nov 2026 02:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wvgT71Jk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F611F000C4;
+	Thu, 19 Nov 2026 02:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056418;
-	bh=/i0IA1r9d6XrVD+VoVUH+YArkHYCtQGnAUSov1S1YeI=;
+	s=korg; t=1795056421;
+	bh=IwoK8FSY+ufQ0x+EadOdjbfGSIHbQxe4W7eXNZWuNRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jloVfcVgCt/12zqqPPWJbdockeRo+wlvctJqeUXRm44EN22L4aknAyY4H8+OH++bT
-	 Ekf4C1KBUOL/pIDRNFIoKlq0S7CDYNVwwBwcj6Py91okwczW8zXrBRyEiklG0B63gh
-	 6HsJxMcmNkXrKiq0UyexN+F9OGhC3aKXfudjdd4M=
+	b=wvgT71JkAmC5q/hajZ1dpG1PQcSXDag8AJi4YYO0b46/5To7ogRTmApKav82O5c0H
+	 wVAn/klVzLHs8EjytQdPtAf4d4Ocgq3zG+mIj2vsn1eArsKxq/zrnJqO8bR4gk+K2B
+	 kgdJnr7apTZDMh/6E/QqSkLKC+tP0q8Ib3rc4LZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amade@asmblr.net>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1980/2214] ASoC: soc-ac97: Fix error handling in snd_soc_new_ac97_component()
-Date: Wed, 18 Nov 2026 16:00:56 +0100
-Message-ID: <20261118150130.080159352@linuxfoundation.org>
+Subject: [PATCH 5.15 1981/2214] ASoC: soc-component: Fix return type of snd_soc_pcm_component_pointer()
+Date: Wed, 18 Nov 2026 16:00:57 +0100
+Message-ID: <20261118150130.114049427@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,39 +71,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Amadeusz Sławiński <amade@asmblr.net>
 
-[ Upstream commit fc081cdfc6b370f6b6853cdeb4313f92561770d1 ]
+[ Upstream commit 9df30adce80dd6b0646e58c12a4cf7c6c88d0778 ]
 
-If call to snd_soc_ac97_init_gpio() fails, proper removal procedure
-should mirror snd_soc_free_ac97_component() behaviour and call
-device_del() before put_device().
+Both caller and pointer callback expect the return value to be
+snd_pcm_uframes_t, however it was defined incorrectly leading to
+potential truncation of returned value.
 
-Fixes: 9bf5c3d11f1f ("ASoC: ac97: add gpio chip")
+Fixes: 0035e2565b93 ("ASoC: soc-component: add snd_soc_pcm_component_pointer()")
 Signed-off-by: Amadeusz Sławiński <amade@asmblr.net>
-Link: https://patch.msgid.link/20261014200608.118770-6-amade@asmblr.net
+Link: https://patch.msgid.link/20261014200608.118770-8-amade@asmblr.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-ac97.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/sound/soc-component.h | 2 +-
+ sound/soc/soc-component.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/soc-ac97.c b/sound/soc/soc-ac97.c
-index 5f49e3dec3fc1..cdcbd3f649d3c 100644
---- a/sound/soc/soc-ac97.c
-+++ b/sound/soc/soc-ac97.c
-@@ -235,10 +235,12 @@ struct snd_ac97 *snd_soc_new_ac97_component(struct snd_soc_component *component,
+diff --git a/include/sound/soc-component.h b/include/sound/soc-component.h
+index 8c4d6830597ff..94c8460756dd2 100644
+--- a/include/sound/soc-component.h
++++ b/include/sound/soc-component.h
+@@ -477,7 +477,7 @@ int snd_soc_component_compr_set_metadata(struct snd_compr_stream *cstream,
+ int snd_soc_component_compr_get_metadata(struct snd_compr_stream *cstream,
+ 					 struct snd_compr_metadata *metadata);
  
- 	ret = snd_soc_ac97_init_gpio(ac97, component);
- 	if (ret)
--		goto err_put_device;
-+		goto err_del_device;
+-int snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream);
++snd_pcm_uframes_t snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream);
+ int snd_soc_pcm_component_ioctl(struct snd_pcm_substream *substream,
+ 				unsigned int cmd, void *arg);
+ int snd_soc_pcm_component_sync_stop(struct snd_pcm_substream *substream);
+diff --git a/sound/soc/soc-component.c b/sound/soc/soc-component.c
+index 8e8d917d22f8f..e6fb36fea18e9 100644
+--- a/sound/soc/soc-component.c
++++ b/sound/soc/soc-component.c
+@@ -921,7 +921,7 @@ int snd_soc_component_test_bits(struct snd_soc_component *component,
+ }
+ EXPORT_SYMBOL_GPL(snd_soc_component_test_bits);
  
- 	return ac97;
- 
-+err_del_device:
-+	device_del(&ac97->dev);
- err_put_device:
- 	put_device(&ac97->dev);
- 	return ERR_PTR(ret);
+-int snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream)
++snd_pcm_uframes_t snd_soc_pcm_component_pointer(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
+ 	struct snd_soc_component *component;
 -- 
 2.53.0
 
