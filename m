@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056669;
-	b=Ho0BkyyGqD+EUx2tDw2WjRFL9PfsszO2/U/+r4A58EMq7VeDUd+7e/ygB138RcyAjOLf
-	 FHq4PBc32ZFrwD4KyeemnRaybDt78zRPTgczOU+5qYV4cPi9MsCEijDlKM1P9T4meanJK
-	 rUwS4y4msYOqCRRCngdsIe/U95b86+rAt+1b+rErFMQbVoGnDTYCDNpP5MijaXmN4ldBQ
-	 jyx84knfluVDU+TBuE5fuFUwaa7hVw8lRMuhzYTwywM9oi7Do49TvKCVI6ebZo7bRMuK+
-	 EXsl5vJJ3ISianZ0N9Wr2XgaPDyQujGq/gEoxr/rhN1ooG3dyabfcWy1iMrJK+XTjpQ==
+	t=1795056672;
+	b=lXngTA02T8CKBxgcxheII8lrJVcklMWcnzr62+dTMpgrAZ/ehbHnQRa8gWEIOKkiXpHt
+	 mYHYh2i64zsBbUKcfMao6W/948eVTpv0M+QPC37ZQMMsVEkvu8KmUELCNRIkn2jizmDMQ
+	 Wza0vmiUmHfyO/X+/05/9YuQX2g9vhTfgKc4r10Uf2lDBWjGo8osjY8vq25+wVwf/Rt6M
+	 rvM2KgSA9KRvl7jLsPu/GEYPrIurfE2ri5DUCLGwUPbYN0tONmIqxCectupe6K/3Hmf+7
+	 2zFXYR5UEUOMreb7WuN6hHd3o4d6r7SXQ4Z6WdJlMnFEdCYOowtDnWkNmEl+QjLyLAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056669;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056672;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=O59fd2sGf1GWq8ZIIDE6q4Rce4Ve/bceBQtNSYrAhoI=;
-	b=aap9hTRpOnyv5tYx/rhYICPPo3ULFo9zojtAjVsa7RVpBPxMaXxyz7hepVIBSxrm1n1g
-	 2AvBaTTQJW/WBgrbebry3ASdyvuNxlApFxHhyalw28kV0EnlgNaINPf2/5FVh+5bH0HWk
-	 X/InXVKK5YTRn4++SD8uvJnRPlLPiLEdwHyb04xxBfVK1Wv5w0U7j4+8XfVrHZ0yujYEH
-	 6mGxgTcSGFGMe9Gh1yU2yXCiSDOMKy6XhOx3/3rI4Zigmh7BJ8KF+eJ8q1LoACXwpsCQI
-	 rzj25dZwdUEXs0Sbe0la+xK3ZEtVpuVhbScWLXL4OXpYScYM/tcMFKSUYaRnxJ5x0kw==
+	bh=cR8VXKC8iyWb4Hs0KN2P0OZY0fJj2fXVgPHLnMPFoAc=;
+	b=p0U4dpImNCkOdAtKqBkFtYURgpjO7DKTsTKzSS/ZioN+jtX6RPXFEILakvE9AKsFIBEd
+	 1DrbocjdaB9vccxNMFoclvVe7KE6+hIbFZNX36v0XoDzXVmzTNxCi8mbDtC/G0X4RRkQE
+	 A9dcYmTO7ElxSgNtCWDrzrYFWda2uYcTWsawD1gUZdbOiXDI/MvugMspclMeZQVdGge0u
+	 e5yWTLIOMIfEA7uzZhBjL7waWtDV975sU0XgNGfGKbOJYPQDfd+2U6771i8MAS4jnmkuJ
+	 Puy/N5e7qHq8J6C1hcox4USpf3yMsr6FfzCOW4tKAz+JufE3/bupzpq95yIvCOowPlA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j3rYNmez;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="U/mzWUX8";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E100606A320;
-	Thu, 19 Nov 2026 02:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77937606A32C;
+	Thu, 19 Nov 2026 02:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j3rYNmez
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA491F000C4;
-	Thu, 19 Nov 2026 02:51:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=U/mzWUX8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84D41F000C4;
+	Thu, 19 Nov 2026 02:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056669;
-	bh=O59fd2sGf1GWq8ZIIDE6q4Rce4Ve/bceBQtNSYrAhoI=;
+	s=korg; t=1795056672;
+	bh=cR8VXKC8iyWb4Hs0KN2P0OZY0fJj2fXVgPHLnMPFoAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j3rYNmezB2JxJJO+6BF0bABZK7KfvBERKcGGFROWHTgxPqnls2Pm2a74/GgWP4PfN
-	 k6YgkHLw7kTLOtt1AIdYPjXe8BuHAcsc4kBYMY1CUA7A0Ac8FI4zB3HxvFxQnREUy7
-	 eBhjXcIWTF3L/jZkQGBXWDLrPzgPR5uvNPkGrfi4=
+	b=U/mzWUX8QtbO3TDhn1GVJKNBRUg6qbmzsSZ3FQxI0mj5CXxxjaT7AalwGNozFeJrR
+	 GriNcwVWBnaxMLWbLIUZH0dhC05C6l0grWOlNoZAxls0JcAPaz7fFf8YiE83DB/S5V
+	 tJgRZ7K2nl/FLjBp82Vch+1BQYRorexgHXuV9Vtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rishikesh Jethwani <rjethwani@purestorage.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 2069/2214] tls: device: protect async RX resync state during device-down
-Date: Wed, 18 Nov 2026 16:02:25 +0100
-Message-ID: <20261118150133.406121877@linuxfoundation.org>
+Subject: [PATCH 5.15 2070/2214] net: hix5hd2: serialize timeout recovery with interface teardown
+Date: Wed, 18 Nov 2026 16:02:26 +0100
+Message-ID: <20261118150133.442229032@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,105 +70,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rishikesh Jethwani <rjethwani@purestorage.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit f89a228125238f8d4c7e2b8161e2a85fe35307b6 ]
+[ Upstream commit 87cce46329a811ea3fe108ac721e0a2400d0a3bb ]
 
-tls_device_rx_resync_new_rec() can run in process context with the
-socket lock held, but without an RCU read lock: from the strparser work
-item (tls_strp_work()) and from the receive paths (tls_rx_rec_wait(),
-tls_rx_rec_done()). The resync_async pointer belongs to the driver RX
-context, which tls_device_down() tears down from the netdev notifier
-without taking the socket lock; only the softirq entry to the parser is
-implicitly inside an RCU section.
+The timeout worker calls the driver's close and open methods without
+RTNL or a running-state check. A timeout queued before an interface is
+closed can call close again after ndo_stop has disabled NAPI. The second
+napi_disable() can then wait indefinitely. The worker can also race with
+an ongoing close.
 
-If the parser passes the TLS_RX_DEV_DEGRADED check before device-down
-sets it, tls_device_down() can complete synchronize_net() and delete the
-driver context before the parser accesses resync_async->req or its
-record log. In the asynchronous stage the parser also writes the record
-log, so this is a write to freed memory, not only a stale read. The RCU
-section in tls_device_resync_rx() starts after those accesses and
-therefore does not prevent the use-after-free.
+Take RTNL and skip recovery when the interface is no longer running.
+Use the netdev core close and open helpers so a failed reopen leaves the
+interface down, rather than leaving it marked running with NAPI disabled.
 
-Found by code inspection; not reproduced. Hitting the window requires
-the parser to be preempted between the DEGRADED check and the
-resync_async access across the device-down grace period and the
-driver's teardown.
+After unregister_netdev() has stopped the watchdog, drain the worker
+before releasing its MDIO and descriptor resources. This wait is outside
+RTNL, allowing an already queued worker to take RTNL, observe the down
+state, and finish.
 
-Fixes: ed9b7646b06a ("net/tls: Add asynchronous resync")
-Signed-off-by: Rishikesh Jethwani <rjethwani@purestorage.com>
-Link: https://patch.msgid.link/20261013213517.2219663-1-rjethwani@purestorage.com
+This issue was identified as part of our ongoing research while
+reviewing kernel code.
+
+Fixes: 57c5bc9ad7d7 ("net: hisilicon: add hix5hd2 mac driver")
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Reviewed-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/179203116093.2621539.3718842986255459438.G202@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tls/tls_device.c | 21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/hisilicon/hix5hd2_gmac.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 636e106679056..33c3fbb7c5a12 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -753,8 +753,15 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
+diff --git a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+index 7ecc3333c8df2..4fa0ba6996b7e 100644
+--- a/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
++++ b/drivers/net/ethernet/hisilicon/hix5hd2_gmac.c
+@@ -11,6 +11,7 @@
+ #include <linux/of_net.h>
+ #include <linux/of_mdio.h>
+ #include <linux/reset.h>
++#include <linux/rtnetlink.h>
+ #include <linux/clk.h>
+ #include <linux/circ_buf.h>
  
- 	if (tls_ctx->rx_conf != TLS_HW)
- 		return;
+@@ -889,8 +890,13 @@ static void hix5hd2_tx_timeout_task(struct work_struct *work)
+ 	struct hix5hd2_priv *priv;
+ 
+ 	priv = container_of(work, struct hix5hd2_priv, tx_timeout_task);
+-	hix5hd2_net_close(priv->netdev);
+-	hix5hd2_net_open(priv->netdev);
 +
-+	/* The parser also runs in process context, without an RCU read lock.
-+	 * Protect the driver's resync_async state before checking the flags:
-+	 * device-down sets DEGRADED and waits for synchronize_net() before
-+	 * freeing it, without taking the socket lock.
-+	 */
-+	rcu_read_lock();
- 	if (unlikely(test_bit(TLS_RX_DEV_DEGRADED, &tls_ctx->flags)))
--		return;
-+		goto out;
- 
- 	prot = &tls_ctx->prot_info;
- 	rx_ctx = tls_offload_ctx_rx(tls_ctx);
-@@ -769,11 +776,11 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 
- 		if (likely(!is_req_pending) || req_seq != seq ||
- 		    !atomic64_try_cmpxchg(&rx_ctx->resync_req, &resync_req, 0))
--			return;
-+			goto out;
- 		break;
- 	case TLS_OFFLOAD_SYNC_TYPE_CORE_NEXT_HINT:
- 		if (likely(!rx_ctx->resync_nh_do_now))
--			return;
-+			goto out;
- 
- 		/* head of next rec is already in, note that the sock_inq will
- 		 * include the currently parsed message when called from parser
-@@ -782,7 +789,7 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 		if (sock_data > rcd_len) {
- 			trace_tls_device_rx_resync_nh_delay(sk, sock_data,
- 							    rcd_len);
--			return;
-+			goto out;
- 		}
- 
- 		rx_ctx->resync_nh_do_now = 0;
-@@ -793,16 +800,18 @@ void tls_device_rx_resync_new_rec(struct sock *sk, u32 rcd_len, u32 seq)
- 		resync_req = atomic64_read(&rx_ctx->resync_async->req);
- 		is_req_pending = resync_req;
- 		if (likely(!is_req_pending))
--			return;
-+			goto out;
- 
- 		if (!tls_device_rx_resync_async(rx_ctx->resync_async,
- 						resync_req, &seq, &rcd_delta))
--			return;
-+			goto out;
- 		tls_bigint_subtract(rcd_sn, rcd_delta);
- 		break;
- 	}
- 
- 	tls_device_resync_rx(tls_ctx, sk, seq, rcd_sn);
-+out:
-+	rcu_read_unlock();
++	rtnl_lock();
++	if (netif_running(priv->netdev)) {
++		dev_close(priv->netdev);
++		dev_open(priv->netdev, NULL);
++	}
++	rtnl_unlock();
  }
  
- static void tls_device_core_ctrl_rx_resync(struct tls_context *tls_ctx,
+ static void hix5hd2_net_timeout(struct net_device *dev, unsigned int txqueue)
+@@ -1289,6 +1295,7 @@ static int hix5hd2_dev_remove(struct platform_device *pdev)
+ 	struct hix5hd2_priv *priv = netdev_priv(ndev);
+ 
+ 	unregister_netdev(ndev);
++	cancel_work_sync(&priv->tx_timeout_task);
+ 	mdiobus_unregister(priv->bus);
+ 	mdiobus_free(priv->bus);
+ 
+@@ -1296,7 +1303,6 @@ static int hix5hd2_dev_remove(struct platform_device *pdev)
+ 		hix5hd2_destroy_sg_desc_queue(priv);
+ 	hix5hd2_destroy_hw_desc_queue(priv);
+ 	of_node_put(priv->phy_node);
+-	cancel_work_sync(&priv->tx_timeout_task);
+ 	free_netdev(ndev);
+ 
+ 	return 0;
 -- 
 2.53.0
 
