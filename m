@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042169;
-	b=JFszrKWwgFWt6s0zYsoY29gfbVbQuJupYUlX9b7af66CrBYaLw8kuRVJOvX2DQidm1im
-	 k1cUfU3xLawTZgNZKT4Ypg+U5qeyA7hLS8/kko08XH6ms19/DjnKS1W5A5b0VzkbhY/Sm
-	 EMU+ECoRWK8/jqv18wrAvEUGO11bvtlsu4PhCpSFDiGCVNci6koHVVMJjTa4VYumlP9ko
-	 aCUh0J1h0IoBmA7U4jVA/OqSMaHIfz4Rb5oL7LgI+knNZTTSQ9Cy9/jP6BV5XJ0vCMoM7
-	 RlEBFx/CT3/Ugivd/+ssVWzSLCjRITNG3QGPa+KxnT8NsXSCQ4gTKdCDaqV86wd+0sg==
+	t=1795042172;
+	b=kSheNBrwjYnRdHIIeHZUt52ZmROKj31mg1ilb9QKlJ99dufHryGRCIwQqQLY20BV3lbk
+	 BAlU11b9U8h+AEqvf8wQN2VTcu/D/FiroN5DbnTjT7Iv3KGu+7ZxqZUIzLjadHdTUqnRQ
+	 a2stYiViByEIbzwoXdp/KZVA3knNfmF9Xn6f4/2jghAfpXuGLvo/iq5a2UX65olmDSLTE
+	 SCiwzmY95UVMYVFnguUYGlcUIlDuKaB3X+QrVRdEvw62oyIblIoCmTxDhyU79CkSuigDO
+	 Xo6PkEf6ijkuA0ZTBGSSx5EY/HsFe9nesq8r6EkfkqN//9JqPjaDFUNMENz1+YvKuwg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042169;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042172;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=SfqNUyid+s2lxqgi7aOJI2uGO6bLoSSxmUGbgHHbVwg=;
-	b=aMi1PKtIi/TKQm7LXPYPKN+K3xaZCVKXZZYA9fszXGzO7AfllKucaAXj8aOc9twpUrRo
-	 Y+7JryA2MBy+f0r+QxmPaxWhYvwP53XaRNyqr3RnksSeQiiqsIuB+gPzzmX9ER62HFXk4
-	 svuo6BiVbSdMx7w2rbLU7WKcjXaVyrUYcqd8y/vPSEQowp3F2X1MYI2sZhO8IKEITEz1R
-	 PwiQ3Mcwe0oXzjFSrEG9qVekLK37gngCFbaWmvOP4vpgHtsHS+XBcvUt3Zpjw5XTGMHGQ
-	 0FscPWguHnDNjvpJxyjtWx1Zj9TTN+UYIbcSPBSFFNdLFehGfP8MlvZ4C6i2Udvw6pg==
+	bh=eEvZVKDl6j6Yg7w9CvUkHtie3/lXXwwO8Emnljh1IA4=;
+	b=ZRRNzp3l7qemRUPhHa1YeDh1WTdZDoA6bDeyetxxdecdTc1V0vGYyO+mMS0Ivu8pks4I
+	 AWT/gcYn/Gmgdv/sjCh5tPbv/k9gs7g6nIILazuo+OEf8p+iq9DPkMQnwBBQHRTR+gRHL
+	 pIuAir1/RjpW42kpRRmW8XnPq9XXZ6RQzyOXukucFWzQRNu8BuZcMCwwdaVT8Nn2GvBW0
+	 ebvejDET4N7XM9w4WKa/UXp6VXHg/2DN4o8avStPfPtpIHRL4GoilvkQPPlef54FIBvH7
+	 rRS2clrv7L5FH306UObDi8mEekNq39tiuce6UubeEGtZpajmzn7eSQN0x1nGzroY8OA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3rboXwV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBsJBHLW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47558606A320;
-	Wed, 18 Nov 2026 22:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C28606A325;
+	Wed, 18 Nov 2026 22:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3rboXwV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482F61F000C5;
-	Wed, 18 Nov 2026 22:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBsJBHLW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A021F000C4;
+	Wed, 18 Nov 2026 22:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042168;
-	bh=SfqNUyid+s2lxqgi7aOJI2uGO6bLoSSxmUGbgHHbVwg=;
+	s=korg; t=1795042171;
+	bh=eEvZVKDl6j6Yg7w9CvUkHtie3/lXXwwO8Emnljh1IA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=a3rboXwVMsNuioHXq8A3bH1D5NZkdnxJLboXHZffyEnTRewpekFWW0wjINxLHOwav
-	 d94zvHn19uG+2Dofv4D/QNOUf27pkYsdAb/yp7lzIOwGOxyvHxBI6eXw+Rd36t5gOU
-	 sbi4w5bjm5dY4qTkLEH15q2e0R2WInvBDES6YcPk=
+	b=TBsJBHLWWdJhUN3gdzQak/uZwY5l6gnCqmuvwMKbVaYRF45oteM/x0C8B5M/bdVdK
+	 pXqHBpmb5ldN0Zk6De+tiXXcTHzAbvm8HcQDsHRlfyjnKVY7BZLO3yQF1i9LgZ4uRx
+	 fIWQVvYyPAeiDmzRymdwyKHlAAfQWfrTdiUKgviI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Velkov <iav@iav.lv>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ilya Maximets <i.maximets@ovn.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3023/3318] power: supply: gpio-charger: Report discharging without input power
-Date: Wed, 18 Nov 2026 16:00:45 +0100
-Message-ID: <20261118150450.896192179@linuxfoundation.org>
+Subject: [PATCH 6.6 3068/3318] net: openvswitch: skip IPv4 later fragments on TCP/UDP set actions
+Date: Wed, 18 Nov 2026 16:01:30 +0100
+Message-ID: <20261118150452.154996976@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,45 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Velkov <iav@iav.lv>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit f0f400459bf6a037e70768de623fff3f8920b8bb ]
+[ Upstream commit 14c0350142ab0a10ebeefed03b779df23749e16a ]
 
-The status property follows only the charge-status GPIO. Without input
-power a charger such as the BQ24133 releases its open-drain STAT pin,
-and depending on the board the GPIO then reads as charging.
+An IPv4 later fragment carries no L4 header, but key extraction leaves
+ip.proto set to the real protocol and the flow may wildcard the frag
+field, so validate_set() accepts such packets. set_tcp() and set_udp()
+then treat the first bytes of the fragment payload as an L4 header,
+rewrite them as ports and patch the bytes at the checksum offset,
+corrupting the packet.
 
-On Kobol Helios64 the board runs from its battery after a mains loss,
-and the charger reports online 0 with status "Charging".
+Skip these actions for OVS_FRAG_TYPE_LATER. IPv6 later fragments are not
+affected, since their ip.proto is NEXTHDR_FRAGMENT and validate_set()
+rejects L4 set actions for them.
 
-Report "Discharging" whenever the online GPIO is present and inactive.
-
-Fixes: df68c44c720a ("power: supply: gpio-charger: Add support for charger status.")
-Assisted-by: LLM
-Signed-off-by: Igor Velkov <iav@iav.lv>
-Link: https://patch.msgid.link/20261018-gpio-charger-offline-v2-1-482795f9e27c@iav.lv
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
+Link: https://patch.msgid.link/20261015124749.4694-1-fmancera@suse.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/gpio-charger.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/openvswitch/actions.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/power/supply/gpio-charger.c b/drivers/power/supply/gpio-charger.c
-index 6139f736ecbe4..fba7b0616059c 100644
---- a/drivers/power/supply/gpio-charger.c
-+++ b/drivers/power/supply/gpio-charger.c
-@@ -100,7 +100,10 @@ static int gpio_charger_get_property(struct power_supply *psy,
- 		val->intval = gpiod_get_value_cansleep(gpio_charger->gpiod);
- 		break;
- 	case POWER_SUPPLY_PROP_STATUS:
--		if (gpiod_get_value_cansleep(gpio_charger->charge_status))
-+		/* Without input power the battery discharges, whatever the status pin says */
-+		if (gpio_charger->gpiod && !gpiod_get_value_cansleep(gpio_charger->gpiod))
-+			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
-+		else if (gpiod_get_value_cansleep(gpio_charger->charge_status))
- 			val->intval = POWER_SUPPLY_STATUS_CHARGING;
- 		else
- 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
+diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
+index c525eb456609a..8511e70890b45 100644
+--- a/net/openvswitch/actions.c
++++ b/net/openvswitch/actions.c
+@@ -619,6 +619,9 @@ static int set_udp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__be16 src, dst;
+ 	int err;
+ 
++	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
++		return 0;
++
+ 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
+ 				  sizeof(struct udphdr));
+ 	if (unlikely(err))
+@@ -662,6 +665,9 @@ static int set_tcp(struct sk_buff *skb, struct sw_flow_key *flow_key,
+ 	__be16 src, dst;
+ 	int err;
+ 
++	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
++		return 0;
++
+ 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
+ 				  sizeof(struct tcphdr));
+ 	if (unlikely(err))
 -- 
 2.53.0
 
