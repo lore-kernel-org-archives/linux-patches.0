@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795024254;
-	b=B2kerRKNf7RqtsZbQ4FqP97rixthImCotf3kA9UY5ED9+Q492RccnrJNG2O1bnXUBzww
-	 wxLLAK/qEkCUxGVp3y4V17VnYH/knXMZyrKRtYs9UgzEFrK0d5p4AurYsMHos79Cw8M+4
-	 e/o9VlNiPxR2+jdHNe/Y4Y2vkB6vZtNeda88iKnSzK75LXduYStqT6zfaNL3YD9uTRLXs
-	 E8DN3r2fsrq61iOC9CcDSLrCOAz+8qYPG1CMe/qfO8VNcaKKATd1wHQxtZUVrC8yg+xFG
-	 gJpWZJdL7C8foxQ+oZwFOXeKXzac+WmIiWOjszuWCCMr+r5aJdTeO+HWfneY0bWGg3w==
+	t=1795024260;
+	b=nrSEvqE4I1x88za4HXF5hB7Li4B+tWBdyYzs1jmXInw/hcSIW/8pPHG8er+0KUZg+hPQ
+	 pzTgMaBB73/xUivxykekxArbdOX1WUAt+DGN1RzYSGF9TZw2DNcfg+/QlGJDjMeIxYn+L
+	 iEjNIBtedn/gMBTUEsQYzQ76Bx2AANXURxjwzZu6MzEAim7ZV2A3bCLy8D26LAY7pVwZS
+	 8ByWSBPv7/HPXg+VK5dsRhUOSFsCsls3YA7W6lwuZU4Q4GtSlYfqcjKIOHiq0zsiUfb1V
+	 dtL7gJgw/tCjo8qMEyeRukMBo9rd5lQNTmQ33OEL1P6Zbl7X/FUhY6hEv/VKKyPO1mQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795024254;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795024260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=2HgbchdjctYgPtOYjmE7RTfVUMw1jlDN1EpFpk89R9w=;
-	b=4MxI8YWvZ76S2p/ZlrKlx76n1Y17zjzDJ0UYjAxkjgF0U+ytCXIwAj4gg1dvOx/kGMbW
-	 IhiYOi6YzIFkdcWJq/WFeI/oTQLtEIaNPZ/tCsyEFiLp2E929JyPZM5Yd7DxJjIKaXeC1
-	 OIxzwaz0ulY1M54yDh8turR3MB4y6MzNeU2bsPm3/JWYTHpJXarFvbRicSDOZnYO0NfmB
-	 rnIVuNdWEKg47Tqvf0WCLIb7vy2i3+nSElCxqyYoEslJjS0wJrCm/kgnVaIamAQMKGfMI
-	 3Wlpuy8xVFhxY3LD7XVGbldJOl85nuCbhrcBftv8AthdnhIZ1MzUA1gU+DiqxxY3f3Q==
+	bh=fPLw+tbwyqtuipxt0reC1jRxDstheok+VsEQahw5J48=;
+	b=mlThIqi29lNxH5AWFM92viAUYGzqYsXrKhk6T10QdVRcEW9Ft9dG1+df/ty/i93y6LaN
+	 m8Bgt9O8wabKSHm1Ki1PxLhQgs1L01ljKyCT4UG9RkRzURhexw8aGTsgdhQ/PtMQe5UEI
+	 jbPBl0ocmoWXdrui0EoPolMVlMAGOhGC8dXJtHdYYr10CvaDsIIx+oT8F19s8nvwumpV1
+	 TdTtZybL8UxcVTiqHJVdvE3LgKALM654Kwes4QAyr4rRlSeOo86aQvJTow7/HOGT6VgGt
+	 9mcRc2j7DJro4VoUpUmFwUzoUMjlPsOytoWId/vc7yS6lk1MHxNaaptG8vFl0ssRoDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="b4/wG2qk";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n2rvZj6X;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D74D60A260B;
-	Wed, 18 Nov 2026 17:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5CE606A31C;
+	Wed, 18 Nov 2026 17:51:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b4/wG2qk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AF51F000CD;
-	Wed, 18 Nov 2026 17:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n2rvZj6X
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9961A1F000C5;
+	Wed, 18 Nov 2026 17:50:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795024254;
-	bh=2HgbchdjctYgPtOYjmE7RTfVUMw1jlDN1EpFpk89R9w=;
+	s=korg; t=1795024260;
+	bh=fPLw+tbwyqtuipxt0reC1jRxDstheok+VsEQahw5J48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b4/wG2qk+uAudYQeb/lQM5bIWfQENhUgVw40kOaXyoL+Ax5GINFdOrMoKxYBhBQjj
-	 kEOenBs7FCwmGOb9+aaHgKc2IxsRWMiejc9vj7HJF8otdE/uvM+XOUD0Nnyo89WNEx
-	 rKKh1V1K1h5VQ9j3AaQWyJEoBqLuzJn0n4/Gy22U=
+	b=n2rvZj6Xfdk8XNrGLpeOL4+wOou8a6baUyVg2z7JVEmqTE3cFrbcxhtyePrMQ0okZ
+	 WI/AnQQC1rI6nryq4nK62wLKUNLCIZLRMxr5hEaGfMBZCyAhAZHY0XNzAj0Nps3h8H
+	 fLsBTx7Jb5XLqp9+NKVTZK5sA96yNfnFu4u1SdB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Malathi A <malathi.a2000@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0661/2151] serial: sh-sci: Drop checking port type for device file{create, remove}
-Date: Wed, 18 Nov 2026 15:39:56 +0100
-Message-ID: <20261118150145.919234693@linuxfoundation.org>
+Subject: [PATCH 6.18 0663/2151] serial: 8250_uniphier: Use devm_clk_get_enabled()
+Date: Wed, 18 Nov 2026 15:39:58 +0100
+Message-ID: <20261118150145.986013921@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,64 +68,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Malathi A <malathi.a2000@gmail.com>
 
-[ Upstream commit 42f7303c5f668403f06d9b938d3de2bda3736530 ]
+[ Upstream commit 790aacba3fdfd3a227cdd5e4952c596ed66a0ed8 ]
 
-Ports that support FIFO has fifosize > 1. Replace checking the port type
-with fifosize for device file{create, remove}.
+uniphier_uart_probe() enables priv->clk by hand and is then responsible
+for disabling it again on every error path. It misses one: when
+uart_read_port_properties() fails the function returns directly, leaving
+the clock prepared and enabled. The neighbouring path, taken when
+serial8250_register_8250_port() fails, does call clk_disable_unprepare(),
+which shows the leak is an oversight rather than intent.
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Tested-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://patch.msgid.link/20251129164325.209213-5-biju.das.jz@bp.renesas.com
+Rather than adding another manual unwind, switch to
+devm_clk_get_enabled() so the clock is released by devres. That removes
+the error path entirely, along with the explicit disables in the
+register failure path and in uniphier_uart_remove().
+
+The clock is still disabled and re-enabled by hand across system sleep,
+which stays balanced: only SET_SYSTEM_SLEEP_PM_OPS is used, so the
+device cannot be unbound while suspended and devres always sees an
+enabled clock at detach.
+
+Found by smatch:
+
+  drivers/tty/serial/8250/8250_uniphier.c:232 uniphier_uart_probe() warn: 'priv->clk' from clk_prepare_enable() not released on lines: 205.
+
+Fixes: 26e8349c0d76 ("serial: 8250_uniphier: Switch to use uart_read_port_properties()")
+Signed-off-by: Malathi A <malathi.a2000@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260917040511.103232-1-malathi.a2000@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: c5b33c86d86d ("serial: sh-sci: Unregister UART on sysfs setup failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sh-sci.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ drivers/tty/serial/8250/8250_uniphier.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/tty/serial/sh-sci.c b/drivers/tty/serial/sh-sci.c
-index a64a26fb7ff86..96f70581d6ecf 100644
---- a/drivers/tty/serial/sh-sci.c
-+++ b/drivers/tty/serial/sh-sci.c
-@@ -3375,16 +3375,14 @@ static struct uart_driver sci_uart_driver = {
- static void sci_remove(struct platform_device *dev)
- {
- 	struct sci_port *s = platform_get_drvdata(dev);
--	unsigned int type = s->type;	/* uart_remove_... clears it */
+diff --git a/drivers/tty/serial/8250/8250_uniphier.c b/drivers/tty/serial/8250/8250_uniphier.c
+index e3db60bf50c93..6fffac12277ac 100644
+--- a/drivers/tty/serial/8250/8250_uniphier.c
++++ b/drivers/tty/serial/8250/8250_uniphier.c
+@@ -180,16 +180,12 @@ static int uniphier_uart_probe(struct platform_device *pdev)
  
- 	sci_ports_in_use &= ~BIT(s->port.line);
- 	uart_remove_one_port(&sci_uart_driver, &s->port);
+ 	memset(&up, 0, sizeof(up));
  
--	if (s->port.fifosize > 1)
-+	if (s->port.fifosize > 1) {
- 		device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
--	if (type == PORT_SCIFA || type == PORT_SCIFB || type == PORT_HSCIF ||
--	    type == SCI_PORT_RSCI)
- 		device_remove_file(&dev->dev, &dev_attr_rx_fifo_timeout);
-+	}
+-	priv->clk = devm_clk_get(dev, NULL);
++	priv->clk = devm_clk_get_enabled(dev, NULL);
+ 	if (IS_ERR(priv->clk)) {
+-		dev_err(dev, "failed to get clock\n");
++		dev_err(dev, "failed to get and enable clock\n");
+ 		return PTR_ERR(priv->clk);
+ 	}
+ 
+-	ret = clk_prepare_enable(priv->clk);
+-	if (ret)
+-		return ret;
+-
+ 	up.port.uartclk = clk_get_rate(priv->clk);
+ 
+ 	spin_lock_init(&priv->atomic_write_lock);
+@@ -222,7 +218,6 @@ static int uniphier_uart_probe(struct platform_device *pdev)
+ 	ret = serial8250_register_8250_port(&up);
+ 	if (ret < 0) {
+ 		dev_err(dev, "failed to register 8250 port\n");
+-		clk_disable_unprepare(priv->clk);
+ 		return ret;
+ 	}
+ 	priv->line = ret;
+@@ -237,7 +232,6 @@ static void uniphier_uart_remove(struct platform_device *pdev)
+ 	struct uniphier8250_priv *priv = platform_get_drvdata(pdev);
+ 
+ 	serial8250_unregister_port(priv->line);
+-	clk_disable_unprepare(priv->clk);
  }
  
- static const struct sci_of_data of_sci_scif_sh2 = {
-@@ -3743,15 +3741,10 @@ static int sci_probe(struct platform_device *dev)
- 		ret = device_create_file(&dev->dev, &dev_attr_rx_fifo_trigger);
- 		if (ret)
- 			return ret;
--	}
--	if (sp->type == PORT_SCIFA || sp->type == PORT_SCIFB ||
--	    sp->type == PORT_HSCIF || sp->type == SCI_PORT_RSCI) {
-+
- 		ret = device_create_file(&dev->dev, &dev_attr_rx_fifo_timeout);
- 		if (ret) {
--			if (sp->port.fifosize > 1) {
--				device_remove_file(&dev->dev,
--						   &dev_attr_rx_fifo_trigger);
--			}
-+			device_remove_file(&dev->dev, &dev_attr_rx_fifo_trigger);
- 			return ret;
- 		}
- 	}
+ static int __maybe_unused uniphier_uart_suspend(struct device *dev)
 -- 
 2.53.0
 
