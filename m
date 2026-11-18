@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036257;
-	b=VabJ+IAcKHk5HdxW4cOi2aAe3rlKrvOD9Ljr62Gy58bK8JQSu6j30OQy4Jn/yjpmutwM
-	 t5Al8V7KVsFqFYuPkGr0Aha7rYO6CF8+i5p4hJ62ztd0UoMI7IuUMZOeRfNQIwaxic4VI
-	 Tb3ysFQszVXdniA7ylXUgDYVhe0uYz3shX2NMU5pT8xAran39+44CKpNe1Vrpi8EneHvf
-	 mbXFiuoufd2QyRp4sBiZfTSOavn787DOYif/3vfNulmOmXGHPLIBi+hqMkfE9rOf4xxLV
-	 cEglOQ+pfhIceJph1ZKSh5mahDRP7yeTJhGWuS6BvJ0924W2QUI3loy9O5ii6Wr+Otg==
+	t=1795036260;
+	b=4tdAEa1qKi4fJBzElMledT7enCynYCy29zhKyEkTHJrnfYGZAb1KDWT0KFgfClHLRTgR
+	 phj7y3rTtJOno0HIcyldnfHrmtPfTyuhe/vClgExXtuNwjwf6pWrzIgTnfRHdFEku1Wrl
+	 GAf6/exrFJrMQ1BKn6Z516M/COwnSBPyzr9JaDjW5S6EQVbGk7CzYSlwq+rjm96j6Y3vu
+	 WzHhDndVo1ScdeZyAKI9mZ4Z3otojO3GbDNkxQzTNfNgYspEgHt37kcrDGsQF8Kc6+TYg
+	 Wx/0Fhpz7Zef5nDImr5Xp2N8ETc0XTCAHY1kqymFYRBOypsngkOkSnR3vMIAfnJI1Bg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036257;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036260;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3fbe6ulCf0RI4IKjfNJP9rg6ADOA3XrubGeszGRGpsU=;
-	b=R4MpkYPOX8jF7hZAi9trU3+X6Fl/setbKnckqZJpxb8s0d4XKSJxBkwlQc/GtbGzzKXY
-	 LEZjXgYF7xQ+VpCmXucuorfoDDZPfsq3iL1ZQ0GWeAM0OxuYR9pjKUQpJ4DBRI2DVcrVV
-	 pCjlffJJOfcoZFldInB6QTEN2WDaZO5Z731b0JIuFAJzmMA9MtrcirKfAR0vZVofuAAIP
-	 9DVIC3SPRUhdS7g7NiWCo2RmQ1MaVbdJ53W+7g/JaKcErZTwZ60YnF+UNFIBX7Ysoc0hV
-	 dZ78kaXkqovmfSg4oltEZPcGcC6RniDhnmFV42G0Fih2pcEdwpPk4wSxlFRFFnZLjZg==
+	bh=Yn/RtmhILMtwn5yIGQOdllQ9yydFCrFc0yanqzeJ6S0=;
+	b=tFjVbR03Yd4TieoEIHMzU7AKoxclEa/V3o4zZ83tUTKHFe3x48Z2KR15kVEUxpmLR6W9
+	 zHqaoq8uNM6zjfL3VIMna4pxL+JmcDS0xhx0zZe4DYvcVKv8fOkoZdk5xzxsMowNODyDo
+	 FqRT3DicgC0TcQ2nR3BEwjmccDOdn8TVvys+6YftaaTO7UV7ua2fdYPlUDLhrav+erx5o
+	 H14UZGBKabKeCT9yvAoW+gJoywzVdLI3RT3h6BaHC/tl2MXZ7R7kmClGuFJ40vxSQfDbV
+	 FMR7C6uLvuyHrsHF16n6g76VVf5vs2LvvjEQ87O5fRGJjVEKNb0NWho2I4yUydhXV5g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngRDlYFS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EB1bGAz0;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6420C606A31C;
-	Wed, 18 Nov 2026 21:10:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E19D606A33E;
+	Wed, 18 Nov 2026 21:11:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ngRDlYFS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B4E1F000C4;
-	Wed, 18 Nov 2026 21:10:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EB1bGAz0
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603091F000C4;
+	Wed, 18 Nov 2026 21:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036256;
-	bh=3fbe6ulCf0RI4IKjfNJP9rg6ADOA3XrubGeszGRGpsU=;
+	s=korg; t=1795036260;
+	bh=Yn/RtmhILMtwn5yIGQOdllQ9yydFCrFc0yanqzeJ6S0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ngRDlYFS2Bn0/J8IvRVKbV5d/8CSUJhnWF4lizXerFILzgovHEZzNZoxJq+JUhdhA
-	 dgsNTR8uSlOyzzJ57xTD6XDaDSSMV0uTgKPu/NF0VHmbM2hnhHpSBb8iOQKnDLMVCc
-	 /3dvyoNBqy1Xi2JS0/AjLYfxs6qIEQb1igG6P5i0=
+	b=EB1bGAz0o5WQh81r0XgMH9DSMRRWEA/38YbV4qUv2xlAqXAnDdiUUXYii0RgiJTY/
+	 YPJCHlzrqCAxmiDOhQk7UCftsTObxOKUl+f9lkOgdArzqBGaahTpq9MYkeA2MKBOVi
+	 pnjBJ8EtEXaNBOllkAZ8NgiZYFikIrgHaJoWTMTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -47,9 +47,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0995/3318] media: amphion: drain message work before releasing core state
-Date: Wed, 18 Nov 2026 15:26:57 +0100
-Message-ID: <20261118150349.681779201@linuxfoundation.org>
+Subject: [PATCH 6.6 0996/3318] media: amphion: prevent unbind while video instances are open
+Date: Wed, 18 Nov 2026 15:26:58 +0100
+Message-ID: <20261118150349.714914294@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -73,14 +73,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit ec95ae226f240ed657834fe4114abb7067e1af2d ]
+[ Upstream commit 96ea6bc6835f1b18b75303d536a7f9a3829c9bc1 ]
 
-vpu_core_unregister() frees core->msg_buffer before cancelling the message
-workers, although core->msg_fifo still uses the buffer as its backing
-storage. A queued worker can read it after it has been freed.
+An open video instance holds a plain pointer to its devm-allocated core.
+Unbinding the core or its parent through sysfs can release that memory
+while the instance remains open. A later ioctl or close then uses the
+stale pointer.
 
-Drain the core and instance message work first, then release core->vpu
-and the FIFO buffer. This follows the ordering in vpu_core_suspend().
+The video file operations pin the module, but sysfs unbind bypasses that
+protection. Suppress manual bind and unbind for both platform drivers,
+and warn if core removal ever encounters a live instance.
 
 Fixes: 9f599f351e86 ("media: amphion: add vpu core driver")
 Cc: stable@vger.kernel.org
@@ -92,44 +94,43 @@ Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_core.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/media/platform/amphion/vpu_core.c | 3 +++
+ drivers/media/platform/amphion/vpu_drv.c  | 1 +
+ 2 files changed, 4 insertions(+)
 
 diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/platform/amphion/vpu_core.c
-index 3a2030d02e45e..b2531a0e6c0b0 100644
+index b2531a0e6c0b0..321f319d14a6a 100644
 --- a/drivers/media/platform/amphion/vpu_core.c
 +++ b/drivers/media/platform/amphion/vpu_core.c
-@@ -301,22 +301,23 @@ static void vpu_core_put_vpu(struct vpu_core *core)
- 	core->vpu->put_vpu(core->vpu);
- }
+@@ -718,6 +718,8 @@ static void vpu_core_remove(struct platform_device *pdev)
+ 	struct vpu_core *core = platform_get_drvdata(pdev);
+ 	int ret;
  
-+static void vpu_core_cancel_work(struct vpu_core *core);
++	WARN_ON(!list_empty(&core->instances));
 +
- static int vpu_core_unregister(struct device *dev, struct vpu_core *core)
- {
- 	list_del_init(&core->list);
- 
--	vpu_core_put_vpu(core);
--	core->vpu = NULL;
--	vfree(core->msg_buffer);
--	core->msg_buffer = NULL;
--
- 	if (core->workqueue) {
--		cancel_work_sync(&core->msg_work);
--		cancel_delayed_work_sync(&core->msg_delayed_work);
-+		vpu_core_cancel_work(core);
- 		destroy_workqueue(core->workqueue);
- 		core->workqueue = NULL;
- 	}
- 
-+	vpu_core_put_vpu(core);
-+	core->vpu = NULL;
-+	vfree(core->msg_buffer);
-+	core->msg_buffer = NULL;
-+
- 	return 0;
- }
- 
+ 	vpu_core_remove_dbgfs_file(core);
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	WARN_ON(ret < 0);
+@@ -868,6 +870,7 @@ static struct platform_driver amphion_vpu_core_driver = {
+ 	.remove_new = vpu_core_remove,
+ 	.driver = {
+ 		.name = "amphion-vpu-core",
++		.suppress_bind_attrs = true,
+ 		.of_match_table = vpu_core_dt_match,
+ 		.pm = &vpu_core_pm_ops,
+ 	},
+diff --git a/drivers/media/platform/amphion/vpu_drv.c b/drivers/media/platform/amphion/vpu_drv.c
+index 51d5234869f57..53c38721e376b 100644
+--- a/drivers/media/platform/amphion/vpu_drv.c
++++ b/drivers/media/platform/amphion/vpu_drv.c
+@@ -230,6 +230,7 @@ static struct platform_driver amphion_vpu_driver = {
+ 	.remove_new = vpu_remove,
+ 	.driver = {
+ 		.name = "amphion-vpu",
++		.suppress_bind_attrs = true,
+ 		.of_match_table = vpu_dt_match,
+ 		.pm = &vpu_pm_ops,
+ 	},
 -- 
 2.53.0
 
