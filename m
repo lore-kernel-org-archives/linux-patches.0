@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015538;
-	b=Vsh/P6At3TJbhPmDT8ZB2T8U5FNDULPO0zFrA5xdBXAC6ANqiAaorFewlYTNAEfWghL7
-	 r/iiiVHUgJF18gfpP410K1QceU5cd7snxq/tuTi5u9X84v3A0QXj5ZWu6kUWMoCxUrWvl
-	 FaTKBz757SVw9ZSFpHP/i0UQ7KTYrEjNF04sRjEfH+NY8vAh3YWu6s/Z1B00duMJPGGxz
-	 Mto3NpAhzqDQnV6KbAOOVRO32gEmRag/vDnEed4ZBMw4EtDX4BSR0JOKtnFL+TQQSKJ9x
-	 TlJXxwTjRY3FAkN00FB8AnWFES25ArfnodC64ykIP7HdUkViwGTUXa/tarNC98QTHNw==
+	t=1795015540;
+	b=c5gRPIF7R1lbEoxRJloKsqo0pmROWdJOYykIdUC0KLSV3r0aIQncwgc40Hy5x9vIG3KH
+	 z35H6ZJoY9GuGcRIb/4tg8a09wHherFxTelGev6oa58DkJCwGdm5zEVj+TCVtbqL0fV18
+	 OZCRm7E1lKe2oCdP2ftF3LB63+r90D3wYaFvRNN4GfSg0diO2vnL9ApJap/1tZ4Aq7IKw
+	 zwBwwJ++p0UaRPnbRZFEDGhrmKmsf+BdHLhZsaRiwTJmdfyr6z7b7aJswl9XzMQWhGxJF
+	 eqo/21gOm5xQ1l3RbyZTF9IpTMIev8atTKtK8l81HakCzegLUwVP8Ysip/B7Qd0rztg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015540;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vG/aj9R3DLoMZQVAkeM1vq+oIX183vr0flLm1Di/r7w=;
-	b=iP+3cEUTpUX/bM46suYNm1kfCUDaJmVkE9ZgEKk2x4XQ3778wFq5hh0ZQAhLD9aR5S4B
-	 DOcGp/hWUEprNN4jHSCD5FRorFg38H0BEb5wJH+QHPFv91xbHeSFW+1YQO56jXVn/2g53
-	 2qHD6XvLAX5PV5x/f05QEkOiOfgKEP9CDXCB4t4RPD41+W1YPoL9nAM/IpQ6nnGFcy0qA
-	 28MiU8pHJ1BAvNo2HoEFUTMS/pbUAL18Ye7waEcWdAVxPqM5PBZFNYRhFMkA6vuCNhJw4
-	 7U3fe+MCWymzh0dSklqaBebeWgT+CZplNGQWxGWd6Ls/r+WRdP7uaql/ChZNwDC99Cw==
+	bh=SEPlPQsmlKWypx+o40SlbwgKsCuhSQgq5NUiuTLZuTc=;
+	b=VZnZxs2RmGTbLQebWYB4Rz8wNVyJGrggB2JOT87LiZgsSrc6QUzkcOr7G/xT0NKo9gRw
+	 qJWpwSb9RzpmE4t3+9jT1jxhWCHEV7SwcW5GadnH5pwIrlEKzxWeRkr9aoGjb/eXz/PSc
+	 CvWlG6y65QPSqGf5MGnNQ0bNK1HW6j4qhGNipGjst2/mjCeh3kVZHZGCYUOZu4eReynCJ
+	 DMpPwCLoO8qJpb4dvsjVQdJBzmFrKf/4cHUMM09ERCQO7ZXwKd2h+Ul4HxaXPRKHNQyRR
+	 CiPY31gWbZZCYoVmnpmaV/jMV4y5xlB/kG2p36FMnkvETIDdbowqBafthxGtOoe4aVg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5zLX3C+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Nxx1pnC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05475606A32A;
-	Wed, 18 Nov 2026 15:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE12F606A31C;
+	Wed, 18 Nov 2026 15:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O5zLX3C+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D4C51F000C4;
-	Wed, 18 Nov 2026 15:25:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0Nxx1pnC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5CD1F000C4;
+	Wed, 18 Nov 2026 15:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015537;
-	bh=vG/aj9R3DLoMZQVAkeM1vq+oIX183vr0flLm1Di/r7w=;
+	s=korg; t=1795015540;
+	bh=SEPlPQsmlKWypx+o40SlbwgKsCuhSQgq5NUiuTLZuTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O5zLX3C+Z12RukbMAoqA1Fazm8raK+zdrMZPF0yKUn+TOlkZUbTdohtl38VjOlc+l
-	 qoF2K4NZXURZD2D3QCw3dDIJm2NrYRwQTgd1RxgwcSlTva2RmeQlcmpBIDlTD7tHN5
-	 MYjNksvUBusi3i4fLs9WApRE5A+Nnv8106S2HrB8=
+	b=0Nxx1pnCF2o6qWc1hqowHu9zJnYipBoWapJJZkE2KueuWV+v43I9fvdx/XYBYhrCu
+	 pmzjGe16pPXjKIN7XLmFQsNCiqTbcKNizjN/V2Ep9efebAXZZ16eeoqU+54WVXguid
+	 CueOj/UYrsuEfGvz3yaqlXzDC1qwryypXDJq1zHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	David Teigland <teigland@redhat.com>,
+	Horst Birthelmer <hbirthelmer@ddn.com>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0168/2651] dlm: fix buffer overflow from negative len in dlm_search_rsb_tree
-Date: Wed, 18 Nov 2026 15:23:28 +0100
-Message-ID: <20261118150253.899092620@linuxfoundation.org>
+Subject: [PATCH 7.3 0159/2651] fuse: dont bump attr_version for async direct read completion
+Date: Wed, 18 Nov 2026 15:23:19 +0100
+Message-ID: <20261118150253.575587320@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,68 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit d785f7d92f197b72d496bbcf54a160cd54f00263 ]
+[ Upstream commit fc60668db85584da911e5d0a65c8698628f98bba ]
 
-commit 080e5563f878c ("dlm: validate length in dlm_search_rsb_tree")
-only checks for len > DLM_RESNAME_MAXLEN, which does not catch negative
-values. While the input 'len' can be negative and a negative int passed
-to memcpy() is implicitly converted to a large size_t, causing a stack
-buffer overflow on the key[] array.
+The attr_version counter should only be incremented when cached
+attributes are actually modified (as documented in commit 1fb69e781729
+("fuse: fix race between getattr and write")).  Async direct reads do not
+modify any cached inode attributes (size, mtime, ctime), so bumping
+attr_version in fuse_aio_complete() for reads is incorrect.
 
-Fix this by changing the 'len' parameter type from int to unsigned int.
-This ensures negative values from callers are implicitly converted to
-large unsigned values that are caught by the existing
-len > DLM_RESNAME_MAXLEN check.
+This unconditional bump causes a livelock when auto_inval_data is
+enabled together with writeback_cache: fuse_cache_read_iter() issues a
+FUSE_GETATTR before every read, but by the time the response arrives,
+an async DIO read completion has already incremented fi->attr_version
+past the snapshot taken before the request.  The GETATTR result is then
+discarded (attr_version race), fi->i_time is never refreshed, and every
+subsequent read triggers yet another GETATTR -- creating an infinite
+loop of useless round-trips.
 
-Acked-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Stable-dep-of: b4e6ae7ba711 ("dlm: fix variable key length lookup")
+Fix this by only bumping attr_version for write completions, consistent
+with the synchronous DIO write path (fuse_write_update_attr) and the
+cached write path.
+
+Fixes: 01e9d11a3e79 ("fuse: add support of async IO")
+Reviewed-by: Horst Birthelmer <hbirthelmer@ddn.com>
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lock.c | 6 ++++--
- fs/dlm/lock.h | 4 ++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ fs/fuse/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
-index 9aa4f7a190742..d73c4aed1f8ac 100644
---- a/fs/dlm/lock.c
-+++ b/fs/dlm/lock.c
-@@ -622,12 +622,14 @@ static int get_rsb_struct(struct dlm_ls *ls, const void *name, int len,
- 	return 0;
- }
+diff --git a/fs/fuse/file.c b/fs/fuse/file.c
+index bf79c6eb3062c..7e6eba6e7086f 100644
+--- a/fs/fuse/file.c
++++ b/fs/fuse/file.c
+@@ -689,7 +689,7 @@ static void fuse_aio_complete(struct fuse_io_priv *io, int err, ssize_t pos)
+ 		struct address_space *mapping = io->iocb->ki_filp->f_mapping;
+ 		ssize_t res = fuse_get_res_by_io(io);
  
--int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name, int len,
--			struct dlm_rsb **r_ret)
-+int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name,
-+			unsigned int len, struct dlm_rsb **r_ret)
- {
- 	char key[DLM_RESNAME_MAXLEN] = {};
-+
- 	if (len > DLM_RESNAME_MAXLEN)
- 		return -EINVAL;
-+
- 	memcpy(key, name, len);
- 	*r_ret = rhashtable_lookup_fast(rhash, &key, dlm_rhash_rsb_params);
- 	if (*r_ret)
-diff --git a/fs/dlm/lock.h b/fs/dlm/lock.h
-index b23d7b854ed46..c75975937331c 100644
---- a/fs/dlm/lock.h
-+++ b/fs/dlm/lock.h
-@@ -31,8 +31,8 @@ void resume_scan_timer(struct dlm_ls *ls);
- int dlm_master_lookup(struct dlm_ls *ls, int from_nodeid, const char *name,
- 		      int len, unsigned int flags, int *r_nodeid, int *result);
+-		if (res >= 0) {
++		if (res >= 0 && io->write) {
+ 			struct fuse_conn *fc = get_fuse_conn(inode);
+ 			struct fuse_inode *fi = get_fuse_inode(inode);
  
--int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name, int len,
--			struct dlm_rsb **r_ret);
-+int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name,
-+			unsigned int len, struct dlm_rsb **r_ret);
- 
- void dlm_recover_purge(struct dlm_ls *ls, const struct list_head *root_list);
- void dlm_purge_mstcpy_locks(struct dlm_rsb *r);
 -- 
 2.53.0
 
