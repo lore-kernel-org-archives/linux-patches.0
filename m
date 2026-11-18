@@ -1,53 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038840;
-	b=WnnlnxW/7Wf+gmHNGNU3vd5XeFqcp5K3JxTHpYWJ2Dhsd885JAxgM7RzoJPZTzmhgReU
-	 G7aJxhp+Rg+jn3S8U5yDqHvKZldea1g/wMqJB2b0zsaF9ozFmGyNjW2b1XSGWBmQWAHUt
-	 MT8WY0WRzcPZPaWTrwkXHkSdJsmEgiR1PIbHsv5ZD/09dXwyenEdEIYJrGiQVf59IOXMT
-	 AG2AIcWTEasbp4+iLq7KwjM2ya1rR1Q16AzshcKpjRy5yMin8THuWCKVT1fk4Yk45qb/+
-	 Ipl3X+EpNgCWLrg1SXgmtPAuevJUX07+gya/bOFb7RXjkipd5wxml4AResKO2cyOEYQ==
+	t=1795038843;
+	b=v9jXuw011li+LY8LBdV6vSXCRxoC2DP/nw8iJJ6nRSPJQ4a1sf31B4Gho6CI/OMYRyBM
+	 tPl9gM/guqMT5CbY7Ovje3prCs0NzubS0trLX5aGMUBieSVTDta3QoC0FwdJItokxzmEG
+	 sQ+OIanxHSXY0xJn7v1NoW7GO8Dvy4hijodHBofIkoM+C+6O1c8dH0dHVEPG/PreyTlTW
+	 mmAhdFdQJg9VjptGPQBbovpaqvk9OWbMOzSnCTuEbIMl1TrK8S0k0YRN6tCfEYWSyqQSA
+	 h6vnBLSYf7xawZVQylw9h3p+EoWwINMBe/+e0a9mgIRZEa9DcNsonVMcr2vVa1WJrzA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038843;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=g6KTuWnOL7duEkSERVaJY8Dr6IkB/OkLJVZ295Uxm4Q=;
-	b=qatwH28h3wt3KAag1EtRNIuth5YoZjt//x5xLBsbdmprwUfZYFzEKdsC84/+RVmXksoA
-	 DMOzVZOPhuTqfnuxTcsoy6FT7eyKfn6s/quioFYFn5ypO4ZtmPkJeAQ5Bz6IrxkQqRX4+
-	 Vy8uIPpBEvJApf9Qi87rxRm08hR4oQhxYST3b0BTsSvRTw0oTP0i05PLZ2PtrjHzcVFxy
-	 C30No1FxaR6n8waCm+nDakKSXqj+JN2jRGaDYWCdmjp9tNAMK9l1Njkz7GVG3vi/ZzylA
-	 vUyXMSypNkNRkM6Pn9p0uogqdtArfjZ3KWI6T0nM3MUjcbuFo0WFMtxiUtXzIRn/vHg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=cOBjw8QpMSjgQYQNj2fcvHvmA3prueRhh7hKg1R4sI0=;
+	b=FVKfUNgN86U5VFDl58nQc+SwmTk0q2g+OoAMG6h2QX9SKVLvBel2S+khrfXoikltjnWx
+	 FNSgVODnDn7c4Jso2A9n2PZ++LQLaFyhR6z2XlTEwTwyb0jBfJsZZSzvGE+GVTJuqXV1M
+	 lke3F8OQOEoZWCtYd9CbQafYMju3z0u3NUWwVtCeHSvuGFYq5ScMBBkfiKkb/6V6Ojyqj
+	 hli3RW3zXue4M14/lgRxKKPdzL1Ok5LYJVavGZ1FjghIl5z5RnrLaJjSHbeQNRwZn5+fx
+	 k/3BdQUqjxSD+OUBpDGderC/XR2a/YvYBbFAnteswQCw+R6B8c131CKpo+VOScSW3+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLQuRO07;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vGOI+IwS;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DEF606A31C;
-	Wed, 18 Nov 2026 21:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5037B606A332;
+	Wed, 18 Nov 2026 21:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iLQuRO07
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF0BB1F000C4;
-	Wed, 18 Nov 2026 21:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vGOI+IwS
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA9BE1F000C4;
+	Wed, 18 Nov 2026 21:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038840;
-	bh=g6KTuWnOL7duEkSERVaJY8Dr6IkB/OkLJVZ295Uxm4Q=;
+	s=korg; t=1795038843;
+	bh=cOBjw8QpMSjgQYQNj2fcvHvmA3prueRhh7hKg1R4sI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iLQuRO07wm4Hxbf+myrHot+JTQumvWhdc/ebny3lDnd2HWJOTW6dRrzcdOE93WKaR
-	 xFj2I/ZJ5ALTIRHGw8AdG/rnz1ukni6RRce48mXEwkoSZ8vbp8eYAb48mez4/DXL6y
-	 qTXzJbhLFoq8ChMUHFL4UVfG7T6N4ZA5ZeRz4hKk=
+	b=vGOI+IwSaFHQzrURMTOsHW0ZrG1DVpvLkEbmc0z8Kl9F15IgYDsWlrBo8LKTjyF6D
+	 5Up+ePpDJF2pK3Yn0m9ZY+Z056Cnqqo0bIcTE1xaKYNiyQVq3kOJuGHHZK8/5nz+Th
+	 P/Br2VpczMXVzT7QCXOFdG4K78q78iB5A4VwDXtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chengfeng Ye <nicoyip.dev@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Xu Xin <xu.xin16@zte.com.cn>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1887/3318] drm/amdgpu: drop the gang leader reference when freeing gang jobs
-Date: Wed, 18 Nov 2026 15:41:49 +0100
-Message-ID: <20261118150418.603012918@linuxfoundation.org>
+Subject: [PATCH 6.6 1888/3318] mm/ksm: mark migration stores with WRITE_ONCE()
+Date: Wed, 18 Nov 2026 15:41:50 +0100
+Message-ID: <20261118150418.635981809@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,99 +65,86 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Chengfeng Ye <nicoyip.dev@gmail.com>
 
-[ Upstream commit c1584e10a7deb655438f21867b2b7a356a9aaf9f ]
+[ Upstream commit d3863210464f69c18615cbe400d48a6e53e770d4 ]
 
-Every job of a gang except the leader holds a reference to the
-scheduled fence of the leader in job->gang_submit. Only
-amdgpu_job_free(), used for jobs which never ran, drops it, so for every
-gang submission which completes the scheduler fence of the leader, and
-with it its hardware fence, is leaked. amdgpu_job_free() in turn checks
-for the leader only after drm_sched_job_cleanup() cleared the scheduler
-fence, so a leader freed there drops a reference it never took.
+ksm_get_folio() deliberately samples stable_node->kpfn and folio->mapping
+without taking the folio lock because the KSM folio may be migrated
+concurrently.  folio_migrate_ksm() updates the same state using plain
+assignments.
 
-On navi31, 100 submissions of a GFX + COMPUTE gang grow the slab cache
-drm_sched_fence is merged into by 60 to 180 objects each time, while
-100 GFX only submissions don't.
+The reader can load the old kpfn, then the migrator can store the new
+kpfn, execute smp_wmb(), and clear the old folio's mapping before the
+reader checks that mapping.  Thus the initial kpfn load can overlap its
+update and the subsequent mapping load can overlap the clear, with no
+common lock.  This leaves marked READ_ONCE() accesses racing with plain
+stores.
 
-Use amdgpu_job_free() for the jobs the scheduler frees too, and check
-for the gang leader there before drm_sched_job_cleanup() clears the
-scheduler fence. As the scheduler clears the entity of the jobs it
-picked up, check for the scheduler fence instead to tell whether the job
-needs cleaning up.
+The kernel reported:
 
-Keep freeing the remaining IBs with amdgpu_job_free_resources() after
-drm_sched_job_cleanup(), so that it frees them with the hardware fence or
-right away and not with the scheduler fence, which nobody signals for
-jobs aborted after drm_sched_job_arm(), like a CS returning -EAGAIN.
+  BUG: KCSAN: data-race in folio_migrate_ksm / ksm_get_folio
 
-v2: unify amdgpu_job_free() and amdgpu_job_free_cb() (Christian), don't
-    free the remaining IBs with the scheduler fence
-v3: drop the comments (Christian)
-v4: free the IBs with amdgpu_job_free_resources() again (Christian)
+  read (marked) to 0xffff8ce401421330 of 8 bytes by task 48 on cpu 3:
+   ksm_get_folio+0x7f/0x2a0
+   ksm_scan_thread+0x1635/0x3330
+   kthread+0x1af/0x1f0
 
-Fixes: 68ce8b242242 ("drm/amdgpu: add gang submit backend v2")
-Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit df4d6d404d44bbc8fc850bc7f9f136a25dabf180)
-Cc: stable@vger.kernel.org
-[ sashal: adjusted cleanup context for an embedded hw_fence using base.ops to check initialization ]
+  write to 0xffff8ce401421330 of 8 bytes by task 102 on cpu 1:
+   folio_migrate_ksm+0x6a/0xd0
+   folio_migrate_flags+0x193/0x420
+   __migrate_folio.isra.0+0x162/0x1a0
+   migrate_folio+0x4c/0x70
+   move_to_new_folio+0xd6/0x170
+
+Use WRITE_ONCE() for both stores to pair them with the existing lockless
+reads.  This preserves the existing smp_wmb()/smp_rmb() migration protocol
+and control flow while preventing compiler transformations of the shared
+accesses.
+
+Link: https://lore.kernel.org/20260824112433.191301-1-nicoyip.dev@gmail.com
+Fixes: c8d6553b9580 ("ksm: make KSM page migration possible")
+Signed-off-by: Chengfeng Ye <nicoyip.dev@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Xu Xin <xu.xin16@zte.com.cn>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: <stable@vger.kernel.org>
+[ sashal: Adapted folio_set_stable_node() to set_page_stable_node() with page->mapping and PAGE_MAPPING_KSM. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ mm/ksm.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-index 56eb3aa1d9d3e..b03860f23c70c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -181,17 +181,7 @@ void amdgpu_job_free_resources(struct amdgpu_job *job)
- 
- static void amdgpu_job_free_cb(struct drm_sched_job *s_job)
+diff --git a/mm/ksm.c b/mm/ksm.c
+index 902258abee418..cd68f44754af1 100644
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -916,7 +916,8 @@ static inline void set_page_stable_node(struct page *page,
+ 					struct ksm_stable_node *stable_node)
  {
--	struct amdgpu_job *job = to_amdgpu_job(s_job);
--
--	drm_sched_job_cleanup(s_job);
--
--	amdgpu_sync_free(&job->explicit_sync);
--
--	/* only put the hw fence if has embedded fence */
--	if (!job->hw_fence.base.ops)
--		kfree(job);
--	else
--		dma_fence_put(&job->hw_fence.base);
-+	amdgpu_job_free(to_amdgpu_job(s_job));
+ 	VM_BUG_ON_PAGE(PageAnon(page) && PageAnonExclusive(page), page);
+-	page->mapping = (void *)((unsigned long)stable_node | PAGE_MAPPING_KSM);
++	WRITE_ONCE(page->mapping,
++		   (void *)((unsigned long)stable_node | PAGE_MAPPING_KSM));
  }
  
- void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
-@@ -212,13 +202,14 @@ void amdgpu_job_set_gang_leader(struct amdgpu_job *job,
- 
- void amdgpu_job_free(struct amdgpu_job *job)
- {
--	if (job->base.entity)
-+	if (job->gang_submit != &job->base.s_fence->scheduled)
-+		dma_fence_put(job->gang_submit);
-+
-+	if (job->base.s_fence)
- 		drm_sched_job_cleanup(&job->base);
- 
- 	amdgpu_job_free_resources(job);
- 	amdgpu_sync_free(&job->explicit_sync);
--	if (job->gang_submit != &job->base.s_fence->scheduled)
--		dma_fence_put(job->gang_submit);
- 
- 	if (!job->hw_fence.base.ops)
- 		kfree(job);
+ #ifdef CONFIG_SYSFS
+@@ -3089,7 +3090,7 @@ void folio_migrate_ksm(struct folio *newfolio, struct folio *folio)
+ 	stable_node = folio_stable_node(folio);
+ 	if (stable_node) {
+ 		VM_BUG_ON_FOLIO(stable_node->kpfn != folio_pfn(folio), folio);
+-		stable_node->kpfn = folio_pfn(newfolio);
++		WRITE_ONCE(stable_node->kpfn, folio_pfn(newfolio));
+ 		/*
+ 		 * newfolio->mapping was set in advance; now we need smp_wmb()
+ 		 * to make sure that the new stable_node->kpfn is visible
 -- 
 2.53.0
 
