@@ -1,52 +1,62 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022082;
-	b=cbnJkhT4qjKm7mELjXhTOkjRpJHrE978HB5F9l/5fpZI9sRZcnYL/6wDE+J56ySKyTdl
-	 SPc5PC8/O3RQrdQx48UVkXXEE59K2b4Kpe5ktex634cHRETrWryFTn9Mlfh132gZVgX0A
-	 FxvquOmKtvQlmsxU4MU2VktFZk0T9o0K5JXcVRGgUG6KtBYfGbgOMkejxd5JPTZoiWy8t
-	 H2C4v1SA9vGf29kLnjmH0FbiDSDhs5syNn3fWWKuWHkUpmKVPvpFMr1wwzUz6nyeq/x1K
-	 j3rcMV0NK0LY8OkPcJkLh4Hxtbkqln/dIHrebUqCAhNTe9Uf9aC7TyNIMZkjfaUUUNg==
+	t=1795022084;
+	b=waS0Z1MeCsINHQ56ah/kFL9BnykktifsVqITo/vm9bDci2J4/k5iMmDdPsuw0JZZirQ/
+	 fhkXlCUrSQlK5wi1iChoNQf3shqOQl7eqwpxIHveWUdyj3F9FvkjZeuf6v6QqMAlG3Sby
+	 RDEXjkWvWEuvvtQ6/5UD0Hcyhg4f0BGJl+i5DEx+ZIsxWhTo29G5IwUFuciz7geqhbG8/
+	 8MV1/82xfwy0gzKi29fLOcRBM6ocev/KzHnPVHerlDRnaKq3KncYCrM7YZ1Bcfpx+U1g0
+	 4Tc7KZ18CpwnKYxgUnIqLV1r1DUhu5uNX5oTrf3S9R+ijX42btv0FK0EXJ09d7KFDMw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022082;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022084;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TFwFdo0TecpC7S5u1/R+P6YGgPqOiaHdeNBeUlA9IK4=;
-	b=pJ4fgHT9OhBBWVJxuyduCpAG4Q36ZvnwgcLFPi3K+cAag4Q7Ow6qAM/I5ngbwUBAJGVT
-	 X6KBZEzLGJ/knYNj17PUa+CyxlELEMrLRdTqp1N1Ct3y4NG6hMN/LZ8KwaUlXkxeXqBkB
-	 k98kD0iqz66MUoqz9QdJso1rG1Ssjz3UD20K1Ese+YvJ2Hy3TM3HlYF7DaJcPr222EkIJ
-	 7bfw3GL9gI82UfitfI3dfB3bERsZi92WHga45ZhatwtNDLp+nc8fenM5/QBNUS7njxnqV
-	 t4b6SvYKtBksUOvOVArYWLU9wUA+qD5KdG1qpJhzilmbuLxiIPSIJcfMJ8vtlsNuZpA==
+	bh=ouPTUszjfBuwgZbU73PYRXliwype0jmp2SMVfYDUdDw=;
+	b=imGXb5NJS0r52pSLWgg+bDw19YIEiLkHVBUN77Wbuk1W0dzHdJMVQ8YBdSlQVasvE63w
+	 eUJBdWF/X+lhLdCzUrc07lbPv6y/rff2UczaCSx3+EYb2sw9X+VM5cJthaHTbCA5ZdRbP
+	 XVs/5KU3oWDVEMqL+N4QwdAzC1cgOsc9B/kgjLCRR9C+2DguNYDGzKXsjizgk2bh6cHCz
+	 4GAl9mq4AQWP/ObQJHXHF0/ANIjJNjFkr98cv69xXoA+wf5rZup8DZFgVK07ym4nDJdat
+	 IMBX4SJzspawak/hjVIW8b+6nKZHvLWQ60iqkxwEw96Uo6LpkyruehdzX0vwm/hz4ZA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jt9AcO7t;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCLy0HuW;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E40D606A320;
-	Wed, 18 Nov 2026 17:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16B4606A320;
+	Wed, 18 Nov 2026 17:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Jt9AcO7t
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2C61F000C4;
-	Wed, 18 Nov 2026 17:14:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aCLy0HuW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B5E1F000C4;
+	Wed, 18 Nov 2026 17:14:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022081;
-	bh=TFwFdo0TecpC7S5u1/R+P6YGgPqOiaHdeNBeUlA9IK4=;
+	s=korg; t=1795022084;
+	bh=ouPTUszjfBuwgZbU73PYRXliwype0jmp2SMVfYDUdDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Jt9AcO7tpNN9gFM5NkwQGSxPvjU95SqVuwzfhZ7kVCcw8zveT9mpA7D6UVCpfzpnO
-	 1vPUonzzT8Tc28AK4kW/APPXUPUPl1cgemEhde+UycLbwduG+Hu6sNV8ANbbTpNzvG
-	 Yomcz8UYUaiW7HGNThO1SEnRdpwt2e9MKcDZmCeQ=
+	b=aCLy0HuWQOdDW7JfTIqF5cQKjiI/wDOeLcMNqVjv719f9USE1h0TzSjFKKeZgqMXb
+	 GxAkuPPTQhzOT/XClP7XrSMPboWoNol0nSsVzDecwBa8wLrftIw7c50DV5Lbf9BI8c
+	 KWFoTTTMl+ymP3GRw9TEj1T6YhybaqmRSvLTxqJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naveen Kumar Chaudhary <naveen.osdev@gmail.com>,
-	Daniel Thompson <daniel@riscstar.com>,
+	Paul Moses <p@1g4.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2533/2651] kdb: unify CMD_BUFLEN definition into kdb_private.h
-Date: Wed, 18 Nov 2026 16:02:53 +0100
-Message-ID: <20261118150415.796763954@linuxfoundation.org>
+Subject: [PATCH 7.3 2496/2651] perf mmap: Preserve the consumed cursor in forward mode
+Date: Wed, 18 Nov 2026 16:02:16 +0100
+Message-ID: <20261118150414.682779647@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,79 +78,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
+From: Paul Moses <p@1g4.org>
 
-[ Upstream commit 2a052074582d976bfa81e41a0337d8ae6dd1dc65 ]
+[ Upstream commit 1e826983ceef421d7047ed76581840b778294ad4 ]
 
-CMD_BUFLEN was defined separately in kdb_io.c (256) and kdb_main.c
-(200), causing kdb_main.c to use the wrong size when formatting the
-prompt string into kdb_prompt_str (which is 256 bytes).
+perf_mmap__read_event() updates prev as it consumes forward-buffer
+records. perf_mmap__read_done() then overwrites prev with a fresh
+producer head, even when unread records remain.
 
-Move CMD_BUFLEN (256) into kdb_private.h so all users share a single
-consistent definition, and remove the local definitions from both
-files.
+perf_kvm__mmap_read_idx() stops after 25 records per mmap and calls
+read_done(). If more records are pending, prev advances past them. The
+next drain starts at that new position and skips the unread remainder.
 
-Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
-Signed-off-by: Naveen Kumar Chaudhary <naveen.osdev@gmail.com>
-Link: https://lore.kernel.org/r/l6b6bomrw3bvkehlv73fyghk6loz6jpdwqk5c4nthnhl7j7kzk@4jjhfpzv5zon
-Signed-off-by: Daniel Thompson <daniel@riscstar.com>
+An event arriving after the last empty read_event() and before
+read_done() can also be skipped. read_done() does not itself update the
+kernel's data_tail.
+
+Only refresh prev for overwrite buffers, which need the current head as
+the end of the next backward read. Leave the forward cursor at the
+consumed position.
+
+Fixes: 53172f9057e92c9b ("perf kvm: Switch to new perf_mmap__read_event() interface")
+Signed-off-by: Paul Moses <p@1g4.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/kdb/kdb_io.c      | 1 -
- kernel/debug/kdb/kdb_main.c    | 6 ++----
- kernel/debug/kdb/kdb_private.h | 3 ++-
- 3 files changed, 4 insertions(+), 6 deletions(-)
+ tools/lib/perf/mmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
-index c399f11740ef3..f5b1b7d4c9c87 100644
---- a/kernel/debug/kdb/kdb_io.c
-+++ b/kernel/debug/kdb/kdb_io.c
-@@ -22,7 +22,6 @@
- #include <linux/kallsyms.h>
- #include "kdb_private.h"
+diff --git a/tools/lib/perf/mmap.c b/tools/lib/perf/mmap.c
+index ec124eb0ec0ab..ab3adf1d8baf9 100644
+--- a/tools/lib/perf/mmap.c
++++ b/tools/lib/perf/mmap.c
+@@ -200,7 +200,7 @@ void perf_mmap__read_done(struct perf_mmap *map)
+ 	/*
+ 	 * Check if event was unmapped due to a POLLHUP/POLLERR.
+ 	 */
+-	if (!refcount_read(&map->refcnt))
++	if (!refcount_read(&map->refcnt) || !map->overwrite)
+ 		return;
  
--#define CMD_BUFLEN 256
- char kdb_prompt_str[CMD_BUFLEN];
- 
- int kdb_trap_printk;
-diff --git a/kernel/debug/kdb/kdb_main.c b/kernel/debug/kdb/kdb_main.c
-index 31abaea5454e6..40c332d2179d8 100644
---- a/kernel/debug/kdb/kdb_main.c
-+++ b/kernel/debug/kdb/kdb_main.c
-@@ -784,8 +784,6 @@ static int kdb_exec_defcmd(int argc, const char **argv)
- 
- /* Command history */
- #define KDB_CMD_HISTORY_COUNT	32
--#define CMD_BUFLEN		200	/* kdb_printf: max printline
--					 * size == 256 */
- static unsigned int cmd_head, cmd_tail;
- static unsigned int cmdptr;
- static char cmd_hist[KDB_CMD_HISTORY_COUNT][CMD_BUFLEN];
-@@ -1266,8 +1264,8 @@ static int kdb_local(kdb_reason_t reason, int error, struct pt_regs *regs,
- 
- do_full_getstr:
- 		/* PROMPT can only be set if we have MEM_READ permission. */
--		snprintf(kdb_prompt_str, CMD_BUFLEN, kdbgetenv("PROMPT"),
--			 raw_smp_processor_id());
-+		snprintf(kdb_prompt_str, CMD_BUFLEN,
-+			 kdbgetenv("PROMPT"), raw_smp_processor_id());
- 
- 		/*
- 		 * Fetch command from keyboard
-diff --git a/kernel/debug/kdb/kdb_private.h b/kernel/debug/kdb/kdb_private.h
-index 92a28b8ab604e..722e8aa50724b 100644
---- a/kernel/debug/kdb/kdb_private.h
-+++ b/kernel/debug/kdb/kdb_private.h
-@@ -225,7 +225,8 @@ extern void kdb_kbd_cleanup_state(void);
- #define kdb_kbd_cleanup_state()
- #endif /* ! CONFIG_KDB_KEYBOARD */
- 
--extern char kdb_prompt_str[];
-+#define CMD_BUFLEN 256
-+extern char kdb_prompt_str[CMD_BUFLEN];
- 
- #define	KDB_WORD_SIZE	((int)sizeof(unsigned long))
- 
+ 	map->prev = perf_mmap__read_head(map);
 -- 
 2.53.0
 
