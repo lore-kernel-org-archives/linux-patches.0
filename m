@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021314;
-	b=yYnOakQ0Wb2ftlnSwHKd9eT8n1yBzd4Yl0VpWH7AjYVq27DgDDlruv8lA+Lq8NgpCMwk
-	 Sz6qbx7i4F54oiKv1pu2uw8vWoiZOmq3vLqzvqcfjgfmMYlUbokYzWhv2G9qdm8iQGKle
-	 hEGQEzmio/Wb301Zbaz4aJTNyUmVT/vpqDQOI7GdGTNIKB/YX1k4qWf92+MjG/xVARark
-	 NWaHDTEvHqdJvsePaIaEOXfnpVTyQba1w8pPKBdqoNtrTt9NYcSBG4m8T/5M6fKx+xrxW
-	 p997Wl8SG7QSx+vbmYLVRaz6dQ2ZG1cXQFCMTwv4mrWV3tUoYgfV3pZo+EYlMfPyyVw==
+	t=1795021317;
+	b=JAIJvoIxjN3UkyiewDvFVYS940442J9b+VuL8dDo3U1bfSzCRDBAMhNZnQfmKhDcA6FA
+	 v+B2FT33o88PObVL7vUhzrt4ne39WHt/LlatVRRupN0g6yCUE/lYez42JgdCIBBi+hQiY
+	 vSKmUeKNGCrn8/zXjBkCCAIs4lF09HwAcysk3GUIUNBklx9LCqUEfiIu0ZxrJuTYtmEyg
+	 tE3lIPySCARh39Ikt9MHHNtmFllDA1iTGvNNOoFfM9ZcQC9GQaR2hAaeovulWpyM5CFPZ
+	 RDIkq+I6sxrVFcYONQIGloaVM/YYLjGBFKFb3E/TJXlKRYP0SBniFydarED6IdHQM9A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021314;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021317;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=IkEMIAoqgn7Q/aEfU0K/eEQbU/BlFxIdvCclAenTXRc=;
-	b=BAtH38hEaK+LzWTWBJhx7sg3HniogObJ9DlIa7T4dRKuawOageAVk2MfCXj73vzOihdQ
-	 cD8Bw/s037cYG9mg/7oZZsDEsr+PQ6+XP375ihBGlsiVXQI3X4VoSbgN26O2WyAoQSAVm
-	 MO4HDI8qRY+Ka74Vj7O3D8QYAKtGukIM/ernbaOanMbtaPgDG5kSx+zB8bVXBRVYEAvxy
-	 S0r7E9Bq1nCQ6NcJdunkgMz7nvVsm/nIPdPVGSSGZlqNtyCsucUet/lvWTZ3U2HNoQ8Ac
-	 WpYEf8wX/jfpT+P37F28NXFjbVxLXR0VDY3bod7R2tyqSbrHzHzoB5xJOAbI+lEptXg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=OwJ917yR5SarT8zJz7tYB2rovlnXmAEXS5tQeQWM3PU=;
+	b=2Sud9Ol0vVnRZcdqzduROjW4mDrWQ8mwJsxKvtrchrVsCLS6zp1pABhfdo6uIDJBAYMR
+	 VglebhlWjawEYIwrtmOpt4FHSIbfHDyoYgJmLXsPTm8zcWwSwaHaRAOuSWtboFCdbW3M2
+	 GT0SP5ItMDAMavRpPnGcYHVJpWKIpedTC3MQjWB/bB9BppkpoqOvOC56JIvxHnIElBsip
+	 yL667piSOTeFx70E43izS/a5ts2jilXWYSjxY1YWRoSOaJQBH49d6U4Ro4XqUaimnuBFL
+	 01TMGLpYeOakgldjCcuJmQm3Q6pWA8b4r9/WHjKR0YrkwhOn8G6yvQakTMcYUxeyt2g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9XQ7+7r;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bogMUH9t;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85203606A33E;
-	Wed, 18 Nov 2026 17:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BE9606A31C;
+	Wed, 18 Nov 2026 17:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=O9XQ7+7r
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD05A1F000C7;
-	Wed, 18 Nov 2026 17:01:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bogMUH9t
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908251F000C5;
+	Wed, 18 Nov 2026 17:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021314;
-	bh=IkEMIAoqgn7Q/aEfU0K/eEQbU/BlFxIdvCclAenTXRc=;
+	s=korg; t=1795021317;
+	bh=OwJ917yR5SarT8zJz7tYB2rovlnXmAEXS5tQeQWM3PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=O9XQ7+7rOtec0t/AZ7SG5tcPG3/ZK7Y6LXzpL1Q8mlybjpOO71NZakPtahtFkNAGU
-	 elPtNRTsnowGtOGyqHndSJ2OSMNVrghyYJPqwAmhtm8gbChk4RS0ZGLhVAtiFQasdo
-	 biD6awcbL/3E2arnprehnotqkN9DNJBrPiRZTmMo=
+	b=bogMUH9t9K+Wkz5KkVC8WdaevSVt6Y6Mkp0hil89d8OozMmaDFE6FCTOADmSgrw2T
+	 Y8biEC8bhIxmzifFBEDE/fB1n1lm2WImWesaWYY3H9t4hFyXPU3P2vBQDRg+WYTd20
+	 gYcmbESdGAXoh7jK8YBJLw7svuEtjVjWLQhAN9T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Rosen Penev <rosenp@gmail.com>,
+	Igor Velkov <iav@iav.lv>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2262/2651] platform/x86: gpd pocket fan: Cancel work before releasing GPIOs
-Date: Wed, 18 Nov 2026 15:58:22 +0100
-Message-ID: <20261118150406.833393559@linuxfoundation.org>
+Subject: [PATCH 7.3 2263/2651] net: phy: marvell: keep WOL_EIE across interrupt reconfiguration
+Date: Wed, 18 Nov 2026 15:58:23 +0100
+Message-ID: <20261118150406.865643439@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,70 +63,232 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit 9962770049c715fc30a7b3274d8f245167c0a410 ]
+[ Upstream commit f434191f93884c9de58c38f18ac7fc7f1fdf9e42 ]
 
-The fan worker changes the direction of both GPIOs and schedules its
-next run. Its managed cancellation action is registered before the GPIOs
-are acquired, so devres releases the GPIOs before cancelling the work. A
-running worker can therefore change a GPIO after the driver has released
-it.
+marvell_config_intr() rewrites the whole interrupt enable register, so
+the config_intr call from phy_init_hw() on resume silently cleared
+WOL_EIE on the 88E1318S and 88E1510: m88e1318_get_wol() still reported
+WAKE_MAGIC, but a matched magic packet was no longer routed to INTn and
+the board did not wake.
 
-Register the work cancellation action after both GPIO acquisitions. This
-makes devres cancel and drain the worker before releasing either GPIO.
-No work has been queued yet if GPIO acquisition or action registration
-fails.
+Bit 7 of that register is WOL_EIE only on these two PHYs; on others,
+such as the 88E1111, it enables a FIFO error interrupt. So give the
+88E1318S and 88E1510 their own config_intr and handle_interrupt, and
+leave the shared callbacks unchanged.
 
-This issue was identified as part of our ongoing research while
-reviewing kernel code.
+m88e1318_set_wol() now records whether WoL is enabled, and both it and
+the new config_intr derive WOL_EIE from that state under the MDIO bus
+lock. WOL_EIE stays set across config_intr while WoL is enabled, except
+when the PHY has an interrupt line and interrupts are being disabled,
+as in phy_free_interrupt(): INTn is then the PHY IRQ, and nothing would
+read IEVENT after free_irq() to release it. The bit is set again once
+interrupts are re-enabled. phy_probe() still clears a WOL_EIE left by a
+previous boot, since WoL starts out disabled. The new handler also
+claims WoL events, so they do not go unacknowledged when the PHY IRQ is
+in use.
 
-Fixes: b82a7b018b93 ("platform/x86: gpd pocket fan: Clean-up by using managed work init")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Link: https://patch.msgid.link/179229442299.3956787.17526066623947466315.gpd-pocket-fan@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Helios4 (Armada 388, 88E1512), 7.2.9. With this patch WOL_EIE stays set
+over 3 link down/up cycles, "wol d" clears it, and a magic packet on a
+running board is a handled interrupt. Without it, WOL_EIE is lost on the
+first down/up, survives "wol d", and the magic packet is an unhandled
+interrupt.
+
+Fixes: 3871c3876f80 ("mv643xx_eth with 88E1318S: support Wake on LAN")
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Tested-by: Igor Velkov <iav@iav.lv>
+Link: https://patch.msgid.link/20261014194818.11640-2-rosenp@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/gpd-pocket-fan.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/phy/marvell.c | 97 ++++++++++++++++++++++++++++++---------
+ 1 file changed, 75 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/platform/x86/gpd-pocket-fan.c b/drivers/platform/x86/gpd-pocket-fan.c
-index c9236738f8960..ced93795c5d4b 100644
---- a/drivers/platform/x86/gpd-pocket-fan.c
-+++ b/drivers/platform/x86/gpd-pocket-fan.c
-@@ -153,10 +153,6 @@ static int gpd_pocket_fan_probe(struct platform_device *pdev)
- 		return -ENOMEM;
+diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
+index f71cffa884062..94e8dbe9a859f 100644
+--- a/drivers/net/phy/marvell.c
++++ b/drivers/net/phy/marvell.c
+@@ -55,6 +55,8 @@
+ #define MII_M1011_IMASK			0x12
+ #define MII_M1011_IMASK_INIT		0x6400
+ #define MII_M1011_IMASK_CLEAR		0x0000
++/* WOL Event Interrupt Enable, 88E1318S and 88E1510 only */
++#define MII_M1011_IMASK_WOL		BIT(7)
  
- 	fan->dev = &pdev->dev;
--	ret = devm_delayed_work_autocancel(&pdev->dev, &fan->work,
--					   gpd_pocket_fan_worker);
--	if (ret)
--		return ret;
+ #define MII_M1011_PHY_SCR			0x10
+ #define MII_M1011_PHY_SCR_DOWNSHIFT_EN		BIT(11)
+@@ -139,11 +141,6 @@
+ #define MII_88E1318S_PHY_MSCR1_REG	16
+ #define MII_88E1318S_PHY_MSCR1_PAD_ODD	BIT(6)
  
- 	/* Note this returns a "weak" reference which we don't need to free */
- 	fan->dts0 = thermal_zone_get_zone_by_name("soc_dts0");
-@@ -175,6 +171,11 @@ static int gpd_pocket_fan_probe(struct platform_device *pdev)
- 	if (IS_ERR(fan->gpio1))
- 		return PTR_ERR(fan->gpio1);
+-/* Copper Specific Interrupt Enable Register */
+-#define MII_88E1318S_PHY_CSIER				0x12
+-/* WOL Event Interrupt Enable */
+-#define MII_88E1318S_PHY_CSIER_WOL_EIE			BIT(7)
+-
+ #define MII_88E1318S_PHY_LED_FUNC		0x10
+ #define MII_88E1318S_PHY_LED_FUNC_OFF		(0x8)
+ #define MII_88E1318S_PHY_LED_FUNC_ON		(0x9)
+@@ -354,6 +351,7 @@ struct marvell_priv {
+ 	u32 step;
+ 	s8 pair;
+ 	u8 vct_phase;
++	bool wol_enabled;
+ };
  
-+	ret = devm_delayed_work_autocancel(&pdev->dev, &fan->work,
-+					   gpd_pocket_fan_worker);
-+	if (ret)
-+		return ret;
+ static int marvell_read_page(struct phy_device *phydev)
+@@ -407,7 +405,8 @@ static int marvell_config_intr(struct phy_device *phydev)
+ 	return err;
+ }
+ 
+-static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
++static irqreturn_t __marvell_handle_interrupt(struct phy_device *phydev,
++					      u16 mask)
+ {
+ 	int irq_status;
+ 
+@@ -417,7 +416,7 @@ static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
+ 		return IRQ_NONE;
+ 	}
+ 
+-	if (!(irq_status & MII_M1011_IMASK_INIT))
++	if (!(irq_status & mask))
+ 		return IRQ_NONE;
+ 
+ 	phy_trigger_machine(phydev);
+@@ -425,6 +424,57 @@ static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
+ 	return IRQ_HANDLED;
+ }
+ 
++static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
++{
++	return __marvell_handle_interrupt(phydev, MII_M1011_IMASK_INIT);
++}
 +
- 	gpd_pocket_fan_force_update(fan);
++/* WOL_EIE also routes WoL events to INTn. Keep it set while WoL is enabled,
++ * unless INTn is the PHY interrupt and that interrupt is being disabled:
++ * nothing would read IEVENT after free_irq() to release the line.
++ */
++static u16 m88e1318_wol_imask(struct phy_device *phydev)
++{
++	struct marvell_priv *priv = phydev->priv;
++
++	if (priv->wol_enabled &&
++	    (phydev->interrupts == PHY_INTERRUPT_ENABLED ||
++	     !phy_interrupt_is_valid(phydev)))
++		return MII_M1011_IMASK_WOL;
++
++	return 0;
++}
++
++static int m88e1318_config_intr(struct phy_device *phydev)
++{
++	bool enable = phydev->interrupts == PHY_INTERRUPT_ENABLED;
++	u16 imask;
++	int err;
++
++	if (enable) {
++		err = marvell_ack_interrupt(phydev);
++		if (err)
++			return err;
++	}
++
++	/* Serialise against m88e1318_set_wol() updating wol_enabled */
++	phy_lock_mdio_bus(phydev);
++	imask = enable ? MII_M1011_IMASK_INIT : MII_M1011_IMASK_CLEAR;
++	imask |= m88e1318_wol_imask(phydev);
++	err = __phy_write(phydev, MII_M1011_IMASK, imask);
++	phy_unlock_mdio_bus(phydev);
++	if (err || enable)
++		return err;
++
++	return marvell_ack_interrupt(phydev);
++}
++
++static irqreturn_t m88e1318_handle_interrupt(struct phy_device *phydev)
++{
++	return __marvell_handle_interrupt(phydev, MII_M1011_IMASK_INIT |
++					  MII_M1011_IMASK_WOL);
++}
++
+ static int marvell_set_polarity(struct phy_device *phydev, int polarity)
+ {
+ 	u16 val;
+@@ -1969,18 +2019,27 @@ static void m88e1318_get_wol(struct phy_device *phydev,
+ static int m88e1318_set_wol(struct phy_device *phydev,
+ 			    struct ethtool_wolinfo *wol)
+ {
++	struct marvell_priv *priv = phydev->priv;
+ 	int err = 0, oldpage;
  
- 	platform_set_drvdata(pdev, fan);
+ 	oldpage = phy_save_page(phydev);
+ 	if (oldpage < 0)
+ 		goto error;
+ 
+-	if (wol->wolopts & (WAKE_MAGIC | WAKE_PHY)) {
+-		/* Explicitly switch to page 0x00, just to be sure */
+-		err = marvell_write_page(phydev, MII_MARVELL_COPPER_PAGE);
+-		if (err < 0)
+-			goto error;
++	priv->wol_enabled = !!(wol->wolopts & (WAKE_MAGIC | WAKE_PHY));
+ 
++	/* Explicitly switch to page 0x00, just to be sure */
++	err = marvell_write_page(phydev, MII_MARVELL_COPPER_PAGE);
++	if (err < 0)
++		goto error;
++
++	/* Update the WOL interrupt enable */
++	err = __phy_modify(phydev, MII_M1011_IMASK, MII_M1011_IMASK_WOL,
++			   m88e1318_wol_imask(phydev));
++	if (err < 0)
++		goto error;
++
++	if (priv->wol_enabled) {
+ 		/* If WOL event happened once, the LED[2] interrupt pin
+ 		 * will not be cleared unless we reading the interrupt status
+ 		 * register. If interrupts are in use, the normal interrupt
+@@ -1990,12 +2049,6 @@ static int m88e1318_set_wol(struct phy_device *phydev,
+ 		if (!phy_interrupt_is_valid(phydev))
+ 			__phy_read(phydev, MII_M1011_IEVENT);
+ 
+-		/* Enable the WOL interrupt */
+-		err = __phy_set_bits(phydev, MII_88E1318S_PHY_CSIER,
+-				     MII_88E1318S_PHY_CSIER_WOL_EIE);
+-		if (err < 0)
+-			goto error;
+-
+ 		err = marvell_write_page(phydev, MII_MARVELL_LED_PAGE);
+ 		if (err < 0)
+ 			goto error;
+@@ -3817,8 +3870,8 @@ static struct phy_driver marvell_drivers[] = {
+ 		.config_init = m88e1318_config_init,
+ 		.config_aneg = m88e1318_config_aneg,
+ 		.read_status = marvell_read_status,
+-		.config_intr = marvell_config_intr,
+-		.handle_interrupt = marvell_handle_interrupt,
++		.config_intr = m88e1318_config_intr,
++		.handle_interrupt = m88e1318_handle_interrupt,
+ 		.get_wol = m88e1318_get_wol,
+ 		.set_wol = m88e1318_set_wol,
+ 		.resume = genphy_resume,
+@@ -3925,8 +3978,8 @@ static struct phy_driver marvell_drivers[] = {
+ 		.config_init = m88e1510_config_init,
+ 		.config_aneg = m88e1510_config_aneg,
+ 		.read_status = marvell_read_status,
+-		.config_intr = marvell_config_intr,
+-		.handle_interrupt = marvell_handle_interrupt,
++		.config_intr = m88e1318_config_intr,
++		.handle_interrupt = m88e1318_handle_interrupt,
+ 		.get_wol = m88e1318_get_wol,
+ 		.set_wol = m88e1318_set_wol,
+ 		.resume = m88e1510_resume,
 -- 
 2.53.0
 
