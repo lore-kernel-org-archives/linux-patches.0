@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026046;
-	b=zJSc/U7/vwtIK8JpHzcqsWLLsWOhtGj6+4gxfdjqG5XVCbctkWnu/dLBRLVTK19wbFof
-	 l+PdXaCzo3QMRbO432rhW9nEDNQn2ucNc/SyRxpXYi44DLfqFlajHu2AJGLpUprLImZAt
-	 6Hi8mHPvFUyMC1lIKtA/KODsr5AuTRHCOlNAPPd+9OQaepvmQtO2qN5MXfilloJ4GXhxi
-	 0av7r6MCS122n6eaHCw4Tj6wd9yRxYnyIEEIlIe7Ie+GdmBnDz8mu1JMBsPiiAP/vR6a1
-	 PtFGqvzxxQXu9dZRTWmf4+svmwRNzW433EVkGDH6zo+8RjlJtOwIwfy3GYkINuC5T/w==
+	t=1795026049;
+	b=lvC3BaD4lCnRuNekuW2hodB811YXT3wljRRhW6CEZL9lvWjFje+FOwgt1r/1Mt+Ih3eB
+	 +qiHM2hfskr5UMab3acJ5cwHvM/82R2Ou9oAWR6aNEmB9STbJmouWEeJaePqaiNMIggX7
+	 kPzAIlPzPGr3hAY4LTlPAoGJ7nEvsqf/BSIFyQWU58iQ90bulQCG0GSaCNHw56lCha2K2
+	 pLiN1Uj6UVi9viIrtmz/xadWvnBcSfO+67MqaOau9YhebT4Guow5azctLSeuV8QXMhb1F
+	 XCLPHlQIKuv30P7OTM23JeholjX15m7AZc3h+WDPzhqTkj0KC7c5pR9Fs+eL+JR0uvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026046;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026049;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jezcl71P3UexTJO7mT65Nbg9hykcm4nNNLIJGCPvglA=;
-	b=SftCYC7kThbc9H+5YySsVmXWLoKdFRxwrofnUujFn0JJzuw0wwirNTdxHf/3sd0+8t6S
-	 prwt+x43jMIiJOwN9cP+F98of4QEYeJmgW7McfLqwZWloXKFOxnlQwLCPgozGl72AfdRI
-	 iMJQhzzpEAAWqHNmlDJLwhecf23thDB9Zs6d0FMPVYrcNbyOESm9N38wc8zgMYuWcMErI
-	 dl6VLqHKUt/rBhsIuT7vGdI3HUQ8z50SoyF0giGdpOKQlVR+gvY0N02Q7AQ+M26k0kKJA
-	 BGKXD2oAKaw1g8E0p65lUiRzAEKLEbFNHYiphO9+X/b/Yz2kBWtW28rizJpw28dj1HQ==
+	bh=5iJmcB1XfaeaHNDX86EL2bAwxBZKofV0eom9Ri0z5OE=;
+	b=zGjlB+y9bWr6LzornOwsAtqaMp8Qu87CzdkJa/DjCSYHmjoUd3Sn3IKEwPkGm/UtRhh+
+	 b1xtwAzEJWjrV63Qz5nFLK1ma4gY/1FmgO0/3yZnPfPHh6twe8nNgta/8LoLmhCkTuqms
+	 RG0u99c01arjVLeDdZsRlHu9/2Gx9tW6wyUKdqh193em3x12oGA9ZB4Aa2ZygEAerrMnm
+	 Zs9RqrZUUZmEBAbejez6izF8j/1TkK8IFDbnJj1KlMjG/aN1XwOh9qSg1NnDBy9IxdCH3
+	 cssRDS3Jk+IneUWzEpwI9WMLzvE3gFUII6/d+SHm15IW93NZnyjl/AUsSvxKY34hgbA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrLpVrR3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npRcvOka;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7C5606A31C;
-	Wed, 18 Nov 2026 18:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC90606A31C;
+	Wed, 18 Nov 2026 18:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrLpVrR3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06CC81F000C4;
-	Wed, 18 Nov 2026 18:20:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=npRcvOka
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C053A1F000C4;
+	Wed, 18 Nov 2026 18:20:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026046;
-	bh=jezcl71P3UexTJO7mT65Nbg9hykcm4nNNLIJGCPvglA=;
+	s=korg; t=1795026049;
+	bh=5iJmcB1XfaeaHNDX86EL2bAwxBZKofV0eom9Ri0z5OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PrLpVrR3NlXiXcWz+Rm5I8H3k3Y+sqG6m8YfcvKs7l5OE7hr6nbnAVTbgtRHhDkIO
-	 yeuNZjUw246YTE5Rm0s6kaqrmHeWJ1uVfAhzWsa1iqNUVNn9buJL4TwaM2WnnubmOR
-	 2YQ4B2gufvj9gsRHTRiaNN5W9wSRK7JMAxFkFAws=
+	b=npRcvOkabR3t1muYMENmWpKFwgdDxTQvVlIVH/+4YZGn4/haqkkBLUDXQ+QyxEQDc
+	 j7kGZOaH20jISwmi2Tfd8t2k4eqwEgfdvQtLXGrUVjySJpBE6jD/z5p8fsMLTc1V4q
+	 EylhO6bUTxZy4U9tQMm+gNuEupfK3z+dC56YA5Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Felix Fietkau <nbd@nbd.name>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1296/2151] wifi: cfg80211: reg: protect regdb pointer with RCU
-Date: Wed, 18 Nov 2026 15:50:31 +0100
-Message-ID: <20261118150209.322478454@linuxfoundation.org>
+Subject: [PATCH 6.18 1297/2151] wifi: mac80211: use link address as TA for non-MLO 4-addr station on MLD AP
+Date: Wed, 18 Nov 2026 15:50:32 +0100
+Message-ID: <20261118150209.360228088@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -67,206 +68,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-[ Upstream commit 298618f28bd3d1da677828354b504c12e2f375e4 ]
+[ Upstream commit 07b3eb8b9048976b585d29f1a1df9a435423c473 ]
 
-reg_query_regdb_wmm() is only used by iwlwifi, but even when
-it was introduced was already broken, as it reads the global
-db without any locking (drivers can't really guarantee any).
-Certainly iwlwifi doesn't since it calls it for FW messages.
-Therefore, it can race against regdb updates. The function
-uses a local pointer, but doesn't help.
+A 4-address AP_VLAN always sets A2 to sdata->vif.addr, which on an MLD
+AP is the AP MLD address. For a non-MLO station, A2 must be the link
+address it associated to.
 
-Use RCU to protect the regdb pointer to fix that, and update
-the documentation to mention this (and do some cleanups).
+Use the link address for a non-MLO station in the 4-address case as
+well, like the AP case already does in ieee80211_build_hdr() and
+ieee80211_check_fast_xmit(). Share the address selection between both
+cases and both TX paths.
 
-Fixes: 19d3577e35e0 ("cfg80211: Add API to allow querying regdb for wmm_rule")
-Link: https://patch.msgid.link/20261006120655.7c261d237cae.If21cf0af3b0d7e8c62c45ece5dc654b30c9d7757@changeid
+Fixes: 3e0278b717b0 ("wifi: mac80211: select link when transmitting to non-MLO stations")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20261007105249.1234601-1-nbd@nbd.name
+[use guard]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cfg80211.h | 12 ++++++------
- net/wireless/reg.c     | 41 +++++++++++++++++++++++++----------------
- 2 files changed, 31 insertions(+), 22 deletions(-)
+ net/mac80211/tx.c | 65 +++++++++++++++++++++++++++--------------------
+ 1 file changed, 37 insertions(+), 28 deletions(-)
 
-diff --git a/include/net/cfg80211.h b/include/net/cfg80211.h
-index 39f6d7ac77eea..df220a10a4f62 100644
---- a/include/net/cfg80211.h
-+++ b/include/net/cfg80211.h
-@@ -7732,20 +7732,20 @@ bool regulatory_pre_cac_allowed(struct wiphy *wiphy);
-  */
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index cdbce28631483..f078bc8049a83 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2691,6 +2691,29 @@ static void ieee80211_remove_ack_skb(struct ieee80211_local *local, u16 info_id)
+ 	kfree_skb(ack_skb);
+ }
  
- /**
-- * reg_query_regdb_wmm -  Query internal regulatory db for wmm rule
-- * Regulatory self-managed driver can use it to proactively
-- *
-+ * reg_query_regdb_wmm -  Query internal regulatory db for WMM rules
-  * @alpha2: the ISO/IEC 3166 alpha2 wmm rule to be queried.
-  * @freq: the frequency (in MHz) to be queried.
-- * @rule: pointer to store the wmm rule from the regulatory db.
-+ * @rule: pointer to store the WMM rule from the regulatory db.
-  *
-- * Self-managed wireless drivers can use this function to  query
-+ * Self-managed wireless drivers can use this function to query
-  * the internal regulatory database to check whether the given
-- * ISO/IEC 3166 alpha2 country and freq have wmm rule limitations.
-+ * ISO/IEC 3166 alpha2 country and freq have WMM rule limitations.
-  *
-  * Drivers should check the return value, its possible you can get
-  * an -ENODATA.
-  *
-+ * This uses RCU internally so can be called in just about any context.
-+ *
-  * Return: 0 on success. -ENODATA.
-  */
- int reg_query_regdb_wmm(char *alpha2, int freq,
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index 3f685b1396ff0..4d861371658b0 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -602,7 +602,7 @@ static inline int call_crda(const char *alpha2)
- #endif /* CONFIG_CFG80211_CRDA_SUPPORT */
- 
- /* code to directly load a firmware database through request_firmware */
--static const struct fwdb_header *regdb;
-+static const struct fwdb_header __rcu *global_regdb;
- 
- struct fwdb_country {
- 	u8 alpha2[2];
-@@ -907,16 +907,19 @@ static int __regdb_query_wmm(const struct fwdb_header *db,
- 
- int reg_query_regdb_wmm(char *alpha2, int freq, struct ieee80211_reg_rule *rule)
- {
--	const struct fwdb_header *hdr = regdb;
- 	const struct fwdb_country *country;
-+	const struct fwdb_header *regdb;
- 
++static int ieee80211_ap_tx_addr_get(struct ieee80211_sub_if_data *sdata,
++				    struct sta_info *sta, u8 *addr, u8 *link_id)
++{
++	struct ieee80211_link_data *link;
++
++	if (!ieee80211_vif_is_mld(&sdata->vif) || sta->sta.mlo) {
++		memcpy(addr, sdata->vif.addr, ETH_ALEN);
++		return 0;
++	}
++
 +	guard(rcu)();
 +
-+	regdb = rcu_dereference(global_regdb);
- 	if (!regdb)
- 		return -ENODATA;
- 
- 	if (IS_ERR(regdb))
- 		return PTR_ERR(regdb);
- 
--	country = &hdr->country[0];
-+	country = &regdb->country[0];
- 	while (country->coll_ptr) {
- 		if (alpha2_equal(alpha2, country->alpha2))
- 			return __regdb_query_wmm(regdb, country, freq, rule);
-@@ -986,15 +989,13 @@ static int regdb_query_country(const struct fwdb_header *db,
- 
- static int query_regdb(const char *alpha2)
- {
--	const struct fwdb_header *hdr = regdb;
-+	const struct fwdb_header *regdb = rtnl_dereference(global_regdb);
- 	const struct fwdb_country *country;
- 
--	ASSERT_RTNL();
--
- 	if (IS_ERR(regdb))
- 		return PTR_ERR(regdb);
- 
--	country = &hdr->country[0];
-+	country = &regdb->country[0];
- 	while (country->coll_ptr) {
- 		if (alpha2_equal(alpha2, country->alpha2))
- 			return regdb_query_country(regdb, country);
-@@ -1006,6 +1007,7 @@ static int query_regdb(const char *alpha2)
- 
- static void regdb_fw_cb(const struct firmware *fw, void *context)
- {
-+	const struct fwdb_header *regdb;
- 	int set_error = 0;
- 	bool restore = true;
- 	void *db;
-@@ -1019,6 +1021,7 @@ static void regdb_fw_cb(const struct firmware *fw, void *context)
- 	}
- 
- 	rtnl_lock();
-+	regdb = rtnl_dereference(global_regdb);
- 	if (regdb && !IS_ERR(regdb)) {
- 		/* negative case - a bug
- 		 * positive case - can happen due to race in case of multiple cb's in
-@@ -1027,11 +1030,11 @@ static void regdb_fw_cb(const struct firmware *fw, void *context)
- 		 * Either case, just restore and free new db.
- 		 */
- 	} else if (set_error) {
--		regdb = ERR_PTR(set_error);
-+		rcu_assign_pointer(global_regdb, ERR_PTR(set_error));
- 	} else if (fw) {
- 		db = kmemdup(fw->data, fw->size, GFP_KERNEL);
- 		if (db) {
--			regdb = db;
-+			rcu_assign_pointer(global_regdb, db);
- 			restore = context && query_regdb(context);
- 		} else {
- 			restore = true;
-@@ -1056,7 +1059,7 @@ static int query_regdb_file(const char *alpha2)
- 
- 	ASSERT_RTNL();
- 
--	if (regdb)
-+	if (rcu_access_pointer(global_regdb))
- 		return query_regdb(alpha2);
- 
- 	alpha2 = kmemdup(alpha2, 2, GFP_KERNEL);
-@@ -1074,8 +1077,8 @@ static int query_regdb_file(const char *alpha2)
- 
- int reg_reload_regdb(void)
- {
-+	const struct fwdb_header *db, *old;
- 	const struct firmware *fw;
--	void *db;
- 	int err;
- 	const struct ieee80211_regdomain *current_regdomain;
- 	struct regulatory_request *request;
-@@ -1096,9 +1099,7 @@ int reg_reload_regdb(void)
- 	}
- 
- 	rtnl_lock();
--	if (!IS_ERR_OR_NULL(regdb))
--		kfree(regdb);
--	regdb = db;
-+	old = rcu_replace_pointer_rtnl(global_regdb, db);
- 
- 	/* reset regulatory domain */
- 	current_regdomain = get_cfg80211_regdom();
-@@ -1119,6 +1120,11 @@ int reg_reload_regdb(void)
- 
- out_unlock:
- 	rtnl_unlock();
++	link = rcu_dereference(sdata->link[sta->deflink.link_id]);
++	if (WARN_ON(!link))
++		return -ENOLINK;
 +
-+	if (!IS_ERR_OR_NULL(old)) {
-+		synchronize_rcu();
-+		kfree(old);
-+	}
-  out:
- 	release_firmware(fw);
- 	return err;
-@@ -4339,6 +4345,7 @@ void regulatory_exit(void)
- {
- 	struct regulatory_request *reg_request, *tmp;
- 	struct reg_beacon *reg_beacon, *btmp;
-+	const struct fwdb_header *db;
++	memcpy(addr, link->conf->addr, ETH_ALEN);
++	if (link_id)
++		*link_id = sta->deflink.link_id;
++
++	return 0;
++}
++
+ /**
+  * ieee80211_build_hdr - build 802.11 header in the given frame
+  * @sdata: virtual interface to build the header for
+@@ -2759,7 +2782,10 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 			fc |= cpu_to_le16(IEEE80211_FCTL_FROMDS | IEEE80211_FCTL_TODS);
+ 			/* RA TA DA SA */
+ 			memcpy(hdr.addr1, sta->sta.addr, ETH_ALEN);
+-			memcpy(hdr.addr2, sdata->vif.addr, ETH_ALEN);
++			ret = ieee80211_ap_tx_addr_get(sdata, sta, hdr.addr2,
++						       &link_id);
++			if (ret)
++				goto free;
+ 			memcpy(hdr.addr3, skb->data, ETH_ALEN);
+ 			memcpy(hdr.addr4, skb->data + ETH_ALEN, ETH_ALEN);
+ 			hdrlen = 30;
+@@ -2784,18 +2810,12 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
+ 		/* DA BSSID SA */
+ 		memcpy(hdr.addr1, skb->data, ETH_ALEN);
  
- 	cancel_work_sync(&reg_work);
- 	cancel_crda_timeout_sync();
-@@ -4368,8 +4375,10 @@ void regulatory_exit(void)
- 		kfree(reg_request);
- 	}
- 
--	if (!IS_ERR_OR_NULL(regdb))
--		kfree(regdb);
-+	/* RCU is irrelevant on the way out */
-+	db = rcu_dereference_protected(global_regdb, true);
-+	if (!IS_ERR_OR_NULL(db))
-+		kfree(db);
- 	if (!IS_ERR_OR_NULL(cfg80211_user_regdom))
- 		kfree(cfg80211_user_regdom);
- 
+-		if (ieee80211_vif_is_mld(&sdata->vif) && sta && !sta->sta.mlo) {
+-			struct ieee80211_link_data *link;
+-
+-			link_id = sta->deflink.link_id;
+-			link = rcu_dereference(sdata->link[link_id]);
+-			if (WARN_ON(!link)) {
+-				ret = -ENOLINK;
++		if (sta) {
++			ret = ieee80211_ap_tx_addr_get(sdata, sta, hdr.addr2,
++						       &link_id);
++			if (ret)
+ 				goto free;
+-			}
+-			memcpy(hdr.addr2, link->conf->addr, ETH_ALEN);
+-		} else if (link_id == IEEE80211_LINK_UNSPECIFIED ||
+-			   (sta && sta->sta.mlo)) {
++		} else if (link_id == IEEE80211_LINK_UNSPECIFIED) {
+ 			memcpy(hdr.addr2, sdata->vif.addr, ETH_ALEN);
+ 		} else {
+ 			struct ieee80211_bss_conf *conf;
+@@ -3262,7 +3282,9 @@ void ieee80211_check_fast_xmit(struct sta_info *sta)
+ 					  IEEE80211_FCTL_TODS);
+ 			/* RA TA DA SA */
+ 			memcpy(hdr->addr1, sta->sta.addr, ETH_ALEN);
+-			memcpy(hdr->addr2, sdata->vif.addr, ETH_ALEN);
++			if (ieee80211_ap_tx_addr_get(sdata, sta, hdr->addr2,
++						     NULL))
++				goto out;
+ 			build.da_offs = offsetof(struct ieee80211_hdr, addr3);
+ 			build.sa_offs = offsetof(struct ieee80211_hdr, addr4);
+ 			build.hdr_len = 30;
+@@ -3273,21 +3295,8 @@ void ieee80211_check_fast_xmit(struct sta_info *sta)
+ 		fc |= cpu_to_le16(IEEE80211_FCTL_FROMDS);
+ 		/* DA BSSID SA */
+ 		build.da_offs = offsetof(struct ieee80211_hdr, addr1);
+-		if (sta->sta.mlo || !ieee80211_vif_is_mld(&sdata->vif)) {
+-			memcpy(hdr->addr2, sdata->vif.addr, ETH_ALEN);
+-		} else {
+-			unsigned int link_id = sta->deflink.link_id;
+-			struct ieee80211_link_data *link;
+-
+-			rcu_read_lock();
+-			link = rcu_dereference(sdata->link[link_id]);
+-			if (WARN_ON(!link)) {
+-				rcu_read_unlock();
+-				goto out;
+-			}
+-			memcpy(hdr->addr2, link->conf->addr, ETH_ALEN);
+-			rcu_read_unlock();
+-		}
++		if (ieee80211_ap_tx_addr_get(sdata, sta, hdr->addr2, NULL))
++			goto out;
+ 		build.sa_offs = offsetof(struct ieee80211_hdr, addr3);
+ 		build.hdr_len = 24;
+ 		break;
 -- 
 2.53.0
 
