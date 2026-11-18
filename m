@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020617;
-	b=SU09d/0RUzqIrsqgK57ecFEeP2euBWWl0wuGVfOkzT2kdVKoXkyV3koVexTrMVsZeHqZ
-	 50eNpsj11qoxM/hyR9WLH81sf80UOnpHlyTAG35jW/LHugEiHxvTMBj43uW91ADiq/wNv
-	 u0YaDMkiYuWMuIuzAJ9tUsuhZiIY+wFeKXJS+v4j1iB+l5qZxOnvsMZzf9PbOfyWDdjtP
-	 jlroI8u17Voo6c2tDXifIx0iBbv/p5kPf55J5gzZ8XNTP/TUPgPC07NPodRlm1su32SXw
-	 Kq63JQ0mLT6bsdvx7prgrvJfFy7He+mnueRBh4xF+93Q45yxMEqkTN3sV25idylRVtA==
+	t=1795020620;
+	b=K02PXGobFEiauQIoSh/ZitO3TZEOXsm3Mu1iQfnr/Q+fhTvq98rMwLgOsN9JBqC1e6hU
+	 3R1ve4mIQ5k2qq2dhl1TIWs0uZzCtEOiqdoWZDbmQpIDS+Ok8uLZTR/Td75sZcWXssIR0
+	 VB8KyRRblIdYxMGALYu9GjoDDaX/N6dkg5011tNU+KGQesBIfcKqa2W+dMdi5OJlf69fS
+	 JpV7CDB2qisShwg0YPxHGBGYbIa/QO81r0ZKQgJr5jxWcKrAyaI1kUdZUN/3C1f+N6i4+
+	 7xnxp/73tie42xNzKhu3G1sMnQxZon3JT167aLy19IgABCWuuRViE4lz33rUm9kCpqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020617;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020620;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YYVYDNU4RmeSbvMdpYtJZnXgHvcdlkD8w3tebLzp7uE=;
-	b=k9uP7XPHi4ophGTYLyMY1LSxSoMqTng4ey4383QBBs3L+1wcErs1T6qBa2LFgy0tBzJt
-	 gxEGge05qKoDWwu6uPl7JHZZR187GE8UhBxEe9nycVsdy8ORqMlwXu1EC2b/AX83NchF/
-	 Ps/nq1atnhw12kUQfw5wYzZ0TbabmhjGiFUsVTo0q18lAHm2GyvpJb9mC7UvdTl2yqJJs
-	 zEUMn24uyiofrmEzUQoWPR1q0HdaPY2vMP1cnovBxs3TaoMTzPBzYKrGsy7IYmIaNsYTr
-	 3bIXgmRfLE1Q5EKXYFU3WidNKsVI5th7e28k7Eq6cx0CCXTut/TSXO8uOnUDUU7EepA==
+	bh=oz4PZvvos1uJxR0++NL0Uhfd/aZmDV8EN7EAvbyyua8=;
+	b=fwu/w3F09g4kLYndkOnLPUuHyADvMGntAAIAWXOoftWzjnSGbrUwFFVWeNd3ps7Yneep
+	 652/GG9ykj/dU8fbJi7UazYmZ8SnzbtrEsQ2bcDj9e8uw52wK5uRNVPGIJ+4Z8LUmSGDX
+	 6y0N3RnBEHL0rMah9ZTpeYV/pOM5RthYUriCJhrnklXUa7A6Zk1wnbqy0a6egJ0IvhF4P
+	 2OKXVVZIZMHnswT1QOYERvWat3AhDp2YLLkpOBHl3CgE5A7rwDrVy8c8hgcez7B3yJxbZ
+	 SU1uQc0LRF4/BHqYYNdLRPiEd10XLLXPesl7MEV/iZi0ajj9ZLN/dgKc27CCE7lLuAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TEKh8NlD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VVZdJk57;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AC1606A31C;
-	Wed, 18 Nov 2026 16:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE30606A33B;
+	Wed, 18 Nov 2026 16:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TEKh8NlD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E0A1F000CA;
-	Wed, 18 Nov 2026 16:50:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=VVZdJk57
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B9E1F000C7;
+	Wed, 18 Nov 2026 16:50:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020616;
-	bh=YYVYDNU4RmeSbvMdpYtJZnXgHvcdlkD8w3tebLzp7uE=;
+	s=korg; t=1795020619;
+	bh=oz4PZvvos1uJxR0++NL0Uhfd/aZmDV8EN7EAvbyyua8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TEKh8NlDx0SCZyM5bjtfZYDXNovduDBvKLEq7SO11ed1sL57oBQ931x2BPugFm74y
-	 TVw2LfTz7MT5Y5za1vde92+Hx3jQnjIIT022saS8eRWVFfoT0KmbkRsidO9trAwWUf
-	 SVYcV8uTwbOMI/jnu6GiqiOoLdt0N8DTUBRlD08w=
+	b=VVZdJk57BoOvuZlf4m5Jtgkpj593IAhL3OHTlZ4uePfVdK618g6sakTjhik4n+RyB
+	 h4H/dLP2Ubc65Q5s6PHd6J0OKUtJ9NLm0Agjeg/OJDs2LYLWruqiEuCytExftvrdGU
+	 you7rGey4MR6kBTzF8LMV68Cl0noXSfNiZzum1eA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Akash Goel <akash.goel@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	pengdonglin <pengdonglin@xiaomi.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1965/2651] drm/panthor: Fix handling of NO_MMAP BOs
-Date: Wed, 18 Nov 2026 15:53:25 +0100
-Message-ID: <20261118150357.243800441@linuxfoundation.org>
+Subject: [PATCH 7.3 2009/2651] tracing: Avoid BTF lookup in atomic context
+Date: Wed, 18 Nov 2026 15:54:09 +0100
+Message-ID: <20261118150358.600732249@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,51 +68,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akash Goel <akash.goel@arm.com>
+From: pengdonglin <pengdonglin@xiaomi.com>
 
-[ Upstream commit 9a07b36a511fe998f46372331758ef355273bdfb ]
+[ Upstream commit 42643ba35deb8ad1821acfc0577b445ee7ad7548 ]
 
-The BOs created with DRM_PANTHOR_BO_NO_MMAP flag are not supposed to be
-mmappable by the Userspace. But after the rework to support shrinker,
-it became possible to mmap NO_MMAP BOs. Userspace could second guess
-the file offset range, allocated unconditionally at the BO creation
-time, and create a CPU mapping. There may not be any adverse effect of
-such a CPU mapping though.
-This commit adds a check in the mmap callback of Panthor driver to
-fail the mmap() attempts on BOs created with NO_MMAP flag. The check
-covers private BOs as well as the prime exported BOs that are mmapped
-using prime fd.
+The function graph trace formatter can be called from ftrace_dump_one()
+with interrupts disabled. When ftrace_dump_on_oops is enabled, the trace
+panic notifier can reach ftrace_dump() from the panic path, including the
+nmi_panic() path used by the hard lockup detector.
 
-v2:
- - Fix breakage of mmap() on exported BOs that didn't have
-   BO_MMAP_OFFSET ioctl invoked for them.
+btf_find_func_proto() calls bpf_find_btf_id(), which may initialize vmlinux
+BTF under a mutex. Skip the BTF lookup when running in an atomic context
+or with interrupts disabled, and fall back to the existing return value
+formatting.
 
-Fixes: 68cbf96b1e9b ("drm/panthor: Part ways with drm_gem_shmem_object")
-Suggested-by: Boris Brezillon <boris.brezillon@collabora.com>
-Signed-off-by: Akash Goel <akash.goel@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20261013125433.26432-1-akash.goel@arm.com
+Link: https://patch.msgid.link/20260916133218.1282590-2-dolinux.peng@gmail.com
+Fixes: ebeed8d4a555 ("tracing/probes: Move finding func-proto API and getting func-param API to trace_btf")
+Signed-off-by: pengdonglin <pengdonglin@xiaomi.com>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gem.c | 3 +++
+ kernel/trace/trace_btf.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
-index 72908be5e144f..75d462f20b6c8 100644
---- a/drivers/gpu/drm/panthor/panthor_gem.c
-+++ b/drivers/gpu/drm/panthor/panthor_gem.c
-@@ -744,6 +744,9 @@ static int panthor_gem_mmap(struct drm_gem_object *obj, struct vm_area_struct *v
- 	struct panthor_gem_object *bo = to_panthor_bo(obj);
- 	int ret;
+diff --git a/kernel/trace/trace_btf.c b/kernel/trace/trace_btf.c
+index ee7a04886bf67..b8370ae9bd547 100644
+--- a/kernel/trace/trace_btf.c
++++ b/kernel/trace/trace_btf.c
+@@ -15,6 +15,9 @@ const struct btf_type *btf_find_func_proto(const char *func_name, struct btf **b
+ 	const struct btf_type *t;
+ 	s32 id;
  
-+	if (bo->flags & DRM_PANTHOR_BO_NO_MMAP)
-+		return -EINVAL;
++	if (unlikely(in_atomic() || irqs_disabled()))
++		return NULL;
 +
- 	if (drm_gem_is_imported(obj)) {
- 		/* Reset both vm_ops and vm_private_data, so we don't end up with
- 		 * vm_ops pointing to our implementation if the dma-buf backend
+ 	id = bpf_find_btf_id(func_name, BTF_KIND_FUNC, btf_p);
+ 	if (id < 0)
+ 		return NULL;
 -- 
 2.53.0
 
