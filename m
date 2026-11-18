@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021754;
-	b=38HaNkONLCRDE9ZpCQbPGRh/8NjJscfeYR0oHcVVvzDoi7NDXN/FVeFx8s01CCvEIWVp
-	 paNZEVql4uifqHsohqBK0L2f/3kjeZcJuH112mrMjKm4aPuWnJHvqnXFhRVUF6nmFZ8RV
-	 LTFVU5PdyYO3k20VHMj3+NTs5nSZ7stU/9cDvx3Nxg10d+gEZMJU1GSODSuxyn37wqQq6
-	 56voN6u+F0+4LP04p5XnVJeXUGeK3qLnBJKhWiqCTF76lvt5ALyP0c1sIFRtR4k00UKEr
-	 99C3aiDF+cP57a0K0AjXs0rM9NEZtqrJmpUeGOLRv4gxHtD1n4k4KM7wo3Z5tAo7ykA==
+	t=1795021757;
+	b=aZbeinvPzBZXBDDvc9IQq3Lr/Gd3ea4HaLhg4huCqP6+usP8lAwzJOaUhPl4wFzjx/w3
+	 5jB0hvOkCSBkWGF0L459BapxS265xH+hGT2PKV6tdzwCRXUKLcwUCU1ALkOzx2D+37omh
+	 Z0TEAyCqayD2UYvLmn8MZElwwjNH/cBsQ9a9QnulrLKIvA84qJBN7CLUghyTWlWeBQ/ag
+	 0goHZoypUl2GNVS3E7gBI1Jo1z9CWUvypUL26pFJqPnUckTTAwQaTaGesvNz1+4Q0U8gE
+	 rCaSRn6e8xDqAejJjkncgcT90J1C3A9tS7yINM1Prm6FjA2gBSekwV4hyKOaDXdMwuw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021754;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021757;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=EWKIH4C0NchJNgdsC5Q6TRtTwlQuUk0mtvtYcbl/pSY=;
-	b=wm+CC88qi10aTAv4emamOAFaE8MYb/8y6B+nc2OOrNxGEaGCzHk7trKXmltBq0R8zaBt
-	 6NoEbzH8c4bXYLyxakE9DoGQVcFT/5AY+wNDRnNWwh4dxtLKAg5bdbVYhw9ccEAc5DgJm
-	 SHHfW9WC4faxUv+E79nPSwaSkspRzvMBjukc9u5qR9e8c9w+tSt0r9CHEKMhS9LsuiKB7
-	 R+gAgcDWrnAmvoJiZ+uPbz7+FK6WLng9ArThi8Jjrg+RW4PTTnKjW4636epfq7b9cDqRY
-	 aBf4CMkbYjZ0VVQycKDNVzl1Foa2NgpVICZrIShymvjhT6AT/1GaXt0UY+uajMGLkGA==
+	bh=p+KIRW02VBFwKmG0WHYHZG8QmizQT8EeYBQ88H6/99w=;
+	b=dnIsZhaU1puiPE7rZ2qLwBK9T0m1k/z/SV8udxqf7E5nAM1ZoXSW3ku65qzC2I5Jw5Lc
+	 ARqAbjsvLXWDagZ7Kk9X3u9qDzWl0LtuuRfZ6tsAEW4tOo1aiF1h6dFM3iHYEbNwG7SIL
+	 XIxMO6mV/69CSphBEkIHPkqUjoBKPUbHqYiu9gFJy6WZfeL37rWPMyZ/ULgvyVvb1vn4p
+	 DsXFMbIfaaB8+IlR+hm4whLHqLlKC8oRr5gWDH99DlfWtX6iK+OWlY1lEb/ZLdgjfjR07
+	 QD+DRu7F5t3jpkF2to6UyPa66yRWFie6vRNRnijZcBgWQW/nat8bDYTQUSOF4XXkcCw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4wMglnC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AvOHGwhl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B455960A2600;
-	Wed, 18 Nov 2026 17:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430ED60A381C;
+	Wed, 18 Nov 2026 17:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=j4wMglnC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B01031F000C7;
-	Wed, 18 Nov 2026 17:09:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AvOHGwhl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9220F1F000C6;
+	Wed, 18 Nov 2026 17:09:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021754;
-	bh=EWKIH4C0NchJNgdsC5Q6TRtTwlQuUk0mtvtYcbl/pSY=;
+	s=korg; t=1795021757;
+	bh=p+KIRW02VBFwKmG0WHYHZG8QmizQT8EeYBQ88H6/99w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=j4wMglnCQog70dNwLxvWdZzDt+yDY9CTwzN9oMAogJ+EDI87poH8LkOFcdCcPVT5k
-	 DbgCxlXkXg1qWWc/nBm3Mk7NoXui0mr9jYnSeGd84frguM1oLxzIRgjjgus4tIoW5a
-	 aXE4L6xLdCLz13L7oQovY7LAIRTUq3a7GH5a454c=
+	b=AvOHGwhlmWOQG1LBnL4oYw76V9EJGnegjdFia4u/PI9gEXX6F8/qZ8i2gxHXrnuH0
+	 bH65sJZNMUYLebeuCIhai3g+HMJdxPnidbpBlTZtX2PcyK0L7FfmxXoqYtY0eZYosE
+	 r1SaWgYeh8l2VQ302jO+QLM/AsBZjGkH/1+zygcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
 	Alex Markuze <amarkuze@redhat.com>,
 	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2420/2651] ceph: dont keep a mon_addr string that failed to parse
-Date: Wed, 18 Nov 2026 16:01:00 +0100
-Message-ID: <20261118150412.376858816@linuxfoundation.org>
+Subject: [PATCH 7.3 2421/2651] libceph: reject bad connect_seq in msgr1 READY reply
+Date: Wed, 18 Nov 2026 16:01:01 +0100
+Message-ID: <20261118150412.409287251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,68 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit 6c82bff8561f4c20dc0113f81cb2f6e6e2b4cf70 ]
+[ Upstream commit 6dfc1b1a99da4909aee07a906352be5c3fc9baba ]
 
-ceph_parse_mon_addr() stores the string in fsopt->mon_addr before handing
-it to ceph_parse_mon_ips(), and then returns that function's error. So
-after a mon_addr= that does not parse, fsconfig() reports the failure but
-the mount context keeps the rejected string.
+process_connect() WARN_ON()s when the peer's READY/SEQ reply carries a
+connect_seq other than ours + 1. That value comes off the wire, so a
+misbehaving or malicious server can trigger the warning at will (and
+panic machines running with panic_on_warn).
 
-That matters because ceph_get_tree() uses fsopt->mon_addr as the "monitor
-addresses were supplied" test:
+Check it before touching connection state and fail the connection with
+a protocol error instead, like the other bad-reply cases here.
 
-	if (fsopt->new_dev_syntax && !fsopt->mon_addr)
-		return invalfc(fc, "No monitor address");
-
-Userspace is free to ignore the error from fsconfig(FSCONFIG_SET_STRING)
-and go straight to FSCONFIG_CMD_CREATE. The check then passes on a value
-that was rejected, and the mount continues with ceph_options::num_mon
-still 0 - which is how syzbot reached the BUG_ON() in pick_new_mon()
-fixed by the previous patch.
-
-Parse first and commit only on success. A failed mon_addr= now leaves any
-previously accepted value in place instead of replacing it with one that
-does not parse.
-
-Fixes: 7b19b4db5add ("ceph: new device mount syntax")
-Reported-by: syzbot+1dbed5969931c19d3eb5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=1dbed5969931c19d3eb5
-Assisted-by: Cursor
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
+Fixes: 31b8006e10a4 ("ceph: messenger library")
+Reported-by: syzbot+21f8628595b2061c438d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=21f8628595b2061c438d
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/super.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/ceph/messenger_v1.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ceph/super.c b/fs/ceph/super.c
-index 4306d6b3b995f..416bf86996a03 100644
---- a/fs/ceph/super.c
-+++ b/fs/ceph/super.c
-@@ -394,13 +394,18 @@ static int ceph_parse_mon_addr(struct fs_parameter *param,
- {
- 	struct ceph_parse_opts_ctx *pctx = fc->fs_private;
- 	struct ceph_mount_options *fsopt = pctx->opts;
-+	int ret;
+diff --git a/net/ceph/messenger_v1.c b/net/ceph/messenger_v1.c
+index c9e002d963190..b3ff3274344e9 100644
+--- a/net/ceph/messenger_v1.c
++++ b/net/ceph/messenger_v1.c
+@@ -887,6 +887,12 @@ static int process_connect(struct ceph_connection *con)
+ 			return -1;
+ 		}
+ 
++		if (le32_to_cpu(con->v1.in_reply.connect_seq) !=
++		    con->v1.connect_seq + 1) {
++			con->error_msg = "protocol error, bad connect_seq";
++			return -1;
++		}
 +
-+	ret = ceph_parse_mon_ips(param->string, strlen(param->string),
-+				 pctx->copts, fc->log.log, '/');
-+	if (ret)
-+		return ret;
+ 		WARN_ON(con->state != CEPH_CON_S_V1_CONNECT_MSG);
+ 		con->state = CEPH_CON_S_OPEN;
+ 		con->v1.auth_retry = 0;    /* we authenticated; clear flag */
+@@ -898,8 +904,6 @@ static int process_connect(struct ceph_connection *con)
+ 		     con->v1.peer_global_seq,
+ 		     le32_to_cpu(con->v1.in_reply.connect_seq),
+ 		     con->v1.connect_seq);
+-		WARN_ON(con->v1.connect_seq !=
+-			le32_to_cpu(con->v1.in_reply.connect_seq));
  
- 	kfree(fsopt->mon_addr);
- 	fsopt->mon_addr = param->string;
- 	param->string = NULL;
- 
--	return ceph_parse_mon_ips(fsopt->mon_addr, strlen(fsopt->mon_addr),
--				  pctx->copts, fc->log.log, '/');
-+	return 0;
- }
- 
- static int ceph_parse_mount_param(struct fs_context *fc,
+ 		if (con->v1.in_reply.flags & CEPH_MSG_CONNECT_LOSSY)
+ 			ceph_con_flag_set(con, CEPH_CON_F_LOSSYTX);
 -- 
 2.53.0
 
