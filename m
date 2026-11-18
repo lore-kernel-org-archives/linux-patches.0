@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036361;
-	b=Asc7BLuOjaAq9WT1OsRyfLsorilZ4+QoyDJVm8m4WdCOZYkpx4BF0KXrs4LOyOSg5UdO
-	 4mqRiIIbazj4PFvC1GfDHZqnehoXpTI0tBUOCC7/dQJARG9F7TeyrScCuOKn89B51JjKk
-	 JhnE8R4SSG7fR0wuMV1eNZ6CSks0fOAgqMZMNxlP8ie1VsZM7YyA6EeJujrhh57MJRJF8
-	 Anfn9gvFokr7AiOwy6O5avjyI7xRdpeQH0O0CTzyDfwC40abXXyO0sm+awM8NWQwuDS8j
-	 glujjcu0eu8If3cj3h9F5SNBA6hOF2TWfm20asvJgROSyIHytDn53y0u3fSNVHxLIRg==
+	t=1795036364;
+	b=1xFc8tGSdnTk8sNFPnLvEdWB9d5BkImXQSVAwPjwh1M8Ti4Dko0le4cliJlTVoc8HYY8
+	 D9wCOTtz8uf2wzhxIi3lR+cJxS1hqZtN7ipDnLNJyKcnzDhnXo8xQTGDzSnDzGLHtnabx
+	 QYYz+Yil92TkCPSdmbXmdsNurrZE/3cwef2TabnJ8qzuYs4UhLZ1rYJYBZwRXObpLFOiF
+	 Ri0U/AyYLZg0tp8b3ULsgeW4xmIaozBfT5GItglTJZg1n7s2xFhFrff9IRaeKA/ptgAp9
+	 jsTtIqc86odeJmNETOI7x5+BXbh9xh9xE0hFlytKyY6n/rTVVyDPekk8NTlmgK2I+wQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036364;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=joy7FJFWVcXyWm4AHaGmVxWMUTm64gHx5FMTDu6C9bY=;
-	b=qpDHWLB9DbmCbFhcfishWIzckGGZyHrNxzGeD4niznS4fX5Kyoorelw5ZG06vvGfTNpV
-	 2lGfdHIpMUs+N9FowtQIo9KCZ6mQ+0+wxXZ35Am6VwnpJqUfOrqKHeIN4sYPYarOqNinx
-	 syxgEj2lvUGuO9lMJia0mqjf965rWz/0mc/gWS6bT55vCP/F/C7AdSZc6PPPORxb5lqfZ
-	 aJbvEBrEV2St4cRfbhs3ff57WOQq44nNdoSkThSWnJ4qTZ2tt9GY8tAriRMGxkjv57TVE
-	 ENIsyvJ5hyGjLc512mlstQWP0OT2+a9hF5uJhwe9BahO0mhj4uLyQslUG+137u71sFg==
+	bh=N/sz9J2AfF8cOWLDTOzS37H5szsQ31CucKBmK3AvO6Q=;
+	b=3DTklqYeAL4kY5MO4uoMgyQyc73/Z5EezsiYHjerbHl5adsfRpatYqy4HS4ZAm3H3poc
+	 I7QY4CLETwfF2apkdsFP5+as5QfaXSwXVXaoZQKLCP51CjgH1r+4VAaFUG4i/1X2d7tml
+	 vfQBMEM7KtaNYah9B9nyj3DyoI4YEaoa1MK2n8F6g1JD4ZjWgo5QPBlpI/fjfsp+eMoli
+	 ChY7+6VsAddvgo4bej+b+8I6DRKy3PHIVt+DJDSFOybOETRsK78SsfPWEo4gRJ1OmI7Cg
+	 sesJBymg+wAeeiSWmpORjmJr9EDUvclZBx/KSrL0alScXla7mv6o9fyHCcjQj4s6E3w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XG8szl2R;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kh2rh+W7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A057606A32C;
-	Wed, 18 Nov 2026 21:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EF1606A336;
+	Wed, 18 Nov 2026 21:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XG8szl2R
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4F71F000C7;
-	Wed, 18 Nov 2026 21:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=kh2rh+W7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A405E1F000C4;
+	Wed, 18 Nov 2026 21:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036361;
-	bh=joy7FJFWVcXyWm4AHaGmVxWMUTm64gHx5FMTDu6C9bY=;
+	s=korg; t=1795036364;
+	bh=N/sz9J2AfF8cOWLDTOzS37H5szsQ31CucKBmK3AvO6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XG8szl2RT3atoIoY9mzD6NVgECF2z8lE7BRPc65IMX0ZEzenTHZ2HoWwa5GzpooMH
-	 /XEoNr0DUkXBMrLGmxUJkppyw6AAEV4RNVhKd0x+ck4rk6Oqf9ajeDLBnMfB2OL/rh
-	 W+SdO7+oiwopYGRyr1bqAIeKqbgphfLNfOZWxXuQ=
+	b=kh2rh+W7aCXGBUVW+tIRsayVkyffVspMd18cnGkBoyg79fVaewbkUFpvV/v4wIq4b
+	 51uflOyG4CouDsHDEKEqWKMK5RZtaye+7o7+zoTlhpZ0NeTJzeVRTtXEGxXCpbNUxt
+	 52s5QC4y2tAMPtwdWwBFtuKoCiIqviTU8HVBSIxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Denis Efremov (Oracle)" <efremov@linux.com>,
+	Wentao Liang <vulab@iscas.ac.cn>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1015/3318] floppy: return the drive state flags from the 32-bit FDGETDRVSTAT
-Date: Wed, 18 Nov 2026 15:27:17 +0100
-Message-ID: <20261118150350.333928345@linuxfoundation.org>
+Subject: [PATCH 6.6 1033/3318] clocksource/drivers/fttmr010: Fix clk reference leak in error paths
+Date: Wed, 18 Nov 2026 15:27:35 +0100
+Message-ID: <20261118150350.883455578@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -67,54 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Efremov (Oracle) <efremov@linux.com>
+From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit bb38473f1bcb287567f2fa7980e483a778092504 ]
+[ Upstream commit 277e5657237a92e279ee28da2f5c07902cc6aa0b ]
 
-compat_getdrvstat() copies every field of the drive state to a 32-bit
-caller except ->flags, which stays zero. 32-bit FDGETDRVSTAT and
-FDPOLLDRVSTAT therefore never report FD_DISK_WRITABLE, FD_DISK_CHANGED
-or FD_VERIFY: i386 fdutils (floppycontrol -P, fdmount), and other
-32-bit users see every disk as write-protected and never see a disk
-change. The compat code in block/compat_ioctl.c copied the field;
-it was lost when that code moved into floppy.c
+fttmr010_common_init() obtains the PCLK reference with
+of_clk_get_by_name() but never calls clk_put(). If clk_prepare_enable()
+fails the reference is leaked directly, and every error path that jumps
+to out_disable_clock only calls clk_disable_unprepare(), which releases
+the prepare/enable state but not the reference obtained from
+of_clk_get_by_name().
 
-Also declare the field as compat_ulong_t: the 32-bit struct
-floppy_drive_struct starts with an unsigned long, and a signed char at
-offset 0 only lines up with its low byte on little-endian machines. The
-size and offsets of the compat structure, and so FDGETDRVSTAT32, do not
-change.
+Add clk_put() to the clk_prepare_enable() failure path and to the
+out_disable_clock label so the clock reference is no longer leaked. The
+success path keeps PCLK enabled for the lifetime of the timer and is
+left untouched.
 
+Fixes: dd98442e17a6 ("clocksource/drivers/fttmr010: Drop Gemini specifics")
 Cc: stable@vger.kernel.org
-Fixes: 229b53c9bf4e ("take floppy compat ioctls to sodding floppy.c")
-Link: https://patch.msgid.link/20260924112825.3525931-1-efremov@linux.com
-Signed-off-by: Denis Efremov (Oracle) <efremov@linux.com>
+Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260915045426.1726805-1-vulab@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clocksource/timer-fttmr010.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/block/floppy.c b/drivers/block/floppy.c
-index 2bffe6830570b..790218836468d 100644
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -3603,7 +3603,7 @@ struct compat_floppy_drive_params {
- };
- 
- struct compat_floppy_drive_struct {
--	signed char	flags;
-+	compat_ulong_t	flags;
- 	compat_ulong_t	spinup_date;
- 	compat_ulong_t	select_date;
- 	compat_ulong_t	first_read_date;
-@@ -3787,6 +3787,7 @@ static int compat_getdrvstat(int drive, bool poll,
- 			goto Eintr;
- 		process_fd_request();
+diff --git a/drivers/clocksource/timer-fttmr010.c b/drivers/clocksource/timer-fttmr010.c
+index 126fb1f259b28..0003d49768f62 100644
+--- a/drivers/clocksource/timer-fttmr010.c
++++ b/drivers/clocksource/timer-fttmr010.c
+@@ -292,6 +292,7 @@ static int __init fttmr010_common_init(struct device_node *np,
+ 	ret = clk_prepare_enable(clk);
+ 	if (ret) {
+ 		pr_err("failed to enable PCLK\n");
++		clk_put(clk);
+ 		return ret;
  	}
-+	v.flags = drive_state[drive].flags;
- 	v.spinup_date = drive_state[drive].spinup_date;
- 	v.select_date = drive_state[drive].select_date;
- 	v.first_read_date = drive_state[drive].first_read_date;
+ 
+@@ -432,6 +433,7 @@ static int __init fttmr010_common_init(struct device_node *np,
+ 	kfree(fttmr010);
+ out_disable_clock:
+ 	clk_disable_unprepare(clk);
++	clk_put(clk);
+ 
+ 	return ret;
+ }
 -- 
 2.53.0
 
