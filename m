@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055275;
-	b=cwR6/1smJLYb+w7bQ6Y4/DHCmzTYVLsR4CbgVzUEPWGQcwO7COjcMfdTXPwSdHPZ2wAK
-	 m7JdMg4j5uyxtw6HgeqWkpdDVUClvJynTmIGG/YIhoqtHcMWRk9NOvgy053Zorr+F0sLb
-	 xP/KlCXgA33pIre0TiuwsMHMplqQn/SzvSrADigwfNx4BG+BBpunQG/pRBF7NoW8xkb+b
-	 MR+vJItvKziZrKfyeCJCryGpb0YhWF8oqjrZf4cViWIDNvwT0PSg3DmYiq4YnpGeQc3nt
-	 YE4wtTTAUDjb5Ey5BTQvAaCqc3Q26Fk9+VSpqYKPL1+n6mkMsDoGd1ZggC4R+xtbO9w==
+	t=1795055278;
+	b=MUp/OY/QIcjOhzQEWwXVDadEHhrQYhPSvjFhkR4KAXuGODk0haQwcXy4g4eOtjMa4Zmw
+	 Egj6jU4KqVhk8tQBSU/HS0jhw2+/TD2jWYXGwsiet/uawymGXNouVCPxVHHHujTX1Bw7A
+	 kFAsVuIzC9so6TQmxOcBgPQlj8VhiG+WRlsR6riVOnWQ0eJXBe+y5PjDfPfpqEWvhsz7c
+	 F5a95QMPUrxVr4seM9zcRvtSQxIREgEIQOX51TbigKZANdklzKp6ZHBIF9RCqvvPsx9kf
+	 R6lKdMlIw/DLaGij4GgVWggafSI4qmYcNqIUCH0gyHoTtY1Z5PLMHcc/ogX6c3uLEQQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055275;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055278;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=P4xSgmtpQcsMU4jaEDGRdrwZDFMC7H456O4RfSn4i0Q=;
-	b=uXCx76lHrt/6uaYE2/Rz1p+a4w7PRLeE++6Xwfq6MFoOVUOmvJhKXZlsR13HV3kMcD7l
-	 nJt0BSh2Alzrg5Ef1tZ2MCITWpv4yhBdk5gssqbwVzYbaSM8mOIHq2utjMe2JIIPx2Qn+
-	 JDL+ZYPKFIcP2c6ZN2LK8iogbOiIUp+950ZgDYD2PA35quG23n4NIPHm4AjDxq5NKRS3t
-	 wsx7WFmXYuA4g4oUnQrS4pBIfc4BuRxOsMoZYntAri/nuzQ1aPGRMHQD7DU8J9fyLeCqe
-	 GIWm8lTaoJu8Cv634KfW+Jlq5g978Q+5ZpfW6iISJlkgUHsCs3+GDpZ69ScdwvEQ6NQ==
+	bh=hbBimIjt5U9DrdDVeQLvZYDkDAbWnDLMAaG+wzuou1c=;
+	b=W33UEFi8T9GVGu9gpJnI6yzg4t04Kp8CpQIvVMQc5s9GvwfdHxw1wEHzX3Ok94tw+qYe
+	 4Iiv40lGRAHDQUAZz0FJzkfL/f69EW4tBeq5cO8nXqt5h2UQoK4gIGojUlFA2gE/fCWRQ
+	 3bb6sVTLV5v3gOdPCAU9HbH0DqmE2KVkXX4AQj3z65vkboL1nHrQr+vDTIRwuUbwPIg4e
+	 4VZh65F7T2TJLXhKHuoEsBs2x4Vdhb3GK0jzvkgz17C1Ru333lX90cGzOBSjCZZptAqls
+	 UFvrYidP531X2dpS8I223DhNA+fcq5Ural8gd+5U6WCdLeaFZUrmQCQbDARl5NFbKcQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="LB9/hC5s";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ftAOczEB;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3D6606A32A;
-	Thu, 19 Nov 2026 02:27:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5783A606A332;
+	Thu, 19 Nov 2026 02:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LB9/hC5s
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E97C1F000C4;
-	Thu, 19 Nov 2026 02:27:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ftAOczEB
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CAF1F000C6;
+	Thu, 19 Nov 2026 02:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055275;
-	bh=P4xSgmtpQcsMU4jaEDGRdrwZDFMC7H456O4RfSn4i0Q=;
+	s=korg; t=1795055278;
+	bh=hbBimIjt5U9DrdDVeQLvZYDkDAbWnDLMAaG+wzuou1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LB9/hC5sgXdnJKsu7DGPQy/SIPcNLFMINDVQ67YW5+oCZLJ/e1sVvE2rj+npkteOB
-	 1yIa3xdupmQdfWjsfhBqd+Nqg+/tMlL+KVwDk6J6IBZR72oerdmZ+qqmAsM9KClCQ/
-	 /DbnuMSUR57wTFLWtMtPPM2WVem3PykZG8btTWPk=
+	b=ftAOczEBSQDGibG37fo9+7fJW9pcDBs6A9EYuQ1aJ+fQD1QHdm6V95xqcKQHiPuip
+	 A9ALVWrv1wAod+yGwspzCKvnbr+oMPOkX+q/EqvA0z/eyD7QK3cgiyFJm4ijOmJ5Rx
+	 Pm/rBoiGT6qFhjsdIzc6rJGGVY+4w48sIwuKnwP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
 	Finn Thain <fthain@linux-m68k.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1573/2214] swim: Handle FIFO timeout error
-Date: Wed, 18 Nov 2026 15:54:09 +0100
-Message-ID: <20261118150114.973302536@linuxfoundation.org>
+Subject: [PATCH 5.15 1574/2214] swim: Check for CRC errors
+Date: Wed, 18 Nov 2026 15:54:10 +0100
+Message-ID: <20261118150115.010697052@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -72,43 +71,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit 2e9bcbecee68431b689d16b23bc5529db686f8d4 ]
+[ Upstream commit 01bff87152e6748fbac9ccd645d3d5f490d75ddc ]
 
-When polling the FIFO for a mark byte in the sector header, don't
-return zero if the timeout counter has expired, return an error code.
+After reading either the sector header or sector data, examine that flag
+in the handshake register which holds the result of the CRC calculation.
+CRC validation has to take place with the last byte still in the FIFO.
+This flag can't be checked by the caller because by then all bytes will
+have been retrieved from the FIFO. Return an error code when appropriate.
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/aadb674d27d6e6d346d9b525597bf2e339c57e04.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/9bfcd0414192d1b95803c16701d62732ff6e8f3f.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim_asm.S | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/block/swim_asm.S | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
-index 3d7a2d87595a5..208622ac4aeb9 100644
+index 208622ac4aeb9..250e408060e8b 100644
 --- a/drivers/block/swim_asm.S
 +++ b/drivers/block/swim_asm.S
-@@ -79,7 +79,7 @@ wait_addr_mark_byte:
+@@ -42,6 +42,8 @@
+ 	.equ	max_retry, 40
+ 	.equ	sector_size, 512
  
- 	tstb	%a2@
- 	dbmi	%d2, wait_addr_mark_byte
--	bpl	header_exit
-+	bpl	signal_nonyb
++	.equ	.Lhr_crc_error,		0x02
++
+ 	.global swim_read_sector_header
+ swim_read_sector_header:
+ 	link	%a6, #0
+@@ -134,6 +136,10 @@ crc1:	tstb	%a2@
  
- 	moveb	%a3@, %d3
- 	cmpb	%a0@+, %d3
-@@ -136,7 +136,6 @@ crc1:	tstb	%a2@
+ 	moveb	%a3@, %a4@(o_crc1)
  
++	moveb	%a2@, %d5
++	andb	#.Lhr_crc_error, %d5
++	bne	signal_nonyb
++
  	tstb	%a3@(read_error - read_mark)
  
--header_exit:
  	moveq	#0, %d0
+@@ -226,6 +232,10 @@ data_crc1:
+ 
+ 	moveb	%a3@, %d5
+ 
++	moveb	%a2@, %d5
++	andb	#.Lhr_crc_error, %d5
++	bne	data_exit
++
+ 	tstb	%a3@(read_error - read_mark)
+ 
  	moveb	#0x18, %a3@(write_mode0 - read_mark)
- 	rts
 -- 
 2.53.0
 
