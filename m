@@ -1,64 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053704;
-	b=ojkt1DKrxhoXs3hcbOXFnWkvOPw0wPmaJqxpNtvL4/OFAs355/7iMCxo6dxupK8RTBhM
-	 5Q2GmkSVV4EbsswwZZE9hMwd9fWTjYSxvIyPxyq1kzSt6wYfMQUQ0Hq0xisjbINfupata
-	 50KAdjTTFuoNqMKggE/bY9iQN7BjHcAsVRjcgHfayphVU+UcmFKmap+H8c4l6lHAB4g5J
-	 3pCof+qkO/yLXTmqHn/ydcDZ4UqxEXtJQqwrI/Q2xyhuRA+r27VxKU0frWm/cDlh5czgl
-	 MdFzdbwjfOI2KfkokkYiFofX9c9J5gd9HEzg+mhJIxNhmGny+640xL5TyI351cYE1mw==
+	t=1795053706;
+	b=pGACjBuTjsZZ4BqpLI8fv5rfh57ctTm8w80bdsBVCVORrlSwOIK7fi05+uhv8qBgaBfg
+	 1A0domqSiraKYspicCbi4+FxNrtzJF/zvr0HDk/DfbNtjrVNhad6q3hOLxOfiEgpQ0twQ
+	 gZhSN9eDPHX0sOlfa9WPbPgZYxg8HwKxeWCXLNxen+WtFDXxoasdG1EAeDDO4Z2Zoh7yd
+	 j2NbddgM3HILzysBzhYGUtvwX1Tr9p/bvlVzcFuOZI85YLHs33f0y12Z5MhkCkVI7qVH8
+	 YqtvfAmASOt5Oo9AhnWZ1LFGHqW2IDI+0ysW64I1gmK7tByv1aSe7Guo7bLn2hvOP6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053704;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=g6vKVuasMkoUOMYgffa1iiG9zunRNdJY9cS3pMJ/spw=;
-	b=Qz7S5IOuEYXo4t2jjv9VfXuRl0XoaZoIJDkRF0dnijCCAT17HegNlytTD/bcGnQx+qKa
-	 FScRg6ZnEqnl7MnXkVMR0XbvINcHF/kOOPjy1jrXoYfH7vUlxh2McmyUtsUyLs0rw5AP5
-	 arCRdaN/HGSFwMmDKnBgYgwDqX13O0MV1Ocq2wW3VjQKWMR4cG7N5NlQ2dx6SkKfb4fCY
-	 oCcCshBTiAmOVq2DBU+/SbwISAtMVmTgFyTTQ29ekmUdPicTYNkYt55ZJqe+t0MtqWezf
-	 E4yu+K6EUM0RSgiy2xF6SCcuC8MjayskszEwdu4J/ix2MRJIHtyVB/2X0U5vaxXvd3g==
+	bh=GhSJ406RrP7E3vowuFn25941hpB0FSMpw4Tx6W4jOEs=;
+	b=2ESztc5HTJgHFFz4GR8UD+IwT0G1ch9/o4BPlSwKCSDZ8RVJuRh5ob6O471bjNgoQdE5
+	 u8BiM/i1192wEtKfV2rfIu6JdZN4cLRD1s+iMOZ9dtY97ToIKnhBFBRp0vSggootAE1NU
+	 cTP6XUSIdXETLsPgY08S0IoFYGY3KefMqmRmSDKrLIKdFz/uGg8+1bcv+aOgcb8PEml9q
+	 qKjn0m57EZH57/T1abOwCF3mCcou4S6samfeHzG+Xb54o5J9bp0KCECiEvdXeHHUJyTV/
+	 IbpY8z1bwvvQmQtW7a6SjPsO8++1Tm87+/jsUXUFghVSkdeKcgyy290zAgt+esrI4cw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YBI5kfP6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WmVYa/0a";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54428606A320;
-	Thu, 19 Nov 2026 02:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD507606A320;
+	Thu, 19 Nov 2026 02:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YBI5kfP6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A4D1F000C4;
-	Thu, 19 Nov 2026 02:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WmVYa/0a
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4091F000C4;
+	Thu, 19 Nov 2026 02:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053704;
-	bh=g6vKVuasMkoUOMYgffa1iiG9zunRNdJY9cS3pMJ/spw=;
+	s=korg; t=1795053706;
+	bh=GhSJ406RrP7E3vowuFn25941hpB0FSMpw4Tx6W4jOEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=YBI5kfP6vA+ZVWc0AVf/4eFxt8WTf8x0bb3KIUt61b4oshQJt2u/42Do3LJYdDsq4
-	 53rW0C6HaUiqk9+R3G75jNnfkLdLCrop+/2tFWMc+E9pnHAhDaSzl/q+SsUctIXtDt
-	 z63Bl25swDPVcZ/ukSU3XjoUWJu2Dvy29EThVOvc=
+	b=WmVYa/0afpDFGFVL2sls/XANGDXIYRBva2Q0AMyF+kp8w4Sb8FWuIRF3f78WhZM7M
+	 OkjIega9U+p57nEsfAk0Z+kNLOt03ixX4AMkAQ+rBIWpV42HPjbQuM+huT94v2Ug+D
+	 9ce3cH8PNHR3s5AmKp//JmcnyRByJFcE+ZS3lb0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Samarth Narang <samarth.colleges@gmail.com>,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Zi Yan <ziy@nvidia.com>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	SJ Park <sj@kernel.org>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
+	co+ecaada42f806f629@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1012/2214] mm/madvise: atomically clear the young bit on THP MADV_COLD
-Date: Wed, 18 Nov 2026 15:44:48 +0100
-Message-ID: <20261118150052.862860948@linuxfoundation.org>
+Subject: [PATCH 5.15 1013/2214] ceph: fix integer overflow in the snap trace bounds check
+Date: Wed, 18 Nov 2026 15:44:49 +0100
+Message-ID: <20261118150052.904666991@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -80,82 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 246c8cc33438a71c28f9b86baa492d9a0a130316 ]
+[ Upstream commit b3bf89767e3ca9506f1c7167cac97c41ec254d42 ]
 
-As-is, madvise_cold_or_pageout_pte_range() discards the hardware young bit
-by invalidating the PMD, doing pmd_mkold() and subsequently writing to the
-pmd again.  However, it does so in a racy manner, looking at a
-possibly-stale snapshot.  It's entirely possible that a write elsewhere
-set the hardware D bit, which this logic now loses.
+ceph_update_snap_trace() bounds the two encoded snapid arrays that follow a
+struct ceph_mds_snap_realm with sizeof(u64) * (num_snaps +
+num_prior_parent_snaps).  Both counts come straight off the wire as __le32,
+so the addition is evaluated in unsigned int and wraps before sizeof(u64)
+promotes it to size_t: an MDS sending num_snaps = 1 and
+num_prior_parent_snaps = 0xffffffff makes the sum zero and the check
+degenerates to ceph_decode_need(&p, e, 0, bad), which always passes.
+dup_array() then reads num_snaps * 8 bytes past the end of the message
+front, which ceph_msg_new2() allocates at exactly front_len bytes.  An
+unsolicited CEPH_MSG_CLIENT_SNAP reaches this from a malicious or
+compromised MDS with no client-side action, as do the snaptraces carried in
+an MDS reply and in a cap import.
 
-Fix it by using pmdp_test_and_clear_young().  This is an atomic
-modification of the PMD entry, and thus safe against any possible racing
-writes.  As a (nice) side-effect, this elides one non-required TLB flush
-in pmdp_invalidate().
+Compute the length with size_add()/size_mul() so it saturates at SIZE_MAX
+instead of wrapping, in the style fs/ceph/mdsmap.c already uses for
+num_export_targets.
 
-This bug can interact with the swapping system in complicated ways,
-leading to data loss.  For instance, if a folio is marked lazyfree, but
-was later read from, and then MADV_COLD'd while racing a write to that
-same THP, dropping the dirty bit may lead to data loss as
-reclaim/MADV_PAGEOUT drops the "clean" anon folio:
+  BUG: KASAN: slab-out-of-bounds in dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
+  Read of size 8 at addr ffff8880102a16c8 by task kworker/1:2/129
+  Workqueue: ceph-msgr ceph_con_workfn
+  Call Trace:
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
+   ceph_update_snap_trace (fs/ceph/snap.c:836)
+   ceph_handle_snap (fs/ceph/snap.c:1155)
+   mds_dispatch (fs/ceph/mds_client.c:7234)
+   ceph_con_process_message (net/ceph/messenger.c:1424)
+   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
+   ceph_con_workfn (net/ceph/messenger.c:1576)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  ...
+  The buggy address is located 0 bytes to the right of
+   allocated 72-byte region [ffff8880102a1680, ffff8880102a16c8)
 
-T0                                T1
-================================================================
-MADV_FREE(thp)			|
-  folio marked lazyfree		|
-read(thp)			|
-  PMD marked young by hardware	|
-				| MADV_COLD(thp)
-write(thp)			|   if (pmd_young(pmd)) {
-  PMD marked dirty by hardware	|     set(pmdp, pmd_mkold(pmd));
-MADV_PAGEOUT/reclaim		|
-  dirty bit may or may not be   |
-  set				|
-    reclaim/pageout may drop    |
-    the folio			|
-
-Link: https://lore.kernel.org/20261013191719.95502-1-pfalcato@suse.de
-Fixes: 9c276cc65a58 ("mm: introduce MADV_COLD")
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Samarth Narang <samarth.colleges@gmail.com>
-Closes: https://lore.kernel.org/linux-mm/20261011132227.413217-1-samarth.colleges@gmail.com/
-Reviewed-by: Gregory Price (Meta) <gourry@gourry.net>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Reviewed-by: SJ Park <sj@kernel.org>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: adjusted context for the pmd_young() check without the !pageout guard ]
+Cc: stable@vger.kernel.org
+Fixes: 963b61eb041e ("ceph: snapshot management")
+Reported-by: co+ecaada42f806f629@bugs.sh
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ sashal: Adjusted snaps_len declaration placement to account for missing client and ret declarations. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/ceph/snap.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 367220e1fe52a..3079da08c19de 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -363,10 +363,7 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		}
- 
- 		if (pmd_young(orig_pmd)) {
--			pmdp_invalidate(vma, addr, pmd);
--			orig_pmd = pmd_mkold(orig_pmd);
--
--			set_pmd_at(mm, addr, pmd, orig_pmd);
-+			pmdp_test_and_clear_young(vma, addr, pmd);
- 			tlb_remove_pmd_tlb_entry(tlb, pmd, addr);
- 		}
- 
+diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
+index 74a1fc919c6be..ce1f489e00e84 100644
+--- a/fs/ceph/snap.c
++++ b/fs/ceph/snap.c
+@@ -710,6 +710,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	struct ceph_snap_realm *realm;
+ 	struct ceph_snap_realm *first_realm = NULL;
+ 	struct ceph_snap_realm *realm_to_rebuild = NULL;
++	size_t snaps_len;
+ 	int rebuild_snapcs;
+ 	int err = -ENOMEM;
+ 	LIST_HEAD(dirty_realms);
+@@ -723,8 +724,10 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	ceph_decode_need(&p, e, sizeof(*ri), bad);
+ 	ri = p;
+ 	p += sizeof(*ri);
+-	ceph_decode_need(&p, e, sizeof(u64)*(le32_to_cpu(ri->num_snaps) +
+-			    le32_to_cpu(ri->num_prior_parent_snaps)), bad);
++	snaps_len = size_mul(size_add(le32_to_cpu(ri->num_snaps),
++				      le32_to_cpu(ri->num_prior_parent_snaps)),
++			     sizeof(u64));
++	ceph_decode_need(&p, e, snaps_len, bad);
+ 	snaps = p;
+ 	p += sizeof(u64) * le32_to_cpu(ri->num_snaps);
+ 	prior_parent_snaps = p;
 -- 
 2.53.0
 
