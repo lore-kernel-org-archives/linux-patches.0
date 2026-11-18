@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034585;
-	b=Cxptdh9+CnKpr1pVrc8vYLJiS2fnLCBWc0Cz68vRdbew62o6uLcNIh73fp0uPyOey0Kz
-	 9AfS5GpjPXu8vjtLC/PE8j3gi4pk5NhyV7RA/AnlJiOzJxuks6XvUPfQcF7VsGRT8Nrmd
-	 lh4jB9v0vRrtiN3F56brUYVcwb6PnNNtl6I/u9q9Z5T2Lb6qdlvbwXn1cdWLyBB7CGK0x
-	 p79Wg4Rm0rRgtuPe0gOLUQRrk/CShQ3JtUQ77M1AggrfknhGZuMMTRSk32N3w61tpkwu2
-	 qlIr2kBLKkaxHU1XFUMK2+r4kwRK0MuKicuigGOitDGEheqzMOHug6dxGSIVod9N6NA==
+	t=1795034587;
+	b=2W0hcNrDuM4XvaHP8Z9TfnXoAvqPv68ZeGKuZAO1oJkyGZquyiO2CmOUdOkrJDSUayC/
+	 aHFB1wMECExmbwIbey58+LHBezmcjCDpdfWdVLNuR+iLW+gNKDN9xkYkYS62mdsRIrU+/
+	 aFoM8LSGPpsh5AnXHIDlnYn7ttomFZxvs76oKUbDyCwewUg8m3+1b+d/fr8dHOYtNfmno
+	 HMgiywxSmyqW0rAdIdN+v6GYwE9lk5rOF0k3sdRBQlgnuWcXrW5xEmUxuwivgDif07GtF
+	 OAAkhrqwhWtqeaPZYhAcqLvMFHUae0GhlK/qK9Bl3Fu0rKufsIzcMamm2FER2WDdOQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034585;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034587;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=w4s5Yy6LsuORLrlVMx1+62C3LN4yqs0YA7nYEkDVwTk=;
-	b=rvtEqLmSSlFPOkiWbOPwJYb0Kisn7iaR05VHWR51l1FZly+yr1zX2OCBjWax5OY93qME
-	 eNQjEnANFTxlITiOBvJP99sdLLt1V3QL1/04MF7AFoDl0s8s+cBocVqIMg5sTA2Z7bGb6
-	 Ebka00BHhr1C2ZQ1nNa6Dg+bf9jadPX+waUjmzXlL42K4cuZRaPvzqFz3kFxhfG03cAwU
-	 wi/iYJ0R5VCwgn2RbS9aFBM3gFHyPTTlRGkMm2cdPV/hTVolyi10VHz5Dt0jRx4izNinJ
-	 yTCmwXheQ0kTnOCSTU/d4ceOiMa3gaiIoiGdIQb3wZxV4+qhG7TdIuTZhdiCApYPu3g==
+	bh=OS0KHp6LHKyjXdnbdkgIr/V+KMabQIpPeDrxxOOQIvI=;
+	b=zOGIkF4SKeN8UKgcRZMtES19jKLtM/zjty+heKFe+4GwLtG6KIp6mJ8Yz4tU0aIxS4B1
+	 f5DtDFL2SEnxLc0+6h50rxiej/csTzKFDUpqMkKXd+p5ksGrrGEoBc//HhPVQ6cBSmGLQ
+	 k3fxMQnMyyliXKVV5mSsf5onM1JFxfYwK4ZFKkARAbAyzNAfJTkMo7ukUAiDT0UuFzcfP
+	 frUfYV0tgeLbDbqH24d7dm+9xaQjKUfUBapYxFyeqqFfGTjE/eS6FZJN4O7YpjnJscwSG
+	 5UQCE7FGQrQRw0JtEgF/fDoOxtWZKWqN1aXpYgTx5u0dRLcqwp2hppTv1aaf3gaRMXw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dvTQ1V5h;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WY2WM+Re;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F292606A325;
-	Wed, 18 Nov 2026 20:43:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07F8606A320;
+	Wed, 18 Nov 2026 20:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dvTQ1V5h
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763731F000C4;
-	Wed, 18 Nov 2026 20:43:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WY2WM+Re
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E361F000C4;
+	Wed, 18 Nov 2026 20:43:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034585;
-	bh=w4s5Yy6LsuORLrlVMx1+62C3LN4yqs0YA7nYEkDVwTk=;
+	s=korg; t=1795034587;
+	bh=OS0KHp6LHKyjXdnbdkgIr/V+KMabQIpPeDrxxOOQIvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=dvTQ1V5hnk4e91jcq8Z4PIJxKZtZUdhX70Fndepv+BJlLGNygPoz02g45se9c656U
-	 w15r6dgbqLOPl7RzWsPymL6ykmS8tNP03hlpXOaG+ihbNfyBUsDme0jW10UBi3eBAR
-	 6q3Sx8MDRD2n9eCrfcX4WWn03NRdR24AYfjLtX0k=
+	b=WY2WM+Re55wZ3E57VA1ChobOJlLb0tYfpr95seymHToLYC1QFPmoENIKQXlPt4Bfj
+	 wD3miKkJD3Bdidl0iUCgHsCfLu5O/BlVjgVXdpsfMBTKFFfNU06IQGZfksAL4Zrd1t
+	 UGvWRr9lk15i/cfUPT/bM5EFo/e0DkT7ZI0HgiVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Glenn Judd <gmj@meta.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Candice Li <candice.li@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0420/3318] net/mlx5e: do not HW-GRO coalesce small frames
-Date: Wed, 18 Nov 2026 15:17:22 +0100
-Message-ID: <20261118150329.159522893@linuxfoundation.org>
+Subject: [PATCH 6.6 0421/3318] drm/amdgpu: Disable runtime PM for externally attached dGPUs
+Date: Wed, 18 Nov 2026 15:17:23 +0100
+Message-ID: <20261118150329.195359698@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,70 +70,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Glenn Judd <gmj@meta.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit e2466392a0b8496000e12181cb1ee1535eb0da25 ]
+[ Upstream commit c52feb4365396b6a881b5e8a95540517ffabb3b7 ]
 
-When hardware GRO (SHAMPO) coalesces a small IPv4/TCP segment that was
-padded up to the 60-byte minimum Ethernet frame, the trailing padding is
-folded into the merged payload causing padding to be delivered
-to the user as payload.
+pci_is_thunderbolt_attached() requires an upstream PCI bridge with
+is_thunderbolt set from an Intel Thunderbolt VSEC. This does not cover
+the affected ASM4242 USB4 PCI hierarchy:
 
-Detecting and reproducing the issue: the selftest
-tools/testing/selftests/drivers/net/gro.py subtest
-hw_ipv4_data_lrg_1byte sends {100, 1} expecting to receive {101}.
-In current code, it receives {106} (100 + 1 payload + 5 pad) instead.
+  00:02.2
+    \- 0f:00.0 [1b21:2421]
+       +- 10:01.0 [1b21:2423] -> 45:00.0 -> 46:00.0
+       |  -> 47:00.0 -> 48:00.0 -> 49:00.0 [1002:7590]
+       \- 10:03.0 -> 76:00.0 [1b21:2425] USB4 Host Router
 
-This patch avoids giving the user padding as payload by simply not
-coalescing small packets (which fails the subtest; the same approach
-and behavior as sw gro). This gains code simplicity at the cost of
-more computation (passing an extra skb up the stack) for small packets
-that could be coalesced.
+The host router is outside the GPU upstream bridge chain, leaving no
+ancestor with is_thunderbolt set. PCI core propagates DEVICE_REMOVABLE
+below the external-facing PCIe tunnel. Disable Runtime PM when either
+pci_is_thunderbolt_attached() or dev_is_removable() is true.
 
-The threshold is chosen as ETH_ZLEN + 2 * VLAN_HLEN. This is the largest
-frame that may still contain minimum-frame padding (+ 2 VLAN tags), so
-anything larger is safe to consider for coalesce. (We do not include
-ETH_FCS_LEN in that threshold computation as netdev_fix_features()
-drops NETIF_F_GRO_HW whenever NETIF_F_RXFCS is set, so retained FCS
-can't reach this path.)
-
-Fixes: 92552d3abd32 ("net/mlx5e: HW_GRO cqe handler implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Glenn Judd <gmj@meta.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260816064259.3279548-1-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Adapted the hunk context to the older fixed-page-size code and added a flush && *skb NULL check so the trailing flush can't dereference an skb already passed up the stack. ]
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ sashal: Moved the externally-attached check into the inline runtime-PM setup in amdgpu_driver_load_kms() as the first else if branch, since the detect function doesn't exist here and an early return would skip later init. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index 11a75a9917f9c..5df1ec397ddac 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -2376,6 +2376,11 @@ static void mlx5e_handle_rx_cqe_mpwrq_shampo(struct mlx5e_rq *rq, struct mlx5_cq
- 		goto mpwrq_cqe_out;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+index 11e8370176258..cb7a74286e54d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -152,8 +152,12 @@ int amdgpu_driver_load_kms(struct amdgpu_device *adev, unsigned long flags)
  	}
  
-+	if (unlikely(cqe_bcnt <= ETH_ZLEN + 2 * VLAN_HLEN)) {
-+		match = false;
-+		flush = true;
-+	}
-+
- 	stats->gro_match_packets += match;
- 
- 	if (*skb && (!match || !(mlx5e_hw_gro_skb_has_enough_space(*skb, data_bcnt)))) {
-@@ -2415,7 +2420,7 @@ static void mlx5e_handle_rx_cqe_mpwrq_shampo(struct mlx5e_rq *rq, struct mlx5_cq
- 	}
- 
- 	mlx5e_shampo_complete_rx_cqe(rq, cqe, cqe_bcnt, *skb);
--	if (flush)
-+	if (flush && *skb)
- 		mlx5e_shampo_flush_skb(rq, cqe, match);
- free_hd_entry:
- 	if (likely(head_size))
+ 	adev->pm.rpm_mode = AMDGPU_RUNPM_NONE;
+-	if (amdgpu_device_supports_px(dev) &&
+-	    (amdgpu_runtime_pm != 0)) { /* enable PX as runtime mode */
++	if (pci_is_thunderbolt_attached(adev->pdev) ||
++	    dev_is_removable(&adev->pdev->dev)) {
++		dev_info(adev->dev,
++			 "Runtime PM disabled for externally attached device\n");
++	} else if (amdgpu_device_supports_px(dev) &&
++		   (amdgpu_runtime_pm != 0)) { /* enable PX as runtime mode */
+ 		adev->pm.rpm_mode = AMDGPU_RUNPM_PX;
+ 		dev_info(adev->dev, "Using ATPX for runtime pm\n");
+ 	} else if (amdgpu_device_supports_boco(dev) &&
 -- 
 2.53.0
 
