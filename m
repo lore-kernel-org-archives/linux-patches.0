@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044796;
-	b=w+jOeinzsEovWBYF6fiQpcIx5KsvwVt1ZPjH4S6TQHTmYTH8CGLoVxOKA2Wt9QuqjBIC
-	 DPITL/XyX+7PhHeLpMeeT3TrV0CZQdwa1XjSXpkjBrYLxYhHOs4qQWufQWaCViV0+93tj
-	 bWvktIbgvClEYjwgjd5Cin1wDQj6L9rQLsvuMiH9YC0jtfB0IhO9Jq1n8+gUNQpZgALbY
-	 uaKer77fbKJ1XKaSMm+howCEw8xRjHT69OjmYaKNt4ZgvKAGcbh1hFmnWZzKDrc5SnwJC
-	 Gef3wUxWSD+M6QOaCb93j4gpVne3u9uWv9RXUk/sOqXVfumyPTFqzWwgyBPEMQRShoA==
+	t=1795044799;
+	b=0cSANccPpe6+cCwPcBez+RCzvVd0HYCpkkvny2ssNDeQV4NvNxj8tD/E0UNnqqEXEVHA
+	 /Bq70rzMTVJjV8anMVB6XYBYFXvoe3vk2gX9y7ozUzcqfU3ePzn6BspBRiyDeE9/MdR0+
+	 /ARmGhHdYjFNIYJaJCUMZmwc40q/gJehwNN0spTJ0eDB0mV6x4BHAOkd/Ofpvp35DPLNB
+	 eAzj2Phz4JS1KKb3Xaxmz8ZLuTlNVbhuQ2EX/h2o/u8DJwjS6B/BRA6Fnt8drKeWeChP4
+	 7e7S2g+tO1xwCBNP3oykFLXZPcYTZvDjWKQPvl87JaSFGHVi3X571d6Z5ukkxxIxKLw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044796;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044799;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=//FBhDqcJQrfOnCGt2k2fuOYj69zqkyl9j1+rIScAnI=;
-	b=J769Nnf4qAM3f4h3RZJKp3hUuHWr9WTYoxOSNHvCPEpFT8kJgjY6JAIM6+7J309xwbmL
-	 1r0c+grNX+GqfPFYUAbjpY155Fp06M3LVotdY3btHThJISjGot8XwdZgvhQGFBuE3ve5l
-	 3WZHR1rx0N+UqIqO3Hap0HSw+cBw/SeB+ad2nYS3hE/IKC4VF7c9y32ittmxku8Q9g6Mj
-	 Rd03He1GL+TJLBTP4AD8AwNMz2E1gvHfBMDSVQQY1jLADHupzpmWJO5s/wdplkErYf+/R
-	 nyHDl3CNWZ7rLf/CvvyJSptD4EVaMvyK3K1hJgMELRN1BCwwEU44Ivwpm4o81f6M9Nw==
+	bh=OhzfjiGfmigsvaMmncrQZBpAj1luxKGsMF4E1QQOIic=;
+	b=3HcMKNgl1sHCf89mIx9ZggSfG0KdAt6CtTCVTbVqZe6HIW0lAlrX5wPYIVZq6xaKlCFu
+	 nORg6SI9dQ9XvGiosACA4T1wVORt+ROrUJE62s91qjvuciFN9vmXlepj6js/1+VYWnV3g
+	 GIQChpH5E6wdMpzaNY0KWXkU8dyshw3rWN+MHxciy/8rgu6hdJhfNf93ov6efICJRrHA7
+	 FlycxcOgDok7Wf09cjfaYmKnX+MJx6EWCc+OWxwHJE9DXDznSmg5qEKEOH5o8YLQYBsEY
+	 zPRvwCZsJ30xay+5RuXXkaBB4KoKRBuAh9KC0ihWgi7c82WGthLPp8JYRLfROdbHu4w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Fh/NWBMv";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IMXxP0bt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8490060A381F;
-	Wed, 18 Nov 2026 23:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D67060A2626;
+	Wed, 18 Nov 2026 23:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Fh/NWBMv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FAE1F000C5;
-	Wed, 18 Nov 2026 23:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IMXxP0bt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736BB1F000CB;
+	Wed, 18 Nov 2026 23:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044796;
-	bh=//FBhDqcJQrfOnCGt2k2fuOYj69zqkyl9j1+rIScAnI=;
+	s=korg; t=1795044799;
+	bh=OhzfjiGfmigsvaMmncrQZBpAj1luxKGsMF4E1QQOIic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Fh/NWBMvQG/2nEPAf0HcDzYAaiE3K76xDPIFgnvLrtUmZyQALPBDZ/JTHd8pakCWI
-	 l5My2XkO5mLOVcirBvcQeUgSk1/Q6LaocChODTUTcsh9pNNPxMlxDhxYLf+wdflvGC
-	 jwbi9Tiw2sqUAj74t0zdyGTGSTMeXSS/NVVuVrBg=
+	b=IMXxP0btRbGF4GCPBPqPO4dNU/KYx6bRoCnzvdHldbnhlrUanZg8Dx8bHp6yj/V/A
+	 dTIVcvYD32aVcvStN7NpxqgxAE4UE1npq8pqED0Q6ilTfL5EXe88pcWqyupwX4YENn
+	 HcyGMG+0WLHgI1o8VPI27sCzdTJDQg56KnWYrHAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot@kernel.org,
-	Xiaoyao Li <xiaoyao.li@intel.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0678/2857] KVM: VMX: Preserve negative return value in vmx_handle_exit() with bus lock detected
-Date: Wed, 18 Nov 2026 15:28:32 +0100
-Message-ID: <20261118150225.974230671@linuxfoundation.org>
+Subject: [PATCH 6.1 0696/2857] staging: rtl8723bs: fix protected RX frame validation in decrypt path
+Date: Wed, 18 Nov 2026 15:28:50 +0100
+Message-ID: <20261118150226.620794766@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,50 +67,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-[ Upstream commit cef48693da1e964e9f192bfc16cd0ed287c48337 ]
+[ Upstream commit 495cb31c791bdf3f9efef255a9587b05b0526c9d ]
 
-Preserve the negative return value from __vmx_handle_exit() when a bus
-lock is detected, instead of always overwriting it with 0.
+The RX software decrypt path mishandles crafted protected frames from a
+malicious AP in two ways:
 
-The purpose of bus_lock_detected handling is to force a userspace exit to
-inform userspace that a bus lock happened. The negative return value can
-achieve this purpose, and changing the negative value to 0 fails to return
-an error to userspace. So, preserve the negative return value.
+1) decryptor() never checks that a protected frame is long enough to
+hold the 802.11 header plus the per-cipher trailer.  All of
+rtw_wep_decrypt(), rtw_tkip_decrypt() and rtw_aes_decrypt() compute
 
-Fixes: fe6b6bc802b4 ("KVM: VMX: Enable bus lock VM exit")
+	length = hdr.len - hdrlen - iv_len;
+
+and act on the result, and recvframe_chkmic() similarly computes
+
+	datalen = hdr.len - hdrlen - iv_len - icv_len - 8;
+
+for TKIP (the 8-byte Michael MIC is not accounted for in icv_len).
+A frame shorter than hdrlen + iv_len + icv_len (+ 8 for TKIP) underflows
+these unsigned subtractions, turning into a ~4 GiB iteration count in
+aes_decipher()/arc4_crypt()/rtw_seccalctkipmic() or a ~4 GiB crc32_le()
+length, causing out-of-bounds reads/writes of up to ~4 GiB starting from
+the rx skb.  Reject such frames in decryptor() before touching the IV;
+this covers all three ciphers and the TKIP MIC check, and also keeps the
+unconditional iv[3] access within the frame.
+
+2) validate_80211w_mgmt() keeps using the frame - two memcpys through
+the stale rx_data pointer and a pkt_len update - before checking
+whether decryptor() returned NULL.  On decrypt failure (e.g. a unicast
+protected deauth/disassoc/action frame with a bad MIC, which this path
+always software-decrypts) the skb has already been freed, so this is a
+use-after-free read/write, and the caller's error path frees the frame
+a second time, drifting free_recvframe_cnt.  Bail out immediately when
+decryptor() fails, freeing the temporary mgmt_DATA buffer first.
+
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
+
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
+Assisted-by: LLM
 Cc: stable@vger.kernel.org
-Reported-by: sashiko-bot@kernel.org
-Closes: https://lore.kernel.org/all/20260805034602.5B2BB1F000E9@smtp.kernel.org/
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://patch.msgid.link/20260819094903.3060020-7-xiaoyao.li@intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Link: https://patch.msgid.link/8ee3bdd1c45034200cb1aa9a7e9b575b9584643a@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_recv.c | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index cc10bde20d451..16b95732ba9e6 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -6539,11 +6539,12 @@ static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
- 	 * a bus lock in guest.
- 	 */
- 	if (to_vmx(vcpu)->exit_reason.bus_lock_detected) {
--		if (ret > 0)
-+		if (ret > 0) {
- 			vcpu->run->exit_reason = KVM_EXIT_X86_BUS_LOCK;
-+			ret = 0;
-+		}
+diff --git a/drivers/staging/rtl8723bs/core/rtw_recv.c b/drivers/staging/rtl8723bs/core/rtw_recv.c
+index ebec2cff6a2b6..9004c3952a655 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_recv.c
++++ b/drivers/staging/rtl8723bs/core/rtw_recv.c
+@@ -387,8 +387,21 @@ static union recv_frame *decryptor(struct adapter *padapter, union recv_frame *p
+ 	u32  res = _SUCCESS;
  
- 		vcpu->run->flags |= KVM_RUN_X86_BUS_LOCK;
--		return 0;
- 	}
- 	return ret;
- }
+ 	if (prxattrib->encrypt > 0) {
+-		u8 *iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
++		u8 *iv;
++		u32 min_len = prxattrib->hdrlen + prxattrib->iv_len + prxattrib->icv_len;
+ 
++		/* TKIP appends an 8-byte Michael MIC that icv_len doesn't account for */
++		if (prxattrib->encrypt == _TKIP_)
++			min_len += 8;
++
++		/* a protected frame must be long enough to hold the IV and ICV/MIC */
++		if (precv_frame->u.hdr.len < min_len) {
++			rtw_free_recvframe(precv_frame,
++					   &padapter->recvpriv.free_recv_queue);
++			return NULL;
++		}
++
++		iv = precv_frame->u.hdr.rx_data + prxattrib->hdrlen;
+ 		prxattrib->key_index = (((iv[3]) >> 6) & 0x3);
+ 
+ 		if (prxattrib->key_index > WEP_KEYS) {
+@@ -1372,6 +1385,10 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
+ 			if (!mgmt_DATA)
+ 				goto validate_80211w_fail;
+ 			precv_frame = decryptor(adapter, precv_frame);
++			if (!precv_frame) {
++				kfree(mgmt_DATA);
++				goto validate_80211w_fail;
++			}
+ 			/* save actual management data frame body */
+ 			memcpy(mgmt_DATA, ptr + pattrib->hdrlen + pattrib->iv_len, data_len);
+ 			/* overwrite the iv field */
+@@ -1379,8 +1396,6 @@ static signed int validate_80211w_mgmt(struct adapter *adapter, union recv_frame
+ 			/* remove the iv and icv length */
+ 			pattrib->pkt_len = pattrib->pkt_len - pattrib->iv_len - pattrib->icv_len;
+ 			kfree(mgmt_DATA);
+-			if (!precv_frame)
+-				goto validate_80211w_fail;
+ 		} else if (is_multicast_ether_addr(GetAddr1Ptr(ptr)) &&
+ 			(subtype == WIFI_DEAUTH || subtype == WIFI_DISASSOC)) {
+ 			signed int BIP_ret = _SUCCESS;
 -- 
 2.53.0
 
