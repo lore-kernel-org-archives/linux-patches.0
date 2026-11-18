@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022675;
-	b=gOWUZN1CvgDN8OxOpQ59dIKW/MT3KUWcRgDIE4+Hdnizd1WFuoVz35n4zz21ix8ulkwr
-	 wIR6/D8Q8JIusH0zBibRH58ofVWk13JuSVLPcE4itbhod3Mi7x5tc1G8eBwQ7pEFJTRgO
-	 W07/Tzba33Zbm1ZzUSOSXe/aRaOitxU1pL/sNp+D0TnmotVuWjP36mnzIcnjPQHN5x0H7
-	 TxcywcxR7Q7OK3CwR/c2mRLQq270jdnuha+7bVYYwjYWvpQpcBmeNqABJ1OWD3S+lN8Ij
-	 ytaj51KVr9KQ36BgOnO2hFvDThy9VhVtm9gYJNUqmHee6cQo3dAYc9eHb52bfqyy+4A==
+	t=1795022677;
+	b=AdfXDawpUX1aDm/TpyUj24feOTuNnWVrM1qa+3s8s1t7sf+pqRxSB3FtOZFQOkr6tJ6A
+	 vgPvaVLpYB+DY+E1XA9XOy/JFwv4jcbi6rzLm356p8N9R5MCXx0JyWQk92bltyGopbeW+
+	 B6lvtNmvUs7nNQZhHXjdtDmIncP9Y0YMaU33jU9RRnLOJWdA1mutMtV4R5o3/CZEL2LXf
+	 FX1EPaytQ86eTSUsah78F5CjNk5uiQBH/wGBVUKCPNhR3QKhY67YF6HHBTh7Tm+gPVyjI
+	 dyDG1Vm8wUP4x65pavAcX7d0ZydiF0FpnnLuvwLQv9maivF6EqwkqO2ZlM1hpyui9kQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022675;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=B8In5UecZdglJPHyLfxVFR8UhWfs0GXKkwVdymvucu8=;
-	b=sddgiOYswbw1ou67W+U7DJCsqviDqZ56nIMBBrNGzvIhuidDwt9bxzfHBtAnoJsWw1M3
-	 tUrtr2xTk7t0YbLxWZzsX7cMJHb43H5+3vhAtOC7yAsERwWzfhtjyNHveoe/NSKmahS1D
-	 XOOPx+pXAdfwICilJrAtoqeTDKDGT2ktdeTbDiERPiqvNMzcpYu8vcluMjyycwg+AUIv6
-	 7zLs54HrbC6JPkRutxyd2Q7lWz3mCMP4CdYt0BhavkboOIhAgpuBWByosMss/zxLHcxxb
-	 MiIkGlcIi8eit1GR1LnI1i5m+Tka9AA9P42W7rfFnVmp1VSdDTt2VtgTKCPJEN6sLCQ==
+	bh=gNjhlCEitExtre1WtVAvglMWfprWspspunMsehHkECw=;
+	b=plDs+xAaIbx1i79lXBHzfAk+IlGjPhT4W3L6d0ytUgtnmDqRj7EA/cFHBlqkz282pzVe
+	 +Xtx+Tz0vf2/uNL1oB5XFzlBzHRYd3FxQuQbtPVRbsV0ffmU0QJUrnFJ8HhnC5ZyuGzh2
+	 /aLGOdMjIzidmOtSyWjmJtl47wy6p8fcl5jLQMkfCwXbw41eB3UlyL7znPfHM9ZR4eZxH
+	 9CKWiYoJT3ITIfFQ90PkW21qu8MH+WThl8qJRoGD1I6ef86DyPZK4zQp7I7kU2vOWJXb9
+	 gxiLvnZzfpt2emuQCmm4Y2I3hHsPjlhb0ZkeHCJJo9SZvk/SfUqJmXMkcySQl8fVa0A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QmYCTutv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DujRFOPR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB6F606A325;
-	Wed, 18 Nov 2026 17:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F2B606A32A;
+	Wed, 18 Nov 2026 17:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QmYCTutv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6F61F000C4;
-	Wed, 18 Nov 2026 17:24:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DujRFOPR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269181F000C4;
+	Wed, 18 Nov 2026 17:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022674;
-	bh=B8In5UecZdglJPHyLfxVFR8UhWfs0GXKkwVdymvucu8=;
+	s=korg; t=1795022677;
+	bh=gNjhlCEitExtre1WtVAvglMWfprWspspunMsehHkECw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QmYCTutvfFKmNsFq9/gQL03sVhXwPRg/Uppse5O0tgNf60kAMxlVbhpRsQP5h3+O+
-	 B6jUeS6Qwn4L65gZE6P23d8GIUOnajvizyM63WJrW/VNSQsCMMk4Ds0jJtNhd6tMjo
-	 4IpFyxoS9zDVUNpb8iqbe4T8xDQfY2z0HQW6HwEw=
+	b=DujRFOPRybb2f0j0wCMEt83W5rE8DAtmuDgQ+wL3QQXOsYZO6cn30pW5JKr/q77tT
+	 pmMO4D7K4SulWLy07W/Z4W56tkibdCnEZmT/Ni1Cr3cRjOKdYTtCn5zqBgVD3OFMVq
+	 QmV9+cq505YOxZnd1wTGOQ+viU290Ywusc3JMvKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Machon <daniel.machon@microchip.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Chris J Arges <carges@cloudflare.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0056/2151] net: Use a dedicated flag to track disabled napi instances
-Date: Wed, 18 Nov 2026 15:29:51 +0100
-Message-ID: <20261118150123.784354897@linuxfoundation.org>
+Subject: [PATCH 6.18 0047/2151] inet: frags: bound the wmem charge of the socket completing a reassembly
+Date: Wed, 18 Nov 2026 15:29:42 +0100
+Message-ID: <20261118150123.438869141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,127 +69,262 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Eric Dumazet <edumazet@kernel.org>
 
-commit 8dc87fc5d6a0eb337744737008177342a708bf36 upstream.
+[ Upstream commit b71c101bbb9814d163c00234d43c41f0a17907d4 ]
 
-Trying to disable the napi threaded state while the napi instance is
-disabled will hang forever in napi_stop_kthread(), as it waits for
-NAPIF_STATE_SCHED_THREADED to clear.
+When a socket owned fragment completes a reassembly queue,
+inet_frag_reasm_prepare() and inet_frag_reasm_finish() charge the
+truesize of all other fragments to its sk_wmem_alloc. These fragments
+were orphaned when queued, and might have been sent by someone else,
+for instance padded TUN packets.
 
-This won't happen until the next ____napi_schedule() call, which won't
-happen as it's disabled.
+Commit 3ae20e4697eb ("inet: frags: limit the truesize of a reassembly
+queue") bounds this charge to INT_MAX / 2 per queue, but a socket can
+complete several queues while the reassembled skbs are still alive,
+for instance held in a qdisc. sk_wmem_alloc can then go past INT_MAX,
+refcount_add() saturates it with a WARN, and the socket is leaked.
 
-This happens in 2 instances :
+This is reachable from an unprivileged user/network namespace, by
+raising ipfrag_high_thresh.
 
- - Drivers that create but don't use napi instances (stmmac's rxtx napi
-   for AF_XDP for example), here it's a driver bug
+Refuse the reassembly if the charge would push sk_wmem_alloc above
+2 * sk_sndbuf, the bound ip_append_data() uses, plus 4MB of slack for
+fragments inflated by a refragmentation with a small MTU, and never
+above INT_MAX / 2. The cap matters for tun sockets, which use
+sk_sndbuf = INT_MAX, and whose skbs are still owned when act_ct or
+openvswitch reassemble them at ingress.
 
- - Drivers that create their napi instances in .probe(). Here, setting
-   threaded off while the interface is down will hang :
+Several queues can complete at the same time on different cpus for
+the same socket, so the charge is reserved with a cmpxchg() loop in
+inet_frag_reasm_prepare(), before it modifies the queue, and settled
+in inet_frag_reasm_finish(). Move the size checks of ip_frag_reasm(),
+ip6_frag_reasm() and nf_ct_frag6_reasm() before
+inet_frag_reasm_prepare(), using the first fragment which becomes the
+head, so that a successful inet_frag_reasm_prepare() is always followed
+by inet_frag_reasm_finish(). All callers already kill the queue when
+inet_frag_reasm_prepare() returns NULL.
 
-   ip link set eth0 down
-   echo 1 > /sys/class/net/eth0/threaded
-   echo 0 > /sys/class/net/eth0/threaded
-   -> hang
+Found by code inspection (AI review), not reproduced.
 
-Checking on netif_running() isn't enough, as napi instances may be
-transiently disabled when changing the MTU for example, let's use a
-dedicated flag to track if the instance is disabled.
-
-This allows immediately disabling the kthread when the instance is
-disabled.
-
-This was tested on mvpp2 (probe-time napi_add) and stmmac.
-
-[ Backport: omit threaded busy-poll state handling, which is not present
-  in 6.18.y. ]
-
-Fixes: 689883de94dd ("net: stop napi kthreads when THREADED napi is disabled")
-Tested-by: Daniel Machon <daniel.machon@microchip.com>
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20261029153130.121204-1-maxime.chevallier@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Chris J Arges <carges@cloudflare.com>
+Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Closes: https://lore.kernel.org/netdev/24feda7d-ae49-45af-9596-2cc5f149f28e@redhat.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261104122927.1033747-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h |  2 ++
- net/core/dev.c            | 14 ++++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ net/ipv4/inet_fragment.c                | 61 ++++++++++++++++++++++---
+ net/ipv4/ip_fragment.c                  | 13 ++++--
+ net/ipv6/netfilter/nf_conntrack_reasm.c | 13 ++++--
+ net/ipv6/reassembly.c                   | 13 ++++--
+ 4 files changed, 78 insertions(+), 22 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 7be5b78b2bff7..e272d0006c6bd 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -431,6 +431,7 @@ enum {
- 	NAPI_STATE_THREADED,		/* The poll is performed inside its own thread*/
- 	NAPI_STATE_SCHED_THREADED,	/* Napi is currently scheduled in threaded mode */
- 	NAPI_STATE_HAS_NOTIFIER,	/* Napi has an IRQ notifier */
-+	NAPI_STATE_DISABLED,		/* NAPI is disabled */
- };
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 436b8737b2b66..4d55444a6f30f 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -17,6 +17,7 @@
+ #include <linux/rtnetlink.h>
+ #include <linux/slab.h>
+ #include <linux/rhashtable.h>
++#include <linux/sizes.h>
  
- enum {
-@@ -445,6 +446,7 @@ enum {
- 	NAPIF_STATE_THREADED		= BIT(NAPI_STATE_THREADED),
- 	NAPIF_STATE_SCHED_THREADED	= BIT(NAPI_STATE_SCHED_THREADED),
- 	NAPIF_STATE_HAS_NOTIFIER	= BIT(NAPI_STATE_HAS_NOTIFIER),
-+	NAPIF_STATE_DISABLED		= BIT(NAPI_STATE_DISABLED),
- };
+ #include <net/sock.h>
+ #include <net/inet_frag.h>
+@@ -516,6 +517,43 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ }
+ EXPORT_SYMBOL(inet_frag_queue_insert);
  
- enum gro_result {
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 673223065b955..95126e2360792 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -7127,6 +7127,12 @@ static void napi_stop_kthread(struct napi_struct *napi)
- {
- 	unsigned long val, new;
- 
-+	/* Instance is disabled, we can immediately stop the kthread */
-+	if (test_bit(NAPI_STATE_DISABLED, &napi->state)) {
-+		clear_bit(NAPI_STATE_THREADED, &napi->state);
-+		goto stop;
-+	}
++/* When a socket owned fragment completes a queue, the truesize of all
++ * other fragments is charged to its sk_wmem_alloc, although they were
++ * orphaned when queued and possibly sent by someone else.
++ * Bound this like ip_append_data() bounds the memory a socket can
++ * allocate (2 * sk_sndbuf), plus slack for fragments inflated by a
++ * refragmentation using a small MTU. Otherwise, several reassembled skbs
++ * alive at the same time can saturate sk_wmem_alloc, and leak the socket.
++ *
++ * Several queues can complete at the same time for the same socket,
++ * and some sockets (tun) use sk_sndbuf = INT_MAX. The charge is reserved
++ * with a cmpxchg() loop, a refcount_t has no helper for this.
++ */
++#define INET_FRAG_WMEM_SLACK	SZ_4M
 +
- 	/* Wait until the napi STATE_THREADED is unset. */
- 	while (true) {
- 		val = READ_ONCE(napi->state);
-@@ -7156,6 +7162,7 @@ static void napi_stop_kthread(struct napi_struct *napi)
- 		msleep(20);
++static bool inet_frag_wmem_reserve(struct sock *sk, unsigned int charge)
++{
++	u64 limit = 2ULL * READ_ONCE(sk->sk_sndbuf) + INET_FRAG_WMEM_SLACK;
++	int old = refcount_read(&sk->sk_wmem_alloc);
++
++	limit = min_t(u64, limit, INET_FRAG_MAX_TRUESIZE);
++	do {
++		if (old <= 0 || (u64)old + charge > limit)
++			return false;
++	} while (!atomic_try_cmpxchg(&sk->sk_wmem_alloc.refs, &old,
++				     old + charge));
++
++	return true;
++}
++
++static void inet_frag_wmem_adjust(struct sock *sk, int delta)
++{
++	if (delta >= 0)
++		refcount_add(delta, &sk->sk_wmem_alloc);
++	else
++		WARN_ON_ONCE(refcount_sub_and_test(-delta, &sk->sk_wmem_alloc));
++}
++
+ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 			      struct sk_buff *parent)
+ {
+@@ -527,6 +565,11 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 	int delta;
+ 
+ 	if (sk && is_skb_wmem(skb)) {
++		/* skb->truesize is already charged to sk, and is part of
++		 * q->truesize. inet_frag_reasm_finish() settles the charge.
++		 */
++		if (!inet_frag_wmem_reserve(sk, q->truesize - skb->truesize))
++			return NULL;
+ 		/* TX: skb->sk might have been passed as argument to
+ 		 * dst->output and must remain valid until tx completes.
+ 		 *
+@@ -604,17 +647,18 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 
+ out_restore_sk:
+ 	if (orig_truesize) {
+-		int ts_delta = head->truesize - orig_truesize;
+-
+ 		/* if this reassembled skb is fragmented later,
+ 		 * fraglist skbs will get skb->sk assigned from head->sk,
+ 		 * and each frag skb will be released via sock_wfree.
+-		 *
+-		 * Update sk_wmem_alloc.
+ 		 */
+ 		head->sk = sk;
+ 		head->destructor = destructor;
+-		refcount_add(ts_delta, &sk->sk_wmem_alloc);
++		/* On failure, head stays in the queue and will be freed
++		 * with the queue: only charge its truesize.
++		 */
++		if (!nextp)
++			inet_frag_wmem_adjust(sk, (int)head->truesize -
++						  (int)q->truesize);
  	}
  
-+stop:
- 	kthread_stop(napi->thread);
- 	napi->thread = NULL;
+ 	return nextp;
+@@ -625,7 +669,6 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 			    void *reasm_data, bool try_coalesce)
+ {
+ 	struct sock *sk = is_skb_wmem(head) ? head->sk : NULL;
+-	const unsigned int head_truesize = head->truesize;
+ 	struct sk_buff **nextp = reasm_data;
+ 	struct rb_node *rbn;
+ 	struct sk_buff *fp;
+@@ -690,8 +733,12 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 	head->tstamp = q->stamp;
+ 	head->tstamp_type = q->tstamp_type;
+ 
++	/* After inet_frag_reasm_prepare(), q->truesize is charged to sk.
++	 * sum_truesize also includes what it added (skb_unclone() and
++	 * frag_list clone).
++	 */
+ 	if (sk)
+-		refcount_add(sum_truesize - head_truesize, &sk->sk_wmem_alloc);
++		inet_frag_wmem_adjust(sk, sum_truesize - (int)q->truesize);
  }
-@@ -7541,6 +7548,7 @@ void netif_napi_add_weight_locked(struct net_device *dev,
- 	napi->list_owner = -1;
- 	set_bit(NAPI_STATE_SCHED, &napi->state);
- 	set_bit(NAPI_STATE_NPSVC, &napi->state);
-+	set_bit(NAPI_STATE_DISABLED, &napi->state);
- 	netif_napi_dev_list_add(dev, napi);
+ EXPORT_SYMBOL(inet_frag_reasm_finish);
  
- 	/* default settings from sysfs are applied to all NAPIs. any per-NAPI
-@@ -7577,7 +7585,8 @@ void napi_disable_locked(struct napi_struct *n)
- 			val = READ_ONCE(n->state);
- 		}
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index c790d2f494870..03e19a29df05e 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -412,16 +412,19 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
+ 		goto out_fail;
+ 	}
  
--		new = val | NAPIF_STATE_SCHED | NAPIF_STATE_NPSVC;
-+		new = val | NAPIF_STATE_SCHED | NAPIF_STATE_NPSVC |
-+		      NAPIF_STATE_DISABLED;
- 		new &= ~(NAPIF_STATE_THREADED | NAPIF_STATE_PREFER_BUSY_POLL);
- 	} while (!try_cmpxchg(&n->state, &val, new));
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	len = ip_hdrlen(skb_rb_first(&qp->q.rb_fragments)) + qp->q.len;
++	err = -E2BIG;
++	if (len > 65535)
++		goto out_oversize;
++
+ 	/* Make the one we just received the head. */
+ 	reasm_data = inet_frag_reasm_prepare(&qp->q, skb, prev_tail);
+ 	if (!reasm_data)
+ 		goto out_nomem;
  
-@@ -7620,7 +7629,8 @@ void napi_enable_locked(struct napi_struct *n)
- 	do {
- 		BUG_ON(!test_bit(NAPI_STATE_SCHED, &val));
+-	len = ip_hdrlen(skb) + qp->q.len;
+-	err = -E2BIG;
+-	if (len > 65535)
+-		goto out_oversize;
+-
+ 	inet_frag_reasm_finish(&qp->q, skb, reasm_data,
+ 			       ip_frag_coalesce_ok(qp));
  
--		new = val & ~(NAPIF_STATE_SCHED | NAPIF_STATE_NPSVC);
-+		new = val & ~(NAPIF_STATE_SCHED | NAPIF_STATE_NPSVC |
-+			      NAPIF_STATE_DISABLED);
- 		if (n->dev->threaded && n->thread)
- 			new |= NAPIF_STATE_THREADED;
- 	} while (!try_cmpxchg(&n->state, &val, new));
+diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
+index 599c49bf0a0af..02341c64baaa6 100644
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -330,11 +330,10 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 	if (unlikely(ecn == 0xff))
+ 		goto err;
+ 
+-	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
+-	if (!reasm_data)
+-		goto err;
+-
+-	payload_len = -skb_network_offset(skb) -
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	payload_len = -skb_network_offset(skb_rb_first(&fq->q.rb_fragments)) -
+ 		       sizeof(struct ipv6hdr) + fq->q.len -
+ 		       sizeof(struct frag_hdr);
+ 	if (payload_len > IPV6_MAXPLEN) {
+@@ -343,6 +342,10 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 		goto err;
+ 	}
+ 
++	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
++	if (!reasm_data)
++		goto err;
++
+ 	/* We have to remove fragment header from datagram and to relocate
+ 	 * header in order to calculate ICV correctly. */
+ 	skb_network_header(skb)[fq->nhoffset] = skb_transport_header(skb)[0];
+diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
+index c10a8a9d607e8..a5e0cec45974a 100644
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -271,16 +271,19 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 	if (unlikely(ecn == 0xff))
+ 		goto out_fail;
+ 
+-	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
+-	if (!reasm_data)
+-		goto out_oom;
+-
+-	payload_len = -skb_network_offset(skb) -
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	payload_len = -skb_network_offset(skb_rb_first(&fq->q.rb_fragments)) -
+ 		       sizeof(struct ipv6hdr) + fq->q.len -
+ 		       sizeof(struct frag_hdr);
+ 	if (payload_len > IPV6_MAXPLEN)
+ 		goto out_oversize;
+ 
++	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
++	if (!reasm_data)
++		goto out_oom;
++
+ 	/* We have to remove fragment header from datagram and to relocate
+ 	 * header in order to calculate ICV correctly. */
+ 	nhoff = fq->nhoffset;
 -- 
 2.53.0
 
