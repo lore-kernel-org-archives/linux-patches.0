@@ -1,70 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053723;
-	b=Lby4ZCOACu2ZHqwySWapnBELvmc+huSNw9m0DuKpgtGsahw64f3NYBibNTWJW4ZjjLcc
-	 UMkx0RiC4El2jVeGOP0wEdB8w5m+T/EPpzEUOkaao1Bw0x8jaUtzQ0JfqrK4hEw+cl22H
-	 6tVjqRU2y2vs60c3C8T3o7HBQluRjcJulodBOGDayEiVixIzXTe8BwrYE6S7I67I17F6i
-	 Erl+r8PALwuD3tFpOHwXfjFTQl/1SXgGALnCmW/hVWgdwVQMde7EN9dUbovftiZUrAQqw
-	 1CZhD+ryxH3XLxdTQtyokg3nK9rH9IA4VLeVis11E/nE4QV1JzowWlDPy15rUNqJN1w==
+	t=1795053726;
+	b=ejEl30VVxw1PdaGqQ08Iys0jzOeJkyARhssqBOOYgud447fXeh8XWx6bn2FJa6fRSysW
+	 T8rX7mxFRd7E9qR7h8n29kx2xUfawIVWui/3ajyIaskRKgp0gTR3HoEzLltK5HfAdP86f
+	 eE6qnpMkRZOOhFnE7Eb5joSlk8zi3AvCbNW3/R/RI641kZEGfrhmAgyrP9LviWQUIwGkA
+	 rWDO+XqRV3CJqYG5V3DAq5nUtqUASz8n6hn5gr5fANUKMxOHi/gOd7d5/GwN4dVeNVJhu
+	 LANspf8m/fbKSeG6idHZ1aYg/x/a0X9hT5zeV7pLrYPtb87qfUPuTUskgbNRf2NL1AA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053723;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053726;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=C8fFkZJAKutZe9/LR9O2Ik33v1ujevzzuraGZpbiBHw=;
-	b=VQ1lgviSXyWLaGX2VqKvJDTeqXJpWIB0Wk8M3nlfOJaF1tbqOzQ039QlLdKEO1EjK3l/
-	 TjZDLFCVG8t76DUhYFMYL3Jww427SKJqGAB8YVphUzVmI/6Ozja8YOnnnoVfmg+83u/zK
-	 SqSzyh77HFl+w7taxHQcY7ufidq+vixGrFhV6UtZEOzMYR9OK6Xd/uzmiRvh5/s00ANGz
-	 Q/uldNlOxRPFTTFrJ8Ib8LNGXmjIUNGKsTwUUL16pWPt4+1f4gB6gldBO182eJAylJw1E
-	 cwRD4KPYbSwetqABQNwCF0lW/lRsRrJK1v1QqhZO1yyR6nrEGdoTw9MqMyyUMWB7Jgw==
+	bh=SVsTNQCdjNCR7qB+5EeAwd6pazBmUfuu45F7DRAS3YI=;
+	b=eTo1PAX3LeYcBCfrfLeUp+a2HWfU1twDFqt5Ve79rA8EMCJjri+u1FOpQak7c2ZvIKjE
+	 Er1Hhacjpayx2pZqJf96k1YNM43J8PHxt93mQwDAEcOe8ozz13AFAXFG0OJEDkbV4Jxxm
+	 lSoEwESH+9VVxShkUNFGNPxJwEZBYwrBCC801fYP8VxjRVLoOjewcyAkBAQO8cG7cyXnh
+	 SFhl6TT0hvQhl6eyHRa6v9kor2jYnfZgqY9id7lIqsecEsq4yDKK20rC4pJf7NRw5Pakt
+	 njOnfuTAxIHdyQvis4lQNbUNwguYzT6cqQvNhMbadiO9nVkkLcDONkHhHsj8AyqiEog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMadamxN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="u6kd/VAW";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAE4606A31C;
-	Thu, 19 Nov 2026 02:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CD7606A31C;
+	Thu, 19 Nov 2026 02:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aMadamxN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36571F000C4;
-	Thu, 19 Nov 2026 02:02:02 +0000 (UTC)
+	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=u6kd/VAW
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC96B1F000C4;
+	Thu, 19 Nov 2026 02:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053723;
-	bh=C8fFkZJAKutZe9/LR9O2Ik33v1ujevzzuraGZpbiBHw=;
+	s=korg; t=1795053726;
+	bh=SVsTNQCdjNCR7qB+5EeAwd6pazBmUfuu45F7DRAS3YI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=aMadamxNhaclY4cdIkrD4O5R2xkoSAULXeomU8EFMPX9j/qpOjLyxkf4E4JKgkx4u
-	 IpYbSteS1pspI3PDS8AjuhnG6649XnUMxfKo3RZ0UEe+nPefrtuF8utjvh0EFDM9Kz
-	 j4PQJSCbn9VWAMufNYY8eGSF/0K2XJF3mQav8z1U=
+	b=u6kd/VAWzrWMkGLRN6v07SsSO+tbqB9ei4qc5TpYM9inxW/8g9Y7VsrpzaiOuWnPA
+	 93LL0mX4h9vZ9ihkKrGBqgVYUL5YwXH+UDvTLpZvux8fKzliQs9wNH9R6Dz4gZE9gW
+	 hvOk9Cq8mBeNZJjxZ89Rmh1Squawtqg9MrGRfkIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Chris Mason <mason@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Pedro Falcato <pfalcato@suse.de>,
-	Oscar Salvador <osalvador@suse.de>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Adam Litke <agl@us.ibm.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Rik van Riel <riel@surriel.com>,
-	Peter Xu <peterx@redhat.com>,
-	Kiryl Shutsemau <kas@kernel.org>,
-	Mike Rapoport <rppt@kernel.org>,
+	Sashiko <netdev-bot+sashiko@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1018/2214] mm/hugetlb: unmap the page where the other VMA maps it
-Date: Wed, 18 Nov 2026 15:44:54 +0100
-Message-ID: <20261118150053.092696289@linuxfoundation.org>
+Subject: [PATCH 5.15 1019/2214] ipmr, ip6mr: validate packets injected into the register vif on xmit
+Date: Wed, 18 Nov 2026 15:44:55 +0100
+Message-ID: <20261118150053.130921527@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -86,152 +71,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit ae99c503eb362b42cd5d24d80bc6cba669acc4c2 ]
+[ Upstream commit aa1799e93f5ebb973252aec649d84d12d9c7fd1c ]
 
-If the owner of a MAP_PRIVATE hugetlb mapping fails to allocate a page
-for CoW, unmap_ref_private() unmaps the old page from all other private
-VMAs that have no reservation of their own.  It finds them by the offset
-in the file, but then zaps each of them at the address of the faulting
-VMA.  Nothing says that another VMA maps the offset at that address: a
-child can have moved its copy of the VMA with mremap(), and a second
-mapping of the file is wherever mmap() has put it.
+reg_vif_xmit() passes the packet to ipmr_cache_report() which copies its
+IP header into the IGMPMSG_WHOLEPKT report that is queued to the mroute
+socket. Nothing guarantees that the packet contains a full IP header, so
+when a short packet is injected on the register device (e.g., using
+AF_PACKET), the copy reads past the end of the packet and a recvmsg() on
+the mroute socket leaks the uninitialized bytes to user space [1].
 
-So __unmap_hugepage_range() walks the page tables of the other mm at an
-address outside of iter_vma, where i_mmap_rwsem of this file protects
-nothing and where anything can be mapped, and the page stays mapped where
-it really is.
+IPv6 has the same problem [2]. Its reg_vif_xmit() does call
+pskb_inet_may_pull(), but the helper keys off skb->protocol and does not
+pull anything when the protocol is neither IPv4 nor IPv6.
 
-All of the following was seen on v7.3-rc6+ (g6c377d19d4a5) in KVM guests,
-as a user without any privilege.  It takes a pool of 2 MiB pages with no
-free page that is not reserved, so that the allocation fails: the user
-can take or reserve what is free itself.
+Fix by dropping packets whose protocol does not match the address family
+of the register device or that do not contain a full network header.
 
- - The child moves its VMA away.  The page is never unmapped, the
-   mapcount stays 2, and the owner goes round retry_avoidcopy in
-   hugetlb_wp() until the child is gone or a page becomes free.  SIGKILL
-   to the owner does not end it.  5 of 5 runs.
+[1]
+BUG: KMSAN: kernel-infoleak in _copy_to_iter
+ raw_recvmsg
 
- - The owner's mm has a second private mapping of the offset, made with
-   MAP_NORESERVE.  The owner zaps its own entry and reads zeroes where
-   its data was.  5 of 5 runs.
+Uninit was stored to memory at:
+ ipmr_cache_report
+ reg_vif_xmit
+ packet_sendmsg
 
- - The child moves its VMA away and maps a 1 GiB hugetlb page at the old
-   address, so this one takes a pool with a 1 GiB page as well.
-   huge_pte_offset() for the 2 MiB size steps through the PUD
-   leaf, so the "PMD table" is the 1 GiB page itself and its "page table
-   lock" is folio->private of that page, which holds 2.  Kernels with
-   lock debugging oops in __unmap_hugepage_range(), 7 of 7 runs.  Others
-   spin on that word for ever with preemption disabled, 5 of 5 runs:
+Uninit was created at:
+ __alloc_skb
+ sock_alloc_send_pskb
+ packet_sendmsg
 
-     watchdog: BUG: soft lockup - CPU#0 stuck for 26s! [u_det3:130]
-     RIP: 0010:queued_spin_lock_slowpath+0x8a/0x290
-     RAX: 0000000000000002 RBX: ffffea0001000028
-     Call Trace:
-      __unmap_hugepage_range+0x154/0x6d0
-      unmap_hugepage_range+0xc1/0x140
-      hugetlb_wp+0x55c/0x700
-      hugetlb_fault+0x5f3/0x8f0
+Bytes 1-3 of 21 are uninitialized
 
-   RCU stalls follow, and killing all tasks of the user changes nothing.
-   Four such owners, whose children share a single 1 GiB page, took down
-   the whole guest with its four CPUs, 2 of 2 runs: one reported soft
-   lockups on all four, the other gave no sign of life any more.
+[2]
+BUG: KMSAN: kernel-infoleak in _copy_to_iter
+ rawv6_recvmsg
 
-   i_mmap_rwsem stays write locked.  With a MAP_PRIVATE mapping of a
-   hugetlbfs file that belongs to another user, and that the attacker
-   can only read, the next mmap() of that file by its owner sleeps
-   uninterruptibly in __mmap_region(), 4 of 4 runs.
+Uninit was stored to memory at:
+ ip6mr_cache_report
+ reg_vif_xmit
+ packet_sendmsg
 
-Compute the address from the offset for each VMA.  The tree walk returns
-only VMAs that cover pgoff, and vm_start, vm_end and vm_pgoff of a hugetlb
-VMA are aligned to the huge page size, as pgoff is, so the whole range
-lies inside iter_vma.  Its page tables can not go away there, since the
-VMA is unlinked from the file under i_mmap_rwsem first.
+Uninit was created at:
+ __alloc_skb
+ sock_alloc_send_pskb
+ packet_sendmsg
 
-With the right address the page is unmapped from all VMAs but the
-owner's, so the retry in hugetlb_wp() finds a mapcount of 1 and reuses the
-page.
+Bytes 8-23 of 41 are uninitialized
 
-A child that has moved its copy of the VMA now loses the page, and gets
-SIGBUS when it faults on a missing page of that VMA.  That is what the
-comment above the function has always promised to those who do not own
-the reservation, and what already happens to a child that has left the
-VMA in place.
-
-The address has been wrong from the start, and the second case needs
-only mmap() and fork().  mremap() of hugetlb VMAs, which the other cases
-use, came with commit 550a7d60bd5e ("mm, hugepages: add mremap() support
-for hugepage backed vma") in v5.16.
-
-Original fix generated by an LLM and sent in private by Josef.
-
-[david@kernel.org: switch to vma_filebacked_address, add VM_WARN_ON_ONCE, refine comments]
-Link: https://lore.kernel.org/20261015-urgent_fixes-v1-4-42796911043b@kernel.org
-Fixes: 04f2cbe35699 ("hugetlb: guarantee that COW faults for a process that called mmap(MAP_PRIVATE) on hugetlbfs will succeed")
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: Chris Mason <mason@kernel.org>
-Reviewed-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Lance Yang <lance.yang@linux.dev>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pedro Falcato <pfalcato@suse.de>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Adam Litke <agl@us.ibm.com>
-Cc: Mel Gorman <mgorman@techsingularity.net>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Kiryl Shutsemau <kas@kernel.org>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: <stable@vger.kernel.org>
-[ sashal: Replaced the unavailable vma_filebacked_address() helper with inline VMA address arithmetic. ]
+Fixes: 14fb64e1f449 ("[IPV6] MROUTE: Support PIM-SM (SSM).")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/0545f0c83f5ee2f6696210f87268e811ef655715.1792476357.git.zhilinz%40nebusec.ai
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261025071729.34967-3-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ sashal: Adjusted IPv4 patch context to preserve the existing locking layout around the route lookup. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/hugetlb.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ net/ipv4/ipmr.c  | 6 ++++++
+ net/ipv6/ip6mr.c | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index e8ee7ef7fe03b..a4d70b5ad9a70 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -4578,6 +4578,8 @@ static void unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
- 	struct address_space *mapping;
- 	pgoff_t pgoff;
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index dc33f432e0f0c..10394192e2883 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -502,6 +502,12 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	};
+ 	int err;
  
-+	VM_WARN_ON_ONCE(!PageAnon(page));
++	if (skb->protocol != htons(ETH_P_IP) || !pskb_inet_may_pull(skb)) {
++		DEV_STATS_INC(dev, tx_errors);
++		kfree_skb(skb);
++		return NETDEV_TX_OK;
++	}
 +
- 	/*
- 	 * vm_pgoff is in PAGE_SIZE units, hence the different calculation
- 	 * from page cache lookup which is in HPAGE_SIZE units.
-@@ -4613,9 +4615,18 @@ static void unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
- 		 * could insert a zeroed page instead of the data existing
- 		 * from the time of fork. This would look like data corruption
- 		 */
--		if (!is_vma_resv_set(iter_vma, HPAGE_RESV_OWNER))
--			unmap_hugepage_range(iter_vma, address,
--					     address + huge_page_size(h), page);
-+		if (is_vma_resv_set(iter_vma, HPAGE_RESV_OWNER))
-+			continue;
-+
-+		/*
-+		 * The address in other VMAs can differ. Even though our old
-+		 * page is anon, we always operate on the underlying hugetlb
-+		 * file.
-+		 */
-+		address = iter_vma->vm_start +
-+			((pgoff - iter_vma->vm_pgoff) << PAGE_SHIFT);
-+		unmap_hugepage_range(iter_vma, address,
-+				     address + huge_page_size(h), page);
- 	}
- 	i_mmap_unlock_write(mapping);
- }
+ 	err = ipmr_fib_lookup(net, &fl4, &mrt);
+ 	if (err < 0) {
+ 		kfree_skb(skb);
+diff --git a/net/ipv6/ip6mr.c b/net/ipv6/ip6mr.c
+index a793dcd24813e..1781287fb5aed 100644
+--- a/net/ipv6/ip6mr.c
++++ b/net/ipv6/ip6mr.c
+@@ -601,7 +601,7 @@ static netdev_tx_t reg_vif_xmit(struct sk_buff *skb,
+ 		.flowi6_mark	= skb->mark,
+ 	};
+ 
+-	if (!pskb_inet_may_pull(skb))
++	if (skb->protocol != htons(ETH_P_IPV6) || !pskb_inet_may_pull(skb))
+ 		goto tx_err;
+ 
+ 	if (ip6mr_fib_lookup(net, &fl6, &mrt) < 0)
 -- 
 2.53.0
 
