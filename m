@@ -1,58 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053789;
-	b=2UR7W26YnKBAk8YH7g7lTsxtBTEJfiD+z5/4dCsOrx4jG+wVWJaPr+iviANghCPuSyTS
-	 5fdzCEW/7XjSj5y/H3/hi35zRTwuvibMajbeGpo2lddI0sNOHfE49W9LgPulxO7IMGOj2
-	 5gJbdnSnJvEpJeDEV0WzV6P/1pQUtWk2iFFq6J1vvE8MHuIDhgfcJbGH40Ygrl6TN0bAV
-	 CCWi7zHlXR9rGm+ZamrYdpQT1RuNzY4h9uxVdYggLRhXV3FV6KOh47rqvFGCt+b7w90xk
-	 IYnjuXIiNqDI0CKDoOOMZ9Ilpj/P8Sh2F9Xy3WgC6MBd9PXqSqXnqZ+m2FdP1j1yCrw==
+	t=1795053792;
+	b=K8cXt4SXgskwUDpB/CAYfUjNRzmfN8tJW36BzcfjGYGHDoE0Ut/t56hkohUh6xggUE3O
+	 B1/yXi/HxEMld1oAKYh2y4s7nFIjLi1e+pI99Qu5wgyfiJc3V/UVpeForM9XGYqJIOc29
+	 rINVSNBEvELoAFqScqW4UNVwJL3prhqG0vXAjaKH/ROrKlFejmOABOdWlcBF1Bau1G2zF
+	 CWV1UHr/3RoB4O+7FZ4H7dK6j/WfWqJh3SrR9Vf1gfIR+wC0gD2Pb9kz9e7tL4TUHvQVY
+	 dkoCRMOzcxUZIYE4j7XDg5zOF0wCbmKghlcEm+we4KvQDPbTRq3RW46VVssYca9jGug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053789;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053792;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0aGgErfw2UmoEMkW7YFTLEbPRT/qfElRgEXHfaj3IxA=;
-	b=P/KrdMLksNbBOwhbP+ilGPNOknyiD8mLRmLD2WRBUN0KRhJ/6xu4H7VkSKuiXZzKYR4e
-	 hzf/S4tgZVe3ICY9gAmeO4oVedyJEeY/EflgxTAy7/VoD8/DSY1mpcD4SSHHfWAzlb605
-	 B7amKSixCvIAVLHOrVz+oLQR0/mA0R/DV51HN1XPKQIaJJD+yJ66MPwY6lzzQSiRatZRL
-	 VhQiuhrYunDAnOExIvmNyU0o9VhQwOWCWYao1ViJYJ4UYtkI9DdECWgJkbX3ymB+rBXpg
-	 CnkyReu3YoxiQw/9BK6jpngK9bbt/WYQgmSU4/+V7yOI3oGnnT9D273gfhNle/xusAg==
+	bh=6B0/HSXQTHsQv6pHZuWkLZQrpPWS3Vs51ITITe/uFJg=;
+	b=hYoPiJ7nWmSMXEcYvoM1wdvWnORw3tppgBD1mCuVE7uSn9mseE3yvkJG+Bsm4w+SA71d
+	 qqyODt0pUywrerJhhAxFKMFyC/UxV5V41WWyIgQXY8QgwhIHKGLKezjp6kUL/ne0b8r0u
+	 qEfQZ1jWUPnUr1gd1ueTmeK5EYCrgoFX6FbvvWeF2a3vc4xHpLITVYDQ53cXNSYNf66Fz
+	 b8AId8/KeDxehzbSNi4BfjYEqZTcbrn3c1bwi0W0kuLlE1rUHRwkNiqFJQuatiR1974uQ
+	 08/mR8JCNXsBHtSllRKet+2nnC8r8FOTLcJLneWtRGQUzOvDWTzKGF7wTZbnpKInt8g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ja2248kj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLVzZJq9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3296F606A325;
-	Thu, 19 Nov 2026 02:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A704606A325;
+	Thu, 19 Nov 2026 02:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ja2248kj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862991F000C4;
-	Thu, 19 Nov 2026 02:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hLVzZJq9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A081F000C4;
+	Thu, 19 Nov 2026 02:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053789;
-	bh=0aGgErfw2UmoEMkW7YFTLEbPRT/qfElRgEXHfaj3IxA=;
+	s=korg; t=1795053791;
+	bh=6B0/HSXQTHsQv6pHZuWkLZQrpPWS3Vs51ITITe/uFJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ja2248kj/HE0nO1GfDlYM+vgwLjPPIbWQhv9Bi72uDFMn6H+VGiEqjvlZlJKRzx9j
-	 6mQv+FN77O1mXL4GeO6t2Os1oBXUcgxqQOnHW+X1MfW8LBPH2EFv4yvwco4VelF2Q/
-	 UnpbJSmVmtDem4ZGiZrAZ2DcVxeO0VScMapp1bZc=
+	b=hLVzZJq96miYuaVJqTwGOv/D5gP3BE3WZCKTYHWH8f4xW43LznZYhKgQdGQh1Z7IZ
+	 Prep2PUc6qeU4ky2/Zd0w3BIFJ8Yun67hWz+xtAvTUBf3Ns9eLNisCVrEdZVg3T3rq
+	 6LW/iRMTxLIYHff4ObknLHF3aAq1BgtHeNtxgtHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gregory Price (Meta)" <gourry@gourry.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	"Lorenzo Stoakes (ARM)" <ljs@kernel.org>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	"Liam R. Howlett" <liam@infradead.org>,
-	Vlastimil Babka <vbabka@kernel.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1043/2214] mm/madvise: use folio_trylock() in the cold/pageout PMD split
-Date: Wed, 18 Nov 2026 15:45:19 +0100
-Message-ID: <20261118150054.064253873@linuxfoundation.org>
+Subject: [PATCH 5.15 1044/2214] ALSA: line6: Handle period elapsed calls outside the locks
+Date: Wed, 18 Nov 2026 15:45:20 +0100
+Message-ID: <20261118150054.102581033@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -74,79 +68,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Price <gourry@gourry.net>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 5a6c9cf117fca3c38a98fb2a2d5549795c8b0b73 ]
+[ Upstream commit 443ed4edc2678cc51c5a01e7dffc4c890be40051 ]
 
-MADV_COLD or MADV_PAGEOUT over part of a PMD splits the THP in
-madvise_cold_or_pageout_pte_range().  Two threads doing that to the same
-THP create spurious failures.
+LINE6 driver may call snd_pcm_period_elapsed() for both playback and
+capture substreams at processing the playback substream, and this may
+lead to a ABBA deadlock.
 
-  CPU0                          CPU1
-  ----                          ----
-  folio_get()
-  spin_unlock(ptl)
-  folio_lock()
-                                folio_get()
-                                spin_unlock(ptl)
-                                folio_lock()  <- blocks, keeps its ref
-  split_folio()
-    folio_expected_ref_count(folio) != folio_ref_count(folio) - 1
-    -EAGAIN
+Move the actual calls of snd_pcm_period_elapsed() outside the locks
+for avoiding it.  The capture period notification at submitting the
+initial playback URBs (only with the impulse mode) is simply skipped,
+as it's done in the lock context; it'll be caught up at the next
+period.
 
-CPU1 cannot drop its reference until it gets the lock CPU0 holds, so
-CPU0's split always fails.  folio_trylock() makes CPU1 leave without ever
-taking a reference.  The PTE branch of this same function already does
-this, as do madvise_free_pte_range() and madvise_free_huge_pmd().
-
-Reproducer: 400 rounds of eight threads calling MADV_COLD on half of each
-of eight THPs, re-formed with MADV_COLLAPSE between rounds.  From
-/proc/vmstat:
-
-                     thp_split_page   thp_split_page_failed
-    before                     3186                     860
-    after                      3200                       0
-
-The short before count is rounds where every thread failed and the advice
-was dropped for that THP entirely.
-
-On failure the walker returns 0 and nothing retries.  The PMD path becomes
-best effort when the folio lock is held elsewhere - same as the PTE path.
-
-Link: https://lore.kernel.org/20260912110540.3203010-1-gourry@gourry.net
-Signed-off-by: Gregory Price (Meta) <gourry@gourry.net>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20260817220810.1175596-1-gourry%40gourry.net
-Acked-by: Lorenzo Stoakes (ARM) <ljs@kernel.org>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
-Assisted-by: LLM
-Cc: Jann Horn <jannh@google.com>
-Cc: Liam R. Howlett <liam@infradead.org>
-Cc: Vlastimil Babka <vbabka@kernel.org>
+Fixes: f56742cc4189 ("ALSA: line6: Add LINE6_CAP_IN_NEEDS_OUT, a void playback stream during capture")
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-5a9de389-e6ea-410d-8322-e74e14152603
 Cc: <stable@vger.kernel.org>
-[ sashal: replaced folio_trylock(folio) with trylock_page(page) to match the existing page-based API ]
+Link: https://patch.msgid.link/20261020113118.234689-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ sashal: used a local capture_period_elapsed flag in audio_in_callback() instead of extracting handle_audio_in() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/madvise.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/line6/capture.c  | 17 +++++++++--------
+ sound/usb/line6/capture.h  |  2 +-
+ sound/usb/line6/playback.c | 31 +++++++++++++++++++++----------
+ 3 files changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/mm/madvise.c b/mm/madvise.c
-index 668d2fa835d4e..fba17d32cc1d0 100644
---- a/mm/madvise.c
-+++ b/mm/madvise.c
-@@ -351,9 +351,10 @@ static int madvise_cold_or_pageout_pte_range(pmd_t *pmd,
- 		if (next - addr != HPAGE_PMD_SIZE) {
- 			int err;
+diff --git a/sound/usb/line6/capture.c b/sound/usb/line6/capture.c
+index e77ef16c792f0..2f7490c8693fa 100644
+--- a/sound/usb/line6/capture.c
++++ b/sound/usb/line6/capture.c
+@@ -137,18 +137,15 @@ void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf, int fsize)
+ 		line6pcm->in.pos_done -= runtime->buffer_size;
+ }
  
-+			if (!trylock_page(page))
-+				goto huge_unlock;
- 			get_page(page);
- 			spin_unlock(ptl);
--			lock_page(page);
- 			err = split_huge_page(page);
- 			unlock_page(page);
- 			put_page(page);
+-void line6_capture_check_period(struct snd_line6_pcm *line6pcm, int length)
++/* update the capture position and check whether we need period_elapsed call */
++bool line6_capture_check_period(struct snd_line6_pcm *line6pcm, int length)
+ {
+-	struct snd_pcm_substream *substream =
+-	    get_substream(line6pcm, SNDRV_PCM_STREAM_CAPTURE);
+-
+ 	line6pcm->in.bytes += length;
+ 	if (line6pcm->in.bytes >= line6pcm->in.period) {
+ 		line6pcm->in.bytes %= line6pcm->in.period;
+-		spin_unlock(&line6pcm->in.lock);
+-		snd_pcm_period_elapsed(substream);
+-		spin_lock(&line6pcm->in.lock);
++		return true;
+ 	}
++	return false;
+ }
+ 
+ /*
+@@ -158,6 +155,7 @@ static void audio_in_callback(struct urb *urb)
+ {
+ 	int i, index, length = 0, shutdown = 0;
+ 	unsigned long flags;
++	bool capture_period_elapsed = false;
+ 
+ 	struct snd_line6_pcm *line6pcm = (struct snd_line6_pcm *)urb->context;
+ 
+@@ -221,10 +219,13 @@ static void audio_in_callback(struct urb *urb)
+ 
+ 		if (!test_bit(LINE6_STREAM_IMPULSE, &line6pcm->in.running) &&
+ 		    test_bit(LINE6_STREAM_PCM, &line6pcm->in.running))
+-			line6_capture_check_period(line6pcm, length);
++			capture_period_elapsed = line6_capture_check_period(line6pcm, length);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&line6pcm->in.lock, flags);
++
++	if (capture_period_elapsed)
++		snd_pcm_period_elapsed(get_substream(line6pcm, SNDRV_PCM_STREAM_CAPTURE));
+ }
+ 
+ /* open capture callback */
+diff --git a/sound/usb/line6/capture.h b/sound/usb/line6/capture.h
+index 20e05a5eceb4f..5ae1745261e50 100644
+--- a/sound/usb/line6/capture.h
++++ b/sound/usb/line6/capture.h
+@@ -17,7 +17,7 @@ extern const struct snd_pcm_ops snd_line6_capture_ops;
+ 
+ extern void line6_capture_copy(struct snd_line6_pcm *line6pcm, char *fbuf,
+ 			       int fsize);
+-extern void line6_capture_check_period(struct snd_line6_pcm *line6pcm,
++extern bool line6_capture_check_period(struct snd_line6_pcm *line6pcm,
+ 				       int length);
+ extern int line6_create_audio_in_urbs(struct snd_line6_pcm *line6pcm);
+ extern int line6_submit_audio_in_all_urbs(struct snd_line6_pcm *line6pcm);
+diff --git a/sound/usb/line6/playback.c b/sound/usb/line6/playback.c
+index 0da1998dd5add..deb313486ee78 100644
+--- a/sound/usb/line6/playback.c
++++ b/sound/usb/line6/playback.c
+@@ -136,6 +136,8 @@ static void add_monitor_signal(struct urb *urb_out, unsigned char *signal,
+ /*
+ 	Find a free URB, prepare audio data, and submit URB.
+ 	must be called in line6pcm->out.lock context
++	Returns 1 if snd_pcm_period_elapsed() needs to be called for the
++	capture stream after releasing the lock, 0 if not, or a negative error
+ */
+ static int submit_audio_out_urb(struct snd_line6_pcm *line6pcm)
+ {
+@@ -151,6 +153,7 @@ static int submit_audio_out_urb(struct snd_line6_pcm *line6pcm)
+ 		line6pcm->properties->rates.rats[0].den *
+ 		(line6pcm->line6->intervals_per_second / LINE6_ISO_INTERVAL);
+ 	struct urb *urb_out;
++	bool capture_period_elapsed = false;
+ 
+ 	index = find_first_zero_bit(&line6pcm->out.active_urbs,
+ 				    line6pcm->line6->iso_buffers);
+@@ -260,8 +263,9 @@ static int submit_audio_out_urb(struct snd_line6_pcm *line6pcm)
+ 						   urb_out->transfer_buffer,
+ 						   urb_out->
+ 						   transfer_buffer_length);
+-				line6_capture_check_period(line6pcm,
+-					urb_out->transfer_buffer_length);
++				capture_period_elapsed =
++					line6_capture_check_period(line6pcm,
++								   urb_out->transfer_buffer_length);
+ 			}
+ 		} else {
+ 			if (!(line6pcm->line6->properties->capabilities & LINE6_CAP_HWMON)
+@@ -283,24 +287,26 @@ static int submit_audio_out_urb(struct snd_line6_pcm *line6pcm)
+ 		dev_err(line6pcm->line6->ifcdev,
+ 			"URB out #%d submission failed (%d)\n", index, ret);
+ 
+-	return 0;
++	return capture_period_elapsed;
+ }
+ 
+ /*
+ 	Submit all currently available playback URBs.
+ 	must be called in line6pcm->out.lock context
++	The capture period notification is skipped here since we can't call
++	snd_pcm_period_elapsed() in the lock; it'll be caught up at the next one.
+  */
+ int line6_submit_audio_out_all_urbs(struct snd_line6_pcm *line6pcm)
+ {
+-	int ret = 0, i;
++	int ret, i;
+ 
+ 	for (i = 0; i < line6pcm->line6->iso_buffers; ++i) {
+ 		ret = submit_audio_out_urb(line6pcm);
+ 		if (ret < 0)
+-			break;
++			return ret;
+ 	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ /*
+@@ -316,6 +322,8 @@ static void audio_out_callback(struct urb *urb)
+ 	const int bytes_per_frame =
+ 		line6pcm->properties->bytes_per_channel *
+ 		line6pcm->properties->playback_hw.channels_max;
++	bool capture_period_elapsed = false;
++	bool playback_period_elapsed = false;
+ 
+ #if USE_CLEAR_BUFFER_WORKAROUND
+ 	memset(urb->transfer_buffer, 0, urb->transfer_buffer_length);
+@@ -358,19 +366,22 @@ static void audio_out_callback(struct urb *urb)
+ 		shutdown = 1;
+ 
+ 	if (!shutdown) {
+-		submit_audio_out_urb(line6pcm);
++		capture_period_elapsed = submit_audio_out_urb(line6pcm) > 0;
+ 
+ 		if (test_bit(LINE6_STREAM_PCM, &line6pcm->out.running)) {
+ 			line6pcm->out.bytes += length;
+ 			if (line6pcm->out.bytes >= line6pcm->out.period) {
+ 				line6pcm->out.bytes %= line6pcm->out.period;
+-				spin_unlock(&line6pcm->out.lock);
+-				snd_pcm_period_elapsed(substream);
+-				spin_lock(&line6pcm->out.lock);
++				playback_period_elapsed = true;
+ 			}
+ 		}
+ 	}
+ 	spin_unlock_irqrestore(&line6pcm->out.lock, flags);
++
++	if (capture_period_elapsed)
++		snd_pcm_period_elapsed(get_substream(line6pcm, SNDRV_PCM_STREAM_CAPTURE));
++	if (playback_period_elapsed)
++		snd_pcm_period_elapsed(substream);
+ }
+ 
+ /* open playback callback */
 -- 
 2.53.0
 
