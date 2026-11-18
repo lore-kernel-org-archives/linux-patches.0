@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018536;
-	b=Mg9oA8nRF6gsqnr63vEPlCuhuqop0ayoRNxyPqFs7LXRtv/KlgpfjgSziR1jTarSPgni
-	 nqtTjMsP+DSvrEwbCA+EMTl8bfoFGsX16ODf9yd+0z8ec01GNeLPKZnIlUpx9hG9pNZLC
-	 YePNP18gJynPQaqDTo14d8vvcVYu3n7kdaInvMSeKOtCrjId36wDV4z/O18iN+7D1Pq/1
-	 dnbw6TZtrRa7+9FmpvnoJdEY9N5+y8ZXYuZDcnQFfPJWQlFAhQrtsm6P6GSPXJGSUIN7K
-	 dC9Y85Ke2w3h7cNNiJYoBz3WgSJgUsTxmoREkM7v9gtUd+oyNRbwl3bkYZqq9fLBuog==
+	t=1795018538;
+	b=xP0qDpttvHiTg4Ze3DY0+FvEQo1Tv+5JzuslCSOvEu02q0u/q0vjIqubgEONWMG8+7my
+	 BXCHMzCfrx0Z/qgZXyPaiPwdyYohteWrAJD1mkEs8C92MDnFmoZXE7MGdIObh8dyBVrLB
+	 Ug6RhdYuKgsblYheQF4T/eJuU4mNhxkKPx9JUvGQO7XqdSnOnyA9gSokO2P/NKCDIS9Gf
+	 F8R2U/6RIkS5TOJ6C15adUZUd6I4uxmWMYoxExNBoeXdGUFKFXhNeVHDvgl81hDx+JBjL
+	 ZFTntR9Cs3dwT9qXmw1HDVwXDbv7wWSH8DtiLUGD5Kgmc9Cp3BBN9Mlq7qSjd/o0grw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018536;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018538;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cbxJuCjfVU3ztyUZLOgNmEBh2xBqfaOOnNoKWOdBwhg=;
-	b=1AjQwY394sxTLJRnN5wc0dCYAz358tirr6jY/mmWzuAgEIw2WEwCD4qLb9/XsSMNCv/k
-	 iqaqtrUOjy6aGORLRWO6HxlPhN+bWg9xpoDOzBIxbbHqDhHXPQZS8qC2FwJLyVGKyIBe2
-	 2a4mdAPv+iIaKTENrzqgMCfHo3Iko5H3kX27ADEdDhNb1zKyJaZ3q5IPW5FEyVRuMwGMJ
-	 /rlHw25ec6ew1wTDR6mFebiPOMtIckqOrQQnw9LRHtYaAuQGBAz99b14eCXsQ9YFZjg11
-	 K8sOXowVJ7zIZdq5dJsch90JzBHkLJcAAKxgYiu6igvnpZlOYZ7ML8FwJ3uaeujYZlQ==
+	bh=+j73dKNJQSXM+5YC9v6f1nIdOy74vpRTi8MAhnc28Nw=;
+	b=gKJ6JOVAeTCwf4eG4Y8sLM9/AbHlHjfUKfgS1vjPGFqieMH5JBG6wA10ndwk5x3NCuvK
+	 4lo/57t2zy2B+XuOnlsU9eZqPn7XNh3Mve/SNL2FdT8Ztr5mVz94Nvem8ogEkHSRABaNI
+	 AJ1fLTqKqHBlWzzSEL0Pb/dBRQtgxaYTTiPovlYqYupgCDJ5H4los9TcMKAtKmTgmFpA8
+	 x9unp2ST7Mx2xBxdxp6NQbk8y19I5acE+1yAMlGuhL0NkrdNWxo5OVl7v+HuAbqCCfHm2
+	 ek9ojZcn05RpWqwUX9NuS+1P5rhVNVzx6Vli5bjxkoxyIU+tW1nztE2MaC1rr5phNNA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4CimJ0b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQyZglh7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF71B606A31C;
-	Wed, 18 Nov 2026 16:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DED606A31C;
+	Wed, 18 Nov 2026 16:15:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B4CimJ0b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560801F000C4;
-	Wed, 18 Nov 2026 16:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zQyZglh7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3EC1F000C4;
+	Wed, 18 Nov 2026 16:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018535;
-	bh=cbxJuCjfVU3ztyUZLOgNmEBh2xBqfaOOnNoKWOdBwhg=;
+	s=korg; t=1795018538;
+	bh=+j73dKNJQSXM+5YC9v6f1nIdOy74vpRTi8MAhnc28Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B4CimJ0blGwn8qC5K7OQjXWGZh/G5jvLBhwc8/ovFIN070pdVNOD8h9NbwxPwVJf+
-	 zPNLiobvOSSlhJhTXU53OUdhkG90k1ns3aQfP1xSeJBIC+wseMbJec0reG0CJH10PW
-	 /Jd9CpYvHKWpHYlNXcOZu3eoMK0KuERkl27cuizk=
+	b=zQyZglh7Xm31E9H6+2lHfSoE8KeRO9Rj19yAjgMSfxk3J9XMY4YrLMGFrbV+HHzlY
+	 kYjv6NOUr5BUWDlI8R/YrK6a6lKhEitc9pjPBWPoZ+BU45oTuMJtp/LRhwZhM9A+7l
+	 yT50f8ULkFx/iJ8ODFJjgWJEH/bKc1iNoqgj14y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Marco Giunta <marco_giunta@outlook.it>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1276/2651] power: supply: ab8500_fg: Avoid reserved AB8505 CCConf bit
-Date: Wed, 18 Nov 2026 15:41:56 +0100
-Message-ID: <20261118150333.885169594@linuxfoundation.org>
+Subject: [PATCH 7.3 1277/2651] ASoC: aw88399: skip BSTS check when boost converter is bypassed
+Date: Wed, 18 Nov 2026 15:41:57 +0100
+Message-ID: <20261118150333.921911361@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,69 +68,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Marco Giunta <marco_giunta@outlook.it>
 
-[ Upstream commit edafb2e4642b72b0f86ce5990d5c29c116bb642b ]
+[ Upstream commit 664824782df63013ba8686b649c625cac4793248 ]
 
-AB8500 defines CCConf bit 1 as CCDeepSleepEna, but AB8505 reserves
-bits 7:1 and only defines bit 0, CCPwrUpEna. The fuel-gauge driver
-currently writes both bits whenever it starts the coulomb counter.
+The sysst check in aw_dev_check_sysst() requires BSTS (boost finished)
+to assert, but on hardware where the boost converter is bypassed via
+external power supply (BSTCTRL10 register 0x69, EN_HVBAT bit 2 set),
+BSTS (SYSST register 0x01, bit 9) will never assert.
 
-The Samsung-GT-S7710-Skomer and related Samsung product trees use the
-same unconditional value in their fuel-gauge drivers, so they provide
-no AB8505 workaround to carry over. Select the value from the detected
-PMIC variant instead, retaining the deep-sleep enable bit on all
-existing non-AB8505 paths and avoiding the reserved bit on AB8505.
+The vendor's generic driver (aw883xx) handles this by reading EN_HVBAT and
+conditionally masking out BSTS from the sysst check. The in-tree driver
+missed this logic when the original code was ported upstream.
 
-Fixes: a982362c1723 ("mfd: Support for the AB8500 AB8505 variant")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-15-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Add the same conditional check, matching the vendor driver's
+aw_dev_sysst_check() implementation.
+
+Fixes: 8ade6cc7e261 ("ASoC: codecs: Add aw88399 amplifier driver")
+Signed-off-by: Marco Giunta <marco_giunta@outlook.it>
+Link: https://patch.msgid.link/SN6PR19MB2303FF1922BF5F876378066FFC8F2@SN6PR19MB2303.namprd19.prod.outlook.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_fg.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ include/sound/aw88399.h        |  5 +++++
+ sound/soc/codecs/aw88399-lib.c | 13 +++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/power/supply/ab8500_fg.c b/drivers/power/supply/ab8500_fg.c
-index 15112c80318fb..7e8416adb2ce5 100644
---- a/drivers/power/supply/ab8500_fg.c
-+++ b/drivers/power/supply/ab8500_fg.c
-@@ -451,6 +451,16 @@ static void ab8500_fg_fill_cap_sample(struct ab8500_fg *di, int sample)
- 	avg->avg = sample;
- }
+diff --git a/include/sound/aw88399.h b/include/sound/aw88399.h
+index a1e0de6be8eac..974b5774ac2b6 100644
+--- a/include/sound/aw88399.h
++++ b/include/sound/aw88399.h
+@@ -449,6 +449,11 @@
+ #define AW88399_NOISE_GATE_EN_MASK	\
+ 	(~(((1<<AW88399_NOISE_GATE_EN_BITS_LEN)-1) << AW88399_NOISE_GATE_EN_START_BIT))
  
-+static u8 ab8500_fg_cc_config(struct ab8500_fg *di)
-+{
-+	u8 config = CC_PWR_UP_ENA;
++#define AW88399_EPS_EN_START_BIT	(2)
++#define AW88399_EPS_EN_BITS_LEN		(1)
++#define AW88399_EPS_EN_MASK		\
++	(~(((1 << AW88399_EPS_EN_BITS_LEN) - 1) << AW88399_EPS_EN_START_BIT))
 +
-+	if (!is_ab8505(di->parent))
-+		config |= CC_DEEP_SLEEP_ENA;
-+
-+	return config;
-+}
-+
- /**
-  * ab8500_fg_coulomb_counter() - enable coulomb counter
-  * @di:		pointer to the ab8500_fg structure
-@@ -481,7 +491,7 @@ static int ab8500_fg_coulomb_counter(struct ab8500_fg *di, bool enable)
- 		/* Start the CC */
- 		ret = abx500_set_register_interruptible(di->dev, AB8500_RTC,
- 			AB8500_RTC_CC_CONF_REG,
--			(CC_DEEP_SLEEP_ENA | CC_PWR_UP_ENA));
-+			ab8500_fg_cc_config(di));
- 		if (ret)
- 			goto cc_err;
+ #define AW88399_WDT_CNT_START_BIT	(0)
+ #define AW88399_WDT_CNT_BITS_LEN	(8)
+ #define AW88399_WDT_CNT_MASK		\
+diff --git a/sound/soc/codecs/aw88399-lib.c b/sound/soc/codecs/aw88399-lib.c
+index 809c2faa0c0c7..1ba0147cf4dfd 100644
+--- a/sound/soc/codecs/aw88399-lib.c
++++ b/sound/soc/codecs/aw88399-lib.c
+@@ -183,6 +183,19 @@ static int aw_dev_check_sysst(struct aw88399 *aw88399)
+ 	else
+ 		check_val = AW88399_BIT_SYSST_SWS_CHECK;
  
-@@ -555,7 +565,7 @@ int ab8500_fg_inst_curr_start(struct ab8500_fg *di)
- 		/* Start the CC */
- 		ret = abx500_set_register_interruptible(di->dev, AB8500_RTC,
- 			AB8500_RTC_CC_CONF_REG,
--			(CC_DEEP_SLEEP_ENA | CC_PWR_UP_ENA));
-+			ab8500_fg_cc_config(di));
- 		if (ret)
- 			goto fail;
- 	} else {
++	/*
++	 * When an external power supply (EPS) is used to feed the amplifier
++	 * (EN_HVBAT bit in BSTCTRL10 set), the boost converter is bypassed,
++	 * and BSTS (boost finished) will never assert. Skip the BSTS check in
++	 * this case, matching the vendor driver's behavior.
++	 */
++	ret = regmap_read(aw_dev->regmap, AW88399_BSTCTRL10_REG, &reg_val);
++	if (ret)
++		return ret;
++
++	if (reg_val & (~AW88399_EPS_EN_MASK))
++		check_val &= ~AW88399_BSTS_FINISHED_VALUE;
++
+ 	/*
+ 	 * On some hardware the BSTS (boost-finished) status bit does not
+ 	 * reliably assert even when audio output is working normally.
 -- 
 2.53.0
 
