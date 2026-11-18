@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049924;
-	b=ym3zhTaXZ19LKsYrXM5gXveaqihWNXCXCm26SWsb3XwQaaeVvFmPJqQTnAxoov7YqkKb
-	 kU+PlwVrGMoqSCVBfrz5pYRggjMg8p9ZdFQITvZYIKejL+wD5MDVgbNfaO6a57pyipA7G
-	 pko+LrqLGKGtGGL6nJi6vX8Fktiby5AFwvz3lVSQEEiuns44ZhNJA0Ws7UIyuexLHJu1S
-	 F1nY7SWOjkLBPNcsMIrOH64gq7yqbSJxJ/v4t0Rk/PZ7/bO8UncAZotbtsNGuRkiQvOog
-	 l8Z9KsrgPOulbc4KL47am9onjY+d0cINhnig4wkXHllZsRt6LqoDcZQyt65MPCZPglw==
+	t=1795049927;
+	b=Zd2TgPqhU8Sjrlzjqo6qy2YtVenGRBDbaF5vsLikkq/jlsEzxLkWrI1mE+w5mLedsj2H
+	 9sQABupMf/53ueZoeEqjyKgNqJ1qMGEHux7sX7baUXFGJvRKLwumW5+Pj2wroGQfd+eug
+	 n73+Q0xHSQifV9Ekkycg01+RQxo21EM3bBir2KkItMaALJ/z6McFNyJvT2Vr0LRsz19e/
+	 Od8R31sQ+wjVqSm5LsV9Hetzh+/2JgWLj9+P0jNiReTjcjy5Hs6U4RnXpxs2I46haTJLH
+	 hoX994WLMZf0zF+pVPQvbP8ibG8TK4hn/gYJpwgfL60KyHuDM/jO4cGTKunM9dRRLIQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049924;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049927;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=PmLTJlSLD5SNhgnecNAgZ6+zOFk5642kcSKldCASvwE=;
-	b=jhJ5YekWWkXgaj1xTNsh0q2Jt8Rdvr3lHtZvXNi5YfVPwMO7Z0vajpN6bKYFxUT4Wwlw
-	 vXL3vG89vDS2m5Ltt9b/fA3fgi2Nblw68vDIQwcVL8qqd6wfrjNZrww/QNy+vvm/hwznw
-	 Sjo1WidgLJKnQ4e+hy7Zp9l132RCbsswGnJoWDQTbvuCG4ra0AyRjnj1n5+XadMItBPc2
-	 fO7qTzQjfJbCMUzjeZ6IUu7pvyTUcDGASjH3M5bVwWLiWIEeoL01vO7adVodlrj6OmK3q
-	 1yWaGFimHWe8Ia61+BRCM1mQa+fUoK5LVvdqzmH8XuSS1q6Sv0fXQ1603jVccMcUo1A==
+	bh=9TND4Ywy2EGoXZmJlRM3m/m1Pklmnw0d8tIVWS3Zkx0=;
+	b=3wz0EdTgbNcpTymvHT4+zYdAiGSkygHitNRCMbUwyimpO5CCKDeRcJxDfdCUOdxKozCn
+	 ERseZnWnKRt1lanlZSKWcOOwu665NUqBVclRK/gvwH+W0E4sC8v5Jsk6TTpUPrxqaHGnf
+	 11HDLtuVU8Iq4/CylsAiPhcKM+l4HxFZbJib5IYJfMmln+EJbVaNbKUrgr1xkvNSp1860
+	 mMAxmPvdEpLdFmvkg1NcHE+dnJc5A16mHxJfL17rtj6x5TTqRiYduPb41XEwKyfa9wceT
+	 UXVCJMv3HqFCTY1kvkDBPL+orMq83MfLzv8NOQ+9bPJcwpntaPV5fKqqUlRicV8gAeQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unCb34e5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tJHG4Fhf;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60558606A31C;
-	Thu, 19 Nov 2026 00:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335AF606A31C;
+	Thu, 19 Nov 2026 00:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=unCb34e5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B11EB1F000C4;
-	Thu, 19 Nov 2026 00:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tJHG4Fhf
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860051F000C4;
+	Thu, 19 Nov 2026 00:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049924;
-	bh=PmLTJlSLD5SNhgnecNAgZ6+zOFk5642kcSKldCASvwE=;
+	s=korg; t=1795049927;
+	bh=9TND4Ywy2EGoXZmJlRM3m/m1Pklmnw0d8tIVWS3Zkx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=unCb34e5nxMmKWYoABXGz2xJiWsewuh/Fah6xhgKq/elAoAccyeOIFMagJ1ZYncjt
-	 JysBoyycTiHlwi0NG1/yHSA2nPhGQP7QjkaNY65n4s6LCbsZzVoRVmYDuohXRr3gJk
-	 7t089Hw5U+pu+Z8HyHIiJgWwJANlQHMUUwZWwPTc=
+	b=tJHG4FhfLglNJlPN64XtYJNbewxT0Q6iJ1e2IrHa/18ZDjxnjBsgHeki8wtqqQODP
+	 FK9K0V3CK36TQJptc+DNG1xrqiU/esMe0FEBgRBvQOUKODoUGZ4pemrlHPTi60qe3k
+	 sndx3VsKM46c4ByBv1tnqEqzRLIgaSV15Du5Bnc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Youngsung Ahn <ays511.kr@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2524/2857] ALSA: pcm: Add refcount for races between drain and unlink
-Date: Wed, 18 Nov 2026 15:59:18 +0100
-Message-ID: <20261118150332.422554408@linuxfoundation.org>
+Subject: [PATCH 6.1 2525/2857] RDMA/rxe: refuse to destroy a QP with type 2 MWs still bound
+Date: Wed, 18 Nov 2026 15:59:19 +0100
+Message-ID: <20261118150332.458182310@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,168 +68,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Youngsung Ahn <ays511.kr@gmail.com>
 
-[ Upstream commit 91d0048a97e0fdc0a071caa0ba59e659bc6f84df ]
+[ Upstream commit 9e61a2ac6590e9c42d2eeef687749781334b300f ]
 
-We added a workaround for the case where a linked substream gets
-unlinked during the drain operation by another substream of the same
-linked group in the commit 9b1dbd69ba6f ("ALSA: pcm: fix
-use-after-free on linked stream runtime in snd_pcm_drain()").
-There, we just cached the parameters of the draining substream for
-avoiding UAF.
+Binding a type 2 memory window takes a reference on the QP:
+rxe_do_bind_mw() does rxe_get(qp) and stores it in mw->qp. That
+reference is released only when the window is invalidated
+(rxe_do_invalidate_mw() on IB_WR_LOCAL_INV) or the window itself is
+destroyed (rxe_mw_cleanup()).
 
-Then, we check the draining substream (to_check) again in the loop and
-remove it from the queue only when it's still present.  It means,
-however, that the wait queue entry won't be removed if the substream
-went out of the link beforehand, hence a stale wq entry remains.
-Later on, this can be woken up, and this may hit a UAF, too.
-The problem surfaced more due to the recent change to call
-snd_pcm_unlink() earlier.
+rxe_qp_chk_destroy() does not account for those references -- it only
+refuses when qp->mcg_num is non-zero. So an unprivileged user can bind
+a type 2 MW to a QP and then destroy the QP while the binding is still
+live. __rxe_cleanup() cannot drop the QP refcount to zero (the MW still
+holds a reference), hits its -ETIMEDOUT path, and frees the QP anyway;
+mw->qp is left dangling. When the MW is later invalidated or
+deallocated, rxe_mw_cleanup()/rxe_do_invalidate_mw() do rxe_put(mw->qp)
+on the freed struct rxe_qp -- a use-after-free write (refcount_dec, and
+complete()/list work if it reaches zero) reachable from userspace.
+IB_WR_BIND_MW is a local operation, so no peer is required.
 
-For properly handling both cases above, in this patch, we introduce a
-refcount to the snd_pcm_runtime that indicates the substream is being
-accessed / used, then at snd_pcm_release_substream(), it's synced
-before the actual resource release via snd_refcount_sync().  This
-guarantees that the accessors are finished, and safe to release
-memories.  Along with the introduction of a refcount, the comments and
-the code changes by the former fix were partially reverted as they
-don't fit with the updated code flow any longer.
+Track the number of type 2 MWs bound to a QP and refuse to destroy the
+QP while that count is non-zero, returning -EBUSY exactly as the
+existing multicast-attachment check does. The window must be
+invalidated or deallocated, which drops the reference and the count,
+before the QP can be destroyed.
 
-Last but not least, the setup of wait queue entry and
-prepare_to_wait() call are moved before the group unref.  With this
-change, we can avoid the race between the enqueue and the wakeup, too.
-
-Fixes: 9b1dbd69ba6f ("ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()")
-Link: https://patch.msgid.link/20261015071838.31082-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Youngsung Ahn <ays511.kr@gmail.com>
+Link: https://patch.msgid.link/20260930182223.2511145-1-ays511.kr@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/pcm.h     |  2 ++
- sound/core/pcm.c        |  1 +
- sound/core/pcm_native.c | 54 ++++++++++++++++-------------------------
- 3 files changed, 24 insertions(+), 33 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_mw.c    |  3 +++
+ drivers/infiniband/sw/rxe/rxe_qp.c    | 10 ++++++++++
+ drivers/infiniband/sw/rxe/rxe_verbs.h |  1 +
+ 3 files changed, 14 insertions(+)
 
-diff --git a/include/sound/pcm.h b/include/sound/pcm.h
-index 296bd28aa1570..774c541eb3843 100644
---- a/include/sound/pcm.h
-+++ b/include/sound/pcm.h
-@@ -8,6 +8,7 @@
-  *                   Abramo Bagnara <abramo@alsa-project.org>
-  */
+diff --git a/drivers/infiniband/sw/rxe/rxe_mw.c b/drivers/infiniband/sw/rxe/rxe_mw.c
+index 9ed6647f156d5..b43c7ed7059b9 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mw.c
++++ b/drivers/infiniband/sw/rxe/rxe_mw.c
+@@ -161,6 +161,7 @@ static void rxe_do_bind_mw(struct rxe_qp *qp, struct rxe_send_wqe *wqe,
  
-+#include <sound/core.h>
- #include <sound/asound.h>
- #include <sound/memalloc.h>
- #include <sound/minors.h>
-@@ -401,6 +402,7 @@ struct snd_pcm_runtime {
- 	snd_pcm_uframes_t twake; 	/* do transfer (!poll) wakeup if non-zero */
- 	wait_queue_head_t sleep;	/* poll sleep */
- 	wait_queue_head_t tsleep;	/* transfer sleep */
-+	struct snd_refcount refcnt;	/* refcount for draining, etc */
- 	struct snd_fasync *fasync;
- 	bool stop_operating;		/* sync_stop will be called */
- 	struct mutex buffer_mutex;	/* protect for buffer changes */
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index 958e5837b00a0..84f0ca7ecbc44 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -970,6 +970,7 @@ int snd_pcm_attach_substream(struct snd_pcm *pcm, int stream,
+ 	if (mw->ibmw.type == IB_MW_TYPE_2) {
+ 		rxe_get(qp);
++		atomic_inc(&qp->mw_bind_num);
+ 		mw->qp = qp;
+ 	}
+ }
+@@ -239,6 +240,7 @@ static void rxe_do_invalidate_mw(struct rxe_mw *mw)
+ 	/* valid type 2 MW will always have a QP pointer */
+ 	qp = mw->qp;
+ 	mw->qp = NULL;
++	atomic_dec(&qp->mw_bind_num);
+ 	rxe_put(qp);
  
- 	init_waitqueue_head(&runtime->sleep);
- 	init_waitqueue_head(&runtime->tsleep);
-+	snd_refcount_init(&runtime->refcnt);
+ 	/* valid type 2 MW will always have an MR pointer */
+@@ -327,6 +329,7 @@ void rxe_mw_cleanup(struct rxe_pool_elem *elem)
+ 		struct rxe_qp *qp = mw->qp;
  
- 	__snd_pcm_set_state(runtime, SNDRV_PCM_STATE_OPEN);
- 	mutex_init(&runtime->buffer_mutex);
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index f8da62d9db81e..dc81e422da026 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2158,9 +2158,6 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
- 	for (;;) {
- 		long tout;
- 		struct snd_pcm_runtime *to_check;
--		unsigned int drain_rate;
--		snd_pcm_uframes_t drain_bufsz;
--		bool drain_no_period_wakeup;
+ 		mw->qp = NULL;
++		atomic_dec(&qp->mw_bind_num);
+ 		rxe_put(qp);
+ 	}
  
- 		if (signal_pending(current)) {
- 			result = -ERESTARTSYS;
-@@ -2175,45 +2172,35 @@ static int snd_pcm_drain(struct snd_pcm_substream *substream,
- 			runtime = s->runtime;
- 			if (runtime->state == SNDRV_PCM_STATE_DRAINING) {
- 				to_check = runtime;
-+				/* pin the draining substream */
-+				snd_refcount_get(&to_check->refcnt);
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index a468e9bdc7364..f4f72a30fae23 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -779,6 +779,16 @@ int rxe_qp_chk_destroy(struct rxe_qp *qp)
+ 		return -EBUSY;
+ 	}
+ 
++	/* An attempt to destroy a QP while it still holds references for
++	 * bound type 2 memory windows will fail immediately.  Otherwise the
++	 * QP is freed with those references outstanding and the windows are
++	 * left pointing at freed memory (use-after-free).
++	 */
++	if (atomic_read(&qp->mw_bind_num)) {
++		rxe_dbg_qp(qp, "Attempt to destroy while type 2 MWs are bound\n");
++		return -EBUSY;
++	}
 +
-+				init_wait_entry(&wait, 0);
-+				prepare_to_wait(&to_check->sleep, &wait,
-+						TASK_INTERRUPTIBLE);
-+				if (to_check->no_period_wakeup) {
-+					tout = MAX_SCHEDULE_TIMEOUT;
-+				} else {
-+					tout = 100;
-+					if (to_check->rate) {
-+						long t = to_check->buffer_size *
-+							1100 / to_check->rate;
-+						tout = max(t, tout);
-+					}
-+					tout = msecs_to_jiffies(tout);
-+				}
- 				break;
- 			}
- 		}
- 		snd_pcm_group_unref(group, substream);
- 		if (!to_check)
- 			break; /* all drained */
--		/*
--		 * Cache the runtime fields needed after unlock.
--		 * A concurrent close() on the linked stream may free
--		 * its runtime via snd_pcm_detach_substream() once we
--		 * release the stream lock below.
--		 */
--		drain_no_period_wakeup = to_check->no_period_wakeup;
--		drain_rate = to_check->rate;
--		drain_bufsz = to_check->buffer_size;
--		init_wait_entry(&wait, 0);
--		prepare_to_wait(&to_check->sleep, &wait, TASK_INTERRUPTIBLE);
- 		snd_pcm_stream_unlock_irq(substream);
--		if (drain_no_period_wakeup)
--			tout = MAX_SCHEDULE_TIMEOUT;
--		else {
--			tout = 100;
--			if (drain_rate) {
--				long t = drain_bufsz * 1100 / drain_rate;
--				tout = max(t, tout);
--			}
--			tout = msecs_to_jiffies(tout);
--		}
- 		tout = schedule_timeout(tout);
--
- 		snd_pcm_stream_lock_irq(substream);
--		group = snd_pcm_stream_group_ref(substream);
--		snd_pcm_group_for_each_entry(s, substream) {
--			if (s->runtime == to_check) {
--				finish_wait(&to_check->sleep, &wait);
--				break;
--			}
--		}
--		snd_pcm_group_unref(group, substream);
-+		finish_wait(&to_check->sleep, &wait);
-+		/* unpin the draining substream again now */
-+		snd_refcount_put(&to_check->refcnt);
+ 	return 0;
+ }
  
- 		if (card->shutdown) {
- 			result = -ENODEV;
-@@ -2749,6 +2736,7 @@ void snd_pcm_release_substream(struct snd_pcm_substream *substream)
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.h b/drivers/infiniband/sw/rxe/rxe_verbs.h
+index 5f5cbfcb35695..3699eb3053965 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.h
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
+@@ -233,6 +233,7 @@ struct rxe_qp {
+ 	struct rxe_av		alt_av;
  
- 	snd_pcm_drop(substream);
- 	if (substream->hw_opened) {
-+		snd_refcount_sync(&substream->runtime->refcnt);
- 		if (substream->runtime->state != SNDRV_PCM_STATE_OPEN)
- 			do_hw_free(substream);
- 		substream->ops->close(substream);
+ 	atomic_t		mcg_num;
++	atomic_t		mw_bind_num;
+ 
+ 	struct sk_buff_head	req_pkts;
+ 	struct sk_buff_head	resp_pkts;
 -- 
 2.53.0
 
