@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795056192;
-	b=A0cGjmafM2Vmxhd7vcrD/+2PdwOgswnp+Iw49/b6t9FBp5MrFRt5c6QBQHUAXKCpbPSW
-	 JX0pKXLfUfKwtaYb9g4wQnpvgQEwrrqs13YDawKUkpHT2Ld08jIZ+kxOnrMC1jfD8EZ/M
-	 oRGx5Jl4AJoS9py6kfCf7ylLe9MvDrnz+VvK85d07C3feFUgepxJ8ngyF6pJDUhInrbl1
-	 jFcXDFDuxxdu/ooZPJgX7Fw6BMcnY5pmWpdNSDudAtiY9qJ2Tn/8qPQSQV8qr9pQz2nyM
-	 +o+HOJNjx/7ZcNpfNtdlPiq4hGYj4VNlkN9Xpxn6+ywbt0JxiceiAytogHRmw2TfFXQ==
+	t=1795056195;
+	b=KpuI3aJFZB3BzacQWo3Ib+UQk31Eb3Rvvwz6jXG0TNA4afaYB8dUSJ0RFZZD7PvNTErA
+	 PtmSTnwOTaz20MjHQQr5pph9bBxZKQBI0Isx6qZ6aAbL0AENd2MnDwxFs2VdAz65hnhJL
+	 94OZhnJRBPS9UI4G8Eiz4Cf037OrKIWBZ218ApNwi2CjrZW24PCujvbkpMnSgSAoiPrzQ
+	 LSXg3e/PWjGyVvci7r6xKou+GHusLbK25aknJhlKZN+q0Kkxkus3Q6IodzDo7zPdhUkGy
+	 /Q9szyXMlS32DP4Nxg4uceUUp0VOYdHnVMaWCN8urIPDpJPYaJXcpQrkMoFmOtrgOMA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795056192;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795056195;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vnexBoTC8oADHrF8T5z6wx21tPU+a8L0sjN+8fXKLA0=;
-	b=LW0sF16p7ImN/vXzWM7ynAnsJ46ianmp6F0h+Ee85NyGYzakwgG0ArntbAbbRz1mzv0G
-	 K376ZrWEYqKFASBEfE8XYxvLqGH7KEEJjk4GHJlEFDNSw5DNA3xmxUTzZDTIRVkRVQrkJ
-	 sslcvT1tJJvaQNzGInI4g3z2BuqJAjc81yIQC4ieog1kk/6rH3a9JMEIZMGDfNRtEC/2/
-	 gOB1VjFTOY4C1USrECoDKCPTifcD85GT56EpewFGW/LWt6fmBZvrsePfzHjoRPUxIK/xT
-	 PUBFZ2hHge2zIH2I5OJN90G3sBQyHt+DjUMco2y2VbHlzcxECuKR/3aJsUrE8bJ+gQw==
+	bh=ydh36IqmxvbYzkNMCh+ioSCN/S2Vt6uHFWhcIjUK2Sw=;
+	b=O8xd7cgcQdF/ZPl/8CUVUb7O4qXfe7xkhyIIBrWS1pOSAgqY8QaSAejzWM/crodyxF3F
+	 5y6jpPy+9YMLm3442vU0cNPdrmtzqgj22ta5iMSlS7oDU+dsHQ3KJF9oVBMpaCFofcwhc
+	 DSGzk7NP3R76ENxdh1FFfKMbFrom5XT2FHUm5HqjnqRgLqyTpcxp6aLciU+2r/g9ww9Ll
+	 ueJ0DNR9egyAv489w/s+B1IdYNH+4pZn5RS0NV57NXEKdOgNYkj1n15NP7W76Ckgz2x3W
+	 q9KL5ZqUsDEndV53OEgpZ5Im7YJLwvLa5/arGXknfMF/8N7jcl8LD3Xee75dV+KRlRw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TUMAE42;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1cicohj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C053606A31C;
-	Thu, 19 Nov 2026 02:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4008606A320;
+	Thu, 19 Nov 2026 02:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0TUMAE42
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B5C1F000C4;
-	Thu, 19 Nov 2026 02:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k1cicohj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCB21F000C4;
+	Thu, 19 Nov 2026 02:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795056191;
-	bh=vnexBoTC8oADHrF8T5z6wx21tPU+a8L0sjN+8fXKLA0=;
+	s=korg; t=1795056194;
+	bh=ydh36IqmxvbYzkNMCh+ioSCN/S2Vt6uHFWhcIjUK2Sw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=0TUMAE42SGJLXm2ZRiZGhYYrKcrp8kXP506wc6Fc03seWj7bpeDU++zu7zARCRSW7
-	 UEYd6A+4tjchjOu9iNd6SM1jG5K50dQC+unXDjboFtMb2eyPn++UmCThf1eV8CqQTd
-	 6J1O0JnfHqvMqnSRu1Oj9kmsxV16a5nSIXUOatLo=
+	b=k1cicohj/65YYysdPom48LqseBae62sxexk4aI0aJ7KO7CyZ+057iIsxuvTM8dRA6
+	 iQYhuNxfFU2XkRSrUu/mFN5HAV4kv3Rz/lx5ElIR7MZ3LWSQCYoYwOWblcoJkyd2DD
+	 3QSUqT7I5N7vvcyJxhxQT5d5Jq90mB+rhpLFoZB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1898/2214] sh: sh7785lcr: Register the PCA9564 controller as I2C bus 0
-Date: Wed, 18 Nov 2026 15:59:34 +0100
-Message-ID: <20261118150127.087963139@linuxfoundation.org>
+Subject: [PATCH 5.15 1861/2214] fbdev: gxt4500: Release WC setup on probe failure
+Date: Wed, 18 Nov 2026 15:58:57 +0100
+Message-ID: <20261118150125.785921903@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,49 +69,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-[ Upstream commit 3b8386ffc0c33b6b5a6a8e64e1487c1adec57dc9 ]
+[ Upstream commit b71e0bb7ad40c005b167e9b48be3af5a3fa51974 ]
 
-Before commit 44454baa7ca7 ("i2c: Dynamically assign adapter id if it
-wasn't explictly specified"), a negative ID was replaced by zero, and
-I2C bus zero was instantiated. Since that commit, a negative ID is passed
-verbatim, instantiating an I2C bus with a dynamic number. As SH boards
-still use i2c_register_board_info(0, ...) to register I2C devices, they
-rely on the I2C bus being bus zero.
+gxt4500_probe() adds a write-combining range before allocating the cmap
+and registering the framebuffer. If a later step fails, the range is
+not released. Add the missing cleanup before unmapping the framebuffer,
+matching the successful remove path.
 
-The SH7785LCR is the only SH board whose I2C adapter has a negative ID
-and its PCA9564 controller becomes i2c-1, causing registration of the
-R2025S/D RTC to fail and hwclock not detecting /dev/rtc0.
+This issue was identified during our ongoing static-analysis research
+while reviewing kernel code.
 
-Set the platform device ID to 0 so that the adapter is registered as
-bus zero again.
-
-Fixes: 44454baa7ca7 ("i2c: Dynamically assign adapter id if it wasn't explictly specified")
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Fixes: 38fc4d45fae5 ("gxt4500: Use arch_phys_wc_* for framebuffer")
 Assisted-by: LLM
-Tested-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/boards/board-sh7785lcr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/video/fbdev/gxt4500.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/sh/boards/board-sh7785lcr.c b/arch/sh/boards/board-sh7785lcr.c
-index 77dad1e511b46..05e2678dfc678 100644
---- a/arch/sh/boards/board-sh7785lcr.c
-+++ b/arch/sh/boards/board-sh7785lcr.c
-@@ -256,7 +256,7 @@ static struct i2c_pca9564_pf_platform_data i2c_platform_data = {
- 
- static struct platform_device i2c_device = {
- 	.name		= "i2c-pca-platform",
--	.id		= -1,
-+	.id		= 0,
- 	.dev		= {
- 		.platform_data	= &i2c_platform_data,
- 	},
+diff --git a/drivers/video/fbdev/gxt4500.c b/drivers/video/fbdev/gxt4500.c
+index e5475ae1e1587..a9124e1dcbde4 100644
+--- a/drivers/video/fbdev/gxt4500.c
++++ b/drivers/video/fbdev/gxt4500.c
+@@ -717,6 +717,7 @@ static int gxt4500_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+  err_free_cmap:
+ 	fb_dealloc_cmap(&info->cmap);
+  err_unmap_all:
++	arch_phys_wc_del(par->wc_cookie);
+ 	iounmap(info->screen_base);
+  err_unmap_regs:
+ 	iounmap(par->regs);
 -- 
 2.53.0
 
