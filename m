@@ -1,54 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032604;
-	b=ZSrJ1PC83BFQiOdbmwo3sJuJ4QClqi9nYKF/tAWZKGLVx9FzXjHdgfoJ4Ma52lEd7UmV
-	 NXi9scmVmt8GxF+ZB9muEGwp1jCMfT+uSYdywPyqpWhfKhueZbTOwsuokXzPSUIRKeydx
-	 E1C2g3g/BypkmKA6atMnQd6eR9XoJcmZMXqIBz/+jk76OX1oyZS3y3y61pqyLqIVhpZQK
-	 bURcGncTNvYwtyOMlGZBogNJapNtuuUt40nTAcms0OdB4hQNXiF6fWLwZcg4Fn/50/pLo
-	 NmhTpE1axftu58l1XEOZSFrGPrTUUlVBnxjgiJa9srQnWkOCyfcg8kruIig+gjK/FZQ==
+	t=1795032607;
+	b=V5ecOY7JQPqKQo/A6bbRPbQ7c/7ocu0TFtg8cJHHEEUHj22+ANd8PQYt91VZrgqniIXr
+	 q/+h8ezyUkMm4JzRER5XJ1ONU/Xw+vcZ9RtxGVEgDhIsIB8bnFrXEvpXl2CheM5UxtB6z
+	 jGnFisGj9X4HsNfIY6G0zgNmEmrKXLpNJnPvHkDf+pgA8m107Zduzee13rUDEVx3y8pv9
+	 fZhZlv8RR0a1g7NWWLaneeQA3PUSAeaeX7hmzl8JoXU0a7aRj8+F7h07/H9wpLaK8Nzcw
+	 KuY/gVvaP0+9eOlRiB1ie6RA/V1KSkz7NV809skiHhf3JvEnNwxsIuf41p08HoA7sCA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032604;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032607;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=36EfvrW7PNtjqc9Kh9ftQWPL+YFXkMFE3xZnhHLJCxk=;
-	b=AS2VORypcob1GvURt8MWk3/30K+2ZPO+jFxHgQO/acYb2W5Elkouv6qEv82r3rN+F2NP
-	 INho39DsMXAiCi6FbCUVQmNOekEGt8nIM4kURCsXVgRvRq5SwwpD0RTTZYYkldtZa5MNj
-	 Yfj+3651WgdUEAL9pZi9B9GfTUUy4etszYWEj1+WKstzEw45FRw+1NcZpBQzHDb8CR9qE
-	 knkxPLtfPWtD1GX8eFNKsZHk9bE0k8U3/NJgbRBien2pcGRO7/o+np06RCN4coLeo31wT
-	 iZHsI5+wukttOyuXjYeHf8BJTOn1+4s+sACz9xcMsPp5ovqeJ/Ctuyn0xVVnm0K5Rpg==
+	bh=RailAe45xpl6A14n+J9aDz9ZRCTB2RwJKYqo54IDGrg=;
+	b=3j0maIvYsJQ+kipH3b2f9lGeeqmhtgV3KwdZciumxKymm0Y+WbZRPyRoXDwAPvuyF9ie
+	 VG6s/QwyN9/U5ySXoFErrokEG19OGsQIsMp8Zxo4B5j9upKOLwKzb6EZP3EFnkN3qjvWY
+	 1XR61qIBpmOAJspROV75N1+nHrTin2x6mRo7GnV0oBuScW4dTSL5fvaqaW57tOfs/o8gZ
+	 LaMEnaXv4BaqexazoNSy0RWHVBIIPs45/CnnnoCa+khTBVcJteAkknpdUxlAkNbIJsvI5
+	 gmblv+vzguzZ5hbp7JokO3tkDpGKuTDsxNtsddikmqFw6zeG0VGGN22K7vX48NsH4ig==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mo/kHs16";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trRgFTSo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D82A606A333;
-	Wed, 18 Nov 2026 20:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D945606A32F;
+	Wed, 18 Nov 2026 20:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mo/kHs16
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C40701F000C4;
-	Wed, 18 Nov 2026 20:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=trRgFTSo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8297A1F000C5;
+	Wed, 18 Nov 2026 20:10:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032604;
-	bh=36EfvrW7PNtjqc9Kh9ftQWPL+YFXkMFE3xZnhHLJCxk=;
+	s=korg; t=1795032607;
+	bh=RailAe45xpl6A14n+J9aDz9ZRCTB2RwJKYqo54IDGrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=mo/kHs16q24YhqjvEihCTIDitUtIozk2l+WzqZFmykGMq33GuA7ScPl1bhU70p4mA
-	 MWdWyAV1KYGyWzR0vlsotbeOKurzECpIxx0MfO21/GByxFDnLBxvABGOqMgM65mAsv
-	 RPm4oTDQ89DrgPBPbmEiYFQLSfZA47D8WqriUBUM=
+	b=trRgFTSoKJGQIIdcraEx4nZHwAmuIu59HtBt2FUFH52r+wRUu8gG5uT/74zi/+sZQ
+	 cTwBffzNlApl94+R1cO0W66rbcdI6i64PeLw7TkhwlSbS7WNYXNMVpzouqOtaskB3n
+	 KmZNc5VLJobt5e28JpiTAROeGa66ZD8CJjdUCKjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiale Yao <yaojiale02@163.com>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Hangbin Liu <liuhangbin@kylinos.cn>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sashiko <sashiko-bot+sashiko@kernel.org>,
+	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Henry Hu <huhai@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1463/1756] team: reject CAN, IEEE 802.15.4 and 6LoWPAN devices in team_port_add
-Date: Wed, 18 Nov 2026 15:59:50 +0100
-Message-ID: <20261118150107.297570199@linuxfoundation.org>
+Subject: [PATCH 6.12 1472/1756] ksmbd: fix unlocked IPv6 addr_list walk in fsctl_query_iface_info_ioctl()
+Date: Wed, 18 Nov 2026 15:59:59 +0100
+Message-ID: <20261118150107.610605259@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,68 +70,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiale Yao <yaojiale02@163.com>
+From: Henry Hu <huhai@kylinos.cn>
 
-[ Upstream commit 9043be310c6a4c5e57f7bba4b9870554eac7aa96 ]
+[ Upstream commit a63bb4d91c784f63ad7c063717dff7920d8445be ]
 
-When the first port has a non-Ethernet type, team_setup_by_port()
-copies port_dev->type to the team device while netdev_priv() of the
-team device still holds a struct team. Several L2 stacks identify their
-devices by dev->type alone and then access type specific data that the
-team driver never sets up:
+fsctl_query_iface_info_ioctl() walks idev6->addr_list with a plain
+list_for_each_entry() while holding only rtnl_lock(). rtnl does not
+serialize all writers of this list: the DAD-failure path
+(addrconf_dad_failure -> ipv6_add_addr) can insert addresses without
+holding RTNL. It updates idev->addr_list with list_add_tail_rcu() under
+write_lock_bh(&idev->lock), so it can race with the unlocked walk.
 
-- CAN protocols rely on the CAN mid-layer private data (ml_priv)
-- IEEE 802.15.4 code dereferences ieee802154_ptr and the mlme ops in
-  ml_priv
-- the 6LoWPAN netdev notifier writes through lowpan_dev(dev) on
-  NETDEV_DOWN and reads it on NETDEV_UP/NETDEV_CHANGE
+addr_list is RCU managed, so walk it with list_for_each_entry_rcu()
+under rcu_read_lock(), matching the other lockless readers of the list.
 
-Enslaving such a device (e.g. vxcan, wpan0, lowpan0) therefore leads to
-NULL pointer dereferences or to writes into struct team.
-
-This is the same problem that syzbot reported for the bonding driver
-with a vxcan device enslaved to a bond master, which crashed in
-can_rx_unregister() and was fixed by commit 8ba68464e478 ("bonding:
-refuse to enslave CAN devices"). The team driver has the same gap.
-
-Reject ARPHRD_CAN, ARPHRD_IEEE802154, ARPHRD_IEEE802154_MONITOR and
-ARPHRD_6LOWPAN devices in team_port_add().
-
-Link: https://lore.kernel.org/all/b58d98e0-8fe3-4e4e-b8a5-c1c7e647ccca@hartkopp.net/
-Link: https://syzkaller.appspot.com/bug?extid=8ed98cbd0161632bce95 # bonding splat
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Signed-off-by: Jiale Yao <yaojiale02@163.com>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
-Link: https://patch.msgid.link/20261019155407.61487-1-socketcan@hartkopp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: Sashiko <sashiko-bot+sashiko@kernel.org>
+Link: https://sashiko.dev/#/patchset/20260910090818.24479-1-15815827059%40163.com
+Co-developed-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
+Signed-off-by: Henry Hu <huhai@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/server/smb2pdu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index 1645a7a2e0767..479d5a51152ef 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -1173,6 +1173,17 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 		return -EINVAL;
- 	}
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 7c7eb542caf10..e03a9401e276d 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8283,13 +8283,15 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
+ 			if (!idev6)
+ 				continue;
  
-+	if (port_dev->type == ARPHRD_CAN ||
-+	    port_dev->type == ARPHRD_IEEE802154 ||
-+	    port_dev->type == ARPHRD_IEEE802154_MONITOR ||
-+	    port_dev->type == ARPHRD_6LOWPAN) {
-+		NL_SET_ERR_MSG(extack,
-+			       "CAN, IEEE 802.15.4 and 6LoWPAN devices can't be added as a team port");
-+		netdev_err(dev, "Device %s is CAN, IEEE 802.15.4 or 6LoWPAN. These device types can't be added as a team port\n",
-+			   portname);
-+		return -EINVAL;
-+	}
-+
- 	if (netif_is_team_port(port_dev)) {
- 		NL_SET_ERR_MSG(extack, "Device is already a port of a team device");
- 		netdev_err(dev, "Device %s is already a port "
+-			list_for_each_entry(ifa, &idev6->addr_list, if_list) {
++			rcu_read_lock();
++			list_for_each_entry_rcu(ifa, &idev6->addr_list, if_list) {
+ 				if (ifa->flags & (IFA_F_TENTATIVE |
+ 							IFA_F_DEPRECATED))
+ 					continue;
+ 				memcpy(ipv6_addr, ifa->addr.s6_addr, 16);
+ 				break;
+ 			}
++			rcu_read_unlock();
+ 			sockaddr_storage->addr6.ScopeId = 0;
+ 			nbytes += sizeof(struct network_interface_info_ioctl_rsp);
+ 		}
 -- 
 2.53.0
 
