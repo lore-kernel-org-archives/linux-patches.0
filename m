@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061704;
-	b=LjVeWIoypACFrJguFKC/S4XcY3lWXWOAizyAUBZjzYe4uAAjyCkVBw7ypCQkyjyp47Rq
-	 zocfIKUuBhI8h3lsuDfEej6NDouGMRewiRkF/qfDuVwWhKslcm5XeLpHhkUT2YulITQjr
-	 oNaKbE+CsvQiPMHoRGfEsxf7UE1G/46udMjYMcowMU5PSVjQGiACpmrFVTHjAq9LEWZXA
-	 vEOgrlnwLth0B6KLkwuiXUMsWPVm9WNOURV9Y96ff48nF2prpHzCmfCZQ99zp4eWAc55A
-	 ZzhV+YAHVhdcpZkaCJB75UPgqQissLjbd8bnMYtJIowSzMAcukrSxE3LwtNIKZQsacg==
+	t=1795061706;
+	b=JNhvtou8O6oQwXg8t5jvS1YCbp6ETzwRajnspqg7PJk7s/k0wMIgO8HFJYwrXi3Bcyy2
+	 RENs2qbHvco3tkSroydeKTZpa8A7X+nQKk1+AAHW3tU2JglP0TXg456rMUgOOpsyVYGXD
+	 eLo2WGXP1NprT8HqJMjL5QoH0JDSXOqHGX0PgmrYGrzjnlQ3iPkVJLwmlLszWU4pZ00bt
+	 W7/1VWGm8ihpPTRE4HkgQW4iu6Vu6lkMyD/PE7M9W0tZATPNTS+kktRNGJlJ1nkT5REeU
+	 XfFc5Jp23+ZyMBv0poatZxToZvqc+nv91c+v2y/DnfJDUDpSNle5qU+6b+lwZzvxFoA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061704;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061706;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=1oXSFvptcb5nxVx6snS63IwWWVNZ/Yd7EUcTGwqoJ/Y=;
-	b=W8gSToO1cWuaYnQzGdwZdkJluUJEFoYKFAj7L4/JD2JXcF9R5q1p294Wg1EkLnHe2+R/
-	 eK/HptFnqmvjpg4OgZ8L+mmpkmZPvojj3IrV2BUxXhsovTriItazVHIV3z5bUP8EJHcnN
-	 +oxtAgHW8CNMTw+W9HBkelkKsaC68ZTHXu8b5uZJ4ok9XWmze+E9Y95WhQbWFgACdOgdC
-	 kFd9QX3faBYBdKiMMyWvT+62X0Rjt8ScVIkUUcWV1AXg8uxP52csv2263Nqz3BS1077F/
-	 EDU7BA0vjKKXp8ORrLyjry9rL7iLm1tFc2aqiOTPTRLU9CSfpWJvNlgZ9ev9O76roPQ==
+	bh=Dtr7ozJS24gvSO4LDvMgyS2SktBIvtr52XQJr6b4ztw=;
+	b=vN4QZJMVsAPknbTZhJdZ662vmQowh1KfI37ds8vh+gatrzDTtBbdNv02iuL22ybts+u1
+	 0POeyrAGsYB1QlrSFeK7kWifQCU9ogemKvvSjB1TNjdpjjmSmzYytkGAj9l4tEhkTTCyJ
+	 la7E7qGOVjCzLdRvAaNIeWYxJwQs6xGKtqdierXtndfEVGM10vWON5B3pHnN00OOUQdzu
+	 VDNXeAvJh2HWBQPIlUH657hwnry8Z6MBrLt+Pz3uXiYfNNKaUPGdzUB+4bjpQ7A/LUZGc
+	 Ruw8W3y2eh/5v6Mfg0cm21Ox1wzbp82HEXn2Q4BBfS0hfZBReQhptFgPSrxqgLrZlOA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="E/soi30B";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvJEdPYK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C228606A330;
-	Thu, 19 Nov 2026 04:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3662606A330;
+	Thu, 19 Nov 2026 04:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=E/soi30B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E79A1F000C4;
-	Thu, 19 Nov 2026 04:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PvJEdPYK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1301F000C5;
+	Thu, 19 Nov 2026 04:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061704;
-	bh=1oXSFvptcb5nxVx6snS63IwWWVNZ/Yd7EUcTGwqoJ/Y=;
+	s=korg; t=1795061706;
+	bh=Dtr7ozJS24gvSO4LDvMgyS2SktBIvtr52XQJr6b4ztw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=E/soi30BZGl+/y2jd0mOcR0vdgq4C8bc3iD04DeQintec2U9GWw16MyphniVZEpWK
-	 LLdjOBAJv+0z6oWsYWXliewWI6t2Y5qyCL473gJPcbpqYVEHNRftg6d7xZZHOSTXD2
-	 pvAV3rA577IMm3UX/k/U8gcOiirxHlMfYwDKeRtg=
+	b=PvJEdPYKR3qSxtddoGYmyjj6zTudpVGyjDap5K8wikskGP/NxC+cVW3qE83FL2Zm7
+	 2RYTt7QSjGA9nErjFsB6ySB6vcsXcL/w0vry0m666Cmh7Mo5aj/rmMpsSWcPlZeZCH
+	 fUHCb9lYOjENy0PR+85/tGIpeJGKMzQZdfmEN7zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	Cen Zhang <zzzccc427@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1649/1848] Bluetooth: L2CAP: hold chan in l2cap_ecred_conn_rsp()
-Date: Wed, 18 Nov 2026 16:01:27 +0100
-Message-ID: <20261118150028.766437701@linuxfoundation.org>
+Subject: [PATCH 5.10 1650/1848] Bluetooth: 6LoWPAN: Use RCU-safe device list removal
+Date: Wed, 18 Nov 2026 16:01:28 +0100
+Message-ID: <20261118150028.803285028@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,66 +68,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit b508a2a2d846ccc4c8f691e4e3dfca6f97dfe85a ]
+[ Upstream commit 8c27d7d06e21ba9455ddae4e14f364c57f095cba ]
 
-l2cap_chan_del() calls l2cap_chan_put() to drop the conn->chan_l
-reference.  If this was the last reference, UAF follows.
+RCU readers of bt_6lowpan_devices must be able to follow an adapter's
+forward link until their read-side critical section ends. The entries
+are published with list_add_rcu(), but device_event() removes an entry
+on NETDEV_UNREGISTER with list_del(), poisoning that link.
 
-l2cap_ecred_conn_rsp() iterates chan_l list and calls l2cap_chan_del()
-on some members, without holding chan reference.
+When an adapter is being unregistered and 6LoWPAN is enabled, a
+6lowpan_control debugfs write with an existing LE L2CAP connection can
+enter lookup_peer() after unregister's first synchronize_net(). If the
+connection has no peer on that adapter, the reader must advance to the
+next list entry. Neither RTNL nor devices_lock excludes this RCU reader.
 
-Fix by holding refcount while using chan after l2cap_chan_del().
+The last peer's chan_close_cb() schedules delete_netdev(), which reaches
+unregister_netdevice_many_notify() through unregister_dev() and
+lowpan_unregister_netdev(). The following ordering is possible:
 
-Since orig is looked up by dcid provided by remote, it's also possible
-orig == chan, so reference needs to be held also after orig use.
+  Unregister worker                 Control writer
+  -----------------                 --------------
+  synchronize_net() returns
+                                    lowpan_control_write()
+                                    lookup_peer(): rcu_read_lock()
+                                    reach adapter; no matching peer
+  device_event(): devices_lock
+  list_del(&entry->list)
+  spin_unlock(&devices_lock)
+                                    follow poisoned next link
+                                    read invalid adapter address
+  post-notifier synchronize_net()
+    waits for the reader
 
-Fixes: 41c2713b204e ("Bluetooth: L2CAP: Fix possible crash on l2cap_ecred_conn_rsp")
-Assisted-by: deepseek-v4-flash
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+This invalid pointer access can fault in lookup_peer(). The first grace
+period drains existing readers but permits new ones to start, and the
+later grace period cannot prevent the intervening poisoned-link access.
+
+Use list_del_rcu() under the existing devices_lock to preserve the
+forward link for readers that already reached the adapter. The existing
+post-notifier synchronize_net() waits for those readers before netdevice
+teardown frees the private storage containing lowpan_btle_dev.
+
+KASAN report as below:
+
+    [...]
+    [   45.867526] Oops: general protection fault, probably for non-canonical address 0xfbd59c0000000023: 0000 [#1] SMP KASAN NOPTI
+    [   45.869489] KASAN: maybe wild-memory-access in range [0xdead000000000118-0xdead00000000011f]
+    [   45.870981] CPU: 1 UID: 0 PID: 646 Comm: sh Not tainted 7.2.0-rc6-pmb-bt-functional-v1+ #4 PREEMPT(lazy)
+    [   45.872609] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+    [   45.874380] RIP: 0010:lookup_peer+0x1ba/0x320
+    [   45.875067] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
+    [   45.878206] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
+    [   45.879106] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
+    [   45.880334] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
+    [   45.881455] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
+    [   45.882546] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
+    [   45.883839] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
+    [   45.885186] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
+    [   45.886539] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    [   45.887527] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
+    [   45.888687] PKRU: 55555554
+    [   45.889183] Call Trace:
+    [   45.889666]  <TASK>
+    [   45.890061]  lowpan_control_write+0x445/0x9e0
+    [   45.890854]  ? __pfx_lowpan_control_write+0x10/0x10
+    [   45.891738]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.892603]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.893383]  ? __debugfs_file_get+0x1bd/0x7f0
+    [   45.894057]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.894902]  ? lock_acquire+0x17b/0x2f0
+    [   45.895593]  ? ksys_write+0x111/0x200
+    [   45.896290]  full_proxy_write+0x11f/0x180
+    [   45.896991]  vfs_write+0x25a/0x1010
+    [   45.897642]  ? __pfx_full_proxy_write+0x10/0x10
+    [   45.898440]  ? __pfx_vfs_write+0x10/0x10
+    [   45.899178]  ? lock_release+0x11f/0x280
+    [   45.899855]  ksys_write+0x111/0x200
+    [   45.900435]  ? __pfx_ksys_write+0x10/0x10
+    [   45.901074]  ? irqentry_exit+0xbe/0x820
+    [   45.901722]  ? srso_alias_return_thunk+0x5/0xfbef5
+    [   45.902489]  do_syscall_64+0x115/0x6a0
+    [   45.903064]  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+    [   45.903813] RIP: 0033:0x7fa889c3e687
+    [   45.904359] Code: 48 89 fa 4c 89 df e8 58 b3 00 00 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 1a 5b c3 0f 1f 84 00 00 00 00 00 48 8b 44 24 10 0f 05 <5b> c3 0f 1f 80 00 00 00 00 83 e2 39 83 fa 08 75 de e8 23 ff ff ff
+    [   45.906981] RSP: 002b:00007ffd7651b960 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+    [   45.908070] RAX: ffffffffffffffda RBX: 00007fa889bac780 RCX: 00007fa889c3e687
+    [   45.909102] RDX: 000000000000001c RSI: 00005570f25e8d10 RDI: 0000000000000001
+    [   45.910133] RBP: 00005570f25e8d10 R08: 0000000000000000 R09: 0000000000000000
+    [   45.911162] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000001
+    [   45.912190] R13: 000000000000001c R14: 0000000000000000 R15: 00005570f25e8a78
+    [   45.913208]  </TASK>
+    [   45.913530] Modules linked in:
+    [   45.914022] ---[ end trace 0000000000000000 ]---
+    [   45.914709] RIP: 0010:lookup_peer+0x1ba/0x320
+    [   45.915436] Code: 48 89 d9 ba 04 00 00 00 4c 89 fe bf a0 06 00 00 e8 2b e8 ad fb e9 56 ff ff ff e8 01 1e c3 fb 49 8d 7f 18 48 89 f8 48 c1 e8 03 <80> 3c 28 00 0f 85 4a 01 00 00 4d 8b 47 18 4c 89 f1 ba 04 00 00 00
+    [   45.919191] RSP: 0018:ffff888114d67b90 EFLAGS: 00010212
+    [   45.920046] RAX: 1bd5a00000000023 RBX: 0000000000000000 RCX: ffffffff85c1d19f
+    [   45.921129] RDX: ffff88810dc35700 RSI: 0000000000000000 RDI: dead000000000118
+    [   45.922553] RBP: dffffc0000000000 R08: 0000000000000001 R09: 0000000000000001
+    [   45.923653] R10: ffffffff893d3057 R11: ffff88810dc35700 R12: ffff88810a690000
+    [   45.925119] R13: ffff888115451038 R14: ffff88810a690000 R15: dead000000000100
+    [   45.926180] FS:  00007fa889bac780(0000) GS:ffff8881fd852000(0000) knlGS:0000000000000000
+    [   45.927817] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    [   45.928726] CR2: 00007ffe304f2f80 CR3: 0000000104f64005 CR4: 0000000000770ef0
+    [   45.930069] PKRU: 55555554
+    [   45.930456] Kernel panic - not syncing: Fatal exception
+    [   45.931542] Kernel Offset: disabled
+    [   45.932040] Rebooting in 1 seconds..
+
+Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
+Assisted-by: LLM
+Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/bluetooth/6lowpan.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 98f82f4613e93..15809ca665ffa 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6419,12 +6419,14 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 		    chan->state == BT_CONNECTED)
- 			continue;
- 
-+		l2cap_chan_hold(chan);
- 		l2cap_chan_lock(chan);
- 
- 		/* Check that there is a dcid for each pending channel */
- 		if (cmd_len < sizeof(dcid)) {
- 			l2cap_chan_del(chan, ECONNREFUSED);
- 			l2cap_chan_unlock(chan);
-+			l2cap_chan_put(chan);
- 			continue;
- 		}
- 
-@@ -6463,6 +6465,8 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 				__set_chan_timer(orig, 0);
- 				l2cap_chan_unlock(orig);
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 17c9af8d4bc68..f0a70743360f8 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -1325,7 +1325,7 @@ static int device_event(struct notifier_block *unused,
+ 			if (entry->netdev == netdev) {
+ 				BT_DBG("Unregistered netdev %s %p",
+ 				       netdev->name, netdev);
+-				list_del(&entry->list);
++				list_del_rcu(&entry->list);
+ 				break;
  			}
-+
-+			l2cap_chan_put(chan);
- 			continue;
  		}
- 
-@@ -6508,6 +6512,7 @@ static inline int l2cap_ecred_conn_rsp(struct l2cap_conn *conn,
- 		}
- 
- 		l2cap_chan_unlock(chan);
-+		l2cap_chan_put(chan);
- 	}
- 
- 	mutex_unlock(&conn->chan_lock);
 -- 
 2.53.0
 
