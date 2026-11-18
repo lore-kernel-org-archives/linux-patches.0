@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029441;
-	b=UtuFSPcEnIjtqu7ueNQGx5ExlVZS6Fr5doc8aZL+FDcT/Yf0soWfGmgmeyZiCr02AR7W
-	 n3+GTvcA1r5ZTI4dYWq1F2Mw7qgtVQGkBRfz4elg1RNjKbtNcym4A2OfBWlpeNdvFr+23
-	 QCVnCmhIWjUnEBId/23KUa7qZn6pSMMdZJ12FTasFof2H5Cm+dZkYPuUyVx30HMP1k0tB
-	 p1yc4Xyvm1YKBIVPVXkR82mhonAsqn4Gti5UfftEXbKgqeOsy9GN0mHkx4bI0nFUc0QqE
-	 PLTPBX0CiO1N0wm89DRdp7DuDouub9X+BUzbu/B2L5QpM9uW9EpgkeSF21HAgFaaNwQ==
+	t=1795029444;
+	b=gY2x3lYPY9CuW+3kkIJWt72/7nD+T8ok8I48GicXK62tfChwRCx/uemgOzZpTxBTFDVB
+	 2BfqYBch+RBmoOFOcXYf7dwfJ9WLEAetU7wM9ebvhr1c7eku2T/rHy/sBlJ7U166TpImX
+	 X79T+lE8GjEb6IaG6ygTeelXBXqva4dTZ1ErvdolbKkM5r27TTV5L26TJSQOMZqi/SID7
+	 Z5zp2h5++OSl388dE7CaJHQ/tnyVxyj5b0mbeR6Ed1fXIVh5Eo0kFr5c/3GH8JmfJZOW/
+	 Z+PoD6fS+ParK5CiA2OeWCoPh9m7Uj/dBS1CEHQeplyJlI2z/LTaBb7ZLIsUt+af9mw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029441;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029444;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4cPV/jhitoHWw5Ogts2ae0D7lhyG1grR7AyQm8FlGWU=;
-	b=YrKPvEjVSYV69RwP0u58p6Z2TcgKm9vBb9Iys1tH3r/CPAFHjxf6zhgLiKr7Qf8Eh+yV
-	 8+Uh6e9qGxcRsDX7stVXx+jc+eC6wp19G/TCupmBBUb/Lkla+JsnZjy7Y3FB3AVLrscOK
-	 BUjI6PnSR5q8QhpG55v7/yVCyLUxMPp2cJI09ECPnaEg7L6/1dRNssSQNKhLoUcfwt6LL
-	 mF3teeH9jQEUvbIStI8kLSd5Fwz4uwCeo0FHxbLOderYPukqHOB/aSOa4ZTppk4TLRbfA
-	 kEJlJJ0F2m4CD3Nj+q60dT3i2r0F8Ttt7/uSWcTKHlnfDJEG9DNrhN5/Ily3IxWDPIw==
+	bh=XYME2G4xDzlqfybDNhbUsqZORzeHpFmGAS1jxkDr9qw=;
+	b=TCSZILDvkviVJ/SSWBLeDQlemoJJtSa/radPwg+u/NkRlPR9jUOH0rjiK7jTgKvzZ6V9
+	 jkslPwYlGtrHKAwaHQOI3oJXYWi3oI7ej4daa8/sIkWvJ3pFBvU3omReP8V3a5ZLunqmS
+	 5PnFwJBwq3YcAPIz+U0B1uLF+hR5iSJZJsay9xswog32DCXXK9tWq1YyzxfZrxev5hxdh
+	 Cu3ehhxZBRbrDzAusWkVn1dvuAOOoRXipwY//m695cvtVugieUs8nPLZCatPH9D2swigv
+	 UhsaJdkIv6hJf69+mjoH0GgHuw6/k3esEFCO1nj/4Sy2MCXDzagR9fuwnsfN+xKFksw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T30GmbpD;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RrOycnvq;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D089606A320;
-	Wed, 18 Nov 2026 19:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414FA606A320;
+	Wed, 18 Nov 2026 19:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T30GmbpD
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D74DF1F000C5;
-	Wed, 18 Nov 2026 19:17:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RrOycnvq
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C271F000C5;
+	Wed, 18 Nov 2026 19:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029441;
-	bh=4cPV/jhitoHWw5Ogts2ae0D7lhyG1grR7AyQm8FlGWU=;
+	s=korg; t=1795029444;
+	bh=XYME2G4xDzlqfybDNhbUsqZORzeHpFmGAS1jxkDr9qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T30GmbpDbhApbC9R8G0E6tLZcPjZAgVh9uRGVWcqjPJaH12ofOCnMbRsam3E6jl9I
-	 pbvkeNcqNDx3GaEYl1aLeoQiGGXN+onl1HujJYncYnbtxHBI9uotSN9qMqDibmMDqa
-	 BMlnoYecCNhlkYnMnfWO6Y+C2WY1r7DwGAg+s0xY=
+	b=RrOycnvqM03taFKyWxCpw/DoHP5oqd/4pgyh7EZyHxs1jbhoOXf8x7yKjgBWvKDaR
+	 znCPpuAHLMUyWY7O3ILbZeS9d7XvefvROKnaxsErZzD7wfgpHpBt5eQPN/MdCzFTwe
+	 ylAcUGrj2Z0Fi/5tj4rdrrYBX8M6lC2T14dhXBVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0350/1756] arm64: dts: qcom: sm7225-fairphone-fp4: Disable PMK8350 PON
-Date: Wed, 18 Nov 2026 15:41:17 +0100
-Message-ID: <20261118150022.298190258@linuxfoundation.org>
+Subject: [PATCH 6.12 0351/1756] sit: fix UAF in ipip6_tunnel_del_prl()
+Date: Wed, 18 Nov 2026 15:41:18 +0100
+Message-ID: <20261118150022.333542384@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,40 +68,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5c088a33e3a9bb236c475b7230df275fc1e51eda ]
+[ Upstream commit 5145bb6a2c2683d541828f86d5321e0565f2e30c ]
 
-Two PMICs on this phone have a PON block, the PM6350 and PMK8350. Only
-one should be enabled at one time, so disable PMK8350 PON and keep the
-PM6350 PON.
+When flushing all potential router list (PRL) entries,
+ipip6_tunnel_del_prl() called call_rcu(&x->rcu_head, prl_list_destroy_rcu)
+before clearing t->prl.
 
-Fixes: 582e7c1026fa ("arm64: dts: qcom: sm7225-fairphone-fp4: Add pmk8350 PMIC")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20260901-fp4-pmk8350-pon-v1-1-e05937e9c860@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+A concurrent reader in isatap_chksrc() could enter an RCU read-side
+critical section after call_rcu() but before t->prl is set to NULL,
+allowing prl_list_destroy_rcu() to free nodes while the reader traverses
+them.
+
+Clear t->prl using RCU_INIT_POINTER() before invoking call_rcu().
+Also use rcu_assign_pointer() when unlinking individual entries.
+
+Fixes: ef9a9d1183b3 ("ipv6 sit: RCU conversion phase I")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260907075846.2913645-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv6/sit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index dfa3b111ae10f..4c73893e26931 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -924,6 +924,10 @@ xo-therm@0 {
- 	};
- };
- 
-+&pmk8350_pon {
-+	status = "disabled";
-+};
-+
- &pmk8350_rtc {
- 	status = "okay";
- };
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 614f7267dc9f8..eb42d3075e77d 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -435,7 +435,7 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
+ 		     (x = rtnl_dereference(*p)) != NULL;
+ 		     p = &x->next) {
+ 			if (x->addr == a->addr) {
+-				*p = x->next;
++				rcu_assign_pointer(*p, rtnl_dereference(x->next));
+ 				kfree_rcu(x, rcu_head);
+ 				t->prl_count--;
+ 				goto out;
+@@ -446,8 +446,8 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
+ 		x = rtnl_dereference(t->prl);
+ 		if (x) {
+ 			t->prl_count = 0;
++			RCU_INIT_POINTER(t->prl, NULL);
+ 			call_rcu(&x->rcu_head, prl_list_destroy_rcu);
+-			t->prl = NULL;
+ 		}
+ 	}
+ out:
 -- 
 2.53.0
 
