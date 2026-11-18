@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795054350;
-	b=L1kAHVt2q3ZUQr6EoY8Sp2q4Hrt/Te7W3SB9c6qI8ohRxqwRSV/SSdo68t2FLiqMQ1kl
-	 J3FINnwUXz6CPyqXN1qv4XrWSVu3OKYdv/NjUrv/lpXtO+s4Ey2JtdTrKwAaQl2VA8ljI
-	 U9ZRO52eo8PUqDXPK8xlD1OEjk6Yi1EQgjnsQMNp8ijVuj/OZo0GW+NbYgVVf3KkYGuaz
-	 F3mPKN0Co6rNLnDr6kU8mhb7lPefhT2geOoB9X3nTym2Qfeel1BQOQhPwnWtY+KM0v/4s
-	 TOC+FZTss9QmZxC4c2VEx674xZ2w6OJCOWj0TA0rMJOIytvIAm/hrNx//J2SG8AXMHQ==
+	t=1795054352;
+	b=DkLZ3UcfIL+joON846TOQBD9AnM97ZgzTNJOF0/SgnB0tFDRmtFT8Bkc3uq6tjhvnhV/
+	 s6pf3WTfx+cCEvnY/0zxTKojhzE8oa1C39QFUZcg3a1R9DAa52xHmjIoKLun2AufZTXuR
+	 W2WkRjkTtdgRzQCX1OHns99b38yFlsuMLRyAmryL5ZuG52AAOICwGjYjVTn3GZ2b1kCXT
+	 EdovH2MK6WdCs8u2SEwvsXXp7MyFr3f/0FPn1q45tmq4/I2Nq0wJp+ttjp8RJGbANHkON
+	 62XcHswkSfzwXyufyMBpyQOb4AEr+LzLfRSF04PUJGYf7FiZ/hUT4RWphDKTSwrubAw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795054350;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795054352;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=HPM7SSxtdtJbaxldmENkzCc3mYHzf8OTs6ou0e+MCXg=;
-	b=crFx0sUxEe/HrcyBXyjuTBW/cC5BXkQJCoMWmT/Kj7GbhNREKRap/OYS1MFVqcSdZRul
-	 pNKt0hBiDmuIs1NPXL6+FqzL9/N9Bji4PV+oAMwQnMrj1sQUtsBJoTiIt2x7ZepBsZMs9
-	 xd/F/wRB3lNQa37qsPzLKrHdy3LBHT2Apb1Xk/1W7ZCj+WDe70vMHTl3Hi5t/wz7evtI+
-	 6RDca0zsiJQsdYdmcFqgt195RmpAeyIn+H/taS1zmpDStyg5DBzr5MJQ5lo7pg9VBYA+w
-	 5aeDHsPp/NrCA+ejr4CwwgiBz8Qn0aZaEjelVSkCLxEuq1OU9WUKx82ui8JQVICKl0g==
+	bh=HX77RaJy1vhz7rl3IDxOX1Wx6ENbntFR5VcLbPBqL1E=;
+	b=vZQObqe6nq0jRwWaUhsDQ6Y0CvU5vqm80o3+ABKVcbTu24n0mKu/5H18qoxaGcZ90ogD
+	 eL2dIqz9nf6grOXZg9o1zQnqkcslL608x8zX4YXuznpO46iW13EAFWKuSVYGxpdfrhLeJ
+	 W9WNKLbd/rt7k8lwzmDHmvluajT7FnnM/vlzDd7urSTTzCaM89b1jXkgsecL14dZn11Dc
+	 PKEFO8XCuKmavgptdJumasN9RLokZxweOPKghQn1YGaJJ+YMg2UyBMwI3h2jYmNhHCo+3
+	 gkLFMZxKgCdZDduC+DGdb5Ej3W2gbr1epl+KRpDViOYGgp54AYKftkDqRCUkVw+FIGA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fHivah6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zxdne3Ye;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65D8606A337;
-	Thu, 19 Nov 2026 02:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF0E606A331;
+	Thu, 19 Nov 2026 02:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2fHivah6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F196B1F000C4;
-	Thu, 19 Nov 2026 02:12:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Zxdne3Ye
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E971F000C4;
+	Thu, 19 Nov 2026 02:12:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795054349;
-	bh=HPM7SSxtdtJbaxldmENkzCc3mYHzf8OTs6ou0e+MCXg=;
+	s=korg; t=1795054352;
+	bh=HX77RaJy1vhz7rl3IDxOX1Wx6ENbntFR5VcLbPBqL1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2fHivah6UhcEtTZR/HbIqPT0K7pwSBmMYm7jOllFyCC56srj8D/za9+AncA8iUmkx
-	 fO7Yua3JLRlIEkB5TIS6MB6A1p2Ozn2109QJOcDPWEcESI3U12XVnb93keOaqrUGpT
-	 /THrajuaf3T4RFfSObC7tQqLx7qsVAhdc/dFzNcY=
+	b=Zxdne3YeZCAES1Z3oHzF7Ek0oAFKO+aTyai+EokePT4NYlLI2T4AVIfjW+PAh51kx
+	 Qq9bhELfnGpsBTCA/No2H5QWptv/DSf92IUcqmeDDVn8gC416fzh35yWfzRGnm3UgD
+	 LRChMeZOE1FSHm3ojOi8bFhE44oDi0e2u+7acWOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Kyle Zeng <kylebot@openai.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1241/2214] apparmor: on failed load ensure profile files are removed before parent
-Date: Wed, 18 Nov 2026 15:48:37 +0100
-Message-ID: <20261118150101.365682158@linuxfoundation.org>
+Subject: [PATCH 5.15 1242/2214] mptcp: pm: kernel: use RCU to free endpoint listeners
+Date: Wed, 18 Nov 2026 15:48:38 +0100
+Message-ID: <20261118150101.402688174@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,45 +69,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Kyle Zeng <kylebot@openai.com>
 
-[ Upstream commit 97ba44a2aa4c7ab011a93ce94cb595200fe4ea4f ]
+[ Upstream commit 49b09ae0bf57b4230187d4cdd0a370558e44a6e8 ]
 
-The load interface does not guarantee the order profiles are loaded.
-When a parent is loaded after its child, and the load fails, the
-current code will issue a warning, and leak a dentry.
+mptcp_pm_nl_create_listen_socket() starts the TCP listener directly
+instead of going through mptcp_listen(). It consequently misses setting
+SOCK_RCU_FREE on the parent MPTCP socket.
 
-For the loaded set of profiles, ensure that on failure list is ordered
-is traversed in reverse so any children processed after their parent
-is freed first. We do not need to deal with the cases where the
-children are processed before their parent, because either a parent
-outside the list already exists or a dummy parent outside of the list
-is created, and the list walk will not put those parents before their
-children.
+tcp_child_process() can invoke the listener's subflow_data_ready()
+callback without holding the MPTCP parent lock or a reference to the
+parent. An authenticated MP_JOIN racing with endpoint teardown can
+therefore access the parent after its last reference has been dropped.
+The ADD_ADDR error path can also close an already published listener.
 
-Fixes: 6ec46f8f1977d ("apparmor: remove fs entries created by a failed policy load")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Set SOCK_RCU_FREE before __inet_listen_sk() publishes the TCP listener,
+matching mptcp_listen(). This protects the parent on every subsequent
+close path, including a failed endpoint addition.
+
+Fixes: 1729cf186d8a ("mptcp: create the listening socket for new port")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kyle Zeng <kylebot@openai.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20261030042255.74216-1-kylebot@openai.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ sashal: adjusted context to insert the flag before kernel_listen() instead of __inet_listen_sk() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
-index dd8439e9cf55b..de6ccef62e968 100644
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1126,8 +1126,10 @@ ssize_t aa_replace_profiles(struct aa_ns *policy_ns, struct aa_label *label,
- 	 * them yet, and leaving them behind would leak the new profiles
- 	 * (their dents pin the proxy) and make the next load at the same,
- 	 * unbumped ns revision fail with -EEXIST on its raw_data dir.
-+	 * ensure children (which are at the end of the list are removed
-+	 * before their parent
- 	 */
--	list_for_each_entry(tmp, &lh, list) {
-+	list_for_each_entry_reverse(tmp, &lh, list) {
- 		if (!tmp->old)
- 			__aafs_profile_rmdir(tmp->new);
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index e912615e008f3..b748558fd27eb 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1111,6 +1111,7 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+ 		goto out;
  	}
+ 
++	sock_set_flag(newsk, SOCK_RCU_FREE);
+ 	WRITE_ONCE(mptcp_subflow_ctx(ssock->sk)->pm_listener, true);
+ 	err = kernel_listen(ssock, backlog);
+ 	if (err) {
 -- 
 2.53.0
 
