@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041086;
-	b=c4Z8O/4F9wXerWLgpYnFZtnYHgf5RnfdhiLPU0hguJZjfHryrsqeLe71ilXI2I7eIx5d
-	 YDOAAMQufvkofJcFtpTwXYlLuJA2TSwxThq9/E6dZU5OmPJjTrNM7w0u1IqUj2nDDvMn+
-	 5GSzMyXF9z7EdTNGL8Se5CBo5nEJOlQfvsRs2b+MhCF/jXOPWxf0Uh43Rapig+AQsTV7B
-	 ZGe9zyMHFgIpgrkNkhhxe2olqzWxBXsmY5O/fvWQGCMW7go9SsllZZ3RZACFvvsScXC7f
-	 4LXqCv7D6vjFATwOtfa/Bqa9zt0L7zm7I+V+44Y1HbG7AnP4gRdmqDp/ExmIhAYOw/g==
+	t=1795041089;
+	b=tIZlOQ7rhf194FOOuL/lQWK3T08QUny3F2EryZfqqqMnxXYgplvuH8m8JOBlc7Vl7n4n
+	 zHqNMXB/8ahQZdOFdSs7BeRE/tWj1sWXw/T336zqvBLpdznoJQDUhkcQ0627IIBbi8D1K
+	 lsYU5+HU6FnZvpnsdOh3vdCm29Wbs6kPtbUGnvouVQf2qMc+I/luXNVArpmXn7wgm1xJf
+	 P/Cw/vAA2lnumf6ZiORB1QDmoO5XE5DQWu53YMcPFPGC4of0PXSizYBERV7466z1CPa4t
+	 Tgk+JqbjWhMxmXscJyxd2kHXr3R9hAO5A1cSIBVhvXHK0v14gERqWeLKVUIg+Um64DA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041086;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041089;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XW0PtkrY6LX8V7eIVHSrjTgwZja0Sq6JgPYhA3ZejJU=;
-	b=vPf3rqh3Euf4UVZUhE7T1CiwwIY6CiXRm/FQXDhQecWPTUuJOHeAKVANwLk7oz4jOKqI
-	 t42D5Udt/mhulhl7llfuDYa1Ij/vHsDxNPTQrhBeIYeTnl6Vd2QaKF4q92IziL21mcfwV
-	 OS8qin23C3BttGuv8p4nHDqyQtg/Al/u5/0MGadT/ViNtNr/eqJ9uP7Ky8MXQYt993IVS
-	 1/UVzkiJF7IqEa5GeJDdLxCVThZpyn8eZnXJGMtH3F7wRfJEDDbVJ5bVUHyTshEb7SQhS
-	 y2nOQLq5KpoWy44Vo4jc7YsidbOyLkuLCu6IqP7fWhHS82NUbB/Hqj7hPi6jea/L/iA==
+	bh=7N0sof7I7tBoKyEk12fYkTzoWWqkyJeCTKOyFqUO0PI=;
+	b=vXyv+XwgkOAw5MQiYM4fVeMySjg/aPFvio2abTFcxVa+XtMJ6bDkmvWGS0F4HgI+9EFX
+	 3TIzj+Tbti3ygZl02RzDT+J21s8uoilFMmi/rvdFvWS6XzN85HO7qX+tG9PuNdaJTfMXg
+	 YwtLhfaTaEraKG2H8gaaAmTLdHmMQCxbqjCswoEx44hkya0w8BFG5ajFP+Qf80FwHzc/v
+	 ZnDw1T20ziWr5UOsmoTuFmWM9hXiwYS4P5RJs7hvFb7GPadfmkbI2O745Sn/NEoUXUJm9
+	 JxKRXi8skS+3666DBLoILG3FkuINaPl5e3xjNwzI+GyBBbgsLbLi1S/6a/EPqkimsEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o7jzETjV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aejUGpP6;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD0C606A320;
-	Wed, 18 Nov 2026 22:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78159606A320;
+	Wed, 18 Nov 2026 22:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=o7jzETjV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F7F11F000C4;
-	Wed, 18 Nov 2026 22:31:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aejUGpP6
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13621F000C4;
+	Wed, 18 Nov 2026 22:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041086;
-	bh=XW0PtkrY6LX8V7eIVHSrjTgwZja0Sq6JgPYhA3ZejJU=;
+	s=korg; t=1795041089;
+	bh=7N0sof7I7tBoKyEk12fYkTzoWWqkyJeCTKOyFqUO0PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=o7jzETjVuv2P0w8ie1rM8Zztir7x8ng4U6Cs0bXFDyPJut3QvRAaS9Qfy1nxVqTPK
-	 Qsys+73k08zFMcL9D73HjGVNUBvaed3BLMhV5PqjRHzVykFC/UMxpDAqGgjTHKSU6t
-	 +hJHGJjZBM9iQbLhJ2oo3bHUaMbn7i16UYahbPCA=
+	b=aejUGpP6v4yamFU8oTVJgLcdrgESykT/N9556chEeytg+laC4xeMcji4RcU1J+bCh
+	 nSS0YeVuuFshUUJliIQ3ZvLWMZxOhb3WNxf2T7ldpAZn/XP7kd2q27vk6Pq4ZcqNp5
+	 xo3bLQTNhT2QQTYhgwPmAMf1fM8wqIv/nkPW+Oc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Leung <untilscour@protonmail.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Sashiko <sashiko-bot@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2671/3318] wifi: mt76: fix wcid->pktid corruption in mt76_wcid_cleanup()
-Date: Wed, 18 Nov 2026 15:54:53 +0100
-Message-ID: <20261118150441.137378364@linuxfoundation.org>
+Subject: [PATCH 6.6 2689/3318] ALSA: usb-audio: Fix invalid UAC2/3 mixer unit matrix evaluation
+Date: Wed, 18 Nov 2026 15:55:11 +0100
+Message-ID: <20261118150441.629901143@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,56 +68,180 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Leung <untilscour@protonmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 158c1145fe7ddd82914011a00de7cc3262616b16 ]
+[ Upstream commit c01fb2ed90c0770560ea9cc1644f205956b26a70 ]
 
-mt76_wcid_cleanup() releases dev->status_lock before calling
-idr_destroy(&wcid->pktid) to tear down the pktid idr. Meanwhile,
-mt76_tx_status_skb_add() from tx.c can concurrently insert into
-that same idr during tx completion handling:
+The bitmap matrix in the mixer unit descriptor for UAC2 and UAC3 has
+rather the size of input-pins x output-pins, while the current
+USB-audio driver code wrongly assumes the UAC1 bitmap matrix size,
+which is input-channels x output-pins.  That is, when input pins have
+multiple channels, the column size differs and it leads to the
+accesses at a wrong position.
 
-	spin_lock_bh(&dev->status_lock);
+This patch corrects the access of the bitmap matrix for UAC2/UAC3.
+For making the code cleaner, split the parser to UAC1 and UAC2/3, too.
 
-	pid = idr_alloc(&wcid->pktid, skb, MT_PACKET_ID_FIRST,
-			MT_PACKET_ID_MASK, GFP_ATOMIC);
-
-Since idr_destroy() runs outside the lock, it can execute concurrently
-with idr_alloc() on the same idr, corrupting its internal data
-structures. Because idr nodes are freed through the generic slab
-allocator, this corruption can resurface later as an unrelated-looking
-crash anywhere in the kernel that happens to reuse the same freed
-memory.
-
-Fix this by calling idr_destroy() before releasing dev->status_lock,
-so that the table teardown and any concurrent insertion are mutually
-exclusive.
-
-Closes: https://github.com/openwrt/openwrt/issues/24594
-Fixes: bd1e3e7b693c ("mt76: introduce packet_id idr")
-Signed-off-by: Ryan Leung <untilscour@protonmail.com>
-Link: https://patch.msgid.link/20260820-mt76-pktid-idr-race-v1-1-451f176a6495@protonmail.com
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Fixes: 23caaf19b11e ("ALSA: usb-mixer: Add support for Audio Class v2.0")
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20261007172051.13240-5-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mac80211.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/usb/mixer.c | 112 ++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 78 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mac80211.c b/drivers/net/wireless/mediatek/mt76/mac80211.c
-index 2d99b1c382bd0..1d28d26a45ad3 100644
---- a/drivers/net/wireless/mediatek/mt76/mac80211.c
-+++ b/drivers/net/wireless/mediatek/mt76/mac80211.c
-@@ -1561,9 +1561,8 @@ void mt76_wcid_cleanup(struct mt76_dev *dev, struct mt76_wcid *wcid)
- 
- 	mt76_tx_status_lock(dev, &list);
- 	mt76_tx_status_skb_get(dev, wcid, -1, &list);
--	mt76_tx_status_unlock(dev, &list);
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 5f0a122fde8c9..29ccf7a4ec348 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -2180,7 +2180,7 @@ static bool mixer_bitmap_overflow(struct uac_mixer_unit_descriptor *desc,
+  */
+ static void build_mixer_unit_ctl(struct mixer_build *state,
+ 				 struct uac_mixer_unit_descriptor *desc,
+-				 int in_pin, int in_ch, int num_outs,
++				 int in_ch, int num_outs,
+ 				 int unitid, struct usb_audio_term *iterm)
+ {
+ 	struct usb_mixer_elem_info *cval;
+@@ -2265,34 +2265,13 @@ static int parse_audio_input_terminal(struct mixer_build *state, int unitid,
+ /*
+  * parse a mixer unit
+  */
+-static int parse_audio_mixer_unit(struct mixer_build *state, int unitid,
+-				  void *raw_desc)
++/* UAC1 mixer unit */
++static int parse_audio_mixer_unit_v1(struct mixer_build *state, int unitid,
++				     int input_pins, int num_outs,
++				     struct uac_mixer_unit_descriptor *desc)
+ {
+-	struct uac_mixer_unit_descriptor *desc = raw_desc;
+ 	struct usb_audio_term iterm;
+-	int input_pins, num_ins, num_outs;
+-	int pin, ich, err;
 -
- 	idr_destroy(&wcid->pktid);
-+	mt76_tx_status_unlock(dev, &list);
+-	err = uac_mixer_unit_get_channels(state, desc);
+-	if (err < 0) {
+-		usb_audio_err(state->chip,
+-			      "invalid MIXER UNIT descriptor %d\n",
+-			      unitid);
+-		return err;
+-	}
+-
+-	num_outs = err;
+-	input_pins = desc->bNrInPins;
+-
+-	if (state->mixer->protocol == UAC_VERSION_2 ||
+-	    state->mixer->protocol == UAC_VERSION_3) {
+-		if (input_pins * num_outs > 256) {
+-			usb_audio_err(state->chip,
+-				      "invalid channels for MIXER UNIT %d: input=%d, output=%d\n",
+-				      unitid, input_pins, num_outs);
+-			return -EINVAL;
+-		}
+-	}
++	int num_ins, pin, ich, och, err;
  
- 	spin_lock_bh(&phy->tx_lock);
+ 	num_ins = 0;
+ 	ich = 0;
+@@ -2311,25 +2290,90 @@ static int parse_audio_mixer_unit(struct mixer_build *state, int unitid,
+ 					  num_ins, num_outs))
+ 			break;
+ 		for (; ich < num_ins; ich++) {
+-			int och, ich_has_controls = 0;
+-
+ 			for (och = 0; och < num_outs; och++) {
+ 				__u8 *c = uac_mixer_unit_bmControls(desc,
+ 						state->mixer->protocol);
  
+-				if (check_matrix_bitmap(c, ich, och, num_outs)) {
+-					ich_has_controls = 1;
++				if (check_matrix_bitmap(c, ich, och, num_outs))
+ 					break;
+-				}
+ 			}
+-			if (ich_has_controls)
+-				build_mixer_unit_ctl(state, desc, pin, ich, num_outs,
++			if (och < num_outs)
++				build_mixer_unit_ctl(state, desc, ich, num_outs,
+ 						     unitid, &iterm);
+ 		}
+ 	}
+ 	return 0;
+ }
+ 
++/* UAC2/UAC3 mixer unit */
++static int parse_audio_mixer_unit_v2(struct mixer_build *state, int unitid,
++				     int input_pins, int num_outs,
++				     struct uac_mixer_unit_descriptor *desc)
++{
++	struct usb_audio_term iterm;
++	int pin, och, err;
++
++	if (input_pins * num_outs > 256 ||
++	    mixer_bitmap_overflow(desc, state->mixer->protocol,
++				  input_pins, num_outs)) {
++		usb_audio_err(state->chip,
++			      "invalid channels for MIXER UNIT %d: input=%d, output=%d\n",
++			      unitid, input_pins, num_outs);
++		return -EINVAL;
++	}
++
++	for (pin = 0; pin < input_pins; pin++) {
++		err = parse_audio_unit(state, desc->baSourceID[pin]);
++		if (err < 0)
++			continue;
++		if (!num_outs)
++			continue;
++		err = check_input_term(state, desc->baSourceID[pin], &iterm);
++		if (err < 0)
++			return err;
++
++		for (och = 0; och < num_outs; och++) {
++			__u8 *c = uac_mixer_unit_bmControls(desc,
++						state->mixer->protocol);
++
++			if (check_matrix_bitmap(c, pin, och, num_outs))
++				break;
++		}
++		if (och < num_outs)
++			build_mixer_unit_ctl(state, desc, pin, num_outs,
++					     unitid, &iterm);
++	}
++	return 0;
++}
++
++static int parse_audio_mixer_unit(struct mixer_build *state, int unitid,
++				  void *raw_desc)
++{
++	struct uac_mixer_unit_descriptor *desc = raw_desc;
++	int num_outs;
++
++	num_outs = uac_mixer_unit_get_channels(state, desc);
++	if (num_outs < 0) {
++		usb_audio_err(state->chip,
++			      "invalid MIXER UNIT descriptor %d\n",
++			      unitid);
++		return num_outs;
++	}
++
++	switch (state->mixer->protocol) {
++	case UAC_VERSION_1:
++	default:
++		return parse_audio_mixer_unit_v1(state, unitid,
++						 desc->bNrInPins, num_outs,
++						 desc);
++	case UAC_VERSION_2:
++	case UAC_VERSION_3:
++		return parse_audio_mixer_unit_v2(state, unitid,
++						 desc->bNrInPins, num_outs,
++						 desc);
++	}
++}
++
+ /*
+  * Processing Unit / Extension Unit
+  */
 -- 
 2.53.0
 
