@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035138;
-	b=p4f/e0p0Un793VpK2bU9Kfm2Ze+oNzsD7h/hGKvE9wR81Da6xqUZVjDelHgfFMqpHZq0
-	 8Eoikp3zNfpEXGLVGOi6kFgGwJT2tMwxTCaXSZjklfck/oNOaD0Z4y0zCgGx6XJexVk+Z
-	 GaJaJh2ZTtZkBPMuXPr2EkPP6vmiR5hZ/McgSxb9JzcmOdnHA0sWfc7aWB+FvMKL7axlb
-	 IJc0hCJQHj7GXKE2+w0mxGBUiQ0tED6wI5+tT/NcmEY7ED/5IBXMcN3umXmjAcVntjvVV
-	 G8WQiPvUuBtf36zsWSAjD5MDeMaQLWuHZYVROPQBukhncUB0TUpRBrM9KVLGBciRbOQ==
+	t=1795035140;
+	b=izxnv5/fw/QxdCxCsCNUH9M2XcCeG6ApCnTflGhdCBHiKSUgiTHqMRf67fjx+eLtwb6O
+	 D/IEXKF2v61QfMp0T0Mj62A5pZ8IHKSk0sFMpQW0QDMQAiQVixT5uj2dmEMWayCRFIws7
+	 2KLOApw+Ptm8wqFnrzhL+YNYntj/fI+R9hSVgTLkkPJJtDj4rf2v7xJmEfCm0981Ca8RB
+	 pBRazqYH3D5TcixiNnlSZfBNJT3D4GA00TyPgiNDrYisnxzUaDhfNBiAJu8Z8jrqaDJiS
+	 EfbK6Bet8D+m+Po1fn06aiNl4eSGb9V0OSdUoRoJ4J3BiApADAcyJwFUkpKA8sJNwpw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035140;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=87oKvwmy8UpUwGXfKB56qK7PJkfnrLBmM8Qffubitx0=;
-	b=bJFPXfb2rCqHc8WHjGJL4BaJvpm0+2/SKWh6V2KDRCCEiTzZkuAqAyWjpXeydMvjxJ+U
-	 FaIYxtfjrYssKgAzNwL8KfjlhfYeAIfFckMUxLZn2Gd48ZO2wcsFA4N1nVQTQ87pbJVpr
-	 b2HU+a4JVn97rkuup7zXc5k55aOl2geapFOlmILGChH16AxOM8gI/IcUjxlyCuBKaNB1y
-	 bh93qFFehss2U9rPGRFfP618Hy3G8mAqiYYvQ/SLHoDKBLkGpJtpQxgaHXUdUw1zWuVYp
-	 yIQ0GfsYSWw8ZYkUFRYq0tQKn9KhYlz1zfNqEY3dtw4mleT68pkRerZKOT7WVk5P/Jw==
+	bh=i1cdiWTIHRG1tiD7/FKKRzr8jPTxV8gSouWz8ffNhyI=;
+	b=VQxFiIUjuMBmFy5VuYuIg/Yoz161pBNOCXIjNxBTvDBR63ooKfCZ8JvtpDT7qA5f3hOx
+	 JlmSC9dP8FCMe4HWfzCGVbs/13EDD0kyU7N8wPbDwFhOId8iyMSoITBUrASQW9LY68lsq
+	 /Npr+ZsB2QrSlGBFTBVx1nJPPGog6QO+gBW8ItOMBkhq1A3OmYb86L5YIVaHsI4LnRdSo
+	 sl9V0CVjlx49B7I0TfdJZtIbd1/Nf5Fg6jo01IAX736nXrtfvgRM5R4GKu5TG5g56YrEf
+	 17SsvRKulU0O3RnnElzirpKm7t7A0hUkZfsHU19MXqzdT+Os4lDaiVFg3QZzYrNtLSQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LF5p7TpR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hPXqdrYM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA91606A31C;
-	Wed, 18 Nov 2026 20:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C181A606A31C;
+	Wed, 18 Nov 2026 20:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=LF5p7TpR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605D21F000C4;
-	Wed, 18 Nov 2026 20:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hPXqdrYM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 243FA1F000C4;
+	Wed, 18 Nov 2026 20:52:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035137;
-	bh=87oKvwmy8UpUwGXfKB56qK7PJkfnrLBmM8Qffubitx0=;
+	s=korg; t=1795035140;
+	bh=i1cdiWTIHRG1tiD7/FKKRzr8jPTxV8gSouWz8ffNhyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LF5p7TpRZNcAlIxBO+tnoPHsmvClRBy0dqITSid4hk1zGBn4RYD+wcG9v1f8ei07q
-	 HM2k8x0aY2A42WJ1v/BnekOQa/NpILOfTt8o9w8R6JxgEHa07Mdxxr5lGXc4LmS0mP
-	 i8WIpHPKNLkwUwoSBf5y2ApzIE8z+RREIkzigVl4=
+	b=hPXqdrYM5cAW/crW9H7hgPJRRfj+n3DQeQW9mwS12XlYJrT4XbJPLaEsUFUURGLxQ
+	 K0O/lsBBGQ6SpvAYbgjwuQ70/HTjpbGez01C8oAz6wdFpH8pSC6k1QIp71BfL4nM4V
+	 /QrAhdu6OmGsdBFGeSI5vxj7afBg8KzmFoT/XP40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com,
-	Anuj Bolewar <bolewara@gmail.com>,
+	Ijae Kim <ae878000@gmail.com>,
+	Myeonghun Pak <mhun512@gmail.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: [PATCH 6.6 0592/3318] media: hackrf: fix use-after-free in hackrf_alloc_urbs() error path
-Date: Wed, 18 Nov 2026 15:20:14 +0100
-Message-ID: <20261118150335.372138328@linuxfoundation.org>
+Subject: [PATCH 6.6 0619/3318] media: cx23885: unregister DVB bus when SP2 CI setup fails
+Date: Wed, 18 Nov 2026 15:20:41 +0100
+Message-ID: <20261118150336.388912682@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,56 +68,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anuj Bolewar <bolewara@gmail.com>
+From: Myeonghun Pak <mhun512@gmail.com>
 
-commit 6802ad4b6b267dda02209b5811edac7825c8a5f6 upstream.
+commit 22f552ff726a82a086be4ef02ce5099a0e8624b6 upstream.
 
-hackrf_alloc_urbs() frees the URBs it allocated so far when one
-allocation fails, but leaves the entries in dev->urb_list[] and
-dev->urbs_initialized untouched. The caller, hackrf_start_streaming(),
-then calls hackrf_free_urbs() on the error path, which walks
-dev->urbs_initialized entries and calls usb_free_urb() a second time on
-the already-freed URBs, causing a use-after-free (slab-use-after-free
-Write in usb_free_urb()).
+The DVBSKY S950C, DVBSKY T980C and TechnoTrend CT2-4500 CI paths register
+the DVB bus before attaching their SP2 CI client. If that client cannot be
+created, bound, or pinned, the current error path removes the I2C frontend
+components and only deallocates the frontend list, leaving the registered
+DVB adapter behind. Removing an I2C demod before unregistering the DVB bus
+can also expose the use-after-free ordering fixed for the normal remove
+path.
 
-Drop the redundant cleanup loop inside hackrf_alloc_urbs() and let
-hackrf_free_urbs(), which the caller already invokes on error, own the
-cleanup of the successfully allocated URBs.
+Unregister the DVB bus immediately when SP2 CI setup fails, before the
+existing I2C client cleanup. The bus helper empties the frontend list, so
+the later frontend deallocation has nothing left to release. Keep failures
+from vb2_dvb_register_bus() on the existing cleanup path. Also release an
+unbound SP2 client and propagate the actual I2C creation or CI registration
+error.
 
-Reported-by: syzbot+832ce9fa3face1b7d44d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=832ce9fa3face1b7d44d
-Fixes: 969ec1f6bd92 ("[media] hackrf: HackRF SDR driver")
+This issue was identified during our ongoing static-analysis research while
+reviewing kernel code.
+
+Fixes: 2b0aac3011bc ("[media] cx23885: move CI/MAC registration to a separate function")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anuj Bolewar <bolewara@gmail.com>
+Assisted-by: OpenAI:GPT-5.6
+Co-developed-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Ijae Kim <ae878000@gmail.com>
+Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/hackrf/hackrf.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/media/pci/cx23885/cx23885-dvb.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/media/usb/hackrf/hackrf.c
-+++ b/drivers/media/usb/hackrf/hackrf.c
-@@ -665,7 +665,7 @@ static int hackrf_free_urbs(struct hackr
+--- a/drivers/media/pci/cx23885/cx23885-dvb.c
++++ b/drivers/media/pci/cx23885/cx23885-dvb.c
+@@ -1160,8 +1160,12 @@ static int dvb_register_ci_mac(struct cx
+ 		info.platform_data = &sp2_config;
+ 		request_module(info.type);
+ 		client_ci = i2c_new_client_device(&i2c_bus->i2c_adap, &info);
+-		if (!i2c_client_has_driver(client_ci))
++		if (IS_ERR(client_ci))
++			return PTR_ERR(client_ci);
++		if (!client_ci->dev.driver) {
++			i2c_unregister_device(client_ci);
+ 			return -ENODEV;
++		}
+ 		if (!try_module_get(client_ci->dev.driver->owner)) {
+ 			i2c_unregister_device(client_ci);
+ 			return -ENODEV;
+@@ -1204,7 +1208,7 @@ static int dvb_register(struct cx23885_t
+ 	int (*p_set_voltage)(struct dvb_frontend *fe,
+ 			     enum fe_sec_voltage voltage) = NULL;
+ 	int mfe_shared = 0; /* bus not shared by default */
+-	int ret;
++	int ret = -EINVAL;
  
- static int hackrf_alloc_urbs(struct hackrf_dev *dev, bool rcv)
- {
--	int i, j;
-+	int i;
- 	unsigned int pipe;
- 	usb_complete_t complete;
+ 	/* Get the first frontend */
+ 	fe0 = vb2_dvb_get_frontend(&port->frontends, 1);
+@@ -2586,8 +2590,10 @@ static int dvb_register(struct cx23885_t
+ 		goto frontend_detach;
  
-@@ -681,11 +681,8 @@ static int hackrf_alloc_urbs(struct hack
- 	for (i = 0; i < MAX_BULK_BUFS; i++) {
- 		dev_dbg(dev->dev, "alloc urb=%d\n", i);
- 		dev->urb_list[i] = usb_alloc_urb(0, GFP_KERNEL);
--		if (!dev->urb_list[i]) {
--			for (j = 0; j < i; j++)
--				usb_free_urb(dev->urb_list[j]);
-+		if (!dev->urb_list[i])
- 			return -ENOMEM;
--		}
- 		usb_fill_bulk_urb(dev->urb_list[i],
- 				dev->udev,
- 				pipe,
+ 	ret = dvb_register_ci_mac(port);
+-	if (ret)
++	if (ret) {
++		vb2_dvb_unregister_bus(&port->frontends);
+ 		goto frontend_detach;
++	}
+ 
+ 	return 0;
+ 
+@@ -2618,7 +2624,7 @@ frontend_detach:
+ 
+ 	port->gate_ctrl = NULL;
+ 	vb2_dvb_dealloc_frontends(&port->frontends);
+-	return -EINVAL;
++	return ret;
+ }
+ 
+ int cx23885_dvb_register(struct cx23885_tsport *port)
 
 
