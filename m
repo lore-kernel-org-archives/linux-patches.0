@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019060;
-	b=bbEbHaMGppmWWsrVD7BEsGN9F85UBWZCfXaL/ZOoR14eCmnp71KNeBGOqjhmyE61p1NN
-	 XevKHLoEm2+VIdYu1AiNRKVRAhOvz/SMLwUbeUTlKC8yOA4SQe19KYs89qMRnUsZ3eKNk
-	 2SoOWS/7womj/xm9M/Nm1Sl8ra7OBOvjir1jT8rReD0f534R0jrBInzekZkXZZa6yxu9S
-	 toEc9lmRTSzYzWKcSSRFjHg5HvsRg8+i5034laQi8pFMydOu2mtZ9Rdr/HjjlU94bPU/0
-	 yTyetyMT4UXtVkEO7OAgkqNI0J0n/sDM0aL2TUSDnGFI3KTvxZony5zAKfnQCZbp2AA==
+	t=1795019063;
+	b=yiajS+u+f5xs5vpx9pTAoI7eW9VMCKocTHH4MObqwGLZpMV/EVurT3in6ePLBQGApu4e
+	 dAQtAK0q3jr94i9gpPjmw3v6hBj1mgJUnpTDLcPIxCMCRo+KJRnQJ1uK1OKV9S4T6iM8I
+	 4A7Hj86C45cWxFyx0GwzNQPM5kTtf/4eUE3dpCueXFzHkCgbgF7VQEVOx++bY9ZXP9AjJ
+	 G/E8Ph66rPgaEmuAqXMOMVA1d5AUVvdK2iLuXmsmynFSjDBx6SyOFzY4uHVlNWcGzUd9m
+	 0Hbfwuv1E3CrlTbClfMFDhvaV2n5TlTQL8O6AkYsTbgxCOQamjcNrTll5lLgtwGu53Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019060;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019063;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=A8+wDgMKMWpmbtMEqetHuwBjYE45CipqGYMXv9hBHas=;
-	b=lhl3RxFsEMVHi8D1uqb3vx4KRM5zzlP9lBg/I1FSk40s4EKheo7PvO5o5DR/XhAUu2L/
-	 FrWa1+v3qlE12WS8m0Uz065Ut5zaJiSVpkFj/CjfQ6Q3+PlaR2JC2z8pndTAkZSrwYRG1
-	 H/0iC3RurE/EMOqSqKtANoHmM5dpzs2gjhL5t0lLgr312tMqLX6QdPXioW4yfXa9497jS
-	 Y7vubw0tIJvuDM0PaqJZholUptsJR1MneuhMVZilgy5E4i2RDnONetcFQ0im3C37E6aS+
-	 TcIjCv5PN5S2/hvp7fR+6bka0ZXD+0lOI6RLAW6TSDRa9I3cGoTnLlRIHgSk+yqopLQ==
+	bh=/W7G/Xlm7tnkGwBngZBg99PzPvkVaTnznBd/HNzP2nI=;
+	b=w36CB1ozfLtgBTG+EONFfvk7Kjaq/lKE/amAS4e8odGv2igaPDrMi2VWgsgfvjSJSOG6
+	 U8IzVEiLAUacGbbcw2VfwUSnZJvqARxmKxMrkH6sPFjTnaqlmV155gS7EjvkU+9rvrY1R
+	 aJ3FJYlzzyJ29wzuOuh0kxwL2t+U9BYyefixbVuh9dXMnqCWh60bkcqf+3csrtYgkTHEB
+	 XaV0kaQgGBH2U2Y6e005+aNDYAATn4Yj0AQKJg0WIMCGb2h4nLM0Ip3Rs+oi00s3a21vt
+	 HAvZeDM66c3U/SzUZWyipvCKMrU1Bc5/Nu0DsJO/EIBzkbWf2Ti1eVtfjwXuwk2cOzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SCOlGX3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=00zwTLd1;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4A7606A320;
-	Wed, 18 Nov 2026 16:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CE660A2600;
+	Wed, 18 Nov 2026 16:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2SCOlGX3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBDA1F000C8;
-	Wed, 18 Nov 2026 16:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=00zwTLd1
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67F9F1F000CB;
+	Wed, 18 Nov 2026 16:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019060;
-	bh=A8+wDgMKMWpmbtMEqetHuwBjYE45CipqGYMXv9hBHas=;
+	s=korg; t=1795019063;
+	bh=/W7G/Xlm7tnkGwBngZBg99PzPvkVaTnznBd/HNzP2nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2SCOlGX3xR0QNbwuTC7OpLuPqOVwg0aR9Obo6CJCuqq9nnF5mVOJW4hr0nexZJqMf
-	 nCWjPjKIwbBzj1Syglwn0GXE6gA4LM2YQlIfZGOdfvi7wxcUzH+4JcoQYWc+EK9BH2
-	 7uMRynan9kWboGoTksU01Kx7wY5lDEmMC8VzFGa4=
+	b=00zwTLd1S3Q8L3jNASyeJHAA6nFBEZwr19D9jRwshms4B3UreDjDdkBi3bPMegTBT
+	 xuN9v1fibcEtEYdo4oIcioRkRovddQVUFLJkTavYyrXidIq6E6KSjXDK2RhGLnfUGf
+	 FjzoVXS7n1/g47+ebsoLT3Ap6WsAMTVtpGNl5ay4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
+	Slavin Liu <bolin.liu@seu.edu.cn>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1461/2651] wifi: mt76: mt7615: validate MCU response lengths
-Date: Wed, 18 Nov 2026 15:45:01 +0100
-Message-ID: <20261118150340.631884022@linuxfoundation.org>
+Subject: [PATCH 7.3 1462/2651] wifi: mt76: mt7996: guard station-only MLO TX handling
+Date: Wed, 18 Nov 2026 15:45:02 +0100
+Message-ID: <20261118150340.667340211@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,74 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Slavin Liu <bolin.liu@seu.edu.cn>
 
-[ Upstream commit 356735fc612ea54062eb741ea15fa4ff7df4fc36 ]
+[ Upstream commit fb03c4204498f300ffa3324f2e90df5742a2984d ]
 
-mt7615_mcu_parse_response() reads the common response header before
-checking its size and then consumes command-specific fields after unchecked
-skb_pull() calls. A short firmware response can therefore be read beyond
-its current extent.
+Pending frames can be retried after their station is no longer
+available. Require a station for both MLO-specific branches and retain
+the existing non-station transmission path for valid vif traffic.
 
-Validate the common header and each command-specific payload before reading
-it.
+Detected by static analysis and reviewed with AI-assisted source auditing.
 
-Fixes: 0e6a29e477f3 ("mt76: mt7615: add support to read temperature from mcu")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260830131049.2097-1-pengpeng@iscas.ac.cn
+Fixes: 7ef0c7ad735b ("wifi: mt76: mt7996: Implement MLD address translation for EAPOL")
+Fixes: 85cd5534a3f2 ("wifi: mt76: mt7996: use correct link_id when filling TXD and TXP")
+Assisted-by: LLM
+Signed-off-by: Slavin Liu <bolin.liu@seu.edu.cn>
+Link: https://patch.msgid.link/20260911060922.94383-1-bolin.liu@seu.edu.cn
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mcu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-index 1ce0192c2c91f..aab4303fef652 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mcu.c
-@@ -145,6 +145,9 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 	}
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 42c0c53f10238..eb39526548e8a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -1057,7 +1057,7 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 	if (!wcid)
+ 		wcid = &dev->mt76.global_wcid;
  
- 	rxd = (struct mt7615_mcu_rxd *)skb->data;
-+	if (skb->len < sizeof(*rxd))
-+		return -EMSGSIZE;
-+
- 	if (seq != rxd->seq)
- 		return -EAGAIN;
+-	if ((is_8023 || ieee80211_is_data_qos(hdr->frame_control)) && sta->mlo &&
++	if (sta && (is_8023 || ieee80211_is_data_qos(hdr->frame_control)) && sta->mlo &&
+ 	    likely(tx_info->skb->protocol != cpu_to_be16(ETH_P_PAE))) {
+ 		u8 tid = tx_info->skb->priority & IEEE80211_QOS_CTL_TID_MASK;
  
-@@ -152,11 +155,15 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 		skb_pull(skb, sizeof(*rxd) - 4);
- 		ret = *skb->data;
- 	} else if (cmd == MCU_EXT_CMD(THERMAL_CTRL)) {
-+		if (skb->len < sizeof(*rxd) + (is_mt7663(mdev) ? 8 : 4))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		if (is_mt7663(mdev))
- 			skb_pull(skb, 4);
- 		ret = le32_to_cpu(*(__le32 *)skb->data);
- 	} else if (cmd == MCU_EXT_QUERY(RF_REG_ACCESS)) {
-+		if (skb->len < sizeof(*rxd) + 8 + sizeof(__le32))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		ret = le32_to_cpu(*(__le32 *)&skb->data[8]);
- 	} else if (cmd == MCU_UNI_CMD(DEV_INFO_UPDATE) ||
-@@ -167,12 +174,16 @@ int mt7615_mcu_parse_response(struct mt76_dev *mdev, int cmd,
- 		   cmd == MCU_UNI_CMD(SUSPEND)) {
- 		struct mt76_connac_mcu_uni_event *event;
- 
-+		if (skb->len < sizeof(*rxd) + sizeof(*event))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		event = (struct mt76_connac_mcu_uni_event *)skb->data;
- 		ret = le32_to_cpu(event->status);
- 	} else if (cmd == MCU_CE_QUERY(REG_READ)) {
- 		struct mt76_connac_mcu_reg_event *event;
- 
-+		if (skb->len < sizeof(*rxd) + sizeof(*event))
-+			return -EMSGSIZE;
- 		skb_pull(skb, sizeof(*rxd));
- 		event = (struct mt76_connac_mcu_reg_event *)skb->data;
- 		ret = (int)le32_to_cpu(event->val);
+@@ -1097,7 +1097,7 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 	 * compatible with 802.11 EAPOL frame, we do the translation by
+ 	 * software
+ 	 */
+-	if (tx_info->skb->protocol == cpu_to_be16(ETH_P_PAE) && sta->mlo) {
++	if (sta && tx_info->skb->protocol == cpu_to_be16(ETH_P_PAE) && sta->mlo) {
+ 		struct ieee80211_hdr *hdr = (void *)tx_info->skb->data;
+ 		struct ieee80211_bss_conf *link_conf;
+ 		struct ieee80211_link_sta *link_sta;
 -- 
 2.53.0
 
