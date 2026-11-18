@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041674;
-	b=3uv1b9jD4HVtpjAobomFzK+/39/k3E0VT7TaIMJFzMQwGBgu1DqiE5t6Q3E+KSPhcnmC
-	 FeTiPd/cSXCK3+Cqcy6V52w8RZSaXQ8cSj0Z4pknsGYBmCMCqz6Zo9PKIoTbTeT/dCk3d
-	 r6b5uSkV6mcYB7A/8qnyfZZ5ILS06fM2nCzVlezYySeqRgzDhCSUfMQbcc2fXF2DjQcyk
-	 P/xwnzll1UaaFV0XCS4GqlDdYQU+dzOm5KoVmYHMql/5vvFq7pk/SygeVSGhgoAK+aTpT
-	 brVO4xJJFGlFxKg36xontHmcS9cpBsWO/LTozkRU6dGhv/6OGaCCT9+H40PV/aGOxGA==
+	t=1795041677;
+	b=NB1TeTTybA/WVovcQXcPoPwH+ciDM16N+gvf47MkMMl1++2ZY/tGP5qtj708sc/M7YfR
+	 5nPwZROa+5j0xJFisOpwO9/INmI8HULKumSFn31s0LRwKsb5mpOSVkSGpTluef8H4BTy7
+	 1YBi478oj4SR9Joy4VZdrZ9rVS9VCXA2SZO6vEXQL8H/7Jbfp28zU1D/Tej4oUqAqqMh9
+	 RHnaiugHG6T1f/J67s3TxnVJHE53SiVb3cRbm0of5MGv83ix6FfkO3oa1qMzSL1antzLz
+	 GQatlHbFD3Oo+rgeX81+P9k8OshRb1mB0kO7rh2rCX1u75rRvwTMNgod+Tex4UrwT9w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041674;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041677;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wDvPd5VSlGggxZd1tCtN0RqJ8PlexIxlec1K9QO5Sg0=;
-	b=INyLFWYqHQPN1Z0bylY8YrLhTT1R3PlyawmuLMr0Adr51THGAUHJBzz3WuU4nSz5crMW
-	 t+XDg6UaQAsHtA3lK0cF9I/gy1tMQDM4kHS45iCrC+ER0sAace2KQ4Ro61W4lZ4G+LAL0
-	 Au1Tyh4jlDx3eMv2wd0mC6uGEbYalRCTXvkIRwmCxG2PfXl5I7DKIZOrJMDwagN2HoLL2
-	 u50Y5Trm9epP5xRhhvMEp16RKMr/32mbYvGwh+Td3jrh7axLbi7UBV1InVHDZxVfRPJIn
-	 rlxerRPhME59UknT/rTQ0f8ixPnCkaQa8WP1KpYNdLCOAKy6seC+Nxlfk42FrqiffYg==
+	bh=V2Dox9Y8LGl8TXk0Nt3M89TyskAo72CHjTYZx08iiQk=;
+	b=r976Dzhlb5Hc0S77kmG3zn5fuipHCtmF7WMjoAWYWExExyjtNwlEB32ThpLBrtNtWpiZ
+	 0XnMNDYaunP2y3wZ8BJMh6bIi8G1FSBDs5ud0q5leumhRwxlrpNY2Nml2b6RB6VE4Kz8N
+	 c5aDqua55VLEdcAna1Fw+aiJ0xwc6EXlVQyAVjRISKyLfv2Jjds1l6vPi8Ui91z9Ztft9
+	 eO0QKnfLcwo8mF8CAbFnJvkc597LhFIgZ5SQpUi/yanlBCL2zA/9uiQKqkoe3os5WgWGS
+	 h9XQKjUXLy1vkmjUVvEHKC05VXECk/NGB/G5g2Ae/llsp1ns1d0luHLG1m3/ssNkoKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srnevj0B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=04ECvPMo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C4A606A320;
-	Wed, 18 Nov 2026 22:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAA2606A320;
+	Wed, 18 Nov 2026 22:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=srnevj0B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD93C1F000C4;
-	Wed, 18 Nov 2026 22:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=04ECvPMo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878861F000C4;
+	Wed, 18 Nov 2026 22:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041674;
-	bh=wDvPd5VSlGggxZd1tCtN0RqJ8PlexIxlec1K9QO5Sg0=;
+	s=korg; t=1795041677;
+	bh=V2Dox9Y8LGl8TXk0Nt3M89TyskAo72CHjTYZx08iiQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=srnevj0BgmHNfQxyK6N6cJo1bIIfTFyrnPAdQijiyAX7jNwIFWD5QZ5A/RIdsf9dZ
-	 b0sSBWEy/Ac5QM6l0RUxSmPEiQe7R09j6TqjVmQVf6ztd8qCsaZpYGTLI8tDf49deh
-	 TiVt/ak72YNHpfdRmAm33COD5TFfv9qHzbuXoADg=
+	b=04ECvPMo9VUO4Rn22CpSCBKLFseUyA/y8TnxpiWSaU5WlnAyxXKxfoM/qYmSdVn0e
+	 s/acoklFtH4LlS4VyBoUiYveStmfYnixIu5iI+Sa15VVflT7lzHEIb2V7vgLLIP2++
+	 zQK6hEbY8i0UNW1ObIrBB4O/DWtBWdJPX6UreD8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Long Zhao <longzhao@ambarella.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	"Rob Herring (Arm)" <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2891/3318] Bluetooth: hci_sync: Protect IRK identity reads with RCU
-Date: Wed, 18 Nov 2026 15:58:33 +0100
-Message-ID: <20261118150447.237628528@linuxfoundation.org>
+Subject: [PATCH 6.6 2900/3318] dt-bindings: vendor-prefixes: add Ambarella
+Date: Wed, 18 Nov 2026 15:58:42 +0100
+Message-ID: <20261118150447.483182893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,187 +71,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Long Zhao <longzhao@ambarella.com>
 
-[ Upstream commit 4b76fa362110cf1b74a0263c14406b71de99894c ]
+[ Upstream commit 5ef299ffb56531b3a4f2b311000da76beed403ee ]
 
-hci_le_set_privacy_mode_sync() needs the IRK returned by
-hci_find_irk_by_addr() to remain allocated until its identity address
-and type have been copied into the command. The finder drops its RCU
-read lock before returning this borrowed pointer, leaving the later
-field reads unprotected.
+Document the Ambarella, Inc. vendor prefix so Ambarella DT bindings
+can be applied without waiting for the SoC series.
 
-When a privacy-capable controller has a pending peer with address
-resolution and device privacy enabled, accept-list programming can
-reach this helper while management reloads the IRKs. The request
-worker holds hdev->req_lock, whereas load_irks() takes hdev->lock,
-allowing the following ordering:
-
-  Request worker                     Management / RCU reclaim
-  hci_le_set_privacy_mode_sync()
-    hci_find_irk_by_addr()
-      rcu_read_lock()
-      find matching IRK
-      rcu_read_unlock()
-      return borrowed IRK
-                                     load_irks()
-                                       hci_dev_lock(hdev)
-                                       hci_smp_irks_clear()
-                                         list_del_rcu()
-                                         kfree_rcu()
-                                       hci_dev_unlock(hdev)
-                                     RCU grace period and IRK free
-    read irk->addr_type
-    copy irk->bdaddr
-
-The request then accesses a freed IRK. KASAN reports a one-byte
-use-after-free read of addr_type on this path.
-
-Keep an outer RCU read-side critical section across the lookup and
-both identity-field copies. The finder's nested unlock then leaves
-the IRK protected until the caller finishes copying it. Release RCU
-on a lookup miss and after copying the fields, before the synchronous
-HCI command can sleep.
-
-KASAN report as below:
-
-    ==================================================================
-        BUG: KASAN: slab-use-after-free in
-    hci_le_add_accept_list_sync+0x90f/0x940
-    Read of size 1 at addr ffff88810aa6072c by task kworker/u17:0/493
-
-    Workqueue: hci0 hci_cmd_sync_work
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     kasan_report+0xe0/0x110
-     ? hci_le_add_accept_list_sync+0x90f/0x940
-     hci_le_add_accept_list_sync+0x90f/0x940
-     ? __pfx_hci_le_add_accept_list_sync+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? conn_params_copy+0x3a0/0x650
-     hci_passive_scan_sync+0x8c9/0x1e80
-     ? __pfx_hci_passive_scan_sync+0x10/0x10
-     ? find_held_lock+0x2b/0x80
-     ? hci_lookup_le_connect+0x181/0x3c0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? find_held_lock+0x2b/0x80
-     ? hci_update_passive_scan_sync+0x437/0x950
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_release+0xc8/0x280
-     hci_update_passive_scan_sync+0x461/0x950
-     hci_cmd_sync_work+0x1b3/0x450
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     process_one_work+0x908/0x19c0
-     ? __pfx_process_one_work+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? lock_is_held_type+0x8f/0x100
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     worker_thread+0x65c/0xe40
-     ? __pfx_worker_thread+0x10/0x10
-     kthread+0x34f/0x460
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork+0x659/0x940
-     ? __pfx_ret_from_fork+0x10/0x10
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __switch_to+0x74f/0xf80
-     ? __pfx_kthread+0x10/0x10
-     ret_from_fork_asm+0x1a/0x30
-     </TASK>
-
-    Allocated by task 507:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     hci_add_irk+0xb6/0x220
-     load_irks+0x5ef/0x7e0
-     hci_sock_sendmsg+0x128b/0x22e0
-     __sys_sendto+0x425/0x470
-     __x64_sys_sendto+0xe5/0x1c0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 0:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     __rcu_free_sheaf_prepare+0x65/0x2a0
-     rcu_free_sheaf+0x1f/0xe0
-     rcu_core+0x661/0x1d10
-     handle_softirqs+0x201/0x930
-     __irq_exit_rcu+0x110/0x1e0
-     irq_exit_rcu+0xe/0x20
-     sysvec_apic_timer_interrupt+0x6c/0x80
-     asm_sysvec_apic_timer_interrupt+0x1a/0x20
-
-    The buggy address belongs to the object at ffff88810aa60700
-     which belongs to the cache kmalloc-64 of size 64
-    The buggy address is located 44 bytes inside of
-     freed 64-byte region [ffff88810aa60700, ffff88810aa60740)
-
-    The buggy address belongs to the physical page:
-        page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0
-    pfn:0x10aa60
-    flags: 0x200000000000000(node=0|zone=2)
-    page_type: f5(slab)
-        raw: 0200000000000000 ffff8881000428c0 dead000000000100
-    dead000000000122
-        raw: 0000000000000000 0000000000200020 00000000f5000000
-    0000000000000000
-    page dumped because: kasan: bad access detected
-
-    Memory state around the buggy address:
-     ffff88810aa60600: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810aa60680: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    >ffff88810aa60700: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-                                      ^
-     ffff88810aa60780: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-     ffff88810aa60800: fa fb fb fb fb fb fb fb fc fc fc fc fc fc fc fc
-    ==================================================================
-    Disabling lock debugging due to kernel taint
-
-Fixes: adae20cb2d20 ("Bluetooth: Convert IRK list to RCU")
-Assisted-by: LLM
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Long Zhao <longzhao@ambarella.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20261014-cv75-prefix-v1-1-fe95ed567880@ambarella.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/vendor-prefixes.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 2ebaceb96105b..d9e8352020893 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2619,13 +2619,19 @@ static int hci_le_set_privacy_mode_sync(struct hci_dev *hdev,
- 	if (!(params->flags & HCI_CONN_FLAG_DEVICE_PRIVACY))
- 		return 0;
- 
-+	rcu_read_lock();
-+
- 	irk = hci_find_irk_by_addr(hdev, &params->addr, params->addr_type);
--	if (!irk)
-+	if (!irk) {
-+		rcu_read_unlock();
- 		return 0;
-+	}
- 
- 	memset(&cp, 0, sizeof(cp));
- 	cp.bdaddr_type = irk->addr_type;
- 	bacpy(&cp.bdaddr, &irk->bdaddr);
-+	rcu_read_unlock();
-+
- 	cp.mode = HCI_DEVICE_PRIVACY;
- 
- 	/* Note: params->privacy_mode is not updated since it is a copy */
+diff --git a/Documentation/devicetree/bindings/vendor-prefixes.yaml b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+index 41799c152403a..635d0249651f8 100644
+--- a/Documentation/devicetree/bindings/vendor-prefixes.yaml
++++ b/Documentation/devicetree/bindings/vendor-prefixes.yaml
+@@ -95,6 +95,8 @@ patternProperties:
+     description: Amarula Solutions
+   "^amazon,.*":
+     description: Amazon.com, Inc.
++  "^ambarella,.*":
++    description: Ambarella, Inc.
+   "^amcc,.*":
+     description: Applied Micro Circuits Corporation (APM, formally AMCC)
+   "^amd,.*":
 -- 
 2.53.0
 
