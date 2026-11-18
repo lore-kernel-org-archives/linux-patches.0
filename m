@@ -1,58 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037672;
-	b=GlED8CqfYK177QhPNYkXDyxtPA13RsYCIssVPR3SPhfwbSBFx5RMKmgv33NfE/r7l1H5
-	 DFleC1pXn+9pci+HQUitk1io8WqMlVQ2NGZbMPGlvLmysTZgLZCvGDusFNQf4nIn7dwf0
-	 EL6HpC6d/oLEdOADfOrCtedCuZwT6Fw3OD9owmWNxd4IYd0At5dUTOHUYuh88boWy3ICq
-	 YNRrsvxszJoktQUWKXXBHT/LFpeIQB9i1llzP2QpMT/3D5noZFLd6rqZyhlu9O6Df+ezW
-	 2tXW3nwXtvL2V2Tjqk2QNCwhoeWTGVX17++MCjy2oYKjvuONeMfI+CH6tpzVCJ/phsQ==
+	t=1795037675;
+	b=MisTmO7jrqR4BhZWc8dPV3EmHBE2clKLKKEXfXTa50VTuwFD5b3yIHUcvIHgUjm81JTy
+	 Ov0muzyjGdkRVYkys82pR3tYVp8AqI1Pu5pu4qlf8XnUe/s4cQpZSBZVU+J3QoyWHyLN8
+	 Xf3abamDl7/rI6qJ9aBTGXiKKg6ZO09NehB/y3w/ZzVyCWyuTju8kwNfY9JkW9rqEDe8c
+	 2UFTG4KS8MZF3/0aWdo2KNqcEKQoxuye3GBR88MuvzSg+J+b4decvGRpUnkJwm3CAm/5m
+	 twoiTfqZ2jpHAmwhvcLm2uGR9k91DpziZP1btYI6r/UY8u5WyRp3vyKIG8LkNEpcf5Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037672;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037675;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9wc8w4qziHXknXRZqJOxaqZvV5Th4HhcOh+KdBvkTgM=;
-	b=BpeWJnFLEV7Fyw/xQ047AH6B8hc6Y66nKNmBNC5N660wslGisP88kiJTSwJ4Zk+WwCYk
-	 bPbZe2heCrldaO2SXX0/iHHElF9XXzrWsaMJOXo5RZow3zOthnzpew7m9uL/PhxQpEKQr
-	 Ne3DsvR3guZbk5guYu4sMhPvl6QHMP5wmiVikSO+giriKWl2yySyQinfHP3l0iu1eIepD
-	 lHNQiLGr6SKdE9nSS9KqJ+MaihGzsPnsSMDvPcS4wyZsZlPToJhbDFLru0h4CY/f2Db8E
-	 DURdscU11PCuAUZBrxB7M4FaVvxiI1+Zy/7IvIyAk1S5YWDiokp1OufaSPP3IkW+Amg==
+	bh=Fh2h+CGB095DZsDrWmNJiYQuNz4Lce42YLxD3b4HTZQ=;
+	b=eTkGm2oxbFqk3s2aQFGL4+iD2Wf5ahwRv5ShT9N8q3d2csd4+VOyGntv5p3KwMDxrpdX
+	 MhIsJHJSSyTh9wpucIhxa+3Dt79x1KpmawsrGZFVdJS81XiTJ8p/geJsXg1vd1W6wyRA1
+	 MOk3MPoJG9rgYW6J/Tp+wnEsj34p/a0hBZz1Rp9+/SbN0dWxPoVZbPlS/aszM5JSK2t1d
+	 8mYpExRVJpkpxKQugzRDVsVswY3GMMCrFz6XnxNfd5TZztJgr6Pzf4jR9IIkMnAvTdhnp
+	 u1sih7/d0Z4MI+3mEeLCX+B8niUFYRoSMFBCW6I9SLyB0vRdMnZnMI55I7jP/VVy4nw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhoSIUm8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnUCR6pn;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4555606A320;
-	Wed, 18 Nov 2026 21:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63B5606A325;
+	Wed, 18 Nov 2026 21:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MhoSIUm8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E56D1F000C6;
-	Wed, 18 Nov 2026 21:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nnUCR6pn
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139021F000C5;
+	Wed, 18 Nov 2026 21:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037672;
-	bh=9wc8w4qziHXknXRZqJOxaqZvV5Th4HhcOh+KdBvkTgM=;
+	s=korg; t=1795037675;
+	bh=Fh2h+CGB095DZsDrWmNJiYQuNz4Lce42YLxD3b4HTZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MhoSIUm8Xez6/8dj+bwQw57VBnfJtbOoG0yIcoBFXJL+a6y/buDmBj5UPadfZNJeX
-	 nk/LM/W10aSTVSI0zNLY/yiGdkKEMtlwMyRwDLZHpwl2zxbhKI7bhyhMqZIRNYaEXK
-	 rlRVkL4Cn/7dKuSuYeYyU+HbixJqDi03qXGPdVZw=
+	b=nnUCR6pnx0whBLdawFdqdjcQW+EOPk2pp8tyLR1IReK+kLKuRsCmLOK86Tz78vAxv
+	 pZqrGx8SPd+NLJhWYS/jYk6FHJCUUMDxTLEPJTZ0GJ/9+3WhGy6MxQdkkpUQuZ5L4K
+	 IElvIt6ZnxFkAfsW3az1jkPSUOOHCKM/SQt/yPQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	kernel test robot <lkp@intel.com>,
-	Bradley Morgan <brads@mainlining.org>,
-	Jonas Bonn <jonas@southpole.se>,
-	Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>,
-	Stafford Horne <shorne@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Karl Mehltretter <kmehltretter@gmail.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1480/3318] openrisc: export __mulsi3 for modules
-Date: Wed, 18 Nov 2026 15:35:02 +0100
-Message-ID: <20261118150405.304435792@linuxfoundation.org>
+Subject: [PATCH 6.6 1481/3318] ocfs2: find the xattr entry again after defragmenting a bucket
+Date: Wed, 18 Nov 2026 15:35:03 +0100
+Message-ID: <20261118150405.334652667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -74,55 +71,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Morton <akpm@linux-foundation.org>
+From: Joseph Qi <joseph.qi@linux.alibaba.com>
 
-[ Upstream commit 8ff981aa283a0ce516c2dc65a48a185ed336c657 ]
+[ Upstream commit 9a40c050f58344615a0604701b5d299519833163 ]
 
-OpenRISC configurations without hardware multiplication fail to build
-modules which contain compiler-generated calls to __mulsi3.  The failure
-is widespread, affecting filesystems, drivers and KUnit tests at modpost.
+ocfs2_xattr_set_entry_bucket() hands loc.xl_entry to ocfs2_xa_set() twice:
+once for the bucket as it stands, and, if that reports -ENOSPC, once more
+after ocfs2_defrag_xattr_bucket() has packed the name/value pairs down.
 
-When CONFIG_OPENRISC_HAVE_INST_MUL is disabled, the architecture Makefile
-passes -msoft-mul to GCC.  The multiplication helper is supplied by the
-libgcc archive linked into vmlinux, but or32_ksyms.c does not export it.
-Built-in callers can therefore link while module callers cannot resolve
-the symbol.
+Defragmenting ends by sorting the entry array on xe_name_hash.  Buckets
+are kept sorted, so the sort only permutes entries that share a hash, but
+lib/sort.c is an unstable heapsort and it does permute them.  loc.xl_entry
+is an address inside xh_entries[], so afterwards it denotes whichever
+entry landed in that slot rather than the one the search found.
 
-Export __mulsi3 alongside the other compiler-generated helpers.
+The second ocfs2_xa_set() then works on the wrong entry.  Nothing on that
+path compares the entry's name with xi->xi_name, so what happens depends
+on how the two entries compare in size: ocfs2_xa_reuse_entry() trips its
+BUG_ON() when the padded name sizes differ, and otherwise the new value is
+written into the neighbouring attribute's value slot while the attribute
+being set is left untouched.  setxattr() reports success either way.
 
-The omission predates 7c3f4d699f34 ("resource, kunit: stop selecting
-GET_FREE_REGION"), which the robot identified when reporting an additional
-failing module.  It was already present in the initial OpenRISC export
-list.
+Remember the entry's hash before defragmenting and look the entry up
+again afterwards, the way ocfs2_xattr_bucket_find() does.  An entry that
+cannot be found again means the bucket no longer holds what the search
+found, so fail with -EFSCORRUPTED rather than writing through the stale
+pointer.
 
-Fixes: 616257669e1a ("OpenRISC: Miscellaneous")
+Link: https://lore.kernel.org/20261024151012.1059683-3-joseph.qi@linux.alibaba.com
+Fixes: 012255961c9e ("ocfs2: Enable xattr set in index btree")
+Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202610290106.o8Fs3NvO-lkp@intel.com/
-Reviewed-by: Bradley Morgan <brads@mainlining.org>
-Cc: Jonas Bonn <jonas@southpole.se>
-Cc: Stefan Kristiansson <stefan.kristiansson@saunalahti.fi>
-Cc: Stafford Horne <shorne@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Karl Mehltretter <kmehltretter@gmail.com>
+Cc: Heming Zhao <heming.zhao@suse.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/kernel/or32_ksyms.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/xattr.c | 30 +++++++++++++++++++++++++++++-
+ 1 file changed, 29 insertions(+), 1 deletion(-)
 
-diff --git a/arch/openrisc/kernel/or32_ksyms.c b/arch/openrisc/kernel/or32_ksyms.c
-index 212e5f85004cc..c63d7f25bc575 100644
---- a/arch/openrisc/kernel/or32_ksyms.c
-+++ b/arch/openrisc/kernel/or32_ksyms.c
-@@ -35,6 +35,7 @@ DECLARE_EXPORT(__divsi3);
- DECLARE_EXPORT(__umodsi3);
- DECLARE_EXPORT(__modsi3);
- DECLARE_EXPORT(__muldi3);
-+DECLARE_EXPORT(__mulsi3);
- DECLARE_EXPORT(__ashrdi3);
- DECLARE_EXPORT(__ashldi3);
- DECLARE_EXPORT(__lshrdi3);
+diff --git a/fs/ocfs2/xattr.c b/fs/ocfs2/xattr.c
+index 89b454eaff68f..3828a5c62c7c0 100644
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -5859,13 +5859,18 @@ static int ocfs2_xattr_set_entry_bucket(struct inode *inode,
+ 					struct ocfs2_xattr_search *xs,
+ 					struct ocfs2_xattr_set_ctxt *ctxt)
+ {
+-	int ret;
++	int ret, found = 0;
++	u16 xe_index;
++	u32 name_hash;
+ 	struct ocfs2_xa_loc loc;
+ 
+ 	trace_ocfs2_xattr_set_entry_bucket(xi->xi_name);
+ 
+ 	ocfs2_init_xattr_bucket_xa_loc(&loc, xs->bucket,
+ 				       xs->not_found ? NULL : xs->here);
++	/* Defragmenting below may move this entry, so remember its hash. */
++	name_hash = loc.xl_entry ? le32_to_cpu(loc.xl_entry->xe_name_hash) : 0;
++
+ 	ret = ocfs2_xa_set(&loc, xi, ctxt);
+ 	if (!ret) {
+ 		xs->here = loc.xl_entry;
+@@ -5884,6 +5889,29 @@ static int ocfs2_xattr_set_entry_bucket(struct inode *inode,
+ 		goto out;
+ 	}
+ 
++	/*
++	 * ocfs2_defrag_xattr_bucket() sorts the entries by name hash and
++	 * lib/sort.c is not stable, so entries sharing a hash may have traded
++	 * slots.  Look the entry up again before writing through it.
++	 */
++	if (loc.xl_entry) {
++		ret = ocfs2_find_xe_in_bucket(inode, xs->bucket,
++					      xi->xi_name_index, xi->xi_name,
++					      name_hash, &xe_index, &found);
++		if (ret) {
++			mlog_errno(ret);
++			goto out;
++		}
++		if (!found) {
++			mlog(ML_ERROR, "xattr entry not found in bucket %llu after defrag\n",
++			     (unsigned long long)bucket_blkno(xs->bucket));
++			ret = -EFSCORRUPTED;
++			goto out;
++		}
++		loc.xl_entry = &bucket_xh(xs->bucket)->xh_entries[xe_index];
++		xs->here = loc.xl_entry;
++	}
++
+ 	ret = ocfs2_xa_set(&loc, xi, ctxt);
+ 	if (!ret) {
+ 		xs->here = loc.xl_entry;
 -- 
 2.53.0
 
