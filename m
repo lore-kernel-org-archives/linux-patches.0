@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060207;
-	b=gZpdeXiS566FrfYxU/dobPwhMGDbTq9jfFgagvSTcMx0zRvh6NYH0upuehqwVp6rT3la
-	 Egrqj0cCdmUH7AAFYVQf674i4fwfZpJ2fgL1thyWx3gF7rVEJmr+ScCbnmrHM3YyRaBDI
-	 EiLu3IXrb3DMw2JQBg5zei6tycWy3+aKVBvE47uO4E59ad7CHG4havNvb7/JGFJBOceco
-	 AxBv6g8VCN8G2FeNaLGLZEMaQhxeTjjVjRZvM1yKoeIzEl2pRcYS0aYHt9XtH/1p5zyBE
-	 kWYTVBuO6LrMTvko2n4R0f5dNYk/fbs1BZ2Bctb27JhPR2E7fifJDLC86osVFJ7dPCg==
+	t=1795060210;
+	b=WLloxPfzJdWKS443xFhpvg1lfpcZS56ycKWUDNtzqyCuIVq4bbKUlEzpF50DZOAfA5Y2
+	 nGsvzsKbUvi6MM+4JgdwvDtNYPpGePbNAOaDx1wzLHADPrOiIdV1Jycgo+3AGC+eK8jMf
+	 /B00Ew+faNAKNU1gGUjSu3A8HlGS5HeA+zrRXLL+VSarJ6manJ+bSmJ3i8CKoBjvowYEi
+	 /n+p4tDuGsPLy//RVggzxnV/zrLRfA8OLrsPaDBYCWCFwGYhPjJdr4bk6D1kajplF6Dsf
+	 m00OngRWge4AOcQ9TqDj/sNR6mq+xfjHn3E3W/oHy6ItTsY2ZCnZp37HOakJGrR0Fdw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060207;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060210;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=piHWxKEMQPiDEZmunb59WBjcZSTLs08ojleLseMaQ+A=;
-	b=u++GD/nQYIFRmmBhROc+K5Od49oHF4sSroNydtrwui4VaFDyOW+OOnkf7J2sDrSC2gyI
-	 RFCAXH5PddkBeduDbpbbLaTml5WhPbFoa3DfBGnqqjfA2sTPqKrqM0Bd3tbPSC+wqjWb6
-	 FfXnMh1SfWWZAtGGbjAAyVlTA9QLpYlvNp+W2zMerorSZpyKvIwb4+jAwTe8zkvBhOosc
-	 vVF95wVYdLSgIrrhqHGZ4nAM1sGrBoXkDAy0d1vHCxrESZHb5YkL7PyY7OuLzhciCn43c
-	 6Dgx15ozrzNMoCYGT4BhTbZQzz/iNk0WgJ8NlT6aOvS38tRG61+I2Gz2yjadG189vqw==
+	bh=1B5RG3kA8lRoNfdQ5vFksoqoxXDqibshra3X2MyelmE=;
+	b=XwzcwJmOM4B/cNIy8LEt1CiZrNF9Oy8JkDhK4pDUKiCL8plXKQZx80IGWbC5DLphM1Q4
+	 dprxlcJUOItcmUpGJECM3BujuOeKe2uoadif+6CVL8aoKyQRxogjScaEa8dBMHWpDguCF
+	 lbnTlFFBhMecTwlWGtlw/TTKj+Q+X/OTQkvoaBnW30Ma0S64giXrjNQiC3D1/F6/FigEf
+	 dJSFbWufy6HXRIZtbGpwUT88vZLdufK4wOtFHvjcj9IsfQ8zaV7KCzFuV93Hs8ItF4quN
+	 a8XfUv/P+bFRQTQiUc8Ai27vqjPaKx9W/mj8SwsqV4ArvUidR7aCMqgrQUviM9kTXpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n2aa6Exz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cp5rZoof;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FA7606A320;
-	Thu, 19 Nov 2026 03:50:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96032606A326;
+	Thu, 19 Nov 2026 03:50:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=n2aa6Exz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F7A71F000C4;
-	Thu, 19 Nov 2026 03:50:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cp5rZoof
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D261F000C4;
+	Thu, 19 Nov 2026 03:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060207;
-	bh=piHWxKEMQPiDEZmunb59WBjcZSTLs08ojleLseMaQ+A=;
+	s=korg; t=1795060210;
+	bh=1B5RG3kA8lRoNfdQ5vFksoqoxXDqibshra3X2MyelmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=n2aa6ExztqgdBkvUZr4A6C4lRqFT3bl4OvM7D3EWYHq0nFixgoeHhEWIA7rc66R5c
-	 OTiHlBFMrSIfUZpEaO8PZ8n2lfsLGYt4WlI1dMdMa5T/aLWxtSzYgsAqvqBpTmVkxX
-	 GvNoDXabJnEj9ulfhv7NfxRATO+zzWG5xdnwxlj8=
+	b=cp5rZoof3a8f6JZgynMvodT2pOb0iB4KHYEVNJHFr/P97g+U2f+UwXLsLoXKKCOSz
+	 6g6lqzXl5IS7TozrXgj9gpnf3/xhNvCAXdxVRIJo6OrFCDmCgt7DV0TROTdvj2R0DU
+	 QgY0PxSiaJDHJyFVuEyg9ez4RzaRWVoePf6dKyWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 5.10 1117/1848] extract-cert: Wrap key_pass with #ifdef USE_PKCS11_ENGINE
-Date: Wed, 18 Nov 2026 15:52:35 +0100
-Message-ID: <20261118150006.085507655@linuxfoundation.org>
+	Joachim Vandersmissen <git@jvdsn.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Roman Demidov <roman.demidov.nn@gmail.com>
+Subject: [PATCH 5.10 1118/1848] crypto: ecdh - explicitly zeroize private_key
+Date: Wed, 18 Nov 2026 15:52:36 +0100
+Message-ID: <20261118150006.138133618@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,63 +68,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Joachim Vandersmissen <git@jvdsn.com>
 
-commit 4f96b7c68a9904e01049ef610d701b382dca9574 upstream.
+commit 73e5984e540a76a2ee1868b91590c922da8c24c9 upstream.
 
-A recent strengthening of -Wunused-but-set-variable (enabled with -Wall)
-in clang under a new subwarning, -Wunused-but-set-global, points out an
-unused static global variable in certs/extract-cert.c:
+private_key is overwritten with the key parameter passed in by the
+caller (if present), or alternatively a newly generated private key.
+However, it is possible that the caller provides a key (or the newly
+generated key) which is shorter than the previous key. In that
+scenario, some key material from the previous key would not be
+overwritten. The easiest solution is to explicitly zeroize the entire
+private_key array first.
 
-  certs/extract-cert.c:46:20: error: variable 'key_pass' set but not used [-Werror,-Wunused-but-set-global]
-     46 | static const char *key_pass;
-        |                    ^
+Note that this patch slightly changes the behavior of this function:
+previously, if the ecc_gen_privkey failed, the old private_key would
+remain. Now, the private_key is always zeroized. This behavior is
+consistent with the case where params.key is set and ecc_is_key_valid
+fails.
 
-After commit 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider
-for OPENSSL MAJOR >= 3"), key_pass is only used with the OpenSSL engine
-API, not the new provider API. Wrap key_pass's declaration and
-assignment with '#ifdef USE_PKCS11_ENGINE' so that it is only included
-with its use to clear up the warning. While this is a little uglier than
-just marking key_pass with the unused attribute, this will make it
-easier to clean up all code associated with the use of the engine API if
-it were ever removed in the future. While in the area, use a tab for
-the key_pass assignment line to match the rest of the file.
-
-Cc: stable@vger.kernel.org
-Fixes: 558bdc45dfb2 ("sign-file,extract-cert: use pkcs11 provider for OPENSSL MAJOR >= 3")
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://patch.msgid.link/20260325-certs-extract-cert-key_pass-unused-but-set-global-v1-1-ecf94326d532@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Joachim Vandersmissen <git@jvdsn.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Roman Demidov <roman.demidov.nn@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/extract-cert.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ crypto/ecdh.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/scripts/extract-cert.c
-+++ b/scripts/extract-cert.c
-@@ -43,7 +43,9 @@ void format(void)
- 	exit(2);
- }
+--- a/crypto/ecdh.c
++++ b/crypto/ecdh.c
+@@ -33,6 +33,8 @@ static int ecdh_set_secret(struct crypto
+ 	    params.key_size > sizeof(u64) * ctx->ndigits)
+ 		return -EINVAL;
  
-+#ifdef USE_PKCS11_ENGINE
- static const char *key_pass;
-+#endif
- static BIO *wb;
- static char *cert_dst;
- static int kbuild_verbose;
-@@ -132,7 +134,9 @@ int main(int argc, char **argv)
- 
- 	kbuild_verbose = atoi(getenv("KBUILD_VERBOSE")?:"0");
- 
--        key_pass = getenv("KBUILD_SIGN_PIN");
-+#ifdef USE_PKCS11_ENGINE
-+	key_pass = getenv("KBUILD_SIGN_PIN");
-+#endif
- 
- 	if (argc != 3)
- 		format();
++	memset(ctx->private_key, 0, sizeof(ctx->private_key));
++
+ 	if (!params.key || !params.key_size)
+ 		return ecc_gen_privkey(ctx->curve_id, ctx->ndigits,
+ 				       ctx->private_key);
 
 
