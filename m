@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036193;
-	b=K+GH8dyR6ZJ5umEb9u7zqjacQuspnIMj/QSfmmMM9maooCThXnpre9qToLdhTJ5psPxl
-	 yYuFlSi9BiRRtHNXLfJ3MZwd9nGzD1T/GRr9Q7u1Qu8pM4h1b0mONbYoYP+dqzySjLQI1
-	 5sJbAw7W2LDQ3ii/Vg5KhbhhxFaYaLVBXuhZqHQ4EPFSoUV6MdO+hbsd6oU+3w/e3WP3b
-	 vlUE5t5ssQDXX4r2m7l5SsIDevWR+e3/M80cd6r1cofKAm+WvXRekVrdotAFOd0Pqc4x7
-	 7mIq13jehvqRlTt0URguSbeZXKKg3gjXNi9+JOzgkQDCdpiKyjWa9u62AnW7J5FFV9g==
+	t=1795036196;
+	b=GWOAH6os+qMWihPFJT5fOycASQyHwGtyiS8pFySQUDG/ZxnZlAC9HrvS1CJVUuNQGL3b
+	 hwRQAfPA3eiFIPRdqv/lxI1WkiTXWgD7BQ1mYiRn55+ftyrpKbpUFoBEwglGgBfeXHvtG
+	 wisO1GkYecCsBuDk/wFzYLeewZmAHBWBUkrciMOsdmVGOkxwCYBwvJjDyq/FneXiL6OZS
+	 zrzixoJbLO59ZieTttvXP3T1afrrsbHbu7p7NeEL2RHvKtbXltPE0dsc47ARAUdsD69ol
+	 cOQwysYI7NCTVsAD6B/38ENM0ctU0dW8x5Bmkivj6VpXG0NxRiWVKqFBUsH2Nm9Pmdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036193;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036196;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gXxUEidI1YqC1yblzoGC+44AEEp2W6Wa6FVQvIXKWDU=;
-	b=SBMK6cM9uKpk/1THbRdy5cs3KCUsxtC7x6nHkDbq+V4wZ6htFPZlRrYLPN2U8wD09nRe
-	 w6Q70O2mch/y+d21nRHHmO7bJOuLz08PPcddQANZVl/KiS3rFwqexMR6hk+INr6bHg3Bq
-	 E1BL9l8nd0cQc258szaBmUtXFIlc08/kQlZpNT5F10pspJ54vVDBRQ1/Fvmpscyjj0kiw
-	 pfLler8hLYRjAPpdv3mnCuy6r5tdojp47cKm7IvB/ScIGIQcm6PltQHpsQj8u0F3eXq7I
-	 ipWKBAfOMCnQziinaYCGvPdPP4k348C8g5Hcaop28/+hkmFjoGLJr/KL+Ai/IGDuXBA==
+	bh=+Yw+U+bcFpllhBzQlDNR3soDfwz0jxSno6kkfdWtR7o=;
+	b=VGqCvDDGxf90kgH39+UeCpLlExqmSGLPMkdDnQtyoeRtMOo3yXRQTwW9qe/l3/gGpXWG
+	 MrTQZveVOm4SFJSVdsHbhDRmiLkwCxY+OKo2rr5WJnFmnBNQ9aRXy8W2Ug1V2/+sVUZ8K
+	 rSyqrQEx36xuRtOjjQn7BEvPMEDe+lEDF3awVNsJsheUdzSxzeBDyN0GswROSLFzlvkdF
+	 8J+S3+AGr5hI0yAoopYh4Y4k5OvDu6ah8yoh3dvdFkVJbEg02Ggr1aVVvFz2vBkS1Lcnx
+	 n+1qRLTGehFITCnHBf+E4nFUQMWzSxCWpSB9fWXFp/mq9kKNSpE0bjh8mPzbhYMMzxQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxF7Vtfr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OfpvWRjX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5782760A260F;
-	Wed, 18 Nov 2026 21:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5924D60A2608;
+	Wed, 18 Nov 2026 21:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hxF7Vtfr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F271F000C4;
-	Wed, 18 Nov 2026 21:09:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OfpvWRjX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8EA1F000C9;
+	Wed, 18 Nov 2026 21:09:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036193;
-	bh=gXxUEidI1YqC1yblzoGC+44AEEp2W6Wa6FVQvIXKWDU=;
+	s=korg; t=1795036195;
+	bh=+Yw+U+bcFpllhBzQlDNR3soDfwz0jxSno6kkfdWtR7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=hxF7VtfrgYBHjSG/r1RXp929eBFDWKEVU8fQDS8RTLjP1WxonPZ9eWMoqHZm0hLMA
-	 W6seA7J+vBbEswRkSwVxKfnQsj6o1uRBr4iVHBA847GiamAIfKh/sveTvYM7YQSFxF
-	 3H/ZlXlIXd+zr9XGIzVvJm03yjPf3Xjfwec2Oyqg=
+	b=OfpvWRjXqGjI5MbNyUsFqjl96Fa145TRSQAbt9VLGppn0MKg3GKtp/YFddVjjTzOy
+	 nAC1GnAXmt/Q3XOThKD7iA6mj3iyeuJZPeg9RPT82iSoOA7OzknBU8csKFElnFr7D0
+	 DDhqZ6Sw3OU7KilTywNx6CZrwXtut2nSr0f5W82E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	David Heidelberg <david@ixit.cz>,
-	Lee Jones <lee@kernel.org>,
+	syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0929/3318] mfd: wcd934x: Fix NULL pointer dereference on IRQ probe deferral
-Date: Wed, 18 Nov 2026 15:25:51 +0100
-Message-ID: <20261118150347.414652583@linuxfoundation.org>
+Subject: [PATCH 6.6 0930/3318] nilfs2: fix deadlock between nilfs_evict_inode() and find_inode()
+Date: Wed, 18 Nov 2026 15:25:52 +0100
+Message-ID: <20261118150347.445420224@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,45 +69,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Heidelberg <david@ixit.cz>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit dcf0e640b553d33512fbcaedb909c32ba9636a64 ]
+[ Upstream commit ff1227f70eead8704ecfec69259fb4c041f92cda ]
 
-ddata->dev is only assigned at the end of wcd934x_slim_probe(), but the
-of_irq_get() error path has passed it to the error print since the
-driver was added, while it is still NULL.
+Syzbot reported a deadlock between nilfs_evict_inode(), executed via
+an asynchronous workqueue (kworker) as:
 
-This used to be harmless with dev_err(), which copes with a NULL device
-and was skipped on -EPROBE_DEFER. Since the switch to dev_err_probe(), a
-deferred IRQ reaches device_set_deferred_probe_reason() ->
-dev_driver_string(), which dereferences the NULL pointer and crashes
-during probe. Use dev, which is already valid at this point.
+  process_one_work()
+    process_scheduled_works()
+      nilfs_iput_work_func()
+        nilfs_dispose_list()
+          iput()
+            iput_final()
+              evict()
+                s_op->evict_inode()
+                  nilfs_evict_inode()
 
+and find_inode(), called via
+
+  nilfs_mkdir()
+    nilfs_new_inode()
+      nilfs_insert_inode_locked()
+        insert_inode_locked4()
+          inode_insert5()
+            find_inode()
+
+When an inode is deleted (i_nlink == 0), nilfs_evict_inode() clears its
+ifile bitmap entry and then synchronously triggers the log writer via
+nilfs_transaction_commit() if IS_SYNC(inode) is true.
+
+If a concurrent directory creation via nilfs_new_inode() attempts to
+allocate the same newly freed inode number, however, find_inode() called
+just before inserting it into the inode hash, blocks waiting for the old
+inode's evict() to complete.
+
+Meanwhile, the synchronous log writer invoked from nilfs_evict_inode()
+tries to acquire a write lock on 'ns_segctor_sem' which is read locked
+by the caller of nilfs_new_inode() (in this case, nilfs_mkdir()),
+resulting in a deadlock.
+
+The synchronous log writer invocation from nilfs_evict_inode() is a
+legacy artifact; it is no longer necessary because the call itself
+(triggered by iput()) is now handled asynchronously with a kworker
+if i_nlink == 0.  It merely increases the risk of deadlock.
+
+Fix this deadlock by removing the synchronous log writer trigger from
+nilfs_evict_inode().
+
+Reported-by: syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6646318bbcf419411bc5
+Fixes: 7ef3ff2fea8b ("nilfs2: fix deadlock of segment constructor over I_SYNC flag")
+Tested-by: syzbot+6646318bbcf419411bc5@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Fixes: 0f1b1b899521 ("mfd: wcd934x: Simplify with dev_err_probe()")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Link: https://lore.kernel.org/mfd/20260903145651.AC1311F00ACA@smtp.kernel.org/
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://patch.msgid.link/20260903-wcd-dma-v3-1-d3920c6563c4@ixit.cz
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/wcd934x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/inode.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
-index 2ea70d163ac10..f1da94174a25c 100644
---- a/drivers/mfd/wcd934x.c
-+++ b/drivers/mfd/wcd934x.c
-@@ -229,7 +229,7 @@ static int wcd934x_slim_probe(struct slim_device *sdev)
+diff --git a/fs/nilfs2/inode.c b/fs/nilfs2/inode.c
+index 8c47c13c8e716..410da542a3b90 100644
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -976,13 +976,7 @@ void nilfs_evict_inode(struct inode *inode)
  
- 	ddata->irq = of_irq_get(np, 0);
- 	if (ddata->irq < 0)
--		return dev_err_probe(ddata->dev, ddata->irq,
-+		return dev_err_probe(dev, ddata->irq,
- 				     "Failed to get IRQ\n");
+ 	nilfs_clear_inode(inode);
  
- 	ddata->extclk = devm_clk_get(dev, "extclk");
+-	if (IS_SYNC(inode))
+-		nilfs_set_transaction_flag(NILFS_TI_SYNC);
+ 	nilfs_transaction_commit(sb);
+-	/*
+-	 * May construct a logical segment and may fail in sync mode.
+-	 * But delete_inode has no return value.
+-	 */
+ }
+ 
+ int nilfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
 -- 
 2.53.0
 
