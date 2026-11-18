@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795032678;
-	b=4VKop2iTpIHBFoNQNRN+2kL6v+eqCsPKmfGYDbz+bW9FDLhxaZ2rkfA9ubvrleH2HoVO
-	 ljgl98+IdEByoREvQoNAr2+UmIUxZF2kcxE8l43PZtpyib79BeYJRumLi2dM0w1CAMvpi
-	 J86Z43BBhxwLq6huUNZKrVqy0fspf5zfdldP5B4mMiv6guAkgMKBGHDw5z/zPfE0Gbt6R
-	 yOxJijRI4eIDxQYD1UkgQanQB3fstk3lJFzmVLFY61fsTi81HICgMJITA8JGNkDuX1iyP
-	 OD+s5ShsfhxkrN6JZm7j8qgdiqBQhTzryqGwAUXKgyz4+SYJvvMSlEmblADUQvOGrmA==
+	t=1795032681;
+	b=gEXnVNYrLPVLa6idK/Z2lgfSUoaaXsVNr9TTXkIs0mfN3bDs/FvQbN+ouUxBEkhP0iIA
+	 cK/eUkWUOdOJtzUA+HD15xzJ5g9GZGBEOPi9Ws3E264qagTMFCAZsF03Brbqd+EVRvivV
+	 oMMcJAllFi3dMpkenjO7BAzK45SYCWKK+WEjiDCdE76ggesvwp5CnHbOYgm6IxE9/k6zD
+	 tPBlXxtjrxxdAf6FZWD/QCId+ePv0I8dbKv7p5HLGcgwEbftlul2Etp2ml6lut5eu4LHX
+	 UaZNDO6VgdPC4TOOkqSjto+vBU0AXgVPJFxW6DGbPNREk4V8icKc5QG/czDdGB6ZB4w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795032678;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795032681;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TGm7X/tnPOujqRlgCpZhcVTbFs/MYcgN+hxnDZmMhww=;
-	b=IEQFcx9WmRF/q7iL3JU39PZ7PxwxKlOUDpgGQSbdEQeZdSTrlL67Hi8K86tMiNBpHiyu
-	 8AMsKX5+kuESWiQ1lOgjaIpc8dQSV3cU5Qn6sqtn6zjROHe9W0F1cle/e8D5vNrs6tA94
-	 dHBoFRkw1lG+rbhV0sJ3cx+/c7T8Yws/ltSgOEu4qFO4c2/uMVCP7bqXyowlDsHxad0SB
-	 Cqu8QPCoXJ1/de64EX+djZKDj+CiFdfLbQ/Ws22xpB90NW1iI9qV4ABxZ6Dt4gcQ0XMeo
-	 S5qhjMMCGOFeb30lhCNRe34L5cUwNs9kzOl9inA2GQEGoEAhPzmOG+6fUB7Z9kLalNg==
+	bh=TDJu6j3/1Xouw3lLgZwi3X9M5om7vqcAsk8zwUTkTBI=;
+	b=TUFW0WgMf+rr8SEJseCUrLTtRlHMkXYYUOJz0VWDRYAumuq+0OEGbZ0IglEiWJbWDhvU
+	 2YZKkf+mou1vlu7y1HPCx7pk7wmEjoCt6s01tI54tbR5zjisGREOcIPQP8RUR9jVS/zXM
+	 EDzVTBVJoBVMUN8wE3YTtU4p4Yqp5LJ6J/s+f0l2WenM+zCk2AFRfCJdKshGa2yojbrgO
+	 n83Fpoeh+mkys6/gMl5Wa88sv5YAqGh0AYRQJxoUv6a01JSQVhhbtuhQdzY8Jyg1FIb5Y
+	 q0CzKruhi8SfpQTS6Ir8VDKDLffKU2O7INN17Q9zwFmbD1KDqpROrn3nFy3whsiUoRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZrwWY4Ow;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p2XP4EFA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C57606A325;
-	Wed, 18 Nov 2026 20:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD73B606A31C;
+	Wed, 18 Nov 2026 20:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ZrwWY4Ow
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D291F000C4;
-	Wed, 18 Nov 2026 20:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=p2XP4EFA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A6E01F000C4;
+	Wed, 18 Nov 2026 20:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795032678;
-	bh=TGm7X/tnPOujqRlgCpZhcVTbFs/MYcgN+hxnDZmMhww=;
+	s=korg; t=1795032681;
+	bh=TDJu6j3/1Xouw3lLgZwi3X9M5om7vqcAsk8zwUTkTBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ZrwWY4OwumbrLQVacWVftFd9q/zGZAi6rv6rlCVx4CrsNyH7aySg4g4bvcUuRGEjz
-	 4nJS8WlcbWoScLwCwrSj0reoH2GuOw4Q86PBmEoA0pk7wPX6bNabkVt1LtJ8x9OhJj
-	 eYIxrlVC2gdKkj4JjvC4hUW6QKr2ViSUXaQ3JzM0=
+	b=p2XP4EFAFOQyvGEinKcIHq9PMOjVoUTSqpTOA4adHe0wFqeGoblE29rMVL+ctPZBO
+	 /zFmbvh0tMCrh4LIfC+sq8jFpMX7qFcDsxEkJXDrplcvq3nuAsYJO/MEieGZ8kW5gN
+	 V8EecK0NFk6kIyHcB2IXieB+5sM/KriEqFjbud2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -46,9 +46,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sylwester Nawrocki <s.nawrocki@samsung.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1496/1756] ASoC: wm8994: fix MCLK gating for AIF clocks sourced from MCLK2
-Date: Wed, 18 Nov 2026 16:00:23 +0100
-Message-ID: <20261118150108.509810409@linuxfoundation.org>
+Subject: [PATCH 6.12 1497/1756] ASoC: wm8994: dont lose the AIF clock ratio when staying at 32kHz SYSCLK
+Date: Wed, 18 Nov 2026 16:00:24 +0100
+Message-ID: <20261118150108.546334067@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,117 +72,158 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 872215109fc880de7a03fa30437346f9212649e8 ]
+[ Upstream commit 693574504051a19383640cfb99524a6b69e4624f ]
 
-aif_mclk_set() masks the AIFnCLK_SRC field of the AIFn clocking
-register, but compares the result with unshifted field values. The
-MCLK2 source (0x08) therefore never matches, so MCLK2 is never enabled
-for an AIF clocked from it, and the AIF relies on other users of that
-clock to keep it running.
+When SYSCLK drops below 50kHz, the AIFnCLK rate ratio is saved and
+temporarily lowered to 128fs for accessory detection, then restored
+once SYSCLK gets fast enough again. The ratio is however saved again
+on each clock reconfiguration done while SYSCLK is still slow, which
+overwrites the original ratio with the 128fs one.
 
-On the Exynos4412 Trats2 board, AIF1 and SYSCLK run from MCLK2, the
-32768Hz PMIC clock, while the codec is idle. That clock is shared with
-the WLAN and Bluetooth chips, which enable it only once their drivers
-are loaded. Until then the codec runs from a stopped clock: FLL1 fails
-to lock when configured from that state, and the codec floods the
-kernel log with FIFO error interrupts once a digital path is powered
-up:
+This happens on the Exynos4412 Trats2 board, which set MCLK2 as SYSCLK
+twice during the card probe and then configure FLL1 while still running
+from MCLK2. Once SYSCLK is switched to FLL1, the 128fs ratio is
+"restored", so AIF1 is left configured for 48kHz at 128fs while being
+clocked at 256fs. If any digital path is powered up before a stream
+reconfigures the AIF, the codec raises FIFO error interrupts every
+10ms, flooding the kernel log:
 
- wm8994-codec wm8994-codec: Timed out waiting for FLL lock
  wm8994-codec wm8994-codec: FIFO error
 
-Booting with clk_ignore_unused, which keeps that clock running from
-the bootloader, makes both issues disappear.
+Save the original ratio only when entering the low SYSCLK mode. While
+at it, move the code duplicated in _wm8994_set_fll() and
+wm8994_set_dai_sysclk() to a common helper.
 
-Fixing just the comparison is not enough. The AIF clock source can
-be changed while the AIF clock is running, for example the Midas
-machine driver switches AIF1 between MCLK2 and FLL1 while AIF1CLK is
-kept enabled for jack detection. Looking up the clock again on disable
-can then release a different MCLK than the one enabled, leaking the
-enable count of one clock and underflowing the other.
-
-Shift the field value before decoding it, and remember which MCLK has
-been enabled for each AIF, so that the same clock is released on
-disable. While at it, report the MCLK number 1-based in the error
-message.
-
-Fixes: 001b83d395ab ("ASoC: wm8994: Add support for MCLKn clock gating")
+Fixes: 6730049a4763 ("ASoC: wm8994: Lower AIFnCLK divisor when dropping to 32kHz")
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
 Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 Reviewed-by: Sylwester Nawrocki <s.nawrocki@samsung.com>
-Link: https://patch.msgid.link/20261021101750.3297770-2-m.szyprowski@samsung.com
+Link: https://patch.msgid.link/20261021101750.3297770-3-m.szyprowski@samsung.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 28 ++++++++++++++++++----------
- sound/soc/codecs/wm8994.h |  1 +
- 2 files changed, 19 insertions(+), 10 deletions(-)
+ sound/soc/codecs/wm8994.c | 94 +++++++++++++++++----------------------
+ 1 file changed, 40 insertions(+), 54 deletions(-)
 
 diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index 0f02d134ba178..b3a3b3268096b 100644
+index b3a3b3268096b..c7474b644c23c 100644
 --- a/sound/soc/codecs/wm8994.c
 +++ b/sound/soc/codecs/wm8994.c
-@@ -1062,13 +1062,24 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 	unsigned int offset, val, clk_idx;
- 	int ret;
+@@ -2210,6 +2210,44 @@ static int wm8994_get_fll_config(struct wm8994 *control, struct fll_div *fll,
+ 	return 0;
+ }
  
-+	/*
-+	 * The AIF clock source may be changed while the AIF clock is
-+	 * running, so release the MCLK which has been enabled for it
-+	 * instead of the one currently selected.
-+	 */
-+	if (!enable) {
-+		clk_disable_unprepare(wm8994->aif_mclk[aif]);
-+		wm8994->aif_mclk[aif] = NULL;
-+		return 0;
-+	}
++/*
++ * If SYSCLK is less than 50kHz adjust AIFnCLK dividers for detection,
++ * restoring the original ones once SYSCLK is fast enough again.
++ */
++static void wm8994_update_aif_clk_rate(struct snd_soc_component *component)
++{
++	struct wm8994_priv *wm8994 = snd_soc_component_get_drvdata(component);
 +
- 	if (aif)
- 		offset = 4;
- 	else
- 		offset = 0;
++	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
++		/* Don't overwrite the saved dividers with the 128fs ones */
++		if (!wm8994->aifdiv[0]) {
++			dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
++
++			wm8994->aifdiv[0] = snd_soc_component_read(component,
++								   WM8994_AIF1_RATE)
++				& WM8994_AIF1CLK_RATE_MASK;
++			wm8994->aifdiv[1] = snd_soc_component_read(component,
++								   WM8994_AIF2_RATE)
++				& WM8994_AIF1CLK_RATE_MASK;
++		}
++
++		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
++				    WM8994_AIF1CLK_RATE_MASK, 0x1);
++		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
++				    WM8994_AIF2CLK_RATE_MASK, 0x1);
++	} else if (wm8994->aifdiv[0]) {
++		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
++				    WM8994_AIF1CLK_RATE_MASK,
++				    wm8994->aifdiv[0]);
++		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
++				    WM8994_AIF2CLK_RATE_MASK,
++				    wm8994->aifdiv[1]);
++
++		wm8994->aifdiv[0] = 0;
++		wm8994->aifdiv[1] = 0;
++	}
++}
++
+ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
+ 			  unsigned int freq_in, unsigned int freq_out)
+ {
+@@ -2444,33 +2482,7 @@ static int _wm8994_set_fll(struct snd_soc_component *component, int id, int src,
  
- 	val = snd_soc_component_read(component, WM8994_AIF1_CLOCKING_1 + offset);
--	val &= WM8994_AIF1CLK_SRC_MASK;
-+	val = (val & WM8994_AIF1CLK_SRC_MASK) >> WM8994_AIF1CLK_SRC_SHIFT;
+ 	configure_clock(component);
  
- 	switch (val) {
- 	case 0:
-@@ -1081,16 +1092,13 @@ static int aif_mclk_set(struct snd_soc_component *component, int aif, bool enabl
- 		return 0;
- 	}
- 
--	if (enable) {
--		ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
--		if (ret < 0) {
--			dev_err(component->dev,	"Failed to enable MCLK%d\n",
--				clk_idx);
--			return ret;
--		}
--	} else {
--		clk_disable_unprepare(wm8994->mclk[clk_idx].clk);
-+	ret = clk_prepare_enable(wm8994->mclk[clk_idx].clk);
-+	if (ret < 0) {
-+		dev_err(component->dev,	"Failed to enable MCLK%d\n",
-+			clk_idx + 1);
-+		return ret;
- 	}
-+	wm8994->aif_mclk[aif] = wm8994->mclk[clk_idx].clk;
+-	/*
+-	 * If SYSCLK will be less than 50kHz adjust AIFnCLK dividers
+-	 * for detection.
+-	 */
+-	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
+-		dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
+-
+-		wm8994->aifdiv[0] = snd_soc_component_read(component, WM8994_AIF1_RATE)
+-			& WM8994_AIF1CLK_RATE_MASK;
+-		wm8994->aifdiv[1] = snd_soc_component_read(component, WM8994_AIF2_RATE)
+-			& WM8994_AIF1CLK_RATE_MASK;
+-
+-		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
+-				    WM8994_AIF1CLK_RATE_MASK, 0x1);
+-		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
+-				    WM8994_AIF2CLK_RATE_MASK, 0x1);
+-	} else if (wm8994->aifdiv[0]) {
+-		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
+-				    WM8994_AIF1CLK_RATE_MASK,
+-				    wm8994->aifdiv[0]);
+-		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
+-				    WM8994_AIF2CLK_RATE_MASK,
+-				    wm8994->aifdiv[1]);
+-
+-		wm8994->aifdiv[0] = 0;
+-		wm8994->aifdiv[1] = 0;
+-	}
++	wm8994_update_aif_clk_rate(component);
  
  	return 0;
  }
-diff --git a/sound/soc/codecs/wm8994.h b/sound/soc/codecs/wm8994.h
-index bc584b17bf283..28a54007302f9 100644
---- a/sound/soc/codecs/wm8994.h
-+++ b/sound/soc/codecs/wm8994.h
-@@ -81,6 +81,7 @@ struct wm8994_priv {
- 	struct wm_hubs_data hubs;
- 	struct wm8994 *wm8994;
- 	struct clk_bulk_data mclk[WM8994_NUM_MCLK];
-+	struct clk *aif_mclk[2];
- 	int sysclk[2];
- 	int sysclk_rate[2];
- 	int mclk_rate[2];
+@@ -2588,33 +2600,7 @@ static int wm8994_set_dai_sysclk(struct snd_soc_dai *dai,
+ 
+ 	configure_clock(component);
+ 
+-	/*
+-	 * If SYSCLK will be less than 50kHz adjust AIFnCLK dividers
+-	 * for detection.
+-	 */
+-	if (max(wm8994->aifclk[0], wm8994->aifclk[1]) < 50000) {
+-		dev_dbg(component->dev, "Configuring AIFs for 128fs\n");
+-
+-		wm8994->aifdiv[0] = snd_soc_component_read(component, WM8994_AIF1_RATE)
+-			& WM8994_AIF1CLK_RATE_MASK;
+-		wm8994->aifdiv[1] = snd_soc_component_read(component, WM8994_AIF2_RATE)
+-			& WM8994_AIF1CLK_RATE_MASK;
+-
+-		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
+-				    WM8994_AIF1CLK_RATE_MASK, 0x1);
+-		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
+-				    WM8994_AIF2CLK_RATE_MASK, 0x1);
+-	} else if (wm8994->aifdiv[0]) {
+-		snd_soc_component_update_bits(component, WM8994_AIF1_RATE,
+-				    WM8994_AIF1CLK_RATE_MASK,
+-				    wm8994->aifdiv[0]);
+-		snd_soc_component_update_bits(component, WM8994_AIF2_RATE,
+-				    WM8994_AIF2CLK_RATE_MASK,
+-				    wm8994->aifdiv[1]);
+-
+-		wm8994->aifdiv[0] = 0;
+-		wm8994->aifdiv[1] = 0;
+-	}
++	wm8994_update_aif_clk_rate(component);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
