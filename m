@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061294;
-	b=Sl09wBdeuNUb9qjgdE8eXJIBJwQ23DMTZkvi1budBXVBGRxYoi/k2hsBdfad4eW2+sH7
-	 bWl3HPriYH9chTL+Dl+WNpkraBMHoyCNyJOC1vR4ST0ciSgzFlyHTSVq6B1LaD8/YjJWP
-	 CchiWoUs9v+zGJFSrChwyDF/oYCPNt7o0nvgAT4HQe59oU/KrKC2qwu37RoVVAK5D3ANA
-	 mh2h+iwXzSm3UIPJmTdSgP64u/j2bMsuTjEcWqAjN6/fLJwF1M3nXgN/dwt/TSRdomTFF
-	 A5x95rPFfd22wlLMe4jOUW+IvT1Fo+R6vsUwNF+HfkwWyAyYmmnJraxecOrgzINuFsg==
+	t=1795061297;
+	b=jS8vLI1XHiDRYVBy3toTcFayFqAmzOkXGdRXJosNn7RmqEy2M2CohoaMlJNo2Su9sIXY
+	 6SJRI+QahH0Yk9o5wRWl6Zr4FEjfyXWM4Bb3s0SA4k57bwCujQepkT2b/Famcu7wzolLw
+	 4xb1Rsn4Ur8rwAjPJchWTpGl817ab7oirctbAPc48xmgYPGn/qDQjPWBYhJv5GveJTSc3
+	 qYKShI6jBtzbKjpnoj5w7pE3UTvEVxu9GlbUW9rIK5V1hPahN33Rw3bVwx6NIgXqpg21x
+	 6EpqIa5fm0xNP+HRAseBjqWt3C9mafLDN5u9mvbD9XgDeM6QoXfnYCqrvvS0yrvKiGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061294;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061297;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=7PKaoS1hUqNC7qFCGl9uf908St1vKZnAoTYR0I/dEMg=;
-	b=5iqBLRM1C4K2K2J+1Bh9+bAUXXgxXvqwp5tpmy+jrYlOZq3oxHcnEm5I/hEb/BuJ5j8S
-	 8qNyViBuiPNZGtkJsRSNqOs71wFlqkc4+g1DxN78sb4gxDFMXr2hJSty3SHrS7rMgjBaE
-	 DpJ7/+xONutW9T62y9pGCxWZwH5XjGa8wmuj+Nc6V48dF9AHszpcVBt4isEr/VhJdkY6N
-	 tTD8rXWuOsn8u6rkBhoDaEztNgS542BAEiCm/1VuUbHdgtgYAarYh8Ltnvczh9G9AeKrq
-	 DYRuV9HzY/2rsJW9wQIfUFvw4bUPDMDt3mf+DutSt+gfEJYu2XDiW1CQsVFoHXbbESQ==
+	bh=oNZr1OOJyG3M/NGPlCNA8rl8pQflLsyADbcf7a4qhGo=;
+	b=YWoAVE20pwr6Sx6Mmr8dwt5RT9pLnaV6WrIvwLooVaoITHivUHV5xwitiiaWGCWGWNhk
+	 NsMesf2/+/chUG8YJXGsjRHguUvkITotco7aQho+c9xnKpTZ+iPZLsuAqfN3TZiOxWQlQ
+	 /LXUW7RAH+0ZGoZEs0dthxjWOXSnEjakB/WPS51neIpnb2gsvfNayNE8ZnZl3PhU5kT1c
+	 VKj7QGoeFU85kRPeuvUc/vNWhLdeYn+GqJumQRaEn6O889gdi83hxHTBzZckSVL0sTrAX
+	 lg69fAUhr43o3OLZQWUn/jYzKVNp5rG3LS/gU7TfCFB9bc8IGtBXaLQ8tiuV17ds+eA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="WcOn8/Ri";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uzAqzw+Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A362606A325;
-	Thu, 19 Nov 2026 04:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465A1606A325;
+	Thu, 19 Nov 2026 04:08:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WcOn8/Ri
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011FE1F000C4;
-	Thu, 19 Nov 2026 04:08:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=uzAqzw+Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09E11F000C4;
+	Thu, 19 Nov 2026 04:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061294;
-	bh=7PKaoS1hUqNC7qFCGl9uf908St1vKZnAoTYR0I/dEMg=;
+	s=korg; t=1795061297;
+	bh=oNZr1OOJyG3M/NGPlCNA8rl8pQflLsyADbcf7a4qhGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WcOn8/RiKxN8U677BLT9fmJWDM5JM9MbyXCkRn1MoE7MTdNgOks8gTYnU0qf/vFvc
-	 ujWXUMAl7rVPDqqzYcpM0GnRDg3McHMtLxCh4pM8uqCm8I90mna0AF6FPftm9o+vvd
-	 nNyCO8SsOVIabii1a4sXnulqpmbNqMyp9AUswJ7M=
+	b=uzAqzw+Z+oBTZXKBK9FzvD1SCrD2M8I7yl8mS6pFUFTcs4wzDQWqJDmBcLe5qhkId
+	 avTqvdLOem1/3xJJ7c9PpF0WBJV6HHpiJGxFCJjtlyGTJUNmLvAJkNDSubEGvVGoAM
+	 0/dWjOLjXytn2MInHjSUthyRX/C1SWSJKK0/Er1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Detlev Casanova <detlev.casanova@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1500/1848] dmaengine: ste_dma40: Validate DMA specifier length
-Date: Wed, 18 Nov 2026 15:58:58 +0100
-Message-ID: <20261118150022.153919463@linuxfoundation.org>
+Subject: [PATCH 5.10 1465/1848] arm64: dts: rockchip: Rename rk3328 HDMI audio card
+Date: Wed, 18 Nov 2026 15:58:23 +0100
+Message-ID: <20261118150020.665739804@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,43 +68,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Detlev Casanova <detlev.casanova@collabora.com>
 
-[ Upstream commit 9f1064ebe17cf3ab65ac6eb166398e02678aea33 ]
+[ Upstream commit daa0db717771d43c25d98c2798fa6a7b0252deb7 ]
 
-The DMA40 binding requires three cells, but d40_xlate() reads args[0],
-args[1], and args[2] without checking args_count. A malformed provider node
-can specify fewer cells, leaving some of these values uninitialized when
-the OF DMA core invokes the translation callback.
+Rename the card from "HDMI" to "RK3328 HDMI" so it identifies the SoC
+in user-visible ALSA fields and no longer collides with the identical
+"HDMI" string used by other Rockchip SoCs.
 
-Reject specifiers that do not contain exactly three cells before reading
-the argument array.
-
-Fixes: fa332de5c6b3 ("dmaengine: ste_dma40: Supply full Device Tree parsing support")
-Assisted-by: LLM
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260927-dma40-fixes-v7-17-89f595e8851d@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 29e8976e604f1 ("arm64: dts: rockchip: Add RK3328 audio pipelines")
+Signed-off-by: Detlev Casanova <detlev.casanova@collabora.com>
+Link: https://patch.msgid.link/20260910-fix-rockchip-hdmi-audio-names-v2-4-1396a6168e20@collabora.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ste_dma40.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
-index 8cb561d0dad70..824fbff30db59 100644
---- a/drivers/dma/ste_dma40.c
-+++ b/drivers/dma/ste_dma40.c
-@@ -2398,6 +2398,9 @@ static struct dma_chan *d40_xlate(struct of_phandle_args *dma_spec,
- 	dma_cap_mask_t cap;
- 	u32 flags;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+index 28c861ac20f74..e4c4f413d1ebb 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+@@ -194,7 +194,7 @@ hdmi_sound: hdmi-sound {
+ 		compatible = "simple-audio-card";
+ 		simple-audio-card,format = "i2s";
+ 		simple-audio-card,mclk-fs = <128>;
+-		simple-audio-card,name = "HDMI";
++		simple-audio-card,name = "RK3328 HDMI";
+ 		status = "disabled";
  
-+	if (dma_spec->args_count != 3)
-+		return NULL;
-+
- 	memset(&cfg, 0, sizeof(struct stedma40_chan_cfg));
- 
- 	dma_cap_zero(cap);
+ 		simple-audio-card,cpu {
 -- 
 2.53.0
 
