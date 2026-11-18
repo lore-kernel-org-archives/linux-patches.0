@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037494;
-	b=BSNJGnwxhzLVyqoHS3uffu6CT+D45CfzGxBFxbp7SCa6mfCOegrx5tVAKfIHkSMc0GEg
-	 efLXplQEZmD9Pk/XGK+s+SKg+D7IX2aPq9cowzxM1xeoRQxqyJU0cg83j71zHekHmZmhj
-	 1+C8ZTXrNZj04WTZTVyM/0X2My79fiOw0CAzgRbhCg31MCo9vgImW5k6b9tLh8LQ1Cd0j
-	 J3qmhoqQ3OHFCvufjS+Wmpg6Qi/AjQWu9cOugtlxaejAe7YI+KOVHk8wdKkcvrAh6Cv9u
-	 xt9p9/lfkaB/ZfnR8TzZvjVqCdIEb4HFELdRb5b6jzfIW0axiwU3+P8F0gUlj3O97kA==
+	t=1795037496;
+	b=HUJ9YxyD05wSvdmi7uTxvdRmx0knaWGp+qzs9q+hq8NFGyfDggpd3pezU3H5j8NhveMN
+	 tKaF2EekMS2rM2NC1Ruk0Hck8110M65NlrnNpTwew9vmOTsnjZCtThfwwdfFoaaX2MDwf
+	 4IbysyURhBGQgfvQ70zznZNPv05SLqCNcxJnaCRiG45x64INmBO5uEVdXBwTp3DhIOjwY
+	 Kw3tNyQs8cFUvK0fj30Y6Yg8Nz4BgPzW7UfmqVAHv64rdUT+4z0h/v0ybFtfX5X2N6IaL
+	 3/M3e9uzBvwTaSaK5z0F582T8J+w2mo8r7Mfft0tpUatYoC+Y2lGy0yWFcutrRWyymA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037494;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037496;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=38EdhMesqulZ5CcPF5Li4TctP7mDFJy+uFNRqV7VEXs=;
-	b=hU3PtVVBE2+irchSp3wrdbSEFa7c4MI58c1+QXqLEXEGsnCm00wBLDNCgvxh/8qgxhm/
-	 IUVXBWOsywgXTTpccujkSj718DliDmJWvWlPujRPkUgxdKa3YSEaHvQfcLomfXb26l0AM
-	 A1jN4asNoD5dnbL3+Wz/ewCR6Q9VITivno8IGO39wHI780RnfIXmzwnue5mLRAAWtSkAi
-	 KIkMODgxe42aQesxuVc0SJ3ZTBLVoWF3DYfqAK4PBaPu2ui7A43ipSSxbZQG5fy+O+Q0m
-	 wXey9oJv5LKFWjpbSrI5jwcGfha7M6E+oNQqB2yfhe6wHkgHy6S+qP687ux8QTLZhmA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=k89PG3vf7PwJIt6170Aq+BM6jDa/QGDiwqrrVK4DyX8=;
+	b=kgK2PciyJjOmNwbe/Hcgar/xVPrcDEMedHn2xbWTiTZEdlfIVxrenhtdffxWpEcldkcB
+	 trLcOYZOHtTHTy7Ex7vLPcivnq17DMPz1CVO2NAhDL3Tg5TAmBOucyn+sCKrrvFBbF8Mq
+	 rpavsGQDHYNh0/HBWodKRmTdevPoK2dU7GQ998ayIawI39gqHNFF30N42dxzhsa2gobCD
+	 i6Myt8ReYbfcjxHnPCZHwvg3lWx3MhNY4nb2wjfb/wzxBYho+nduH+3I7DT8YqurI9V7b
+	 gRy7KyyLNEFB/i4kE6Yo/Htd++EYWiWWIE3wxbuo7v24m84ucJw3fm9gmoJFLWSEoiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MYQ6NuAj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JAh8w1q3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3812606A320;
-	Wed, 18 Nov 2026 21:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE67606A320;
+	Wed, 18 Nov 2026 21:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MYQ6NuAj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038221F000C4;
-	Wed, 18 Nov 2026 21:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JAh8w1q3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23721F000C4;
+	Wed, 18 Nov 2026 21:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037493;
-	bh=38EdhMesqulZ5CcPF5Li4TctP7mDFJy+uFNRqV7VEXs=;
+	s=korg; t=1795037496;
+	bh=k89PG3vf7PwJIt6170Aq+BM6jDa/QGDiwqrrVK4DyX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MYQ6NuAjg65Xzt5EgRiEwoKcJPKIuBRsszb4MkpE8zNbp8GW6Pza+iYRvfG1qgOuW
-	 lsVFZXR4BXb0CdapodrjeLfQeLRwA7VBan3FLns0f4mUwIH/6Nd7lYupFCRMdR5pmq
-	 7Fn1D+ZZNDcsrlAoZZUseGQ/abRiwNUzET5b1ycM=
+	b=JAh8w1q3Ge5cSwdoBNntGDDxPkW2CW4pIPgIQFHzyGm/KyVU49YNXc4qc+uheI9YA
+	 SSEbhib6ZOOH4KwwV7BIk9936gISQoYk9mPNEjR6/855pqRfQafsjrxrvWqOWDrFo2
+	 Ay+EeqYWo+l7/h36g+nhA404/0+bTKbriw1TrzFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Sashiko <sashiko-bot@kernel.org>,
+	=?UTF-8?q?Linus=20L=C3=BCssing?= <linus.luessing@c0d3.blue>,
+	Sven Eckelmann <sven@narfation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1415/3318] 9p: dont decrement a server-owned zero nlink
-Date: Wed, 18 Nov 2026 15:33:57 +0100
-Message-ID: <20261118150403.123670082@linuxfoundation.org>
+Subject: [PATCH 6.6 1416/3318] batman-adv: dat: initialize orig_node of unfilled candidate slots
+Date: Wed, 18 Nov 2026 15:33:58 +0100
+Message-ID: <20261118150403.162416639@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,92 +63,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
+From: Sven Eckelmann <sven@narfation.org>
 
-[ Upstream commit 4e915aa8566173b44146bc46177c85afbe6bdf96 ]
+[ Upstream commit 4eb19a389d74f06901b4cd6f24b996b2e84eaefc ]
 
-A 9P2000.L server can report nlink=0 for a regular file that still
-exists.  On a cache=loose or cache=fscache mount, lookup stores that
-value with set_nlink().  A later successful unlink calls
-v9fs_dec_count(), which still calls drop_nlink() for a non-directory.
-drop_nlink() warns, and the unsigned link count wraps to 4294967295.
-fstat() on a descriptor opened before the unlink shows 0 before and
-4294967295 after.
+batadv_dat_select_candidates() allocates the candidate array without
+zeroing it. batadv_choose_next_candidate() marks each slot as
+BATADV_DAT_CANDIDATE_NOT_FOUND but only sets orig_node when an eligible
+originator was found. In the following rounds,
+batadv_is_orig_node_eligible() compares res[j].orig_node of all previous
+slots against the evaluated originator. For slots without candidates, it
+reads uninitialized memory.
 
-The warning on the unpatched kernel, trimmed:
+The orig_node has to be cleared together with the
+BATADV_DAT_CANDIDATE_NOT_FOUND type.
 
-WARNING: fs/inode.c:408 at drop_nlink+0xac/0xd0, CPU#1: trigger/188
-CPU: 1 UID: 0 PID: 188 Comm: trigger Tainted: G                 N  7.3.0-rc4-00537-ga3ff15db6820 #1 PREEMPT(lazy)
-RIP: 0010:drop_nlink+0xac/0xd0
-Call Trace:
- <TASK>
- v9fs_remove+0x529/0x750
- vfs_unlink+0x2f0/0xbd0
- filename_unlinkat+0x340/0x6c0
- __x64_sys_unlink+0x46/0x70
- do_syscall_64+0xe8/0x4f0
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
- </TASK>
----[ end trace 0000000000000000 ]---
-
-Directories whose cached nlink is at most 2 already skip this
-decrement, because the exported filesystem may not maintain nlink
-(commit ac89b2ef9b559).  cache=none skips it as well (commit
-574aa0b479947).  cache=mmap does not take this path: it sets neither
-CACHE_META nor CACHE_LOOSE.  A regular file on cache=loose or
-cache=fscache still does.  Its count came from GETATTR and may
-already be zero, so skip the decrement when i_nlink is already 0.
-
-Verified on 7.3-rc4-00537-ga3ff15db6820 with only this change.  A
-server that advertises nlink=0 and accepts the unlink no longer
-warns, and the open descriptor stays at nlink 0.  An honest server
-on the same mount still goes from 1 to 0.  A rejected unlink leaves
-the count unchanged.  cache=none is unchanged.  With panic_on_warn
-the unpatched kernel panics on the warning; the patched kernel does
-not.
-
-Fixes: ac89b2ef9b559 ("9p: don't maintain dir i_nlink if the exported fs doesn't either")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yuanfu Xie <yuanfuxie@stu.pku.edu.cn>
-Message-ID: <8B490036-EBB0-4A36-AE39-F294F7C79649@stu.pku.edu.cn>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Reported-by: Sashiko <sashiko-bot@kernel.org>
+Closes: https://sashiko.dev/#/bug/linux-b25d9aa4-10bb-427c-a145-ccaadc2a1bb9
+Fixes: 785ea1144182 ("batman-adv: Distributed ARP Table - create DHT helper functions")
+Acked-by: Linus Lüssing <linus.luessing@c0d3.blue>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_inode.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/batman-adv/distributed-arp-table.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index 3fbfd6aa1a361..6ce79084017fa 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -526,6 +526,12 @@ static int v9fs_at_to_dotl_flags(int flags)
-  * nothing and races with concurrent metadata fetches that may already
-  * have observed the post-unlink value (nlink == 0).
-  *
-+ * The same applies to a regular file whose cached nlink has already been
-+ * driven to zero by the server: in the cached modes the attributes come
-+ * from GETATTR and are applied verbatim, so decrementing a link count the
-+ * server does not maintain only trips the drop_nlink() WARN_ON and
-+ * underflows i_nlink.
-+ *
-  * @inode: inode whose nlink is being dropped
-  */
- static void v9fs_dec_count(struct inode *inode)
-@@ -534,6 +540,8 @@ static void v9fs_dec_count(struct inode *inode)
+diff --git a/net/batman-adv/distributed-arp-table.c b/net/batman-adv/distributed-arp-table.c
+index c6b7b3bece813..fb6ca168ad0b9 100644
+--- a/net/batman-adv/distributed-arp-table.c
++++ b/net/batman-adv/distributed-arp-table.c
+@@ -583,6 +583,7 @@ static void batadv_choose_next_candidate(struct batadv_priv *bat_priv,
+ 	 * NOT_FOUND
+ 	 */
+ 	cands[select].type = BATADV_DAT_CANDIDATE_NOT_FOUND;
++	cands[select].orig_node = NULL;
  
- 	if (!(v9ses->cache & (CACHE_META | CACHE_LOOSE)))
- 		return;
-+	if (inode->i_nlink == 0)
-+		return;
- 	if (!S_ISDIR(inode->i_mode) || inode->i_nlink > 2)
- 		drop_nlink(inode);
- }
+ 	/* iterate over the originator list and find the node with the closest
+ 	 * dat_address which has not been selected yet
 -- 
 2.53.0
 
