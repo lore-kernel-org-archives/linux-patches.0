@@ -1,59 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795022458;
-	b=07dUytkeRwV9/sCEUHn95izw5amAJprrH0wmpGmxbTP34C5jQvPe5M/Mx6enW2XmEJHV
-	 pC62lWKj3Mrhnrd6JifYqwFVzpQmrqLuGlLyUCi4Ea9TbS8J+lB5e8Yf2QwH3ZnHVmKce
-	 ZH44INj9iI9rFYtPS7iMyBhAnO5x0g2cYUmg09bpCbQC7HOH6xDh57PGjx3AMstR5Gb0S
-	 yhHSKPBQb+3w6txw6Z4TlGU6ITqqGTBlag48sU/rPmrjJOVe6G7nunRYpcIfBDf2wLxDJ
-	 z4x0m/J896HICumSddtLf/FqQSSAQb9npi8pZNs7w0mp959+cg8kBJqPwFnAZoLQAyA==
+	t=1795022461;
+	b=rsIhlOeojFKpSx/Rxfem+lbw84maxIo/erp8v0bmF4es9+LIg87wbFd2gr7l1pDpzaMD
+	 yiYBpRI62m3TtT9ZOCNxS8oHsINYBPQYsyQCXLKCQA6U5iDmtjsWVaH5Pkzuvq6NLJSZy
+	 uPzUzOgoEuIHuLRZbHqsHoYuW3zBLjUVEOSh+tD6acit/jiX2LLtW8fu5PS5P4+eyd74f
+	 JZSjrze3T2G5aB6j0P5IP/1ZPLwbx1Ax0JMc47SZU4MuLSwEHLcdmCobSDa2trkANPKKT
+	 8zUekRhbIKzCISXUZ7s+8eWwI1/+vCy4909CPCVQ3IAJ1MWHKU4hNhZuZ+WxUYv4gqw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795022458;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795022461;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=RZzEM5iNXOndyxQn0ek1d566gxvJ8i1vzkj+ZcUOWOY=;
-	b=446ko2svOdsf4UQMLNlwZ9rN6bcKor2uSwF+JfpHu/uPwGaJ5Xfoe2hWj1k5fsLXymNy
-	 5cgUAS6qrexf9Q6Vd0JnaR3h4tNJnDYt+LK4pYJ14Y/kGVNEhaSD7qWDGCpZR3r5G+6bu
-	 NFboX+tDOIYDFplc6sP06BcayA/BLlNfauq9e/QcneVi8wqce8mv9+lHr40UXyMXSsoGh
-	 zcEI3LQwn8tQs2hylcxX1weXlreElYBABpUO2qkPaDX3G+glMoZKRekI8yyft7c1NgBKo
-	 n0Uw68PZFw3+KxhSL6dwzbuZx9I31Y6AVE5kuOkxIw4Tb1p5gUjNk0z7aIU28BU0+JA==
+	bh=A8dczPzrHUYEK+wcWvK1xkd8QIoA+H2IyGDOkdD+zv4=;
+	b=H7YaHq6qE7bL5Xayn0vjV9dmsghg24CIIAo3QBYjzErKyKRRTL57rLGkxkkZJ5CC15hI
+	 OoDPtoplOygsX2+NFtLAqTvOsdcoSO+ZFWuCnX8xJKN0CeiJ37QAbPL8LbSETr9+/pBvE
+	 XcbyDZD17hSLyAEH1um8xPHW1bSfM+5JB6C5L4ub+TjHcyhgCNuClxdR0YPJDJk6qHzGX
+	 yi6RGzn4LYyhbgNvIm0e2VL7xVbppdtWMac7ofdE2Stg0AOI9U3643J+mr7I5WsQe1rTQ
+	 9ULBRxluidIZDDAp4IFfhiQ746qLv1qgEZ2h8MiNsu7qjFvUoeiqlyRRoCNYymtn6vw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GKOdSkEi;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zK9sZcsv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4580606A334;
-	Wed, 18 Nov 2026 17:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723DA606A330;
+	Wed, 18 Nov 2026 17:21:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GKOdSkEi
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39481F000C4;
-	Wed, 18 Nov 2026 17:20:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zK9sZcsv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45831F000C4;
+	Wed, 18 Nov 2026 17:21:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795022458;
-	bh=RZzEM5iNXOndyxQn0ek1d566gxvJ8i1vzkj+ZcUOWOY=;
+	s=korg; t=1795022461;
+	bh=A8dczPzrHUYEK+wcWvK1xkd8QIoA+H2IyGDOkdD+zv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GKOdSkEiM3DCuNnNU43n3ZjJiOF+lYcciGv0NrN4idOe+2Z1y0YlTV3Rx++piv89H
-	 W4GeKKvueb7jYGU697aiHU4A14ZAKW/iMOV6eaPFdGmppWS4D9NYJBoQcOZPMiC3Rc
-	 LCNhnGYD/VwukHnNpLqv7+q+8ArFxTAXka+BSfPE=
+	b=zK9sZcsvtxwII6etnrkoRPwaTpUOLNibRMlFrh9RCgrjGHlYVydYgFCdFkZxDlAwH
+	 mofdjnalEdAr+fC0pesaKwU+mZbZGGPjBx7Tbhf7cn8Fzso++ehvrQ3bmTSZmK7VMw
+	 L4TrE2Az2zBT8x3j1cjZS8iRKsRjCptLi8ZcDiUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eklavya Singh <eklavyasingh2106@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	syzbot+5d4e96acd0febccb5e87@syzkaller.appspotmail.com,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Ravi Hothi <ravi.hothi@oss.qualcomm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0021/2151] ocfs2/heartbeat: serialize concurrent writes to a regions dev attribute
-Date: Wed, 18 Nov 2026 15:29:16 +0100
-Message-ID: <20261118150122.421899142@linuxfoundation.org>
+Subject: [PATCH 6.18 0022/2151] ASoC: qcom: audioreach: fix module cfg blob size handling
+Date: Wed, 18 Nov 2026 15:29:17 +0100
+Message-ID: <20261118150122.460773841@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -75,183 +69,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eklavya Singh <eklavyasingh2106@gmail.com>
+From: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
 
-[ Upstream commit 0a8f258c0f012314c36b9e4818cdc0178c68f891 ]
+[ Upstream commit e21fb64a8c4aecae31ec63f994423ac944705c3e ]
 
-o2hb_region_dev_store() checks reg->hr_bdev_file to see if the region
-is already started, but nothing stops two writers from doing that at
-the same time. configfs only serializes writes through the same open
-file, so two processes that each open the dev attribute can both get
-past the check:
+audioreach_get_module_priv_data() passes mod_array->size, a byte count,
+as the element count of the __le32 data[] flex array. The allocation and
+the copy are four times too large, and the memcpy() can read past the end
+of the topology firmware buffer. The size is also never checked against
+the private data it must lie within, and a zero size makes the loop spin
+forever.
 
-  A: hr_bdev_file is NULL, opens file A, sets hr_bdev_file = A
-  B: hr_bdev_file is NULL, opens file B, sets hr_bdev_file = B
-  A: start fails, fput(hr_bdev_file) drops B, sets it to NULL
-  B: start fails, fput(NULL)
+Convert the size to a word count, bound the blob by the remaining private
+data and reject a zero size. Also check the returned pointer before
+storing it in mod->data, as an error pointer there is dereferenced when
+the graph is opened.
 
-Both calls also use the same hr_slots, hr_slot_data and hr_tmp_block,
-so the error paths can free the slot data twice.
-
-syzbot hit the fput(NULL) with an unbound loop device, where every
-start fails with -EIO. With four threads doing the same thing on a
-KASAN kernel I get both crashes within a second:
-
-  BUG: KASAN: double-free in o2hb_unmap_slot_data+0x14d/0x2f0
-  BUG: kernel NULL pointer dereference, address: 0000000000000158
-
-Add a mutex to the region and hold it in dev_store(), in the
-block_bytes, start_block and blocks stores, and in dev_show(), since
-they all look at hr_bdev_file. dev_store() cleans up with goto, so it
-takes the mutex in a small wrapper rather than with guard(). The mutex
-is dropped while dev_store() waits for the heartbeat to become steady,
-which takes seconds, so a read of dev doesn't stall behind a start.
-hr_bdev_file is already set at that point, so other writers still get
--EINVAL, and the cleanup after the wait retakes the mutex.
-
-With the patch the same test ran for 10 minutes with lockdep on and
-nothing was reported. So did a second one, with a working loop device,
-that interrupts starts during the wait while other threads read and
-write the attributes.
-
-Link: https://lore.kernel.org/20261020212339.46591-1-eklavyasingh2106@gmail.com
-Fixes: a7f6a5fb4bde ("[PATCH] OCFS2: The Second Oracle Cluster Filesystem")
-Signed-off-by: Eklavya Singh <eklavyasingh2106@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: <syzbot+5d4e96acd0febccb5e87@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=5d4e96acd0febccb5e87
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Heming Zhao <heming.zhao@suse.com>
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>
-Cc: Cen Zhang <zzzccc427@gmail.com>
-Cc: <stable@vger.kernel.org>
+Fixes: c7ed4c2debfd ("ASoC: qcom: audioreach: add support for static calibration")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20261023171316.819857-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ sashal: Adjusted declaration context to retain the existing non-const mod_array pointer. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/cluster/heartbeat.c | 40 ++++++++++++++++++++++++++++++------
- 1 file changed, 34 insertions(+), 6 deletions(-)
+ sound/soc/qcom/qdsp6/topology.c | 31 ++++++++++++++++++++++++++-----
+ 1 file changed, 26 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ocfs2/cluster/heartbeat.c b/fs/ocfs2/cluster/heartbeat.c
-index ec7e87c065742..6672dab217956 100644
---- a/fs/ocfs2/cluster/heartbeat.c
-+++ b/fs/ocfs2/cluster/heartbeat.c
-@@ -269,6 +269,8 @@ struct o2hb_region {
- 	struct list_head	hr_handler_list;
- 	/* Serializes timeout arming against failed-start and teardown. */
- 	struct mutex		hr_arming_mutex;
-+	/* Serializes the dev, block_bytes, start_block and blocks attributes. */
-+	struct mutex		hr_dev_mutex;
- 	bool			hr_stopping;
+diff --git a/sound/soc/qcom/qdsp6/topology.c b/sound/soc/qcom/qdsp6/topology.c
+index f8d3bb83e3b0d..93e40a05920f7 100644
+--- a/sound/soc/qcom/qdsp6/topology.c
++++ b/sound/soc/qcom/qdsp6/topology.c
+@@ -312,22 +312,37 @@ static struct audioreach_module_priv_data *audioreach_get_module_priv_data(
  
- 	/* last hb status, 0 for success, other value for error. */
-@@ -1666,6 +1668,7 @@ static ssize_t o2hb_region_block_bytes_store(struct config_item *item,
- 	unsigned long block_bytes;
- 	unsigned int block_bits;
+ 	for (sz = 0; sz < le32_to_cpu(private->size); ) {
+ 		struct snd_soc_tplg_vendor_array *mod_array;
++		u32 array_size;
  
-+	guard(mutex)(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev_file)
- 		return -EINVAL;
- 
-@@ -1695,6 +1698,7 @@ static ssize_t o2hb_region_start_block_store(struct config_item *item,
- 	char *p = (char *)page;
- 	ssize_t ret;
- 
-+	guard(mutex)(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev_file)
- 		return -EINVAL;
- 
-@@ -1721,6 +1725,7 @@ static ssize_t o2hb_region_blocks_store(struct config_item *item,
- 	char *p = (char *)page;
- 	int ret;
- 
-+	guard(mutex)(&reg->hr_dev_mutex);
- 	if (reg->hr_bdev_file)
- 		return -EINVAL;
- 
-@@ -1738,10 +1743,12 @@ static ssize_t o2hb_region_blocks_store(struct config_item *item,
- 
- static ssize_t o2hb_region_dev_show(struct config_item *item, char *page)
- {
-+	struct o2hb_region *reg = to_o2hb_region(item);
- 	unsigned int ret = 0;
- 
--	if (to_o2hb_region(item)->hr_bdev_file)
--		ret = sprintf(page, "%pg\n", reg_bdev(to_o2hb_region(item)));
-+	guard(mutex)(&reg->hr_dev_mutex);
-+	if (reg->hr_bdev_file)
-+		ret = sprintf(page, "%pg\n", reg_bdev(reg));
- 
- 	return ret;
- }
-@@ -1859,11 +1866,9 @@ static int o2hb_populate_slot_data(struct o2hb_region *reg)
-  * this is acting as commit; we set up all of hr_bdev_file and hr_task or
-  * nothing
-  */
--static ssize_t o2hb_region_dev_store(struct config_item *item,
--				     const char *page,
--				     size_t count)
-+static ssize_t __o2hb_region_dev_store(struct o2hb_region *reg,
-+				       const char *page, size_t count)
- {
--	struct o2hb_region *reg = to_o2hb_region(item);
- 	struct task_struct *hb_task;
- 	long fd;
- 	int sectsize;
-@@ -1871,6 +1876,8 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	ssize_t ret = -EINVAL;
- 	int live_threshold;
- 
-+	lockdep_assert_held(&reg->hr_dev_mutex);
+ 		mod_array = (struct snd_soc_tplg_vendor_array *)((u8 *)private->array + sz);
++		array_size = le32_to_cpu(mod_array->size);
 +
- 	if (reg->hr_bdev_file)
- 		return -EINVAL;
- 
-@@ -1974,9 +1981,15 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 
- 	wake_up_process(hb_task);
- 
-+	/*
-+	 * Don't hold hr_dev_mutex across the wait, which can take seconds.
-+	 * hr_bdev_file is already set, so other writers still get -EINVAL.
-+	 */
-+	mutex_unlock(&reg->hr_dev_mutex);
- 	ret = wait_event_interruptible(o2hb_steady_queue,
- 				atomic_read(&reg->hr_steady_iterations) == 0 ||
- 				reg->hr_node_deleted);
-+	mutex_lock(&reg->hr_dev_mutex);
- 	if (ret) {
- 		atomic_set(&reg->hr_steady_iterations, 0);
- 		reg->hr_aborted_start = 1;
-@@ -2028,6 +2041,20 @@ static ssize_t o2hb_region_dev_store(struct config_item *item,
- 	return ret;
- }
- 
-+static ssize_t o2hb_region_dev_store(struct config_item *item,
-+				     const char *page,
-+				     size_t count)
-+{
-+	struct o2hb_region *reg = to_o2hb_region(item);
-+	ssize_t ret;
+ 		if (le32_to_cpu(mod_array->type) == SND_SOC_AR_TPLG_MODULE_CFG_TYPE) {
+ 			struct audioreach_module_priv_data *pdata;
++			u32 nwords;
 +
-+	mutex_lock(&reg->hr_dev_mutex);
-+	ret = __o2hb_region_dev_store(reg, page, count);
-+	mutex_unlock(&reg->hr_dev_mutex);
++			/* size is the byte count of the __le32 data[] */
++			nwords = array_size / sizeof(__le32);
 +
-+	return ret;
-+}
-+
- static ssize_t o2hb_region_pid_show(struct config_item *item, char *page)
- {
- 	struct o2hb_region *reg = to_o2hb_region(item);
-@@ -2130,6 +2157,7 @@ static struct config_item *o2hb_heartbeat_group_make_item(struct config_group *g
++			/* the blob must lie within the private data */
++			if (sizeof(*pdata) + (u64)array_size >
++			    le32_to_cpu(private->size) - sz)
++				return ERR_PTR(-EINVAL);
  
- 	INIT_LIST_HEAD(&reg->hr_all_item);
- 	mutex_init(&reg->hr_arming_mutex);
-+	mutex_init(&reg->hr_dev_mutex);
- 	reg->hr_stopping = true;
- 	INIT_DELAYED_WORK(&reg->hr_write_timeout_work, o2hb_write_timeout);
- 	INIT_DELAYED_WORK(&reg->hr_nego_timeout_work, o2hb_nego_timeout);
+-			pdata = kzalloc(struct_size(pdata, data, le32_to_cpu(mod_array->size)),
+-				       GFP_KERNEL);
++			pdata = kzalloc_flex(*pdata, data, nwords);
+ 			if (!pdata)
+ 				return ERR_PTR(-ENOMEM);
+ 
+-			memcpy(pdata, ((u8 *)private->data + sz), struct_size(pdata, data,
+-						le32_to_cpu(mod_array->size)));
++			memcpy(pdata, ((u8 *)private->data + sz),
++			       struct_size(pdata, data, nwords));
+ 			return pdata;
+ 		}
+ 
+-		sz = sz + le32_to_cpu(mod_array->size);
++		/* a zero size would never advance the walk */
++		if (!array_size)
++			return ERR_PTR(-EINVAL);
++
++		sz = sz + array_size;
+ 	}
+ 
+ 	return NULL;
+@@ -611,6 +626,12 @@ static int audioreach_widget_load_module_common(struct snd_soc_component *compon
+ 		return mod ? PTR_ERR(mod) : -ENODEV;
+ 
+ 	mod->data = audioreach_get_module_priv_data(&tplg_w->priv);
++	if (IS_ERR(mod->data)) {
++		int rc = PTR_ERR(mod->data);
++
++		mod->data = NULL;
++		return rc;
++	}
+ 
+ 	dobj = &w->dobj;
+ 	dobj->private = mod;
 -- 
 2.53.0
 
