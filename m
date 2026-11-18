@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060483;
-	b=AKBMLPxj5EM57sRoZKSQhOXhYTrZKC+ecuMR0flTMeMw21HP4fPimxYC/J/oi+n6iHTD
-	 mQjdZHNyMmddI/9zb32kAiXm065PKYsaH+bhwSHK9Zd94peBgJtuiy/1FSjfyFP+18Pw/
-	 tXWAULQrserkW5K/u8PMJVT/WRwJ9vDYWehXO68ikxcfEXWuqwEl7MJuIdGzw7PmUaXok
-	 JcmjCjRC8Bqp+ompVoM94GulxpqpW7WIFc+KZAmUAXL97YNJeF2cJH5r9gpCmy5SKLBP0
-	 P7PTo3lYFDao0u0LRM0BzAsvYIOtkxSLXORd8DCAE/8oUhEaWvIB7IwChie0NXXJZtA==
+	t=1795060485;
+	b=QgZilx9itlaGIc1zOyJA+KHa0vk1zNbZf3og5OBZo9TkcZHmlb4MQjTjvLuWrUV085IQ
+	 hZZOFJDDPv12a203fliYK3EzlpGAtXjS9K2HXrXkSs0oKk0XKE5WYBm66fMC98YXuoGDb
+	 sHmRRbCYCGX4ULTws0vH3B0bgLIlJsWMKpGevoyFe43BTk7dLa92lPv5owmOAzx9N0pDk
+	 OmJm4LNnYdBwHbL4o00p9IxZldvqSMmiXttqN+PxGYkFtBY6JxM7jYLU4iC6dwjV3rpRK
+	 ZVUgcdqrlrlXX2VkyRzTzYWTSlQP5B8GaHRnginRKxBpG1az+GQj40ywzXdvLOBXswQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060483;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060485;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zosmwNfkFV8RAenUb0qUo5DqaHxNsmW0mYDIt4ozAIs=;
-	b=MM+jUh3oUHJqgUIyKJi+DEAG0ZyWJ0vyIJ7sePGBH+zuZLcqIMAt7WDvxC5rRZcTD5CU
-	 1pAQm+fGytK4ezD30GZSU3zakqweLz04VhyIMVMMXqc5fW4G99WebXi2ra1aHi1DFk1YW
-	 LMzZNkaFKK24sWg1MrAX9awffcZDtYQLhYew8E1TINOTD4yH3VAGE7yVbCXU1ctPHji9B
-	 D/gnlTtEDpxbA3KGfg1mR8HzEDO1ta2nBQ/+P1P2zhHdFM3VOsJM0+i3VciVB24rJ17+S
-	 mNqcVkqGZwRIXxExUIxAXYAgwG/GDpbVOf6hq3VQ8bH0GAiIUlGzjkBWNjismWy1QzQ==
+	bh=3M3uKE5pexSHETL4yEmA7Qh4C0sA4etm5Ej2U/nfYbU=;
+	b=48/QAhucQacXpV0SXx8ykkwJUyOFZBNrt9f3g8Xvfg6/6WqWdXbQRnAVfb9xKabiz8C1
+	 ZwMaRvbaVJ80PyuhEHiTd5t+sHfsMtPGEQz6Skn5GPohrkyjARVmrK4JN5H74b6K5uGA/
+	 LA5N6r5zMUZeb7tGkYLOU6fwCHQgIXRmsw53a3eiHZxes1rgJStaaF/uuDR5yckktYvXr
+	 viSqUsmq/BRMXoQpfcfYsX1TPykamoDnUcWIehbxt3zdKaZqp8NtoRBTcHIGk0aJc22KS
+	 YFOBN/gCair1NaDewqmdwOmWNox53oz5O2n2Swvmi6bdV11Hq/HoAU8u7v1M458yzvg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8kKrVxb;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cCa4u8+J;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5B6606A320;
-	Thu, 19 Nov 2026 03:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DFE606A32F;
+	Thu, 19 Nov 2026 03:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s8kKrVxb
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C8911F000C5;
-	Thu, 19 Nov 2026 03:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cCa4u8+J
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0BE1F000C5;
+	Thu, 19 Nov 2026 03:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060482;
-	bh=zosmwNfkFV8RAenUb0qUo5DqaHxNsmW0mYDIt4ozAIs=;
+	s=korg; t=1795060485;
+	bh=3M3uKE5pexSHETL4yEmA7Qh4C0sA4etm5Ej2U/nfYbU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=s8kKrVxbj3PeW+9Ma4HPfocsfYlF4x/2PEOlsjBRYZNpEgmBYyvNPGABrcFIPzYDa
-	 J3DDMu1Es/q+VrG+9Mtkh0W8rCxSw77FZWBZfE1syjwoxJYrUqGGgjRctqrgZMZuzR
-	 oZULKcSGZEHTxzox4YpOvhcwEEGMUe2d8L/+SB9E=
+	b=cCa4u8+JRH6e94eep5I970gkUER3Z3GdpqIiEnPnZ/WyhCJ8GHZSddL7x3M5PJJ2d
+	 cyw4rnmLq5+Nu0iDnghm+jo0Bpep4jgBJ6DvlRZKywM2Gza0oZMXPWfe8dkyz9ApOO
+	 slvvT4MuJyET5zlpMQ/+NYtW7IHTB+0JNk09VddU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	syzbot+a83a5a1ba9ff57935171@syzkaller.appspotmail.com,
+	Keisuke Tsukuda <tkdkei@outlook.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1215/1848] dmaengine: sprd: use clk_bulk API to fix clock imbalance
-Date: Wed, 18 Nov 2026 15:54:13 +0100
-Message-ID: <20261118150010.844630658@linuxfoundation.org>
+Subject: [PATCH 5.10 1216/1848] usb: gadget: composite: avoid warning on aborted delayed status
+Date: Wed, 18 Nov 2026 15:54:14 +0100
+Message-ID: <20261118150010.882630453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,108 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+From: Keisuke Tsukuda <catnyaaan@outlook.com>
 
-[ Upstream commit d09cd5e8bbc98969b5333015b45c525078ac0f6f ]
+[ Upstream commit 048884b782b137229399b9f727b6437d9b4f1071 ]
 
-sprd_dma_enable() enabled sdev->clk and then the optional ashb_clk. If
-enabling ashb_clk failed, sdev->clk was left enabled: both callers
-(probe and resume) treat a non-zero return as "nothing was enabled" and
-bail out, leaking sdev->clk.
+A SET_CONFIGURATION request that disables the current configuration, or a
+disconnect, can abort a control transfer whose status stage was delayed by
+a function driver. The asynchronous function work can nevertheless finish
+later and call usb_composite_setup_continue() after reset_config() has
+cleared delayed_status.
 
-Convert the driver to the clk_bulk API. clk_bulk_prepare_enable()
-enables all clocks and unwinds them on failure, and
-clk_bulk_disable_unprepare() disables them, which fixes the imbalance
-and simplifies the enable/disable paths. Both clocks are fetched with
-devm_clk_bulk_get_optional(); the optional ashb_eb clock simply becomes
-a NULL entry that the bulk helpers treat as a no-op, while the mandatory
-enable clock is still checked explicitly.
+This is an expected consequence of aborting the old control transfer, and
+does not require a kernel warning. Keep the diagnostic available under
+dynamic debug and ignore the obsolete completion as before.
 
-Fixes: 9b3b8171f7f4 ("dmaengine: sprd: Add Spreadtrum DMA driver")
-Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260819053518.2825514-1-nagachaithanya9911@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 2bac51a1827a ("usb: gadget: composite: reset delayed_status on reset_config")
+Reported-by: syzbot+a83a5a1ba9ff57935171@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a83a5a1ba9ff57935171
+Signed-off-by: Keisuke Tsukuda <tkdkei@outlook.jp>
+Link: https://patch.msgid.link/20260908203348.95825-2-tkdkei@outlook.jp
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sprd-dma.c | 45 ++++++++++++------------------------------
- 1 file changed, 13 insertions(+), 32 deletions(-)
+ drivers/usb/gadget/composite.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/sprd-dma.c b/drivers/dma/sprd-dma.c
-index e6ba7f7df8638..e27b77715a679 100644
---- a/drivers/dma/sprd-dma.c
-+++ b/drivers/dma/sprd-dma.c
-@@ -208,8 +208,7 @@ struct sprd_dma_chn {
- struct sprd_dma_dev {
- 	struct dma_device	dma_dev;
- 	void __iomem		*glb_base;
--	struct clk		*clk;
--	struct clk		*ashb_clk;
-+	struct clk_bulk_data	clks[2];
- 	int			irq;
- 	u32			total_chns;
- 	struct sprd_dma_chn	channels[];
-@@ -260,31 +259,12 @@ static void sprd_dma_chn_update(struct sprd_dma_chn *schan, u32 reg,
+diff --git a/drivers/usb/gadget/composite.c b/drivers/usb/gadget/composite.c
+index 02cbb83cbed62..38ecb4d42ca6b 100644
+--- a/drivers/usb/gadget/composite.c
++++ b/drivers/usb/gadget/composite.c
+@@ -2504,7 +2504,7 @@ void usb_composite_setup_continue(struct usb_composite_dev *cdev)
+ 	spin_lock_irqsave(&cdev->lock, flags);
  
- static int sprd_dma_enable(struct sprd_dma_dev *sdev)
- {
--	int ret;
--
--	ret = clk_prepare_enable(sdev->clk);
--	if (ret)
--		return ret;
--
--	/*
--	 * The ashb_clk is optional and only for AGCP DMA controller, so we
--	 * need add one condition to check if the ashb_clk need enable.
--	 */
--	if (!IS_ERR(sdev->ashb_clk))
--		ret = clk_prepare_enable(sdev->ashb_clk);
--
--	return ret;
-+	return clk_bulk_prepare_enable(ARRAY_SIZE(sdev->clks), sdev->clks);
- }
+ 	if (cdev->delayed_status == 0) {
+-		WARN(cdev, "%s: Unexpected call\n", __func__);
++		DBG(cdev, "%s: Ignoring obsolete call\n", __func__);
  
- static void sprd_dma_disable(struct sprd_dma_dev *sdev)
- {
--	clk_disable_unprepare(sdev->clk);
--
--	/*
--	 * Need to check if we need disable the optional ashb_clk for AGCP DMA.
--	 */
--	if (!IS_ERR(sdev->ashb_clk))
--		clk_disable_unprepare(sdev->ashb_clk);
-+	clk_bulk_disable_unprepare(ARRAY_SIZE(sdev->clks), sdev->clks);
- }
- 
- static void sprd_dma_set_uid(struct sprd_dma_chn *schan)
-@@ -1132,16 +1112,17 @@ static int sprd_dma_probe(struct platform_device *pdev)
- 	if (!sdev)
- 		return -ENOMEM;
- 
--	sdev->clk = devm_clk_get(&pdev->dev, "enable");
--	if (IS_ERR(sdev->clk)) {
--		dev_err(&pdev->dev, "get enable clock failed\n");
--		return PTR_ERR(sdev->clk);
--	}
-+	/* The ashb_eb clock is optional and only present for AGCP DMA */
-+	sdev->clks[0].id = "enable";
-+	sdev->clks[1].id = "ashb_eb";
-+	ret = devm_clk_bulk_get_optional(&pdev->dev, ARRAY_SIZE(sdev->clks),
-+					 sdev->clks);
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "get clocks failed\n");
- 
--	/* ashb clock is optional for AGCP DMA */
--	sdev->ashb_clk = devm_clk_get(&pdev->dev, "ashb_eb");
--	if (IS_ERR(sdev->ashb_clk))
--		dev_warn(&pdev->dev, "no optional ashb eb clock\n");
-+	if (!sdev->clks[0].clk)
-+		return dev_err_probe(&pdev->dev, -ENOENT,
-+				     "get enable clock failed\n");
- 
- 	/*
- 	 * We have three DMA controllers: AP DMA, AON DMA and AGCP DMA. For AGCP
+ 	} else if (--cdev->delayed_status == 0) {
+ 		DBG(cdev, "%s: Completing delayed status\n", __func__);
 -- 
 2.53.0
 
