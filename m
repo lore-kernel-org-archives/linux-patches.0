@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053583;
-	b=l4H0GTI9EW8xqpJUlSawpwswt8Ktqr6k2Udx+qOX0BkBw2i9qafqwJT/ki/c+LhIm7uK
-	 abNgornE0meM9VGgM2vaToggcyeQshMg3/1BIJCi4/ugaO4kOw4V7hk6A45CYjXLfGNbB
-	 l0aUvOkDl2/Z76D3k6W9ssbavI+yssJdQcy+yRqJ3k0mO9xAZcALAHUVcvjAnVjjIsYT+
-	 ghOaR8YnhYyUz7z7zsrhBLm6vb8+IUySBqibgOk8AL6SqunO/yF6ov5BSQR+banGtCEwR
-	 wn6vs68/3fogqFU2W5VUfAT1BSBi6oPeU/lDBNVvlMwDgoyMxavjL7iaagKgfS7MolQ==
+	t=1795053586;
+	b=VyOuBQefn2njWCZE7Inb5Woz/NaCpToyr3xnBIoOsQTRx0gNYTPExbDv4TnPAFSDiDYp
+	 edJhEOBFGqMHQuRI2MQGy2ZRd4OqIqu58RjLYMSHVbRgiunED+nCFMYE/ONYYZV7A+4kP
+	 gKQshyFlPmQaF94WPJnBU/fPAms1ZdzGDGdZonKobKz+tS3j8IG/cx5ioLHB2emQcRcbs
+	 BrY+/s8RriKWL2Zwz/ro7BcRY5jnDjCYxPXMSNOL4iVWftbjpbjDp/wzVs7DcZV2zR2om
+	 eZCU6tbQ9F23714wQ/4QluMT1YPSnJlHl+tPISDnZLbyn3+QGpVQ/sqqS+h1eUA71gg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053583;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053586;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3J2b92xBbL411dRYZhz9sZZ/eoF+NvKDnlJLtdwfjEM=;
-	b=MuARDV0+8kc3NBA46QxSM+ScIdjANEflUClVhj5lVFkdBzcwUTZBSYMnC3PB2/Kx59Fu
-	 9JCC4pCnHC6o6w10BWultujRYsAM1w9yRbOVhSNr1AvsZjyWklOJMqzocbq6ic25nkPbJ
-	 icnZNWbMGsG1sAen9uqknWIVn5XjV5I+N7Ag5GWqpHkwpA7xOA8d6qlW40yRcuh2SNVp9
-	 m6j9o3Op5+ZJ2Q1Y8WP+NJY36qtLD2wXJfc+noOEhSmyXaoerqdBqeph6PhhR0nTXqmYB
-	 Jbmn2z+Kjm3ZgHFLfC6ziavQ0/pBDf0I0ghauINUf7tqY7sjg2MykicQ9Z3QrJPl+aA==
+	bh=t4ax1p/MU0HW3lW5jA5SBgSaDDGGQDKdvHhA7s57Vrs=;
+	b=aXh5tAdUroAbkejOF30vEnWE+uzoaEyBtnyuO97VngyxgvUY+MUm8DGO64z7dbHzBmxi
+	 ycR/J8otoHhknU2icruipxc3562NMz4RyxpidUIDm+FoExcdxwA3BScXKXcVnyifK3gs3
+	 S8Tz+JMWFJtPeePa1VWONG+d096vp8UQOUuyM2yFxZOxMzzx/nFsUPv5L1MIjoh3yABPc
+	 dFwpyR9N8ibgiujxII7zH05qp39yedlqz1R1yhE5EGKz1GYd8SYZElizS7r7L5GkUIpH2
+	 WScaGgAFDXBQjYnPGyRjUYYHrFVFR9PvtXat+lF/SIM63hO4/HxaEonVKQo4HisihKg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wsg71y0d;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FgJo4nae;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7EF606A32A;
-	Thu, 19 Nov 2026 01:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A89606A320;
+	Thu, 19 Nov 2026 01:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Wsg71y0d
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C77D1F000C4;
-	Thu, 19 Nov 2026 01:59:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FgJo4nae
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E52C1F000C5;
+	Thu, 19 Nov 2026 01:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053583;
-	bh=3J2b92xBbL411dRYZhz9sZZ/eoF+NvKDnlJLtdwfjEM=;
+	s=korg; t=1795053586;
+	bh=t4ax1p/MU0HW3lW5jA5SBgSaDDGGQDKdvHhA7s57Vrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Wsg71y0doP+scK1Po33hFW9LhRMkrztRvegeSt2Kc1xs05aptttbbHucN4UdZeMV0
-	 CDndvfWkjrb3wnw853Jk/Q9t8bV4ysmHfqolp1HbN2K9aM4EhLdJmmYeyuJaZOqgEE
-	 y2GL30ynignPiPoV4FkMSekhrXqdqu9sn3NrkEYo=
+	b=FgJo4naeSKixRPBjb4peIBhVcYfgYduJ+G8z6+AhJlPMlpp2ukUvAIIiIY1jCq77F
+	 YGaZbQdp/YEGG2PEkJOizXdXyaFVZjxVjnv615t0nt3MMzxtBhTuFtrd9QkscV81E5
+	 nqQFx8IwrbeHxJpduG/T+d8dlaWJ9yZdGwGO34AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>,
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0970/2214] lib/crypto: mips: Disable Octeon SHA code on little-endian kernels
-Date: Wed, 18 Nov 2026 15:44:06 +0100
-Message-ID: <20261118150051.080473322@linuxfoundation.org>
+Subject: [PATCH 5.15 0971/2214] ALSA: usx2y: Refuse a retried DSP load after a failure
+Date: Wed, 18 Nov 2026 15:44:07 +0100
+Message-ID: <20261118150051.115607887@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,95 +70,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit dd2a4edb26e1c78823c50ba10c42f2d3de2e5ec4 upstream.
+[ Upstream commit 1f8101b6adc87a3ddbd51fcb6609251591758026 ]
 
-Kernels built for the MIPS64-based Cavium Octeon SoCs are normally
-big-endian, but little-endian builds are also supported.  Currently, the
-SHA-1, SHA-256, and SHA-512 code using the Octeon crypto co-processor is
-enabled in both builds.
+snd_usx2y_hwdep_dsp_load() sets up the asynchronous sequence URBs and
+the interrupt URB when the FPGA firmware image with index 1 is loaded,
+and then creates the ALSA devices.  If usx2y_in04_init() or
+usx2y_create_alsa_devices() fails, the URBs that were already set up
+are left in place.
 
-This code is untestable without the hardware.  However, based on the
-code itself, it is implausible that it computes hash values correctly in
-little-endian builds.  Such builds write many incorrect values to COP2:
+The core keeps the index unloaded when the callback fails, so user
+space may issue the same request again.  The second attempt then enters
+usx2y_async_seq04_init() or usx2y_in04_init() with the URBs still
+allocated and trips WARN_ON(usx2y->as04.buffer) or
+WARN_ON(usx2y->in04_urb).
 
-  - SHA-1 and SHA-256: The 64-bit integer that contains the last two
-    32-bit message words of each block is written to COP2 entirely
-    byte-reflected, due to missing endianness conversion in
-    octeon_sha1_start() and octeon_sha256_start() to compensate for
-    using native 64-bit loads from the message bytes.  This differs from
-    all the earlier message words which are written correctly.
+The URBs cannot be released at this point: the card may already have
+registered PCM devices that user space can still open, and the
+disconnect handler accesses the URBs without holding the DSP lock.
+Mark the chip as hung instead, so that a retried request is refused
+with -ENODEV and the assertions keep their meaning.  The URBs are
+released by snd_usx2y_card_private_free() when the card is freed.
 
-    Furthermore, the state is written to COP2 with each 32-bit word
-    byte-reflected within each 64-bit integer, due to incorrect use of
-    64-bit endianness conversion in write_octeon_64bit_hash_dword() when
-    the state is kept in memory in native-endian 32-bit words.
+A failing usx2y_async_seq04_init() still releases its own URBs, so that
+path remains retryable.
 
-  - SHA-512: All the 64-bit message words are written to COP2
-    byte-reflected, due to missing endianness conversion in
-    write_octeon_64bit_block_sha512() and octeon_sha512_start().  The
-    SHA-512 state words seem to be written correctly.
-
-Big-endian kernels aren't affected by these bugs.  These bugs also
-aren't new; this code has been broken on little-endian ever since it and
-Octeon little-endian support were first added in v4.1.
-
-Commit d2a948d2db68 ("MIPS: Octeon: Make octeon-md5 driver
-endian-agnostic") made the MD5 code work on little-endian kernels by
-adding 64-bit endianness conversions to the COP2 macros used by MD5
-(some of which are shared by SHA-1 and SHA-256, despite those algorithms
-keeping the state words in native-endian instead of MD5's little-endian,
-causing some of the strange behavior described above).  However, SHA-1,
-SHA-256, and SHA-512 were never fixed to work on little-endian kernels.
-
-Therefore, disable the Octeon SHA-1, SHA-256, and SHA-512 code in
-little-endian kernels.  This causes the generic code that actually
-computes hash values correctly to be used instead.
-
-Fixes: 82be2dcfa6a1 ("crypto: octeon - add SHA1 module")
-Fixes: c3d0def62001 ("crypto: octeon - add SHA256 module")
-Fixes: fbaa4dfd51a0 ("crypto: octeon - add SHA512 module")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://patch.msgid.link/20261022054450.20746-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261031191557.8460-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/Kconfig | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/usx2y/usX2Yhwdep.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/crypto/Kconfig b/crypto/Kconfig
-index 126d4699f06f7..6cfd33de36c15 100644
---- a/crypto/Kconfig
-+++ b/crypto/Kconfig
-@@ -868,7 +868,7 @@ config CRYPTO_SHA512_SSSE3
+diff --git a/sound/usb/usx2y/usX2Yhwdep.c b/sound/usb/usx2y/usX2Yhwdep.c
+index c0293af448fe7..89c7ff597a442 100644
+--- a/sound/usb/usx2y/usX2Yhwdep.c
++++ b/sound/usb/usx2y/usX2Yhwdep.c
+@@ -185,6 +185,9 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
+ 	int lret, err;
+ 	char *buf;
  
- config CRYPTO_SHA1_OCTEON
- 	tristate "SHA1 digest algorithm (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA1
- 	select CRYPTO_HASH
- 	help
-@@ -922,7 +922,7 @@ config CRYPTO_SHA256_PPC_SPE
++	if (priv->chip_status & USX2Y_STAT_CHIP_HUP)
++		return -ENODEV;
++
+ 	snd_printdd("dsp_load %s\n", dsp->name);
  
- config CRYPTO_SHA256_OCTEON
- 	tristate "SHA224 and SHA256 digest algorithm (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA256
- 	select CRYPTO_HASH
- 	help
-@@ -952,7 +952,7 @@ config CRYPTO_SHA512
- 
- config CRYPTO_SHA512_OCTEON
- 	tristate "SHA384 and SHA512 digest algorithms (OCTEON)"
--	depends on CPU_CAVIUM_OCTEON
-+	depends on CPU_CAVIUM_OCTEON && CPU_BIG_ENDIAN
- 	select CRYPTO_SHA512
- 	select CRYPTO_HASH
- 	help
+ 	buf = memdup_user(dsp->image, dsp->length);
+@@ -209,11 +212,13 @@ static int snd_usx2y_hwdep_dsp_load(struct snd_hwdep *hw,
+ 		err = usx2y_in04_init(priv);
+ 		if (err) {
+ 			snd_printk(KERN_ERR "usx2y_in04_init error\n");
++			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
+ 			return err;
+ 		}
+ 		err = usx2y_create_alsa_devices(hw->card);
+ 		if (err) {
+ 			snd_printk(KERN_ERR "usx2y_create_alsa_devices error %i\n", err);
++			priv->chip_status |= USX2Y_STAT_CHIP_HUP;
+ 			return err;
+ 		}
+ 		priv->chip_status |= USX2Y_STAT_CHIP_INIT;
 -- 
 2.53.0
 
