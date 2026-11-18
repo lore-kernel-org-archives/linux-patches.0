@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046816;
-	b=jLSetaxyUSwu9JOuhujQWK/QC+Jsfueah1q5kJEYPDqk/iJq+Ipj4t/U7penhbqUq3WZ
-	 ndg2CqXehiGX5N7NISt240nJX952vAVchUJ17EHwyUWOFdVhry362pepyRuJTyNGfHqj8
-	 Kj/7qeVPK3BywLfnBpD00U0XhRitR+GzlGwkAXUidEkXKXIJqSGrR4XO5wca2+M4fA0El
-	 s08tbfb0rbRv41nb8Zf6m6iMf3BNBhYf6BFzU/xzX88CuRQjv9EOGpFo80Q215G0129Ld
-	 Kku1agWYglQpdhO1PKGSDrZk4/lWdhvZSwwi1OEczkUafMVG7nSNTmbLRRO8U9y2zYg==
+	t=1795046819;
+	b=aIZfoUIF1FiyKaAn9zgS+pmVmuxnDzwzhGfPj0N8qtFaOUKIoQA9IwHwBUQlVLkR2gYO
+	 DPAzkz6QOZPmwMfXaSjVoiNYxXl53GkYVqUqnpXEdLdzhhs8eNrtW6nZRK7QhADcsQe7W
+	 BjPBmPjGmm5jOIJaVIWAnw2auRGwgzQiIBGCEc+akuKNt+Fb/hb0EAqb0/a7iMuJEqTmL
+	 XyaJaxC4jJAl5IeKQ4DJ+Ji79aFbSncvDX1FBDtsco8nWQe8+9fFRvvs3P43RBrUyEFbF
+	 xHhonGKDpBW9mfMZZnXRe0Y6zubPFJOkKlE4+I1QEcXMwuySjXS8ZcsgrjRaekpoX8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046816;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046819;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aCrMCP2acCyazMDpuO+oCpcC79ytbkbYgsdD8Jy0Oek=;
-	b=vNZ0ona1/gfh5InILQdm8vuOOk/wpYrYb7FDhV/nMc8yAO5i8idqgzf8B0mzkRzRtsPE
-	 zLLBCr6Ck9J0Mw4w0wDbGoahoGcodlgaDJgnngLpHwu/r08ZFtfYoeHCSfvkKxBwsa/Ti
-	 bH3eKlrhW6fz3FIBCtGfmaaoLagNsDkjRT9V3b6A6lxkILpB9cjRdFTZs3qdkeUGEc2IS
-	 m5Q3sNmbeCO8GabsrR3F/pHM3s+m66HgMjTZvp9JguaHwxgV4YeCAfxCpwOSCM51M0QC2
-	 O76xKQRbzuA/00oxHX9XITdf1HHUFsAoe6nWCZgbhCYhH0guulIEwbiNzlnRSdbikfw==
+	bh=qN5G46fB1cn4UKOhmxLKS/L6MobIW69IKXuCrNcavxg=;
+	b=YnuhQ6ZjTaZvPxCJfTC+aDMFQhiMWYTYi+YJ98Te6BjIpW5bt+WrXsveq7I8TwpwZ2BZ
+	 irTHqwC8AaKZcy6tFGFDHYH/Yffpr7GXfW0hMA1P4H2qCsOshYiGSxjgHy8vvK9jxDtgi
+	 VZaFh9xflW2rV4v9WwAd8lp2EdyLprQk9pDY+5j7nsu/bTiIdIdA+f9CQyNf3RcVF8Ypk
+	 6EPJpDO/zNHbsBX4prURNVs9c9cZjwUqLp5iVY38yODdgNoEKyf/NJSAR4YhvYpotwueU
+	 p1JvpFOQcxyImqE3LOlqvt2G5985nsmt8e5GFl8kzaCP/867AWKed6HW7nJEEqQXk2Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="lKCfw/di";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vcEwNptR;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C32606A320;
-	Thu, 19 Nov 2026 00:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F57606A32C;
+	Thu, 19 Nov 2026 00:06:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lKCfw/di
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB5161F000C4;
-	Thu, 19 Nov 2026 00:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vcEwNptR
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984361F000C4;
+	Thu, 19 Nov 2026 00:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046816;
-	bh=aCrMCP2acCyazMDpuO+oCpcC79ytbkbYgsdD8Jy0Oek=;
+	s=korg; t=1795046819;
+	bh=qN5G46fB1cn4UKOhmxLKS/L6MobIW69IKXuCrNcavxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lKCfw/diXZp5Y6D3zBGBqP8y3tjKd609rRjwe2aiN3wB1Aky6IQJMgTC2lfEt/U/M
-	 K9Kgh652WRjH/USFg0TmaeW/QO8paoSJOme5B5HZcD4OezGjOKbpljJcTjex+LLSnr
-	 7EsOiFWoV+SzYCRwlgfmiGcuDEjC4PIGmRg3nn5M=
+	b=vcEwNptRA8LfqMvx4hWuA72UIbOVR6yeqBUzbk6uKBbMqKDRX00B/YgkLuzf91IFS
+	 kw3uyiGo9h17QE9MwZEuL8IhaIjWoP4tJhYQQIKFLFW5tY7mN1AmqIjvaArI9/ov33
+	 m1EHtXx/KIPuyhUEQkRSAJ2IrrglL4LPavv1GsxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1415/2857] ipmr: prevent info-leak in pmr_cache_report()
-Date: Wed, 18 Nov 2026 15:40:49 +0100
-Message-ID: <20261118150252.279807984@linuxfoundation.org>
+Subject: [PATCH 6.1 1380/2857] media: redrat3: Error path leaves device in transmitting state
+Date: Wed, 18 Nov 2026 15:40:14 +0100
+Message-ID: <20261118150251.063498980@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,67 +68,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Sean Young <sean@mess.org>
 
-[ Upstream commit 4f34002e2e37639133693c13a2a9977fab86880d ]
+[ Upstream commit 8024d5e84531d828535365718278f1cf0ce67db0 ]
 
-Yiming Qian reported:
+In the allocation failure error path, the transmitting boolean is not
+cleared. If this error path is followed the transmitter cannot be
+used again until the device is replugged or the module reloaded.
 
-<quote>
- ipmr_cache_report()` allocates a report skb with `alloc_skb(128,
- GFP_ATOMIC)` and appends a `struct igmphdr` using `skb_put()`. In the
- non-`IGMPMSG_WHOLEPKT` path it initializes only:
+Fix the error path by moving the assignment statement.
 
- - `igmp->type`
- - `igmp->code`
+Remove the check for the transmitting state in transmit, since rc-core
+ensures there is never a reentrant call to the driver transmit function;
+the transmit function is always called with dev->lock held.
 
- but does not initialize:
+The transmitting boolean is only used for interpretting firmware errors.
 
- - `igmp->csum`
- - `igmp->group`
-
- Later, `igmpmsg_netlink_event()` copies the bytes after `sizeof(struct
- igmpmsg)` into the `IPMRA_CREPORT_PKT` netlink attribute and emits
- `RTM_NEWCACHEREPORT` on `RTNLGRP_IPV4_MROUTE_R`.
-
- As a result, 6 bytes of stale heap data from the skb head are
- disclosed to userspace.
-</quote>
-
-Let's use skb_put_zero() instead of skb_put() to fix this bug.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260430070611.4004529-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 94a6736bb5ab ("ipmr: only copy pktinfo to cache reports")
+Fixes: fac59136bc22 ("[media] RedRat3: Return directly after a failed kcalloc() in redrat3_transmit_ir()")"
+Signed-off-by: Sean Young <sean@mess.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ sashal: adjusted context for kcalloc() instead of kzalloc_objs() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ipmr.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/media/rc/redrat3.c | 11 +++--------
+ 1 file changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
-index 2f9c39b3cb5aa..459d58b36dec6 100644
---- a/net/ipv4/ipmr.c
-+++ b/net/ipv4/ipmr.c
-@@ -1094,11 +1094,12 @@ static int ipmr_cache_report(const struct mr_table *mrt,
- 		msg->im_vif_hi = vifi >> 8;
- 		ipv4_pktinfo_prepare(mroute_sk, pkt, false);
- 		memcpy(skb->cb, pkt->cb, sizeof(skb->cb));
--		/* Add our header */
--		igmp = skb_put(skb, sizeof(struct igmphdr));
-+		/* Add our header.
-+		 * Note that code, csum and group fields are cleared.
-+		 */
-+		igmp = skb_put_zero(skb, sizeof(struct igmphdr));
- 		igmp->type = assert;
- 		msg->im_msgtype = assert;
--		igmp->code = 0;
- 		ip_hdr(skb)->tot_len = htons(skb->len);	/* Fix the length */
- 		skb->transport_header = skb->network_header;
+diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
+index db317c6c62fe7..56b28f98a0ad6 100644
+--- a/drivers/media/rc/redrat3.c
++++ b/drivers/media/rc/redrat3.c
+@@ -773,17 +773,9 @@ static int redrat3_transmit_ir(struct rc_dev *rcdev, unsigned *txbuf,
+ 	u8 curlencheck = 0;
+ 	unsigned i, sendbuf_len;
+ 
+-	if (rr3->transmitting) {
+-		dev_warn(dev, "%s: transmitter already in use\n", __func__);
+-		return -EAGAIN;
+-	}
+-
+ 	if (count > RR3_MAX_SIG_SIZE - RR3_TX_TRAILER_LEN)
+ 		return -EINVAL;
+ 
+-	/* rr3 will disable rc detector on transmit */
+-	rr3->transmitting = true;
+-
+ 	sample_lens = kcalloc(RR3_DRIVER_MAXLENS,
+ 			      sizeof(*sample_lens),
+ 			      GFP_KERNEL);
+@@ -796,6 +788,9 @@ static int redrat3_transmit_ir(struct rc_dev *rcdev, unsigned *txbuf,
+ 		goto out;
  	}
+ 
++	/* rr3 will disable rc detector on transmit */
++	rr3->transmitting = true;
++
+ 	for (i = 0; i < count; i++) {
+ 		cur_sample_len = redrat3_us_to_len(txbuf[i]);
+ 		if (cur_sample_len > 0xffff) {
 -- 
 2.53.0
 
