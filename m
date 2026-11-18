@@ -1,53 +1,57 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795034920;
-	b=gAYv8f/5FsZ9hoJ3utFupPnAI95yZ1uXG4Ev1YISsTTDOFua1CeZCrXjXb43KaPlI1k+
-	 FhKxQ03b92huVqu8cudbIJPtHegclN2R+97vxiib68J/uH/cC4x/eGH0lpzCdUNXP6ESk
-	 IvTJWq3T6f0OaeRUeiR2z8iLY6IRT3xAz8l0Nw0ExmsEwmgXg0BCyQvdu8IdkkEppqKw/
-	 KTEMm+QXw2wmAEVv3g1LUuJcUm6GKAWprUoEwF9OhlbPJ9SO6Ny0VBF32W9K2u2OMI4pv
-	 ntFeC6f7pZTG2mrUq3tQkZEOEVXk8WO2oWyn3qIwFJ2nKfrFlPkMS6W4I0Ek+fOWIZg==
+	t=1795034923;
+	b=JTsKUXmiP6gmIT/Nop1zQ3p95E0KSQwQp1IrJij8TJ96gsml6O55TCyh5bbCJgWnvXOf
+	 YtWsGHb2LoK9fckOirOf4K2Q0KWsrMr8GrrEasKMYdmdDjgcgYgbWCBw8v/9n3HN6hZum
+	 Pb4vuQUl6ZvxWl0WJm1lsulkOuZ2oULbixnQwGCeaZf/A5lKZojjN/qwxzA4sgfV56WDf
+	 KgXNrLOULC88E5Abt48VHAYe9y8V7sCSIsCF2ohh8HZHQzNuAMOYSJYqUP+S62ohuzUCk
+	 Fh+A+GTewyIHYwCQRl5mnS/rdZBPBkOUYp4/X469PnJNJc2xSVLx4pD6E1ahWdNVLKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795034920;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795034923;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qKkI2KjiQ2ZaCmunU634TCL7Nf1I/L/zlT90PGnVXCE=;
-	b=MNYODHiofHula4WRTYvrOhPASKvTvmVKYqjMQMTgLWLpZlL5+7H9TR781eyBwyWH8VUK
-	 yOPN3mfFLX4O6yKcHvVR8nCGMkia0oS+whN8+NpNnML270B6OB1aJ1EniuWST/qYzujJ2
-	 V37BQeTSnT2ftECfpce5e9moE1eYajCLdTUrlGxBUkzgdVHu5TqKVZeM++wiBTYueilir
-	 Z+DIZcTsNJOb2dtL2qtQcqSQhzOdVgq4sFiQcjx8dZwEFL1roIzJe7TpDwof2FpUbIGGQ
-	 6JHF7EvXc5OjhwHahYiMq4nFEXFFPq9+5q15tNuxUe8eG2s9ripZalEuccFAesF025w==
+	bh=MFDByEdy464XeMBvrRLWKee9WgjSmMTsl1KYzn2pf5I=;
+	b=CbEPE4U7It1BeaWQzIW2/LvFmH93MEGgqvMxYDABpcBm9Q+fJMT3wG1ECFl2by0WNsJ1
+	 XJ5WVNXqct++/HbNC1DC2OB9MKalV6ih6v5kSfgDuyCyWfeE1BOWNU96krYTpwKz2hcOo
+	 +nebJsxcQhsJPtLmlj214q/079A4Ok6dVfO2kOa2UcEy+OFomYudSyKz/OXBMtDaFMsFS
+	 DodnBn9okYUwvEhX+//BmyrDc563y3GB4dWV9y26DOW8a4qbG/gQuUfp1X7G0ZExdD54h
+	 a3wLFsDWb0hfmEpS48HVwG4ZeOApMp1AhzRsjX6BAE2J3Oc2imX6r4nBSIc3j5J4Hog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SM1bB7Nz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0omfopjo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9FD606A320;
-	Wed, 18 Nov 2026 20:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCAC606A31C;
+	Wed, 18 Nov 2026 20:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SM1bB7Nz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4CD01F000C4;
-	Wed, 18 Nov 2026 20:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0omfopjo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75DA1F000C4;
+	Wed, 18 Nov 2026 20:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795034920;
-	bh=qKkI2KjiQ2ZaCmunU634TCL7Nf1I/L/zlT90PGnVXCE=;
+	s=korg; t=1795034923;
+	bh=MFDByEdy464XeMBvrRLWKee9WgjSmMTsl1KYzn2pf5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SM1bB7NzhUEgnCUUgT00/vRFuJw20iYUiKcIE04oI1CkWHf9syIOdLIChOQTB9Fxb
-	 ytVhBz0lQaNTQv2/2EbC9CmAqVhE7U/aOwKGQRZ8/k2VGtUx4tw+PXkWTwXt+5EblC
-	 Xv9iZ2l+PbwV9zr1S/jhDLA4il4cSUwcfz+uwBIw=
+	b=0omfopjotdmO15Mxc7//amg3bETE+/HPfpRtrsxynF9MwYgMSyn2pnHdMljEB1+yn
+	 1HJk94H6LbfZyftRv5S7l57dab+/hA9oJ4s3y392txcNMu4/SNrwR2PeCMp9UgG3z/
+	 cuv+RkcJK1jHD09lFA+fToc1yzwQconNzaG8/eaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chang S. Bae" <chang.seok.bae@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Longlong Xia <xialonglong@kylinos.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Muchun Song <muchun.song@linux.dev>,
+	David Hildenbrand <david@kernel.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Oscar Salvador <osalvador@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0491/3318] x86/microcode/intel: Reject problematic loading on Granite Rapids systems
-Date: Wed, 18 Nov 2026 15:18:33 +0100
-Message-ID: <20261118150331.728310948@linuxfoundation.org>
+Subject: [PATCH 6.6 0492/3318] mm/hugetlb: do not dissolve gigantic pages without runtime support
+Date: Wed, 18 Nov 2026 15:18:34 +0100
+Message-ID: <20261118150331.763033447@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,84 +73,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chang S. Bae <chang.seok.bae@intel.com>
+From: Longlong Xia <xialonglong@kylinos.cn>
 
-[ Upstream commit e7d3e2f46dd5a69046e6d95a0f189155a5516b93 ]
+[ Upstream commit a363c62a653cc8b3e21da9545fa4e028ef50f9c3 ]
 
-Microcode updates can usually jump revisions. However, there is an erratum on
-Granite Rapids systems. If they "jump over" revision 0x1000405, they result in
-an #MC. Avoid it.
+dissolve_free_hugetlb_folio() doesn't check
+hstate_is_gigantic_no_runtime(h) though remove_hugetlb_folio()/
+update_and_free_hugetlb_folio() silently bail for such folios, so it frees
+a still-listed folio and, on vmemmap restore failure, the
+add_hugetlb_folio() rollback corrupts the free list.
 
-Signed-off-by: Chang S. Bae <chang.seok.bae@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260916225939.1144524-1-chang.seok.bae@intel.com
-[ sashal: Dropped the minrev-based context in parse_microcode_blobs() and placed the new check after the signature match, and added an include of asm/cpu_device_id.h so IFM() builds. ]
+Link: https://lore.kernel.org/20260823044118.1097121-2-xialonglong2025@163.com
+Fixes: 6eb4e88a6d27 ("hugetlb: create remove_hugetlb_page() to separate functionality")
+Signed-off-by: Longlong Xia <xialonglong@kylinos.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: Codex:gpt-5.6-sol
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+[ sashal: Replaced the missing hstate_is_gigantic_no_runtime() helper with the open-coded hstate_is_gigantic(h) && !gigantic_page_runtime_supported() check, and adjusted context for the older function name and missing local. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/microcode/intel.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ mm/hugetlb.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/microcode/intel.c b/arch/x86/kernel/cpu/microcode/intel.c
-index 4e5a71796fbdb..433b54f56ec29 100644
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -21,6 +21,7 @@
- #include <linux/uio.h>
- #include <linux/mm.h>
+diff --git a/mm/hugetlb.c b/mm/hugetlb.c
+index 8bfaaa84bb3f7..bd5fceaea788e 100644
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2298,6 +2298,16 @@ int dissolve_free_huge_page(struct page *page)
  
-+#include <asm/cpu_device_id.h>
- #include <asm/intel-family.h>
- #include <asm/processor.h>
- #include <asm/tlbflush.h>
-@@ -257,6 +258,26 @@ static void save_microcode_patch(struct microcode_intel *patch)
- 		pr_err("Unable to allocate microcode memory size: %u\n", size);
- }
+ 	if (!folio_ref_count(folio)) {
+ 		struct hstate *h = folio_hstate(folio);
++
++		/*
++		 * remove_hugetlb_folio()/update_and_free_hugetlb_folio() bail
++		 * for gigantic hstates without runtime support, so dissolving one
++		 * here would leave it on the free list and, on vmemmap restore
++		 * failure, the add_hugetlb_folio() rollback corrupts that list.
++		 */
++		if (hstate_is_gigantic(h) && !gigantic_page_runtime_supported())
++			goto out;
++
+ 		if (!available_huge_pages(h))
+ 			goto out;
  
-+static bool revision_is_safe(struct cpu_signature *sig, u32 rev)
-+{
-+	u32 vfm = IFM(x86_family(sig->sig), x86_model(sig->sig));
-+
-+	/*
-+	 * Erratum GNR98 can cause #MCs if "jumping over" revision 0x1000405.
-+	 * Avoid the jumps.
-+	 */
-+	if (vfm == INTEL_GRANITERAPIDS_X &&
-+	    x86_stepping(sig->sig) == 1 &&
-+	    sig->pf & 0x95 &&
-+	    sig->rev < 0x1000405 &&
-+	    rev > 0x1000405) {
-+		pr_err_once("Erratum GNR98: skipping revision 0x%x.\n", rev);
-+		return false;
-+	}
-+
-+	return true;
-+}
-+
- /* Scan blob for microcode matching the boot CPUs family, model, stepping */
- static __init struct microcode_intel *scan_microcode(void *data, size_t size,
- 						     struct ucode_cpu_info *uci,
-@@ -278,6 +299,9 @@ static __init struct microcode_intel *scan_microcode(void *data, size_t size,
- 		if (!intel_find_matching_signature(data, &uci->cpu_sig))
- 			continue;
- 
-+		if (!revision_is_safe(&uci->cpu_sig, mc_header->rev))
-+			continue;
-+
- 		/*
- 		 * For saving the early microcode, find the matching revision which
- 		 * was loaded on the BSP.
-@@ -516,6 +540,9 @@ static enum ucode_state parse_microcode_blobs(int cpu, struct iov_iter *iter)
- 		if (!intel_find_matching_signature(mc, &uci->cpu_sig))
- 			continue;
- 
-+		if (!revision_is_safe(&uci->cpu_sig, mc_header.rev))
-+			continue;
-+
- 		kvfree(new_mc);
- 		cur_rev = mc_header.rev;
- 		new_mc  = mc;
 -- 
 2.53.0
 
