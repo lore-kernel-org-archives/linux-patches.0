@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031621;
-	b=iesCFH4L1LGkololcur9gfGkK2NZKCB+tgl4bPG/W7aIvY2d/0KNmGyS9qFAmJe2Stii
-	 PcTXiJDSd5F+zmwd3ZwMjqxeScDl3dHZkESbeqW6c6BXtA8EHIR+0G5LAfJgGForH+b8m
-	 IuCKI1MGPkRN4FxE5bEKFfu7U0MwToLkUOeDdz0ZQSVeyCbpPZotz8dLG+ZtjGIjHXlBo
-	 4XhuLj3T1jHvmky0Ed/GaDL5EUdiLONnf6Ql/ZdYSUmH4b6g7e560NMUV14lakbG35Pxm
-	 XUxG4Iid+WMTzehSDctxkZASUe8tLYhyZ6l2Lp79HzB2o1bypGXoLv90eL2PvGGadmQ==
+	t=1795031624;
+	b=czXazL/3iurYbYRncq9vgaRodFENEBsMTQ2Q3UdKkHOQCQyDAf1y7OEU1nsu9DQY+oX0
+	 pOn7/Hn7JTx3wVgzkEnfmNe+Ev9dI2TfSLxI3PddH3kIHiKyYZb9RglYkn3IsMpNGrc3I
+	 IFtTtGRBVTwE+qIg6vNaevKSypHd8DwAj/G0+lhUMwwJbQHmYB5EZd3PPEfrKnshH9Xjk
+	 RhgOpz0AVZndgkrOrR33EA50K/ZP0onNA35P6qFxCnMBg40tBWx3k0MxgKjSOC+5xCz9G
+	 I2E5MGt5XoIJbBMKFtk4amijDXds4K7BEdjxHRDrhhiybT4Lj0M4NQNxWpTstkyCISw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031624;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=m0R2p71HcYP+4+DmLSa+mcWwR71MUuNaM5aPNv0M/Vs=;
-	b=XjTm3ihsV4+xd4n4hehGlvt162oOE+lk4OzkemoC1wYgHfVJTws5VJIqLJYoHNMKC8J/
-	 AAGyqEgLWf5uC2huULhqE+Vv4jwskNEI9BTxAwQjiTKCt3JhBRtCgpLTg55nHDFen98GV
-	 44VNpoSAekGqZa8abPuedZuyIJPf7MrsZw2jMvhoyQgb8wN6/seLy4tDcUItzBoVAb5zX
-	 LrH99H3inT5U25cgPpM/dXREkgP5mDRUgF1+Jez4+j1hte1ny3wp1RgE8hC910B2RUUsa
-	 eQSisncsyUxebz/zf/AmUpSjTj1KE1t0TufHHoRo3Q4enOBA+1uVoCNk0rF6O4Pwt2Q==
+	bh=r6EBqcea1OhCyv1lP3RQdq3cNJQWmrhLeLUuM9RmliY=;
+	b=kBdFTmXCTtcBtp/6/6Ht7hkV2RPJmHFMm3Q7L4oTkuT62aEvaQsckuNwyeEp5ANuTZEI
+	 VAaAmAOxhWODJFajCP6YD8FVYNvKj7ip1zis+jFuu097A0hvB/0XMEyApmC97EmAx51MW
+	 hhi6uV+iiOqs0QtC2tk37N3N/bBO/l4o5NbXM/HT59csRZ6xEKMw12QE9r0Sq3Ii8iL06
+	 E7PUFIDeQw6tIj4+LXhs5PFmw22NHsz3bFTY1zSShwV08cwyBdNBFijvNF5jmKs0bWO1K
+	 Vxc5A/neZPJUmdhj69ZFsmtl/TiTPQ+zC22vHbGjfl+G0BNZKDxb9fC6OwuSCkkqiMQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeH7z2KG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwfTWIVK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AD2606A32C;
-	Wed, 18 Nov 2026 19:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25467606A31C;
+	Wed, 18 Nov 2026 19:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BeH7z2KG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2601F000C4;
-	Wed, 18 Nov 2026 19:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XwfTWIVK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765551F000C4;
+	Wed, 18 Nov 2026 19:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031621;
-	bh=m0R2p71HcYP+4+DmLSa+mcWwR71MUuNaM5aPNv0M/Vs=;
+	s=korg; t=1795031624;
+	bh=r6EBqcea1OhCyv1lP3RQdq3cNJQWmrhLeLUuM9RmliY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=BeH7z2KG3SPP+w/IUfCBmk5bbdUsUgDKrPOOd/vCYWxTX8wnlRQ+aNQkDUrZ/qDvB
-	 uQHZwEccE8ZW+RCuQkEvaNyWamru3miDg3YNNZUf+okDI7YQtUDjvZBfMDOyakYLxz
-	 kP981fsJEElLFsx24PDdXr1641tgMDtxZIcjvbso=
+	b=XwfTWIVKmKnSEtBjfvYa0NOZAadnvJKHrlp761c42mqQModwhwQtJm8RUwbyR9G6l
+	 P/n2t4hHRyu3MeWjNn4WF6v5o0pU9dGDl3bsKssRX6K285xHjLAN1gcbr0liUyJltD
+	 as/+nIvwdJZlu/JAEpehiXf8IdYhXG+oqKJwD0SU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1122/1756] fs/ntfs3: do not mark frame pages uptodate on read error
-Date: Wed, 18 Nov 2026 15:54:09 +0100
-Message-ID: <20261118150054.775261493@linuxfoundation.org>
+Subject: [PATCH 6.12 1123/1756] net: alacritech: fix dma_free_coherent() in error path
+Date: Wed, 18 Nov 2026 15:54:10 +0100
+Message-ID: <20261118150054.813576079@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,68 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 80218408836fa6fc91a9c26a9c014f81abf9e41f ]
+[ Upstream commit 05b5019b01fb9443b09ae4ed34af1135a80a84c8 ]
 
-ni_read_frame() ends with a loop that marks every page of a compressed
-frame uptodate regardless of whether the read succeeded:
+In slic_init_stat_queue(), a series of coherent buffers is allocated
+with the length size. The size is then stored in stq->mem_size for
+normal deallocation. However, in the error path, stq->mem_size is also
+used but is not initialized. This error may leave the freed buffers
+mapped, leaking a resource and allowing the device to access freed
+memory.
 
-	out:
-		for (i = 0; i < pages_per_frame; i++) {
-			pg = pages[i];
-			SetPageUptodate(pg);
-		}
+Change the length in error path to size.
 
-Non-critical frame pages come from __filemap_get_folio(FGP_CREAT) and are
-not zeroed. On an error path that reaches out: before frame_mem is
-written, these pages keep uninitialized page-allocator contents but are
-still marked uptodate. A later read() is then served from the page cache
-and returns that stale kernel memory to user space.
-
-For an unprivileged user mounting a crafted NTFS image this is a
-repeatable kernel memory disclosure.
-
-Mark the pages uptodate only on success; on error leave them !uptodate so
-the read path re-reads them or reports the error.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 60c140df15db ("net: ethernet: slicoss: add slicoss gigabit ethernet driver")
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Daniel Machon <daniel.machon@microchip.com>
+Link: https://patch.msgid.link/20261006140912.50828-2-fourier.thomas@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/alacritech/slicoss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 609b90a7c3191..7e5c13a42e44b 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -2479,7 +2479,6 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
- 	u64 vbo_disk;
- 	size_t unc_size;
- 	u32 frame_size, i, ondisk_size;
--	struct page *pg;
- 	struct ATTRIB *attr;
- 	CLST frame, clst_data;
+diff --git a/drivers/net/ethernet/alacritech/slicoss.c b/drivers/net/ethernet/alacritech/slicoss.c
+index f62851708d4f3..4b4f44a5c6cc0 100644
+--- a/drivers/net/ethernet/alacritech/slicoss.c
++++ b/drivers/net/ethernet/alacritech/slicoss.c
+@@ -813,7 +813,7 @@ static int slic_init_stat_queue(struct slic_device *sdev)
  
-@@ -2710,11 +2709,10 @@ int ni_read_frame(struct ntfs_inode *ni, u64 frame_vbo, struct page **pages,
- #endif
- 	vunmap(frame_mem);
- out:
--	for (i = 0; i < pages_per_frame; i++) {
--		pg = pages[i];
--		if (err)
--			clear_highpage(pg);
--		SetPageUptodate(pg);
-+	if (!err) {
-+		for (i = 0; i < pages_per_frame; i++) {
-+			SetPageUptodate(pages[i]);
-+		}
+ free_descs:
+ 	while (i--) {
+-		dma_free_coherent(&sdev->pdev->dev, stq->mem_size,
++		dma_free_coherent(&sdev->pdev->dev, size,
+ 				  stq->descs[i] - stq->addr_offset[i],
+ 				  stq->paddr[i] - stq->addr_offset[i]);
  	}
- 
- 	return err;
 -- 
 2.53.0
 
