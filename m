@@ -1,60 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027864;
-	b=qA1tlL/oYIj0I2K+1LhSgzpKIcytJI7VpvpjfWGSoAH3Q3PS8cHDQ/o0Bj3OJHxt73KX
-	 KD8rY81TrZ625j6390nQ5ram+qOvducMds5sZsVGbCcTfFhFSD68wmr6jBy3dVuIIln9S
-	 NSNhuAP/3FDyWHhQROdrivSGOQI1BlaQjHAf9MIK/w5BSLHF3WMSPgdboaixlZQYm4OyV
-	 8KrkWhhzYt1e25MTVwHsojxZKX3rx4CMKaaKNnl2+yzRRxjCvq45jNUllAZI7pf/BgnMC
-	 Oy180Ah2N6sI4MlBC0BhQzhLHCrawwFrTdfvg7JKoGHxqZ2FsxtHau9y0+I95pBsNGQ==
+	t=1795027867;
+	b=0/zJbBwypNLtJHMUMCtqspXCBe7YCjBvx+gvoo+H5kOSwIxzkWORFGpOyWcD8zdBq9DB
+	 91w/P9tov0sagXiaqUGhKzuBusHLCI/76z6TvIicEKJPzuaQEH3LSje3pTW9Wp8rdlSPZ
+	 xSej1iaRzTFBO6nAOe5sGLVorAXA68hO+j5uwRjHk6i0miJqA3iY7Tqw1oQ5JA9Gs6KD2
+	 sa+b3tMVccLqztxdSYG13f2d+EucF8fg/8YW18nmWa3NVeUM/Y10b4hKp0tv03OY4LyHQ
+	 z4Sasc5PQQTwCsYxAbvMUO+ZCBM4kRz5FHzzZGW8A1juaal0vIW50O8q5jRGuTokPVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027864;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027867;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=a0ysMmdOgwd7pgtuHlCRoe1A8N4vifXOjdG6K0ZJhuU=;
-	b=Ni52O9ntmGA91kbeyxWy0RCMu34Ss1HAbG5DU8eILuin3EbZBxk9LVPObv5uMha5Oc7k
-	 JaBSwcIEdg02hiBUYO8hWH6FaPRId37pGR7sCbIeMxOzTFOxBVNNA2O/0YXhcIhxSaNIW
-	 9TmGnGuX0paA5+RWrnPfwh25g02QFFJwVLhKggJ41ptOkupFJnVUwNBmAYdAENHIFh05d
-	 qE6ioLi/XcRutfx1fgPunv4a/Ufvun9kRRS2R+CO0SnJHHamzdW1d9t7BBNYnXXnNcFSh
-	 yEnDip7LHykkmHT9duW/KIJUVKrB5SBREH9KOVqUribFjtkYC9G1ZZ2MU1TE63I0ALA==
+	bh=38KVbyNuQG9/ZPEP4z+ismEKUOn+N70oVmKejIcd3bc=;
+	b=aQj8PmSuQl8N6YoS4n2Uat/YIntscuyb5bMdOlAYW4037QNq1+uAVWrH8C0Ld/fZGLti
+	 UooQIw9qkzGKlFz0rweutX9PZ3F9cGbmH9sZ3comlVARUez1q+D6fDQHLaRup0F3e8lwE
+	 YU1qSq2zPjz2ipr6uiruch26q+SFBwrfov14H1RquWTIMlL9AGH9ZzM6NiTerp30jT1Kg
+	 7NS9p7uyw9a6ydr+fkmxHiew0avq4ievc1/EQzKWU0SMETEA8rIccJwJ9mYodXw0V4Br3
+	 nFk5bj49JrwrY4F0GIRxGoVwUlW8lpKSJJcWvK6S+Nehq58wdMksIUScBI5TWuJsMfw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCahEqbs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w06PHlvC;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9D7606A31C;
-	Wed, 18 Nov 2026 18:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874A0606A320;
+	Wed, 18 Nov 2026 18:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=FCahEqbs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0AD71F000C4;
-	Wed, 18 Nov 2026 18:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=w06PHlvC
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9051A1F000C4;
+	Wed, 18 Nov 2026 18:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027864;
-	bh=a0ysMmdOgwd7pgtuHlCRoe1A8N4vifXOjdG6K0ZJhuU=;
+	s=korg; t=1795027867;
+	bh=38KVbyNuQG9/ZPEP4z+ismEKUOn+N70oVmKejIcd3bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=FCahEqbsF08IhNxGNieEYr0u+/l1R+elT5s4tZQVd81pUHoLYQo+rRS+3QNRvLDGd
-	 eSNCi7dsgDWOmKpV7zOA4pD0Mhz/Byi9UdcZ3ZeC9dKo6QUxcCj/uAXSwARkwYJFtK
-	 Oyc98/q4dJTY2p6YPnIfNQxikNGuH55a84ypv6Ps=
+	b=w06PHlvCYyBaNfKY6jGxP7sO68P18J7z+wsDhlyCg4n3LSWe7wXV2YIzupSIAENRH
+	 hUPx4mF9hUYbKPbk7biWOcSuWKVdaWVfuFc2/e9k3CIX/zTQzjyT27ZYd+/OgWprTE
+	 jmltFpXU9Q+kceBESQYYrEkie6eqgldDTHSDzuB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkman <daniel@iogearbox.net>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Ting-Han Hou <ue081723@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Jan Kiszka <jan.kiszka@siemens.com>,
 	Kieran Bingham <kbingham@kernel.org>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Kuan-Ying Lee <kuan-ying.lee@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1939/2151] scripts/gdb/radix-tree: add lx-radix-tree-command
-Date: Wed, 18 Nov 2026 16:01:14 +0100
-Message-ID: <20261118150232.405693820@linuxfoundation.org>
+Subject: [PATCH 6.18 1940/2151] scripts/gdb: fix radix tree lookup pointer handling
+Date: Wed, 18 Nov 2026 16:01:15 +0100
+Message-ID: <20261118150232.440090037@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -76,213 +71,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Ting-Han Hou <ue081723@gmail.com>
 
-[ Upstream commit caa71919a622e3f7d290d4f17ae538b15f5cb6d3 ]
+[ Upstream commit 66d190b072b4e261aff35debb53872ace9b80628 ]
 
-Patch series "scripts/gdb/symbols: make BPF debug info available to GDB",
-v2.
+Patch series "scripts/gdb: fix radix tree lookup and stack depot
+diagnostic", v2.
 
-This series greatly simplifies debugging BPF progs when using QEMU gdbstub
-by providing symbol names, sizes, and line numbers to GDB.
+Two scripts/gdb fixes.
 
-Patch 1 adds radix tree iteration, which is necessary for parsing
-prog_idr.  Patch 2 is the actual implementation; its description contains
-some details on how to use this.
+Patch 1 fixes $lx_radix_tree_lookup(), which dereferenced slot contents
+as if they were node pointers. v2 also handles the XArray sibling,
+retry and zero entries that Sashiko pointed out: they carry the
+internal tag but are not node pointers, and the v1 patch raised a GDB
+MemoryError on them. Large folios in the page cache make sibling
+entries common, so this was worth fixing rather than documenting.
+
+Patch 2 is unchanged from v1 apart from being resent with git
+send-email, since the earlier copy was word-wrapped by the mail
+client. Sorry about that.
+
+Both patches are tested against standalone GCC-built fixtures that use
+the kernel struct layouts (details below the --- line of each patch),
+not against a running kernel.
 
 This patch (of 2):
 
-Add a function and a command to iterate over radix tree contents.
-Duplicate the C implementation in Python, but drop support for tagging.
+lookup() casts each slot to a pointer to a node pointer and then
+dereferences it. Since the slot already contains an entry pointer,
+this reads the entry's contents as another pointer instead of
+returning the entry itself. Internal entries also keep their tag
+bits when descending, so multi-level trees are read from the wrong
+address and $lx_radix_tree_lookup() fails with a memory error.
 
-Link: https://lkml.kernel.org/r/20251106124600.86736-1-iii@linux.ibm.com
-Link: https://lkml.kernel.org/r/20251106124600.86736-2-iii@linux.ibm.com
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Daniel Borkman <daniel@iogearbox.net>
-Cc: Heiko Carstens <hca@linux.ibm.com>
+Sibling, retry and zero entries carry the same internal tag but are
+small integers rather than node pointers, so the tag alone must not
+decide whether to descend. A page cache populated with large folios
+has a sibling entry in every slot but the first of each folio.
+
+Walk the tree the way xas_load() does: descend only through entries
+that xa_is_node() would accept, follow sibling entries to the
+canonical slot of a multi-index entry, and treat retry and zero
+entries like empty slots since they hold no data. Remove the explicit
+shift counter, as traversal now follows the entry type.
+
+Link: https://lore.kernel.org/20261011023044.1722-1-ue081723@gmail.com
+Link: https://lore.kernel.org/20261011023044.1722-2-ue081723@gmail.com
+Fixes: b7235d6bb516 ("scripts/gdb: add a Radix Tree Parser")
+Signed-off-by: Ting-Han Hou <ue081723@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Assisted-by: LLM
 Cc: Jan Kiszka <jan.kiszka@siemens.com>
 Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 66d190b072b4 ("scripts/gdb: fix radix tree lookup pointer handling")
+Cc: Kuan-Ying Lee <kuan-ying.lee@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/radixtree.py | 139 +++++++++++++++++++++++++++++++--
- 1 file changed, 132 insertions(+), 7 deletions(-)
+ scripts/gdb/linux/radixtree.py | 66 ++++++++++++++++++++--------------
+ 1 file changed, 40 insertions(+), 26 deletions(-)
 
 diff --git a/scripts/gdb/linux/radixtree.py b/scripts/gdb/linux/radixtree.py
-index 074543ac763d2..bc2954e45c327 100644
+index bc2954e45c327..8ce9936dfa50f 100644
 --- a/scripts/gdb/linux/radixtree.py
 +++ b/scripts/gdb/linux/radixtree.py
-@@ -30,13 +30,16 @@ def entry_to_node(node):
+@@ -27,6 +27,24 @@ def entry_to_node(node):
+     indirect_ptr = node.cast(long_type) & ~constants.LX_RADIX_TREE_INTERNAL_NODE
+     return indirect_ptr.cast(radix_tree_node_type.get_type().pointer())
+ 
++def is_node(entry):
++    # Like xa_is_node(): internal entries below 4096 are sibling, retry
++    # or zero entries rather than pointers to a struct xa_node.
++    ulong_type = utils.get_ulong_type()
++    return is_internal_node(entry) and entry.cast(ulong_type) > 4096
++
++def is_sibling(entry):
++    # Like xa_is_sibling(): a multi-index entry occupies several slots,
++    # and all but the first hold a sibling entry that encodes the offset
++    # of the first one.
++    ulong_type = utils.get_ulong_type()
++    return is_internal_node(entry) and entry.cast(ulong_type) < \
++        xa_mk_internal(constants.LX_RADIX_TREE_MAP_SIZE - 1)
++
++def sibling_offset(entry):
++    ulong_type = utils.get_ulong_type()
++    return int(entry.cast(ulong_type)) >> 2
++
  def node_maxindex(node):
      return (constants.LX_RADIX_TREE_MAP_SIZE << node['shift']) - 1
  
--def lookup(root, index):
-+def resolve_root(root):
-+    if root.type == radix_tree_root_type.get_type():
-+        return root
-     if root.type == radix_tree_root_type.get_type().pointer():
--        node = root.dereference()
--    elif root.type != radix_tree_root_type.get_type():
--        raise gdb.GdbError("must be {} not {}"
--                           .format(radix_tree_root_type.get_type(), root.type))
-+        return root.dereference()
-+    raise gdb.GdbError("must be {} not {}"
-+                       .format(radix_tree_root_type.get_type(), root.type))
+@@ -40,39 +58,35 @@ def resolve_root(root):
  
-+def lookup(root, index):
-+    root = resolve_root(root)
-     node = root['xa_head']
-     if node == 0:
-         return None
-@@ -71,14 +74,120 @@ def lookup(root, index):
+ def lookup(root, index):
+     root = resolve_root(root)
+-    node = root['xa_head']
+-    if node == 0:
+-        return None
++    entry = root['xa_head']
  
-     return node
+-    if not (is_internal_node(node)):
+-        if (index > 0):
++    if is_node(entry):
++        node = entry_to_node(entry)
++        if index > node_maxindex(node):
+             return None
+-        return node
  
--class LxRadixTree(gdb.Function):
-+def descend(parent, index):
-+    offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
-+    return offset, parent["slots"][offset]
-+
-+def load_root(root):
-+    node = root["xa_head"]
-+    nodep = node
-+
-+    if is_internal_node(node):
-+        node = entry_to_node(node)
-+        maxindex = node_maxindex(node)
-+        return int(node["shift"]) + constants.LX_RADIX_TREE_MAP_SHIFT, \
-+               nodep, maxindex
-+
-+    return 0, nodep, 0
-+
-+class RadixTreeIter:
-+    def __init__(self, start):
-+        self.index = 0
-+        self.next_index = start
-+        self.node = None
-+
-+def xa_mk_internal(v):
-+    return (v << 2) | 2
-+
-+LX_XA_RETRY_ENTRY = xa_mk_internal(256)
-+LX_RADIX_TREE_RETRY = LX_XA_RETRY_ENTRY
-+
-+def next_chunk(root, iter):
-+    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
-+
-+    index = iter.next_index
-+    if index == 0 and iter.index != 0:
-+        return None
-+
-+    restart = True
-+    while restart:
-+        restart = False
-+
-+        _, child, maxindex = load_root(root)
-+        if index > maxindex:
-+            return None
-+        if not child:
-+            return None
-+
-+        if not is_internal_node(child):
-+            iter.index = index
-+            iter.next_index = (maxindex + 1) & mask
-+            iter.node = None
-+            return root["xa_head"].address
-+
+-    node = entry_to_node(node)
+-    maxindex = node_maxindex(node)
+-
+-    if (index > maxindex):
+-        return None
+-
+-    shift = node['shift'] + constants.LX_RADIX_TREE_MAP_SHIFT
+-
+-    while True:
+-        offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
+-        slot = node['slots'][offset]
++        # Walk down the tree like xas_load() does.
 +        while True:
-+            node = entry_to_node(child)
-+            offset, child = descend(node, index)
-+
-+            if not child:
-+                while True:
-+                    offset += 1
-+                    if offset >= constants.LX_RADIX_TREE_MAP_SIZE:
-+                        break
-+                    slot = node["slots"][offset]
-+                    if slot:
-+                        break
-+                index &= ~node_maxindex(node)
-+                index = (index + (offset << int(node["shift"]))) & mask
-+                if index == 0:
++            offset = (index >> node['shift']) & constants.LX_RADIX_TREE_MAP_MASK
++            entry = node['slots'][offset]
+ 
+-        if slot == 0:
+-            return None
++            while is_sibling(entry):
++                entry = node['slots'][sibling_offset(entry)]
++                if node['shift'] and is_node(entry):
++                    # xas_descend() turns this into a retry entry.
 +                    return None
-+                if offset == constants.LX_RADIX_TREE_MAP_SIZE:
-+                    restart = True
-+                    break
-+                child = node["slots"][offset]
-+
-+            if not child:
-+                restart = True
+ 
+-        node = slot.cast(node.type.pointer()).dereference()
+-        if node == 0:
+-            return None
++            if not is_node(entry) or node['shift'] == 0:
 +                break
-+            if child == LX_XA_RETRY_ENTRY:
-+                break
-+            if not node["shift"] or not is_internal_node(child):
-+                break
-+
-+    iter.index = (index & ~node_maxindex(node)) | offset
-+    iter.next_index = ((index | node_maxindex(node)) + 1) & mask
-+    iter.node = node
-+
-+    return node["slots"][offset].address
-+
-+def next_slot(slot, iter):
-+    mask = (1 << (utils.get_ulong_type().sizeof * 8)) - 1
-+    for _ in range(iter.next_index - iter.index - 1):
-+        slot += 1
-+        iter.index = (iter.index + 1) & mask
-+        if slot.dereference():
-+            return slot
-+    return None
-+
-+def for_each_slot(root, start=0):
-+    iter = RadixTreeIter(start)
-+    slot = None
-+    while True:
-+        if not slot:
-+            slot = next_chunk(root, iter)
-+            if not slot:
-+                break
-+        yield iter.index, slot
-+        slot = next_slot(slot, iter)
-+
-+class LxRadixTreeLookup(gdb.Function):
-     """ Lookup and return a node from a RadixTree.
++            node = entry_to_node(entry)
++    elif index > 0:
++        return None
  
- $lx_radix_tree_lookup(root_node [, index]): Return the node at the given index.
- If index is omitted, the root node is dereference and returned."""
+-        shift -= constants.LX_RADIX_TREE_MAP_SHIFT
+-        if (shift <= 0):
+-            break
++    # Empty slots and retry or zero entries hold no data.
++    if entry == 0 or is_internal_node(entry):
++        return None
  
-     def __init__(self):
--        super(LxRadixTree, self).__init__("lx_radix_tree_lookup")
-+        super(LxRadixTreeLookup, self).__init__("lx_radix_tree_lookup")
+-    return node
++    return entry
  
-     def invoke(self, root, index=0):
-         result = lookup(root, index)
-@@ -87,4 +196,20 @@ If index is omitted, the root node is dereference and returned."""
- 
-         return result
- 
-+class LxRadixTree(gdb.Command):
-+    """Show all values stored in a RadixTree."""
-+
-+    def __init__(self):
-+        super(LxRadixTree, self).__init__("lx-radix-tree", gdb.COMMAND_DATA,
-+                                          gdb.COMPLETE_NONE)
-+
-+    def invoke(self, argument, from_tty):
-+        args = gdb.string_to_argv(argument)
-+        if len(args) != 1:
-+            raise gdb.GdbError("Usage: lx-radix-tree ROOT")
-+        root = gdb.parse_and_eval(args[0])
-+        for index, slot in for_each_slot(root):
-+            gdb.write("[{}] = {}\n".format(index, slot.dereference()))
-+
- LxRadixTree()
-+LxRadixTreeLookup()
+ def descend(parent, index):
+     offset = (index >> int(parent["shift"])) & constants.LX_RADIX_TREE_MAP_MASK
 -- 
 2.53.0
 
