@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026863;
-	b=3up/4h2cSubsbhr04qW4XzEJXbH0DJAaP0EruYvNNgvKx7AshvULidsbLwHyTRl3scDV
-	 j5opnfz1nrhoT/WUoC1uyOal7Q5TMBICpQInpe8LSFevzbvsvDs+pa2F6jRB/XjPaWPj/
-	 X3S6C11wqsL53GkUAPT4E7gElDJj6KM/J1SvIsrlhLI1IosaMygLtvr32JZ3ozteDD/kV
-	 3ysyQFVkwkd7U22iAtPfo1sy2WSLrAwhvXcW7VL1f9L9HMQrqUzFtEs0qy3NcRNAG15jP
-	 r8E05yWEZDAI+EQiUwmtXdgjVpvgeWVsP7NcItjBcz7l6esyiDhSwNc2UYVtEtBv2ZA==
+	t=1795026866;
+	b=YdDPB/7oFcjHNHG/eHQrgnvoAaxDojJ3EbHGDdCjpD8D+7/CbdSKXIdwcijKeAyDuA82
+	 xxHWRduq0SdcJPB6XZSzkVOvs85CzuqwGuk8UalLd4w04jKi/k+2AfqrugCTLJCY/IvgM
+	 BFQwItWyfb5X4A190w2UTAZfl3R41L92PV4FEHCURKCaFk7QtV+L8IS8Ur1KlonPErcZi
+	 ++hzz20ACMKpg/mVrsCNAHKFYRFAk9OwV8fw0LWUSSzUjqWVTCacQoyLlPTxUWVyGbme4
+	 k+Y6YB8XCXF/SJiWIViJks1eC1ofuPfKYyyCcNe+1n6M/1GopXKOihFwt1jcUBchWKA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026863;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026866;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=c0QOOz8WF9qvZ4wxeQxMWorBpsu3FmDmAB9KA/QgaMs=;
-	b=wsalIHQeDH5FoJOgi5nVXXpXwiiQPxwS651ydCbCPVix64mZCiXffoIQzj530BR7GcPe
-	 ycjdCKrYg+eiR+5fyt1PfUMfSZvIxActaSI0FjrZrbOH/gSJuzQGu2y+8ClfOvpA/3Ef+
-	 0+S4rkXWpJPP1m8M6dF4ozXE6L2sjCLcd/4h19WvsRtxonQiDkKsNkIYFznJwZf+XElZe
-	 5tkhU4P48avR7yyk1CJcYsOILylnd6mwRlmvpfTviWIpM6ciTS3iICWGKlGN9RtPvBKT8
-	 /j+p5Jw6NpUhbmQsZEgBRd2BjwrVSfOhIj8f6V7a+whXRbj2BNiv4x3FzsYQoWmMaFg==
+	bh=YJsmnop7uYn7QBh7obJ7OrQSnqBm0K0s3APgmC2FbLU=;
+	b=5hlCp6HJ54ALDdgFVAvFSRHfDq1Oi+wgk6c5vhwrrkpdjYU8DqSnXsHSU5PRFzF2eTiH
+	 K6oVXCu95dPxC/tnA1onGcopS4F+QK5lrjfyNp3RW5bhKE/J37jIRy76wckxz5ArAeYjg
+	 LLON+XgsJIc5OU6dH/JxFxxiG6Yu/lcqQcNojtij1bOIvwndMCcDTKq8qXMxruV24UziP
+	 ME+MbyJICnd9XJ6cRT34zeB2pnhSSszXULcEsrN7oKePVWoAsP2qjpar3/PdRyxmfs/zw
+	 z7l7rHcUH3v6STBVL6EjFKPdn8U7qgKojghcXULsRJAORaHyMUAzhQVfRxVxh3vRmUQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAiUfWqY;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVpzWBnT;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7EF606A330;
-	Wed, 18 Nov 2026 18:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37511606A31C;
+	Wed, 18 Nov 2026 18:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QAiUfWqY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2201F000C5;
-	Wed, 18 Nov 2026 18:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GVpzWBnT
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5391F000CA;
+	Wed, 18 Nov 2026 18:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026863;
-	bh=c0QOOz8WF9qvZ4wxeQxMWorBpsu3FmDmAB9KA/QgaMs=;
+	s=korg; t=1795026866;
+	bh=YJsmnop7uYn7QBh7obJ7OrQSnqBm0K0s3APgmC2FbLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QAiUfWqYx/hdv8vfPX9WAA5aJMk3BHubZ15ozoonAI0FGpO9gyBd4rYI5588g+Rj+
-	 CMelDNI41C9Sr5CPlnaG1IVB1CSOgS0sAEhb14TtUEP9K46ocDiWZvVntLPrRk3whG
-	 W248rMfuM6Jzi8aW2YEt7ON1V+pMLmAx/YT9TSGc=
+	b=GVpzWBnTgEis3MueKFXJGOo43hz2KYOz7dPP4zEKSxpOIeeBfAVpViel88/BPi0hW
+	 rM38VfmDV2pSYyz6TtggF0p3jTPfq/khQ4tWZBm6KF628RWApcH0/JgSTYvoofbKUL
+	 IrVTo+TJExHZ/ND1IUrO0j93beUpXYrmyIs7UHu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1585/2151] irqchip/gic-v3-its: Dont free a vPE table shared with another ITS
-Date: Wed, 18 Nov 2026 15:55:20 +0100
-Message-ID: <20261118150219.622465140@linuxfoundation.org>
+Subject: [PATCH 6.18 1586/2151] irqchip/gic-v3-its: Dont free the tables of an enabled ITS
+Date: Wed, 18 Nov 2026 15:55:21 +0100
+Message-ID: <20261118150219.657137926@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,57 +71,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Fuad Tabba <fuad.tabba@linux.dev>
 
-[ Upstream commit 32e056cc1d1582951f981113ca8b98914f29c32a ]
+[ Upstream commit d09b36d8e0e60f35bd1cd7d63aadc6dfad61700c ]
 
-On GICv4.1, its_alloc_tables() copies a sibling's vPE table baser
-rather than allocating one, but its_free_tables() frees it like the
-rest. A probe failure on the copying ITS then frees pages the enabled
-sibling still points GITS_BASER2 at, and the kernel comes up running
-on that sibling.
+its_probe_one() enables the ITS before its_init_domain(), the last step
+that can fail, and the unwind from there frees the tables and the
+command queue without disabling it. The kernel comes up with an enabled
+ITS pointing at freed pages.
 
-Mark a shared table so its_free_tables() skips it.
+Enable the ITS last. Nothing reaches the new domain before then: this
+runs from init_IRQ(), and the ITS joins its_nodes only after the enable.
 
-Fixes: 5e5168461c22c ("irqchip/gic-v4.1: VPE table (aka GICR_VPROPBASER) allocation")
+Fixes: 4c21f3c26ecc2 ("irqchip: GICv3: ITS: DT probing and initialization")
 Signed-off-by: Fuad Tabba <fuad.tabba@linux.dev>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260925085000.753400-2-fuad.tabba@linux.dev
+Link: https://patch.msgid.link/20260925085000.753400-3-fuad.tabba@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/irqchip/irq-gic-v3-its.c b/drivers/irqchip/irq-gic-v3-its.c
-index 4bd1623b9c49a..b8384ceebb270 100644
+index b8384ceebb270..9fb9c06b9242e 100644
 --- a/drivers/irqchip/irq-gic-v3-its.c
 +++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -87,6 +87,8 @@ struct its_baser {
- 	u64		val;
- 	u32		order;
- 	u32		psz;
-+	/* Inherited from a sibling ITS, not freed here */
-+	bool		shared;
- };
- 
- struct its_device;
-@@ -2608,7 +2610,8 @@ static void its_free_tables(struct its_node *its)
- 
- 	for (i = 0; i < GITS_BASER_NR_REGS; i++) {
- 		if (its->tables[i].base) {
--			its_free_pages(its->tables[i].base, its->tables[i].order);
-+			if (!its->tables[i].shared)
-+				its_free_pages(its->tables[i].base, its->tables[i].order);
- 			its->tables[i].base = NULL;
- 		}
+@@ -5333,16 +5333,18 @@ static int __init its_probe_one(struct its_node *its)
  	}
-@@ -2707,6 +2710,7 @@ static int its_alloc_tables(struct its_node *its)
- 				WARN_ON(i != 2);
- 				if ((sibling = find_sibling_its(its))) {
- 					*baser = sibling->tables[2];
-+					baser->shared = true;
- 					its_write_baser(its, baser, baser->val);
- 					continue;
- 				}
+ 
+ 	gits_write_cwriter(0, its->base + GITS_CWRITER);
++
++	err = its_init_domain(its);
++	if (err)
++		goto out_free_collection;
++
++	/* Enable last: the unwind frees memory an enabled ITS may access */
+ 	ctlr = readl_relaxed(its->base + GITS_CTLR);
+ 	ctlr |= GITS_CTLR_ENABLE;
+ 	if (is_v4(its))
+ 		ctlr |= GITS_CTLR_ImDe;
+ 	writel_relaxed(ctlr, its->base + GITS_CTLR);
+ 
+-	err = its_init_domain(its);
+-	if (err)
+-		goto out_free_collection;
+-
+ 	raw_spin_lock(&its_lock);
+ 	list_add(&its->entry, &its_nodes);
+ 	raw_spin_unlock(&its_lock);
 -- 
 2.53.0
 
