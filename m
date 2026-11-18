@@ -1,54 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026533;
-	b=W/gFsqb+EDibQXMV9kE1nTfoc7h3wDY2zaGYpxocaFgL+MZxtmAbR8Xcx6Ef/w3kuVYR
-	 59cv6j9pXRYTy/epp8wjIvqrP/5JCpBpRRnOqS9ytcAyM0Atvu0k6kXdpGe7JBenMoI6A
-	 FZutVgNGZMa5lZXcQbvkRMuDAbuyBe5eD1TZIoPpurwknBwmJPCf2Yknl92bzz6JGYjbt
-	 coD9P1qFn4q3+VCDfyCUWV9PnaUqFCBLIi++GXsHhfsWjlc4X/p9AbTXLgtML696CI0Vb
-	 +NZxSzRGSTDHAJBf26C1uutPiWMs4bWKkdIgwA31EeaUTLfxOmC339f8I08pr2iSeDQ==
+	t=1795026535;
+	b=wk6uQ23QPY5fFd8EfckBryYf0QECWaGNh/r6Ae7KCxTAQeb0XZ6Z04iOzXI0ViojSQBD
+	 d6hXFPUqEGcGg3pPcz2mA2SGbRPvibzvMfQ+9HqK6i1BZ4EJQwQTRbviX9aes/QYF8hwz
+	 05CpZUCZsUlRayfmaW6PcpvmCN2cUHMJbLujqlVmDsReHkCTt6Z6Vj73aGGI2cBXnQZQf
+	 WJwGRZryOhyhb2akR7r941DsHlr9UFHqWh1Wi6RRLI4g2bv6Nr6JPbyK8Hn56vRHVzf1o
+	 6AWF1bcuflKEUa/hvxZ8edb0f14+vuME4FizxGq7TKU9F4mQl4cjpW7aA9FcKy95bdg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026533;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026535;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GOe7+ALC01FP/vQFqPu21QiJy6mPLxuO/A+3QN7Fk4s=;
-	b=L8G3vczxorRNljq0wD8jbrifWbwJutSCJiNjDnqAt0adEIdnCSm/mMqPKeDAIxPQELFJ
-	 t+rZh/DRUIEvunyHhuJQytud1vR26JgatKHKJunsuIGitPYqChJHJcADe0zM+mV9MuaVF
-	 33wT46RhwTXNkyRCn2B6oVMkFBT80A0gmlyDZ8wZR33wIsQel0rVSmdrRejJW+UpMs4k1
-	 qdR8DE15/eOmoNDrho6w/Z1YE6+MWHFMc5J/gQ17siniOGC4J56iTNKLXZQpG2YvMemDF
-	 SWn3c8AOFibz2r351un5hts43G6yV5aifj9EPZHAoTo+kCHD8nkI/3ty1YG487RpuzQ==
+	bh=nHpQAOPSkhxsFWY1+3kKOu/7Xil87aMdwntFVEgteEA=;
+	b=lV9hKR+2P0+Mgwd7/i4PZpQ7WBOeIJT2rpuDT4DEyi16Jfiq3tJWpzp0525JvuxiKF+n
+	 GN4xLWYKbKEsUv7WV/2a4Zgy5a/D/8h+Xhhiv0Y+B5lyqUfsdp3joXJhJ36ItKRwAff/V
+	 sUTVDWwhhWuphwJRHhvukbkEHEwU3Ow3dUYJEOlf2YZhczJqvTHdLyJHQwNsP7DUmDSxT
+	 nhSeng1j4+KGkWS85IAindnM+oE/7gjHV7VH8loBz1Z7a8mzaHvdcn29ks17tBhs6dUGS
+	 Hh7VLULTO1HHGlW/FKAjdV/zaySLmSD/thlRBGjhw59hv/VERZT2CpXdth1tAxIUKTg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgbqdDTs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nENuX6Al;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E6E606A31C;
-	Wed, 18 Nov 2026 18:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B461C606A31C;
+	Wed, 18 Nov 2026 18:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WgbqdDTs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312111F000C4;
-	Wed, 18 Nov 2026 18:28:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nENuX6Al
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CD81F000C4;
+	Wed, 18 Nov 2026 18:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026532;
-	bh=GOe7+ALC01FP/vQFqPu21QiJy6mPLxuO/A+3QN7Fk4s=;
+	s=korg; t=1795026535;
+	bh=nHpQAOPSkhxsFWY1+3kKOu/7Xil87aMdwntFVEgteEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WgbqdDTsvHUNBqpqz4q5bk7uXdMKufp9GRh9o4yTqu4vUSbZXCAr7+go4oBaaDteg
-	 FYOJuld8h3Cb8P4QdyPCVLPX1xEeveDTrrvKE1cJLcLJjjF5XdHTh6hTxkBRFiq3xu
-	 74DO8zq/bVoeyhw5iV7AepKGK7SnP0ikdHqtxL3c=
+	b=nENuX6AlZbWpnTPbwXdZ5+yDpfdhELOEaYYGjpQzDPRaTeUi+dv8kjGTp+dAqr/kN
+	 qqeNE28eKG/MkO7U/S6nQdqJXH41K4SjtFro9iJ3cTu4gzacBN86MJ5Jheme+YEydV
+	 NHj0QnPDhld23uXS1dIhKIe8Bai0lEQkAHMkxOio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1427/2151] clk: qcom: rpmh: Update the clock suffix for Glymur
-Date: Wed, 18 Nov 2026 15:52:42 +0100
-Message-ID: <20261118150213.930038430@linuxfoundation.org>
+Subject: [PATCH 6.18 1428/2151] clk: qcom: rpmhcc: Add LNBB clocks support for Glymur
+Date: Wed, 18 Nov 2026 15:52:43 +0100
+Message-ID: <20261118150213.963998907@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,62 +71,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <taniya.das@oss.qualcomm.com>
+From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 
-[ Upstream commit 3dadc1dc5e85cefc7a2f1c9d428b5622fda12d3d ]
+[ Upstream commit 1ebab545ee3acbbee22adecb858d5d1d001de0af ]
 
-The current RPMh VRM clock definitions do not accurately represent the
-hardware mapping of these clocks. While there is no functional impact,
-this update aligns the definitions with the hardware convention by adding
-the appropriate suffix to indicate the clock divider and the E0 variant
-for the C3A_E0, C4A_E0, C5A_E0, and C8A_E0 resources on Glymur.
+Add support for rpmh LN_BB_CLK2 and LN_BB_CLK3 clocks on Qualcomm Glymur
+platform.
 
+Fixes: ebcb9db98bda ("clk: qcom: rpmh: Add support for Glymur rpmh clocks")
+Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251209-gcc_kaanapali-v3-v5-1-3af118262289@oss.qualcomm.com
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260915-glymur-ufs-clk-changes-v2-1-d0aa1c60c269@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 1ebab545ee3a ("clk: qcom: rpmhcc: Add LNBB clocks support for Glymur")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rpmh.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/clk/qcom/clk-rpmh.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-index 82f18e15cd77b..feeb288479b00 100644
+index feeb288479b00..0f148bde109f0 100644
 --- a/drivers/clk/qcom/clk-rpmh.c
 +++ b/drivers/clk/qcom/clk-rpmh.c
-@@ -388,10 +388,10 @@ DEFINE_CLK_RPMH_VRM(clk7, _a4, "clka7", 4);
- 
- DEFINE_CLK_RPMH_VRM(div_clk1, _div2, "divclka1", 2);
- 
--DEFINE_CLK_RPMH_VRM(clk3, _a, "C3A_E0", 1);
--DEFINE_CLK_RPMH_VRM(clk4, _a, "C4A_E0", 1);
--DEFINE_CLK_RPMH_VRM(clk5, _a, "C5A_E0", 1);
--DEFINE_CLK_RPMH_VRM(clk8, _a, "C8A_E0", 1);
-+DEFINE_CLK_RPMH_VRM(clk3, _a1_e0, "C3A_E0", 1);
-+DEFINE_CLK_RPMH_VRM(clk4, _a1_e0, "C4A_E0", 1);
-+DEFINE_CLK_RPMH_VRM(clk5, _a1_e0, "C5A_E0", 1);
-+DEFINE_CLK_RPMH_VRM(clk8, _a1_e0, "C8A_E0", 1);
+@@ -391,6 +391,7 @@ DEFINE_CLK_RPMH_VRM(div_clk1, _div2, "divclka1", 2);
+ DEFINE_CLK_RPMH_VRM(clk3, _a1_e0, "C3A_E0", 1);
+ DEFINE_CLK_RPMH_VRM(clk4, _a1_e0, "C4A_E0", 1);
+ DEFINE_CLK_RPMH_VRM(clk5, _a1_e0, "C5A_E0", 1);
++DEFINE_CLK_RPMH_VRM(clk7, _a1_e0, "C7A_E0", 1);
+ DEFINE_CLK_RPMH_VRM(clk8, _a1_e0, "C8A_E0", 1);
  
  DEFINE_CLK_RPMH_BCM(ce, "CE0");
- DEFINE_CLK_RPMH_BCM(hwkm, "HK0");
-@@ -882,12 +882,12 @@ static const struct clk_rpmh_desc clk_rpmh_sm8750 = {
- static struct clk_hw *glymur_rpmh_clocks[] = {
- 	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div2.hw,
- 	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div2_ao.hw,
--	[RPMH_RF_CLK3]		= &clk_rpmh_clk3_a.hw,
--	[RPMH_RF_CLK3_A]	= &clk_rpmh_clk3_a_ao.hw,
--	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a.hw,
--	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a_ao.hw,
--	[RPMH_RF_CLK5]		= &clk_rpmh_clk5_a.hw,
--	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a_ao.hw,
-+	[RPMH_RF_CLK3]		= &clk_rpmh_clk3_a1_e0.hw,
-+	[RPMH_RF_CLK3_A]	= &clk_rpmh_clk3_a1_e0_ao.hw,
-+	[RPMH_RF_CLK4]		= &clk_rpmh_clk4_a1_e0.hw,
-+	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a1_e0_ao.hw,
-+	[RPMH_RF_CLK5]		= &clk_rpmh_clk5_a1_e0.hw,
-+	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a1_e0_ao.hw,
+@@ -888,6 +889,10 @@ static struct clk_hw *glymur_rpmh_clocks[] = {
+ 	[RPMH_RF_CLK4_A]	= &clk_rpmh_clk4_a1_e0_ao.hw,
+ 	[RPMH_RF_CLK5]		= &clk_rpmh_clk5_a1_e0.hw,
+ 	[RPMH_RF_CLK5_A]	= &clk_rpmh_clk5_a1_e0_ao.hw,
++	[RPMH_LN_BB_CLK2]	= &clk_rpmh_clk7_a1_e0.hw,
++	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_clk7_a1_e0_ao.hw,
++	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a1_e0.hw,
++	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a1_e0_ao.hw,
  };
  
  static const struct clk_rpmh_desc clk_rpmh_glymur = {
