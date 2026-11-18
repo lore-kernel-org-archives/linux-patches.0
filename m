@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033846;
-	b=eRr/gg+u8I6zAQaQfz/aYhfvDgl/JcSl98sD/U9mmEN+q3zdkou3p0sN6MWLyhUSk8x7
-	 G0FCQR4yaOuCyy97VpDXb5GUjpz56jGGEGDsK/zQSgxaI6ygtYwAbTQw+ouEC/eDyaoeb
-	 Fxcvuopy+73nN8GiLcvK+t9KGWnxlLGiwsKzSiUUfI923AoM+t6CLO8nVQ5kfG8pD2Ltj
-	 OPOC3213HTKkbmS5yYMxMilllxN9IJuX0bwQA5yjvndSiSZa61VfBVvTonbYEgnmZBDdP
-	 D9dC0fZI/Psc7rN7civcZv5z+6/syrphelxEPhkG5WllH+HEIB5Yf4rAk+Ia3F4vZ9w==
+	t=1795033848;
+	b=zqNPl9CSMbIAcOpmd9FqLdM78aP+hybQk7LEjdvU68nDgmfiXEg2XJoPRyAqK7Vrpzpm
+	 B9vDS2qFAZvqim8ynM2jTlokKXec90qkfJ1QnZVkNirLGhHqRT35mEkH5Mruylo1fLoHH
+	 TpClSkLYnmSavtxWG/upvffYn/GQY9BrqNMKof8zIWHYF8tfjBax2NNxmHbeytFFHYm0d
+	 XBS5uiMa/5WaOrhQzV6cJK/tolMrfpv1FxWp9g8EnQ/fpTRO2KB21pBCiUbX1tk+F1d1G
+	 NMhCbqb/7iWwv0jtXORondyjzwGZ2zIm55XiECdQDFHOtYyUl2d7RvvfMLYrW9m8/sw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033846;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033848;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zeEGBh7dYKbtEwFObFxknfiuihxpB4Lr3IYtWyNwdYQ=;
-	b=hfHeHB95uxBq55PP/akGwN/AobZIavTxpeyD6Cj68VhRTTSxNsaHWsANZj54hZnQcGOb
-	 2Z1wrBt3WjQb7NB7EUVzr92NnMZdZB4PYksmYt5Nl8vXuRe2zO3zppOp35dFCsP3U8TOq
-	 hgW/WsxNr+t+hO8BLoyeUiJshGGkTKGU2LMU5GgrcuZ6tlwf09HHZNOFh1q0aCumNBbNl
-	 lu4zrYW3HILBtx7O7mL0+Cb7vEqmsKcpoYaTJhGUpTb4QJX9YKt9Jam5PfkvRmpyt5O9g
-	 oh043XvRPfR+IiVD8IdiW7rFzzq3fn6fMVYx6SB2RQHCpV/qUSF6GlLq5XbuZiWNRlw==
+	bh=gj/Yilb31ambxsfGuFP4gX2NVYLHhC/tkcHgSxNU3w4=;
+	b=FA35aOmmCvrM1HgD6NpMnxc0IPP98WixCGFKRt4RRL7SbBdWdHrkCa6YoCx72Pc220LC
+	 M9mA9XOf/2jYNzmbSkDUqQhjqyrTo1fJWAH/JHC1AD2jsgjDv6nlarulYMZk5X+iG1gwo
+	 e4C9O6qoAkpQonlqB/FiZYas9JKsuOKivJz8FYxSnZDbPzNTKIVQSN9nhCajg5ljkiTpb
+	 OqsxDjZwltk1YfeX6ZlH+LbUU5t7cC94Pb9WGpVg6giUB0o3pZlJlW2DeGqLs6HM89uzL
+	 LD5rAhoPXVUVofBM0AI35W3UgxBwvsrkPQ/GwkGGaz+9xI8jves41l/F3AHjL6jbRJw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XYzb5vgc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sm61j5Iu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BED606A338;
-	Wed, 18 Nov 2026 20:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52D5460A2605;
+	Wed, 18 Nov 2026 20:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XYzb5vgc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 062D91F000C5;
-	Wed, 18 Nov 2026 20:30:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Sm61j5Iu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA111F000C4;
+	Wed, 18 Nov 2026 20:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033845;
-	bh=zeEGBh7dYKbtEwFObFxknfiuihxpB4Lr3IYtWyNwdYQ=;
+	s=korg; t=1795033848;
+	bh=gj/Yilb31ambxsfGuFP4gX2NVYLHhC/tkcHgSxNU3w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XYzb5vgcQ8Gc5YSOsHWkyQIh9I1dwfxXfd0RhtZNc0PLh2HUycv3HMZAQ948S2LPY
-	 Qt/zH6XF7se8AxLDTwWG8yHPZkkNyPK130iyJfg6eY40CA1NTx185TMd+jOYUntMNk
-	 nWWvt0Y61bFES/hXujlPQLhFmnFiR+pDmvdoOCgw=
+	b=Sm61j5IudB43+uH0Za+jnSHiPWmbqI/BwTnOaCWi6mf7ASXCglThCHiF4/sxGaqm9
+	 IAF2c8pfTakJTbqOsvplPUU7l6ISo8ZnDA3Tw/UltlNyjPlyvHt1WWOcTOOU6zoykz
+	 bva0qSWmh+pR98fzdBr3qL3b+b5U94ddgBop0h6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Yuyang Huang <yuyanghuang@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0157/3318] net: prestera: ignore duplicate RIF destruction events
-Date: Wed, 18 Nov 2026 15:12:59 +0100
-Message-ID: <20261118150319.263957752@linuxfoundation.org>
+Subject: [PATCH 6.6 0119/3318] usb: misc: cypress_cy7c63: check result of IO
+Date: Wed, 18 Nov 2026 15:12:21 +0100
+Message-ID: <20261118150317.890405713@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,42 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuyang Huang <yuyanghuang@google.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-[ Upstream commit 3cbbc9fa33382d03f2813118e672eb318eba9cde ]
+[ Upstream commit 0673b919e0933541ae56bb3f0253853f696d3773 ]
 
-During address teardown, the inetaddr notifier may be called multiple
-times for the same interface. Ignore NETDEV_DOWN events if the RIF has
-already been destroyed, rather than returning -EEXIST, which aborts the
-notifier chain.
+If the device returns a bogus short read, treat it as EIO.
+Actually check for IO errors.
 
-Cc: Ido Schimmel <idosch@nvidia.com>
-Cc: Kuniyuki Iwashima <kuniyu@google.com>
-Signed-off-by: Yuyang Huang <yuyanghuang@google.com>
-Link: https://patch.msgid.link/20260711005405.2861680-2-yuyanghuang@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260710095523.1646308-1-oneukum@suse.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/prestera/prestera_router.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/usb/misc/cypress_cy7c63.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/prestera/prestera_router.c b/drivers/net/ethernet/marvell/prestera/prestera_router.c
-index de317179a7dcc..e36d023fe9c30 100644
---- a/drivers/net/ethernet/marvell/prestera/prestera_router.c
-+++ b/drivers/net/ethernet/marvell/prestera/prestera_router.c
-@@ -1302,10 +1302,8 @@ static int __prestera_inetaddr_port_event(struct net_device *port_dev,
- 		dev_hold(port_dev);
- 		break;
- 	case NETDEV_DOWN:
--		if (!re) {
--			NL_SET_ERR_MSG_MOD(extack, "Can't find RIF");
--			return -EEXIST;
--		}
-+		if (!re)
-+			return 0;
- 		prestera_rif_entry_destroy(port->sw, re);
- 		dev_put(port_dev);
- 		break;
+diff --git a/drivers/usb/misc/cypress_cy7c63.c b/drivers/usb/misc/cypress_cy7c63.c
+index 75f5a740cba39..e1a0c1ae93f2b 100644
+--- a/drivers/usb/misc/cypress_cy7c63.c
++++ b/drivers/usb/misc/cypress_cy7c63.c
+@@ -89,8 +89,11 @@ static int vendor_command(struct cypress *dev, unsigned char request,
+ 				 address, data, iobuf, CYPRESS_MAX_REQSIZE,
+ 				 USB_CTRL_GET_TIMEOUT);
+ 	/* we must not process garbage */
+-	if (retval < 2)
++	if (retval < 2) {
++		if (retval >= 0)
++			retval = -EIO;
+ 		goto err_buf;
++	}
+ 
+ 	/* store returned data (more READs to be added) */
+ 	switch (request) {
+@@ -175,8 +178,9 @@ static ssize_t read_port(struct device *dev, struct device_attribute *attr,
+ 	dev_dbg(&cyp->udev->dev, "READ_PORT%d called\n", port_num);
+ 
+ 	result = vendor_command(cyp, CYPRESS_READ_PORT, read_id, 0);
+-
+ 	dev_dbg(&cyp->udev->dev, "Result of vendor_command: %d\n\n", result);
++	if (result < 0)
++		return result;
+ 
+ 	return sprintf(buf, "%d", cyp->port[port_num]);
+ }
 -- 
 2.53.0
 
