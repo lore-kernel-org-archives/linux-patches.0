@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029316;
-	b=rR0WRH0BfkuFmbFCb2ftu8MqKpIpqK4s4pPC5p7emq7AbbWe1uvzjBjjf4kzTQUBc+ju
-	 Bpomp1ru0wT+QKYgKV7i5jkDhNZkTguinZ8GuWxp98n6UUdhr1G/OiSQuSHF3RgMemVoU
-	 tErDgbOhi/WGTkKpALo391I9Gj1JjkJFNx8GKoKLCJm+7rBpltI1i++/DANeY3LyqCayH
-	 OrKDnuXZBsaYwTC5EGfLoL1j1QK37n+ylEWZNBnPxscy9WW+hkRQFs0Pj7yaMLMFpyDGs
-	 Fwub4864L+onUqrPQCcaGbxC7ddHQudIrWP1XfM+ACPhlpLFVuozWHtnR+muGnzdLrw==
+	t=1795029319;
+	b=opXt8gBRjhDiEMq8QEt0HT9bx3KonpzlMa+SGRR+6fX3aMX1BOClD5ZYRIuxNOkQtpnu
+	 O/SlkvWxlyWvUPW4NTVzP6AN8SdXIjPrss/jpjKdoDH2A7H6lqCqW1alnG5qdl83yR1ap
+	 S9gzqPLx2Acofo6kvLM1xjO912OSqK7r3ntobE1256Ut7KhTx1Z0ILx+eQaOE9m0BaOkt
+	 qVONNXSyz0FzE1o5cVBxyG2t62nzqOlyoQD3Qn/77uRg1+dR4S9tGJYYBK6uX3dwWaw3o
+	 QjDyqQoOcdeFwPRfxOCvYdbuNLyIDi4dimGExAWOr39l0V92ft2Qh+YGTBhgekTC14A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029316;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029319;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=3/gddXTHWhSIDGtbY4ysEFrtyZTIhRbvxadROP6j6iA=;
-	b=cWds3970F73/kuUj9s2u24Pfi9OBxUB/gn+Q5cKymZUHwqMjQvzGz/Xya965fHBAWK1l
-	 sobN2ARhVeVZSPQFI4FBUySeZB20wHE52Hs1sNVJfdyL+bzgl3pd5pRGiTZX/OjaKoIg3
-	 xWLy0kL1v9/DMvADkoTLjLAwc3BPp6GrxMus1eyI0tv+6KiyLXI4/C2d1uCQjLVudY4PI
-	 qfdKo4YyBnR9Lcy9r46vv/QFbUQTCHR2Yq+yUOBd+gYgyp7q2oa+PeLWWw68m5tfurPMO
-	 4hoA/NKKVKqalNPotrYfPS1PMDl/Fe3MjtjDOB/e6OU5v+gdxBZHa+PMTHjzO9mc4Yw==
+	bh=3g74nzSpIrIsquTmdbGRYCxU7BElndTy3QxJjX/GKKE=;
+	b=kYwvcWXLM/jtIScR8wUtzrF8hiJEWFACKsl66jDrcaKGaPIl/yQbNChbdjJ3fyQ2l7oP
+	 Jw7x03UCZr7TLL3DFn9rjSrUlHNbb1WZ39aREjFDforstvlJVZVHP0Imzjh1w7dFC/zbi
+	 nfHrYOP3cTJFBvcyUORbbk2hZDXffeTdRdYvaBF7T7WhETU4UJTiRWP9CkMbuMgi4KcLh
+	 jAXr282iVOh/TPLY5tiAeq06EwtUaRTtlv4915TTcj7uBQ28AtwbsmHrk2x9GNE6HPMH8
+	 uo2YQyV97bxsKlD2JjRsiW057y5nvUJr0sWIYar/KHU8tPz3rohktrUtunwlZsXx0OQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WHWJyfyk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXqTNg6y;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A429C60A2603;
-	Wed, 18 Nov 2026 19:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4108606A332;
+	Wed, 18 Nov 2026 19:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WHWJyfyk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DFF1F000C9;
-	Wed, 18 Nov 2026 19:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sXqTNg6y
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AF61F0089E;
+	Wed, 18 Nov 2026 19:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029316;
-	bh=3/gddXTHWhSIDGtbY4ysEFrtyZTIhRbvxadROP6j6iA=;
+	s=korg; t=1795029319;
+	bh=3g74nzSpIrIsquTmdbGRYCxU7BElndTy3QxJjX/GKKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=WHWJyfykeJT6EARmKCrlZh2tF5BKqihTEpC1Te+xirEGjOFc7tSUp5KJekunJbhYh
-	 PUpUDcWJpvJBVqUwRefUW9CwhGN3rLD7k5D0xaxnXH0ScHwZH7sR5ws4vLy7UaRXXO
-	 oIIhDsK2FsY4z2mTC7htZ8VQn/xspWVw4JDdSz/s=
+	b=sXqTNg6y+rTNJVjkNgxHJmqWES50x2uujsWxlRsUkOLBo9RgwOGgAuELsaiAWNSEO
+	 vwMVeEL+pZk/0mIHAWAsxLMh54xl7itRcdafZRUbfvByseT9DcprC3HqhE1/SHTAlv
+	 KoL15uiyBxGjzqpgbFgxSdUGjk9c4b+Oe+YkZYJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Howard Chu <howardchu95@gmail.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0270/1756] perf trace: Add upper bound checks for augmented BTF struct printing
-Date: Wed, 18 Nov 2026 15:39:57 +0100
-Message-ID: <20261118150019.158487225@linuxfoundation.org>
+Subject: [PATCH 6.12 0306/1756] scsi: mpi3mr: Fix target device reference leak in device removal handshake
+Date: Wed, 18 Nov 2026 15:40:33 +0100
+Message-ID: <20261118150020.525859486@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -70,71 +68,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
 
-[ Upstream commit 024b219744a949419b3c9e8aa23031c04428d9d6 ]
+[ Upstream commit a04b0f3a17e32aa449fd896163a7b40efc29c4f5 ]
 
-When pretty-printing augmented struct payloads using BTF via
-btf_struct_scnprintf(), augmented_arg->size is currently only validated
-against values <= 0.
+The device removal handshake looks up the target device to update its state
+but never drops the reference that the lookup takes.
 
-However, several edge cases can result in size mismatches or buffer
-over-reads:
-    1.  If arg->augmented.size is smaller than sizeof(*augmented_arg),
-        dereferencing augmented_arg->size reads past the available
-        buffer.
+Drop it once the state has been updated.
 
-    2.  If augmented_arg->size exceeds arg->augmented.size -
-        sizeof(*augmented_arg), calculating consumed =
-        sizeof(*augmented_arg) + augmented_arg->size can overflow signed
-        integer limits (e.g., with crafted INT_MAX values in an
-        untrusted perf.data file) or cause arg->augmented.size to
-        underflow. This advances arg->augmented.args out of bounds,
-        corrupting the parsing state for subsequent arguments in
-        multi-argument syscalls.
-
-    3.  If the captured payload is truncated (e.g., short reads in BPF,
-        or during cross-architecture analysis such as replaying a 32-bit
-        perf.data on a 64-bit host where host BTF type->size exceeds the
-        32-bit target payload), passing type->size to
-        btf_dump__dump_type_data() causes libbpf to read past the end of
-        the payload buffer.
-
-Enforce an upper bound on augmented_arg->size against the remaining
-buffer (arg->augmented.size - sizeof(*augmented_arg)) and verify that the
-captured payload contains at least type->size bytes before passing it to
-btf_dump__dump_type_data().
-
-Fixes: cb32035214b9a09d ("perf trace: Pretty print struct data")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 13ef29ea4aa0 ("scsi: mpi3mr: Add support for device add/remove event handling")
+Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+Link: https://patch.msgid.link/20260825210411.301535-10-chandrakanth.patil@broadcom.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index d701836f62819..d3bd36e12080b 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1082,12 +1082,13 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- 	LIBBPF_OPTS(btf_dump_opts, dump_opts);
- 	LIBBPF_OPTS(btf_dump_type_data_opts, dump_data_opts);
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index eb9477d70e681..b92026b350819 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -2420,6 +2420,9 @@ static void mpi3mr_dev_rmhs_send_tm(struct mpi3mr_ioc *mrioc, u16 handle,
+ 		tgtdev->state = MPI3MR_DEV_REMOVE_HS_STARTED;
+ 	spin_unlock_irqrestore(&mrioc->tgtdev_lock, flags);
  
--	if (arg == NULL || arg->augmented.args == NULL || arg->augmented.size <= 0 ||
-+	if (arg == NULL || arg->augmented.args == NULL || arg->augmented.size < (int)sizeof(*augmented_arg) ||
- 	    arg->fmt == NULL || !arg->fmt->from_user)
- 		return 0;
- 
- 	augmented_arg = arg->augmented.args;
--	if (augmented_arg->size <= 0)
-+	if (augmented_arg->size <= 0 || augmented_arg->size > arg->augmented.size - (int)sizeof(*augmented_arg) ||
-+	    (size_t)augmented_arg->size < type->size)
- 		return 0;
- 
- 	dump_data_opts.compact	  = true;
++	if (tgtdev)
++		mpi3mr_tgtdev_put(tgtdev);
++
+ 	if (drv_cmd)
+ 		goto issue_cmd;
+ 	do {
 -- 
 2.53.0
 
