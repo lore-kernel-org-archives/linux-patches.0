@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033605;
-	b=5dlZLXkzlmkT5lnzeiBimMZaJQnTVoUA2PYry76RPhRJq+F/vG8x0aXnwUat3F9Iv4wT
-	 GbuG0LAsgrg8/sE4cyem6Ds0V6QcWeAHFHzsVTR0TgJmbvdROcDIFRIRTqS6/45zpGNv2
-	 H908PWVyizwtOnwysvt7R8pI3mEOLmtukKG4PiYHOkkQaPECuBswBkDAeJi8XsuF7iec4
-	 tuLPUDv4qz0DZ7UHIvPVAPAWC2K5BSWo7KEmA5DJrrJAN+q7jPTxrO7waW4nOQ74Z7y2L
-	 mk4ud/DD3XuYpKU5T6lrbqJTdpRXDcr9MXW/qxgQNL8stV5flQrxOkLOlaAQPRK11kQ==
+	t=1795033608;
+	b=j5R5NYtYkK2+cC9hIipC29Al78TphFUR4k14BaHylLULu662EW0FYnoCRZuxUQ51/TGE
+	 h7/Y8iW7yPvyaBSgQ6SNmCcDsRiELRIdRDqt1hd8LnPziW1idEU3u3yx3RmuO7KivwEpL
+	 kuHeYxZD5ALf8+WberE8ebiIYCqRnYi612WahRW3FY/exNwCAKzvfuhWvM5u+j3BmAq8s
+	 O3DNF6+Y6qzd0e/T4otzGS6txXa14IAY/hYfSlX2D6OztV+hAqzY31pJKagbqh59XFmLu
+	 qoUCwVlVM7jRjOjJCHmhcFbQpU29LCO+LOyRVEFmTWEH+GxSbQ9CFlEeamGM7hzd04A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=CCyippY+3NnnztdJY2/pqtVnt4PZ2rO+dZmAeEhHcwk=;
-	b=wuniCg5tJBwg0NiDuUIqsJa2UJ4mNldoDj8lGZx9SJ6V9ioHwIurj2/bcaeSuAoT+Z5h
-	 7esDcyYY84GVuzplornp/7gukx8TZ/J3wEEsMyt4fx5pIbPtuL8b7lUAFGUV/OCB7DL0P
-	 uyTempRU/WTUvRpuWdxjIuvzaSQLqipmlgdPcbjaLoC+xaDxnSJ1gWt2KP6IGVE+6cIAr
-	 /8x9CJ7urPPm8sCIu+/7bgiSVwoldpLJXUXXR4wkABF5PD9QY8oxyVy5QAmod4+edr0UC
-	 deVirSSaDc4lkg5nWZSWmkqJzewt2QO8eZ1MpyYQbh5gE5nJUxT7gk60m00BKljLR6w==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=TNFHDFM4K1AW3GlNgioZ3tgqwl3n1roSw4ANYa5yNjw=;
+	b=fahkud7xA/JvIEgqO/RBKoBP2p0dOtz5QqkXq0MZIqFXZKxfCgc/g3umUdfDtxOHeL9H
+	 97sWUI1fHmehthWOpaTfipVk/l+PcYNMQeBFjUF9kcGvFXp+eW1GQ8iRslUqFO6miLewS
+	 f2cuZW112lRz16vAF7w130l9KHu0dqFKUkp0TJh9YwfybN6zF2g7Dyiq+SjJHQ+kGzyPe
+	 fGk354J92x1ApZCXdylOx7IzwWqEZFyjuCP1Yexr/nfXu0ATi+nYuhwaQhVh1nD7rkNsg
+	 IzIkGeJCjQhYT7oJdXq7+kOUiWSjGJcbyXwjuwFQLSJF2dscq4WbzOtnBZAVP5ARYzw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ji9RL0Kf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uz65gtmk;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CBD3606A31C;
-	Wed, 18 Nov 2026 20:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27909606A320;
+	Wed, 18 Nov 2026 20:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Ji9RL0Kf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C285C1F000C4;
-	Wed, 18 Nov 2026 20:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Uz65gtmk
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1A01F000C4;
+	Wed, 18 Nov 2026 20:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033605;
-	bh=CCyippY+3NnnztdJY2/pqtVnt4PZ2rO+dZmAeEhHcwk=;
+	s=korg; t=1795033608;
+	bh=TNFHDFM4K1AW3GlNgioZ3tgqwl3n1roSw4ANYa5yNjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Ji9RL0KfTvIzgxuzMnV+8RGTYFSlTCELFvCzj5To35nEHb2/Wuf4/OyMuyCV3uVri
-	 JZUfwPFrNx/U9VuszgohOMkqAL1yYPxP+eoSqV1SAnehDMVXK5OvIc/h3+7gEdB9d2
-	 UXRSEsNLtXzIobfPM19xYiPPbYwLD4zKqcqn4Z78=
+	b=Uz65gtmkswn0MJvOsuAnBXPezzADOZWefcMFVzT2zCAknaRSVsAYbPZMAVuhD5D3X
+	 oK/mSkiTtzjRVKByS6FkFMGhSmF9WV2aBxbhu6y5qLeVIbJEaO83WF6P3EFD5SMm2W
+	 9R8jiCQVXRt29E+IPAtpeKhZZ0pGsPKWda2mAKYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig=20 ?= <u.kleine-koenig@baylibre.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0032/3318] ASoC: hdac_hdmi: Fix resource cleanup on probe failure
-Date: Wed, 18 Nov 2026 15:10:54 +0100
-Message-ID: <20261118150314.767415339@linuxfoundation.org>
+Subject: [PATCH 6.6 0033/3318] regmap: maple: Workaround for another false-positive compiler warning
+Date: Wed, 18 Nov 2026 15:10:55 +0100
+Message-ID: <20261118150314.803688585@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,75 +62,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 785903b7770f19ea05b8a76081dff691c56fa771 ]
+[ Upstream commit dffd32eb2b0e714a8ae23f98518ad7152cb06369 ]
 
-hdac_hdmi_dev_probe() gets the HDA link before allocating and
-initializing the HDMI codec private data. Several later error
-paths return directly without dropping the link reference,
-leaving the hlink refcount unbalanced.
+Similar to the issue fixed in commit 542440fd7b30 ("regmap: maple: work
+around gcc-14.1 false-positive warning"), I see an uninitialized warning
+for upper_index and upper_last.
 
-Release the link reference on probe failures. Also turn display
-power off if the failure happens after it has been enabled.
+Happens with arc-linux-gnu-gcc (Debian 15.3.0-1) 15.3.0 on an
+allmodconfig for ARCH=arc.
 
-This issue was dicussed in:
-https://lore.kernel.org/all/s5h1s0esk8o.wl-tiwai@suse.de/
-I think the paths fixed here are probe failure paths: the device
-has not been fully initialized or bound, and runtime PM suspend
-cannot be relied on to balance the reference taken during probe.
-
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20260622151127.1198196-1-haoxiang_li2024@163.com
+Signed-off-by: Uwe Kleine-König (The Capable Hub) <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20260626060427.2548578-2-u.kleine-koenig@baylibre.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/hdac_hdmi.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/base/regmap/regcache-maple.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/hdac_hdmi.c b/sound/soc/codecs/hdac_hdmi.c
-index 7707f0b5562d4..4ff3c1d9eaa07 100644
---- a/sound/soc/codecs/hdac_hdmi.c
-+++ b/sound/soc/codecs/hdac_hdmi.c
-@@ -2162,8 +2162,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	snd_hdac_ext_bus_link_get(hdev->bus, hlink);
+diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
+index 86de71ce2c191..a2450b38b8b3b 100644
+--- a/drivers/base/regmap/regcache-maple.c
++++ b/drivers/base/regmap/regcache-maple.c
+@@ -113,7 +113,7 @@ static int regcache_maple_drop(struct regmap *map, unsigned int min,
+ 	unsigned long *entry, *lower, *upper;
+ 	/* initialized to work around false-positive -Wuninitialized warning */
+ 	unsigned long lower_index = 0, lower_last = 0;
+-	unsigned long upper_index, upper_last;
++	unsigned long upper_index = 0, upper_last = 0;
+ 	int ret = 0;
  
- 	hdmi_priv = devm_kzalloc(&hdev->dev, sizeof(*hdmi_priv), GFP_KERNEL);
--	if (hdmi_priv == NULL)
-+	if (hdmi_priv == NULL) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENOMEM;
-+	}
- 
- 	snd_hdac_register_chmap_ops(hdev, &hdmi_priv->chmap);
- 	hdmi_priv->chmap.ops.get_chmap = hdac_hdmi_get_chmap;
-@@ -2172,8 +2174,10 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	hdmi_priv->chmap.ops.get_spk_alloc = hdac_hdmi_get_spk_alloc;
- 	hdmi_priv->hdev = hdev;
- 
--	if (!hdac_id)
-+	if (!hdac_id) {
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
- 		return -ENODEV;
-+	}
- 
- 	if (hdac_id->driver_data)
- 		hdmi_priv->drv_data =
-@@ -2198,6 +2202,8 @@ static int hdac_hdmi_dev_probe(struct hdac_device *hdev)
- 	if (ret < 0) {
- 		dev_err(&hdev->dev,
- 			"Failed in parse and map nid with err: %d\n", ret);
-+		snd_hdac_ext_bus_link_put(hdev->bus, hlink);
-+		snd_hdac_display_power(hdev->bus, hdev->addr, false);
- 		return ret;
- 	}
- 	snd_hdac_refresh_widgets(hdev);
+ 	lower = NULL;
 -- 
 2.53.0
 
