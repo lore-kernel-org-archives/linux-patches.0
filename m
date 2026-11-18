@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049790;
-	b=RcHXH1z/nD553VOQJDidAPPJ/WAtWF7jh8DQu5xK9qlzcDpcDyfxZAc/Dhui+C/C2B/f
-	 alnLGWffjL0Ziw3P2lThtchSgjX0ihEVkEFb5K4dl8cp7WvUewSBDHbE+yEwCHKpSOg5Q
-	 pOlkQC1EdJE6BNLLHG4p6Ac4/4NJAG3B80hRb7htGOzrvic5VBLO3TYSsWV4/0PQdKhfg
-	 uq9nlra96+U6i97x+aWlNmBVGzvbDMbSJzgugAjVIwUwx4Ii3s8HCXqDXYL1/HrLf9ovf
-	 2U8B9KeWoSPUFIFe8CToIQkItbJFab2gFLv6T+jiE60yG/dluKF5NGVZOhDFQhKo8yw==
+	t=1795049793;
+	b=s2oCL+m2YSEWD2vCan3czG7INtLQsBA1Z9mFYW2sGwWWb26bzVkjvMITMlmUHfdzfijp
+	 LmcwxG3h6kbeZMsomAzHgJDuxKqpGb9kwKrL1EX+F0fJXLnfkVPulXOOw2DeEGHtnhNiF
+	 4RmqtraLjZyux0DnILj129BW2gxEJwz6VoAH+6H/dJ0kmK3sDwjms8IkpkGemCu6/ACa3
+	 eHk8VneQwTr9QtjJCVVgct/2UivndIDU1Ux241Idn14oCXu7JHwO0qZM0bCLuiyqkcyOD
+	 zIh6aHQKQPmDixlMvFcgHrwMZsKf/Vvl6Uef5QHZh7W0apFDqc8+Tg8OolUFyqpQGFQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049790;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=/YGYcmjuInsi3yHIKRveXSvzc+L+GscvkUSuOZq0dCg=;
-	b=2j+3/xSArjbhOMfyyNC/aQzSbBLFqu0nTrDK2g0UIlH/aiyoSA9txcLq6s5QqLKfItzD
-	 rYNCsSciyOlOFYtr4Qrshg+wKtfL/sFAtVg0HDa+WzlA8GeIRbPX+5tttZf5Rn/ZmssEj
-	 5TMn9eOa4RMQDCsE/PbfhbcTTGvxUs3FdxQJiJuqEDRQuZ7Gk575l9nb9YsyCcuTmn9SY
-	 98eDkkLGMJxWKcG+wKwrkZHdUAVgi55zlyPCgAWv/3b3R4evZluoj9Z1vN5ZQt7BH2FVL
-	 7nj567j9dsKKcTj4ou9eA5F4aDxPmtGmwbidUaOH/MP5jgUDC1wOa2p2VlGQDtmQEPg==
+	bh=+7OnVaDtnwtoIDSYbAEpXCZjzW9PQsW7LgTMu10IhJ4=;
+	b=e7+XpTSFZhf9pYeA76G0Tt0T42MOkh2HF/425w4HLea6dWJgYKZqgb8AWiSi40PoAno4
+	 nHHe/7+K8U+jkmiy0H1eqOzI43+5AYmSwEOj3BMv52DOu6SBJZD8KRxgN3j9S6WtdS5SD
+	 XdjkAgzmrOwxhihNrWSG37upkRK/vQyJMOauBgtE3CZ+QjN+jqD9GhH1PnN2ejuhff/30
+	 cDAlMRl7ZYxC3h5hrj+0b8GORwaK87H7iRbJGPES7qJsReAUW0vcGFy8b6OMkkdmUnJ6v
+	 Jgb1Js0jAWHCORNGS/CvPug9UFUWg/m6zDAqnAUAu2RznAtXp6AGM/Dln3R7qlZkMYA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wpaa8s4+;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9N2qvOo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3CB606A325;
-	Thu, 19 Nov 2026 00:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601B2606A32C;
+	Thu, 19 Nov 2026 00:56:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wpaa8s4+
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2D51F000C4;
-	Thu, 19 Nov 2026 00:56:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=f9N2qvOo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE5C61F000C5;
+	Thu, 19 Nov 2026 00:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049790;
-	bh=/YGYcmjuInsi3yHIKRveXSvzc+L+GscvkUSuOZq0dCg=;
+	s=korg; t=1795049793;
+	bh=+7OnVaDtnwtoIDSYbAEpXCZjzW9PQsW7LgTMu10IhJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wpaa8s4+IqAEaiz0mgv4VUK38FgMPzf4D579Qu3lyxZX3n/gAKVb0uED4n8MdGYvS
-	 Qfhv8UgBgKeg/ZPkLxpoi4KFQScJ7hVLDCoC6pcReLp4V13YyWzcKG7Ccs+FVCAowy
-	 gg8bqPAH0bT8vx0JWZGIKXRpcnpUx5cW+c8rSc5c=
+	b=f9N2qvOo7+hn49x7Lxf+YQu+Z2Vhp1VcWks5hqqkcbnj3CNLlGmCa+Gupbra+zyhA
+	 Jbu9jDyhyJrxDiKIREPgLy2RUhSVLVRDVgJf8wgqcPRZWW5sdtzZM3duBA6CI4k7lL
+	 1rb1COW27uJQEQuNGHmAdi+pkUlWmBCMI7c6ph1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiling Zou <zhilinz@nebusec.ai>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	VEGA <vega@nebusec.ai>,
-	Kyungsik Lee <kyungsik.lee@lge.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2450/2857] lib: validate in-memory LZ4 chunk length
-Date: Wed, 18 Nov 2026 15:58:04 +0100
-Message-ID: <20261118150329.780371727@linuxfoundation.org>
+Subject: [PATCH 6.1 2477/2857] ASoC: codecs: wm5100: Fix definition of EQ3 Band 1 Volume control
+Date: Wed, 18 Nov 2026 15:58:31 +0100
+Message-ID: <20261118150330.748168183@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -70,49 +69,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiling Zou <zhilinz@nebusec.ai>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 138a84817df01eda67bb23032ab49c23fe2ffc16 ]
+[ Upstream commit 96d30816a9a4fa6b3cc470f82d0f53e8a6425ab9 ]
 
-We found and validated an issue in lib/decompress_unlz4.c.  The bug is
-reachable by a root user through kexec_file_load() with a crafted external
-initrd.
+The EQ3 band 1 gain is in WM5100_EQ3_1, not in WM5100_EQ1_1, which
+holds the EQ1 band 1 gain.
 
-unlz4() reads the compressed chunk length from an in-memory initrd and
-passes it to LZ4_decompress_safe().  It only checks the chunk length
-against the allocation size when the input is filled by a callback.
-
-Reject an in-memory chunk that extends past the remaining input before
-calling the LZ4 decoder.  This prevents malformed initrds from making
-the decoder read past the mapped archive.
-
-Link: https://lore.kernel.org/59c6555c27aa7ba18ee227f9f02c78d15a37605f.1789219453.git.zhilinz@nebusec.ai
-Fixes: e76e1fdfa8f8 ("lib: add support for LZ4-compressed kernel")
-Signed-off-by: Zhiling Zou <zhilinz@nebusec.ai>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reported-by: VEGA <vega@nebusec.ai>
-Assisted-by: LLM
-Cc: Kyungsik Lee <kyungsik.lee@lge.com>
+Fixes: 6d4baf084f4d ("ASoC: Add WM5100 driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/d7f690e391feda7a6d8f38d0b238b165bc1f4fe2.1791959026.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/decompress_unlz4.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/soc/codecs/wm5100.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/decompress_unlz4.c b/lib/decompress_unlz4.c
-index e6327391b6b66..80bd4ea40f95b 100644
---- a/lib/decompress_unlz4.c
-+++ b/lib/decompress_unlz4.c
-@@ -139,6 +139,10 @@ STATIC inline int INIT unlz4(u8 *input, long in_len,
- 		if (!fill) {
- 			inp += 4;
- 			size -= 4;
-+			if (chunksize > size) {
-+				error("data corrupted");
-+				goto exit_2;
-+			}
- 		} else {
- 			if (chunksize > LZ4_compressBound(uncomp_chunksize)) {
- 				error("chunk length is longer than allocated");
+diff --git a/sound/soc/codecs/wm5100.c b/sound/soc/codecs/wm5100.c
+index 3b09d4a1684f3..7b2ba70687919 100644
+--- a/sound/soc/codecs/wm5100.c
++++ b/sound/soc/codecs/wm5100.c
+@@ -655,7 +655,7 @@ SOC_SINGLE_TLV("EQ2 Band 4 Volume", WM5100_EQ2_2, WM5100_EQ2_B4_GAIN_SHIFT,
+ SOC_SINGLE_TLV("EQ2 Band 5 Volume", WM5100_EQ2_2, WM5100_EQ2_B5_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
+ 
+-SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ1_1, WM5100_EQ3_B1_GAIN_SHIFT,
++SOC_SINGLE_TLV("EQ3 Band 1 Volume", WM5100_EQ3_1, WM5100_EQ3_B1_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
+ SOC_SINGLE_TLV("EQ3 Band 2 Volume", WM5100_EQ3_1, WM5100_EQ3_B2_GAIN_SHIFT,
+ 	       24, 0, eq_tlv),
 -- 
 2.53.0
 
