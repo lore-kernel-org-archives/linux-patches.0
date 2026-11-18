@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037854;
-	b=l6Vg0MPSAjfG2yK2MSpiLcWAZa5CFdWxiN+0vNpYdlXssx7vG8mUqnkPalUQMuNM5Obz
-	 ikXL9O12XfM/lWF6kV4pHzdb4+nrD5z0L+OwmuqXgxHx9ocLLeNGag4Qz9s47uKbC8YcK
-	 xKzWf+mBn/lE1T8VE1d49QDTXDQKSZfyG2xnilpdXhemLrP/Rw5qG4xfSyitjfoDWto7s
-	 z/UpfyP2a3f8hkiHk/4cezCstsTtmHxYXLaKccQubRF/v/kUmC668mdX4wIb9NFGZpRLy
-	 BozWU5JtGqd8QvO0nvSAtyjw7MHJhqDBKuc9WLpfIZAXnimd/AUCMDcAuuWpr1qCQbA==
+	t=1795037857;
+	b=3+NDwnbSIY4VcD6olQ/fASIj3wM7DDT673YXBJjCxWCE+wERjEoy1q+ARRD9NuQC3vHR
+	 db9zskqZzGoyA0IUGOBiA7N5L9YK0NPinuBml8qI9HmtOk5aMhfmsUAbwTwcvQd4/p2dO
+	 IKXhtSJj25ap+ZgkvM+RY19h+8PXmhREaWU10MlszY5OSlXzA1yqU/51HiulR3aPkJ3V6
+	 lI9PbgQ8SZ6NeFk4cOZXBt5rmQ6mMPWneE5TgOBULBVjwgPfF//m0oGaDOU2KwsEso6Bb
+	 eM2EAxz1OpyN3S7pxMmx4UQg9DPBeyrvNbc1q8kTSVDfMMPUEISlv7Wl0mKRxeo/Zsw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037854;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037857;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NUlpjLyMPebu+og7jgviHHNbJkf8c59wD/v5tFl9gHg=;
-	b=gy3K65O1yMaYvKvy/W2yBkVUY2fvw/USSoewzwL7l1elobOMqXbTZagny/v8AfSp9bDK
-	 LZ5pCQL6XPKvSxsRFupnlmefSSUIgyp1WoIT2y7z1CFr6hZsIY2b4vgzxNMjOenOWOn8H
-	 oG7nTJGJ0H/oUgXTcZrkN4UavTgTPGQAatPmNzV03DoOf2nxOmnqN3vG2z4FwFqhiYypY
-	 faICODvlMOYGa6Z/dYen9aohMUyCTh3JSy6L5Z2wvFOVJm2u8JSGLVi8sxwGudQ+DKvvO
-	 3oCBR8piGbpz9CkWL2PHzE5oNa+ApHqBAURRSLPTbc8nNweNm5u09rAwdUfqsDbsDmQ==
+	bh=YN7FDiAsGXtxhc94rFlinAMM+9zSB5vSmJSaYi+ds9I=;
+	b=et4xFPcinmnPB3cEHvNNY7rL3jsYsFEvdV+bagvfiaQT7dTJsnxEXIH+pXtiG2MEqOp6
+	 mp0sHrgC79r27Kfc5jhPDPI+7cKCFe5CxxvI4VyzBi3A/dz/0r3hEgb30ioiLgC+s+m3p
+	 CQFxFuxwJMJPXtscXdhqKjn5O4RC/Yv4hVO7R7AOhMw515DsZd3NQ2uDgANZPDwityprx
+	 ZuRxKWLLygsZNLfyLEieDKTb/mRcO+H5LUNfK/UpxL6YIRIPwSo/S4Tss70sSYI4k7WdO
+	 KNcZr/av9dsZ9LkxqRkIq32cmxj+rJmsS5wzPvrLuKytce1kfUnPAmTPR3I2dYQ72Gw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="qv/NVqUO";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NWQQw6vu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D98D606A31C;
-	Wed, 18 Nov 2026 21:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24955606A31C;
+	Wed, 18 Nov 2026 21:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qv/NVqUO
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27C71F000C4;
-	Wed, 18 Nov 2026 21:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NWQQw6vu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7465B1F000C4;
+	Wed, 18 Nov 2026 21:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037854;
-	bh=NUlpjLyMPebu+og7jgviHHNbJkf8c59wD/v5tFl9gHg=;
+	s=korg; t=1795037857;
+	bh=YN7FDiAsGXtxhc94rFlinAMM+9zSB5vSmJSaYi+ds9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qv/NVqUOk4EstFJI1IUqeL40BEc/VK/DmfwKn3S+0jK3P2XKwAa7N1NOcVh4vZFhD
-	 oKqeg6vDI+sOuG2QnoQfa1vTuHFEtXc4dIcVVokwyLy/qYeCdqJzqKZEFxh42C4LWm
-	 tldryPQJGw6+YIStphBbG+6y7RgqyjPk8q37XoSM=
+	b=NWQQw6vu6kbDhp5jj2ejDLI1Ga/g2iWEcj/yfNmFd/70Iuf/qQHhXZ4PbZmq6tRWQ
+	 XzcnkSoT26t92IevrsI45bOS1knPNHkREOmLorJF7UWLZ/e3brfDWTO1dRWOSd13/R
+	 JJ6U83J6HbaS4rrn87Am5If81PpQ/v5uIiwMChis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Chris Simpson <chris@nilk.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1514/3318] can: dev: can_fill_info(): dont wake up controller if interface is down
-Date: Wed, 18 Nov 2026 15:35:36 +0100
-Message-ID: <20261118150406.364651744@linuxfoundation.org>
+Subject: [PATCH 6.6 1541/3318] ALSA: hda/realtek: Enable bass speakers on Alienware m17 R3
+Date: Wed, 18 Nov 2026 15:36:03 +0100
+Message-ID: <20261118150407.208073132@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,77 +68,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
+From: Chris Simpson <chris@nilk.net>
 
-[ Upstream commit 75332c410c8190d61499001c5516af977ca426c3 ]
+[ Upstream commit eb296114d5ba4d335a640dbbbbc9618fded0ffe7 ]
 
-If the interface is down, the CAN controller might be powered down and
-its clocks gated. Don't call do_get_berr_counter() to read the bus error
-counters if the interface is down, and adjust can_get_size() to match.
+The Alienware m17 R3 (ALC289, PCI SSID 1028:09d1) has a second speaker
+pair, the bass speakers, on pin 0x17, which the BIOS leaves unconnected
+(0x411111f0). No PCI SSID quirk matches the machine, so it gets
+ALC269_FIXUP_DELL4_MIC_NO_PRESENCE from the fallback pin quirk table,
+and only the speakers on pin 0x14 play.
 
-This removes one trigger for a synchronous external abort seen on
-i.MX8QXP when "ip link show" is run on a flexcan interface that was
-never brought up. The underlying cause is platform-specific: on i.MX8QXP
-the CAN clocks are gated through the SCU LPCG and the subsystem shares
-the IMX_SC_R_CAN_0 power domain, and there is a window after
-pm_runtime_resume_and_get() returns where the clock has not reached the
-module yet. This patch avoids the netlink query path while the interface
-is down, but does not root-cause the LPCG window itself.
+Use ALC289_FIXUP_DUAL_SPK, as on the Alienware x16 R2 and Dell XPS 15
+9510/9520: it sets pin 0x17 up as a speaker on DAC 0x02, so one volume
+control covers both pairs, and chains to
+ALC269_FIXUP_DELL4_MIC_NO_PRESENCE, so the headset mic setup is
+unchanged.
 
-As a result, IFLA_CAN_BERR_COUNTER is no longer reported for down
-interfaces. Userspace must treat the attribute as optional.
+Tested on an Alienware m17 R3 (BIOS 1.38.0), Linux 7.3 with this change
+applied: the bass speakers play, and volume and mute cover both pairs,
+also after suspend and resume. Headphones and a headset mic were not
+tested.
 
-The issue was triggered on an i.MX8QXP board by running "ip link show"
-without ever bringing the interface up:
+I used Claude Code (Claude Opus 5.5) to find the unused pin, pick the
+existing fixup and write this patch and changelog; I did the listening
+tests myself.
 
-    Internal error: synchronous external abort: 0000000096000210
-
-    pc : flexcan_read_le+0x0/0x18
-    lr : flexcan_get_berr_counter+0x4c/0x8c
-    Call trace:
-     flexcan_read_le+0x0/0x18
-     flexcan_get_berr_counter+0x4c/0x8c
-     can_fill_info+0x1f8/0x434
-     rtnl_fill_ifinfo+0x8fc/0xbb4
-     rtnl_dump_ifinfo+0x364/0x448
-
-This is the same class of problem fixed for m_can in
-commit 91a55c72a821 ("can: m_can: m_can_get_berr_counter(): don't
-wake up controller if interface is down").
-
-Fixes: ec56acfef2af1 ("can: flexcan: flexcan_get_berr_counter(): switch on clocks before accessing ecr register")
 Cc: stable@vger.kernel.org
-Signed-off-by: ChunYuZhiQiang <chunyuzhiqiang@yinhe.ht>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20261027065012.191348-1-chunyuzhiqiang@yinhe.ht
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Assisted-by: LLM
+Signed-off-by: Chris Simpson <chris@nilk.net>
+Link: https://patch.msgid.link/20261029-alc289-m17r3-v1-1-5d3eac605e7a@nilk.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/netlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/dev/netlink.c b/drivers/net/can/dev/netlink.c
-index 77d165ed0d534..884313a5cdd31 100644
---- a/drivers/net/can/dev/netlink.c
-+++ b/drivers/net/can/dev/netlink.c
-@@ -454,7 +454,7 @@ static size_t can_get_size(const struct net_device *dev)
- 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_STATE */
- 	size += nla_total_size(sizeof(struct can_ctrlmode));	/* IFLA_CAN_CTRLMODE */
- 	size += nla_total_size(sizeof(u32));			/* IFLA_CAN_RESTART_MS */
--	if (priv->do_get_berr_counter)				/* IFLA_CAN_BERR_COUNTER */
-+	if (priv->do_get_berr_counter && netif_running(dev))	/* IFLA_CAN_BERR_COUNTER */
- 		size += nla_total_size(sizeof(struct can_berr_counter));
- 	if (priv->data_bittiming.bitrate)			/* IFLA_CAN_DATA_BITTIMING */
- 		size += nla_total_size(sizeof(struct can_bittiming));
-@@ -574,7 +574,7 @@ static int can_fill_info(struct sk_buff *skb, const struct net_device *dev)
- 	    nla_put(skb, IFLA_CAN_CTRLMODE, sizeof(cm), &cm) ||
- 	    nla_put_u32(skb, IFLA_CAN_RESTART_MS, priv->restart_ms) ||
- 
--	    (priv->do_get_berr_counter &&
-+	    (priv->do_get_berr_counter && netif_running(dev) &&
- 	     !priv->do_get_berr_counter(dev, &bec) &&
- 	     nla_put(skb, IFLA_CAN_BERR_COUNTER, sizeof(bec), &bec)) ||
- 
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index f13da29f4b90b..d711cd7292b2e 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10041,6 +10041,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1028, 0x097e, "Dell Precision", ALC289_FIXUP_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1028, 0x098d, "Dell Precision", ALC233_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x09bf, "Dell Precision", ALC233_FIXUP_ASUS_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1028, 0x09d1, "Alienware m17 R3", ALC289_FIXUP_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1028, 0x0a2e, "Dell", ALC236_FIXUP_DELL_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1028, 0x0a30, "Dell", ALC236_FIXUP_DELL_AIO_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1028, 0x0a38, "Dell Latitude 7520", ALC269_FIXUP_DELL4_MIC_NO_PRESENCE_QUIET),
 -- 
 2.53.0
 
