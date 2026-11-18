@@ -1,53 +1,56 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040276;
-	b=jtXt/l+x66JZwIsuj2d5T7DII3I9XEsXAdgBbCKicuOQ21w7Qg+oZbbAkHyywBw8txB2
-	 vRs3vcZwhOGlRzTqtIBLhY4pUZ/HKlB0A/VxvdBD32n1EJw6PidpSJP2Ce97jvTQjAPCB
-	 E8rN+TlXnVtjfhxm50bQkKAixGIZgM4VMWnAMHqwobW6/rMk3+zNtrJIFO9ula9d2GClo
-	 G4DHHi10a0oRQqSSOiT/ky0E6vdDeS4xnMF6axO/8q6WIl3tnHmAPulE7J8bmMM3tFxDM
-	 QJQVtyGvfZOH/8ExIu1i6MazvMMjQz/H5bO8gjOm3nLfGsjBDdjPFf8eTxy0WyJ9/Hg==
+	t=1795040279;
+	b=qwFUL/rw9LH7To6iLQhQeBlkKIAVIzOyaknatDhBiiKEKBMjordWl3TVnI3BDRXHcM0l
+	 ++IWzBTvGEDYotBS7NI5BLERAmSOfnNU3acPBTho6/51q17qlIMKqJjqyos4HcqD5K2+f
+	 PNNMXx7yl4Eymh9s1O/2VnSi8XANIM12U1jdC6PlQZHxD7j6/NTmr0u6g6VpL4hgqXhPK
+	 dlda4EY7I5M1U4lxRcdBDbjGsWUjtDYnnfoOsrhja2fM73V/hPovTIaVZJDOMVLDQ7UJs
+	 ooddbc75N2nqskbjIt8yCy6AEsfD+5/A4qHuUZAER3g1iQ7y37ah3u2K6FP0RC/NYGA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040276;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040279;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=WEok7Z3w52jKV2oHORDGb0cuQAGlL/Cqee2r4GneDj4=;
-	b=vK7rW9f7KWgwQAI/kHmceBLzVOtjsfZxMhXRr0/lAOu7cF7Pz3ocTqlb7cY3DKROes9C
-	 +U0fz7kjOhIiT6LP5tXsQVDZ6xl0f69ETy8dMw/A2SKZLOu8n7HBZC6g3hvjEaIwwux0a
-	 n+RHDJDDb2/JcNAZZvmjhXX2SxpGwMLhDcLBCYYSQjhRbtUwQwKdZWnEjfSzCXDEWw8zr
-	 /X2qW3KrIavKtvou1p0JUxrE/aFe015jkdu6/C4BmBh+uTJBJ8jPAGDlq5HyEoZPYKclW
-	 aos1aLj1AMTp2YsTk23s11vuT8yGhet/rJucUgF1sgIvRhNLr5nPPl0XToVwfLX4Nwg==
+	bh=pkmJg+0cUhjURDrLlGsukQvafa8PpCuEX/6mm26umWM=;
+	b=NST7RgEErRRtWx3dQthEIXaNebTlW7mwr4gZE68pM1pjV0+O7XSnMobxZ7LQ24jd2VXb
+	 bVuoM0t68h2Oo0F0BoVhLWtVf/6KSjPHAzCLDKe1mf1Y7/uWxVr19nSRFsJBpNFKUhKiq
+	 mVBiWDYf3+Jf8aEMsIxkrF3qfRTT+pA0NoLy+RJMIxh+nVzg0x6GA6+OjaTrkGZqKaP73
+	 6yanaSZvyNfrBz68p5gxr246pRQOrCMGtM9nEOhpb7DucFHlof8sE4URM9Rvj4vEiXeqi
+	 abKxDGKc6te7HhGbgK5wyty6jw705J4UUPDBjWAMUmoWvbblLqspuyo3Ji/0xfnH3Qg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="N/f21YsY";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a9eO951B;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886FB606A320;
-	Wed, 18 Nov 2026 22:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E662606A31C;
+	Wed, 18 Nov 2026 22:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N/f21YsY
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44E31F000C4;
-	Wed, 18 Nov 2026 22:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a9eO951B
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8BD11F000C4;
+	Wed, 18 Nov 2026 22:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040276;
-	bh=WEok7Z3w52jKV2oHORDGb0cuQAGlL/Cqee2r4GneDj4=;
+	s=korg; t=1795040279;
+	bh=pkmJg+0cUhjURDrLlGsukQvafa8PpCuEX/6mm26umWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=N/f21YsYkv43Ldh7/OgH4qiozybLnojo0HY3r4jx4+LIe/W5eJNvV/PvctCy5oEDp
-	 evDSYPQNVWHBLB+7NQk1Fw4yizHzlLGLKPQHwHddZxl7xxUBVzj5HfTJSfJCHrFm5h
-	 CD04EZiXxIuMxI2pTmQc+jDwPa7CKkZrW6XXivII=
+	b=a9eO951B+MScp3+2ayqi22CfKt97FmCfxLgFTLL//aklcXBPaAjIijsxIy7mLL4PQ
+	 /OqpkZOlJkoLVMN1Jz93zHk+BUByO5GQvZyGyOZzFD0sjj7sNZHnWhd9r6e7PkD7nR
+	 zxHs7Q/h5SkAfVWVeWE7XUUi44Hekk5UMWQvEdu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Hari Bathini <hbathini@linux.ibm.com>,
+	Shrikanth Hegde <sshegde@linux.ibm.com>,
+	Samir Mulani <samir@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2398/3318] iommu/vt-d: Fix IQE handling to cover all descriptors in submission range
-Date: Wed, 18 Nov 2026 15:50:20 +0100
-Message-ID: <20261118150433.449288107@linuxfoundation.org>
+Subject: [PATCH 6.6 2363/3318] powerpc/ftrace: Dont restore r13 during ftrace_regs_caller
+Date: Wed, 18 Nov 2026 15:49:45 +0100
+Message-ID: <20261118150432.470814676@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,137 +73,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Shrikanth Hegde <sshegde@linux.ibm.com>
 
-[ Upstream commit 754d07b940c4ce025fab022b548fb5c3d11bf766 ]
+[ Upstream commit af5f0870883ae4aea7f668d06cbb7ad0e12824c8 ]
 
-When an Invalidation Queue Error (IQE) occurs, hardware halts fetching
-and IQH points at the faulting descriptor. The previous code only
-checked whether IQH matched the first descriptor index of the current
-submission, missing faults on any other descriptor within the batch.
+Michal reported a stack-protector failure and subsequent panic when
+running kernel builds. This was observed with full/lazy preemption.
+Initially it was suspected as KVM, but later turned out to be due
+to a bcc tool running in parallel.
 
-Expand the check to cover the entire submission range [index, wait_index],
-accounting for circular wrap-around.
+Issue was recreated using a bcc tool.
+For example, running below in parallel leads to crash.
+./funccount sched* -d 100 and make -j 64
 
-Furthermore, after detecting IQE, the old recovery only replaced the
-single faulting slot with a copy of the wait descriptor and immediately
-returned -EINVAL. This left two problems:
+The same crash was observed when running kprobe for schedule() function,
+while simpler function tracer for schedule() didn't cause the crash.
+This helped to narrow it down to ftrace backed kprobes area.
 
-  a) Hardware resumed fetching and could hit another invalid descriptor
-     in the same abandoned batch, raising a second IQE that no submitter
-     would claim — permanently deadlocking the queue.
+The crash occurs as follows:
 
-  b) The caller reclaimed all batch slots (QI_FREE) while hardware might
-     still be asynchronously processing descriptors from that batch,
-     allowing concurrent overwrite and descriptor corruption.
+ftrace_regs_caller entry on CPU A
+    |
+    +-> save r13 = CPU A PACA into pt_regs
+    |
+    +-> call kprobe_ftrace_handler()
+            |
+            +-> ftrace_test_recursion_unlock()
+                    |
+                    +-> preempt_enable
+                    +-> task can schedule and migrate to CPU B
+                    +-> task resumes with live r13 = CPU B PACA
+    |
+    +-> REST_GPRS(2, 31)
+            |
+            +-> restore saved r13 = CPU A PACA
+    |
+    |-> The task then continues running on CPU B with r13 pointing
+    |   to CPU A's PACA.
 
-Fix both by introducing qi_drain_remaining_descs(): upon IQE detection,
-overwrite the stranded slots in [IQH, wait_index) with fenced no-op wait
-descriptors, resubmit the wait descriptor at wait_index, clear IQE, and
-spin until hardware signals QI_DONE (with DMAR_OPERATION_TIMEOUT). This
-guarantees hardware has fully drained the batch before the caller
-reclaims slots.
+The stack-protector canary is accessed through the PACA. After the task
+migrates, CPU A may run a different task and update its PACA with that
+task's canary. Restoring the saved r13 then causes the migrated task's
+saved stack canary to be compared against the canary in CPU A's PACA,
+resulting in a stack-protector failure.
 
-Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per qi_submit_sync()")
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Similarly, current is resolved through the PACA. With a stale r13,
+preempt_count() can access the state of the task referenced by CPU A's
+PACA instead of the task running on CPU B. This results in corrupted
+preempt-count warnings and scheduling-while-atomic failures.
+
+This path for example is called when using kprobes and parallel kernel
+builds can cause preemptions during ftrace_test_recursion_unlock.
+
+Do not restore r13 from the saved register frame. If the task did not
+migrate, the live r13 already has the saved value. If it migrated, the
+live r13 contains the correct PACA pointer for the CPU on which the task
+resumed.
+
+On PPC32, r13 is regular register. So do this fix only for PPC64
+
+Fixes: 153086644fd1 ("powerpc/ftrace: Add support for -mprofile-kernel ftrace ABI")
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/all/aqKfsVArHHaIK6M9@kunlun.suse.cz/
+Reviewed-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Shrikanth Hegde <sshegde@linux.ibm.com>
+Tested-by: Samir Mulani <samir@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260921072151.35531-1-sshegde@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/dmar.c | 72 ++++++++++++++++++++++++++++++++------
- 1 file changed, 61 insertions(+), 11 deletions(-)
+ arch/powerpc/kernel/trace/ftrace_entry.S | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index 4ad1ac43ed0df..ac52d20317f4e 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1276,6 +1276,49 @@ static void qi_dump_fault(struct intel_iommu *iommu, u32 fault)
- 	       (unsigned long long)desc->qw1);
- }
+diff --git a/arch/powerpc/kernel/trace/ftrace_entry.S b/arch/powerpc/kernel/trace/ftrace_entry.S
+index 40677416d7b26..47ccb75deeaa3 100644
+--- a/arch/powerpc/kernel/trace/ftrace_entry.S
++++ b/arch/powerpc/kernel/trace/ftrace_entry.S
+@@ -129,7 +129,13 @@
  
-+static int qi_drain_remaining_descs(struct intel_iommu *iommu, int head,
-+				    int wait_index)
-+{
-+	struct q_inval *qi = iommu->qi;
-+	int shift = qi_shift(iommu);
-+	struct qi_desc wait_desc = {};
-+	struct qi_desc nop_desc = {};
-+	cycles_t start;
-+
-+	nop_desc.qw0 = QI_IWD_FENCE | QI_IWD_TYPE;
-+
-+	wait_desc.qw0 = QI_IWD_STATUS_DATA(QI_DONE) | QI_IWD_PRQ_DRAIN |
-+			QI_IWD_STATUS_WRITE | QI_IWD_FENCE | QI_IWD_TYPE;
-+	wait_desc.qw1 = virt_to_phys(&qi->desc_status[wait_index]);
-+
-+	while (head != wait_index) {
-+		memcpy(qi->desc + (head << shift), &nop_desc, 1 << shift);
-+		head = (head + 1) % QI_LENGTH;
-+	}
-+
-+	WRITE_ONCE(qi->desc_status[wait_index], QI_IN_USE);
-+	memcpy(qi->desc + (wait_index << shift), &wait_desc, 1 << shift);
-+
-+	/*
-+	 * Order the descriptor rewrites before the writel() that restarts
-+	 * the fetch engine.
-+	 */
-+	wmb();
-+
-+	writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+
-+	start = get_cycles();
-+	while (READ_ONCE(qi->desc_status[wait_index]) != QI_DONE) {
-+		if (DMAR_OPERATION_TIMEOUT < (get_cycles() - start)) {
-+			pr_err("Timeout draining invalidation queue after IQE\n");
-+			return -ETIMEDOUT;
-+		}
-+		cpu_relax();
-+	}
-+
-+	return 0;
-+}
-+
- static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- {
- 	u32 fault;
-@@ -1296,18 +1339,25 @@ static int qi_check_fault(struct intel_iommu *iommu, int index, int wait_index)
- 	 * is cleared.
- 	 */
- 	if (fault & DMA_FSTS_IQE) {
-+		int head_idx, ret;
-+
- 		head = readl(iommu->reg + DMAR_IQH_REG);
--		if ((head >> shift) == index) {
--			struct qi_desc *desc = qi->desc + head;
--
--			/*
--			 * desc->qw2 and desc->qw3 are either reserved or
--			 * used by software as private data. We won't print
--			 * out these two qw's for security consideration.
--			 */
--			memcpy(desc, qi->desc + (wait_index << shift),
--			       1 << shift);
--			writel(DMA_FSTS_IQE, iommu->reg + DMAR_FSTS_REG);
-+		head_idx = (head >> shift) % QI_LENGTH;
-+
-+		/*
-+		 * The faulting descriptor can be anywhere within the current
-+		 * submission's range [index, wait_index]. Since the queue is
-+		 * circular, this submission may wrap around QI_LENGTH
-+		 * (index > wait_index in that case), so check both the
-+		 * non-wrapped and wrapped cases of the range.
-+		 */
-+		if (index <= wait_index ?
-+		    (head_idx >= index && head_idx <= wait_index) :
-+		    (head_idx >= index || head_idx <= wait_index)) {
-+			ret = qi_drain_remaining_descs(iommu, head_idx, wait_index);
-+			if (ret)
-+				return ret;
-+
- 			pr_info("Invalidation Queue Error (IQE) cleared\n");
- 			return -EINVAL;
- 		}
+ 	/* Restore gprs */
+ 	.if \allregs == 1
++#ifdef CONFIG_PPC64
++	REST_GPRS(2, 12, r1)
++	/* Do not restore a stale PACA pointer if the task migrated */
++	REST_GPRS(14, 31, r1)
++#else
+ 	REST_GPRS(2, 31, r1)
++#endif
+ 	.else
+ 	REST_GPRS(3, 10, r1)
+ #ifdef CONFIG_LIVEPATCH_64
 -- 
 2.53.0
 
