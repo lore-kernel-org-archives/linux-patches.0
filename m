@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795053076;
-	b=KMXBcHsLhgWFT6gcRiHK5BLTJRui7OoAX02aQdpC/96V0p/yotQWK86hAAPNflnyXIuV
-	 BDEvTTVJ3anEHnZfk+y/bU/3BcBtOH+Fc6/eDbqv3M8rt/cZSnXcK//CXFzRqfpCMeQ5d
-	 X4TvpHya29ZuHX7IwdWZERb3Idb1rUIBnmWIXy7iOpFunvCZCG4sKRpfHhp/FZpIHZ6Yr
-	 j47iXJyutzr27bziSjU9ApKkiGPTPPAEH4ccpQfc+hP8CFBGFpG8M2uoAf8Oj+pJT9tCs
-	 ifCDGVVEKhV6r9nwN7fKuM6mpUBFMgfYJWybQLczDy3ro5Fw6OD71yFuepPTmU2+Gjg==
+	t=1795053079;
+	b=pU2gFs3YRiZLLW1Rqwjr4UOq6nTUfIwAi+jFfkhKbQRdK7HDBKakcaL37y8/JhvseA46
+	 E1o41DcJ888QIlDNL0BGebw98ZxBPQyHiuB9/vHkVkXwvLzyXGakG3U3zG8G7blThtHwA
+	 pMVRkfR2ydjd7GPuJk9PMyxc+nwvysvU1h+F7CwfEvqKUIWW636+9Ze2Q+s6/c2dDwn97
+	 LZk7JHoQUZyu5Q9GJ6JXhzZQ4yw+ga7fg6Z41j1LkS3NHlAa3bC0obhxG+9+5eteb4lj+
+	 WfSkeZkrGGp54+n/1542QWn5NOXwn1PEKliZzn19VsRATvV6IB/6pFWGN1DLBTfvwzw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795053076;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795053079;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=tYCf+E8lzREyNy5yk3gAglvciEPT01bngkEtrpbVr1E=;
-	b=DrgRZf8jH4r0x2Se7RXKiOnZkcwEGUY6I6YDxuc8V+Af6+sPzXMqt9AskBUTjxE4f4Y0
-	 4GvOAlxGPaxedGBVXfT7NG+QfjW+/LgnjxG73Zj+nB5iQw5YeKu10q3B/GP69gPBMqPZd
-	 hElKccd4vUq3LV/BfnjiHw4kpiG7gCo+xcBCb+LcLpR0w4lgk1qbhsJc3J1vIh2LaK9eW
-	 D6TpTc/xiPwTopTLEFJtluPZv56oFSO5VeUmGQz8RCY7fyxvG975YN4AlbbzikiI307RZ
-	 hpcOSnuYb+vfTUR64wGGRt6KiWUn7IDu3IfbraCgtJlltOSg5thbdRDGUQVSu928iIQ==
+	bh=yRCxmrltfdBgr/4Lc82cPy5Hnpd7z+YLuwzkub1u8i4=;
+	b=OHyZfs6z7XoOsch6WleY1j/0I3iwcpwub9XRkd48s1xurQjJ2ldEbTjDxZJdfO6gOhU3
+	 xJubZrtWnhFBp0uHppriQQXgL1zv1x9aY90izYh2dlOmXppjomBh6/zLyre8f89WGmmbd
+	 PbIriNJFVEFljDIsdXXm9gd2N3jEVzF7FQblCzbsGvWcLZMOUnoD0kQ/aJoPFqAqdPNFS
+	 EzuZ2z1q3SmseWh3S8thv0SuHS4e+taDEXdI3caryv9AjoI7lD0kmEsJXKFmX4HW/nGWv
+	 1Tt4yTC394K4QVxcZwbp/1GoQo7CNxroi15mIH9P49ghrm2PJOvRveIGNh1y4YlrVEg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2kweuJ3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLsc1uAP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93740606A325;
-	Thu, 19 Nov 2026 01:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451AF606A31C;
+	Thu, 19 Nov 2026 01:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x2kweuJ3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77631F000C4;
-	Thu, 19 Nov 2026 01:51:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fLsc1uAP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF5A1F000C4;
+	Thu, 19 Nov 2026 01:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795053076;
-	bh=tYCf+E8lzREyNy5yk3gAglvciEPT01bngkEtrpbVr1E=;
+	s=korg; t=1795053079;
+	bh=yRCxmrltfdBgr/4Lc82cPy5Hnpd7z+YLuwzkub1u8i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x2kweuJ30iZODRZwWmLBzhx3DKoEUKCEpqH7DeREou/lJ7gq+aMNyS3r9CZ6BIXlo
-	 AkrEbC05jBDExpLctphcuw0D2b5BZt/HiIYiVO44cKruhXIScszY6mDH9IkvG7bxcR
-	 Zc8OQozIHz3LT9S+mZRF6duwHmHf7+sWgONCmJoU=
+	b=fLsc1uAPDN59vQyOr2Ua1OOQH+gmBrl8db1ve8SwZLb8UlHKYkGqaETnVcimN7rQb
+	 13Yt8+0vCwNe9DludjwLzshdPNaNvVWox8YRCkdC4D8pwu2FqfKOOGkwbEbMvYi/sD
+	 U4RI9k+tzVMKs0yrm5djHrsR08aanPWcj1/YkxmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Guixin Liu <kanie@linux.alibaba.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Xia Yan <yanxia@cmss.chinamobile.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0741/2214] nvmet-fc: Tear down the association when the admin queue allocation fails
-Date: Wed, 18 Nov 2026 15:40:17 +0100
-Message-ID: <20261118150041.465771293@linuxfoundation.org>
+Subject: [PATCH 5.15 0732/2214] macvlan: fix passthru promiscuity accounting while down
+Date: Wed, 18 Nov 2026 15:40:08 +0100
+Message-ID: <20261118150041.116759922@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -69,50 +69,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guixin Liu <kanie@linux.alibaba.com>
+From: Xia Yan <yanxia@cmss.chinamobile.com>
 
-[ Upstream commit 11db8ab55e1a7533e9cfe57687ab142ba67d3c84 ]
+[ Upstream commit b6743653d134c9ef8436e2db1be1ad4c1e0d0091 ]
 
-When the initial admin queue allocation fails after a new association
-was created, nvmet_fc_ls_create_association() only drops the
-association reference, which frees the association.  By then the
-association is already on the target port's assoc_list, though, and
-removal from that list only happens in nvmet_fc_delete_target_assoc(),
-which this error path never calls.  The freed association stays on the
-list, where later lookups and the port teardown can access it, and the
-target port reference taken at allocation time leaks.
+macvlan_changelink() adjusts the lower device's promiscuity count when
+NOPROMISC changes, even if the passthru macvlan is down. The reference
+is acquired in macvlan_open() and released in macvlan_stop(), so a down
+interface has no reference to change.
 
-A remote host can trigger this reliably with a Create Association LS
-requesting a queue too large to allocate.
+Clearing NOPROMISC while down leaves an extra reference after the next
+open/stop cycle. Setting it while down can remove a reference held by
+another user of the lower device.
 
-Schedule the regular association teardown instead of dropping the
-reference directly.  The teardown removes the association from the
-list and releases the target port reference before the final reference
-drop frees it.
+Guard the count adjustment with netif_running(dev). Keep storing the
+requested flags while down so the next open uses the new setting.
 
-Fixes: 0cab4404874f ("nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association")
+Comparing changelink with open/stop exposed the unmatched count changes;
+the same issue was also described in earlier macvlan reviews. A netlink
+test on UML reproduced both DOWN cases before the fix and verified the
+expected counts afterwards. Repeated flag updates, two open/stop cycles,
+deletion and bidirectional small-frame delivery were also checked.
+
+Full x86_64 builds completed with WERROR disabled for allmodconfig, and
+WERROR and KASAN disabled for allyesconfig, including the resulting
+dependency changes. Neither comparison showed new diagnostics.
+
+Fixes: df8ef8f3aaa6 ("macvlan: add FDB bridge ops and macvlan flags")
+Link: https://lore.kernel.org/netdev/179170088566.434549.4699134797461783473@kernel.org/
+Link: https://lore.kernel.org/netdev/20261016003009.2692872-1-kuba@kernel.org/
 Cc: stable@vger.kernel.org
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Guixin Liu <kanie@linux.alibaba.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Xia Yan <yanxia@cmss.chinamobile.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Link: https://patch.msgid.link/20261022090809.12019-1-yanxia@cmss.chinamobile.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/macvlan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index adb6a207cf2d6..28ad8de903ff0 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1681,7 +1681,7 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
- 					be16_to_cpu(rqst->assoc_cmd.sqsize));
- 			if (!queue) {
- 				ret = VERR_QUEUE_ALLOC_FAIL;
--				nvmet_fc_tgt_a_put(iod->assoc);
-+				nvmet_fc_schedule_delete_assoc(iod->assoc);
- 			}
- 		}
- 	}
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index c8c1761908c1b..0755f1dc296c0 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1590,7 +1590,8 @@ static int macvlan_changelink(struct net_device *dev,
+ 	if (data && data[IFLA_MACVLAN_FLAGS]) {
+ 		__u16 flags = nla_get_u16(data[IFLA_MACVLAN_FLAGS]);
+ 		bool promisc = (flags ^ vlan->flags) & MACVLAN_FLAG_NOPROMISC;
+-		if (macvlan_passthru(vlan->port) && promisc) {
++		if (macvlan_passthru(vlan->port) && promisc &&
++		    netif_running(dev)) {
+ 			int err;
+ 
+ 			if (flags & MACVLAN_FLAG_NOPROMISC)
 -- 
 2.53.0
 
