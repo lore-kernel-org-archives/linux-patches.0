@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035948;
-	b=Wdal10AabICMWYqlgOzOBlB/hxvtCU2Ljn9kY6j1t17JaN8K4zbrGOpvPiKzrWHArtNV
-	 6Q8+hNb0zEAmLtMgtIhCowcuEXE3t7W4VDZyzFQhyqLiBy11VqHr67fAG/fcRrlUZJsuD
-	 6HZw4nCrysKP1YOCHtf/V3gmE03LusiL6adQNaNgFg0KxIHigMol5CHB4e25PdMkSSDZw
-	 5/odWJqb1ZcfbfrlnY8Ia15TTkOU4giLmZwVbj+BnbpEk+v19q7RGPODUf1WZnop5REm6
-	 NmI1QRRGlvkqakPMYq4I6u930aAV1QHWpPTSEKEmA6L5W76x4HbD1Nizkpjet/AgnUg==
+	t=1795035951;
+	b=UOVW5VBQzE1dIlFT2Fp+ivQ1PdfXTgiJwbAUF2cDYiRQ1KgWYZnaxCdXQRe8nLDqF5sL
+	 krQ23tFqlsd6/l55pFmcELVMP368z1q0CxMkegAhaSEVsI3FjFuqAisK/k+/vAwFyzdUo
+	 SvXaLNgiw0qngHuvWcHZHe29qSqWN8zOLj0bKcwI5oo4NTeTCBgSXfxsv45XZ1crowigQ
+	 8tRoGwVE4j3NXAiwDzyBen4laletOqD8tRD3w18Dp3NB5PESiBZCtTeHt8l+BKBzySwUC
+	 5RR9Lsg92m8X3fYfPa4HUrUfWBq7/MRGWuKR7AhwIZas1ICVZEaiXfkNSbj2LQ3uvcg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035948;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035951;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=FvsODOztpCVR6EqMu3TIcfgXnnAQnR9306cTTWJPyy8=;
-	b=PV+NnS8eu7PqGMbxkzg6K+0vqEUvOs0vpfZtUYtkKPiT7ITWgtxdM7bU908QeXDO9gFB
-	 BpAmZTCWdU/dY7EoHlk1Tpmq6UnHMWkE4j0/tjlHF8G01/Gq4Pw3qMdm57UrBcD29ygU/
-	 0Id/PnIL1TopXNX7X+vD5m6UL3F2Y5shhoGrQuU3ENoFMCSQwzzFrFM5Hckxe6NA4YBNq
-	 nYIXIbW3moclC9VMMIF9qzahxHw5t1pRgigH+AfNm4o2lrdZmT03yMxNPQBTUZFvHb/JO
-	 A/x3OJEmxbnOW9Z0z0ttGJeS0qUlyWH39nRKlEgd8p2q+b8Y9cpQktXvCMxf62/Wnzg==
+	bh=QZY1+CYTebZbIjHY4b1ZyJPzknBz9sMvhyCWYDnWqKQ=;
+	b=DT0rJXAvilVOLnpCyl3AfJ/hu7eUTNAaj//uAYMQ9bp7WYTb+BuTCSOrKHY17lfClqLR
+	 qHpNFTxl3VYBP9PHFpsEt55ezLOGuveqHe6MS7fY29VOZLo0MxiuK1xHmV1hRG0JUgNoL
+	 ZkvsTjlBaJHuI8fyP7VjydEQzcrf//h9uMojyrY1MpM2diahF3GHzBpzJPK5D2COOyZ9v
+	 8esaycNtpLF4zmBXHe2UE8VAl9kN2aOhvAGifRgFuks5qe2mjn+JKqod+om+0OBjMjOc7
+	 xwiW0S/4SWaBMI3kfAs9EGxsIVsJug47QiKNdEGWL/KI7hpmJAMhpcK8vFWdA0/7y3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wIFVrBsp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHrlSmIh;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28336606A334;
-	Wed, 18 Nov 2026 21:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3216606A334;
+	Wed, 18 Nov 2026 21:05:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wIFVrBsp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76AE01F000C4;
-	Wed, 18 Nov 2026 21:05:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHrlSmIh
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51B9D1F000C4;
+	Wed, 18 Nov 2026 21:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035948;
-	bh=FvsODOztpCVR6EqMu3TIcfgXnnAQnR9306cTTWJPyy8=;
+	s=korg; t=1795035950;
+	bh=QZY1+CYTebZbIjHY4b1ZyJPzknBz9sMvhyCWYDnWqKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=wIFVrBspHT+p4yN2I0xHKgrMMv/s1Nm9A+5xKkIY7ARFni4l3I2U5aJymLqe4csH9
-	 rs3mrJNUnFQdz3wbZMPDW5p/iiqGb2QzIvl2q3wHmXODjFG7vs3U9V7uh7Ee80/076
-	 Xali0efgrP69mGXARs5emU95hzZv1Kmbek2NJ8YQ=
+	b=GHrlSmIhhbBRUsWT8FL0hS12qYKKzRLjYHi+wHaoph/1E1z3VUxTGhP6YRaz3UeFm
+	 Yre5ljL9WU7ai0alyNb7QyrsCSH9vBVQFhELbr9n22+lJp7+AFHW1DfZdwLoySl2f/
+	 HA5/SUMFx0fPIQbjpV0rEgMJ6fZgSDK+QL0sR7i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangshuo Li <lgs201920130244@gmail.com>,
-	Joshua Crofts <joshua.crofts1@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
+	Cao Guanghui <caoguanghui@kylinos.cn>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0885/3318] iio: adc: at91-sama5d2: disable autosuspend on remove
-Date: Wed, 18 Nov 2026 15:25:07 +0100
-Message-ID: <20261118150345.933259879@linuxfoundation.org>
+Subject: [PATCH 6.6 0886/3318] md/raid5: track disks array size to fix extra_page leak on error paths
+Date: Wed, 18 Nov 2026 15:25:08 +0100
+Message-ID: <20261118150345.973505324@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,48 +68,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guangshuo Li <lgs201920130244@gmail.com>
+From: Cao Guanghui <caoguanghui@kylinos.cn>
 
-[ Upstream commit 022996906e70c6bc9a7968ee663ebbe314fe1524 ]
+[ Upstream commit 5028ceee173bfcf844469cfb0d1c151d3f6d0296 ]
 
-at91_adc_probe() enables runtime PM autosuspend with
-pm_runtime_use_autosuspend(). The probe error path correctly undoes
-this setting with pm_runtime_dont_use_autosuspend(), but the normal
-remove path only disables runtime PM.
+free_conf() iterates conf->pool_size entries to free extra_page
+allocations, but pool_size may not reflect the actual size of the
+conf->disks array.  Two scenarios cause a mismatch:
 
-The runtime PM API requires pm_runtime_use_autosuspend() to be undone
-with pm_runtime_dont_use_autosuspend() at driver exit unless runtime PM
-was enabled with devm_pm_runtime_enable(). Leaving the autosuspend flag
-set therefore leaves the runtime PM state incompletely cleaned up after
-the driver is unbound.
+1. setup_conf() early abort: pool_size is 0 (not yet set by
+   grow_stripes) but conf->disks has max_disks entries with
+   extra_page allocated.  The loop iterates 0 times, leaking all
+   pages.
 
-Add the missing pm_runtime_dont_use_autosuspend() call to the remove
-path.
+2. resize_stripes() Step 4 failure: conf->disks was replaced with
+   a newsize-entry array in Step 3, but pool_size is only updated
+   on success.  The loop iterates pool_size (old, smaller value)
+   times, leaking (newsize - pool_size) pages.
 
-This issue was found by manual code inspection.
+Add a dedicated disks_cnt field to track the actual number of
+entries in conf->disks.  Set it immediately after each allocation
+or replacement (in setup_conf and resize_stripes Step 3, where the
+array is safely stalled with no concurrent access), and use it in
+free_conf() instead of pool_size.
 
-Fixes: 75d7556ac0e4 ("iio: adc: at91-sama5d2_adc: add runtime pm support")
+This leaves pool_size untouched, preserving the check_reshape()
+retry behavior that depends on pool_size only being updated on
+full success.
+
+Fixes: d7bd398e97f2 ("md/r5cache: handle alloc_page failure")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guangshuo Li <lgs201920130244@gmail.com>
-Reviewed-by: Joshua Crofts <joshua.crofts1@gmail.com>
-Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
+Signed-off-by: Cao Guanghui <caoguanghui@kylinos.cn>
+Link: https://patch.msgid.link/20260827080341.112296-1-ghuicao@163.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/at91-sama5d2_adc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/raid5.c | 5 +++--
+ drivers/md/raid5.h | 1 +
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/adc/at91-sama5d2_adc.c b/drivers/iio/adc/at91-sama5d2_adc.c
-index 4ca39a2527c21..7b8550f57c328 100644
---- a/drivers/iio/adc/at91-sama5d2_adc.c
-+++ b/drivers/iio/adc/at91-sama5d2_adc.c
-@@ -2510,6 +2510,7 @@ static int at91_adc_remove(struct platform_device *pdev)
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index d6035fc6232aa..747da5fb96254 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -2649,6 +2649,7 @@ static int resize_stripes(struct r5conf *conf, int newsize)
+ 		} else {
+ 			kfree(conf->disks);
+ 			conf->disks = ndisks;
++			conf->disks_cnt = newsize;
+ 		}
+ 	} else
+ 		err = -ENOMEM;
+@@ -7454,7 +7455,7 @@ static void free_conf(struct r5conf *conf)
+ 	free_thread_groups(conf);
+ 	shrink_stripes(conf);
+ 	raid5_free_percpu(conf);
+-	for (i = 0; i < conf->pool_size; i++)
++	for (i = 0; i < conf->disks_cnt; i++)
+ 		if (conf->disks[i].extra_page)
+ 			put_page(conf->disks[i].extra_page);
+ 	kfree(conf->disks);
+@@ -7637,7 +7638,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
  
- 	pm_runtime_disable(st->dev);
- 	pm_runtime_set_suspended(st->dev);
-+	pm_runtime_dont_use_autosuspend(st->dev);
- 	clk_disable_unprepare(st->per_clk);
- 
- 	regulator_disable(st->vref);
+ 	if (!conf->disks)
+ 		goto abort;
+-
++	conf->disks_cnt = max_disks;
+ 	for (i = 0; i < max_disks; i++) {
+ 		conf->disks[i].extra_page = alloc_page(GFP_KERNEL);
+ 		if (!conf->disks[i].extra_page)
+diff --git a/drivers/md/raid5.h b/drivers/md/raid5.h
+index fd61715538800..64b6a0fb28600 100644
+--- a/drivers/md/raid5.h
++++ b/drivers/md/raid5.h
+@@ -668,6 +668,7 @@ struct r5conf {
+ 	unsigned long		cache_state;
+ 	struct shrinker		shrinker;
+ 	int			pool_size; /* number of disks in stripeheads in pool */
++	int			disks_cnt; /* number of entries in disks[] array */
+ 	spinlock_t		device_lock;
+ 	struct disk_info	*disks;
+ 	struct bio_set		bio_split;
 -- 
 2.53.0
 
