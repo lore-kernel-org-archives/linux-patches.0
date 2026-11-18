@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060794;
-	b=XGRxrGg4VOaEGwnZsKQ4SgeWhfGU5PnJqaffoLDaIzrtKnCwkfLwE1dOx/3xdHmgh9jo
-	 GjCUWgqC6r1Zv8LbOLgOhH6uM+SlapAhDr2fHK29QRB9oJqgyJaiXLRce4LVWE0WO/iJp
-	 tA7yXGin0tb0NBGXZHapQhXuS3n27uJ53jHT/lZtb9BOD2cqgzQoAEE1PABOAWj+AvLC+
-	 AdY6dqCNeOZ6+pTQhyLuCh/6/W3uxEK/OdFKyVegEipHz5auaXevgr7Nz8g7AnlpZO2qT
-	 ETfqcXLxrnjfJbYdmPnMalq10Xjbur7M8xV010VN7TzTg2iqUPu1PjUwV3Q/tPfS0qw==
+	t=1795060798;
+	b=capC7U63Ouf6ps3MDqy3+htjKWECVaJYtUziNQmOjaRQ9HR3hYhuI9QEGxp+oVVm1fMc
+	 zkuhO1tocc0Tpszr4X9r8jVY3RNJfI6t4/O1EyWTw/MeFtyq0WlW4NkevxUHYo4c83yTv
+	 jXt4iqpIzwLaqo3tCCj1P+c0lr7yiOLs2wGLeTaI3PgdPqPuar3V7lIBB0lNAW0OCAg1u
+	 1QEBm1edqIx5WkGm3ypIEsJvQuDOsRIQ9lldHtRiPeSgoiay8qW8n0ucdN4g9jmPzGB4H
+	 pCsjO4TcUJYdXf9dGk7FmgfuhaD7RvKqnB+3xZPzjtAYU/5k8+VaaJ+Zqfb6pCB65wA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060794;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060798;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ukeqwe0usV36hle2i94lWWapwWyaaOtesO/p5+nd5GM=;
-	b=vho8foekxdSUcnYZSHdq+P9ZBAtuL+4L21Hx4jaX6IU8ysegFWR4HhNC4KbMj7Nyylvy
-	 FLQV6eBuXK9uAagIQjXJClb9+Tizuc0DeSeXnzS1XSv7as6+T2tL30yNfi8KPsxm8dHUj
-	 LdIfIQRCCAkVKb+s/+3vDmTj08QDmIexhMDpy34JuGXqZPk2N5k7babZS0nt+X6lk0Boc
-	 T7jTWfgk055mWWPj7IdYd8lgxj92gjew6uprSf0JzaoBNbUgiGVmEV27F9YZK3mMx0Saj
-	 D3XZjHjv79YwZlCMPwZPlt7AxSRvLKCldLdXHUF6htpZQZeNx7PNSmE7U5fS23t2ESg==
+	bh=InC90Q2OR5jb5YxMg/G6Tx+XyuZP1Gugwm29GURYSao=;
+	b=aW2UCYKk6ipaZUpCKP6+ihRwFkRdy7FWaOTBNEPKrI3yP/Jc9RhF7PgAEGjXNmw4pjHh
+	 Eludev5pf+bOHJUQwpsAojoofC64SRtS5vr4qEr5nRsCtttLvSZXfrRoOWGkyXDKBQWCo
+	 Qe0cY0h0O3g/gPX/PC1S3pgBlHzwvxSTXRBZkiYpHTJYcYSqrXHr6E5Zx7pCIcCljebvq
+	 UYTFf4FMJH4SJYLLNLICGO/GqbbuU42CRYdFq7s2lRcGROJw9wZal6CmGC3eRbtBG3AEP
+	 vr0bpI7/kQLRGDVD/r4EnK81uniSi6RtQAILr76ssgdzRihvHAEn7he7wJMjHtSSldw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kqn5eUlt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="q1/6sMj7";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5059606A326;
-	Thu, 19 Nov 2026 03:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB9C4606A320;
+	Thu, 19 Nov 2026 03:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Kqn5eUlt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1669B1F000C4;
-	Thu, 19 Nov 2026 03:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=q1/6sMj7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F731F000C4;
+	Thu, 19 Nov 2026 03:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060794;
-	bh=ukeqwe0usV36hle2i94lWWapwWyaaOtesO/p5+nd5GM=;
+	s=korg; t=1795060797;
+	bh=InC90Q2OR5jb5YxMg/G6Tx+XyuZP1Gugwm29GURYSao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Kqn5eUlt3qLAooVxpB2k/6CqRvyayFiwF9PVD0VgY+lR3KBrAk0u4++nbXNDYd2xl
-	 W0k7zMSy8UMRAorL0guAM9ywjpeD7+CAfTxvxCNHq/7lJ2z2/lY/UxSOUWCG2t67Qp
-	 Vr7M/75v3G8FxhOPMxUj0lqUpmLOqRV6u1/rQ1ec=
+	b=q1/6sMj7tIzCQaQ3mZMK9NYjhGMKyhEI+yu1FBXiVJeSwwyEWhRk9NbFZru0kDbKX
+	 lAUxrMHHXhAnOpi4XVECh03CTY/NM2HAGuFHeDmUqleG5AryQFrtJKUPQbW+zK9jJf
+	 uFEdrEH0gDGFpb/dFMMOBFEJD9wZ13soNXIdY/Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felipe Balbi <balbi@kernel.org>,
 	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Lee Jones <lee.jones@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1325/1848] software node: Introduce device_add_software_node()
-Date: Wed, 18 Nov 2026 15:56:03 +0100
-Message-ID: <20261118150015.214544640@linuxfoundation.org>
+Subject: [PATCH 5.10 1326/1848] mfd: core: Add support for software nodes
+Date: Wed, 18 Nov 2026 15:56:04 +0100
+Message-ID: <20261118150015.276117208@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,131 +71,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-[ Upstream commit e68d0119e3284334de5650a1ac42ef4e179f895e ]
+[ Upstream commit 42e59982917a25ad254b74e6e8decee5e684763d ]
 
-This helper will register a software node and then assign
-it to device at the same time. The function will also make
-sure that the device can't have more than one software node.
+The old device property API is going to be removed and
+replaced with the newer software node API. This prepares MFD
+subsystem for the transition.
 
-Acked-by: Felipe Balbi <balbi@kernel.org>
 Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20210115094914.88401-2-heikki.krogerus@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Lee Jones <lee.jones@linaro.org>
 Stable-dep-of: 14a7cf1a3730 ("mfd: intel_quark_i2c_gpio: Manage the fixed-rate clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/swnode.c    | 71 +++++++++++++++++++++++++++++++++++-----
- include/linux/property.h |  3 ++
- 2 files changed, 65 insertions(+), 9 deletions(-)
+ drivers/mfd/mfd-core.c   | 9 +++++++++
+ include/linux/mfd/core.h | 4 ++++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/drivers/base/swnode.c b/drivers/base/swnode.c
-index e11e715320199..dc59a25e207c1 100644
---- a/drivers/base/swnode.c
-+++ b/drivers/base/swnode.c
-@@ -48,6 +48,19 @@ EXPORT_SYMBOL_GPL(is_software_node);
- 				     struct swnode, fwnode) : NULL;	\
- 	})
+diff --git a/drivers/mfd/mfd-core.c b/drivers/mfd/mfd-core.c
+index c0083e38d5273..0eb9cacbcfd44 100644
+--- a/drivers/mfd/mfd-core.c
++++ b/drivers/mfd/mfd-core.c
+@@ -253,6 +253,12 @@ static int mfd_add_device(struct device *parent, int id,
+ 			goto fail_of_entry;
+ 	}
  
-+static inline struct swnode *dev_to_swnode(struct device *dev)
-+{
-+	struct fwnode_handle *fwnode = dev_fwnode(dev);
++	if (cell->swnode) {
++		ret = device_add_software_node(&pdev->dev, cell->swnode);
++		if (ret)
++			goto fail_of_entry;
++	}
 +
-+	if (!fwnode)
-+		return NULL;
+ 	for (r = 0; r < cell->num_resources; r++) {
+ 		res[r].name = cell->resources[r].name;
+ 		res[r].flags = cell->resources[r].flags;
+@@ -313,6 +319,7 @@ static int mfd_add_device(struct device *parent, int id,
+ 			list_del(&of_entry->list);
+ 			kfree(of_entry);
+ 		}
++	device_remove_software_node(&pdev->dev);
+ fail_alias:
+ 	regulator_bulk_unregister_supply_alias(&pdev->dev,
+ 					       cell->parent_supplies,
+@@ -381,6 +388,8 @@ static int mfd_remove_devices_fn(struct device *dev, void *data)
+ 	regulator_bulk_unregister_supply_alias(dev, cell->parent_supplies,
+ 					       cell->num_parent_supplies);
+ 
++	device_remove_software_node(&pdev->dev);
 +
-+	if (!is_software_node(fwnode))
-+		fwnode = fwnode->secondary;
-+
-+	return to_swnode(fwnode);
-+}
-+
- static struct swnode *
- software_node_to_swnode(const struct software_node *node)
- {
-@@ -853,22 +866,62 @@ void fwnode_remove_software_node(struct fwnode_handle *fwnode)
+ 	platform_device_unregister(pdev);
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(fwnode_remove_software_node);
+diff --git a/include/linux/mfd/core.h b/include/linux/mfd/core.h
+index 8974c7142c94c..7a29d5389982c 100644
+--- a/include/linux/mfd/core.h
++++ b/include/linux/mfd/core.h
+@@ -50,6 +50,7 @@
+ #define MFD_DEP_LEVEL_HIGH 1
  
-+/**
-+ * device_add_software_node - Assign software node to a device
-+ * @dev: The device the software node is meant for.
-+ * @swnode: The software node.
-+ *
-+ * This function will register @swnode and make it the secondary firmware node
-+ * pointer of @dev. If @dev has no primary node, then @swnode will become the primary
-+ * node.
-+ */
-+int device_add_software_node(struct device *dev, const struct software_node *swnode)
-+{
-+	int ret;
-+
-+	/* Only one software node per device. */
-+	if (dev_to_swnode(dev))
-+		return -EBUSY;
-+
-+	ret = software_node_register(swnode);
-+	if (ret)
-+		return ret;
-+
-+	set_secondary_fwnode(dev, software_node_fwnode(swnode));
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(device_add_software_node);
-+
-+/**
-+ * device_remove_software_node - Remove device's software node
-+ * @dev: The device with the software node.
-+ *
-+ * This function will unregister the software node of @dev.
-+ */
-+void device_remove_software_node(struct device *dev)
-+{
-+	struct swnode *swnode;
-+
-+	swnode = dev_to_swnode(dev);
-+	if (!swnode)
-+		return;
-+
-+	software_node_notify(dev, KOBJ_REMOVE);
-+	set_secondary_fwnode(dev, NULL);
-+	kobject_put(&swnode->kobj);
-+}
-+EXPORT_SYMBOL_GPL(device_remove_software_node);
-+
- int software_node_notify(struct device *dev, unsigned long action)
- {
--	struct fwnode_handle *fwnode = dev_fwnode(dev);
- 	struct swnode *swnode;
- 	int ret;
+ struct irq_domain;
++struct software_node;
+ struct property_entry;
  
--	if (!fwnode)
--		return 0;
--
--	if (!is_software_node(fwnode))
--		fwnode = fwnode->secondary;
--	if (!is_software_node(fwnode))
-+	swnode = dev_to_swnode(dev);
-+	if (!swnode)
- 		return 0;
+ /* Matches ACPI PNP id, either _HID or _CID, or ACPI _ADR */
+@@ -78,6 +79,9 @@ struct mfd_cell {
+ 	void			*platform_data;
+ 	size_t			pdata_size;
  
--	swnode = to_swnode(fwnode);
--
- 	switch (action) {
- 	case KOBJ_ADD:
- 		ret = sysfs_create_link(&dev->kobj, &swnode->kobj,
-diff --git a/include/linux/property.h b/include/linux/property.h
-index b6135176cfdc5..9e94de6a83478 100644
---- a/include/linux/property.h
-+++ b/include/linux/property.h
-@@ -492,4 +492,7 @@ fwnode_create_software_node(const struct property_entry *properties,
- 			    const struct fwnode_handle *parent);
- void fwnode_remove_software_node(struct fwnode_handle *fwnode);
- 
-+int device_add_software_node(struct device *dev, const struct software_node *swnode);
-+void device_remove_software_node(struct device *dev);
++	/* Software node for the device. */
++	const struct software_node *swnode;
 +
- #endif /* _LINUX_PROPERTY_H_ */
+ 	/* device properties passed to the sub devices drivers */
+ 	const struct property_entry *properties;
+ 
 -- 
 2.53.0
 
