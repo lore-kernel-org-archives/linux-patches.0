@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028951;
-	b=LTAscHYYNaSU6Trug5tixXP7zDMF7+130b/daA6W75czpRV7oz8cIV6SuSHdLZSjQ5O0
-	 8BD6HCIL9FXjxf3abZ5uzmiV+7arPHwEkegkK3rOKV9NEwNFTAiVnRbdSQaOvQETqudGq
-	 dlYrGTaSnIRWcpF9IpMBrbrTR95CnZlJX6I/4b4WcPv0Pu10YKY5TpFKJl7F8u7x8hXsB
-	 loopl1CBvhbWm/6kmFCZbQNCHVSVJoRQ1FkGRoh3oeo5LyFAP13XKS15UQzJYlya4h3sz
-	 VoMs0ybNcgUnQlASf7LSfIFeZHpsqetp1Oo+b4D0TIK0qTANYj1GwHVbj1wwmjK+upw==
+	t=1795028954;
+	b=bD+8T+0MDfUVMrnthQKQi5yKqH12Pxt29qJDrn9QAVd0eiPPZ1X/4OrO5v3arTBGC1Im
+	 oFLo/FXgdvzYofb+CF4xSodkRObhdIkNf+qQKsXKFUboqTJtlz3bxS9bEuRBgMcO5AO95
+	 k4Hlvlp+b5WzCAKxdz7ZAAHPxr2ds5xPQr4/CIuT1Lg5fhqtCBUjYEwevsNGPcPTbFhwy
+	 TGFq4WyCYzwdZhFThNMPQh/6QCpnkw0JhJNCtEuxjgR5YZ4imumqNutNUZOtUKHPIC3DO
+	 p20w5JJOYzDHGETz9mcdWT4UM2p/WN/9Q+vu6OC7lP7w2AWgol9YTJ0KPb9/UrrN0pA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028954;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=jGUdJ8QLHpqF3hhhRX2SDBXwCgfViCI+QemkaEzhZhE=;
-	b=O9RKBCPB9Pyd1wZlZSux67AN50mg+guSLaorHYFVFp/B9WTEJfKhL3fV5o5+vfGo6+Oa
-	 8iK5fHKXehAIFHjzSW/huFXM49VcAVoJuwI5vbPohZZYUW1wnceM9QIVfBggSHd57gLIT
-	 iRpDazZizyo7qbgP8Em6xvUTZ+hBE6CpIK65saRNwUplVrvcwJzAPZRQIUtMJszbl65Z+
-	 ZzQx1TcaaNTjpyXyshqZmeIajWFb3FPejqPn/XMt6QXMdWaK/YziRTWUyMZSJdmUp25yL
-	 Limt7dUmMIYuyeLyAA6bfvf4Or3TDYFoTgvROT6RxlF1aer70h6wPExQ/m74R/GDeeg==
+	bh=tYSvJKJCP7fGuspin0pBjI7i+TDmjCwivEfOS4ZAGKU=;
+	b=Bq3CVEc25EYjYF33wexC66Ug+CpAHDV0x+wzsNNN/j4lw62RXIgSrodRmQB5ucaREgRK
+	 ZSc0FfhrHs2wNVnaoD9oDdftGHkgUdvQ+SnKuVc6u9XAQvPawsxzBCe9uZYffZvUz06kQ
+	 kBnqDYzLaF6P6SumtAOoap+l9Ma0104S5s404d2eYOW72LjeRfLAoJm5SaRR0+XZMVB99
+	 KFoBF8Qs/3VS2MOYE6Z3tYInoXyb2k9jl1JGaYDsnkLJcxGkwC2Xbf+mxU6hN3wCeRgAq
+	 VjwF2PqImXck6jC7c81+mEzDaYpUVGHm+x5c5T9vS9+NrnLEe6ATmql689BbffKc3TA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPNZF46X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHzLYHcF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5061D606A335;
-	Wed, 18 Nov 2026 19:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5592A606A33F;
+	Wed, 18 Nov 2026 19:09:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RPNZF46X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4C81F000C4;
-	Wed, 18 Nov 2026 19:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GHzLYHcF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A6261F000C4;
+	Wed, 18 Nov 2026 19:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028951;
-	bh=jGUdJ8QLHpqF3hhhRX2SDBXwCgfViCI+QemkaEzhZhE=;
+	s=korg; t=1795028953;
+	bh=tYSvJKJCP7fGuspin0pBjI7i+TDmjCwivEfOS4ZAGKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RPNZF46XN21Ch8+zqlftcHRg9SIOf2o0pYag16RCAdR571o8Yx4tFBMIufFvQPmbV
-	 8rK5HhBvoFdjpL8DxKeO2nYXV4C+giioKNUKtCqFVn5m56ANTq+A/Gr6sjdwnd9JzD
-	 7aiiBU7/nlYBdXBvEUzZy/vSlx33/rHowJOARmLg=
+	b=GHzLYHcFT9mcAA8PkixOJxgxy+Ua1NRpV97GW9UfWCxGfKsrEr/ODovMjIVtB5t7i
+	 Zzxg59VNQ0Oqv2t8izk1kYnMpEvu8oA8jilu1XzTzSQF5yPyklQw0TpTFc5xUSBGVw
+	 dkgwg2bSX6xWObcfd4LpSwONaoGAMwpMeOEWgMUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shujath Mohd <shujath@outlook.in>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Bradley Morgan <include@grrlz.net>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0178/1756] arm64: dts: qcom: sdm845-sony-xperia-tama: Fix Bluetooth UART pinctrl
-Date: Wed, 18 Nov 2026 15:38:25 +0100
-Message-ID: <20261118150015.531349746@linuxfoundation.org>
+Subject: [PATCH 6.12 0161/1756] kexec_file: stop the top-down search before it underflows
+Date: Wed, 18 Nov 2026 15:38:08 +0100
+Message-ID: <20261118150014.584598170@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,41 +69,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shujath Mohd <shujath@outlook.in>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit cd0f33393882e2554d46e8e068ab95d00593f385 ]
+[ Upstream commit c711461303af9f796b293b5ac06f49a885e46e71 ]
 
-Use the 4-pin UART6 pinctrl configuration for the WCN3990 Bluetooth
-controller on Sony Xperia Tama devices.
+locate_mem_hole_top_down() walks candidates downwards by subtracting
+PAGE_SIZE whenever the window conflicts with an existing segment or with
+an architecture exclude range.
 
-This enables the UART hardware flow control required for reliable
-Bluetooth communication at higher baud rates.
+Nothing stops that subtraction at zero, so a search that reaches the
+bottom of the address space wraps temp_start around and continues.
 
-Fixes: d54331131cde ("arm64: dts: qcom: sdm845-sony-xperia-tama: Add bluetooth")
-Fixes: 30a7f99befc6 ("arm64: dts: qcom: Add support for SONY Xperia XZ2 / XZ2C / XZ3 (Tama platform)")
+The walk starts inside the range being scanned and only moves down, so
+bail out once a candidate ends up above end. That covers every step in
+the loop rather than the subtractions alone, and it matches
+locate_mem_hole_bottom_up(), which already bounds its candidate on both
+sides.
 
-Signed-off-by: Shujath Mohd <shujath@outlook.in>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/PUZPR01MB51413F6FF89A8FA82A9B2755C3A02@PUZPR01MB5141.apcprd01.prod.exchangelabs.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+This is a better check than subtracting with check_sub_overflow(), given
+that we would have 3 subtractions in this block, and this single fix
+would take care of them all (instead of three check_sub_overflow()).
+
+Fixes: cb1052581e2b ("kexec: implementation of new syscall kexec_file_load")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Bradley Morgan <include@grrlz.net>
+Link: https://patch.msgid.link/20260812-kexec_posioned-v6-1-e477887086f0@debian.org
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/kexec_file.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-index b02a1dc5fecd6..4c01c43023fdd 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-sony-xperia-tama.dtsi
-@@ -758,6 +758,8 @@ int-pins {
- };
+diff --git a/kernel/kexec_file.c b/kernel/kexec_file.c
+index 909432e804be1..cd9b5b9d0c787 100644
+--- a/kernel/kexec_file.c
++++ b/kernel/kexec_file.c
+@@ -474,7 +474,9 @@ static int locate_mem_hole_top_down(unsigned long start, unsigned long end,
+ 		/* align down start */
+ 		temp_start = ALIGN_DOWN(temp_start, kbuf->buf_align);
  
- &uart6 {
-+	pinctrl-0 = <&qup_uart6_4pin>;
-+
- 	status = "okay";
- };
+-		if (temp_start < start || temp_start < kbuf->buf_min)
++		/* A candidate above the range means the walk wrapped around */
++		if (temp_start < start || temp_start < kbuf->buf_min ||
++		    temp_start > end)
+ 			return 0;
  
+ 		temp_end = temp_start + kbuf->memsz - 1;
 -- 
 2.53.0
 
