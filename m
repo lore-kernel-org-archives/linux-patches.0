@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795047772;
-	b=IWgaHWbWnA+nLGMVO8gULFefZB1xXeY8G1F0SzoiPQf3CVozKrBRwOZsDSsQ+kghhOCD
-	 U/5h+t5/sAameOZdP1j+f7IN7U+VDXXB2u1xCVu/m+4h/IM2nou/96EzTzh1gfpoZ3ffK
-	 Vvs4VzwCdr25T+wqSfsxEfQU4iEGtBapUtDVyg1fzPhcAKE0NGtOjJRnmgAvopDydJe4p
-	 DzqHJoP3AbGfhrWJEFouMjg2l2wCiQegaO1JdPMDess76xcs08ey6hYzP6TT7Yse/zHHf
-	 qeqeR/YLNN0zOWdsMA/H/dhIU2uEOL96jyFKIeLMUcu06e9zWWYceEm+vL2tGNFKgIQ==
+	t=1795047775;
+	b=Qv87begDU9D1orTN6yD1xnd/+GTUjAufa1quEPSTs32dIhc42b/IrjYhBUeIyD3ytuM5
+	 RjBtNuvrrNgmJQ65KthApxhObMCg1jsa0ttug1jZeqs5lKsZAiKDVXKZwVSLDSkPlRzcO
+	 qvZDlFN9PPS0bevdXHd8lLWr3pq7eG52nEXhBOU9DeQ+AB4N/IwVCvOtEXVBONmJZR5AT
+	 nP7ca5CXhhOoPi7YUpxAkjFtX4auxk3I4soS8rq0FiXXPSMjaIajHs2t1tBVolUABLPsE
+	 jPuepl3wT8SVCYCV+5NRE9jyH0j57QnOBUW5vx+qAuVxVeS7i1rW8z5Owi27MSMeUSg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795047772;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795047775;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=0OxvvH754Lpejgomspm41FnxShKB1Pq7w76M2s8d6oU=;
-	b=q9ZB8vlIYb17EgkcDJD8mK6rnEkDc5RE4XpSTA/UMVqAfrtSz3zEANgU90IOuQ3oi8ao
-	 5QRsAFDiNOU+IAskTVBeS+ofPD89PwD22q0WphDUEv7BHCqMogK2Ksy7VCJSVB7Q3e7l1
-	 1HWOSe/l2Dcgvp6hUT676oFTBKmuCD3UoG+HGisUfvkTZmv2Ue4y5s20zeYKu/MNgoYif
-	 /28my1UtmVVtbFG7uAIgNZ3SUkNSx6L3aIUCSBLG7JACvMrFl4Ixir0NY0/Pcz4LjP1p8
-	 MBzm0h8Pmo5Oysws+IoQEowyt4K+Um4ai+QtVFyQ7esPEGdkbvvE9NvcWy829HhHkBA==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=GNzTHZV7SXN9/X+L5FGjtPYU9jP34HHIHPqtLF+GYcQ=;
+	b=TUMUXuu3Zj53HevMhNxPnKr7u7VUFuI13bBneCoCbkP8HFDeMLkc6w4QREgBxKemeFpe
+	 +D1Gc6/rYq/d/diTgGuu07ESZDt7xcbrEvKpNtUN91DiJshfvE9hrXebETPpfz+RBIYE3
+	 jd6VPAXm10zs392Hty2ti9QHID2n5cFECXxRS5pVKklSIWYpYVVwxZ9Dyb3BSeFPSkRpQ
+	 DWbH8vqUHdP4C4w4A0a5+E8KS7ODY553dv9DFS5EkjVm2Jc6+GPu7DMyvaq6HvcPkJw37
+	 WwUuSsuJOqI5PV4u9tygnqDIG5hzgMtY7f5RKVHDCKIrhu2tlizMxjgntBlCcahtU2w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=px+xnBPw;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="BVscaFY/";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3A1606A325;
-	Thu, 19 Nov 2026 00:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3424F606A325;
+	Thu, 19 Nov 2026 00:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=px+xnBPw
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDEB1F000C4;
-	Thu, 19 Nov 2026 00:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BVscaFY/
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8919B1F000C4;
+	Thu, 19 Nov 2026 00:22:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795047772;
-	bh=0OxvvH754Lpejgomspm41FnxShKB1Pq7w76M2s8d6oU=;
+	s=korg; t=1795047775;
+	bh=GNzTHZV7SXN9/X+L5FGjtPYU9jP34HHIHPqtLF+GYcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=px+xnBPwZJb8FHtItwDVHTKTuz1jYDyLejoTns8v/uR3H0TOULTJjKWyQZlfYD/a0
-	 0tGeO4F/T0Jw0E52+FkkI73Pn/PiXWMA4Physv6/9UdI0jE0yWkDTGjObucmc4i4qK
-	 4RMaudzkVjF5ud8D1ocBppdDzdd3MA31BXq+2PIE=
+	b=BVscaFY/gc/m10081oGuGLVVpIqm1bE/pEu8ypQ3IZH7iJ6bvk1QYkwk/bExWk1do
+	 O7IHxj+W45StREbokjZI6Lyve9BjZ1mDr5NY4wKTEjH227S6nRytexAk4StxBmavQW
+	 HXIMcrcJsJArgfNUcJP0L5r5gJu8kx0/ph+0TF/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
-	Ian Rogers <irogers@google.com>,
-	Stefano Sanfilippo <ssanfilippo@chromium.org>,
-	Stephane Eranian <eranian@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1757/2857] perf jitdump: Validate unwinding sizes against record payload
-Date: Wed, 18 Nov 2026 15:46:31 +0100
-Message-ID: <20261118150304.551852078@linuxfoundation.org>
+Subject: [PATCH 6.1 1758/2857] remoteproc: qcom_q6v5_adsp: Fix double jiffies conversion in adsp_start()
+Date: Wed, 18 Nov 2026 15:46:32 +0100
+Message-ID: <20261118150304.589376617@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -65,99 +63,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
 
-[ Upstream commit 92d50319b4f0c0bbee8a236a09063272cd22faab ]
+[ Upstream commit f559ef6316971fe39dc5f5edd6a483429ba03768 ]
 
-jit_repipe_unwinding_info() copies unwinding_size and eh_frame_hdr_size
-from the jitdump record into jd-> fields without checking them against
-the actual payload size.  Downstream, jit_add_eh_frame_info() in
-genelf.c computes unwinding_table_size = unwinding_size -
-eh_frame_hdr_size, which underflows when eh_frame_hdr_size >
-unwinding_size.  The result is passed as d->d_size to libelf, causing
-an OOB heap read into the output ELF file.
+adsp_start() computes 5 * HZ, an already-converted jiffies count, and
+passes it into msecs_to_jiffies(), which expects milliseconds --
+reinterpreting the value and shrinking the intended timeout. Every
+other caller (q6v5_start() in qcom_q6v5_mss.c, qcom_pas_start() in
+qcom_q6v5_pas.c) passes msecs_to_jiffies(5000) directly, matching
+qcom_q6v5_wait_for_start()'s kerneldoc, which documents @timeout as
+already being in jiffies.
 
-Validate that unwinding_size fits within the record payload and that
-eh_frame_hdr_size does not exceed unwinding_size before allocating or
-storing the values, so a bogus record cannot force a large allocation
-that is then discarded.
+On CONFIG_HZ=250 this shrinks the intended 5 second timeout to
+~1.25 seconds, causing a DSP that legitimately takes 2-3 seconds to
+signal ready to be spuriously torn down as a boot failure.
 
-mapped_size is likewise taken from the record and was narrowed into an
-int for the mmap2 len computation in jit_repipe_code_load() and
-jit_repipe_code_move(); values above INT_MAX would turn negative,
-producing a wrong mmap2 length.  Use uint64_t for usize so the value
-cannot truncate.
+Fix by passing msecs_to_jiffies(5000) directly, matching every other
+caller.
 
-Fixes: 0284fecd13b6db3e ("perf jit: Add unwinding support")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: Stefano Sanfilippo <ssanfilippo@chromium.org>
-Cc: Stephane Eranian <eranian@google.com>
-Assisted-by: LLM
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Anup Vishwakarma <anup.vishwakarma@oss.qualcomm.com>
+Fixes: dc160e449122 ("remoteproc: qcom: Introduce Non-PAS ADSP PIL driver")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260831-b4-adsp_start_jiffies_fix_upstream-v1-1-9f8cf85ea220@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/jitdump.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/remoteproc/qcom_q6v5_adsp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/jitdump.c b/tools/perf/util/jitdump.c
-index 05561ab23f174..de44e3efc9324 100644
---- a/tools/perf/util/jitdump.c
-+++ b/tools/perf/util/jitdump.c
-@@ -462,7 +462,8 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
- 	u16 idr_size;
- 	const char *sym;
- 	uint64_t count;
--	int ret, csize, usize;
-+	int ret, csize;
-+	uint64_t usize;
- 	pid_t nspid, pid, tid;
- 	struct {
- 		u32 pid, tid;
-@@ -543,7 +544,7 @@ static int jit_repipe_code_load(struct jit_buf_desc *jd, union jr_entry *jr)
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index 4c9a1b99cd511..efc4740074713 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -376,7 +376,7 @@ static int adsp_start(struct rproc *rproc)
+ 		goto disable_adsp_clks;
+ 	}
  
- 	event->mmap2.pgoff = GEN_ELF_TEXT_OFFSET;
- 	event->mmap2.start = addr;
--	event->mmap2.len   = usize ? ALIGN_8(csize) + usize : csize;
-+	event->mmap2.len   = usize ? ALIGN_8((uint64_t)csize) + usize : (uint64_t)csize;
- 	event->mmap2.pid   = pid;
- 	event->mmap2.tid   = tid;
- 	event->mmap2.ino   = st.st_ino;
-@@ -596,7 +597,7 @@ static int jit_repipe_code_move(struct jit_buf_desc *jd, union jr_entry *jr)
- 	char *filename;
- 	size_t size;
- 	struct stat st;
--	int usize;
-+	uint64_t usize;
- 	u16 idr_size;
- 	int ret;
- 	pid_t nspid, pid, tid;
-@@ -743,6 +744,18 @@ jit_repipe_unwinding_info(struct jit_buf_desc *jd, union jr_entry *jr)
- 		return -1;
- 
- 	unwinding_data_size  = jr->prefix.total_size - sizeof(jr->unwinding);
-+
-+	/*
-+	 * Validate sizes before allocating — jit_add_eh_frame_info()
-+	 * computes unwinding_size - eh_frame_hdr_size and uses the
-+	 * result as a buffer length for libelf.
-+	 */
-+	if (jr->unwinding.unwinding_size > unwinding_data_size ||
-+	    jr->unwinding.eh_frame_hdr_size > jr->unwinding.unwinding_size) {
-+		pr_warning("jitdump: invalid unwinding sizes in unwinding_info record\n");
-+		return -1;
-+	}
-+
- 	unwinding_data = malloc(unwinding_data_size);
- 	if (!unwinding_data)
- 		return -1;
+-	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5 * HZ));
++	ret = qcom_q6v5_wait_for_start(&adsp->q6v5, msecs_to_jiffies(5000));
+ 	if (ret == -ETIMEDOUT) {
+ 		dev_err(adsp->dev, "start timed out\n");
+ 		goto disable_adsp_clks;
 -- 
 2.53.0
 
