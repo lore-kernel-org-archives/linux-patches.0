@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795028390;
-	b=FCOpI9LhiKcrETAJMSLtnzwpBEdtlGBRC3WbAyWMZePdggA/RZvZdoes5OW2yqTZuMXv
-	 3WGuDoiw2zxqHoBUaEtc9RH4c6vCU6MyK0lQ6beLxYjNqj084eU2yBwhrkjvi8MrGhtNw
-	 a3hl7qy9+ItGd7QaY4FpS/LI9CZtF+PNd9aW/P1MGJQS1uM7Ga7Wte5G+P7d76AZu0vZw
-	 mFP2ufdzxNkw5SeX+a5LSbfSDYFqtvVKw3nvA3H+OR1cFZWCWQDQKTxXAri0H4fL7brUP
-	 bDaPNBpZNL+UrQ5GFz6Hmh0pRovefHXTQ4h7heYMG4jG1VqB5y8AT4m4ygWuGjBRH5A==
+	t=1795028392;
+	b=E7BEcCubYwQ7ZlFxqoPSZPc/1QnFMycQUDXqQ0SwKq9pU+h/d2MvgpffyvENkzRS7UHA
+	 jNf+AJWs5btl1HyZLR6/bKH+pTYA1cpJWD6edEaLdEuHvv0FYXqJ4l6IAHg0BGqHdEZVa
+	 RLau/JYl8TOmnYADyxYxwcoQF/eC3PupEwIA8FckXvH0YicwsPrQnAvT7ZRFUI8pIU2wD
+	 +wyGVaFwHshBsM/Zgj2DF0RVphzYBrKP8TZ4/F8VhGvDTEjVUlFNJaZDgaBNVikBGG9Hx
+	 6EVDJTICqmolJRhPS+1d/ebiY9VkH2LDFpu0vR3ockJ6yjJMarpeKlTo61oauQfGCJw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795028390;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795028392;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=mP30uge2S92qSQ2YmtJkQp/RCIIk9FTvkSGcn8NNoio=;
-	b=Bn3oMXLmwIpcn73FNRv6KfKMXecPjn0rxL9IM4IcgF+sFexRDRvzv8jAoctl6YiySRz4
-	 43Ssd35YObwSHIp1uT3c6wjfK9jr1jkOBiFQ6uvTGq4UVea1XnumGkFhWgNeNbrnmU4PC
-	 rlPco7elyBHV2AEX1bK5usw4nleFeU68pMBRlrXTWePOXFXs3cAm6i4GsiYlZswZYGsxd
-	 6s9itcGdpgDMJ+RNmWbyu57TZQofvW4KZcHDESOk0/eYa/OOsPa1ofFAqhrgGaWDutok5
-	 0CQbcXpWVri6uzsekK/odMMnDoo0Cs18ZIUWSVrAvL983GyC/Uohk2YUrTUc6C9Y8eQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=YY5Ba9x1DQfhfoWSor671m1qgeehgRv38M0VR1kieYw=;
+	b=5RTMvjHqMXu27pAiSzXPxbBzDK123cziypsikKdAmbdVTjcxpL27nIZvYZHBDudANHHT
+	 v0bIj9c1SjH8elG1hhpbz/BxnByugissWSvu0uCXbAP0n+UjTfUicRL6xCH7AVyu+7Q6Z
+	 kwxP3mpkGXm8shNMLl5OUA4+mtPK3evcZ4VAWfNDCZhP/PXlLu39dzKvU15rJoXMRqq9W
+	 g7J0RQ+TQMYkunDpSXeY5JupAsQePyjNt7nbZUJJdgdzKjWoIUJoBb9yE5nqowhPkqYkP
+	 lu5+/1U/ABVwQbzgRKx7nnexYqTYtdgLaPqV3Z7kJBWjCU8UckH/XV1Qaxnu/UHiSsA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4GgenQR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IyZzjXBP;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DDC606A320;
-	Wed, 18 Nov 2026 18:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AC4606A31C;
+	Wed, 18 Nov 2026 18:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=H4GgenQR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD301F000C4;
-	Wed, 18 Nov 2026 18:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IyZzjXBP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0483F1F000C4;
+	Wed, 18 Nov 2026 18:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795028389;
-	bh=mP30uge2S92qSQ2YmtJkQp/RCIIk9FTvkSGcn8NNoio=;
+	s=korg; t=1795028392;
+	bh=YY5Ba9x1DQfhfoWSor671m1qgeehgRv38M0VR1kieYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=H4GgenQRSqCL7vuEpxc5PpNkZCOB50okX26InvRUhM49o36eP5897YEc8ApmWnjNo
-	 0veRmFE1gm6962uv/ZtMkW5Ls4lSOHThT3sdvKqahIMbRqkvFcljSXmyyEoL7zUEOp
-	 ddOeIYZht4UXtLwH1DC/xwkzXw9DBHi4A5Zi+sjM=
+	b=IyZzjXBPz+O8k7uuGFq9y7Qa4CviLGfnN6MxFIECJKxdP9GEtZqiyhOOnH1SwGGnk
+	 jYFRtX4lytBMkv5TO77kCIshOI+pyRbFl7Y/gZlyGR0E1/4fUQkkm514/s/xm7ikbI
+	 9AVXrAML3OZC+72T7zB7GP3y/CLZkMZnvG0yuRto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Imre Kaloz <kaloz@kernel.org>,
+	Joshua Kinard <linux@kumba.dev>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 2091/2151] apparmor: report a label allocation failure as -ENOMEM
-Date: Wed, 18 Nov 2026 16:03:46 +0100
-Message-ID: <20261118150237.871851104@linuxfoundation.org>
+Subject: [PATCH 6.18 2127/2151] rtc: ds1685: arm the wake-up alarm at power-off only if an alarm is set
+Date: Wed, 18 Nov 2026 16:04:22 +0100
+Message-ID: <20261118150239.167287230@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,57 +63,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maxime Bélair <maxime.belair@canonical.com>
+From: Imre Kaloz <kaloz@kernel.org>
 
-[ Upstream commit 07aee062c6ecaa7199be583c83a1c74ae9885f03 ]
+[ Upstream commit c2373bcd50d9654b76eac585c7c98105665b3321 ]
 
-aa_label_strn_parse() returns -ENOENT for every failure, so a caller
-cannot tell "no such profile" from "could not allocate a label".
+ds1685_rtc_poweroff() always sets WIE. The wake-up alarm then compares
+the time-of-day and date alarm registers, which hold whatever was last
+written to them, and a match powers the machine straight back on.
 
-Report an allocation failure as -ENOMEM.
+Set WIE only when AIE is set in Control B, and clear it otherwise.
 
-Fixes: f1bd904175e8 ("apparmor: add the base fns() for domain labels")
-Signed-off-by: Maxime Bélair <maxime.belair@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Fixes: aaaf5fbf56f1 ("rtc: add driver for DS1685 family of real time clocks")
+Signed-off-by: Imre Kaloz <kaloz@kernel.org>
+Acked-by: Joshua Kinard <linux@kumba.dev>
+Link: https://patch.msgid.link/20261013120208.11268-2-kaloz@kernel.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/rtc/rtc-ds1685.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index d0610e9d7961a..18f71d7f9ba67 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -1919,12 +1919,18 @@ struct aa_label *aa_label_strn_parse(struct aa_label *base, const char *str,
- 		goto out;
- 	}
+diff --git a/drivers/rtc/rtc-ds1685.c b/drivers/rtc/rtc-ds1685.c
+index 97423f1d0361f..7f84ea02c4038 100644
+--- a/drivers/rtc/rtc-ds1685.c
++++ b/drivers/rtc/rtc-ds1685.c
+@@ -1370,7 +1370,7 @@ module_platform_driver(ds1685_rtc_driver);
+ void __noreturn
+ ds1685_rtc_poweroff(struct platform_device *pdev)
+ {
+-	u8 ctrla, ctrl4a, ctrl4b;
++	u8 ctrla, ctrlb, ctrl4a, ctrl4b;
+ 	struct ds1685_priv *rtc;
  
--	if (create)
-+	if (create) {
- 		label = aa_vec_find_or_create_label(vec, len, gfp);
--	else
-+		if (!label) {
-+			/* not absence: creating only fails on allocation */
-+			label = ERR_PTR(-ENOMEM);
-+			goto out;
-+		}
-+	} else {
- 		label = vec_find(vec, len);
--	if (!label)
--		goto fail;
-+		if (!label)
-+			goto fail;
-+	}
+ 	/* Check for valid RTC data, else, spin forever. */
+@@ -1397,6 +1397,8 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+ 		ctrla &= ~(RTC_CTRL_A_DV2);
+ 		rtc->write(rtc, RTC_CTRL_A, ctrla);
  
- out:
- 	/* use adjusted len from after vec_unique, not original */
++		ctrlb = rtc->read(rtc, RTC_CTRL_B);
++
+ 		/*
+ 		 * Read Control 4A and check the status of the auxillary
+ 		 * battery.  This must be present and working (VRT2 = 1)
+@@ -1411,13 +1413,17 @@ ds1685_rtc_poweroff(struct platform_device *pdev)
+ 
+ 			/*
+ 			 * The auxillary battery is present and working.
+-			 * Enable extended functions (ABE=1), enable
+-			 * wake-up (WIE=1), and enable kickstart (KSE=1)
+-			 * in Control 4B.
++			 * Enable extended functions (ABE=1) and kickstart
++			 * (KSE=1) in Control 4B.  Enable wake-up (WIE=1) only
++			 * if an alarm is set, else stale alarm registers
++			 * can power the system back on.
+ 			 */
+ 			ctrl4b = rtc->read(rtc, RTC_EXT_CTRL_4B);
+-			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_WIE |
+-				   RTC_CTRL_4B_KSE);
++			ctrl4b |= (RTC_CTRL_4B_ABE | RTC_CTRL_4B_KSE);
++			if (ctrlb & RTC_CTRL_B_AIE)
++				ctrl4b |= RTC_CTRL_4B_WIE;
++			else
++				ctrl4b &= ~(RTC_CTRL_4B_WIE);
+ 			rtc->write(rtc, RTC_EXT_CTRL_4B, ctrl4b);
+ 		}
+ 
 -- 
 2.53.0
 
