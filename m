@@ -1,51 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019817;
-	b=bYlOEDUfungvL8gQLFbi2A5rRSa7NvEz3Avyji5seJ4KXsl03L7uYmNBOEaV3da+YQiH
-	 4z/6rSJOHy5uXZGdyTFEWGYUWADlJ5ZjRz97JXabmcmeQSIIIHdvWqfcK7qmooaLzXp5I
-	 x6Uh7svx5Vv/RxTObxmpXFbU28/WsT3uHsbugh75Lx5m0cYSrllLc+YOctfy8ppBTvRCP
-	 wnJn/ocXAppIis4uk8DVsDlkhyzNony9MiGTgzB7msrntILqDFTEkGVTjvWBbaXENI1pj
-	 ZNCOwodPCrG+qLWUqOW9UOc/8u4hJilFW0zu3neLkQAmi9eT3Kj2e8iVfG67cgFbL1A==
+	t=1795019820;
+	b=jVQ/H96FS/q6B4CdltIFjR7LTriuQlxp9Y4DbvREFYMa7Vy6sVUpoq1s8jvxptMKoiDm
+	 jtwkNgcqoMYBEWSPtmZFHKSIT+lYb9uoojcVy5O6yR5JatV3PVkSdOz+iLjQgWlv+I4kb
+	 sAPqcIYVdKkxOIhxIk7YMzw3lQcZI/riZk5M+EbpO3FYlys0k5ikNKT2aPCf/RbK8lgvw
+	 5i5FAiNlfnfuW7jsNS3q9PpRjLGteKibQv1bsUQFy5yN66Cn2sXBsu+SlEZnQqUO20yhG
+	 T7zJVh1lUiJWgHcFJbQLM/uWCGj8ce4qF6pHZCTfixDofgTNuBqoK3My8iW+j/Jk8rw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019817;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019820;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=iTx/muVfB3pbd8VGMq50ZWj+DFNF5rZlEvJtFQfi6xo=;
-	b=OGxv0sJf3JNiIM7A6mHKssfqPgzRZUw7bsMKlDoCtnk9xhXLg6k03888nfZe204e4odS
-	 hbWRPtYeUujoe14TN5XkJ2IGyUH1m50bfyegRqiikXNbHlIqo2LVZjX45HPCYNwnMKH+U
-	 V1zCUDKm9QbC2i66qHga7IXdpfC+ETG8SFhxdhucl6Kw20KPv8fC+FTnHxi1C7lEi0u1E
-	 wEGsYe+/fj1tb/15ajLaFrYJxXCQkJcTRXGPGVCN7sWBuRRVigqjZOkg7VzebPEXBAQTX
-	 vqLRC450d/BOxiVmfwK/ML1Wu3fBQbZrNG+F2gT0cGzo7FquTvBY1YMrXsaVNzhEwXA==
+	bh=5M/p3dZYdIUsEtDc0grw4XLE6nIf4vr6x5i8kDX3mYQ=;
+	b=PRpAWrC8XoYjjyOxw6zrvbXpBbW71BfzcuuT4glII/0wEWLuAiWLDzuNgG94ylQWswiC
+	 1YSWWtvchVJ8yH3pbd/skcjnA58BXQV+0kTj3Lx2obucK1GGHoqe6pfaVHVMDQnsczfA0
+	 Z30rbdP/evlHecDFxLvGrhGiBT6sWKqxqUJV6S+HlTdwpaTF16RrQO4q26M2TBYf291KC
+	 rW09b2Yqig33FzA3yJJqfYKuVTxlsS2jJIvAdatMkwpzx6gfUvn91JQTLq6M/NyyVNKD7
+	 wvLupxyiJFPcc2+nS+PNXsczoyWjoMcqZ42zEWVGEfJ5VubQbj+pIr7s5rGV/yhRiwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPOw7JmN;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ymp3MK/g";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C3B60A2607;
-	Wed, 18 Nov 2026 16:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2263160A2623;
+	Wed, 18 Nov 2026 16:37:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lPOw7JmN
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B955A1F000CE;
-	Wed, 18 Nov 2026 16:36:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ymp3MK/g
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7206B1F000C4;
+	Wed, 18 Nov 2026 16:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019817;
-	bh=iTx/muVfB3pbd8VGMq50ZWj+DFNF5rZlEvJtFQfi6xo=;
+	s=korg; t=1795019820;
+	bh=5M/p3dZYdIUsEtDc0grw4XLE6nIf4vr6x5i8kDX3mYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lPOw7JmNg6719ZT05a+eM8FijM4BMit5KTXCLB91jJL9DOysWi39GNHY/nG927SKi
-	 D5oHU5AIlFm0uHC8pnty7EEbpaUHdDFOqmof4tkQgGV0AHmUPzMU2jyvacIEDo82Pc
-	 uA/EAmnxe7+HLY3Rh9G0qw+lER7cYly4O0Z+olbg=
+	b=ymp3MK/gqvWAkTuT2RssmQgjp3JKBaOXyUkFaTwG4LbaoS98Th/eZ+mFyH2WVtbUC
+	 40v9/L+AqsN/2/QraVHDMP0fQB9CgXBI0DIM0N1HcH9eDrKjuGbo8jayt1fQXP15Mi
+	 G5y1xk/Vg8lblp0hzSCyWQTrhWrKBWocMppB5H3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yogesh Gaur <yogeshgaur.83@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1730/2651] comedi: pcmmio: validate the IRQ supplied by userspace
-Date: Wed, 18 Nov 2026 15:49:30 +0100
-Message-ID: <20261118150349.904919530@linuxfoundation.org>
+Subject: [PATCH 7.3 1731/2651] comedi: pcmuio: validate the IRQs supplied by userspace
+Date: Wed, 18 Nov 2026 15:49:31 +0100
+Message-ID: <20261118150349.938296468@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,49 +69,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Yogesh Gaur <yogeshgaur.83@gmail.com>
 
-[ Upstream commit 23c6fc62e754f8bc412ceb5c0d9aaa14f2c9ff31 ]
+[ Upstream commit 9c325b21bba99e597771137fc11b9427c86618d8 ]
 
 comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
-it->options[1] is a number chosen by userspace. pcmmio passes it to
+it->options[1] is a number chosen by userspace. pcmuio passes it to
 request_irq() without checking it first, which lets an interrupt owned by
 another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
 claimed for this board. When the owner of that interrupt is later
 released the descriptor is freed while this driver's handler is still
 installed on it.
 
-The board's interrupt is routed in software rather than jumpered, and the
-driver notes that "any IRQ from 1-15 is OK", so the ISA range is exactly
-the right bound.
+Every interrupt this board can assert is a legacy ISA one, so the ISA
+range is the right bound; it is also sufficient, because
+mp_chip_data->isa_irq is set only by alloc_isa_irq_from_domain() and
+mp_unmap_irq() returns early when it is set.
 
 Bound the value before requesting it, as das16m1.c already does. An
 out-of-range value is ignored rather than rejected, so the board still
 attaches without interrupt support, exactly as it does today when
 request_irq() fails.
 
+This board takes two interrupts, one per ASIC, so options[1] and
+options[2] both need the check. The existing options[2] == dev->irq case
+is left alone: it covers both ASICs sharing one interrupt and neither
+having one, and by then options[1] has already been validated.
+
 Fixes: 6baef150380d ("Staging: comedi: add pcmmio and pcmuio drivers")
 Assisted-by: LLM
 Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260909104848.1763-6-yogeshgaur.83@gmail.com
+Link: https://patch.msgid.link/20260909104848.1763-7-yogeshgaur.83@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcmmio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/comedi/drivers/pcmuio.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/comedi/drivers/pcmmio.c b/drivers/comedi/drivers/pcmmio.c
-index f42b7343b4e45..afe2bda916591 100644
---- a/drivers/comedi/drivers/pcmmio.c
-+++ b/drivers/comedi/drivers/pcmmio.c
-@@ -684,7 +684,8 @@ static int pcmmio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
+diff --git a/drivers/comedi/drivers/pcmuio.c b/drivers/comedi/drivers/pcmuio.c
+index d9995cbeecb62..da80bca0bb55e 100644
+--- a/drivers/comedi/drivers/pcmuio.c
++++ b/drivers/comedi/drivers/pcmuio.c
+@@ -546,7 +546,8 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
  
- 	pcmmio_reset(dev);
+ 	pcmuio_reset(dev);
  
 -	if (it->options[1]) {
-+	/* the irq is configured in software, so any ISA irq is OK */
++	/* only ISA interrupts are valid on this board */
 +	if (it->options[1] >= 1 && it->options[1] <= 15) {
- 		ret = request_irq(it->options[1], interrupt_pcmmio, 0,
+ 		/* request the irq for the 1st asic */
+ 		ret = request_irq(it->options[1], pcmuio_interrupt, 0,
  				  dev->board_name, dev);
- 		if (ret == 0) {
+@@ -558,7 +559,7 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
+ 		if (it->options[2] == dev->irq) {
+ 			/* the same irq (or none) is used by both asics */
+ 			devpriv->irq2 = it->options[2];
+-		} else if (it->options[2]) {
++		} else if (it->options[2] >= 1 && it->options[2] <= 15) {
+ 			/* request the irq for the 2nd asic */
+ 			ret = request_irq(it->options[2], pcmuio_interrupt, 0,
+ 					  dev->board_name, dev);
 -- 
 2.53.0
 
