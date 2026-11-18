@@ -1,52 +1,61 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037457;
-	b=XfkbFzhm2xmiXf/UkP+0V5adlZaA2AEdZFF0oLvl4Xqk1HsO2Lj5m1+VntjMP8S4bjLt
-	 VWPT1aMPnsbZKld1Eg4k2LLiJAkB2YTNoXh0xlgvXWDP0w0QnzEps+MjxPojNSiuaFYka
-	 Tbjocbisceirueu6zuTWp1kG/YmXDpMpVzrA665bcBRBbtWEOSMgb7sviVBEXyAhCiScJ
-	 DKwBFjzHvecrkKjwoAvx9NkxkfpgBfkyqRwI3dS5n0HxcNpkyqME1aH4eXkjJwYX8dB8T
-	 6JwJqqm8iH5nnQIJGDbjLiZXC88ZAWrqJzadLTXbGu5v87xwbUMyPJGPypZzyd/64JA==
+	t=1795037460;
+	b=BB5+DYJjQ316GuYg2RJj1ej/4sH9jI8wlMJ2ZHM9J2ZRYKJZBCorObUAY9cAoP8FQDvr
+	 5XHpMahyVDKzQg71vf1d3WDJa87kK3n866ImSiQemteHLU6tR6mgY6ipoQN0E84bQxqyi
+	 asQw0LQG0qqUx3WqFdHYNIwraHvFyJlx6WAeGIbInT8wd9iZvzPJ1hkISiECxnBAm8atg
+	 6A4uu7m+wpQTEp0twXUTtn1sessu1pm11whQ3MgNjjmNeYiljSeXp+4SmJ5TKJk7j2lTa
+	 BqdtU1d7oytXQBjIuO7QFRrOEIDBApfLztrPO5gDyd54rTQe0goBU9feo+6iqyMpgTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037457;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037460;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kxFkQz4qRHRKYFArIIWPD0UFNIoOqCno1lVozna1NrU=;
-	b=Q10/1MghvbKNasslljX93sJXYYbrcNW88IiRdVBMb0kvUpxE0q5WMKPHLUfSowX/GCot
-	 sejEECerWLr4ysALXTJOaN4exe2tZ7OEXX+27ia0svk5rjiOvhvZSl7X0PTVuJ40+oI28
-	 4bEffDqwKaovnp6B7uUPPU56pnIpTEDU/9fxPIRgafPDC+Fa1lUGIRK+SPe+ltQhcip3G
-	 wAGpY11ePCIURGoBt+JpNLgppmoxtU9Gw07WR7mPS3UIpjOigPa79BYRJxfAdwsQrabfL
-	 MejHfP2Yp0hjbwmxNtsVGtSIolZ7FCCHFrXzsqUSYVkZbz2qKN2sJSKSxS/jZLCPq+g==
+	bh=PGMuH37grX9WAqxKYBYkA903RGxx0F/zkUQCZ2+5hdM=;
+	b=nMMqrE6j156fvHt3FRiIemzrUvnMwkmqd53C8221ezJLzEGNbAjMuCoDnE9UpSMpyJaG
+	 lmr/gRWuih2GYkalMFl0TACHxFbq8jZBUbYXohzskZ+SJTSUG0IGjqS93kjLsvy9Z31Do
+	 U98WV1FieIQVfwnFw4q7PCOCpdX0kv9ex8gI+eQkeApTkGSJR9d1WxKhdLgSXEQjt+GFS
+	 4v34nAzzHn74YFSRn1Ycj+bh2gqi7lCj/t+JPTmWb6JlooH+s9ky0UFQkzVDuo7NdWSQ1
+	 ojNsn00hLUeZqYsBWcltn2oWHiBka4KSwx7+rH2slIKGAfD/3lofrpCV1yo565EwOuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ihoAz/Hp";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2taewk0Z;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD8A606A320;
-	Wed, 18 Nov 2026 21:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128C2606A32A;
+	Wed, 18 Nov 2026 21:31:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ihoAz/Hp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374BF1F000C4;
-	Wed, 18 Nov 2026 21:30:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2taewk0Z
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499201F000C4;
+	Wed, 18 Nov 2026 21:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037456;
-	bh=kxFkQz4qRHRKYFArIIWPD0UFNIoOqCno1lVozna1NrU=;
+	s=korg; t=1795037459;
+	bh=PGMuH37grX9WAqxKYBYkA903RGxx0F/zkUQCZ2+5hdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ihoAz/HpISYRmEewHk2ZAPPNqDMWcEjpOHHMMmFelcrQ1heQ7VrKUdlWJaVTkNkfs
-	 NjodZ1ZmxCfi8/SjIGIY/w6D/940F3zovCFomK+mbEXEqUm6XRdE97SbJibJYJ524m
-	 nAdPfoxI5V1GEeBHdULsx24wNveW3FERG5NSiWkc=
+	b=2taewk0ZMqUx1kUwILAii11osjusU7itoXhyrWhggpXemZERw6lN+eHyxPEOGdDYG
+	 J/wkYMjIJRnGm+GKqbeFY+n0AgcaYlQpaVzIV6yrh1yTBTa2qgzklpWwOeYP/MMhap
+	 4QYoMIYig8WVVrulAbhFRPP2qJL5Zbc3uE4IG9M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qihang <q.h.hack.winter@gmail.com>,
+	Yuan Tan <yuantan098@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Peihan Liu <ronbogo@outlook.com>,
+	Yilin Zhu <zylzyl2333@gmail.com>,
+	Ren Wei <n05ec@lzu.edu.cn>,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Jaeyoung Chung <jjy600901@snu.ac.kr>,
+	Sabrina Dubroca <sd@queasysnail.net>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1405/3318] xfrm: interface: validate the IP header on xmit
-Date: Wed, 18 Nov 2026 15:33:47 +0100
-Message-ID: <20261118150402.777913532@linuxfoundation.org>
+Subject: [PATCH 6.6 1406/3318] xfrm: espintcp: reorder operations within espintcp_init_sk
+Date: Wed, 18 Nov 2026 15:33:48 +0100
+Message-ID: <20261118150402.814436748@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,59 +77,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qihang <q.h.hack.winter@gmail.com>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 86de3a1118a16dbbbe5fabe9aa20ffb93c072ed5 ]
+[ Upstream commit f9a11716c8445b496e9fafeec7e8412d384d02e2 ]
 
-Packets injected into an xfrm interface (e.g. AF_PACKET on an xfrmi
-device) reach the xfrm output path without IP header validation, but
-xfrm4_transport_output() uses iph->ihl for __skb_pull() and memmove()
-and expects the header to be valid.
+When enabled on a socket, espintcp sets the socket callbacks to its
+own before it has finished setting up its context and published it as
+icsk_ulp_data. Any one of those callbacks that gets called before will
+dereference a NULL icsk_ulp_data.
 
-vti_tunnel_xmit() already calls pskb_inet_may_pull() before handing
-packets to the xfrm output path.  Do the same in xfrmi_xmit() and
-perform the header checks ip_rcv_core()/ip6_rcv_core() do on entry
-to the IP stack: reject wrong IP versions and malformed IPv4 header
-lengths.
+Fix this by reording the operations, and add memory barriers to ensure
+callers will have a struct espintcp_ctx available. Add a few
+WRITE_ONCE/READ_ONCE too while we're there.
 
-Fixes: f203b76d7809 ("xfrm: Add virtual xfrm interfaces")
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Qihang <q.h.hack.winter@gmail.com>
+Reported-by: Yuan Tan <yuantan098@gmail.com>
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Reported-by: Xin Liu <bird@lzu.edu.cn>
+Reported-by: Peihan Liu <ronbogo@outlook.com>
+Reported-by: Yilin Zhu <zylzyl2333@gmail.com>
+Reported-by: Ren Wei <n05ec@lzu.edu.cn>
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Reported-by: Jaeyoung Chung <jjy600901@snu.ac.kr>
+Link: https://lore.kernel.org/all/c30b645074a1b379e0f7fe297f917c66137d9964.1778464688.git.zylzyl2333@gmail.com/
+Link: https://lore.kernel.org/all/20260819155349.3555804-1-jjy600901@snu.ac.kr
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_interface_core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/net/espintcp.h |  5 +++--
+ net/xfrm/espintcp.c    | 43 +++++++++++++++++++++++++-----------------
+ 2 files changed, 29 insertions(+), 19 deletions(-)
 
-diff --git a/net/xfrm/xfrm_interface_core.c b/net/xfrm/xfrm_interface_core.c
-index 77a58f2626931..0802568c8be31 100644
---- a/net/xfrm/xfrm_interface_core.c
-+++ b/net/xfrm/xfrm_interface_core.c
-@@ -533,8 +533,13 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
+diff --git a/include/net/espintcp.h b/include/net/espintcp.h
+index 0335bbd76552a..d8fb608ec6ea1 100644
+--- a/include/net/espintcp.h
++++ b/include/net/espintcp.h
+@@ -34,7 +34,8 @@ static inline struct espintcp_ctx *espintcp_getctx(const struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
  
- 	memset(&fl, 0, sizeof(fl));
+-	/* RCU is only needed for diag */
+-	return (__force void *)icsk->icsk_ulp_data;
++	/* pairs with smp_wmb() in espintcp_init_sk() */
++	smp_rmb();
++	return (__force void *)READ_ONCE(icsk->icsk_ulp_data);
+ }
+ #endif
+diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
+index 2e026aca2d7c1..a5c8d630eed53 100644
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -435,7 +435,9 @@ static void espintcp_destruct(struct sock *sk)
  
-+	if (!pskb_inet_may_pull(skb))
-+		goto tx_err;
+ bool tcp_is_ulp_esp(struct sock *sk)
+ {
+-	return sk->sk_prot == &espintcp_prot || sk->sk_prot == &espintcp6_prot;
++	const struct proto *prot = READ_ONCE(sk->sk_prot);
 +
- 	switch (skb->protocol) {
- 	case htons(ETH_P_IPV6):
-+		if (ipv6_hdr(skb)->version != 6)
-+			goto tx_err;
- 		memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
- 		xfrm_decode_session(skb, &fl, AF_INET6);
- 		if (!dst) {
-@@ -550,6 +555,9 @@ static netdev_tx_t xfrmi_xmit(struct sk_buff *skb, struct net_device *dev)
- 		}
- 		break;
- 	case htons(ETH_P_IP):
-+		if (ip_hdr(skb)->version != 4 || ip_hdr(skb)->ihl < 5 ||
-+		    !pskb_network_may_pull(skb, ip_hdr(skb)->ihl * 4))
-+			goto tx_err;
- 		memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
- 		xfrm_decode_session(skb, &fl, AF_INET);
- 		if (!dst) {
++	return prot == &espintcp_prot || prot == &espintcp6_prot;
+ }
+ EXPORT_SYMBOL_GPL(tcp_is_ulp_esp);
+ 
+@@ -467,34 +469,41 @@ static int espintcp_init_sk(struct sock *sk)
+ 
+ 	__sk_dst_reset(sk);
+ 
+-	strp_check_rcv(&ctx->strp);
+ 	skb_queue_head_init(&ctx->ike_queue);
+ 	skb_queue_head_init(&ctx->out_queue);
++	INIT_WORK(&ctx->work, espintcp_tx_work);
++
++	ctx->saved_data_ready = sk->sk_data_ready;
++	ctx->saved_write_space = sk->sk_write_space;
++	ctx->saved_destruct = sk->sk_destruct;
++
++	/* avoid using task_frag */
++	sk->sk_allocation = GFP_ATOMIC;
++	sk->sk_use_task_frag = false;
++
++	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
++
++	/* pairs with smp_rmb() in espintcp_getctx() */
++	smp_wmb();
++
++	WRITE_ONCE(sk->sk_data_ready, espintcp_data_ready);
++	WRITE_ONCE(sk->sk_write_space, espintcp_write_space);
++	sk->sk_destruct = espintcp_destruct;
+ 
+ 	if (sk->sk_family == AF_INET) {
+-		sk->sk_prot = &espintcp_prot;
+-		sk->sk_socket->ops = &espintcp_ops;
++		WRITE_ONCE(sk->sk_prot, &espintcp_prot);
++		WRITE_ONCE(sk->sk_socket->ops, &espintcp_ops);
+ 	} else {
+ 		mutex_lock(&tcpv6_prot_mutex);
+ 		if (!espintcp6_prot.recvmsg)
+ 			build_protos(&espintcp6_prot, &espintcp6_ops, sk->sk_prot, sk->sk_socket->ops);
+ 		mutex_unlock(&tcpv6_prot_mutex);
+ 
+-		sk->sk_prot = &espintcp6_prot;
+-		sk->sk_socket->ops = &espintcp6_ops;
++		WRITE_ONCE(sk->sk_prot, &espintcp6_prot);
++		WRITE_ONCE(sk->sk_socket->ops, &espintcp6_ops);
+ 	}
+-	ctx->saved_data_ready = sk->sk_data_ready;
+-	ctx->saved_write_space = sk->sk_write_space;
+-	ctx->saved_destruct = sk->sk_destruct;
+-	sk->sk_data_ready = espintcp_data_ready;
+-	sk->sk_write_space = espintcp_write_space;
+-	sk->sk_destruct = espintcp_destruct;
+-	rcu_assign_pointer(icsk->icsk_ulp_data, ctx);
+-	INIT_WORK(&ctx->work, espintcp_tx_work);
+ 
+-	/* avoid using task_frag */
+-	sk->sk_allocation = GFP_ATOMIC;
+-	sk->sk_use_task_frag = false;
++	strp_check_rcv(&ctx->strp);
+ 
+ 	return 0;
+ 
 -- 
 2.53.0
 
