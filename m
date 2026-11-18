@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055781;
-	b=igGswd+YyH/cnw3UHccjfO/6/ljHL1gODjHnJDsRU/xF6239TMN2wPBL+MJvi37oCnub
-	 KJUAWtuFezt8aTAVQNxTOemWInUTr+P3ujs+0rBeD2RJVof8wscEd/hM/9qqwOsIX1cx7
-	 6MXtZJwiHp7/SUaEKZrKEI31OUewZCghHe8BSHurOcIQ8sTewJMmEKYyJG7G0MYmeYnUk
-	 Aq0wUNOcBnWcjAt7X6E/w/vdUkRFS+ygF7Qs2xYifZV6D2BgKB5T5S4B2SB6MeyKbDMTK
-	 +RlAQsXAGnYKPaaaovClCRYBsshNyV4++3Ng9BxVa9x2Xv4UnvSViV+9Tug8nJgMtyg==
+	t=1795055784;
+	b=lPL1P0hhN7tsNHKwjyKz2qEgcn7yKAS4jVhkhU27DAuGv6Lflhx7VAlC97t0rYzxLPLV
+	 2cESmKvPg58s4frY5OdXYPkzx8XhTyNSRS9PPyX23ZqyuDrr/GYel7tEGnxGam8x8h0h5
+	 kK1gnM6YlImnu1Rf2bVKELIiGwOCifiNsfeNIUqU6g8KlX9/mvrNHxIkZWsAp/Z5Ji4Rn
+	 fm7SrdOcO73eCTjQN3qYRPK3n//rXQ13O0+peWjDBaxWtJjxi+1LlxuEzRZ8EjVM9Mk9z
+	 Td1BwKsz8lbJQVmB3z5MXaKkNhh0iK/QmUlAIqupEpg/ABUEyvKGKdZ22fOu63ECEXQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055781;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055784;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=wyjCyOVek9ewZIqjfeUPpX5n96QUqFhXoLHjtGlaIzs=;
-	b=M9+1r/b6q/1XuZ66gU9/qC6leGuoNombiYFyh6HkNJ+hMULWiQpQECxWV5QpOvg/v59t
-	 LSvISbxMvmN/dxdqLxKIHakBWaMU3G2QGjhb5SGZzdCn0hoNheOZrDOM80qhOAklwAzl7
-	 VSoBh2bFs5T2PApC9H0eBWa32MnWu3Bs0NqwBriPik61UZxxB7MJGZPS6QaR2wKtKBnQp
-	 eoyCt+Hg9Q9Xa7BWrzmaPJmwsdrzp82DJSfDJowaR266M1ykExdRZWbK4kOYN8gFFVemQ
-	 sQgN+sEmlQChJWA82o/Lv1r1WXWzoqNr2e7EwNqeQwx9/ZyNwIoYr+Kph7HZlSkdSqA==
+	bh=1vm08BiFdcdMRGu8jb48jW7jBA6Afp09/+xLYkxYHe8=;
+	b=j9SuenoxFu1KEOYdXn4NheAYjmp3jSdFOaRWRl4imoDurkVbgbATAQmoHCBr0mUNo+6+
+	 4DmzS/5bXf16mlALjSeP93uAsXipPczu13f4k5Bcji4Esp/YiSOE8Q0YQyFNchCVV+Cqz
+	 3LKzCfki61Fe3Xm01+bCDuSqz+hFBJBadPctdgXlTn65RrthBqd7ir/WCRYg2Ecco1D0J
+	 v5S7aXB+JrFH1ECA1wXpf71Sh9yT3AL9NfZbfsP4SCkLd9wyeGl+Lqnm0hDo3kIJZ1mAG
+	 rPUcHy9KIIACjuPg8OcnFZ0YbzquFOmy4jtf8yRgE5KWsrn8g50Oqi7ytpQd6Fv+5YA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oj6OVseX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYUCLbWp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD2A606A320;
-	Thu, 19 Nov 2026 02:36:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88E8606A31C;
+	Thu, 19 Nov 2026 02:36:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oj6OVseX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9361F000C4;
-	Thu, 19 Nov 2026 02:36:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NYUCLbWp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DC31F000C5;
+	Thu, 19 Nov 2026 02:36:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055781;
-	bh=wyjCyOVek9ewZIqjfeUPpX5n96QUqFhXoLHjtGlaIzs=;
+	s=korg; t=1795055784;
+	bh=1vm08BiFdcdMRGu8jb48jW7jBA6Afp09/+xLYkxYHe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oj6OVseXjWwoMn1KyAzjFhot/FwqNsCOEaYd0BMv0z86Ud0YWxb70z5UuHx/j6dLd
-	 DWI2D13u6O04i4eT24YPzz9QEU16QcvGVGigFUTzQeS++cRFJ4OCfvwesWzfoi8sO+
-	 8t2TjDOhRqHatGC5Gg8ObB/oMgb/iFFYxCFlsaL0=
+	b=NYUCLbWpOnXDZlqmkdbEed/FNZ74CvMZcFJU0lICd9SFKQ6G4TYtPsqeQx+YhBV5l
+	 g/q2MOwGCshdcDrg26u4A9nCOCWXecJ7gBvzBM1lOf87u9xarDT8P9ev4qkL/2szXV
+	 X84YTz9Qw983WymG0Iv/Wwmh5DIYL6Qh1iTwL3m8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1727/2214] power: supply: ab8500_charger: Respect AB8505 register layout
-Date: Wed, 18 Nov 2026 15:56:43 +0100
-Message-ID: <20261118150120.792606881@linuxfoundation.org>
+Subject: [PATCH 5.15 1754/2214] dmaengine: ste_dma40: Get LCPA SRAM from SRAM node
+Date: Wed, 18 Nov 2026 15:57:10 +0100
+Message-ID: <20261118150121.735271399@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,110 +68,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Walleij <linusw@kernel.org>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit dcecf527632297011153f088573689a1ad1de790 ]
+[ Upstream commit 5a1a3b9c19ddeddc6b0c2ea1da7fbe6624c04c7e ]
 
-Several AB8505 charger fields differ from AB8500. Its long VBUS
-falling debounce is 300 ms rather than 100 ms, and its VBUS
-overvoltage selector has a different encoding programmed through OTP.
-Writing the AB8500 6.3 V value selects 9 V on AB8505.
+Instead of passing the reserved SRAM as a "reg" field
+look for a phandle to the LCPA SRAM memory so we can
+use the proper SRAM device tree bindings for the SRAM.
 
-AB8505 revision 3 also defines SwControlFallback as reserved,
-correcting older documentation which led the driver to support
-autopower there. Preserve the AB8505 overvoltage setting, wait for its
-documented debounce, and reject the unsupported autopower setting.
-
-Fixes: 0ed5107fa860 ("ab8500-charger: Do not touch VBUSOVV bits")
-Fixes: b016322293c7 ("ab8500-charger: Add support for autopower on AB8505 and AB9540")
-Assisted-by: LLM
-Signed-off-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260916-ab8500-charging-v1-9-e986ed321cc6@kernel.org
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20230417-ux500-dma40-cleanup-v3-2-60bfa6785968@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: c6809b381e34 ("dmaengine: ste_dma40: Fix probe runtime PM disable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/dma/Kconfig     |  1 +
+ drivers/dma/ste_dma40.c | 47 +++++++++++++++++++++--------------------
+ 2 files changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index cce2f3c13b797..ae9e938188829 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -52,7 +52,7 @@
- #define MAIN_CH_DET			0x01
- #define MAIN_CH_CV_ON			0x04
- #define USB_CH_CV_ON			0x08
--#define VBUS_DET_DBNC100		0x02
-+#define VBUS_DET_DBNC_LONG		0x02
- #define VBUS_DET_DBNC1			0x01
- #define OTP_ENABLE_WD			0x01
- #define DROP_COUNT_RESET		0x01
-@@ -356,6 +356,10 @@ static void ab8500_enable_disable_sw_fallback(struct ab8500_charger *di,
- 	u8 bit;
- 	int ret;
+diff --git a/drivers/dma/Kconfig b/drivers/dma/Kconfig
+index 143fb0f8c07fa..b49a408967371 100644
+--- a/drivers/dma/Kconfig
++++ b/drivers/dma/Kconfig
+@@ -554,6 +554,7 @@ config STE_DMA40
+ 	bool "ST-Ericsson DMA40 support"
+ 	depends on ARCH_U8500
+ 	select DMA_ENGINE
++	select SRAM
+ 	help
+ 	  Support for ST-Ericsson DMA40 controller
  
-+	/* SwControlFallback is reserved and must remain clear on AB8505. */
-+	if (is_ab8505(di->parent))
-+		return;
-+
- 	dev_dbg(di->dev, "SW Fallback: %d\n", fallback);
+diff --git a/drivers/dma/ste_dma40.c b/drivers/dma/ste_dma40.c
+index 52f455262857d..b25225c480fa7 100644
+--- a/drivers/dma/ste_dma40.c
++++ b/drivers/dma/ste_dma40.c
+@@ -19,6 +19,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/err.h>
+ #include <linux/of.h>
++#include <linux/of_address.h>
+ #include <linux/of_dma.h>
+ #include <linux/amba/bus.h>
+ #include <linux/regulator/consumer.h>
+@@ -3515,9 +3516,11 @@ static int __init d40_probe(struct platform_device *pdev)
+ {
+ 	struct stedma40_platform_data *plat_data = dev_get_platdata(&pdev->dev);
+ 	struct device_node *np = pdev->dev.of_node;
++	struct device_node *np_lcpa;
+ 	int ret = -ENOENT;
+ 	struct d40_base *base;
+ 	struct resource *res;
++	struct resource res_lcpa;
+ 	int num_reserved_chans;
+ 	u32 val;
  
- 	if (is_ab8500(di->parent)) {
-@@ -660,12 +664,16 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
+@@ -3544,37 +3547,37 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	spin_lock_init(&base->interrupt_lock);
+ 	spin_lock_init(&base->execmd_lock);
  
- 	if (!probe) {
- 		/*
--		 * AB8500 says VBUS_DET_DBNC1 & VBUS_DET_DBNC100
-+		 * AB8500 says VBUS_DET_DBNC1 & VBUS_DET_DBNC_LONG
- 		 * when disconnecting ACA even though no
- 		 * charger was connected. Try waiting a little
--		 * longer than the 100 ms of VBUS_DET_DBNC100...
-+		 * longer than its 100 ms debounce. AB8505 uses
-+		 * a 300 ms falling debounce for the same bit.
- 		 */
--		msleep(110);
-+		if (is_ab8505(di->parent))
-+			msleep(310);
-+		else
-+			msleep(110);
+-	/* Get IO for logical channel parameter address */
+-	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lcpa");
+-	if (!res) {
+-		ret = -ENOENT;
+-		d40_err(&pdev->dev, "No \"lcpa\" memory resource\n");
+-		goto destroy_cache;
++	/* Get IO for logical channel parameter address (LCPA) */
++	np_lcpa = of_parse_phandle(np, "sram", 0);
++	if (!np_lcpa) {
++		dev_err(&pdev->dev, "no LCPA SRAM node\n");
++		goto report_failure;
  	}
- 	ret = abx500_get_register_interruptible(di->dev, AB8500_CHARGER,
- 		AB8500_CH_USBCH_STAT1_REG, &val);
-@@ -676,7 +684,7 @@ static int ab8500_charger_detect_chargers(struct ab8500_charger *di, bool probe)
- 	dev_dbg(di->dev,
- 		"%s AB8500_CH_USBCH_STAT1_REG %x\n", __func__,
- 		val);
--	if ((val & VBUS_DET_DBNC1) && (val & VBUS_DET_DBNC100))
-+	if ((val & VBUS_DET_DBNC1) && (val & VBUS_DET_DBNC_LONG))
- 		result |= USB_PW_CONN;
- 
- 	return result;
-@@ -3060,7 +3068,7 @@ static int ab8500_charger_init_hw_registers(struct ab8500_charger *di)
- 		}
- 	}
- 
--	if (is_ab8505_2p0(di->parent))
-+	if (is_ab8505(di->parent))
- 		ret = abx500_mask_and_set_register_interruptible(di->dev,
- 			AB8500_CHARGER,
- 			AB8500_USBCH_CTRL2_REG,
-@@ -3413,11 +3421,14 @@ static int ab8500_charger_probe(struct platform_device *pdev)
- 
- 	di->bm = &ab8500_bm_data;
- 
--	di->autopower_cfg = of_property_read_bool(np, "autopower_cfg");
+-	base->lcpa_size = resource_size(res);
+-	base->phy_lcpa = res->start;
 -
- 	/* get parent data */
- 	di->dev = dev;
- 	di->parent = dev_get_drvdata(pdev->dev.parent);
-+	di->autopower_cfg = of_property_read_bool(np, "autopower_cfg");
-+	if (di->autopower_cfg && is_ab8505(di->parent)) {
-+		dev_warn(dev, "autopower is not supported on AB8505\n");
-+		di->autopower_cfg = false;
-+	}
+-	if (request_mem_region(res->start, resource_size(res),
+-			       D40_NAME " I/O lcpa") == NULL) {
+-		ret = -EBUSY;
+-		d40_err(&pdev->dev, "Failed to request LCPA region %pR\n", res);
+-		goto destroy_cache;
++	/* This is no device so read the address directly from the node */
++	ret = of_address_to_resource(np_lcpa, 0, &res_lcpa);
++	if (ret) {
++		dev_err(&pdev->dev, "no LCPA SRAM resource\n");
++		goto report_failure;
+ 	}
++	base->lcpa_size = resource_size(&res_lcpa);
++	base->phy_lcpa = res_lcpa.start;
++	dev_info(&pdev->dev, "found LCPA SRAM at 0x%08x, size 0x%08x\n",
++		 (u32)base->phy_lcpa, base->lcpa_size);
  
- 	/* Get ADC channels */
- 	di->adc_main_charger_v = devm_iio_channel_get(dev, "main_charger_v");
+ 	/* We make use of ESRAM memory for this. */
+ 	val = readl(base->virtbase + D40_DREG_LCPA);
+-	if (res->start != val && val != 0) {
++	if (base->phy_lcpa != val && val != 0) {
+ 		dev_warn(&pdev->dev,
+-			 "[%s] Mismatch LCPA dma 0x%x, def %pa\n",
+-			 __func__, val, &res->start);
++			 "[%s] Mismatch LCPA dma 0x%x, def %08x\n",
++			 __func__, val, (u32)base->phy_lcpa);
+ 	} else
+-		writel(res->start, base->virtbase + D40_DREG_LCPA);
++		writel(base->phy_lcpa, base->virtbase + D40_DREG_LCPA);
+ 
+-	base->lcpa_base = ioremap(res->start, resource_size(res));
++	base->lcpa_base = ioremap(base->phy_lcpa, base->lcpa_size);
+ 	if (!base->lcpa_base) {
+ 		ret = -ENOMEM;
+ 		d40_err(&pdev->dev, "Failed to ioremap LCPA region\n");
+-		goto destroy_cache;
++		goto release_base;
+ 	}
+ 	/* If lcla has to be located in ESRAM we don't need to allocate */
+ 	if (base->plat_data->use_esram_lcla) {
+@@ -3691,9 +3694,7 @@ static int __init d40_probe(struct platform_device *pdev)
+ 	if (base->lcpa_base)
+ 		iounmap(base->lcpa_base);
+ 
+-	if (base->phy_lcpa)
+-		release_mem_region(base->phy_lcpa,
+-				   base->lcpa_size);
++release_base:
+ 	if (base->phy_start)
+ 		release_mem_region(base->phy_start,
+ 				   base->phy_size);
 -- 
 2.53.0
 
