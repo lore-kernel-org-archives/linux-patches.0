@@ -1,52 +1,59 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044311;
-	b=FPF030XYuTInRrnAUh50NLSG60AF6q1z+5qnYV7VAY29UPff0/6zMSx3M8vDePjR/fG/
-	 8LG3CGiyyHdRYyTpzxnx4/P+V66NvW+jjuzuC+3nemA7rKOXWTH3j02x3vk2Jr8sJdD36
-	 /rFhDsy1kuXuXUvKBMcnbUOeeW0qnOUOwJktTcevtUJOhij1zjX6G5KDxKiC22VJUkgqr
-	 C33eyOzKLq3cjXIA4A4uMDFe4Yh6hS/bHNL5nn15ZaGZYjbE36XhjxpmN9C5DB39/KVJT
-	 q+KwMpiec64hLexSYglQXz8VmdjB0pXFgV+KRxW3Fo1pBG2akXzbL/Kb2yWTBTJeWkg==
+	t=1795044314;
+	b=BY+L904IOFhFFkNQZnCwRx/ev40V6JfRw0lpAjhuReU+9tW9lJbv4E8uD0eTJJKmTsLA
+	 Br2R2m3fh9hi9AUc5V1gQizEynA7ejmxqq21qdot4/GsFSGWz8n8fi0kSKKoYkC5GHBCe
+	 eTLVLea0Rew7Q5W0iOm95aFZBDihzvIsxQOlgQk2Pnz8kwRsC9tp/eWxz/O9lV3he4H+O
+	 FhSb9LyZLwX5YYqN4ME7GQeZlWg5HpbTiu4gFLHirXLX3ZzbnXz8SyT8aHBHmYlBMjBqa
+	 /5w0MJ+0iSEJBOmhm+SpzJzVjrtTmya0lZMUTEh2uGIu3VQKSfvpFIdnxaW4LQ53pWw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044311;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044314;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=R/MO68E7+nB/GaVMUdlILyuEO7B+oRX+1c3IRX3YDdg=;
-	b=TeGOiV2L9PE0WMc/kDd/oWQ1Ak5L5gTdGMQ4Y5mcnYH2/XX54WMTbrpkr6v2TH7Yw67P
-	 LVExpIxqQ6FH+MdkWFlKcZBCKX8/PkPgiltmMjSpcqoewZ5z9FiJd8/kyUsjmND2AqM/P
-	 0eGl1wPsPypjlQvWhQd3DCvlQ5X77FT7M16xtDmmJxnH5Mc5gnqNBvRfeQ8BP8e/M81TL
-	 Dvfxvzhbsqemy64VVUODSY3dZegKNjzpJyRfpQ7wszYWvmS6f1Ep7EOGGf5QaelyxaKk1
-	 NQwRudDg4L2QeoEDCZneOGa6r9rEzlAV91vKBq/0js0CsWxtNqZ5NbYCxcvgg/fJu1A==
+	bh=EMtMuHal404Hm1tY/P5bbSuz9NoTcDl9jdRcyVovcio=;
+	b=oooTp1WwBCcCFM6oce7oL+ZsOm6qecnrKnGq4g5lkheXk44iscr3ErrSd+sMWCqcWjE6
+	 S3JH1Hf+v9+1CoUGug4OpqRdWECCcB+8uZCKLItGv6myDV6Tmo9NkTnH3svrQVM/bxpba
+	 CBBKJSF6h76Oh3UmUBItnSvoJu2i04WvTlR+EKT8HYoAAKbWizJFd+AZUTlJx5k5MF1lK
+	 Q+3w5lPnk2a3XGUDy0K2YAyAtc5noxE+5MnjqEVG4ouoeEci7zsYMXk6wLsplRyJzWqfD
+	 mFp1dMODqD47cl0O0d2o0ieyjMMDRspMKQFL872qK0up85ghvtyjnL0hGc14yZoL9Jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQM0xKO8;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="ev+NR/GF";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D942606A320;
-	Wed, 18 Nov 2026 23:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813B9606A32A;
+	Wed, 18 Nov 2026 23:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QQM0xKO8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF33B1F000C4;
-	Wed, 18 Nov 2026 23:25:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ev+NR/GF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B1A1F000C4;
+	Wed, 18 Nov 2026 23:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044311;
-	bh=R/MO68E7+nB/GaVMUdlILyuEO7B+oRX+1c3IRX3YDdg=;
+	s=korg; t=1795044314;
+	bh=EMtMuHal404Hm1tY/P5bbSuz9NoTcDl9jdRcyVovcio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QQM0xKO8KEsw7qT28O/ebYL3VJfN7og3YFD4raVM1AW6XkFMP64vt7ryHE5tTJe6R
-	 cEfBoBLhI8R4fNtXgSGzfTIixO+L6oq0VAjcYOXXk4EeaH9q65P5DIhMyi3KGZr4VQ
-	 AyNWMcGsRSgnA+J1VZFJ9/JPl3WYV+y1wS7VMsYw=
+	b=ev+NR/GF/PyBBcVop46F/oAQ5dTPYHSylO6ZN68U5/XOg2vEEiqiPht9OramF7HbW
+	 5GvIUoth0yL3fcNu/TN+qfNO9Arwfbcc5zrB7uhB79sONfb97m6r+bAwyBTNk7Asm2
+	 5Uc0PZ5WSy0DSBKn/mU3KQm2r7bU3Bqqg3tSwaXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Howells <dhowells@redhat.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Paulo Alcantara <pc@manguebit.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>,
+	Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0471/2857] net: extend IPv6 exthdr detection of tunneled packets
-Date: Wed, 18 Nov 2026 15:25:05 +0100
-Message-ID: <20261118150218.406663389@linuxfoundation.org>
+Subject: [PATCH 6.1 0472/2857] smb: client: discard post-EOF pagecache when extending a file via clone range
+Date: Wed, 18 Nov 2026 15:25:06 +0100
+Message-ID: <20261118150218.440021363@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,144 +75,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 5f0764cb1c81a9712bce605d38efe6d844a70b29 ]
+[ Upstream commit 4721587f96cb8de8164f3fd203093a0875560999 ]
 
-Commit c4336a07eb6b ("net: correctly handle tunneled traffic on IPV6_CSUM
-GSO fallback") split skb_gso_has_extension_hdr() into mutually exclusive
-branches on skb->encapsulation. This did not yet address all paths:
+cifs_remap_file_range() discarded the pagecache only for the folios
+overlapping the destination region, so when a clone extends the file the
+folio straddling the old EOF - which may hold data dirtied past EOF
+through an mmap - was never dropped and became visible as file content
+once the file was extended.
 
-1. With skb->encapsulation set, the outer header is not checked. IPv6
-   tunnels such as ip6_gre and ip6_tunnel add an outer Destination
-   Options header by default (encap_limit). Their GSO packets skip
-   software GSO, then skb_csum_hwoffload_help() sees the outer extension
-   header and calls skb_checksum_help() on the GSO skb, which warns and
-   drops it.
+Start the discard at the smaller of fstart and the old EOF.  i_size is
+still old here, so nothing past the old EOF is flushed to the server.
 
-2. Tunnels over IPv6 without an outer transport header, such as
-   ip6_tunnel, leave skb->transport_header at the inner transport
-   header. skb_network_header_len() then spans the outer IPv6, tunnel
-   and inner IP headers, a false positive.
-
-3. UDP tunnels without an inner network header, such as SCTP-in-UDP or
-   PSP, have no inner IPv6 header to check. Decide on the outer header
-   alone.
-
-4. Directly dereferencing inner_ip_hdr(skb)->version without
-   skb_header_pointer() is unsafe.
-
-Instead, check ipv6_ext_hdr(nexthdr) on the outer IPv6 header and, if
-set, on the inner IPv6 header. Read the headers with skb_header_pointer().
-Keep the skb_network_header_len() check when !skb->encapsulation to also
-catch encapsulated packets without skb->encapsulation (e.g., virtio).
-
-Use the same helper in skb_csum_hwoffload_help(). Its open coded test
-has the false positive of (2) and ignores the inner header.
-
-Background: checksum offload of tunneled packets invariants:
-
-Non-GSO skb:
-- If the inner packet is CHECKSUM_PARTIAL, Local Checksum Offload computes
-  the outer checksum in software and the device offloads only the inner L4
-  checksum.
-- If the inner packet is CHECKSUM_NONE (e.g., SCTP-in-UDP, ESP-in-UDP,
-  Remote Checksum Offload), the device offloads the outer UDP or GRE
-  checksum instead.
-
-GSO skb:
-- A device with NETIF_F_GSO_UDP_TUNNEL_CSUM or NETIF_F_GSO_GRE_CSUM
-  computes both inner and outer checksums per segment.
-  The outer checksum is seeded with only the pseudo-header checksum.
-
-A NETIF_F_IPV6_CSUM device must parse through the outer headers to
-reach the inner ones.
-
-Fixes: c4336a07eb6b ("net: correctly handle tunneled traffic on IPV6_CSUM GSO fallback")
+Fixes: c54fc3a4f375 ("cifs: Fix flushing, invalidation and file size with FICLONE")
+Reviewed-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Paulo Alcantara <pc@manguebit.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Ronnie Sahlberg <ronniesahlberg@gmail.com>
+Cc: Shyam Prasad N <sprasad@microsoft.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Bharath SM <bharathsm@microsoft.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260926140506.2335137-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: Kept the existing !ipv6_has_hopopt_jumbo(skb) guards in both caller conditions while swapping in the new skb_has_ipv6_extension_hdr() helper, since upstream's context lacked those guards. ]
+[ sashal: Replaced the missing i_size local with i_size_read(target_inode) and used min_t(unsigned long long, ...) for the type check, with the netfs zero-point context omitted. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 49 ++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 32 insertions(+), 17 deletions(-)
+ fs/smb/client/cifsfs.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 7c0d0905dd31b..ea6785052e8cf 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3592,20 +3592,36 @@ static netdev_features_t dflt_features_check(struct sk_buff *skb,
- 	return vlan_features_check(skb, features);
- }
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index c43c937b3f577..01b4f34a23ad0 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1366,9 +1366,15 @@ static loff_t cifs_remap_file_range(struct file *src_file, loff_t off,
+ 	if (rc)
+ 		goto unlock;
  
--static bool skb_gso_has_extension_hdr(const struct sk_buff *skb)
--{
--	if (!skb->encapsulation)
--		return ((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
--			 (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
--			  vlan_get_protocol(skb) == htons(ETH_P_IPV6))) &&
--			skb_transport_header_was_set(skb) &&
--			skb_network_header_len(skb) != sizeof(struct ipv6hdr));
--	else
--		return (!skb_inner_network_header_was_set(skb) ||
--			((skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6 ||
--			  (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4 &&
--			   inner_ip_hdr(skb)->version == 6)) &&
--			 skb_inner_network_header_len(skb) != sizeof(struct ipv6hdr)));
-+static bool __skb_has_ipv6_ext_hdr(const struct sk_buff *skb, int nhoff)
-+{
-+	const struct ipv6hdr *ip6h;
-+	struct ipv6hdr _ip6h;
-+
-+	ip6h = skb_header_pointer(skb, nhoff, sizeof(_ip6h), &_ip6h);
-+	return ip6h && ip6h->version == 6 && ipv6_ext_hdr(ip6h->nexthdr);
-+}
-+
-+static bool skb_has_ipv6_extension_hdr(const struct sk_buff *skb)
-+{
-+	if (vlan_get_protocol(skb) == htons(ETH_P_IPV6)) {
-+		if (__skb_has_ipv6_ext_hdr(skb, skb_network_offset(skb)))
-+			return true;
-+
-+		/* Catch tunnels without skb->encapsulation (e.g., virtio). */
-+		if (!skb->encapsulation &&
-+		    skb_transport_header_was_set(skb) &&
-+		    skb_network_header_len(skb) != sizeof(struct ipv6hdr))
-+			return true;
-+	}
-+
-+	/* Tunnels without an inner network header, such as SCTP-in-UDP or
-+	 * PSP, have no inner IP header and thus no inner extension header.
+-	/* Discard all the folios that overlap the destination region. */
++	/*
++	 * Discard all the folios that overlap the destination region.  Start at
++	 * the old EOF when extending so the folio straddling it, which may hold
++	 * data written past EOF through an mmap, is dropped too.
 +	 */
-+	if (skb->encapsulation && skb_inner_network_header_was_set(skb) &&
-+	    __skb_has_ipv6_ext_hdr(skb, skb_inner_network_offset(skb)))
-+		return true;
-+
-+	return false;
- }
+ 	cifs_dbg(FYI, "about to discard pages %llx-%llx\n", fstart, fend);
+-	truncate_inode_pages_range(&target_inode->i_data, fstart, fend);
++	truncate_inode_pages_range(&target_inode->i_data,
++				   min_t(unsigned long long, fstart,
++					 i_size_read(target_inode)), fend);
  
- static netdev_features_t gso_features_check(const struct sk_buff *skb,
-@@ -3654,7 +3670,7 @@ static netdev_features_t gso_features_check(const struct sk_buff *skb,
- 	 * so neither does TSO that depends on it.
- 	 */
- 	if (features & NETIF_F_IPV6_CSUM &&
--	    skb_gso_has_extension_hdr(skb) &&
-+	    skb_has_ipv6_extension_hdr(skb) &&
- 	    !ipv6_has_hopopt_jumbo(skb))
- 		features &= ~(NETIF_F_IPV6_CSUM | NETIF_F_TSO6 | NETIF_F_GSO_UDP_L4);
- 
-@@ -3757,8 +3773,7 @@ int skb_csum_hwoffload_help(struct sk_buff *skb,
- 		return 0;
- 
- 	if (features & (NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM)) {
--		if (vlan_get_protocol(skb) == htons(ETH_P_IPV6) &&
--		    skb_network_header_len(skb) != sizeof(struct ipv6hdr) &&
-+		if (skb_has_ipv6_extension_hdr(skb) &&
- 		    !ipv6_has_hopopt_jumbo(skb))
- 			goto sw_checksum;
- 
+ 	fscache_invalidate(cifs_inode_cookie(target_inode), NULL,
+ 			   i_size_read(target_inode), 0);
 -- 
 2.53.0
 
