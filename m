@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052644;
-	b=OvxDg8x6oK78C5m/pFmo7yTSGQVdoXm7HVD4aed1/ooaKEonh6Degcdbc8UZ6Sj29rhh
-	 s5u2psqZyEnkEAvROfb6UDjFwK52KDZdMVPTVysaKv2vsTiTw5xHvP2pZPDLNOdQJ1Xra
-	 JiQWqBx6gi6m69Xz66VdWY2vlxBXm4pLAf7vDQARXZ0mSR7/JsDDhGG0vfTc9WHbzaIkS
-	 msct0JMV6m9lEO2R6NkYd1t/E+62kaKTN8WbgW3XSDRpt8nwVNnEVpLv0sRGHXT4NcU1m
-	 6c8cyaP6M3Dq9OQoPMVVnsVodsdO5M/Xc1KpV1RcM5ty0ngwnBRkHfT76CiflV1TBbQ==
+	t=1795052646;
+	b=M43+2GuirrpnZI4iLhyNzjn8Dk56t9Vu+uNCF0fmc0pxqMgl68Su0adl29Lbaklo8TQX
+	 HbVOdxljxfeUYS3ukyDPOv6eXUbuoGUxIObUQcVAYAbhGWxMOOwpcJvTPhz0K07nPwQVv
+	 EAqyt5AHtx9waXH/iWGKNhhPkoMFyb7QtzV/qC+0BRfo4hyoq/pg62O0yQWKUg87HFG+Y
+	 r9hyN95HHCAzRLdL2YIxL4FNBBco9mNcnPeurf3jIV5PNpIMKJ6WgSaH2CMI8z/4n4Bho
+	 Kz98hSQ1ajWSyzncGswTLzJqRi9wjlTkIlm1GV24N2tNynP1PkKO+TKan1g+r63OUiw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052644;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052646;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zn5fcZzLyeerA983SQ1kwaoJy/WYfxM4b0KNJOWv/L8=;
-	b=WjY+hvRvDiBNDW7wF5SXdLLVrciSxJ0yrEhXeTYlv9qrxY7aw0V8eMIO6au+EhyJ05tj
-	 Netta+3sX8RBbsydBGmuQ3tknkJfJYe3k/cttl37hmBD5oJvJic5lVg2G5QdlPPdk1ED6
-	 MhRq7Yvg4Jthdi3QrwXy2v/0wwm++18D2DAu4U/4d6Ec/5pckCgsuQnsrMmNA18+SMioG
-	 jqeJ/bazzdnjKYELJlJnXhYEDF26xjP6ZXKlIeJumSxToturKJtkv9MeY31I1sfxMjNhJ
-	 vj9qy5VX5FzWYiMFbWVqKsOnEThmvtoh4nhLwkKJhJq1If+qqHYaaTczY5F/0fRR27g==
+	bh=jpbAcuhH5wFcDJQWfGjtl7NRPPs1gnJluVcqpvqHipc=;
+	b=Bjyg2bSkHyq99xmjSzuVU4LDd7hcITQ8a1NB2Y+jRxmaCwZ+VwlWd//aCmiCDl4PK49S
+	 vsjP3nY2BjN2znVo+vTJJOuHrh6QKgitCegg1ZbYttqGz7amrHdQ9NpLgaW0hgiZoTXCG
+	 8QDHA2N+NA/jZl5IeS483Ic7Z3GR2ewVOgnMv5Ui6nwc7WYlCEQ5auCfU1byZFhbxehb8
+	 5wq+it0Vj4ZfjczeoMZhX1acsFs/5xbEHZHyk5KkMJWUBLMvW4VAq+2SsfJIT63LH5tSB
+	 EJwesXeZNsGNccZ5Fbv/Lb1zkkveKdATYkgOto3LxmzGwibN9Y+nuen6gRN+Z5eeokg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRy3hP70;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTIIyjLM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BCD606A320;
-	Thu, 19 Nov 2026 01:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B780E606A320;
+	Thu, 19 Nov 2026 01:44:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yRy3hP70
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DC91F000C4;
-	Thu, 19 Nov 2026 01:44:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eTIIyjLM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D12D1F000C4;
+	Thu, 19 Nov 2026 01:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052643;
-	bh=zn5fcZzLyeerA983SQ1kwaoJy/WYfxM4b0KNJOWv/L8=;
+	s=korg; t=1795052646;
+	bh=jpbAcuhH5wFcDJQWfGjtl7NRPPs1gnJluVcqpvqHipc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yRy3hP70vP/3GDDUDkcX3JN94d1XEisjnkBpt40nZp0Wrmu+Z6nHlco4QLdES3feQ
-	 LxCc9P1rBQW4NpJAw8C/K92dB2F/A3Mwe7eN1Dt+ALObg1qkEPpwtJx8BcHDhkjtkt
-	 fmwujznxbQCden+MdMm7bnPWUcsmy2PNNvhGGvMw=
+	b=eTIIyjLMFUrdv1YqBURiABJcVaRK6FpjUUX9uAfZbL4F/2Ulrb2JokNWin1x8p3PI
+	 EC5l4QJpyRs3qAKCAn3kSsAbgXYb2LWvZ67Vxhz0YwaX900ofSb+7qdgtP81HXq1ph
+	 T9gPmH5solv+5pFyHlwbdA1WOb9GSAA/uUdbrQ9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Douglas <me@timdoug.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0638/2214] serial: pmac_zilog: push received data to the port that received it
-Date: Wed, 18 Nov 2026 15:38:34 +0100
-Message-ID: <20261118150036.858015643@linuxfoundation.org>
+Subject: [PATCH 5.15 0639/2214] ARM: 9491/1: alignment: restore uaccess state on emulation fault
+Date: Wed, 18 Nov 2026 15:38:35 +0100
+Message-ID: <20261118150036.907996490@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -67,50 +69,200 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Douglas <me@timdoug.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit f3dc727da3af64abc12b625bbf1eb68d55d882cc ]
+[ Upstream commit 80dafbcb705cead6d25cb821cf29c47da8860c8c ]
 
-pmz_interrupt() drains both channels but, since commit 2e124b4a390c
-("TTY: switch tty_flip_buffer_push"), pushes the flip buffer of the
-port whose handler is running rather than the port that was drained.
-With both ports open, data received on the other port can be left in
-its flip buffer until something else pushes it, so its reader may not
-see it.
+The alignment handlers enable access to user memory while emulating
+unaligned instructions. If a checked access faults, its exception table
+fixup jumps to the handler's fault label and bypasses uaccess_restore().
+This leaves DOMAIN_USER as DOMAIN_CLIENT with SW domain PAN, or leaves
+TTBR0 page table walks enabled with TTBR0 PAN, while the fault is handled.
 
-Fixes: 2e124b4a390c ("TTY: switch tty_flip_buffer_push")
+An ARM926 QEMU test using LDMIA across an unmapped page boundary reports
+DOMAIN_USER=1 at TYPE_FAULT before this change and DOMAIN_USER=0 after it.
+SW domain PAN is the default on ARMv5, ARMv6, and non-LPAE ARMv7 builds.
+
+Keep the saved uaccess state at function scope and track whether it was
+saved. Restore it at the fault label only when needed. Paths that did not
+enable user access continue to skip the restore.
+
+Assisted-by: Codex:gpt-5.6-sol
+
+Fixes: 274e91b81ed2 ("ARM: alignment: fix alignment handling for uaccess changes")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM
-Signed-off-by: Tim Douglas <me@timdoug.com>
-Link: https://patch.msgid.link/20261013013541.4535-2-me@timdoug.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pmac_zilog.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mm/alignment.c | 51 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/tty/serial/pmac_zilog.c b/drivers/tty/serial/pmac_zilog.c
-index b2eadbac013e9..ad67608b23901 100644
---- a/drivers/tty/serial/pmac_zilog.c
-+++ b/drivers/tty/serial/pmac_zilog.c
-@@ -455,7 +455,7 @@ static irqreturn_t pmz_interrupt(int irq, void *dev_id)
-  skip_a:
- 	spin_unlock(&uap_a->port.lock);
- 	if (push)
--		tty_flip_buffer_push(&uap->port.state->port);
-+		tty_flip_buffer_push(&uap_a->port.state->port);
+diff --git a/arch/arm/mm/alignment.c b/arch/arm/mm/alignment.c
+index 758504a28c13f..2f76a04cd29d2 100644
+--- a/arch/arm/mm/alignment.c
++++ b/arch/arm/mm/alignment.c
+@@ -341,6 +341,8 @@ static int
+ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+ 	unsigned int rd = RD_BITS(instr);
++	unsigned int ua_flags;
++	bool ua_saved = false;
  
- 	if (!uap_b)
- 		goto out;
-@@ -480,7 +480,7 @@ static irqreturn_t pmz_interrupt(int irq, void *dev_id)
-  skip_b:
- 	spin_unlock(&uap_b->port.lock);
- 	if (push)
--		tty_flip_buffer_push(&uap->port.state->port);
-+		tty_flip_buffer_push(&uap_b->port.state->port);
+ 	ai_half += 1;
  
-  out:
- 	return rc;
+@@ -364,10 +366,11 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
+  user:
+ 	if (LDST_L_BIT(instr)) {
+ 		unsigned long val;
+-		unsigned int __ua_flags = uaccess_save_and_enable();
+ 
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		get16t_unaligned_check(val, addr);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 
+ 		/* signed half-word? */
+ 		if (instr & 0x40)
+@@ -375,14 +378,17 @@ do_alignment_ldrhstrh(unsigned long addr, u32 instr, struct pt_regs *regs)
+ 
+ 		regs->uregs[rd] = val;
+ 	} else {
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		put16t_unaligned_check(regs->uregs[rd], addr);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 	}
+ 
+ 	return TYPE_LDST;
+ 
+  fault:
++	if (ua_saved)
++		uaccess_restore(ua_flags);
+ 	return TYPE_FAULT;
+ }
+ 
+@@ -391,6 +397,8 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+ 	unsigned int rd = RD_BITS(instr);
+ 	unsigned int rd2;
++	unsigned int ua_flags;
++	bool ua_saved = false;
+ 	int load;
+ 
+ 	if ((instr & 0xfe000000) == 0xe8000000) {
+@@ -425,26 +433,30 @@ do_alignment_ldrdstrd(unsigned long addr, u32 instr, struct pt_regs *regs)
+  user:
+ 	if (load) {
+ 		unsigned long val, val2;
+-		unsigned int __ua_flags = uaccess_save_and_enable();
+ 
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		get32t_unaligned_check(val, addr);
+ 		get32t_unaligned_check(val2, addr + 4);
+ 
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 
+ 		regs->uregs[rd] = val;
+ 		regs->uregs[rd2] = val2;
+ 	} else {
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		put32t_unaligned_check(regs->uregs[rd], addr);
+ 		put32t_unaligned_check(regs->uregs[rd2], addr + 4);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 	}
+ 
+ 	return TYPE_LDST;
+  bad:
+ 	return TYPE_ERROR;
+  fault:
++	if (ua_saved)
++		uaccess_restore(ua_flags);
+ 	return TYPE_FAULT;
+ }
+ 
+@@ -452,6 +464,8 @@ static int
+ do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+ 	unsigned int rd = RD_BITS(instr);
++	unsigned int ua_flags;
++	bool ua_saved = false;
+ 
+ 	ai_word += 1;
+ 
+@@ -469,18 +483,22 @@ do_alignment_ldrstr(unsigned long addr, u32 instr, struct pt_regs *regs)
+  trans:
+ 	if (LDST_L_BIT(instr)) {
+ 		unsigned int val;
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		get32t_unaligned_check(val, addr);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 		regs->uregs[rd] = val;
+ 	} else {
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		put32t_unaligned_check(regs->uregs[rd], addr);
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 	}
+ 	return TYPE_LDST;
+ 
+  fault:
++	if (ua_saved)
++		uaccess_restore(ua_flags);
+ 	return TYPE_FAULT;
+ }
+ 
+@@ -502,6 +520,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ {
+ 	unsigned int rd, rn, correction, nr_regs, regbits;
+ 	unsigned long eaddr, newaddr;
++	unsigned int ua_flags;
++	bool ua_saved = false;
+ 
+ 	if (LDM_S_BIT(instr))
+ 		goto bad;
+@@ -547,7 +567,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ #endif
+ 
+ 	if (user_mode(regs)) {
+-		unsigned int __ua_flags = uaccess_save_and_enable();
++		ua_flags = uaccess_save_and_enable();
++		ua_saved = true;
+ 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
+ 		     regbits >>= 1, rd += 1)
+ 			if (regbits & 1) {
+@@ -559,7 +580,7 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ 					put32t_unaligned_check(regs->uregs[rd], eaddr);
+ 				eaddr += 4;
+ 			}
+-		uaccess_restore(__ua_flags);
++		uaccess_restore(ua_flags);
+ 	} else {
+ 		for (regbits = REGMASK_BITS(instr), rd = 0; regbits;
+ 		     regbits >>= 1, rd += 1)
+@@ -581,6 +602,8 @@ do_alignment_ldmstm(unsigned long addr, u32 instr, struct pt_regs *regs)
+ 	return TYPE_DONE;
+ 
+ fault:
++	if (ua_saved)
++		uaccess_restore(ua_flags);
+ 	regs->ARM_pc -= correction;
+ 	return TYPE_FAULT;
+ 
 -- 
 2.53.0
 
