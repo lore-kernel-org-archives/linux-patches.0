@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042791;
-	b=cKwJ6auWpVIYhrwF4z2GvzHX/qo4ffASvVbMLzNU+MneTUBqbMnlkGfJjuWZZ1NZ2WZ5
-	 q1Ld4eW+RA9rzN0aFo8sx25MY1wat+UmSieu15hLvQaVZ2qq+/XBoVqquTLxTV5Fghn3l
-	 WYeQtTbAuzUo9WyAnb/gtyTz0A4AWwPodcLArQJ18k9uU0Wzb4FU441UyJUIS6mxavfMj
-	 QG3LBwPSJeZrvThFLYimHnRSE9Os2ngDXU9Wl3PnINb1tjzTjH9ACqru7tRfRQC7xdfRK
-	 bPV7qVM6Ek4h5OIta1fncaaqMBOFCT0iQNwZBZzbYVBdk/0jU4mPZ6H1N/T+lT8CQHQ==
+	t=1795042793;
+	b=j5EASI6Tv3hFb/xG44fRn4OhMotqJvuT2gTb92DN3EZ/85afGCgz1T/cUVIidP7rkts0
+	 mX1hBOXgehIP7gwwLPBc6fYeEHJt3AKv6HVygaFbAV8dnYLmKaGUZyrMINC7CVurcK73f
+	 Wp4BypdM/2I8PZ2nh3tIV95Eh4F6k0ik6Y9/uBe8u+czQfy5M5CO1YvYLWImg3Wb5VDfB
+	 AYypzKWRksEu/gLO5CX2VPdL8aPa5hBTHDpmWtxUS9I6IZuQDsY1qPd0q/UIel6JdjcI+
+	 9Z+VHum2SaCk0Fqx8x8Dki3ltf2KIPF1/5M5a/L4RZB0j5fymOHrcxk5cHdPFLz2qSw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042791;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042793;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ocf+W6as2/UVQB26U/1Y3ApYIFaIC0zsXKbw5GhKnEo=;
-	b=OYuK2BBZDaXcfXkeW2pGkEF8JGu+DL9YXTpNYNxo+0VmXywnFRx4QVy/uwWieyLIf2dx
-	 jBRNyQXbE07l/PBBfkYahYA0y2yytwcvxcbhbp5nSjW5TQC7+pAeFsZ09lQwr6RUQ3DF4
-	 g8z7jVvXXZ7t+oFh9/nP7FZxr9jNS8ZdSHoPPK3x0TOUncYyRn/rAYAyiByMyT+VdXTNf
-	 iNdidf6f4LVhaiNvv+HjDAgezPhPAWGEOkCwldrsIyFYh6e3PDFVXC95+wjawwfOccnyc
-	 a6l3UOljhr5NXOZGeOsiUIJhf9rsndIJrEF1wfyD69A6f7Xm/jueVqQaA+jyFw/+07A==
+	bh=eNo2WpJOzkvv6lSjE2M+xQ1UVUgWPyHXYTVseH8Oho4=;
+	b=uym+FNYGTnoZdDQJrij7tEcWxgqSoVlztmzc06h5iduvrQ76yYbJqwdYo88xFjiXXLJi
+	 BnO6IqSLj2Rj8dqUCxT18OAOWOTXy+CZsjonRxIIDBg5aA3QsYPkUQuGJFZ80h0+2xh9W
+	 zVlClkXHr/WdKAN5t8JyzwQNaGr2L9W0s+r78b4/niV4pTkPC73YBUsVqamKO7yvvzkNl
+	 4ieqY2ciD6cIbxDUPH784irH8y0ZLV0doZ8qpvkLgL1lzUwEMKHv8ZLx0RTCfB+1Quh1w
+	 zUigjRtfIVma10WjyXywoqHOibL+QHq3Vu/bMC/oMmqkfT2iC8q3uX9HzSR7/F/fTzQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="bRG/U3tA";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BNXy8EjQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C8F606A320;
-	Wed, 18 Nov 2026 22:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EBA606A31C;
+	Wed, 18 Nov 2026 22:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bRG/U3tA
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3674C1F000C4;
-	Wed, 18 Nov 2026 22:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BNXy8EjQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AA11F000C4;
+	Wed, 18 Nov 2026 22:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042790;
-	bh=ocf+W6as2/UVQB26U/1Y3ApYIFaIC0zsXKbw5GhKnEo=;
+	s=korg; t=1795042793;
+	bh=eNo2WpJOzkvv6lSjE2M+xQ1UVUgWPyHXYTVseH8Oho4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bRG/U3tAQeSiXxZIPf7ekigZL9QBKNAIbDg+MnXXgfmJqjCY3Dbly6ysLhNmzJCvW
-	 IQRt5Z8Gyees3dsSeFQHWyXjzKUX6HuvXNZMIg34ik6LoGQlbImk8eI8pp4llw49sw
-	 NXgA3tnpVStDWQD37E71BsrkCTwZkhLZDH9BztO4=
+	b=BNXy8EjQSpLv4+FXEt4A4m5sMQryfRGsagYwplvJPa9whvP+jKfXIwG23rlwKF/3l
+	 wIkt4GiNgm1vKf4c/r+8ew88floJDIIDKFllzbHtqXQB0fnqVqC5BZ1gVbRUjJkVRs
+	 Rscg6GZ9jMHklJ7bVW5S7vL58Lw1Bn4k+HYoKOi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng Xu <chengyou@linux.alibaba.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3297/3318] RDMA/erdma: Use IRQ-safe XArray helpers for QP and CQ tables
-Date: Wed, 18 Nov 2026 16:05:19 +0100
-Message-ID: <20261118150458.503305384@linuxfoundation.org>
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.6 3298/3318] vdpa_sim: disable page faults around vringh_need_notify_iotlb()
+Date: Wed, 18 Nov 2026 16:05:20 +0100
+Message-ID: <20261118150458.532713421@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,94 +68,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng Xu <chengyou@linux.alibaba.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 00baeade709fb66da647e8327e8398bb532e30f7 ]
+[ Upstream commit 05fb07c40e0013ba5ae373c6ea1bcc622eaea7f0 ]
 
-Locked QP and CQ lookups from EQ interrupts can deadlock with
-create-path XArray updates. If an interrupt arrives while the create
-path holds the plain xa_lock, the lookup spins forever trying to
-acquire the same lock.
+When vdpa_sim runs with use_va (the default), its rings live in user
+memory, and vringh reads the ring's flags and event index with
+__get_user() through the user address.  The net and block simulators
+call vringh_need_notify_iotlb() with bottom halves disabled, so those
+reads happen in atomic context.
 
-Use IRQ-safe XArray helpers for all QP and CQ create-path updates,
-including the GSI QP store and error paths. Initialize both arrays with
-XA_FLAGS_LOCK_IRQ so sleeping allocations preserve interrupt state.
+That only works today because __get_user() has no might_fault() check: a
+fault is not handled in atomic context and simply comes back as -EFAULT.
+Make that explicit with pagefault_disable() around the call, so vringh
+can use the normal user accessors without complaint.  Only the
+notification check needs this: the rest of the ring processing runs in
+the same kthread without bottom halves disabled, and can fault normally.
 
-[ The GSI QP create path is not present in 6.6.y, so omit that hunk. ]
-
-Fixes: 98df2aee1459 ("RDMA/erdma: Hold CQ references when processing EQ events")
-Fixes: a52eeff32024 ("RDMA/erdma: Hold QP references for AE and CM processing")
-Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
-Link: https://patch.msgid.link/20260828030344.88021-1-chengyou@linux.alibaba.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Tested-and-acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/erdma/erdma_main.c  |  4 ++--
- drivers/infiniband/hw/erdma/erdma_verbs.c | 16 ++++++++--------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 9 ++++++++-
+ drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 9 ++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/erdma/erdma_main.c b/drivers/infiniband/hw/erdma/erdma_main.c
-index 0880c79a978c2..6dc6c7f4fb2e0 100644
---- a/drivers/infiniband/hw/erdma/erdma_main.c
-+++ b/drivers/infiniband/hw/erdma/erdma_main.c
-@@ -519,8 +519,8 @@ static int erdma_ib_device_add(struct pci_dev *pdev)
- 	INIT_LIST_HEAD(&dev->cep_list);
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+index 770a40a20be9d..0d5922ba05bcb 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
++#include <linux/uaccess.h>
+ #include <linux/blkdev.h>
+ #include <linux/vringh.h>
+ #include <linux/vdpa.h>
+@@ -343,11 +344,17 @@ static void vdpasim_blk_work(struct vdpasim *vdpasim)
+ 			continue;
  
- 	spin_lock_init(&dev->lock);
--	xa_init_flags(&dev->qp_xa, XA_FLAGS_ALLOC1);
--	xa_init_flags(&dev->cq_xa, XA_FLAGS_ALLOC1);
-+	xa_init_flags(&dev->qp_xa, XA_FLAGS_ALLOC1 | XA_FLAGS_LOCK_IRQ);
-+	xa_init_flags(&dev->cq_xa, XA_FLAGS_ALLOC1 | XA_FLAGS_LOCK_IRQ);
- 	dev->next_alloc_cqn = 1;
- 	dev->next_alloc_qpn = 1;
+ 		while (vdpasim_blk_handle_req(vdpasim, vq)) {
++			bool notify;
++
+ 			/* Make sure used is visible before rasing the interrupt. */
+ 			smp_wmb();
  
-diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
-index a9b2d0890570f..94b3d4aea1236 100644
---- a/drivers/infiniband/hw/erdma/erdma_verbs.c
-+++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
-@@ -945,9 +945,9 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 	kref_init(&qp->ref);
- 	init_completion(&qp->safe_free);
+ 			local_bh_disable();
+-			if (vringh_need_notify_iotlb(&vq->vring) > 0)
++			/* The ring may be in user memory, and we can't take faults here */
++			pagefault_disable();
++			notify = vringh_need_notify_iotlb(&vq->vring) > 0;
++			pagefault_enable();
++			if (notify)
+ 				vringh_notify(&vq->vring);
+ 			local_bh_enable();
  
--	ret = xa_alloc_cyclic(&dev->qp_xa, &qp->ibqp.qp_num, qp,
--			      XA_LIMIT(1, dev->attrs.max_qp - 1),
--			      &dev->next_alloc_qpn, GFP_KERNEL);
-+	ret = xa_alloc_cyclic_irq(&dev->qp_xa, &qp->ibqp.qp_num, qp,
-+				  XA_LIMIT(1, dev->attrs.max_qp - 1),
-+				  &dev->next_alloc_qpn, GFP_KERNEL);
- 	if (ret < 0) {
- 		ret = -ENOMEM;
- 		goto err_out;
-@@ -1003,7 +1003,7 @@ int erdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attrs,
- 	else
- 		free_kernel_qp(qp);
- err_out_xa:
--	xa_erase(&dev->qp_xa, QP_ID(qp));
-+	xa_erase_irq(&dev->qp_xa, QP_ID(qp));
- err_out:
- 	return ret;
- }
-@@ -1682,9 +1682,9 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
- 	refcount_set(&cq->refcount, 1);
- 	init_completion(&cq->free);
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+index 2a997b0ae3a84..1fd298bb808ce 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+@@ -11,6 +11,7 @@
+ #include <linux/module.h>
+ #include <linux/device.h>
+ #include <linux/kernel.h>
++#include <linux/uaccess.h>
+ #include <linux/etherdevice.h>
+ #include <linux/vringh.h>
+ #include <linux/vdpa.h>
+@@ -68,6 +69,8 @@ static struct vdpasim_net *sim_to_net(struct vdpasim *vdpasim)
  
--	ret = xa_alloc_cyclic(&dev->cq_xa, &cq->cqn, cq,
--			      XA_LIMIT(1, dev->attrs.max_cq - 1),
--			      &dev->next_alloc_cqn, GFP_KERNEL);
-+	ret = xa_alloc_cyclic_irq(&dev->cq_xa, &cq->cqn, cq,
-+				  XA_LIMIT(1, dev->attrs.max_cq - 1),
-+				  &dev->next_alloc_cqn, GFP_KERNEL);
- 	if (ret < 0)
- 		return ret;
+ static void vdpasim_net_complete(struct vdpasim_virtqueue *vq, size_t len)
+ {
++	bool notify;
++
+ 	/* Make sure data is wrote before advancing index */
+ 	smp_wmb();
  
-@@ -1731,7 +1731,7 @@ int erdma_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
- 	}
+@@ -77,7 +80,11 @@ static void vdpasim_net_complete(struct vdpasim_virtqueue *vq, size_t len)
+ 	smp_wmb();
  
- err_out_xa:
--	xa_erase(&dev->cq_xa, cq->cqn);
-+	xa_erase_irq(&dev->cq_xa, cq->cqn);
- 
- 	return ret;
+ 	local_bh_disable();
+-	if (vringh_need_notify_iotlb(&vq->vring) > 0)
++	/* The ring may be in user memory, and we can't take faults here */
++	pagefault_disable();
++	notify = vringh_need_notify_iotlb(&vq->vring) > 0;
++	pagefault_enable();
++	if (notify)
+ 		vringh_notify(&vq->vring);
+ 	local_bh_enable();
  }
 -- 
 2.53.0
