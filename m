@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060050;
-	b=lmXpKGqVqltSmt6y7ADS9/VM/tWYXXPjpbEOWy/+YuK0w3TKs1iCbBL6T6fXPzLbi3hG
-	 opba+KDnpCGo6rI8BD8hE4cFHI3FVXJWDIQzVjlzFD3kLhe80e5wnnwq8M9cLLEKJlmbt
-	 KaETB04ksx8g0dyQjLkgsxnxYWgSn5BaLfQHFUGIXpLhHOfuHx3VBUK+ZoPy1SxdZtqV1
-	 zYCa1y9hsXQzuf0mYTOOg2Z6omPicKfVhZOg5MCyG/uBYEYCtwLUtjslQv0Ux/X8zonRX
-	 3YdoVMR8wCxuT4CbzT5HeNOenafuq9wydiCrciieuyIcNOFPCnhIxQV8aYxkAuxDRsg==
+	t=1795060052;
+	b=VEhZRAYX3WSFSy2MAEzYfREdQejK55/gUK2q2On6y7PwbO7Q77qugn1OZYQsWo6QFgaZ
+	 SvvK8TNp4pdfaWtUWa56uC7cn3y2dqgQb79GV3SBL+RbxiE4Hka0+CatvkjYV+YRLR4Nd
+	 bru3Bqrlt/VNvCLAC3crkD//xNx8zsZ9CSEOVv94XZeANdSCUyyXy1E+NnRE09zehX/bI
+	 0eVqq1yfMKf5bdnxC8yaB0jwOlVZM2n/YfpqTXrvrf3yFBar2ypxRyubASapaIxqMVRd/
+	 FdtL0HOJc9nF1AxpMubQ6Vrz53JTVoPoEW9w2pRy0m1f8yXZoMo1/bDwgBsjOPb57rQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060050;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060052;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=eA7b5F/eEi4QDtRSeOQ4v+efLqyaaUy9tZWDItYhZNA=;
-	b=lrhyoUDBzp8z+Z8BZuGQ+QHRKhc3H/6uHRfktyuug9Y2gAfqzPhCfnZIWp8y2HD2JKaA
-	 fPme0kOWiQJgtoA0iyo7dXxCihjYE/UtlFVckWACvXLu4aR5q10dc2otui3zMnPuSx3Mj
-	 +Re33RMcCqlrLUDDbys6oscHbxx4r195xkmGMPZ6k+1ajmjQGLQWXzRF2VQsZQ1WHEkQm
-	 /lSK4pUZ6viC7lOA5z6SfTiAs6KbYfvynY2ihr+QupuyUcGBm6/jksGkaFzbIyqjbH6f5
-	 uJ2XonslOLshyqx+LLfqfCpULMNuGsXBVMYtTBKFTBRoRFFmK9vC8mgVStb5LnnF2DQ==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=2vu0WzsUoBoJiVTDjkKZcpp5KhZ3zYl0VJjx4zrmWd4=;
+	b=qKkbplCqQGZlsiIbTTqrR7CvA1o4hhTGpQkAN5pkjsr8CQ0qNTCE7f4tBPsaBMEuevYg
+	 vCCw94G9NG12kYsVJz5upbqsBQeNtM0FHlR5gfIrjCP7gNsAjlHZ4LZpOT7FF3LCtx2h8
+	 SmLtHI+B5+3APdrzTENJM6RaUAwvtl8zZ8nh6nYdqk4UL5CASBBc5KlvElDr9tgoJbCEr
+	 qusJxhq2ipmyWzrc0I6oHQxAtuKtPzmXXC0z8ZGu//XsOlrsnY4vwte4EGEMDTcix0XVn
+	 eBuOjc1voX1MapyP5Ces+/rhvUkvgAQuB/JBekLLYj7dIAzhd3TcCxQn3bDWXenwPSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bqQQA9vk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WrrXHnzX;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34FFF606A320;
-	Thu, 19 Nov 2026 03:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CF3606A320;
+	Thu, 19 Nov 2026 03:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bqQQA9vk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BAF1F000C4;
-	Thu, 19 Nov 2026 03:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WrrXHnzX
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E23D1F000C5;
+	Thu, 19 Nov 2026 03:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060049;
-	bh=eA7b5F/eEi4QDtRSeOQ4v+efLqyaaUy9tZWDItYhZNA=;
+	s=korg; t=1795060052;
+	bh=2vu0WzsUoBoJiVTDjkKZcpp5KhZ3zYl0VJjx4zrmWd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bqQQA9vkcnYftnmAk74UB8ocIT+CG4+nb0+vZa8NpP8tPDoOqb3J+7lbXxC8gRzO5
-	 XrwUCwHwhtOdr9fpqGscdW5uwtDNZ7iT7+fZ6vPdQOi8S426anTOZwJkxEwOgdDoo8
-	 EmpHquG5sT/2sIGS8PQVmlCHMo7X0gfoJ1HyqFbY=
+	b=WrrXHnzXZjCjEmDYrrgCJVQKKk2tLBummgycOrY91V+FfpWbZ1Zqb2eYu0nLNYBHf
+	 t5bFezLMa+CNd4T6gNarW98GmFerITddLaplaQMZEPA12HVKMh5hZ6FR2j90Zx7FHc
+	 BjMKqZMknRSN1fciR4Qeh5VmoarQzDzE5irKLwUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yu Zhang <yuz08559@gmail.com>,
+	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1058/1848] drm/amdgpu: keep the CS user fence BO in GTT
-Date: Wed, 18 Nov 2026 15:51:36 +0100
-Message-ID: <20261118150001.746545159@linuxfoundation.org>
+Subject: [PATCH 5.10 1059/1848] scsi: target: Fix demo-mode dynamic ACL dev-entry UAF vs LUN teardown
+Date: Wed, 18 Nov 2026 15:51:37 +0100
+Message-ID: <20261118150001.830472278@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -63,77 +62,173 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse Zhang <Jesse.Zhang@amd.com>
+From: Yu Zhang <yuz08559@gmail.com>
 
-[ Upstream commit 7a56d929dc2304edaa6231e1eb5eb82b7e8b74a9 ]
+[ Upstream commit 6a6e7d7230cd4e0a6c003bae5b85bf37a1e77b94 ]
 
-The CS ioctl hands the GPU the GART address of the user fence BO, but
-since the BO keeps its own preferred and allowed domains, it no longer
-makes sure the BO is in GTT. A user fence in a VRAM BO, which only needs
-to be a page in size, gets its address from amdgpu_bo_gpu_offset(), which
-warns about non-contiguous VRAM. On navi31, a CS with a user fence in a
-4K VRAM BO, or in one created with AMDGPU_GEM_CREATE_VM_ALWAYS_VALID:
+A demo-mode (generate_node_acls=1) login that allocates a dynamic NodeACL
+populates that ACL's per-LUN dev entries in core_tpg_add_node_to_devs()
+*before* the ACL is linked onto tpg->acl_node_list by
+target_add_node_acl():
 
-  WARNING: amdgpu_object.c:1531 at amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu], CPU#11: cs_gem_checks/18393
-  RIP: 0010:amdgpu_bo_gpu_offset+0x86/0xb0 [amdgpu]
-  Call Trace:
-   <TASK>
-   amdgpu_cs_parser_bos.isra.0+0x4eb/0x850 [amdgpu]
-   amdgpu_cs_ioctl+0x97e/0x2510 [amdgpu]
-   drm_ioctl_kernel+0xac/0x110 [drm]
-   drm_ioctl+0x2c6/0x5b0 [drm]
-   __x64_sys_ioctl+0xa0/0xf0
-   do_syscall_64+0xa3/0x4d0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+	core_tpg_check_initiator_node_acl():
+		...
+		core_tpg_add_node_to_devs(acl, tpg, NULL); /* builds deves */
+		target_add_node_acl(acl);                  /* only now listed */
 
-and BOs which can't be in GTT at all, like GWS or OA ones of a page in
-size, pass the checks as well.
+The LUN teardown sweep, core_clear_lun_from_tpg(), enumerates only
+tpg->acl_node_list, so a dev entry whose ACL is still in the window above
+is invisible to the sweep and is never disabled.  It is left on the
+se_lun->lun_deve_list after core_tpg_remove_lun() frees the se_lun; when
+the same unpacked_lun is later re-added and the se_lun is reallocated at
+the same address, the stale dev entry is rediscovered by
+target_nacl_find_deve() and core_enable_device_list_for_node() corrupts
+lun_deve_list:
 
-Only take BOs which can't be anywhere else than in GTT as user fence,
-which the CS then validates there along with its other BOs. While at it,
-detect userptrs with amdgpu_ttm_tt_is_userptr(); amdgpu_ttm_tt_get_usermm()
-returns NULL once the task which created the userptr is gone.
+  BUG: KASAN: slab-use-after-free ...
+   core_enable_device_list_for_node+0x5ce/0x880
+   core_tpg_add_node_to_devs+0x169/0x190
+   core_dev_add_lun+0x146/0x190
+   target_fabric_port_link+0xe9/0x1b0
+   configfs_symlink+0x381/0xae0
+   __x64_sys_symlink+0x55/0x80
 
-v2: only take BOs which can only be in GTT instead of special casing the
-    user fence BO in the validation, use amdgpu_ttm_tt_is_userptr()
-    (Christian)
+The demo-mode login path that drives the ACL/dev-entry creation is
+reachable by an unauthenticated initiator; the colliding LUN add/remove is
+a local configfs operation.
 
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f16989def9561d04d0f2e77216f5319112d29bf1)
+Commit 49cb77e297dc ("target: Avoid mappedlun symlink creation during lun
+shutdown") introduced se_lun->lun_shutdown and guarded the *explicit* ACL
+MappedLUN path (target_fabric_mappedlun_link()), but the demo-mode
+automatic path, core_tpg_add_node_to_devs() ->
+core_enable_device_list_for_node(), was never given the equivalent guard,
+and the publish-after-populate ordering in
+core_tpg_check_initiator_node_acl() was left unchanged.
+
+Fix it in three cooperating parts:
+
+ 1) Publish the dynamic NodeACL onto acl_node_list *before* creating its
+    dev entries, so the teardown sweep can observe them.
+
+ 2) Refuse to attach a dev entry to an se_lun that is shutting down,
+    checked under nacl->lun_entry_mutex -- the same lock the sweep takes --
+    so once the sweep has passed an ACL any later enable for that LUN
+    observes lun_shutdown and skips it.
+
+ 3) In core_enable_device_list_for_node(), insert the new dev entry onto
+    lun->lun_deve_list while still holding nacl->lun_entry_mutex, in both
+    the replace and the new-entry branch.  Previously the entry was added
+    to nacl->lun_entry_hlist under the mutex but to lun->lun_deve_list only
+    after dropping it; with the ACL now published early, the sweep could
+    take the mutex in that gap, find the entry on the hlist,
+    core_disable_device_list_for_node() it (list_del() on the not-yet-
+    linked lun_link succeeds and the entry is freed), and then the enable
+    would list_add_tail() the freed entry back onto lun_deve_list.  Linking
+    both lists under the mutex makes enable and the sweep mutually
+    exclusive, closing that window.
+
+core_tpg_add_node_to_devs() already ignores the return value of
+core_enable_device_list_for_node(), so a shutting-down LUN is simply
+skipped.
+
 Cc: stable@vger.kernel.org
-[ sashal: adapted p->uf_bo accesses to the local bo variable in amdgpu_cs_user_fence_chunk() ]
+Fixes: 49cb77e297dc ("target: Avoid mappedlun symlink creation during lun shutdown")
+Signed-off-by: Yu Zhang <yuz08559@gmail.com>
+Tested-by: Yu Zhang <yuz08559@gmail.com>
+Link: https://patch.msgid.link/20261014013746.46705-1-yuz08559@gmail.com
+Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+[ sashal: Replaced the free_stats cleanup path with kfree(new) and a direct -ENODEV return because statistics are embedded in the device entry. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/target/target_core_device.c | 18 +++++++++++++++---
+ drivers/target/target_core_tpg.c    | 10 +++++++++-
+ 2 files changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 40146957996f0..38491f05c9d39 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -62,7 +62,12 @@ static int amdgpu_cs_user_fence_chunk(struct amdgpu_cs_parser *p,
- 	if (size != PAGE_SIZE || data->offset > (size - 8))
- 		return -EINVAL;
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index 50135f8df1b4a..877d4d8e8ebb7 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -330,6 +330,19 @@ int core_enable_device_list_for_node(
+ 	new->attach_count++;
  
--	if (amdgpu_ttm_tt_get_usermm(bo->tbo.ttm))
-+	if (amdgpu_ttm_tt_is_userptr(bo->tbo.ttm))
-+		return -EINVAL;
+ 	mutex_lock(&nacl->lun_entry_mutex);
++	/*
++	 * Do not attach a new dev entry to an se_lun that is being torn down.
++	 * lun_shutdown is set by core_tpg_remove_lun() before its
++	 * core_clear_lun_from_tpg() sweep; checking it here under the same
++	 * nacl->lun_entry_mutex the sweep takes guarantees that once the sweep
++	 * has passed this ACL no dev entry can be left dangling on the
++	 * se_lun->lun_deve_list that is about to be freed.
++	 */
++	if (lun->lun_shutdown) {
++		mutex_unlock(&nacl->lun_entry_mutex);
++		kfree(new);
++		return -ENODEV;
++	}
+ 	orig = target_nacl_find_deve(nacl, mapped_lun);
+ 	if (orig && orig->se_lun) {
+ 		struct se_lun *orig_lun = rcu_dereference_check(orig->se_lun,
+@@ -357,12 +370,12 @@ int core_enable_device_list_for_node(
+ 		rcu_assign_pointer(new->se_lun_acl, lun_acl);
+ 		hlist_del_rcu(&orig->link);
+ 		hlist_add_head_rcu(&new->link, &nacl->lun_entry_hlist);
+-		mutex_unlock(&nacl->lun_entry_mutex);
+ 
+ 		spin_lock(&lun->lun_deve_lock);
+ 		list_del(&orig->lun_link);
+ 		list_add_tail(&new->lun_link, &lun->lun_deve_list);
+ 		spin_unlock(&lun->lun_deve_lock);
++		mutex_unlock(&nacl->lun_entry_mutex);
+ 
+ 		kref_put(&orig->pr_kref, target_pr_kref_release);
+ 		wait_for_completion(&orig->pr_comp);
+@@ -375,11 +388,10 @@ int core_enable_device_list_for_node(
+ 	rcu_assign_pointer(new->se_lun, lun);
+ 	rcu_assign_pointer(new->se_lun_acl, lun_acl);
+ 	hlist_add_head_rcu(&new->link, &nacl->lun_entry_hlist);
+-	mutex_unlock(&nacl->lun_entry_mutex);
+-
+ 	spin_lock(&lun->lun_deve_lock);
+ 	list_add_tail(&new->lun_link, &lun->lun_deve_list);
+ 	spin_unlock(&lun->lun_deve_lock);
++	mutex_unlock(&nacl->lun_entry_mutex);
+ 
+ 	target_luns_data_has_changed(nacl, new, true);
+ 	return 0;
+diff --git a/drivers/target/target_core_tpg.c b/drivers/target/target_core_tpg.c
+index 62aa5fa63ac09..9b1c23fafbbe6 100644
+--- a/drivers/target/target_core_tpg.c
++++ b/drivers/target/target_core_tpg.c
+@@ -265,6 +265,15 @@ struct se_node_acl *core_tpg_check_initiator_node_acl(
+ 	kref_get(&acl->acl_kref);
+ 	acl->dynamic_node_acl = 1;
+ 
++	/*
++	 * Publish the dynamic NodeACL on tpg->acl_node_list before creating
++	 * its demo-mode MappedLUN dev entries below, so that a concurrent LUN
++	 * teardown sweep (core_clear_lun_from_tpg(), which walks acl_node_list)
++	 * can observe and disable those dev entries.  Otherwise a dev entry can
++	 * be left on an se_lun->lun_deve_list that is about to be freed.
++	 */
++	target_add_node_acl(acl);
 +
-+	/* The GPU writes the user fence through the GART */
-+	if (bo->preferred_domains != AMDGPU_GEM_DOMAIN_GTT &&
-+	    bo->allowed_domains != AMDGPU_GEM_DOMAIN_GTT)
- 		return -EINVAL;
+ 	/*
+ 	 * Here we only create demo-mode MappedLUNs from the active
+ 	 * TPG LUNs if the fabric is not explicitly asking for
+@@ -274,7 +283,6 @@ struct se_node_acl *core_tpg_check_initiator_node_acl(
+ 	    (tpg->se_tpg_tfo->tpg_check_demo_mode_login_only(tpg) != 1))
+ 		core_tpg_add_node_to_devs(acl, tpg, NULL);
  
- 	*offset = data->offset;
+-	target_add_node_acl(acl);
+ 	return acl;
+ }
+ EXPORT_SYMBOL(core_tpg_check_initiator_node_acl);
 -- 
 2.53.0
 
