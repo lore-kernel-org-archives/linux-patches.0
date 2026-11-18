@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795035962;
-	b=i5AtK5q0mtMu8x3CXpgnkmSBmIKfOuMMDrCqZZRkJgnQhRmINMM9+i7aCZCfbornaSBg
-	 yYhQ/WqnjI1fBReddb3xxLwGE3Eg32Bg3JiF7m8NftipnEqrdJJCrCzcrcHBZCEIqsDKE
-	 dx2u9+8oxov9pH5e+7yOO7U1RlGCBZJhy2SQVsa3tts01hH8IoAev2W4O40QSKQthZ/Ve
-	 YzQDag0jnawRwIVOInx3UQBmOdEoqTUdq6H0drf5TTwMwDaXdfiHflM72g0rwhQwzWbzg
-	 5IeqPuoQDXign6NxxPiEE1olv691dtAirvbts05DR6l/SxZu7dWuF0Zrj+49DaZeCFA==
+	t=1795035965;
+	b=EssSPj5jxEGWfSDiIc3RxsiTIyK7Hy+O1ORjP9Nhwf1NEMCKeKoQBpztYDp0Tig6/gx9
+	 95q2019scM9jYxy0uxSZuNbGLHnag1ARvPeXvX/qp0Kn7Vx5eOSDrxJ2Vh+N8+Tb7EfxS
+	 wiq+N+EQwZu0wMWeHPvJkd5TNPaHTd0nkob9NGC3sp2MU5iHtetifNeUDZuT3xlOdFyBo
+	 i8vW45d+UsEQg+MkXQjOqKiEF5BF7PmZeJIDpLYz5bXGI6OhWHGbqE+ctbwnjsDGBC/ig
+	 QWtOzXxNvpywzVmoICN29pnHKo5yvSnM2KHWwGWGh22VXN9WaenFysXLEb9VY0fUH6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795035962;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795035965;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Rv8tx7lkIFBCurRZYhwP+xF8hP65DNL4aFFk7EbYGxo=;
-	b=ll76rd94lpDD4r5Zs+iVgfIMVNV3ueqMzrJ+N+ZwGJZ1BFjLx80+IwScViYrPr4K2NOu
-	 XzlyyLFi1HaMduNcIob4OIsAwhx6Ja4LW8+gtt4HtoXTta+QkK6Zu0SyWRnozTHJQ1PXO
-	 wtHT88ef5h5dGsVSE/pNV5tCrof5Vpm++BzstVIKeWvNmwXcVAhHwBSTiJ87hkkgaKJvi
-	 gdYAf6mrae8mUe5LfwpU6+BVJBnHG+FnJqYoHHIwJ1zITlJ2fZuuE6Hrb/iRpn8uGx24/
-	 Gd4TWpY5UYYWCRVkft+NUUsvYHOK+6T8NvF2zmFXjQyYGAepLSaCnmh60ZxSmat7XRA==
+	bh=dWgV3+5H9O8C61IiKi8Ag7oeXJ5baoijNaojl1FkH/M=;
+	b=hCsiE1eCvxcDl9SK3I1s3POhdoGuxqf3peBOcI+FHaC7Bw1Ox4g7UPN/DqyBNPi5w2A4
+	 Zb/kz8OjJxc2sSH9nAPNioZemGYWeKC5UVJWYjQ7SK4PSh96EmDcZggYke9jXr6xrN3iL
+	 obqmqLD1QgOBWVZ/YaM+YcA2JRSUargI72kRuQ2Wwjd9G0Qy6dCN6z6RVweFWwlkZD7GL
+	 tXBmUu9+sP3B5IR0rvrExqXeYjrIiGkWlpdaDGQkCUc5W5v4wWU+YvKjYvGyLcxXc65Wt
+	 mEIdssjerG7jq4V86RyZCl05NemaMgT56W1ajyDs2noXJ6NhVC6xtCKnUf5kk6B8yhw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=15y9gLXp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PPAs252h;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6645D606A325;
-	Wed, 18 Nov 2026 21:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044DB606A31C;
+	Wed, 18 Nov 2026 21:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=15y9gLXp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DA741F000C4;
-	Wed, 18 Nov 2026 21:06:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PPAs252h
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2ED1F000C4;
+	Wed, 18 Nov 2026 21:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795035962;
-	bh=Rv8tx7lkIFBCurRZYhwP+xF8hP65DNL4aFFk7EbYGxo=;
+	s=korg; t=1795035964;
+	bh=dWgV3+5H9O8C61IiKi8Ag7oeXJ5baoijNaojl1FkH/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=15y9gLXpYEJzjyQ8zC13gvpKCiNg/jG7z1SWnRVO3H4I9cni5JWCGkAinQn6YbSV7
-	 4Rkq/OF30f7kU4dnDA2iK6osSasNfcjgeXrJAoTdloArtE1MULmg2VTdsaTMNPNSW3
-	 PjApGOYSsVjEJ+gbmJFYJ40EB+h0q+lL7x4IDSXU=
+	b=PPAs252hQ740DC/NTkO7tBH/DtALy4LdCCW82odRQpohs8H9UIr1smMcCdYGiK1Wr
+	 9njvXi8ACHwu/eoQbxr8Kb8jLfbwm74fm9w6bEWKQ9i89/nQJXASZIJOjJ2jHtW94B
+	 TcWYfJa6uuINiNb3fv0e+YzBsJ1wEYiTIra+gRf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wentao Liang <vulab@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0890/3318] regulator: core: Fix c_rdev reference leak in regulator_resolve_coupling()
-Date: Wed, 18 Nov 2026 15:25:12 +0100
-Message-ID: <20261118150346.122198097@linuxfoundation.org>
+Subject: [PATCH 6.6 0891/3318] regulator: core: Fix rdev reference leak in regulator_resolve_supply()
+Date: Wed, 18 Nov 2026 15:25:13 +0100
+Message-ID: <20261118150346.157179734@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,17 +70,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Wentao Liang <vulab@iscas.ac.cn>
 
-[ Upstream commit c41b69e9f76fd9632662714c1d37860468e8d773 ]
+[ Upstream commit 195bbe5e1c29aa1349655a6162958149c1176034 ]
 
-of_parse_coupled_regulator() returns the coupled regulator with its
-device reference incremented, but regulator_resolve_coupling() returns
-without dropping it when the coupled regulator belongs to a different
-coupler, leaking the reference.
+regulator_resolve_supply() takes a reference on the looked-up regulator
+with regulator_dev_lookup(), but when the supply resolves to the
+regulator itself that reference is never dropped: it leaks on the early
+return and is lost as well when r is replaced with the dummy regulator.
 
-Fixes: d8ca7d184b33 ("regulator: core: Introduce API for regulators coupling customization")
+Release the reference before handling the self-referent case.
+
+Fixes: 4b639e254d3d ("regulator: avoid resolve_supply() infinite recursion")
 Cc: stable@vger.kernel.org
 Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20260917142535.2156720-1-vulab@iscas.ac.cn
+Link: https://patch.msgid.link/20260917142810.2156816-1-vulab@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -88,17 +90,17 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index ce69d37cfaa90..9707e90ddf0c2 100644
+index 9707e90ddf0c2..8690166428a75 100644
 --- a/drivers/regulator/core.c
 +++ b/drivers/regulator/core.c
-@@ -5411,6 +5411,7 @@ static void regulator_resolve_coupling(struct regulator_dev *rdev)
- 		if (c_rdev->coupling_desc.coupler != coupler) {
- 			rdev_err(rdev, "coupler mismatch with %s\n",
- 				 rdev_get_name(c_rdev));
-+			put_device(&c_rdev->dev);
- 			return;
- 		}
- 
+@@ -2130,6 +2130,7 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
+ 	if (r == rdev) {
+ 		dev_err(dev, "Supply for %s (%s) resolved to itself\n",
+ 			rdev->desc->name, rdev->supply_name);
++		put_device(&rdev->dev);
+ 		if (!have_full_constraints()) {
+ 			ret = -EINVAL;
+ 			goto out;
 -- 
 2.53.0
 
