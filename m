@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795025284;
-	b=DjJc8DclEk9dY7B+OjMsZRo9CEFLMq+EELIbPKKCsL03uWWrKh+gSX5NHc+/8tEz+V3+
-	 FdHiT4inGvrObv/p2ure1Yfcsc38pUKGt6gcGrIN0WUosy3/vPYmpo2XEMCkN90gjWx9k
-	 zztgx6a8hpHSy1uNxylvzXuEGHGfPUg7xW0CJx41k3+4yhXxhjweR++YdrHNsBugNKHEe
-	 YARXCxCcSYfN0NTeONLdEYp110z9un3+afgAk7upgdXPhuoGtA3mhefouZUTP926t5ccX
-	 Ia4/YGmdvaGOv/0C9mpPDYMD1NhiftZ6z3BfY2E540pGLInP8Shlf+lCNnIiV1zJTnw==
+	t=1795025287;
+	b=U0GkWOvK7jUV9h2lckp4BKJE6JIG7ZCK0kxC05cUHpfP5Sl2EzLtW6miewNDceUwV9je
+	 5DiDyF1N16hN+Sjr8nZysUA5PTTWEsNNx8ZOKSHEV+QWxFxyznJ30Wi5afx9EwjcllriZ
+	 HzB3x3kD46Px2YRkLz0jvauItiKl1OMxfNO+WsL+x/NneMwuGF0qp6b7rw9Muod8Z5sK8
+	 5cCFDtWm0ItlN/XdA8kVK1yhmwhM7Q+kv+6n4B7jyLwEN3lxvx+uA5eiAp/th1GI8BbaD
+	 5gmkTYB+cN9GuRdbaCt0SWMJtyxxNDCzztVbWgjIFGlOAZlVdDsIc9b8AwJKC+jfsvQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795025284;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795025287;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=BgW/OzgH9G1xGQ2QJXpgjaG4gXaYWKL233j+dY7LfJY=;
-	b=bDakx0h0lJT7dId4ivdCdzfMAc/Jrk6kjkmLdtmE14Tj/IJTpju3J41Nw9pkW68y4aKM
-	 +85BEP97cOY5rEvivx5hLNJzkApcv8ACfhG1i5A6EzvnZCOpM3mUad87xtub/FeiUDo3A
-	 +rPUV2OOyrXWwoox6YS17SIqr5Vvqo0YSEBtF08E+Tmpmj/QsWeiWX0OOyWq5RWDCSG5A
-	 4923GdKorUdRw0NwwFXKVZu9yY7+37CE9LYSgnH7BUUAH+8LsDbl9SxeOs2H1tAJM4VM6
-	 AAweWJtyU91TvmVfWfXYdQhGF4j6zO64HeBK0DEROcUKKqL2gXMXvP2RbQAQ0lrTf0A==
+	bh=UE9Z8e0LqJEqjcWr3yUQNHJ5aOm1h87YviBqtg6do8M=;
+	b=O8luLzX6u/x9gcUiIRWYk6Jcx+doE4JVc8UjG88k1y1ckfBanywbrB7T+4QUvVre9NWk
+	 nS6UVlxBE1oyGmfMUnWSY+tKZmtmmr60dMZtVVDTCgmF8J0CioyZyxaY11koTC4kbYpt9
+	 qnPy4X6qMFA5OXBYJHgfe5wkQ874Ov+XIyje7JDNxkRsYIs0ibhI4ISuWRLwQGhwENu7f
+	 orTEkAoSvuiZ8UWcyf4jyGKozWY9ejaBG4EdS88YP6CrWVqGnyGxxXjxen94EHis3nvr2
+	 nDVQ3auNztvjh3Tmq7CUZFNShJ+08j96JVQ7h7ASc870SGOt7Bkve/iBJQPYRizW8WA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=frCIy0Kk;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZOsR9Z4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84B8D606A31C;
-	Wed, 18 Nov 2026 18:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A80C606A325;
+	Wed, 18 Nov 2026 18:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=frCIy0Kk
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C1D1F000C4;
-	Wed, 18 Nov 2026 18:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZOsR9Z4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A064B1F000C4;
+	Wed, 18 Nov 2026 18:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795025284;
-	bh=BgW/OzgH9G1xGQ2QJXpgjaG4gXaYWKL233j+dY7LfJY=;
+	s=korg; t=1795025287;
+	bh=UE9Z8e0LqJEqjcWr3yUQNHJ5aOm1h87YviBqtg6do8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=frCIy0KkqIpVA3TqlvBkAFif/BWpMT43zS+SKASO7xsj3BK7hZZgBKYc4qvyLkyfv
-	 HrvmSn1w8znV4ji5ahJcqR8l6JGwGMGodtqKfjDJWZEf4xAqwZxZg8W8eHpaft6SB1
-	 5HhyqipNBLesKo0bPS+ZEfxud+kBZNZOqOlfi0bc=
+	b=iZOsR9Z49muyWWmK1T3Dy3/Af96gIOZ7MKnfmZVzQ4EGeux65E96zCGWpuy12c/hC
+	 hzc8iTsrJpVF5vvS+Rm94C8JOTnKKDW72EywmzNpS1gpJiRyYpRQ8twmOt0iG+NAvl
+	 yKWRD0nA252OBopJvDMrTQkm3QXLh/VtO6DE14f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	"Martin K. Petersen (Oracle)" <mkp@kernel.org>,
+	syzbot+75d7e96ad03ac2dbbd9f@syzkaller.appspotmail.com,
+	Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>,
+	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1018/2151] scsi: scsi_debug: Advance the write pointer over the data written
-Date: Wed, 18 Nov 2026 15:45:53 +0100
-Message-ID: <20261118150159.488572615@linuxfoundation.org>
+Subject: [PATCH 6.18 1027/2151] md: take reconfig_mutex when enabling PPL on an inactive array
+Date: Wed, 18 Nov 2026 15:46:02 +0100
+Message-ID: <20261118150159.799398505@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,67 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
 
-[ Upstream commit cb2d2a7c80c62d1e5e476609706f29dd9584d0e0 ]
+[ Upstream commit 900bf42e0ff8009f66ffd4a679c56264957019dd ]
 
-resp_write_dt0() and resp_write_scat() advance the write pointer of a
-sequential write required zone by the transfer length of the command
-without looking at what do_device_access() returned, which is -1 when the
-data direction of the command does not match the operation, and a short
-byte count when the data-out buffer is smaller than the transfer length. An
-initiator can produce both with SG_IO.
+consistency_policy_store() sets MD_HAS_PPL for an external-metadata array
+that is not running yet, without holding reconfig_mutex.  But ->pers is
+only assigned after pers->run() returns, so "not running" also covers an
+md_run() that is in progress under the lock.
 
-The zone then describes more data than is on the medium, and a write at the
-position where the data really ends is terminated with UNALIGNED WRITE
-COMMAND, so the zone has to be reset before it can be written to again.
+If the write lands inside raid5_run() after log_init() has decided not to
+set up PPL, or after a failed ppl_init_log() has cleared the flag, the
+flag ends up set with conf->log_private still NULL.  The next idle pass
+of raid5d() then does:
 
-Advance the write pointer over the data that was written instead. As
-do_device_access() does not write a partial physical block to such a zone,
-that leaves the write pointer where a write can end.
+  raid5d() -> handle_active_stripes() -> log_flush_stripe_to_raid()
+    -> ppl_write_stripe_run()
 
-Assisted-by: LLM
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Fixes: f0d1cf9378bd ("scsi: scsi_debug: Add ZBC zone commands")
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Link: https://patch.msgid.link/20260929082456.857423-25-cassel@kernel.org
-Signed-off-by: Martin K. Petersen (Oracle) <mkp@kernel.org>
+and dereferences the NULL ppl_conf:
+
+  Oops: general protection fault, probably for non-canonical address
+  0xdffffc0000000002
+  KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+  RIP: 0010:ppl_write_stripe_run+0x60/0x1320 drivers/md/raid5-ppl.c:538
+
+Take reconfig_mutex around the update and refuse it with -EBUSY once the
+array is running, in which case ->change_consistency_policy() is the
+right interface.
+
+Fixes: 664aed04446c ("md: add sysfs entries for PPL")
+Reported-by: syzbot+75d7e96ad03ac2dbbd9f@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=75d7e96ad03ac2dbbd9f
+Signed-off-by: Nguyen Ngoc Thang <ngocthang2710.1999@gmail.com>
+Link: https://patch.msgid.link/20260924171345.75894-1-ngocthang2710.1999@gmail.com
+Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/md/md.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index aaa530f9f6c6a..5654fb8f18362 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -5029,9 +5029,9 @@ static int resp_write_dt0(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
- 	if (unlikely(scsi_debug_lbp()))
- 		map_region(sip, lba, num);
- 
--	/* If ZBC zone then bump its write pointer */
--	if (sdebug_dev_is_zoned(devip))
--		zbc_inc_wp(devip, lba, num);
-+	/* If ZBC zone then bump its write pointer over the data written */
-+	if (sdebug_dev_is_zoned(devip) && ret > 0)
-+		zbc_inc_wp(devip, lba, ret >> ilog2(sdebug_sector_size));
- 	if (meta_data_locked)
- 		sdeb_meta_write_unlock(sip);
- 
-@@ -5194,9 +5194,10 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 		ret = do_device_access(sip, scp,
- 				       min_t(u64, sg_off, scsi_bufflen(scp)),
- 				       lba, num, group, true, true);
--		/* If ZBC zone then bump its write pointer */
--		if (sdebug_dev_is_zoned(devip))
--			zbc_inc_wp(devip, lba, num);
-+		/* If ZBC zone then bump its write pointer over the data written */
-+		if (sdebug_dev_is_zoned(devip) && ret > 0)
-+			zbc_inc_wp(devip, lba,
-+				   ret >> ilog2(sdebug_sector_size));
- 		if (unlikely(scsi_debug_lbp()))
- 			map_region(sip, lba, num);
- 		if (unlikely(-1 == ret)) {
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 8b750af486b69..3c8f11b612883 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -5870,7 +5870,15 @@ consistency_policy_store(struct mddev *mddev, const char *buf, size_t len)
+ 		else
+ 			err = -EBUSY;
+ 	} else if (mddev->external && strncmp(buf, "ppl", 3) == 0) {
+-		set_bit(MD_HAS_PPL, &mddev->flags);
++		/* md_run() holds the lock until ->pers is set */
++		err = mddev_lock(mddev);
++		if (err)
++			return err;
++		if (mddev->pers)
++			err = -EBUSY;
++		else
++			set_bit(MD_HAS_PPL, &mddev->flags);
++		mddev_unlock(mddev);
+ 	} else {
+ 		err = -EINVAL;
+ 	}
 -- 
 2.53.0
 
