@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042166;
-	b=0vSitBhmG1lDYvVsKAbiNClWXxBubbpqOZDY3yLUzYQUyR6wXH3zOlR+QBs7Y+zcFjRi
-	 hYd3stTqlHDDFMLj9PUefJ+1qNJB+x3wXnbnCtyr1Xq+npUvbY2mjvBNZ2eX0OHFR4fdg
-	 1l7K3FVLppzs8oj0cVgKzs3HCkdD7f+t6BDKKblXB8cq6k+b4rUNHN3E9X9HosRMA/ru/
-	 ylhG7xjFbz8w2rTB3bWg4MfdIpVwmkRLF0T92bSz9HlqQnXr2vR7nZZ+T3VxarCH8JanS
-	 VeHSyISA9fdat9zUTv7NaPCCAQPial4+n2SsU1yx4cOPNxyV4qAWO+3FiEbBUCxcaag==
+	t=1795042169;
+	b=JFszrKWwgFWt6s0zYsoY29gfbVbQuJupYUlX9b7af66CrBYaLw8kuRVJOvX2DQidm1im
+	 k1cUfU3xLawTZgNZKT4Ypg+U5qeyA7hLS8/kko08XH6ms19/DjnKS1W5A5b0VzkbhY/Sm
+	 EMU+ECoRWK8/jqv18wrAvEUGO11bvtlsu4PhCpSFDiGCVNci6koHVVMJjTa4VYumlP9ko
+	 aCUh0J1h0IoBmA7U4jVA/OqSMaHIfz4Rb5oL7LgI+knNZTTSQ9Cy9/jP6BV5XJ0vCMoM7
+	 RlEBFx/CT3/Ugivd/+ssVWzSLCjRITNG3QGPa+KxnT8NsXSCQ4gTKdCDaqV86wd+0sg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042166;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042169;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=n7178yTSZK7efZzIZIC1GGsw3LHjxr9DJDuh6uIYKXg=;
-	b=JqC5Y7Jo93nx7rfwzbdZcroslyBtytF0om+Z0Dwy1yUwGGxkxPe55kCFIN/avQbYaCIk
-	 m+Up2FoJNUSHeyncwTzFX2PnqgqdBhjps24h43ZqJCE7lLpDzNljhWgSysSvnjF78mi/E
-	 kbR6FDKQzfTe3+6zMeBas1Uwu5gceNQBr5XofSFTt0xT7WPfpqxca5Gmzc9l+3xvH3pRb
-	 2veI/DkxBO1IUCwDPqLJhgsHjsuaxVAeSecDewgOfTNpD4BlBqdyul2oaW5E+f8sAev06
-	 zHKfZTJD8mCHZRbuAu6r2gknxdE82Y2uB4FS1EXf2jtVKLNgiSDd0xNd1f6+sQUgbNg==
+	bh=SfqNUyid+s2lxqgi7aOJI2uGO6bLoSSxmUGbgHHbVwg=;
+	b=aMi1PKtIi/TKQm7LXPYPKN+K3xaZCVKXZZYA9fszXGzO7AfllKucaAXj8aOc9twpUrRo
+	 Y+7JryA2MBy+f0r+QxmPaxWhYvwP53XaRNyqr3RnksSeQiiqsIuB+gPzzmX9ER62HFXk4
+	 svuo6BiVbSdMx7w2rbLU7WKcjXaVyrUYcqd8y/vPSEQowp3F2X1MYI2sZhO8IKEITEz1R
+	 PwiQ3Mcwe0oXzjFSrEG9qVekLK37gngCFbaWmvOP4vpgHtsHS+XBcvUt3Zpjw5XTGMHGQ
+	 0FscPWguHnDNjvpJxyjtWx1Zj9TTN+UYIbcSPBSFFNdLFehGfP8MlvZ4C6i2Udvw6pg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="Qel/USKz";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3rboXwV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224B5606A31C;
-	Wed, 18 Nov 2026 22:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47558606A320;
+	Wed, 18 Nov 2026 22:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Qel/USKz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1AC1F000C4;
-	Wed, 18 Nov 2026 22:49:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=a3rboXwV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482F61F000C5;
+	Wed, 18 Nov 2026 22:49:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042166;
-	bh=n7178yTSZK7efZzIZIC1GGsw3LHjxr9DJDuh6uIYKXg=;
+	s=korg; t=1795042168;
+	bh=SfqNUyid+s2lxqgi7aOJI2uGO6bLoSSxmUGbgHHbVwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Qel/USKzgepfZLdn27U7MT88hxu+zA7jIMjdNI8hqcwgU53jmkEPv3C2mQYfd0mHp
-	 uYzGWBVpSjNNuxeGwcHuNp6ljveDEctAVAKRaU5u1UK3/zD7Le0LDWNVeoCZ7B2Nb/
-	 VrqOph73lQyp/b67An7XCd+VwxBUBP5zgYyGsu5Q=
+	b=a3rboXwVMsNuioHXq8A3bH1D5NZkdnxJLboXHZffyEnTRewpekFWW0wjINxLHOwav
+	 d94zvHn19uG+2Dofv4D/QNOUf27pkYsdAb/yp7lzIOwGOxyvHxBI6eXw+Rd36t5gOU
+	 sbi4w5bjm5dY4qTkLEH15q2e0R2WInvBDES6YcPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Igor Velkov <iav@iav.lv>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3032/3318] ASoC: tlv320aic32x4-spi: Simplify probe()
-Date: Wed, 18 Nov 2026 16:00:54 +0100
-Message-ID: <20261118150451.140076448@linuxfoundation.org>
+Subject: [PATCH 6.6 3023/3318] power: supply: gpio-charger: Report discharging without input power
+Date: Wed, 18 Nov 2026 16:00:45 +0100
+Message-ID: <20261118150450.896192179@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,55 +68,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Igor Velkov <iav@iav.lv>
 
-[ Upstream commit c6d86149db94c0289b0e5950fa23c5b19031ab8d ]
+[ Upstream commit f0f400459bf6a037e70768de623fff3f8920b8bb ]
 
-Simplify probe() by replacing of_match_node() and spi_get_device_id() with
-spi_get_device_match_data().
+The status property follows only the charge-status GPIO. Without input
+power a charger such as the BQ24133 releases its open-drain STAT pin,
+and depending on the board the GPIO then reads as charging.
 
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://lore.kernel.org/r/20230831194622.87653-4-biju.das.jz@bp.renesas.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: f28c09b7e62f ("ASoC: tlv320aic32x4: Fix definition of TAS2505 HP Driver Gain Volume control")
+On Kobol Helios64 the board runs from its battery after a mains loss,
+and the charger reports online 0 with status "Charging".
+
+Report "Discharging" whenever the online GPIO is present and inactive.
+
+Fixes: df68c44c720a ("power: supply: gpio-charger: Add support for charger status.")
+Assisted-by: LLM
+Signed-off-by: Igor Velkov <iav@iav.lv>
+Link: https://patch.msgid.link/20261018-gpio-charger-offline-v2-1-482795f9e27c@iav.lv
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320aic32x4-spi.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ drivers/power/supply/gpio-charger.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tlv320aic32x4-spi.c b/sound/soc/codecs/tlv320aic32x4-spi.c
-index 81c05030dd3bf..d5976c91766e0 100644
---- a/sound/soc/codecs/tlv320aic32x4-spi.c
-+++ b/sound/soc/codecs/tlv320aic32x4-spi.c
-@@ -16,8 +16,6 @@
- 
- #include "tlv320aic32x4.h"
- 
--static const struct of_device_id aic32x4_of_id[];
--
- static int aic32x4_spi_probe(struct spi_device *spi)
- {
- 	struct regmap *regmap;
-@@ -31,18 +29,7 @@ static int aic32x4_spi_probe(struct spi_device *spi)
- 	config.read_flag_mask = 0x01;
- 
- 	regmap = devm_regmap_init_spi(spi, &config);
--
--	if (spi->dev.of_node) {
--		const struct of_device_id *oid;
--
--		oid = of_match_node(aic32x4_of_id, spi->dev.of_node);
--		type = (uintptr_t)oid->data;
--	} else {
--		const struct spi_device_id *id_entry;
--
--		id_entry = spi_get_device_id(spi);
--		type = id_entry->driver_data;
--	}
-+	type = (uintptr_t)spi_get_device_match_data(spi);
- 
- 	return aic32x4_probe(&spi->dev, regmap, type);
- }
+diff --git a/drivers/power/supply/gpio-charger.c b/drivers/power/supply/gpio-charger.c
+index 6139f736ecbe4..fba7b0616059c 100644
+--- a/drivers/power/supply/gpio-charger.c
++++ b/drivers/power/supply/gpio-charger.c
+@@ -100,7 +100,10 @@ static int gpio_charger_get_property(struct power_supply *psy,
+ 		val->intval = gpiod_get_value_cansleep(gpio_charger->gpiod);
+ 		break;
+ 	case POWER_SUPPLY_PROP_STATUS:
+-		if (gpiod_get_value_cansleep(gpio_charger->charge_status))
++		/* Without input power the battery discharges, whatever the status pin says */
++		if (gpio_charger->gpiod && !gpiod_get_value_cansleep(gpio_charger->gpiod))
++			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
++		else if (gpiod_get_value_cansleep(gpio_charger->charge_status))
+ 			val->intval = POWER_SUPPLY_STATUS_CHARGING;
+ 		else
+ 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
 -- 
 2.53.0
 
