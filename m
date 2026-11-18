@@ -1,56 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033442;
-	b=rmTsqNw0pia7mFL8G+n6k/61x34pXmqXSsvjz4OJLhf47uRAaIvqkmuT2E56a5ds084z
-	 ROzrmB//XGbrB60hce2w9Uz5X95w5djBebLf7uqyyUY4Jex3MnFD/J+bax5+biIM2HTKu
-	 vmBKehXyxkDZq7yZcwyzLqoX8M436gz+8eZj8kN18SJ0U4f9QSvmvc04pb7VQWIupYXFh
-	 e9lA3nNc3WYK2cI4D7EmhHhlfDBpNIUxZUSpdmhLZtN3RD4ak0X3HFfAZ25KlrQ82kwp7
-	 +4g7dmpsk5liMHKB/Ce2UkkXCA9g9OBWriO94H0Jv3WjRzUIi51Oh3AITfAM/DTM1Iw==
+	t=1795033445;
+	b=tsYo/LlCpdABZeknqjDmrAd0FNOhGlNHyt6umF4wj8BmipuJNYnLWCnAQLeVuDOXHK3k
+	 uiKbo9ZVul9A+k53ko+SkCx0iGJEReP1cGZWu6e5G458Y0Z/HxXsD96evmuaiphBJMZJ6
+	 vcjhB+26HtG/YpiJ2/7IKeOc4Sf9q5JDJe0Hy30ABBogiR+AoA6GfoVXk5ijtesQprlGk
+	 U0900avcUYwCWWXTIENDENnbTed4t3uDjpPmuLCvSKnLOUNYU2DWXZP4uEfLNsg60QKyM
+	 9VakkLoGJxbqEZ3GI5S1cqgF5F+tWKFLrJak1sW64zlq1MVcosVGaBENX5lDEBchH2A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033442;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033445;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dVWKi9UhLYOTDkWxmJqsBCtcpylEYxUGWxcb2nLUrLw=;
-	b=qRQYuoOzYuLYZSG372ru+029f6qEdFplhGsMwAycXep7i9yW5xqA9SMjIFRiz334wUVx
-	 ABtQMPB1pMB7IprPVT2oNAyc9qFAkE8WbDmYnUFafbAVjYgTcaJ7UZb6rTAlzpwx2IjDx
-	 dtVQGr+FpdajtfqDeGsxdO1VYnKaMiQLhS/8VlHpeynrSrOSqanrSPIuHmbtn8geDjD61
-	 x+aY06RA7czY87vR1v20PJuEUAOgmTnDIlJ5vQ3cRRAlAWkEbysy7AGOkYt6w0rbvslZp
-	 TZcfULcxJS76cQwSRPIg6N7PcxhI74zMILVKD5NerlCk/M+VBmduH8wxxyeMPoiPz8w==
+	bh=vGg24R/JwFSBwuDP6QiK5E5XZ6V4YKBflqneSsGEAe0=;
+	b=uFUPNJGt3kTzBl6dmR918G1qVc3eOriBeQMqV1iuGEcq45yWuOx+lW8znqx1kqcPpPCw
+	 qQN1+w+7sW9cRVDhXIi50PLVehWyRFHFksE7YEbQrtUNQwmvFpGdl+VgWZ/xyjn/5550X
+	 cLALozGhbyRuAor8zWkoP+UeWULnvH2JijNlIoYA6SEMV0R1m+ElSMijqkukBUbfiYb2p
+	 eNsARx/2/H3JU3X7zN4n3N/E3dhHfoHdG0lskMW4KcSC5ayA3UsEdlPkFEsigiykFRJhV
+	 DLC6ABoEuonFjNEa0qr3ryS12ent1cwNCqm41zFsVImIstl0UTHOYbCdaeueWGBcM3Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XDlusmES;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMuywkNe;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCE7606A31C;
-	Wed, 18 Nov 2026 20:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE99606A31C;
+	Wed, 18 Nov 2026 20:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=XDlusmES
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADAE91F000C4;
-	Wed, 18 Nov 2026 20:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AMuywkNe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767F71F000C4;
+	Wed, 18 Nov 2026 20:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033442;
-	bh=dVWKi9UhLYOTDkWxmJqsBCtcpylEYxUGWxcb2nLUrLw=;
+	s=korg; t=1795033445;
+	bh=vGg24R/JwFSBwuDP6QiK5E5XZ6V4YKBflqneSsGEAe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XDlusmESW4nZEirYAydw2PO3TJe2Mff9r1F2UQfFCcJNyUmWZGj0xaxVyK/MYYCaK
-	 5YJ1kcI+srXq+7UQC+4qZDTj0DFRIIAP0Me8gk221eC6SOyxB6As2fpDyFd4AFTNFf
-	 k9DVUL10WPLFewGTqVY0PkVJcj0kN5UFQsteBbM8=
+	b=AMuywkNe8m6zn4VsN18h3f/MtfNvx8udHINUDfZ85c1Jk8K/SU+yygbCUI0cBTZTc
+	 wYuak5giKYWpIQuQUYNKxcGgoPq3DILq6iTJG6fNSbdUN895/y617bVg0V82Yw2uoa
+	 iI7w5fnDQ8lUQtBQDK2ZqBvUPFuIRWOHX/3gNbQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5322c5c260eb44d209ed@syzkaller.appspotmail.com,
-	Yao Kai <yaokai34@huawei.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.6 0017/3318] ext4: validate readdir offset before accessing dirent
-Date: Wed, 18 Nov 2026 15:10:39 +0100
-Message-ID: <20261118150314.218751775@linuxfoundation.org>
+	Bin Yu <byu@xidian.edu.cn>,
+	Cheng Wen <wencheng@xidian.edu.cn>,
+	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 0018/3318] ALSA: line6: Clear prev_fbuf on capture buffer release
+Date: Wed, 18 Nov 2026 15:10:40 +0100
+Message-ID: <20261118150314.251607514@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -72,130 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Kai <yaokai34@huawei.com>
+From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
 
-commit bc4b7b0414c33b2c8898eb04386df0d21a13dad8 upstream.
+commit aa118c8f61d59387961d58ffae831c5259a9f222 upstream.
 
-A corrupted directory can trigger the following KASAN report when
-ext4_readdir() resumes from an invalid position:
+A KASAN slab-use-after-free read was reported in submit_audio_out_urb()
+when generating an impulse test signal:
 
-  BUG: KASAN: use-after-free in __ext4_check_dir_entry+0x5ef/0x820
-  Read of size 2 at addr ffff88810a646000 by task repro_linear/509
+  BUG: KASAN: slab-use-after-free in create_impulse_test_signal sound/usb/line6/playback.c:76 [inline]
+  BUG: KASAN: slab-use-after-free in submit_audio_out_urb+0x1848/0x1b20 sound/usb/line6/playback.c:249
+  Read of size 2 at addr ffff888008d74870 by task syz.2.3214/7785
 
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x53/0x70
-   print_report+0xd0/0x630
-   kasan_report+0xce/0x100
-   __ext4_check_dir_entry+0x5ef/0x820
-   ext4_readdir+0xcde/0x2b70
-   iterate_dir+0x1a1/0x520
-   __x64_sys_getdents64+0x12b/0x220
-   do_syscall_64+0xf9/0x540
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-   </TASK>
+  Allocated by task 11:
+   kmem_cache_alloc_noprof+0x2f0/0x390 mm/slub.c:4144
+   line6_buffer_acquire+0x1a1/0x220 sound/usb/line6/pcm.c:158
+   line6_pcm_acquire+0xb6/0x230 sound/usb/line6/pcm.c:329
+   line6_startup_work+0x3c/0x50 sound/usb/line6/driver.c:728
 
-KASAN reports use-after-free because the out-of-bounds access lands in an
-adjacent freed page. The directory buffer itself is still referenced.
+  Freed by task 7785:
+   kfree+0xf8/0x390 mm/slub.c:6566
+   line6_buffer_release sound/usb/line6/pcm.c:176 [inline]
+   line6_buffer_release+0xa5/0xf0 sound/usb/line6/pcm.c:170
+   __line6_pcm_release sound/usb/line6/pcm.c:305 [inline]
+   line6_pcm_release+0x5a/0x80 sound/usb/line6/pcm.c:313
+   snd_toneport_monitor_put+0x11b/0x190 sound/usb/line6/toneport.c:183
 
-ext4_dir_llseek() invalidates the directory cookie so that ext4_readdir()
-rescans directory entries from the start of the block. The rescan checks
-only the lower bound of rec_len before advancing. A corrupted rec_len can
-therefore place the offset where the block has insufficient space for a
-complete directory entry. The rescan itself may dereference that truncated
-entry, or the main loop may pass it to __ext4_check_dir_entry(). The latter
-reads de->rec_len before validating the range. For example:
+line6pcm->prev_fbuf points into the capture PCM stream buffer
+(line6pcm->in.buffer), which is updated during audio_in_callback() to
+feed rate synchronization, software monitoring, and impulse test signal
+generation on playback side.
 
-  block offset  0                           4092  4096
-                |---- de1.rec_len = 4092 -----|----|
-                                               de2.inode
-                                                    | de2.rec_len
-                                                    ^ OOB, reported as UAF
+When all capture streams are closed, line6_buffer_release() frees
+pstr->buffer with kfree().  However, it does not clear line6pcm->prev_fbuf.
+If playback is subsequently started (e.g. via impulse test signal
+volume control snd_line6_impulse_volume_put()), submit_audio_out_urb()
+dereferences the stale pointer line6pcm->prev_fbuf under in.lock,
+resulting in a slab-use-after-free read.
 
-de2 starts at offset 4092 in this 4 KiB block. Its four-byte inode fits in
-the block, but its rec_len starts at offset 4096 and crosses the boundary.
+Clear prev_fbuf and prev_fsize in line6_buffer_release() when releasing
+the capture stream buffer under in.lock, ensuring that no stale buffer
+pointer can be accessed by submit_audio_out_urb().
 
-The minimum safe length is inode-dependent. Encrypted and casefolded
-directory entries need eight additional hash bytes, while a valid metadata
-checksum tail is only 12 bytes.
-
-Cache the metadata checksum feature state and derive the minimum directory
-entry length from the on-disk format. Use it to bound both the rescan and
-the offset passed to the main loop. Report an offset in a truncated block
-tail and skip the remainder of the block, while continuing to accept an
-offset exactly at the block boundary.
-
-Reported-by: syzbot+5322c5c260eb44d209ed@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=5322c5c260eb44d209ed
-Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
-Signed-off-by: Yao Kai <yaokai34@huawei.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20260706041313.708346-1-yaokai34@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Fixes: 63e20df1e5b2 ("ALSA: line6: Reorganize PCM stream handling")
+Cc: stable@vger.kernel.org
+Co-developed-by: Bin Yu <byu@xidian.edu.cn>
+Signed-off-by: Bin Yu <byu@xidian.edu.cn>
+Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
+Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+Link: https://patch.msgid.link/20261013063554.571-1-25031212351@stu.xidian.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/dir.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ sound/usb/line6/pcm.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/ext4/dir.c
-+++ b/fs/ext4/dir.c
-@@ -136,6 +136,7 @@ static int ext4_readdir(struct file *fil
- 	struct super_block *sb = inode->i_sb;
- 	struct buffer_head *bh = NULL;
- 	struct fscrypt_str fstr = FSTR_INIT(NULL, 0);
-+	bool has_csum = ext4_has_metadata_csum(sb);
- 
- 	err = fscrypt_prepare_readdir(inode);
- 	if (err)
-@@ -147,7 +148,7 @@ static int ext4_readdir(struct file *fil
- 			return err;
- 
- 		/* Can we just clear INDEX flag to ignore htree information? */
--		if (!ext4_has_metadata_csum(sb)) {
-+		if (!has_csum) {
- 			/*
- 			 * We don't set the inode dirty flag since it's not
- 			 * critical that it gets flushed back to the disk.
-@@ -233,7 +234,10 @@ static int ext4_readdir(struct file *fil
- 		 * dirent right now.  Scan from the start of the block
- 		 * to make sure. */
- 		if (!inode_eq_iversion(inode, file->f_version)) {
--			for (i = 0; i < sb->s_blocksize && i < offset; ) {
-+			for (i = 0;
-+			     i <= sb->s_blocksize -
-+				  ext4_dir_rec_len(1, has_csum ? NULL : inode) &&
-+			     i < offset;) {
- 				de = (struct ext4_dir_entry_2 *)
- 					(bh->b_data + i);
- 				/* It's too expensive to do a full
-@@ -255,6 +259,17 @@ static int ext4_readdir(struct file *fil
- 			file->f_version = inode_query_iversion(inode);
- 		}
- 
-+		if (unlikely(offset < sb->s_blocksize &&
-+			     offset > sb->s_blocksize -
-+			     ext4_dir_rec_len(1, has_csum ? NULL : inode))) {
-+			EXT4_ERROR_FILE(file, bh->b_blocknr,
-+					"bad entry in directory: %s - offset=%u, size=%lu",
-+					"directory entry too close to block end",
-+					offset, sb->s_blocksize);
-+			ctx->pos = round_up(ctx->pos, sb->s_blocksize);
-+			goto next_block;
+--- a/sound/usb/line6/pcm.c
++++ b/sound/usb/line6/pcm.c
+@@ -173,6 +173,14 @@ static void line6_buffer_release(struct
+ 	clear_bit(type, &pstr->opened);
+ 	if (!pstr->opened) {
+ 		line6_wait_clear_audio_urbs(line6pcm, pstr);
++		if (pstr == &line6pcm->in) {
++			/* prev_fbuf points into the capture buffer we are about
++			 * to free; drop it while no capture URB is in flight.
++			 */
++			guard(spinlock_irqsave)(&line6pcm->in.lock);
++			line6pcm->prev_fbuf = NULL;
++			line6pcm->prev_fsize = 0;
 +		}
-+
- 		while (ctx->pos < inode->i_size
- 		       && offset < sb->s_blocksize) {
- 			de = (struct ext4_dir_entry_2 *) (bh->b_data + offset);
-@@ -310,6 +325,7 @@ static int ext4_readdir(struct file *fil
- 			ctx->pos += ext4_rec_len_from_disk(de->rec_len,
- 						sb->s_blocksize);
- 		}
-+next_block:
- 		if ((ctx->pos < inode->i_size) && !dir_relax_shared(inode))
- 			goto done;
- 		brelse(bh);
+ 		kfree(pstr->buffer);
+ 		pstr->buffer = NULL;
+ 	}
 
 
