@@ -1,52 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795048786;
-	b=ZTMW0gOLiTy1wmFj584FKbKTETHXAcJYaQlFuSksi0CgLrAbMTFLYKmux3dExbW0Qf2g
-	 1RiHnaxuB4Pa3hbmooELljygyj9H4jb73EsykfacjnldM45YNwPI8E9QbgusdIqDcDaYT
-	 MxeCdGV/q5/IEVUwQNfAgjaCLzVn3aV+QlOk7J06TZbWGxwOCijm8SzqzzuBXo3wfzVUk
-	 caRy/48OoxEToJq2z9+tetFJe3rYFZsgsoQKgpjkN73mAtqq/1oVZ9xMXbrfWaBMPDipL
-	 m2AW3CIVfzdO7L2azXvYpm4AwJfplByKYOu8jr/zsUpqZ15U4+C5TBDxB/Hp60CmQ0g==
+	t=1795048789;
+	b=f0yFBXEvM+twLIALyXNFG44/ljTxfSB4giw5pCaNoLA1oYrpF4WfT+XkdjejnsjH3dl2
+	 npTYlJ2xh7X+9fftC6Qgxr85NM5hg5nmM7/gYdH8JEV4sj+QoE1s6PplBihfW1yECNPpp
+	 XptvrpbtxlLJEpvKXI72LkOGZANITo8XFCx8iXAEJrRWetYVBGpc9riC7vS0/x409VVdk
+	 Sey+UNz0/yIQ7X4kaCASbNSs+Wib3CG8aAJ3u6NWnugNlR3YMmQevv9jBoe0aJgjT1pMj
+	 kPnBUh9WzkaM94XO26MsO7AT71sWZSZwJ79mFummPt3Mh9LkyymWC87OP64dZmjCoeQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795048786;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795048789;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=4da7gSkqzwCO3W/W5+2Qw7IPBxQ4GTGzzf0DkGkCsmg=;
-	b=DWez904q6b5KOKhLzFeJPh4ILbUeywyZn/1yHs4YqWZQqngtPOUqzhxvldNAziXLjV1u
-	 GqLYT/lsBLteij838QmRSZ+ik/VO5ciPD0zGYv2dywW+k33pLamQbHneQkU+oHnGQ2cfM
-	 nsn9xK8e9MPem4M11yHtspRHrh4NfWPVagNg7lbsHY9/kimbZmNa3AZS+A6Iq0qiG9RHn
-	 LVchdfWu4tgwMl7Zw29E6vqflfzDHiJA0Td+DpsSBGKlZc5pE+AGD8wdrEOfyo53zA6ze
-	 xkhSanFvZbmxs1q0P3+xqbvYQJD6RETQ501PuPJxACTu+EZUQPD7PEjJpFyMPofEtuA==
+	bh=lmCIto2wzZ5YqAkDIHY6E2drjLdnliq1/gHGTxz4SDU=;
+	b=QsvTWruvFQ/wReeAcuW68doAglbMoDxsEAV/y4PfeMJnVnkkOu/tpHTc0r3uBa8RmL3V
+	 iXzPJs9txVmX6oNWKeXPKIAMBe3/YSmhnWZkVcNQCd8P3T+Wy3fAV9mHCwyThJ5kzU4QR
+	 T2e7L3mfMKV86zVpgHsyLen09bRM4ukQY9PlRLMLK+BUh38trer9V4ag6xSP6ylFLe06c
+	 nuNXVIbbLjjTUE2LF6NQu/3WF2O+CCYSzT1K+sYk2KXZbO6ox53KE+2AbXfTru4zOZEjT
+	 Z0M3Gt+9ZIlH/dPpL/sE1UhuE7dPlfa0poXlA9vwpL2qir4Kw88at6d1kcoTQZmGRLg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GEf3XQLz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyvKsSSD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C22606A31C;
-	Thu, 19 Nov 2026 00:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367B4606A325;
+	Thu, 19 Nov 2026 00:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GEf3XQLz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB05E1F000C4;
-	Thu, 19 Nov 2026 00:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zyvKsSSD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D1201F000C4;
+	Thu, 19 Nov 2026 00:39:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795048786;
-	bh=4da7gSkqzwCO3W/W5+2Qw7IPBxQ4GTGzzf0DkGkCsmg=;
+	s=korg; t=1795048789;
+	bh=lmCIto2wzZ5YqAkDIHY6E2drjLdnliq1/gHGTxz4SDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GEf3XQLz401QhTM71fKjkoh/EyQW3puVFQ+9ZSFssHksT/+ZrPm5utR/kjvMJvN7z
-	 YUqsnRm/6MHfPNUsamlJ32NDwqMAchO1sHKn6moFsJN5pcsyVPsN4ixmZz7PrtW+bD
-	 ULUjZMaoG4cw29cyn9SECt+tNbeo4ZYToNv/zClM=
+	b=zyvKsSSDu8deRoo2gD7sy1gfjUOHlOmKpzYlCmjhUfyTnpjsFkos7NZ83ucXk+jBN
+	 ozkKzk0ELM4zC8OmeE1jLE1sp+L4g5LlrYxl9LS7HIQrnrifesSpdcy0t8n4HkPs+A
+	 DbpVezHmNW5n6ZSaycYr0BuY/7L9mnxyOAF6lCSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Nishanth Menon <nm@ti.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2117/2857] soc: ti: k3-ringacc: Correct ring API kernel-doc
-Date: Wed, 18 Nov 2026 15:52:31 +0100
-Message-ID: <20261118150317.629880136@linuxfoundation.org>
+Subject: [PATCH 6.1 2079/2857] ARM: dts: gemini: Use a level-high interrupt for TVE200
+Date: Wed, 18 Nov 2026 15:51:53 +0100
+Message-ID: <20261118150316.265115193@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,111 +67,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
 
-[ Upstream commit 45ea6911ad16859d4ce4f25780b0ebcf5660e43a ]
+[ Upstream commit 5bf1bb010712bba28eda926ed453db3cab91381a ]
 
-The ring accelerator header labels k3_ring_cfg as an enum, uses
-propname instead of property, and gives the DMA reset helper the
-ordinary reset helper's name. The DMA reset comment also omits occ,
-including the convention that zero requests a hardware occupancy read.
+TVE200's interrupt is configured as rising-edge. On the D-Link DIR-685,
+this can stop interrupt delivery after the first vertical interrupt,
+causing vblank and page-flip timeouts and delaying framebuffer console
+startup.
 
-The proxy flag is parsed as a separate parameter, and the pop helpers
-describe pushing elements. Proxy access is supported in Message mode;
-the listed Credentials and Queue modes are not implemented. The phandle
-lookup returns encoded error pointers rather than integer error values.
+The vertical interrupt can remain pending after acknowledgment. Use
+level-high triggering so the pending condition is delivered again
+without requiring another edge.
 
-Match the declarations and document these argument and operation roles.
-
-Fixes: 3277e8aa2504 ("soc: ti: k3: add navss ringacc driver")
+Fixes: d2b85241a9f5 ("ARM: dts: Add TVE200 to the Gemini SoC DTSI")
 Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Link: https://patch.msgid.link/20260923061658.20140-1-kmehltretter@gmail.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Message-ID: <20260921-gemini-tve200-fix-v1-2-8be03ac2a8f7@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/soc/ti/k3-ringacc.h | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ arch/arm/boot/dts/gemini.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/soc/ti/k3-ringacc.h b/include/linux/soc/ti/k3-ringacc.h
-index 39b022b925986..2de6031b94241 100644
---- a/include/linux/soc/ti/k3-ringacc.h
-+++ b/include/linux/soc/ti/k3-ringacc.h
-@@ -57,13 +57,13 @@ struct k3_ringacc;
- struct k3_ring;
- 
- /**
-- * enum k3_ring_cfg - RA ring configuration structure
-+ * struct k3_ring_cfg - RA ring configuration structure
-  *
-  * @size: Ring size, number of elements
-  * @elm_size: Ring element size
-  * @mode: Ring operational mode
-  * @flags: Ring configuration flags. Possible values:
-- *	 @K3_RINGACC_RING_SHARED: when set allows to request the same ring
-+ *	 %K3_RINGACC_RING_SHARED: when set allows to request the same ring
-  *	 few times. It's usable when the same ring is used as Free Host PD ring
-  *	 for different flows, for example.
-  *	 Note: Locking should be done by consumer if required
-@@ -88,11 +88,10 @@ struct k3_ring_cfg {
- /**
-  * of_k3_ringacc_get_by_phandle - find a RA by phandle property
-  * @np: device node
-- * @propname: property name containing phandle on RA node
-+ * @property: property name containing phandle on RA node
-  *
-- * Returns pointer on the RA - struct k3_ringacc
-- * or -ENODEV if not found,
-- * or -EPROBE_DEFER if not yet registered
-+ * Return: Pointer to the RA, or ERR_PTR(-ENODEV) if the phandle cannot
-+ * be resolved, or ERR_PTR(-EPROBE_DEFER) if the RA is not yet registered.
-  */
- struct k3_ringacc *of_k3_ringacc_get_by_phandle(struct device_node *np,
- 						const char *property);
-@@ -103,10 +102,8 @@ struct k3_ringacc *of_k3_ringacc_get_by_phandle(struct device_node *np,
-  * k3_ringacc_request_ring - request ring from ringacc
-  * @ringacc: pointer on ringacc
-  * @id: ring id or K3_RINGACC_RING_ID_ANY for any general purpose ring
-- * @flags:
-- *	@K3_RINGACC_RING_USE_PROXY: if set - proxy will be allocated and
-- *		used to access ring memory. Sopported only for rings in
-- *		Message/Credentials/Queue mode.
-+ * @flags: Set %K3_RINGACC_RING_USE_PROXY to allocate a proxy for
-+ *	accessing ring memory in Message mode.
-  *
-  * Returns pointer on the Ring - struct k3_ring
-  * or NULL in case of failure.
-@@ -126,8 +123,9 @@ int k3_ringacc_request_rings_pair(struct k3_ringacc *ringacc,
-  */
- void k3_ringacc_ring_reset(struct k3_ring *ring);
- /**
-- * k3_ringacc_ring_reset - ring reset for DMA rings
-+ * k3_ringacc_ring_reset_dma - ring reset for DMA rings
-  * @ring: pointer on Ring
-+ * @occ: occupancy used by the DMA reset quirk, or zero to read it from hardware
-  *
-  * Resets ring internal state ((hw)occ, (hw)idx). Should be used for rings
-  * which are read by K3 UDMA, like TX or Free Host PD rings.
-@@ -217,8 +215,8 @@ int k3_ringacc_ring_push(struct k3_ring *ring, void *elem);
-  * @ring: pointer on ring
-  * @elem: pointer on ring element buffer
-  *
-- * Push one ring element from the ring head. Size of the ring element is
-- * determined by ring configuration &struct k3_ring_cfg elm_size..
-+ * Pop one ring element from the ring head. Size of the ring element is
-+ * determined by ring configuration &struct k3_ring_cfg elm_size.
-  *
-  * Returns 0 on success, errno otherwise.
-  */
-@@ -242,7 +240,7 @@ int k3_ringacc_ring_push_head(struct k3_ring *ring, void *elem);
-  * @ring: pointer on ring
-  * @elem: pointer on ring element buffer
-  *
-- * Push one ring element from the ring tail. Size of the ring element is
-+ * Pop one ring element from the ring tail. Size of the ring element is
-  * determined by ring configuration &struct k3_ring_cfg elm_size.
-  *
-  * Returns 0 on success, errno otherwise.
+diff --git a/arch/arm/boot/dts/gemini.dtsi b/arch/arm/boot/dts/gemini.dtsi
+index e836bd0818d42..86d7f1b683dc0 100644
+--- a/arch/arm/boot/dts/gemini.dtsi
++++ b/arch/arm/boot/dts/gemini.dtsi
+@@ -430,7 +430,7 @@ dma-controller@67000000 {
+ 		display-controller@6a000000 {
+ 			compatible = "cortina,gemini-tvc", "faraday,tve200";
+ 			reg = <0x6a000000 0x1000>;
+-			interrupts = <13 IRQ_TYPE_EDGE_RISING>;
++			interrupts = <13 IRQ_TYPE_LEVEL_HIGH>;
+ 			resets = <&syscon GEMINI_RESET_TVC>;
+ 			clocks = <&syscon GEMINI_CLK_GATE_TVC>,
+ 				 <&syscon GEMINI_CLK_TVC>;
 -- 
 2.53.0
 
