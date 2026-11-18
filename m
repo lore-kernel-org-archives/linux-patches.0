@@ -1,57 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052185;
-	b=yI2debit6e2o0UI9re4N5iEcMbQs8OIxyCRe9y3LKjLTNo4wcr18zhKLfAywPinOO8sq
-	 IPdwztYHAd7Ry2iQXVOMV5y6ReC/ewN5AABMk6O/zZUg0wsiLobhSa++7bs8G7yyNavuE
-	 qysbVpv+zSruJlkSbcl59J2SsHWAXEZnNec4LjNCoQ/jaacRVNYRbvgmKVF3Ej41RnjnI
-	 zBZx58y/CUuO5bSKyEJrKCkku3kOMpqiPW67jSUp74zaklz6Zop/8qxYzcVTzyWOH+Mmw
-	 g1ToQjfIQdbHEV1TFGxOLF6ZAnag3f5eHUujfzC78/U87AnYQPZiA+oxpcTpFSphgpQ==
+	t=1795052188;
+	b=DP0ioLFYbfXga07AStEqIJvup0G6Z92APg/kG3Ohh8DIsQ5bpHZt/NweRFdjA5tjVD/j
+	 OvYWn1g+0E3ZcthuKjXBdyid1o+1bMXwJPENNizd8zQQm7zrF7IFb/FHqZj95K7sM5C8a
+	 YoBGhw5vbW95539jVKIMs0Ia+gXeYFCBMxfipOAE0ZdYTTK/4TlgtCS5VlNiYNA1LKmwi
+	 7WKfIubRe8OybDpqn2iZAm/j4X/UkeEQXnmY6AitKlL45ZUW5rGpB/UKK/JkfpeY8cyDS
+	 u6OFWRqnCRaRM4BMNjEIwGgAHqqH2uTA1n0Bq47K9XrmLs5tlsfWL58F8rluCwxS7IA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052185;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052188;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=aOC7i7aiBBxjlOekQWmfYmrUgM/IzKL2SoeGgPZlrgI=;
-	b=dDrdybZ4ibdG52MYGI7gQO1GXf1swJWd64aqEwAYn8Y87xWhCFluzgdYPz0cG4NODxol
-	 sQ3PoGspUThdGuoIJiBi+xhxYuJlOcCe2X/qV1DROkWW/OoXLwQigrQpSb8vltXF7wYiL
-	 v+LTckUheDI9W10ko7hEmgeXCHtPdbwiJsAPkweEkSLGHteV+FyamndvnItAxRSxVpbw+
-	 pSOUXObVy7dGnnd8CDfsIJ/3QLjJWg1+7EUn5xsWkiMbR2InslMA1UwJ9EtSo0zxGLkBi
-	 44o+koFjOjYtH76riXYj4Zt7T0qkfRPuyHeg08bbjWhlspecmWgH1ppTzVGAfHpZDDg==
+	bh=mpEghRKknv6eN7FcrfVGsms5VET26UJJH2LFU745HEA=;
+	b=B1OeQ4CAJOEzd2NSOtMs0pczY8Udv7lAESPcsdhIjcRtzchBnOwnNfrCfsctYptq0gy9
+	 f5ja4NM+TeYSZgHHUIhX9Ia+ZZ6iLuuLKZIDWYOZn+SbzZnw/hthtT1IzFlIKS+3tblqG
+	 8i0LjexkcCz8sr07sGSxQ1vO8Bqk4lX0qKLU9SvxADTE6yI5uZ6GrKPKwLFTYC2XP30OX
+	 eBO0AQ0aRs2Zhz8n2UmFqIZuFdkkgM2Kvf5Zd2112zmgFceaH2AjG5rHeUs+nQ4AeEz5F
+	 U7cqfmt8jYPZZrFnFdGWXulN62wfK6E1NbkKbIOqNo/Na7xF3faatRULDuvAiQBdN+g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jow9pyFs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bylZUYBA;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EFF606A31C;
-	Thu, 19 Nov 2026 01:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE49606A32A;
+	Thu, 19 Nov 2026 01:36:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jow9pyFs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA481F000C5;
-	Thu, 19 Nov 2026 01:36:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bylZUYBA
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9AE91F000C4;
+	Thu, 19 Nov 2026 01:36:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052185;
-	bh=aOC7i7aiBBxjlOekQWmfYmrUgM/IzKL2SoeGgPZlrgI=;
+	s=korg; t=1795052188;
+	bh=mpEghRKknv6eN7FcrfVGsms5VET26UJJH2LFU745HEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=jow9pyFs9HUcEqPs5DJMyTKxWwNQTDz/wI4R0tg1Li7wcyOkIth3xtQLLzR++jleQ
-	 icwyHJx4FtdU0WCMfkHSMHs2J86qaq0S39539oHMZoGlj2IGoaYF/GZIitRKm1fbUQ
-	 zEpA/R5fE7XxxE7t7jcdi1EEr+N6COi2Img4Ym1U=
+	b=bylZUYBAAJMmVZfQPWE7o0ACTNh3kP9IUhskmt1YJeknraBLIOG+0WpNjZ9zVFcPJ
+	 h2Kq9C5289tibJIkBldBIra3usibmbT0dbs/QZznIA1MYpN+exqLdcxwpsaXJnbdrH
+	 L7JK4M+GIspXihxP2DIKuJkQHhnmtINZ+oNrT7nI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <kylebot@openai.com>,
-	David Lee <david.lee@trailofbits.com>,
-	Vega <vega@nebusec.ai>,
-	Ruide Cao <caoruide123@gmail.com>,
-	Ren Wei <weir@nebusec.ai>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0424/2214] mptcp: hold MP_JOIN msk ref when cloning reqsk
-Date: Wed, 18 Nov 2026 15:35:00 +0100
-Message-ID: <20261118150027.847919107@linuxfoundation.org>
+	Stefan Metzmacher <metze@samba.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 5.15 0415/2214] smb: smbdirect: fix buffer length underflow in RDMA transfers
+Date: Wed, 18 Nov 2026 15:34:51 +0100
+Message-ID: <20261118150027.452802445@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -73,195 +69,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ruide Cao <caoruide123@gmail.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-[ Upstream commit c9c90cf437a9e6597611b6d3aad6e255fad22867 ]
+[ Upstream commit 7193241a49c958782ba4b8df06da3734d1e317d2 ]
 
-TCP request migration clones pending request sockets with
-inet_reqsk_clone().  For MPTCP MP_JOIN requests this byte-copies
-subflow_req->msk, but the clone does not own a reference.
+When a remote buffer descriptor is larger than the remaining local
+buffer, smbdirect_connection_rdma_xmit() clamps its length and sets
+buf_len to zero. The common accounting code then subtracts the clamped
+length from buf_len, causing it to underflow. If another descriptor
+follows, the loop processes it with a wrapped remaining length and
+includes memory beyond the local buffer in the RDMA transfer.
 
-The original and cloned requests can consequently drop the same msk
-reference, leaving one request with a dangling pointer.  This manifests as
-a KASAN slab-use-after-free in subflow_req_destructor():
+A client can trigger an out-of-bounds kernel write with an SMB WRITE
+request, or an out-of-bounds kernel read with an SMB READ request, by
+supplying multiple RDMA buffer descriptors with an oversized descriptor
+before the last one.
 
-  BUG: KASAN: slab-use-after-free in subflow_req_destructor (net/mptcp/subflow.c:45)
-  Write of size 4 at addr ff1100010e008d40 by task swapper/0/0
-  CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 7.2.0-rc5-00353-gc27e36054537 #10 PREEMPT(full)
+Remove the premature assignment to buf_len. Subtracting the clamped length
+already consumes the remaining buffer, so the next iteration stops and
+only descriptors within the local buffer are used to build work requests.
 
-  Call Trace:
-   subflow_req_destructor (net/mptcp/subflow.c:45)
-   subflow_v4_req_destructor (net/mptcp/subflow.c:694)
-   __reqsk_free (net/ipv4/inet_connection_sock.c:906)
-   reqsk_timer_handler (include/net/request_sock.h:137 net/ipv4/inet_connection_sock.c:1147)
-
-  Allocated by task 10014:
-   sk_prot_alloc (net/core/sock.c:2246)
-   sk_clone (net/core/sock.c:2488)
-   mptcp_sk_clone_init (include/net/sock.h:1848 net/mptcp/protocol.c:3564)
-   subflow_syn_recv_sock (net/mptcp/subflow.c:883)
-   tcp_check_req (net/ipv4/tcp_minisocks.c:934)
-
-  Freed by task 0:
-   slab_free_after_rcu_debug (include/linux/kasan.h:235 mm/slub.c:2677 mm/slub.c:6439)
-   rcu_core (kernel/rcu/tree.c:2645 kernel/rcu/tree.c:2897)
-
-  Last potentially related work creation:
-   kmem_cache_free (mm/slub.c:2638 mm/slub.c:6377 mm/slub.c:6504)
-   __sk_destruct (net/core/sock.c:2289 net/core/sock.c:2391)
-   sk_destruct (net/core/sock.c:2419)
-   __sk_free (net/core/sock.c:2430)
-   sk_free (net/core/sock.c:2441)
-   mptcp_close (include/net/sock.h:2020 net/mptcp/protocol.c:3399)
-   inet_release (net/ipv4/af_inet.c:442)
-
-  The buggy address belongs to the cache MPTCP of size 2968
-  The buggy address is 128 bytes inside a freed 2968-byte region
-
-A non-NULL subflow_req->msk means that the request owns one reference. The
-third ACK can concurrently transfer the original request reference to the
-child and release it, so taking an unconditional hold on the copied pointer
-is unsafe.
-
-MPTCP sockets use SLAB_TYPESAFE_BY_RCU and all current inet_reqsk_clone()
-callers run in an RCU read-side critical section. Document and
-lockdep-check that calling-context requirement.  Read the pointer from the
-original request and acquire a reference only if it is still live.  Use
-refcount_inc_not_zero_acquire() so the subsequent ownership validation
-cannot be reordered before the try-get, then re-read the original request
-to verify that it still owns the same msk. If either check fails, clear the
-clone pointer; otherwise its normal destructor balances the new reference.
-Mark the ownership-transfer store with WRITE_ONCE() to match the lockless
-reads.
-
-The following patch completes the clone fixup for MP_CAPABLE token
-ownership. Both patches carry the same Fixes tag and are required for
-stable backports.
-
-Fixes: c905dee62232 ("tcp: Migrate TCP_NEW_SYN_RECV requests at retransmitting SYN+ACKs.")
+Fixes: e628bf939aaf ("ksmbd: reduce descriptor size if remaining bytes is less than request size")
 Cc: stable@vger.kernel.org
-Reported-by: Kyle Zeng <kylebot@openai.com>
-Reported-by: David Lee <david.lee@trailofbits.com>
-Reported-by: Vega <vega@nebusec.ai>
-Closes: https://lore.kernel.org/all/20260804095051.715355-1-david.lee@trailofbits.com/
-Signed-off-by: Ruide Cao <caoruide123@gmail.com>
-Signed-off-by: Ren Wei <weir@nebusec.ai>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20261013-net-mptcp-misc-fixes-7-3-rc8-v1-3-932c9b182fc7@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ sashal: replaced refcount_inc_not_zero_acquire() with refcount_inc_not_zero() followed by smp_acquire__after_ctrl_dep() ]
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-33549
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ metze: in 5.15 the code is smb_direct_rdma_xmit() in
+  fs/ksmbd/transport_rdma.c ]
+Assisted-by: Claude:claude-opus-5-5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mptcp.h             |  9 ++++++++
- net/ipv4/inet_connection_sock.c |  4 ++++
- net/mptcp/subflow.c             | 38 ++++++++++++++++++++++++++++++++-
- 3 files changed, 50 insertions(+), 1 deletion(-)
+ fs/ksmbd/transport_rdma.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/net/mptcp.h b/include/net/mptcp.h
-index 1120363987d05..bcde90d8d9168 100644
---- a/include/net/mptcp.h
-+++ b/include/net/mptcp.h
-@@ -183,6 +183,9 @@ int mptcp_subflow_init_cookie_req(struct request_sock *req,
- struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
- 					       struct sock *sk_listener,
- 					       bool attach_listener);
-+/* Caller must hold an RCU read-side lock. */
-+void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+			       struct request_sock *new_req);
+diff --git a/fs/ksmbd/transport_rdma.c b/fs/ksmbd/transport_rdma.c
+index 6ea73fe6de6c5..9986e191e7019 100644
+--- a/fs/ksmbd/transport_rdma.c
++++ b/fs/ksmbd/transport_rdma.c
+@@ -1361,7 +1361,6 @@ static int smb_direct_rdma_xmit(struct smb_direct_transport *t,
+ 		if (desc_buf_len > buf_len) {
+ 			desc_buf_len = buf_len;
+ 			desc[i].length = cpu_to_le32(desc_buf_len);
+-			buf_len = 0;
+ 		}
  
- __be32 mptcp_get_reset_option(const struct sk_buff *skb);
- 
-@@ -282,6 +285,12 @@ static inline struct request_sock *mptcp_subflow_reqsk_alloc(const struct reques
- 	return NULL;
- }
- 
-+/* Caller must hold an RCU read-side lock. */
-+static inline void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+					     struct request_sock *new_req)
-+{
-+}
-+
- static inline __be32 mptcp_reset_option(const struct sk_buff *skb)  { return htonl(0u); }
- #endif /* CONFIG_MPTCP */
- 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index fd407022814ea..ef18e663a5471 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -20,6 +20,7 @@
- #include <net/tcp_states.h>
- #include <net/xfrm.h>
- #include <net/tcp.h>
-+#include <net/mptcp.h>
- #include <net/sock_reuseport.h>
- #include <net/addrconf.h>
- 
-@@ -768,6 +769,9 @@ static struct request_sock *inet_reqsk_clone(struct request_sock *req,
- 		rcu_assign_pointer(tcp_sk(nreq->sk)->fastopen_rsk, nreq);
- 	}
- 
-+	if (rsk_is_mptcp(req))
-+		mptcp_subflow_reqsk_clone(req, nreq);
-+
- 	return nreq;
- }
- 
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 5ee090b74fa45..73580bf40aca8 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -47,6 +47,42 @@ static void subflow_req_destructor(struct request_sock *req)
- 	mptcp_token_destroy_request(req);
- }
- 
-+void mptcp_subflow_reqsk_clone(struct request_sock *req,
-+			       struct request_sock *new_req)
-+{
-+	struct mptcp_subflow_request_sock *subflow_req = mptcp_subflow_rsk(req);
-+	struct mptcp_subflow_request_sock *new_subflow_req;
-+	struct mptcp_sock *msk;
-+
-+	new_subflow_req = mptcp_subflow_rsk(new_req);
-+	RCU_LOCKDEP_WARN(!rcu_read_lock_any_held(),
-+			 "MPTCP reqsk clone called without RCU");
-+
-+	/* A non-NULL ->msk means the request owns one reference.  The clone
-+	 * copied only the pointer, while the original request can concurrently
-+	 * transfer its reference to the child.  Acquire a reference for the
-+	 * clone, then verify that the original request still owns the same msk.
-+	 * MPTCP sockets use SLAB_TYPESAFE_BY_RCU and all clone callers run in
-+	 * an RCU read-side critical section, keeping the memory stable here.
-+	 */
-+	msk = READ_ONCE(subflow_req->msk);
-+	if (msk) {
-+		struct sock *sk = (struct sock *)msk;
-+
-+		if (!refcount_inc_not_zero(&sk->sk_refcnt)) {
-+			msk = NULL;
-+		} else {
-+			smp_acquire__after_ctrl_dep();
-+			if (READ_ONCE(subflow_req->msk) != msk) {
-+				sock_put(sk);
-+				msk = NULL;
-+			}
-+		}
-+	}
-+
-+	new_subflow_req->msk = msk;
-+}
-+
- static void subflow_generate_hmac(u64 key1, u64 key2, u32 nonce1, u32 nonce2,
- 				  void *hmac)
- {
-@@ -803,7 +839,7 @@ static struct sock *subflow_syn_recv_sock(const struct sock *sk,
- 			}
- 
- 			/* move the msk reference ownership to the subflow */
--			subflow_req->msk = NULL;
-+			WRITE_ONCE(subflow_req->msk, NULL);
- 			ctx->conn = (struct sock *)owner;
- 
- 			if (subflow_use_different_sport(owner, sk)) {
+ 		credits_needed += calc_rw_credits(t, desc_buf, desc_buf_len);
 -- 
 2.53.0
 
