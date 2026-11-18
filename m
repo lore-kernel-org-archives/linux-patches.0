@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015598;
-	b=DtU7/3+3UIVCkqAGKfsX4h7+6jhbd12NV8/Lme4+w1Y4lH+jYymyk3veDO3zwU8T/tHa
-	 me3lYujUqj5eH/Ugn21I2CyyhCMC6H7CDNPugnOY17inrPGGEDk4RMBomDNkip1zAx9Hx
-	 Btj+FqABnfSPzu0BwmL6fwyaxf5N0VbaCLa2ZnUutfskhFs6ZhubKeB5YJVU29NkrJ4dq
-	 tdzrN12rr6FaaWmiRjHsrT2qThALUarmXEXe+hirv5HrISDkK/CgQPyEWGkMABIsvnAEz
-	 oV5la4uPwfJDpMhn4BuXSnyhpiprSWj3NTPYrK4tJfmORZicEa8uKcUiVy5+LR0L/eA==
+	t=1795015601;
+	b=AYij5dT7hcnr5rT3c56bbrvC2p2lMGijN6JzpcWoyg5XE80YbZB11Zn1JSMrERfG2pnr
+	 MGLqyLmJEwlhJCOCHh9mTzqLKHjh2UfgXf3W3J2JpTCUCzVxUoI/mj6/O6XxMnC2p8vLh
+	 ug0XFPrNUFi8U6q3uhS1T7xBkSukWFO+e2tipyOSqdM3DAcO85ZAByA8vHd7mYmFReMDu
+	 9H/ov9mYrBIDGR/KBC2s2E3ffuaFG1jet3dLqbj+ikzuNaKVx4T4kNTQLiOMjPeMnVdyO
+	 frzYAFo938v8kU6CvlrDcCTMBsLiG/06socks8eECrz+W9eAkj/5NuJ6uQ440KUnA2w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015598;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015601;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d6pknIWlQfduE+nICqf9mcE1BUD3srtM/sY2Ogd1v9o=;
-	b=3/Qrl3kueyuaPuBSqznOFMVNFQ6xmHfpCOVzTXAO084T4t4JhV/Kwq0pJpzMa/Oi3R7q
-	 JXlMOv33PVaYCtVjgmyNf4P9CEC3FGmteB8f5AqOKiZYpPl5LaVjaBzNgxIRECjMh7jky
-	 B7/3FUjCGILoAVlpldNk0lT5gL9DWrMrk9IiDCq3TuF44nM4NYRrQJif7NSRrzQ8J8c3r
-	 Kd65rssF/0aw5io8ZFr43iL8AyCqbBbQIBNiKdmvCdRMdacdIMjFJI0l4DEv/FMAOI8/i
-	 xryavELtU54vazlM8FUiY0Ee3rDZvIgJQCNHfkEM0lt1jP4wAWngQ2e6A85veEsTvFg==
+	bh=v5ZfLTX+QiY0avi18ZpwEB5Txc9lts2ZKubmfTDMZok=;
+	b=HqJIVd09ZP7hJpqUIydUVAJ5Qlv3/qXL0iUfAc7CM1dmoXJKbSP3odVo/8LTSq36w/H6
+	 SKciA0VzfdCQVUADoNG+IjaAQ4VHdkPBbJuWcizDe1AEgYyrOSX0dci8Rt58QTdpf20um
+	 2916f3bmqMCzGFF8r01J5R0oxTxVvckDC+jeJLwOk5CGTs2VQpgvQV8JLoYUNNPzaoMwf
+	 7jGI/inl1Nl83JEeJ8aFlGyGcaUTXUVSxgU39p24Gz9LSxQIX4iMonHTvDC7p3euqNQ2l
+	 SE0sMcZfR+7kO/nQEzPGRVMMCEHJGCuVY6gdgcZrlpndKA6cil+4Yjw1KBPF/VjKg8Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1FuxYWr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UTSnF1ej;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6012A606A330;
-	Wed, 18 Nov 2026 15:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C04606A320;
+	Wed, 18 Nov 2026 15:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=g1FuxYWr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84F01F000C4;
-	Wed, 18 Nov 2026 15:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UTSnF1ej
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DD21F000C4;
+	Wed, 18 Nov 2026 15:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015598;
-	bh=d6pknIWlQfduE+nICqf9mcE1BUD3srtM/sY2Ogd1v9o=;
+	s=korg; t=1795015601;
+	bh=v5ZfLTX+QiY0avi18ZpwEB5Txc9lts2ZKubmfTDMZok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=g1FuxYWr3xOcqZqV1pzYEkPJrYVayHilneNFEKN2b1qvnuB9ZT/KPv1D9s86n6d2q
-	 zgZfv2hE08nlXCL/1mDKxwkclZmh06rf1c6MPGK2udSMUoLYUL7CV4uQ1nWoBnTiev
-	 +L2l7/Tsa1L440MG28E5orRJvl86Aa55KPrAieEM=
+	b=UTSnF1ejD+WCMbahEXbmx9C2h03qAT/9xozNCXA/JQ6PxciZRsFbDvsHjcrNx/Fer
+	 iAh43Ko578XdFGs3jYblLD4cc5tRAIOXkWKoK09iShcazLztlpsR1seQlMjlcAx1wI
+	 FZAvmOrvXW/U4Rn1emQuHZAbuWK6meKtxA82/RkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Youhong <liyouhong@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>,
+	sashiko-bot@kernel.org,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0230/2651] spi: ma35d1-qspi: assert reset on probe error paths
-Date: Wed, 18 Nov 2026 15:24:30 +0100
-Message-ID: <20261118150256.142804715@linuxfoundation.org>
+Subject: [PATCH 7.3 0231/2651] efi/cper: Reject CPER records with an out-of-range error_data_length
+Date: Wed, 18 Nov 2026 15:24:31 +0100
+Message-ID: <20261118150256.177298465@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,75 +71,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Youhong <liyouhong@kylinos.cn>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 8992169e7ac6b216f881cb373bb2c6bff0c6162a ]
+[ Upstream commit a5a612cd3eecbadf135df1e9b2b40bc9f4c28f1c ]
 
-nuvoton_qspi_probe() pulses the exclusive reset and leaves it
-deasserted for normal operation. Later probe failures returned
-without re-asserting the reset, leaving the controller out of
-reset after a failed probe. Assert the reset on those error
-paths.
+cper_estatus_check() sizes each section with acpi_hest_get_record_size(),
+which adds the firmware-controlled u32 error_data_length to the header size
+as a signed int (see <acpi/ghes.h>). A value in the top sizeof(*gdata)
+bytes of the u32 range wraps the sum small rather than large, so it slips
+past the "record_size > data_len" check: against the 72-byte v300 header,
+0xffffffb9 sizes the record at 1 and acpi_hest_get_next() walks it a byte
+at a time, off the end. 0xffffffb8 sizes it at 0 and loops forever.
 
-Fixes: 78b16af159ae ("spi: ma35d1-qspi: Add Nuvoton MA35D1 QSPI controller support")
-Signed-off-by: Li Youhong <liyouhong@kylinos.cn>
-Link: https://patch.msgid.link/20260901025129.359960-1-dayou5941@163.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Use check_add_overflow() to reject a sum that will not fit the int those
+helpers return, since the walk advances by that value. That subsumes the
+"acpi_hest_get_size(gdata) > data_len" test above it, because record_size
+is never smaller than the header.
+
+The later "len < sizeof(*foo)" guards rely on this per-section upper bound;
+they are lower bounds only.
+
+Reported-by: sashiko-bot@kernel.org
+Closes: https://sashiko.dev/#/patchset/20260714231835.303081-1-dave.jiang@intel.com?part=1
+Fixes: 45b14a4ffcc1 ("efi: cper: Fix possible out-of-bounds access")
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://patch.msgid.link/20260904172337.1409775-2-dave.jiang@intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ma35d1-qspi.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ drivers/firmware/efi/cper.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-ma35d1-qspi.c b/drivers/spi/spi-ma35d1-qspi.c
-index 7f938d0c6f1fc..cf731fa2f7e2d 100644
---- a/drivers/spi/spi-ma35d1-qspi.c
-+++ b/drivers/spi/spi-ma35d1-qspi.c
-@@ -633,12 +633,16 @@ static int nuvoton_qspi_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, ret, "failed to deassert reset\n");
+diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
+index 06b4fdb59917a..332c78f2d5617 100644
+--- a/drivers/firmware/efi/cper.c
++++ b/drivers/firmware/efi/cper.c
+@@ -752,7 +752,7 @@ EXPORT_SYMBOL_GPL(cper_estatus_check_header);
+ int cper_estatus_check(const struct acpi_hest_generic_status *estatus)
+ {
+ 	struct acpi_hest_generic_data *gdata;
+-	unsigned int data_len, record_size;
++	unsigned int data_len;
+ 	int rc;
  
- 	ret = device_property_read_u32(dev, "num-cs", &num_cs);
--	if (ret && ret != -EINVAL)
--		return dev_err_probe(dev, ret, "failed to read num-cs\n");
-+	if (ret && ret != -EINVAL) {
-+		ret = dev_err_probe(dev, ret, "failed to read num-cs\n");
-+		goto err_assert;
-+	}
+ 	rc = cper_estatus_check_header(estatus);
+@@ -762,10 +762,18 @@ int cper_estatus_check(const struct acpi_hest_generic_status *estatus)
+ 	data_len = estatus->data_length;
  
--	if (!num_cs || num_cs > NUVOTON_QSPI_MAX_NUM_CS)
--		return dev_err_probe(dev, -EINVAL, "invalid num-cs %u\n",
-+	if (!num_cs || num_cs > NUVOTON_QSPI_MAX_NUM_CS) {
-+		ret = dev_err_probe(dev, -EINVAL, "invalid num-cs %u\n",
- 				     num_cs);
-+		goto err_assert;
-+	}
- 
- 	ctlr->num_chipselect = num_cs;
- 	ctlr->max_transfer_size = nuvoton_qspi_max_transfer_size;
-@@ -655,14 +659,20 @@ static int nuvoton_qspi_probe(struct platform_device *pdev)
- 
- 	ret = nuvoton_qspi_hw_init(qspi);
- 	if (ret)
--		return ret;
-+		goto err_assert;
- 
- 	ret = devm_spi_register_controller(dev, ctlr);
--	if (ret)
--		return dev_err_probe(dev, ret,
--				     "failed to register spi controller\n");
-+	if (ret) {
-+		ret = dev_err_probe(dev, ret,
-+				    "failed to register spi controller\n");
-+		goto err_assert;
-+	}
- 
- 	return 0;
+ 	apei_estatus_for_each_section(estatus, gdata) {
+-		if (acpi_hest_get_size(gdata) > data_len)
++		int record_size;
 +
-+err_assert:
-+	reset_control_assert(rst);
-+	return ret;
- }
++		/*
++		 * The <acpi/ghes.h> helpers sum these as a signed int, so a
++		 * huge error_data_length wraps small rather than large and the
++		 * walk then advances by that wrapped value. Reject a size an
++		 * int cannot carry.
++		 */
++		if (check_add_overflow(acpi_hest_get_size(gdata),
++				       gdata->error_data_length, &record_size))
+ 			return -EINVAL;
  
- static const struct of_device_id nuvoton_qspi_of_match[] = {
+-		record_size = acpi_hest_get_record_size(gdata);
+ 		if (record_size > data_len)
+ 			return -EINVAL;
+ 
 -- 
 2.53.0
 
