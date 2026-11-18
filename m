@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060452;
-	b=pTIaxYGAMZ7ng/IbTghhPUyQsTOGqhOgv6aFZaM4gEW5t848I6zcqH5I20UNlm2kraXm
-	 tJDs9rIPHVAsFWJ2/yZEM5p6ITCdISMynxazzVro9ybXPP0qlgG2a+vyDg3relUAkm4XC
-	 Qa+ut7bUu/HCkk7VYxRoTTGzqtoTgS7XphnN6301t3wkAkooKasOjoYGhaycsZpUL47X/
-	 PAmovRq3xTMGKEjRwB56fwRKshskC2S18vuCqXE2YCx6/MWuEhKajPpkTays6qvJJUe+T
-	 P8onUAd6EZJpQv80qtGzaLJlL+n5V7YbWIK2JpUivdcM76xwtM7mCyTw5Ml3LB0kRYQ==
+	t=1795060455;
+	b=KKpourMX6gGE49/rpEIchLZFjHIs27USagTKlVdj6IGK6RcGQE6azuHeNGm2H7YKl6l6
+	 au5mMRLejiv+u3GDHfGETFgL+Y7gFfM0qInlahufeY6Jz5aB44BTI3/z4Ru5SKFqxiiyL
+	 UBRBgNn8hGEY473Z3A3zpbrssQ1I6pVnR/+W/5ppBBZdpe+hnq8UFrnBl2Gx71p9pmYac
+	 HSLfVem9S0T915SLDQBKrghgfxLlvZRexzeZ3OYLBNtNdwtg2y6L9OhFn2DoxWiCEUqJR
+	 a8KUwXTiFnxONfPlcYdlJFNZL1fyGu6OJ95qF5lFaQ8OXf6qL/DE1Cld2ONstSEEOZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060452;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060455;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=92BkXAiaezx4wseehsVMgbszZuaV3huVsampRCw+Dqg=;
-	b=43VB8eeFZwcfmYfc07mc9r5MlvIveJ3Zi7/wgUlKSsZEkPXDHxlSVcu9ikExmu3gTpfZ
-	 Mj8KAu/bSffg/zwrCohijToOANq+sa7quukvO45uP7XAYvXN+/FjI/4vULRkQiZNm477G
-	 0gZFTVOzlz/pKFdKVHfaAD8F/2vhjGnsthJRvRnP6GJi/iaG8iLJqwNMX7D5C28khpeP8
-	 0d07Zc210cwH0ND3aSFVphR0Ij6JGeFcfoSI/msbY1Nw37UgmRygG08I/GnAKpO1uI0wm
-	 C2h9uBjEuQ5SvR1V0lbEo0cv0t5K0aerHZ+F0zHppaUkOj+8ec5r8ol5D7B2I6q1ppg==
+	bh=ZDvzKn9fW3occxNZ9oNhyPhksk31OZuEB6E3z27j4p4=;
+	b=nn1/JGAbUOoshGOhMAOEyqoELFGM6cuDYtFjl1/WNK7V43ggJtruqvT3yZj1YeW8u0QG
+	 73vs8Ri3DlRSKZVQvCpm33sTFpZz4+QWIcSQ51s69fumPpxJBdt5z02myagz5gqVRl5BW
+	 wDHleNPEEGnIf8D5OQmA0X63cB18ECoSLq4+/fLA6K4rLiWEQbCzaBeS17J21CR6rHA2s
+	 hyjnpwxmeW9VHYz5QiyKs+yRewINf9bcQ9EDrlYrN1IDNinW91a/++cdbEIfLrnnK3tPn
+	 YjSf9Z8bjwLEOu4x1/gE00ePbTMyX3iypfA0zKQW5H+w5f/6jqQs6wPI1H5MLZrS0yQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJj45XyM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="NQR/cdKe";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61098606A320;
-	Thu, 19 Nov 2026 03:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2561C606A325;
+	Thu, 19 Nov 2026 03:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zJj45XyM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB0D1F000C4;
-	Thu, 19 Nov 2026 03:54:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=NQR/cdKe
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AC711F000C4;
+	Thu, 19 Nov 2026 03:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060452;
-	bh=92BkXAiaezx4wseehsVMgbszZuaV3huVsampRCw+Dqg=;
+	s=korg; t=1795060455;
+	bh=ZDvzKn9fW3occxNZ9oNhyPhksk31OZuEB6E3z27j4p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zJj45XyMCC1UdeD/ZgT7L7r2WRceGGnYBQMlE4SQYbVmW6mM1OJbyVXqHB1Jpb1uM
-	 hG1OLEmFG+5t6/SSrxc5+t4Jhnsj14PnXSArdzZAB/RcKDbb46cH6yitIaxZVhJFH3
-	 DjE5QVA1acpfrcfJIvw9XhApwh3lJD9huvVY9ngk=
+	b=NQR/cdKeSV+dx9HD9nBL+SzGv0iBZ9EcxqB5Phn5e/SORGoTTkMr7UtU2vxxaRgyz
+	 0D4DACjCotSz18zd7EzygX6BITryh4g+KFjJI2bp3xHaEF+sNDZWDOgA3sLCq6iNE1
+	 w9BAoavUoBt+QwgXHLNOSfu3SdSymCghuGx/4O7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Yuho Choi <dbgh9129@gmail.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1205/1848] efi/libstub: Fix efi_set_event_at() parameter documentation
-Date: Wed, 18 Nov 2026 15:54:03 +0100
-Message-ID: <20261118150010.462928132@linuxfoundation.org>
+Subject: [PATCH 5.10 1206/1848] PCI: xgene: Use managed clock for PCIe controller
+Date: Wed, 18 Nov 2026 15:54:04 +0100
+Message-ID: <20261118150010.501972061@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,39 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: Yuho Choi <dbgh9129@gmail.com>
 
-[ Upstream commit c12a3a4b35e47fd511fbd550d3637318be41c4eb ]
+[ Upstream commit b9022584ebbae81f7bbe4a61bd1df0d0a95e1a99 ]
 
-efi_set_event_at() documents ids although its array index argument is
-named idx. This produces missing and excess parameter warnings.
+xgene_pcie_init_port() obtains and enables the controller clock manually.
+When xgene_pcie_setup() or pci_host_probe() fails, probe returns without
+disabling, unpreparing, or releasing the clock. A failed enable also leaves
+the clk_get() reference unreleased.
 
-Match the argument name and fix the adjacent spelling of array.
+Use devm_clk_get_enabled() so the clock is unwound automatically on probe
+failure and device removal.
 
-Fixes: 8c0a839c2bcc ("efi/libstub: Descriptions for stub helper functions")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 5f6b6ccdbe1c ("PCI: xgene: Add APM X-Gene PCIe driver")
+Signed-off-by: Yuho Choi <dbgh9129@gmail.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260802221146.573233-1-dbgh9129@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/efistub.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/pci-xgene.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/firmware/efi/libstub/efistub.h b/drivers/firmware/efi/libstub/efistub.h
-index c5e0c6e99d20c..40a954033ef2a 100644
---- a/drivers/firmware/efi/libstub/efistub.h
-+++ b/drivers/firmware/efi/libstub/efistub.h
-@@ -181,8 +181,8 @@ typedef void (__efiapi *efi_event_notify_t)(efi_event_t, void *);
-  * efi_set_event_at() - add event to events array
-  *
-  * @events:	array of UEFI events
-- * @ids:	index where to put the event in the array
-- * @event:	event to add to the aray
-+ * @idx:	index where to put the event in the array
-+ * @event:	event to add to the array
-  *
-  * boottime->wait_for_event() takes an array of events as input.
-  * Provide a helper to set it up correctly for mixed mode.
+diff --git a/drivers/pci/controller/pci-xgene.c b/drivers/pci/controller/pci-xgene.c
+index e1c2daa50b498..4b299fb5ab944 100644
+--- a/drivers/pci/controller/pci-xgene.c
++++ b/drivers/pci/controller/pci-xgene.c
+@@ -327,18 +327,11 @@ static void xgene_pcie_linkup(struct xgene_pcie_port *port,
+ static int xgene_pcie_init_port(struct xgene_pcie_port *port)
+ {
+ 	struct device *dev = port->dev;
+-	int rc;
+ 
+-	port->clk = clk_get(dev, NULL);
++	port->clk = devm_clk_get_enabled(dev, NULL);
+ 	if (IS_ERR(port->clk)) {
+ 		dev_err(dev, "clock not available\n");
+-		return -ENODEV;
+-	}
+-
+-	rc = clk_prepare_enable(port->clk);
+-	if (rc) {
+-		dev_err(dev, "clock enable failed\n");
+-		return rc;
++		return PTR_ERR(port->clk);
+ 	}
+ 
+ 	return 0;
 -- 
 2.53.0
 
