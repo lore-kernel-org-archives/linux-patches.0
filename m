@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018004;
-	b=rZWbPLN7ddzxHYuxnXfyrcYwCiRsI7mdNqWfffwjeiehTmI8mVgT73RXfSqaFVhjWbh4
-	 2juvk/U1WFK9GWRdfF5j65mIfzWjXw6afWFLMkpvWHA+K8VtsP0dV+mQ/XvgQORQ8MveB
-	 qnVmFbd1Uxto3eaCTMVNLGeUuXN+iVij8ygm7968MjP8ncGZTva5nrsQg+LZL/ao6hW53
-	 I53cHkuyM3sVmnQbZgZ+xMMuiWitYB6K6UAnhwkMoZrjxaOnMDGYZcDuKnHE37QM32Hk4
-	 E2NHwuhLUZXNtI8WaRP1KOvSsrYl9OYBbHXE55pIN59mLuOcHiwJgMfxHFSOOJ0c+/A==
+	t=1795018007;
+	b=UDU6QlpAhrpBwPwy+60cAPKlyKJVVj5BhaBkTvjkvqTXi2Ff9NzOeuCGlYi06Ehurzs8
+	 eL9X9xm3cCkMi+vZkm6inZfT5CHY5S6BPvAFs5gbAzd28y0F2iW03O11Ou+rw3gauVa0c
+	 Lfv5ZJZRqn/rUsIIONtuRobx+eKJe2kw0g/+WLiG04+PtDKMwdtlwv5FUnRF33upDJUTo
+	 F6bd4DiVTFtW3cug+bxvUnHfz65SyHiAlDoRUDRCK4GvpC5baiwYUPIboKMKbtAU98lZE
+	 Ppjf1anyuzBmINGtRbZzNxzZLgjyr+z73b7KBfoA2OMHUTvNzkgP+KtuRIFxVeO2GRg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018004;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018007;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=uepKgfpYfjAhCk6CfRfJUBBCh66J65zDGw6E/qSnyIE=;
-	b=GXpMx6kkLYCgwAeG4dOGifP4A9rObZSu27z8VIYc6WgmNifkwvXiFr2Kel2en5trt94H
-	 1LSUZe7Nx3CPCSa4z4SCXfI5ilAYZKBP1KIRfpXLyZ18CL9hda6tZLckV/9ARZDAgr2OA
-	 gdnusoECTEnq1mkCfRfUeMc3X3dMCB42WwbPhcxelv/+dHW0WqDnGjbhXD7eBQqfpLVA+
-	 BfyQRo+F5Z/37wep6Jc2/QlvILI1fkrH5y7n3yE2Lt1b5aX6ZmvljM9bhs2y8/qoSfPDs
-	 LzgLxMwZ9vS9auZBITiNFEVwlji9sqrp+2DITJXzCN+eFr3U2qtJ/Bycd7ZESOQbrOg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=It2WXrDRywZE3ORAl2OqCDD62ty3TrNeIA2h+/g5330=;
+	b=SrfUlfks5BkYyG8p3RsOwErREBkA3m4BditL3TGZ2+Xb+s2y/Q+tXZKYeQY3zJ+39x0c
+	 sfu7cy4TC2IOB+XKEwyHqGg9dQ5O3CHM1vG6lqugmHT+kLHzDiINx7k+FQ3TZ9PmY6CVn
+	 a52uAJtB/BkZwT5MD4tSnYKqY/LyxbWU0KFm7yLGT88pPTSquTeJBBo18TiEGsRTIKpBr
+	 EqKRL+b/GgRaVqcbIUW1X42bGc9qNgMh1Bvwam/PpU70LA+L8OI+QaSaCtgpMLNPzz5N2
+	 CdBOZv/97HD1/YNTKR1PhBOLIaS3u/4DADQ2/tc+2GkvVncWaX+NsbFYP2jCKrRRmtQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lqvWdjnV;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rv1HOK9P;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDBC606A320;
-	Wed, 18 Nov 2026 16:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2618C606A320;
+	Wed, 18 Nov 2026 16:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lqvWdjnV
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED351F000C4;
-	Wed, 18 Nov 2026 16:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rv1HOK9P
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772C91F000C4;
+	Wed, 18 Nov 2026 16:06:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018004;
-	bh=uepKgfpYfjAhCk6CfRfJUBBCh66J65zDGw6E/qSnyIE=;
+	s=korg; t=1795018007;
+	bh=It2WXrDRywZE3ORAl2OqCDD62ty3TrNeIA2h+/g5330=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=lqvWdjnVJGWzmRPcMDqlNxiU/KS8Rh1Hu3I1sYAKam9EdGEKcL1cW9n8lq7nzamwl
-	 oknMZTkMdL1t9vsVn2eUDHkGuNgsHdKRAJtI5d6tI1Zm5ryiQXhFHPyXNfQYClMfyp
-	 qDlJBT37tBf6y/rrfam/jRZFupeYJaG2U83iY1BQ=
+	b=rv1HOK9PaqDBDDdkW9qRVe7i5xnNqAihelRRLQQvspU2irHgO6AMIH/Mh8Fpie9GW
+	 XHhCm7z5IbI5GfwH/hUKyBsDG3o4rnfvvPb+4vkwnHx1OL+Mjv8zEYJo7hbzaqo3+h
+	 X3J8xr+9QCLoAMio5x2D7ouJvWV1JcLC1geC2u9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Karl Mehltretter <kmehltretter@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1084/2651] ice: extract ice_vsi_get_num_qs()
-Date: Wed, 18 Nov 2026 15:38:44 +0100
-Message-ID: <20261118150327.021712818@linuxfoundation.org>
+Subject: [PATCH 7.3 1046/2651] time: Prevent time64_to_tm() day truncation on 32-bit
+Date: Wed, 18 Nov 2026 15:38:06 +0100
+Message-ID: <20261118150325.622706022@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -63,213 +63,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+From: Karl Mehltretter <kmehltretter@gmail.com>
 
-[ Upstream commit 4425fa055c0da53c893ff5989b63cd04b9c8353b ]
+[ Upstream commit 2927f7ca78448781e11a4623d347cd653c28adf6 ]
 
-ice_vsi_set_num_qs() mixed two things: deciding how many queues a VSI
-gets, and applying all the side effects of that decision. Split the
-decision out into ice_vsi_get_num_qs(), returning both counts at once.
+time64_to_tm() accepts a 64-bit seconds value, but stores the quotient in
+long. On a 32-bit kernel the day count therefore wraps when it reaches
+2^31, even though the corresponding year remains representable in
+struct tm.
 
-To make that possible, group alloc_txq and alloc_rxq in struct ice_vsi
-with struct_group_tagged(), which gives the return type without adding
-any new storage. Field order changes slightly, num_txq now follows
-alloc_rxq, but nothing depends on it.
+This is reachable when formatting externally supplied timestamps. For
+example, NILFS recovery copies the little-endian 64-bit ss_create field
+from an on-disk segment summary into time64_t. Its sysfs attributes then
+print that value with %ptTs, whose formatter calls time64_to_tm(). A
+corrupted image can consequently produce an architecture-dependent printed
+date.
 
-ice_vsi_get_num_qs() takes @held_txq and @held_rxq from the start, even
-though the only caller so far passes zero for both. They let a caller
-ask what the counts would be once the queues the VSI currently owns are
-back in the PF pool. A later commit adds the caller that needs this: the
-rebuild path has to size its ring stats arrays before ice_vsi_decfg()
-releases the queues, yet the arrays must match what ice_vsi_set_num_qs()
-computes afterwards.
+Keep the day quotient in s64 while leaving the seconds-within-day remainder
+as long. Use div_s64_rem() for the weekday calculation so 32-bit builds do
+not require compiler runtime division helpers.
 
-While reshaping the whole body, drop the kernel-doc line promising a
-return value; ice_vsi_set_num_qs() returns void.
-
-No functional change intended.
-
-Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Link: https://patch.msgid.link/20260925132636.123300-5-przemyslaw.kitszel@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: f1c3b87896e6 ("ice: size ring stats arrays from the final queue count")
+Fixes: e6c2682a1da3 ("time: Add time64_to_tm()")
+Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Assisted-by: LLM
+Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Link: https://patch.msgid.link/20260925165702.51677-2-kmehltretter@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice.h     |  6 +-
- drivers/net/ethernet/intel/ice/ice_lib.c | 88 ++++++++++++++----------
- 2 files changed, 55 insertions(+), 39 deletions(-)
+ kernel/time/timeconv.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index fadfe94bf1c8c..f1ba86d066be5 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -403,9 +403,11 @@ struct ice_vsi {
- 	u8 rx_mapping_mode;		 /* ICE_MAP_MODE_[CONTIG|SCATTER] */
- 	u16 *txq_map;			 /* index in pf->avail_txqs */
- 	u16 *rxq_map;			 /* index in pf->avail_rxqs */
--	u16 alloc_txq;			 /* Allocated Tx queues */
-+	struct_group_tagged(ice_vsi_alloc_queues_params, alloc_txq_rxq,
-+		u16 alloc_txq;		 /* Allocated Tx queues */
-+		u16 alloc_rxq;		 /* Allocated Rx queues */
-+	);
- 	u16 num_txq;			 /* Used Tx queues */
--	u16 alloc_rxq;			 /* Allocated Rx queues */
- 	u16 num_rxq;			 /* Used Rx queues */
- 	u16 req_txq;			 /* User requested Tx queues */
- 	u16 req_rxq;			 /* User requested Rx queues */
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index ed32ae2667c5f..134984077d5da 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -153,23 +153,61 @@ static void ice_vsi_set_num_desc(struct ice_vsi *vsi)
- 	}
- }
+diff --git a/kernel/time/timeconv.c b/kernel/time/timeconv.c
+index 59b922c826e77..aed3af950fa0b 100644
+--- a/kernel/time/timeconv.c
++++ b/kernel/time/timeconv.c
+@@ -49,8 +49,9 @@ void time64_to_tm(time64_t totalsecs, int offset, struct tm *result)
+ 	u32 u32tmp, day_of_century, year_of_century, day_of_year, month, day;
+ 	u64 u64tmp, udays, century, year;
+ 	bool is_Jan_or_Feb, is_leap_year;
+-	long days, rem;
+ 	int remainder;
++	long rem;
++	s64 days;
  
--static u16 ice_get_rxq_count(struct ice_pf *pf)
-+static u16 ice_get_rxq_count(struct ice_pf *pf, u16 held)
- {
--	return min(ice_get_avail_rxq_count(pf),
--		   netif_get_num_default_rss_queues());
-+	return min_t(u16, ice_get_avail_rxq_count(pf) + held,
-+		     netif_get_num_default_rss_queues());
- }
+ 	days = div_s64_rem(totalsecs, SECS_PER_DAY, &remainder);
+ 	rem = remainder;
+@@ -70,7 +71,8 @@ void time64_to_tm(time64_t totalsecs, int offset, struct tm *result)
+ 	result->tm_sec = rem % 60;
  
--static u16 ice_get_txq_count(struct ice_pf *pf)
-+static u16 ice_get_txq_count(struct ice_pf *pf, u16 held)
- {
--	return min(ice_get_avail_txq_count(pf),
--		   netif_get_num_default_rss_queues());
-+	return min_t(u16, ice_get_avail_txq_count(pf) + held,
-+		     netif_get_num_default_rss_queues());
-+}
-+
-+/* @held_txq, @held_rxq: queues the VSI still owns but is about to return to the
-+ * PF pool, so that the result matches what it will be once they are back there.
-+ */
-+static struct ice_vsi_alloc_queues_params
-+ice_vsi_get_num_qs(struct ice_vsi *vsi, u16 held_txq, u16 held_rxq)
-+{
-+	struct ice_vsi_alloc_queues_params qs = {};
-+	struct ice_pf *pf = vsi->back;
-+
-+	switch (vsi->type) {
-+	case ICE_VSI_PF:
-+		qs.alloc_txq = vsi->req_txq ?: ice_get_txq_count(pf, held_txq);
-+
-+		/* only 1 Rx queue unless RSS is enabled */
-+		if (!test_bit(ICE_FLAG_RSS_ENA, pf->flags))
-+			qs.alloc_rxq = 1;
-+		else
-+			qs.alloc_rxq = vsi->req_rxq ?:
-+				       ice_get_rxq_count(pf, held_rxq);
-+		break;
-+	case ICE_VSI_SF:
-+	case ICE_VSI_CTRL:
-+	case ICE_VSI_LB:
-+		qs.alloc_txq = 1;
-+		qs.alloc_rxq = 1;
-+		break;
-+	case ICE_VSI_VF:
-+		qs.alloc_txq = vsi->vf->num_req_qs ?: vsi->vf->num_vf_qs;
-+		qs.alloc_rxq = qs.alloc_txq;
-+		break;
-+	case ICE_VSI_CHNL:
-+		break;
-+	default:
-+		dev_warn(ice_pf_to_dev(pf), "Unknown VSI type %d\n", vsi->type);
-+		return vsi->alloc_txq_rxq;
-+	}
-+
-+	return qs;
- }
- 
- /**
-  * ice_vsi_set_num_qs - Set number of queues, descriptors and vectors for a VSI
-  * @vsi: the VSI being configured
-- *
-- * Return 0 on success and a negative value on error
-  */
- static void ice_vsi_set_num_qs(struct ice_vsi *vsi)
- {
-@@ -180,44 +218,27 @@ static void ice_vsi_set_num_qs(struct ice_vsi *vsi)
- 	if (WARN_ON(vsi_type == ICE_VSI_VF && !vf))
- 		return;
- 
-+	vsi->alloc_txq_rxq = ice_vsi_get_num_qs(vsi, 0, 0);
-+
- 	switch (vsi_type) {
- 	case ICE_VSI_PF:
--		if (vsi->req_txq) {
--			vsi->alloc_txq = vsi->req_txq;
-+		if (vsi->req_txq)
- 			vsi->num_txq = vsi->req_txq;
--		} else {
--			vsi->alloc_txq = ice_get_txq_count(pf);
--		}
-+		if (vsi->req_rxq && test_bit(ICE_FLAG_RSS_ENA, pf->flags))
-+			vsi->num_rxq = vsi->req_rxq;
- 
- 		pf->num_lan_tx = vsi->alloc_txq;
--
--		/* only 1 Rx queue unless RSS is enabled */
--		if (!test_bit(ICE_FLAG_RSS_ENA, pf->flags)) {
--			vsi->alloc_rxq = 1;
--		} else {
--			if (vsi->req_rxq) {
--				vsi->alloc_rxq = vsi->req_rxq;
--				vsi->num_rxq = vsi->req_rxq;
--			} else {
--				vsi->alloc_rxq = ice_get_rxq_count(pf);
--			}
--		}
--
- 		pf->num_lan_rx = vsi->alloc_rxq;
- 
- 		vsi->num_q_vectors = max(vsi->alloc_rxq, vsi->alloc_txq);
- 		break;
- 	case ICE_VSI_SF:
--		vsi->alloc_txq = 1;
--		vsi->alloc_rxq = 1;
- 		vsi->num_q_vectors = 1;
- 		vsi->irq_dyn_alloc = true;
- 		break;
- 	case ICE_VSI_VF:
- 		if (vf->num_req_qs)
- 			vf->num_vf_qs = vf->num_req_qs;
--		vsi->alloc_txq = vf->num_vf_qs;
--		vsi->alloc_rxq = vf->num_vf_qs;
- 		/* pf->vfs.num_msix_per includes (VF miscellaneous vector +
- 		 * data queue interrupts). Since vsi->num_q_vectors is number
- 		 * of queues vectors, subtract 1 (ICE_NONQ_VECS_VF) from the
-@@ -226,22 +247,15 @@ static void ice_vsi_set_num_qs(struct ice_vsi *vsi)
- 		vsi->num_q_vectors = vf->num_msix - ICE_NONQ_VECS_VF;
- 		break;
- 	case ICE_VSI_CTRL:
--		vsi->alloc_txq = 1;
--		vsi->alloc_rxq = 1;
- 		vsi->num_q_vectors = 1;
- 		break;
- 	case ICE_VSI_CHNL:
--		vsi->alloc_txq = 0;
--		vsi->alloc_rxq = 0;
- 		break;
- 	case ICE_VSI_LB:
--		vsi->alloc_txq = 1;
--		vsi->alloc_rxq = 1;
- 		/* A dummy q_vector, no actual IRQ. */
- 		vsi->num_q_vectors = 1;
- 		break;
- 	default:
--		dev_warn(ice_pf_to_dev(pf), "Unknown VSI type %d\n", vsi_type);
- 		break;
- 	}
+ 	/* January 1, 1970 was a Thursday. */
+-	result->tm_wday = (4 + days) % 7;
++	div_s64_rem(days + 4, 7, &remainder);
++	result->tm_wday = remainder;
+ 	if (result->tm_wday < 0)
+ 		result->tm_wday += 7;
  
 -- 
 2.53.0
