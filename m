@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795051580;
-	b=Jid3Q7tD8scABBdPBMPnrFuCiySSf5B+PZjgMbHVp6U/G4UpoL3+0HhRWJrhpHOGcFaA
-	 v7Wx809TQM5HR0wDVqrwDM9H3ov3CFU/52GZzm2xGQJB6+um/tno9O6ZvJDdRVPHiDozv
-	 Wt6fGBx1LQcTHsVLmKUuyV0dC0AUO74z3BxlThTIUcY1PuO76co8tSBNHVHBcTvx1VKZ5
-	 z+XpW2+pU1Z7yMHlOAx0hgYft97ncP5InnwZck1fz019Mez0XG8mwxB0cnEPNbJOSQUr2
-	 JpRJ5re+/3JSP1C1tsQkwvM55eGS/7VjNtP8ORQgrV1qYo5kErNrwCdzx22kMaJ9v4A==
+	t=1795051583;
+	b=PCWpEweY66AXQilu9tQBaUnXPRvDdW0LB6w1ibZBakT7INZKQ/4Ss0I5uSrF9/srlcfu
+	 LNYJrJFOqRUl2d9hM0IJRPeNpqfRFb3Ezzh95Vr1ToXu31k42w4GLRXJ244wyiRNSLI9I
+	 dm790C4noNk4Geevs9lNuZSJ65swPA8QOvn5WV+2CQoxjgNIumkd704ft3tkp4lSf6N74
+	 Eb8MJdo/1vuujhbcqHKuMDeKO8wXzPHGkySW1l8B89NUQpXenCFXnO0ISBE9NqdN/EmBY
+	 e/IczmdWyu5J+HGbR/RjWL72ACA2MiZw45Mywv+h9gUs81KW7o1ZK6bIlqU+Bc3rmkA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795051580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795051583;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GIOAH8mirx1foI0+oRwGh0yopHrdmL0PnBw8GR8bbdc=;
-	b=0P9paHgOZk4NwtBvXx/5vZ3tfserjKv0Kka8+YqZV5WNdsNPhDD+lV/CYl+WljRlYsOr
-	 8/TI/yeSbNmAvwWEHEJ9UsNhHrSqDigmOMGMn1uW9CXJ7SCjpmchCVH6MB1eAZ41MO1p2
-	 SiSAwwyk74pV6kthV6HWMNnPWoe2dBB5W2yEsfqcY1Dvyhe/6/lCeYJ4/mjSKVtAfimZT
-	 8Xm9zca8/W/DMf93ZfnplyLTkzkd618R3t92rMyg9VGWbiwpdyHHp1qKKlQ8E+qgfxjfS
-	 1pJ5ahQPrCPteglgEW96yjJ2F6A/3XIH0zQVL7byghUN44tZn8Q9ffZXh5ktHq2MY4w==
+	bh=ukg3OuRTuq3mi2QGvVuOaJ0bkgAuFYMNn3PFRmurIDg=;
+	b=sGU0o+25CaWQK/cVp/3e2DzJyGVrUD3QX+ijhvT9i6VuGWWwVcPP8Wi3plFGAKp//4qB
+	 ZYogj0bk8fg6tZJfnrUn6dqICPf8XEz2n/OOCS7qVMH/jTeJn9ITcsMnWVmRTFO2aqXc7
+	 bDDAMCXHFe2ZXOl/ADsWi0xjcHQAlKn1aqZDO6nJvzdaT7DkWu8xki4sPB/iL86DqiRQo
+	 HH0eFtYj9DevjiPvHbjTSW1ZWYvXuMYtMcSPTshK+DY1oDxs6MQGqJHFKtKNxWi9f024q
+	 ZsT5Xc0r+24RcyqM7c9jHEqrOmY6O6YZXgLx2lP3WI0I82aFvjup6FHjVuX94etQtmw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SKAbsPYJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BIWlojAy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60EC606A31C;
-	Thu, 19 Nov 2026 01:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7384E606A338;
+	Thu, 19 Nov 2026 01:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=SKAbsPYJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286A61F000C4;
-	Thu, 19 Nov 2026 01:26:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=BIWlojAy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0271F000C8;
+	Thu, 19 Nov 2026 01:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795051580;
-	bh=GIOAH8mirx1foI0+oRwGh0yopHrdmL0PnBw8GR8bbdc=;
+	s=korg; t=1795051583;
+	bh=ukg3OuRTuq3mi2QGvVuOaJ0bkgAuFYMNn3PFRmurIDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=SKAbsPYJtBdznQ8I9jPTBQS/KCW6PvTV5v98uCgUs/TSS8TjbYJGcNU7DAI4sMNfe
-	 P2lAPJjfHtpjEjdmMT0aIzKbuDy9rTShoFglPFJCLLCOX9iz+mMHPToVF/WwT5OjfR
-	 qZVtDqMv91IXXPy6mWQaTBBwNi505AaHudXlp6Oc=
+	b=BIWlojAysYMZlBphFlWVBws9ExuCntAJ3GVDvBuAc/Fl7WpQDpezUYimuYlNNBi3s
+	 vRKo9d/Sa7lqv4vbMoBhXC1MUyuE9N8sXYttn2Kwioiw4qVQ4U2sFT530mzA+n/I43
+	 hPasZgyvg+GgMZxlGQhq5a1f/+wDyma+H3SHfwi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gael Blivet <gael.blivet@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0212/2214] ksmbd: skip fallocate for SMB2_CREATE_ALLOCATION_SIZE on a stream handle
-Date: Wed, 18 Nov 2026 15:31:28 +0100
-Message-ID: <20261118150018.660233515@linuxfoundation.org>
+Subject: [PATCH 5.15 0213/2214] smb/server: cancel async requests when closing connection
+Date: Wed, 18 Nov 2026 15:31:29 +0100
+Message-ID: <20261118150018.697298743@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -68,62 +68,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gael Blivet <gael.blivet@gmail.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit bfdf81c62f4f52a3626ea62db0744def6778e83f ]
+[ Upstream commit 4fd5bad647bfa45eb86bfd2f03ba1bef3fcd5851 ]
 
-smb2_open() calls vfs_fallocate(fp->filp, ...) unconditionally when a
-client's CREATE request includes an AllocationSize create context.
-For a stream handle, fp->filp refers to the base file's data fork
-(streams are xattr-backed on the same underlying file, not separate
-files), so this pre-allocates storage on the base file's actual data
-instead of doing anything meaningful for the stream -- fallocate has
-no applicability to an xattr-backed stream at all.
+An async request may still be waiting when a connection is closed.
+This can stop the connection from closing.
 
-Skip the fallocate call for stream handles.
+Cancel active async requests before waiting for them to finish.
 
-Assisted-by: Claude:claude-sonnet-5
-Signed-off-by: Gael Blivet <gael.blivet@gmail.com>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ fs/ksmbd/connection.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 53be62debf2d4..1f55c1bf69b9f 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -3347,13 +3347,22 @@ int smb2_open(struct ksmbd_work *work)
- 			ksmbd_debug(SMB,
- 				    "request smb2 create allocate size : %llu\n",
- 				    alloc_size);
--			smb_break_all_levII_oplock(work, fp, 1);
--			err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
--					    alloc_size);
--			if (err < 0)
--				ksmbd_debug(SMB,
--					    "vfs_fallocate is failed : %d\n",
--					    err);
-+			/*
-+			 * fp->filp is the base file's data fork for a stream
-+			 * handle (streams are xattr-backed on the same
-+			 * underlying file) -- fallocate has no meaning for a
-+			 * stream and would otherwise pre-allocate storage on
-+			 * the base file's data instead.
-+			 */
-+			if (!ksmbd_stream_fd(fp)) {
-+				smb_break_all_levII_oplock(work, fp, 1);
-+				err = vfs_fallocate(fp->filp, FALLOC_FL_KEEP_SIZE, 0,
-+						    alloc_size);
-+				if (err < 0)
-+					ksmbd_debug(SMB,
-+						    "vfs_fallocate is failed : %d\n",
-+						    err);
-+			}
- 		}
+diff --git a/fs/ksmbd/connection.c b/fs/ksmbd/connection.c
+index b0a47b7923d52..65dd05290c9ba 100644
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -190,6 +190,26 @@ void ksmbd_conn_try_dequeue_request(struct ksmbd_work *work)
+ 	wake_up_all(&conn->req_running_q);
+ }
  
- 		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
++static void ksmbd_conn_cancel_async_requests(struct ksmbd_conn *conn)
++{
++	struct ksmbd_work *work, *tmp;
++
++	ksmbd_debug(CONN, "Cancel pending async requests on releasing connection\n");
++	spin_lock(&conn->request_lock);
++	list_for_each_entry_safe(work, tmp, &conn->async_requests,
++				 async_request_entry) {
++		if (work->state != KSMBD_WORK_ACTIVE)
++			continue;
++
++		ksmbd_debug(CONN, "Cancel async request id %d\n",
++			    work->async_id);
++		work->state = KSMBD_WORK_CANCELLED;
++		if (work->cancel_fn)
++			work->cancel_fn(work->cancel_argv);
++	}
++	spin_unlock(&conn->request_lock);
++}
++
+ void ksmbd_conn_lock(struct ksmbd_conn *conn)
+ {
+ 	mutex_lock(&conn->srv_mutex);
+@@ -422,6 +442,7 @@ int ksmbd_conn_handler_loop(void *p)
+ 
+ out:
+ 	ksmbd_conn_set_releasing(conn);
++	ksmbd_conn_cancel_async_requests(conn);
+ 	/* Wait till all reference dropped to the Server object*/
+ 	wait_event(conn->r_count_q, atomic_read(&conn->r_count) == 0);
+ 
 -- 
 2.53.0
 
