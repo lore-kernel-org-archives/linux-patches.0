@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795037538;
-	b=OgHU5MS75G13M0iOVf2Vsv7IHbix+5TBPMPZF8qXKgvOhX2f/ifDPg3ZXaqTGQxEHFAc
-	 nHYZPoCmufEnB8a4tJb3Hkz9RKXDikyRvYIJmF4FVZwfhdb9eW82FPLU0t8a1veckZU6q
-	 hWo05lRNF0geKwjzugJs+NGWi4muluFeemBM6villWsLsRuTmE8LAGPUM/R2YtXXvH9n+
-	 rdUl0FOVwSI4vp3HlikNgKRCv2DA0jHLaeFekvT6VZ2LD1BG373/N5SWCHwi6fYKVp2Vy
-	 3c3le4byRFXskekxDT4kl+pv1sWgZGuJxsZ0NakuMP8R2bXhWPH9CzG7ViequHUzGYw==
+	t=1795037541;
+	b=5QaXixasEOId05wpXnLpm0AESSVn7//0dCgmsE1AOP4i1An4Hes5eEspd7JWyJiD/HaW
+	 cahMFuywDgC81prMP8NqpAiUpIaYKn1UdvI0ORCCwhkgeyQcTdOi9sH01j+iRlbRfsSBm
+	 LSQ6vdQ4bDBs76Whk+BT8sF6lED/P3AUyA1cC2xkr831ZOJBU0LaZg6oqHBZQ6+ivsATu
+	 3dfeExEyua2H2dYW3R9lVg+iykqkM0Y1Xb+RTwoT0FGU+4B2kRH9GgLVk5mheSiwTiBTZ
+	 zA8Lt9+87ER+ArfXxVDVCoPSUgMlpW9vjootJ6lnQjFtAI0Wv3WVUAF6aCaBWccXhAg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795037538;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795037541;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=d3XyXZm20lhYZRSnKptCplqZ3L6sPNVnFEPQ1gvGsbw=;
-	b=dwKmpALeW181fsK0P/apIQs3JQN0xhCdhmZuBP3K0c9RVdugaVA25+F52b9q8kpcLBIP
-	 z6Esll48My7MzFHtbdV0w/mDzPZlYcc+X1oXQAIqGrne14aD2GqodQ6Slg9vJn7hiLNXJ
-	 zeX+OCsUeN1ETnRX1GJtvcPItVBnGEgjmNF0yEKaH9sRV9YOwj9CDCiyiTE2u22Ry35Hf
-	 KokVnQ3J7hfq7vuHyLMLwRWvtY4gAkXxfsJCsKsmlJrNibdmUVYp1gwkNnv49YYAoEwbp
-	 Y9d81w6QpeNncZKALtcjn0DryIMxbEoCpMgTFK2cqPGyDPSUDNVO3ky9kDTNlOyWlpg==
+	bh=WbZyDOSwTGvvpiF/cnG+IlKJTiXvEW2/fPomECx643g=;
+	b=lZWETPpzdDInzvVt0ctMdFqxLfqS/cFgUEZrG2iwLeW/BTVMKKL45wbA0JX1Fk3xL6Ky
+	 MiPu7a83smk0pw4sSf1IltZJrJWlxxCX+N/Ds/F7FhKESb+AW/WXOYjhWr8EJeYewbvI1
+	 vfM+HTTHJC9Yn1XITmARHk4FQ/xG0SNAc8I4wpFFSOg50hRJpLlMs+fxhfuhioyyFxdRA
+	 ryhhUJ7Xz1LlT5hxVGd6ArBoPhHhYO0iN7fgLM6wet3ryY10DuZq9XsaprwFLNwic/4yT
+	 khigzdCk8zhSoJMnoJFkhT+Q0g9UHQiO6NT9q/rSgV+1dsPr3un+ZDRZidKxvAh78JQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYBvhhbt;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ETiVO45F;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987E4606A31C;
-	Wed, 18 Nov 2026 21:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D37E606A320;
+	Wed, 18 Nov 2026 21:32:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cYBvhhbt
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B815B1F000C4;
-	Wed, 18 Nov 2026 21:32:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ETiVO45F
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7539E1F000C4;
+	Wed, 18 Nov 2026 21:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795037538;
-	bh=d3XyXZm20lhYZRSnKptCplqZ3L6sPNVnFEPQ1gvGsbw=;
+	s=korg; t=1795037541;
+	bh=WbZyDOSwTGvvpiF/cnG+IlKJTiXvEW2/fPomECx643g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=cYBvhhbtYxUgEElflv6bvFNA79a3UD/rzOT/Xmwz6d0wT2M8Nc1waJZBKxbeICuVg
-	 nlT+SkddB0t/ORe6tr1ii5OFy4Cc4cGSwhBvJMTkdsRD/NusXVSR+yciCzkLqtgRP/
-	 g1jTDPlcRUn97fDuJSOiOdS5ISajfVJ/sXRm8xmo=
+	b=ETiVO45FON2Zaqvyp9L3sutW/jrY81P3dLSwMPAo6PlXRDJW/MR1W4V197ZzeZPOM
+	 HNIz8SLIYjUs3zcsG5QiNQJcNeNjmsMRTCEDvrwbwDOJ+Z6CcHdtVKCb/2X3dupuwx
+	 glevJf9I3j+UAoJbwH7roDWJdpAQJW8QXgtLjl8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bin Yu <byu@xidian.edu.cn>,
-	Cheng Wen <wencheng@xidian.edu.cn>,
-	YuanZhe Liu <25031212351@stu.xidian.edu.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1433/3318] ALSA: hwdep: Serialize DSP load requests
-Date: Wed, 18 Nov 2026 15:34:15 +0100
-Message-ID: <20261118150403.771657929@linuxfoundation.org>
+Subject: [PATCH 6.6 1434/3318] bpf: Fix skb_pull() BUG in __bpf_redirect_neigh()
+Date: Wed, 18 Nov 2026 15:34:16 +0100
+Message-ID: <20261118150403.803069091@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,72 +69,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit aee83c204f80d56b4d55f53acdb8594308ddcd4a ]
+[ Upstream commit 23503acb214cbefaf3945d05ab9667ff11ae3de9 ]
 
-The check of the loaded DSP indices and the call of the driver's
-dsp_load callback in snd_hwdep_dsp_load() are not serialized.  A hwdep
-file descriptor can be shared among threads, or inherited across fork,
-so two SNDRV_HWDEP_IOCTL_DSP_LOAD requests for the same index can both
-observe the index as unloaded and enter the driver's callback
-concurrently, even though the device itself is opened exclusively.
+The issue:
+This is a follow-up to the short link-layer header fixes from Eric.
+After vlan pop_eth, a privileged SCHED_ACT BPF program can call
+bpf_skb_change_head(skb, 1, 0) and then bpf_redirect_neigh().
 
-This breaks the assumption behind hw->dsp_loaded that a firmware index
-is loaded only once.  For example, snd-usb-usx2y hits
-WARN_ON(usx2y->as04.buffer) in usx2y_async_seq04_init() and may
-allocate the US-428 sequence URBs twice.
+__bpf_redirect_neigh() calls skb_pull(skb, sizeof(*ethh)) after checking
+only that mac_header < network_header.  Nothing verifies that the MAC
+header is long enough, that it is linear, or that the IP header the
+redirect goes on to read is linear either.
 
-Serialize the check, the callback invocation and the bookkeeping with a
-per-hwdep mutex, so that the second request returns -EBUSY.
+A SCHED_ACT BPF program can do:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+    bpf_skb_change_head(skb, 1, 0);
+    bpf_redirect_neigh(lo, NULL, 0, 0);
+
+after vlan pop_eth.  The skb then has mac_len == 1 and only one byte of
+linear data; skb_pull(ETH_HLEN) trips the skb->len < skb->data_len BUG in
+__skb_pull():
+
+    kernel BUG at ./include/linux/skbuff.h:2839!
+    RIP: skb_pull+0x40/0x50
+    Call Trace: skb_do_redirect -> packet_xmit -> packet_sendmsg
+    Kernel panic - not syncing: Fatal exception in interrupt
+
+The v4 and v6 paths read ip_hdr() and ipv6_hdr() as soon as the MAC
+header is gone.  On the AF_PACKET frame below that leaves headlen == 0
+after the pull, so the network header sits at skb->tail and the route
+lookup reads ip4h->protocol, ip4h->saddr and ip4h->daddr past the linear
+area.
+
+The Fix:
+Use skb_network_offset(), which is the MAC header span, instead of
+skb->mac_len.  mac_len is zero for locally generated tc egress and netkit
+packets, while the span still rejects the one-byte header produced by
+pop_eth + bpf_skb_change_head(skb, 1, 0).  The single check also covers
+the mac_header >= network_header test it replaces.
+
+Use pskb_may_pull() to make the Ethernet header linear before it is read
+or pulled, and to make the IP header linear in both the v4 and the v6
+path before ip_hdr()/ipv6_hdr() is read.  The header pointers are taken
+after the pull, since pskb_may_pull() may reallocate skb->head.
+
+Conditions to recreate the bug:
+On x86-64 with 4 KiB pages, enable CONFIG_PACKET, CONFIG_BPF_SYSCALL,
+CONFIG_NET_SCH_INGRESS, CONFIG_NET_CLS_MATCHALL, CONFIG_NET_ACT_VLAN and
+CONFIG_NET_ACT_BPF.  Run as root with BPF loading, network administration
+and raw-packet privileges.  Bring lo up and attach a SCHED_ACT program
+that calls bpf_skb_change_head(skb, 1, 0), then returns
+bpf_redirect_neigh(skb->ifindex, NULL, 0, 0):
+
+  ip link set lo up
+  tc qdisc add dev lo clsact
+  tc filter add dev lo egress matchall action vlan pop_eth pipe \
+      action bpf object-file neigh_chghead.o section action
+
+Send an untagged ETH_P_IP frame of ETH_HLEN + 8192 bytes through an
+AF_PACKET/SOCK_RAW socket bound to lo, without PACKET_VNET_HDR or
+PACKET_QDISC_BYPASS.  Use a unicast destination MAC.  The sender's skb
+has a 14-byte linear Ethernet prefix and a fragmented payload; pop_eth
+removes that prefix and change_head restores only one linear byte.
+The unfixed neighbor redirect then tries to pull 14 bytes and BUGs.
+
+Sending the same frame without pop_eth and change_head leaves the IP
+header in the frags, which is the route lookup reading past skb->tail.
+
+Fixes: b4ab31414970 ("bpf: Add redirect_neigh helper as redirect drop-in")
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
 Cc: stable@vger.kernel.org
-Co-developed-by: Bin Yu <byu@xidian.edu.cn>
-Signed-off-by: Bin Yu <byu@xidian.edu.cn>
-Co-developed-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: Cheng Wen <wencheng@xidian.edu.cn>
-Signed-off-by: YuanZhe Liu <25031212351@stu.xidian.edu.cn>
-Link: https://patch.msgid.link/20261029084810.21910-2-25031212351@stu.xidian.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/netdev/20261027082604.1485903-1-edumazet@kernel.org/
+Link: https://lore.kernel.org/all/2a0f5ff1d8db81b07fc4b344b8e68e3505fcbf36f72a471d1678b2f1cecd881b@mail.kernel.org/
+Link: https://lore.kernel.org/netdev/DMII4JGTEUEG.2WRJPT6ODT6J0@gmail.com/
+Link: https://patch.msgid.link/bpf_redirect_neigh_short_linear.v3.r0.20261031153053-1@mojatatu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hwdep.h | 1 +
- sound/core/hwdep.c    | 2 ++
- 2 files changed, 3 insertions(+)
+ net/core/filter.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/include/sound/hwdep.h b/include/sound/hwdep.h
-index b0da633184cde..7357727f06603 100644
---- a/include/sound/hwdep.h
-+++ b/include/sound/hwdep.h
-@@ -57,6 +57,7 @@ struct snd_hwdep {
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 531e7a9f42b03..89984a086b41d 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2262,9 +2262,13 @@ static int bpf_out_neigh_v6(struct net *net, struct sk_buff *skb,
+ static int __bpf_redirect_neigh_v6(struct sk_buff *skb, struct net_device *dev,
+ 				   struct bpf_nh_params *nh)
+ {
+-	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 	struct net *net = dev_net(dev);
+ 	int err, ret = NET_XMIT_DROP;
++	const struct ipv6hdr *ip6h;
++
++	if (unlikely(!pskb_may_pull(skb, sizeof(*ip6h))))
++		goto out_drop;
++	ip6h = ipv6_hdr(skb);
  
- 	struct mutex open_mutex;
- 	int used;			/* reference counter */
-+	struct mutex dsp_mutex;		/* serializes DSP load requests */
- 	unsigned int dsp_loaded;	/* bit fields of loaded dsp indices */
- 	unsigned int exclusive:1;	/* exclusive access mode */
- };
-diff --git a/sound/core/hwdep.c b/sound/core/hwdep.c
-index de7476034f2cf..378188a528d05 100644
---- a/sound/core/hwdep.c
-+++ b/sound/core/hwdep.c
-@@ -212,6 +212,7 @@ static int snd_hwdep_dsp_load(struct snd_hwdep *hw,
- 		return -ENXIO;
- 	if (info->index >= 32)
- 		return -EINVAL;
-+	guard(mutex)(&hw->dsp_mutex);
- 	/* check whether the dsp was already loaded */
- 	if (hw->dsp_loaded & (1u << info->index))
- 		return -EBUSY;
-@@ -382,6 +383,7 @@ int snd_hwdep_new(struct snd_card *card, char *id, int device,
+ 	if (!nh) {
+ 		struct dst_entry *dst;
+@@ -2368,9 +2372,13 @@ static int bpf_out_neigh_v4(struct net *net, struct sk_buff *skb,
+ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
+ 				   struct bpf_nh_params *nh)
+ {
+-	const struct iphdr *ip4h = ip_hdr(skb);
+ 	struct net *net = dev_net(dev);
+ 	int err, ret = NET_XMIT_DROP;
++	const struct iphdr *ip4h;
++
++	if (unlikely(!pskb_may_pull(skb, sizeof(*ip4h))))
++		goto out_drop;
++	ip4h = ip_hdr(skb);
  
- 	init_waitqueue_head(&hwdep->open_wait);
- 	mutex_init(&hwdep->open_mutex);
-+	mutex_init(&hwdep->dsp_mutex);
- 	hwdep->card = card;
- 	hwdep->device = device;
- 	if (id)
+ 	if (!nh) {
+ 		struct flowi4 fl4 = {
+@@ -2420,15 +2428,14 @@ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
+ static int __bpf_redirect_neigh(struct sk_buff *skb, struct net_device *dev,
+ 				struct bpf_nh_params *nh)
+ {
+-	struct ethhdr *ethh = eth_hdr(skb);
+-
+-	if (unlikely(skb->mac_header >= skb->network_header))
++	if (unlikely(skb_network_offset(skb) < ETH_HLEN ||
++		     !pskb_may_pull(skb, ETH_HLEN)))
+ 		goto out;
+ 	bpf_push_mac_rcsum(skb);
+-	if (is_multicast_ether_addr(ethh->h_dest))
++	if (is_multicast_ether_addr(eth_hdr(skb)->h_dest))
+ 		goto out;
+ 
+-	skb_pull(skb, sizeof(*ethh));
++	skb_pull(skb, ETH_HLEN);
+ 	skb_unset_mac_header(skb);
+ 	skb_reset_network_header(skb);
+ 
 -- 
 2.53.0
 
