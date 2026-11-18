@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046301;
-	b=mO/bhhrFFGpBIFTLwcbuHXFwWSneU3c/U2FOB2bzthy3Zp4gf63OAcO/yHZ3z7au60ZA
-	 5aRHFowJFk11iu5PES6c9Fx8Dx167eQyA6zzphJl2Ek7CJ409NKrBO7cORot1po/ctRhf
-	 CJMYWnzllx2YzcZGRlzPRxQ2ctuKR3iGUvfJQwgnEe05Eohs23NOZwc5cEN5zmepYAERq
-	 DfYn9lh0k/ToKM0orhu2BkE68rdtm2UEu7G0oTwiYvEfONNosovs5vw1qHE35HQQtePWv
-	 J/kdjhBmTBPC1w1Zt5rT1Zt6S7swwdFNkOKF7N31Z3h3iE2MpElEeLpbj9qLZRZmJcw==
+	t=1795046304;
+	b=xeuK6JORlgf8CzjxFV0mSOln48hhKpwodpIT6p1iQ9zovZWapxGsGfk6BBss1immYnkN
+	 PD9zGVLrz2fmV3pk/Y0c3uD9oEMz7WYCp5u1/LrpD1Z3Eh/QyrRhrcg/BEnu2UeuKlFHd
+	 ErV7YFonNa5GXbrf2SKgNOJcGTKytszTyJtIGSfaQEzwrwOZQ4FzF4AQ1sH/XZHkx88bE
+	 0kdkNQYFwICfBPy51EGM8xdgxu6biGgTO1NOMETF8nPPM8IcE2HOk4yGuR4JFvynUCogy
+	 Sl4BMEo6Hpm7fmZh4yaJNp2kuA72dealajyRuq88+Ji0adXIZY/fqT9oLVV3nMoh2kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046301;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046304;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=3mebds7zVqX322RVA0AwMk7GIjqm1mDkXe2iCZBWoQc=;
-	b=Mh9W3YNYFmyswPspxotf016wuDgmsKw9kwa78eOIomJy7BPuz85nXx2p8YJxaOCbuuHc
-	 D4glY00N3bey/vfE+jucZQ1GxXpHbdluGjVM/QSrRx98jeVpjNM7YRE4nPBwo8xbtEpsp
-	 blqH8HS2T36dBfRl7rVKv7K+ICiXy8+5Gpdg0qS/fRL2FAT5HXfjybUYXrWdcQsl3//nf
-	 0rxiRH2T3gE2GG3ccS3WFkV8Wo9xyqfaP8ngNvGHnFBFWCqGE/gajKlViBZ/nfPnYGLPU
-	 k9d2iDGGapeFdTvzSLR4YOpsiNLXzLNvJxDDz4KOEWeIBDYAxHIJmxOJgVKxQG/7MdA==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=cFJyiZPN8NoWhAXA0nCTNobsbMIPwF5JumOfGATHqIs=;
+	b=UaAD6hC1AMySNege3piruHEcV8Oo87WInhlfBqHw5gThw5H6qA8glsSPvDpoee5z6GwN
+	 Vs0g6fA4p2vbfHgJJ3DitzGOSU4IDagRQxcteWU7wKoWV/s7zy18bFqj7UQ2pPHL4WCak
+	 onANXyXjSKGDayvQgssjgBJp7W36+eBL9FXmyQJY8vG1M8GLIhvbIFOTP5xtPiqCWOCbU
+	 SsJ/hbitclFTRZLs16gP9wZbIRt0avtZTHiojIyC8f7NwTw13RQnSBDzITHV3s9Jl2ITJ
+	 YbqReg/BJd00KfXdgtFLXjvB290zzd2SR6USpqjh9OL6RIt0TXh7WgIbCliQUvoWSIw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6Qg22UR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="1/AC2kx4";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CCC606A31C;
-	Wed, 18 Nov 2026 23:58:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD5C606A31C;
+	Wed, 18 Nov 2026 23:58:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=z6Qg22UR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D061F000C4;
-	Wed, 18 Nov 2026 23:58:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1/AC2kx4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF921F000C4;
+	Wed, 18 Nov 2026 23:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046301;
-	bh=3mebds7zVqX322RVA0AwMk7GIjqm1mDkXe2iCZBWoQc=;
+	s=korg; t=1795046303;
+	bh=cFJyiZPN8NoWhAXA0nCTNobsbMIPwF5JumOfGATHqIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=z6Qg22URYNDKEKhzUeakPYKMZynF1Lsh18P6/IUvRkGRsAQ4qthoDKzXnVD3kB4vx
-	 F8TVnlxx7OC38umG9Rc1bjnyL0suh5uWwyTm7L5UeE5tVLiVAwvMxnfFX6w+wEPCkU
-	 2wA/emOGfG3c/sR/mg2a1/pZPvAUZcA741Py8PWA=
+	b=1/AC2kx4vH5aOQqJzkoxDnqhf8SEHkZNtJYXtap5hFacK9mHO8QodQiNo9TKeW0f5
+	 AQ/JObhioAH8wgcVuW62GTLUcBvBcmpeHOmN8+ouJzkZ2+dXSmnyeEGQ+vmntWqAUJ
+	 2JAJJKv/sA4eLBfd6RvYP/WdJT75Y6mwb0dhryKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Eckelmann <sven@narfation.org>,
+	Jose Maria Casanova Crespo <jmcasanova@igalia.com>,
+	Iago Toral Quiroga <itoral@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1205/2857] batman-adv: fix skb leak when hard_iface is being released
-Date: Wed, 18 Nov 2026 15:37:19 +0100
-Message-ID: <20261118150244.988471614@linuxfoundation.org>
+Subject: [PATCH 6.1 1232/2857] drm/v3d: Initialize timedout_batches when running a CSD job
+Date: Wed, 18 Nov 2026 15:37:46 +0100
+Message-ID: <20261118150245.919583251@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -61,55 +63,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
 
-[ Upstream commit 522e4aece2e96cacbb8a6ae1eec0d4c0dd6f4fed ]
+[ Upstream commit 0afdbdd5b1af729108de8f893d179c3b99eac29d ]
 
-batadv_batman_skb_recv() owns the skb it is given. When the hard_iface
-refcount already dropped to zero, the function jumped to err_out, which
-only returned NET_RX_DROP and skipped the kfree_skb() under err_free.
+v3d_csd_job_timedout() decides whether a compute job made progress by
+comparing CSD_CURRENT_CFG4, the number of batches the dispatcher still
+has to start, against the value saved at the previous timeout. That
+saved value is never initialized, so it is zero on the first timeout.
 
-To avoid a leak, free the skb before returning in this case.
+On V3D 7.1.6 and later, CFG4 counts down to zero once the dispatcher has
+started the last batch, but the dispatch keeps running until the batches
+in flight complete. If the first timeout fires in that window, the
+handler sees no change and resets the GPU while the job is about to
+complete. For example, this happens with long dispatches that only keep a
+single supergroup in flight.
+
+Initialize timedout_batches to the value programmed in CFG4 when the job
+is started. The register does not return to it once a batch has started:
+it counts down to zero on V3D 7.1.6 and later (CFG4 holds the number of
+batches), and to 0xffffffff on V3D 4.2 (CFG4 holds the number of batches
+minus one).
 
 Cc: stable@vger.kernel.org
-Fixes: 4fe56e60ac1b ("batman-adv: Check hard_iface refcnt when receiving skb")
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Fixes: d223f98f0209 ("drm/v3d: Add support for compute shader dispatch.")
+Signed-off-by: Jose Maria Casanova Crespo <jmcasanova@igalia.com>
+Reviewed-by: Iago Toral Quiroga <itoral@igalia.com>
+Link: https://patch.msgid.link/20261101125619.2465064-1-mcanal@igalia.com
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/batman-adv/main.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/v3d/v3d_sched.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/batman-adv/main.c b/net/batman-adv/main.c
-index 650e9bacbb79d..48065fd09e1a8 100644
---- a/net/batman-adv/main.c
-+++ b/net/batman-adv/main.c
-@@ -448,8 +448,10 @@ int batadv_batman_skb_recv(struct sk_buff *skb, struct net_device *dev,
- 	 * shut down otherwise the packet may trigger de-reference errors
- 	 * further down in the receive path.
- 	 */
--	if (!kref_get_unless_zero(&hard_iface->refcount))
--		goto err_out;
-+	if (!kref_get_unless_zero(&hard_iface->refcount)) {
-+		kfree_skb(skb);
-+		return NET_RX_DROP;
-+	}
+diff --git a/drivers/gpu/drm/v3d/v3d_sched.c b/drivers/gpu/drm/v3d/v3d_sched.c
+index e31a3c8ff924f..b44cbcc915039 100644
+--- a/drivers/gpu/drm/v3d/v3d_sched.c
++++ b/drivers/gpu/drm/v3d/v3d_sched.c
+@@ -260,6 +260,8 @@ v3d_csd_job_run(struct drm_sched_job *sched_job)
+ 		dma_fence_put(job->base.irq_fence);
+ 	job->base.irq_fence = dma_fence_get(fence);
  
- 	skb = skb_share_check(skb, GFP_ATOMIC);
++	job->timedout_batches = job->args.cfg[4];
++
+ 	trace_v3d_submit_csd(dev, to_v3d_fence(fence)->seqno);
  
-@@ -508,7 +510,6 @@ int batadv_batman_skb_recv(struct sk_buff *skb, struct net_device *dev,
- 	kfree_skb(skb);
- err_put:
- 	batadv_hardif_put(hard_iface);
--err_out:
- 	return NET_RX_DROP;
- }
- 
+ 	v3d_switch_perfmon(v3d, &job->base);
 -- 
 2.53.0
 
