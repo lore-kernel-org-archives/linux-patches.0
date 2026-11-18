@@ -1,55 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795052896;
-	b=QoCPQoLaVsHghhlMPq2h98KSiRybIE3qa9IHxdyTefIJAj91jRlPhMypI/TmZo26hohN
-	 mKtUqAySSXQZOicw/U8+yREgsxcpdkmRnl+51Ujv3hM9ac3t33lARyI2XoncSuLQwuUTy
-	 mwWOiZJitNSTtUwD5+k4SPArD5TWPLpw4IXIDOuQ4ZjSDse9XjYmHs7Z2npCllNDebluV
-	 eeLhoIFVhyKYwhofcdLHr2bAdZ+xpZwbk47JOqEuAvyjBKHisKRvTMH/qgr5fug6XV+bp
-	 13Q0GI/grZXeWhRC0/MiJ4XBgmci74M2WkekrvlfT4NWTtzqbQQFI3JkcgtNsu+Tvxw==
+	t=1795052899;
+	b=Y6kwQNBR1YpIVfhwRGUhrQJSSS7cfissK4Kh3uyaXYJGGWyRDsWlWLGWnTZVgrIm3Qnc
+	 LgNiX1zFBPeZxM1u8AjmGHQ2ffbODn09pYavwb17YE9rB34LoxT1bOv3CWxL59YPQS44B
+	 RaXNV47Kv74vKDWyPexlotMasmWebp5/coVwqixhhA47G8EUj6MGL4ykCIBH02hCWSpce
+	 pj80NOCBuEVVTvQ8/FIJafqE5oAh6wedPqmXAmRFANTLQCyfKqRNdzKaBXtARKwxbOHBA
+	 wzEJcf/6tvw2gcoIMaI7yE/4vQ9KQzDJLnhjgywcSwr7lqEqdoTneQYqu2Tg5HhWRTw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795052896;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795052899;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=OqvOQQxlY/BWiZXRU59NQfX5iPE+cBFUYhvL5gMTUU8=;
-	b=46DOSxMtAmXVb6B3T6KVTiK/S84WobSXBQc1kHh38MGgqa+Z/meXyULKKxG/IdOcv9Qg
-	 OSLC6wYDpB6quyPbbFGvmcWWowcZurjAwfdwUPRwEqRUkOowpnumtlBT5ScXSO4tIlRd4
-	 H904NC6f4cYBbYwiSPG8DwQClPxcoqguEnXghhslq8DUbO6d6c7f7yRzsAJyNE0Uk+dHq
-	 goSLs2+yFyp9jPPOg6c5QKAS82kQzWTgGDW67e45DZNgkqvMn8Po/dQVgwGUu7Y5YLmCc
-	 xFt14b4THc0M+FQzdyyR1UTedKzJU7q5H+g7iTb1zzB726DXquxHmpj3PROsqYW4nMA==
+	bh=ioU55sSsrcT0M+aE93UMiuR+wo0cE9aXsj/QzjuPED4=;
+	b=ijpucXym+S3BLhRB+6o1RAAAQCUsHlpD0I+MN6lGWR5C/YTBszNTqY1WV4PyMGVgb9Xt
+	 pHasshHJnWvp+iv4VaO4lsvxoOw5X5sLlwE3pqF2RLoHpDQwbY6EkNGpikrc6n3RP+9bw
+	 spFz91NWT8mrZe2p+xK2FGOYhpdPtpZ3bSPTs6xWpGOweDGuCF1ParaPIuHBJi0NaR1ME
+	 0la9y7tAuKMWInqDMOgw67MPUmdJ3/GhBlpVhr8WwHm37eymkNL+3/rut2Zr7a8wSyQ31
+	 9Jfq7nlpzFIdc0L8gIwkUoOiNK0Zw5JCak3kp4mk46l8g4VfbWn6Dx53qJbopA4mYgA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IVCvaW+M;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGDUt+zJ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24277606A320;
-	Thu, 19 Nov 2026 01:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF5F606A31C;
+	Thu, 19 Nov 2026 01:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IVCvaW+M
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809381F000CA;
-	Thu, 19 Nov 2026 01:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MGDUt+zJ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E2851F000C5;
+	Thu, 19 Nov 2026 01:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795052896;
-	bh=OqvOQQxlY/BWiZXRU59NQfX5iPE+cBFUYhvL5gMTUU8=;
+	s=korg; t=1795052898;
+	bh=ioU55sSsrcT0M+aE93UMiuR+wo0cE9aXsj/QzjuPED4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IVCvaW+MvZK+7gTNadQ292cIuJWu83J/RWoqrMIXSSsDhr8du3EC2jAJJnIFMrpj5
-	 nkSFR8dMXOWV/oN+JaeAirhNGG6W4++eXFVshoMJDie0rJnxMGGzJdn5DwhHiBpYT9
-	 UEvErNioWBli6wMEjSK1z4Lm87I+FvPYDhLEFiFA=
+	b=MGDUt+zJeqHJ/cgFaAjoCwiFp1dX5ToYOwEuExSDjmZQAXvhbE/qsyJvxC68go22l
+	 MT0mo9Ou15BqqQ/a9VM/hdWkOkpbITyy5Hx7O+f23SCGP12PZ3VYkPg4mHsxeZdi+X
+	 4TqoUfyRlN+JFC9wHy9Nl8HzQr0N0b2XAZiOGipU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jay Vosburgh <jv@jvosburgh.net>,
+	Sashiko <netdev-bot+sashiko@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Hangbin Liu <liuhangbin@kylinos.cn>,
+	Eric Dumazet <edumazet@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 0724/2214] bonding: fix out-of-bounds read of arp_ip_target
-Date: Wed, 18 Nov 2026 15:40:00 +0100
-Message-ID: <20261118150040.739270934@linuxfoundation.org>
+Subject: [PATCH 5.15 0725/2214] ipmr: fully initialize the synthetic IP header in ipmr_get_route()
+Date: Wed, 18 Nov 2026 15:40:01 +0100
+Message-ID: <20261118150040.775807096@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -71,66 +71,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit a81513bf5bdf29cf00c0a11f56be515c1ec260f4 ]
+[ Upstream commit 134351edc28e083c61012b6c69e8e54dd7fa5bcc ]
 
-arp_ip_target is a module parameter array with BOND_MAX_ARP_TARGETS
-entries. In the loop parsing it in bond_check_params(), arp_ip_count is
-the number of accepted targets, while i is the index into
-arp_ip_target. Invalid and duplicate entries are skipped without
-bumping arp_ip_count, so bounding the loop with arp_ip_count lets i run
-past the end of arp_ip_target, e.g. 16 targets with one duplicate:
+For an unresolved multicast route query, ipmr_get_route() builds a
+synthetic IP header in the headroom obtained from
+skb_realloc_headroom(), which does not zero the memory it allocates.
+Only a few fields are initialized, leaving others as stale heap
+contents.
 
-  BUG: KASAN: global-out-of-bounds in bond_check_params.constprop.0+0x1148/0x1440
-  Read of size 8 at addr ffffffff96e9ee00 by task swapper/0/1
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x91/0xf0
-   print_report+0xd1/0x630
-   kasan_report+0xf3/0x130
-   __asan_report_load8_noabort+0x14/0x30
-   bond_check_params.constprop.0+0x1148/0x1440
-   bonding_init+0x13/0xe0
-   do_one_initcall+0xe7/0x5b0
-   kernel_init_freeable+0xa91/0x1120
-   kernel_init+0x24/0x220
-   ret_from_fork+0x5b3/0x820
-   ret_from_fork_asm+0x1a/0x30
-   </TASK>
+ipmr_cache_report() copies this header into the IGMPMSG_NOCACHE report
+that is queued to the mroute socket, so a recvmsg() on that socket leaks
+the uninitialized bytes to user space: the 'tos' field [1] and the 'id'
+and 'frag_off' fields [2].
 
-  The buggy address belongs to the variable:
-   arp_ip_target+0x80/0xa0
+Fix by zeroing the IP header before filling in the few fields that are
+used, so that the entire header is initialized, as in ip6mr_get_route().
 
-Bound the loop with i instead. arp_ip_count never exceeds i, so it
-stays within BOND_MAX_ARP_TARGETS too.
+[1]
+BUG: KMSAN: kernel-infoleak in _copy_to_iter
+ raw_recvmsg
 
-Fixes: 5a5c5fd48e3b ("bonding: arp_ip_count and arp_targets can be wrong")
+Uninit was stored to memory at:
+ ipmr_cache_report
+ ipmr_cache_unresolved
+ ipmr_get_route
+
+Uninit was created at:
+ pskb_expand_head
+ skb_realloc_headroom
+ ipmr_get_route
+
+Byte 1 of 28 is uninitialized
+
+[2]
+BUG: KMSAN: kernel-infoleak in _copy_to_iter
+ raw_recvmsg
+
+Uninit was stored to memory at:
+ ipmr_cache_report
+ ipmr_cache_unresolved
+ ipmr_get_route
+
+Uninit was created at:
+ pskb_expand_head
+ skb_realloc_headroom
+ ipmr_get_route
+
+Bytes 4-7 of 28 are uninitialized
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20261023104528.232427-1-jiayuan.chen@linux.dev
+Reported-by: Sashiko <netdev-bot+sashiko@kernel.org>
+Closes: https://netdev-ai.bots.linux.dev/sashiko/#/patchset/0545f0c83f5ee2f6696210f87268e811ef655715.1792476357.git.zhilinz%40nebusec.ai
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Hangbin Liu <liuhangbin@kylinos.cn>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261025071729.34967-2-idosch@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ipmr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 12dc1d3c6e2b6..558bff14740bd 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -5757,7 +5757,7 @@ static int bond_check_params(struct bond_params *params)
- 	}
- 
- 	for (arp_ip_count = 0, i = 0;
--	     (arp_ip_count < BOND_MAX_ARP_TARGETS) && arp_ip_target[i]; i++) {
-+	     (i < BOND_MAX_ARP_TARGETS) && arp_ip_target[i]; i++) {
- 		__be32 ip;
- 
- 		/* not a complete check, but good enough to catch mistakes */
+diff --git a/net/ipv4/ipmr.c b/net/ipv4/ipmr.c
+index 855da7c3a906a..dc33f432e0f0c 100644
+--- a/net/ipv4/ipmr.c
++++ b/net/ipv4/ipmr.c
+@@ -2283,6 +2283,7 @@ int ipmr_get_route(struct net *net, struct sk_buff *skb,
+ 		skb_push(skb2, sizeof(struct iphdr));
+ 		skb_reset_network_header(skb2);
+ 		iph = ip_hdr(skb2);
++		memset(iph, 0, sizeof(*iph));
+ 		iph->ihl = sizeof(struct iphdr) >> 2;
+ 		iph->saddr = saddr;
+ 		iph->daddr = daddr;
 -- 
 2.53.0
 
