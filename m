@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795046206;
-	b=CU9oHTBNxnEUWds3Ibbo7Tfo3DcKkroDqiD4qevyM6Gh+opWpv0k5GK/kaTy4GLAgCdt
-	 oVG1dKCts4K1ACHtnIH96952y5oZU51pvbeY4E/OI+ROJwYkQBru/VcPjD4kJeAYtR83q
-	 in7e+VNXQvR4vWYq7nmEoWMqPM+hDAC8m3yO3IJVsadoWIc9oIquj1d9R2C9Z7BP8mFF7
-	 XproXZEE1CoFKWCmDvHdy/ABMBvsyzAvz/e5B/SSOg6IGbyNDA5w/ZNU6N5P40jODiPkk
-	 bc5DeAGcohl4jNnbUZYefvY9y3SwqjpDkfN7n7R9mpwiaFKt8tCWIUlzbk0WaccwvCw==
+	t=1795046209;
+	b=FJQJOU5V2H7kJeUM90IiMY72JdZKJcAl7OdnE/iDj4yttJb4m0VsjOkuwnoys6AmJUFl
+	 mA71u8Cnc2HR//nvVj5LezZ0fwjIdE/7lay1O+mGhZB96zlqLXDgdXOsYGVBde6cjdCJl
+	 oBUs7D12itGB5Q0Bh0B3gYA026NjV81a3IMolrXXx1OGCjyKCHLwjbRntBkKSnbdxbHz2
+	 xu34E//wsL8uELrgZctT4GVIZGvxzNY2hkPU6RT7uk+Rv2Q7PrQOsvtkzzYTNoGmmS+Bi
+	 W3gCeSdMJoV0fn2VdZla3jz9Ct+GWGGrEZkQrnXxNEaS3JkfnmzP/EjgD+9co8Xl81Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795046206;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795046209;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=oM/PVCiE0SOa/UeUa0ZqC08upbeYD8905YSouqWjgdQ=;
-	b=sZFWGpXHOivaKZtd/s546kBRrg0SH6GEZ6bfoV5yu8+/fB4MdiJyWprZkd8pUG17trma
-	 51C22ljC7wAysaXJAJ/n3W4tjrcoK3UmYBSbyKh7kwKF1h/DEI0QprrLYEH1zJQ6aJGUj
-	 peBQtTsc3vbyjv/+EFZoCed+ooxkk16Mszx9GzLvQJBzb7PxCv/0czh/NhAbUQPJwaQRL
-	 JJtEFHzZ3QNksK8+pZM/CY43OjL4jRmUNVMkf9k+5tQ0Xhh50KB6QcqsiKIcH5IRITK+X
-	 aFw4foLN1/FyWjfRqfbgXeSz8gAwBppQBkKXPZp2ZydW8ZX/+qvQx6lezeiDHPhSLdg==
+	bh=ccRqTVVdWGZY02zgv/iaO24TkzpX4jKfVloZNIb3PoU=;
+	b=zwcxJywVlD86mwvy66sh8EX9Fco5lvv00lxFwrRqdi/JeVUMCIlyn1voB4AlvvkRbnlr
+	 T4Hv5MNkVCIOkLZrGXvG2CUavz8xrStoIlP8ZwNp5ig7QKjFZ9uGuHxuiWOWlcQ/L0rYk
+	 C5iEg+CI+mQNXpQVVR/xHkpZd9JDxh6QBepxse2rE7v35crOLX29wtOns50SG3ozvk5Ic
+	 MayLucHr/pqZnMXAZPvUymqxzI0cib9qPPLo/gPapvyYuViAHCRs+Q2vqm4TelXOxH0l4
+	 GnHRl1HARz0PQ3EIiBilw0WxxGSNiD7zjQItx/fOiY5Ly8mcVVJCJwrG3qvrondIiNQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i3N20bwu;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HbzLa6UO;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A86606A32A;
-	Wed, 18 Nov 2026 23:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362AF606A325;
+	Wed, 18 Nov 2026 23:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=i3N20bwu
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B411C1F000C7;
-	Wed, 18 Nov 2026 23:56:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=HbzLa6UO
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898CC1F000C8;
+	Wed, 18 Nov 2026 23:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795046206;
-	bh=oM/PVCiE0SOa/UeUa0ZqC08upbeYD8905YSouqWjgdQ=;
+	s=korg; t=1795046209;
+	bh=ccRqTVVdWGZY02zgv/iaO24TkzpX4jKfVloZNIb3PoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=i3N20bwu0SLZwZY148sgOXKoePBgLkXjsi3lMO623cbwJCPUZT5ciX3tbOvhbqScq
-	 eidv6GNoOREc/5MSAZJM3PUoC5AX9WRhxeokPqKWKGe8mTeeytwrR1cla7sL2xZCVv
-	 +RnTwrhrUs5e2ZO/VDTNAlJbZlPqhvQK7KKG3Pvo=
+	b=HbzLa6UOyJ+PwdcCA6e74pjEvU0DBc1SImbF9lgZ72CxTRa6wzxV2NxMBPG8V0Yni
+	 +lerPlzhLGFNE9bQMpyfx7mWKLxtJvhMnwCGutgfmLFO+1Lzr8iEOC01jovVdfbblQ
+	 Fv4wTisFt8bpClBLZvhSygwRlr8IfSbEEoVAGL2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
+	Alex Kazinsky <a.kazinsky@ideco.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1197/2857] wifi: mac80211: reload TDLS header pointer after skb_linearize()
-Date: Wed, 18 Nov 2026 15:37:11 +0100
-Message-ID: <20261118150244.717067665@linuxfoundation.org>
+Subject: [PATCH 6.1 1198/2857] wifi: rsi: Skip TX aggregation setup for non-QoS frames
+Date: Wed, 18 Nov 2026 15:37:12 +0100
+Message-ID: <20261118150244.750765899@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -68,67 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Alex Kazinsky <a.kazinsky@ideco.ru>
 
-[ Upstream commit 35c5a5ea4418571997a7e7af3e7e8922b136f6e6 ]
+[ Upstream commit 71f756a4c064b0312f46617c20893ecc17c332e4 ]
 
-ieee80211_process_tdls_channel_switch() sets tf = skb->data before it
-calls skb_linearize(), and reads tf->action_code afterwards.
+When transmitting a non-QoS unicast frame to a station in AP mode,
+rsi_core_xmit() assigns IEEE80211_NONQOS_TID (16) to tid. The station
+lookup succeeds, allowing tid to index start_tx_aggr[], which has only
+IEEE80211_NUM_TIDS (16) elements. This causes an out-of-bounds read and,
+if the value read is zero, an out-of-bounds write.
 
-ieee80211_rx_h_data() queues TDLS channel switch requests and
-responses to the interface after pulling only
-offsetof(struct ieee80211_tdls_data, u) bytes, so the skb can still be
-non-linear when the interface work handles it. Drivers that build
-paged RX skbs do this for every frame that does not fit into the skb
-head, e.g. iwlwifi (mvm), which is also the only mac80211 driver
-that sets NL80211_FEATURE_TDLS_CHANNEL_SWITCH. If the remaining data
-does not fit into the tailroom, skb_linearize() moves the data to a
-new head and frees the old one, and the action code is then read from
-freed memory. Depending on what that memory holds by then, the frame
-is handled as before or ends in the WARN_ON_ONCE() of the default
-case.
+Only access the aggregation state for tids below IEEE80211_NUM_TIDS,
+excluding the non-QoS sentinel from TX aggregation setup.
 
-The frame only has to be a data frame with the TDLS ethertype from an
-authorized peer, e.g. relayed by the AP from another station in the
-BSS; the read happens before the sender is checked to be a TDLS peer.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Load tf after skb_linearize(), as the request and response handlers
-already do.
-
-Found by static analysis tool CodeQL.
-
-Fixes: 8a4d32f30d11 ("mac80211: add TDLS channel-switch Rx flow")
+Fixes: 19844c0a9a19 ("rsi: data and managemet path changes for AP mode")
 Cc: stable@vger.kernel.org
-Assisted-by: LLM codeql
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Link: https://patch.msgid.link/20261021145807.3018338-1-geoffreyhe2@gmail.com
+Signed-off-by: Alex Kazinsky <a.kazinsky@ideco.ru>
+Link: https://patch.msgid.link/20261015072010.742369-1-a.kazinsky@ideco.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tdls.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/rsi/rsi_91x_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
-index b25aed68dc8a8..071cbed5f3b06 100644
---- a/net/mac80211/tdls.c
-+++ b/net/mac80211/tdls.c
-@@ -1976,7 +1976,7 @@ void
- ieee80211_process_tdls_channel_switch(struct ieee80211_sub_if_data *sdata,
- 				      struct sk_buff *skb)
- {
--	struct ieee80211_tdls_data *tf = (void *)skb->data;
-+	struct ieee80211_tdls_data *tf;
- 	struct wiphy *wiphy = sdata->local->hw.wiphy;
+diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
+index ead4d4e043280..3281fc94e1078 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_core.c
++++ b/drivers/net/wireless/rsi/rsi_91x_core.c
+@@ -458,7 +458,7 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
+ 			tx_params->sta_id = 0;
+ 		}
  
- 	lockdep_assert_wiphy(wiphy);
-@@ -1992,6 +1992,7 @@ ieee80211_process_tdls_channel_switch(struct ieee80211_sub_if_data *sdata,
- 	 * The packet/size was already validated by mac80211 Rx path, only look
- 	 * at the action type.
- 	 */
-+	tf = (void *)skb->data;
- 	switch (tf->action_code) {
- 	case WLAN_TDLS_CHANNEL_SWITCH_REQUEST:
- 		ieee80211_process_tdls_channel_switch_req(sdata, skb);
+-		if (rsta) {
++		if (rsta && tid < IEEE80211_NUM_TIDS) {
+ 			/* Start aggregation if not done for this tid */
+ 			if (!rsta->start_tx_aggr[tid]) {
+ 				rsta->start_tx_aggr[tid] = true;
 -- 
 2.53.0
 
