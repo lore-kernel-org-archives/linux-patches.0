@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050495;
-	b=QdT8G39yrqXCxEnV07oLPd9XdmFXClyRjW0O1hYUcpfFtqDc0jekeiyc9OL0U5sF7oTK
-	 qbNgVkTe4MiRBOL9pdAjRtmmGv3VeFmvBtpF9u+dU9iMMU5iRPK1k/j6s2in19/7Bh96k
-	 Zeuq7OpEFyEyUgwY4LQlI7OsgGD0Twuog2s5lYm8kAITO76xpd9iBKVSVFQzNGAe/nLvS
-	 ETPSsnhdkRpTWaSHwxtHakbD7KStc/mN4sd+J3bxTQjrYzGtz1VOpE2b38/5EtQGx6FSb
-	 zzvm/7YO55nvfm9/zXyXYxuD3/ZRaD2/9bOjjM7+4h0YSAM5XtSaN+QUgFSxsLNIH/g==
+	t=1795050498;
+	b=tx8JlrpEw1YOTzqseFCmNVACC3wViWgKxPhP+/NPoqgidCYCkn5W+6nuHrBPZUMaKE6Z
+	 0LPudZqUxq/eugV8rmKDUUedWD0Grj/0jBUMoeh2IXHA9DTNPx+R4iNiUrrDaMMg30QPO
+	 K3XucUdXpwFQPV/0Okfd59QT4dQ0Bz+Bq09mGSok3VXMIiee9TAdhPAt8Arn81yQpZaRI
+	 /T3SKzpw7VeS8elI0F3Un5xnbS1bHRjYoFSTVwLj6kcJUll2f/A4bufPdC6RaUnCA9GYA
+	 P56BfKi+sEdr5hBAm3z8qv7GOUlA6LpSpgXkTjeDJMyptIHA45roz47T63IT0LAZOmA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050495;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050498;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=+TQjnhnOS4kbYgYy9FXF+JBO0vI8BbFcNuGn8Ga3csE=;
-	b=VCs7tzchls3O4886xXREFoyBzya2p3Bl2kBGmQ2DinsoDfb3QeDrnFHYch67YQMSdLRT
-	 LNSLiOZTBte13GEoamxyB0+nu24ZJBfvTLXTnJy3EfuA8AEjNINPXT2LMPlETDOq6Hj14
-	 U1JFT94A787p2cgGkbe4uSJFPEQeSqH7QDISWXY8aDgE3IvYk2I5Tu7tGpEEV6aVOMSoS
-	 LJGYblWXLX1rUBsmu/NpuQBf3SasKPraVrNU7cHv9vP8Ty7Pew6VASis4wTDLSqrUcJf/
-	 ymmbrmGJSqtHUejjs+dsZHjBO3jZIucY/oR9hpIXN+5Yg6Uq/o0xt9cJOjm8WUJORBA==
+	bh=N4hFwBkmVlt43Tp0LeJkFgAabe0QShkzPB1Wnp54G1M=;
+	b=w7hjFSCZCYjp3ZfQk8qMI436r2TEBbvQonm9aLl7OgOPydcAYn2POR2416bjrc+MRoaY
+	 +n4T5EgH+BwP8dmdFnYlH0yzgP8273XO5MVMPsR4J5WF/1sxRY/40t6YSMQoGAS+j4PeY
+	 BwaGnz3u3LCSp7Edg8k2eZ8HS25qnSAOYIDXOA39CdiTWlya+bkSlVRgBnam8oif8OVLe
+	 4XRm5fCj1oWYpSvGUIwF9PgvrQAhC0APNXsehB6BMCOJ0c6wXNTiDMBN5bh4eIw3pWWEq
+	 6ijXPlX+tjqc1MO/N6QxJeR8lLeNogikVw2REmrMl5kDVsjR2ZgBeQdV1eVibZUDlUw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ybbdhwAM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KXWr8Vy4;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C7F606A320;
-	Thu, 19 Nov 2026 01:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F3D606A320;
+	Thu, 19 Nov 2026 01:08:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ybbdhwAM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E74D91F000C4;
-	Thu, 19 Nov 2026 01:08:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KXWr8Vy4
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B752E1F000C4;
+	Thu, 19 Nov 2026 01:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050495;
-	bh=+TQjnhnOS4kbYgYy9FXF+JBO0vI8BbFcNuGn8Ga3csE=;
+	s=korg; t=1795050498;
+	bh=N4hFwBkmVlt43Tp0LeJkFgAabe0QShkzPB1Wnp54G1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=ybbdhwAMjYXX3HlwZNuHd0MYYAF4zBzeToZliXeMbJN5nUaiWPgAT8zSBWaOcMYqW
-	 5g4CNcxtpiJFYhTKEe29O0DCucrsL9xfwaSNFb/LFGmiD0OMhrYBVcmbnzuauFfdkB
-	 mqD1z4rVO0ywUMXX5hZy1krbtyQNItD66iRjR35s=
+	b=KXWr8Vy4tTJV7kRRSb2qRleKH8KWH9jjXb9xwA3TuEX5HqFPFsy6+H9ZKKAVOnH5O
+	 HIwmEJo1m6ykWe0p9mrb0JYgFjNeft7onzK/2DzSotYy7/Vktn1z8RqR6+F6Ct+PDD
+	 rrsJ2Lmn+6KIjmr9mDTyS4Yo4h/u05je/vDqmdIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Coco Li <lixiaoyan@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiubo Li <xiubo.li@clyso.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2711/2857] selftests/net: Add SHA256 computation over data sent in tcp_mmap
-Date: Wed, 18 Nov 2026 16:02:25 +0100
-Message-ID: <20261118150339.230884844@linuxfoundation.org>
+Subject: [PATCH 6.1 2729/2857] ceph: mark the superblock active after mounting
+Date: Wed, 18 Nov 2026 16:02:43 +0100
+Message-ID: <20261118150339.881910848@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,286 +69,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaoyan Li <lixiaoyan@google.com>
+From: Xiubo Li <xiubo.li@clyso.com>
 
-[ Upstream commit 5c5945dc695c54f2b55a934a10b6c4e220f9c140 ]
+[ Upstream commit 32eacfae3b16f6a9c0c20f946115abf5a091c922 ]
 
-Add option to compute and send SHA256 over data sent (-i).
+ceph_get_tree() calls sget_fc() directly and so never goes through
+vfs_get_super(), which is what sets SB_ACTIVE after fill_super for
+filesystems that use it.  Before commit 82995cc6c5ae ("libceph, rbd,
+ceph: convert to use the new mount API") the flag used to be set by
+get_sb_nodev(), which did this for ceph, but the conversion dropped it.
 
-This is to ensure the correctness of data received.
-Data is randomly populated from /dev/urandom.
+SB_ACTIVE is required for iput_final() to retain an inode on the
+inode LRU instead of evicting it once its last reference goes away.
+This has gone unnoticed because ceph sets inode_just_drop() for
+->drop_inode, which always asks for eviction, so the retain branch in
+iput_final() was never reachable.  The next patch makes ->drop_inode()
+able to retain inodes, and that needs the flag to actually work.
 
-Tested:
-./tcp_mmap -s -z -i
-./tcp_mmap -z -H $ADDR -i
-SHA256 is correct
+Set it once the mount is up, like nfs_get_tree() does.
 
-./tcp_mmap -s -i
-./tcp_mmap -H $ADDR -i
-SHA256 is correct
-
-Signed-off-by: Coco Li <lixiaoyan@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230321081202.2370275-2-lixiaoyan@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 5536d5553f27 ("selftests/net: tcp_mmap: remove unused -k option and keepflag")
+Fixes: 82995cc6c5ae ("libceph, rbd, ceph: convert to use the new mount API")
+Signed-off-by: Xiubo Li <xiubo.li@clyso.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/Makefile   |   2 +-
- tools/testing/selftests/net/tcp_mmap.c | 102 ++++++++++++++++++++++---
- 2 files changed, 92 insertions(+), 12 deletions(-)
+ fs/ceph/super.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/tools/testing/selftests/net/Makefile b/tools/testing/selftests/net/Makefile
-index 080860a8826b1..8e7cd3c3b7512 100644
---- a/tools/testing/selftests/net/Makefile
-+++ b/tools/testing/selftests/net/Makefile
-@@ -79,7 +79,7 @@ TEST_FILES := settings
- include ../lib.mk
- 
- $(OUTPUT)/reuseport_bpf_numa: LDLIBS += -lnuma
--$(OUTPUT)/tcp_mmap: LDLIBS += -lpthread
-+$(OUTPUT)/tcp_mmap: LDLIBS += -lpthread -lcrypto
- $(OUTPUT)/tcp_inq: LDLIBS += -lpthread
- $(OUTPUT)/bind_bhash: LDLIBS += -lpthread
- 
-diff --git a/tools/testing/selftests/net/tcp_mmap.c b/tools/testing/selftests/net/tcp_mmap.c
-index 00f837c9bc6c4..51d48229c18cd 100644
---- a/tools/testing/selftests/net/tcp_mmap.c
-+++ b/tools/testing/selftests/net/tcp_mmap.c
-@@ -66,11 +66,16 @@
- #include <poll.h>
- #include <linux/tcp.h>
- #include <assert.h>
-+#include <openssl/pem.h>
- 
- #ifndef MSG_ZEROCOPY
- #define MSG_ZEROCOPY    0x4000000
- #endif
- 
-+#ifndef min
-+#define min(a, b)  ((a) < (b) ? (a) : (b))
-+#endif
+diff --git a/fs/ceph/super.c b/fs/ceph/super.c
+index 2dee4ca9f7a72..77bd924228279 100644
+--- a/fs/ceph/super.c
++++ b/fs/ceph/super.c
+@@ -1267,6 +1267,15 @@ static int ceph_get_tree(struct fs_context *fc)
+ 	dout("root %p inode %p ino %llx.%llx\n", res,
+ 	     d_inode(res), ceph_vinop(d_inode(res)));
+ 	fc->root = fsc->sb->s_root;
 +
- #define FILE_SZ (1ULL << 35)
- static int cfg_family = AF_INET6;
- static socklen_t cfg_alen = sizeof(struct sockaddr_in6);
-@@ -81,12 +86,14 @@ static int sndbuf; /* Default: autotuning.  Can be set with -w <integer> option
- static int zflg; /* zero copy option. (MSG_ZEROCOPY for sender, mmap() for receiver */
- static int xflg; /* hash received data (simple xor) (-h option) */
- static int keepflag; /* -k option: receiver shall keep all received file in memory (no munmap() calls) */
-+static int integrity; /* -i option: sender and receiver compute sha256 over the data.*/
- 
- static size_t chunk_size  = 512*1024;
- 
- static size_t map_align;
- 
- unsigned long htotal;
-+unsigned int digest_len;
- 
- static inline void prefetch(const void *x)
- {
-@@ -147,12 +154,14 @@ static void *mmap_large_buffer(size_t need, size_t *allocated)
- 
- void *child_thread(void *arg)
- {
-+	unsigned char digest[SHA256_DIGEST_LENGTH];
- 	unsigned long total_mmap = 0, total = 0;
- 	struct tcp_zerocopy_receive zc;
-+	unsigned char *buffer = NULL;
- 	unsigned long delta_usec;
-+	EVP_MD_CTX *ctx = NULL;
- 	int flags = MAP_SHARED;
- 	struct timeval t0, t1;
--	char *buffer = NULL;
- 	void *raddr = NULL;
- 	void *addr = NULL;
- 	double throughput;
-@@ -179,6 +188,14 @@ void *child_thread(void *arg)
- 			addr = ALIGN_PTR_UP(raddr, map_align);
- 		}
- 	}
-+	if (integrity) {
-+		ctx = EVP_MD_CTX_new();
-+		if (!ctx) {
-+			perror("cannot enable SHA computing");
-+			goto error;
-+		}
-+		EVP_DigestInit_ex(ctx, EVP_sha256(), NULL);
-+	}
- 	while (1) {
- 		struct pollfd pfd = { .fd = fd, .events = POLLIN, };
- 		int sub;
-@@ -190,7 +207,7 @@ void *child_thread(void *arg)
- 
- 			memset(&zc, 0, sizeof(zc));
- 			zc.address = (__u64)((unsigned long)addr);
--			zc.length = chunk_size;
-+			zc.length = min(chunk_size, FILE_SZ - lu);
- 
- 			res = getsockopt(fd, IPPROTO_TCP, TCP_ZEROCOPY_RECEIVE,
- 					 &zc, &zc_len);
-@@ -199,6 +216,8 @@ void *child_thread(void *arg)
- 
- 			if (zc.length) {
- 				assert(zc.length <= chunk_size);
-+				if (integrity)
-+					EVP_DigestUpdate(ctx, addr, zc.length);
- 				total_mmap += zc.length;
- 				if (xflg)
- 					hash_zone(addr, zc.length);
-@@ -210,22 +229,30 @@ void *child_thread(void *arg)
- 			}
- 			if (zc.recv_skip_hint) {
- 				assert(zc.recv_skip_hint <= chunk_size);
--				lu = read(fd, buffer, zc.recv_skip_hint);
-+				lu = read(fd, buffer, min(zc.recv_skip_hint,
-+							  FILE_SZ - total));
- 				if (lu > 0) {
-+					if (integrity)
-+						EVP_DigestUpdate(ctx, buffer, lu);
- 					if (xflg)
- 						hash_zone(buffer, lu);
- 					total += lu;
- 				}
-+				if (lu == 0)
-+					goto end;
- 			}
- 			continue;
- 		}
- 		sub = 0;
- 		while (sub < chunk_size) {
--			lu = read(fd, buffer + sub, chunk_size - sub);
-+			lu = read(fd, buffer + sub, min(chunk_size - sub,
-+							FILE_SZ - total));
- 			if (lu == 0)
- 				goto end;
- 			if (lu < 0)
- 				break;
-+			if (integrity)
-+				EVP_DigestUpdate(ctx, buffer + sub, lu);
- 			if (xflg)
- 				hash_zone(buffer + sub, lu);
- 			total += lu;
-@@ -236,6 +263,20 @@ void *child_thread(void *arg)
- 	gettimeofday(&t1, NULL);
- 	delta_usec = (t1.tv_sec - t0.tv_sec) * 1000000 + t1.tv_usec - t0.tv_usec;
- 
-+	if (integrity) {
-+		fcntl(fd, F_SETFL, 0);
-+		EVP_DigestFinal_ex(ctx, digest, &digest_len);
-+		lu = read(fd, buffer, SHA256_DIGEST_LENGTH);
-+		if (lu != SHA256_DIGEST_LENGTH)
-+			perror("Error: Cannot read SHA256\n");
-+
-+		if (memcmp(digest, buffer,
-+			   SHA256_DIGEST_LENGTH))
-+			fprintf(stderr, "Error: SHA256 of the data is not right\n");
-+		else
-+			printf("\nSHA256 is correct\n");
-+	}
-+
- 	throughput = 0;
- 	if (delta_usec)
- 		throughput = total * 8.0 / (double)delta_usec / 1000.0;
-@@ -367,19 +408,38 @@ static unsigned long default_huge_page_size(void)
- 	return hps;
- }
- 
-+static void randomize(void *target, size_t count)
-+{
-+	static int urandom = -1;
-+	ssize_t got;
-+
-+	urandom = open("/dev/urandom", O_RDONLY);
-+	if (urandom < 0) {
-+		perror("open /dev/urandom");
-+		exit(1);
-+	}
-+	got = read(urandom, target, count);
-+	if (got != count) {
-+		perror("read /dev/urandom");
-+		exit(1);
-+	}
-+}
-+
- int main(int argc, char *argv[])
- {
-+	unsigned char digest[SHA256_DIGEST_LENGTH];
- 	struct sockaddr_storage listenaddr, addr;
- 	unsigned int max_pacing_rate = 0;
-+	EVP_MD_CTX *ctx = NULL;
-+	unsigned char *buffer;
- 	uint64_t total = 0;
- 	char *host = NULL;
- 	int fd, c, on = 1;
- 	size_t buffer_sz;
--	char *buffer;
- 	int sflg = 0;
- 	int mss = 0;
- 
--	while ((c = getopt(argc, argv, "46p:svr:w:H:zxkP:M:C:a:")) != -1) {
-+	while ((c = getopt(argc, argv, "46p:svr:w:H:zxkP:M:C:a:i")) != -1) {
- 		switch (c) {
- 		case '4':
- 			cfg_family = PF_INET;
-@@ -425,6 +485,9 @@ int main(int argc, char *argv[])
- 		case 'a':
- 			map_align = atol(optarg);
- 			break;
-+		case 'i':
-+			integrity = 1;
-+			break;
- 		default:
- 			exit(1);
- 		}
-@@ -467,7 +530,7 @@ int main(int argc, char *argv[])
- 	}
- 
- 	buffer = mmap_large_buffer(chunk_size, &buffer_sz);
--	if (buffer == (char *)-1) {
-+	if (buffer == (unsigned char *)-1) {
- 		perror("mmap");
- 		exit(1);
- 	}
-@@ -500,17 +563,34 @@ int main(int argc, char *argv[])
- 		perror("setsockopt SO_ZEROCOPY, (-z option disabled)");
- 		zflg = 0;
- 	}
-+	if (integrity) {
-+		randomize(buffer, buffer_sz);
-+		ctx = EVP_MD_CTX_new();
-+		if (!ctx) {
-+			perror("cannot enable SHA computing");
-+			exit(1);
-+		}
-+		EVP_DigestInit_ex(ctx, EVP_sha256(), NULL);
-+	}
- 	while (total < FILE_SZ) {
-+		size_t offset = total % chunk_size;
- 		int64_t wr = FILE_SZ - total;
- 
--		if (wr > chunk_size)
--			wr = chunk_size;
--		/* Note : we just want to fill the pipe with 0 bytes */
--		wr = send(fd, buffer, (size_t)wr, zflg ? MSG_ZEROCOPY : 0);
-+		if (wr > chunk_size - offset)
-+			wr = chunk_size - offset;
-+		/* Note : we just want to fill the pipe with random bytes */
-+		wr = send(fd, buffer + offset,
-+			  (size_t)wr, zflg ? MSG_ZEROCOPY : 0);
- 		if (wr <= 0)
- 			break;
-+		if (integrity)
-+			EVP_DigestUpdate(ctx, buffer + offset, wr);
- 		total += wr;
- 	}
-+	if (integrity && total == FILE_SZ) {
-+		EVP_DigestFinal_ex(ctx, digest, &digest_len);
-+		send(fd, digest, (size_t)SHA256_DIGEST_LENGTH, 0);
-+	}
- 	close(fd);
- 	munmap(buffer, buffer_sz);
++	/*
++	 * The mount is up.  sget_fc() leaves SB_ACTIVE unset, and, unlike
++	 * filesystems that go through vfs_get_super(), nothing else sets
++	 * it here, so iput_final() would always evict an inode whose
++	 * ->drop_inode() asks to retain it.  Set it like nfs_get_tree()
++	 * does.
++	 */
++	sb->s_flags |= SB_ACTIVE;
  	return 0;
+ 
+ out_splat:
 -- 
 2.53.0
 
