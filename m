@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045636;
-	b=H4qXxtEH6YUA+mve3hqdhIvZBaQZn56Ibz0WyhRgOshHu6UxW4Jx1WzE8iPOb2B7YpZe
-	 QWtc3qXRVaDPWhLiVAoT3Uh/l1aMow4/75Vmmn6DEHMgSj0mpOdhRaf3vOBNxw79j7uq/
-	 kPTPRwHRLvnUdBSMmzFXdoARiahVqAXmduUjPz3dijoJ6qtsVl1Fz8lO//tdjR7CYLW5z
-	 Ygbm65dE0Khs+QGevagroyBqoJUJczDWRLtnRnqcsTE0zDfRJeVPQaoX8Q9GFKosvNt2+
-	 GHjZKV6DvPPd23mdZDlTmqVfJNsFTHxebhcWh4ntpOPEbi6o2vFjjGxjDZ7zCmoi9Fg==
+	t=1795045639;
+	b=F+5Up0hlHPcBXQxnozdWN7wqCU4ZW8gxH5uCnvj0655ISz/Txx5/mU9KKGbpCohJiXiN
+	 bzpsXB/No+kVrtR2ZUZUN6Fxkh5aUcG89YMqv75uBWOJbxFNk2F6VtfsNIayx88f3ARLL
+	 TWRQdJ9IZkjVYZ6GEKW4IsMYxYaKDbrUSgOk2VfwoIAn/mKRxgv4OQOQgOEgXHMBzPZDB
+	 UfDOWgFO0hZJtBqnV6NAiMKZjqEBZrnaWIca/0zVA6Fu9u/2bE1S7MHVtqRnoad5BuKiv
+	 fg3CKbcR4G/zRauooLZ8ZxyhEhg+9kURTcNBEJ84oK1zRAb1VvZ6957qx9BxKb9uYRw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045636;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045639;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=E0GO7monrCbyIHq+XOxFkBBAyY0hR5H8Pujb2LFPaEU=;
-	b=WbRbK/UkhMSWtWeI27wrtABgH7O2wkptSezKOzIheY/tkugSKwQECWMCuGcoYEl3eZun
-	 r1axrdNbqmPB+oih+JB/nFj6wjXRGWGZJ0aG8i+TRQY7xKsnUIcUGfxSwXyje5NO1PIMN
-	 QnQrkdhCGCOs6Rp4LN/SiBJBIZEvDTVg62vLMo7uFOlOnQEn5rd4HUuYhUHHnthVTNdE/
-	 AE99/R35VsDf1FSR7+yOOk3k0mPTlniPSochcLVRvCVkj4bJa+/7MEge7CCHhlXX6IPNh
-	 bERSdo7Ej4e2TvJ9BCunwNwFyH2ts/vUzy+I2CpcnCL03jTwekdrUyMDhwjCXUcw6mw==
+	bh=kaT1sIi695+C3nrQDAtLJ/O0/6JZscRlQGNl7Fu/TZg=;
+	b=G34E8TVe0QjFWhB1ui9I+49ZXwbIfCgfpZsMQmlKTu3Pc0SlqWSCCYZXugOs4vTCp7rt
+	 zJg3ZtfMh1gyn0K8wS5VZ06WRE6zHCjmuzu8fGwHQbmta+RLSbs4NUrhAzlkawEvZ7Qh6
+	 AcqkpvBbmepOj9kcjR72LcoAyAgK8Qed1hY2lRJXivck3qm1KNQ+Aif0cjCrc4lNes8Vs
+	 Ky9JtpTyR6/Md4txiRn78wtiJEDxbirOkiRSwOIcVBKlEQPk20sxwMot50tbEL3vqTjNV
+	 m8FuUZiktNHoOI8SDHpwFzSnxBW+Iob/AkaoYhrxdh8a/n0KJtl2MDBtAUxoArKPfiQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GIn2l63X;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yN3HARrs;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3C4606A31C;
-	Wed, 18 Nov 2026 23:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13256606A325;
+	Wed, 18 Nov 2026 23:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GIn2l63X
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A884C1F000C4;
-	Wed, 18 Nov 2026 23:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yN3HARrs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5F01F000C4;
+	Wed, 18 Nov 2026 23:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045636;
-	bh=E0GO7monrCbyIHq+XOxFkBBAyY0hR5H8Pujb2LFPaEU=;
+	s=korg; t=1795045638;
+	bh=kaT1sIi695+C3nrQDAtLJ/O0/6JZscRlQGNl7Fu/TZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GIn2l63XL5O/1mzNPAMcT07KFRXMBc49PaPnHm9QpdylF0jcwRzhiJ+kDL+W7Fij4
-	 X0214gExJ11fP9JVR2iJUMbHj5yaSGIHjnNHwEiYXCiSpflzKJycgFQWUtsUgzor3r
-	 KRFBwoeHNS76JefM8Os0B6eWR6ymVC7LLVtDT5iE=
+	b=yN3HARrsgjj+xC2IUt6wjqrfR8juMKNtHQFEzgx5kpZBQQJ8zVNkVRLl6fcxFJbpX
+	 0eL14djfcCltmpcmYRjxcOu+zcwshGGwyxBiQpFdvKVnnsiCc3tCzIAygnvojDH8c3
+	 ShtxE1dii51LBGZa0JdVw5a3tXY06n8OTHYggdNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Sahaj Chaudhari <sahaj123.sc@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0995/2857] ALSA: compress: add missing OPEN-state gate to SET_METADATA
-Date: Wed, 18 Nov 2026 15:33:49 +0100
-Message-ID: <20261118150237.429944263@linuxfoundation.org>
+Subject: [PATCH 6.1 0996/2857] gpio: davinci: Clear interrupt status in every bank on suspend
+Date: Wed, 18 Nov 2026 15:33:50 +0100
+Message-ID: <20261118150237.468282453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,48 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Sahaj Chaudhari <sahaj123.sc@gmail.com>
 
-[ Upstream commit 931f5714b7921290cd1a4742e185aeeae7270ee6 ]
+[ Upstream commit 800d7627f552bbf602a1736b638aee0ada3fbf87 ]
 
-snd_compr_set_metadata() calls stream->ops->set_metadata() straight
-after copy_from_user(), without ever checking runtime->state, even
-though the function's own comment says a parameter change should only
-be allowed once the stream has left the OPEN state. Every other
-metadata/param entry point in this file (SET_PARAMS, WRITE, ...)
-enforces that gate.
+davinci_gpio_save_context() saves the registers of each 32-GPIO
+register bank, but clears interrupt status only after the loop. At that
+point g refers to the last bank, so pending status in all preceding
+banks is left uncleared.
 
-A codec driver's set_metadata callback can assume SET_PARAMS has
-already run and initialised its private state; calling it while the
-stream is still OPEN can operate on that uninitialised state.
+Move the interrupt-status write into the per-bank loop so that the
+existing suspend-time clearing covers every register bank. Single-bank
+controllers retain the same behavior.
 
-Add the OPEN-state check the existing comment already documents.
-
-Fixes: 9727b490e543 ("ALSA: compress: add support for gapless playback")
+Fixes: 0651a730924b ("gpio: davinci: Add support for system suspend/resume PM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Acked-by: Vinod Koul <vkoul@kernel.org>
-Link: https://patch.msgid.link/20261019144533.30665-4-peter.ujfalusi@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sahaj Chaudhari <sahaj123.sc@gmail.com>
+Link: https://patch.msgid.link/20261018170622.3406158-1-sahaj123.sc@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/compress_offload.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpio-davinci.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index f1140a6bc996d..e961d79f076bb 100644
---- a/sound/core/compress_offload.c
-+++ b/sound/core/compress_offload.c
-@@ -674,6 +674,9 @@ snd_compr_set_metadata(struct snd_compr_stream *stream, unsigned long arg)
- 	* we should allow parameter change only when stream has been
- 	* opened not in other cases
- 	*/
-+	if (stream->runtime->state == SNDRV_PCM_STATE_OPEN)
-+		return -EBADFD;
-+
- 	if (copy_from_user(&metadata, (void __user *)arg, sizeof(metadata)))
- 		return -EFAULT;
+diff --git a/drivers/gpio/gpio-davinci.c b/drivers/gpio/gpio-davinci.c
+index cac9737b25a50..1e55f4eb0d992 100644
+--- a/drivers/gpio/gpio-davinci.c
++++ b/drivers/gpio/gpio-davinci.c
+@@ -648,10 +648,10 @@ static void davinci_gpio_save_context(struct davinci_gpio_controller *chips,
+ 		context->set_data = readl_relaxed(&g->set_data);
+ 		context->set_rising = readl_relaxed(&g->set_rising);
+ 		context->set_falling = readl_relaxed(&g->set_falling);
+-	}
  
+-	/* Clear all interrupt status registers */
+-	writel_relaxed(GENMASK(31, 0), &g->intstat);
++		/* Clear stale interrupt status for this bank. */
++		writel_relaxed(GENMASK(31, 0), &g->intstat);
++	}
+ }
+ 
+ static void davinci_gpio_restore_context(struct davinci_gpio_controller *chips,
 -- 
 2.53.0
 
