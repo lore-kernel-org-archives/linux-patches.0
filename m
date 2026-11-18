@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049941;
-	b=ObPF/vpny7DCjjdDoAo2ehyc5w/T6X2ZTppXaNGn/0Wbg2QS9fQStWnxV9sViwGfLEc+
-	 KgjguWmOFtNmYewcFJVhW9qtvTLg2iVmtVSx+rLWOO7esAL43uhakTaukTZxumTQxptRH
-	 uRaVbAwPDME2Q4I3i5N5ZzsgbuJiM9aeu1KxJ/3GKQATcBA3sGEhBIzDzlKADSrbg7bOm
-	 8Zd+cZP1VkjMLFEGqyyOwJ/HKfPLjAAEVY3t8k73LBIIyrdyFjiKR9ryeY+NfODMmT6vl
-	 2kb6HTKGuU65tSw/SkURLtLfls0pJqVXb9KmLgvFtcmjrlpM0zk6jzJX22IilAvBDIw==
+	t=1795049944;
+	b=KGDGYL4Pfm5UI1F7nm+EtiLw86Y6BaaPBQ3AjDCkx5G+JqMjok6H+uLYnh5KjFUgGixy
+	 wIg4kXggUdMhM2ngxdXYRcq4Ar+gFRdRlOE4didSi6/4ez2Y544YVXX4byn+qGjifKqhM
+	 eGMS6ndsPBk+QzSt5tHn5DeS5Bt4wdeCFUAknYqRMaiO3f6XZSoXOF5DS4TUoDOOS44FW
+	 YGNUzFZgJFNAhrH4ENf+Syc9ZILdLnS1DK2gu1OrZgJc5Q0owZoOQvAspUcDmp0Y1Syv/
+	 hYwl8tly0Uaj102D3UGC5NB7/FLF5JMLto4woaIc2NGa2EhkKDGXFO0Z5I4D2+b5Qvw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049941;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049944;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=M6kdnGsLdk9mNe5d8XvUmAgHsGtqyBa5NnRg4iXo83U=;
-	b=hLGDb+LSFhx8Y/ZgVTh60KtGTJKYGVlKBXt2T0FO2fAbM5KjPE4GyEW64pbT2q7qw4If
-	 /bu30JNY5uErc8vuBLoyG1Z5mCd6EthetfuPwSjncxUiCL4gR5x+zypJbflnPbo7CIDmK
-	 Df/6Y96PU7EwyyUqWAeBiNLPk3xeJu6ZsJ4hQ0Xw6meUr66nZoL9OmROYXdDDAkbIJJP6
-	 CJIn4P2UxCBDXoC39o9uUHwNCf0D1ClchLdQJnIM7Q4FPj1hSCGvEu1RyVHd7+mAaa47Z
-	 8VYii+xj6TZPAqE8Ad5gcR/BU3+uan2SpUM5xIpSVJ0e8F8HoWhHm33hZ36Z5+rmSqA==
+	bh=uY3pOHJrg+fl5Qyt8SGlkhcV+b8y0oPmWANYKxh0OpY=;
+	b=euvzYPBbUhsw0WMIaggaDuQVoSdTD7W1qw7obFzeiVjeOWw8rEckfH//fZSuxCE3OXbQ
+	 SFHj1jYRigMwG//33Hv87PxGYP0lasbe9ouyUncoaeFPofi96VjvT5RO8eyHQUbZpvrGA
+	 bMLS2LPqzj8i6Vw1HzVDN+SLgy9r0CvNwd3wdGu+cFtaxEhcNRfKWDFErqvZvjjlntggi
+	 xiIq9Q2Iu//UC1IlKhxlLY3A0x3Ccc8ujAJMQ+MH8E4sJlfdeDQ4LLyFjWsTHQafaNiYX
+	 zOAugS7tBi8PrQfd391Z/B4lDmRlm7pTbmmpiYhaIw2Melyj403r4SOCAlInriAHFwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKKQWLS0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YPPmwZti;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A7606A320;
-	Thu, 19 Nov 2026 00:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C89606A31C;
+	Thu, 19 Nov 2026 00:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=JKKQWLS0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 885331F000C4;
-	Thu, 19 Nov 2026 00:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YPPmwZti
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0A91F000C4;
+	Thu, 19 Nov 2026 00:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049941;
-	bh=M6kdnGsLdk9mNe5d8XvUmAgHsGtqyBa5NnRg4iXo83U=;
+	s=korg; t=1795049943;
+	bh=uY3pOHJrg+fl5Qyt8SGlkhcV+b8y0oPmWANYKxh0OpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JKKQWLS0EK19+vyoxKqg+OoeVCwgzSH//UVZaYKgo0ItSrV3nqY3L+Q8vI/yVjovt
-	 HIz4WXIQJe/Duyl2Y+OBaC1oOVR6oeoypMronuQiiICUWtqHYmWMF+X4O7ofMro2d4
-	 GbX1MUSbtmpG7GFXFJdbNsFdE9f9hSxxSS3VVny0=
+	b=YPPmwZtiMEETrEy7zweiXB0u14E56YywLQUpTOF9gEGSbIgcxYRBK6/DMQZ3+doky
+	 4EWCrK3spvgSZPvJ+5NHGUpNsbE2iF1i/ABprP/dqXpR1UWoOZOi/XqWRpD739CrUw
+	 T4muN4NwacE+8HCLYsPx6oQ3ZlBKJM/LbwxuGFeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sashiko <sashiko-bot@kernel.org>,
-	Cen Zhang <zzzccc427@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hitalo Souza <enghitalo@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2530/2857] ALSA: core: Serialize snd_refcount put and sync
-Date: Wed, 18 Nov 2026 15:59:24 +0100
-Message-ID: <20261118150332.631545498@linuxfoundation.org>
+Subject: [PATCH 6.1 2495/2857] Bluetooth: Add missing newline to bt_dev_{err,warn}_ratelimited()
+Date: Wed, 18 Nov 2026 15:58:49 +0100
+Message-ID: <20261118150331.395021691@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,73 +68,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Hitalo Souza <enghitalo@gmail.com>
 
-[ Upstream commit 6904743ab77e0684dff319f3806ef982e5eea6cf ]
+[ Upstream commit f51ee3bb5fbe9c2019c31befe330bddd3aee39c2 ]
 
-When a thread tries to sync-and-destroy the resource with
-snd_refcount_sync(), it might lead to a UAF in a very slight time
-window.  Namely, snd_refount_put() calls wake_up() after
-atomic_dec_and_test(), but wait_event() in snd_refcount_sync() checks
-the condition via atomic_test() without serialization, hence the
-thread that called snd_refcount_sync() can continue immediately to
-release the resource before another thread calls wake_up().
+bt_dev_err_ratelimited() and bt_dev_warn_ratelimited() pass the format
+string to bt_err_ratelimited()/bt_warn_ratelimited() without appending
+a newline, unlike bt_dev_err() and bt_dev_warn(), which go through
+BT_ERR()/BT_WARN() and add one. Only 2 of the 22 in-tree callers (both
+in virtio_bt) put the newline in their own format string.
 
-For avoiding the race above, introduce the spinlock and take it at
-snd_refcount_put() and snd_refcount_sync() in order to serialize the
-operations.
+A printk record without a trailing newline is stored with prb_commit()
+instead of prb_final_commit(), and readers of the log buffer (/dev/kmsg,
+syslog) do not see it until it is finalized, which only happens when the
+next record is reserved. These messages therefore stay invisible until
+some unrelated message is printed, and journald, which timestamps a
+record when it reads it, logs them with the time of that later message.
 
-Fixes: dcca9b6064c3 ("ALSA: Add simple refcount helper functions")
-Reported-by: Sashiko <sashiko-bot@kernel.org>
-Closes: https://sashiko.dev/#/patchset/20261015071838.31082-1-tiwai%40suse.de
-Reviewed-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/20261015112256.3902-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This was observed with a MediaTek MT7921 controller (USB 04ca:3802):
+when an eSCO link is closed, the host still receives a few SCO packets
+for the handle after Disconnection Complete, so hci_scodata_packet()
+logs "SCO packet for unknown connection handle". Comparing the record's
+kernel timestamp (_SOURCE_MONOTONIC_TIMESTAMP) with the time journald
+received it, over one capture:
+
+  emitted       logged        delay
+  15:36:52.896  15:37:00.214    7.3 s
+  15:37:03.410  15:39:05.574  122.2 s
+  15:39:05.574  15:39:12.506    6.9 s
+  15:39:19.791  15:40:54.109   94.3 s
+  15:41:22.021  15:41:24.647    2.6 s
+
+Each message showed up together with the next kernel message; the 94 s
+one looked as if it had been logged in the middle of a later, healthy
+eSCO connection.
+
+bt_dev_err_ratelimited() lost its newline in commit 657cc646475b
+("Bluetooth: Remove usage of BT_ERR_RATELIMITED macro"), which replaced
+BT_ERR_RATELIMITED(), the variant that appended "\n", with a direct call
+to bt_err_ratelimited(). bt_dev_warn_ratelimited() never had one.
+
+Append the newline in both macros, as BT_ERR() and BT_WARN() do, and
+drop it from the two virtio_bt format strings so that their messages do
+not gain an empty line.
+
+Fixes: 36278a5d4d35 ("Bluetooth: Adding a bt_dev_warn_ratelimited macro.")
+Fixes: 657cc646475b ("Bluetooth: Remove usage of BT_ERR_RATELIMITED macro")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: Hitalo Souza <enghitalo@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/core.h | 1 +
- sound/core/misc.c    | 5 ++++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/bluetooth/virtio_bt.c     | 4 ++--
+ include/net/bluetooth/bluetooth.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/sound/core.h b/include/sound/core.h
-index fb49bbeb59188..3a0e3010405ca 100644
---- a/include/sound/core.h
-+++ b/include/sound/core.h
-@@ -84,6 +84,7 @@ struct snd_device {
- struct snd_refcount {
- 	atomic_t count;
- 	wait_queue_head_t waiter;
-+	spinlock_t lock;
- };
+diff --git a/drivers/bluetooth/virtio_bt.c b/drivers/bluetooth/virtio_bt.c
+index f7438735884ab..6366d63ccf452 100644
+--- a/drivers/bluetooth/virtio_bt.c
++++ b/drivers/bluetooth/virtio_bt.c
+@@ -220,7 +220,7 @@ static void virtbt_rx_handle(struct virtio_bluetooth *vbt, struct sk_buff *skb)
  
- void snd_refcount_init(struct snd_refcount *ref);
-diff --git a/sound/core/misc.c b/sound/core/misc.c
-index 19ad0a2cc7e1a..b44bcce7a220f 100644
---- a/sound/core/misc.c
-+++ b/sound/core/misc.c
-@@ -254,11 +254,13 @@ void snd_refcount_init(struct snd_refcount *ref)
- {
- 	atomic_set(&ref->count, 0);
- 	init_waitqueue_head(&ref->waiter);
-+	spin_lock_init(&ref->lock);
- }
- EXPORT_SYMBOL_GPL(snd_refcount_init);
+ 	if (skb->len < min_hdr) {
+ 		bt_dev_err_ratelimited(vbt->hdev,
+-				       "rx pkt_type 0x%02x payload %u < hdr %zu\n",
++				       "rx pkt_type 0x%02x payload %u < hdr %zu",
+ 				       pkt_type, skb->len, min_hdr);
+ 		kfree_skb(skb);
+ 		return;
+@@ -243,7 +243,7 @@ static void virtbt_rx_work(struct work_struct *work)
  
- void snd_refcount_put(struct snd_refcount *ref)
- {
-+	guard(spinlock_irqsave)(&ref->lock);
- 	if (atomic_dec_and_test(&ref->count))
- 		wake_up(&ref->waiter);
- }
-@@ -266,6 +268,7 @@ EXPORT_SYMBOL_GPL(snd_refcount_put);
+ 	if (!len || len > VIRTBT_RX_BUF_SIZE) {
+ 		bt_dev_err_ratelimited(vbt->hdev,
+-				       "rx reply len %u outside [1, %u]\n",
++				       "rx reply len %u outside [1, %u]",
+ 				       len, VIRTBT_RX_BUF_SIZE);
+ 		kfree_skb(skb);
+ 	} else {
+diff --git a/include/net/bluetooth/bluetooth.h b/include/net/bluetooth/bluetooth.h
+index 05dc9832f9bb6..945d6a6b98b8f 100644
+--- a/include/net/bluetooth/bluetooth.h
++++ b/include/net/bluetooth/bluetooth.h
+@@ -262,9 +262,9 @@ void bt_err_ratelimited(const char *fmt, ...);
+ 	BT_DBG("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
  
- void snd_refcount_sync(struct snd_refcount *ref)
- {
--	wait_event(ref->waiter, !atomic_read(&ref->count));
-+	guard(spinlock_irq)(&ref->lock);
-+	wait_event_lock_irq(ref->waiter, !atomic_read(&ref->count), ref->lock);
- }
- EXPORT_SYMBOL_GPL(snd_refcount_sync);
+ #define bt_dev_warn_ratelimited(hdev, fmt, ...)			\
+-	bt_warn_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
++	bt_warn_ratelimited("%s: " fmt "\n", bt_dev_name(hdev), ##__VA_ARGS__)
+ #define bt_dev_err_ratelimited(hdev, fmt, ...)			\
+-	bt_err_ratelimited("%s: " fmt, bt_dev_name(hdev), ##__VA_ARGS__)
++	bt_err_ratelimited("%s: " fmt "\n", bt_dev_name(hdev), ##__VA_ARGS__)
+ 
+ /* Connection and socket states */
+ enum {
 -- 
 2.53.0
 
