@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026332;
-	b=fPr49vKVqQqX/ZjOyb5HG2NHpClIGHui+gWogh38XXj8SB8uEppKv4x7Xuu6lQxaVGXl
-	 SRj9uVZGlHc5jtxLE/jBLG8a71dp3Qjm45DW71hsxVDl1H4VsKRA7Ob9xYvbPDrbfEhKY
-	 MMimoTbqVgZg4xl+LJeWStQ9ZP8jIakFBOudydWBsvt836z+Ywhf/ZBUtanobblNFZc34
-	 zxkBMoGIaDSNbPKvXE0d6gFn2tHeoP9xQKrHEjAiaQaZGyahFf1c6ihdtg0jQmmIfuZXb
-	 598eSrZaBqhOqO/+TB9C7leJM7ZgEq6geKXEH1qZR+ylTlOsDUNWvPvjoeSbTWe6FeA==
+	t=1795026334;
+	b=oOofmJEikWlbeyx5f3dUn5AA4oSIvCFrhcJQ8zdWf8KLNOj1j7COfY6IhLWXFa/O+dTp
+	 5QRpZq0Kc+pL3q0ebBn6fkutnLj1hESD4iR2dicK9IQSTnJDJYBYfl0reJ3xzQcqqnbXx
+	 nIMcgMekBr2tkaomGlfUZyXqs8SupPaybnVWqFAmH3nr3CyQAyWxRdabCkwwy+UD8M3Fv
+	 xEmIQbNG7W/kGXDAqTAMYYslgnL2L8V6e0uF4Ldugjzjc1wyWpbhyVCYo4oR72NSFctex
+	 RWufoYscGPVPgPP9dI9pI9RMP7gZ2dhCQz0mMUN0qnOUu2j7HGOvewLruvCdHbo78yw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026332;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026334;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CK1kvYwYZb7IMJ31DVyx1k6C2OjNL22klcIsIY6pe7g=;
-	b=MsPsXPVxt9TfMycGxdEBp3543XTqQSZsFjl6n7n8Wda+vbin/pdvsTiiThuYjDfqGqQo
-	 MlD8oZsDs7Ii3ZFC8bSDggUfBGCH3VUZKrG+o52Xmb9qBxmm1+ChAqssNf07+NunTDSYx
-	 Y2yFXfDLjS4MHSlW8/+KskyzkufIXisIWS+yc2ka55gQdUOPOSioPy/C8p2wHf7KBbsT5
-	 LZ6oFFi+dKq4Vrm8GZYS2+h/OtlQjzDDF4H80HkVPKHq/AsC3CuOwZoa7MEXqfhM1oeV8
-	 uoEOaAlXX81wDh+FKyECzEwVX4sFnZhu94i8CVdNhtFBxJ0JtZR2sZoyoB7dbPJJlGw==
+	bh=9A2uhExaKSHw+0HilPBvaiSibM6Wil9OOB/GuvrtM/M=;
+	b=IHNONaCjALJIfa2AzCLTP86Tcp4qERlEIvUnR/Z/jaCPkrxM2xt2cP5kcevMFkvXSmX8
+	 y7+cM61PZssRFaHAmvBXCbLKc3CVFw1LIkAts0X/0BkuhyOQU6lIij+DZmmwQ3cwSphE3
+	 4hdO4QxSUGvOBJvQ4sUF/6azV2I990+tuMOF0lgnLFOyR1msH26Sblx9sY/hoSYMfhfHr
+	 ynCB1x92xaAB6LT/yvnmeo3+W8uVIntzMu1oN1lRWBpjZ90qTkVxXG3nwXc3Fy5kgHYUC
+	 BSQ8/S02bzrQUW8xEavgrN2FbcO/l4HrsVCFYfUn+Oq8vGqXlkLnBXXZ5skYmAT3wXg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="nHkz/adR";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1kFUh7V;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12284606A31C;
-	Wed, 18 Nov 2026 18:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C431E606A320;
+	Wed, 18 Nov 2026 18:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=nHkz/adR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647691F000C4;
-	Wed, 18 Nov 2026 18:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=v1kFUh7V
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 273BD1F000C5;
+	Wed, 18 Nov 2026 18:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026331;
-	bh=CK1kvYwYZb7IMJ31DVyx1k6C2OjNL22klcIsIY6pe7g=;
+	s=korg; t=1795026334;
+	bh=9A2uhExaKSHw+0HilPBvaiSibM6Wil9OOB/GuvrtM/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=nHkz/adRlUByx7JTrNPJe0NAWdCsl0peGaZzaLUv9s6MT0WASnmYgw+nEC+Cw+GLt
-	 0L0n1URAyGKpepPC+8S65oaBLa6WbzDTAq4L1MHgwg5ObUDTAzVg/wk6YpGWnxWFcA
-	 PHYF27zVo+Ryg3bc/PYSDAN2KBtUH4bzilG70PFc=
+	b=v1kFUh7VrOxczClOycFsqcUelqQ3jq1N5q8dMfI5CZMwJxebdbE4sgh4mM65rmd4n
+	 3VFa+8xadu2qbWhr1Es1gzxZCXHOTjWBfbx1A4fJrLIchO2og7xmCGy5RTW11C3XHT
+	 ods68jegRs6JFvx62s/n3bMLRkNGxFAaPrf9jWUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Chen <jeff.chen_1@nxp.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	VEGA <vega@nebusec.ai>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1397/2151] wifi: mwifiex: append hotfix number to firmware version string
-Date: Wed, 18 Nov 2026 15:52:12 +0100
-Message-ID: <20261118150212.887254269@linuxfoundation.org>
+Subject: [PATCH 6.18 1398/2151] tcp_bic: fix divide by zero on max_increment == 0
+Date: Wed, 18 Nov 2026 15:52:13 +0100
+Message-ID: <20261118150212.919455588@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,111 +70,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Chen <jeff.chen_1@nxp.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-[ Upstream commit 958f20d5aa0aa645068454fdb62ebc625ac9a115 ]
+[ Upstream commit 8edbf6c23363563e508a61f3f26f4e4b6eec9dd5 ]
 
-mwifiex_ret_get_hw_spec() parses and logs the FW_HOTFIX_VER_ID TLV,
-but the hotfix value is not stored in the adapter structure. As a
-result, the hotfix number never appears in the firmware version string
-returned by mwifiex_drv_get_driver_version().
+max_increment is how many packets cwnd can grow per RTT, so 0 makes
+no sense, and bictcp_update() divides by it.
 
-Store the hotfix version from FW_HOTFIX_VER_ID and append it to the
-firmware version string.
+Reject values below 1 when the parameter is written.
 
-Assisted-by: LLM sparse
-Fixes: 7715d79553de ("wifi: mwifiex: Support firmware hotfix version in GET_HW_SPEC responses")
-Signed-off-by: Jeff Chen <jeff.chen_1@nxp.com>
-Link: https://patch.msgid.link/20261012123624.3147417-2-jeff.chen_1@oss.nxp.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 83803034f423 ("[TCP]: Add TCP BIC congestion control module.")
+Reported-by: VEGA <vega@nebusec.ai>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Reviewed-by: Eric Dumazet <edumazet@kernel.org>
+Link: https://patch.msgid.link/20261008092641.140777-2-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cmdevt.c    | 10 ++++++++--
- drivers/net/wireless/marvell/mwifiex/fw.h        |  6 ++++++
- drivers/net/wireless/marvell/mwifiex/init.c      |  1 +
- drivers/net/wireless/marvell/mwifiex/main.h      |  1 +
- drivers/net/wireless/marvell/mwifiex/sta_ioctl.c |  3 ++-
- 5 files changed, 18 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_bic.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/marvell/mwifiex/cmdevt.c b/drivers/net/wireless/marvell/mwifiex/cmdevt.c
-index 0f466c31337fa..3eac262945667 100644
---- a/drivers/net/wireless/marvell/mwifiex/cmdevt.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cmdevt.c
-@@ -1594,11 +1594,17 @@ int mwifiex_ret_get_hw_spec(struct mwifiex_private *priv,
- 						    api_rev->major_ver,
- 						    api_rev->minor_ver);
- 					break;
--				case FW_HOTFIX_VER_ID:
-+				case FW_HOTFIX_VER_ID: {
-+					struct hw_spec_fw_hotfix_ver *hf;
+diff --git a/net/ipv4/tcp_bic.c b/net/ipv4/tcp_bic.c
+index 65444ff142413..27d2e38ff7932 100644
+--- a/net/ipv4/tcp_bic.c
++++ b/net/ipv4/tcp_bic.c
+@@ -27,15 +27,25 @@
+ 					  */
+ 
+ static int fast_convergence = 1;
+-static int max_increment = 16;
++static unsigned int max_increment = 16;
+ static int low_window = 14;
+ static int beta = 819;		/* = 819/1024 (BICTCP_BETA_SCALE) */
+ static int initial_ssthresh;
+ static int smooth_part = 20;
+ 
++static int max_increment_set(const char *val, const struct kernel_param *kp)
++{
++	return param_set_uint_minmax(val, kp, 1, INT_MAX);
++}
 +
-+					hf = (void *)tlv;
-+					adapter->fw_hotfix_ver =
-+						le16_to_cpu(hf->hotfix_ver);
- 					mwifiex_dbg(adapter, INFO,
- 						    "Firmware hotfix version %d\n",
--						    api_rev->major_ver);
-+						    adapter->fw_hotfix_ver);
- 					break;
-+				}
- 				default:
- 					mwifiex_dbg(adapter, FATAL,
- 						    "Unknown api_id: %d\n",
-diff --git a/drivers/net/wireless/marvell/mwifiex/fw.h b/drivers/net/wireless/marvell/mwifiex/fw.h
-index 93561116959ac..f254d6d6e3eb9 100644
---- a/drivers/net/wireless/marvell/mwifiex/fw.h
-+++ b/drivers/net/wireless/marvell/mwifiex/fw.h
-@@ -1104,6 +1104,12 @@ struct hw_spec_api_rev {
- 	u8 minor_ver;
- } __packed;
- 
-+struct hw_spec_fw_hotfix_ver {
-+	struct mwifiex_ie_types_header header;
-+	__le16 api_id;
-+	__le16 hotfix_ver;
-+} __packed;
++static const struct kernel_param_ops max_increment_ops = {
++	.set = max_increment_set,
++	.get = param_get_uint,
++};
 +
- struct host_cmd_ds_get_hw_spec {
- 	__le16 hw_if_version;
- 	__le16 version;
-diff --git a/drivers/net/wireless/marvell/mwifiex/init.c b/drivers/net/wireless/marvell/mwifiex/init.c
-index 5902e2c821f28..501025777adb8 100644
---- a/drivers/net/wireless/marvell/mwifiex/init.c
-+++ b/drivers/net/wireless/marvell/mwifiex/init.c
-@@ -296,6 +296,7 @@ static void mwifiex_init_adapter(struct mwifiex_adapter *adapter)
- 	adapter->config_bands = 0;
- 	adapter->adhoc_start_band = 0;
- 	adapter->fw_release_number = 0;
-+	adapter->fw_hotfix_ver = 0;
- 	adapter->fw_cap_info = 0;
- 	memset(&adapter->upld_buf, 0, sizeof(adapter->upld_buf));
- 	adapter->event_cause = 0;
-diff --git a/drivers/net/wireless/marvell/mwifiex/main.h b/drivers/net/wireless/marvell/mwifiex/main.h
-index 27559e2ddc317..eb47ade44e1fb 100644
---- a/drivers/net/wireless/marvell/mwifiex/main.h
-+++ b/drivers/net/wireless/marvell/mwifiex/main.h
-@@ -1003,6 +1003,7 @@ struct mwifiex_adapter {
- 	bool host_mlme_enabled;
- 	struct ieee80211_txrx_stypes mwifiex_mgmt_stypes[NUM_NL80211_IFTYPES];
- 	u8 fw_api_ver;
-+	u16 fw_hotfix_ver;
- 	u8 key_api_major_ver, key_api_minor_ver;
- 	u8 max_p2p_conn, max_sta_conn;
- 	struct memory_type_mapping *mem_type_mapping_tbl;
-diff --git a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-index b8267a5ebcfb0..b752588e1c7c7 100644
---- a/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sta_ioctl.c
-@@ -1145,7 +1145,8 @@ mwifiex_drv_get_driver_version(struct mwifiex_adapter *adapter, char *version,
- 	char fw_ver[32];
- 
- 	ver.l = cpu_to_le32(adapter->fw_release_number);
--	sprintf(fw_ver, "%u.%u.%u.p%u", ver.c[2], ver.c[1], ver.c[0], ver.c[3]);
-+	sprintf(fw_ver, "%u.%u.%u.p%u.%u", ver.c[2], ver.c[1],
-+		ver.c[0], ver.c[3], adapter->fw_hotfix_ver);
- 
- 	snprintf(version, max_len, driver_version, fw_ver);
- 
+ module_param(fast_convergence, int, 0644);
+ MODULE_PARM_DESC(fast_convergence, "turn on/off fast convergence");
+-module_param(max_increment, int, 0644);
++module_param_cb(max_increment, &max_increment_ops, &max_increment, 0644);
+ MODULE_PARM_DESC(max_increment, "Limit on increment allowed during binary search");
+ module_param(low_window, int, 0644);
+ MODULE_PARM_DESC(low_window, "lower bound on congestion window (for TCP friendliness)");
 -- 
 2.53.0
 
