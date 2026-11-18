@@ -1,51 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795049621;
-	b=C75H1RXlD1kU3GIa7l2i1eInV9bcOh8cH/JW5PJ+iPpWJSiXdPOJO2FxQv3qwWlVdVFp
-	 iNiF+tUhD1DtyjWgSw5ljaiqnKyoRxlep8eTCIehMsYHK50i7inydo41+828rf2IPdV0y
-	 Hz2AgBOQ8CM+9npOs/ApDvoM+nnw/vx9Lxe+GiCRLNVRTKrpU/aoP3/+SAAPtNnEjwRAo
-	 4c9h1NofB9WnGKvz8gFJLXUw4DVP0dRkr6LKu69p6V6duMrzdd1nyvGueUgC1S6etPmfz
-	 0fx9BSnxeqsX//9V6sY2joWOd/fE0iOFfjwJ+NUWLwDWfktbrMnZNgWV/gRNr8eZvgg==
+	t=1795049624;
+	b=S3YFf7WtAXvl4AIyt2++jchDj7xpFaml7KrpA3YAZto1F4gXqMmG0vVeMeM9xJBbCsXs
+	 SvzAZsOTknLkPN3jqcpXh09XOvA2lzjw3tOFScJIT7GrGmOXXMd3sFL8fzxaW+vVxRAvK
+	 yUJCdGLG7dY/RHcNTHG7ii68ZDDmUda4SGPqGTuVQZV4aRLhvm1J7jceUTE9CXN3lpVv7
+	 R9WlrUidBaM7W65euINkpNGnngOTHezQiE5DhKJwU4TLH9ExyLBI4Y1UR0+ge3Mn5BFOe
+	 8U/72NJ4rYUgBilF6V6LwtjhT06lzpQzWGe1tZBf6UIJDfXNDLNvq8Q1igXvkIUJ2HQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795049621;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795049624;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=atoUjcEcf1EKZR9oSBCdjJTWE+rb4jIZ748Mq5stATY=;
-	b=xT57LY/FOik2x0r/1gfJgdu7iyAMRzR82b9QjPVZo4R+c6WoIO8KEfqIv0JDbNazajYw
-	 GZQgUjj6bUyuHkYkrRkjlE71SKUBuSAg4xJALIB3pQTde1fuzvWgXO1z5dFPDlm9Eqbhw
-	 Oi1ctCEyZczghjmOJXJ1x4oRm0/oDsXtONtfUcVNK/AhkqpuQtoGptMdxxeIVUboDexIx
-	 SJV6Ei6XrEbFwKP/jWSWap9tTFkNPZPibdgspfSQ7iKu1+P5qMynyp1OR0Zs35F5Rruuw
-	 Hk+q5T0UJBwtxfPqP43fwArTnahJ3W0XL2chdd31kbvl77/v9dBgjgYRNMzax8bqU5g==
+	bh=yEpTQSbjURAsk2YExMFkOf3cPrkWMesSv7OVYu9bER8=;
+	b=2bT4Mxa+bYKgui/2deEXXEflWJ9anjJ+4PTvuchG2Bg8QS9v7PaJWfSANwQsxuFoXTaW
+	 15K8cjxQN5psD6NLSq+Qnl7DhTsLUjJZPBdwJgdZxCdHZHt8Eu6rKFM/FFT7z0cHgGk1/
+	 H/q1Q7KNJshddkLhhbjDJzUnQpHJwTLzjb73qHZzHa+MkB4rpx2aUYxtPtjk7uAE+t227
+	 9n1liUB2U+qwcf4i/d3axrj/qge4ESNmjgS+2deTk2DHcc4pA+2ylFnvSKjCry/vLO2rg
+	 dZGhNBX9kbLu21l/tCaGiwjuR4p3Z8lY+P6rxoq557yL6wyAlV3gj/OXWqzy+lPukwA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1prsGQz;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mss1fFvt;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46A4606A331;
-	Thu, 19 Nov 2026 00:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761FE60A2602;
+	Thu, 19 Nov 2026 00:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=R1prsGQz
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 161401F000C4;
-	Thu, 19 Nov 2026 00:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Mss1fFvt
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC091F000C4;
+	Thu, 19 Nov 2026 00:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795049621;
-	bh=atoUjcEcf1EKZR9oSBCdjJTWE+rb4jIZ748Mq5stATY=;
+	s=korg; t=1795049624;
+	bh=yEpTQSbjURAsk2YExMFkOf3cPrkWMesSv7OVYu9bER8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=R1prsGQzXW9+w+d5YL7lG6eDvyFuWZBZ6bsQAic/YAx8zAC3WnNc7o1QiZDUA0KIb
-	 N4yhXQ6EB+EwjpVmpqW4SCqv4LNVr/Pndwokmj3KN65lXwpnVsH5zHaENhAa/2CbV5
-	 YhxIG+bAOi3iMqm4SqLZFPFTRSZ8jTbKg1UZ1n/A=
+	b=Mss1fFvtvEyGEcIxxyY6CpUR+OaHD6gMKiukncvjQqZacdAq6XvHaHqnaqqp53HQb
+	 TUzaETQjUIusMoSHw2ubDulu6uMrKt5y+5SaakkskVnAA5Hwbkjj3oMPPBk1XDYKIw
+	 nn8C+FdaYGJpDd7gh22olHXMj3zSpleONHCFGohw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yogesh Gaur <yogeshgaur.83@gmail.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Keerthy <j-keerthy@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2418/2857] comedi: pcmuio: validate the IRQs supplied by userspace
-Date: Wed, 18 Nov 2026 15:57:32 +0100
-Message-ID: <20261118150328.616218760@linuxfoundation.org>
+Subject: [PATCH 6.1 2419/2857] thermal/drivers/ti-soc-thermal: Cancel pending alert work on remove
+Date: Wed, 18 Nov 2026 15:57:33 +0100
+Message-ID: <20261118150328.650378141@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,66 +69,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yogesh Gaur <yogeshgaur.83@gmail.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 9c325b21bba99e597771137fc11b9427c86618d8 ]
+[ Upstream commit aaa6c8dec49339710f9fd2a2af5646cf4111dbd4 ]
 
-comedi boards are configured through the COMEDI_DEVCONFIG ioctl, so
-it->options[1] is a number chosen by userspace. pcmuio passes it to
-request_irq() without checking it first, which lets an interrupt owned by
-another irqdomain -- a PCI device's IO-APIC GSI, for instance -- be
-claimed for this board. When the owner of that interrupt is later
-released the descriptor is freed while this driver's handler is still
-installed on it.
+On a threshold crossing, the talert IRQ handler calls
+ti_thermal_report_sensor_temperature(), which queues the work embedded
+in the sensor's ti_thermal_data on the system workqueue. Nothing ever
+cancels or flushes that work.
 
-Every interrupt this board can assert is a legacy ISA one, so the ISA
-range is the right bound; it is also sufficient, because
-mp_chip_data->isa_irq is set only by alloc_isa_irq_from_domain() and
-mp_unmap_irq() returns early when it is set.
+ti_bandgap_remove() frees the talert IRQ last. free_irq() waits for a
+running handler, but not for the work the handler has queued. When
+remove returns, devres unregisters and frees the thermal zones and then
+frees the devm-allocated ti_thermal_data, so a work item that is still
+pending runs ti_thermal_work() on freed memory:
 
-Bound the value before requesting it, as das16m1.c already does. An
-out-of-range value is ignored rather than rejected, so the board still
-attaches without interrupt support, exactly as it does today when
-request_irq() fails.
+	ti_thermal_work()
+	  data = container_of(work, struct ti_thermal_data, thermal_wq);
+	  thermal_zone_device_update(data->ti_thermal, ...);
 
-This board takes two interrupts, one per ASIC, so options[1] and
-options[2] both need the check. The existing options[2] == dev->irq case
-is left alone: it covers both ASICs sharing one interrupt and neither
-having one, and by then options[1] has already been validated.
+Free the talert IRQ before removing the sensors, so that no new work
+can be queued, and cancel the work in ti_thermal_remove_sensor().
 
-Fixes: 6baef150380d ("Staging: comedi: add pcmmio and pcmuio drivers")
-Assisted-by: LLM
-Signed-off-by: Yogesh Gaur <yogeshgaur.83@gmail.com>
-Link: https://patch.msgid.link/20260909104848.1763-7-yogeshgaur.83@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This needs an OMAP4460/4470 or OMAP5 SoC (DRA7 has TALERT but no
+->report_temperature, so it never queues the work), a threshold crossing
+just before the driver is unbound or unloaded, and the work still
+pending when devres frees the data.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 445eaf871bf9 ("staging: omap-thermal: common code to expose driver to thermal framework")
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Acked-by: Keerthy <j-keerthy@ti.com>
+Link: https://patch.msgid.link/20260926124931.3599746-1-geoffreyhe2@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/pcmuio.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/thermal/ti-soc-thermal/ti-bandgap.c        | 7 ++++---
+ drivers/thermal/ti-soc-thermal/ti-thermal-common.c | 4 ++++
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/comedi/drivers/pcmuio.c b/drivers/comedi/drivers/pcmuio.c
-index 1c5fe065a91f5..84bbfdcd0953d 100644
---- a/drivers/comedi/drivers/pcmuio.c
-+++ b/drivers/comedi/drivers/pcmuio.c
-@@ -545,7 +545,8 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
+diff --git a/drivers/thermal/ti-soc-thermal/ti-bandgap.c b/drivers/thermal/ti-soc-thermal/ti-bandgap.c
+index 67050a1a5b07f..13c5166b3384d 100644
+--- a/drivers/thermal/ti-soc-thermal/ti-bandgap.c
++++ b/drivers/thermal/ti-soc-thermal/ti-bandgap.c
+@@ -1077,6 +1077,10 @@ int ti_bandgap_remove(struct platform_device *pdev)
+ 	if (!soc_device_match(soc_no_cpu_notifier))
+ 		cpu_pm_unregister_notifier(&bgp->nb);
  
- 	pcmuio_reset(dev);
++	/* Stop the alerts first: they queue work on the sensors' data */
++	if (TI_BANDGAP_HAS(bgp, TALERT))
++		free_irq(bgp->irq, bgp);
++
+ 	/* Remove sensor interfaces */
+ 	for (i = 0; i < bgp->conf->sensor_count; i++) {
+ 		if (bgp->conf->sensors[i].unregister_cooling)
+@@ -1093,9 +1097,6 @@ int ti_bandgap_remove(struct platform_device *pdev)
+ 	clk_put(bgp->fclock);
+ 	clk_put(bgp->div_clk);
  
--	if (it->options[1]) {
-+	/* only ISA interrupts are valid on this board */
-+	if (it->options[1] >= 1 && it->options[1] <= 15) {
- 		/* request the irq for the 1st asic */
- 		ret = request_irq(it->options[1], pcmuio_interrupt, 0,
- 				  dev->board_name, dev);
-@@ -557,7 +558,7 @@ static int pcmuio_attach(struct comedi_device *dev, struct comedi_devconfig *it)
- 		if (it->options[2] == dev->irq) {
- 			/* the same irq (or none) is used by both asics */
- 			devpriv->irq2 = it->options[2];
--		} else if (it->options[2]) {
-+		} else if (it->options[2] >= 1 && it->options[2] <= 15) {
- 			/* request the irq for the 2nd asic */
- 			ret = request_irq(it->options[2], pcmuio_interrupt, 0,
- 					  dev->board_name, dev);
+-	if (TI_BANDGAP_HAS(bgp, TALERT))
+-		free_irq(bgp->irq, bgp);
+-
+ 	if (TI_BANDGAP_HAS(bgp, TSHUT))
+ 		free_irq(gpiod_to_irq(bgp->tshut_gpiod), NULL);
+ 
+diff --git a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
+index 8a9055bd376ec..6df1db82a59b0 100644
+--- a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
++++ b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
+@@ -194,6 +194,10 @@ int ti_thermal_remove_sensor(struct ti_bandgap *bgp, int id)
+ 
+ 	data = ti_bandgap_get_sensor_data(bgp, id);
+ 
++	/* Work queued by the talert IRQ must not outlive the data */
++	if (!IS_ERR_OR_NULL(data))
++		cancel_work_sync(&data->thermal_wq);
++
+ 	if (!IS_ERR_OR_NULL(data) && data->ti_thermal) {
+ 		if (data->our_zone)
+ 			thermal_zone_device_unregister(data->ti_thermal);
 -- 
 2.53.0
 
