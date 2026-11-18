@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036580;
-	b=LzLuyBQi0nu4E1nPogIsghhuWpM5ddA8XA+xFO7v+fPJvy4EyzBuRFDQUAKrdVSmRZAM
-	 9vludFNciqLqM9rmsBV5iY4rQaBuVp3uvUfddUa63SCycgiMvtUK3IyKUasK2n6+0P+Oh
-	 iisCUBCIA60P6qeuk2F+DYXvRlJqtPY0m3oMk2E9AbGwCbkBSGfO0aHjwR94UydMcb4DH
-	 H9Kq0gekj2p3FCPpkQji2gh1Q+x6pseIMOSyBvj4O33oPuaqkOp1aR7G++7n+EGkPffXY
-	 7GROjUrGPSsTHR1xVUornyqtlG89ii9iAgkKLp2go5Qrpl30Zu86nzmZF9ELT2YzdTg==
+	t=1795036582;
+	b=pSFnLpd3Y49V3elxi0DqLoWZi9mkY7h8SwmMuNyPTdXMC8sohrqoW9bEgPPvoSIwlKNc
+	 MQINGBmAP/KLiPHNynX5n0mRNIlm7WGgkz67beZ7AdzCfY8QMxEbNS4ohpzsOcoUad7mA
+	 HNH4qZ+eXgIWiUfaKd/IYBZ8f6/HIVf41yVSe0ydAxsJcxW85ITL84MYlajIXACQA8cTg
+	 KmZn7uIFyMdWQ3HaMXw8N95bmhieFIMVnqeChF578f6f9kS3CtW7zPmZNMUMOwCTNpEqC
+	 NXa0KQCZBv5KKtWQ8dEYr/VV9xHzUKXWy8Qsis/1ZnSuQ5+q8wUr3nEIPgj+STAE2kA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036580;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036582;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=MvWbJHz/cGW8yfmWw+/TUf2FDY9FkREfu8NRRXlIiaI=;
-	b=wX6oabtbETbmJ+3+eYoqEu+pveveAQHhRSA00ayep0oNb1Ddfa33r4BpJz1g6KAka9nu
-	 OsYs0wzdDGV63PnZpFIXJ50epjA1/Uy0r5vKEnwEIQFuu/4GANjOWTuLCvwQt/9e6NbmC
-	 faKrUGOcuIbWyk7Pq7JDcH+dKqkBrT7N7wkKstqCQLC3+qU+uRNCbPFUnVwnyaKd+iJO8
-	 vfxkeOWRU1hyWHaLFR/TxkaZeZm3hEweaT/hclXSQsnoVQ2CJ9Fbi/I5XJXAp60xAR4Lc
-	 +ijGm39mTL6DpO/hjJqFxuIKYG8Fg14XGw1RLuIGBsC94ZWMbSAuhwWtVCAHxCIFHwg==
+	bh=7oNsktwka7mvtvZat2ZRgfunxoUlPnt80qfF5mehdTw=;
+	b=veUg2X/VKbQWeCB9gJqIxhMyWVjOADWZkfWdtjNJYTTFP4qTk5Z1P5cQhswa6nAtlgY2
+	 I+D4DSpBV/Wj1H1NJsWTRrdUwlClvq7GbKiRKah3mGHfoxLcxn6P+m1OS+AywAB/KVQfq
+	 UXNjpm4rvbzf4Ta8OD3X1VDA86sRStCe2+cLf6P2I2IQMSw5qh79iMRq797PUCljPnz2X
+	 XZTjy4FgMPZh3sqCf+e3/6q2aDyKcAPUrgdhWfQ3g4I6yUEtoKQ9U+G9BzIy7yv7s3bYw
+	 3mrmPAEnt8+KVo5e9dz/6nSrqYwIX4wIQhZdADol69gwxqO7RHZ3jghKbEMUSMCMMxA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upn9BVXG;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hqd0JQMz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AC5606A339;
-	Wed, 18 Nov 2026 21:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD349606A332;
+	Wed, 18 Nov 2026 21:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=upn9BVXG
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D241F000C4;
-	Wed, 18 Nov 2026 21:16:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Hqd0JQMz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E470E1F000C4;
+	Wed, 18 Nov 2026 21:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036579;
-	bh=MvWbJHz/cGW8yfmWw+/TUf2FDY9FkREfu8NRRXlIiaI=;
+	s=korg; t=1795036582;
+	bh=7oNsktwka7mvtvZat2ZRgfunxoUlPnt80qfF5mehdTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=upn9BVXGZgKg3XJz5KKzurrtyy0GNQuyqdNBZFolTAB3y7gLaYOH0rnl69MzClF4o
-	 Ogemuiwp3x9zPsH6LwqmtbfBOWOhup/4z819cfpbjZ5SL7+lvCP/S41zr87+VBnMSV
-	 F71YXVnak+QG0+bqo2iBqSP9hfZ76vqUwPcJR1Fg=
+	b=Hqd0JQMzIXm2bSlpRRmL5TCP7ddcuOnYlkecomR5eoty4VfnFXSUvbu6cfaKJ2ahn
+	 bluA7U5nJ3to/qGZMYPYz6COYqk+qVWeiGoL3P2Qd/JqRGRQ5bRvBRLd8cceoAgMf7
+	 +FN8RaCiCawSM/dAoI1XdIynTVOMWhsusKRt9+O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Wentao Liang <vulab@iscas.ac.cn>,
-	David Sterba <dsterba@suse.com>,
+	Weigang He <geoffreyhe2@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1067/3318] btrfs: zoned: fix block group reference leak in btrfs_repair_one_zone()
-Date: Wed, 18 Nov 2026 15:28:09 +0100
-Message-ID: <20261118150351.974230523@linuxfoundation.org>
+Subject: [PATCH 6.6 1068/3318] mtd: parsers: qcom: fix offset/size overflow on large partitions
+Date: Wed, 18 Nov 2026 15:28:10 +0100
+Message-ID: <20261118150352.008038453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,54 +68,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Liang <vulab@iscas.ac.cn>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-[ Upstream commit 886f1aa6e6b30a02901aa7f140149d466e10a873 ]
+[ Upstream commit 2f7fa8d90694d21dce68ceabd8383252b111cfea ]
 
-btrfs_repair_one_zone() hands the block group reference taken by
-btrfs_lookup_block_group() over to relocating_repair_kthread(), which
-drops it.  However the return value of kthread_run() is not checked, so
-when the kernel thread fails to spawn, nothing executes the put and the
-block group reference is leaked.
+In parse_qcomsmem_part() the partition offset and size are computed as
 
-Check kthread_run() and drop the reference if the thread failed to
-start.
+	parts[j].offset = le32_to_cpu(pentry->offset) * mtd->erasesize;
+	parts[j].size   = le32_to_cpu(pentry->length) * mtd->erasesize;
 
-Fixes: f7ef5287a63d ("btrfs: zoned: relocate block group to repair IO failure in zoned filesystems")
-CC: stable@vger.kernel.org
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Wentao Liang <vulab@iscas.ac.cn>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Both le32_to_cpu() and mtd->erasesize are 32-bit (u32). The multiply is
+therefore evaluated in 32-bit arithmetic and the product is truncated to
+32 bits before being widened and stored into the 64-bit (u64)
+parts[j].offset / parts[j].size fields, so the 64-bit destinations are
+never used at their full width.
+
+The SMEM partition table is firmware-provided and the per-entry offset
+and length are not bounds-checked against the device geometry (only
+numparts is capped). On a sufficiently large flash, a partition whose
+(offset|length) * erasesize is >= 2^32 gets a silently truncated
+offset/size and is mapped to the wrong region of the master MTD, which
+can overlap or extend into an unintended area.
+
+Cast one operand to u64 so the multiplication is performed in 64-bit and
+the result fits the 64-bit fields without truncation.
+
+Found by static analysis tool CodeQL.
+
+Fixes: 803eb124e1a6 ("mtd: parsers: Add Qcom SMEM parser")
+Cc: stable@vger.kernel.org
+Assisted-by: LLM codeql
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/volumes.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/mtd/parsers/qcomsmempart.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index e371bcd14e8cf..626f6aa5ef2f3 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -8206,6 +8206,7 @@ static int relocating_repair_kthread(void *data)
- bool btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical)
- {
- 	struct btrfs_block_group *cache;
-+	struct task_struct *task;
+diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qcomsmempart.c
+index 4311b89d8df00..b12d87c3b0232 100644
+--- a/drivers/mtd/parsers/qcomsmempart.c
++++ b/drivers/mtd/parsers/qcomsmempart.c
+@@ -143,9 +143,9 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
+ 			*c = tolower(*c);
  
- 	if (!btrfs_is_zoned(fs_info))
- 		return false;
-@@ -8223,8 +8224,9 @@ bool btrfs_repair_one_zone(struct btrfs_fs_info *fs_info, u64 logical)
- 		return true;
- 	}
- 
--	kthread_run(relocating_repair_kthread, cache,
--		    "btrfs-relocating-repair");
-+	task = kthread_run(relocating_repair_kthread, cache, "btrfs-relocating-repair");
-+	if (IS_ERR(task))
-+		btrfs_put_block_group(cache);
- 
- 	return true;
- }
+ 		parts[j].name = name;
+-		parts[j].offset = le32_to_cpu(pentry->offset) * mtd->erasesize;
++		parts[j].offset = (u64)le32_to_cpu(pentry->offset) * mtd->erasesize;
+ 		parts[j].mask_flags = pentry->attr;
+-		parts[j].size = le32_to_cpu(pentry->length) * mtd->erasesize;
++		parts[j].size = (u64)le32_to_cpu(pentry->length) * mtd->erasesize;
+ 		pr_debug("%d: %s offs=0x%08x size=0x%08x attr:0x%08x\n",
+ 			 i, pentry->name, le32_to_cpu(pentry->offset),
+ 			 le32_to_cpu(pentry->length), pentry->attr);
 -- 
 2.53.0
 
