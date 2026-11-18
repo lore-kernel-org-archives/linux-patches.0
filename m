@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057702;
-	b=IIEWES8UtldMqYb6SksFx9vDFBkivQGo8IjSnVM2OdJSKyc1KfmgKf0gyQOtpePhgz9Y
-	 0Pkf7x6zxWseNAcofVeUqux1opb415gs3xZF1eIV+AT0a9wCg4ZNQZY3i6eTxBq7CL/p8
-	 6I3Eryun8K9B0fWSQ3axMe+bl9y5R+zOx6kkD9OmE1DXjxG4l9kzuzCHYVwlSFYjxMt9c
-	 AEf1lM5/57zaqmYlMcCx+0mnAaAhpvMvtgWcIJXxCSTFJcAzVam0qFAF9EwO7e2g7nG/3
-	 PQ17enAvhhX49Y1qk7FBGgk4kpgTBoEJcxW6/ocjFgVQOCrFbQ4mmTxHJw+tLu18eIg==
+	t=1795057705;
+	b=cKEvpqc3yU5MMcpuXtZzE2+X2Jh10SElAFRrY+W/1y5cS8ZneFDqWVXu8F2wUJ62A9GN
+	 /bwgTW4y4UQNDoGXag8hV7vj/fHkBnqFwC90PJDJ3t0QiQ6Fz/CkrV6+e9Q2ZWlKyV46+
+	 fLqoDqBmVOLaIWy7h5PYqP4Tcifi1kS5iuvvNE3zt2mrrKO2q2TJUxyMVXgEQDtGPReEL
+	 B3iHEWtsJPlK2xZdLz7WiPO9FPXWLhz4XOYZfUNNPRRSI+Xb0AG24LooL+Y5qYfwc7k8K
+	 EkTCoDhj0acGqvJKBIiCX454Sg8aCunsM3ODGd63DmFmBSL07NasVZwpjuZcPAzr3NA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057702;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057705;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=Dhh7LFINCwrTl/G7d1UMxemCPN/r9V9YAdmyiiQ+w6U=;
-	b=MHMx77+NOqy3G4qPDl43+lE3Ww/ePlDlkX/Bal3JLEFTBR2ZAeyd3rYGkM2psJRT+oMl
-	 58AlOZyuCx8KjpUY9GrSLy52WkqXDKPG8gxfbK6sSS8ngl1CqICsIY6fykvnf8xVUfDG0
-	 jOkqjAUpKYhL8I8y6OTFUsXkC+WUetqVPeinBgIDfzh0DRmA3oGWrbxcC5aTebiIyN4oG
-	 8PdEXUyxU49ckxPnFM5jyMA8AYtCT2fgkqu0WNCGeWzvfLai5rRFG42qV4JqVf/Cjt5Ix
-	 4BZJfMLuQDcSoTYgfjBDLvhOBpMfX9rx+3Nj4pFMmRxqOssvTfi26S7wQ5GvgvTkCNw==
+	bh=gp1odGEn+f1kXoUhr7mKAU6WEeidyDduLq14DHrqQLY=;
+	b=GF22aeQzmS6AWpQbTc+CaCzNQ3liGqRroMEKFW7ufkC5qCIIFDJLlNRrBGuKVZQ2DFgq
+	 iZlt71eNJ+XaWV+2gU3rQwnt+c3hdhMD7Gtd0ennMkml3UEWvymGL1NhKOn510i2cWzrV
+	 UBOE1kLGBM5+50+dvGbN/py1oJZ1Mo4xvscevrmAE4dr8ovLbyp/gsdivMM+XQIcDdn+B
+	 Ux2466dFXpOfMQ2My31/2Ioe5a1CRtpclfec49EOsZHuk8KMLGm8RDPWSezizf/5bh27p
+	 kav85z4pt+FcCbSEINuyZSkQhXgP7Vl5zFecJQT2j9mB8vMR98wGo7Z96dw2V070Cog==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GubXQrU7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xZjwKBK8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E21F606A320;
-	Thu, 19 Nov 2026 03:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EF4606A320;
+	Thu, 19 Nov 2026 03:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=GubXQrU7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51401F000C4;
-	Thu, 19 Nov 2026 03:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=xZjwKBK8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956A91F000C4;
+	Thu, 19 Nov 2026 03:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057702;
-	bh=Dhh7LFINCwrTl/G7d1UMxemCPN/r9V9YAdmyiiQ+w6U=;
+	s=korg; t=1795057705;
+	bh=gp1odGEn+f1kXoUhr7mKAU6WEeidyDduLq14DHrqQLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=GubXQrU7zREwmyZj4URwRC73FeQ2YMNpFJWrgeELxS8uH4ex0Uv28LAHu28Z5NrTR
-	 pbB8H2COyhQwVWxt/uJ/pCt1qpGNJAVzl1KsbRoiLkfto0TSauGje9yWXONppesXGP
-	 zjO9Ctetzq5l1asxlSuKttRSck0tcrBSw8pTQ4mk=
+	b=xZjwKBK8v1lE2HdalgTwo0nyqYGIVDaYXdAuR9UVQmxJjHvzUK9SDNXUiZ8cECt4K
+	 e5r4A3whMAdATdMEbWO/YdLA2yY3/YoE+fa3X5Za0tLaicI5nMfNGw3RvrZjBqCUTI
+	 UMxhpVaZj9aJSzlp/8Ows76tNU6fBf+Wq3NmY99w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	BingKun Yue <yuebingkun@kylinos.cn>,
-	Helge Deller <deller@gmx.de>,
+	syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com,
+	syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0184/1848] fbdev: platinumfb: add error checking for ioremap calls
-Date: Wed, 18 Nov 2026 15:37:02 +0100
-Message-ID: <20261118145919.324836089@linuxfoundation.org>
+Subject: [PATCH 5.10 0175/1848] ALSA: hda/intel: Add sanity check for BAR0 size
+Date: Wed, 18 Nov 2026 15:36:53 +0100
+Message-ID: <20261118145918.872385439@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,87 +69,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: BingKun Yue <yuebingkun@kylinos.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit ba13226fc966004713aed47931db8922b84d1960 ]
+[ Upstream commit 9895573b0185f922be4cf500a0f2e5b9560ab1c3 ]
 
-The ioremap() and ioremap_wt() calls in platinumfb_probe() were not
-checked for failure. If any of these mappings fail, the driver would
-dereference NULL pointers, leading to a kernel panic.
+The recent reports from syzkaller showed that we can bind any wild PCI
+device to HD-audio controller, and if PCI BAR of the device is too
+small, it may lead to a crash, as the driver believes as if the full
+register range were accessible.
 
-Add proper error checking and use goto-based cleanup to avoid code
-duplication across the error paths.
+For avoiding such a problem, add a safeguard before the actual probe
+to check the available BAR0 size.
 
-Signed-off-by: BingKun Yue <yuebingkun@kylinos.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Note that the threshold (0x200) is chosen to cover all needed
+registers at probing.  But this doesn't mean that it would cover fully
+for all features including the extended ones.
+
+Reported-by: syzbot+10cd2d1efe8eeb604bee@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=10cd2d1efe8eeb604bee
+Reported-by: syzbot+5ebe7cd17e48b4293660@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5ebe7cd17e48b4293660
+Link: https://patch.msgid.link/20260813150354.763502-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/platinumfb.c | 35 ++++++++++++++++++++++++++------
- 1 file changed, 29 insertions(+), 6 deletions(-)
+ sound/pci/hda/hda_intel.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/video/fbdev/platinumfb.c b/drivers/video/fbdev/platinumfb.c
-index ce413a9df06e4..d2fd6725d5c2b 100644
---- a/drivers/video/fbdev/platinumfb.c
-+++ b/drivers/video/fbdev/platinumfb.c
-@@ -570,15 +570,30 @@ static int platinumfb_probe(struct platform_device* odev)
- 	/* frame buffer - map only 4MB */
- 	pinfo->frame_buffer_phys = pinfo->rsrc_fb.start;
- 	pinfo->frame_buffer = ioremap_wt(pinfo->rsrc_fb.start, 0x400000);
-+	if (!pinfo->frame_buffer) {
-+		dev_err(&odev->dev, "failed to ioremap frame buffer\n");
-+		rc = -ENOMEM;
-+		goto err_release_fb;
-+	}
- 	pinfo->base_frame_buffer = pinfo->frame_buffer;
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index cb3dccdf3911c..a16c09fcaedec 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -2191,6 +2191,15 @@ static int azx_probe(struct pci_dev *pci,
+ 		dev_warn(&pci->dev, "dmic_detect option is deprecated, pass snd-intel-dspcfg.dsp_driver=1 option instead\n");
+ 	}
  
- 	/* registers */
- 	pinfo->platinum_regs_phys = pinfo->rsrc_reg.start;
- 	pinfo->platinum_regs = ioremap(pinfo->rsrc_reg.start, 0x1000);
-+	if (!pinfo->platinum_regs) {
-+		dev_err(&odev->dev, "failed to ioremap registers\n");
-+		rc = -ENOMEM;
-+		goto err_unmap_fb;
++	/* A sanity check against wild device binding;
++	 * here the range 0x200 is enough for the registers used at probe,
++	 * but it doesn't mean covering all HD-audio registers
++	 */
++	if (pci_resource_len(pci, 0) < 0x200) {
++		dev_err(&pci->dev, "Too small PCI BAR0\n");
++		return -EINVAL;
 +	}
- 
- 	pinfo->cmap_regs_phys = 0xf301b000;	/* XXX not in prom? */
- 	request_mem_region(pinfo->cmap_regs_phys, 0x1000, "platinumfb cmap");
- 	pinfo->cmap_regs = ioremap(pinfo->cmap_regs_phys, 0x1000);
-+	if (!pinfo->cmap_regs) {
-+		dev_err(&odev->dev, "failed to ioremap cmap registers\n");
-+		rc = -ENOMEM;
-+		goto err_release_cmap;
-+	}
- 
- 	/* Grok total video ram */
- 	out_be32(&pinfo->platinum_regs->reg[16].r, (unsigned)pinfo->frame_buffer_phys);
-@@ -626,13 +641,21 @@ static int platinumfb_probe(struct platform_device* odev)
- 	dev_set_drvdata(&odev->dev, info);
- 	
- 	rc = platinum_init_fb(info);
--	if (rc != 0) {
--		iounmap(pinfo->frame_buffer);
--		iounmap(pinfo->platinum_regs);
--		iounmap(pinfo->cmap_regs);
--		framebuffer_release(info);
--	}
-+	if (rc != 0)
-+		goto err_unmap_cmap;
 +
-+	return 0;
- 
-+err_unmap_cmap:
-+	iounmap(pinfo->cmap_regs);
-+err_release_cmap:
-+	release_mem_region(pinfo->cmap_regs_phys, 0x1000);
-+	iounmap(pinfo->platinum_regs);
-+err_unmap_fb:
-+	iounmap(pinfo->frame_buffer);
-+err_release_fb:
-+	release_mem_region(pinfo->rsrc_fb.start, resource_size(&pinfo->rsrc_fb));
-+	framebuffer_release(info);
- 	return rc;
- }
- 
+ 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+ 			   0, &card);
+ 	if (err < 0) {
 -- 
 2.53.0
 
