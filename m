@@ -1,58 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795045348;
-	b=T/zJSfJoED69HhIJJdRi6RNPXpQ6BPeVtDjuLM3xWiqF+0LOMVoICtzP91aQUtC9uy8r
-	 GSx0GFcOhIKPvIL0jLSYgzjP608fchx6T9uXX8yTeUS/9n41awZ7gbtQJxrPk4N05qtb1
-	 bh00krc+R+KlqiNwTs86++mWnaZj9Zn2+wIuf9ke/UOP1piGNxjkAlk6f+476Mxz0/zFf
-	 BoljThxap5fzAl2uSvuAaPNWe1wLzXNvhvSALLzO7T8hHu5K07zOLpbrIiFLFdxA8nSMn
-	 ckryOCGcR49t2F/ML+DZbHnfnUMo4+ATHtBdrHf2Oahxu9+xFnDH/4wfBx3X/Y2s6Ng==
+	t=1795045351;
+	b=A2qu1pTKn1HHmevEzuX/bI2k/qsaopA/J1zriROCZZboEc+9EI7o1dD4IhdydG2VUI0u
+	 xX+TJSpOtd30fjwD1K4aSgVxBexAjYhu1CBtOynQflyp3jv4DUNdfuG9pAJzrR7BvC8ZP
+	 JnE/Xr8NOmIfJ75AkzXue9ags0ARmVVk1OPD+0+jLMdpz6YHbvDZz7LIuqpxKftFuM9Bj
+	 2hQydQd8r2ylOxGNA4E+hiFfMeMm8WTbmmfCe1RrNAhlogzC4QgIW4Szpwuz+jOqkamxL
+	 QXlLUoNInqXbeSUelF231x5jtCF8pWWCWGiddFFppoL034TA0UCgOBqt8GN4qFpDuyw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795045348;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795045351;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pjuBo7+HCgrRBco4zqLCaskHZeOYCvUduZIwork3Q0c=;
-	b=PsIlPaEtxkBEA+LB1Jzk8eYc9wV1G5OGWdRHZ+VBvm7xhRi41QkNDnFHI7yHOc2dodK3
-	 AqbLsnzKzwSpE5QVMqW3YaufNysOlkkCWsTix50gF/Mc98L2X2aW654Sy4ysHz9E5gO8i
-	 h05cPKtaIFsrH2aWtiMMyIYRtss7vs53IsN8g7Hczqy+DEmWxpd0kAmzjaCJqiGklpECf
-	 bHFDxg+V0KllwihLygFWr1VS5qFEh18wqoPtx1OBTKNTW5sqOtF8cALThEoeN7jZdjoTk
-	 bDOSQds/6+UJM+XukaUj+dBhiOZRFo/Fu673xSH1wVIvFdw2QrTu3nKOJ9tBFGfbXTA==
+	bh=kM5XrDsmG8zgk5XqaYva58nl9/H4UcJEWjmQh+dXB5U=;
+	b=nquXISRIRPquZTFxmlXzAgE5HLWkkuCGClQ5+eELEELWjn9XbUFsF9W1aTnXqYOlm/Oh
+	 CHsU7XgmYL2HDoe6uGBtle/T0YH2cKtz3VHfJszARKgkRj7d5vW3S+vQU8pbo8Yr7apvV
+	 GL4UQjfxDvPl+667XBIjrGYsl1ys4yWTETBBmfaZqkrO4EkMO457LBrwbiwXs7ukHPYH8
+	 ZScwNk/9IibDriAPnzhw/Z4PPrCw4a1GiqTrndhXTUW0cEKaT0MF3kWodXe5ONZj2Emui
+	 95B2DxBRV9gVtqmfZRixBW4KwUw+8Y+1IF6B7+WzBwRDojDJs6HEeTrZZeqeXMxs7NQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QL1oY32B;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0D058cDZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E96606A320;
-	Wed, 18 Nov 2026 23:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82AB606A32A;
+	Wed, 18 Nov 2026 23:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QL1oY32B
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E701F000C4;
-	Wed, 18 Nov 2026 23:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=0D058cDZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED96C1F000C4;
+	Wed, 18 Nov 2026 23:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795045347;
-	bh=pjuBo7+HCgrRBco4zqLCaskHZeOYCvUduZIwork3Q0c=;
+	s=korg; t=1795045350;
+	bh=kM5XrDsmG8zgk5XqaYva58nl9/H4UcJEWjmQh+dXB5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QL1oY32BUYh5VjBmcfXAyfdSq9ptG4KCLUG8M7CJMvM7BFfqday/yQHhx5lBARhSA
-	 8oTK5AOMq7RONjSj6tlzWYAUJn7Wo8BLWwh2mG69woTCcuJntWLnZJLOTnd815dN9w
-	 2uoT3C53wn7pDEDpk36pr+P60MPk6y2a/zagCksA=
+	b=0D058cDZOPHKUtp/GT/BtzGRtIUyY8dkczRb1jhcH7LRdsTagKxf+eD+QPaBfnWHl
+	 /dG1ptKm1aDYxN+t5h258N5QtI9LDGOE4yHh8Ang0dM6spf1elwuV1Arag21NQPt2B
+	 z+XPotV1AzyPoFF/j3Jtzf+5rRVuO3q7JBtNVskQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0888/2857] ocfs2: exit recovery thread on mount error path
-Date: Wed, 18 Nov 2026 15:32:02 +0100
-Message-ID: <20261118150233.528813456@linuxfoundation.org>
+Subject: [PATCH 6.1 0842/2857] drm/msm/hdmi_phy: Cleanup after msm_hdmi_phy_resource_enable() failure
+Date: Wed, 18 Nov 2026 15:31:16 +0100
+Message-ID: <20261118150231.892794019@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -74,65 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joseph Qi <joseph.qi@linux.alibaba.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-[ Upstream commit 6163a859649e9432e9c79c541f36dbf3bba9172f ]
+[ Upstream commit d27f831aaf20aaf06e41ceb1b260e10672269155 ]
 
-When a mount fails after the cluster connection has been established, e.g.
-in ocfs2_mount_volume(), ocfs2_fill_super() unwinds via
-out_debugfs/out_super and frees the osb without disabling recovery.
+If msm_hdmi_phy_resource_enable() fails, e.g. when enabling regulators,
+it should reverse the state of things already changed.
+msm_hdmi_phy_resource_enable() is used also in probe path, thus such
+failure, which could be simple deferred probe, would leave these
+resources permanently enabled for the rest of the runtime.
 
-A node failure event can concurrently launch the recovery thread, which
-blocks in __ocfs2_wait_on_mount() waiting for the volume state to become
-VOLUME_MOUNTED or VOLUME_DISABLED.  As the mount error path neither sets
-VOLUME_DISABLED nor wakes osb_mount_event, the thread can never make
-progress: the kthread leaks and stays blocked on the wait queue embedded
-in the freed osb, which may then be accessed as freed memory.
-
-Fix it by setting VOLUME_DISABLED and waking osb_mount_event on this path
-so the thread bails out, and replace the plain kfree(osb->recovery_map)
-with ocfs2_recovery_exit(), which waits for a running recovery thread to
-exit before the recovery map is freed.
-
-Link: https://lore.kernel.org/20260828112825.666097-1-joseph.qi@linux.alibaba.com
-Fixes: f1e75d128b46 ("ocfs2: rewrite error handling of ocfs2_fill_super")
-Signed-off-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
 Cc: <stable@vger.kernel.org>
+Fixes: 15b4a4523859 ("drm/msm/hdmi: Create a separate HDMI PHY driver")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/752654/
+Link: https://lore.kernel.org/r/20260911-drm-msm-hdmi-fixes-before-eliza-v4-1-87bdb9f1987f@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/super.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
-index 59b6ec7eec4f2..8dd141609f69c 100644
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -1169,8 +1169,17 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- out_debugfs:
- 	debugfs_remove_recursive(osb->osb_debug_root);
- out_super:
-+	/*
-+	 * A recovery thread launched by a node failure event may still be
-+	 * waiting for the volume to be mounted.  Set VOLUME_DISABLED and
-+	 * wake it up, then wait for it to exit before osb is freed,
-+	 * otherwise the kthread would leak and stay blocked on the wait
-+	 * queue embedded in the freed osb.
-+	 */
-+	atomic_set(&osb->vol_state, VOLUME_DISABLED);
-+	wake_up(&osb->osb_mount_event);
- 	ocfs2_release_system_inodes(osb);
--	kfree(osb->recovery_map);
-+	ocfs2_recovery_exit(osb);
- 	ocfs2_delete_osb(osb);
- 	kfree(osb);
- out:
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+index 1f5924b4d981a..04782f14a5691 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+@@ -62,16 +62,28 @@ int msm_hdmi_phy_resource_enable(struct hdmi_phy *phy)
+ 	ret = regulator_bulk_enable(cfg->num_regs, phy->regs);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev, "failed to enable regulators: (%d)\n", ret);
+-		return ret;
++		goto err_pm_put;
+ 	}
+ 
+ 	for (i = 0; i < cfg->num_clks; i++) {
+ 		ret = clk_prepare_enable(phy->clks[i]);
+-		if (ret)
++		if (ret) {
+ 			DRM_DEV_ERROR(dev, "failed to enable clock: %s (%d)\n",
+ 				cfg->clk_names[i], ret);
++			goto err_clk_unprepare;
++		}
+ 	}
+ 
++	return 0;
++
++err_clk_unprepare:
++	for (; i > 0; i--)
++		clk_disable_unprepare(phy->clks[i - 1]);
++	regulator_bulk_disable(cfg->num_regs, phy->regs);
++
++err_pm_put:
++	pm_runtime_put_sync(dev);
++
+ 	return ret;
+ }
+ 
 -- 
 2.53.0
 
