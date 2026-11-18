@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026527;
-	b=03cBLH+lBsEVfojOQ8FZlcesj1bykBv6mGy4F5xWh/tMRHVGXxYG8LPz3iL+AQN+8eSb
-	 1lNDdtYz3RpjAEqlVvD1kynMRWtXolc1vc6NL29Wt9/76dJKtxfXm0KUvs/i5Vgjn0cH2
-	 T7k3iRo42lW3vGAZuDwjZav9HCC69adtGpwb4rwVMuPJeomi1yoDcFkoq18qZ99yMH+GZ
-	 BMP/msHh/HdBpRTCZQ/zEaw6eKSYJbwec1bVy5uRbYOQL7iCVDIh1SDlI/bcklZ06a9Yx
-	 wudf1JR9/zCBzJJsP9OMMGk89GSD0uvLziXaFZqL1rcnl9EeArbey/sCJ3bS37Kr7hQ==
+	t=1795026530;
+	b=weurSLiFIn1Hu62T1rVshCuy9m8ET9whbUnC6E1PcSTfRKX9CcHJUtwVv5qD2cz1TyWr
+	 DdJpml62vt9RX0T0oVETgGGlviip9M+XnLzhZN5tqzgd0x00f64+BnYii/ZRSBT8EuHM5
+	 Ml2QJ6HuNrZn4jzNdxBR7E0TzDeehi/tVJ2l8MHMoHRJs1fhbd+4B6fH+j3ArFKjJ6kDp
+	 QEFwZ9GFMFJmYo+XpZXa+OJXKnnLyz9db1sU8pGW1s4AhbFl9q44QdxvY+u+4EonA4sNb
+	 whGTCsCoTDZZ+rwtQgStk0CETrX0TPZq6ShYTXreGuGh3xZR6iXiN5JY4UVZ4SFt43w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026527;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026530;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5QicVRaAipwIkw05e6EYdhLov/BKgKxbOQcYLdVrK5o=;
-	b=gKuXKv67oW4xK0QOu3/XQw4Qkgui7cziNpZIIgQvt22IGfT0K/+vUWaBzL0zUFat6gVf
-	 irulI7P2g+LGYWTVDy9xy+4VARLdjcS9YUgkhJu9qpCaS6yr97JwIJ7IX0J1F5fQBl0E+
-	 kSU2hGt3JfphWEwt8rjMUjWhr8XVmIZqmgthdolvU+Cgd0J/RwYbWkFxcgahTUD3pbj/O
-	 xNje/HEaG4FHeaD7Do1IgJA/3tXdQsQrLv3AuxWGT5ajLviRPXEjyhlPFfTJFXtsZMjTR
-	 GcgmYc4MR5J9E8D3ElPS01ZIqK1iQLISspIouaFeXd0gxaYwz2HTUJf0+c1DVIJPExw==
+	bh=YiKQFJ5BMcJnSlBjyUCGb2hACj3MjOQSDeqEykq0MzU=;
+	b=x6h5kaU6teLISakhTAwJB9pbpgd5L+YCcUJdTPJKc+dWLEQoXTDXjcHi+atCYNArxYH+
+	 FtvaMD87IjiQYCM4kGNrqX8cqFmYmdTBtfDCgGXVqmYHPz2ftv26XVvIyx5Z5L8KpnK7i
+	 w+h1vWKMWGCr5diEJNcsGuXoIcupKD+ZGBVuvWPV7hAJDA/vIW7NtgH9XIemTReeQmqsH
+	 T2PlSMwSLToIhcCmkSu9TGse4s6arc5INtLYOw6SkCdcI7mSsTrBZ9V7ccyQ191D9KWaU
+	 zwBvmpYQ5dFgCdw7MwiHaGf1aHzu4ytuVP3zF04QCASpRYzJfVFauXBm1HIcsePU4Jw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJvvfVSp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DulPmZQ8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35136606A320;
-	Wed, 18 Nov 2026 18:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195B1606A31C;
+	Wed, 18 Nov 2026 18:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eJvvfVSp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884EB1F000C4;
-	Wed, 18 Nov 2026 18:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DulPmZQ8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BA81F000C4;
+	Wed, 18 Nov 2026 18:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026527;
-	bh=5QicVRaAipwIkw05e6EYdhLov/BKgKxbOQcYLdVrK5o=;
+	s=korg; t=1795026530;
+	bh=YiKQFJ5BMcJnSlBjyUCGb2hACj3MjOQSDeqEykq0MzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eJvvfVSpEd5aCEn6JBUGMspMi8l+KaOrGPHN25QsHInBqshQ2MiKS2nMke5ZwG2cR
-	 CQpY3uegm/fW4ktrWWXHjdNGJfjAWQVLDyW7RmRFVixofc5DngMXOPgZMlSoEBTaK8
-	 TW+yd4m5oFcjP3dYNJ7Pf8KHVkE8gOUJPMPZ9h34=
+	b=DulPmZQ8O3ntS81agquiCxgzOrv3uL5oyym3JdusW/0XDrO5J0i/PjRv/o2RxxWe3
+	 Qg106PQr5fsEWgAIsaN6q23J34bVSorx9wMhsIZF1mp3/D3ibGXK8ix5hwyZJS0lDJ
+	 KxH+nNWCW4dx9YDaR88DQziSA9F18u8EzhoApCSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yuho Choi <oss.patchbox@gmail.com>,
 	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1425/2151] bus: arm-cci: Drop CPU node reference in cci_ace_init_ports()
-Date: Wed, 18 Nov 2026 15:52:40 +0100
-Message-ID: <20261118150213.862519752@linuxfoundation.org>
+Subject: [PATCH 6.18 1426/2151] bus: arm-cci: Drop cci-control-port node reference in __cci_ace_get_port()
+Date: Wed, 18 Nov 2026 15:52:41 +0100
+Message-ID: <20261118150213.895926348@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,37 +70,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Yuho Choi <oss.patchbox@gmail.com>
 
-[ Upstream commit 41d6c0fcd4d75bf78c304c6660d60fcf757885ce ]
+[ Upstream commit 810ccc792193909ba9bbb4246e0eb0de14dad724 ]
 
-cci_ace_init_ports() looks up each possible CPU's node with
-of_get_cpu_node(), which returns the node with its reference count
-raised, but never releases it: neither when the CPU has no ACE port nor
-after the port has been recorded.  Before the commit below the loop used
-for_each_child_of_node(), which manages the references itself.
+__cci_ace_get_port() looks up the device's "cci-control-port" node with
+of_parse_phandle(), which returns the node with its reference count
+raised, and only compares the pointer against the probed ports.  Neither
+the match nor the no-match return releases it.
 
-The node is only needed for the port lookup, so drop the reference right
-after __cci_ace_get_port().
+Drop the reference on both paths once the comparison is done.
 
-Fixes: 78b4d6e0fd26 ("drivers/bus: arm-cci: avoid parsing DT for cpu device nodes")
+Fixes: ed69bdd8fd9b ("drivers: bus: add ARM CCI support")
 Signed-off-by: Yuho Choi <oss.patchbox@gmail.com>
-Link: https://lore.kernel.org/r/20260923163536.596107-1-oss.patchbox@gmail.com
+Link: https://lore.kernel.org/r/20260923164122.596910-1-oss.patchbox@gmail.com
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/arm-cci.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bus/arm-cci.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/bus/arm-cci.c b/drivers/bus/arm-cci.c
-index b8184a9035837..ab9b49451f8f2 100644
+index ab9b49451f8f2..25a741e48573f 100644
 --- a/drivers/bus/arm-cci.c
 +++ b/drivers/bus/arm-cci.c
-@@ -199,6 +199,7 @@ static void cci_ace_init_ports(void)
- 			continue;
- 
- 		port = __cci_ace_get_port(cpun, ACE_PORT);
-+		of_node_put(cpun);
- 		if (port < 0)
- 			continue;
+@@ -167,9 +167,12 @@ static int __cci_ace_get_port(struct device_node *dn, int type)
+ 	cci_portn = of_parse_phandle(dn, "cci-control-port", 0);
+ 	for (i = 0; i < nb_cci_ports; i++) {
+ 		ace_match = ports[i].type == type;
+-		if (ace_match && cci_portn == ports[i].dn)
++		if (ace_match && cci_portn == ports[i].dn) {
++			of_node_put(cci_portn);
+ 			return i;
++		}
+ 	}
++	of_node_put(cci_portn);
+ 	return -ENODEV;
+ }
  
 -- 
 2.53.0
