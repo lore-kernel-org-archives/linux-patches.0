@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061819;
-	b=CRAqyXM9VXcVFx5DXxZT5cQv8E8asMoHL/Z9NIlDrq6KA/3Sl5rRI/9yvBU+IVqRMXPy
-	 /FxmZ0cfjNt/lQZ/qN/okKjoG82Wex2OEH0f1MxLzKlDQp4HmsPcqkLf/C31XfLfTHJCg
-	 COlsMJ+HI4EDbay/rTttiZpnQoKQc8QP9Es1X22OSE3lc0/9JT28iEaEQAHRgjMoscVAc
-	 nxP+tGTxU96ua6qa3/ywm8w21jGf7QVZR69VWVENwQWeV4xdhP2YPDLwANPyijz7ndf8j
-	 kjIDVoYv8wim5IrK1CDsHYkMnfE+U+LZG5yBr7ekBNn9qJLpzilFuu8cjLKYkQRtHAQ==
+	t=1795061822;
+	b=Fp2xD1rAAzu3dSyzMYA/rF20lNjvbSn2tOBeu8MDq0wBE0DpNTBMxlofaR0sfmVwGCqh
+	 ijb+iLkp/UNgIC5V3jMIDqAcNZ89zJ5DFI/V41kD4g0i1z1K9TBQ1CDJysgB+f0bDoDtl
+	 saqlbt/LDfuDLUjCMyXY4E9WuAHbo2JEhYuc+wq1+UeYLS2XdobdDCsz+2PdsGgbqggda
+	 FT26/7439cKzFYtw3kjFl0gnJyCqnRbs4CADcTL0GB9y/ruPw3U5qIBoEXpauK1d38amT
+	 SymUq5RHUYmAD3FtlUkJV8/YcdV83xvXh6MSSHrrwdXZ645xKx/R5yMBkUfwE7hHG0w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061819;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061822;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LkEJnTso9gsB8Uqa5kQVrwKegB2/pWxTMBHrS9Lkfpk=;
-	b=Q5t7An8NvO7jKTMqeDeDS5AbTRSiyWVDz6LucQ6G0xL0LdchEovpilzswcGf8zocSPMQ
-	 lOf6ULoAc+GPydwkIDtZG3/jSZhWfyJSvzOcIjH2ybJ0AhTgnKun615JTxfpVzU6dMAUV
-	 LbzcjPilnWiWbcuvLH325UotQNXPkl624vfdwuBKsYYW0yWSWGo06rX82AMV3VSa3RcFA
-	 BEbmNU8lOB5gD1zlMhKSN3ofYE/JP/rNoV49RYa3iB3uI3xUorvDQgI5U57ZquNZPns24
-	 ua1kgqaKjIH37E7o75f8i+3Ppui6Gd2pW4/J9TRm8eaz6P+IaMNp26kbqJeaIiaEcsA==
+	bh=fdeTWeq2a1vpyzb3WazGeynyu7y2ADzBVptw37tyl3U=;
+	b=JurO8v9y9RKrjHwXY+rFsm6G3GvY43BN9nc0YuEL/EpM75D/xj9fAEOQF7T3XJ9065ig
+	 66IlITMzmEqGFVeNvV68Wta1pCy5b8m+etSeK6z7d+yzIRKBO+Mdu2016MruUXmt/PAUz
+	 Jh5mNnoBMBEEWV7Qk+G6MuN/xEHpdi0iXXt74AhWy8EwAiBLtaL4Hi+j9SUJbibxrKQS1
+	 hK4qB7kzbfxsNeoi2rrdIzggs8LRrbT/KMGgP7NmnhMlDOpQ6nmjh9dYGepIOL/K90O4t
+	 9xqBQo4TpcfalsJpqtbMFN7G7Jrgtcb2CR7k/nxDoTxFL+HyizGPntMnTtzuHN9yIEA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZcZ+4bs;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k8gsdKQr;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DF2606A325;
-	Thu, 19 Nov 2026 04:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A93C606A320;
+	Thu, 19 Nov 2026 04:17:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iZcZ+4bs
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992161F000C4;
-	Thu, 19 Nov 2026 04:16:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k8gsdKQr
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 601EE1F000C4;
+	Thu, 19 Nov 2026 04:17:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061819;
-	bh=LkEJnTso9gsB8Uqa5kQVrwKegB2/pWxTMBHrS9Lkfpk=;
+	s=korg; t=1795061821;
+	bh=fdeTWeq2a1vpyzb3WazGeynyu7y2ADzBVptw37tyl3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iZcZ+4bsYtabsi5vtgnwYIA6Fny5qu4A+tTK/BKHvUh72HHF0QfWNemIfBFHfeEd4
-	 n6udI0LH+M69ahZ3z90UR16PzYwLHhYGDhk5+lYj3EvcHOE+geJTCTYElEKR5zX3fO
-	 o5uvmaFb2IwXfloVLlQipNt3fYxa3RGGEEhZW9t0=
+	b=k8gsdKQr2RqUfLkEudHRHRlzj3FOecMdzcTb8ldjG/UgspnvZTuELvTE6dDyEVYZ3
+	 VspieK0rpx9MLfJg/JN2ltKxtl+Agw154MjFN04/MK1UTNamx3YMPyXkF3sUX3Xbdd
+	 6rFb/aL0MqBzDWqpqL6Ele5IEupfnweJHTTYXTHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li RongQing <lirongqing@baidu.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
+	Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1647/1848] ARM: 9519/1: dma-mapping: Fix wrong free function in __iommu_alloc_simple() error path
-Date: Wed, 18 Nov 2026 16:01:25 +0100
-Message-ID: <20261118150028.691015417@linuxfoundation.org>
+Subject: [PATCH 5.10 1648/1848] PCI: Fix out-of-bounds MMIO read in nvme_disable_and_flr()
+Date: Wed, 18 Nov 2026 16:01:26 +0100
+Message-ID: <20261118150028.727474745@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,47 +69,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
 
-[ Upstream commit 74f79365839720bdb0c6bb4fe85c5b2a929ff5d1 ]
+[ Upstream commit 6aaa3f42e3410ea8e26c857477260159f724cb1d ]
 
-In __iommu_alloc_simple(), when IOMMU mapping creation fails, the error
-path unconditionally called __free_from_pool() regardless of the
-allocation path taken.
+In nvme_disable_and_flr(), the PCI bar is mapped using
+NVME_REG_CC + sizeof(cfg) which is (0x14 + 4 = 0x18 bytes)
 
-For the COHERENT case, memory is allocated via __alloc_simple_buffer(),
-which does not use the atomic pool. Calling __free_from_pool() on such
-memory silently returns without freeing, causing a page memory leak.
+However, the function later reads the controller status from
+NVME_REG_CSTS - offset 0x1C, which is outside the mapped 0x18 byte
+boundary. This violates the API contract.
 
-Fix this by matching the free function to the allocation path:
-- COHERENT: use __dma_free_buffer(virt_to_page(addr), size)
-- non-COHERENT: use __free_from_pool(addr, size)
+Fix this by increasing the mapping size to include NVME_REG_CSTS. Also
+change sizeof(cfg) to sizeof(u32) to make the intent clearer.
 
-Fixes: 565068221b905 ("ARM: 8561/4: dma-mapping: Fix the coherent case when iommu is used")
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Reviewed-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
+Fixes: ffb0863426eb9 ("PCI: Disable Samsung SM961/PM961 NVMe before FLR")
+Signed-off-by: Mohamad Raizudeen <raizudeen.kerneldev@gmail.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Alex Williamson <alex@shazbot.org>
+Link: https://patch.msgid.link/20260903164615.5744-1-raizudeen.kerneldev@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/dma-mapping.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/quirks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mm/dma-mapping.c b/arch/arm/mm/dma-mapping.c
-index c4b8df2ad3285..d83fbfcd0fdfd 100644
---- a/arch/arm/mm/dma-mapping.c
-+++ b/arch/arm/mm/dma-mapping.c
-@@ -1405,7 +1405,10 @@ static void *__iommu_alloc_simple(struct device *dev, size_t size, gfp_t gfp,
- 	return addr;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 7e05cf575cfc7..45262341ec60a 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -3929,7 +3929,7 @@ static int nvme_disable_and_flr(struct pci_dev *dev, int probe)
+ 	if (probe)
+ 		return 0;
  
- err_mapping:
--	__free_from_pool(addr, size);
-+	if (coherent_flag == COHERENT)
-+		__dma_free_buffer(virt_to_page(addr), size);
-+	else
-+		__free_from_pool(addr, size);
- 	return NULL;
- }
+-	bar = pci_iomap(dev, 0, NVME_REG_CC + sizeof(cfg));
++	bar = pci_iomap(dev, 0, NVME_REG_CSTS + sizeof(u32));
+ 	if (!bar)
+ 		return -ENOTTY;
  
 -- 
 2.53.0
