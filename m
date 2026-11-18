@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038851;
-	b=JaKl74oeHM6oiHQjFaBPHEQbHPY8uYd1s0MmojcCW/N2SaNrTfu9jJtmaKDqUw7lRAs8
-	 cV56pIsOHFssukYuI7jySnBV61nHbp9LxeilozNieo5sq4UxlkcnEhfEyqi2lf1STF30W
-	 UKumm5Iz8uaxiKN2dMBXP3OI2RPhsgge0nRchMq3knuJMTKlDI2gmwgqP1rT6N3WAZP0+
-	 VCDeeZ9Viq/SZbxALvmxEt6U0k3le0yEBUaCtpx2q8MUhE46ps2fdgVB9oTJpHp/Z7w5A
-	 TSUQjUNo3Z/bI35iA4QFWprMm2jXWxBcA92dT5FuORINvP/6wcQWerFHsX8CyryoOEw==
+	t=1795038854;
+	b=ehgBpd2pN6tgxPYfoPEVzhjidPQFIc3VR9JlSfmAms8LfX1eJHXzFVPeWkF+KDUN37rY
+	 2B2NP2ZRjc8nttLFse3mM1pNV95PQAr8S1s9GYIO1cs+uX1t+WRig+5NIseGZjkN/Fy1k
+	 1jUjW3Fmp78HJJ3cpJLeDRa6uz999Kw11t9bPlBHLMbiFk/HTZrjq6os1jbsBSpoCt3oZ
+	 hFDgsDgySHqdlA+skFTG1qQ2Qr1xfXZHiIU0ulFvtjB7e+NtrsQmLwQINA8xudcEWCNot
+	 Q/oR+wPvqt5HtaXfxiOV/sN/FJj502IJ3DEsvZJ/JycfLPwPfXAD2fs6+mfKsDZIWAQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038851;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038854;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8Nk3sdJCdGm+MexJj2/Gefw4SUrp5Z8dZ7E5t1m8o5o=;
-	b=ooG/VKYCHos1t6UHW4+eahXk6Jc//ADxhGtrn4pVKDyrXEqVvRLaZR5HvvT2spLnk1CT
-	 70wvx5WZDSbsZaUKDp1EP21i1GzdpK2Nt+aMZx6LuQJIaNBbqP3TjP9p1Wexw31GbK9Ae
-	 xNKkxpvgl0cO07rJG/Cve7bvBePOionF+pMbLO5bi8Iw58nDO2DuZ79AoPJkHm8spLSSg
-	 Gy7ZS+DGd0rjdkdlnLmKNSmjRpBl5rSf1wk2lbTRQ1yficBCNpVI96lv1fBM4LIMR+OYb
-	 WK8zq+8ezKDWPqBpGPR7Gc9XTntbA/ZuM7mY4n5fPGfwD3/rArcUMh9c6mT4yV1AIpw==
+	bh=1wwwe6eMqCmOqopz5clAspLVJBdoFRJ2PTGrchlAba0=;
+	b=xWFeL19Uemf9YPyKtPWCLPM6XmWQqDS9EXdN3CDKrpe9NAIpUN9lBUSWqDPmgTyR96Sb
+	 Hu9EOdY+VsD1s073n1evyKLiYHAN+LHQJwomuWdFecEdUV9iYECc67eZXlJdfqszhf5Y4
+	 1U2RSwqz54EGTODauY6VDmav9Vm/Cba8bj40i475Ly6A/lMd5ck0VWAmJrDnXKUR7MkOW
+	 YRt8nft5QZYwgWbGV6QvTy76CcjtxlP+JBN5xiW8BgWYgV2GjK+fZdjqcIFUWfws/sKlV
+	 0jNbUdaNF62rWyqFwl96SBOriSpGJIa+UYJbk0xvxdX1RUlU/1cgvraizuP4EcwS/NQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Bx9d9Pf;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5wNW7Q2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52D5606A32A;
-	Wed, 18 Nov 2026 21:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD25E606A325;
+	Wed, 18 Nov 2026 21:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2Bx9d9Pf
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181B71F000C4;
-	Wed, 18 Nov 2026 21:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x5wNW7Q2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1C91F000C4;
+	Wed, 18 Nov 2026 21:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038851;
-	bh=8Nk3sdJCdGm+MexJj2/Gefw4SUrp5Z8dZ7E5t1m8o5o=;
+	s=korg; t=1795038854;
+	bh=1wwwe6eMqCmOqopz5clAspLVJBdoFRJ2PTGrchlAba0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2Bx9d9Pf8jBZ5kxtPHcwQDUjHjj8s1bFsfL7Btsm/WDrw6/JVeSVHEZb86nDVgeVT
-	 bm3f96aAF6x5ck3UH85uw8xgO2RnoaByXUtawYaIMdXOyGnlTkx4/me1Chyo03CN+B
-	 gaRX4/1ZCgx6IVUK3ijNP5DF8popB3uMNtI1dCJU=
+	b=x5wNW7Q2E7erEA0uNUImAw1ct3D7AEn67xRGtgoOcaJOpzYt5xTxKrDJOd2Um87Rl
+	 h8T/dBOXPH42nlKYXNb9lQ1WHzAE4okxI2eOYxc6D4YB2iWUso3KfnaF9un7eM1qER
+	 CFayT7GTG7EFFyg8DbwGLD0pUqvwX2o/ECEFb224=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Aleksa Sarai <aleksa@amutable.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1873/3318] proc: dont let an entry below /proc/<pid>/net be a mountpoint
-Date: Wed, 18 Nov 2026 15:41:35 +0100
-Message-ID: <20261118150418.160903980@linuxfoundation.org>
+Subject: [PATCH 6.6 1891/3318] inet: frags: bound the wmem charge of the socket completing a reassembly
+Date: Wed, 18 Nov 2026 15:41:53 +0100
+Message-ID: <20261118150418.732300496@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,244 +69,262 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Eric Dumazet <edumazet@kernel.org>
 
-[ Upstream commit eeecea75ece2ba894bee4d3c53ed2e40abda8f0e ]
+[ Upstream commit b71c101bbb9814d163c00234d43c41f0a17907d4 ]
 
-proc_net_d_revalidate() always returns 0 so that a dentry below
-/proc/<pid>/net is never reused after setns(). So lookup_fast() will end
-up calling d_invalidate(), which unhashes the dentry and detaches every
-mount on it, in every mount namespace; including locked mounts.
+When a socket owned fragment completes a reassembly queue,
+inet_frag_reasm_prepare() and inet_frag_reasm_finish() charge the
+truesize of all other fragments to its sk_wmem_alloc. These fragments
+were orphaned when queued, and might have been sent by someone else,
+for instance padded TUN packets.
 
-Then lookup_slow() creates a new dentry for the same entry. So a mount
-on /proc/<pid>/net/dev succeeds and goes away with the first lookup of
-the name by anybody with search permission on the directory. Given it's
-0555 that's everyone's grandma. A mask on such a name hides nothing as
-the repro below shows.
+Commit 3ae20e4697eb ("inet: frags: limit the truesize of a reassembly
+queue") bounds this charge to INT_MAX / 2 per queue, but a socket can
+complete several queues while the reassembled skbs are still alive,
+for instance held in a qdisc. sk_wmem_alloc can then go past INT_MAX,
+refcount_add() saturates it with a WARN, and the socket is leaked.
 
-Treat those entries like I did fd/, fdinfo/ and map_files/ and refuse to
-mount on them in the first place. It's nonsensical theater otherwise:
+This is reachable from an unprivileged user/network namespace, by
+raising ipfrag_high_thresh.
 
-  procnet net/dev stat
+Refuse the reassembly if the charge would push sk_wmem_alloc above
+2 * sk_sndbuf, the bound ip_append_data() uses, plus 4MB of slack for
+fragments inflated by a refragmentation with a small MTU, and never
+above INT_MAX / 2. The cap matters for tun sockets, which use
+sk_sndbuf = INT_MAX, and whose skbs are still owned when act_ct or
+openvswitch reassemble them at ingress.
 
-  // SPDX-License-Identifier: GPL-2.0
-  /*
-   * procnet: cover an entry of /proc/<pid>/ with a bind mount, lock the mount,
-   * then look the name up.
-   *
-   * The first task stays alive, <pid> is its pid. The "container" task has its
-   * own mount namespace. There it binds a mask on /proc/<pid>/<name>. It drops to
-   * uid 1000 and enters a new user namespace with a new mount namespace, so that
-   * the mask is locked. Then one task looks the name up:
-   *
-   *   stat    the container calls stat() on the name
-   *   umount  the container calls umount2(MNT_DETACH) on the name
-   *   nobody  a task with uid 65534 in the first namespaces calls stat()
-   *
-   * The container lists its mounts before and after (that does not look the
-   * name up) and then reads the name. MASK is fine. Anything else means that
-   * the lookup uncovered the entry.
-   *
-   * usage: procnet <name> stat|umount|nobody
-   *   name "status" is the control, "net/dev" is a file below net, "net/stat" is
-   *   a directory below net
-   */
-  #define _GNU_SOURCE
-  #include <dirent.h>
-  #include <errno.h>
-  #include <fcntl.h>
-  #include <sched.h>
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <string.h>
-  #include <time.h>
-  #include <unistd.h>
-  #include <sys/mount.h>
-  #include <sys/prctl.h>
-  #include <sys/stat.h>
-  #include <sys/wait.h>
+Several queues can complete at the same time on different cpus for
+the same socket, so the charge is reserved with a cmpxchg() loop in
+inet_frag_reasm_prepare(), before it modifies the queue, and settled
+in inet_frag_reasm_finish(). Move the size checks of ip_frag_reasm(),
+ip6_frag_reasm() and nf_ct_frag6_reasm() before
+inet_frag_reasm_prepare(), using the first fragment which becomes the
+head, so that a successful inet_frag_reasm_prepare() is always followed
+by inet_frag_reasm_finish(). All callers already kill the queue when
+inet_frag_reasm_prepare() returns NULL.
 
-  #define WORK "/run/pn"
+Found by code inspection (AI review), not reproduced.
 
-  static char target[128];
-
-  static void die(const char *what)
-  {
-  	fprintf(stderr, "FATAL %s: %s\n", what, strerror(errno));
-  	exit(2);
-  }
-
-  static void write_str(const char *path, const char *s, int flags)
-  {
-  	int fd = open(path, O_WRONLY | flags, 0644);
-
-  	if (fd < 0 || write(fd, s, strlen(s)) < 0)
-  		die(path);
-  	close(fd);
-  }
-
-  /* list the mounts below /proc without a lookup of the target */
-  static void mounts(const char *when)
-  {
-  	char line[512];
-  	FILE *f = fopen("/proc/self/mountinfo", "r");
-  	int n = 0;
-
-  	if (!f)
-  		die("mountinfo");
-  	while (fgets(line, sizeof(line), f)) {
-  		if (!strstr(line, " /proc/"))
-  			continue;
-  		printf("container: %s: mount: %s", when, line);
-  		n++;
-  	}
-  	fclose(f);
-  	if (!n)
-  		printf("container: %s: nothing is mounted below /proc\n", when);
-  }
-
-  static void show(const char *when, int isdir)
-  {
-  	char buf[48] = "";
-  	int fd;
-
-  	if (isdir) {
-  		struct dirent *de;
-  		DIR *d = opendir(target);
-  		int hit = 0;
-
-  		if (!d) {
-  			printf("container: %s: opendir(%s) = %s\n", when, target, strerror(errno));
-  			return;
-  		}
-  		printf("container: %s: readdir(%s) =", when, target);
-  		while ((de = readdir(d))) {
-  			if (de->d_name[0] == '.')
-  				continue;
-  			printf(" %s", de->d_name);
-  			hit |= strcmp(de->d_name, "MASK");
-  		}
-  		closedir(d);
-  		printf("%s\n", hit ? "   <-- HIT" : "");
-  		return;
-  	}
-  	fd = open(target, O_RDONLY);
-  	if (fd < 0) {
-  		printf("container: %s: open(%s) = %s\n", when, target, strerror(errno));
-  		return;
-  	}
-  	if (read(fd, buf, sizeof(buf) - 1) < 0)
-  		die("read");
-  	close(fd);
-  	if (strchr(buf, '\n'))
-  		*strchr(buf, '\n') = 0;
-  	printf("container: %s: read(%s) = \"%s\"%s\n", when, target, buf,
-  	       strncmp(buf, "MASK", 4) ? "   <-- HIT" : "");
-  }
-
-  int main(int argc, char **argv)
-  {
-  	const char *name = argc > 1 ? argv[1] : "net/dev";
-  	const char *op = argc > 2 ? argv[2] : "stat";
-  	int isdir = !strcmp(name, "net/stat");
-  	int to_host[2], to_cont[2];
-  	struct stat st;
-  	pid_t pid;
-  	char c;
-
-  	setvbuf(stdout, NULL, _IOLBF, 0);
-  	snprintf(target, sizeof(target), "/proc/%d/%s", getpid(), name);
-  	if (unshare(CLONE_NEWNS) || mount(NULL, "/", NULL, MS_REC | MS_PRIVATE, NULL))
-  		die("unshare");
-  	mkdir(WORK, 0755);
-  	if (mount("W", WORK, "tmpfs", 0, NULL))
-  		die("mount W");
-  	write_str(WORK "/mask", "MASK", O_CREAT);
-  	mkdir(WORK "/maskdir", 0755);
-  	write_str(WORK "/maskdir/MASK", "MASK", O_CREAT);
-  	if (pipe(to_host) || pipe(to_cont))
-  		die("pipe");
-
-  	pid = fork();
-  	if (pid < 0)
-  		die("fork");
-  	if (!pid) {
-  		if (unshare(CLONE_NEWNS))
-  			die("container unshare");
-  		if (mount(isdir ? WORK "/maskdir" : WORK "/mask", target, NULL, MS_BIND, NULL)) {
-  			printf("container: bind the mask on %s: %s\n", target, strerror(errno));
-  			exit(0);
-  		}
-  		printf("container: bind the mask on %s: ok\n", target);
-  		if (setgid(1000) || setuid(1000) || prctl(PR_SET_DUMPABLE, 1))
-  			die("setuid");
-  		/* lock the mount: a new user namespace with a copy of the tree */
-  		if (unshare(CLONE_NEWUSER | CLONE_NEWNS))
-  			die("container userns");
-  		write_str("/proc/self/setgroups", "deny", 0);
-  		write_str("/proc/self/uid_map", "0 1000 1", 0);
-  		write_str("/proc/self/gid_map", "0 1000 1", 0);
-  		mounts("before");
-  		errno = 0;
-  		if (!strcmp(op, "stat")) {
-  			stat(target, &st);
-  			printf("container: stat(%s): %s\n", target, strerror(errno));
-  		} else if (!strcmp(op, "umount")) {
-  			umount2(target, MNT_DETACH);
-  			printf("container: umount2(%s, MNT_DETACH): %s\n", target, strerror(errno));
-  		} else if (write(to_host[1], "g", 1) != 1 || read(to_cont[0], &c, 1) != 1) {
-  			die("sync");
-  		}
-  		mounts("after");
-  		show("after", isdir);
-  		exit(0);
-  	}
-  	close(to_host[1]);
-  	if (read(to_host[0], &c, 1) == 1) {
-  		pid_t p2 = fork();
-
-  		if (!p2) {
-  			if (setgid(65534) || setuid(65534))
-  				die("setuid");
-  			errno = 0;
-  			stat(target, &st);
-  			printf("nobody: uid %u: stat(%s): %s\n", getuid(), target, strerror(errno));
-  			exit(0);
-  		}
-  		waitpid(p2, NULL, 0);
-  		if (write(to_cont[1], "g", 1) != 1)
-  			die("sync");
-  	}
-  	waitpid(pid, NULL, 0);
-  	return 0;
-  }
-
-Fixes: 1fde6f21d90f ("proc: fix /proc/net/* after setns(2)")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261024-work-procfs-fixes-v1-1-46b03c3a8fac@kernel.org
-Acked-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Aleksa Sarai <aleksa@amutable.com>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[ sashal: replaced the flag-based helper path with a proc_net_dentry_ops check and direct dont_mount() call before the existing dentry setup ]
+Fixes: 18685451fc4e ("inet: inet_defrag: prevent sk release while still in use")
+Reported-by: Paolo Abeni <pabeni@redhat.com>
+Closes: https://lore.kernel.org/netdev/24feda7d-ae49-45af-9596-2cc5f149f28e@redhat.com/
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20261104122927.1033747-1-edumazet@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/generic.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv4/inet_fragment.c                | 61 ++++++++++++++++++++++---
+ net/ipv4/ip_fragment.c                  | 13 ++++--
+ net/ipv6/netfilter/nf_conntrack_reasm.c | 13 ++++--
+ net/ipv6/reassembly.c                   | 13 ++++--
+ 4 files changed, 78 insertions(+), 22 deletions(-)
 
-diff --git a/fs/proc/generic.c b/fs/proc/generic.c
-index 91c25a5f770c5..a8bce3ce3b09d 100644
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -255,6 +255,9 @@ struct dentry *proc_lookup_de(struct inode *dir, struct dentry *dentry,
- 		inode = proc_get_inode(dir->i_sb, de);
- 		if (!inode)
- 			return ERR_PTR(-ENOMEM);
-+		/* never reused and so never a mountpoint for long */
-+		if (de->proc_dops == &proc_net_dentry_ops)
-+			dont_mount(dentry);
- 		d_set_d_op(dentry, de->proc_dops);
- 		return d_splice_alias(inode, dentry);
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index c7be3060698ba..040621c6b2a06 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -17,6 +17,7 @@
+ #include <linux/rtnetlink.h>
+ #include <linux/slab.h>
+ #include <linux/rhashtable.h>
++#include <linux/sizes.h>
+ 
+ #include <net/sock.h>
+ #include <net/inet_frag.h>
+@@ -512,6 +513,43 @@ int inet_frag_queue_insert(struct inet_frag_queue *q, struct sk_buff *skb,
+ }
+ EXPORT_SYMBOL(inet_frag_queue_insert);
+ 
++/* When a socket owned fragment completes a queue, the truesize of all
++ * other fragments is charged to its sk_wmem_alloc, although they were
++ * orphaned when queued and possibly sent by someone else.
++ * Bound this like ip_append_data() bounds the memory a socket can
++ * allocate (2 * sk_sndbuf), plus slack for fragments inflated by a
++ * refragmentation using a small MTU. Otherwise, several reassembled skbs
++ * alive at the same time can saturate sk_wmem_alloc, and leak the socket.
++ *
++ * Several queues can complete at the same time for the same socket,
++ * and some sockets (tun) use sk_sndbuf = INT_MAX. The charge is reserved
++ * with a cmpxchg() loop, a refcount_t has no helper for this.
++ */
++#define INET_FRAG_WMEM_SLACK	SZ_4M
++
++static bool inet_frag_wmem_reserve(struct sock *sk, unsigned int charge)
++{
++	u64 limit = 2ULL * READ_ONCE(sk->sk_sndbuf) + INET_FRAG_WMEM_SLACK;
++	int old = refcount_read(&sk->sk_wmem_alloc);
++
++	limit = min_t(u64, limit, INET_FRAG_MAX_TRUESIZE);
++	do {
++		if (old <= 0 || (u64)old + charge > limit)
++			return false;
++	} while (!atomic_try_cmpxchg(&sk->sk_wmem_alloc.refs, &old,
++				     old + charge));
++
++	return true;
++}
++
++static void inet_frag_wmem_adjust(struct sock *sk, int delta)
++{
++	if (delta >= 0)
++		refcount_add(delta, &sk->sk_wmem_alloc);
++	else
++		WARN_ON_ONCE(refcount_sub_and_test(-delta, &sk->sk_wmem_alloc));
++}
++
+ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 			      struct sk_buff *parent)
+ {
+@@ -523,6 +561,11 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 	int delta;
+ 
+ 	if (sk && is_skb_wmem(skb)) {
++		/* skb->truesize is already charged to sk, and is part of
++		 * q->truesize. inet_frag_reasm_finish() settles the charge.
++		 */
++		if (!inet_frag_wmem_reserve(sk, q->truesize - skb->truesize))
++			return NULL;
+ 		/* TX: skb->sk might have been passed as argument to
+ 		 * dst->output and must remain valid until tx completes.
+ 		 *
+@@ -600,17 +643,18 @@ void *inet_frag_reasm_prepare(struct inet_frag_queue *q, struct sk_buff *skb,
+ 
+ out_restore_sk:
+ 	if (orig_truesize) {
+-		int ts_delta = head->truesize - orig_truesize;
+-
+ 		/* if this reassembled skb is fragmented later,
+ 		 * fraglist skbs will get skb->sk assigned from head->sk,
+ 		 * and each frag skb will be released via sock_wfree.
+-		 *
+-		 * Update sk_wmem_alloc.
+ 		 */
+ 		head->sk = sk;
+ 		head->destructor = destructor;
+-		refcount_add(ts_delta, &sk->sk_wmem_alloc);
++		/* On failure, head stays in the queue and will be freed
++		 * with the queue: only charge its truesize.
++		 */
++		if (!nextp)
++			inet_frag_wmem_adjust(sk, (int)head->truesize -
++						  (int)q->truesize);
  	}
+ 
+ 	return nextp;
+@@ -621,7 +665,6 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 			    void *reasm_data, bool try_coalesce)
+ {
+ 	struct sock *sk = is_skb_wmem(head) ? head->sk : NULL;
+-	const unsigned int head_truesize = head->truesize;
+ 	struct sk_buff **nextp = reasm_data;
+ 	struct rb_node *rbn;
+ 	struct sk_buff *fp;
+@@ -686,8 +729,12 @@ void inet_frag_reasm_finish(struct inet_frag_queue *q, struct sk_buff *head,
+ 	head->tstamp = q->stamp;
+ 	head->tstamp_type = q->tstamp_type;
+ 
++	/* After inet_frag_reasm_prepare(), q->truesize is charged to sk.
++	 * sum_truesize also includes what it added (skb_unclone() and
++	 * frag_list clone).
++	 */
+ 	if (sk)
+-		refcount_add(sum_truesize - head_truesize, &sk->sk_wmem_alloc);
++		inet_frag_wmem_adjust(sk, sum_truesize - (int)q->truesize);
+ }
+ EXPORT_SYMBOL(inet_frag_reasm_finish);
+ 
+diff --git a/net/ipv4/ip_fragment.c b/net/ipv4/ip_fragment.c
+index e79ebe911548a..0dd8baacc0c89 100644
+--- a/net/ipv4/ip_fragment.c
++++ b/net/ipv4/ip_fragment.c
+@@ -413,16 +413,19 @@ static int ip_frag_reasm(struct ipq *qp, struct sk_buff *skb,
+ 		goto out_fail;
+ 	}
+ 
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	len = ip_hdrlen(skb_rb_first(&qp->q.rb_fragments)) + qp->q.len;
++	err = -E2BIG;
++	if (len > 65535)
++		goto out_oversize;
++
+ 	/* Make the one we just received the head. */
+ 	reasm_data = inet_frag_reasm_prepare(&qp->q, skb, prev_tail);
+ 	if (!reasm_data)
+ 		goto out_nomem;
+ 
+-	len = ip_hdrlen(skb) + qp->q.len;
+-	err = -E2BIG;
+-	if (len > 65535)
+-		goto out_oversize;
+-
+ 	inet_frag_reasm_finish(&qp->q, skb, reasm_data,
+ 			       ip_frag_coalesce_ok(qp));
+ 
+diff --git a/net/ipv6/netfilter/nf_conntrack_reasm.c b/net/ipv6/netfilter/nf_conntrack_reasm.c
+index 0d19974e85cf7..19d5a1370ae6a 100644
+--- a/net/ipv6/netfilter/nf_conntrack_reasm.c
++++ b/net/ipv6/netfilter/nf_conntrack_reasm.c
+@@ -331,11 +331,10 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 	if (unlikely(ecn == 0xff))
+ 		goto err;
+ 
+-	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
+-	if (!reasm_data)
+-		goto err;
+-
+-	payload_len = -skb_network_offset(skb) -
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	payload_len = -skb_network_offset(skb_rb_first(&fq->q.rb_fragments)) -
+ 		       sizeof(struct ipv6hdr) + fq->q.len -
+ 		       sizeof(struct frag_hdr);
+ 	if (payload_len > IPV6_MAXPLEN) {
+@@ -344,6 +343,10 @@ static int nf_ct_frag6_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 		goto err;
+ 	}
+ 
++	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
++	if (!reasm_data)
++		goto err;
++
+ 	/* We have to remove fragment header from datagram and to relocate
+ 	 * header in order to calculate ICV correctly. */
+ 	skb_network_header(skb)[fq->nhoffset] = skb_transport_header(skb)[0];
+diff --git a/net/ipv6/reassembly.c b/net/ipv6/reassembly.c
+index 05dbf8144805c..a0a5c03c16f35 100644
+--- a/net/ipv6/reassembly.c
++++ b/net/ipv6/reassembly.c
+@@ -271,16 +271,19 @@ static int ip6_frag_reasm(struct frag_queue *fq, struct sk_buff *skb,
+ 	if (unlikely(ecn == 0xff))
+ 		goto out_fail;
+ 
+-	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
+-	if (!reasm_data)
+-		goto out_oom;
+-
+-	payload_len = -skb_network_offset(skb) -
++	/* Check the size on the first fragment, which will become the head:
++	 * inet_frag_reasm_finish() must follow inet_frag_reasm_prepare().
++	 */
++	payload_len = -skb_network_offset(skb_rb_first(&fq->q.rb_fragments)) -
+ 		       sizeof(struct ipv6hdr) + fq->q.len -
+ 		       sizeof(struct frag_hdr);
+ 	if (payload_len > IPV6_MAXPLEN)
+ 		goto out_oversize;
+ 
++	reasm_data = inet_frag_reasm_prepare(&fq->q, skb, prev_tail);
++	if (!reasm_data)
++		goto out_oom;
++
+ 	/* We have to remove fragment header from datagram and to relocate
+ 	 * header in order to calculate ICV correctly. */
+ 	nhoff = fq->nhoffset;
 -- 
 2.53.0
 
