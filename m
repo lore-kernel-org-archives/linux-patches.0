@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023751;
-	b=rK9UfkoHI1mfwvcUCDq4h3q3GTJP1flVoYhKsa5RWx1d1QrjE7we/xsEWXuXkQEU9DZE
-	 PIJPlFcRI/jZzyQAgKgtaMuRKPJGuhDdfS/UPHrb+ylXsMiCZ46JT93q8+jOIOl5MJa0f
-	 Pm6wdnb8TIJqLMUdoag95UlEkCbhWmQgK/CgJSeMSPrKNUum7ZKHhZXgoQ/eAMvcl1Joz
-	 eZ7evej5Kg2xULSBeKVjFfJRM75EsSokto4QEkS02x6m3KmY4LPeSvr9F6+iYwiYy3OtI
-	 Yj5ncnqdi56SdJgNLplRaz1kh+30bF+GgSK/Z5C6KDbbFOiYhjGI/OVfS+/qi0eZTvw==
+	t=1795023754;
+	b=lb31ln2AnRlQGpMQx1T0/mOakvkiIziR47Ux/EhU8vzN8UIwHJdTzleL+A/fUON9qqHs
+	 mgR2gPaN39gR+6tocQEjEGtwasA6G7v0vTWRp9v8IVC90+wNHna81ZrxI8YvCZ40jms1G
+	 GoXhb6MIa+wqCKASzhovSuD/W71ZtYWu/OIMSnJ9WZU7ddHu+Wr/sRHyrdkhswrBqTGS+
+	 4NOrm3kitmEh5TA27wssHgy9olXVa9lLoPlwzShzVpYEPf+753l4r34PMsSnwLKx4aTcd
+	 ZBMJRwh5Do2LGrNGv1bGG4L9epKEHOj2Pbf81/QObDuXUU2R7lmsBaCVY3bM9B/lKqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023751;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023754;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cF41ZZbdro6oY2LXhuj3ifSl8SN+bjS48DcyZjyx+4s=;
-	b=1V58/pWMOr3mnjV6+GU33YkJgRynmspfrtWQCfD2h7aoB1I3f2H/k7wqOjiEfhMTuwBS
-	 u4t1RgGw6YuPwRQNIE0jzu5dYz1AFHJz2LsOGCE8PXBaIAsjiFF+yjjWGpekmTC+lWqjH
-	 g6km8WvW1gOH/t2iS3DI/y077ipkN+PAggeseb4kQwFODxwAwiJNmZmflW+JTUhUdgbS0
-	 mR1nSqGSQ3SPew9HZDHhDe5/JX/v8Q0Jng/m4blsRq4e72cCOUOZ3n7y5nit2QSxM1HsC
-	 vlQ2FYvkeeaDnei3Gvtd6WIcNaNdNO8XNIflTLHHc4wsrBA7PoKcsDDC3ks47WKwtVA==
+	bh=ZBFa0hLLx9UiJXAsotbbFW175DMj+9PPPWdtPvaZq08=;
+	b=tE6WlNOA8EF+//A2b2Ud4VkLFqmY3jab1aYGsoQnmotWksFYm/w7A0k3I6mPgCZ7313r
+	 RJoh5qbpjNIp+6kcWNx/QM891JFBlShqyJp+sY2L96851i0+GG5lqXU7nYCR7Eogs1cM0
+	 26BlV8zvyDWKfpL0kz25vSruSJbgFlkkJlVaDlu1pSuBU3OoKsnT1r5T3QjqpgejtgBfO
+	 kVbICqtPHG93yoImlvHrHCw1KE8EOFhmmOA2kpXFS/4i0OMN0Abi7dazmDXf3S9md6Fk8
+	 cVP/WHYy3sxnOi6PMBi+sFMBdvQX90Gv17IrrVRrpXub8hDxsdI3jUyez/LVHUaQB0w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W4U64m0v;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgNP7zsl;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894D1606A325;
-	Wed, 18 Nov 2026 17:42:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53325606A320;
+	Wed, 18 Nov 2026 17:42:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=W4U64m0v
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFECE1F000C4;
-	Wed, 18 Nov 2026 17:42:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=hgNP7zsl
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73171F000C4;
+	Wed, 18 Nov 2026 17:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023751;
-	bh=cF41ZZbdro6oY2LXhuj3ifSl8SN+bjS48DcyZjyx+4s=;
+	s=korg; t=1795023754;
+	bh=ZBFa0hLLx9UiJXAsotbbFW175DMj+9PPPWdtPvaZq08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=W4U64m0vn3H34F9NK8nYL139FdMCtiQVOoj6NSVAOIJ+eYzhB4IwRYKIq/jRStWx8
-	 XwlUp12KIu1keQoTBN8RgSdgyb/HMto8yQH6o0tjJ4zL0kbidJow6ZJ5484PTek2Kc
-	 dd0Wzdp3JZVUANlIS6+FtNrPdLfPqpdNP7m1IP/0=
+	b=hgNP7zslpaZ3ElOTnqYCvuMiA01mANwVAV7hZNXZcNG2vuHQoG3WZLniDdZzuWpXh
+	 A6hOrN/u+po2vw/RGCgGZii5JAM8+egtJIvM+QzHcPq0a30uuloRfq3bnFkV3f7PxI
+	 IBq24JMwWHhMGAj5/xgOZJ3iZkAAnOadHITNg5Yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
+	syzbot+50f9bc7ab8eb224b7629@syzkaller.appspotmail.com,
+	Zizhi Wo <wozizhi@huawei.com>,
 	Yu Kuai <yukuai@fygo.io>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0482/2151] md/raid5: setup_conf: Fix null-ptr-def in error handling path
-Date: Wed, 18 Nov 2026 15:36:57 +0100
-Message-ID: <20261118150139.607652878@linuxfoundation.org>
+Subject: [PATCH 6.18 0483/2151] md/raid5: reject a per-device size smaller than one chunk
+Date: Wed, 18 Nov 2026 15:36:58 +0100
+Message-ID: <20261118150139.642833420@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,50 +69,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Zizhi Wo <wozizhi@huawei.com>
 
-[ Upstream commit eba5f518701b1c7f2d883504f89c41611bd2de46 ]
+[ Upstream commit 370ca0760b18c64592a258bcb057ff0a2531aabf ]
 
-For raid5 setup_conf, if an error(eg. bioset_init fails) happens before
-'conf->mddev = mddev', following error handling path could trigger a
-null-ptr-def problem:
+Both raid5_run() and raid5_resize() align the per-device size down to a
+whole multiple of the chunk size:
 
- free_conf
-  log_exit
-   raid5_has_ppl
-    test_bit(MD_HAS_PPL, &conf->mddev->flags) // conf->mddev is NULL !
+	mddev->dev_sectors &= ~(chunk_sectors - 1);
 
-Fix it by initializing conf->mddev in advance.
+Neither checks the result, so a size smaller than one chunk silently
+becomes zero.
 
-Fixes: 3418d036c81d ("raid5-ppl: Partial Parity Log write logging implementation")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Link: https://patch.msgid.link/20260915081731.122933-1-chengzhihao1@huawei.com
+In raid5_run() that is harmless: the array size is derived from the same
+zero, so the disk just ends up with no capacity.
+
+In raid5_resize() it leaves the array inconsistent -- mddev->dev_sectors
+becomes zero, while mddev->array_sectors and the gendisk capacity keep the
+previous. A later raid4/raid5 -> raid0 takeover copies the zero into every
+rdev->sectors (raid0_takeover_raid45()), so create_strip_zones() builds a
+strip zone table whose zone_end is zero. Any read then passes
+bio_check_eod() against the stale capacity and hits the BUG() in
+find_zone():
+
+ kernel BUG at drivers/md/raid0.c:318!
+ Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+ Call Trace:
+   raid0_make_request
+   md_handle_request
+   submit_bio_noacct_nocheck
+   block_read_full_folio
+   read_part_sector
+   bdev_disk_changed
+   bdev_open
+
+Reject a size smaller than one chunk in both functions, so that a running
+raid4/raid5 array always has mddev->dev_sectors >= one chunk.
+
+The check is done where the value takes effect, not where it is assigned.
+mddev->dev_sectors is written from several places, and none of them can
+tell whether the value is usable: the chunk size may still change later.
+raid5_run() and raid5_resize() are where every input is final, so one check
+in each covers them all.
+
+Fixes: eea136d69f9f ("md: fix buglet in RAID5 -> RAID0 conversion.")
+Reported-by: syzbot+50f9bc7ab8eb224b7629@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=50f9bc7ab8eb224b7629
+Signed-off-by: Zizhi Wo <wozizhi@huawei.com>
+Link: https://patch.msgid.link/20260916095137.1157801-1-wozizhi@huaweicloud.com
 Signed-off-by: Yu Kuai <yukuai@fygo.io>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid5.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 6f71c0c3dfd74..42602ac28d903 100644
+index 42602ac28d903..d427b24314c91 100644
 --- a/drivers/md/raid5.c
 +++ b/drivers/md/raid5.c
-@@ -7529,6 +7529,7 @@ static struct r5conf *setup_conf(struct mddev *mddev)
- 	if (conf == NULL)
- 		goto abort;
+@@ -8056,6 +8056,12 @@ static int raid5_run(struct mddev *mddev)
  
-+	conf->mddev = mddev;
- #if PAGE_SIZE != DEFAULT_STRIPE_SIZE
- 	conf->stripe_size = DEFAULT_STRIPE_SIZE;
- 	conf->stripe_shift = ilog2(DEFAULT_STRIPE_SIZE) - 9;
-@@ -7602,7 +7603,6 @@ static struct r5conf *setup_conf(struct mddev *mddev)
- 	ret = bioset_init(&conf->bio_split, BIO_POOL_SIZE, 0, 0);
- 	if (ret)
- 		goto abort;
--	conf->mddev = mddev;
+ 	/* device size must be a multiple of chunk size */
+ 	mddev->dev_sectors &= ~((sector_t)mddev->chunk_sectors - 1);
++	if (!mddev->dev_sectors) {
++		pr_warn("md/raid:%s: device size is smaller than one chunk\n",
++			mdname(mddev));
++		ret = -EINVAL;
++		goto abort;
++	}
+ 	mddev->resync_max_sectors = mddev->dev_sectors;
  
- 	ret = -ENOMEM;
- 	conf->stripe_hashtbl = kzalloc(PAGE_SIZE, GFP_KERNEL);
+ 	if (mddev->degraded > dirty_parity_disks &&
+@@ -8388,6 +8394,8 @@ static int raid5_resize(struct mddev *mddev, sector_t sectors)
+ 	if (raid5_has_log(conf) || raid5_has_ppl(conf))
+ 		return -EINVAL;
+ 	sectors &= ~((sector_t)conf->chunk_sectors - 1);
++	if (!sectors)
++		return -EINVAL;
+ 	newsize = raid5_size(mddev, sectors, mddev->raid_disks);
+ 	if (mddev->external_size &&
+ 	    mddev->array_sectors > newsize)
 -- 
 2.53.0
 
