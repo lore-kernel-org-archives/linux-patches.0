@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039781;
-	b=ZwfUWkit4nL+SzWSft5r/6b8ggyXjEqsnghnQwxqRFsU7WzImsfk3DtbKpaLH8kA+x0O
-	 SrgHL3W3fYEMAMyrtFFxuoxBfiwOAvQ+Q2Bsu0g93wBjaQ5t9UnjzzA2xz+YsOknHC6yh
-	 LcMvB+McNYaynZuR0g898y/5EFjH4qQ8+nTYoSIxK1lmDTKswOSwyDRIKj1dfcUH81Vhd
-	 YrNkNRR/ZvHNo6FWDEYz5lmjXE0wNg0S8UcqgQWzky1MHYDXmkGDeaCf1kcXvEfU36ZGK
-	 6nDa6sdcZMAi3DJ+3rRoBqN6sc+O/W11Y8uRleakoa1rhkHLRq771Bro5/KP35c9kzQ==
+	t=1795039784;
+	b=VEcq6vtUT0CmgwNLiUh6gAv1jc4UmyEyCHGnF1cqe7Cc9eqiGy+Ls7wDcOt6BxdPbS88
+	 ZNLAk7uuB8PSNBkgk1ui7skMArhtBzps5Y5D0BxXo9GPDEp8iC12mp4LLRLUkXNcEiyMO
+	 dWgn/MWCy5YzwegCsR+fENXIaJzT12A5Kw5bYSq3akq/NGz1cNZsg3wa2ap7mBJULtbOW
+	 GV33PGwPJdDgcK/3F4Gt130j0xMXZNi9FfUBxjlmw6nHe9Ys8Pbpk+phoGyWFhYQ4TKMH
+	 iFcAitdrJG8eh44CXV9z/rARr8LAvDudHGZAG73JuVD5rCxtPA+xgtGXPK+Zkopgklw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039781;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039784;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=WHa4yJKgpZ7oAx5qRraliAk71scZeuxx2weCD4FnyHg=;
-	b=pIICQAXKOZDe8NC5uhtoKgXbrGee973Eahmsp/+IAY+8G1S75N/1RdusW+DG7Gol9Sr3
-	 zyvjaGpLjQP8mV+GLoMXamKlAHnuMLl+ctZrvjgAvDjNbSYbbNF0eY21/5jvzZWrcbEXe
-	 YFdGobVPLTqOUoOT59BpOyURNpuhHgCs+cFriaiDdvPfjj7HcesN2MnxIKICFa72wRioZ
-	 woCDXayjeflAInxKbA0CxoXjPES4buRlcjK4IdtjyEyAv8EgF1reqGaAvHApJG6/034Fc
-	 XRHe10DPUxKXyuDGPKPyAam0FD+6sWV9PYgKC+WO/9DDGgcNjhXdH+H1mpjZXrXfdhA==
+	bh=BZb6jmPIrg3gOAU/D6u0uZWPjT1xOXfkBFNmoBY4LxQ=;
+	b=cig8OZA34AbWe07R3sCYsIi3twQ2NmeuIWi20FXOMk2cN/YW4/mJr04QshXg9RgYIkL8
+	 MzdDICl8wFOpeKArRvvlcP+6BepCGzf9TQR6GcMPZKP8z8/AUXE0c/RxclZSOIAEK7ubh
+	 liZ0B89KRPuUaG9/aMTLOn81UeG60DZZ7QqShB4f+cM65rZ/8FCexqwm1QX7PSzEiaS0l
+	 gHY10CKdIcLdyUy03Esb1gQ3Ms20HcRtZy0AXbXzH5gpIc/3ZG7E3IM9pPqWwx6MP7a9W
+	 gvGpjux5O/B1mlAnig2jxh5Ubjoo/eCsCwdaIYCYrthaRg3VdL+u6/tpS47X5eIA33A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZC9QOCJ;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="wyvx/aQs";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7000606A320;
-	Wed, 18 Nov 2026 22:09:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFAB606A325;
+	Wed, 18 Nov 2026 22:09:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bZC9QOCJ
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1131F1F000C4;
-	Wed, 18 Nov 2026 22:09:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wyvx/aQs
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF73F1F000C4;
+	Wed, 18 Nov 2026 22:09:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039781;
-	bh=WHa4yJKgpZ7oAx5qRraliAk71scZeuxx2weCD4FnyHg=;
+	s=korg; t=1795039784;
+	bh=BZb6jmPIrg3gOAU/D6u0uZWPjT1xOXfkBFNmoBY4LxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bZC9QOCJ3g1rSgi6UEUNxUXy4K318yG/Mj65yXIaIz08Hutzuc7RWs7tyx/tO0Sxe
-	 8Jt2D2QFiRPgtHhPsnPpcLzaVtQ/9/Gk0aWsamTfx2tmUmjLRM0varFlUxGt/8jqBb
-	 Fguqt1Q6owRc5QYWupRlO0iVSyITPcaQxUU0hd+8=
+	b=wyvx/aQspLVHL+ptDDGZZh8NEhHdccTwJr+soDfkV6Y5Moj6KhWapeueNWoIHnUDk
+	 1MVV+wgAnvGvDtSQvNscU/Bwu7XwafQwvCub81F1WGpPXOVoDfnYo1bI1ZqogTZ8rX
+	 CcuEBductChmaZn1l4+IiUA0LDusnQcBi8DY/DSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaithanya Lagisetty <nagachaithanya9911@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Nicolas Morey <nmorey@suse.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2186/3318] x86/svm: Avoid sign extension of SVM_EVTINJ_VALID in 64-bit expressions
-Date: Wed, 18 Nov 2026 15:46:48 +0100
-Message-ID: <20261118150427.537074310@linuxfoundation.org>
+Subject: [PATCH 6.6 2222/3318] RDMA/rxe: Use validated num_sge in local buffer
+Date: Wed, 18 Nov 2026 15:47:24 +0100
+Message-ID: <20261118150428.553454670@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,70 +69,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
+From: Nicolas Morey <nmorey@suse.com>
 
-[ Upstream commit c5991239b148d40d4981901968b3a6a838ff517b ]
+[ Upstream commit a4368022a3ac5324356ae8d88e3a42d115956fd6 ]
 
-SVM_EVTINJ_VALID is defined as (1 << 31), i.e. as an int with the sign
-bit set. Whenever it is used in a 64-bit expression the int is sign
-extended, so bits 63:32 end up set as well. Two 64-bit users are
-affected.
+For both SRQ and non-SRQ receive paths, the WQE is copied into a local
+buffer to provide a kernel-owned, validated copy. While calculating the
+memcpy size from the validated num_sge prevents overflow during the
+copy, memcpy() itself still copies num_sge from shared memory.
 
-verify_exception_info() uses the macro as a mask against a 64-bit value
-when it sanity checks hypervisor supplied exception information:
+A concurrent userspace modification before or during memcpy() leaves
+an unvalidated num_sge in the local buffer, leading to potential
+out-of-bounds reads in rxe_resp_check_length() and copy_data() causing:
 
-	u64 info = ghcb->save.sw_exit_info_2;
-	...
-	if ((info & SVM_EVTINJ_VALID) &&
+  BUG: KASAN: slab-out-of-bounds in rxe_receiver+0x8109/0x9ec0 [rdma_rxe]
+  Read of size 4 at addr ffff88812c4867f8 by task kworker/u9:6/361
+  Workqueue: rxe_wq do_work [rdma_rxe]
+  Call Trace:
+   rxe_receiver+0x8109/0x9ec0 [rdma_rxe]
+   do_work+0x149/0x610 [rdma_rxe]
+   process_one_work+0x726/0x10a0
 
-The mask is 0xffffffff80000000, so the check also passes when any bit of
-the error code in 63:32 is set while the valid bit itself is clear.
+  The buggy address belongs to the object at ffff88812c486000
+   which belongs to the cache kmalloc-part-13-2k of size 2048
+  The buggy address is located 0 bytes to the right of
+   allocated 2040-byte region [ffff88812c486000, ffff88812c4867f8)
 
-svm_vmgexit_inject_exception() builds the value that KVM hands to an
-SEV-ES guest in GHCB SW_EXITINFO2:
+Explicitly assign the validated num_sge to the local buffer after the
+copy to prevent this race.
 
-	u64 data = SVM_EVTINJ_VALID | SVM_EVTINJ_TYPE_EXEPT | vector;
-
-For vector == X86_TRAP_GP this yields 0xffffffff8000030d instead of
-0x000000008000030d. The field uses the EVENTINJ format, which holds the
-error code in bits 63:32, so KVM asks the guest to inject #GP with an
-error code of 0xffffffff. Linux guests only consume the error code when
-SVM_EVTINJ_VALID_ERR is set, which it is not here, so they are not
-affected in practice, but the value KVM writes is not the one it intends.
-
-Use BIT() instead, as is already done for most single bit definitions in
-this header. Every other user applies the macro to a u32, where the
-resulting bits are unchanged.
-
-Opportunistically give SVM_EVTINJ_VALID_ERR the same treatment, there's
-zero reason to open code BIT().
-
-Fixes: 597cfe48212a ("x86/boot/compressed/64: Setup a GHCB-based VC Exception handler")
-Fixes: c3392d0ab714 ("KVM: SVM: Provide helpers to set the error code")
-Signed-off-by: Chaithanya Lagisetty <nagachaithanya9911@gmail.com>
-Link: https://patch.msgid.link/20260908053722.3917934-1-nagachaithanya9911@gmail.com
-[sean: use BIT() for SVM_EVTINJ_VALID_ERR as well]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 22b8fbded65b ("RDMA/rxe: Fix TOCTOU heap overflow in get_srq_wqe")
+Fixes: d6ab440240a0 ("RDMA/rxe: Copy WQE to local buffer in non-SRQ receive path")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Nicolas Morey <nmorey@suse.com>
+Link: https://patch.msgid.link/20260909160132.1491248-1-nmorey@suse.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/svm.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_resp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/include/asm/svm.h b/arch/x86/include/asm/svm.h
-index 3ac0ffc4f3e20..3032e95bef04c 100644
---- a/arch/x86/include/asm/svm.h
-+++ b/arch/x86/include/asm/svm.h
-@@ -605,8 +605,8 @@ struct vmcb {
- #define SVM_EVTINJ_TYPE_EXEPT (3 << SVM_EVTINJ_TYPE_SHIFT)
- #define SVM_EVTINJ_TYPE_SOFT (4 << SVM_EVTINJ_TYPE_SHIFT)
+diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
+index c5ca984562627..2eff46c5e1102 100644
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -297,6 +297,7 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
+ 	}
+ 	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
+ 	memcpy(&qp->resp.srq_wqe, wqe, size);
++	qp->resp.srq_wqe.wqe.dma.num_sge = num_sge;
  
--#define SVM_EVTINJ_VALID (1 << 31)
--#define SVM_EVTINJ_VALID_ERR (1 << 11)
-+#define SVM_EVTINJ_VALID	BIT(31)
-+#define SVM_EVTINJ_VALID_ERR	BIT(11)
+ 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
+ 	queue_advance_consumer(q, QUEUE_TYPE_FROM_CLIENT);
+@@ -337,6 +338,7 @@ static enum resp_states rxe_get_recv_wqe(struct rxe_qp *qp)
+ 	}
+ 	size = sizeof(*wqe) + num_sge * sizeof(struct rxe_sge);
+ 	memcpy(&qp->resp.srq_wqe, wqe, size);
++	qp->resp.srq_wqe.wqe.dma.num_sge = num_sge;
  
- #define SVM_EXITINTINFO_VEC_MASK SVM_EVTINJ_VEC_MASK
- #define SVM_EXITINTINFO_TYPE_MASK SVM_EVTINJ_TYPE_MASK
+ 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
+ 	return RESPST_CHK_LENGTH;
 -- 
 2.53.0
 
