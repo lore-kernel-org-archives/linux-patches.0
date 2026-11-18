@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059578;
-	b=oQirnyQDITvKXWGEfVzwKsyaOXKeqMwxi06pBrZLek/TumC9C80XtV4sfVMNH03kKQuY
-	 phZlffbXtQuWlYqZ9oM2bawDoUVo+tiZKkREJ5NECXRmTXOZx+od7BgDIiacFeioA82FO
-	 soaexOhS08mZuhSiO06JqdnkGBlbp5QFwey4PjmWtzPVbs/RgBFC7xK8uqGJod0MsBHZO
-	 PVJ7QG2H+6lhl0fZFLUieSXiDkm3dFBx1W9wNNLX3TCkklaN3wB9CISPGDjK3ygFPQogC
-	 R2Za8b4VTvS+xcD2E9ELaLl2N5FIumeaobTciorNQA4TA4+KFoHXmpd2uRaj5zda+AA==
+	t=1795059580;
+	b=KPHU2uz74Y+wbYQ24IdzBilCIUEANdusGSFhVWn6PGnU1BJjo/1N6Ax7H+JNhfzLPNY+
+	 Wbi9Tgns4hXEe6U8aIdxndIi9GxgM92jlRL16LPJK21I8I/adltISCMuoQy6VjR6MhuNg
+	 pPsGrv83oUviJ7zhft7mxTJKYIgQ9NJfLHuI09N/+3tAWFrvQvxIrOZr4a0RzLfu1cqGS
+	 +VPcMGODt1AyR3KXBOg+Gd6dNHF7Kgz9N98W0PwRdQ6buaIHxYtbp0+s7Og+Q9WGc7Jc9
+	 cZAIDuCu0UvjOlY0ijuNMYdwiAt89b3V7Kg7rD9VicsgjNDoddISoI2sT3Zuqxv1KZQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059580;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=YR4rriffynI8pG6l4zK8WE+Og34ZgnF+cW9PbjfVCng=;
-	b=LnD2AAbAdXDS1GzNGJ9mzlqDsh2UFwD6Gpbu4VU+3eTdKM0ib9L7X2++dqSz8+yRZhFW
-	 bxAc2axyAW0R36r4usPeglnIL+AY4fUh54/rtWNJIx4gLBynQnutQBIE/DU4h2AzJTlca
-	 hcxjHNaWH4Th7lO2JjvQMfrtKScxI0/AUjKv9jcq+EauJdYwXUjuS146bBSvGuP2ayLvU
-	 /mw0GB97u1qQsR5WEs6W+K2huDG3HXcr5chP0QPAmQjRzoVe4psPUyrhzWJdKgN7ljldi
-	 XOdj/wXeKueDasLCZnEPlwn+jCZ4mqaK0E5W78E7p9rpV7iI2gPPGHRjFosXJWVH0TA==
+	bh=CkSU0zdmJcT2Ofl4c/unz9aRfrb+w7vI8UlFWvWE46k=;
+	b=DXosEZRbOsLUgKtqGRAC/XwbBEINavJ5g2CU9M9tdf2i+3FnL9c/o/yF1toEbu4lu0GY
+	 7V6jPX2xQKEC1Ux2YX/9oN/qiEtXO2noXV+kYgnMxwy4+g9q4SkE7s6Uh0aqTRKkC5N9z
+	 1MArEkvDrENodrZ5U0jbU1bNwxy3pfmKEWfkKN6yPlufm7L5UA+nbpWCNboNf9Ehc809B
+	 gEmyeLwf3Pc35+rIUKNRBHXYShGk4eVqKS00qKufsq1u1KIFVHQwoNx2Tqw18Y1WzgD+6
+	 Z3Ag3ojl420M6WJCleGVPQ6ort87pR+MG31i8K1zZiavQVq/i1XnX3DMyeg/qjRYFvQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrOKCXLv;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvtMxqDa;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23848606A333;
-	Thu, 19 Nov 2026 03:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C17D606A338;
+	Thu, 19 Nov 2026 03:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PrOKCXLv
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D361F000C4;
-	Thu, 19 Nov 2026 03:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qvtMxqDa
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32EC1F000C6;
+	Thu, 19 Nov 2026 03:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059577;
-	bh=YR4rriffynI8pG6l4zK8WE+Og34ZgnF+cW9PbjfVCng=;
+	s=korg; t=1795059580;
+	bh=CkSU0zdmJcT2Ofl4c/unz9aRfrb+w7vI8UlFWvWE46k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=PrOKCXLvRb3V+Ipf6wK0RZPLmbgl+MNEW9z3pcDAq4n8lzvgFYIu0jCATcs6gXFVF
-	 pSWUFoBXmP5O5368ZYWU7AomQNMMg15P8i8I/JjokZiLoOc8lMwjHUaP/swXgRaGUF
-	 HgQ3RurQPKNb//UkY0H7I3dxslWP9V9yaH4Qtu0U=
+	b=qvtMxqDaatTX4qJSSubXm9htNXkET1nvKT/RomkskS5j6+K8Y5hHlM3lVn9QvSVi2
+	 BX+jmynw5jRtBmKxKSKcRylUoGtr/x9XdPrLA6FlpotpbGR/R3HBF9gnktNlYpkCDB
+	 yeITtjPMRgz3WK5qdAErvdDqb4go6JQ4m5mqFWrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Maier <dmnk@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	co+ecaada42f806f629@bugs.sh,
+	Xiang Mei <xmei5@asu.edu>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0850/1848] loop: check for read-write open mode on LOOP_SET_STATUS in lo_compat_ioctl()
-Date: Wed, 18 Nov 2026 15:48:08 +0100
-Message-ID: <20261118145952.161224295@linuxfoundation.org>
+Subject: [PATCH 5.10 0841/1848] ceph: fix integer overflow in the snap trace bounds check
+Date: Wed, 18 Nov 2026 15:47:59 +0100
+Message-ID: <20261118145951.845944806@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,54 +70,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dominik Maier <dmnk@google.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 87409eedc543d288cdd49c2174f7d61eca7b8db5 ]
+[ Upstream commit b3bf89767e3ca9506f1c7167cac97c41ec254d42 ]
 
-lo_ioctl() checks for (mode & BLK_OPEN_WRITE) || capable(CAP_SYS_ADMIN)
-before allowing LOOP_SET_STATUS or LOOP_SET_STATUS64, but not
-lo_compat_ioctl(), the handler used by 32-bit user space on 64-bit
-kernels.
+ceph_update_snap_trace() bounds the two encoded snapid arrays that follow a
+struct ceph_mds_snap_realm with sizeof(u64) * (num_snaps +
+num_prior_parent_snaps).  Both counts come straight off the wire as __le32,
+so the addition is evaluated in unsigned int and wraps before sizeof(u64)
+promotes it to size_t: an MDS sending num_snaps = 1 and
+num_prior_parent_snaps = 0xffffffff makes the sum zero and the check
+degenerates to ceph_decode_need(&p, e, 0, bad), which always passes.
+dup_array() then reads num_snaps * 8 bytes past the end of the message
+front, which ceph_msg_new2() allocates at exactly front_len bytes.  An
+unsolicited CEPH_MSG_CLIENT_SNAP reaches this from a malicious or
+compromised MDS with no client-side action, as do the snaptraces carried in
+an MDS reply and in a cap import.
 
-As a result, on 64-bit kernels with CONFIG_COMPAT=y, a 32-bit
-unprivileged user-space process holding a read-only (O_RDONLY) file
-descriptor to an active /dev/loopN device can issue a compat
-LOOP_SET_STATUS ioctl to modify lo_offset, clear lo_sizelimit to 0
-(exposing backing-file data past the configured limit), or alter
-lo_flags.
+Compute the length with size_add()/size_mul() so it saturates at SIZE_MAX
+instead of wrapping, in the style fs/ceph/mdsmap.c already uses for
+num_export_targets.
 
-Enforce the same (mode & BLK_OPEN_WRITE) || capable(CAP_SYS_ADMIN) check
-on LOOP_SET_STATUS in lo_compat_ioctl().
+  BUG: KASAN: slab-out-of-bounds in dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
+  Read of size 8 at addr ffff8880102a16c8 by task kworker/1:2/129
+  Workqueue: ceph-msgr ceph_con_workfn
+  Call Trace:
+   dump_stack_lvl (lib/dump_stack.c:94 lib/dump_stack.c:120)
+   print_report (mm/kasan/report.c:378 mm/kasan/report.c:482)
+   kasan_report (mm/kasan/report.c:595)
+   dup_array (include/linux/unaligned.h:28 fs/ceph/snap.c:500)
+   ceph_update_snap_trace (fs/ceph/snap.c:836)
+   ceph_handle_snap (fs/ceph/snap.c:1155)
+   mds_dispatch (fs/ceph/mds_client.c:7234)
+   ceph_con_process_message (net/ceph/messenger.c:1424)
+   ceph_con_v1_try_read (net/ceph/messenger_v1.c:1430)
+   ceph_con_workfn (net/ceph/messenger.c:1576)
+   process_one_work (kernel/workqueue.c:3396)
+   worker_thread (kernel/workqueue.c:3479 kernel/workqueue.c:3560)
+   kthread (kernel/kthread.c:436)
+   ret_from_fork (arch/x86/kernel/process.c:158)
+   ret_from_fork_asm (arch/x86/entry/entry_64.S:245)
+  ...
+  The buggy address is located 0 bytes to the right of
+   allocated 72-byte region [ffff8880102a1680, ffff8880102a16c8)
 
 Cc: stable@vger.kernel.org
-Assisted-by: ARTIST LLM
-Signed-off-by: Dominik Maier <dmnk@google.com>
-Reviewed-by: Bart Van Assche bvanassche@acm.org
-Link: https://patch.msgid.link/20261025200740.2064379-1-dmnk@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ sashal: Replaced BLK_OPEN_WRITE with FMODE_WRITE to match the existing fmode_t interface. ]
+Fixes: 963b61eb041e ("ceph: snapshot management")
+Reported-by: co+ecaada42f806f629@bugs.sh
+Assisted-by: LLM
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ sashal: adjusted local variable declaration context in ceph_update_snap_trace() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/loop.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ceph/snap.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/block/loop.c b/drivers/block/loop.c
-index dab31049bd4fa..a25467bb1cc74 100644
---- a/drivers/block/loop.c
-+++ b/drivers/block/loop.c
-@@ -1850,8 +1850,10 @@ static int lo_compat_ioctl(struct block_device *bdev, fmode_t mode,
- 
- 	switch(cmd) {
- 	case LOOP_SET_STATUS:
--		err = loop_set_status_compat(lo,
--			     (const struct compat_loop_info __user *)arg);
-+		err = -EPERM;
-+		if ((mode & FMODE_WRITE) || capable(CAP_SYS_ADMIN))
-+			err = loop_set_status_compat(lo,
-+				(const struct compat_loop_info __user *)arg);
- 		break;
- 	case LOOP_GET_STATUS:
- 		err = loop_get_status_compat(lo,
+diff --git a/fs/ceph/snap.c b/fs/ceph/snap.c
+index db464682b2cb2..d5cb4988e387e 100644
+--- a/fs/ceph/snap.c
++++ b/fs/ceph/snap.c
+@@ -702,6 +702,7 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	struct ceph_snap_realm *realm;
+ 	struct ceph_snap_realm *first_realm = NULL;
+ 	struct ceph_snap_realm *realm_to_rebuild = NULL;
++	size_t snaps_len;
+ 	int rebuild_snapcs;
+ 	int err = -ENOMEM;
+ 	LIST_HEAD(dirty_realms);
+@@ -715,8 +716,10 @@ int ceph_update_snap_trace(struct ceph_mds_client *mdsc,
+ 	ceph_decode_need(&p, e, sizeof(*ri), bad);
+ 	ri = p;
+ 	p += sizeof(*ri);
+-	ceph_decode_need(&p, e, sizeof(u64)*(le32_to_cpu(ri->num_snaps) +
+-			    le32_to_cpu(ri->num_prior_parent_snaps)), bad);
++	snaps_len = size_mul(size_add(le32_to_cpu(ri->num_snaps),
++				      le32_to_cpu(ri->num_prior_parent_snaps)),
++			     sizeof(u64));
++	ceph_decode_need(&p, e, snaps_len, bad);
+ 	snaps = p;
+ 	p += sizeof(u64) * le32_to_cpu(ri->num_snaps);
+ 	prior_parent_snaps = p;
 -- 
 2.53.0
 
