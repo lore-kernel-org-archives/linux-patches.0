@@ -1,55 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029148;
-	b=D42mU/jJ9GXP3ohzoe/HgzdgQMzjqVgrBP2LFtP5kJQU72fGDfWaZDMEpsow6oSAdoxT
-	 OTaUJvaAxCJRZpaJKY3ZyhPDb99SrkkiICEvf8SQ5qaPf7RfG54cFXd0JnTSvmaC/FA3z
-	 f1RQkaD0xUQGjL3tfGZC2jToTNSmAicnfLVNuL5RKd5aqdixGuqGvAb3p3InyenSYa76r
-	 HERCEuRLSK9x+cyDeBqXjsrO0cNYXTfrsehryk6HwkMcbKd99dIkXQZNXssAfg5BbOzEm
-	 30i3rHwmG5Jhhf5Xfdn5v5MeWlJd2PmxLLlC7YNk5UTTn6M4lTDkGA3XWelGu5ZpYRA==
+	t=1795029151;
+	b=ysWmwR/UigpMJvUtFd5XtLa2Esd4gpcsP0io7jrpd+pEwUMoooYovAF3Oe76HyK4uRR+
+	 QygDk+vnYnjYAIZ9y4+AhfrxFT30lWOH9hzEcBrIqC8iA4o8Csx75w/JNLtgE6FqBnlGA
+	 NHWiyXNiVGRX90QAREW3Mbgom/7TugWNhR29OsGkl5E6MqEHGKasR+9HOS02cTdpDK9RR
+	 uNXifYNaFpU+RwAG6TYIMWjcCgyOiC5ScK8IWzoF4EaG64c5qbIDi4HtYKdbXltDzl8hz
+	 R1YBAIEzDlFgJjsUrauHyPuSxemQvhyhpk9uic5z9fI6psuSU/WUFZpzKODnIEJcvug==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029148;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029151;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=CLD8pnMLxPzZQyEMnrgS5aZ57WyAkEw62dMbPcC5cT4=;
-	b=uvkgBTEj3ztSA0Qbs98ZiAXvor6Qzzt0DhzwsYuBpVaA60vvg0Bi4AlwJgjWTVZsbRYI
-	 vZ21cRoVxlephHhGTlo+es9YxIi2G2gHkWmzWcEcdbwPPKVN5tmnSjNmTqLAKafvZMTCx
-	 0o57ygQ4mWlCGU2Y9upvyPiIVhDCMfbrwzVFz8pAQfaSS6ok3iJgN5jdXU/MsUSytsxud
-	 w0AZpUZalB+Kfc5onk24SmKLdI2/HKGkVXsfHeoWgV1dUr6BTZ2tzaB0CA0f3sBHeGvmf
-	 B749u3q7S5lAx62ZUSzzklQj7snkU0NzePMZa7DDTBb05rdb5St+wqWmxxRVlU/II1w==
+	bh=fqrfNL9eDEZmcWcL9KnJU3eNKEo4GRn9hCr+8qSOjfY=;
+	b=0iz5GUaCf9ns/LxJHLWwTmxggPC/PwdP43VGz8JqnMyZMuIUByxRIym++BNE4nHfr3HR
+	 p7FCVucFPgLASS8MlsWVfN95z5jSw2RUc1Bit7Zk+Wu0MOteVPEZX1zjDDN0JImqeM679
+	 GB3fG54+ETEojtxPF5AqnNJ12RZvhwx+KfgkIwhcrp29tK/PIoLo4KXaPhIt5M8N85IXc
+	 /yujkax3uDdTXIChnzkQAg7xSFikYxUU/tGJf2t5xIG4DSVbS1095TYtpf9fUnGpIDCy7
+	 fsHVRhrjZaHGLXtGJJe2XWmary8vS+I6oWr18V9Eid+Uiq23wB5yArzyhecV5HInZSw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qqTmKPU6;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ocVwzM3S;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C096606A31C;
-	Wed, 18 Nov 2026 19:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5E2606A32F;
+	Wed, 18 Nov 2026 19:12:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qqTmKPU6
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BA31F000C4;
-	Wed, 18 Nov 2026 19:12:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ocVwzM3S
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEFE1F000C4;
+	Wed, 18 Nov 2026 19:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029148;
-	bh=CLD8pnMLxPzZQyEMnrgS5aZ57WyAkEw62dMbPcC5cT4=;
+	s=korg; t=1795029151;
+	bh=fqrfNL9eDEZmcWcL9KnJU3eNKEo4GRn9hCr+8qSOjfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=qqTmKPU6hBBGPGsE8aWZDJDlTo1wkoY15QUovGjQGRbiKqn04qrVZLk0TqBgXH3yX
-	 ORsIVmmITk9V06eFa3aJHxKOm2yV9v493hKJgRPETE8ooosnjbWyot7t0Ug1GVF4bt
-	 D8ZA/DlQZp+Nj3VRiBbuDahFMNterhaENkxYfXS4=
+	b=ocVwzM3Sb0Abk+1tb/P8YOF0UsirCkseNAR4LEar3MxF6ZN8rpiGGb9Ttcm5lXx8I
+	 ZcP5ToBL8FL/l7osGaPMCq150HUFlYaV444thxz8V2fkloxrWw1RZGYcGmlYH6dunT
+	 FBFXvgVz4+7X4INZQkXTgti+FLxw1JFY2omxO5hU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sashiko-bot <sashiko-bot@kernel.org>,
 	Ian Rogers <irogers@google.com>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Howard Chu <howardchu95@gmail.com>,
+	Mark Amirkan <markdamirkan@gmail.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0246/1756] perf trace: Fix error checking in btf_struct_scnprintf()
-Date: Wed, 18 Nov 2026 15:39:33 +0100
-Message-ID: <20261118150018.185454434@linuxfoundation.org>
+Subject: [PATCH 6.12 0247/1756] perf evsel: Validate branch stack before byte swapping
+Date: Wed, 18 Nov 2026 15:39:34 +0100
+Message-ID: <20261118150018.227775185@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -71,53 +70,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Tomlin <atomlin@atomlin.com>
+From: Mark Amirkan <markdamirkan@gmail.com>
 
-[ Upstream commit 02241f791aa28802cc05223a740e163e14cd5ea2 ]
+[ Upstream commit 2148e094671b0f6a44f033787b7da4ed14e96c27 ]
 
-btf_dump__dump_type_data() returns the positive number of bytes dumped on
-success, or a negative error code (e.g., -EINVAL) on failure.
+When perf reads an opposite-endian branch stack, __evsel__parse_sample()
+swaps each entry before checking whether all entries fit in the event. A
+truncated sample can therefore make the swap loop read and write past the
+event boundary.
 
-Currently, btf_struct_scnprintf() checks if btf_dump__dump_type_data()
-returns 0. When a negative error code is returned on failure, this check
-evaluates to false, causing the function to proceed down the success path
-and advance arg->augmented.args past the unprinted struct data before
-returning 0.
+A truncated perf.data file makes perf report crash with SIGSEGV. ASan
+reports an out-of-bounds read. A regression test puts an entry just past
+the declared end and shows that its flags are changed before the parser
+returns -EFAULT.
 
-Consequently, when syscall__scnprintf_args() falls back to the default
-argument beautifier upon receiving 0 from trace__btf_scnprintf(), the
-fallback beautifier or subsequent arguments read from an erroneously
-advanced augmented arguments buffer.
+Move the bounds check before the byte-swap loop. Valid samples are handled
+as before.
 
-Fix this by checking for '<= 0' ensuring that on any failure or 0-byte
-dump, 0 is returned without modifying the augmented arguments pointer.
-
-Fixes: cb32035214b9a09d ("perf trace: Pretty print struct data")
-Reported-by: sashiko-bot <sashiko-bot@kernel.org>
+Fixes: 63c12ae2f246dcdc ("perf evsel: Add bitfield_swap() to handle branch_stack endian issue")
 Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Aaron Tomlin <atomlin@atomlin.com>
-Tested-by: Ian Rogers <irogers@google.com>
-Cc: Howard Chu <howardchu95@gmail.com>
-[ Restored that call to be a single line ]
+Assisted-by: Symbolic
+Signed-off-by: Mark Amirkan <markdamirkan@gmail.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/tests/sample-parsing.c | 48 +++++++++++++++++++++++++++++++
+ tools/perf/util/evsel.c           |  3 +-
+ 2 files changed, 50 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 0af5254df4720..385686a93ab8f 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1044,7 +1044,7 @@ static size_t btf_struct_scnprintf(const struct btf_type *type, struct btf *btf,
- 		return 0;
+diff --git a/tools/perf/tests/sample-parsing.c b/tools/perf/tests/sample-parsing.c
+index 72411580f8698..5af2c1a0c376f 100644
+--- a/tools/perf/tests/sample-parsing.c
++++ b/tools/perf/tests/sample-parsing.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0
+ #include <stdbool.h>
++#include <errno.h>
+ #include <inttypes.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -376,6 +377,49 @@ static int do_test(u64 sample_type, u64 sample_regs, u64 read_format)
+ 	return ret;
+ }
  
- 	/* pretty print the struct data here */
--	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) == 0)
-+	if (btf_dump__dump_type_data(btf_dump, type_id, arg->augmented.args->value, type->size, &dump_data_opts) <= 0)
- 		return 0;
++static int test_truncated_branch_stack(void)
++{
++	struct perf_event_attr attr = {
++		.sample_type = PERF_SAMPLE_BRANCH_STACK,
++	};
++	struct {
++		struct perf_event_header header;
++		u64 nr;
++		struct branch_entry entry;
++	} input = {
++		.header = {
++			.type = PERF_RECORD_SAMPLE,
++			.size = sizeof(input.header) + sizeof(input.nr),
++		},
++		.nr = 1,
++	};
++	struct perf_sample sample;
++	struct evsel *evsel;
++	u64 flags = 1;
++	int err;
++
++	input.entry.flags.value = flags;
++	evsel = evsel__new(&attr);
++	if (!evsel)
++		return -1;
++
++	evsel->sample_size = __evsel__sample_size(attr.sample_type);
++	err = __evsel__parse_sample(evsel, (union perf_event *)&input,
++				    &sample, /*needs_swap=*/true);
++	perf_sample__exit(&sample);
++	evsel__put(evsel);
++
++	if (err != -EFAULT) {
++		pr_debug("truncated branch stack returned %d, expected -EFAULT\n", err);
++		return -1;
++	}
++	if (input.entry.flags.value != flags) {
++		pr_debug("truncated branch stack modified data past the event\n");
++		return -1;
++	}
++	return 0;
++}
++
+ /**
+  * test__sample_parsing - test sample parsing.
+  *
+@@ -392,6 +436,10 @@ static int test__sample_parsing(struct test_suite *test __maybe_unused, int subt
+ 	size_t i;
+ 	int err;
  
- 	consumed = sizeof(*augmented_arg) + augmented_arg->size;
++	err = test_truncated_branch_stack();
++	if (err)
++		return err;
++
+ 	/*
+ 	 * Fail the test if it has not been updated when new sample format bits
+ 	 * were added.  Please actually update the test rather than just change
+diff --git a/tools/perf/util/evsel.c b/tools/perf/util/evsel.c
+index e84dacb5627b6..ab808f0754055 100644
+--- a/tools/perf/util/evsel.c
++++ b/tools/perf/util/evsel.c
+@@ -2898,6 +2898,8 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
+ 			e = (struct branch_entry *)&data->branch_stack->hw_idx;
+ 		}
+ 
++		OVERFLOW_CHECK(array, sz, max_size);
++
+ 		if (swapped) {
+ 			/*
+ 			 * struct branch_flag does not have endian
+@@ -2913,7 +2915,6 @@ int evsel__parse_sample(struct evsel *evsel, union perf_event *event,
+ 				e->flags.value = evsel__bitfield_swap_branch_flags(e->flags.value);
+ 		}
+ 
+-		OVERFLOW_CHECK(array, sz, max_size);
+ 		array = (void *)array + sz;
+ 
+ 		if (evsel__has_branch_counters(evsel)) {
 -- 
 2.53.0
 
