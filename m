@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795041983;
-	b=w9BZT77mqJ8WswpOYHtrHhW7uvliDseI4O04E+PLwmV9CGJlCP+FNLPcPlNaYmyTHLvI
-	 lx9OT0zqRVrgCxCWZM6kR/WosrRTsm5OWCH5JzKemkcuDyZyOPTKlSpBFDqLjRq+2z2r8
-	 5Mkpq1rrFM72vhVMmLSRZaD1qhh3HPd81TVFfHsfjVeD2Us4ndWYxVHyohmiuocBaMJZX
-	 KmSWmrwuVezwFldD1jLSdsbYDUDyckm74nz9mKD4z4uv2G6ucuHaAbPYbm2IGo6QRht+M
-	 q6e9/rzXc0WAywcnXhhpHi/aQvbls+Ncd2NX9Ax/0FZyo9pZUcDh/JNgSWCDpqAwXxw==
+	t=1795041986;
+	b=Kes8+s2sN3m2VcfLFYCu6fPaDmffhWvVHCXDycATgF033O83xJRindKieIUTuddhWfz3
+	 pdEUHixEmYcRHT4VF/x+fngKxRb14cCxYQ0OznjRR95x8A3ySQdT+4izjtu+edE72Becc
+	 MmapOMbfMet90ZVjjJCQVD4tpjXgHnorHyIXiTjr3CVKx42e7uO5cJhSKm/btK8So83vx
+	 02YUoLIahIm0OaWYyWTfZE4+fBj88O4FKCo571rXzZKZBb9ElHsdd74lbFVWWP072TxDe
+	 Pip6tTszSyCIEo1P2KqAURvwHpiF7lL4BwdXdCLRoPzv1OmLHavtIwEPv95zOQ1SYFg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795041983;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795041986;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=JGmaLjOJ8LLjNWyNZZrX3Rsv0EKqXSPhD2CaIRXlBmQ=;
-	b=PNnw/6hmydB6KkaWLrUd0WxrJzYRCDVUiIcBlkDq9cnVaS0vZ0CSqOBDui9IzSCIk2Of
-	 blyw99ZGGJymUXQc/0Durwn8dIBfNm2LwPCR2e9sEe2D5V40H0ZxvEkylLsEPr1tnm97a
-	 S6TL1kwhPH7HPW7UrIUMrAit60JuKl5/L6tOjZCsYyeTH6FE9hoVWQFVMi2d41+/fJe2O
-	 1vXnczrw87c0Xx2G/pj81S09Y832w3XC49iVMHA0pzP2hdbphy9098pGc95/QX/HFfnlP
-	 TPmfiEN8sjkVRSH3unSNdtwnLw++mES14zttm7ZWzWl72Bn7vDmyY+riyWnyGwHJgqw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=xc3oWoi1HKV4PjOSCiH84AwPFDa7Fbh5T57GQHES0Y0=;
+	b=DACbJdp1yrCokzv6f9Ph85KXnXbwDfrmwC2FIH4k/HuNprpvpEj96Z7ZRZacEm/cpt7E
+	 ZO0+5uUFmXMzIwsJMgpnJlekySxjGCRBCs4tVW9RdrG9PS3yX9TA595xUQLXYb3HVGelU
+	 NW51LAw7HyEWSCEaCRJht/zywTL+MatIzvzA8VH2unPAvLGV9STv93HHDd8D46GHwkOYr
+	 pCeAIWlkADpdOjZiPOvqLu6xH8vtkocuxm5Qj2Eyf/ZD5zKma9ReflkicCdy0ehcMDYMJ
+	 JyUgxrm8aMEJVG9HMtcn40nnhmjTlxzk08MVDdICyNlrVh5fbLIn4+d5sO3pHvr/0oQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I9YCHsRo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVL5IQR2;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8020B606A32A;
-	Wed, 18 Nov 2026 22:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAA5606A320;
+	Wed, 18 Nov 2026 22:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=I9YCHsRo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9060C1F000C4;
-	Wed, 18 Nov 2026 22:46:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eVL5IQR2
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D9141F000C4;
+	Wed, 18 Nov 2026 22:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795041983;
-	bh=JGmaLjOJ8LLjNWyNZZrX3Rsv0EKqXSPhD2CaIRXlBmQ=;
+	s=korg; t=1795041985;
+	bh=xc3oWoi1HKV4PjOSCiH84AwPFDa7Fbh5T57GQHES0Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=I9YCHsRoOw79HcgLcDrkIhSju+bCfdygdSOXhTgG6nkAg9RaCOWsKaAhjv6lA33iE
-	 Ni8KrsPkOqmDqLVQGjBwsIVpchJdDXUqb7MCEf+fJmrGq8NwnAneH60GOUAr9VllY0
-	 d/2Ndh/YTg791m44q3VefGpp74sps9aowPGNhYa4=
+	b=eVL5IQR20BxsWnFVCXze0PULu11SEFOW/ODWvrY0m+zDWDtNQRYiGsmXmL1alLGIO
+	 KCI/m1qoexDQ6scIeVX/S15gT+w7vN8ZhgDIJ/IRXhntQI/VVibckLIpd0yKDJJX89
+	 b23GPF4q44NIpRYBY2tU5afIBj3MBbj//39nAfnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vega <vega@nebusec.ai>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	David Laight <david.laight.linux@gmail.com>,
+	syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com,
+	=?UTF-8?q?=C3=96mer=20Mete=20Kaya?= <omermetekaya0@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3008/3318] netfilter: conntrack: fix unlikely UaF in gc worker
-Date: Wed, 18 Nov 2026 16:00:30 +0100
-Message-ID: <20261118150450.483109643@linuxfoundation.org>
+Subject: [PATCH 6.6 2982/3318] usbnet: fix smp_processor_id() use in preemptible context
+Date: Wed, 18 Nov 2026 16:00:04 +0100
+Message-ID: <20261118150449.734755947@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -63,59 +64,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Ömer Mete Kaya <omermetekaya0@gmail.com>
 
-[ Upstream commit 9836164821a46af07428bb2a5e14137bf0c7bd6e ]
+[ Upstream commit 95a5c641fc7becab441bf244baa73b0b0f8b7dea ]
 
-When early-drop scan is enabled, gc_worker() reads tmp->ct_net, resolves
-cnet with nf_ct_pernet(), and reads cnet->count with RCU read lock held but
-before acquiring a reference to tmp.
+tx_complete() calls this_cpu_ptr() before disabling preemption, which
+triggers a BUG when running with CONFIG_DEBUG_PREEMPT:
 
-Its unlikely but possible that the worker gets preempted before reading
-cnet->count while nf_conntrack_cleanup_net_list manages to unlink all
-conntracks and returns in the mean time.
-This allows for the pernet memory to get free'd.
+  BUG: using smp_processor_id() in preemptible code in tx_complete
 
-On resume, use after free would occur when the worker reads cnet->count.
+Fix by using get_cpu_ptr()/put_cpu_ptr() which disable preemption and
+return the per-CPU pointer atomically. The usbnet_skb_return() hunk
+is a hardening change: that path runs in softirq context so no warning
+fires there, but the same fix is applied for consistency.
 
-This can be solved either via another synchronize_rcu() in
-nf_conntrack_cleanup_net_list or via cheaper flush_work().  If work
-wasn't running no race can happen as next call cannot observe
-already-unlinked conntrack objects.
-
-This is an LLM finding with no reproducer, but it appears to be correct.
-
-Fixes: c6dd940b1f74 ("netfilter: allow early drop of assured conntracks")
-Reported-by: Vega <vega@nebusec.ai>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ed194d136769 ("usb: core: remove local_irq_save() around ->complete() handler")
+Suggested-by: David Laight <david.laight.linux@gmail.com>
+Reported-by: syzbot+04cd90bb99c6ef81a65d@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=04cd90bb99c6ef81a65d
+Signed-off-by: Ömer Mete Kaya <omermetekaya0@gmail.com>
+Link: https://patch.msgid.link/20261004215937.302247-1-omermetekaya0@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/usb/usbnet.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
-index 8969d8abe4cbf..51cd56e31135e 100644
---- a/net/netfilter/nf_conntrack_core.c
-+++ b/net/netfilter/nf_conntrack_core.c
-@@ -2554,6 +2554,11 @@ void nf_conntrack_cleanup_net_list(struct list_head *net_exit_list)
- 		goto i_see_dead_people;
- 	}
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index a26a7435d84bb..c4416d933b6c3 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -328,7 +328,7 @@ static void __usbnet_status_stop_force(struct usbnet *dev)
+  */
+ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
+ {
+-	struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
++	struct pcpu_sw_netstats *stats64;
+ 	unsigned long flags;
+ 	int	status;
  
-+	/* must wait for current scan loop, worker also looks at
-+	 * struct nf_conntrack_net, which is about to be free'd.
-+	 */
-+	flush_work(&conntrack_gc_work.dwork.work);
-+
- 	list_for_each_entry(net, net_exit_list, exit_list) {
- 		nf_conntrack_ecache_pernet_fini(net);
- 		nf_conntrack_expect_pernet_fini(net);
+@@ -341,10 +341,12 @@ void usbnet_skb_return (struct usbnet *dev, struct sk_buff *skb)
+ 	if (skb->protocol == 0)
+ 		skb->protocol = eth_type_trans (skb, dev->net);
+ 
++	stats64 = get_cpu_ptr(dev->net->tstats);
+ 	flags = u64_stats_update_begin_irqsave(&stats64->syncp);
+ 	u64_stats_inc(&stats64->rx_packets);
+ 	u64_stats_add(&stats64->rx_bytes, skb->len);
+ 	u64_stats_update_end_irqrestore(&stats64->syncp, flags);
++	put_cpu_ptr(dev->net->tstats);
+ 
+ 	netif_dbg(dev, rx_status, dev->net, "< rx, len %zu, type 0x%x\n",
+ 		  skb->len + sizeof (struct ethhdr), skb->protocol);
+@@ -1277,13 +1279,15 @@ static void tx_complete (struct urb *urb)
+ 	struct usbnet		*dev = entry->dev;
+ 
+ 	if (urb->status == 0) {
+-		struct pcpu_sw_netstats *stats64 = this_cpu_ptr(dev->net->tstats);
++		struct pcpu_sw_netstats *stats64;
+ 		unsigned long flags;
+ 
++		stats64 = get_cpu_ptr(dev->net->tstats);
+ 		flags = u64_stats_update_begin_irqsave(&stats64->syncp);
+ 		u64_stats_add(&stats64->tx_packets, entry->packets);
+ 		u64_stats_add(&stats64->tx_bytes, entry->length);
+ 		u64_stats_update_end_irqrestore(&stats64->syncp, flags);
++		put_cpu_ptr(dev->net->tstats);
+ 	} else {
+ 		dev->net->stats.tx_errors++;
+ 
 -- 
 2.53.0
 
