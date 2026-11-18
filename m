@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017990;
-	b=4M4Jd+IyxuBlLZ1jeCud/VA1o5Qz2vMWJCc0Iuioy9lU32tRHxTAVsWqljdHY9d+Dbnw
-	 Rlp+87ASW1GTHQymElKgG9NKWrCKfbu6/FioAHDXM0t2p49U1GgJuLL0lInGimE400xH4
-	 q9DwKF/A4lL1Xk6m0E6TEH52d+ovNPQ6RZp8DaW9MAGXjaK0MOTyRKYZZMkSg6uRnjunO
-	 tLmiGGO8wl9nIw5wAPgQbM7WclLZoKzyCiilEREXCjelA5uZVpwIO+mW/yrHlE0rNR4Gm
-	 ZAhYwIvx2cqYR2NYJUZuRQKrrUB20w3I4WCZERROky9nYqVIz0/4KP/TMY+po/72iDA==
+	t=1795017993;
+	b=SXtdPw2sYnyw2mdes4Ns/iRsWlZYeHmBK1qbUDOX05gi3zJHlHx2CHBOUGY7/IHSZUwX
+	 r/GUOj4JuSi3qzDHm1T/Zbv1DsiLRCa/mqgtyuMG6FN9XvCvuSO+jX8Yc3jsfGy087csS
+	 SgPb1AIBu7DGO/E0McHWtpMPV9g/Nz2gT7V/ZuffnBvA1rk0D8PmURbjVhESBuZPUCUtk
+	 UYNKlT2+qjsNibRDGZwL7/FTzCAVY3eRooy1CeNGnMTAjl5lkofBwQ+gFbMNDzczLvPqt
+	 xYugh4tHKoIIvGIvMBGcjJtn6kXQBs9EG7/znsIHSiRMpVeVnUQOSrVJJBiqLSc5I3w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017990;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017993;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GFg9ZPqLpReq4L3o0UCrBmVN8+xtYrNl4O07n2sKZn8=;
-	b=1g35gYphn481iXyYZpThYaN5W1T7vZK7ROALB/f6YgQshQ/wKFnSOP91e1k65sTv+c9D
-	 68uhn/bPowMQttha9egF3KFkDnzAPad0lPNMJdZKHVQ4yRs60S9Cv61wvYKyOJXzN8YJT
-	 KhZNk5QDTFVFfS6PhpGO2hQqN7Cii9LTOpyQw7F+1fq/Fwv/g29GPTd4uKCSe4SOoIEba
-	 jCRB8pZMexLJ2mhRJF7GDeboJVzFswvPMoFsIYRU4ljLa0kTO/SpUWMVL9PzY4VpbspU8
-	 egJOyjtXFJ+nCKPQpZUHteeCF22fc+1hw7FbA3EHaWEvCEr86IcY4K5w2JkYKcgw7qA==
+	bh=sPYLNUHXAwebsnlfZC2G0ISUiHOxYaRf5xA6/LZkuHk=;
+	b=wP/6dQTYZMgNVvN0M0X7sfWAu2HRFQ6LWI0+dtE+oWMkZXtXIPlJ5icgeZgoBYxUYD1u
+	 1ILcimLHiQoNnWNkSElYkZOdBUgBusG82OIHbfLuYAz80rbwpkES2d5G/0bOHR98cDs7R
+	 51WY/mZnYj65mh41Ed0c1KLOAw9IMEyL7sPYlHqt23TfKQ6bGlTPUw5AXli3LlG/aKVJF
+	 Sor8XS1NkfYiCwcWG5tCMLd9GqOqGXD57vpyD2vp6110QpA+YJbX2szaFEL3OZMeao8/h
+	 XaZkgzsSRD6aKEiaFoZ2Clx+GprhMlR89OFngXXDb4mqRwNP7yUFsamSsKf4/tr2jlw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tccyr7dU;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2iEDoRN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D04606A320;
-	Wed, 18 Nov 2026 16:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A81606A31C;
+	Wed, 18 Nov 2026 16:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Tccyr7dU
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893101F000C4;
-	Wed, 18 Nov 2026 16:06:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s2iEDoRN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E6E1F000C4;
+	Wed, 18 Nov 2026 16:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017990;
-	bh=GFg9ZPqLpReq4L3o0UCrBmVN8+xtYrNl4O07n2sKZn8=;
+	s=korg; t=1795017992;
+	bh=sPYLNUHXAwebsnlfZC2G0ISUiHOxYaRf5xA6/LZkuHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=Tccyr7dUnEo3/LVDN+YlGjYXVNaSRlAGGAizY9IdUGcKG5GyLHon3CFLmQrYy7GWw
-	 QYE1j0s57U8LZtRQTla147zjvVh+kEmEwzNKXoxfre0zHTC28Mt3jQ+ZTIVFtglCIZ
-	 JR+u/O+XUxKoY2xOf3Z+OQCOiZm0KWH9Pox5asPs=
+	b=s2iEDoRNA4Lyo0s6e6RgSQkOtneCLATiAlsqUBpo/GRXzTG48gEtnX8l9DBON6crz
+	 DNAbVOZRawhf+2uCw/C6ApG/fliJ1MrHR24Sw0zWXhvd6kATauxCuz6Po/lfx9ktgO
+	 ldyi38RT9eP6dhdu1QXk9XC8yOWgZwSuEZNQs/9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	George Zhang <george.zhang@amd.com>,
-	Lu Yao <yaolu@kylinos.cn>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jiale Yao <yaojiale02@163.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1080/2651] drm/amd/display: Fix wrong plane index in dcn6 writeback latency loop
-Date: Wed, 18 Nov 2026 15:38:40 +0100
-Message-ID: <20261118150326.877371337@linuxfoundation.org>
+Subject: [PATCH 7.3 1045/2651] RDMA/cxgb4: Do not allow userspace to write the status page
+Date: Wed, 18 Nov 2026 15:38:05 +0100
+Message-ID: <20261118150325.587491667@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -70,35 +68,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Yao <yaolu@kylinos.cn>
+From: Jiale Yao <yaojiale02@163.com>
 
-[ Upstream commit 2c3ed158087d2971cad00faab24e2143eef49944 ]
+[ Upstream commit 1c5335a6902639596a795705349da7f76027e103 ]
 
-Use plane_descriptors[k] for the loop bound, matching the loop body.
+The device status page is shared by all userspace contexts and contains
+db_off, which the driver updates to control doorbell flow. The rdma-core
+provider maps it with PROT_READ, but c4iw_mmap() passes the requested page
+protection through when handling CXGB4_MMAP_CONTIG.
 
-Fixes: 7f7d7ea1fa51 ("drm/amd/display: Add new sources for DCN6")
-Reviewed-by: George Zhang <george.zhang@amd.com>
-Signed-off-by: Lu Yao <yaolu@kylinos.cn>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+A process can therefore request PROT_WRITE directly or later upgrade a
+read-only mapping with mprotect() because VM_MAYWRITE remains set. This
+lets userspace alter device-wide flow-control state seen by the kernel and
+other contexts.
+
+Reject initially writable mappings and clear VM_MAYWRITE before mapping the
+page. This preserves the existing read-only userspace ABI.
+
+Fixes: 05eb23893c2c ("cxgb4/iw_cxgb4: Doorbell Drop Avoidance Bug Fixes")
+Signed-off-by: Jiale Yao <yaojiale02@163.com>
+Link: https://patch.msgid.link/20260926112611.3214382-1-yaojiale02@163.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c  | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/cxgb4/provider.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c
-index a4e2f8604650f..60e873edf13c3 100644
---- a/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml2_0/dml21/src/dml2_core/dml2_core_dcn6_calcs_dchub.c
-@@ -1252,7 +1252,7 @@ void dcn6_calculate_watermarks_and_dram_speed_change_support(
- 			DML_LOG_VERBOSE("DML::%s: k=%u, VActiveLatencyHidingUs = %f\n", __func__, k, p->VActiveLatencyHidingUs[k]);
- 		}
- 
--		for (unsigned int j = 0; j < p->display_cfg->stream_descriptors[p->display_cfg->plane_descriptors[j].stream_index].writeback.active_writebacks_per_stream; ++j) {
-+		for (unsigned int j = 0; j < p->display_cfg->stream_descriptors[p->display_cfg->plane_descriptors[k].stream_index].writeback.active_writebacks_per_stream; ++j) {
- 			double byte_per_pixel_luma_in_buffer = 1.0;
- 			double buffer_for_luma = (double)p->WritebackInterfaceBufferSize * 1024.0 / 2.0;
- 			if (p->display_cfg->stream_descriptors[p->display_cfg->plane_descriptors[k].stream_index].writeback.writeback_stream[j].pixel_format == dml2_444_64) {
+diff --git a/drivers/infiniband/hw/cxgb4/provider.c b/drivers/infiniband/hw/cxgb4/provider.c
+index ebe3170a641ca..904a5323a6930 100644
+--- a/drivers/infiniband/hw/cxgb4/provider.c
++++ b/drivers/infiniband/hw/cxgb4/provider.c
+@@ -171,6 +171,11 @@ static int c4iw_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 					 len, t4_pgprot_wc(vma->vm_page_prot));
+ 		break;
+ 	case CXGB4_MMAP_CONTIG:
++		if (vma->vm_flags & (VM_WRITE | VM_EXEC)) {
++			ret = -EPERM;
++			break;
++		}
++		vm_flags_clear(vma, VM_MAYWRITE);
+ 		ret = io_remap_pfn_range(vma, vma->vm_start,
+ 					 addr >> PAGE_SHIFT,
+ 					 len, vma->vm_page_prot);
 -- 
 2.53.0
 
