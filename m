@@ -1,53 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042172;
-	b=kSheNBrwjYnRdHIIeHZUt52ZmROKj31mg1ilb9QKlJ99dufHryGRCIwQqQLY20BV3lbk
-	 BAlU11b9U8h+AEqvf8wQN2VTcu/D/FiroN5DbnTjT7Iv3KGu+7ZxqZUIzLjadHdTUqnRQ
-	 a2stYiViByEIbzwoXdp/KZVA3knNfmF9Xn6f4/2jghAfpXuGLvo/iq5a2UX65olmDSLTE
-	 SCiwzmY95UVMYVFnguUYGlcUIlDuKaB3X+QrVRdEvw62oyIblIoCmTxDhyU79CkSuigDO
-	 Xo6PkEf6ijkuA0ZTBGSSx5EY/HsFe9nesq8r6EkfkqN//9JqPjaDFUNMENz1+YvKuwg==
+	t=1795042174;
+	b=qDqub2QVMJp51+3ig+tBsMZkP1VDe4Grv7lOsBsRO/N3pMyevJZzSSn5P0Ds7TiiQAPb
+	 8UJAhEo/x6T+bBs5EQRnuHuOZ4h1q66otviPGikCGG5pofK5ILiimb1pswz5iYOxTyKLz
+	 9B6gFbmNdta08GF9tbrGU384NBft3XzH+3T73RxcfhD02/YoYmGAUM3SQDcNoBHTbbm1f
+	 OluvgGJM8Vq1Sh7F+pgNE83Y2MDOnrM2J4sKmphr5NOvjJOyv7Xl48sj0Kfj2DoJAOjFY
+	 xaw4zlbJXsDo+h1e583t1zKqmbwOrzC9VZUjlOo38EflIOzWud/vkDNUA+q4mxyOgqg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042172;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042174;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=eEvZVKDl6j6Yg7w9CvUkHtie3/lXXwwO8Emnljh1IA4=;
-	b=ZRRNzp3l7qemRUPhHa1YeDh1WTdZDoA6bDeyetxxdecdTc1V0vGYyO+mMS0Ivu8pks4I
-	 AWT/gcYn/Gmgdv/sjCh5tPbv/k9gs7g6nIILazuo+OEf8p+iq9DPkMQnwBBQHRTR+gRHL
-	 pIuAir1/RjpW42kpRRmW8XnPq9XXZ6RQzyOXukucFWzQRNu8BuZcMCwwdaVT8Nn2GvBW0
-	 ebvejDET4N7XM9w4WKa/UXp6VXHg/2DN4o8avStPfPtpIHRL4GoilvkQPPlef54FIBvH7
-	 rRS2clrv7L5FH306UObDi8mEekNq39tiuce6UubeEGtZpajmzn7eSQN0x1nGzroY8OA==
+	bh=Rp4yind+agSxvhBKGkKQRy4vVl5j2BVAA+pYlwLN3v8=;
+	b=WkzfTKsjHPj8dR7lObij3+xIK6vrshiABrSx17Q8WlWfGDS1nxvNa9Auh4Y05tjqdAdl
+	 QkXTHYQaA21MqE1re/jrz+l03NkgwWsPGK4ApIP1fkT/UPD8/0nxxdZkLHiT1eOdtOzgy
+	 nzsTsr1yXQ4Jccv2Uf8Jwy+c0lLpUPSDr2ftxNUljbEwEWrTr3FCqR7+mcyoNQ2kSI0XR
+	 nyqdV7SvWQf5ZLFI9dkBZ7LxVQQdCfcyC8IRFltIhcOco9ZGUUK1fTD7dECnoLLnCCgf2
+	 hA+Ksd1j1uwtlMuYCGbiqQF3i6WT+WgYbcTzQu/EKol2MYiPDTEMNugdgPS85ewqPtw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBsJBHLW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QzthaHhz;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C28606A325;
-	Wed, 18 Nov 2026 22:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92408606A31C;
+	Wed, 18 Nov 2026 22:49:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=TBsJBHLW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A021F000C4;
-	Wed, 18 Nov 2026 22:49:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QzthaHhz
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18D91F000C4;
+	Wed, 18 Nov 2026 22:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042171;
-	bh=eEvZVKDl6j6Yg7w9CvUkHtie3/lXXwwO8Emnljh1IA4=;
+	s=korg; t=1795042174;
+	bh=Rp4yind+agSxvhBKGkKQRy4vVl5j2BVAA+pYlwLN3v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TBsJBHLWWdJhUN3gdzQak/uZwY5l6gnCqmuvwMKbVaYRF45oteM/x0C8B5M/bdVdK
-	 pXqHBpmb5ldN0Zk6De+tiXXcTHzAbvm8HcQDsHRlfyjnKVY7BZLO3yQF1i9LgZ4uRx
-	 fIWQVvYyPAeiDmzRymdwyKHlAAfQWfrTdiUKgviI=
+	b=QzthaHhzUWCeBLfqF/O6fhVL+Q2/xDxpFtsS8fRZvv6NOhJtokBX/LqyNT9TjmKS/
+	 Z/cId5FGYWKdgCIMoPMob9NUy5D4zxuxQyZk6jYD4Rs0V6KEvv84J5djvtwL3+e9Xa
+	 ECTWzgoRtdsfZwQQnQfuBiVUpqmZGafW/6QSfwmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Ilya Maximets <i.maximets@ovn.org>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3068/3318] net: openvswitch: skip IPv4 later fragments on TCP/UDP set actions
-Date: Wed, 18 Nov 2026 16:01:30 +0100
-Message-ID: <20261118150452.154996976@linuxfoundation.org>
+Subject: [PATCH 6.6 3077/3318] net: bcmasp: account for offload header in TX short packet padding
+Date: Wed, 18 Nov 2026 16:01:39 +0100
+Message-ID: <20261118150452.393359160@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -69,55 +69,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit 14c0350142ab0a10ebeefed03b779df23749e16a ]
+[ Upstream commit 74667a55122ad2fad88af4fd7672e4c8175c2558 ]
 
-An IPv4 later fragment carries no L4 header, but key extraction leaves
-ip.proto set to the real protocol and the flow may wildcard the frag
-field, so validate_set() accepts such packets. set_tcp() and set_udp()
-then treat the first bytes of the fragment payload as an L4 header,
-rewrite them as ports and patch the bytes at the checksum offset,
-corrupting the packet.
+When hardware checksum offload is enabled for an skb,
+bcmasp_csum_offload() prepends a struct bcmasp_pkt_offload header
+(20 bytes) to the skb via skb_push(). This increases skb->len and
+skb_headlen(skb) by sizeof(struct bcmasp_pkt_offload).
 
-Skip these actions for OVS_FRAG_TYPE_LATER. IPv6 later fragments are not
-affected, since their ip.proto is NEXTHDR_FRAGMENT and validate_set()
-rejects L4 set actions for them.
+Because the hardware descriptor processor strips this offload header
+before transmitting the packet on the wire, the wire packet length is
+smaller by sizeof(struct bcmasp_pkt_offload). The padding calculation
+must account for this extra header; otherwise, short frames are sent on
+the wire smaller than the minimum Ethernet frame size (ETH_ZLEN +
+ETH_FCS_LEN).
 
-Fixes: ccb1352e76cf ("net: Add Open vSwitch kernel components.")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Reviewed-by: Ilya Maximets <i.maximets@ovn.org>
-Link: https://patch.msgid.link/20261015124749.4694-1-fmancera@suse.de
+Furthermore, small frames with payload in page fragments (such as small
+TCP segments with CHECKSUM_PARTIAL) have nr_frags > 0 and were skipping
+padding entirely because the padding check was restricted to
+nr_frags == 0.
+
+Perform the padding check on skb->len before the descriptor loop using
+skb_put_padto(), adding sizeof(struct bcmasp_pkt_offload) to min_size
+when checksum offload is enabled, and re-read nr_frags after padding in
+case the skb was linearized.
+
+Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
+Reviewed-by: Justin Chen <justin.chen@broadcom.com>
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261013204439.3494046-6-florian.fainelli@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../net/ethernet/broadcom/asp2/bcmasp_intf.c    | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index c525eb456609a..8511e70890b45 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -619,6 +619,9 @@ static int set_udp(struct sk_buff *skb, struct sw_flow_key *flow_key,
- 	__be16 src, dst;
- 	int err;
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+index 4e9fa6463831a..f5874190dbf64 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+@@ -268,7 +268,7 @@ static const struct bcmasp_intf_ops bcmasp_intf_ops = {
+ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct bcmasp_intf *intf = netdev_priv(dev);
+-	unsigned int total_bytes, size;
++	unsigned int total_bytes, size, min_size;
+ 	int spb_index, nr_frags, i, j;
+ 	struct bcmasp_tx_cb *txcb;
+ 	dma_addr_t mapping, valid;
+@@ -294,16 +294,21 @@ static netdev_tx_t bcmasp_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	if (!skb)
+ 		return NETDEV_TX_OK;
  
-+	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
-+		return 0;
++	min_size = ETH_ZLEN + ETH_FCS_LEN;
++	if (csum_hw)
++		min_size += sizeof(struct bcmasp_pkt_offload);
 +
- 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
- 				  sizeof(struct udphdr));
- 	if (unlikely(err))
-@@ -662,6 +665,9 @@ static int set_tcp(struct sk_buff *skb, struct sw_flow_key *flow_key,
- 	__be16 src, dst;
- 	int err;
- 
-+	if (flow_key->ip.frag == OVS_FRAG_TYPE_LATER)
-+		return 0;
++	if (skb->len < min_size) {
++		if (skb_put_padto(skb, min_size))
++			return NETDEV_TX_OK;
++		nr_frags = skb_shinfo(skb)->nr_frags;
++	}
 +
- 	err = skb_ensure_writable(skb, skb_transport_offset(skb) +
- 				  sizeof(struct tcphdr));
- 	if (unlikely(err))
+ 	spb_index = intf->tx_spb_index;
+ 	valid = intf->tx_spb_dma_valid;
+ 	for (i = 0; i <= nr_frags; i++) {
+ 		if (!i) {
+ 			size = skb_headlen(skb);
+-			if (!nr_frags && size < (ETH_ZLEN + ETH_FCS_LEN)) {
+-				if (skb_put_padto(skb, ETH_ZLEN + ETH_FCS_LEN))
+-					return NETDEV_TX_OK;
+-				size = skb->len;
+-			}
+ 			mapping = dma_map_single(kdev, skb->data, size,
+ 						 DMA_TO_DEVICE);
+ 		} else {
 -- 
 2.53.0
 
