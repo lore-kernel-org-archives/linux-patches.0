@@ -1,52 +1,58 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795062138;
-	b=xrKfm5eDovbnr/mWBMW5dPUQ5/GmcqDSZiP+lpZBk2pZmfFNMqusEZ7cUENYQQx6ug1S
-	 5UnAXVK7goDLqlZA1vTrex0+z29sMytOqKNstnHMVqidXeH3Y91GOKfKwLn+mW6/jMIyO
-	 T32fD7BIXd5l69+ymasUJLoNuygX9IXMy5s7+HUA4gXiUpGVnYjx2CV1ifPhNZMoGcd/v
-	 9xh1ukM0fN9sCHr3FhxDQfFARbgF1k1Iw7zh/tRVQVu52rqipULvc2ouqvG4CuT2lAwsd
-	 +KmRCSUjBsQoZ40m2wGA5yr1fizQ+FvW8EDaYw4iAm+8FmyYo7dZWwLbZJtYpr83VCA==
+	t=1795062141;
+	b=z2R+lWoiLvO4qQmgiuf0cUauTroiC0LExExfIuMFfvXJw2kLziPg5bQ7S/bZg0d/0L3D
+	 iK0GZUw66VL00Saj4zU/qUzC8eFoDxUNx7dKCeBsRFfCge/eBofsnTGY4g9XqcCi32qpb
+	 lccpgBmIflJ8+O9vQd5neZ7AyhpNJZ2NHj4VIQ3Yfel/obeMyXj21DquOVcYWeQiduK7F
+	 SXybgDfld8Ao44iUvX17AZGC+ob+z2J5CprJPkyzzRoWIzGSOKqyrDBcMCYXnjsDHeEtP
+	 /SK7vazcvKUOsGoG9av7t5qkD5W7h+hOyiGApEa7jOJMiuOuQ3/6QXeRPCgaMqf+x7w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795062138;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062141;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=zuuTACKvrGYDRAktX2BOOob+k84XUU6ImnFMaCisbwY=;
-	b=Y3TrVsMF7277U76Jbk5RDaDelLmIBWXbUDjqag7VLQMt4+p+FrBQCCCVGEoy/vNFXCdA
-	 l1PjufkK0l07qlgpoHIIXpzbRQQDvKtvKOoZPVO0MjICeLfJuRY48f8SN3g0xB7ZuiGOI
-	 maDgr94fUAkbFPP7HJ6xLV/vJ/jCnfQkPDiFhyQ3TAlMkR7uZuQfhqDDKn+v4PqP9u2kr
-	 fP67jU3hnxCpDHZLZJiaRkczGvTDMAbMlQHrXR/xe9kjNiK3X8tULJdSX1CqagUsEHVla
-	 bBn8oBvcIMRBLdGGsad79WF+Ft5d6nxGBwUULwU2fEj9FZHnlflVrO7/BtfItm2FMbw==
+	bh=ccDlipBp4qTD3KZsuNeOsmiLZc9SetFBGAax7coJjaw=;
+	b=W4K4onm1bOjp28BOSJkwjVBNyhMXA8aq7C9e6HHlvKMBsYVZfmayfoDBCKzL8AnZN8FF
+	 DfcrjDnXH55Fs3XnjcjMI0DY6VKFSZCsPSeGn5mUccg3+kBCG5KBUtCNOQYbX4H6d1Q6p
+	 bmsDOJCw5ftjf2QjIhq96wNNiFa/w6FjQtF4AfmRT5PEZjGJF6DBMBq2NVvAtsuCaY+is
+	 uZzOVeOt7XFcLAmrP1V80wakR9a7M4bv+DqDzS/7pgQM1cpwk/wXm4lQ7HfNTW7HM/WVV
+	 1N9bfLBbU9VwnIMgzpV7/8nU90+yOOKKFo5zaiTBN1DQxKn0kmP9fXMDKm2+bl+Sy+Q==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIyKGnkp;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ViWcyLX5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B76606A32C;
-	Thu, 19 Nov 2026 04:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2119C606A325;
+	Thu, 19 Nov 2026 04:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bIyKGnkp
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBA21F000C5;
-	Thu, 19 Nov 2026 04:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ViWcyLX5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1541F000C4;
+	Thu, 19 Nov 2026 04:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795062138;
-	bh=zuuTACKvrGYDRAktX2BOOob+k84XUU6ImnFMaCisbwY=;
+	s=korg; t=1795062141;
+	bh=ccDlipBp4qTD3KZsuNeOsmiLZc9SetFBGAax7coJjaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=bIyKGnkp36sLeD1iyxjSaYb2yJvQeWMA5MRjjcK9P1/xSVWzGl0HYKl9b/N/r3Wcl
-	 KBhq68CLPdAUJ4ZkpTBE3H1lT4XEC/82R60wN65hkswRt2ury99BZibm7nqGwxDNvW
-	 QQ7ATKns4+N4pCtCQORVId1MOasLjIv+ZwUEVOUU=
+	b=ViWcyLX5FKQqn3wfsyOve9AG4KeyB5UzU+rb0HifrN8lvt7qKIL39130s71nvsLlw
+	 bHbEu5pDmHeGYt//XaftityUdMeHCXWg3zBmC8glnGky/u4ZphYpyrts+Jhw6a2maS
+	 1liBAmOGFQNgJdVNsupoHVaf9MD5x+z8xUlnltaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hungyu Lin <dennylin0707@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kashyap Desai <kashyap.desai@broadcom.com>,
+	Qian Cai <cai@redhat.com>,
+	Sumit Saxena <sumit.saxena@broadcom.com>,
+	John Garry <john.garry@huawei.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1776/1848] thermal: Fix CPU mask truncation in power limit trace event
-Date: Wed, 18 Nov 2026 16:03:34 +0100
-Message-ID: <20261118150033.715711765@linuxfoundation.org>
+Subject: [PATCH 5.10 1803/1848] blk-mq: add new API of blk_mq_hctx_set_fq_lock_class
+Date: Wed, 18 Nov 2026 16:04:01 +0100
+Message-ID: <20261118150034.787353009@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,48 +74,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hungyu Lin <dennylin0707@gmail.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 82c9c94f54a444a686e926c872dae4b198d1036f ]
+[ Upstream commit fb01a2932e81a1fb2273f87ff92dc8172b8880ee ]
 
-num_possible_cpus() counts CPUs, but CPU IDs need not be contiguous.
-Using it to size the thermal_power_cpu_limit bitmap can omit CPUs with
-higher IDs. For example, possible CPUs 0 and 64 produce an eight-byte
-bitmap on a 64-bit system, dropping CPU 64.
+flush_end_io() may be called recursively from some driver, such as
+nvme-loop, so lockdep may complain 'possible recursive locking'.
+Commit b3c6a5997541("block: Fix a lockdep complaint triggered by
+request queue flushing") tried to address this issue by assigning
+dynamically allocated per-flush-queue lock class. This solution
+adds synchronize_rcu() for each hctx's release handler, and causes
+horrible SCSI MQ probe delay(more than half an hour on megaraid sas).
 
-Use nr_cpumask_bits for both sizing and copying the bitmap.
+Add new API of blk_mq_hctx_set_fq_lock_class() for these drivers, so
+we just need to use driver specific lock class for avoiding the
+lockdep warning of 'possible recursive locking'.
 
-Fixes: 6828a4711f99 ("thermal: add trace events to the power allocator governor")
-Signed-off-by: Hungyu Lin <dennylin0707@gmail.com>
-Link: https://patch.msgid.link/20261023060724.5691-1-dennylin0707@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Tested-by: Kashyap Desai <kashyap.desai@broadcom.com>
+Reported-by: Qian Cai <cai@redhat.com>
+Cc: Sumit Saxena <sumit.saxena@broadcom.com>
+Cc: John Garry <john.garry@huawei.com>
+Cc: Kashyap Desai <kashyap.desai@broadcom.com>
+Cc: Bart Van Assche <bvanassche@acm.org>
+Cc: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 64e21d782020 ("nvme-loop: don't BUG() if a scan runs beside a reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/thermal.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/blk-flush.c      | 25 +++++++++++++++++++++++++
+ include/linux/blk-mq.h |  3 +++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/include/trace/events/thermal.h b/include/trace/events/thermal.h
-index 135e5421f0035..4ba9ea4c95631 100644
---- a/include/trace/events/thermal.h
-+++ b/include/trace/events/thermal.h
-@@ -129,7 +129,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
- 	TP_ARGS(cpus, freq, cdev_state, power),
+diff --git a/block/blk-flush.c b/block/blk-flush.c
+index 33b487b5cbf78..a82c82259112b 100644
+--- a/block/blk-flush.c
++++ b/block/blk-flush.c
+@@ -509,3 +509,28 @@ void blk_free_flush_queue(struct blk_flush_queue *fq)
+ 	kfree(fq->flush_rq);
+ 	kfree(fq);
+ }
++
++/*
++ * Allow driver to set its own lock class to fq->mq_flush_lock for
++ * avoiding lockdep complaint.
++ *
++ * flush_end_io() may be called recursively from some driver, such as
++ * nvme-loop, so lockdep may complain 'possible recursive locking' because
++ * all 'struct blk_flush_queue' instance share same mq_flush_lock lock class
++ * key. We need to assign different lock class for these driver's
++ * fq->mq_flush_lock for avoiding the lockdep warning.
++ *
++ * Use dynamically allocated lock class key for each 'blk_flush_queue'
++ * instance is over-kill, and more worse it introduces horrible boot delay
++ * issue because synchronize_rcu() is implied in lockdep_unregister_key which
++ * is called for each hctx release. SCSI probing may synchronously create and
++ * destroy lots of MQ request_queues for non-existent devices, and some robot
++ * test kernel always enable lockdep option. It is observed that more than half
++ * an hour is taken during SCSI MQ probe with per-fq lock class.
++ */
++void blk_mq_hctx_set_fq_lock_class(struct blk_mq_hw_ctx *hctx,
++		struct lock_class_key *key)
++{
++	lockdep_set_class(&hctx->fq->mq_flush_lock, key);
++}
++EXPORT_SYMBOL_GPL(blk_mq_hctx_set_fq_lock_class);
+diff --git a/include/linux/blk-mq.h b/include/linux/blk-mq.h
+index f8ea27423d1d8..92bbc9a72355a 100644
+--- a/include/linux/blk-mq.h
++++ b/include/linux/blk-mq.h
+@@ -5,6 +5,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/sbitmap.h>
+ #include <linux/srcu.h>
++#include <linux/lockdep.h>
  
- 	TP_STRUCT__entry(
--		__bitmask(cpumask, num_possible_cpus())
-+		__bitmask(cpumask, nr_cpumask_bits)
- 		__field(unsigned int,  freq      )
- 		__field(unsigned long, cdev_state)
- 		__field(u32,           power     )
-@@ -137,7 +137,7 @@ TRACE_EVENT(thermal_power_cpu_limit,
+ struct blk_mq_tags;
+ struct blk_flush_queue;
+@@ -594,5 +595,7 @@ static inline void blk_mq_cleanup_rq(struct request *rq)
+ }
  
- 	TP_fast_assign(
- 		__assign_bitmask(cpumask, cpumask_bits(cpus),
--				num_possible_cpus());
-+				nr_cpumask_bits);
- 		__entry->freq = freq;
- 		__entry->cdev_state = cdev_state;
- 		__entry->power = power;
+ blk_qc_t blk_mq_submit_bio(struct bio *bio);
++void blk_mq_hctx_set_fq_lock_class(struct blk_mq_hw_ctx *hctx,
++		struct lock_class_key *key);
+ 
+ #endif
 -- 
 2.53.0
 
