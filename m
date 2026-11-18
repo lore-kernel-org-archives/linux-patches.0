@@ -1,55 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795036528;
-	b=uhU+b3mhIkxZpvpi7P/7lIc1/uKPXuNE1xobfLaujfF6RrC+EYUtihJJVn5EEmckSNl+
-	 dRuYQLgfwMrkkku263BJKgwbwekwVg+2CY8yhE5SiGkHlAMQjyQnqjwa4nSa6u5J/RCFx
-	 Yq/THSQm6xOTELj0OPGUssGH/RfwfzBVEt2Qc0A/ifBe2G4Yp7vAAjHK6b2maYALby8I6
-	 MP1Z9L5oi4worGkBRd7FEdR1tjDIXD0tdZA1q90OQ6f3ZXToP5eHFeShxS9ybqad0npuy
-	 alQuMAOD0xX5NxqZ76FL6x0dYuaqb2IgmefFee3awTUStjVfB2HK+ik5gZh4bX7kgrQ==
+	t=1795036531;
+	b=x1Q8UFfvcGbCsI4Tdz471RzW0FtPdHEw1/T749/8meblfnH1u4NygY0vvu4nPq7B3ehb
+	 pPJe3VDCBRlqnUtyPHPcQZxJiCkIXAQIzZqjLKqQcgFXQWM0F04BdriW6f8QpP/VVvMyw
+	 X309smOcRdyiCD2MH8+BYilSO6DpysvXybaOK6WjJCz6TY3XAkh09dWVEdILV1y6+iT5P
+	 jqu0GKsMeg6p0OxUy1NQn0FfAsRsoOhtA0M7Uwr7rtAbbBdQDhSQLJY157N/buE5tZQWx
+	 AGi/RNDz6JCjjJ0EMrphtZNde/srfjNKCNhCeZDMmCD2cT1Qaty8u5pVM9thfpcN6Gw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795036528;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795036531;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DKqJ4QWXsJYMDnSRlMBrGpDl3qLgvUVpYcwNKlJ6X+4=;
-	b=nbYj+lbEaI9ID3beS/vpW3y6lHwV0LhzngQLgrGwZLvDycC48yDvGff/x2PcBnS1kE8B
-	 53wF/nSGiSxtD303o/z9ud0kOyl+qLg9vtfyajkYfAoEyBjCol06ONtpqE6/ieOFXGGmy
-	 /W+QHn3InCdG8ZOHaB4HFxl3sAtOqNn99hAvrS8jd8FnKBHn8rJBoWSt+PhIpN2SJdMtv
-	 9TfBJ+FW6DQyLdMDE93z4Eu/MPUyXTDUnSBBYYRZi+c8eC54210AX+4iWEcSRhCNkCzqB
-	 GBdbmVY8XcwPYHAdh8x3Qee0z9SpXp0gUbFP7pZ/7W/wFNGr8oM4yxKbjz8YXt3SH6Q==
+	bh=2a7VhQOGraUUqpvIyIU4um4fnO6AKg80UQGIX4gApQM=;
+	b=rB5FL5SqnWJnbCtA/rHfIvRhM7of9WZVUuYEJNknfu70NcuVrwKOL8M0Et24XbJHE5iB
+	 Yxoq6qEpGB2xqEcg2KtQd6ERO9F2xZFcyCnMn2lITgdSY0D56/cTtGJ2HDergrusMd4hR
+	 ReUimreQFxDjxMTcMdmViYB5rydQzcKjjPeELZ8pZHVVhV990aLwBd20GZbtqRfD+hF23
+	 WekTcpNFRvhlkhL33jZOg8iftmdnODH7k4U/zPDEnjzJ4Z11esSyWpCcAVb54OAmwxc7J
+	 qt5DDSL5rkqvBqmQA8Rp5NrU2NoZOv3L6z3YFoddd1XX2dLuHYqD/gCbvaK6xRKc7xg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GPTVCo7;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J0kROtT5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8D0606A320;
-	Wed, 18 Nov 2026 21:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23479606A320;
+	Wed, 18 Nov 2026 21:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=2GPTVCo7
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8E81F000C5;
-	Wed, 18 Nov 2026 21:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=J0kROtT5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7485B1F000C4;
+	Wed, 18 Nov 2026 21:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795036528;
-	bh=DKqJ4QWXsJYMDnSRlMBrGpDl3qLgvUVpYcwNKlJ6X+4=;
+	s=korg; t=1795036531;
+	bh=2a7VhQOGraUUqpvIyIU4um4fnO6AKg80UQGIX4gApQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=2GPTVCo7BkxcHCaAOuQQhGy2CN/5k46kkwOZ64aE6ehAeMCLw+daTwn7XkCkcWFaK
-	 uAvbouGSaaRJ6NbqYjspzweNrV5X8P5R5lxIInDAVCsIeFhtlGwSgP7vbRT9tghRds
-	 H7khqEQlsWeGziX1RlctOUITfTmvbawludywdOcg=
+	b=J0kROtT5T2BvhMboKrSmGd4vWgqsx5kUgypc/5VhCBzmaVvc3+5sBrmrMpGRp/jf4
+	 CIGApO6ODj85LgWDhVLJhQDKZVRMA1JtPZ7+LzCho2Bm8BJa5WczDoxs/vgBeKWpv4
+	 3g7qgBthbW3i6iQzQwyoJn2pbPuoIc59+jrYvWRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
 	Christoph Hellwig <hch@lst.de>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Yehyeong Lee <yhlee@isslab.korea.ac.kr>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1091/3318] iomap: dont lose a fiemap iteration error when emitting the last extent
-Date: Wed, 18 Nov 2026 15:28:33 +0100
-Message-ID: <20261118150352.706353005@linuxfoundation.org>
+Subject: [PATCH 6.6 1092/3318] nvme-rdma: dont complete a request after a bogus remote invalidation
+Date: Wed, 18 Nov 2026 15:28:34 +0100
+Message-ID: <20261118150352.738245723@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,64 +69,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrea Parri <parri.andrea@gmail.com>
+From: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
 
-[ Upstream commit 0d0104adc2c8316433b660cdf6d182a09881864f ]
+[ Upstream commit 909307cea08aff4e486cdb7491de5c76a2c31341 ]
 
-iomap_fiemap() emits extents one behind: iomap_fiemap_iter() flushes the
-previous extent and remembers the current one, and the remembered extent
-is written with FIEMAP_EXTENT_LAST after the iteration loop.
+When a remote invalidation names an rkey that is not the one we handed out
+for this request, nvme_rdma_process_nvme_rsp() logs and schedules error
+recovery, then falls through to nvme_rdma_end_request().  The request is
+completed with req->mr never invalidated, and nvme_rdma_unmap_data() hands
+it back with ib_mr_pool_put(), which only puts it on a list.  The rkey
+stays valid and still maps the pages the completed read filled, so a
+controller that sent the bogus invalidation can write into those pages
+after pread() has returned.
 
-That final flush overwrites ret, so when ->iomap_begin() fails partway
-through the iteration the error is replaced by the result of
-iomap_to_fiemap() (zero on success) and iomap_fiemap() returns success
-with a truncated extent list whose last entry is wrongly marked as the
-last extent in the file.  The pre-iomap_iter code returned the error
-from inside the loop, before flushing the pending extent.
+Return instead, the way the local invalidation path below already does,
+and leave the request for error recovery to cancel.
 
-Check for the iteration error before flushing the pending extent, so
-that real errors are propagated and only a successful iteration emits
-the final FIEMAP_EXTENT_LAST extent.  -ENOENT (no mapping) is still not
-an error, and the pending extent is still emitted in that case.
-
-Fixes: 7892386d3571 ("iomap: switch iomap_fiemap to use iomap_iter")
-Cc: stable@vger.kernel.org # v5.15
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Fixes: 3ef0279bb0031 ("nvme-rdma: Check remotely invalidated rkey matches our expected rkey")
+Cc: stable@vger.kernel.org
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Andrea Parri <parri.andrea@gmail.com>
-Link: https://patch.msgid.link/250226e33b3b23c6b1714a45dc3c465c2a45cdc0.1790342457.git.parri.andrea@gmail.com
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Yehyeong Lee <yhlee@isslab.korea.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/iomap/fiemap.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/host/rdma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/iomap/fiemap.c b/fs/iomap/fiemap.c
-index 610ca6f1ec9b6..1cf49bac25011 100644
---- a/fs/iomap/fiemap.c
-+++ b/fs/iomap/fiemap.c
-@@ -80,15 +80,15 @@ int iomap_fiemap(struct inode *inode, struct fiemap_extent_info *fi,
- 	while ((ret = iomap_iter(&iter, ops)) > 0)
- 		iter.processed = iomap_fiemap_iter(&iter, fi, &prev);
- 
-+	/* inode with no (attribute) mapping will give ENOENT */
-+	if (ret < 0 && ret != -ENOENT)
-+		return ret;
-+
- 	if (prev.type != IOMAP_HOLE) {
- 		ret = iomap_to_fiemap(fi, &prev, FIEMAP_EXTENT_LAST);
- 		if (ret < 0)
- 			return ret;
- 	}
--
--	/* inode with no (attribute) mapping will give ENOENT */
--	if (ret < 0 && ret != -ENOENT)
--		return ret;
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(iomap_fiemap);
+diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
+index 0e985dd471ab2..927a6631e3bc0 100644
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -1699,6 +1699,7 @@ static void nvme_rdma_process_nvme_rsp(struct nvme_rdma_queue *queue,
+ 				"Bogus remote invalidation for rkey %#x\n",
+ 				req->mr ? req->mr->rkey : 0);
+ 			nvme_rdma_error_recovery(queue->ctrl);
++			return;
+ 		}
+ 	} else if (req->mr) {
+ 		int ret;
 -- 
 2.53.0
 
