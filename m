@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057713;
-	b=dVmB7VFdw/H8YyejmTJZKB9bU9m4hmnLMomsOXCF4QqfWmQyhgTSv6cMu03BKbJ2YY6M
-	 3EIT6+KL5JrUb8YXYW/fv2ibk9TsWqHXNZH/weiY31rjXKBoG91+dv1/8wGn2CABm2xRO
-	 cqPJUyxANdANDvYvwFE8Hh69K2AfkjuhUvXpdmW2eoxEGNp5qxMnUBEvBY+C0BDtrLJ+b
-	 Tsabhwrm2VzKXvj2R8KHLumHAqrWOwu/EojMhefvOblUuUhLTCvSgEK06VzHQdu7IoQJ3
-	 0RWgpRjScrCDnP28bBxbUKDPrxWuwjz8dPqF909Vjq6kfMB4VNnY/gta4YOnGlmtgGA==
+	t=1795057716;
+	b=YAcuNhKw70PMJ7voI/j+G+WqU+wF/gF+DZpcqFWnmARISHfgrEa+uaL/6KsU/W8lPwHH
+	 Gbs9Wn/a11R+fCxSAllouL8DdP7qDgypjiWya0IxiKXLV/x5OFc4bOQCoU2f1OjplRRGS
+	 ndRt9d7bOc8pBVkdftB/J/Eo5k4actuuvrvmrjWoa2mjCEVCzTYMfWo4zFRFxLFdUZ36U
+	 IM6zHl2Pt60E2tfvQ5KPnnRYXSG40b8LAkyqIkPYGaiPYSZ40UmjKDdlASrrwfDKsDj0E
+	 hrpZQaBJvPica5OCm/fTyTjvGuwXV4OpUZNGzmrq6LV2JX1a0nE/aZ9FGPwrR9mydhQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057713;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057716;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=vAwoKWH5hZJATjqPbzN2/Xb1sxvrpBESNWW3NKzQ16s=;
-	b=uEXyeJYtj0/1ESJPObDNgIUgqiQfVv+fNe/eBWJLUQgPdvDZz2kdz+xx0fQ1CXFcfGMt
-	 Nd5XDGP9Ts6Xq1KYNhbKwoSZhqBg0yrbM7ZWsn3lkSPjuepCJmX6zKbcIABrkmaxhR0mw
-	 K/uQ6YwwHSkahzPizTPNlC5H/nE69ayfVktuSzqzfsGttEzNbFbeIi5x7Jue5oLqcvza/
-	 slCfcsoYxzhljhg6TsujuDV/kLQBCGptpU50lpdL3s1tKxlj/9PFkt1/ihryQJHbf8PZd
-	 Zsb7eTbbH5NDee+4v0JlqAkuT1pxNqfFBsDHvVVf4UlpUTTXBJ6tTnsVSrwGuyxIURw==
+	bh=bVbLj9px5Nb+O3Y3JK5P3tdQDwinenaQkY2X8EpId4g=;
+	b=4VMPjsNhA4I0qpRI/IvA6NVaGdLbx/JtYrBC+wDwXeZsg/LI13TTK7UyZzdETdkTzsEt
+	 X9zm478cyMVqyY2mZpLW9D3f+SwZr/KBFFI6UXm5N6rggFRgFD9peHELMhR/NK2Qw3IqC
+	 iO25KgIc1LtHT0Pqri5vc+wwTv90Eav0nk7fmL77Qx1ghj5S1mKxXQiJcsNGU20oK9dMu
+	 XS0DVcGCjbtGinHGYmTG9R0QqPBASzR4DMKKgwavcnmvl9SwoNzbJ/SXZGDAHBevboHub
+	 2As45aOtSSnlhMj+b1zdQ9aoeJK2yv8Qq6qr/ufb04rkhxdDR6mA3jLLAInCHayZRmg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yln4yVup;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpNvG5ZQ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCD2606A32A;
-	Thu, 19 Nov 2026 03:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD33606A31C;
+	Thu, 19 Nov 2026 03:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yln4yVup
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B8B1F000C4;
-	Thu, 19 Nov 2026 03:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MpNvG5ZQ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F821F000C4;
+	Thu, 19 Nov 2026 03:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057713;
-	bh=vAwoKWH5hZJATjqPbzN2/Xb1sxvrpBESNWW3NKzQ16s=;
+	s=korg; t=1795057716;
+	bh=bVbLj9px5Nb+O3Y3JK5P3tdQDwinenaQkY2X8EpId4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yln4yVupuTgM0Zx7oIU0r2krUHDdcWhtDCKnAMPTocV1OjP3Qy1wxPD7J4cGYDjfl
-	 lyAf6vp59LlTa9PpdtehRpk9B19opLgxWd0TxrNJqS3FMN4H5q2U7j5ydO1u/3pJc7
-	 78B3/jD7h7ouf6AnCwQPeeBq7Sjh720v7IyxSMDs=
+	b=MpNvG5ZQNRbutNZcfJ5eEHBBd2BNrIfZ9k3UAAPv66uOnchZNr9jh6ZCIZNDBjFGz
+	 CWhl3IKHwGv+cBeMfGk0mhCOGxpefWBTAxyjIF533UJYZMmz7DiWBUU1e26KUBSg1l
+	 ci8HRQyN2EVidc97z3KkJ2PnZj/IC1KThVVR9eAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koichiro Den <den@valinux.co.jp>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Manjunath Patil <manjunath.b.patil@oracle.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0229/1848] net: sched: avoid qdisc_reset_all_tx_gt() vs dequeue race for lockless qdiscs
-Date: Wed, 18 Nov 2026 15:37:47 +0100
-Message-ID: <20261118145921.582688989@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Eric Dumazet <edumazet@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 0230/1848] net/sched: act_ife: do not consume the inner header on egress
+Date: Wed, 18 Nov 2026 15:37:48 +0100
+Message-ID: <20261118145921.612270853@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,70 +69,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 7f083faf59d14c04e01ec05a7507f036c965acf8 ]
+commit 498c631f9c6d74aad4bf43039fa3ce70ae9a8bb7 upstream.
 
-When shrinking the number of real tx queues,
-netif_set_real_num_tx_queues() calls qdisc_reset_all_tx_gt() to flush
-qdiscs for queues which will no longer be used.
+The issue:
+tcf_ife_decode() unconditionally calls eth_type_trans(), which pulls
+ETH_HLEN.  On egress this consumes the inner Ethernet header, and the
+device receives an skb whose data points to the L3 header:
 
-qdisc_reset_all_tx_gt() currently serializes qdisc_reset() with
-qdisc_lock(). However, for lockless qdiscs, the dequeue path is
-serialized by qdisc_run_begin/end() using qdisc->seqlock instead, so
-qdisc_reset() can run concurrently with __qdisc_run() and free skbs
-while they are still being dequeued, leading to UAF.
+- loopback_xmit() parses L3 data as Ethernet: the "ethertype" comes
+  from the inner IPv4 source address, and the decapsulated packet is
+  dropped or misparsed.
+- a real NIC transmits the frame without its Ethernet header.
 
-Serialize qdisc_reset_all_tx_gt() against the lockless dequeue path by
-taking qdisc->seqlock for TCQ_F_NOLOCK qdiscs, matching the
-serialization model already used by dev_reset_queue().
+(The __skb_pull() BUG this used to trigger in loopback_xmit() when the
+remaining linear area was short is handled by "loopback: use
+eth_type_trans_careful()".)
 
-Additionally clear QDISC_STATE_NON_EMPTY after reset so the qdisc state
-reflects an empty queue, avoiding needless re-scheduling.
+The Fix:
+Parse the inner Ethernet header with eth_type_trans() in both directions,
+then restore the egress data position and MAC length.  On ingress the
+existing behavior is unchanged.  On egress, push the inner Ethernet header
+back after parsing so the xmit path sees the original frame and later
+actions see a consistent network header.
 
-Fixes: 6b3ba9146fe6 ("net: sched: allow qdiscs to handle locking")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260228145307.3955532-1-den@valinux.co.jp
+Conditions to recreate the bug:
+- egress tc filter on lo: action ife decode pipe;
+- AF_PACKET SOCK_RAW frame: outer Ethernet with ETH_P_IFE, IFE metadata,
+  inner Ethernet + a valid IPv4 ICMP echo request to a local address;
+- before this patch, no echo is received; after it, the echo is
+  delivered and answered.
+
+Fixes: ef6980b6becb ("introduce IFE action")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+[edumazet: reworded changelog, the crash is now handled in loopback]
+Signed-off-by: Eric Dumazet <edumazet@kernel.org>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://patch.msgid.link/20261028122703.2093730-6-edumazet@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-(cherry picked from commit 7f083faf59d14c04e01ec05a7507f036c965acf8)
-
-Conflicts:
- - include/net/sch_generic.h: retain the older qdisc state model. It has
-   no __QDISC_STATE_DRAINING or QDISC_STATE_NON_EMPTY, so serialize reset
-   with seqlock and clear __QDISC_STATE_MISSED, matching dev_reset_queue().
-
-Assisted-by: Codex:gpt-6
-Signed-off-by: Manjunath Patil <manjunath.b.patil@oracle.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sch_generic.h |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/sched/act_ife.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -745,13 +745,22 @@ static inline bool skb_skip_tc_classify(
- static inline void qdisc_reset_all_tx_gt(struct net_device *dev, unsigned int i)
- {
- 	struct Qdisc *qdisc;
-+	bool nolock;
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -761,6 +761,10 @@ static int tcf_ife_decode(struct sk_buff
  
- 	for (; i < dev->num_tx_queues; i++) {
- 		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, i)->qdisc);
- 		if (qdisc) {
-+			nolock = qdisc->flags & TCQ_F_NOLOCK;
-+
-+			if (nolock)
-+				spin_lock_bh(&qdisc->seqlock);
- 			spin_lock_bh(qdisc_lock(qdisc));
- 			qdisc_reset(qdisc);
- 			spin_unlock_bh(qdisc_lock(qdisc));
-+			if (nolock) {
-+				clear_bit(__QDISC_STATE_MISSED, &qdisc->state);
-+				spin_unlock_bh(&qdisc->seqlock);
-+			}
- 		}
- 	}
+ 	skb->protocol = eth_type_trans(skb, skb->dev);
+ 	skb_reset_network_header(skb);
++	if (!skb_at_tc_ingress(skb)) {
++		skb_push(skb, ETH_HLEN);
++		skb_reset_mac_len(skb);
++	}
+ 
+ 	return action;
  }
 
 
