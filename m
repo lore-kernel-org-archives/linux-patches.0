@@ -1,54 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029951;
-	b=m4BVIATOfMsPdn8zLcgeqscMoYnrRFuZDSmeY3y814pcsodsXsLYNJNt3TO2ybeTQq99
-	 Zpkipyf6X4tCI1I8VaZAgV2uPNOyYeh/RqKH7JrvlRerE+p0Hmc9voSTT/7zkkPwIdaPO
-	 Vj+7u1Wy2QLA7o9eS9G3VEUTMkiRd0XVJrPhU8UYHIx5PxpvEjokq/zULyzu7WnB4H3A5
-	 sCzoqnUuayU1w6du6CByMs6AVk/Nacvpq518p2F/SFzIbPDj6J2OjAMxOjs2FpdH+AlLd
-	 b4yVktnqBKeUEXn6Ngs5cHgaO81tdh+wwRGxrS07pbJeZFAL6BeP6CMX9M1I11JP3OA==
+	t=1795029953;
+	b=glV/qwURn9VWhBJ1psb0LS6PGdlj/yhG+cM5pL0Biedxo8meHFtw65xq49vnFEDEUixm
+	 i0onyeZvlTc89GudFKAxff+SRyDpH/ekpNXKIfbVLHB5NbM5pDq1+L6ltRCwbshOX4HrW
+	 gawLmG1q5a/SPAtlEyI2Ai1uyTX8C6cRWxxlmkc3zT2mZ/3HGnkeATfgqW+yRAU5F8WZK
+	 GjujfQELDHTFuV2ioIY6nFb8yPGLvjQZPEw39zVKgbnqFxC2wLDyL6bf3izJ1EanPWXIr
+	 urkMPvH1Cv4TIuHf+LLdH6ByVsf/wydph4ohHXMtegVsb0+zruG7x6itXoWCk6ObDXA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029951;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029953;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=GadNHq6jAmtI8W+KWCgciwXkwcYziLC+fEyV044Peu4=;
-	b=r1t0CrfZ5Yds7zD6PaZe5oJ31yD7fxOUR54s1nUgfaLHXXKPlp+cWkvBQZGcv3r42CB4
-	 yRISMtacAsOP3eMd9pMtIQZPk1B/1e+myOovYSWvXobZl/P8Rwe0V82tzIVVAn2OPlzG/
-	 yFKF0M/O66nQzyJSXINnVw9GVRC1R5B3G2uU1NRGYHHfbkmgsg2ndYMutNPof4I6Xsn6a
-	 LFV8mXYTokkMcqjfc1HbusLgMGsa0k6uCLnrVoX1iF5GWAcqal1WAs3UUp7oyhoyu/Y6B
-	 mZaPYdoFFSOwG4AFqjYd9LhNBwLjajD9ZYy9Br1cezogx94KoY9zlMxsq4M69TX/16g==
+	bh=hWELkP5YD3O73p3L1767lhORnykoSFC2hWvjIUk9pQY=;
+	b=ftz6pNT1IQ7OfQLaAFkWcPngT8AGRI3SS3NN3FNy+kK3g/70RKdyILfxxGY7i+FIBR3F
+	 7lAadtqllnG4xSp5bEsOmnikZKi7GBxTQVuxRLE0glCZgF6XXdTw/iCJl8jsJpXnQfokm
+	 e7RkJlnt2EzGLziJhuHheBO1eNDj9eTzDZ7cv3lG4YWJjgQfyP8eaoDC4rhbJhblVxKgm
+	 j+x9CjiKeRXweBfsZlvZak5kOXoWs6Od/D9VIkT2v8Noyy3J8l5ciILTDWDSNx54miE2b
+	 GkHTP0vD5JX/+X85LXIv1HmO5cMs/slQ6m/Eq7cbKLB+9MgY7YlTXUeyh9p8C0cXI4A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIX+tGWL;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1IuLFon3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC6D606A33A;
-	Wed, 18 Nov 2026 19:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BFB606A320;
+	Wed, 18 Nov 2026 19:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tIX+tGWL
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD4C1F000CA;
-	Wed, 18 Nov 2026 19:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1IuLFon3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C281F000C6;
+	Wed, 18 Nov 2026 19:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795029950;
-	bh=GadNHq6jAmtI8W+KWCgciwXkwcYziLC+fEyV044Peu4=;
+	s=korg; t=1795029953;
+	bh=hWELkP5YD3O73p3L1767lhORnykoSFC2hWvjIUk9pQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=tIX+tGWL26CSWAjj2zsvQOrSnZ1t2f6n5guYJd0HAqG71qJDK6NCeNKnB/TxnQxJ6
-	 LipADUuFgY9JoMomQfppUyD3EkTg0UP5130IvVyFEGjJpQNQTCmaoPkMltLW2j+HzW
-	 InCEpT7WuJte0NOujKkIj7Eb0pj7IjDb3OA9OQ1g=
+	b=1IuLFon3c66bGuWydiokeFDifHNSptExSSo6s/CQ1zvkgTPmWywGnmbS00TzU1IEq
+	 6VV9hZ19FLijGlQ/irqg8hyYVvQk60mx6kYtHy3kImZlK8jdet4bSEsv97grySXyDm
+	 jz2+AS6eKYvytoUEwElCVqvlIYaaYnjDqpw/Sq88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <laurent@vivier.eu>,
 	Finn Thain <fthain@linux-m68k.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 0532/1756] swim: Dont use the mark register to read data
-Date: Wed, 18 Nov 2026 15:44:19 +0100
-Message-ID: <20261118150030.281847476@linuxfoundation.org>
+Subject: [PATCH 6.12 0533/1756] swim: Fix buffer overflow
+Date: Wed, 18 Nov 2026 15:44:20 +0100
+Message-ID: <20261118150030.319966095@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -72,122 +71,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit cb7923133ec18e67e2d6718e29426a4423af6b73 ]
+[ Upstream commit a54870a4ae4962acf341eb6ca010cae02af1a6ea ]
 
-If an unexpected mark byte were to be read from the data register, an
-error would be flagged. But no error gets flagged when such a byte is
-read from the mark register, which is misleading. Always use the data
-register except when a mark byte is expected.
+The effect of this bug can be observed as swim_read_sector_data()
+inexplicably returning -5, or an error flag indicating that a mark byte
+was read from the data register, or other odd behviour.
+
+When copying bytes from the chip FIFO to the read buffer, the driver
+keeps count of the remaining buffer space using register %d4. A counter
+in register %d2 serves as a timeout. The driver polls (%a2), the handshake
+register, until flags indicate that byte(s) have arrived in the FIFO.
+
+        movel   #sector_size-1, %d4
+read_new_data:
+        movew   #max_retry, %d2
+read_data_loop:
+        moveb   %a2@, %d5
+        andb    #0xc0, %d5
+        dbne    %d2, read_data_loop
+        beq     data_exit
+        moveb   %a5@, %a4@+
+        andb    #0x40, %d5
+        dbne    %d4, read_new_data
+        beq     exit_loop
+
+Note that the exit_loop branch depends upon a flag in the handshake
+register and not on the remaining buffer space. Hence there may be no
+branch to exit_loop after %d4 is decremented to -1 (i.e. full buffer).
+
+        moveb   %a5@, %a4@+
+        dbra    %d4, read_new_data
+exit_loop:
+
+Here is a second decrement of %d4 which can now reach -2. But the buffer
+bounds check is a comparison with -1, which is now ineffective. Hence the
+loop will continue copying until %d2 eventually reaches -1.
+
+Fix this bug by terminating the loop as soon as %d4 or %d2 reach -1.
+Reset the timeout whenever a byte is copied.
 
 Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/fecd77b141bdd8a59ebae5f9efffccb155afdc4c.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/d8fceda197b840f892d9b511175e824ca2549f01.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim_asm.S | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/block/swim_asm.S | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
-index fcf574ced85ec..699f7c90dd1c0 100644
+index 699f7c90dd1c0..e06aadb411a14 100644
 --- a/drivers/block/swim_asm.S
 +++ b/drivers/block/swim_asm.S
-@@ -47,11 +47,11 @@
+@@ -43,6 +43,8 @@
+ 	.equ	sector_size, 512
+ 
+ 	.equ	.Lhr_crc_error,		0x02
++	.equ	.Lhr_fifo_2bytes,	0x40
++	.equ	.Lhr_fifo_1byte,	0x80
+ 
  	.global swim_read_sector_header
  swim_read_sector_header:
- 	link	%a6, #0
--	moveml	%d1-%d5/%a0-%a4,%sp@-
-+	moveml	%d1-%d5/%a0-%a5,%sp@-
- 	movel	%a6@(0x0c), %a4
- 	moveq	#-1, %d0
- 	bsr	mfm_read_addrmark
--	moveml	%sp@+, %d1-%d5/%a0-%a4
-+	moveml	%sp@+, %d1-%d5/%a0-%a5
- 	unlk	%a6
- 	rts
+@@ -189,20 +191,20 @@ wait_data_mark_byte:
+ 	/* read data */
  
-@@ -63,6 +63,7 @@ sector_data_mark:
- mfm_read_addrmark:
- 	movel	%a6@(0x08), %a3
- 	lea	%a3@(read_handshake), %a2
-+	lea	%a3@(read_data), %a5
- 	lea	%a3@(read_mark), %a3
- 	movew	#seek_time, %d2
- 
-@@ -93,7 +94,7 @@ amark0:	tstb	%a2@
- 	dbmi	%d2, amark0
- 	bpl	signal_nonyb
- 
--	moveb	%a3@, %a4@(o_track)
-+	moveb	%a5@, %a4@(o_track)
- 
- 	moveq	#max_retry, %d2
- 
-@@ -101,7 +102,7 @@ amark1:	tstb	%a2@
- 	dbmi	%d2, amark1
- 	bpl	signal_nonyb
- 
--	moveb	%a3@, %a4@(o_side)
-+	moveb	%a5@, %a4@(o_side)
- 
- 	moveq	#max_retry, %d2
- 
-@@ -109,7 +110,7 @@ amark2:	tstb	%a2@
- 	dbmi	%d2, amark2
- 	bpl	signal_nonyb
- 
--	moveb	%a3@, %a4@(o_sector)
-+	moveb	%a5@, %a4@(o_sector)
- 
- 	moveq	#max_retry, %d2
- 
-@@ -117,7 +118,7 @@ amark3:	tstb	%a2@
- 	dbmi	%d2, amark3
- 	bpl	signal_nonyb
- 
--	moveb	%a3@, %a4@(o_size)
-+	moveb	%a5@, %a4@(o_size)
- 
- 	moveq	#max_retry, %d2
- 
-@@ -125,7 +126,7 @@ crc0:	tstb	%a2@
- 	dbmi	%d2, crc0
- 	bpl	signal_nonyb
- 
--	moveb	%a3@, %a4@(o_crc0)
-+	moveb	%a5@, %a4@(o_crc0)
- 
- 	moveq	#max_retry, %d2
- 
-@@ -133,7 +134,7 @@ crc1:	tstb	%a2@
- 	dbmi	%d2, crc1
- 	bpl	signal_nonyb
- 
--	moveb	%a3@, %a4@(o_crc1)
-+	moveb	%a5@, %a4@(o_crc1)
- 
+ 	movel	#sector_size-1, %d4		/* sector size */
+-read_new_data:
+ 	movew	#max_retry, %d2
+ read_data_loop:
  	moveb	%a2@, %d5
- 	andb	#.Lhr_crc_error, %d5
-@@ -212,7 +213,7 @@ data_crc0:
- 	dbmi	%d2, data_crc0
- 	bpl	data_exit
+-	andb	#0xc0, %d5
++	andb	#(.Lhr_fifo_1byte + .Lhr_fifo_2bytes), %d5
+ 	dbne	%d2, read_data_loop
+ 	beq	data_exit
++	moveq	#max_retry, %d2
+ 	moveb	%a5@, %a4@+
+-	andb	#0x40, %d5
+-	dbne	%d4, read_new_data
+-	beq	exit_loop
++	dbra	%d4, 1f
++	bra	data_crc0
++1:	andb	#.Lhr_fifo_2bytes, %d5
++	beq	read_data_loop
+ 	moveb	%a5@, %a4@+
+-	dbra	%d4, read_new_data
+-exit_loop:
++	dbra	%d4, read_data_loop
  
--	moveb	%a3@, %d5
-+	moveb	%a5@, %d5
+ 	/* read CRC */
  
- 	moveq	#max_retry, %d2
- 
-@@ -222,7 +223,7 @@ data_crc1:
- 	dbmi	%d2, data_crc1
- 	bpl	data_exit
- 
--	moveb	%a3@, %d5
-+	moveb	%a5@, %d5
- 
- 	moveb	%a2@, %d5
- 	andb	#.Lhr_crc_error, %d5
 -- 
 2.53.0
 
