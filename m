@@ -1,54 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795039868;
-	b=y6/DyOyl2hdQIHYGOqwEkmQ4OGZ59EYY7ByDVIBtPvJmATuEWUJfzOwDOdZDHBlccDFe
-	 j0Rr+Cpx/G2cJBh284qTLFVLUF+JDOXWzJUrp0ccqULd7dnr18hO0vK0BZVDKvtl8nxey
-	 4eysoxxa4ICMxYxrb1ci36tN3e7I3ZIdLX67b4kvV64byS8vuCNNzAoRdwP9iqOjTtjGa
-	 iS/iKY9BA5DOUViDudQGBmhTtZ6PLNG6n6xiy8V/9llf/wbOK2/RsuZzY2eUnvjH1B3vc
-	 u8WdeHLVzdxN1489qblp9EUPmvAsYa0btWy0OcLfsXuXMQWOV2WyXk5Ymtwf+bDC0FA==
+	t=1795039871;
+	b=CEBgluBBuNX663wsQPWqGvG7gZpDPsYJ/jE1Ut72+7N3vLnX5n4oC1sY23juLpOb8hy4
+	 LwvDrVuDsDMdjNtJuEiPwYhHOXxoqrhIi3Fbt7U44AteZ/kHxA/86HchFvxmzwLIXM0RC
+	 t7AKYbRFd49s0nCjLtscSmURyFe+0ywpc4+wu8AjSYAh0YoPd181Nq1JAeLCt12IdlcwS
+	 bpxJhsgSrllKGvOFkndjRmCm/JyDlgwb13LgrRQUIN80qrLz1yj+tkOnMGOvCs7/SLe+G
+	 8kWzirWhpdmAUG0Xc1aFFjDINxYvzek4w6Tz+AqVGNbRdDZQf3ejSHhuFx/tU7e3hqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795039868;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795039871;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=++OYDUI3HqSkV0t/jD3kvMbs2KeMvnYVnimJhOKK86w=;
-	b=eb/MbiMRcmWeR3wU2rB4JMyOoZOpYKvuscqnbl4LqsyHolLBKeFpLroEO1/LWsnGT6Xx
-	 qhjJn9Yyk8KawXW7Ouq8mGHYYEvncKl3JJnMi2epiyVizo4hD7oIVEmmvZf8FtWnWC26Y
-	 GXIE+AxYf8JP4W6L5zoS5uyszSbwBlfQmJ4t4FjjtmJexJ4O4GjKS/XMNDUKmE/1eUb35
-	 AaBwEGMP0tmPS6DmZwsoWwV/thQ/B32q/R/oyvKM+772cEp48DjS4t+Bxe7DZ99GWhs07
-	 dUnNOfxtVXKs4Xrtc2/KPIV1kGdgaxZUtLZMh7LV8OoCuvjBM0idAGKVdJQnAFH8edw==
+	bh=HDyRjg/uWTn2X4FB6Nh155+qplbtLVk51htgrkEa+KI=;
+	b=e1WfpisIOqdi5QGCrfan4OmckfxAOj7t0SeBPOAglIUas+PeGHlfFNNH5QmbM6KItrWq
+	 JKJcEmF1+xCViOyoQ0HfPVcPIM5gJYRebY54326KpK6FmF5L6S84gK6uEsLhsQcmPyzL7
+	 ws2hMUCvttDCHJInoz9I019z+SbB8ye1gXY4lTsg1Ba9fg3m8vzoP895DIEal64tSY9o5
+	 i+qZEat/MFPZelpwc73zJw0HEpsZZR1t3nl6g9lf80I/7g9XQwrkqloc9wou7x4uxeWCb
+	 lQ3G/Nccfz3u54+x8w+Js6JTSerdz3j111FhcmbS8F/Ii7TrefiXLvtrG4j512nkq5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8Vv5BUr;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECgUXLHI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BE8606A32A;
-	Wed, 18 Nov 2026 22:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08281606A31C;
+	Wed, 18 Nov 2026 22:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=G8Vv5BUr
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F5081F000C4;
-	Wed, 18 Nov 2026 22:11:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ECgUXLHI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F811F000C4;
+	Wed, 18 Nov 2026 22:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795039868;
-	bh=++OYDUI3HqSkV0t/jD3kvMbs2KeMvnYVnimJhOKK86w=;
+	s=korg; t=1795039870;
+	bh=HDyRjg/uWTn2X4FB6Nh155+qplbtLVk51htgrkEa+KI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=G8Vv5BUrwzy3R7wkiPjX9KNKaFPsrrlgqgPgi5HMeMUAVuPrHOalM+E64sZIiAT4x
-	 Jml9/25n8WIFjW3aLuMAvpRBiTBAB5uDl2Sm4FMbd2757ytckzCodqiyCDy+WAh1kv
-	 ysnENA7uiE8QnRlmbcPecYpnfATQX0CXPrq12+SI=
+	b=ECgUXLHIYSo7yWjxLpvKVk1FIwyh1B2pcblNXG27+1AkpH0q/ZQB0IV49cvqdwMI3
+	 FRFJRvQ/VM0ibato9kgH6Q04J8Oliw9WR+MGztXKk1g4/l75UNFU1xlUsNAbGxpXjk
+	 imQPrJ0mUNzmC9Dq1hw5Ecf99z+I+uJL75uEmlqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2254/3318] PCI: dra7xx: Fix clock enable leak on probe failure
-Date: Wed, 18 Nov 2026 15:47:56 +0100
-Message-ID: <20261118150429.449434425@linuxfoundation.org>
+Subject: [PATCH 6.6 2255/3318] kconfig: remove unneeded symbol_empty variable
+Date: Wed, 18 Nov 2026 15:47:57 +0100
+Message-ID: <20261118150429.476892933@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,48 +67,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 768e5d0936d00d663ce2b8c192cc6ab0b61ad461 ]
+[ Upstream commit 4e244c10eab345a735c5052688e4a55bddce5bf7 ]
 
-dra7xx_pcie_probe() enables the optional clock but never disables it
-when probing fails afterwards.
+This is used only for initializing other variables.
 
-Switch to devm_clk_get_optional_enabled(), which disables the clock
-automatically on failure.
+Use the empty string "" directly.
 
-Fixes: 5af9405397bf ("PCI: dra7xx: Get an optional clock")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260822-dra7xx-v1-1-23e204d5548b@gmail.com
+Please note newval.tri is unused for S_INT/HEX/STRING.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Stable-dep-of: dbe1ae2304a3 ("kconfig: fix extra output from savedefconfig on out-of-range defaults")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-dra7xx.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ scripts/kconfig/symbol.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-dra7xx.c b/drivers/pci/controller/dwc/pci-dra7xx.c
-index d7535db2e1bb8..b1838877d7d58 100644
---- a/drivers/pci/controller/dwc/pci-dra7xx.c
-+++ b/drivers/pci/controller/dwc/pci-dra7xx.c
-@@ -735,15 +735,11 @@ static int dra7xx_pcie_probe(struct platform_device *pdev)
- 	if (!phy)
- 		return -ENOMEM;
+diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
+index 1c0306c9d74e2..dc8edb0ac5236 100644
+--- a/scripts/kconfig/symbol.c
++++ b/scripts/kconfig/symbol.c
+@@ -32,12 +32,6 @@ struct symbol symbol_no = {
+ 	.flags = SYMBOL_CONST|SYMBOL_VALID,
+ };
  
--	dra7xx->clk = devm_clk_get_optional(dev, NULL);
-+	dra7xx->clk = devm_clk_get_optional_enabled(dev, NULL);
- 	if (IS_ERR(dra7xx->clk))
- 		return dev_err_probe(dev, PTR_ERR(dra7xx->clk),
- 				     "clock request failed");
- 
--	ret = clk_prepare_enable(dra7xx->clk);
--	if (ret)
--		return ret;
+-static struct symbol symbol_empty = {
+-	.name = "",
+-	.curr = { "", no },
+-	.flags = SYMBOL_VALID,
+-};
 -
- 	for (i = 0; i < phy_count; i++) {
- 		snprintf(name, sizeof(name), "pcie-phy%d", i);
- 		phy[i] = devm_phy_get(dev, name);
+ struct symbol *modules_sym;
+ static tristate modules_val;
+ static int sym_warnings;
+@@ -359,7 +353,7 @@ void sym_calc_value(struct symbol *sym)
+ 	case S_INT:
+ 	case S_HEX:
+ 	case S_STRING:
+-		newval = symbol_empty.curr;
++		newval.val = "";
+ 		break;
+ 	case S_BOOLEAN:
+ 	case S_TRISTATE:
+@@ -710,13 +704,12 @@ const char *sym_get_string_default(struct symbol *sym)
+ {
+ 	struct property *prop;
+ 	struct symbol *ds;
+-	const char *str;
++	const char *str = "";
+ 	tristate val;
+ 
+ 	sym_calc_visibility(sym);
+ 	sym_calc_value(modules_sym);
+ 	val = symbol_no.curr.tri;
+-	str = symbol_empty.curr.val;
+ 
+ 	/* If symbol has a default value look it up */
+ 	prop = sym_get_default_prop(sym);
 -- 
 2.53.0
 
