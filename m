@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016840;
-	b=I7DaEZtKVgAc3vbeCSF3PtdEKatRTF9y5FvfWz6I1ZSOhaB7Lzcmgh4aAZilkl1TAZWu
-	 Vlex63pkhaVnJfTVY0lkwJYMgWO+B2Ko9G0hIrzm9bTAYPmdu+PvNeEe8I2ziExsJtLVZ
-	 KCJ+k69ym133lTrLRsIsdZAjB1fmopSoDV3kBKTnSpaDMrVXlcZjEFMM+ImyREZYq7P4h
-	 WHqqNFTy5RCoKYN8zm8GueHXH5GSgLs/6RHJ6CVBNEnNHb1lcTRazbYtwEffcP8cx6LiQ
-	 usy/iyoKpAt+oRz/E1JLbJA88lRvp6pn8RZjWmRvXJUzp/1BkfBec8xXJVzdXIjluhQ==
+	t=1795016842;
+	b=aNsTF/37HI1uuoadBrPLfibZybDdCutgi690objgFvxGZ3xPteYB2xzwJPfHjTo6etSL
+	 cmJMVU2dLez74Ei4FxjqVtOmDzc/zeHjzrlFOHkP7/3znJZSPwT2pN0X/yFBO+DFmuZEs
+	 j9dbk/+vVcd75A6AsX7Mt1giCdAMN24sOsyjQ7HLYysw2mP/57YAq8ebrEmKKJbBPrPnh
+	 W4bAnA1U/DIab6qBPjdYH6sUk5SNvG2uT5Yr1cGJP0gwA8eEkgUGej4pSE2f0tIMJX93d
+	 FTVzLyUMag1U7Zs7WI9xKa45tV+AegVAkjgNZu3IEOBBX77cVARb6P1MGu9oQKBF1qA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016840;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016842;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=67DHtvsCSi7D5Qqv8LXnydU1eaqPTGihITbNkvVvDVk=;
-	b=JLi9vAlkzUbmGpJQPWiqvz6L4d2/R6JPUt7WB3SXOlmTW1+e7OiQH3CgdcibHyJBw4OR
-	 hsSiLxuafP3w7B4/QRpoyL2X/PSqqd3xvxjLczF1IyWa5jI15pkCNbID7WQCzFc1B78uz
-	 jwkLc65pnviJ+cj0nDLl6gd575XzMnqICllfPg5leP/LFDKaNrCy4Yzg0lpeOyas/jfib
-	 /nTD9EdETPZBV0tvti6hAhQOCj5R2T0O3JWO7Y908uYrQcFSQF0A7duhCCXaJqsgzRtMC
-	 au1ZxCEa0V9bT0elpIoKF5jZuZBX7kEkiA0CoyMxQpvayHW9v2R3+wWTsmHAHxyp/Nw==
+	bh=G+OHcL5mnRTiUySkpI3IBA48oq1pfGegOcZg2EX6J/Q=;
+	b=A8PqE2KYZGgkiub433QZ+IhlGZrzes7iFB5FLDs5xDmZQwoSgAW80Wg2MxA1+lRkj8FH
+	 NHlGOtxWQ62QxfPa//Wb0pVq2gdlbyz7nYoMmWOkOkmvEoE4mifsOCgVGpmjA19alc9Xg
+	 zTpcXvavqxaymMxfLQPVUHdknfzZQ66XZ7eaIF7pH6bI5b/lFcKNnMXoqkO00NvuujUUb
+	 jtCvAdL/gXMCxt3evaWXJ5ByG0oYOssmxoYLbqJHUTj+sunxa0RuncBd7rjSekNJvugvX
+	 4v4F9MQC76W2i/1DBiAb8DF88uMnMkW33tqoGuRFm9cw+sNkgpMewPW5Gy2nLKPd8lw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eNbPJwBo;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMjgnLSd;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E09E5606A32A;
-	Wed, 18 Nov 2026 15:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01AB606A31C;
+	Wed, 18 Nov 2026 15:47:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eNbPJwBo
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 396C41F000C4;
-	Wed, 18 Nov 2026 15:47:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RMjgnLSd
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4601F000C4;
+	Wed, 18 Nov 2026 15:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016839;
-	bh=67DHtvsCSi7D5Qqv8LXnydU1eaqPTGihITbNkvVvDVk=;
+	s=korg; t=1795016842;
+	bh=G+OHcL5mnRTiUySkpI3IBA48oq1pfGegOcZg2EX6J/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=eNbPJwBoP3AtfJA1jd2M3sg7avF9Dc0oLX8NZjLs2/XFWRJCOWrYADLWMpwxjvfh3
-	 EdmzckgQSzy3NcuvJYtPC/tlMWzPZtZuHdYsCrA9jxQWexPqQWcose8CnePhMdOKG4
-	 N2EZkMcBDdh/dSLKYvYqq3Ypn1x8qtZ8a+LAlGag=
+	b=RMjgnLSd8Aq6EmjaBR286aAfUlMujQXvmzrD4yyNRCG+CG1Kxizbpil4nffpxspyR
+	 /Hc3mx8uRrujU7Fu0JZnJ9MK6apq2jg+BnJMZootK2mVOMCtVffPQklOfwgxgGICY9
+	 T/MA90Xl7x31sf65D1tjtKMWrpXgU0spghjfIZmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xueqin Luo <luoxueqin@kylinos.cn>,
+	Mario Limonciello <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0671/2651] ASoC: amd: acp3x-es83xx: Switch to use acpi_bus_get_primary_device()
-Date: Wed, 18 Nov 2026 15:31:51 +0100
-Message-ID: <20261118150312.028273023@linuxfoundation.org>
+Subject: [PATCH 7.3 0672/2651] cpufreq/amd-pstate: Restore previous EPP if profile_name allocation fails
+Date: Wed, 18 Nov 2026 15:31:52 +0100
+Message-ID: <20261118150312.065542893@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,44 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Xueqin Luo <luoxueqin@kylinos.cn>
 
-[ Upstream commit aae5bd00ced5b7e42ef3b3aa46923ad72388c60b ]
+[ Upstream commit 50fb9e04c9b1fe822baccba57801e2bc7795552e ]
 
-Replace acpi_get_first_physical_node() that is slated for removal
-with acpi_bus_get_primary_device() that takes a reference to the
-device it is about to return.
+amd_pstate_set_dynamic_epp() first applies the EPP value derived from
+the current platform profile via amd_pstate_set_epp() and only then
+allocates the profile name and registers the platform profile handler
+and the power supply notifier.  All failures after the EPP has been
+programmed jump to the cleanup label, which restores the previously
+programmed EPP value.
 
-This addresses a potential use-after-free that may occur if the
-device returned by acpi_get_first_physical_node() is removed right
-after dropping its ACPI companion's physical_node_lock in that
-function.
+However, if the kasprintf() of the profile name fails, the function
+returns -ENOMEM directly, bypassing the cleanup label, so the EPP value
+programmed above is never rolled back even though enabling dynamic EPP
+has failed.
 
-It also fixes a device reference counting issue that may lead to a
-premature device release if devm_kzalloc() fails in acp3x_es83xx_probe().
+Make the allocation failure path jump to the cleanup label as well, so
+that the previous EPP value is restored consistently on all error
+paths.
 
-Fixes: 54fcd9dd44b2 ("ASoC: amd: acp: Add machine driver that enables sound for systems with a ES8336 codec")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/2310746.NgBsaNRSFp@rafael.j.wysocki
+Fixes: b7294b627598 ("cpufreq/amd-pstate: Add dynamic EPP as an "energy_performance_preference" mode")
+Signed-off-by: Xueqin Luo <luoxueqin@kylinos.cn>
+Link: https://lore.kernel.org/r/20260825131400.1509428-1-luoxueqin@kylinos.cn
+Signed-off-by: Mario Limonciello <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/amd-pstate.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-index 3a640e6523142..c522b421e1ec2 100644
---- a/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-+++ b/sound/soc/amd/acp/acp3x-es83xx/acp3x-es83xx.c
-@@ -428,7 +428,7 @@ static int acp3x_es83xx_probe(struct snd_soc_card *card)
- 			return -ENXIO;
- 		}
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index a6f96d812c5db..dffa75b0e8709 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1281,8 +1281,10 @@ static int amd_pstate_set_dynamic_epp(struct cpufreq_policy *policy)
+ 		return ret;
  
--		codec_dev = acpi_get_first_physical_node(adev);
-+		codec_dev = acpi_bus_get_primary_device(adev);
- 		acpi_dev_put(adev);
- 		if (!codec_dev) {
- 			dev_warn(dev, "Error cannot find codec device, will defer probe\n");
+ 	cpudata->profile_name = kasprintf(GFP_KERNEL, "amd-pstate-epp-cpu%d", cpudata->cpu);
+-	if (!cpudata->profile_name)
+-		return -ENOMEM;
++	if (!cpudata->profile_name) {
++		ret = -ENOMEM;
++		goto cleanup;
++	}
+ 
+ 	cpudata->ppdev = platform_profile_register(get_cpu_device(policy->cpu),
+ 						   cpudata->profile_name,
 -- 
 2.53.0
 
