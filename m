@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795057256;
-	b=pRejDuvsRvMQZhOB/4SB4R5RUB2kBzPQ+AOrTJqw0iR4Mky048rAWcpKHErz+6Kxb8DF
-	 /PEGGXvNLJaoE8w2/8fBhL4WKx5dZ2MgHNlerwyaH268JAwSG3aN6Zos4Z8bPNxvKvkgx
-	 nDFHKuxKbc4rMJhVH61dAZCEAVtqfDeDtll1lYpLkmdTF1/YyzXRyMoPy6fXdrlTpQ04Q
-	 X5gF3EmzA45uJP+4LI/x+oxxU5wqZCPkfe+8Nwx4IkVw7CxXdxZoBycVM+/tCSXx1ucsD
-	 i8vKw7WnxuKHEhYHKDz7RWR40+B/mYJnDPND7lcrYcKc2q7ZImlTCe1tqOPvizoK2MA==
+	t=1795057259;
+	b=1CIjoeXR76l3Dqm51BJQ75xR0qQaxFVVZaXMWoascWX3oySJucBb3nDk/Q9F8Xr6aHxs
+	 tPFzNfSndIBonYcaSqUnYs705abB5/MSiypfE4iqSKyyC3Wym5uBmV+7CSTnBnSnK4Ajl
+	 Tij1oG2w4eKRP4CY1hQL2I88+rEx34YAxASlYxEj2KYkoqsPJ4LayRKTRt4Xcgm+ywNT4
+	 Lhgag2MfRXyhSMrvGI1RMyNaXLE563OEl3kjoBmxFSR0pW+4iDJyavQyLuOLUj/Sc1Iyg
+	 E/IoxJ3US1a4Zl6XKD+jpzettAJSrhrT8cn+SxP9fU/Urt5SwBH3pL3A9h8X83zk/BA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795057256;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795057259;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=pj0yanhP9jg2rrctX9AAnGQS7oEkE0wtwH+dePJhGKc=;
-	b=M2n3FoHL4PLXKJm8f54Ltgo0ypbVKpgeidw0fv2THUMDTnYK52kclQNbcxOjlnX1rhAY
-	 aCZJj4EFqXaGzQlpS5HWq6MRtqcRUNzBngOk8N37wBSpefBIA2BL33Hag2HnatLCpuwBS
-	 5KNfgn1PtW9NkwHL3FpY8HnrIddtBlaIH+aQdo0nqWfiKV3SEMtCZEtKC6HNIA7rtB5nD
-	 3C+NJIACAlvkkFFKOXFDKvTkAgG1lufpKe4Y7KEIb4K7FQ0BMtC7tTAC/vQijWkt3LnNM
-	 Igr1knqr4ZDHSDor4XL1YVoWsdbZpV/2ExAN1kG0RCdJnUzmBYrb4qsztuuJzFG326Q==
+	bh=/r1tnlnEjn7Z+Fj2z6IQpmKTqyRXg+e3s8bQ4V3OrUg=;
+	b=wrr+Hn1dZ+yyszcEW7SGZwoOQDZF9c+WASV3IXj2X+R+fjlY2PY/cqvsijaOlvX+x1Il
+	 9VyQeFZf22lKJTWA4LpLcuPkFQ9bwXRG7AR6y9AjjSyZ/nCg/VadPkJKZ872chOksuzbN
+	 TFGVsDO7/gzCr1WYSr16VauUqULflmETBwQ69osLUJ39EDi2lHIIC8Q9jCmWMXmAtIx3w
+	 dB7l6qSKmh0Vv+h994oORrN1eE4Crc431D4UBC5/u9QfFsVywVnsFGVq36j0KoA5XBHBf
+	 41+4XjC7UxA/61n4F2qvWrlNHXeTxv+4zW342sJZqEwJIexUbEEtrAIB0B1mlTT/zRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axAZx4N3;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yoGKIyTF;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4889B606A33D;
-	Thu, 19 Nov 2026 03:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F66060A261E;
+	Thu, 19 Nov 2026 03:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=axAZx4N3
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D8D1F000C9;
-	Thu, 19 Nov 2026 03:00:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yoGKIyTF
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC5C1F000C5;
+	Thu, 19 Nov 2026 03:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795057256;
-	bh=pj0yanhP9jg2rrctX9AAnGQS7oEkE0wtwH+dePJhGKc=;
+	s=korg; t=1795057259;
+	bh=/r1tnlnEjn7Z+Fj2z6IQpmKTqyRXg+e3s8bQ4V3OrUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=axAZx4N3+ISid6zfof1vYEQUeM0ZUiJDSPLXQ3KOij4Ke4Ubl8h1q3IYPXmt9z/iI
-	 iLuhlsfx20SKYVhB61KFcvaFmQN9+ksF262REkYUSC1MmmhLnpeRyPNhgvvhAAzXUT
-	 fAYPdaU5zq3RhLtlM6P6xr8/J+X+mV+PmIUAvyb0=
+	b=yoGKIyTFAIaU3AI9MUfFlEh8XqJh5/ZvqbMzxMRh0x+09FcOS/UcZbC4sJjaM1YOP
+	 6LFbYzVsj1LCU6qgdtT3VE2eOybX9kMxkQxmCAAGQd/AseQaClHFYC1bqUe3NWyuse
+	 HkPkNfs73K7I3ANI59Xil/v5rA/mN+mRjzu7WuZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Christian Gmeiner <cgmeiner@igalia.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0067/1848] iwlwifi: dvm: add missing cleaup for on error path
-Date: Wed, 18 Nov 2026 15:35:05 +0100
-Message-ID: <20261118145913.935184860@linuxfoundation.org>
+Subject: [PATCH 5.10 0068/1848] drm/etnaviv: check all modules for idle after reset
+Date: Wed, 18 Nov 2026 15:35:06 +0100
+Message-ID: <20261118145913.965609960@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,37 +68,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit 94280e6e0c69a5327e377803732f494d8b5a74cd ]
+[ Upstream commit 1006d1f7c03d92b28c252333836635df8e165401 ]
 
-In iwlagn_tx_agg_start(), call iwlagn_dealloc_agg_txq()
-to clear bit on error path.
+While the FE is an important part of the GPU, which needs to be idle
+after reset, all other modules should be idle after a proper reset.
+Check all present modules for being idle to determine whether the
+reset was successful.
 
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20260401030555.541685-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+Link: https://patch.msgid.link/20260511085148.652256-1-l.stach@pengutronix.de
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/dvm/tx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-index e3962bb523289..c6f248e83c2f1 100644
---- a/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/dvm/tx.c
-@@ -606,8 +606,10 @@ int iwlagn_tx_agg_start(struct iwl_priv *priv, struct ieee80211_vif *vif,
- 	}
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+index 407a15e1469f2..b9464240835d7 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+@@ -525,9 +525,9 @@ static int etnaviv_hw_reset(struct etnaviv_gpu *gpu)
+ 		/* read idle register. */
+ 		idle = gpu_read(gpu, VIVS_HI_IDLE_STATE);
  
- 	ret = iwl_sta_tx_modify_enable_tid(priv, sta_id, tid);
--	if (ret)
-+	if (ret) {
-+		iwlagn_dealloc_agg_txq(priv, txq_id);
- 		return ret;
-+	}
+-		/* try resetting again if FE is not idle */
+-		if ((idle & VIVS_HI_IDLE_STATE_FE) == 0) {
+-			dev_dbg(gpu->dev, "FE is not idle\n");
++		/* try resetting again if any module is not idle */
++		if ((idle & gpu->idle_mask) != gpu->idle_mask) {
++			dev_dbg(gpu->dev, "GPU modules not idle\n");
+ 			continue;
+ 		}
  
- 	spin_lock_bh(&priv->sta_lock);
- 	tid_data = &priv->tid_data[sta_id][tid];
 -- 
 2.53.0
 
