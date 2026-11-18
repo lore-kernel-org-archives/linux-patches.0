@@ -1,53 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795040174;
-	b=DogPaNdn6irpRAdRIIyA/JvbysAskNHnmraB/WVTXre3sUYcUXPa4BmImIBS9BvBW1NC
-	 8qfSH+8xIqBOsKw+HJtufMZZFQpfgvkoj6It9l/vAG9Iyo8Jdac58oGA984jkwannJh86
-	 FIqveLdLSTWzrDutxbVyupsxm9COU1KfuXtkBvm59aGR07lva04Sn8sJyG6l/ehG3vArG
-	 ybd3QXoO8ypPzNqxyo/xuqKHSGqVwgqPaXLoJw4SfwtKowHjQqto7W6uT84w4zHfxrW6r
-	 G/fDeaCGsXZe91T8r/Kl6lQTN7ECGpvZhEHldEUqVqfoVeR2fu33Pg6pkFcOFDsfAFg==
+	t=1795040177;
+	b=V+iiu+pG+qQgBMVj2YWwxZJmExniJLQGmrDFzlGljXtFWC4nPCSN4DMbEfrLGXZO6N/P
+	 rqXFARZpZDHPYwcuTvVTMHqWOHptZHw03vuc9IYML6jmZbcBSMGeGIh1kuumjkoVxVIiP
+	 m1ENAk8zFvUHePQqIbfE5z/5poXh+ZSfGetghNM5/uafTYSdPVMBWUpI1eHcSPgIXpBWJ
+	 QEHOPFZvp5EjxnDdC9yDVUPIgHxmtxlTe1hytIaLPG2enuVnrPpypSdcEyKwczRHZ7bP/
+	 h88XWi/iMxwgk3h4isgP61b9HL0V3CPZWmYYlSoFoadumw5/wSr0LGQppTRZt2e2+og==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795040174;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795040177;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=D6T0rVy5+YtpxhHMC4pScwjF8nBGAwocvaRkH+4fpxU=;
-	b=J+PeAmzI6uEOROR3Yotp8BOZdb3zyCfDbTpRYRtxJ3jUHZNSe7ZMGmrG310QpxNOgi9F
-	 /KOLq7O3f8tWfYUonZf9i53X77E8UdklTfnQPQPvDSeeYSMH33V0RM2fV7TvP+mJnko/X
-	 Ejg7nqOBXpmHi9mgQCyHyhmnXBDa9FA1NTqv2hxeFG/00Bhc+FnPDtXAmProqIRWsqfdH
-	 r5en8w4Iy7uyuDrJ1XdcM5Jr5FgnJpZ1TbiVzYjrfEsTerDUKwYAkspvbYY6juk6EtjiF
-	 HBU/bT3VJCN/ir+HxACPN0/EHktHmZVDpqHZPObTJkaXPb7irOoBqan1cRfEzHWZ3qg==
+	bh=Vw0VHSSNFbYoQLnQGcojfr2HjxgIiWG/ubH8TEriFP4=;
+	b=L9+X9fp67Ih981YozTI2BymvFO0dTJjSfAu2V3G6QX3LcTMpTjs6HcSpEhHv8Ae40OJ7
+	 KaG/I1MJXoZATI/ts+n+IwwC5Np94dPfVTTrbhRSEyetHOdJRyB+O4h2uVB2Gn4SY67MY
+	 Emrm3buBp+qCAQmwiCq2Kz9rNn/IP/zrxKEuV15qyVqH5mLc+hMhe7qayNNqEdusGktd/
+	 eWCtGP7Z68JKp/lPlLqhVzJ3/NPFcP6Ig2tdS9HQ7Y63s+Q4MOmYeIuhRAbyfffLIVgdb
+	 1t9nqzF+jvCxtn3XLrrB606nLN5psoumIglvbiyEyEY+HagBTfSJIVjdD5IORR1SRAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iVTIsPFE;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQbKL8w+;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05591606A32A;
-	Wed, 18 Nov 2026 22:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35E6606A32A;
+	Wed, 18 Nov 2026 22:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iVTIsPFE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B75E1F000C5;
-	Wed, 18 Nov 2026 22:16:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=aQbKL8w+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B4A31F000C4;
+	Wed, 18 Nov 2026 22:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795040173;
-	bh=D6T0rVy5+YtpxhHMC4pScwjF8nBGAwocvaRkH+4fpxU=;
+	s=korg; t=1795040176;
+	bh=Vw0VHSSNFbYoQLnQGcojfr2HjxgIiWG/ubH8TEriFP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iVTIsPFEaLQNWxV4NCdAlWmxyRc4ZtiNNiG+HrDFcLwB6zd2eosN+oycQdkIuZiFK
-	 cElaJh6+NLAkSeNZSv47Z47M1zQK9kAE24lB715fkWllyjtDeYWLYZmC8w41iR/V/a
-	 mPuDlXq1KAsbgvmZjOVCW0ayCGHLekP2/jQ5SvV8=
+	b=aQbKL8w+8UgSWRoB0sOKwseoGgCUWvYl/qi9rO4qMKEh3hsmo8rWrW5Rvpdh72oWj
+	 CvrKTREU6LcWkWZKMeO65kBep2mP1mZdnpxASA2iwXGvg0L2X2kwuLLA+CEZ7zaNii
+	 T6OibSZlUdNZgTfdbkUoEaprsbngSyLZr5vqVVMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Laurent Vivier <laurent@vivier.eu>,
 	Finn Thain <fthain@linux-m68k.org>,
 	Stan Johnson <userm57@yahoo.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 2321/3318] swim: Fix buffer overflow
-Date: Wed, 18 Nov 2026 15:49:03 +0100
-Message-ID: <20261118150431.304554734@linuxfoundation.org>
+Subject: [PATCH 6.6 2322/3318] swim: Remove redundant RELAX actions
+Date: Wed, 18 Nov 2026 15:49:04 +0100
+Message-ID: <20261118150431.332689134@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -71,96 +72,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Finn Thain <fthain@linux-m68k.org>
 
-[ Upstream commit a54870a4ae4962acf341eb6ca010cae02af1a6ea ]
+[ Upstream commit 04cb277e6841b55b950b42063fe11501b5d1676a ]
 
-The effect of this bug can be observed as swim_read_sector_data()
-inexplicably returning -5, or an error flag indicating that a mark byte
-was read from the data register, or other odd behviour.
+Wherever we have a swim_select() or swim_readbit() call there is an
+implicit RELAX. That means the caller doesn't have to do it. Remove the
+redundant code.
 
-When copying bytes from the chip FIFO to the read buffer, the driver
-keeps count of the remaining buffer space using register %d4. A counter
-in register %d2 serves as a timeout. The driver polls (%a2), the handshake
-register, until flags indicate that byte(s) have arrived in the FIFO.
+BTW, Inside Macintosh says, "Be sure [...] that CA0 and CA1 are set high
+before changing SEL." Hence the RELAX found in swim_select(). The SwimIII
+driver in mkLinux also has that. But the swim3.c driver in Linux is odd:
+it scatters RELAX actions around as though SEL was not actually under its
+control... In anycase, swim.c really does control SEL so there's no need
+for that here.
 
-        movel   #sector_size-1, %d4
-read_new_data:
-        movew   #max_retry, %d2
-read_data_loop:
-        moveb   %a2@, %d5
-        andb    #0xc0, %d5
-        dbne    %d2, read_data_loop
-        beq     data_exit
-        moveb   %a5@, %a4@+
-        andb    #0x40, %d5
-        dbne    %d4, read_new_data
-        beq     exit_loop
-
-Note that the exit_loop branch depends upon a flag in the handshake
-register and not on the remaining buffer space. Hence there may be no
-branch to exit_loop after %d4 is decremented to -1 (i.e. full buffer).
-
-        moveb   %a5@, %a4@+
-        dbra    %d4, read_new_data
-exit_loop:
-
-Here is a second decrement of %d4 which can now reach -2. But the buffer
-bounds check is a comparison with -1, which is now ineffective. Hence the
-loop will continue copying until %d2 eventually reaches -1.
-
-Fix this bug by terminating the loop as soon as %d4 or %d2 reach -1.
-Reset the timeout whenever a byte is copied.
-
-Fixes: 8852ecd97488 ("m68k: mac - Add SWIM floppy support")
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Tested-by: Stan Johnson <userm57@yahoo.com>
-Link: https://patch.msgid.link/d8fceda197b840f892d9b511175e824ca2549f01.1788513997.git.fthain@linux-m68k.org
+Link: https://patch.msgid.link/08ab67c2780c9107b87a1ece8b5f9cb54a8cea70.1788513997.git.fthain@linux-m68k.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b736189c93c9 ("swim: Deduplicate polling loops")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/swim_asm.S | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/block/swim.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/block/swim_asm.S b/drivers/block/swim_asm.S
-index 699f7c90dd1c0..e06aadb411a14 100644
---- a/drivers/block/swim_asm.S
-+++ b/drivers/block/swim_asm.S
-@@ -43,6 +43,8 @@
- 	.equ	sector_size, 512
+diff --git a/drivers/block/swim.c b/drivers/block/swim.c
+index 4fe51dbb9d047..ddb85cae76062 100644
+--- a/drivers/block/swim.c
++++ b/drivers/block/swim.c
+@@ -337,7 +337,6 @@ static inline void swim_motor(struct swim __iomem *base,
+ 		swim_action(base, MOTOR_ON);
  
- 	.equ	.Lhr_crc_error,		0x02
-+	.equ	.Lhr_fifo_2bytes,	0x40
-+	.equ	.Lhr_fifo_1byte,	0x80
+ 		for (i = 0; i < 2*HZ; i++) {
+-			swim_select(base, RELAX);
+ 			if (swim_readbit(base, MOTOR_ON))
+ 				break;
+ 			set_current_state(TASK_INTERRUPTIBLE);
+@@ -345,7 +344,7 @@ static inline void swim_motor(struct swim __iomem *base,
+ 		}
+ 	} else if (action == OFF) {
+ 		swim_action(base, MOTOR_OFF);
+-		swim_select(base, RELAX);
++		swim_write(base, phase, RELAX | PHASE_PIN_DIR);
+ 	}
+ }
  
- 	.global swim_read_sector_header
- swim_read_sector_header:
-@@ -189,20 +191,20 @@ wait_data_mark_byte:
- 	/* read data */
+@@ -356,13 +355,11 @@ static inline void swim_eject(struct swim __iomem *base)
+ 	swim_action(base, EJECT);
  
- 	movel	#sector_size-1, %d4		/* sector size */
--read_new_data:
- 	movew	#max_retry, %d2
- read_data_loop:
- 	moveb	%a2@, %d5
--	andb	#0xc0, %d5
-+	andb	#(.Lhr_fifo_1byte + .Lhr_fifo_2bytes), %d5
- 	dbne	%d2, read_data_loop
- 	beq	data_exit
-+	moveq	#max_retry, %d2
- 	moveb	%a5@, %a4@+
--	andb	#0x40, %d5
--	dbne	%d4, read_new_data
--	beq	exit_loop
-+	dbra	%d4, 1f
-+	bra	data_crc0
-+1:	andb	#.Lhr_fifo_2bytes, %d5
-+	beq	read_data_loop
- 	moveb	%a5@, %a4@+
--	dbra	%d4, read_new_data
--exit_loop:
-+	dbra	%d4, read_data_loop
+ 	for (i = 0; i < 2*HZ; i++) {
+-		swim_select(base, RELAX);
+ 		if (!swim_readbit(base, DISK_IN))
+ 			break;
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(1);
+ 	}
+-	swim_select(base, RELAX);
+ }
  
- 	/* read CRC */
+ static inline void swim_head(struct swim __iomem *base, enum head head)
+@@ -386,7 +383,6 @@ static inline int swim_step(struct swim __iomem *base)
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		schedule_timeout(1);
  
+-		swim_select(base, RELAX);
+ 		if (!swim_readbit(base, STEP))
+ 			return 0;
+ 	}
+@@ -400,8 +396,6 @@ static inline int swim_track00(struct swim __iomem *base)
+ 	swim_action(base, SEEK_NEGATIVE);
+ 
+ 	for (try = 0; try < 100; try++) {
+-
+-		swim_select(base, RELAX);
+ 		msleep(3);
+ 
+ 		if (swim_readbit(base, TRACK_ZERO))
 -- 
 2.53.0
 
