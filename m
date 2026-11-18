@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026615;
-	b=HB/sC1EVvIjxyb2CJsid29ZsYzBKIXrmFrkjv6PIfaVPiG7e2Lxx5QD3ydBOtLDMGxCu
-	 0ErZEmUkWtnoxtpwLxz7aFBl2/OdrFy3HM4qb8BgAh97w79xRa3mCTifmExkK8zMx1me+
-	 QHQbEAhdsuTcag9VQHxQOukHPfFXsozG8LuB6dtLHJsfHTz+3nEeP0dH8BHVyTD4DXEBR
-	 77mHZcFryU0swnKOs486EMEkQRo82P7LgkPCS9ocNjeqcBGHvvx3CMUPpXaKi2KL6cV0q
-	 p3tDQofKbUUU98hpakqQwH0SGzZQvNIrRiXnPK5T6do0yahJ7hOvwnrM08hvsYrhYhw==
+	t=1795026618;
+	b=sS38jLPiFWvSOuBco9mmGpNlECeSm1Ir8SG3DKERjXFiMQfBN8dluXsa2twfe8HYGfpk
+	 joGsBJoXks5FmcwxVZXdzFTcCel/2c6p0oresdkkXMoqAzkkYLQfsa2fR5tjb3KIIZb/p
+	 AC8nBk3ijxfMsCxDIamZ/8xA7/gYRH98R0evwMktJCDxnJx58nsTzSwCcyDe5CLQzhs2t
+	 khsd/y6rZRInb/dKty7q5v9b/Lf+inznrzRrRiPzJy465JTHJ2we+4HDoQUYUlmKY/fKT
+	 /VYL9ZnSlP89kmBn3zyWkQ7iEWDNJcOFryjW26Bcz0VLc+M40s1LVylCDgMxqgwBrqA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026615;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026618;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=ylDhx2fKFbZWytdywbuJ7j6OMIQRWsP+PveFycq1ofo=;
-	b=uD58OZs/hUrjOgSLupF1/gbmV4JEoyvLXazyq8V+8escI/VseC7teB2jenCRQknPodMb
-	 hAEnYgvFxTNierYiG/Fp9gA3IkwFJmL3OT9lJqhiY/uZmLv6XO/OwAW6mjqlUpZJoXibL
-	 D3MeFnLqV6W8oI69+tec1DR5KIkvV3AnocbDAzMbvCYad/MtY+N1dB+x1guzbkVMoIEvr
-	 8RTKDzlOPSe3l1YzMdf2FE7bAZKniBDt/TIoKppM11mcr2IaWNeNr8ze/fXZ7wOnveKvC
-	 /5IHLt4ehm65wyXPjfrMN8lOAjhlY5iscJvMC+1aSHUVc8lSIiWi9oHFX+MLWnKFDzg==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=ZJa41AFR1bLLC+HVTb8t3Rt1Y2EPFwljVi2t3RTvYOw=;
+	b=3PDhuOF/7/R1/SbCUxDsvgiAB7UGLnTsweUi5DsIIX3Dh0TpTZCZ9Pu8Pr8ZQggk6YX6
+	 pefeSsnlsYlNr9OLRvlJp8burmu/BsNlQ1ai6J2DKvggQw8Gl3uoLrvC0E6jvrTTrsm7C
+	 egrpCdlOHTdvGCprofZXJ3f7pqfRSKXNhc/mvIWH6creTeetFqcDRqhixyfef/NQGsCw+
+	 JnGyJ92tfroUIGacn2jMnhFaPC8p4Jz9mhMAXckAdhvAHTWbUZIymIL50MmCS83nJqMtx
+	 d0Ifp+FenEalueNAfiFGNRYiGeuvyh/aN6uQl9ZGUtd8lJm8wYs2aqFc+YIRkUZs0pw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGWyUTJl;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tU5I9Lvu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BD6606A32C;
-	Wed, 18 Nov 2026 18:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EF4606A32A;
+	Wed, 18 Nov 2026 18:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=IGWyUTJl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAAB1F000C4;
-	Wed, 18 Nov 2026 18:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=tU5I9Lvu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B7C91F000C4;
+	Wed, 18 Nov 2026 18:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026615;
-	bh=ylDhx2fKFbZWytdywbuJ7j6OMIQRWsP+PveFycq1ofo=;
+	s=korg; t=1795026617;
+	bh=ZJa41AFR1bLLC+HVTb8t3Rt1Y2EPFwljVi2t3RTvYOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=IGWyUTJlzAcW6ss/jzqv7MWe+fzQlnwYXYzpIM9AVskwNovDNyUNYg4/bKl6tqVyh
-	 NZnwieHrdmDWOsJAHD3Ve992KZNcvMc4zkAiWSftbSRlWoiYV7UI0kiGji0L+5cKiT
-	 OJy/6AWjvu0NDjQIMD2dYitc/02/GNaikkR7Ok88=
+	b=tU5I9LvuCLQX5p4OpVHLu94hk+J6KHeODeCoVwqCWjhFYqAffS6RYNJvnMPgSI34b
+	 4l8LcKoCAumrCdqbfZTdHX8DvK3MlTYFKUxa4GCKwkMjG4mJywx2SDav+UDDfkusG8
+	 i07ipuvajUg0CCjc5oINs5OtmmAZtyO0xz7HaLgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Cen Zhang <zzzccc427@gmail.com>,
+	Muhammad Bilal <meatuni001@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1497/2151] ALSA: pcm: Unlink substreams before releasing them
-Date: Wed, 18 Nov 2026 15:53:52 +0100
-Message-ID: <20261118150216.403580374@linuxfoundation.org>
+Subject: [PATCH 6.18 1498/2151] platform/x86: hp-bioscfg: fix off-by-one in password length check
+Date: Wed, 18 Nov 2026 15:53:53 +0100
+Message-ID: <20261118150216.441620644@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -62,170 +62,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cen Zhang <zzzccc427@gmail.com>
+From: Muhammad Bilal <meatuni001@gmail.com>
 
-[ Upstream commit d1e57f8fb7a6b6d32a4aaa31fd6fc4c77339608f ]
+[ Upstream commit 0c22178524864af85ea380be4b2d36078c0edc9c ]
 
-A closing PCM substream can remain in its linked group after the
-driver close callback has freed its private data. With two configured
-dummy capture substreams on the same PCM device, linked with LINK,
-PREPARE on the surviving substream can still visit the closing member:
+current_password and new_password hold MAX_PASSWD_SIZE bytes including
+the NUL, but validate_password_input() accepts a password of exactly
+MAX_PASSWD_SIZE characters when the firmware limits allow it.
+strscpy() then truncates it and fails with -E2BIG, which
+store_password_instance() ignores, so the write reports success with a
+truncated password stored.
 
-  Final close of A                   PREPARE on linked B
-  ----------------                   -------------------
-  snd_pcm_drop(): group -> SETUP
-  do_hw_free(A)
-  dummy_pcm_close(A): free dpcm
-                                     Take snd_pcm_link_rwsem for reading
-                                     Walk the group, including A
-                                     dummy_pcm_prepare(A)
-                                       Read freed timer_ops
-  pcm_release_private(A)
-    snd_pcm_unlink(A)
+For example, with a max_password_length of 64 or more, writing 64
+characters succeeds but only 63 are stored.
 
-Unlink at the start of final substream release, before dropping the
-stream or releasing driver resources. The link write lock waits for
-an existing group PREPARE, and unlink removes the closing member from
-later group actions. Keep the existing stop synchronization in
-do_hw_free() before the driver resources are freed.
+Reject lengths of MAX_PASSWD_SIZE or more.
 
-Make unlink independent of the pcm_release callback so OSS substreams
-are covered too. Remove the native-only unlink callback and its
-registration, while retaining the callback hook for OSS cleanup.
+Compile tested only.
 
-The existing KASAN report below records the freed timer_ops read in
-dummy_pcm_prepare().
-
-KASAN report as below:
-
-    BUG: KASAN: slab-use-after-free in dummy_pcm_prepare+0xb7/0xc0
-    Read of size 8 at addr ffff888106b35f00 by task alsa_pcm_fixtur/491
-
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x93/0xd0
-     print_report+0xce/0x630
-     ? dummy_pcm_prepare+0xb7/0xc0
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? __virt_addr_valid+0x20d/0x410
-     ? dummy_pcm_prepare+0xb7/0xc0
-     kasan_report+0xe0/0x110
-     ? dummy_pcm_prepare+0xb7/0xc0
-     dummy_pcm_prepare+0xb7/0xc0
-     snd_pcm_do_prepare+0x71/0xb0
-     snd_pcm_action_group+0x505/0xb30
-     snd_pcm_action_nonatomic+0xab/0x150
-     snd_pcm_common_ioctl+0x1bf5/0x3a50
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     ? do_vfs_ioctl+0x1f5/0x1280
-     ? __pfx_do_vfs_ioctl+0x10/0x10
-     ? ioctl_has_perm.constprop.0.isra.0+0x34f/0x500
-     ? __pfx_snd_pcm_common_ioctl+0x10/0x10
-     ? __fput+0x5ba/0xa60
-     ? srso_alias_return_thunk+0x5/0xfbef5
-     snd_pcm_ioctl+0x76/0xb0
-     ? __pfx_snd_pcm_ioctl+0x10/0x10
-     __x64_sys_ioctl+0x163/0x1d0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    RIP: 0033:0x41ee8d
-    Code: 04 25 28 00 00 00 48 89 45 c8 31 c0 48 8d 45 10 c7 45 b0 10 00 00 00 48 89 45 b8 48 8d 45 d0 48 89 45 c0 b8 10 00 00 00 0f 05 <89> c2 3d 00 f0 ff ff 77 1a 48 8b 45 c8 64 48 2b 04 25 28 00 00 00
-    RSP: 002b:00007ffcfa72fb60 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-    RAX: ffffffffffffffda RBX: 0000000000000004 RCX: 000000000041ee8d
-    RDX: 0000000000000000 RSI: 0000000000004140 RDI: 0000000000000004
-    RBP: 00007ffcfa72fbb0 R08: 00007ffcfa72fb98 R09: 0000000000000110
-    R10: 0000000000000001 R11: 0000000000000246 R12: 00007ffcfa72fcd8
-    R13: 00007ffcfa72fcf0 R14: 00000000004a8f28 R15: 0000000000000001
-     </TASK>
-
-    Allocated by task 488:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     __kasan_kmalloc+0xaa/0xb0
-     __kmalloc_cache_noprof+0x251/0x610
-     dummy_hrtimer_create+0x4a/0x170
-     dummy_pcm_open+0xe7/0x730
-     snd_pcm_open_substream+0x926/0x1580
-     snd_pcm_open+0x28d/0x6d0
-     snd_pcm_capture_open+0x82/0xe0
-     snd_open+0x1ec/0x3e0
-     chrdev_open+0x21f/0x660
-     do_dentry_open+0x5c8/0x1300
-     vfs_open+0x87/0x390
-     path_openat+0x2460/0x3cd0
-     do_file_open+0x21e/0x470
-     do_sys_openat2+0xf4/0x1b0
-     __x64_sys_openat+0x136/0x1e0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-    Freed by task 490:
-     kasan_save_stack+0x33/0x60
-     kasan_save_track+0x14/0x30
-     kasan_save_free_info+0x3b/0x60
-     __kasan_slab_free+0x5f/0x80
-     kfree+0x307/0x580
-     dummy_hrtimer_free+0x72/0xe0
-     dummy_pcm_close+0x9f/0xd0
-     snd_pcm_release_substream.part.0+0x104/0x310
-     snd_pcm_release+0x106/0x240
-     __fput+0x39f/0xa60
-     fput_close_sync+0xff/0x200
-     __x64_sys_close+0x8c/0xf0
-     do_syscall_64+0x115/0x6a0
-     entry_SYSCALL_64_after_hwframe+0x77/0x7f
-    ==================================================================
-
-Fixes: 1576274d3028 ("[ALSA] Fix Oops of PCM OSS emulation")
-Suggested-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-9c80f858ccc13b3de84d-v7-fcd8c7aa0e837bf0b036@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 8646a3b5ee3a ("platform/x86: hp-bioscfg: passwdobj-attributes")
+Signed-off-by: Muhammad Bilal <meatuni001@gmail.com>
+Link: https://lore.kernel.org/all/20261007134711.473857-1-meatuni001@gmail.com/
+Link: https://patch.msgid.link/20261007134711.473857-6-meatuni001@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 2c038cdda6873..72de45053baef 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2753,18 +2753,14 @@ static int snd_pcm_hw_constraints_complete(struct snd_pcm_substream *substream)
- 	return 0;
- }
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+index 97990191b71f3..938e70e806445 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/passwdobj-attributes.c
+@@ -74,7 +74,7 @@ static int validate_password_input(int instance_id, const char *buf,
+ 	if (is_current && !length)
+ 		return 0;
  
--static void pcm_release_private(struct snd_pcm_substream *substream)
--{
--	if (snd_pcm_stream_linked(substream))
--		snd_pcm_unlink(substream);
--}
--
- void snd_pcm_release_substream(struct snd_pcm_substream *substream)
- {
- 	substream->ref_count--;
- 	if (substream->ref_count > 0)
- 		return;
+-	if (length > MAX_PASSWD_SIZE)
++	if (length >= MAX_PASSWD_SIZE)
+ 		return -E2BIG;
  
-+	snd_pcm_unlink(substream);
-+
- 	snd_pcm_drop(substream);
- 	if (substream->hw_opened) {
- 		if (substream->runtime->state != SNDRV_PCM_STATE_OPEN)
-@@ -2848,8 +2844,6 @@ static int snd_pcm_open_file(struct file *file,
- 		return -ENOMEM;
- 	}
- 	pcm_file->substream = substream;
--	if (substream->ref_count == 1)
--		substream->pcm_release = pcm_release_private;
- 	file->private_data = pcm_file;
- 
- 	return 0;
+ 	if (password_data->min_password_length > length ||
 -- 
 2.53.0
 
