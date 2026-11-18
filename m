@@ -1,51 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795044225;
-	b=IBoxCZN9EGL5Hz8nydB9sUEk3U3KPh2GlDz47fRAF497hVcFkB2rnGroLzuVgungPxCa
-	 bPJEgXrNffAgwoxzviCfzMuKbVny4if1iugFPBTzSVy1r2ecAyiE4ygA5s4IUIL1p1fGH
-	 3wt8JwFjllIUAth9ct+fCBYzbMOUw36CMHk/FO2TOt0zWGehdGTajcndjTtmUstIUH0KZ
-	 oMUQUDy9OjAlBXDxoSbbtE4vlG5rYRU1RmUFh1VivxCDWF1NgMBWrEAXGuxb/UpkPDxaC
-	 VPOAibI0AI+7OQI1WAqlL4bqpRnclNREMY2QfVHc/TMBZuIXBFVs9YDfq5MIkBv6I5w==
+	t=1795044228;
+	b=ssyPEXzT4Y8asf9yIPmx1yv8/sP1L5rAfu8bBUPFHMPP1HnquSg72vTXJnW/M4Mpycit
+	 3HRGFUAfxLARiCQe18tGUy4tAevJvllWlafZA8ztUjw/ZMuUGP8KKHORq+6Lr1WnET3Vn
+	 xTxvwC3jGf1ULnip8UvPAmgA2See7cAZ/tXnkZkIlrp2mypZXoXqE9n8JAcYrSVD1f605
+	 FJYVpdItwbOlB2s6nQosntU4+Kfw8SMWJYIqc/Xk75L99iJ/Grsca4YbHFFj/uj18xrvA
+	 577ZJZAweCAEnr/nlVsRpLrj5PM1natfwSvAiM7cE78xOh2Yz0brRlMvdDVvFxPZlYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795044225;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795044228;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=gbTvhCHGJ2dibuv+ffo85m2+WRgLAR90+L4tJsPHWG4=;
-	b=XiDwxtSYyqX16JYcBvWDdQuTddMQo0b6DtJS52MtmjgYGplJfQ6Tu5rwciUH8gozeTZf
-	 LK9jKfkocpbXj4349rgUdLvZ7OiifCxF0W2y7kwWdC7yKcg6U+UVoKgpK2ewWEbv2/Ah+
-	 +VQLdd6FShQ+4CTtNckVguijZznuXqGAodNCuBeFZbqH1ksZQV86WAmfoTVNi3j/OXEln
-	 P8MPA7JENve2Dl/wgILQmYX/fQxOEGx5hv75qafvFuMtk080XfY7TPrg2XQvdBQDyp8hC
-	 fIG3V+ryFsWI0nOudciI2gZhVvOtVUicmTkJjFc1DPBmmRChyNK4Rv8iHSA8ZFijohw==
+	bh=DEPYZxecRCr+0k4W62F7TwcTyCrnZwADxmyc9eOLOrk=;
+	b=V3cZkpTlgYqNb8UtbGdLhuJN7X8z5m6MQJ6P5h7VaSXBkYgc6pakrC7fP6g6+8cw1uhC
+	 P2XkWeWgSll158PleWlaZoZOSygSAfxNmG+B+SqB2mxjtlJ8WkVXyPkDyFrKgH3us34uf
+	 bB9e+5ljXWW+hdwuJlLRk+lLJcNYLqJB4tpu/MgPt6/3tGdJBjRnpOZkFOo+yyzOm0nrU
+	 6c8O1PVq+UJROyrg+ayRO6TtO6q9aJ/QkbNHVQmf3F7fK7NjuqmwZ6gxWWuvHohhguQg0
+	 2EFWL6D2zEX1fW+dC5/W0Y6LTFyaqd3BsWSn9zHuLvPGZSEh9VPmG1w2JVt67iCJoZQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1DgqUQS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iEvwZwaK;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC481606A325;
-	Wed, 18 Nov 2026 23:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803EE606A31C;
+	Wed, 18 Nov 2026 23:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=T1DgqUQS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17F2B1F000C4;
-	Wed, 18 Nov 2026 23:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iEvwZwaK
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42EA1F000C7;
+	Wed, 18 Nov 2026 23:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795044225;
-	bh=gbTvhCHGJ2dibuv+ffo85m2+WRgLAR90+L4tJsPHWG4=;
+	s=korg; t=1795044228;
+	bh=DEPYZxecRCr+0k4W62F7TwcTyCrnZwADxmyc9eOLOrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=T1DgqUQS2tSljbMoUqWqN9+o+Mto2jWpvGBV/d9inGPVL5RcCow2dOpS2LaKms9Uw
-	 8TiADF2VIIjd95zQ+08c5VopgcYmLadRQbHnHcwDhrrsG3qlRjqu1E/kiYE1vEiGMX
-	 e/xvPspBcznrbQH4/LkV9P64L+eKt4VkJ4X5gxm4=
+	b=iEvwZwaK3z9J6KPhIxMbKOCO7hlt2NmFibUKWltsVrgjwvK4QSUdXEbiuUaDKtQYR
+	 daZ29nsBV4kmUwpukDsHzFIGUL8vkTnZmLrS2cxaBxWrVeMd5KOkgmAvTAvSI95AlL
+	 YgJ0fxOl9an+anbVG3Q7itOpNsWqVxUN5YXsVDEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Christian Brauner (Amutable)" <brauner@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0492/2857] ipc: drop the mqueue mount with kern_unmount() on setup failure
-Date: Wed, 18 Nov 2026 15:25:26 +0100
-Message-ID: <20261118150219.168619315@linuxfoundation.org>
+Subject: [PATCH 6.1 0466/2857] KVM: SVM: Update control fields on #VMEXIT if and only if VMRUN succeeded
+Date: Wed, 18 Nov 2026 15:25:00 +0100
+Message-ID: <20261118150218.215142459@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -67,49 +68,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit f0e48172a59e517e613b73f73cc35f24fd123aeb ]
+[ Upstream commit e27fc915c8f575ab5630e27d97465c2077d4b9d1 ]
 
-mq_init_ns() creates the mqueue mount with fc_mount_longterm(), so its
-->mnt_ns is MNT_NS_INTERNAL. When setting up the mqueue or ipc sysctls
-or msg_init_ns() fails afterwards, create_ipc_ns() drops it with a plain
-mntput(). With ->mnt_ns set that takes the fast path of
-mntput_no_expire(). The count drops to zero and nothing ever kills the
-mount, so the mount and the mqueue superblock are leaked.
+Leave control.erap_ctl and control.clean as-is in the VMCS if VMRUN fails,
+because as per AMD:
 
-Commit dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
-added the first failure path after mq_init_ns() and never dropped the
-mount. Commit 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on
-sysctl setup failure") tried to fix that with a mntput() but that
-doesn't help for a long-term mount.
+  there's no explicit architectural guarantee about the behavior in the
+  presence of VMRUN failures. So the best thing to do would be to assume
+  that if VMRUN fails, the actions requested in the control fields may not
+  have been performed.
 
-Use kern_unmount(). free_ipc() open-codes the same thing for a namespace
-that made it.
-
-Fixes: dc55e35f9e81 ("ipc: Store mqueue sysctls in the ipc namespace")
-Fixes: 7229d74e5e8c ("ipc: create_ipc_ns: drop mqueue mount on sysctl setup failure")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20261009-work-fixes-rcu-v1-5-7446d2d335e6@kernel.org
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-ID: <20260904170642.3291466-3-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ sashal: Used exit_code != SVM_EXIT_ERR in place of svm_is_vmrun_failure(), and dropped the ERAP control-field hunk because this tree has no ERAPS support, so only vmcb_mark_all_clean() moves into the success branch. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- ipc/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/svm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/ipc/namespace.c b/ipc/namespace.c
-index 745826c9206bc..58be7a072d19c 100644
---- a/ipc/namespace.c
-+++ b/ipc/namespace.c
-@@ -80,7 +80,7 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
- fail_mq_sysctls:
- 	retire_mq_sysctls(ns);
- fail_mq_mount:
--	mntput(ns->mq_mnt);
-+	kern_unmount(ns->mq_mnt);
- fail_put:
- 	put_user_ns(ns->user_ns);
- 	ns_free_inum(&ns->ns);
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 84af54cc84631..a28d3f76960cd 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -4135,9 +4135,9 @@ static __no_kcsan fastpath_t svm_vcpu_run(struct kvm_vcpu *vcpu, u64 run_flags)
+ 	if (svm->vmcb->control.exit_code != SVM_EXIT_ERR) {
+ 		this_cpu_ptr(&svm_data)->flush_all_asids = false;
+ 		svm->vmcb->control.tlb_ctl = TLB_CONTROL_DO_NOTHING;
+-	}
+ 
+-	vmcb_mark_all_clean(svm->vmcb);
++		vmcb_mark_all_clean(svm->vmcb);
++	}
+ 
+ 	/* if exit due to PF check for async PF */
+ 	if (svm->vmcb->control.exit_code == SVM_EXIT_EXCP_BASE + PF_VECTOR)
 -- 
 2.53.0
 
