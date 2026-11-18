@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795015811;
-	b=T7gb5AjIegoHH5nn6JjgQqh2RvvlK22RzTTkFFTQlpQJ8pyREpOmFLE2Rw+zM0pAY462
-	 /UuNF42mcHDLNXzviR+Jpppq5jU9+P6DFziaQiMIjl/CsHrJHzcLFoL8Rh6sQxAhjfcva
-	 qAjMt3PqFCWiW7LP7gKLIVwKuFiY+mCyfwBrLDLa5jHCwHOzJPP8NSNcyOm6p5Cd2hbXB
-	 +helnZhV4x9CG8jmFVedHAuMGn99JvTtX24gdBMjlXCcncMxKKgpEXJabmllwkKjNQDwZ
-	 S5uZ2fZ3WFJUIisqrE2T6SBc9ztFaCGjhGeXKLph/6DsiKMfQpsrzHI/IX6Phl6ctBw==
+	t=1795015814;
+	b=IBRQeiC8A1f7TAE2ddlgwl2axxk89PTZOwSvIQ8lCQbbnycfsxitdOy1Ug0xcxpIu72Z
+	 Y9K6ZzqMmgIpvz/m6g5Z6Mmphw3H+Jm92Voom3TYRaBFXqWjYIGC8OJuIe00gZqNUyczf
+	 LGVMaSnERdaF2ZWq3CsxmOVipAD9HTv1nhZHnFVALJoSXYNN2Jq0xRHNjsHSCWbs1sPRs
+	 h1wxXN9XMGYvIDexzrgKlZM716QkkkqSi5VSoniCMxbW/P9YCNM0x4BhoGBukkyq1WdLE
+	 nqbig5uZDHECfXtygy/3vWsqf/18ZW8GpcrWEiDLkcnfpp3EylNBfS9FmZKlrfQFDfA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795015811;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795015814;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=TIS/9YRPwLoAM5cgEcqVeeb+Swu8vXwKmmnrG3+YW/A=;
-	b=2meDU8X821CK6303awCJzh5TcK5lzc/m8tGYyUaLsOaK97MRgqmuVM0yH8/59VSL/aVZ
-	 PWbozQKYv0cvhMr5eqO3m0Qb9VhcHXwzz7LyUNbVi4FL1Q5Wgsw9TF78h603EH6LEulZ7
-	 //c/2wAifpEpJncN/XH2l1LrbrVI9LuA/+D8jH93N04fy8DbGktENxdE4RthD3vpDCgxY
-	 q11YCZPcBxHMx74MffgRxr9kgjPMWEn83Fut91dnNLnZAcNL4277JHBknGW5zeKqhpw1m
-	 0X4t1aD4BT/+H++1T8zS+Dc8a7fjOSEN4Ha9wqB0Jt/uYFO1lFUi/0SLHu9OcI+PoyQ==
+	bh=ikGcfM920CHLDR0HhhtbFofDlHBxMsnqrnNuaz8rSbo=;
+	b=vSD7hHBy/DtzMqDUJtPbxC9MkC7I749ZltLQnsToQTOy64oi4agNA3u2KZr3BUi4zsml
+	 zCUFa8ouo1xMZxVto42Q3bjV2BjE85SAl/ckCfbnB2CaYCoH5dir5sGsQRFeALmGaChkN
+	 KB+Recz0qGg3aHM7AIOy6mxrW3GMi8qrqG5BnhQ7NjsuaZk2FLG+a6ygC8UGS8uATaKhJ
+	 AXos2M9h9x5AHwJMN4TsAPVunzlwwwBMv7oxm768nLyUvgz+uGaSduAr6LEocUiHzEfvL
+	 Dqzldryh0/HkwwPcKaPTS/2IEc5JlssrhG21tAfjys54OXE8rbdoKu6WLjimgnVFdfA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UooL76Le;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUYhwEHo;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656BA606A32A;
-	Wed, 18 Nov 2026 15:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549BD60A2626;
+	Wed, 18 Nov 2026 15:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=UooL76Le
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94CF1F000D0;
-	Wed, 18 Nov 2026 15:30:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=KUYhwEHo
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09E31F000C8;
+	Wed, 18 Nov 2026 15:30:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795015811;
-	bh=TIS/9YRPwLoAM5cgEcqVeeb+Swu8vXwKmmnrG3+YW/A=;
+	s=korg; t=1795015814;
+	bh=ikGcfM920CHLDR0HhhtbFofDlHBxMsnqrnNuaz8rSbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UooL76LeTO169byARj8zjOJ/9ZCZI4dP7NRLxtSP7Fz2L2YGE9izpqXHZ8uxu/OZk
-	 ODLxLKHnE9xTg5X1sGo0qxM1BFjq/r7CKDL9w7j8UdgBb3O9YPhqmVIH3J6QZFqn89
-	 QBJx3hGGK4XsnCc8pIeyaxETMJQngtZp+2xw2RXI=
+	b=KUYhwEHoXatxEahG1nTN2+xpJlLdsnk/YiYix6qY75847CaPZyBTeAwhoK7QNTAMr
+	 jhSAdd1XeaQi8FXQ22YkD6vU82aqd1wOw4+U2mRjF9q4phM9iv43aHbzSIQpTI/ARQ
+	 aQFAwo2aWFl/x3o0sL3DpaeuzySjeUHbdA4tP5u8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -45,9 +45,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peixin Xie <peixin.xie@linux.spacemit.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0307/2651] ACPI: PM: Drop parent state update from acpi_device_get_power()
-Date: Wed, 18 Nov 2026 15:25:47 +0100
-Message-ID: <20261118150258.947424872@linuxfoundation.org>
+Subject: [PATCH 7.3 0308/2651] ACPI: scan: Stop calling acpi_bus_init_power() early
+Date: Wed, 18 Nov 2026 15:25:48 +0100
+Message-ID: <20261118150258.984170066@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -71,75 +71,268 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 5636eebb7bb1c6f06f0058d48353686304d4bb47 ]
+[ Upstream commit 2f4ddf2bd1baf0ee3c8542ec6f382a3585cae607 ]
 
-The parent state update in acpi_device_get_power(), that occurs when the
-child device turns out to be in D0 and the parent's power state is still
-unknown, is highly questionable because it may cause the reference
-counters of the power resources used by the parent in D0 (if any) to
-underflow when the parent goes into a low-power state later.  Moreover,
-there is no reason to do it on reads from the real_power_state sysfs
-attribute of the child.
+There is a problem, introduced by commit 9d9bcae47fd5 ("ACPI: delay
+enumeration of devices with a _DEP pointing to an INT3472 device")
+inadvertently, that devices with missing dependencies may be put
+into power state D0 prematurely [1].
 
-That check had been added by commit 8f7412a792bc ("ACPI / PM: Infer
-parent power state from child if unknown, v2") before starting to
-handle the "missing _PSC and no power resources" case directly in
-acpi_bus_init_power(), as of commit b3785492268f ("ACPI / PM: Do not
-power manage devices in unknown initial states").  It is not necessary
-any more and commit b3785492268f should have removed it.
+Namely, acpi_bus_init_power() called by acpi_bus_get_power_flags()
+during the early initialization of ACPI device objects, may discover
+that all of the power resources needed by the given device to be in
+power state D0 are initially on, so it will reference count those
+power resources and transition the device into D0.  Later, if
+acpi_bus_attach() running for that device notices that it has missing
+dependencies, the enumeration of it will be deferred and its
+power_manageable flag will be cleared, even though it is still in D0
+at that point.
 
-Drop it now.
+After the dependencies in question have been met, acpi_bus_attach()
+runs again for the device and now it calls acpi_bus_init_power() that
+takes additional references to the power resources used by the device
+in D0.  These additional references prevent the power resources from
+being turned off when the device goes into D3hot/D3cold.
 
-Fixes: b3785492268f ("ACPI / PM: Do not power manage devices in unknown initial states")
+Another problem, related to the previous one, is that ACPI power state
+initialization may be carried out for devices whose parents are not
+ready for enumeration which may lead to initialization ordering issues.
+
+To address both, stop calling acpi_bus_init_power() from
+acpi_bus_get_power_flags(), but also take the initialization of
+PCI devices into account, which needs to be done because they
+are initialized and bound to their ACPI companions before
+acpi_bus_attach() is called for the latter.
+
+To that end, notice that acpi_power_up_if_adr_present() is used for
+powering-up PCI devices in D3cold before walking the bus in order to
+discover them and the initial ACPI power state of those devices needs
+to be known for this purpose, so add an acpi_bus_init_power() invocation
+to that function.  [The debug statement printed by it duplicates the
+debug statements printed during the acpi_bus_init_power() execution, so
+drop it.]
+
+Moreover, since the ACPI companions of PCI devices are associated with
+the corresponding PCI devices found on the bus before acpi_bus_attach()
+is called for them, it is not necessary or even useful to skip them in
+acpi_bus_attach() due to an ACPI status mismatch, so avoid doing that
+and complain if the ACPI status does not match the observed situation.
+
+Also use the ACPI power state tracking to decide whether or not
+the device's power state needs to be initialized in acpi_bus_attach()
+instead of using the "initialized" flag of the ACPI device object
+for this purpose, which is fragile and inconvenient, and clear the
+power_manageable flag on failure in acpi_bus_init_power() (additionally,
+poison the device ACPI power state as "invalid" if the initialization of
+it fails).  That allows the clearing of the power_manageable flag for
+devices with unmet dependencies to be dropped.
+
+While at it, add a debug message pringing statement to
+acpi_bus_init_power() to facilitate diagnostics.
+
+Fixes: 9d9bcae47fd5 ("ACPI: delay enumeration of devices with a _DEP pointing to an INT3472 device")
+Link: https://lore.kernel.org/linux-acpi/20260820-acpi-power-resource-ref-fix-v2-1-29818173ea13@linux.spacemit.com/ [1]
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Tested-by: Peixin Xie <peixin.xie@linux.spacemit.com>
 Tested-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/5147279.31r3eYUQgx@rafael.j.wysocki
+Link: https://patch.msgid.link/2295263.irdbgypaU6@rafael.j.wysocki
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/device_pm.c | 15 ++-------------
- 1 file changed, 2 insertions(+), 13 deletions(-)
+ drivers/acpi/device_pm.c | 62 ++++++++++++++++++++++++++++++++--------
+ drivers/acpi/scan.c      | 40 +++++++++++++++++---------
+ 2 files changed, 76 insertions(+), 26 deletions(-)
 
 diff --git a/drivers/acpi/device_pm.c b/drivers/acpi/device_pm.c
-index aa55ecfc2923c..4269735aadde5 100644
+index 4269735aadde5..76104f715efa1 100644
 --- a/drivers/acpi/device_pm.c
 +++ b/drivers/acpi/device_pm.c
-@@ -75,15 +75,14 @@ static int acpi_dev_pm_explicit_get(struct acpi_device *device, int *state)
- int acpi_device_get_power(struct acpi_device *device, int *state)
+@@ -23,6 +23,8 @@
+ #include "fan.h"
+ #include "internal.h"
+ 
++#define ACPI_D_STATE_INVALID	ACPI_D_STATE_COUNT
++
+ /**
+  * acpi_power_state_string - String representation of ACPI device power state.
+  * @state: ACPI device power state to return the string representation of.
+@@ -293,24 +295,28 @@ int acpi_bus_set_power(acpi_handle handle, int state)
+ }
+ EXPORT_SYMBOL(acpi_bus_set_power);
+ 
+-int acpi_bus_init_power(struct acpi_device *device)
++static int acpi_device_init_power(struct acpi_device *device)
  {
- 	int result = ACPI_STATE_UNKNOWN;
--	struct acpi_device *parent;
- 	int error;
+ 	int state;
+ 	int result;
  
- 	if (!device || !state)
- 		return -EINVAL;
- 
--	parent = acpi_dev_parent(device);
+-	if (!device)
+-		return -EINVAL;
 -
- 	if (!device->flags.power_manageable) {
+-	device->power.state = ACPI_STATE_UNKNOWN;
+-	if (!acpi_device_is_present(device)) {
+-		device->flags.initialized = false;
+-		return -ENXIO;
+-	}
+-
+ 	result = acpi_device_get_power(device, &state);
+ 	if (result)
+ 		return result;
+ 
++	/*
++	 * If the current power state of the device is D0 and it has a parent
++	 * whose power state is not ignored, and the parent's power state
++	 * initialization has failed, the parent's power state can be updated to
++	 * D0 for consistency.
++	 */
++	if (!device->power.flags.ignore_parent && state == ACPI_STATE_D0) {
 +		struct acpi_device *parent = acpi_dev_parent(device);
 +
- 		/* TBD: Non-recursive algorithm for walking up hierarchy. */
- 		*state = parent ? parent->power.state : ACPI_STATE_D0;
- 		goto out;
-@@ -119,16 +118,6 @@ int acpi_device_get_power(struct acpi_device *device, int *state)
- 			result = psc > ACPI_STATE_D2 ? ACPI_STATE_D3_HOT : psc;
++		if (parent && parent->power.state == ACPI_D_STATE_INVALID)
++			parent->power.state = ACPI_STATE_D0;
++	}
++
+ 	if (state < ACPI_STATE_D3_COLD && device->power.flags.power_resources) {
+ 		/* Reference count the power resources. */
+ 		result = acpi_power_on_resources(device, state);
+@@ -340,9 +346,36 @@ int acpi_bus_init_power(struct acpi_device *device)
+ 		state = ACPI_STATE_D0;
+ 	}
+ 	device->power.state = state;
++
++	acpi_handle_debug(device->handle, "Initial power state: %s\n",
++			  acpi_power_state_string(state));
++
+ 	return 0;
+ }
+ 
++int acpi_bus_init_power(struct acpi_device *device)
++{
++	int result;
++
++	if (device->power.state != ACPI_STATE_UNKNOWN)
++		return 0;
++
++	/*
++	 * The ACPI device power state can be only initialized once.  If this
++	 * fails, ACPI power management will not be used for the device going
++	 * forward.
++	 */
++	result = acpi_device_init_power(device);
++	if (result) {
++		device->flags.power_manageable = 0;
++		device->power.state = ACPI_D_STATE_INVALID;
++		acpi_handle_info(device->handle,
++				 "Initial power state undetermined, ACPI PM disabled\n");
++	}
++
++	return result;
++}
++
+ /**
+  * acpi_device_fix_up_power - Force device with missing _PSC into D0.
+  * @device: Device object whose power state is to be fixed up.
+@@ -464,8 +497,13 @@ static int acpi_power_up_if_adr_present(struct acpi_device *adev, void *not_used
+ 	if (!(adev->flags.power_manageable && adev->pnp.type.bus_address))
+ 		return 0;
+ 
+-	acpi_handle_debug(adev->handle, "Power state: %s\n",
+-			  acpi_power_state_string(adev->power.state));
++	/*
++	 * This is done during the PCI root initialization which occurs before
++	 * acpi_bus_attach() is called for the device, so the ACPI power state
++	 * of the device needs to be initialized here.
++	 */
++	if (acpi_bus_init_power(adev))
++		return 0;
+ 
+ 	if (adev->power.state == ACPI_STATE_D3_COLD)
+ 		return acpi_device_set_power(adev, ACPI_STATE_D0);
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 163a3cccf197b..e8189849eaa60 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -20,6 +20,7 @@
+ #include <linux/kthread.h>
+ #include <linux/dmi.h>
+ #include <linux/dma-map-ops.h>
++#include <linux/pci.h>
+ #include <linux/platform_data/x86/apple.h>
+ #include <linux/pgtable.h>
+ #include <linux/crc32.h>
+@@ -1143,8 +1144,7 @@ static void acpi_bus_get_power_flags(struct acpi_device *device)
+ 			device->power.states[ACPI_STATE_D3_COLD].flags.valid = 1;
  	}
  
--	/*
--	 * If we were unsure about the device parent's power state up to this
--	 * point, the fact that the device is in D0 implies that the parent has
--	 * to be in D0 too, except if ignore_parent is set.
--	 */
--	if (!device->power.flags.ignore_parent && parent &&
--	    parent->power.state == ACPI_STATE_UNKNOWN &&
--	    result == ACPI_STATE_D0)
--		parent->power.state = ACPI_STATE_D0;
--
- 	*state = result;
+-	if (acpi_bus_init_power(device))
+-		device->flags.power_manageable = 0;
++	device->power.state = ACPI_STATE_UNKNOWN;
+ }
  
-  out:
+ static void acpi_bus_get_flags(struct acpi_device *device)
+@@ -2338,38 +2338,50 @@ static int acpi_scan_attach_handler(struct acpi_device *device)
+ static int acpi_bus_attach(struct acpi_device *device, void *first_pass)
+ {
+ 	bool skip = !first_pass && device->flags.visited;
++	struct pci_dev *pci;
+ 	acpi_handle ejd;
+ 	int ret;
+ 
+ 	if (skip)
+ 		goto ok;
+ 
++	device->flags.initialized = true;
++
+ 	if (ACPI_SUCCESS(acpi_bus_get_ejd(device->handle, &ejd)))
+ 		register_dock_dependent_device(device, ejd);
+ 
+ 	acpi_bus_get_status(device);
+-	/* Skip devices that are not ready for enumeration (e.g. not present) */
+-	if (!acpi_dev_ready_for_enumeration(device)) {
+-		device->flags.initialized = false;
++	/*
++	 * If the given ACPI device object has been already associated with a
++	 * PCI device found on the bus, its status is effectively "present and
++	 * enabled", and dependencies are not tracked for PCI devices, so it is
++	 * not necessary or even useful to check the device's readiness in that
++	 * case.
++	 */
++	pci = acpi_dev_get_pci_dev(device);
++	if (pci) {
++		acpi_handle_debug(device->handle, "PCI companion %s found\n",
++				  pci_name(pci));
++
++		if (!acpi_device_is_present(device))
++			pci_info(pci, FW_BUG "ACPI status differs from reality\n");
++
++		pci_dev_put(pci);
++	} else if (!acpi_dev_ready_for_enumeration(device)) {
++		/* The device is not ready (e.g. not present), so skip it. */
+ 		acpi_device_clear_enumerated(device);
+-		device->flags.power_manageable = 0;
+ 		return 0;
+ 	}
++
+ 	if (device->handler)
+ 		goto ok;
+ 
+ 	acpi_ec_register_opregions(device);
+ 
+-	if (!device->flags.initialized) {
+-		device->flags.power_manageable =
+-			device->power.states[ACPI_STATE_D0].flags.valid;
+-		if (acpi_bus_init_power(device))
+-			device->flags.power_manageable = 0;
++	acpi_bus_init_power(device);
+ 
+-		device->flags.initialized = true;
+-	} else if (device->flags.visited) {
++	if (device->flags.visited)
+ 		goto ok;
+-	}
+ 
+ 	ret = acpi_scan_attach_handler(device);
+ 	if (ret < 0)
 -- 
 2.53.0
 
