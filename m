@@ -1,54 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795038921;
-	b=Srz0OPVdpEZlsQjd63H8jXZhrevcz34AUROFBoZRst85scpjZq5sJYrsEm+Oj+Y78tQD
-	 3F2Z2pNrI4P0m4YyUtmpdxLoySVo2X5D+beGzaaEU4uncBvSb41uPcMkHeeVSQdgEld2H
-	 TkRLiQE8DW+9U3kDQvjl6MTx4jNjeMFCIboSVVD7YlonXvYFhujVfqIkLF+pqDOqnj68B
-	 6qUbfVLYIfoV6lywNEFRpZDT2wnbwReS0RsYydBLa3+u4OiFislTAh7C6f8ETz9pSfZRl
-	 dKISQdrL68Sgx3TcjLxsp035adXy6+KH/u4/WZJZi3XR+UMA+h+MOao/BYxP7xufaeQ==
+	t=1795038924;
+	b=GzrhvyECg5YzJPfeKoI6Jq3pjSs/DWvB5XeesNGqVvell9tHZ3gR7f7G7ZXbptSkcolM
+	 YrfhiReJJ4yGOnHUcXjlnLpHxafBADBOsSfqvLCp3TrsV8EBj91RIsVW1QeF2t8JDgDXT
+	 RTW1l0LMuFbfONoSYZEdez+78Lq2zyYX1ff1ztaD9SqSxcNaHV02XSbNzcazmPbb66fc0
+	 IZ3aWrRGW7u1cezpxIbu6j3Viju1TOuJjLpKXk+kQNTgYATxaKDissgWouKh9E0meBK11
+	 2TiZVhG/PiEw5J5skJf9ZAWJdAgG6dpDmUQUqnLV6OsZ8gliVm7X/MBCWXORRBAzbDg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795038921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795038924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=0VPSQhWSNMD5Fcx9okDa1NoJaDeC0LChIGzf5WTirnY=;
-	b=lErOBpYmFTg3K6n7DObhYUaxxDrH/LLLSdvpKb9791rIm5OPWseQnM0GB2K1vtardieP
-	 1E6ArkRJRvr0DR979olgfXfVw/xv0NpGY2b0Km+EknqSlREzzPg33DWSq/oEIHa7sVw2Q
-	 3Z1pfW5oFtm1gQVB0l/kdfx1yGq6GP0wOfZ/nwMGI9PlznpS5AoZEyw9tKudj6E8Es3ab
-	 3QMqgML9mP3qML+gqTWVOKNjpq4E7trf7NMTcWjZf1A2a6Lcq9FqFdMYlKFtuedvK6HuJ
-	 YYW46MLSuzs4wiycr15CcJYryOIoDO7Hm83zXatz5/eYsMWNRuoUcLe7cXQ2HVCLfiA==
+	bh=ZgQVQAlbQMjHVpaoxtU/ZaWlDV04TxuNv7DHwfcp2do=;
+	b=S87C9h6g4jLVXJyoicyIEvf/74QYnbJmu8QPRG5jdveoqbd2jznCKKT4elKYrHAS5iaw
+	 +r2s52dyrCBFRDdBdKfs6gJX9xQT2dKIzWU7a4CJ+sriBRGrxDiFc9hVjR9hC/Xaeku/A
+	 3wB4MI+Uv5xAzQAsWh4yS+DEIO59K/I5q0FJQ23UCa7E3Mz2OwNUpqcZ6zFO/36dWF5Fh
+	 G3SsXBYij9zJ7goQNnDhQXV+Fg4b7BSZ74MgDHKegQ0KB0jriVCycViN4J04dd/57zjXQ
+	 jWxbCewaNcW+wKPmj8enF6A2FwgNf/qOw9FOUPrPGo7KFvtj+iBgLqyWDp0P6o3ZPRQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cNX1J7n;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09TTy6eu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731DF606A31C;
-	Wed, 18 Nov 2026 21:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E079606A320;
+	Wed, 18 Nov 2026 21:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=1cNX1J7n
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F9D1F000C7;
-	Wed, 18 Nov 2026 21:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=09TTy6eu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B9B1F000C4;
+	Wed, 18 Nov 2026 21:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795038921;
-	bh=0VPSQhWSNMD5Fcx9okDa1NoJaDeC0LChIGzf5WTirnY=;
+	s=korg; t=1795038924;
+	bh=ZgQVQAlbQMjHVpaoxtU/ZaWlDV04TxuNv7DHwfcp2do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=1cNX1J7nfUkFDfyH5HStusce7jKE4UEYJlh/9kVUehvOt1fs+mZHtlczyympG3chQ
-	 lntTvItzoZoHGDMNAKczhn+k2j7LTaLNX/M8J3huAqxY8ns8vcx4p72kx0yLCea7C6
-	 vH7g4iiR8jeBm9BjevM9cbMAcFKQiISAkrJVB/cc=
+	b=09TTy6eu14I3nVgkovsZd8/3bKGT5XS3yhIdVJqbLI77vOYJ8O4WloI1tnNQ8jVBj
+	 V0TXMzM0lbNoyYlRU2nIkjcbqDXKZKxuPmgkLHrfNL/1emA1TQgKGtoyYtx8Q0ndGe
+	 F9w4igF/iCehZoR0+SKgPXHkrLceU5eCQQJePNpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Fenski <bartosz@fenski.pl>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ian Bridges <icb@fastmail.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 1913/3318] btrfs: raid56: do not verify the content if there is no data checksum
-Date: Wed, 18 Nov 2026 15:42:15 +0100
-Message-ID: <20261118150419.397221916@linuxfoundation.org>
+Subject: [PATCH 6.6 1914/3318] ksmbd: do not read past the DACL in the access denied debug message
+Date: Wed, 18 Nov 2026 15:42:16 +0100
+Message-ID: <20261118150419.425948579@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -70,105 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Ian Bridges <icb@fastmail.org>
 
-[ Upstream commit d00b85308abee300dfb7e1ac642f38bab9ec7492 ]
+[ Upstream commit 8296a64df5448548f410fb246c1d88a93609602b ]
 
-[BUG]
-There is a bug report that fio can fail to sync the data on a degraded
-RAID56 mount:
+When smb_check_perm_dacl() falls back to the POSIX ACL and then denies
+the request, its debug message prints the access mask of the ACE that
+the second DACL walk stopped at. On that path the walk ran to the end
+of the DACL, so the pointer is one past the last ACE. If the DACL is
+the last part of the stored security descriptor, the message reads 4
+bytes past the buffer, and KASAN reports a slab-out-of-bounds read in
+smb_check_perm_dacl().
 
-  # mkfs.btrfs -m raid1 -d raid5 -f $dev1 $dev2 $dev3
-  # mount $dev1 $mnt
-  # btrfs balance start -d $mnt
-  # umount $mnt
-  # btrfs dev scan -u $dev2
-  # wipefs -fa $dev2
-  # mount -o degraded $dev1 $mnt
-  # fio --name=degraded-write --directory=$mnt --rw=randwrite --fdatasync=4 \
-		--bs=4k --size=512M --randrepeat=1
+Print the requested and allowed masks instead. They are what the check
+compares.
 
-The run will fail at fsync:
-
-  fio: io_u error on file /mnt/btrfs/degraded-write.0.0: Input/output error: datasync offset=142254080, buflen=0
-  fio: pid=2064, err=5/file:io_u.c:2008, func=io_u error, error=Input/output error
-
-[CAUSE]
-With extra debug output, it shows the problem pretty well:
-
-  rbio=2876243968 faila=0 sectornr=0
-  rbio=2876243968 error=0-15 csum=2 bio=15
-
-The first line shows the rbio's full stripe logical, and stripe/sector
-number when verify_one_sector() failed.
-
-The second line shows more detail about the rbio, the sector range [0, 16)
-is corrupted, which indicates the first data stripe is corrupted, matching
-the missing device.
-
-The important part is that the csum bitmap shows the data csum is only
-for sector number 2, meanwhile the failed verification is at sector
-number 0.
-
-This means we did the checksum verification even if no corresponding
-checksum is populated.
-
-[FIX]
-There is already a similar check at verify_bio_data_sectors(), but
-unfortunately there is no such check at verify_one_sector().
-
-Add the missing check to skip the csum verification if there is no
-corresponding data checksum.
-
-Reported-by: Bartosz Fenski <bartosz@fenski.pl>
-Link: https://lore.kernel.org/linux-btrfs/a72409af-45ef-45df-9970-2e38bcb22ea6@fenski.pl/
-Fixes: 7a3150723061 ("btrfs: raid56: do data csum verification during RMW cycle")
-CC: stable@vger.kernel.org
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ sashal: adjusted context for sector_ptr checksum verification using btrfs_check_sector_csum() ]
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ian Bridges <icb@fastmail.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+[ sashal: Adjusted context for the broader access mask check at the check_access_bits label. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/raid56.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/smb/server/smbacl.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/raid56.c b/fs/btrfs/raid56.c
-index 3e014b9370a3f..ce7baf55e6213 100644
---- a/fs/btrfs/raid56.c
-+++ b/fs/btrfs/raid56.c
-@@ -1680,6 +1680,8 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
- {
- 	struct btrfs_fs_info *fs_info = rbio->bioc->fs_info;
- 	struct sector_ptr *sector;
-+	const unsigned int total_sector_nr =
-+		stripe_nr * rbio->stripe_nsectors + sector_nr;
- 	u8 csum_buf[BTRFS_CSUM_SIZE];
- 	u8 *csum_expected;
- 	int ret;
-@@ -1690,6 +1692,11 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
- 	/* No way to verify P/Q as they are not covered by data csum. */
- 	if (stripe_nr >= rbio->nr_data)
- 		return 0;
-+
-+	/* No data checksum for this sector. */
-+	if (!test_bit(total_sector_nr, rbio->csum_bitmap))
-+		return 0;
-+
- 	/*
- 	 * If we're rebuilding a read, we have to use pages from the
- 	 * bio list if possible.
-@@ -1702,9 +1709,7 @@ static int verify_one_sector(struct btrfs_raid_bio *rbio,
- 
- 	ASSERT(sector->page);
- 
--	csum_expected = rbio->csum_buf +
--			(stripe_nr * rbio->stripe_nsectors + sector_nr) *
--			fs_info->csum_size;
-+	csum_expected = rbio->csum_buf + total_sector_nr * fs_info->csum_size;
- 	ret = btrfs_check_sector_csum(fs_info, sector->page, sector->pgoff,
- 				      csum_buf, csum_expected);
- 	return ret;
+diff --git a/fs/smb/server/smbacl.c b/fs/smb/server/smbacl.c
+index 40b2e6b499457..6147322bb4b0d 100644
+--- a/fs/smb/server/smbacl.c
++++ b/fs/smb/server/smbacl.c
+@@ -1640,8 +1640,8 @@ int smb_check_perm_dacl(struct ksmbd_conn *conn, const struct path *path,
+ check_access_bits:
+ 	if (granted &
+ 	    ~(access_bits | FILE_READ_ATTRIBUTES | READ_CONTROL | WRITE_DAC | DELETE)) {
+-		ksmbd_debug(SMB, "Access denied with winACL, granted : %x, access_req : %x\n",
+-			    granted, le32_to_cpu(ace->access_req));
++		ksmbd_debug(SMB, "Access denied with winACL, requested : %x, allowed : %x\n",
++			    granted, access_bits);
+ 		rc = -EACCES;
+ 		goto err_out;
+ 	}
 -- 
 2.53.0
 
