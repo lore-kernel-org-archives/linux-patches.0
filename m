@@ -1,55 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795021298;
-	b=LQoOgDpM4QYyrW4SWZ+z07lgPLhgOFyX80AZf0AAep3r80v2MLH2EVcHVT75uMhZD7/M
-	 1k45RDozycfw6d78e2+IsLFMzPLU0LjjKd/0DevcmsA5yEZSfdOY/LtCH0H64azna30nM
-	 UUt/vXCGO1074ftzmLUqs9sbmQTE/gPyVIyoQPKA0exX4vV+0cPTCvzoXGUuokJe7oyNE
-	 Syav8PotgH5SIKx7QVBvAcVA5h1Clk+ByL5LPdso537dZAOy7xi+PZHIPkvfiIeFPb6pI
-	 JktifXpnCntYMs2RPi5JkZ+vK4JehutltO+3iKrBTEhEnqDKA+/MXAtoIlv7CibSLwQ==
+	t=1795021300;
+	b=01m0uN3llCyrBGpu/ij1NoTfG1mNk6X8a9gw/zbb7pkuIV4Svp4UR/mmGNXLOIX82FGt
+	 IQ+rvixywTV1/PVFwAa+ZXNHDYuPR4HQ7OYQ53UO7UNqZPfk4dDrm1hFqaTSQ5W+KG6hO
+	 lGeFsnG03/sqwqB+ZXDlBrOKHxHxxxMTQOE/BWQ4kHRAydZeMa1gPMXJJ53bH3tNblRN8
+	 mAQghqtr2coyKWPTb2VrPZYG7cbCc95m7nIi4duNqBfg1cCKRRybS9LQ5ahO/nRxcYwLj
+	 sGVrUuiR/Yzn6YgMsDtW0MEwCnuw7wNVJPEQoE3a48phvQneV48N0b56wrMtVxvU3UQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795021298;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795021300;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding;
-	bh=5nxY6N0TcXhyyg9Dudu3gZCe05u4xSmfUpUdE5S9mso=;
-	b=F8S1dnL4LRG2jO9bLDiNode+nIhy9U04LHYwoTBi3HNS4htjpNEm+Jh5Db/wdF5rHsUu
-	 8fn8QpEe0Zrh8r4HSa82LiVlZ6JVS1rMvcnAD32o3eW7bnyDWLH/91dAASr1ltjOzLTPF
-	 nvcZH/AwvS+P+4knW4RVZQ3koUHP6C309vFR/ZSzqfaCTamKGHa66FsMzgEgvrWmJ8wWs
-	 6erOwyzPaGhXjS03m4FP9jNCmba3s7msZolERSG6Atjli71tohcfilOeGUeO+EORjQs2m
-	 d17kZTv1dEiGRV8rUtNlVeEh6rJySJGjjncSChxsKRlzmoG+H/YwotXafRMd9XzCMXg==
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=/a5xfI3tbODvuJUIg1kHEl4rju61Ho6LnXE09beojbs=;
+	b=3BwVUlREO12zXinR7lfGJnB50El8nvYBT4lCA0RF5PyMTNilb37tZvDE9Tc4GdD5ezp9
+	 gTmm1YywgzcTxaNkURAj8Jc2A/Was85BNs6f/XjdmEDRdN68xu2wCAOaScO2T/qGCBW//
+	 3kT2FmlZFQcgdGdAWjzbhb+5fAHDqxWy78bfNUkClt02G2pzjzXH+PY62gKb6rt5kdegc
+	 pPt+nx5OZwUh8uElcPKIZNl0VRYCRpeRVdidzdbmRWQL73UX5a8bQ8dGOhz9fMuaTqy5C
+	 CwuobHnZBae/KIwTF3cjuAErP16Zw9KpqVE9lI2optkMqB8cJqnt/Tx28iIV+RE80AA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXFZ3+IS;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McrupRJy;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65529606A31C;
-	Wed, 18 Nov 2026 17:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF04606A31C;
+	Wed, 18 Nov 2026 17:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=OXFZ3+IS
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821D41F000C4;
-	Wed, 18 Nov 2026 17:01:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=McrupRJy
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320301F000C6;
+	Wed, 18 Nov 2026 17:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795021298;
-	bh=5nxY6N0TcXhyyg9Dudu3gZCe05u4xSmfUpUdE5S9mso=;
+	s=korg; t=1795021300;
+	bh=/a5xfI3tbODvuJUIg1kHEl4rju61Ho6LnXE09beojbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=OXFZ3+ISTmnnOrRZOV15HraIIAJEFSF0Nf6UDXAZlL2iJ//AfiGTiNs7GVdZfxRef
-	 8o/Sys2xqjZFkufd5YIhu4twWs2ArtbZbBOmwUc/4GV+sILaDpXVRlijULzYzxPBSB
-	 5u1+3gV2L8deUnU7nQuuETVzqUl3An8OvlCM73+M=
+	b=McrupRJyBRd2gOsy2CmVi5/XN72S6huxhoX6/PixFwC/8ef3EzX2488KydrE5WTIz
+	 X9HtZn7feJ8k0+OxlR4L82n0C1fj/Fts4RSVO+4qH9paXKbBvoWd+6esDE7BW7CPd2
+	 PshQIN8sy/GVkU77HyfIbOI3FQaiejkili2nUApA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 2230/2651] xsk: freeze deferred pool teardown without blocking unregister
-Date: Wed, 18 Nov 2026 15:57:50 +0100
-Message-ID: <20261118150405.815282901@linuxfoundation.org>
+Subject: [PATCH 7.3 2257/2651] net: bcmasp: fix network filter lookup and wake filter pair allocation
+Date: Wed, 18 Nov 2026 15:58:17 +0100
+Message-ID: <20261118150406.675735488@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -65,207 +62,235 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 7.3-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Florian Fainelli <florian.fainelli@broadcom.com>
 
-[ Upstream commit fece8420e76fe53ee84f0439f18d026b4c7641da ]
+[ Upstream commit fa1459375794f14fb65039cd19c9398d759b491e ]
 
-Deferred pool destruction calls ndo_bpf() under RTNL. system_wq is
-not frozen during system sleep, so that callback can run after a
-device has suspended and gated its clocks. Use system_freezable_wq
-so running destruction finishes before device suspend and new work
-waits until process thaw.
+In bcmasp_netfilt_get_init(), when looking up an existing filter (!init)
+for a specified location, if the filter at loc was not claimed, the
+previous loop continued searching higher indices and could return an
+arbitrary unrelated filter belonging to the port. This caused flow get or
+delete operations on an empty rule location to return or delete an
+unintended filter.
 
-Keep assigned pools visible to NETDEV_UNREGISTER independently of
-the socket list. A released socket has already left that list, but
-its final pool put can queue destruction after workqueues freeze.
-A resume-time unregister would then wait for a device reference
-whose release cannot run until the resume completes.
+Fix this by checking only the requested location on lookup and rejecting
+RX_CLS_LOC_ANY when !init. In addition, harden wake filter allocation
+and release by ensuring wake filter pair searches stay on even boundaries
+where both entries are free, checking that loc + 1 is free for positioned
+wake filters, and validating parity and bounds on release.
 
-Track assigned pools per netdev with netdev operations locking and detach
-remaining pools after the notifier socket walk, including copy-mode pools.
-This also covers leased queues without scanning pools from unrelated
-devices or network namespaces. Remove the entry on assignment failure and
-normal teardown. The deferred worker still owns the pool and later observes
-the cleared device pointer, avoiding a second driver detach or put.
-
-The lifetime problem was identified by code inspection of the deferred
-release and system-sleep paths.
-
-Fixes: 1c1efc2af158 ("xsk: Create and free buffer pool independently from umem")
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20261014-xsk-suspend-teardown-v4-1-27795582e4a3@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c5d511c49587 ("net: bcmasp: Add support for wake on net filters")
+Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20261013204439.3494046-7-florian.fainelli@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h   |  5 ++++
- include/net/xsk_buff_pool.h |  3 +++
- net/xdp/xsk.c               |  5 ++++
- net/xdp/xsk_buff_pool.c     | 46 ++++++++++++++++++++++++++++++-------
- 4 files changed, 51 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp.c | 121 +++++++++++---------
+ 1 file changed, 70 insertions(+), 51 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 02119fa153c97..1fb51c576758c 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -2547,6 +2547,11 @@ struct net_device {
- 	/* protected by rtnl_lock */
- 	struct bpf_xdp_entity	xdp_state[__MAX_XDP_MODE];
- 
-+#ifdef CONFIG_XDP_SOCKETS
-+	/** @xsk_pools: assigned AF_XDP pools, ops protected */
-+	struct hlist_head	xsk_pools;
-+#endif
-+
- 	u8 dev_addr_shadow[MAX_ADDR_LEN];
- 	netdevice_tracker	linkwatch_dev_tracker;
- 	netdevice_tracker	watchdog_dev_tracker;
-diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
-index a7df573784fd6..02e89350faf9a 100644
---- a/include/net/xsk_buff_pool.h
-+++ b/include/net/xsk_buff_pool.h
-@@ -48,6 +48,8 @@ struct xsk_buff_pool {
- 	struct device *dev;
- 	struct net_device *netdev;
- 	struct list_head xsk_tx_list;
-+	/* Assigned pools, including deferred releases; ops protected. */
-+	struct hlist_node dev_node;
- 	/* Protects modifications to the xsk_tx_list */
- 	spinlock_t xsk_tx_list_lock;
- 	refcount_t users;
-@@ -119,6 +121,7 @@ bool xp_put_pool(struct xsk_buff_pool *pool);
- void xp_clear_dev(struct xsk_buff_pool *pool);
- void xp_add_xsk(struct xsk_buff_pool *pool, struct xdp_sock *xs);
- void xp_del_xsk(struct xsk_buff_pool *pool, struct xdp_sock *xs);
-+void xp_clear_dev_all(struct net_device *dev);
- 
- /* AF_XDP, and XDP core. */
- void xp_free(struct xdp_buff_xsk *xskb);
-diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 33475b180ea6f..781ba46eb1525 100644
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -2145,6 +2145,11 @@ static int xsk_notifier(struct notifier_block *this,
- 			mutex_unlock(&xs->mutex);
- 		}
- 		mutex_unlock(&net->xdp.lock);
-+		/*
-+		 * A released socket is no longer on xdp.list. Its pool can still
-+		 * hold a device reference on the frozen release workqueue.
-+		 */
-+		xp_clear_dev_all(dev);
- 		break;
- 	}
- 	return NOTIFY_DONE;
-diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
-index e836eca469b0b..7750d2ec4ee24 100644
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -173,7 +173,7 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- 	u32 frame_size;
- 	int err = 0;
- 
--	ASSERT_RTNL();
-+	netdev_assert_locked_ops_compat(netdev);
- 
- 	force_zc = flags & XDP_ZEROCOPY;
- 	force_copy = flags & XDP_COPY;
-@@ -205,6 +205,11 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- 	pool->cached_need_wakeup = XDP_WAKEUP_TX;
- 
- 	dev_hold(netdev);
-+	/*
-+	 * Socket removal precedes the final pool put. Keep the pool visible to
-+	 * NETDEV_UNREGISTER even while release work is waiting for process thaw.
-+	 */
-+	hlist_add_head(&pool->dev_node, &netdev->xsk_pools);
- 
- 	if (force_copy)
- 		/* For copy-mode, we are done. */
-@@ -245,7 +250,6 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- 	bpf.xsk.pool = pool;
- 	bpf.xsk.queue_id = queue_id;
- 
--	netdev_assert_locked_ops_compat(netdev);
- 	err = netdev->netdev_ops->ndo_bpf(netdev, &bpf);
- 	if (err)
- 		goto err_unreg_pool;
-@@ -267,6 +271,8 @@ int xp_assign_dev(struct xsk_buff_pool *pool,
- 	if (err) {
- 		pool->umem->flags = umem_flags;
- 		xsk_clear_pool_at_qid(netdev, queue_id);
-+		hlist_del(&pool->dev_node);
-+		pool->netdev = NULL;
- 		dev_put(netdev);
- 	}
- 	return err;
-@@ -289,19 +295,39 @@ int xp_assign_dev_shared(struct xsk_buff_pool *pool, struct xdp_sock *umem_xs,
- 	return xp_assign_dev(pool, dev, queue_id, flags);
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+index 972474893a6bc..f41a79529f100 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
+@@ -511,6 +511,13 @@ static int bcmasp_netfilt_wr_to_hw(struct bcmasp_priv *priv,
+ 	return 0;
  }
  
-+static void __xp_clear_dev(struct xsk_buff_pool *pool)
++static bool bcmasp_netfilt_is_companion(struct bcmasp_priv *priv, int i)
 +{
-+	struct net_device *netdev = pool->netdev;
-+
-+	netdev_assert_locked_ops_compat(netdev);
-+	xp_disable_drv_zc(pool);
-+	xsk_clear_pool_at_qid(netdev, pool->queue_id);
-+	hlist_del(&pool->dev_node);
-+	pool->netdev = NULL;
-+	dev_put(netdev);
++	return i > 0 && (i % 2) &&
++	       priv->net_filters[i].wake_filter &&
++	       priv->net_filters[i - 1].wake_filter;
 +}
 +
- void xp_clear_dev(struct xsk_buff_pool *pool)
+ void bcmasp_netfilt_suspend(struct bcmasp_intf *intf)
  {
- 	struct net_device *netdev = pool->netdev;
+ 	struct bcmasp_priv *priv = intf->parent;
+@@ -524,9 +531,7 @@ void bcmasp_netfilt_suspend(struct bcmasp_intf *intf)
+ 		    priv->net_filters[i].port != intf->port)
+ 			continue;
  
--	if (!pool->netdev)
-+	if (!netdev)
- 		return;
+-		if (i > 0 && (i % 2) &&
+-		    priv->net_filters[i].wake_filter &&
+-		    priv->net_filters[i - 1].wake_filter)
++		if (bcmasp_netfilt_is_companion(priv, i))
+ 			continue;
  
- 	netdev_lock_ops(netdev);
--	xp_disable_drv_zc(pool);
--	xsk_clear_pool_at_qid(pool->netdev, pool->queue_id);
--	pool->netdev = NULL;
-+	__xp_clear_dev(pool);
- 	netdev_unlock_ops(netdev);
--	dev_put(netdev);
-+}
+ 		ret = bcmasp_netfilt_wr_to_hw(priv, &priv->net_filters[i]);
+@@ -556,9 +561,7 @@ int bcmasp_netfilt_get_all_active(struct bcmasp_intf *intf, u32 *rule_locs,
+ 		    priv->net_filters[i].port != intf->port)
+ 			continue;
+ 
+-		if (i > 0 && (i % 2) &&
+-		    priv->net_filters[i].wake_filter &&
+-		    priv->net_filters[i - 1].wake_filter)
++		if (bcmasp_netfilt_is_companion(priv, i))
+ 			continue;
+ 
+ 		if (j == *rule_cnt)
+@@ -583,9 +586,7 @@ int bcmasp_netfilt_get_active(struct bcmasp_intf *intf)
+ 			continue;
+ 
+ 		/* Skip over a wake filter pair */
+-		if (i > 0 && (i % 2) &&
+-		    priv->net_filters[i].wake_filter &&
+-		    priv->net_filters[i - 1].wake_filter)
++		if (bcmasp_netfilt_is_companion(priv, i))
+ 			continue;
+ 
+ 		cnt++;
+@@ -607,6 +608,9 @@ bool bcmasp_netfilt_check_dup(struct bcmasp_intf *intf,
+ 		    priv->net_filters[i].port != intf->port)
+ 			continue;
+ 
++		if (bcmasp_netfilt_is_companion(priv, i))
++			continue;
 +
-+void xp_clear_dev_all(struct net_device *dev)
-+{
-+	struct xsk_buff_pool *pool;
-+	struct hlist_node *next;
-+
-+	netdev_lock_ops(dev);
-+	hlist_for_each_entry_safe(pool, next, &dev->xsk_pools, dev_node)
-+		__xp_clear_dev(pool);
-+	netdev_unlock_ops(dev);
+ 		cur = &priv->net_filters[i].fs;
+ 
+ 		if (cur->flow_type != fs->flow_type ||
+@@ -659,7 +663,7 @@ bool bcmasp_netfilt_check_dup(struct bcmasp_intf *intf,
  }
  
- static void xp_release_deferred(struct work_struct *work)
-@@ -339,7 +365,11 @@ bool xp_put_pool(struct xsk_buff_pool *pool)
+ /* If no network filter found, return open filter.
+- * If no more open filters return NULL
++ * If no more open filters return error.
+  */
+ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
+ 						  u32 loc, bool wake_filter,
+@@ -669,45 +673,55 @@ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
+ 	struct bcmasp_priv *priv = intf->parent;
+ 	int i, open_index = -1;
  
- 	if (refcount_dec_and_test(&pool->users)) {
- 		INIT_WORK(&pool->work, xp_release_deferred);
--		schedule_work(&pool->work);
-+		/*
-+		 * Teardown calls ndo_bpf(), which may need powered hardware.
-+		 * RTNL alone does not exclude the device's system PM callbacks.
-+		 */
-+		queue_work(system_freezable_wq, &pool->work);
- 		return true;
+-	/* Check whether we exceed the filter table capacity */
++	if (!init) {
++		if (loc == RX_CLS_LOC_ANY || loc >= priv->num_net_filters)
++			return ERR_PTR(-EINVAL);
++
++		if (priv->net_filters[loc].claimed &&
++		    priv->net_filters[loc].port == intf->port &&
++		    !bcmasp_netfilt_is_companion(priv, loc))
++			return &priv->net_filters[loc];
++
++		return ERR_PTR(-ENOENT);
++	}
++
+ 	if (loc != RX_CLS_LOC_ANY && loc >= priv->num_net_filters)
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	/* If the filter location is busy (already claimed) and we are initializing
+ 	 * the filter (insertion), return a busy error code.
+ 	 */
+-	if (loc != RX_CLS_LOC_ANY && init && priv->net_filters[loc].claimed)
+-		return ERR_PTR(-EBUSY);
+-
+-	/* We need two filters for wake-up, so we cannot use an odd filter */
+-	if (wake_filter && loc != RX_CLS_LOC_ANY && (loc % 2))
+-		return ERR_PTR(-EINVAL);
+-
+-	/* Initialize the loop index based on the desired location or from 0 */
+-	i = loc == RX_CLS_LOC_ANY ? 0 : loc;
+-
+-	for ( ; i < priv->num_net_filters; i++) {
+-		/* Found matching network filter */
+-		if (!init &&
+-		    priv->net_filters[i].claimed &&
+-		    priv->net_filters[i].hw_index == i &&
+-		    priv->net_filters[i].port == intf->port)
+-			return &priv->net_filters[i];
+-
+-		/* If we don't need a new filter or new filter already found */
+-		if (!init || open_index >= 0)
+-			continue;
+-
+-		/* Wake filter conslidates two filters to cover more bytes
+-		 * Wake filter is open if...
+-		 * 1. It is an even filter
+-		 * 2. The current and next filter is not claimed
+-		 */
+-		if (wake_filter && !(i % 2) && !priv->net_filters[i].claimed &&
+-		    !priv->net_filters[i + 1].claimed)
+-			open_index = i;
+-		else if (!priv->net_filters[i].claimed)
+-			open_index = i;
++	if (loc != RX_CLS_LOC_ANY) {
++		if (priv->net_filters[loc].claimed)
++			return ERR_PTR(-EBUSY);
++
++		/* We need two filters for wake-up, so we cannot use an odd filter */
++		if (wake_filter) {
++			if ((loc % 2) || loc + 1 >= priv->num_net_filters)
++				return ERR_PTR(-EINVAL);
++			if (priv->net_filters[loc + 1].claimed)
++				return ERR_PTR(-EBUSY);
++		}
++		open_index = loc;
++	} else {
++		for (i = 0; i < priv->num_net_filters; i++) {
++			/* Wake filter consolidates two filters to cover more bytes.
++			 * Wake filter is open if:
++			 * 1. It is an even filter
++			 * 2. The current and next filter is not claimed
++			 */
++			if (wake_filter) {
++				if (!(i % 2) && (i + 1 < priv->num_net_filters) &&
++				    !priv->net_filters[i].claimed &&
++				    !priv->net_filters[i + 1].claimed) {
++					open_index = i;
++					break;
++				}
++			} else if (!priv->net_filters[i].claimed) {
++				open_index = i;
++				break;
++			}
++		}
  	}
  
+ 	if (open_index >= 0) {
+@@ -716,16 +730,20 @@ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
+ 		nfilter->port = intf->port;
+ 		nfilter->ch = intf->channel + priv->tx_chan_offset;
+ 		nfilter->hw_index = open_index;
+-	}
+ 
+-	if (wake_filter && open_index >= 0) {
+-		/* Claim next filter */
+-		priv->net_filters[open_index + 1].claimed = true;
+-		priv->net_filters[open_index + 1].wake_filter = true;
+-		nfilter->wake_filter = true;
++		if (wake_filter) {
++			/* Claim next filter */
++			priv->net_filters[open_index + 1].claimed = true;
++			priv->net_filters[open_index + 1].wake_filter = true;
++			priv->net_filters[open_index + 1].hw_index = open_index + 1;
++			priv->net_filters[open_index + 1].port = intf->port;
++			priv->net_filters[open_index + 1].ch = intf->channel +
++							       priv->tx_chan_offset;
++			nfilter->wake_filter = true;
++		}
+ 	}
+ 
+-	return nfilter ? nfilter : ERR_PTR(-EINVAL);
++	return nfilter ? nfilter : ERR_PTR(-ENOSPC);
+ }
+ 
+ void bcmasp_netfilt_release(struct bcmasp_intf *intf,
+@@ -733,7 +751,8 @@ void bcmasp_netfilt_release(struct bcmasp_intf *intf,
+ {
+ 	struct bcmasp_priv *priv = intf->parent;
+ 
+-	if (nfilt->wake_filter) {
++	if (nfilt->wake_filter && !(nfilt->hw_index % 2) &&
++	    nfilt->hw_index + 1 < priv->num_net_filters) {
+ 		memset(&priv->net_filters[nfilt->hw_index + 1], 0,
+ 		       sizeof(struct bcmasp_net_filter));
+ 	}
 -- 
 2.53.0
 
