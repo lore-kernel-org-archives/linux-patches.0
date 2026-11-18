@@ -1,52 +1,55 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795042691;
-	b=18xC2Q6rvVSKk8D7Fz5cGCeG8/aJggxrM+lMWLLeTDiR9U1nu9FSoou7HxwRlmEePCZ5
-	 E7unolUmAoUtS8O44NyevP+o5Z4oc+J/3u7ONSzL5YzIvtS+mpfbSCdCVh4dNBsTR1Ypz
-	 mvUpAkb5df90moAiqoyR9ix+gbxZVmcFDlnc9YPjiEyAcN5ZcV/AOFbnwaC/2UmRsJQ+3
-	 8Brgk5s/AfBrKCerxyJVpk1inorUkfbqs7+8rFV5pxfGMb/I4UxFesLCEc/SgI6nLxCIP
-	 /vt/LhZIzV5JASsGXmtsT216f9xZm79NZAYcjm/zPjBelEcZZn0uPGTRJxFoz93nvJg==
+	t=1795042694;
+	b=IGZEB28iWg9q7ft9HTKWp8QTglrLfLOpsqUFhNPoY5ANbHaceM3c/SpDjKe/mUn47bb/
+	 GbrN7g+xwPcRRxHaYk7aKAEpXNntFUO+YeC35DDoxEWslNuJovg0RLNGTDqz40Re4w0jI
+	 44KnDyuSfsT4kBf7W01vANONqdgeb+zkMRpJlZ93URmhT6x3hcEBv2KzmO+D8xLMofBO+
+	 r+Z2AfxmWrFD8eLAsrI8cFZRHnFAgSa1yBZ7h5DGp1tH4IghhCBmq5cppxpwsDPOpibgI
+	 +Tf96oBlUP2ECv78jYBLsxv1c0O+BLRaGxBJ5O4m2kb1I5xEMQOSku0SaUI7wSXEFDQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795042691;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795042694;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=N8dXvAwfg4gDfRyFmD/fl6UBe8wl3EQkbVuPGMgXtI0=;
-	b=ckvVAYapnTRRVknAWdbJSQf1AOYmgBww/PcERvQFUPHTXm8f9eEo8aHyOaUPw3K+jJqP
-	 rvKeEjg8LH/yb3r0pwF1hUj/4PWf8zvrsno3s2MMendCJGkivn3CPrOG8KR3NWYMIJ8a3
-	 v7Kmu3qfxbWREYIlvIibGs5WUfBIgaSGZBWnBB4etM/dlyZ9cCCNcex49Q8KJLJfpbW1S
-	 HmNdY95qj8rbcO3i+prBweDRLQJujR7aUhO56/9LxLxM672Ayjn/h1IRwPEVI7Ld/mBRt
-	 DGffk0g8q19QJu/QxV2iR4DC/E3m3u3X7+JvtIUOHv/0JluVVVIqLOkUDB5M1XSWeQw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=o7J9JAyHu75OdwoMli/a7OTSC6qNgdyCJ78SxIM08pQ=;
+	b=PAFpub9RWrBjWKJZo9JA3D43X/7YvLyH/IbAMEgUMunvwYihvipGXf52DBvEadkoTElk
+	 IWokky3T26ceEMUQhT/GDkaaJJ33OVwdL+Kd8EzhSKDTMcLv3eIZwoWUOKjqXFojpH337
+	 U08nUTwdY8A1LYwEMtpryRlcnHW2wVEHMgbKNdg3m90eHpk/UCpM9n2o7gd9HQwsn1PsQ
+	 3ltSy9nKhqIA17Rj7IyBGREHHIIOnhvD3D/o960Uwal0mIwHMnUGbxddAB/lsvNWvNpR7
+	 yldB8SZ0PiOMOPTvbIc5HT7OvGzygI5mttqNgcQ4xBhFVj4xjXqeKtnLSVf5eoBlrdw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRdQv6pg;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zws5lu6x;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD6C606A31C;
-	Wed, 18 Nov 2026 22:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBC5606A31C;
+	Wed, 18 Nov 2026 22:58:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=oRdQv6pg
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5691F000C4;
-	Wed, 18 Nov 2026 22:58:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zws5lu6x
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 855621F000C4;
+	Wed, 18 Nov 2026 22:58:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795042691;
-	bh=N8dXvAwfg4gDfRyFmD/fl6UBe8wl3EQkbVuPGMgXtI0=;
+	s=korg; t=1795042694;
+	bh=o7J9JAyHu75OdwoMli/a7OTSC6qNgdyCJ78SxIM08pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=oRdQv6pghLqmuxFNWXkWwfliUr6loNjc5YtkJFkd+sVIyjRfmPLMLd32Id/1OTOeY
-	 0mdPPs0aureHd9NK/+EfltAGd/cK8KLbO2UFk/buPRHLcxOKP8vRsHL6v6U6cy8LLS
-	 MO0dGAEzlQlzF83RkML76dgTsMKdaIjUj/a7GCds=
+	b=zws5lu6xgzHVvmf1gjDierfFTEmnTBZcVSNqut6OyrB1GQacwTDIv5i+TpTR7O1eY
+	 F+9oQnU4UFqgRWEXlSQEePjgyTsvpZBLBUShUPcMnCT6V88VKeoF4P7vmS3LsVzydx
+	 X1ZTczH2A/W2Yk/feNaRfhoaOoxxY/I7TCFNl2/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Probst <markus.probst@posteo.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Philipp Reisner <philipp.reisner@linbit.com>,
+	Lars Ellenberg <lars.ellenberg@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 3244/3318] rtc: s35390a: Add missing newline to dev_err
-Date: Wed, 18 Nov 2026 16:04:26 +0100
-Message-ID: <20261118150456.986991923@linuxfoundation.org>
+Subject: [PATCH 6.6 3262/3318] drbd: take req_lock to skip the initial sync as peer
+Date: Wed, 18 Nov 2026 16:04:44 +0100
+Message-ID: <20261118150457.478129509@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -62,38 +65,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Markus Probst <markus.probst@posteo.de>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit a27b25bb9b422c8468cb6965b2d72b7b64187fd2 ]
+[ Upstream commit bf7fff620c890a7ee0b444f1c7e9f0d1263a30ac ]
 
-Fixes: 3bd32722c827d ("rtc: s35390a: improve irq handling")
-Signed-off-by: Markus Probst <markus.probst@posteo.de>
-Link: https://patch.msgid.link/20260930-rtc_s35390a_int1-v10-2-e7b1cbc50a7b@posteo.de
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+_drbd_set_state() must be called with req_lock held. drbd_adm_new_c_uuid()
+does, receive_uuids() on the peer doesn't, so a concurrent state change
+gets lost: the device is Secondary again, or its failed disk UpToDate,
+while the work for the lost change is already queued.
+
+Fixes: b411b3637fa7 ("The DRBD driver")
+Cc: Philipp Reisner <philipp.reisner@linbit.com>
+Cc: Lars Ellenberg <lars.ellenberg@linbit.com>
+Cc: "Christoph Böhmwalder" <christoph.boehmwalder@linbit.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://patch.msgid.link/20261028164415.1262013-15-axboe@kernel.dk
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-s35390a.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/drbd/drbd_receiver.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/rtc/rtc-s35390a.c b/drivers/rtc/rtc-s35390a.c
-index 90a3028ac5743..ea4eaa675e236 100644
---- a/drivers/rtc/rtc-s35390a.c
-+++ b/drivers/rtc/rtc-s35390a.c
-@@ -468,7 +468,7 @@ static int s35390a_probe(struct i2c_client *client)
- 		buf = 0;
- 		err = s35390a_set_reg(s35390a, S35390A_CMD_STATUS2, &buf, 1);
- 		if (err < 0) {
--			dev_err(dev, "error disabling alarm");
-+			dev_err(dev, "error disabling alarm\n");
- 			return err;
+diff --git a/drivers/block/drbd/drbd_receiver.c b/drivers/block/drbd/drbd_receiver.c
+index f85ebdc3cff6b..1f3760bbf15d1 100644
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -4284,8 +4284,10 @@ static int receive_uuids(struct drbd_connection *connection, struct packet_info
+ 					BM_LOCKED_TEST_ALLOWED, NULL);
+ 			_drbd_uuid_set(device, UI_CURRENT, p_uuid[UI_CURRENT]);
+ 			_drbd_uuid_set(device, UI_BITMAP, 0);
++			spin_lock_irq(&device->resource->req_lock);
+ 			_drbd_set_state(_NS2(device, disk, D_UP_TO_DATE, pdsk, D_UP_TO_DATE),
+ 					CS_VERBOSE, NULL);
++			spin_unlock_irq(&device->resource->req_lock);
+ 			drbd_md_sync(device);
+ 			updated_uuids = 1;
  		}
- 	} else {
 -- 
 2.53.0
 
