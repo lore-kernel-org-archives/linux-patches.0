@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061997;
-	b=JHxlncU/GRkXGjebfUha7kuILJlskdG9ozG1zzl8vIAuJPJJ1xeTawwB5AS/e2Bfr14W
-	 nZAbYlvblPtunF9vzo80i/7nBRWrKBBKne5A0zLvjjI8jalItgVYmsY8iK5qN1f+fBTsf
-	 uatKbqNkx2Hxb9JGx6ZrYaBIp0Kwyp/lJGXWnEfgNyQCf8twAX65cZrWaVyWck0rbfY+3
-	 rjOU8E7WkYqbRyvpwecho5p62eq3/orq4yDcv7clYSMcgjX2M8snvTq2dFehnqmhdy3bZ
-	 Toui5rIoQCCC3VUGgGeOuBtm5Cns3yhPUYlZtwOQVNh/oe/yTtJEa/6kx0r6A5wWkfQ==
+	t=1795062000;
+	b=Xh23k+PI0w0tML3Dp/XpsyRbMCJi0u+63ugfOY6sHqxgKbMTZDSamkVsrDgVxbTDzzU1
+	 fQvOPIV2M+2K+I9JI2harQhW1maYDN6ZEU1cdEwb7TXqMphZGL0GZX9meTdWUXZetkpDh
+	 m4XixJbwTuLCPkfk27zTbYUe2jqBnvaHHWwo7DXkBwZoCXm8hedRLKg4Aj8qx6IhXQaHM
+	 wojgUIeFQlCm+couhJe9dfsWYsluDDjEgK+ZiG3MP+Jp79v4yT7f/p+UiCUq/UEqyyTgW
+	 3fzikqOS/8AR1n5D57nD0t9J6JZbcxziYrsz4sZLhuqHKoq9kOXxhJHuMuCd8769N0A==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061997;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795062000;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=F+2rswXhzI+HexKmk3t4SySlnGg4WRI1UsIhXEKgCpU=;
-	b=kl9QvGyjoWK0pYZ3/aza1u5jrKJfe5OcOgb3+0Xbq+1nest0M2ovus0Jvu9KodJX875w
-	 nqjnLpWvxXe6PuKc/Xe1YILHGkp9XdHPigfexPwoAmF/gC6ypYcjtZUGsK+T7sP91uSfn
-	 KgrRNwPRaClhBW5AcXmQr+lR2oolVdm3bR5TabzTW0w1dqSAIw/b2g36rpwJV/ojWpuEO
-	 TnMd2v9bryRp/GhiKLcGtuLQIKU57CkMSli4LRwJ0+laC7CvQQeI4bVomXP5DmBL5DoJK
-	 UwBQTp9XH6RELUIqgrpiAGqQx6dE+E3bFR4cOybSzVNsLPo+XWYULoZZRAZTZMY7dtg==
+	bh=WMoDiA+9cdMY6bQTDHxwDxcjY8KVFeDqzb1tstUZoW8=;
+	b=jrt46o2gtEhJyQfRnajcpvKOk8qB3G1QyTQsigcV4tLkQYtmUVUMv3DxmNIlN9x9aj0+
+	 uMbF3TBfNSo1o+wIT0gsKTtYYzV8AKPulBdly0l77+Bdnyuz6MYKzMnj1EuicuvBkCdGe
+	 PwtjN7Asi0aMDy3op74vKqhaB56aRM3igqJrSv59PPLNDK5oCZ6ktf39V6TVpRBhRx+lQ
+	 8aA3/1ukjM38WMl4+MTbcC8O4VS/B7z0CeZr19aPzP5Lue/leC0zxYJz+FKkgEHk5pzXW
+	 l7DQJU5lFYa9VkFOqpH/sNoJ+5mlaY6IDzkZR1+1auDhvnuLGcDjUh+d0yQqVpp7Ljw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QVhU5ICj;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2UXJmy5;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56D360A2601;
-	Thu, 19 Nov 2026 04:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772CF606A320;
+	Thu, 19 Nov 2026 04:20:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QVhU5ICj
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C621F000C4;
-	Thu, 19 Nov 2026 04:19:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=X2UXJmy5
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D4C1F000C4;
+	Thu, 19 Nov 2026 04:19:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061997;
-	bh=F+2rswXhzI+HexKmk3t4SySlnGg4WRI1UsIhXEKgCpU=;
+	s=korg; t=1795062000;
+	bh=WMoDiA+9cdMY6bQTDHxwDxcjY8KVFeDqzb1tstUZoW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QVhU5ICj9bYzanBT+Un0DYuJHnUj5pnXQqj9LFaofk18GVl69iRYzNI2SuLoQlJEr
-	 8AmpoDmWHxYxs13fpmJNMmj1Q9irsTw052yMG4YhIntRyP20Yo+ex4ggYU9dpg2VVM
-	 ATxTmxf/SvmuIxkqi76/p2IMGVD439oHXoEKD/48=
+	b=X2UXJmy5VPWsg37tcmkfBMG09GTKPwpbjzuJ0w+hahw4W2yLV5vjBaRJO1h1SEkYp
+	 95vFRqt40yiqlEY0C1fZLahjIqBPTztAf0oMcvXa/sqBwiDkDXdxMAZj06WGeOEdP7
+	 cmVx69JxyB4XlvMK768BJHxTmYR+vlg8YdIcAV2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Travis Howard <thoward@lafayetteinstrument.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rand Deeb <rand.sec96@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1753/1848] tg3: Add Datto SIRIS 5 1U Server to restart AER quirk table
-Date: Wed, 18 Nov 2026 16:03:11 +0100
-Message-ID: <20261118150032.848547011@linuxfoundation.org>
+Subject: [PATCH 5.10 1754/1848] ata: libata-core: Ignore forced transfer modes the host does not support
+Date: Wed, 18 Nov 2026 16:03:12 +0100
+Message-ID: <20261118150032.888047108@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,50 +69,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Travis Howard <thoward@lafayetteinstrument.com>
+From: Rand Deeb <rand.sec96@gmail.com>
 
-[ Upstream commit a55eb6a622141352131aa6156bbd6ce5da79d9b5 ]
+[ Upstream commit ea5a5af9159cc89e8bcb7a95336e02c8b70aa3d2 ]
 
-The Datto SIRIS 5 1U Server is a Dell OEMR XL R640 (Dell's OEM-ready
-variant of the PowerEdge R640) sold under Datto's identity. Its DMI
-strings report sys_vendor "datto" and product_name "SIRIS 5 1U Server",
-so it does not match the existing "PowerEdge R640" entry in
-tg3_restart_aer_quirk_table.
+The libata.force parameter can force a transfer mode (pio0-6, mwdma0-4,
+udma0-7) for a port or device. ata_force_xfermask() applies it in
+ata_do_set_mode() right after ata_dev_xfermask() has limited the device
+masks to what the host supports. It replaces those masks with the forced
+mode without checking the host masks, so a mode the controller does not
+support is passed to the driver's ->set_piomode() or ->set_dmamode().
 
-As on the PowerEdge R640, a system restart triggers a fatal PCIe AER
-on the BCM5720 during ACPI _PTS for S5, which the iDRAC logs as
-PCI1318 and which hangs the reboot. Power off is unaffected.
+Several PATA drivers rely on the host masks to keep the mode number in
+range when indexing their timing tables. ata_piix, pata_efar,
+pata_it8213, pata_oldpiix, pata_radisys and pata_rdc declare ATA_PIO4
+and ATA_MWDMA12_ONLY, index a five-entry PIO timing table with
+pio_mode - XFER_PIO_0, and index a three-entry needed_pio[] table with
+dma_mode - XFER_MW_DMA_0. Booting with libata.force=pio5, pio6, mwdma3
+or mwdma4 makes them read past those tables, use the values read as
+further indices into the timing table, and write the result to the
+controller's timing registers.
 
-Clearing the same PCI_EXP_DEVCTL error-reporting bits on both BCM5720
-functions from userspace immediately before restart allows the system
-to reboot normally, confirming the quirk applies to this platform.
+Make ata_force_xfermask() skip, with a warning, a forced transfer mode
+that is not in the port's PIO, MWDMA or UDMA mask, and keep looking for
+an earlier matching libata.force entry, as it already does for entries
+that do not apply to the device. With libata.force=pio4,1.0:pio5 on a
+PIO4 host, device 1.0 now gets pio4 instead of pio5. Forcing a mode the
+host supports still works as before, including a mode that
+ata_dev_xfermask() removed for the device or cable.
 
-Fixes: e0efe83ed325 ("tg3: Disable tg3 PCIe AER on system reboot")
-Signed-off-by: Travis Howard <thoward@lafayetteinstrument.com>
-Link: https://patch.msgid.link/20261019-tg3-datto-aer-quirk-v1-1-f0eccfb2ab5d@lafayetteinstrument.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 332673257056 ("libata: implement libata.force module parameter")
+Signed-off-by: Rand Deeb <rand.sec96@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20261015194935.1497-1-rand.sec96@gmail.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/ata/libata-core.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 3f5cd16c79210..e0317ea710d63 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -18203,6 +18203,12 @@ static const struct dmi_system_id tg3_restart_snp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "PowerEdge R750"),
- 		},
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "datto"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "SIRIS 5 1U Server"),
-+		},
-+	},
- 	{}
- };
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index 0eab4898e835d..103f00f65d19e 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -402,6 +402,7 @@ static void ata_force_link_limits(struct ata_link *link)
+  */
+ static void ata_force_xfermask(struct ata_device *dev)
+ {
++	struct ata_port *ap = dev->link->ap;
+ 	int devno = dev->link->pmp + dev->devno;
+ 	int alt_devno = devno;
+ 	int i;
+@@ -426,6 +427,17 @@ static void ata_force_xfermask(struct ata_device *dev)
  
+ 		ata_unpack_xfermask(fe->param.xfer_mask,
+ 				    &pio_mask, &mwdma_mask, &udma_mask);
++
++		/* Make sure that the port supports the specified xfer modes. */
++		if (!(pio_mask & ap->pio_mask) &&
++		    !(mwdma_mask & ap->mwdma_mask) &&
++		    !(udma_mask & ap->udma_mask)) {
++			ata_dev_warn(dev,
++				     "FORCE: ignoring unsupported xfer_mask %s\n",
++				     fe->param.name);
++			continue;
++		}
++
+ 		if (udma_mask)
+ 			dev->udma_mask = udma_mask;
+ 		else if (mwdma_mask) {
 -- 
 2.53.0
 
