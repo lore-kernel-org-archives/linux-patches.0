@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795033878;
-	b=NQLq4Vgr91EFsFyw41bzkuoIR/LztlvR4k8eg+mDcWEJiPDw9/B/tQqSxo20Bwf+Upht
-	 Yhey3Xo6kwxwYDYaIvwuoGu/xltkZiwGSmos9Z/+GqywWo+Nvbbt6xIkRww9Q/KoUgt0Q
-	 yevV45+9V4tjHfoS+jLLqtaejrqYbM/hLN42cHwv0axDA4M365Tw0lotkG4vu9ZHnSh8A
-	 MTTxQLhUb7vphFTVmOdDOPR7Uru7+DB+IKLs/3/FQYPg1ycG0rdHYEmCNdy9ynXdJnXIb
-	 Tn0c7hlGrph4m8z3wM4v+4AWt/AJ5nbvLtp+bIZ6CHYTz7DCmSilr39x30hb18tcs2g==
+	t=1795033882;
+	b=zWt+S89uvRk5qP9uml/E8rIOerN8O9kVdKCUWdYvjAPoRvPDBjUE8ibrLwPw7cvjXqg4
+	 0IVhBmt5pv4+Ttxu5R1Vij9wrSbXjtJ3nL/YWzhhNubhdIBIjfwhMknqpPv2rZ1sNLK0U
+	 40g6rXJ8GsdoGN6Fc1B/Jm3sQFYuTbM8sv8X4E/1n/iMwubdPhL2IXHRgE3NP5vZkQAZ9
+	 maKZocabLNj962qPav5IjpJUtSNqDFVcexURYAJ5WxP7OSIzLlRcLeWTN62eDwYTTiXq/
+	 0PKmbA8D8iMCBIauX8dvooB5p5gtiJShvKvuBPeZcmCVrp+NC3Kv7Mu8SpQh3JEqeZw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795033878;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795033882;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NJp5ABLLi0VH3uTXMKqbkeGN/mfjAEPza0ow8TFWAXk=;
-	b=lrWt3wsnzA/BwnY6H5rnqRHKhqSs4BDWB9H/4sv2XikNtehsltTY9ZXQYTGjb78iyFeB
-	 qVHFtIeZcYYdZIOn6L8+TSWBcm1sYOSbouwvbdzLVBPYPtMbdx+9YdLU6mZkDuI9WHp5c
-	 4QLLaQp5tEf+XwbXnpBlQyBZcirDf5d/p5zaEgpWhSka7ZIQu6x+IZuV5XEBiPN54qcx3
-	 hxKaPSjtw4+1d+M9bMITMfWqgxNra/1Y8XZoM3roguMY7XpLbifHEWTLYyHDgipNRbWjm
-	 Z5Hzf/3AMcJtRiifnd4hr2sOy13+3CMcd2PV65szO2eZKmugvnXhblbtLwjSigEWKzA==
+	bh=XGz+7qlBFyX64Hux60SwIjbhpFtFftHPmBz7jlv4akE=;
+	b=yYGxeLGwmQFh8Jr25JHViHmz8A/9huxzMUHXo5ARvebetCRasvT4ds3qB1tNXBnmwD7b
+	 PH7pTBR02XT9MxjsAQ7yWACr0K5yh9s+j54w0Mkg3cG3rJ5WArn2dMW0zZaIAt7fcJmDK
+	 Hy+/9zRiBQOMzemPvQyCwYbRCSvvEkwjoHsLteIpqVpdoV9cGCDBrlYIQaf0qnXQac61h
+	 3cLzah6C+efx/MzBo08bF15jBi77sEG0GJa9kYOn0kRpVud/WW+Ll1FOcYQzL1lux3tAX
+	 QjzIPA9cyDW3A7u9/slmHsBx+4CXtHEnrBTFuUq2QzqIHR8DjI2Cknnj3Yf5aFAn4NA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DpDF5AcM;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YMm9tt3N;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E07606A325;
-	Wed, 18 Nov 2026 20:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8E7606A31C;
+	Wed, 18 Nov 2026 20:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=DpDF5AcM
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D0D1F000C4;
-	Wed, 18 Nov 2026 20:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=YMm9tt3N
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76D91F000C4;
+	Wed, 18 Nov 2026 20:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795033878;
-	bh=NJp5ABLLi0VH3uTXMKqbkeGN/mfjAEPza0ow8TFWAXk=;
+	s=korg; t=1795033881;
+	bh=XGz+7qlBFyX64Hux60SwIjbhpFtFftHPmBz7jlv4akE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DpDF5AcMTyhwNP2P0O2LO/e9rXRKAHzRfhwuMGTreigfFY3CI4rPH4nlQLkTiVB4t
-	 p5LnmPZpbVD56UYPDCCeDnTGHbo4cfUlYMvZNpIjHT8vWwpldpArvxJgpbrga9Uc2o
-	 5SziI2peBdbRjA+EI7xTJtj2v9VLss5SZ4y3jFUw=
+	b=YMm9tt3Nke8LoC4wM9KwayAQfI+D7oLZu71H8p2Jm7Wal0PBtdhiaHFNcPYnbmEmj
+	 HQ00Z/3+IyV6jxv49wF0i7QJwRjkFcdIcfWpEJqgdRhVMU+wL9ORue4ajTLRTUU4Tj
+	 vWO4XHwMsrDlr2S+jNNswxaVKNtiFBApToco/6Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Linus Walleij <linusw@kernel.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 0172/3318] soc: ixp4xx: qmgr: add missing MODULE_DEVICE_TABLE()
-Date: Wed, 18 Nov 2026 15:13:14 +0100
-Message-ID: <20261118150319.823471159@linuxfoundation.org>
+Subject: [PATCH 6.6 0173/3318] PCI/portdrv: Allow probing even without child services
+Date: Wed, 18 Nov 2026 15:13:15 +0100
+Message-ID: <20261118150319.859885350@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150313.527275416@linuxfoundation.org>
 References: <20261118150313.527275416@linuxfoundation.org>
@@ -68,40 +69,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Brian Norris <briannorris@chromium.org>
 
-[ Upstream commit 01479280fa5d4691013bcd64fdfd935117b69769 ]
+[ Upstream commit 834171efeefffb1a0f2136f32e76669bbc11db86 ]
 
-The driver has an OF match table wired to .of_match_table, but does
-not export the table with MODULE_DEVICE_TABLE().
+The PCIe port driver fails to probe if it finds no child services,
+presumably under the assumption that the driver is not useful in that case.
+However, the driver *can* still be useful for power management support --
+namely, it still configures the port for runtime PM / D3, which may be
+important for allowing a bridge to enter low power modes.
 
-Add the missing MODULE_DEVICE_TABLE(of, ...) entry so module alias
-information is generated for OF based module autoloading.
+Thus, allow probe to succeed even if no IRQs and no child services are
+available. This also mirrors existing behavior for ports that don't support
+any portdrv services (PCIe hotplug, AER, DPC, PME, bwctrl), where we'd also
+probe successfully.
 
-This is a source-level fix.  It does not claim dynamic hardware
-reproduction; the evidence is the driver-owned match table, its use by
-the platform driver, and the missing module alias publication.
+This change is a bit more important after commit f5cd8a929c82 ("PCI: dwc:
+Remove MSI/MSIX capability for Root Port if iMSI-RX is used as MSI
+controller"), because it's common for some DWC-based systems to:
 
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Message-ID: <20260704121851.63805-1-pengpeng@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+  1. have only the "aer" and "pcie_pme" port services available and
+
+  2. not define legacy INTx interrupts properly in their device tree.
+
+After commit f5cd8a929c82, such systems may fail pcie_init_service_irqs()
+and so exit with -ENODEV.
+
+Link: https://lore.kernel.org/all/nyada24tqwlkzdceyoxbzitzygvp4elvj5oajnqdwb33xkcdwk@76vnrx45fsfd/
+Signed-off-by: Brian Norris <briannorris@chromium.org>
+[bhelgaas: reorder pcie_port_device_register() decls per Lukas]
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Link: https://patch.msgid.link/20260722160942.v4.1.I5fd5d83f518681b3949d8ab2f16ba8244fd3e774@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ixp4xx/ixp4xx-qmgr.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pci/pcie/portdrv.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/soc/ixp4xx/ixp4xx-qmgr.c b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-index 291086bb9313e..db3683300f315 100644
---- a/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-+++ b/drivers/soc/ixp4xx/ixp4xx-qmgr.c
-@@ -455,6 +455,7 @@ static const struct of_device_id ixp4xx_qmgr_of_match[] = {
-         },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, ixp4xx_qmgr_of_match);
+diff --git a/drivers/pci/pcie/portdrv.c b/drivers/pci/pcie/portdrv.c
+index dac3ba1b2552f..49b598f32984b 100644
+--- a/drivers/pci/pcie/portdrv.c
++++ b/drivers/pci/pcie/portdrv.c
+@@ -327,8 +327,8 @@ static int pcie_device_init(struct pci_dev *pdev, int service, int irq)
+  */
+ static int pcie_port_device_register(struct pci_dev *dev)
+ {
+-	int status, capabilities, i, nr_service;
+ 	int irqs[PCIE_PORT_DEVICE_MAXSERVICES];
++	int status, capabilities, i;
  
- static struct platform_driver ixp4xx_qmgr_driver = {
- 	.driver = {
+ 	/* Enable PCI Express port device */
+ 	status = pci_enable_device(dev);
+@@ -352,29 +352,29 @@ static int pcie_port_device_register(struct pci_dev *dev)
+ 	if (status) {
+ 		capabilities &= PCIE_PORT_SERVICE_HP;
+ 		if (!capabilities)
+-			goto error_disable;
++			goto out;
+ 	}
+ 
+ 	/* Allocate child services if any */
+-	status = -ENODEV;
+-	nr_service = 0;
+ 	for (i = 0; i < PCIE_PORT_DEVICE_MAXSERVICES; i++) {
+ 		int service = 1 << i;
+ 		if (!(capabilities & service))
+ 			continue;
+-		if (!pcie_device_init(dev, service, irqs[i]))
+-			nr_service++;
++		if (pcie_device_init(dev, service, irqs[i]))
++			capabilities &= ~service;
+ 	}
+-	if (!nr_service)
+-		goto error_cleanup_irqs;
+ 
+-	return 0;
++out:
++	/*
++	 * With no child services, we shouldn't need bus mastering or any IRQ
++	 * vectors we allocated.
++	 */
++	if (!capabilities) {
++		pci_free_irq_vectors(dev);
++		pci_clear_master(dev);
++	}
+ 
+-error_cleanup_irqs:
+-	pci_free_irq_vectors(dev);
+-error_disable:
+-	pci_disable_device(dev);
+-	return status;
++	return 0;
+ }
+ 
+ typedef int (*pcie_callback_t)(struct pcie_device *);
 -- 
 2.53.0
 
