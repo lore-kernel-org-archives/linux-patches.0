@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795026698;
-	b=I3+5oMaz2HzoHgPHuYCsTitgvUJA5JLS+84l5OqzWJiYK5SXwKqjl2m1rAscdP+B6JLI
-	 Ipeg3eD1Q+ZmQvN/+8fMXRadAJGpUZlApKdXFYiaunL4d3xuc4g0AVOynD+pcbUqZ5mjF
-	 3G8Hm4wZUWtiBPikKWHyyBdp95uN3K/wVcojy+C7Y9w0MaQ0SeHtJbE9Z1lqciK970g2I
-	 EQXNKizPhKpL19JOoSAJfjcq9LrsmWURX6xe65o5hILo+pApnhgHIADX0CtizeqHYiWMG
-	 L8rkOB3pnPN/HjlHIylpg0EhtQeYJXDqU3lqtlcarn5FIrLqiTiA27DmfE0OwkXlJhg==
+	t=1795026700;
+	b=3j4mj7vtOVCY19GTeQ3d5KizEhE75IYmkVC6xboatQ5ECAkqg56JZI4Y/sXQWVQxg9ps
+	 0e63coF9iMZadaMSiHal34s8M7ZnjtU59hI9kzgHFAMrZ7iLEFrvdid9e/10m2OypNGc/
+	 BrJ9p113koiOSZwaPIC8HF0YdxEJyFO628A/ZSOtvtcMsTjsnGBgHgi7TigRI6ggRVXIN
+	 yLg5G/2g2Quhh3UrDvVXDLWMHoAJEXyx7oiQd1+O0F8OUVsPW4kpMiNNKx7MV34qW0grV
+	 gRXQZT/6VBXvMPJLhxJLAAOUS1I2dIimxSB2gOcVD2oMcxR/Plw0vJMdheHJQIQxL1w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795026698;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795026700;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=drsA510EuJfo18VhIrKDsgnZ+0NsYalHzTJ/BDSL+nA=;
-	b=hie9faJwXFv+0qAXUpmDg3FhEDBYuf23RgD+tFJKWmkx0VSaaJs21Hytnq5zJUKH3Xiz
-	 mthLLpEmho6iI4EECVY1WFQeH5CdifpShdEa59Jg+Tc6DxE3aom0XZNcZzoSZwPearjw9
-	 ZFGDQeSDhvYskfD8BGWXBfDiSYfggFfzk4R+YuiHcASqdjg2o8MkwkhbpASc+OyOR49MK
-	 KJ6Qugq7DxNgLk2YpgZLMjcDkXBh1lpZF/CgPhOnO30VnwGpL7aLzTl7ytXAbLuWnLDKH
-	 JgHpu4s0Up4UE4KbFh463n3SGSn7wZQR+4XrwCLH/IcKnCcrENesmIW8GnB5HBdnIxw==
+	bh=mISeJYiybF7lvfZzd0ppmhYoIsrniFUcCNlERHexYU8=;
+	b=xlY/CUbn3/6M3nzexXWIP0uj60c6lP+TVJ2o5yM5eRquvNYbLHAOGijUztUaC+BBmfpW
+	 cGIQ9JvtUvE9iswlJZ06VbbF9TyUFHheBeCL+ye63XDIomIltssvNjqvG0+G0qrRIi0ct
+	 6XhR5GJbY+CjJXZDaZsVvJgczSIY9fvqFJ7xZgbge1lH8nAM7/MKT5WpGtK9BDn4weVs/
+	 Cp6VcN1+QNC5A3x6fRUCLfQFVsP5e0t4zAjNB+JT96ttqjuOvOER5ggJeCUNzFcI4YgMW
+	 TrvPE0UaLNfOZasdEZstatw4lErStKiZ0NP/sBIrbPRnu78lgiJEl184I17CJlpiZXA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxTXdM4b;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcC2xFSw;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115BC606A31C;
-	Wed, 18 Nov 2026 18:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880F0606A32C;
+	Wed, 18 Nov 2026 18:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pxTXdM4b
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 208721F000C4;
-	Wed, 18 Nov 2026 18:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pcC2xFSw
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC6E1F000C4;
+	Wed, 18 Nov 2026 18:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795026697;
-	bh=drsA510EuJfo18VhIrKDsgnZ+0NsYalHzTJ/BDSL+nA=;
+	s=korg; t=1795026700;
+	bh=mISeJYiybF7lvfZzd0ppmhYoIsrniFUcCNlERHexYU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pxTXdM4bOtd24u024Ba5KdOjZUo7njcbtp8V6mGyblpd4p3yLC7NhMxHQEzm3a2wd
-	 TE9y9LqowZuWm3N4P34HyhaZeC1QBaJEo+RS2MEgbghLCf7g2gPMZC6EX6Zzwp475U
-	 KEJlN/sgHH1pLl7Ew0GzQwoII1ujUlUK853FunJY=
+	b=pcC2xFSwLXph/31HVDpH2jJ3OVYRuIIGYdwBBjiMXdag073+w4GUeYwNwzl5UD7BW
+	 2H5S/Q8HABFx4m/4nPeavWeZY0SdZOfbX6wEPPBBsmr7LfF7J8Q79pR1SKeWJ9RQHv
+	 EiOAkIcdaKfTCi1q8n4IuQ1kPET+Achk8ANxorkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	HyeongJun An <sammiee5311@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1528/2151] Bluetooth: btmtk: Validate the firmware layout before parsing it
-Date: Wed, 18 Nov 2026 15:54:23 +0100
-Message-ID: <20261118150217.488844733@linuxfoundation.org>
+Subject: [PATCH 6.18 1511/2151] ASoC: codecs: wm_hubs: Fix definition of MIXINR to MIXOUTR volume control
+Date: Wed, 18 Nov 2026 15:54:06 +0100
+Message-ID: <20261118150216.897863247@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,155 +69,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: HyeongJun An <sammiee5311@gmail.com>
 
-[ Upstream commit 760ac9d02dce001f2e20c17deb18e7bb63d8355e ]
+[ Upstream commit 22bfcedd3febd6acc63ecf8bfd9638210e4b9a5e ]
 
-btmtk_setup_firmware_79xx() reads the section count out of the firmware's
-global descriptor, then walks a 64-byte section map per section and hands
-each section's file-supplied offset and length to the WMT download path.
-None of that is checked against fw->size, so a truncated or corrupted
-file makes the driver read past the end of request_firmware()'s buffer.
-On 32-bit the section count can also wrap the section map size
-calculation.
+The Right Output Mixer Right Input Volume (MIXINR_MIXOUTR_VOL) is at
+bits 2:0 of Output Mixer6, not at bits 8:6, which hold the IN2LN volume
+(IN2LN_MIXOUTR_VOL).
 
-Add btmtk_fw_validate_layout() to check that the header, global
-descriptor and section map array all fit, and btmtk_fw_validate_section()
-to check one section's offset and length, both written so the size
-arithmetic cannot wrap. A section count of zero is rejected as well: it
-passes every size check but leaves the download loop with nothing to do,
-so the function would report success on hardware it never programmed.
-They are helpers rather than open-coded because the MT7928 CBMCU download
-path added later needs the same arithmetic.
-
-This is hardening against a corrupted /lib/firmware rather than a bug an
-unprivileged user can trigger, hence bluetooth-next and no Fixes: tag.
-Well-formed firmware files are unaffected.
-
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Assisted-by: Claude:claude-opus-5
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 942c435ba79f ("ASoC: Add WM8993 CODEC driver")
+Assisted-by: Claude:claude-opus-5-5
+Signed-off-by: HyeongJun An <sammiee5311@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/1ea1d115cea5b183dd51bba5cd9e38157b3482ee.1791959026.git.sammiee5311@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btmtk.c | 74 +++++++++++++++++++++++++++++++++++++--
- 1 file changed, 71 insertions(+), 3 deletions(-)
+ sound/soc/codecs/wm_hubs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btmtk.c b/drivers/bluetooth/btmtk.c
-index c525e2685a861..528dcd000d303 100644
---- a/drivers/bluetooth/btmtk.c
-+++ b/drivers/bluetooth/btmtk.c
-@@ -6,6 +6,7 @@
- #include <linux/firmware.h>
- #include <linux/usb.h>
- #include <linux/iopoll.h>
-+#include <linux/overflow.h>
- #include <linux/unaligned.h>
+diff --git a/sound/soc/codecs/wm_hubs.c b/sound/soc/codecs/wm_hubs.c
+index 196ddb224e6dc..1428164cfa8b9 100644
+--- a/sound/soc/codecs/wm_hubs.c
++++ b/sound/soc/codecs/wm_hubs.c
+@@ -427,7 +427,7 @@ SOC_SINGLE_TLV("Right Output Mixer IN2RP Volume",
+ SOC_SINGLE_TLV("Right Output Mixer Left Input Volume",
+ 	       WM8993_OUTPUT_MIXER6, 3, 7, 1, outmix_tlv),
+ SOC_SINGLE_TLV("Right Output Mixer Right Input Volume",
+-	       WM8993_OUTPUT_MIXER6, 6, 7, 1, outmix_tlv),
++	       WM8993_OUTPUT_MIXER6, 0, 7, 1, outmix_tlv),
+ SOC_SINGLE_TLV("Right Output Mixer DAC Volume",
+ 	       WM8993_OUTPUT_MIXER6, 9, 7, 1, outmix_tlv),
  
- #include <net/bluetooth/bluetooth.h>
-@@ -59,6 +60,67 @@ struct btmtk_section_map {
- 	};
- } __packed;
- 
-+/* Reject a firmware image whose header, global descriptor or section map
-+ * array does not fit in the file, and hand back the validated section
-+ * count, so that the section map walks stay inside the firmware buffer.
-+ */
-+static int btmtk_fw_validate_layout(struct hci_dev *hdev,
-+				    const struct firmware *fw,
-+				    u32 *section_num)
-+{
-+	const struct btmtk_global_desc *globaldesc;
-+	size_t need;
-+
-+	if (fw->size < MTK_FW_ROM_PATCH_HEADER_SIZE + MTK_FW_ROM_PATCH_GD_SIZE) {
-+		bt_dev_err(hdev, "Firmware too small: %zu bytes, need at least %u",
-+			   fw->size,
-+			   MTK_FW_ROM_PATCH_HEADER_SIZE + MTK_FW_ROM_PATCH_GD_SIZE);
-+		return -EINVAL;
-+	}
-+
-+	globaldesc = (const struct btmtk_global_desc *)(fw->data +
-+			MTK_FW_ROM_PATCH_HEADER_SIZE);
-+	*section_num = le32_to_cpu(globaldesc->section_num);
-+
-+	if (!*section_num) {
-+		bt_dev_err(hdev, "Firmware declares no sections");
-+		return -EINVAL;
-+	}
-+
-+	if (check_mul_overflow((size_t)MTK_FW_ROM_PATCH_SEC_MAP_SIZE,
-+			       (size_t)*section_num, &need) ||
-+	    check_add_overflow(need,
-+			       (size_t)(MTK_FW_ROM_PATCH_HEADER_SIZE +
-+					MTK_FW_ROM_PATCH_GD_SIZE),
-+			       &need)) {
-+		bt_dev_err(hdev, "Firmware section count too large: %u",
-+			   *section_num);
-+		return -EINVAL;
-+	}
-+
-+	if (fw->size < need) {
-+		bt_dev_err(hdev, "Firmware truncated: %zu bytes, need %zu for %u sections",
-+			   fw->size, need, *section_num);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
-+/* Reject a section whose payload does not lie within the firmware file. */
-+static int btmtk_fw_validate_section(struct hci_dev *hdev,
-+				     const struct firmware *fw, int index,
-+				     u32 offset, u32 size)
-+{
-+	if (offset > fw->size || size > fw->size - offset) {
-+		bt_dev_err(hdev, "Firmware section %d out of bounds: offset=%u, size=%u, fw_size=%zu",
-+			   index, offset, size, fw->size);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static void btmtk_coredump(struct hci_dev *hdev)
- {
- 	int err;
-@@ -137,7 +199,6 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
- {
- 	struct btmtk_hci_wmt_params wmt_params;
- 	struct btmtk_patch_header *hdr;
--	struct btmtk_global_desc *globaldesc = NULL;
- 	struct btmtk_section_map *sectionmap;
- 	const struct firmware *fw;
- 	const u8 *fw_ptr;
-@@ -153,11 +214,13 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
- 		return err;
- 	}
- 
-+	err = btmtk_fw_validate_layout(hdev, fw, &section_num);
-+	if (err < 0)
-+		goto err_release_fw;
-+
- 	fw_ptr = fw->data;
- 	fw_bin_ptr = fw_ptr;
- 	hdr = (struct btmtk_patch_header *)fw_ptr;
--	globaldesc = (struct btmtk_global_desc *)(fw_ptr + MTK_FW_ROM_PATCH_HEADER_SIZE);
--	section_num = le32_to_cpu(globaldesc->section_num);
- 
- 	bt_dev_info(hdev, "HW/SW Version: 0x%04x%04x, Build Time: %s",
- 		    le16_to_cpu(hdr->hwver), le16_to_cpu(hdr->swver), hdr->datetime);
-@@ -180,6 +243,11 @@ int btmtk_setup_firmware_79xx(struct hci_dev *hdev, const char *fwname,
- 			continue;
- 
- 		if (dl_size > 0) {
-+			err = btmtk_fw_validate_section(hdev, fw, i,
-+							section_offset, dl_size);
-+			if (err < 0)
-+				goto err_release_fw;
-+
- 			retry = 20;
- 			while (retry > 0) {
- 				cmd[0] = 0; /* 0 means legacy dl mode. */
 -- 
 2.53.0
 
