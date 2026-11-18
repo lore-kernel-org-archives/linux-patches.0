@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795019436;
-	b=KFmiogbVIa1zJri6K2Z9mQQBVh/jmVmEpSOT0gwnd1lohiLr27gJHQj/qE7ymCofOB0e
-	 T5pSQmdMEM4gr7fyPBxDRC4WiVrU4CF01z9X0f0+x4fkVg/hWGdFyu2daBn5Cm8+awwmt
-	 5q8jB5EpOWnXz/UiIcdONMdROGjXsAJpKXOLJwDL/bRpHxI8BVPyJyfoWadyeGhDmo+Qr
-	 9pzUTE88aZz9WgbsQsP4tyjyf99dbpysbDfTTUU7bs6i6SkTZv74n8fP5UDTvnZTmmO6a
-	 dajk2c29O+uH9O6lrMXQMrcnweMTooAqc+dNqFcfqyrMmZJC1uS+F7Ju9dFOyBgBrxg==
+	t=1795019439;
+	b=w1lzGeYiZTsH/GfkNDPXjHa4atTnMVU5VredAdMxJkodxiHngYleUKZAe2hn3riJdsi0
+	 8VMAOMYA78XEKcPf6RAZ0+IFT/t8eOzccoSBQdjatjA0nkAiqmk9SkOvYFUjPLxPXZ92O
+	 5YEbU7UPr29oczTvFcdLeuAh2v546+oJYTGcJbOg8gixmvpG8G3YjjGtW/SB4MhcgwTJg
+	 kgjgLnmvpbM57SFdPPfj55JJzI1mEMsknTZtnD3Oxf70ALnccXkFrBq6xHMA0v6tIxLkB
+	 6Z04dIxeS2e4hy0vZ0S6rqRsRquFdkTK7/BNpgfoYx8g0dh9qQBZeKN+mpUZBuvk4Ew==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795019436;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795019439;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=cN8XzYy6OANLG+gmeG8ObscmU625bxKB55wtbCjfXWg=;
-	b=cazac/KLAQzes5OAz+wQD+BIEr06BG7CJeJIeV0nu+BbNu70rDRjhqjuaLy8yB+8nXsa
-	 URp7qWTux0dpAwR/Gfc7gog2Ql06iH9xrYZbTfZK52gBBXIYZsQav2R+N/khD72BrjF3u
-	 1f4/2FWWmKvcsjWJFNmtg7zMHmbBViVAP0KrYhtVWQHO+j/t3Jlv9Vqjd+qt3LX90jXoE
-	 nD5Cq5E/oIwyXsANM8J/Mt9YI8XV8Fou+Ph5Achh0piTDwZmWKg493GqNnY0jsT7BBleV
-	 tBubhG8Mb+0fufKfKLJ2GJ/uXGNPjxSyCewWtU8tuCwkW+j6ANOjxLZDc405IxbnJ/g==
+	bh=WBPg6zRU7we71ChsFY0rt6H1VrWbOJeG1bdKIzcXj+U=;
+	b=MkvXiXoeZrHeU6/WVIEYKkmc6fPOvVe0HeLrFvIu8huy32nQlc19kYiNiCRVdeOwUYtf
+	 ap+Y75d2pgytq1zUl6q3fNKyuw9fqzvjDumYQR9pJPgEqiuYuved7Xm0FjnYIpCR4ku/d
+	 abAXjC0yCylvvTIDU7B/cRQyJDlPcoA6MxDSWDBjhhhgBzd5rvkFEmw4FcG02KIiiFzvj
+	 6uLyuwp7ZvWczReb8jGV/sp1PXMEBQPbOO4MdW8punan54EbCfqU8G6jeOVb0gj30B3Ef
+	 hYDk7CBZgr5GYRObssGKZvTprhbGLXB/lLaYy7x/mQRRnlnjc2KzD5TdQNYlUtuQtKQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEG+uqM5;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xz9LWCOG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AAA606B568;
-	Wed, 18 Nov 2026 16:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F41760A263F;
+	Wed, 18 Nov 2026 16:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yEG+uqM5
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9151F000C4;
-	Wed, 18 Nov 2026 16:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=Xz9LWCOG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542B51F000C5;
+	Wed, 18 Nov 2026 16:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795019436;
-	bh=cN8XzYy6OANLG+gmeG8ObscmU625bxKB55wtbCjfXWg=;
+	s=korg; t=1795019438;
+	bh=WBPg6zRU7we71ChsFY0rt6H1VrWbOJeG1bdKIzcXj+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=yEG+uqM55yoXg6U7zk44cH3HjE6bA3qRFySTsxc6Mrj6Fu6Gdt20rSDS5V304GGOE
-	 v4hGAVzMvfy3hksx2WGufzy9wherwUjeiL4Z89JO6yo56MHUFi5SdQaLWWBXRjCIyH
-	 KSfOuKQb3zfSXdeidkKutXktBMQYUVBYl5XD/2vQ=
+	b=Xz9LWCOGJv1xuDUnCSSnuuC35QmkuF6Y7kKOfJInYNUrOfHMEqCSeBBe4/6BV3cNI
+	 eZWKi1KFTgIhJIyS/eVkLazwkZl4Vvq0b8BfKsIx2J8UK7or+Lnjk/cY8NJ3+bcrYx
+	 MPdxJsfqc9lMMdad944+93r6GOOy7xZyyJZNppVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Pon <theflyingrahul@gmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Nicolas Schier <n.schier@fritz.com>,
+	Kees Cook <kees@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1595/2651] drm/msm/a8xx: report the GMEM size of the active slices
-Date: Wed, 18 Nov 2026 15:47:15 +0100
-Message-ID: <20261118150345.311623867@linuxfoundation.org>
+Subject: [PATCH 7.3 1596/2651] kbuild: Mark the initcall ordering recipe as recursive
+Date: Wed, 18 Nov 2026 15:47:16 +0100
+Message-ID: <20261118150345.341403390@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,82 +70,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rahul Pon <theflyingrahul@gmail.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit efbda69d92e6a4822c5f2d09910f547872a9498d ]
+[ Upstream commit ae5f6044c4cdffe2b3361b15c1d6fc67b339f2a4 ]
 
-A8xx GPUs split GMEM evenly between their slices, and parts can have
-slices fused off: a8xx_gpu_get_slice_info() reads the active slice mask
-and folds the slice count into the chip ID. The GMEM size reported to
-userspace (MSM_PARAM_GMEM_SIZE) is still the catalog value for all
-slices, so on a part with fused-off slices userspace would size its
-tiles and place its CCU caches past the end of the GMEM that exists.
+generate_initcall_order.pl, which orders initcalls for Clang LTO, forks
+a child per input file, up to the job count scripts/jobserver-exec
+passes it in PARALLELISM. It used to run from link-vmlinux.sh, which
+the top-level Makefile invokes as a recursive recipe, but
+commit 5d45950dfbb15 ("kbuild: move vmlinux.o link to
+scripts/Makefile.vmlinux_o") moved it into a recipe without "+".
 
-Qualcomm's downstream driver reports GMEM for the active slices:
-gen8_get_gmem_size() in KGSL divides the GMEM size by the number of
-physical slices and multiplies it by the number of active ones. Do the
-same when reading the slice mask. The GMEM protection and UCHE setup
-still cover the full range, as in KGSL.
+GNU Make passes the jobserver pipe only to recipes it treats as
+recursive, and the make 4.3 in CentOS Stream 9 also hides it in
+sub-makes (a backport of the fix for GNU Make bug 58232), so
+jobserver-exec cannot open it and prints:
 
-Fixes: 288a93200892 ("drm/msm/adreno: Introduce A8x GPU Support")
-Signed-off-by: Rahul Pon <theflyingrahul@gmail.com>
-Patchwork: https://patchwork.freedesktop.org/patch/757560/
-Message-ID: <20260930183840.1171-1-theflyingrahul@gmail.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+  WARNING: Unable to reopen jobserver read-side pipe: FileNotFoundError(2, 'No such file or directory')
+
+PARALLELISM is then left unset, and the script caps its children at the
+number of online CPUs instead of the free job slots.
+
+Mark the recipe as recursive again (this makes "make -n" runs the script
+again too, as it did from link-vmlinux.sh). Masahiro posted the same
+change and withdrew it because the script was given only vmlinux.a, and
+so never ran more than one child [1]. But on arm64, LoongArch, and RISC-V
+with CONFIG_EFI_STUB, KBUILD_VMLINUX_LIBS also gives it the EFI stub's
+lib.a. Either way, the warning is silenced.
+
+Tested ARCH=x86_64 defconfig with CONFIG_LTO_CLANG_THIN=y, LLVM=1
+(Clang 24.0.0git), and GNU Make 4.3 plus CentOS Stream 9's
+make-4.3-cloexec.patch.
+
+Fixes: 5d45950dfbb15 ("kbuild: move vmlinux.o link to scripts/Makefile.vmlinux_o")
+Link: https://lore.kernel.org/all/CAK7LNARCM=rUm8mA8GRQ7ufeyfneGf4OEvHmESKt=zuxs2KrHw@mail.gmail.com/ [1]
+Assisted-by: LLM
+Reviewed-by: Nicolas Schier <n.schier@fritz.com>
+Signed-off-by: Kees Cook <kees@kernel.org>
+Tested-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://patch.msgid.link/20261010081914.540611-2-kees@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a8xx_gpu.c   | 3 +++
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 3 ++-
- drivers/gpu/drm/msm/adreno/adreno_gpu.h | 2 ++
- 3 files changed, 7 insertions(+), 1 deletion(-)
+ scripts/Makefile.vmlinux_o | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-index add93c1fa0391..2f6f36fb8ba92 100644
---- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
-@@ -112,6 +112,9 @@ void a8xx_gpu_get_slice_info(struct msm_gpu *gpu)
- 	/* Chip ID depends on the number of slices available. So update it */
- 	adreno_gpu->chip_id |= FIELD_PREP(GENMASK(7, 4), hweight32(slice_mask));
+diff --git a/scripts/Makefile.vmlinux_o b/scripts/Makefile.vmlinux_o
+index 24a3a4fd271c2..0b37bd5dc3a49 100644
+--- a/scripts/Makefile.vmlinux_o
++++ b/scripts/Makefile.vmlinux_o
+@@ -19,7 +19,7 @@ quiet_cmd_gen_initcalls_lds = GEN     $@
  
-+	/* GMEM is split evenly between slices: report the active share */
-+	adreno_gpu->gmem = (adreno_gpu->info->gmem / info->max_slices) * hweight32(slice_mask);
-+
- 	/* Update the gpu-name to reflect the slice config: */
- 	const char *name = devm_kasprintf(dev, GFP_KERNEL,
- 			"%"ADRENO_CHIPID_FMT,
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 5832dc25d6bf4..dadfe4c694384 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -379,7 +379,7 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
- 		*value = adreno_gpu->info->revn;
- 		return 0;
- 	case MSM_PARAM_GMEM_SIZE:
--		*value = adreno_gpu->info->gmem;
-+		*value = adreno_gpu->gmem;
- 		return 0;
- 	case MSM_PARAM_GMEM_BASE:
- 		if (adreno_gpu->info->family >= ADRENO_6XX_GEN3)
-@@ -1205,6 +1205,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 	adreno_gpu->funcs = funcs;
- 	adreno_gpu->info = config->info;
- 	adreno_gpu->chip_id = config->chip_id;
-+	adreno_gpu->gmem = config->info->gmem;
+ .tmp_initcalls.lds: $(srctree)/scripts/generate_initcall_order.pl \
+ 		vmlinux.a $(KBUILD_VMLINUX_LIBS) FORCE
+-	$(call if_changed,gen_initcalls_lds)
++	+$(call if_changed,gen_initcalls_lds)
  
- 	gpu->allow_relocs = config->info->family < ADRENO_6XX_GEN1;
- 	gpu->pdev = pdev;
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index bd5c440f1753f..e0d0043cd8ba0 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -204,6 +204,8 @@ struct adreno_gpu {
- 	struct msm_gpu base;
- 	const struct adreno_info *info;
- 	uint32_t chip_id;
-+	/* GMEM size available to userspace, see a8xx_gpu_get_slice_info(): */
-+	uint32_t gmem;
- 	uint16_t speedbin;
- 	const struct adreno_gpu_funcs *funcs;
+ targets := .tmp_initcalls.lds
  
 -- 
 2.53.0
