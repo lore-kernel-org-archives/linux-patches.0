@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027027;
-	b=cMdYNCrcinKR/KVicE0Hr2IZCI97uMT+3Lr2tnUBM5ZrtpwjqWyg3Vri+RR+VF22NAjo
-	 yrxqidQcjAk1DhtRWsHR1lHTV786/Sc1X7IlOONk3v/lKWrvERKMMJ80k3ouH9gtKSI4U
-	 NmaHnAsd0hYbkOl5mJkD7ycaaYHIsQcoqMAlYxxiib0w18Oolq4SXiGyFCIB6187B0atw
-	 mOF3jeUbSUj1grBVuboSQzMM6Rh8o15NKz8XAM4DSkUKQSh49dluvQk7aAhIDxC03Af/H
-	 LFSZ7WN0oBeb6FU/4gO/xtcQ72NZlIxDIentRKQHrjblEnhyoCw0mhuCfR1xwkMtYVg==
+	t=1795027030;
+	b=h8SQ4726bgisbkCLQRXNtO3wT1hB4Qd6wreH6aKjtGdTH9fUydnJBeXbfeH00o8q8RCZ
+	 yw5c6ogKVyM36Yg3ysvPYZXaC4IXGU6Wv/2NJdOxtfUSBPZ9nGzF+HImx3IPy5ARPgh9m
+	 eHZdF6nKGphSecmg6qq06u0tM85nmVnwyYiJIQwTG5rPkjGrGWYIQJQ22YnIk2rEJeHUP
+	 Pusure2g/SUHEUHxDw0iLFX+9oxEE5FvelkoN5sCXad0WDW4uFJ+mM3YPop5PLPlJkbvF
+	 vPA0O0mOIx7L8HQiIprq15ZtYwtNxahGXXIW8uTDPXFSW5zpQZg1a7VKweE/Hp4yoYQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027027;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027030;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=igCuOyzHUrDbHLwP8mXnchjnbOL1TxN91s7VygrMTes=;
-	b=vxJU1HqIILieDlFoOVU0SUPbRmUdXV1CcoFbnCQA/QSytTRweKYwNi/YJHu7ADvYmyZx
-	 S+tU3t2D5LbN5T7QCaBGEzxaubWIeWrw7eJWNjz+K5gXjsDLNwFH5dliyCLMiSuzYzisC
-	 tybmMpp8N7HaTo3sav1MJQvoE0DRdf9F0HjTuIOsGZcN74ilLEU2pYcz4oWKNUTX68HvA
-	 TlEyjB0V5C4/T4NA5NH5WEIWLqPGvZXU4+mh6ogC6bibbU/QJAu+yFHHlG8CdQV6x5Rop
-	 DxzSk+HY35h32k6QIwuVQaGd6pGdkNUF/Uh2QoHsyvazen8MlOgBTEEK12JIKIQ0rlQ==
+	bh=f1w9kozcEZtIp4mbRbKKna5qJa4IooqN6VpJPP+MVLg=;
+	b=fWqs9f8wfdVB57rYUM0iBNJqbJsMnWPLed3OOvoFp/2Orepc5mUUsaIngrGe8ys/UaRx
+	 ndfRP3+GrH88tDtdGO6tPVmUbP4wBuEPC5nKMprxYYzm1M2yyqz1bcRdjw4k72Y4Mqf5K
+	 enwWqJnEWgzAy1yi4WPFzt10IYWszyVFt+6A/RqXl0RzbP7d3PXZxI7oNlQxHeL8apHYc
+	 YDCuK2F+fA8zChb2ao+b/c+jqAMw38zztQ6Z9LJGuOr90kxdhOLxnYWLnC7oCIOgCB0Ij
+	 OXYKOCvmh0Ct4Qvk8CMv1UAvsgmtgIFyn9F5bgD0auXpX6hyBV/pYVA+L6cGZmly48w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RW2MapjR;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMVz9UWp;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CEE606A330;
-	Wed, 18 Nov 2026 18:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE351606A31C;
+	Wed, 18 Nov 2026 18:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=RW2MapjR
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9311F000C5;
-	Wed, 18 Nov 2026 18:37:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=lMVz9UWp
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05811F000C4;
+	Wed, 18 Nov 2026 18:37:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027027;
-	bh=igCuOyzHUrDbHLwP8mXnchjnbOL1TxN91s7VygrMTes=;
+	s=korg; t=1795027030;
+	bh=f1w9kozcEZtIp4mbRbKKna5qJa4IooqN6VpJPP+MVLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=RW2MapjRIS2MAt5E3I34kFKJZbDdg5XNkAoOjNWjyFlNAS9FdU7cVFi/xdpNroSDL
-	 VBJAI/4mZlGOmls5hlr1TK8Oet/n8VO04dqnwKrOVWGVVv7FNM08BUcUuWWsGiHI57
-	 hJ7JKd1dAdrOaSVCLOZflBtTlfjjztVmy0APNj/w=
+	b=lMVz9UWpVO7Mv0raXDYIzVN9PcjtR8uQpUuRfwczDP/OfYWDb+6U+G+mNtYB1MktK
+	 pVOH2y9kuoA0kSiivB+U3224vGUiyeCbID9hUyc475ti+yPE0qaxLkXI3TR4AL5uO3
+	 afCB2tEi+WL+wQIJCuRKwnPQ174qnjg5iqt+6PKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	bui duc phuc <phucduc.bui@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Honggang LI <honggangli@163.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1642/2151] ASoC: mediatek: mt8195: Fix HDMI TX startup error handling
-Date: Wed, 18 Nov 2026 15:56:17 +0100
-Message-ID: <20261118150221.673399433@linuxfoundation.org>
+Subject: [PATCH 6.18 1603/2151] RDMA/rxe: Fix out-of-range unsigned-to-signed conversion for RDMA message in 2GiB size
+Date: Wed, 18 Nov 2026 15:55:38 +0100
+Message-ID: <20261118150220.267114886@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -68,58 +68,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: bui duc phuc <phucduc.bui@gmail.com>
+From: Honggang LI <honggangli@163.com>
 
-[ Upstream commit 1d6f1785d90334b66809a57ebfc40a5b1cfa80ec ]
+[ Upstream commit 56a27df6cedd4f3918969d61c7b9d3cc177b2d1b ]
 
-Check and propagate errors when enabling the clock gate and MCLK
-during HDMI TX/DP TX startup.
+When RDMA READ request for 2GiB in single WR, res->read.resid is u32
+0x80000000, which is INT_MIN (-2147483648).
 
-If MCLK enabling fails, disable the clock gate that was already
-enabled before returning the error.
+    payload = min_t(int, res->read.resid, mtu);
 
-Fixes: 1de9a54acafb ("ASoC: mediatek: mt8195: support etdm in platform driver")
-Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
-Link: https://patch.msgid.link/20261014112752.683032-15-phucduc.bui@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The `min_t` function will return -2147483648 for payload. The wrong
+size is propagated through call chain, `read_reply` -> `prepare_ack_packet`
+-> `rxe_init_packet` -> `alloc_skb` . `alloc_skb` failed because of
+invalid size. The passive side failed to emit response packet for RDMA
+READ request.
+
+After fixed it, the active side of RDMA READ failed with error code
+"IB_WC_LOC_PROT_ERR". When RDMA_READ_RESPONSE_FIRST packet recived by
+the active side, `do_read` call `copy_data`. dma->resid is u32 0x80000000.
+
+   int resid	= dma->resid;
+
+This conversion set resid to -2147483648. `copy_data` abort as length
+greater than resid.
+
+RDMA SEND and WRITE 2GiB message works too, after fixed these two bugs.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Honggang LI <honggangli@163.com>
+Link: https://patch.msgid.link/20261002142250.657151-1-honggangli@163.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8195/mt8195-dai-etdm.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_loc.h  |  4 ++--
+ drivers/infiniband/sw/rxe/rxe_mr.c   |  8 ++++----
+ drivers/infiniband/sw/rxe/rxe_net.c  |  2 +-
+ drivers/infiniband/sw/rxe/rxe_resp.c | 17 +++++++++--------
+ 4 files changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-index d6100a6aa7757..66f8468e534a8 100644
---- a/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-+++ b/sound/soc/mediatek/mt8195/mt8195-dai-etdm.c
-@@ -2326,13 +2326,25 @@ static int mtk_dai_hdmitx_dptx_startup(struct snd_pcm_substream *substream,
- 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
- 	struct mt8195_afe_private *afe_priv = afe->platform_priv;
- 	int cg_id = mtk_dai_etdm_get_cg_id_by_dai_id(dai->id);
-+	int ret;
+diff --git a/drivers/infiniband/sw/rxe/rxe_loc.h b/drivers/infiniband/sw/rxe/rxe_loc.h
+index b6c85b5c248d2..18c7284d0e575 100644
+--- a/drivers/infiniband/sw/rxe/rxe_loc.h
++++ b/drivers/infiniband/sw/rxe/rxe_loc.h
+@@ -67,7 +67,7 @@ int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, unsigned int length);
+ int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr,
+ 		unsigned int length, enum rxe_mr_copy_dir dir);
+ int copy_data(struct rxe_pd *pd, int access, struct rxe_dma_info *dma,
+-	      void *addr, int length, enum rxe_mr_copy_dir dir);
++	      void *addr, u32 length, enum rxe_mr_copy_dir dir);
+ int rxe_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg,
+ 		  int sg_nents, unsigned int *sg_offset);
+ enum resp_states rxe_mr_do_atomic_op(struct rxe_mr *mr, u64 iova, int opcode,
+@@ -94,7 +94,7 @@ void rxe_mw_cleanup(struct rxe_pool_elem *elem);
  
--	if (cg_id >= 0)
--		mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
-+	if (cg_id >= 0) {
-+		ret = mt8195_afe_enable_clk(afe, afe_priv->clk[cg_id]);
-+		if (ret)
-+			return ret;
-+	}
- 
--	mtk_dai_etdm_enable_mclk(afe, dai->id);
-+	ret = mtk_dai_etdm_enable_mclk(afe, dai->id);
-+	if (ret)
-+		goto err_disable_cg_clk;
- 
- 	return 0;
-+
-+err_disable_cg_clk:
-+	if (cg_id >= 0)
-+		mt8195_afe_disable_clk(afe, afe_priv->clk[cg_id]);
-+
-+	return ret;
+ /* rxe_net.c */
+ struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
+-				int paylen, struct rxe_pkt_info *pkt);
++				u32 paylen, struct rxe_pkt_info *pkt);
+ void rxe_put_skb(struct sk_buff *skb);
+ int rxe_prepare(struct rxe_av *av, struct rxe_pkt_info *pkt,
+ 		struct sk_buff *skb);
+diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
+index 39166bb9dbf42..eb67a64bbadc7 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mr.c
++++ b/drivers/infiniband/sw/rxe/rxe_mr.c
+@@ -420,13 +420,13 @@ int copy_data(
+ 	int			access,
+ 	struct rxe_dma_info	*dma,
+ 	void			*addr,
+-	int			length,
++	u32			length,
+ 	enum rxe_mr_copy_dir	dir)
+ {
+-	int			bytes;
++	u32			bytes;
+ 	struct rxe_sge		*sge	= &dma->sge[dma->cur_sge];
+-	int			offset	= dma->sge_offset;
+-	int			resid	= dma->resid;
++	u32			offset	= dma->sge_offset;
++	u32			resid	= dma->resid;
+ 	struct rxe_mr		*mr	= NULL;
+ 	u64			iova;
+ 	int			err;
+diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
+index 0c28453ebc118..f1c0116082a56 100644
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -483,7 +483,7 @@ int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
  }
  
- static void mtk_dai_hdmitx_dptx_shutdown(struct snd_pcm_substream *substream,
+ struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
+-				int paylen, struct rxe_pkt_info *pkt)
++				u32 paylen, struct rxe_pkt_info *pkt)
+ {
+ 	unsigned int hdr_len;
+ 	struct sk_buff *skb = NULL;
+diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
+index f2a98b0554499..b1b4f8c054c74 100644
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -600,7 +600,7 @@ static enum resp_states check_rkey(struct rxe_qp *qp,
+ }
+ 
+ static enum resp_states send_data_in(struct rxe_qp *qp, void *data_addr,
+-				     int data_len)
++				     u32 data_len)
+ {
+ 	int err;
+ 
+@@ -815,20 +815,21 @@ static enum resp_states atomic_write_reply(struct rxe_qp *qp,
+ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
+ 					  struct rxe_pkt_info *ack,
+ 					  int opcode,
+-					  int payload,
++					  u32 payload,
+ 					  u32 psn,
+ 					  u8 syndrome)
+ {
+ 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+ 	struct sk_buff *skb;
+-	int paylen;
+-	int pad;
++	u32 paylen;
++	u32 pad = 0;
+ 	int err;
+ 
+ 	/*
+ 	 * allocate packet
+ 	 */
+-	pad = (-payload) & 0x3;
++	if (payload % 4)
++		pad = 4 - payload % 4;
+ 	paylen = rxe_opcode[opcode].length + payload + pad + RXE_ICRC_SIZE;
+ 
+ 	skb = rxe_init_packet(rxe, &qp->pri_av, paylen, ack);
+@@ -922,9 +923,9 @@ static enum resp_states read_reply(struct rxe_qp *qp,
+ {
+ 	struct rxe_pkt_info ack_pkt;
+ 	struct sk_buff *skb;
+-	int mtu = qp->mtu;
++	u32 mtu = qp->mtu;
+ 	enum resp_states state;
+-	int payload;
++	u32 payload;
+ 	int opcode;
+ 	int err;
+ 	struct resp_res *res = qp->resp.res;
+@@ -970,7 +971,7 @@ static enum resp_states read_reply(struct rxe_qp *qp,
+ 
+ 	res->state = rdatm_res_state_next;
+ 
+-	payload = min_t(int, res->read.resid, mtu);
++	payload = min(res->read.resid, mtu);
+ 
+ 	skb = prepare_ack_packet(qp, &ack_pkt, opcode, payload,
+ 				 res->cur_psn, AETH_ACK_UNLIMITED);
 -- 
 2.53.0
 
