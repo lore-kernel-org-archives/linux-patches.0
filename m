@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027330;
-	b=HZDnau3u9ohEQMKBx4CPNsvPY42JXGZrumA1fRG65p2MyWHL7cXPVHeLSyDF+EnJc33/
-	 NER5F40BJteDp1Bm7N5L1OqwDx6JOoUgzfLb8lPF/mO9F99aQ2ZtdVzVTouod0UR78f9W
-	 ohAZ0GpzV8X29UTVPLIRvhabPtu4YY/4q/M6BL3gBY/k5ewKTQWQ+4cnV9xrpFyqzmZLE
-	 Bufyj4c8vPe8EJklMRXkde7q19N+F5VcFGpJpa4OPloYuQgCByxXq47Vnwtt6ijrQ0cOU
-	 Jpxjch0xpdlmxu91eBslXF03RbbT9SkUHWNdwY9fOwK6CyNDjm+VxW63aRxYvKZVqvg==
+	t=1795027333;
+	b=UJOyqxu3eH0Au8/ql2StEIX82PgRIHwC8w5+AqOJRKYjzNkrv74IK8ASqLj3efSvgGbo
+	 gnCqKh3OWhedQHpEqTaMBKn4tTpQ4aegrDaedoT9H+QtaYwipv2YJqnLYi+juWkkpTcNk
+	 fT6V4H70uj93k+NPljO+H4UqILrcyrqPxiGoD1IG95By2pkjh8r1oxDD4+CdxHNJ96s0V
+	 m6SHUKTM+vQ0CFWxYwJrJI97vr+mYK36vFg3jb2+dR1mcJYW4vJsElkZKobtBPGn92KKX
+	 DE5zvr06P4S19C4mzX0YNMYDn/nYwqz2j7keSr+ESp6FbruJ6y1z+0sFkA21qolzT+w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027330;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027333;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=8Lkes+B5hch/jWH5/f7OOIq/Qgb3yY5e1wR+9U0seAU=;
-	b=vTxRC9vqjDiEwXsAi/czzMS9Tt/+c1mgkXaBA8O8rtKIegwKes+JdoPyxGocwBIQ/fHF
-	 1T2iCEvq7qnXFxZFQKeb06Qo3YR2VYL7oPbz86cjjEweYCzpZ8bXf8khajGZlBgHZKC1O
-	 fIIXs/yvyX9+xUlP4PPwu9DizDtuvqT3psFN6gTJ8xy8Pn6arGg3KNiRqSXdCNNVcE1Qc
-	 VQBdYn4WYqmlWIL1NJGn84PeykzJaurPxIZeFO+xRvGGgWjG0IeEqXwR4AUPcOtKKQbMe
-	 Hf6b3pWdbYTbHVRbU+SarSWObO43RM6ujP5/sIjuOCPn1ycPoh7TcP7kp7Ny7I54fgQ==
+	bh=jL1kD3jN5ygzJKn7r4frvieVZzv/42AUT4t5LyGPSao=;
+	b=kWJMhYDqE6aqwylwY1B1t3ysJ7QtnQWFIjxeFH7A2rrJdmzVeeaLBbkXDixZWS1mMa2Z
+	 /38wrnsEuSnEQ7BdJPIToyKJPYOESOC/8um7QKiOy306aWUZjO29cX4qyAsJG2lJ8Fgq0
+	 ohWeaSRKkBAVZigsy0v9MIaMvlV75aDkyhlVGipsPR64ppJDwlxWRQiUK10WPvschHGxJ
+	 9BRSydgz4gQ140hAF4OAp18iQe7Sw8FIzx01hptkd7kown6TXv6cEe2Mma0n+e9oN+Ppy
+	 3biWAgJlROUfJAHxopcxUUVBwRhzS8PDt1qyxem5XtfmqHlELBkIrdph/NoODxOzSMA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b0a89NhX;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKYURWRZ;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E56606A330;
-	Wed, 18 Nov 2026 18:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10032606A331;
+	Wed, 18 Nov 2026 18:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=b0a89NhX
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9C21F000C4;
-	Wed, 18 Nov 2026 18:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=cKYURWRZ
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606411F000C4;
+	Wed, 18 Nov 2026 18:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027330;
-	bh=8Lkes+B5hch/jWH5/f7OOIq/Qgb3yY5e1wR+9U0seAU=;
+	s=korg; t=1795027332;
+	bh=jL1kD3jN5ygzJKn7r4frvieVZzv/42AUT4t5LyGPSao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=b0a89NhXmSJj/CTaYi5JJRp/FHcMVmYVRPHWwa0/NiA2skvo/qRKjqZAve4QRWckq
-	 3oU15veEyU6sCsLvmDHzgsuFr8ENuvw8v0RVqzNsblwR1zsBiobrvUk8A/fneWHYGl
-	 tq2qMo/f/EvSIQocKiE5EeMZMh+kMDVF7Z8CQzk0=
+	b=cKYURWRZOBY7OkJlt0bWthDGTW2pTgpt9oqbMPKDQB7RmB3GeQzJu26q+MBhK5Jjq
+	 7vk/hHaiS94sn2B4hIX2F7G62wTyrjxvQEVwMhte7Cm/GDI3zTQ0BkQZU4rkZF85Cg
+	 b/W82raUdztZj6JU+TfPSNOTBjVZpR6LAJV0lUl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1734/2151] selftests: netfilter: fix return value in zone subtest
-Date: Wed, 18 Nov 2026 15:57:49 +0100
-Message-ID: <20261118150225.031039591@linuxfoundation.org>
+Subject: [PATCH 6.18 1752/2151] RDMA/core: Free unpublished port statistics after initial-read failure
+Date: Wed, 18 Nov 2026 15:58:07 +0100
+Message-ID: <20261118150225.674391485@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -69,105 +68,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit a20a01ae89813ef493dc416d69f2b2ad17afb54c ]
+[ Upstream commit d74bdcfa89fa45d3a506cddc37b3bf1b76cea0ce ]
 
-zone subtest prints FAIL, but did not set 'ret=1', so kselftest
-framework reports success.
+An initial port counter read can fail after allocating its statistics
+buffer and wrapper. Free these both allocations.
 
-While at it, also fail when "nft -f" returns an error.
-
-Noticed thanks to a (broken) local patch that should have caused this
-selftest (resp. the kselftest framework) to report a failure.
-
-Fixes: 33b8aad21ac1 ("selftests: netfilter: add a vrf+conntrack testcase")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 467f432a521a ("RDMA/core: Split port and device counter sysfs attributes")
+Link: https://patch.msgid.link/20261015-ib-core-fixes-v1-2-60f6da3ddec3@nvidia.com
+Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/netfilter/conntrack_vrf.sh  | 25 ++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/sysfs.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/netfilter/conntrack_vrf.sh b/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
-index 207b79932d91a..2dbfabaadf4bd 100755
---- a/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
-+++ b/tools/testing/selftests/net/netfilter/conntrack_vrf.sh
-@@ -84,7 +84,7 @@ busywait $BUSYWAIT_TIMEOUT listener_ready "$ns1"
- # as decided by the first iteration of the ruleset.
- test_ct_zone_in()
- {
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- table testct {
- 	chain rawpre {
- 		type filter hook prerouting priority raw;
-@@ -105,6 +105,12 @@ table testct {
+diff --git a/drivers/infiniband/core/sysfs.c b/drivers/infiniband/core/sysfs.c
+index 0ed862b38b443..a08758db0ba09 100644
+--- a/drivers/infiniband/core/sysfs.c
++++ b/drivers/infiniband/core/sysfs.c
+@@ -1039,8 +1039,8 @@ static int setup_hw_port_stats(struct ib_port *port,
+ 					    data->stats->num_counters);
+ 	if (ret != data->stats->num_counters) {
+ 		if (WARN_ON(ret >= 0))
+-			return -EINVAL;
+-		return ret;
++			ret = -EINVAL;
++		goto err_free_data;
  	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load testct nft ruleset"
-+		ret=1
-+		return
-+	fi
-+
- 	ip netns exec "$ns1" ping -W 1 -c 1 -I veth0 "$IP0" > /dev/null
  
- 	# should be in zone 1, not zone 2
-@@ -113,6 +119,7 @@ EOF
- 		echo "PASS: entry found in conntrack zone 1"
- 	else
- 		echo "FAIL: entry not found in conntrack zone 1"
-+		ret=1
- 		count=$(ip netns exec "$ns0" conntrack -L -s $IP1 -d $IP0 -p icmp --zone 2 2> /dev/null | wc -l)
- 		if [ "$count" -eq 1 ]; then
- 			echo "FAIL: entry found in zone 2 instead"
-@@ -137,7 +144,7 @@ test_masquerade_vrf()
+ 	data->stats->timestamp = jiffies;
+@@ -1074,6 +1074,11 @@ static int setup_hw_port_stats(struct ib_port *port,
  
- 	ip netns exec "$ns0" conntrack -F 2>/dev/null
+ 	port->hw_stats_data = data;
+ 	return 0;
++
++err_free_data:
++	rdma_free_hw_stats_struct(data->stats);
++	kfree(data);
++	return ret;
+ }
  
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- flush ruleset
- table ip nat {
- 	chain rawout {
-@@ -158,6 +165,12 @@ table ip nat {
- 	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load ip nat nft ruleset"
-+		ret=1
-+		return
-+	fi
-+
- 	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
- 		echo "FAIL: connect failure with masquerade + sport rewrite on vrf device"
- 		ret=1
-@@ -184,7 +197,7 @@ EOF
- test_masquerade_veth()
- {
- 	ip netns exec "$ns0" conntrack -F 2>/dev/null
--ip netns exec "$ns0" nft -f - <<EOF
-+if ! ip netns exec "$ns0" nft -f - <<EOF
- flush ruleset
- table ip nat {
- 	chain postrouting {
-@@ -193,6 +206,12 @@ table ip nat {
- 	}
- }
- EOF
-+	then
-+		echo "FAIL: cannot load ip nat postrouting ruleset"
-+		ret=1
-+		return
-+	fi
-+
- 	if ! ip netns exec "$ns0" ip vrf exec tvrf socat -u -4 STDIN TCP:"$IP1":55555 < /dev/null > /dev/null;then
- 		echo "FAIL: connect failure with masquerade + sport rewrite on veth device"
- 		ret=1
+ struct rdma_hw_stats *ib_get_hw_stats_port(struct ib_device *ibdev,
 -- 
 2.53.0
 
