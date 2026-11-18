@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795055605;
-	b=I/KIajO/tEdrlM9aExGJNCgBQO5AYz8Nb8ReopDqP6q5q3S1Jh+CRJB8C4+reahPsna0
-	 rTPNdX1wZ2hj1qa79biStZNilpgVuZD3Tw7qHCX209m7XAPysWbUNInOEeM33IpNgaGkc
-	 QAPPbsEqzULFs5BMiUOeVlvOQp2WICHfA9mwo8UpaoBwmJz379t0SGEtK/hXHTBkaT+Pb
-	 gPnAS3fJ56Dxe16d8SHYqp4BO7tvBT3rLyTRE1NE+ctR7AnK7wYYZJTWl1jWed+uWVUD0
-	 QJzp3e8qKs5yE8C3K3jzaSx9yYIbTgydqj4S/bRvjcRZ/QBeI5Uu3h/hnmWWwF6FRwQ==
+	t=1795055608;
+	b=AVPY/ps7PYXiCgmpPqP19h0VZkus41So+tQBv4x1p35OX44q+SRVJ2YkAxs6hYK8J763
+	 TxoLRRGArc5m2tEpgaiHBzkfFo81+dZkZbJb1DeAIR2ZL1RfDQMH+MNZe2oGae5UpWqnT
+	 etmuWucR/OJj3MBlfxARqS465bHuEX3y2qu2b/m1FK4zyD8uoXV9efVX+FmtaUn8d17YP
+	 PUn4df0CLcbX2rgDu4WVg0d7qnNs4HXRaBUle3ooSvupD5QW/iqbg6oDtPdwqfvQfaEsa
+	 yp6Tac57IDpY6ol4wHvm83tFU5CdFh/UCuMZKTVL+hgffaiQLNGgpW5YtafNyEPSgSA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795055605;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795055608;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
-	 MIME-Version:Content-Transfer-Encoding;
-	bh=DBl+u2jP6z3x/AiAWWx0Fvhx0VXUgILawUb5eTKSBDw=;
-	b=hVpnZhW/v6weJBFfE+UK+v0uRnjhXcqaMa/TPKxl0Bty7yaYTSNtgr64pqvkIbiwVZFF
-	 iJeYvmsooa8YJLnbqj2BgKBx/0hi96/JlJTHHUj7fwgzml00Le6WNkbLjESiA4pZpUa3a
-	 Fx8LSf5n5OXjcjE6hRxbNUI6i2IuzWZ4/elMKhB8TcvZh7ENBLwo4dHDQk/bEX1+M1QvA
-	 LJh//JX1dbUK6DaOi45h5z0yUq+WwMNHwPhKWMxqt4GndkOU3EIYfcW6JKH84yTQQjzqk
-	 CC/mnHnOjgNdC17WFbp6v7D6HzRAfQDav2ZHR6sLa+c7puPTjqCLz5GYu0J3F4lYg8g==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding;
+	bh=JGwLaznsAgN6xgLhi6gkfh6rfk8pSVltLMvja/zLEow=;
+	b=CH5FNk2vXwqADR1hCaCuTg8YOmVRpB4DK/Y/fZpKxyESG/3hI6gp6WDfHoaTovyHcVYr
+	 Ng9gNDKEKTlqGVHHozrDbrRZWwn4K9/EEaG1ESZRQmn15SdIdtsetqA0RO4z4GI0JMrxe
+	 Hy2yTvjBAWKFQXZJdSoUeDCWTKXIkli9A37cv3pgM1XiN+nFXhbIO5iGxpABjE2Hk8hhW
+	 4tnCR503rS7GsX2TmhUbHuLO8j4qpj3uDYETWztCHvWht9Y0Qutj7p3vEhSHLmj7fmHaj
+	 pQIKFHo8/WIkidVi6ieaQM+/2Dqr/GpU7u7If7X8KG5NLV0MeFCjfvQHiwhf6IogSqg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="zEAWVQL/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=neQPDkMD;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D693D606A320;
-	Thu, 19 Nov 2026 02:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F91606A32A;
+	Thu, 19 Nov 2026 02:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zEAWVQL/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18C11F000C5;
-	Thu, 19 Nov 2026 02:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=neQPDkMD
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD2F31F000C4;
+	Thu, 19 Nov 2026 02:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795055605;
-	bh=DBl+u2jP6z3x/AiAWWx0Fvhx0VXUgILawUb5eTKSBDw=;
+	s=korg; t=1795055608;
+	bh=JGwLaznsAgN6xgLhi6gkfh6rfk8pSVltLMvja/zLEow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=zEAWVQL/+xzbPkCZk7vy3lndEuDSD/TaC0rsDym4MmqjRLNrtc4qcHeDGcBl/Kvmd
-	 u2T6OFbe8lCMRYC6sVoSkIwRsGGhGtfsX90kJ5z5DVdRckXLEZnDElpabQq86UmhF0
-	 2Gl0rPJQmO9qyg7wlR+ZUf/AGGuNGNJQCSSeO9zs=
+	b=neQPDkMD6/9ABMoqiaYtaZ8NvJlr66iyyhCuTifW+cczWTwFnqXdXsk7qWTByuK4w
+	 pB2b8ds/3MuD2CmAA0gVYXrovfVzx18DoLYWsYr65KVVvEzs5Osmol4/CWZ7eFjkHx
+	 9oVpwhQ1+yGDZD7bF4JKi/n40c/fv5AEIGt7cUBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karl Mehltretter <kmehltretter@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 1692/2214] OPP: Fix the return value in dev_pm_opp_get_of_node() kernel-doc
-Date: Wed, 18 Nov 2026 15:56:08 +0100
-Message-ID: <20261118150119.507748848@linuxfoundation.org>
+Subject: [PATCH 5.15 1693/2214] rtc: ftrtc010: drop needless struct ftrtc010_rtc::rtc_dev member
+Date: Wed, 18 Nov 2026 15:56:09 +0100
+Message-ID: <20261118150119.543026773@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
 References: <20261118150009.797899913@linuxfoundation.org>
@@ -62,41 +63,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karl Mehltretter <kmehltretter@gmail.com>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 706081c6b9327dd611dd72b20130a77f0f059b6e ]
+[ Upstream commit a55d44807b63f171f8079d770c9d82fa87046cdd ]
 
-dev_pm_opp_get_of_node() returns NULL when the OPP is invalid, but its
-kernel-doc says "else 0 on success", which was never true. Say NULL.
+The memory pointed to by the ::rtc_dev member is managed via devres,
+and no code in this driver uses it past _probe().
 
-Fixes: e2f4b5f8dc59 ("PM / OPP: Implement dev_pm_opp_get_of_node()")
-Assisted-by: LLM
-Signed-off-by: Karl Mehltretter <kmehltretter@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+We can drop it from the structure and just use a local temporary
+variable, reducing runtime memory consumption by a few bytes.
+
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Link: https://lore.kernel.org/r/20250304-rtc-cleanups-v2-6-d4689a71668c@linaro.org
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: c60478875a44 ("rtc: ftrtc010: fix clock resource leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/opp/of.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-ftrtc010.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/opp/of.c b/drivers/opp/of.c
-index 83c2e62e92142..f31a33ce90888 100644
---- a/drivers/opp/of.c
-+++ b/drivers/opp/of.c
-@@ -1348,7 +1348,7 @@ EXPORT_SYMBOL_GPL(of_get_required_opp_performance_state);
-  * dev_pm_opp_get_of_node() - Gets the DT node corresponding to an opp
-  * @opp:	opp for which DT node has to be returned for
-  *
-- * Return: DT node corresponding to the opp, else 0 on success.
-+ * Return: DT node corresponding to the opp, else NULL.
-  *
-  * The caller needs to put the node with of_node_put() after using it.
-  */
+diff --git a/drivers/rtc/rtc-ftrtc010.c b/drivers/rtc/rtc-ftrtc010.c
+index 25c6e7d9570f0..14858d2faa2a7 100644
+--- a/drivers/rtc/rtc-ftrtc010.c
++++ b/drivers/rtc/rtc-ftrtc010.c
+@@ -28,7 +28,6 @@ MODULE_LICENSE("GPL");
+ MODULE_ALIAS("platform:" DRV_NAME);
+ 
+ struct ftrtc010_rtc {
+-	struct rtc_device	*rtc_dev;
+ 	void __iomem		*rtc_base;
+ 	int			rtc_irq;
+ 	struct clk		*pclk;
+@@ -113,6 +112,7 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+ 	struct ftrtc010_rtc *rtc;
+ 	struct device *dev = &pdev->dev;
+ 	struct resource *res;
++	struct rtc_device *rtc_dev;
+ 	int ret;
+ 
+ 	rtc = devm_kzalloc(&pdev->dev, sizeof(*rtc), GFP_KERNEL);
+@@ -160,29 +160,28 @@ static int ftrtc010_rtc_probe(struct platform_device *pdev)
+ 		goto err_disable_extclk;
+ 	}
+ 
+-	rtc->rtc_dev = devm_rtc_allocate_device(dev);
+-	if (IS_ERR(rtc->rtc_dev)) {
+-		ret = PTR_ERR(rtc->rtc_dev);
++	rtc_dev = devm_rtc_allocate_device(dev);
++	if (IS_ERR(rtc_dev)) {
++		ret = PTR_ERR(rtc_dev);
+ 		goto err_disable_extclk;
+ 	}
+ 
+-	rtc->rtc_dev->ops = &ftrtc010_rtc_ops;
++	rtc_dev->ops = &ftrtc010_rtc_ops;
+ 
+ 	sec  = readl(rtc->rtc_base + FTRTC010_RTC_SECOND);
+ 	min  = readl(rtc->rtc_base + FTRTC010_RTC_MINUTE);
+ 	hour = readl(rtc->rtc_base + FTRTC010_RTC_HOUR);
+ 	days = readl(rtc->rtc_base + FTRTC010_RTC_DAYS);
+ 
+-	rtc->rtc_dev->range_min = (u64)days * 86400 + hour * 3600 +
+-				  min * 60 + sec;
+-	rtc->rtc_dev->range_max = U32_MAX + rtc->rtc_dev->range_min;
++	rtc_dev->range_min = (u64)days * 86400 + hour * 3600 + min * 60 + sec;
++	rtc_dev->range_max = U32_MAX + rtc_dev->range_min;
+ 
+ 	ret = devm_request_irq(dev, rtc->rtc_irq, ftrtc010_rtc_interrupt,
+ 			       IRQF_SHARED, pdev->name, dev);
+ 	if (unlikely(ret))
+ 		goto err_disable_extclk;
+ 
+-	return devm_rtc_register_device(rtc->rtc_dev);
++	return devm_rtc_register_device(rtc_dev);
+ 
+ err_disable_extclk:
+ 	clk_disable_unprepare(rtc->extclk);
 -- 
 2.53.0
 
