@@ -1,52 +1,54 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795017394;
-	b=fyz7TweHZtosJ1bYAUfW5iS1OmNPub3lebEJnh0VKCjH3fCiGziim3M6/SO0r3RRfR22
-	 UpErpyKy6fhGKqu8J+0hxLnPLxHoP5gf82uyedHRYuLTXuTbyFcGBViJKnE1C415RVDP2
-	 xyiXaT3yqhU6OToG5GXSY6hlYOfjTu5Pf78FmVpJRStoU4EDhXC0uzjtEtAYtumWJu5b7
-	 5b1nNsYNKs8X54j/au7aKQ4T8lJewubsH4+F7LK0IDYMRItmSGkU6HJ7U+ehYvTz/LqxO
-	 p+Jm5j1ir2aswcVdBtuMljlLrw5Fo1gIykhIgQGGfQFqBlAtGO8DAi4rTLnfr4hIYfQ==
+	t=1795017397;
+	b=5nAcHF9UzOcuJbThWobESjnvd0Wr4C0Hfie2ulm18jVT6JCJo09CuoQfRBfBjp903P6O
+	 45wukT7i/h33Fnr/6VoF5Y1nW8L67VSiqiGdZtgj/rmek8DyYSnKpAHLXQtYuKN+4iqMT
+	 XwiXRnHwByzlrS9vH5uI7jMpxduaKI7rFaT4PuQJI9UMyv8qbsS/5C3luANch4qmTfKCP
+	 yl4Fb68e8pUxt+39cLcKvXIWami2TRf3sbhVj2JzFwtDtAkGkINWczVlS72WpDJIzGHw8
+	 55PZkU4ydoqeoTZ+apaAAhHhgqkU8IeGG88EemE0GpJe5Gvg2AF6OZ+obr9d/ZeuNkg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795017394;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795017397;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=xeVEwBEqL4wyD005ne/b6GbNqcMaMO+uGhS6r7Dbilk=;
-	b=xsI09BQjljFznv5nVFOEKodzOh95bNCFwEUKZRDlkWJBLpsVyjlf7c/wJA1cPoBHPyg+
-	 5Rha3Qwyqe03FwZizpNDyewaj1mn28UsxkFz4hss8MU3OxYD950shqqLbiKd7Yewc+C73
-	 +og7kal2UlffcuS2qyCstA+l/yhOm/ta992WwnNpY6+CuQ0nzMAASF5PmoOI2DiiVwZX5
-	 HpRGrT0jUYhPSDzmzNNb28tIKIAKpn8LgrB5aKzK6b4n3k2A/m9fNWTJ8CVyLisNDJg7M
-	 qG4DUaMlWf1D0Hw73SYPnEQDRAvOA6Xr/de5q/F7DjxVLdJ8ElJH5kuku1135lw3ISA==
+	bh=hpF0b5riVj+4qW2u56G2AhGpHoFBSAqWPv3TUALK23U=;
+	b=ytKHgUdCl4BxaAtvDuM53Up1LOf7w+e6nAeL9ZBEIeRo6i1qr+7vE5KJkNkgSqV7XNXH
+	 q07p+peFBbp7etj+4TKo6iSuWtsuhqpJuI+kS77o2As7GiGrdChBThNcbaaz3kNoBJb/P
+	 diWd46XH0lRg566bJ1xIrHoXiCoYkYDhw8H4Q66sPYdfobfCFKC/adnFblPVoSB+66MdL
+	 Vg7QIUDCm25Li65OxOAcj4yJhwbsCli8q1NGaOhfj9w7pwGHYbaM3we7eLji28ssAQ3bo
+	 d2lI9kmoOxVGeA/oPQ1l2HwOFOqPq4BgbUHJIUhoA/mhZJcMB/g8RXgBFHDmqGzAkdg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QBaZ11vq;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDVPo+RM;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A002C606A31C;
-	Wed, 18 Nov 2026 15:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65121606A331;
+	Wed, 18 Nov 2026 15:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QBaZ11vq
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02CD1F000C4;
-	Wed, 18 Nov 2026 15:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=wDVPo+RM
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8EC1F000C4;
+	Wed, 18 Nov 2026 15:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795017394;
-	bh=xeVEwBEqL4wyD005ne/b6GbNqcMaMO+uGhS6r7Dbilk=;
+	s=korg; t=1795017397;
+	bh=hpF0b5riVj+4qW2u56G2AhGpHoFBSAqWPv3TUALK23U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=QBaZ11vq++nxs7PUnQQxpPEwBQRX0onmZNEmo9hismQxRK81p6ZwN5isKEGn6+2Az
-	 8NXwtnmskEjCoSjv+0KOBu2J9WlHe0SYFt/MsosxRp1ddAB0RnFt2AHxrTk7QHux6D
-	 GFWTknOZAvkySiMpyX0hxSSE9ocUMEUnJyqW8/8A=
+	b=wDVPo+RMG2x6DZCWds57CUKZQFYxIEq9Y6Aw0Z6WufpzzqGmW6CiyHysFCpnrAQI3
+	 +yFyZwabSjTv0mPTctPqE8zA9uz7Tqvzix6uaObQk3uwAbPnazrhpvtZnvMVYslLL1
+	 1O0jO3Irs3f1BoSJEf78J5dB/vZWSOSD8u3s7MsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0829/2651] perf machine: Add session back pointer to fix out of bounds read
-Date: Wed, 18 Nov 2026 15:34:29 +0100
-Message-ID: <20261118150317.731876963@linuxfoundation.org>
+Subject: [PATCH 7.3 0830/2651] vfio: Reject a second cdev open before mutating shared device state
+Date: Wed, 18 Nov 2026 15:34:30 +0100
+Message-ID: <20261118150317.767965261@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,269 +70,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-[ Upstream commit d227b45fc162ce9134bb96f33f71e6952ec36ea5 ]
+[ Upstream commit 258ba46543abdd36844f04bba8b4022a5731d873 ]
 
-thread__e_machine_endian() decides whether a thread is live, and so
-whether to read /proc/pid/exe rather than fall back to the perf.data
-environment, by recovering the session from the machine:
+The cdev single-open check lives in vfio_df_open(), which runs at the
+end of the bind ioctl, after vfio_df_ioctl_bind_iommufd() has already
+updated state shared across all opens: vfio_df_check_token() can set
+the PF vf_token and vfio_df_get_kvm_safe() records the caller's KVM
+pointer in device->kvm and takes a reference.
 
-	session = container_of(machine->machines, struct perf_session,
-			       machines);
-	is_live = !session->data;
+A second cdev bind of an already-open device runs both, only to be
+rejected in vfio_df_open().  The error path clears device->kvm and
+drops the reference, tearing down the current opener's KVM association
+and potentially resulting in an unbalanced reference on close or
+premature release, while the vf_token remains clobbered.
 
-That only holds when the struct machines is the one embedded in a struct
-perf_session. It is not the only one. aslr_tool keeps its own in struct
-aslr_tool, and hists_cumulate, hists_filter, hists_link, hists_output
-and thread-maps-share each put one on the stack. For those the
-container_of subtracts offsetof(struct perf_session, machines) from an
-address that was never inside a session, and the following load of
-session->data reads outside the object, which is what ASan reports.
+Move the single-open check into vfio_df_ioctl_bind_iommufd() ahead of
+both mutations, so a bind that cannot complete leaves the current
+opener's state untouched.  df->group is NULL on this path, so a
+non-zero open_count is exactly what vfio_df_open() rejected.  The test
+in vfio_df_open() becomes redundant and is removed.
 
-Replace the derivation with an explicit link. machines__init() takes the
-owning session, or NULL when the machines is standalone, and
-thread__e_machine_endian() reads it back through machines__session().
+Return -EBUSY rather than -EINVAL here.  The arguments are not invalid,
+the device is in use, which could be a transient condition due to a
+delayed fput if the prior user is terminated.  This provides
+compatibility with the group path, where a group open returns -EBUSY,
+and users may choose bounded polling to detect such a transient
+condition.
 
-A NULL session is treated as live. The tests use synthetic pids that
-have no /proc entry, so the read fails there and the e_machine falls
-back to EM_HOST as before, rather than being decided by whatever the
-out of bounds read happened to return. perf inject registers its
-session with the aslr tool once the session exists, before any event is
-processed, so that tool keeps reporting file based threads as not live.
-
-Fixes: 70351029b556 ("perf thread: Add support for reading the e_machine type for a thread")
-Assisted-by: Antigravity:gemini-3.1-pro
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 839e692fa4eb ("vfio: Make vfio_df_open() single open for device cdev path")
+Fixes: 5fcc26969a16 ("vfio: Add VFIO_DEVICE_BIND_IOMMUFD")
+Fixes: 86624ba3b522 ("vfio/pci: Do vf_token checks for VFIO_DEVICE_BIND_IOMMUFD")
+Assisted-by: LLM
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Link: https://lore.kernel.org/r/20260911170429.1642480-2-alex.williamson@nvidia.com
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-inject.c          |  3 +++
- tools/perf/tests/hists_cumulate.c    |  2 +-
- tools/perf/tests/hists_filter.c      |  2 +-
- tools/perf/tests/hists_link.c        |  2 +-
- tools/perf/tests/hists_output.c      |  2 +-
- tools/perf/tests/thread-maps-share.c |  3 ++-
- tools/perf/util/aslr.c               | 10 +++++++++-
- tools/perf/util/aslr.h               |  2 ++
- tools/perf/util/machine.c            |  3 ++-
- tools/perf/util/machine.h            | 10 +++++++++-
- tools/perf/util/session.c            |  2 +-
- tools/perf/util/thread.c             |  8 +++-----
- 12 files changed, 35 insertions(+), 14 deletions(-)
+ drivers/vfio/device_cdev.c | 12 ++++++++++++
+ drivers/vfio/vfio_main.c   |  7 -------
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/builtin-inject.c b/tools/perf/builtin-inject.c
-index 70bbfad5653e1..1446e5c0f63e8 100644
---- a/tools/perf/builtin-inject.c
-+++ b/tools/perf/builtin-inject.c
-@@ -2880,6 +2880,9 @@ int cmd_inject(int argc, const char **argv)
- 		goto out_close_output;
+diff --git a/drivers/vfio/device_cdev.c b/drivers/vfio/device_cdev.c
+index 1d9515c967b01..30362936c7b59 100644
+--- a/drivers/vfio/device_cdev.c
++++ b/drivers/vfio/device_cdev.c
+@@ -130,6 +130,18 @@ long vfio_df_ioctl_bind_iommufd(struct vfio_device_file *df,
+ 		goto out_unlock;
  	}
  
-+	if (inject.aslr)
-+		aslr_tool__register_session(tool, inject.session);
++	/*
++	 * The cdev path allows only a single open.  Reject a second open here,
++	 * before the VF token and device->kvm updates below would clobber the
++	 * current opener's state on a bind that cannot complete.  Return -EBUSY
++	 * rather than -EINVAL since a delayed release of the prior opener can
++	 * make this transient.
++	 */
++	if (device->open_count) {
++		ret = -EBUSY;
++		goto out_unlock;
++	}
 +
- 	if (zstd_init(&(inject.session->zstd_data), 0) < 0)
- 		pr_warning("Decompression initialization failed.\n");
+ 	ret = vfio_df_check_token(device, &bind);
+ 	if (ret)
+ 		goto out_unlock;
+diff --git a/drivers/vfio/vfio_main.c b/drivers/vfio/vfio_main.c
+index 423ead48aafe3..cb3deb5a48574 100644
+--- a/drivers/vfio/vfio_main.c
++++ b/drivers/vfio/vfio_main.c
+@@ -603,13 +603,6 @@ int vfio_df_open(struct vfio_device_file *df)
  
-diff --git a/tools/perf/tests/hists_cumulate.c b/tools/perf/tests/hists_cumulate.c
-index 9356451a172ea..c4a11a3255bc9 100644
---- a/tools/perf/tests/hists_cumulate.c
-+++ b/tools/perf/tests/hists_cumulate.c
-@@ -723,7 +723,7 @@ static int test__hists_cumulate(struct test_suite *test __maybe_unused, int subt
- 		goto out;
- 	err = TEST_FAIL;
+ 	lockdep_assert_held(&device->dev_set->lock);
  
--	if (machines__init(&machines))
-+	if (machines__init(&machines, /*session=*/NULL))
- 		goto out;
- 
- 	/* setup threads/dso/map/symbols also */
-diff --git a/tools/perf/tests/hists_filter.c b/tools/perf/tests/hists_filter.c
-index f9eaa511487b4..6c7e4cdc71a72 100644
---- a/tools/perf/tests/hists_filter.c
-+++ b/tools/perf/tests/hists_filter.c
-@@ -131,7 +131,7 @@ static int test__hists_filter(struct test_suite *test __maybe_unused, int subtes
- 		goto out;
- 	err = TEST_FAIL;
- 
--	if (machines__init(&machines))
-+	if (machines__init(&machines, /*session=*/NULL))
- 		goto out;
- 
- 	/* setup threads/dso/map/symbols also */
-diff --git a/tools/perf/tests/hists_link.c b/tools/perf/tests/hists_link.c
-index d88591bcbe508..cd32c82776275 100644
---- a/tools/perf/tests/hists_link.c
-+++ b/tools/perf/tests/hists_link.c
-@@ -303,7 +303,7 @@ static int test__hists_link(struct test_suite *test __maybe_unused, int subtest
- 		goto out;
- 
- 	err = TEST_FAIL;
--	if (machines__init(&machines))
-+	if (machines__init(&machines, /*session=*/NULL))
- 		goto out;
- 
- 	/* setup threads/dso/map/symbols also */
-diff --git a/tools/perf/tests/hists_output.c b/tools/perf/tests/hists_output.c
-index f58c8d18fe330..35d230a83e430 100644
---- a/tools/perf/tests/hists_output.c
-+++ b/tools/perf/tests/hists_output.c
-@@ -610,7 +610,7 @@ static int test__hists_output(struct test_suite *test __maybe_unused, int subtes
- 		goto out;
- 	err = TEST_FAIL;
- 
--	if (machines__init(&machines))
-+	if (machines__init(&machines, /*session=*/NULL))
- 		goto out;
- 
- 	/* setup threads/dso/map/symbols also */
-diff --git a/tools/perf/tests/thread-maps-share.c b/tools/perf/tests/thread-maps-share.c
-index 0431bff31b3a1..4a0bbf715acb4 100644
---- a/tools/perf/tests/thread-maps-share.c
-+++ b/tools/perf/tests/thread-maps-share.c
-@@ -27,7 +27,8 @@ static int test__thread_maps_share(struct test_suite *test __maybe_unused, int s
- 	 * other  group (pid: 4, tids: 4, 5)
- 	*/
- 
--	TEST_ASSERT_VAL("failed to init machines", machines__init(&machines) == 0);
-+	TEST_ASSERT_VAL("failed to init machines",
-+			machines__init(&machines, /*session=*/NULL) == 0);
- 	machine = &machines.host;
- 
- 	/* create process with 4 threads */
-diff --git a/tools/perf/util/aslr.c b/tools/perf/util/aslr.c
-index 027695d967798..76eba1a23bc7f 100644
---- a/tools/perf/util/aslr.c
-+++ b/tools/perf/util/aslr.c
-@@ -1243,7 +1243,7 @@ static int aslr_tool__init(struct aslr_tool *aslr, struct perf_tool *delegate)
- 	delegate_tool__init(&aslr->tool, delegate);
- 	aslr->tool.tool.ordered_events = true;
- 
--	if (machines__init(&aslr->machines))
-+	if (machines__init(&aslr->machines, /*session=*/NULL))
- 		return -ENOMEM;
- 
- 	hashmap__init(&aslr->remap_addresses,
-@@ -1343,6 +1343,14 @@ void aslr_tool__delete(struct perf_tool *tool)
- 	free(aslr);
- }
- 
-+void aslr_tool__register_session(struct perf_tool *tool, struct perf_session *session)
-+{
-+	struct delegate_tool *del_tool = container_of(tool, struct delegate_tool, tool);
-+	struct aslr_tool *aslr = container_of(del_tool, struct aslr_tool, tool);
-+
-+	aslr->machines.session = session;
-+}
-+
- int aslr_tool__cache_orig_attrs(struct perf_tool *tool, struct evsel *evsel)
- {
- 	struct delegate_tool *del_tool = container_of(tool, struct delegate_tool, tool);
-diff --git a/tools/perf/util/aslr.h b/tools/perf/util/aslr.h
-index 522e31c8e2c04..9cc14f0263dbe 100644
---- a/tools/perf/util/aslr.h
-+++ b/tools/perf/util/aslr.h
-@@ -28,6 +28,7 @@
- 	PERF_SAMPLE_CODE_PAGE_SIZE | \
- 	PERF_SAMPLE_AUX)
- 
-+struct perf_session;
- struct perf_tool;
- struct evsel;
- struct evlist;
-@@ -36,6 +37,7 @@ union perf_event;
- struct perf_tool *aslr_tool__new(struct perf_tool *delegate);
- void aslr_tool__delete(struct perf_tool *tool);
- 
-+void aslr_tool__register_session(struct perf_tool *tool, struct perf_session *session);
- void aslr_tool__strip_attr_event(union perf_event *event, struct evlist *evlist);
- int aslr_tool__cache_orig_attrs(struct perf_tool *tool, struct evsel *evsel);
- void aslr_tool__strip_evlist(const struct perf_tool *tool, struct evlist *evlist);
-diff --git a/tools/perf/util/machine.c b/tools/perf/util/machine.c
-index ad29a30a7b891..076d167380f20 100644
---- a/tools/perf/util/machine.c
-+++ b/tools/perf/util/machine.c
-@@ -233,10 +233,11 @@ void machine__delete(struct machine *machine)
- 	}
- }
- 
--int machines__init(struct machines *machines)
-+int machines__init(struct machines *machines, struct perf_session *session)
- {
- 	int err = machine__init(&machines->host, "", HOST_KERNEL_ID);
- 
-+	machines->session = session;
- 	machines->host.machines = machines;
- 	machines->guests = RB_ROOT_CACHED;
- 	return err;
-diff --git a/tools/perf/util/machine.h b/tools/perf/util/machine.h
-index 26f9827062f5e..973a59f7c26ab 100644
---- a/tools/perf/util/machine.h
-+++ b/tools/perf/util/machine.h
-@@ -15,6 +15,7 @@ struct dso;
- struct dso_id;
- struct evsel;
- struct perf_sample;
-+struct perf_session;
- struct symbol;
- struct target;
- struct thread;
-@@ -148,13 +149,20 @@ int machine__process_event(struct machine *machine, union perf_event *event,
- typedef void (*machine__process_t)(struct machine *machine, void *data);
- 
- struct machines {
-+	/** @session: back link to owning session if there is one. */
-+	struct perf_session *session;
- 	struct machine host;
- 	struct rb_root_cached guests;
- };
- 
--int machines__init(struct machines *machines);
-+int machines__init(struct machines *machines, struct perf_session *session);
- void machines__exit(struct machines *machines);
- 
-+static inline struct perf_session *machines__session(struct machines *machines)
-+{
-+	return machines->session;
-+}
-+
- void machines__process_guests(struct machines *machines,
- 			      machine__process_t process, void *data);
- 
-diff --git a/tools/perf/util/session.c b/tools/perf/util/session.c
-index 3237870a1a34b..1505a6f125be0 100644
---- a/tools/perf/util/session.c
-+++ b/tools/perf/util/session.c
-@@ -161,7 +161,7 @@ struct perf_session *__perf_session__new(struct perf_data *data,
- 	session->active_decomp = &session->decomp_data;
- 	INIT_LIST_HEAD(&session->auxtrace_index);
- 	perf_env__init(&session->header.env);
--	if (machines__init(&session->machines))
-+	if (machines__init(&session->machines, session))
- 		goto out_delete;
- 
- 	ordered_events__init(&session->ordered_events,
-diff --git a/tools/perf/util/thread.c b/tools/perf/util/thread.c
-index f0d3773d87db0..8b8ca94e89ea8 100644
---- a/tools/perf/util/thread.c
-+++ b/tools/perf/util/thread.c
-@@ -531,12 +531,10 @@ uint16_t thread__e_machine_endian(struct thread *thread, struct machine *machine
- 		bool is_live = machine->machines == NULL;
- 
- 		if (!is_live) {
--			/* Check if the session has a data file. */
--			struct perf_session *session = container_of(machine->machines,
--								    struct perf_session,
--								    machines);
-+			/* Check if the session has a data file (assume no session is a test). */
-+			struct perf_session *session = machines__session(machine->machines);
- 
--			is_live = !session->data;
-+			is_live = !session || !session->data;
- 		}
- 		/* Read from /proc/pid/exe if live. */
- 		if (is_live) {
+-	/*
+-	 * Only the group path allows the device to be opened multiple
+-	 * times.  The device cdev path doesn't have a secure way for it.
+-	 */
+-	if (device->open_count != 0 && !df->group)
+-		return -EINVAL;
+-
+ 	device->open_count++;
+ 	if (device->open_count == 1) {
+ 		ret = vfio_df_device_first_open(df);
 -- 
 2.53.0
 
