@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795016547;
-	b=tF4Zibq+j6aiVpRdA0JPIwvvB7mKvAKJLf+lU19SJpEpugqFxBQ5i66ZSqp2rXQW6Ukx
-	 gt485KIru3eJgi22qcPHZ+je4ODvaHQmRuCMBjvicNWrOvJ7+8MLL9XxRcBOvVuHWi7kq
-	 h6vkorF4y+M5o/XG+vfK3LDm0mnJlrYCTXfTxm+Vku9eYFcNPvEQ0uidVqcRja5B1NA4D
-	 fZef34zDweSkUImhTRDjCZOdAAIWCaiafS1vgHW/tYlEK6qdyVOKBQ2F3psCXK7tFjeIz
-	 Lt9ZcS15yfwxiuRkAc/l0SObz8SnLvNFkey1Sm55x8EE7Y7Qg9ATWOJiSUB4df3ehGg==
+	t=1795016550;
+	b=tKrLPYruL6aNij7zoO+Sr+cxpnm4sgAR+X71Ar17cdU2zZXsGzn6G6oS22ZtNAqsnk0T
+	 UilVe6QWrgupvKdQXlTj2iEcBETVTk/Dog49pYFP1RDprTfh/jnimyTNIN9hZaNqYDbWl
+	 nFiB3amhV1B59g7/lB38CEBfaqqHPopPAf4oKMFBs92L9805Fke8NSBKePpqfHHtkyzdy
+	 HkD9Qte8OfqX07rwLeZ5l5b9bXZ0+6E36Xu9SCrtp+/Z+HU8zCoNAWN8QF43oP+rHi5sl
+	 TaEMjoj2DEI0ICREm6rx4lVv/mnGnaaoaynlzY1xDYOSDk+M4kFUKH54AyFBmsL6LyA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795016547;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795016550;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=9zaz8bshYU9SK40r1+B6i91jzla86gEHpmrp7IH2D5U=;
-	b=o5ODPZsh6K2kkX+RshpmSa9W8g1dykmyH3zlUb724aHSRaWTjXE/Jdt/5LgR0Ii83XJF
-	 s9I6oTMTitzYuGV5Th2QRUrlmS5yzHZurnpS5JUMFgaNjS1K4d18ZphIQqh84HvfZA4C0
-	 h8K2CrZaJcWyc4q0SVWSTaDDk5ZDDIM5TBbRxLi5sAIOR+Eqwtsye2HhhGRK8S/zY8oM9
-	 t159pJ4PtrdM53nRF7FGeUZBltEPwk25kaDoEi8uVwNTr+6UzyEeldn/LA+c0zssrr+Rk
-	 PAMRL17tMXzByyUsZ1snn8WHNlmnGADBraWV6KMR6PwpABtGJKLd34VFoD+ipcslbXA==
+	bh=X8LSnUl++ySvlYrWoxGkviymI0EDO6u8qNhu3h7jMZ8=;
+	b=jtQVD1qh0lkee7fOEDC3Ff3KWlsEdSQqhXOk3RYLhAC/eedt9KrXteQL4e8CbXaagXkb
+	 j+BE4ssMU9O+7STtO6+glGw0QZgman9HpkOq+FHNgSDr93YI80QP/RngknbHganm+QwuG
+	 YnYq5OmzWpQ2i73ApfXi+q7fVRY8cdCrdV5GCF1MDNYA+6tsJb9SDqKyFkGU++OO7mNXa
+	 OyIg1kvwsrzAZhT1Pon9g78mcifbH7xxZJ4sFl26/sa+64lNnP5FSKPBHTs48HCh8BCoJ
+	 hkiLg4dTWjs3Qr58IpEHFij9V7xdXmkM+wvjcMvH/LC7/drM+WRiPMYBrae6AyyyWhg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTdzdpY9;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eDTIUWVV;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CBA60A2608;
-	Wed, 18 Nov 2026 15:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060AA606A335;
+	Wed, 18 Nov 2026 15:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=iTdzdpY9
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841BA1F000C5;
-	Wed, 18 Nov 2026 15:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=eDTIUWVV
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 584401F000C4;
+	Wed, 18 Nov 2026 15:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795016547;
-	bh=9zaz8bshYU9SK40r1+B6i91jzla86gEHpmrp7IH2D5U=;
+	s=korg; t=1795016549;
+	bh=X8LSnUl++ySvlYrWoxGkviymI0EDO6u8qNhu3h7jMZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=iTdzdpY9D673mtN94OSg+O+ultoIkjx+WzVaUO7V1N7UosMHxsK61aNxp2/S8f6xp
-	 gb5zLvi/EzWqnFAQ+XQFXVhEDZPSPKAkG3ayRoLVK892NV63OUp61e+XV1iu8ULuR0
-	 UAdn+9oPMUZIUUSNXTzhtnGHdfob0XSzqgNeG74o=
+	b=eDTIUWVV9Qh5pjETe8koWCYfGE0TYQ3bD2q8ebIXAkJaVtFxpmw3ko+arN25oMfzo
+	 9FxrY6rMj3R8UuDZG/JfzP/YWKOTvK+EJDDAfRNT5pHX3Z2QQCMquskdD/FZHT3/UM
+	 xqyR6nQOvplJczzcN6aXxi3YYOLatNvimclcLKrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Julian Braha <julianbraha@gmail.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Vitaliy Sochnev <sochnev.v.74@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 0560/2651] kconfig: fix extra output from savedefconfig on out-of-range defaults
-Date: Wed, 18 Nov 2026 15:30:00 +0100
-Message-ID: <20261118150307.901333622@linuxfoundation.org>
+Subject: [PATCH 7.3 0569/2651] thermal/drivers/airoha: Request the EN7581 IRQ after zone registration
+Date: Wed, 18 Nov 2026 15:30:09 +0100
+Message-ID: <20261118150308.222468784@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -69,244 +68,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Julian Braha <julianbraha@gmail.com>
+From: Vitaliy Sochnev <sochnev.v.74@gmail.com>
 
-[ Upstream commit dbe1ae2304a3b02c3bf6ae82895ff232a29f3fee ]
+[ Upstream commit 7efceedd23678cd58e98b2c64d4b2b7be03f6cf9 ]
 
-The Kconfig interpreter currently allows defaults that are outside of the
-range bounds.
+The EN7581 IRQ is requested before the thermal zone is registered, and
+the handler passes priv->tz to thermal_zone_device_update(). Unbind
+leaves the monitor interrupt enabled, so an interrupt pending on the
+next bind fires while priv->tz is NULL. On a Nokia XG-040G-MD this
+oopses in thermal_zone_device_update(). On unbind, devres also frees the
+zone before the IRQ.
 
-In these cases, the 'sym_validate_range' function will adjust the default
-value to the nearest range bound. For example, see this example:
+Request the IRQ in post_probe, after zone registration.
 
-  config A
-    int
-    range 1 2
-    default 16
-
-Here, since the default value of 16 is greater than the bounds, the
-effective default value gets adjusted down to the upper bound, 2.
-
-However, 'savedefconfig' writes non-default values, and without being
-aware of the automatic adjustment to the range bound, it would write: A=2
-
-This limitation is also documented in a comment: "The following fails to
-handle the situation where a default value is further limited by the valid
-range."
-
-To resolve this, let's factor out the default-range adjustment logic from
-the existing 'sym_validate_range' function into its own
-'sym_get_near_range_bound' function for 'savedefconfig' to use too, so
-that it compares against the effective value.
-
-Adds tests, accordingly.
-
-Fixes: 7cf3d73b4360 ("kconfig: add savedefconfig")
-Assisted-by: Codex:gpt-5.6-sol
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Closes: https://lore.kernel.org/lkml/CAMuHMdVyUAA3L4mUkSjmnuE3cvj-+N8z-Bhxsh1wa-FQWc=fjw@mail.gmail.com/
-Signed-off-by: Julian Braha <julianbraha@gmail.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260830221129.2668354-1-julianbraha@gmail.com
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: 42de37f40e1b ("thermal/drivers: Add support for Airoha EN7581 thermal sensor")
+Signed-off-by: Vitaliy Sochnev <sochnev.v.74@gmail.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+Link: https://patch.msgid.link/20260915194128.42508-1-sochnev.v.74@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/symbol.c                      | 39 ++++++++----
- .../kconfig/tests/savedefconfig_range/Kconfig | 60 +++++++++++++++++++
- .../tests/savedefconfig_range/__init__.py     |  8 +++
- .../kconfig/tests/savedefconfig_range/config  |  7 +++
- .../savedefconfig_range/expected_defconfig    |  0
- 5 files changed, 102 insertions(+), 12 deletions(-)
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/Kconfig
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/__init__.py
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/config
- create mode 100644 scripts/kconfig/tests/savedefconfig_range/expected_defconfig
+ drivers/thermal/airoha_thermal.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/scripts/kconfig/symbol.c b/scripts/kconfig/symbol.c
-index 7e81b3676ee94..1536db1599f4c 100644
---- a/scripts/kconfig/symbol.c
-+++ b/scripts/kconfig/symbol.c
-@@ -157,7 +157,12 @@ static long long sym_get_range_val(struct symbol *sym, int base)
- 	return strtoll(sym->curr.val, NULL, base);
- }
+diff --git a/drivers/thermal/airoha_thermal.c b/drivers/thermal/airoha_thermal.c
+index 77b3a1af271fd..ea3e2649c280c 100644
+--- a/drivers/thermal/airoha_thermal.c
++++ b/drivers/thermal/airoha_thermal.c
+@@ -528,7 +528,7 @@ static int en7581_thermal_probe(struct platform_device *pdev,
+ 	struct device_node *chip_scu_np;
+ 	struct device *dev = &pdev->dev;
+ 	void __iomem *base;
+-	int i, irq, ret;
++	int i;
  
--static void sym_validate_range(struct symbol *sym)
-+/*
-+ * Return the nearest range bound for an out-of-range default value.
-+ * Return NULL if the value is valid or the symbol has no active range.
-+ */
-+static struct symbol *sym_get_near_range_bound(struct symbol *sym,
-+					  const char *value)
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+@@ -567,16 +567,6 @@ static int en7581_thermal_probe(struct platform_device *pdev,
+ 	of_address_to_resource(chip_scu_np, 0, &priv->scu_adc_res);
+ 	of_node_put(chip_scu_np);
+ 
+-	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0)
+-		return irq;
+-
+-	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+-					en7581_thermal_irq, IRQF_ONESHOT,
+-					pdev->name, priv);
+-	if (ret)
+-		return ret;
+-
+ 	en7581_thermal_setup_monitor(priv);
+ 	en7581_thermal_setup_adc_val(dev, priv);
+ 
+@@ -586,6 +576,18 @@ static int en7581_thermal_probe(struct platform_device *pdev,
+ static int en7581_thermal_post_probe(struct platform_device *pdev)
  {
- 	struct property *prop;
- 	struct symbol *range_sym;
-@@ -172,21 +177,31 @@ static void sym_validate_range(struct symbol *sym)
- 		base = 16;
- 		break;
- 	default:
--		return;
-+		return NULL;
- 	}
- 	prop = sym_get_range_prop(sym);
- 	if (!prop)
--		return;
--	val = strtoll(sym->curr.val, NULL, base);
-+		return NULL;
-+	val = strtoll(value, NULL, base);
- 	range_sym = prop->expr->left.sym;
- 	val2 = sym_get_range_val(range_sym, base);
- 	if (val >= val2) {
- 		range_sym = prop->expr->right.sym;
- 		val2 = sym_get_range_val(range_sym, base);
- 		if (val <= val2)
--			return;
-+			return NULL;
- 	}
--	sym->curr.val = range_sym->curr.val;
+ 	struct airoha_thermal_priv *priv = platform_get_drvdata(pdev);
++	int irq, ret;
 +
-+	return range_sym;
-+}
++	/* After zone registration: the handler uses priv->tz */
++	irq = platform_get_irq(pdev, 0);
++	if (irq < 0)
++		return irq;
 +
-+static void sym_validate_range(struct symbol *sym)
-+{
-+	struct symbol *range_sym;
-+
-+	range_sym = sym_get_near_range_bound(sym, sym->curr.val);
-+	if (range_sym)
-+		sym->curr.val = range_sym->curr.val;
- }
++	ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
++					en7581_thermal_irq, IRQF_ONESHOT,
++					pdev->name, priv);
++	if (ret)
++		return ret;
  
- static void sym_set_changed(struct symbol *sym)
-@@ -812,7 +827,7 @@ bool sym_set_string_value(struct symbol *sym, const char *newval)
- const char *sym_get_string_default(struct symbol *sym)
- {
- 	struct property *prop;
--	struct symbol *ds;
-+	struct symbol *ds, *range_sym;
- 	const char *str = "";
- 	tristate val;
- 
-@@ -830,11 +845,6 @@ const char *sym_get_string_default(struct symbol *sym)
- 			val = EXPR_AND(expr_calc_value(prop->expr), prop->visible.tri);
- 			break;
- 		default:
--			/*
--			 * The following fails to handle the situation
--			 * where a default value is further limited by
--			 * the valid range.
--			 */
- 			ds = prop_get_symbol(prop);
- 			if (ds != NULL) {
- 				sym_calc_value(ds);
-@@ -878,6 +888,11 @@ const char *sym_get_string_default(struct symbol *sym)
- 	default:
- 		break;
- 	}
-+
-+	range_sym = sym_get_near_range_bound(sym, str);
-+	if (range_sym)
-+		str = range_sym->curr.val;
-+
- 	return str;
- }
- 
-diff --git a/scripts/kconfig/tests/savedefconfig_range/Kconfig b/scripts/kconfig/tests/savedefconfig_range/Kconfig
-new file mode 100644
-index 0000000000000..fd59d9082ed5b
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/Kconfig
-@@ -0,0 +1,60 @@
-+# SPDX-License-Identifier: GPL-2.0
-+
-+# Static default and range values
-+
-+config INT_DEFAULT_ABOVE_RANGE
-+	int
-+	range 1 1
-+	default 16
-+
-+config INT_DEFAULT_BELOW_RANGE
-+	int
-+	range 4 8
-+	default 2
-+
-+# Default and range values determined by other options
-+
-+config RANGE_UPPER_BOUND
-+	int
-+	default 3
-+
-+config INT_DYNAMIC_RANGE
-+	int
-+	range 0 RANGE_UPPER_BOUND
-+	default 4
-+
-+# Hex
-+
-+config HEX_DEFAULT_ABOVE_RANGE
-+	hex
-+	range 0x10 0x20
-+	default 0x40
-+
-+# Implicit default value of 0
-+
-+config INT_IMPLICIT_DEFAULT_ZERO
-+	int
-+	range 1 4
-+
-+# Conditional range
-+
-+config USE_FIRST_RANGE
-+	bool
-+	default y
-+
-+config INT_CONDITIONAL_RANGE
-+	int
-+	range 1 2 if USE_FIRST_RANGE
-+	range 3 4 if !USE_FIRST_RANGE
-+	default 3
-+
-+# Conditional default
-+
-+config USE_DEFAULT
-+	bool
-+	default y
-+
-+config INT_CONDITIONAL_DEFAULT
-+	int
-+	range 1 2
-+	default 3 if USE_DEFAULT
-diff --git a/scripts/kconfig/tests/savedefconfig_range/__init__.py b/scripts/kconfig/tests/savedefconfig_range/__init__.py
-new file mode 100644
-index 0000000000000..961454be732c2
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/__init__.py
-@@ -0,0 +1,8 @@
-+# SPDX-License-Identifier: GPL-2.0
-+"""Test savedefconfig with numerical defaults outside of ranges."""
-+
-+
-+def test(conf):
-+    assert conf._run_conf('--savedefconfig=defconfig', dot_config='config',
-+                          out_file='defconfig') == 0
-+    assert conf.config_matches('expected_defconfig')
-diff --git a/scripts/kconfig/tests/savedefconfig_range/config b/scripts/kconfig/tests/savedefconfig_range/config
-new file mode 100644
-index 0000000000000..d939cfe5fd349
---- /dev/null
-+++ b/scripts/kconfig/tests/savedefconfig_range/config
-@@ -0,0 +1,7 @@
-+CONFIG_INT_DEFAULT_ABOVE_RANGE=1
-+CONFIG_INT_DEFAULT_BELOW_RANGE=4
-+CONFIG_INT_DYNAMIC_RANGE=3
-+CONFIG_HEX_DEFAULT_ABOVE_RANGE=0x20
-+CONFIG_INT_IMPLICIT_DEFAULT_ZERO=1
-+CONFIG_INT_CONDITIONAL_RANGE=2
-+CONFIG_INT_CONDITIONAL_DEFAULT=2
-diff --git a/scripts/kconfig/tests/savedefconfig_range/expected_defconfig b/scripts/kconfig/tests/savedefconfig_range/expected_defconfig
-new file mode 100644
-index 0000000000000..e69de29bb2d1d
+ 	/* Enable LOW and HIGH interrupt (if supported) */
+ 	regmap_write(priv->map, EN7581_TEMPMONINT,
 -- 
 2.53.0
 
