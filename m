@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060518;
-	b=Nh7NnyHqRNrJjMy1Xkp+CA2G9aT5KxnaYIMMATrTZQwJUsHPCzqBAH8gNPkrxf7WHpIU
-	 PyikIgsstNu63ZraoHZ2evcsaUjzHzKhijZBMQ94MsCWzueoXrPXtI77/3yOALK4kMRS0
-	 Z+klW/1AVj7TkKzQx7ec2ssy/FRcb1gTApPW+fjViu47nmBFIYlEiLgaMQZaRQO53iOxs
-	 uxA4tUNxwl9k06oXVvIOamGFtmi+UR5IYMzCWGbFVQDXXTuZD42mVAgfdVjG/1PPpqwLx
-	 aDL//o0HGqr3r9Pq+5mKw2/EczQKak1oZNRutaxciQIPeDI40oXF3MKsbDI6ZLz0JhA==
+	t=1795060520;
+	b=seWwvNQQ6PNyq/itKFz/O/Dbsy29qzjMoI6paAQ8vEhmAM41A1oqzRjJLwlMQUow5S8p
+	 iC3X6sPqPzHICv27sre+mhtIYef3yT+XLgRB2FMgmV0dH+NwjJ6Fu9zgEdjxTlDSesxFs
+	 GOZz7DfVKNT0HrBHcCVYwEH0l2H6ICCMOhb4U3MIvOD8NXejnLGYaaSfWG1N4nv17tQ9R
+	 b/cEwryachrv4GUdrwC5Fn+URa0qhELT6/wMyc7XkF2yrjt02zVcWHkDCh53bQiq7j8m7
+	 KEdNd5PHhVqggtmUxukkylDvVrXvEIy3xvVVaSzT3V0+kpHwLKVK3LJb0MBwFvgYo4g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060518;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060520;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=kM5cGArgepWNH8W73mG0ln7aO+kuBM1F0b7bk09svYM=;
-	b=LGuz7BDW7VXOeQ5NI8+xjQ6nMnlPOdHCI3Q56KmcEPIWHHId7VEAW7mbcXq7vvnfEMFv
-	 DCK7aP7ZoVZ/1ICaHNwQufJDAnDLVJ5NJLeUZIe+5x/9aT3xwb970W6/iCReCz3hgoMty
-	 ZRcOwX7lx2cY8p3hUcHFfOMS7DQfOa6z9TWpRdnmCpZZvJ9yfYESWf9irTmMfxk8MW4Di
-	 apCCMJ+hMjSOd3qVJUZsHOjPQdN9hhVBLK/ED39zxv33jh4/xXKgNuyLeZ0ATIfI/QV1X
-	 Y4BUUqYGFI0E7UrO5jQgzcUa0V4OlNu/mNjnwmCKIr9PfOZS9fvA74T1agl/8lUFtoA==
+	bh=kvJ7VjZvvLvruXFncgC2K4JXBfV2hKAfeAdveO2GZlc=;
+	b=2zCxW7romiVup/lrI20Lcryp/pg94jtiSfvaLTho3uQ/iWPzbmujQR2rFKycSXSaVM4v
+	 zt1YMvejWRL76thL3S2zZsG0GwsJqf4PneaxIIFjZGku3XbnbCVxOi36BOpaWEXkPBHQE
+	 qRe3jEBzydgQzUTbsPOr+bB/Kg475mBkMbMRcyeqqdXQcLM9+ThYbQuoOsXv4oBcriXHf
+	 yK5XIaD9+f/vy+h58D8Zs2F5D3JMd26lx70OEFMl7yRoWCxkEdptwzyw3+porXVWFtXJH
+	 Cn6EISELkl2gJlDU6eeTtB62y445Dr/sPw4jpSu3szrl14p049+CF941B2XIuvsd9kg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="x/oN3P4C";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHSonYfu;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258B1606A325;
-	Thu, 19 Nov 2026 03:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3063606A325;
+	Thu, 19 Nov 2026 03:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=x/oN3P4C
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DD21F000C4;
-	Thu, 19 Nov 2026 03:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=qHSonYfu
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34CFB1F000C4;
+	Thu, 19 Nov 2026 03:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060518;
-	bh=kM5cGArgepWNH8W73mG0ln7aO+kuBM1F0b7bk09svYM=;
+	s=korg; t=1795060520;
+	bh=kvJ7VjZvvLvruXFncgC2K4JXBfV2hKAfeAdveO2GZlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=x/oN3P4CwjJFpbsMLeQO+bH4/jfLgIWZpTRzgSn5ojbc+Ub+H698BPaf56+NKWWMc
-	 ldB3zURZroJ3K59NTEZOFx+rJwYWYGHNM+7n4As03b5m601Dwu3xKEweveb2hUrplf
-	 5G02+4OOrq/oMJswR2qdU4By9dcx8rmigfFCo6Lk=
+	b=qHSonYfuo6vkeGzWPJoCACHPo6ynezGP0C/i0HpPkAVxiZYDjNQbZr3QifvLLL0Gd
+	 b/j+olQpbD6M0Crj9OWl2Irye02Y2q/4oWygn7A2ofoYpD4h49PX5xgb7MA52b9YX5
+	 pKaffuZ56v1dzUs7HVVokpG6EZ5jzyVWK0Y1XFaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1226/1848] sit: fix UAF in ipip6_tunnel_del_prl()
-Date: Wed, 18 Nov 2026 15:54:24 +0100
-Message-ID: <20261118150011.245926433@linuxfoundation.org>
+Subject: [PATCH 5.10 1227/1848] ip_tunnel: use WRITE_ONCE in ip_tunnel_encap_setup
+Date: Wed, 18 Nov 2026 15:54:25 +0100
+Message-ID: <20261118150011.282202727@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -70,52 +71,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5145bb6a2c2683d541828f86d5321e0565f2e30c ]
+[ Upstream commit 88b84cae6b94087d3a9679845fe28ad19c7bef8b ]
 
-When flushing all potential router list (PRL) entries,
-ipip6_tunnel_del_prl() called call_rcu(&x->rcu_head, prl_list_destroy_rcu)
-before clearing t->prl.
+Update ip_tunnel_encap_setup() to use WRITE_ONCE() when writing
+to encap fields (type, sport, dport, flags) and hlen fields.
+This ensures that concurrent lockless readers (like fill_info)
+do not see torn writes.
 
-A concurrent reader in isatap_chksrc() could enter an RCU read-side
-critical section after call_rcu() but before t->prl is set to NULL,
-allowing prl_list_destroy_rcu() to free nodes while the reader traverses
-them.
+Also remove the unsafe memset() on t->encap which could cause
+concurrent readers to transiently see zeroed fields.
+Removing it also fixes a bug where t->encap was left cleared
+even if ip_encap_hlen() failed, resulting in partial configuration.
 
-Clear t->prl using RCU_INIT_POINTER() before invoking call_rcu().
-Also use rcu_assign_pointer() when unlinking individual entries.
-
-Fixes: ef9a9d1183b3 ("ipv6 sit: RCU conversion phase I")
+Fixes: 56328486539d ("net: Changes to ip_tunnel to support foo-over-udp encapsulation")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260907075846.2913645-2-edumazet@google.com
+Acked-by: Lorenzo Bianconi <lorenzo.bianconi@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260907075846.2913645-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/sit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/ip_tunnel.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index 9e991d2a4c99b..54fa3715d620c 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -429,7 +429,7 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
- 		     (x = rtnl_dereference(*p)) != NULL;
- 		     p = &x->next) {
- 			if (x->addr == a->addr) {
--				*p = x->next;
-+				rcu_assign_pointer(*p, rtnl_dereference(x->next));
- 				kfree_rcu(x, rcu_head);
- 				t->prl_count--;
- 				goto out;
-@@ -440,8 +440,8 @@ ipip6_tunnel_del_prl(struct ip_tunnel *t, struct ip_tunnel_prl *a)
- 		x = rtnl_dereference(t->prl);
- 		if (x) {
- 			t->prl_count = 0;
-+			RCU_INIT_POINTER(t->prl, NULL);
- 			call_rcu(&x->rcu_head, prl_list_destroy_rcu);
--			t->prl = NULL;
- 		}
- 	}
- out:
+diff --git a/net/ipv4/ip_tunnel.c b/net/ipv4/ip_tunnel.c
+index 99bcc43aa4f05..bee7ded2038de 100644
+--- a/net/ipv4/ip_tunnel.c
++++ b/net/ipv4/ip_tunnel.c
+@@ -476,19 +476,17 @@ int ip_tunnel_encap_setup(struct ip_tunnel *t,
+ {
+ 	int hlen;
+ 
+-	memset(&t->encap, 0, sizeof(t->encap));
+-
+ 	hlen = ip_encap_hlen(ipencap);
+ 	if (hlen < 0)
+ 		return hlen;
+ 
+-	t->encap.type = ipencap->type;
+-	t->encap.sport = ipencap->sport;
+-	t->encap.dport = ipencap->dport;
+-	t->encap.flags = ipencap->flags;
++	WRITE_ONCE(t->encap.type, ipencap->type);
++	WRITE_ONCE(t->encap.sport, ipencap->sport);
++	WRITE_ONCE(t->encap.dport, ipencap->dport);
++	WRITE_ONCE(t->encap.flags, ipencap->flags);
+ 
+-	t->encap_hlen = hlen;
+-	t->hlen = t->encap_hlen + t->tun_hlen;
++	WRITE_ONCE(t->encap_hlen, hlen);
++	WRITE_ONCE(t->hlen, hlen + t->tun_hlen);
+ 
+ 	return 0;
+ }
 -- 
 2.53.0
 
