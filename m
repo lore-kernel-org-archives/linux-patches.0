@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795060866;
-	b=bH073Wslv3J0JuVooOf5N3FIx9cRODbi0LtGm8gXOCMr0iZFtl1vnML8t9jcar4tCxcc
-	 0zrqsSGUslY/YpKIg6h8tUxn+kIjDiNc7W3toaMXoLofl+ymiAtzoxC1u38Up+8TUJsTJ
-	 c8P8ZkfknJRVSXP3Jc+mqsa0o/leVpfQU4mF+bqYl/5zTg4clzWhHp+B3c+xSr8DwU1IB
-	 7sS7SRYouSDTMMd1l1/ApBz7jcOnAPCa5taeg9SZXv13EuMuaLAj9tvpUytsdNO8A9On8
-	 3DwXi1WNavJ8S3k0RvgB89LRWok8ij+DuKWiCbEEXoQ+Qrp8YHameZELAxziPVZCcOg==
+	t=1795060869;
+	b=ZV4uEWsoC0MGhjp9k+COwJJ6b4O9xLXI4uYWqaGSOxqNTzJL9oXLVbVYYRvffzhM23rZ
+	 r53Z8KBrOHggMaYS2cCa/Uo8DCJdA/pxfUqDaa6y0zoAdtMXaAcI5x/+VPjpMNpDaMuoL
+	 IXArqR28tFlmzSIYhxKnhtEHaIG0zc+AbHRYTw3mhWna7TZr7+lMwgxMgwxsKJTRCDEWw
+	 xOBJWxUQXXrhqWESHuJWR8esW5zYdrFbeRWyDG2ksHzLbWsArQE1NJgiLg6nlZtU5DaXd
+	 beDBSrdLCRiLVCdMwM08O5yZVWzfgubtOGtbO9+Ef+8+GoeOA61LYbxIqh1y5zN/+oA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795060866;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795060869;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=DNHssTfTldj/iPSvk6QB0GTq24J8ZXvBHRQ/fgmpX1A=;
-	b=zlSZTThV+ylCbE6OPSD0z5EKocL5ZExyKD3XQgTilPkvZeSVGqRyYOMMb4HkhrFVpGv6
-	 fnJtgGzz9a+Di7hWpycZnzcpx2If1YD2l0gwQyB9QCx01cSNapxABcCKb3vrfhHcNHMM+
-	 zP7knGY3wRxKngjb8Y2Ahr/1bu525de7xIGzXYFO0EmS1wdx8ieH+9PgRm9MEY49X9+ou
-	 7WR7drjzgHvmNgA8FH9OhAnMHWk4+D4h7LFWJHE8aVqz6Oia9FFFuFyDtW2HFP+cOc2xp
-	 BCmfGLDojJdpT8z15GwEiINGNZsPZWRjwi0Zs9PxzRKkVlwBg0fz38tvBkYoAum1A/g==
+	bh=rvY4cHujTfA0SDluvh7JRMoQPGSIBe93/qBe8zW4P1k=;
+	b=nsZ95Y/TTzOKBuBrF9g8tRWLUmmpV6PkU+rPlZH4jrVaKOwIfC3vZh/cErKe51wM4oMK
+	 14frGzsQB/4WI+IDQSHeNxepDABfef2hVKXkwSV/MKItZs+zHHm+h0BM1yJgFWhDDgOG6
+	 XWiblisQno8YK9qFyNjydcF3fbr7Fl1V9aaM56Fv3lRDRxRZk6nJj1ar0IA/R28kCZHgZ
+	 3PpWinkg8iU9t8pHMY+rY7WFcm+uaysxuDiJCGXfPdiOvET99ZrvxIYnRgMG4Be2kmxPX
+	 CRGl84KfdqgF0Rb9qKy0JpeCySzr9KLZKseFYZdJmcP2orI0oky7Rnk5HKU1CicGamw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evpxREf0;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zhy09wzj;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401A6606A320;
-	Thu, 19 Nov 2026 04:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13AA2606A32F;
+	Thu, 19 Nov 2026 04:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=evpxREf0
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E08C1F000C4;
-	Thu, 19 Nov 2026 04:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zhy09wzj
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BEB1F000C4;
+	Thu, 19 Nov 2026 04:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795060866;
-	bh=DNHssTfTldj/iPSvk6QB0GTq24J8ZXvBHRQ/fgmpX1A=;
+	s=korg; t=1795060868;
+	bh=rvY4cHujTfA0SDluvh7JRMoQPGSIBe93/qBe8zW4P1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=evpxREf0LAkO+DZlme515kDfp3ZTDMkQ4MANEcS0ISrAA6UwZ0eJ8WI4yVvaVOKbx
-	 ZEzhhIlliMiunpwarMxVxKMnrXXELQErDvwktQC+oFTGroW9OcXJ74eCNJwcp15F2q
-	 aOcYLh0dLlgewjCsupFwbzz5+RDWpnAbyivWO48E=
+	b=zhy09wzja34TI30sAUPAfPs2NdUAITWll9QMMj9C/Q7p78V349l9sKQTSRBG7afPF
+	 9o1/4IZlTgp8xhRoue5HWiUTZciSDndEThPQz6ZfOvspawBJT+vbbuhBDnZwbJbrWN
+	 KMnI18BeamUglIfF6uqP6cHr15F99TO/QBCJUsMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengpeng Hou <pengpeng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Pengpeng Hou <hppiscas@163.com>,
+	Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1352/1848] ASoC: rt5665: return cache sync errors from resume
-Date: Wed, 18 Nov 2026 15:56:30 +0100
-Message-ID: <20261118150016.238068238@linuxfoundation.org>
+Subject: [PATCH 5.10 1353/1848] iio: accel: bma220: publish the SPI driver ACPI alias
+Date: Wed, 18 Nov 2026 15:56:31 +0100
+Message-ID: <20261118150016.276809157@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,49 +68,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
+From: Pengpeng Hou <hppiscas@163.com>
 
-[ Upstream commit 9f2933d9a437302d5ae32eb9022efef049d8ab22 ]
+[ Upstream commit cdc7d3dd101251a6373332726b8d6fad35e83b8a ]
 
-rt5665_resume() restores cached registers during component resume but
-discards the regcache_sync() result and returns success. A failed replay
-can therefore leave the hardware register state stale without reaching
-the component error reporting path.
+The SPI driver advertises an ACPI match for BMA0220 but does not export
+that table. A modular build therefore lacks the ACPI alias used to load
+the driver when the device is enumerated through ACPI.
 
-Return the cache synchronization result. The ASoC component wrapper
-reports a negative callback result and retains the established
-best-effort resume state, so this adds observability without introducing
-rollback or retry semantics.
+Export the ACPI table. Move the existing SPI export next to its SPI ID
+table so each export is adjacent to the table it describes.
 
-The successful resume path is unchanged.
+The issue was found by our static-analysis tool.
 
-The issue was found by a tool we developed.
-
-Fixes: 33ada14a26c8 ("ASoC: add rt5665 codec driver")
-Assisted-by: gpt 5
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
-Link: https://patch.msgid.link/20260902013256.93072-15-pengpeng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bf2a5600a3eb ("iio: accel: Add support for Bosch BMA220")
+Assisted-by: LLM
+Signed-off-by: Pengpeng Hou <hppiscas@163.com>
+Signed-off-by: Jonathan Cameron <jonathan.cameron@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5665.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/iio/accel/bma220_spi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt5665.c b/sound/soc/codecs/rt5665.c
-index 8b73c2d7f1f10..5ca706a15d6fa 100644
---- a/sound/soc/codecs/rt5665.c
-+++ b/sound/soc/codecs/rt5665.c
-@@ -4491,9 +4491,7 @@ static int rt5665_resume(struct snd_soc_component *component)
- 	struct rt5665_priv *rt5665 = snd_soc_component_get_drvdata(component);
+diff --git a/drivers/iio/accel/bma220_spi.c b/drivers/iio/accel/bma220_spi.c
+index e8a9db1a82ad8..4f16d1e96e7d8 100644
+--- a/drivers/iio/accel/bma220_spi.c
++++ b/drivers/iio/accel/bma220_spi.c
+@@ -312,12 +312,13 @@ static const struct spi_device_id bma220_spi_id[] = {
+ 	{"bma220", 0},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(spi, bma220_spi_id);
  
- 	regcache_cache_only(rt5665->regmap, false);
--	regcache_sync(rt5665->regmap);
--
--	return 0;
-+	return regcache_sync(rt5665->regmap);
- }
- #else
- #define rt5665_suspend NULL
+ static const struct acpi_device_id bma220_acpi_id[] = {
+ 	{"BMA0220", 0},
+ 	{}
+ };
+-MODULE_DEVICE_TABLE(spi, bma220_spi_id);
++MODULE_DEVICE_TABLE(acpi, bma220_acpi_id);
+ 
+ static struct spi_driver bma220_driver = {
+ 	.driver = {
 -- 
 2.53.0
 
