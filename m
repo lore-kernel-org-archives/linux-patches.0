@@ -1,53 +1,63 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795023921;
-	b=Qkn/r3TMq19X+7iP6Akb+OLsyf2EEMb5nW67ZlZ7zmuOa6z5/yCLQZBxEHyb4sQy7a0E
-	 LlsmZpNFKbmKRaRPVxlJVJpMPcSUenagQvciRVwLc9GKkxOPBZIex3KWSvjEL3TZjHaOp
-	 KowPDOGCKlPMzdtt1aqg2q5YE64sWx0nVslspAvPyIIY2aAH7jnHx54WfOotHyirwvYwQ
-	 U+qO4pKF1sn/ueDiJvSGaeR4DZ/OxMXr8G2FUOtYF9DNd08d7qWq1v8Wsh9RAMScCjyZM
-	 IMe1VtveXoDh4lxKjE4d2v4eqy5jbWyvULv4/EzTAF/lkj2E/XQRgKaJFr5ndbguKFw==
+	t=1795023924;
+	b=CrfkJw4yLWckl3Nzq9eBescQLUd/JpL0r0yPAsJr49TX27rjoF4J13dxNd8eEKtTlQcl
+	 Z6qZQEl8MZ1Fy3MzptEWDEazYpbL8TeTyTJGmOdkaMK3jAiM6+IHS5RgjjjizgUCBRrEC
+	 /Tmxm3SSGfkSh+Epb2G24ujA7o+6+UfYHLt1ej+TVwAa4niIlR/D5bHwa6DpwfwiVgwIC
+	 PYGfYs7K3w610ZrayjkeUyx/G/dLfYWW53dspziKRsHU54nR0TeiVp3ebHbxhWFONKDif
+	 Ik2TLuE4IQWqRoPcE0cNZoBM22/7zKdiQKjgKBWjV0m5jtVhMlfDJiVO+aWUseTlAkw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795023921;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795023924;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=qCdNajnoDkwNBttx01uOTJjdTwDDe3nOzOPCrs2oRHs=;
-	b=uX7gAbAI9Ohdy7jwNkL7m7gFFufCyZsUI3fCjEP3v7xyAcxiYn3X/Gx81YDEDZQFc2++
-	 dYhIm/DhiXBsyLwtU8KjnJpmJhsx05cyZxhjzdvJ3XG1vO7JTu2kPNzd35ex6qRzWUujW
-	 ts3doek0Oi9n67TYKb+RwXhD14cH1BhUVQAtvZNliXFjXz7Wu05qAMUOQavAj8oAtCZe6
-	 Le3xQaDBuaN8xcNLsPcpNbup5P24acprRBHngFBTs28Se7jh09ZTEo5JN026RmjMu23Nq
-	 Q0FcmX2I7PvBdhUKi9XEn4+JFgN2ilO1aaDT7L6GSaDN//T6jw4ostStNZzpS5cyc0w==
+	bh=9XzxcIOwjg15S2LY0VhWsdB79N5aQBtxgMhpCe6RfZQ=;
+	b=J9sQRdqcukQH2whuJBbumz4YT3MRr60e0Ig7bqs2jC6sl3SobG+eiT4hNVXfVrlrvXuq
+	 vUVoCT2KuxwsHeLS4FbdbKL2dJG6gBopMvGktXiuTeZ5yFJPxdBqD80ZByH85r/QU1ZSk
+	 9d/9y9E3Y/WEqlpuZTftuPeuLlYAzvmG2YwUuQlGEXGk1nwKMk7PrdnKqY/Vp7pVlqMw6
+	 l/poKVegZTuwnmb5R+H7gc7+0xaFJVNnkrmCKCOe9JMW/F5HlhJoHInfypGTWvXqHV/O2
+	 xqC3D5BEenOQuclRTKuCvbrNQSJTmEXogjiKxwRTJoXiwY2uBPhUU2oZ60GaO5wo61g==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsYUEnTW;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gSyOOxx7;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68AB606A32A;
-	Wed, 18 Nov 2026 17:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB03606A32A;
+	Wed, 18 Nov 2026 17:45:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rsYUEnTW
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CE31F000C4;
-	Wed, 18 Nov 2026 17:45:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gSyOOxx7
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92FA31F000C5;
+	Wed, 18 Nov 2026 17:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795023921;
-	bh=qCdNajnoDkwNBttx01uOTJjdTwDDe3nOzOPCrs2oRHs=;
+	s=korg; t=1795023924;
+	bh=9XzxcIOwjg15S2LY0VhWsdB79N5aQBtxgMhpCe6RfZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rsYUEnTWziOeW/Jd9v5pSOk1b4pDh7g3+VcUC+kqQsyHfR6PmKmiPcHV/uuHB8hjY
-	 /7NJw051dhhgDvsYhjJ/giOf2QCEp/iLNrmwdD9Y3F/6xVEN30PlJYwKpnNp6plU7F
-	 OVY4FirHTddyAm85+CkDloKcCv/tywliombnyXPc=
+	b=gSyOOxx7QFgODqMuTUe4WdWK0cTLuRiTCmyZpEaCE5F33ohUdEXfplIDMvXZQHcaP
+	 CbkeennTWjTgJtBScrB4lCL0gdBMScRKhHyEZYOxOqIz4U55RAvWsiBwHz+u+ftwAq
+	 Og6/MClguu50/R5U1K9PpIUS2AgpCYIKIjPmjeiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ian Rogers <irogers@google.com>,
+	Zide Chen <zide.chen@intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Dmitrii Dolgov <9erthalion6@gmail.com>,
+	German Gomez <german.gomez@arm.com>,
+	Ingo Molnar <mingo@redhat.com>,
 	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 0541/2151] perf auxtrace: Remove errno.h from auxtrace.h and fix transitive dependencies
-Date: Wed, 18 Nov 2026 15:37:56 +0100
-Message-ID: <20261118150141.702785156@linuxfoundation.org>
+Subject: [PATCH 6.18 0542/2151] perf arch x86 tests: Add test for topdown event sorting
+Date: Wed, 18 Nov 2026 15:37:57 +0100
+Message-ID: <20261118150141.734209555@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -71,445 +81,213 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit ca016b6527e154013693722a2cdbec7c05fb6df7 ]
+[ Upstream commit b439c20b2fe1cfed2210e50c06006845ae424c48 ]
 
-errno.h isn't used in auxtrace.h so remove it and fix build failures
-caused by transitive dependencies through auxtrace.h on errno.h.
+Add a test to capture the comment in tools/perf/arch/x86/util/evlist.c.
+
+Test that slots and topdown-retiring get appropriately sorted with
+respect to instructions when they're all specified together.
+
+When the PMU requires topdown event grouping (indicated by the pressence
+of the slots event) metric events should be after slots, which should be
+the group leader.
+
+Add a related test that when the slots event isn't given it is injected
+into the appropriate group.
 
 Signed-off-by: Ian Rogers <irogers@google.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Zide Chen <zide.chen@intel.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Collin Funk <collin.funk1@gmail.com>
+Cc: Dmitrii Dolgov <9erthalion6@gmail.com>
+Cc: German Gomez <german.gomez@arm.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Stable-dep-of: 0824af00a8d2 ("perf topdown: Don't require config1==0 for a slots event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/arm/annotate/instructions.c   | 1 +
- tools/perf/arch/arm/util/auxtrace.c           | 1 +
- tools/perf/arch/arm64/annotate/instructions.c | 1 +
- tools/perf/arch/arm64/util/arm-spe.c          | 1 +
- tools/perf/arch/arm64/util/hisi-ptt.c         | 1 +
- tools/perf/arch/powerpc/util/auxtrace.c       | 2 +-
- tools/perf/arch/s390/util/auxtrace.c          | 1 +
- tools/perf/arch/x86/tests/topdown.c           | 1 +
- tools/perf/arch/x86/util/topdown.c            | 1 +
- tools/perf/bench/evlist-open-close.c          | 1 +
- tools/perf/bench/futex.c                      | 1 +
- tools/perf/bench/pmu-scan.c                   | 1 +
- tools/perf/bench/synthesize.c                 | 1 +
- tools/perf/builtin-mem.c                      | 1 +
- tools/perf/tests/hwmon_pmu.c                  | 1 +
- tools/perf/tests/parse-metric.c               | 1 +
- tools/perf/tests/pfm.c                        | 1 +
- tools/perf/ui/hist.c                          | 1 +
- tools/perf/util/annotate-data.c               | 2 +-
- tools/perf/util/auxtrace.h                    | 1 -
- tools/perf/util/bpf-filter.h                  | 2 ++
- tools/perf/util/bpf-trace-summary.c           | 1 +
- tools/perf/util/bpf_counter_cgroup.c          | 1 +
- tools/perf/util/bpf_ftrace.c                  | 3 ++-
- tools/perf/util/bpf_map.c                     | 1 +
- tools/perf/util/cgroup.c                      | 1 +
- tools/perf/util/drm_pmu.c                     | 1 +
- tools/perf/util/evswitch.c                    | 1 +
- tools/perf/util/intel-tpebs.c                 | 1 +
- tools/perf/util/kvm-stat.h                    | 1 +
- tools/perf/util/mmap.c                        | 1 +
- tools/perf/util/pfm.c                         | 1 +
- tools/perf/util/powerpc-vpadtl.c              | 1 +
- tools/perf/util/stat-shadow.c                 | 1 +
- 34 files changed, 35 insertions(+), 4 deletions(-)
+ tools/perf/arch/x86/tests/topdown.c | 166 +++++++++++++++++++++++++++-
+ 1 file changed, 165 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/arch/arm/annotate/instructions.c b/tools/perf/arch/arm/annotate/instructions.c
-index cf91a43362b0e..5e667b0f55126 100644
---- a/tools/perf/arch/arm/annotate/instructions.c
-+++ b/tools/perf/arch/arm/annotate/instructions.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/compiler.h>
- #include <linux/zalloc.h>
-+#include <errno.h>
- #include <sys/types.h>
- #include <regex.h>
- #include <stdlib.h>
-diff --git a/tools/perf/arch/arm/util/auxtrace.c b/tools/perf/arch/arm/util/auxtrace.c
-index 3b8eca0ffb171..eb6404267f171 100644
---- a/tools/perf/arch/arm/util/auxtrace.c
-+++ b/tools/perf/arch/arm/util/auxtrace.c
-@@ -5,6 +5,7 @@
-  */
- 
- #include <dirent.h>
-+#include <errno.h>
- #include <stdbool.h>
- #include <linux/coresight-pmu.h>
- #include <linux/zalloc.h>
-diff --git a/tools/perf/arch/arm64/annotate/instructions.c b/tools/perf/arch/arm64/annotate/instructions.c
-index d465d093e7eb5..16cb62d40bd96 100644
---- a/tools/perf/arch/arm64/annotate/instructions.c
-+++ b/tools/perf/arch/arm64/annotate/instructions.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/compiler.h>
-+#include <errno.h>
- #include <sys/types.h>
- #include <regex.h>
- #include <stdlib.h>
-diff --git a/tools/perf/arch/arm64/util/arm-spe.c b/tools/perf/arch/arm64/util/arm-spe.c
-index cac43cde7dbee..d5ec1408d0aec 100644
---- a/tools/perf/arch/arm64/util/arm-spe.c
-+++ b/tools/perf/arch/arm64/util/arm-spe.c
-@@ -10,6 +10,7 @@
- #include <linux/log2.h>
- #include <linux/string.h>
- #include <linux/zalloc.h>
-+#include <errno.h>
- #include <time.h>
- 
- #include "../../../util/cpumap.h"
-diff --git a/tools/perf/arch/arm64/util/hisi-ptt.c b/tools/perf/arch/arm64/util/hisi-ptt.c
-index eac9739c87e6c..fe457fd58c9e8 100644
---- a/tools/perf/arch/arm64/util/hisi-ptt.c
-+++ b/tools/perf/arch/arm64/util/hisi-ptt.c
-@@ -9,6 +9,7 @@
- #include <linux/bitops.h>
- #include <linux/log2.h>
- #include <linux/zalloc.h>
-+#include <errno.h>
- #include <time.h>
- 
- #include <internal/lib.h> // page_size
-diff --git a/tools/perf/arch/powerpc/util/auxtrace.c b/tools/perf/arch/powerpc/util/auxtrace.c
-index 57f2910c0b019..d0082eb276425 100644
---- a/tools/perf/arch/powerpc/util/auxtrace.c
-+++ b/tools/perf/arch/powerpc/util/auxtrace.c
-@@ -2,7 +2,7 @@
- /*
-  * VPA support
-  */
--
-+#include <errno.h>
- #include <linux/kernel.h>
- #include <linux/types.h>
- #include <linux/string.h>
-diff --git a/tools/perf/arch/s390/util/auxtrace.c b/tools/perf/arch/s390/util/auxtrace.c
-index 5068baa3e092b..1a36761450661 100644
---- a/tools/perf/arch/s390/util/auxtrace.c
-+++ b/tools/perf/arch/s390/util/auxtrace.c
-@@ -1,3 +1,4 @@
-+#include <errno.h>
- #include <stdbool.h>
- #include <stdlib.h>
- #include <linux/kernel.h>
 diff --git a/tools/perf/arch/x86/tests/topdown.c b/tools/perf/arch/x86/tests/topdown.c
-index 1eba3b4594ef2..3ee4e5e71be3b 100644
+index 3ee4e5e71be3b..221f2c4bbb615 100644
 --- a/tools/perf/arch/x86/tests/topdown.c
 +++ b/tools/perf/arch/x86/tests/topdown.c
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include <errno.h>
- #include "arch-tests.h"
- #include "../util/topdown.h"
- #include "debug.h"
-diff --git a/tools/perf/arch/x86/util/topdown.c b/tools/perf/arch/x86/util/topdown.c
-index 0d01b662627a3..bafd285119d7a 100644
---- a/tools/perf/arch/x86/util/topdown.c
-+++ b/tools/perf/arch/x86/util/topdown.c
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include <errno.h>
- #include "util/evlist.h"
- #include "util/pmu.h"
- #include "util/pmus.h"
-diff --git a/tools/perf/bench/evlist-open-close.c b/tools/perf/bench/evlist-open-close.c
-index bfaf50e4e5193..faf9c34b4a5dc 100644
---- a/tools/perf/bench/evlist-open-close.c
-+++ b/tools/perf/bench/evlist-open-close.c
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include <errno.h>
- #include <inttypes.h>
- #include <stdio.h>
- #include <stdlib.h>
-diff --git a/tools/perf/bench/futex.c b/tools/perf/bench/futex.c
-index 1481196a22f0c..1968c9d00b5bb 100644
---- a/tools/perf/bench/futex.c
-+++ b/tools/perf/bench/futex.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <err.h>
-+#include <errno.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <sys/prctl.h>
-diff --git a/tools/perf/bench/pmu-scan.c b/tools/perf/bench/pmu-scan.c
-index 9e4d36486f625..14a464ad8cea8 100644
---- a/tools/perf/bench/pmu-scan.c
-+++ b/tools/perf/bench/pmu-scan.c
-@@ -4,6 +4,7 @@
-  *
-  * Copyright 2023 Google LLC.
-  */
-+#include <errno.h>
- #include <stdio.h>
- #include "bench.h"
- #include "util/debug.h"
-diff --git a/tools/perf/bench/synthesize.c b/tools/perf/bench/synthesize.c
-index b3d493697675c..265d49a913d94 100644
---- a/tools/perf/bench/synthesize.c
-+++ b/tools/perf/bench/synthesize.c
-@@ -6,6 +6,7 @@
-  *
-  * Copyright 2019 Google LLC.
-  */
-+#include <errno.h>
- #include <stdio.h>
- #include "bench.h"
- #include "../util/debug.h"
-diff --git a/tools/perf/builtin-mem.c b/tools/perf/builtin-mem.c
-index c6496adff3fea..d43500b92a7b9 100644
---- a/tools/perf/builtin-mem.c
-+++ b/tools/perf/builtin-mem.c
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include <errno.h>
- #include <inttypes.h>
- #include <sys/types.h>
- #include <sys/stat.h>
-diff --git a/tools/perf/tests/hwmon_pmu.c b/tools/perf/tests/hwmon_pmu.c
-index 151f02701c8cc..4aa4aac94f09c 100644
---- a/tools/perf/tests/hwmon_pmu.c
-+++ b/tools/perf/tests/hwmon_pmu.c
-@@ -4,6 +4,7 @@
- #include "hwmon_pmu.h"
- #include "parse-events.h"
- #include "tests.h"
-+#include <errno.h>
- #include <fcntl.h>
- #include <sys/stat.h>
- #include <linux/compiler.h>
-diff --git a/tools/perf/tests/parse-metric.c b/tools/perf/tests/parse-metric.c
-index 66a5275917e22..9b1df1eb455a7 100644
---- a/tools/perf/tests/parse-metric.c
-+++ b/tools/perf/tests/parse-metric.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- #include <linux/compiler.h>
-+#include <errno.h>
- #include <string.h>
- #include <perf/cpumap.h>
- #include <perf/evlist.h>
-diff --git a/tools/perf/tests/pfm.c b/tools/perf/tests/pfm.c
-index 2e38dfa34b6ce..fca4a86452df6 100644
---- a/tools/perf/tests/pfm.c
-+++ b/tools/perf/tests/pfm.c
-@@ -4,6 +4,7 @@
-  *
-  * Copyright 2020 Google LLC.
-  */
-+#include <errno.h>
- #include "tests.h"
- #include "util/debug.h"
- #include "util/evlist.h"
-diff --git a/tools/perf/ui/hist.c b/tools/perf/ui/hist.c
-index b085eb0de8499..e58327595d37d 100644
---- a/tools/perf/ui/hist.c
-+++ b/tools/perf/ui/hist.c
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include <errno.h>
- #include <inttypes.h>
- #include <math.h>
- #include <stdlib.h>
-diff --git a/tools/perf/util/annotate-data.c b/tools/perf/util/annotate-data.c
-index 903027a6fb7d3..687f381aeaec2 100644
---- a/tools/perf/util/annotate-data.c
-+++ b/tools/perf/util/annotate-data.c
-@@ -4,7 +4,7 @@
-  *
-  * Written by Namhyung Kim <namhyung@kernel.org>
-  */
--
-+#include <errno.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <inttypes.h>
-diff --git a/tools/perf/util/auxtrace.h b/tools/perf/util/auxtrace.h
-index 79ffdddab7ab4..ab826d4a58e02 100644
---- a/tools/perf/util/auxtrace.h
-+++ b/tools/perf/util/auxtrace.h
-@@ -7,7 +7,6 @@
- #ifndef __PERF_AUXTRACE_H
- #define __PERF_AUXTRACE_H
+@@ -75,4 +75,168 @@ static int test__x86_topdown(struct test_suite *test __maybe_unused, int subtest
+ 	return ret;
+ }
  
--#include <errno.h>
- #include <stdio.h> // FILE
- #include <linux/perf_event.h>
- #include <linux/types.h>
-diff --git a/tools/perf/util/bpf-filter.h b/tools/perf/util/bpf-filter.h
-index 122477f2de44b..818c554b91b28 100644
---- a/tools/perf/util/bpf-filter.h
-+++ b/tools/perf/util/bpf-filter.h
-@@ -36,6 +36,8 @@ int perf_bpf_filter__unpin(void);
- 
- #else /* !HAVE_BPF_SKEL */
- 
-+#include <errno.h>
+-DEFINE_SUITE("x86 topdown", x86_topdown);
++#define CHECK_COND(cond, text)					\
++do {								\
++	if (!(cond)) {						\
++		pr_debug("FAILED %s:%d %s\n", __FILE__, __LINE__, text); \
++		ret = TEST_FAIL;				\
++		goto out_err;					\
++	}							\
++} while (0)
 +
- static inline int perf_bpf_filter__parse(struct list_head *expr_head __maybe_unused,
- 					 const char *str __maybe_unused)
- {
-diff --git a/tools/perf/util/bpf-trace-summary.c b/tools/perf/util/bpf-trace-summary.c
-index 8dfe7e678941d..cf6e1e4402d52 100644
---- a/tools/perf/util/bpf-trace-summary.c
-+++ b/tools/perf/util/bpf-trace-summary.c
-@@ -1,4 +1,5 @@
- /* SPDX-License-Identifier: GPL-2.0 */
-+#include <errno.h>
- #include <inttypes.h>
- #include <math.h>
- #include <stdio.h>
-diff --git a/tools/perf/util/bpf_counter_cgroup.c b/tools/perf/util/bpf_counter_cgroup.c
-index 690be3ce3e114..8d701724a807c 100644
---- a/tools/perf/util/bpf_counter_cgroup.c
-+++ b/tools/perf/util/bpf_counter_cgroup.c
-@@ -4,6 +4,7 @@
- /* Copyright (c) 2021 Google */
- 
- #include <assert.h>
-+#include <errno.h>
- #include <limits.h>
- #include <unistd.h>
- #include <sys/file.h>
-diff --git a/tools/perf/util/bpf_ftrace.c b/tools/perf/util/bpf_ftrace.c
-index e61a3b20be0a0..c456d24efa308 100644
---- a/tools/perf/util/bpf_ftrace.c
-+++ b/tools/perf/util/bpf_ftrace.c
-@@ -1,6 +1,7 @@
--#include <stdio.h>
-+#include <errno.h>
- #include <fcntl.h>
- #include <stdint.h>
-+#include <stdio.h>
- #include <stdlib.h>
- 
- #include <bpf/bpf.h>
-diff --git a/tools/perf/util/bpf_map.c b/tools/perf/util/bpf_map.c
-index 578f27d2d6b46..442f91b4e8e15 100644
---- a/tools/perf/util/bpf_map.c
-+++ b/tools/perf/util/bpf_map.c
-@@ -5,6 +5,7 @@
- #include <bpf/libbpf.h>
- #include <linux/err.h>
- #include <linux/kernel.h>
-+#include <errno.h>
- #include <stdbool.h>
- #include <stdlib.h>
- #include <unistd.h>
-diff --git a/tools/perf/util/cgroup.c b/tools/perf/util/cgroup.c
-index 0038d2ac647c4..1b5664d1481f5 100644
---- a/tools/perf/util/cgroup.c
-+++ b/tools/perf/util/cgroup.c
-@@ -10,6 +10,7 @@
- #include <sys/types.h>
- #include <sys/stat.h>
- #include <sys/statfs.h>
-+#include <errno.h>
- #include <fcntl.h>
- #include <stdlib.h>
- #include <string.h>
-diff --git a/tools/perf/util/drm_pmu.c b/tools/perf/util/drm_pmu.c
-index 98d4d2b556d4e..b3052266d5993 100644
---- a/tools/perf/util/drm_pmu.c
-+++ b/tools/perf/util/drm_pmu.c
-@@ -10,6 +10,7 @@
- #include <api/io.h>
- #include <ctype.h>
- #include <dirent.h>
-+#include <errno.h>
- #include <fcntl.h>
- #include <unistd.h>
- #include <linux/unistd.h>
-diff --git a/tools/perf/util/evswitch.c b/tools/perf/util/evswitch.c
-index 40cb56a9347da..d4c06a3f825a8 100644
---- a/tools/perf/util/evswitch.c
-+++ b/tools/perf/util/evswitch.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0-only
- // Copyright (C) 2019, Red Hat Inc, Arnaldo Carvalho de Melo <acme@redhat.com>
- 
-+#include <errno.h>
- #include "evswitch.h"
- #include "evlist.h"
- 
-diff --git a/tools/perf/util/intel-tpebs.c b/tools/perf/util/intel-tpebs.c
-index 21359155f2a0b..3c958d738ca6c 100644
---- a/tools/perf/util/intel-tpebs.c
-+++ b/tools/perf/util/intel-tpebs.c
-@@ -25,6 +25,7 @@
- #include "stat.h"
- #include <sys/stat.h>
- #include <sys/file.h>
-+#include <errno.h>
- #include <poll.h>
- #include <math.h>
- 
-diff --git a/tools/perf/util/kvm-stat.h b/tools/perf/util/kvm-stat.h
-index 53db3d56108bd..a356b839c2ee0 100644
---- a/tools/perf/util/kvm-stat.h
-+++ b/tools/perf/util/kvm-stat.h
-@@ -10,6 +10,7 @@
- #include "symbol.h"
- #include "record.h"
- 
-+#include <errno.h>
- #include <stdlib.h>
- #include <linux/zalloc.h>
- 
-diff --git a/tools/perf/util/mmap.c b/tools/perf/util/mmap.c
-index fcc0939846830..d64aec6c7c843 100644
---- a/tools/perf/util/mmap.c
-+++ b/tools/perf/util/mmap.c
-@@ -7,6 +7,7 @@
-  */
- 
- #include <sys/mman.h>
-+#include <errno.h>
- #include <inttypes.h>
- #include <asm/bug.h>
- #include <linux/zalloc.h>
-diff --git a/tools/perf/util/pfm.c b/tools/perf/util/pfm.c
-index e5b3a2a5ddef5..d9043f4afbe7b 100644
---- a/tools/perf/util/pfm.c
-+++ b/tools/perf/util/pfm.c
-@@ -15,6 +15,7 @@
- #include "util/strbuf.h"
- #include "util/thread_map.h"
- 
-+#include <errno.h>
- #include <string.h>
- #include <linux/kernel.h>
- #include <perfmon/pfmlib_perf_event.h>
-diff --git a/tools/perf/util/powerpc-vpadtl.c b/tools/perf/util/powerpc-vpadtl.c
-index eacc845ebda26..740fef005cf56 100644
---- a/tools/perf/util/powerpc-vpadtl.c
-+++ b/tools/perf/util/powerpc-vpadtl.c
-@@ -4,6 +4,7 @@
-  */
- 
- #include <linux/string.h>
-+#include <errno.h>
- #include <inttypes.h>
- #include "color.h"
- #include "evlist.h"
-diff --git a/tools/perf/util/stat-shadow.c b/tools/perf/util/stat-shadow.c
-index abaf6b579bfc2..0002e51194c2c 100644
---- a/tools/perf/util/stat-shadow.c
-+++ b/tools/perf/util/stat-shadow.c
-@@ -1,4 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0
-+#include <errno.h>
- #include <math.h>
- #include <stdio.h>
- #include "evsel.h"
++#define CHECK_EQUAL(val, expected, text)			\
++do {								\
++	if ((val) != (expected)) {				\
++		pr_debug("FAILED %s:%d %s (%d != %d)\n",	\
++			 __FILE__, __LINE__, text, (val), (expected)); \
++		ret = TEST_FAIL;				\
++		goto out_err;					\
++	}							\
++} while (0)
++
++static int test_sort(const char *str, int expected_slots_group_size,
++		     int expected_instructions_group_size)
++{
++	struct evlist *evlist = NULL;
++	struct parse_events_error err;
++	struct evsel *evsel;
++	int ret = TEST_FAIL;
++	bool slots_seen = false;
++
++	parse_events_error__init(&err);
++
++	evlist = evlist__new();
++	if (!evlist)
++		goto out_err;
++
++	if (parse_events(evlist, str, &err)) {
++		pr_debug("parse_events failed for %s\n", str);
++		goto out_err;
++	}
++
++	evlist__for_each_entry(evlist, evsel) {
++		if (!evsel__is_group_leader(evsel))
++			continue;
++
++		if (strstr(evsel__name(evsel), "slots")) {
++			/*
++			 * Slots as a leader means the PMU is for a perf metric
++			 * group as the slots event isn't present when not.
++			 */
++			slots_seen = true;
++			CHECK_EQUAL(evsel->core.nr_members, expected_slots_group_size,
++				    "slots group size");
++			if (expected_slots_group_size == 3) {
++				struct evsel *next = evsel__next(evsel);
++				struct evsel *next2 = evsel__next(next);
++
++				CHECK_COND(strstr(evsel__name(next), "instructions") != NULL,
++					   "slots second event is instructions");
++				CHECK_COND(strstr(evsel__name(next2), "topdown-retiring") != NULL,
++					   "slots third event is topdown-retiring");
++			} else if (expected_slots_group_size == 2) {
++				struct evsel *next = evsel__next(evsel);
++
++				CHECK_COND(strstr(evsel__name(next), "topdown-retiring") != NULL,
++					   "slots second event is topdown-retiring");
++			}
++		} else if (strstr(evsel__name(evsel), "instructions")) {
++			CHECK_EQUAL(evsel->core.nr_members, expected_instructions_group_size,
++				    "instructions group size");
++			if (expected_instructions_group_size == 2) {
++				/*
++				 * On Intel hybrid CPUs (e.g., Alder Lake/
++				 * Raptor Lake), E-cores (cpu_atom) do not
++				 * support/enforce the slots event. When
++				 * parsing event groups containing slots
++				 * across all PMUs, slots is automatically
++				 * filtered out from cpu_atom, leaving
++				 * {cpu_atom/instructions/,
++				 *  cpu_atom/topdown-retiring/}. On cpu_atom,
++				 * instructions correctly leads this group of
++				 * 2 without slots reordering.
++				 */
++				struct evsel *next = evsel__next(evsel);
++
++				CHECK_COND(strstr(evsel__name(next), "topdown-retiring") != NULL,
++					   "instructions second event is topdown-retiring");
++			}
++		} else if (strstr(evsel__name(evsel), "topdown-retiring")) {
++			/*
++			 * A perf metric event where the PMU doesn't require
++			 * slots as a leader.
++			 */
++			CHECK_EQUAL(evsel->core.nr_members, 1, "topdown-retiring group size");
++		} else if (strstr(evsel__name(evsel), "cycles")) {
++			CHECK_EQUAL(evsel->core.nr_members, 1, "cycles group size");
++		}
++	}
++	CHECK_COND(slots_seen, "slots seen");
++	ret = TEST_OK;
++out_err:
++	evlist__delete(evlist);
++	parse_events_error__exit(&err);
++	return ret;
++}
++
++static int test__x86_topdown_sorting(struct test_suite *test __maybe_unused,
++				     int subtest __maybe_unused)
++{
++	int ret;
++
++	if (!topdown_sys_has_perf_metrics())
++		return TEST_OK;
++
++	ret = test_sort("{instructions,topdown-retiring,slots}", 3, 2);
++	TEST_ASSERT_EQUAL("all events in a group", ret, TEST_OK);
++	ret = test_sort("instructions,topdown-retiring,slots", 2, 1);
++	TEST_ASSERT_EQUAL("all events not in a group", ret, TEST_OK);
++	ret = test_sort("{instructions,slots},topdown-retiring", 2, 1);
++	TEST_ASSERT_EQUAL("slots event in a group but topdown metrics events outside the group",
++			  ret, TEST_OK);
++	ret = test_sort("{instructions,slots},{topdown-retiring}", 2, 1);
++	TEST_ASSERT_EQUAL("slots event and topdown metrics events in two groups",
++			  ret, TEST_OK);
++	ret = test_sort("{instructions,slots},cycles,topdown-retiring", 2, 1);
++	TEST_ASSERT_EQUAL("slots event and metrics event are not in a group and not adjacent",
++			  ret, TEST_OK);
++
++	return TEST_OK;
++}
++
++static int test__x86_topdown_slots_injection(struct test_suite *test __maybe_unused,
++					     int subtest __maybe_unused)
++{
++	int ret;
++
++	if (!topdown_sys_has_perf_metrics())
++		return TEST_OK;
++
++	ret = test_sort("{instructions,topdown-retiring}", 3, 2);
++	TEST_ASSERT_EQUAL("all events in a group", ret, TEST_OK);
++	ret = test_sort("instructions,topdown-retiring", 2, 1);
++	TEST_ASSERT_EQUAL("all events not in a group", ret, TEST_OK);
++	ret = test_sort("{instructions},topdown-retiring", 2, 1);
++	TEST_ASSERT_EQUAL("event in a group but topdown metrics events outside the group",
++			  ret, TEST_OK);
++	ret = test_sort("{instructions},{topdown-retiring}", 2, 1);
++	TEST_ASSERT_EQUAL("event and topdown metrics events in two groups",
++			  ret, TEST_OK);
++	ret = test_sort("{instructions},cycles,topdown-retiring", 2, 1);
++	TEST_ASSERT_EQUAL("event and metrics event are not in a group and not adjacent",
++			  ret, TEST_OK);
++
++	return TEST_OK;
++}
++
++static struct test_case x86_topdown_tests[] = {
++	TEST_CASE("topdown events", x86_topdown),
++	TEST_CASE("topdown sorting", x86_topdown_sorting),
++	TEST_CASE("topdown slots injection", x86_topdown_slots_injection),
++	{ .name = NULL, }
++};
++
++struct test_suite suite__x86_topdown = {
++	.desc = "x86 topdown",
++	.test_cases = x86_topdown_tests,
++};
 -- 
 2.53.0
 
