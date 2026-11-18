@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795018586;
-	b=LoIJHmaORlGe7O8RVFrY1elVJ/mipG6rksdHMgPHtBvJFu4ng8RyrGEub5hUY+c8vxIc
-	 T58ASqwqbCOdrkutqGmeaeHiNr+8qC9rs67a4VBW4HEHvZl085MoZWTAWBCRXPdTT+21Y
-	 brhmjTtjmPYMpBmE3aOepCjkzsWL2NqKFTd79aAQ0g54mrxn081kgJfKdcfqfh0g7Ncts
-	 rOOqvJojwzxgQtO6oG1QFSmgMTD3ylvxxnIGcTals7OjTy+vxtlcFAEur9wm7lhpAi9Y2
-	 Z0lvamlpSqJotPpYzs/irIYKwIKT414PaWlKlS+ZHxcFrrSeqUv7ddfBR8HFDQxySOg==
+	t=1795018589;
+	b=Yb34zANlqFrMBprDvi7AdVH5e+VonV3yBI+KeUoFMZVa0WmQtT18XjknDRrIM09IE8yb
+	 ihJWL6/pvVosywGndfCbbB+tr47d9f0CgNq2TJMdIPezszxG07gvsmH2Jqc7nP/VU6iQD
+	 9gI5ZMBk7Gg+Dc0xykOFciMou6PtWjLz0IAXR6xBv009VbG6hXVCIln4mpd5Dp3gvomdo
+	 PmyxU3khjcUQrfVY78419qX9uUtg6/dIeNz15ZNtYbOzi5p8AYt+dwkKAJnMcydha54Kz
+	 I+el4KDMTfuRBXSHPjfbaKi9pIo5hi7lVF4eP9UrHfhA6B0Gpvd/akKgh5dtmmolcaw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795018586;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795018589;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=QYz2AlKj2zCGhWyjiFXRQzuBwIPF4nzcKcfGShgtNJ0=;
-	b=erPHxxLZmRY2GvZX+bAPicXUJKKPHiOT34igZve6t0Cvgcy9jCdmb3lAUlRyBFAeKysn
-	 Xf4NDiKiBeA27FhIIwaui5nhxaGd58CTdBPY3hT7wPZspBKjhtzyf1dP7fy9m2Rh8dU0C
-	 x0ukSU61X0avU+W0eAMUNvaIbEqjyrlyz72dE7LA5zQZh2S/KNHIFu72UaRuwRDuZOa6B
-	 4riWEHn+97gVDIGW+S9p4TbrfdwDoy148IlfCtLZPXKlo1vaX0+p1Cxuxd2sTUj9FVEuq
-	 x6+sXckJfTYy+FABrcbkhutxZ17yppSI7HR2dyme+a4kGpMu/HMad3evt7lj92bWDQA==
+	bh=NgBFnGEa+3IDS1BNqcXlxTeVgZ7qbRkxo5CxuBSz1es=;
+	b=VlXixx2PQ/BZma5tjnffnr7WUlEB0za3QpQzkaCqBHgA/VMPaeesw9AsYXnpEdjxqcyb
+	 mrN1m9mKpLns7Na0mHvxwdLb/ijwzP0GRO9D2mSHJgxg0au2AgjuLMzDaRXyL8DdCt4Va
+	 6wsOs4vvZW3oOdtmQPOMjp+DrflyxSsr8qwR/F6IVLrE4hhvrCJmufJgayDr4LONFQx2C
+	 dOJ/QR60IC67Nq8WB3gznPu9XsF1Urw6pitfpxaI1o0HbZBhDk4MiRl81pUh+IJYTqmJp
+	 L/zrSheLQSXMyihJx1iDy4qiTjqPCKMlDwmogtR474ooShYc3FBjKyPh+Sa2FGm1RSg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MwnXygYC;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gVAdcs7M;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585BB606A31C;
-	Wed, 18 Nov 2026 16:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA27606A31C;
+	Wed, 18 Nov 2026 16:16:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=MwnXygYC
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB10E1F000C4;
-	Wed, 18 Nov 2026 16:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gVAdcs7M
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9BB1F000C4;
+	Wed, 18 Nov 2026 16:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795018586;
-	bh=QYz2AlKj2zCGhWyjiFXRQzuBwIPF4nzcKcfGShgtNJ0=;
+	s=korg; t=1795018589;
+	bh=NgBFnGEa+3IDS1BNqcXlxTeVgZ7qbRkxo5CxuBSz1es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=MwnXygYCN1XC49tT1w0mHrcnms8eK3XwQy9NAWV3FU61tNPf47qex6pdtU3Xa+hPz
-	 H0rXMILSi5qCz+B/GL8qLj4KyhIkxgt8XgG7HuMSMA4v9dktP6RnNWWnK4RaP/dKFf
-	 el9v/eOIBT789Gllxb8sWXJUMCc8OdW45YUSpDvc=
+	b=gVAdcs7MFRxeOHNTvSTMCSzuvWJ9GQ8w6gMGQm0K0vAfBe132CfknYeaW6kXArprY
+	 zK4LRyRDkynTUblFr03VIsALM1+Ykqi3nkHidKld1nj72is0eUB+BMP9O1WWNcECxm
+	 Rr2t0MxodZfUw9YznSDx+/49oJdzeniFp0U5TT2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaozhong Li <yaozhonguwl@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Hongyan Xu <getshell@seu.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1292/2651] arm64: dts: rockchip: disable unused i2s0 on rk3399-firefly
-Date: Wed, 18 Nov 2026 15:42:12 +0100
-Message-ID: <20261118150334.454254750@linuxfoundation.org>
+Subject: [PATCH 7.3 1293/2651] ASoC: mt6359-accdet: manage private workqueues with devres
+Date: Wed, 18 Nov 2026 15:42:13 +0100
+Message-ID: <20261118150334.496161930@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,68 +68,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yaozhong Li <yaozhonguwl@gmail.com>
+From: Hongyan Xu <getshell@seu.edu.cn>
 
-[ Upstream commit 9416a641cfe5b75dd9178c15960ee741c1091b45 ]
+[ Upstream commit 9a773d9d21fa909e8babbe11e93c811cf1a6d22d ]
 
-The board file enables i2s0, but no sound card references it: the
-on-board RT5640 is wired to i2s1 and the S/PDIF transmitter has its own
-controller. Keeping it enabled starves the other controllers, due to the
-pl330 instance that serves the audio block only having six channels.
+The threaded jack-detect interrupts queue work on two private
+workqueues. Neither queue is destroyed on device removal, so queued
+callbacks can retain pointers to devm-allocated state after it is
+released. Probe error paths also leak the queues.
 
-The i2s0 pin groups also lists GPIO4_A0, which carries SCLK_I2S_8CH_OUT,
-providing the MCLK the codec runs on.
+Create and initialize both workqueues before requesting interrupts, then
+add a managed cleanup action. Since the managed IRQs are acquired
+afterwards, devres releases and synchronizes them before draining and
+destroying the workqueues on both removal and probe failure.
 
-So add the pinmux for the MCLK signal to the i2s1 node.
-
-The RT5640 and S/PDIF cards then register with no DMA errors, and a
-1 kHz tone measured through the codec's internal HPOL/HPOR loopback is
-unchanged (L 2135 -> 2138, R 2202 -> 2203), confirming that MCLK still
-reaches the codec.
-
-Fixes: 171582e00db1 ("arm64: dts: rockchip: add support for firefly-rk3399 board")
-Assisted-by: LLM
-Signed-off-by: Yaozhong Li <yaozhonguwl@gmail.com>
-Link: https://patch.msgid.link/20260921063431.103-3-yaozhonguwl@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: eef07b9e0925 ("ASoC: mediatek: mt6359: add MT6359 accdet jack driver")
+Signed-off-by: Hongyan Xu <getshell@seu.edu.cn>
+Link: https://patch.msgid.link/20260928134054.312-1-getshell@seu.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-firefly.dts | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ sound/soc/codecs/mt6359-accdet.c | 50 ++++++++++++++++++--------------
+ 1 file changed, 28 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
-index e971966516127..e4570e75c203a 100644
---- a/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-firefly.dts
-@@ -628,13 +628,9 @@ accelerometer@68 {
- 	};
- };
+diff --git a/sound/soc/codecs/mt6359-accdet.c b/sound/soc/codecs/mt6359-accdet.c
+index e1190c644021c..54ec1c6bd64b4 100644
+--- a/sound/soc/codecs/mt6359-accdet.c
++++ b/sound/soc/codecs/mt6359-accdet.c
+@@ -914,6 +914,14 @@ int mt6359_accdet_enable_jack_detect(struct snd_soc_component *component,
+ }
+ EXPORT_SYMBOL_GPL(mt6359_accdet_enable_jack_detect);
  
--&i2s0 {
--	rockchip,playback-channels = <8>;
--	rockchip,capture-channels = <8>;
--	status = "okay";
--};
--
- &i2s1 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2s_8ch_mclk_pin>, <&i2s1_2ch_bus>;
- 	rockchip,playback-channels = <2>;
- 	rockchip,capture-channels = <2>;
- 	status = "okay";
-@@ -689,6 +685,12 @@ ir_int: ir-int {
- 		};
- 	};
- 
-+	i2s1 {
-+		i2s_8ch_mclk_pin: i2s-8ch-mclk-pin {
-+			rockchip,pins = <4 RK_PA0 1 &pcfg_pull_none>;
-+		};
-+	};
++static void mt6359_accdet_destroy_workqueues(void *data)
++{
++	struct mt6359_accdet *priv = data;
 +
- 	lcd-panel {
- 		lcd_panel_reset: lcd-panel-reset {
- 			rockchip,pins = <4 RK_PD6 RK_FUNC_GPIO &pcfg_pull_up>;
++	destroy_workqueue(priv->jd_workqueue);
++	destroy_workqueue(priv->accdet_workqueue);
++}
++
+ static int mt6359_accdet_probe(struct platform_device *pdev)
+ {
+ 	struct mt6359_accdet *priv;
+@@ -955,6 +963,26 @@ static int mt6359_accdet_probe(struct platform_device *pdev)
+ 	}
+ 	mutex_init(&priv->res_lock);
+ 
++	priv->accdet_workqueue = create_singlethread_workqueue("accdet");
++	INIT_WORK(&priv->accdet_work, mt6359_accdet_work);
++	if (!priv->accdet_workqueue) {
++		dev_err(&pdev->dev, "Failed to create accdet workqueue\n");
++		return -ENOMEM;
++	}
++
++	priv->jd_workqueue = create_singlethread_workqueue("mt6359_accdet_jd");
++	INIT_WORK(&priv->jd_work, mt6359_accdet_jd_work);
++	if (!priv->jd_workqueue) {
++		dev_err(&pdev->dev, "Failed to create jack detect workqueue\n");
++		destroy_workqueue(priv->accdet_workqueue);
++		return -ENOMEM;
++	}
++
++	ret = devm_add_action_or_reset(&pdev->dev,
++				       mt6359_accdet_destroy_workqueues, priv);
++	if (ret)
++		return ret;
++
+ 	priv->accdet_irq = platform_get_irq(pdev, 0);
+ 	if (priv->accdet_irq >= 0) {
+ 		ret = devm_request_threaded_irq(&pdev->dev, priv->accdet_irq,
+@@ -1000,22 +1028,6 @@ static int mt6359_accdet_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
+-	priv->accdet_workqueue = create_singlethread_workqueue("accdet");
+-	INIT_WORK(&priv->accdet_work, mt6359_accdet_work);
+-	if (!priv->accdet_workqueue) {
+-		dev_err(&pdev->dev, "Failed to create accdet workqueue\n");
+-		ret = -1;
+-		goto err_accdet_wq;
+-	}
+-
+-	priv->jd_workqueue = create_singlethread_workqueue("mt6359_accdet_jd");
+-	INIT_WORK(&priv->jd_work, mt6359_accdet_jd_work);
+-	if (!priv->jd_workqueue) {
+-		dev_err(&pdev->dev, "Failed to create jack detect workqueue\n");
+-		ret = -1;
+-		goto err_eint_wq;
+-	}
+-
+ 	platform_set_drvdata(pdev, priv);
+ 	ret = devm_snd_soc_register_component(&pdev->dev,
+ 					      &mt6359_accdet_soc_driver,
+@@ -1034,12 +1046,6 @@ static int mt6359_accdet_probe(struct platform_device *pdev)
+ 	mt6359_accdet_jack_report(priv);
+ 
+ 	return 0;
+-
+-err_eint_wq:
+-	destroy_workqueue(priv->accdet_workqueue);
+-err_accdet_wq:
+-	dev_err(&pdev->dev, "%s error. now exit.!\n", __func__);
+-	return ret;
+ }
+ 
+ static struct platform_driver mt6359_accdet_driver = {
 -- 
 2.53.0
 
