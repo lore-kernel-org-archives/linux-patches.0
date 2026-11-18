@@ -1,55 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061153;
-	b=04GVnh358uTHtSbOtZ7Gzm53c9n7R1CKw63j4V4jD33ZF6eggUpZIwidyZ9i6PQRyUs/
-	 DwM4cgimLA0eM9dDZdVKjwYs+8G7Aj1MJE+YDHUi8mzwcxDaxB6QJXHWly+vjk6plImDY
-	 qoDPzg958EWq7z9BiE7D7qby+NuSv2VMUQ3oJ2Q24kWrfLLxpBQZTvYECx/fiZmJM6QdU
-	 6Tv8hEtjruZEe0KgskWIEiOlOa59twnIW0ifnlP3fbSnApBEUjCBlRmoiFdUM14jRyhJJ
-	 orUCUzyp7W2zvdxmxcGiiGH+EJCjHXEaZZJHoPwOZnA7lrVsAWaMTNKPSDXNqHKQtOw==
+	t=1795061156;
+	b=W92DAVro7yGj8gAujETdgv3NW4dWS+TGosOt84auBSd/sC8fPVEwtkCsBDC1/AV1Ru6s
+	 A+khpEzzZclCE/qPuu4fycXEzCSI/VszoEise5sGleViIdquCV5IX+JVVPCq0tkMMO336
+	 evVoB4zbFRGueqshWPNi82f8vnfk0RWe0lGUypIpG3EVtZLt6TrsHvCPpRZjl0ccADpSx
+	 0JALZRwzPJONct4ppnJysgTEE8IqO0gh1pP1iKKfg6RuSBYImj8LkWTRkQQGxAJcScvJv
+	 Ol5TZYZ8eA4ZnjCvs6V5+ZaMpzGSRdfR9iJINNQRbVmRle5ATS9MxLIotZPSpyT1+9g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061153;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061156;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=by+T7ye6QHnHEl9ggw9DhpKMepxTErejpaU9LSC333g=;
-	b=ZylR4Vgld8VowWoRq82JUoowz7fLF3zVgrcWP6RX/MApTqMp0TcIrk6eQiLlDUw3gYyR
-	 xxCvxEaa2UQaPs5Rio10+xHNv0i5iQrKND5ECFFvpyeAXhmgomVcrN6KNv8qZrDtI9cBx
-	 rW6ZOCvEozA89d++O6nskBUNMSldIojni8L9VmhQlBBxMBpIYRIA4+1fP2H2LrrfPzrgj
-	 Do/FDgRXASKcIMO4kPvnf4Fdoj1CIWt9y3I+FiODAIWBBxP40xbXTt540ijWy/C9cqNJq
-	 BdjSBqL7mAucXMFNLAMWj0shhnsZ6VcGvcSlVm+pLBtp/9O/aV2WKtfMIYvNVRxs7cQ==
+	bh=rpmJ1IzEfOm6R5/iX8a2adnjpf3k1DXgl1IHt8arHQI=;
+	b=ctjHwYil7i1CvyeLUR1Rba2lVDTkOTh0e4I0FZlfb7hJRSrQOPf0MtnBP+O22BeLHI9u
+	 9pr1Xnc6ONjFNMNx2vMioQ2hEQGArSng0sKKgVPUPrENrgT0FYDkuKJdjRBiARNe2M6AR
+	 OEUwjmsXiM6ISvNNViumaHM3d4nRhHXLIBHkuLUciEBzD3C4b4ihSIfdh9gP22sOJhpz7
+	 umbxwFN9M8Z6iU7sBOkMUU8Nbt0uFsdSuXw2/FHhRGPthOuDY8dMqVDse3pji6RbX9UOE
+	 etCapxQz2jqvz6kqyK1b2Wa4fCteT6lya0VMK6NQhMalLpY4uThh2Ksk1TL2XLJdh3A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="k0IGNjU/";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPOX9fT8;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61B7606A326;
-	Thu, 19 Nov 2026 04:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918E7606A325;
+	Thu, 19 Nov 2026 04:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=k0IGNjU/
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391AB1F000C4;
-	Thu, 19 Nov 2026 04:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=gPOX9fT8
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78131F000C4;
+	Thu, 19 Nov 2026 04:05:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061153;
-	bh=by+T7ye6QHnHEl9ggw9DhpKMepxTErejpaU9LSC333g=;
+	s=korg; t=1795061156;
+	bh=rpmJ1IzEfOm6R5/iX8a2adnjpf3k1DXgl1IHt8arHQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=k0IGNjU/YwkApenqqp+Wn5T5PS5JEgbjkZNd886hPDJM8KfCx25ylxPX2KeKGWoAD
-	 1xZ+FluNAXlbPDmugxW5pJpI1Qg97B+493A0kzlP+U6nYBte9HSSPshareQSH2ArwU
-	 T/0PdglfUpCB8szOyrrnkBPiXkc2kJ758Y4K1+as=
+	b=gPOX9fT8tUFfsNiXegoxcKNRGZGJWsyRSrarANTcddqHgAgmR6wUKydUa4GW8cGeA
+	 T+O8LfjVWNPTsVJ//BtzXhcOBaDtuukAm6yDcIFLwz5PVrlsvuT15ApsNiTfpD/Y1z
+	 l4G9E60WwuYJDWqg7QW/QlXeOnYpJQxK4nZWSaJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1450/1848] dt-bindings: media: sun4i-a10-video-engine: Fix IOMMU count for H6
-Date: Wed, 18 Nov 2026 15:58:08 +0100
-Message-ID: <20261118150020.127184001@linuxfoundation.org>
+Subject: [PATCH 5.10 1451/1848] .gitignore: ignore only top-level modules.builtin
+Date: Wed, 18 Nov 2026 15:58:09 +0100
+Message-ID: <20261118150020.163599135@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -71,67 +67,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit ca9a67831805dc788407a05f276abb6b86b1174d ]
+[ Upstream commit 40cb020305f40bafc2a13c7e879a33dbbd607507 ]
 
-On the H6 SoC, the Video Engine has two memory ports, thus two IOMMU
-connections. The secondary one that is missing is likely used for
-reading reference frames. The newer H616 is the same. On the other
-hand, the D1 only has one memory port.
+modules.builtin used to be created in every directory.
 
-Add the missing IOMMU connection for the Video Engine.
+Since commit 8b41fc4454e3 ("kbuild: create modules.builtin without
+Makefile.modbuiltin or tristate.conf"), modules.builtin is created only
+in the top directory.
 
-Fixes: 62a8ccf3a248 ("arm64: dts: allwinner: h6: Fix Cedrus IOMMU usage")
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Add the '/' prefix so that it matches to only the modules.builtin located
+in the top directory.
+
+It has been more than one year since that change. I hope this will not
+flood 'Untracked files' of 'git status'.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Stable-dep-of: a7d32fa14bc7 (".gitignore: drop Module.markers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../allwinner,sun4i-a10-video-engine.yaml     | 21 ++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ .gitignore | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
-index 4cc1a670c9860..74db54fc6a3ae 100644
---- a/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
-+++ b/Documentation/devicetree/bindings/media/allwinner,sun4i-a10-video-engine.yaml
-@@ -48,7 +48,10 @@ properties:
-     description: Phandle to the device SRAM
+diff --git a/.gitignore b/.gitignore
+index f53e8be649a24..3d95f2b268e55 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -46,7 +46,6 @@
+ *.xz
+ *.zst
+ Module.symvers
+-modules.builtin
+ modules.order
  
-   iommus:
--    maxItems: 1
-+    minItems: 1
-+    items:
-+      - description: VE port on IOMMU
-+      - description: VE_R port on IOMMU
+ #
+@@ -63,6 +62,7 @@ modules.order
+ /vmlinuz
+ /System.map
+ /Module.markers
++/modules.builtin
+ /modules.builtin.modinfo
+ /modules.nsdeps
  
-   memory-region:
-     description:
-@@ -64,6 +67,22 @@ required:
-   - resets
-   - allwinner,sram
- 
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-+              - allwinner,sun50i-h6-video-engine
-+    then:
-+      properties:
-+        iommus:
-+          minItems: 2
-+    else:
-+      properties:
-+        iommus:
-+          maxItems: 1
-+
- additionalProperties: false
- 
- examples:
 -- 
 2.53.0
 
