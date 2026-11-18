@@ -1,86 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795029398;
-	b=TxODqk2cLqo3Il/UrC2KVdMx07hPL65LA9fQdo2J8yjDkkHStbvIUY7LNLqRfsgJFAa9
-	 sdkjW3PnF5iAs2lt0XgHInYFV/rE1hqJQbYOwgRoB8A8Gj13XX5d3Q2qDETMfP1bd0YPa
-	 cMvjm2VL/IXKR7xU+DzVLZyo2mjBVikN9aIh0ia7lDf8swWN0ICoNWUuec+d2VY5i2Ap1
-	 OCNm9T5KPiG0xW3B7boJcT470sVI2zRchmZKrBvc5V/EsO6onr+lT4hA4r2IwODoe+W/Q
-	 J9iV+5rkYIiq1Qt9sbCQMBTZIDDDJw2LTi0DoTBlX03mg+pesZp8xHyLw3zLVpo6zZQ==
+	t=1795029400;
+	b=pJS4E6Mdwk3nPJ+F+VBTyxl5FoVR3aSVhOu+1YTvRR3q70ZhSc0HAYaeZXlPPKlAl1Ef
+	 BNJLDBcxzcz6pnbBFih88uEz4srAJUJTgnTloIF+oi38mh2QZtu7B+4+kv8Gvd2DX+n9c
+	 lCVfGGMuJxVdnsg78/x0MyOeMAB0kbSuFIuMgCADl2voWKPt6T/M5X2ekz799JbVTeVqg
+	 fYvreDSHiH/U34PVqaEtvh9KM3gpaawje4v9pWbEeMpfMK4zzY1pYmxQ6yyeJ490znZY9
+	 wkPNUZL/UOO9NwEQ7Os0zNKqaAEr8eFk9ntIYOOI9eVdXXzPadpW4Lk5+h2otre5Thg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795029398;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Message-ID:Date:
-	 MIME-Version:User-Agent:Subject:To:Cc:References:Content-Language:
-	 From:In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	bh=58b5SUFBCY4/MY2JUfmGH8gHdBS79YyzhPLRjlW4m0U=;
-	b=hgZ+CtW2ObTiCnN2KJRUfCmP1qwahegQF5q4V/7fQmaFzqpX5OmgtMIWIY2TAtLeLoDQ
-	 sAoZNxvd1IzcUjj8BsSr4pEPaCTVmsBIa+LUMEAVanCdAyxAvzTei3EJdNz6qVyigBCDa
-	 isrb/y9q8jQUMcSd4EBXCoTTuGFY1g8UgBr+VfQ9OdSrfMe9njwtoZuvLf/1kQR9NhRkS
-	 CTHEGqVwE3O1EXjicohHMWgeg6wdBpXyuz/MzqoASlYlJ1ww+RKWOJtaNdsmsWmD82+9j
-	 Vy33C6/+0Ligpza5uZYVPPCqA2G00DTo/ANcpMR7NevmR34UP+jMW6FEpiqo5WyYTpg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1795029400;
+	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
+	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
+	 MIME-Version:Content-Transfer-Encoding;
+	bh=562rkKoPNnF7OCuNyBoTSADDIawlNE0wTSlRUOyDGrs=;
+	b=gTMG1d/sHyiiGc8xmjmWoWYPSMjLdaBMJQ1TjNcOsipH/FizQGAqny8dAvtlqqqZatF3
+	 BxSl5ki5GzeJYFAPHMtf5HLWy7moiWLYkXhZHDAsrpyo8kPT6/j7IwWPS9V3rejIzDfTq
+	 QHuhBhejw99tfw/HG6w3kCItB/soDi9B3UAp7kp7i+KCgXc4WnFKwWJSUyMaKgqS+3n7L
+	 50Lk0+XFBYK99PgTRIbAyVP6ALgHXjp2V/mBVC/MdzO1IGRzjh6VP0PUEfuvGhsvPItCr
+	 zbudXXIWTIC6yjD1O3oMhQiHhhp9+0vcZPrejq/aJ8U9VL6XyeOV7ghxnC8hHR0KTDQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=We8d0i3r;
-	arc=none smtp.remote-ip=209.85.210.172
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDtYyyFx;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947A2606A320
-	for <patches@lists.linux.dev>; Wed, 18 Nov 2026 19:16:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 947A2606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3493B606A339;
+	Wed, 18 Nov 2026 19:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=We8d0i3r
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-8b5c3288e6cso837726b3a.3
-        for <patches@lists.linux.dev>; Wed, 18 Nov 2026 11:16:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795029397; x=1795634197; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=58b5SUFBCY4/MY2JUfmGH8gHdBS79YyzhPLRjlW4m0U=;
-        b=We8d0i3rQbpbdFpwpD2PVcRXnGNlJVF7fiBvpRGCRqAi2biV//g9Lxm7jNbi05hQ9S
-         Wi9QflTROUD3vWN6LF2d3R+ep3oHIp7cu7oRj56tDn8lH8Y3gV5S+yNUi4LopS121yTN
-         hfPksqUpPRLP4n7MocSbkt+I2LCpnXn/JOpj5R7zx/DmIrhVTBJwa1zsPimeGJItJ2Fr
-         q7sva0D1NEPq5+H+7gVKQ+UF6ll7qN893of2uK94uD7t6omN+nEG02sWYHGOVTjXQykr
-         XBUi8xeMsnUK/UpZ91Cb1Kw8VOHmCp08Hz5Kb0rWBCTs2Uy+UsrGpB6/B/A2p67DHnr8
-         /zZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795029397; x=1795634197;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=58b5SUFBCY4/MY2JUfmGH8gHdBS79YyzhPLRjlW4m0U=;
-        b=uSdo7vl8ukKUnWpWYmRo+N3x2b0NKQTd3kJf1sUy5lWjSInbesQRjdTx1saNB+5S5U
-         KdymxM9lMEfq63/jdbdy0ru65oI+XzMdfpbGZLwHBg0NqOYVZJw7kllt1G1PniP+Zozz
-         ZXx51Wjch7yIH4pPKPMJBz5+30n0lBBXxFGoILwFU2YjuSUZjB1ju1hGPzAqW5jvWMeM
-         Q4Pm5maHdDaxgFaNcUgiGrW9Xys6Jgf2hfyWbEGaR9Vb3Mkwu/dtOvj2E40TAj31NI3m
-         dUGsNUZvjSvEVoLZp7yocPCgXVcSHTfVEw4xuy3d95oTKzQL7uPXh5Taf0gHfsDrXkrz
-         c+CA==
-X-Gm-Message-State: APuU4Z+geFfqd6DBlGauAPm213yczW5SOGDVzD0fgbTcixaaa3vw7xXq
-	Xexf6xYcXS5FP5selVnATBtFvzbA/m8y7J7FEsG6S9v+ejuTtQF2qZ2B
-X-Gm-Gg: AYBFou3PxFFNAo52SU/xGaDbs7FIOe8EsA+hZBIoQtGzBiE7fr+C5BOJFiXPmrIJbm7
-	AEOyrhvEkFMaQG/jtzqT417kr67+SE32O3Q7gxIsICfG3YC4UQdjObk7hcbvpy4xv9t15+hgCdJ
-	9gAMxyOUEZhoXTxRagh2rgroaxuVfoICY1C2Y7Cd9cOCHMmlll3CtvjQlr7HghhEeGkUQt8bPHH
-	gXq0sl5rogc1w21COUVTlWsdN0BtXVNKpRwJJgEd6I3sbKjbgzAh8Uh2ju4SYW/ClvQhDwSxcL/
-	nJPDBNxVF5Xl3MgBUbJSABm6qIT7ABFk93bj/qZRFosYS0nXrVrckX81zJaShXO2VhHbWaro+Sv
-	Vf0g2oA/JLs2NBP1ycy6Aq2zfDS+STHzCOqJzMdpRj4GISJjN7buqsnqOSoxk36lvlPDpmq6aHn
-	CqbO980waLO61I9LWh41KgY5axoSSCuYXbOrNmsPSwd4CqaYtGnVBo6HoWFhhWhAuJ9RU1xsrsW
-	LbV5+gmSN+H5XyYWtVGCmMRN7XEPQBWJ17V63+xnRfi1qhoEba6XSwTP48ftUn3HKdv07Rv1pP8
-	pTAX6/wWY1RCQ1u9GpFliEN1ta5Th88+tnUTR8KJwaW78FRy32YwiPAD
-X-Received: by 2002:a05:6a21:b8c:b0:3fb:1091:bfdc with SMTP id adf61e73a8af0-3fe97bf78a2mr3539072637.37.1795029396924;
-        Wed, 18 Nov 2026 11:16:36 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-cde534854b1sm453228a12.12.2026.11.18.11.16.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Nov 2026 11:16:36 -0800 (PST)
-Message-ID: <65c24a95-1087-4f30-9f9c-9e8636da211c@gmail.com>
-Date: Wed, 18 Nov 2026 11:16:34 -0800
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=fDtYyyFx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C4B1F000C4;
+	Wed, 18 Nov 2026 19:16:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
+	s=korg; t=1795029400;
+	bh=562rkKoPNnF7OCuNyBoTSADDIawlNE0wTSlRUOyDGrs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=fDtYyyFx3nO3o9e/zGwvBziextx51s5zdS6OnZTNim4pG70MEFWAgPbZ0HOmLDbPY
+	 jokxkVIfzMHkm/GgpByxykJkBHdBdCkAOGeWT9palxu/jPH+gXnCTOdWplgAS35gMY
+	 X5+IPyFmj0UNenQEDAa4L1KE/QXLtqme9SlTQ8sg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	syzbot+d31109047baed8f3b590@syzkaller.appspotmail.com,
+	Keisuke Tsukuda <tkdkei@outlook.jp>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 0337/1756] usb: gadget: f_mass_storage: ignore class requests while inactive
+Date: Wed, 18 Nov 2026 15:41:04 +0100
+Message-ID: <20261118150021.665353895@linuxfoundation.org>
+X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
+References: <20261118150007.957976754@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Post: <mailto:patches@lists.linux.dev>
@@ -90,79 +63,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:patches+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 0000/2214] 5.15.226-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20261118150009.797899913@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20261118150009.797899913@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/18/26 06:27, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.226 release.
-> There are 2214 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 20 Nov 2026 14:55:35 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.226-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-perf fails to build with:
+------------------
 
-/local/stbopt_p/toolchains_303/stbgcc-12.4-2.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.4.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o: 
-in function `test_truncated_branch_stack':
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/tests/sample-parsing.c:358: 
-undefined reference to `__evsel__parse_sample'
-/local/stbopt_p/toolchains_303/stbgcc-12.4-2.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.4.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/tests/sample-parsing.c:360: 
-undefined reference to `perf_sample__exit'
-/local/stbopt_p/toolchains_303/stbgcc-12.4-2.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.4.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/tests/sample-parsing.c:361: 
-undefined reference to `evsel__put'
-/local/stbopt_p/toolchains_303/stbgcc-12.4-2.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.4.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf-in.o: 
-in function `test_truncated_swapped_raw':
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/tests/sample-parsing.c:406: 
-undefined reference to `__evsel__parse_sample'
-/local/stbopt_p/toolchains_303/stbgcc-12.4-2.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.4.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/tests/sample-parsing.c:408: 
-undefined reference to `perf_sample__exit'
-/local/stbopt_p/toolchains_303/stbgcc-12.4-2.0/bin/../lib/gcc/arm-unknown-linux-gnueabihf/12.4.0/../../../../arm-unknown-linux-gnueabihf/bin/ld: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/tests/sample-parsing.c:409: 
-undefined reference to `evsel__put'
-collect2: error: ld returned 1 exit status
-make[4]: *** [Makefile.perf:670: 
-/local/users/fainelli/buildroot/output/arm/build/linux-custom/tools/perf/perf] 
-Error 1
-make[3]: *** [Makefile.perf:238: sub-make] Error 2
-make[2]: *** [Makefile:70: all] Error 2
-make[1]: *** [package/pkg-generic.mk:286: 
-/local/users/fainelli/buildroot/output/arm/build/linux-tools/.stamp_built] 
-Error 2
-make: *** [Makefile:29: _all] Error 2
+From: Keisuke Tsukuda <catnyaaan@outlook.com>
 
-which is coming from fb1a8ab598b3 ("perf evsel: Validate branch stack 
-before byte swapping") and 2bdbf51d3627 ("perf evsel: Validate RAW 
-sample before byte swapping")
+[ Upstream commit e84caed6e7f58d96ea2e4aaa0b947ab05faa451b ]
+
+SET_CONFIGURATION is handled asynchronously by the mass-storage thread.
+A class request can arrive after the composite core selects the function
+but before the thread installs common->fsg, or while the function is being
+disabled.
+
+fsg_setup() already rejects this state with -EOPNOTSUPP, but checking it
+through fsg_is_set() also emits a warning. Check the active function
+directly so normal requests during a configuration transition are rejected
+without hiding fsg_is_set() warnings from other internal paths.
+
+Fixes: 8876f5e7d3b2 ("USB: gadget: f_mass_storage: added eject callback")
+Reported-by: syzbot+d31109047baed8f3b590@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d31109047baed8f3b590
+Signed-off-by: Keisuke Tsukuda <tkdkei@outlook.jp>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260908203348.95825-3-tkdkei@outlook.jp
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/usb/gadget/function/f_mass_storage.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
+index 8b3deed447367..49e4501f57475 100644
+--- a/drivers/usb/gadget/function/f_mass_storage.c
++++ b/drivers/usb/gadget/function/f_mass_storage.c
+@@ -464,7 +464,12 @@ static int fsg_setup(struct usb_function *f,
+ 	u16			w_value = le16_to_cpu(ctrl->wValue);
+ 	u16			w_length = le16_to_cpu(ctrl->wLength);
+ 
+-	if (!fsg_is_set(fsg->common))
++	/*
++	 * fsg_is_set() warns when common->fsg is NULL, but that can happen
++	 * normally while a configuration change installs or removes the active
++	 * function.
++	 */
++	if (!fsg->common->fsg)
+ 		return -EOPNOTSUPP;
+ 
+ 	++fsg->common->ep0_req_tag;	/* Record arrival of a new request */
 -- 
-Florian
+2.53.0
+
+
+
