@@ -1,52 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795059342;
-	b=lTLlRvBspHEOaTlc7a0rWlIuAT4L+NCzi48D060Hzg0ul2mPC6+B+8eXeB+rSZQaabsE
-	 SocPxk7/IEL3KS4Yaf26ZOyGm5+bOi/15y2H5FceHQpGkrcZEBKXS12gZDEDiBpS6sdXi
-	 rr8Cg8pF5LM6XLIlCugMstKrQeDBZAjYAYA4DJZ9uUFR6rMDoSJfTzUqwJRS7ljfEO0nl
-	 i7R3M6YtVdtq4Sh4rsXjVjRbUkIFz29WQ069KScaYenKwwfJgeEjEkxMgxWTONO3EhBTp
-	 fLWGU8CuZIaZrJrmEx9yi/u8seeM4Yl8uEWiUQKRqwOYh11q7eJfJQl2KmCviBMMLGw==
+	t=1795059345;
+	b=MJhVJF5EBxXJ2pSdj9gIF3PG+lfUPNNGxZYA5u0q5EZRzI78ZWSyfcY1YULkMj+wyPsT
+	 EXiX3aqeHBQlnlfxN4FFbyjGG5h/n3J4zMJCq7KW3U93Q+KVBhl7QTJGH5LmdelqdS55i
+	 qxPJT8M+G+i+gz6HR8+OLAwdKTMkouhGAgK4KjUpdyCYIAWhyicDSzUk6osnNQDQVoxLA
+	 xynlq78/c9N1szfLGWao4E9TJnuAVWzHKfL6LD0CpLIqGBt7RK0AV2Km254b5Mu+udQoK
+	 hYmqkLzJUwcwbtF0MSf2bTtk093hWWWgSGFUT0IlOArUs2Fj6qasaDNfhXN4kLdysUg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795059342;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795059345;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=yoA+H2I7T6/PVDqDHDTHyirRKMIGfDyI2/GUV6bbzgM=;
-	b=K+WBl6r+2krtxQkPwqrLmPSyCeR/9GIHebPyLgbXXc/oLM2cdj1nbbwTkQBHB0xdtU+Y
-	 bWhgJRAc+vKF7OXUj9xr2Q1F8paU81IvyBajaXGOU0V3UvN8umZg2zL4Qf2/vm9vUcPqQ
-	 w1iPFL50+hR4Ed0jm3Z32EaCsaa1yWHkdMDUM4MgfEFm0/6e3hT4ZkikI7SRFnm1vuaUe
-	 ir1tlBDzhT32UOhmtgoC3QuMvRYUunTjJZEXuaANZ1zBAVOa+huKE073ft7qLoZd5xcAk
-	 HYpNss7zqGpwKRymYeGLPQpdbyRRFAqIwmHTnlx1RWv8dzBIwdo5KgkAnhQb2viBBfQ==
+	bh=tys/Tbjej0PXIbabandivLqGLqWNrbbvsercIV8AA8o=;
+	b=scx1QzST5R8RI0uWYiPOayF+Iw40UoG1Yh9lXdqWkyfBqdHzxssAjUCjwPThCP0HBf6C
+	 ZPOFEfEM8FN27Ycrsu98LAWq9EluDnyhRZ62u1vL5uTLqHYKVe7gfkmbAYpdkM6mJI7dj
+	 tiX24I1Q+u5dd/9anuKRnkX/RvWbgoZkeIV7RmccKNHHzHkEyHjF6XQAOPbqG0PrgepoX
+	 0t3kbyVMFc1MkraIV/pSmNtMWu89x8s8r9C/IMU2O17d0NS5IjNptxdB4aeO0GGhh8FkQ
+	 3+z7TCIlw5YTEDjuh70/AD3NY23uoTLfb8jVd+nx0BnK9P2Bu+nzMrVRrD0t9YHtXoQ==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EQIF5MQc;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxSvw1gi;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0B3606A31C;
-	Thu, 19 Nov 2026 03:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D876606A31C;
+	Thu, 19 Nov 2026 03:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=EQIF5MQc
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F0F1F000C4;
-	Thu, 19 Nov 2026 03:35:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=QxSvw1gi
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7141F000C4;
+	Thu, 19 Nov 2026 03:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795059342;
-	bh=yoA+H2I7T6/PVDqDHDTHyirRKMIGfDyI2/GUV6bbzgM=;
+	s=korg; t=1795059345;
+	bh=tys/Tbjej0PXIbabandivLqGLqWNrbbvsercIV8AA8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=EQIF5MQcUun5DoaASCTuS9indm+byswPAUVDe01qzJTFu7OsjHTMFtytECBx9XNfR
-	 11l+8rcAV0qLkiGdlo+m9e24P3S/hZd1NK0yhdDmLNX/vPqoF7LhJpAfPPqUVY+P0B
-	 cJR1U3UM69uJkQeRdOHk+gc9dvbp4xAFdZFQXp1c=
+	b=QxSvw1gim0xgKvPRE51vNOuzw78+lv1HYMTYTgoyPb06TfajtuC3GViF9C03LxwwE
+	 0pdTA2OBom9dmEBjRLsz25vcqq2Mgn5I3Q8Jz8r1UV9c6lZ0yVeWW4rMu99w2OXYq/
+	 8azDCfBVAXmqRq0fK5ZiIcne6l0vXSaq2njNuquA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 0808/1848] wifi: mac80211: queue frames while off-channel
-Date: Wed, 18 Nov 2026 15:47:26 +0100
-Message-ID: <20261118145950.144602640@linuxfoundation.org>
+Subject: [PATCH 5.10 0809/1848] crypto: hisilicon/hpre - fix GFP flags for dma_alloc_coherent
+Date: Wed, 18 Nov 2026 15:47:27 +0100
+Message-ID: <20261118145950.181404202@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -68,144 +68,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanislaw Gruszka <stf_xl@wp.pl>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 13e51269b6656768dc595ed6025e4974f2026543 ]
+[ Upstream commit 40ec9605cb195e065470f8f23ef94b1b541411a3 ]
 
-Drivers without FAST_XMIT and hardware scan support currently drop TX
-frames during software scanning while being off-channel. This happens
-in ieee80211_tx_h_check_assoc() before frames reach internal TX queue.
+The HPRE driver hard-codes GFP_ATOMIC for RSA/DH and GFP_KERNEL for
+ECDH. This may cause "scheduling while atomic" in atomic context or
+unnecessary allocation failures under memory pressure.
 
-Move the off-channel check to invoke_tx_handlers_late(), after
-ieee80211_queue_skb(). Frames can then remain queued and be transmitted
-when the interface returns on-channel. This how TX works currently when
-code goes via ieee80211_xmit_fast() path.
+Select GFP flags dynamically based on CRYPTO_TFM_REQ_MAY_SLEEP and
+store them in hpre_asym_request::flags. The areq field is a union of
+rsa/dh/ecdh request pointers; reading base.flags through any union
+member other than the one that was written would be type-punning, so
+a dedicated flags field avoids that.
 
-Below is rt2x00 driver ping output example while scanning, before and
-after the fix. After the fix, packets are no longer lost. Some have
-increased latency, what is expected behavior.
-
-BEFORE:
-64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.61 ms
-64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=3.33 ms # Missed 30
-64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.03 ms
-64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=3.10 ms # Missed 33
-64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=3.04 ms # Missed 35
-64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.05 ms # Missed 37
-64 bytes from 192.168.0.1: icmp_seq=40 ttl=64 time=4.14 ms # Missed 39
-64 bytes from 192.168.0.1: icmp_seq=41 ttl=64 time=4.50 ms
-
-AFTER:
-64 bytes from 192.168.0.1: icmp_seq=29 ttl=64 time=3.40 ms
-64 bytes from 192.168.0.1: icmp_seq=30 ttl=64 time=6.10 ms
-64 bytes from 192.168.0.1: icmp_seq=31 ttl=64 time=4.69 ms
-64 bytes from 192.168.0.1: icmp_seq=32 ttl=64 time=4.49 ms
-64 bytes from 192.168.0.1: icmp_seq=33 ttl=64 time=148 ms
-64 bytes from 192.168.0.1: icmp_seq=34 ttl=64 time=6.83 ms
-64 bytes from 192.168.0.1: icmp_seq=35 ttl=64 time=8.66 ms
-64 bytes from 192.168.0.1: icmp_seq=36 ttl=64 time=13.0 ms
-64 bytes from 192.168.0.1: icmp_seq=37 ttl=64 time=4.78 ms
-64 bytes from 192.168.0.1: icmp_seq=38 ttl=64 time=3.85 ms
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260908124651.2995-1-stf_xl@wp.pl
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ sashal: retained the existing out_free cleanup path in ieee80211_8023_xmit() ]
+Fixes: 98dfa9343f37 ("crypto: hisilicon/hpre - don't use GFP_KERNEL to alloc mem during softirq")
+Cc: stable@vger.kernel.org
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ sashal: Omitted ECDH changes because the driver lacks ECDH support. ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/tx.c | 50 ++++++++++++++++++++++++++---------------------
- 1 file changed, 28 insertions(+), 22 deletions(-)
+ drivers/crypto/hisilicon/hpre/hpre_crypto.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 73b79a9611011..6c9df5e2a0d64 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -291,7 +291,6 @@ ieee80211_tx_h_dynamic_ps(struct ieee80211_tx_data *tx)
- static ieee80211_tx_result debug_noinline
- ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
+diff --git a/drivers/crypto/hisilicon/hpre/hpre_crypto.c b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+index 4477a781bc3f9..742bca5d6a146 100644
+--- a/drivers/crypto/hisilicon/hpre/hpre_crypto.c
++++ b/drivers/crypto/hisilicon/hpre/hpre_crypto.c
+@@ -96,6 +96,7 @@ struct hpre_asym_request {
+ 	int req_id;
+ 	hpre_cb cb;
+ 	struct timespec64 req_time;
++	u32 flags;
+ };
+ 
+ static int hpre_alloc_req_id(struct hpre_ctx *ctx)
+@@ -201,6 +202,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
+ 				struct scatterlist *data, unsigned int len,
+ 				int is_src, dma_addr_t *tmp)
  {
--
- 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
- 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
- 	bool assoc = false;
-@@ -299,23 +298,6 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
- 	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
- 		return TX_CONTINUE;
++	gfp_t gfp = hpre_req->flags & CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL : GFP_ATOMIC;
+ 	struct hpre_ctx *ctx = hpre_req->ctx;
+ 	struct device *dev = HPRE_DEV(ctx);
+ 	void *ptr;
+@@ -210,7 +212,7 @@ static int hpre_prepare_dma_buf(struct hpre_asym_request *hpre_req,
+ 	if (unlikely(shift < 0))
+ 		return -EINVAL;
  
--	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
--	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
--	    !ieee80211_is_probe_req(hdr->frame_control) &&
--	    !ieee80211_is_any_nullfunc(hdr->frame_control))
--		/*
--		 * When software scanning only nullfunc frames (to notify
--		 * the sleep state to the AP) and probe requests (for the
--		 * active scan) are allowed, all other frames should not be
--		 * sent and we should not get here, but if we do
--		 * nonetheless, drop them to avoid sending them
--		 * off-channel. See the link below and
--		 * ieee80211_start_scan() for more.
--		 *
--		 * http://article.gmane.org/gmane.linux.kernel.wireless.general/30089
--		 */
--		return TX_DROP;
--
- 	if (tx->sdata->vif.type == NL80211_IFTYPE_OCB)
- 		return TX_CONTINUE;
+-	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, GFP_ATOMIC);
++	ptr = dma_alloc_coherent(dev, ctx->key_sz, tmp, gfp);
+ 	if (unlikely(!ptr))
+ 		return -ENOMEM;
  
-@@ -801,6 +783,33 @@ ieee80211_tx_h_rate_ctrl(struct ieee80211_tx_data *tx)
- 	return TX_CONTINUE;
- }
- 
-+static ieee80211_tx_result debug_noinline
-+ieee80211_tx_h_check_offchannel(struct ieee80211_tx_data *tx)
-+{
-+	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)tx->skb->data;
-+	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
-+
-+	if (unlikely(info->flags & IEEE80211_TX_CTL_INJECTED))
-+		return TX_CONTINUE;
-+
-+	if (unlikely(test_bit(SCAN_SW_SCANNING, &tx->local->scanning)) &&
-+	    test_bit(SDATA_STATE_OFFCHANNEL, &tx->sdata->state) &&
-+	    !ieee80211_is_probe_req(hdr->frame_control) &&
-+	    !ieee80211_is_any_nullfunc(hdr->frame_control)) {
-+		/*
-+		 * When software scanning only nullfunc frames (to notify
-+		 * the sleep state to the AP) and probe requests (for the
-+		 * active scan) are allowed, all other frames should not be
-+		 * sent and we should not get here, but if we do
-+		 * nonetheless, drop them to avoid sending them
-+		 * off-channel. See __ieee80211_start_scan() for more.
-+		 */
-+		return TX_DROP;
-+	}
-+
-+	return TX_CONTINUE;
-+}
-+
- static __le16 ieee80211_tx_next_seq(struct sta_info *sta, int tid)
- {
- 	u16 *seq = &sta->tid_seq[tid];
-@@ -1825,6 +1834,7 @@ static int invoke_tx_handlers_late(struct ieee80211_tx_data *tx)
- 		goto txh_done;
- 	}
- 
-+	CALL_TXH(ieee80211_tx_h_check_offchannel);
- 	CALL_TXH(ieee80211_tx_h_michael_mic_add);
- 	CALL_TXH(ieee80211_tx_h_sequence);
- 	CALL_TXH(ieee80211_tx_h_fragment);
-@@ -4282,10 +4292,6 @@ static void ieee80211_8023_xmit(struct ieee80211_sub_if_data *sdata,
- 		skb_get_hash(skb);
- 	}
- 
--	if (unlikely(test_bit(SCAN_SW_SCANNING, &local->scanning)) &&
--	    test_bit(SDATA_STATE_OFFCHANNEL, &sdata->state))
--		goto out_free;
--
- 	memset(info, 0, sizeof(*info));
- 
- 	tid = skb->priority & IEEE80211_QOS_CTL_TAG1D_MASK;
+@@ -455,6 +457,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
+ 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
+ 		h_req->cb = hpre_rsa_cb;
+ 		h_req->areq.rsa = akreq;
++		h_req->flags = akreq->base.flags;
+ 		msg = &h_req->req;
+ 		memset(msg, 0, sizeof(*msg));
+ 	} else {
+@@ -469,6 +472,7 @@ static int hpre_msg_request_set(struct hpre_ctx *ctx, void *req, bool is_rsa)
+ 		h_req = PTR_ALIGN(tmp, HPRE_ALIGN_SZ);
+ 		h_req->cb = hpre_dh_cb;
+ 		h_req->areq.dh = kreq;
++		h_req->flags = kreq->base.flags;
+ 		msg = &h_req->req;
+ 		memset(msg, 0, sizeof(*msg));
+ 		msg->key = cpu_to_le64(ctx->dh.dma_xa_p);
 -- 
 2.53.0
 
