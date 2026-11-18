@@ -1,42 +1,42 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795027425;
-	b=mOAAHE9peYnrMCd2k26ZQ1M5rlRuApbmVhP7zj3NRal4BR7fuOAvmkaM9dCbU5+WOogG
-	 LstiFB9vCj/0hL4om63ExXzYiVJEDh3Mh5e73dpToeVBKwL2osBbhVy+2vOGbSNUS4hG0
-	 N12+cADjMILHxDaEh0ILtvcuKN1r5mJ597Sm2Vxc3zCGFb2397PSFd0HmZaG7f7E1Bb5i
-	 ePFBmpbxLtKVRUJz2fwoWacowUh7/MpxwYs7uMZH4pQ3RAPc6DmTIwwaEWHC6BGSWZGDf
-	 UPzYelJHZeSVjgiw9sqpS/lW3OaHw4FNJ0hzBqZvOGjt4PcYioUs8RpV2R4lOYXu5UQ==
+	t=1795027428;
+	b=gZ+t6ip3cnAS2+W+mevQhPIq6nnTJxrumD155KYmVHxzIMfe3djBAnlbn1EOKgWZoOCr
+	 P80dvnAH7/EPHt+n5lYd8DsFRah340r9WnA9chf71Rqfn4YZfaryLiTdVqNG4fBd+ysK3
+	 tGBCM0BBAzTpEpK2jJfQWCRUBx7BS/Ar3egc33y1KFM+9Gw5+3zGa30Ag2ESS5wDKbXPc
+	 7SrbSxFC7l6Hj6/FODfzy8QP3HMwxAFSOvwIRNYd+gmzk1tzVaNZyO0hqvHhfpEuZtHjf
+	 WzKwbd+ccKHu1xbTRewvo1EGdXxK5HAhK89u1j4JIrqbNImc6LLu6aL/N3U/orYe9Zw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795027425;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795027428;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=5WK0XTBX0rK7OTKTxLZseb/zXtC1r4iLNGWaMSI5TdU=;
-	b=BmKNbIz3DC1WplOk7xNC/ZZWLAliyTIcpWrSgeKBAGmIbG42NfENxH79K9RVf6jPvwQQ
-	 S0UsJw3Av3kQBnT5l4/OyWF/TkLu1Ytps7/ihHdYchNAvI0MrRpYQPigPcVBjgabVYCR4
-	 3qNT6Dr9eCudyiRGGfo9OofT4ESn016gzpMy6dh77H1jUenhEJUFErEmLqQbtA82ZjL53
-	 Np00m3bDI0X5nswzY58PPlFe2Zy0XWxezJQHtUb9M2H7UrAKjO9I7GmdLQJyP9mzXtmMU
-	 yv5kUTwThmOAhz8JrAD8wnkR+nc7rImtZximPW92JREuIW7N9xHaUI9/Ka1jxLV73Tg==
+	bh=T4l6nUicII9Rjx0NR9akmYx3C+Dad4cObR2BbsgsSK8=;
+	b=Wdk35443LTb/PWUkdoQo0AtakYfjppbgbcCxN4takwlbKA4RZbzqB/b0bzUgEOeY+1x0
+	 XuwhX1VydAiCN8d9JC0mp8LbCMQPMg61XhS3u75Be3j8i488foGPmcwhzeRTPTZ3W9/jv
+	 5mC3PwL+lh3EVqmM+vFlMpPODd9pk2gX9trv6yHNsaKKtGxyEd5tdlAOwON3yOu2PeqTn
+	 D6im46k1sT4vcFq0mPak/cETajTXh6yUGS+P4yLtv9rLiMjf5dluy2GrYC89k9Caik2RY
+	 LQMJW2YyI6ISOfd2G2yEm7SNeCNKSlj9cHrGLZhf8jPjmd93Bz8IWaGJkJ+HpgFez6w==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vZdPhJed;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yfM0Ee3e;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD5760A260B;
-	Wed, 18 Nov 2026 18:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8343060A2602;
+	Wed, 18 Nov 2026 18:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=vZdPhJed
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1D71F000C4;
-	Wed, 18 Nov 2026 18:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=yfM0Ee3e
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49CC1F000C7;
+	Wed, 18 Nov 2026 18:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795027425;
-	bh=5WK0XTBX0rK7OTKTxLZseb/zXtC1r4iLNGWaMSI5TdU=;
+	s=korg; t=1795027428;
+	bh=T4l6nUicII9Rjx0NR9akmYx3C+Dad4cObR2BbsgsSK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=vZdPhJedhv1c5N8qjdHCkBmGbcuAva8P2t8+EqbB4NTRHBietdL0KIzwhrwptqEkV
-	 IsNpt8wd+K46RpngS5psc5xk2+OTwccKJ2Ozd2pXW+eJR1twXam/V6glzUwB/PRG9/
-	 9BDnicVS9PuoZE2jhSHl+LnCNKLBJjdhT4d0s3yc=
+	b=yfM0Ee3eL9Vau3BrGqrJ8VTVFLW8Q5/g7gHEASc5p2GFFGywFvkjD9+Qj+zV0cNZj
+	 +/Zwc1hGaHlfG4OWGkuiNhnFyGmX8O9EE/Ut3nMk8zh2DE1WVes1KFpEk/PntwJDq8
+	 +etbo7ZQFDh8YV46SOVUh9Ff9sBRPpvudt+55duY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -44,9 +44,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cen Zhang <zzzccc427@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 1778/2151] ALSA: pcm: Remove channel-map controls before freeing substreams
-Date: Wed, 18 Nov 2026 15:58:33 +0100
-Message-ID: <20261118150226.594601386@linuxfoundation.org>
+Subject: [PATCH 6.18 1787/2151] ALSA: aloop: Keep the timer source alive until card release
+Date: Wed, 18 Nov 2026 15:58:42 +0100
+Message-ID: <20261118150226.917101818@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150121.603863898@linuxfoundation.org>
 References: <20261118150121.603863898@linuxfoundation.org>
@@ -70,86 +70,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Cen Zhang <zzzccc427@gmail.com>
 
-[ Upstream commit d5dd05c1f72a95d8ab06828d7272a185ad2b9185 ]
+[ Upstream commit 762ef425cf0ac9c4b9e9e61e0da0950e16e6fbea ]
 
-A late HDA codec bind on an already registered card builds new PCMs
-before registering them. add_std_chmaps() publishes generic channel-map
-controls during this BUILD stage. If an earlier chmap succeeds and a
-later allocation fails, probe cleanup frees the BUILD PCM while the
-card's control device remains accessible.
+The timer_source string must remain valid while PCM opens can select
+and parse it. loopback_set_timer_source() allocates the string with
+parent-device devres, which can release it while the card is still
+registered.
 
-These generic controls are added directly by snd_pcm_add_chmap_ctls();
-snd_hda_ctls_clear() only removes codec-tracked mixer controls. BUILD
-devices also skip dev_disconnect. snd_pcm_free_stream() then frees the
-substreams before free_chmap() withdraws their generic control:
+A successful nonempty proc replacement after snd_card_register() adds
+the string allocation after trigger_card_free. Unbinding the platform
+device while snd_aloop remains loaded releases devres in reverse order.
+An open for an unused cable can run after the string is freed and before
+the card-free action disconnects the card:
 
-  Late HDA codec bind / rollback        Control GET on the live card
-  ------------------------------       ----------------------------
-  hda_codec_driver_probe()
-    snd_hda_codec_build_pcms()
-      PCM is BUILD
-    snd_hda_codec_build_controls()
-      add_std_chmaps()
-        publish an earlier chmap
-        later allocation: -ENOMEM
-    snd_hda_codec_cleanup_for_unbind()
-      snd_hda_ctls_clear()
-        generic chmap remains
-      codec_release_pcms()
-        snd_device_free()
-          BUILD: skip dev_disconnect
-          snd_pcm_free_stream()
-            kfree(substream)
-                                       snd_ctl_elem_read()
-                                         down_read(controls_rwsem)
-                                         pcm_chmap_ctl_get()
-                                           walk freed substream
-            free_chmap()
-              snd_ctl_remove()
-                wait for GET
-                                         up_read(controls_rwsem)
+  Device unbind                      PCM open
+  devres_release_all()
+    free replacement string
+                                     snd_pcm_open()
+                                       snd_card_file_add()
+                                       loopback_open()
+                                         loopback_snd_timer_open()
+                                           loopback_parse_timer_id()
+    trigger_card_free()
+      snd_card_free()
+        snd_card_disconnect()
 
-The control read lock cannot protect a substream already freed before
-control removal starts. The failure above occurs before
-snd_card_register(), so the PCM has not transitioned out of BUILD.
+The parser can then read freed memory. KASAN has reported a one-byte
+use-after-free read in strchr() from loopback_snd_timer_open(). The
+cable_lock mutex serializes explicit replacements with opens, but
+implicit devres release does not take it. The card and module references
+held by PCM open do not retain this separate devres allocation.
 
-Move free_chmap() before the substream free loop. Its snd_ctl_remove()
-withdraws the control and drains readers under controls_rwsem before any
-substream is released. Normal registered-device disconnect already
-removes the control, so the later call remains harmless on that path.
+Use kstrdup() and release the current string from card->private_free.
+PCM admission already retains the card until each file is removed, and
+card disconnect drains proc callbacks before final card release. This
+keeps the string alive across admitted PCM opens and preserves the
+cable_lock serialization of replacements. Install the callback before
+the initial allocation so probe failures also release the string.
 
-Fixes: 2d3391ec0ecc ("ALSA: PCM: channel mapping API implementation")
-Assisted-by: LLM
+Fixes: b072e65aadd6 ("ALSA: aloop: Allocate resources with device-managed APIs")
 Signed-off-by: Cen Zhang <zzzccc427@gmail.com>
-Link: https://patch.msgid.link/pm-pmb-4a207d9ef3a3597a74a4-v4-80b0113669b1a62fbbe9@gmail.com
+Assisted-by: LLM
+Link: https://patch.msgid.link/pm-pmb-71a33a26d68356e3ade7-v1-108d86919c5c92fe1ea8@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/drivers/aloop.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/sound/core/pcm.c b/sound/core/pcm.c
-index 62ef75115f3bf..7a494b17c9cd1 100644
---- a/sound/core/pcm.c
-+++ b/sound/core/pcm.c
-@@ -821,6 +821,9 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
- 	/* free all proc files under the stream */
- 	snd_pcm_stream_proc_done(pstr);
- 
-+	/* Drain channel-map callbacks before freeing the substreams. */
-+	free_chmap(pstr);
-+
- 	substream = pstr->substream;
- 	while (substream) {
- 		substream_next = substream->next;
-@@ -835,7 +838,6 @@ static void snd_pcm_free_stream(struct snd_pcm_str * pstr)
- 		kfree(setup);
- 	}
- #endif
--	free_chmap(pstr);
- 	if (pstr->substream_count)
- 		put_device(pstr->dev);
+diff --git a/sound/drivers/aloop.c b/sound/drivers/aloop.c
+index 24a5fbc1c288f..93ac63edfb975 100644
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -1786,13 +1786,10 @@ static int loopback_cable_proc_new(struct loopback *loopback, int cidx)
+ static void loopback_set_timer_source(struct loopback *loopback,
+ 				      const char *value)
+ {
+-	if (loopback->timer_source) {
+-		devm_kfree(loopback->card->dev, loopback->timer_source);
+-		loopback->timer_source = NULL;
+-	}
++	kfree(loopback->timer_source);
++	loopback->timer_source = NULL;
+ 	if (value && *value)
+-		loopback->timer_source = devm_kstrdup(loopback->card->dev,
+-						      value, GFP_KERNEL);
++		loopback->timer_source = kstrdup(value, GFP_KERNEL);
  }
+ 
+ static void print_timer_source_info(struct snd_info_entry *entry,
+@@ -1823,6 +1820,13 @@ static int loopback_timer_source_proc_new(struct loopback *loopback)
+ 				    change_timer_source_info);
+ }
+ 
++static void loopback_private_free(struct snd_card *card)
++{
++	struct loopback *loopback = card->private_data;
++
++	kfree(loopback->timer_source);
++}
++
+ static int loopback_probe(struct platform_device *devptr)
+ {
+ 	struct snd_card *card;
+@@ -1848,6 +1852,7 @@ static int loopback_probe(struct platform_device *devptr)
+ 		pcm_substreams[dev] = MAX_PCM_SUBSTREAMS;
+ 	
+ 	loopback->card = card;
++	card->private_free = loopback_private_free;
+ 	loopback_set_timer_source(loopback, timer_source[dev]);
+ 
+ 	mutex_init(&loopback->cable_lock);
 -- 
 2.53.0
 
