@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795043344;
-	b=JV/G2oMkNTg/+fDljb5frSSbf6fzCCwYJIKrbfF2E/PoJ1stZdjio+1D0hcZhGaJRJ8w
-	 /PiXDaXqLOb0mnnJwLcp4Y7eE//HTN1K5rqlpek4U3PzNOqDjg8OzP1rvLOggcuA+zQZf
-	 wGofS9AmRIHEzZZOW4drHrt1TmgC/aWU0WgIdHpW0mLUVaMtFcXg9bS2hcw957Ss5XGeE
-	 yWHv6BA9a3yH38lqKELyhJUQzUlSmQGWsI0p8agAAeZ3lBnHFvUjfGTPmkGd2JvaZ/ABm
-	 fnqp2+Fxgz9LdEDskcN2VIOOlX4+pymrg/2z3lYShxJsS3DhcqWiDFBT8OqNzAdFLNw==
+	t=1795043347;
+	b=kXe+FSNY2ytduyarKtaRowVElEqw4HZk53nr6DVqqWSZ2d56xWN7EKzwXAzdbOOxbSmS
+	 42bJNCDLJRoluIH+hBRRPaVbz9LPK4y9FXdj9vSaKfXsR742Ubc5zKljPdtaNY9L+CsfT
+	 SvclsBdyVq91l3q7GW3w+sPGtjQ+wAAMvFMk0DCs0n98m5UB4brN7C8XGAllOos87Gln+
+	 gjLU5Y9uBwAa8ZtaLOyQ2w5Xi9OdqPGRCzHABO2FM0qsq3Aj8+zVoklntvakb+kVZUPdW
+	 fgqPYcRj/CCFaLN9unmD+62aFxT9WlJyoUdOGbaVWSaZvhMsxuqBbvKOUMOjggkNLNw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795043344;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795043347;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=NS4BOHwQ6wmVBYa921YGNQ1JDco89lyQUoC0qKEfmLI=;
-	b=ictTWswqsyD2Y/ErkRmdQqvv+PBcUiq2f+QP5D+FNtjzi4oSRhViUW9WS0RLNQMXiX8g
-	 sEBIyQbpX/aQQP0iwbQXDdFZaKKwxMLfVOKwKfyNzRgYd1KHlNqva0Y0GqJOPb4M5L9Vb
-	 qEmhjig+5JZmmaF4htrVHhVO0xkGCF7EYGEEu3FJgaDIUm7I3xQGiMe6cvNOp38qV3c6i
-	 2TP3Qs6FHb36bW/8aKVtJMJ4Ycbzhb2iC7IH7e2WwUk8k1P2jLw3hFhY5Jr5u5o53No5K
-	 wk5hcs0VkhX22Ab5LeTK0zRXA6iHcYp5wj0AG7ZZdu7PcI9+aWF8uDPvFrPdgpxj9tw==
+	bh=VEkgsrr3xOwqwVOvG+W3q4+PEMhr1VQuz3H7WvoWKhY=;
+	b=n7cX8aSJmp/yHGC9etXAz5i4GPlsVRx1VXIhXG3w0rDTd82F6d6k65Pz/kQBUm+TJibR
+	 vrdGZYODU6l6LI+gCfLJDh8ApJBFWVFqoIoYdEoGVJiSGBWiy2MsnbjuCNY7eoOl5Tpu0
+	 TKRePXHWvpSeJNYiWs9RzjF7Mgk7xqkoILG26h/QVd/6QfrTKbHs7rmOQXB0s5ABhIgmU
+	 9xCiGLOGzO3vmhYL3VWfPAXQBjHbGR2MiSxWI3QNPlW7JvGXKIUClXhiapUvk2Ccsb2eN
+	 p6NBZjO7ktfzmyELIe2FY/f0Cbi61t6V+4uhb+y7UZGzkX/g11XNrATaAk9R+2Pud+A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5vgIX4Z;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVz1shPN;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D34606A32A;
-	Wed, 18 Nov 2026 23:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346BE606A31C;
+	Wed, 18 Nov 2026 23:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=B5vgIX4Z
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D079C1F000C4;
-	Wed, 18 Nov 2026 23:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=dVz1shPN
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B99D1F000C4;
+	Wed, 18 Nov 2026 23:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795043344;
-	bh=NS4BOHwQ6wmVBYa921YGNQ1JDco89lyQUoC0qKEfmLI=;
+	s=korg; t=1795043347;
+	bh=VEkgsrr3xOwqwVOvG+W3q4+PEMhr1VQuz3H7WvoWKhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=B5vgIX4Z7HLJwW+vKnKtcGOOKCqG4pKrcrHhBVRCnmlrOrh5Fjj24LexAYbsgQwvr
-	 tSCZFTr1wXjqI5GgST5BUjAhVI6WivDHjdkroX+BKGAjDOUbCR0YfWNdcf9YyFDTEz
-	 jOWEIHMVsfIm3pXKf8wVrfQjH5V0cCu2addev3BQ=
+	b=dVz1shPNy4ivQSheYQ55WG6cQZEjmpI/+XmsTHTS5B/wa9CTX4k8l8iqwwGdpnQnk
+	 1aHjQSlDVcpcPg8Z4TkOcTurT5+qHO+lbBSinRUWS0NFx3RXiLTblHnankk5IWbNSn
+	 w1hvQzmdnR2XPcHBl6wCupNE41reTqc0UlkrQ7/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Prashant Rahul <prashantrahul23@gmail.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0150/2857] ntfs3: fix info-leak in ntfs_rename()
-Date: Wed, 18 Nov 2026 15:19:44 +0100
-Message-ID: <20261118150206.749299805@linuxfoundation.org>
+Subject: [PATCH 6.1 0177/2857] wifi: mt76: mt7921: fix memory leak when skb_linearize fails in mcu rx event
+Date: Wed, 18 Nov 2026 15:20:11 +0100
+Message-ID: <20261118150207.725457688@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,64 +68,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Prashant Rahul <prashantrahul23@gmail.com>
 
-[ Upstream commit 2fa56613b25d0c983ef3ff6d3e865d4254280abe ]
+[ Upstream commit 4361f1660101270611eb5dc39799f620b35f2e4d ]
 
-Hard to say about copy_to_user_iter(), but at least the first splat
-looks correct. At the end of fill_name_de(), data layout is:
+The ownership of sk_buff skb is passed to mt7921_queue_rx_skb, each
+path inside it under the switch case handles cleaning of skb and it
+is true for mt7921_mcu_rx_event as well.
 
-struct NTFS_DE *e = buf;
-...
+mt7921_mcu_rx_event, on a success path, either queues skb via
+mt76_mcu_rx_event or cleans it immediately inside
+mt7921_mcu_uni_rx_unsolicited_event.
 
-    |<- data_size + sizeof(struct NTFS_DE) ->|<- XXX ->|
-buf |-----------------------------------------------------------
-    |<- ALIGN(data_size, 8) + sizeof(struct NTFS_DE) ->|   ;; e->size
+However inside mt7921_mcu_rx_event, if skb_linearize fails, the function
+returns immediately and never bothers cleaning skb which leaks skb.
 
-If 'buf' was allocated with kmalloc(), XXX remains uninitialized and
-passed as such to memcpy() called from hdr_insert_de().
+Since skb is fully owned at this point, it is safe to call
+dev_kfree_skb which fixes the leak.
 
-So using kzalloc() for all buffers passed to fill_name_de() looks
-the simplest and most safe solution. OTOH if someone would have
-said that an overhead of PAGE_SIZE'd memset() is too large, more
-fine-granted solution is to memset() XXX only.
+Granted, the skb_linearize failure is rare as it can only fail under
+heavy memory usage, but at the same time, leaking memory under heavy
+memory usage can worsen the OOM condition.
 
-Reported-by: syzbot+905d785c4923bea2c1db@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=905d785c4923bea2c1db
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Prashant Rahul <prashantrahul23@gmail.com>
+Link: https://patch.msgid.link/20260716-mt7921-mem-leak-v1-1-6e9c0ea19f63@gmail.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/namei.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/mcu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 1adbc4af6aba8..25c833ca7a6e0 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -20,7 +20,7 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index 991298475844f..d0e93707b9787 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -286,8 +286,10 @@ void mt7921_mcu_rx_event(struct mt7921_dev *dev, struct sk_buff *skb)
  {
- 	int err;
- 	struct NTFS_DE *e = buf;
--	u16 data_size;
-+	u16 data_size, real_size, aligned_size;
- 	struct ATTR_FILE_NAME *fname = (struct ATTR_FILE_NAME *)(e + 1);
+ 	struct mt76_connac2_mcu_rxd *rxd;
  
- #ifndef CONFIG_NTFS3_64BIT_CLUSTER
-@@ -51,7 +51,12 @@ int fill_name_de(struct ntfs_sb_info *sbi, void *buf, const struct qstr *name,
- 	fname->type = FILE_NAME_POSIX;
- 	data_size = fname_full_size(fname);
+-	if (skb_linearize(skb))
++	if (skb_linearize(skb)) {
++		dev_kfree_skb(skb);
+ 		return;
++	}
  
--	e->size = cpu_to_le16(ALIGN(data_size, 8) + sizeof(struct NTFS_DE));
-+	real_size = data_size + sizeof(struct NTFS_DE);
-+	aligned_size = ALIGN(data_size, 8) + sizeof(struct NTFS_DE);
-+	if (aligned_size > real_size)
-+		memset((char *)buf + real_size, 0, aligned_size - real_size);
-+
-+	e->size = cpu_to_le16(aligned_size);
- 	e->key_size = cpu_to_le16(data_size);
- 	e->flags = 0;
- 	e->res = 0;
+ 	rxd = (struct mt76_connac2_mcu_rxd *)skb->data;
+ 
 -- 
 2.53.0
 
