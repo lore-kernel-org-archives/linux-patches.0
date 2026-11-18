@@ -1,52 +1,53 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795020024;
-	b=WYY7kFUF8Rx5TrcVmwkOT1DaDH3mJHZZLe+G5cgBlzWImFhkx0TXxGLdqnJudoGS5XUy
-	 yEJourm29RBw/nTHwrlTOgF9aXSs4XNIKfF11eZLwPNPYNtN19y7t80XsZfXg3ja5Lh0n
-	 eCHC4B+h2wrOuanHkylyJmRLssa6NV8gBcQlnNQ62txQKmlQjspOy4wwYnUZLcwbOTqNo
-	 Lj0C4pXlvcB9GOt49fusrMmW1LhqXipr5W5ig6vQkHwS/HYlHESnz7DBdivM0kYUtZqNt
-	 1ySPbUMpf2d4E/Nia0pGJ8HNYESJNRd5x/ebqz5iVSWJzwoKeoSoMOd7pDdutMtDlFg==
+	t=1795020026;
+	b=n+oQV7Jipqni27UEfvmXlerYlgQWVPyk+1btQYqR2fswPpuFfTg28ZlV3L+cO20jNV5q
+	 1JMo8KknDUbIO12hBjeSmgtxpq9D1RJnVHUk+hlYyQ8ysPgRNb1Zc0Z26RBZ+5KIy6Gfz
+	 JnPFO98Ez3fUQz+CK44Mn0Ney6E/vbpeuqo3F/R1Qn0mINmgxKQFkwSdjSkUfGk4HM4EN
+	 EO/FtbB8gQamSjQON//0H+p4A4nnYKchu925eNo/Np6WXXuNO7z03YhTkRRZsf2VHeHyP
+	 VBIDVxcU4y7LaHOAjy2wZxSX0nHdxnArmtSc00HJ1DOIbvxZDBd0owFnV9U00fjtKfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795020024;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795020026;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=hCJVHLQSCyEmhB6ELHQ8yjjQHeqQrq6kt+djO3nrQg0=;
-	b=28Vi8NE9POdd0z/mf2CbXqNT3KfyWhgLPqpNqWM8nTwkTPjfZO9i2YErYFoef4ooUyAx
-	 81ajUI01i5aG5IQfChjyzj/SgvjIlHbDEHno5XHHJYABijNG3HwCJQKw99Pm2QNGFXs/2
-	 a/allLjzLhENVPsJbZKTFch34yh2Yx/zaLodUni0rBGNjcBOpti7V8XqFpnLFj+o/Fhg1
-	 aojeOlL63ZhZdHVLhlSP6IHkKr2hSIAg6DSUfyQDi55TS1k1V4YAHoeOouS4eqDmzDyyr
-	 P/g55d+8u6MrfuepM6VBtuB27MJYm6Z4WWVmRZUbUf4lhAwVjc/P0Xjs2q6NH6P89Ug==
+	bh=kimW1d6J6Zua5JjqC+ZK24zcmnWMH5CP6qpUPOP5gnU=;
+	b=lLGOj0OZLJCr3gtG9U7+xR9H5BOKpaw2Kxv74n+5BN+v7+SW4wtwBu4NUw61DmG6VVjG
+	 pjs6Q/ppjyI9ruXizr437fWkD030Dh1odgirtGTOQgo/xSwAjq7/jFiRpP8xVlbybnjKm
+	 HosFVMEjKkoJERLWcpPTw7UwQtioeUHD098Iu/tKCcHNCWeU/gdlmhOMEoTf3JVyeckFK
+	 omg+CuC+A0zec8hCq+ANqTVpzgAc6x93LregV0GatwiUc9CJ9NG0fwP4DkxJ+AY/AkmsW
+	 xBhjbY/mR/dGuHzdQmcSKSy8UZD4xvtbajcbDb8pOfTyzAU9gxclbj7F0IsvVbIptoA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rs4eEXD2;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9qVF3KG;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F13606A32A;
-	Wed, 18 Nov 2026 16:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06E5606A32A;
+	Wed, 18 Nov 2026 16:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=rs4eEXD2
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9891F000C4;
-	Wed, 18 Nov 2026 16:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=N9qVF3KG
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236F11F000C4;
+	Wed, 18 Nov 2026 16:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795020023;
-	bh=hCJVHLQSCyEmhB6ELHQ8yjjQHeqQrq6kt+djO3nrQg0=;
+	s=korg; t=1795020026;
+	bh=kimW1d6J6Zua5JjqC+ZK24zcmnWMH5CP6qpUPOP5gnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=rs4eEXD2/Y6J61rIAAGrqfOV9mRrYGFazfJDHJVoG/+qRGEINOTj7s2+vGHgLycIN
-	 93QeEl/XvmM2FYL6yuWWLrUFGfBUUi8rePli8cznt0Zr5xNLZi9scl67NDjnvrWVrR
-	 h+NDZLC6ZjUjXRedPMgskETN7XK4Rw90VNg7sQXY=
+	b=N9qVF3KGiPM/459V3oxm5cMr2dbsyahC17Le0zeCwOIE7EUT6yS9Q8Jm0PHPJPLO4
+	 /vH+a2GxuB166Cac4DKrYjquGnIRhPSNkEulTVR6rfukKa/hNHzxplSQMyuAicOxts
+	 6/GeEUMAy/Cj/gqHptpImo5JDOvbGojxQ5k96xc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuvam Pandey <shuvampandey1@gmail.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Priyanka Mani <priyankamani2100@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 7.3 1805/2651] accel/qaic: Protect perf stats BO state with bo->lock
-Date: Wed, 18 Nov 2026 15:50:45 +0100
-Message-ID: <20261118150352.247880560@linuxfoundation.org>
+Subject: [PATCH 7.3 1806/2651] ASoC: mediatek: mt8365: Fix out-of-bounds read in get_iir_coef()
+Date: Wed, 18 Nov 2026 15:50:46 +0100
+Message-ID: <20261118150352.276487278@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150247.972732815@linuxfoundation.org>
 References: <20261118150247.972732815@linuxfoundation.org>
@@ -68,67 +69,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Priyanka Mani <priyankamani2100@gmail.com>
 
-[ Upstream commit 1c50c57717c013ca63363eecb4154049cc727767 ]
+[ Upstream commit e913917febd31998e3d0b9e8c861e538a6185045 ]
 
-qaic_perf_stats_bo_ioctl() validates each BO by checking bo->sliced and
-bo->dbc before returning its perf stats. These fields are changed by the
-detach paths while holding bo->lock, but the perf stats ioctl reads them
-without that lock.
+get_iir_coef() looks up a resampling coefficient set by reading an
+index "k" from iir_coef_tbl_matrix[][] and using it to index
+iir_coef_tbl_list[], which has 8 entries (valid indices 0..7).
 
-A concurrent detach can clear bo->dbc and mark the BO unsliced while the
-perf stats ioctl is validating the BO. Take bo->lock while checking the
-BO state and copying the per-BO stats into the temporary result buffer.
+Before the lookup, "k" is only rejected when it is >= IIR_NO_NEED (11),
+or equal to IIR_RATIOVER (9) or IIR_INV_COEF (10). The value 8 is
+neither a sentinel nor a valid table index, so it falls through to the
+else branch and iir_coef_tbl_list[8] is read one element past the end
+of the array. The bogus coef pointer and count are then returned to
+mt8365_dai_set_config(), which dereferences coef.
 
-Fixes: 4ddf4ddfceb4 ("accel/qaic: Ensure entry belongs to DBC in qaic_perf_stats_bo_ioctl()")
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Link: https://patch.msgid.link/6a115824.a0bed9bd.3c0137.9edf@mx.google.com
+The current matrix never produces 8, so this cannot be triggered today,
+but the bounds check is wrong: it relies on the matrix contents instead
+of the size of the array it guards. Bound the lookup with the actual
+array size so only valid indices reach the table.
+
+This was found by Smatch:
+
+  sound/soc/mediatek/mt8365/mt8365-dai-i2s.c:271 get_iir_coef()
+  error: buffer overflow 'iir_coef_tbl_list' 8 <= 8
+
+Fixes: 402bbb13a195 ("ASoC: mediatek: mt8365: Add I2S DAI support")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/67af3580-a907-403d-8bfd-76b5c304ab99@stanley.mountain/
+Signed-off-by: Priyanka Mani <priyankamani2100@gmail.com>
+Link: https://patch.msgid.link/403cc04bb103dff096edf72b99ae6868ee91f359.1791782072.git.priyankamani2100@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/qaic/qaic_data.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ sound/soc/mediatek/mt8365/mt8365-dai-i2s.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index 4d55531bf1c9e..ee35e13091b30 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -1840,15 +1840,16 @@ int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file
- 			goto free_ent;
+diff --git a/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c b/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
+index a058973662b3a..2e678f4aa4b1f 100644
+--- a/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
++++ b/sound/soc/mediatek/mt8365/mt8365-dai-i2s.c
+@@ -267,7 +267,7 @@ static const u32 *get_iir_coef(unsigned int input_fs,
+ 		if (k >= IIR_NO_NEED) {
+ 		} else if (k == IIR_RATIOVER) {
+ 		} else if (k == IIR_INV_COEF) {
+-		} else {
++		} else if (k < ARRAY_SIZE(iir_coef_tbl_list)) {
+ 			coef = iir_coef_tbl_list[k].coef;
+ 			cnt = iir_coef_tbl_list[k].cnt;
  		}
- 		bo = to_qaic_bo(obj);
-+		ret = mutex_lock_interruptible(&bo->lock);
-+		if (ret)
-+			goto put_obj;
- 		if (!bo->sliced) {
--			drm_gem_object_put(obj);
- 			ret = -EINVAL;
--			goto free_ent;
-+			goto unlock_bo;
- 		}
- 		if (bo->dbc->id != args->hdr.dbc_id) {
--			drm_gem_object_put(obj);
- 			ret = -EINVAL;
--			goto free_ent;
-+			goto unlock_bo;
- 		}
- 		/*
- 		 * perf stats ioctl is called before wait ioctl is complete then
-@@ -1864,7 +1865,12 @@ int qaic_perf_stats_bo_ioctl(struct drm_device *dev, void *data, struct drm_file
- 						    bo->perf_stats.req_received_ts), 1000);
- 		ent[i].queue_level_before = bo->perf_stats.queue_level_before;
- 		ent[i].num_queue_element = bo->total_slice_nents;
-+unlock_bo:
-+		mutex_unlock(&bo->lock);
-+put_obj:
- 		drm_gem_object_put(obj);
-+		if (ret)
-+			goto free_ent;
- 	}
- 
- 	if (copy_to_user(u64_to_user_ptr(args->data), ent, args->hdr.count * sizeof(*ent)))
 -- 
 2.53.0
 
