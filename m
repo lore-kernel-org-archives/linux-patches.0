@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795031578;
-	b=SonXF1/5mDgoREvBb+qXUHagN6xm1quCm/7AMtMWEeAf+4bHStaM21kuRStNhPrCfZli
-	 9zyBWMenY23HMWlewG3mlUUvDfQvpH+uF7YlPEK+CK3Sr1d8O95tzGTE1yQ2AgW0ZZ3cn
-	 VoUr6Bzcct8LWm/Pw9I3ipnKjc6hfCEy3jrWkv5wRklJNYqbiMGZeMWlX2oIDTjCdnjpx
-	 ZeWE1xWnDJSWNsFMfrpUKhDHhhBqpr89inmyUUbU31zzxN/toGgzfI/RIkMgTnvZaRvDk
-	 yb3ebGXoLILv3oEGEvGt4nUIzVq/zppXPacc0+XAhL3BlL+pRdu1XebvpOZPGsyjruA==
+	t=1795031581;
+	b=FV/hFjm/6StOmBnxDRe5Acj/XOZXJGIUeSyisg/x1zIXsAaMFRaK7YXgVBgmlpq8nnQ8
+	 VYKOnKGiKugrkwKsKq0Ro6FLtyZ1qmp7pQ94hSLh1wvEqzUp81j6bxg0d4cYI5gTEb0Ws
+	 UlWuS94X/5/WlSrWe2AgF4j4srclcfgs3lWFbDQcMN30K+SVm83pSCXrpTMSBPkguwvUX
+	 QToSXnxAhuujusmT6JxCN3U2sjvyRCF0tebTBnESnwQSBjWr4NrRB4+rCvMPrrMCtm/aj
+	 awzZGJU7tjfsZMt7C7UsOMKBaJcChieVJcvFR+PrZq9zBkl7bzejbMpLXoG+cEgDx6w==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795031578;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795031581;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=LDfcF4oSZzfvN6lHUQV4R7FL9J3UPEUuwKlcTSb1cLM=;
-	b=Y/ArexZAckt9Bc6U+VZYpXnNHWjGR9bLvxh1Wc4M2uQTY0VSyaP7/6Ww/VThbK/MG8PI
-	 0quX+b5JepjFLUhC3JLObC1I7Ayodv66pKj2VtEhVOTim7lIC9pf8AcxEoefdBIx3lmRq
-	 Engvh/fRSeiKk7Pi75Yxbgx8lOfNeqCOVw8qf0rP6ZTPFYW/x4nteJEnqasqizDKJBdhq
-	 T7dhoAj83z+X1/y8kes3Ai5jVy6XY6eYph38XO24IL+HjoGEAfwkAM64SmjW2F228PYHB
-	 f4VaA+bqyy3H7YAAzSfrOAXkK4AEANjwGILxn0iPCN0xhepESwCtamAsKDcpKV0sI7g==
+	bh=90vV/sporvwYDIyZBbGNb4QLau2y6gs+JbZvmTJUSH8=;
+	b=u1WXyz6L0BIkhidjsAN8rNddNDB0OE7+HiLXPb1NNFd6/CM/wwnOkuOfW7EpMek2TmwV
+	 Ne+YIGxJxyGjeKvvRf5GXC1nSeDH76O13NEvXvyYUhCCqUnyxXfNEbU4yt4P0fq5brsJQ
+	 9Ta6+GqlcWyQx1GL0W7xoGzxefe2v1W0/WTP8adAq0pr004Bqz+Q0RJbnYxICECgK1Fwg
+	 h2SgqmoHs4GrkUukeUrrvRPPbcwnezkjdoEbBYksAPEBUu6dj+CQiOBpidUyTbKUnuacy
+	 yjoUxIJW0oCXPlYe2jMWkRf20kPS0HVkP4bjf36DHWH00bBYe/dEng1o1MJb6axZ2Sw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="umZO/a0J";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="mj/6B8ak";
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D17606A31C;
-	Wed, 18 Nov 2026 19:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC6D606A325;
+	Wed, 18 Nov 2026 19:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=umZO/a0J
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A34A1F000C4;
-	Wed, 18 Nov 2026 19:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=mj/6B8ak
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B101F000C4;
+	Wed, 18 Nov 2026 19:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795031578;
-	bh=LDfcF4oSZzfvN6lHUQV4R7FL9J3UPEUuwKlcTSb1cLM=;
+	s=korg; t=1795031580;
+	bh=90vV/sporvwYDIyZBbGNb4QLau2y6gs+JbZvmTJUSH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=umZO/a0JIFRKXTXbGqqYbvobtWXUI9y8+SB77op3zVrMHgIInlTuG4+NMJb0iDwoK
-	 xdfWZDS6C4Cu2DTtqkfXfgu/dF+esR/X7uikLTXwET3UcEjN4pTfE2aLnXLyf92+eh
-	 2V1IuAGQ3kb9IataWbZjQmUg6kRBmSz84fC1gjls=
+	b=mj/6B8akgaRyFCcMA9pIqunkhsIA4mwQjQBw4q1RyuEm1TtQmrRpcq3PPTfp4bc8q
+	 OET1AS5IFdpxQQsuhoxUu3FcYYKSMBO6MEw5kN2AMpVc3elxBTXY8SLrW1wYrrcItv
+	 dBgkusPU81jBh/gor/fQUEYDfsm03L6EAVjt7Yt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 1066/1756] btrfs: fix dangling nodes in tree-mod-log after error in btrfs_tree_mod_log_insert_root()
-Date: Wed, 18 Nov 2026 15:53:13 +0100
-Message-ID: <20261118150052.700952564@linuxfoundation.org>
+Subject: [PATCH 6.12 1057/1756] dm-snapshot: make the chunk list sorted by the chunk number
+Date: Wed, 18 Nov 2026 15:53:04 +0100
+Message-ID: <20261118150052.312148207@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150007.957976754@linuxfoundation.org>
 References: <20261118150007.957976754@linuxfoundation.org>
@@ -69,54 +67,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 057e3c350a9185df598c88b4081168ed047c9247 ]
+[ Upstream commit bbd6f974d0386036e560af332b6b8cdd17010a72 ]
 
-If in btrfs_tree_mod_log_insert_root() there is an error in the call to
-tree_mod_log_insert() (the only possible error is -EEXIST, which means we
-have a bug or some memory corruption maybe) we free all the nodes in the
-'tm_list' array but we don't remove them from the tree-mod-log rbtree,
-which can result in use-after-free bugs later.
+Commit 8581b19eb2c5 ("dm-snapshot: fix 'scheduling while atomic' on
+real-time kernels") replaced hlist_bl_for_each_entry with
+hlist_for_each_entry, but the two iteration macros differ after the loop
+ends: hlist_bl_for_each_entry leaves "e" pointing at the last element,
+while hlist_for_each_entry() sets it to NULL.
 
-So make sure we remove the nodes from the rbtree before freeing them after
-an error.
+The result is that the list is no longer sorted by chunk number as it was
+intended to be. This bug doesn't cause data corruption because
+dm_lookup_exception walks the full list.
 
-Fixes: 5de865eebb83 ("Btrfs: fix tree mod logging")
-Assisted-by: LLM (found the bug)
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Restore the invariant by tracking the list tail in the "prev" variable
+and appending after it with hlist_add_behind.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Fixes: 8581b19eb2c5 ("dm-snapshot: fix 'scheduling while atomic' on real-time kernels")
+Assisted-by: Claude:claude-opus-5
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-mod-log.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/md/dm-snap.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
-diff --git a/fs/btrfs/tree-mod-log.c b/fs/btrfs/tree-mod-log.c
-index b382a4c443d42..13f58ed448422 100644
---- a/fs/btrfs/tree-mod-log.c
-+++ b/fs/btrfs/tree-mod-log.c
-@@ -446,10 +446,17 @@ int btrfs_tree_mod_log_insert_root(struct extent_buffer *old_root,
- 		goto out_unlock;
+diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
+index 4a3a6cf772f77..c04e570756ef2 100644
+--- a/drivers/md/dm-snap.c
++++ b/drivers/md/dm-snap.c
+@@ -770,7 +770,7 @@ static void dm_insert_exception(struct dm_exception_table *eh,
+ 				struct dm_exception *new_e)
+ {
+ 	struct hlist_head *l;
+-	struct dm_exception *e = NULL;
++	struct dm_exception *e = NULL, *prev = NULL;
+ 
+ 	l = &eh->table[exception_hash(eh, new_e->old_chunk)].head;
+ 
+@@ -802,21 +802,23 @@ static void dm_insert_exception(struct dm_exception_table *eh,
+ 
+ 		if (new_e->old_chunk < e->old_chunk)
+ 			break;
++
++		prev = e;
  	}
  
--	if (tm_list)
-+	if (tm_list) {
- 		ret = tree_mod_log_free_eb(fs_info, tm_list, nritems);
--	if (!ret)
--		ret = tree_mod_log_insert(fs_info, tm);
-+		if (ret)
-+			goto out_unlock;
-+	}
-+
-+	ret = tree_mod_log_insert(fs_info, tm);
-+	if (ret && tm_list) {
-+		for (i = 0; i < nritems; i++)
-+			rb_erase(&tm_list[i]->node, &fs_info->tree_mod_log);
-+	}
+ out:
+-	if (!e) {
++	if (e && new_e->old_chunk < e->old_chunk) {
++		/* Add before an existing exception */
++		hlist_add_before(&new_e->hash_list, &e->hash_list);
++	} else if (prev) {
++		/* Add to l's tail: prev is the last exception in this slot */
++		hlist_add_behind(&new_e->hash_list, &prev->hash_list);
++	} else {
+ 		/*
+ 		 * Either the table doesn't support consecutive chunks or slot
+ 		 * l is empty.
+ 		 */
+ 		hlist_add_head(&new_e->hash_list, l);
+-	} else if (new_e->old_chunk < e->old_chunk) {
+-		/* Add before an existing exception */
+-		hlist_add_before(&new_e->hash_list, &e->hash_list);
+-	} else {
+-		/* Add to l's tail: e is the last exception in this slot */
+-		hlist_add_behind(&new_e->hash_list, &e->hash_list);
+ 	}
+ }
  
- out_unlock:
- 	write_unlock(&fs_info->tree_mod_log_lock);
 -- 
 2.53.0
 
