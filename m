@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795061018;
-	b=325aaCY8wBM2gS21WFqes9OVatzpaHnJ3bG6hVqyTkjVCSDThTjYjGmjFjdTEdLM5OBu
-	 oqDplos6+ReHGf5RunTOH+TmmG1a07dFxcbQe7+UG4nV7r1WnZ2ZAAubeP5rBJ4vvfpgz
-	 DK+MVIxPYsTDbDmGfZg2hSkmHRneAejtEx2e/PJzmIIH6IlwA8sH119fpV5ghltoXuyXG
-	 vE+Vv/bsH0N4TuzJB8eElMqqHbiB85kcL26NBW0Y7qf+twZvWL9TFTA+ZFLBEYP74865A
-	 WNn12K5otb3XLVADx8iIxK/ZCkdYdFdHCztAOLGEm+QqPACBF7CwGMT8l4bmP9iLF/Q==
+	t=1795061021;
+	b=TaVYSFDahYKNOLAJflg1Je5rWq9uwDorx9XWGv82AGtR5xg8nmfO6M9Re/ttwp8NBBhi
+	 u+FPSHDnpzrCMhgwTU/KevdKsDyC4RUoNdBM0NQoLB7QOc5VPn+PEpCWsS7sxS7s0cfsX
+	 9MGdAVMg62sSt2AkJIuGiXblToRSCMBCd71MX9ArYxLDb+YU+Ce2c15MqdsPo6Cv2F9vX
+	 x3zGZ0C2EVNSWGPrR+jmJ36j1tPlrBu8u53e2kAoXYe/5EjGdywI9JHCQ10rS6OyuJHEM
+	 ow5nDiGPLJ8N/59pWMIjDO5LuRU6sQTVo/HjrMJdmYaLdBT5XkBrClRxGL8pOa6rUGg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795061018;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795061021;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=dD/WNnK6fdcHCgIHUtrZ12nUqg5EneI2w7Jk0aiJCVQ=;
-	b=ODFfg+iU8JGJyc+/Sr40kzToUtRXNMIVFTJwDdFA6NVkbQnY2vIun+Ui3kCYtc4uSdtu
-	 xnqgSxPvo491SOLtgDUXy6shFkQ+xhRe4uvTskVr4ieG0/zWxfN/BmaVJJ6ZSfHlxMuHn
-	 BZxX6G8A9B9HLNyXUVnAvoceIcg3gpZFIbvSie3VVMTM+/OmlQAoj5XqJ9S7F4b1N6Iqa
-	 IvEnyZxnEY6qTIGYVcRQKtBdVH8wk9Aq+LSQCyXWWFCQovw+62es9hsVpuniF5XTZC9cf
-	 OQIl1fyV9UOxMWBkGzwRqQ1tFY+EN9jfdkXL77+IrbgnnxHxIxLrkCizmZu0zu+T3wg==
+	bh=bCyjNl9jbkDQJKuIV26WHi20MKbUEAvq1IXs3YLk99k=;
+	b=xAU8iGCPpa26Nnj91ZNrg9rKVGLT0Pa8JKSc5ayYBAymwrQIHV06fwDNiSl77DWkxPXV
+	 S7By2XCykxegsMfUhX2geXjH2w1t7XYIowUfCvBtNrJeBXLuiraIfjtpYjQW8Rxxg2AdD
+	 2UeKFynNuaD4y17L6tIxw0mHn24HeaxIDj55VZzubaDTwuL6dyhenthQSck6blptU6igy
+	 zksp6kz4BFksKmO81HpRx2l4NlFvdHQoTQxxdkUn5K1StN3uu1ZkmBA7EvJI8b6mbdbiq
+	 7+UY13NBXdOkCuq0k15B2VedwvYJVXpPM6P3DPmDblFnKpKU05+2n/2nVvSKLCOdWpw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCEJCKgH;
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WDmHf88s;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A608606A320;
-	Thu, 19 Nov 2026 04:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676B1606A320;
+	Thu, 19 Nov 2026 04:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=pCEJCKgH
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B1DD1F000C4;
-	Thu, 19 Nov 2026 04:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=WDmHf88s
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B6E1F000C5;
+	Thu, 19 Nov 2026 04:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795061018;
-	bh=dD/WNnK6fdcHCgIHUtrZ12nUqg5EneI2w7Jk0aiJCVQ=;
+	s=korg; t=1795061021;
+	bh=bCyjNl9jbkDQJKuIV26WHi20MKbUEAvq1IXs3YLk99k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=pCEJCKgHIycYax+n3Ekg0l6xuu+7UT947dXF4nwBi+a4+/z5rDGt0sW3swWAyOvv4
-	 bzcmWJ4kbTyn5/iGLZgHUigwvelK5pUheF/NhVUaLRSRGRaOH3bPYvUsoujZE1NDB6
-	 LeooJihA3RdCGC3xOJ3fDpiWW+w9PAccx/Jbelhc=
+	b=WDmHf88sdPKwXfvBBRzrFFCrWgdpqrd295DhwaY6kSV6v/TFtTXzu8tBktgZsTXs1
+	 5cK7hwDAGMMdk4pNeI92DW4O2x8DOx6nnI+jBQc//ZWl1XIfCNT945N/8qXYBllQlN
+	 IhH2+6tQ3drgIyjVR8huhddIX4a+mBdeaigm94sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ijae Kim <ae878000@gmail.com>,
-	Myeonghun Pak <mhun512@gmail.com>,
-	Brian Masney <bmasney@redhat.com>,
+	Yili Zhang <zhangyili01@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1403/1848] clk: ti: adpll: unregister OF clock provider on remove
-Date: Wed, 18 Nov 2026 15:57:21 +0100
-Message-ID: <20261118150018.257816503@linuxfoundation.org>
+Subject: [PATCH 5.10 1404/1848] RDMA/nldev: Fix NULL deref in dumps of objects abandoned by DRIVER_FAILURE
+Date: Wed, 18 Nov 2026 15:57:22 +0100
+Message-ID: <20261118150018.295359970@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118145911.150052362@linuxfoundation.org>
 References: <20261118145911.150052362@linuxfoundation.org>
@@ -69,41 +68,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Myeonghun Pak <mhun512@gmail.com>
+From: Yili Zhang <zhangyili01@baidu.com>
 
-[ Upstream commit 4c943ddfc24340f1b899762b1ff35c38306b7a35 ]
+[ Upstream commit 9f4c322be27bf617cad2f4a15f6c6024a69e220c ]
 
-ti_adpll_probe() registers the driver's onecell clock provider with
-of_clk_add_provider().  The remove path only frees the clock resources,
-leaving the provider registered after the backing data has been torn
-down.
+fill_res_cq_entry() dereferences cq->uobject->uevent.uobject.context->res.id
+unconditionally for user resources.
 
-Unregister the OF clock provider before freeing the ADPLL resources so
-the provider no longer points at released driver data after device
-removal.
+This is normally safe by ordering: destroy_hw() removes the resource
+from the restrack before uverbs_destroy_uobject() clears ->context,
+and the XA_ZERO_ENTRY marker set by rdma_restrack_begin_del() hides
+the entry from concurrent netlink dumps.
 
-Fixes: 21330497f303 ("clk: ti: Add support for dm814x ADPLL")
-Co-developed-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Ijae Kim <ae878000@gmail.com>
-Signed-off-by: Myeonghun Pak <mhun512@gmail.com>
-Signed-off-by: Brian Masney <bmasney@redhat.com>
+The ordering breaks when a driver keeps failing to destroy an object
+during ucontext teardown. uverbs_destroy_ufile_hw() then falls back to
+__uverbs_cleanup_ufile(RDMA_REMOVE_DRIVER_FAILURE), which
+abandons the object in place: the HW object and its restrack entry
+are intentionally leaked, while the uobject bookkeeping is torn down
+and ->context is explicitly set to NULL by uverbs_destroy_uobject().
+rdma_restrack_del() is never reached, so the orphaned entry stays in
+the device restrack with a valid kref, reachable by any subsequent
+netlink dump.
+
+Observed on 6.1.52 with MLNX_OFED 24.10, after an mlx5 FW failure
+left a process unable to tear down its CQ (destroy_cq FW command
+failing during FD close):
+
+  WARNING: ... uverbs_destroy_ufile_hw+0xe3/0x100
+  BUG: kernel NULL pointer dereference, address: 0000000000000058
+  RIP: 0010:fill_res_cq_entry+0x15e/0x180 [ib_core]
+   res_get_common_dumpit+0x304/0x530 [ib_core]
+   nldev_res_get_cq_dumpit+0x1a/0x20 [ib_core]
+
+The faulting chain maps to the source (CR2 = 0x58):
+  cq->uobject            (struct ib_cq +0x08, res at +0x98)
+  uobject->context       (struct ib_uobject +0x10, NULL after abandon)
+  context->res.id        (struct ib_ucontext +0x58)
+
+The recent restrack rework (8d186210677c and its series) moved the
+restrack deletion to the start of the destroy flow and thus fences
+concurrent dumps from an object being destroyed, but it does not
+cover this case: when destroy fails, rdma_restrack_abort_del()
+restores the entry, and the RDMA_REMOVE_DRIVER_FAILURE sweep still
+never removes it from the restrack.
+
+>From the fallback until the device is unregistered, any "rdma res
+show cq" deterministically takes the NULL pointer dereference; this
+is a long-lived state, NOT A RACE. The dump path holds neither the
+restrack lock (dropped before the fill callback runs) nor
+ufile->hw_destroy_rwsem, and rdma_restrack_get() only guarantees
+that the res memory stays alive, not that ->context is still valid.
+
+Fix the dump side: check the uobject context directly instead of the
+rdma_is_kernel_res() marker. A non-NULL uobject already implies a
+user resource, so kernel resources keep being skipped, and the
+additional ->context check skips the RES_CTXN attribute for
+orphaned entries instead of crashing the dump. The orphaned resource
+itself remains visible in "rdma res show" (cqn/cqe/usecnt/pid),
+which is what an operator needs after the accompanying uverbs WARN
+to diagnose the driver destroy failure.
+
+fill_res_pd_entry() has the same pattern (pd->uobject->context->res.id)
+and is fixed the same way; a PD can even reach the fallback without
+its own driver callback failing, e.g. uverbs_free_pd() returns -EBUSY
+while another object that failed to destroy still holds the PD usecnt.
+
+Fixes: c3d02788b45a ("RDMA/nldev: Provide parent IDs for PD, MR and QP objects")
+Signed-off-by: Yili Zhang <zhangyili01@baidu.com>
+Link: https://patch.msgid.link/20260923131239.6521-1-zhangyili01@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/ti/adpll.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/nldev.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/ti/adpll.c b/drivers/clk/ti/adpll.c
-index bb2f2836dab22..798e4835ce71e 100644
---- a/drivers/clk/ti/adpll.c
-+++ b/drivers/clk/ti/adpll.c
-@@ -947,6 +947,7 @@ static int ti_adpll_remove(struct platform_device *pdev)
- {
- 	struct ti_adpll_data *d = dev_get_drvdata(&pdev->dev);
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 1475069aa4285..c94fc38fb7d30 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -606,7 +606,8 @@ static int fill_res_cq_entry(struct sk_buff *msg, bool has_cap_net_admin,
  
-+	of_clk_del_provider(d->np);
- 	ti_adpll_free_resources(d);
+ 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CQN, res->id))
+ 		return -EMSGSIZE;
+-	if (!rdma_is_kernel_res(res) &&
++
++	if (cq->uobject && cq->uobject->uevent.uobject.context &&
+ 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CTXN,
+ 			cq->uobject->uevent.uobject.context->res.id))
+ 		return -EMSGSIZE;
+@@ -693,7 +694,7 @@ static int fill_res_pd_entry(struct sk_buff *msg, bool has_cap_net_admin,
+ 	if (nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_PDN, res->id))
+ 		goto err;
  
- 	return 0;
+-	if (!rdma_is_kernel_res(res) &&
++	if (pd->uobject && pd->uobject->context &&
+ 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_CTXN,
+ 			pd->uobject->context->res.id))
+ 		goto err;
 -- 
 2.53.0
 
