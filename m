@@ -1,53 +1,52 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795050224;
-	b=DpHYEyoVF0WdjCo8gWcjpjF0srj6hlIXBdVSjZB0/pLwH0WJ41MgP2I58g+lADda2CBL
-	 5s8BnXY3ESdjN4Hwh8Hms4C8ncZc6bZpXYCffq2QwqCMPEky78wrffCdkkOwSf66FLc8T
-	 /HuhgW0yPFup+YXa1zuRt8xdu+MfYzm12n8yRUFstUUXV3neVXnAcIHnwwne9hHAgHvyn
-	 FopMHbCYVHJyhaUejBgbOkZ6oZ01zMnFQ8pbUPeyNcqTne71mUWnv37nhD1Wvp72JNVCT
-	 Z3AqkPKlG0GX0o1ybXEfxup7pCRATtm+/v9O13sb9984MdTHMPBWDs1eKjAOCLWbp8A==
+	t=1795050227;
+	b=zL92Myjfmb5vBrR6G5iKKp8dBzMCZjdewBLXIbkJ1WBMeL9WsxeV5GMOR3+Pw9fjN6NJ
+	 rPGxOWFlz3o1p9RhUrahqceTcED4WNM1rfIM5FAQos0PqcY2kYbqqyYvVe/G2Hrff387r
+	 DiKnkcu1mJpAKtXQ4Gbh7Rcc8KVg/x5ROz0XdxXkri8mU/rHELz977nBqH7hGczPE7BY3
+	 rRFLi+PaUbVS1Ctr0fqWx0/Dv6KuNePY5VLm271IcbYA4op6AwDGgq/YztIL/qS0eEHV9
+	 RtbR4T4ASfxR4xBDX/oixJUGo9Tp98CqbxGnp7yLdJ9Q92RfYMoMBQ6TBFm7e/7aEeA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795050224;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795050227;
 	h=Received:DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:X-Mailer:
 	 In-Reply-To:References:User-Agent:X-stable:X-Patchwork-Hint:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=ByayToAbcZjpWNyC3/VkRVFdQ+DMDTHYkICKPzCTY/o=;
-	b=dmQxDTro1LMghqaILxRKgdwHaOLBzNJsFPkp9Gc/752mVK/QcPch0CPr4zb3X9y/QlCg
-	 rsaar2Z/3nWKewGHF+urz8k5RTMmMfps8Yfy7OEqfU+9K41/D8SiwgZOd0lcQvnCOjfG5
-	 DJSn99KH+BUWECOmeAm0arvNWWLCCz5EfwBUR9W1MICXYh6967gYBIv32lswcbBz3peZP
-	 Hh42aqWviEHJcF099FJ+vJeA4VfH/ZTjnbBdHPQ84qiaITrEyIq907rFaOzinR6yfmRhM
-	 A9i0KHOq+Xx4bopNR4qgMRbXOUxV52q2ZcUkvxoOuM5BgxCKxEY+Nci9uxnHJv74qvA==
+	bh=MVrKNhMgVkRoenc3mTJ0F5EwxdFhqIP2eiINn/Rj/EM=;
+	b=Cl3Gcb7ftt2cCi7N5R0VgZLWpxhV7SKnQVYKYaz/B76a2MavO5XXbdB5uEnZLUIubKv/
+	 NfO+vDd7jq4I2Ckixk5YybwdKHIzOZKPWg458HuajU9eDnAMkNVyKXuVoWu+ig+eTjSEU
+	 NobmblZu9ub4+k3Cp55Q86WBeoERdAtqj6nOU0u3vWyrpME0rXNi+J/CM6GhdO9tEbVvw
+	 Wsu+zDCdZKHu5qC/cHVOVaOEDkmL6kBye+jcuqVFlmCpsOBe8wWVd0Mc3vXPMHbPj+QZm
+	 7GlYwsZ29pabMP2ydYVUTN+OtVtcKPEOyGUqso2I2Ap2cpuAizSVeY4oRBFKE6oYhdA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b="sI/bWV+F";
+	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6xakxIx;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822A6606A31C;
-	Thu, 19 Nov 2026 01:03:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56533606A32A;
+	Thu, 19 Nov 2026 01:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sI/bWV+F
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB3AB1F000C4;
-	Thu, 19 Nov 2026 01:03:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=s6xakxIx
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64A51F000C4;
+	Thu, 19 Nov 2026 01:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1795050224;
-	bh=ByayToAbcZjpWNyC3/VkRVFdQ+DMDTHYkICKPzCTY/o=;
+	s=korg; t=1795050227;
+	bh=MVrKNhMgVkRoenc3mTJ0F5EwxdFhqIP2eiINn/Rj/EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=sI/bWV+FUKTof9xFhl7pCPYlEaJzG2zj2MvCduO51W1l3a2RzO/ghRRKXA10w4UzD
-	 e/EkSBUAHFvYR0XZDm58614HvVdbeAqw5v8vOEUFfwjNgNKjBWgf9tTGcgIO94ZeiM
-	 0e4EFyledFuzaTEf3kjJj3cAkfN0HcE/rYDIjipQ=
+	b=s6xakxIxGpXvRVoCMR2UbWG2KXxzdbgTs91h7ihzzSV+kogWYbAWC3uD07h0NZy2T
+	 pE7T/Oznj9uesDogpwgUGePVuoV2euz5T6WABNr/2NXi5Zp56hHXpHNVbFxvWoHmvs
+	 wQEsSWPUbhYNgSt6ifqbx4fWY9I6ohb8tBTSQSgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Sashiko (gemini)" <sashiko-bot@kernel.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Li RongQing <lirongqing@baidu.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 2633/2857] net/sched: act_api: reject duplicate actions in a batch
-Date: Wed, 18 Nov 2026 16:01:07 +0100
-Message-ID: <20261118150336.396757625@linuxfoundation.org>
+Subject: [PATCH 6.1 2634/2857] RDMA/mlx5: Fix CQ resize destination index mask
+Date: Wed, 18 Nov 2026 16:01:08 +0100
+Message-ID: <20261118150336.431819453@linuxfoundation.org>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261118150201.293410965@linuxfoundation.org>
 References: <20261118150201.293410965@linuxfoundation.org>
@@ -69,87 +68,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit f67b3ed1308d7a282e2d6202d61af052ab0da39e ]
+[ Upstream commit 0fe31052d948a3a993bb2f58cd5886f7ec279ea7 ]
 
-tca_action_gd() builds actions[] with one tcf_action_get_1() per nested
-TCA_ACT_TAB entry.  Each successful lookup takes its own reference to the
-resolved action, so repeated TCA_ACT_INDEX entries in one request yield
-the same pointer in multiple slots.
+In copy_resize_cqes, the destination CQE index is computed as
+(i + 1) & cq->resize_buf->nent, but resize_buf->nent is produced by
+roundup_pow_of_two(), so it is a power of two with exactly one bit set.
+Masking with a single-bit value can only yield 0 or nent itself. The
+buffer has nent entries, so valid indices are 0 .. nent - 1 and nent is
+one past the last slot; whenever the masked result is nent the following
+memcpy writes one entry out of bounds.
 
-For RTM_DELACTION, tcf_action_delete() then consumes two references per
-slot: one in tcf_action_put() and one in tcf_idr_delete_index().  A
-duplicate therefore drives the refcount to zero mid-walk -- the delete
-frees the action and removes its IDR slot -- and the next slot calls
-tcf_action_put() on the freed action:
+Use (nent - 1) as the wrap mask instead. For a power-of-two nent,
+(i + 1) & (nent - 1) is the correct modulo-nent reduction, keeping the
+index within [0, nent - 1]. This matches get_sw_cqe(), which addresses
+the CQ buffer via n & cq->ibcq.cqe, where cq->ibcq.cqe == entries - 1 is
+exactly the nent - 1 wrap mask.
 
-  refcount_t: underflow; use-after-free.
-  WARNING: lib/refcount.c:87 at refcount_dec_not_one
-   refcount_dec_and_mutex_lock
-   __tcf_action_put
-   tca_action_gd
-
-Three duplicate entries are enough.  Reject a repeated action while a
-delete batch is built, dropping the reference the extra lookup took, and
-return -EINVAL.  RTM_GETACTION balances its own references and keeps
-accepting duplicate entries.
-
-Conditions to recreate the bug:
-  tc actions add action gact index 100
-  tc actions delete action gact index 100 action gact index 100 \
-                     action gact index 100
-
-Fixes: 16af6067392c ("net: sched: implement reference counted action release")
-Reported-by: Sashiko (gemini) <sashiko-bot@kernel.org>
-Link: https://sashiko.dev/#/patchset/20260824153903.4143642-1-victor@mojatatu.com
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/QDISC-K1TH.v1.r3.20261012134653-1@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: bde51583f49b ("IB/mlx5: Add support for resize CQ")
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Link: https://patch.msgid.link/20261019050503.2313-1-lirongqing@baidu.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_api.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/cq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/act_api.c b/net/sched/act_api.c
-index 0ab2c48775996..5fff8f6a0f111 100644
---- a/net/sched/act_api.c
-+++ b/net/sched/act_api.c
-@@ -1994,7 +1994,7 @@ static int
- tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
- 	      u32 portid, int event, struct netlink_ext_ack *extack)
- {
--	int i, ret;
-+	int i, j, ret;
- 	struct nlattr *tb[TCA_ACT_MAX_PRIO + 1];
- 	struct tc_action *act;
- 	size_t attr_size = 0;
-@@ -2019,6 +2019,25 @@ tca_action_gd(struct net *net, struct nlattr *nla, struct nlmsghdr *n,
- 			ret = PTR_ERR(act);
- 			goto err;
- 		}
-+
-+		/* A delete consumes two references per slot (tcf_action_put()
-+		 * and tcf_idr_delete_index()) but each entry takes one, so a
-+		 * repeated action would hit zero mid-walk.  GET balances its
-+		 * own references and keeps accepting duplicates.
-+		 */
-+		if (event == RTM_DELACTION) {
-+			for (j = 0; j < i - 1; j++) {
-+				if (actions[j] != act)
-+					continue;
-+
-+				tcf_action_put(act);
-+				NL_SET_ERR_MSG(extack,
-+					       "Duplicate TC action in a delete batch");
-+				ret = -EINVAL;
-+				goto err;
-+			}
-+		}
-+
- 		attr_size += tcf_action_fill_size(act);
- 		actions[i - 1] = act;
- 	}
+diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+index 997bb9e245979..ec39b26c45d7d 100644
+--- a/drivers/infiniband/hw/mlx5/cq.c
++++ b/drivers/infiniband/hw/mlx5/cq.c
+@@ -1250,7 +1250,7 @@ static int copy_resize_cqes(struct mlx5_ib_cq *cq)
+ 
+ 	while (get_cqe_opcode(scqe64) != MLX5_CQE_RESIZE_CQ) {
+ 		dcqe = mlx5_frag_buf_get_wqe(&cq->resize_buf->fbc,
+-					     (i + 1) & cq->resize_buf->nent);
++					     (i + 1) & (cq->resize_buf->nent - 1));
+ 		dcqe64 = dsize == 64 ? dcqe : dcqe + 64;
+ 		sw_own = sw_ownership_bit(i + 1, cq->resize_buf->nent);
+ 		memcpy(dcqe, scqe, dsize);
 -- 
 2.53.0
 
